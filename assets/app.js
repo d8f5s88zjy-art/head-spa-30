@@ -173,20 +173,66 @@
     el.textContent = ''; el.appendChild(sr); el.appendChild(vis);
   }
 
+  /* ============ headlines rise out of a masked slot, line by line ============ */
+  function wrapLines(h) {
+    const nodes = [...h.childNodes];
+    const lines = []; let buf = '';
+    const flush = () => { const t = buf.replace(/\s+/g, ' ').trim(); if (t) lines.push({ text: t }); buf = ''; };
+    nodes.forEach((n) => {
+      if (n.nodeType === 3) buf += n.textContent;
+      else if (n.nodeName === 'BR') flush();
+      else if (n.nodeName === 'EM') { flush(); lines.push({ em: n }); }
+      else buf += n.textContent;
+    });
+    flush();
+    if (!lines.length) return;
+    h.textContent = '';
+    lines.forEach((l) => {
+      const ln = document.createElement('span'); ln.className = 'ln';
+      if (l.em) { l.em.classList.add('li'); ln.appendChild(l.em); }
+      else { const li = document.createElement('span'); li.className = 'li'; li.textContent = l.text; ln.appendChild(li); }
+      h.appendChild(ln);
+    });
+    if (!h.classList.contains('part')) { const p = h.closest('.part'); if (p) p.classList.add('has-h2'); }
+  }
+  $$('.h2').forEach(wrapLines);
+
+  /* ============ the manifesto reads itself: words in reading order ============ */
+  const manifesto = $('.manifesto'), quote = $('.manifesto .q');
+  if (quote) {
+    const full = quote.textContent.replace(/\s+/g, ' ').trim();
+    const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
+    const words = [];
+    const wrapText = (text, parent) => text.split(/(\s+)/).forEach((t) => {
+      if (!t) return;
+      if (/^\s+$/.test(t)) { parent.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = 'w'; w.textContent = t; parent.appendChild(w); words.push(w);
+    });
+    [...quote.childNodes].forEach((n) => {
+      if (n.nodeType === 3) wrapText(n.textContent, vis);
+      else if (n.nodeName === 'EM') { const em = document.createElement('em'); wrapText(n.textContent, em); vis.appendChild(em); }
+    });
+    words.forEach((w, i) => w.style.setProperty('--th', ((i / Math.max(1, words.length - 1)) * 0.8).toFixed(3)));
+    const sr = document.createElement('span'); sr.className = 'vh'; sr.textContent = full;
+    quote.textContent = ''; quote.appendChild(sr); quote.appendChild(vis);
+  }
+
   /* ============ hero scrub ============ */
-  const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene');
+  const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene'), env = $('.env');
   const bands = $$('.band', stage).map((el, i) => ({
     el, a: +el.dataset.a, b: +el.dataset.b, i,
     ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, on: false
   }));
   const hud = $('.hud b'), cue = $('.cue');
-  let scene = null, scrubOn = false, heroOnScreen = true, inited = false;
+  let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 0, loadStart = 0;
   let lastHud = '', lastHudAt = 0;
 
   function heroProgress() {
     const r = hero.getBoundingClientRect();
     const range = hero.offsetHeight - window.innerHeight;
+    const c = r.top <= 0 && r.bottom >= window.innerHeight;
+    if (c !== covered) { covered = c; env.classList.toggle('covered', c); }
     return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
   }
   function updateCaptions(p, now) {
@@ -263,7 +309,7 @@
     addEventListener('scroll', onScroll, { passive: true });
     bands.forEach((b) => { b.op = -1; b.k = -1; b.on = false; });
     unpinFinalStates();
-    loadStart = performance.now(); loadK = 0;
+    loadStart = performance.now() + veilMs; loadK = 0;
     target = shown = heroProgress();
     scene.draw(shown, true);
     updateCaptions(shown, loadStart);
@@ -273,6 +319,7 @@
     if (!scrubOn) return; scrubOn = false;
     removeEventListener('scroll', onScroll);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    if (covered) { covered = false; env.classList.remove('covered'); }
   }
   const GATES = [
     '(max-width: 720px)',
@@ -287,7 +334,31 @@
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
 
-  /* ============ nav ============ */
+  /* ============ the veil: the mark draws itself once per session, then takes its place in the nav ============ */
+  const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
+  let veilMs = 0, veilDone = false;
+  try {
+    if (veil && !sessionStorage.hs30open && !location.hash && !reduced.matches && !document.hidden) {
+      veilMs = 1100; sessionStorage.hs30open = '1'; document.body.classList.add('veiling');
+    }
+  } catch (e) { veilMs = 0; }
+  document.documentElement.style.setProperty('--veil', veilMs + 'ms');
+  function endVeil() {
+    if (veilDone) return; veilDone = true;
+    document.body.classList.remove('veiling');
+    if (veil) veil.classList.add('gone');
+  }
+  function flipVeil() {
+    if (veilDone) return;
+    const n = navMark.getBoundingClientRect();
+    const dx = n.left + n.width / 2 - innerWidth / 2, dy = n.top + n.height / 2 - innerHeight / 2, s = n.width / 96;
+    veilMark.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
+    veil.classList.add('lift');
+    const onEnd = (e) => { if (e.target === veilMark && e.propertyName === 'transform') { veilMark.removeEventListener('transitionend', onEnd); endVeil(); } };
+    veilMark.addEventListener('transitionend', onEnd);
+  }
+
+  /* ============ nav: solid after the top, and it holds your place ============ */
   const nav = $('.nav');
   let navSolid = false;
   function navCheck() {
@@ -295,63 +366,126 @@
     if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
+  const navLinks = $$('.links a');
+  const spied = new Set();
+  const spy = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
+    let cur = null; $$('#ritual,#cennik,#poukaz,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  $$('#ritual,#cennik,#poukaz,#faq,#kontakt').forEach((s) => spy.observe(s));
+
+  /* ============ the light is handed from room to room ============ */
+  const scenes = $$('[data-scene]');
+  const inScene = new Set();
+  document.body.dataset.scene = 'hero';
+  const sceneIO = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) inScene.add(e.target); else inScene.delete(e.target); });
+    let last = null; scenes.forEach((s) => { if (inScene.has(s)) last = s; });
+    if (last && document.body.dataset.scene !== last.dataset.scene) document.body.dataset.scene = last.dataset.scene;
+  }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
+  scenes.forEach((s) => sceneIO.observe(s));
+
+  /* ============ stillness: sections rest off screen, the page rests when the visitor does ============ */
+  const liveIO = new IntersectionObserver((es) => { es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)); if (typeof driveLines === 'function') driveLines(); }, { threshold: 0 });
+  $$('.manifesto,.hold,.gift,.contact').forEach((s) => liveIO.observe(s));
+  let idleT;
+  function wake() {
+    document.body.classList.remove('idle');
+    clearTimeout(idleT);
+    idleT = setTimeout(() => document.body.classList.add('idle'), 45000);
+  }
+  ['scroll', 'pointermove', 'pointerdown', 'keydown', 'touchstart', 'wheel'].forEach((ev) => addEventListener(ev, wake, { passive: true }));
 
   /* ============ entrances ============ */
   const rv = $$('.rv');
   const rio = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
     e.target.classList.add('in'); rio.unobserve(e.target);
-    setTimeout(() => e.target.classList.add('done'), 1500);
+    setTimeout(() => e.target.classList.add('done'), 1600);
   }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   rv.forEach((el) => rio.observe(el));
 
-  /* ============ self-drawing stream line + counters (scroll drives) ============ */
-  const streamPath = $('.steps .stream .draw');
-  let streamLen = 0, lastDash = -1, pinned = false;
+  /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
+  const stepsEl = $('.steps'), streamPath = $('.steps .stream .draw');
+  const steps = $$('.step').map((el) => ({ el, n: $('.n', el), at: 0, lit: null }));
+  let streamLen = 0, lastDash = -1, pinned = false, lastMk = -1;
   if (streamPath) { streamLen = streamPath.getTotalLength(); streamPath.style.strokeDasharray = streamLen; streamPath.style.strokeDashoffset = streamLen; }
-  const counters = $$('[data-count]');
-  const counted = new Set();
+  function measureSteps() {
+    if (!stepsEl) return;
+    const h = stepsEl.offsetHeight - 16;
+    steps.forEach((s) => { s.at = h > 0 ? (s.el.offsetTop + s.n.offsetTop + s.n.offsetHeight / 2 - 8) / h : 0; });
+  }
+  measureSteps();
+  let mrt; addEventListener('resize', () => { clearTimeout(mrt); mrt = setTimeout(measureSteps, 150); }, { passive: true });
   function driveLines() {
     if (pinned) return;
     if (streamPath) {
-      const r = streamPath.closest('.steps').getBoundingClientRect();
+      const r = stepsEl.getBoundingClientRect();
       const p = clamp((innerHeight * 0.78 - r.top) / r.height, 0, 1);
       const d = Math.round(streamLen * (1 - p));
       if (d !== lastDash) { lastDash = d; streamPath.style.strokeDashoffset = d; }
+      steps.forEach((s) => { const lit = p >= s.at; if (lit !== s.lit) { s.lit = lit; s.el.classList.toggle('lit', lit); } });
+    }
+    if (quote && manifesto.classList.contains('live')) {
+      const r = quote.getBoundingClientRect();
+      const p = clamp((innerHeight * 0.88 - r.top) / (innerHeight * 0.55), 0, 1);
+      if (Math.abs(p - lastMk) > 0.004 || (p === 1 && lastMk !== 1) || (p === 0 && lastMk !== 0)) { lastMk = p; manifesto.style.setProperty('--k', p.toFixed(3)); }
+      if (p >= 0.98 && !quote.classList.contains('read')) quote.classList.add('read');
+      else if (p < 0.6 && quote.classList.contains('read')) quote.classList.remove('read');
     }
   }
   addEventListener('scroll', driveLines, { passive: true }); driveLines();
+
+  /* ============ counters (ledger numerals) ============ */
+  const counters = $$('[data-count]');
+  const counted = new Set();
   function runCounter(el) {
     if (counted.has(el)) return; counted.add(el);
-    const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), dur = 1200;
-    let last = '';
-    (function step(now) {
-      const t = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - t, 3);
-      const s = Math.round(end * e) + suf;
-      if (s !== last) { last = s; el.textContent = s; }
-      if (t < 1) requestAnimationFrame(step);
-    })(t0);
+    const end = +el.dataset.count, suf = el.dataset.suffix || '', dur = 1200;
+    const group = el.closest('.stats'); const idx = group ? $$('[data-count]', group).indexOf(el) : 0;
+    setTimeout(() => {
+      if (pinned) return;
+      const t0 = performance.now(); let last = '';
+      (function step(now) {
+        const t = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - t, 3);
+        const s = Math.round(end * e) + suf;
+        if (s !== last) { last = s; el.textContent = s; }
+        if (t < 1) requestAnimationFrame(step);
+      })(t0);
+    }, idx * 120);
   }
   const cio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { runCounter(e.target); cio.unobserve(e.target); } }), { threshold: 0.6 });
   counters.forEach((c) => cio.observe(c));
+
   function pinToFinalStates() {
     pinned = true;
     if (streamPath) streamPath.style.strokeDashoffset = 0;
+    steps.forEach((s) => { s.lit = true; s.el.classList.add('lit'); });
     counters.forEach((c) => { counted.add(c); c.textContent = c.dataset.count + (c.dataset.suffix || ''); });
     rv.forEach((el) => el.classList.add('in', 'done'));
+    if (manifesto) { manifesto.style.setProperty('--k', 1); lastMk = 1; }
+    if (quote) quote.classList.add('read');
     if (hold) { hold.classList.add('done'); hold.style.setProperty('--p', 1); }
+    endVeil();
   }
   function unpinFinalStates() {
-    pinned = false; lastDash = -1; driveLines();
+    pinned = false; lastDash = -1; lastMk = -1;
+    steps.forEach((s) => { s.lit = null; });
+    driveLines();
   }
   reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else applyHeroMode(); });
 
-  /* ============ the hold: press and hold to switch off ============ */
+  /* ============ the hold: press and hold to switch off; the water rises through the tiles ============ */
   const hold = $('.hold'), holdBtn = $('.holdbtn');
   if (holdBtn) {
     let p = 0, holding = false, hr = null, hl = 0, done = false;
-    const setP = (v) => { holdBtn.style.setProperty('--p', v.toFixed(3)); };
-    const finish = () => { done = true; hold.classList.add('done'); holdBtn.setAttribute('aria-pressed', 'true'); };
+    const setP = (v) => { hold.style.setProperty('--p', (v < 0.15 ? v * v / 0.15 : v).toFixed(3)); };
+    const finish = () => {
+      done = true; holding = false; holdBtn.classList.remove('holding');
+      hold.classList.add('done'); holdBtn.setAttribute('aria-pressed', 'true');
+      if (navigator.vibrate) navigator.vibrate(12);
+    };
     function loop(now) {
       const dt = Math.min(64, now - (hl || now)); hl = now;
       p += holding ? dt / 1800 : -dt / 900;
@@ -359,8 +493,8 @@
       if (p >= 1 && !done) finish();
       if ((holding && p < 1) || (!holding && p > 0)) hr = requestAnimationFrame(loop); else { hr = null; hl = 0; }
     }
-    const start = (e) => { if (done) return; if (e.type === 'pointerdown') holdBtn.setPointerCapture(e.pointerId); holding = true; if (hr === null) hr = requestAnimationFrame(loop); };
-    const stop = () => { holding = false; if (hr === null && p > 0) hr = requestAnimationFrame(loop); };
+    const start = (e) => { if (done) return; if (e.type === 'pointerdown') holdBtn.setPointerCapture(e.pointerId); holding = true; holdBtn.classList.add('holding'); if (hr === null) hr = requestAnimationFrame(loop); };
+    const stop = () => { holding = false; holdBtn.classList.remove('holding'); if (hr === null && p > 0) hr = requestAnimationFrame(loop); };
     holdBtn.addEventListener('pointerdown', start);
     holdBtn.addEventListener('pointerup', stop); holdBtn.addEventListener('pointercancel', stop); holdBtn.addEventListener('pointerleave', stop);
     holdBtn.addEventListener('keydown', (e) => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); start(e); } });
@@ -369,20 +503,35 @@
     if (reduced.matches) { p = 1; setP(1); finish(); }
   }
 
-  /* ============ price list: filters, finder, details ============ */
+  /* ============ price list: filters, finder, details, the cascade ============ */
   const cards = $$('.card'), cats = $$('.cat'), count = $('.count');
   let activeCat = 'all';
-  function applyFilter() {
-    let n = 0;
-    cards.forEach((c) => { const show = activeCat === 'all' || c.dataset.cat === activeCat; c.classList.toggle('hidden', !show); if (show) n++; });
+  function cascade(list) {
+    if (reduced.matches) return;
+    list.forEach((c) => c.classList.remove('pop'));
+    void document.body.offsetWidth;
+    list.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); });
+  }
+  cards.forEach((c) => c.addEventListener('animationend', (e) => { if (e.animationName === 'cardIn') c.classList.remove('pop'); }));
+  if (!reduced.matches) {
+    const pio = new IntersectionObserver((es) => {
+      const hits = es.filter((e) => e.isIntersecting).map((e) => e.target);
+      hits.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); pio.unobserve(c); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
+    cards.forEach((c) => pio.observe(c));
+  }
+  function applyFilter(fromChip) {
+    let n = 0; const shown = [];
+    cards.forEach((c) => { const show = activeCat === 'all' || c.dataset.cat === activeCat; c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } });
     cats.forEach((l) => l.classList.toggle('hidden', !(activeCat === 'all' || l.dataset.cat === activeCat)));
     if (count) count.textContent = activeCat === 'all' ? `Zobrazených všetkých ${cards.length} rituálov` : `Zobrazených ${n} z ${cards.length} rituálov`;
+    if (fromChip) cascade(shown);
   }
   $$('.tools .chip').forEach((b) => b.addEventListener('click', () => {
     $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
-    activeCat = b.dataset.filter; applyFilter();
+    activeCat = b.dataset.filter; applyFilter(true);
   }));
-  applyFilter();
+  applyFilter(false);
   const RECS = {
     relax: ['RELAXAČNÝ HEAD SPA', 'HEAD SPA HARMÓNIA', 'PRÉMIOVÝ HEAD SPA RITUÁL'],
     scalp: ['HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY', 'PÁNSKY HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY', 'KLASICKÝ HEAD SPA'],
@@ -395,10 +544,10 @@
     const on = b.getAttribute('aria-pressed') === 'true';
     $$('.finder .chip').forEach((x) => x.setAttribute('aria-pressed', 'false'));
     cards.forEach((c) => c.classList.remove('reco'));
-    if (on) { if (count) applyFilter(); return; }
+    if (on) { applyFilter(false); return; }
     b.setAttribute('aria-pressed', 'true');
     $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x.dataset.filter === 'all' ? 'true' : 'false'));
-    activeCat = 'all'; applyFilter();
+    activeCat = 'all'; applyFilter(false);
     const names = RECS[b.dataset.goal] || [];
     const hits = names.map((n) => cards.find((c) => c.dataset.name === n)).filter(Boolean);
     hits.forEach((c) => c.classList.add('reco'));
@@ -406,6 +555,7 @@
     if (hits[0]) { const y = hits[0].getBoundingClientRect().top + scrollY - 150; scrollTo({ top: y, behavior: reduced.matches ? 'auto' : 'smooth' }); }
     track('ritual_finder_used', { goal: b.dataset.goal });
   }));
+  $$('.card .panel ol').forEach((ol) => [...ol.children].forEach((li, i) => li.style.setProperty('--i', i)));
   $$('.card-toggle').forEach((b) => b.addEventListener('click', () => {
     const c = b.closest('.card'); const open = !c.classList.contains('open');
     c.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
@@ -429,12 +579,18 @@
   });
 
   /* ============ housekeeping ============ */
-  document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
-  $$('.stream').length; // no-op guard for older engines
-  // year
+  document.addEventListener('visibilitychange', () => { document.body.classList.toggle('paused', document.hidden); if (!document.hidden) wake(); });
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 
   applyHeroMode();
   if (reduced.matches) pinToFinalStates();
-  requestAnimationFrame(() => document.body.classList.add('ready'));
+  wake();
+  requestAnimationFrame(() => {
+    document.body.classList.add('ready', 'open');
+    if (veilMs) {
+      veil.classList.add('drawn');
+      setTimeout(flipVeil, 1100);
+      setTimeout(endVeil, 3000);
+    }
+  });
 })();

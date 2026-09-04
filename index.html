@@ -26,7 +26,8 @@
 </head>
 <body>
 <a class="skip" href="#main">Preskočiť na obsah</a>
-<div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="grain"></div></div>
+<div class="veil" aria-hidden="true"><div class="sheet"></div><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg></div>
+<div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="glow g4"></div><div class="grain"></div></div>
 
 <nav class="nav" aria-label="Hlavná navigácia">
   <div class="wrap">
@@ -49,7 +50,7 @@
 <div id="top"></div>
 
 <!-- ========== HERO: the scroll journey (desktop) ========== -->
-<div class="hero" aria-label="Úvod">
+<div class="hero" aria-label="Úvod" data-scene="hero">
   <div class="stage">
     <div class="fallback" aria-hidden="true"></div>
     <canvas id="scene" aria-hidden="true" tabindex="-1"></canvas>
@@ -92,13 +93,13 @@
 </div>
 
 <!-- ========== HERO: the still (phones, reduced motion) ========== -->
-<header class="hero-static" aria-label="Úvod">
+<header class="hero-static" aria-label="Úvod" data-scene="hero">
   <div class="art" aria-hidden="true"><canvas id="scene-static"></canvas></div>
   <div class="wrap">
-    <div class="kicker">HEAD SPA 30 · Nitra</div>
-    <h1>Vypni <em>hlavu.</em></h1>
-    <p>Head Spa rituály v Nitre. Teplá voda, masáž pokožky hlavy a ticho, ktoré si zapamätáš.</p>
-    <div class="cta">
+    <div class="kicker" style="--i:0">HEAD SPA 30 · Nitra</div>
+    <h1 style="--i:1">Vypni <em>hlavu.</em></h1>
+    <p style="--i:2">Head Spa rituály v Nitre. Teplá voda, masáž pokožky hlavy a ticho, ktoré si zapamätáš.</p>
+    <div class="cta" style="--i:3">
       <a class="btn primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať termín</a>
       <a class="btn ghost" href="#cennik">Pozrieť rituály</a>
     </div>
@@ -108,7 +109,7 @@
 <div class="site">
 
 <!-- ========== RITUÁL ========== -->
-<section class="ritual" id="ritual">
+<section class="ritual" id="ritual" data-scene="ritual">
   <div class="wrap grid">
     <div class="sticky rv">
       <div class="kicker part">Ako to prebieha</div>
@@ -127,18 +128,18 @@
 </section>
 
 <!-- ========== MANIFEST ========== -->
-<section class="manifesto" aria-label="Motto">
+<section class="manifesto" aria-label="Motto" data-scene="manifesto">
   <div class="big" aria-hidden="true">30</div>
   <div class="wrap rv">
     <div class="drop part" aria-hidden="true"></div>
-    <p class="q part">Vstúpiš s hlavou plnou chaosu. Odídeš s pocitom, že si stlačil <em>oddych.</em></p>
+    <p class="q">Vstúpiš s hlavou plnou chaosu. Odídeš s pocitom, že si stlačil <em>oddych.</em></p>
   </div>
 </section>
 
-<div class="divider" aria-hidden="true"></div>
+<div class="divider rv" aria-hidden="true"></div>
 
 <!-- ========== THE HOLD ========== -->
-<section class="hold" id="vyber">
+<section class="hold" id="vyber" data-scene="vyber">
   <div class="wrap">
     <div class="top rv">
       <div class="part">
@@ -163,7 +164,7 @@
 </section>
 
 <!-- ========== CENNÍK ========== -->
-<section class="menu" id="cennik">
+<section class="menu" id="cennik" data-scene="cennik">
   <div class="wrap">
     <div class="head rv">
       <div class="part">
@@ -174,8 +175,8 @@
         <p class="lede">Kompletná ponuka Head Spa, pánskych, detských a spoločných rituálov a rituálov pre chodidlá. Od 40-minútového relaxu až po dvojhodinový prémiový zážitok.</p>
         <div class="stats">
           <div><b data-count="17">0</b><span>rituálov</span></div>
-          <div><b>40 až 120</b><span>minút</span></div>
-          <div><b>45 až 149 €</b><span>cenové rozpätie</span></div>
+          <div><b><i data-count="40">0</i> až <i data-count="120">0</i></b><span>minút</span></div>
+          <div><b><i data-count="45">0</i> až <i data-count="149" data-suffix=" €">0</i></b><span>cenové rozpätie</span></div>
         </div>
       </div>
     </div>
@@ -202,7 +203,7 @@
     <p class="count" aria-live="polite"></p>
 
     <div class="list">
-      <div class="cat" data-cat="classic"><span>Klasické</span><b>Head Spa rituály</b></div>
+      <div class="cat rv" data-cat="classic"><span>Klasické</span><b>Head Spa rituály</b></div>
 <article class="card" data-cat="classic" data-name="KLASICKÝ HEAD SPA">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
@@ -308,7 +309,7 @@
   </div>
   <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Privítací aromaterapeutický rituál s výberom vône</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a tvár</li><li>Luxusná pleťová maska</li><li>Chladivý očný rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hĺbkový vlasový zábal podľa typu vlasov</li><li>Výživné sérum pre pokožku hlavy</li><li>Reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Jemný tlakový rituál chodidiel</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li><li>Luxusné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
-<div class="cat" data-cat="gentlemen"><span>Pánske</span><b>Pánske rituály</b></div>
+<div class="cat rv" data-cat="gentlemen"><span>Pánske</span><b>Pánske rituály</b></div>
 <article class="card" data-cat="gentlemen" data-name="PÁNSKY HEAD SPA">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
   <div>
@@ -369,7 +370,7 @@
   </div>
   <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: céder, santalové drevo, bergamot</li><li>Úvodný rituál na spomalenie a uvoľnenie</li><li>Jemný peeling pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál hlavy a spánkov</li><li>Teplý aromatický uterákový rituál</li><li>Luxusná hydratačná maska na tvár</li><li>Chladivý očný rituál</li><li>Hĺbkový vlasový zábal</li><li>Výživné sérum pre pokožku hlavy</li><li>Relaxačný reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Regeneračná maska na chodidlá</li><li>Jemný tlakový rituál chodidiel</li><li>Aromatický oddych v tichu</li><li>Relaxačný zvukový rituál</li><li>Záverečná vlasová starostlivosť</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
-<div class="cat" data-cat="kids"><span>Detské</span><b>Detské rituály</b></div>
+<div class="cat rv" data-cat="kids"><span>Detské</span><b>Detské rituály</b></div>
 <article class="card" data-cat="kids" data-name="DETSKÝ OVOCNÝ HEAD SPA">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 20.5s-7-4.4-7-9.5a3.8 3.8 0 0 1 7-2 3.8 3.8 0 0 1 7 2c0 5.1-7 9.5-7 9.5z"/><path d="M12 3v2"/></svg></div>
   <div>
@@ -385,7 +386,7 @@
   </div>
   <div class="panel"><div><ol><li>Detský welcome drink</li><li>Ovocný aromatický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Ovocný vlasový zábal</li><li>Jemný relaxačný rituál hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Jemná masáž hlavy</li><li>Teplý uteráčikový rituál</li><li>Hydratačná starostlivosť o vlasy</li><li>Malý relaxačný oddych</li><li>Záverečné umytie a vysušenie vlasov</li></ol></div></div>
 </article>
-<div class="cat" data-cat="couple"><span>Pre dvoch</span><b>Rituály pre dvoch</b></div>
+<div class="cat rv" data-cat="couple"><span>Pre dvoch</span><b>Rituály pre dvoch</b></div>
 <article class="card" data-cat="couple" data-name="SPOLOČNÝ HEAD SPA RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></div>
   <div>
@@ -416,7 +417,7 @@
   </div>
   <div class="panel"><div><ol><li>Uvítací nápoj pre oboch</li><li>Výber vône pre spoločný aromaterapeutický úvod</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska s teplým turbanom</li><li>Jemný relaxačný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Rituál pod hviezdnou oblohou</li><li>Pokojný zvukový sprievod a tlmené svetlo</li><li>Záverečné výživné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<div class="cat" data-cat="feet"><span>Chodidlá</span><b>Rituály pre chodidlá</b></div>
+<div class="cat rv" data-cat="feet"><span>Chodidlá</span><b>Rituály pre chodidlá</b></div>
 <article class="card" data-cat="feet" data-name="KLASICKÝ RITUÁL PRE CHODIDLÁ">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
@@ -467,10 +468,10 @@
   </div>
 </section>
 
-<div class="divider" aria-hidden="true"></div>
+<div class="divider rv" aria-hidden="true"></div>
 
 <!-- ========== POUKAZ ========== -->
-<section class="gift" id="poukaz">
+<section class="gift" id="poukaz" data-scene="poukaz">
   <div class="wrap">
     <div class="box rv">
       <div class="part">
@@ -484,7 +485,7 @@
       </div>
       <div class="ticket part" aria-hidden="true">
         <small>HEAD SPA 30 · Nitra</small>
-        <svg class="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
+        <svg class="mark" viewBox="0 0 64 64"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
         <strong>Darujte oddych.</strong>
         <small>Mostná 30 · prémiový relaxačný zážitok</small>
       </div>
@@ -493,7 +494,7 @@
 </section>
 
 <!-- ========== FAQ ========== -->
-<section class="faq" id="faq">
+<section class="faq" id="faq" data-scene="faq">
   <div class="wrap grid">
     <div class="sticky rv">
       <div class="kicker part">Pred návštevou</div>
@@ -512,7 +513,7 @@
 </section>
 
 <!-- ========== KONTAKT ========== -->
-<section class="contact" id="kontakt">
+<section class="contact" id="kontakt" data-scene="kontakt">
   <div class="wrap">
     <div class="box rv">
       <div class="part">
@@ -536,12 +537,12 @@
 </div>
 </main>
 
-<footer>
+<footer data-scene="footer">
   <div class="wrap">
     <div class="grid">
-      <div>
+      <div class="rv">
         <a class="brand" href="#top" aria-label="HEAD SPA 30, domov">
-          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
+          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
           <span class="name"><small>Barbershop30 · Nitra</small><strong>HEAD SPA 30</strong></span>
         </a>
         <p>Head Spa koncept pod značkou Barbershop30. Barber presnosť, spa pokoj a nový dôvod vrátiť sa.</p>
