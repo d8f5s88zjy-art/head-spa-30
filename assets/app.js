@@ -397,10 +397,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -419,7 +419,7 @@
 
   /* ============ stillness: sections rest off screen, the page rests when the visitor does ============ */
   const liveIO = new IntersectionObserver((es) => { es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)); if (typeof driveLines === 'function') driveLines(); }, { threshold: 0 });
-  $$('.gift,.contact').forEach((s) => liveIO.observe(s));
+  $$('.gift,.book,.contact').forEach((s) => liveIO.observe(s));
   let idleT;
   function wake() {
     document.body.classList.remove('idle');
@@ -575,6 +575,203 @@
       done.hidden = false;
       location.href = `mailto:info@barbershop30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
     });
+  }
+
+  /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  const rform = $('#rform');
+  if (rform) {
+    const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
+    const datum = $('#r-datum'), datumHint = $('#r-datum-hint'), casBox = $('#r-cas'), casHint = $('#r-cas-hint');
+    const presnyWrap = $('#r-presny'), presny = $('#r-cas-presny'), presnyHint = $('#r-presny-hint');
+    const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
+    const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
+    const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
+    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when');
+    const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14] };
+    const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
+    const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 19)' };
+    const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 14)' };
+    const NOTE_PH = { kids: 'Vek dieťaťa a čo má rado.', couple: 'Meno druhej osoby, alergie, darček.', deep: 'Čo ťa na pokožke hlavy trápi.', base: 'napr. citlivá pokožka, tehotenstvo, alergia, darček' };
+    const pad = (n) => String(n).padStart(2, '0');
+    const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+    const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const parse = (v) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return null; const [y, m, d] = v.split('-').map(Number); const dt = new Date(y, m - 1, d); return isNaN(dt) || dt.getDate() !== d ? null : dt; };
+    const fmt = (d) => `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
+    const hm = (h) => `${pad(Math.floor(h))}:${pad(Math.round((h - Math.floor(h)) * 60))}`;
+    const val = (name) => (rform.querySelector(`input[name="${name}"]:checked`) || {}).value || 'any';
+    const setVal = (name, v) => { const i = rform.querySelector(`input[name="${name}"][value="${v}"]`); if (i) i.checked = true; };
+    const ritual = () => { const o = sel.options[sel.selectedIndex]; return o && o.value ? { slug: o.value, name: o.dataset.name, min: +o.dataset.min, price: o.dataset.price, cat: o.dataset.cat } : null; };
+    const isCouple = () => { const r = ritual(); return !!r && r.cat === 'couple'; };
+    const persons = () => (isCouple() ? 2 : +val('osoby'));
+    const duration = () => { const r = ritual(); return r ? r.min * (isCouple() ? 1 : persons()) : 0; };
+    const lastStart = (d) => { const h = HOURS[d.getDay()]; return h ? h[1] - duration() / 60 : null; };
+    const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+    const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
+    [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
+    let message = '', shortMessage = '', opened = 0;
+
+    // ---- pick a ritual from a card: same slug on the card and the option
+    function selectRitual(slug, flash) {
+      if (!rform.querySelector(`option[value="${slug}"]`)) return false;
+      sel.value = slug; refresh();
+      if (flash && !reduced.matches) { sel.classList.remove('flash'); void sel.offsetWidth; sel.classList.add('flash'); }
+      return true;
+    }
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-book]'); if (!a) return;
+      selectRitual(a.dataset.book, true);
+      track('reservation_open', { ritual: a.dataset.book });
+    });
+    const fromUrl = new URLSearchParams(location.search).get('ritual');
+    if (fromUrl) selectRitual(fromUrl, false);
+
+    // ---- "more" toggles: exact time, alternative date, voucher code
+    $$('[data-more]', rform).forEach((b) => b.addEventListener('click', () => {
+      const box = $('#' + b.dataset.more); const open = box.hidden;
+      box.hidden = !open; b.setAttribute('aria-expanded', String(open));
+      if (!open) { $$('input,textarea', box).forEach((i) => { if (i.type === 'radio') { if (i.value === 'any') i.checked = true; } else i.value = ''; }); }
+      else { const f = $('input,select,textarea', box); if (f) f.focus({ preventScroll: true }); }
+      refresh();
+    }));
+
+    // ---- time windows: a chip is out when its window starts after the last possible start
+    function tuneWindows(box, d) {
+      const sat = d && d.getDay() === 6, last = d ? lastStart(d) : null;
+      $$('input', box).forEach((i) => {
+        const from = +i.dataset.from || 0, labels = sat ? WINDOW_SAT : WINDOW;
+        const out = i.value !== 'any' && (!(i.value in labels) || (last !== null && from >= last));
+        i.disabled = out; i.closest('.choice').hidden = i.value !== 'any' && !(i.value in labels);
+        if (i.nextElementSibling) i.nextElementSibling.textContent = (labels[i.value] || WINDOW[i.value]).replace(/^./, (c) => c.toUpperCase()).replace(/ \(.*\)$/, '');
+        if (out && i.checked) { setVal(i.name, 'any'); }
+      });
+    }
+    const windowText = (v, d) => ((d && d.getDay() === 6 ? WINDOW_SAT : WINDOW)[v] || WINDOW.any);
+
+    // ---- everything derived from the form, recomputed on every change
+    function refresh() {
+      const r = ritual(), d = parse(datum.value), d2 = parse(datum2.value), n = persons();
+      // ritual hint, persons, note placeholder
+      if (r) {
+        const base = `Vybraný rituál: ${r.name}, ${r.min} min`;
+        rHint.textContent = r.cat === 'couple' ? `${base}. Cena ${r.price} platí za obe osoby. Ležíte vedľa seba, rozprávať sa nemusíte. Meno druhej osoby napíš do poznámky.`
+          : r.cat === 'kids' ? `${base}, ${r.price}. Rodič môže zostať v miestnosti po celý čas, vek dieťaťa napíš do poznámky.`
+          : `${base}, ${r.price}.`;
+      } else rHint.textContent = 'Vyber rituál zo zoznamu alebo ťukni na Rezervovať pri rituáli v cenníku.';
+      $('.choices', osobyWrap).hidden = !!r && r.cat === 'couple'; osobyHint.hidden = !(r && r.cat === 'couple');
+      pozn.placeholder = r ? (NOTE_PH[r.cat] || (/hĺbkov/i.test(r.name) ? NOTE_PH.deep : NOTE_PH.base)) : NOTE_PH.base;
+      poznHint.hidden = !(r && r.cat === 'kids' && !pozn.value.trim());
+      if (!poznHint.hidden) poznHint.textContent = 'Napíš prosím vek dieťaťa, pomôže nám pripraviť rituál.';
+      // day and windows
+      tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
+      const last = d ? lastStart(d) : null;
+      if (d && d.getDay() === 6 && r && last !== null && last < 14) casHint.textContent = `V sobotu máme do 14:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
+      else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
+      else casHint.textContent = '';
+      const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
+      datumHint.textContent = d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0951 267 203.' : 'Po až Pi 9:00 až 19:00, So 9:00 až 14:00, v nedeľu máme zatvorené.';
+      // exact time bounds
+      if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
+      else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
+      // the message
+      const lines = ['Dobrý deň, chcem si rezervovať termín v HEAD SPA 30.', ''];
+      lines.push(r ? `Rituál: ${r.name} (${r.min} min, ${r.cat === 'couple' ? `2 osoby, ${r.price} za obe osoby` : r.price})` : 'Rituál: (nevybraný)');
+      let when = '';
+      if (d) {
+        const isToday = d.getTime() === t0.getTime();
+        if (presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number); const end = hh + mm / 60 + duration() / 60; when = `${isToday ? 'DNES ' : ''}${fmt(d)} o ${presny.value} (koniec cca ${hm(end)})`; }
+        else when = `${isToday ? 'DNES ' : ''}${fmt(d)}, ${windowText(val('cas'), d)}`;
+      }
+      lines.push(`Termín: ${when || '(nevybraný)'}`);
+      if (d2 && !nahradny.hidden) lines.push(`Náhradný termín: ${fmt(d2)}, ${windowText(val('cas2'), d2)}`);
+      if (r && r.cat !== 'couple' && n === 2) lines.push('Osoby: 2, každý svoj rituál');
+      lines.push(`Meno: ${meno.value.trim() || '(nevyplnené)'}`, `Telefón: ${tel.value.trim() || '(nevyplnený)'}`);
+      if (email.value.trim()) lines.push(`E-mail: ${email.value.trim()}`);
+      if (poukaz.value.trim() && !$('#r-poukaz-wrap').hidden) lines.push(`Kód poukazu: ${poukaz.value.trim().toUpperCase().replace(/\s+/g, '')}`);
+      if (pozn.value.trim()) lines.push(`Poznámka: ${pozn.value.trim()}`);
+      lines.push('', 'Prosím o potvrdenie termínu. Ďakujem.', `Ref: ${REF}`);
+      message = lines.join('\n');
+      shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
+      wa.href = `https://wa.me/421951267203?text=${encodeURIComponent(message)}`;
+      sms.href = `sms:+421951267203?&body=${encodeURIComponent(shortMessage)}`;
+      // the ticket
+      tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
+      tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
+      tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
+    }
+
+    // ---- validation: one list of plain sentences, focus on the first wrong field
+    function validate() {
+      const problems = []; let first = null;
+      const bad = (el, msg) => { problems.push(msg); const f = el.closest('.field'); if (f) f.classList.add('invalid'); el.setAttribute('aria-invalid', 'true'); if (!first) first = el; };
+      $$('.field.invalid', rform).forEach((f) => f.classList.remove('invalid')); $$('[aria-invalid]', rform).forEach((i) => i.removeAttribute('aria-invalid'));
+      const r = ritual(); if (!r) bad(sel, 'Vyber rituál zo zoznamu.');
+      const d = parse(datum.value);
+      if (!datum.value) bad(datum, 'Vyber deň, kedy chceš prísť.');
+      else if (!d || d < t0) bad(datum, 'Tento deň už prešiel, vyber iný.');
+      else if (d > tMax) bad(datum, 'Tak ďaleko kalendár ešte neotvárame, vyber termín do pol roka.');
+      else if (d.getDay() === 0) bad(datum, 'V nedeľu máme zatvorené, vyber iný deň.');
+      else if (d.getTime() === t0.getTime() && r) { const now = new Date(); if (now.getHours() + now.getMinutes() / 60 > lastStart(d)) bad(datum, 'Dnes už nestíhame, vyber ďalší deň alebo nám zavolaj.'); }
+      if (d && r && presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number), t = hh + mm / 60, last = lastStart(d); if (t < 9 || t > last) bad(presny, `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`); }
+      if (!nahradny.hidden && datum2.value) {
+        const d2 = parse(datum2.value);
+        if (!d2 || d2 < t0) bad(datum2, 'Náhradný deň už prešiel, vyber iný.');
+        else if (d2 > tMax) bad(datum2, 'Náhradný termín je príliš ďaleko, vyber termín do pol roka.');
+        else if (d2.getDay() === 0) bad(datum2, 'V nedeľu máme zatvorené, vyber iný náhradný deň.');
+        else if (d && d2.getTime() === d.getTime() && val('cas2') === val('cas')) bad(datum2, 'Náhradný termín je rovnaký ako hlavný, vyber iný deň alebo čas.');
+      }
+      if (meno.value.trim().length < 2) bad(meno, 'Napíš svoje meno.');
+      const digits = tel.value.replace(/[\s\-().]/g, '');
+      if (!/^\+?\d{9,15}$/.test(digits)) bad(tel, 'Napíš telefón, na ktorom ťa zastihneme, napr. 0900 123 456.');
+      if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) bad(email, 'E-mail nevyzerá správne, oprav ho alebo ho nechaj prázdny.');
+      if (message.length > 1500) bad(pozn, 'Skráť prosím poznámku.');
+      if (problems.length) {
+        err.hidden = false; err.innerHTML = problems.length === 1 ? problems[0] : 'Ešte doplň:<ul>' + problems.map((p) => `<li>${p}</li>`).join('') + '</ul>';
+        if (first) first.focus({ preventScroll: false });
+        return false;
+      }
+      err.hidden = true; return true;
+    }
+
+    // ---- sending: WhatsApp is a real link (a native gesture), e-mail is the submit; both share the validation
+    function showSent(kind) {
+      const r = ritual(), d = parse(datum.value);
+      const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
+      sentText.textContent = kind === 'wa' ? `Otvorili sme WhatsApp s tvojou požiadavkou, stačí ju odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa WhatsApp neotvoril:`
+        : kind === 'mail' ? `Otvorili sme e-mail pre info@barbershop30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
+        : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0951 267 203, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
+      sent.hidden = false; copyText.value = message;
+      sms.hidden = !matchMedia('(pointer: coarse)').matches;
+      opened += 1;
+      if (opened > 1) { sentText.textContent += ' Správu si už raz otvoril. Ak ju vo WhatsApp nevidíš, pošli ju e-mailom alebo si ju skopíruj.'; }
+    }
+    wa.addEventListener('click', (e) => {
+      refresh();
+      if (!validate()) { e.preventDefault(); return; }
+      track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
+      showSent('wa');
+    });
+    rform.addEventListener('submit', (e) => {
+      e.preventDefault(); refresh();
+      if (!validate()) return;
+      const r = ritual(), d = parse(datum.value);
+      const subject = `Rezervácia: ${r.name}, ${fmt(d)}, ${meno.value.trim()}`.replace(/[&#?]/g, ' ');
+      track('reservation_send', { channel: 'email', ritual: r.slug });
+      let left = false; const mark = () => { left = true; };
+      addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
+      showSent('mail');
+      location.href = `mailto:info@barbershop30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
+    });
+    copyBtn.addEventListener('click', async () => {
+      let ok = false;
+      try { await navigator.clipboard.writeText(message); ok = true; } catch (e) { try { copyText.classList.remove('vh'); copyText.select(); ok = document.execCommand('copy'); copyText.classList.add('vh'); } catch (e2) { ok = false; } }
+      const old = copyBtn.textContent; copyBtn.textContent = ok ? 'Skopírované' : 'Nepodarilo sa, označ text ručne';
+      if (!ok) { copyText.classList.remove('vh'); copyText.removeAttribute('aria-hidden'); copyText.removeAttribute('tabindex'); copyText.rows = 8; copyText.focus(); copyText.select(); }
+      setTimeout(() => { copyBtn.textContent = old; }, 2200);
+    });
+    rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
+    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); refresh(); datumHint.textContent = 'V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'; } });
+    refresh();
   }
 
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */

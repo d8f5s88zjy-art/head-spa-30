@@ -45,6 +45,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 body[data-scene="hero"] .env .g4{--go:.55}
 body[data-scene="cennik"] .env .g4{--gx:-6vw;--gy:-10vh;--go:.25}
 body[data-scene="cennik"] .env .g3{--gx:24vw;--gy:-20vh;--go:.3}
+body[data-scene="rezervacia"] .env .g3{--gx:18vw;--gy:-26vh;--go:.32}
+body[data-scene="rezervacia"] .env .g4{--gx:-12vw;--gy:-18vh;--go:.34}
 body[data-scene="poukaz"] .env .g4{--gx:10vw;--gy:-30vh;--go:.5}
 body[data-scene="poukaz"] .env .g3{--go:0}
 body[data-scene="ritual"] .env .g3{--gx:10vw;--gy:-10vh;--go:.45}
@@ -62,7 +64,7 @@ body[data-scene="footer"] .env .g3,body[data-scene="footer"] .env .g4{--go:0}
 /* stillness: hidden tab, idle visitor, off-screen section */
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
 body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .drop{animation-play-state:paused}
-.gift:not(.live) .ticket,.contact:not(.live) .pin::after{animation-play-state:paused}
+.gift:not(.live) .ticket,.book:not(.live) .ticket,.contact:not(.live) .pin::after{animation-play-state:paused}
 
 /* ---------- the mark draws itself (veil, ticket, footer) ---------- */
 .mark .ring,.mark .wave{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 700ms var(--ease) 100ms}
@@ -333,8 +335,8 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 }
 
 /* gift: pick, fill in, send */
-.gift .head,.gallery .head{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:end}
-.gift .head .lede,.gallery .head .lede{margin-top:0}
+.gift .head,.gallery .head,.book .head{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:end}
+.gift .head .lede,.gallery .head .lede,.book .head .lede{margin-top:0}
 .gift .head .cta{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
 .order{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:start;margin-top:48px}
 .vform{padding:36px;border:1px solid var(--line-strong);border-radius:28px;background:linear-gradient(150deg,rgba(29,40,29,.85),rgba(14,19,16,.95));box-shadow:0 40px 100px rgba(0,0,0,.35)}
@@ -379,6 +381,30 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .ticket strong{display:block;font-family:var(--display);font-weight:400;font-style:italic;font-size:34px;line-height:1.15;letter-spacing:-.01em;color:var(--accent-hover);overflow-wrap:anywhere}
 .ticket strong.long{font-size:24px}
 .ticket .t-for{display:block;margin-top:8px;font-size:15px;color:var(--text-secondary)}
+
+/* booking: pick a ritual, a day and a time window; the message leaves from the guest's own phone */
+.lbl{display:block;margin-bottom:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary)}
+.field label small{font-family:var(--body);text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--text-tertiary)}
+.hint{margin-top:8px;font-size:13px;line-height:1.55;color:var(--text-tertiary)}
+.hint.warn{color:#f0b8a6}
+.hint .linkbtn{margin-left:8px}
+.more{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px}
+.linkbtn{appearance:none;background:none;border:0;border-bottom:1px solid var(--line-strong);padding:0 0 2px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;transition:color .3s,border-color .3s}
+.linkbtn:hover{color:var(--accent-hover)}
+.linkbtn[aria-expanded="true"]{color:var(--text-secondary);border-color:var(--line)}
+.vform .cta .call{align-self:center;font-size:13.5px;color:var(--text-secondary);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-strong)}
+.vform .cta .call:hover{color:var(--text-primary)}
+.choice input:disabled+span{opacity:.32;cursor:not-allowed}
+.field input[type="date"],.field input[type="time"]{color-scheme:dark;min-height:46px}
+.field input[type="date"]::-webkit-calendar-picker-indicator,.field input[type="time"]::-webkit-calendar-picker-indicator{filter:invert(.8) sepia(.6) saturate(2) hue-rotate(5deg);cursor:pointer}
+.field select optgroup{background:#131a15;color:var(--accent);font-style:normal}
+.field select.flash{animation:flash 1300ms var(--ease)}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(217,181,106,0)}25%{box-shadow:0 0 0 5px rgba(217,181,106,.38);border-color:var(--accent)}100%{box-shadow:0 0 0 0 rgba(217,181,106,0)}}
+.err ul{margin:6px 0 0 18px;padding:0;list-style:disc}
+.err li+li{margin-top:2px}
+.sent .cta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.vform .fine .btn.small{margin-top:4px}
+.book .ticket strong.long{font-size:24px}
 
 /* gallery: the door, then the rooms behind it */
 .shots{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(0,auto);gap:14px;margin-top:48px}
@@ -462,7 +488,7 @@ footer .bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wra
   .links{display:none}
   .ritual .grid,.faq .grid,.contact .box,.menu .head{grid-template-columns:1fr;gap:34px}
   .ritual .sticky,.faq .sticky{position:static}
-  .gift .head,.gallery .head,.order{grid-template-columns:1fr;gap:34px}
+  .gift .head,.gallery .head,.book .head,.order{grid-template-columns:1fr;gap:34px}
   .order>.part:last-child{position:static;padding:0 14px}
   .shots{grid-template-columns:1fr 1fr}
   .shot.door{grid-row:span 2}
