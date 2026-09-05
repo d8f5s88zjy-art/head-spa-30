@@ -27,7 +27,7 @@
       if (!W) resize();
       if (!force && Math.abs(p - lastP) < 0.0005) return;
       lastP = p;
-      const cx = W > 720 ? W * 0.66 : W * 0.5;   // action lane: right third on wide screens, centre on narrow
+      const cx = W > 720 ? W * 0.69 : W * 0.5;   // action lane: right third on wide screens, centre on narrow
       const basinY = W > 720 ? H * 0.80 : H * 0.6, topY = -H * 0.03;
       const land = smoothstep(p, 0.06, 0.42);     // stream length 0..1
       const after = smoothstep(p, 0.42, 0.6);      // impact aftermath
@@ -193,29 +193,10 @@
       else { const li = document.createElement('span'); li.className = 'li'; li.textContent = l.text; ln.appendChild(li); }
       h.appendChild(ln);
     });
+    h.classList.add('lines');
     if (!h.classList.contains('part')) { const p = h.closest('.part'); if (p) p.classList.add('has-h2'); }
   }
   $$('.h2').forEach(wrapLines);
-
-  /* ============ the manifesto reads itself: words in reading order ============ */
-  const manifesto = $('.manifesto'), quote = $('.manifesto .q');
-  if (quote) {
-    const full = quote.textContent.replace(/\s+/g, ' ').trim();
-    const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
-    const words = [];
-    const wrapText = (text, parent) => text.split(/(\s+)/).forEach((t) => {
-      if (!t) return;
-      if (/^\s+$/.test(t)) { parent.appendChild(document.createTextNode(' ')); return; }
-      const w = document.createElement('span'); w.className = 'w'; w.textContent = t; parent.appendChild(w); words.push(w);
-    });
-    [...quote.childNodes].forEach((n) => {
-      if (n.nodeType === 3) wrapText(n.textContent, vis);
-      else if (n.nodeName === 'EM') { const em = document.createElement('em'); wrapText(n.textContent, em); vis.appendChild(em); }
-    });
-    words.forEach((w, i) => w.style.setProperty('--th', ((i / Math.max(1, words.length - 1)) * 0.8).toFixed(3)));
-    const sr = document.createElement('span'); sr.className = 'vh'; sr.textContent = full;
-    quote.textContent = ''; quote.appendChild(sr); quote.appendChild(vis);
-  }
 
   /* ============ hero scrub ============ */
   const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene'), env = $('.env');
@@ -244,7 +225,7 @@
       if (b.i === 0) k = Math.max(k, loadK);
       if (Math.abs(op - b.op) > 0.005 || (op === 0 && b.op !== 0) || (op === 1 && b.op !== 1)) { b.op = op; b.el.style.opacity = op.toFixed(3); }
       const on = op > 0.5;
-      if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); }
+      if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
     }
     if (hud && now !== undefined) {
@@ -294,6 +275,10 @@
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
   }
+  const moods = $$('canvas[data-mood]').map((c) => ({ c, p: +c.dataset.mood, s: null }));
+  function drawMoods() { moods.forEach((m) => { if (!m.s) m.s = makeScene(m.c); m.s.resize(); m.s.draw(m.p, true); }); }
+  let mdt; addEventListener('resize', () => { clearTimeout(mdt); mdt = setTimeout(drawMoods, 150); }, { passive: true });
+  drawMoods();
   const staticCanvas = $('#scene-static');
   let staticScene = null;
   let srt;
@@ -337,16 +322,18 @@
   /* ============ the veil: the mark draws itself once per session, then takes its place in the nav ============ */
   const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
   let veilMs = 0, veilDone = false;
-  try {
-    if (veil && !sessionStorage.hs30open && !location.hash && !reduced.matches && !document.hidden) {
-      veilMs = 1100; sessionStorage.hs30open = '1'; document.body.classList.add('veiling');
-    }
-  } catch (e) { veilMs = 0; }
+  let seenVeil = false;
+  try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
+  if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden) {
+    veilMs = 1100; document.body.classList.add('veiling');
+    try { sessionStorage.hs30open = '1'; } catch (e) { /* storage blocked: the veil simply plays each load */ }
+  }
   document.documentElement.style.setProperty('--veil', veilMs + 'ms');
   function endVeil() {
     if (veilDone) return; veilDone = true;
     document.body.classList.remove('veiling');
     if (veil) veil.classList.add('gone');
+    veilMs = 0;
   }
   function flipVeil() {
     if (veilDone) return;
@@ -366,29 +353,38 @@
     if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
+  let atBottom = false;
+  addEventListener('scroll', () => {
+    const b = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+    if (b !== atBottom) { atBottom = b; if (b) document.body.dataset.scene = 'footer'; else sceneUpdate(); }
+  }, { passive: true });
   const navLinks = $$('.links a');
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#ritual,#cennik,#poukaz,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#poukaz,#ritual,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#ritual,#cennik,#poukaz,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#poukaz,#ritual,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
   const inScene = new Set();
   document.body.dataset.scene = 'hero';
-  const sceneIO = new IntersectionObserver((es) => {
-    es.forEach((e) => { if (e.isIntersecting) inScene.add(e.target); else inScene.delete(e.target); });
+  function sceneUpdate() {
+    if (atBottom) return;
     let last = null; scenes.forEach((s) => { if (inScene.has(s)) last = s; });
     if (last && document.body.dataset.scene !== last.dataset.scene) document.body.dataset.scene = last.dataset.scene;
+  }
+  const sceneIO = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) inScene.add(e.target); else inScene.delete(e.target); });
+    sceneUpdate();
   }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
   scenes.forEach((s) => sceneIO.observe(s));
 
   /* ============ stillness: sections rest off screen, the page rests when the visitor does ============ */
   const liveIO = new IntersectionObserver((es) => { es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)); if (typeof driveLines === 'function') driveLines(); }, { threshold: 0 });
-  $$('.manifesto,.hold,.gift,.contact').forEach((s) => liveIO.observe(s));
+  $$('.gift,.contact').forEach((s) => liveIO.observe(s));
   let idleT;
   function wake() {
     document.body.classList.remove('idle');
@@ -409,7 +405,7 @@
   /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
   const stepsEl = $('.steps'), streamPath = $('.steps .stream .draw');
   const steps = $$('.step').map((el) => ({ el, n: $('.n', el), at: 0, lit: null }));
-  let streamLen = 0, lastDash = -1, pinned = false, lastMk = -1;
+  let streamLen = 0, lastDash = -1, pinned = false;
   if (streamPath) { streamLen = streamPath.getTotalLength(); streamPath.style.strokeDasharray = streamLen; streamPath.style.strokeDashoffset = streamLen; }
   function measureSteps() {
     if (!stepsEl) return;
@@ -426,13 +422,6 @@
       const d = Math.round(streamLen * (1 - p));
       if (d !== lastDash) { lastDash = d; streamPath.style.strokeDashoffset = d; }
       steps.forEach((s) => { const lit = p >= s.at; if (lit !== s.lit) { s.lit = lit; s.el.classList.toggle('lit', lit); } });
-    }
-    if (quote && manifesto.classList.contains('live')) {
-      const r = quote.getBoundingClientRect();
-      const p = clamp((innerHeight * 0.88 - r.top) / (innerHeight * 0.55), 0, 1);
-      if (Math.abs(p - lastMk) > 0.004 || (p === 1 && lastMk !== 1) || (p === 0 && lastMk !== 0)) { lastMk = p; manifesto.style.setProperty('--k', p.toFixed(3)); }
-      if (p >= 0.98 && !quote.classList.contains('read')) quote.classList.add('read');
-      else if (p < 0.6 && quote.classList.contains('read')) quote.classList.remove('read');
     }
   }
   addEventListener('scroll', driveLines, { passive: true }); driveLines();
@@ -464,44 +453,14 @@
     steps.forEach((s) => { s.lit = true; s.el.classList.add('lit'); });
     counters.forEach((c) => { counted.add(c); c.textContent = c.dataset.count + (c.dataset.suffix || ''); });
     rv.forEach((el) => el.classList.add('in', 'done'));
-    if (manifesto) { manifesto.style.setProperty('--k', 1); lastMk = 1; }
-    if (quote) quote.classList.add('read');
-    if (hold) { hold.classList.add('done'); hold.style.setProperty('--p', 1); }
     endVeil();
   }
   function unpinFinalStates() {
-    pinned = false; lastDash = -1; lastMk = -1;
+    pinned = false; lastDash = -1;
     steps.forEach((s) => { s.lit = null; });
     driveLines();
   }
-  reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else applyHeroMode(); });
-
-  /* ============ the hold: press and hold to switch off; the water rises through the tiles ============ */
-  const hold = $('.hold'), holdBtn = $('.holdbtn');
-  if (holdBtn) {
-    let p = 0, holding = false, hr = null, hl = 0, done = false;
-    const setP = (v) => { hold.style.setProperty('--p', (v < 0.15 ? v * v / 0.15 : v).toFixed(3)); };
-    const finish = () => {
-      done = true; holding = false; holdBtn.classList.remove('holding');
-      hold.classList.add('done'); holdBtn.setAttribute('aria-pressed', 'true');
-      if (navigator.vibrate) navigator.vibrate(12);
-    };
-    function loop(now) {
-      const dt = Math.min(64, now - (hl || now)); hl = now;
-      p += holding ? dt / 1800 : -dt / 900;
-      p = clamp(p, 0, 1); setP(p);
-      if (p >= 1 && !done) finish();
-      if ((holding && p < 1) || (!holding && p > 0)) hr = requestAnimationFrame(loop); else { hr = null; hl = 0; }
-    }
-    const start = (e) => { if (done) return; if (e.type === 'pointerdown') holdBtn.setPointerCapture(e.pointerId); holding = true; holdBtn.classList.add('holding'); if (hr === null) hr = requestAnimationFrame(loop); };
-    const stop = () => { holding = false; holdBtn.classList.remove('holding'); if (hr === null && p > 0) hr = requestAnimationFrame(loop); };
-    holdBtn.addEventListener('pointerdown', start);
-    holdBtn.addEventListener('pointerup', stop); holdBtn.addEventListener('pointercancel', stop); holdBtn.addEventListener('pointerleave', stop);
-    holdBtn.addEventListener('keydown', (e) => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); start(e); } });
-    holdBtn.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); stop(); } });
-    $('.hold .skipnote button')?.addEventListener('click', () => { p = 1; setP(1); finish(); });
-    if (reduced.matches) { p = 1; setP(1); finish(); }
-  }
+  reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else { unpinFinalStates(); applyHeroMode(); } });
 
   /* ============ price list: filters, finder, details, the cascade ============ */
   const cards = $$('.card'), cats = $$('.cat'), count = $('.count');
@@ -522,7 +481,7 @@
   }
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = activeCat === 'all' || c.dataset.cat === activeCat; c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } });
+    cards.forEach((c) => { const show = activeCat === 'all' || c.dataset.cat === activeCat; c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
     cats.forEach((l) => l.classList.toggle('hidden', !(activeCat === 'all' || l.dataset.cat === activeCat)));
     if (count) count.textContent = activeCat === 'all' ? `Zobrazených všetkých ${cards.length} rituálov` : `Zobrazených ${n} z ${cards.length} rituálov`;
     if (fromChip) cascade(shown);
@@ -532,39 +491,18 @@
     activeCat = b.dataset.filter; applyFilter(true);
   }));
   applyFilter(false);
-  const RECS = {
-    relax: ['RELAXAČNÝ HEAD SPA', 'HEAD SPA HARMÓNIA', 'PRÉMIOVÝ HEAD SPA RITUÁL'],
-    scalp: ['HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY', 'PÁNSKY HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY', 'KLASICKÝ HEAD SPA'],
-    gentlemen: ['PÁNSKY HEAD SPA', 'PÁNSKY HARMONICKÝ RITUÁL', 'PRÉMIOVÝ PÁNSKY RITUÁL'],
-    couple: ['SPOLOČNÝ HEAD SPA RITUÁL', 'SPOLOČNÝ RITUÁL POD HVIEZDAMI'],
-    gift: ['PRÉMIOVÝ HEAD SPA RITUÁL', 'SPOLOČNÝ RITUÁL POD HVIEZDAMI', 'ZLATÝ RITUÁL 24K'],
-    feet: ['KLASICKÝ RITUÁL PRE CHODIDLÁ', 'OVOCNÝ A BYLINKOVÝ RITUÁL PRE CHODIDLÁ', 'ZLATÝ RITUÁL 24K']
-  };
-  $$('.finder .chip').forEach((b) => b.addEventListener('click', () => {
-    const on = b.getAttribute('aria-pressed') === 'true';
-    $$('.finder .chip').forEach((x) => x.setAttribute('aria-pressed', 'false'));
-    cards.forEach((c) => c.classList.remove('reco'));
-    if (on) { applyFilter(false); return; }
-    b.setAttribute('aria-pressed', 'true');
-    $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x.dataset.filter === 'all' ? 'true' : 'false'));
-    activeCat = 'all'; applyFilter(false);
-    const names = RECS[b.dataset.goal] || [];
-    const hits = names.map((n) => cards.find((c) => c.dataset.name === n)).filter(Boolean);
-    hits.forEach((c) => c.classList.add('reco'));
-    if (count) count.textContent = `Odporúčame: ${hits.map((c) => c.dataset.name).join(' · ')}`;
-    if (hits[0]) { const y = hits[0].getBoundingClientRect().top + scrollY - 150; scrollTo({ top: y, behavior: reduced.matches ? 'auto' : 'smooth' }); }
-    track('ritual_finder_used', { goal: b.dataset.goal });
-  }));
   $$('.card .panel ol').forEach((ol) => [...ol.children].forEach((li, i) => li.style.setProperty('--i', i)));
   $$('.card-toggle').forEach((b) => b.addEventListener('click', () => {
     const c = b.closest('.card'); const open = !c.classList.contains('open');
     c.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+    $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');
     it.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+    $('.faq-a', it).setAttribute('aria-hidden', String(!open));
   }));
 
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */
@@ -585,12 +523,14 @@
   applyHeroMode();
   if (reduced.matches) pinToFinalStates();
   wake();
-  requestAnimationFrame(() => {
+  void getComputedStyle(veilMark || document.body).opacity;   // settle the initial styles first
+  void document.body.offsetWidth;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.add('ready', 'open');
     if (veilMs) {
       veil.classList.add('drawn');
       setTimeout(flipVeil, 1100);
       setTimeout(endVeil, 3000);
     }
-  });
+  }));
 })();

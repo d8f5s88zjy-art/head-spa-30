@@ -36,9 +36,9 @@
       <span class="name"><small>Barbershop30 · Nitra</small><strong>HEAD SPA 30</strong></span>
     </a>
     <div class="links">
-      <a href="#ritual">Rituál</a>
       <a href="#cennik">Rituály a ceny</a>
       <a href="#poukaz">Poukaz</a>
+      <a href="#ritual">Ako to prebieha</a>
       <a href="#faq">Otázky</a>
       <a href="#kontakt">Kontakt</a>
     </div>
@@ -56,7 +56,7 @@
     <canvas id="scene" aria-hidden="true" tabindex="-1"></canvas>
     <div class="scrim" aria-hidden="true"></div>
 
-    <div class="band" data-a="0" data-b="0.17" data-fx="drift" data-ramp="0.03" style="--scrim:.62">
+    <div class="band" data-a="0" data-b="0.2" data-fx="drift" data-ramp="0.03" style="--scrim:.62">
       <div class="inner">
         <div class="kicker">HEAD SPA 30 · Nitra</div>
         <h1 data-split>Vypni hlavu.</h1>
@@ -64,19 +64,16 @@
       </div>
     </div>
 
-    <div class="band" data-a="0.20" data-b="0.38" data-fx="punch" style="--scrim:.7">
+    <div class="band" data-a="0.24" data-b="0.46" data-fx="punch" style="--scrim:.7">
       <div class="inner"><h2 data-split>Teplo. Voda. Ticho.</h2></div>
     </div>
 
-    <div class="band" data-a="0.41" data-b="0.59" data-fx="blur" data-ramp="0.036" style="--scrim:.66">
+    <div class="band" data-a="0.5" data-b="0.72" data-fx="blur" data-ramp="0.036" style="--scrim:.66">
       <div class="inner"><div class="stack"><p class="line sharp">Hĺbkové čistenie pokožky hlavy. Pomalá masáž šije a spánkov. <em>Žiadny zhon.</em></p></div></div>
     </div>
 
-    <div class="band" data-a="0.62" data-b="0.80" data-fx="scatter" data-ramp="0.04" style="--scrim:.64">
-      <div class="inner"><h2 data-split>17 rituálov. Od 40 minút po dve hodiny.</h2></div>
-    </div>
 
-    <div class="band" data-a="0.83" data-b="1" data-fx="rise" data-ramp="0.05" style="--scrim:.66">
+    <div class="band" data-a="0.76" data-b="1" data-fx="rise" data-ramp="0.05" style="--scrim:.66">
       <div class="inner">
         <h2 data-split>Tvoj termín čaká.</h2>
         <p class="sub">Mostná 30, Nitra. Online rezervácia trvá minútu.</p>
@@ -108,61 +105,6 @@
 
 <div class="site">
 
-<!-- ========== RITUÁL ========== -->
-<section class="ritual" id="ritual" data-scene="ritual">
-  <div class="wrap grid">
-    <div class="sticky rv">
-      <div class="kicker part">Ako to prebieha</div>
-      <h2 class="h2 part">Nie umytie vlasov.<br><em>Rituál pre hlavu.</em></h2>
-      <p class="lede part">Každý krok má svoj účel: pokožku vyčistiť, uvoľniť, stimulovať a zanechať ju sviežu. Žiadny zhon. Žiadny bežiaci pás. Len presne dávkovaný reset v atmosfére Barbershop30.</p>
-    </div>
-    <div class="steps rv">
-      <svg class="stream" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true"><path class="base" d="M2 0 V1000"/><path class="draw" d="M2 0 V1000"/></svg>
-      <div class="step part"><span class="n">01</span><h3>Scalp check a konzultácia</h3><p>Krátke posúdenie pokožky, typu vlasov a toho, čo práve potrebuješ.</p></div>
-      <div class="step part"><span class="n">02</span><h3>Hĺbkové čistenie</h3><p>Hĺbkové čistenie pokožky hlavy od mazu, stylingu a nánosov.</p></div>
-      <div class="step part"><span class="n">03</span><h3>Para a vodný rituál</h3><p>Teplo, para a vodný oblúk vytvoria charakteristický Head Spa zážitok.</p></div>
-      <div class="step part"><span class="n">04</span><h3>Prémiová masáž</h3><p>Pomalá masáž pokožky hlavy, spánkov a šije pre maximálne uvoľnenie.</p></div>
-      <div class="step part"><span class="n">05</span><h3>Finish a styling</h3><p>Ošetrenie vlasov, vysušenie a finálny styling v štýle Barbershop30.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== MANIFEST ========== -->
-<section class="manifesto" aria-label="Motto" data-scene="manifesto">
-  <div class="big" aria-hidden="true">30</div>
-  <div class="wrap rv">
-    <div class="drop part" aria-hidden="true"></div>
-    <p class="q">Vstúpiš s hlavou plnou chaosu. Odídeš s pocitom, že si stlačil <em>oddych.</em></p>
-  </div>
-</section>
-
-<div class="divider rv" aria-hidden="true"></div>
-
-<!-- ========== THE HOLD ========== -->
-<section class="hold" id="vyber" data-scene="vyber">
-  <div class="wrap">
-    <div class="top rv">
-      <div class="part">
-        <div class="kicker">Výber</div>
-        <h2 class="h2">Štyri rituály, ktoré si <em>všimneš ako prvé.</em></h2>
-        <p class="lede">Podrž tlačidlo a nechaj hlavu vypnúť. Voda stúpa, výber sa rozsvieti.</p>
-        <p class="skipnote">Nechceš držať? <button type="button">Zobraziť výber hneď</button></p>
-      </div>
-      <button class="holdbtn part" type="button" aria-pressed="false" aria-label="Podrž a vypni hlavu">
-        <span class="water" aria-hidden="true"></span>
-        <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="49" pathLength="1"/><circle class="fill" cx="50" cy="50" r="49" pathLength="1"/></svg>
-        <span class="lbl"><span>Podrž a</span><b>vypni hlavu</b></span>
-      </button>
-    </div>
-    <div class="tiles">
-      <article class="tile"><div><small>Odporúčame · 120 min</small><h3>Prémiový Head Spa rituál</h3><p>Kompletný dvojhodinový rituál od pokožky hlavy cez tvár a vlasy až k chodidlám.</p></div><div class="foot"><strong>149 €</strong><a href="#cennik">Detail a rezervácia</a></div></article>
-<article class="tile"><div><small>Pánsky rituál · 120 min</small><h3>Prémiový pánsky rituál</h3><p>Najvyššia úroveň pánskeho komfortu, starostlivosti a nerušeného oddychu.</p></div><div class="foot"><strong>149 €</strong><a href="#cennik">Detail a rezervácia</a></div></article>
-<article class="tile"><div><small>Pre dvoch · 75 min</small><h3>Spoločný rituál pod hviezdami</h3><p>Spoločný Head Spa zážitok v tlmenom svetle s hviezdnou atmosférou.</p></div><div class="foot"><strong>149 €</strong><a href="#cennik">Detail a rezervácia</a></div></article>
-<article class="tile"><div><small>24K zlato · 90 min</small><h3>Zlatý rituál 24K</h3><p>Luxusný chodidlový rituál s kozmetickým zlatom, teplom, vôňou a tichom.</p></div><div class="foot"><strong>119 €</strong><a href="#cennik">Detail a rezervácia</a></div></article>
-    </div>
-  </div>
-</section>
-
 <!-- ========== CENNÍK ========== -->
 <section class="menu" id="cennik" data-scene="cennik">
   <div class="wrap">
@@ -172,7 +114,7 @@
         <h2 class="h2">17 rituálov.<br><em>Jedna adresa.</em></h2>
       </div>
       <div class="part">
-        <p class="lede">Kompletná ponuka Head Spa, pánskych, detských a spoločných rituálov a rituálov pre chodidlá. Od 40-minútového relaxu až po dvojhodinový prémiový zážitok.</p>
+        <p class="lede">Päť kategórií: Head Spa, pánske, detské, pre dvoch a chodidlá. Vyber si kategóriu, otvor obsah rituálu a rezervuj.</p>
         <div class="stats">
           <div><b data-count="17">0</b><span>rituálov</span></div>
           <div><b><i data-count="40">0</i> až <i data-count="120">0</i></b><span>minút</span></div>
@@ -188,17 +130,6 @@
       <button class="chip" type="button" data-filter="kids" aria-pressed="false">Deti</button>
       <button class="chip" type="button" data-filter="couple" aria-pressed="false">Pre dvoch</button>
       <button class="chip" type="button" data-filter="feet" aria-pressed="false">Chodidlá</button>
-    </div>
-    <div class="finder" role="group" aria-label="Nájdi svoj rituál">
-      <span class="lbl">Čo hľadáš?</span>
-      <div class="chips">
-        <button class="chip" type="button" data-goal="relax" aria-pressed="false">Chcem vypnúť a relaxovať</button>
-        <button class="chip" type="button" data-goal="scalp" aria-pressed="false">Pokožka hlavy potrebuje starostlivosť</button>
-        <button class="chip" type="button" data-goal="gentlemen" aria-pressed="false">Niečo pre muža</button>
-        <button class="chip" type="button" data-goal="couple" aria-pressed="false">Prídeme dvaja</button>
-        <button class="chip" type="button" data-goal="gift" aria-pressed="false">Výnimočný darček</button>
-        <button class="chip" type="button" data-goal="feet" aria-pressed="false">Rituál pre chodidlá</button>
-      </div>
     </div>
     <p class="count" aria-live="polite"></p>
 
@@ -217,7 +148,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Krátka konzultácia</li><li>Jemný peeling pokožky hlavy</li><li>Čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Umytie vlasov</li><li>Hydratačná starostlivosť</li><li>Teplý uterákový rituál</li><li>Záverečné vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Krátka konzultácia</li><li>Jemný peeling pokožky hlavy</li><li>Čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Umytie vlasov</li><li>Hydratačná starostlivosť</li><li>Teplý uterákový rituál</li><li>Záverečné vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="classic" data-name="RELAXAČNÝ HEAD SPA">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -232,7 +163,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Peeling a hĺbkové čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Rituál so sérom na pokožku hlavy</li><li>Masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Luxusný vodný Head Spa rituál</li><li>Výživná vlasová maska</li><li>Chladivý očný rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Peeling a hĺbkové čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Rituál so sérom na pokožku hlavy</li><li>Masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Luxusný vodný Head Spa rituál</li><li>Výživná vlasová maska</li><li>Chladivý očný rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="classic" data-name="HEAD SPA HARMÓNIA">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -247,7 +178,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemný peeling a osvieženie pokožky hlavy</li><li>Intenzívna relaxačná masáž hlavy</li><li>Masáž tváre a spánkov</li><li>Teplý bylinný obklad</li><li>Luxusný vodný Head Spa rituál</li><li>Hĺbkový hydratačný vlasový zábal</li><li>Relaxačný zvukový rituál</li><li>Uvoľňujúci záverečný rituál pokoja</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemný peeling a osvieženie pokožky hlavy</li><li>Intenzívna relaxačná masáž hlavy</li><li>Masáž tváre a spánkov</li><li>Teplý bylinný obklad</li><li>Luxusný vodný Head Spa rituál</li><li>Hĺbkový hydratačný vlasový zábal</li><li>Relaxačný zvukový rituál</li><li>Uvoľňujúci záverečný rituál pokoja</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="classic" data-name="HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -262,7 +193,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia a rozhovor o stave pokožky hlavy</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Jemný predčistiaci rituál</li><li>Hĺbkový detox pokožky hlavy</li><li>Peeling podľa aktuálneho stavu pokožky</li><li>Relaxačná a stimulačná masáž pokožky hlavy</li><li>Teplý uterákový rituál</li><li>Špeciálna čistiaca starostlivosť pre pokožku hlavy</li><li>Vodný Head Spa rituál</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Relaxačný záverečný rituál v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia a rozhovor o stave pokožky hlavy</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Jemný predčistiaci rituál</li><li>Hĺbkový detox pokožky hlavy</li><li>Peeling podľa aktuálneho stavu pokožky</li><li>Relaxačná a stimulačná masáž pokožky hlavy</li><li>Teplý uterákový rituál</li><li>Špeciálna čistiaca starostlivosť pre pokožku hlavy</li><li>Vodný Head Spa rituál</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Relaxačný záverečný rituál v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="classic" data-name="KOZMETICKÝ HEAD SPA RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -277,7 +208,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Čistiaca a hydratačná maska na tvár</li><li>Liftingová masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Výživná maska pre vlasy</li><li>Chladivý očný rituál</li><li>Intenzívny záverečný pleťový rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Čistiaca a hydratačná maska na tvár</li><li>Liftingová masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Výživná maska pre vlasy</li><li>Chladivý očný rituál</li><li>Intenzívny záverečný pleťový rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="classic" data-name="OVOCNÝ A OSVIEŽUJÚCI HEAD SPA RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -292,7 +223,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Svieži aromatický úvod</li><li>Rituál s čerstvým sezónnym ovocím</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Chladivý uhorkový očný rituál</li><li>Svieži pleťový obklad</li><li>Relaxačná masáž tváre</li><li>Teplý uterákový rituál</li><li>Čerstvý ovocný vlasový zábal</li><li>Hydratačná vlasová starostlivosť</li><li>Jemný aromatický záverečný rituál</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Svieži aromatický úvod</li><li>Rituál s čerstvým sezónnym ovocím</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Chladivý uhorkový očný rituál</li><li>Svieži pleťový obklad</li><li>Relaxačná masáž tváre</li><li>Teplý uterákový rituál</li><li>Čerstvý ovocný vlasový zábal</li><li>Hydratačná vlasová starostlivosť</li><li>Jemný aromatický záverečný rituál</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card featured" data-cat="classic" data-name="PRÉMIOVÝ HEAD SPA RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
@@ -307,7 +238,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Privítací aromaterapeutický rituál s výberom vône</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a tvár</li><li>Luxusná pleťová maska</li><li>Chladivý očný rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hĺbkový vlasový zábal podľa typu vlasov</li><li>Výživné sérum pre pokožku hlavy</li><li>Reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Jemný tlakový rituál chodidiel</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li><li>Luxusné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Privítací aromaterapeutický rituál s výberom vône</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a tvár</li><li>Luxusná pleťová maska</li><li>Chladivý očný rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hĺbkový vlasový zábal podľa typu vlasov</li><li>Výživné sérum pre pokožku hlavy</li><li>Reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Jemný tlakový rituál chodidiel</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li><li>Luxusné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="gentlemen"><span>Pánske</span><b>Pánske rituály</b></div>
 <article class="card" data-cat="gentlemen" data-name="PÁNSKY HEAD SPA">
@@ -323,7 +254,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Úvodný relaxačný rituál</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý uterákový rituál</li><li>Osviežujúce ošetrenie pokožky hlavy</li><li>Výživná starostlivosť pre vlasy</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Úvodný relaxačný rituál</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý uterákový rituál</li><li>Osviežujúce ošetrenie pokožky hlavy</li><li>Výživná starostlivosť pre vlasy</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="gentlemen" data-name="PÁNSKY HARMONICKÝ RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
@@ -338,7 +269,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: drevo, céder, bergamot</li><li>Osviežujúci peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Hrejivý aromatický uterákový rituál</li><li>Chladivý očný rituál</li><li>Relaxačný rituál pre tvár</li><li>Výživná vlasová starostlivosť</li><li>Ošetrenie pokožky hlavy pánskym sérom</li><li>Záverečný relaxačný moment v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: drevo, céder, bergamot</li><li>Osviežujúci peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Hrejivý aromatický uterákový rituál</li><li>Chladivý očný rituál</li><li>Relaxačný rituál pre tvár</li><li>Výživná vlasová starostlivosť</li><li>Ošetrenie pokožky hlavy pánskym sérom</li><li>Záverečný relaxačný moment v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card" data-cat="gentlemen" data-name="PÁNSKY HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
@@ -353,7 +284,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Analýza aktuálneho stavu pokožky</li><li>Predčistiaci rituál</li><li>Hĺbkový peeling pokožky hlavy</li><li>Detoxikačné čistenie</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Cielená starostlivosť pri nadmernom mastení, lupinách a nánosoch stylingových produktov</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Chladivý očný rituál</li><li>Záverečný relax v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Analýza aktuálneho stavu pokožky</li><li>Predčistiaci rituál</li><li>Hĺbkový peeling pokožky hlavy</li><li>Detoxikačné čistenie</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Cielená starostlivosť pri nadmernom mastení, lupinách a nánosoch stylingových produktov</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Chladivý očný rituál</li><li>Záverečný relax v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card featured" data-cat="gentlemen" data-name="PRÉMIOVÝ PÁNSKY RITUÁL">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
@@ -368,7 +299,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: céder, santalové drevo, bergamot</li><li>Úvodný rituál na spomalenie a uvoľnenie</li><li>Jemný peeling pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál hlavy a spánkov</li><li>Teplý aromatický uterákový rituál</li><li>Luxusná hydratačná maska na tvár</li><li>Chladivý očný rituál</li><li>Hĺbkový vlasový zábal</li><li>Výživné sérum pre pokožku hlavy</li><li>Relaxačný reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Regeneračná maska na chodidlá</li><li>Jemný tlakový rituál chodidiel</li><li>Aromatický oddych v tichu</li><li>Relaxačný zvukový rituál</li><li>Záverečná vlasová starostlivosť</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: céder, santalové drevo, bergamot</li><li>Úvodný rituál na spomalenie a uvoľnenie</li><li>Jemný peeling pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál hlavy a spánkov</li><li>Teplý aromatický uterákový rituál</li><li>Luxusná hydratačná maska na tvár</li><li>Chladivý očný rituál</li><li>Hĺbkový vlasový zábal</li><li>Výživné sérum pre pokožku hlavy</li><li>Relaxačný reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Regeneračná maska na chodidlá</li><li>Jemný tlakový rituál chodidiel</li><li>Aromatický oddych v tichu</li><li>Relaxačný zvukový rituál</li><li>Záverečná vlasová starostlivosť</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="kids"><span>Detské</span><b>Detské rituály</b></div>
 <article class="card" data-cat="kids" data-name="DETSKÝ OVOCNÝ HEAD SPA">
@@ -384,7 +315,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Detský welcome drink</li><li>Ovocný aromatický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Ovocný vlasový zábal</li><li>Jemný relaxačný rituál hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Jemná masáž hlavy</li><li>Teplý uteráčikový rituál</li><li>Hydratačná starostlivosť o vlasy</li><li>Malý relaxačný oddych</li><li>Záverečné umytie a vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Detský welcome drink</li><li>Ovocný aromatický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Ovocný vlasový zábal</li><li>Jemný relaxačný rituál hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Jemná masáž hlavy</li><li>Teplý uteráčikový rituál</li><li>Hydratačná starostlivosť o vlasy</li><li>Malý relaxačný oddych</li><li>Záverečné umytie a vysušenie vlasov</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="couple"><span>Pre dvoch</span><b>Rituály pre dvoch</b></div>
 <article class="card" data-cat="couple" data-name="SPOLOČNÝ HEAD SPA RITUÁL">
@@ -400,7 +331,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj pre oboch</li><li>Aromaterapeutický úvod</li><li>Výber vône podľa nálady</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska</li><li>Jemný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Krátky relaxačný zvukový rituál</li><li>Výživné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj pre oboch</li><li>Aromaterapeutický úvod</li><li>Výber vône podľa nálady</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska</li><li>Jemný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Krátky relaxačný zvukový rituál</li><li>Výživné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <article class="card featured" data-cat="couple" data-name="SPOLOČNÝ RITUÁL POD HVIEZDAMI">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></div>
@@ -415,7 +346,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj pre oboch</li><li>Výber vône pre spoločný aromaterapeutický úvod</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska s teplým turbanom</li><li>Jemný relaxačný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Rituál pod hviezdnou oblohou</li><li>Pokojný zvukový sprievod a tlmené svetlo</li><li>Záverečné výživné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj pre oboch</li><li>Výber vône pre spoločný aromaterapeutický úvod</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska s teplým turbanom</li><li>Jemný relaxačný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Rituál pod hviezdnou oblohou</li><li>Pokojný zvukový sprievod a tlmené svetlo</li><li>Záverečné výživné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet"><span>Chodidlá</span><b>Rituály pre chodidlá</b></div>
 <article class="card" data-cat="feet" data-name="KLASICKÝ RITUÁL PRE CHODIDLÁ">
@@ -431,7 +362,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel</li><li>Osviežujúca maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky na chodidlách</li><li>Výživné sérum a intenzívna hydratácia</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel</li><li>Osviežujúca maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky na chodidlách</li><li>Výživné sérum a intenzívna hydratácia</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
 <article class="card" data-cat="feet" data-name="OVOCNÝ A BYLINKOVÝ RITUÁL PRE CHODIDLÁ">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
@@ -446,7 +377,7 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý bylinný kúpeľ chodidiel s čerstvými citrusmi</li><li>Jemné penové očistenie</li><li>Ovocný peeling chodidiel</li><li>Čerstvý ovocný a bylinný obklad</li><li>Chladivý osviežujúci rituál</li><li>Hydratačná maska na chodidlá a päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné ovocné maslo/krémové ošetrenie</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý bylinný kúpeľ chodidiel s čerstvými citrusmi</li><li>Jemné penové očistenie</li><li>Ovocný peeling chodidiel</li><li>Čerstvý ovocný a bylinný obklad</li><li>Chladivý osviežujúci rituál</li><li>Hydratačná maska na chodidlá a päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné ovocné maslo/krémové ošetrenie</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál</li></ol></div></div>
 </article>
 <article class="card featured" data-cat="feet" data-name="ZLATÝ RITUÁL 24K">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
@@ -461,12 +392,14 @@
     <button class="card-toggle" type="button" aria-expanded="false">Čo rituál obsahuje <i>+</i></button>
     <a class="btn primary small" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
   </div>
-  <div class="panel"><div><ol><li>Uvítací nápoj</li><li>Zlatý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel s minerálnym a aromatickým rituálom</li><li>Jemné penové očistenie</li><li>Luxusný peeling chodidiel</li><li>24K zlatý peelingový rituál</li><li>Teplý uterákový zábal</li><li>Zlatá hydratačná maska na chodidlá</li><li>24K zlatý zábal na päty a chodidlá</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné sérum obohatené o kozmetické zlato</li><li>Hrejivý zábal chodidiel</li><li>Chladivý záverečný rituál</li><li>Aromaterapeutický odpočinok v úplnom tichu</li><li>Luxusné záverečné ošetrenie chodidiel</li></ol></div></div>
+  <div class="panel" aria-hidden="true"><div><ol><li>Uvítací nápoj</li><li>Zlatý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel s minerálnym a aromatickým rituálom</li><li>Jemné penové očistenie</li><li>Luxusný peeling chodidiel</li><li>24K zlatý peelingový rituál</li><li>Teplý uterákový zábal</li><li>Zlatá hydratačná maska na chodidlá</li><li>24K zlatý zábal na päty a chodidlá</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné sérum obohatené o kozmetické zlato</li><li>Hrejivý zábal chodidiel</li><li>Chladivý záverečný rituál</li><li>Aromaterapeutický odpočinok v úplnom tichu</li><li>Luxusné záverečné ošetrenie chodidiel</li></ol></div></div>
 </article>
     </div>
     <p class="note">Ceny a trvanie zodpovedajú aktuálnej ponuke HEAD SPA 30. Tlačidlo Rezervovať otvorí online rezerváciu Barbershop30.</p>
   </div>
 </section>
+
+<div class="divider rv" aria-hidden="true"></div>
 
 <div class="divider rv" aria-hidden="true"></div>
 
@@ -483,13 +416,40 @@
           <a class="btn ghost" href="mailto:info@barbershop30.sk?subject=Darčekový poukaz HEAD SPA 30">Napísať email</a>
         </div>
       </div>
-      <div class="ticket part" aria-hidden="true">
+      <div class="part"><div class="ticket" aria-hidden="true">
         <small>HEAD SPA 30 · Nitra</small>
         <svg class="mark" viewBox="0 0 64 64"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
         <strong>Darujte oddych.</strong>
         <small>Mostná 30 · prémiový relaxačný zážitok</small>
-      </div>
+      </div></div>
     </div>
+  </div>
+</section>
+
+<div class="divider rv" aria-hidden="true"></div>
+
+<!-- ========== RITUÁL ========== -->
+<section class="ritual" id="ritual" data-scene="ritual">
+  <div class="wrap grid">
+    <div class="sticky rv">
+      <div class="kicker part">Ako budete relaxovať</div>
+      <h2 class="h2 part">Nie umytie vlasov.<br><em>Rituál pre hlavu.</em></h2>
+      <p class="lede part">Každý krok má svoj účel: pokožku vyčistiť, uvoľniť, stimulovať a zanechať ju sviežu. Žiadny zhon. Žiadny bežiaci pás. Len presne dávkovaný reset v atmosfére Barbershop30.</p>
+      <p class="quote part">Vstúpiš s hlavou plnou chaosu. Odídeš s pocitom, že si stlačil <em>oddych.</em></p>
+    </div>
+    <div class="steps rv">
+      <svg class="stream" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true"><path class="base" d="M2 0 V1000"/><path class="draw" d="M2 0 V1000"/></svg>
+      <div class="step part"><span class="n">01</span><h3>Scalp check a konzultácia</h3><p>Krátke posúdenie pokožky, typu vlasov a toho, čo práve potrebuješ.</p></div>
+      <div class="step part"><span class="n">02</span><h3>Hĺbkové čistenie</h3><p>Hĺbkové čistenie pokožky hlavy od mazu, stylingu a nánosov.</p></div>
+      <div class="step part"><span class="n">03</span><h3>Para a vodný rituál</h3><p>Teplo, para a vodný oblúk vytvoria charakteristický Head Spa zážitok.</p></div>
+      <div class="step part"><span class="n">04</span><h3>Prémiová masáž</h3><p>Pomalá masáž pokožky hlavy, spánkov a šije pre maximálne uvoľnenie.</p></div>
+      <div class="step part"><span class="n">05</span><h3>Finish a styling</h3><p>Ošetrenie vlasov, vysušenie a finálny styling v štýle Barbershop30.</p></div>
+    </div>
+  </div>
+  <div class="wrap moods rv" aria-label="Atmosféra">
+    <figure class="mood part"><canvas data-mood="0.3" aria-hidden="true"></canvas><figcaption><b>Teplá voda</b><span>Vodný oblúk sa pomaly vylieva na pokožku hlavy.</span></figcaption></figure>
+    <figure class="mood part"><canvas data-mood="0.62" aria-hidden="true"></canvas><figcaption><b>Para a ticho</b><span>Teplo, para a vôňa. Telefón zostáva v taške.</span></figcaption></figure>
+    <figure class="mood part"><canvas data-mood="1" aria-hidden="true"></canvas><figcaption><b>Zlaté svetlo</b><span>Voda sa upokojí, svetlo zostane. Odchádzaš s ľahkou hlavou.</span></figcaption></figure>
   </div>
 </section>
 
@@ -503,11 +463,11 @@
     </div>
     <div class="rv">
       <div class="faq-item part open"><button class="faq-q" type="button" aria-expanded="true">Ako si vybrať správny rituál?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Vyber podľa času, typu zážitku a toho, či chceš relax, beauty starostlivosť, hĺbkovú starostlivosť o pokožku hlavy, pánsky rituál alebo zážitok pre dvoch. Pri neistote sa pred rezerváciou poraď s prevádzkou.</p></div></div></div>
-      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Musím si pred návštevou umyť vlasy?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Nie je to potrebné, pretože umytie a starostlivosť sú súčasťou rituálu. Ak máš špecifické potreby pokožky hlavy, povedz o nich pri konzultácii.</p></div></div></div>
-      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Je Head Spa vhodné aj pre mužov?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Áno. Ponuka obsahuje samostatnú pánsku kategóriu vrátane 45-, 60-, 90- a 120-minútových rituálov.</p></div></div></div>
-      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Môžeme prísť dvaja spolu?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Áno. V ponuke sú dva spoločné rituály pre 2 osoby: Spoločný Head Spa rituál a Spoločný rituál pod hviezdami.</p></div></div></div>
-      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Je v rituáloch zahrnuté vysušenie vlasov?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Pri Head Spa rituáloch je záverečné vysušenie alebo profesionálne vysušenie uvedené priamo v obsahu konkrétnej služby.</p></div></div></div>
-      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Ako funguje rezervácia?<span class="pm" aria-hidden="true"></span></button><div class="faq-a"><div><p>Tlačidlo Rezervovať otvorí online rezerváciu Barbershop30. Vyberieš si službu, termín a potvrdíš. Ak si nie si istý výberom, zavolaj a poradíme.</p></div></div></div>
+      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Musím si pred návštevou umyť vlasy?<span class="pm" aria-hidden="true"></span></button><div class="faq-a" aria-hidden="true"><div><p>Nie je to potrebné, pretože umytie a starostlivosť sú súčasťou rituálu. Ak máš špecifické potreby pokožky hlavy, povedz o nich pri konzultácii.</p></div></div></div>
+      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Je Head Spa vhodné aj pre mužov?<span class="pm" aria-hidden="true"></span></button><div class="faq-a" aria-hidden="true"><div><p>Áno. Ponuka obsahuje samostatnú pánsku kategóriu vrátane 45-, 60-, 90- a 120-minútových rituálov.</p></div></div></div>
+      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Môžeme prísť dvaja spolu?<span class="pm" aria-hidden="true"></span></button><div class="faq-a" aria-hidden="true"><div><p>Áno. V ponuke sú dva spoločné rituály pre 2 osoby: Spoločný Head Spa rituál a Spoločný rituál pod hviezdami.</p></div></div></div>
+      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Je v rituáloch zahrnuté vysušenie vlasov?<span class="pm" aria-hidden="true"></span></button><div class="faq-a" aria-hidden="true"><div><p>Pri Head Spa rituáloch je záverečné vysušenie alebo profesionálne vysušenie uvedené priamo v obsahu konkrétnej služby.</p></div></div></div>
+      <div class="faq-item part"><button class="faq-q" type="button" aria-expanded="false">Ako funguje rezervácia?<span class="pm" aria-hidden="true"></span></button><div class="faq-a" aria-hidden="true"><div><p>Tlačidlo Rezervovať otvorí online rezerváciu Barbershop30. Vyberieš si službu, termín a potvrdíš. Ak si nie si istý výberom, zavolaj a poradíme.</p></div></div></div>
     </div>
   </div>
 </section>
@@ -523,6 +483,7 @@
         <div class="cta">
           <a class="btn primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať termín</a>
           <a class="btn ghost" href="tel:+421951267203">0951 267 203</a>
+
         </div>
       </div>
       <div class="info part">
@@ -547,7 +508,7 @@
         </a>
         <p>Head Spa koncept pod značkou Barbershop30. Barber presnosť, spa pokoj a nový dôvod vrátiť sa.</p>
       </div>
-      <div class="col"><h4>Stránka</h4><a href="#ritual">Rituál</a><a href="#cennik">Rituály a ceny</a><a href="#poukaz">Darčekový poukaz</a><a href="#faq">Otázky</a></div>
+      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="#poukaz">Darčekový poukaz</a><a href="#ritual">Ako to prebieha</a><a href="#faq">Otázky</a></div>
       <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
       <div class="col"><h4>Online</h4><a href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervácia</a><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a></div>
     </div>
