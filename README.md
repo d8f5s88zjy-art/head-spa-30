@@ -24,7 +24,7 @@ a otvorte `http://localhost:8080`.
 
 ## Nasadenie
 
-Nahrajte obsah priečinka (index.html a assets/) na akýkoľvek statický hosting. Pred nasadením upravte v `index.html` značky `og:url` a `og:image` na živú adresu (miesto je označené komentárom `DEPLOY STEP`).
+Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30/. Nasadenie robí automaticky `.github/workflows/pages.yml` pri každom pushi (repozitár musí byť verejný, alebo účet s GitHub Pro). Pri presune na vlastnú doménu upravte v `index.html` značky `canonical`, `og:url` a `og:image` (miesto je označené komentárom `DEPLOY STEP`) a v nastaveniach Pages zadajte doménu.
 
 ## Darčekové poukážky
 
