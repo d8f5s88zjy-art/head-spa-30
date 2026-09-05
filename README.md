@@ -28,7 +28,7 @@ Nahrajte obsah priečinka (index.html a assets/) na akýkoľvek statický hostin
 
 ## Darčekové poukážky
 
-Sekcia Poukážky (vlastná položka v lište) obsahuje objednávkový formulár: hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie a spôsob doručenia. Odoslanie otvorí pripravený e-mail na info@barbershop30.sk. Platba kartou priamo na webe vyžaduje platobnú bránu (napríklad Stripe Payment Links alebo GoPay), stačí potom nahradiť odkaz v `assets/app.js` v časti `vouchers`.
+Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku Booqme (https://booqme.app/sk/rezervacia/barbershop-30), kde sa po vytvorení typov poukážok v administrácii Booqme automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@barbershop30.sk.
 
 ## Galéria
 
@@ -36,4 +36,4 @@ Sekcia Galéria zobrazuje fotografiu dverí a tri kreslené scény. Po nafotení
 
 ## Rezervácie
 
-Všetky tlačidlá Rezervovať vedú na https://www.barbershop30.sk/rezervacia. Telefón a e-mail sú v sekcii Kontakt.
+Všetky tlačidlá Rezervovať vedú na rezervačnú stránku Booqme https://booqme.app/sk/rezervacia/barbershop-30 (adresa je v `scratchpad/build.py` ako `BOOK` a v šablóne). Zoznam 17 programov na nahratie do Booqme je v `docs/booqme-programy.xlsx`. Telefón a e-mail sú v sekcii Kontakt.
