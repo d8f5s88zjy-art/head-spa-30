@@ -1,8 +1,9 @@
 name: Web na GitHub Pages
 
+# GitHub Pages nasadzuje len z hlavnej vetvy, preto tu žiadna iná vetva nie je.
 on:
   push:
-    branches: [main, claude/profesionalny-web-l7ozjk]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
