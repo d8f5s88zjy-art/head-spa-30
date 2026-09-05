@@ -9,12 +9,15 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ============ the scene (water, light, steam), drawn from progress p ============ */
-  function makeScene(canvas) {
+  function makeScene(canvas, opts) {
+    const o = opts || {};
+    const view = o.view || 'room';          // room = the hero framing, close = tighter on the guest, steam = the abstract shot
     const ctx = canvas.getContext('2d', { alpha: false });
-    let W = 0, H = 0, dpr = 1, lastP = -1;
+    let W = 0, H = 0, dpr = 1, lastP = -1, lastT = -1;
     const R = rng(30);
     const steam = Array.from({ length: 34 }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
     const drops = Array.from({ length: 16 }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
+    const puffs = Array.from({ length: 54 }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
     function resize() {
       const r = canvas.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -23,14 +26,49 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       lastP = -1;
     }
-    function draw(p, force) {
+    // the abstract shot: a dark room, a vertical slit of gold light, steam drifting through it
+    function drawSteam(p, t) {
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#080c0a'); bg.addColorStop(.6, '#0a0f0c'); bg.addColorStop(1, '#070a08');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      const sx = W * 0.78, top = H * 0.06, bot = H * 0.94;
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      const halo = ctx.createLinearGradient(sx - W * .22, 0, sx + W * .07, 0);
+      halo.addColorStop(0, 'rgba(217,181,106,0)'); halo.addColorStop(.78, 'rgba(217,181,106,.16)'); halo.addColorStop(1, 'rgba(236,208,143,.05)');
+      ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
+      ctx.beginPath(); ctx.moveTo(sx, top); ctx.lineTo(sx, bot);
+      ctx.strokeStyle = 'rgba(255,236,190,.85)'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke();
+      ctx.strokeStyle = 'rgba(236,208,143,.18)'; ctx.lineWidth = 12; ctx.stroke();
+      for (const s of puffs) {
+        const k = (p * .5 + s.s + t * 0.035) % 1;
+        const x = W * (1.02 - k * 1.15) + s.w * W * .06, y = H * (0.98 - k * 0.9) + Math.sin(k * 5 + s.s * 7) * H * .05;
+        const r = s.r * (0.7 + k * 1.9), near = 1 - Math.min(1, Math.abs(x - sx) / (W * .22));
+        const a = k * (1 - k) * 4 * (0.035 + 0.075 * near) * s.v;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        const col = near > .35 ? '236,214,168' : '214,224,216';
+        g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(1, `rgba(${col},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+      const pool = ctx.createRadialGradient(sx, bot, 0, sx, bot, W * .3);
+      pool.addColorStop(0, 'rgba(217,181,106,.12)'); pool.addColorStop(1, 'rgba(217,181,106,0)');
+      ctx.fillStyle = pool; ctx.fillRect(0, H * .6, W, H * .4);
+      ctx.restore();
+      const v = ctx.createRadialGradient(W * .6, H * .5, H * .2, W * .6, H * .5, Math.max(W, H) * .8);
+      v.addColorStop(0, 'rgba(6,8,7,0)'); v.addColorStop(1, 'rgba(6,8,7,.78)');
+      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+    }
+
+    function draw(p, force, time) {
+      const t = time || 0;
       if (!W) resize();
-      if (!force && Math.abs(p - lastP) < 0.0005) return;
-      lastP = p;
-      const cx = W > 720 ? W * 0.69 : W * 0.42;   // action lane: right third on wide screens, left of centre on narrow
-      const basinY = W > 720 ? H * 0.80 : H * 0.6, topY = -H * 0.03;
+      if (!force && Math.abs(p - lastP) < 0.0005 && t === lastT) return;
+      lastP = p; lastT = t;
+      if (view === 'steam') { drawSteam(p, t); return; }
+      const wide = W > 720;
+      const cx = view === 'close' ? W * (wide ? 0.58 : 0.46) : (wide ? W * 0.69 : W * 0.42);   // action lane
+      const basinY = H * (view === 'close' ? (wide ? 0.74 : 0.70) : (wide ? 0.80 : 0.6)), topY = -H * 0.03;
       // the guest: a reclining silhouette, head resting in the basin, the stream lands on the scalp
-      const r = H * (W > 720 ? 0.062 : 0.08), hx = cx, hy = basinY - r * 0.35, landY = hy - r * 1.12;
+      const r = H * (view === 'close' ? (wide ? 0.125 : 0.155) : (wide ? 0.062 : 0.08)), hx = cx, hy = basinY - r * 0.35, landY = hy - r * 1.12;
       const P = (x, y) => [hx + x * r, hy + y * r];
       const HEAD = [[1.0, .3], [.95, -.15], [.92, -.42], [.8, -.62], [.72, -.78], [.68, -.86], [.72, -.97], [.64, -1.05], [.68, -1.28], [.45, -1.13], [.28, -1.09], [0, -1.13], [-.45, -1.03], [-.85, -.72], [-1.06, -.1], [-.9, .5], [-.45, .9], [.15, 1.0], [.65, .85]].map(([x, y]) => P(x, y));
       const BODY = [[.7, .9], [1.1, .45], [1.45, -.25], [2.2, -.62], [3.4, -.66], [5.0, -.55], [8.5, -.45], [8.5, 1.6], [2.4, 1.6], [1.2, 1.35]].map(([x, y]) => P(x, y));
@@ -69,10 +107,10 @@
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         const calm = 1 - smoothstep(p, 0.82, 1) * 0.6;
         for (let i = 0; i < 5; i++) {
-          const t = ((p - 0.42) * 1.9 + i * 0.2) % 1;
-          if (t < 0) continue;
-          const a = (1 - t) * 0.33 * after * calm;
-          ctx.beginPath(); ctx.ellipse(cx, basinY, brx * (0.08 + t * 0.95), bry * (0.08 + t * 0.95), 0, 0, Math.PI * 2);
+          const k = ((p - 0.42) * 1.9 + i * 0.2 + t * 0.12) % 1;
+          if (k < 0) continue;
+          const a = (1 - k) * 0.33 * after * calm;
+          ctx.beginPath(); ctx.ellipse(cx, basinY, brx * (0.08 + k * 0.95), bry * (0.08 + k * 0.95), 0, 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(160,215,200,${a})`; ctx.lineWidth = 1.2; ctx.stroke();
         }
         ctx.restore();
@@ -111,7 +149,7 @@
       if (land > 0) {
         const endY = topY + (landY - topY) * land;
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const sway = (y) => Math.sin(y * 0.018 + p * 5) * 3.5;
+        const sway = (y) => Math.sin(y * 0.018 + p * 5 + t * 0.8) * 3.5;
         // glow halo
         ctx.beginPath();
         for (let y = topY; y <= endY; y += 6) { const x = cx + sway(y); y === topY ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
@@ -120,7 +158,7 @@
         ctx.strokeStyle = 'rgba(200,232,224,.5)'; ctx.lineWidth = 6; ctx.stroke();
         ctx.strokeStyle = 'rgba(240,248,245,.85)'; ctx.lineWidth = 2.2; ctx.stroke();
         for (let i = 0; i < 9; i++) {
-          const t = (p * 2.4 + i / 9) % 1; const y = topY + (endY - topY) * t;
+          const k = (p * 2.4 + i / 9 + t * 0.45) % 1; const y = topY + (endY - topY) * k;
           if (y > endY - 8) continue;
           ctx.beginPath(); ctx.ellipse(cx + sway(y) + (i % 2 ? 2.5 : -2.5), y, 2.2, 5, 0, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fill();
@@ -150,9 +188,9 @@
       if (sv > 0) {
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         for (const s of steam) {
-          const t = (p * 1.35 + s.s) % 1;
-          const y = hy - t * H * 0.62, x = cx + s.x * brx * 0.7 + Math.sin(t * 4 + s.s * 7) * 26;
-          const a = t * (1 - t) * 4 * 0.075 * sv, r = s.r * (0.6 + t * 1.6);
+          const k = (p * 1.35 + s.s + t * 0.03) % 1;
+          const y = hy - k * H * 0.62, x = cx + s.x * brx * 0.7 + Math.sin(k * 4 + s.s * 7 + t * 0.2) * 26;
+          const a = k * (1 - k) * 4 * 0.075 * sv, r = s.r * (0.6 + k * 1.6);
           const g = ctx.createRadialGradient(x, y, 0, x, y, r);
           g.addColorStop(0, `rgba(230,236,230,${a})`); g.addColorStop(1, 'rgba(230,236,230,0)');
           ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
@@ -311,10 +349,49 @@
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
   }
-  const moods = $$('canvas[data-mood]').map((c) => ({ c, p: +c.dataset.mood, s: null }));
-  function drawMoods() { moods.forEach((m) => { if (!m.s) m.s = makeScene(m.c); m.s.resize(); m.s.draw(m.p, true); }); }
-  let mdt; addEventListener('resize', () => { clearTimeout(mdt); mdt = setTimeout(drawMoods, 150); }, { passive: true });
-  drawMoods();
+  /* the gallery: drawn shots that breathe, but only while they are on screen */
+  const moods = $$('canvas[data-mood]').map((c) => ({ c, p: +c.dataset.mood, view: c.dataset.view || 'room', s: null, on: false }));
+  function drawMoods(t) { moods.forEach((m) => { if (!m.s) m.s = makeScene(m.c, { view: m.view }); m.s.resize(); m.s.draw(m.p, true, t || 0); }); }
+  let mdt; addEventListener('resize', () => { clearTimeout(mdt); mdt = setTimeout(() => drawMoods(0), 150); }, { passive: true });
+  drawMoods(0);
+
+  if (moods.length && !reduced.matches) {
+    const AMBIENT_FPS = 12;
+    let raf = 0, start = 0, lastFrame = 0;
+    const live = () => moods.some((m) => m.on) && !document.hidden && !document.body.classList.contains('idle');
+    function tick(now) {
+      if (!live()) { raf = 0; return; }
+      raf = requestAnimationFrame(tick);
+      if (now - lastFrame < 1000 / AMBIENT_FPS) return;
+      lastFrame = now;
+      if (!start) start = now;
+      const t = (now - start) / 1000;
+      moods.forEach((m) => { if (m.on && m.s) m.s.draw(m.p, true, t); });
+    }
+    const wake = () => { if (!raf && live()) raf = requestAnimationFrame(tick); };
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { const m = moods.find((x) => x.c === e.target); if (m) m.on = e.isIntersecting; });
+      wake();
+    }, { threshold: 0.35 });
+    moods.forEach((m) => io.observe(m.c));
+    document.addEventListener('visibilitychange', wake);
+    addEventListener('hs30wake', wake);
+  }
+
+  /* the gallery lightbox: only real photographs open, drawn shots stay in the grid */
+  const lb = $('#lightbox');
+  if (lb) {
+    const lbImg = $('img', lb), lbCap = $('.lb-cap', lb);
+    $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
+      const fig = btn.closest('.shot'), img = $('img', fig);
+      if (!img) return;
+      lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+      lbCap.textContent = $('.cap b', fig) ? $('.cap b', fig).textContent + '. ' + $('.cap span', fig).textContent : img.alt;
+      if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
+    }));
+    $('.lb-close', lb).addEventListener('click', () => lb.close());
+    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+  }
   const staticCanvas = $('#scene-static');
   let staticScene = null;
   let srt;
@@ -504,13 +581,16 @@
     if (reduced.matches) return;
     list.forEach((c) => c.classList.remove('pop'));
     void document.body.offsetWidth;
-    list.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); });
+    list.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); }); sweepPop();
   }
+  // animationend can be missed (hidden tab, a card filtered out mid-animation), so a timer sweeps up too
+  let popSweep = 0;
+  function sweepPop() { clearTimeout(popSweep); popSweep = setTimeout(() => cards.forEach((c) => c.classList.remove('pop')), 1400); }
   cards.forEach((c) => c.addEventListener('animationend', (e) => { if (e.animationName === 'cardIn') c.classList.remove('pop'); }));
   if (!reduced.matches) {
     const pio = new IntersectionObserver((es) => {
       const hits = es.filter((e) => e.isIntersecting).map((e) => e.target);
-      hits.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); pio.unobserve(c); });
+      hits.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); pio.unobserve(c); }); sweepPop();
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
     cards.forEach((c) => pio.observe(c));
   }
