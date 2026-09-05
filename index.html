@@ -26,7 +26,18 @@
 </head>
 <body>
 <a class="skip" href="#main">Preskočiť na obsah</a>
-<div class="veil" aria-hidden="true"><div class="sheet"></div><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg></div>
+<div class="veil" aria-hidden="true">
+  <div class="scene">
+    <div class="door">
+      <div class="doorway"></div>
+      <div class="frame"></div>
+      <div class="leaf l"><i class="p t"></i><i class="p m"></i><i class="p b"></i><b class="knock"></b></div>
+      <div class="leaf r"><i class="p t"></i><i class="p m"></i><i class="p b"></i><b class="knock"></b><b class="handle"></b></div>
+      <div class="sill"></div>
+    </div>
+  </div>
+  <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
+</div>
 <div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="glow g4"></div><div class="grain"></div></div>
 
 <nav class="nav" aria-label="Hlavná navigácia">
@@ -37,8 +48,9 @@
     </a>
     <div class="links">
       <a href="#cennik">Rituály a ceny</a>
-      <a href="#poukaz">Poukaz</a>
+      <a href="#poukaz">Poukážky</a>
       <a href="#ritual">Ako to prebieha</a>
+      <a href="#galeria">Galéria</a>
       <a href="#faq">Otázky</a>
       <a href="#kontakt">Kontakt</a>
     </div>
@@ -403,24 +415,59 @@
 
 <div class="divider rv" aria-hidden="true"></div>
 
-<!-- ========== POUKAZ ========== -->
+<!-- ========== POUKÁŽKY ========== -->
 <section class="gift" id="poukaz" data-scene="poukaz">
   <div class="wrap">
-    <div class="box rv">
+    <div class="head rv">
       <div class="part">
-        <div class="kicker">Darčekový poukaz</div>
+        <div class="kicker">Darčekové poukážky</div>
         <h2 class="h2">Daruj <em>čas pre seba.</em></h2>
-        <p class="lede">Head Spa netreba trafiť podľa veľkosti ani štýlu. Poukaz je darček pre partnera, mamu, kamarátku, muža aj spoločný zážitok pre dvoch. Formu a hodnotu poukazu dohodneš s prevádzkou.</p>
-        <div class="cta">
-          <a class="btn primary" href="tel:+421951267203">Zavolať o poukaze</a>
-          <a class="btn ghost" href="mailto:info@barbershop30.sk?subject=Darčekový poukaz HEAD SPA 30">Napísať email</a>
-        </div>
       </div>
+      <p class="lede part">Vyber rituál alebo hodnotu, napíš, pre koho je, a pošli objednávku. Ozveme sa do 24 hodín s platobnými údajmi. Po úhrade príde poukaz v PDF na e-mail, alebo si ho vyzdvihneš v salóne na Mostnej 30.</p>
+    </div>
+    <div class="order rv">
+      <form class="vform part" id="vform" novalidate>
+        <fieldset class="vf">
+          <legend><span>1</span>Čo darovať</legend>
+          <div class="choices" role="radiogroup" aria-label="Hodnota poukazu">
+            <label class="choice"><input type="radio" name="hodnota" value="50 €" checked><span>50 €</span></label>
+            <label class="choice"><input type="radio" name="hodnota" value="70 €"><span>70 €</span></label>
+            <label class="choice"><input type="radio" name="hodnota" value="100 €"><span>100 €</span></label>
+            <label class="choice"><input type="radio" name="hodnota" value="149 €"><span>149 €</span></label>
+            <label class="choice"><input type="radio" name="hodnota" value="ritual"><span>Konkrétny rituál</span></label>
+          </div>
+          <div class="field ritual-pick" hidden>
+            <label for="v-ritual">Rituál</label>
+            <select id="v-ritual" name="ritual"><option value="Klasický Head Spa (40 min, 50 €)" data-price="50 €">Klasický Head Spa · 50 €</option><option value="Relaxačný Head Spa (60 min, 70 €)" data-price="70 €">Relaxačný Head Spa · 70 €</option><option value="Head Spa harmónia (75 min, 85 €)" data-price="85 €">Head Spa harmónia · 85 €</option><option value="Hĺbkový rituál pre pokožku hlavy (90 min, 95 €)" data-price="95 €">Hĺbkový rituál pre pokožku hlavy · 95 €</option><option value="Kozmetický Head Spa rituál (60 min, 75 €)" data-price="75 €">Kozmetický Head Spa rituál · 75 €</option><option value="Ovocný a osviežujúci Head Spa rituál (75 min, 89 €)" data-price="89 €">Ovocný a osviežujúci Head Spa rituál · 89 €</option><option value="Prémiový Head Spa rituál (120 min, 149 €)" data-price="149 €">Prémiový Head Spa rituál · 149 €</option><option value="Pánsky Head Spa (45 min, 55 €)" data-price="55 €">Pánsky Head Spa · 55 €</option><option value="Pánsky harmonický rituál (60 min, 75 €)" data-price="75 €">Pánsky harmonický rituál · 75 €</option><option value="Pánsky hĺbkový rituál pre pokožku hlavy (90 min, 99 €)" data-price="99 €">Pánsky hĺbkový rituál pre pokožku hlavy · 99 €</option><option value="Prémiový pánsky rituál (120 min, 149 €)" data-price="149 €">Prémiový pánsky rituál · 149 €</option><option value="Detský ovocný Head Spa (50 min, 55 €)" data-price="55 €">Detský ovocný Head Spa · 55 €</option><option value="Spoločný Head Spa rituál (65 min / 2 osoby, 129 €)" data-price="129 €">Spoločný Head Spa rituál · 129 €</option><option value="Spoločný rituál pod hviezdami (75 min / 2 osoby, 149 €)" data-price="149 €">Spoločný rituál pod hviezdami · 149 €</option><option value="Klasický rituál pre chodidlá (40 min, 45 €)" data-price="45 €">Klasický rituál pre chodidlá · 45 €</option><option value="Ovocný a bylinkový rituál pre chodidlá (60 min, 65 €)" data-price="65 €">Ovocný a bylinkový rituál pre chodidlá · 65 €</option><option value="Zlatý rituál 24K (90 min, 119 €)" data-price="119 €">Zlatý rituál 24K · 119 €</option></select>
+          </div>
+        </fieldset>
+        <fieldset class="vf">
+          <legend><span>2</span>Pre koho a kam poslať</legend>
+          <div class="grid2">
+            <div class="field"><label for="v-pre">Meno obdarovaného</label><input id="v-pre" name="pre" type="text" placeholder="napr. Zuzana" autocomplete="off"></div>
+            <div class="field"><label for="v-od">Vaše meno</label><input id="v-od" name="od" type="text" autocomplete="name"></div>
+            <div class="field"><label for="v-email">Váš e-mail <b>*</b></label><input id="v-email" name="email" type="email" required autocomplete="email" placeholder="meno@email.sk"></div>
+            <div class="field"><label for="v-tel">Váš telefón</label><input id="v-tel" name="tel" type="tel" autocomplete="tel" placeholder="0900 000 000"></div>
+          </div>
+          <div class="field"><label for="v-ven">Venovanie na poukaz (nepovinné)</label><textarea id="v-ven" name="venovanie" rows="2" maxlength="160" placeholder="napr. Všetko najlepšie, vypni hlavu."></textarea></div>
+          <div class="choices small" role="radiogroup" aria-label="Doručenie">
+            <label class="choice"><input type="radio" name="dorucenie" value="PDF na e-mail" checked><span>PDF na e-mail</span></label>
+            <label class="choice"><input type="radio" name="dorucenie" value="Vyzdvihnutie v salóne"><span>Vyzdvihnutie v salóne</span></label>
+          </div>
+        </fieldset>
+        <p class="err" role="alert" hidden>Napíšte prosím platný e-mail, aby sme vedeli, kam poslať platobné údaje.</p>
+        <div class="cta">
+          <button class="btn primary" type="submit">Objednať poukaz</button>
+          <a class="btn ghost" href="tel:+421951267203">Radšej zavolať</a>
+        </div>
+        <p class="fine">Objednávka sa otvorí ako e-mail pre info@barbershop30.sk, stačí ho odoslať. Platba kartou priamo na webe pribudne po napojení platobnej brány.</p>
+        <div class="sent" hidden><b>Ďakujeme.</b> Otvorili sme e-mail s vašou objednávkou, stačí ho odoslať. Ozveme sa do 24 hodín s platobnými údajmi. Ak sa e-mail neotvoril, napíšte nám na <a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a>.</div>
+      </form>
       <div class="part"><div class="ticket" aria-hidden="true">
         <small>HEAD SPA 30 · Nitra</small>
         <svg class="mark" viewBox="0 0 64 64"><circle class="ring" pathLength="1" cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path class="wave" pathLength="1" d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text class="num" x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
-        <strong>Darujte oddych.</strong>
-        <small>Mostná 30 · prémiový relaxačný zážitok</small>
+        <div><strong id="t-val">50 €</strong><span class="t-for" id="t-for">Darujte oddych.</span></div>
+        <small id="t-ven">Mostná 30 · prémiový relaxačný zážitok</small>
       </div></div>
     </div>
   </div>
@@ -446,10 +493,24 @@
       <div class="step part"><span class="n">05</span><h3>Finish a styling</h3><p>Ošetrenie vlasov, vysušenie a finálny styling v štýle Barbershop30.</p></div>
     </div>
   </div>
-  <div class="wrap moods rv" aria-label="Atmosféra">
-    <figure class="mood part"><canvas data-mood="0.3" aria-hidden="true"></canvas><figcaption><b>Teplá voda</b><span>Vodný oblúk sa pomaly vylieva na pokožku hlavy.</span></figcaption></figure>
-    <figure class="mood part"><canvas data-mood="0.62" aria-hidden="true"></canvas><figcaption><b>Para a ticho</b><span>Teplo, para a vôňa. Telefón zostáva v taške.</span></figcaption></figure>
-    <figure class="mood part"><canvas data-mood="1" aria-hidden="true"></canvas><figcaption><b>Zlaté svetlo</b><span>Voda sa upokojí, svetlo zostane. Odchádzaš s ľahkou hlavou.</span></figcaption></figure>
+</section>
+
+<!-- ========== GALÉRIA ========== -->
+<section class="gallery" id="galeria" data-scene="galeria">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="part">
+        <div class="kicker">Galéria</div>
+        <h2 class="h2">Za týmito <em>dverami.</em></h2>
+      </div>
+      <p class="lede part">Mostná 30, Nitra. Zelené dvere so zlatými kruhmi, za nimi teplo, voda a ticho. Fotografie z rituálov pribudnú po nafotení salónu.</p>
+    </div>
+    <div class="shots rv">
+      <figure class="shot door part"><img src="assets/img/dvere.jpg" alt="Zelené vstupné dvere HEAD SPA 30 na Mostnej 30 v Nitre" width="800" height="992" loading="lazy" decoding="async"><figcaption><b>Vstup</b><span>Mostná 30, Nitra</span></figcaption></figure>
+      <figure class="shot part"><canvas data-mood="0.3" aria-hidden="true"></canvas><figcaption><b>Teplá voda</b><span>Vodný oblúk sa pomaly vylieva na pokožku hlavy.</span></figcaption></figure>
+      <figure class="shot part"><canvas data-mood="0.62" aria-hidden="true"></canvas><figcaption><b>Para a ticho</b><span>Teplo, para a vôňa. Telefón zostáva v taške.</span></figcaption></figure>
+      <figure class="shot wide part"><canvas data-mood="1" aria-hidden="true"></canvas><figcaption><b>Zlaté svetlo</b><span>Voda sa upokojí, svetlo zostane. Odchádzaš s ľahkou hlavou.</span></figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -508,7 +569,7 @@
         </a>
         <p>Head Spa koncept pod značkou Barbershop30. Barber presnosť, spa pokoj a nový dôvod vrátiť sa.</p>
       </div>
-      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="#poukaz">Darčekový poukaz</a><a href="#ritual">Ako to prebieha</a><a href="#faq">Otázky</a></div>
+      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="#poukaz">Darčekové poukážky</a><a href="#ritual">Ako to prebieha</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
       <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
       <div class="col"><h4>Online</h4><a href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervácia</a><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a></div>
     </div>

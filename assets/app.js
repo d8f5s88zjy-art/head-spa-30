@@ -361,7 +361,7 @@
   let seenVeil = false;
   try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
   if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden) {
-    veilMs = 1100; document.body.classList.add('veiling');
+    veilMs = 1500; document.body.classList.add('veiling');
     try { sessionStorage.hs30open = '1'; } catch (e) { /* storage blocked: the veil simply plays each load */ }
   }
   document.documentElement.style.setProperty('--veil', veilMs + 'ms');
@@ -373,12 +373,11 @@
   }
   function flipVeil() {
     if (veilDone) return;
-    const n = navMark.getBoundingClientRect();
-    const dx = n.left + n.width / 2 - innerWidth / 2, dy = n.top + n.height / 2 - innerHeight / 2, s = n.width / 96;
+    const n = navMark.getBoundingClientRect(), m = veilMark.getBoundingClientRect();
+    const dx = n.left + n.width / 2 - (m.left + m.width / 2), dy = n.top + n.height / 2 - (m.top + m.height / 2), s = n.width / 96;
     veilMark.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
-    veil.classList.add('lift');
-    const onEnd = (e) => { if (e.target === veilMark && e.propertyName === 'transform') { veilMark.removeEventListener('transitionend', onEnd); endVeil(); } };
-    veilMark.addEventListener('transitionend', onEnd);
+    veil.classList.add('lift');                                  // both leaves swing inward
+    setTimeout(() => { if (!veilDone) veil.classList.add('through'); }, 420);   // and you walk through
   }
 
   /* ============ nav: solid after the top, and it holds your place ============ */
@@ -398,10 +397,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#poukaz,#ritual,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#poukaz,#ritual,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -541,6 +540,43 @@
     $('.faq-a', it).setAttribute('aria-hidden', String(!open));
   }));
 
+  /* ============ vouchers: pick, preview on the ticket, send as an e-mail order ============ */
+  const vform = $('#vform');
+  if (vform) {
+    const pick = $('.ritual-pick', vform), sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
+    const err = $('.err', vform), done = $('.sent', vform), emailField = $('#v-email', vform);
+    const val = (name) => (vform.querySelector(`input[name="${name}"]:checked`) || {}).value || '';
+    const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
+    const fieldVal = (id) => ($(id, vform).value || '').trim();
+    function preview() {
+      const h = val('hodnota'), isRit = h === 'ritual';
+      pick.hidden = !isRit;
+      const shown = isRit ? ritualName().replace(/\s*\(.*$/, '') : (h || '50 €');
+      tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
+      const pre = fieldVal('#v-pre');
+      tFor.textContent = pre ? `Pre: ${pre}` : 'Darujte oddych.';
+      const ven = fieldVal('#v-ven');
+      tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
+    }
+    vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
+    vform.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = fieldVal('#v-email'), ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+      err.hidden = ok; emailField.closest('.field').classList.toggle('invalid', !ok);
+      if (!ok) { emailField.focus(); return; }
+      const h = val('hodnota'), what = h === 'ritual' ? `Rituál: ${ritualName()}` : `Hodnota: ${h}`;
+      const lines = ['Dobrý deň,', '', 'objednávam darčekový poukaz HEAD SPA 30.', '', what,
+        `Pre: ${fieldVal('#v-pre') || '(nevyplnené)'}`, `Od: ${fieldVal('#v-od') || '(nevyplnené)'}`,
+        `E-mail: ${email}`, `Telefón: ${fieldVal('#v-tel') || '(nevyplnené)'}`,
+        `Doručenie: ${val('dorucenie')}`, `Venovanie: ${fieldVal('#v-ven') || '(bez venovania)'}`, '',
+        'Prosím o zaslanie platobných údajov.', 'Ďakujem.'];
+      const subject = `Objednávka poukazu: ${h === 'ritual' ? ritualName().replace(/\s*\(.*$/, '') : h}`;
+      track('voucher_order', { value: h === 'ritual' ? ritualName() : h, delivery: val('dorucenie') });
+      done.hidden = false;
+      location.href = `mailto:info@barbershop30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    });
+  }
+
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */
   function track(event, data) { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {})); }
   document.addEventListener('click', (e) => {
@@ -566,7 +602,7 @@
     if (veilMs) {
       veil.classList.add('drawn');
       setTimeout(flipVeil, 1100);
-      setTimeout(endVeil, 3000);
+      setTimeout(endVeil, 3100);
     }
   }));
 })();
