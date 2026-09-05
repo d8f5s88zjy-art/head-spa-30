@@ -27,8 +27,14 @@
       if (!W) resize();
       if (!force && Math.abs(p - lastP) < 0.0005) return;
       lastP = p;
-      const cx = W > 720 ? W * 0.69 : W * 0.5;   // action lane: right third on wide screens, centre on narrow
+      const cx = W > 720 ? W * 0.69 : W * 0.42;   // action lane: right third on wide screens, left of centre on narrow
       const basinY = W > 720 ? H * 0.80 : H * 0.6, topY = -H * 0.03;
+      // the guest: a reclining silhouette, head resting in the basin, the stream lands on the scalp
+      const r = H * (W > 720 ? 0.062 : 0.08), hx = cx, hy = basinY - r * 0.35, landY = hy - r * 1.12;
+      const P = (x, y) => [hx + x * r, hy + y * r];
+      const HEAD = [[1.0, .3], [.95, -.15], [.92, -.42], [.8, -.62], [.72, -.78], [.68, -.86], [.72, -.97], [.64, -1.05], [.68, -1.28], [.45, -1.13], [.28, -1.09], [0, -1.13], [-.45, -1.03], [-.85, -.72], [-1.06, -.1], [-.9, .5], [-.45, .9], [.15, 1.0], [.65, .85]].map(([x, y]) => P(x, y));
+      const BODY = [[.7, .9], [1.1, .45], [1.45, -.25], [2.2, -.62], [3.4, -.66], [5.0, -.55], [8.5, -.45], [8.5, 1.6], [2.4, 1.6], [1.2, 1.35]].map(([x, y]) => P(x, y));
+      const smooth = (pts, closed) => { const n = pts.length; ctx.moveTo(pts[0][0], pts[0][1]); for (let i = 0; i < (closed ? n : n - 1); i++) { const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n]; ctx.bezierCurveTo(p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6, p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6, p2[0], p2[1]); } };
       const land = smoothstep(p, 0.06, 0.42);     // stream length 0..1
       const after = smoothstep(p, 0.42, 0.6);      // impact aftermath
       const glow = smoothstep(p, 0.6, 1);          // the gold settle
@@ -71,9 +77,39 @@
         }
         ctx.restore();
       }
+      // the guest
+      ctx.save();
+      // bed plane
+      ctx.beginPath(); ctx.moveTo(P(.9, 1.55)[0], P(.9, 1.55)[1]); ctx.lineTo(P(9, 1.5)[0], P(9, 1.5)[1]); ctx.lineTo(P(9, 2.4)[0], P(9, 2.4)[1]); ctx.lineTo(P(.6, 2.3)[0], P(.6, 2.3)[1]); ctx.closePath();
+      ctx.fillStyle = 'rgba(242,237,226,.035)'; ctx.fill();
+      // body under a towel
+      const bodyFill = ctx.createLinearGradient(0, hy - r * .7, 0, hy + r * 1.6);
+      bodyFill.addColorStop(0, '#13181a'); bodyFill.addColorStop(1, '#080b09');
+      ctx.beginPath(); smooth(BODY, true); ctx.closePath(); ctx.fillStyle = bodyFill; ctx.fill();
+      const towel = ctx.createLinearGradient(0, hy - r * .7, 0, hy + r * 1.6);
+      towel.addColorStop(0, 'rgba(242,237,226,.10)'); towel.addColorStop(.5, 'rgba(242,237,226,.05)'); towel.addColorStop(1, 'rgba(242,237,226,.01)');
+      ctx.beginPath(); ctx.moveTo(P(1.7, -.62)[0], P(1.7, -.62)[1]); ctx.lineTo(P(8.5, -.45)[0], P(8.5, -.45)[1]); ctx.lineTo(P(8.5, 1.6)[0], P(8.5, 1.6)[1]); ctx.lineTo(P(2.0, 1.6)[0], P(2.0, 1.6)[1]); ctx.closePath();
+      ctx.fillStyle = towel; ctx.fill();
+      // head
+      const headFill = ctx.createLinearGradient(0, hy - r, 0, hy + r);
+      headFill.addColorStop(0, '#171c1b'); headFill.addColorStop(1, '#090c0a');
+      ctx.beginPath(); smooth(HEAD, true); ctx.closePath(); ctx.fillStyle = headFill; ctx.fill();
+      // rim light from the lamp above
+      const rim = ctx.createLinearGradient(0, hy - r * 1.2, 0, hy + r * .9);
+      rim.addColorStop(0, `rgba(236,208,143,${.5 + .3 * glow})`); rim.addColorStop(.55, 'rgba(236,208,143,.12)'); rim.addColorStop(1, 'rgba(236,208,143,0)');
+      ctx.beginPath(); smooth(HEAD, true); ctx.closePath(); ctx.strokeStyle = rim; ctx.lineWidth = 1.4; ctx.stroke();
+      ctx.beginPath(); smooth(BODY.slice(0, 7), false); ctx.strokeStyle = rim; ctx.lineWidth = 1.2; ctx.stroke();
+      // water sheeting over the scalp once the stream has landed
+      if (land >= 1) {
+        ctx.globalCompositeOperation = 'lighter';
+        const sheet = HEAD.slice(9, 15);
+        ctx.beginPath(); smooth(sheet, false); ctx.strokeStyle = `rgba(160,215,200,${.14 * (0.5 + after * 0.5)})`; ctx.lineWidth = 9; ctx.lineCap = 'round'; ctx.stroke();
+        ctx.beginPath(); smooth(sheet, false); ctx.strokeStyle = `rgba(220,240,235,${.45 * (0.5 + after * 0.5)})`; ctx.lineWidth = 2.4; ctx.stroke();
+      }
+      ctx.restore();
       // the stream
       if (land > 0) {
-        const endY = topY + (basinY - topY) * land;
+        const endY = topY + (landY - topY) * land;
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         const sway = (y) => Math.sin(y * 0.018 + p * 5) * 3.5;
         // glow halo
@@ -103,7 +139,7 @@
         for (const d of drops) {
           const t = clamp(after * 1.4 - d.s * 0.4, 0, 1);
           if (t <= 0 || t >= 1) continue;
-          const x = cx + d.a * brx * t, y = basinY - (t * 4 * (1 - t)) * H * 0.12 * d.v;
+          const x = cx + d.a * r * 1.6 * t, y = landY - (t * 4 * (1 - t)) * H * 0.1 * d.v;
           ctx.beginPath(); ctx.arc(x, y, 2.2 * (1 - t) + .6, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(236,245,240,${.7 * (1 - t)})`; ctx.fill();
         }
@@ -115,7 +151,7 @@
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         for (const s of steam) {
           const t = (p * 1.35 + s.s) % 1;
-          const y = basinY - t * H * 0.62, x = cx + s.x * brx * 0.9 + Math.sin(t * 4 + s.s * 7) * 26;
+          const y = hy - t * H * 0.62, x = cx + s.x * brx * 0.7 + Math.sin(t * 4 + s.s * 7) * 26;
           const a = t * (1 - t) * 4 * 0.075 * sv, r = s.r * (0.6 + t * 1.6);
           const g = ctx.createRadialGradient(x, y, 0, x, y, r);
           g.addColorStop(0, `rgba(230,236,230,${a})`); g.addColorStop(1, 'rgba(230,236,230,0)');
@@ -126,7 +162,7 @@
       // gold settle glow
       if (glow > 0) {
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const g = ctx.createRadialGradient(cx, basinY - H * .08, 0, cx, basinY - H * .08, H * .5);
+        const g = ctx.createRadialGradient(cx, hy, 0, cx, hy, H * .5);
         g.addColorStop(0, `rgba(217,181,106,${.16 * glow})`); g.addColorStop(1, 'rgba(217,181,106,0)');
         ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
         ctx.restore();
