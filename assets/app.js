@@ -484,6 +484,32 @@
     if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
+  // the bar steps aside while you read downward and comes back the moment you scroll up
+  let lastY = scrollY, navHidden = false, navT = 0;
+  addEventListener('scroll', () => {
+    const y = scrollY, down = y > lastY + 4, up = y < lastY - 4;
+    if (down && y > 260 && !navHidden && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
+    else if ((up || y < 120) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
+    if (down || up) lastY = y;
+    clearTimeout(navT); navT = setTimeout(() => { lastY = scrollY; }, 200);
+  }, { passive: true });
+  nav.addEventListener('focusin', () => { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } });
+
+  /* ============ the hand: magnetic primary buttons, a light under the cursor on cards (fine pointers only) ============ */
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
+    $$('.btn.primary').forEach((btn) => {
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        btn.style.setProperty('--mx', (dx * 8).toFixed(1) + 'px'); btn.style.setProperty('--my', (dy * 6).toFixed(1) + 'px');
+      });
+      btn.addEventListener('pointerleave', () => { btn.style.setProperty('--mx', '0px'); btn.style.setProperty('--my', '0px'); });
+    });
+    $$('.card,.whys li').forEach((el) => el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--lx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); el.style.setProperty('--ly', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    }, { passive: true }));
+  }
   let atBottom = false;
   addEventListener('scroll', () => {
     const b = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
