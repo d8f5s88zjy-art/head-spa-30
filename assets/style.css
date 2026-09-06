@@ -136,6 +136,9 @@ body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.ve
 .nav .btn{padding:11px 18px;font-size:13px}
 @media (pointer:coarse){
   .btn,.chip,.faq-q,.card-toggle{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .choice span,.choices.small span{min-height:44px}
+  .linkbtn{min-height:44px;display:inline-flex;align-items:center}
+  .map-link,.lb-close,.shot .open{min-height:44px;min-width:44px}
   .btn:active,.mbar a:active,.chip:active{transform:scale(.97);transition-duration:80ms}
 }
 
@@ -243,7 +246,7 @@ body.open .hero-static :is(.kicker,h1,p,.cta){opacity:1;transform:none}
   .hero{display:none}
   .hero-static{display:flex}
 }
-@media (min-width:721px){.hero-static{align-items:center}.hero-static p{max-width:30ch}}
+@media (min-width:901px){.hero-static{align-items:center}.hero-static p{max-width:30ch}}
 
 /* ---------- sections ---------- */
 main{position:relative;z-index:1}

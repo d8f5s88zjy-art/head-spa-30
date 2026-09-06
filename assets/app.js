@@ -64,7 +64,7 @@
       if (!force && Math.abs(p - lastP) < 0.0005 && t === lastT) return;
       lastP = p; lastT = t;
       if (view === 'steam') { drawSteam(p, t); return; }
-      const wide = W > 720;
+      const wide = view === 'still' ? W > 900 : W > 720;   // the still hero keeps the bowl above the text up to tablet width
       // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
       const cx = view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5);
@@ -457,7 +457,7 @@
   let seenVeil = false;
   try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
   if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden) {
-    veilMs = 1500; document.body.classList.add('veiling');
+    veilMs = 1000; document.body.classList.add('veiling');
     try { sessionStorage.hs30open = '1'; } catch (e) { /* storage blocked: the veil simply plays each load */ }
   }
   document.documentElement.style.setProperty('--veil', veilMs + 'ms');
@@ -933,8 +933,8 @@
     document.body.classList.add('ready', 'open');
     if (veilMs) {
       veil.classList.add('drawn');
-      setTimeout(flipVeil, 1100);
-      setTimeout(endVeil, 3100);
+      setTimeout(flipVeil, 700);
+      setTimeout(endVeil, 2300);
     }
   }));
 })();
