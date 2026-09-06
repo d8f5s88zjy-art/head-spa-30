@@ -27,7 +27,7 @@ jobs:
         with:
           enablement: true
       - name: Pripraviť súbory webu
-        run: mkdir -p _site && cp -r index.html assets _site/
+        run: mkdir -p _site && cp -r index.html robots.txt sitemap.xml assets _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
