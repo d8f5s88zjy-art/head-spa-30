@@ -493,10 +493,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#preco,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#preco,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -532,7 +532,7 @@
     if (!e.isIntersecting) return;
     e.target.classList.add('in'); rio.unobserve(e.target);
     setTimeout(() => e.target.classList.add('done'), 1600);
-  }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  }), { threshold: 0, rootMargin: '0px 0px -10% 0px' });
   rv.forEach((el) => rio.observe(el));
 
   /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
@@ -612,7 +612,7 @@
     const pio = new IntersectionObserver((es) => {
       const hits = es.filter((e) => e.isIntersecting).map((e) => e.target);
       hits.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); pio.unobserve(c); }); sweepPop();
-    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
     cards.forEach((c) => pio.observe(c));
   }
   function applyFilter(fromChip) {
@@ -885,6 +885,40 @@
     else if (h.startsWith('mailto:')) track('email_click');
     else if (h.includes('google.com/maps')) track('map_click');
   });
+
+  /* ============ mobile menu (native dialog: focus trap and Escape for free) ============ */
+  const menu = $('#drawer'), menuBtn = $('.menu-btn');
+  if (menu && menuBtn) {
+    $$('.drawer-links a', menu).forEach((a, i) => a.style.setProperty('--i', i));
+    const openMenu = () => { if (menu.open) return; menu.showModal(); document.body.classList.add('drawer-open'); menuBtn.setAttribute('aria-expanded', 'true'); track('menu_open'); };
+    const closeMenu = () => { if (!menu.open) return; menu.close(); };
+    menuBtn.addEventListener('click', () => (menu.open ? closeMenu() : openMenu()));
+    $('.drawer-close', menu).addEventListener('click', closeMenu);
+    menu.addEventListener('click', (e) => { if (e.target === menu) closeMenu(); });
+    menu.addEventListener('close', () => { document.body.classList.remove('drawer-open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus({ preventScroll: true }); });
+    $$('a[href^="#"]', menu).forEach((a) => a.addEventListener('click', () => { closeMenu(); }));
+    matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
+  }
+
+  /* ============ today's hours, computed in the salon's own time zone ============ */
+  (function todayStatus() {
+    const els = $$('[data-today]'); if (!els.length) return;
+    const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14], 0: null };
+    const DAYS = ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'];
+    let parts;
+    try { parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()); } catch (e) { return; }
+    const get = (t) => (parts.find((p) => p.type === t) || {}).value;
+    const wdMap = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
+    const wd = wdMap[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
+    const now = (+get('hour') % 24) + (+get('minute') || 0) / 60;
+    if (wd === undefined || isNaN(now)) return;
+    const h = HOURS[wd]; const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:00`;
+    let text, open = false;
+    if (h && now >= h[0] && now < h[1]) { open = true; text = `Dnes otvorené do ${hm(h[1])}`; }
+    else if (h && now < h[0]) text = `Dnes otvárame o ${hm(h[0])}`;
+    else { let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; } text = `Dnes už zatvorené, otvárame ${n === 1 ? 'zajtra' : DAYS[d]} o ${hm(HOURS[d][0])}`; }
+    els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
+  })();
 
   /* ============ housekeeping ============ */
   document.addEventListener('visibilitychange', () => { document.body.classList.toggle('paused', document.hidden); if (!document.hidden) wake(); });

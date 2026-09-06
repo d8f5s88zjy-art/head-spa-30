@@ -51,13 +51,38 @@
       <a href="#rezervacia">Rezervácia</a>
       <a href="#poukaz">Poukážky</a>
       <a href="#ritual">Ako to prebieha</a>
+      <a href="#preco">Prečo k nám</a>
       <a href="#galeria">Galéria</a>
       <a href="#faq">Otázky</a>
       <a href="#kontakt">Kontakt</a>
     </div>
-    <a class="btn primary" href="#rezervacia">Rezervovať</a>
+    <div class="nav-actions">
+      <a class="btn primary" href="#rezervacia">Rezervovať</a>
+      <button class="menu-btn" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+    </div>
   </div>
 </nav>
+<dialog class="drawer" id="drawer" aria-label="Menu">
+  <div class="drawer-in">
+    <div class="drawer-top"><span class="drawer-brand">HEAD SPA 30 · Nitra</span><button class="drawer-close" type="button" aria-label="Zavrieť menu">&times;</button></div>
+    <nav class="drawer-links" aria-label="Sekcie">
+      <a href="#cennik"><span>01</span>Rituály a ceny</a>
+      <a href="#rezervacia"><span>02</span>Rezervácia</a>
+      <a href="#poukaz"><span>03</span>Darčekové poukážky</a>
+      <a href="#ritual"><span>04</span>Ako to prebieha</a>
+      <a href="#preco"><span>05</span>Prečo k nám</a>
+      <a href="#galeria"><span>06</span>Galéria</a>
+      <a href="#faq"><span>07</span>Otázky</a>
+      <a href="#kontakt"><span>08</span>Kontakt</a>
+    </nav>
+    <div class="drawer-foot">
+      <a class="btn primary" href="#rezervacia">Rezervovať termín</a>
+      <a class="btn ghost" href="tel:+421951267203">0951 267 203</a>
+      <p><span class="today" data-today></span></p>
+      <p>Mostná 226/30, Nitra · <a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></p>
+    </div>
+  </div>
+</dialog>
 
 <main id="main" tabindex="-1">
 <div id="top"></div>
@@ -613,6 +638,26 @@
   </div>
 </section>
 
+<!-- ========== PREČO K NÁM ========== -->
+<section class="why" id="preco" data-scene="preco">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="part">
+        <div class="kicker">Prečo k nám</div>
+        <h2 class="h2">Čo dostaneš<br><em>za tie minúty.</em></h2>
+      </div>
+      <p class="lede part">Head Spa nie je umytie vlasov s masážou navyše. Je to vyhradený čas v tichej miestnosti, kde sa o pokožku hlavy stará niekto, kto ju najprv naozaj pozrie.</p>
+    </div>
+    <ul class="whys rv">
+      <li class="part"><span class="wn">01</span><h3>Pokožka pod kamerou</h3><p>Pri hĺbkových rituáloch začíname trichologickou kamerou. Peeling, detox a sérum vyberáme podľa toho, čo na pokožke vidíme, nie podľa odhadu.</p></li>
+      <li class="part"><span class="wn">02</span><h3>17 rituálov, päť kategórií</h3><p>Head Spa, pánske, detské, pre dvoch a chodidlá. Od štyridsiatich minút po dve hodiny, od 45 do 149 €. Každý rituál má zverejnený presný obsah.</p></li>
+      <li class="part"><span class="wn">03</span><h3>Ticho ako súčasť rituálu</h3><p>Tlmené svetlo, teplý uterák, vôňa podľa výberu a niekoľko minút úplného ticha na záver. Bez telefónov, bez bežiaceho pásu.</p></li>
+      <li class="part"><span class="wn">04</span><h3>V centre, pod jednou strechou</h3><p>Mostná 30 v Nitre, priestory Barbershop30. Rezervácia online alebo cez WhatsApp, darčekový poukaz kúpiš z domu a príde na e-mail.</p></li>
+    </ul>
+    <div class="why-cta rv"><a class="btn primary part" href="#rezervacia">Rezervovať termín</a><a class="btn ghost part" href="#cennik">Pozrieť všetkých 17 rituálov</a></div>
+  </div>
+</section>
+
 <!-- ========== GALÉRIA ========== -->
 <section class="gallery" id="galeria" data-scene="galeria">
   <div class="wrap">
@@ -706,10 +751,14 @@
       </div>
       <div class="info part">
         <div><h4>Adresa</h4><p><span class="pin" aria-hidden="true"></span>Mostná 226/30, 949 01 Nitra</p><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a></div>
-        <div><h4>Otváracie hodiny</h4><p>Po až Pi: 09:00 až 19:00<br>So: 09:00 až 14:00<br>Ne: zatvorené</p></div>
+        <div><h4>Otváracie hodiny</h4><p class="today" data-today aria-live="polite"></p><p>Po až Pi: 09:00 až 19:00<br>So: 09:00 až 14:00<br>Ne: zatvorené</p></div>
         <div><h4>Kontakt</h4><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></div>
       </div>
     </div>
+    <div class="map rv"><div class="part">
+      <iframe title="Mapa: HEAD SPA 30, Mostná 226/30, Nitra" src="https://www.google.com/maps?q=Mostn%C3%A1%20226%2F30%2C%20949%2001%20Nitra&amp;hl=sk&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Otvoriť navigáciu <span aria-hidden="true">↗</span></a>
+    </div></div>
   </div>
 </section>
 
@@ -726,7 +775,7 @@
         </a>
         <p>Head Spa koncept pod značkou Barbershop30. Barber presnosť, spa pokoj a nový dôvod vrátiť sa.</p>
       </div>
-      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="#rezervacia">Rezervácia</a><a href="#poukaz">Darčekové poukážky</a><a href="#ritual">Ako to prebieha</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
+      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="#rezervacia">Rezervácia</a><a href="#poukaz">Darčekové poukážky</a><a href="#ritual">Ako to prebieha</a><a href="#preco">Prečo k nám</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
       <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
       <div class="col"><h4>Online</h4><a href="#rezervacia">Rezervácia</a><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener">Kalendár Booqme</a><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a></div>
     </div>
