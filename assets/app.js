@@ -65,143 +65,145 @@
       lastP = p; lastT = t;
       if (view === 'steam') { drawSteam(p, t); return; }
       const wide = W > 720;
-      const cx = view === 'close' ? W * (wide ? 0.58 : 0.46) : (wide ? W * 0.69 : W * 0.42);   // action lane
-      const basinY = H * (view === 'close' ? (wide ? 0.74 : 0.70) : (wide ? 0.80 : 0.6)), topY = -H * 0.03;
-      // the guest: a reclining silhouette, head resting in the basin, the stream lands on the scalp
-      const r = H * (view === 'close' ? (wide ? 0.125 : 0.155) : (wide ? 0.062 : 0.08)), hx = cx, hy = basinY - r * 0.35, landY = hy - r * 1.12;
-      const P = (x, y) => [hx + x * r, hy + y * r];
-      const HEAD = [[1.0, .3], [.95, -.15], [.92, -.42], [.8, -.62], [.72, -.78], [.68, -.86], [.72, -.97], [.64, -1.05], [.68, -1.28], [.45, -1.13], [.28, -1.09], [0, -1.13], [-.45, -1.03], [-.85, -.72], [-1.06, -.1], [-.9, .5], [-.45, .9], [.15, 1.0], [.65, .85]].map(([x, y]) => P(x, y));
-      const BODY = [[.7, .9], [1.1, .45], [1.45, -.25], [2.2, -.62], [3.4, -.66], [5.0, -.55], [8.5, -.45], [8.5, 1.6], [2.4, 1.6], [1.2, 1.35]].map(([x, y]) => P(x, y));
-      const smooth = (pts, closed) => { const n = pts.length; ctx.moveTo(pts[0][0], pts[0][1]); for (let i = 0; i < (closed ? n : n - 1); i++) { const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n]; ctx.bezierCurveTo(p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6, p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6, p2[0], p2[1]); } };
-      const land = smoothstep(p, 0.06, 0.42);     // stream length 0..1
-      const after = smoothstep(p, 0.42, 0.6);      // impact aftermath
-      const glow = smoothstep(p, 0.6, 1);          // the gold settle
+      // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
+      const cx = view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * 0.66 : W * 0.5);
+      const cy = view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * 0.70 : H * 0.40);
+      const rx = view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * 0.31, H * 0.56) : Math.min(W * 0.36, H * 0.5));
+      const ry = rx * 0.34;
+      const topY = -H * 0.04, landY = cy - ry * 0.12;
+      const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
+      const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
+      const calm = smoothstep(p, 0.74, 1);         // the water settles, the light stays
+      const stream = fall * (1 - calm * 0.85);
       // room
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#111814'); bg.addColorStop(.55, '#0c110e'); bg.addColorStop(1, '#0a0d0b');
+      bg.addColorStop(0, '#0f1613'); bg.addColorStop(.55, '#0b100d'); bg.addColorStop(1, '#090c0a');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-      // light cone from above
-      const cone = ctx.createRadialGradient(cx, -H * 0.15, 0, cx, -H * 0.15, H * 1.05);
-      const ca = 0.16 + 0.12 * p;
-      cone.addColorStop(0, `rgba(236,208,143,${ca})`); cone.addColorStop(.45, `rgba(217,181,106,${ca * .45})`); cone.addColorStop(1, 'rgba(217,181,106,0)');
+      // the lamp: a cone of warm light that widens as the ritual goes on
+      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p));
+      const ca = 0.15 + 0.13 * p;
+      cone.addColorStop(0, `rgba(236,208,143,${ca})`); cone.addColorStop(.42, `rgba(217,181,106,${ca * .42})`); cone.addColorStop(1, 'rgba(217,181,106,0)');
       ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
-      // floor sheen
-      const floor = ctx.createLinearGradient(0, basinY - H * .06, 0, H);
-      floor.addColorStop(0, 'rgba(140,195,182,0)'); floor.addColorStop(.3, `rgba(140,195,182,${.05 + .05 * glow})`); floor.addColorStop(1, 'rgba(10,13,11,0)');
-      ctx.fillStyle = floor; ctx.fillRect(0, basinY - H * .06, W, H);
-      // basin
-      const brx = Math.min(W * 0.2, 300), bry = brx * 0.22;
+      // a faint far wall line so the room has depth
+      ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
+      // floor sheen under the bowl
+      const floor = ctx.createRadialGradient(cx, cy + ry * 0.6, 0, cx, cy + ry * 0.6, rx * 1.8);
+      floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(10,13,11,0)');
+      ctx.fillStyle = floor; ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.6, rx * 1.8, ry * 2.2, 0, 0, Math.PI * 2); ctx.fill();
+      // the bowl body: a dark ceramic rim below the water line
       ctx.save();
-      const pool = ctx.createRadialGradient(cx, basinY, 0, cx, basinY, brx * 1.6);
-      pool.addColorStop(0, `rgba(140,195,182,${.10 + .08 * glow})`); pool.addColorStop(1, 'rgba(140,195,182,0)');
-      ctx.fillStyle = pool; ctx.beginPath(); ctx.ellipse(cx, basinY, brx * 1.6, bry * 1.9, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.ellipse(cx, basinY, brx, bry, 0, 0, Math.PI * 2);
-      const bw = ctx.createRadialGradient(cx, basinY, 0, cx, basinY, brx);
-      bw.addColorStop(0, `rgba(140,195,182,${.24 + .22 * glow})`); bw.addColorStop(.6, `rgba(80,130,120,${.16 + .1 * glow})`); bw.addColorStop(.92, 'rgba(30,50,45,.3)'); bw.addColorStop(1, 'rgba(30,50,45,0)');
-      ctx.fillStyle = bw; ctx.fill();
-      ctx.beginPath(); ctx.ellipse(cx, basinY - 1, brx * .985, bry * .985, 0, Math.PI * 1.05, Math.PI * 1.95);
-      ctx.strokeStyle = `rgba(217,181,106,${.14 + .26 * glow})`; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx * 1.03, ry * 1.03, 0, 0, Math.PI); ctx.lineTo(cx - rx * 1.03, cy);
+      const bowl = ctx.createLinearGradient(0, cy, 0, cy + ry * 1.6);
+      bowl.addColorStop(0, '#1a221d'); bowl.addColorStop(1, '#0a0e0c');
+      ctx.fillStyle = bowl;
+      ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.35, rx * 1.03, ry * 1.25, 0, 0, Math.PI); ctx.closePath(); ctx.fill();
       ctx.restore();
-      // ripples
+      // the water surface
+      ctx.save();
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
+      const water = ctx.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx);
+      water.addColorStop(0, `rgba(96,150,140,${.55 + .15 * after})`); water.addColorStop(.55, 'rgba(46,84,78,.9)'); water.addColorStop(1, 'rgba(18,34,31,1)');
+      ctx.fillStyle = water; ctx.fillRect(cx - rx, cy - ry, rx * 2, ry * 2);
+      // the lamp reflected in the water: a soft vertical bar of gold
+      ctx.globalCompositeOperation = 'lighter';
+      const refl = ctx.createRadialGradient(cx, cy - ry * 0.15, 0, cx, cy - ry * 0.15, rx * 0.55);
+      refl.addColorStop(0, `rgba(236,208,143,${.22 + .2 * calm})`); refl.addColorStop(.35, `rgba(217,181,106,${.08 + .08 * calm})`); refl.addColorStop(1, 'rgba(217,181,106,0)');
+      ctx.fillStyle = refl; ctx.save(); ctx.scale(0.42, 1); ctx.beginPath(); ctx.arc(cx / 0.42, cy - ry * 0.15, rx * 0.55, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      // caustics: light that has been bent by the water, breathing slowly
+      for (let j = 0; j < 4; j++) {
+        const ph = t * 0.35 + j * 1.7 + p * 2.0;
+        const k = 0.22 + j * 0.19 + Math.sin(ph) * 0.04;
+        const a = (0.025 + 0.085 * after) * (1 - j * 0.15);
+        ctx.beginPath(); ctx.ellipse(cx + Math.sin(ph * 0.7) * rx * 0.04, cy + Math.cos(ph * 0.5) * ry * 0.06, rx * k, ry * k, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(236,214,168,${a})`; ctx.lineWidth = 7; ctx.stroke();
+        ctx.strokeStyle = `rgba(255,236,190,${a * 1.4})`; ctx.lineWidth = 2; ctx.stroke();
+      }
+      // rings: each drop that lands sends a ring to the rim
       if (after > 0) {
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const calm = 1 - smoothstep(p, 0.82, 1) * 0.6;
-        for (let i = 0; i < 5; i++) {
-          const k = ((p - 0.42) * 1.9 + i * 0.2 + t * 0.12) % 1;
-          if (k < 0) continue;
-          const a = (1 - k) * 0.33 * after * calm;
-          ctx.beginPath(); ctx.ellipse(cx, basinY, brx * (0.08 + k * 0.95), bry * (0.08 + k * 0.95), 0, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(160,215,200,${a})`; ctx.lineWidth = 1.2; ctx.stroke();
+        const rings = 7;
+        for (let i = 0; i < rings; i++) {
+          let k = ((p - 0.30) * 1.7 + i / rings + t * 0.10) % 1; if (k < 0) k += 1;
+          const a = Math.pow(1 - k, 1.6) * 0.55 * after * (1 - calm * 0.65);
+          if (a < 0.01) continue;
+          const kr = 0.03 + k * 0.97;
+          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr, ry * kr, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(190,232,222,${a})`; ctx.lineWidth = 1.4 + (1 - k) * 1.2; ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr * 0.94, ry * kr * 0.94, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,208,143,${a * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
         }
-        ctx.restore();
-      }
-      // the guest
-      ctx.save();
-      // bed plane
-      ctx.beginPath(); ctx.moveTo(P(.9, 1.55)[0], P(.9, 1.55)[1]); ctx.lineTo(P(9, 1.5)[0], P(9, 1.5)[1]); ctx.lineTo(P(9, 2.4)[0], P(9, 2.4)[1]); ctx.lineTo(P(.6, 2.3)[0], P(.6, 2.3)[1]); ctx.closePath();
-      ctx.fillStyle = 'rgba(242,237,226,.035)'; ctx.fill();
-      // body under a towel
-      const bodyFill = ctx.createLinearGradient(0, hy - r * .7, 0, hy + r * 1.6);
-      bodyFill.addColorStop(0, '#13181a'); bodyFill.addColorStop(1, '#080b09');
-      ctx.beginPath(); smooth(BODY, true); ctx.closePath(); ctx.fillStyle = bodyFill; ctx.fill();
-      const towel = ctx.createLinearGradient(0, hy - r * .7, 0, hy + r * 1.6);
-      towel.addColorStop(0, 'rgba(242,237,226,.10)'); towel.addColorStop(.5, 'rgba(242,237,226,.05)'); towel.addColorStop(1, 'rgba(242,237,226,.01)');
-      ctx.beginPath(); ctx.moveTo(P(1.7, -.62)[0], P(1.7, -.62)[1]); ctx.lineTo(P(8.5, -.45)[0], P(8.5, -.45)[1]); ctx.lineTo(P(8.5, 1.6)[0], P(8.5, 1.6)[1]); ctx.lineTo(P(2.0, 1.6)[0], P(2.0, 1.6)[1]); ctx.closePath();
-      ctx.fillStyle = towel; ctx.fill();
-      // head
-      const headFill = ctx.createLinearGradient(0, hy - r, 0, hy + r);
-      headFill.addColorStop(0, '#171c1b'); headFill.addColorStop(1, '#090c0a');
-      ctx.beginPath(); smooth(HEAD, true); ctx.closePath(); ctx.fillStyle = headFill; ctx.fill();
-      // rim light from the lamp above
-      const rim = ctx.createLinearGradient(0, hy - r * 1.2, 0, hy + r * .9);
-      rim.addColorStop(0, `rgba(236,208,143,${.5 + .3 * glow})`); rim.addColorStop(.55, 'rgba(236,208,143,.12)'); rim.addColorStop(1, 'rgba(236,208,143,0)');
-      ctx.beginPath(); smooth(HEAD, true); ctx.closePath(); ctx.strokeStyle = rim; ctx.lineWidth = 1.4; ctx.stroke();
-      ctx.beginPath(); smooth(BODY.slice(0, 7), false); ctx.strokeStyle = rim; ctx.lineWidth = 1.2; ctx.stroke();
-      // water sheeting over the scalp once the stream has landed
-      if (land >= 1) {
-        ctx.globalCompositeOperation = 'lighter';
-        const sheet = HEAD.slice(9, 15);
-        ctx.beginPath(); smooth(sheet, false); ctx.strokeStyle = `rgba(160,215,200,${.14 * (0.5 + after * 0.5)})`; ctx.lineWidth = 9; ctx.lineCap = 'round'; ctx.stroke();
-        ctx.beginPath(); smooth(sheet, false); ctx.strokeStyle = `rgba(220,240,235,${.45 * (0.5 + after * 0.5)})`; ctx.lineWidth = 2.4; ctx.stroke();
       }
       ctx.restore();
-      // the stream
-      if (land > 0) {
-        const endY = topY + (landY - topY) * land;
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const sway = (y) => Math.sin(y * 0.018 + p * 5 + t * 0.8) * 3.5;
-        // glow halo
+      // the rim of the bowl catches the lamp
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 1.02, Math.PI * 1.98);
+      ctx.strokeStyle = `rgba(236,208,143,${.22 + .3 * calm})`; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 0.02, Math.PI * 0.98);
+      ctx.strokeStyle = 'rgba(242,237,226,.08)'; ctx.lineWidth = 1; ctx.stroke();
+      // the stream: one laminar thread of warm water from the lamp to the bowl
+      if (stream > 0.01) {
+        const endY = topY + (landY - topY) * fall;
+        ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = Math.min(1, stream * 1.2);
+        const sway = (y) => Math.sin(y * 0.014 + p * 4 + t * 0.9) * 2.8;
         ctx.beginPath();
         for (let y = topY; y <= endY; y += 6) { const x = cx + sway(y); y === topY ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-        ctx.strokeStyle = 'rgba(140,195,182,.09)'; ctx.lineWidth = 34; ctx.lineCap = 'round'; ctx.stroke();
-        ctx.strokeStyle = 'rgba(160,215,200,.2)'; ctx.lineWidth = 15; ctx.stroke();
-        ctx.strokeStyle = 'rgba(200,232,224,.5)'; ctx.lineWidth = 6; ctx.stroke();
-        ctx.strokeStyle = 'rgba(240,248,245,.85)'; ctx.lineWidth = 2.2; ctx.stroke();
-        for (let i = 0; i < 9; i++) {
-          const k = (p * 2.4 + i / 9 + t * 0.45) % 1; const y = topY + (endY - topY) * k;
-          if (y > endY - 8) continue;
-          ctx.beginPath(); ctx.ellipse(cx + sway(y) + (i % 2 ? 2.5 : -2.5), y, 2.2, 5, 0, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fill();
+        ctx.strokeStyle = 'rgba(140,195,182,.08)'; ctx.lineWidth = 30; ctx.lineCap = 'round'; ctx.stroke();
+        ctx.strokeStyle = 'rgba(160,215,200,.18)'; ctx.lineWidth = 13; ctx.stroke();
+        ctx.strokeStyle = 'rgba(210,236,228,.5)'; ctx.lineWidth = 5; ctx.stroke();
+        ctx.strokeStyle = 'rgba(244,250,247,.9)'; ctx.lineWidth = 1.8; ctx.stroke();
+        for (let i = 0; i < 8; i++) {
+          const k = (p * 2.2 + i / 8 + t * 0.5) % 1; const y = topY + (endY - topY) * k;
+          if (y > endY - 10) continue;
+          ctx.beginPath(); ctx.ellipse(cx + sway(y) + (i % 2 ? 2 : -2), y, 1.8, 4.5, 0, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.fill();
         }
-        // droplet tip while falling
-        if (land < 1) {
-          const tx = cx + sway(endY);
-          ctx.beginPath(); ctx.ellipse(tx, endY + 6, 6, 10, 0, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(236,245,240,.85)'; ctx.fill();
+        if (fall < 1) { ctx.beginPath(); ctx.ellipse(cx + sway(endY), endY + 6, 5, 9, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(236,245,240,.85)'; ctx.fill(); }
+        else {
+          // where the thread meets the water: a small bright crown
+          const g = ctx.createRadialGradient(cx, landY, 0, cx, landY, rx * 0.12);
+          g.addColorStop(0, 'rgba(230,246,240,.5)'); g.addColorStop(1, 'rgba(230,246,240,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, landY, rx * 0.12, ry * 0.12, 0, 0, Math.PI * 2); ctx.fill();
         }
         ctx.restore();
       }
-      // splash
+      // splash: a few drops leap at the moment the thread lands
       if (after > 0 && after < 1) {
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         for (const d of drops) {
-          const t = clamp(after * 1.4 - d.s * 0.4, 0, 1);
-          if (t <= 0 || t >= 1) continue;
-          const x = cx + d.a * r * 1.6 * t, y = landY - (t * 4 * (1 - t)) * H * 0.1 * d.v;
-          ctx.beginPath(); ctx.arc(x, y, 2.2 * (1 - t) + .6, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(236,245,240,${.7 * (1 - t)})`; ctx.fill();
+          const k = clamp(after * 1.5 - d.s * 0.5, 0, 1);
+          if (k <= 0 || k >= 1) continue;
+          const x = cx + d.a * rx * 0.3 * k, y = landY - (k * 4 * (1 - k)) * H * 0.06 * d.v;
+          ctx.beginPath(); ctx.arc(x, y, 2 * (1 - k) + .5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(236,245,240,${.7 * (1 - k)})`; ctx.fill();
         }
         ctx.restore();
       }
-      // steam
-      const sv = smoothstep(p, 0.32, 0.55);
+      // steam lifts off the warm water
+      const sv = smoothstep(p, 0.34, 0.6);
       if (sv > 0) {
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
         for (const s of steam) {
-          const k = (p * 1.35 + s.s + t * 0.03) % 1;
-          const y = hy - k * H * 0.62, x = cx + s.x * brx * 0.7 + Math.sin(k * 4 + s.s * 7 + t * 0.2) * 26;
-          const a = k * (1 - k) * 4 * 0.075 * sv, r = s.r * (0.6 + k * 1.6);
+          const k = (p * 1.2 + s.s + t * 0.03) % 1;
+          const y = cy - ry * 0.2 - k * H * 0.55, x = cx + s.x * rx * 0.6 + Math.sin(k * 4 + s.s * 7 + t * 0.2) * 24;
+          const a = k * (1 - k) * 4 * 0.07 * sv * (1 - calm * 0.3), r = s.r * (0.6 + k * 1.7);
           const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-          g.addColorStop(0, `rgba(230,236,230,${a})`); g.addColorStop(1, 'rgba(230,236,230,0)');
+          g.addColorStop(0, `rgba(228,236,230,${a})`); g.addColorStop(1, 'rgba(228,236,230,0)');
           ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
         }
         ctx.restore();
       }
-      // gold settle glow
-      if (glow > 0) {
+      // dust in the lamp light: tiny motes drifting, only ever a whisper
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      for (const m of puffs) {
+        const k = (m.s + t * 0.012 + p * 0.3) % 1;
+        const x = cx + (m.x - 0.5) * rx * 2.2 * (0.3 + k * 0.7), y = H * 0.05 + k * (cy - H * 0.05);
+        const a = k * (1 - k) * 4 * 0.10 * (0.4 + 0.6 * p);
+        ctx.fillStyle = `rgba(236,214,168,${a})`; ctx.beginPath(); ctx.arc(x, y, 1 + m.v * 0.6, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+      // the gold settle: at the end the whole bowl glows
+      if (calm > 0) {
         ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const g = ctx.createRadialGradient(cx, hy, 0, cx, hy, H * .5);
-        g.addColorStop(0, `rgba(217,181,106,${.16 * glow})`); g.addColorStop(1, 'rgba(217,181,106,0)');
+        const g = ctx.createRadialGradient(cx, cy - ry, 0, cx, cy - ry, H * .55);
+        g.addColorStop(0, `rgba(217,181,106,${.18 * calm})`); g.addColorStop(1, 'rgba(217,181,106,0)');
         ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
         ctx.restore();
       }
@@ -396,10 +398,26 @@
   let staticScene = null;
   let srt;
   addEventListener('resize', () => { if (!scrubOn) { clearTimeout(srt); srt = setTimeout(drawStatic, 120); } }, { passive: true });
+  const STATIC_P = 0.62, STATIC_FPS = 20;
+  let staticRaf = 0, staticStart = 0, staticLast = 0, staticOn = false;
   function drawStatic() {
     if (!staticCanvas) return;
     if (!staticScene) staticScene = makeScene(staticCanvas);
-    staticScene.resize(); staticScene.draw(1, true);
+    staticScene.resize(); staticScene.draw(STATIC_P, true, staticStart ? (performance.now() - staticStart) / 1000 : 0);
+  }
+  function staticLive() { return staticOn && !scrubOn && !reduced.matches && !document.hidden && !document.body.classList.contains('idle'); }
+  function staticTick(now) {
+    if (!staticLive()) { staticRaf = 0; return; }
+    staticRaf = requestAnimationFrame(staticTick);
+    if (now - staticLast < 1000 / STATIC_FPS) return;
+    staticLast = now; if (!staticStart) staticStart = now;
+    staticScene.draw(STATIC_P, true, (now - staticStart) / 1000);
+  }
+  function staticWake() { if (!staticRaf && staticLive()) staticRaf = requestAnimationFrame(staticTick); }
+  if (staticCanvas) {
+    new IntersectionObserver((es) => { staticOn = es[0].isIntersecting; staticWake(); }, { threshold: 0.1 }).observe(staticCanvas);
+    document.addEventListener('visibilitychange', staticWake);
+    addEventListener('hs30wake', staticWake);
   }
   function enableScrub() {
     if (scrubOn) return; scrubOn = true;
@@ -427,7 +445,7 @@
     '(prefers-reduced-motion: reduce)'
   ];
   function applyHeroMode() {
-    if (GATES.some((q) => matchMedia(q).matches)) { disableScrub(); drawStatic(); } else enableScrub();
+    if (GATES.some((q) => matchMedia(q).matches)) { disableScrub(); drawStatic(); staticWake(); } else enableScrub();
   }
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
@@ -499,7 +517,9 @@
   $$('.gift,.book,.contact').forEach((s) => liveIO.observe(s));
   let idleT;
   function wake() {
+    const wasIdle = document.body.classList.contains('idle');
     document.body.classList.remove('idle');
+    if (wasIdle) dispatchEvent(new Event('hs30wake'));
     clearTimeout(idleT);
     idleT = setTimeout(() => document.body.classList.add('idle'), 45000);
   }

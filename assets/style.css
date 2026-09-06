@@ -16,6 +16,9 @@
 html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--canvas)}
 body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:16px;line-height:1.6;font-feature-settings:"kern" 1,"liga" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;opacity:0;transition:opacity .9s var(--ease-soft)}
 body.ready,body.veiling{opacity:1}
+@keyframes bodyFallback{to{opacity:1}}
+body{animation:bodyFallback 0s linear 2.5s forwards}
+body.ready,body.veiling{animation:none}
 body.veiling{transition:none}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -135,7 +138,7 @@ body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.ve
 }
 
 /* ---------- hero ---------- */
-.hero{position:relative;height:580vh;z-index:1}
+.hero{position:relative;height:360vh;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transform:translateZ(0)}
 .stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 66% -10%,rgba(217,181,106,.22),transparent 60%),radial-gradient(ellipse 30% 8% at 66% 80%,rgba(140,195,182,.35),transparent 70%),linear-gradient(180deg,#0e1310,#0a0d0b)}
@@ -158,6 +161,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .band.on .w{will-change:transform}
 .band .c{display:inline-block}
 /* drift-down */
+.band[data-fx="drift"] .cta{--kb:clamp(0,(var(--k,0) - .55)*3,1);opacity:var(--kb);transform:translateY(calc((1 - var(--kb))*14px))}
 .band[data-fx="drift"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.8,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*-26px))}
 /* punch */
 .band[data-fx="punch"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);--ks:clamp(0,(var(--k,0) - var(--th,0) - var(--sd,.1))*var(--ss,3.2),1);opacity:var(--kc);transform:scale(calc(.6 + (.4 + var(--ov,.12))*var(--kc) - var(--ov,.12)*var(--ks)))}

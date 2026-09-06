@@ -6,7 +6,7 @@ Profesionálny web pre HEAD SPA 30 (Barbershop30, Mostná 30, Nitra). Čisté HT
 
 - `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), galéria, otázky, kontakt
 - `assets/style.css` – štýly
-- `assets/app.js` – scrollom riadená úvodná scéna (voda, svetlo, para), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov
+- `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
 - `assets/fonts/` – písma Fraunces, Manrope a JetBrains Mono (hostované lokálne)
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
