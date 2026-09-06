@@ -938,11 +938,16 @@
     const wd = wdMap[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
     const now = (+get('hour') % 24) + (+get('minute') || 0) / 60;
     if (wd === undefined || isNaN(now)) return;
-    const h = HOURS[wd]; const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:00`;
+    const h = HOURS[wd]; const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:${String(Math.round((x % 1) * 60)).padStart(2, '0')}`;
     let text, open = false;
     if (h && now >= h[0] && now < h[1]) { open = true; text = `Dnes otvorené do ${hm(h[1])}`; }
     else if (h && now < h[0]) text = `Dnes otvárame o ${hm(h[0])}`;
-    else { let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; } text = `Dnes už zatvorené, otvárame ${n === 1 ? 'zajtra' : DAYS[d]} o ${hm(HOURS[d][0])}`; }
+    else {
+      let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; }
+      const when = n === 1 ? 'zajtra' : DAYS[d];
+      // a day we never opened reads differently from a day that has just ended
+      text = `${h ? 'Dnes už zatvorené' : 'Dnes máme zatvorené'}, otvárame ${when} o ${hm(HOURS[d][0])}`;
+    }
     els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
   })();
 

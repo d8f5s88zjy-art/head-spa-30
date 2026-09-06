@@ -173,6 +173,14 @@ body.drawer-open{overflow:hidden}
 .today:empty{display:none}
 .today .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6fcf97;margin-right:8px;position:relative;top:-1px;box-shadow:0 0 12px rgba(111,207,151,.6)}
 .today.closed .dot{background:#c97b5a;box-shadow:0 0 12px rgba(201,123,90,.5)}
+.today-line{margin-top:18px;line-height:1.45;text-wrap:pretty}
+.today-line .today{font-size:14px;font-weight:500;color:var(--text-secondary)}
+.today-line .today .dot{width:7px;height:7px;margin-right:7px}
+.today-line:has(.today:empty){display:none}
+.band[data-fx="drift"] .today-line{--kf:clamp(0,(var(--k,0) - .68)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
+.band[data-fx="rise"] .today-line{margin-top:14px}
+.hero-static .today-line{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
+body.open .hero-static .today-line{opacity:1;transform:none}
 
 /* ---------- hero ---------- */
 .hero{position:relative;height:360vh;z-index:1}
