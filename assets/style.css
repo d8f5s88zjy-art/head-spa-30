@@ -203,6 +203,7 @@ body.open .hero-static :is(.kicker,h1,p,.cta){opacity:1;transform:none}
   .hero{display:none}
   .hero-static{display:flex}
 }
+@media (min-width:721px){.hero-static{align-items:center}.hero-static p{max-width:30ch}}
 
 /* ---------- sections ---------- */
 main{position:relative;z-index:1}
