@@ -68,8 +68,8 @@
       // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
       const cx = view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5);
-      const cy = view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.40);
-      const rx = view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.36, H * 0.5));
+      const cy = view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31);   // phones: the bowl sits in the upper third, the copy below it
+      const rx = view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5));
       const ry = rx * 0.34;
       const topY = -H * 0.04, landY = cy - ry * 0.12;
       const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
@@ -438,11 +438,9 @@
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
+  // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
   const GATES = [
-    '(max-width: 720px)',
-    '(orientation: portrait) and (max-width: 1024px)',
-    '(orientation: portrait) and (pointer: coarse)',
-    '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
+    '(max-height: 500px)',
     '(prefers-reduced-motion: reduce)'
   ];
   function applyHeroMode() {

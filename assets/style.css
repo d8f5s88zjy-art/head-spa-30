@@ -27,6 +27,7 @@ h1,h2,h3,h4{margin:0;font-weight:400}
 p{margin:0}
 ul,ol{margin:0;padding:0;list-style:none}
 .wrap{width:min(var(--wrap),calc(100% - 48px));margin-inline:auto}
+[hidden]{display:none!important}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 .skip{position:fixed;left:16px;top:16px;z-index:200;padding:12px 16px;background:var(--accent);color:#141208;font-weight:700;border-radius:10px;transform:translateY(-120px);transition:transform .25s var(--ease)}
@@ -239,7 +240,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .hero-static .facts{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
 body.open .hero-static .facts{opacity:1;transform:none}
 
-/* static hero (five gates; strings identical in JS) */
+/* static hero (two gates; strings identical in JS) */
 .hero-static{display:none;position:relative;z-index:1;min-height:100svh;padding:130px 0 60px;align-items:flex-end;overflow:hidden}
 .hero-static .art{position:absolute;inset:0;z-index:0}
 .hero-static .art canvas{width:100%;height:100%;display:block}
@@ -253,7 +254,7 @@ body.open .hero-static .facts{opacity:1;transform:none}
 .hero-static .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
 .hero-static .kicker,.hero-static h1,.hero-static p,.hero-static .cta{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
 body.open .hero-static :is(.kicker,h1,p,.cta){opacity:1;transform:none}
-@media (max-width: 720px),(orientation: portrait) and (max-width: 1024px),(orientation: portrait) and (pointer: coarse),(orientation: landscape) and (pointer: coarse) and (max-height: 560px),(prefers-reduced-motion: reduce){
+@media (max-height: 500px),(prefers-reduced-motion: reduce){
   .hero{display:none}
   .hero-static{display:flex}
 }
@@ -691,6 +692,35 @@ footer .bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wra
   .mbar a:first-child{border:1px solid var(--line);color:var(--text-primary)}
   .mbar a:last-child{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208}
   body{padding-bottom:76px}
+}
+
+
+/* ---------- the journey on a phone: text sits low, full width, above the fixed bar ---------- */
+@media (max-width:640px){
+  .band{align-items:flex-end;padding:0 16px 132px}
+  .band .inner{max-width:100%}
+  .band::before{left:-10%;top:auto;bottom:-8%;width:120%;height:86%;background:linear-gradient(180deg,rgba(6,8,7,0) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.75)) 32%,rgba(6,8,7,var(--scrim,.66)) 100%)}
+  .band .kicker{margin-bottom:14px}
+  .band h1{font-size:clamp(46px,13.6vw,62px);max-width:none;line-height:1}
+  .band h2{font-size:clamp(38px,11.4vw,54px);max-width:none;line-height:1.02}
+  .band .line{font-size:clamp(23px,6.6vw,30px);max-width:none;line-height:1.22}
+  .band .sub{margin-top:14px;font-size:16px;max-width:none}
+  .band .cta{margin-top:20px;display:grid;gap:10px}
+  .band .facts{display:grid;grid-template-columns:1fr 1fr;margin-top:18px;padding-top:14px;gap:8px 18px}
+  .band .facts b{font-size:18px}
+  .band .today-line{margin-top:14px}
+  .hud{display:none}
+  /* the cue lives in its own strip between the text and the fixed bar, never over the copy */
+  .cue{bottom:82px;gap:6px;font-size:10px;letter-spacing:.22em}
+  .cue .drop{width:12px;height:17px}
+  .stage .scrim{background:radial-gradient(ellipse 140% 90% at 50% 40%,rgba(8,10,9,0) 30%,rgba(8,10,9,.7) 100%)}
+}
+@media (max-width:640px) and (max-height:700px){
+  .band{padding-bottom:124px}
+  .cue{bottom:80px}
+  .band .facts{display:none}
+  .band h1{font-size:clamp(42px,12vw,54px)}
+  .band .sub{font-size:15px}
 }
 
 /* ---------- reduced motion: final states, stopped drives, no veil ---------- */
