@@ -1,6 +1,6 @@
 # HEAD SPA 30, Nitra
 
-Profesionálny web pre HEAD SPA 30 (Barbershop30, Mostná 30, Nitra). Čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí.
+Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra). Čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí.
 
 ## Štruktúra
 
