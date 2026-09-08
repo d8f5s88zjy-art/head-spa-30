@@ -517,10 +517,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#preco,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#preco,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
