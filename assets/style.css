@@ -614,6 +614,8 @@ footer .col a,footer .col span{display:block;color:var(--text-secondary);font-si
 footer .col a{position:relative;width:fit-content;line-height:1.7;margin:3px 0}
 footer .col a:hover{color:var(--accent-hover)}
 footer .bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:var(--label);letter-spacing:.08em;color:var(--text-tertiary)}
+footer .bottom .credit a{color:var(--text-secondary);border-bottom:1px solid var(--line-strong);transition:color .3s,border-color .3s}
+footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--accent)}
 
 /* mobile bar */
 .mbar{display:none}
