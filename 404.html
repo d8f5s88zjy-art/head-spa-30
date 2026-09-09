@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stránka sa nenašla | HEAD SPA 30 Nitra</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0d0b">
+<!-- DEPLOY STEP: on a custom domain change this one line to <base href="/"> -->
+<base href="/head-spa-30/">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --canvas:#0a0d0b;--panel:#131a15;--accent:#d9b56a;--accent-hover:#ecd08f;
+  --text-primary:#f2ede2;--text-secondary:#b3b8ab;--text-tertiary:#8a9086;
+  --line:rgba(242,237,226,.10);--line-strong:rgba(217,181,106,.42);
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Manrope","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{min-height:100%}
+body{margin:0;min-height:100vh;min-height:100dvh}
+body{
+  background:var(--canvas);color:var(--text-primary);font-family:var(--body);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  display:grid;place-items:center;padding:40px 20px;
+  background-image:radial-gradient(60vw 55vh at 72% 12%,rgba(217,181,106,.16),transparent 70%),
+                   radial-gradient(50vw 45vh at 12% 88%,rgba(140,195,182,.10),transparent 70%);
+}
+main{width:100%;max-width:640px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:34px;height:1px;background:var(--line-strong)}
+h1{font-family:var(--display);font-weight:400;letter-spacing:-.02em;line-height:1.04;
+   font-size:clamp(38px,7vw,64px);margin:18px 0 0}
+h1 em{font-style:italic;font-weight:300;color:var(--accent-hover)}
+p.lede{color:var(--text-secondary);margin:18px 0 0;max-width:46ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;
+  border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;
+  border:1px solid var(--line-strong);transition:transform .25s ease,background .25s ease,color .25s ease}
+.btn.primary{background:var(--accent);color:#17130b;border-color:transparent}
+.btn.primary:hover{background:var(--accent-hover)}
+.btn.ghost{color:var(--text-primary)}
+.btn.ghost:hover{background:rgba(242,237,226,.06)}
+.btn:hover{transform:translateY(-2px)}
+nav.links{margin-top:38px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:8px 26px}
+nav.links a{color:var(--text-secondary);text-decoration:none;font-size:14.5px}
+nav.links a:hover{color:var(--accent-hover)}
+footer{margin-top:34px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--text-tertiary)}
+footer a{color:inherit;text-decoration:none}
+footer a:hover{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Chyba 404</div>
+  <h1>Táto stránka<br><em>sa nenašla.</em></h1>
+  <p class="lede">Adresa neexistuje alebo sa presunula. Rituály, ceny aj rezervácia sú na úvodnej stránke.</p>
+  <div class="cta">
+    <a class="btn primary" href="index.html">Späť na úvod</a>
+    <a class="btn ghost" href="index.html#cennik">17 rituálov a ceny</a>
+  </div>
+  <nav class="links" aria-label="Sekcie webu">
+    <a href="index.html#headspa">Čo je Head Spa</a>
+    <a href="index.html#poukaz">Darčekové poukážky</a>
+    <a href="index.html#ritual">Ako to prebieha</a>
+    <a href="index.html#galeria">Galéria</a>
+    <a href="index.html#faq">Otázky</a>
+    <a href="index.html#kontakt">Kontakt</a>
+  </nav>
+  <footer>
+    HEAD SPA 30 · Mostná 30, Nitra · <a href="tel:+421951267203">0951 267 203</a>
+  </footer>
+</main>
+</body>
+</html>
