@@ -11,28 +11,91 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var STORE = 'bs30-brief';
 
-  /* ============ 1. úvodná scéna ============ */
+  /* ============ 1. úvodná scéna ============
+   * Poradie: plagát je vždy prvý a nesie LCP. Ak dávajú okolnosti zmysel, pripojí sa
+   * video (záber A machová stena, strihová spojka, záber B remeslo). Ak nie, ostane
+   * plagát a scéna sa dohrá v CSS. Obsah pod úvodom je použiteľný od prvej sekundy.
+   */
   (function intro() {
-    var hero = $('#hero'), skip = $('#skipIntro');
+    var hero = $('#hero'), skip = $('#skipIntro'), vid = $('#introVid');
     if (!hero) return;
     var done = false;
+
     function finish() {
       if (done) return;
       done = true;
       hero.classList.remove('revealing');
       hero.classList.add('revealed', 'done');
+      if (vid) { try { vid.pause(); } catch (e) {} }
       try { sessionStorage.setItem('bs30-intro', '1'); } catch (e) {}
     }
+
     var seen = false;
     try { seen = sessionStorage.getItem('bs30-intro') === '1'; } catch (e) {}
-    if (reduce.matches || seen) { finish(); return; }
 
-    // scéna sa spustí až po vykreslení, obsah pod ňou je použiteľný od začiatku
-    requestAnimationFrame(function () {
-      hero.classList.add('revealing');
-      setTimeout(function () { hero.classList.add('revealed'); }, 1700);
-      setTimeout(finish, 3400);
+    // dôvody, prečo video vôbec nenačítať
+    var conn = navigator.connection || {};
+    var slow = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+    if (reduce.matches || seen || slow) { finish(); return; }
+
+    var portrait = window.matchMedia('(max-width: 900px)').matches;
+    var base = portrait ? 'assets/video/intro-9x16' : 'assets/video/intro-16x9';
+
+    function markSeen() { try { sessionStorage.setItem('bs30-intro', '1'); } catch (e) {} }
+
+    function cssFallback() {
+      markSeen();
+      hero.classList.remove('video-mode');
+      requestAnimationFrame(function () {
+        hero.classList.add('revealing');
+        setTimeout(function () { hero.classList.add('revealed'); }, 1700);
+        setTimeout(finish, 3400);
+      });
+    }
+
+    function playVideo() {
+      if (!vid || !vid.canPlayType) return cssFallback();
+      var canWebm = vid.canPlayType('video/webm; codecs="vp9"');
+      var canMp4 = vid.canPlayType('video/mp4; codecs="avc1.4d401f"');
+      if (!canWebm && !canMp4) return cssFallback();
+
+      hero.classList.add('video-mode');
+      markSeen();
+      var src = document.createElement('source');
+      if (canWebm) { src.src = base + '.webm'; src.type = 'video/webm'; }
+      else { src.src = base + '.mp4'; src.type = 'video/mp4'; }
+      vid.appendChild(src);
+      if (canWebm && canMp4) {
+        var s2 = document.createElement('source');
+        s2.src = base + '.mp4'; s2.type = 'video/mp4';
+        vid.appendChild(s2);
+      }
+      vid.addEventListener('error', cssFallback, { once: true });
+      vid.addEventListener('playing', function () { vid.classList.add('on'); }, { once: true });
+      vid.addEventListener('ended', finish, { once: true });
+      vid.load();
+      var p = vid.play();
+      if (p && p.catch) p.catch(cssFallback);       // odmietnuté automatické prehratie
+      setTimeout(function () { if (!done && vid.paused) cssFallback(); }, 2500);
+      setTimeout(finish, 9000);                      // poistka, keby sa video zaseklo
+    }
+
+    // video sa pripája až po prvom vykreslení, nikdy neblokuje obsah
+    if ('requestIdleCallback' in window) requestIdleCallback(playVideo, { timeout: 900 });
+    else setTimeout(playVideo, 250);
+
+    // pauza, keď úvod nie je na obrazovke
+    if (vid && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (done) return;
+        if (es[0].isIntersecting) { var q = vid.play(); if (q && q.catch) q.catch(function () {}); }
+        else { try { vid.pause(); } catch (e) {} }
+      }, { threshold: 0.15 }).observe(hero);
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (vid && document.hidden) { try { vid.pause(); } catch (e) {} }
     });
+
     if (skip) skip.addEventListener('click', finish);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') finish(); });
   })();

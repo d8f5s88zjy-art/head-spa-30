@@ -85,6 +85,10 @@
   <!-- ========== HERO ========== -->
   <section class="hero" id="hero" aria-labelledby="h-hero">
     <div class="cut-scene" id="scene" aria-hidden="true">
+      <!-- Plagát nesie LCP. Video sa pripája až po ňom, cez app.js, a len keď to dáva zmysel. -->
+      <div class="poster" id="poster"></div>
+      <video class="intro-vid" id="introVid" muted playsinline preload="none" disablepictureinpicture
+             poster="assets/img/intro-poster-16x9.jpg" width="1280" height="716" tabindex="-1"></video>
       <div class="pane left"></div>
       <div class="pane right"></div>
       <div class="seam"></div>

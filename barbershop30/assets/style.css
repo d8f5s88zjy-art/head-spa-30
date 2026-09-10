@@ -103,6 +103,12 @@ body.drawer-open{overflow:hidden}
 
 /* machová scéna: dve polovice, ktoré sa rozostúpia */
 .cut-scene{position:absolute;inset:0;z-index:1;background:#0b0d0b}
+.cut-scene .poster{position:absolute;inset:0;background:url(img/intro-poster-16x9.jpg) center/cover;z-index:0}
+.intro-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;
+  transition:opacity .5s var(--ease);pointer-events:none}
+.intro-vid.on{opacity:1}
+.hero.video-mode .pane,.hero.video-mode .seam,.hero.video-mode .shears{display:none}
+.cut-scene::after{z-index:-1}
 .cut-scene .pane{position:absolute;top:0;bottom:0;width:50.4%;
   background-image:url(img/moss-16x9.jpg);background-size:auto 100%;
   transition:transform 1.5s var(--ease);will-change:transform}
@@ -347,6 +353,7 @@ textarea:focus{border-color:var(--brass)}
   .sheet-fig img{position:static}
   .hero::after{background:linear-gradient(180deg,rgba(12,14,12,.72) 0%,rgba(12,14,12,.55) 40%,rgba(12,14,12,.96) 88%)}
   .cut-scene .pane{background-image:url(img/moss-9x16.jpg);background-size:cover}
+  .cut-scene .poster{background-image:url(img/intro-poster-9x16.jpg)}
   .cut-scene .left{background-position:left center}
   .cut-scene .right{background-position:right center}
   .mobile-bar-book{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;align-items:center;

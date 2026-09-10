@@ -15,8 +15,24 @@ do rezervácie.
   filtre, otváracie hodiny, galéria, barberi a referencie.
 - `assets/app.js` – filtre, detail strihu, formulár predstavy, zhrnutie, kopírovanie, menu.
 - `assets/style.css` – štýly.
-- `assets/img/` – obrázky.
+- `assets/img/` – obrázky vrátane plagátov úvodného videa.
+- `assets/video/` – úvodné video v dvoch formátoch a dvoch pomeroch. Vzniklo podľa produkčného kódu GV-19148, podklady sú v `docs/`.
 - `assets/fonts/` – vlastná kópia písiem, aby sa priečinok dal presunúť samostatne.
+
+## Úvodné video
+
+Hero má video: machová stena, strih nožnicami, rozostúpenie a prienik do priestoru, potom
+strihová spojka na detail strihania. Na telefóne beží iba machová časť.
+
+Poistky, ktoré sú v `app.js` zapojené a odskúšané:
+
+- plagát nesie prvé vykreslenie, video sa pripája až po ňom a nikdy neblokuje obsah;
+- video je vždy stlmené, bez zvukovej stopy a `playsinline`;
+- pri obmedzenom pohybe, v režime úspory dát a na pomalom pripojení sa vôbec nestiahne;
+- keď prehliadač odmietne automatické prehratie alebo súbor zlyhá, dohrá sa scéna v CSS;
+- v tej istej relácii sa úvod nespustí druhýkrát;
+- mimo obrazovky a na skrytej karte sa video pozastaví;
+- tlačidlo Preskočiť úvod a celá navigácia sú použiteľné od prvej sekundy.
 
 ## Čo ešte treba doplniť pred spustením
 
