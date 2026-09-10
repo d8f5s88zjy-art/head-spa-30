@@ -11,6 +11,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra). Čisté HTML,
 - `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
+- `barbershop30/` – samostatná stránka pre BARBERSHOP 30, nasadzuje sa na `/barbershop30/`. Má vlastný `index.html`, vlastné `assets/` aj vlastnú kópiu písiem, takže sa dá kedykoľvek presunúť na vlastnú doménu bez zásahu do kódu. Celý obsah a všetky údaje prevádzky sú v jedinom súbore `barbershop30/assets/data.js`; položky označené `REQUIRED_REAL_DATA` čakajú na potvrdenie od prevádzky a stránka ich zámerne nevymýšľa
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona
 
