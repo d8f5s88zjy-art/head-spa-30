@@ -530,10 +530,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#chodidla,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#chodidla,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -573,26 +573,33 @@
   rv.forEach((el) => rio.observe(el));
 
   /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
-  const stepsEl = $('.steps'), streamPath = $('.steps .stream .draw');
-  const steps = $$('.step').map((el) => ({ el, n: $('.n', el), at: 0, lit: null }));
-  let streamLen = 0, lastDash = -1, pinned = false;
-  if (streamPath) { streamLen = streamPath.getTotalLength(); streamPath.style.strokeDasharray = streamLen; streamPath.style.strokeDashoffset = streamLen; }
+  /* every .steps block runs its own line, so the head ritual and the foot ritual do not share one */
+  let pinned = false;
+  const streams = $$('.steps').map((box) => {
+    const path = $('.stream .draw', box);
+    const steps = $$('.step', box).map((el) => ({ el, n: $('.n', el), at: 0, lit: null }));
+    const len = path ? path.getTotalLength() : 0;
+    if (path) { path.style.strokeDasharray = len; path.style.strokeDashoffset = len; }
+    return { box, path, steps, len, lastDash: -1 };
+  }).filter((s) => s.path && s.steps.length);
   function measureSteps() {
-    if (!stepsEl) return;
-    const h = stepsEl.offsetHeight - 16;
-    steps.forEach((s) => { s.at = h > 0 ? (s.el.offsetTop + s.n.offsetTop + s.n.offsetHeight / 2 - 8) / h : 0; });
+    streams.forEach((s) => {
+      const h = s.box.offsetHeight - 16;
+      s.steps.forEach((x) => { x.at = h > 0 ? (x.el.offsetTop + x.n.offsetTop + x.n.offsetHeight / 2 - 8) / h : 0; });
+    });
   }
   measureSteps();
   let mrt; addEventListener('resize', () => { clearTimeout(mrt); mrt = setTimeout(measureSteps, 150); }, { passive: true });
   function driveLines() {
     if (pinned) return;
-    if (streamPath) {
-      const r = stepsEl.getBoundingClientRect();
+    streams.forEach((s) => {
+      const r = s.box.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > innerHeight + 200) return;   // off screen, nothing to draw
       const p = clamp((innerHeight * 0.78 - r.top) / r.height, 0, 1);
-      const d = Math.round(streamLen * (1 - p));
-      if (d !== lastDash) { lastDash = d; streamPath.style.strokeDashoffset = d; }
-      steps.forEach((s) => { const lit = p >= s.at; if (lit !== s.lit) { s.lit = lit; s.el.classList.toggle('lit', lit); } });
-    }
+      const d = Math.round(s.len * (1 - p));
+      if (d !== s.lastDash) { s.lastDash = d; s.path.style.strokeDashoffset = d; }
+      s.steps.forEach((x) => { const lit = p >= x.at; if (lit !== x.lit) { x.lit = lit; x.el.classList.toggle('lit', lit); } });
+    });
   }
   addEventListener('scroll', driveLines, { passive: true }); driveLines();
 
@@ -619,15 +626,14 @@
 
   function pinToFinalStates() {
     pinned = true;
-    if (streamPath) streamPath.style.strokeDashoffset = 0;
-    steps.forEach((s) => { s.lit = true; s.el.classList.add('lit'); });
+    streams.forEach((s) => { s.path.style.strokeDashoffset = 0; s.steps.forEach((x) => { x.lit = true; x.el.classList.add('lit'); }); });
     counters.forEach((c) => { counted.add(c); c.textContent = c.dataset.count + (c.dataset.suffix || ''); });
     rv.forEach((el) => el.classList.add('in', 'done'));
     endVeil();
   }
   function unpinFinalStates() {
-    pinned = false; lastDash = -1;
-    steps.forEach((s) => { s.lit = null; });
+    pinned = false;
+    streams.forEach((s) => { s.lastDash = -1; s.steps.forEach((x) => { x.lit = null; }); });
     driveLines();
   }
   reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else { unpinFinalStates(); applyHeroMode(); } });
@@ -659,9 +665,19 @@
     if (count) count.textContent = activeCat === 'all' ? `Zobrazených všetkých ${cards.length} rituálov` : `Zobrazených ${n} z ${cards.length} rituálov`;
     if (fromChip) cascade(shown);
   }
-  $$('.tools .chip').forEach((b) => b.addEventListener('click', () => {
-    $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
-    activeCat = b.dataset.filter; applyFilter(true);
+  function pickCat(cat, fromChip) {
+    $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x.dataset.filter === cat ? 'true' : 'false'));
+    activeCat = cat; applyFilter(fromChip);
+  }
+  $$('.tools .chip').forEach((b) => b.addEventListener('click', () => pickCat(b.dataset.filter, true)));
+  /* a link elsewhere on the page can open the list already filtered, e.g. the foot rituals */
+  $$('[data-cat-jump]').forEach((a) => a.addEventListener('click', () => {
+    pickCat(a.dataset.catJump, true);
+    const id = (a.getAttribute('href') || '').slice(1), target = id && document.getElementById(id);
+    if (target && target.classList.contains('card')) {
+      const open = !target.classList.contains('open');
+      if (open) { const b = $('.card-toggle', target); if (b) b.click(); }
+    }
   }));
   applyFilter(false);
   $$('.card .panel ol').forEach((ol) => [...ol.children].forEach((li, i) => li.style.setProperty('--i', i)));

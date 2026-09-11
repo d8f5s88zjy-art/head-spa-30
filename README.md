@@ -4,7 +4,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
@@ -77,3 +77,18 @@ Ak sa hodiny zmenia, treba ich upraviť na všetkých týchto miestach naraz.
 Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologické vyšetrenie
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
+
+## Sekcia Rituály pre chodidlá
+
+Tri rituály pre chodidlá (Klasický 45 €, Ovocný a bylinkový 65 €, Zlatý rituál 24K 119 €)
+boli od začiatku v cenníku, ale až na jeho konci za filtrom, takže ich nikto nevidel.
+Sekcia `#chodidla` ich vyťahuje dopredu: päť krokov rituálu odvodených z obsahu kariet
+a tri odkazy s trvaním a cenou.
+
+Odkazy majú `data-cat-jump="feet"`. Po kliknutí sa cenník prepne na kategóriu Chodidlá
+a ak odkaz mieri na konkrétnu kartu, tá sa rovno rozbalí. Ten istý mechanizmus sa dá použiť
+pre ktorúkoľvek kategóriu, stačí `data-cat-jump` s jej kľúčom (`classic`, `gentlemen`,
+`kids`, `couple`, `feet`).
+
+Vodná línia v sekcii Ako to prebieha aj v sekcii pre chodidlá beží samostatne,
+`assets/app.js` si drží pole `streams`, jeden záznam na každý blok `.steps`.

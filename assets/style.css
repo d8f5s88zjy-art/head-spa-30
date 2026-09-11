@@ -299,10 +299,10 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in.done .part{transition-delay:0s}
 
 /* ritual steps: the water line lights each numeral as it reaches it */
-.ritual .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
-.ritual .sticky{position:sticky;top:120px}
-.ritual .h2{font-size:clamp(38px,4.3vw,60px)}
-.ritual .lede{margin-top:22px}
+.ritual .grid,.feet .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.ritual .sticky,.feet .sticky{position:sticky;top:120px}
+.ritual .h2,.feet .h2{font-size:clamp(38px,4.3vw,60px)}
+.ritual .lede,.feet .lede{margin-top:22px}
 .steps{position:relative;padding-left:56px}
 .steps .stream{position:absolute;left:19px;top:8px;width:4px;height:calc(100% - 16px);overflow:visible}
 .steps .stream path{stroke:var(--water);stroke-width:2;fill:none;stroke-linecap:round;opacity:.9;filter:drop-shadow(0 0 6px rgba(140,195,182,.5))}
@@ -630,8 +630,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .menu-btn{display:block}
   .whys{grid-template-columns:1fr 1fr}
   .map .part{aspect-ratio:16/10}
-  .ritual .grid,.faq .grid,.contact .box,.head{grid-template-columns:1fr;gap:34px}
-  .ritual .sticky,.faq .sticky{position:static}
+  .ritual .grid,.feet .grid,.faq .grid,.contact .box,.head{grid-template-columns:1fr;gap:34px}
+  .ritual .sticky,.feet .sticky,.faq .sticky{position:static}
   .order{grid-template-columns:1fr;gap:34px}
   .order>.part:last-child{position:static;padding:0 14px}
   .shots{grid-template-columns:repeat(6,1fr)}
@@ -826,4 +826,25 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .today .dot{animation:none}
   .btn.primary::before,.scard::before,.card::after,.scard::after{display:none}
   .scard:hover{transform:none}
+}
+
+/* ==========================================================
+   RITUÁLY PRE CHODIDLÁ
+   ========================================================== */
+.feet-pick{display:grid;gap:10px;margin-top:28px}
+.fbtn{position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:14px;
+  padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius-m);
+  background:linear-gradient(160deg,rgba(25,34,25,.7),rgba(14,19,16,.9));
+  transition:border-color .4s var(--ease),transform .4s var(--ease),background .4s}
+.fbtn b{font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:-.01em}
+.fbtn span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
+.fbtn i{font-style:normal;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;color:var(--accent)}
+.fbtn:hover{border-color:var(--line-strong);transform:translateX(4px);background:linear-gradient(160deg,rgba(33,45,33,.85),rgba(16,22,18,.95))}
+.fbtn.gold{border-color:var(--line-strong);
+  background:radial-gradient(circle at 92% 12%,rgba(217,181,106,.16),transparent 34%),linear-gradient(160deg,rgba(29,40,29,.9),rgba(19,26,21,.9))}
+.fbtn.gold i{color:var(--accent-hover)}
+.feet .fine{max-width:46ch}
+@media (max-width:640px){
+  .fbtn{grid-template-columns:1fr auto;row-gap:6px;padding:15px 17px}
+  .fbtn b{grid-column:1/-1}
 }
