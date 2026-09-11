@@ -668,13 +668,51 @@
     const g = GROUPS[activeCat];
     return g ? g.indexOf(cat) > -1 : cat === activeCat;
   };
+  /* Tento riadok sa skladá až v prehliadači, preto má vlastné preklady. */
+  const COUNT_WORDS = {
+    sk: { all: (t) => `Zobrazených všetkých ${t} rituálov`, some: (n, t) => `Zobrazených ${n} z ${t} rituálov` },
+    cs: { all: (t) => `Zobrazeno všech ${t} rituálů`, some: (n, t) => `Zobrazeno ${n} z ${t} rituálů` },
+    pl: { all: (t) => `Pokazano wszystkie ${t} rytuały`, some: (n, t) => `Pokazano ${n} z ${t} rytuałów` },
+    hu: { all: (t) => `Mind a ${t} rituálé látszik`, some: (n, t) => `${t} rituáléból ${n} látszik` },
+    de: { all: (t) => `Alle ${t} Rituale angezeigt`, some: (n, t) => `${n} von ${t} Ritualen angezeigt` },
+    uk: { all: (t) => `Показано всі ${t} ритуали`, some: (n, t) => `Показано ${n} з ${t} ритуалів` },
+    en: { all: (t) => `Showing all ${t} rituals`, some: (n, t) => `Showing ${n} of ${t} rituals` },
+  };
+
+  /* Čas a rozpočet, aby sa dalo z 34 rituálov vybrať bez čítania všetkých. */
+  const fTime = $('#f-time'), fPrice = $('#f-price'), fClear = $('#f-clear'), noHit = $('#noHit');
+  let maxMin = Infinity, maxEur = Infinity;
+  const limited = () => maxMin !== Infinity || maxEur !== Infinity;
+  const fits = (c) => +c.dataset.min <= maxMin && +c.dataset.price <= maxEur;
+
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = inCat(c.dataset.cat); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
-    cats.forEach((l) => l.classList.toggle('hidden', !inCat(l.dataset.cat)));
-    if (count) count.textContent = activeCat === 'all' ? `Zobrazených všetkých ${cards.length} rituálov` : `Zobrazených ${n} z ${cards.length} rituálov`;
+    cards.forEach((c) => { const show = inCat(c.dataset.cat) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
+    /* nadpis kategórie zmizne aj vtedy, keď v nej po obmedzení nič nezostalo */
+    cats.forEach((l) => {
+      const zije = inCat(l.dataset.cat) && shown.some((c) => c.dataset.cat === l.dataset.cat);
+      l.classList.toggle('hidden', !zije);
+    });
+    if (count) {
+      const W = COUNT_WORDS[(document.documentElement.lang || 'sk').slice(0, 2)] || COUNT_WORDS.sk;
+      count.textContent = (activeCat === 'all' && !limited()) ? W.all(cards.length) : W.some(n, cards.length);
+    }
+    if (noHit) noHit.hidden = n > 0;
+    if (fClear) fClear.hidden = !limited();
     if (fromChip) cascade(shown);
   }
+  function readLimits() {
+    maxMin = fTime ? (+fTime.value || Infinity) : Infinity;
+    maxEur = fPrice ? (+fPrice.value || Infinity) : Infinity;
+    if (maxMin >= 999) maxMin = Infinity;
+    if (maxEur >= 9999) maxEur = Infinity;
+  }
+  [fTime, fPrice].forEach((s) => s && s.addEventListener('change', () => { readLimits(); applyFilter(true); }));
+  if (fClear) fClear.addEventListener('click', () => {
+    if (fTime) fTime.value = '999';
+    if (fPrice) fPrice.value = '9999';
+    readLimits(); applyFilter(true);
+  });
   function pickCat(cat, fromChip) {
     $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x.dataset.filter === cat ? 'true' : 'false'));
     activeCat = cat; applyFilter(fromChip);
@@ -690,6 +728,7 @@
     }
   }));
   applyFilter(false);
+  document.addEventListener('langchange', () => applyFilter(false));
   $$('.card .panel ol').forEach((ol) => [...ol.children].forEach((li, i) => li.style.setProperty('--i', i)));
   $$('.card-toggle').forEach((b) => b.addEventListener('click', () => {
     const c = b.closest('.card'); const open = !c.classList.contains('open');

@@ -78,6 +78,26 @@ Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologic
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
 
+## Výber podľa času a rozpočtu
+
+Pri 34 rituáloch nestačí filter podľa kategórie. Nad zoznamom sú preto dva
+výbery, ktoré sa kombinujú s kategóriou: **Mám čas** (do 45, 60, 75 alebo 90 minút)
+a **Rozpočet** (do 60, 90, 130 alebo 160 €).
+
+Každá karta má `data-min` a `data-price`, takže sa filtruje priamo z hodnôt,
+nie z parsovania textu. Nadpis kategórie zmizne, keď v nej po obmedzení nič
+nezostane, a keď nezodpovedá nič, zobrazí sa vysvetlenie s návrhom, čo zmeniť.
+Tlačidlo Zrušiť obmedzenia sa objaví len vtedy, keď je naozaj čo rušiť.
+
+Riadok "Zobrazených N z 34 rituálov" sa skladá až v prehliadači, preto má
+vlastné preklady v `assets/app.js` (`COUNT_WORDS`), rovnako ako text otváracích
+hodín. Po zmene jazyka sa prekreslí.
+
+Pozor pri úprave cien alebo trvaní: hodnoty v `data-min` a `data-price` musia
+sedieť s tým, čo je napísané v `.meta` karty, inak filter ukáže niečo iné,
+než karta tvrdí.
+
+
 ## Sekcia Rituály pre chodidlá
 
 Tri rituály pre chodidlá (Klasický 45 €, Ovocný a bylinkový 65 €, Zlatý rituál 24K 119 €)

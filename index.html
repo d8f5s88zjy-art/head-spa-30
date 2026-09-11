@@ -216,11 +216,33 @@
         <button class="chip" type="button" data-filter="feet-lux" aria-pressed="false">Luxusné</button>
       </div>
     </div>
+    <div class="finder" role="group" aria-label="Filter podľa času a ceny">
+      <label class="fx"><span>Mám čas</span>
+        <select id="f-time" name="cas">
+          <option value="999">koľkokoľvek</option>
+          <option value="45">do 45 minút</option>
+          <option value="60">do 60 minút</option>
+          <option value="75">do 75 minút</option>
+          <option value="90">do 90 minút</option>
+        </select>
+      </label>
+      <label class="fx"><span>Rozpočet</span>
+        <select id="f-price" name="cena">
+          <option value="9999">akýkoľvek</option>
+          <option value="60">do 60 €</option>
+          <option value="90">do 90 €</option>
+          <option value="130">do 130 €</option>
+          <option value="160">do 160 €</option>
+        </select>
+      </label>
+      <button class="fx-clear link" type="button" id="f-clear" hidden>Zrušiť obmedzenia</button>
+    </div>
     <p class="count" aria-live="polite"></p>
+    <p class="no-hit" id="noHit" hidden>Tejto kombinácii nezodpovedá žiadny rituál. Skús predĺžiť čas alebo zvýšiť rozpočet.</p>
 
     <div class="list">
       <div class="cat rv" data-cat="classic"><span>Klasické</span><b>Head Spa rituály</b></div>
-<article class="card" data-cat="classic" data-name="KLASICKÝ HEAD SPA" data-id="klasicky-head-spa">
+<article data-min="40" data-price="50" class="card" data-cat="classic" data-name="KLASICKÝ HEAD SPA" data-id="klasicky-head-spa">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>01</span><span>Klasické</span></div>
@@ -235,7 +257,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Prvých štyridsať minút, počas ktorých zistíte, prečo sa o Head Spa hovorí. Krátky, ale úplný rituál: peeling, hĺbkové čistenie pokožky hlavy, relaxačná masáž a vodný rituál v teplej vode.</p><p>Ideálny, ak si chcete Head Spa vyskúšať prvýkrát, alebo si doprajete oddych medzi dvoma pracovnými dňami. Odchádzate s čistou pokožkou hlavy, upravenými vlasmi a hlavou o niečo ľahšou.</p></div><ol><li>Uvítací nápoj</li><li>Krátka konzultácia</li><li>Jemný peeling pokožky hlavy</li><li>Čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Umytie vlasov</li><li>Hydratačná starostlivosť</li><li>Teplý uterákový rituál</li><li>Záverečné vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="classic" data-name="RELAXAČNÝ HEAD SPA" data-id="relaxacny-head-spa">
+<article data-min="60" data-price="70" class="card" data-cat="classic" data-name="RELAXAČNÝ HEAD SPA" data-id="relaxacny-head-spa">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>02</span><span>Klasické</span></div>
@@ -250,7 +272,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Doprajte si 60 minút, počas ktorých sa svet na chvíľu zastaví. Relaxačný Head Spa rituál je vytvorený v pokojnej atmosfére, s dôrazom na ticho, jemný dotyk, vôňu, teplo a vodu.</p><p>Postupné uvoľnenie pokožky hlavy, tváre a dekoltu prináša príjemný pocit ľahkosti a oddychu.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Peeling a hĺbkové čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy</li><li>Rituál so sérom na pokožku hlavy</li><li>Masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Luxusný vodný Head Spa rituál</li><li>Výživná vlasová maska</li><li>Chladivý očný rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="classic" data-name="HEAD SPA HARMÓNIA" data-id="head-spa-harmonia">
+<article data-min="75" data-price="85" class="card" data-cat="classic" data-name="HEAD SPA HARMÓNIA" data-id="head-spa-harmonia">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>03</span><span>Klasické</span></div>
@@ -265,7 +287,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Sedemdesiatpäť minút bez ponáhľania. Rituál postupne prechádza od pokožky hlavy cez spánky a tvár až k tichu.</p><p>Teplý bylinný obklad, hĺbkový hydratačný zábal a relaxačný zvukový rituál držia telo aj myseľ v jednom pokojnom tempe.</p><p>Vhodné vtedy, keď máte za sebou náročné obdobie a potrebujete viac než len rýchly oddych.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemný peeling a osvieženie pokožky hlavy</li><li>Intenzívna relaxačná masáž hlavy</li><li>Masáž tváre a spánkov</li><li>Teplý bylinný obklad</li><li>Luxusný vodný Head Spa rituál</li><li>Hĺbkový hydratačný vlasový zábal</li><li>Relaxačný zvukový rituál</li><li>Uvoľňujúci záverečný rituál pokoja</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="classic" data-name="HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY" data-id="hlbkovy-ritual-pre-pokozku-hlavy">
+<article data-min="90" data-price="95" class="card" data-cat="classic" data-name="HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY" data-id="hlbkovy-ritual-pre-pokozku-hlavy">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>04</span><span>Klasické</span></div>
@@ -280,7 +302,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre pokožku, ktorá pôsobí zaťažene, rýchlo sa mastí, svrbí alebo má sklony k lupinám.</p><p>Začíname rozhovorom a pozorovaním pokožky hlavy trichologickou kamerou, aby sme videli jej skutočný stav. Podľa toho vyberáme peeling aj následnú starostlivosť.</p><p>Nasleduje hĺbkový detox, stimulačná masáž, vodný Head Spa rituál a sérum zvolené presne pre vašu pokožku. Deväťdesiat minút, po ktorých pokožka hlavy konečne dýcha.</p></div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia a rozhovor o stave pokožky hlavy</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Jemný predčistiaci rituál</li><li>Hĺbkový detox pokožky hlavy</li><li>Peeling podľa aktuálneho stavu pokožky</li><li>Relaxačná a stimulačná masáž pokožky hlavy</li><li>Teplý uterákový rituál</li><li>Špeciálna čistiaca starostlivosť pre pokožku hlavy</li><li>Vodný Head Spa rituál</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Relaxačný záverečný rituál v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="classic" data-name="KOZMETICKÝ HEAD SPA RITUÁL" data-id="kozmeticky-head-spa-ritual">
+<article data-min="60" data-price="75" class="card" data-cat="classic" data-name="KOZMETICKÝ HEAD SPA RITUÁL" data-id="kozmeticky-head-spa-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>05</span><span>Klasické</span></div>
@@ -295,7 +317,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Spojenie Head Spa a kozmetiky v jednej hodine. Staráme sa o pokožku hlavy, tvár aj vlasy naraz.</p><p>Čistiaca a hydratačná maska, liftingová masáž tváre a relaxačná masáž dekoltu dopĺňajú klasický vodný rituál.</p><p>Voľba pre tých, ktorí chcú z jednej návštevy odísť oddýchnutí aj rozžiarení.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Čistiaca a hydratačná maska na tvár</li><li>Liftingová masáž tváre</li><li>Relaxačná masáž dekoltu</li><li>Teplý uterákový rituál</li><li>Výživná maska pre vlasy</li><li>Chladivý očný rituál</li><li>Intenzívny záverečný pleťový rituál</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="classic" data-name="OVOCNÝ A OSVIEŽUJÚCI HEAD SPA RITUÁL" data-id="ovocny-a-osviezujuci-head-spa-ritual">
+<article data-min="75" data-price="89" class="card" data-cat="classic" data-name="OVOCNÝ A OSVIEŽUJÚCI HEAD SPA RITUÁL" data-id="ovocny-a-osviezujuci-head-spa-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>06</span><span>Klasické</span></div>
@@ -310,7 +332,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál, ktorý je cítiť a dá sa aj ochutnať. Pracujeme s čerstvým sezónnym ovocím, chladivou uhorkou a sviežimi vôňami.</p><p>Teplo a chlad sa striedajú, ovocný vlasový zábal a svieži pleťový obklad zanechajú pokožku osviežanú a vlasy vyživené.</p><p>Obľúbená voľba na jar a v lete, aj ako darček pre niekoho, kto má rád niečo iné než klasiku.</p></div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Svieži aromatický úvod</li><li>Rituál s čerstvým sezónnym ovocím</li><li>Jemné čistenie pokožky hlavy</li><li>Relaxačná masáž hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Chladivý uhorkový očný rituál</li><li>Svieži pleťový obklad</li><li>Relaxačná masáž tváre</li><li>Teplý uterákový rituál</li><li>Čerstvý ovocný vlasový zábal</li><li>Hydratačná vlasová starostlivosť</li><li>Jemný aromatický záverečný rituál</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="classic" data-name="PRÉMIOVÝ HEAD SPA RITUÁL" data-id="premiovy-head-spa-ritual">
+<article data-min="120" data-price="149" class="card featured" data-cat="classic" data-name="PRÉMIOVÝ HEAD SPA RITUÁL" data-id="premiovy-head-spa-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3c3.5 4.6 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.4 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2 2.4"/></svg></div>
   <div>
     <div class="mini"><span>07</span><span>Klasické</span><span class="badge">Odporúčame</span></div>
@@ -326,7 +348,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Dve hodiny, počas ktorých neriešite nič. Najkompletnejší rituál, aký v HEAD SPA 30 ponúkame.</p><p>Začíname výberom vône a hĺbkovým očistením pokožky hlavy, pokračujeme luxusným vodným rituálom, starostlivosťou o tvár a oči a vlasovým zábalom podľa typu vlasov.</p><p>Záver patrí chodidlám: reflexný rituál, hrejivý zábal a jemné tlakové techniky. Všetko uzatvára zvukový rituál a tichý aromaterapeutický odpočinok.</p><p>Ak si chcete dopriať Head Spa v jeho najúplnejšej podobe, toto je ono.</p></div><ol><li>Uvítací nápoj</li><li>Privítací aromaterapeutický rituál s výberom vône</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a tvár</li><li>Luxusná pleťová maska</li><li>Chladivý očný rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hĺbkový vlasový zábal podľa typu vlasov</li><li>Výživné sérum pre pokožku hlavy</li><li>Reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Jemný tlakový rituál chodidiel</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li><li>Luxusné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="gentlemen"><span>Pánske</span><b>Pánske rituály</b></div>
-<article class="card" data-cat="gentlemen" data-name="PÁNSKY HEAD SPA" data-id="pansky-head-spa">
+<article data-min="45" data-price="55" class="card" data-cat="gentlemen" data-name="PÁNSKY HEAD SPA" data-id="pansky-head-spa">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
   <div>
     <div class="mini"><span>08</span><span>Pánske</span></div>
@@ -341,7 +363,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Štyridsaťpäť minút vytvorených pre mužov. Bez zbytočností, ale s plnou starostlivosťou.</p><p>Peeling, hĺbkové čistenie pokožky hlavy, relaxačný rituál hlavy a spánkov, luxusný vodný rituál a teplý uterák.</p><p>Ideálne po práci alebo pred dôležitým dňom. Pokožka hlavy je čistá, vlasy svieže a hlava vypnutá.</p></div><ol><li>Uvítací nápoj</li><li>Úvodný relaxačný rituál</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý uterákový rituál</li><li>Osviežujúce ošetrenie pokožky hlavy</li><li>Výživná starostlivosť pre vlasy</li><li>Záverečné opláchnutie a profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="gentlemen" data-name="PÁNSKY HARMONICKÝ RITUÁL" data-id="pansky-harmonicky-ritual">
+<article data-min="60" data-price="75" class="card" data-cat="gentlemen" data-name="PÁNSKY HARMONICKÝ RITUÁL" data-id="pansky-harmonicky-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
   <div>
     <div class="mini"><span>09</span><span>Pánske</span></div>
@@ -356,7 +378,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Hodina v drevitých a sviežich tónoch. Na začiatku si vyberiete vôňu: drevo, céder alebo bergamot.</p><p>Teplý aromatický uterák, chladivý očný rituál a relaxačný rituál pre tvár dopĺňajú luxusný vodný Head Spa rituál.</p><p>Rituál končí niekoľkými minútami v úplnom tichu. Práve tie si muži pochvaľujú najviac.</p></div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: drevo, céder, bergamot</li><li>Osviežujúci peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Hrejivý aromatický uterákový rituál</li><li>Chladivý očný rituál</li><li>Relaxačný rituál pre tvár</li><li>Výživná vlasová starostlivosť</li><li>Ošetrenie pokožky hlavy pánskym sérom</li><li>Záverečný relaxačný moment v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card" data-cat="gentlemen" data-name="PÁNSKY HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY" data-id="pansky-hlbkovy-ritual-pre-pokozku-hlavy">
+<article data-min="90" data-price="99" class="card" data-cat="gentlemen" data-name="PÁNSKY HĹBKOVÝ RITUÁL PRE POKOŽKU HLAVY" data-id="pansky-hlbkovy-ritual-pre-pokozku-hlavy">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
   <div>
     <div class="mini"><span>10</span><span>Pánske</span></div>
@@ -371,7 +393,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>90 minút dôkladnej starostlivosti pre mužov, ktorí chcú svoju pokožku hlavy dostať späť do pocitu čistoty, sviežosti a komfortu.</p><p>Začíname konzultáciou a pozorovaním pokožky hlavy trichologickou kamerou. Až podľa toho, čo na nej vidíme, volíme peeling, detox aj sérum.</p><p>Rituál cielene rieši nadmerné mastenie, lupiny a nánosy stylingových produktov. Medzi jednotlivými krokmi je priestor na teplý uterák, chladivý očný rituál a záverečný oddych v tichu.</p></div><ol><li>Uvítací nápoj</li><li>Úvodná konzultácia</li><li>Trichologické pozorovanie pokožky hlavy kamerou</li><li>Analýza aktuálneho stavu pokožky</li><li>Predčistiaci rituál</li><li>Hĺbkový peeling pokožky hlavy</li><li>Detoxikačné čistenie</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Cielená starostlivosť pri nadmernom mastení, lupinách a nánosoch stylingových produktov</li><li>Ošetrenie pokožky vhodným sérom</li><li>Výživná starostlivosť pre vlasy</li><li>Chladivý očný rituál</li><li>Záverečný relax v tichu</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="gentlemen" data-name="PRÉMIOVÝ PÁNSKY RITUÁL" data-id="premiovy-pansky-ritual">
+<article data-min="120" data-price="149" class="card featured" data-cat="gentlemen" data-name="PRÉMIOVÝ PÁNSKY RITUÁL" data-id="premiovy-pansky-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9h16M4 13h16M4 17h10"/><path d="M6 5.5c2-1.5 4 1.5 6 0s4 1.5 6 0"/></svg></div>
   <div>
     <div class="mini"><span>11</span><span>Pánske</span><span class="badge">Odporúčame</span></div>
@@ -387,7 +409,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Dve hodiny, počas ktorých nemusíte nič riešiť.</p><p>Rituál je vytvorený pre muža, ktorý si chce dopriať najvyššiu úroveň komfortu, oddychu a starostlivosti.</p><p>Začíname pri pokožke hlavy a postupne prechádzame cez vlasy, tvár a oči až k chodidlám. Teplé uteráky, voda, drevité vône, vlasové zábaly, pleťová maska a starostlivosť o chodidlá vytvárajú jeden plynulý zážitok.</p><p>Počas rituálu je priestor na ticho, pokoj a úplné vypnutie. Žiadne telefóny, žiadny zhon, iba dve hodiny venované vám.</p><p>Odpočívate. My sa postaráme o zvyšok. Keď obyčajný relax nestačí a chcete zažiť Head Spa v jeho najluxusnejšej podobe.</p></div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: céder, santalové drevo, bergamot</li><li>Úvodný rituál na spomalenie a uvoľnenie</li><li>Jemný peeling pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Intenzívny relaxačný rituál hlavy a spánkov</li><li>Teplý aromatický uterákový rituál</li><li>Luxusná hydratačná maska na tvár</li><li>Chladivý očný rituál</li><li>Hĺbkový vlasový zábal</li><li>Výživné sérum pre pokožku hlavy</li><li>Relaxačný reflexný rituál pre chodidlá</li><li>Hrejivý zábal chodidiel</li><li>Regeneračná maska na chodidlá</li><li>Jemný tlakový rituál chodidiel</li><li>Aromatický oddych v tichu</li><li>Relaxačný zvukový rituál</li><li>Záverečná vlasová starostlivosť</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="kids"><span>Detské</span><b>Detské rituály</b></div>
-<article class="card" data-cat="kids" data-name="DETSKÝ OVOCNÝ HEAD SPA" data-id="detsky-ovocny-head-spa">
+<article data-min="50" data-price="55" class="card" data-cat="kids" data-name="DETSKÝ OVOCNÝ HEAD SPA" data-id="detsky-ovocny-head-spa">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 20.5s-7-4.4-7-9.5a3.8 3.8 0 0 1 7-2 3.8 3.8 0 0 1 7 2c0 5.1-7 9.5-7 9.5z"/><path d="M12 3v2"/></svg></div>
   <div>
     <div class="mini"><span>12</span><span>Detské</span></div>
@@ -403,7 +425,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál vytvorený tak, aby sa v ňom deti cítili bezpečne a zároveň ich to bavilo.</p><p>Ovocné vône, detský uvítací nápoj, jemné čistenie pokožky hlavy, ovocný vlasový zábal a teplý uteráčik. Všetko jemne, pomaly a s úsmevom.</p><p>Vhodné pre deti, ktoré vydržia pokojne poležať. Rodič môže zostať v miestnosti po celý čas.</p></div><ol><li>Detský welcome drink</li><li>Ovocný aromatický úvod</li><li>Jemné čistenie pokožky hlavy</li><li>Ovocný vlasový zábal</li><li>Jemný relaxačný rituál hlavy</li><li>Jemný vodný Head Spa rituál</li><li>Jemná masáž hlavy</li><li>Teplý uteráčikový rituál</li><li>Hydratačná starostlivosť o vlasy</li><li>Malý relaxačný oddych</li><li>Záverečné umytie a vysušenie vlasov</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="couple"><span>Pre dvoch</span><b>Rituály pre dvoch</b></div>
-<article class="card" data-cat="couple" data-name="SPOLOČNÝ HEAD SPA RITUÁL" data-id="spolocny-head-spa-ritual">
+<article data-min="65" data-price="129" data-duo="1" class="card" data-cat="couple" data-name="SPOLOČNÝ HEAD SPA RITUÁL" data-id="spolocny-head-spa-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></div>
   <div>
     <div class="mini"><span>13</span><span>Pre dvoch</span></div>
@@ -418,7 +440,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre dvoch, vedľa seba. Partneri, manželia, mama s dcérou, sestry, kamarátky alebo mama so synom.</p><p>Každý si na začiatku vyberie vôňu podľa nálady, potom už len ležíte. Rozprávať sa nemusíte.</p><p>Uvedená cena platí za obe osoby.</p></div><ol><li>Uvítací nápoj pre oboch</li><li>Aromaterapeutický úvod</li><li>Výber vône podľa nálady</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska</li><li>Jemný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Krátky relaxačný zvukový rituál</li><li>Výživné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="couple" data-name="SPOLOČNÝ RITUÁL POD HVIEZDAMI" data-id="spolocny-ritual-pod-hviezdami">
+<article data-min="75" data-price="149" data-duo="1" class="card featured" data-cat="couple" data-name="SPOLOČNÝ RITUÁL POD HVIEZDAMI" data-id="spolocny-ritual-pod-hviezdami">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></div>
   <div>
     <div class="mini"><span>14</span><span>Pre dvoch</span><span class="badge">Odporúčame</span></div>
@@ -434,7 +456,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Sedemdesiatpäť minút v tlmenom svetle pod hviezdnou oblohou.</p><p>K spoločnému Head Spa rituálu pridávame hydratačnú masku s teplým turbanom, hviezdnu atmosféru a pokojný zvukový sprievod.</p><p>Najčastejšie sa daruje k výročiu či Valentínovi, alebo len tak, keď chcete niekoho prekvapiť. Uvedená cena platí za obe osoby.</p></div><ol><li>Uvítací nápoj pre oboch</li><li>Výber vône pre spoločný aromaterapeutický úvod</li><li>Jemný peeling pokožky hlavy</li><li>Hĺbkové čistenie pokožky hlavy</li><li>Relaxačný rituál hlavy a spánkov</li><li>Luxusný vodný Head Spa rituál</li><li>Teplý aromatický uterákový rituál</li><li>Hydratačná vlasová maska s teplým turbanom</li><li>Jemný relaxačný rituál pre tvár</li><li>Chladivý očný rituál</li><li>Rituál pod hviezdnou oblohou</li><li>Pokojný zvukový sprievod a tlmené svetlo</li><li>Záverečné výživné ošetrenie vlasov</li><li>Profesionálne vysušenie vlasov</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="lux"><span>Luxusné</span><b>Luxusné Head Spa rituály</b></div>
-<article class="card" data-cat="lux" data-name="STRIEBORNÝ HEAD SPA RITUÁL" data-id="strieborny-head-spa-ritual" id="strieborny-head-spa-ritual">
+<article data-min="75" data-price="109" class="card" data-cat="lux" data-name="STRIEBORNÝ HEAD SPA RITUÁL" data-id="strieborny-head-spa-ritual" id="strieborny-head-spa-ritual">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="9" r="5.4"/><path d="M6.6 9c0-3 2.4-5.4 5.4-5.4"/><path d="M12 14.4v6M8.6 17.4l3.4 3 3.4-3"/></svg></div>
   <div>
     <div class="mini"><span>15</span><span>Luxusné</span></div>
@@ -449,7 +471,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Luxusný Head Spa rituál s kozmetickým striebrom.</p><p>Chladivý strieborný peeling pokožky hlavy a strieborná maska sa striedajú s hrejivým zábalom, takže pokožka prechádza z chladu do tepla a späť.</p><p>Menší brat zlatého rituálu, o pätnásť minút kratší.</p></div><ol><li>Uvítací nápoj</li><li>Strieborný aromaterapeutický úvod</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>Chladivý strieborný peelingový rituál</li><li>Strieborná maska na pokožku hlavy</li><li>Hrejivý uterákový zábal</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a šiju</li><li>Výživné sérum s kozmetickým striebrom</li><li>Chladivý záverečný rituál</li><li>Aromaterapeutický odpočinok v tichu</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="lux" data-name="ZLATÝ HEAD SPA RITUÁL 24K" data-id="zlaty-head-spa-ritual-24k" id="zlaty-head-spa-ritual-24k">
+<article data-min="90" data-price="129" class="card featured" data-cat="lux" data-name="ZLATÝ HEAD SPA RITUÁL 24K" data-id="zlaty-head-spa-ritual-24k" id="zlaty-head-spa-ritual-24k">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="9" r="5.4"/><path d="M6.6 9c0-3 2.4-5.4 5.4-5.4"/><path d="M12 14.4v6M8.6 17.4l3.4 3 3.4-3"/></svg></div>
   <div>
     <div class="mini"><span>16</span><span>Luxusné</span><span class="badge">Odporúčame</span></div>
@@ -464,7 +486,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Deväťdesiat minút absolútneho rozmaznávania s kozmetickým 24-karátovým zlatom.</p><p>Zlatý peelingový rituál pokožky hlavy, zlatá maska a zlatý vlasový zábal, doplnené teplom, vôňou a dlhou masážou hlavy, spánkov a šije.</p><p>Náš najluxusnejší rituál pre hlavu. Obľúbený ako darček vtedy, keď chcete darovať niečo naozaj výnimočné.</p></div><ol><li>Uvítací nápoj</li><li>Zlatý aromaterapeutický úvod</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>24K zlatý peelingový rituál pokožky hlavy</li><li>Teplý aromatický uterákový rituál</li><li>Zlatá maska na pokožku hlavy</li><li>24K zlatý vlasový zábal</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky, šiju a tvár</li><li>Chladivý očný rituál</li><li>Výživné sérum obohatené o kozmetické zlato</li><li>Relaxačný zvukový rituál</li><li>Aromaterapeutický odpočinok v úplnom tichu</li><li>Luxusné záverečné ošetrenie vlasov</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
-<article class="card" data-cat="lux" data-name="ZLATÝ HEAD SPA RITUÁL 24K PRE DVOCH" data-id="zlaty-head-spa-ritual-24k-pre-dvoch" id="zlaty-head-spa-ritual-24k-pre-dvoch">
+<article data-min="90" data-price="249" data-duo="1" class="card" data-cat="lux" data-name="ZLATÝ HEAD SPA RITUÁL 24K PRE DVOCH" data-id="zlaty-head-spa-ritual-24k-pre-dvoch" id="zlaty-head-spa-ritual-24k-pre-dvoch">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="9" r="5.4"/><path d="M6.6 9c0-3 2.4-5.4 5.4-5.4"/><path d="M12 14.4v6M8.6 17.4l3.4 3 3.4-3"/></svg></div>
   <div>
     <div class="mini"><span>17</span><span>Luxusné</span></div>
@@ -480,7 +502,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Zlatý Head Spa rituál 24K v dvojici, vedľa seba.</p><p>Obaja prechádzate celým zlatým rituálom naraz: zlatý peeling pokožky hlavy, zlatá maska, zlatý vlasový zábal a dlhá masáž hlavy, spánkov a šije.</p><p>Náš najluxusnejší darček pre dvoch.</p></div><ol><li>Uvítací nápoj pre oboch</li><li>Zlatý aromaterapeutický úvod pre oboch</li><li>Stlmenie svetiel</li><li>Jemný peeling a hĺbkové očistenie pokožky hlavy</li><li>Luxusný vodný Head Spa rituál</li><li>24K zlatý peelingový rituál pokožky hlavy</li><li>Teplý aromatický uterákový rituál</li><li>Zlatá maska na pokožku hlavy</li><li>24K zlatý vlasový zábal</li><li>Intenzívny relaxačný rituál pokožky hlavy</li><li>Rituál pre spánky a šiju</li><li>Výživné sérum obohatené o kozmetické zlato</li><li>Relaxačný zvukový rituál</li><li>Spoločný aromaterapeutický odpočinok v úplnom tichu</li><li>Profesionálne vysušenie a finálna úprava</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet"><span>Chodidlá</span><b>Rituály pre chodidlá</b></div>
-<article class="card" data-cat="feet" data-name="KLASICKÝ RITUÁL PRE CHODIDLÁ" data-id="klasicky-ritual-pre-chodidla" id="klasicky-ritual-pre-chodidla">
+<article data-min="40" data-price="45" class="card" data-cat="feet" data-name="KLASICKÝ RITUÁL PRE CHODIDLÁ" data-id="klasicky-ritual-pre-chodidla" id="klasicky-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>18</span><span>Chodidlá</span></div>
@@ -495,7 +517,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Doprajte svojim nohám viac než len oddych. Doprajte si chvíľu úplného vypnutia.</p><p>Štyridsať minút, počas ktorých sa chodidlá dostanú z teplého kúpeľa cez peeling a masku až k reflexnému tlakovému rituálu.</p><p>Teplý uterákový zábal, výživné sérum a intenzívna hydratácia zanechajú chodidlá hladké a ľahké. Rituál končí niekoľkými minútami v tichu.</p></div><ol><li>Uvítací nápoj</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel</li><li>Osviežujúca maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky na chodidlách</li><li>Výživné sérum a intenzívna hydratácia</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet" data-name="RELAXAČNÝ RITUÁL PRE CHODIDLÁ" data-id="relaxacny-ritual-pre-chodidla" id="relaxacny-ritual-pre-chodidla">
+<article data-min="60" data-price="59" class="card" data-cat="feet" data-name="RELAXAČNÝ RITUÁL PRE CHODIDLÁ" data-id="relaxacny-ritual-pre-chodidla" id="relaxacny-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>19</span><span>Chodidlá</span></div>
@@ -510,7 +532,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Hodina namiesto štyridsiatich minút. Rozdiel nie je v počte krokov, ale v tempe.</p><p>Teplý kúpeľ trvá dlhšie, peeling je dôkladnejší a reflexná masáž dostane toľko priestoru, koľko potrebuje.</p><p>Rituál pre toho, kto celý deň stojí alebo chodí a potrebuje nohy naozaj vypnúť.</p></div><ol><li>Uvítací nápoj</li><li>Voňavý aromaterapeutický úvod s výberom vône</li><li>Predĺžený teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Osviežujúca maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Predĺžený reflexný tlakový rituál chodidiel</li><li>Uvoľňujúca masáž lýtok</li><li>Jemné stimulačné techniky na chodidlách</li><li>Výživné sérum a intenzívna hydratácia</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet" data-name="HARMÓNIA PRE CHODIDLÁ" data-id="harmonia-pre-chodidla" id="harmonia-pre-chodidla">
+<article data-min="75" data-price="75" class="card" data-cat="feet" data-name="HARMÓNIA PRE CHODIDLÁ" data-id="harmonia-pre-chodidla" id="harmonia-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>20</span><span>Chodidlá</span></div>
@@ -525,7 +547,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál, ktorý nekončí pri členku.</p><p>Po kúpeli, peelingu a maske prichádza na rad uvoľnenie lýtok a jemná práca s dychom, ktorá spomalí celé telo, nielen nohy.</p><p>Odchádzate uvoľnení od chodidiel nahor.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod s výberom vône</li><li>Rituál spomalenia dychu</li><li>Teplý kúpeľ chodidiel s minerálmi</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Hydratačná maska na chodidlá</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Uvoľňujúca masáž lýtok a členkov</li><li>Jemné stimulačné techniky</li><li>Výživné sérum a intenzívna hydratácia</li><li>Relaxačný zvukový rituál</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet" data-name="HĹBKOVÝ RITUÁL PRE CHODIDLÁ A PÄTY" data-id="hlbkovy-ritual-pre-chodidla-a-paty" id="hlbkovy-ritual-pre-chodidla-a-paty">
+<article data-min="90" data-price="85" class="card" data-cat="feet" data-name="HĹBKOVÝ RITUÁL PRE CHODIDLÁ A PÄTY" data-id="hlbkovy-ritual-pre-chodidla-a-paty" id="hlbkovy-ritual-pre-chodidla-a-paty">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>21</span><span>Chodidlá</span></div>
@@ -540,7 +562,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre chodidlá, ktoré toho majú veľa za sebou.</p><p>Dvojitý peeling, dlhší zábal a intenzívna maska na päty riešia suchú a zrohovatenú pokožku. Reflexná práca sa sústredí na klenbu a pätu.</p><p>Ak máte suché päty alebo chodidlá bolia na konci dňa, toto je rituál pre vás.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Zmäkčujúci rituál pre zrohovatenú pokožku</li><li>Dvojitý peeling chodidiel a pät</li><li>Intenzívna maska na päty</li><li>Výživná maska na chodidlá</li><li>Predĺžený teplý uterákový zábal</li><li>Hĺbkový reflexný tlakový rituál</li><li>Cielená práca s klenbou a pätou</li><li>Uvoľňujúca masáž lýtok a členkov</li><li>Výživné sérum a olejové ošetrenie</li><li>Intenzívna hydratácia a uzatvárajúci krém</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet" data-name="KOZMETICKÝ RITUÁL PRE CHODIDLÁ" data-id="kozmeticky-ritual-pre-chodidla" id="kozmeticky-ritual-pre-chodidla">
+<article data-min="60" data-price="69" class="card" data-cat="feet" data-name="KOZMETICKÝ RITUÁL PRE CHODIDLÁ" data-id="kozmeticky-ritual-pre-chodidla" id="kozmeticky-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>22</span><span>Chodidlá</span></div>
@@ -555,7 +577,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre toho, kto chce mať nohy nielen oddýchnuté, ale aj upravené.</p><p>K teplému kúpeľu, peelingu a maske sa pridáva úprava nechtov, ošetrenie nechtového lôžka a záverečné ošetrenie pokožky.</p><p>Obľúbený pred dovolenkou a pred sezónou otvorenej obuvi.</p></div><ol><li>Uvítací nápoj</li><li>Aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Úprava a tvarovanie nechtov</li><li>Ošetrenie nechtového lôžka a okolia</li><li>Hydratačná maska na chodidlá a päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Výživné sérum a intenzívna hydratácia</li><li>Záverečné ošetrenie pokožky chodidiel</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet" data-name="OVOCNÝ A BYLINKOVÝ RITUÁL PRE CHODIDLÁ" data-id="ovocny-a-bylinkovy-ritual-pre-chodidla" id="ovocny-a-bylinkovy-ritual-pre-chodidla">
+<article data-min="60" data-price="65" class="card" data-cat="feet" data-name="OVOCNÝ A BYLINKOVÝ RITUÁL PRE CHODIDLÁ" data-id="ovocny-a-bylinkovy-ritual-pre-chodidla" id="ovocny-a-bylinkovy-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>23</span><span>Chodidlá</span></div>
@@ -570,7 +592,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Hodina pre chodidlá, v ktorej sa teplo strieda s osviežením.</p><p>Teplý bylinný kúpeľ s čerstvými citrusmi, ovocný peeling, bylinný obklad, hydratačná maska a reflexný tlakový rituál.</p><p>Odchádzate s pocitom, že ste celý deň stáli na tráve, nie na asfalte.</p></div><ol><li>Uvítací nápoj s čerstvým ovocím</li><li>Voňavý aromaterapeutický úvod</li><li>Teplý bylinný kúpeľ chodidiel s čerstvými citrusmi</li><li>Jemné penové očistenie</li><li>Ovocný peeling chodidiel</li><li>Čerstvý ovocný a bylinný obklad</li><li>Chladivý osviežujúci rituál</li><li>Hydratačná maska na chodidlá a päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné ovocné maslo a krémové ošetrenie</li><li>Aromaterapeutický oddych v tichu</li><li>Záverečný relaxačný rituál</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="feet" data-name="PRÉMIOVÝ RITUÁL PRE CHODIDLÁ" data-id="premiovy-ritual-pre-chodidla" id="premiovy-ritual-pre-chodidla">
+<article data-min="120" data-price="139" class="card featured" data-cat="feet" data-name="PRÉMIOVÝ RITUÁL PRE CHODIDLÁ" data-id="premiovy-ritual-pre-chodidla" id="premiovy-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>24</span><span>Chodidlá</span><span class="badge">Odporúčame</span></div>
@@ -586,7 +608,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Dve hodiny, počas ktorých neriešite nič.</p><p>Všetko, čo vieme pre chodidlá spraviť, v jednom plynulom rituále: minerálny kúpeľ, dvojitý peeling, výživná aj hydratačná maska, teplý aj chladivý zábal a dlhá reflexná masáž chodidiel, členkov a lýtok.</p><p>Záver patrí zvukovému rituálu a tichému aromaterapeutickému odpočinku.</p></div><ol><li>Uvítací nápoj</li><li>Privítací aromaterapeutický rituál s výberom vône</li><li>Rituál spomalenia dychu</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Prvý peeling chodidiel</li><li>Druhý jemný peeling pät</li><li>Výživná maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Chladivý osviežujúci rituál</li><li>Hĺbkový reflexný tlakový rituál chodidiel</li><li>Masáž členkov a lýtok</li><li>Jemné stimulačné techniky</li><li>Výživné sérum a olejové ošetrenie</li><li>Intenzívna hydratácia a uzatvárajúci krém</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet-men"><span>Pánske chodidlá</span><b>Pánske rituály pre chodidlá</b></div>
-<article class="card" data-cat="feet-men" data-name="PÁNSKY RITUÁL PRE CHODIDLÁ" data-id="pansky-ritual-pre-chodidla" id="pansky-ritual-pre-chodidla">
+<article data-min="45" data-price="49" class="card" data-cat="feet-men" data-name="PÁNSKY RITUÁL PRE CHODIDLÁ" data-id="pansky-ritual-pre-chodidla" id="pansky-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>25</span><span>Pánske chodidlá</span></div>
@@ -601,7 +623,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Pánska verzia klasického rituálu pre chodidlá.</p><p>Drevité vône namiesto kvetinových, silnejší tlak pri reflexnej masáži a dôraz na uvoľnenie napätia v klenbe.</p><p>Štyridsaťpäť minút, po ktorých sa nohy cítia ľahšie.</p></div><ol><li>Uvítací nápoj</li><li>Výber pánskej vône: céder, santalové drevo, bergamot</li><li>Teplý kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Osviežujúca maska na chodidlá</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel so silnejším tlakom</li><li>Uvoľnenie napätia v klenbe</li><li>Výživné sérum a hydratácia</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet-men" data-name="PÁNSKY HARMONICKÝ RITUÁL PRE CHODIDLÁ" data-id="pansky-harmonicky-ritual-pre-chodidla" id="pansky-harmonicky-ritual-pre-chodidla">
+<article data-min="60" data-price="69" class="card" data-cat="feet-men" data-name="PÁNSKY HARMONICKÝ RITUÁL PRE CHODIDLÁ" data-id="pansky-harmonicky-ritual-pre-chodidla" id="pansky-harmonicky-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>26</span><span>Pánske chodidlá</span></div>
@@ -616,7 +638,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Hodina pre nohy, ktoré majú za sebou dlhý deň na nohách alebo tréning.</p><p>Po kúpeli a peelingu prichádza dlhšia reflexná masáž chodidiel a cielené uvoľnenie lýtok a členkov.</p><p>Rituál končí v tichu, s hrejivým zábalom.</p></div><ol><li>Uvítací nápoj</li><li>Výber pánskej vône: céder, santalové drevo, bergamot</li><li>Rituál spomalenia dychu</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Hydratačná maska na chodidlá</li><li>Teplý uterákový zábal</li><li>Predĺžený reflexný tlakový rituál chodidiel</li><li>Uvoľňujúca masáž lýtok a členkov</li><li>Jemné stimulačné techniky</li><li>Výživné sérum a intenzívna hydratácia</li><li>Hrejivý zábal chodidiel</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet-men" data-name="PÁNSKY HĹBKOVÝ RITUÁL PRE CHODIDLÁ" data-id="pansky-hlbkovy-ritual-pre-chodidla" id="pansky-hlbkovy-ritual-pre-chodidla">
+<article data-min="90" data-price="89" class="card" data-cat="feet-men" data-name="PÁNSKY HĹBKOVÝ RITUÁL PRE CHODIDLÁ" data-id="pansky-hlbkovy-ritual-pre-chodidla" id="pansky-hlbkovy-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>27</span><span>Pánske chodidlá</span></div>
@@ -631,7 +653,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre chodidlá, ktoré sú roky v pracovnej obuvi.</p><p>Zmäkčujúci rituál, dvojitý peeling a intenzívna maska riešia zrohovatenú pokožku a suché päty.</p><p>Reflexná časť je dlhšia a cielená na klenbu, pätu a Achillovu šľachu.</p></div><ol><li>Uvítací nápoj</li><li>Výber pánskej vône: céder, santalové drevo, bergamot</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Zmäkčujúci rituál pre zrohovatenú pokožku</li><li>Dvojitý peeling chodidiel a pät</li><li>Intenzívna maska na päty</li><li>Výživná maska na chodidlá</li><li>Predĺžený teplý uterákový zábal</li><li>Hĺbkový reflexný tlakový rituál</li><li>Cielená práca s klenbou a pätou</li><li>Uvoľnenie lýtok a Achillovej šľachy</li><li>Výživné sérum a olejové ošetrenie</li><li>Intenzívna hydratácia a uzatvárajúci krém</li><li>Aromatický oddych v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="feet-men" data-name="PRÉMIOVÝ PÁNSKY RITUÁL PRE CHODIDLÁ" data-id="premiovy-pansky-ritual-pre-chodidla" id="premiovy-pansky-ritual-pre-chodidla">
+<article data-min="120" data-price="139" class="card featured" data-cat="feet-men" data-name="PRÉMIOVÝ PÁNSKY RITUÁL PRE CHODIDLÁ" data-id="premiovy-pansky-ritual-pre-chodidla" id="premiovy-pansky-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>28</span><span>Pánske chodidlá</span><span class="badge">Odporúčame</span></div>
@@ -647,7 +669,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Dve hodiny, počas ktorých nemusíte nič riešiť.</p><p>Najúplnejšia pánska verzia: minerálny kúpeľ, dvojitý peeling, výživná aj hydratačná maska, teplý aj chladivý zábal a dlhá reflexná práca s chodidlami, členkami a lýtkami.</p><p>Žiadne telefóny, žiadny zhon, iba dve hodiny venované vám.</p></div><ol><li>Uvítací nápoj</li><li>Výber charakteristickej pánskej vône: céder, santalové drevo, bergamot</li><li>Úvodný rituál na spomalenie</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Prvý peeling chodidiel</li><li>Druhý jemný peeling pät</li><li>Výživná maska na chodidlá</li><li>Intenzívna maska na päty</li><li>Teplý aromatický uterákový rituál</li><li>Chladivý osviežujúci rituál</li><li>Hĺbkový reflexný tlakový rituál chodidiel</li><li>Masáž členkov a lýtok</li><li>Uvoľnenie Achillovej šľachy</li><li>Výživné sérum a olejové ošetrenie</li><li>Intenzívna hydratácia a uzatvárajúci krém</li><li>Relaxačný zvukový rituál</li><li>Tichý aromaterapeutický odpočinok</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet-kids"><span>Detské chodidlá</span><b>Detský rituál pre chodidlá</b></div>
-<article class="card" data-cat="feet-kids" data-name="DETSKÝ OVOCNÝ RITUÁL PRE CHODIDLÁ" data-id="detsky-ovocny-ritual-pre-chodidla" id="detsky-ovocny-ritual-pre-chodidla">
+<article data-min="40" data-price="45" class="card" data-cat="feet-kids" data-name="DETSKÝ OVOCNÝ RITUÁL PRE CHODIDLÁ" data-id="detsky-ovocny-ritual-pre-chodidla" id="detsky-ovocny-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>29</span><span>Detské chodidlá</span></div>
@@ -663,7 +685,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pripravený pre deti.</p><p>Bublinkový kúpeľ s ovocnou vôňou, jemný peeling, ovocná maska a teplý uterák. Masáž je jemná a krátka, aby deti vydržali a bavilo ich to.</p><p>Tempo prispôsobujeme dieťaťu. Rodič môže byť v miestnosti.</p></div><ol><li>Uvítací detský nápoj</li><li>Výber ovocnej vône</li><li>Teplý bublinkový kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Jemný ovocný peeling chodidiel</li><li>Ovocná maska na chodidlá</li><li>Teplý uterákový zábal</li><li>Jemná masáž chodidiel</li><li>Ovocné krémové ošetrenie</li><li>Záverečný oddych a rozprávkový zvukový rituál</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet-duo"><span>Chodidlá pre dvoch</span><b>Rituály pre chodidlá pre dvoch</b></div>
-<article class="card" data-cat="feet-duo" data-name="SPOLOČNÝ RITUÁL PRE CHODIDLÁ" data-id="spolocny-ritual-pre-chodidla" id="spolocny-ritual-pre-chodidla">
+<article data-min="60" data-price="115" data-duo="1" class="card" data-cat="feet-duo" data-name="SPOLOČNÝ RITUÁL PRE CHODIDLÁ" data-id="spolocny-ritual-pre-chodidla" id="spolocny-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>30</span><span>Chodidlá pre dvoch</span></div>
@@ -678,7 +700,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Rituál pre dvoch, vedľa seba, v jednej tichej miestnosti.</p><p>Obaja prechádzate rovnakými krokmi naraz: teplý kúpeľ, peeling, maska, zábal a reflexný tlakový rituál.</p><p>Obľúbené ako darček pre pár, pre mamu s dcérou alebo pre dve kamarátky.</p></div><ol><li>Uvítací nápoj pre oboch</li><li>Spoločný aromaterapeutický úvod s výberom vône</li><li>Teplý kúpeľ chodidiel pre oboch</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Hydratačná maska na chodidlá a päty</li><li>Teplý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky</li><li>Výživné sérum a intenzívna hydratácia</li><li>Spoločný oddych v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet-duo" data-name="SPOLOČNÝ RITUÁL PRE CHODIDLÁ POD HVIEZDAMI" data-id="spolocny-ritual-pre-chodidla-pod-hviezdami" id="spolocny-ritual-pre-chodidla-pod-hviezdami">
+<article data-min="75" data-price="139" data-duo="1" class="card" data-cat="feet-duo" data-name="SPOLOČNÝ RITUÁL PRE CHODIDLÁ POD HVIEZDAMI" data-id="spolocny-ritual-pre-chodidla-pod-hviezdami" id="spolocny-ritual-pre-chodidla-pod-hviezdami">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>31</span><span>Chodidlá pre dvoch</span></div>
@@ -694,7 +716,7 @@
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Večerná verzia spoločného rituálu.</p><p>Svetlá idú dole, na strope sa rozsvieti hviezdna projekcia a k rituálu sa pridáva zvukový rituál a dlhší spoločný oddych.</p><p>Náš najobľúbenejší darček k výročiu.</p></div><ol><li>Uvítací nápoj pre oboch</li><li>Spoločný aromaterapeutický úvod s výberom vône</li><li>Stlmenie svetiel a hviezdna projekcia</li><li>Teplý minerálny kúpeľ chodidiel pre oboch</li><li>Jemné penové očistenie</li><li>Peeling chodidiel a pät</li><li>Výživná maska na chodidlá</li><li>Hydratačná maska na päty</li><li>Teplý uterákový zábal</li><li>Predĺžený reflexný tlakový rituál chodidiel</li><li>Masáž členkov a lýtok</li><li>Výživné sérum a intenzívna hydratácia</li><li>Relaxačný zvukový rituál</li><li>Spoločný oddych pod hviezdami v tichu</li><li>Záverečný relaxačný rituál v tichu</li></ol></div></div>
 </article>
 <div class="cat rv" data-cat="feet-lux"><span>Luxusné chodidlá</span><b>Luxusné rituály pre chodidlá</b></div>
-<article class="card" data-cat="feet-lux" data-name="STRIEBORNÝ RITUÁL PRE CHODIDLÁ" data-id="strieborny-ritual-pre-chodidla" id="strieborny-ritual-pre-chodidla">
+<article data-min="75" data-price="99" class="card" data-cat="feet-lux" data-name="STRIEBORNÝ RITUÁL PRE CHODIDLÁ" data-id="strieborny-ritual-pre-chodidla" id="strieborny-ritual-pre-chodidla">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>32</span><span>Luxusné chodidlá</span></div>
@@ -709,7 +731,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Luxusný rituál pre chodidlá s kozmetickým striebrom.</p><p>Chladivý strieborný peeling a strieborná maska sa striedajú s hrejivým zábalom, takže chodidlá prechádzajú z chladu do tepla a späť.</p><p>Menší brat zlatého rituálu, o pätnásť minút kratší.</p></div><ol><li>Uvítací nápoj</li><li>Strieborný aromaterapeutický úvod</li><li>Teplý minerálny kúpeľ chodidiel</li><li>Jemné penové očistenie</li><li>Luxusný peeling chodidiel</li><li>Chladivý strieborný peelingový rituál</li><li>Strieborná hydratačná maska na chodidlá</li><li>Hrejivý uterákový zábal</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky</li><li>Výživné sérum s kozmetickým striebrom</li><li>Chladivý záverečný rituál</li><li>Aromaterapeutický odpočinok v tichu</li></ol></div></div>
 </article>
-<article class="card featured" data-cat="feet-lux" data-name="ZLATÝ RITUÁL 24K" data-id="zlaty-ritual-24k" id="zlaty-ritual-24k">
+<article data-min="90" data-price="119" class="card featured" data-cat="feet-lux" data-name="ZLATÝ RITUÁL 24K" data-id="zlaty-ritual-24k" id="zlaty-ritual-24k">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>33</span><span>Luxusné chodidlá</span><span class="badge">Odporúčame</span></div>
@@ -724,7 +746,7 @@
   </div>
   <div class="panel" aria-hidden="true"><div><div class="about"><span class="lbl">O rituále</span><p>Deväťdesiat minút absolútneho rozmaznávania s kozmetickým 24-karátovým zlatom.</p><p>Zlatý peelingový rituál, zlatá hydratačná maska a zábal na päty a chodidlá, doplnené teplom, vôňou a reflexnou masážou.</p><p>Náš najluxusnejší rituál pre chodidlá. Obľúbený ako darček vtedy, keď chcete darovať niečo naozaj výnimočné.</p></div><ol><li>Uvítací nápoj</li><li>Zlatý aromaterapeutický úvod</li><li>Teplý kúpeľ chodidiel s minerálnym a aromatickým rituálom</li><li>Jemné penové očistenie</li><li>Luxusný peeling chodidiel</li><li>24K zlatý peelingový rituál</li><li>Teplý uterákový zábal</li><li>Zlatá hydratačná maska na chodidlá</li><li>24K zlatý zábal na päty a chodidlá</li><li>Reflexný tlakový rituál chodidiel</li><li>Jemné stimulačné techniky pre pocit uvoľnenia</li><li>Výživné sérum obohatené o kozmetické zlato</li><li>Hrejivý zábal chodidiel</li><li>Chladivý záverečný rituál</li><li>Aromaterapeutický odpočinok v úplnom tichu</li><li>Luxusné záverečné ošetrenie chodidiel</li></ol></div></div>
 </article>
-<article class="card" data-cat="feet-lux" data-name="ZLATÝ RITUÁL 24K PRE DVOCH" data-id="zlaty-ritual-24k-pre-dvoch" id="zlaty-ritual-24k-pre-dvoch">
+<article data-min="90" data-price="229" data-duo="1" class="card" data-cat="feet-lux" data-name="ZLATÝ RITUÁL 24K PRE DVOCH" data-id="zlaty-ritual-24k-pre-dvoch" id="zlaty-ritual-24k-pre-dvoch">
   <div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 21c-3 0-4-2.5-4-5s1.5-4 3.5-4S14 13 14 16s-1 5-4 5z"/><circle cx="8" cy="6.5" r="1.2"/><circle cx="11.2" cy="5.2" r="1.1"/><circle cx="14.3" cy="5.6" r="1"/><circle cx="17" cy="7.2" r=".9"/></svg></div>
   <div>
     <div class="mini"><span>34</span><span>Luxusné chodidlá</span></div>
@@ -1150,9 +1172,9 @@
         </div>
       </div>
       <div class="info part">
-        <div><h4>Adresa</h4><p><span class="pin" aria-hidden="true"></span>Mostná 226/30, 949 01 Nitra</p><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a></div>
-        <div><h4>Otváracie hodiny</h4><p class="today" data-today aria-live="polite"></p><p>Po až Pi: 09:00 až 18:00<br>So: 09:00 až 15:00<br>Ne: zatvorené</p></div>
-        <div><h4>Kontakt</h4><a href="tel:+421911153136">+421 911 153 136</a><a href="mailto:info@salon30.sk">info@salon30.sk</a><a href="https://www.salon30.sk/" target="_blank" rel="noopener">www.salon30.sk</a><a href="https://www.instagram.com/salon30_nitra/" target="_blank" rel="noopener">Instagram</a></div>
+        <div><h3>Adresa</h3><p><span class="pin" aria-hidden="true"></span>Mostná 226/30, 949 01 Nitra</p><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a></div>
+        <div><h3>Otváracie hodiny</h3><p class="today" data-today aria-live="polite"></p><p>Po až Pi: 09:00 až 18:00<br>So: 09:00 až 15:00<br>Ne: zatvorené</p></div>
+        <div><h3>Kontakt</h3><a href="tel:+421911153136">+421 911 153 136</a><a href="mailto:info@salon30.sk">info@salon30.sk</a><a href="https://www.salon30.sk/" target="_blank" rel="noopener">www.salon30.sk</a><a href="https://www.instagram.com/salon30_nitra/" target="_blank" rel="noopener">Instagram</a></div>
       </div>
     </div>
     <div class="map rv"><div class="part">
