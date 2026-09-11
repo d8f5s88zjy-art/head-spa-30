@@ -660,7 +660,7 @@
   }
   /* a chip is either one category or a group of them (everything for the head, everything for the feet) */
   const GROUPS = {
-    head: ['classic', 'gentlemen', 'kids', 'couple'],
+    head: ['classic', 'gentlemen', 'kids', 'couple', 'lux'],
     feetall: ['feet', 'feet-men', 'feet-kids', 'feet-duo', 'feet-lux'],
   };
   const inCat = (cat) => {
@@ -964,28 +964,56 @@
   }
 
   /* ============ today's hours, computed in the salon's own time zone ============ */
+  /* Tento text vzniká až v prehliadači, preto má vlastné preklady, nie je v assets/i18n. */
+  const TODAY_WORDS = {
+    sk: { open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
+          next: 'otvárame', at: 'o', tomorrow: 'zajtra',
+          days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
+    cs: { open: 'Dnes otevřeno do', soon: 'Dnes otevíráme v', shut: 'Dnes už zavřeno', none: 'Dnes máme zavřeno',
+          next: 'otevíráme', at: 'v', tomorrow: 'zítra',
+          days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
+    pl: { open: 'Dziś otwarte do', soon: 'Dziś otwieramy o', shut: 'Dziś już zamknięte', none: 'Dziś mamy zamknięte',
+          next: 'otwieramy', at: 'o', tomorrow: 'jutro',
+          days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
+    hu: { open: 'Ma nyitva eddig:', soon: 'Ma nyitunk ekkor:', shut: 'Ma már zárva', none: 'Ma zárva vagyunk',
+          next: 'nyitás', at: '', tomorrow: 'holnap',
+          days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
+    de: { open: 'Heute geöffnet bis', soon: 'Heute öffnen wir um', shut: 'Heute schon geschlossen', none: 'Heute haben wir geschlossen',
+          next: 'wir öffnen', at: 'um', tomorrow: 'morgen',
+          days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
+    uk: { open: 'Сьогодні відчинено до', soon: 'Сьогодні відчиняємо о', shut: 'Сьогодні вже зачинено', none: 'Сьогодні зачинено',
+          next: 'відчиняємо', at: 'о', tomorrow: 'завтра',
+          days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
+    en: { open: 'Open today until', soon: 'We open today at', shut: 'Closed for today', none: 'We are closed today',
+          next: 'we open', at: 'at', tomorrow: 'tomorrow',
+          days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
+  };
   (function todayStatus() {
     const els = $$('[data-today]'); if (!els.length) return;
     const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15], 0: null };
-    const DAYS = ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'];
-    let parts;
-    try { parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()); } catch (e) { return; }
-    const get = (t) => (parts.find((p) => p.type === t) || {}).value;
-    const wdMap = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
-    const wd = wdMap[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
-    const now = (+get('hour') % 24) + (+get('minute') || 0) / 60;
-    if (wd === undefined || isNaN(now)) return;
-    const h = HOURS[wd]; const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:${String(Math.round((x % 1) * 60)).padStart(2, '0')}`;
-    let text, open = false;
-    if (h && now >= h[0] && now < h[1]) { open = true; text = `Dnes otvorené do ${hm(h[1])}`; }
-    else if (h && now < h[0]) text = `Dnes otvárame o ${hm(h[0])}`;
-    else {
-      let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; }
-      const when = n === 1 ? 'zajtra' : DAYS[d];
-      // a day we never opened reads differently from a day that has just ended
-      text = `${h ? 'Dnes už zatvorené' : 'Dnes máme zatvorené'}, otvárame ${when} o ${hm(HOURS[d][0])}`;
+    function render(lang) {
+      const W = TODAY_WORDS[lang] || TODAY_WORDS.sk;
+      let parts;
+      try { parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()); } catch (e) { return; }
+      const get = (t) => (parts.find((p) => p.type === t) || {}).value;
+      const wdMap = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
+      const wd = wdMap[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
+      const now = (+get('hour') % 24) + (+get('minute') || 0) / 60;
+      if (wd === undefined || isNaN(now)) return;
+      const h = HOURS[wd]; const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:${String(Math.round((x % 1) * 60)).padStart(2, '0')}`;
+      let text, open = false;
+      if (h && now >= h[0] && now < h[1]) { open = true; text = `${W.open} ${hm(h[1])}`; }
+      else if (h && now < h[0]) text = `${W.soon} ${hm(h[0])}`;
+      else {
+        let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; }
+        const when = n === 1 ? W.tomorrow : W.days[d];
+        // a day we never opened reads differently from a day that has just ended
+        text = `${h ? W.shut : W.none}, ${W.next} ${when} ${W.at ? W.at + ' ' : ''}${hm(HOURS[d][0])}`;
+      }
+      els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
     }
-    els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
+    render((document.documentElement.lang || 'sk').slice(0, 2));
+    document.addEventListener('langchange', (e) => render(e.detail.lang));
   })();
 
   /* ============ housekeeping ============ */

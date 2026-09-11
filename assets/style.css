@@ -882,3 +882,32 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .fbtn{grid-template-columns:1fr auto;row-gap:6px;padding:15px 17px}
   .fbtn b{grid-column:1/-1}
 }
+
+/* ==========================================================
+   PREPÍNAČ JAZYKA
+   ========================================================== */
+.lang{position:relative;flex:none}
+.lang-btn{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 12px;
+  border:1px solid var(--line);border-radius:999px;background:rgba(25,34,25,.7);color:var(--text-secondary);
+  font-family:var(--mono);font-size:var(--label);letter-spacing:.1em;
+  transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease)}
+.lang-btn:hover,.lang-btn[aria-expanded="true"]{border-color:var(--line-strong);color:var(--text-primary);background:rgba(33,45,33,.85)}
+.lang-btn svg{opacity:.8}
+.lang-menu{position:absolute;top:calc(100% + 10px);right:0;z-index:60;min-width:186px;display:grid;gap:2px;padding:7px;
+  border:1px solid var(--line-strong);border-radius:var(--radius-m);background:rgba(14,19,16,.97);
+  backdrop-filter:blur(18px);box-shadow:0 18px 46px rgba(3,5,4,.7);animation:langIn .26s var(--ease)}
+@keyframes langIn{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}
+.lang-opt{display:flex;align-items:center;gap:11px;width:100%;padding:10px 12px;border:0;border-radius:10px;
+  background:none;color:var(--text-secondary);text-align:left;transition:background .25s,color .25s}
+.lang-opt b{flex:none;width:26px;font-family:var(--mono);font-size:var(--label);font-weight:400;letter-spacing:.1em;color:var(--text-tertiary)}
+.lang-opt span{font-size:14.5px}
+.lang-opt:hover{background:rgba(217,181,106,.1);color:var(--text-primary)}
+.lang-opt:hover b{color:var(--accent)}
+.lang-opt[aria-pressed="true"]{background:var(--accent-muted);color:var(--text-primary)}
+.lang-opt[aria-pressed="true"] b{color:var(--accent-hover)}
+@media (prefers-reduced-motion:reduce){.lang-menu{animation:none}}
+@media (max-width:860px){
+  .lang-btn{min-height:38px;padding:0 10px}
+  .lang-menu{right:auto;left:50%;transform:translateX(-50%);min-width:176px}
+  @keyframes langIn{from{opacity:0}to{opacity:1}}
+}

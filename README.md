@@ -4,7 +4,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 31 rituálov v dvoch skupinách a piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 34 rituálov v dvoch skupinách a piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
@@ -37,7 +37,7 @@ Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30
 
 ## Rezervácia
 
-Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek z 31 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
+Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek z 34 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
 
 Kalendár Booqme zostáva ako druhá možnosť pod formulárom.
 
@@ -95,7 +95,7 @@ Vodná línia v sekcii Ako to prebieha aj v sekcii pre chodidlá beží samostat
 
 ## Rituály pre chodidlá: čo je overené a čo je návrh
 
-Cenník má dve skupiny: **14 rituálov pre hlavu** a **17 rituálov pre chodidlá**, obe
+Cenník má dve rovnaké polovice: **17 rituálov pre hlavu** a **17 rituálov pre chodidlá**, obe
 v rovnakých piatich kategóriách (klasické, pánske, detské, pre dvoch, luxusné).
 Filter má preto dva riadky a v každom je aj tlačidlo na celú skupinu.
 
@@ -136,3 +136,44 @@ z výberu `#v-ritual` a jeho `Offer` zo `hasOfferCatalog` v štruktúrovaných d
 Cenová logika návrhu kopíruje hlavové menu: rovnaké dĺžky (40, 45, 60, 75, 90, 120 min),
 ceny pre chodidlá o niečo nižšie ako za rovnako dlhý rituál pre hlavu, pri rituáloch
 pre dvoch platí cena za obe osoby.
+
+## Luxusné rituály pre hlavu (NÁVRH)
+
+Aby mala hlavová polovica rovnakých 17 rituálov ako chodidlová, pribudla kategória
+Luxusné Head Spa rituály. Tri položky, všetky **NÁVRH**, rovnako ako 14 návrhov
+pri chodidlách. Treba ich potvrdiť a založiť v Booqme.
+
+| Rituál | Trvanie | Cena |
+| --- | --- | --- |
+| Strieborný Head Spa rituál | 75 min | 109 € |
+| Zlatý Head Spa rituál 24K | 90 min | 129 € |
+| Zlatý Head Spa rituál 24K pre dvoch | 90 min / 2 os. | 249 € |
+
+Spolu je teda z 34 rituálov **overených 17** (14 pre hlavu z pôvodnej ponuky
+a 3 pre chodidlá) a **17 je návrh**.
+
+## Jazyky
+
+Stránka je v siedmich jazykoch: slovenčina, čeština, poľština, maďarčina,
+nemčina, ukrajinčina a angličtina. Teda Slovensko a všetky susedné krajiny plus angličtina.
+
+Ako to funguje:
+
+- `assets/i18n/sk.json` je zdroj, pole 801 reťazcov v poradí, v akom sa vyskytujú na stránke.
+- `assets/i18n/<jazyk>.json` má rovnaký počet položiek na rovnakých indexoch.
+  Prázdny reťazec znamená "nechaj po slovensky".
+- `assets/i18n.js` po načítaní prejde textové uzly a vybrané atribúty
+  (`placeholder`, `aria-label`, `alt`, `title`, meta popisy, `<title>`) a vymení ich.
+  HTML preto nepotrebuje žiadne značky navyše. Element s `data-no-i18n` sa preskočí.
+- Jazyk sa vyberie v poradí: `?lang=xx` v odkaze, uložená voľba v `localStorage`,
+  jazyk prehliadača, inak slovenčina. Voľba sa zapíše do adresy, takže sa dá poslať odkaz.
+- Text "Dnes otvorené do 18:00" vzniká až v prehliadači, preto má vlastné preklady
+  priamo v `assets/app.js` (`TODAY_WORDS`), nie v JSON súboroch.
+- Keď sa preklad nestiahne, stránka zostane slovenská a plne funkčná.
+- V hlavičke sú `hreflang` odkazy na všetkých sedem jazykov plus `x-default`,
+  to isté má aj `sitemap.xml`.
+
+**Po každej zmene textu v `index.html` treba znovu vygenerovať `sk.json`**
+a doplniť nové položky do ostatných jazykov, inak sa nové vety nepreložia.
+Neviditeľný dôsledok: ak sa poradie reťazcov zmení, rozsypú sa všetky preklady,
+lebo sa spájajú cez index.
