@@ -343,7 +343,10 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .stats b{display:block;font-family:var(--display);font-weight:500;font-size:clamp(22px,1.9vw,28px);line-height:1;color:var(--accent-hover);white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .stats i{font-style:normal}
 .stats span{display:block;margin-top:6px;font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.tools{position:sticky;top:72px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px solid var(--line);border-radius:18px;background:rgba(10,13,11,.86);backdrop-filter:blur(16px);margin-bottom:12px}
+.tools{position:sticky;top:72px;z-index:20;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(10,13,11,.86);backdrop-filter:blur(16px);margin-bottom:12px}
+.chip-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%}
+.chip-row + .chip-row{padding-top:10px;border-top:1px solid var(--line)}
+.chip-row > b{flex:none;min-width:104px;font-family:var(--mono);font-size:var(--label);font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--text-tertiary)}
 .chip{appearance:none;border:1px solid var(--line);background:rgba(25,34,25,.7);color:var(--text-secondary);padding:9px 14px;border-radius:999px;font-family:var(--mono);font-size:var(--label);letter-spacing:.08em;text-transform:uppercase;transition:background .3s,color .3s,border-color .3s,transform .35s var(--ease)}
 .chip:hover{border-color:var(--line-strong);color:var(--text-primary)}
 .chip[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208;border-color:var(--accent)}
@@ -645,6 +648,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .card .glyph{display:none}
   .card .actions,.card .panel{grid-column:1/3}
   .tools{position:relative;top:auto}
+  .chip-row > b{min-width:100%;margin-bottom:-2px}
   footer .grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:720px){
@@ -831,7 +835,37 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ==========================================================
    RITUÁLY PRE CHODIDLÁ
    ========================================================== */
-.feet-pick{display:grid;gap:10px;margin-top:28px}
+.feet-art{margin:30px 0 0;max-width:440px}
+.feet-art svg{display:block;width:100%;height:auto;overflow:visible}
+.feet-art figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--text-tertiary);max-width:42ch}
+.feet-art .fa-feet{filter:drop-shadow(0 0 14px rgba(217,181,106,.14))}
+
+/* para stúpa a mizne, každý prameň v inom rytme */
+.fa-steam path{stroke-dasharray:120;stroke-dashoffset:120;opacity:0}
+.fa-steam .s1{animation:faSteam 7s var(--ease-soft) infinite}
+.fa-steam .s2{animation:faSteam 7s var(--ease-soft) 1.3s infinite}
+.fa-steam .s3{animation:faSteam 7s var(--ease-soft) 2.6s infinite}
+@keyframes faSteam{
+  0%{stroke-dashoffset:120;opacity:0;transform:translateY(6px)}
+  18%{opacity:.5}
+  60%{stroke-dashoffset:0;opacity:.32}
+  100%{stroke-dashoffset:0;opacity:0;transform:translateY(-14px)}
+}
+/* hladina sa vlní, tri vrstvy proti sebe */
+.fa-ripples path{animation:faRipple 9s ease-in-out infinite}
+.fa-ripples .r2{animation-duration:11s;animation-direction:reverse;opacity:.7}
+.fa-ripples .r3{animation-duration:13s;opacity:.45}
+@keyframes faRipple{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+/* citrusový plátok sa zľahka kolíše */
+.fa-props circle,.fa-props path{transform-box:fill-box;transform-origin:center}
+.fa-props > g{animation:faBob 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes faBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){
+  .fa-steam path{animation:none;stroke-dashoffset:0;opacity:.3}
+  .fa-ripples path,.fa-props > g{animation:none}
+}
+
+.feet-pick{display:grid;gap:10px;margin-top:26px}
 .fbtn{position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:14px;
   padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius-m);
   background:linear-gradient(160deg,rgba(25,34,25,.7),rgba(14,19,16,.9));
@@ -843,7 +877,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .fbtn.gold{border-color:var(--line-strong);
   background:radial-gradient(circle at 92% 12%,rgba(217,181,106,.16),transparent 34%),linear-gradient(160deg,rgba(29,40,29,.9),rgba(19,26,21,.9))}
 .fbtn.gold i{color:var(--accent-hover)}
-.feet .fine{max-width:46ch}
+.feet .fine{max-width:46ch;margin-top:14px}
 @media (max-width:640px){
   .fbtn{grid-template-columns:1fr auto;row-gap:6px;padding:15px 17px}
   .fbtn b{grid-column:1/-1}

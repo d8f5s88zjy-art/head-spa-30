@@ -4,7 +4,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 31 rituálov v dvoch skupinách a piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
@@ -37,7 +37,7 @@ Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30
 
 ## Rezervácia
 
-Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek zo 17 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
+Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek z 31 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
 
 Kalendár Booqme zostáva ako druhá možnosť pod formulárom.
 
@@ -92,3 +92,47 @@ pre ktorúkoľvek kategóriu, stačí `data-cat-jump` s jej kľúčom (`classic`
 
 Vodná línia v sekcii Ako to prebieha aj v sekcii pre chodidlá beží samostatne,
 `assets/app.js` si drží pole `streams`, jeden záznam na každý blok `.steps`.
+
+## Rituály pre chodidlá: čo je overené a čo je návrh
+
+Cenník má dve skupiny: **14 rituálov pre hlavu** a **17 rituálov pre chodidlá**, obe
+v rovnakých piatich kategóriách (klasické, pánske, detské, pre dvoch, luxusné).
+Filter má preto dva riadky a v každom je aj tlačidlo na celú skupinu.
+
+**Overené z ponuky prevádzky (3):**
+
+| Rituál | Trvanie | Cena |
+| --- | --- | --- |
+| Klasický rituál pre chodidlá | 40 min | 45 € |
+| Ovocný a bylinkový rituál pre chodidlá | 60 min | 65 € |
+| Zlatý rituál 24K | 90 min | 119 € |
+
+**NÁVRH, čaká na potvrdenie prevádzky (14).** Názvy, dĺžky, ceny aj obsah krokov sú
+odvodené zo štruktúry hlavového menu a zo slovníka troch overených rituálov pre chodidlá.
+Nie sú prevzaté zo žiadneho zdroja prevádzky.
+
+| Rituál | Trvanie | Cena |
+| --- | --- | --- |
+| Relaxačný rituál pre chodidlá | 60 min | 59 € |
+| Harmónia pre chodidlá | 75 min | 75 € |
+| Hĺbkový rituál pre chodidlá a päty | 90 min | 85 € |
+| Kozmetický rituál pre chodidlá | 60 min | 69 € |
+| Prémiový rituál pre chodidlá | 120 min | 139 € |
+| Pánsky rituál pre chodidlá | 45 min | 49 € |
+| Pánsky harmonický rituál pre chodidlá | 60 min | 69 € |
+| Pánsky hĺbkový rituál pre chodidlá | 90 min | 89 € |
+| Prémiový pánsky rituál pre chodidlá | 120 min | 139 € |
+| Detský ovocný rituál pre chodidlá | 40 min | 45 € |
+| Spoločný rituál pre chodidlá | 60 min / 2 os. | 115 € |
+| Spoločný rituál pre chodidlá pod hviezdami | 75 min / 2 os. | 139 € |
+| Strieborný rituál pre chodidlá | 75 min | 99 € |
+| Zlatý rituál 24K pre dvoch | 90 min / 2 os. | 229 € |
+
+**Pred spustením treba tých 14 rituálov potvrdiť a založiť v Booqme**, inak si ich
+zákazník na stránke vyberie, ale v rezervačnom systéme ich nenájde. Ak sa niektorý
+neschváli, stačí vymazať jeho `<article class="card">` z `index.html`, jeho `<option>`
+z výberu `#v-ritual` a jeho `Offer` zo `hasOfferCatalog` v štruktúrovaných dátach.
+
+Cenová logika návrhu kopíruje hlavové menu: rovnaké dĺžky (40, 45, 60, 75, 90, 120 min),
+ceny pre chodidlá o niečo nižšie ako za rovnako dlhý rituál pre hlavu, pri rituáloch
+pre dvoch platí cena za obe osoby.

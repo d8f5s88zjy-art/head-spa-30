@@ -658,10 +658,20 @@
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
     cards.forEach((c) => pio.observe(c));
   }
+  /* a chip is either one category or a group of them (everything for the head, everything for the feet) */
+  const GROUPS = {
+    head: ['classic', 'gentlemen', 'kids', 'couple'],
+    feetall: ['feet', 'feet-men', 'feet-kids', 'feet-duo', 'feet-lux'],
+  };
+  const inCat = (cat) => {
+    if (activeCat === 'all') return true;
+    const g = GROUPS[activeCat];
+    return g ? g.indexOf(cat) > -1 : cat === activeCat;
+  };
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = activeCat === 'all' || c.dataset.cat === activeCat; c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
-    cats.forEach((l) => l.classList.toggle('hidden', !(activeCat === 'all' || l.dataset.cat === activeCat)));
+    cards.forEach((c) => { const show = inCat(c.dataset.cat); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
+    cats.forEach((l) => l.classList.toggle('hidden', !inCat(l.dataset.cat)));
     if (count) count.textContent = activeCat === 'all' ? `Zobrazených všetkých ${cards.length} rituálov` : `Zobrazených ${n} z ${cards.length} rituálov`;
     if (fromChip) cascade(shown);
   }
