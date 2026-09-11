@@ -503,24 +503,37 @@
       });
       btn.addEventListener('pointerleave', () => { btn.style.setProperty('--mx', '0px'); btn.style.setProperty('--my', '0px'); });
     });
-    $$('.card,.whys li').forEach((el) => el.addEventListener('pointermove', (e) => {
+    $$('.card,.scard,.whys li').forEach((el) => el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty('--lx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); el.style.setProperty('--ly', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
     }, { passive: true }));
   }
   let atBottom = false;
+  /* reading progress: one hairline, driven by the scroll listener that is already here */
+  const prog = document.createElement('div');
+  prog.className = 'prog'; prog.setAttribute('aria-hidden', 'true');
+  if (!reduced.matches) document.body.appendChild(prog);
+  let progRaf = 0;
+  function drawProg() {
+    progRaf = 0;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const k = max > 40 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    prog.style.transform = 'scaleX(' + k.toFixed(4) + ')';
+    prog.classList.toggle('on', scrollY > 120);
+  }
   addEventListener('scroll', () => {
     const b = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
     if (b !== atBottom) { atBottom = b; if (b) document.body.dataset.scene = 'footer'; else sceneUpdate(); }
+    if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg);
   }, { passive: true });
   const navLinks = $$('.links a');
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -698,7 +711,7 @@
       const subject = `Objednávka poukazu: ${h === 'ritual' ? ritualName().replace(/\s*\(.*$/, '') : h}`;
       track('voucher_order', { value: h === 'ritual' ? ritualName() : h, delivery: val('dorucenie') });
       done.hidden = false;
-      location.href = `mailto:info@barbershop30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
     });
   }
 
@@ -712,10 +725,10 @@
     const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
     const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
     const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when');
-    const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14] };
+    const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
     const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
-    const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 19)' };
-    const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 14)' };
+    const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
+    const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 15)' };
     const NOTE_PH = { kids: 'Vek dieťaťa a čo má rado.', couple: 'Meno druhej osoby, alergie, darček.', deep: 'Čo ťa na pokožke hlavy trápi.', base: 'napr. citlivá pokožka, tehotenstvo, alergia, darček' };
     const pad = (n) => String(n).padStart(2, '0');
     const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
@@ -789,11 +802,11 @@
       // day and windows
       tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
       const last = d ? lastStart(d) : null;
-      if (d && d.getDay() === 6 && r && last !== null && last < 14) casHint.textContent = `V sobotu máme do 14:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
+      if (d && d.getDay() === 6 && r && last !== null && last < 15) casHint.textContent = `V sobotu máme do 15:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
       else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
       else casHint.textContent = '';
       const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
-      datumHint.textContent = d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0951 267 203.' : 'Po až Pi 9:00 až 19:00, So 9:00 až 14:00, v nedeľu máme zatvorené.';
+      datumHint.textContent = d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.';
       // exact time bounds
       if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
       else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
@@ -816,8 +829,8 @@
       lines.push('', 'Prosím o potvrdenie termínu. Ďakujem.', `Ref: ${REF}`);
       message = lines.join('\n');
       shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
-      wa.href = `https://wa.me/421951267203?text=${encodeURIComponent(message)}`;
-      sms.href = `sms:+421951267203?&body=${encodeURIComponent(shortMessage)}`;
+      wa.href = `https://wa.me/421911153136?text=${encodeURIComponent(message)}`;
+      sms.href = `sms:+421911153136?&body=${encodeURIComponent(shortMessage)}`;
       // the ticket
       tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
       tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
@@ -862,8 +875,8 @@
       const r = ritual(), d = parse(datum.value);
       const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
       sentText.textContent = kind === 'wa' ? `Otvorili sme WhatsApp s tvojou požiadavkou, stačí ju odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa WhatsApp neotvoril:`
-        : kind === 'mail' ? `Otvorili sme e-mail pre info@barbershop30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
-        : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0951 267 203, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
+        : kind === 'mail' ? `Otvorili sme e-mail pre info@salon30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
+        : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0911 153 136, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
       sent.hidden = false; copyText.value = message;
       sms.hidden = !matchMedia('(pointer: coarse)').matches;
       opened += 1;
@@ -884,7 +897,7 @@
       let left = false; const mark = () => { left = true; };
       addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
       showSent('mail');
-      location.href = `mailto:info@barbershop30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
       setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
     });
     copyBtn.addEventListener('click', async () => {
@@ -927,7 +940,7 @@
   /* ============ today's hours, computed in the salon's own time zone ============ */
   (function todayStatus() {
     const els = $$('[data-today]'); if (!els.length) return;
-    const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14], 0: null };
+    const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15], 0: null };
     const DAYS = ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'];
     let parts;
     try { parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()); } catch (e) { return; }

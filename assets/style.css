@@ -755,3 +755,75 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .ticket{transform:none}
   .card .panel>div,.card .panel li,.faq-a>div{opacity:1;transform:none}
 }
+
+/* ==========================================================
+   MATERSKÝ SALÓN: Salón 30
+   ========================================================== */
+.salon{background:linear-gradient(180deg,transparent,rgba(19,26,21,.55) 30%,rgba(19,26,21,.55) 70%,transparent)}
+.salon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:54px}
+.scard{position:relative;overflow:hidden;padding:32px 30px 34px;border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(165deg,rgba(25,34,25,.7),rgba(14,19,16,.92));transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.scard::before{content:"";position:absolute;left:-40%;top:-120%;width:55%;height:340%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(217,181,106,.10),transparent);transform:translateX(-40%) rotate(8deg);
+  opacity:0;transition:opacity .5s var(--ease),transform 1.1s var(--ease)}
+.scard:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.scard:hover::before{opacity:1;transform:translateX(260%) rotate(8deg)}
+.sn{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent)}
+.scard h3{font-family:var(--display);font-weight:500;font-size:25px;line-height:1.15;margin:14px 0 12px;letter-spacing:-.01em}
+.scard p{color:var(--text-secondary);font-size:15px;line-height:1.68}
+.slink{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--accent);
+  border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .3s,border-color .3s}
+.slink:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.salon-price{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:end;margin-top:44px}
+.sprice{margin:10px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.sprice li{display:flex;align-items:baseline;gap:16px;padding:13px 2px;border-bottom:1px solid var(--line);transition:color .35s}
+.sprice li::after{content:"";flex:1;order:1;height:1px;margin-bottom:4px;
+  background:repeating-linear-gradient(90deg,var(--line) 0 3px,transparent 3px 7px)}
+.sprice span{order:0;font-size:15px;color:var(--text-secondary)}
+.sprice b{order:2;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;color:var(--text-primary);letter-spacing:.02em}
+.sprice li:hover span{color:var(--text-primary)}
+.sprice li:hover b{color:var(--accent-hover)}
+.salon-cta{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+@media (max-width:900px){
+  .salon-grid{grid-template-columns:1fr;gap:14px}
+  .salon-price{grid-template-columns:1fr;gap:26px;align-items:stretch}
+}
+
+/* ==========================================================
+   NOVÉ ANIMÁCIE
+   ========================================================== */
+/* tenká zlatá linka postupu čítania */
+.prog{position:fixed;left:0;top:0;z-index:110;height:2px;width:100%;transform:scaleX(0);transform-origin:left;
+  background:linear-gradient(90deg,rgba(217,181,106,0),var(--accent) 22%,var(--accent-hover) 60%,var(--water));
+  opacity:0;transition:opacity .45s var(--ease-soft);pointer-events:none}
+.prog.on{opacity:.9}
+
+/* bodka "dnes otvorené" jemne dýcha */
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(111,207,151,.42)}55%{box-shadow:0 0 0 7px rgba(111,207,151,0)}}
+.today .dot{animation:dotPulse 3.4s var(--ease-soft) infinite}
+.today.closed .dot{animation:none}
+
+/* prejazd svetla po hlavnom tlačidle (pozadie sa oreže o vlastný polomer, netreba overflow) */
+.btn.primary::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.38) 50%,transparent 58%);
+  background-size:300% 100%;background-position:140% 0;background-repeat:no-repeat;
+  transition:background-position .9s var(--ease)}
+.btn.primary:hover::before,.btn.primary:focus-visible::before{background-position:-40% 0}
+
+/* karta rituálu sleduje kurzor jemným leskom */
+.card,.scard{--lx:50%;--ly:50%}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(240px circle at var(--lx) var(--ly),rgba(217,181,106,.13),transparent 70%);
+  transition:opacity .45s var(--ease-soft)}
+.scard::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(260px circle at var(--lx) var(--ly),rgba(140,195,182,.10),transparent 70%);
+  transition:opacity .45s var(--ease-soft)}
+@media (hover:hover) and (pointer:fine){.scard:hover::after{opacity:1}}
+@media (hover:hover) and (pointer:fine){.card:hover::after{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){
+  .prog{display:none}
+  .today .dot{animation:none}
+  .btn.primary::before,.scard::before,.card::after,.scard::after{display:none}
+  .scard:hover{transform:none}
+}
