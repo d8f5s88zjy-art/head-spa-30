@@ -736,6 +736,19 @@
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
+  /* Hodnoty poukazu a ceny rituálov sú dva ručne udržiavané zoznamy v rôznych
+     častiach HTML. Keď sa rozídu, poukaz by sľuboval viac alebo menej, než sa
+     dá minúť. Táto kontrola sa ozve len vtedy, keď sa to naozaj stane. */
+  (function poukazVsCennik() {
+    const ceny = $$('.card').map((c) => +c.dataset.price).filter(Boolean);
+    const suma = $$('[name="hodnota"]').map((r) => parseInt(r.value, 10)).filter((n) => !isNaN(n));
+    if (!ceny.length || !suma.length) return;
+    const maxC = Math.max(...ceny), minC = Math.min(...ceny);
+    const maxP = Math.max(...suma), minP = Math.min(...suma);
+    if (maxP > maxC) console.warn(`HEAD SPA 30: poukaz za ${maxP} € presahuje najdrahší rituál (${maxC} €).`);
+    if (minP < minC) console.warn(`HEAD SPA 30: poukaz za ${minP} € nepokryje ani najlacnejší rituál (${minC} €).`);
+  })();
+
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');

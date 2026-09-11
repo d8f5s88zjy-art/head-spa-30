@@ -78,6 +78,26 @@ Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologic
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
 
+## Hodnoty darčekových poukazov
+
+Rebríček je odvodený od cenníka, nie zvolený od oka: **45, 70, 100, 149 a 249 €**.
+Spodná hodnota presne pokryje najlacnejší rituál (45 €), horná aj ten najdrahší
+(Zlatý Head Spa rituál 24K pre dvoch za 249 €). Vyššie hodnoty zámerne nie sú,
+aby obdarovanému nezostal zostatok, ktorý nemá ako minúť.
+
+Sú to dva ručne udržiavané zoznamy v rôznych častiach `index.html`: hodnoty
+poukazu (`name="hodnota"`) a ceny rituálov (`data-price` na kartách). Keď sa
+rozídu, `assets/app.js` vypíše varovanie do konzoly prehliadača:
+
+```
+HEAD SPA 30: poukaz za 400 € presahuje najdrahší rituál (249 €).
+```
+
+Kontrola sa ozve len vtedy, keď je naozaj čo hlásiť. **Pri zmene cien rituálov
+preto treba prejsť aj hodnoty poukazov** a upraviť aj vetu pod nimi, ktorá obe
+čísla menuje, plus jej preklady v šiestich jazykových súboroch.
+
+
 ## Výber podľa času a rozpočtu
 
 Pri 34 rituáloch nestačí filter podľa kategórie. Nad zoznamom sú preto dva
