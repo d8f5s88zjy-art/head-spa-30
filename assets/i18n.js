@@ -1,6 +1,8 @@
-/* Prepínanie jazyka. Slovenčina je zdroj, ostatné jazyky sú polia reťazcov
-   v rovnakom poradí ako assets/i18n/sk.json. Preklad sa nasadzuje na textové
-   uzly a na vybrané atribúty, takže HTML nepotrebuje žiadne značky navyše. */
+/* Prepínanie jazyka. Slovenčina je zdroj priamo v index.html, ostatné jazyky sú
+   objekty kľúčované slovenským textom (assets/i18n/<jazyk>.json). Preklad sa
+   nasadzuje na textové uzly a na vybrané atribúty, takže HTML nepotrebuje žiadne
+   značky navyše, a presun sekcií v HTML preklady nerozbije. Text bez kľúča
+   zostane po slovensky. */
 (function () {
   'use strict';
 
@@ -17,7 +19,7 @@
   var ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
   var SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, svg: 1 };
 
-  var SK = null, current = 'sk', applied = 'sk', busy = false;
+  var current = 'sk', applied = 'sk', busy = false;
 
   function pick() {
     var q = new URLSearchParams(location.search).get('lang');
@@ -93,14 +95,7 @@
     if (cache[code]) return cb(cache[code]);
     fetch('assets/i18n/' + code + '.json', { cache: 'force-cache' })
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-      .then(function (arr) {
-        var map = {};
-        for (var i = 0; i < SK.length; i++) {
-          var v = arr[i];
-          if (v) map[norm(SK[i])] = v;
-        }
-        cache[code] = map; cb(map);
-      })
+      .then(function (map) { cache[code] = map; cb(map); })
       .catch(function () { cb(null); });   /* keď sa preklad nenačíta, zostane slovenčina */
   }
 
@@ -142,13 +137,8 @@
   }
 
   function start() {
-    fetch('assets/i18n/sk.json', { cache: 'force-cache' })
-      .then(function (r) { return r.json(); })
-      .then(function (arr) {
-        SK = arr; current = pick(); build();
-        if (current !== 'sk') set(current, false);
-      })
-      .catch(function () { /* bez katalógu stránka zostane slovenská a funkčná */ });
+    current = pick(); build();
+    if (current !== 'sk') set(current, false);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 

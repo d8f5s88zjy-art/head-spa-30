@@ -159,9 +159,10 @@ nemčina, ukrajinčina a angličtina. Teda Slovensko a všetky susedné krajiny 
 
 Ako to funguje:
 
-- `assets/i18n/sk.json` je zdroj, pole 801 reťazcov v poradí, v akom sa vyskytujú na stránke.
-- `assets/i18n/<jazyk>.json` má rovnaký počet položiek na rovnakých indexoch.
-  Prázdny reťazec znamená "nechaj po slovensky".
+- Slovenčina je priamo v `index.html`, žiadny zvláštny súbor nepotrebuje.
+- `assets/i18n/<jazyk>.json` je objekt, kde kľúč je slovenský text zo stránky
+  a hodnota je jeho preklad. Kľúčuje sa textom, nie poradím, takže presun sekcií
+  v HTML preklady nerozbije. Text bez kľúča zostane po slovensky.
 - `assets/i18n.js` po načítaní prejde textové uzly a vybrané atribúty
   (`placeholder`, `aria-label`, `alt`, `title`, meta popisy, `<title>`) a vymení ich.
   HTML preto nepotrebuje žiadne značky navyše. Element s `data-no-i18n` sa preskočí.
@@ -173,7 +174,6 @@ Ako to funguje:
 - V hlavičke sú `hreflang` odkazy na všetkých sedem jazykov plus `x-default`,
   to isté má aj `sitemap.xml`.
 
-**Po každej zmene textu v `index.html` treba znovu vygenerovať `sk.json`**
-a doplniť nové položky do ostatných jazykov, inak sa nové vety nepreložia.
-Neviditeľný dôsledok: ak sa poradie reťazcov zmení, rozsypú sa všetky preklady,
-lebo sa spájajú cez index.
+**Keď pribudne nový text v `index.html`**, stačí doň pridať nový kľúč do šiestich
+jazykových súborov. Kým tam nie je, tá jedna veta sa zobrazí po slovensky
+a zvyšok stránky ostane preložený.
