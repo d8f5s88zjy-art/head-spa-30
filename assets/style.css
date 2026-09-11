@@ -907,7 +907,38 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .lang-opt[aria-pressed="true"] b{color:var(--accent-hover)}
 @media (prefers-reduced-motion:reduce){.lang-menu{animation:none}}
 @media (max-width:860px){
-  .lang-btn{min-height:38px;padding:0 10px}
+  .lang-btn{min-height:44px;padding:0 13px}
   .lang-menu{right:auto;left:50%;transform:translateX(-50%);min-width:176px}
+  .lang-opt{padding:13px 12px}
   @keyframes langIn{from{opacity:0}to{opacity:1}}
+}
+
+/* ==========================================================
+   MOBIL: dotykové ciele a filter, ktorý nezaberie celú obrazovku
+   ========================================================== */
+@media (max-width:640px){
+  /* Filter mal jedenásť čipov v zalamovaných riadkoch a zjedol celú výšku
+     obrazovky. Každá skupina je teraz jeden riadok, ktorý sa posúva prstom. */
+  .tools{padding:11px 0 11px 14px;gap:6px}
+  /* Bez prichytávania: snap zarovnával čip na okraj kontajnera, teda pod nálepku. */
+  .chip-row{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;padding-right:14px}
+  .chip-row::-webkit-scrollbar{display:none}
+  .chip-row > b{min-width:auto;width:auto;position:sticky;left:0;z-index:1;padding-right:14px;
+    background:linear-gradient(90deg,var(--canvas) 0,var(--canvas) 76%,rgba(10,13,11,0))}
+  .chip-row .chip{flex:none}
+  .tools > .chip{margin-left:14px}
+  .chip-row + .chip-row{margin-top:2px;padding-top:11px;border-top:1px solid var(--line)}
+
+  /* Telefón, e-mail, mapa a odkazy v pätičke sú na mobile najčastejšie ťukané.
+     Dvadsaťšesť pixelov na výšku je málo, preto majú vlastný väčší cieľ. */
+  .info a,footer .col a,.map-link,.slink,.credit a{
+    min-height:44px;display:inline-flex;align-items:center}
+  footer .col a{padding-right:6px}
+
+  /* Nadpis nad hero sa lámal tak, že na druhom riadku zostalo samotné mesto. */
+  .kicker{letter-spacing:.18em}
+}
+@media (max-width:400px){
+  .kicker{font-size:10px;letter-spacing:.14em}
 }
