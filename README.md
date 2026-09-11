@@ -93,6 +93,28 @@ pre ktorúkoľvek kategóriu, stačí `data-cat-jump` s jej kľúčom (`classic`
 Vodná línia v sekcii Ako to prebieha aj v sekcii pre chodidlá beží samostatne,
 `assets/app.js` si drží pole `streams`, jeden záznam na každý blok `.steps`.
 
+### Animácia v sekcii chodidiel
+
+Kresba nôh v mise je čisté SVG a CSS, žiadny obrázok ani knižnica. Celá scéna
+beží v jednom osemsekundovom kruhu, aby jednotlivé pohyby na seba nadväzovali:
+
+1. kvapka padá z výšky a pri dopade sa sploští (`faDrop`),
+2. z miesta dopadu sa rozbehnú dva kruhy (`faRing`, druhý s odstupom pol sekundy),
+3. chodidlá sa o dva a pol pixela prepadnú a prsty sa uvoľnia (`faSink`, `faToes`),
+4. zo štyroch miest stúpne para a rozplynie sa (`faSteam`),
+5. zlatá žiara pod misou v polovici kruhu zosilnie (`faGlow`).
+
+Hladina sa vlní nezávisle v troch vrstvách s rôznou dĺžkou (9, 11 a 13 sekúnd),
+takže sa vzor viditeľne neopakuje. Citrusový plátok sa kolíše v šiestich sekundách.
+Spolu šestnásť animovaných častí.
+
+Pri `prefers-reduced-motion: reduce` sa zastaví všetko, kvapka sa skryje
+a para zostane staticky viditeľná, takže kresba dáva zmysel aj bez pohybu.
+
+Sekcia má vlastnú scénu pozadia `data-scene="chodidla"`: zelená žiara klesne
+nižšie k zemi, zlatá sa stlmí. Predtým si požičiavala scénu od rituálu pre hlavu.
+
+
 ## Rituály pre chodidlá: čo je overené a čo je návrh
 
 Cenník má dve rovnaké polovice: **17 rituálov pre hlavu** a **17 rituálov pre chodidlá**, obe
