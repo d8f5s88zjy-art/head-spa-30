@@ -10,9 +10,64 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
 - `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
+- `barbershop/` – samostatná stránka BARBER SHOP 30 na tej istej adrese, pozri nižšie
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona
+
+## BARBER SHOP 30, podstránka `barbershop/`
+
+Samostatná stránka pánskeho barbershopu na tej istej adrese (Mostná 226/30, Nitra), nasadená
+na https://d8f5s88zjy-art.github.io/head-spa-30/barbershop/. Rovnaký dizajnový jazyk ako HEAD SPA 30
+(tmavé plátno, mosadzné zlato, písma Fraunces a Manrope zdieľané z `assets/fonts/`), ale vlastný,
+oveľa jednoduchší kód bez scrollovanej scény a bez prekladov:
+
+- `barbershop/index.html` – úvod s animovaným barber stĺpom (čisté CSS, bez obrázka), cenník
+  16 služieb v piatich kategóriách s filtrom a rozbaľovacím obsahom, ako to prebieha (5 krokov),
+  prečo k nám, odkaz na HEAD SPA 30, poukážky, otázky, kontakt s mapou. V hlavičke sú štruktúrované
+  dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
+- `barbershop/style.css`, `barbershop/app.js` – štýly a správanie (menu, hlásenie Dnes otvorené,
+  odhaľovanie pri rolovaní, filter cenníka, rozbaľovanie kariet a otázok)
+- `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
+
+Stránka je v `.github/workflows/pages.yml` aj v `sitemap.xml`. HEAD SPA 30 na barbershop
+neodkazuje (zámerne, pozri históriu commitov), barbershop na HEAD SPA 30 áno.
+
+**Kontakty a hodiny sú prevzaté z prvej verzie webu HEAD SPA 30 (september 2026), keď ešte bežal
+pod značkou Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram
+barbershop30_nitra, rezervácia https://booqme.app/sk/rezervacia/barbershop-30, otváracie hodiny
+pondelok až piatok 09:00 až 19:00, sobota 09:00 až 14:00, nedeľa zatvorené. Pred spustením ich treba
+overiť s prevádzkou. Hodiny sú na troch miestach naraz: v schéme, v kontakte a v `barbershop/app.js`
+(konštanta `HOURS`).
+
+**Cenník je NÁVRH, čaká na potvrdenie prevádzky.** Názvy, dĺžky, ceny aj obsah krokov sú odvodené
+z bežnej ponuky slovenských barbershopov, nie prevzaté zo zdroja prevádzky. Pri zmene ceny alebo
+dĺžky treba upraviť `data-min`, `data-price` a text `.meta` na karte, `Offer` v štruktúrovaných
+dátach, prípadne čísla v úvode (16 služieb, 10 až 75 minút, strih od 13 €), v sekcii Prečo k nám,
+v otázkach a hodnoty poukazov (15, 20, 30 a 40 €, spodná pokryje študentský strih, horná
+kompletný servis za 36 €).
+
+| Služba | Trvanie | Cena |
+| --- | --- | --- |
+| Klasický pánsky strih | 30 min | 18 € |
+| Strih strojčekom | 20 min | 13 € |
+| Fade a skin fade | 45 min | 22 € |
+| Strih s umytím a stylingom | 45 min | 24 € |
+| Úprava brady | 20 min | 12 € |
+| Brada s kontúrami britvou a horúcim uterákom | 30 min | 17 € |
+| Klasické holenie britvou | 30 min | 18 € |
+| Strih a brada | 60 min | 30 € |
+| Strih, brada a holenie kontúr | 75 min | 36 € |
+| Otec a syn | 60 min / 2 os. | 28 € |
+| Detský strih do 12 rokov | 25 min | 13 € |
+| Študentský strih | 30 min | 15 € |
+| Čierna maska na tvár | 15 min | 8 € |
+| Kamufláž šedín, vlasy alebo brada | 20 min | 12 € |
+| Vosk: nos, uši, obočie | 10 min | 6 € |
+| Umytie a styling | 15 min | 8 € |
+
+Náhľad: `npx http-server -p 8080` v koreni projektu a otvoriť `http://localhost:8080/barbershop/`
+(písma sa načítavajú z `../assets/`, preto dvojklik na súbor bez servera ukáže náhradné písmo).
 
 ## Čo web robí sám
 
