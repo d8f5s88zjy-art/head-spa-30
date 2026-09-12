@@ -22,12 +22,17 @@ na https://d8f5s88zjy-art.github.io/head-spa-30/barbershop/. Rovnaký dizajnový
 (tmavé plátno, mosadzné zlato, písma Fraunces a Manrope zdieľané z `assets/fonts/`), ale vlastný,
 oveľa jednoduchší kód bez scrollovanej scény a bez prekladov:
 
-- `barbershop/index.html` – úvod s animovaným barber stĺpom (čisté CSS, bez obrázka), cenník
+- `barbershop/index.html` – úvod so scénou z troch SVG vrstiev (barber stĺp so sklom, mosadzou a motorom, ktorý sa po načítaní rozbieha a pri prejdení myšou zrýchli; britva s odleskom, ktorý po nej prejde každých sedem sekúnd; nožnice, ktoré strihnú), vrstvy sa na počítači naklonia za kurzorom. Cenník
   16 služieb v piatich kategóriách s filtrom a rozbaľovacím obsahom, ako to prebieha (5 krokov),
   prečo k nám, odkaz na HEAD SPA 30, poukážky, otázky, kontakt s mapou. V hlavičke sú štruktúrované
   dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
 - `barbershop/style.css`, `barbershop/app.js` – štýly a správanie (menu, hlásenie Dnes otvorené,
-  odhaľovanie pri rolovaní, filter cenníka, rozbaľovanie kariet a otázok)
+  odhaľovanie pri rolovaní, filter cenníka, rozbaľovanie kariet a otázok). Nadpisy vychádzajú
+  z maskovaného riadku, značka v lište sa po načítaní nakreslí, dve svetlá v pozadí sa presúvajú
+  podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii Ako to prebieha rastie so scrollom
+  a každý krok má malú animovanú ikonu (para, nožnice, britva, uterák, hrebeň). Tlačidlá sa
+  nakláňajú k ruke, karty Prečo k nám sa jemne natočia. Pri obmedzení pohybu je všetko statické
+  a viditeľné; pruhy stĺpa kreslí `app.js` (`pole()`), pri skrytej karte alebo mimo obrazovky motor stojí
 - `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
 
 Stránka je v `.github/workflows/pages.yml` aj v `sitemap.xml`. HEAD SPA 30 na barbershop

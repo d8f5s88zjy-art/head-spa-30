@@ -5,6 +5,24 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* ============ headlines: each line in its own masked slot ============ */
+  $$('.h2').forEach((h) => {
+    const lines = h.innerHTML.split(/<br\s*\/?>/i);
+    h.innerHTML = lines.map((l) => `<span class="ln"><span class="li">${l.trim()}</span></span>`).join('');
+  });
+  const h1 = $('.hero h1');
+  if (h1) {
+    const html = h1.innerHTML.trim();
+    h1.innerHTML = `<span class="ln"><span class="li">${html}</span></span>`;
+  }
+
+  /* ============ scene: the two travelling lights follow the section ============ */
+  const sceneIO = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) document.body.dataset.scene = e.target.id || 'hero'; });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  $$('.hero, main section[id]').forEach((el) => sceneIO.observe(el));
+  document.body.dataset.scene = 'hero';
+
   /* ============ nav: solid after the top, hides on the way down, returns on the first move up ============ */
   const nav = $('.nav');
   let lastY = scrollY, navSolid = false, navHidden = false;
@@ -50,16 +68,18 @@
   }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   $$('.rv, .divider, .cat').forEach((el) => rio.observe(el));
 
-  /* the steps: numerals light as the line reaches them */
-  $$('.steps').forEach((steps) => {
-    const line = $('.line', steps), items = $$('.step', steps);
-    const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } });
-      const lit = items.filter((s) => s.classList.contains('lit'));
-      if (line && lit.length) { const last = lit[lit.length - 1]; line.style.height = (last.offsetTop + 30) + 'px'; }
-    }, { rootMargin: '0px 0px -30% 0px' });
-    items.forEach((s) => io.observe(s));
-  });
+  /* the steps: the line grows with the scroll, each numeral lights when the line reaches it */
+  const stepBlocks = $$('.steps').map((steps) => ({ steps, line: $('.line', steps), items: $$('.step', steps) }));
+  function driveSteps() {
+    const mid = innerHeight * 0.62;
+    stepBlocks.forEach(({ steps, line, items }) => {
+      const r = steps.getBoundingClientRect();
+      const reach = Math.max(0, Math.min(r.height, mid - r.top));
+      if (line) line.style.height = reach + 'px';
+      items.forEach((st) => st.classList.toggle('lit', st.offsetTop + 22 <= reach));
+    });
+  }
+  if (stepBlocks.length) { addEventListener('scroll', driveSteps, { passive: true }); addEventListener('resize', driveSteps); driveSteps(); }
 
   /* counters in the price head */
   function runCounter(el) {
@@ -114,6 +134,67 @@
     panel.setAttribute('aria-hidden', String(!open));
     $$('li', panel).forEach((li, i) => li.style.setProperty('--i', i));
   }));
+
+  /* ============ the pole: stripes built once, a motor that spins up and slows down ============ */
+  (function pole() {
+    const g = $('.p-stripes'); if (!g) return;
+    const X0 = 52, W = 96, T = 26, RISE = W * Math.tan(35 * Math.PI / 180), P = T * 4;
+    const colors = ['#c0392f', '#f4efe4', '#3a5a78', '#f4efe4'];
+    let svg = '';
+    for (let y = 96 - 3 * P, i = 0; y < 496 + 2 * P; y += T, i++) {
+      svg += `<polygon fill="${colors[i % 4]}" points="${X0},${y} ${X0 + W},${y - RISE} ${X0 + W},${y - RISE + T} ${X0},${y + T}"/>`;
+    }
+    g.innerHTML = svg;
+    if (reduced.matches) return;
+    let offset = 0, v = 0, target = 1, last = 0, running = false, visible = true;
+    const SPEED = P / 3.4;   // one period every 3.4 s at full speed
+    function tick(t) {
+      if (!running) return;
+      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
+      v += (target - v) * Math.min(1, dt * 1.4);   // the motor takes about two seconds to reach speed
+      offset = (offset + v * SPEED * dt) % P;
+      g.setAttribute('transform', `translate(0 ${-offset})`);
+      requestAnimationFrame(tick);
+    }
+    const start = () => { if (running || !visible || document.hidden) return; running = true; last = performance.now(); requestAnimationFrame(tick); };
+    const stop = () => { running = false; };
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; visible ? start() : stop(); }, { threshold: 0 }).observe($('.pole'));
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    const poleEl = $('.pole');
+    poleEl.addEventListener('pointerenter', () => { target = 1.8; });
+    poleEl.addEventListener('pointerleave', () => { target = 1; });
+    start();
+  })();
+
+  /* the hand: layers drift toward the cursor, buttons lean, cards tilt (fine pointers only, never with reduced motion) */
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
+    const art = $('.art'), hero = $('.hero');
+    if (art && hero) {
+      const layers = $$('.l', art);
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        const px = ((e.clientX - r.left) / r.width - 0.5) * 2, py = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        layers.forEach((l) => { const d = +l.dataset.depth || 0; l.style.translate = `${px * d * 18}px ${py * d * 12}px`; });
+      });
+      hero.addEventListener('pointerleave', () => layers.forEach((l) => { l.style.translate = '0px 0px'; }));
+    }
+    $$('.btn.primary').forEach((b) => {
+      b.addEventListener('pointermove', (e) => {
+        const r = b.getBoundingClientRect();
+        b.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5) * 8 + 'px');
+        b.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5) * 6 + 'px');
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+    });
+    $$('.whys li').forEach((li) => {
+      li.addEventListener('pointermove', (e) => {
+        const r = li.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        li.style.setProperty('--lx', x * 100 + '%'); li.style.setProperty('--ly', y * 100 + '%');
+        li.style.setProperty('--ry', (x - 0.5) * 6 + 'deg'); li.style.setProperty('--rx', (0.5 - y) * 6 + 'deg');
+      });
+      li.addEventListener('pointerleave', () => { li.style.setProperty('--rx', '0deg'); li.style.setProperty('--ry', '0deg'); });
+    });
+  }
 
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {

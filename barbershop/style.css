@@ -33,6 +33,24 @@ ul,ol{margin:0;padding:0;list-style:none}
 .env .glow{position:absolute;width:70vmax;height:70vmax;border-radius:50%;opacity:.55}
 .env .g1{left:-25vmax;top:-20vmax;background:radial-gradient(circle,rgba(217,181,106,.14),rgba(217,181,106,.05) 40%,transparent 68%);animation:envA 90s var(--ease-soft) -30s infinite alternate}
 .env .g2{right:-30vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(159,179,189,.10),rgba(159,179,189,.04) 40%,transparent 68%);animation:envB 110s var(--ease-soft) -50s infinite alternate}
+.env .g3,.env .g4{width:60vmax;height:60vmax;opacity:var(--go,0);transform:translate3d(var(--gx,0px),var(--gy,0px),0);transition:transform 2400ms var(--ease-soft),opacity 1400ms var(--ease-soft);animation:none}
+.env .g3{left:calc(20vw - 30vmax);top:calc(60vh - 30vmax);background:radial-gradient(circle,rgba(159,179,189,.13),rgba(159,179,189,.05) 40%,transparent 68%)}
+.env .g4{left:calc(69vw - 30vmax);top:calc(72vh - 30vmax);background:radial-gradient(circle,rgba(217,181,106,.16),rgba(217,181,106,.05) 40%,transparent 68%)}
+body[data-scene="hero"] .env .g4{--go:.5}
+body[data-scene="cennik"] .env .g4{--gx:-6vw;--gy:-10vh;--go:.25}
+body[data-scene="cennik"] .env .g3{--gx:24vw;--gy:-20vh;--go:.3}
+body[data-scene="ako"] .env .g3{--gx:10vw;--gy:-10vh;--go:.45}
+body[data-scene="ako"] .env .g4{--go:.15}
+body[data-scene="preco"] .env .g3{--gx:14vw;--gy:-24vh;--go:.34}
+body[data-scene="preco"] .env .g4{--gx:-10vw;--gy:-16vh;--go:.2}
+body[data-scene="headspa"] .env .g3{--gx:30vw;--gy:-30vh;--go:.5}
+body[data-scene="headspa"] .env .g4{--go:0}
+body[data-scene="poukaz"] .env .g4{--gx:10vw;--gy:-30vh;--go:.5}
+body[data-scene="poukaz"] .env .g3{--go:0}
+body[data-scene="faq"] .env .g3{--go:.2}
+body[data-scene="faq"] .env .g4{--go:.15}
+body[data-scene="kontakt"] .env .g4{--gx:-40vw;--gy:-30vh;--go:.55}
+body[data-scene="kontakt"] .env .g3{--go:0}
 .env .grain{position:absolute;inset:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes envA{to{transform:translate(12vmax,10vmax)}}
 @keyframes envB{to{transform:translate(-14vmax,-8vmax)}}
@@ -122,27 +140,53 @@ body.open .hero :is(.kicker,h1,.sub,.cta,.today-line,.facts){opacity:1;transform
 .facts b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1;color:var(--accent-hover);white-space:nowrap}
 .facts span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 
-/* the art: a barber pole that turns, a razor that waits */
-.art{position:relative;display:grid;place-items:center;min-height:420px;opacity:0;transform:scale(.96);transition:opacity 1400ms var(--ease) 300ms,transform 1400ms var(--ease) 300ms}
+/* the art: a pole with a motor, a razor that catches the light, scissors that snip. Layers answer the hand (fine pointers only). */
+.art{position:relative;display:grid;place-items:center;min-height:520px;opacity:0;transform:scale(.96);transition:opacity 1400ms var(--ease) 300ms,transform 1400ms var(--ease) 300ms;--px:0;--py:0}
 body.open .art{opacity:1;transform:none}
-.art .halo{position:absolute;width:min(520px,80vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,181,106,.18),rgba(217,181,106,.05) 45%,transparent 70%);animation:breathe 10s var(--ease-soft) infinite}
-@keyframes breathe{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+.art .l{transition:translate 900ms var(--ease-soft)}
+.art .halo{position:absolute;width:min(560px,84vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,181,106,.2),rgba(217,181,106,.06) 45%,transparent 70%);animation:breathe 10s var(--ease-soft) infinite}
+@keyframes breathe{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 .art .ring{position:absolute;width:min(440px,68vw);aspect-ratio:1;border-radius:50%;border:1px solid var(--line-strong);opacity:.6}
 .art .ring.r2{width:min(560px,86vw);border-color:var(--line);opacity:.5}
-.pole{position:relative;width:min(120px,20vw);height:min(360px,56vw);border-radius:60px;padding:16px 0;background:linear-gradient(180deg,#e3cf9a,#b8924a 35%,#8f6f36);box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.35)}
-.pole .cap{position:absolute;left:50%;width:44%;height:26px;margin-left:-22%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f0dca7,#a3823f 70%);box-shadow:0 4px 10px rgba(0,0,0,.4)}
-.pole .cap.t{top:-12px}
-.pole .cap.b{bottom:-12px}
-.pole .glass{position:absolute;left:14%;right:14%;top:22px;bottom:22px;border-radius:40px;overflow:hidden;background:#f2ede2;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),inset 18px 0 30px rgba(0,0,0,.35),inset -14px 0 24px rgba(255,255,255,.18)}
-/* the stripes live on one tall layer that slides by exactly one period (88px along the stripe = 107.43px vertically at 35deg), so the loop has no seam */
-.pole .glass::before{content:"";position:absolute;left:0;top:-120px;width:100%;height:calc(100% + 240px);background:repeating-linear-gradient(-35deg,#f2ede2 0 21px,var(--pole) 23px 43px,#f2ede2 45px 65px,#3e5a72 67px 87px,#f2ede2 88px);animation:poleTurn 3.2s linear infinite}
-.pole .glass::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.35),transparent 30%,rgba(255,255,255,.22) 48%,transparent 62%,rgba(0,0,0,.4))}
-@keyframes poleTurn{to{transform:translateY(107.43px)}}
-.razor{position:absolute;right:-6%;bottom:8%;width:min(230px,38vw);transform:rotate(-28deg);filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
-.razor .blade{fill:url(#steel)}
-.razor .handle{fill:#1f1c18;stroke:#6b5a34;stroke-width:1.2}
-.scissors{position:absolute;left:-2%;top:6%;width:min(110px,18vw);transform:rotate(18deg);opacity:.8;filter:drop-shadow(0 12px 22px rgba(0,0,0,.6))}
-.scissors path{fill:none;stroke:var(--accent);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.art .floor{position:absolute;left:50%;bottom:6%;width:min(360px,56vw);height:36px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.7),rgba(0,0,0,.25) 50%,transparent 72%);filter:blur(6px)}
+.pole{position:relative;width:min(172px,26vw);height:auto;overflow:visible}
+.pole .p-lamp{animation:lamp 6s var(--ease-soft) infinite;transform-origin:100px 44px}
+@keyframes lamp{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.pole .p-stripes{will-change:transform}
+.razor{position:absolute;right:-12%;bottom:4%;width:min(300px,44vw);overflow:visible;transform:rotate(-24deg);animation:floatR 7s var(--ease-soft) infinite}
+@keyframes floatR{0%,100%{transform:rotate(-24deg) translateY(0)}50%{transform:rotate(-25.5deg) translateY(-7px)}}
+.rz-sweep{animation:sweep 7s var(--ease-soft) infinite}
+@keyframes sweep{0%,55%{transform:translateX(0)}85%,100%{transform:translateX(380px)}}
+.scissors{position:absolute;left:-2%;top:4%;width:min(120px,20vw);overflow:visible;transform:rotate(22deg);animation:floatS 9s var(--ease-soft) infinite}
+@keyframes floatS{0%,100%{transform:rotate(22deg) translateY(0)}50%{transform:rotate(20deg) translateY(-6px)}}
+.sc-a,.sc-b{transform-box:view-box;transform-origin:70px 120px}
+.sc-a{animation:snipA 4.6s cubic-bezier(.6,0,.3,1) infinite}
+.sc-b{animation:snipB 4.6s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes snipA{0%,62%{transform:rotate(-4deg)}72%{transform:rotate(-15deg)}80%{transform:rotate(-2deg)}86%{transform:rotate(-12deg)}94%,100%{transform:rotate(-4deg)}}
+@keyframes snipB{0%,62%{transform:rotate(4deg)}72%{transform:rotate(15deg)}80%{transform:rotate(2deg)}86%{transform:rotate(12deg)}94%,100%{transform:rotate(4deg)}}
+
+/* the mark draws itself when the page opens */
+.brand .mark circle{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 900ms var(--ease) 150ms;transform:rotate(-90deg);transform-origin:50% 50%}
+.brand .mark text,.brand .mark path{opacity:0;transition:opacity 500ms var(--ease-soft) 700ms}
+body.open .brand .mark circle{stroke-dashoffset:0}
+body.open .brand .mark text,body.open .brand .mark path{opacity:1}
+
+/* headlines rise out of a masked slot, line by line; the h1 word by word */
+.h2 .ln,.hero h1 .ln{display:block;overflow:hidden;padding:.08em .14em .22em .06em;margin:-.08em -.14em -.22em -.06em}
+.h2 .li,.hero h1 .li{display:block;transform:translateY(120%);transition:transform 1100ms var(--ease)}
+.rv.in .h2 .li,body.open .hero h1 .li{transform:none}
+.rv.in .h2 .ln:nth-child(2) .li,body.open .hero h1 .ln:nth-child(2) .li{transition-delay:130ms}
+.rv.in .h2.part .ln:nth-child(1) .li{transition-delay:90ms}
+.rv.in .h2.part .ln:nth-child(2) .li{transition-delay:220ms}
+.rv .part.h2{transform:none}
+.hero h1{transition:none;transform:none;opacity:1}
+body.open .hero h1 .ln:nth-child(1) .li{transition-delay:calc(var(--i,0)*110ms + 80ms)}
+
+/* the light passes over a primary button once on hover */
+.btn.primary{overflow:hidden}
+.btn.primary::before{content:"";position:absolute;top:-40%;bottom:-40%;left:-30%;width:26%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg) translateX(0);opacity:0;pointer-events:none}
+.btn.primary:hover::before{animation:shine 900ms var(--ease-soft) 1}
+@keyframes shine{0%{opacity:0;transform:skewX(-20deg) translateX(0)}15%{opacity:1}100%{opacity:0;transform:skewX(-20deg) translateX(520%)}}
 
 /* ---------- sections ---------- */
 main{position:relative;z-index:1}
@@ -220,6 +264,10 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .card.open .panel li{opacity:1;transform:none;transition-delay:calc(60ms + var(--i,0)*22ms)}
 .note{margin-top:20px;font-size:12.5px;color:var(--text-tertiary);max-width:70ch}
 @media (hover:hover) and (pointer:fine){
+  .btn.primary{transform:translate(var(--mx,0px),var(--my,0px))}
+  .btn.primary:hover{transform:translate(var(--mx,0px),calc(var(--my,0px) - 2px))}
+  .whys li::before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--lx,50%) var(--ly,50%),rgba(159,179,189,.09),transparent 60%);opacity:0;transition:opacity .5s;pointer-events:none}
+  .whys li:hover::before{opacity:1}
   .card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(420px circle at var(--lx,50%) var(--ly,50%),rgba(217,181,106,.10),transparent 60%);opacity:0;transition:opacity .5s;pointer-events:none}
   .card:hover::before{opacity:1}
   .card .meta strong{color:var(--text-primary)}
@@ -249,13 +297,35 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .step.lit .n,.step.lit .n::after{opacity:1}
 .step h3{font-family:var(--display);font-weight:500;font-size:24px;letter-spacing:-.01em}
 .step p{margin-top:8px;color:var(--text-secondary);max-width:48ch}
+.step .ico{position:absolute;right:0;top:24px;width:46px;height:46px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.35;transition:opacity 600ms var(--ease)}
+.step.lit .ico{opacity:1}
+.step h3{padding-right:60px}
+.step .ico .stm{stroke:var(--steel);opacity:0}
+.step.lit .ico .stm{animation:steam 3.2s var(--ease-soft) infinite}
+.step.lit .ico .s2{animation-delay:.9s}
+.step.lit .ico .s3{animation-delay:1.7s}
+@keyframes steam{0%{opacity:0;transform:translateY(4px)}30%{opacity:.9}100%{opacity:0;transform:translateY(-8px)}}
+.step .ico .ia,.step .ico .ib{transform-box:view-box;transform-origin:24px 26px}
+.step.lit .ico .ia{animation:snipA 3.4s cubic-bezier(.6,0,.3,1) infinite}
+.step.lit .ico .ib{animation:snipB 3.4s cubic-bezier(.6,0,.3,1) infinite}
+.step .ico .rz{transform-box:view-box;transform-origin:24px 24px}
+.step.lit .ico .rz{animation:stroke 3.6s var(--ease-soft) infinite}
+@keyframes stroke{0%,15%{transform:translate(-4px,4px)}55%,70%{transform:translate(6px,-6px)}100%{transform:translate(-4px,4px)}}
+.step .ico .trail{stroke:var(--steel);stroke-dasharray:1;stroke-dashoffset:1;opacity:.6}
+.step.lit .ico .trail{animation:trail 3.6s var(--ease-soft) infinite}
+@keyframes trail{0%,15%{stroke-dashoffset:1}60%{stroke-dashoffset:0}80%,100%{stroke-dashoffset:0;opacity:0}}
+.step .ico .spark{fill:var(--accent-hover);stroke:none;transform-box:view-box;transform-origin:38px 14px;opacity:0}
+.step.lit .ico .spark{animation:spark 3s var(--ease-soft) infinite}
+@keyframes spark{0%,50%{opacity:0;transform:scale(.4) rotate(0)}65%{opacity:1;transform:scale(1.1) rotate(30deg)}80%,100%{opacity:0;transform:scale(.4) rotate(60deg)}}
 .step-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:30px}
 .step-cta span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
 
 /* why us */
 .whys{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px}
 .whys li{position:relative;overflow:hidden;padding:28px 24px 30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,rgba(30,28,25,.7),rgba(23,22,20,.85));transition:border-color .4s,transform .5s var(--ease)}
-.whys li:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.whys li{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:border-color .4s,transform .6s var(--ease)}
+.whys li:hover{border-color:var(--line-strong);--ty:-3px}
+.rv.in .whys li.part{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px))}
 .whys .wn{display:block;font-family:var(--mono);font-size:var(--label);letter-spacing:.2em;color:var(--accent);margin-bottom:22px}
 .whys h3{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.15;letter-spacing:-.01em}
 .whys p{margin-top:12px;color:var(--text-secondary);font-size:14.5px;line-height:1.65}
@@ -345,11 +415,12 @@ footer .bottom a{color:var(--text-secondary);border-bottom:1px solid var(--line)
   .menu-btn{display:block}
   .hero .wrap{grid-template-columns:1fr;gap:20px}
   .hero{padding:120px 0 60px}
-  .art{min-height:300px;order:-1}
-  .pole{width:min(80px,16vw);height:min(240px,44vw)}
-  .pole .cap{height:18px}
-  .razor{width:min(160px,34vw);right:4%}
-  .scissors{left:6%}
+  .art{min-height:340px;order:-1}
+  .pole{width:min(110px,22vw)}
+  .razor{width:min(200px,40vw);right:2%;bottom:10%}
+  .scissors{left:4%;width:min(84px,16vw)}
+  .step .ico{width:36px;height:36px;top:22px}
+  .step h3{padding-right:48px}
   .ritual .grid,.faq .grid,.contact .box,.head,.sister .box,.gift .box{grid-template-columns:1fr;gap:34px}
   .ritual .sticky,.faq .sticky{position:static}
   .sister .box{padding:40px 32px}
@@ -408,4 +479,8 @@ footer .bottom a{color:var(--text-secondary);border-bottom:1px solid var(--line)
   .kicker::before,.divider,.cat::after,.step::after{transform:none}
   .step .n,.step .n::after{opacity:1}
   .steps .line{height:100%}
+  .step .ico{opacity:1}
+  .hero h1 .li,.h2 .li{transform:none}
+  .brand .mark circle{stroke-dashoffset:0}
+  .brand .mark text,.brand .mark path{opacity:1}
 }
