@@ -59,14 +59,66 @@
     matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
   }
 
-  /* ============ reveals ============ */
-  const rio = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return;
-    e.target.classList.add('in');
-    setTimeout(() => e.target.classList.add('done'), 1600);
-    rio.unobserve(e.target);
-  }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  $$('.rv, .divider, .cat').forEach((el) => rio.observe(el));
+  /* ============ one scroll driver: progress, the hero leaving, the way back up ============ */
+  const motion = { vel: 0 }, onDrive = [];
+  (function driver() {
+    const prog = $('.prog'), hero = $('.hero'), toTop = $('.totop');
+    let prevY = scrollY, queued = false;
+    function drive() {
+      queued = false;
+      const y = scrollY;
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      if (prog) prog.style.setProperty('--p', Math.min(1, y / max).toFixed(4));
+      if (hero && !reduced.matches) hero.style.setProperty('--hs', Math.min(1, y / Math.max(1, hero.offsetHeight)).toFixed(4));
+      if (toTop) toTop.classList.toggle('on', y > innerHeight * 1.4);
+      motion.vel = y - prevY;
+      prevY = y;
+      for (const fn of onDrive) fn();
+    }
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(drive); } }, { passive: true });
+    addEventListener('resize', drive);
+    if (toTop) toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' }));
+    drive();
+  })();
+
+  $$('.gift .vals span').forEach((el, i) => el.style.setProperty('--i', i));
+  $$('.hours li').forEach((el, i) => el.style.setProperty('--i', i));
+  $$('footer .col').forEach((el, i) => el.style.setProperty('--i', i));
+
+  /* ============ reveals: one pass on every scroll frame ============ */
+  /* A pass beats an observer here: jump to a section from the menu and everything
+     above it is still revealed, instead of sitting at opacity 0 until you scroll back. */
+  (function reveals() {
+    let parts = $$('.rv, .divider, .cat');
+    let cards = $$('.card');
+    let marks = $$('main section[id], footer');
+    function pass() {
+      const fold = innerHeight * 0.88;
+      if (parts.length) parts = parts.filter((el) => {
+        if (el.getBoundingClientRect().top > fold) return true;
+        el.classList.add('in');
+        setTimeout(() => el.classList.add('done'), 1600);
+        return false;
+      });
+      if (cards.length) {
+        let step = 0;
+        cards = cards.filter((el) => {
+          const top = el.getBoundingClientRect().top;
+          if (top > fold) return true;
+          el.style.setProperty('--d', top < -40 ? 0 : Math.min(step++, 5));   // already passed: no waiting
+          el.classList.add('seen');
+          return false;
+        });
+      }
+      if (marks.length) marks = marks.filter((el) => {
+        if (el.getBoundingClientRect().top > innerHeight * 0.96) return true;
+        el.classList.add('seen');
+        return false;
+      });
+    }
+    onDrive.push(pass);
+    pass();
+  })();
 
   /* the steps: the line grows with the scroll, each numeral lights when the line reaches it */
   const stepBlocks = $$('.steps').map((steps) => ({ steps, line: $('.line', steps), items: $$('.step', steps) }));
@@ -111,6 +163,7 @@
     if (count) count.textContent = key === 'all' ? `Všetkých ${cards.length} ${WORDS(cards.length)}` : `Zobrazených ${shown} z ${cards.length} služieb`;
   }
   chips.forEach((c) => c.addEventListener('click', () => {
+    cards.forEach((k) => { k.classList.add('seen'); k.style.setProperty('--d', 0); });
     applyFilter(c.dataset.filter);
     const top = $('#cennik').getBoundingClientRect().top + scrollY - 70;
     if (scrollY > top) scrollTo({ top, behavior: reduced.matches ? 'auto' : 'smooth' });
@@ -278,6 +331,33 @@
       at(1750, () => intro.classList.add('cut'));   // the blade runs down the seam
       at(2000, () => finish(false));                // and the two halves part
     }));
+  })();
+
+  /* ============ the ticker rides the scroll: faster with it, backwards against it ============ */
+  (function ticker() {
+    const band = $('.ticker'), track = $('.ticker .track'), row = $('.ticker .row');
+    if (!band || !track || !row || reduced.matches) return;
+    track.style.animation = 'none';
+    let x = 0, half = 0, raf = 0, on = false, last = 0, sv = 0, hold = false;
+    const measure = () => { half = row.getBoundingClientRect().width; };
+    function frame(t) {
+      if (!on || document.hidden) { raf = 0; return; }
+      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
+      sv += (motion.vel - sv) * Math.min(1, dt * 9);
+      motion.vel *= 0.82;
+      if (!hold) x -= (34 + Math.max(-250, Math.min(250, sv * 7))) * dt;
+      if (half) { if (x <= -half) x += half; else if (x > 0) x -= half; }
+      track.style.transform = `translateX(${x.toFixed(2)}px)`;
+      raf = requestAnimationFrame(frame);
+    }
+    const run = () => { if (!raf && on && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+    new IntersectionObserver((es) => { on = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(band);
+    document.addEventListener('visibilitychange', run);
+    addEventListener('resize', measure);
+    band.addEventListener('pointerenter', () => { hold = true; });
+    band.addEventListener('pointerleave', () => { hold = false; });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure(); run();
   })();
 
   /* ============ dust in the lamp light ============ */

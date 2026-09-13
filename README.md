@@ -46,11 +46,31 @@ strán. Potom nabehne úvod. Celé to riadi funkcia `opening()` v `app.js`:
 - preskočí sa tlačidlom, klávesom Escape, medzerníkom, kliknutím do plochy alebo prvým scrollom
 - ak by skript nezbehol, okenice sa samy zdvihnú po šiestich sekundách (`iFailsafe` v CSS)
 
-Ďalší pohyb na stránke: nadpisy vychádzajú z maskovaného riadku, značka v lište sa nakreslí,
-dve svetlá v pozadí sa presúvajú podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii
-Ako to prebieha rastie so scrollom a každý krok má malú animovanú ikonu (para, nožnice, britva,
-uterák, hrebeň). Tlačidlá sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pruhy stĺpa kreslí
-`app.js` (`pole()`), prach kreslí `dust()` na canvas; oboje stojí mimo obrazovky aj pri skrytej karte.
+### Pohyb na zvyšku stránky
+
+Všetko beží z jedného miesta: `driver()` v `app.js` počíta raz za snímku polohu scrollu
+a rýchlosť a spustí funkcie zo zoznamu `onDrive`.
+
+- **Ukazovateľ postupu** – zlatá vlásočnica hore cez celú šírku okna
+- **Úvod odchádza** – text a scéna sa vzďaľujú rôznou rýchlosťou a text sa stráca (`--hs` na `.hero`)
+- **Pás služieb** – uháňa rýchlejšie, keď scrolluješ dole, a cúva, keď ideš hore; pri prejdení
+  myšou zastaví. Kreslí sa transformom, nie CSS animáciou, aby vedel meniť smer plynule
+- **Karty cenníka** – prichádzajú vo vlnách, každá o kúsok neskôr ako tá nad ňou, ikona sa dotočí
+  a cena vyjde zdola
+- **Sekcie** – každá si pri príchode nakreslí vlásočnicu na svojom hornom okraji
+- **Poukážky, otváracie hodiny, stĺpce v pätičke** – nabiehajú po jednom
+- **Svetlo cez celú stránku** – šikmý pruh svetla prejde pozadím raz za 28 sekúnd
+- **Tlačidlo späť hore** – objaví sa po prvej a pol obrazovke (na telefóne nie, tam je spodná lišta)
+
+Odhaľovanie nerobí IntersectionObserver, ale jeden priechod v `reveals()`. Vďaka tomu sa obsah
+ukáže aj vtedy, keď čitateľ skočí na sekciu z menu a preletí cez polovicu stránky.
+
+Ďalej: nadpisy vychádzajú z maskovaného riadku, značka v lište sa nakreslí, dve svetlá v pozadí
+sa presúvajú podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii Ako to prebieha rastie
+so scrollom a každý krok má malú animovanú ikonu (para, nožnice, britva, uterák, hrebeň). Tlačidlá
+sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pruhy stĺpa kreslí `pole()`, prach `dust()`;
+oboje stojí mimo obrazovky aj pri skrytej karte. Pri `prefers-reduced-motion: reduce` je celá
+stránka statická a všetko je viditeľné.
 
 **Kontakty a hodiny sú prevzaté z prvej verzie webu (september 2026), keď ešte bežal pod značkou
 Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram barbershop30_nitra,
