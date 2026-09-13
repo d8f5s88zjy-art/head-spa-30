@@ -530,10 +530,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#chodidla,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#chodidla,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -658,16 +658,7 @@
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
     cards.forEach((c) => pio.observe(c));
   }
-  /* a chip is either one category or a group of them (everything for the head, everything for the feet) */
-  const GROUPS = {
-    head: ['classic', 'gentlemen', 'kids', 'couple', 'lux'],
-    feetall: ['feet', 'feet-men', 'feet-kids', 'feet-duo', 'feet-lux'],
-  };
-  const inCat = (cat) => {
-    if (activeCat === 'all') return true;
-    const g = GROUPS[activeCat];
-    return g ? g.indexOf(cat) > -1 : cat === activeCat;
-  };
+  const inCat = (cat) => activeCat === 'all' || cat === activeCat;
   /* Tento riadok sa skladá až v prehliadači, preto má vlastné preklady. */
   const COUNT_WORDS = {
     sk: { all: (t) => `Zobrazených všetkých ${t} rituálov`, some: (n, t) => `Zobrazených ${n} z ${t} rituálov` },

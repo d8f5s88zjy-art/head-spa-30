@@ -54,9 +54,6 @@ body[data-scene="rezervacia"] .env .g4{--gx:-12vw;--gy:-18vh;--go:.34}
 body[data-scene="poukaz"] .env .g4{--gx:10vw;--gy:-30vh;--go:.5}
 body[data-scene="poukaz"] .env .g3{--go:0}
 body[data-scene="ritual"] .env .g3{--gx:10vw;--gy:-10vh;--go:.45}
-body[data-scene="chodidla"] .env .g2{--gx:-6vw;--gy:6vh;--go:.5}
-body[data-scene="chodidla"] .env .g3{--gx:6vw;--gy:14vh;--go:.3}
-body[data-scene="chodidla"] .env .g4{--go:.12}
 body[data-scene="ritual"] .env .g4{--go:.15}
 body[data-scene="preco"] .env .g3{--gx:14vw;--gy:-24vh;--go:.34}
 body[data-scene="preco"] .env .g4{--gx:-10vw;--gy:-16vh;--go:.2}
@@ -302,10 +299,10 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in.done .part{transition-delay:0s}
 
 /* ritual steps: the water line lights each numeral as it reaches it */
-.ritual .grid,.feet .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
-.ritual .sticky,.feet .sticky{position:sticky;top:120px}
-.ritual .h2,.feet .h2{font-size:clamp(38px,4.3vw,60px)}
-.ritual .lede,.feet .lede{margin-top:22px}
+.ritual .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.ritual .sticky{position:sticky;top:120px}
+.ritual .h2{font-size:clamp(38px,4.3vw,60px)}
+.ritual .lede{margin-top:22px}
 .steps{position:relative;padding-left:56px}
 .steps .stream{position:absolute;left:19px;top:8px;width:4px;height:calc(100% - 16px);overflow:visible}
 .steps .stream path{stroke:var(--water);stroke-width:2;fill:none;stroke-linecap:round;opacity:.9;filter:drop-shadow(0 0 6px rgba(140,195,182,.5))}
@@ -563,7 +560,6 @@ body.idle .shot.word .frame::before{animation-play-state:paused}
 .lb .lb-close{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(10,13,11,.7);color:var(--text-primary);font-size:22px;line-height:1;cursor:pointer}
 .lb .lb-close:hover{border-color:var(--accent)}
 
-
 /* faq */
 .faq .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
 .faq .sticky{position:sticky;top:120px}
@@ -636,8 +632,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .menu-btn{display:block}
   .whys{grid-template-columns:1fr 1fr}
   .map .part{aspect-ratio:16/10}
-  .ritual .grid,.feet .grid,.faq .grid,.contact .box,.head{grid-template-columns:1fr;gap:34px}
-  .ritual .sticky,.feet .sticky,.faq .sticky{position:static}
+  .ritual .grid,.faq .grid,.contact .box,.head{grid-template-columns:1fr;gap:34px}
+  .ritual .sticky,.faq .sticky{position:static}
   .order{grid-template-columns:1fr;gap:34px}
   .order>.part:last-child{position:static;padding:0 14px}
   .shots{grid-template-columns:repeat(6,1fr)}
@@ -712,7 +708,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .mbar a:last-child{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208}
   body{padding-bottom:76px}
 }
-
 
 /* ---------- the journey on a phone: text sits low, full width, above the fixed bar ---------- */
 @media (max-width:640px){
@@ -863,96 +858,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .today .dot{animation:none}
   .btn.primary::before,.scard::before,.card::after,.scard::after{display:none}
   .scard:hover{transform:none}
-}
-
-/* ==========================================================
-   RITUÁLY PRE CHODIDLÁ
-   ========================================================== */
-.feet-art{margin:30px 0 0;max-width:440px}
-.feet-art svg{display:block;width:100%;height:auto;overflow:visible}
-.feet-art figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--text-tertiary);max-width:42ch}
-.feet-art .fa-feet{filter:drop-shadow(0 0 14px rgba(217,181,106,.14))}
-
-/* Celá scéna beží v jednom osemsekundovom kruhu: kvapka dopadne, hladina sa
-   rozbehne v kruhoch, para stúpne a chodidlá sa o kúsok prepadnú do vody. */
-.feet-art .fa-glow{animation:faGlow 8s var(--ease-soft) infinite}
-@keyframes faGlow{0%,100%{opacity:.75}46%{opacity:1}}
-
-/* kvapka padá z výšky, zrýchli a v hladine zmizne */
-.fa-drop{animation:faDrop 8s cubic-bezier(.55,0,.85,.35) infinite}
-@keyframes faDrop{
-  0%{transform:translateY(0) scaleY(1);opacity:0}
-  6%{opacity:.9}
-  30%{transform:translateY(138px) scaleY(1.45);opacity:.9}
-  33%{transform:translateY(142px) scaleY(.5);opacity:0}
-  100%{transform:translateY(142px);opacity:0}
-}
-/* kruhy po dopade, druhý o kúsok neskôr */
-.fa-rings .ring{opacity:0;transform-box:fill-box;transform-origin:center}
-.ring-a{animation:faRing 8s var(--ease-soft) infinite}
-.ring-b{animation:faRing 8s var(--ease-soft) .5s infinite}
-@keyframes faRing{
-  0%,32%{transform:scale(.4);opacity:0}
-  36%{opacity:.65}
-  62%,100%{transform:scale(9);opacity:0}
-}
-
-/* para stúpa a mizne, každý prameň v inom rytme */
-.fa-steam path{stroke-dasharray:130;stroke-dashoffset:130;opacity:0}
-.fa-steam .s1{animation:faSteam 8s var(--ease-soft) 3.4s infinite}
-.fa-steam .s2{animation:faSteam 8s var(--ease-soft) 3.9s infinite}
-.fa-steam .s3{animation:faSteam 8s var(--ease-soft) 4.5s infinite}
-.fa-steam .s4{animation:faSteam 8s var(--ease-soft) 5.1s infinite}
-@keyframes faSteam{
-  0%{stroke-dashoffset:130;opacity:0;transform:translateY(8px)}
-  10%{opacity:.5}
-  38%{stroke-dashoffset:0;opacity:.34}
-  60%,100%{stroke-dashoffset:0;opacity:0;transform:translateY(-20px)}
-}
-
-/* hladina sa vlní, tri vrstvy proti sebe */
-.fa-ripples path{animation:faRipple 9s ease-in-out infinite}
-.fa-ripples .r2{animation-duration:11s;animation-direction:reverse;opacity:.7}
-.fa-ripples .r3{animation-duration:13s;opacity:.45}
-@keyframes faRipple{0%,100%{transform:translateX(-16px)}50%{transform:translateX(16px)}}
-
-/* chodidlá sa po dopade kvapky o kúsok prepadnú a prsty sa uvoľnia */
-.fa-feet .foot{transform-box:fill-box;transform-origin:50% 100%}
-.foot-l{animation:faSink 8s var(--ease-soft) infinite}
-.foot-r{animation:faSink 8s var(--ease-soft) .35s infinite}
-@keyframes faSink{0%,26%{transform:translateY(0)}42%{transform:translateY(2.5px)}70%,100%{transform:translateY(0)}}
-.fa-feet .toes{transform-box:fill-box;transform-origin:50% 100%}
-.foot-l .toes{animation:faToes 8s var(--ease-soft) infinite}
-.foot-r .toes{animation:faToes 8s var(--ease-soft) .35s infinite}
-@keyframes faToes{0%,30%{transform:translateY(0) rotate(0)}44%{transform:translateY(-2px) rotate(-2.5deg)}66%,100%{transform:translateY(0) rotate(0)}}
-
-/* citrusový plátok sa zľahka kolíše */
-.fa-props .citrus{transform-box:fill-box;transform-origin:center;animation:faBob 6s ease-in-out infinite}
-@keyframes faBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
-
-@media (prefers-reduced-motion:reduce){
-  .fa-steam path{animation:none;stroke-dashoffset:0;opacity:.3}
-  .fa-ripples path,.fa-props .citrus,.fa-drop,.fa-rings .ring,
-  .fa-feet .foot,.fa-feet .toes,.feet-art .fa-glow{animation:none}
-  .fa-drop{opacity:0}
-}
-
-.feet-pick{display:grid;gap:10px;margin-top:26px}
-.fbtn{position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:14px;
-  padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius-m);
-  background:linear-gradient(160deg,rgba(25,34,25,.7),rgba(14,19,16,.9));
-  transition:border-color .4s var(--ease),transform .4s var(--ease),background .4s}
-.fbtn b{font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:-.01em}
-.fbtn span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.fbtn i{font-style:normal;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;color:var(--accent)}
-.fbtn:hover{border-color:var(--line-strong);transform:translateX(4px);background:linear-gradient(160deg,rgba(33,45,33,.85),rgba(16,22,18,.95))}
-.fbtn.gold{border-color:var(--line-strong);
-  background:radial-gradient(circle at 92% 12%,rgba(217,181,106,.16),transparent 34%),linear-gradient(160deg,rgba(29,40,29,.9),rgba(19,26,21,.9))}
-.fbtn.gold i{color:var(--accent-hover)}
-.feet .fine{max-width:46ch;margin-top:14px}
-@media (max-width:640px){
-  .fbtn{grid-template-columns:1fr auto;row-gap:6px;padding:15px 17px}
-  .fbtn b{grid-column:1/-1}
 }
 
 /* ==========================================================
