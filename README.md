@@ -154,6 +154,34 @@ Kreslené scény, ktoré tu boli predtým (barber stĺp s motorom, britva, nožn
 a kreslená miestnosť), sú preč. Boli to domnienky o tom, ako prevádzka vyzerá; odkedy sú po ruke
 fotografie, nemali čo robiť vedľa nich.
 
+### Pohyb odpísaný z prevádzky
+
+Každá animácia má predlohu v miestnosti, nie je to efekt pre efekt:
+
+| V prevádzke | Na stránke |
+| --- | --- |
+| Neón na drevenej stene | názov v úvodnej scéne sa zapáli s krátkym zablikaním (`neonOn`) |
+| Oranžové priemyselné lampy | teplý kruh svetla nad fotkou v úvode pulzuje (`lampPulse`), svetlá v pozadí dýchajú (`envBreathe`) |
+| Barber stĺp | pásik medzi kapitolami je otáčajúci sa stĺp (`.pole-rule`, `poleRule`) |
+| Kruhové svetlá pri zrkadlách | tlačidlo späť hore má pulzujúci prstenec (`ringLight`) |
+| Pomalý pohľad po miestnosti | fotka v úvode sa pomaly približuje (`kenburns`), ostatné fotky dosadnú z mierneho priblíženia |
+
+Pri zapaľovaní neónu bliká len žiara, nie farba písmen, takže nápis je čitateľný po celý čas.
+Pri `prefers-reduced-motion: reduce` stojí všetko a všetko je viditeľné.
+
+Fotografie sú okrem úvodu, sekcie U nás vnútri a galérie aj v sekcii Ako to prebieha (vedľa krokov,
+v lepiacom stĺpci) a pod panelom s poukážkami (ako podklad pod závojom).
+
+### Dve chyby, ktoré pri tom vyšli najavo
+
+- **Úvodná scéna sa vôbec neprehrávala.** Pri skoršom mazaní kresieb sa v `app.js` zduplikoval
+  koniec súboru, takže funkcia `opening()` tam bola dvakrát. Prvá scénu spustila, druhá ju hneď
+  odstránila, lebo v `sessionStorage` už našla značku od prvej. Navyše na `body` zostala trieda
+  `intro-on`, čiže zamknuté rolovanie. Koniec skriptu je poskladaný načisto.
+- **Pásik služieb sa nehýbal.** Jeho `IntersectionObserver` bol vytvorený bez premennej, ktorá by
+  ho držala, a prehliadač ho zahodil. Viditeľnosť pásika teraz počíta ten istý scrollový priechod
+  ako zvyšok stránky (`onDrive`), takže nemá čo zmiznúť.
+
 **Kontakty a hodiny sú prevzaté z prvej verzie webu (september 2026), keď ešte bežal pod značkou
 Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram barbershop30_nitra,
 rezervácia https://booqme.app/sk/rezervacia/barbershop-30, otváracie hodiny pondelok až piatok

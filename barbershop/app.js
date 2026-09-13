@@ -297,55 +297,6 @@
   /* ============ housekeeping ============ */
   document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
-  /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
-  /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
-  (function opening() {
-    const intro = $('#intro');
-    const wake = () => requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
-    if (!intro) { wake(); return; }
-    let seen = false;
-    try { seen = sessionStorage.getItem('bs30.intro') === '1'; } catch (e) {}
-    if (reduced.matches || seen) { intro.remove(); wake(); return; }
-    try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
-
-    const name = $('.iname', intro);
-    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' '
-      ? '<span class="sp"></span>'
-      : `<span class="sl"><b style="--i:${i}">${c}</b></span>`)).join('');
-
-    document.body.classList.add('intro-on');
-    const timers = [];
-    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-    let done = false;
-    function finish(fast) {
-      if (done) return;
-      done = true;
-      timers.forEach(clearTimeout);
-      document.body.classList.remove('intro-on');
-      document.body.classList.add('open');
-      intro.classList.add('part');
-      if (fast) intro.classList.add('fast');
-      setTimeout(() => intro.remove(), fast ? 620 : 1200);
-      removeEventListener('keydown', onKey);
-      removeEventListener('wheel', skip);
-      removeEventListener('touchmove', skip);
-    }
-    const skip = () => finish(true);
-    const onKey = (e) => { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip(); };
-    $('.iskip', intro).addEventListener('click', skip);
-    intro.addEventListener('click', (e) => { if (e.target === intro || e.target.classList.contains('ipanel')) skip(); });
-    addEventListener('keydown', onKey);
-    addEventListener('wheel', skip, { passive: true, once: true });
-    addEventListener('touchmove', skip, { passive: true, once: true });
-
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      intro.classList.add('seam');                  // the pool of light, the mark draws itself
-      at(480, () => intro.classList.add('name'));   // the name rises out of its slots
-      at(2150, () => intro.classList.add('cut'));   // a beat to read it, then the blade
-      at(2530, () => finish(false));                // and the two halves part
-    }));
-  })();
-
   /* ============ the ticker rides the scroll: faster with it, backwards against it ============ */
   (function ticker() {
     const band = $('.ticker'), track = $('.ticker .track'), row = $('.ticker .row');
@@ -364,130 +315,68 @@
       raf = requestAnimationFrame(frame);
     }
     const run = () => { if (!raf && on && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
-    new IntersectionObserver((es) => { on = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(band);
-    document.addEventListener('visibilitychange', run);
-    addEventListener('resize', measure);
-    band.addEventListener('pointerenter', () => { hold = true; });
-    band.addEventListener('pointerleave', () => { hold = false; });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    measure(); run();
-  })();
-
-  /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
-  /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
-  (function opening() {
-    const intro = $('#intro');
-    const wake = () => requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
-    if (!intro) { wake(); return; }
-    let seen = false;
-    try { seen = sessionStorage.getItem('bs30.intro') === '1'; } catch (e) {}
-    if (reduced.matches || seen) { intro.remove(); wake(); return; }
-    try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
-
-    const name = $('.iname', intro);
-    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' '
-      ? '<span class="sp"></span>'
-      : `<span class="sl"><b style="--i:${i}">${c}</b></span>`)).join('');
-
-    document.body.classList.add('intro-on');
-    const timers = [];
-    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-    let done = false;
-    function finish(fast) {
-      if (done) return;
-      done = true;
-      timers.forEach(clearTimeout);
-      document.body.classList.remove('intro-on');
-      document.body.classList.add('open');
-      intro.classList.add('part');
-      if (fast) intro.classList.add('fast');
-      setTimeout(() => intro.remove(), fast ? 620 : 1200);
-      removeEventListener('keydown', onKey);
-      removeEventListener('wheel', skip);
-      removeEventListener('touchmove', skip);
-    }
-    const skip = () => finish(true);
-    const onKey = (e) => { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip(); };
-    $('.iskip', intro).addEventListener('click', skip);
-    intro.addEventListener('click', (e) => { if (e.target === intro || e.target.classList.contains('ipanel')) skip(); });
-    addEventListener('keydown', onKey);
-    addEventListener('wheel', skip, { passive: true, once: true });
-    addEventListener('touchmove', skip, { passive: true, once: true });
-
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      intro.classList.add('seam');                  // the pool of light, the mark draws itself
-      at(480, () => intro.classList.add('name'));   // the name rises out of its slots
-      at(2150, () => intro.classList.add('cut'));   // a beat to read it, then the blade
-      at(2530, () => finish(false));                // and the two halves part
-    }));
-  })();
-
-  /* ============ the ticker rides the scroll: faster with it, backwards against it ============ */
-  (function ticker() {
-    const band = $('.ticker'), track = $('.ticker .track'), row = $('.ticker .row');
-    if (!band || !track || !row || reduced.matches) return;
-    track.style.animation = 'none';
-    let x = 0, half = 0, raf = 0, on = false, last = 0, sv = 0, hold = false;
-    const measure = () => { half = row.getBoundingClientRect().width; };
-    function frame(t) {
-      if (!on || document.hidden) { raf = 0; return; }
-      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
-      sv += (motion.vel - sv) * Math.min(1, dt * 9);
-      motion.vel *= 0.82;
-      if (!hold) x -= (34 + Math.max(-250, Math.min(250, sv * 7))) * dt;
-      if (half) { if (x <= -half) x += half; else if (x > 0) x -= half; }
-      track.style.transform = `translateX(${x.toFixed(2)}px)`;
-      raf = requestAnimationFrame(frame);
-    }
-    const run = () => { if (!raf && on && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
-    new IntersectionObserver((es) => { on = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(band);
-    document.addEventListener('visibilitychange', run);
-    addEventListener('resize', measure);
-    band.addEventListener('pointerenter', () => { hold = true; });
-    band.addEventListener('pointerleave', () => { hold = false; });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    measure(); run();
-  })();
-
-  /* ============ dust in the lamp light ============ */
-  (function dust() {
-    const cv = $('.dust'); if (!cv || reduced.matches) return;
-    const ctx = cv.getContext('2d');
-    const dpr = Math.min(2, devicePixelRatio || 1);
-    let w = 0, h = 0, motes = [], raf = 0, visible = true, last = 0;
-    const spawn = (anywhere) => {
-      const d = Math.random();            // depth: far motes stay small, dim and slow
-      return { x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12, r: 0.6 + d * 1.7,
-               a: 0.1 + d * 0.32, v: 4 + d * 13, s: Math.random() * 6.28, sw: 0.3 + Math.random() * 0.6 };
+    /* Visibility rides the same scroll pass as everything else. An IntersectionObserver without
+       a reference of its own was being collected here, and the band silently stopped moving. */
+    const look = () => {
+      const r = band.getBoundingClientRect();
+      const now = r.top < innerHeight && r.bottom > 0;
+      if (now !== on) { on = now; run(); }
     };
-    function size() {
-      const r = cv.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      w = r.width; h = r.height;
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      motes = Array.from({ length: Math.round(Math.min(90, w * h / 13000)) }, () => spawn(true));
-    }
-    function frame(t) {
-      if (!visible || document.hidden) { raf = 0; return; }
-      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#e8d3a0';
-      for (const m of motes) {
-        m.y -= m.v * dt; m.s += dt * m.sw;
-        if (m.y < -12) Object.assign(m, spawn(false));
-        const x = m.x + Math.sin(m.s) * 10;
-        const lit = 1 - Math.min(1, Math.hypot(x - w * 0.72, m.y - h * 0.2) / (Math.max(w, h) * 0.85));
-        ctx.globalAlpha = m.a * (0.3 + lit * 0.95);
-        ctx.beginPath(); ctx.arc(x, m.y, m.r, 0, 6.284); ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(frame);
-    }
-    const run = () => { if (!raf && visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
-    new IntersectionObserver((es) => { visible = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(cv);
+    onDrive.push(look);
     document.addEventListener('visibilitychange', run);
-    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(size, 180); });
-    size(); run();
+    addEventListener('resize', () => { measure(); look(); });
+    band.addEventListener('pointerenter', () => { hold = true; });
+    band.addEventListener('pointerleave', () => { hold = false; });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure(); look();
+  })();
+
+  /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
+  /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
+  (function opening() {
+    const intro = $('#intro');
+    const wake = () => requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
+    if (!intro) { wake(); return; }
+    let seen = false;
+    try { seen = sessionStorage.getItem('bs30.intro') === '1'; } catch (e) {}
+    if (reduced.matches || seen) { intro.remove(); wake(); return; }
+    try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
+
+    const name = $('.iname', intro);
+    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' '
+      ? '<span class="sp"></span>'
+      : `<span class="sl"><b style="--i:${i}">${c}</b></span>`)).join('');
+
+    document.body.classList.add('intro-on');
+    const timers = [];
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    let done = false;
+    function finish(fast) {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      document.body.classList.remove('intro-on');
+      document.body.classList.add('open');
+      intro.classList.add('part');
+      if (fast) intro.classList.add('fast');
+      setTimeout(() => intro.remove(), fast ? 620 : 1200);
+      removeEventListener('keydown', onKey);
+      removeEventListener('wheel', skip);
+      removeEventListener('touchmove', skip);
+    }
+    const skip = () => finish(true);
+    const onKey = (e) => { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip(); };
+    $('.iskip', intro).addEventListener('click', skip);
+    intro.addEventListener('click', (e) => { if (e.target === intro || e.target.classList.contains('ipanel')) skip(); });
+    addEventListener('keydown', onKey);
+    addEventListener('wheel', skip, { passive: true, once: true });
+    addEventListener('touchmove', skip, { passive: true, once: true });
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      intro.classList.add('seam');                  // the pool of light, the mark draws itself
+      at(480, () => intro.classList.add('name'));   // the name rises out of its slots
+      at(2450, () => intro.classList.add('cut'));   // the neon holds steady, then the blade
+      at(2820, () => finish(false));                // and the two halves part
+    }));
   })();
 })();
