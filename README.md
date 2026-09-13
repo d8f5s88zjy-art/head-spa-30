@@ -59,16 +59,33 @@ Texty majú jeden rebríček odtieňov na celú stránku: `--text-primary: #fbf8
 `--text-secondary: #d5cfc5`, `--text-tertiary: #aaa298`. Najslabší prípad má kontrast 6,8 : 1.
 Nikde na stránke nie je farba textu zapísaná ako literál, všetko ide cez tieto premenné.
 
-### Fotografie v galérii
+### Fotografie
 
-V `barbershop/foto/` je päť fotografií z prevádzky: `interier`, `kresla`, `recepcia`, `neon`,
-`stanice`. Sú to **orezané snímky z Instagram stories**, teda nie originály. Rozhranie Instagramu
-je orezané preč, ale rozlíšenie je nižšie, než by na web patrilo. **Keď budú po ruke originály,
-stačí prepísať súbory rovnakým názvom v `foto/`**, nič iné sa nemení.
+V `barbershop/foto/` je päť záberov z prevádzky: `interier`, `kresla`, `recepcia`, `neon`,
+`stanice`. Každý je v dvoch formátoch, `.webp` a `.jpg`. Všade sú vložené cez `<picture>`,
+takže prehliadač stiahne len WebP a JPEG si vezme, len ak WebP nevie. Päť fotiek váži v WebP
+spolu 789 kB, v JPEG by to bolo 1,5 MB.
 
-Mechanizmus je popísaný nižšie: každá dlaždica má `data-photo`, skript fotku najprv načíta
-a až potom ňou nahradí kresbu. Kresby v dlaždiciach zostali ako záloha, keby súbor chýbal.
-Výrez fotky v dlaždici riadi `--pos` (mapuje sa na `object-position`).
+Zdrojom sú **snímky z Instagram stories**, teda nie originály. Rozhranie Instagramu je orezané
+preč. Export ide z pôvodných snímok v ich vlastnej šírke 1290 px, bez zmenšovania, s doostrením
+(`UnsharpMask`, radius 1.1, 115 %, prah 3) a v kvalite 89 bez podvzorkovania farieb. Skoršia
+verzia bola zmenšená na 1160 px a v kvalite 78, preto vyzerala mäkko.
+
+**Keď budú po ruke originály**, nahraď súbory v `foto/` rovnakým názvom. Treba prepísať obe
+prípony, inak prehliadač ukáže starú WebP verziu. `.webp` sa vyrobí z `.jpg` takto:
+
+```python
+from PIL import Image
+Image.open('barbershop/foto/interier.jpg').save(
+    'barbershop/foto/interier.webp', 'WEBP', quality=86, method=6)
+```
+
+Fotky sú vložené priamo v `index.html`, nie dosadzované skriptom. Výrez v dlaždici galérie riadi
+`--pos` (mapuje sa na `object-position`).
+
+**Animácie fotky nezväčšujú viac ako o 5 %.** Pôvodne sa v úvode približovala o 12 % a dlaždice
+dosadali zo 14 %, čo pri zdroji so šírkou 1290 px viditeľne rozmazávalo. Cez fotku v úvode je
+navyše jemné zrno, ktoré zvyšok mäkkosti skryje.
 
 ### U nás vnútri a Galéria
 
@@ -87,70 +104,6 @@ mimo. Bod pri ľavom okraji má triedu `left`, pri pravom `right`, aby bublina n
 **Galéria** (`#galeria`) je mozaika šiestich dlaždíc: päť fotografií z prevádzky a jedna oranžová
 typografická dlaždica, ktorá opakuje nápis z rohožky pri vchode. Kliknutie ktorúkoľvek fotografiu
 zväčší (`<dialog class="lb">`).
-
-### Ako do galérie vložiť skutočné fotky
-
-Dlaždice už fotografie majú (pozri vyššie). Pridanie alebo výmena nevyžaduje zásah do CSS:
-
-1. ulož súbor do `barbershop/foto/`, napríklad `barbershop/foto/kreslo.jpg`
-2. do príslušnej značky `<figure class="shot" data-shot="kreslo" …>` dopíš atribút
-   `data-photo="foto/kreslo.jpg"`
-
-`app.js` fotku najprv načíta a až po úspešnom načítaní ňou nahradí kresbu a skryje štítok Kresba.
-Keď súbor chýba alebo sa nenačíta, ostane kresba, takže na stránke nikdy nie je prázdne miesto.
-Odporúčaný pomer strán: široká dlaždica Náradie 16:5, veľká dlaždica Kreslo a zrkadlo 3:2,
-ostatné 3:2. Rovnaká fotka sa použije aj v zväčšenom náhľade.
-
-Zoznam dlaždíc a ich `data-shot`: `kreslo`, `naradie`, `uterak`, `police`, `stlp`.
-
-### Otvorenie stránky
-
-Pri prvom načítaní v karte sa prehrá scéna, postavená tak, aby sa dala prečítať:
-
-1. za okenicami sa rozsvieti teplý ovál svetla a nakreslí sa značka (prsteň, číslo, britvová linka)
-2. názov vyjde po písmenách, každé zo svojej škáry, celý čas rovno, takže sa dá čítať počas pohybu
-3. pod ním sa rozbehnú dve zlaté linky a medzi ne nabehne adresa
-4. nasleduje pauza, počas ktorej stojí všetko na mieste
-5. až potom sa škára rozjasní, zbehne po nej záblesk britvy a obe polovice sa roztvoria do strán
-
-Zlatá škára je cez stredné pásmo odmaskovaná (`mask-image` na `.iseam`), takže nikdy nepretína
-značku ani názov; spojí sa až v momente, keď cez medzeru prejde britva. Celé to riadi funkcia
-`opening()` v `app.js`:
-
-- trvá dve a pol sekundy a prehrá sa **raz za kartu** (`sessionStorage`, kľúč `bs30.intro`), pri ďalších načítaniach sa
-  preskočí a stránka nabehne hneď
-- pri `prefers-reduced-motion: reduce` sa neprehrá vôbec
-- preskočí sa tlačidlom, klávesom Escape, medzerníkom, kliknutím do plochy alebo prvým scrollom
-- ak by skript nezbehol, okenice sa samy zdvihnú po šiestich sekundách (`iFailsafe` v CSS)
-
-### Pohyb na zvyšku stránky
-
-Všetko beží z jedného miesta: `driver()` v `app.js` počíta raz za snímku polohu scrollu
-a rýchlosť a spustí funkcie zo zoznamu `onDrive`.
-
-- **Ukazovateľ postupu** – zlatá vlásočnica hore cez celú šírku okna
-- **Úvod odchádza** – text a fotografia sa vzďaľujú rôznou rýchlosťou a text sa stráca (`--hs` na `.hero`)
-- **Pás služieb** – uháňa rýchlejšie, keď scrolluješ dole, a cúva, keď ideš hore; pri prejdení
-  myšou zastaví. Kreslí sa transformom, nie CSS animáciou, aby vedel meniť smer plynule
-- **Karty cenníka** – prichádzajú vo vlnách, každá o kúsok neskôr ako tá nad ňou, ikona sa dotočí
-  a cena vyjde zdola
-- **Sekcie** – každá si pri príchode nakreslí vlásočnicu na svojom hornom okraji
-- **Poukážky, otváracie hodiny, stĺpce v pätičke** – nabiehajú po jednom
-- **Svetlo cez celú stránku** – šikmý pruh svetla prejde pozadím raz za 28 sekúnd
-- **Tlačidlo späť hore** – objaví sa po prvej a pol obrazovke (na telefóne nie, tam je spodná lišta)
-
-Odhaľovanie nerobí IntersectionObserver, ale jeden priechod v `reveals()`. Vďaka tomu sa obsah
-ukáže aj vtedy, keď čitateľ skočí na sekciu z menu a preletí cez polovicu stránky.
-
-Ďalej: nadpisy vychádzajú z maskovaného riadku, značka v lište sa nakreslí, dve svetlá v pozadí
-sa presúvajú podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii Ako to prebieha rastie
-so scrollom a každý krok má malú animovanú ikonu (para, nožnice, britva, uterák, hrebeň). Tlačidlá
-sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pri `prefers-reduced-motion: reduce` je celá
-stránka statická a všetko je viditeľné.
-
-Kreslené scény, ktoré tu boli predtým (barber stĺp s motorom, britva, nožnice, prach vo svetle
-a kreslená miestnosť), sú preč. Boli to domnienky o tom, ako prevádzka vyzerá; odkedy sú po ruke
-fotografie, nemali čo robiť vedľa nich.
 
 ### Pohyb odpísaný z prevádzky
 

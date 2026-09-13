@@ -225,24 +225,7 @@
     addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
   })();
 
-  /* ============ the gallery: real photos drop in, any shot enlarges ============ */
-  /* Put a file in barbershop/foto/ and add data-photo="foto/kreslo.jpg" to that figure.
-     The drawing stays until the photo has actually loaded, so a missing file never shows a hole. */
-  $$('.shot[data-photo]').forEach((shot) => {
-    const probe = new Image();
-    probe.onload = () => {
-      const img = document.createElement('img');
-      img.src = shot.dataset.photo;
-      const t = shot.querySelector('figcaption b');
-      img.alt = (t ? t.textContent + ': ' : '') + (shot.dataset.cap || '');
-      img.loading = 'lazy';
-      const draw = $('.draw', shot);
-      draw.replaceChildren(img);
-      shot.classList.add('has-photo');
-    };
-    probe.src = shot.dataset.photo;
-  });
-
+  /* ============ the gallery: any shot enlarges ============ */
   (function lightbox() {
     const lb = $('#lightbox'); if (!lb) return;
     const art = $('.lb-art', lb), cap = $('figcaption', lb);

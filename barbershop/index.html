@@ -108,8 +108,9 @@
 <!-- ========== HERO ========== -->
 <header class="hero" aria-label="Úvod">
   <div class="art" aria-hidden="true">
-    <img class="shot-bg" src="foto/interier.jpg" alt="" fetchpriority="high" decoding="async">
+    <picture><source srcset="foto/interier.webp" type="image/webp"><img class="shot-bg" src="foto/interier.jpg" alt="" fetchpriority="high" decoding="async"></picture>
     <span class="lampglow"></span>
+    <span class="grain"></span>
     <span class="scrim"></span>
   </div>
   <div class="wrap">
@@ -428,7 +429,7 @@
       <p class="lede part">Každý krok má svoj účel. Najprv sa pozrieme, čo chceš a čo tvoje vlasy dovolia, potom ideme presne. Bez bežiaceho pásu.</p>
       <p class="quote part">Dobrý strih vidno hneď. <em>Ten správny aj o tri týždne.</em></p>
       <figure class="side-shot part">
-        <img src="foto/stanice.jpg" alt="Stanice v prevádzke: zrkadlá s kruhovými svetlami, prešívané kreslá a barber stĺp" loading="lazy" decoding="async">
+        <picture><source srcset="foto/stanice.webp" type="image/webp"><img src="foto/stanice.jpg" alt="Stanice v prevádzke: zrkadlá s kruhovými svetlami, prešívané kreslá a barber stĺp" loading="lazy" decoding="async"></picture>
       </figure>
     </div>
     <div class="steps rv">
@@ -476,7 +477,7 @@
     </div>
     <div class="room-wrap rv">
       <div class="part">
-        <div class="room-frame"><img class="room" src="foto/neon.jpg" alt="Interiér prevádzky: oranžové priemyselné lampy, neónový nápis BARBERSHOP 30 na drevených lamelách, čierne prešívané kreslá a sud s uterákmi" loading="lazy" decoding="async"></div>
+        <div class="room-frame"><picture><source srcset="foto/neon.webp" type="image/webp"><img class="room" src="foto/neon.jpg" alt="Interiér prevádzky: oranžové priemyselné lampy, neónový nápis BARBERSHOP 30 na drevených lamelách, čierne prešívané kreslá a sud s uterákmi" loading="lazy" decoding="async"></picture></div>
         <button class="spot" style="--x:35%;--y:17%" type="button" aria-expanded="false">
           <i aria-hidden="true"></i>
           <span><b>Oranžové lampy</b>Priemyselné svietidlá na retiazkach. Nad každou stanicou jedno.</span>
@@ -523,91 +524,25 @@
       </div>
     </div>
     <div class="shots rv">
-      <figure class="shot" data-shot="kreslo" data-photo="foto/interier.jpg" data-cap="Čierny obklad, drevo a zelený zamat" style="--pos:center 55%" tabindex="0" role="button" aria-label="Zväčšiť: Salón">
-        <div class="draw"><svg viewBox="0 0 400 300" role="img" aria-label="Kreslo pred zrkadlom"><defs><linearGradient id="kw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d5434"/><stop offset=".55" stop-color="#573921"/><stop offset="1" stop-color="#3a2617"/></linearGradient><linearGradient id="kb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba6"/><stop offset=".45" stop-color="#c19a52"/><stop offset="1" stop-color="#7d5c25"/></linearGradient><linearGradient id="kl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3630"/><stop offset=".5" stop-color="#1d1a17"/><stop offset="1" stop-color="#0f0d0b"/></linearGradient></defs>
-<rect width="400" height="300" fill="#efece4"/>
-<rect x="30" y="26" width="150" height="150" rx="5" fill="#cdd5d3"/><path d="M44 164 150 38" stroke="#fff" stroke-width="12" opacity=".5"/>
-<rect x="24" y="20" width="162" height="162" rx="7" fill="none" stroke="url(#kw)" stroke-width="11"/>
-<g fill="#fff3cf" stroke="#c19a52" stroke-width="2"><circle cx="46" cy="12" r="7"/><circle cx="86" cy="12" r="7"/><circle cx="126" cy="12" r="7"/><circle cx="166" cy="12" r="7"/></g>
-<rect x="0" y="196" width="400" height="10" fill="#3a2617"/><g><rect x="0" y="206" width="34" height="94" fill="#5b3a22"/><rect x="34" y="206" width="34" height="94" fill="#6a452a"/><rect x="68" y="206" width="34" height="94" fill="#54341e"/><rect x="102" y="206" width="34" height="94" fill="#7a5133"/><rect x="136" y="206" width="34" height="94" fill="#4e3020"/><rect x="170" y="206" width="34" height="94" fill="#654027"/><rect x="204" y="206" width="34" height="94" fill="#5b3a22"/><rect x="238" y="206" width="34" height="94" fill="#6a452a"/><rect x="272" y="206" width="34" height="94" fill="#54341e"/><rect x="306" y="206" width="34" height="94" fill="#7a5133"/><rect x="340" y="206" width="34" height="94" fill="#4e3020"/><rect x="374" y="206" width="34" height="94" fill="#654027"/></g>
-<ellipse cx="268" cy="258" rx="76" ry="11" fill="#2a241d" opacity=".45"/>
-<rect x="214" y="244" width="108" height="11" rx="5" fill="url(#kb)"/><rect x="250" y="188" width="34" height="58" fill="url(#kb)"/>
-<rect x="186" y="162" width="150" height="32" rx="12" fill="url(#kl)"/>
-<path d="M312 172c20-3 33 8 34 27l5 60c1 19-9 30-28 30h-17z" fill="url(#kl)"/>
-<rect x="316" y="60" width="44" height="48" rx="14" fill="url(#kl)"/><rect x="310" y="106" width="52" height="11" rx="5" fill="url(#kb)"/>
-<rect x="186" y="146" width="110" height="10" rx="5" fill="url(#kl)"/></svg></div>
+      <figure class="shot" data-shot="kreslo" data-cap="Čierny obklad, drevo a zelený zamat" style="--pos:center 55%" tabindex="0" role="button" aria-label="Zväčšiť: Salón">
+        <div class="draw"><picture><source srcset="foto/interier.webp" type="image/webp"><img src="foto/interier.jpg" alt="Salón: Čierny obklad, drevo a zelený zamat" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Salón</b><span>Čierny obklad, drevo a zelený zamat</span></figcaption>
-        <i class="badge">Kresba</i>
       </figure>
-      <figure class="shot" data-shot="naradie" data-photo="foto/kresla.jpg" data-cap="Nad každou stanicou jedna" style="--pos:center 42%" tabindex="0" role="button" aria-label="Zväčšiť: Oranžové lampy">
-        <div class="draw"><svg viewBox="0 0 640 200" role="img" aria-label="Nožnice, britva, hrebeň a štetka na koži"><defs><linearGradient id="nb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba6"/><stop offset=".45" stop-color="#c19a52"/><stop offset="1" stop-color="#7d5c25"/></linearGradient><linearGradient id="ns" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7f8"/><stop offset=".45" stop-color="#b9c6cd"/><stop offset="1" stop-color="#5c6a72"/></linearGradient></defs>
-<rect width="640" height="200" fill="#efece4"/>
-<rect x="18" y="18" width="604" height="164" rx="10" fill="#4b3524"/><rect x="30" y="30" width="580" height="140" rx="6" fill="#5f452f"/>
-<path d="M30 100h580" stroke="#7a5b3e" stroke-width="2" opacity=".55"/>
-<g transform="translate(58 34) rotate(-6)"><path d="M14 0 40 62" stroke="url(#ns)" stroke-width="8" stroke-linecap="round"/><path d="M52 0 26 62" stroke="url(#ns)" stroke-width="8" stroke-linecap="round"/><circle cx="18" cy="82" r="13" fill="none" stroke="url(#nb)" stroke-width="6"/><circle cx="48" cy="82" r="13" fill="none" stroke="url(#nb)" stroke-width="6"/><circle cx="33" cy="62" r="4" fill="#8a6a3a"/></g>
-<g transform="translate(178 64) rotate(-4)"><rect x="0" y="12" width="130" height="17" rx="8" fill="url(#ns)"/><path d="M6 29h122" stroke="#fff" stroke-width="3" opacity=".85"/><rect x="128" y="8" width="82" height="25" rx="12" fill="#241d17"/><circle cx="200" cy="20" r="4" fill="url(#nb)"/></g>
-<g transform="translate(178 116)"><rect x="0" y="0" width="184" height="15" rx="5" fill="#241d17"/><g stroke="#241d17" stroke-width="3" stroke-linecap="round"><path d="M8 15v20M22 15v24M36 15v20M50 15v24M64 15v20M78 15v24M92 15v20M106 15v24M120 15v20M134 15v24M148 15v20M162 15v24M176 15v20"/></g></g>
-<g transform="translate(444 44)"><ellipse cx="38" cy="20" rx="38" ry="22" fill="#e8e2d4"/><path d="M0 20c0-20 17-34 38-34s38 14 38 34z" fill="#f4f0e6"/><rect x="20" y="38" width="36" height="58" rx="13" fill="url(#nb)"/><ellipse cx="38" cy="96" rx="18" ry="8" fill="#8a6a3a"/></g>
-<g transform="translate(552 52)"><rect x="0" y="0" width="54" height="88" rx="10" fill="#2b2620"/><rect x="0" y="0" width="54" height="12" rx="6" fill="url(#nb)"/><circle cx="27" cy="50" r="13" fill="none" stroke="#7d5c25" stroke-width="3"/></g></svg></div>
+      <figure class="shot" data-shot="naradie" data-cap="Nad každou stanicou jedna" style="--pos:center 42%" tabindex="0" role="button" aria-label="Zväčšiť: Oranžové lampy">
+        <div class="draw"><picture><source srcset="foto/kresla.webp" type="image/webp"><img src="foto/kresla.jpg" alt="Oranžové lampy: Nad každou stanicou jedna" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Oranžové lampy</b><span>Nad každou stanicou jedna</span></figcaption>
-        <i class="badge">Kresba</i>
       </figure>
-      <figure class="shot" data-shot="uterak" data-photo="foto/neon.jpg" data-cap="BARBERSHOP 30 na drevenej stene" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Neón a uteráky">
-        <div class="draw"><svg viewBox="0 0 400 300" role="img" aria-label="Zrolované horúce uteráky"><defs><linearGradient id="uw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a5433"/><stop offset="1" stop-color="#422c19"/></linearGradient><linearGradient id="ub" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba6"/><stop offset=".45" stop-color="#c19a52"/><stop offset="1" stop-color="#7d5c25"/></linearGradient>
-<linearGradient id="uc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4cd68"/><stop offset="1" stop-color="#d4972b"/></linearGradient></defs>
-<rect width="400" height="300" fill="#efece4"/>
-<g stroke="#cfc7b6" stroke-width="1" fill="#f4f1ea"><rect x="0" y="30" width="120" height="56" rx="2"/><rect x="124" y="30" width="120" height="56" rx="2"/><rect x="248" y="30" width="120" height="56" rx="2"/><rect x="-30" y="90" width="120" height="56" rx="2"/><rect x="94" y="90" width="120" height="56" rx="2"/><rect x="218" y="90" width="120" height="56" rx="2"/><rect x="342" y="90" width="120" height="56" rx="2"/></g>
-<g opacity=".5" stroke="#c7cdc9" stroke-width="5" fill="none" stroke-linecap="round"><path d="M120 138c-14-22 12-34-2-58"/><path d="M200 130c-14-24 12-36-2-60"/><path d="M280 138c-14-22 12-34-2-58"/></g>
-<rect x="20" y="150" width="360" height="16" rx="5" fill="url(#uw)"/><rect x="20" y="150" width="360" height="4" rx="2" fill="#a87a48"/>
-<g><ellipse cx="104" cy="186" rx="44" ry="30" fill="url(#uc)"/><path d="M104 158c-22 10-22 46 0 56" fill="none" stroke="#c08f25" stroke-width="3"/><ellipse cx="104" cy="186" rx="14" ry="10" fill="#e0ae3c"/></g>
-<g><ellipse cx="200" cy="186" rx="44" ry="30" fill="url(#uc)"/><path d="M200 158c-22 10-22 46 0 56" fill="none" stroke="#c08f25" stroke-width="3"/><ellipse cx="200" cy="186" rx="14" ry="10" fill="#e0ae3c"/></g>
-<g><ellipse cx="296" cy="186" rx="44" ry="30" fill="url(#uc)"/><path d="M296 158c-22 10-22 46 0 56" fill="none" stroke="#c08f25" stroke-width="3"/><ellipse cx="296" cy="186" rx="14" ry="10" fill="#e0ae3c"/></g>
-<rect x="20" y="216" width="360" height="12" rx="5" fill="url(#ub)"/></svg></div>
+      <figure class="shot" data-shot="uterak" data-cap="BARBERSHOP 30 na drevenej stene" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Neón a uteráky">
+        <div class="draw"><picture><source srcset="foto/neon.webp" type="image/webp"><img src="foto/neon.jpg" alt="Neón a uteráky: BARBERSHOP 30 na drevenej stene" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Neón a uteráky</b><span>BARBERSHOP 30 na drevenej stene</span></figcaption>
-        <i class="badge">Kresba</i>
       </figure>
-      <figure class="shot" data-shot="police" data-photo="foto/recepcia.jpg" data-cap="Produkty, ktoré pri práci používame" style="--pos:center 45%" tabindex="0" role="button" aria-label="Zväčšiť: Recepcia">
-        <div class="draw"><svg viewBox="0 0 400 300" role="img" aria-label="Polica s fľašami a pomádami"><defs><linearGradient id="pw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a5433"/><stop offset="1" stop-color="#422c19"/></linearGradient><linearGradient id="pb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba6"/><stop offset=".45" stop-color="#c19a52"/><stop offset="1" stop-color="#7d5c25"/></linearGradient></defs>
-<rect width="400" height="300" fill="#efece4"/>
-<g fill="#f4f1ea" stroke="#dcd6c9"><rect x="0" y="10" width="96" height="44" rx="2"/><rect x="100" y="10" width="96" height="44" rx="2"/><rect x="200" y="10" width="96" height="44" rx="2"/><rect x="300" y="10" width="96" height="44" rx="2"/><rect x="-46" y="58" width="96" height="44" rx="2"/><rect x="54" y="58" width="96" height="44" rx="2"/><rect x="154" y="58" width="96" height="44" rx="2"/><rect x="254" y="58" width="96" height="44" rx="2"/><rect x="354" y="58" width="96" height="44" rx="2"/></g>
-<rect x="20" y="128" width="360" height="14" rx="4" fill="url(#pw)"/>
-<rect x="20" y="212" width="360" height="14" rx="4" fill="url(#pw)"/>
-<g>
-<rect x="44" y="78" width="26" height="50" rx="4" fill="#2b2620"/><rect x="52" y="68" width="10" height="12" rx="3" fill="url(#pb)"/>
-<rect x="84" y="66" width="30" height="62" rx="4" fill="#6d4b2a"/><rect x="93" y="56" width="12" height="12" rx="3" fill="url(#pb)"/>
-<rect x="128" y="86" width="34" height="42" rx="6" fill="#1f1b17"/><rect x="140" y="78" width="10" height="10" rx="3" fill="url(#pb)"/>
-<rect x="176" y="70" width="24" height="58" rx="4" fill="#8a6a3a"/><rect x="182" y="60" width="12" height="12" rx="3" fill="#2b2620"/>
-<rect x="214" y="88" width="38" height="40" rx="8" fill="#3a3129"/><rect x="226" y="80" width="14" height="10" rx="3" fill="url(#pb)"/>
-<rect x="266" y="64" width="26" height="64" rx="4" fill="#5a4632"/><rect x="273" y="54" width="12" height="12" rx="3" fill="url(#pb)"/>
-<rect x="306" y="82" width="30" height="46" rx="5" fill="#24211c"/><rect x="316" y="72" width="10" height="12" rx="3" fill="url(#pb)"/>
-</g>
-<g>
-<rect x="56" y="168" width="40" height="44" rx="8" fill="#1f1b17"/><rect x="56" y="168" width="40" height="9" rx="4" fill="url(#pb)"/>
-<rect x="112" y="160" width="34" height="52" rx="6" fill="#6d4b2a"/><rect x="112" y="160" width="34" height="9" rx="4" fill="url(#pb)"/>
-<rect x="162" y="174" width="44" height="38" rx="8" fill="#3a3129"/><rect x="162" y="174" width="44" height="9" rx="4" fill="url(#pb)"/>
-<rect x="222" y="154" width="30" height="58" rx="5" fill="#8a6a3a"/><rect x="222" y="154" width="30" height="9" rx="4" fill="#2b2620"/>
-<rect x="268" y="170" width="46" height="42" rx="8" fill="#2b2620"/><rect x="268" y="170" width="46" height="9" rx="4" fill="url(#pb)"/>
-</g></svg></div>
+      <figure class="shot" data-shot="police" data-cap="Produkty, ktoré pri práci používame" style="--pos:center 45%" tabindex="0" role="button" aria-label="Zväčšiť: Recepcia">
+        <div class="draw"><picture><source srcset="foto/recepcia.webp" type="image/webp"><img src="foto/recepcia.jpg" alt="Recepcia: Produkty, ktoré pri práci používame" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Recepcia</b><span>Produkty, ktoré pri práci používame</span></figcaption>
-        <i class="badge">Kresba</i>
       </figure>
-      <figure class="shot" data-shot="stlp" data-photo="foto/stanice.jpg" data-cap="Zrkadlá, kruhové svetlá a barber stĺp" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Stanice">
-        <div class="draw"><svg viewBox="0 0 400 300" role="img" aria-label="Barber stĺp pri vstupných dverách"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba6"/><stop offset=".45" stop-color="#c19a52"/><stop offset="1" stop-color="#7d5c25"/></linearGradient>
-<linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".4" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
-<clipPath id="sc"><rect x="176" y="66" width="48" height="168" rx="24"/></clipPath></defs>
-<rect width="400" height="300" fill="#efece4"/>
-<rect x="0" y="0" width="132" height="300" fill="#3a2617"/><rect x="0" y="0" width="9" height="300" fill="#4a3220"/><rect x="13" y="0" width="9" height="300" fill="#2e1d11"/><rect x="26" y="0" width="9" height="300" fill="#4a3220"/><rect x="39" y="0" width="9" height="300" fill="#2e1d11"/><rect x="52" y="0" width="9" height="300" fill="#4a3220"/><rect x="65" y="0" width="9" height="300" fill="#2e1d11"/><rect x="78" y="0" width="9" height="300" fill="#4a3220"/><rect x="91" y="0" width="9" height="300" fill="#2e1d11"/><rect x="104" y="0" width="9" height="300" fill="#4a3220"/><rect x="117" y="0" width="9" height="300" fill="#2e1d11"/><rect x="120" y="0" width="12" height="300" fill="#1d1209"/>
-<g fill="#f4f1ea" stroke="#dcd6c9"><rect x="240" y="20" width="76" height="40" rx="2"/><rect x="320" y="20" width="76" height="40" rx="2"/><rect x="210" y="64" width="76" height="40" rx="2"/><rect x="290" y="64" width="76" height="40" rx="2"/><rect x="370" y="64" width="76" height="40" rx="2"/></g>
-<rect x="166" y="46" width="68" height="20" rx="10" fill="url(#sb)"/>
-<rect x="166" y="234" width="68" height="20" rx="10" fill="url(#sb)"/>
-<rect x="172" y="62" width="56" height="176" rx="28" fill="url(#sb)"/>
-<rect x="176" y="66" width="48" height="168" rx="24" fill="#f4efe4"/>
-<g clip-path="url(#sc)"><g transform="rotate(-35 200 150)"><rect x="60" y="-40" width="280" height="18" fill="#c0392f"/><rect x="60" y="-4" width="280" height="18" fill="#3a5a78"/><rect x="60" y="32" width="280" height="18" fill="#c0392f"/><rect x="60" y="68" width="280" height="18" fill="#3a5a78"/><rect x="60" y="104" width="280" height="18" fill="#c0392f"/><rect x="60" y="140" width="280" height="18" fill="#3a5a78"/><rect x="60" y="176" width="280" height="18" fill="#c0392f"/><rect x="60" y="212" width="280" height="18" fill="#3a5a78"/><rect x="60" y="248" width="280" height="18" fill="#c0392f"/><rect x="60" y="284" width="280" height="18" fill="#3a5a78"/></g></g>
-<rect x="176" y="66" width="48" height="168" rx="24" fill="url(#sg)"/>
-<circle cx="200" cy="36" r="12" fill="url(#sb)"/>
-<rect x="186" y="254" width="28" height="28" rx="4" fill="url(#sb)"/><rect x="170" y="282" width="60" height="14" rx="5" fill="url(#sb)"/></svg></div>
+      <figure class="shot" data-shot="stlp" data-cap="Zrkadlá, kruhové svetlá a barber stĺp" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Stanice">
+        <div class="draw"><picture><source srcset="foto/stanice.webp" type="image/webp"><img src="foto/stanice.jpg" alt="Stanice: Zrkadlá, kruhové svetlá a barber stĺp" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Stanice</b><span>Zrkadlá, kruhové svetlá a barber stĺp</span></figcaption>
-        <i class="badge">Kresba</i>
       </figure>
       <figure class="shot word" data-shot="word">
         <div class="draw">
@@ -631,7 +566,7 @@
 <section class="gift" id="poukaz" aria-labelledby="h-poukaz">
   <div class="wrap">
     <div class="box rv">
-      <span class="bg" aria-hidden="true"><img src="foto/recepcia.jpg" alt="" loading="lazy" decoding="async"></span>
+      <span class="bg" aria-hidden="true"><picture><source srcset="foto/recepcia.webp" type="image/webp"><img src="foto/recepcia.jpg" alt="" loading="lazy" decoding="async"></picture></span>
       <div class="part">
         <div class="kicker">Darčekové poukážky</div>
         <h2 class="h2" id="h-poukaz">Daruj <em>dobrý strih.</em></h2>

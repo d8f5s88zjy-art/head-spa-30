@@ -23,6 +23,7 @@ body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:v
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
 img,svg{max-width:100%;display:block}
+picture{display:contents}
 h1,h2,h3,h4{margin:0;font-weight:400}
 p{margin:0}
 ul,ol{margin:0;padding:0;list-style:none}
@@ -271,9 +272,10 @@ body.open .hero :is(.kicker,h1,.sub,.cta,.today-line,.facts){opacity:1;transform
 .hero .art{position:absolute;inset:0;z-index:0;opacity:0;transform:scale(1.04);transition:opacity 1400ms var(--ease) 200ms,transform 2200ms var(--ease) 200ms;translate:0 calc(var(--hs,0) * 46px)}
 body.open .hero .art{opacity:1;transform:none}
 .hero .shot-bg{width:100%;height:100%;object-fit:cover;object-position:74% 50%;display:block;animation:kenburns 38s var(--ease-soft) infinite alternate}
-@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1.6%,-1.2%)}}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.05) translate(-1%,-.8%)}}
 .hero .lampglow{position:absolute;right:-8%;top:-24%;width:min(900px,74vw);aspect-ratio:1;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(240,214,148,.3),rgba(212,176,98,.1) 42%,transparent 70%);animation:lampPulse 7s var(--ease-soft) infinite}
 @keyframes lampPulse{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+.hero .grain{position:absolute;inset:0;pointer-events:none;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");background-size:170px 170px}
 .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,6,.96),rgba(9,9,9,.9) 32%,rgba(10,10,10,.56) 60%,rgba(10,10,10,.26)),linear-gradient(180deg,rgba(6,6,6,.8),transparent 26%,transparent 58%,var(--canvas))}
 
 /* the mark draws itself when the page opens */
@@ -416,7 +418,7 @@ section.seen:not(#cennik)::before{transform:scaleX(1);opacity:1}
 .ritual .quote em{font-style:normal;font-weight:600;color:var(--gold)}
 .side-shot{margin:30px 0 0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .side-shot img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 55%;transition:transform 1600ms var(--ease)}
-.rv:not(.in) .side-shot img{transform:scale(1.1)}
+.rv:not(.in) .side-shot img{transform:scale(1.05)}
 .steps{position:relative;padding-left:56px}
 .steps::before{content:"";position:absolute;left:20px;top:8px;bottom:8px;width:1px;background:rgba(242,237,226,.08)}
 .steps .line{position:absolute;left:20px;top:8px;width:1px;height:0;background:linear-gradient(180deg,var(--gold),var(--steel));box-shadow:0 0 8px rgba(212,176,98,.5);transition:height 900ms var(--ease)}
@@ -475,7 +477,7 @@ section.seen:not(#cennik)::before{transform:scaleX(1);opacity:1}
 .room-wrap .part{position:relative}
 .room-frame{position:relative;border-radius:var(--radius-l);overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.5)}
 .room{display:block;width:100%;height:auto;transition:transform 1600ms var(--ease)}
-.rv:not(.in) .room{transform:scale(1.09)}
+.rv:not(.in) .room{transform:scale(1.04)}
 .room-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,6,.18),transparent 30%,transparent 72%,rgba(6,6,6,.35));pointer-events:none}
 @keyframes roomBreathe{0%,100%{opacity:.72}50%{opacity:1}}
 @keyframes roomPole{to{transform:translate(489px,271px) translateY(64px)}}
@@ -519,13 +521,12 @@ section.seen:not(#cennik)::before{transform:scaleX(1);opacity:1}
 .shot:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .shot .draw{position:absolute;inset:0}
 .shot .draw svg,.shot img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,center);display:block;transition:transform 1400ms var(--ease)}
-.shot:not(.seen) img{transform:scale(1.14)}
-.shot:hover img{transform:scale(1.04)}
+.shot:not(.seen) img{transform:scale(1.06)}
+.shot:hover img{transform:scale(1.02)}
 .shot figcaption{position:absolute;left:0;right:0;bottom:0;display:grid;gap:3px;padding:34px 16px 13px;background:linear-gradient(180deg,transparent,rgba(8,8,8,.55) 40%,rgba(8,8,8,.88));color:#fbf8f3}
 .shot figcaption b{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:17px;letter-spacing:.02em}
 .shot figcaption span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.78}
 .shot .badge{position:absolute;right:12px;top:12px;padding:5px 10px;border-radius:999px;background:rgba(12,12,12,.82);color:#cfc5b7;font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
-.shot.has-photo .badge{display:none}
 .shot[data-shot="kreslo"]{grid-column:span 2;grid-row:span 2}
 .shot[data-shot="naradie"]{grid-column:span 2}
 
@@ -551,7 +552,7 @@ section.seen:not(#cennik)::before{transform:scaleX(1);opacity:1}
 .gift .box{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;padding:44px 48px;border:1px solid var(--line);border-radius:var(--radius-l);background:linear-gradient(150deg,rgba(26,26,24,.85),rgba(10,10,10,.95))}
 .gift .box .bg{position:absolute;inset:0;z-index:0}
 .gift .box .bg img{width:100%;height:100%;object-fit:cover;object-position:center 42%;opacity:.42;transition:transform 1800ms var(--ease)}
-.rv:not(.in) .gift .box .bg img,.gift .box.rv:not(.in) .bg img{transform:scale(1.08)}
+.rv:not(.in) .gift .box .bg img,.gift .box.rv:not(.in) .bg img{transform:scale(1.04)}
 .gift .box .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.96),rgba(10,10,10,.86) 46%,rgba(10,10,10,.62))}
 .gift .box>.part{position:relative;z-index:1}
 .gift .h2{font-size:clamp(34px,4vw,54px)}
