@@ -23,13 +23,11 @@ HEAD SPA 30:** má vlastné písma, vlastné štýly aj skript, žiadny odkaz an
 a nezdieľa s ním ani jeden súbor. Celý priečinok `barbershop/` sa dá presunúť na vlastnú doménu
 tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `index.html`).
 
-- `barbershop/index.html` – kinematické otvorenie, úvod so scénou z troch SVG vrstiev (barber stĺp
-  so sklom, mosadzou a motorom, ktorý sa po načítaní rozbieha a pri prejdení myšou zrýchli; britva
-  s odleskom, ktorý po nej prejde každých sedem sekúnd; nožnice, ktoré strihnú), prach vo svetle
-  lampy, bežiaci pás služieb, cenník 16 služieb v piatich kategóriách s filtrom a rozbaľovacím
-  obsahom, ako to prebieha (5 krokov), prečo k nám, U nás vnútri a Galéria na svetlom páse,
-  poukážky, otázky, kontakt s mapou. V hlavičke
-  sú štruktúrované dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
+- `barbershop/index.html` – kinematické otvorenie, úvod s fotografiou prevádzky pod tmavým závojom,
+  bežiaci pás služieb, cenník 16 služieb v piatich kategóriách s filtrom a rozbaľovacím obsahom,
+  ako to prebieha (5 krokov), prečo k nám, U nás vnútri (fotka s bodmi) a Galéria, poukážky,
+  otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org `BarberShop`, otváracie
+  hodiny, 16 ponúk s cenou a trvaním, FAQ)
 - `barbershop/style.css`, `barbershop/app.js` – štýly a správanie
 - `barbershop/assets/fonts.css`, `barbershop/assets/fonts/` – vlastná kópia písiem Fraunces, Manrope
   a JetBrains Mono, aby priečinok fungoval samostatne
@@ -44,7 +42,8 @@ predlohu, nič nie je zvolené od oka:
 | --- | --- |
 | Oranžové priemyselné lampy nad stanicami | `--accent: #e8571b`, tlačidlá, linky, ikony, lampa v úvode |
 | Tmavý orech, lamelové steny, drevená podlaha | `--canvas: #15100c`, `--panel: #231b14`, plocha celej stránky |
-| Biely a čierny obklad | svetlý pás `.studio` (`--canvas: #efeae1`) |
+| Teplé svetlo lámp v tmavej miestnosti | celá stránka je tmavá, bez svetlých pásov |
+| Biely a čierny obklad | fotografie v galérii, obklad v zábere |
 | Zelený zamat kresiel | `--velvet`, druhé svetlo v pozadí |
 | Mosadz na kreslách a svietidlách | `--brass` v kresbách |
 | Nápis na rohožke a neón na stene | názov **BARBERSHOP 30**, podnázov **Holičstvo** |
@@ -67,32 +66,23 @@ Mechanizmus je popísaný nižšie: každá dlaždica má `data-photo`, skript f
 a až potom ňou nahradí kresbu. Kresby v dlaždiciach zostali ako záloha, keby súbor chýbal.
 Výrez fotky v dlaždici riadi `--pos` (mapuje sa na `object-position`).
 
-### Svetlý pás: U nás vnútri a Galéria
+### U nás vnútri a Galéria
 
-Uprostred stránky sa tmavé plátno na dve sekcie zmení na svetlé. Nie je to druhý dizajn, je to
-tá istá sada komponentov s prehodenými premennými: `.studio` v `style.css` predefinuje `--canvas`,
-`--panel`, `--text-*`, `--line*` a `--accent` a všetko pod ním sa prekreslí samo. Hlavné tlačidlo
-je na svetlom podklade čierne, nie zlaté.
+Celá stránka je jedna tmavá miestnosť, tak ako prevádzka. Stredná kapitola (`#interier`
+a `#galeria`) sa od zvyšku odlišuje len o odtieň svetlejším podkladom a oranžovou linkou navrchu,
+nie prevrátenou paletou. Skoršia verzia mala v strede krémový pás; to bol cudzí prvok, prevádzka
+nič také nemá.
 
-**U nás vnútri** (`#interier`) má kresbu celej prevádzky v jednom SVG, zľava doprava: zelené
-vstupné dvere, barber stĺp, zrkadlová stanica v mosadznom ráme so siedmimi žiarovkami, drevený
-pult s pomádami, kožené kreslo s opierkou hlavy a uterákom, okno s lavicou. Nad tým dve závesné
-lampy, pod tým šachovnicová podlaha v perspektíve. Podlaha nie je pruhovaná textúra: polygóny
-sa počítajú do úbežníka v bode (700, 385), preto sa štvorce smerom dozadu zbiehajú a skracujú.
+**U nás vnútri** (`#interier`) je fotografia prevádzky, do ktorej je vložených päť bodov. Po
+ťuknutí alebo prejdení myšou povedia, čo je čo: oranžové lampy, neón na lamelách, sud s uterákmi,
+kreslá, vchod s recepciou. Body sú umiestnené v percentách (`--x`, `--y`), takže sedia pri každej
+šírke. Na počítači sa text ukáže v bubline pri bode, na telefóne by sa bublina nezmestila, preto
+ide do panela `.spot-read` pod fotkou. Otvorený je vždy len jeden bod, zatvára ho Escape aj klik
+mimo. Bod pri ľavom okraji má triedu `left`, pri pravom `right`, aby bublina neutiekla z obrazu.
 
-V kresbe je päť bodov, ktoré po ťuknutí alebo prejdení myšou povedia, čo je čo (`.spot`
-v `style.css`, funkcia `spots()` v `app.js`). Na počítači sa text ukáže v bubline nad bodom,
-na telefóne by sa bublina nezmestila, preto sa ten istý text vypíše do panela `.spot-read`
-pod kresbou. Otvorený je vždy len jeden bod, zatvára ho Escape aj klik mimo.
-
-Kresba sa jemne hýbe: žiarovky a lampy dýchajú, pruhy na stĺpe sa točia, denné svetlo v okne
-kolíše. Pri `prefers-reduced-motion: reduce` stojí všetko vrátane pulzu okolo bodov.
-
-Pod kresbou sú tri poznámky o tom, ako u nás strihanie prebieha.
-
-**Galéria** (`#galeria`) je mozaika šiestich dlaždíc: kreslo a zrkadlo, náradie, horúci uterák,
-polica, stĺp pri dverách a jedna typografická dlaždica s adresou. Kliknutie ktorúkoľvek zväčší
-(`<dialog class="lb">`).
+**Galéria** (`#galeria`) je mozaika šiestich dlaždíc: päť fotografií z prevádzky a jedna oranžová
+typografická dlaždica, ktorá opakuje nápis z rohožky pri vchode. Kliknutie ktorúkoľvek fotografiu
+zväčší (`<dialog class="lb">`).
 
 ### Ako do galérie vložiť skutočné fotky
 
@@ -135,7 +125,7 @@ Všetko beží z jedného miesta: `driver()` v `app.js` počíta raz za snímku 
 a rýchlosť a spustí funkcie zo zoznamu `onDrive`.
 
 - **Ukazovateľ postupu** – zlatá vlásočnica hore cez celú šírku okna
-- **Úvod odchádza** – text a scéna sa vzďaľujú rôznou rýchlosťou a text sa stráca (`--hs` na `.hero`)
+- **Úvod odchádza** – text a fotografia sa vzďaľujú rôznou rýchlosťou a text sa stráca (`--hs` na `.hero`)
 - **Pás služieb** – uháňa rýchlejšie, keď scrolluješ dole, a cúva, keď ideš hore; pri prejdení
   myšou zastaví. Kreslí sa transformom, nie CSS animáciou, aby vedel meniť smer plynule
 - **Karty cenníka** – prichádzajú vo vlnách, každá o kúsok neskôr ako tá nad ňou, ikona sa dotočí
@@ -151,9 +141,12 @@ ukáže aj vtedy, keď čitateľ skočí na sekciu z menu a preletí cez polovic
 Ďalej: nadpisy vychádzajú z maskovaného riadku, značka v lište sa nakreslí, dve svetlá v pozadí
 sa presúvajú podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii Ako to prebieha rastie
 so scrollom a každý krok má malú animovanú ikonu (para, nožnice, britva, uterák, hrebeň). Tlačidlá
-sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pruhy stĺpa kreslí `pole()`, prach `dust()`;
-oboje stojí mimo obrazovky aj pri skrytej karte. Pri `prefers-reduced-motion: reduce` je celá
+sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pri `prefers-reduced-motion: reduce` je celá
 stránka statická a všetko je viditeľné.
+
+Kreslené scény, ktoré tu boli predtým (barber stĺp s motorom, britva, nožnice, prach vo svetle
+a kreslená miestnosť), sú preč. Boli to domnienky o tom, ako prevádzka vyzerá; odkedy sú po ruke
+fotografie, nemali čo robiť vedľa nich.
 
 **Kontakty a hodiny sú prevzaté z prvej verzie webu (september 2026), keď ešte bežal pod značkou
 Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram barbershop30_nitra,

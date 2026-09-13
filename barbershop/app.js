@@ -188,49 +188,8 @@
     $$('li', panel).forEach((li, i) => li.style.setProperty('--i', i));
   }));
 
-  /* ============ the pole: stripes built once, a motor that spins up and slows down ============ */
-  (function pole() {
-    const g = $('.p-stripes'); if (!g) return;
-    const X0 = 52, W = 96, T = 26, RISE = W * Math.tan(35 * Math.PI / 180), P = T * 4;
-    const colors = ['#c0392f', '#f4efe4', '#3a5a78', '#f4efe4'];
-    let svg = '';
-    for (let y = 96 - 3 * P, i = 0; y < 496 + 2 * P; y += T, i++) {
-      svg += `<polygon fill="${colors[i % 4]}" points="${X0},${y} ${X0 + W},${y - RISE} ${X0 + W},${y - RISE + T} ${X0},${y + T}"/>`;
-    }
-    g.innerHTML = svg;
-    if (reduced.matches) return;
-    let offset = 0, v = 0, target = 1, last = 0, running = false, visible = true;
-    const SPEED = P / 3.4;   // one period every 3.4 s at full speed
-    function tick(t) {
-      if (!running) return;
-      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
-      v += (target - v) * Math.min(1, dt * 1.4);   // the motor takes about two seconds to reach speed
-      offset = (offset + v * SPEED * dt) % P;
-      g.setAttribute('transform', `translate(0 ${-offset})`);
-      requestAnimationFrame(tick);
-    }
-    const start = () => { if (running || !visible || document.hidden) return; running = true; last = performance.now(); requestAnimationFrame(tick); };
-    const stop = () => { running = false; };
-    new IntersectionObserver((es) => { visible = es[0].isIntersecting; visible ? start() : stop(); }, { threshold: 0 }).observe($('.pole'));
-    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
-    const poleEl = $('.pole');
-    poleEl.addEventListener('pointerenter', () => { target = 1.8; });
-    poleEl.addEventListener('pointerleave', () => { target = 1; });
-    start();
-  })();
-
-  /* the hand: layers drift toward the cursor, buttons lean, cards tilt (fine pointers only, never with reduced motion) */
+  /* the hand: buttons lean toward the cursor, cards tilt (fine pointers only, never with reduced motion) */
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
-    const art = $('.art'), hero = $('.hero');
-    if (art && hero) {
-      const layers = $$('.l', art);
-      hero.addEventListener('pointermove', (e) => {
-        const r = hero.getBoundingClientRect();
-        const px = ((e.clientX - r.left) / r.width - 0.5) * 2, py = ((e.clientY - r.top) / r.height - 0.5) * 2;
-        layers.forEach((l) => { const d = +l.dataset.depth || 0; l.style.translate = `${px * d * 18}px ${py * d * 12}px`; });
-      });
-      hero.addEventListener('pointerleave', () => layers.forEach((l) => { l.style.translate = '0px 0px'; }));
-    }
     $$('.btn.primary').forEach((b) => {
       b.addEventListener('pointermove', (e) => {
         const r = b.getBoundingClientRect();
@@ -338,6 +297,82 @@
   /* ============ housekeeping ============ */
   document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
+  /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
+  /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
+  (function opening() {
+    const intro = $('#intro');
+    const wake = () => requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
+    if (!intro) { wake(); return; }
+    let seen = false;
+    try { seen = sessionStorage.getItem('bs30.intro') === '1'; } catch (e) {}
+    if (reduced.matches || seen) { intro.remove(); wake(); return; }
+    try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
+
+    const name = $('.iname', intro);
+    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' '
+      ? '<span class="sp"></span>'
+      : `<span class="sl"><b style="--i:${i}">${c}</b></span>`)).join('');
+
+    document.body.classList.add('intro-on');
+    const timers = [];
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    let done = false;
+    function finish(fast) {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      document.body.classList.remove('intro-on');
+      document.body.classList.add('open');
+      intro.classList.add('part');
+      if (fast) intro.classList.add('fast');
+      setTimeout(() => intro.remove(), fast ? 620 : 1200);
+      removeEventListener('keydown', onKey);
+      removeEventListener('wheel', skip);
+      removeEventListener('touchmove', skip);
+    }
+    const skip = () => finish(true);
+    const onKey = (e) => { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip(); };
+    $('.iskip', intro).addEventListener('click', skip);
+    intro.addEventListener('click', (e) => { if (e.target === intro || e.target.classList.contains('ipanel')) skip(); });
+    addEventListener('keydown', onKey);
+    addEventListener('wheel', skip, { passive: true, once: true });
+    addEventListener('touchmove', skip, { passive: true, once: true });
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      intro.classList.add('seam');                  // the pool of light, the mark draws itself
+      at(480, () => intro.classList.add('name'));   // the name rises out of its slots
+      at(2150, () => intro.classList.add('cut'));   // a beat to read it, then the blade
+      at(2530, () => finish(false));                // and the two halves part
+    }));
+  })();
+
+  /* ============ the ticker rides the scroll: faster with it, backwards against it ============ */
+  (function ticker() {
+    const band = $('.ticker'), track = $('.ticker .track'), row = $('.ticker .row');
+    if (!band || !track || !row || reduced.matches) return;
+    track.style.animation = 'none';
+    let x = 0, half = 0, raf = 0, on = false, last = 0, sv = 0, hold = false;
+    const measure = () => { half = row.getBoundingClientRect().width; };
+    function frame(t) {
+      if (!on || document.hidden) { raf = 0; return; }
+      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
+      sv += (motion.vel - sv) * Math.min(1, dt * 9);
+      motion.vel *= 0.82;
+      if (!hold) x -= (34 + Math.max(-250, Math.min(250, sv * 7))) * dt;
+      if (half) { if (x <= -half) x += half; else if (x > 0) x -= half; }
+      track.style.transform = `translateX(${x.toFixed(2)}px)`;
+      raf = requestAnimationFrame(frame);
+    }
+    const run = () => { if (!raf && on && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+    new IntersectionObserver((es) => { on = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(band);
+    document.addEventListener('visibilitychange', run);
+    addEventListener('resize', measure);
+    band.addEventListener('pointerenter', () => { hold = true; });
+    band.addEventListener('pointerleave', () => { hold = false; });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure(); run();
+  })();
+
   /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
   /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
   (function opening() {
