@@ -33,40 +33,31 @@ tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `inde
   a JetBrains Mono, aby priečinok fungoval samostatne
 - `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
 
-### Identita je odpísaná z prevádzky
+### Identita: čierna a zlatá
 
-Podkladom je päť fotografií interiéru (september 2026). Všetko, čo stránka používa, má na nich
-predlohu, nič nie je zvolené od oka:
+Podkladom je päť fotografií interiéru (september 2026). Stránka je čierno-zlatá a farbu nesie
+len zlatá; oranžová z priemyselných lámp zostala tam, kam patrí, teda na fotografiách.
 
 | Na fotke | Na stránke |
 | --- | --- |
-| Oranžové priemyselné lampy nad stanicami | `--accent: #e8571b`, ale len tam, kde sa dá kliknúť |
-| Mosadz na kreslách a nástenných svietidlách | `--gold: #d8ae6a`, nadpisy, popisky, ikony, linky |
-| Tmavý orech, lamelové steny, drevená podlaha | `--canvas: #15100c`, `--panel: #231b14`, plocha celej stránky |
-| Teplé svetlo lámp v tmavej miestnosti | celá stránka je tmavá, bez svetlých pásov |
-| Biely a čierny obklad | fotografie v galérii, obklad v zábere |
-| Zelený zamat kresiel | `--velvet`, druhé svetlo v pozadí |
+| Mosadz na kreslách, zrkadlách a nástenných svietidlách | `--gold: #d4b062`, `--gold-hi: #f0d694`, `--gold-deep: #a8842f` |
+| Tmavé drevo, čierny obklad, tlmené svetlo | `--canvas: #0a0a09`, `--panel: #141413` |
+| Oranžové lampy | ponechané fotografiám, v rozhraní nie sú |
 | Nápis na rohožke a neón na stene | názov **BARBERSHOP 30**, podnázov **Holičstvo** |
 | Kondenzované písmo na rohožke | nadpisy **Oswald**, verzálky |
 | Ozdobná trojka v logu | čísla a značka zostali vo **Fraunces** |
 
-Farba má dve polohy a nemiešajú sa. **Oranžová je vyhradená pre akciu**: tlačidlo Rezervovať,
-aktívny filter, štítok Najžiadanejší, prechod myšou, zameranie klávesnicou, ukazovateľ postupu,
-body vo fotke, neón v úvode a oranžová dlaždica s nápisom z rohožky. **Mosadz nesie všetko
-ostatné**: zvýraznené slová v nadpisoch, popisky nad nimi, čísla, ikony, linky a rámiky. Predtým
-bola oranžová na oboch úlohách naraz a stránka z nej hučala. Mosadz má navyše na tmavom podklade
-kontrast 9,2 : 1, oranžová 5,2 : 1.
-
-Texty majú jeden rebríček odtieňov na celú stránku: `--text-primary: #fbf8f3`,
-`--text-secondary: #d5cfc5`, `--text-tertiary: #aaa298`. Sú teplé, ale bez hnedého nádychu,
-ktorý ich na drevenom pozadí zašpinil. Najslabší prípad (najtmavší sivý text na karte) má kontrast
-6,7 : 1, predtým 4,4 : 1, teda pod normou AA. Nikde na stránke nie je text zapísaný ako literál,
-všetko ide cez tieto tri premenné.
+Zlatá robí všetko naraz: tlačidlá, zvýraznené slová v nadpisoch, popisky, čísla, ikony, linky,
+rámiky aj neón v úvodnej scéne. Na tlačidlách je zlatá plocha s takmer čiernym textom, inde zlatý
+text na čiernom. Kontrast zlatej na plátne je 9,6 : 1, tmavého textu na zlatom tlačidle 5,5 až
+12,8 : 1 podľa miesta v prechode.
 
 Písmo Oswald je jeden variabilný súbor na dva rozsahy (`Oswald-latin.woff2`,
 `Oswald-latin-ext.woff2`, spolu 40 kB), hostovaný lokálne ako ostatné.
-Predtým stránka bežala na mosadznej zlatej a na serifovom Fraunces; to bola domnienka,
-nie prevádzka.
+
+Texty majú jeden rebríček odtieňov na celú stránku: `--text-primary: #fbf8f3`,
+`--text-secondary: #d5cfc5`, `--text-tertiary: #aaa298`. Najslabší prípad má kontrast 6,8 : 1.
+Nikde na stránke nie je farba textu zapísaná ako literál, všetko ide cez tieto premenné.
 
 ### Fotografie v galérii
 
@@ -167,9 +158,9 @@ Každá animácia má predlohu v miestnosti, nie je to efekt pre efekt:
 
 | V prevádzke | Na stránke |
 | --- | --- |
-| Neón na drevenej stene | názov v úvodnej scéne sa zapáli s krátkym zablikaním (`neonOn`) |
-| Oranžové priemyselné lampy | teplý kruh svetla nad fotkou v úvode pulzuje (`lampPulse`), svetlá v pozadí dýchajú (`envBreathe`) |
-| Barber stĺp | pásik medzi kapitolami je otáčajúci sa stĺp (`.pole-rule`, `poleRule`) |
+| Neón na drevenej stene | názov v úvodnej scéne sa zapáli zlatou s krátkym zablikaním (`neonOn`) |
+| Svetlo lámp v tmavej miestnosti | zlatý kruh svetla nad fotkou v úvode pulzuje (`lampPulse`), svetlá v pozadí dýchajú (`envBreathe`) |
+| Barber stĺp | pásik medzi kapitolami je otáčajúci sa stĺp v čiernej a zlatej (`.pole-rule`) |
 | Kruhové svetlá pri zrkadlách | tlačidlo späť hore má pulzujúci prstenec (`ringLight`) |
 | Pomalý pohľad po miestnosti | fotka v úvode sa pomaly približuje (`kenburns`), ostatné fotky dosadnú z mierneho priblíženia |
 
