@@ -50,6 +50,12 @@ predlohu, nič nie je zvolené od oka:
 | Kondenzované písmo na rohožke | nadpisy **Oswald**, verzálky |
 | Ozdobná trojka v logu | čísla a značka zostali vo **Fraunces** |
 
+Texty majú jeden rebríček odtieňov na celú stránku: `--text-primary: #fbf8f3`,
+`--text-secondary: #d5cfc5`, `--text-tertiary: #aaa298`. Sú teplé, ale bez hnedého nádychu,
+ktorý ich na drevenom pozadí zašpinil. Najslabší prípad (najtmavší sivý text na karte) má kontrast
+6,7 : 1, predtým 4,4 : 1, teda pod normou AA. Nikde na stránke nie je text zapísaný ako literál,
+všetko ide cez tieto tri premenné.
+
 Písmo Oswald je jeden variabilný súbor na dva rozsahy (`Oswald-latin.woff2`,
 `Oswald-latin-ext.woff2`, spolu 40 kB), hostovaný lokálne ako ostatné.
 Predtým stránka bežala na mosadznej zlatej a na serifovom Fraunces; to bola domnienka,
