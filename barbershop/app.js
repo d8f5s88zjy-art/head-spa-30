@@ -274,7 +274,8 @@
     probe.onload = () => {
       const img = document.createElement('img');
       img.src = shot.dataset.photo;
-      img.alt = shot.dataset.cap || '';
+      const t = shot.querySelector('figcaption b');
+      img.alt = (t ? t.textContent + ': ' : '') + (shot.dataset.cap || '');
       img.loading = 'lazy';
       const draw = $('.draw', shot);
       draw.replaceChildren(img);

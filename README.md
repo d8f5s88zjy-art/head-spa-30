@@ -10,12 +10,12 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
 - `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
-- `barbershop/` – samostatný web BARBER SHOP 30 na tej istej adrese, vlastné písma a kód, pozri nižšie
+- `barbershop/` – samostatný web BARBERSHOP 30 na tej istej adrese, vlastné písma a kód, pozri nižšie
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona
 
-## BARBER SHOP 30, samostatný web v `barbershop/`
+## BARBERSHOP 30, samostatný web v `barbershop/`
 
 Samostatná stránka pánskeho barbershopu na tej istej adrese (Mostná 226/30, Nitra), nasadená
 na https://d8f5s88zjy-art.github.io/head-spa-30/barbershop/. **Je to vlastný web, nie podstránka
@@ -34,6 +34,38 @@ tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `inde
 - `barbershop/assets/fonts.css`, `barbershop/assets/fonts/` – vlastná kópia písiem Fraunces, Manrope
   a JetBrains Mono, aby priečinok fungoval samostatne
 - `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
+
+### Identita je odpísaná z prevádzky
+
+Podkladom je päť fotografií interiéru (september 2026). Všetko, čo stránka používa, má na nich
+predlohu, nič nie je zvolené od oka:
+
+| Na fotke | Na stránke |
+| --- | --- |
+| Oranžové priemyselné lampy nad stanicami | `--accent: #e8571b`, tlačidlá, linky, ikony, lampa v úvode |
+| Tmavý orech, lamelové steny, drevená podlaha | `--canvas: #15100c`, `--panel: #231b14`, plocha celej stránky |
+| Biely a čierny obklad | svetlý pás `.studio` (`--canvas: #efeae1`) |
+| Zelený zamat kresiel | `--velvet`, druhé svetlo v pozadí |
+| Mosadz na kreslách a svietidlách | `--brass` v kresbách |
+| Nápis na rohožke a neón na stene | názov **BARBERSHOP 30**, podnázov **Holičstvo** |
+| Kondenzované písmo na rohožke | nadpisy **Oswald**, verzálky |
+| Ozdobná trojka v logu | čísla a značka zostali vo **Fraunces** |
+
+Písmo Oswald je jeden variabilný súbor na dva rozsahy (`Oswald-latin.woff2`,
+`Oswald-latin-ext.woff2`, spolu 40 kB), hostovaný lokálne ako ostatné.
+Predtým stránka bežala na mosadznej zlatej a na serifovom Fraunces; to bola domnienka,
+nie prevádzka.
+
+### Fotografie v galérii
+
+V `barbershop/foto/` je päť fotografií z prevádzky: `interier`, `kresla`, `recepcia`, `neon`,
+`stanice`. Sú to **orezané snímky z Instagram stories**, teda nie originály. Rozhranie Instagramu
+je orezané preč, ale rozlíšenie je nižšie, než by na web patrilo. **Keď budú po ruke originály,
+stačí prepísať súbory rovnakým názvom v `foto/`**, nič iné sa nemení.
+
+Mechanizmus je popísaný nižšie: každá dlaždica má `data-photo`, skript fotku najprv načíta
+a až potom ňou nahradí kresbu. Kresby v dlaždiciach zostali ako záloha, keby súbor chýbal.
+Výrez fotky v dlaždici riadi `--pos` (mapuje sa na `object-position`).
 
 ### Svetlý pás: U nás vnútri a Galéria
 
@@ -64,8 +96,7 @@ polica, stĺp pri dverách a jedna typografická dlaždica s adresou. Kliknutie 
 
 ### Ako do galérie vložiť skutočné fotky
 
-Fotky z Instagramu sa do repozitára nedali stiahnuť automaticky, preto sú dlaždice zatiaľ kreslené
-a označené štítkom Kresba. Výmena za fotografiu nevyžaduje zásah do CSS:
+Dlaždice už fotografie majú (pozri vyššie). Pridanie alebo výmena nevyžaduje zásah do CSS:
 
 1. ulož súbor do `barbershop/foto/`, napríklad `barbershop/foto/kreslo.jpg`
 2. do príslušnej značky `<figure class="shot" data-shot="kreslo" …>` dopíš atribút
