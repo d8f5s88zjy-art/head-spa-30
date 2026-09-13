@@ -36,11 +36,19 @@ tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `inde
 
 ### Otvorenie stránky
 
-Pri prvom načítaní v karte sa prehrá dvojsekundová scéna: medzi dvoma okenicami sa rozsvieti zlatá
-škára, nakreslí sa značka a názov, po škáre zbehne záblesk britvy a obe polovice sa roztvoria do
-strán. Potom nabehne úvod. Celé to riadi funkcia `opening()` v `app.js`:
+Pri prvom načítaní v karte sa prehrá scéna, postavená tak, aby sa dala prečítať:
 
-- prehrá sa **raz za kartu** (`sessionStorage`, kľúč `bs30.intro`), pri ďalších načítaniach sa
+1. za okenicami sa rozsvieti teplý ovál svetla a nakreslí sa značka (prsteň, číslo, britvová linka)
+2. názov vyjde po písmenách, každé zo svojej škáry, celý čas rovno, takže sa dá čítať počas pohybu
+3. pod ním sa rozbehnú dve zlaté linky a medzi ne nabehne adresa
+4. nasleduje pauza, počas ktorej stojí všetko na mieste
+5. až potom sa škára rozjasní, zbehne po nej záblesk britvy a obe polovice sa roztvoria do strán
+
+Zlatá škára je cez stredné pásmo odmaskovaná (`mask-image` na `.iseam`), takže nikdy nepretína
+značku ani názov; spojí sa až v momente, keď cez medzeru prejde britva. Celé to riadi funkcia
+`opening()` v `app.js`:
+
+- trvá dve a pol sekundy a prehrá sa **raz za kartu** (`sessionStorage`, kľúč `bs30.intro`), pri ďalších načítaniach sa
   preskočí a stránka nabehne hneď
 - pri `prefers-reduced-motion: reduce` sa neprehrá vôbec
 - preskočí sa tlačidlom, klávesom Escape, medzerníkom, kliknutím do plochy alebo prvým scrollom

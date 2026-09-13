@@ -131,45 +131,66 @@ body.drawer-open{overflow:hidden}
 .totop.on{opacity:1;transform:none;pointer-events:auto}
 .totop:hover{color:var(--accent-hover);border-color:var(--accent);transform:translateY(-3px)}
 
-/* ---------- the opening: a seam of light, one cut, the room opens ---------- */
-/* Runs once per tab (sessionStorage in app.js) and not at all with reduced motion. */
+/* ---------- the opening: the mark is read first, the cut comes after ---------- */
+/* Runs once per tab (sessionStorage in app.js) and not at all with reduced motion.
+   The seam of light is masked away across the middle band, so it never crosses the
+   name while you are reading it; the blade completes the line as it passes. */
 body.intro-on{overflow:hidden}
 .intro{position:fixed;inset:0;z-index:400;overflow:hidden;background:transparent}
 .intro.gone{display:none}
-.ipanel{position:absolute;top:-2%;bottom:-2%;width:50.4%;background:linear-gradient(178deg,#16140f,#0a0908 55%,#050504);transition:transform 1050ms cubic-bezier(.52,0,.18,1)}
+.ipanel{position:absolute;top:0;bottom:0;width:50.4%;background:linear-gradient(176deg,#18150f,#0b0a09 52%,#050504);transition:transform 1150ms cubic-bezier(.5,0,.16,1)}
 .ipanel::after{content:"";position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.ipanel.l{left:0;box-shadow:inset -1px 0 0 rgba(217,181,106,.22),40px 0 90px rgba(0,0,0,.7)}
-.ipanel.r{right:0;box-shadow:inset 1px 0 0 rgba(217,181,106,.22),-40px 0 90px rgba(0,0,0,.7)}
+.ipanel.l{left:0;box-shadow:40px 0 90px rgba(0,0,0,.7)}
+.ipanel.r{right:0;box-shadow:-40px 0 90px rgba(0,0,0,.7)}
 .intro.part .ipanel.l{transform:translateX(-101%)}
 .intro.part .ipanel.r{transform:translateX(101%)}
-.iseam{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:linear-gradient(180deg,transparent,rgba(217,181,106,.9) 16%,#f6e7b6 50%,rgba(217,181,106,.9) 84%,transparent);box-shadow:0 0 24px rgba(217,181,106,.5);transform:scaleY(0);transition:transform 1000ms cubic-bezier(.18,.84,.2,1),opacity 500ms var(--ease-soft)}
+
+/* a warm pool of light, so the frame has depth instead of flat black */
+.iglow{position:absolute;left:50%;top:50%;width:min(980px,130vw);height:min(620px,86vh);border-radius:50%;transform:translate(-50%,-50%) scale(.88);background:radial-gradient(ellipse,rgba(217,181,106,.17),rgba(217,181,106,.05) 46%,transparent 72%);opacity:0;transition:opacity 1200ms var(--ease-soft),transform 1800ms var(--ease)}
+.intro.seam .iglow{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.intro.part .iglow{opacity:0;transition-duration:500ms}
+
+/* the seam: a quiet hairline while you read, bright only at the cut */
+.iseam{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:linear-gradient(180deg,transparent,rgba(217,181,106,.85) 14%,rgba(217,181,106,.85) 86%,transparent);opacity:.4;transform:scaleY(0);transition:transform 1100ms cubic-bezier(.18,.84,.2,1),opacity 400ms var(--ease-soft),box-shadow 400ms var(--ease-soft);-webkit-mask-image:linear-gradient(180deg,#000,#000 24%,transparent 34%,transparent 66%,#000 76%,#000);mask-image:linear-gradient(180deg,#000,#000 24%,transparent 34%,transparent 66%,#000 76%,#000)}
 .intro.seam .iseam{transform:scaleY(1)}
+.intro.cut .iseam{opacity:1;box-shadow:0 0 26px rgba(217,181,106,.65)}
 .intro.part .iseam{opacity:0}
-.iglint{position:absolute;left:50%;top:-14%;width:140px;height:140px;margin-left:-70px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(246,231,182,.55) 32%,transparent 70%);opacity:0;pointer-events:none}
-.intro.cut .iglint{animation:iCut 460ms cubic-bezier(.45,0,.2,1) forwards}
-@keyframes iCut{0%{opacity:0;top:-14%}14%{opacity:1}100%{opacity:0;top:106%}}
+
+/* the blade runs the seam and completes it through the gap */
+.iglint{position:absolute;left:50%;top:-14%;width:150px;height:150px;margin-left:-75px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(246,231,182,.5) 30%,transparent 70%);opacity:0;pointer-events:none}
+.intro.cut .iglint{animation:iCut 520ms cubic-bezier(.4,0,.2,1) forwards}
+@keyframes iCut{0%{opacity:0;top:-14%}12%{opacity:1}100%{opacity:0;top:106%}}
 .intro::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
-.intro.cut::after{animation:iFlash 420ms var(--ease-soft) 160ms forwards}
-@keyframes iFlash{0%{opacity:0}22%{opacity:.1}100%{opacity:0}}
-.icore{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:24px;padding:24px;text-align:center;transition:opacity 520ms var(--ease-soft),transform 900ms cubic-bezier(.52,0,.18,1)}
-.intro.part .icore{opacity:0;transform:scale(1.28)}
-.imark{width:clamp(78px,11vw,116px);height:auto}
-.imark .ir,.imark .ix{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1000ms var(--ease)}
+.intro.cut::after{animation:iFlash 420ms var(--ease-soft) 190ms forwards}
+@keyframes iFlash{0%{opacity:0}24%{opacity:.09}100%{opacity:0}}
+
+/* the mark, the name, the address */
+.icore{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:26px;padding:24px;text-align:center;transition:opacity 540ms var(--ease-soft),transform 950ms cubic-bezier(.5,0,.16,1)}
+.intro.part .icore{opacity:0;transform:scale(1.26)}
+.imark{width:clamp(76px,10vw,108px);height:auto}
+.imark .ir,.imark .ix{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 900ms var(--ease)}
 .imark .ir{transform:rotate(-90deg);transform-origin:50% 50%}
 .intro.seam .imark .ir{stroke-dashoffset:0}
-.intro.seam .imark .ix.a{stroke-dashoffset:0;transition-delay:520ms;transition-duration:600ms}
-.intro.seam .imark .ix.b{stroke-dashoffset:0;transition-delay:640ms;transition-duration:600ms}
-.imark .in{opacity:0;transition:opacity 500ms var(--ease-soft) 760ms}
+.intro.seam .imark .ix{stroke-dashoffset:0;transition-delay:440ms;transition-duration:520ms}
+.imark .in{opacity:0;transition:opacity 480ms var(--ease-soft) 620ms}
 .intro.seam .imark .in{opacity:1}
-.iname{display:flex;justify-content:center;font-family:var(--display);font-weight:500;font-size:clamp(24px,5vw,50px);letter-spacing:.06em;color:var(--text-primary);perspective:600px}
-.iname b{display:inline-block;font-weight:inherit;opacity:0;transform:translateY(16px) rotateX(-70deg);transition:opacity 620ms var(--ease),transform 760ms var(--ease);transition-delay:calc(var(--i,0)*42ms)}
-.iname b.sp{width:.38em}
-.intro.name .iname b{opacity:1;transform:none}
-.iaddr{font-family:var(--mono);font-size:var(--label);letter-spacing:.3em;text-transform:uppercase;color:var(--accent);opacity:0;transform:translateY(8px);transition:opacity 700ms var(--ease-soft) 760ms,transform 700ms var(--ease) 760ms}
-.intro.name .iaddr{opacity:1;transform:none}
-.iskip{position:absolute;right:22px;bottom:22px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(11,11,10,.5);font-family:var(--mono);font-size:var(--label);letter-spacing:.16em;text-transform:uppercase;color:var(--text-tertiary);opacity:0;transition:opacity 600ms var(--ease-soft) 900ms,color .3s,border-color .3s}
+
+/* each letter rises out of its own slot: upright the whole way, so it stays readable */
+.iname{display:flex;justify-content:center;align-items:flex-end;font-family:var(--display);font-weight:500;font-size:clamp(25px,4.6vw,48px);letter-spacing:.05em;color:var(--text-primary)}
+.iname .sl{display:block;overflow:hidden;line-height:1.08}
+.iname b{display:block;font-weight:inherit;transform:translateY(115%);transition:transform 720ms cubic-bezier(.2,.86,.24,1);transition-delay:calc(var(--i,0)*30ms)}
+.intro.name .iname b{transform:none}
+.iname .sp{display:block;width:.32em}
+.iaddr{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:var(--label);letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+.iaddr span{opacity:0;transform:translateY(6px);transition:opacity 700ms var(--ease-soft) 480ms,transform 700ms var(--ease) 480ms}
+.iaddr i{display:block;width:clamp(22px,4vw,44px);height:1px;background:linear-gradient(90deg,transparent,var(--accent));transform:scaleX(0);transition:transform 700ms var(--ease) 560ms}
+.iaddr i:last-child{background:linear-gradient(90deg,var(--accent),transparent)}
+.intro.name .iaddr span{opacity:1;transform:none}
+.intro.name .iaddr i{transform:scaleX(1)}
+
+.iskip{position:absolute;right:24px;bottom:24px;padding:11px 18px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(11,11,10,.55);font-family:var(--mono);font-size:var(--label);letter-spacing:.16em;text-transform:uppercase;color:var(--text-secondary);opacity:0;transition:opacity 700ms var(--ease-soft) 1100ms,color .3s,border-color .3s,background .3s}
 .intro.seam .iskip{opacity:1}
-.iskip:hover{color:var(--text-primary);border-color:var(--line-strong)}
+.iskip:hover{color:#141208;background:var(--accent);border-color:var(--accent)}
 .intro.part .iskip{opacity:0;transition-delay:0s}
 .intro.fast .ipanel{transition-duration:560ms}
 .intro.fast .icore{transition-duration:360ms}
@@ -504,7 +525,8 @@ footer .bottom a{color:var(--text-secondary);border-bottom:1px solid var(--line)
   .wrap{width:calc(100% - 32px)}
   .ticker{padding:12px 0}
   .ticker .row{gap:20px;padding-right:20px}
-  .iskip{right:14px;bottom:14px}
+  .iskip{right:14px;bottom:14px;padding:10px 14px}
+  .icore{gap:20px}
   .divider{width:calc(100% - 32px)}
   section{padding:72px 0}
   .brand .name small{display:none}

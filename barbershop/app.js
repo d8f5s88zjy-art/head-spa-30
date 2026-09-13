@@ -298,7 +298,9 @@
     try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
 
     const name = $('.iname', intro);
-    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' ' ? '<b class="sp"></b>' : `<b style="--i:${i}">${c}</b>`)).join('');
+    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' '
+      ? '<span class="sp"></span>'
+      : `<span class="sl"><b style="--i:${i}">${c}</b></span>`)).join('');
 
     document.body.classList.add('intro-on');
     const timers = [];
@@ -326,10 +328,10 @@
     addEventListener('touchmove', skip, { passive: true, once: true });
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      intro.classList.add('seam');          // the light between the shutters
-      at(560, () => intro.classList.add('name'));
-      at(1750, () => intro.classList.add('cut'));   // the blade runs down the seam
-      at(2000, () => finish(false));                // and the two halves part
+      intro.classList.add('seam');                  // the pool of light, the mark draws itself
+      at(480, () => intro.classList.add('name'));   // the name rises out of its slots
+      at(2150, () => intro.classList.add('cut'));   // a beat to read it, then the blade
+      at(2530, () => finish(false));                // and the two halves part
     }));
   })();
 
