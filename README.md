@@ -163,8 +163,13 @@ Každá animácia má predlohu v miestnosti, nie je to efekt pre efekt:
 | Barber stĺp | pásik medzi kapitolami je otáčajúci sa stĺp v čiernej a zlatej (`.pole-rule`) |
 | Kruhové svetlá pri zrkadlách | tlačidlo späť hore má pulzujúci prstenec (`ringLight`) |
 | Pomalý pohľad po miestnosti | fotka v úvode sa pomaly približuje (`kenburns`), ostatné fotky dosadnú z mierneho priblíženia |
+| Mosadz, ktorá chytá svetlo | zvýraznené slová v nadpisoch nie sú vyplnené plochou farbou, ale zlatým prechodom, ktorý sa raz za jedenásť sekúnd posunie a prebehne po písmenách (`goldSheen`) |
+| Odlesk na hrane kovu | pri prejdení myšou obieha po ráme karty v cenníku zlaté vlákno (`cardBeam`) |
 
 Pri zapaľovaní neónu bliká len žiara, nie farba písmen, takže nápis je čitateľný po celý čas.
+Lesk na nadpisoch beží cez `background-clip: text`; kde ho prehliadač nevie, zostane plná zlatá
+z pravidla nad ním. Obiehajúce vlákno po ráme karty potrebuje `@property` na animovanie uhla,
+bez neho sa jednoducho nezobrazí a karta vyzerá ako predtým.
 Pri `prefers-reduced-motion: reduce` stojí všetko a všetko je viditeľné.
 
 Fotografie sú okrem úvodu, sekcie U nás vnútri a galérie aj v sekcii Ako to prebieha (vedľa krokov,
