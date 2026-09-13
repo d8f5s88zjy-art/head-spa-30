@@ -249,6 +249,23 @@
     });
   }
 
+  /* ============ the room: one point open at a time, tap works like hover ============ */
+  (function spots() {
+    const all = $$('.spot'); if (!all.length) return;
+    const read = $('.spot-read');
+    const shut = () => { all.forEach((s) => s.setAttribute('aria-expanded', 'false')); if (read) read.textContent = ''; };
+    all.forEach((s) => s.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const was = s.getAttribute('aria-expanded') === 'true';
+      shut();
+      s.setAttribute('aria-expanded', String(!was));
+      /* the same text under the drawing, where a phone has room for it */
+      if (read && !was) read.innerHTML = $('span', s).innerHTML;
+    }));
+    addEventListener('click', shut);
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
+  })();
+
   /* ============ the gallery: real photos drop in, any shot enlarges ============ */
   /* Put a file in barbershop/foto/ and add data-photo="foto/kreslo.jpg" to that figure.
      The drawing stays until the photo has actually loaded, so a missing file never shows a hole. */

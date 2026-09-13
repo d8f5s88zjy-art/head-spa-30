@@ -42,9 +42,21 @@ tá istá sada komponentov s prehodenými premennými: `.studio` v `style.css` p
 `--panel`, `--text-*`, `--line*` a `--accent` a všetko pod ním sa prekreslí samo. Hlavné tlačidlo
 je na svetlom podklade čierne, nie zlaté.
 
-**U nás vnútri** (`#interier`) má kresbu prevádzky v SVG: biely obklad, zrkadlo v mosadznom ráme
-so žiarovkami, drevený pult s fľašami, kožené kreslo, okno, závesnú lampu a šachovnicovú podlahu.
-Pod ňou sú tri poznámky o tom, ako u nás strihanie prebieha.
+**U nás vnútri** (`#interier`) má kresbu celej prevádzky v jednom SVG, zľava doprava: zelené
+vstupné dvere, barber stĺp, zrkadlová stanica v mosadznom ráme so siedmimi žiarovkami, drevený
+pult s pomádami, kožené kreslo s opierkou hlavy a uterákom, okno s lavicou. Nad tým dve závesné
+lampy, pod tým šachovnicová podlaha v perspektíve. Podlaha nie je pruhovaná textúra: polygóny
+sa počítajú do úbežníka v bode (700, 385), preto sa štvorce smerom dozadu zbiehajú a skracujú.
+
+V kresbe je päť bodov, ktoré po ťuknutí alebo prejdení myšou povedia, čo je čo (`.spot`
+v `style.css`, funkcia `spots()` v `app.js`). Na počítači sa text ukáže v bubline nad bodom,
+na telefóne by sa bublina nezmestila, preto sa ten istý text vypíše do panela `.spot-read`
+pod kresbou. Otvorený je vždy len jeden bod, zatvára ho Escape aj klik mimo.
+
+Kresba sa jemne hýbe: žiarovky a lampy dýchajú, pruhy na stĺpe sa točia, denné svetlo v okne
+kolíše. Pri `prefers-reduced-motion: reduce` stojí všetko vrátane pulzu okolo bodov.
+
+Pod kresbou sú tri poznámky o tom, ako u nás strihanie prebieha.
 
 **Galéria** (`#galeria`) je mozaika šiestich dlaždíc: kreslo a zrkadlo, náradie, horúci uterák,
 polica, stĺp pri dverách a jedna typografická dlaždica s adresou. Kliknutie ktorúkoľvek zväčší
