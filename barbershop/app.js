@@ -249,6 +249,40 @@
     });
   }
 
+  /* ============ the gallery: real photos drop in, any shot enlarges ============ */
+  /* Put a file in barbershop/foto/ and add data-photo="foto/kreslo.jpg" to that figure.
+     The drawing stays until the photo has actually loaded, so a missing file never shows a hole. */
+  $$('.shot[data-photo]').forEach((shot) => {
+    const probe = new Image();
+    probe.onload = () => {
+      const img = document.createElement('img');
+      img.src = shot.dataset.photo;
+      img.alt = shot.dataset.cap || '';
+      img.loading = 'lazy';
+      const draw = $('.draw', shot);
+      draw.replaceChildren(img);
+      shot.classList.add('has-photo');
+    };
+    probe.src = shot.dataset.photo;
+  });
+
+  (function lightbox() {
+    const lb = $('#lightbox'); if (!lb) return;
+    const art = $('.lb-art', lb), cap = $('figcaption', lb);
+    const open = (shot) => {
+      const src = $('.draw', shot);
+      art.replaceChildren(src.firstElementChild.cloneNode(true));
+      cap.textContent = `${$('figcaption b', shot).textContent} — ${shot.dataset.cap || ''}`;
+      lb.showModal();
+    };
+    $$('.shot:not(.word)').forEach((shot) => {
+      shot.addEventListener('click', () => open(shot));
+      shot.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(shot); } });
+    });
+    $('.lb-close', lb).addEventListener('click', () => lb.close());
+    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+  })();
+
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const item = b.closest('.faq-item'), open = !item.classList.contains('open');

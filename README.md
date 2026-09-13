@@ -27,12 +27,44 @@ tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `inde
   so sklom, mosadzou a motorom, ktorý sa po načítaní rozbieha a pri prejdení myšou zrýchli; britva
   s odleskom, ktorý po nej prejde každých sedem sekúnd; nožnice, ktoré strihnú), prach vo svetle
   lampy, bežiaci pás služieb, cenník 16 služieb v piatich kategóriách s filtrom a rozbaľovacím
-  obsahom, ako to prebieha (5 krokov), prečo k nám, poukážky, otázky, kontakt s mapou. V hlavičke
+  obsahom, ako to prebieha (5 krokov), prečo k nám, U nás vnútri a Galéria na svetlom páse,
+  poukážky, otázky, kontakt s mapou. V hlavičke
   sú štruktúrované dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
 - `barbershop/style.css`, `barbershop/app.js` – štýly a správanie
 - `barbershop/assets/fonts.css`, `barbershop/assets/fonts/` – vlastná kópia písiem Fraunces, Manrope
   a JetBrains Mono, aby priečinok fungoval samostatne
 - `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
+
+### Svetlý pás: U nás vnútri a Galéria
+
+Uprostred stránky sa tmavé plátno na dve sekcie zmení na svetlé. Nie je to druhý dizajn, je to
+tá istá sada komponentov s prehodenými premennými: `.studio` v `style.css` predefinuje `--canvas`,
+`--panel`, `--text-*`, `--line*` a `--accent` a všetko pod ním sa prekreslí samo. Hlavné tlačidlo
+je na svetlom podklade čierne, nie zlaté.
+
+**U nás vnútri** (`#interier`) má kresbu prevádzky v SVG: biely obklad, zrkadlo v mosadznom ráme
+so žiarovkami, drevený pult s fľašami, kožené kreslo, okno, závesnú lampu a šachovnicovú podlahu.
+Pod ňou sú tri poznámky o tom, ako u nás strihanie prebieha.
+
+**Galéria** (`#galeria`) je mozaika šiestich dlaždíc: kreslo a zrkadlo, náradie, horúci uterák,
+polica, stĺp pri dverách a jedna typografická dlaždica s adresou. Kliknutie ktorúkoľvek zväčší
+(`<dialog class="lb">`).
+
+### Ako do galérie vložiť skutočné fotky
+
+Fotky z Instagramu sa do repozitára nedali stiahnuť automaticky, preto sú dlaždice zatiaľ kreslené
+a označené štítkom Kresba. Výmena za fotografiu nevyžaduje zásah do CSS:
+
+1. ulož súbor do `barbershop/foto/`, napríklad `barbershop/foto/kreslo.jpg`
+2. do príslušnej značky `<figure class="shot" data-shot="kreslo" …>` dopíš atribút
+   `data-photo="foto/kreslo.jpg"`
+
+`app.js` fotku najprv načíta a až po úspešnom načítaní ňou nahradí kresbu a skryje štítok Kresba.
+Keď súbor chýba alebo sa nenačíta, ostane kresba, takže na stránke nikdy nie je prázdne miesto.
+Odporúčaný pomer strán: široká dlaždica Náradie 16:5, veľká dlaždica Kreslo a zrkadlo 3:2,
+ostatné 3:2. Rovnaká fotka sa použije aj v zväčšenom náhľade.
+
+Zoznam dlaždíc a ich `data-shot`: `kreslo`, `naradie`, `uterak`, `police`, `stlp`.
 
 ### Otvorenie stránky
 
