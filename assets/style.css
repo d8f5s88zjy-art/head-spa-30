@@ -797,6 +797,36 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 }
 
 /* ==========================================================
+   TÍM
+   ========================================================== */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+.tcard{position:relative;overflow:hidden;padding:28px 28px 32px;border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(165deg,rgba(25,34,25,.7),rgba(14,19,16,.92));
+  transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.tcard:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.tface{position:relative;aspect-ratio:4/5;border-radius:calc(var(--radius) - 6px);overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 15%,rgba(140,195,182,.10),rgba(10,13,11,.9) 70%);
+  display:flex;align-items:center;justify-content:center}
+.tface img{width:100%;height:100%;object-fit:cover;display:block}
+.tmark{width:84px;height:84px;opacity:.8}
+.tcard.is-empty .tface{aspect-ratio:3/2;border:1px dashed var(--line-strong)}
+.tcard.is-empty .tname{color:var(--text-secondary)}
+.tnum{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent)}
+.tname{font-family:var(--display);font-weight:500;font-size:25px;line-height:1.15;margin:10px 0 6px;letter-spacing:-.01em}
+.trole{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.tbio{color:var(--text-secondary);font-size:15px;line-height:1.68}
+.team-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-top:34px}
+.team-foot .note{color:var(--text-secondary);font-size:15px;line-height:1.7;max-width:640px}
+.team-foot .note a{color:var(--accent);border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+.team-foot .note a:hover{color:var(--accent-hover)}
+@media (max-width:900px){
+  .team-grid{grid-template-columns:1fr;gap:14px}
+  .tface{aspect-ratio:16/9}
+  .team-foot{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){.tcard:hover{transform:none}}
+
+/* ==========================================================
    NOVÉ ANIMÁCIE
    ========================================================== */
 /* tenká zlatá linka postupu čítania */

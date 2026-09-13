@@ -78,6 +78,34 @@ Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologic
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
 
+## Sekcia Tím
+
+Sekcia `#tim` je pripravená, ale zatiaľ prázdna. Obsahuje tri karty v stave
+„pripravujeme“: prerušovaný rámik, monogram 30 a text `Meno doplníme`.
+Web tak nikde netvrdí nič, čo nie je overené.
+
+Ako kartu vyplniť (jedna karta = jeden človek), v `index.html` v sekcii `#tim`:
+
+1. z `<article class="tcard part is-empty">` zmazať `is-empty`,
+2. `<h3 class="tname">` prepísať na meno,
+3. `<p class="trole">` prepísať na rolu, napríklad `Head Spa terapeutka · Salón 30`,
+4. `<p class="tbio">` prepísať na jednu vetu o tom, čo robí najradšej,
+5. celý `<div class="tface"> ... </div>` nahradiť fotografiou:
+
+```html
+<div class="tface"><img src="assets/img/tim-meno.jpg" alt="Meno, Head Spa terapeutka"
+     width="600" height="750" loading="lazy" decoding="async"></div>
+```
+
+Fotografie na výšku, minimálne 600 × 750 px, tvár v hornej tretine. Kariet môže
+byť ľubovoľný počet, mriežka sa prispôsobí sama (tri v rade na počítači, jedna
+pod druhou na mobile). Rovnaký návod je aj v komentári priamo nad sekciou.
+
+Keď pribudnú mená, treba ich pridať aj do prekladov: v `assets/i18n/<jazyk>.json`
+sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
+`Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
+sa neprekladá, stačí ho nechať bez kľúča.
+
 ## Hodnoty darčekových poukazov
 
 Rebríček je odvodený od cenníka, nie zvolený od oka: **45, 70, 100, 149 a 249 €**.

@@ -75,6 +75,7 @@
       <a href="#chodidla">Chodidlá</a>
       <a href="#headspa">Čo je Head Spa</a>
       <a href="#preco">Prečo k nám</a>
+      <a href="#tim">Tím</a>
       <a href="#galeria">Galéria</a>
       <a href="#faq">Otázky</a>
       <a href="#kontakt">Kontakt</a>
@@ -98,9 +99,10 @@
       <a href="#headspa"><span>06</span>Čo je Head Spa</a>
       <a href="#preco"><span>07</span>Prečo k nám</a>
       <a href="#salon"><span>08</span>Salón 30</a>
-      <a href="#galeria"><span>09</span>Galéria</a>
-      <a href="#faq"><span>10</span>Otázky</a>
-      <a href="#kontakt"><span>11</span>Kontakt</a>
+      <a href="#tim"><span>09</span>Tím</a>
+      <a href="#galeria"><span>10</span>Galéria</a>
+      <a href="#faq"><span>11</span>Otázky</a>
+      <a href="#kontakt"><span>12</span>Kontakt</a>
     </nav>
     <div class="drawer-foot">
       <a class="btn primary" href="https://booqme.app/sk/rezervacia/salon-30">Rezervovať termín</a>
@@ -1070,6 +1072,65 @@
   </div>
 </section>
 
+<!-- ========== TÍM ==========
+     Pre majiteľa: každá karta nižšie je jedno miesto v tíme. Keď budú mená
+     a fotografie hotové, v karte stačí:
+       1. zmazať triedu "is-empty" z <article class="tcard part is-empty">,
+       2. do <h3 class="tname"> napísať meno,
+       3. do <p class="trole"> rolu (napríklad Head Spa terapeutka),
+       4. do <p class="tbio"> jednu vetu o tom, čo robí najradšej,
+       5. namiesto <div class="tface"> ... </div> vložiť fotografiu:
+          <div class="tface"><img src="assets/img/tim-meno.jpg" alt="Meno, Head Spa terapeutka"
+               width="600" height="750" loading="lazy" decoding="async"></div>
+     Karta sa dá pridať alebo zmazať celá, mriežka sa prispôsobí sama.
+     Fotografie: na výšku, 600×750 px a viac, tvár v hornej tretine. -->
+<section class="team" id="tim" data-scene="preco" aria-labelledby="h-tim">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="part">
+        <div class="kicker">Tím</div>
+        <h2 class="h2" id="h-tim">Ruky, ktoré<br><em>vedú rituál.</em></h2>
+      </div>
+      <p class="lede part">Head Spa nerobí prístroj, ale človek. Mená, fotografie a špecializácie sem doplníme, keď bude tím nafotený. Dovtedy ťa na rituál objedná ktokoľvek zo Salónu 30.</p>
+    </div>
+
+    <div class="team-grid rv">
+      <article class="tcard part is-empty">
+        <div class="tface" aria-hidden="true">
+          <svg class="tmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.2" stroke-dasharray="4 6"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.4" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="20" fill="#f2ede2">30</text></svg>
+        </div>
+        <span class="tnum" aria-hidden="true">01</span>
+        <h3 class="tname">Meno doplníme</h3>
+        <p class="trole">Head Spa terapeut · Salón 30</p>
+        <p class="tbio">Vedie rituály pre hlavu aj pre chodidlá. Krátky profil sem pribudne po nafotení.</p>
+      </article>
+      <article class="tcard part is-empty">
+        <div class="tface" aria-hidden="true">
+          <svg class="tmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.2" stroke-dasharray="4 6"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.4" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="20" fill="#f2ede2">30</text></svg>
+        </div>
+        <span class="tnum" aria-hidden="true">02</span>
+        <h3 class="tname">Meno doplníme</h3>
+        <p class="trole">Head Spa terapeut · Salón 30</p>
+        <p class="tbio">Vedie rituály pre hlavu aj pre chodidlá. Krátky profil sem pribudne po nafotení.</p>
+      </article>
+      <article class="tcard part is-empty">
+        <div class="tface" aria-hidden="true">
+          <svg class="tmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.2" stroke-dasharray="4 6"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.4" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="20" fill="#f2ede2">30</text></svg>
+        </div>
+        <span class="tnum" aria-hidden="true">03</span>
+        <h3 class="tname">Meno doplníme</h3>
+        <p class="trole">Head Spa terapeut · Salón 30</p>
+        <p class="tbio">Vedie rituály pre hlavu aj pre chodidlá. Krátky profil sem pribudne po nafotení.</p>
+      </article>
+    </div>
+
+    <div class="team-foot rv">
+      <p class="note part">Ak chceš, aby ťa viedol niekto konkrétny, napíš to pri rezervácii do poznámky alebo zavolaj na <a href="tel:+421911153136">0911 153 136</a>.</p>
+      <a class="btn ghost part" href="https://booqme.app/sk/rezervacia/salon-30">Rezervovať termín</a>
+    </div>
+  </div>
+</section>
+
 <!-- ========== GALÉRIA ========== -->
 <section class="gallery" id="galeria" data-scene="galeria" aria-labelledby="h-galeria">
   <div class="wrap">
@@ -1199,7 +1260,7 @@
         </a>
         <p>HEAD SPA 30 je Head Spa koncept salónu <a href="https://www.salon30.sk/" target="_blank" rel="noopener">Salón 30</a> na Mostnej 30 v Nitre. Kadernícka presnosť, spa pokoj a nový dôvod vrátiť sa.</p>
       </div>
-      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="https://booqme.app/sk/rezervacia/salon-30">Rezervácia</a><a href="#poukaz">Darčekové poukážky</a><a href="#ritual">Ako to prebieha</a><a href="#chodidla">Rituály pre chodidlá</a><a href="#headspa">Čo je Head Spa</a><a href="#preco">Prečo k nám</a><a href="#salon">Salón 30</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
+      <div class="col"><h4>Stránka</h4><a href="#cennik">Rituály a ceny</a><a href="https://booqme.app/sk/rezervacia/salon-30">Rezervácia</a><a href="#poukaz">Darčekové poukážky</a><a href="#ritual">Ako to prebieha</a><a href="#chodidla">Rituály pre chodidlá</a><a href="#headspa">Čo je Head Spa</a><a href="#preco">Prečo k nám</a><a href="#salon">Salón 30</a><a href="#tim">Tím</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
       <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a href="tel:+421911153136">+421 911 153 136</a><a href="mailto:info@salon30.sk">info@salon30.sk</a></div>
       <div class="col"><h4>Online</h4><a href="https://booqme.app/sk/rezervacia/salon-30">Rezervácia</a><a href="https://booqme.app/sk/rezervacia/salon-30" target="_blank" rel="noopener">Kalendár Booqme</a><a href="https://www.instagram.com/salon30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/Salon30_nitra-112861134668883" target="_blank" rel="noopener">Facebook</a><a href="https://www.salon30.sk/" target="_blank" rel="noopener">www.salon30.sk</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a></div>
     </div>
