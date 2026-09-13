@@ -233,5 +233,92 @@
   /* ============ housekeeping ============ */
   document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
+  /* ============ the opening: seam, wordmark, one cut, the room opens ============ */
+  /* Plays once per tab. Skipped for reduced motion and by Escape, a click or the first scroll. */
+  (function opening() {
+    const intro = $('#intro');
+    const wake = () => requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('open')));
+    if (!intro) { wake(); return; }
+    let seen = false;
+    try { seen = sessionStorage.getItem('bs30.intro') === '1'; } catch (e) {}
+    if (reduced.matches || seen) { intro.remove(); wake(); return; }
+    try { sessionStorage.setItem('bs30.intro', '1'); } catch (e) {}
+
+    const name = $('.iname', intro);
+    name.innerHTML = name.textContent.trim().split('').map((c, i) => (c === ' ' ? '<b class="sp"></b>' : `<b style="--i:${i}">${c}</b>`)).join('');
+
+    document.body.classList.add('intro-on');
+    const timers = [];
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    let done = false;
+    function finish(fast) {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      document.body.classList.remove('intro-on');
+      document.body.classList.add('open');
+      intro.classList.add('part');
+      if (fast) intro.classList.add('fast');
+      setTimeout(() => intro.remove(), fast ? 620 : 1200);
+      removeEventListener('keydown', onKey);
+      removeEventListener('wheel', skip);
+      removeEventListener('touchmove', skip);
+    }
+    const skip = () => finish(true);
+    const onKey = (e) => { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip(); };
+    $('.iskip', intro).addEventListener('click', skip);
+    intro.addEventListener('click', (e) => { if (e.target === intro || e.target.classList.contains('ipanel')) skip(); });
+    addEventListener('keydown', onKey);
+    addEventListener('wheel', skip, { passive: true, once: true });
+    addEventListener('touchmove', skip, { passive: true, once: true });
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      intro.classList.add('seam');          // the light between the shutters
+      at(560, () => intro.classList.add('name'));
+      at(1750, () => intro.classList.add('cut'));   // the blade runs down the seam
+      at(2000, () => finish(false));                // and the two halves part
+    }));
+  })();
+
+  /* ============ dust in the lamp light ============ */
+  (function dust() {
+    const cv = $('.dust'); if (!cv || reduced.matches) return;
+    const ctx = cv.getContext('2d');
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    let w = 0, h = 0, motes = [], raf = 0, visible = true, last = 0;
+    const spawn = (anywhere) => {
+      const d = Math.random();            // depth: far motes stay small, dim and slow
+      return { x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12, r: 0.6 + d * 1.7,
+               a: 0.1 + d * 0.32, v: 4 + d * 13, s: Math.random() * 6.28, sw: 0.3 + Math.random() * 0.6 };
+    };
+    function size() {
+      const r = cv.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      w = r.width; h = r.height;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      motes = Array.from({ length: Math.round(Math.min(90, w * h / 13000)) }, () => spawn(true));
+    }
+    function frame(t) {
+      if (!visible || document.hidden) { raf = 0; return; }
+      const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#e8d3a0';
+      for (const m of motes) {
+        m.y -= m.v * dt; m.s += dt * m.sw;
+        if (m.y < -12) Object.assign(m, spawn(false));
+        const x = m.x + Math.sin(m.s) * 10;
+        const lit = 1 - Math.min(1, Math.hypot(x - w * 0.72, m.y - h * 0.2) / (Math.max(w, h) * 0.85));
+        ctx.globalAlpha = m.a * (0.3 + lit * 0.95);
+        ctx.beginPath(); ctx.arc(x, m.y, m.r, 0, 6.284); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(frame);
+    }
+    const run = () => { if (!raf && visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; run(); }, { threshold: 0 }).observe(cv);
+    document.addEventListener('visibilitychange', run);
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(size, 180); });
+    size(); run();
+  })();
 })();

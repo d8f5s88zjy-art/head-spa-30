@@ -10,39 +10,53 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
 - `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
-- `barbershop/` – samostatná stránka BARBER SHOP 30 na tej istej adrese, pozri nižšie
+- `barbershop/` – samostatný web BARBER SHOP 30 na tej istej adrese, vlastné písma a kód, pozri nižšie
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona
 
-## BARBER SHOP 30, podstránka `barbershop/`
+## BARBER SHOP 30, samostatný web v `barbershop/`
 
 Samostatná stránka pánskeho barbershopu na tej istej adrese (Mostná 226/30, Nitra), nasadená
-na https://d8f5s88zjy-art.github.io/head-spa-30/barbershop/. Rovnaký dizajnový jazyk ako HEAD SPA 30
-(tmavé plátno, mosadzné zlato, písma Fraunces a Manrope zdieľané z `assets/fonts/`), ale vlastný,
-oveľa jednoduchší kód bez scrollovanej scény a bez prekladov:
+na https://d8f5s88zjy-art.github.io/head-spa-30/barbershop/. **Je to vlastný web, nie podstránka
+HEAD SPA 30:** má vlastné písma, vlastné štýly aj skript, žiadny odkaz ani zmienku o Head Spa
+a nezdieľa s ním ani jeden súbor. Celý priečinok `barbershop/` sa dá presunúť na vlastnú doménu
+tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `index.html`).
 
-- `barbershop/index.html` – úvod so scénou z troch SVG vrstiev (barber stĺp so sklom, mosadzou a motorom, ktorý sa po načítaní rozbieha a pri prejdení myšou zrýchli; britva s odleskom, ktorý po nej prejde každých sedem sekúnd; nožnice, ktoré strihnú), vrstvy sa na počítači naklonia za kurzorom. Cenník
-  16 služieb v piatich kategóriách s filtrom a rozbaľovacím obsahom, ako to prebieha (5 krokov),
-  prečo k nám, odkaz na HEAD SPA 30, poukážky, otázky, kontakt s mapou. V hlavičke sú štruktúrované
-  dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
-- `barbershop/style.css`, `barbershop/app.js` – štýly a správanie (menu, hlásenie Dnes otvorené,
-  odhaľovanie pri rolovaní, filter cenníka, rozbaľovanie kariet a otázok). Nadpisy vychádzajú
-  z maskovaného riadku, značka v lište sa po načítaní nakreslí, dve svetlá v pozadí sa presúvajú
-  podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii Ako to prebieha rastie so scrollom
-  a každý krok má malú animovanú ikonu (para, nožnice, britva, uterák, hrebeň). Tlačidlá sa
-  nakláňajú k ruke, karty Prečo k nám sa jemne natočia. Pri obmedzení pohybu je všetko statické
-  a viditeľné; pruhy stĺpa kreslí `app.js` (`pole()`), pri skrytej karte alebo mimo obrazovky motor stojí
+- `barbershop/index.html` – kinematické otvorenie, úvod so scénou z troch SVG vrstiev (barber stĺp
+  so sklom, mosadzou a motorom, ktorý sa po načítaní rozbieha a pri prejdení myšou zrýchli; britva
+  s odleskom, ktorý po nej prejde každých sedem sekúnd; nožnice, ktoré strihnú), prach vo svetle
+  lampy, bežiaci pás služieb, cenník 16 služieb v piatich kategóriách s filtrom a rozbaľovacím
+  obsahom, ako to prebieha (5 krokov), prečo k nám, poukážky, otázky, kontakt s mapou. V hlavičke
+  sú štruktúrované dáta (schema.org `BarberShop`, otváracie hodiny, 16 ponúk s cenou a trvaním, FAQ)
+- `barbershop/style.css`, `barbershop/app.js` – štýly a správanie
+- `barbershop/assets/fonts.css`, `barbershop/assets/fonts/` – vlastná kópia písiem Fraunces, Manrope
+  a JetBrains Mono, aby priečinok fungoval samostatne
 - `barbershop/og.jpg`, `barbershop/favicon.svg` – obrázok pre zdieľanie a ikona
 
-Stránka je v `.github/workflows/pages.yml` aj v `sitemap.xml`. HEAD SPA 30 na barbershop
-neodkazuje (zámerne, pozri históriu commitov), barbershop na HEAD SPA 30 áno.
+### Otvorenie stránky
 
-**Kontakty a hodiny sú prevzaté z prvej verzie webu HEAD SPA 30 (september 2026), keď ešte bežal
-pod značkou Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram
-barbershop30_nitra, rezervácia https://booqme.app/sk/rezervacia/barbershop-30, otváracie hodiny
-pondelok až piatok 09:00 až 19:00, sobota 09:00 až 14:00, nedeľa zatvorené. Pred spustením ich treba
-overiť s prevádzkou. Hodiny sú na troch miestach naraz: v schéme, v kontakte a v `barbershop/app.js`
+Pri prvom načítaní v karte sa prehrá dvojsekundová scéna: medzi dvoma okenicami sa rozsvieti zlatá
+škára, nakreslí sa značka a názov, po škáre zbehne záblesk britvy a obe polovice sa roztvoria do
+strán. Potom nabehne úvod. Celé to riadi funkcia `opening()` v `app.js`:
+
+- prehrá sa **raz za kartu** (`sessionStorage`, kľúč `bs30.intro`), pri ďalších načítaniach sa
+  preskočí a stránka nabehne hneď
+- pri `prefers-reduced-motion: reduce` sa neprehrá vôbec
+- preskočí sa tlačidlom, klávesom Escape, medzerníkom, kliknutím do plochy alebo prvým scrollom
+- ak by skript nezbehol, okenice sa samy zdvihnú po šiestich sekundách (`iFailsafe` v CSS)
+
+Ďalší pohyb na stránke: nadpisy vychádzajú z maskovaného riadku, značka v lište sa nakreslí,
+dve svetlá v pozadí sa presúvajú podľa sekcie (`data-scene` na `body`), vodiaca čiara v sekcii
+Ako to prebieha rastie so scrollom a každý krok má malú animovanú ikonu (para, nožnice, britva,
+uterák, hrebeň). Tlačidlá sa nakláňajú k ruke, karty Prečo k nám sa natočia. Pruhy stĺpa kreslí
+`app.js` (`pole()`), prach kreslí `dust()` na canvas; oboje stojí mimo obrazovky aj pri skrytej karte.
+
+**Kontakty a hodiny sú prevzaté z prvej verzie webu (september 2026), keď ešte bežal pod značkou
+Barbershop30:** telefón 0951 267 203, e-mail info@barbershop30.sk, Instagram barbershop30_nitra,
+rezervácia https://booqme.app/sk/rezervacia/barbershop-30, otváracie hodiny pondelok až piatok
+09:00 až 19:00, sobota 09:00 až 14:00, nedeľa zatvorené. Pred spustením ich treba overiť
+s prevádzkou. Hodiny sú na troch miestach naraz: v schéme, v kontakte a v `barbershop/app.js`
 (konštanta `HOURS`).
 
 **Cenník je NÁVRH, čaká na potvrdenie prevádzky.** Názvy, dĺžky, ceny aj obsah krokov sú odvodené
@@ -71,8 +85,8 @@ kompletný servis za 36 €).
 | Vosk: nos, uši, obočie | 10 min | 6 € |
 | Umytie a styling | 15 min | 8 € |
 
-Náhľad: `npx http-server -p 8080` v koreni projektu a otvoriť `http://localhost:8080/barbershop/`
-(písma sa načítavajú z `../assets/`, preto dvojklik na súbor bez servera ukáže náhradné písmo).
+Náhľad: `npx http-server -p 8080` v koreni projektu a otvoriť `http://localhost:8080/barbershop/`.
+Stránka je v `.github/workflows/pages.yml` aj v `sitemap.xml`.
 
 ## Čo web robí sám
 
