@@ -40,15 +40,22 @@ predlohu, nič nie je zvolené od oka:
 
 | Na fotke | Na stránke |
 | --- | --- |
-| Oranžové priemyselné lampy nad stanicami | `--accent: #e8571b`, tlačidlá, linky, ikony, lampa v úvode |
+| Oranžové priemyselné lampy nad stanicami | `--accent: #e8571b`, ale len tam, kde sa dá kliknúť |
+| Mosadz na kreslách a nástenných svietidlách | `--gold: #d8ae6a`, nadpisy, popisky, ikony, linky |
 | Tmavý orech, lamelové steny, drevená podlaha | `--canvas: #15100c`, `--panel: #231b14`, plocha celej stránky |
 | Teplé svetlo lámp v tmavej miestnosti | celá stránka je tmavá, bez svetlých pásov |
 | Biely a čierny obklad | fotografie v galérii, obklad v zábere |
 | Zelený zamat kresiel | `--velvet`, druhé svetlo v pozadí |
-| Mosadz na kreslách a svietidlách | `--brass` v kresbách |
 | Nápis na rohožke a neón na stene | názov **BARBERSHOP 30**, podnázov **Holičstvo** |
 | Kondenzované písmo na rohožke | nadpisy **Oswald**, verzálky |
 | Ozdobná trojka v logu | čísla a značka zostali vo **Fraunces** |
+
+Farba má dve polohy a nemiešajú sa. **Oranžová je vyhradená pre akciu**: tlačidlo Rezervovať,
+aktívny filter, štítok Najžiadanejší, prechod myšou, zameranie klávesnicou, ukazovateľ postupu,
+body vo fotke, neón v úvode a oranžová dlaždica s nápisom z rohožky. **Mosadz nesie všetko
+ostatné**: zvýraznené slová v nadpisoch, popisky nad nimi, čísla, ikony, linky a rámiky. Predtým
+bola oranžová na oboch úlohách naraz a stránka z nej hučala. Mosadz má navyše na tmavom podklade
+kontrast 9,2 : 1, oranžová 5,2 : 1.
 
 Texty majú jeden rebríček odtieňov na celú stránku: `--text-primary: #fbf8f3`,
 `--text-secondary: #d5cfc5`, `--text-tertiary: #aaa298`. Sú teplé, ale bez hnedého nádychu,
