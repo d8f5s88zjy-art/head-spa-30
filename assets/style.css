@@ -950,6 +950,23 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* poznámka pod hodnotami poukazu */
 .vf-hint{margin-top:12px;max-width:52ch}
 
+.to-top{position:fixed;right:20px;bottom:24px;z-index:60;display:inline-flex;align-items:center;gap:8px;
+  height:46px;padding:0 18px;border:1px solid var(--line-strong);border-radius:999px;
+  background:rgba(10,13,11,.82);backdrop-filter:blur(14px);color:var(--text-secondary);
+  font-family:var(--mono);font-size:var(--label);letter-spacing:.16em;text-transform:uppercase;
+  opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .4s var(--ease),transform .4s var(--ease),color .3s,border-color .3s}
+.to-top svg{width:16px;height:16px}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{color:var(--text-primary);border-color:var(--accent)}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:640px){
+  .to-top{right:14px;bottom:94px;height:42px;padding:0 14px}
+  .to-top span{display:none}
+}
+@media (prefers-reduced-motion:reduce){.to-top{transition:opacity .2s linear}}
+@media print{.to-top{display:none!important}}
+
 .first-tip{margin:14px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-tertiary);
   display:flex;align-items:baseline;gap:10px}
 .first-tip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto;
@@ -982,10 +999,10 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .pricelist .pl-cat th{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--accent);text-align:left;font-weight:400;padding:18px 26px 8px}
 .pricelist tbody tr:not(.pl-cat){border-top:1px solid var(--line)}
-.pricelist tbody th{font-weight:400;text-align:left;padding:12px 26px;color:var(--text-secondary)}
+.pricelist tbody th{font-weight:400;text-align:left;padding:7px 26px;color:var(--text-secondary)}
 .pricelist tbody td{padding:12px 26px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
 .pricelist tbody td:last-child{font-family:var(--mono);color:var(--text-primary)}
-.pricelist tbody a{color:var(--text-primary);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
+.pricelist tbody a{display:inline-block;padding:5px 0;color:var(--text-primary);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
 .pricelist tbody a:hover{color:var(--accent-hover);border-bottom-color:var(--line-strong)}
 .pricelist tbody tr:not(.pl-cat):hover td,.pricelist tbody tr:not(.pl-cat):hover th{color:var(--text-primary)}
 .pl-note{padding:16px 26px 22px;font-size:13px;line-height:1.6;color:var(--text-tertiary)}

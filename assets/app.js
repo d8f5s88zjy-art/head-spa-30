@@ -1092,4 +1092,26 @@
     }
   })();
 
+
+  /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
+  (function spatHore() {
+    const btn = document.getElementById('toTop');
+    if (!btn) return;
+    btn.hidden = false;
+    const prah = () => window.innerHeight * 2;
+    let tiká = false;
+    const prekresli = () => {
+      tiká = false;
+      btn.classList.toggle('show', window.scrollY > prah());
+    };
+    addEventListener('scroll', () => { if (!tiká) { tiká = true; requestAnimationFrame(prekresli); } }, { passive: true });
+    prekresli();
+    btn.addEventListener('click', () => {
+      const jemne = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: jemne ? 'auto' : 'smooth' });
+      const cieľ = document.getElementById('main') || document.body;
+      cieľ.focus({ preventScroll: true });
+    });
+  })();
+
 })();

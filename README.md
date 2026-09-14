@@ -106,6 +106,16 @@ sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
 `Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
 sa neprekladá, stačí ho nechať bez kľúča.
 
+## Drobnosti, ktoré nie sú vidieť
+
+- Titulok stránky má 55 znakov a meta popis 133, aby ich Google neorezal.
+- `sitemap.xml` má `lastmod` pri každej zo siedmich jazykových adries.
+- Tlačidlo Späť hore (`#toTop`) sa objaví po dvoch obrazovkách skrolovania,
+  na mobile sedí nad lištou s tlačidlami Zavolať a Rezervovať. Pri tlači sa skryje.
+- Nadpisy v hrdinskej sekcii sa lámu na slová (`data-split`), preto sa prekladajú
+  po slovách: `Teplo.`, `Voda.`, `Ticho.`, `Tvoj`, `termín`, `čaká.` sú vlastné
+  kľúče v jazykových súboroch.
+
 ## Rýchly prehľad cien a tlač
 
 Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých štrnástich
