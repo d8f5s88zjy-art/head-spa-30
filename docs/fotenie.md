@@ -21,7 +21,7 @@ Jedno fotenie, ktoré naplní galériu webu aj všetkých 10 sérií Instagram S
 | 7 | Trichologická kamera v ruke pri pokožke hlavy, obrazovka mimo | Stories 03 (scalp check), web „Prečo k nám“ |
 | 8 | Čerstvé ovocie, uhorka a bylinky na tmavom podnose pri miske s vodou | Stories 08 (vôňa), Ovocný rituál |
 | 9 | Dve kreslá vedľa seba, dva uteráky, dva poháre, bez ľudí | Spoločné rituály, Stories 06 |
-| 10 | Chodidlá v teplom kúpeli, zlatý peeling alebo maska, zboku | Rituály pre chodidlá, Zlatý rituál 24K |
+| 10 | Teplý uterákový zábal na hlave, para nad miskou, detail | Prémiové rituály, Stories 02 |
 | 11 | Uvítací nápoj na tácke, vôňové oleje, detail | Stories 01 a 04 |
 | 12 | Portrét terapeutky pri práci, z profilu, sústredená, bez pózy | web „Prečo k nám“, Stories 03 |
 | 13 | Pánsky rituál: mužská hlava, uterák, tmavšie tóny | Pánske rituály, Stories 06 |

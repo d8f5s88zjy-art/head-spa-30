@@ -4,7 +4,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 14 rituálov v štyroch kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), rituály pre chodidlá (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 14 rituálov v štyroch kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 14 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
@@ -193,8 +193,11 @@ z `docs/booqme-programy.xlsx`: trvanie 40 až 120 minút, ceny 50 až 149 €,
 pri rituáloch pre dvoch platí cena za obe osoby.
 
 Rituály pre chodidlá boli zo stránky odstránené (13. 9. 2026) spolu s tromi
-luxusnými návrhmi pre hlavu. Na webe tak nie je nič, čo by si zákazník nevedel
-rezervovať. Ak sa niektorá z týchto služieb spustí, pridá sa späť ako
+luxusnými návrhmi pre hlavu. O deň neskôr zmizli aj posledné zmienky o chodidlách
+v dvoch dvojhodinových prémiových rituáloch: tri, respektíve štyri kroky
+so starostlivosťou o chodidlá a vety, ktoré ich opisovali. Na webe tak nie je
+nič, čo by si zákazník nevedel rezervovať, a slovo chodidlá sa na ňom
+nevyskytuje ani raz. Ak sa niektorá z týchto služieb spustí, pridá sa späť ako
 `<article class="card">` v `index.html`, `<option>` do výberu `#v-ritual`
 a `Offer` do `hasOfferCatalog` v štruktúrovaných dátach, plus preklady
 do šiestich jazykových súborov.
