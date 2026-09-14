@@ -264,6 +264,9 @@ body.open .hero-static :is(.kicker,h1,p,.cta){opacity:1;transform:none}
 main{position:relative;z-index:1}
 .site{position:relative;background:linear-gradient(180deg,var(--canvas) 0,transparent 240px)}
 section{position:relative;padding:120px 0;scroll-margin-top:80px}
+/* karta rituálu má nad sebou lepkavý filter, preto väčší odstup pri skoku z odkazu */
+.card[id]{scroll-margin-top:170px}
+@media (max-width:640px){.card[id]{scroll-margin-top:200px}}
 .kicker{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
 .kicker::before{content:"";width:28px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 800ms var(--ease)}
 .rv.in .kicker::before{transform:scaleX(1)}
@@ -896,16 +899,10 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 @media (max-width:640px){
   /* Filter mal jedenásť čipov v zalamovaných riadkoch a zjedol celú výšku
      obrazovky. Každá skupina je teraz jeden riadok, ktorý sa posúva prstom. */
-  .tools{padding:11px 0 11px 14px;gap:6px}
+  .tools{padding:11px 12px;gap:6px}
   /* Bez prichytávania: snap zarovnával čip na okraj kontajnera, teda pod nálepku. */
-  .chip-row{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;padding-right:14px}
-  .chip-row::-webkit-scrollbar{display:none}
-  .chip-row > b{min-width:auto;width:auto;position:sticky;left:0;z-index:1;padding-right:14px;
-    background:linear-gradient(90deg,var(--canvas) 0,var(--canvas) 76%,rgba(10,13,11,0))}
+  .chip-row{flex-wrap:wrap;gap:7px}
   .chip-row .chip{flex:none}
-  .tools > .chip{margin-left:14px}
-  .chip-row + .chip-row{margin-top:2px;padding-top:11px;border-top:1px solid var(--line)}
 
   /* Telefón, e-mail, mapa a odkazy v pätičke sú na mobile najčastejšie ťukané.
      Dvadsaťšesť pixelov na výšku je málo, preto majú vlastný väčší cieľ. */

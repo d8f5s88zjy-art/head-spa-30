@@ -106,6 +106,21 @@ sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
 `Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
 sa neprekladá, stačí ho nechať bez kľúča.
 
+## Texty pri rituáloch
+
+Karty rituálov majú tri vrstvy textu: `.tag` (jedna veta nad názvom), `.desc`
+(čo rituál je) a odseky v `O rituále` (ako prebieha). Kroky v `<ol>` sú prevzaté
+z ponuky prevádzky a neprepisujú sa.
+
+Celá stránka **tyká**, vrátane kariet a formulára na poukaz. Pri písaní nových
+textov sa toho treba držať, inak stránka pôsobí, akoby ju písali dvaja ľudia.
+Rovnaké pravidlo platí pre preklady: všetkých šesť jazykov oslovuje neformálne
+(ty, du, ty, te, ти, you).
+
+Každá karta má `id` zhodné s `data-id`, takže na ňu vedie odkaz z rýchleho
+prehľadu cien aj zvonka. Kvôli lepkavému filtru má `.card[id]`
+`scroll-margin-top`, inak by nadpis skončil pod filtrom.
+
 ## Drobnosti, ktoré nie sú vidieť
 
 - Titulok stránky má 55 znakov a meta popis 133, aby ich Google neorezal.

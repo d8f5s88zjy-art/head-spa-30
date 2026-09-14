@@ -761,7 +761,7 @@
       const shown = isRit ? ritualName().replace(/\s*\(.*$/, '') : (h || '50 €');
       tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
       const pre = fieldVal('#v-pre');
-      tFor.textContent = pre ? `Pre: ${pre}` : 'Darujte oddych.';
+      tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
       const ven = fieldVal('#v-ven');
       tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
     }
