@@ -1096,6 +1096,13 @@
   /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
   (function spatHore() {
     const btn = document.getElementById('toTop');
+    const mbtn = document.getElementById('mbarTop');
+    const hore = () => {
+      const jemne = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: jemne ? 'auto' : 'smooth' });
+      (document.getElementById('main') || document.body).focus({ preventScroll: true });
+    };
+    if (mbtn) mbtn.addEventListener('click', hore);
     if (!btn) return;
     btn.hidden = false;
     const prah = () => window.innerHeight * 2;
@@ -1106,12 +1113,7 @@
     };
     addEventListener('scroll', () => { if (!tiká) { tiká = true; requestAnimationFrame(prekresli); } }, { passive: true });
     prekresli();
-    btn.addEventListener('click', () => {
-      const jemne = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      scrollTo({ top: 0, behavior: jemne ? 'auto' : 'smooth' });
-      const cieľ = document.getElementById('main') || document.body;
-      cieľ.focus({ preventScroll: true });
-    });
+    btn.addEventListener('click', hore);
   })();
 
 })();

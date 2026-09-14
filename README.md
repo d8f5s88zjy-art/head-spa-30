@@ -106,6 +106,18 @@ sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
 `Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
 sa neprekladá, stačí ho nechať bez kľúča.
 
+## Typografia po slovensky
+
+V `index.html` sú pevné medzery (`&nbsp;`, znak U+00A0) za jednopísmenovými
+predložkami a spojkami (a, i, k, o, s, u, v, z) a medzi číslom a jednotkou
+(50 €, 40 min, 2 osoby). Sadzba tak nikdy nenechá osamelé „v“ na konci riadku
+a cena sa nezalomí. Prekladom to nevadí: `assets/i18n.js` medzery normalizuje,
+takže kľúč zostáva rovnaký.
+
+Pri písaní nových textov stačí spustiť rovnaké pravidlo, alebo medzery doplniť
+ručne. Značka je zviazaná celá: `HEAD SPA 30` aj `Salón 30` majú pevné medzery,
+aby sa nelámali na dva riadky.
+
 ## Texty pri rituáloch
 
 Karty rituálov majú tri vrstvy textu: `.tag` (jedna veta nad názvom), `.desc`
