@@ -106,6 +106,20 @@ sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
 `Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
 sa neprekladá, stačí ho nechať bez kľúča.
 
+## Rýchly prehľad cien a tlač
+
+Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých štrnástich
+rituálov: názov (odkaz na kartu), trvanie a cena, rozdelené podľa kategórií.
+Slúži tým, čo chcú len ceny, a zároveň je z neho tlačový cenník.
+
+`@media print` v `assets/style.css` skryje navigáciu, animácie, karty rituálov
+aj ostatné sekcie a vytlačí sa hlavička so značkou, tabuľka a pätička s kontaktom,
+dokopy dve strany A4. `assets/app.js` pri tlači tabuľku sám otvorí
+(`beforeprint`), aby sa nevytlačila zatvorená.
+
+Pri zmene ponuky treba tabuľku prepísať ručne rovnako ako karty, alebo ju
+vygenerovať z `data-min`, `data-price` a `.meta` kariet.
+
 ## Hodnoty darčekových poukazov
 
 Rebríček je odvodený od cenníka, nie zvolený od oka: **50, 70, 100 a 149 €**.

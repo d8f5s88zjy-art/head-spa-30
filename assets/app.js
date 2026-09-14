@@ -1076,4 +1076,20 @@
       setTimeout(endVeil, 2300);
     }
   }));
+
+  /* Pri tlači sa prehľad cien otvorí sám, inak by sa vytlačil zatvorený. */
+  (function tlacCennika() {
+    const pl = document.getElementById('prehlad-cien');
+    if (!pl) return;
+    let bolo = false;
+    const otvor = () => { bolo = pl.open; pl.open = true; };
+    const vrat = () => { pl.open = bolo; };
+    window.addEventListener('beforeprint', otvor);
+    window.addEventListener('afterprint', vrat);
+    if (window.matchMedia) {
+      const mq = window.matchMedia('print');
+      if (mq.addEventListener) mq.addEventListener('change', (e) => (e.matches ? otvor() : vrat()));
+    }
+  })();
+
 })();
