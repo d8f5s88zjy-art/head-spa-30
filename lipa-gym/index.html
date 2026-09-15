@@ -184,6 +184,79 @@
   </div>
 </div>
 
+<!-- PRÍBEH: filmová scéna riadená skrolovaním (naloženie, zdvih, uloženie) -->
+<section class="story" id="pribeh" aria-labelledby="h-pribeh">
+  <div class="story-pin">
+    <div class="story-ui wrap">
+      <p class="kicker">Ako to u nás vyzerá</p>
+      <h2 id="h-pribeh" class="story-h">
+        <span class="w" data-w="0">Nalož.</span>
+        <span class="w" data-w="1">Zdvihni.</span>
+        <span class="w" data-w="2">Zopakuj.</span>
+      </h2>
+      <p class="story-sub">
+        <span data-w="0">Kotúč po kotúči. Začneš tam, kde si.</span>
+        <span data-w="1">Technika, dych, plný rozsah. Tréner ťa stráži.</span>
+        <span data-w="2">Zajtra o kúsok viac. Tak vzniká forma.</span>
+      </p>
+      <p class="story-kg" aria-hidden="true"><b data-kg>20</b><span>kg</span></p>
+      <div class="story-cta"><a class="btn btn-volt btn-lg" href="#skusobny">Začni skúšobným tréningom</a></div>
+      <ol class="story-dots" aria-hidden="true"><li></li><li></li><li></li></ol>
+    </div>
+    <svg class="scene" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="sc-spot" cx="50%" cy="0%" r="75%"><stop offset="0" stop-color="#d4ff3f" stop-opacity=".38"/><stop offset=".55" stop-color="#d4ff3f" stop-opacity=".06"/><stop offset="1" stop-color="#d4ff3f" stop-opacity="0"/></radialGradient>
+        <linearGradient id="sc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1e25"/><stop offset="1" stop-color="#0b0c0f"/></linearGradient>
+        <linearGradient id="sc-steel" gradientUnits="userSpaceOnUse" x1="0" y1="452" x2="0" y2="479"><stop offset="0" stop-color="#e2e6ec"/><stop offset=".5" stop-color="#aab0ba"/><stop offset="1" stop-color="#6f7681"/></linearGradient>
+        <linearGradient id="sc-volt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6ff7a"/><stop offset="1" stop-color="#b8ea1e"/></linearGradient>
+        <linearGradient id="sc-dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a404a"/><stop offset="1" stop-color="#1b1f26"/></linearGradient>
+      </defs>
+      <g class="sc-cam">
+        <rect class="sc-spot" x="0" y="0" width="1200" height="700" fill="url(#sc-spot)"/>
+        <rect x="0" y="560" width="1200" height="140" fill="url(#sc-floor)"/>
+        <g class="sc-grid" stroke="rgba(255,255,255,.07)" stroke-width="1">
+          <line x1="0" y1="560" x2="1200" y2="560" stroke="rgba(255,255,255,.14)"/>
+          <line x1="600" y1="560" x2="600" y2="700"/><line x1="600" y1="560" x2="300" y2="700"/><line x1="600" y1="560" x2="900" y2="700"/>
+          <line x1="600" y1="560" x2="0" y2="700"/><line x1="600" y1="560" x2="1200" y2="700"/>
+          <line x1="600" y1="560" x2="-300" y2="700"/><line x1="600" y1="560" x2="1500" y2="700"/>
+          <line x1="360" y1="616" x2="840" y2="616"/><line x1="120" y1="672" x2="1080" y2="672"/>
+        </g>
+        <!-- stojan -->
+        <g class="sc-rack">
+          <rect x="128" y="180" width="26" height="380" rx="4" fill="url(#sc-dark)"/>
+          <rect x="1046" y="180" width="26" height="380" rx="4" fill="url(#sc-dark)"/>
+          <path d="M154 318h44v10h-34v24h-10z" fill="#4a505b"/>
+          <path d="M1046 318h-44v10h34v24h10z" fill="#4a505b"/>
+          <rect x="112" y="552" width="58" height="10" rx="3" fill="#2a2f38"/>
+          <rect x="1030" y="552" width="58" height="10" rx="3" fill="#2a2f38"/>
+        </g>
+        <ellipse class="sc-shadow" cx="600" cy="562" rx="440" ry="12" fill="rgba(0,0,0,.7)"/>
+        <g class="sc-chalk"></g>
+        <!-- činka: skupina sa posúva podľa výšky, os sa prehýba -->
+        <g class="sc-bar">
+          <path class="sc-axis" d="M180 465 Q600 465 1020 465" fill="none" stroke="url(#sc-steel)" stroke-width="14" stroke-linecap="round"/>
+          <path class="sc-knurl" d="M430 465h110M660 465h110" fill="none" stroke="#7f8792" stroke-width="7" stroke-linecap="round"/>
+          <g class="sc-side sc-side-l" data-dir="-1">
+            <rect x="180" y="453" width="150" height="24" rx="7" fill="url(#sc-steel)"/>
+            <rect class="sc-pl" data-i="0" data-kg="20" x="300" y="370" width="30" height="190" rx="8" fill="url(#sc-volt)"/>
+            <rect class="sc-pl" data-i="1" data-kg="15" x="264" y="395" width="28" height="140" rx="7" fill="#2e333c" stroke="rgba(255,255,255,.1)"/>
+            <rect class="sc-pl" data-i="2" data-kg="5" x="236" y="420" width="22" height="90" rx="6" fill="#4a505b"/>
+            <rect class="sc-pl sc-col" data-i="3" data-kg="0" x="212" y="443" width="16" height="44" rx="5" fill="#9aa1ab"/>
+          </g>
+          <g class="sc-side sc-side-r" data-dir="1">
+            <rect x="870" y="453" width="150" height="24" rx="7" fill="url(#sc-steel)"/>
+            <rect class="sc-pl" data-i="0" data-kg="20" x="870" y="370" width="30" height="190" rx="8" fill="url(#sc-volt)"/>
+            <rect class="sc-pl" data-i="1" data-kg="15" x="908" y="395" width="28" height="140" rx="7" fill="#2e333c" stroke="rgba(255,255,255,.1)"/>
+            <rect class="sc-pl" data-i="2" data-kg="5" x="942" y="420" width="22" height="90" rx="6" fill="#4a505b"/>
+            <rect class="sc-pl sc-col" data-i="3" data-kg="0" x="972" y="443" width="16" height="44" rx="5" fill="#9aa1ab"/>
+          </g>
+        </g>
+      </g>
+      <rect class="sc-vignette" x="0" y="0" width="1200" height="700" fill="none"/>
+    </svg>
+  </div>
+</section>
+
 <!-- PONUKA -->
 <section class="zones" id="ponuka" aria-labelledby="h-ponuka">
   <div class="wrap">

@@ -278,6 +278,7 @@ Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30:
 ## Animácie činiek
 
 - **Otvorenie stránky:** tmavá opona s činkou, ktorá spraví dva zdvihy, kým sa písmená LIPA GYM vysunú. Potom sa opona roztvorí ako dvere (zelený šev v strede) a úvodná činka s textom nabehne až za ňou. Preskočí sa klikom, klávesom, tlačidlom Preskočiť, pri obmedzení pohybu, pri odkaze priamo na sekciu (`#clenstvo`) a pri druhom načítaní v tej istej karte.
+- **Príbeh pri skrolovaní (sekcia `#pribeh`):** filmová scéna pripnutá na obrazovku, ktorú riadi skrolovanie. Najprv sa na os nakladajú kotúče (počítadlo kilogramov rastie do 100 kg), potom sa činka zdvihne s prehnutím osi, kriedovým prachom, zosilnením svetla a jemným priblížením kamery, nakoniec sa uloží do stojana a objaví sa tlačidlo na skúšobný tréning. Nadpisy Nalož / Zdvihni / Zopakuj sa prelínajú podľa fázy. Úvod má pri skrolovaní paralaxu (text a činka sa rozchádzajú a strácajú). Pri obmedzení pohybu je scéna statická s naloženou činkou a všetkými textami.
 - **Otázky:** odpovede sa plynulo vysúvajú a zasúvajú, znamienko plus sa otáča na mínus.
 - **Úvod:** veľká olympijská os, na ktorú sa po načítaní nasunú kotúče (pružinový pohyb), potom činka opakuje „rep“ so slabým prehnutím kotúčov a tieňom. Okolo plávajú jednoručky, kettlebell a kotúče, na počítači reagujú na pohyb myši (paralaxa).
 - **Lišta:** pri rolovaní beží pod lištou pás postupu a po ňom sa kotúľa malá jednoručka.
