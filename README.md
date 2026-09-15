@@ -143,6 +143,27 @@ prehľadu cien aj zvonka. Kvôli lepkavému filtru má `.card[id]`
   po slovách: `Teplo.`, `Voda.`, `Ticho.`, `Tvoj`, `termín`, `čaká.` sú vlastné
   kľúče v jazykových súboroch.
 
+## Rezervácia priamo na stránke
+
+Sekcia `#rezervacia` je návrat formulára, ktorý bol na webe od začiatku a v septembri
+sa stratil, keď všetky tlačidlá začali smerovať rovno do Booqme. Logika v
+`assets/app.js` medzitým zostala celá, chýbala len značka, takže sa dala vrátiť
+bez písania nového kódu.
+
+Ako to funguje:
+
+1. Návštevník ťukne na Rezervovať pri rituáli. Tlačidlo má `data-book` so slugom
+   rituálu a odkazuje na `#rezervacia`. Skript ten rituál vyberie vo formulári
+   a lístok vpravo hneď ukáže názov, trvanie a cenu.
+2. Vyberie deň, časové okno (prípadne presný čas a náhradný termín), počet osôb,
+   meno, telefón a poznámku. Formulár pozná otváracie hodiny, takže nedovolí
+   termín, ktorý sa do nich nezmestí.
+3. Odošle to cez WhatsApp alebo e-mailom. Web nič neukladá, správa sa skladá
+   v prehliadači a odchádza z telefónu návštevníka. Každá má referenciu `HS30-XXXX`.
+
+Odkaz na online kalendár je na jednom jedinom mieste, v bloku `Radšej kalendár?`
+v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa jedna adresa.
+
 ## Rýchly prehľad cien a tlač
 
 Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých štrnástich
