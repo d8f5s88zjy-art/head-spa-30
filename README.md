@@ -260,3 +260,57 @@ Ako to funguje:
 **Keď pribudne nový text v `index.html`**, stačí doň pridať nový kľúč do šiestich
 jazykových súborov. Kým tam nie je, tá jedna veta sa zobrazí po slovensky
 a zvyšok stránky ostane preložený.
+
+---
+
+# LIPA GYM (priečinok `lipa-gym/`)
+
+Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30: čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí. Nasadzuje sa spolu s hlavným webom (`.github/workflows/pages.yml` kopíruje aj `lipa-gym/`), takže beží na https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/. Pri presune na vlastnú doménu stačí priečinok skopírovať do vlastného repozitára a v `index.html` upraviť `canonical`, `og:url` a `og:image` (miesto je označené komentárom `DEPLOY STEP`).
+
+## Štruktúra
+
+- `lipa-gym/index.html` – celá stránka: úvod s animovanou činkou, bežiaci pás, ponuka (6 zón), členstvo (3 plány), rozvrh skupinových tréningov, tréneri (zatiaľ „pripravujeme“), priestor (kreslené dlaždice + 4 kroky prvej návštevy), skúšobný tréning (formulár), otázky, kontakt s hodinami
+- `lipa-gym/assets/style.css` – štýly, tmavá paleta s neónovo zelenou (lipa = lipový list v značke), písmo Bebas Neue na nadpisy a Manrope na text
+- `lipa-gym/assets/app.js` – **jediné miesto s faktami o podniku** (objekt `GYM`, `HOURS`, `TIMETABLE`), otvorené/zatvorené podľa času v Bratislave, menu, rozvrh, formulár, animácie, schema.org
+- `lipa-gym/assets/fonts/` – Bebas Neue a Manrope (variabilné), lokálne, latinka + slovenská diakritika
+- `lipa-gym/assets/og.jpg`, `favicon.svg` – obrázok pre zdieľanie a ikona
+
+## Animácie činiek
+
+- **Úvod:** veľká olympijská os, na ktorú sa po načítaní nasunú kotúče (pružinový pohyb), potom činka opakuje „rep“ so slabým prehnutím kotúčov a tieňom. Okolo plávajú jednoručky, kettlebell a kotúče, na počítači reagujú na pohyb myši (paralaxa).
+- **Lišta:** pri rolovaní beží pod lištou pás postupu a po ňom sa kotúľa malá jednoručka.
+- **Ponuka:** každá zóna má vlastnú ikonu s pohybom, keď sa objaví a pri prejdení myšou: bicepsový zdvih jednoručky, švih kettlebellu, otáčajúci sa kotúč, tep.
+- **Členstvo:** na karte sa pri odhalení „naložia“ kotúče (počet podľa plánu).
+- **Priestor:** stojan s jednoručkami, ktoré sa po jednom dvíhajú, hojdajúci sa kettlebell, kresliaca sa krivka tepu, otáčajúci sa kotúč.
+- Pri zapnutom **obmedzení pohybu** je všetko statické a nič sa neschováva.
+
+## Pravdivostný register (čo treba doplniť pred spustením)
+
+Web nikde neuvádza vymyslené fakty. Zástupné hodnoty sú označené `DOPLNIŤ` v `lipa-gym/assets/app.js` a v komentároch `index.html`:
+
+| Údaj | Stav | Kde |
+|---|---|---|
+| Adresa, mesto, PSČ | doplniť | `GYM.street`, `GYM.zip`, `GYM.city` |
+| Telefón, WhatsApp | doplniť | `GYM.phone`, `GYM.whatsapp` (bez neho tlačidlo WhatsApp zobrazí upozornenie) |
+| E-mail | doplniť | `GYM.email` |
+| Instagram, Facebook | doplniť | `GYM.instagram`, `GYM.facebook` |
+| Mapa | doplniť | `GYM.mapQuery` (po vyplnení sa vloží Google mapa), `GYM.geo` |
+| Otváracie hodiny | ukážkové | `HOURS`; po potvrdení prepnúť `HOURS_VERIFIED = true`, až potom sa ukazuje živé „Otvorené do…“ |
+| Ceny členstva | ukážkové (zobrazuje sa „— €“) | sekcia `#clenstvo` v `index.html`, odstrániť poznámku „Ukážkový cenník“ |
+| Rozvrh lekcií, tréneri | ukážkové | `TIMETABLE` v `app.js`, sekcia `#treneri` (návod v komentári) |
+| Podmienky pozastavenia, zľavy, čo je v cene | potvrdiť | odpovede v `#faq` a texty pri plánoch |
+| Fotografie priestoru | doplniť | dlaždica „Fotografiu doplníme“ v `#priestor` |
+
+Kým fakty nie sú doplnené, stránka ukazuje „doplníme“ a nevytvára odkazy na telefón ani mapu.
+
+## Skúšobný tréning
+
+Formulár (meno, telefón, deň, čas, záujem, poznámka) skontroluje polia a otvorí pripravenú správu vo WhatsApp alebo v e-maile. Web nič neukladá. Na telefóne je dole lišta s tlačidlami Zavolať a Skúšobný tréning, ktorá sa schová, keď je formulár na obrazovke.
+
+## Náhľad
+
+```
+npx http-server -p 8080
+```
+
+a otvoriť `http://localhost:8080/lipa-gym/`.

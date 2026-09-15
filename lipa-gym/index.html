@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LIPA GYM | Moderné fitness centrum, členstvo a skúšobný tréning</title>
+<meta name="description" content="LIPA GYM je moderné fitness centrum s voľnou činkovou zónou, strojmi, cardio a funkčnou zónou a skupinovými tréningami. Členstvo, rozvrh a skúšobný tréning.">
+<meta name="theme-color" content="#0b0c0f">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<!-- DEPLOY STEP: pri presune na vlastnú doménu upraviť canonical, og:url a og:image -->
+<link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:site_name" content="LIPA GYM">
+<meta property="og:title" content="LIPA GYM | Moderné fitness centrum">
+<meta property="og:description" content="Voľné činky, stroje, cardio, funkčná zóna a skupinové tréningy. Príď na skúšobný tréning.">
+<meta property="og:url" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/">
+<meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LIPA GYM, moderné fitness centrum">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LIPA GYM | Moderné fitness centrum">
+<meta name="twitter:description" content="Voľné činky, stroje, cardio, funkčná zóna a skupinové tréningy. Príď na skúšobný tréning.">
+<meta name="twitter:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/assets/og.jpg">
+<link rel="preload" href="assets/fonts/BebasNeue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/style.css">
+<!--
+  ŠTRUKTÚROVANÉ DÁTA (schema.org) sa generujú v assets/app.js z objektu GYM,
+  aby adresa, telefón a hodiny boli len na jednom mieste. Údaje označené
+  DOPLNIŤ v app.js sú zástupné a treba ich pred spustením webu potvrdiť.
+-->
+</head>
+<body>
+<a class="skip" href="#main">Preskočiť na obsah</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Jednoručka: os, dve kotúče na každej strane -->
+    <symbol id="i-dumbbell" viewBox="0 0 64 32">
+      <rect x="18" y="14" width="28" height="4" rx="2" fill="currentColor"/>
+      <rect x="10" y="6" width="6" height="20" rx="2" fill="currentColor"/>
+      <rect x="4" y="9" width="5" height="14" rx="2" fill="currentColor" opacity=".7"/>
+      <rect x="48" y="6" width="6" height="20" rx="2" fill="currentColor"/>
+      <rect x="55" y="9" width="5" height="14" rx="2" fill="currentColor" opacity=".7"/>
+    </symbol>
+    <!-- Kettlebell -->
+    <symbol id="i-kettle" viewBox="0 0 48 56">
+      <path d="M16 20c-4-9 1-16 8-16s12 7 8 16" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="24" cy="36" r="17" fill="currentColor"/>
+    </symbol>
+    <!-- Kotúč -->
+    <symbol id="i-plate" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="22" fill="currentColor"/>
+      <circle cx="24" cy="24" r="14" fill="none" stroke="#0b0c0f" stroke-width="2" opacity=".5"/>
+      <circle cx="24" cy="24" r="4" fill="#0b0c0f"/>
+    </symbol>
+    <!-- Srdce / cardio -->
+    <symbol id="i-pulse" viewBox="0 0 64 32">
+      <path d="M2 18h12l5-12 8 22 7-16 4 6h24" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+    <!-- Lipový list, značka -->
+    <symbol id="i-leaf" viewBox="0 0 32 32">
+      <path d="M16 3C9 8 5 14 6 21c1 5 5 8 10 8s9-3 10-8c1-7-3-13-10-18z" fill="currentColor"/>
+      <path d="M16 9v18M16 15l-4-3M16 20l4-3" fill="none" stroke="#0b0c0f" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="grain"></div></div>
+
+<header class="bar" id="top">
+  <div class="wrap bar-in">
+    <a class="brand" href="#top" aria-label="LIPA GYM, na začiatok">
+      <span class="brand-mark"><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg><i class="brand-leaf"><svg viewBox="0 0 32 32"><use href="#i-leaf"/></svg></i></span>
+      <span class="brand-name">LIPA<b>GYM</b></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Hlavné menu">
+      <a href="#ponuka">Ponuka</a>
+      <a href="#clenstvo">Členstvo</a>
+      <a href="#rozvrh">Rozvrh</a>
+      <a href="#treneri">Tréneri</a>
+      <a href="#priestor">Priestor</a>
+      <a href="#faq">Otázky</a>
+      <a href="#kontakt">Kontakt</a>
+      <p class="nav-status"><span class="dot"></span><span data-open-status>Otváracie hodiny v kontakte</span></p>
+    </nav>
+    <div class="bar-cta">
+      <span class="status" aria-live="polite"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></span>
+      <a class="btn btn-volt" href="#skusobny">Skúšobný tréning</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Otvoriť menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress" aria-hidden="true"><svg class="progress-db" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg><span class="progress-bar"></span></div>
+</header>
+
+<main id="main">
+
+<!-- ÚVOD -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero-floaters" aria-hidden="true">
+    <svg class="fl fl1" data-depth="18" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
+    <svg class="fl fl2" data-depth="-12" viewBox="0 0 48 56"><use href="#i-kettle"/></svg>
+    <svg class="fl fl3" data-depth="26" viewBox="0 0 48 48"><use href="#i-plate"/></svg>
+    <svg class="fl fl4" data-depth="-20" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
+    <svg class="fl fl5" data-depth="10" viewBox="0 0 48 48"><use href="#i-plate"/></svg>
+  </div>
+  <div class="wrap hero-in">
+    <p class="eyebrow reveal"><span class="eyebrow-dot"></span><span>Fitness centrum · <span data-fact="city">Mesto</span></span></p>
+    <h1 id="h-hero" class="hero-h">
+      <span class="line"><span>Tvoja najlepšia</span></span>
+      <span class="line"><span>forma <em>začína tu.</em></span></span>
+    </h1>
+    <p class="hero-p reveal">Moderné fitko s voľnou činkovou zónou, strojmi, cardio a funkčnou zónou a skupinovými tréningami. Pre začiatočníkov aj pre tých, čo už dvíhajú roky.</p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-volt btn-lg" href="#skusobny">Príď na skúšobný tréning</a>
+      <a class="btn btn-ghost btn-lg" href="#clenstvo">Pozri členstvo</a>
+    </div>
+    <ul class="hero-facts reveal" aria-label="Rýchle informácie">
+      <li><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>Voľné činky aj stroje</li>
+      <li><svg viewBox="0 0 64 32"><use href="#i-pulse"/></svg>Cardio a funkčná zóna</li>
+      <li><svg viewBox="0 0 48 56"><use href="#i-kettle"/></svg>Skupinové a osobné tréningy</li>
+    </ul>
+  </div>
+
+  <!-- Veľká činka: kotúče sa nasunú, potom činka opakuje "rep" -->
+  <div class="barbell-stage" aria-hidden="true">
+    <svg class="barbell" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid meet">
+      <ellipse class="bb-shadow" cx="600" cy="236" rx="420" ry="12"/>
+      <g class="bb-lift">
+        <rect class="bb-bar" x="60" y="123" width="1080" height="14" rx="7"/>
+        <rect class="bb-sleeve" x="60" y="118" width="300" height="24" rx="6"/>
+        <rect class="bb-sleeve" x="840" y="118" width="300" height="24" rx="6"/>
+        <!-- ľavá strana -->
+        <g class="plates plates-l">
+          <rect class="pl pl-big" x="300" y="40" width="34" height="180" rx="8"/>
+          <rect class="pl pl-mid" x="262" y="66" width="30" height="128" rx="7"/>
+          <rect class="pl pl-sm" x="230" y="86" width="24" height="88" rx="6"/>
+          <rect class="pl pl-col" x="204" y="106" width="18" height="48" rx="5"/>
+        </g>
+        <!-- pravá strana -->
+        <g class="plates plates-r">
+          <rect class="pl pl-big" x="866" y="40" width="34" height="180" rx="8"/>
+          <rect class="pl pl-mid" x="908" y="66" width="30" height="128" rx="7"/>
+          <rect class="pl pl-sm" x="946" y="86" width="24" height="88" rx="6"/>
+          <rect class="pl pl-col" x="978" y="106" width="18" height="48" rx="5"/>
+        </g>
+        <!-- vrúbkovanie na osi -->
+        <g class="bb-knurl">
+          <rect x="420" y="126" width="120" height="8" rx="4"/>
+          <rect x="660" y="126" width="120" height="8" rx="4"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <a class="hero-scroll" href="#ponuka" aria-label="Posunúť na ponuku"><span></span></a>
+</section>
+
+<!-- PÁS -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Voľné činky</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Stroje</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Cardio zóna</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Funkčná zóna</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Skupinové tréningy</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Osobný tréning</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+    <span>Šatne a sprchy</span><i><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></i>
+  </div>
+</div>
+
+<!-- PONUKA -->
+<section class="zones" id="ponuka" aria-labelledby="h-ponuka">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Ponuka</p>
+      <h2 id="h-ponuka" class="h2">Všetko, čo potrebuješ <em>na jednom mieste</em></h2>
+      <p class="lead">Šesť zón, jeden vstup. Vyber si, čo ti dnes sedí, alebo to skombinuj.</p>
+    </header>
+    <div class="zone-grid">
+      <article class="zone reveal">
+        <div class="zone-ico ico-curl"><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></div>
+        <span class="zone-n">01</span>
+        <h3>Voľná činková zóna</h3>
+        <p>Jednoručky, olympijské osi, stojany a lavičky. Základ pre silu a techniku.</p>
+      </article>
+      <article class="zone reveal">
+        <div class="zone-ico ico-press"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg></div>
+        <span class="zone-n">02</span>
+        <h3>Stroje</h3>
+        <p>Vedené pohyby na každú svalovú partiu. Bezpečný štart a presné dotrénovanie.</p>
+      </article>
+      <article class="zone reveal">
+        <div class="zone-ico ico-pulse"><svg viewBox="0 0 64 32"><use href="#i-pulse"/></svg></div>
+        <span class="zone-n">03</span>
+        <h3>Cardio zóna</h3>
+        <p>Bežecké pásy, bicykle a veslá. Rozohriatie, kondícia alebo celý tréning.</p>
+      </article>
+      <article class="zone reveal">
+        <div class="zone-ico ico-swing"><svg viewBox="0 0 48 56"><use href="#i-kettle"/></svg></div>
+        <span class="zone-n">04</span>
+        <h3>Funkčná zóna</h3>
+        <p>Kettlebelly, TRX, medicinbaly a voľná plocha pre pohyb celého tela.</p>
+      </article>
+      <article class="zone reveal">
+        <div class="zone-ico ico-group"><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></div>
+        <span class="zone-n">05</span>
+        <h3>Skupinové tréningy</h3>
+        <p>Kruhový tréning, kondičné lekcie a mobilita pod vedením trénera. Rozvrh nižšie.</p>
+      </article>
+      <article class="zone reveal">
+        <div class="zone-ico ico-star"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg></div>
+        <span class="zone-n">06</span>
+        <h3>Osobný tréning</h3>
+        <p>Plán šitý na teba, kontrola techniky a niekto, kto ťa dotlačí na posledné opakovanie.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ČLENSTVO -->
+<section class="plans" id="clenstvo" aria-labelledby="h-clenstvo">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Členstvo</p>
+      <h2 id="h-clenstvo" class="h2">Vyber si, ako často <em>chceš dvíhať</em></h2>
+      <p class="lead">Bez skrytých poplatkov. Každý vstup platí do všetkých zón.</p>
+      <!-- DOPLNIŤ: ceny nižšie sú ukážkové, nahradiť skutočným cenníkom -->
+      <p class="note">Ukážkový cenník. Aktuálne ceny a podmienky potvrdí recepcia.</p>
+    </header>
+    <div class="plan-grid">
+      <article class="plan reveal">
+        <div class="plan-plates" aria-hidden="true"><i></i></div>
+        <h3>Jednorazový vstup</h3>
+        <p class="price"><span class="price-n">— €</span><span class="price-u">za vstup</span></p>
+        <ul class="plan-list">
+          <li>Vstup do všetkých zón</li>
+          <li>Bez viazanosti</li>
+          <li>Šatňa a sprcha v cene</li>
+        </ul>
+        <a class="btn btn-ghost" href="#skusobny">Prísť na tréning</a>
+      </article>
+      <article class="plan is-hot reveal">
+        <span class="plan-tag">Najobľúbenejšie</span>
+        <div class="plan-plates" aria-hidden="true"><i></i><i></i><i></i></div>
+        <h3>Mesačné členstvo</h3>
+        <p class="price"><span class="price-n">— €</span><span class="price-u">mesačne</span></p>
+        <ul class="plan-list">
+          <li>Neobmedzený počet vstupov</li>
+          <li>Skupinové tréningy v cene</li>
+          <li>Vstup počas celej otváracej doby</li>
+          <li>Možnosť pozastavenia</li>
+        </ul>
+        <a class="btn btn-volt" href="#skusobny">Začať skúšobným tréningom</a>
+      </article>
+      <article class="plan reveal">
+        <div class="plan-plates" aria-hidden="true"><i></i><i></i></div>
+        <h3>Permanentka 10 vstupov</h3>
+        <p class="price"><span class="price-n">— €</span><span class="price-u">10 vstupov</span></p>
+        <ul class="plan-list">
+          <li>Vstup do všetkých zón</li>
+          <li>Platnosť podľa podmienok</li>
+          <li>Ideálne pre nepravidelný režim</li>
+        </ul>
+        <a class="btn btn-ghost" href="#kontakt">Opýtať sa na recepcii</a>
+      </article>
+    </div>
+    <p class="plan-foot reveal">Študentské, seniorské a firemné podmienky riešime osobne na recepcii alebo telefonicky. <!-- DOPLNIŤ: potvrdiť zľavy --></p>
+  </div>
+</section>
+
+<!-- ROZVRH -->
+<section class="timetable" id="rozvrh" aria-labelledby="h-rozvrh">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Rozvrh</p>
+      <h2 id="h-rozvrh" class="h2">Skupinové tréningy <em>tento týždeň</em></h2>
+      <p class="lead">Ťukni na deň. Kapacita lekcie je obmedzená, miesto si drž vopred.</p>
+      <!-- DOPLNIŤ: rozvrh je ukážkový, skutočné lekcie, časy a tréneri sú v assets/app.js (TIMETABLE) -->
+      <p class="note">Ukážkový rozvrh. Skutočné lekcie a časy doplníme podľa aktuálneho týždňa.</p>
+    </header>
+    <div class="tt" data-timetable>
+      <div class="tt-days" role="tablist" aria-label="Dni v týždni"></div>
+      <div class="tt-list" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRÉNERI -->
+<section class="team" id="treneri" aria-labelledby="h-treneri">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Tréneri</p>
+      <h2 id="h-treneri" class="h2">Ľudia, ktorí ťa <em>naučia dvíhať správne</em></h2>
+      <p class="lead">Fotografie a profily trénerov doplníme. Do vtedy ti radi poradíme na recepcii.</p>
+    </header>
+    <!--
+      Ako vyplniť kartu trénera: z <article class="coach is-empty"> zmazať is-empty,
+      nahradiť <div class="coach-face"> fotografiou na výšku (600 × 750 px),
+      prepísať meno, špecializáciu a jednu vetu. Kariet môže byť ľubovoľný počet.
+    -->
+    <div class="coach-grid">
+      <article class="coach is-empty reveal">
+        <div class="coach-face"><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg></div>
+        <h3 class="coach-name">Meno doplníme</h3>
+        <p class="coach-role">Tréner · špecializácia</p>
+        <p class="coach-bio">Jedna veta o tom, čo trénuje najradšej.</p>
+      </article>
+      <article class="coach is-empty reveal">
+        <div class="coach-face"><svg viewBox="0 0 48 56"><use href="#i-kettle"/></svg></div>
+        <h3 class="coach-name">Meno doplníme</h3>
+        <p class="coach-role">Tréner · špecializácia</p>
+        <p class="coach-bio">Jedna veta o tom, čo trénuje najradšej.</p>
+      </article>
+      <article class="coach is-empty reveal">
+        <div class="coach-face"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg></div>
+        <h3 class="coach-name">Meno doplníme</h3>
+        <p class="coach-role">Tréner · špecializácia</p>
+        <p class="coach-bio">Jedna veta o tom, čo trénuje najradšej.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRIESTOR -->
+<section class="space" id="priestor" aria-labelledby="h-priestor">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Priestor</p>
+      <h2 id="h-priestor" class="h2">Miesto, kde sa <em>chce trénovať</em></h2>
+      <p class="lead">Fotografie priestoru pribudnú po nafotení. Zatiaľ kreslené zábery z jednotlivých zón.</p>
+    </header>
+    <div class="mosaic">
+      <figure class="tile tile-rack reveal" aria-label="Kresba: stojan s jednoručkami">
+        <div class="rack" aria-hidden="true">
+          <i style="--w:.55"></i><i style="--w:.65"></i><i style="--w:.75"></i><i style="--w:.85"></i><i style="--w:1"></i>
+        </div>
+        <figcaption><span class="tag">Kresba</span>Činková zóna</figcaption>
+      </figure>
+      <figure class="tile tile-type reveal">
+        <p class="tile-big">Tréning<br>bez<br>výhovoriek.</p>
+      </figure>
+      <figure class="tile tile-kettle reveal" aria-label="Kresba: kettlebell">
+        <svg class="kb-swing" viewBox="0 0 48 56" aria-hidden="true"><use href="#i-kettle"/></svg>
+        <figcaption><span class="tag">Kresba</span>Funkčná zóna</figcaption>
+      </figure>
+      <figure class="tile tile-pulse reveal" aria-label="Kresba: krivka tepu">
+        <svg class="pulse-line" viewBox="0 0 64 32" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 18h12l5-12 8 22 7-16 4 6h28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <figcaption><span class="tag">Kresba</span>Cardio zóna</figcaption>
+      </figure>
+      <figure class="tile tile-plate reveal" aria-label="Kresba: kotúč">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-plate"/></svg>
+        <figcaption><span class="tag">Kresba</span>Stroje</figcaption>
+      </figure>
+      <figure class="tile tile-photo reveal">
+        <div class="tile-empty"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg><p>Fotografiu doplníme<br>po nafotení</p></div>
+      </figure>
+    </div>
+
+    <div class="steps reveal">
+      <h3 class="h3">Prvá návšteva za štyri kroky</h3>
+      <ol class="step-list">
+        <li><b>01</b><strong>Ozvi sa</strong><span>Vyplň formulár nižšie alebo zavolaj. Dohodneme deň a čas.</span></li>
+        <li><b>02</b><strong>Príď o pár minút skôr</strong><span>Stačí čistá halová obuv, uterák a fľaša s vodou.</span></li>
+        <li><b>03</b><strong>Prevedieme ťa fitkom</strong><span>Ukážeme ti zóny, stroje a povieme si, čo chceš dosiahnuť.</span></li>
+        <li><b>04</b><strong>Trénuj</strong><span>Prvý tréning s dohľadom, potom sa rozhodneš, či pokračuješ.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- SKÚŠOBNÝ TRÉNING -->
+<section class="trial" id="skusobny" aria-labelledby="h-skusobny">
+  <div class="wrap trial-in">
+    <div class="trial-copy reveal">
+      <p class="kicker">Skúšobný tréning</p>
+      <h2 id="h-skusobny" class="h2">Prvý tréning <em>si vyskúšaš</em></h2>
+      <p class="lead">Napíš, kedy sa ti hodí. Správa sa pripraví do WhatsAppu alebo e-mailu, nič sa nikde neukladá. Ozveme sa ti a potvrdíme termín.</p>
+      <ul class="trial-facts">
+        <li>Vhodné aj pre úplných začiatočníkov</li>
+        <li>Prevedieme ťa všetkými zónami</li>
+        <li>Bez viazanosti</li>
+      </ul>
+      <p class="trial-alt">Radšej telefón? <a data-fact="phone-link" href="#kontakt"><span data-fact="phone">Telefón doplníme</span></a></p>
+    </div>
+    <form class="trial-form reveal" id="trial-form" novalidate>
+      <div class="f-row">
+        <label class="f-field"><span>Meno</span><input type="text" name="name" autocomplete="name" required></label>
+        <label class="f-field"><span>Telefón</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
+      </div>
+      <div class="f-row">
+        <label class="f-field"><span>Deň</span><input type="date" name="day" required></label>
+        <label class="f-field"><span>Čas</span>
+          <select name="slot" required>
+            <option value="">Vyber</option>
+            <option>Ráno</option>
+            <option>Obed</option>
+            <option>Poobede</option>
+            <option>Večer</option>
+          </select>
+        </label>
+      </div>
+      <label class="f-field"><span>Čo ťa zaujíma</span>
+        <select name="goal">
+          <option>Voľný tréning s prevedením</option>
+          <option>Skupinový tréning</option>
+          <option>Osobný tréning</option>
+          <option>Ešte neviem, poraďte mi</option>
+        </select>
+      </label>
+      <label class="f-field"><span>Poznámka (nepovinné)</span><textarea name="note" rows="3"></textarea></label>
+      <p class="f-error" data-error hidden></p>
+      <div class="f-actions">
+        <button class="btn btn-volt btn-lg" type="submit" data-send="wa">Poslať cez WhatsApp</button>
+        <button class="btn btn-ghost btn-lg" type="submit" data-send="mail">Poslať e-mailom</button>
+      </div>
+      <p class="f-small">Odoslaním otvoríš pripravenú správu vo svojej aplikácii. Údaje použijeme len na dohodnutie termínu.</p>
+    </form>
+  </div>
+</section>
+
+<!-- OTÁZKY -->
+<section class="faq" id="faq" aria-labelledby="h-faq">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Otázky</p>
+      <h2 id="h-faq" class="h2">Čo sa <em>pýtate najčastejšie</em></h2>
+    </header>
+    <div class="faq-list reveal">
+      <details class="q" open>
+        <summary>Som úplný začiatočník. Je to pre mňa?</summary>
+        <div class="a"><p>Áno. Na skúšobnom tréningu ťa prevedieme zónami, ukážeme základné cviky a nastavíme stroje. Nikto tu nehodnotí, koľko dvíhaš.</p></div>
+      </details>
+      <details class="q">
+        <summary>Čo si mám priniesť?</summary>
+        <div class="a"><p>Čistú halovú obuv, športové oblečenie, uterák a fľašu s vodou. Zvyšok máme.</p></div>
+      </details>
+      <details class="q">
+        <summary>Musím sa objednať vopred?</summary>
+        <div class="a"><p>Na voľný tréning nie, stačí prísť počas otváracích hodín. Na skupinové lekcie a osobný tréning si miesto drž vopred, kapacita je obmedzená.</p></div>
+      </details>
+      <details class="q">
+        <summary>Môžem členstvo pozastaviť?</summary>
+        <div class="a"><p>Podmienky pozastavenia a platnosti permanentiek potvrdí recepcia. <!-- DOPLNIŤ: skutočné podmienky --></p></div>
+      </details>
+      <details class="q">
+        <summary>Sú skupinové tréningy v cene členstva?</summary>
+        <div class="a"><p>Pri mesačnom členstve áno. Pri jednorazovom vstupe a permanentke sa lekcie riešia samostatne na recepcii. <!-- DOPLNIŤ: potvrdiť --></p></div>
+      </details>
+      <details class="q">
+        <summary>Ako funguje osobný tréning?</summary>
+        <div class="a"><p>Vyberieš si trénera, dohodnete si ciele a frekvenciu. Cena za tréning alebo balík je individuálna, opýtaj sa na recepcii alebo napíš cez formulár.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="contact" id="kontakt" aria-labelledby="h-kontakt">
+  <div class="wrap contact-in">
+    <div class="contact-copy reveal">
+      <p class="kicker">Kontakt</p>
+      <h2 id="h-kontakt" class="h2">Nájdeš nás <em>tu</em></h2>
+      <address class="addr">
+        <p class="addr-line"><strong data-fact="name">LIPA GYM</strong></p>
+        <p class="addr-line"><span data-fact="street">Ulica a číslo doplníme</span><br><span data-fact="zip">PSČ</span> <span data-fact="city">Mesto</span></p>
+        <p class="addr-line"><a data-fact="phone-link" href="#kontakt"><span data-fact="phone">Telefón doplníme</span></a></p>
+        <p class="addr-line"><a data-fact="mail-link" href="#kontakt"><span data-fact="email">E-mail doplníme</span></a></p>
+      </address>
+      <div class="contact-actions">
+        <a class="btn btn-volt" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Navigovať</a>
+        <a class="btn btn-ghost" data-fact="ig-link" href="#kontakt" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="status status-big"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></p>
+    </div>
+    <div class="hours reveal">
+      <h3 class="h3">Otváracie hodiny</h3>
+      <!-- DOPLNIŤ: hodiny sa vypĺňajú z objektu HOURS v assets/app.js -->
+      <table class="hours-t" data-hours>
+        <caption class="sr-only">Otváracie hodiny podľa dní</caption>
+        <tbody></tbody>
+      </table>
+      <p class="hours-note">Sviatky a výnimky oznámime na Instagrame a na recepcii.</p>
+      <div class="map" data-map>
+        <div class="map-empty"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg><p>Mapa sa zobrazí po doplnení adresy.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="#top" aria-label="LIPA GYM, na začiatok">
+      <span class="brand-mark"><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg><i class="brand-leaf"><svg viewBox="0 0 32 32"><use href="#i-leaf"/></svg></i></span>
+      <span class="brand-name">LIPA<b>GYM</b></span>
+    </a>
+    <nav class="foot-nav" aria-label="Pätička">
+      <a href="#ponuka">Ponuka</a>
+      <a href="#clenstvo">Členstvo</a>
+      <a href="#rozvrh">Rozvrh</a>
+      <a href="#skusobny">Skúšobný tréning</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <p class="foot-copy">© <span data-year>2026</span> <span data-fact="name">LIPA GYM</span>. <span data-fact="street">Adresa doplníme</span>, <span data-fact="city">Mesto</span>.</p>
+  </div>
+</footer>
+
+<div class="dock" aria-label="Rýchle akcie">
+  <a class="dock-call" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z" fill="currentColor"/></svg>Zavolať</a>
+  <a class="dock-cta" href="#skusobny"><svg viewBox="0 0 64 32" aria-hidden="true"><use href="#i-dumbbell"/></svg>Skúšobný tréning</a>
+</div>
+
+<a class="totop" href="#top" aria-label="Späť hore"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 7-1.4 1.4L13 8.8V20h-2V8.8l-4.6 4.6L5 12z" fill="currentColor"/></svg></a>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
