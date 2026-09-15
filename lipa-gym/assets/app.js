@@ -540,6 +540,60 @@
     frame();
   }
 
+
+  /* ---------- plynulé (zotrvačné) skrolovanie kolieskom ----------
+     Len na počítači s myšou. Dotyk, klávesnica a posuvník ostávajú natívne.
+     Vypnúť: SMOOTH_SCROLL = false. */
+  var SMOOTH_SCROLL = true;
+  function smoothScroll() {
+    if (!SMOOTH_SCROLL || reduce.matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var target = window.scrollY, current = target, running = false;
+    var EASE = 0.11;
+    function max() { return d.documentElement.scrollHeight - window.innerHeight; }
+    function loop() {
+      if (!running) return;
+      var diff = target - current;
+      if (Math.abs(diff) < 0.4) {
+        current = target; window.scrollTo({ top: current, behavior: 'instant' });
+        running = false; return;
+      }
+      current += diff * EASE;
+      window.scrollTo({ top: current, behavior: 'instant' });
+      requestAnimationFrame(loop);
+    }
+    window.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.metaKey) return;                        // zoom
+      if (d.body.classList.contains('nav-open') || d.body.classList.contains('intro')) return;
+      if (e.target.closest && e.target.closest('textarea, select, .tt-days, [data-native-scroll]')) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;        // vodorovné
+      var dy = e.deltaY;
+      if (e.deltaMode === 1) dy *= 18; else if (e.deltaMode === 2) dy *= window.innerHeight;
+      e.preventDefault();
+      if (!running) { current = window.scrollY; target = current; }
+      target = Math.max(0, Math.min(max(), target + dy));
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    }, { passive: false });
+    // odkazy na sekcie idú cez rovnaké dobiehanie, aby ich nič neprerušilo
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').length < 2) return;
+      var el = $(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      var pad = a.getAttribute('href') === '#top' ? 0 : (parseFloat(getComputedStyle(d.documentElement).scrollPaddingTop) || 0);
+      if (!running) { current = window.scrollY; }
+      target = Math.max(0, Math.min(max(), el.getBoundingClientRect().top + window.scrollY - pad));
+      try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    });
+    // skrol, ktorý nespôsobil tento kód (klávesnica, posuvník): zosúladiť
+    window.addEventListener('scroll', function () {
+      if (Math.abs(window.scrollY - current) > 2) { current = target = window.scrollY; running = false; }
+    }, { passive: true });
+    window.addEventListener('resize', function () { target = Math.min(target, max()); });
+  }
+
   /* ---------- otváranie otázok ---------- */
   function faq() {
     $$('.q').forEach(function (q) {
@@ -740,4 +794,5 @@
   heroParallax();
   story();
   scrollFx();
+  smoothScroll();
 })();
