@@ -287,6 +287,7 @@ Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30:
 - **Členstvo:** na karte sa pri odhalení „naložia“ kotúče (počet podľa plánu).
 - **Priestor:** stojan s jednoručkami, ktoré sa po jednom dvíhajú, hojdajúci sa kettlebell, kresliaca sa krivka tepu, otáčajúci sa kotúč.
 - Pri zapnutom **obmedzení pohybu** je všetko statické a nič sa neschováva.
+- **Plynulosť:** pri skrolovaní sa nemení nič, čo vyžaduje prepočet rozloženia alebo filtre (žiadne `blur`/`drop-shadow` na hýbucich sa prvkoch, žiara je obyčajný gradient, tieň činky je gradient), hýbuce sa vrstvy majú `will-change`, rozostrenie lišty je na mobile vypnuté a premenná postupu skrolu sa nastavuje len na prvkoch, ktoré ju používajú.
 
 ## Pravdivostný register (čo treba doplniť pred spustením)
 

@@ -208,12 +208,14 @@
   /* ---------- lišta ---------- */
   function header() {
     var bar = $('.bar'), nav = $('#nav'), burger = $('.burger');
+    var spTargets = $$('.progress, .rail-track');
     var lastY = window.scrollY, ticking = false;
     function onScroll() {
       var y = window.scrollY;
       var h = d.documentElement.scrollHeight - window.innerHeight;
       var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
-      d.documentElement.style.setProperty('--sp', p.toFixed(4));
+      var sp = p.toFixed(4);
+      spTargets.forEach(function (el) { el.style.setProperty('--sp', sp); });
       if (y > 120 && y > lastY + 4 && !nav.classList.contains('is-open')) bar.classList.add('is-hidden');
       else if (y < lastY - 4 || y < 120) bar.classList.remove('is-hidden');
       lastY = y;
@@ -446,8 +448,11 @@
   function scrollFx() {
     if (reduce.matches) return;
     var shapes = $$('.bgs').map(function (el) {
-      return { el: el, speed: +el.dataset.speed, rot: +el.dataset.rot, top: +el.dataset.top / 100 };
+      return { el: el, speed: +el.dataset.speed, rot: +el.dataset.rot, top: +el.dataset.top / 100, size: 200 };
     });
+    function measure() { shapes.forEach(function (sh) { sh.size = sh.el.offsetHeight || 200; }); }
+    measure();
+    window.addEventListener('resize', measure);
     // vodoznaky
     var wms = $$('.has-wm').map(function (sec) {
       var w = d.createElement('span');
@@ -492,7 +497,7 @@
 
       // pozadie: tvary plynú hore rôznou rýchlosťou a otáčajú sa, po opustení obrazovky sa vrátia zdola
       shapes.forEach(function (sh) {
-        var size = sh.el.getBoundingClientRect().height || 200;
+        var size = sh.size;
         var L = vh + size;
         var ty = (((sh.top * vh - y * sh.speed) % L) + L) % L - size;
         sh.el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) rotate(' + (y * sh.rot).toFixed(2) + 'deg)';
@@ -512,7 +517,7 @@
         var e = 1 - Math.pow(1 - v, 3);
         h.el.style.opacity = e.toFixed(3);
         h.el.style.transform = 'translate3d(0,' + ((1 - e) * 56).toFixed(1) + 'px,0)';
-        if (h.k) h.k.style.letterSpacing = (0.18 + (1 - e) * 0.3).toFixed(3) + 'em';
+        if (h.k) h.k.style.transform = 'translate3d(' + ((1 - e) * -16).toFixed(1) + 'px,0,0)';
       });
 
       // bežiaci pás sa pri rýchlom skrole nakloní
