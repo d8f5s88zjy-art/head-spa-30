@@ -393,6 +393,44 @@ body.is-loaded .plates-r{animation:whipR 3.2s ease-in-out 1.6s infinite;transfor
 .totop.is-on{opacity:1;transform:none;pointer-events:auto}
 .totop:hover{border-color:var(--volt);color:var(--volt)}
 
+
+/* Otváracia animácia */
+.veil{position:fixed;inset:0;z-index:90;display:none;overflow:hidden}
+body.intro{overflow:hidden}
+body.intro .veil{display:block}
+.veil-half{position:absolute;top:0;bottom:0;width:50.5%;background:var(--bg);overflow:hidden;transition:transform 1s cubic-bezier(.7,0,.2,1)}
+.veil-half::after{content:"";position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px}
+.veil-l{left:0}
+.veil-r{right:0}
+.veil-seam{position:absolute;left:50%;top:50%;width:2px;height:0;margin-left:-1px;background:var(--volt);box-shadow:0 0 24px 4px rgba(212,255,63,.6);transform:translateY(-50%);transition:height .5s var(--ease),opacity .4s}
+.veil-in{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:18px;transition:opacity .35s,transform .6s var(--ease)}
+.veil-db{width:min(46vw,200px);color:var(--volt);filter:drop-shadow(0 0 22px rgba(212,255,63,.45));animation:introRep .55s cubic-bezier(.3,0,.2,1) .15s 2 both}
+.veil-name{display:flex;font-family:var(--font-d);font-size:clamp(3rem,10vw,6rem);letter-spacing:.08em;line-height:1;text-transform:uppercase;color:var(--ink);overflow:hidden;padding:.1em 0}
+.veil-name span{display:inline-block;transform:translateY(120%);animation:introUp .7s var(--ease) both}
+.veil-name .veil-gap{width:.3em}
+.veil-name .v{color:var(--volt)}
+.veil-name span:nth-child(1){animation-delay:.2s}.veil-name span:nth-child(2){animation-delay:.26s}.veil-name span:nth-child(3){animation-delay:.32s}.veil-name span:nth-child(4){animation-delay:.38s}
+.veil-name span:nth-child(6){animation-delay:.5s}.veil-name span:nth-child(7){animation-delay:.56s}.veil-name span:nth-child(8){animation-delay:.62s}
+.veil-sub{overflow:hidden;font-size:.9rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.veil-sub span{display:inline-block;transform:translateY(120%);animation:introUp .7s var(--ease) .8s both}
+.veil-skip{position:absolute;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:transparent;border:1px solid var(--line2);color:var(--mute);border-radius:999px;padding:8px 16px;font-size:.82rem;font-weight:700;opacity:0;animation:introFade .4s ease 1s both;transition:color .2s,border-color .2s}
+.veil-skip:hover{color:var(--ink);border-color:var(--volt)}
+body.intro-open .veil-in{opacity:0;transform:scale(1.12)}
+body.intro-open .veil-seam{height:100%;opacity:0;transition:height .35s var(--ease),opacity .5s .3s}
+body.intro-open .veil-l{transform:translateX(-101%);transition-delay:.15s}
+body.intro-open .veil-r{transform:translateX(101%);transition-delay:.15s}
+body.intro-open .veil-skip{opacity:0;transition:opacity .2s}
+body.intro-done .brand-mark>svg{animation:curl .9s var(--ease) .2s}
+@keyframes introRep{0%{transform:translateY(0) scale(.92)}50%{transform:translateY(-22px) scale(1)}100%{transform:translateY(0) scale(.92)}}
+@keyframes introUp{to{transform:none}}
+@keyframes introFade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.veil{display:none!important}body.intro{overflow:auto}}
+
+/* Otváranie otázok */
+.q .a{overflow:hidden}
+.q.is-anim .a{transition:height .38s var(--ease),opacity .3s}
+.q summary::before,.q summary::after{transition:transform .35s var(--ease)}
+
 /* Odhaľovanie pri rolovaní */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}

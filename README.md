@@ -277,6 +277,8 @@ Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30:
 
 ## Animácie činiek
 
+- **Otvorenie stránky:** tmavá opona s činkou, ktorá spraví dva zdvihy, kým sa písmená LIPA GYM vysunú. Potom sa opona roztvorí ako dvere (zelený šev v strede) a úvodná činka s textom nabehne až za ňou. Preskočí sa klikom, klávesom, tlačidlom Preskočiť, pri obmedzení pohybu, pri odkaze priamo na sekciu (`#clenstvo`) a pri druhom načítaní v tej istej karte.
+- **Otázky:** odpovede sa plynulo vysúvajú a zasúvajú, znamienko plus sa otáča na mínus.
 - **Úvod:** veľká olympijská os, na ktorú sa po načítaní nasunú kotúče (pružinový pohyb), potom činka opakuje „rep“ so slabým prehnutím kotúčov a tieňom. Okolo plávajú jednoručky, kettlebell a kotúče, na počítači reagujú na pohyb myši (paralaxa).
 - **Lišta:** pri rolovaní beží pod lištou pás postupu a po ňom sa kotúľa malá jednoručka.
 - **Ponuka:** každá zóna má vlastnú ikonu s pohybom, keď sa objaví a pri prejdení myšou: bicepsový zdvih jednoručky, švih kettlebellu, otáčajúci sa kotúč, tep.

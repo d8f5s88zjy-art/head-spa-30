@@ -251,7 +251,7 @@
 
   /* ---------- odhaľovanie ---------- */
   function reveal() {
-    var items = $$('.reveal, .zone, .plan, .tile');
+    var items = $$('.reveal, .zone, .plan, .tile').filter(function (el) { return !(INTRO && el.closest('.hero')); });
     if (!('IntersectionObserver' in window)) { items.forEach(function (el) { el.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -261,10 +261,80 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
+
+  /* ---------- otváracia animácia ---------- */
+  var INTRO = false;
+  function intro() {
+    var veil = $('#veil');
+    if (!veil) return;
+    var skip = reduce.matches || location.hash.length > 1 || !window.matchMedia('(min-width: 320px)').matches;
+    try { if (sessionStorage.getItem('lipa-intro')) skip = true; } catch (e) {}
+    if (skip) { veil.remove(); return; }
+    INTRO = true;
+    d.body.classList.add('intro');
+    try { sessionStorage.setItem('lipa-intro', '1'); } catch (e) {}
+    var heroBits = $$('.hero .reveal');
+    heroBits.forEach(function (el) { el.style.transition = 'none'; });
+    var opened = false;
+    function open() {
+      if (opened) return;
+      opened = true;
+      d.body.classList.add('intro-open');
+      d.body.classList.add('is-loaded');
+      heroBits.forEach(function (el, i) {
+        el.style.transition = '';
+        void el.offsetWidth;
+        el.style.transitionDelay = (0.25 + i * 0.1) + 's';
+        el.classList.add('in');
+      });
+      setTimeout(function () {
+        d.body.classList.remove('intro');
+        d.body.classList.add('intro-done');
+        veil.remove();
+        d.removeEventListener('keydown', onKey);
+      }, 1300);
+    }
+    function onKey(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') open(); }
+    veil.addEventListener('click', open);
+    d.addEventListener('keydown', onKey);
+    setTimeout(open, 1450);
+  }
+
+  /* ---------- otváranie otázok ---------- */
+  function faq() {
+    $$('.q').forEach(function (q) {
+      var sum = $('summary', q), a = $('.a', q), busy = false;
+      sum.addEventListener('click', function (e) {
+        if (reduce.matches) return;
+        e.preventDefault();
+        if (busy) return;
+        busy = true;
+        q.classList.add('is-anim');
+        if (q.open) {
+          a.style.height = a.scrollHeight + 'px';
+          requestAnimationFrame(function () { a.style.height = '0px'; a.style.opacity = '0'; });
+          a.addEventListener('transitionend', function done() {
+            a.removeEventListener('transitionend', done);
+            q.open = false; a.style.height = ''; a.style.opacity = ''; q.classList.remove('is-anim'); busy = false;
+          });
+        } else {
+          q.open = true;
+          var h = a.scrollHeight;
+          a.style.height = '0px'; a.style.opacity = '0';
+          requestAnimationFrame(function () { a.style.height = h + 'px'; a.style.opacity = '1'; });
+          a.addEventListener('transitionend', function done() {
+            a.removeEventListener('transitionend', done);
+            a.style.height = ''; a.style.opacity = ''; q.classList.remove('is-anim'); busy = false;
+          });
+        }
+      });
+    });
+  }
+
   /* ---------- úvod: činka a plávajúce prvky ---------- */
   function hero() {
     var done = false;
-    function loaded() { if (done) return; done = true; d.body.classList.add('is-loaded'); }
+    function loaded() { if (done || INTRO) return; done = true; d.body.classList.add('is-loaded'); }
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(loaded);
     setTimeout(loaded, 900);
 
@@ -411,6 +481,7 @@
   }
 
   /* ---------- štart ---------- */
+  intro();
   fillFacts();
   schema();
   openStatus();
@@ -425,4 +496,5 @@
   timetable();
   trialForm();
   dock();
+  faq();
 })();

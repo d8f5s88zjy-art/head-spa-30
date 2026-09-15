@@ -36,6 +36,19 @@
 <body>
 <a class="skip" href="#main">Preskočiť na obsah</a>
 
+<!-- OTVÁRACIA ANIMÁCIA: opona s činkou, ktorá po dvoch opakovaniach roztvorí dvere. Preskočiť: klik, kláves, obmedzený pohyb, odkaz na sekciu, druhá návšteva v tej istej karte. -->
+<div class="veil" id="veil" aria-hidden="true">
+  <div class="veil-half veil-l"></div>
+  <div class="veil-half veil-r"></div>
+  <div class="veil-seam"></div>
+  <div class="veil-in">
+    <svg class="veil-db" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
+    <p class="veil-name"><span>L</span><span>I</span><span>P</span><span>A</span><span class="veil-gap"></span><span class="v">G</span><span class="v">Y</span><span class="v">M</span></p>
+    <p class="veil-sub"><span>Poď dvíhať.</span></p>
+  </div>
+  <button class="veil-skip" type="button">Preskočiť</button>
+</div>
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <!-- Jednoručka: os, dve kotúče na každej strane -->
