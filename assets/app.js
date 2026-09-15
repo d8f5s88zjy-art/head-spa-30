@@ -573,7 +573,7 @@
   rv.forEach((el) => rio.observe(el));
 
   /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
-  /* every .steps block runs its own line, so the head ritual and the foot ritual do not share one */
+  /* every .steps block runs its own water line, independently of the others */
   let pinned = false;
   const streams = $$('.steps').map((box) => {
     const path = $('.stream .draw', box);
@@ -709,7 +709,7 @@
     activeCat = cat; applyFilter(fromChip);
   }
   $$('.tools .chip').forEach((b) => b.addEventListener('click', () => pickCat(b.dataset.filter, true)));
-  /* a link elsewhere on the page can open the list already filtered, e.g. the foot rituals */
+  /* a link elsewhere on the page can open the list already filtered by category */
   $$('[data-cat-jump]').forEach((a) => a.addEventListener('click', () => {
     pickCat(a.dataset.catJump, true);
     const id = (a.getAttribute('href') || '').slice(1), target = id && document.getElementById(id);
