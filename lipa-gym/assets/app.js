@@ -213,7 +213,7 @@
       var y = window.scrollY;
       var h = d.documentElement.scrollHeight - window.innerHeight;
       var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
-      bar.style.setProperty('--sp', p.toFixed(4));
+      d.documentElement.style.setProperty('--sp', p.toFixed(4));
       if (y > 120 && y > lastY + 4 && !nav.classList.contains('is-open')) bar.classList.add('is-hidden');
       else if (y < lastY - 4 || y < 120) bar.classList.remove('is-hidden');
       lastY = y;
@@ -440,6 +440,101 @@
     frame();
   }
 
+
+  /* ---------- skrolovacia vrstva cez celú stránku ----------
+     pozadie s tvarmi, vodoznaky sekcií, nadpisy, bežiaci pás, koľajnica */
+  function scrollFx() {
+    if (reduce.matches) return;
+    var shapes = $$('.bgs').map(function (el) {
+      return { el: el, speed: +el.dataset.speed, rot: +el.dataset.rot, top: +el.dataset.top / 100 };
+    });
+    // vodoznaky
+    var wms = $$('.has-wm').map(function (sec) {
+      var w = d.createElement('span');
+      w.className = 'wm'; w.setAttribute('aria-hidden', 'true'); w.textContent = sec.dataset.wm;
+      sec.insertBefore(w, sec.firstChild);
+      return { sec: sec, el: w };
+    });
+    // nadpisy sekcií: namiesto jednorazového odhalenia sledujú skrol
+    var heads = $$('.has-wm .sec-head').map(function (h) {
+      h.classList.remove('reveal'); h.classList.add('in');
+      return { el: h, k: $('.kicker', h) };
+    });
+    var marquee = $('.marquee');
+    // koľajnica
+    var rail = $('.rail'), dotsBox = $('.rail-dots'), dots = [];
+    if (rail) {
+      var ids = ['ponuka', 'clenstvo', 'rozvrh', 'treneri', 'priestor', 'skusobny', 'faq', 'kontakt'];
+      ids.forEach(function (id) {
+        var sec = $('#' + id); if (!sec) return;
+        var a = d.createElement('a');
+        a.href = '#' + id; a.dataset.label = sec.dataset.wm || id; a.setAttribute('aria-label', a.dataset.label);
+        dotsBox.appendChild(a); dots.push({ a: a, sec: sec });
+      });
+    }
+    function placeDots() {
+      var max = d.documentElement.scrollHeight - window.innerHeight;
+      dots.forEach(function (dt) {
+        var top = dt.sec.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.4;
+        dt.a.style.top = (Math.min(1, Math.max(0, top / max)) * 100).toFixed(2) + '%';
+      });
+    }
+    placeDots();
+    window.addEventListener('resize', placeDots);
+    setTimeout(placeDots, 1500);
+
+    var lastY = window.scrollY, vel = 0, ticking = false, running = true, idle = 0;
+    function frame() {
+      var y = window.scrollY, vh = window.innerHeight;
+      var dy = y - lastY; lastY = y;
+      vel += (dy - vel) * 0.18;
+      if (Math.abs(vel) < 0.05) vel = 0;
+
+      // pozadie: tvary plynú hore rôznou rýchlosťou a otáčajú sa, po opustení obrazovky sa vrátia zdola
+      shapes.forEach(function (sh) {
+        var size = sh.el.getBoundingClientRect().height || 200;
+        var L = vh + size;
+        var ty = (((sh.top * vh - y * sh.speed) % L) + L) % L - size;
+        sh.el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) rotate(' + (y * sh.rot).toFixed(2) + 'deg)';
+      });
+
+      // vodoznaky a nadpisy podľa polohy sekcie vo výreze
+      wms.forEach(function (w) {
+        var r = w.sec.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        var v = (vh - r.top) / (vh + r.height);          // 0 = prichádza zdola, 1 = odišla hore
+        w.el.style.transform = 'translate3d(' + ((0.5 - v) * 28).toFixed(2) + 'vw,' + ((v - 0.5) * -12).toFixed(2) + 'vh,0)';
+      });
+      heads.forEach(function (h) {
+        var r = h.el.getBoundingClientRect();
+        if (r.top > vh + 80 || r.bottom < -80) return;
+        var v = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.55)));
+        var e = 1 - Math.pow(1 - v, 3);
+        h.el.style.opacity = e.toFixed(3);
+        h.el.style.transform = 'translate3d(0,' + ((1 - e) * 56).toFixed(1) + 'px,0)';
+        if (h.k) h.k.style.letterSpacing = (0.18 + (1 - e) * 0.3).toFixed(3) + 'em';
+      });
+
+      // bežiaci pás sa pri rýchlom skrole nakloní
+      if (marquee) {
+        var sk = Math.max(-14, Math.min(14, -vel * 0.35));
+        marquee.style.transform = 'skewX(' + sk.toFixed(2) + 'deg)';
+      }
+
+      // koľajnica: aktívna sekcia
+      var active = null;
+      dots.forEach(function (dt) { if (dt.sec.getBoundingClientRect().top <= vh * 0.45) active = dt; });
+      dots.forEach(function (dt) { dt.a.classList.toggle('is-active', dt === active); });
+
+      ticking = false;
+      if (vel !== 0) requestAnimationFrame(tick); // doznievanie rýchlosti
+    }
+    function tick() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    frame();
+  }
+
   /* ---------- otváranie otázok ---------- */
   function faq() {
     $$('.q').forEach(function (q) {
@@ -639,4 +734,5 @@
   faq();
   heroParallax();
   story();
+  scrollFx();
 })();

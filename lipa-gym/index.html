@@ -82,7 +82,16 @@
   </defs>
 </svg>
 
-<div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="grain"></div></div>
+<div class="env" aria-hidden="true">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="bgfx">
+    <svg class="bgs bgs1" data-speed=".32" data-rot=".05" data-top="60" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="24" cy="24" r="13" fill="none" stroke="currentColor" stroke-width=".8"/><circle cx="24" cy="24" r="3" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M24 3v6M24 39v6M3 24h6M39 24h6" stroke="currentColor" stroke-width=".8"/></svg>
+    <svg class="bgs bgs2" data-speed=".2" data-rot="-.03" data-top="30" viewBox="0 0 64 32"><rect x="18" y="14" width="28" height="4" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="10" y="6" width="6" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="4" y="9" width="5" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="48" y="6" width="6" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="55" y="9" width="5" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    <svg class="bgs bgs3" data-speed=".5" data-rot=".12" data-top="85" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="24" cy="24" r="6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+    <svg class="bgs bgs4" data-speed=".14" data-rot="0" data-top="10" viewBox="0 0 48 56"><path d="M16 20c-4-9 1-16 8-16s12 7 8 16" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="36" r="17" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+  </div>
+  <div class="grain"></div>
+</div>
 
 <header class="bar" id="top">
   <div class="wrap bar-in">
@@ -258,7 +267,7 @@
 </section>
 
 <!-- PONUKA -->
-<section class="zones" id="ponuka" aria-labelledby="h-ponuka">
+<section class="zones has-wm" id="ponuka" data-wm="Ponuka" aria-labelledby="h-ponuka">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Ponuka</p>
@@ -307,7 +316,7 @@
 </section>
 
 <!-- ČLENSTVO -->
-<section class="plans" id="clenstvo" aria-labelledby="h-clenstvo">
+<section class="plans has-wm" id="clenstvo" data-wm="Členstvo" aria-labelledby="h-clenstvo">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Členstvo</p>
@@ -358,7 +367,7 @@
 </section>
 
 <!-- ROZVRH -->
-<section class="timetable" id="rozvrh" aria-labelledby="h-rozvrh">
+<section class="timetable has-wm" id="rozvrh" data-wm="Rozvrh" aria-labelledby="h-rozvrh">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Rozvrh</p>
@@ -375,7 +384,7 @@
 </section>
 
 <!-- TRÉNERI -->
-<section class="team" id="treneri" aria-labelledby="h-treneri">
+<section class="team has-wm" id="treneri" data-wm="Tréneri" aria-labelledby="h-treneri">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Tréneri</p>
@@ -411,7 +420,7 @@
 </section>
 
 <!-- PRIESTOR -->
-<section class="space" id="priestor" aria-labelledby="h-priestor">
+<section class="space has-wm" id="priestor" data-wm="Priestor" aria-labelledby="h-priestor">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Priestor</p>
@@ -458,7 +467,7 @@
 </section>
 
 <!-- SKÚŠOBNÝ TRÉNING -->
-<section class="trial" id="skusobny" aria-labelledby="h-skusobny">
+<section class="trial has-wm" id="skusobny" data-wm="Tréning" aria-labelledby="h-skusobny">
   <div class="wrap trial-in">
     <div class="trial-copy reveal">
       <p class="kicker">Skúšobný tréning</p>
@@ -508,7 +517,7 @@
 </section>
 
 <!-- OTÁZKY -->
-<section class="faq" id="faq" aria-labelledby="h-faq">
+<section class="faq has-wm" id="faq" data-wm="Otázky" aria-labelledby="h-faq">
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker">Otázky</p>
@@ -544,7 +553,7 @@
 </section>
 
 <!-- KONTAKT -->
-<section class="contact" id="kontakt" aria-labelledby="h-kontakt">
+<section class="contact has-wm" id="kontakt" data-wm="Kontakt" aria-labelledby="h-kontakt">
   <div class="wrap contact-in">
     <div class="contact-copy reveal">
       <p class="kicker">Kontakt</p>
@@ -594,6 +603,14 @@
     <p class="foot-copy">© <span data-year>2026</span> <span data-fact="name">LIPA GYM</span>. <span data-fact="street">Adresa doplníme</span>, <span data-fact="city">Mesto</span>.</p>
   </div>
 </footer>
+
+<nav class="rail" aria-label="Poloha na stránke">
+  <div class="rail-track">
+    <span class="rail-fill"></span>
+    <div class="rail-dots"></div>
+    <svg class="rail-marker" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-plate"/></svg>
+  </div>
+</nav>
 
 <div class="dock" aria-label="Rýchle akcie">
   <a class="dock-call" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z" fill="currentColor"/></svg>Zavolať</a>

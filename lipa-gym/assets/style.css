@@ -477,6 +477,33 @@ body.intro-done .brand-mark>svg{animation:curl .9s var(--ease) .2s}
   .story-cta{opacity:1;transform:none;pointer-events:auto}
 }
 
+
+/* Skrolovacia vrstva cez celú stránku */
+.bgfx{position:absolute;inset:0;overflow:hidden}
+.bgs{position:absolute;color:rgba(255,255,255,.075);will-change:transform;left:var(--x);width:var(--w)}
+.bgs1{--x:auto;right:-8vw;--w:46vmin;color:rgba(212,255,63,.11)}
+.bgs2{--x:-5vw;--w:34vmin}
+.bgs3{--x:58vw;--w:13vmin;color:rgba(212,255,63,.16)}
+.bgs4{--x:auto;right:22vw;--w:16vmin}
+.has-wm{overflow:clip}
+.has-wm>.wrap{position:relative;z-index:1}
+.wm{position:absolute;right:-1vw;top:clamp(28px,5vw,64px);z-index:0;font-family:var(--font-d);font-size:clamp(5.5rem,17vw,15rem);line-height:1;letter-spacing:.04em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.09);pointer-events:none;user-select:none;white-space:nowrap;will-change:transform}
+.contact .wm,.trial .wm{top:auto;bottom:clamp(20px,4vw,48px)}
+.marquee{will-change:transform}
+
+.rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:40;display:none}
+@media (min-width:1100px){.rail{display:block}}
+.rail-track{position:relative;width:2px;height:min(40vh,340px);background:var(--line2);border-radius:2px}
+.rail-fill{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--volt);transform-origin:top;transform:scaleY(var(--sp,0));border-radius:2px}
+.rail-marker{position:absolute;left:50%;top:calc(var(--sp,0) * 100%);width:20px;height:20px;margin:-10px 0 0 -10px;color:var(--volt);transform:rotate(calc(var(--sp,0) * 540deg));filter:drop-shadow(0 0 8px rgba(212,255,63,.7));pointer-events:none}
+.rail-dots a{position:absolute;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--dim);transform:translateY(-50%);transition:background .3s,transform .3s}
+.rail-dots a::before{content:"";position:absolute;inset:-8px}
+.rail-dots a::after{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translate(6px,-50%);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity .2s,transform .3s var(--ease);white-space:nowrap;font-family:var(--font-b)}
+.rail-dots a:hover{background:var(--ink)}
+.rail-dots a.is-active{background:var(--volt);transform:translateY(-50%) scale(1.4)}
+.rail:hover .rail-dots a::after,.rail-dots a.is-active::after,.rail-dots a:focus-visible::after{opacity:1;transform:translate(0,-50%)}
+@media (prefers-reduced-motion:reduce){.bgfx,.rail,.wm{display:none}}
+
 /* Odhaľovanie pri rolovaní */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
