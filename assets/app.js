@@ -18,6 +18,27 @@
     const steam = Array.from({ length: 34 }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
     const drops = Array.from({ length: 16 }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
     const puffs = Array.from({ length: 54 }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
+    // the journey camera: p, zoom, shift x (of W), shift y (of H), tilt (how far we look down into the bowl), warmth of the light
+    const CAM = [
+      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
+      [0.20, 1.10, 0.00, -.02, .36, 0.10],
+      [0.30, 1.48, -.06, -.10, .42, 0.28],
+      [0.46, 1.58, -.06, -.12, .46, 0.38],
+      [0.56, 2.25, 0.03, 0.20, .60, 0.52],
+      [0.72, 2.35, 0.04, 0.22, .62, 0.62],
+      [0.84, 1.26, 0.00, 0.03, .40, 0.92],
+      [1.00, 1.20, 0.00, 0.03, .40, 1.00]
+    ];
+    function cam(p) {
+      if (!o.journey) return { z: 1, dx: 0, dy: 0, tilt: .34, warm: 1, grade: 0 };   // the gallery shots keep their fixed gold lamp and cool room
+      let i = 0; while (i < CAM.length - 2 && p > CAM[i + 1][0]) i++;
+      const a = CAM[i], b = CAM[i + 1], k = smoothstep(p, a[0], b[0]);
+      const m = (j) => a[j] + (b[j] - a[j]) * k;
+      const w = m(5); return { z: m(1), dx: m(2), dy: m(3), tilt: m(4), warm: w, grade: w };
+    }
+    const mix = (c1, c2, k) => c1.map((v, i) => Math.round(v + (c2[i] - v) * k));
+    const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+    const COOL = [214, 226, 218], GOLD = [236, 208, 143];
     function resize() {
       const r = canvas.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -67,10 +88,12 @@
       const wide = view === 'still' ? W > 900 : W > 720;   // the still hero keeps the bowl above the text up to tablet width
       // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
-      const cx = view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5);
-      const cy = view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31);   // phones: the bowl sits in the upper third, the copy below it
-      const rx = view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5));
-      const ry = rx * 0.34;
+      const c = cam(p);
+      const cx = (view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5)) + c.dx * W;
+      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
+      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5))) * c.z;
+      const ry = rx * c.tilt;
+      const warm = c.warm, lamp = mix(COOL, GOLD, warm);
       const topY = -H * 0.04, landY = cy - ry * 0.12;
       const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
       const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
@@ -78,13 +101,20 @@
       const stream = fall * (1 - calm * 0.85);
       // room
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#0f1613'); bg.addColorStop(.55, '#0b100d'); bg.addColorStop(1, '#090c0a');
+      bg.addColorStop(0, rgb(mix([15, 22, 19], [22, 20, 15], c.grade), 1)); bg.addColorStop(.55, rgb(mix([11, 16, 13], [16, 14, 11], c.grade), 1)); bg.addColorStop(1, '#090c0a');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-      // the lamp: a cone of warm light that widens as the ritual goes on
-      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p));
+      // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
+      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
       const ca = 0.15 + 0.13 * p;
-      cone.addColorStop(0, `rgba(236,208,143,${ca})`); cone.addColorStop(.42, `rgba(217,181,106,${ca * .42})`); cone.addColorStop(1, 'rgba(217,181,106,0)');
+      cone.addColorStop(0, rgb(lamp, ca)); cone.addColorStop(.42, rgb(mix([160, 178, 168], [217, 181, 106], warm), ca * .42)); cone.addColorStop(1, 'rgba(217,181,106,0)');
       ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
+      // the lamp itself: a small bright disc high above the bowl, only in the journey
+      if (o.journey) {
+        const ly = -H * 0.02, lr = rx * (0.07 + 0.05 * c.z);
+        const disc = ctx.createRadialGradient(cx, ly, 0, cx, ly, lr * 4);
+        disc.addColorStop(0, rgb(lamp, .55)); disc.addColorStop(.25, rgb(lamp, .16)); disc.addColorStop(1, rgb(lamp, 0));
+        ctx.fillStyle = disc; ctx.fillRect(cx - lr * 4, 0, lr * 8, lr * 4);
+      }
       // a faint far wall line so the room has depth
       ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
       // floor sheen under the bowl
@@ -131,6 +161,33 @@
           ctx.strokeStyle = `rgba(190,232,222,${a})`; ctx.lineWidth = 1.4 + (1 - k) * 1.2; ctx.stroke();
           ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr * 0.94, ry * kr * 0.94, 0, 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(236,208,143,${a * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+      // the massage: two slow hands, two sources of small ripples that take turns
+      const mass = o.journey ? smoothstep(p, 0.48, 0.56) * (1 - smoothstep(p, 0.72, 0.80)) : 0;
+      if (mass > 0) {
+        const hands = [[-0.36, 0.10, 0], [0.34, -0.06, 0.5]];
+        for (const h of hands) {
+          const hx = cx + h[0] * rx, hy = cy + h[1] * ry;
+          for (let i = 0; i < 4; i++) {
+            let k = ((p - 0.48) * 2.6 + i / 4 + h[2] + t * 0.12) % 1; if (k < 0) k += 1;
+            const a = Math.pow(1 - k, 1.8) * 0.5 * mass;
+            if (a < 0.01) continue;
+            const kr = 0.04 + k * 0.42;
+            ctx.beginPath(); ctx.ellipse(hx, hy, rx * kr, ry * kr, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(200,236,226,${a})`; ctx.lineWidth = 1 + (1 - k) * 1.4; ctx.stroke();
+          }
+          const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, rx * 0.14);
+          g.addColorStop(0, `rgba(230,246,240,${.22 * mass})`); g.addColorStop(1, 'rgba(230,246,240,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(hx, hy, rx * 0.14, ry * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      // the settle: the rings give way to one still gold circle, the mark of the house
+      if (o.journey && calm > 0) {
+        const pulse = 1 + Math.sin(t * 0.8) * 0.012;
+        for (const [kr, a, w] of [[0.58, 0.55, 1.6], [0.50, 0.22, 1], [0.66, 0.16, 1]]) {
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx * kr * pulse, ry * kr * pulse, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,208,143,${a * calm})`; ctx.lineWidth = w; ctx.stroke();
         }
       }
       ctx.restore();
@@ -209,8 +266,9 @@
         ctx.restore();
       }
       // vignette
-      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, Math.max(W, H) * .85);
-      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, 'rgba(8,10,9,.7)');
+      const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
+      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
+      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${.7 + .08 * (c.z - 1)})`);
       ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
     return { resize, draw };
@@ -281,7 +339,7 @@
     el, a: +el.dataset.a, b: +el.dataset.b, i,
     ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, on: false
   }));
-  const hud = $('.hud b'), cue = $('.cue');
+  const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 0, loadStart = 0;
   let lastHud = '', lastHudAt = 0;
@@ -305,13 +363,23 @@
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
     }
-    if (hud && now !== undefined) {
-      if (now - lastHudAt > 100) {
-        const t = String(Math.round(p * 100)).padStart(2, '0');
-        if (t !== lastHud) { lastHud = t; lastHudAt = now; hud.textContent = t; }
+    if (hud && now !== undefined && now - lastHudAt > 80) {
+      const t = p.toFixed(3);
+      if (t !== lastHud) {
+        lastHud = t; lastHudAt = now; hud.style.setProperty('--p', t);
+        chapters.forEach((ch, i) => { const on = bands[i] && bands[i].on; if (ch.classList.contains('on') !== on) ch.classList.toggle('on', on); });
       }
     }
     if (cue) { const show = p < 0.04; if (cue.classList.contains('show') !== show) cue.classList.toggle('show', show); }
+  }
+  // between scrolls the scene keeps breathing (steam, caustics, the stream) at a low frame rate, and rests with the visitor
+  const AMB_FPS = 12;
+  let ambStart = 0, ambTimer = 0;
+  function ambientLive() { return scrubOn && heroOnScreen && !document.hidden && !reduced.matches && !document.body.classList.contains('idle'); }
+  function ambientLater() {
+    clearTimeout(ambTimer);
+    if (!ambientLive()) return;
+    ambTimer = setTimeout(() => { if (rafId === null && ambientLive()) rafId = requestAnimationFrame(tick); }, 1000 / AMB_FPS);
   }
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
@@ -321,17 +389,20 @@
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
     if (loadK < 1) { loadK = smoothstep((now - loadStart) / 1400, 0, 1); busy = true; }
-    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; }
-    scene.draw(shown);
+    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
+    if (!ambStart) ambStart = now;
+    scene.draw(shown, false, (now - ambStart) / 1000);
     updateCaptions(shown, now);
   }
   function onScroll() {
     target = heroProgress();
     if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
   }
+  document.addEventListener('visibilitychange', ambientLater);
+  addEventListener('hs30wake', ambientLater);
   function initHeroOnce() {
     if (inited) return; inited = true;
-    scene = makeScene(canvas);
+    scene = makeScene(canvas, { journey: true });
     scene.resize();
     bands.forEach((b) => {
       const fx = b.el.dataset.fx;
@@ -348,6 +419,7 @@
     new IntersectionObserver((es) => {
       heroOnScreen = es[0].isIntersecting;
       if (heroOnScreen && scrubOn) onScroll();
+      ambientLater();
     }, { threshold: 0 }).observe(hero);
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
@@ -436,6 +508,7 @@
     if (!scrubOn) return; scrubOn = false;
     removeEventListener('scroll', onScroll);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    clearTimeout(ambTimer);
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
   // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
