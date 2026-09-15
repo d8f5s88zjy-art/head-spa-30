@@ -4,7 +4,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 14 rituálov v štyroch kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 14 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
@@ -37,7 +37,7 @@ Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30
 
 ## Rezervácia
 
-Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek zo 14 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
+Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek zo 17 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
 
 Kalendár Booqme zostáva ako druhá možnosť pod formulárom.
 
@@ -166,7 +166,7 @@ v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa je
 
 ## Rýchly prehľad cien a tlač
 
-Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých štrnástich
+Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých sedemnástich
 rituálov: názov (odkaz na kartu), trvanie a cena, rozdelené podľa kategórií.
 Slúži tým, čo chcú len ceny, a zároveň je z neho tlačový cenník.
 
@@ -180,9 +180,9 @@ vygenerovať z `data-min`, `data-price` a `.meta` kariet.
 
 ## Hodnoty darčekových poukazov
 
-Rebríček je odvodený od cenníka, nie zvolený od oka: **50, 70, 100 a 149 €**.
+Rebríček je odvodený od cenníka, nie zvolený od oka: **50, 70, 100, 149 a 249 €**.
 Spodná hodnota presne pokryje najlacnejší rituál (50 €), horná aj ten najdrahší
-(Prémiový Head Spa rituál za 149 €). Vyššie hodnoty zámerne nie sú,
+(Zlatý Head Spa rituál 24K pre dvoch za 249 €). Vyššie hodnoty zámerne nie sú,
 aby obdarovanému nezostal zostatok, ktorý nemá ako minúť.
 
 Sú to dva ručne udržiavané zoznamy v rôznych častiach `index.html`: hodnoty
@@ -190,7 +190,7 @@ poukazu (`name="hodnota"`) a ceny rituálov (`data-price` na kartách). Keď sa
 rozídu, `assets/app.js` vypíše varovanie do konzoly prehliadača:
 
 ```
-HEAD SPA 30: poukaz za 400 € presahuje najdrahší rituál (149 €).
+HEAD SPA 30: poukaz za 400 € presahuje najdrahší rituál (249 €).
 ```
 
 Kontrola sa ozve len vtedy, keď je naozaj čo hlásiť. **Pri zmene cien rituálov
@@ -209,7 +209,7 @@ nie z parsovania textu. Nadpis kategórie zmizne, keď v nej po obmedzení nič
 nezostane, a keď nezodpovedá nič, zobrazí sa vysvetlenie s návrhom, čo zmeniť.
 Tlačidlo Zrušiť obmedzenia sa objaví len vtedy, keď je naozaj čo rušiť.
 
-Riadok "Zobrazených N zo 14 rituálov" sa skladá až v prehliadači, preto má
+Riadok "Zobrazených N zo 17 rituálov" sa skladá až v prehliadači, preto má
 vlastné preklady v `assets/app.js` (`COUNT_WORDS`), rovnako ako text otváracích
 hodín. Po zmene jazyka sa prekreslí.
 
@@ -218,28 +218,22 @@ sedieť s tým, čo je napísané v `.meta` karty, inak filter ukáže niečo in
 než karta tvrdí.
 
 
-## Ponuka: štrnásť rituálov, presne tie z rezervácie
+## Ponuka: sedemnásť rituálov pre hlavu
 
-Cenník obsahuje **14 Head Spa rituálov** v štyroch kategóriách: Head Spa (7),
-pánske (4), detský (1) a pre dvoch (2). Zodpovedajú programom prevádzky
-z `docs/booqme-programy.xlsx`: trvanie 40 až 120 minút, ceny 50 až 149 €,
+Cenník má **17 Head Spa rituálov** v piatich kategóriách: Head Spa (7), pánske (4),
+detský (1), pre dvoch (2) a luxusné (3). Trvanie 40 až 120 minút, ceny 50 až 249 €,
 pri rituáloch pre dvoch platí cena za obe osoby.
 
-Rituály pre chodidlá boli zo stránky odstránené (13. 9. 2026) spolu s tromi
-luxusnými návrhmi pre hlavu. O deň neskôr zmizli aj posledné zmienky o chodidlách
-v dvoch dvojhodinových prémiových rituáloch: tri, respektíve štyri kroky
-so starostlivosťou o chodidlá a vety, ktoré ich opisovali. Na webe tak nie je
-nič, čo by si zákazník nevedel rezervovať, a slovo chodidlá sa na ňom
-nevyskytuje ani raz. Ak sa niektorá z týchto služieb spustí, pridá sa späť ako
-`<article class="card">` v `index.html`, `<option>` do výberu `#v-ritual`
-a `Offer` do `hasOfferCatalog` v štruktúrovaných dátach, plus preklady
-do šiestich jazykových súborov.
+Štrnásť z nich zodpovedá programom v `docs/booqme-programy.xlsx`. Tri luxusné
+(Strieborný Head Spa rituál 109 €, Zlatý Head Spa rituál 24K 129 €, Zlatý Head Spa
+rituál 24K pre dvoch 249 €) sa vrátili 15. 9. 2026 na pokyn majiteľa, že ponuka
+má sedemnásť rituálov. Rituály pre chodidlá na webe nie sú a slovo chodidlá sa
+na ňom nevyskytuje.
 
-Pri zmene ponuky treba prejsť aj tieto miesta, kde je počet alebo rozpätie
-napísané slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii,
-`priceRange` v štruktúrovaných dátach, odpovede v otázkach, meta popisy
-a hodnoty darčekových poukazov.
-
+Pri zmene ponuky treba prejsť aj miesta, kde je počet alebo rozpätie napísané
+slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, rýchly prehľad
+cien, výber rituálu v rezervácii a v poukaze, hodnoty poukazov, `priceRange`
+a ponuky v štruktúrovaných dátach, odpovede v otázkach, meta popisy a preklady.
 
 ## Jazyky
 

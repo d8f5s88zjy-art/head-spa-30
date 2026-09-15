@@ -13,7 +13,7 @@ značka, kresba vody a texty. Formát A6 na šírku, 148 × 105 mm.
 - `foto-5-ritual.jpg` poukaz na konkrétny rituál
 
 **02_tlac** · pripravené do tlačiarne, PDF 154 × 111 mm, čiže A6 so spadávkou 3 mm
-- `poukaz-50.pdf` … `poukaz-149.pdf` a `poukaz-ritual.pdf`, každý má stranu 1 líce a stranu 2 rub
+- `poukaz-50.pdf` … `poukaz-249.pdf` a `poukaz-ritual.pdf`, každý má stranu 1 líce a stranu 2 rub
 - `poukaz-vsetky.pdf` všetkých šesť líc a spoločný rub v jednom súbore
 
 **03_obrazky** · PNG 1748 × 1240 px, čo je 300 dpi pri A6. Na e-mail, do Booqme alebo na web.
@@ -24,9 +24,9 @@ Keď sa zmenia ceny alebo texty, prepíše sa `build.mjs` a spustí sa:
 
 ## Hodnoty
 
-50 €, 70 €, 100 €, 149 € a poukaz na konkrétny rituál. Sú to tie isté
+50 €, 70 €, 100 €, 149 €, 249 € a poukaz na konkrétny rituál. Sú to tie isté
 hodnoty ako na webe: najnižšia pokryje najlacnejší rituál, najvyššia aj ten
-najdrahší (Prémiový Head Spa rituál za 149 €).
+najdrahší (Zlatý Head Spa rituál 24K pre dvoch za 249 €).
 
 ## Rub poukazu
 

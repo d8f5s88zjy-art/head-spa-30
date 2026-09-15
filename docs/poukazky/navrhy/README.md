@@ -45,7 +45,7 @@ Rub je tmavý pri návrhoch 1, 2 a 4 a krémový pri návrhoch 3 a 5, nech ladí
 ## Hodnoty na ukážkach
 
 Head Spa 30 má na ukážke 100 €, Salón 30 má 50 €. Vybraný návrh sa vygeneruje
-pre všetky hodnoty naraz: 50, 70, 100 a 149 € pre Head Spa a hodnoty, ktoré
+pre všetky hodnoty naraz: 50, 70, 100, 149 a 249 € pre Head Spa a hodnoty, ktoré
 si salón určí, pre kaderníctvo.
 
 ## Na potvrdenie

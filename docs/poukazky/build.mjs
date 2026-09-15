@@ -22,8 +22,10 @@ const VARIANTY = [
     note: 'Poukaz pokryje ktorýkoľvek Head Spa rituál v hodnote do 70 €. Pri drahšom rituáli sa rozdiel dopláca v salóne.' },
   { id: '100', hodnota: '100 €', lbl: 'Hodnota poukazu', claim: 'Daruj teplo <em>a vodu.</em>',
     note: 'Poukaz pokryje ktorýkoľvek Head Spa rituál v hodnote do 100 €, vrátane hĺbkových deväťdesiatminútových rituálov.' },
-  { id: '149', hodnota: '149 €', lbl: 'Hodnota poukazu', claim: 'Daruj <em>to najlepšie,</em> čo máme.',
-    note: 'Najvyšší poukaz pokryje ktorýkoľvek rituál z celej ponuky vrátane dvojhodinových prémiových rituálov a rituálov pre dvoch.' },
+  { id: '149', hodnota: '149 €', lbl: 'Hodnota poukazu', claim: 'Daruj dve hodiny <em>bez mesta.</em>',
+    note: 'Pokryje aj dvojhodinové prémiové rituály a spoločné rituály pre dvoch.' },
+  { id: '249', hodnota: '249 €', lbl: 'Hodnota poukazu', claim: 'Daruj <em>to najlepšie,</em> čo máme.',
+    note: 'Najvyšší poukaz pokryje ktorýkoľvek rituál z celej ponuky vrátane Zlatého Head Spa rituálu 24K pre dvoch.' },
   { id: 'ritual', hodnota: 'Konkrétny rituál', lbl: 'Poukaz na rituál', small: true,
     claim: 'Daruj presne <em>ten pravý.</em>',
     note: 'Rituál je vybraný a zaplatený vopred, obdarovaný si už len vyberie termín.', fieldRitual: true },
@@ -65,13 +67,13 @@ const back = `<div class="card back" id="back">
       <div class="steps">
         <h3>Ako ho uplatniť</h3>
         <ol>
-          <li>Vyber si rituál, štrnásť Head Spa rituálov od 40 do 120 minút.</li>
+          <li>Vyber si rituál, sedemnásť Head Spa rituálov od 40 do 120 minút.</li>
           <li>Rezervuj si termín cez QR kód vedľa alebo telefonicky na 0911 153 136.</li>
           <li>Poukaz prines so sebou, stačí aj v telefóne.</li>
         </ol>
       </div>
       <div class="b-facts">
-        <div><b>14</b><span>rituálov</span></div>
+        <div><b>17</b><span>rituálov</span></div>
         <div><b>40 až 120</b><span>minút</span></div>
         <div><b>od 50 €</b><span>ceny rituálov</span></div>
         <div><b>Mostná 30</b><span>Nitra</span></div>
