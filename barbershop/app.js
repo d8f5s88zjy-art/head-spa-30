@@ -120,6 +120,49 @@
     pass();
   })();
 
+  /* ============ parallax: every photograph lags the scroll a little ============ */
+  /* One pass over every [data-par] element per driven frame. Each writes --p, a
+     signed distance from the middle of the viewport in viewport heights; the
+     stylesheet decides how many pixels that is worth for that kind of element. */
+  (function parallax() {
+    const targets = $$('[data-par]').map((el) => ({ el, k: parseFloat(el.dataset.par) || 1 }));
+    if (!targets.length || reduced.matches) return;
+    function pass() {
+      const vh = innerHeight;
+      for (const { el, k } of targets) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -160 || r.top > vh + 160) continue;
+        const c = (r.top + r.height / 2 - vh / 2) / vh;
+        /* 0.9 is past anything reachable while the element is on screen; the clamp
+           is what lets the stylesheet size its overscan and never show an edge */
+        el.style.setProperty('--p', (Math.max(-0.9, Math.min(0.9, c)) * k).toFixed(4));
+      }
+    }
+    onDrive.push(pass);
+    pass();
+  })();
+
+  /* ============ the lamps you walk under ============ */
+  /* Two pendant glows ride up the fixed background on a scroll-driven cycle, half a
+     cycle apart, fading in and out at the edges so neither one ever pops. Scrolling
+     the page reads as walking the row of lamps in the shop. */
+  (function lamps() {
+    const l = [$('.env .l1'), $('.env .l2')].filter(Boolean);
+    if (l.length < 2 || reduced.matches) return;
+    const CYCLES = 7;                       /* lamps passed over the whole page */
+    function pass() {
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const t = (scrollY / max) * CYCLES;
+      l.forEach((el, i) => {
+        const ph = (t + i * 0.5) % 1;       /* 0 at the bottom edge, 1 past the top */
+        el.style.setProperty('--y', (116 - 150 * ph).toFixed(2));
+        el.style.setProperty('--o', Math.sin(ph * Math.PI).toFixed(3));
+      });
+    }
+    onDrive.push(pass);
+    pass();
+  })();
+
   /* the steps: the line grows with the scroll, each numeral lights when the line reaches it */
   const stepBlocks = $$('.steps').map((steps) => ({ steps, line: $('.line', steps), items: $$('.step', steps) }));
   function driveSteps() {
