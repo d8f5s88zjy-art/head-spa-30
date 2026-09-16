@@ -176,20 +176,6 @@
   }
   if (stepBlocks.length) { addEventListener('scroll', driveSteps, { passive: true }); addEventListener('resize', driveSteps); driveSteps(); }
 
-  /* counters in the price head */
-  function runCounter(el) {
-    const to = +el.dataset.count, suffix = el.dataset.suffix || '';
-    if (reduced.matches) { el.textContent = to + suffix; return; }
-    const t0 = performance.now(), dur = 1100;
-    (function tick(t) {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = Math.round(to * e) + suffix;
-      if (k < 1) requestAnimationFrame(tick);
-    })(t0);
-  }
-  const cio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { runCounter(e.target); cio.unobserve(e.target); } }), { threshold: 0.6 });
-  $$('[data-count]').forEach((el) => cio.observe(el));
-
   /* ============ price list: one category at a time ============ */
   const chips = $$('.chip[data-filter]'), cards = $$('.card'), cats = $$('.cat[data-cat]'), count = $('.count');
   const WORDS = (n) => (n === 1 ? 'služba' : n >= 2 && n <= 4 ? 'služby' : 'služieb');
@@ -223,6 +209,10 @@
   }
 
   /* what the service includes */
+  $$('.card').forEach((card) => card.addEventListener('click', (e) => {
+    if (e.target.closest('.card-toggle, a')) return;   /* the button handles itself */
+    $('.card-toggle', card).click();
+  }));
   $$('.card-toggle').forEach((b) => b.addEventListener('click', () => {
     const card = b.closest('.card'), panel = $('.panel', card), open = !card.classList.contains('open');
     card.classList.toggle('open', open);
@@ -240,14 +230,6 @@
         b.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5) * 6 + 'px');
       });
       b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
-    });
-    $$('.whys li').forEach((li) => {
-      li.addEventListener('pointermove', (e) => {
-        const r = li.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        li.style.setProperty('--lx', x * 100 + '%'); li.style.setProperty('--ly', y * 100 + '%');
-        li.style.setProperty('--ry', (x - 0.5) * 6 + 'deg'); li.style.setProperty('--rx', (0.5 - y) * 6 + 'deg');
-      });
-      li.addEventListener('pointerleave', () => { li.style.setProperty('--rx', '0deg'); li.style.setProperty('--ry', '0deg'); });
     });
   }
 

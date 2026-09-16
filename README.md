@@ -25,7 +25,7 @@ tak, ako je (potom stačí prepísať `canonical`, `og:url` a `og:image` v `inde
 
 - `barbershop/index.html` – kinematické otvorenie, úvod s fotografiou prevádzky pod tmavým závojom,
   bežiaci pás služieb, cenník 16 služieb v piatich kategóriách s filtrom a rozbaľovacím obsahom,
-  ako to prebieha (5 krokov), prečo k nám, U nás vnútri (fotka s bodmi) a Galéria, poukážky,
+  ako to prebieha (5 krokov), U nás vnútri (fotka s bodmi) a Galéria, poukážky,
   otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org `BarberShop`, otváracie
   hodiny, 16 ponúk s cenou a trvaním, FAQ)
 - `barbershop/style.css`, `barbershop/app.js` – štýly a správanie
@@ -148,7 +148,7 @@ s prevádzkou. Hodiny sú na troch miestach naraz: v schéme, v kontakte a v `ba
 **Cenník je NÁVRH, čaká na potvrdenie prevádzky.** Názvy, dĺžky, ceny aj obsah krokov sú odvodené
 z bežnej ponuky slovenských barbershopov, nie prevzaté zo zdroja prevádzky. Pri zmene ceny alebo
 dĺžky treba upraviť `data-min`, `data-price` a text `.meta` na karte, `Offer` v štruktúrovaných
-dátach, prípadne čísla v úvode (16 služieb, 10 až 75 minút, strih od 13 €), v sekcii Prečo k nám,
+dátach, prípadne čísla v úvode (16 služieb, 10 až 75 minút, strih od 13 €),
 v otázkach a hodnoty poukazov (15, 20, 30 a 40 €, spodná pokryje študentský strih, horná
 kompletný servis za 36 €).
 
