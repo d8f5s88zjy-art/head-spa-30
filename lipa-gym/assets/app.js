@@ -325,125 +325,6 @@
     frame();
   }
 
-  /* ---------- príbeh: scéna riadená skrolovaním ----------
-     0–0.34 naloženie kotúčov, 0.34–0.70 zdvih, 0.70–1 uloženie do stojana */
-  function story() {
-    var sec = $('#pribeh');
-    if (!sec || reduce.matches) return;
-    var svg = $('.scene', sec), cam = $('.sc-cam', sec), axis = $('.sc-axis', sec), knurl = $('.sc-knurl', sec);
-    var bar = $('.sc-bar', sec), shadow = $('.sc-shadow', sec), spot = $('.sc-spot', sec), chalkG = $('.sc-chalk', sec);
-    var sides = $$('.sc-side', sec), plates = $$('.sc-pl', sec);
-    var words = $$('.story-h .w', sec), subs = $$('.story-sub span', sec), kgEl = $('[data-kg]', sec);
-    var cta = $('.story-cta', sec), dots = $$('.story-dots li', sec);
-    var ns = 'http://www.w3.org/2000/svg';
-    var BASE = 465, FLOOR = 562, TOP = 150, RACK = 330;
-
-    // úzke obrazovky: tesnejší výrez scény
-    function fit() {
-      var narrow = window.innerWidth < 700;
-      svg.setAttribute('viewBox', narrow ? '110 60 980 600' : '0 0 1200 700');
-      svg.setAttribute('preserveAspectRatio', narrow ? 'xMidYMid meet' : 'xMidYMax meet');
-    }
-    fit();
-    window.addEventListener('resize', fit);
-
-    // krieda
-    var chalk = [];
-    for (var i = 0; i < 34; i++) {
-      var c = d.createElementNS(ns, 'circle');
-      var p = { x: 380 + Math.random() * 440, r: 1.5 + Math.random() * 3.5, dx: (Math.random() - 0.5) * 120, rise: 120 + Math.random() * 260, off: Math.random() * 0.5, el: c };
-      c.setAttribute('r', p.r); c.setAttribute('fill', '#e9ecf1'); c.setAttribute('opacity', '0');
-      chalkG.appendChild(c); chalk.push(p);
-    }
-
-    function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
-    function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
-    function io(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-    function outBack(t) { var c = 1.4; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
-    function outCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    var last = -1, ticking = false;
-    function render(p) {
-      // 1. naloženie
-      var load = seg(p, 0, 0.34);
-      var kg = 20;
-      plates.forEach(function (pl) {
-        var i = +pl.dataset.i, dir = +pl.closest('.sc-side').dataset.dir;
-        var t = outBack(seg(load, i * 0.2, i * 0.2 + 0.4));
-        pl.style.transform = 'translate(' + (dir * 520 * (1 - t)).toFixed(1) + 'px,0)';
-        kg += (+pl.dataset.kg) * clamp(t, 0, 1);
-      });
-      kgEl.textContent = String(Math.round(kg));
-
-      // 2. zdvih
-      var lift = seg(p, 0.34, 0.70), rack = seg(p, 0.70, 1);
-      var y, bend, vel;
-      if (rack === 0) {
-        var e = io(lift);
-        y = BASE - (BASE - TOP) * e;
-        vel = Math.sin(lift * Math.PI);
-        bend = vel * 26;
-      } else {
-        var e2 = outCubic(rack);
-        y = TOP + (RACK - TOP) * e2;
-        vel = Math.sin(rack * Math.PI) * 0.6;
-        bend = -vel * 14;
-      }
-      bar.style.transform = 'translate(0,' + (y - BASE).toFixed(1) + 'px)';
-      axis.setAttribute('d', 'M180 ' + (BASE + bend).toFixed(1) + ' Q600 ' + (BASE - bend * 0.9).toFixed(1) + ' 1020 ' + (BASE + bend).toFixed(1));
-      knurl.style.transform = 'translate(0,' + (-bend * 0.25).toFixed(1) + 'px)';
-      sides.forEach(function (sd) {
-        var dir = +sd.dataset.dir;
-        sd.style.transform = 'translate(0,' + bend.toFixed(1) + 'px) rotate(' + (dir * -bend * 0.18).toFixed(2) + 'deg)';
-        sd.style.transformOrigin = (dir < 0 ? 330 : 870) + 'px ' + BASE + 'px';
-      });
-      var height = 1 - (y - TOP) / (BASE - TOP);
-      shadow.setAttribute('rx', (440 - 260 * height).toFixed(0));
-      shadow.setAttribute('opacity', (0.75 - 0.55 * height).toFixed(2));
-      spot.setAttribute('opacity', (0.25 + 0.75 * Math.max(height, rack > 0 ? 0.7 : 0)).toFixed(2));
-      var zoom = 1 + 0.07 * io(lift) - 0.03 * outCubic(rack);
-      cam.style.transform = 'scale(' + zoom.toFixed(3) + ')';
-
-      // krieda: stúpa počas zdvihu
-      var dust = lift > 0 ? Math.sin(Math.min(1, (lift + rack * 0.5)) * Math.PI) : 0;
-      chalk.forEach(function (c) {
-        var t = clamp(lift * 1.4 - c.off, 0, 1);
-        c.el.setAttribute('cx', (c.x + c.dx * t).toFixed(1));
-        c.el.setAttribute('cy', (BASE - 60 - c.rise * t).toFixed(1));
-        c.el.setAttribute('opacity', (dust * (1 - t) * 0.9).toFixed(2));
-      });
-
-      // texty
-      var ph = p < 0.34 ? 0 : p < 0.70 ? 1 : 2;
-      var edges = [[0, 0.30, 0.36], [0.30, 0.66, 0.72], [0.66, 1, 1.2]];
-      words.forEach(function (w, i) {
-        var a = edges[i][0], b = edges[i][1], c2 = edges[i][2];
-        var o = i === 0 ? 1 - seg(p, b, c2) : seg(p, a, a + 0.06) * (1 - seg(p, b, c2));
-        w.style.opacity = o.toFixed(3);
-        w.style.transform = 'translateY(' + ((1 - o) * 0.25).toFixed(3) + 'em)';
-        subs[i].style.opacity = o.toFixed(3);
-        subs[i].style.transform = 'translateY(' + ((1 - o) * 10).toFixed(1) + 'px)';
-      });
-      dots.forEach(function (dt, i) { dt.classList.toggle('on', i === ph); });
-      cta.classList.toggle('is-on', p > 0.86);
-    }
-
-    function frame() {
-      ticking = false;
-      var r = sec.getBoundingClientRect(), vh = window.innerHeight;
-      if (r.bottom < -vh || r.top > vh * 2) return;
-      var p = clamp(-r.top / (r.height - vh), 0, 1);
-      if (Math.abs(p - last) < 0.0005) return;
-      last = p;
-      render(p);
-    }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
-    window.addEventListener('resize', function () { last = -1; frame(); });
-    render(0);
-    frame();
-  }
-
-
   /* ---------- skrolovacia vrstva cez celú stránku ----------
      pozadie s tvarmi, vodoznaky sekcií, nadpisy, bežiaci pás, koľajnica */
   function scrollFx() {
@@ -793,7 +674,6 @@
   dock();
   faq();
   heroParallax();
-  story();
   scrollFx();
   smoothScroll();
 })();
