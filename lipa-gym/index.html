@@ -36,18 +36,6 @@
 <body>
 <a class="skip" href="#main">Preskočiť na obsah</a>
 
-<!-- OTVÁRACIA ANIMÁCIA: opona s činkou, ktorá po dvoch opakovaniach roztvorí dvere. Preskočiť: klik, kláves, obmedzený pohyb, odkaz na sekciu, druhá návšteva v tej istej karte. -->
-<div class="veil" id="veil" aria-hidden="true">
-  <div class="veil-half veil-l"></div>
-  <div class="veil-half veil-r"></div>
-  <div class="veil-seam"></div>
-  <div class="veil-in">
-    <svg class="veil-db" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
-    <p class="veil-name"><span>L</span><span>I</span><span>P</span><span>A</span><span class="veil-gap"></span><span class="v">G</span><span class="v">Y</span><span class="v">M</span></p>
-    <p class="veil-sub"><span>Poď dvíhať.</span></p>
-  </div>
-  <button class="veil-skip" type="button">Preskočiť</button>
-</div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
@@ -120,65 +108,35 @@
 
 <main id="main">
 
-<!-- ÚVOD -->
+<!-- ÚVOD: fotografický záber, otvorenie ako zapnutie svetiel v hale, pomalý nájazd kamery -->
 <section class="hero" aria-labelledby="h-hero">
-  <div class="hero-floaters" aria-hidden="true">
-    <svg class="fl fl1" data-depth="18" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
-    <svg class="fl fl2" data-depth="-12" viewBox="0 0 48 56"><use href="#i-kettle"/></svg>
-    <svg class="fl fl3" data-depth="26" viewBox="0 0 48 48"><use href="#i-plate"/></svg>
-    <svg class="fl fl4" data-depth="-20" viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>
-    <svg class="fl fl5" data-depth="10" viewBox="0 0 48 48"><use href="#i-plate"/></svg>
+  <div class="hero-media" aria-hidden="true">
+    <picture>
+      <source type="image/webp" srcset="assets/img/hero-800.webp 800w, assets/img/hero.webp 1600w" sizes="100vw">
+      <img class="hero-img" src="assets/img/hero.jpg" srcset="assets/img/hero-800.jpg 800w, assets/img/hero.jpg 1600w" sizes="100vw" width="1600" height="895" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <div class="hero-shade"></div>
+    <div class="hero-sweep"></div>
   </div>
   <div class="wrap hero-in">
     <p class="eyebrow reveal"><span class="eyebrow-dot"></span><span>Fitness centrum · <span data-fact="city">Mesto</span></span></p>
     <h1 id="h-hero" class="hero-h">
-      <span class="line"><span>Tvoja najlepšia</span></span>
-      <span class="line"><span>forma <em>začína tu.</em></span></span>
+      <span class="line"><span>Priestor,</span></span>
+      <span class="line"><span>kde sa <em>chce dvíhať.</em></span></span>
     </h1>
-    <p class="hero-p reveal">Moderné fitko s voľnou činkovou zónou, strojmi, cardio a funkčnou zónou a skupinovými tréningami. Pre začiatočníkov aj pre tých, čo už dvíhajú roky.</p>
+    <p class="hero-p reveal">Voľné činky, stroje, cardio aj funkčná zóna. Vybavenie, na ktoré sa tešíš, a priestor, v ktorom sa nedá nesústrediť.</p>
     <div class="hero-cta reveal">
       <a class="btn btn-volt btn-lg" href="#skusobny">Príď na skúšobný tréning</a>
-      <a class="btn btn-ghost btn-lg" href="#clenstvo">Pozri členstvo</a>
+      <a class="btn btn-ghost btn-lg" href="#priestor">Pozri priestor</a>
     </div>
     <ul class="hero-facts reveal" aria-label="Rýchle informácie">
       <li><svg viewBox="0 0 64 32"><use href="#i-dumbbell"/></svg>Voľné činky aj stroje</li>
-      <li><svg viewBox="0 0 64 32"><use href="#i-pulse"/></svg>Cardio a funkčná zóna</li>
-      <li><svg viewBox="0 0 48 56"><use href="#i-kettle"/></svg>Skupinové a osobné tréningy</li>
+      <li><svg viewBox="0 0 64 32"><use href="#i-pulse"/></svg>Cardio a funkčná zóna</li>
+      <li><svg viewBox="0 0 48 56"><use href="#i-kettle"/></svg>Skupinové a osobné tréningy</li>
     </ul>
   </div>
-
-  <!-- Veľká činka: kotúče sa nasunú, potom činka opakuje "rep" -->
-  <div class="barbell-stage" aria-hidden="true">
-    <svg class="barbell" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid meet">
-      <defs><radialGradient id="bb-shadow-g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset=".6" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
-      <ellipse class="bb-shadow" cx="600" cy="236" rx="460" ry="16"/>
-      <g class="bb-lift">
-        <rect class="bb-bar" x="60" y="123" width="1080" height="14" rx="7"/>
-        <rect class="bb-sleeve" x="60" y="118" width="300" height="24" rx="6"/>
-        <rect class="bb-sleeve" x="840" y="118" width="300" height="24" rx="6"/>
-        <!-- ľavá strana -->
-        <g class="plates plates-l">
-          <rect class="pl pl-big" x="300" y="40" width="34" height="180" rx="8"/>
-          <rect class="pl pl-mid" x="262" y="66" width="30" height="128" rx="7"/>
-          <rect class="pl pl-sm" x="230" y="86" width="24" height="88" rx="6"/>
-          <rect class="pl pl-col" x="204" y="106" width="18" height="48" rx="5"/>
-        </g>
-        <!-- pravá strana -->
-        <g class="plates plates-r">
-          <rect class="pl pl-big" x="866" y="40" width="34" height="180" rx="8"/>
-          <rect class="pl pl-mid" x="908" y="66" width="30" height="128" rx="7"/>
-          <rect class="pl pl-sm" x="946" y="86" width="24" height="88" rx="6"/>
-          <rect class="pl pl-col" x="978" y="106" width="18" height="48" rx="5"/>
-        </g>
-        <!-- vrúbkovanie na osi -->
-        <g class="bb-knurl">
-          <rect x="420" y="126" width="120" height="8" rx="4"/>
-          <rect x="660" y="126" width="120" height="8" rx="4"/>
-        </g>
-      </g>
-    </svg>
-  </div>
-  <a class="hero-scroll" href="#ponuka" aria-label="Posunúť na ponuku"><span></span></a>
+  <p class="hero-note" aria-hidden="true">Vizualizácia priestoru</p>
+  <a class="hero-scroll" href="#pribeh" aria-label="Posunúť ďalej"><span></span></a>
 </section>
 
 <!-- PÁS -->
@@ -197,6 +155,7 @@
 <!-- PRÍBEH: filmová scéna riadená skrolovaním (naloženie, zdvih, uloženie) -->
 <section class="story" id="pribeh" aria-labelledby="h-pribeh">
   <div class="story-pin">
+    <div class="story-bg" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/hero.webp"><img src="assets/img/hero.jpg" width="1600" height="895" alt="" loading="lazy" decoding="async"></picture></div>
     <div class="story-ui wrap">
       <p class="kicker">Ako to u nás vyzerá</p>
       <h2 id="h-pribeh" class="story-h">
@@ -426,32 +385,30 @@
     <header class="sec-head reveal">
       <p class="kicker">Priestor</p>
       <h2 id="h-priestor" class="h2">Miesto, kde sa <em>chce trénovať</em></h2>
-      <p class="lead">Fotografie priestoru pribudnú po nafotení. Zatiaľ kreslené zábery z jednotlivých zón.</p>
+      <p class="lead">Takto má vyzerať hala, do ktorej sa chce vracať. Zábery sú vizualizácie, skutočné fotografie pribudnú po nafotení.</p>
     </header>
     <div class="mosaic">
-      <figure class="tile tile-rack reveal" aria-label="Kresba: stojan s jednoručkami">
-        <div class="rack" aria-hidden="true">
-          <i style="--w:.55"></i><i style="--w:.65"></i><i style="--w:.75"></i><i style="--w:.85"></i><i style="--w:1"></i>
-        </div>
-        <figcaption><span class="tag">Kresba</span>Činková zóna</figcaption>
+      <figure class="tile tile-img tile-w reveal">
+        <picture><source type="image/webp" srcset="assets/img/cinky.webp"><img src="assets/img/cinky.jpg" width="1000" height="753" alt="Stojan s jednoručkami v činkovej zóne" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="tag">Vizualizácia</span>Činková zóna</figcaption>
       </figure>
       <figure class="tile tile-type reveal">
         <p class="tile-big">Tréning<br>bez<br>výhovoriek.</p>
       </figure>
-      <figure class="tile tile-kettle reveal" aria-label="Kresba: kettlebell">
-        <svg class="kb-swing" viewBox="0 0 48 56" aria-hidden="true"><use href="#i-kettle"/></svg>
-        <figcaption><span class="tag">Kresba</span>Funkčná zóna</figcaption>
+      <figure class="tile tile-img reveal">
+        <picture><source type="image/webp" srcset="assets/img/funkcna.webp"><img src="assets/img/funkcna.jpg" width="1000" height="753" alt="Kettlebelly a kruhy vo funkčnej zóne" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="tag">Vizualizácia</span>Funkčná zóna</figcaption>
       </figure>
-      <figure class="tile tile-pulse reveal" aria-label="Kresba: krivka tepu">
-        <svg class="pulse-line" viewBox="0 0 64 32" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 18h12l5-12 8 22 7-16 4 6h28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <figcaption><span class="tag">Kresba</span>Cardio zóna</figcaption>
+      <figure class="tile tile-img tile-w reveal">
+        <picture><source type="image/webp" srcset="assets/img/cardio.webp"><img src="assets/img/cardio.jpg" width="1000" height="753" alt="Bežecké pásy a veslo v cardio zóne" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="tag">Vizualizácia</span>Cardio zóna</figcaption>
       </figure>
-      <figure class="tile tile-plate reveal" aria-label="Kresba: kotúč">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-plate"/></svg>
-        <figcaption><span class="tag">Kresba</span>Stroje</figcaption>
+      <figure class="tile tile-img reveal">
+        <picture><source type="image/webp" srcset="assets/img/stroje.webp"><img src="assets/img/stroje.jpg" width="1000" height="753" alt="Rad posilňovacích strojov a kladková veža" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="tag">Vizualizácia</span>Stroje</figcaption>
       </figure>
       <figure class="tile tile-photo reveal">
-        <div class="tile-empty"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg><p>Fotografiu doplníme<br>po nafotení</p></div>
+        <div class="tile-empty"><svg viewBox="0 0 48 48"><use href="#i-plate"/></svg><p>Skutočné fotografie<br>doplníme po nafotení</p></div>
       </figure>
     </div>
 
@@ -469,6 +426,7 @@
 
 <!-- SKÚŠOBNÝ TRÉNING -->
 <section class="trial has-wm" id="skusobny" data-wm="Tréning" aria-labelledby="h-skusobny">
+  <div class="trial-bg" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/os.webp"><img src="assets/img/os.jpg" width="1600" height="895" alt="" loading="lazy" decoding="async"></picture></div>
   <div class="wrap trial-in">
     <div class="trial-copy reveal">
       <p class="kicker">Skúšobný tréning</p>

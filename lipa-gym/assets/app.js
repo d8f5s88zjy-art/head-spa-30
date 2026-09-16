@@ -264,49 +264,51 @@
   }
 
 
-  /* ---------- otváracia animácia ---------- */
+  /* ---------- otvorenie: zapnutie svetiel v hale ----------
+     Fotografia úvodu je tmavá, svetlá dvakrát bliknú a zostanú svietiť,
+     kamera pomaly nabieha, potom vybehne nadpis. Preskočí sa pri
+     obmedzení pohybu, pri odkaze na sekciu a pri opakovanom načítaní v karte. */
   var INTRO = false;
   function intro() {
-    var veil = $('#veil');
-    if (!veil) return;
-    var skip = reduce.matches || location.hash.length > 1 || !window.matchMedia('(min-width: 320px)').matches;
+    var img = $('.hero-img');
+    if (!img) return;
+    var skip = reduce.matches || location.hash.length > 1;
     try { if (sessionStorage.getItem('lipa-intro')) skip = true; } catch (e) {}
-    if (skip) { veil.remove(); return; }
+    if (skip) return;
     INTRO = true;
     d.body.classList.add('intro');
     try { sessionStorage.setItem('lipa-intro', '1'); } catch (e) {}
     var heroBits = $$('.hero .reveal');
     heroBits.forEach(function (el) { el.style.transition = 'none'; });
-    var opened = false;
+    var started = false, opened = false;
+    function start() {
+      if (started) return;
+      started = true;
+      d.body.classList.add('lights');
+      setTimeout(open, 1500);
+    }
     function open() {
       if (opened) return;
       opened = true;
-      d.body.classList.add('intro-open');
       d.body.classList.add('is-loaded');
       heroBits.forEach(function (el, i) {
         el.style.transition = '';
         void el.offsetWidth;
-        el.style.transitionDelay = (0.25 + i * 0.1) + 's';
+        el.style.transitionDelay = (0.35 + i * 0.12) + 's';
         el.classList.add('in');
       });
-      setTimeout(function () {
-        d.body.classList.remove('intro');
-        d.body.classList.add('intro-done');
-        veil.remove();
-        d.removeEventListener('keydown', onKey);
-      }, 1300);
+      d.body.classList.remove('intro');
+      d.body.classList.add('intro-done');
     }
-    function onKey(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') open(); }
-    veil.addEventListener('click', open);
-    d.addEventListener('keydown', onKey);
-    setTimeout(open, 1450);
+    var t = setTimeout(start, 1200);
+    (img.decode ? img.decode() : Promise.resolve()).then(function () { clearTimeout(t); start(); }, function () { clearTimeout(t); start(); });
+    $('.hero').addEventListener('click', function () { if (started && !opened) open(); });
   }
-
 
   /* ---------- úvod: paralaxa pri skrolovaní ---------- */
   function heroParallax() {
     if (reduce.matches) return;
-    var hin = $('.hero-in'), stage = $('.barbell-stage'), fl = $('.hero-floaters');
+    var hin = $('.hero-in'), stage = $('.hero-media'), fl = null;
     if (!hin || !stage) return;
     var tick = false;
     function frame() {
@@ -316,8 +318,7 @@
       var k = Math.min(1, y / (vh * 0.9));
       hin.style.transform = 'translate3d(0,' + (y * 0.28).toFixed(1) + 'px,0)';
       hin.style.opacity = (1 - k * 1.1).toFixed(3);
-      stage.style.transform = 'translate3d(0,' + (y * -0.14).toFixed(1) + 'px,0)';
-      stage.style.opacity = (1 - k).toFixed(3);
+      stage.style.transform = 'translate3d(0,' + (y * 0.35).toFixed(1) + 'px,0)';
       if (fl) fl.style.transform = 'translate3d(0,' + (y * 0.12).toFixed(1) + 'px,0)';
     }
     window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
@@ -630,7 +631,7 @@
     var done = false;
     function loaded() { if (done || INTRO) return; done = true; d.body.classList.add('is-loaded'); }
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(loaded);
-    setTimeout(loaded, 900);
+    setTimeout(loaded, 600);
 
     if (reduce.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     var stage = $('.hero'), fls = $$('.fl');

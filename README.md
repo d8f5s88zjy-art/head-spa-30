@@ -277,11 +277,11 @@ Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30:
 
 ## Animácie činiek
 
-- **Otvorenie stránky:** tmavá opona s činkou, ktorá spraví dva zdvihy, kým sa písmená LIPA GYM vysunú. Potom sa opona roztvorí ako dvere (zelený šev v strede) a úvodná činka s textom nabehne až za ňou. Preskočí sa klikom, klávesom, tlačidlom Preskočiť, pri obmedzení pohybu, pri odkaze priamo na sekciu (`#clenstvo`) a pri druhom načítaní v tej istej karte.
+- **Otvorenie stránky (zapnutie svetiel):** úvod je fotografický záber haly na celú obrazovku. Pri načítaní je tmavý, svetlá dvakrát bliknú a zostanú svietiť, po hale prejde zelený odlesk, kamera 11 sekúnd pomaly nabieha a nadpis vybehne po riadkoch. Preskočí sa klikom do úvodu, pri obmedzení pohybu, pri odkaze priamo na sekciu (`#clenstvo`) a pri druhom načítaní v tej istej karte.
+- **Vizualizácie priestoru:** hala v úvode, činková, funkčná a cardio zóna, stroje a činka pod formulárom sú AI vizualizácie (`assets/img/*.jpg` + `.webp`, vygenerované 16. 9. 2026), na stránke označené štítkom „Vizualizácia“ a poznámkou „Vizualizácia priestoru“. Sú to ilustrácie atmosféry, nie fotografie skutočnej prevádzky, a po nafotení sa nahradia skutočnými fotkami (rovnaké názvy súborov, rovnaké rozmery 1600 × 895 a 1000 × 753). Ukazujú zelené kotúče a LED pásy vo farbe značky.
 - **Príbeh pri skrolovaní (sekcia `#pribeh`):** filmová scéna pripnutá na obrazovku, ktorú riadi skrolovanie. Najprv sa na os nakladajú kotúče (počítadlo kilogramov rastie do 100 kg), potom sa činka zdvihne s prehnutím osi, kriedovým prachom, zosilnením svetla a jemným priblížením kamery, nakoniec sa uloží do stojana a objaví sa tlačidlo na skúšobný tréning. Nadpisy Nalož / Zdvihni / Zopakuj sa prelínajú podľa fázy. Úvod má pri skrolovaní paralaxu (text a činka sa rozchádzajú a strácajú). Pri obmedzení pohybu je scéna statická s naloženou činkou a všetkými textami.
 - **Skrolovacia vrstva cez celú stránku:** v pozadí plávajú obrysové kotúče, činka a kettlebell, každý inou rýchlosťou, otáčajú sa so skrolovaním a po opustení obrazovky sa vracajú zdola. Za nadpisom každej sekcie je obrysový nápis (Ponuka, Členstvo…), ktorý sa posúva do strany podľa polohy sekcie. Nadpisy sekcií nabiehajú podľa skrolu (nie jednorazovo), bežiaci pás sa pri rýchlom skrole nakloní. Na širokých obrazovkách je vpravo koľajnica s kotúčom, ktorý ukazuje polohu na stránke, s bodkami sekcií (klikateľné, s názvom pri prejdení).
 - **Otázky:** odpovede sa plynulo vysúvajú a zasúvajú, znamienko plus sa otáča na mínus.
-- **Úvod:** veľká olympijská os, na ktorú sa po načítaní nasunú kotúče (pružinový pohyb), potom činka opakuje „rep“ so slabým prehnutím kotúčov a tieňom. Okolo plávajú jednoručky, kettlebell a kotúče, na počítači reagujú na pohyb myši (paralaxa).
 - **Lišta:** pri rolovaní beží pod lištou pás postupu a po ňom sa kotúľa malá jednoručka.
 - **Ponuka:** každá zóna má vlastnú ikonu s pohybom, keď sa objaví a pri prejdení myšou: bicepsový zdvih jednoručky, švih kettlebellu, otáčajúci sa kotúč, tep.
 - **Členstvo:** na karte sa pri odhalení „naložia“ kotúče (počet podľa plánu).
@@ -305,7 +305,7 @@ Web nikde neuvádza vymyslené fakty. Zástupné hodnoty sú označené `DOPLNI�
 | Ceny členstva | ukážkové (zobrazuje sa „— €“) | sekcia `#clenstvo` v `index.html`, odstrániť poznámku „Ukážkový cenník“ |
 | Rozvrh lekcií, tréneri | ukážkové | `TIMETABLE` v `app.js`, sekcia `#treneri` (návod v komentári) |
 | Podmienky pozastavenia, zľavy, čo je v cene | potvrdiť | odpovede v `#faq` a texty pri plánoch |
-| Fotografie priestoru | doplniť | dlaždica „Fotografiu doplníme“ v `#priestor` |
+| Fotografie priestoru | vizualizácie (AI), označené | nahradiť skutočnými fotkami v `assets/img/` (hero, cinky, funkcna, cardio, stroje, os) |
 
 Kým fakty nie sú doplnené, stránka ukazuje „doplníme“ a nevytvára odkazy na telefón ani mapu.
 
