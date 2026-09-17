@@ -399,3 +399,29 @@ Ako to funguje:
 **Keď pribudne nový text v `index.html`**, stačí doň pridať nový kľúč do šiestich
 jazykových súborov. Kým tam nie je, tá jedna veta sa zobrazí po slovensky
 a zvyšok stránky ostane preložený.
+
+## Plagát na losovanie
+
+`barbershop/plagat/index.html` – plagát A3 na výšku (297 × 420 mm) pre losovanie o rok strihania
+zadarmo. Jeden hárok postavený ako vstupenka do losovania: perforácia s nožnicami, pod ňou útržok
+s dátumom, QR kódom a podmienkami. Farby a písma sú tie isté ako na stránke, písma sa načítavajú
+z `barbershop/assets/fonts/` cez `../assets/`.
+
+Rozmery vnútri hárku sú v `cqw` (1 cqw = 1 % šírky hárku = 2,97 mm), takže jedny čísla platia na
+obrazovke aj v tlači. Tlačový hárok drží `@page{size:A3 portrait;margin:0}` a `print-color-adjust:exact`.
+
+- `barbershop/plagat/qr.svg` – QR kód na Instagram, vygenerovaný cez `segno` (ECC úroveň Q, 33
+  modulov), tmavé moduly na svetlej podložke, aby sa dal naskenovať z tmavého plagátu
+- `barbershop/plagat/barbershop30-losovanie-A3.pdf` – tlačové PDF, jedna strana, písma vložené
+- `barbershop/plagat/barbershop30-losovanie.png` – náhľad na sociálne siete
+
+Prerender po zmene (beží lokálny server nad `barbershop/`):
+
+```
+python3 -m http.server 8766   # v priečinku barbershop/
+node -e "…playwright… page.pdf({width:'297mm',height:'420mm',printBackground:true})"
+```
+
+**Termíny, výhra aj podmienky sú NÁVRH, čakajú na potvrdenie prevádzky.** Obdobie 17. 9. – 31. 10.
+2026, losovanie 31. 10. 2026 o 14:00, výhra 12 strihov po 18 € (216 €). Pri zmene treba prepísať
+horný pás, blok `03`, `.when` a text `.fine`. Text podmienok nie je právne overený.

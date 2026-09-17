@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="BARBERSHOP 30 Nitra losuje o rok strihania zadarmo. Plagát na tlač, A3 na výšku.">
+<meta name="theme-color" content="#0a0a09">
+<title>Rok strihania zadarmo</title>
+<style>
+/* BARBERSHOP 30 — plagát na losovanie, A3 na výšku (297 × 420 mm).
+   Jeden hárok, postavený ako obrovská vstupenka do losovania: perforácia
+   s nožnicami, pod ňou útržok s dátumom a pravidlami. Farby a písma sú tie
+   isté ako na webe, takže plagát a stránka vyzerajú ako jedna vec.
+
+   Všetky rozmery vnútri hárku sú v cqw (1 cqw = 1 % šírky hárku = 2,97 mm),
+   takže rovnaké čísla platia na obrazovke aj v tlači. */
+
+@font-face{font-family:'Oswald';font-style:normal;font-weight:400 700;font-display:block;src:url(../assets/fonts/Oswald-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Oswald';font-style:normal;font-weight:400 700;font-display:block;src:url(../assets/fonts/Oswald-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Fraunces';font-weight:400;font-display:block;src:url(../assets/fonts/Fraunces-400.woff2) format('woff2')}
+@font-face{font-family:'Fraunces';font-weight:500;font-display:block;src:url(../assets/fonts/Fraunces-500.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;font-display:block;src:url(../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:600;font-display:block;src:url(../assets/fonts/Manrope-600.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:400;font-display:block;src:url(../assets/fonts/JetBrainsMono-400.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:600;font-display:block;src:url(../assets/fonts/JetBrainsMono-600.woff2) format('woff2')}
+
+:root{
+  --ink:#0a0a09;          /* hárok */
+  --panel:#15140f;        /* útržok pod perforáciou */
+  --gold:#d4b062;
+  --gold-hi:#f0d694;
+  --gold-deep:#a8842f;
+  --bone:#fbf8f3;
+  --dim:#a9a196;
+  --stage:#1b1a17;        /* plocha okolo hárku, len na obrazovke */
+  --display:"Oswald","Arial Narrow",Impact,sans-serif;
+  --num:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Manrope","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--stage);color:var(--bone);font-family:var(--body);-webkit-font-smoothing:antialiased}
+
+.stage{display:grid;justify-items:center;gap:22px;padding-block:28px 46px;padding-left:16px;padding-right:16px}
+
+.bar{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;justify-content:center;max-width:297mm;width:100%;
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);text-align:center}
+.bar button{appearance:none;cursor:pointer;font:inherit;letter-spacing:.13em;text-transform:uppercase;
+  padding:11px 20px;min-height:44px;border-radius:999px;border:1px solid rgba(212,176,98,.5);
+  background:linear-gradient(135deg,var(--gold-hi),#cfa94e 60%,var(--gold-deep));color:#100f0a;font-weight:600;
+  transition:filter .25s ease,transform .25s ease}
+.bar button:hover{filter:brightness(1.08)}
+.bar button:active{transform:translateY(1px)}
+.bar button:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+/* ---------- hárok ---------- */
+.sheet{
+  position:relative;container-type:inline-size;
+  width:min(100%,297mm);aspect-ratio:297/420;
+  display:flex;flex-direction:column;
+  padding:4.4cqw 4.6cqw 4.2cqw;overflow:hidden;
+  background:var(--ink);color:var(--bone);
+  box-shadow:0 30px 90px rgba(0,0,0,.55);
+  print-color-adjust:exact;-webkit-print-color-adjust:exact}
+
+/* svetlo lámp z prevádzky, zhora a zľava, ako na webe */
+.sheet .glow{position:absolute;pointer-events:none;border-radius:50%}
+.sheet .g1{width:74cqw;height:74cqw;left:-24cqw;top:-26cqw;background:radial-gradient(circle,rgba(240,214,148,.16),rgba(212,176,98,.05) 42%,transparent 70%)}
+.sheet .g2{width:58cqw;height:58cqw;right:-20cqw;top:26cqw;background:radial-gradient(circle,rgba(212,176,98,.12),rgba(168,132,47,.04) 44%,transparent 70%)}
+.sheet .edge{position:absolute;inset:2.4cqw;border:1px solid rgba(212,176,98,.3);pointer-events:none}
+
+.sheet>*{position:relative}
+
+/* ---------- horná lišta ---------- */
+.rail{display:flex;justify-content:space-between;align-items:baseline;gap:2cqw;
+  font-family:var(--mono);font-size:1.12cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.rail .mid{color:var(--dim);letter-spacing:.16em}
+
+/* ---------- značka ---------- */
+.lockup{display:flex;align-items:center;gap:2.2cqw;margin-top:3.4cqw}
+.lockup svg{width:9.4cqw;height:9.4cqw;flex:none}
+.lockup .who{display:grid;gap:.5cqw}
+.lockup b{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:3.1cqw;letter-spacing:.06em;line-height:1}
+.lockup span{font-family:var(--mono);font-size:1.08cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+/* ---------- hlavný nápis ---------- */
+.eyebrow{display:flex;align-items:center;gap:1.6cqw;margin:5.6cqw 0 0;
+  font-family:var(--mono);font-size:1.5cqw;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.eyebrow::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(212,176,98,.55),transparent)}
+
+h1{margin:1.6cqw 0 0;font-family:var(--display);font-weight:600;text-transform:uppercase;
+  font-size:14.6cqw;line-height:.86;letter-spacing:-.005em;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--gold-deep) 4%,var(--gold-hi) 34%,#fff4dc 48%,var(--gold) 66%,var(--gold-deep) 96%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+.prize{margin:3.4cqw 0 0;font-size:2.35cqw;line-height:1.5;color:var(--bone);max-width:60cqw}
+.prize b{font-family:var(--num);font-weight:500;color:var(--gold-hi);font-size:1.18em;white-space:nowrap}
+.prize .sub{display:block;margin-top:.9cqw;font-size:.76em;color:var(--dim)}
+
+/* ---------- tri kroky: naozaj postupnosť, preto číslovanie ---------- */
+.steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw;margin:auto 0 0;padding:0}
+.steps li{display:grid;gap:.9cqw;align-content:start;padding-top:1.5cqw;border-top:1px solid rgba(212,176,98,.34)}
+.steps .n{font-family:var(--mono);font-weight:600;font-size:1.25cqw;letter-spacing:.2em;color:var(--gold)}
+.steps h2{margin:0;font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:2.5cqw;line-height:1.08;letter-spacing:.015em}
+.steps p{margin:0;font-size:1.44cqw;line-height:1.55;color:var(--dim)}
+
+/* ---------- perforácia s nožnicami ---------- */
+.perf{position:relative;height:0;margin:4.6cqw 0;
+  border-top:1px dashed rgba(212,176,98,.55)}
+.perf svg{position:absolute;left:6cqw;top:50%;width:3.6cqw;height:3.6cqw;translate:0 -50%;
+  padding:.5cqw;background:var(--ink);color:var(--gold);box-sizing:content-box}
+
+/* ---------- útržok ---------- */
+.stub{display:grid;grid-template-columns:1fr auto;gap:3.4cqw;align-items:start}
+.when{display:grid;gap:.8cqw}
+.when .lab{font-family:var(--mono);font-size:1.25cqw;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.when .day{font-family:var(--num);font-weight:500;font-size:9.2cqw;line-height:.9;color:var(--bone);font-variant-numeric:tabular-nums}
+.when .day i{font-style:normal;color:var(--gold-hi)}
+.when .at{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:2.05cqw;letter-spacing:.06em;color:var(--dim)}
+
+.qr-plate{display:grid;justify-items:center;gap:1cqw;width:22cqw;padding:1.5cqw 1.5cqw 1.2cqw;border-radius:1.2cqw;background:var(--bone)}
+.qr-plate svg{display:block;width:100%;height:auto;shape-rendering:crispEdges}
+.qr-plate span{font-family:var(--mono);font-size:1.02cqw;letter-spacing:.09em;text-transform:uppercase;color:#141310;text-align:center;line-height:1.35}
+
+.fine{grid-column:1/-1;margin:2.6cqw 0 0;padding-top:1.6cqw;border-top:1px solid rgba(251,248,243,.14);
+  font-size:1.06cqw;line-height:1.6;color:#8d867d;max-width:none}
+.fine b{color:var(--dim);font-weight:600}
+
+/* ---------- tlač ---------- */
+@page{size:A3 portrait;margin:0}
+@media print{
+  body{background:#fff}
+  .stage{display:block;padding:0;gap:0}
+  .bar{display:none}
+  .sheet{width:297mm;height:420mm;aspect-ratio:auto;max-width:none;box-shadow:none;break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){.bar button{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="bar">
+    <button type="button" id="print">Tlačiť plagát</button>
+    <span>A3 na výšku · 297 × 420 mm · tlač so zapnutou grafikou na pozadí</span>
+  </div>
+
+  <article class="sheet" aria-label="Plagát: Rok strihania zadarmo">
+    <i class="glow g1" aria-hidden="true"></i>
+    <i class="glow g2" aria-hidden="true"></i>
+    <i class="edge" aria-hidden="true"></i>
+
+    <div class="rail">
+      <span>Vstupenka do losovania</span>
+      <span class="mid">17. 9. — 31. 10. 2026</span>
+      <span>Nitra</span>
+    </div>
+
+    <div class="lockup">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="#d4b062" stroke-width="1.5"/>
+        <path d="M7 32 L18 32 M57 32 L46 32" stroke="#a9a196" stroke-width="1.5" stroke-linecap="round" opacity=".75"/>
+        <text x="32" y="38.5" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#fbf8f3">30</text>
+      </svg>
+      <div class="who">
+        <b>Barbershop 30</b>
+        <span>Holičstvo · Mostná 226/30</span>
+      </div>
+    </div>
+
+    <p class="eyebrow">Losujeme o</p>
+    <h1>Rok<br>strihania<br><em>zadarmo</em></h1>
+
+    <p class="prize">Dvanásť strihov, jeden každý mesiac, celý rok na náš účet.
+      <b>V hodnote 216 €.</b>
+      <span class="sub">Klasický pánsky strih, 30 minút, 18 € — dvanásťkrát.</span></p>
+
+    <ol class="steps">
+      <li><span class="n">01</span><h2>Príď sa ostrihať</h2><p>Každá návšteva od 17. septembra do 31. októbra je jeden lístok do bubna. Koľko strihov, toľko šancí.</p></li>
+      <li><span class="n">02</span><h2>Vhoď lístok do bubna</h2><p>Lístok dostaneš pri pulte. Napíš meno a telefón a hoď ho do bubna — to je celé.</p></li>
+      <li><span class="n">03</span><h2>Losujeme naživo</h2><p>Ťaháme na Instagrame @barbershop30_nitra. Výhercovi zavoláme ešte v ten deň.</p></li>
+    </ol>
+
+    <div class="perf" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M9 15 19 3M15 15 5 3"/>
+      </svg>
+    </div>
+
+    <div class="stub">
+      <div class="when">
+        <span class="lab">Losujeme</span>
+        <span class="day">31.<i>10.</i></span>
+        <span class="at">Sobota · 14:00 · naživo na Instagrame</span>
+      </div>
+      <div class="qr-plate">
+        <svg class="qr" viewBox="0 0 33 33" role="img" aria-label="QR kód na Instagram @barbershop30_nitra"><path d="M0 0h7v1h-7zM12 0h1v1h-1zM15 0h2v1h-2zM18 0h1v1h-1zM20 0h3v1h-3zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h2v1h-2zM13 1h1v1h-1zM17 1h1v1h-1zM19 1h1v1h-1zM21 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h3v1h-3zM19 2h3v1h-3zM24 2h1v1h-1zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h3v1h-3zM14 3h2v1h-2zM18 3h6v1h-6zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM11 4h1v1h-1zM13 4h2v1h-2zM16 4h1v1h-1zM18 4h3v1h-3zM22 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM10 5h1v1h-1zM14 5h3v1h-3zM20 5h2v1h-2zM23 5h2v1h-2zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM8 7h2v1h-2zM12 7h1v1h-1zM15 7h2v1h-2zM18 7h3v1h-3zM24 7h1v1h-1zM1 8h1v1h-1zM3 8h4v1h-4zM8 8h3v1h-3zM13 8h2v1h-2zM16 8h2v1h-2zM19 8h1v1h-1zM24 8h3v1h-3zM28 8h2v1h-2zM31 8h1v1h-1zM2 9h4v1h-4zM8 9h2v1h-2zM11 9h2v1h-2zM16 9h1v1h-1zM18 9h2v1h-2zM23 9h1v1h-1zM28 9h3v1h-3zM0 10h2v1h-2zM6 10h1v1h-1zM11 10h1v1h-1zM14 10h1v1h-1zM17 10h2v1h-2zM21 10h1v1h-1zM23 10h4v1h-4zM28 10h3v1h-3zM32 10h1v1h-1zM1 11h2v1h-2zM4 11h2v1h-2zM7 11h5v1h-5zM15 11h4v1h-4zM22 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM30 11h2v1h-2zM2 12h3v1h-3zM6 12h3v1h-3zM10 12h3v1h-3zM17 12h5v1h-5zM26 12h2v1h-2zM1 13h2v1h-2zM4 13h2v1h-2zM8 13h1v1h-1zM10 13h1v1h-1zM13 13h1v1h-1zM15 13h4v1h-4zM22 13h2v1h-2zM27 13h1v1h-1zM29 13h1v1h-1zM1 14h1v1h-1zM3 14h5v1h-5zM9 14h1v1h-1zM11 14h4v1h-4zM17 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM26 14h2v1h-2zM29 14h1v1h-1zM1 15h4v1h-4zM7 15h2v1h-2zM11 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM18 15h3v1h-3zM23 15h1v1h-1zM25 15h1v1h-1zM28 15h3v1h-3zM32 15h1v1h-1zM0 16h1v1h-1zM2 16h3v1h-3zM6 16h4v1h-4zM11 16h2v1h-2zM16 16h2v1h-2zM20 16h1v1h-1zM22 16h1v1h-1zM24 16h6v1h-6zM0 17h3v1h-3zM4 17h1v1h-1zM7 17h1v1h-1zM9 17h2v1h-2zM12 17h1v1h-1zM14 17h2v1h-2zM19 17h3v1h-3zM24 17h3v1h-3zM28 17h1v1h-1zM30 17h1v1h-1zM32 17h1v1h-1zM0 18h2v1h-2zM4 18h6v1h-6zM11 18h2v1h-2zM14 18h1v1h-1zM16 18h2v1h-2zM19 18h2v1h-2zM23 18h1v1h-1zM25 18h3v1h-3zM29 18h2v1h-2zM32 18h1v1h-1zM0 19h2v1h-2zM3 19h2v1h-2zM7 19h7v1h-7zM16 19h1v1h-1zM18 19h1v1h-1zM20 19h1v1h-1zM22 19h2v1h-2zM25 19h1v1h-1zM28 19h3v1h-3zM4 20h3v1h-3zM8 20h3v1h-3zM14 20h1v1h-1zM16 20h2v1h-2zM19 20h2v1h-2zM24 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM32 20h1v1h-1zM0 21h3v1h-3zM4 21h2v1h-2zM7 21h2v1h-2zM10 21h3v1h-3zM14 21h2v1h-2zM18 21h2v1h-2zM22 21h2v1h-2zM25 21h1v1h-1zM27 21h2v1h-2zM30 21h1v1h-1zM0 22h1v1h-1zM3 22h2v1h-2zM6 22h2v1h-2zM9 22h2v1h-2zM14 22h1v1h-1zM20 22h10v1h-10zM31 22h2v1h-2zM0 23h1v1h-1zM3 23h1v1h-1zM10 23h5v1h-5zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM22 23h5v1h-5zM28 23h1v1h-1zM30 23h2v1h-2zM0 24h3v1h-3zM6 24h2v1h-2zM11 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM24 24h6v1h-6zM8 25h1v1h-1zM10 25h5v1h-5zM16 25h1v1h-1zM18 25h1v1h-1zM21 25h1v1h-1zM23 25h2v1h-2zM28 25h1v1h-1zM30 25h2v1h-2zM0 26h7v1h-7zM10 26h2v1h-2zM13 26h1v1h-1zM18 26h3v1h-3zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h1v1h-1zM30 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h3v1h-3zM12 27h1v1h-1zM14 27h2v1h-2zM18 27h2v1h-2zM22 27h3v1h-3zM28 27h4v1h-4zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM8 28h1v1h-1zM10 28h4v1h-4zM15 28h2v1h-2zM22 28h7v1h-7zM32 28h1v1h-1zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h3v1h-3zM13 29h1v1h-1zM15 29h2v1h-2zM18 29h3v1h-3zM22 29h1v1h-1zM25 29h1v1h-1zM27 29h1v1h-1zM29 29h2v1h-2zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM9 30h1v1h-1zM12 30h1v1h-1zM14 30h1v1h-1zM16 30h1v1h-1zM19 30h1v1h-1zM21 30h2v1h-2zM24 30h1v1h-1zM27 30h2v1h-2zM30 30h3v1h-3zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM10 31h1v1h-1zM19 31h2v1h-2zM22 31h1v1h-1zM25 31h8v1h-8zM0 32h7v1h-7zM9 32h2v1h-2zM13 32h2v1h-2zM16 32h3v1h-3zM23 32h2v1h-2zM26 32h4v1h-4z" fill="#141310"/></svg>
+        <span>Sleduj nás<br>@barbershop30_nitra</span>
+      </div>
+      <p class="fine"><b>Podmienky:</b> Organizátor: BARBERSHOP 30, Mostná 226/30, 949 01 Nitra. Do losovania ide každý lístok vhodený do bubna v prevádzke od 17. 9. do 31. 10. 2026. Zúčastniť sa môže osoba staršia ako 16 rokov. Výhra: 12 strihov v hodnote 18 € za strih, jeden mesačne, platné 12 mesiacov od prevzatia, neprenosné a nevymeniteľné za hotovosť. Výhercu vyžrebujeme 31. 10. 2026 o 14:00 a kontaktujeme telefonicky do troch dní; ak sa nedovoláme, ťaháme znova. Telefónne číslo použijeme výhradne na kontaktovanie výhercu a po losovaní lístky skartujeme. Zamestnanci prevádzky sa losovania nezúčastňujú.</p>
+    </div>
+  </article>
+</div>
+
+<script>
+  document.getElementById('print').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
