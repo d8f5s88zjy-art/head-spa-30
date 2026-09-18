@@ -18,6 +18,20 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Citáty medzi sekciami
+
+Medzi sekcie pribudli tri tiché citáty (`section.pull`). Každý je veta, ktorá už
+na stránke je, prevzatá z obsahu konkrétneho rituálu, a rovnaká veta nesie
+aj sériu Instagram storiek, takže web a profil hovoria jedným hlasom:
+
+- `Záver patrí tichu.` z Prémiového Head Spa rituálu, za sekciou Ako to prebieha
+- `Tempo určuje pokoj, nie hodiny.` z Relaxačného Head Spa, za sekciou Prečo k nám
+- `Dve osoby. Jedna hviezdna obloha.` zo Spoločného rituálu pod hviezdami, za galériou
+
+Popisok pod citátom je odkaz na kartu toho rituálu v cenníku, takže citát nie je
+len ozdoba. Trieda je `pull`, nie `quote`, lebo `quote` už patrí odseku v sekcii
+Rituál a nesmie sa prepísať.
+
 ## Čo web robí sám
 
 - Na telefóne a tablete má menu (ikona vpravo hore), na počítači odkazy v lište. Lišta sa pri čítaní smerom dole schová a pri prvom pohybe hore sa vráti.
