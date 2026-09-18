@@ -866,7 +866,7 @@
     const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
     const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
     const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
-    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when');
+    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
     const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
     const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
     const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
@@ -888,7 +888,109 @@
     const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
     const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
     [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
-    let message = '', shortMessage = '', opened = 0;
+    let message = '', shortMessage = '', opened = 0, dayNote = '', dayNoteUntil = 0;
+    const note = (t) => { dayNote = t; dayNoteUntil = Date.now() + 6000; };
+
+    // ---- slová pre dni a pre vetu o potvrdení (dynamické, preto nie v i18n súboroch)
+    const DAY_WORDS = {
+      sk: { today: 'Dnes', tomorrow: 'Zajtra', d: ['ne', 'po', 'ut', 'st', 'št', 'pi', 'so'] },
+      cs: { today: 'Dnes', tomorrow: 'Zítra', d: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'] },
+      pl: { today: 'Dziś', tomorrow: 'Jutro', d: ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'] },
+      hu: { today: 'Ma', tomorrow: 'Holnap', d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] },
+      de: { today: 'Heute', tomorrow: 'Morgen', d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'] },
+      uk: { today: 'Сьогодні', tomorrow: 'Завтра', d: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'] },
+      en: { today: 'Today', tomorrow: 'Tomorrow', d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+    };
+    const CONFIRM_WORDS = {
+      sk: { open: 'Sme otvorení. Ozveme sa ti dnes, zvyčajne do pár hodín.', soon: 'Dnes otvárame o {t}, vtedy ti napíšeme.', shut: 'Teraz máme zatvorené. Ozveme sa ti {d} po {t}.', tomorrow: 'zajtra', days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
+      cs: { open: 'Máme otevřeno. Ozveme se ti dnes, obvykle do pár hodin.', soon: 'Dnes otevíráme v {t}, tehdy ti napíšeme.', shut: 'Teď máme zavřeno. Ozveme se ti {d} po {t}.', tomorrow: 'zítra', days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
+      pl: { open: 'Jesteśmy otwarci. Odezwiemy się dziś, zwykle w ciągu kilku godzin.', soon: 'Dziś otwieramy o {t}, wtedy napiszemy.', shut: 'Teraz jest zamknięte. Odezwiemy się {d} po {t}.', tomorrow: 'jutro', days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
+      hu: { open: 'Nyitva vagyunk. Ma jelentkezünk, általában pár órán belül.', soon: 'Ma {t}-kor nyitunk, akkor írunk.', shut: 'Most zárva vagyunk. {d} {t} után jelentkezünk.', tomorrow: 'holnap', days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
+      de: { open: 'Wir haben geöffnet. Wir melden uns heute, meist innerhalb weniger Stunden.', soon: 'Wir öffnen heute um {t} und melden uns dann.', shut: 'Gerade ist geschlossen. Wir melden uns {d} nach {t}.', tomorrow: 'morgen', days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
+      uk: { open: 'Ми відчинені. Відповімо сьогодні, зазвичай за кілька годин.', soon: 'Сьогодні відчиняємо о {t}, тоді й напишемо.', shut: 'Зараз зачинено. Відповімо {d} після {t}.', tomorrow: 'завтра', days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
+      en: { open: 'We are open. We will get back to you today, usually within a few hours.', soon: 'We open today at {t} and will write to you then.', shut: 'We are closed right now. We will get back to you {d} after {t}.', tomorrow: 'tomorrow', days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
+    };
+    const lang = () => (document.documentElement.lang || 'sk').slice(0, 2);
+    const words = (map) => map[lang()] || map.sk;
+
+    // ---- deň sa vyberá ťuknutím: desať najbližších otvorených dní
+    const dniBox = $('#r-dni'), inyBtn = $('#r-iny'), datumWrap = $('#r-datum-wrap');
+    function buildDays() {
+      const W = words(DAY_WORDS), list = [], d = new Date(t0);
+      while (list.length < 10) { if (HOURS[d.getDay()]) list.push(new Date(d)); d.setDate(d.getDate() + 1); }
+      dniBox.innerHTML = list.map((dt) => {
+        const diff = Math.round((dt - t0) / 86400000);
+        const top = diff === 0 ? W.today : diff === 1 ? W.tomorrow : W.d[dt.getDay()];
+        return `<label class="day"><input type="radio" name="den" value="${iso(dt)}"><span><b>${top}</b><i>${dt.getDate()}. ${dt.getMonth() + 1}.</i></span></label>`;
+      }).join('');
+      syncDays();
+    }
+    // chip zapnutý podľa dátumu; dnešok zhasne, keď už rituál nestihneme
+    function syncDays() {
+      const v = datum.value, now = new Date();
+      $$('input[name="den"]', dniBox).forEach((i) => {
+        i.checked = i.value === v;
+        const d = parse(i.value), late = d && d.getTime() === t0.getTime() && ritual() && now.getHours() + now.getMinutes() / 60 > lastStart(d);
+        i.disabled = !!late; i.closest('.day').classList.toggle('off', !!late);
+        if (late && i.checked) { i.checked = false; datum.value = ''; note('Dnes už tento rituál nestihneme, vyber ďalší deň alebo nám zavolaj.'); }
+      });
+      const known = !!v && $$('input[name="den"]', dniBox).some((i) => i.value === v);
+      if (v && !known && datumWrap.hidden) openIny(true);
+    }
+    function openIny(open) { datumWrap.hidden = !open; inyBtn.setAttribute('aria-expanded', String(open)); }
+    dniBox.addEventListener('change', (e) => {
+      const i = e.target.closest('input[name="den"]'); if (!i) return;
+      datum.value = i.value; openIny(false); refresh();
+    });
+    inyBtn.addEventListener('click', () => {
+      const open = datumWrap.hidden; openIny(open);
+      if (open) datum.focus({ preventScroll: true }); else { datum.value = ''; refresh(); }
+    });
+
+    // ---- kedy sa ozveme, podľa skutočných otváracích hodín
+    // čas salónu, nie čas návštevníkovho telefónu
+    function salonNow() {
+      try {
+        const parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
+        const get = (t) => (parts.find((x) => x.type === t) || {}).value;
+        const map = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
+        const wd = map[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
+        const cur = (+get('hour') % 24) + (+get('minute') || 0) / 60;
+        if (wd !== undefined && !isNaN(cur)) return { wd, cur };
+      } catch (e) { /* staršie prehliadače: použijeme lokálny čas */ }
+      const d = new Date(); return { wd: d.getDay(), cur: d.getHours() + d.getMinutes() / 60 };
+    }
+    function confirmText() {
+      const W = words(CONFIRM_WORDS), now = salonNow(), h = HOURS[now.wd], cur = now.cur;
+      if (h && cur >= h[0] && cur < h[1]) return { text: W.open, open: true };
+      if (h && cur < h[0]) return { text: W.soon.replace('{t}', hm(h[0])), open: false };
+      let d = (now.wd + 1) % 7, n = 1;
+      while (!HOURS[d]) { d = (d + 1) % 7; n++; }
+      return { text: W.shut.replace('{d}', n === 1 ? W.tomorrow : W.days[d]).replace('{t}', hm(HOURS[d][0])), open: false };
+    }
+
+    // ---- rozpísaný formulár prežije obnovenie stránky (24 hodín, len v prehliadači)
+    const DRAFT = 'hs30-rezervacia';
+    const FIELDS = ['r-ritual', 'r-datum', 'r-cas-presny', 'r-datum2', 'r-meno', 'r-tel', 'r-email', 'r-poukaz', 'r-pozn'];
+    function saveDraft() {
+      try {
+        const v = {}; FIELDS.forEach((id) => { const el = $('#' + id); if (el && el.value) v[id] = el.value; });
+        ['osoby', 'cas', 'cas2'].forEach((n) => { v[n] = val(n); });
+        localStorage.setItem(DRAFT, JSON.stringify({ t: Date.now(), v }));
+      } catch (e) { /* súkromný režim: koncept sa jednoducho neuloží */ }
+    }
+    function loadDraft() {
+      let d; try { d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { return; }
+      if (!d || !d.v || Date.now() - d.t > 864e5) return;
+      const v = d.v;
+      FIELDS.forEach((id) => { const el = $('#' + id); if (el && v[id]) el.value = v[id]; });
+      ['osoby', 'cas', 'cas2'].forEach((n) => { if (v[n]) setVal(n, v[n]); });
+      const dd = parse(datum.value); if (!dd || dd < t0) datum.value = '';
+      if (v['r-cas-presny']) { presnyWrap.hidden = false; const b = rform.querySelector('[data-more="r-presny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+      if (v['r-datum2']) { nahradny.hidden = false; const b = rform.querySelector('[data-more="r-nahradny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+      if (v['r-poukaz']) { $('#r-poukaz-wrap').hidden = false; const b = rform.querySelector('[data-more="r-poukaz-wrap"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+    }
+    const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
 
     // ---- pick a ritual from a card: same slug on the card and the option
     function selectRitual(slug, flash) {
@@ -948,7 +1050,7 @@
       else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
       else casHint.textContent = '';
       const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
-      datumHint.textContent = d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.';
+      datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
       // exact time bounds
       if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
       else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
@@ -977,6 +1079,10 @@
       tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
       tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
       tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
+      // deň, kedy sa ozveme, a koncept
+      syncDays();
+      if (confirmEl) { const c = confirmText(); confirmEl.textContent = c.text; confirmEl.classList.toggle('shut', !c.open); }
+      saveDraft();
     }
 
     // ---- validation: one list of plain sentences, focus on the first wrong field
@@ -1028,7 +1134,7 @@
       refresh();
       if (!validate()) { e.preventDefault(); return; }
       track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
-      showSent('wa');
+      showSent('wa'); clearDraft();
     });
     rform.addEventListener('submit', (e) => {
       e.preventDefault(); refresh();
@@ -1038,7 +1144,7 @@
       track('reservation_send', { channel: 'email', ritual: r.slug });
       let left = false; const mark = () => { left = true; };
       addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
-      showSent('mail');
+      showSent('mail'); clearDraft();
       location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
       setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
     });
@@ -1050,8 +1156,9 @@
       setTimeout(() => { copyBtn.textContent = old; }, 2200);
     });
     rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
-    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); refresh(); datumHint.textContent = 'V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'; } });
-    refresh();
+    document.addEventListener('langchange', () => { buildDays(); refresh(); });
+    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); note('V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'); refresh(); } });
+    buildDays(); loadDraft(); refresh();
   }
 
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */

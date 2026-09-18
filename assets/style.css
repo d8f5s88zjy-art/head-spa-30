@@ -144,6 +144,7 @@ body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.ve
 @media (pointer:coarse){
   .btn,.chip,.faq-q,.card-toggle{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
   .choice span,.choices.small span{min-height:44px}
+  .day span{min-height:68px}
   .linkbtn{min-height:44px;display:inline-flex;align-items:center}
   .map-link,.lb-close,.shot .open{min-height:44px;min-width:44px}
   .btn:active,.mbar a:active,.chip:active{transform:scale(.97);transition-duration:80ms}
@@ -442,7 +443,25 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .choice input:checked+span{border-color:var(--accent);background:var(--accent-muted);color:var(--accent-hover)}
 .choice input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}
 .choices.small{margin-top:14px}
-.choices.small span{min-height:38px;padding:7px 14px;font-size:13px}
+/* výber dňa: jedno ťuknutie namiesto písania dátumu */
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:10px}
+.day{position:relative;display:block;margin:0;cursor:pointer;font-family:inherit;letter-spacing:normal;text-transform:none;color:inherit}
+.day input{position:absolute;opacity:0;width:1px;height:1px}
+.day span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;padding:10px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(10,13,11,.45);transition:border-color .3s,color .3s,background .3s,transform .3s var(--ease)}
+.day span b{font-family:var(--body);font-weight:700;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-primary);line-height:1}
+.day span i{font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.06em;color:var(--text-tertiary);line-height:1}
+.day:hover span{border-color:var(--line-strong)}
+.day input:checked+span{border-color:var(--accent);background:var(--accent-muted)}
+.day input:checked+span b{color:var(--accent-hover)}
+.day input:checked+span i{color:var(--text-secondary)}
+.day input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}
+.day input:disabled+span{opacity:.34;cursor:not-allowed}
+.day.off span{border-style:dashed}
+.confirm{margin-top:14px;display:flex;align-items:flex-start;gap:9px;font-size:13.5px;line-height:1.55;color:var(--text-secondary)}
+.confirm::before{content:"";flex:0 0 auto;width:7px;height:7px;margin-top:7px;border-radius:50%;background:var(--status-open,#6fcf97);box-shadow:0 0 0 4px rgba(111,207,151,.16)}
+.confirm.shut::before{background:var(--status-closed,#c97b5a);box-shadow:0 0 0 4px rgba(201,123,90,.16)}
+.fine .linkbtn{font-size:inherit}
+.choices.small span{min-height:42px;padding:9px 15px;font-size:13.5px}
 .field{margin-top:14px}
 .field label{display:block;margin-bottom:6px;font-family:var(--mono);font-size:var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary)}
 .field label b{color:var(--accent);font-weight:400}
@@ -916,6 +935,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .tools{padding:11px 12px;gap:6px}
   /* Bez prichytávania: snap zarovnával čip na okraj kontajnera, teda pod nálepku. */
   .chip-row{flex-wrap:wrap;gap:7px}
+  .choice span,.choices.small span{min-height:44px}
+  .days{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
   .chip-row .chip{flex:none}
 
   /* Telefón, e-mail, mapa a odkazy v pätičke sú na mobile najčastejšie ťukané.

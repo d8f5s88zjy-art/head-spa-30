@@ -159,11 +159,28 @@ Ako to funguje:
 1. Návštevník ťukne na Rezervovať pri rituáli. Tlačidlo má `data-book` so slugom
    rituálu a odkazuje na `#rezervacia`. Skript ten rituál vyberie vo formulári
    a lístok vpravo hneď ukáže názov, trvanie a cenu.
-2. Vyberie deň, časové okno (prípadne presný čas a náhradný termín), počet osôb,
+2. Deň si vyberie ťuknutím. Skript ponúkne desať najbližších otvorených dní ako
+   dlaždice `Dnes`, `Zajtra`, `po 21. 9.` a podobne. Nedeľa sa v ponuke nikdy
+   neobjaví a dnešok zhasne, keď už sa vybraný rituál do zvyšku dňa nezmestí.
+   Kto chce termín ďalej v kalendári, otvorí `Iný deň` a dostane bežné pole
+   s dátumom. Ak doň napíše nedeľu, deň sa posunie na pondelok a povie to.
+3. Doplní časové okno (prípadne presný čas a náhradný termín), počet osôb,
    meno, telefón a poznámku. Formulár pozná otváracie hodiny, takže nedovolí
    termín, ktorý sa do nich nezmestí.
-3. Odošle to cez WhatsApp alebo e-mailom. Web nič neukladá, správa sa skladá
-   v prehliadači a odchádza z telefónu návštevníka. Každá má referenciu `HS30-XXXX`.
+4. Odošle to cez WhatsApp. Pod tlačidlami je veta, kedy sa salón ozve, počítaná
+   z otváracích hodín a z času v Bratislave, nie z času na telefóne návštevníka.
+   Telefón je druhé tlačidlo, e-mail zostal len ako záloha v drobnom texte,
+   lebo schránku salón číta zriedka.
+5. Web nič neukladá ani nikam neposiela. Správa sa skladá v prehliadači
+   a odchádza z telefónu návštevníka, každá má referenciu `HS30-XXXX`.
+
+Rozpísaný formulár prežije obnovenie stránky. Ukladá sa do `localStorage` pod
+kľúčom `hs30-rezervacia`, platí 24 hodín a po odoslaní sa maže. V súkromnom
+režime sa jednoducho neuloží a formulár funguje ďalej.
+
+Dni, názvy dní a veta o potvrdení sú v siedmich jazykoch priamo v `assets/app.js`
+(`DAY_WORDS`, `CONFIRM_WORDS`), pretože vznikajú za behu a v prekladových
+súboroch by nemali kľúč. Pri zmene jazyka sa dlaždice prekreslia.
 
 Odkaz na online kalendár je na jednom jedinom mieste, v bloku `Radšej kalendár?`
 v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa jedna adresa.

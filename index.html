@@ -545,7 +545,7 @@
         <div class="kicker">Rezervácia</div>
         <h2 class="h2" id="h-rezervacia">Vyber si rituál.<br><em>Termín ti potvrdíme.</em></h2>
       </div>
-      <p class="lede part">Vyber si rituál, deň a čas, ktorý ti sedí, a pošli nám to cez WhatsApp alebo e-mail. Ozveme sa v otváracích hodinách, zvyčajne do pár hodín, najneskôr do 24 hodín. Termín platí až po našom potvrdení.</p>
+      <p class="lede part">Vyber si rituál, deň a čas, ktorý ti sedí, a pošli nám to cez WhatsApp. Ozveme sa v otváracích hodinách, zvyčajne do pár hodín, najneskôr do 24 hodín. Termín platí až po našom potvrdení.</p>
     </div>
     <div class="order rv">
       <form class="vform part" id="rform" action="#rezervacia" novalidate>
@@ -567,12 +567,17 @@
         </fieldset>
         <fieldset class="vf">
           <legend><span>2</span>Kedy</legend>
-          <div class="grid2">
-            <div class="field">
-              <label for="r-datum">Deň <b>*</b></label>
+          <div class="field">
+            <span class="lbl" id="r-den-lbl">Deň <b>*</b></span>
+            <div class="days" id="r-dni" role="radiogroup" aria-labelledby="r-den-lbl"></div>
+            <div class="more"><button class="linkbtn" type="button" id="r-iny" aria-expanded="false" aria-controls="r-datum-wrap">Iný deň</button></div>
+            <div class="field" id="r-datum-wrap" hidden>
+              <label for="r-datum">Dátum</label>
               <input id="r-datum" name="datum" type="date" required>
-              <p class="hint" id="r-datum-hint">Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.</p>
             </div>
+            <p class="hint" id="r-datum-hint">Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.</p>
+          </div>
+          <div class="grid2">
             <div class="field">
               <span class="lbl" id="r-cas-lbl">Čas, ktorý ti sedí</span>
               <div class="choices small" role="radiogroup" aria-labelledby="r-cas-lbl" id="r-cas">
@@ -583,15 +588,15 @@
               </div>
               <p class="hint" id="r-cas-hint" aria-live="polite"></p>
             </div>
+            <div class="field" id="r-presny" hidden>
+              <label for="r-cas-presny">Presný čas</label>
+              <input id="r-cas-presny" name="cas_presny" type="time" step="900" min="09:00">
+              <p class="hint" id="r-presny-hint"></p>
+            </div>
           </div>
           <div class="more">
             <button class="linkbtn" type="button" data-more="r-presny" aria-expanded="false">Chcem presný čas</button>
             <button class="linkbtn" type="button" data-more="r-nahradny" aria-expanded="false">Pridať náhradný termín</button>
-          </div>
-          <div class="field" id="r-presny" hidden>
-            <label for="r-cas-presny">Presný čas</label>
-            <input id="r-cas-presny" name="cas_presny" type="time" step="900" min="09:00">
-            <p class="hint" id="r-presny-hint"></p>
           </div>
           <div class="grid2" id="r-nahradny" hidden>
             <div class="field">
@@ -622,11 +627,11 @@
         </fieldset>
         <p class="err" role="alert" hidden></p>
         <div class="cta">
-          <a class="btn primary" id="r-wa" href="https://wa.me/421911153136" target="_blank" rel="noopener">Poslať cez WhatsApp</a>
-          <button class="btn ghost" type="submit">Poslať e-mailom</button>
-          <a class="call" href="tel:+421911153136">Radšej zavolať: 0911 153 136</a>
+          <a class="btn primary" id="r-wa" href="https://wa.me/421911153136" target="_blank" rel="noopener">Odoslať cez WhatsApp</a>
+          <a class="btn ghost" href="tel:+421911153136">Zavolať 0911 153 136</a>
         </div>
-        <p class="fine">Správa sa otvorí v tvojom WhatsAppe alebo e-maile, stačí ju odoslať. Web nič neukladá, píšeš nám priamo zo svojho telefónu. Termín platí až po našom potvrdení.</p>
+        <p class="confirm" id="r-confirm" aria-live="polite"></p>
+        <p class="fine">Správa sa otvorí v tvojom WhatsAppe, stačí ju odoslať. Web nič neukladá ani nikam neposiela, píšeš nám priamo zo svojho telefónu. Termín platí až po našom potvrdení. Ak WhatsApp nemáš, <button class="linkbtn" type="submit" id="r-mail">pošli to e-mailom</button> alebo si správu skopíruj.</p>
         <div class="sent" id="r-sent" hidden>
           <b>Ďakujeme.</b> <span id="r-sent-text"></span>
           <div class="cta"><button class="btn ghost small" type="button" id="r-copy">Skopírovať správu</button><a class="btn ghost small" id="r-sms" href="sms:+421911153136">Poslať SMS</a><a class="btn ghost small" href="tel:+421911153136">Zavolať</a></div>
@@ -643,7 +648,7 @@
         </div>
         <div class="book-online">
           <h3>Radšej kalendár?</h3>
-          <p>Online rezervácia Salónu 30 je otvorená nonstop. Ak tam rituál ešte nevidíš, napíš nám cez formulár a termín ti potvrdíme ručne.</p>
+          <p>Online rezervácia Salónu 30 je otvorená nonstop. Head Spa rituály do nej postupne dopĺňame, preto je formulár vyššie zatiaľ najistejšia cesta.</p>
           <a class="btn ghost small" href="https://booqme.app/sk/rezervacia/salon-30" target="_blank" rel="noopener">Otvoriť online rezerváciu</a>
         </div>
       </div>
