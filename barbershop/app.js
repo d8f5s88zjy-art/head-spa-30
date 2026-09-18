@@ -16,6 +16,28 @@
     h1.innerHTML = `<span class="ln"><span class="li">${html}</span></span>`;
   }
 
+  /* ============ chapter rail: the page's own table of contents, on wide screens ============ */
+  /* Built from the drawer's list so there is one source of section names. */
+  (function rail() {
+    const src = $$('.drawer-links a[href^="#"]');
+    if (!src.length) return;
+    const nav = document.createElement('nav');
+    nav.className = 'rail';
+    nav.setAttribute('aria-label', 'Sekcie stránky');
+    src.forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!document.getElementById(href.slice(1))) return;
+      const link = document.createElement('a');
+      link.href = href;
+      const name = a.textContent.replace(/^\s*\d+\s*/, '').trim();
+      link.innerHTML = '<span></span><i aria-hidden="true"></i>';
+      $('span', link).textContent = name;
+      link.setAttribute('aria-label', name);
+      nav.appendChild(link);
+    });
+    if (nav.children.length) document.body.appendChild(nav);
+  })();
+
   /* ============ scene: the two travelling lights follow the section ============ */
   const sceneIO = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) document.body.dataset.scene = e.target.id || 'hero'; });
@@ -40,7 +62,7 @@
   nav.addEventListener('focusin', () => { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } });
 
   /* the current section lights its link */
-  const links = $$('.links a[href^="#"]');
+  const links = $$('.links a[href^="#"], .rail a[href^="#"]');
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('cur', a.getAttribute('href') === '#' + e.target.id)); });
   }, { rootMargin: '-40% 0px -55% 0px' });
@@ -62,7 +84,7 @@
   /* ============ one scroll driver: progress, the hero leaving, the way back up ============ */
   const motion = { vel: 0 }, onDrive = [];
   (function driver() {
-    const prog = $('.prog'), hero = $('.hero'), toTop = $('.totop');
+    const prog = $('.prog'), hero = $('.hero'), toTop = $('.totop'), rail = $('.rail');
     let prevY = scrollY, queued = false;
     function drive() {
       queued = false;
@@ -71,6 +93,7 @@
       if (prog) prog.style.setProperty('--p', Math.min(1, y / max).toFixed(4));
       if (hero && !reduced.matches) hero.style.setProperty('--hs', Math.min(1, y / Math.max(1, hero.offsetHeight)).toFixed(4));
       if (toTop) toTop.classList.toggle('on', y > innerHeight * 1.4);
+      if (rail) rail.classList.toggle('on', y > innerHeight * 0.75);
       motion.vel = y - prevY;
       prevY = y;
       for (const fn of onDrive) fn();
@@ -199,6 +222,31 @@
   }));
   applyFilter('all');
 
+  /* the tally belongs in the bar with the chips, not on a line of its own */
+  if (count && count.parentElement !== $('.tools')) $('.tools').appendChild(count);
+
+  /* the brass pill behind the pressed chip, measured from the chip itself */
+  (function chipPill() {
+    const tools = $('.tools');
+    if (!tools || !chips.length) return;
+    const ind = document.createElement('i');
+    ind.className = 'chip-ind';
+    ind.setAttribute('aria-hidden', 'true');
+    tools.insertBefore(ind, tools.firstChild);
+    tools.classList.add('has-ind');
+    function place() {
+      const on = chips.find((c) => c.getAttribute('aria-pressed') === 'true') || chips[0];
+      ind.style.setProperty('--cx', on.offsetLeft + 'px');
+      ind.style.setProperty('--cy', on.offsetTop + 'px');
+      ind.style.setProperty('--cw', on.offsetWidth + 'px');
+      ind.style.setProperty('--ch', on.offsetHeight + 'px');
+    }
+    chips.forEach((c) => c.addEventListener('click', () => requestAnimationFrame(place)));
+    addEventListener('resize', place);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    place();
+  })();
+
   /* the light under the cursor */
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
     cards.forEach((card) => card.addEventListener('pointermove', (e) => {
@@ -233,6 +281,52 @@
     });
   }
 
+  /* ============ the pointer: a brass ring that names what it is over ============ */
+  /* Fine pointers only, never with reduced motion, and it steps aside for a dialog:
+     a dialog paints in the top layer, above anything the page can place, so the ring
+     would sit behind it while the system cursor is hidden. */
+  (function pointerRing() {
+    if (!matchMedia('(hover:hover) and (pointer:fine)').matches || reduced.matches) return;
+    const el = document.createElement('div');
+    el.className = 'cursor';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<i class="ring"></i><i class="dot"></i><span class="lab"></span>';
+    document.body.appendChild(el);
+    const lab = $('.lab', el);
+    const dialogs = $$('dialog');
+    const HOT = 'a[href],button,.shot,.spot,.card,[tabindex]:not([tabindex="-1"])';
+    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, raf = 0, live = false;
+    function frame() {
+      rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;
+      el.style.setProperty('--x', x + 'px');
+      el.style.setProperty('--y', y + 'px');
+      el.style.setProperty('--rx', rx.toFixed(1) + 'px');
+      el.style.setProperty('--ry', ry.toFixed(1) + 'px');
+      raf = Math.abs(x - rx) > 0.2 || Math.abs(y - ry) > 0.2 ? requestAnimationFrame(frame) : 0;
+    }
+    const run = () => { if (!raf) raf = requestAnimationFrame(frame); };
+    const hide = () => { live = false; el.classList.remove('on'); document.body.classList.remove('cursor-on'); };
+    addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      x = e.clientX; y = e.clientY;
+      /* a dialog, and the map's own iframe, keep the system cursor: the ring cannot
+         draw above the top layer, and it never sees a move inside a frame */
+      if (dialogs.some((d) => d.open) || (e.target.closest && e.target.closest('.map'))) { if (live) hide(); return; }
+      if (!live) { live = true; rx = x; ry = y; el.classList.add('on'); document.body.classList.add('cursor-on'); }
+      const named = e.target.closest ? e.target.closest('[data-cursor]') : null;
+      if (named) { lab.textContent = named.dataset.cursor; el.classList.add('lab'); el.classList.remove('hot'); }
+      else { el.classList.remove('lab'); el.classList.toggle('hot', !!(e.target.closest && e.target.closest(HOT))); }
+      run();
+    }, { passive: true });
+    document.addEventListener('mouseleave', hide);
+    addEventListener('blur', hide);
+    /* the system cursor comes back the moment a dialog opens, not on the next move */
+    if (window.MutationObserver) {
+      const sync = () => { if (dialogs.some((d) => d.open) && live) hide(); };
+      dialogs.forEach((d) => new MutationObserver(sync).observe(d, { attributes: true, attributeFilter: ['open'] }));
+    }
+  })();
+
   /* ============ the room: one point open at a time, tap works like hover ============ */
   (function spots() {
     const all = $$('.spot'); if (!all.length) return;
@@ -250,22 +344,45 @@
     addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
   })();
 
-  /* ============ the gallery: any shot enlarges ============ */
+  /* ============ the gallery: any shot enlarges, and the set steps through ============ */
   (function lightbox() {
     const lb = $('#lightbox'); if (!lb) return;
-    const art = $('.lb-art', lb), cap = $('figcaption', lb);
-    const open = (shot) => {
-      const src = $('.draw', shot);
-      art.replaceChildren(src.firstElementChild.cloneNode(true));
+    const shots = $$('.shot:not(.word)'); if (!shots.length) return;
+    const art = $('.lb-art', lb), cap = $('.lb-cap', lb), num = $('.lb-n', lb);
+    let at = 0, swiped = false;
+    function paint(n) {
+      at = (n + shots.length) % shots.length;
+      const shot = shots[at];
+      art.replaceChildren($('.draw', shot).firstElementChild.cloneNode(true));
       cap.textContent = `${$('figcaption b', shot).textContent} — ${shot.dataset.cap || ''}`;
-      lb.showModal();
-    };
-    $$('.shot:not(.word)').forEach((shot) => {
+      num.textContent = `${at + 1} / ${shots.length}`;
+    }
+    function step(d) {
+      if (reduced.matches) { paint(at + d); return; }
+      lb.classList.add('swap');
+      setTimeout(() => { paint(at + d); lb.classList.remove('swap'); }, 170);
+    }
+    const open = (shot) => { paint(shots.indexOf(shot)); lb.showModal(); };
+    shots.forEach((shot) => {
       shot.addEventListener('click', () => open(shot));
       shot.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(shot); } });
     });
     $('.lb-close', lb).addEventListener('click', () => lb.close());
-    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+    $('.lb-nav.prev', lb).addEventListener('click', () => step(-1));
+    $('.lb-nav.next', lb).addEventListener('click', () => step(1));
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    });
+    /* a swipe on the enlarged shot moves along the set; it must not read as a
+       click on the backdrop, which closes */
+    let sx = 0, sy = 0;
+    lb.addEventListener('pointerdown', (e) => { sx = e.clientX; sy = e.clientY; swiped = false; });
+    lb.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { swiped = true; step(dx < 0 ? 1 : -1); }
+    });
+    lb.addEventListener('click', (e) => { if (swiped) { swiped = false; return; } if (e.target === lb) lb.close(); });
   })();
 
   /* ============ faq ============ */

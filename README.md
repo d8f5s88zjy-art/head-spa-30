@@ -128,6 +128,24 @@ Pri `prefers-reduced-motion: reduce` stojí všetko a všetko je viditeľné.
 Fotografie sú okrem úvodu, sekcie U nás vnútri a galérie aj v sekcii Ako to prebieha (vedľa krokov,
 v lepiacom stĺpci) a pod panelom s poukážkami (ako podklad pod závojom).
 
+### Detaily, ktoré držia dojem
+
+Drahé weby nepoznať podľa toho, že sa na nich viac hýbe, ale podľa toho, že im nič nechýba pod
+rukou. Preto k stránke pribudlo sedem drobností, každá s vlastným vypínačom:
+
+| Detail | Čo robí | Kedy sa neukáže |
+| --- | --- | --- |
+| Mosadzný prstenec pod myšou (`.cursor`) | sleduje ruku, nad odkazom sa zväčší, nad fotkou v galérii sa zmení na zlatú pilulku s nápisom **Zväčšiť**, nad tlačidlom rezervácie **Rezervovať**, nad telefónom **Zavolať** | na dotykovom displeji, pri obmedzení pohybu, v otvorenom dialógu (menu, zväčšená fotka) a nad mapou, kde patrí systémový kurzor |
+| Bočný register kapitol (`.rail`) | vpravo pri okraji ukazuje, v ktorej sekcii si; po prejdení myšou vysvieti názov | pod 1260 px šírky a kým si v úvode |
+| Stojatý popis a šípka v úvode (`.hside`, `.hcue`) | adresa postavená na výšku pri ľavom okraji a odkaz na cenník so stekajúcim svetlom | pod 900 px šírky |
+| Krokovanie galérie | zväčšenú fotku posunieš šípkami na obrazovke, klávesmi ← a →, alebo ťahom prsta; v popise je počítadlo **1 / 5** | — |
+| Mosadzná pilulka vo filtri (`.chip-ind`) | podklad stlačenej kategórie sa presunie k novej, nepreblikne | pilulku stavia skript, bez neho ostáva pôvodné zlaté tlačidlo |
+| Počet služieb v lište filtra | tally sa presunul z vlastného riadka do pravej časti lepiacej lišty | pod 901 px sa vráti pod čipy |
+| Vlasový rám stránky (`.frame`) | zlatá linka po obvode okna, ako orezová značka na tlači | pod 1260 px šírky |
+
+Zlatý prechod na hlavných tlačidlách sa pri prejdení myšou posunie po ploche, takže mosadz chytí
+svetlo namiesto toho, aby len zosvetlela.
+
 ### Dve chyby, ktoré pri tom vyšli najavo
 
 - **Úvodná scéna sa vôbec neprehrávala.** Pri skoršom mazaní kresieb sa v `app.js` zduplikoval

@@ -57,6 +57,7 @@
   <button class="iskip" type="button">Preskočiť úvod</button>
 </div>
 <div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><i class="lamp l1"></i><i class="lamp l2"></i><i class="sweep"></i><div class="grain"></div></div>
+<div class="frame" aria-hidden="true"></div>
 <div class="prog" aria-hidden="true"></div>
 
 <nav class="nav" aria-label="Hlavná navigácia">
@@ -74,7 +75,7 @@
       <a href="#kontakt">Kontakt</a>
     </div>
     <div class="nav-actions">
-      <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať</a>
+      <a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať</a>
       <button class="menu-btn" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
     </div>
   </div>
@@ -93,8 +94,8 @@
       <a href="#kontakt"><span>08</span>Kontakt</a>
     </nav>
     <div class="drawer-foot">
-      <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
-      <a class="btn ghost" href="tel:+421951267203">0951 267 203</a>
+      <a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
+      <a class="btn ghost" data-cursor="Zavolať" href="tel:+421951267203">0951 267 203</a>
       <p><span class="today" data-today></span></p>
       <p>Mostná 226/30, Nitra · <a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></p>
     </div>
@@ -118,13 +119,15 @@
       <h1 style="--i:1">Strih, ktorý <em>drží.</em></h1>
       <p class="sub" style="--i:2">Pánske strihy, fade, brada a klasické holenie britvou s horúcim uterákom. Tridsať minút v kresle, z ktorého odchádzaš ako iný človek.</p>
       <div class="cta" style="--i:3">
-        <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
+        <a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
         <a class="btn ghost" href="#cennik">Cenník služieb</a>
       </div>
       <p class="today-line" style="--i:4"><span class="today" data-today aria-live="polite"></span></p>
       <ul class="facts" style="--i:5" aria-label="V skratke"><li><b>16</b><span>služieb</span></li><li><b>10 až 75</b><span>minút</span></li><li><b>strih od 13 €</b><span>ceny</span></li><li><b>Mostná 30</b><span>Nitra</span></li></ul>
     </div>
   </div>
+  <span class="hside" aria-hidden="true">Holičstvo · Mostná 226/30 · Nitra</span>
+  <a class="hcue" href="#cennik" aria-label="Posunúť na cenník"><span>Cenník</span><i aria-hidden="true"></i></a>
 </header>
 
 <div class="ticker" aria-label="Čo robíme">
@@ -386,7 +389,7 @@
       <div class="step part"><span class="n">03</span><svg class="ico" viewBox="0 0 48 48"><g class="rz"><path d="M6 30 26 10l6 6L12 36H6z"/><path d="M26 10l6-4 6 6-6 4"/><path d="M8 28l6 6"/></g><path class="trail" pathLength="1" d="M10 42h28"/></svg><h3>Kontúry britvou</h3><p>Krk, spánky a línie brady britvou. Ostrá hrana, ktorá vydrží dlhšie ako strojček a lepšie odrastá.</p></div>
       <div class="step part"><span class="n">04</span><svg class="ico" viewBox="0 0 48 48"><path class="stm s1" d="M16 8c-2 3 2 5 0 8"/><path class="stm s2" d="M24 6c-2 3 2 5 0 8"/><path class="stm s3" d="M32 8c-2 3 2 5 0 8"/><rect x="6" y="22" width="36" height="16" rx="8"/><path d="M14 22v16M22 22v16M30 22v16"/></svg><h3>Horúci uterák</h3><p>Pri brade a holení otvorí horúci uterák póry a zmäkčí chlp. Potom pena štetkou a britva. Chladný uterák a balzam na záver.</p></div>
       <div class="step part"><span class="n">05</span><svg class="ico" viewBox="0 0 48 48"><g class="comb"><path d="M8 14h32v8H8z"/><path d="M10 22v12M15 22v10M20 22v12M25 22v10M30 22v12M35 22v10"/></g><path class="spark" d="M38 8l1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5z"/></svg><h3>Styling a rada domov</h3><p>Nastylujeme tak, ako si to zvládneš doma. Povieme, aký produkt a koľko, a kedy sa vidíme nabudúce.</p></div>
-      <div class="step-cta part"><a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a><span>Online, za minútu</span></div>
+      <div class="step-cta part"><a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a><span>Online, za minútu</span></div>
     </div>
   </div>
 </section>
@@ -446,23 +449,23 @@
       </div>
     </div>
     <div class="shots rv">
-      <figure class="shot" data-shot="salon" data-cap="Obklad, drevo a zelený zamat" style="--pos:center 55%" tabindex="0" role="button" aria-label="Zväčšiť: Salón">
+      <figure class="shot" data-cursor="Zväčšiť" data-shot="salon" data-cap="Obklad, drevo a zelený zamat" style="--pos:center 55%" tabindex="0" role="button" aria-label="Zväčšiť: Salón">
         <div class="draw" data-par=".7"><picture><source srcset="foto/interier.webp" type="image/webp"><img width="1290" height="860" src="foto/interier.jpg" alt="Salón: Obklad, drevo a zelený zamat" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Salón</b><span>Obklad, drevo a zelený zamat</span></figcaption>
       </figure>
-      <figure class="shot" data-shot="lampy" data-cap="Nad každým kreslom jedna" style="--pos:center 42%" tabindex="0" role="button" aria-label="Zväčšiť: Oranžové lampy">
+      <figure class="shot" data-cursor="Zväčšiť" data-shot="lampy" data-cap="Nad každým kreslom jedna" style="--pos:center 42%" tabindex="0" role="button" aria-label="Zväčšiť: Oranžové lampy">
         <div class="draw" data-par="1.2"><picture><source srcset="foto/kresla.webp" type="image/webp"><img width="1290" height="860" src="foto/kresla.jpg" alt="Oranžové lampy: Nad každým kreslom jedna" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Oranžové lampy</b><span>Nad každým kreslom jedna</span></figcaption>
       </figure>
-      <figure class="shot" data-shot="neon" data-cap="BARBERSHOP 30 na drevenej stene" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Neón">
+      <figure class="shot" data-cursor="Zväčšiť" data-shot="neon" data-cap="BARBERSHOP 30 na drevenej stene" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Neón">
         <div class="draw" data-par="1"><picture><source srcset="foto/neon.webp" type="image/webp"><img width="1290" height="860" src="foto/neon.jpg" alt="Neón: BARBERSHOP 30 na drevenej stene" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Neón</b><span>BARBERSHOP 30 na drevenej stene</span></figcaption>
       </figure>
-      <figure class="shot" data-shot="recepcia" data-cap="Produkty, ktoré používame" style="--pos:center 45%" tabindex="0" role="button" aria-label="Zväčšiť: Recepcia">
+      <figure class="shot" data-cursor="Zväčšiť" data-shot="recepcia" data-cap="Produkty, ktoré používame" style="--pos:center 45%" tabindex="0" role="button" aria-label="Zväčšiť: Recepcia">
         <div class="draw" data-par="1.35"><picture><source srcset="foto/recepcia.webp" type="image/webp"><img width="1290" height="860" src="foto/recepcia.jpg" alt="Recepcia: Produkty, ktoré používame" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Recepcia</b><span>Produkty, ktoré používame</span></figcaption>
       </figure>
-      <figure class="shot" data-shot="stanice" data-cap="Zrkadlá, kreslá a barber stĺp" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Stanice">
+      <figure class="shot" data-cursor="Zväčšiť" data-shot="stanice" data-cap="Zrkadlá, kreslá a barber stĺp" style="--pos:center 50%" tabindex="0" role="button" aria-label="Zväčšiť: Stanice">
         <div class="draw" data-par=".85"><picture><source srcset="foto/stanice.webp" type="image/webp"><img width="1290" height="860" src="foto/stanice.jpg" alt="Stanice: Zrkadlá, kreslá a barber stĺp" loading="lazy" decoding="async"></picture></div>
         <figcaption><b>Stanice</b><span>Zrkadlá, kreslá a barber stĺp</span></figcaption>
       </figure>
@@ -481,7 +484,9 @@
 
 <dialog class="lb" id="lightbox" aria-label="Zväčšený záber">
   <button class="lb-close" type="button" aria-label="Zavrieť">&times;</button>
-  <figure><div class="lb-art"></div><figcaption></figcaption></figure>
+  <button class="lb-nav prev" type="button" aria-label="Predchádzajúci záber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="lb-nav next" type="button" aria-label="Ďalší záber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <figure><div class="lb-art"></div><figcaption><b class="lb-cap"></b><span class="lb-n"></span></figcaption></figure>
 </dialog>
 
 <!-- ========== POUKÁŽKY ========== -->
@@ -496,7 +501,7 @@
         <div class="vals" aria-label="Odporúčané hodnoty"><span>15 €</span><span>20 €</span><span>30 €</span><span>40 €</span></div>
       </div>
       <div class="cta part">
-        <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener">Kúpiť poukaz online</a>
+        <a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener">Kúpiť poukaz online</a>
         <a class="btn ghost" href="mailto:info@barbershop30.sk?subject=Dar%C4%8Dekov%C3%BD%20poukaz%20BARBERSHOP%2030">Objednať e-mailom</a>
         <p class="fine">Hodnoty sú odvodené od cenníka: 15 € pokryje študentský strih, 40 € kompletný servis s bradou aj holením. Platí 12 mesiacov.</p>
       </div>
@@ -537,14 +542,14 @@
         <h2 class="h2" id="h-kontakt">Tvoje kreslo <em>čaká.</em></h2>
         <p class="lede">Rezervácia trvá minútu. Ak si radšej zavoláš, sme na telefóne. Voľný termín na poslednú chvíľu? Zavolaj, často sa niečo nájde ešte dnes.</p>
         <div class="cta">
-          <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
-          <a class="btn ghost" href="tel:+421951267203">0951 267 203</a>
+          <a class="btn primary" data-cursor="Rezervovať" href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a>
+          <a class="btn ghost" data-cursor="Zavolať" href="tel:+421951267203">0951 267 203</a>
         </div>
       </div>
       <div class="info part">
         <div><h3>Adresa</h3><p><span class="pin" aria-hidden="true"></span>Mostná 226/30, 949 01 Nitra</p><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a></div>
         <div><h3>Otváracie hodiny</h3><p class="today" data-today aria-live="polite"></p><ul class="hours"><li><span>Po až Pi</span><b>09:00 až 19:00</b></li><li><span>So</span><b>09:00 až 14:00</b></li><li><span>Ne</span><b>zatvorené</b></li></ul></div>
-        <div><h3>Kontakt</h3><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
+        <div><h3>Kontakt</h3><a data-cursor="Zavolať" href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
         <div><h3>Online</h3><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener">Kalendár Booqme</a></div>
       </div>
     </div>
@@ -568,7 +573,7 @@
         <p>Pánsky barbershop v centre Nitry. Nožnice, britva a horúci uterák. Otvorené šesť dní v týždni na Mostnej 30, pár krokov od pešej zóny.</p>
       </div>
       <div class="col"><h4>Stránka</h4><a href="#cennik">Cenník</a><a href="#ako">Ako to prebieha</a><a href="#interier">U nás vnútri</a><a href="#galeria">Galéria</a><a href="#poukaz">Poukážky</a><a href="#faq">Otázky</a><a href="#kontakt">Kontakt</a></div>
-      <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
+      <div class="col"><h4>Kontakt</h4><span>Mostná 226/30, Nitra</span><a data-cursor="Zavolať" href="tel:+421951267203">+421 951 267 203</a><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></div>
       <div class="col"><h4>Online</h4><a href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervácia</a><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a><a href="https://wa.me/421951267203" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <div class="bottom"><span>© <span id="year">2026</span> BARBERSHOP 30</span><span class="credit">Web a grafický dizajn: <a href="mailto:samuelpavelka387@gmail.com" rel="author">Samuel Pavelka</a></span><span>Mostná 30 · Nitra</span></div>
@@ -579,7 +584,7 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 
-<div class="mbar" aria-label="Rýchly kontakt"><a href="tel:+421951267203">Zavolať</a><a href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a></div>
+<div class="mbar" aria-label="Rýchly kontakt"><a data-cursor="Zavolať" href="tel:+421951267203">Zavolať</a><a href="https://booqme.app/sk/rezervacia/barbershop-30">Rezervovať termín</a></div>
 
 <script src="app.js" defer></script>
 </body>
