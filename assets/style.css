@@ -1111,3 +1111,26 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .pull .q-src a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px;transition:color .3s,border-color .3s}
 .pull .q-src a:hover{color:var(--accent-hover);border-color:var(--line-strong)}
 @media (max-width:640px){.pull{padding:56px 0}.pull .q-src{letter-spacing:.16em}}
+
+/* ---------- poradca: tri otázky nad cenníkom ---------- */
+.advisor{margin:0 0 30px;padding:30px 32px 32px;border:1px solid var(--line);border-radius:var(--radius-m);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.35))}
+.adv-top .kicker{margin-bottom:12px}
+.adv-h{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.015em;color:var(--text-primary)}
+.adv-h em{font-style:italic;font-weight:300;color:var(--accent-hover)}
+.adv-sub{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--text-secondary);max-width:56ch}
+.adv-qs{display:grid;gap:18px;margin-top:24px}
+.adv-lbl{display:block;margin-bottom:9px;font-family:var(--mono);font-size:var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--text-tertiary)}
+.adv-opts{display:flex;flex-wrap:wrap;gap:8px}
+.adv-opts .chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-muted);color:var(--accent-hover)}
+.adv-res{margin-top:24px;padding-top:24px;border-top:1px solid var(--line-strong);display:grid;gap:14px}
+.adv-res .r-lbl{font-family:var(--mono);font-size:var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.adv-res .r-name{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);line-height:1.12;color:var(--text-primary)}
+.adv-res .r-meta{display:flex;align-items:baseline;gap:14px;font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
+.adv-res .r-meta b{font-family:var(--display);font-size:30px;letter-spacing:-.01em;color:var(--accent-hover);font-weight:400}
+.adv-res .r-why{font-size:15px;line-height:1.6;color:var(--text-secondary);max-width:60ch}
+.adv-res .r-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.adv-res .r-alt{font-size:13.5px;color:var(--text-tertiary)}
+.adv-res .r-alt a{color:var(--text-secondary);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-strong)}
+.adv-res .r-alt a:hover{color:var(--accent-hover)}
+.card.pick{border-color:var(--line-strong);box-shadow:0 0 0 1px var(--line-strong),0 18px 50px rgba(0,0,0,.35)}
+@media (max-width:640px){.advisor{padding:24px 20px 26px;margin-bottom:24px}.adv-opts{gap:7px}}

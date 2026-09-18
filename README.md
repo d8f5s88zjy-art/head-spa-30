@@ -18,6 +18,26 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Poradca nad cenníkom
+
+Nad cenníkom je blok `#poradca`: tri otázky (pre koho, koľko času, čo od toho
+čakáš) a odporúčanie jedného rituálu s cenou, trvaním, tlačidlom Rezervovať
+a odkazom na kartu v cenníku. Pod tým je jedna alternatíva.
+
+Poradca si nedrží vlastný zoznam rituálov. Číta karty v cenníku, takže keď
+pribudne alebo sa zmení rituál, poradca to vie hneď. Každá karta má `data-goal`
+(`relax`, `deep`, `beauty`, `lux`) a `data-duo` pri rituáloch pre dvoch.
+
+Bodovanie v `assets/app.js`: zhoda cieľa má váhu osem, tesnosť času do štyroch
+bodov, prekročenie času je mierny mínus. Preto keď si niekto vyberie hĺbkové
+čistenie a hodinu času, dostane hĺbkový rituál aj s vetou, že trvá deväťdesiat
+minút, nie iný rituál, ktorý sa do hodiny zmestí. Pri zhode rozhoduje nižšia cena.
+
+Pri tom sa opravila stará chyba: Zlatý Head Spa rituál 24K pre dvoch patrí
+do luxusnej kategórie, preto sa pod filtrom Pre dvoch nezobrazoval, hoci
+otázky na stránke hovoria o troch rituáloch pre dve osoby. Filter aj poradca
+teraz berú `data-duo`, takže Pre dvoch ukáže všetky tri.
+
 ## Citáty medzi sekciami
 
 Medzi sekcie pribudli tri tiché citáty (`section.pull`). Každý je veta, ktorá už

@@ -731,7 +731,8 @@
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
     cards.forEach((c) => pio.observe(c));
   }
-  const inCat = (cat) => activeCat === 'all' || cat === activeCat;
+  // rituál pre dvoch nájdeš pod Pre dvoch aj vtedy, keď patrí do luxusnej kategórie
+  const inCat = (c) => activeCat === 'all' || c.dataset.cat === activeCat || (activeCat === 'couple' && c.dataset.duo === '1');
   /* Tento riadok sa skladá až v prehliadači, preto má vlastné preklady. */
   const COUNT_WORDS = {
     sk: { all: (t) => `Zobrazených všetkých ${t} rituálov`, some: (n, t) => `Zobrazených ${n} z ${t} rituálov` },
@@ -751,10 +752,10 @@
 
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = inCat(c.dataset.cat) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
+    cards.forEach((c) => { const show = inCat(c) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
     /* nadpis kategórie zmizne aj vtedy, keď v nej po obmedzení nič nezostalo */
     cats.forEach((l) => {
-      const zije = inCat(l.dataset.cat) && shown.some((c) => c.dataset.cat === l.dataset.cat);
+      const zije = shown.some((c) => c.dataset.cat === l.dataset.cat);
       l.classList.toggle('hidden', !zije);
     });
     if (count) {
@@ -858,6 +859,66 @@
   }
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  /* ============ poradca: tri otázky nad cenníkom, odporúčanie z kariet ============ */
+  (function advisor() {
+    const box = $('#poradca'); if (!box) return;
+    const res = $('#advRes', box);
+    const answer = {};
+    // rituály čítame z kariet, aby cenník a poradca nikdy nešli od seba
+    const list = $$('.card').map((c) => ({
+      id: c.dataset.id, cat: c.dataset.cat, goal: c.dataset.goal || 'relax', duo: c.dataset.duo === '1' || c.dataset.cat === 'couple',
+      min: +c.dataset.min, eur: +c.dataset.price,
+      name: ($('h3', c) || {}).textContent || '', tag: ($('.tag', c) || {}).textContent || '',
+      dur: ($('.meta span', c) || {}).textContent || '', price: ($('.meta strong', c) || {}).textContent || '',
+    })).filter((r) => r.id);
+
+    const FITS = { self: (r) => r.cat !== 'kids' && r.cat !== 'gentlemen' && !r.duo, men: (r) => r.cat === 'gentlemen' && !r.duo, kid: (r) => r.cat === 'kids', duo: (r) => r.duo };
+    function pick() {
+      const kto = answer.kto, cas = +answer.cas, ciel = answer.ciel;
+      let pool = list.filter(FITS[kto] || (() => true));
+      if (!pool.length) pool = list.slice();
+      const scored = pool.map((r) => {
+        let sc = 0;
+        // to, čo človek chce, váži viac než presné dodržanie času; keď sa rituál do okna nezmestí, povieme to
+        if (r.goal === ciel) sc += 8;
+        else if ((ciel === 'lux' && r.eur >= 109) || (ciel === 'relax' && r.goal === 'beauty')) sc += 2;
+        if (r.min <= cas) sc += 4 - Math.min(3, (cas - r.min) / 20);
+        else sc -= 1.5 + (r.min - cas) / 60;
+        return { r, sc };
+      }).sort((a, b) => b.sc - a.sc || a.r.eur - b.r.eur);
+      return scored.map((x) => x.r);
+    }
+    function show() {
+      if (!answer.kto || !answer.cas || !answer.ciel) return;
+      const [best, second] = pick();
+      if (!best) return;
+      const fits = best.min <= +answer.cas;
+      const why = best.tag + (fits ? '.' : '. Trvá ' + best.min + ' minút, takže si treba vyhradiť o niečo viac času.');
+      res.hidden = false;
+      res.innerHTML = '<span class="r-lbl">Odporúčame</span>'
+        + '<p class="r-name">' + best.name + '</p>'
+        + '<p class="r-meta"><span>' + best.dur + '</span><b>' + best.price + '</b></p>'
+        + '<p class="r-why">' + why + '</p>'
+        + '<div class="r-cta"><a class="btn primary small" href="#rezervacia" data-book="' + best.id + '">Rezervovať</a>'
+        + '<a class="btn ghost small" href="#' + best.id + '" data-jump="' + best.id + '">Pozrieť rituál</a></div>'
+        + (second ? '<p class="r-alt">Alebo <a href="#' + second.id + '" data-jump="' + second.id + '">' + second.name + '</a>, ' + second.dur + ' · ' + second.price + '.</p>' : '');
+      track('advisor_result', { ritual: best.id, kto: answer.kto, cas: answer.cas, ciel: answer.ciel });
+    }
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('.adv-opts .chip');
+      if (b) {
+        const q = b.closest('.adv-q').dataset.q;
+        $$('.chip', b.parentElement).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        answer[q] = b.dataset.v; show(); return;
+      }
+      const j = e.target.closest('[data-jump]');
+      if (j) {
+        const card = document.getElementById(j.dataset.jump);
+        if (card) { $$('.card.pick').forEach((c) => c.classList.remove('pick')); card.classList.add('pick'); setTimeout(() => card.classList.remove('pick'), 3000); }
+      }
+    });
+  })();
+
   const rform = $('#rform');
   if (rform) {
     const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
