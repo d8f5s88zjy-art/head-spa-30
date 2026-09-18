@@ -18,6 +18,21 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Kam vedú tlačidlá
+
+Adresa online kalendára je na jedinom mieste, v atribúte `data-booking` na
+`<html>` v `index.html`. Skript pri načítaní prepíše každé tlačidlo `a.btn`,
+ktoré smerovalo na `#rezervacia`, na túto adresu a otvorí ju v novej karte.
+Zmena rezervačného systému je teda úprava jedného reťazca.
+
+Pôvodný odkaz na Booqme (`booqme.app/sk/rezervacia/salon-30`) v septembri
+prestal existovať, vracal chybu 404, takže všetky tlačidlá aj nákup poukazu
+viedli do prázdna. Nahradila ho funkčná online rezervácia Salónu 30.
+
+Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kalendári
+ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
+JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
+
 ## Poradca nad cenníkom
 
 Nad cenníkom je blok `#poradca`: tri otázky (pre koho, koľko času, čo od toho
@@ -77,11 +92,11 @@ Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30
 
 Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek zo 17 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
 
-Kalendár Booqme zostáva ako druhá možnosť pod formulárom.
+Kalendár online rezerváciu zostáva ako druhá možnosť pod formulárom.
 
 ## Darčekové poukážky
 
-Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku Booqme (https://booqme.app/sk/rezervacia/salon-30), kde sa po vytvorení typov poukážok v administrácii Booqme automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
+Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku online rezerváciu (https://www.salon30.sk/rezervacia), kde sa po vytvorení typov poukážok v administrácii online rezerváciu automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
 
 ## Galéria
 
@@ -98,7 +113,7 @@ Ak fotografia existuje, použije sa namiesto kresby a štítok Kresba zmizne.
 
 ## Rezervácie
 
-Všetky tlačidlá Rezervovať vedú na rezervačnú stránku Booqme https://booqme.app/sk/rezervacia/salon-30 (adresa je v `scratchpad/build.py` ako `BOOK` a v šablóne). Zoznam 17 programov na nahratie do Booqme je v `docs/booqme-programy.xlsx`. Telefón a e-mail sú v sekcii Kontakt.
+Všetky tlačidlá Rezervovať vedú na rezervačnú stránku online rezerváciu https://www.salon30.sk/rezervacia (adresa je v `scratchpad/build.py` ako `BOOK` a v šablóne). Zoznam 17 programov na nahratie do online rezerváciu je v `docs/booqme-programy.xlsx`. Telefón a e-mail sú v sekcii Kontakt.
 
 ## Kontakt a otváracie hodiny
 
@@ -184,7 +199,7 @@ prehľadu cien aj zvonka. Kvôli lepkavému filtru má `.card[id]`
 ## Rezervácia priamo na stránke
 
 Sekcia `#rezervacia` je návrat formulára, ktorý bol na webe od začiatku a v septembri
-sa stratil, keď všetky tlačidlá začali smerovať rovno do Booqme. Logika v
+sa stratil, keď všetky tlačidlá začali smerovať rovno do online rezerváciu. Logika v
 `assets/app.js` medzitým zostala celá, chýbala len značka, takže sa dala vrátiť
 bez písania nového kódu.
 

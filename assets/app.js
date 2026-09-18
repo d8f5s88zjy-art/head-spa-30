@@ -859,6 +859,23 @@
   }
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
+     Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
+     stránke zostáva ako záloha, vedie naň položka Rezervácia v menu. Bez
+     JavaScriptu tlačidlá stále fungujú, len skončia pri formulári. */
+  const BOOKING = (document.documentElement.dataset.booking || '').trim();
+  function toBooking(a) {
+    if (!a || !BOOKING) return;
+    a.href = BOOKING; a.target = '_blank'; a.rel = 'noopener';
+  }
+  if (BOOKING) {
+    $$('a.btn[href="#rezervacia"], .mbar a[href="#rezervacia"]').forEach(toBooking);
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="http"][target="_blank"]');
+      if (a && a.href === BOOKING) track('booking_open', { from: (a.dataset.book || a.className || 'cta').slice(0, 40) });
+    });
+  }
+
   /* ============ poradca: tri otázky nad cenníkom, odporúčanie z kariet ============ */
   (function advisor() {
     const box = $('#poradca'); if (!box) return;
@@ -902,6 +919,7 @@
         + '<div class="r-cta"><a class="btn primary small" href="#rezervacia" data-book="' + best.id + '">Rezervovať</a>'
         + '<a class="btn ghost small" href="#' + best.id + '" data-jump="' + best.id + '">Pozrieť rituál</a></div>'
         + (second ? '<p class="r-alt">Alebo <a href="#' + second.id + '" data-jump="' + second.id + '">' + second.name + '</a>, ' + second.dur + ' · ' + second.price + '.</p>' : '');
+      const go = $('.btn.primary', res); if (typeof toBooking === 'function') toBooking(go);
       track('advisor_result', { ritual: best.id, kto: answer.kto, cas: answer.cas, ciel: answer.ciel });
     }
     box.addEventListener('click', (e) => {
