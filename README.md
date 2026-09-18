@@ -18,6 +18,25 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Darčekové poukazy ako predajná sekcia
+
+Nad objednávkovým formulárom je šesť kariet hodnôt: 50, 70, 100, 149, 249 eur
+a konkrétny rituál. Každá hovorí, čo za tie peniaze obdarovaný dostane, podľa
+skutočného cenníka. Ťuknutie kartu zvýrazní, vyplní hodnotu vo formulári nižšie
+a posunie na neho; pri konkrétnom rituále rovno otvorí zoznam sedemnástich.
+
+## Postup rituálu ako číslovaný sled
+
+Kroky v rozbalenej karte rituálu už nie sú odrážky pod sebou. Každý krok má
+číslo v zlatom krúžku a vlasovú linku nad sebou, na širokej obrazovke v dvoch
+stĺpcoch, na telefóne v jednom. Zmena je len v CSS, obsah krokov zostal.
+
+## Záverečná výzva pred pätičkou
+
+Sekcia `.finale` uzatvára stránku jednou vetou a dvoma tlačidlami: Rezervovať
+rituál a Darovať poukaz. Rezervačné tlačidlo prepíše skript na kalendár rovnako
+ako ostatných tridsať.
+
 ## Kam vedú tlačidlá
 
 Adresa online kalendára je na jedinom mieste, v atribúte `data-booking` na

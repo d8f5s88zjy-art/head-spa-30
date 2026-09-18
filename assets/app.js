@@ -859,6 +859,30 @@
   }
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  /* ============ karty hodnôt poukazu: ťuknutie vyplní formulár nižšie ============ */
+  (function giftValues() {
+    const box = $('.gift-values'); if (!box) return;
+    const form = $('#vform'); if (!form) return;
+    function sync() {
+      const v = (form.querySelector('input[name="hodnota"]:checked') || {}).value;
+      $$('.gv', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.gift === v)));
+    }
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('.gv'); if (!b) return;
+      const i = form.querySelector(`input[name="hodnota"][value="${b.dataset.gift}"]`);
+      if (!i) return;
+      i.checked = true;
+      i.dispatchEvent(new Event('change', { bubbles: true }));
+      sync();
+      const target = b.dataset.gift === 'ritual' ? ($('#v-ritual') || form) : form;
+      target.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
+      if (b.dataset.gift === 'ritual') setTimeout(() => { const sel = $('#v-ritual'); if (sel) sel.focus({ preventScroll: true }); }, reduced.matches ? 0 : 420);
+      track('gift_value', { value: b.dataset.gift });
+    });
+    form.addEventListener('change', sync);
+    sync();
+  })();
+
   /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
      Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
      stránke zostáva ako záloha, vedie naň položka Rezervácia v menu. Bez
