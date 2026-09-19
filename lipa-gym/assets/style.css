@@ -142,6 +142,7 @@ body.is-loaded:not(.lights) .hero-media{filter:none}
 body.is-loaded:not(.lights) .hero-img,body.is-loaded:not(.lights) .hero-video{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
 body.past-hero .hero-img,body.past-hero .hero-video{animation-play-state:paused}
 body.lights .hero-sweep{animation:sweep 1.8s cubic-bezier(.3,0,.2,1) 1.35s forwards}
+body.intro-done .hero-media{animation:none;filter:none;opacity:1}
 .hero-in{position:relative;z-index:2;max-width:var(--wrap);width:100%;will-change:transform,opacity}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
 .eyebrow-dot{width:10px;height:10px;border-radius:50%;background:var(--volt);box-shadow:0 0 18px var(--volt);flex:none}

@@ -282,7 +282,7 @@
       if (started) return;
       started = true;
       d.body.classList.add('lights');
-      setTimeout(open, 1500);
+      setTimeout(open, 1750);
     }
     function open() {
       if (opened) return;
