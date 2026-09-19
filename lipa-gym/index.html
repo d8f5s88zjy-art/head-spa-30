@@ -31,9 +31,7 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
 <!--
-  Všetky údaje o prevádzke (názov, adresa, telefón, hodiny, cenník, rozvrh, tréneri, recenzie)
-  sú prevzaté z oficiálneho webu gymklub.sk, stav 19. 9. 2026. Kontakty, hodiny a rozvrh
-  sa vypĺňajú z assets/app.js (GYM, HOURS, TIMETABLE). Štruktúrované dáta generuje skript.
+  Kontakty, hodiny, rozvrh a štruktúrované dáta sa vypĺňajú z assets/app.js (GYM, HOURS, TIMETABLE).
 -->
 </head>
 <body>
@@ -106,7 +104,7 @@
 
 <main id="main">
 
-<!-- ÚVOD: fotografia z prevádzky + ambientné video, otvorenie ako zapnutie svetiel -->
+<!-- ÚVOD: fotografia z prevádzky, otvorenie ako zapnutie svetiel -->
 <section class="hero" aria-labelledby="h-hero">
   <div class="hero-media" aria-hidden="true">
     <picture>
@@ -115,9 +113,6 @@
       <source type="image/webp" srcset="assets/img/hero-800.webp 800w, assets/img/hero.webp 1600w" sizes="100vw">
       <img class="hero-img" src="assets/img/hero.jpg" srcset="assets/img/hero-800.jpg 800w, assets/img/hero.jpg 1600w" sizes="100vw" width="1600" height="899" alt="" fetchpriority="high" decoding="async">
     </picture>
-    <video class="hero-video" muted loop playsinline preload="none" poster="assets/img/hero.jpg" tabindex="-1">
-      <source src="assets/hero-gym.mp4" type="video/mp4">
-    </video>
     <div class="hero-shade"></div>
     <div class="hero-sweep"></div>
   </div>
@@ -138,7 +133,6 @@
       <li class="hero-fact"><svg viewBox="0 0 24 24"><use href="#i-snow"/></svg>Plne klimatizované</li>
     </ul>
   </div>
-  <p class="hero-note" aria-hidden="true">Fotografie z prevádzky · video je ilustračné</p>
   <a class="hero-scroll" href="#preco" aria-label="Posunúť ďalej"><span></span></a>
 </section>
 
@@ -258,7 +252,7 @@
     <header class="sec-head reveal">
       <p class="kicker">Jasné ceny</p>
       <h2 id="h-cennik" class="h2">Začnite <em>jedným vstupom</em></h2>
-      <p class="lead">Ceny fitness centra podľa oficiálneho cenníka. Skupinové lekcie a osobné tréningy dohodnete priamo s trénerom.</p>
+      <p class="lead">Ceny fitness centra. Skupinové lekcie a osobné tréningy dohodnete priamo s trénerom.</p>
     </header>
     <div class="price-grid">
       <article class="price-card glowcard reveal" data-price="6" data-name="Jednorazový vstup">
@@ -320,7 +314,7 @@
       <div class="tt-days" role="tablist" aria-label="Dni v týždni"></div>
       <div class="tt-list" role="tabpanel" aria-live="polite"></div>
     </div>
-    <p class="tt-note reveal">Rozvrh je prevzatý z gymklub.sk. Počas sviatkov a cez víkend odporúčame hodiny overiť telefonicky.</p>
+    <p class="tt-note reveal">Počas sviatkov a cez víkend odporúčame hodiny overiť telefonicky.</p>
   </div>
 </section>
 
@@ -409,7 +403,7 @@
         <p class="coach-bio">Individuálne nutričné poradenstvo, analýza telesného zloženia a stravovací protokol. Osobné tréningy a príprava na súťaž vo fitness a silovom trojboji.</p>
       </article>
     </div>
-    <p class="team-note reveal">Profily a kontakty trénerov sú prevzaté z gymklub.sk. Ak tréner nemá uvedený telefón, dohodnite sa na recepcii alebo na <a data-fact="phone-link" href="#kontakt"><span data-fact="phone">+421 944 800 394</span></a>.</p>
+    <p class="team-note reveal">Ak tréner nemá uvedený telefón, dohodnite sa na recepcii alebo na <a data-fact="phone-link" href="#kontakt"><span data-fact="phone">+421 944 800 394</span></a>.</p>
   </div>
 </section>
 
@@ -476,7 +470,7 @@
     <header class="sec-head reveal">
       <p class="kicker">Skúsenosti klientov</p>
       <h2 id="h-recenzie" class="h2">Dobré fitko <em>cítiť hneď</em></h2>
-      <p class="lead">Recenzie klientov zverejnené na gymklub.sk.</p>
+      <p class="lead">Najdôležitejšie je prostredie, do ktorého sa chcete vracať.</p>
     </header>
     <div class="rev-grid">
       <blockquote class="rev reveal"><p>Posilňovňa bola plne klimatizovaná a tvorená kombináciou starších a novších strojov, priestor bol dobre zvetraný, príjemné prostredie, milý personál, skvelí tréneri a čisté šatne.</p><footer>Nika D.</footer></blockquote>
@@ -601,7 +595,7 @@
       <a href="#kontakt">Kontakt</a>
       <a data-fact="web-link" href="https://gymklub.sk/" target="_blank" rel="noopener">gymklub.sk</a>
     </nav>
-    <p class="foot-copy">© <span data-year>2026</span> <span data-fact="fullname">GYM KLUB Fitness &amp; Bodybuilding</span>. Fotografie a prevádzkové informácie: gymklub.sk. Video v úvode je ilustračné.</p>
+    <p class="foot-copy">© <span data-year>2026</span> <span data-fact="fullname">GYM KLUB Fitness &amp; Bodybuilding</span>. Všetky práva vyhradené.</p>
   </div>
 </footer>
 

@@ -30,7 +30,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 html:has(.bar){scroll-padding-top:calc(var(--bar-h) + 12px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:17px;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:clip}
-img,svg,video{display:block;max-width:100%}
+img,svg{display:block;max-width:100%}
 a{color:inherit}
 h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
 ul,ol{padding:0;list-style:none}
@@ -127,20 +127,18 @@ section{padding-block:clamp(72px,10vw,128px);position:relative}
   body.nav-open{overflow:hidden}
 }
 
-/* ÚVOD: fotografia z prevádzky, ambientné video, zapnutie svetiel, nájazd kamery */
+/* ÚVOD: fotografia z prevádzky, zapnutie svetiel, nájazd kamery */
 .hero{min-height:100svh;position:relative;display:flex;flex-wrap:wrap;align-items:flex-end;padding:calc(var(--bar-h) + 40px) 0 clamp(56px,9vh,110px);overflow:hidden;background:#000}
 .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:#000;will-change:transform;filter:brightness(0)}
-.hero-media picture,.hero-img,.hero-video{position:absolute;inset:0;width:100%;height:100%}
-.hero-img,.hero-video{object-fit:cover;object-position:50% 55%;transform:scale(1.14);transform-origin:50% 55%;will-change:transform}
-.hero-video{opacity:0;transition:opacity 1.2s ease .3s;pointer-events:none}
-.hero-video.is-ready{opacity:1}
+.hero-media picture,.hero-img{position:absolute;inset:0;width:100%;height:100%}
+.hero-img{object-fit:cover;object-position:50% 55%;transform:scale(1.14);transform-origin:50% 55%;will-change:transform}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.62) 0%,rgba(11,12,15,.18) 30%,rgba(11,12,15,.4) 60%,rgba(11,12,15,.94) 100%),linear-gradient(90deg,rgba(11,12,15,.8) 0%,rgba(11,12,15,.45) 40%,rgba(11,12,15,.05) 75%)}
 .hero-sweep{position:absolute;inset:-30% -20%;background:linear-gradient(100deg,transparent 42%,rgba(214,255,90,.12) 50%,transparent 58%);transform:translateX(-90%);opacity:0;pointer-events:none}
 body.lights .hero-media{animation:lightsOn 1.7s steps(1,end) forwards}
-body.lights .hero-img,body.lights .hero-video{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
+body.lights .hero-img{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
 body.is-loaded:not(.lights) .hero-media{filter:none}
-body.is-loaded:not(.lights) .hero-img,body.is-loaded:not(.lights) .hero-video{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
-body.past-hero .hero-img,body.past-hero .hero-video{animation-play-state:paused}
+body.is-loaded:not(.lights) .hero-img{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
+body.past-hero .hero-img{animation-play-state:paused}
 body.lights .hero-sweep{animation:sweep 1.8s cubic-bezier(.3,0,.2,1) 1.35s forwards}
 body.intro-done .hero-media{animation:none;filter:none;opacity:1}
 .hero-in{position:relative;z-index:2;max-width:var(--wrap);width:100%;will-change:transform,opacity}
@@ -157,7 +155,6 @@ body.is-loaded .hero-h .line>span{transform:none}
 .hero-fact{display:inline-flex;align-items:center;gap:10px}
 .hero-fact svg{width:18px;height:18px;color:var(--volt);flex:none}
 .hero-fact.is-open{color:var(--ink)}
-.hero-note{position:absolute;right:var(--gut);bottom:18px;z-index:2;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,242,236,.45)}
 .hero-scroll{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:26px;height:42px;border:2px solid var(--line2);border-radius:14px;z-index:3}
 .hero-scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--volt);animation:wheel 1.8s ease-in-out infinite}
 @keyframes lightsOn{0%{filter:brightness(0)}18%{filter:brightness(.55)}24%{filter:brightness(.03)}36%{filter:brightness(.85)}42%{filter:brightness(.12)}50%{filter:brightness(1.08)}62%{filter:brightness(.96)}100%{filter:brightness(1)}}
@@ -166,7 +163,6 @@ body.is-loaded .hero-h .line>span{transform:none}
 @media (max-width:860px){
   .eyebrow{font-size:.72rem;letter-spacing:.12em}
   .hero{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
-  .hero-note{position:static;margin:22px 0 0 var(--gut)}
   .hero-scroll{display:none}
   .hero-shade{background:linear-gradient(180deg,rgba(11,12,15,.72) 0%,rgba(11,12,15,.3) 30%,rgba(11,12,15,.6) 60%,rgba(11,12,15,.97) 100%)}
 }
@@ -430,12 +426,12 @@ body.is-loaded .hero-h .line>span{transform:none}
 
 
 /* Odľahčený režim na telefóne a dotykových zariadeniach (body.lite): bez videa, pozadia, vodoznakov a paralaxy */
-body.lite .bgfx,body.lite .rail,body.lite .wm,body.lite .hero-video{display:none}
+body.lite .bgfx,body.lite .rail,body.lite .wm{display:none}
 body.lite .hero-media,body.lite .hero-in,body.lite .has-wm .sec-head,body.lite .marquee,body.lite .bar{will-change:auto}
 body.lite .hero-media{filter:none;opacity:0}
 body.lite.lights .hero-media{animation:lightsOnLite 1.5s steps(1,end) forwards}
 body.lite.is-loaded:not(.lights) .hero-media{opacity:1}
-body.lite .hero-img,body.lite .hero-video{animation:none!important;transform:none}
+body.lite .hero-img{animation:none!important;transform:none}
 body.lite .hero-sweep{display:none}
 body.lite section:not(.hero){content-visibility:auto;contain-intrinsic-size:auto 900px}
 body.lite .reveal{transition-duration:.45s,.5s}
@@ -465,7 +461,7 @@ body.lite .glowcard::after{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal,.hero-h .line>span{opacity:1;transform:none}
   .hero-media{filter:none}
-  .hero-img,.hero-video{transform:none}
+  .hero-img{transform:none}
   .hero-scroll span{opacity:1}
   .bgfx,.rail,.wm{display:none}
 }

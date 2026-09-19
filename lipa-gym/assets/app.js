@@ -4,7 +4,7 @@
 
   /* ============================================================
      FAKTY O PODNIKU – jediné miesto, kde sa upravujú.
-     Všetko nižšie je prevzaté z oficiálneho webu gymklub.sk, stav 19. 9. 2026.
+     Kontakty, hodiny, rozvrh a odkazy prevádzky.
      ============================================================ */
   var GYM = {
     name: 'GYM KLUB',
@@ -24,9 +24,7 @@
   };
 
   /* Otváracie hodiny fitness centra (Európa/Bratislava), [od, do] v minútach od polnoci.
-     Index 0 = pondelok. Zdroj: gymklub.sk (kontakt, FAQ, harmonogram).
-     Víkend: oficiálny web uvádza na jednom mieste 08:00 – 17:00 a v pätičke 08:30 – 18:00,
-     použitá je verzia z kontaktu a harmonogramu. */
+     Index 0 = pondelok. Víkendové hodiny pri zmene upraviť aj v texte FAQ. */
   var HOURS = [
     [6 * 60 + 30, 21 * 60],   // pondelok
     [6 * 60 + 30, 21 * 60],   // utorok
@@ -37,7 +35,7 @@
     [8 * 60, 17 * 60]         // nedeľa
   ];
 
-  /* Harmonogram skupinových tréningov. Zdroj: gymklub.sk, sekcia časový harmonogram.
+  /* Harmonogram skupinových tréningov.
      day: 0 = pondelok … 6 = nedeľa. tag zodpovedá filtru trénerov. */
   var TIMETABLE = [
     { day: 0, from: '16:00', to: '17:00', name: 'Pilates', coach: 'Majka Navrátilová', tag: 'pilates' },
@@ -300,27 +298,6 @@
     var t = setTimeout(start, 1200);
     (img.decode ? img.decode() : Promise.resolve()).then(function () { clearTimeout(t); start(); }, function () { clearTimeout(t); start(); });
     $('.hero').addEventListener('click', function () { if (started && !opened) open(); });
-  }
-
-  /* ---------- úvodné video ---------- */
-  function heroVideo() {
-    var v = $('.hero-video');
-    if (!v) return;
-    var conn = navigator.connection || {};
-    if (LITE || reduce.matches || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) { v.remove(); return; }
-    v.muted = true;
-    v.preload = 'auto';
-    v.autoplay = true;
-    v.addEventListener('canplay', function () { v.classList.add('is-ready'); });
-    v.addEventListener('error', function () { v.remove(); });
-    var p = v.play();
-    if (p && p.catch) p.catch(function () { /* autoplay zablokovaný: ostane fotografia */ });
-    // šetrenie: video beží, len keď je úvod na obrazovke
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) {
-        if (en[0].isIntersecting) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } else { v.pause(); }
-      }, { threshold: 0.05 }).observe(v);
-    }
   }
 
   function hero() {
@@ -676,7 +653,6 @@
   header();
   reveal();
   hero();
-  heroVideo();
   cardGlow();
   marquee();
   timetable();
