@@ -18,6 +18,27 @@
     const steam = Array.from({ length: 34 }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
     const drops = Array.from({ length: 16 }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
     const puffs = Array.from({ length: 54 }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
+    // the journey camera: p, zoom, shift x (of W), shift y (of H), tilt (how far we look down into the bowl), warmth of the light
+    const CAM = [
+      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
+      [0.20, 1.10, 0.00, -.02, .36, 0.10],
+      [0.30, 1.48, -.06, -.10, .42, 0.28],
+      [0.46, 1.58, -.06, -.12, .46, 0.38],
+      [0.56, 2.25, 0.03, 0.20, .60, 0.52],
+      [0.72, 2.35, 0.04, 0.22, .62, 0.62],
+      [0.84, 1.26, 0.00, 0.03, .40, 0.92],
+      [1.00, 1.20, 0.00, 0.03, .40, 1.00]
+    ];
+    function cam(p) {
+      if (!o.journey) return { z: 1, dx: 0, dy: 0, tilt: .34, warm: 1, grade: 0 };   // the gallery shots keep their fixed gold lamp and cool room
+      let i = 0; while (i < CAM.length - 2 && p > CAM[i + 1][0]) i++;
+      const a = CAM[i], b = CAM[i + 1], k = smoothstep(p, a[0], b[0]);
+      const m = (j) => a[j] + (b[j] - a[j]) * k;
+      const w = m(5); return { z: m(1), dx: m(2), dy: m(3), tilt: m(4), warm: w, grade: w };
+    }
+    const mix = (c1, c2, k) => c1.map((v, i) => Math.round(v + (c2[i] - v) * k));
+    const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+    const COOL = [214, 226, 218], GOLD = [236, 208, 143];
     function resize() {
       const r = canvas.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -67,10 +88,12 @@
       const wide = view === 'still' ? W > 900 : W > 720;   // the still hero keeps the bowl above the text up to tablet width
       // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
-      const cx = view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5);
-      const cy = view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31);   // phones: the bowl sits in the upper third, the copy below it
-      const rx = view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5));
-      const ry = rx * 0.34;
+      const c = cam(p);
+      const cx = (view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5)) + c.dx * W;
+      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
+      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5))) * c.z;
+      const ry = rx * c.tilt;
+      const warm = c.warm, lamp = mix(COOL, GOLD, warm);
       const topY = -H * 0.04, landY = cy - ry * 0.12;
       const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
       const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
@@ -78,13 +101,20 @@
       const stream = fall * (1 - calm * 0.85);
       // room
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#0f1613'); bg.addColorStop(.55, '#0b100d'); bg.addColorStop(1, '#090c0a');
+      bg.addColorStop(0, rgb(mix([15, 22, 19], [22, 20, 15], c.grade), 1)); bg.addColorStop(.55, rgb(mix([11, 16, 13], [16, 14, 11], c.grade), 1)); bg.addColorStop(1, '#090c0a');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-      // the lamp: a cone of warm light that widens as the ritual goes on
-      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p));
+      // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
+      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
       const ca = 0.15 + 0.13 * p;
-      cone.addColorStop(0, `rgba(236,208,143,${ca})`); cone.addColorStop(.42, `rgba(217,181,106,${ca * .42})`); cone.addColorStop(1, 'rgba(217,181,106,0)');
+      cone.addColorStop(0, rgb(lamp, ca)); cone.addColorStop(.42, rgb(mix([160, 178, 168], [217, 181, 106], warm), ca * .42)); cone.addColorStop(1, 'rgba(217,181,106,0)');
       ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
+      // the lamp itself: a small bright disc high above the bowl, only in the journey
+      if (o.journey) {
+        const ly = -H * 0.02, lr = rx * (0.07 + 0.05 * c.z);
+        const disc = ctx.createRadialGradient(cx, ly, 0, cx, ly, lr * 4);
+        disc.addColorStop(0, rgb(lamp, .55)); disc.addColorStop(.25, rgb(lamp, .16)); disc.addColorStop(1, rgb(lamp, 0));
+        ctx.fillStyle = disc; ctx.fillRect(cx - lr * 4, 0, lr * 8, lr * 4);
+      }
       // a faint far wall line so the room has depth
       ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
       // floor sheen under the bowl
@@ -131,6 +161,33 @@
           ctx.strokeStyle = `rgba(190,232,222,${a})`; ctx.lineWidth = 1.4 + (1 - k) * 1.2; ctx.stroke();
           ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr * 0.94, ry * kr * 0.94, 0, 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(236,208,143,${a * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+      // the massage: two slow hands, two sources of small ripples that take turns
+      const mass = o.journey ? smoothstep(p, 0.48, 0.56) * (1 - smoothstep(p, 0.72, 0.80)) : 0;
+      if (mass > 0) {
+        const hands = [[-0.36, 0.10, 0], [0.34, -0.06, 0.5]];
+        for (const h of hands) {
+          const hx = cx + h[0] * rx, hy = cy + h[1] * ry;
+          for (let i = 0; i < 4; i++) {
+            let k = ((p - 0.48) * 2.6 + i / 4 + h[2] + t * 0.12) % 1; if (k < 0) k += 1;
+            const a = Math.pow(1 - k, 1.8) * 0.5 * mass;
+            if (a < 0.01) continue;
+            const kr = 0.04 + k * 0.42;
+            ctx.beginPath(); ctx.ellipse(hx, hy, rx * kr, ry * kr, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(200,236,226,${a})`; ctx.lineWidth = 1 + (1 - k) * 1.4; ctx.stroke();
+          }
+          const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, rx * 0.14);
+          g.addColorStop(0, `rgba(230,246,240,${.22 * mass})`); g.addColorStop(1, 'rgba(230,246,240,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(hx, hy, rx * 0.14, ry * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      // the settle: the rings give way to one still gold circle, the mark of the house
+      if (o.journey && calm > 0) {
+        const pulse = 1 + Math.sin(t * 0.8) * 0.012;
+        for (const [kr, a, w] of [[0.58, 0.55, 1.6], [0.50, 0.22, 1], [0.66, 0.16, 1]]) {
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx * kr * pulse, ry * kr * pulse, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,208,143,${a * calm})`; ctx.lineWidth = w; ctx.stroke();
         }
       }
       ctx.restore();
@@ -209,8 +266,9 @@
         ctx.restore();
       }
       // vignette
-      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, Math.max(W, H) * .85);
-      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, 'rgba(8,10,9,.7)');
+      const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
+      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
+      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${.7 + .08 * (c.z - 1)})`);
       ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
     return { resize, draw };
@@ -281,7 +339,7 @@
     el, a: +el.dataset.a, b: +el.dataset.b, i,
     ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, on: false
   }));
-  const hud = $('.hud b'), cue = $('.cue');
+  const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 0, loadStart = 0;
   let lastHud = '', lastHudAt = 0;
@@ -305,13 +363,23 @@
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
     }
-    if (hud && now !== undefined) {
-      if (now - lastHudAt > 100) {
-        const t = String(Math.round(p * 100)).padStart(2, '0');
-        if (t !== lastHud) { lastHud = t; lastHudAt = now; hud.textContent = t; }
+    if (hud && now !== undefined && now - lastHudAt > 80) {
+      const t = p.toFixed(3);
+      if (t !== lastHud) {
+        lastHud = t; lastHudAt = now; hud.style.setProperty('--p', t);
+        chapters.forEach((ch, i) => { const on = bands[i] && bands[i].on; if (ch.classList.contains('on') !== on) ch.classList.toggle('on', on); });
       }
     }
     if (cue) { const show = p < 0.04; if (cue.classList.contains('show') !== show) cue.classList.toggle('show', show); }
+  }
+  // between scrolls the scene keeps breathing (steam, caustics, the stream) at a low frame rate, and rests with the visitor
+  const AMB_FPS = 12;
+  let ambStart = 0, ambTimer = 0;
+  function ambientLive() { return scrubOn && heroOnScreen && !document.hidden && !reduced.matches && !document.body.classList.contains('idle'); }
+  function ambientLater() {
+    clearTimeout(ambTimer);
+    if (!ambientLive()) return;
+    ambTimer = setTimeout(() => { if (rafId === null && ambientLive()) rafId = requestAnimationFrame(tick); }, 1000 / AMB_FPS);
   }
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
@@ -321,17 +389,20 @@
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
     if (loadK < 1) { loadK = smoothstep((now - loadStart) / 1400, 0, 1); busy = true; }
-    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; }
-    scene.draw(shown);
+    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
+    if (!ambStart) ambStart = now;
+    scene.draw(shown, false, (now - ambStart) / 1000);
     updateCaptions(shown, now);
   }
   function onScroll() {
     target = heroProgress();
     if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
   }
+  document.addEventListener('visibilitychange', ambientLater);
+  addEventListener('hs30wake', ambientLater);
   function initHeroOnce() {
     if (inited) return; inited = true;
-    scene = makeScene(canvas);
+    scene = makeScene(canvas, { journey: true });
     scene.resize();
     bands.forEach((b) => {
       const fx = b.el.dataset.fx;
@@ -348,6 +419,7 @@
     new IntersectionObserver((es) => {
       heroOnScreen = es[0].isIntersecting;
       if (heroOnScreen && scrubOn) onScroll();
+      ambientLater();
     }, { threshold: 0 }).observe(hero);
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
@@ -436,6 +508,7 @@
     if (!scrubOn) return; scrubOn = false;
     removeEventListener('scroll', onScroll);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    clearTimeout(ambTimer);
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
   // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
@@ -573,7 +646,7 @@
   rv.forEach((el) => rio.observe(el));
 
   /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
-  /* every .steps block runs its own line, so the head ritual and the foot ritual do not share one */
+  /* every .steps block runs its own water line, independently of the others */
   let pinned = false;
   const streams = $$('.steps').map((box) => {
     const path = $('.stream .draw', box);
@@ -658,7 +731,8 @@
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
     cards.forEach((c) => pio.observe(c));
   }
-  const inCat = (cat) => activeCat === 'all' || cat === activeCat;
+  // rituál pre dvoch nájdeš pod Pre dvoch aj vtedy, keď patrí do luxusnej kategórie
+  const inCat = (c) => activeCat === 'all' || c.dataset.cat === activeCat || (activeCat === 'couple' && c.dataset.duo === '1');
   /* Tento riadok sa skladá až v prehliadači, preto má vlastné preklady. */
   const COUNT_WORDS = {
     sk: { all: (t) => `Zobrazených všetkých ${t} rituálov`, some: (n, t) => `Zobrazených ${n} z ${t} rituálov` },
@@ -678,10 +752,10 @@
 
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = inCat(c.dataset.cat) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
+    cards.forEach((c) => { const show = inCat(c) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
     /* nadpis kategórie zmizne aj vtedy, keď v nej po obmedzení nič nezostalo */
     cats.forEach((l) => {
-      const zije = inCat(l.dataset.cat) && shown.some((c) => c.dataset.cat === l.dataset.cat);
+      const zije = shown.some((c) => c.dataset.cat === l.dataset.cat);
       l.classList.toggle('hidden', !zije);
     });
     if (count) {
@@ -709,7 +783,7 @@
     activeCat = cat; applyFilter(fromChip);
   }
   $$('.tools .chip').forEach((b) => b.addEventListener('click', () => pickCat(b.dataset.filter, true)));
-  /* a link elsewhere on the page can open the list already filtered, e.g. the foot rituals */
+  /* a link elsewhere on the page can open the list already filtered by category */
   $$('[data-cat-jump]').forEach((a) => a.addEventListener('click', () => {
     pickCat(a.dataset.catJump, true);
     const id = (a.getAttribute('href') || '').slice(1), target = id && document.getElementById(id);
@@ -785,6 +859,108 @@
   }
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  /* ============ karty hodnôt poukazu: ťuknutie vyplní formulár nižšie ============ */
+  (function giftValues() {
+    const box = $('.gift-values'); if (!box) return;
+    const form = $('#vform'); if (!form) return;
+    function sync() {
+      const v = (form.querySelector('input[name="hodnota"]:checked') || {}).value;
+      $$('.gv', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.gift === v)));
+    }
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('.gv'); if (!b) return;
+      const i = form.querySelector(`input[name="hodnota"][value="${b.dataset.gift}"]`);
+      if (!i) return;
+      i.checked = true;
+      i.dispatchEvent(new Event('change', { bubbles: true }));
+      sync();
+      const target = b.dataset.gift === 'ritual' ? ($('#v-ritual') || form) : form;
+      target.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
+      if (b.dataset.gift === 'ritual') setTimeout(() => { const sel = $('#v-ritual'); if (sel) sel.focus({ preventScroll: true }); }, reduced.matches ? 0 : 420);
+      track('gift_value', { value: b.dataset.gift });
+    });
+    form.addEventListener('change', sync);
+    sync();
+  })();
+
+  /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
+     Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
+     stránke zostáva ako záloha, vedie naň položka Rezervácia v menu. Bez
+     JavaScriptu tlačidlá stále fungujú, len skončia pri formulári. */
+  const BOOKING = (document.documentElement.dataset.booking || '').trim();
+  function toBooking(a) {
+    if (!a || !BOOKING) return;
+    a.href = BOOKING; a.target = '_blank'; a.rel = 'noopener';
+  }
+  if (BOOKING) {
+    $$('a.btn[href="#rezervacia"], .mbar a[href="#rezervacia"]').forEach(toBooking);
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="http"][target="_blank"]');
+      if (a && a.href === BOOKING) track('booking_open', { from: (a.dataset.book || a.className || 'cta').slice(0, 40) });
+    });
+  }
+
+  /* ============ poradca: tri otázky nad cenníkom, odporúčanie z kariet ============ */
+  (function advisor() {
+    const box = $('#poradca'); if (!box) return;
+    const res = $('#advRes', box);
+    const answer = {};
+    // rituály čítame z kariet, aby cenník a poradca nikdy nešli od seba
+    const list = $$('.card').map((c) => ({
+      id: c.dataset.id, cat: c.dataset.cat, goal: c.dataset.goal || 'relax', duo: c.dataset.duo === '1' || c.dataset.cat === 'couple',
+      min: +c.dataset.min, eur: +c.dataset.price,
+      name: ($('h3', c) || {}).textContent || '', tag: ($('.tag', c) || {}).textContent || '',
+      dur: ($('.meta span', c) || {}).textContent || '', price: ($('.meta strong', c) || {}).textContent || '',
+    })).filter((r) => r.id);
+
+    const FITS = { self: (r) => r.cat !== 'kids' && r.cat !== 'gentlemen' && !r.duo, men: (r) => r.cat === 'gentlemen' && !r.duo, kid: (r) => r.cat === 'kids', duo: (r) => r.duo };
+    function pick() {
+      const kto = answer.kto, cas = +answer.cas, ciel = answer.ciel;
+      let pool = list.filter(FITS[kto] || (() => true));
+      if (!pool.length) pool = list.slice();
+      const scored = pool.map((r) => {
+        let sc = 0;
+        // to, čo človek chce, váži viac než presné dodržanie času; keď sa rituál do okna nezmestí, povieme to
+        if (r.goal === ciel) sc += 8;
+        else if ((ciel === 'lux' && r.eur >= 109) || (ciel === 'relax' && r.goal === 'beauty')) sc += 2;
+        if (r.min <= cas) sc += 4 - Math.min(3, (cas - r.min) / 20);
+        else sc -= 1.5 + (r.min - cas) / 60;
+        return { r, sc };
+      }).sort((a, b) => b.sc - a.sc || a.r.eur - b.r.eur);
+      return scored.map((x) => x.r);
+    }
+    function show() {
+      if (!answer.kto || !answer.cas || !answer.ciel) return;
+      const [best, second] = pick();
+      if (!best) return;
+      const fits = best.min <= +answer.cas;
+      const why = best.tag + (fits ? '.' : '. Trvá ' + best.min + ' minút, takže si treba vyhradiť o niečo viac času.');
+      res.hidden = false;
+      res.innerHTML = '<span class="r-lbl">Odporúčame</span>'
+        + '<p class="r-name">' + best.name + '</p>'
+        + '<p class="r-meta"><span>' + best.dur + '</span><b>' + best.price + '</b></p>'
+        + '<p class="r-why">' + why + '</p>'
+        + '<div class="r-cta"><a class="btn primary small" href="#rezervacia" data-book="' + best.id + '">Rezervovať</a>'
+        + '<a class="btn ghost small" href="#' + best.id + '" data-jump="' + best.id + '">Pozrieť rituál</a></div>'
+        + (second ? '<p class="r-alt">Alebo <a href="#' + second.id + '" data-jump="' + second.id + '">' + second.name + '</a>, ' + second.dur + ' · ' + second.price + '.</p>' : '');
+      const go = $('.btn.primary', res); if (typeof toBooking === 'function') toBooking(go);
+      track('advisor_result', { ritual: best.id, kto: answer.kto, cas: answer.cas, ciel: answer.ciel });
+    }
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('.adv-opts .chip');
+      if (b) {
+        const q = b.closest('.adv-q').dataset.q;
+        $$('.chip', b.parentElement).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        answer[q] = b.dataset.v; show(); return;
+      }
+      const j = e.target.closest('[data-jump]');
+      if (j) {
+        const card = document.getElementById(j.dataset.jump);
+        if (card) { $$('.card.pick').forEach((c) => c.classList.remove('pick')); card.classList.add('pick'); setTimeout(() => card.classList.remove('pick'), 3000); }
+      }
+    });
+  })();
+
   const rform = $('#rform');
   if (rform) {
     const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
@@ -793,7 +969,7 @@
     const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
     const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
     const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
-    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when');
+    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
     const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
     const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
     const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
@@ -815,7 +991,109 @@
     const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
     const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
     [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
-    let message = '', shortMessage = '', opened = 0;
+    let message = '', shortMessage = '', opened = 0, dayNote = '', dayNoteUntil = 0;
+    const note = (t) => { dayNote = t; dayNoteUntil = Date.now() + 6000; };
+
+    // ---- slová pre dni a pre vetu o potvrdení (dynamické, preto nie v i18n súboroch)
+    const DAY_WORDS = {
+      sk: { today: 'Dnes', tomorrow: 'Zajtra', d: ['ne', 'po', 'ut', 'st', 'št', 'pi', 'so'] },
+      cs: { today: 'Dnes', tomorrow: 'Zítra', d: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'] },
+      pl: { today: 'Dziś', tomorrow: 'Jutro', d: ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'] },
+      hu: { today: 'Ma', tomorrow: 'Holnap', d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] },
+      de: { today: 'Heute', tomorrow: 'Morgen', d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'] },
+      uk: { today: 'Сьогодні', tomorrow: 'Завтра', d: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'] },
+      en: { today: 'Today', tomorrow: 'Tomorrow', d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+    };
+    const CONFIRM_WORDS = {
+      sk: { open: 'Sme otvorení. Ozveme sa ti dnes, zvyčajne do pár hodín.', soon: 'Dnes otvárame o {t}, vtedy ti napíšeme.', shut: 'Teraz máme zatvorené. Ozveme sa ti {d} po {t}.', tomorrow: 'zajtra', days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
+      cs: { open: 'Máme otevřeno. Ozveme se ti dnes, obvykle do pár hodin.', soon: 'Dnes otevíráme v {t}, tehdy ti napíšeme.', shut: 'Teď máme zavřeno. Ozveme se ti {d} po {t}.', tomorrow: 'zítra', days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
+      pl: { open: 'Jesteśmy otwarci. Odezwiemy się dziś, zwykle w ciągu kilku godzin.', soon: 'Dziś otwieramy o {t}, wtedy napiszemy.', shut: 'Teraz jest zamknięte. Odezwiemy się {d} po {t}.', tomorrow: 'jutro', days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
+      hu: { open: 'Nyitva vagyunk. Ma jelentkezünk, általában pár órán belül.', soon: 'Ma {t}-kor nyitunk, akkor írunk.', shut: 'Most zárva vagyunk. {d} {t} után jelentkezünk.', tomorrow: 'holnap', days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
+      de: { open: 'Wir haben geöffnet. Wir melden uns heute, meist innerhalb weniger Stunden.', soon: 'Wir öffnen heute um {t} und melden uns dann.', shut: 'Gerade ist geschlossen. Wir melden uns {d} nach {t}.', tomorrow: 'morgen', days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
+      uk: { open: 'Ми відчинені. Відповімо сьогодні, зазвичай за кілька годин.', soon: 'Сьогодні відчиняємо о {t}, тоді й напишемо.', shut: 'Зараз зачинено. Відповімо {d} після {t}.', tomorrow: 'завтра', days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
+      en: { open: 'We are open. We will get back to you today, usually within a few hours.', soon: 'We open today at {t} and will write to you then.', shut: 'We are closed right now. We will get back to you {d} after {t}.', tomorrow: 'tomorrow', days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
+    };
+    const lang = () => (document.documentElement.lang || 'sk').slice(0, 2);
+    const words = (map) => map[lang()] || map.sk;
+
+    // ---- deň sa vyberá ťuknutím: desať najbližších otvorených dní
+    const dniBox = $('#r-dni'), inyBtn = $('#r-iny'), datumWrap = $('#r-datum-wrap');
+    function buildDays() {
+      const W = words(DAY_WORDS), list = [], d = new Date(t0);
+      while (list.length < 10) { if (HOURS[d.getDay()]) list.push(new Date(d)); d.setDate(d.getDate() + 1); }
+      dniBox.innerHTML = list.map((dt) => {
+        const diff = Math.round((dt - t0) / 86400000);
+        const top = diff === 0 ? W.today : diff === 1 ? W.tomorrow : W.d[dt.getDay()];
+        return `<label class="day"><input type="radio" name="den" value="${iso(dt)}"><span><b>${top}</b><i>${dt.getDate()}. ${dt.getMonth() + 1}.</i></span></label>`;
+      }).join('');
+      syncDays();
+    }
+    // chip zapnutý podľa dátumu; dnešok zhasne, keď už rituál nestihneme
+    function syncDays() {
+      const v = datum.value, now = new Date();
+      $$('input[name="den"]', dniBox).forEach((i) => {
+        i.checked = i.value === v;
+        const d = parse(i.value), late = d && d.getTime() === t0.getTime() && ritual() && now.getHours() + now.getMinutes() / 60 > lastStart(d);
+        i.disabled = !!late; i.closest('.day').classList.toggle('off', !!late);
+        if (late && i.checked) { i.checked = false; datum.value = ''; note('Dnes už tento rituál nestihneme, vyber ďalší deň alebo nám zavolaj.'); }
+      });
+      const known = !!v && $$('input[name="den"]', dniBox).some((i) => i.value === v);
+      if (v && !known && datumWrap.hidden) openIny(true);
+    }
+    function openIny(open) { datumWrap.hidden = !open; inyBtn.setAttribute('aria-expanded', String(open)); }
+    dniBox.addEventListener('change', (e) => {
+      const i = e.target.closest('input[name="den"]'); if (!i) return;
+      datum.value = i.value; openIny(false); refresh();
+    });
+    inyBtn.addEventListener('click', () => {
+      const open = datumWrap.hidden; openIny(open);
+      if (open) datum.focus({ preventScroll: true }); else { datum.value = ''; refresh(); }
+    });
+
+    // ---- kedy sa ozveme, podľa skutočných otváracích hodín
+    // čas salónu, nie čas návštevníkovho telefónu
+    function salonNow() {
+      try {
+        const parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
+        const get = (t) => (parts.find((x) => x.type === t) || {}).value;
+        const map = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
+        const wd = map[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
+        const cur = (+get('hour') % 24) + (+get('minute') || 0) / 60;
+        if (wd !== undefined && !isNaN(cur)) return { wd, cur };
+      } catch (e) { /* staršie prehliadače: použijeme lokálny čas */ }
+      const d = new Date(); return { wd: d.getDay(), cur: d.getHours() + d.getMinutes() / 60 };
+    }
+    function confirmText() {
+      const W = words(CONFIRM_WORDS), now = salonNow(), h = HOURS[now.wd], cur = now.cur;
+      if (h && cur >= h[0] && cur < h[1]) return { text: W.open, open: true };
+      if (h && cur < h[0]) return { text: W.soon.replace('{t}', hm(h[0])), open: false };
+      let d = (now.wd + 1) % 7, n = 1;
+      while (!HOURS[d]) { d = (d + 1) % 7; n++; }
+      return { text: W.shut.replace('{d}', n === 1 ? W.tomorrow : W.days[d]).replace('{t}', hm(HOURS[d][0])), open: false };
+    }
+
+    // ---- rozpísaný formulár prežije obnovenie stránky (24 hodín, len v prehliadači)
+    const DRAFT = 'hs30-rezervacia';
+    const FIELDS = ['r-ritual', 'r-datum', 'r-cas-presny', 'r-datum2', 'r-meno', 'r-tel', 'r-email', 'r-poukaz', 'r-pozn'];
+    function saveDraft() {
+      try {
+        const v = {}; FIELDS.forEach((id) => { const el = $('#' + id); if (el && el.value) v[id] = el.value; });
+        ['osoby', 'cas', 'cas2'].forEach((n) => { v[n] = val(n); });
+        localStorage.setItem(DRAFT, JSON.stringify({ t: Date.now(), v }));
+      } catch (e) { /* súkromný režim: koncept sa jednoducho neuloží */ }
+    }
+    function loadDraft() {
+      let d; try { d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { return; }
+      if (!d || !d.v || Date.now() - d.t > 864e5) return;
+      const v = d.v;
+      FIELDS.forEach((id) => { const el = $('#' + id); if (el && v[id]) el.value = v[id]; });
+      ['osoby', 'cas', 'cas2'].forEach((n) => { if (v[n]) setVal(n, v[n]); });
+      const dd = parse(datum.value); if (!dd || dd < t0) datum.value = '';
+      if (v['r-cas-presny']) { presnyWrap.hidden = false; const b = rform.querySelector('[data-more="r-presny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+      if (v['r-datum2']) { nahradny.hidden = false; const b = rform.querySelector('[data-more="r-nahradny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+      if (v['r-poukaz']) { $('#r-poukaz-wrap').hidden = false; const b = rform.querySelector('[data-more="r-poukaz-wrap"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+    }
+    const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
 
     // ---- pick a ritual from a card: same slug on the card and the option
     function selectRitual(slug, flash) {
@@ -875,7 +1153,7 @@
       else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
       else casHint.textContent = '';
       const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
-      datumHint.textContent = d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.';
+      datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
       // exact time bounds
       if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
       else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
@@ -904,6 +1182,10 @@
       tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
       tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
       tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
+      // deň, kedy sa ozveme, a koncept
+      syncDays();
+      if (confirmEl) { const c = confirmText(); confirmEl.textContent = c.text; confirmEl.classList.toggle('shut', !c.open); }
+      saveDraft();
     }
 
     // ---- validation: one list of plain sentences, focus on the first wrong field
@@ -955,7 +1237,7 @@
       refresh();
       if (!validate()) { e.preventDefault(); return; }
       track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
-      showSent('wa');
+      showSent('wa'); clearDraft();
     });
     rform.addEventListener('submit', (e) => {
       e.preventDefault(); refresh();
@@ -965,7 +1247,7 @@
       track('reservation_send', { channel: 'email', ritual: r.slug });
       let left = false; const mark = () => { left = true; };
       addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
-      showSent('mail');
+      showSent('mail'); clearDraft();
       location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
       setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
     });
@@ -977,8 +1259,9 @@
       setTimeout(() => { copyBtn.textContent = old; }, 2200);
     });
     rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
-    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); refresh(); datumHint.textContent = 'V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'; } });
-    refresh();
+    document.addEventListener('langchange', () => { buildDays(); refresh(); });
+    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); note('V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'); refresh(); } });
+    buildDays(); loadDraft(); refresh();
   }
 
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */

@@ -6,13 +6,85 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 - `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
-- `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Na telefóne a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
+- `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
 - `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona
+
+## Úvodná cesta
+
+Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
+
+## Darčekové poukazy ako predajná sekcia
+
+Nad objednávkovým formulárom je šesť kariet hodnôt: 50, 70, 100, 149, 249 eur
+a konkrétny rituál. Každá hovorí, čo za tie peniaze obdarovaný dostane, podľa
+skutočného cenníka. Ťuknutie kartu zvýrazní, vyplní hodnotu vo formulári nižšie
+a posunie na neho; pri konkrétnom rituále rovno otvorí zoznam sedemnástich.
+
+## Postup rituálu ako číslovaný sled
+
+Kroky v rozbalenej karte rituálu už nie sú odrážky pod sebou. Každý krok má
+číslo v zlatom krúžku a vlasovú linku nad sebou, na širokej obrazovke v dvoch
+stĺpcoch, na telefóne v jednom. Zmena je len v CSS, obsah krokov zostal.
+
+## Záverečná výzva pred pätičkou
+
+Sekcia `.finale` uzatvára stránku jednou vetou a dvoma tlačidlami: Rezervovať
+rituál a Darovať poukaz. Rezervačné tlačidlo prepíše skript na kalendár rovnako
+ako ostatných tridsať.
+
+## Kam vedú tlačidlá
+
+Adresa online kalendára je na jedinom mieste, v atribúte `data-booking` na
+`<html>` v `index.html`. Skript pri načítaní prepíše každé tlačidlo `a.btn`,
+ktoré smerovalo na `#rezervacia`, na túto adresu a otvorí ju v novej karte.
+Zmena rezervačného systému je teda úprava jedného reťazca.
+
+Pôvodný odkaz na Booqme (`booqme.app/sk/rezervacia/salon-30`) v septembri
+prestal existovať, vracal chybu 404, takže všetky tlačidlá aj nákup poukazu
+viedli do prázdna. Nahradila ho funkčná online rezervácia Salónu 30.
+
+Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kalendári
+ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
+JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
+
+## Poradca nad cenníkom
+
+Nad cenníkom je blok `#poradca`: tri otázky (pre koho, koľko času, čo od toho
+čakáš) a odporúčanie jedného rituálu s cenou, trvaním, tlačidlom Rezervovať
+a odkazom na kartu v cenníku. Pod tým je jedna alternatíva.
+
+Poradca si nedrží vlastný zoznam rituálov. Číta karty v cenníku, takže keď
+pribudne alebo sa zmení rituál, poradca to vie hneď. Každá karta má `data-goal`
+(`relax`, `deep`, `beauty`, `lux`) a `data-duo` pri rituáloch pre dvoch.
+
+Bodovanie v `assets/app.js`: zhoda cieľa má váhu osem, tesnosť času do štyroch
+bodov, prekročenie času je mierny mínus. Preto keď si niekto vyberie hĺbkové
+čistenie a hodinu času, dostane hĺbkový rituál aj s vetou, že trvá deväťdesiat
+minút, nie iný rituál, ktorý sa do hodiny zmestí. Pri zhode rozhoduje nižšia cena.
+
+Pri tom sa opravila stará chyba: Zlatý Head Spa rituál 24K pre dvoch patrí
+do luxusnej kategórie, preto sa pod filtrom Pre dvoch nezobrazoval, hoci
+otázky na stránke hovoria o troch rituáloch pre dve osoby. Filter aj poradca
+teraz berú `data-duo`, takže Pre dvoch ukáže všetky tri.
+
+## Citáty medzi sekciami
+
+Medzi sekcie pribudli tri tiché citáty (`section.pull`). Každý je veta, ktorá už
+na stránke je, prevzatá z obsahu konkrétneho rituálu, a rovnaká veta nesie
+aj sériu Instagram storiek, takže web a profil hovoria jedným hlasom:
+
+- `Záver patrí tichu.` z Prémiového Head Spa rituálu, za sekciou Ako to prebieha
+- `Tempo určuje pokoj, nie hodiny.` z Relaxačného Head Spa, za sekciou Prečo k nám
+- `Dve osoby. Jedna hviezdna obloha.` zo Spoločného rituálu pod hviezdami, za galériou
+
+Popisok pod citátom je odkaz na kartu toho rituálu v cenníku, takže citát nie je
+len ozdoba. Trieda je `pull`, nie `quote`, lebo `quote` už patrí odseku v sekcii
+Rituál a nesmie sa prepísať.
 
 ## Čo web robí sám
 
@@ -39,11 +111,11 @@ Web beží zadarmo na GitHub Pages: https://d8f5s88zjy-art.github.io/head-spa-30
 
 Sekcia Rezervácia (vlastná položka v lište) umožňuje vybrať ktorýkoľvek zo 17 rituálov, deň a časové okno. Tlačidlo Rezervovať pri rituáli v cenníku daný rituál rovno predvyberie. Formulár kontroluje otváracie hodiny, dĺžku rituálu a nedele, potom otvorí hotovú správu vo WhatsApp (0911 153 136) alebo v e-maile. Web nič neukladá, správa odchádza z telefónu zákazníka. Odkaz sa dá aj zdieľať s predvybraným rituálom, napríklad `?ritual=zlaty-ritual-24k#rezervacia`.
 
-Kalendár Booqme zostáva ako druhá možnosť pod formulárom.
+Kalendár online rezerváciu zostáva ako druhá možnosť pod formulárom.
 
 ## Darčekové poukážky
 
-Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku Booqme (https://booqme.app/sk/rezervacia/salon-30), kde sa po vytvorení typov poukážok v administrácii Booqme automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
+Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku online rezerváciu (https://www.salon30.sk/rezervacia), kde sa po vytvorení typov poukážok v administrácii online rezerváciu automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
 
 ## Galéria
 
@@ -60,7 +132,7 @@ Ak fotografia existuje, použije sa namiesto kresby a štítok Kresba zmizne.
 
 ## Rezervácie
 
-Všetky tlačidlá Rezervovať vedú na rezervačnú stránku Booqme https://booqme.app/sk/rezervacia/salon-30 (adresa je v `scratchpad/build.py` ako `BOOK` a v šablóne). Zoznam 17 programov na nahratie do Booqme je v `docs/booqme-programy.xlsx`. Telefón a e-mail sú v sekcii Kontakt.
+Všetky tlačidlá Rezervovať vedú na rezervačnú stránku online rezerváciu https://www.salon30.sk/rezervacia (adresa je v `scratchpad/build.py` ako `BOOK` a v šablóne). Zoznam 17 programov na nahratie do online rezerváciu je v `docs/booqme-programy.xlsx`. Telefón a e-mail sú v sekcii Kontakt.
 
 ## Kontakt a otváracie hodiny
 
@@ -146,7 +218,7 @@ prehľadu cien aj zvonka. Kvôli lepkavému filtru má `.card[id]`
 ## Rezervácia priamo na stránke
 
 Sekcia `#rezervacia` je návrat formulára, ktorý bol na webe od začiatku a v septembri
-sa stratil, keď všetky tlačidlá začali smerovať rovno do Booqme. Logika v
+sa stratil, keď všetky tlačidlá začali smerovať rovno do online rezerváciu. Logika v
 `assets/app.js` medzitým zostala celá, chýbala len značka, takže sa dala vrátiť
 bez písania nového kódu.
 
@@ -155,11 +227,28 @@ Ako to funguje:
 1. Návštevník ťukne na Rezervovať pri rituáli. Tlačidlo má `data-book` so slugom
    rituálu a odkazuje na `#rezervacia`. Skript ten rituál vyberie vo formulári
    a lístok vpravo hneď ukáže názov, trvanie a cenu.
-2. Vyberie deň, časové okno (prípadne presný čas a náhradný termín), počet osôb,
+2. Deň si vyberie ťuknutím. Skript ponúkne desať najbližších otvorených dní ako
+   dlaždice `Dnes`, `Zajtra`, `po 21. 9.` a podobne. Nedeľa sa v ponuke nikdy
+   neobjaví a dnešok zhasne, keď už sa vybraný rituál do zvyšku dňa nezmestí.
+   Kto chce termín ďalej v kalendári, otvorí `Iný deň` a dostane bežné pole
+   s dátumom. Ak doň napíše nedeľu, deň sa posunie na pondelok a povie to.
+3. Doplní časové okno (prípadne presný čas a náhradný termín), počet osôb,
    meno, telefón a poznámku. Formulár pozná otváracie hodiny, takže nedovolí
    termín, ktorý sa do nich nezmestí.
-3. Odošle to cez WhatsApp alebo e-mailom. Web nič neukladá, správa sa skladá
-   v prehliadači a odchádza z telefónu návštevníka. Každá má referenciu `HS30-XXXX`.
+4. Odošle to cez WhatsApp. Pod tlačidlami je veta, kedy sa salón ozve, počítaná
+   z otváracích hodín a z času v Bratislave, nie z času na telefóne návštevníka.
+   Telefón je druhé tlačidlo, e-mail zostal len ako záloha v drobnom texte,
+   lebo schránku salón číta zriedka.
+5. Web nič neukladá ani nikam neposiela. Správa sa skladá v prehliadači
+   a odchádza z telefónu návštevníka, každá má referenciu `HS30-XXXX`.
+
+Rozpísaný formulár prežije obnovenie stránky. Ukladá sa do `localStorage` pod
+kľúčom `hs30-rezervacia`, platí 24 hodín a po odoslaní sa maže. V súkromnom
+režime sa jednoducho neuloží a formulár funguje ďalej.
+
+Dni, názvy dní a veta o potvrdení sú v siedmich jazykoch priamo v `assets/app.js`
+(`DAY_WORDS`, `CONFIRM_WORDS`), pretože vznikajú za behu a v prekladových
+súboroch by nemali kľúč. Pri zmene jazyka sa dlaždice prekreslia.
 
 Odkaz na online kalendár je na jednom jedinom mieste, v bloku `Radšej kalendár?`
 v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa jedna adresa.
