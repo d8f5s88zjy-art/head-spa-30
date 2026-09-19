@@ -1,60 +1,58 @@
-/* LIPA GYM – správanie stránky. Bez závislostí. */
+/* GYM KLUB (Lipa Centrum, Nitra) – správanie stránky. Bez závislostí. */
 (function () {
   'use strict';
 
   /* ============================================================
      FAKTY O PODNIKU – jediné miesto, kde sa upravujú.
-     Hodnoty s DOPLNIŤ sú zástupné. Kým nie sú potvrdené, web ich
-     ukazuje ako „doplníme“ a nevytvára odkazy na telefón či mapu.
+     Všetko nižšie je prevzaté z oficiálneho webu gymklub.sk, stav 19. 9. 2026.
      ============================================================ */
   var GYM = {
-    name: 'LIPA GYM',
-    street: '',            // DOPLNIŤ, napr. 'Fatranská 1'
-    zip: '',               // DOPLNIŤ, napr. '949 01'
-    city: '',              // DOPLNIŤ, napr. 'Nitra'
-    phone: '',             // DOPLNIŤ, napr. '+421 900 000 000'
-    whatsapp: '',          // DOPLNIŤ, číslo bez medzier a bez +, napr. '421900000000'
-    email: '',             // DOPLNIŤ, napr. 'info@lipagym.sk'
-    instagram: '',         // DOPLNIŤ, napr. 'https://www.instagram.com/lipagym/'
-    facebook: '',          // DOPLNIŤ (nepovinné)
-    mapQuery: '',          // DOPLNIŤ, presná adresa pre Google mapu, napr. 'Fatranská 1, Nitra'
-    geo: null,             // DOPLNIŤ, napr. { lat: 48.30, lng: 18.09 }
+    name: 'GYM KLUB',
+    fullName: 'GYM KLUB Fitness & Bodybuilding',
+    street: 'Výstavná 6',
+    place: 'Lipa Centrum',
+    district: 'Chrenová',
+    zip: '949 01',
+    city: 'Nitra',
+    phone: '+421 944 800 394',
+    email: 'info@gymklub.sk',
+    web: 'https://gymklub.sk/',
+    instagram: 'https://www.instagram.com/gymklubnitra/',
+    facebook: 'https://www.facebook.com/profile.php?id=100057511568169',
+    mapQuery: 'Gym Klub, Výstavná 6, 949 01 Nitra',
     url: 'https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/'
   };
 
-  /* Otváracie hodiny (Európa/Bratislava). Pole [od, do] v minútach od polnoci
-     alebo null pre zatvorené. Index 0 = pondelok. DOPLNIŤ podľa skutočnosti. */
+  /* Otváracie hodiny fitness centra (Európa/Bratislava), [od, do] v minútach od polnoci.
+     Index 0 = pondelok. Zdroj: gymklub.sk (kontakt, FAQ, harmonogram).
+     Víkend: oficiálny web uvádza na jednom mieste 08:00 – 17:00 a v pätičke 08:30 – 18:00,
+     použitá je verzia z kontaktu a harmonogramu. */
   var HOURS = [
-    [6 * 60, 22 * 60],   // pondelok
-    [6 * 60, 22 * 60],   // utorok
-    [6 * 60, 22 * 60],   // streda
-    [6 * 60, 22 * 60],   // štvrtok
-    [6 * 60, 22 * 60],   // piatok
-    [8 * 60, 20 * 60],   // sobota
-    [8 * 60, 20 * 60]    // nedeľa
+    [6 * 60 + 30, 21 * 60],   // pondelok
+    [6 * 60 + 30, 21 * 60],   // utorok
+    [6 * 60 + 30, 21 * 60],   // streda
+    [6 * 60 + 30, 21 * 60],   // štvrtok
+    [6 * 60 + 30, 23 * 60],   // piatok
+    [8 * 60, 17 * 60],        // sobota
+    [8 * 60, 17 * 60]         // nedeľa
   ];
-  var HOURS_VERIFIED = false; // DOPLNIŤ: po potvrdení hodín prepnúť na true, zobrazí sa stav „Otvorené“
 
-  /* Ukážkový rozvrh skupinových tréningov. DOPLNIŤ skutočné lekcie.
-     day: 0 = pondelok … 6 = nedeľa, lvl: 1 až 3 */
+  /* Harmonogram skupinových tréningov. Zdroj: gymklub.sk, sekcia časový harmonogram.
+     day: 0 = pondelok … 6 = nedeľa. tag zodpovedá filtru trénerov. */
   var TIMETABLE = [
-    { day: 0, time: '07:00', len: 45, name: 'Ranný kruhový tréning', kind: 'Kondícia', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 0, time: '17:30', len: 60, name: 'Sila a technika', kind: 'Voľné činky', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 0, time: '19:00', len: 45, name: 'Mobilita a core', kind: 'Regenerácia', coach: 'Tréner doplníme', lvl: 1 },
-    { day: 1, time: '17:00', len: 45, name: 'Kettlebell flow', kind: 'Funkčná zóna', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 1, time: '18:30', len: 45, name: 'HIIT', kind: 'Kondícia', coach: 'Tréner doplníme', lvl: 3 },
-    { day: 2, time: '07:00', len: 45, name: 'Ranný kruhový tréning', kind: 'Kondícia', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 2, time: '18:00', len: 60, name: 'Sila a technika', kind: 'Voľné činky', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 3, time: '17:30', len: 45, name: 'Kruhový tréning', kind: 'Kondícia', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 3, time: '19:00', len: 45, name: 'Mobilita a core', kind: 'Regenerácia', coach: 'Tréner doplníme', lvl: 1 },
-    { day: 4, time: '17:00', len: 45, name: 'HIIT', kind: 'Kondícia', coach: 'Tréner doplníme', lvl: 3 },
-    { day: 5, time: '09:00', len: 60, name: 'Sobotná sila', kind: 'Voľné činky', coach: 'Tréner doplníme', lvl: 2 },
-    { day: 5, time: '10:30', len: 45, name: 'Začiatočníci: základy', kind: 'Prevedenie fitkom', coach: 'Tréner doplníme', lvl: 1 }
+    { day: 0, from: '16:00', to: '17:00', name: 'Pilates', coach: 'Majka Navrátilová', tag: 'pilates' },
+    { day: 0, from: '17:00', to: '18:30', name: 'Krav Maga', coach: 'Tomáš Židek', tag: 'kravmaga' },
+    { day: 1, from: '17:00', to: '19:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' },
+    { day: 1, from: '18:00', to: '19:00', name: 'Zdravý chrbát', coach: 'Nikol Molnárová', tag: 'chrbat' },
+    { day: 2, from: '18:00', to: '19:00', name: 'Pilates', coach: 'Majka Navrátilová', tag: 'pilates' },
+    { day: 3, from: '17:00', to: '19:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' },
+    { day: 3, from: '18:00', to: '19:00', name: 'Zdravý chrbát', coach: 'Nikol Molnárová', tag: 'chrbat' },
+    { day: 5, from: '13:00', to: '15:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' }
   ];
 
   var DAYS = ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'];
   var DAYS_SHORT = ['Po', 'Ut', 'St', 'Št', 'Pi', 'So', 'Ne'];
-  var LVL = ['', 'Ľahká', 'Stredná', 'Náročná'];
+  var TAGS = { fitness: 'Fitness', boj: 'Bojové športy', kravmaga: 'Krav Maga', pilates: 'Pilates', chrbat: 'Zdravý chrbát', vyziva: 'Výživa' };
 
   var d = document;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -64,33 +62,21 @@
   /* ---------- fakty do stránky ---------- */
   function fillFacts() {
     var map = {
-      name: GYM.name,
-      street: GYM.street,
-      zip: GYM.zip,
-      city: GYM.city,
-      phone: GYM.phone,
-      email: GYM.email
+      name: GYM.name, fullname: GYM.fullName, street: GYM.street, place: GYM.place, district: GYM.district,
+      zip: GYM.zip, city: GYM.city, phone: GYM.phone, email: GYM.email
     };
-    var fallback = { street: 'Adresu doplníme', zip: '', city: 'Mesto doplníme', phone: 'Telefón doplníme', email: 'E-mail doplníme' };
     Object.keys(map).forEach(function (k) {
-      $$('[data-fact="' + k + '"]').forEach(function (el) {
-        el.textContent = map[k] || fallback[k] || '';
-      });
+      $$('[data-fact="' + k + '"]').forEach(function (el) { el.textContent = map[k]; });
     });
-    $$('[data-fact="phone-link"]').forEach(function (a) {
-      if (GYM.phone) a.href = 'tel:' + GYM.phone.replace(/\s+/g, '');
-    });
-    $$('[data-fact="mail-link"]').forEach(function (a) {
-      if (GYM.email) a.href = 'mailto:' + GYM.email;
-    });
+    var tel = 'tel:' + GYM.phone.replace(/\s+/g, '');
+    $$('[data-fact="phone-link"]').forEach(function (a) { a.href = tel; });
+    $$('[data-fact="mail-link"]').forEach(function (a) { a.href = 'mailto:' + GYM.email; });
     $$('[data-fact="map-link"]').forEach(function (a) {
-      if (GYM.mapQuery) {
-        a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(GYM.mapQuery);
-      } else { a.removeAttribute('target'); }
+      a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(GYM.mapQuery);
     });
-    $$('[data-fact="ig-link"]').forEach(function (a) {
-      if (GYM.instagram) a.href = GYM.instagram; else a.hidden = true;
-    });
+    $$('[data-fact="ig-link"]').forEach(function (a) { a.href = GYM.instagram; });
+    $$('[data-fact="fb-link"]').forEach(function (a) { a.href = GYM.facebook; });
+    $$('[data-fact="web-link"]').forEach(function (a) { a.href = GYM.web; });
     var year = $('[data-year]');
     if (year) year.textContent = String(new Date().getFullYear());
   }
@@ -98,33 +84,44 @@
   /* ---------- schema.org ---------- */
   function schema() {
     var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    var spec = HOURS.map(function (h, i) {
-      return h ? { '@type': 'OpeningHoursSpecification', dayOfWeek: days[i], opens: mm(h[0]), closes: mm(h[1]) } : null;
-    }).filter(Boolean);
     var gym = {
       '@context': 'https://schema.org',
       '@type': ['HealthClub', 'ExerciseGym', 'SportsActivityLocation'],
       '@id': GYM.url + '#gym',
-      name: GYM.name,
+      name: GYM.fullName,
+      alternateName: ['Gym Klub Nitra', 'Lipa Gym Nitra'],
       url: GYM.url,
       image: GYM.url + 'assets/og.jpg',
-      logo: GYM.url + 'assets/favicon.svg',
+      logo: GYM.url + 'assets/img/logo-gymklub.png',
+      telephone: GYM.phone.replace(/\s+/g, ''),
+      email: GYM.email,
+      address: { '@type': 'PostalAddress', streetAddress: GYM.street + ' (' + GYM.place + ')', postalCode: GYM.zip, addressLocality: GYM.city, addressCountry: 'SK' },
+      areaServed: { '@type': 'City', name: 'Nitra' },
+      hasMap: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(GYM.mapQuery),
       currenciesAccepted: 'EUR',
-      amenityFeature: ['Voľná činková zóna', 'Stroje', 'Cardio zóna', 'Funkčná zóna', 'Skupinové tréningy', 'Osobný tréning', 'Šatne a sprchy'].map(function (n) {
+      paymentAccepted: 'Cash',
+      priceRange: '3,50 € až 80 €',
+      openingHoursSpecification: HOURS.map(function (h, i) {
+        return { '@type': 'OpeningHoursSpecification', dayOfWeek: days[i], opens: mm(h[0]), closes: mm(h[1]) };
+      }),
+      amenityFeature: ['Klimatizácia', 'Posilňovacie stroje', 'Voľné váhy', 'Pomôcky na bojové športy', 'Šatne'].map(function (n) {
         return { '@type': 'LocationFeatureSpecification', name: n, value: true };
+      }),
+      sameAs: [GYM.web, GYM.instagram, GYM.facebook],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog', name: 'Cenník GYM KLUB',
+        itemListElement: $$('[data-price]').map(function (el) {
+          return { '@type': 'Offer', name: el.dataset.name, price: el.dataset.price, priceCurrency: 'EUR' };
+        })
+      },
+      employee: $$('.coach').map(function (c) {
+        return { '@type': 'Person', name: $('.coach-name', c).textContent.trim(), jobTitle: $('.coach-role', c).textContent.trim() };
       })
     };
-    if (GYM.phone) gym.telephone = GYM.phone.replace(/\s+/g, '');
-    if (GYM.email) gym.email = GYM.email;
-    if (GYM.street) gym.address = { '@type': 'PostalAddress', streetAddress: GYM.street, postalCode: GYM.zip, addressLocality: GYM.city, addressCountry: 'SK' };
-    if (GYM.geo) gym.geo = { '@type': 'GeoCoordinates', latitude: GYM.geo.lat, longitude: GYM.geo.lng };
-    if (HOURS_VERIFIED) gym.openingHoursSpecification = spec;
-    var same = [GYM.instagram, GYM.facebook].filter(Boolean);
-    if (same.length) gym.sameAs = same;
     var faq = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: $$('.q').map(function (q) {
-        return { '@type': 'Question', name: $('summary', q).textContent.trim(), acceptedAnswer: { '@type': 'Answer', text: $('.a', q).textContent.trim() } };
+        return { '@type': 'Question', name: $('summary', q).textContent.trim(), acceptedAnswer: { '@type': 'Answer', text: $('.a', q).textContent.trim().replace(/\s+/g, ' ') } };
       })
     };
     [gym, faq].forEach(function (obj) {
@@ -159,50 +156,51 @@
     var t = nowBA();
     var h = HOURS[t.day];
     var text, open = false;
-    if (!HOURS_VERIFIED) {
-      text = h ? 'Dnes ' + mm(h[0]) + ' až ' + mm(h[1]) : 'Dnes zatvorené';
-    } else if (h && t.min >= h[0] && t.min < h[1]) {
+    if (h && t.min >= h[0] && t.min < h[1]) {
       open = true;
-      text = 'Otvorené do ' + mm(h[1]);
+      text = (h[1] - t.min <= 60) ? 'Otvorené, zatvárame o ' + mm(h[1]) : 'Otvorené do ' + mm(h[1]);
     } else if (h && t.min < h[0]) {
-      text = 'Otvárame o ' + mm(h[0]);
+      text = 'Dnes otvárame o ' + mm(h[0]);
     } else {
-      var next = null;
-      for (var i = 1; i <= 7; i++) {
-        var dd = (t.day + i) % 7;
-        if (HOURS[dd]) { next = { day: dd, from: HOURS[dd][0] }; break; }
-      }
-      text = next ? (i === 1 ? 'Zajtra od ' + mm(next.from) : DAYS[next.day] + ' od ' + mm(next.from)) : 'Zatvorené';
-      if (h && t.min >= h[1]) text = 'Dnes už zatvorené · ' + text.toLowerCase();
+      var nd = (t.day + 1) % 7;
+      text = 'Zatvorené · zajtra od ' + mm(HOURS[nd][0]);
     }
     els.forEach(function (el) {
       el.textContent = text;
-      var wrap = el.closest('.status, .nav-status');
+      var wrap = el.closest('.status, .nav-status, .hero-fact');
       if (wrap) wrap.classList.toggle('is-open', open);
     });
+    var today = $('[data-today-hours]');
+    if (today) today.textContent = mm(h[0]) + ' – ' + mm(h[1]);
   }
 
   function hoursTable() {
-    var tb = $('[data-hours] tbody');
-    if (!tb) return;
-    var today = nowBA().day;
-    tb.innerHTML = HOURS.map(function (h, i) {
-      var cls = (i === today ? 'is-today' : '') + (h ? '' : ' is-closed');
-      return '<tr class="' + cls.trim() + '"><td>' + DAYS[i] + '</td><td>' + (h ? mm(h[0]) + ' – ' + mm(h[1]) : 'Zatvorené') + '</td></tr>';
-    }).join('');
+    $$('[data-hours] tbody').forEach(function (tb) {
+      var today = nowBA().day;
+      tb.innerHTML = HOURS.map(function (h, i) {
+        return '<tr' + (i === today ? ' class="is-today"' : '') + '><td>' + DAYS[i] + (i === today ? ' <small>dnes</small>' : '') + '</td><td>' + mm(h[0]) + ' – ' + mm(h[1]) + '</td></tr>';
+      }).join('');
+    });
   }
 
   function mapEmbed() {
     var box = $('[data-map]');
-    if (!box || !GYM.mapQuery) return;
-    var f = d.createElement('iframe');
-    f.loading = 'lazy';
-    f.title = 'Mapa: ' + GYM.name;
-    f.referrerPolicy = 'no-referrer-when-downgrade';
-    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(GYM.mapQuery) + '&output=embed';
-    box.innerHTML = '';
-    box.style.borderStyle = 'solid';
-    box.appendChild(f);
+    if (!box) return;
+    function load() {
+      if (box.dataset.loaded) return;
+      box.dataset.loaded = '1';
+      var f = d.createElement('iframe');
+      f.loading = 'lazy';
+      f.title = 'Mapa: ' + GYM.fullName + ', ' + GYM.street + ', ' + GYM.city;
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.allowFullscreen = true;
+      f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(GYM.mapQuery) + '&z=16&output=embed';
+      box.innerHTML = '';
+      box.appendChild(f);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en, io) { if (en[0].isIntersecting) { load(); io.disconnect(); } }, { rootMargin: '400px' }).observe(box);
+    } else { load(); }
   }
 
   /* ---------- lišta ---------- */
@@ -216,8 +214,9 @@
       var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
       var sp = p.toFixed(4);
       spTargets.forEach(function (el) { el.style.setProperty('--sp', sp); });
-      if (y > 120 && y > lastY + 4 && !nav.classList.contains('is-open')) bar.classList.add('is-hidden');
-      else if (y < lastY - 4 || y < 120) bar.classList.remove('is-hidden');
+      bar.classList.toggle('is-solid', y > 40);
+      if (y > 140 && y > lastY + 4 && !nav.classList.contains('is-open')) bar.classList.add('is-hidden');
+      else if (y < lastY - 4 || y < 140) bar.classList.remove('is-hidden');
       lastY = y;
       $('.totop').classList.toggle('is-on', y > 700);
       ticking = false;
@@ -234,17 +233,14 @@
     burger.addEventListener('click', function () { setNav(!nav.classList.contains('is-open')); });
     $$('a', nav).forEach(function (a) { a.addEventListener('click', function () { setNav(false); }); });
     d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setNav(false); burger.focus(); } });
-    window.matchMedia('(min-width: 821px)').addEventListener('change', function (e) { if (e.matches) setNav(false); });
+    window.matchMedia('(min-width: 861px)').addEventListener('change', function (e) { if (e.matches) setNav(false); });
 
-    // aktívny odkaz podľa sekcie
     var links = $$('a[href^="#"]', nav);
     var secs = links.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            links.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id); });
-          }
+          if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id); });
         });
       }, { rootMargin: '-40% 0px -55% 0px' });
       secs.forEach(function (s) { io.observe(s); });
@@ -253,31 +249,28 @@
 
   /* ---------- odhaľovanie ---------- */
   function reveal() {
-    var items = $$('.reveal, .zone, .plan, .tile').filter(function (el) { return !(INTRO && el.closest('.hero')); });
+    var items = $$('.reveal').filter(function (el) { return !(INTRO && el.closest('.hero')); });
     if (!('IntersectionObserver' in window)) { items.forEach(function (el) { el.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-      });
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     items.forEach(function (el) { io.observe(el); });
   }
 
-
   /* ---------- otvorenie: zapnutie svetiel v hale ----------
-     Fotografia úvodu je tmavá, svetlá dvakrát bliknú a zostanú svietiť,
-     kamera pomaly nabieha, potom vybehne nadpis. Preskočí sa pri
-     obmedzení pohybu, pri odkaze na sekciu a pri opakovanom načítaní v karte. */
+     Úvod je tmavý, svetlá dvakrát bliknú a zostanú svietiť, kamera pomaly nabieha,
+     potom vybehne nadpis. Preskočí sa pri obmedzení pohybu, pri odkaze na sekciu
+     a pri opakovanom načítaní v tej istej karte. */
   var INTRO = false;
   function intro() {
     var img = $('.hero-img');
     if (!img) return;
     var skip = reduce.matches || location.hash.length > 1;
-    try { if (sessionStorage.getItem('lipa-intro')) skip = true; } catch (e) {}
+    try { if (sessionStorage.getItem('gk-intro')) skip = true; } catch (e) {}
     if (skip) return;
     INTRO = true;
     d.body.classList.add('intro');
-    try { sessionStorage.setItem('lipa-intro', '1'); } catch (e) {}
+    try { sessionStorage.setItem('gk-intro', '1'); } catch (e) {}
     var heroBits = $$('.hero .reveal');
     heroBits.forEach(function (el) { el.style.transition = 'none'; });
     var started = false, opened = false;
@@ -305,10 +298,36 @@
     $('.hero').addEventListener('click', function () { if (started && !opened) open(); });
   }
 
+  /* ---------- úvodné video ---------- */
+  function heroVideo() {
+    var v = $('.hero-video');
+    if (!v) return;
+    var conn = navigator.connection || {};
+    if (reduce.matches || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) { v.remove(); return; }
+    v.muted = true;
+    v.addEventListener('canplay', function () { v.classList.add('is-ready'); });
+    v.addEventListener('error', function () { v.remove(); });
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { /* autoplay zablokovaný: ostane fotografia */ });
+    // šetrenie: video beží, len keď je úvod na obrazovke
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } else { v.pause(); }
+      }, { threshold: 0.05 }).observe(v);
+    }
+  }
+
+  function hero() {
+    var done = false;
+    function loaded() { if (done || INTRO) return; done = true; d.body.classList.add('is-loaded'); }
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(loaded);
+    setTimeout(loaded, 600);
+  }
+
   /* ---------- úvod: paralaxa pri skrolovaní ---------- */
   function heroParallax() {
     if (reduce.matches) return;
-    var hin = $('.hero-in'), stage = $('.hero-media'), fl = null;
+    var hin = $('.hero-in'), stage = $('.hero-media');
     if (!hin || !stage) return;
     var tick = false;
     function frame() {
@@ -317,16 +336,172 @@
       if (y > vh * 1.2) return;
       var k = Math.min(1, y / (vh * 0.9));
       hin.style.transform = 'translate3d(0,' + (y * 0.28).toFixed(1) + 'px,0)';
-      hin.style.opacity = (1 - k * 1.1).toFixed(3);
+      hin.style.opacity = Math.max(0, 1 - k * 1.1).toFixed(3);
       stage.style.transform = 'translate3d(0,' + (y * 0.35).toFixed(1) + 'px,0)';
-      if (fl) fl.style.transform = 'translate3d(0,' + (y * 0.12).toFixed(1) + 'px,0)';
     }
     window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
     frame();
   }
 
-  /* ---------- skrolovacia vrstva cez celú stránku ----------
-     pozadie s tvarmi, vodoznaky sekcií, nadpisy, bežiaci pás, koľajnica */
+  function cardGlow() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    $$('.glowcard').forEach(function (c) {
+      c.addEventListener('mousemove', function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      }, { passive: true });
+    });
+  }
+
+  function marquee() {
+    var t = $('.marquee-track');
+    if (t) t.innerHTML += t.innerHTML;
+  }
+
+  /* ---------- rozvrh ---------- */
+  function timetable() {
+    var root = $('[data-timetable]');
+    if (!root) return;
+    var tabs = $('.tt-days', root), list = $('.tt-list', root);
+    var today = nowBA().day, sel = today;
+    tabs.innerHTML = DAYS.map(function (n, i) {
+      var cnt = TIMETABLE.filter(function (c) { return c.day === i; }).length;
+      return '<button class="tt-day' + (i === today ? ' is-today' : '') + '" role="tab" type="button" data-day="' + i + '" aria-selected="' + (i === sel) + '" id="tt-tab-' + i + '">' +
+        DAYS_SHORT[i] + '<small>' + (i === today ? 'dnes' : (cnt ? cnt + (cnt === 1 ? ' lekcia' : ' lekcie') : 'fitness')) + '</small></button>';
+    }).join('');
+    function render(day) {
+      sel = day;
+      $$('.tt-day', tabs).forEach(function (b) { b.setAttribute('aria-selected', String(+b.dataset.day === day)); });
+      list.setAttribute('aria-labelledby', 'tt-tab-' + day);
+      var h = HOURS[day];
+      var rows = TIMETABLE.filter(function (c) { return c.day === day; }).sort(function (a, b) { return a.from.localeCompare(b.from); });
+      var html = '<div class="tt-row tt-open" style="animation-delay:0ms">' +
+        '<div class="tt-time">' + mm(h[0]) + '<small>do ' + mm(h[1]) + '</small></div>' +
+        '<div class="tt-name">Samostatný tréning<span>Fitness centrum otvorené celý deň, stroje aj voľné váhy</span></div>' +
+        '<div class="tt-coach">Bez objednania</div>' +
+        '<a class="tt-go" href="#cennik">Cenník</a></div>';
+      html += rows.map(function (c, i) {
+        return '<div class="tt-row" style="animation-delay:' + ((i + 1) * 60) + 'ms">' +
+          '<div class="tt-time">' + c.from + '<small>do ' + c.to + '</small></div>' +
+          '<div class="tt-name">' + c.name + (c.note ? '<span>' + c.note + '</span>' : '<span>Skupinový tréning</span>') + '</div>' +
+          '<div class="tt-coach">' + c.coach + '</div>' +
+          '<a class="tt-go" href="#treneri" data-filter-go="' + c.tag + '">Tréner</a></div>';
+      }).join('');
+      if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. Fitness centrum je otvorené na samostatný tréning.</p>';
+      list.innerHTML = html;
+    }
+    tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('.tt-day');
+      if (b) render(+b.dataset.day);
+    });
+    tabs.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var n = (sel + (e.key === 'ArrowRight' ? 1 : -1) + 7) % 7;
+      render(n);
+      $('#tt-tab-' + n).focus();
+    });
+    list.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-filter-go]');
+      if (a) setCoachFilter(a.dataset.filterGo);
+    });
+    render(sel);
+  }
+
+  /* ---------- tréneri: filter ---------- */
+  var setCoachFilter = function () {};
+  function coaches() {
+    var root = $('#treneri');
+    if (!root) return;
+    var chips = $$('.chip', root), cards = $$('.coach', root), count = $('[data-coach-count]', root);
+    function apply(tag) {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.tag === tag)); });
+      var n = 0;
+      cards.forEach(function (c) {
+        var on = tag === 'all' || (c.dataset.tags || '').split(' ').indexOf(tag) >= 0;
+        c.hidden = !on;
+        if (on) n++;
+      });
+      if (count) count.textContent = n === 1 ? '1 tréner' : n < 5 ? n + ' tréneri' : n + ' trénerov';
+    }
+    chips.forEach(function (c) { c.addEventListener('click', function () { apply(c.dataset.tag); }); });
+    setCoachFilter = function (tag) { if (TAGS[tag]) apply(tag); };
+    apply('all');
+  }
+
+  /* ---------- galéria: lightbox ---------- */
+  function lightbox() {
+    var figs = $$('.gal-item');
+    var dlg = $('#lightbox');
+    if (!figs.length || !dlg || !dlg.showModal) return;
+    var img = $('img', dlg), cap = $('.lb-cap', dlg), cnt = $('.lb-count', dlg);
+    var i = 0;
+    function show(n) {
+      i = (n + figs.length) % figs.length;
+      var f = figs[i], src = f.dataset.full || $('img', f).currentSrc || $('img', f).src;
+      img.src = src; img.alt = $('img', f).alt;
+      cap.textContent = $('figcaption', f) ? $('figcaption', f).textContent : '';
+      cnt.textContent = (i + 1) + ' / ' + figs.length;
+    }
+    figs.forEach(function (f, n) {
+      f.addEventListener('click', function () { show(n); dlg.showModal(); d.body.classList.add('lb-open'); });
+      f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.click(); } });
+    });
+    $('.lb-prev', dlg).addEventListener('click', function () { show(i - 1); });
+    $('.lb-next', dlg).addEventListener('click', function () { show(i + 1); });
+    $('.lb-close', dlg).addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () { d.body.classList.remove('lb-open'); });
+    dlg.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') show(i + 1);
+      if (e.key === 'ArrowLeft') show(i - 1);
+    });
+    // potiahnutie prstom
+    var sx = null;
+    dlg.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+  }
+
+  /* ---------- kontaktný formulár: pripravený e-mail ---------- */
+  function contactForm() {
+    var form = $('#contact-form');
+    if (!form) return;
+    var err = $('[data-error]', form);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.hidden = true;
+      var f = form.elements;
+      var name = f.name.value.trim(), contact = f.contact.value.trim(), topic = f.topic.value, msg = f.msg.value.trim();
+      var problems = [];
+      if (name.length < 2) problems.push('meno');
+      if (contact.length < 5) problems.push('telefón alebo e-mail');
+      if (msg.length < 3) problems.push('správa');
+      if (problems.length) {
+        err.textContent = 'Skontroluj prosím: ' + problems.join(', ') + '.';
+        err.hidden = false;
+        (problems[0] === 'meno' ? f.name : problems[0] === 'správa' ? f.msg : f.contact).focus();
+        return;
+      }
+      var body = 'Dobrý deň,\n\n' + msg + '\n\nMeno: ' + name + '\nKontakt: ' + contact + '\nTéma: ' + topic + '\n\n(odoslané z webu GYM KLUB)';
+      window.location.href = 'mailto:' + GYM.email + '?subject=' + encodeURIComponent(topic + ' – ' + name) + '&body=' + encodeURIComponent(body);
+      form.classList.add('is-sent');
+      $('[data-sent]', form).hidden = false;
+    });
+  }
+
+  /* ---------- mobilná lišta: skryť pri formulári a lightboxe ---------- */
+  function dock() {
+    var dk = $('.dock'), form = $('#contact-form');
+    if (!dk || !form || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (en) { dk.classList.toggle('is-hidden', en[0].isIntersecting); }, { threshold: 0.2 }).observe(form);
+  }
+
+  /* ---------- skrolovacia vrstva cez celú stránku ---------- */
   function scrollFx() {
     if (reduce.matches) return;
     var shapes = $$('.bgs').map(function (el) {
@@ -335,24 +510,20 @@
     function measure() { shapes.forEach(function (sh) { sh.size = sh.el.offsetHeight || 200; }); }
     measure();
     window.addEventListener('resize', measure);
-    // vodoznaky
     var wms = $$('.has-wm').map(function (sec) {
       var w = d.createElement('span');
       w.className = 'wm'; w.setAttribute('aria-hidden', 'true'); w.textContent = sec.dataset.wm;
       sec.insertBefore(w, sec.firstChild);
       return { sec: sec, el: w };
     });
-    // nadpisy sekcií: namiesto jednorazového odhalenia sledujú skrol
     var heads = $$('.has-wm .sec-head').map(function (h) {
       h.classList.remove('reveal'); h.classList.add('in');
       return { el: h, k: $('.kicker', h) };
     });
     var marquee = $('.marquee');
-    // koľajnica
     var rail = $('.rail'), dotsBox = $('.rail-dots'), dots = [];
     if (rail) {
-      var ids = ['ponuka', 'clenstvo', 'rozvrh', 'treneri', 'priestor', 'skusobny', 'faq', 'kontakt'];
-      ids.forEach(function (id) {
+      ['treningy', 'cennik', 'rozvrh', 'treneri', 'priestor', 'recenzie', 'faq', 'kontakt'].forEach(function (id) {
         var sec = $('#' + id); if (!sec) return;
         var a = d.createElement('a');
         a.href = '#' + id; a.dataset.label = sec.dataset.wm || id; a.setAttribute('aria-label', a.dataset.label);
@@ -369,27 +540,23 @@
     placeDots();
     window.addEventListener('resize', placeDots);
     setTimeout(placeDots, 1500);
+    setTimeout(placeDots, 4000);
 
-    var lastY = window.scrollY, vel = 0, ticking = false, running = true, idle = 0;
+    var lastY = window.scrollY, vel = 0, ticking = false;
     function frame() {
       var y = window.scrollY, vh = window.innerHeight;
       var dy = y - lastY; lastY = y;
       vel += (dy - vel) * 0.18;
       if (Math.abs(vel) < 0.05) vel = 0;
-
-      // pozadie: tvary plynú hore rôznou rýchlosťou a otáčajú sa, po opustení obrazovky sa vrátia zdola
       shapes.forEach(function (sh) {
-        var size = sh.size;
-        var L = vh + size;
-        var ty = (((sh.top * vh - y * sh.speed) % L) + L) % L - size;
+        var L = vh + sh.size;
+        var ty = (((sh.top * vh - y * sh.speed) % L) + L) % L - sh.size;
         sh.el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) rotate(' + (y * sh.rot).toFixed(2) + 'deg)';
       });
-
-      // vodoznaky a nadpisy podľa polohy sekcie vo výreze
       wms.forEach(function (w) {
         var r = w.sec.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) return;
-        var v = (vh - r.top) / (vh + r.height);          // 0 = prichádza zdola, 1 = odišla hore
+        var v = (vh - r.top) / (vh + r.height);
         w.el.style.transform = 'translate3d(' + ((0.5 - v) * 28).toFixed(2) + 'vw,' + ((v - 0.5) * -12).toFixed(2) + 'vh,0)';
       });
       heads.forEach(function (h) {
@@ -401,20 +568,12 @@
         h.el.style.transform = 'translate3d(0,' + ((1 - e) * 56).toFixed(1) + 'px,0)';
         if (h.k) h.k.style.transform = 'translate3d(' + ((1 - e) * -16).toFixed(1) + 'px,0,0)';
       });
-
-      // bežiaci pás sa pri rýchlom skrole nakloní
-      if (marquee) {
-        var sk = Math.max(-14, Math.min(14, -vel * 0.35));
-        marquee.style.transform = 'skewX(' + sk.toFixed(2) + 'deg)';
-      }
-
-      // koľajnica: aktívna sekcia
+      if (marquee) marquee.style.transform = 'skewX(' + Math.max(-14, Math.min(14, -vel * 0.35)).toFixed(2) + 'deg)';
       var active = null;
       dots.forEach(function (dt) { if (dt.sec.getBoundingClientRect().top <= vh * 0.45) active = dt; });
       dots.forEach(function (dt) { dt.a.classList.toggle('is-active', dt === active); });
-
       ticking = false;
-      if (vel !== 0) requestAnimationFrame(tick); // doznievanie rýchlosti
+      if (vel !== 0) requestAnimationFrame(tick);
     }
     function tick() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
     window.addEventListener('scroll', tick, { passive: true });
@@ -422,10 +581,8 @@
     frame();
   }
 
-
   /* ---------- plynulé (zotrvačné) skrolovanie kolieskom ----------
-     Len na počítači s myšou. Dotyk, klávesnica a posuvník ostávajú natívne.
-     Vypnúť: SMOOTH_SCROLL = false. */
+     Len na počítači s myšou. Dotyk, klávesnica a posuvník ostávajú natívne. Vypnúť: SMOOTH_SCROLL = false. */
   var SMOOTH_SCROLL = true;
   function smoothScroll() {
     if (!SMOOTH_SCROLL || reduce.matches) return;
@@ -436,19 +593,16 @@
     function loop() {
       if (!running) return;
       var diff = target - current;
-      if (Math.abs(diff) < 0.4) {
-        current = target; window.scrollTo({ top: current, behavior: 'instant' });
-        running = false; return;
-      }
+      if (Math.abs(diff) < 0.4) { current = target; window.scrollTo({ top: current, behavior: 'instant' }); running = false; return; }
       current += diff * EASE;
       window.scrollTo({ top: current, behavior: 'instant' });
       requestAnimationFrame(loop);
     }
     window.addEventListener('wheel', function (e) {
-      if (e.ctrlKey || e.metaKey) return;                        // zoom
-      if (d.body.classList.contains('nav-open') || d.body.classList.contains('intro')) return;
-      if (e.target.closest && e.target.closest('textarea, select, .tt-days, [data-native-scroll]')) return;
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;        // vodorovné
+      if (e.ctrlKey || e.metaKey) return;
+      if (d.body.classList.contains('nav-open') || d.body.classList.contains('lb-open')) return;
+      if (e.target.closest && e.target.closest('textarea, select, .tt-days, dialog, [data-native-scroll]')) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
       var dy = e.deltaY;
       if (e.deltaMode === 1) dy *= 18; else if (e.deltaMode === 2) dy *= window.innerHeight;
       e.preventDefault();
@@ -456,7 +610,6 @@
       target = Math.max(0, Math.min(max(), target + dy));
       if (!running) { running = true; requestAnimationFrame(loop); }
     }, { passive: false });
-    // odkazy na sekcie idú cez rovnaké dobiehanie, aby ich nič neprerušilo
     d.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href^="#"]');
       if (!a || a.getAttribute('href').length < 2) return;
@@ -469,7 +622,6 @@
       try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
       if (!running) { running = true; requestAnimationFrame(loop); }
     });
-    // skrol, ktorý nespôsobil tento kód (klávesnica, posuvník): zosúladiť
     window.addEventListener('scroll', function () {
       if (Math.abs(window.scrollY - current) > 2) { current = target = window.scrollY; running = false; }
     }, { passive: true });
@@ -507,159 +659,9 @@
     });
   }
 
-  /* ---------- úvod: činka a plávajúce prvky ---------- */
-  function hero() {
-    var done = false;
-    function loaded() { if (done || INTRO) return; done = true; d.body.classList.add('is-loaded'); }
-    if (d.fonts && d.fonts.ready) d.fonts.ready.then(loaded);
-    setTimeout(loaded, 600);
-
-    if (reduce.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    var stage = $('.hero'), fls = $$('.fl');
-    fls.forEach(function (f) { f.style.setProperty('--d', f.getAttribute('data-depth') || '10'); });
-    stage.addEventListener('mousemove', function (e) {
-      var r = stage.getBoundingClientRect();
-      var px = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      var py = ((e.clientY - r.top) / r.height - 0.5) * 2;
-      fls.forEach(function (f) { f.style.setProperty('--px', px.toFixed(3)); f.style.setProperty('--py', py.toFixed(3)); });
-    }, { passive: true });
-    stage.addEventListener('mouseleave', function () {
-      fls.forEach(function (f) { f.style.setProperty('--px', '0'); f.style.setProperty('--py', '0'); });
-    });
-  }
-
-  function cardGlow() {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    $$('.zone').forEach(function (c) {
-      c.addEventListener('mousemove', function (e) {
-        var r = c.getBoundingClientRect();
-        c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-        c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
-      }, { passive: true });
-    });
-  }
-
-  function marquee() {
-    var t = $('.marquee-track');
-    if (!t) return;
-    t.innerHTML += t.innerHTML;
-  }
-
-  /* ---------- rozvrh ---------- */
-  function timetable() {
-    var root = $('[data-timetable]');
-    if (!root) return;
-    var tabs = $('.tt-days', root), list = $('.tt-list', root);
-    var today = nowBA().day;
-    var sel = today;
-    tabs.innerHTML = DAYS.map(function (n, i) {
-      return '<button class="tt-day' + (i === today ? ' is-today' : '') + '" role="tab" type="button" data-day="' + i + '" aria-selected="' + (i === sel) + '" id="tt-tab-' + i + '">' + DAYS_SHORT[i] + '<small>' + (i === today ? 'dnes' : n.slice(0, 3)) + '</small></button>';
-    }).join('');
-    function render(day) {
-      sel = day;
-      $$('.tt-day', tabs).forEach(function (b) { b.setAttribute('aria-selected', String(+b.dataset.day === day)); });
-      list.setAttribute('aria-labelledby', 'tt-tab-' + day);
-      var rows = TIMETABLE.filter(function (c) { return c.day === day; }).sort(function (a, b) { return a.time.localeCompare(b.time); });
-      if (!rows.length) {
-        list.innerHTML = '<div class="tt-empty"><svg viewBox="0 0 64 32" aria-hidden="true"><use href="#i-dumbbell"/></svg>' + DAYS[day] + ' bez skupinových lekcií. Fitko je otvorené na voľný tréning.</div>';
-        return;
-      }
-      list.innerHTML = rows.map(function (c, i) {
-        var dots = [1, 2, 3].map(function (n) { return '<i class="' + (n <= c.lvl ? 'on' : '') + '"></i>'; }).join('');
-        return '<div class="tt-row" style="animation-delay:' + (i * 60) + 'ms">' +
-          '<div class="tt-time">' + c.time + '<small>' + c.len + ' min</small></div>' +
-          '<div class="tt-name">' + c.name + '<span>' + c.kind + '</span></div>' +
-          '<div class="tt-coach">' + c.coach + '</div>' +
-          '<div class="tt-lvl" aria-label="Náročnosť: ' + LVL[c.lvl] + '">' + dots + '<span>' + LVL[c.lvl] + '</span></div>' +
-          '</div>';
-      }).join('');
-    }
-    tabs.addEventListener('click', function (e) {
-      var b = e.target.closest('.tt-day');
-      if (b) render(+b.dataset.day);
-    });
-    tabs.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      e.preventDefault();
-      var n = (sel + (e.key === 'ArrowRight' ? 1 : -1) + 7) % 7;
-      render(n);
-      $('#tt-tab-' + n).focus();
-    });
-    render(sel);
-  }
-
-  /* ---------- formulár skúšobného tréningu ---------- */
-  function trialForm() {
-    var form = $('#trial-form');
-    if (!form) return;
-    var err = $('[data-error]', form);
-    var day = form.elements.day;
-    var t = new Date(); t.setDate(t.getDate() + 1);
-    day.min = t.toISOString().slice(0, 10);
-    var via = 'wa';
-    $$('[data-send]', form).forEach(function (b) { b.addEventListener('click', function () { via = b.dataset.send; }); });
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      err.hidden = true;
-      var f = form.elements;
-      var name = f.name.value.trim(), phone = f.phone.value.trim(), dayV = f.day.value, slot = f.slot.value;
-      var problems = [];
-      if (name.length < 2) problems.push('meno');
-      if (!/^[+\d][\d\s()/-]{6,}$/.test(phone)) problems.push('telefón');
-      if (!dayV) problems.push('deň');
-      if (!slot) problems.push('čas');
-      if (problems.length) {
-        err.textContent = 'Skontroluj prosím: ' + problems.join(', ') + '.';
-        err.hidden = false;
-        var first = problems[0] === 'meno' ? f.name : problems[0] === 'telefón' ? f.phone : problems[0] === 'deň' ? f.day : f.slot;
-        first.focus();
-        return;
-      }
-      var dt = new Date(dayV + 'T12:00:00');
-      var nice = pad(dt.getDate()) + '. ' + pad(dt.getMonth() + 1) + '. ' + dt.getFullYear() + ' (' + DAYS[(dt.getDay() + 6) % 7].toLowerCase() + ')';
-      var msg = 'Ahojte, mám záujem o skúšobný tréning v LIPA GYM.\n' +
-        'Meno: ' + name + '\n' +
-        'Telefón: ' + phone + '\n' +
-        'Deň: ' + nice + '\n' +
-        'Čas: ' + slot.toLowerCase() + '\n' +
-        'Zaujíma ma: ' + f.goal.value +
-        (f.note.value.trim() ? '\nPoznámka: ' + f.note.value.trim() : '');
-
-      if (via === 'wa') {
-        if (!GYM.whatsapp) {
-          err.textContent = 'WhatsApp číslo ešte nie je nastavené. Pošli správu e-mailom alebo zavolaj.';
-          err.hidden = false;
-          return;
-        }
-        window.open('https://wa.me/' + GYM.whatsapp + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-      } else {
-        if (!GYM.email) {
-          err.textContent = 'E-mail ešte nie je nastavený. Zavolaj nám, prosím.';
-          err.hidden = false;
-          return;
-        }
-        window.location.href = 'mailto:' + GYM.email + '?subject=' + encodeURIComponent('Skúšobný tréning: ' + name) + '&body=' + encodeURIComponent(msg);
-      }
-      form.classList.add('is-sent');
-    });
-  }
-
-  /* ---------- mobilná lišta: skryť pri formulári ---------- */
-  function dock() {
-    var dk = $('.dock'), form = $('#trial-form');
-    if (!dk || !form || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver(function (en) {
-      dk.classList.toggle('is-hidden', en[0].isIntersecting);
-    }, { threshold: 0.2 }).observe(form);
-    var call = $('.dock-call');
-    if (call && !GYM.phone) call.href = '#kontakt';
-  }
-
   /* ---------- štart ---------- */
   intro();
   fillFacts();
-  schema();
   openStatus();
   setInterval(openStatus, 60000);
   hoursTable();
@@ -667,13 +669,17 @@
   header();
   reveal();
   hero();
+  heroVideo();
   cardGlow();
   marquee();
   timetable();
-  trialForm();
+  coaches();
+  lightbox();
+  contactForm();
   dock();
   faq();
   heroParallax();
   scrollFx();
   smoothScroll();
+  schema();
 })();

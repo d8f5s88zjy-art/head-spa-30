@@ -263,54 +263,50 @@ a zvyšok stránky ostane preložený.
 
 ---
 
-# LIPA GYM (priečinok `lipa-gym/`)
+# GYM KLUB Nitra, pracovný názov LIPA GYM (priečinok `lipa-gym/`)
 
-Samostatný web pre fitness centrum LIPA GYM. Rovnaký princíp ako HEAD SPA 30: čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí. Nasadzuje sa spolu s hlavným webom (`.github/workflows/pages.yml` kopíruje aj `lipa-gym/`), takže beží na https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/. Pri presune na vlastnú doménu stačí priečinok skopírovať do vlastného repozitára a v `index.html` upraviť `canonical`, `og:url` a `og:image` (miesto je označené komentárom `DEPLOY STEP`).
+Web pre **GYM KLUB Fitness & Bodybuilding**, Výstavná 6 (Lipa Centrum), 949 01 Nitra-Chrenová. Rovnaký princíp ako HEAD SPA 30: čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí. Nasadzuje sa spolu s hlavným webom (`.github/workflows/pages.yml` kopíruje aj `lipa-gym/`), takže beží na https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/. Pri presune na vlastnú doménu stačí priečinok skopírovať do vlastného repozitára a v `index.html` upraviť `canonical`, `og:url` a `og:image` (miesto je označené komentárom `DEPLOY STEP`).
+
+## Zdroj údajov
+
+Všetky fakty sú prevzaté z oficiálneho webu **gymklub.sk** (stav 19. 9. 2026) a zo zadania `LIPA_GYM_Nitra_source.zip` (DESIGN_PROMPT.md, hero-gym.mp4). Nič nie je vymyslené:
+
+| Údaj | Hodnota | Zdroj |
+|---|---|---|
+| Názov | GYM KLUB Fitness & Bodybuilding | gymklub.sk |
+| Adresa | Výstavná 6 (Lipa Centrum), 949 01 Nitra, Chrenová | gymklub.sk/contact.html |
+| Telefón, e-mail | +421 944 800 394, info@gymklub.sk | gymklub.sk |
+| Hodiny | Po až Št 06:30 – 21:00, Pi 06:30 – 23:00, So a Ne 08:00 – 17:00 | gymklub.sk (kontakt, FAQ, harmonogram); pätička webu uvádza pre víkend 08:30 – 18:00, preto je na stránke poznámka „cez víkend overte telefonicky“ |
+| Cenník | vstup 6 €, permanentka 50 €/mesiac, študentská 42 €/mesiac, 10 vstupov 50 €, 20 vstupov 80 €, študent 5 €, dôchodca 3,50 €; platba len v hotovosti; MultiSport a Upbalansea app | gymklub.sk, sekcia Cenník a FAQ |
+| Rozvrh | Po Pilates 16:00 a Krav Maga 17:00, Ut a Št Bojové športy 17:00 a Zdravý chrbát 18:00, St Pilates 18:00, So Bojové športy 13:00 | gymklub.sk, časový harmonogram |
+| Tréneri (10) | mená, špecializácie, fotografie, telefóny a popisy | gymklub.sk/treneri.html a stránky tréningov |
+| Recenzie (4) | Nika D., Jozef K., Andrea F., Marcel Š. | gymklub.sk, sekcia Recenzie |
+| Fotografie | 9 záberov priestoru, 5 záberov tréningov, 10 portrétov, logo | gymklub.sk/assets/img |
+| Video v úvode | `assets/hero-gym.mp4` zo zadania, ilustračné (Higgsfield), na stránke označené | zadanie |
+| Sociálne siete | Instagram gymklubnitra, Facebook | gymklub.sk |
+
+Kontakty, hodiny a rozvrh sú na jednom mieste v `assets/app.js` (`GYM`, `HOURS`, `TIMETABLE`); z nich sa vypĺňa stránka aj štruktúrované dáta (schema.org HealthClub s hodinami, cenníkom a trénermi, FAQPage).
 
 ## Štruktúra
 
-- `lipa-gym/index.html` – celá stránka: fotografický úvod so zapnutím svetiel, bežiaci pás, ponuka (6 zón), členstvo (3 plány), rozvrh skupinových tréningov, tréneri (zatiaľ „pripravujeme“), priestor (kreslené dlaždice + 4 kroky prvej návštevy), skúšobný tréning (formulár), otázky, kontakt s hodinami
-- `lipa-gym/assets/style.css` – štýly, tmavá paleta s neónovo zelenou (lipa = lipový list v značke), písmo Bebas Neue na nadpisy a Manrope na text
-- `lipa-gym/assets/app.js` – **jediné miesto s faktami o podniku** (objekt `GYM`, `HOURS`, `TIMETABLE`), otvorené/zatvorené podľa času v Bratislave, menu, rozvrh, formulár, animácie, schema.org
-- `lipa-gym/assets/fonts/` – Bebas Neue a Manrope (variabilné), lokálne, latinka + slovenská diakritika
-- `lipa-gym/assets/og.jpg`, `favicon.svg` – obrázok pre zdieľanie a ikona
+- `lipa-gym/index.html` – úvod (fotografia z prevádzky + ambientné video, zapnutie svetiel, nájazd kamery), bežiaci pás, dôvody, 6 tréningov s fotografiami, cenník (3 karty + tabuľka + podmienky), rozvrh s dňami a živým stavom otvorené, 10 trénerov s filtrom podľa disciplíny, galéria 9 fotografií s lightboxom, prvá návšteva, recenzie, otázky, kontakt s mapou, hodinami a formulárom
+- `lipa-gym/assets/style.css` – štýly, tmavá paleta s limetkovou, Bebas Neue + Manrope
+- `lipa-gym/assets/app.js` – údaje o prevádzke, živé hodiny (Bratislava), rozvrh, filter trénerov, lightbox, formulár (otvorí pripravený e-mail na info@gymklub.sk, nič neukladá), mapa načítaná až pri posune, animácie, koľajnica, zotrvačné skrolovanie, schema.org
+- `lipa-gym/assets/img/` – fotografie prevádzky (`hero`, `stojany`, `rig`, `cardio`, `ring`, `stroje`, `recepcia`, `rig2`, `tatami`, `bar`), tréningy (`t-*`), `tim/` portréty trénerov, `logo-gymklub.png`; každý obrázok v JPG aj WebP
+- `lipa-gym/assets/hero-gym.mp4` – ambientné video úvodu (bez zvuku, 0,6 MB), pri obmedzení pohybu alebo šetrení dát sa nenačíta a ostáva fotografia
+- `lipa-gym/assets/fonts/` – Bebas Neue a Manrope lokálne
 
-## Animácie činiek
+## Animácie
 
-- **Otvorenie stránky (zapnutie svetiel):** úvod je fotografický záber haly na celú obrazovku. Pri načítaní je tmavý, svetlá dvakrát bliknú a zostanú svietiť, po hale prejde zelený odlesk, kamera 11 sekúnd pomaly nabieha a nadpis vybehne po riadkoch. Preskočí sa klikom do úvodu, pri obmedzení pohybu, pri odkaze priamo na sekciu (`#clenstvo`) a pri druhom načítaní v tej istej karte.
-- **Vizualizácie priestoru:** hala v úvode, činková, funkčná a cardio zóna, stroje a činka pod formulárom sú AI vizualizácie (`assets/img/*.jpg` + `.webp`, vygenerované 16. 9. 2026), na stránke označené štítkom „Vizualizácia“ a poznámkou „Vizualizácia priestoru“. Sú to ilustrácie atmosféry, nie fotografie skutočnej prevádzky, a po nafotení sa nahradia skutočnými fotkami (rovnaké názvy súborov, rovnaké rozmery 1600 × 895 a 1000 × 753). Ukazujú zelené kotúče a LED pásy vo farbe značky.
-- **Skrolovacia vrstva cez celú stránku:** v pozadí plávajú obrysové kotúče, činka a kettlebell, každý inou rýchlosťou, otáčajú sa so skrolovaním a po opustení obrazovky sa vracajú zdola. Za nadpisom každej sekcie je obrysový nápis (Ponuka, Členstvo…), ktorý sa posúva do strany podľa polohy sekcie. Nadpisy sekcií nabiehajú podľa skrolu (nie jednorazovo), bežiaci pás sa pri rýchlom skrole nakloní. Na širokých obrazovkách je vpravo koľajnica s kotúčom, ktorý ukazuje polohu na stránke, s bodkami sekcií (klikateľné, s názvom pri prejdení).
-- **Otázky:** odpovede sa plynulo vysúvajú a zasúvajú, znamienko plus sa otáča na mínus.
-- **Lišta:** pri rolovaní beží pod lištou pás postupu a po ňom sa kotúľa malá jednoručka.
-- **Ponuka:** každá zóna má vlastnú ikonu s pohybom, keď sa objaví a pri prejdení myšou: bicepsový zdvih jednoručky, švih kettlebellu, otáčajúci sa kotúč, tep.
-- **Členstvo:** na karte sa pri odhalení „naložia“ kotúče (počet podľa plánu).
-- **Priestor:** stojan s jednoručkami, ktoré sa po jednom dvíhajú, hojdajúci sa kettlebell, kresliaca sa krivka tepu, otáčajúci sa kotúč.
+- **Otvorenie (zapnutie svetiel):** úvod je pri načítaní tmavý, svetlá dvakrát bliknú a zostanú svietiť, po hale prejde odlesk, kamera 12 sekúnd pomaly nabieha a nadpis vybehne po riadkoch. Preskočí sa klikom do úvodu, pri obmedzení pohybu, pri odkaze na sekciu a pri druhom načítaní v tej istej karte.
+- **Skrolovacia vrstva:** obrysové kotúče a činka v pozadí plynú rôznou rýchlosťou, za nadpismi sekcií plávajú obrysové nápisy, nadpisy nabiehajú podľa skrolu, bežiaci pás sa pri rýchlom skrole nakloní, vpravo koľajnica s kotúčom a bodkami sekcií.
+- **Zotrvačné skrolovanie** kolieskom na počítači (`SMOOTH_SCROLL` v `app.js`), odkazy na sekcie idú tou istou cestou, dotyk a klávesnica ostávajú natívne.
+- **Plynulosť:** žiadne filtre na hýbucich sa prvkoch, `will-change` na vrstvách, premenná postupu len na prvkoch, ktoré ju používajú, lišta bez rozostrenia na mobile.
 - Pri zapnutom **obmedzení pohybu** je všetko statické a nič sa neschováva.
-- **Zotrvačné skrolovanie:** na počítači s myšou stránka po koliesku nedobieha skokmi, ale mäkko (dobiehanie v `assets/app.js`, funkcia `smoothScroll`, vypína sa konštantou `SMOOTH_SCROLL = false`). Odkazy na sekcie idú tou istou cestou. Klávesnica, posuvník a dotyk na telefóne ostávajú natívne, pri obmedzení pohybu je vypnuté.
-- **Plynulosť:** pri skrolovaní sa nemení nič, čo vyžaduje prepočet rozloženia alebo filtre (žiadne `blur`/`drop-shadow` na hýbucich sa prvkoch, žiara je obyčajný gradient, tieň činky je gradient), hýbuce sa vrstvy majú `will-change`, rozostrenie lišty je na mobile vypnuté a premenná postupu skrolu sa nastavuje len na prvkoch, ktoré ju používajú.
 
-## Pravdivostný register (čo treba doplniť pred spustením)
+## Kontakt a formulár
 
-Web nikde neuvádza vymyslené fakty. Zástupné hodnoty sú označené `DOPLNIŤ` v `lipa-gym/assets/app.js` a v komentároch `index.html`:
-
-| Údaj | Stav | Kde |
-|---|---|---|
-| Adresa, mesto, PSČ | doplniť | `GYM.street`, `GYM.zip`, `GYM.city` |
-| Telefón, WhatsApp | doplniť | `GYM.phone`, `GYM.whatsapp` (bez neho tlačidlo WhatsApp zobrazí upozornenie) |
-| E-mail | doplniť | `GYM.email` |
-| Instagram, Facebook | doplniť | `GYM.instagram`, `GYM.facebook` |
-| Mapa | doplniť | `GYM.mapQuery` (po vyplnení sa vloží Google mapa), `GYM.geo` |
-| Otváracie hodiny | ukážkové | `HOURS`; po potvrdení prepnúť `HOURS_VERIFIED = true`, až potom sa ukazuje živé „Otvorené do…“ |
-| Ceny členstva | ukážkové (zobrazuje sa „— €“) | sekcia `#clenstvo` v `index.html`, odstrániť poznámku „Ukážkový cenník“ |
-| Rozvrh lekcií, tréneri | ukážkové | `TIMETABLE` v `app.js`, sekcia `#treneri` (návod v komentári) |
-| Podmienky pozastavenia, zľavy, čo je v cene | potvrdiť | odpovede v `#faq` a texty pri plánoch |
-| Fotografie priestoru | vizualizácie (AI), označené | nahradiť skutočnými fotkami v `assets/img/` (hero, cinky, funkcna, cardio, stroje, os) |
-
-Kým fakty nie sú doplnené, stránka ukazuje „doplníme“ a nevytvára odkazy na telefón ani mapu.
-
-## Skúšobný tréning
-
-Formulár (meno, telefón, deň, čas, záujem, poznámka) skontroluje polia a otvorí pripravenú správu vo WhatsApp alebo v e-maile. Web nič neukladá. Na telefóne je dole lišta s tlačidlami Zavolať a Skúšobný tréning, ktorá sa schová, keď je formulár na obrazovke.
+Hlavná akcia je „Prísť si zacvičiť“ (kontakt s hodinami, mapou a navigáciou) a „Pozrieť cenník“. Na telefóne je dole lišta Zavolať a Cenník a vstup. Formulár „Napíšte nám“ pripraví e-mail do klientovho programu, web nič neukladá ani neposiela.
 
 ## Náhľad
 
