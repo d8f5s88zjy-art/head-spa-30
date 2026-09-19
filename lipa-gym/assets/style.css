@@ -137,9 +137,10 @@ section{padding-block:clamp(72px,10vw,128px);position:relative}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.62) 0%,rgba(11,12,15,.18) 30%,rgba(11,12,15,.4) 60%,rgba(11,12,15,.94) 100%),linear-gradient(90deg,rgba(11,12,15,.8) 0%,rgba(11,12,15,.45) 40%,rgba(11,12,15,.05) 75%)}
 .hero-sweep{position:absolute;inset:-30% -20%;background:linear-gradient(100deg,transparent 42%,rgba(214,255,90,.12) 50%,transparent 58%);transform:translateX(-90%);opacity:0;pointer-events:none}
 body.lights .hero-media{animation:lightsOn 1.7s steps(1,end) forwards}
-body.lights .hero-img,body.lights .hero-video{animation:heroIn 12s cubic-bezier(.15,.55,.25,1) forwards}
+body.lights .hero-img,body.lights .hero-video{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
 body.is-loaded:not(.lights) .hero-media{filter:none}
-body.is-loaded:not(.lights) .hero-img,body.is-loaded:not(.lights) .hero-video{animation:heroIn 12s cubic-bezier(.15,.55,.25,1) forwards}
+body.is-loaded:not(.lights) .hero-img,body.is-loaded:not(.lights) .hero-video{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
+body.past-hero .hero-img,body.past-hero .hero-video{animation-play-state:paused}
 body.lights .hero-sweep{animation:sweep 1.8s cubic-bezier(.3,0,.2,1) 1.35s forwards}
 .hero-in{position:relative;z-index:2;max-width:var(--wrap);width:100%;will-change:transform,opacity}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
@@ -159,7 +160,7 @@ body.is-loaded .hero-h .line>span{transform:none}
 .hero-scroll{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:26px;height:42px;border:2px solid var(--line2);border-radius:14px;z-index:3}
 .hero-scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--volt);animation:wheel 1.8s ease-in-out infinite}
 @keyframes lightsOn{0%{filter:brightness(0)}18%{filter:brightness(.55)}24%{filter:brightness(.03)}36%{filter:brightness(.85)}42%{filter:brightness(.12)}50%{filter:brightness(1.08)}62%{filter:brightness(.96)}100%{filter:brightness(1)}}
-@keyframes heroIn{from{transform:scale(1.14)}to{transform:scale(1.02)}}
+@keyframes heroIn{from{transform:scale(1.12)}to{transform:scale(1.02)}}
 @keyframes sweep{0%{transform:translateX(-90%);opacity:1}100%{transform:translateX(90%);opacity:0}}
 @media (max-width:860px){
   .eyebrow{font-size:.72rem;letter-spacing:.12em}
@@ -425,6 +426,21 @@ body.is-loaded .hero-h .line>span{transform:none}
 .totop svg{width:20px;height:20px}
 .totop.is-on{opacity:1;transform:none;pointer-events:auto}
 .totop:hover{border-color:var(--volt);color:var(--volt)}
+
+
+/* Odľahčený režim na telefóne a dotykových zariadeniach (body.lite): bez videa, pozadia, vodoznakov a paralaxy */
+body.lite .bgfx,body.lite .rail,body.lite .wm,body.lite .hero-video{display:none}
+body.lite .hero-media,body.lite .hero-in,body.lite .has-wm .sec-head,body.lite .marquee,body.lite .bar{will-change:auto}
+body.lite .hero-media{filter:none;opacity:0}
+body.lite.lights .hero-media{animation:lightsOnLite 1.5s steps(1,end) forwards}
+body.lite.is-loaded:not(.lights) .hero-media{opacity:1}
+body.lite .hero-img,body.lite .hero-video{animation:none!important;transform:none}
+body.lite .hero-sweep{display:none}
+body.lite section:not(.hero){content-visibility:auto;contain-intrinsic-size:auto 900px}
+body.lite .reveal{transition-duration:.45s,.5s}
+body.lite .tr-card img,body.lite .gal-item img,body.lite .coach-face img{transform:none;transition:none}
+body.lite .glowcard::after{display:none}
+@keyframes lightsOnLite{0%{opacity:0}18%{opacity:.55}24%{opacity:.04}36%{opacity:.85}42%{opacity:.15}50%{opacity:1}100%{opacity:1}}
 
 /* Odhaľovanie pri rolovaní */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .8s var(--ease)}

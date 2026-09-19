@@ -56,6 +56,9 @@
 
   var d = document;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* Odľahčený režim: telefóny a dotykové zariadenia. Bez videa, pohyblivého pozadia a paralaxy. */
+  var LITE = window.matchMedia('(max-width: 860px), (hover: none) and (pointer: coarse)').matches;
+  if (LITE) document.documentElement.classList.add('lite-root');
   var $ = function (s, r) { return (r || d).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
 
@@ -215,6 +218,7 @@
       var sp = p.toFixed(4);
       spTargets.forEach(function (el) { el.style.setProperty('--sp', sp); });
       bar.classList.toggle('is-solid', y > 40);
+      d.body.classList.toggle('past-hero', y > window.innerHeight);
       if (y > 140 && y > lastY + 4 && !nav.classList.contains('is-open')) bar.classList.add('is-hidden');
       else if (y < lastY - 4 || y < 140) bar.classList.remove('is-hidden');
       lastY = y;
@@ -303,8 +307,10 @@
     var v = $('.hero-video');
     if (!v) return;
     var conn = navigator.connection || {};
-    if (reduce.matches || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) { v.remove(); return; }
+    if (LITE || reduce.matches || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) { v.remove(); return; }
     v.muted = true;
+    v.preload = 'auto';
+    v.autoplay = true;
     v.addEventListener('canplay', function () { v.classList.add('is-ready'); });
     v.addEventListener('error', function () { v.remove(); });
     var p = v.play();
@@ -326,7 +332,7 @@
 
   /* ---------- úvod: paralaxa pri skrolovaní ---------- */
   function heroParallax() {
-    if (reduce.matches) return;
+    if (reduce.matches || LITE) return;
     var hin = $('.hero-in'), stage = $('.hero-media');
     if (!hin || !stage) return;
     var tick = false;
@@ -344,7 +350,7 @@
   }
 
   function cardGlow() {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (LITE || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     $$('.glowcard').forEach(function (c) {
       c.addEventListener('mousemove', function (e) {
         var r = c.getBoundingClientRect();
@@ -503,7 +509,7 @@
 
   /* ---------- skrolovacia vrstva cez celú stránku ---------- */
   function scrollFx() {
-    if (reduce.matches) return;
+    if (reduce.matches || LITE) return;
     var shapes = $$('.bgs').map(function (el) {
       return { el: el, speed: +el.dataset.speed, rot: +el.dataset.rot, top: +el.dataset.top / 100, size: 200 };
     });
@@ -660,6 +666,7 @@
   }
 
   /* ---------- štart ---------- */
+  if (LITE) d.body.classList.add('lite');
   intro();
   fillFacts();
   openStatus();

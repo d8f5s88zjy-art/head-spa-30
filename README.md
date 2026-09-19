@@ -281,7 +281,7 @@ Všetky fakty sú prevzaté z oficiálneho webu **gymklub.sk** (stav 19. 9. 2026
 | Rozvrh | Po Pilates 16:00 a Krav Maga 17:00, Ut a Št Bojové športy 17:00 a Zdravý chrbát 18:00, St Pilates 18:00, So Bojové športy 13:00 | gymklub.sk, časový harmonogram |
 | Tréneri (10) | mená, špecializácie, fotografie, telefóny a popisy | gymklub.sk/treneri.html a stránky tréningov |
 | Recenzie (4) | Nika D., Jozef K., Andrea F., Marcel Š. | gymklub.sk, sekcia Recenzie |
-| Fotografie | 9 záberov priestoru, 5 záberov tréningov, 10 portrétov, logo | gymklub.sk/assets/img |
+| Fotografie | výlučne zábery z prevádzky: 10 fotografií priestoru (aj pri tréningoch), 10 portrétov trénerov, logo; stockové zábery z gymklub.sk (service) sa nepoužívajú | gymklub.sk/assets/img |
 | Video v úvode | `assets/hero-gym.mp4` zo zadania, ilustračné (Higgsfield), na stránke označené | zadanie |
 | Sociálne siete | Instagram gymklubnitra, Facebook | gymklub.sk |
 
@@ -292,7 +292,7 @@ Kontakty, hodiny a rozvrh sú na jednom mieste v `assets/app.js` (`GYM`, `HOURS`
 - `lipa-gym/index.html` – úvod (fotografia z prevádzky + ambientné video, zapnutie svetiel, nájazd kamery), bežiaci pás, dôvody, 6 tréningov s fotografiami, cenník (3 karty + tabuľka + podmienky), rozvrh s dňami a živým stavom otvorené, 10 trénerov s filtrom podľa disciplíny, galéria 9 fotografií s lightboxom, prvá návšteva, recenzie, otázky, kontakt s mapou, hodinami a formulárom
 - `lipa-gym/assets/style.css` – štýly, tmavá paleta s limetkovou, Bebas Neue + Manrope
 - `lipa-gym/assets/app.js` – údaje o prevádzke, živé hodiny (Bratislava), rozvrh, filter trénerov, lightbox, formulár (otvorí pripravený e-mail na info@gymklub.sk, nič neukladá), mapa načítaná až pri posune, animácie, koľajnica, zotrvačné skrolovanie, schema.org
-- `lipa-gym/assets/img/` – fotografie prevádzky (`hero`, `stojany`, `rig`, `cardio`, `ring`, `stroje`, `recepcia`, `rig2`, `tatami`, `bar`), tréningy (`t-*`), `tim/` portréty trénerov, `logo-gymklub.png`; každý obrázok v JPG aj WebP
+- `lipa-gym/assets/img/` – fotografie prevádzky (`hero`, `stojany`, `rig`, `cardio`, `ring`, `stroje`, `recepcia`, `rig2`, `tatami`, `bar`, `about`) s mobilnými variantmi `-640`, `tim/` portréty trénerov (+ `-320`), `logo-gymklub.png`; každý obrázok v JPG aj WebP
 - `lipa-gym/assets/hero-gym.mp4` – ambientné video úvodu (bez zvuku, 0,6 MB), pri obmedzení pohybu alebo šetrení dát sa nenačíta a ostáva fotografia
 - `lipa-gym/assets/fonts/` – Bebas Neue a Manrope lokálne
 
@@ -301,6 +301,7 @@ Kontakty, hodiny a rozvrh sú na jednom mieste v `assets/app.js` (`GYM`, `HOURS`
 - **Otvorenie (zapnutie svetiel):** úvod je pri načítaní tmavý, svetlá dvakrát bliknú a zostanú svietiť, po hale prejde odlesk, kamera 12 sekúnd pomaly nabieha a nadpis vybehne po riadkoch. Preskočí sa klikom do úvodu, pri obmedzení pohybu, pri odkaze na sekciu a pri druhom načítaní v tej istej karte.
 - **Skrolovacia vrstva:** obrysové kotúče a činka v pozadí plynú rôznou rýchlosťou, za nadpismi sekcií plávajú obrysové nápisy, nadpisy nabiehajú podľa skrolu, bežiaci pás sa pri rýchlom skrole nakloní, vpravo koľajnica s kotúčom a bodkami sekcií.
 - **Zotrvačné skrolovanie** kolieskom na počítači (`SMOOTH_SCROLL` v `app.js`), odkazy na sekcie idú tou istou cestou, dotyk a klávesnica ostávajú natívne.
+- **Telefón (odľahčený režim, `body.lite`):** na dotykových zariadeniach a do šírky 860 px sa nenačíta video, nebeží pohyblivé pozadie, obrysové nápisy, paralaxa ani nájazd kamery, obrázky sa berú v menších variantoch (`*-640`, `tim/*-320`) a sekcie mimo obrazovky sa nevykresľujú (`content-visibility`). Zapnutie svetiel ostáva ako prelínanie priehľadnosti.
 - **Plynulosť:** žiadne filtre na hýbucich sa prvkoch, `will-change` na vrstvách, premenná postupu len na prvkoch, ktoré ju používajú, lišta bez rozostrenia na mobile.
 - Pri zapnutom **obmedzení pohybu** je všetko statické a nič sa neschováva.
 
