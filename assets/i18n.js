@@ -50,6 +50,9 @@
       }
     });
     var n; while ((n = w.nextNode())) nodes.push({ node: n, sk: n.nodeValue, key: norm(n.nodeValue) });
+    /* skripty, ktoré text delia na slová (filmové výroky), čakajú na túto zbierku, aby preklad písal do pôvodných uzlov */
+    document.documentElement.setAttribute('data-i18n', 'ready');
+    document.dispatchEvent(new CustomEvent('i18nready'));
     var all = document.body.querySelectorAll('[' + ATTRS.join('],[') + ']');
     Array.prototype.forEach.call(all, function (el) {
       if (el.closest('svg')) return;
@@ -184,7 +187,7 @@
   function start() {
     current = pick(); build();
     if (current !== 'sk') { waiting(true); setTimeout(function () { waiting(false); }, 1500); set(current, false); }
-    else later(offer);
+    else { later(offer); later(function () { if (!nodes) collect(); }); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 

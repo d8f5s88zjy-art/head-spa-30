@@ -119,6 +119,8 @@
       const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * rxP, H * 0.5))) * c.z;
       const ry = rx * c.tilt;
       const warm = c.warm, lamp = mix(COOL, GOLD, warm);
+      // nábeh: prvú sekundu a pol sa misa skladá z prachu, z bodiek na kružniciach, potom stuhne do vody
+      const life = reduced.matches ? 1 : smoothstep(t || 0, 0.05, 1.5);
       const topY = -H * 0.04, landY = cy - ry * 0.12;
       const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
       const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
@@ -147,7 +149,25 @@
       floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(10,13,11,0)');
       ctx.fillStyle = floor; ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.6, rx * 1.8, ry * 2.2, 0, 0, Math.PI * 2); ctx.fill();
       // the bowl body: a dark ceramic rim below the water line
+      if (life < 1) {
+        // prach: body na kružniciach misy, rozhodené o (1 - life), s vlastným pomalým rotovaním
+        const rings = 9, per = lite ? 26 : 44, scatter = (1 - life) * rx * 0.35;
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < rings; i++) {
+          const kr = 0.18 + i / rings * 0.9;
+          for (let j = 0; j < per; j++) {
+            const ang = j / per * Math.PI * 2 + i * 0.37 + (1 - life) * 1.6 + (t || 0) * 0.05;
+            const jx = Math.sin(i * 12.9 + j * 78.2) * scatter, jy = Math.cos(i * 7.3 + j * 31.7) * scatter * 0.6;
+            const x = cx + Math.cos(ang) * rx * kr + jx, y = cy + Math.sin(ang) * ry * kr + jy - (1 - life) * ry * 0.8;
+            const a = (0.35 + 0.65 * (j % 3 === 0 ? 1 : 0.4)) * (1 - life) * 0.9;
+            ctx.fillStyle = i % 3 === 0 ? `rgba(236,208,143,${a})` : `rgba(190,232,222,${a})`;
+            ctx.fillRect(x, y, 1.5, 1.5);
+          }
+        }
+        ctx.restore();
+      }
       ctx.save();
+      ctx.globalAlpha = 0.08 + 0.92 * life;
       ctx.beginPath(); ctx.ellipse(cx, cy, rx * 1.03, ry * 1.03, 0, 0, Math.PI); ctx.lineTo(cx - rx * 1.03, cy);
       const bowl = ctx.createLinearGradient(0, cy, 0, cy + ry * 1.6);
       bowl.addColorStop(0, '#1a221d'); bowl.addColorStop(1, '#0a0e0c');
@@ -156,6 +176,7 @@
       ctx.restore();
       // the water surface
       ctx.save();
+      ctx.globalAlpha = 0.08 + 0.92 * life;
       ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
       const water = ctx.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx);
       water.addColorStop(0, `rgba(96,150,140,${.55 + .15 * after})`); water.addColorStop(.55, 'rgba(46,84,78,.9)'); water.addColorStop(1, 'rgba(18,34,31,1)');
@@ -435,6 +456,7 @@
     if (!heroOnScreen) shown = target;   // pri skoku na kotvu sa mimo obrazovky nič nedobieha
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
+    if (ambStart && now - ambStart < 1800) busy = true;   // nábeh misy z prachu beží plynulo, nie v ambientnom tempe
     if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
     if (!ambStart) ambStart = now;
     scene.draw(shown, false, (now - ambStart) / 1000);
@@ -851,6 +873,38 @@
     c.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
+
+  /* ============ filmové výroky: slová sa dvíhajú jedno po druhom, keď výrok príde do obrazu ============
+     Pôvodné textové uzly zostávajú v pamäti (preklad do nich zapisuje), po zmene jazyka sa vrátia a rozdelia znova. */
+  idle(function vyroky() {
+    const qs = $$('.pull .q');
+    function split(q) {
+      const items = []; let i = 0;
+      const walk = (n) => {
+        if (n.nodeType === 3) {
+          if (!n.nodeValue.trim()) return;
+          const spans = [], frag = document.createDocumentFragment();
+          n.nodeValue.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { const t = document.createTextNode(part); spans.push(t); frag.appendChild(t); return; }
+            const w = document.createElement('span'); w.className = 'w'; w.style.setProperty('--i', i++);
+            const c = document.createElement('span'); c.className = 'c'; c.textContent = part; w.appendChild(c);
+            spans.push(w); frag.appendChild(w);
+          });
+          n.parentNode.replaceChild(frag, n); items.push({ n, spans });
+        } else if (n.nodeType === 1 && !n.classList.contains('w')) [...n.childNodes].forEach(walk);
+      };
+      [...q.childNodes].forEach(walk);
+      q._split = items;
+    }
+    function restore(q) {
+      (q._split || []).forEach(({ n, spans }) => { spans[0].parentNode.insertBefore(n, spans[0]); spans.forEach((x) => x.remove()); });
+      q._split = null;
+    }
+    const first = () => qs.forEach(split);
+    if (document.documentElement.dataset.i18n === 'ready') first(); else document.addEventListener('i18nready', first, { once: true });
+    document.addEventListener('langchange', () => qs.forEach((q) => { restore(q); split(q); }));
+  });
 
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
