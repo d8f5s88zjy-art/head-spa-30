@@ -18,6 +18,15 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Poukazy online cez Booqme
+
+V Booqme (Poukážky, Typy poukážok) je päť typov predplateného kreditu: 50, 70, 100, 149
+a 249 €, s platnosťou 365 dní od zakúpenia a popisom, ktorý sedí s ponukou na webe.
+Verejný obchod je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo
+Kúpiť poukaz online. Platba kartou funguje až po prepojení Stripe Connect v Booqme
+(Nastavenia, Stripe Connect); dovtedy je druhou cestou formulár na webe, ktorý otvorí
+e-mail s objednávkou. Poukaz na konkrétny rituál ide len cez formulár.
+
 ## Darčekové poukazy ako predajná sekcia
 
 Nad objednávkovým formulárom je šesť kariet hodnôt: 50, 70, 100, 149, 249 eur
