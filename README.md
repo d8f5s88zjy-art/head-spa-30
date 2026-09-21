@@ -442,12 +442,14 @@ mobil 94 až 96 podľa toho, ako je stroj zaťažený.
 
 ## Kam vedú tlačidlá Rezervovať
 
-Zatiaľ na formulár na stránke (`#rezervacia`), ktorý pošle správu cez WhatsApp.
-Predtým viedli do kalendára Salónu 30, ale ten Head Spa rituály neponúka, takže
-návštevník skončil na stránke, kde si to, na čo klikol, nevedel objednať.
+Do vlastného online kalendára na Booqme:
+`https://booqme.app/sk/rezervacia/barbershop-30` (prevádzka Salon 30 - Head Spa,
+Mostná 30, Nitra). Formulár na stránke zostáva ako druhá cesta, vedie naň
+položka Rezervácia v menu.
 
-Keď bude vlastný rezervačný systém (Booqme) naplnený službami z
-`docs/booqme-sluzby.csv`, prehodenie je jedna zmena na dvoch miestach:
+Adresa je na jedinom mieste, v atribúte `data-booking` na `<html>`, a v
+`href` tlačidiel s `data-booking-link`. Zmena adresy je jedna náhrada na dvoch
+miestach:
 
 1. v `index.html` v `<html ... data-booking="">` doplniť adresu kalendára
 2. tým istým odkazom nahradiť `href="#rezervacia"` pri tlačidlách, ktoré majú
