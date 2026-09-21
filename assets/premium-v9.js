@@ -35,13 +35,6 @@
   addEventListener('resize', queueScroll, {passive:true});
   paintScroll();
 
-  // 2) Editorial section numbers.
-  const sectionOrder = ['cennik','rezervacia','poukaz','ritual','headspa','preco','salon','tim','galeria','faq','kontakt'];
-  sectionOrder.forEach((id,i) => {
-    const el = d.getElementById(id);
-    if (el) el.dataset.v9Index = String(i+1).padStart(2,'0');
-  });
-
   // 3) Scene-aware atmosphere + active nav state.
   const sceneNodes = [...d.querySelectorAll('[data-scene]')].filter(el => el.matches('section, .hero, .hero-static, footer'));
   const navLinks = [...d.querySelectorAll('.nav .links a[href^="#"]')];
@@ -72,58 +65,9 @@
     const reveal = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.target.classList.toggle('v9-inview', entry.isIntersecting));
     }, {rootMargin:'-8% 0px -14% 0px', threshold:.08});
-    d.querySelectorAll('section[data-v9-index]').forEach(el => reveal.observe(el));
+    d.querySelectorAll('.site>section').forEach(el => reveal.observe(el));
   } else {
-    d.querySelectorAll('section[data-v9-index]').forEach(el => el.classList.add('v9-inview'));
-  }
-
-  // 5) Premium card spotlight on capable fine-pointer devices only.
-  if (fine.matches && !reduce.matches && !constrained){
-    d.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('pointerenter', () => card.classList.add('v9-pointer'), {passive:true});
-      card.addEventListener('pointerleave', () => card.classList.remove('v9-pointer'), {passive:true});
-      card.addEventListener('pointermove', e => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--v9-x', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-        card.style.setProperty('--v9-y', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
-      }, {passive:true});
-    });
-  }
-
-  // 6) Ambient pointer light, skipped on battery/data constrained devices.
-  if (fine.matches && !reduce.matches && !constrained){
-    const light = d.createElement('div');
-    light.className = 'v9-pointer-light';
-    light.setAttribute('aria-hidden','true');
-    body.appendChild(light);
-
-    let tx=innerWidth/2, ty=innerHeight/2, x=tx, y=ty, raf=0;
-    function animate(){
-      x += (tx-x)*.11; y += (ty-y)*.11;
-      light.style.setProperty('--v9-mx', x+'px');
-      light.style.setProperty('--v9-my', y+'px');
-      if (Math.abs(tx-x)+Math.abs(ty-y)>.25) raf=requestAnimationFrame(animate); else raf=0;
-    }
-    addEventListener('pointermove', e => {
-      tx=e.clientX; ty=e.clientY; body.classList.add('v9-pointer');
-      if (!raf) raf=requestAnimationFrame(animate);
-    }, {passive:true});
-    addEventListener('pointerleave', () => body.classList.remove('v9-pointer'), {passive:true});
-  }
-
-  // 7) Lightweight gallery depth. No scroll listener: pointer only.
-  if (fine.matches && !reduce.matches && !constrained){
-    d.querySelectorAll('.shot .frame').forEach(frame => {
-      const media = frame.querySelector('img,canvas');
-      if (!media) return;
-      frame.addEventListener('pointermove', e => {
-        const r=frame.getBoundingClientRect();
-        const dx=((e.clientX-r.left)/r.width-.5)*4;
-        const dy=((e.clientY-r.top)/r.height-.5)*3;
-        media.style.transform=`scale(1.026) translate3d(${dx.toFixed(2)}px,${dy.toFixed(2)}px,0)`;
-      }, {passive:true});
-      frame.addEventListener('pointerleave', () => { media.style.transform=''; }, {passive:true});
-    });
+    d.querySelectorAll('.site>section').forEach(el => el.classList.add('v9-inview'));
   }
 
   // 8) Keep outbound business actions observable without claiming a conversion.

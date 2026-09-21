@@ -55,9 +55,7 @@ stĺpcoch, na telefóne v jednom. Zmena je len v CSS, obsah krokov zostal.
 
 ## Záverečná výzva pred pätičkou
 
-Sekcia `.finale` uzatvára stránku jednou vetou a dvoma tlačidlami: Rezervovať
-rituál a Darovať poukaz. Rezervačné tlačidlo prepíše skript na kalendár rovnako
-ako ostatných tridsať.
+Stránku uzatvára kontakt s rezerváciou; samostatná záverečná sekcia bola zrušená.
 
 ## Kam vedú tlačidlá
 
@@ -74,25 +72,12 @@ Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kal
 ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
 JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
 
-## Poradca nad cenníkom
+## Cenník bez poradcu a filtrov
 
-Nad cenníkom je blok `#poradca`: tri otázky (pre koho, koľko času, čo od toho
-čakáš) a odporúčanie jedného rituálu s cenou, trvaním, tlačidlom Rezervovať
-a odkazom na kartu v cenníku. Pod tým je jedna alternatíva.
-
-Poradca si nedrží vlastný zoznam rituálov. Číta karty v cenníku, takže keď
-pribudne alebo sa zmení rituál, poradca to vie hneď. Každá karta má `data-goal`
-(`relax`, `deep`, `beauty`, `lux`) a `data-duo` pri rituáloch pre dvoch.
-
-Bodovanie v `assets/app.js`: zhoda cieľa má váhu osem, tesnosť času do štyroch
-bodov, prekročenie času je mierny mínus. Preto keď si niekto vyberie hĺbkové
-čistenie a hodinu času, dostane hĺbkový rituál aj s vetou, že trvá deväťdesiat
-minút, nie iný rituál, ktorý sa do hodiny zmestí. Pri zhode rozhoduje nižšia cena.
-
-Pri tom sa opravila stará chyba: Zlatý Head Spa rituál 24K pre dvoch patrí
-do luxusnej kategórie, preto sa pod filtrom Pre dvoch nezobrazoval, hoci
-otázky na stránke hovoria o troch rituáloch pre dve osoby. Filter aj poradca
-teraz berú `data-duo`, takže Pre dvoch ukáže všetky tri.
+Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Luxusné). Poradca s tromi
+otázkami, filter podľa času a rozpočtu, číselný prehľad (17 rituálov, 40 až 120 minút,
+50 až 249 €) aj kadernícky cenník Salónu 30 boli odstránené: na stránke sú iba rituály
+a ceny HEAD SPA 30.
 
 ## Citáty medzi sekciami
 
