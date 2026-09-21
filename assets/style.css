@@ -308,16 +308,11 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in.done .part{transition-delay:0s}
 
 /* ritual steps: the water line lights each numeral as it reaches it */
-/* svetlá kapitola: stránka sa na chvíľu otočí do krémovej, ako list papiera; prichádza stieracím prechodom zdola */
-.ritual.light{--text-primary:#0f1a15;--text-secondary:#3f4a44;--text-tertiary:#6d7671;--line:rgba(10,13,11,.12);--line-strong:rgba(10,13,11,.3);--canvas:#ece7db;--canvas-2:#e3ddcf;--accent:#8f6f2f;--accent-hover:#7a5c22;--water:#2f7a6c;--tshadow:none;background:#ece7db;color:var(--text-primary);clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
+/* kapitola Ako to prebieha: panel o odtieň teplejší než zvyšok stránky, prichádza stieracím prechodom zdola */
+.ritual.light{background:linear-gradient(180deg,#131b16 0%,#101713 100%);clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
 .ritual.light.in{clip-path:inset(0 0 0 0)}
-.ritual.light .step .n{background:#ece7db;color:var(--accent)}
-.ritual.light .steps .stream path{filter:drop-shadow(0 0 4px rgba(47,122,108,.35))}
-.ritual.light .steps .stream .base{stroke:rgba(10,13,11,.1)}
-.ritual.light .step-cta .btn.primary{box-shadow:0 10px 30px rgba(143,111,47,.25)}
 .ritual .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
 .ritual .sticky{position:sticky;top:120px}
-.ritual .h2{font-size:clamp(38px,4.3vw,60px)}
 .ritual .lede{margin-top:22px}
 .steps{position:relative;padding-left:56px}
 .steps .stream{position:absolute;left:19px;top:8px;width:4px;height:calc(100% - 16px);overflow:visible}
@@ -619,13 +614,13 @@ body.idle .shot.word .frame::before{animation-play-state:paused}
 .faq-item.open .faq-a>div{opacity:1;transform:none;transition-delay:80ms}
 
 /* contact: the frame is drawn */
-.contact{padding:140px 0}
+.contact{padding:120px 0}
 .contact .box{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end;padding:70px 0}
 .contact .box::before,.contact .box::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--line);transform:scaleX(0);transform-origin:left;transition:transform 1400ms var(--ease)}
 .contact .box::before{top:0}
 .contact .box::after{bottom:0;transition-delay:250ms}
 .contact .box.in::before,.contact .box.in::after{transform:scaleX(1)}
-.contact .h2{font-size:clamp(44px,7vw,96px);max-width:12ch}
+.contact .h2{max-width:12ch}
 .contact .lede{margin-top:22px}
 .contact .cta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
 .info{display:grid;gap:22px}
@@ -728,7 +723,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .card .panel ol{grid-template-columns:1fr}
   .ticket{transform:none;animation:none;min-height:240px}
   .faq-q{font-size:18px}
-  .contact{padding:90px 0 110px}
+  .contact{padding:80px 0 96px}
   .whys,.whys.three{grid-template-columns:1fr}
   .mantra{grid-template-columns:1fr;gap:14px;margin-top:44px}
   .about .sub-head{margin-top:44px}
@@ -1197,7 +1192,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 
 /* ---------- hodnoty poukazu: karta miesto riadku v zozname ---------- */
 .gift-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:34px 0 8px}
-.gv{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:20px 22px 22px;border:1px solid var(--line);border-radius:var(--radius-m);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.3));color:inherit;font:inherit;cursor:pointer;transition:border-color .3s,transform .3s var(--ease),background .3s}
+.gv{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:20px 22px 22px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.3));color:inherit;font:inherit;cursor:pointer;transition:border-color .3s,transform .3s var(--ease),background .3s}
 .gv:hover{border-color:var(--line-strong);transform:translateY(-3px)}
 .gv[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-muted)}
 .gv:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -1237,7 +1232,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ---------- mobil: pokojnejší rytmus a tlačidlá na celú šírku ---------- */
 @media (max-width:640px){
   section{padding:60px 0}
-  .contact{padding:76px 0 96px}
+  .contact{padding:60px 0 80px}
   .lede{font-size:16.5px;line-height:1.66}
   .h2{margin-top:14px}
 
