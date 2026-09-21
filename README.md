@@ -392,3 +392,24 @@ Zadanie pre tento prechod je v `docs/prompt-senior.md`. Čo z neho vyplynulo:
   ne už neprechádza.
 - Hlavička sa zmestí aj do 320 px.
 - Pribudla stránka `404.html` v štýle webu. GitHub Pages ju ukáže pri zlom odkaze.
+
+## Dvere na úvode
+
+Dvere sa otvárajú raz za návštevu (drží to `sessionStorage`), trvajú necelú
+sekundu a pol a neukážu sa, keď: má odkaz kotvu (`#sekcia`), má návštevník
+zapnuté obmedzenie pohybu, má zapnutý šetrič dát, je karta na pozadí alebo je
+vypnutý JavaScript. Kým dvere držia obraz, úvod čaká cez premennú `--veil`,
+takže text nenabehne za dverami.
+
+Stará verzia dverí stála devätnásť bodov výkonu, lebo telo stránky bolo do
+konca animácie neviditeľné. Teraz je stránka vykreslená hneď a dvere sú len
+vrstva nad ňou, takže stoja jeden bod.
+
+## Mobil
+
+- Odstupy sekcií 60 px, kontakt 76/96 px. Stránka je hustejšia a menej prázdna.
+- Karta rituálu má obe tlačidlá pod sebou cez celú šírku, hlavné je zlaté.
+  Čas a cena sú v jednom riadku, cena vpravo.
+- Dvojice tlačidiel pod textom (poukazy, salón, tím) idú tiež na celú šírku.
+- Tri čísla nad cenníkom sú kompaktnejšie, záber dverí v galérii je 3:4, aby
+  bolo vidieť aj popis.

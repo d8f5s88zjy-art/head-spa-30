@@ -522,6 +522,32 @@
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
 
+  /* ============ dvere: raz za návštevu sa značka nakreslí a dvere sa otvoria ============ */
+  const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
+  let veilMs = 0, veilDone = false;
+  let seenVeil = false;
+  try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
+  const saveData = !!(navigator.connection && navigator.connection.saveData);
+  if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden && !saveData) {
+    veilMs = 620; document.body.classList.add('veiling');
+    try { sessionStorage.hs30open = '1'; } catch (e) { /* zablokované úložisko: dvere sa prehrajú pri každom načítaní */ }
+  }
+  document.documentElement.style.setProperty('--veil', veilMs + 'ms');
+  function endVeil() {
+    if (veilDone) return; veilDone = true;
+    document.body.classList.remove('veiling');
+    if (veil) veil.classList.add('gone');
+    veilMs = 0;
+  }
+  function flipVeil() {
+    if (veilDone) return;
+    const n = navMark.getBoundingClientRect(), m = veilMark.getBoundingClientRect();
+    const dx = n.left + n.width / 2 - (m.left + m.width / 2), dy = n.top + n.height / 2 - (m.top + m.height / 2), s = n.width / 96;
+    veilMark.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
+    veil.classList.add('lift');                                  // obe krídla sa otvoria dnu
+    setTimeout(() => { if (!veilDone) veil.classList.add('through'); }, 260);   // a prejdeš cez ne
+  }
+
   /* ============ nav: solid after the top, and it holds your place ============ */
   const nav = $('.nav');
   let navSolid = false;
@@ -677,6 +703,7 @@
     streams.forEach((s) => { s.path.style.strokeDashoffset = 0; s.steps.forEach((x) => { x.lit = true; x.el.classList.add('lit'); }); });
     counters.forEach((c) => { counted.add(c); c.textContent = c.dataset.count + (c.dataset.suffix || ''); });
     rv.forEach((el) => el.classList.add('in', 'done'));
+    endVeil();
   }
   function unpinFinalStates() {
     pinned = false;
@@ -1328,7 +1355,14 @@
   if (reduced.matches) pinToFinalStates();
   wake();
   void document.body.offsetWidth;   // settle the initial styles first
-  requestAnimationFrame(() => document.body.classList.add('ready', 'open'));
+  requestAnimationFrame(() => {
+    document.body.classList.add('ready', 'open');
+    if (veilMs) {
+      veil.classList.add('drawn');
+      setTimeout(flipVeil, 380);
+      setTimeout(endVeil, 1420);
+    }
+  });
 
   /* Pri tlači sa prehľad cien otvorí sám, inak by sa vytlačil zatvorený. */
   (function tlacCennika() {
