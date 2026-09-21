@@ -27,6 +27,9 @@ je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo Kúpiť p
 Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect);
 dovtedy je druhou cestou formulár na webe, ktorý otvorí e-mail s objednávkou. Na webe si
 zákazník vyberá rituál z rovnakých sedemnástich, karta poukazu ukáže jeho meno.
+Obrázok poukazu v Booqme (misa s vodou, A6 na šírku) je v docs/poukaz-a6.jpg; rezervačná
+stránka Booqme má logo z assets/icon-512.png, tmavozelené pozadie, zlatý názov, odkaz na
+Instagram a na tento web.
 
 ## Darčekové poukazy ako predajná sekcia
 
