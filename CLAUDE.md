@@ -22,8 +22,10 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 ## Technika
 - Dve písma: Fraunces (nadpisy, zlatá kurzíva ako jediný akcent) a Manrope (text aj štítky).
   Písma sú vyrezané v `assets/fonts/`, nepridávaj ďalšie.
-- Zdrojové súbory: `assets/style.css`, `assets/app.js`, `assets/i18n.js`. Web načítava
-  minifikované verzie, preto po každej zmene spusti `node tools/build.mjs` (potrebuje esbuild).
+- Zdrojové súbory: `assets/style.css`, `assets/app.js`, `assets/i18n.js` a prémiová vrstva V9
+  `assets/premium-v9.css` + `assets/premium-v9.js` (načítava sa po základných súboroch, nič
+  z obsahu nemení). Web načítava minifikované verzie, preto po každej zmene spusti
+  `node tools/build.mjs` (potrebuje esbuild).
 - Mobil má vlastnú kameru a časovanie úvodnej animácie (`CAM_P`, `data-ma`/`data-mb`),
   počítač sa nemení. Dvere v úvode zostávajú.
 - Cieľ: Lighthouse desktop 100, mobil 95 a viac. Žiadny backdrop-filter na mobile.

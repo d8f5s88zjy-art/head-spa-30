@@ -18,6 +18,15 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
 
+## Vrstva V9 (agentúrny vzhľad)
+
+`assets/premium-v9.css` a `assets/premium-v9.js` sú prekrytie nad základným webom: väčšie
+editoriálne nadpisy, číslovanie sekcií 01 až 11, tenká linka priebehu skrolu hore, aktívna
+položka v navigácii, atmosféra podľa sekcie, svetlo pod kurzorom a odlesk na kartách (len
+na počítači s myšou, nie pri obmedzenom pohybu ani pri šetrení dát). Obsah, ceny, Booqme,
+formuláre ani preklady nemení. Vypnutie: zmazať dva riadky `premium-v9.min.*` v `index.html`.
+Podklady sú v `docs/v9/`.
+
 ## Poukazy online cez Booqme
 
 V Booqme (Poukážky, Typy poukážok) je sedemnásť typov poukazu, jeden na každý rituál

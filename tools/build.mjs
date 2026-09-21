@@ -14,6 +14,8 @@ const jobs = [
   ['assets/style.css', 'assets/style.min.css'],
   ['assets/app.js', 'assets/app.min.js'],
   ['assets/i18n.js', 'assets/i18n.min.js'],
+  ['assets/premium-v9.css', 'assets/premium-v9.min.css'],
+  ['assets/premium-v9.js', 'assets/premium-v9.min.js'],
 ];
 
 for (const [src, out] of jobs) {
