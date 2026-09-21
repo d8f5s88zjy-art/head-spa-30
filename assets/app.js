@@ -852,19 +852,6 @@
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* Hodnoty poukazu a ceny rituálov sú dva ručne udržiavané zoznamy v rôznych
-     častiach HTML. Keď sa rozídu, poukaz by sľuboval viac alebo menej, než sa
-     dá minúť. Táto kontrola sa ozve len vtedy, keď sa to naozaj stane. */
-  idle(function poukazVsCennik() {
-    const ceny = $$('.card').map((c) => +c.dataset.price).filter(Boolean);
-    const suma = $$('[name="hodnota"]').map((r) => parseInt(r.value, 10)).filter((n) => !isNaN(n));
-    if (!ceny.length || !suma.length) return;
-    const maxC = Math.max(...ceny), minC = Math.min(...ceny);
-    const maxP = Math.max(...suma), minP = Math.min(...suma);
-    if (maxP > maxC) console.warn(`HEAD SPA 30: poukaz za ${maxP} € presahuje najdrahší rituál (${maxC} €).`);
-    if (minP < minC) console.warn(`HEAD SPA 30: poukaz za ${minP} € nepokryje ani najlacnejší rituál (${minC} €).`);
-  });
-
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');
@@ -876,15 +863,14 @@
   idle(function poukazy() {
     const vform = $('#vform');
     if (vform) {
-      const pick = $('.ritual-pick', vform), sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
+      const sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
       const err = $('.err', vform), done = $('.sent', vform), emailField = $('#v-email', vform);
       const val = (name) => (vform.querySelector(`input[name="${name}"]:checked`) || {}).value || '';
       const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
       const fieldVal = (id) => ($(id, vform).value || '').trim();
       function preview() {
-        const h = val('hodnota'), isRit = h === 'ritual';
-        pick.hidden = !isRit;
-        const shown = isRit ? ritualName().replace(/\s*\(.*$/, '') : (h || '50 €');
+        // poukaz je vždy na konkrétny rituál z ponuky
+        const shown = ritualName().replace(/\s*\(.*$/, '');
         tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
         const pre = fieldVal('#v-pre');
         tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
@@ -897,14 +883,14 @@
         const email = fieldVal('#v-email'), ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
         err.hidden = ok; emailField.closest('.field').classList.toggle('invalid', !ok);
         if (!ok) { emailField.focus(); return; }
-        const h = val('hodnota'), what = h === 'ritual' ? `Rituál: ${ritualName()}` : `Hodnota: ${h}`;
+        const what = `Rituál: ${ritualName()}`;
         const lines = ['Dobrý deň,', '', 'objednávam darčekový poukaz HEAD SPA 30.', '', what,
           `Pre: ${fieldVal('#v-pre') || '(nevyplnené)'}`, `Od: ${fieldVal('#v-od') || '(nevyplnené)'}`,
           `E-mail: ${email}`, `Telefón: ${fieldVal('#v-tel') || '(nevyplnené)'}`,
           `Doručenie: ${val('dorucenie')}`, `Venovanie: ${fieldVal('#v-ven') || '(bez venovania)'}`, '',
           'Prosím o zaslanie platobných údajov.', 'Ďakujem.'];
-        const subject = `Objednávka poukazu: ${h === 'ritual' ? ritualName().replace(/\s*\(.*$/, '') : h}`;
-        track('voucher_order', { value: h === 'ritual' ? ritualName() : h, delivery: val('dorucenie') });
+        const subject = `Objednávka poukazu: ${ritualName().replace(/\s*\(.*$/, '')}`;
+        track('voucher_order', { value: ritualName(), delivery: val('dorucenie') });
         done.hidden = false;
         location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
       });
@@ -912,27 +898,19 @@
   });
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
-  /* ============ karty hodnôt poukazu: ťuknutie vyplní formulár nižšie ============ */
+  /* ============ karty rituálov na poukaz: ťuknutie vyberie rituál vo formulári nižšie ============ */
   idle(function giftValues() {
     const box = $('.gift-values'); if (!box) return;
-    const form = $('#vform'); if (!form) return;
-    function sync() {
-      const v = (form.querySelector('input[name="hodnota"]:checked') || {}).value;
-      $$('.gv', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.gift === v)));
-    }
+    const form = $('#vform'), sel = $('#v-ritual'); if (!form || !sel) return;
+    function sync() { $$('.gv', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.gift === sel.value))); }
     box.addEventListener('click', (e) => {
       const b = e.target.closest('.gv'); if (!b) return;
-      const i = form.querySelector(`input[name="hodnota"][value="${b.dataset.gift}"]`);
-      if (!i) return;
-      i.checked = true;
-      i.dispatchEvent(new Event('change', { bubbles: true }));
+      sel.value = b.dataset.gift;
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
       sync();
-      const target = b.dataset.gift === 'ritual' ? ($('#v-ritual') || form) : form;
-      target.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
-      if (b.dataset.gift === 'ritual') setTimeout(() => { const sel = $('#v-ritual'); if (sel) sel.focus({ preventScroll: true }); }, reduced.matches ? 0 : 420);
-      track('gift_value', { value: b.dataset.gift });
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-    form.addEventListener('change', sync);
+    sel.addEventListener('change', sync);
     sync();
   });
 

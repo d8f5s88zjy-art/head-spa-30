@@ -20,12 +20,13 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Poukazy online cez Booqme
 
-V Booqme (Poukážky, Typy poukážok) je päť typov predplateného kreditu: 50, 70, 100, 149
-a 249 €, s platnosťou 365 dní od zakúpenia a popisom, ktorý sedí s ponukou na webe.
-Verejný obchod je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo
-Kúpiť poukaz online. Platba kartou funguje až po prepojení Stripe Connect v Booqme
-(Nastavenia, Stripe Connect); dovtedy je druhou cestou formulár na webe, ktorý otvorí
-e-mail s objednávkou. Poukaz na konkrétny rituál ide len cez formulár.
+V Booqme (Poukážky, Typy poukážok) je sedemnásť typov poukazu, jeden na každý rituál
+z ponuky, s cenou rituálu, platnosťou 365 dní od zakúpenia a popisom podľa
+docs/booqme-poukazy.csv. Žiadne poukazy na sumu, len to, čo salón ponúka. Verejný obchod
+je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo Kúpiť poukaz online.
+Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect);
+dovtedy je druhou cestou formulár na webe, ktorý otvorí e-mail s objednávkou. Na webe si
+zákazník vyberá rituál z rovnakých sedemnástich, karta poukazu ukáže jeho meno.
 
 ## Darčekové poukazy ako predajná sekcia
 

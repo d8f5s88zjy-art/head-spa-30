@@ -1189,7 +1189,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .gv b{font-family:var(--display);font-weight:400;font-size:34px;line-height:1;letter-spacing:-.01em;color:var(--accent-hover)}
 .gv.gv-r b{font-size:22px;line-height:1.15}
 .gv span{font-size:13.5px;line-height:1.5;color:var(--text-secondary)}
-@media (max-width:640px){.gift-values{grid-template-columns:1fr 1fr;gap:10px}.gv{padding:16px 16px 18px}.gv b{font-size:28px}.gv.gv-r{grid-column:1/-1}.gv.gv-r b{font-size:20px}}
+@media (max-width:640px){.gift-values{grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}.gv{padding:14px 14px 15px;gap:6px}.gv b{font-size:28px}.gv.gv-r b{font-size:17px;line-height:1.2}.gv span{font-size:12.5px}}
 
 /* ---------- postup rituálu: číslovaný sled namiesto steny textu ---------- */
 .card .panel ol{gap:0 28px}
