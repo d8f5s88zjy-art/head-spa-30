@@ -7,13 +7,13 @@
   'use strict';
 
   var LANGS = [
-    { code: 'sk', label: 'Slovensky', short: 'SK', locale: 'sk-SK' },
-    { code: 'cs', label: 'Česky', short: 'CZ', locale: 'cs-CZ' },
-    { code: 'pl', label: 'Polski', short: 'PL', locale: 'pl-PL' },
-    { code: 'hu', label: 'Magyar', short: 'HU', locale: 'hu-HU' },
-    { code: 'de', label: 'Deutsch', short: 'DE', locale: 'de-AT' },
-    { code: 'uk', label: 'Українська', short: 'UA', locale: 'uk-UA' },
-    { code: 'en', label: 'English', short: 'EN', locale: 'en' }
+    { code: 'sk', label: 'Slovensky', short: 'SK', locale: 'sk-SK', offer: '' },
+    { code: 'cs', label: 'Česky', short: 'CZ', locale: 'cs-CZ', offer: 'Stránka je i v češtině.' },
+    { code: 'pl', label: 'Polski', short: 'PL', locale: 'pl-PL', offer: 'Strona jest też po polsku.' },
+    { code: 'hu', label: 'Magyar', short: 'HU', locale: 'hu-HU', offer: 'Az oldal magyarul is elérhető.' },
+    { code: 'de', label: 'Deutsch', short: 'DE', locale: 'de-AT', offer: 'Die Seite gibt es auch auf Deutsch.' },
+    { code: 'uk', label: 'Українська', short: 'UA', locale: 'uk-UA', offer: 'Сторінка є і українською.' },
+    { code: 'en', label: 'English', short: 'EN', locale: 'en', offer: 'This page is also in English.' }
   ];
   var STORE = 'hs30.lang';
   var ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
@@ -21,13 +21,19 @@
 
   var current = 'sk', applied = 'sk', busy = false;
 
+  /* Stránka sa otvára po slovensky. Iný jazyk sa nasadí len na vlastnú voľbu,
+     alebo keď je v adrese ?lang=. Prehliadaču s iným jazykom sa jazyk ponúkne
+     malým prúžkom, aby sa text pred očami sám neprepisoval. */
   function pick() {
     var q = new URLSearchParams(location.search).get('lang');
     if (q && byCode(q)) return q;
     try { var s = localStorage.getItem(STORE); if (s && byCode(s)) return s; } catch (e) {}
-    var nav = (navigator.languages || [navigator.language || '']).map(function (l) { return String(l).slice(0, 2).toLowerCase(); });
-    for (var i = 0; i < nav.length; i++) if (byCode(nav[i])) return nav[i];
     return 'sk';
+  }
+  function suggested() {
+    var nav = (navigator.languages || [navigator.language || '']).map(function (l) { return String(l).slice(0, 2).toLowerCase(); });
+    for (var i = 0; i < nav.length; i++) { var L = byCode(nav[i]); if (L && L.code !== 'sk') return L; }
+    return null;
   }
   function byCode(c) { for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === c) return LANGS[i]; return null; }
 
@@ -68,12 +74,27 @@
     return lead + tr + tail;
   }
 
+  /* Preklad beží po dávkach. Prvá dávka pokryje hlavičku a úvod, zvyšok sa
+     dorobí vo voľných chvíľach, takže sa prehliadač nezasekne na jednej úlohe. */
+  var later = window.requestIdleCallback ? function (f) { requestIdleCallback(f, { timeout: 500 }); } : function (f) { setTimeout(f, 0); };
+
   function apply(code, map) {
     if (!nodes) collect();
-    nodes.forEach(function (x) {
-      var tr = map && map[x.key];
-      x.node.nodeValue = tr ? put(x.sk, tr) : x.sk;
-    });
+    var i = 0, N = nodes.length, CHUNK = 240;
+    function chunk() {
+      var end = Math.min(N, i + CHUNK);
+      for (; i < end; i++) {
+        var x = nodes[i], tr = map && map[x.key];
+        x.node.nodeValue = tr ? put(x.sk, tr) : x.sk;
+      }
+      if (i === CHUNK) waiting(false);            /* úvod je preložený, môže sa ukázať */
+      if (i < N) { later(chunk); return; }
+      finish(code, map);
+    }
+    chunk();
+  }
+
+  function finish(code, map) {
     attrs.forEach(function (x) {
       var tr = (map && map[x.key]) || x.sk;
       if (x.attr === 'text') x.el.textContent = tr; else x.el.setAttribute(x.attr, tr);
@@ -143,9 +164,27 @@
      návštevníka a stránka sa neposunie. Slovenčina čaká nula, je priamo v HTML. */
   function waiting(v) { document.documentElement.classList.toggle('t-wait', !!v); }
 
+  function offer() {
+    var L = suggested(); if (!L) return;
+    try { if (localStorage.getItem(STORE) || localStorage.getItem(STORE + '.no')) return; } catch (e) {}
+    var box = document.createElement('div');
+    box.className = 'lang-offer';
+    box.innerHTML = '<span>' + L.offer + '</span>' +
+      '<button type="button" data-yes>' + L.label + '</button>' +
+      '<button type="button" data-no aria-label="Zavrieť">&times;</button>';
+    box.addEventListener('click', function (e) {
+      if (e.target.closest('[data-yes]')) { set(L.code); box.remove(); return; }
+      if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) {} box.remove(); }
+    });
+    document.body.appendChild(box);
+    requestAnimationFrame(function () { box.classList.add('in'); });
+    setTimeout(function () { box.classList.remove('in'); setTimeout(function () { box.remove(); }, 400); }, 12000);
+  }
+
   function start() {
     current = pick(); build();
     if (current !== 'sk') { waiting(true); setTimeout(function () { waiting(false); }, 1500); set(current, false); }
+    else later(offer);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 

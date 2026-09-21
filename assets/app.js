@@ -5,6 +5,8 @@
   const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+  /* Časti stránky pod prvou obrazovkou sa spúšťajú až keď má prehliadač voľnú chvíľu. */
+  const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
   function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -15,9 +17,12 @@
     const ctx = canvas.getContext('2d', { alpha: false });
     let W = 0, H = 0, dpr = 1, lastP = -1, lastT = -1;
     const R = rng(30);
-    const steam = Array.from({ length: 34 }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
-    const drops = Array.from({ length: 16 }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
-    const puffs = Array.from({ length: 54 }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
+    /* telefón kreslí menej častíc a v nižšom rozlíšení, scéna vyzerá rovnako, ale stojí menej */
+    const lite = matchMedia('(max-width: 640px)').matches;
+    const n = (x) => (lite ? Math.round(x * 0.45) : x);
+    const steam = Array.from({ length: n(34) }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
+    const drops = Array.from({ length: n(16) }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
+    const puffs = Array.from({ length: n(54) }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
     // the journey camera: p, zoom, shift x (of W), shift y (of H), tilt (how far we look down into the bowl), warmth of the light
     const CAM = [
       [0.00, 1.00, 0.00, 0.00, .34, 0.00],
@@ -41,7 +46,7 @@
     const COOL = [214, 226, 218], GOLD = [236, 208, 143];
     function resize() {
       const r = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.5);
       W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -525,17 +530,16 @@
   /* ============ dvere: raz za návštevu sa značka nakreslí a dvere sa otvoria ============ */
   const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
   let veilMs = 0, veilDone = false;
-  let seenVeil = false;
-  try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
-  const saveData = !!(navigator.connection && navigator.connection.saveData);
-  if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden && !saveData) {
+  /* o dverách rozhodol krátky skript v hlavičke, aby sa vykreslili hneď pri prvom snímku */
+  if (veil && document.documentElement.classList.contains('door')) {
     veilMs = 620; document.body.classList.add('veiling');
-    try { sessionStorage.hs30open = '1'; } catch (e) { /* zablokované úložisko: dvere sa prehrajú pri každom načítaní */ }
   }
   document.documentElement.style.setProperty('--veil', veilMs + 'ms');
   function endVeil() {
     if (veilDone) return; veilDone = true;
     document.body.classList.remove('veiling');
+    document.documentElement.classList.remove('door');
+    document.documentElement.style.setProperty('--veil', '0ms');
     if (veil) veil.classList.add('gone');
     veilMs = 0;
   }
@@ -805,7 +809,7 @@
   /* Hodnoty poukazu a ceny rituálov sú dva ručne udržiavané zoznamy v rôznych
      častiach HTML. Keď sa rozídu, poukaz by sľuboval viac alebo menej, než sa
      dá minúť. Táto kontrola sa ozve len vtedy, keď sa to naozaj stane. */
-  (function poukazVsCennik() {
+  idle(function poukazVsCennik() {
     const ceny = $$('.card').map((c) => +c.dataset.price).filter(Boolean);
     const suma = $$('[name="hodnota"]').map((r) => parseInt(r.value, 10)).filter((n) => !isNaN(n));
     if (!ceny.length || !suma.length) return;
@@ -813,7 +817,7 @@
     const maxP = Math.max(...suma), minP = Math.min(...suma);
     if (maxP > maxC) console.warn(`HEAD SPA 30: poukaz za ${maxP} € presahuje najdrahší rituál (${maxC} €).`);
     if (minP < minC) console.warn(`HEAD SPA 30: poukaz za ${minP} € nepokryje ani najlacnejší rituál (${minC} €).`);
-  })();
+  });
 
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
@@ -823,45 +827,47 @@
   }));
 
   /* ============ vouchers: pick, preview on the ticket, send as an e-mail order ============ */
-  const vform = $('#vform');
-  if (vform) {
-    const pick = $('.ritual-pick', vform), sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
-    const err = $('.err', vform), done = $('.sent', vform), emailField = $('#v-email', vform);
-    const val = (name) => (vform.querySelector(`input[name="${name}"]:checked`) || {}).value || '';
-    const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
-    const fieldVal = (id) => ($(id, vform).value || '').trim();
-    function preview() {
-      const h = val('hodnota'), isRit = h === 'ritual';
-      pick.hidden = !isRit;
-      const shown = isRit ? ritualName().replace(/\s*\(.*$/, '') : (h || '50 €');
-      tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
-      const pre = fieldVal('#v-pre');
-      tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
-      const ven = fieldVal('#v-ven');
-      tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
+  idle(function poukazy() {
+    const vform = $('#vform');
+    if (vform) {
+      const pick = $('.ritual-pick', vform), sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
+      const err = $('.err', vform), done = $('.sent', vform), emailField = $('#v-email', vform);
+      const val = (name) => (vform.querySelector(`input[name="${name}"]:checked`) || {}).value || '';
+      const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
+      const fieldVal = (id) => ($(id, vform).value || '').trim();
+      function preview() {
+        const h = val('hodnota'), isRit = h === 'ritual';
+        pick.hidden = !isRit;
+        const shown = isRit ? ritualName().replace(/\s*\(.*$/, '') : (h || '50 €');
+        tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
+        const pre = fieldVal('#v-pre');
+        tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
+        const ven = fieldVal('#v-ven');
+        tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
+      }
+      vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
+      vform.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = fieldVal('#v-email'), ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+        err.hidden = ok; emailField.closest('.field').classList.toggle('invalid', !ok);
+        if (!ok) { emailField.focus(); return; }
+        const h = val('hodnota'), what = h === 'ritual' ? `Rituál: ${ritualName()}` : `Hodnota: ${h}`;
+        const lines = ['Dobrý deň,', '', 'objednávam darčekový poukaz HEAD SPA 30.', '', what,
+          `Pre: ${fieldVal('#v-pre') || '(nevyplnené)'}`, `Od: ${fieldVal('#v-od') || '(nevyplnené)'}`,
+          `E-mail: ${email}`, `Telefón: ${fieldVal('#v-tel') || '(nevyplnené)'}`,
+          `Doručenie: ${val('dorucenie')}`, `Venovanie: ${fieldVal('#v-ven') || '(bez venovania)'}`, '',
+          'Prosím o zaslanie platobných údajov.', 'Ďakujem.'];
+        const subject = `Objednávka poukazu: ${h === 'ritual' ? ritualName().replace(/\s*\(.*$/, '') : h}`;
+        track('voucher_order', { value: h === 'ritual' ? ritualName() : h, delivery: val('dorucenie') });
+        done.hidden = false;
+        location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      });
     }
-    vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
-    vform.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = fieldVal('#v-email'), ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-      err.hidden = ok; emailField.closest('.field').classList.toggle('invalid', !ok);
-      if (!ok) { emailField.focus(); return; }
-      const h = val('hodnota'), what = h === 'ritual' ? `Rituál: ${ritualName()}` : `Hodnota: ${h}`;
-      const lines = ['Dobrý deň,', '', 'objednávam darčekový poukaz HEAD SPA 30.', '', what,
-        `Pre: ${fieldVal('#v-pre') || '(nevyplnené)'}`, `Od: ${fieldVal('#v-od') || '(nevyplnené)'}`,
-        `E-mail: ${email}`, `Telefón: ${fieldVal('#v-tel') || '(nevyplnené)'}`,
-        `Doručenie: ${val('dorucenie')}`, `Venovanie: ${fieldVal('#v-ven') || '(bez venovania)'}`, '',
-        'Prosím o zaslanie platobných údajov.', 'Ďakujem.'];
-      const subject = `Objednávka poukazu: ${h === 'ritual' ? ritualName().replace(/\s*\(.*$/, '') : h}`;
-      track('voucher_order', { value: h === 'ritual' ? ritualName() : h, delivery: val('dorucenie') });
-      done.hidden = false;
-      location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-    });
-  }
+  });
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
   /* ============ karty hodnôt poukazu: ťuknutie vyplní formulár nižšie ============ */
-  (function giftValues() {
+  idle(function giftValues() {
     const box = $('.gift-values'); if (!box) return;
     const form = $('#vform'); if (!form) return;
     function sync() {
@@ -882,7 +888,7 @@
     });
     form.addEventListener('change', sync);
     sync();
-  })();
+  });
 
   /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
      Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
@@ -902,7 +908,7 @@
   }
 
   /* ============ poradca: tri otázky nad cenníkom, odporúčanie z kariet ============ */
-  (function advisor() {
+  idle(function advisor() {
     const box = $('#poradca'); if (!box) return;
     const res = $('#advRes', box);
     const answer = {};
@@ -960,310 +966,312 @@
         if (card) { $$('.card.pick').forEach((c) => c.classList.remove('pick')); card.classList.add('pick'); setTimeout(() => card.classList.remove('pick'), 3000); }
       }
     });
-  })();
+  });
 
-  const rform = $('#rform');
-  if (rform) {
-    const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
-    const datum = $('#r-datum'), datumHint = $('#r-datum-hint'), casBox = $('#r-cas'), casHint = $('#r-cas-hint');
-    const presnyWrap = $('#r-presny'), presny = $('#r-cas-presny'), presnyHint = $('#r-presny-hint');
-    const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
-    const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
-    const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
-    const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
-    const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
-    const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
-    const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
-    const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 15)' };
-    const NOTE_PH = { kids: 'Vek dieťaťa a čo má rado.', couple: 'Meno druhej osoby, alergie, darček.', deep: 'Čo ťa na pokožke hlavy trápi.', base: 'napr. citlivá pokožka, tehotenstvo, alergia, darček' };
-    const pad = (n) => String(n).padStart(2, '0');
-    const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
-    const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    const parse = (v) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return null; const [y, m, d] = v.split('-').map(Number); const dt = new Date(y, m - 1, d); return isNaN(dt) || dt.getDate() !== d ? null : dt; };
-    const fmt = (d) => `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
-    const hm = (h) => `${pad(Math.floor(h))}:${pad(Math.round((h - Math.floor(h)) * 60))}`;
-    const val = (name) => (rform.querySelector(`input[name="${name}"]:checked`) || {}).value || 'any';
-    const setVal = (name, v) => { const i = rform.querySelector(`input[name="${name}"][value="${v}"]`); if (i) i.checked = true; };
-    const ritual = () => { const o = sel.options[sel.selectedIndex]; return o && o.value ? { slug: o.value, name: o.dataset.name, min: +o.dataset.min, price: o.dataset.price, cat: o.dataset.cat } : null; };
-    const isCouple = () => { const r = ritual(); return !!r && r.cat === 'couple'; };
-    const persons = () => (isCouple() ? 2 : +val('osoby'));
-    const duration = () => { const r = ritual(); return r ? r.min * (isCouple() ? 1 : persons()) : 0; };
-    const lastStart = (d) => { const h = HOURS[d.getDay()]; return h ? h[1] - duration() / 60 : null; };
-    const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-    const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
-    [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
-    let message = '', shortMessage = '', opened = 0, dayNote = '', dayNoteUntil = 0;
-    const note = (t) => { dayNote = t; dayNoteUntil = Date.now() + 6000; };
+  idle(function rezervacia() {
+    const rform = $('#rform');
+    if (rform) {
+      const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
+      const datum = $('#r-datum'), datumHint = $('#r-datum-hint'), casBox = $('#r-cas'), casHint = $('#r-cas-hint');
+      const presnyWrap = $('#r-presny'), presny = $('#r-cas-presny'), presnyHint = $('#r-presny-hint');
+      const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
+      const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
+      const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
+      const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
+      const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
+      const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
+      const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
+      const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 15)' };
+      const NOTE_PH = { kids: 'Vek dieťaťa a čo má rado.', couple: 'Meno druhej osoby, alergie, darček.', deep: 'Čo ťa na pokožke hlavy trápi.', base: 'napr. citlivá pokožka, tehotenstvo, alergia, darček' };
+      const pad = (n) => String(n).padStart(2, '0');
+      const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+      const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      const parse = (v) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return null; const [y, m, d] = v.split('-').map(Number); const dt = new Date(y, m - 1, d); return isNaN(dt) || dt.getDate() !== d ? null : dt; };
+      const fmt = (d) => `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
+      const hm = (h) => `${pad(Math.floor(h))}:${pad(Math.round((h - Math.floor(h)) * 60))}`;
+      const val = (name) => (rform.querySelector(`input[name="${name}"]:checked`) || {}).value || 'any';
+      const setVal = (name, v) => { const i = rform.querySelector(`input[name="${name}"][value="${v}"]`); if (i) i.checked = true; };
+      const ritual = () => { const o = sel.options[sel.selectedIndex]; return o && o.value ? { slug: o.value, name: o.dataset.name, min: +o.dataset.min, price: o.dataset.price, cat: o.dataset.cat } : null; };
+      const isCouple = () => { const r = ritual(); return !!r && r.cat === 'couple'; };
+      const persons = () => (isCouple() ? 2 : +val('osoby'));
+      const duration = () => { const r = ritual(); return r ? r.min * (isCouple() ? 1 : persons()) : 0; };
+      const lastStart = (d) => { const h = HOURS[d.getDay()]; return h ? h[1] - duration() / 60 : null; };
+      const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+      const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
+      [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
+      let message = '', shortMessage = '', opened = 0, dayNote = '', dayNoteUntil = 0;
+      const note = (t) => { dayNote = t; dayNoteUntil = Date.now() + 6000; };
 
-    // ---- slová pre dni a pre vetu o potvrdení (dynamické, preto nie v i18n súboroch)
-    const DAY_WORDS = {
-      sk: { today: 'Dnes', tomorrow: 'Zajtra', d: ['ne', 'po', 'ut', 'st', 'št', 'pi', 'so'] },
-      cs: { today: 'Dnes', tomorrow: 'Zítra', d: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'] },
-      pl: { today: 'Dziś', tomorrow: 'Jutro', d: ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'] },
-      hu: { today: 'Ma', tomorrow: 'Holnap', d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] },
-      de: { today: 'Heute', tomorrow: 'Morgen', d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'] },
-      uk: { today: 'Сьогодні', tomorrow: 'Завтра', d: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'] },
-      en: { today: 'Today', tomorrow: 'Tomorrow', d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
-    };
-    const CONFIRM_WORDS = {
-      sk: { open: 'Sme otvorení. Ozveme sa ti dnes, zvyčajne do pár hodín.', soon: 'Dnes otvárame o {t}, vtedy ti napíšeme.', shut: 'Teraz máme zatvorené. Ozveme sa ti {d} po {t}.', tomorrow: 'zajtra', days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
-      cs: { open: 'Máme otevřeno. Ozveme se ti dnes, obvykle do pár hodin.', soon: 'Dnes otevíráme v {t}, tehdy ti napíšeme.', shut: 'Teď máme zavřeno. Ozveme se ti {d} po {t}.', tomorrow: 'zítra', days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
-      pl: { open: 'Jesteśmy otwarci. Odezwiemy się dziś, zwykle w ciągu kilku godzin.', soon: 'Dziś otwieramy o {t}, wtedy napiszemy.', shut: 'Teraz jest zamknięte. Odezwiemy się {d} po {t}.', tomorrow: 'jutro', days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
-      hu: { open: 'Nyitva vagyunk. Ma jelentkezünk, általában pár órán belül.', soon: 'Ma {t}-kor nyitunk, akkor írunk.', shut: 'Most zárva vagyunk. {d} {t} után jelentkezünk.', tomorrow: 'holnap', days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
-      de: { open: 'Wir haben geöffnet. Wir melden uns heute, meist innerhalb weniger Stunden.', soon: 'Wir öffnen heute um {t} und melden uns dann.', shut: 'Gerade ist geschlossen. Wir melden uns {d} nach {t}.', tomorrow: 'morgen', days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
-      uk: { open: 'Ми відчинені. Відповімо сьогодні, зазвичай за кілька годин.', soon: 'Сьогодні відчиняємо о {t}, тоді й напишемо.', shut: 'Зараз зачинено. Відповімо {d} після {t}.', tomorrow: 'завтра', days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
-      en: { open: 'We are open. We will get back to you today, usually within a few hours.', soon: 'We open today at {t} and will write to you then.', shut: 'We are closed right now. We will get back to you {d} after {t}.', tomorrow: 'tomorrow', days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
-    };
-    const lang = () => (document.documentElement.lang || 'sk').slice(0, 2);
-    const words = (map) => map[lang()] || map.sk;
+      // ---- slová pre dni a pre vetu o potvrdení (dynamické, preto nie v i18n súboroch)
+      const DAY_WORDS = {
+        sk: { today: 'Dnes', tomorrow: 'Zajtra', d: ['ne', 'po', 'ut', 'st', 'št', 'pi', 'so'] },
+        cs: { today: 'Dnes', tomorrow: 'Zítra', d: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'] },
+        pl: { today: 'Dziś', tomorrow: 'Jutro', d: ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'] },
+        hu: { today: 'Ma', tomorrow: 'Holnap', d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] },
+        de: { today: 'Heute', tomorrow: 'Morgen', d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'] },
+        uk: { today: 'Сьогодні', tomorrow: 'Завтра', d: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'] },
+        en: { today: 'Today', tomorrow: 'Tomorrow', d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+      };
+      const CONFIRM_WORDS = {
+        sk: { open: 'Sme otvorení. Ozveme sa ti dnes, zvyčajne do pár hodín.', soon: 'Dnes otvárame o {t}, vtedy ti napíšeme.', shut: 'Teraz máme zatvorené. Ozveme sa ti {d} po {t}.', tomorrow: 'zajtra', days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
+        cs: { open: 'Máme otevřeno. Ozveme se ti dnes, obvykle do pár hodin.', soon: 'Dnes otevíráme v {t}, tehdy ti napíšeme.', shut: 'Teď máme zavřeno. Ozveme se ti {d} po {t}.', tomorrow: 'zítra', days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
+        pl: { open: 'Jesteśmy otwarci. Odezwiemy się dziś, zwykle w ciągu kilku godzin.', soon: 'Dziś otwieramy o {t}, wtedy napiszemy.', shut: 'Teraz jest zamknięte. Odezwiemy się {d} po {t}.', tomorrow: 'jutro', days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
+        hu: { open: 'Nyitva vagyunk. Ma jelentkezünk, általában pár órán belül.', soon: 'Ma {t}-kor nyitunk, akkor írunk.', shut: 'Most zárva vagyunk. {d} {t} után jelentkezünk.', tomorrow: 'holnap', days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
+        de: { open: 'Wir haben geöffnet. Wir melden uns heute, meist innerhalb weniger Stunden.', soon: 'Wir öffnen heute um {t} und melden uns dann.', shut: 'Gerade ist geschlossen. Wir melden uns {d} nach {t}.', tomorrow: 'morgen', days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
+        uk: { open: 'Ми відчинені. Відповімо сьогодні, зазвичай за кілька годин.', soon: 'Сьогодні відчиняємо о {t}, тоді й напишемо.', shut: 'Зараз зачинено. Відповімо {d} після {t}.', tomorrow: 'завтра', days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
+        en: { open: 'We are open. We will get back to you today, usually within a few hours.', soon: 'We open today at {t} and will write to you then.', shut: 'We are closed right now. We will get back to you {d} after {t}.', tomorrow: 'tomorrow', days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
+      };
+      const lang = () => (document.documentElement.lang || 'sk').slice(0, 2);
+      const words = (map) => map[lang()] || map.sk;
 
-    // ---- deň sa vyberá ťuknutím: desať najbližších otvorených dní
-    const dniBox = $('#r-dni'), inyBtn = $('#r-iny'), datumWrap = $('#r-datum-wrap');
-    function buildDays() {
-      const W = words(DAY_WORDS), list = [], d = new Date(t0);
-      while (list.length < 10) { if (HOURS[d.getDay()]) list.push(new Date(d)); d.setDate(d.getDate() + 1); }
-      dniBox.innerHTML = list.map((dt) => {
-        const diff = Math.round((dt - t0) / 86400000);
-        const top = diff === 0 ? W.today : diff === 1 ? W.tomorrow : W.d[dt.getDay()];
-        return `<label class="day"><input type="radio" name="den" value="${iso(dt)}"><span><b>${top}</b><i>${dt.getDate()}. ${dt.getMonth() + 1}.</i></span></label>`;
-      }).join('');
-      syncDays();
-    }
-    // chip zapnutý podľa dátumu; dnešok zhasne, keď už rituál nestihneme
-    function syncDays() {
-      const v = datum.value, now = new Date();
-      $$('input[name="den"]', dniBox).forEach((i) => {
-        i.checked = i.value === v;
-        const d = parse(i.value), late = d && d.getTime() === t0.getTime() && ritual() && now.getHours() + now.getMinutes() / 60 > lastStart(d);
-        i.disabled = !!late; i.closest('.day').classList.toggle('off', !!late);
-        if (late && i.checked) { i.checked = false; datum.value = ''; note('Dnes už tento rituál nestihneme, vyber ďalší deň alebo nám zavolaj.'); }
+      // ---- deň sa vyberá ťuknutím: desať najbližších otvorených dní
+      const dniBox = $('#r-dni'), inyBtn = $('#r-iny'), datumWrap = $('#r-datum-wrap');
+      function buildDays() {
+        const W = words(DAY_WORDS), list = [], d = new Date(t0);
+        while (list.length < 10) { if (HOURS[d.getDay()]) list.push(new Date(d)); d.setDate(d.getDate() + 1); }
+        dniBox.innerHTML = list.map((dt) => {
+          const diff = Math.round((dt - t0) / 86400000);
+          const top = diff === 0 ? W.today : diff === 1 ? W.tomorrow : W.d[dt.getDay()];
+          return `<label class="day"><input type="radio" name="den" value="${iso(dt)}"><span><b>${top}</b><i>${dt.getDate()}. ${dt.getMonth() + 1}.</i></span></label>`;
+        }).join('');
+        syncDays();
+      }
+      // chip zapnutý podľa dátumu; dnešok zhasne, keď už rituál nestihneme
+      function syncDays() {
+        const v = datum.value, now = new Date();
+        $$('input[name="den"]', dniBox).forEach((i) => {
+          i.checked = i.value === v;
+          const d = parse(i.value), late = d && d.getTime() === t0.getTime() && ritual() && now.getHours() + now.getMinutes() / 60 > lastStart(d);
+          i.disabled = !!late; i.closest('.day').classList.toggle('off', !!late);
+          if (late && i.checked) { i.checked = false; datum.value = ''; note('Dnes už tento rituál nestihneme, vyber ďalší deň alebo nám zavolaj.'); }
+        });
+        const known = !!v && $$('input[name="den"]', dniBox).some((i) => i.value === v);
+        if (v && !known && datumWrap.hidden) openIny(true);
+      }
+      function openIny(open) { datumWrap.hidden = !open; inyBtn.setAttribute('aria-expanded', String(open)); }
+      dniBox.addEventListener('change', (e) => {
+        const i = e.target.closest('input[name="den"]'); if (!i) return;
+        datum.value = i.value; openIny(false); refresh();
       });
-      const known = !!v && $$('input[name="den"]', dniBox).some((i) => i.value === v);
-      if (v && !known && datumWrap.hidden) openIny(true);
-    }
-    function openIny(open) { datumWrap.hidden = !open; inyBtn.setAttribute('aria-expanded', String(open)); }
-    dniBox.addEventListener('change', (e) => {
-      const i = e.target.closest('input[name="den"]'); if (!i) return;
-      datum.value = i.value; openIny(false); refresh();
-    });
-    inyBtn.addEventListener('click', () => {
-      const open = datumWrap.hidden; openIny(open);
-      if (open) datum.focus({ preventScroll: true }); else { datum.value = ''; refresh(); }
-    });
-
-    // ---- kedy sa ozveme, podľa skutočných otváracích hodín
-    // čas salónu, nie čas návštevníkovho telefónu
-    function salonNow() {
-      try {
-        const parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
-        const get = (t) => (parts.find((x) => x.type === t) || {}).value;
-        const map = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
-        const wd = map[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
-        const cur = (+get('hour') % 24) + (+get('minute') || 0) / 60;
-        if (wd !== undefined && !isNaN(cur)) return { wd, cur };
-      } catch (e) { /* staršie prehliadače: použijeme lokálny čas */ }
-      const d = new Date(); return { wd: d.getDay(), cur: d.getHours() + d.getMinutes() / 60 };
-    }
-    function confirmText() {
-      const W = words(CONFIRM_WORDS), now = salonNow(), h = HOURS[now.wd], cur = now.cur;
-      if (h && cur >= h[0] && cur < h[1]) return { text: W.open, open: true };
-      if (h && cur < h[0]) return { text: W.soon.replace('{t}', hm(h[0])), open: false };
-      let d = (now.wd + 1) % 7, n = 1;
-      while (!HOURS[d]) { d = (d + 1) % 7; n++; }
-      return { text: W.shut.replace('{d}', n === 1 ? W.tomorrow : W.days[d]).replace('{t}', hm(HOURS[d][0])), open: false };
-    }
-
-    // ---- rozpísaný formulár prežije obnovenie stránky (24 hodín, len v prehliadači)
-    const DRAFT = 'hs30-rezervacia';
-    const FIELDS = ['r-ritual', 'r-datum', 'r-cas-presny', 'r-datum2', 'r-meno', 'r-tel', 'r-email', 'r-poukaz', 'r-pozn'];
-    function saveDraft() {
-      try {
-        const v = {}; FIELDS.forEach((id) => { const el = $('#' + id); if (el && el.value) v[id] = el.value; });
-        ['osoby', 'cas', 'cas2'].forEach((n) => { v[n] = val(n); });
-        localStorage.setItem(DRAFT, JSON.stringify({ t: Date.now(), v }));
-      } catch (e) { /* súkromný režim: koncept sa jednoducho neuloží */ }
-    }
-    function loadDraft() {
-      let d; try { d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { return; }
-      if (!d || !d.v || Date.now() - d.t > 864e5) return;
-      const v = d.v;
-      FIELDS.forEach((id) => { const el = $('#' + id); if (el && v[id]) el.value = v[id]; });
-      ['osoby', 'cas', 'cas2'].forEach((n) => { if (v[n]) setVal(n, v[n]); });
-      const dd = parse(datum.value); if (!dd || dd < t0) datum.value = '';
-      if (v['r-cas-presny']) { presnyWrap.hidden = false; const b = rform.querySelector('[data-more="r-presny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-      if (v['r-datum2']) { nahradny.hidden = false; const b = rform.querySelector('[data-more="r-nahradny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-      if (v['r-poukaz']) { $('#r-poukaz-wrap').hidden = false; const b = rform.querySelector('[data-more="r-poukaz-wrap"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-    }
-    const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
-
-    // ---- pick a ritual from a card: same slug on the card and the option
-    function selectRitual(slug, flash) {
-      if (!rform.querySelector(`option[value="${slug}"]`)) return false;
-      sel.value = slug; refresh();
-      if (flash && !reduced.matches) { sel.classList.remove('flash'); void sel.offsetWidth; sel.classList.add('flash'); }
-      return true;
-    }
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('[data-book]'); if (!a) return;
-      selectRitual(a.dataset.book, true);
-      track('reservation_open', { ritual: a.dataset.book });
-    });
-    const fromUrl = new URLSearchParams(location.search).get('ritual');
-    if (fromUrl) selectRitual(fromUrl, false);
-
-    // ---- "more" toggles: exact time, alternative date, voucher code
-    $$('[data-more]', rform).forEach((b) => b.addEventListener('click', () => {
-      const box = $('#' + b.dataset.more); const open = box.hidden;
-      box.hidden = !open; b.setAttribute('aria-expanded', String(open));
-      if (!open) { $$('input,textarea', box).forEach((i) => { if (i.type === 'radio') { if (i.value === 'any') i.checked = true; } else i.value = ''; }); }
-      else { const f = $('input,select,textarea', box); if (f) f.focus({ preventScroll: true }); }
-      refresh();
-    }));
-
-    // ---- time windows: a chip is out when its window starts after the last possible start
-    function tuneWindows(box, d) {
-      const sat = d && d.getDay() === 6, last = d ? lastStart(d) : null;
-      $$('input', box).forEach((i) => {
-        const from = +i.dataset.from || 0, labels = sat ? WINDOW_SAT : WINDOW;
-        const out = i.value !== 'any' && (!(i.value in labels) || (last !== null && from >= last));
-        i.disabled = out; i.closest('.choice').hidden = i.value !== 'any' && !(i.value in labels);
-        if (i.nextElementSibling) i.nextElementSibling.textContent = (labels[i.value] || WINDOW[i.value]).replace(/^./, (c) => c.toUpperCase()).replace(/ \(.*\)$/, '');
-        if (out && i.checked) { setVal(i.name, 'any'); }
+      inyBtn.addEventListener('click', () => {
+        const open = datumWrap.hidden; openIny(open);
+        if (open) datum.focus({ preventScroll: true }); else { datum.value = ''; refresh(); }
       });
-    }
-    const windowText = (v, d) => ((d && d.getDay() === 6 ? WINDOW_SAT : WINDOW)[v] || WINDOW.any);
 
-    // ---- everything derived from the form, recomputed on every change
-    function refresh() {
-      const r = ritual(), d = parse(datum.value), d2 = parse(datum2.value), n = persons();
-      // ritual hint, persons, note placeholder
-      if (r) {
-        const base = `Vybraný rituál: ${r.name}, ${r.min} min`;
-        rHint.textContent = r.cat === 'couple' ? `${base}. Cena ${r.price} platí za obe osoby. Ležíte vedľa seba, rozprávať sa nemusíte. Meno druhej osoby napíš do poznámky.`
-          : r.cat === 'kids' ? `${base}, ${r.price}. Rodič môže zostať v miestnosti po celý čas, vek dieťaťa napíš do poznámky.`
-          : `${base}, ${r.price}.`;
-      } else rHint.textContent = 'Vyber rituál zo zoznamu alebo ťukni na Rezervovať pri rituáli v cenníku.';
-      $('.choices', osobyWrap).hidden = !!r && r.cat === 'couple'; osobyHint.hidden = !(r && r.cat === 'couple');
-      pozn.placeholder = r ? (NOTE_PH[r.cat] || (/hĺbkov/i.test(r.name) ? NOTE_PH.deep : NOTE_PH.base)) : NOTE_PH.base;
-      poznHint.hidden = !(r && r.cat === 'kids' && !pozn.value.trim());
-      if (!poznHint.hidden) poznHint.textContent = 'Napíš prosím vek dieťaťa, pomôže nám pripraviť rituál.';
-      // day and windows
-      tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
-      const last = d ? lastStart(d) : null;
-      if (d && d.getDay() === 6 && r && last !== null && last < 15) casHint.textContent = `V sobotu máme do 15:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
-      else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
-      else casHint.textContent = '';
-      const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
-      datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
-      // exact time bounds
-      if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
-      else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
-      // the message
-      const lines = ['Dobrý deň, chcem si rezervovať termín v HEAD SPA 30.', ''];
-      lines.push(r ? `Rituál: ${r.name} (${r.min} min, ${r.cat === 'couple' ? `2 osoby, ${r.price} za obe osoby` : r.price})` : 'Rituál: (nevybraný)');
-      let when = '';
-      if (d) {
-        const isToday = d.getTime() === t0.getTime();
-        if (presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number); const end = hh + mm / 60 + duration() / 60; when = `${isToday ? 'DNES ' : ''}${fmt(d)} o ${presny.value} (koniec cca ${hm(end)})`; }
-        else when = `${isToday ? 'DNES ' : ''}${fmt(d)}, ${windowText(val('cas'), d)}`;
+      // ---- kedy sa ozveme, podľa skutočných otváracích hodín
+      // čas salónu, nie čas návštevníkovho telefónu
+      function salonNow() {
+        try {
+          const parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
+          const get = (t) => (parts.find((x) => x.type === t) || {}).value;
+          const map = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
+          const wd = map[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
+          const cur = (+get('hour') % 24) + (+get('minute') || 0) / 60;
+          if (wd !== undefined && !isNaN(cur)) return { wd, cur };
+        } catch (e) { /* staršie prehliadače: použijeme lokálny čas */ }
+        const d = new Date(); return { wd: d.getDay(), cur: d.getHours() + d.getMinutes() / 60 };
       }
-      lines.push(`Termín: ${when || '(nevybraný)'}`);
-      if (d2 && !nahradny.hidden) lines.push(`Náhradný termín: ${fmt(d2)}, ${windowText(val('cas2'), d2)}`);
-      if (r && r.cat !== 'couple' && n === 2) lines.push('Osoby: 2, každý svoj rituál');
-      lines.push(`Meno: ${meno.value.trim() || '(nevyplnené)'}`, `Telefón: ${tel.value.trim() || '(nevyplnený)'}`);
-      if (email.value.trim()) lines.push(`E-mail: ${email.value.trim()}`);
-      if (poukaz.value.trim() && !$('#r-poukaz-wrap').hidden) lines.push(`Kód poukazu: ${poukaz.value.trim().toUpperCase().replace(/\s+/g, '')}`);
-      if (pozn.value.trim()) lines.push(`Poznámka: ${pozn.value.trim()}`);
-      lines.push('', 'Prosím o potvrdenie termínu. Ďakujem.', `Ref: ${REF}`);
-      message = lines.join('\n');
-      shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
-      wa.href = `https://wa.me/421911153136?text=${encodeURIComponent(message)}`;
-      sms.href = `sms:+421911153136?&body=${encodeURIComponent(shortMessage)}`;
-      // the ticket
-      tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
-      tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
-      tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
-      // deň, kedy sa ozveme, a koncept
-      syncDays();
-      if (confirmEl) { const c = confirmText(); confirmEl.textContent = c.text; confirmEl.classList.toggle('shut', !c.open); }
-      saveDraft();
-    }
+      function confirmText() {
+        const W = words(CONFIRM_WORDS), now = salonNow(), h = HOURS[now.wd], cur = now.cur;
+        if (h && cur >= h[0] && cur < h[1]) return { text: W.open, open: true };
+        if (h && cur < h[0]) return { text: W.soon.replace('{t}', hm(h[0])), open: false };
+        let d = (now.wd + 1) % 7, n = 1;
+        while (!HOURS[d]) { d = (d + 1) % 7; n++; }
+        return { text: W.shut.replace('{d}', n === 1 ? W.tomorrow : W.days[d]).replace('{t}', hm(HOURS[d][0])), open: false };
+      }
 
-    // ---- validation: one list of plain sentences, focus on the first wrong field
-    function validate() {
-      const problems = []; let first = null;
-      const bad = (el, msg) => { problems.push(msg); const f = el.closest('.field'); if (f) f.classList.add('invalid'); el.setAttribute('aria-invalid', 'true'); if (!first) first = el; };
-      $$('.field.invalid', rform).forEach((f) => f.classList.remove('invalid')); $$('[aria-invalid]', rform).forEach((i) => i.removeAttribute('aria-invalid'));
-      const r = ritual(); if (!r) bad(sel, 'Vyber rituál zo zoznamu.');
-      const d = parse(datum.value);
-      if (!datum.value) bad(datum, 'Vyber deň, kedy chceš prísť.');
-      else if (!d || d < t0) bad(datum, 'Tento deň už prešiel, vyber iný.');
-      else if (d > tMax) bad(datum, 'Tak ďaleko kalendár ešte neotvárame, vyber termín do pol roka.');
-      else if (d.getDay() === 0) bad(datum, 'V nedeľu máme zatvorené, vyber iný deň.');
-      else if (d.getTime() === t0.getTime() && r) { const now = new Date(); if (now.getHours() + now.getMinutes() / 60 > lastStart(d)) bad(datum, 'Dnes už nestíhame, vyber ďalší deň alebo nám zavolaj.'); }
-      if (d && r && presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number), t = hh + mm / 60, last = lastStart(d); if (t < 9 || t > last) bad(presny, `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`); }
-      if (!nahradny.hidden && datum2.value) {
-        const d2 = parse(datum2.value);
-        if (!d2 || d2 < t0) bad(datum2, 'Náhradný deň už prešiel, vyber iný.');
-        else if (d2 > tMax) bad(datum2, 'Náhradný termín je príliš ďaleko, vyber termín do pol roka.');
-        else if (d2.getDay() === 0) bad(datum2, 'V nedeľu máme zatvorené, vyber iný náhradný deň.');
-        else if (d && d2.getTime() === d.getTime() && val('cas2') === val('cas')) bad(datum2, 'Náhradný termín je rovnaký ako hlavný, vyber iný deň alebo čas.');
+      // ---- rozpísaný formulár prežije obnovenie stránky (24 hodín, len v prehliadači)
+      const DRAFT = 'hs30-rezervacia';
+      const FIELDS = ['r-ritual', 'r-datum', 'r-cas-presny', 'r-datum2', 'r-meno', 'r-tel', 'r-email', 'r-poukaz', 'r-pozn'];
+      function saveDraft() {
+        try {
+          const v = {}; FIELDS.forEach((id) => { const el = $('#' + id); if (el && el.value) v[id] = el.value; });
+          ['osoby', 'cas', 'cas2'].forEach((n) => { v[n] = val(n); });
+          localStorage.setItem(DRAFT, JSON.stringify({ t: Date.now(), v }));
+        } catch (e) { /* súkromný režim: koncept sa jednoducho neuloží */ }
       }
-      if (meno.value.trim().length < 2) bad(meno, 'Napíš svoje meno.');
-      const digits = tel.value.replace(/[\s\-().]/g, '');
-      if (!/^\+?\d{9,15}$/.test(digits)) bad(tel, 'Napíš telefón, na ktorom ťa zastihneme, napr. 0900 123 456.');
-      if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) bad(email, 'E-mail nevyzerá správne, oprav ho alebo ho nechaj prázdny.');
-      if (message.length > 1500) bad(pozn, 'Skráť prosím poznámku.');
-      if (problems.length) {
-        err.hidden = false; err.innerHTML = problems.length === 1 ? problems[0] : 'Ešte doplň:<ul>' + problems.map((p) => `<li>${p}</li>`).join('') + '</ul>';
-        if (first) first.focus({ preventScroll: false });
-        return false;
+      function loadDraft() {
+        let d; try { d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { return; }
+        if (!d || !d.v || Date.now() - d.t > 864e5) return;
+        const v = d.v;
+        FIELDS.forEach((id) => { const el = $('#' + id); if (el && v[id]) el.value = v[id]; });
+        ['osoby', 'cas', 'cas2'].forEach((n) => { if (v[n]) setVal(n, v[n]); });
+        const dd = parse(datum.value); if (!dd || dd < t0) datum.value = '';
+        if (v['r-cas-presny']) { presnyWrap.hidden = false; const b = rform.querySelector('[data-more="r-presny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+        if (v['r-datum2']) { nahradny.hidden = false; const b = rform.querySelector('[data-more="r-nahradny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
+        if (v['r-poukaz']) { $('#r-poukaz-wrap').hidden = false; const b = rform.querySelector('[data-more="r-poukaz-wrap"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
       }
-      err.hidden = true; return true;
-    }
+      const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
 
-    // ---- sending: WhatsApp is a real link (a native gesture), e-mail is the submit; both share the validation
-    function showSent(kind) {
-      const r = ritual(), d = parse(datum.value);
-      const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
-      sentText.textContent = kind === 'wa' ? `Otvorili sme WhatsApp s tvojou požiadavkou, stačí ju odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa WhatsApp neotvoril:`
-        : kind === 'mail' ? `Otvorili sme e-mail pre info@salon30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
-        : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0911 153 136, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
-      sent.hidden = false; copyText.value = message;
-      sms.hidden = !matchMedia('(pointer: coarse)').matches;
-      opened += 1;
-      if (opened > 1) { sentText.textContent += ' Správu si už raz otvoril. Ak ju vo WhatsApp nevidíš, pošli ju e-mailom alebo si ju skopíruj.'; }
+      // ---- pick a ritual from a card: same slug on the card and the option
+      function selectRitual(slug, flash) {
+        if (!rform.querySelector(`option[value="${slug}"]`)) return false;
+        sel.value = slug; refresh();
+        if (flash && !reduced.matches) { sel.classList.remove('flash'); void sel.offsetWidth; sel.classList.add('flash'); }
+        return true;
+      }
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('[data-book]'); if (!a) return;
+        selectRitual(a.dataset.book, true);
+        track('reservation_open', { ritual: a.dataset.book });
+      });
+      const fromUrl = new URLSearchParams(location.search).get('ritual');
+      if (fromUrl) selectRitual(fromUrl, false);
+
+      // ---- "more" toggles: exact time, alternative date, voucher code
+      $$('[data-more]', rform).forEach((b) => b.addEventListener('click', () => {
+        const box = $('#' + b.dataset.more); const open = box.hidden;
+        box.hidden = !open; b.setAttribute('aria-expanded', String(open));
+        if (!open) { $$('input,textarea', box).forEach((i) => { if (i.type === 'radio') { if (i.value === 'any') i.checked = true; } else i.value = ''; }); }
+        else { const f = $('input,select,textarea', box); if (f) f.focus({ preventScroll: true }); }
+        refresh();
+      }));
+
+      // ---- time windows: a chip is out when its window starts after the last possible start
+      function tuneWindows(box, d) {
+        const sat = d && d.getDay() === 6, last = d ? lastStart(d) : null;
+        $$('input', box).forEach((i) => {
+          const from = +i.dataset.from || 0, labels = sat ? WINDOW_SAT : WINDOW;
+          const out = i.value !== 'any' && (!(i.value in labels) || (last !== null && from >= last));
+          i.disabled = out; i.closest('.choice').hidden = i.value !== 'any' && !(i.value in labels);
+          if (i.nextElementSibling) i.nextElementSibling.textContent = (labels[i.value] || WINDOW[i.value]).replace(/^./, (c) => c.toUpperCase()).replace(/ \(.*\)$/, '');
+          if (out && i.checked) { setVal(i.name, 'any'); }
+        });
+      }
+      const windowText = (v, d) => ((d && d.getDay() === 6 ? WINDOW_SAT : WINDOW)[v] || WINDOW.any);
+
+      // ---- everything derived from the form, recomputed on every change
+      function refresh() {
+        const r = ritual(), d = parse(datum.value), d2 = parse(datum2.value), n = persons();
+        // ritual hint, persons, note placeholder
+        if (r) {
+          const base = `Vybraný rituál: ${r.name}, ${r.min} min`;
+          rHint.textContent = r.cat === 'couple' ? `${base}. Cena ${r.price} platí za obe osoby. Ležíte vedľa seba, rozprávať sa nemusíte. Meno druhej osoby napíš do poznámky.`
+            : r.cat === 'kids' ? `${base}, ${r.price}. Rodič môže zostať v miestnosti po celý čas, vek dieťaťa napíš do poznámky.`
+            : `${base}, ${r.price}.`;
+        } else rHint.textContent = 'Vyber rituál zo zoznamu alebo ťukni na Rezervovať pri rituáli v cenníku.';
+        $('.choices', osobyWrap).hidden = !!r && r.cat === 'couple'; osobyHint.hidden = !(r && r.cat === 'couple');
+        pozn.placeholder = r ? (NOTE_PH[r.cat] || (/hĺbkov/i.test(r.name) ? NOTE_PH.deep : NOTE_PH.base)) : NOTE_PH.base;
+        poznHint.hidden = !(r && r.cat === 'kids' && !pozn.value.trim());
+        if (!poznHint.hidden) poznHint.textContent = 'Napíš prosím vek dieťaťa, pomôže nám pripraviť rituál.';
+        // day and windows
+        tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
+        const last = d ? lastStart(d) : null;
+        if (d && d.getDay() === 6 && r && last !== null && last < 15) casHint.textContent = `V sobotu máme do 15:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
+        else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
+        else casHint.textContent = '';
+        const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
+        datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
+        // exact time bounds
+        if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
+        else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
+        // the message
+        const lines = ['Dobrý deň, chcem si rezervovať termín v HEAD SPA 30.', ''];
+        lines.push(r ? `Rituál: ${r.name} (${r.min} min, ${r.cat === 'couple' ? `2 osoby, ${r.price} za obe osoby` : r.price})` : 'Rituál: (nevybraný)');
+        let when = '';
+        if (d) {
+          const isToday = d.getTime() === t0.getTime();
+          if (presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number); const end = hh + mm / 60 + duration() / 60; when = `${isToday ? 'DNES ' : ''}${fmt(d)} o ${presny.value} (koniec cca ${hm(end)})`; }
+          else when = `${isToday ? 'DNES ' : ''}${fmt(d)}, ${windowText(val('cas'), d)}`;
+        }
+        lines.push(`Termín: ${when || '(nevybraný)'}`);
+        if (d2 && !nahradny.hidden) lines.push(`Náhradný termín: ${fmt(d2)}, ${windowText(val('cas2'), d2)}`);
+        if (r && r.cat !== 'couple' && n === 2) lines.push('Osoby: 2, každý svoj rituál');
+        lines.push(`Meno: ${meno.value.trim() || '(nevyplnené)'}`, `Telefón: ${tel.value.trim() || '(nevyplnený)'}`);
+        if (email.value.trim()) lines.push(`E-mail: ${email.value.trim()}`);
+        if (poukaz.value.trim() && !$('#r-poukaz-wrap').hidden) lines.push(`Kód poukazu: ${poukaz.value.trim().toUpperCase().replace(/\s+/g, '')}`);
+        if (pozn.value.trim()) lines.push(`Poznámka: ${pozn.value.trim()}`);
+        lines.push('', 'Prosím o potvrdenie termínu. Ďakujem.', `Ref: ${REF}`);
+        message = lines.join('\n');
+        shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
+        wa.href = `https://wa.me/421911153136?text=${encodeURIComponent(message)}`;
+        sms.href = `sms:+421911153136?&body=${encodeURIComponent(shortMessage)}`;
+        // the ticket
+        tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
+        tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
+        tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
+        // deň, kedy sa ozveme, a koncept
+        syncDays();
+        if (confirmEl) { const c = confirmText(); confirmEl.textContent = c.text; confirmEl.classList.toggle('shut', !c.open); }
+        saveDraft();
+      }
+
+      // ---- validation: one list of plain sentences, focus on the first wrong field
+      function validate() {
+        const problems = []; let first = null;
+        const bad = (el, msg) => { problems.push(msg); const f = el.closest('.field'); if (f) f.classList.add('invalid'); el.setAttribute('aria-invalid', 'true'); if (!first) first = el; };
+        $$('.field.invalid', rform).forEach((f) => f.classList.remove('invalid')); $$('[aria-invalid]', rform).forEach((i) => i.removeAttribute('aria-invalid'));
+        const r = ritual(); if (!r) bad(sel, 'Vyber rituál zo zoznamu.');
+        const d = parse(datum.value);
+        if (!datum.value) bad(datum, 'Vyber deň, kedy chceš prísť.');
+        else if (!d || d < t0) bad(datum, 'Tento deň už prešiel, vyber iný.');
+        else if (d > tMax) bad(datum, 'Tak ďaleko kalendár ešte neotvárame, vyber termín do pol roka.');
+        else if (d.getDay() === 0) bad(datum, 'V nedeľu máme zatvorené, vyber iný deň.');
+        else if (d.getTime() === t0.getTime() && r) { const now = new Date(); if (now.getHours() + now.getMinutes() / 60 > lastStart(d)) bad(datum, 'Dnes už nestíhame, vyber ďalší deň alebo nám zavolaj.'); }
+        if (d && r && presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number), t = hh + mm / 60, last = lastStart(d); if (t < 9 || t > last) bad(presny, `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`); }
+        if (!nahradny.hidden && datum2.value) {
+          const d2 = parse(datum2.value);
+          if (!d2 || d2 < t0) bad(datum2, 'Náhradný deň už prešiel, vyber iný.');
+          else if (d2 > tMax) bad(datum2, 'Náhradný termín je príliš ďaleko, vyber termín do pol roka.');
+          else if (d2.getDay() === 0) bad(datum2, 'V nedeľu máme zatvorené, vyber iný náhradný deň.');
+          else if (d && d2.getTime() === d.getTime() && val('cas2') === val('cas')) bad(datum2, 'Náhradný termín je rovnaký ako hlavný, vyber iný deň alebo čas.');
+        }
+        if (meno.value.trim().length < 2) bad(meno, 'Napíš svoje meno.');
+        const digits = tel.value.replace(/[\s\-().]/g, '');
+        if (!/^\+?\d{9,15}$/.test(digits)) bad(tel, 'Napíš telefón, na ktorom ťa zastihneme, napr. 0900 123 456.');
+        if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) bad(email, 'E-mail nevyzerá správne, oprav ho alebo ho nechaj prázdny.');
+        if (message.length > 1500) bad(pozn, 'Skráť prosím poznámku.');
+        if (problems.length) {
+          err.hidden = false; err.innerHTML = problems.length === 1 ? problems[0] : 'Ešte doplň:<ul>' + problems.map((p) => `<li>${p}</li>`).join('') + '</ul>';
+          if (first) first.focus({ preventScroll: false });
+          return false;
+        }
+        err.hidden = true; return true;
+      }
+
+      // ---- sending: WhatsApp is a real link (a native gesture), e-mail is the submit; both share the validation
+      function showSent(kind) {
+        const r = ritual(), d = parse(datum.value);
+        const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
+        sentText.textContent = kind === 'wa' ? `Otvorili sme WhatsApp s tvojou požiadavkou, stačí ju odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa WhatsApp neotvoril:`
+          : kind === 'mail' ? `Otvorili sme e-mail pre info@salon30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
+          : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0911 153 136, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
+        sent.hidden = false; copyText.value = message;
+        sms.hidden = !matchMedia('(pointer: coarse)').matches;
+        opened += 1;
+        if (opened > 1) { sentText.textContent += ' Správu si už raz otvoril. Ak ju vo WhatsApp nevidíš, pošli ju e-mailom alebo si ju skopíruj.'; }
+      }
+      wa.addEventListener('click', (e) => {
+        refresh();
+        if (!validate()) { e.preventDefault(); return; }
+        track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
+        showSent('wa'); clearDraft();
+      });
+      rform.addEventListener('submit', (e) => {
+        e.preventDefault(); refresh();
+        if (!validate()) return;
+        const r = ritual(), d = parse(datum.value);
+        const subject = `Rezervácia: ${r.name}, ${fmt(d)}, ${meno.value.trim()}`.replace(/[&#?]/g, ' ');
+        track('reservation_send', { channel: 'email', ritual: r.slug });
+        let left = false; const mark = () => { left = true; };
+        addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
+        showSent('mail'); clearDraft();
+        location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+        setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
+      });
+      copyBtn.addEventListener('click', async () => {
+        let ok = false;
+        try { await navigator.clipboard.writeText(message); ok = true; } catch (e) { try { copyText.classList.remove('vh'); copyText.select(); ok = document.execCommand('copy'); copyText.classList.add('vh'); } catch (e2) { ok = false; } }
+        const old = copyBtn.textContent; copyBtn.textContent = ok ? 'Skopírované' : 'Nepodarilo sa, označ text ručne';
+        if (!ok) { copyText.classList.remove('vh'); copyText.removeAttribute('aria-hidden'); copyText.removeAttribute('tabindex'); copyText.rows = 8; copyText.focus(); copyText.select(); }
+        setTimeout(() => { copyBtn.textContent = old; }, 2200);
+      });
+      rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
+      document.addEventListener('langchange', () => { buildDays(); refresh(); });
+      datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); note('V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'); refresh(); } });
+      buildDays(); loadDraft(); refresh();
     }
-    wa.addEventListener('click', (e) => {
-      refresh();
-      if (!validate()) { e.preventDefault(); return; }
-      track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
-      showSent('wa'); clearDraft();
-    });
-    rform.addEventListener('submit', (e) => {
-      e.preventDefault(); refresh();
-      if (!validate()) return;
-      const r = ritual(), d = parse(datum.value);
-      const subject = `Rezervácia: ${r.name}, ${fmt(d)}, ${meno.value.trim()}`.replace(/[&#?]/g, ' ');
-      track('reservation_send', { channel: 'email', ritual: r.slug });
-      let left = false; const mark = () => { left = true; };
-      addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
-      showSent('mail'); clearDraft();
-      location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-      setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
-    });
-    copyBtn.addEventListener('click', async () => {
-      let ok = false;
-      try { await navigator.clipboard.writeText(message); ok = true; } catch (e) { try { copyText.classList.remove('vh'); copyText.select(); ok = document.execCommand('copy'); copyText.classList.add('vh'); } catch (e2) { ok = false; } }
-      const old = copyBtn.textContent; copyBtn.textContent = ok ? 'Skopírované' : 'Nepodarilo sa, označ text ručne';
-      if (!ok) { copyText.classList.remove('vh'); copyText.removeAttribute('aria-hidden'); copyText.removeAttribute('tabindex'); copyText.rows = 8; copyText.focus(); copyText.select(); }
-      setTimeout(() => { copyBtn.textContent = old; }, 2200);
-    });
-    rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
-    document.addEventListener('langchange', () => { buildDays(); refresh(); });
-    datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); note('V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'); refresh(); } });
-    buildDays(); loadDraft(); refresh();
-  }
+  });
 
   /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */
   function track(event, data) { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {})); }
@@ -1350,8 +1358,12 @@
   /* scéna hero sekcie sa zapne až keď má prehliadač voľnú chvíľu, prvé vykreslenie textu tak nič nebrzdí */
   let heroStarted = false;
   function heroStart() { if (heroStarted) return; heroStarted = true; applyHeroMode(); }
-  if ('requestIdleCallback' in window) requestIdleCallback(heroStart, { timeout: 1500 }); else setTimeout(heroStart, 400);
+  /* Na telefóne je plátno úvodu čistá ozdoba, preto sa zapne až keď návštevník
+     skroluje alebo sa dotkne obrazovky. Na počítači stačí voľná chvíľa. */
+  if ('requestIdleCallback' in window) requestIdleCallback(heroStart, { timeout: 2500 }); else setTimeout(heroStart, 400);
   addEventListener('scroll', heroStart, { once: true, passive: true });
+  addEventListener('pointerdown', heroStart, { once: true, passive: true });
+  addEventListener('keydown', heroStart, { once: true });
   if (reduced.matches) pinToFinalStates();
   wake();
   void document.body.offsetWidth;   // settle the initial styles first
@@ -1365,7 +1377,7 @@
   });
 
   /* Pri tlači sa prehľad cien otvorí sám, inak by sa vytlačil zatvorený. */
-  (function tlacCennika() {
+  idle(function tlacCennika() {
     const pl = document.getElementById('prehlad-cien');
     if (!pl) return;
     let bolo = false;
@@ -1377,11 +1389,11 @@
       const mq = window.matchMedia('print');
       if (mq.addEventListener) mq.addEventListener('change', (e) => (e.matches ? otvor() : vrat()));
     }
-  })();
+  });
 
 
   /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
-  (function spatHore() {
+  idle(function spatHore() {
     const btn = document.getElementById('toTop');
     const mbtn = document.getElementById('mbarTop');
     const hore = () => {
@@ -1401,6 +1413,6 @@
     addEventListener('scroll', () => { if (!tiká) { tiká = true; requestAnimationFrame(prekresli); } }, { passive: true });
     prekresli();
     btn.addEventListener('click', hore);
-  })();
+  });
 
 })();

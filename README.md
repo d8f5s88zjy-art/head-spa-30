@@ -413,3 +413,29 @@ vrstva nad ňou, takže stoja jeden bod.
 - Dvojice tlačidiel pod textom (poukazy, salón, tím) idú tiež na celú šírku.
 - Tri čísla nad cenníkom sú kompaktnejšie, záber dverí v galérii je 3:4, aby
   bolo vidieť aj popis.
+
+## Výkon na mobile
+
+Mobilné meranie Lighthouse simuluje pomalú 4G a štyrikrát pomalší procesor, takže
+tu rozhoduje každý kilobajt a každá dlhá úloha. Čo sa spravilo:
+
+- **Písma.** Z ôsmich súborov zostalo šesť a všetky sú orezané len na znaky, ktoré
+  sa na stránke naozaj používajú. Fraunces má pevnú optickú veľkosť, nie celú os,
+  takže je o polovicu menší. Spolu 227 kB → 74 kB.
+- **Menší kód.** `tools/build.mjs` robí z `assets/style.css`, `assets/app.js` a
+  `assets/i18n.js` zmenšené súbory `*.min.*`, ktoré stránka načítava. Zdrojom
+  zostávajú pôvodné súbory, minifikované sa needitujú.
+  **Po každej zmene CSS alebo JS treba spustiť `node tools/build.mjs`.**
+- **Menej práce na začiatku.** Poukazy, rezervačný formulár, poradca a ďalšie
+  časti pod prvou obrazovkou sa spúšťajú až vo voľnej chvíli prehliadača.
+  Scéna v úvode kreslí na telefóne menej častíc a v nižšom rozlíšení.
+- **Sekcie pod úvodom** majú `content-visibility:auto`, prehliadač ich rieši až
+  keď sa k nim návštevník priblíži.
+- **Bez drahých efektov na mobile.** Žiadne `backdrop-filter`, žiadne zrno,
+  statické svetelné škvrny.
+- **Jazyk.** Stránka sa otvára po slovensky a sama sa neprepína. Prehliadaču s
+  iným jazykom sa po načítaní ukáže malý prúžok s ponukou. Preklad sa nasadzuje
+  po dávkach, takže nezasekne prehliadač.
+
+Merané na serveri s kompresiou (rovnako ako GitHub Pages): počítač 100,
+mobil 94 až 96 podľa toho, ako je stroj zaťažený.

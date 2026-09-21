@@ -14,7 +14,7 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--canvas)}
-body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:16px;line-height:1.6;font-feature-settings:"kern" 1,"liga" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:16px;line-height:1.6;font-feature-settings:"kern" 1,"liga" 1;font-synthesis-weight:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
 img,svg{max-width:100%;display:block}
@@ -77,7 +77,7 @@ body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .dro
 
 /* ---------- dvere, ktorými sa vchádza (raz za návštevu) ---------- */
 .veil{position:fixed;inset:0;z-index:300;pointer-events:none;display:none}
-body.veiling .veil{display:block}
+html.door .veil{display:block}
 .veil.gone{display:none!important}
 .veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 52%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
 .veil.through .scene{transform:scale(3.8);opacity:0}
@@ -103,7 +103,7 @@ body.veiling .veil{display:block}
 .veil .handle{position:absolute;left:8%;top:60%;width:calc(var(--dh)*.02);height:calc(var(--dh)*.12);border-radius:999px;background:linear-gradient(90deg,#b8924a,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
 .veil .handle::after{content:"";position:absolute;left:0;top:22%;width:calc(var(--dh)*.05);height:calc(var(--dh)*.014);border-radius:999px;background:linear-gradient(180deg,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
 .veil .mark{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;transform-origin:50% 50%;transition:transform 650ms cubic-bezier(.7,0,.2,1)}
-body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.veiling .nav .btn{opacity:0}
+html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.veiling .nav .btn{opacity:0}
 
 /* ---------- nav ---------- */
 .nav{position:fixed;left:0;right:0;top:0;z-index:100;height:80px;display:flex;align-items:center}
@@ -179,7 +179,7 @@ body.drawer-open{overflow:hidden}
 .today-line:has(.today:empty){display:none}
 .band[data-fx="drift"] .today-line{--kf:clamp(0,(var(--k,0) - .68)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
 .band[data-fx="rise"] .today-line{margin-top:14px}
-.hero-static .today-line{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--veil,0ms) + var(--i,0)*90ms)}
+.hero-static .today-line{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;height:360vh;z-index:1}
@@ -193,7 +193,7 @@ body.drawer-open{overflow:hidden}
 .t-wait .nav,.t-wait .band .inner,.t-wait .hero-static .wrap{visibility:hidden}
 /* úvodná kapitola sa vykreslí hneď, bez čakania na skript */
 .band[data-a="0"]{opacity:1;--k:1}
-.band[data-a="0"] .inner{animation:heroRise 900ms var(--ease) both;animation-delay:var(--veil,0ms)}
+.band[data-a="0"] .inner{animation:heroRise 800ms var(--ease) both}
 @keyframes heroRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .band::before{content:"";position:absolute;left:-4%;top:-4%;width:64%;height:108%;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 70% 62% at 42% 50%,rgba(6,8,7,var(--scrim,.66)) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.66)) 46%,rgba(6,8,7,0) 76%)}
 .band .inner{position:relative;max-width:min(58%,720px)}
@@ -245,7 +245,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .facts b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1;color:var(--accent-hover);white-space:nowrap}
 .facts span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 .band[data-fx="drift"] .facts{--kf:clamp(0,(var(--k,0) - .7)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
-.hero-static .facts{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--veil,0ms) + var(--i,0)*90ms)}
+.hero-static .facts{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 
 /* static hero (two gates; strings identical in JS) */
 .hero-static{display:none;position:relative;z-index:1;min-height:100svh;padding:130px 0 60px;align-items:flex-end;overflow:hidden}
@@ -259,7 +259,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .hero-static h1 em{font-style:italic;font-weight:300;color:var(--accent-hover)}
 .hero-static p{margin-top:18px;font-size:17px;color:#ddd8cc;max-width:34ch;text-shadow:var(--tshadow)}
 .hero-static .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-.hero-static .kicker,.hero-static h1,.hero-static p,.hero-static .cta{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--veil,0ms) + var(--i,0)*90ms)}
+.hero-static .kicker,.hero-static h1,.hero-static p,.hero-static .cta{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 @media (max-height: 500px),(prefers-reduced-motion: reduce){
   .hero{display:none}
   .hero-static{display:flex}
@@ -1209,3 +1209,33 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   /* galéria ukáže aj popis, nielen záber */
   .shot.door{aspect-ratio:3/4}
 }
+
+/* ---------- mobil: efekty, ktoré telefón prekresľuje v každom snímku ---------- */
+@media (max-width:640px){
+  .nav::before,.mbar,.lang-menu,.to-top,.shot .pill,.map-link,.drawer::backdrop,.lb::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav::before{background:rgba(10,13,11,.95)}
+  .mbar{background:rgba(10,13,11,.97)}
+  .lang-menu{background:rgba(14,19,16,.98)}
+  .env .grain{display:none}
+  .env .g1,.env .g2{animation:none}
+  .veil.through .scene{transform:scale(2.2)}
+}
+
+/* ---------- sekcie pod úvodom sa kreslia až keď sa k nim dostaneš ---------- */
+.site>section,.site>footer,.site>.pull,.site>.finale{content-visibility:auto;contain-intrinsic-size:auto 1400px}
+@media print{.site>section,.site>footer,.site>.pull,.site>.finale{content-visibility:visible}}
+
+/* ---------- ponuka iného jazyka (len pre prehliadač s iným jazykom) ---------- */
+.lang-offer{position:fixed;left:50%;bottom:22px;z-index:120;display:flex;align-items:center;gap:10px;
+  padding:10px 10px 10px 16px;border:1px solid var(--line-strong);border-radius:999px;
+  background:rgba(14,19,16,.96);box-shadow:0 18px 44px rgba(3,5,4,.6);
+  font-size:13.5px;color:var(--text-secondary);opacity:0;transform:translate(-50%,14px);
+  transition:opacity .35s var(--ease-soft),transform .35s var(--ease)}
+.lang-offer.in{opacity:1;transform:translate(-50%,0)}
+.lang-offer button{border:0;border-radius:999px;cursor:pointer;font:inherit}
+.lang-offer [data-yes]{padding:8px 14px;background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208;font-weight:700}
+.lang-offer [data-no]{width:32px;height:32px;background:transparent;color:var(--text-tertiary);font-size:18px;line-height:1}
+.lang-offer [data-no]:hover{color:var(--text-primary)}
+@media (max-width:640px){.lang-offer{bottom:80px;left:10px;right:10px;transform:translateY(14px);justify-content:space-between;font-size:13px}
+  .lang-offer.in{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.lang-offer{transition:none}}
