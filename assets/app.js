@@ -94,9 +94,16 @@
       // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
       const c = cam(p);
+      // telefón: misa vyššie a širšia, aby bola celá nad textom; na krátkej výške (lišta prehliadača) ešte vyššie;
+      // pri priblížení v kapitolách 2 a 3 (c.z nad 1.3) sa hodnoty vracajú k pôvodným, aby nádobu neorezal horný okraj
+      const phone = lite && !wide && view !== 'close';
+      const pk = phone ? Math.max(0, 1 - Math.max(0, c.z - 1.3) / 0.5) : 0;
+      const short = H < 760, tiny = H < 620;   // tiny = najmenšie telefóny (320 x 568): misa ešte vyššie a užšia, nech sa nedotýka textu
+      const cyP = 0.31 + ((tiny ? 0.18 : short ? 0.22 : 0.26) - 0.31) * pk;
+      const rxP = 0.34 + ((tiny ? 0.33 : short ? 0.38 : 0.42) - 0.34) * pk;
       const cx = (view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5)) + c.dx * W;
-      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * 0.31)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
-      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * 0.34, H * 0.5))) * c.z;
+      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * cyP)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
+      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * rxP, H * 0.5))) * c.z;
       const ry = rx * c.tilt;
       const warm = c.warm, lamp = mix(COOL, GOLD, warm);
       const topY = -H * 0.04, landY = cy - ry * 0.12;
@@ -110,7 +117,7 @@
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
       // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
       const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
-      const ca = 0.15 + 0.13 * p;
+      const ca = (phone ? 0.25 : 0.15) + 0.13 * p;
       cone.addColorStop(0, rgb(lamp, ca)); cone.addColorStop(.42, rgb(mix([160, 178, 168], [217, 181, 106], warm), ca * .42)); cone.addColorStop(1, 'rgba(217,181,106,0)');
       ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
       // the lamp itself: a small bright disc high above the bowl, only in the journey
@@ -143,7 +150,7 @@
       // the lamp reflected in the water: a soft vertical bar of gold
       ctx.globalCompositeOperation = 'lighter';
       const refl = ctx.createRadialGradient(cx, cy - ry * 0.15, 0, cx, cy - ry * 0.15, rx * 0.55);
-      refl.addColorStop(0, `rgba(236,208,143,${.22 + .2 * calm})`); refl.addColorStop(.35, `rgba(217,181,106,${.08 + .08 * calm})`); refl.addColorStop(1, 'rgba(217,181,106,0)');
+      refl.addColorStop(0, `rgba(236,208,143,${(phone ? .34 : .22) + .2 * calm})`); refl.addColorStop(.35, `rgba(217,181,106,${(phone ? .12 : .08) + .08 * calm})`); refl.addColorStop(1, 'rgba(217,181,106,0)');
       ctx.fillStyle = refl; ctx.save(); ctx.scale(0.42, 1); ctx.beginPath(); ctx.arc(cx / 0.42, cy - ry * 0.15, rx * 0.55, 0, Math.PI * 2); ctx.fill(); ctx.restore();
       // caustics: light that has been bent by the water, breathing slowly
       for (let j = 0; j < 4; j++) {
@@ -273,7 +280,7 @@
       // vignette
       const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
       const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
-      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${.7 + .08 * (c.z - 1)})`);
+      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${(phone ? .5 : .7) + .08 * (c.z - 1)})`);
       ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
     return { resize, draw };
