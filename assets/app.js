@@ -867,7 +867,7 @@
     a.href = BOOKING; a.target = '_blank'; a.rel = 'noopener';
   }
   if (BOOKING) {
-    $$('a.btn[href="#rezervacia"], .mbar a[href="#rezervacia"]').forEach(toBooking);
+    $$('a[data-booking-link], a.btn[href="#rezervacia"], .mbar a[href="#rezervacia"]').forEach(toBooking);
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href^="http"][target="_blank"]');
       if (a && a.href === BOOKING) track('booking_open', { from: (a.dataset.book || a.className || 'cta').slice(0, 40) });

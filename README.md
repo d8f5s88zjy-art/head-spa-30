@@ -373,3 +373,22 @@ výkon, prístupnosť, osvedčené postupy aj SEO 100 zo 100 na počítači.
 Pri prístupnosti platí: tlačidlá hodnoty poukazu nie sú zoznam, ale skupina
 tlačidiel s aria-pressed, výber jazyka je menu s aria-checked a značka v hlavičke
 aj v pätičke nesie svoj viditeľný text (popis je v title).
+
+## Seniorský prechod
+
+Zadanie pre tento prechod je v `docs/prompt-senior.md`. Čo z neho vyplynulo:
+
+- Sekcia Tím už neukazuje prázdne karty s nápisom "Meno doplníme". Namiesto nich
+  sú tri karty o tom, ako rituál vedie človek: konzultácia, tlak a teplota na
+  mieru, záver v kaderníckych rukách. Keď budú fotografie, karty sa vymenia za
+  profily podľa poznámky priamo v HTML.
+- Bez JavaScriptu stránka už nie je poloprázdna. Na `<html>` je trieda `no-js`,
+  ktorú skript hneď zmaže. Kým tam je, ukáže sa statický úvod a všetko ostatné je
+  v koncovom stave.
+- Tlačidlá do kalendára majú adresu priamo v HTML (`data-booking-link`), takže
+  vedú do kalendára aj bez skriptu. Skript ich už len drží zhodné s `data-booking`
+  na `<html>`.
+- Kapitoly úvodnej cesty, ktoré nie sú na obrazovke, majú `inert`. Klávesnica cez
+  ne už neprechádza.
+- Hlavička sa zmestí aj do 320 px.
+- Pribudla stránka `404.html` v štýle webu. GitHub Pages ju ukáže pri zlom odkaze.

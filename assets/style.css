@@ -162,7 +162,7 @@ body.drawer-open{overflow:hidden}
 /* pri cudzom jazyku čaká úvod na preklad, aby sa text nevymieňal pred očami */
 .t-wait .nav,.t-wait .band .inner,.t-wait .hero-static .wrap{visibility:hidden}
 /* úvodná kapitola sa vykreslí hneď, bez čakania na skript */
-.band[data-a="0"]{opacity:1}
+.band[data-a="0"]{opacity:1;--k:1}
 .band[data-a="0"] .inner{animation:heroRise 900ms var(--ease) both}
 @keyframes heroRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .band::before{content:"";position:absolute;left:-4%;top:-4%;width:64%;height:108%;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 70% 62% at 42% 50%,rgba(6,8,7,var(--scrim,.66)) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.66)) 46%,rgba(6,8,7,0) 76%)}
@@ -741,6 +741,16 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .band .sub{font-size:15px}
 }
 
+/* ---------- bez JavaScriptu: úvod je statický a všetko je v koncovom stave ---------- */
+.no-js .hero,.no-js .cue,.no-js .hud,.no-js .tools{display:none}
+.no-js .hero-static{display:flex}
+.no-js .rv .part,.no-js .card .panel>div,.no-js .card .panel li,.no-js .faq-a>div,.no-js .band .facts{opacity:1;transform:none}
+.no-js .h2 .li,.no-js .kicker::before,.no-js .hero-static .kicker::before,.no-js .cat::after,.no-js .step::after{transform:none}
+.no-js .divider{transform:scaleX(1)}
+.no-js .mark .ring,.no-js .mark .wave{stroke-dashoffset:0}
+.no-js .mark .num,.no-js .step .n,.no-js .step .n::after{opacity:1}
+.no-js .steps .stream path{stroke-dashoffset:0}
+
 /* ---------- reduced motion: final states, stopped drives ---------- */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -807,6 +817,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   display:flex;align-items:center;justify-content:center}
 .tface img{width:100%;height:100%;object-fit:cover;display:block}
 .tmark{width:84px;height:84px;opacity:.8}
+.tcard.craft .tnum{margin-top:0}
 .tcard.is-empty .tface{aspect-ratio:3/2;border:1px dashed var(--line-strong)}
 .tcard.is-empty .tname{color:var(--text-secondary)}
 .tnum{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent)}
@@ -883,8 +894,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .lang-opt span{font-size:14.5px}
 .lang-opt:hover{background:rgba(217,181,106,.1);color:var(--text-primary)}
 .lang-opt:hover b{color:var(--accent)}
-.lang-opt[aria-pressed="true"]{background:var(--accent-muted);color:var(--text-primary)}
-.lang-opt[aria-pressed="true"] b{color:var(--accent-hover)}
+.lang-opt[aria-checked="true"]{background:var(--accent-muted);color:var(--text-primary)}
+.lang-opt[aria-checked="true"] b{color:var(--accent-hover)}
 @media (prefers-reduced-motion:reduce){.lang-menu{animation:none}}
 @media (max-width:860px){
   .lang-btn{min-height:44px;padding:0 13px}
@@ -1130,3 +1141,14 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .fin-in .lede{margin-top:28px;max-width:52ch}
 .fin-in .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
 @media (max-width:640px){.finale{padding:64px 0 72px}.fin-in .cta{width:100%}.fin-in .cta .btn{flex:1 1 100%}}
+
+/* ---------- najmenšie telefóny: hlavička sa musí zmestiť do 320 px ---------- */
+@media (max-width:400px){
+  .nav .wrap{gap:10px}
+  .brand{gap:8px}
+  .brand .mark{width:38px;height:38px;flex:0 0 38px}
+  .brand .name strong{font-size:15px}
+  .nav-actions{gap:6px}
+  .lang-btn{padding:0 9px;gap:0}
+  .lang-btn svg{display:none}
+}

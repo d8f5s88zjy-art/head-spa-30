@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stránka sa nenašla | HEAD SPA 30 Nitra</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0a0d0b">
+<link rel="icon" type="image/svg+xml" href="/head-spa-30/assets/favicon.svg">
+<style>
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:400;font-display:swap;src:url(/head-spa-30/assets/fonts/Fraunces-400.woff2) format('woff2')}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:300;font-display:swap;src:url(/head-spa-30/assets/fonts/Fraunces-300i.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;src:url(/head-spa-30/assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/head-spa-30/assets/fonts/JetBrainsMono-400.woff2) format('woff2')}
+:root{--canvas:#0a0d0b;--text:#f2ede2;--muted:#b9b3a6;--accent:#d9b56a;--accent-hover:#eed49a;--line:rgba(242,237,226,.14)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:40px 20px;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(217,181,106,.13),transparent 62%),var(--canvas);
+  color:var(--text);font-family:Manrope,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{width:100%;max-width:620px;text-align:center}
+.mark{width:64px;height:64px;margin:0 auto 26px}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(38px,7vw,64px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0}
+h1 em{font-style:italic;font-weight:300;color:var(--accent-hover)}
+p{color:var(--muted);margin:18px auto 0;max-width:46ch}
+.cta{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;
+  font-size:14px;letter-spacing:.01em;text-decoration:none;border:1px solid var(--line);color:var(--text);transition:border-color .3s,background .3s,color .3s}
+.btn.primary{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208;border-color:transparent;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.06)}
+.fine{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,237,226,.5)}
+.fine a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="#f2ede2">30</text></svg>
+  <div class="kicker">Chyba 404</div>
+  <h1>Táto strana <em>neexistuje.</em></h1>
+  <p>Odkaz je asi starý alebo má preklep. Rituály, ceny aj rezervácia sú na úvodnej stránke.</p>
+  <div class="cta">
+    <a class="btn primary" href="/head-spa-30/">Späť na úvod</a>
+    <a class="btn" href="/head-spa-30/#cennik">Rituály a ceny</a>
+  </div>
+  <p class="fine">Mostná 30, Nitra · <a href="tel:+421911153136">+421 911 153 136</a></p>
+</main>
+</body>
+</html>
