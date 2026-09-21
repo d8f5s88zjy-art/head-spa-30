@@ -120,7 +120,7 @@
       const ry = rx * c.tilt;
       const warm = c.warm, lamp = mix(COOL, GOLD, warm);
       // nábeh: prvú sekundu a pol sa misa skladá z prachu, z bodiek na kružniciach, potom stuhne do vody
-      const life = reduced.matches ? 1 : smoothstep(t || 0, 0.05, 1.5);
+      const life = reduced.matches ? 1 : smoothstep(t || 0, 0.05, 1.1);
       const topY = -H * 0.04, landY = cy - ry * 0.12;
       const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
       const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
@@ -167,7 +167,7 @@
         ctx.restore();
       }
       ctx.save();
-      ctx.globalAlpha = 0.08 + 0.92 * life;
+      ctx.globalAlpha = 0.22 + 0.78 * life;
       ctx.beginPath(); ctx.ellipse(cx, cy, rx * 1.03, ry * 1.03, 0, 0, Math.PI); ctx.lineTo(cx - rx * 1.03, cy);
       const bowl = ctx.createLinearGradient(0, cy, 0, cy + ry * 1.6);
       bowl.addColorStop(0, '#1a221d'); bowl.addColorStop(1, '#0a0e0c');
@@ -176,7 +176,7 @@
       ctx.restore();
       // the water surface
       ctx.save();
-      ctx.globalAlpha = 0.08 + 0.92 * life;
+      ctx.globalAlpha = 0.22 + 0.78 * life;
       ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
       const water = ctx.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx);
       water.addColorStop(0, `rgba(96,150,140,${.55 + .15 * after})`); water.addColorStop(.55, 'rgba(46,84,78,.9)'); water.addColorStop(1, 'rgba(18,34,31,1)');
@@ -456,7 +456,7 @@
     if (!heroOnScreen) shown = target;   // pri skoku na kotvu sa mimo obrazovky nič nedobieha
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
-    if (ambStart && now - ambStart < 1800) busy = true;   // nábeh misy z prachu beží plynulo, nie v ambientnom tempe
+    if (ambStart && now - ambStart < 1300) busy = true;   // nábeh misy z prachu beží plynulo, nie v ambientnom tempe
     if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
     if (!ambStart) ambStart = now;
     scene.draw(shown, false, (now - ambStart) / 1000);
