@@ -72,6 +72,13 @@ Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kal
 ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
 JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
 
+## Bez opakovania
+
+Sekcie Prečo k nám a Tím, dva z troch výrokov medzi sekciami, zoznamy Solo/Duo/Darček
+a Kedy príde vhod, mantra a tlačidlá Rezervovať mimo úvodu a kontaktu boli odstránené,
+lebo opakovali to, čo je inde na stránke. Rezervovať vedie z úvodu, z kariet rituálov,
+z kontaktu a zo spodnej lišty na telefóne.
+
 ## Cenník bez poradcu a filtrov
 
 Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Luxusné). Poradca s tromi
