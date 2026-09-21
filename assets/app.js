@@ -9,6 +9,7 @@
   const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
   function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const phoneMQ = matchMedia('(max-width: 640px)');   // telefón má vlastné hranice kapitol, kameru, rampy a dobiehanie
 
   /* ============ the scene (water, light, steam), drawn from progress p ============ */
   function makeScene(canvas, opts) {
@@ -34,10 +35,22 @@
       [0.84, 1.26, 0.00, 0.03, .40, 0.92],
       [1.00, 1.20, 0.00, 0.03, .40, 1.00]
     ];
+    // kamera na telefóne: misa je vždy celá v zábere, kľúčové snímky ležia uprostred kapitol,
+    // takže pohyb kamery prekrýva prestrihy textu a v strede kapitoly je pokoj na čítanie;
+    // väzby: dopad vody 0.20 = Ticho, masáž 0.44 = Hĺbkové čistenie, pokoj 0.70 = finále
+    const CAM_P = [
+      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
+      [0.12, 1.03, 0.00, 0.01, .35, 0.06],
+      [0.36, 1.20, 0.00, 0.09, .42, 0.30],
+      [0.62, 1.75, 0.00, 0.24, .58, 0.55],
+      [0.88, 1.24, 0.00, 0.09, .42, 0.92],
+      [1.00, 1.20, 0.00, 0.09, .40, 1.00]
+    ];
     function cam(p) {
       if (!o.journey) return { z: 1, dx: 0, dy: 0, tilt: .34, warm: 1, grade: 0 };   // the gallery shots keep their fixed gold lamp and cool room
-      let i = 0; while (i < CAM.length - 2 && p > CAM[i + 1][0]) i++;
-      const a = CAM[i], b = CAM[i + 1], k = smoothstep(p, a[0], b[0]);
+      const T = (lite && W <= 720) ? CAM_P : CAM;   // telefón na výšku má vlastnú kameru
+      let i = 0; while (i < T.length - 2 && p > T[i + 1][0]) i++;
+      const a = T[i], b = T[i + 1], k = smoothstep(p, a[0], b[0]);
       const m = (j) => a[j] + (b[j] - a[j]) * k;
       const w = m(5); return { z: m(1), dx: m(2), dy: m(3), tilt: m(4), warm: w, grade: w };
     }
@@ -95,9 +108,9 @@
       // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
       const c = cam(p);
       // telefón: misa vyššie a širšia, aby bola celá nad textom; na krátkej výške (lišta prehliadača) ešte vyššie;
-      // pri priblížení v kapitolách 2 a 3 (c.z nad 1.3) sa hodnoty vracajú k pôvodným, aby nádobu neorezal horný okraj
+      // posun misy v kapitolách rieši dy v CAM_P, preto sa hodnoty pre telefón už nevracajú k desktopovým
       const phone = lite && !wide && view !== 'close';
-      const pk = phone ? Math.max(0, 1 - Math.max(0, c.z - 1.3) / 0.5) : 0;
+      const pk = phone ? 1 : 0;
       const short = H < 760, tiny = H < 620;   // tiny = najmenšie telefóny (320 x 568): misa ešte vyššie a užšia, nech sa nedotýka textu
       const cyP = 0.31 + ((tiny ? 0.18 : short ? 0.22 : 0.26) - 0.31) * pk;
       const rxP = 0.34 + ((tiny ? 0.33 : short ? 0.38 : 0.42) - 0.34) * pk;
@@ -349,8 +362,17 @@
   const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene'), env = $('.env');
   const bands = $$('.band', stage).map((el, i) => ({
     el, a: +el.dataset.a, b: +el.dataset.b, i,
-    ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, on: false
+    ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, u: -1, on: false, live: false
   }));
+  // telefón číta vlastné hranice kapitol (data-ma, data-mb), ktoré sa prekrývajú; počítač pôvodné data-a, data-b
+  function bandBounds() {
+    const ph = phoneMQ.matches;
+    bands.forEach((b) => {
+      b.a = ph && b.el.dataset.ma != null ? +b.el.dataset.ma : +b.el.dataset.a;
+      b.b = ph && b.el.dataset.mb != null ? +b.el.dataset.mb : +b.el.dataset.b;
+      b.op = -1; b.k = -1; b.u = -1; b.on = false; b.live = false;
+    });
+  }
   const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 1, loadStart = 0;
@@ -358,22 +380,32 @@
 
   function heroProgress() {
     const r = hero.getBoundingClientRect();
-    const range = hero.offsetHeight - window.innerHeight;
+    // rozsah podľa výšky lepiacej scény (100svh), nie okna: pri zložení lišty v Safari progres neskočí
+    const range = hero.offsetHeight - stage.offsetHeight;
     const c = r.top <= 0 && r.bottom >= window.innerHeight;
     if (c !== covered) { covered = c; env.classList.toggle('covered', c); }
     return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
   }
   function updateCaptions(p, now) {
+    const ph = phoneMQ.matches;
     for (const b of bands) {
-      const f = Math.min(0.02, (b.b - b.a) / 3);
+      // telefón: prelínačka 0.06 (cca 130 px skrolu) leží presne na prekryve kapitol, súčet priehľadností je stále 1, obrazovka nie je nikdy prázdna
+      const f = Math.min(ph ? 0.06 : 0.02, (b.b - b.a) / 3);
       let op = (b.i === 0 ? 1 : smoothstep(p, b.a, b.a + f)) * (b.i === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b));
-      const ramp = b.ramp || Math.min(0.025, (b.b - b.a) * 0.35);
+      // telefón: rampa slov cca 200 px, aby choreografiu bolo vidieť v rámci jedného švihu palcom
+      const ramp = ph ? Math.min(0.09, (b.b - b.a) * 0.35) : (b.ramp || Math.min(0.025, (b.b - b.a) * 0.35));
       let k = clamp((p - b.a) / ramp, 0, 1);
       if (b.i === 0) k = Math.max(k, loadK);
       if (Math.abs(op - b.op) > 0.005 || (op === 0 && b.op !== 0) || (op === 1 && b.op !== 1)) { b.op = op; b.el.style.opacity = op.toFixed(3); }
-      const on = op > 0.5;
+      const on = op > 0.5, live = op > 0;
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
+      if (live !== b.live) { b.live = live; b.el.classList.toggle('live', live); }   // vrstvy vznikajú pred prelínačkou, nie v nej
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
+      if (ph) {
+        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál
+        const u = live ? clamp((p - b.a) / (b.b - b.a), 0, 1) : 0;
+        if (Math.abs(u - b.u) > 0.01 || (u === 0 && b.u !== 0) || (u === 1 && b.u !== 1)) { b.u = u; b.el.style.setProperty('--u', u.toFixed(2)); }
+      }
     }
     if (hud && now !== undefined && now - lastHudAt > 80) {
       const t = p.toFixed(3);
@@ -385,7 +417,7 @@
     if (cue) { const show = p < 0.04; if (cue.classList.contains('show') !== show) cue.classList.toggle('show', show); }
   }
   // between scrolls the scene keeps breathing (steam, caustics, the stream) at a low frame rate, and rests with the visitor
-  const AMB_FPS = 12;
+  const AMB_FPS = phoneMQ.matches ? 15 : 12;   // telefón 15 fps, kvapky v prúde nerobia také veľké kroky
   let ambStart = 0, ambTimer = 0;
   function ambientLive() { return scrubOn && heroOnScreen && !document.hidden && !reduced.matches && !document.body.classList.contains('idle'); }
   function ambientLater() {
@@ -396,8 +428,11 @@
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
     lastTick = now;
-    const k = 0.16;
+    // telefón drží krok s palcom (časová konštanta cca 40 ms), počítač si necháva mäkšie dobiehanie kolieska
+    const gap = Math.abs(target - shown);
+    const k = phoneMQ.matches ? (gap > 0.1 ? 0.5 : 0.35) : 0.16;
     shown += (target - shown) * (1 - Math.pow(1 - k, dt / 16.667));
+    if (!heroOnScreen) shown = target;   // pri skoku na kotvu sa mimo obrazovky nič nedobieha
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
     if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
@@ -430,7 +465,8 @@
     });
     new IntersectionObserver((es) => {
       heroOnScreen = es[0].isIntersecting;
-      if (heroOnScreen && scrubOn) onScroll();
+      // po skoku na kotvu a späť sa scéna postaví rovno na aktuálny progres, cesta sa neprehráva dozadu
+      if (heroOnScreen && scrubOn) { target = shown = heroProgress(); onScroll(); }
       ambientLater();
     }, { threshold: 0 }).observe(hero);
     let rt;
@@ -508,7 +544,7 @@
     if (scrubOn) return; scrubOn = true;
     initHeroOnce();
     addEventListener('scroll', onScroll, { passive: true });
-    bands.forEach((b) => { b.op = -1; b.k = -1; b.on = false; });
+    bandBounds();
     unpinFinalStates();
     loadStart = performance.now(); loadK = 1;
     target = shown = heroProgress();
@@ -533,6 +569,8 @@
   }
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
+  // pri prechode cez 640 px (otočenie tabletu) sa hranice kapitol prepočítajú bez obnovenia stránky
+  phoneMQ.addEventListener('change', () => { if (scrubOn) { bandBounds(); target = shown = heroProgress(); scene.draw(shown, true); updateCaptions(shown); } });
 
   /* ============ dvere: raz za návštevu sa značka nakreslí a dvere sa otvoria ============ */
   const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
@@ -549,6 +587,7 @@
     document.documentElement.style.setProperty('--veil', '0ms');
     if (veil) veil.classList.add('gone');
     veilMs = 0;
+    dispatchEvent(new Event('hs30veilend'));   // scéna hero na telefóne čaká na koniec dverí
   }
   function flipVeil() {
     if (veilDone) return;
@@ -1364,7 +1403,12 @@
 
   /* scéna hero sekcie sa zapne až keď má prehliadač voľnú chvíľu, prvé vykreslenie textu tak nič nebrzdí */
   let heroStarted = false;
-  function heroStart() { if (heroStarted) return; heroStarted = true; applyHeroMode(); }
+  function heroStart() {
+    if (heroStarted) return;
+    // počas dverí patrí hlavné vlákno dverám; scéna štartuje hneď po nich (aj keď návštevník medzitým skroluje)
+    if (phoneMQ.matches && document.body.classList.contains('veiling')) { addEventListener('hs30veilend', heroStart, { once: true }); return; }
+    heroStarted = true; applyHeroMode();
+  }
   /* Na telefóne je plátno úvodu čistá ozdoba, preto sa zapne až keď návštevník
      skroluje alebo sa dotkne obrazovky. Na počítači stačí voľná chvíľa. */
   if ('requestIdleCallback' in window) requestIdleCallback(heroStart, { timeout: 2500 }); else setTimeout(heroStart, 400);
@@ -1378,8 +1422,11 @@
     document.body.classList.add('ready', 'open');
     if (veilMs) {
       veil.classList.add('drawn');
-      setTimeout(flipVeil, 380);
-      setTimeout(endVeil, 1420);
+      setTimeout(flipVeil, phoneMQ.matches ? 520 : 380);   // na telefóne dvere chvíľu postoja
+      // koniec až po dobehnutí prelínania scény (opacity na .scene, nie na krídlach), časovač je poistka pre pomalý telefón
+      const sc = $('.scene', veil);
+      if (sc) sc.addEventListener('transitionend', (e) => { if (e.target === sc && e.propertyName === 'opacity') endVeil(); });
+      setTimeout(endVeil, 2200);
     }
   });
 

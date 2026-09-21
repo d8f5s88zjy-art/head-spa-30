@@ -758,9 +758,9 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .band .sub{margin-top:14px;font-size:16px;line-height:1.5;max-width:32ch}
   .band .sub .sub-more,.hero-static p .sub-more{display:none}
   .band .cta{margin-top:20px;display:grid;gap:10px}
-  /* úvod: jedno zlaté tlačidlo, druhá voľba je tichý zlatý odkaz, nie ďalší rámček; posledná scéna má stále dve pilulky */
-  .band[data-a="0"] .cta{gap:4px}
-  .band[data-a="0"] .cta .btn.ghost,.hero-static .cta .btn.ghost{justify-self:center;min-height:44px;padding:6px 4px;border:0;background:none;box-shadow:none;color:var(--accent-hover);font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:rgba(236,208,143,.45);text-shadow:var(--tshadow)}
+  /* jedno zlaté tlačidlo, druhá voľba je tichý zlatý odkaz, nie ďalší rámček; rovnako v úvode aj vo finále */
+  .band .cta{gap:4px}
+  .band .cta .btn.ghost,.hero-static .cta .btn.ghost{justify-self:center;min-height:44px;padding:6px 4px;border:0;background:none;box-shadow:none;color:var(--accent-hover);font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:rgba(236,208,143,.45);text-shadow:var(--tshadow)}
   .band .facts,.hero-static .facts{display:grid;grid-template-columns:1fr 1fr;margin-top:16px;padding-top:0;border-top:0;gap:6px 16px}
   .band .facts b,.hero-static .facts b{font-size:17px;color:var(--text-primary)}
   .facts span{letter-spacing:.12em}
@@ -770,7 +770,20 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   /* the cue lives in its own strip between the text and the fixed bar, never over the copy */
   .cue{bottom:22px;gap:6px;font-size:12px;letter-spacing:.2em}
   .cue .drop{width:12px;height:17px}
-  .stage .scrim{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.12) 0%,rgba(217,181,106,.05) 40%,rgba(217,181,106,0) 72%),radial-gradient(ellipse 140% 90% at 50% 40%,rgba(8,10,9,0) 32%,rgba(8,10,9,.56) 100%)}
+  /* kapitoly s jedným riadkom sedia v dolnej tretine, nie na okraji */
+  .band[data-fx="punch"],.band[data-fx="blur"]{padding-bottom:max(120px,22svh)}
+  /* kapitola s masážou bez filter blur: text sa vynorí posunom a priehľadnosťou, rozmazaný klon sa nekreslí */
+  .band[data-fx="blur"] .soft{display:none}
+  .band[data-fx="blur"] .sharp{opacity:var(--k,0);transform:translateY(calc((1 - var(--k,0))*18px))}
+  /* clona pod textom nezávisí od --k, nech sa neprekresľuje každý snímok */
+  .band::before{opacity:1}
+  /* pomalý posun bloku textu cez kapitolu (--u 0..1 zo skriptu), 16 px nahor */
+  .hero .band .inner{transform:translate3d(0,calc(var(--u,0)*-16px),0)}
+  /* vrstvy len pre pásy, ktoré je práve vidieť, vznikajú pred prelínačkou */
+  .band.live .inner,.band.live .w{will-change:transform}
+  /* prvý text stúpa až keď sa dvere otvárajú, bez dverí hneď */
+  .band[data-a="0"] .inner{animation-delay:calc(var(--veil,0ms)*.6)}
+  .stage .scrim{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.07) 0%,rgba(217,181,106,.03) 40%,rgba(217,181,106,0) 72%),radial-gradient(ellipse 140% 90% at 50% 40%,rgba(8,10,9,0) 32%,rgba(8,10,9,.56) 100%)}
   .hero-static .art::after{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.12) 0%,rgba(217,181,106,.05) 40%,rgba(217,181,106,0) 72%),linear-gradient(180deg,rgba(10,13,11,.5) 0%,rgba(10,13,11,.3) 34%,rgba(10,13,11,.62) 72%,var(--canvas) 100%)}
 }
 @media (max-width:640px) and (max-height:700px){
