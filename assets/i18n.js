@@ -82,10 +82,12 @@
     document.documentElement.lang = L.locale;
     applied = code;
     document.querySelectorAll('[data-lang-pick]').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.dataset.langPick === code));
+      b.setAttribute('aria-checked', String(b.dataset.langPick === code));
     });
     var cur = document.querySelector('[data-lang-current]');
     if (cur) cur.textContent = L.short;
+    var lb = document.querySelector('.lang-btn');
+    if (lb) lb.setAttribute('aria-label', L.short + ', jazyk stránky');
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: code } }));
   }
 
@@ -115,14 +117,14 @@
     if (!host) return;
     var cur = byCode(current) || LANGS[0];
     host.innerHTML =
-      '<button class="lang-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Jazyk stránky, language">' +
+      '<button class="lang-btn" type="button" aria-expanded="false" aria-haspopup="true" title="Jazyk stránky / language" aria-label="' + cur.short + ', jazyk stránky">' +
       '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' +
       '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>' +
       '<span data-lang-current>' + cur.short + '</span></button>' +
-      '<div class="lang-menu" role="menu" hidden>' +
+      '<div class="lang-menu" role="menu" aria-label="Jazyk stránky" hidden>' +
       LANGS.map(function (l) {
-        return '<button class="lang-opt" type="button" role="menuitem" data-lang-pick="' + l.code +
-          '" aria-pressed="' + (l.code === current) + '"><b>' + l.short + '</b><span>' + l.label + '</span></button>';
+        return '<button class="lang-opt" type="button" role="menuitemradio" data-lang-pick="' + l.code +
+          '" aria-checked="' + (l.code === current) + '"><b>' + l.short + '</b><span>' + l.label + '</span></button>';
       }).join('') + '</div>';
 
     var btn = host.querySelector('.lang-btn'), menu = host.querySelector('.lang-menu');

@@ -341,7 +341,7 @@
   }));
   const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
-  let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 0, loadStart = 0;
+  let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 1, loadStart = 0;
   let lastHud = '', lastHudAt = 0;
 
   function heroProgress() {
@@ -388,7 +388,6 @@
     shown += (target - shown) * (1 - Math.pow(1 - k, dt / 16.667));
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
-    if (loadK < 1) { loadK = smoothstep((now - loadStart) / 1400, 0, 1); busy = true; }
     if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
     if (!ambStart) ambStart = now;
     scene.draw(shown, false, (now - ambStart) / 1000);
@@ -407,7 +406,8 @@
     bands.forEach((b) => {
       const fx = b.el.dataset.fx;
       const spread = b.el.dataset.spread ? +b.el.dataset.spread : undefined;
-      $$('[data-split]', b.el).forEach((el, j) => splitLine(el, fx === 'scatter' ? 'scatter' : 'word', 30 + b.i * 7 + j, spread));
+      /* prvý nadpis je rozdelený už v HTML, aby sa vykreslil bez čakania na skript */
+      $$('[data-split]', b.el).forEach((el, j) => { if (!$('.vh', el)) splitLine(el, fx === 'scatter' ? 'scatter' : 'word', 30 + b.i * 7 + j, spread); });
       if (fx === 'blur') {
         const stack = $('.stack', b.el);
         const sharp = $('.sharp', stack);
@@ -498,7 +498,7 @@
     addEventListener('scroll', onScroll, { passive: true });
     bands.forEach((b) => { b.op = -1; b.k = -1; b.on = false; });
     unpinFinalStates();
-    loadStart = performance.now() + veilMs; loadK = 0;
+    loadStart = performance.now(); loadK = 1;
     target = shown = heroProgress();
     scene.draw(shown, true);
     updateCaptions(shown, loadStart);
@@ -521,31 +521,6 @@
   }
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
-
-  /* ============ the veil: the mark draws itself once per session, then takes its place in the nav ============ */
-  const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
-  let veilMs = 0, veilDone = false;
-  let seenVeil = false;
-  try { seenVeil = !!sessionStorage.hs30open; } catch (e) { seenVeil = false; }
-  if (veil && !seenVeil && !location.hash && !reduced.matches && !document.hidden) {
-    veilMs = 1000; document.body.classList.add('veiling');
-    try { sessionStorage.hs30open = '1'; } catch (e) { /* storage blocked: the veil simply plays each load */ }
-  }
-  document.documentElement.style.setProperty('--veil', veilMs + 'ms');
-  function endVeil() {
-    if (veilDone) return; veilDone = true;
-    document.body.classList.remove('veiling');
-    if (veil) veil.classList.add('gone');
-    veilMs = 0;
-  }
-  function flipVeil() {
-    if (veilDone) return;
-    const n = navMark.getBoundingClientRect(), m = veilMark.getBoundingClientRect();
-    const dx = n.left + n.width / 2 - (m.left + m.width / 2), dy = n.top + n.height / 2 - (m.top + m.height / 2), s = n.width / 96;
-    veilMark.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
-    veil.classList.add('lift');                                  // both leaves swing inward
-    setTimeout(() => { if (!veilDone) veil.classList.add('through'); }, 420);   // and you walk through
-  }
 
   /* ============ nav: solid after the top, and it holds your place ============ */
   const nav = $('.nav');
@@ -702,7 +677,6 @@
     streams.forEach((s) => { s.path.style.strokeDashoffset = 0; s.steps.forEach((x) => { x.lit = true; x.el.classList.add('lit'); }); });
     counters.forEach((c) => { counted.add(c); c.textContent = c.dataset.count + (c.dataset.suffix || ''); });
     rv.forEach((el) => el.classList.add('in', 'done'));
-    endVeil();
   }
   function unpinFinalStates() {
     pinned = false;
@@ -1346,19 +1320,15 @@
   document.addEventListener('visibilitychange', () => { document.body.classList.toggle('paused', document.hidden); if (!document.hidden) wake(); });
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 
-  applyHeroMode();
+  /* scéna hero sekcie sa zapne až keď má prehliadač voľnú chvíľu, prvé vykreslenie textu tak nič nebrzdí */
+  let heroStarted = false;
+  function heroStart() { if (heroStarted) return; heroStarted = true; applyHeroMode(); }
+  if ('requestIdleCallback' in window) requestIdleCallback(heroStart, { timeout: 1500 }); else setTimeout(heroStart, 400);
+  addEventListener('scroll', heroStart, { once: true, passive: true });
   if (reduced.matches) pinToFinalStates();
   wake();
-  void getComputedStyle(veilMark || document.body).opacity;   // settle the initial styles first
-  void document.body.offsetWidth;
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    document.body.classList.add('ready', 'open');
-    if (veilMs) {
-      veil.classList.add('drawn');
-      setTimeout(flipVeil, 700);
-      setTimeout(endVeil, 2300);
-    }
-  }));
+  void document.body.offsetWidth;   // settle the initial styles first
+  requestAnimationFrame(() => document.body.classList.add('ready', 'open'));
 
   /* Pri tlači sa prehľad cien otvorí sám, inak by sa vytlačil zatvorený. */
   (function tlacCennika() {

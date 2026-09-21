@@ -349,3 +349,27 @@ Ako to funguje:
 **Keď pribudne nový text v `index.html`**, stačí doň pridať nový kľúč do šiestich
 jazykových súborov. Kým tam nie je, tá jedna veta sa zobrazí po slovensky
 a zvyšok stránky ostane preložený.
+
+## Rýchlosť a prístupnosť
+
+Stránka je postavená tak, aby sa prvá obrazovka vykreslila bez čakania na skript.
+Čo to v praxi znamená:
+
+- Písma sú priamo v hlavičke stránky a štýl sa načítava ako prvý súbor, ešte pred
+  popismi pre vyhľadávače a zdieľanie.
+- Prvý nadpis je rozdelený na slová už v HTML, takže ho prehliadač vykreslí hneď.
+  Skript ho znova nerozdeľuje, iba prevezme animáciu pri skrolovaní.
+- Úvodná kapitola cesty má plnú viditeľnosť priamo v CSS a jej nábeh je obyčajná
+  CSS animácia. Telo stránky sa už neskrýva, kým nenabehne skript.
+- Scéna hero sekcie (plátno s vodou a parou) sa zapína až keď má prehliadač voľnú
+  chvíľu, najneskôr pri prvom skrolovaní. Do vtedy je na jej mieste rovnaký
+  farebný podklad.
+- Štruktúrované dáta pre vyhľadávače sú na konci stránky, aby nebrzdili prvé
+  vykreslenie.
+
+Merané cez Lighthouse na serveri s kompresiou (rovnako ako GitHub Pages):
+výkon, prístupnosť, osvedčené postupy aj SEO 100 zo 100 na počítači.
+
+Pri prístupnosti platí: tlačidlá hodnoty poukazu nie sú zoznam, ale skupina
+tlačidiel s aria-pressed, výber jazyka je menu s aria-checked a značka v hlavičke
+aj v pätičke nesie svoj viditeľný text (popis je v title).

@@ -10,16 +10,11 @@
   --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
   --ease:cubic-bezier(.22,.8,.2,1);--ease-soft:cubic-bezier(.4,0,.2,1);
   --tshadow:0 1px 2px rgba(5,7,6,.9),0 3px 12px rgba(5,7,6,.6),0 10px 24px rgba(5,7,6,.5);
-  --radius-s:12px;--radius-m:16px;--radius:22px;--radius-l:28px;--label:11px;--wrap:1180px;--veil:0ms;
+  --radius-s:12px;--radius-m:16px;--radius:22px;--radius-l:28px;--label:11px;--wrap:1180px;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--canvas)}
-body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:16px;line-height:1.6;font-feature-settings:"kern" 1,"liga" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;opacity:0;transition:opacity .9s var(--ease-soft)}
-body.ready,body.veiling{opacity:1}
-@keyframes bodyFallback{to{opacity:1}}
-body{animation:bodyFallback 0s linear 2.5s forwards}
-body.ready,body.veiling{animation:none}
-body.veiling{transition:none}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:16px;line-height:1.6;font-feature-settings:"kern" 1,"liga" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
 img,svg{max-width:100%;display:block}
@@ -72,41 +67,11 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .drop{animation-play-state:paused}
 .gift:not(.live) .ticket,.book:not(.live) .ticket,.contact:not(.live) .pin::after{animation-play-state:paused}
 
-/* ---------- the mark draws itself (veil, ticket, footer) ---------- */
+/* ---------- the mark draws itself (ticket, footer) ---------- */
 .mark .ring,.mark .wave{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 700ms var(--ease) 100ms}
 .mark .wave{transition-duration:600ms;transition-delay:450ms}
 .mark .ring{transform:rotate(-90deg);transform-origin:50% 50%}
 .mark .num{transition:opacity 350ms var(--ease-soft) 650ms}
-.veil:not(.drawn) .mark .ring,.veil:not(.drawn) .mark .wave,.rv:not(.in) .mark .ring,.rv:not(.in) .mark .wave{stroke-dashoffset:1}
-.veil:not(.drawn) .mark .num,.rv:not(.in) .mark .num{opacity:0}
-.veil{position:fixed;inset:0;z-index:300;pointer-events:none;display:none}
-body.veiling .veil{display:block}
-.veil.gone{display:none!important}
-.veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 52%;transition:transform 1300ms cubic-bezier(.6,0,.2,1),opacity 800ms var(--ease-soft) 380ms}
-.veil.through .scene{transform:scale(3.8);opacity:0}
-.veil .door{--dh:min(84vh,136vw);position:absolute;left:50%;top:50%;width:calc(var(--dh)*.58);height:var(--dh);margin:calc(var(--dh)*-.5) 0 0 calc(var(--dh)*-.29);perspective:1400px;perspective-origin:50% 45%}
-.veil .doorway{position:absolute;inset:0;background:#0a0d0b;box-shadow:0 0 0 200vmax #e4dcd7;transition:background 700ms var(--ease-soft)}
-.veil.lift .doorway{background:transparent}
-.veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 900ms var(--ease-soft) 250ms;pointer-events:none}
-.veil.lift .doorway::before{opacity:1}
-.veil .frame{position:absolute;inset:calc(var(--dh)*-.05) calc(var(--dh)*-.055) 0;border:solid #3a4c41;border-width:calc(var(--dh)*.05) calc(var(--dh)*.055) 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),inset 0 0 0 calc(var(--dh)*.012) #2c3b32,inset 0 0 0 calc(var(--dh)*.014) rgba(255,255,255,.07),0 0 0 1px rgba(0,0,0,.25),0 24px 60px rgba(0,0,0,.28);pointer-events:none}
-.veil .sill{position:absolute;left:calc(var(--dh)*-.055);right:calc(var(--dh)*-.055);top:100%;height:5vh;background:linear-gradient(#5a5652,#3f3c39);box-shadow:0 30px 40px rgba(0,0,0,.18)}
-.veil .leaf{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(180deg,#34453b,#2d3d33 60%,#293830);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);backface-visibility:hidden;transition:transform 1150ms cubic-bezier(.65,0,.25,1) 60ms}
-.veil .leaf.l{left:0;transform-origin:left center;border-right:1px solid rgba(0,0,0,.45)}
-.veil .leaf.r{right:0;transform-origin:right center;border-left:1px solid rgba(255,255,255,.04);transition-delay:140ms}
-.veil.lift .leaf.l{transform:rotateY(104deg)}
-.veil.lift .leaf.r{transform:rotateY(-104deg)}
-.veil .p{position:absolute;left:15%;right:15%;border:1px solid rgba(255,255,255,.10);box-shadow:inset 0 0 0 calc(var(--dh)*.006) rgba(0,0,0,.28),inset 0 0 0 calc(var(--dh)*.009) rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.04))}
-.veil .p.t{top:5.5%;height:47%}
-.veil .p.m{top:65%;height:8%}
-.veil .p.b{top:78.5%;height:15.5%}
-.veil .p.b2{display:none}
-.veil .knock{position:absolute;left:50%;top:59%;width:calc(var(--dh)*.075);height:calc(var(--dh)*.075);margin-left:calc(var(--dh)*-.0375);border-radius:50%;border:calc(var(--dh)*.007) solid #c9a45c;box-shadow:0 2px 3px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,255,255,.35)}
-.veil .knock::before{content:"";position:absolute;left:50%;top:calc(var(--dh)*-.028);width:calc(var(--dh)*.032);height:calc(var(--dh)*.032);margin-left:calc(var(--dh)*-.016);border-radius:50%;background:radial-gradient(circle at 35% 35%,#eed49a,#b8924a 70%);box-shadow:0 2px 3px rgba(0,0,0,.45)}
-.veil .handle{position:absolute;left:8%;top:60%;width:calc(var(--dh)*.02);height:calc(var(--dh)*.12);border-radius:999px;background:linear-gradient(90deg,#b8924a,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
-.veil .handle::after{content:"";position:absolute;left:0;top:22%;width:calc(var(--dh)*.05);height:calc(var(--dh)*.014);border-radius:999px;background:linear-gradient(180deg,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
-.veil .mark{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;transform-origin:50% 50%;transition:transform 850ms cubic-bezier(.7,0,.2,1)}
-body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.veiling .nav .btn{opacity:0}
 .nav .name,.nav .links{transition:opacity 600ms var(--ease-soft)}
 .nav .btn{transition:opacity 600ms var(--ease-soft),transform .35s var(--ease),background .35s,border-color .35s,color .35s}
 
@@ -184,8 +149,7 @@ body.drawer-open{overflow:hidden}
 .today-line:has(.today:empty){display:none}
 .band[data-fx="drift"] .today-line{--kf:clamp(0,(var(--k,0) - .68)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
 .band[data-fx="rise"] .today-line{margin-top:14px}
-.hero-static .today-line{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
-body.open .hero-static .today-line{opacity:1;transform:none}
+.hero-static .today-line{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--i,0)*90ms)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;height:360vh;z-index:1}
@@ -195,11 +159,15 @@ body.open .hero-static .today-line{opacity:1;transform:none}
 .stage .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(8,10,9,0) 35%,rgba(8,10,9,.62) 100%)}
 .band{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 max(24px,calc((100% - var(--wrap)) / 2 + 24px));opacity:0;pointer-events:none;text-shadow:var(--tshadow);--k:0}
 .band.on{pointer-events:auto}
+/* úvodná kapitola sa vykreslí hneď, bez čakania na skript */
+.band[data-a="0"]{opacity:1}
+.band[data-a="0"] .inner{animation:heroRise 900ms var(--ease) both}
+@keyframes heroRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .band::before{content:"";position:absolute;left:-4%;top:-4%;width:64%;height:108%;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 70% 62% at 42% 50%,rgba(6,8,7,var(--scrim,.66)) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.66)) 46%,rgba(6,8,7,0) 76%)}
 .band .inner{position:relative;max-width:min(58%,720px)}
 .band .kicker{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
 .band .kicker::before{content:"";width:34px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 800ms var(--ease)}
-body.open .band .kicker::before,body.open .hero-static .kicker::before{transform:scaleX(1);transition-delay:calc(var(--veil,0ms) + 200ms)}
+body.open .band .kicker::before,body.open .hero-static .kicker::before{transform:scaleX(1);transition-delay:200ms}
 .band h1,.band h2,.band .line{font-family:var(--display);font-weight:400;letter-spacing:-.02em;line-height:1.02;margin:0}
 .band h1{font-size:clamp(52px,7.4vw,112px);max-width:9ch}
 .band h2{font-size:clamp(40px,5.8vw,86px);max-width:12ch}
@@ -245,8 +213,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .facts b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1;color:var(--accent-hover);white-space:nowrap}
 .facts span{font-family:var(--mono);font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 .band[data-fx="drift"] .facts{--kf:clamp(0,(var(--k,0) - .7)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
-.hero-static .facts{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
-body.open .hero-static .facts{opacity:1;transform:none}
+.hero-static .facts{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--i,0)*90ms)}
 
 /* static hero (two gates; strings identical in JS) */
 .hero-static{display:none;position:relative;z-index:1;min-height:100svh;padding:130px 0 60px;align-items:flex-end;overflow:hidden}
@@ -260,8 +227,7 @@ body.open .hero-static .facts{opacity:1;transform:none}
 .hero-static h1 em{font-style:italic;font-weight:300;color:var(--accent-hover)}
 .hero-static p{margin-top:18px;font-size:17px;color:#ddd8cc;max-width:34ch;text-shadow:var(--tshadow)}
 .hero-static .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-.hero-static .kicker,.hero-static h1,.hero-static p,.hero-static .cta{opacity:0;transform:translateY(18px);transition:opacity 1000ms var(--ease),transform 1000ms var(--ease);transition-delay:calc(var(--veil,0ms) + var(--i,0)*110ms)}
-body.open .hero-static :is(.kicker,h1,p,.cta){opacity:1;transform:none}
+.hero-static .kicker,.hero-static h1,.hero-static p,.hero-static .cta{animation:heroRise 900ms var(--ease) both;animation-delay:calc(var(--i,0)*90ms)}
 @media (max-height: 500px),(prefers-reduced-motion: reduce){
   .hero{display:none}
   .hero-static{display:flex}
@@ -773,15 +739,14 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .band .sub{font-size:15px}
 }
 
-/* ---------- reduced motion: final states, stopped drives, no veil ---------- */
+/* ---------- reduced motion: final states, stopped drives ---------- */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important;transition-delay:0s!important}
   body{opacity:1}
-  .veil{display:none!important}
   .rv .part{opacity:1;transform:none}
   .mark .ring,.mark .wave{stroke-dashoffset:0!important}
-  .mark .num,.rv:not(.in) .mark .num,.veil:not(.drawn) .mark .num,.nav .mark,.nav .name,.nav .links,.nav .btn{opacity:1}
+  .mark .num,.rv:not(.in) .mark .num,.nav .mark,.nav .name,.nav .links,.nav .btn{opacity:1}
 
   .hero-static :is(.kicker,h1,p,.cta,.facts){opacity:1;transform:none}
   .band .facts{opacity:1;transform:none}
@@ -1053,7 +1018,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
    TLAČ: cenník na papier
    ========================================================== */
 @media print{
-  nav,.drawer,.lang,.menu-btn,.tools,.finder,.mbar,.mbar-top,.to-top,.env,.grain,.divider,.veil,.stage,.scrim,
+  nav,.drawer,.lang,.menu-btn,.tools,.finder,.mbar,.mbar-top,.to-top,.env,.grain,.divider,.stage,.scrim,
   #poukaz,#ritual,#headspa,#preco,#salon,#tim,#galeria,#faq,#kontakt,.hero .cta,.hero .facts,
   .hero .today-line,.first-tip,.count,.no-hit,.lb,.scroll,canvas{display:none!important}
   .hero{min-height:0!important;height:auto!important;padding:0 0 10mm!important;position:static!important}
