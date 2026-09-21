@@ -88,6 +88,7 @@
     if (cur) cur.textContent = L.short;
     var lb = document.querySelector('.lang-btn');
     if (lb) lb.setAttribute('aria-label', L.short + ', jazyk stránky');
+    waiting(false);
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: code } }));
   }
 
@@ -138,9 +139,13 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { open(false); btn.focus(); } });
   }
 
+  /* Kým sa prvý preklad nasadí, úvod je skrytý. Text sa tak nevymení pred očami
+     návštevníka a stránka sa neposunie. Slovenčina čaká nula, je priamo v HTML. */
+  function waiting(v) { document.documentElement.classList.toggle('t-wait', !!v); }
+
   function start() {
     current = pick(); build();
-    if (current !== 'sk') set(current, false);
+    if (current !== 'sk') { waiting(true); setTimeout(function () { waiting(false); }, 1500); set(current, false); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 

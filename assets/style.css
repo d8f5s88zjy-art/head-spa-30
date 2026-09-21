@@ -159,6 +159,8 @@ body.drawer-open{overflow:hidden}
 .stage .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(8,10,9,0) 35%,rgba(8,10,9,.62) 100%)}
 .band{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 max(24px,calc((100% - var(--wrap)) / 2 + 24px));opacity:0;pointer-events:none;text-shadow:var(--tshadow);--k:0}
 .band.on{pointer-events:auto}
+/* pri cudzom jazyku čaká úvod na preklad, aby sa text nevymieňal pred očami */
+.t-wait .nav,.t-wait .band .inner,.t-wait .hero-static .wrap{visibility:hidden}
 /* úvodná kapitola sa vykreslí hneď, bez čakania na skript */
 .band[data-a="0"]{opacity:1}
 .band[data-a="0"] .inner{animation:heroRise 900ms var(--ease) both}
