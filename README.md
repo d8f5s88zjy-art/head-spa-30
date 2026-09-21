@@ -439,3 +439,19 @@ tu rozhoduje každý kilobajt a každá dlhá úloha. Čo sa spravilo:
 
 Merané na serveri s kompresiou (rovnako ako GitHub Pages): počítač 100,
 mobil 94 až 96 podľa toho, ako je stroj zaťažený.
+
+## Kam vedú tlačidlá Rezervovať
+
+Zatiaľ na formulár na stránke (`#rezervacia`), ktorý pošle správu cez WhatsApp.
+Predtým viedli do kalendára Salónu 30, ale ten Head Spa rituály neponúka, takže
+návštevník skončil na stránke, kde si to, na čo klikol, nevedel objednať.
+
+Keď bude vlastný rezervačný systém (Booqme) naplnený službami z
+`docs/booqme-sluzby.csv`, prehodenie je jedna zmena na dvoch miestach:
+
+1. v `index.html` v `<html ... data-booking="">` doplniť adresu kalendára
+2. tým istým odkazom nahradiť `href="#rezervacia"` pri tlačidlách, ktoré majú
+   `data-booking-link` (je ich tridsať)
+
+Skript potom drží oboje zhodné. Bez JavaScriptu tlačidlá fungujú tiež, lebo
+adresa je priamo v HTML.
