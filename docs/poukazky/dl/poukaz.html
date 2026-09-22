@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Darčekové poukážky HEAD SPA 30, formát DL</title>
+<style>
+@font-face{font-family:'Lora';font-style:normal;font-weight:300 700;src:url(../../../assets/fonts/Lora-display.woff2) format('woff2')}
+@font-face{font-family:'Lora';font-style:italic;font-weight:300 700;src:url(../../../assets/fonts/Lora-italic.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;src:url(../../../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:700;src:url(../../../assets/fonts/Manrope-700.woff2) format('woff2')}
+:root{--gold:#d9b56a;--gold-hi:#f0d28a;--gold-dk:#9c7a3a;--ink:#f2ede2;--bg:#0b100d}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#222}
+body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+/* Karta DL na šírku so spadávkou 3 mm: 216 × 105 mm, 1 mm = 5 px */
+.card{position:relative;width:1080px;height:525px;overflow:hidden;background:var(--bg);margin:0 auto}
+.card.print{margin:0}
+.bg{position:absolute;inset:0;background:
+  radial-gradient(60% 80% at 18% 20%,rgba(217,181,106,.16),transparent 60%),
+  radial-gradient(50% 70% at 82% 50%,rgba(140,195,182,.10),transparent 65%),
+  linear-gradient(120deg,#0e1511 0%,#0a0f0c 55%,#0b0f0d 100%)}
+.grain{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.6'/></svg>")}
+/* dvojitý zlatý rám vo vnútri spadávky */
+.frame{position:absolute;inset:27px;border:1.5px solid rgba(217,181,106,.75)}
+.frame2{position:absolute;inset:34px;border:.75px solid rgba(217,181,106,.35)}
+.corner{position:absolute;width:26px;height:26px;border-color:var(--gold-hi);border-style:solid;border-width:0}
+.corner.tl{left:22px;top:22px;border-left-width:2px;border-top-width:2px}
+.corner.tr{right:22px;top:22px;border-right-width:2px;border-top-width:2px}
+.corner.bl{left:22px;bottom:22px;border-left-width:2px;border-bottom-width:2px}
+.corner.br{right:22px;bottom:22px;border-right-width:2px;border-bottom-width:2px}
+/* fotografia vpravo v oblúkovom ráme */
+.photo{position:absolute;right:62px;top:52px;width:392px;height:352px;border-radius:196px 196px 22px 22px;overflow:hidden;box-shadow:0 0 0 2px rgba(217,181,106,.85),0 0 0 9px var(--bg),0 0 0 10px rgba(217,181,106,.35),0 30px 60px rgba(0,0,0,.6)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 40%);filter:saturate(.92) contrast(1.04) brightness(.96)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,13,0) 55%,rgba(11,16,13,.55) 100%),linear-gradient(90deg,rgba(11,16,13,.25),transparent 30%)}
+/* pečať */
+.seal{position:absolute;right:44px;bottom:134px;width:118px;height:118px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f5dc9b,#d9b56a 55%,#9c7a3a 100%);box-shadow:0 0 0 4px var(--bg),0 0 0 5px rgba(217,181,106,.6),0 14px 30px rgba(0,0,0,.55);display:grid;place-items:center;color:#2a2110}
+.seal svg{width:118px;height:118px;position:absolute;inset:0}
+.seal .num{font-family:'Lora',serif;font-size:38px;line-height:1;position:relative;top:2px}
+.seal .num small{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:8px;letter-spacing:.28em;text-transform:uppercase;text-align:center;margin-top:4px}
+/* text vľavo */
+.txt{position:absolute;left:78px;top:58px;width:520px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand .mark{width:40px;height:40px;flex:none}
+.brand b{font-family:'Lora',serif;font-weight:500;font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.brand small{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-top:3px}
+.kind{margin-top:30px;line-height:.92}
+.kind .a{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:20px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink)}
+.kind .b{display:block;font-family:'Lora',serif;font-style:italic;font-weight:400;font-size:60px;letter-spacing:.01em;color:var(--gold-hi);margin-top:6px;text-shadow:0 2px 18px rgba(240,210,138,.25)}
+.rule{display:flex;align-items:center;gap:14px;margin-top:20px;font-family:'Lora',serif;font-weight:500;font-size:17px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.rule::before,.rule::after{content:"";height:1px;width:46px;background:linear-gradient(90deg,transparent,var(--gold))}
+.rule::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.cat{margin-top:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.36em;text-transform:uppercase;color:rgba(242,237,226,.72)}
+.lede{margin-top:16px;font-size:12.5px;line-height:1.55;color:rgba(242,237,226,.78);max-width:420px}
+/* polia na vyplnenie */
+.fields{position:absolute;left:78px;right:78px;bottom:64px;display:grid;grid-template-columns:1.25fr .9fr .9fr 1fr .8fr;gap:16px}
+.f{font-family:'Manrope',sans-serif;font-weight:700;font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.f span{display:block;margin-top:8px;height:22px;border-radius:4px;background:linear-gradient(180deg,rgba(242,237,226,.94),rgba(226,218,200,.94));box-shadow:inset 0 0 0 1px rgba(217,181,106,.6)}
+.foot{position:absolute;left:78px;right:78px;bottom:40px;display:flex;justify-content:space-between;font-family:'Manrope',sans-serif;font-weight:700;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(217,181,106,.85)}
+/* stuha okolo ľavého horného rohu s mašľou */
+.bow{position:absolute;left:0;top:0;width:190px;height:190px}
+/* rub */
+.back .txt{width:560px;top:70px}
+.back h2{font-family:'Lora',serif;font-weight:500;font-size:26px;letter-spacing:.02em;margin-top:26px}
+.back ol{margin-top:14px;padding-left:18px;font-size:12px;line-height:1.7;color:rgba(242,237,226,.8)}
+.back li+li{margin-top:4px}
+.back .list{margin-top:20px;font-size:11px;line-height:1.6;color:rgba(242,237,226,.66);max-width:470px}
+.back .qr{position:absolute;right:86px;top:96px;width:172px;height:172px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 0 0 2px rgba(217,181,106,.7),0 0 0 8px var(--bg),0 0 0 9px rgba(217,181,106,.3)}
+.back .qr img{width:100%;height:100%;display:block}
+.back .qrl{position:absolute;right:66px;top:290px;width:212px;text-align:center;font-family:'Manrope',sans-serif;font-weight:700;font-size:7.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);line-height:1.9}
+.back .qrl b{display:block;font-family:'Lora',serif;font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:none;color:var(--ink)}
+</style>
+</head>
+<body>
+<!--CARDS-->
+</body>
+</html>
