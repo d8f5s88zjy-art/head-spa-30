@@ -4,7 +4,7 @@ Nie tisíc odkazov, ale tie, ktoré sa v praxi naozaj používajú. Pri každom 
 licencia, aby bolo jasné, čo sa dá použiť komerčne.
 
 ## Písma
-- Google Fonts, fonts.google.com, otvorené licencie (OFL, Apache); Fraunces a Manrope z tohto webu sú odtiaľ
+- Google Fonts, fonts.google.com, otvorené licencie (OFL, Apache); Lora a Manrope z tohto webu sú odtiaľ
 - Fontshare, fontshare.com, bezplatné písma od Indian Type Foundry (ITF Free Font License)
 - Fontsource, fontsource.org, tie isté písma ako balíčky na vlastné hostovanie
 

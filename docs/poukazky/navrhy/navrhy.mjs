@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 const ROOT = path.dirname(new URL(import.meta.url).pathname);
 
-const mark = (c = '#f2ede2') => `<svg class="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="21" fill="${c}">30</text></svg>`;
+const mark = (c = '#f2ede2') => `<svg class="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="33" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="21" fill="${c}">30</text></svg>`;
 
 // miska s vodou, rytina
 const bowl = (cls, stroke = '#8cc3b6', gold = '#d9b56a') => `<svg class="art ${cls}" viewBox="0 0 600 600" fill="none">
@@ -39,7 +39,7 @@ const guilloche = `<svg class="guilloche" viewBox="0 0 1748 1240" fill="none">
 const seal = `<svg class="seal" viewBox="0 0 150 150" fill="none">
   ${rosette(75, 75, 56, 16, 5, 6, '#d9b56a', .45)}
   <circle cx="75" cy="75" r="40" fill="none" stroke="#d9b56a" stroke-opacity=".55" stroke-width="1"/>
-  <text x="75" y="84" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="30" fill="#ecd08f" fill-opacity=".9">30</text></svg>`;
+  <text x="75" y="84" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="30" fill="#ecd08f" fill-opacity=".9">30</text></svg>`;
 
 const ZNACKY = {
   hs: {

@@ -11,7 +11,7 @@ Web sa nemá cítiť ako zoznam sekcií. Má pôsobiť ako jedna pokojná cesta 
 - tmavá lesná zelená a čierna ako priestor
 - 24K zlatá iba ako vzácny akcent, nie plošná dekorácia
 - vodová tyrkysová iba ako sekundárny pohybový signál
-- Fraunces = rituál, atmosféra, editoriálnosť
+- Lora = rituál, atmosféra, editoriálnosť
 - Manrope = informácia, cena, rezervácia, navigácia
 - žiadne purple gradients, neon SaaS glow, náhodný glassmorphism ani generické 3-card patterny
 

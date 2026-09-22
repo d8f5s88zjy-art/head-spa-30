@@ -21,7 +21,7 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Šesť jazykov: každý nový text potrebuje kľúč v `assets/i18n/*.json` (kľúč je slovenský text).
 
 ## Technika
-- Dve písma: Fraunces (nadpisy, zlatá kurzíva ako jediný akcent) a Manrope (text aj štítky).
+- Dve písma: Lora (nadpisy, zlatá kurzíva ako jediný akcent, čitateľná aj v malých veľkostiach) a Manrope (text aj štítky).
   Písma sú vyrezané v `assets/fonts/`, nepridávaj ďalšie.
 - Zdrojové súbory: `assets/style.css`, `assets/app.js`, `assets/i18n.js` a prémiová vrstva V9
   `assets/premium-v9.css` + `assets/premium-v9.js` (načítava sa po základných súboroch, nič
