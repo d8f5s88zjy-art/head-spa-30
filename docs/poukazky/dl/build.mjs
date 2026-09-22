@@ -43,13 +43,13 @@ const branch = `<svg class="branch" viewBox="0 0 110 170" fill="none" stroke="#d
 const seal = `<div class="seal"><svg viewBox="0 0 118 118"><defs><path id="c" d="M59 59 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs><circle cx="59" cy="59" r="50" fill="none" stroke="#2a2110" stroke-opacity=".45" stroke-width=".8"/><text font-family="Manrope,sans-serif" font-weight="700" font-size="8.2" letter-spacing="2.6" fill="#2a2110"><textPath href="#c" startOffset="2%">PRE KRAJŠÍ DEŇ · HEAD SPA 30 · PRE TEBA ·</textPath></text></svg><div class="num">30<small>Salón 30</small></div></div>`;
 
 const VARIANTY = [
-  { id: 'head-spa', foto: 'foto/head-spa.jpg', pos: '50% 45%', rule: 'Head Spa 30', cat: 'Relax · Obnova · Harmónia',
+  { id: 'head-spa', foto: 'foto/head-spa.jpg', pos: '50% 42%', rule: 'Head Spa 30', cat: 'Relax · Obnova · Harmónia',
     lede: 'Dopraj sebe alebo svojim blízkym chvíľu hlbokého relaxu a starostlivosti o pokožku hlavy.' },
   { id: 'pansky', foto: 'foto/pansky.jpg', pos: '55% 60%', rule: 'Gentlemen Head Spa', cat: 'Pokoj · Starostlivosť · Elegancia',
     lede: 'Rituály pripravené pre mužov: teplá voda, hĺbkové čistenie a masáž bez zhonu.' },
   { id: 'detsky', foto: 'foto/detsky.jpg', pos: '60% 40%', rule: 'Little Fruit Head Spa', cat: 'Hravo · Jemne · S úsmevom',
     lede: 'Hravý a jemný rituál pripravený pre deti: voňavo, pomaly a s úsmevom.' },
-  { id: 'pre-dvoch', foto: 'foto/pre-dvoch.jpg', pos: '50% 35%', rule: 'Rituál pre dvoch', cat: 'Spolu · Teplo · Ticho',
+  { id: 'pre-dvoch', foto: 'foto/pre-dvoch.jpg', pos: '50% 58%', rule: 'Rituál pre dvoch', cat: 'Spolu · Teplo · Ticho',
     lede: 'Niektoré chvíle sú krajšie, keď ich prežívame spolu. Dva rituály vedľa seba.' },
   { id: 'chodidla', foto: 'foto/chodidla.jpg', pos: '50% 55%', rule: 'Rituál pre chodidlá', cat: 'Teplo · Vôňa · Dotyk',
     lede: 'Teplý kúpeľ, peeling, maska a masáž chodidiel pre pocit ľahkosti a pokoja.' },

@@ -7,7 +7,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
 - `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
-- `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
+- `assets/img/dvere.jpg` a `assets/img/galeria/` – fotografie salónu pre galériu (dvere, Budha, miestnosť, vodný oblúk, uteráky, lôžko)
 - `assets/fonts/` – dve písma: Lora (500 a kurzíva 400) na nadpisy, Manrope (400 a 700) na text aj štítky, hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
@@ -136,7 +136,10 @@ Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť 
 
 ## Galéria
 
-Sekcia Galéria je mozaika šiestich dlaždíc: fotografia dverí, makro detail zlatých kruhov (výrez z tej istej fotky), tri kreslené zábery (teplá voda, para, zlaté svetlo) a jedna typografická dlaždica. Kreslené zábery sa jemne hýbu, ale len keď sú na obrazovke, a stoja pri zapnutom obmedzení pohybu aj po 45 sekundách nečinnosti. Fotografia sa dá zväčšiť kliknutím.
+Sekcia Galéria je mozaika šiestich fotografií salónu: zelené dvere, Budha so sviečkami,
+miestnosť s dvoma lôžkami, vodný oblúk, pripravené uteráky a lôžko s orchideou.
+Obrázky sú v `assets/img/galeria/` v troch šírkach (480, 800, 1200 px) ako AVIF, WebP a JPG,
+zdroje v plnej veľkosti sú `*.jpg` bez prípony šírky. Každá fotka sa dá otvoriť vo zväčšení.
 
 Výmena kreslených záberov za skutočné fotografie nevyžaduje zásah do kódu. Stačí uložiť súbor do `assets/img/galeria/` s presným názvom a spustiť `python3 scratchpad/build.py`:
 

@@ -9,10 +9,10 @@ tlačové PDF má spadávku 3 mm (216 × 105 mm).
 
 | Súbor | Pre koho | Fotografia |
 | --- | --- | --- |
-| `poukaz-head-spa` | Head Spa rituály (Classic, Relax, Harmony, Hĺbkový, Beauty, Fruit & Fresh, Signature) | žena pri masáži hlavy |
+| `poukaz-head-spa` | Head Spa rituály (Classic, Relax, Harmony, Hĺbkový, Beauty, Fruit & Fresh, Signature) | vlastná fotka: vodný oblúk v salóne |
 | `poukaz-pansky` | Gentlemen rituály | muž pri umývadle u barbera |
 | `poukaz-detsky` | Little Fruit Head Spa | dieťa v kresle |
-| `poukaz-pre-dvoch` | Spoločný Head Spa rituál, Spoločný rituál pod hviezdami | dvojica pri masáži |
+| `poukaz-pre-dvoch` | Spoločný Head Spa rituál, Spoločný rituál pod hviezdami | vlastná fotka: miestnosť s dvoma lôžkami |
 | `poukaz-chodidla` | Klasický, Ovocný a bylinkový, Zlatý rituál 24K | masáž chodidiel |
 | `poukaz-back` | rub pre všetky: ako poukážku využiť, platnosť 365 dní, QR kód do online kalendára | |
 
@@ -25,8 +25,9 @@ konkrétny rituál, nie na sumu, preto je prvé pole Rituál.
   1,4 : 1 bez polí (2352 × 1680 px) pre Booqme a sociálne siete, lebo obchod obrázok oreže na takmer štvorec.
 - `dl/png/` a `dl/pdf/` sa generujú (`node dl/build.mjs`), do repozitára sa neukladajú.
   PDF `poukaz-vsetky.pdf` má všetkých päť líc a rub, jednotlivé PDF majú líce a rub.
-- `dl/foto/` fotografie z Pexels, autori v `dl/FOTKY.md`. Keď budú vlastné fotky zo
-  salónu, nahradia sa pod rovnakými názvami a spustí sa build.
+- `dl/foto/` fotografie: Head Spa a pre dvoch sú vlastné fotky salónu, pánska, detská a
+  chodidlá sú z Pexels (autori v `dl/FOTKY.md`), kým salón nenafotí ľudí. Nová fotka sa
+  uloží pod rovnakým názvom a spustí sa build.
 
 ## Booqme
 
