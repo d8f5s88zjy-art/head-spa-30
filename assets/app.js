@@ -649,7 +649,7 @@
       });
       btn.addEventListener('pointerleave', () => { btn.style.setProperty('--mx', '0px'); btn.style.setProperty('--my', '0px'); });
     });
-    $$('.card,.scard,.whys li').forEach((el) => el.addEventListener('pointermove', (e) => {
+    $$('.card,.scard').forEach((el) => el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty('--lx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); el.style.setProperty('--ly', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
     }, { passive: true }));
@@ -676,10 +676,10 @@
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#headspa,#preco,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#rezervacia,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
   /* ============ the light is handed from room to room ============ */
   const scenes = $$('[data-scene]');
@@ -874,38 +874,6 @@
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* ============ filmové výroky: slová sa dvíhajú jedno po druhom, keď výrok príde do obrazu ============
-     Pôvodné textové uzly zostávajú v pamäti (preklad do nich zapisuje), po zmene jazyka sa vrátia a rozdelia znova. */
-  idle(function vyroky() {
-    const qs = $$('.pull .q');
-    function split(q) {
-      const items = []; let i = 0;
-      const walk = (n) => {
-        if (n.nodeType === 3) {
-          if (!n.nodeValue.trim()) return;
-          const spans = [], frag = document.createDocumentFragment();
-          n.nodeValue.split(/(\s+)/).forEach((part) => {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { const t = document.createTextNode(part); spans.push(t); frag.appendChild(t); return; }
-            const w = document.createElement('span'); w.className = 'w'; w.style.setProperty('--i', i++);
-            const c = document.createElement('span'); c.className = 'c'; c.textContent = part; w.appendChild(c);
-            spans.push(w); frag.appendChild(w);
-          });
-          n.parentNode.replaceChild(frag, n); items.push({ n, spans });
-        } else if (n.nodeType === 1 && !n.classList.contains('w')) [...n.childNodes].forEach(walk);
-      };
-      [...q.childNodes].forEach(walk);
-      q._split = items;
-    }
-    function restore(q) {
-      (q._split || []).forEach(({ n, spans }) => { spans[0].parentNode.insertBefore(n, spans[0]); spans.forEach((x) => x.remove()); });
-      q._split = null;
-    }
-    const first = () => qs.forEach(split);
-    if (document.documentElement.dataset.i18n === 'ready') first(); else document.addEventListener('i18nready', first, { once: true });
-    document.addEventListener('langchange', () => qs.forEach((q) => { restore(q); split(q); }));
-  });
-
   /* ============ faq ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');
@@ -952,21 +920,6 @@
   });
 
   /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
-  /* ============ karty rituálov na poukaz: ťuknutie vyberie rituál vo formulári nižšie ============ */
-  idle(function giftValues() {
-    const box = $('.gift-values'); if (!box) return;
-    const form = $('#vform'), sel = $('#v-ritual'); if (!form || !sel) return;
-    function sync() { $$('.gv', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.gift === sel.value))); }
-    box.addEventListener('click', (e) => {
-      const b = e.target.closest('.gv'); if (!b) return;
-      sel.value = b.dataset.gift;
-      sel.dispatchEvent(new Event('change', { bubbles: true }));
-      sync();
-      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    sel.addEventListener('change', sync);
-    sync();
-  });
 
   /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
      Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
@@ -1461,22 +1414,6 @@
       setTimeout(endVeil, 2200);
     }
   });
-
-  /* Pri tlači sa prehľad cien otvorí sám, inak by sa vytlačil zatvorený. */
-  idle(function tlacCennika() {
-    const pl = document.getElementById('prehlad-cien');
-    if (!pl) return;
-    let bolo = false;
-    const otvor = () => { bolo = pl.open; pl.open = true; };
-    const vrat = () => { pl.open = bolo; };
-    window.addEventListener('beforeprint', otvor);
-    window.addEventListener('afterprint', vrat);
-    if (window.matchMedia) {
-      const mq = window.matchMedia('print');
-      if (mq.addEventListener) mq.addEventListener('change', (e) => (e.matches ? otvor() : vrat()));
-    }
-  });
-
 
   /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
   idle(function spatHore() {

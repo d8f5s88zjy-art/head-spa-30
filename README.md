@@ -42,10 +42,9 @@ Instagram a na tento web.
 
 ## Darčekové poukazy ako predajná sekcia
 
-Nad objednávkovým formulárom je šesť kariet hodnôt: 50, 70, 100, 149, 249 eur
-a konkrétny rituál. Každá hovorí, čo za tie peniaze obdarovaný dostane, podľa
-skutočného cenníka. Ťuknutie kartu zvýrazní, vyplní hodnotu vo formulári nižšie
-a posunie na neho; pri konkrétnom rituále rovno otvorí zoznam sedemnástich.
+Sekcia Poukaz má nadpis, dve vety, tlačidlo do obchodu Booqme a formulár, v ktorom
+sa vyberá jeden zo sedemnástich rituálov. Vedľa formulára je náhľad poukazu, ktorý
+sa podľa výberu prekreslí. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 
@@ -74,10 +73,15 @@ JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
 
 ## Bez opakovania
 
-Sekcie Prečo k nám a Tím, dva z troch výrokov medzi sekciami, zoznamy Solo/Duo/Darček
-a Kedy príde vhod, mantra a tlačidlá Rezervovať mimo úvodu a kontaktu boli odstránené,
-lebo opakovali to, čo je inde na stránke. Rezervovať vedie z úvodu, z kariet rituálov,
-z kontaktu a zo spodnej lišty na telefóne.
+Zo stránky odišlo všetko, čo len opakovalo iné miesto: sekcie Prečo k nám, Tím
+a Čo je Head Spa (hovorila to isté ako Ako to prebieha), citáty medzi sekciami,
+mantra, zoznamy Solo/Duo/Darček a Kedy príde vhod, rýchly prehľad cien a dlaždice
+rituálov pri poukaze (tretí a štvrtý zoznam tých istých sedemnástich rituálov)
+a stĺpec Kontakt v pätičke (kontakt je hneď nad ňou). Rezervovať vedie z úvodu,
+z kariet rituálov, z kontaktu a zo spodnej lišty na telefóne.
+
+Karty rituálov sú na počítači v dvoch stĺpcoch, aby cenník nebol natiahnutý na
+celú šírku s prázdnym miestom vpravo. Na tablete a telefóne zostáva jeden stĺpec.
 
 ## Cenník bez poradcu a filtrov
 
@@ -85,20 +89,6 @@ Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Chodidlá)
 otázkami, filter podľa času a rozpočtu, číselný prehľad (17 rituálov, 40 až 120 minút,
 45 až 149 €) aj kadernícky cenník Salónu 30 boli odstránené: na stránke sú iba rituály
 a ceny HEAD SPA 30.
-
-## Citáty medzi sekciami
-
-Medzi sekcie pribudli tri tiché citáty (`section.pull`). Každý je veta, ktorá už
-na stránke je, prevzatá z obsahu konkrétneho rituálu, a rovnaká veta nesie
-aj sériu Instagram storiek, takže web a profil hovoria jedným hlasom:
-
-- `Záver patrí tichu.` z Prémiového Head Spa rituálu, za sekciou Ako to prebieha
-- `Tempo určuje pokoj, nie hodiny.` z Relaxačného Head Spa, za sekciou Prečo k nám
-- `Dve osoby. Jedna hviezdna obloha.` zo Spoločného rituálu pod hviezdami, za galériou
-
-Popisok pod citátom je odkaz na kartu toho rituálu v cenníku, takže citát nie je
-len ozdoba. Trieda je `pull`, nie `quote`, lebo `quote` už patrí odseku v sekcii
-Rituál a nesmie sa prepísať.
 
 ## Čo web robí sám
 
@@ -163,34 +153,6 @@ Ak sa hodiny zmenia, treba ich upraviť na všetkých týchto miestach naraz.
 Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologické vyšetrenie
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
-
-## Sekcia Tím
-
-Sekcia `#tim` je pripravená, ale zatiaľ prázdna. Obsahuje tri karty v stave
-„pripravujeme“: prerušovaný rámik, monogram 30 a text `Meno doplníme`.
-Web tak nikde netvrdí nič, čo nie je overené.
-
-Ako kartu vyplniť (jedna karta = jeden človek), v `index.html` v sekcii `#tim`:
-
-1. z `<article class="tcard part is-empty">` zmazať `is-empty`,
-2. `<h3 class="tname">` prepísať na meno,
-3. `<p class="trole">` prepísať na rolu, napríklad `Head Spa terapeutka · Salón 30`,
-4. `<p class="tbio">` prepísať na jednu vetu o tom, čo robí najradšej,
-5. celý `<div class="tface"> ... </div>` nahradiť fotografiou:
-
-```html
-<div class="tface"><img src="assets/img/tim-meno.jpg" alt="Meno, Head Spa terapeutka"
-     width="600" height="750" loading="lazy" decoding="async"></div>
-```
-
-Fotografie na výšku, minimálne 600 × 750 px, tvár v hornej tretine. Kariet môže
-byť ľubovoľný počet, mriežka sa prispôsobí sama (tri v rade na počítači, jedna
-pod druhou na mobile). Rovnaký návod je aj v komentári priamo nad sekciou.
-
-Keď pribudnú mená, treba ich pridať aj do prekladov: v `assets/i18n/<jazyk>.json`
-sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
-`Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
-sa neprekladá, stačí ho nechať bez kľúča.
 
 ## Typografia po slovensky
 
@@ -267,59 +229,18 @@ súboroch by nemali kľúč. Pri zmene jazyka sa dlaždice prekreslia.
 Odkaz na online kalendár je na jednom jedinom mieste, v bloku `Radšej kalendár?`
 v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa jedna adresa.
 
-## Rýchly prehľad cien a tlač
+## Tlač
 
-Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých sedemnástich
-rituálov: názov (odkaz na kartu), trvanie a cena, rozdelené podľa kategórií.
-Slúži tým, čo chcú len ceny, a zároveň je z neho tlačový cenník.
+`@media print` v `assets/style.css` skryje navigáciu, animácie a ostatné sekcie
+a vytlačí sa hlavička so značkou, karty rituálov v jednom stĺpci (názov, trvanie,
+cena, krátky popis) a pätička, dokopy dve strany A4.
 
-`@media print` v `assets/style.css` skryje navigáciu, animácie, karty rituálov
-aj ostatné sekcie a vytlačí sa hlavička so značkou, tabuľka a pätička s kontaktom,
-dokopy dve strany A4. `assets/app.js` pri tlači tabuľku sám otvorí
-(`beforeprint`), aby sa nevytlačila zatvorená.
+## Poukaz na konkrétny rituál
 
-Pri zmene ponuky treba tabuľku prepísať ručne rovnako ako karty, alebo ju
-vygenerovať z `data-min`, `data-price` a `.meta` kariet.
-
-## Hodnoty darčekových poukazov
-
-Rebríček je odvodený od cenníka, nie zvolený od oka: **50, 70, 100, 149 a 249 €**.
-Spodná hodnota presne pokryje najlacnejší rituál (50 €), horná aj ten najdrahší
-(Zlatý Head Spa rituál 24K pre dvoch za 249 €). Vyššie hodnoty zámerne nie sú,
-aby obdarovanému nezostal zostatok, ktorý nemá ako minúť.
-
-Sú to dva ručne udržiavané zoznamy v rôznych častiach `index.html`: hodnoty
-poukazu (`name="hodnota"`) a ceny rituálov (`data-price` na kartách). Keď sa
-rozídu, `assets/app.js` vypíše varovanie do konzoly prehliadača:
-
-```
-HEAD SPA 30: poukaz za 400 € presahuje najdrahší rituál (249 €).
-```
-
-Kontrola sa ozve len vtedy, keď je naozaj čo hlásiť. **Pri zmene cien rituálov
-preto treba prejsť aj hodnoty poukazov** a upraviť aj vetu pod nimi, ktorá obe
-čísla menuje, plus jej preklady v šiestich jazykových súboroch.
-
-
-## Výber podľa času a rozpočtu
-
-Popri filtri podľa kategórie sú nad zoznamom dva výbery, ktoré sa s kategóriou
-kombinujú: **Mám čas** (do 45, 60, 75 alebo 90 minút) a **Rozpočet**
-(do 60, 80, 100 alebo 149 €).
-
-Každá karta má `data-min` a `data-price`, takže sa filtruje priamo z hodnôt,
-nie z parsovania textu. Nadpis kategórie zmizne, keď v nej po obmedzení nič
-nezostane, a keď nezodpovedá nič, zobrazí sa vysvetlenie s návrhom, čo zmeniť.
-Tlačidlo Zrušiť obmedzenia sa objaví len vtedy, keď je naozaj čo rušiť.
-
-Riadok "Zobrazených N zo 17 rituálov" sa skladá až v prehliadači, preto má
-vlastné preklady v `assets/app.js` (`COUNT_WORDS`), rovnako ako text otváracích
-hodín. Po zmene jazyka sa prekreslí.
-
-Pozor pri úprave cien alebo trvaní: hodnoty v `data-min` a `data-price` musia
-sedieť s tým, čo je napísané v `.meta` karty, inak filter ukáže niečo iné,
-než karta tvrdí.
-
+Poukaz nie je na sumu, ale na jeden zo sedemnástich rituálov. Vo formulári sa
+rituál vyberá v `#v-ritual`, hodnota `option` nesie názov, trvanie a cenu a
+náhľad poukazu sa podľa výberu prekreslí. V Booqme je sedemnásť typov poukazov,
+jeden na rituál (`docs/booqme-poukazy.csv`).
 
 ## Ponuka: sedemnásť rituálov pre hlavu
 
@@ -332,8 +253,8 @@ Všetkých sedemnásť je z podkladov salónu (maily s obsahom rituálov). Ritu�
 sú tri a majú vlastnú kategóriu.
 
 Pri zmene ponuky treba prejsť aj miesta, kde je počet alebo rozpätie napísané
-slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, rýchly prehľad
-cien, výber rituálu v rezervácii a v poukaze, hodnoty poukazov, `priceRange`
+slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, výber rituálu
+v rezervácii a v poukaze, `priceRange`
 a ponuky v štruktúrovaných dátach, odpovede v otázkach, meta popisy a preklady.
 
 ## Jazyky

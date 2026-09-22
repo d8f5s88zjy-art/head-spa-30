@@ -369,6 +369,8 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .cat.in::after{transform:scaleX(1)}
 .cat.hidden,.card.hidden{display:none}
 .list{display:grid;gap:10px}
+/* Na širokej obrazovke idú karty rituálov v dvoch stĺpcoch, aby zoznam nebol natiahnutý */
+@media (min-width:901px){.list{grid-template-columns:1fr 1fr;gap:14px;align-items:start}.list .cat{grid-column:1/-1}.card{grid-template-columns:1fr auto;gap:14px 18px;padding:24px 26px}.card .glyph{display:none}.card .actions,.card .panel{grid-column:1/3}.card .desc{max-width:none}}
 .card{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:22px;padding:26px 28px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,rgba(25,34,25,.75),rgba(19,26,21,.85));transition:border-color .4s,transform .5s var(--ease),box-shadow .5s var(--ease)}
 .card:hover{border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 24px 60px rgba(0,0,0,.3)}
 .card.featured{border-color:var(--line-strong);background:radial-gradient(circle at 90% 10%,rgba(217,181,106,.14),transparent 30%),linear-gradient(160deg,rgba(29,40,29,.9),rgba(19,26,21,.9))}
@@ -517,22 +519,15 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 
 /* why: four facts, one grid, no cards for the sake of cards */
 .whys{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:54px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.whys li{position:relative;padding:30px 26px 32px;background:linear-gradient(170deg,rgba(25,34,25,.7),rgba(14,19,16,.9));transition:background .5s}
-.whys li::after{content:"";position:absolute;left:26px;right:26px;top:0;height:1px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity .5s}
-.whys li:hover{background:linear-gradient(170deg,rgba(33,45,33,.85),rgba(16,22,18,.95))}
-.whys li:hover::after{opacity:1}
+
 .wn{display:block;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;color:var(--accent)}
-.whys h3{font-family:var(--display);font-weight:400;font-size:23px;line-height:1.15;margin:14px 0 10px;letter-spacing:-.01em}
-.whys p{color:var(--text-secondary);font-size:14.5px;line-height:1.65}
-.whys.three{grid-template-columns:repeat(3,1fr)}
+
 .about .sub-head{margin-top:64px}
 .about .sub-head .h3{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.01em;margin-top:10px}
 .about .sub-head+.whys{margin-top:26px}
-.mantra{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px;padding-top:34px;border-top:1px solid var(--line)}
-.mantra p{font-family:var(--display);font-size:clamp(22px,2vw,28px);line-height:1.25;color:var(--text-secondary)}
-.mantra em{font-style:italic;font-weight:300;color:var(--accent-hover)}
+
 .gift-occ{margin:16px 0 22px;color:var(--text-secondary);font-size:15px;line-height:1.65}
-.why-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+
 .map{margin-top:50px}
 .map .part{position:relative;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);aspect-ratio:21/9}
 .map .part::before{content:"Mostná 226/30 · Nitra";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
@@ -638,7 +633,7 @@ body.idle .shot.word .frame::before{animation-play-state:paused}
 
 /* footer */
 footer{position:relative;z-index:1;padding:50px 0 40px;border-top:1px solid var(--line);background:var(--canvas)}
-footer .grid{display:grid;grid-template-columns:1.3fr .8fr .8fr .8fr;gap:30px}
+footer .grid{display:grid;grid-template-columns:1.3fr .8fr .8fr;gap:30px}
 footer p{color:var(--text-tertiary);font-size:13px;line-height:1.7;max-width:36ch;margin-top:14px}
 footer h4{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
 footer .col a,footer .col span{display:block;color:var(--text-secondary);font-size:13.5px;line-height:2;transition:color .3s}
@@ -666,7 +661,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   section{padding:90px 0}
   .links{display:none}
   .menu-btn{display:block}
-  .whys{grid-template-columns:1fr 1fr}
+
   .map .part{aspect-ratio:16/10}
   .ritual .grid,.faq .grid,.contact .box,.head{grid-template-columns:1fr;gap:34px}
   .ritual .sticky,.faq .sticky{position:static}
@@ -724,10 +719,9 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .ticket{transform:none;animation:none;min-height:240px}
   .faq-q{font-size:18px}
   .contact{padding:80px 0 96px}
-  .whys,.whys.three{grid-template-columns:1fr}
-  .mantra{grid-template-columns:1fr;gap:14px;margin-top:44px}
+
   .about .sub-head{margin-top:44px}
-  .whys li{padding:24px 20px 26px}
+
   .map .part{aspect-ratio:4/3}
   .nav .btn{display:none}
   .menu-btn{display:block}
@@ -1041,47 +1035,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   transition:color .3s,border-color .3s}
 .first-tip a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
 
-/* ==========================================================
-   RÝCHLY PREHĽAD CIEN
-   ========================================================== */
 .pricelist{margin-top:38px;border:1px solid var(--line);border-radius:var(--radius);
   background:linear-gradient(165deg,rgba(25,34,25,.55),rgba(14,19,16,.85));overflow:hidden}
-.pricelist summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
-  padding:22px 26px;transition:background .3s var(--ease)}
-.pricelist summary::-webkit-details-marker{display:none}
-.pricelist summary::after{content:"";margin-left:auto;width:11px;height:11px;flex:0 0 auto;align-self:center;
-  border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg) translateY(-2px);
-  transition:transform .35s var(--ease)}
-.pricelist[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
-.pricelist summary:hover{background:rgba(217,181,106,.06)}
-.pricelist summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
-.pricelist summary b{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:-.01em}
-.pricelist summary span{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.pricelist table{width:100%;border-collapse:collapse;font-size:15px}
-.pricelist thead th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--text-tertiary);text-align:left;font-weight:400;padding:10px 26px;border-top:1px solid var(--line)}
-.pricelist thead th:nth-child(2),.pricelist tbody td:first-of-type{text-align:right;white-space:nowrap}
-.pricelist thead th:last-child,.pricelist tbody td:last-child{text-align:right;white-space:nowrap}
-.pricelist .pl-cat th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);text-align:left;font-weight:400;padding:18px 26px 8px}
-.pricelist tbody tr:not(.pl-cat){border-top:1px solid var(--line)}
-.pricelist tbody th{font-weight:400;text-align:left;padding:7px 26px;color:var(--text-secondary)}
-.pricelist tbody td{padding:12px 26px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
-.pricelist tbody td:last-child{font-family:var(--mono);font-weight:400;color:var(--text-primary)}
-.pricelist tbody a{display:inline-block;padding:5px 0;color:var(--text-primary);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
-.pricelist tbody a:hover{color:var(--accent-hover);border-bottom-color:var(--line-strong)}
-.pricelist tbody tr:not(.pl-cat):hover td,.pricelist tbody tr:not(.pl-cat):hover th{color:var(--text-primary)}
-.pl-note{padding:16px 26px 22px;font-size:13px;line-height:1.6;color:var(--text-tertiary)}
-@media (max-width:640px){
-  .pricelist summary{padding:18px 18px}
-  .pricelist thead{display:none}
-  .pricelist tbody th,.pricelist tbody td,.pricelist .pl-cat th{padding-left:18px;padding-right:18px}
-  .pricelist tbody tr:not(.pl-cat){display:grid;grid-template-columns:1fr auto;row-gap:2px}
-  .pricelist tbody tr:not(.pl-cat) th{grid-column:1/-1;padding-bottom:2px;color:var(--text-primary)}
-  .pricelist tbody td{padding-top:0;padding-bottom:14px;font-size:13.5px}
-  .pricelist tbody td:last-child{text-align:right}
-  .pl-note{padding:14px 18px 20px}
-}
 
 /* ==========================================================
    TLAČ: cenník na papier
@@ -1105,7 +1060,11 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .card,.panel{break-inside:avoid}
   .card,.panel,.pricelist{background:#fff!important;border-color:#ccc!important}
   .pricelist tbody{break-inside:avoid}
-  .card{display:none!important}
+  /* Bez tabuľky sa tlačia karty rituálov v jednom stĺpci, bez tlačidiel a rozbaľovacieho obsahu */
+  .card .actions,.card .glyph,.card .panel{display:none!important}
+  .list{grid-template-columns:1fr!important;gap:0!important}
+  .card{grid-template-columns:1fr auto!important;gap:2mm 8mm!important;padding:3mm 0!important;border:0!important;border-bottom:1px solid #ccc!important;border-radius:0!important}
+  .card h3,.card .meta strong,.card .meta span,.card .desc,.card .tag,.card .mini,.cat,.cat b{color:#111!important}
   .pricelist{display:block!important;margin:0;border:0}
   .pricelist summary{display:none}
   .pricelist table{font-size:12pt}
@@ -1113,7 +1072,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .pricelist .pl-cat th{color:#111!important;padding:14px 0 4px;border-bottom:1px solid #999}
   .pricelist tbody a{color:#111!important;border:0}
   .h2,.h1,h1,h2,h3{color:#111!important}
-  .kicker,.lede,.note,.pl-note{color:#333!important}
+  .kicker,.lede,.note{color:#333!important}
   a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#555}
 }
 
@@ -1152,19 +1111,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .pull{position:relative;min-height:72vh;min-height:72svh;display:flex;align-items:center;padding:96px 0;background:var(--canvas);overflow:hidden}
 /* filmový výrok: jemná zlatá mriežka a tieň po okrajoch, text sa dvíha slovo po slove */
 .pull::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:84px;height:1px;background:var(--line-strong)}
-.pull .wrap{position:relative;z-index:1}
-.pull .q .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .04em;margin:0 -.04em}
-.pull .q .w .c{display:inline-block;transform:translateY(112%);transition:transform 900ms var(--ease);transition-delay:calc(var(--i,0)*70ms)}
-.pull.in .q .w .c{transform:none}
-.pull .q-src{opacity:0;transform:translateY(8px);transition:opacity .8s var(--ease) .6s,transform .8s var(--ease) .6s}
-.pull.in .q-src{opacity:1;transform:none}
-.pull .q-in{max-width:1100px;margin:0 auto;text-align:center}
-.pull .q{font-family:var(--display);font-weight:400;font-size:clamp(38px,6.2vw,92px);line-height:1.06;letter-spacing:-.02em;color:var(--text-primary);text-wrap:balance}
-.pull .q em{font-style:italic;font-weight:300;color:var(--accent-hover)}
-.pull .q-src{margin-top:24px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.pull .q-src a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px;transition:color .3s,border-color .3s}
-.pull .q-src a:hover{color:var(--accent-hover);border-color:var(--line-strong)}
-@media (max-width:640px){.pull{min-height:58svh;padding:64px 0}.pull .q{font-size:clamp(34px,10.5vw,44px)}.pull .q-src{letter-spacing:.1em}}
 
 /* ---------- poradca: tri otázky nad cenníkom ---------- */
 .advisor{margin:0 0 30px;padding:30px 32px 32px;border:1px solid var(--line);border-radius:var(--radius-m);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.35))}
@@ -1191,14 +1137,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 
 /* ---------- hodnoty poukazu: karta miesto riadku v zozname ---------- */
 .gift-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:34px 0 8px}
-.gv{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:20px 22px 22px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.3));color:inherit;font:inherit;cursor:pointer;transition:border-color .3s,transform .3s var(--ease),background .3s}
-.gv:hover{border-color:var(--line-strong);transform:translateY(-3px)}
-.gv[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-muted)}
-.gv:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.gv b{font-family:var(--display);font-weight:400;font-size:34px;line-height:1;letter-spacing:-.01em;color:var(--accent-hover)}
-.gv.gv-r b{font-size:22px;line-height:1.15}
-.gv span{font-size:13.5px;line-height:1.5;color:var(--text-secondary)}
-@media (max-width:640px){.gift-values{grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}.gv{padding:14px 14px 15px;gap:6px}.gv b{font-size:28px}.gv.gv-r b{font-size:17px;line-height:1.2}.gv span{font-size:12.5px}}
 
 /* ---------- postup rituálu: číslovaný sled namiesto steny textu ---------- */
 .card .panel ol{gap:0 28px}
@@ -1267,7 +1205,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 
 /* ---------- sekcie pod úvodom sa kreslia až keď sa k nim dostaneš ---------- */
 .site>section,.site>footer,.site>.pull,.site>.finale{content-visibility:auto;contain-intrinsic-size:auto 1400px}
-@media print{.site>section,.site>footer,.site>.pull,.site>.finale{content-visibility:visible}}
+@media print{.site>section,.site>footer{content-visibility:visible}}
 
 /* ---------- ponuka iného jazyka (len pre prehliadač s iným jazykom) ---------- */
 .lang-offer{position:fixed;left:50%;bottom:22px;z-index:120;display:flex;align-items:center;gap:10px;
@@ -1284,7 +1222,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .lang-offer.in{transform:translateY(0)}
   body[data-scene="hero"] .lang-offer{bottom:22px}}
 @media (prefers-reduced-motion:reduce){.lang-offer{transition:none}}
-
 
 /* ---------- pohyb viazaný na skrol (bez skriptu): obrázky galérie sa pri príchode zľahka približujú,
    nadpisy sekcií sa dvíhajú ---------- */
