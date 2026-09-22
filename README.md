@@ -136,9 +136,9 @@ Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť 
 
 ## Galéria
 
-Sekcia Galéria je mozaika desiatich fotografií salónu: zelené dvere, Budha so sviečkami,
+Sekcia Galéria je mozaika trinástich fotografií salónu: zelené dvere, Budha so sviečkami,
 miestnosť s dvoma lôžkami, vodný oblúk, komoda s uterákmi, lôžko s orchideou a druhý rad
-štyroch záberov (svietiaci nápis HEAD SPA, dve lôžka s vodou, nápis Spa relax, pripravené lôžka).
+štyroch záberov (svietiaci nápis HEAD SPA, dve lôžka so sviečkou, nápis Spa relax, pripravené lôžka) a tretí rad troch (lôžko pod nápisom, pohľad zhora, miestnosť pri oknách).
 Obrázky sú v `assets/img/galeria/` v troch šírkach (480, 800, 1200 px) ako AVIF, WebP a JPG,
 zdroje v plnej veľkosti sú `*.jpg` bez prípony šírky. Každá fotka sa dá otvoriť vo zväčšení.
 
