@@ -81,9 +81,9 @@ z kontaktu a zo spodnej lišty na telefóne.
 
 ## Cenník bez poradcu a filtrov
 
-Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Luxusné). Poradca s tromi
+Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Chodidlá). Poradca s tromi
 otázkami, filter podľa času a rozpočtu, číselný prehľad (17 rituálov, 40 až 120 minút,
-50 až 249 €) aj kadernícky cenník Salónu 30 boli odstránené: na stránke sú iba rituály
+45 až 149 €) aj kadernícky cenník Salónu 30 boli odstránené: na stránke sú iba rituály
 a ceny HEAD SPA 30.
 
 ## Citáty medzi sekciami
@@ -323,15 +323,13 @@ než karta tvrdí.
 
 ## Ponuka: sedemnásť rituálov pre hlavu
 
-Cenník má **17 Head Spa rituálov** v piatich kategóriách: Head Spa (7), pánske (4),
-detský (1), pre dvoch (2) a luxusné (3). Trvanie 40 až 120 minút, ceny 50 až 249 €,
-pri rituáloch pre dvoch platí cena za obe osoby.
+Cenník má **17 rituálov** v piatich kategóriách: Head Spa (7), pánske (4), detský (1),
+pre dvoch (2) a pre chodidlá (3). Trvanie 40 až 120 minút, ceny 45 až 149 €, presne
+podľa ponuky salónu (`docs/booqme-sluzby.csv`). Žiadny strieborný ani zlatý Head Spa
+rituál, tie salón neponúka.
 
-Štrnásť z nich zodpovedá programom v `docs/booqme-programy.xlsx`. Tri luxusné
-(Strieborný Head Spa rituál 109 €, Zlatý Head Spa rituál 24K 129 €, Zlatý Head Spa
-rituál 24K pre dvoch 249 €) sa vrátili 15. 9. 2026 na pokyn majiteľa, že ponuka
-má sedemnásť rituálov. Rituály pre chodidlá na webe nie sú a slovo chodidlá sa
-na ňom nevyskytuje.
+Všetkých sedemnásť je z podkladov salónu (maily s obsahom rituálov). Rituály pre chodidlá
+sú tri a majú vlastnú kategóriu.
 
 Pri zmene ponuky treba prejsť aj miesta, kde je počet alebo rozpätie napísané
 slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, rýchly prehľad

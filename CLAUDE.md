@@ -9,13 +9,14 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   obchod s poukazmi https://booqme.app/sk/eshop/barbershop-30. Formuláre na webe sú druhá cesta.
 
 ## Pravidlá obsahu (majiteľ ich dal, nemeň ich)
-- Iba to, čo salón ponúka: 17 rituálov z `docs/booqme-sluzby.csv`, nič nevymýšľaj
+- Iba to, čo salón ponúka: 17 rituálov (12 Head Spa, 2 pre dvoch, 3 pre chodidlá) z `docs/booqme-sluzby.csv`, nič nevymýšľaj
   (názvy, ceny, trvania, telefón 0911 153 136, adresa). Keď niečo nevieš, spýtaj sa alebo vynechaj.
 - Poukaz je vždy na konkrétny rituál, nie na sumu (`docs/booqme-poukazy.csv`).
 - Nikde nepíš „Barber shop 30“ ani samostatne „salón 30“ ako názov tohto webu; správne je
   „HEAD SPA 30, pod značkou Salón 30“.
 - Žiadna zmienka o AI na webe, v kóde, v commitoch ani v názvoch vetiev.
-- Žiadne chodidlá ani ošetrenie nôh v textoch.
+- Rituály pre chodidlá sú tri (Klasický, Ovocný a bylinkový, Zlatý rituál 24K); žiadny
+  strieborný ani zlatý Head Spa rituál, tie salón neponúka.
 - Texty krátke, najviac jeden až dva riadky, tykanie, bez pomlčiek typu em dash.
 - Šesť jazykov: každý nový text potrebuje kľúč v `assets/i18n/*.json` (kľúč je slovenský text).
 
