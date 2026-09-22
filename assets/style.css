@@ -330,6 +330,13 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 
 .step-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:30px}
 .step-cta span{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
+.next{margin-top:56px}
+.next a{display:inline-flex;align-items:baseline;gap:16px;flex-wrap:wrap;text-decoration:none;color:var(--text-primary)}
+.next-k{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.next-t{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(20px,2vw,26px);line-height:1.25;letter-spacing:-.01em;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.next a:hover .next-t,.next a:focus-visible .next-t{color:var(--accent-hover);border-bottom-color:var(--line-strong)}
+.faq .next{grid-column:2}
+@media (max-width:900px){.faq .next{grid-column:1}}
 .after{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:22px}
 .after .note{margin:0;max-width:58ch}
 .faq-more{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:26px 0 0}

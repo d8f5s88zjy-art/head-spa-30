@@ -83,6 +83,19 @@ z kariet rituálov, z kontaktu a zo spodnej lišty na telefóne.
 Karty rituálov sú na počítači v dvoch stĺpcoch, aby cenník nebol natiahnutý na
 celú šírku s prázdnym miestom vpravo. Na tablete a telefóne zostáva jeden stĺpec.
 
+## Nadväznosť sekcií
+
+Poradie sekcií je príbeh návštevy: úvod, Ako to prebieha (čo Head Spa je), Rituály
+a ceny (výber), Rezervácia (termín), Darčekové poukážky (ten istý rituál ako dar),
+Salón 30 (kde), Galéria (pohľad za dvere), Otázky (pred návštevou) a Kontakt. Menu,
+mobilné menu aj pätička majú rovnaké poradie.
+
+Každá sekcia končí riadkom `p.next`: štítok Ďalej a jedna veta kurzívou, ktorá je
+odkazom na nasledujúcu sekciu („Vybrané? Termín si dohodneš hneď nižšie.“). Za ním
+je zlatá deliaca čiara (`div.divider`), rovnaká medzi všetkými sekciami. Sekcia Ako
+to prebieha má namiesto riadku tlačidlo Vybrať si rituál. Vety sú v prekladoch ako
+ostatné texty.
+
 ## Cenník bez poradcu a filtrov
 
 Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Chodidlá). Poradca s tromi
