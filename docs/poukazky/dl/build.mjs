@@ -44,7 +44,7 @@ const VARIANTY = [
     lede: 'Teplý kúpeľ, peeling, maska a masáž chodidiel pre pocit ľahkosti a pokoja.' },
 ];
 
-const front = (v) => `<div class="card front" id="front-${v.id}">
+const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="${sq ? 'sq' : 'front'}-${v.id}">
   <div class="bg"></div><div class="grain"></div>
   <div class="frame"></div><div class="frame2"></div>
   <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -88,10 +88,10 @@ const back = () => `<div class="card back" id="back">
 </div>`;
 
 const tpl = fs.readFileSync(path.join(ROOT, 'poukaz.html'), 'utf8');
-const cards = VARIANTY.map(front).join('\n') + '\n' + back();
+const cards = VARIANTY.map((v) => front(v)).join('\n') + '\n' + back() + '\n' + VARIANTY.map((v) => front(v, true)).join('\n');
 fs.writeFileSync(path.join(ROOT, 'index.html'), tpl.replace('<!--CARDS-->', cards));
 
-for (const d of ['png', 'pdf']) fs.mkdirSync(path.join(ROOT, d), { recursive: true });
+for (const d of ['png', 'pdf', 'booqme']) fs.mkdirSync(path.join(ROOT, d), { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 const ctx = await browser.newContext({ viewport: { width: 1080, height: 525 }, deviceScaleFactor: 2.4 });
 const page = await ctx.newPage();
@@ -102,6 +102,11 @@ const ids = [...VARIANTY.map((v) => 'front-' + v.id), 'back'];
 for (const id of ids) {
   const el = await page.$('#' + id);
   await el.screenshot({ path: path.join(ROOT, 'png', `poukaz-${id.replace('front-', '')}.png`), type: 'png' });
+}
+// užšia verzia pre Booqme (obchod ju oreže na takmer štvorec) a pre sociálne siete, 2352 × 1680 px
+for (const v of VARIANTY) {
+  const el = await page.$('#sq-' + v.id);
+  await el.screenshot({ path: path.join(ROOT, 'booqme', `poukaz-${v.id}.png`), type: 'png' });
 }
 // PDF: jedna karta na stranu 216 × 105 mm (so spadávkou), pre tlačiareň
 const pdfPage = await ctx.newPage();

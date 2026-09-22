@@ -20,7 +20,8 @@ konkrétny rituál, nie na sumu, preto je prvé pole Rituál.
 
 ## Kde sú súbory
 
-- `dl/jpg/` v repozitári: JPG 2592 × 1260 px, na e-mail, Instagram alebo do Booqme.
+- `dl/jpg/` v repozitári: JPG 2592 × 1260 px na e-mail a tlač náhľadov; `dl/jpg/booqme/` užšia verzia
+  1,4 : 1 bez polí (2352 × 1680 px) pre Booqme a sociálne siete, lebo obchod obrázok oreže na takmer štvorec.
 - `dl/png/` a `dl/pdf/` sa generujú (`node dl/build.mjs`), do repozitára sa neukladajú.
   PDF `poukaz-vsetky.pdf` má všetkých päť líc a rub, jednotlivé PDF majú líce a rub.
 - `dl/foto/` fotografie z Pexels, autori v `dl/FOTKY.md`. Keď budú vlastné fotky zo
