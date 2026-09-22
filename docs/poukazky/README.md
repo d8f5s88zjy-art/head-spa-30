@@ -1,7 +1,8 @@
 # Darčekové poukážky HEAD SPA 30
 
-Podľa vzoru od majiteľa: tmavá karta so zlatým rámom, stuhou s mašľou v rohu,
-fotografiou v oblúkovom ráme a zlatou pečaťou. Formát DL na šírku, 210 × 99 mm,
+Podľa vzoru od majiteľa: tmavá karta so zlatým rámom, zlatou stuhou s mašľou po ľavom
+okraji, textom v strede stĺpca, písaným nápisom „poukážka“, zlatou vetvičkou,
+fotografiou v oblúkovom ráme v teplom zlatom ladení a zlatou pečaťou. Formát DL na šírku, 210 × 99 mm,
 tlačové PDF má spadávku 3 mm (216 × 105 mm).
 
 ## Päť líc podľa kategórie a spoločný rub
@@ -37,4 +38,5 @@ https://booqme.app/sk/eshop/barbershop-30
 
 Texty líc sú v `dl/build.mjs` (`VARIANTY`: nadpis pod čiarou, tri slová kategórie,
 jedna veta), texty rubu v tej istej funkcii `back()`. Štýly sú v `dl/poukaz.html`.
-Písma sú tie isté ako na webe: Lora a Manrope z `assets/fonts/`.
+Písma sú tie isté ako na webe: Lora a Manrope z `assets/fonts/`, plus písané Pinyon Script
+(`dl/pismo/`, licencia OFL) len na slovo „poukážka“, na webe sa nepoužíva.

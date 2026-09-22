@@ -10,23 +10,34 @@ const ROOT = path.dirname(new URL(import.meta.url).pathname);
 
 const mark = `<svg class="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M14 40c6-9 12-9 18 0s12 9 18 0" fill="none" stroke="#8cc3b6" stroke-width="1.6" stroke-linecap="round"/><text x="32" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="19" fill="#f2ede2">30</text></svg>`;
 
-// mašľa: dve slučky, uzol a dva konce stuhy, zlatý prechod
-const bow = `<svg class="bow" viewBox="0 0 150 150" fill="none">
+// stuha po ľavom okraji s mašľou hore: dve slučky, uzol, dva konce a dlhá stuha s vystrihnutým koncom
+const bow = `<svg class="bow" viewBox="0 0 200 525" fill="none">
   <defs>
-    <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5dc9b"/><stop offset=".5" stop-color="#d9b56a"/><stop offset="1" stop-color="#8d6c2e"/></linearGradient>
-    <linearGradient id="gb2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9c97c"/><stop offset="1" stop-color="#7f5f26"/></linearGradient>
+    <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e2a6"/><stop offset=".45" stop-color="#d9b56a"/><stop offset="1" stop-color="#8d6c2e"/></linearGradient>
+    <linearGradient id="gb2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efd28c"/><stop offset=".6" stop-color="#c9a558"/><stop offset="1" stop-color="#7f5f26"/></linearGradient>
+    <linearGradient id="gv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d6c2e"/><stop offset=".35" stop-color="#e9c97c"/><stop offset=".6" stop-color="#d9b56a"/><stop offset="1" stop-color="#8d6c2e"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".55"/></filter>
   </defs>
-  <!-- stuha pozdĺž horného a ľavého okraja -->
-  <path d="M0 22 H190 V44 H0 Z" fill="url(#gb)"/>
-  <path d="M22 0 V190 H44 V0 Z" fill="url(#gb2)"/>
-  <path d="M0 42 H190 V44 H0 Z" fill="#6f531f" opacity=".5"/>
-  <path d="M42 0 V190 H44 V0 Z" fill="#6f531f" opacity=".5"/>
-  <!-- mašľa v rohu: dve slučky, dva konce, uzol -->
-  <path d="M33 33 C18 6 62 -2 60 22 C59 34 44 36 33 33Z" fill="url(#gb)" stroke="#6f531f" stroke-width=".8"/>
-  <path d="M33 33 C6 18 -2 62 22 60 C34 59 36 44 33 33Z" fill="url(#gb2)" stroke="#6f531f" stroke-width=".8"/>
-  <path d="M33 33 L64 50 L58 60 L30 42 Z" fill="url(#gb)" stroke="#6f531f" stroke-width=".6"/>
-  <path d="M33 33 L50 64 L60 58 L42 30 Z" fill="url(#gb2)" stroke="#6f531f" stroke-width=".6"/>
-  <circle cx="33" cy="33" r="7.5" fill="url(#gb)" stroke="#6f531f" stroke-width="1"/>
+  <g filter="url(#sh)" transform="translate(-14 -8) scale(1.22)">
+    <!-- dlhá stuha dole s vystrihnutým koncom -->
+    <path d="M48 96 L84 96 L84 470 L66 452 L48 470 Z" fill="url(#gv)"/>
+    <!-- krátky koniec doprava -->
+    <path d="M66 92 L150 128 L138 152 L66 116 Z" fill="url(#gb2)"/>
+    <!-- slučky -->
+    <path d="M66 92 C10 70 4 8 52 14 C86 18 84 68 66 92 Z" fill="url(#gb)" stroke="#6f531f" stroke-width=".8"/>
+    <path d="M66 92 C116 62 176 74 168 118 C162 150 104 132 66 92 Z" fill="url(#gb2)" stroke="#6f531f" stroke-width=".8"/>
+    <path d="M66 92 C40 76 32 30 56 26 C74 24 76 66 66 92 Z" fill="#000" opacity=".12"/>
+    <path d="M66 92 C106 72 148 84 146 112 C142 132 100 122 66 92 Z" fill="#000" opacity=".12"/>
+    <!-- uzol -->
+    <path d="M56 80 C60 72 76 72 80 82 C82 94 74 104 66 104 C58 104 52 92 56 80 Z" fill="url(#gb)" stroke="#6f531f" stroke-width="1"/>
+  </g>
+</svg>`;
+
+// zlatá vetvička ako na vzore
+const branch = `<svg class="branch" viewBox="0 0 110 170" fill="none" stroke="#d9b56a" stroke-width="1.4" stroke-linecap="round">
+  <path d="M92 6 C60 40 40 90 30 164" stroke-width="1.8"/>
+  ${[[86,18,-40],[80,34,-38],[72,52,-36],[64,72,-34],[56,94,-32],[48,118,-30],[40,142,-28]].map(([x,y,r])=>`<path transform="rotate(${r} ${x} ${y})" d="M${x} ${y} c-14 -6 -26 -2 -30 8 c10 6 24 4 30 -8 Z" fill="rgba(217,181,106,.35)"/>`).join('')}
+  ${[[90,26,42],[84,44,40],[76,64,38],[68,86,36],[60,110,34],[52,134,32]].map(([x,y,r])=>`<path transform="rotate(${r} ${x} ${y})" d="M${x} ${y} c14 -6 26 -2 30 8 c-10 6 -24 4 -30 -8 Z" fill="rgba(217,181,106,.25)"/>`).join('')}
 </svg>`;
 
 const seal = `<div class="seal"><svg viewBox="0 0 118 118"><defs><path id="c" d="M59 59 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs><circle cx="59" cy="59" r="50" fill="none" stroke="#2a2110" stroke-opacity=".45" stroke-width=".8"/><text font-family="Manrope,sans-serif" font-weight="700" font-size="8.2" letter-spacing="2.6" fill="#2a2110"><textPath href="#c" startOffset="2%">PRE KRAJŠÍ DEŇ · HEAD SPA 30 · PRE TEBA ·</textPath></text></svg><div class="num">30<small>Salón 30</small></div></div>`;
@@ -45,13 +56,13 @@ const VARIANTY = [
 ];
 
 const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="${sq ? 'sq' : 'front'}-${v.id}">
-  <div class="bg"></div><div class="grain"></div>
+  <div class="bg"></div><div class="veins"></div><div class="grain"></div>
   <div class="frame"></div><div class="frame2"></div>
-  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
   <div class="photo" style="--pos:${v.pos}"><img src="${v.foto}" alt=""></div>
+  ${branch}
   ${seal}
   <div class="txt">
-    <div class="brand">${mark}<div><b>Salón 30</b><small>Head Spa 30 · Nitra</small></div></div>
+    <div class="brand">${mark}<b>Salón 30</b><small>Head Spa 30 · Nitra</small></div>
     <div class="kind"><span class="a">Darčeková</span><span class="b">poukážka</span></div>
     <div class="rule">${v.rule}</div>
     <div class="cat">${v.cat}</div>
@@ -64,14 +75,13 @@ const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="
     <div class="f">Platnosť do<span></span></div>
     <div class="f">Kód<span></span></div>
   </div>
-  <div class="foot"><span>Mostná 30 · Nitra</span><span>0911 153 136</span><span>www.salon30.sk</span></div>
+  <div class="foot"><span>www.salon30.sk · 0911 153 136 · Mostná 30, Nitra</span></div>
   ${bow}
 </div>`;
 
 const back = () => `<div class="card back" id="back">
-  <div class="bg"></div><div class="grain"></div>
+  <div class="bg"></div><div class="veins"></div><div class="grain"></div>
   <div class="frame"></div><div class="frame2"></div>
-  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
   <div class="txt">
     <div class="brand">${mark}<div><b>Salón 30</b><small>Head Spa 30 · Nitra</small></div></div>
     <h2>Ako poukážku využiť</h2>
