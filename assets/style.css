@@ -562,6 +562,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .shot.steam{grid-column:6/13;aspect-ratio:16/9}
 .shot.word{grid-column:1/5;aspect-ratio:4/3}
 .shot.gold img{object-position:50% 62%}
+.shot.r3{grid-column:span 3;aspect-ratio:4/5}
 .shot.gold{grid-column:5/13;aspect-ratio:2.72/1}
 .gallery .note{margin-top:18px;text-align:right}
 @media (hover:hover) and (pointer:fine){
@@ -672,6 +673,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .shot.steam{grid-column:1/7;aspect-ratio:21/9}
   .shot.word{grid-column:1/4;aspect-ratio:4/3}
   .shot.gold{grid-column:4/7;aspect-ratio:4/3}
+  .shot.r3{grid-column:span 3;aspect-ratio:4/5}
   .card{grid-template-columns:1fr auto;gap:16px}
   .card .glyph{display:none}
   .card .actions,.card .panel{grid-column:1/3}
@@ -694,7 +696,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .step .n{left:-46px;width:36px;height:36px}
   .steps .stream{left:16px}
   .shots{grid-template-columns:1fr;gap:18px;margin-top:40px}
-  .shot.door,.shot.voda,.shot.rings,.shot.steam,.shot.word,.shot.gold{grid-column:auto;grid-row:auto}
+  .shot.door,.shot.voda,.shot.rings,.shot.steam,.shot.word,.shot.gold,.shot.r3{grid-column:auto;grid-row:auto}
+  .shot.r3{aspect-ratio:4/5}
   .shot.door{aspect-ratio:4/5}
   .shot.voda,.shot.word{aspect-ratio:4/3}
   .shot.rings{aspect-ratio:3/2}
