@@ -1534,3 +1534,29 @@ section{padding:var(--lux-space) 0}
 .linkbtn,.step-cta span,.card .about .lbl,.to-top span,.lbl{text-transform:none;letter-spacing:.01em;font-size:14.5px}
 .linkbtn{font-weight:600;color:var(--accent-hover)}
 .card .about .lbl{font-weight:600;color:var(--text-primary)}
+/* mapa v kontakte: vlastný obrázok okolia v tónoch webu (podklad © OpenStreetMap), bez cudzieho rámca */
+.map .part.mapimg{position:relative;min-height:0;aspect-ratio:auto;padding:0;background:var(--panel)}
+.map .part.mapimg::before{display:none}
+.mapimg picture,.mapimg img{display:block;width:100%;height:100%;object-fit:cover}
+.pin-map{position:absolute;left:50%;top:49.4%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:10px;pointer-events:none}
+.pin-map i{width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px rgba(201,166,107,.22),0 0 0 14px rgba(201,166,107,.08)}
+.pin-map b{position:absolute;top:26px;white-space:nowrap;padding:5px 10px;border-radius:2px;background:var(--canvas);border:1px solid var(--line-strong);font-family:var(--display);font-weight:400;font-size:14px;letter-spacing:.06em;color:var(--text-primary)}
+.map-card{position:absolute;left:20px;bottom:20px;display:grid;gap:4px;padding:18px 20px;border-radius:2px;background:rgba(var(--ink),.92);border:1px solid var(--line);max-width:calc(100% - 40px)}
+.map-card b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--text-primary)}
+.map-card span{font-size:14.5px;color:var(--text-secondary)}
+.map-card .map-link{position:static;margin-top:12px;justify-self:start;padding:10px 16px;border:1px solid var(--line-strong);background:transparent}
+.osm{position:absolute;right:8px;bottom:6px;font-size:10.5px;color:var(--text-tertiary)}
+@media (min-width:901px){.map .part.mapimg{min-height:420px}}
+@media (max-width:900px){.map .part.mapimg{aspect-ratio:auto;height:420px}.mapimg img{object-position:50% 49%}}
+@media (max-width:900px){
+  .map .part.mapimg{height:auto;display:grid}
+  .mapimg picture{height:300px}
+  .map-card{position:static;max-width:none;border:0;border-top:1px solid var(--line);background:var(--panel);padding:20px}
+  .pin-map{top:150px}
+  .osm{bottom:auto;top:280px}
+}
+/* prechod z úvodu do stránky: úvod končí v tej istej farbe, akou začína Ako to prebieha, bez clony a bez diery */
+.reel::after{display:none}
+.hero .lift{transform:none!important;opacity:1!important}
+.ritual.light,.ritual.light.in{background:var(--canvas);clip-path:none}
+.site>.ritual{padding-top:clamp(40px,6vw,88px)}

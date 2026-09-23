@@ -12,21 +12,14 @@
   const phoneMQ = matchMedia('(max-width: 640px)');   // telefón má vlastné hranice kapitol, kameru, rampy a dobiehanie
 
   /* ============ úvod: jeden záber miestnosti ============
-     Po otvorení dverí sa miestnosť pomaly vynorí z tmy (CSS). Pri skrolovaní fotka zaostáva
-     za stránkou a text odchádza rýchlejšie, takže sa vrstvy od seba oddelia. Len transform
-     a priehľadnosť, nič sa neprekresľuje ani neposúva v rozložení. */
+     Po otvorení dverí sa miestnosť pomaly vynorí z tmy (CSS). Pri skrolovaní text ide so stránkou
+     a fotka zaostáva (paralaxa), takže úvod plynulo prejde do obsahu, bez stmavnutia a bez medzery. */
   function makeReel(root) {
-    const shot = $('.reel .fs', root), reel = $('.reel', root), lift = $('.lift', root);
+    const shot = $('.reel .fs', root);
     let last = '';
     function draw(p) {
       const key = p.toFixed(3); if (key === last) return; last = key;
-      const e = p * p * (3 - 2 * p);
-      shot.style.transform = `translate3d(0,${(p * 32).toFixed(2)}%,0) scale(${(1 + p * 0.05).toFixed(4)})`;
-      reel.style.setProperty('--p', e.toFixed(3));
-      if (lift) {
-        lift.style.transform = `translate3d(0,${(-p * 14).toFixed(2)}vh,0)`;
-        lift.style.opacity = clamp(1 - p * 1.7, 0, 1).toFixed(3);
-      }
+      shot.style.transform = `translate3d(0,${(p * 30).toFixed(2)}%,0)`;
     }
     return { resize() { last = ''; }, draw, setCuts() {} };
   }

@@ -201,7 +201,7 @@ zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
 | Poukážky, lístok | tie isté fotky ako tlačené poukážky (`assets/img/poukaz/`, zdroj `docs/poukazky/dl/foto/`), menia sa podľa vybraného rituálu |
 | Salón 30 | `okna`, `buddha`, `komoda` |
 | Galéria | všetkých 13 (poradie vyššie) |
-| Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“ |
+| Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“; mapa okolia `mapa-*` (podklad © OpenStreetMap, zafarbená do tónov webu, značka salónu v strede) namiesto vloženej Google mapy |
 
 Fotky na poukážkach pre pánske, detské a chodidlá sú z Pexels (licencia a autori
 v `docs/poukazky/dl/FOTKY.md`); ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
