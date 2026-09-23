@@ -1019,25 +1019,25 @@
   /* ============ dnešné otváracie hodiny, počítané v časovom pásme salónu ============ */
   /* Tento text vzniká až v prehliadači, preto má vlastné preklady, nie je v assets/i18n. */
   const TODAY_WORDS = {
-    sk: { open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
+    sk: { nonstop: 'Online rezervácia je otvorená nonstop', open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
           next: 'otvárame', at: 'o', tomorrow: 'zajtra',
           days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
-    cs: { open: 'Dnes otevřeno do', soon: 'Dnes otevíráme v', shut: 'Dnes už zavřeno', none: 'Dnes máme zavřeno',
+    cs: { nonstop: 'Online rezervace je otevřená nonstop', open: 'Dnes otevřeno do', soon: 'Dnes otevíráme v', shut: 'Dnes už zavřeno', none: 'Dnes máme zavřeno',
           next: 'otevíráme', at: 'v', tomorrow: 'zítra',
           days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
-    pl: { open: 'Dziś otwarte do', soon: 'Dziś otwieramy o', shut: 'Dziś już zamknięte', none: 'Dziś mamy zamknięte',
+    pl: { nonstop: 'Rezerwacja online działa całą dobę', open: 'Dziś otwarte do', soon: 'Dziś otwieramy o', shut: 'Dziś już zamknięte', none: 'Dziś mamy zamknięte',
           next: 'otwieramy', at: 'o', tomorrow: 'jutro',
           days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
-    hu: { open: 'Ma nyitva eddig:', soon: 'Ma nyitunk ekkor:', shut: 'Ma már zárva', none: 'Ma zárva vagyunk',
+    hu: { nonstop: 'Az online foglalás éjjel-nappal elérhető', open: 'Ma nyitva eddig:', soon: 'Ma nyitunk ekkor:', shut: 'Ma már zárva', none: 'Ma zárva vagyunk',
           next: 'nyitás', at: '', tomorrow: 'holnap',
           days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
-    de: { open: 'Heute geöffnet bis', soon: 'Heute öffnen wir um', shut: 'Heute schon geschlossen', none: 'Heute haben wir geschlossen',
+    de: { nonstop: 'Online-Buchung rund um die Uhr', open: 'Heute geöffnet bis', soon: 'Heute öffnen wir um', shut: 'Heute schon geschlossen', none: 'Heute haben wir geschlossen',
           next: 'wir öffnen', at: 'um', tomorrow: 'morgen',
           days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
-    uk: { open: 'Сьогодні відчинено до', soon: 'Сьогодні відчиняємо о', shut: 'Сьогодні вже зачинено', none: 'Сьогодні зачинено',
+    uk: { nonstop: 'Онлайн-бронювання працює цілодобово', open: 'Сьогодні відчинено до', soon: 'Сьогодні відчиняємо о', shut: 'Сьогодні вже зачинено', none: 'Сьогодні зачинено',
           next: 'відчиняємо', at: 'о', tomorrow: 'завтра',
           days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
-    en: { open: 'Open today until', soon: 'We open today at', shut: 'Closed for today', none: 'We are closed today',
+    en: { nonstop: 'Online booking is open around the clock', open: 'Open today until', soon: 'We open today at', shut: 'Closed for today', none: 'We are closed today',
           next: 'we open', at: 'at', tomorrow: 'tomorrow',
           days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
   };
@@ -1063,7 +1063,9 @@
         // deň, keď sme vôbec neotvorili, znie inak ako deň, ktorý sa práve skončil
         text = `${h ? W.shut : W.none}, ${W.next} ${when} ${W.at ? W.at + ' ' : ''}${hm(HOURS[d][0])}`;
       }
-      els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
+      // v úvode sa pri zatvorenom salóne neukazuje „zatvorené“, ale to, čo platí vždy: online rezervácia
+      els.forEach((el) => { const hero = !el.closest('.contact'); const t = !open && hero ? W.nonstop : text;
+        el.innerHTML = `<span class="dot" aria-hidden="true"></span>${t}`; el.classList.toggle('closed', !open && !hero); });
     }
     render((document.documentElement.lang || 'sk').slice(0, 2));
     document.addEventListener('langchange', (e) => render(e.detail.lang));
@@ -1103,6 +1105,9 @@
       const ready = !im ? Promise.resolve(false) : im.complete && im.naturalWidth ? Promise.resolve(true)
         : Promise.race([im.decode ? im.decode().then(() => true, () => false) : new Promise((r) => { im.onload = () => r(true); im.onerror = () => r(false); }),
           new Promise((r) => setTimeout(() => r(false), 900))]);
+      // dvere sa dajú preskočiť: dotyk, klik, koliesko alebo kláves ich hneď jemne otvorí
+      const skip = () => { if (veilDone) return; veil.style.transition = 'opacity 320ms cubic-bezier(.4,0,.2,1)'; veil.style.opacity = '0'; setTimeout(endVeil, 330); };
+      ['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, skip, { once: true, passive: true }));
       ready.then((ok) => {
         // bez fotky dverí: tma sa pokojne rozplynie, nie tvrdým strihom
         if (!ok) { veil.style.transition = 'opacity 420ms cubic-bezier(.4,0,.2,1)'; veil.style.opacity = '0'; setTimeout(endVeil, 440); return; }
