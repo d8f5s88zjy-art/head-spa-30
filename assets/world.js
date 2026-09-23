@@ -2,9 +2,9 @@
    Pozadie webu sú skutočné fotky salónu, nie vymodelovaná scéna. Každá fotka má hĺbkovú mapu,
    takže kamera sa v nej pohne ako v skutočnej miestnosti: bližšie veci sa posúvajú viac ako
    stena za nimi. Pri skrolovaní ide kamera pomalým filmovým pohybom a medzi časťami webu sa
-   zábery prelínajú, kým ich zakrýva textová doska. Farby fotiek sa nemenia.
+   zábery prelínajú. Fotky sa netónujú, pridá sa len vinetácia a krátke šero pri prelínaní.
    Scéna je iba pozadie: text, formuláre a tlačidlá ostávajú v HTML nad ňou. Keď 3D nejde
-   (bez WebGL, obmedzenie pohybu, šetrenie dát), web ostáva s pokojným úvodom a nič sa nenačíta. */
+   (bez WebGL2, obmedzenie pohybu, šetrenie dát), web ostáva s pokojným úvodom a nič sa nenačíta. */
 (async function () {
   'use strict';
   const d = document, root = d.documentElement;

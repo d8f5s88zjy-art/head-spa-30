@@ -34,15 +34,16 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   len na malých nadpiskoch sekcií), polia formulára ako zreteľné okienka. Žiadna zelená plocha,
   všetko v tónoch orecha so zlatou. Časti oddeľuje zlatá linka s lotosom, obsah sa pri
   skrolovaní nevysúva ani neskladá. Nepridávaj ozdoby navyše.
-- Na pracovnej vetve je pozadie webu film zo skutočných fotiek salónu s hĺbkovou mapou
-  (`assets/world.js`, `assets/img/film/`, README Film zo skutočných fotiek). Nič vymodelované,
-  farby fotiek sa nemenia, kreslí len pri pohybe. Záloha je pokojný úvod s fotkou (`makeReel`).
-  Dvere v úvode zostávajú.
+- Pozadie webu je film zo skutočných fotiek salónu s hĺbkovou mapou (`assets/world.js`,
+  `assets/img/film/`, README Film zo skutočných fotiek). Nič vymodelované, fotky bez tónovania
+  (len vinetácia a krátke šero pri prelínaní). Kreslí pri pohybe a v pokoji ešte 25 s jemné
+  dýchanie kamery 30 snímok za sekundu, potom stojí. Záloha je pokojný úvod s fotkou (`makeReel`).
+- Dvere v úvode zostávajú a sú skutočné: fotka dverí salónu, krídla sa otvoria dnu (README Úvodné dvere).
 - Cieľ: Lighthouse desktop 100, mobil 95 a viac. Žiadny backdrop-filter na mobile.
 - Komentáre v kóde po slovensky. Commity po slovensky, bez podpisov a bez odkazov na nástroje.
 
 ## Postup nasadenia
-1. Práca na vetve `claude/profesionalny-web-l7ozjk`, commit, `git push -u origin <vetva>`.
+1. Práca na vetve `claude/head-spa-30-page-uil3m0`, commit, `git push -u origin <vetva>`.
 2. `git checkout main && git merge --ff-only <vetva> && git push origin main`.
 3. Overiť naživo (Pages beží zhruba minútu).
 

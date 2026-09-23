@@ -1,6 +1,6 @@
 # HEAD SPA 30, Nitra
 
-Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk). Čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí.
+Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk). Čisté HTML, CSS a JavaScript bez frameworku; minifikáciu robí `node tools/build.mjs`, film používa Three.js v `assets/vendor/`.
 
 ## Štruktúra
 
@@ -9,7 +9,8 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/app.js` – scrollom riadená úvodná scéna (jeden záber miestnosti s paralaxou), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` a `assets/img/galeria/` – fotografie salónu pre galériu (dvere, Budha, miestnosť, vodný oblúk, uteráky, lôžko)
 - `assets/fonts/` – dve písma: Lora (500 a kurzíva 400) na nadpisy, Manrope (400 a 700) na text aj štítky, hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
-- `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
+- `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v 480 a 800 px v AVIF, WebP a JPG, pre dvere v úvode aj zaostrená 1600 a 2400 px WebP
+- `assets/img/film/` – fotky filmu na pozadí (README Film zo skutočných fotiek), `assets/world.js` – film
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona, lotos v zlatom kruhu ako na svietiacom nápise v salóne
@@ -34,17 +35,20 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 | Otázky | `komoda` |
 | Kontakt | `neon-head-spa` |
 
-- Fotky sú v `assets/img/film/`: zväčšené a zaostrené na dvojnásobok, v šírkach 2172, 1448 a
+- Fotky sú v `assets/img/film/`: zaostrené, v šírkach 2172 (dvojnásobok originálu), 1448 a
   1086 px, každá v AVIF (o tretinu menšie) aj WebP, a `<meno>-hlbka.webp` (svetlá = blízko).
-  Skript vyberie najmenšiu šírku, ktorá na obrazovke nebude zväčšená, AVIF s návratom na WebP.
+  Zaostrená fotka je z polovice zmiešaná s verným zväčšením originálu, aby mach, tapeta,
+  uteráky a mosadz ostali také, aké sú. Skript vyberie najmenšiu šírku, ktorá na obrazovke
+  nebude zväčšená o viac ako 5 %, AVIF s návratom na WebP.
 - Načítanie: najprv záber, kde návštevník je (pri skoku cez menu cieľ), potom susedia. V pamäti
   sú najviac štyri zábery, preskočené sťahovanie sa ruší. Obrázok sa po nahratí do grafickej
   karty uvoľní. Skrytá kategória cenníka (filter) z filmu vypadne.
 - Ostrosť: plné rozlíšenie displeja do 2x, fotky bez tónovania a bez hmly, farby presne ako na
-  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch a jemné šero pri prelínaní.
+  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch a pri prelínaní krátke stmavnutie o 22 %.
 - Pohyb: kriticky tlmená pružina, prelínanie v strede medzi časťami, v pokoji sa dokončí na
   bližší záber. V pokoji jemné dýchanie kamery 30 snímok za sekundu, po 25 s bez pohybu kreslenie
-  stojí. Na počítači sa perspektíva pohne za myšou, na Androide pri naklonení (mŕtva zóna 0,7°).
+  stojí. Na počítači sa perspektíva pohne za myšou, na Androide pri naklonení (mŕtva zóna 0,7°),
+  iPhone nie (vyžadoval by povolenie).
   Pomalé zariadenie si zníži rozlíšenie (meria sa voči najkratšej snímke, 30 Hz nie je pomalé).
 - Sekcie sú vo filme vyššie ako odhad `content-visibility`, preto sa po prvom pohybe postupne vo
   voľných chvíľach vykreslia všetky a pri kliknutí na odkaz v stránke hneď. Príchod s `#kotvou`
@@ -59,9 +63,10 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 
 Raz za návštevu sa pri otvorení stránky ukážu skutočné dvere salónu (`.veil`): fotka dverí
 (`assets/img/dvere-*.webp`, zaostrená) prekryje obrazovku, rám ostane stáť a obe krídla vystrihnuté
-z tej istej fotky sa v CSS 3D otvoria dnu a stmavnú. V otvore je salón (`lozka-sviecka`), potom
-kamera prejde dnu. Kým fotka dverí nie je pripravená, je tma a kreslí sa značka; keď do 0,9 s
-nepríde, dvere sa preskočia a tma sa rozplynie.
+z tej istej fotky sa v CSS 3D otvoria dnu a stmavnú. V otvore je salón (`okna`), potom
+kamera prejde dnu. Krídla sa otočia 0,56 s (telefón 0,7 s) po načítaní fotky, celé to trvá asi
+1,7 s. Kým fotka dverí nie je pripravená, je tma a kreslí sa značka; keď do 0,9 s nepríde, dvere
+sa preskočia a tma sa rozplynie.
 
 ## Úvod
 
@@ -77,7 +82,7 @@ Technika (`makeReel` v `assets/app.js`, štýly `.reel` v `assets/style.css`):
   Končí 5 % nad spodkom pod tmavým prechodom; záber na celú obrazovku by prehliadač bral ako
   pozadie a LCP by meral až nadpis.
 - Pri obmedzení pohybu a na nízkej obrazovke na šírku sa ukáže pokojný úvod s fotkou nápisu.
-## Vrstva V9 (agentúrny vzhľad)
+## Vrstva V9 (agentúrny vzhľad, už sa nenačítava)
 
 `assets/premium-v9.css` a `assets/premium-v9.js` sú prekrytie nad základným webom: väčšie
 editoriálne nadpisy, číslovanie sekcií 01 až 11, tenká linka priebehu skrolu hore, aktívna
@@ -460,15 +465,16 @@ Zadanie pre tento prechod je v `docs/prompt-senior.md`. Čo z neho vyplynulo:
 
 ## Dvere na úvode
 
-Dvere sa otvárajú raz za návštevu (drží to `sessionStorage`), trvajú necelú
-sekundu a pol a neukážu sa, keď: má odkaz kotvu (`#sekcia`), má návštevník
-zapnuté obmedzenie pohybu, má zapnutý šetrič dát, je karta na pozadí alebo je
-vypnutý JavaScript. Kým dvere držia obraz, úvod čaká cez premennú `--veil`,
-takže text nenabehne za dverami.
+Dvere sa otvárajú raz za návštevu (drží to `sessionStorage`). Sú to skutočné dvere salónu
+z fotky (README Úvodné dvere): krídla sa otočia 0,56 s (telefón 0,7 s) po načítaní fotky, celé to
+trvá asi 1,7 s a medzitým zlatý lotos zo stredu dverí preletí na svoje miesto v lište. Pri
+obmedzení pohybu, šetrení dát, v skrytej karte alebo pri príchode cez odkaz na konkrétnu časť
+(`#rituály`) sa dvere preskočia a stránka je hneď hotová.
 
 Stará verzia dverí stála devätnásť bodov výkonu, lebo telo stránky bolo do
 konca animácie neviditeľné. Teraz je stránka vykreslená hneď a dvere sú len
-vrstva nad ňou, takže stoja jeden bod.
+vrstva nad ňou. Fotka dverí sa prednačíta s bežnou prioritou a fotka v otvore sa
+sťahuje až keď sú dvere na obrazovke, takže stoja zhruba jeden bod.
 
 ## Mobil
 
