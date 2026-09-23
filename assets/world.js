@@ -53,9 +53,9 @@
   };
   const SHOTS = [
     // úvod: tá istá miestnosť, ktorú vidno cez otvorené dvere (a tá istá fotka ako úvod bez 3D)
-    { at: null, photo: 'okna', f: [0.5, 0.4], fm: [0.5, 0.5], mv: 'in' },
-    { at: '#ritual', photo: 'voda', f: [0.5, 0.55], mv: 'right' },
-    { at: '#cennik', photo: 'zhora', f: [0.5, 0.5], mv: 'down' },
+    { at: null, photo: 'okna', place: 'Miestnosť pri oknách', f: [0.5, 0.4], fm: [0.5, 0.5], mv: 'in' },
+    { at: '#ritual', photo: 'voda', place: 'Vodný oblúk nad misou', f: [0.5, 0.55], mv: 'right' },
+    { at: '#cennik', photo: 'zhora', place: 'Lôžka s misami', f: [0.5, 0.5], mv: 'down' },
   ];
   // pri každej kategórii cenníka jej priestor; fotku kategórie určuje stránka.
   // Bod záujmu je tam, kam mieri výrez fotky na stránke (object-position), napr. neón Spa relax hore.
@@ -67,18 +67,30 @@
     SHOTS.push({ at: cat, mid: true, oy, photo: img.dataset.photo, f: FOCUS[img.dataset.photo] || [0.5, 0.62], mv: ['left', 'in', 'right', 'rise', 'left'][k % 5] });
   });
   SHOTS.push(
-    { at: '#poukaz', photo: 'buddha', f: [0.58, 0.3], mv: 'in' },
-    { at: '#tim', photo: 'lozko', f: [0.5, 0.6], mv: 'rise' },
-    { at: '#salon', photo: 'miestnost', f: [0.5, 0.55], mv: 'right' },
-    { at: '#galeria', photo: 'neon-spa', f: [0.5, 0.42], mv: 'left' },
-    { at: '#faq', photo: 'komoda', f: [0.5, 0.55], mv: 'down' },
-    { at: '#kontakt', photo: 'neon-head-spa', f: [0.5, 0.3], mv: 'in' },
+    { at: '#poukaz', photo: 'buddha', place: 'Budha a sviečky', f: [0.58, 0.3], mv: 'in' },
+    { at: '#tim', photo: 'lozko', place: 'Pripravené lôžko', f: [0.5, 0.6], mv: 'rise' },
+    { at: '#salon', photo: 'miestnost', place: 'Miestnosť pre dvoch', f: [0.5, 0.55], mv: 'right' },
+    { at: '#galeria', photo: 'neon-spa', place: 'Nápis Spa relax', f: [0.5, 0.42], mv: 'left' },
+    { at: '#faq', photo: 'komoda', place: 'Komoda s uterákmi', f: [0.5, 0.55], mv: 'down' },
+    { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in' },
   );
   /* ---------- renderer ---------- */
   const canvas = d.createElement('canvas');
   canvas.className = 'world-canvas';
   canvas.setAttribute('aria-hidden', 'true');
   d.body.prepend(canvas);
+  // prehliadka: nenápadný popis miesta vľavo dole, len tam kde film nezakrýva doska
+  const placeBox = d.createElement('div');
+  placeBox.className = 'world-place'; placeBox.setAttribute('aria-hidden', 'true');
+  placeBox.innerHTML = '<b>Prehliadka salónu</b>' + SHOTS.filter((s) => s.place).map((s) => `<span data-p="${s.photo}">${s.place}</span>`).join('');
+  canvas.after(placeBox);
+  let placeNow = null;
+  const showPlace = (s) => {
+    const key = s && s.place && s.pi !== 0 ? s.photo : null;   // v úvode nie, tam je text úvodu
+    if (key === placeNow) return; placeNow = key;
+    placeBox.querySelectorAll('span').forEach((e) => e.classList.toggle('on', e.dataset.p === key));
+    placeBox.classList.toggle('on', !!key);
+  };
   let renderer;
   // obrazovka dostane len hotovú kompozíciu, hĺbku potrebujú iba render targety záberov
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' }); }
@@ -216,7 +228,7 @@
 
   /* ---------- rozloženie záberu podľa obrazovky ---------- */
   const tanH = Math.tan(THREE.MathUtils.degToRad(FOV) / 2);
-  const OVER = 0.08;                                          // presah fotky za okraj, aby pohyb nikdy neodhalil hranu
+  const OVER = 0.12;                                          // presah fotky za okraj, aby pohyb nikdy neodhalil hranu
   function layout() {
     const aspect = canvas.width / canvas.height;
     const vh = 2 * DIST * tanH, vw = vh * aspect, pa = 0.75;   // fotky salónu sú na výšku 3 : 4
@@ -312,7 +324,8 @@
     off.y += (Math.sin(sec * 0.29 + 1.3) * 0.003 * breath + pmy * 0.012) * s.vh;
     off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
     // pri prechode kamera odchádzajúceho záberu pokračuje dopredu, akoby prešla do ďalšej miestnosti
-    off.z -= Math.pow(push, 1.4) * 0.2 * DIST;
+    // odchádzajúci záber: kamera ide ďalej dopredu; prichádzajúci: kamera prichádza zo vzdialenosti
+    off.z -= push > 0 ? Math.pow(push, 1.4) * 0.2 * DIST : push * 0.07 * DIST;
     camera.position.copy(s.eye).add(off);
     tmp.set(s.eye.x + off.x * 0.35, s.eye.y + off.y * 0.35, 0);
     camera.lookAt(tmp);
@@ -344,12 +357,13 @@
     A.mesh.visible = true; place(A, now, mix > 0.001 ? mix : 0); renderer.render(scene, camera); A.mesh.visible = false;
     if (mix > 0.001) {
       renderer.setRenderTarget(rtB); renderer.clear();
-      B.mesh.visible = true; place(B, now); renderer.render(scene, camera); B.mesh.visible = false;
+      B.mesh.visible = true; place(B, now, -(1 - mix)); renderer.render(scene, camera); B.mesh.visible = false;
     }
     post.material.uniforms.uMix.value = mix > 0.001 ? mix : 0;
     renderer.setRenderTarget(null); renderer.clear();
     renderer.render(postScene, postCam);
     held = mix > 0.5 ? B : A;
+    showPlace(held);
     onScreen = new Set(mix > 0.001 ? [A, B] : [A]);
     drawn = true;
     // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej

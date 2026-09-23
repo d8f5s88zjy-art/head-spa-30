@@ -1651,3 +1651,12 @@ html.world #cennik .cat.has-ph>span{padding:12px 18px 0}html.world #cennik .cat.
 .team-grid figcaption span{display:block;margin-top:4px;font-size:14px;color:var(--accent)}
 .team-grid figcaption p{margin-top:8px;max-width:36ch;font-size:15px;line-height:1.6;color:var(--text-secondary)}
 @media (max-width:520px){.team-grid{grid-template-columns:1fr}}
+
+/* ---------- prehliadka: popis miesta vľavo dole, pod doskami s textom (vidno ho len vo filme) ---------- */
+.world-place{position:fixed;left:clamp(16px,3vw,40px);bottom:clamp(20px,4vh,40px);z-index:0;pointer-events:none;opacity:0;transition:opacity .8s cubic-bezier(.4,0,.2,1);display:none}
+html.world-in .world-place{display:block}
+html.world-in .world-place.on{opacity:1}
+.world-place b{display:block;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#d4ae62;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.world-place span{display:none;margin-top:4px;font-family:var(--display);font-style:italic;font-size:20px;color:#efe7da;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.world-place span.on{display:block}
+@media (max-width:640px){.world-place{bottom:96px}.world-place span{font-size:17px}}
