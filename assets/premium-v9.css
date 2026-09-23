@@ -5,12 +5,12 @@ No business facts, prices, booking URLs or structured data are changed here.
 */
 
 :root{
-  --v9-ink:var(--canvas);
-  --v9-ink-2:var(--canvas);
-  --v9-surface:var(--panel);
-  --v9-surface-2:var(--panel);
+  --v9-ink:#070a08;
+  --v9-ink-2:#0b100d;
+  --v9-surface:#101713;
+  --v9-surface-2:#151e18;
   --v9-paper:#f2ede2;
-  --v9-muted:var(--text-secondary);
+  --v9-muted:#aeb5aa;
   --v9-gold:#d9b56a;
   --v9-gold-hi:#f0d99e;
   --v9-water:#8cc3b6;
@@ -47,7 +47,7 @@ body{
   transition:background .48s var(--v9-ease),border-color .48s var(--v9-ease),box-shadow .48s var(--v9-ease),transform .45s var(--v9-ease);
 }
 body.v9-scrolled .nav{
-  background:rgba(var(--ink),.965);
+  background:rgba(7,10,8,.965);
   border-color:rgba(242,237,226,.075);
   box-shadow:0 18px 54px rgba(0,0,0,.18);
 }
@@ -116,12 +116,12 @@ body.v9-scrolled .nav{
   box-shadow:none;
   transition:transform .46s var(--v9-ease),border-color .46s var(--v9-ease),background .46s var(--v9-ease),box-shadow .46s var(--v9-ease)
 }
-.card{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(var(--walnut),.84),rgba(var(--walnut),.84))}
+.card{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(20,27,22,.84),rgba(15,21,17,.84))}
 .card:hover,.scard:hover,.tcard:hover{transform:translateY(-6px);border-color:var(--v9-line-gold);box-shadow:var(--v9-shadow-soft)}
 .card.featured{
   background:
     radial-gradient(120% 100% at 100% 0%,rgba(217,181,106,.11),transparent 52%),
-    linear-gradient(180deg,rgba(var(--walnut-2),.96),rgba(var(--walnut),.96));
+    linear-gradient(180deg,rgba(24,31,25,.96),rgba(15,21,17,.96));
   border-color:rgba(217,181,106,.38);box-shadow:0 24px 82px rgba(0,0,0,.18)
 }
 .card.featured::after{
@@ -144,7 +144,7 @@ body.v9-scrolled .nav{
 .book .box{
   background:
     radial-gradient(110% 120% at 100% 0%,rgba(140,195,182,.07),transparent 54%),
-    linear-gradient(145deg,rgba(var(--walnut),.98),rgba(var(--ink),.98));
+    linear-gradient(145deg,rgba(18,26,21,.98),rgba(10,15,12,.98));
   border-color:rgba(217,181,106,.2);box-shadow:0 30px 100px rgba(0,0,0,.23)
 }
 .book .ticket{border-color:rgba(217,181,106,.28)}
@@ -178,7 +178,7 @@ body.v9-scrolled .nav{
 .shot:hover .frame{transform:translateY(-5px);border-color:rgba(217,181,106,.3);box-shadow:0 32px 96px rgba(0,0,0,.28)}
 .shot img,.shot canvas{will-change:transform;transition:transform 1s var(--v9-ease),filter .8s var(--v9-ease)}
 .shot:hover img,.shot:hover canvas{transform:scale(1.024)}
-.shot .cap{background:linear-gradient(180deg,transparent,rgba(var(--ink),.88))}
+.shot .cap{background:linear-gradient(180deg,transparent,rgba(5,8,6,.88))}
 .shot .pill{border-color:rgba(242,237,226,.16)}
 
 /* FAQ */
@@ -191,7 +191,7 @@ body.v9-scrolled .nav{
 .contact .box{
   background:
     radial-gradient(90% 130% at 100% 0%,rgba(140,195,182,.075),transparent 54%),
-    linear-gradient(145deg,rgba(var(--walnut),.98),rgba(var(--ink),.98));
+    linear-gradient(145deg,rgba(19,26,21,.98),rgba(10,15,12,.98));
   border-color:rgba(217,181,106,.21);box-shadow:var(--v9-shadow)
 }
 .contact .info>div{border-color:rgba(242,237,226,.09)}
@@ -202,7 +202,7 @@ body.v9-scrolled .nav{
   background:
     radial-gradient(760px 460px at 50% 26%,rgba(217,181,106,.095),transparent 68%),
     radial-gradient(520px 340px at 78% 68%,rgba(140,195,182,.045),transparent 72%),
-    linear-gradient(180deg,var(--canvas),var(--canvas))
+    linear-gradient(180deg,#0a0e0b,#070a08)
 }
 .finale .fin-in{text-align:center}
 .finale .h2{margin-inline:auto;max-width:12.5ch}
@@ -220,7 +220,7 @@ footer{border-top:1px solid rgba(242,237,226,.075)}
 @media (max-width:900px){
   .h2{font-size:clamp(36px,8.5vw,56px)}
   .pull .q{font-size:clamp(34px,8.5vw,56px)}
-  .nav{background:rgba(var(--ink),.965)}
+  .nav{background:rgba(7,10,8,.965)}
   .hero .facts li+li::before{display:none}
 }
 @media (max-width:640px){

@@ -12,7 +12,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
-- `assets/favicon.svg` – ikona, lotos v zlatom kruhu ako na svietiacom nápise v salóne
+- `assets/favicon.svg` – ikona
 
 ## Úvodná cesta
 
@@ -136,66 +136,20 @@ Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť 
 
 ## Galéria
 
-Sekcia Galéria je mozaika trinástich fotografií salónu, zoradená ako prechádzka: zelené dvere,
-svietiaci nápis HEAD SPA, miestnosť s dvoma lôžkami, lôžka s vodnými misami, vodný oblúk,
-lôžko s orchideou, pripravené lôžka, lôžko pod nápisom Spa relax, pohľad zhora, komoda
-s uterákmi, Budha so sviečkami, nápis Spa relax a miestnosť pri oknách.
+Sekcia Galéria je mozaika trinástich fotografií salónu: zelené dvere, Budha so sviečkami,
+miestnosť s dvoma lôžkami, vodný oblúk, komoda s uterákmi, lôžko s orchideou a druhý rad
+štyroch záberov (svietiaci nápis HEAD SPA, dve lôžka so sviečkou, nápis Spa relax, pripravené lôžka) a tretí rad troch (lôžko pod nápisom, pohľad zhora, miestnosť pri oknách).
 Obrázky sú v `assets/img/galeria/` v troch šírkach (480, 800, 1200 px) ako AVIF, WebP a JPG,
 zdroje v plnej veľkosti sú `*.jpg` bez prípony šírky. Každá fotka sa dá otvoriť vo zväčšení.
-Rozloženie mozaiky určujú triedy na `<figure>` (`door`, `voda`, `rings`, ..., `r3`, `r4`), nie fotky;
-pri výmene poradia sa presúva len obsah figúry a atribút `sizes` ostáva podľa miesta v mozaike.
 
-## Identita z prevádzky
+Výmena kreslených záberov za skutočné fotografie nevyžaduje zásah do kódu. Stačí uložiť súbor do `assets/img/galeria/` s presným názvom a spustiť `python3 scratchpad/build.py`:
 
-Web má vyzerať ako miestnosť, do ktorej zákazník vojde. Farby, materiály aj pohyb sú odpísané
-z fotiek salónu, nič nie je všeobecná „spa“ paleta.
+- `voda.jpg` nahradí záber Teplá voda
+- `para.jpg` nahradí záber Para a ticho
+- `zlate.jpg` nahradí záber Zlaté svetlo
+- `kruhy.jpg` nahradí makro detail kruhov
 
-| V prevádzke | Na webe |
-| --- | --- |
-| Svietiace logo: machový kruh, **HEAD SPA** verzálkami, pod tým **salon30**, lotos, **NITRA** | značka v lište, v pätičke, na lístkoch aj na dverách v úvode: lotos v zlatom kruhu (`.mark`), vedľa **HEAD SPA 30** verzálkami a *salon30 · Nitra* zlatou kurzívou Lora; rovnaký lotos je `favicon.svg` |
-| Orech, parkety rybia kosť, drevená mozaika za logom | plátno a panely v tónoch orecha (`--canvas #0c0906`, `--panel #1a130d`, `--panel-2 #22190f`), rámy kariet a fotiek `--wood-line` |
-| Fľaškovo zelené dvojkrídlové dvere s mosadznými kruhmi | `--door #1f3328`: lístok rezervácie a poukazu, dvere pri vstupe na stránku |
-| Olivové zamatové závesy a stena | `--olive #5d5a2a` |
-| Tapeta so zlatohnedými listami | jemný vzor listov len v bočných okrajoch sekcií Ako to prebieha a Galéria, nikdy pod textom |
-| Mosadzné misky, zlaté rámy | zlatá `--accent #d9b56a` ostáva jediným akcentom rozhrania |
-| LED pás za logom, sviečky | `--glow #f0a65a`: svit pod nápisom v úvode, plameň na poukaze |
-| Biele uteráky, orchidey | `--cream`, `--orchid` len ako rezerva, nie farba rozhrania |
-| Vane s modrou a zelenou vodou | tyrkys `--water` len pri vode (misa v úvode, linka krokov) |
-
-Zelenočierne odtiene z predchádzajúcej verzie sú v `assets/style.css` a `assets/premium-v9.css`
-nahradené premennými: `rgba(var(--ink),a)` pre tiene a clony, `rgba(var(--walnut),a)`
-a `rgba(var(--walnut-2),a)` pre panely. Aj kreslená scéna v úvode (`assets/app.js`) má miestnosť
-v tónoch orecha.
-
-Kontrast textu (WCAG): hlavný text `#f4ece0` 16,9 : 1 na plátne a 11,5 : 1 na zelenom lístku,
-vedľajší `#d2c6b5` 11,8 : 1 a 8,0 : 1, najslabší `#aa9d8b` 7,5 : 1 na plátne a 5,1 : 1 na lístku,
-zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
-
-### Kde je ktorá fotka
-
-| Miesto | Fotka |
-| --- | --- |
-| Úvod, prvá kapitola (a pokojná verzia úvodu) | `neon-head-spa`, vpravo, na telefóne nad nadpisom; misa sa ukáže pri prechode do druhej kapitoly |
-| Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
-| Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
-| Poukážky, lístok | tie isté fotky ako tlačené poukážky (`assets/img/poukaz/`, zdroj `docs/poukazky/dl/foto/`), menia sa podľa vybraného rituálu |
-| Salón 30 | `okna`, `buddha`, `komoda` |
-| Galéria | všetkých 13 (poradie vyššie) |
-| Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“ |
-
-Fotky na poukážkach pre pánske, detské a chodidlá sú z Pexels (licencia a autori
-v `docs/poukazky/dl/FOTKY.md`); ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
-v `docs/poukazky/dl/foto/` a znova vyrobiť `assets/img/poukaz/*` (480 a 800 px, 4 : 3, AVIF, WebP, JPG).
-
-### Pohyb podľa miestnosti
-
-- svit LED pásu nad nápisom v úvode sa pomaly nadýchne (`ledBreath`, 10 s),
-- na poukaze bliká plameň sviečky, len žiara, text stojí (`candle`),
-- nad vodným oblúkom v sekcii Ako to prebieha stúpa para (`steamRise`).
-
-Fotky sa pri pohybe nezväčšujú o viac ako 5 % (dosadnutie galérie, prejdenie myšou).
-Pri `prefers-reduced-motion: reduce` stojí všetko a všetko je viditeľné; mimo obrazovky
-a pri nečinnosti sa animácie pozastavia.
+Ak fotografia existuje, použije sa namiesto kresby a štítok Kresba zmizne.
 
 ## Rezervácie
 

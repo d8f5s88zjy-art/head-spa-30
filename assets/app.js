@@ -68,7 +68,7 @@
     // the abstract shot: a dark room, a vertical slit of gold light, steam drifting through it
     function drawSteam(p, t) {
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#0b0806'); bg.addColorStop(.6, '#0d0a07'); bg.addColorStop(1, '#090605');
+      bg.addColorStop(0, '#080c0a'); bg.addColorStop(.6, '#0a0f0c'); bg.addColorStop(1, '#070a08');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
       const sx = W * 0.78, top = H * 0.06, bot = H * 0.94;
       ctx.save(); ctx.globalCompositeOperation = 'lighter';
@@ -93,7 +93,7 @@
       ctx.fillStyle = pool; ctx.fillRect(0, H * .6, W, H * .4);
       ctx.restore();
       const v = ctx.createRadialGradient(W * .6, H * .5, H * .2, W * .6, H * .5, Math.max(W, H) * .8);
-      v.addColorStop(0, 'rgba(9,6,5,0)'); v.addColorStop(1, 'rgba(9,6,5,.78)');
+      v.addColorStop(0, 'rgba(6,8,7,0)'); v.addColorStop(1, 'rgba(6,8,7,.78)');
       ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
 
@@ -128,7 +128,7 @@
       const stream = fall * (1 - calm * 0.85);
       // room
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, rgb(mix([19, 17, 13], [26, 18, 12], c.grade), 1)); bg.addColorStop(.55, rgb(mix([13, 12, 9], [18, 13, 9], c.grade), 1)); bg.addColorStop(1, '#0b0806');   // miestnosť v tónoch orecha, nie zelenočierna
+      bg.addColorStop(0, rgb(mix([15, 22, 19], [22, 20, 15], c.grade), 1)); bg.addColorStop(.55, rgb(mix([11, 16, 13], [16, 14, 11], c.grade), 1)); bg.addColorStop(1, '#090c0a');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
       // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
       const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
@@ -146,7 +146,7 @@
       ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
       // floor sheen under the bowl
       const floor = ctx.createRadialGradient(cx, cy + ry * 0.6, 0, cx, cy + ry * 0.6, rx * 1.8);
-      floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(12,9,6,0)');
+      floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(10,13,11,0)');
       ctx.fillStyle = floor; ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.6, rx * 1.8, ry * 2.2, 0, 0, Math.PI * 2); ctx.fill();
       // the bowl body: a dark ceramic rim below the water line
       if (life < 1) {
@@ -314,7 +314,7 @@
       // vignette
       const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
       const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
-      v.addColorStop(0, 'rgba(10,8,6,0)'); v.addColorStop(1, `rgba(10,8,6,${(phone ? .5 : .7) + .08 * (c.z - 1)})`);
+      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${(phone ? .5 : .7) + .08 * (c.z - 1)})`);
       ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
     return { resize, draw };
@@ -898,24 +898,6 @@
         tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
         const ven = fieldVal('#v-ven');
         tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
-        giftPhoto(ritualName());
-      }
-      // na lístku tá istá fotka ako na tlačenej poukážke danej kategórie (assets/img/poukaz/)
-      const ph = $('[data-gift-photo]');
-      let phKey = 'head-spa', phT;
-      function giftPhoto(name) {
-        if (!ph) return;
-        const key = /^Gentlemen/.test(name) ? 'pansky' : /^Little/.test(name) ? 'detsky' : /^Spoločný/.test(name) ? 'pre-dvoch'
-          : /chodidlá|24K/.test(name) ? 'chodidla' : 'head-spa';
-        if (key === phKey) return;
-        phKey = key; ph.classList.add('swap'); clearTimeout(phT);
-        phT = setTimeout(() => {
-          $$('source, img', ph).forEach((el) => {
-            if (el.srcset) el.srcset = el.srcset.replace(/poukaz\/[a-z-]+?-(\d+)/g, `poukaz/${key}-$1`);
-            if (el.tagName === 'IMG') el.src = `assets/img/poukaz/${key}-800.jpg`;
-          });
-          ph.classList.remove('swap');
-        }, reduced.matches ? 0 : 260);
       }
       vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
       vform.addEventListener('submit', (e) => {
