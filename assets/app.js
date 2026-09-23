@@ -1052,13 +1052,19 @@
       // koniec až po dobehnutí prelínania scény (opacity na .scene, nie na krídlach), časovač je poistka pre pomalý telefón
       const sc = $('.scene', veil);
       if (sc) sc.addEventListener('transitionend', (e) => { if (e.target === sc && e.propertyName === 'opacity') endVeil(); });
-      // krídla sa otvoria, až keď je fotka dverí pripravená (najviac o 0,9 s neskôr, potom aj bez nej)
+      // dvere sa ukážu, až keď je fotka dverí pripravená a nakreslená; keď do 0,9 s nepríde,
+      // dvere sa preskočia (radšej žiadne dvere ako plochá plocha namiesto fotky)
       const im = $('.leaf img', veil);
-      const ready = im && !(im.complete && im.naturalWidth) && im.decode
-        ? Promise.race([im.decode().catch(() => {}), new Promise((r) => setTimeout(r, 900))]) : Promise.resolve();
-      ready.then(() => {
-        setTimeout(flipVeil, phoneMQ.matches ? 520 : 380);   // na telefóne dvere chvíľu postoja
-        setTimeout(endVeil, 2200);
+      const ready = !im ? Promise.resolve(false) : im.complete && im.naturalWidth ? Promise.resolve(true)
+        : Promise.race([im.decode ? im.decode().then(() => true, () => false) : new Promise((r) => { im.onload = () => r(true); im.onerror = () => r(false); }),
+          new Promise((r) => setTimeout(() => r(false), 900))]);
+      ready.then((ok) => {
+        if (!ok) { endVeil(); return; }
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          veil.classList.add('pic');
+          setTimeout(flipVeil, phoneMQ.matches ? 700 : 560);   // dvere chvíľu postoja, na telefóne o niečo dlhšie
+          setTimeout(endVeil, 2600);
+        }));
       });
     }
   });

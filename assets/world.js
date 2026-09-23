@@ -20,9 +20,12 @@
     const go = () => { INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
     INPUTS.forEach((e) => addEventListener(e, go, { passive: true }));
   });
+  // od prvého pohybu sa vykreslia všetky sekcie (CSS world-full), aby skok cez menu pristál presne
+  root.classList.add('world-full');
+  const quit = () => { root.classList.remove('world', 'world-full'); };
   const src = window.HS30_THREE || new URL('vendor/three.module.min.js', here).href;
   let THREE;
-  try { THREE = await import(src); } catch (e) { root.classList.remove('world'); return; }
+  try { THREE = await import(src); } catch (e) { quit(); return; }
 
   const phone = matchMedia('(max-width: 720px)').matches;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -44,18 +47,22 @@
     { at: '#ritual', photo: 'voda', f: [0.5, 0.55], mv: 'right' },
     { at: '#cennik', photo: 'zhora', f: [0.5, 0.5], mv: 'down' },
   ];
-  // pri každej kategórii cenníka jej priestor; fotku kategórie určuje stránka
+  // pri každej kategórii cenníka jej priestor; fotku kategórie určuje stránka.
+  // Bod záujmu je tam, kam mieri výrez fotky na stránke (object-position), napr. neón Spa relax hore.
+  const FOCUS = { 'spa-relax-lozko': [0.5, 0.3] };
   d.querySelectorAll('#cennik .cat[data-cat]').forEach((cat, k) => {
     const img = cat.querySelector('img[data-photo]');
-    if (img) SHOTS.push({ at: cat, mid: true, photo: img.dataset.photo, f: [0.5, 0.62], mv: ['left', 'in', 'right', 'rise', 'left'][k % 5] });
+    if (!img) return;
+    const oy = parseFloat((img.style.objectPosition || '50% 62%').split(' ')[1]) / 100;
+    SHOTS.push({ at: cat, mid: true, oy, photo: img.dataset.photo, f: FOCUS[img.dataset.photo] || [0.5, 0.62], mv: ['left', 'in', 'right', 'rise', 'left'][k % 5] });
   });
   SHOTS.push(
     { at: '#rezervacia', photo: 'lozko', f: [0.5, 0.6], mv: 'rise' },
-    { at: '#poukaz', photo: 'buddha', f: [0.5, 0.45], mv: 'in' },
+    { at: '#poukaz', photo: 'buddha', f: [0.58, 0.3], mv: 'in' },
     { at: '#salon', photo: 'okna', f: [0.5, 0.5], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', f: [0.5, 0.55], mv: 'down' },
-    { at: '#kontakt', photo: 'neon-head-spa', f: [0.5, 0.42], mv: 'in' },
+    { at: '#kontakt', photo: 'neon-head-spa', f: [0.5, 0.3], mv: 'in' },
   );
   const N = SHOTS.length - 1;
 
@@ -66,7 +73,7 @@
   d.body.prepend(canvas);
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' }); }
-  catch (e) { canvas.remove(); root.classList.remove('world'); return; }
+  catch (e) { canvas.remove(); quit(); return; }
   // farby fotiek idú na obrazovku bez prepočtov, presne ako na fotke
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
@@ -120,10 +127,10 @@
   const fileUrl = (f) => (FILM && FILM[f]) || base + f;
   let maxTex = 4096;
   function pickSize(s) {
-    // najmenšia fotka, ktorá na obrazovke nebude zväčšená o viac ako štvrtinu
+    // najmenšia fotka, ktorá na obrazovke nebude zväčšená (ostrosť ako na fotke)
     const fit = SIZES.filter((w) => w <= maxTex);
     const need = s.pw / s.vw * canvas.width;
-    return fit.find((w) => w >= need * 0.8) || fit[fit.length - 1];
+    return fit.find((w) => w >= need * 0.95) || fit[fit.length - 1];
   }
   async function bitmap(url) {
     let blob;
@@ -157,7 +164,7 @@
         const u = s.mat.uniforms;
         u.uMap.value = tex(img); u.uDepth.value = tex(dep);
         renderer.initTexture(u.uMap.value); renderer.initTexture(u.uDepth.value);
-        s.ready = true; wake();
+        s.ready = true; s.t0 = performance.now(); wake();
       })
       .catch(() => { s.loading = null; s.failed = true; });
     return s.loading;
@@ -205,7 +212,10 @@
       uniform sampler2D tA, tB; uniform float uMix, uAspect; varying vec2 vUv;
       void main() {
         vec3 c = texture2D(tA, vUv).rgb;
-        if (uMix > 0.0) c = mix(c, texture2D(tB, vUv).rgb, uMix);
+        if (uMix > 0.0) {
+          c = mix(c, texture2D(tB, vUv).rgb, uMix);
+          c *= 1.0 - 0.22 * sin(3.14159 * uMix);   // prechod cez jemné šero ako vo filme
+        }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
         c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * 0.34;
@@ -227,7 +237,11 @@
       const el = typeof s.at === 'string' ? d.querySelector(s.at) : s.at;
       if (!el || !el.offsetParent) return null;
       const r = el.getBoundingClientRect();
-      return s.mid ? r.top + scrollY + r.height / 2 - vh / 2 : r.top + scrollY - vh * 0.45;
+      if (!s.mid) return r.top + scrollY - vh * 0.45;
+      // telefón: záber je vysoký takmer ako obrazovka, bod záujmu fotky sa nedá posunúť kamerou,
+      // preto kamera zastane, keď je v okne tá časť fotky, na ktorú mieri výrez (napr. neón hore)
+      const fy = phone && s.oy != null ? clamp(s.oy * (1 + 2 * OVER) - 0.12, 0.2, 0.5) : 0.5;
+      return r.top + scrollY + r.height / 2 - vh * fy;
     });
     // skrytá kategória (filter v cenníku) dostane miesto hneď za predchádzajúcou
     for (let k = 1; k < anchors.length; k++) anchors[k] = Math.max(anchors[k] == null ? 0 : anchors[k], anchors[k - 1] + 1);
@@ -266,15 +280,25 @@
     for (const s of SHOTS) if (s.ready && (!best || Math.abs(s.i - S) < Math.abs(best.i - S))) best = s;
     return best;
   }
-  function draw(now) {
+  // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
+  let fade = 0, fadeK = -1, fadeGoal = 0, sub = null;
+  const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);
+  function draw(now, dt) {
     keepAround(clamp(Math.round(S), 0, N));
-    // prelínanie prebieha v strede medzi dvomi časťami, kým záber zakrýva textová doska
     const k = clamp(Math.floor(S), 0, N);
     let A = SHOTS[k], B = SHOTS[clamp(k + 1, 0, N)];
-    let mix = A === B ? 0 : smooth(0.35, 0.65, S - k);
-    if (!A.ready) { A = B.ready ? B : nearestReady(); mix = 0; }
-    if (!A) return false;
-    if (!B.ready || A === B) mix = 0;
+    const want = A === B ? 0 : smooth(0.42, 0.58, S - k);
+    if (k !== fadeK) { fade = want; fadeK = k; }
+    fadeGoal = Math.abs(V) < 0.03 ? Math.round(want) : want;
+    fade += (fadeGoal - fade) * (1 - Math.pow(0.02, dt || 0));
+    let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
+    if (!A.ready) {
+      // aktuálny záber sa ešte načítava: dovtedy najbližší hotový, potom sa doň prelnie
+      const R = B.ready ? B : nearestReady();
+      if (!R) return false;
+      A = R; B = R; mix = 0; sub = R;
+    } else if (sub && sub !== A && sub.ready && fin(A, now) < 1) { B = A; A = sub; mix = fin(B, now); }
+    else sub = null;
     renderer.setRenderTarget(rtA); renderer.clear();
     A.mesh.visible = true; place(A, now); renderer.render(scene, camera); A.mesh.visible = false;
     if (mix > 0.001) {
@@ -284,7 +308,8 @@
     post.material.uniforms.uMix.value = mix > 0.001 ? mix : 0;
     renderer.setRenderTarget(null); renderer.clear();
     renderer.render(postScene, postCam);
-    return true;
+    // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej
+    return Math.abs(fadeGoal - fade) > 0.002 || (B.ready && fin(B, now) < 1) || (A.ready && fin(A, now) < 1);
   }
 
   /* ---------- adaptívna kvalita: keď zariadenie nestíha, zníži sa rozlíšenie ---------- */
@@ -321,8 +346,8 @@
     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
-    draw(now);
-    const moving = Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008;
+    const busy = draw(now, dt);
+    const moving = busy || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008;
     if (moving) { quality(dt); raf = requestAnimationFrame(frame); }
     else if (breath > 0) setTimeout(() => { if (!raf && running) raf = requestAnimationFrame(frame); }, 1000 / 30 - 4);   // v pokoji 30 snímok za sekundu
   }
@@ -342,7 +367,7 @@
       if (b0 == null) { b0 = e.beta; g0 = e.gamma; }
       // základ sa pomaly dorovná, aby obraz neostal vychýlený, keď telefón držíš inak
       b0 += (e.beta - b0) * 0.01; g0 += (e.gamma - g0) * 0.01;
-      const nx = clamp((e.gamma - g0) / 36, -0.5, 0.5), ny = clamp((e.beta - b0) / 36, -0.5, 0.5);
+      const nx = clamp((e.gamma - g0) / 24, -0.5, 0.5), ny = clamp((e.beta - b0) / 24, -0.5, 0.5);
       if (Math.abs(nx - mx) > 0.006 || Math.abs(ny - my) > 0.006) { mx = nx; my = ny; wake(); }
     }, { passive: true });
   }
@@ -357,8 +382,8 @@
   const first = SHOTS[clamp(Math.round(S), 0, N)];
   keepAround(first.i);
   await first.loading;
-  if (!first.ready) { canvas.remove(); root.classList.remove('world'); return; }
-  draw(performance.now());
+  if (!first.ready) { canvas.remove(); quit(); return; }
+  draw(performance.now(), 0);
   requestAnimationFrame(() => root.classList.add('world-in'));
   wake();
 })();
