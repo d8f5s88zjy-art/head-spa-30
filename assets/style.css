@@ -1498,3 +1498,39 @@ section{padding:var(--lux-space) 0}
 /* kontakt: telefón, e-mail, web a Instagram vždy pod sebou (na mobile boli zlepené v jednom riadku) */
 .info a{display:flex;width:fit-content}
 .where picture,.where img{object-position:50% 72%}
+
+/* ================= Čitateľnosť =================
+   Riedke verzálky ostávajú len na malých nadpiskoch sekcií. Tlačidlá, odkazy, filtre a popisky
+   polí sú normálnym písmom, polia formulára sú zreteľné okienka, aby bolo jasné, kam písať. */
+.btn,.nav .btn.primary,.btn.small{text-transform:none;letter-spacing:.02em;font-size:15px;font-weight:700}
+.btn.small,.nav .btn.primary{font-size:14px}
+.kicker,.band .kicker,.hero-static .kicker{letter-spacing:.18em;font-size:12px}
+.chip{text-transform:none;letter-spacing:.01em;font-size:15px;font-weight:600}
+.card-toggle,.card .actions .btn{text-transform:none;letter-spacing:.01em;font-size:14.5px;font-weight:600}
+.card .meta span{letter-spacing:.08em;font-size:12px}
+.map-link,.mbar a{text-transform:none;letter-spacing:.01em;font-size:14.5px}
+/* formulár: popisok normálnym písmom, pole ako okienko s jemným rámikom */
+.field label,.field .lbl,.vform .lbl{text-transform:none;letter-spacing:0;font-family:var(--body);font-size:14.5px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+.field label small{font-weight:400;color:var(--text-tertiary)}
+.field input,.field select,.field textarea{border:1px solid rgba(239,231,218,.22);border-radius:3px;background-color:var(--panel);padding:14px 16px;font-size:16px;color:var(--text-primary)}
+.field select{padding-right:40px;background-position:right 14px center}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(239,231,218,.36)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,166,107,.14)}
+.field input::placeholder,.field textarea::placeholder{color:#7d7366}
+.field{margin-top:20px}
+.hint{font-size:14px;color:var(--text-tertiary)}
+/* kroky formulára: čiara už nepreškrtáva nadpis, kroky oddeľuje priestor */
+.vf+.vf{border-top:0;margin-top:44px;padding-top:0}
+.vf legend{font-size:24px;margin-bottom:6px}
+.vf legend span{font-family:var(--body);font-size:13px;letter-spacing:0;color:var(--accent);min-width:1.2em}
+.choice span{font-size:15px;color:var(--text-primary);border-color:rgba(239,231,218,.22);background:var(--panel)}
+.day span{background:var(--panel);border-color:rgba(239,231,218,.22)}
+/* lístok rezervácie a poukazu v tónoch webu (orech a zlatá), nie zelený */
+.ticket{background:var(--panel-2);border-color:var(--line-strong)}
+.t-ph::before{background:linear-gradient(100deg,rgba(var(--ink),.94) 0%,rgba(var(--ink),.8) 45%,rgba(var(--ink),.35) 100%)}
+.t-ph picture,.t-ph img{opacity:.5}
+.ticket small{letter-spacing:.14em}
+/* ostatné ovládacie prvky tiež normálnym písmom; verzálky ostávajú len nadpiskom sekcií, kategóriám a lístku */
+.linkbtn,.step-cta span,.card .about .lbl,.to-top span,.lbl{text-transform:none;letter-spacing:.01em;font-size:14.5px}
+.linkbtn{font-weight:600;color:var(--accent-hover)}
+.card .about .lbl{font-weight:600;color:var(--text-primary)}
