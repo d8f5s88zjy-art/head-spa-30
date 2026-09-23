@@ -45,6 +45,7 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
   karty uvoľní. Skrytá kategória cenníka (filter) z filmu vypadne.
 - Ostrosť: plné rozlíšenie displeja do 2x, fotky bez tónovania a bez hmly, farby presne ako na
   fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch a pri prelínaní krátke stmavnutie o 22 %.
+- Oblúk: kamera sa pri každom zábere posúva do strany (4 % šírky, na telefóne 2,6 %) a pozerá sa stále na bod záujmu, takže popredie sa posúva voči stene. Myš a naklonenie telefónu pridajú ďalší oblúk.
 - Pohyb: kriticky tlmená pružina, prelínanie v strede medzi časťami, v pokoji sa dokončí na
   bližší záber. V pokoji jemné dýchanie kamery 30 snímok za sekundu, po 25 s bez pohybu kreslenie
   stojí. Na počítači sa perspektíva pohne za myšou, na Androide pri naklonení (mŕtva zóna 0,7°),

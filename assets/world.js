@@ -43,13 +43,15 @@
           (x a y ako časť šírky a výšky záberu, z ako časť vzdialenosti; mínus z = nájazd) */
   // jeden jednotný pohyb celého filmu: kamera ide stále pomaly dopredu (nájazd) s jemným
   // bočným posunom, takže celá stránka pôsobí ako jedna súvislá prechádzka salónom
-  const FWD = [[0, 0, 0.04], [0, 0, -0.12]];
+  // Hĺbku fotky prezradí až bočný pohyb: kamera ide po oblúku okolo bodu záujmu (pozerá sa stále naň),
+  // popredie sa tak posúva voči stene ako pri skutočnej prechádzke miestnosťou.
+  const ARC = phone ? 0.026 : 0.04;
   const MOVES = {
-    in: FWD,
-    right: [[-0.008, 0, 0.04], [0.008, 0, -0.12]],
-    left: [[0.008, 0, 0.04], [-0.008, 0, -0.12]],
-    rise: [[0, -0.006, 0.04], [0, 0.006, -0.12]],
-    down: [[0, 0.006, 0.04], [0, -0.006, -0.12]],
+    in: [[-ARC * 0.5, 0, 0.04], [ARC * 0.5, 0, -0.12]],
+    right: [[-ARC, 0, 0.04], [ARC, 0, -0.12]],
+    left: [[ARC, 0, 0.04], [-ARC, 0, -0.12]],
+    rise: [[-ARC * 0.4, -ARC * 0.5, 0.04], [ARC * 0.4, ARC * 0.5, -0.12]],
+    down: [[ARC * 0.4, ARC * 0.5, 0.04], [-ARC * 0.4, -ARC * 0.5, -0.12]],
   };
   const SHOTS = [
     // úvod: tá istá miestnosť, ktorú vidno cez otvorené dvere (a tá istá fotka ako úvod bez 3D)
@@ -367,14 +369,15 @@
       (m[0][2] + (m[1][2] - m[0][2]) * e) * DIST,
     );
     const sec = now / 1000;
-    off.x += (Math.sin(sec * 0.37) * 0.004 * breath + pmx * 0.018) * s.vw;
-    off.y += (Math.sin(sec * 0.29 + 1.3) * 0.003 * breath + pmy * 0.012) * s.vh;
+    off.x += (Math.sin(sec * 0.37) * 0.006 * breath + pmx * 0.03) * s.vw;
+    off.y += (Math.sin(sec * 0.29 + 1.3) * 0.004 * breath + pmy * 0.018) * s.vh;
     off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
     // pri prechode kamera odchádzajúceho záberu pokračuje dopredu, akoby prešla do ďalšej miestnosti
     // odchádzajúci záber: kamera ide ďalej dopredu; prichádzajúci: kamera prichádza zo vzdialenosti
     off.z -= push > 0 ? Math.pow(push, 1.4) * 0.2 * DIST : push * 0.07 * DIST;
     camera.position.copy(s.eye).add(off);
-    tmp.set(s.eye.x + off.x * 0.35, s.eye.y + off.y * 0.35, 0);
+    // pohľad ostáva takmer na bode záujmu: posun kamery sa mení na oblúk okolo neho
+    tmp.set(s.eye.x + off.x * 0.08, s.eye.y + off.y * 0.08, 0);
     camera.lookAt(tmp);
   }
 
