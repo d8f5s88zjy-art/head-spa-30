@@ -1788,3 +1788,47 @@ footer .col a{color:var(--text-secondary)}
   /* spodná lišta prilepená k okraju, bez rozmazania */
   .mbar{left:0;right:0;bottom:0;border-radius:0;border-left:0;border-right:0;border-bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));backdrop-filter:none;background:#0d0a07}
 }
+
+/* ================= Luxusná kompozícia =================
+   Rytmus ako v hotelovom filme: veľký záber cez celú obrazovku, potom pokojný plný pás
+   s veľkým písmom. Žiadne plávajúce krabice nad fotkou, film nepresvitá za textom. */
+html.world .site>section{padding:78vh 0 0}
+html.world .site>.ritual{padding-top:62vh}
+html.world .site{overflow-x:clip}
+html.world .site>section>.wrap{background:#0d0a07;border:0;box-shadow:none;isolation:isolate;padding:clamp(72px,9vw,140px) 0}
+/* pás ide cez celú šírku; záber sa doň pomaly stratí a pod pásom sa pomaly vráti, bez ostrých hrán */
+html.world .site>section>.wrap::after{content:"";position:absolute;left:-100vmax;right:-100vmax;top:0;bottom:-18vh;z-index:-1;background:linear-gradient(180deg,#0d0a07 calc(100% - 18vh),rgba(13,10,7,0));pointer-events:none}
+html.world .site>section>.wrap::before{content:"";position:absolute;left:-100vmax;right:-100vmax;bottom:100%;height:26vh;background:linear-gradient(180deg,rgba(13,10,7,0),#0d0a07);pointer-events:none}
+
+/* väčšie, sebavedomé písmo */
+.h2{font-size:clamp(42px,5.6vw,88px);line-height:1;letter-spacing:-.022em}
+.lede{font-size:clamp(17px,1.35vw,19px);line-height:1.75;color:rgba(239,231,218,.8)}
+.kicker{letter-spacing:.32em}
+
+/* cenník ako menu luxusného spa: jeden pokojný blok, rituály oddelené vlasovou linkou */
+html.world #cennik>.wrap{background:#0d0a07}
+html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{background:#0d0a07;border:0}
+html.world #cennik .cat.has-ph{min-height:48vh;margin:72px 0 8px;overflow:hidden}
+html.world-in #cennik .cat-ph,html.world-in #cennik .cat.has-ph::before{opacity:1}
+html.world-in #cennik .cat.has-ph::before{left:0;right:0;background:linear-gradient(0deg,rgba(13,10,7,.92) 0%,rgba(13,10,7,.3) 45%,rgba(13,10,7,0) 75%)}
+#cennik .list{column-gap:clamp(40px,5vw,88px)}
+html .site #cennik .card,html .site #cennik .card.featured{background:none!important;border:0!important;border-top:1px solid rgba(239,231,218,.12)!important;border-radius:0;box-shadow:none!important;padding:36px 0 30px}
+html .site #cennik .card.featured{border-top-color:rgba(212,174,98,.55)!important}
+html .site #cennik .card.featured::before,html .site #cennik .card.featured::after{display:none}
+#cennik .card .glyph{display:none}
+#cennik .card{grid-template-columns:1fr auto}
+#cennik .card .actions,#cennik .card .panel{grid-column:1/3}
+#cennik .card .mini .badge{background:none;color:var(--accent);padding:0;border:0;letter-spacing:.2em}
+#cennik .card h3{font-size:clamp(24px,2.3vw,32px)}
+#cennik .card .desc{font-size:16px}
+/* v karte jedno tiché tlačidlo namiesto zlatých blokov */
+html .site #cennik .card .actions .btn.small{background:none!important;color:var(--accent-hover)!important;border:1px solid rgba(212,174,98,.45)!important;box-shadow:none!important}
+html .site #cennik .card .actions .btn.small:hover{border-color:var(--accent)!important}
+@media (max-width:640px){
+  html.world .site>section{padding:40vh 0 0}
+  html.world .site>.ritual{padding-top:46vh}
+  html.world .site>section>.wrap{padding:56px 20px}
+  html.world #cennik>.wrap{padding-left:0;padding-right:0}
+  html.world #cennik .cat.has-ph{min-height:36vh;margin:48px 0 0}
+  html .site #cennik .card,html .site #cennik .card.featured{padding:28px 20px 24px}
+}

@@ -61,6 +61,8 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
   pásy na snímku), takže prelínanie nezasekne. Vinetácia sa kreslí v tom istom prechode ako
   fotka, shadery sú preložené vopred a posledný krok znižovania kvality je 30 snímok za sekundu.
   Film sa zapne len pri aspoň 4 GB pamäti a 4 jadrách, slabší telefón dostane pokojný úvod s fotkou.
+- Rytmus: záber cez celú obrazovku, potom plný pás cez celú šírku s veľkým písmom (vrstva Luxusná kompozícia
+  na konci `assets/style.css`), prechody medzi záberom a pásom sú mäkké, cenník je menu s vlasovými linkami.
 - Lighthouse (lokálne, bez gzip): mobil 82 až 86, desktop 98, prístupnosť 100, TBT 0 ms.
 
 ## Úvodné dvere
