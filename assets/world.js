@@ -49,7 +49,8 @@
     down: [[-0.006, 0.022, -0.01], [0.006, -0.02, -0.07]],
   };
   const SHOTS = [
-    { at: null, photo: 'miestnost', f: [0.5, 0.4], fm: [0.5, 0.5], mv: 'in' },
+    // úvod: tá istá miestnosť, ktorú vidno cez otvorené dvere (a tá istá fotka ako úvod bez 3D)
+    { at: null, photo: 'okna', f: [0.5, 0.4], fm: [0.5, 0.5], mv: 'in' },
     { at: '#ritual', photo: 'voda', f: [0.5, 0.55], mv: 'right' },
     { at: '#cennik', photo: 'zhora', f: [0.5, 0.5], mv: 'down' },
   ];
@@ -65,7 +66,7 @@
   SHOTS.push(
     { at: '#rezervacia', photo: 'lozko', f: [0.5, 0.6], mv: 'rise' },
     { at: '#poukaz', photo: 'buddha', f: [0.58, 0.3], mv: 'in' },
-    { at: '#salon', photo: 'okna', f: [0.5, 0.5], mv: 'right' },
+    { at: '#salon', photo: 'miestnost', f: [0.5, 0.55], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', f: [0.5, 0.55], mv: 'down' },
     { at: '#kontakt', photo: 'neon-head-spa', f: [0.5, 0.3], mv: 'in' },

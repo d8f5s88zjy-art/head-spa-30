@@ -25,12 +25,12 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 
 | Časť | Záber |
 | --- | --- |
-| Úvod | `miestnost` (tá istá fotka ako v úvode bez 3D, prelnú sa do seba) |
+| Úvod | `okna` (tá istá miestnosť ako v otvore dverí a vo fotke úvodu bez 3D) |
 | Ako to prebieha | `voda` |
 | Rituály a ceny | `zhora`, potom v okne každej kategórie jej priestor (fotka kategórie z cenníka) |
 | Rezervácia | `lozko` |
 | Poukážky | `buddha` |
-| Salón 30 | `okna` |
+| Salón 30 | `miestnost` |
 | Galéria | `neon-spa` |
 | Otázky | `komoda` |
 | Kontakt | `neon-head-spa` |
@@ -70,15 +70,15 @@ sa preskočia a tma sa rozplynie.
 
 ## Úvod
 
-Úvod má jednu obrazovku, žiadne kapitoly. Po otvorení dverí sa miestnosť salónu so zelenými
-dverami (`miestnost`) pomaly vynorí z tmy a usadí sa, nadpis nastúpi po slovách. Pri skrolovaní
+Úvod má jednu obrazovku, žiadne kapitoly. Po otvorení dverí sa miestnosť salónu pri oknách
+(`okna`, tá istá ako v otvore dverí) pomaly vynorí z tmy a usadí sa, nadpis nastúpi po slovách. Pri skrolovaní
 fotka zaostáva za stránkou, miestnosť stmavne a text odíde rýchlejšie, takže sa vrstvy od seba
 oddelia; hneď pod tým začína Ako to prebieha.
 
 Technika (`makeReel` v `assets/app.js`, štýly `.reel` v `assets/style.css`):
 - Nástup je čisté CSS (`settle`, `shadeOut`), čaká na dvere cez `--veil`. Pri skrolovaní
   skript mení len `transform` a priehľadnosť (`.fs`, `.lift`) a premennú `--p` na stmavnutie.
-- Fotka má `fetchpriority="high"` a pre telefón vlastný výrez na výšku (`miestnost-m`).
+- Fotka (`okna`, miestnosť pri oknách, tá istá ako v otvore dverí) má `fetchpriority="high"` a pre telefón vlastný výrez na výšku (`okna-m`).
   Končí 5 % nad spodkom pod tmavým prechodom; záber na celú obrazovku by prehliadač bral ako
   pozadie a LCP by meral až nadpis.
 - Pri obmedzení pohybu a na nízkej obrazovke na šírku sa ukáže pokojný úvod s fotkou nápisu.
@@ -249,7 +249,7 @@ zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
 
 | Miesto | Fotka |
 | --- | --- |
-| Úvod | `miestnost` (pozri Úvod); pokojná verzia úvodu `neon-head-spa` |
+| Úvod | `okna` (pozri Úvod); pokojná verzia úvodu `neon-head-spa` |
 | Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
 | Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
 | Poukážky, lístok | tie isté fotky ako tlačené poukážky (`assets/img/poukaz/`, zdroj `docs/poukazky/dl/foto/`), menia sa podľa vybraného rituálu |

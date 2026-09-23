@@ -1,4 +1,4 @@
-/* HEAD SPA 30. Vanilla JS, no build step. */
+/* HEAD SPA 30. Čistý JavaScript bez frameworku; minifikáciu robí tools/build.mjs. */
 (function () {
   'use strict';
   const $ = (s, r) => (r || document).querySelector(s);
@@ -24,7 +24,7 @@
     return { resize() { last = ''; }, draw, setCuts() {} };
   }
 
-  /* ============ text splitting with seeded offsets ============ */
+  /* ============ delenie textu s posunmi z pevného semienka ============ */
   function splitLine(el, mode, seed, spread) {
     const text = el.textContent.trim();
     const words = text.split(/\s+/);
@@ -58,7 +58,7 @@
     el.textContent = ''; el.appendChild(sr); el.appendChild(vis);
   }
 
-  /* ============ headlines rise out of a masked slot, line by line ============ */
+  /* ============ nadpisy stúpajú z maskovanej štrbiny, riadok po riadku ============ */
   function wrapLines(h) {
     const nodes = [...h.childNodes];
     const lines = []; let buf = '';
@@ -83,7 +83,7 @@
   }
   $$('.h2').forEach(wrapLines);
 
-  /* ============ hero scrub ============ */
+  /* ============ úvod riadený skrolovaním ============ */
   const hero = $('.hero'), stage = $('.stage'), env = $('.env');
   const bands = $$('.band', stage).map((el, i) => ({
     el, a: +el.dataset.a, b: +el.dataset.b, i,
@@ -188,7 +188,7 @@
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown); }, 120); }, { passive: true });
   }
-  /* the gallery lightbox: only real photographs open, drawn shots stay in the grid */
+  /* zväčšenie v galérii: otvoria sa len skutočné fotky, kreslené zábery ostanú v mriežke */
   const lb = $('#lightbox');
   if (lb) {
     const lbImg = $('img', lb), lbCap = $('.lb-cap', lb);
@@ -221,7 +221,7 @@
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
-  // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
+  // prehliadka už beží aj na telefónoch; statický úvod dostane len nízka obrazovka na šírku a obmedzený pohyb
   const GATES = [
     '(max-height: 500px)',
     '(prefers-reduced-motion: reduce)'
@@ -260,7 +260,7 @@
     setTimeout(() => { if (!veilDone) veil.classList.add('through'); }, 260);   // a prejdeš cez ne
   }
 
-  /* ============ nav: solid after the top, and it holds your place ============ */
+  /* ============ navigácia: pod vrchom stránky plná a pri čítaní neprekáža ============ */
   const nav = $('.nav');
   let navSolid = false;
   function navCheck() {
@@ -268,7 +268,7 @@
     if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
-  // the bar steps aside while you read downward and comes back the moment you scroll up
+  // lišta sa pri čítaní smerom dole uhne a vráti sa hneď, ako sa skroluje hore
   let lastY = scrollY, navHidden = false, navT = 0;
   addEventListener('scroll', () => {
     const y = scrollY, down = y > lastY + 4, up = y < lastY - 4;
@@ -279,7 +279,7 @@
   }, { passive: true });
   nav.addEventListener('focusin', () => { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } });
 
-  /* ============ the hand: magnetic primary buttons, a light under the cursor on cards (fine pointers only) ============ */
+  /* ============ ruka: magnetické hlavné tlačidlá, svetlo pod kurzorom na kartách (len pri presnom ukazovadle) ============ */
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
     $$('.btn.primary').forEach((btn) => {
       btn.addEventListener('pointermove', (e) => {
@@ -295,7 +295,7 @@
     }, { passive: true }));
   }
   let atBottom = false;
-  /* reading progress: one hairline, driven by the scroll listener that is already here */
+  /* postup čítania: jedna vlasová linka, poháňa ju poslucháč skrolovania, ktorý tu už je */
   const prog = document.createElement('div');
   prog.className = 'prog'; prog.setAttribute('aria-hidden', 'true');
   if (!reduced.matches) document.body.appendChild(prog);
@@ -321,7 +321,7 @@
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
   $$('#cennik,#rezervacia,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
-  /* ============ the light is handed from room to room ============ */
+  /* ============ svetlo sa podáva z miestnosti do miestnosti ============ */
   const scenes = $$('[data-scene]');
   const inScene = new Set();
   document.body.dataset.scene = 'hero';
@@ -336,7 +336,7 @@
   }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
   scenes.forEach((s) => sceneIO.observe(s));
 
-  /* ============ stillness: sections rest off screen, the page rests when the visitor does ============ */
+  /* ============ pokoj: sekcie mimo obrazovky odpočívajú, stránka odpočíva spolu s návštevníkom ============ */
   const liveIO = new IntersectionObserver((es) => { es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)); if (typeof driveLines === 'function') driveLines(); }, { threshold: 0 });
   $$('.gift,.book,.contact').forEach((s) => liveIO.observe(s));
   let idleT;
@@ -349,7 +349,7 @@
   }
   ['scroll', 'pointermove', 'pointerdown', 'keydown', 'touchstart', 'wheel'].forEach((ev) => addEventListener(ev, wake, { passive: true }));
 
-  /* ============ entrances ============ */
+  /* ============ príchody ============ */
   const rv = $$('.rv');
   const rio = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
@@ -358,8 +358,8 @@
   }), { threshold: 0, rootMargin: '0px 0px -10% 0px' });
   rv.forEach((el) => rio.observe(el));
 
-  /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
-  /* every .steps block runs its own water line, independently of the others */
+  /* ============ pohyb zo skrolovania: vodná linka, rozsvietené číslice, citát (bez ďalších slučiek) ============ */
+  /* každý blok .steps má vlastnú vodnú linku, nezávisle od ostatných */
   let pinned = false;
   const streams = $$('.steps').map((box) => {
     const path = $('.stream .draw', box);
@@ -380,7 +380,7 @@
     if (pinned) return;
     streams.forEach((s) => {
       const r = s.box.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > innerHeight + 200) return;   // off screen, nothing to draw
+      if (r.bottom < -200 || r.top > innerHeight + 200) return;   // mimo obrazovky, nie je čo kresliť
       const p = clamp((innerHeight * 0.78 - r.top) / r.height, 0, 1);
       const d = Math.round(s.len * (1 - p));
       if (d !== s.lastDash) { s.lastDash = d; s.path.style.strokeDashoffset = d; }
@@ -389,7 +389,7 @@
   }
   addEventListener('scroll', driveLines, { passive: true }); driveLines();
 
-  /* ============ counters (ledger numerals) ============ */
+  /* ============ počítadlá (číslice ako v účtovnej knihe) ============ */
   const counters = $$('[data-count]');
   const counted = new Set();
   function runCounter(el) {
@@ -424,7 +424,7 @@
   }
   reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else { unpinFinalStates(); applyHeroMode(); } });
 
-  /* ============ price list: filters, finder, details, the cascade ============ */
+  /* ============ cenník: filtre, vyhľadávač, detaily, kaskáda ============ */
   const cards = $$('.card'), cats = $$('.cat'), count = $('.count');
   let activeCat = 'all';
   function cascade(list) {
@@ -433,7 +433,7 @@
     void document.body.offsetWidth;
     list.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); }); sweepPop();
   }
-  // animationend can be missed (hidden tab, a card filtered out mid-animation), so a timer sweeps up too
+  // animationend sa môže stratiť (skrytá karta prehliadača, karta odfiltrovaná počas animácie), preto upratuje aj časovač
   let popSweep = 0;
   function sweepPop() { clearTimeout(popSweep); popSweep = setTimeout(() => cards.forEach((c) => c.classList.remove('pop')), 1400); }
   cards.forEach((c) => c.addEventListener('animationend', (e) => { if (e.animationName === 'cardIn') c.classList.remove('pop'); }));
@@ -496,7 +496,7 @@
     activeCat = cat; applyFilter(fromChip);
   }
   $$('.tools .chip').forEach((b) => b.addEventListener('click', () => pickCat(b.dataset.filter, true)));
-  /* a link elsewhere on the page can open the list already filtered by category */
+  /* odkaz inde na stránke môže otvoriť zoznam už vyfiltrovaný podľa kategórie */
   $$('[data-cat-jump]').forEach((a) => a.addEventListener('click', () => {
     pickCat(a.dataset.catJump, true);
     const id = (a.getAttribute('href') || '').slice(1), target = id && document.getElementById(id);
@@ -514,14 +514,14 @@
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* ============ faq ============ */
+  /* ============ časté otázky ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');
     it.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
     $('.faq-a', it).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* ============ vouchers: pick, preview on the ticket, send as an e-mail order ============ */
+  /* ============ poukazy: výber, náhľad na lístku, odoslanie ako objednávka e-mailom ============ */
   idle(function poukazy() {
     const vform = $('#vform');
     if (vform) {
@@ -561,7 +561,7 @@
     }
   });
 
-  /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
+  /* ============ rezervácia: výber jedného zo 17 rituálov, dňa a časového okna; správa odchádza z vlastného telefónu hosťa ============ */
 
   /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
      Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
@@ -776,7 +776,7 @@
       }
       const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
 
-      // ---- pick a ritual from a card: same slug on the card and the option
+      // ---- výber rituálu z karty: rovnaký slug na karte aj v položke zoznamu
       function selectRitual(slug, flash) {
         if (!rform.querySelector(`option[value="${slug}"]`)) return false;
         sel.value = slug; refresh();
@@ -791,7 +791,7 @@
       const fromUrl = new URLSearchParams(location.search).get('ritual');
       if (fromUrl) selectRitual(fromUrl, false);
 
-      // ---- "more" toggles: exact time, alternative date, voucher code
+      // ---- prepínače „viac“: presný čas, náhradný dátum, kód poukazu
       $$('[data-more]', rform).forEach((b) => b.addEventListener('click', () => {
         const box = $('#' + b.dataset.more); const open = box.hidden;
         box.hidden = !open; b.setAttribute('aria-expanded', String(open));
@@ -800,7 +800,7 @@
         refresh();
       }));
 
-      // ---- time windows: a chip is out when its window starts after the last possible start
+      // ---- časové okná: čip vypadne, keď jeho okno začína po poslednom možnom začiatku
       function tuneWindows(box, d) {
         const sat = d && d.getDay() === 6, last = d ? lastStart(d) : null;
         $$('input', box).forEach((i) => {
@@ -813,10 +813,10 @@
       }
       const windowText = (v, d) => ((d && d.getDay() === 6 ? WINDOW_SAT : WINDOW)[v] || WINDOW.any);
 
-      // ---- everything derived from the form, recomputed on every change
+      // ---- všetko odvodené z formulára, prepočíta sa pri každej zmene
       function refresh() {
         const r = ritual(), d = parse(datum.value), d2 = parse(datum2.value), n = persons();
-        // ritual hint, persons, note placeholder
+        // nápoveda k rituálu, počet osôb, zástupný text poznámky
         if (r) {
           const base = `Vybraný rituál: ${r.name}, ${r.min} min`;
           rHint.textContent = r.cat === 'couple' ? `${base}. Cena ${r.price} platí za obe osoby. Ležíte vedľa seba, rozprávať sa nemusíte. Meno druhej osoby napíš do poznámky.`
@@ -827,7 +827,7 @@
         pozn.placeholder = r ? (NOTE_PH[r.cat] || (/hĺbkov/i.test(r.name) ? NOTE_PH.deep : NOTE_PH.base)) : NOTE_PH.base;
         poznHint.hidden = !(r && r.cat === 'kids' && !pozn.value.trim());
         if (!poznHint.hidden) poznHint.textContent = 'Napíš prosím vek dieťaťa, pomôže nám pripraviť rituál.';
-        // day and windows
+        // deň a okná
         tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
         const last = d ? lastStart(d) : null;
         if (d && d.getDay() === 6 && r && last !== null && last < 15) casHint.textContent = `V sobotu máme do 15:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
@@ -835,10 +835,10 @@
         else casHint.textContent = '';
         const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
         datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
-        // exact time bounds
+        // hranice presného času
         if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
         else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
-        // the message
+        // správa
         const lines = ['Dobrý deň, chcem si rezervovať termín v HEAD SPA 30.', ''];
         lines.push(r ? `Rituál: ${r.name} (${r.min} min, ${r.cat === 'couple' ? `2 osoby, ${r.price} za obe osoby` : r.price})` : 'Rituál: (nevybraný)');
         let when = '';
@@ -859,7 +859,7 @@
         shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
         wa.href = `https://wa.me/421911153136?text=${encodeURIComponent(message)}`;
         sms.href = `sms:+421911153136?&body=${encodeURIComponent(shortMessage)}`;
-        // the ticket
+        // lístok
         tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
         tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
         tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
@@ -869,7 +869,7 @@
         saveDraft();
       }
 
-      // ---- validation: one list of plain sentences, focus on the first wrong field
+      // ---- kontrola: jeden zoznam jednoduchých viet, fokus na prvé chybné pole
       function validate() {
         const problems = []; let first = null;
         const bad = (el, msg) => { problems.push(msg); const f = el.closest('.field'); if (f) f.classList.add('invalid'); el.setAttribute('aria-invalid', 'true'); if (!first) first = el; };
@@ -902,7 +902,7 @@
         err.hidden = true; return true;
       }
 
-      // ---- sending: WhatsApp is a real link (a native gesture), e-mail is the submit; both share the validation
+      // ---- odoslanie: WhatsApp je skutočný odkaz (natívne gesto), e-mail ide cez odoslanie formulára; oba majú spoločnú kontrolu
       function showSent(kind) {
         const r = ritual(), d = parse(datum.value);
         const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
@@ -946,7 +946,7 @@
     }
   });
 
-  /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */
+  /* ============ háčiky pre analytiku (len dataLayer; nikam sa nič neposiela) ============ */
   function track(event, data) { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {})); }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a'); if (!a) return;
@@ -957,7 +957,7 @@
     else if (h.includes('google.com/maps')) track('map_click');
   });
 
-  /* ============ mobile menu (native dialog: focus trap and Escape for free) ============ */
+  /* ============ mobilné menu (natívny dialog: zachytenie fokusu a Escape zadarmo) ============ */
   const menu = $('#drawer'), menuBtn = $('.menu-btn');
   if (menu && menuBtn) {
     $$('.drawer-links a', menu).forEach((a, i) => a.style.setProperty('--i', i));
@@ -971,7 +971,7 @@
     matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
   }
 
-  /* ============ today's hours, computed in the salon's own time zone ============ */
+  /* ============ dnešné otváracie hodiny, počítané v časovom pásme salónu ============ */
   /* Tento text vzniká až v prehliadači, preto má vlastné preklady, nie je v assets/i18n. */
   const TODAY_WORDS = {
     sk: { open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
@@ -1015,7 +1015,7 @@
       else {
         let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; }
         const when = n === 1 ? W.tomorrow : W.days[d];
-        // a day we never opened reads differently from a day that has just ended
+        // deň, keď sme vôbec neotvorili, znie inak ako deň, ktorý sa práve skončil
         text = `${h ? W.shut : W.none}, ${W.next} ${when} ${W.at ? W.at + ' ' : ''}${hm(HOURS[d][0])}`;
       }
       els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
@@ -1024,7 +1024,7 @@
     document.addEventListener('langchange', (e) => render(e.detail.lang));
   })();
 
-  /* ============ housekeeping ============ */
+  /* ============ upratovanie ============ */
   document.addEventListener('visibilitychange', () => { document.body.classList.toggle('paused', document.hidden); if (!document.hidden) wake(); });
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 
@@ -1044,7 +1044,7 @@
   addEventListener('keydown', heroStart, { once: true });
   if (reduced.matches) pinToFinalStates();
   wake();
-  void document.body.offsetWidth;   // settle the initial styles first
+  void document.body.offsetWidth;   // najprv nech sa ustália počiatočné štýly
   requestAnimationFrame(() => {
     document.body.classList.add('ready', 'open');
     if (veilMs) {
