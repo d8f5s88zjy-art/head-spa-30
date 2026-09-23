@@ -170,35 +170,115 @@
     glow.rotation.x = -Math.PI / 2; glow.position.set(0, -y + 0.01, 0.9); g.add(glow);
     return g;
   }
-  // časti webu v poradí; každá má pohľad kamery a cieľ, kam kamera hľadí
-  const SECTIONS = ['ritual', 'cennik', 'rezervacia', 'poukaz', 'salon', 'galeria', 'faq', 'kontakt'];
-  const PHOTOS = { ritual: 'voda', cennik: 'miestnost', rezervacia: 'lozka-sviecka', poukaz: 'komoda', salon: 'okna', faq: 'neon-spa' };
+  /* ---------- tabuľa so službami: rituály kategórie a ceny, text sa berie zo stránky ---------- */
+  // tabuľa číta preložené názvy z cenníka, takže je vždy v jazyku stránky a s tými istými cenami
+  const serif = "'Lora', Georgia, serif", sans = "'Manrope', system-ui, sans-serif";
+  function plaque(cat) {
+    const W = 1024, ROW = 150, H = 530 + d.querySelectorAll(`.card[data-cat="${cat}"]`).length * ROW;
+    const c = d.createElement('canvas'); c.width = W; c.height = H;
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = phone ? 4 : 8;
+    const draw = () => {
+      const g = c.getContext('2d');
+      const head = d.querySelector(`.cat[data-cat="${cat}"]`);
+      const cards = [...d.querySelectorAll(`.card[data-cat="${cat}"]`)];
+      g.fillStyle = '#16100a'; g.fillRect(0, 0, W, H);
+      g.strokeStyle = 'rgba(201,166,107,.55)'; g.lineWidth = 3; g.strokeRect(34, 34, W - 68, H - 68);
+      g.strokeStyle = 'rgba(201,166,107,.22)'; g.lineWidth = 2; g.strokeRect(50, 50, W - 100, H - 100);
+      g.textBaseline = 'alphabetic';
+      const fit = (txt, max, size, fam) => { let f = size; do { g.font = `${f}px ${fam}`; f -= 2; } while (g.measureText(txt).width > max && f > 18); };
+      const kick = head ? (head.querySelector('span') || head).textContent.trim() : '';
+      const title = head ? (head.querySelector('b') || head).textContent.trim() : '';
+      g.fillStyle = '#c9a66b'; g.font = `30px ${sans}`;
+      if ('letterSpacing' in g) g.letterSpacing = '6px';
+      g.fillText(kick.toUpperCase(), 110, 190);
+      if ('letterSpacing' in g) g.letterSpacing = '0px';
+      g.fillStyle = '#efe7da'; fit(title, W - 220, 72, serif); g.fillText(title, 110, 290);
+      g.fillStyle = 'rgba(201,166,107,.6)'; g.fillRect(110, 336, 120, 2);
+      const rows = cards.length, top = 420, step = ROW;
+      cards.forEach((card, k) => {
+        const y = top + k * step;
+        const name = (card.querySelector('h3') || card).textContent.trim();
+        const min = (card.querySelector('.meta span') || {}).textContent || '';
+        const price = (card.querySelector('.meta strong') || {}).textContent || '';
+        g.fillStyle = '#c9a66b'; g.font = `600 40px ${serif}`; g.textAlign = 'right'; g.fillText(price.trim(), W - 110, y);
+        g.fillStyle = 'rgba(239,231,218,.62)'; g.font = `26px ${sans}`; g.fillText(min.trim(), W - 110, y + 40);
+        g.textAlign = 'left'; g.fillStyle = '#efe7da'; fit(name, W - 400, 42, serif); g.fillText(name, 110, y);
+        const tag = ((card.querySelector('.tag') || {}).textContent || '').trim();
+        g.fillStyle = 'rgba(239,231,218,.6)'; fit(tag, W - 400, 28, sans); g.fillText(tag, 110, y + 44);
+        if (k < rows - 1) { g.fillStyle = 'rgba(239,231,218,.1)'; g.fillRect(110, y + 92, W - 220, 1); }
+      });
+      t.needsUpdate = true;
+    };
+    draw();
+    // písma a zmena jazyka: tabuľa sa prekreslí
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(() => { draw(); if (live) wake(); });
+    d.addEventListener('langchange', () => setTimeout(() => { draw(); if (live) wake(); }, 60));
+    t.userData.aspect = H / W;
+    return t;
+  }
+  function board(cat, w, h, x, y, z, ry) {
+    const map = plaque(cat); h = Math.min(h, w * map.userData.aspect); w = h / map.userData.aspect;
+    const g = new THREE.Group(); g.position.set(x, y, z); g.rotation.y = ry; scene.add(g);
+    const b = 0.05;
+    const back = new THREE.Mesh(new THREE.BoxGeometry(w + b * 2, h + b * 2, 0.05), M.brass); back.position.z = -0.03; g.add(back);
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map, color: 0xe6ddd0 })); face.position.z = 0.002; g.add(face);
+    const glow = new THREE.Mesh(new THREE.PlaneGeometry(w * 2.2, w * 1.6), M.glow);
+    glow.rotation.x = -Math.PI / 2; glow.position.set(0, -y + 0.01, 0.9); g.add(glow);
+    return g;
+  }
+
+  // zastávky v poradí stránky; každá má prvok, pri ktorom kamera dorazí, pohľad a cieľ pohľadu
+  const stops = [];
   const views = [{ pos: new THREE.Vector3(-1.35, 1.5, 5.2), look: new THREE.Vector3(-1.35, 1.4, 0) }];   // dvere; text je vľavo, dvere vpravo
   if (phone) { views[0].pos.set(0, 1.5, 6.4); views[0].look.set(0, 1.85, 0); }
-  let z = -5.5, lotusAt = null;
-  SECTIONS.forEach((id, i) => {
-    const side = i % 2 ? -1 : 1;
+  const SECTIONS = ['ritual', 'cennik', 'rezervacia', 'poukaz', 'salon', 'galeria', 'faq', 'kontakt'];
+  const PHOTOS = { ritual: 'voda', cennik: 'zhora', rezervacia: 'lozko', poukaz: 'komoda', salon: 'okna', faq: 'neon-spa' };
+  let z = -5.5, lotusAt = null, turn = 0;
+  const stop = (el, mid, pos, look) => { stops.push({ el, mid }); views.push({ pos, look }); };
+  SECTIONS.forEach((id) => {
+    const side = turn++ % 2 ? -1 : 1;
+    const sec = () => d.getElementById(id);
     if (PHOTOS[id]) {
       const x = side * 2.25, h = 2.5, w = h * 0.75;
       framed(PHOTOS[id], w, h, x, 1.75, z, -side * 0.62);
       if (id === 'salon') framed('buddha', w * 0.8, h * 0.8, -x * 0.95, 1.65, z - 1.2, side * 0.62);
-      views.push({ pos: new THREE.Vector3(side * (phone ? 0.9 : 0.4), 1.6, z + (phone ? 4.6 : 3.6)), look: new THREE.Vector3(x * (phone ? 0.92 : 0.8), 1.72, z) });
+      stop(sec, false, new THREE.Vector3(side * (phone ? 0.9 : 0.4), 1.6, z + (phone ? 4.6 : 3.6)), new THREE.Vector3(x * (phone ? 0.92 : 0.8), 1.72, z));
     } else if (id === 'galeria') {
       // stena s fotkami po oboch stranách chodby
       const names = ['neon-head-spa', 'lozka-spa', 'lozko', 'spa-relax-lozko', 'zhora', 'buddha'];
       names.forEach((n, k) => { const s = k % 2 ? -1 : 1; framed(n, 1.4, 1.87, s * 2.9, 1.85, z + 1.2 - (k >> 1) * 2.6, -s * 1.1); });
-      views.push({ pos: new THREE.Vector3(0, 1.62, z + 4.2), look: new THREE.Vector3(0, 1.7, z - 4) });
+      stop(sec, false, new THREE.Vector3(0, 1.62, z + 4.2), new THREE.Vector3(0, 1.7, z - 4));
       z -= 3;
     } else if (id === 'kontakt') {
       // koniec chodby: stena s nápisom a svietiaci lotos pred ňou
       const end = new THREE.Mesh(new THREE.PlaneGeometry(9.2, 5.2), M.wall); end.position.set(0, 2.6, z - 2.2); scene.add(end);
       framed('neon-head-spa', 2.1, 2.8, 0, 2.0, z - 2.1, 0);
       lotusAt = new THREE.Vector3(0, 1.0, z - 0.6);
-      views.push({ pos: new THREE.Vector3(0, 1.55, z + (phone ? 5.2 : 4.2)), look: new THREE.Vector3(0, 1.6, z - 1.5) });
+      stop(sec, false, new THREE.Vector3(0, 1.55, z + (phone ? 5.2 : 4.2)), new THREE.Vector3(0, 1.6, z - 1.5));
     }
     z -= 8.5;
+    if (id === 'cennik') {
+      // výklenky so službami: pri každej kategórii cenníka jej priestor na fotke a tabuľa s rituálmi
+      d.querySelectorAll('.cat[data-cat]').forEach((cat) => {
+        const k = cat.dataset.cat, s = turn++ % 2 ? -1 : 1;
+        const img = cat.querySelector('img');
+        if (img && !img.dataset.photo) img.dataset.photo = 'cat-' + k;
+        const h = 2.3, w = h * 0.75;
+        if (phone) {
+          // telefón je úzky: tabuľa stojí čelom v strede, priestor na fotke hneď za ňou bokom
+          board(k, 1.9, 2.5, 0, 1.72, z, 0);
+          if (img) framed(img.dataset.photo, w, h, s * 1.9, 1.75, z - 1.6, -s * 0.5);
+          stop(() => cat, true, new THREE.Vector3(0, 1.72, z + 3.9), new THREE.Vector3(0, 1.28, z));
+        } else {
+          if (img) framed(img.dataset.photo, w, h, s * 1.75, 1.75, z, -s * 0.45);
+          board(k, 1.9, 2.5, -s * 1.75, 1.72, z, s * 0.45);
+          stop(() => cat, true, new THREE.Vector3(0, 1.66, z + 5.3), new THREE.Vector3(0, 1.62, z - 0.5));
+        }
+        z -= 7;
+      });
+      z -= 1.5;
+    }
   });
-
   await pause();
   /* ---------- lotos zo značky ako zlatá svietiaca línia ---------- */
   function lotusMesh() {
@@ -240,7 +320,12 @@
   let anchors = [];
   function measure() {
     const vh = innerHeight;
-    anchors = [0].concat(SECTIONS.map((id) => { const el = d.getElementById(id); return el ? el.getBoundingClientRect().top + scrollY - vh * 0.45 : 0; }));
+    // pri sekcii kamera dorazí, keď je jej začiatok pod stredom; pri výklenku, keď je okno v strede
+    anchors = [0].concat(stops.map((st) => {
+      const el = st.el(); if (!el || !el.offsetParent) return 0;
+      const r = el.getBoundingClientRect();
+      return st.mid ? r.top + scrollY + r.height / 2 - vh / 2 : r.top + scrollY - vh * 0.45;
+    }));
     for (let k = 1; k < anchors.length; k++) anchors[k] = Math.max(anchors[k], anchors[k - 1] + 1);
   }
   function targetS() {

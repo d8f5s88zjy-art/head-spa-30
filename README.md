@@ -24,21 +24,25 @@ s parketami v rybej kosti a tapetou s listami. Text leží na tmavých doskách 
 | --- | --- |
 | Úvod | zelené dvere s mosadznými kruhmi, otvoria sa dnu |
 | Ako to prebieha | `voda` |
-| Rituály a ceny | `miestnost` |
-| Rezervácia | `lozka-sviecka` |
+| Rituály a ceny | `zhora`, potom päť výklenkov so službami (viď nižšie) |
+| Rezervácia | `lozko` |
 | Poukážky | `komoda` |
 | Salón 30 | `okna`, `buddha` |
 | Galéria | stena s fotkami |
 | Otázky | `neon-spa` |
 | Kontakt | `neon-head-spa` a svietiaci lotos |
 
+- Výklenky so službami: pri každej kategórii cenníka (Head Spa, Pánske, Detské, Pre dvoch,
+  Chodidlá) stojí fotka jej priestoru a mosadzná tabuľa s rituálmi, popisom, trvaním a cenou.
+  Tabuľa sa kreslí z kariet cenníka, takže je v jazyku stránky a ceny sú vždy tie isté. Hlavička
+  kategórie je v 3D okno do scény (74 % výšky, na mobile 64 %); na telefóne stojí tabuľa čelom.
 - Fotky v scéne sa berú z obrázkov na stránke (`img[data-photo]`), nič sa nesťahuje navyše.
 - Trieda `world` sa pridá v hlave stránky (nie pri obmedzení pohybu, šetrení dát, nízkej
   obrazovke a bez WebGL); `world-in` až keď je scéna nakreslená. Bez nich ostáva pokojný úvod
   s fotkou a web funguje bez 3D.
 - Scéna sa načíta až po prvom pohybe alebo skrolovaní, kreslí len keď sa kamera hýbe a pri
   skrytej karte stojí. Mobil: rozlíšenie 1, bez vyhladzovania, bez tieňov.
-- Lighthouse (lokálne, simulované): mobil 87, desktop 99, CLS pod 0,02.
+- Lighthouse (lokálne, simulované): mobil 87, desktop 99, CLS mobil 0,03, desktop 0,005.
 
 ## Úvod
 

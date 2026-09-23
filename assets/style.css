@@ -1591,3 +1591,23 @@ html.world .site>section>.wrap{position:relative;background:rgba(13,10,7,.88);bo
 @media (max-width:640px){html.world .site>section>.wrap{width:calc(100% - 24px);padding:26px 18px}html.world .site>section{padding:26vh 0}}
 html.world .site>.ritual{padding-top:70vh}
 html.world footer{background:var(--canvas)}
+
+/* 3D prehliadka: cenník ako výklenky. Karty sú samostatné dosky, hlavička kategórie je okno do
+   scény, v ktorom stojí priestor kategórie a tabuľa s jej rituálmi. Kým scéna nebeží, okno
+   ukazuje fotku ako doteraz. */
+html.world #cennik>.wrap{background:transparent;border:0;padding:0}
+html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{background:rgba(13,10,7,.9);border:1px solid rgba(239,231,218,.09);padding:clamp(22px,3.4vw,48px);margin:0}
+html.world #cennik .tools,html.world #cennik .first-tip{border-top:0;padding-top:0}
+html.world #cennik .head{padding-bottom:22px}
+html.world #cennik .count:empty{display:none}
+html.world #cennik .card{background:rgba(22,16,10,.94)!important}
+html.world #cennik .cat.has-ph{min-height:74vh;margin:26px 0 22px;background:transparent;border:0;padding:0;align-items:flex-end}
+html.world #cennik .cat.has-ph::before{background:linear-gradient(0deg,rgba(var(--ink),.7),transparent 30%)}
+html.world #cennik .cat.has-ph>span,html.world #cennik .cat.has-ph>b{background:rgba(13,10,7,.9);padding:10px 16px}
+html.world #cennik .cat.has-ph>span{padding-right:0}
+html.world #cennik .cat-ph{transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
+html.world-in #cennik .cat-ph{opacity:0}
+html.world-in #cennik .cat.has-ph::before{opacity:0}
+html.world #cennik .cat.has-ph{gap:0;flex-direction:column;align-items:flex-start;justify-content:flex-end}
+html.world #cennik .cat.has-ph>span{padding:12px 18px 0}html.world #cennik .cat.has-ph>b{padding:4px 18px 12px}
+@media (max-width:640px){html.world #cennik .cat.has-ph{min-height:64vh}}
