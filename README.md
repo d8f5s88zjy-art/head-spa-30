@@ -6,7 +6,7 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 - `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
-- `assets/app.js` – scrollom riadená úvodná scéna (kamera cez mosadzný kruh, štyri zábery zo salónu), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
+- `assets/app.js` – scrollom riadená úvodná scéna (prelet miestnosťou, štyri zábery zo salónu na celú obrazovku), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` a `assets/img/galeria/` – fotografie salónu pre galériu (dvere, Budha, miestnosť, vodný oblúk, uteráky, lôžko)
 - `assets/fonts/` – dve písma: Lora (500 a kurzíva 400) na nadpisy, Manrope (400 a 700) na text aj štítky, hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
@@ -16,35 +16,33 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Úvodná cesta
 
-Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Namiesto kreslenej misy sa kamera pozerá
-cez kruh, ktorý opakuje mosadzné krúžky na dverách a machový kruh so svietiacim nápisom:
+Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Je to prelet miestnosťou salónu, fotky
+na celú obrazovku, kamera ide od dverí k vode a na konci cúvne od svietiaceho nápisu:
 
-| Kapitola | V kruhu |
-| --- | --- |
-| Vypni hlavu (Teplo) | svietiaci nápis HEAD SPA na machovej stene (`neon-head-spa`) |
-| Teplo. Voda. Ticho. | dve lôžka s vaňami a sviečkou (`lozka-sviecka`) |
-| Žiadny zhon (Ticho) | vodný oblúk zblízka (`voda`) |
-| Tvoj termín čaká | kruh sa roztiahne na celú obrazovku, návštevník vojde do miestnosti so zelenými dverami (`miestnost`) |
+| Kapitola | Záber | Kamera |
+| --- | --- | --- |
+| Vypni hlavu (Teplo) | miestnosť so zelenými dverami (`miestnost`) | krok dopredu k dverám |
+| Teplo. Voda. Ticho. | vane so sviečkou (`lozka-sviecka`) | pomalý oblúk k sviečke |
+| Žiadny zhon (Ticho) | vodný oblúk zblízka (`voda`) | nad hladinou |
+| Tvoj termín čaká | svietiaci nápis (`neon-head-spa`) | cúvne, záber sa zmenší do rámu s mosadznou linkou vedľa textu |
 
-Nová fotka sa v kruhu rozleje zo stredu ako kruh na vode, po jej okraji beží zlatá vlna.
-Každý záber sa počas svojej kapitoly pomaly posúva a priblíži najviac o 5 %. Okolo kruhu je
-mosadzný krúžok so svitom ako LED pás za logom.
+Pri strihu nový záber priletí zo zväčšenia (prejdenie cez scénu) a obrazom prebehne teplé
+svetlo ako odlesk lampy. V popredí plávajú zlaté čiastočky, ktoré sa pri skrolovaní hýbu
+rýchlejšie ako fotky, a text sa v kapitole posúva pomalšie, takže vzniká hĺbka. Filmové zrno
+a vinetácia držia fotky pokope.
 
 Technika (`makeReel` v `assets/app.js`, štýly `.reel` v `assets/style.css`):
-- Polohu a veľkosť kruhu určuje CSS (`--r`, `--cx`, `--cy` na `.stage`, zvlášť pre počítač,
-  telefón a tablet na výšku). Kruh je preto vidieť už pri prvom vykreslení, bez čakania na skript,
-  a skript ho len prečíta. Rozmery prvkov sa nikdy nemenia, všetok pohyb je `transform`,
-  takže štart scény nespôsobí posun (CLS 0).
-- Orez kruhom robí `overflow:hidden` so zaoblením; obsah kruhu sa pri zväčšovaní hýbe opačne,
-  takže fotky stoja. `clip-path` beží iba počas krátkeho rozliatia fotky.
-- Strih fotky leží v strede prekryvu dvoch pásov textu (`reelCuts`), text a obraz sa menia naraz.
-- Na telefóne starý text odíde v prvej polovici prelínačky a nový príde v druhej, takže sa dva
-  odseky nikdy neprekrývajú.
-- Prvá fotka má `fetchpriority="high"` a vlastný výrez pre telefón (`neon-head-spa-m`),
-  ďalšie tri sa sťahujú až keď scéna štartuje (`data-src`).
+- Kamera každého záberu je v poli `CAM` (posun v %, zväčšenie od a do), pre telefón a tablet
+  na výšku `CAM_P`: tam je text dole, preto kamera ťahá vane a vodu do hornej polovice.
+- Všetok pohyb je `transform` a priehľadnosť, rozmery prvkov sa nemenia (CLS 0). `clip-path`
+  beží len pri záverečnom cúvnutí do rámu. Rám má tvar obrazovky, preto v ňom ostane ten istý záber.
+- Strih leží v strede prekryvu dvoch pásov textu (`reelCuts`), text a obraz sa menia naraz.
+  Na telefóne starý text odíde v prvej polovici prelínačky a nový príde v druhej.
+- Prvá fotka má `fetchpriority="high"` a pre telefón vlastný výrez na výšku (`miestnost-m`),
+  ďalšie tri sa sťahujú až keď scéna štartuje (`data-src`). Prvý záber končí 5 % nad spodkom
+  (pod tmavým prechodom), inak by ho prehliadač bral ako pozadie a LCP by meral až nadpis.
 - Pri obmedzení pohybu a na nízkej obrazovke na šírku sa namiesto cesty ukáže pokojný úvod
   s fotkou nápisu.
-
 ## Vrstva V9 (agentúrny vzhľad)
 
 `assets/premium-v9.css` a `assets/premium-v9.js` sú prekrytie nad základným webom: väčšie
@@ -202,7 +200,7 @@ zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
 
 | Miesto | Fotka |
 | --- | --- |
-| Úvod (kruh) | `neon-head-spa`, `lozka-sviecka`, `voda`, `miestnost` (pozri Úvodná cesta); pokojná verzia úvodu `neon-head-spa` |
+| Úvod | `miestnost`, `lozka-sviecka`, `voda`, `neon-head-spa` (pozri Úvodná cesta); pokojná verzia úvodu `neon-head-spa` |
 | Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
 | Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
 | Poukážky, lístok | tie isté fotky ako tlačené poukážky (`assets/img/poukaz/`, zdroj `docs/poukazky/dl/foto/`), menia sa podľa vybraného rituálu |

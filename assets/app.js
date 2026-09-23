@@ -11,68 +11,89 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const phoneMQ = matchMedia('(max-width: 640px)');   // telefón má vlastné hranice kapitol, kameru, rampy a dobiehanie
 
-  /* ============ úvod: kamera cez mosadzný kruh, zábery zo salónu ============
-     Okno je kruh ako mosadzné krúžky na dverách a machový kruh s nápisom. Každá kapitola
-     má svoju fotku; nová sa v okne rozleje ako kruh na vode, so zlatou vlnou po okraji.
-     V poslednej kapitole sa kruh roztiahne na celú obrazovku a návštevník vojde do miestnosti.
-     Všetko sú len transformácie (bez prekresľovania), orez kruhom robí overflow so zaoblením;
-     clip-path beží iba počas krátkeho rozliatia fotky. Fotky sa kamerou zväčšujú najviac o 5 %. */
+  /* ============ úvod: prelet miestnosťou, fotky zo salónu na celú obrazovku ============
+     Štyri zábery idú za sebou ako jeden záber kamerou: miestnosť so zelenými dverami, vane so
+     sviečkou, vodný oblúk zblízka a nakoniec kamera cúvne od svietiaceho nápisu. Kamera sa v zábere
+     pomaly posúva a približuje; nový záber pri strihu priletí zo zväčšenia („prejdenie cez scénu“),
+     v tej chvíli prebehne teplé svetlo. V popredí plávajú zlaté čiastočky s vlastnou paralaxou.
+     Všetko sú transformy a priehľadnosť, rozmery sa nemenia, preto nič neposkočí. */
   function makeReel(root) {
-    const lens = $('.lens', root), win = $('.win', root), inner = $('.win-in', root);
-    const ring = $('.ring', root), ripple = $('.ripple', root), shade = $('.shade', root);
+    const reel = $('.reel', root), sweep = $('.sweep', root), dust = $('.dust', root);
     // ďalšie zábery sa sťahujú až keď scéna štartuje, prvá fotka tak má linku pre seba
     $$('[data-srcset]', root).forEach((el) => { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); });
     $$('img[data-src]', root).forEach((el) => { el.src = el.dataset.src; el.removeAttribute('data-src'); });
-    const shots = $$('.rs', root).map((el) => ({ el, img: $('img', el), full: el.classList.contains('full'), clip: '', vis: null, cam: '' }));
-    let W = 0, H = 0, D = 0, bx = 0, by = 0, br = 0, x0 = 0, y0 = 0, cuts = [0.22, 0.48, 0.74], last = '';
-    const set = (el, prop, v, key) => { if (el['_' + key] !== v) { el['_' + key] = v; el.style[prop] = v; } };
-    const full = shots.find((s) => s.full);
+    // kamera každého záberu: odkiaľ a kam (posun v % záberu, zväčšenie); zväčšenie drží okraje mimo obrazu
+    const CAM = [
+      [0, 1.5, 1.04, 0, -1.5, 1.13],    // miestnosť: krok dopredu k zeleným dverám
+      [-1.5, 0, 1.06, 1, -1.5, 1.13],   // vane so sviečkou: pomalý oblúk k sviečke
+      [0, 1.5, 1.06, 0, -.5, 1.14],     // vodný oblúk: nad hladinou
+      [0, -1, 1.14, 0, 0, 1.04]         // nápis: kamera cúvne, pokoj
+    ];
+    // telefón a tablet na výšku: text je dole, kamera preto ťahá vane a vodu do hornej polovice
+    const CAM_P = [
+      [0, 1.5, 1.04, 0, -1.5, 1.12],
+      [0, -9, 1.22, 0, -12, 1.28],
+      [0, -13, 1.3, 0, -16, 1.36],
+      [0, -1, 1.14, 0, 0, 1.04]
+    ];
+    const stackMQ = matchMedia('(max-width:720px),(orientation:portrait) and (max-width:1100px)');
+    const shots = $$('.fs', root).map((el, i) => ({ el, img: $('img', el), i, vis: null, op: -1, tr: '', clip: '' }));
+    const endRing = $('.end-ring', root), veilL = $('.veil-l', root);
+    let cuts = [0.22, 0.48, 0.74], last = '', W = 0, H = 0, stack = false, rect = null;
+    const T = 0.07;   // dĺžka strihu v progrese
     function resize() {
-      W = root.clientWidth; H = root.clientHeight;
-      // kruh rozmiestňuje CSS (premenné --r, --cx, --cy), skript ho len prečíta; rozmery prvkov
-      // sa nikdy nemenia, všetok pohyb je transform, preto pri štarte scény nič neposkočí
-      x0 = win.offsetLeft; y0 = win.offsetTop; br = win.offsetWidth / 2;
-      bx = x0 + br; by = y0 + br;
-      D = Math.hypot(W, H) / 2 + 4;
-      // miestnosť na celú obrazovku: v súradniciach okna leží tam, kde je celé plátno
-      if (full) Object.assign(full.el.style, { left: -x0 + 'px', top: -y0 + 'px', width: W + 'px', height: H + 'px' });
+      W = root.clientWidth; H = root.clientHeight; stack = stackMQ.matches;
+      // záverečný rám, do ktorého kamera cúvne: vpravo od textu na počítači, hore nad textom na telefóne
+      // rám má tvar obrazovky, takže v ňom ostane presne ten istý záber, len menší
+      const k = stack ? 0.5 : 0.46, w = W * k, h = H * k;
+      const l = stack ? (W - w) / 2 : W - Math.max(24, W * 0.08) - w, t = stack ? H * 0.1 : (H - h) / 2;
+      rect = { l, t, w, h, r: W - l - w, b: H - t - h, z: k * 1.02 };
+      rect.dx = l + w / 2 - W / 2; rect.dy = t + h / 2 - H / 2;
+      Object.assign(endRing.style, { left: l + 'px', top: t + 'px', width: w + 'px', height: h + 'px' });
       last = '';
     }
-    // hranice kapitol sa berú z pásov textu, aby fotka a text vždy prestrihli naraz
     function setCuts(c) { cuts = c; last = ''; }
     function draw(p) {
-      if (!W) resize();
+      if (!rect) resize();
       const key = p.toFixed(4); if (key === last) return; last = key;
-      const e = smoothstep(p, cuts[2] + 0.04, cuts[2] + 0.16);        // vstup do miestnosti
-      const cx = bx + (W / 2 - bx) * e, cy = by + (H / 2 - by) * e;
-      const r = br + (D - br) * e, s = r / br;
-      // okno: posun stredu a zväčšenie kruhu; obsah okna sa pohybuje opačne, takže fotky stoja na mieste
-      set(win, 'transform', e ? `translate(${(cx - bx).toFixed(1)}px,${(cy - by).toFixed(1)}px) scale(${s.toFixed(4)})` : 'none', 't');
-      set(inner, 'transform', e ? `translate(${(br + (x0 - cx) / s).toFixed(1)}px,${(br + (y0 - cy) / s).toFixed(1)}px) scale(${(1 / s).toFixed(4)})` : 'none', 't');
-      set(ring, 'transform', e ? `translate(${(cx - bx).toFixed(1)}px,${(cy - by).toFixed(1)}px) scale(${s.toFixed(4)})` : 'none', 't');
-      set(ring, 'opacity', (1 - smoothstep(e, 0, 0.5)).toFixed(3), 'o');
-      set(shade, 'opacity', e.toFixed(3), 'o');
-      let wave = 0, wr = 0;
+      let flash = 0, fx = 0;
       shots.forEach((sh, i) => {
-        // rozliatie: nová fotka rastie z tichého stredu kruhu ako vlna na hladine
-        const k = i ? smoothstep(p, cuts[i - 1] - 0.035, cuts[i - 1] + 0.035) : 1;
-        const next = shots[i + 1] ? smoothstep(p, cuts[i] - 0.035, cuts[i] + 0.035) : 0;
-        const vis = k > 0 && (next < 1 || sh.full);
+        const a = i ? cuts[i - 1] : 0, b = shots[i + 1] ? cuts[i] : 1;
+        const kin = i ? smoothstep(p, a - T / 2, a + T / 2) : 1;                 // príchod
+        const kout = shots[i + 1] ? smoothstep(p, b - T / 2, b + T / 2) : 0;     // odchod pod nový záber
+        const vis = kin > 0 && kout < 1;
         if (vis !== sh.vis) { sh.vis = vis; sh.el.style.visibility = vis ? 'visible' : 'hidden'; }
         if (!vis) return;
-        const clip = k >= 1 ? 'none' : `circle(${(k * br * 1.04).toFixed(1)}px at ${sh.full ? `${bx.toFixed(1)}px ${by.toFixed(1)}px` : '50% 50%'})`;
-        if (clip !== sh.clip) { sh.clip = clip; sh.el.style.clipPath = clip; }
-        if (i && k > 0 && k < 1) { wave = Math.sin(Math.PI * k); wr = k * 1.04; }
-        // kamera v zábere: pomalý posun a priblíženie počas kapitoly, najviac 5 %
-        const a = i ? cuts[i - 1] : 0, b = shots[i + 1] ? cuts[i] : 1;
-        const u = clamp((p - a) / (b - a), 0, 1);
-        const z = sh.full ? 1.05 - 0.04 * e : 1 + 0.05 * u;
-        const dy = sh.full ? 0 : (0.5 - u) * br * 0.06;
-        const cam = `translate3d(0,${dy.toFixed(1)}px,0) scale(${z.toFixed(4)})`;
-        if (cam !== sh.cam) { sh.cam = cam; sh.img.style.transform = cam; }
+        if (Math.abs(kin - sh.op) > 0.004 || kin === 1 && sh.op !== 1) { sh.op = kin; sh.el.style.opacity = kin.toFixed(3); }
+        // postup kamery cez celý čas, keď je záber vidieť (aj počas strihov), aby sa nikdy nezastavila
+        const u = clamp((p - (a - T / 2)) / ((b + T / 2) - (a - T / 2)), 0, 1);
+        const e = u * u * (3 - 2 * u) * 0.35 + u * 0.65;
+        const c = (stack ? CAM_P : CAM)[sh.i] || CAM[0];
+        const x = c[0] + (c[3] - c[0]) * e, y = c[1] + (c[4] - c[1]) * e;
+        // prejdenie cez scénu: nový záber priletí zo zväčšenia, starý pokračuje krokom dopredu
+        let z = (c[2] + (c[5] - c[2]) * e) + (1 - kin) * 0.12 + kout * 0.06;
+        let tr = `translate3d(${x.toFixed(2)}%,${y.toFixed(2)}%,0) scale(${z.toFixed(4)})`;
+        // posledný záber: kamera cúvne a miestnosť sa zmenší do rámu vedľa textu
+        if (!shots[i + 1]) {
+          const q = smoothstep(p, a + T / 2 + 0.02, a + 0.2), qq = q * q * (3 - 2 * q);
+          if (q > 0) {
+            z = z + (rect.z - z) * qq;
+            tr = `translate3d(${(rect.dx * qq).toFixed(1)}px,${(rect.dy * qq).toFixed(1)}px,0) translate3d(${(x * (1 - qq)).toFixed(2)}%,${(y * (1 - qq)).toFixed(2)}%,0) scale(${z.toFixed(4)})`;
+          }
+          const clip = q > 0 ? `inset(${(rect.t * qq).toFixed(1)}px ${(rect.r * qq).toFixed(1)}px ${(rect.b * qq).toFixed(1)}px ${(rect.l * qq).toFixed(1)}px round ${(qq * 22).toFixed(1)}px)` : 'none';
+          if (clip !== sh.clip) { sh.clip = clip; sh.el.style.clipPath = clip; }
+          endRing.style.opacity = smoothstep(q, 0.75, 1).toFixed(3);
+          veilL.style.opacity = (1 - qq * 0.75).toFixed(3);   // nad rámom netreba závoj pre text
+        }
+        if (tr !== sh.tr) { sh.tr = tr; sh.img.style.transform = tr; }
+        if (i && kin > 0 && kin < 1) { flash = Math.sin(Math.PI * kin); fx = kin; }
       });
-      set(ripple, 'transform', `scale(${Math.max(wr, 0.001).toFixed(4)})`, 't');
-      set(ripple, 'opacity', wave.toFixed(3), 'o');
+      // teplé svetlo prebehne cez obraz v strede strihu, ako keď kamera minie lampu
+      sweep.style.opacity = (flash * 0.9).toFixed(3);
+      sweep.style.transform = `translate3d(${(-60 + fx * 120).toFixed(1)}%,0,0)`;
+      // čiastočky v popredí sa hýbu rýchlejšie ako fotky, preto pôsobia bližšie
+      dust.style.transform = `translate3d(0,${(-p * 34).toFixed(2)}vh,0)`;
+      reel.style.setProperty('--p', p.toFixed(3));
     }
     return { resize, draw, setCuts };
   }
@@ -181,8 +202,8 @@
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (live !== b.live) { b.live = live; b.el.classList.toggle('live', live); }   // vrstvy vznikajú pred prelínačkou, nie v nej
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
-      if (ph) {
-        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál
+      {
+        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál (na počítači aj na telefóne)
         const u = live ? clamp((p - b.a) / (b.b - b.a), 0, 1) : 0;
         if (Math.abs(u - b.u) > 0.01 || (u === 0 && b.u !== 0) || (u === 1 && b.u !== 1)) { b.u = u; b.el.style.setProperty('--u', u.toFixed(2)); }
       }
