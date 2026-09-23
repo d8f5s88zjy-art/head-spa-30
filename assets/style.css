@@ -1768,3 +1768,23 @@ footer .col a{color:var(--text-secondary)}
 
 /* čísla krokov sú čitateľné aj pred rozsvietením (kontrast nad 4,5 : 1) */
 .step .n{opacity:.7}
+
+/* ================= Telefón: pokojné a čisté =================
+   Na telefóne dosky idú cez celú šírku a sú plné, film nepresvitá po krajoch ani medzi kartami.
+   Film ostáva ako krátke okno medzi časťami, cenník je jeden súvislý blok s fotkou kategórie. */
+@media (max-width:640px){
+  html.world .site>section{padding:34vh 0 0}
+  html.world .site>.ritual{padding-top:42vh}
+  html.world .site>section>.wrap{width:100%;max-width:none;margin:0;border-left:0;border-right:0;background:#0d0a07;box-shadow:none}
+  html.world #cennik>.wrap{background:#0d0a07}
+  html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{border-left:0;border-right:0;background:#0d0a07}
+  html.world #cennik .card,html.world #cennik .card.featured{background:#17110b!important}
+  html.world #cennik .cards,html.world #cennik .cat{margin-left:0;margin-right:0}
+  /* kategória: vlastná fotka namiesto okna do filmu, nižšia */
+  html.world #cennik .cat.has-ph{min-height:36vh;margin:28px 0 18px;overflow:hidden}
+  html.world-in #cennik .cat-ph,html.world-in #cennik .cat.has-ph::before{opacity:1}
+  html.world-in #cennik .cat.has-ph::before{left:0;right:0;background:linear-gradient(0deg,rgba(var(--ink),.88) 0%,rgba(var(--ink),.35) 45%,rgba(var(--ink),0) 75%)}
+  html.world #cennik .cat.has-ph>b{padding:8px 18px 20px;font-size:30px}
+  /* spodná lišta prilepená k okraju, bez rozmazania */
+  .mbar{left:0;right:0;bottom:0;border-radius:0;border-left:0;border-right:0;border-bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));backdrop-filter:none;background:#0d0a07}
+}
