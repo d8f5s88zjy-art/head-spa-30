@@ -41,12 +41,15 @@
      f  = bod záujmu na fotke (0 až 1, zľava a zhora), fm = to isté pre telefón
      mv = pohyb kamery počas záberu: [x, y, z] na začiatku a na konci, v podieloch obrazu
           (x a y ako časť šírky a výšky záberu, z ako časť vzdialenosti; mínus z = nájazd) */
+  // jeden jednotný pohyb celého filmu: kamera ide stále pomaly dopredu (nájazd) s jemným
+  // bočným posunom, takže celá stránka pôsobí ako jedna súvislá prechádzka salónom
+  const FWD = [[0, 0, 0.04], [0, 0, -0.12]];
   const MOVES = {
-    in: [[0, 0, 0.03], [0, 0, -0.11]],
-    right: [[-0.03, 0.004, 0], [0.03, -0.004, -0.05]],
-    left: [[0.03, 0, -0.02], [-0.03, 0.004, -0.06]],
-    rise: [[0, -0.022, 0], [0.008, 0.022, -0.06]],
-    down: [[-0.006, 0.022, -0.01], [0.006, -0.02, -0.07]],
+    in: FWD,
+    right: [[-0.008, 0, 0.04], [0.008, 0, -0.12]],
+    left: [[0.008, 0, 0.04], [-0.008, 0, -0.12]],
+    rise: [[0, -0.006, 0.04], [0, 0.006, -0.12]],
+    down: [[0, 0.006, 0.04], [0, -0.006, -0.12]],
   };
   const SHOTS = [
     // úvod: tá istá miestnosť, ktorú vidno cez otvorené dvere (a tá istá fotka ako úvod bez 3D)
@@ -64,8 +67,8 @@
     SHOTS.push({ at: cat, mid: true, oy, photo: img.dataset.photo, f: FOCUS[img.dataset.photo] || [0.5, 0.62], mv: ['left', 'in', 'right', 'rise', 'left'][k % 5] });
   });
   SHOTS.push(
-    { at: '#rezervacia', photo: 'lozko', f: [0.5, 0.6], mv: 'rise' },
     { at: '#poukaz', photo: 'buddha', f: [0.58, 0.3], mv: 'in' },
+    { at: '#tim', photo: 'lozko', f: [0.5, 0.6], mv: 'rise' },
     { at: '#salon', photo: 'miestnost', f: [0.5, 0.55], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', f: [0.5, 0.55], mv: 'down' },
@@ -242,7 +245,7 @@
         vec3 c = texture2D(tA, vUv).rgb;
         if (uMix > 0.0) {
           c = mix(c, texture2D(tB, vUv).rgb, uMix);
-          c *= 1.0 - 0.22 * sin(3.14159 * uMix);   // prechod cez jemné šero ako vo filme
+          c *= 1.0 - 0.12 * sin(3.14159 * uMix);   // prechod cez jemné šero ako vo filme
         }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
@@ -295,7 +298,7 @@
   const started = performance.now();
   const BREATH_MS = 25000;                                    // po chvíli bez pohybu sa obraz upokojí a prestane kresliť
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
-  function place(s, now) {
+  function place(s, now, push = 0) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
     const t = s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1);
     const m = MOVES[s.mv], e = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
@@ -308,6 +311,8 @@
     off.x += (Math.sin(sec * 0.37) * 0.004 * breath + pmx * 0.018) * s.vw;
     off.y += (Math.sin(sec * 0.29 + 1.3) * 0.003 * breath + pmy * 0.012) * s.vh;
     off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
+    // pri prechode kamera odchádzajúceho záberu pokračuje dopredu, akoby prešla do ďalšej miestnosti
+    off.z -= Math.pow(push, 1.4) * 0.2 * DIST;
     camera.position.copy(s.eye).add(off);
     tmp.set(s.eye.x + off.x * 0.35, s.eye.y + off.y * 0.35, 0);
     camera.lookAt(tmp);
@@ -321,7 +326,7 @@
     keepAround(clamp(Math.round(S), 0, N));
     const k = clamp(Math.floor(S), 0, N);
     let A = path[k], B = path[clamp(k + 1, 0, N)];
-    const want = A === B ? 0 : smooth(0.42, 0.58, S - k);
+    const want = A === B ? 0 : smooth(0.35, 0.65, S - k);
     if (k !== fadeK) { fade = want; fadeK = k; }
     // až keď skrolovanie naozaj stojí (nie medzi dvomi zárezmi kolieska), dokončí sa prelínanie
     still = Math.abs(V) < 0.03 ? still + dt : 0;
@@ -336,7 +341,7 @@
     } else if (held && held !== A && held !== B && held.ready && fin(A, now) < 1) { B = A; A = held; mix = fin(B, now); }
     if (mix >= 0.999) { A = B; mix = 0; }
     renderer.setRenderTarget(rtA); renderer.clear();
-    A.mesh.visible = true; place(A, now); renderer.render(scene, camera); A.mesh.visible = false;
+    A.mesh.visible = true; place(A, now, mix > 0.001 ? mix : 0); renderer.render(scene, camera); A.mesh.visible = false;
     if (mix > 0.001) {
       renderer.setRenderTarget(rtB); renderer.clear();
       B.mesh.visible = true; place(B, now); renderer.render(scene, camera); B.mesh.visible = false;
