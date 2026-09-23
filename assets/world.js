@@ -11,7 +11,7 @@
   // či sa 3D použije, rozhodol už skript v hlavičke (trieda .world), aby obsah pri štarte neskočil
   if (!root.classList.contains('world')) return;
 
-  const here = d.currentScript ? d.currentScript.src : location.href;
+  const here = (d.currentScript && d.currentScript.src) || location.href;
   if (d.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
   // film sa spustí až keď sa návštevník pohne (dotyk, myš, skrolovanie, klávesnica); dovtedy je
   // v úvode fotka miestnosti, takže otvorenie stránky nič nebrzdí a kto len nazrie, nič nesťahuje
