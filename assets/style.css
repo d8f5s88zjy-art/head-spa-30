@@ -1575,7 +1575,7 @@ section{padding:var(--lux-space) 0}
 /* ================= 3D prehliadka (assets/world.js) =================
    Scéna je pevné pozadie celej stránky. Časti webu sú tmavé dosky s tenkým rámikom nad ňou,
    medzi nimi je vidieť do salónu. Bez 3D (trieda .world chýba) ostáva web ako doteraz. */
-.world-canvas{position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;z-index:0;opacity:0;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.world-canvas{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:0;opacity:0;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);pointer-events:none}
 html.world-in .world-canvas{opacity:1}
 html.world,html.world body{background:var(--canvas)}
 html.world body{background:transparent}

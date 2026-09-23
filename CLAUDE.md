@@ -34,9 +34,10 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   len na malých nadpiskoch sekcií), polia formulára ako zreteľné okienka. Žiadna zelená plocha,
   všetko v tónoch orecha so zlatou. Časti oddeľuje zlatá linka s lotosom, obsah sa pri
   skrolovaní nevysúva ani neskladá. Nepridávaj ozdoby navyše.
-- Na pracovnej vetve je web 3D prehliadka salónu (`assets/world.js`, Three.js v `assets/vendor/`,
-  README 3D prehliadka). Kamera ide po krivke, kreslí len pri pohybe. Záloha je pokojný úvod
-  s fotkou (`makeReel`). Dvere v úvode zostávajú.
+- Na pracovnej vetve je pozadie webu film zo skutočných fotiek salónu s hĺbkovou mapou
+  (`assets/world.js`, `assets/img/film/`, README Film zo skutočných fotiek). Nič vymodelované,
+  farby fotiek sa nemenia, kreslí len pri pohybe. Záloha je pokojný úvod s fotkou (`makeReel`).
+  Dvere v úvode zostávajú.
 - Cieľ: Lighthouse desktop 100, mobil 95 a viac. Žiadny backdrop-filter na mobile.
 - Komentáre v kóde po slovensky. Commity po slovensky, bez podpisov a bez odkazov na nástroje.
 

@@ -14,35 +14,38 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona, lotos v zlatom kruhu ako na svietiacom nápise v salóne
 
-## 3D prehliadka
+## Film zo skutočných fotiek
 
-Celý web je prechádzka salónom (`assets/world.js`, Three.js r169 v `assets/vendor/`). Návštevník
-stojí pred zelenými dverami, pri skrolovaní sa otvoria a kamera ide po plynulej krivke chodbou
-s parketami v rybej kosti a tapetou s listami. Text leží na tmavých doskách nad scénou.
+Pozadie celého webu je film zo skutočných fotiek salónu (`assets/world.js`, Three.js r169
+v `assets/vendor/`), nie vymodelovaná scéna. Každá fotka má hĺbkovú mapu, takže kamera sa v nej
+pohne ako v skutočnej miestnosti: lôžka a misy vpredu sa posúvajú viac ako stena za nimi.
+Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do strany, zdvih) a medzi
+časťami webu sa zábery prelínajú, kým ich zakrýva textová doska. Text leží na tmavých doskách.
 
-| Časť | Miesto v scéne |
+| Časť | Záber |
 | --- | --- |
-| Úvod | zelené dvere s mosadznými kruhmi, otvoria sa dnu |
+| Úvod | `miestnost` (tá istá fotka ako v úvode bez 3D, prelnú sa do seba) |
 | Ako to prebieha | `voda` |
-| Rituály a ceny | `zhora`, potom päť výklenkov so službami (viď nižšie) |
+| Rituály a ceny | `zhora`, potom v okne každej kategórie jej priestor (fotka kategórie z cenníka) |
 | Rezervácia | `lozko` |
-| Poukážky | `komoda` |
-| Salón 30 | `okna`, `buddha` |
-| Galéria | stena s fotkami |
-| Otázky | `neon-spa` |
-| Kontakt | `neon-head-spa` a svietiaci lotos |
+| Poukážky | `buddha` |
+| Salón 30 | `okna` |
+| Galéria | `neon-spa` |
+| Otázky | `komoda` |
+| Kontakt | `neon-head-spa` |
 
-- Výklenky so službami: pri každej kategórii cenníka (Head Spa, Pánske, Detské, Pre dvoch,
-  Chodidlá) stojí fotka jej priestoru a mosadzná tabuľa s rituálmi, popisom, trvaním a cenou.
-  Tabuľa sa kreslí z kariet cenníka, takže je v jazyku stránky a ceny sú vždy tie isté. Hlavička
-  kategórie je v 3D okno do scény (74 % výšky, na mobile 64 %); na telefóne stojí tabuľa čelom.
-- Fotky v scéne sa berú z obrázkov na stránke (`img[data-photo]`), nič sa nesťahuje navyše.
+- Fotky sú v `assets/img/film/`: zväčšené a zaostrené na dvojnásobok (2172, 1448 a 1086 px
+  šírky) a `<meno>-hlbka.webp` (svetlá = blízko). Skript vyberie najmenšiu šírku, ktorá na
+  obrazovke nebude zväčšená o viac ako štvrtinu, a drží v pamäti len zábery okolo aktuálneho.
+- Ostrosť: plné rozlíšenie displeja do 2x, fotky bez tónovania a bez hmly, farby presne ako na
+  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch.
+- Pohyb: kriticky tlmená pružina (žiadne trhnutie pri rýchlom skrole), v pokoji jemné dýchanie
+  kamery 30 snímok za sekundu, po 25 s bez pohybu sa obraz upokojí a prestane kresliť. Na
+  počítači sa perspektíva jemne pohne aj za myšou. Keď zariadenie nestíha, zníži sa rozlíšenie.
+- Hlavička kategórie v cenníku je okno do filmu (74 % výšky, na mobile 64 %); bez 3D ukazuje fotku.
 - Trieda `world` sa pridá v hlave stránky (nie pri obmedzení pohybu, šetrení dát, nízkej
-  obrazovke a bez WebGL); `world-in` až keď je scéna nakreslená. Bez nich ostáva pokojný úvod
-  s fotkou a web funguje bez 3D.
-- Scéna sa načíta až po prvom pohybe alebo skrolovaní, kreslí len keď sa kamera hýbe a pri
-  skrytej karte stojí. Mobil: rozlíšenie 1, bez vyhladzovania, bez tieňov.
-- Lighthouse (lokálne, simulované): mobil 87, desktop 99, CLS mobil 0,03, desktop 0,005.
+  obrazovke a bez WebGL); `world-in` až keď je prvý záber nakreslený. Bez nich ostáva pokojný
+  úvod s fotkou a web funguje bez 3D. Film sa načíta až po prvom pohybe alebo skrolovaní.
 
 ## Úvod
 
