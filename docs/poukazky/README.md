@@ -1,22 +1,25 @@
 # Darčekové poukážky HEAD SPA 30
 
-Podľa vzoru od majiteľa: tmavá karta so zlatým rámom, zlatou stuhou s mašľou po ľavom
-okraji, textom v strede stĺpca, písaným nápisom „poukážka“, zlatou vetvičkou,
-fotografiou v oblúkovom ráme v teplom zlatom ladení a zlatou pečaťou. Formát DL na šírku, 210 × 99 mm,
-tlačové PDF má spadávku 3 mm (216 × 105 mm).
+Podľa nového vzoru od majiteľa (poukážka Head Spa, ktorá ide do tlače): čierny mramor so
+zlatými žilkami, zlatá saténová mašľa so stuhou po ľavom okraji (`dl/stuha.png`, vystrihnutá
+zo vzoru), lotos a nápis SALON30 · NITRA, zlaté „DARČEKOVÁ“ a písané „poukážka“, fotka vpravo
+za zlatým kruhom až po okraj, zlatá olivová vetvička a zlatá pečať s lotosom
+(PRE KRAJŠÍ DEŇ · PRE TEBA). Formát DL na šírku, 210 × 99 mm, tlačové PDF má spadávku 3 mm
+(216 × 105 mm). Mramor je `dl/mramor.jpg`. V PDF je zlatý text plnou farbou (prechod textom
+tlačiarne nespracujú dobre), v JPG má jemný zlatý prechod.
 
 ## Päť líc podľa kategórie a spoločný rub
 
 | Súbor | Pre koho | Fotografia |
 | --- | --- | --- |
-| `poukaz-head-spa` | Head Spa rituály (Classic, Relax, Harmony, Hĺbkový, Beauty, Fruit & Fresh, Signature) | vlastná fotka: vodný oblúk v salóne |
+| `poukaz-head-spa` | Head Spa rituály (Classic, Relax, Harmony, Hĺbkový, Beauty, Fruit & Fresh, Signature) | vlastná fotka: zlatý vodný oblúk v salóne (zaostrená) |
 | `poukaz-pansky` | Gentlemen rituály | muž pri umývadle u barbera |
 | `poukaz-detsky` | Little Fruit Head Spa | dieťa v kresle |
-| `poukaz-pre-dvoch` | Spoločný Head Spa rituál, Spoločný rituál pod hviezdami | vlastná fotka: miestnosť s dvoma lôžkami |
+| `poukaz-pre-dvoch` | Spoločný Head Spa rituál, Spoločný rituál pod hviezdami | vlastná fotka: miestnosť s dvoma lôžkami (zaostrená) |
 | `poukaz-chodidla` | Klasický, Ovocný a bylinkový, Zlatý rituál 24K | masáž chodidiel |
 | `poukaz-back` | rub pre všetky: ako poukážku využiť, platnosť 365 dní, QR kód do online kalendára | |
 
-Polia na vyplnenie rukou: Rituál, Pre, Od, Platnosť do, Kód. Poukážka je vždy na
+Polia na vyplnenie rukou: Rituál, Pre, Od, Platnosť do, Kód (vzor má štyri, pole Rituál je navyše). Poukážka je vždy na
 konkrétny rituál, nie na sumu, preto je prvé pole Rituál.
 
 ## Kde sú súbory

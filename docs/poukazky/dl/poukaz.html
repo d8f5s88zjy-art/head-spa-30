@@ -10,86 +10,88 @@
 @font-face{font-family:'Manrope';font-weight:700;src:url(../../../assets/fonts/Manrope-700.woff2) format('woff2')}
 /* písané „poukážka“ podľa vzoru salónu, len na poukážkach, nie na webe (Pinyon Script, licencia OFL) */
 @font-face{font-family:'Pinyon';font-weight:400;src:url(pismo/PinyonScript.woff2) format('woff2')}
-:root{--gold:#d9b56a;--gold-hi:#f0d28a;--gold-dk:#9c7a3a;--ink:#f2ede2;--bg:#0b100d}
+:root{--gold:#d4ae62;--gold-hi:#f3dc9f;--gold-dk:#a8823f;--ink:#efe7da;--bg:#0a0908;--field:#d8c6a3}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#222}
 body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
-/* Karta DL na šírku so spadávkou 3 mm: 216 × 105 mm, 1 mm = 5 px */
+/* Karta DL na šírku so spadávkou 3 mm: 216 × 105 mm, 1 mm = 5 px. Vzor: poukážka od majiteľa
+   (čierny mramor, zlatá saténová mašľa vľavo, fotka vpravo za zlatým kruhom, pečať s lotosom). */
 .card{position:relative;width:1080px;height:525px;overflow:hidden;background:var(--bg);margin:0 auto}
-.bg{position:absolute;inset:0;background:
-  radial-gradient(55% 75% at 22% 30%,rgba(217,181,106,.14),transparent 62%),
-  radial-gradient(45% 70% at 80% 55%,rgba(217,181,106,.10),transparent 65%),
-  linear-gradient(120deg,#12160f 0%,#0a0e0b 55%,#0d100c 100%)}
-/* jemné zlaté žilky ako na vzore */
-.veins{position:absolute;inset:0;opacity:.35;background:
-  radial-gradient(120% 40% at 10% 90%,rgba(217,181,106,.10),transparent 60%),
-  radial-gradient(60% 30% at 70% 10%,rgba(217,181,106,.08),transparent 60%)}
-.grain{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.6'/></svg>")}
-/* zlatý rám vo vnútri spadávky */
-.frame{position:absolute;inset:28px;border:1.5px solid rgba(217,181,106,.8)}
-.frame2{position:absolute;inset:35px;border:.75px solid rgba(217,181,106,.3)}
-/* fotografia vpravo v oblúkovom ráme, teplé zlaté ladenie */
-.photo{position:absolute;right:66px;top:50px;width:400px;height:352px;border-radius:200px 200px 18px 18px;overflow:hidden;box-shadow:0 0 0 2px rgba(240,210,138,.9),0 0 0 9px var(--bg),0 0 0 10px rgba(217,181,106,.3),0 30px 60px rgba(0,0,0,.6)}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 40%);filter:sepia(.32) saturate(.95) brightness(.88) contrast(1.08)}
-.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,13,0) 50%,rgba(11,16,13,.6) 100%),linear-gradient(90deg,rgba(11,16,13,.35),transparent 30%),radial-gradient(60% 60% at 70% 30%,rgba(240,210,138,.12),transparent 70%)}
-/* zlatá vetvička medzi textom a fotkou */
-.branch{position:absolute;left:566px;top:246px;width:100px;height:156px;opacity:.9}
-/* pečať */
-.seal{position:absolute;right:52px;bottom:120px;width:118px;height:118px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f5dc9b,#d9b56a 55%,#9c7a3a 100%);box-shadow:0 0 0 4px var(--bg),0 0 0 5px rgba(217,181,106,.6),0 14px 30px rgba(0,0,0,.55);display:grid;place-items:center;color:#2a2110}
-.seal svg{width:118px;height:118px;position:absolute;inset:0}
-.seal .num{font-family:'Lora',serif;font-size:38px;line-height:1;position:relative;top:2px}
-.seal .num small{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:8px;letter-spacing:.28em;text-transform:uppercase;text-align:center;margin-top:4px}
+.bg{position:absolute;inset:0;background:url(mramor.jpg) center/cover}
+/* zlatý text s jemným prechodom ako razba */
+.gold{background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-dk) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* fotka vpravo: kruh vľavo a obdĺžnik doprava až po okraj */
+.photo{position:absolute;left:560px;top:0;right:0;bottom:0;
+  -webkit-mask-image:radial-gradient(circle 275px at 275px 262px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 275px,#000 275px);
+  mask-image:radial-gradient(circle 275px at 275px 262px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 275px,#000 275px)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 45%);filter:saturate(1.02) contrast(1.04) brightness(.92)}
+.photo::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(10,9,8,0) 55%,rgba(10,9,8,.55) 80%,rgba(10,9,8,.9) 100%),
+  linear-gradient(90deg,rgba(10,9,8,.55) 0%,rgba(10,9,8,0) 30%),
+  linear-gradient(0deg,rgba(10,9,8,0) 85%,rgba(10,9,8,.35) 100%)}
+.arc{position:absolute;left:0;top:0;width:1080px;height:525px;pointer-events:none}
+.frame{position:absolute;inset:24px;border:1px solid rgba(212,174,98,.7)}
+.branch{position:absolute;left:496px;top:262px;width:190px;height:170px}
+/* pečať: zlatá minca s lotosom */
+.seal{position:absolute;left:873px;top:298px;width:124px;height:124px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#f6e3aa 0%,#dcb86c 42%,#b48b45 78%,#8a6a31 100%);
+  box-shadow:0 10px 24px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,240,200,.35)}
+.seal svg{position:absolute;inset:0;width:124px;height:124px}
 /* text vľavo, zarovnaný na stred stĺpca */
-.txt{position:absolute;left:96px;top:52px;width:460px;text-align:center}
-.brand .mark{width:44px;height:44px;margin:0 auto}
-.brand b{display:block;font-family:'Lora',serif;font-weight:500;font-size:30px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-top:6px}
-.brand small{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-top:2px}
-.kind{margin-top:16px;line-height:.9}
-.kind .a{display:block;font-family:'Lora',serif;font-weight:500;font-size:34px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
-.kind .b{display:block;font-family:'Pinyon',cursive;font-weight:400;font-size:74px;line-height:.9;letter-spacing:.01em;color:var(--gold-hi);margin-top:2px;text-shadow:0 2px 18px rgba(240,210,138,.28)}
-.rule{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:8px;font-family:'Lora',serif;font-weight:500;font-size:19px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
-.rule::before,.rule::after{content:"";height:1px;width:46px;background:linear-gradient(90deg,transparent,var(--gold))}
-.rule::after{background:linear-gradient(90deg,var(--gold),transparent)}
-.cat{margin-top:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.36em;text-transform:uppercase;color:rgba(242,237,226,.78)}
-.lede{margin:14px auto 0;font-size:11.5px;line-height:1.55;color:rgba(242,237,226,.78);max-width:330px}
+.txt{position:absolute;left:128px;top:34px;width:460px;text-align:center}
+.lotus{display:block;width:46px;height:36px;margin:0 auto}
+.wm{display:block;font-family:'Manrope',sans-serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:.07em;margin-top:6px;padding-left:.07em}
+.city{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:7px;font-family:'Manrope',sans-serif;font-weight:400;font-size:12.5px;letter-spacing:.34em;color:var(--gold);padding-left:.34em}
+.city::before,.city::after{content:"";width:30px;height:1px;background:var(--gold);opacity:.8}
+.kind{margin-top:20px;line-height:1}
+.kind .a{display:inline-block;font-family:'Lora',serif;font-weight:500;font-size:43px;letter-spacing:.04em;text-transform:uppercase}
+.kind .b{display:block;font-family:'Pinyon',cursive;font-weight:400;font-size:74px;line-height:.95;color:var(--gold-hi);margin-top:-2px;text-shadow:0 2px 16px rgba(243,220,159,.18)}
+.orn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:0}
+.orn::before,.orn::after{content:"";width:62px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.orn i{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.rule{display:inline-block;margin-top:8px;font-family:'Lora',serif;font-weight:500;font-size:25px;letter-spacing:.06em;text-transform:uppercase}
+.cat{margin-top:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.lede{margin:11px auto 0;font-size:11.5px;line-height:1.55;color:rgba(239,231,218,.86);max-width:330px;text-wrap:balance}
 /* polia na vyplnenie a spodný riadok */
-.fields{position:absolute;left:120px;right:78px;bottom:70px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1.1fr .9fr;gap:14px}
-.f{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
-.f span{display:block;flex:1;height:20px;border-radius:3px;background:linear-gradient(180deg,rgba(242,237,226,.94),rgba(226,218,200,.94));box-shadow:inset 0 0 0 1px rgba(217,181,106,.6)}
-.foot{position:absolute;left:78px;right:78px;bottom:44px;display:flex;align-items:center;justify-content:center;gap:16px;font-family:'Manrope',sans-serif;font-weight:700;font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;color:rgba(217,181,106,.9)}
-.foot::before,.foot::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(217,181,106,.5))}
-.foot::after{background:linear-gradient(90deg,rgba(217,181,106,.5),transparent)}
-/* stuha po ľavom okraji s mašľou hore */
-.bow{position:absolute;left:0;top:0;width:200px;height:525px}
+.fields{position:absolute;left:100px;right:88px;top:438px;display:grid;grid-template-columns:1.35fr 1.1fr 1fr 1.15fr .9fr;gap:16px}
+.f{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.f span{display:block;flex:1;height:24px;background:linear-gradient(180deg,#e0cfad,var(--field));box-shadow:inset 0 0 0 1px rgba(168,130,63,.45)}
+.foot{position:absolute;left:0;right:0;top:480px;display:flex;align-items:center;justify-content:center;gap:16px;font-family:'Manrope',sans-serif;font-weight:400;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);padding-left:.32em}
+.foot::before,.foot::after{content:"";width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,174,98,.7))}
+.foot::after{background:linear-gradient(90deg,rgba(212,174,98,.7),transparent)}
+/* saténová mašľa so stuhou po ľavom okraji */
+.bow{position:absolute;left:-2px;top:-6px;width:186px;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
 /* verzia pre Booqme a sociálne siete: 980 × 700 px, bez polí na vyplnenie */
 .card.sq{width:980px;height:700px}
-.card.sq .photo{right:auto;left:112px;top:314px;width:798px;height:316px;border-radius:26px 26px 22px 22px}
-.card.sq .photo::after{background:linear-gradient(180deg,rgba(11,16,13,0) 60%,rgba(11,16,13,.5) 100%)}
-.card.sq .seal{right:56px;bottom:auto;top:256px;width:124px;height:124px}
-.card.sq .txt{left:0;right:0;width:auto;top:44px}
-.card.sq .kind{margin-top:10px}
-.card.sq .kind .a{font-size:30px}
-.card.sq .kind .b{font-size:66px}
-.card.sq .rule{margin-top:6px}
-.card.sq .cat{margin-top:6px}
-.card.sq .lede,.card.sq .fields,.card.sq .branch{display:none}
-.card.sq .foot{left:70px;right:70px;bottom:36px}
-.card.sq .bow{width:170px;height:700px}
+.card.sq .photo{left:552px;
+  -webkit-mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px);
+  mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px)}
+.card.sq .arc{width:980px;height:700px}
+.card.sq .txt{left:150px;top:132px;width:390px}
+.card.sq .seal{left:812px;top:520px}
+.card.sq .branch{left:470px;top:420px}
+.card.sq .fields{display:none}
+.card.sq .foot{top:640px}
+.card.sq .bow{width:220px}
 /* rub */
-.back .txt{width:560px;top:70px;text-align:left;left:78px}
-.back .brand{display:flex;align-items:center;gap:14px;text-align:left}
-.back .brand .mark{margin:0}
-.back .brand b{font-size:26px;margin:0}
-.back h2{font-family:'Lora',serif;font-weight:500;font-size:26px;letter-spacing:.02em;margin-top:26px}
-.back ol{margin-top:14px;padding-left:18px;font-size:12px;line-height:1.7;color:rgba(242,237,226,.8)}
+.back .txt{width:560px;top:62px;text-align:left;left:96px}
+.back .brand{display:flex;align-items:center;gap:14px}
+.back .brand .lotus{margin:0;width:40px;height:32px}
+.back .brand .wm{font-size:30px;margin:0}
+.back .brand .city{justify-content:flex-start;margin-top:4px;font-size:10.5px}
+.back .brand .city::before{display:none}
+.back h2{font-family:'Lora',serif;font-weight:500;font-size:27px;letter-spacing:.02em;margin-top:26px}
+.back ol{margin-top:14px;padding-left:18px;font-size:12.5px;line-height:1.7;color:rgba(239,231,218,.86)}
+.back ol li::marker{color:var(--gold)}
 .back li+li{margin-top:4px}
-.back .list{margin:20px 0 0;font-size:11px;line-height:1.6;color:rgba(242,237,226,.66);max-width:470px}
-.back .qr{position:absolute;right:86px;top:96px;width:172px;height:172px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 0 0 2px rgba(217,181,106,.7),0 0 0 8px var(--bg),0 0 0 9px rgba(217,181,106,.3)}
+.back .list{margin:18px 0 0;font-size:11.5px;line-height:1.6;color:rgba(239,231,218,.7);max-width:470px}
+.back .qr{position:absolute;right:104px;top:92px;width:172px;height:172px;background:#fff;padding:10px;box-shadow:0 0 0 2px rgba(212,174,98,.8),0 0 0 8px var(--bg),0 0 0 9px rgba(212,174,98,.35)}
 .back .qr img{width:100%;height:100%;display:block}
-.back .qrl{position:absolute;right:66px;top:290px;width:212px;text-align:center;font-family:'Manrope',sans-serif;font-weight:700;font-size:7.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);line-height:1.9}
-.back .qrl b{display:block;font-family:'Lora',serif;font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:none;color:var(--ink)}
-.back .foot{justify-content:space-between}
-.back .foot::before,.back .foot::after{display:none}
+.back .qrl{position:absolute;right:64px;top:288px;width:252px;text-align:center;font-family:'Manrope',sans-serif;font-weight:400;font-size:9px;letter-spacing:.02em;color:var(--gold);line-height:1.9}
+.back .qrl b{display:block;font-family:'Lora',serif;font-weight:500;font-size:15px;letter-spacing:.04em;text-transform:none;color:var(--ink)}
+.back .seal{left:auto;right:128px;top:auto;bottom:62px}
+.back .foot{top:480px}
 </style>
 </head>
 <body>
