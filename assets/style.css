@@ -1832,3 +1832,15 @@ html .site #cennik .card .actions .btn.small:hover{border-color:var(--accent)!im
   html.world #cennik .cat.has-ph{min-height:36vh;margin:48px 0 0}
   html .site #cennik .card,html .site #cennik .card.featured{padding:28px 20px 24px}
 }
+
+/* linka 24/7 pre spätnú väzbu: tichý blok s vlasovou linkou, rovnaký v cenníku aj pri tíme */
+.care{margin:clamp(48px,6vw,88px) 0 0;padding:clamp(28px,3vw,40px) 0 0;border-top:1px solid rgba(212,174,98,.4);display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) auto;gap:14px clamp(24px,4vw,64px);align-items:baseline}
+.care-k{font-family:var(--body);font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent)}
+.care p{margin:0;font-family:var(--display);font-size:clamp(19px,1.7vw,24px);line-height:1.45;color:var(--text-primary);max-width:46ch}
+.care .care-c{font-family:var(--body);font-size:15px;white-space:nowrap}
+.care a,.care-note a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4)}
+.care a:hover,.care-note a:hover{border-bottom-color:var(--accent)}
+.care-note{margin-top:10px;font-size:14px;color:rgba(239,231,218,.72)}
+footer .care-note{margin-top:14px}
+@media (max-width:900px){.care{grid-template-columns:1fr}.care .care-c{white-space:normal}}
+@media (max-width:640px){#cennik .care{padding-left:20px;padding-right:20px}}
