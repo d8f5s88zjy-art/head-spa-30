@@ -1065,11 +1065,17 @@
     document.body.classList.add('ready', 'open');
     if (veilMs) {
       veil.classList.add('drawn');
-      setTimeout(flipVeil, phoneMQ.matches ? 520 : 380);   // na telefóne dvere chvíľu postoja
       // koniec až po dobehnutí prelínania scény (opacity na .scene, nie na krídlach), časovač je poistka pre pomalý telefón
       const sc = $('.scene', veil);
       if (sc) sc.addEventListener('transitionend', (e) => { if (e.target === sc && e.propertyName === 'opacity') endVeil(); });
-      setTimeout(endVeil, 2200);
+      // krídla sa otvoria, až keď je fotka dverí pripravená (najviac o 0,9 s neskôr, potom aj bez nej)
+      const im = $('.leaf img', veil);
+      const ready = im && !(im.complete && im.naturalWidth) && im.decode
+        ? Promise.race([im.decode().catch(() => {}), new Promise((r) => setTimeout(r, 900))]) : Promise.resolve();
+      ready.then(() => {
+        setTimeout(flipVeil, phoneMQ.matches ? 520 : 380);   // na telefóne dvere chvíľu postoja
+        setTimeout(endVeil, 2200);
+      });
     }
   });
 

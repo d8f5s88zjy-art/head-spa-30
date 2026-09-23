@@ -254,8 +254,8 @@
       (m[0][2] + (m[1][2] - m[0][2]) * e) * DIST,
     );
     const sec = now / 1000;
-    off.x += (Math.sin(sec * 0.37) * 0.004 * breath + pmx * 0.012) * s.vw;
-    off.y += (Math.sin(sec * 0.29 + 1.3) * 0.003 * breath + pmy * 0.008) * s.vh;
+    off.x += (Math.sin(sec * 0.37) * 0.004 * breath + pmx * 0.018) * s.vw;
+    off.y += (Math.sin(sec * 0.29 + 1.3) * 0.003 * breath + pmy * 0.012) * s.vh;
     off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
     camera.position.copy(s.eye).add(off);
     tmp.set(s.eye.x + off.x * 0.35, s.eye.y + off.y * 0.35, 0);
@@ -333,6 +333,19 @@
   addEventListener('resize', resize, { passive: true });
   addEventListener('touchstart', poke, { passive: true });
   if (!phone) addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = -(e.clientY / innerHeight - 0.5); poke(); }, { passive: true });
+  // telefón: pri naklonení sa perspektíva jemne pohne ako pri pohľade do skutočnej miestnosti.
+  // iPhone by na to potreboval povolenie, preto sa tam nepýtame a obraz ostáva len so skrolovaním.
+  if (phone && 'DeviceOrientationEvent' in window && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    let b0 = null, g0 = null;
+    addEventListener('deviceorientation', (e) => {
+      if (e.beta == null || e.gamma == null || performance.now() - lastInput > BREATH_MS) return;
+      if (b0 == null) { b0 = e.beta; g0 = e.gamma; }
+      // základ sa pomaly dorovná, aby obraz neostal vychýlený, keď telefón držíš inak
+      b0 += (e.beta - b0) * 0.01; g0 += (e.gamma - g0) * 0.01;
+      const nx = clamp((e.gamma - g0) / 36, -0.5, 0.5), ny = clamp((e.beta - b0) / 36, -0.5, 0.5);
+      if (Math.abs(nx - mx) > 0.006 || Math.abs(ny - my) > 0.006) { mx = nx; my = ny; wake(); }
+    }, { passive: true });
+  }
   d.addEventListener('visibilitychange', () => { running = !d.hidden; if (running) { last = 0; poke(); } });
   // obsah stránky mení výšku (fotky, rozbalené karty), kotvy sa preto prepočítajú
   let mt; new ResizeObserver(() => { clearTimeout(mt); mt = setTimeout(() => { measure(); wake(); }, 150); }).observe(d.body);

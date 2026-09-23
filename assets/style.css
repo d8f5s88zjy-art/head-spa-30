@@ -83,29 +83,35 @@ body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .dro
 .veil{position:fixed;inset:0;z-index:300;pointer-events:none;display:none}
 html.door .veil{display:block}
 .veil.gone{display:none!important}
-.veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 52%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
+.veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 55%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
 .veil.through .scene{transform:scale(3.8);opacity:0}
-.veil .door{--dh:min(84vh,136vw);position:absolute;left:50%;top:50%;width:calc(var(--dh)*.58);height:var(--dh);margin:calc(var(--dh)*-.5) 0 0 calc(var(--dh)*-.29);perspective:1400px;perspective-origin:50% 45%}
-.veil .doorway{position:absolute;inset:0;background:var(--canvas);box-shadow:0 0 0 200vmax #e4dcd7;transition:background 500ms var(--ease-soft)}
+/* skutočné dvere salónu: fotka dverí prekryje celú obrazovku, rám ostane stáť a obe krídla
+   (vystrihnuté z tej istej fotky) sa otvoria dnu. Rozmery sú v podieloch fotky 800 × 992:
+   krídla od 8 % do 90,25 % šírky, deliaca čiara na 49,75 %, vrch krídel na 8,27 % výšky. */
+/* na širokej obrazovke je fotka vyššia ako okno: kruhy a kľučka sú trochu pod stredom, nie na spodnom okraji */
+.veil .door{--bw:max(100vw,80.65vh);--bh:calc(var(--bw)*1.24);position:absolute;left:50%;top:0;width:var(--bw);height:var(--bh);margin:clamp(calc(100vh - var(--bh)),calc(50vh - var(--bh)*.62),0px) 0 0 calc(var(--bw)*-.5);perspective:calc(var(--bw)*1.1);perspective-origin:50% 55%}
+.veil .door img{position:absolute;left:0;top:0;width:var(--bw);height:var(--bh);max-width:none;display:block;user-select:none}
+.veil .jamb,.veil .leaf{position:absolute;overflow:hidden;background:#1b2b21}
+.veil .jamb.t{left:0;top:0;width:100%;height:8.27%}
+.veil .jamb.l{left:0;top:8.27%;width:8%;bottom:0}
+.veil .jamb.r{left:90.25%;right:0;top:8.27%;bottom:0}
+.veil .jamb.l img,.veil .jamb.r img,.veil .leaf img{top:calc(var(--bh)*-.0827)}
+.veil .jamb.r img{left:calc(var(--bw)*-.9025)}
+.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:var(--canvas);transition:background 500ms var(--ease-soft)}
 .veil.lift .doorway{background:transparent}
 .veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 650ms var(--ease-soft) 180ms;pointer-events:none}
 .veil.lift .doorway::before{opacity:1}
-.veil .frame{position:absolute;inset:calc(var(--dh)*-.05) calc(var(--dh)*-.055) 0;border:solid #2b3d31;border-width:calc(var(--dh)*.05) calc(var(--dh)*.055) 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),inset 0 0 0 calc(var(--dh)*.012) #213126,inset 0 0 0 calc(var(--dh)*.014) rgba(255,255,255,.07),0 0 0 1px rgba(0,0,0,.25),0 24px 60px rgba(0,0,0,.28);pointer-events:none}
-.veil .sill{position:absolute;left:calc(var(--dh)*-.055);right:calc(var(--dh)*-.055);top:100%;height:5vh;background:linear-gradient(#5a5652,#3f3c39);box-shadow:0 30px 40px rgba(0,0,0,.18)}
-.veil .leaf{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(180deg,#243a2e,#1f3328 60%,#1b2d23);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);backface-visibility:hidden;transition:transform 680ms cubic-bezier(.65,0,.25,1) 30ms}
-.veil .leaf.l{left:0;transform-origin:left center;border-right:1px solid rgba(0,0,0,.45)}
-.veil .leaf.r{right:0;transform-origin:right center;border-left:1px solid rgba(255,255,255,.04);transition-delay:90ms}
-.veil.lift .leaf.l{transform:rotateY(104deg)}
-.veil.lift .leaf.r{transform:rotateY(-104deg)}
-.veil .p{position:absolute;left:15%;right:15%;border:1px solid rgba(255,255,255,.10);box-shadow:inset 0 0 0 calc(var(--dh)*.006) rgba(0,0,0,.28),inset 0 0 0 calc(var(--dh)*.009) rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.04))}
-.veil .p.t{top:5.5%;height:47%}
-.veil .p.m{top:65%;height:8%}
-.veil .p.b{top:78.5%;height:15.5%}
-.veil .p.b2{display:none}
-.veil .knock{position:absolute;left:50%;top:59%;width:calc(var(--dh)*.075);height:calc(var(--dh)*.075);margin-left:calc(var(--dh)*-.0375);border-radius:50%;border:calc(var(--dh)*.007) solid #c9a45c;box-shadow:0 2px 3px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,255,255,.35)}
-.veil .knock::before{content:"";position:absolute;left:50%;top:calc(var(--dh)*-.028);width:calc(var(--dh)*.032);height:calc(var(--dh)*.032);margin-left:calc(var(--dh)*-.016);border-radius:50%;background:radial-gradient(circle at 35% 35%,#eed49a,#b8924a 70%);box-shadow:0 2px 3px rgba(0,0,0,.45)}
-.veil .handle{position:absolute;left:8%;top:60%;width:calc(var(--dh)*.02);height:calc(var(--dh)*.12);border-radius:999px;background:linear-gradient(90deg,#b8924a,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
-.veil .handle::after{content:"";position:absolute;left:0;top:22%;width:calc(var(--dh)*.05);height:calc(var(--dh)*.014);border-radius:999px;background:linear-gradient(180deg,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.veil .leaf{top:8.27%;bottom:0;backface-visibility:hidden;transition:transform 760ms cubic-bezier(.65,0,.25,1) 30ms}
+.veil .leaf.l{left:8%;width:41.75%;transform-origin:left center}
+.veil .leaf.l img{left:calc(var(--bw)*-.08)}
+.veil .leaf.r{left:49.75%;width:40.5%;transform-origin:right center;transition-delay:90ms}
+.veil .leaf.r img{left:calc(var(--bw)*-.4975)}
+/* krídlo sa pri otváraní odvracia od svetla, preto stmavne ako v skutočnosti */
+.veil .leaf::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity 760ms cubic-bezier(.65,0,.25,1) 30ms}
+.veil .leaf.r::after{transition-delay:90ms}
+.veil.lift .leaf::after{opacity:.6}
+.veil.lift .leaf.l{transform:rotateY(100deg)}
+.veil.lift .leaf.r{transform:rotateY(-100deg)}
 .veil .mark{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;transform-origin:50% 50%;transition:transform 650ms cubic-bezier(.7,0,.2,1)}
 html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.veiling .nav .btn{opacity:0}
 
