@@ -20,9 +20,15 @@
     const go = () => { INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
     INPUTS.forEach((e) => addEventListener(e, go, { passive: true }));
   });
-  // od prvého pohybu sa vykreslia všetky sekcie (CSS world-full), aby skok cez menu pristál presne
-  root.classList.add('world-full');
-  const quit = () => { root.classList.remove('world', 'world-full'); };
+  // sekcie sú vo filme vyššie ako odhad content-visibility, skok cez menu by pristál vedľa. Preto sa
+  // po prvom pohybe postupne vo voľných chvíľach vykreslia všetky (nie naraz, aby dotyk nezamrzol)
+  // a pri kliknutí na odkaz v stránke hneď všetky zvyšné.
+  const secs = [...d.querySelectorAll('.site>section,.site>footer,.site>.pull,.site>.finale')];
+  const open = (all) => { do { const s = secs.shift(); if (s) s.style.contentVisibility = 'visible'; } while (all && secs.length); };
+  const step = (dl) => { while (secs.length && dl.timeRemaining() > 6) open(); if (secs.length) requestIdleCallback(step, { timeout: 800 }); };
+  if ('requestIdleCallback' in window) requestIdleCallback(step, { timeout: 800 }); else setTimeout(() => open(true), 600);
+  d.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('a[href^="#"]')) open(true); }, true);
+  const quit = () => { root.classList.remove('world'); };
   const src = window.HS30_THREE || new URL('vendor/three.module.min.js', here).href;
   let THREE;
   try { THREE = await import(src); } catch (e) { quit(); return; }
@@ -70,7 +76,8 @@
   canvas.setAttribute('aria-hidden', 'true');
   d.body.prepend(canvas);
   let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' }); }
+  // obrazovka dostane len hotovú kompozíciu, hĺbku potrebujú iba render targety záberov
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' }); }
   catch (e) { canvas.remove(); quit(); return; }
   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); canvas.remove(); quit(); return; }
   // farby fotiek idú na obrazovku bez prepočtov, presne ako na fotke
@@ -154,14 +161,24 @@
     t.needsUpdate = true;
     return t;
   }
+  // fotky sú v AVIF (o tretinu menšie) aj WebP; keď prehliadač AVIF nedekóduje, ďalej sa berie WebP
+  let avif = !FILM;
+  async function photo(s, w, signal) {
+    if (avif) {
+      try { return await bitmap(fileUrl(`${s.photo}-${w}.avif`), signal); }
+      catch (e) { if (signal.aborted) throw e; avif = false; }
+    }
+    return bitmap(fileUrl(`${s.photo}-${w}.webp`), signal);
+  }
   const retryOk = (s) => !s.failedAt || performance.now() - s.failedAt > 10000;   // po výpadku siete skúsi znova
   function load(s) {
-    const w = pickSize(s);
+    // raz načítaná veľkosť sa drží (z cache), aj keď pomalé zariadenie zníži rozlíšenie; väčšia len keď treba
+    const w = Math.max(pickSize(s), s.w || 0);
     if (s.loading || (s.ready && s.size >= w) || !retryOk(s)) return;
     // hotový záber v menšej veľkosti (napr. po otočení telefónu) sa vymení až keď je väčší načítaný
     const ctl = new AbortController(), upgrade = s.ready;
     s.ctl = ctl;
-    s.loading = Promise.all([bitmap(fileUrl(`${s.photo}-${w}.webp`), ctl.signal), upgrade ? null : bitmap(fileUrl(`${s.photo}-hlbka.webp`), ctl.signal)])
+    s.loading = Promise.all([photo(s, w, ctl.signal), upgrade ? null : bitmap(fileUrl(`${s.photo}-hlbka.webp`), ctl.signal)])
       .then(([img, dep]) => {
         if (s.ctl === ctl) s.loading = null;
         if (ctl.signal.aborted || lost || (upgrade && !s.ready)) { img.close(); if (dep) dep.close(); return; }
@@ -170,7 +187,7 @@
         if (dep) { u.uDepth.value = tex(dep); renderer.initTexture(u.uDepth.value); dep.close(); }
         if (old) old.dispose();
         if (!upgrade) s.t0 = performance.now();
-        s.ready = true; s.size = w; s.failedAt = 0; wake();
+        s.ready = true; s.size = s.w = w; s.failedAt = 0; wake();
       })
       .catch(() => { if (s.ctl === ctl) s.loading = null; if (!ctl.signal.aborted) s.failedAt = performance.now(); });
   }
@@ -183,12 +200,14 @@
   }
   let onScreen = new Set();
   function keepAround(ci) {
-    SHOTS.forEach((s) => { if ((s.pi == null || Math.abs(s.pi - ci) > 2) && !onScreen.has(s)) drop(s); });
+    // v pamäti je aktuálny záber, susedia a ďalší v smere skrolovania
+    const dir = V < 0 ? -1 : 1, keep = (s) => s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
+    SHOTS.forEach((s) => { if (!keep(s) && !onScreen.has(s)) drop(s); });
     const cur = path[ci];
     if (!cur) return;
     load(cur);
     if (!cur.ready) return;                                   // pri skoku najprv cieľ, susedia až potom
-    for (const k of [ci + 1, ci - 1, ci + 2, ci - 2]) if (path[k]) load(path[k]);
+    for (const k of [ci + dir, ci - dir, ci + 2 * dir]) if (path[k]) load(path[k]);
   }
 
   /* ---------- rozloženie záberu podľa obrazovky ---------- */
@@ -375,7 +394,8 @@
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
     const busy = draw(now, dt);
     if (drawn && !shown) { shown = true; requestAnimationFrame(() => root.classList.add('world-in')); }
-    const moving = busy || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008;
+    // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
+    const moving = busy || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
     if (!shown) {
       // prvý záber ešte nie je: čakať, a keď nič nepríde (sieť), vrátiť pokojný web
       if (now - started > 15000) { stop(); return; }
@@ -408,7 +428,8 @@
       // základ sa pomaly dorovná, aby obraz neostal vychýlený, keď telefón držíš inak
       b0 += (by - b0) * 0.01; g0 += (gx - g0) * 0.01;
       const nx = clamp((gx - g0) / 24, -0.5, 0.5), ny = clamp((by - b0) / 24, -0.5, 0.5);
-      if (Math.abs(nx - mx) > 0.006 || Math.abs(ny - my) > 0.006) { mx = nx; my = ny; wake(); }
+      // mŕtva zóna asi 0,7°: chvenie ruky obraz nerozhýbe
+      if (Math.abs(nx - mx) > 0.03 || Math.abs(ny - my) > 0.03) { mx = nx; my = ny; wake(); }
     });
     if (screen.orientation) on(screen.orientation, 'change', () => { b0 = g0 = null; });
   }

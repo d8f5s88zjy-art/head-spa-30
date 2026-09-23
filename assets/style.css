@@ -102,7 +102,9 @@ html.door .veil{display:block}
 .veil .jamb.l img,.veil .jamb.r img,.veil .leaf img{top:calc(var(--bh)*-.0827)}
 .veil .jamb.r img{left:calc(var(--bw)*-.9025)}
 /* v otvore je salón (fotka), text stránky sa ukáže až keď scéna zmizne */
-.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:#0d0a07 url(img/galeria/lozka-sviecka-800.webp) 50% 62%/cover;background-image:image-set(url(img/galeria/lozka-sviecka-800.webp) 1x,url(img/galeria/lozka-sviecka-1200.webp) 2x)}
+.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:#0d0a07 50% 62%/cover}
+/* fotka v otvore sa sťahuje až keď sú dvere na obrazovke, nie počas načítania stránky */
+.veil.pic .doorway{background-image:url(img/galeria/lozka-sviecka-800.webp);background-image:image-set(url(img/galeria/lozka-sviecka-800.avif) type("image/avif"),url(img/galeria/lozka-sviecka-800.webp) type("image/webp"))}
 .veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 650ms var(--ease-soft) 180ms;pointer-events:none}
 .veil.lift .doorway::before{opacity:1}
 .veil .leaf{top:8.27%;bottom:0;backface-visibility:hidden;transition:transform 760ms cubic-bezier(.65,0,.25,1) 30ms}
@@ -1591,8 +1593,8 @@ html.world,html.world body{background:var(--canvas)}
 html.world body{background:transparent}
 html.world .site,html.world footer{position:relative;z-index:1}
 html.world .site{background:none}
-/* po prvom pohybe sa vykreslia všetky sekcie: vo filme sú vyššie ako odhad content-visibility a skok cez menu by pristál vedľa */
-html.world-full .site>section,html.world-full .site>footer,html.cv-all .site>section,html.cv-all .site>footer,html.cv-all .site>.pull,html.cv-all .site>.finale{content-visibility:visible}
+/* príchod cez odkaz s kotvou: sekcie sa vykreslia hneď, aby stránka pristala presne (vo filme sa rozbaľujú postupne, world.js) */
+html.cv-all .site>section,html.cv-all .site>footer,html.cv-all .site>.pull,html.cv-all .site>.finale{content-visibility:visible}
 html.world .stage{background:transparent}
 html.world .stage .fallback,html.world .reel{transition:opacity .7s cubic-bezier(.4,0,.2,1)}
 html.world-in .stage .fallback,html.world-in .reel{opacity:0}

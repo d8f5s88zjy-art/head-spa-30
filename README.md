@@ -34,18 +34,34 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 | Otázky | `komoda` |
 | Kontakt | `neon-head-spa` |
 
-- Fotky sú v `assets/img/film/`: zväčšené a zaostrené na dvojnásobok (2172, 1448 a 1086 px
-  šírky) a `<meno>-hlbka.webp` (svetlá = blízko). Skript vyberie najmenšiu šírku, ktorá na
-  obrazovke nebude zväčšená o viac ako štvrtinu, a drží v pamäti len zábery okolo aktuálneho.
+- Fotky sú v `assets/img/film/`: zväčšené a zaostrené na dvojnásobok, v šírkach 2172, 1448 a
+  1086 px, každá v AVIF (o tretinu menšie) aj WebP, a `<meno>-hlbka.webp` (svetlá = blízko).
+  Skript vyberie najmenšiu šírku, ktorá na obrazovke nebude zväčšená, AVIF s návratom na WebP.
+- Načítanie: najprv záber, kde návštevník je (pri skoku cez menu cieľ), potom susedia. V pamäti
+  sú najviac štyri zábery, preskočené sťahovanie sa ruší. Obrázok sa po nahratí do grafickej
+  karty uvoľní. Skrytá kategória cenníka (filter) z filmu vypadne.
 - Ostrosť: plné rozlíšenie displeja do 2x, fotky bez tónovania a bez hmly, farby presne ako na
-  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch.
-- Pohyb: kriticky tlmená pružina (žiadne trhnutie pri rýchlom skrole), v pokoji jemné dýchanie
-  kamery 30 snímok za sekundu, po 25 s bez pohybu sa obraz upokojí a prestane kresliť. Na
-  počítači sa perspektíva jemne pohne aj za myšou. Keď zariadenie nestíha, zníži sa rozlíšenie.
+  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch a jemné šero pri prelínaní.
+- Pohyb: kriticky tlmená pružina, prelínanie v strede medzi časťami, v pokoji sa dokončí na
+  bližší záber. V pokoji jemné dýchanie kamery 30 snímok za sekundu, po 25 s bez pohybu kreslenie
+  stojí. Na počítači sa perspektíva pohne za myšou, na Androide pri naklonení (mŕtva zóna 0,7°).
+  Pomalé zariadenie si zníži rozlíšenie (meria sa voči najkratšej snímke, 30 Hz nie je pomalé).
+- Sekcie sú vo filme vyššie ako odhad `content-visibility`, preto sa po prvom pohybe postupne vo
+  voľných chvíľach vykreslia všetky a pri kliknutí na odkaz v stránke hneď. Príchod s `#kotvou`
+  (trieda `cv-all` z hlavičky) vykreslí všetko hneď, aby stránka pristala presne.
 - Hlavička kategórie v cenníku je okno do filmu (74 % výšky, na mobile 64 %); bez 3D ukazuje fotku.
-- Trieda `world` sa pridá v hlave stránky (nie pri obmedzení pohybu, šetrení dát, nízkej
-  obrazovke a bez WebGL); `world-in` až keď je prvý záber nakreslený. Bez nich ostáva pokojný
-  úvod s fotkou a web funguje bez 3D. Film sa načíta až po prvom pohybe alebo skrolovaní.
+- Trieda `world` sa pridá v hlave stránky len pri WebGL2 (three r169 iný nevie), nie pri
+  obmedzení pohybu, šetrení dát a nízkej obrazovke; `world-in` až keď je prvý záber nakreslený.
+  Keď do 15 s nepríde žiadna fotka, film sa ukončí a ostáva pokojný web.
+- Lighthouse (lokálne, bez gzip): mobil 86, desktop 99, CLS pod 0,03, TBT 20 ms.
+
+## Úvodné dvere
+
+Raz za návštevu sa pri otvorení stránky ukážu skutočné dvere salónu (`.veil`): fotka dverí
+(`assets/img/dvere-*.webp`, zaostrená) prekryje obrazovku, rám ostane stáť a obe krídla vystrihnuté
+z tej istej fotky sa v CSS 3D otvoria dnu a stmavnú. V otvore je salón (`lozka-sviecka`), potom
+kamera prejde dnu. Kým fotka dverí nie je pripravená, je tma a kreslí sa značka; keď do 0,9 s
+nepríde, dvere sa preskočia a tma sa rozplynie.
 
 ## Úvod
 
