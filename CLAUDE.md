@@ -27,8 +27,9 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   `assets/premium-v9.css` + `assets/premium-v9.js` (načítava sa po základných súboroch, nič
   z obsahu nemení). Web načítava minifikované verzie, preto po každej zmene spusti
   `node tools/build.mjs` (potrebuje esbuild).
-- Mobil má vlastnú kameru a časovanie úvodnej animácie (`CAM_P`, `data-ma`/`data-mb`),
-  počítač sa nemení. Dvere v úvode zostávajú.
+- Úvod je kamera cez mosadzný kruh so štyrmi fotkami zo salónu (`makeReel`, README Úvodná cesta).
+  Kruh rozmiestňuje CSS (`--r`, `--cx`, `--cy`), pohyb len cez transform. Mobil má vlastné časovanie
+  kapitol (`data-ma`/`data-mb`). Dvere v úvode zostávajú.
 - Cieľ: Lighthouse desktop 100, mobil 95 a viac. Žiadny backdrop-filter na mobile.
 - Komentáre v kóde po slovensky. Commity po slovensky, bez podpisov a bez odkazov na nástroje.
 

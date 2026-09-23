@@ -190,7 +190,7 @@ body.drawer-open{overflow:hidden}
 .hero{position:relative;height:360vh;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transform:translateZ(0)}
-.stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 66% -10%,rgba(217,181,106,.22),transparent 60%),radial-gradient(ellipse 30% 8% at 66% 80%,rgba(140,195,182,.35),transparent 70%),linear-gradient(180deg,var(--canvas-2),var(--canvas))}
+.stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 71% 50%,rgba(240,166,90,.10),transparent 70%),linear-gradient(180deg,var(--canvas-2),var(--canvas))}
 .stage .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(var(--ink),0) 35%,rgba(var(--ink),.62) 100%)}
 .band{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 max(24px,calc((100% - var(--wrap)) / 2 + 24px));opacity:0;pointer-events:none;text-shadow:var(--tshadow);--k:0}
 .band.on{pointer-events:auto}
@@ -1251,8 +1251,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--ink),.35) 0%,rgba(var(--ink),0) 22%,rgba(var(--ink),0) 70%,var(--canvas) 100%)}
 .hero-photo .led{position:absolute;left:8%;right:8%;top:6%;height:18%;z-index:1;background:radial-gradient(ellipse 60% 50% at 50% 50%,var(--glow-soft),transparent 70%);mix-blend-mode:screen;animation:ledBreath 10s var(--ease-soft) infinite}
 .band .inner{z-index:1}
-/* prvá kapitola má vlastné plátno: misa sa ukáže až pri prelínačke do druhej, nie spoza fotky */
-.hero .band[data-a="0"]{background:radial-gradient(ellipse 80% 70% at 30% 45%,var(--canvas-2),var(--canvas))}
 .hero-static .art .hero-photo{z-index:0}
 /* pokojná verzia úvodu: namiesto kreslenej misy stačí fotka nápisu */
 .hero-static .art canvas{display:none}
@@ -1325,4 +1323,49 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 @media (prefers-reduced-motion:reduce){
   .hero-photo .led,.rphoto::after,.t-ph::after{animation:none}
   .rphoto::after{opacity:.6}
+}
+
+/* úvod: kamera cez mosadzný kruh (assets/app.js, makeReel)
+   okno aj fotky sa hýbu len cez transform, kruh orezáva overflow so zaoblením */
+.reel{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:strict}
+.reel .lens{position:absolute;inset:0;transform-origin:var(--cx) var(--cy)}
+.reel .win{position:absolute;border-radius:50%;overflow:hidden;transform-origin:50% 50%;will-change:transform;background:var(--canvas-2);
+  box-shadow:0 40px 120px rgba(var(--ink),.7)}
+.reel .win-in{position:absolute;transform-origin:0 0;will-change:transform}
+.reel .rs{position:absolute;overflow:hidden;visibility:hidden}
+.reel .rs:first-child{visibility:visible}
+.reel .rs.full{left:0;top:0;width:100vw;height:100svh}
+.reel .rs picture,.reel .rs img{display:block;width:100%;height:100%;object-fit:cover}
+.reel .rs img{transform-origin:50% 50%;will-change:transform}
+/* mosadzný krúžok okolo okna a teplý svit ako LED pás za logom */
+.reel .ring,.reel .ripple{position:absolute;border-radius:50%;transform-origin:50% 50%;will-change:transform,opacity}
+.reel .ring{border:1.5px solid rgba(217,181,106,.7);box-shadow:0 0 0 10px rgba(217,181,106,.06),0 0 60px 6px rgba(240,166,90,.16)}
+.reel .ring::after{content:"";position:absolute;inset:-18px;border-radius:50%;box-shadow:0 26px 70px -20px rgba(240,166,90,.55);animation:ledBreath 10s var(--ease-soft) infinite}
+/* vlna po okraji fotky, ktorá sa práve rozlieva */
+.reel .ripple{border:1px solid rgba(236,208,143,.9);box-shadow:0 0 24px rgba(236,208,143,.35),inset 0 0 24px rgba(236,208,143,.2);opacity:0}
+/* posledná kapitola: miestnosť na celú obrazovku, text drží tmavý závoj */
+.reel .shade{position:absolute;inset:0;opacity:0;background:linear-gradient(90deg,rgba(var(--ink),.9) 0%,rgba(var(--ink),.62) 42%,rgba(var(--ink),.2) 75%),linear-gradient(0deg,rgba(var(--ink),.7),transparent 45%)}
+@media (max-width:640px){.reel .shade{background:linear-gradient(0deg,rgba(var(--ink),.95) 0%,rgba(var(--ink),.72) 45%,rgba(var(--ink),.25) 100%)}}
+/* nástup: okno sa pri otvorení stránky pomaly vynorí z tmy, po dverách */
+.reel .lens{animation:lensIn 1.3s var(--ease) both;animation-delay:calc(var(--veil,0ms) + 120ms)}
+@keyframes lensIn{from{transform:scale(.94)}to{transform:none}}
+.t-wait .reel .lens{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.reel .lens,.reel .ring::after{animation:none}}
+/* kruh rozmiestňuje CSS, skript geometriu len prečíta a hýbe ním cez transform (žiadny posun pri štarte) */
+.stage{--r:min(36svh,23vw);--cx:74.5vw;--cy:50svh}
+@media (max-width:720px){.stage{--r:min(41vw,25svh);--cx:50vw;--cy:max(calc(var(--r) + 72px),28svh)}}
+/* tablet na výšku: kruh hore ako na telefóne, text pod ním */
+@media (min-width:721px) and (max-width:1100px) and (orientation:portrait){
+  .stage{--r:min(38vw,24svh);--cx:50vw;--cy:max(calc(var(--r) + 100px),30svh)}
+  .hero .band{align-items:flex-end;padding-bottom:9svh}
+  .hero .band .inner{max-width:min(92%,720px)}
+  .reel .shade{background:linear-gradient(0deg,rgba(var(--ink),.95) 0%,rgba(var(--ink),.72) 45%,rgba(var(--ink),.25) 100%)}
+}
+.reel .win,.reel .ring,.reel .ripple{left:calc(var(--cx) - var(--r));top:calc(var(--cy) - var(--r));width:calc(var(--r)*2);height:calc(var(--r)*2)}
+.reel .win-in{inset:0}
+.reel .rs:not(.full){left:-6%;top:-6%;width:112%;height:112%}
+.reel .rs:first-child img{transform:translate3d(0,calc(var(--r)*.03),0)}
+/* menší počítač a tablet na šírku: text sa zúži, aby nezasahoval do kruhu */
+@media (min-width:721px) and (max-width:1280px) and (orientation:landscape){
+  .hero .band .inner{max-width:min(720px,calc(var(--cx) - var(--r) - 40px - max(24px,(100vw - var(--wrap)) / 2 + 24px)))}
 }
