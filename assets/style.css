@@ -1571,3 +1571,23 @@ section{padding:var(--lux-space) 0}
 .h2 .ln{overflow:visible}
 .kicker::before,.band .kicker::before,.hero-static .kicker::before{transform:none}
 .contact .box::before,.contact .box::after{display:none}
+
+/* ================= 3D prehliadka (assets/world.js) =================
+   Scéna je pevné pozadie celej stránky. Časti webu sú tmavé dosky s tenkým rámikom nad ňou,
+   medzi nimi je vidieť do salónu. Bez 3D (trieda .world chýba) ostáva web ako doteraz. */
+.world-canvas{position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;z-index:0;opacity:0;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);pointer-events:none}
+html.world-in .world-canvas{opacity:1}
+html.world,html.world body{background:var(--canvas)}
+html.world body{background:transparent}
+html.world .site,html.world footer{position:relative;z-index:1}
+html.world .stage{background:transparent}
+html.world .stage .fallback,html.world .reel{transition:opacity 1.6s cubic-bezier(.4,0,.2,1)}
+html.world-in .stage .fallback,html.world-in .reel{opacity:0}
+html.world-in .stage .scrim{background:linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+@media (max-width:720px){html.world-in .stage .scrim{background:linear-gradient(0deg,rgba(var(--ink),.92) 0%,rgba(var(--ink),.6) 40%,transparent 70%)}}
+html.world .site>section{background:transparent!important;padding:32vh 0}
+html.world .site>section::before{display:none}
+html.world .site>section>.wrap{position:relative;background:rgba(13,10,7,.88);border:1px solid rgba(239,231,218,.09);padding:clamp(28px,4.4vw,64px)}
+@media (max-width:640px){html.world .site>section>.wrap{width:calc(100% - 24px);padding:26px 18px}html.world .site>section{padding:26vh 0}}
+html.world .site>.ritual{padding-top:70vh}
+html.world footer{background:var(--canvas)}

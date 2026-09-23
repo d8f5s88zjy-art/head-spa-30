@@ -14,6 +14,32 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
 - `assets/favicon.svg` – ikona, lotos v zlatom kruhu ako na svietiacom nápise v salóne
 
+## 3D prehliadka
+
+Celý web je prechádzka salónom (`assets/world.js`, Three.js r169 v `assets/vendor/`). Návštevník
+stojí pred zelenými dverami, pri skrolovaní sa otvoria a kamera ide po plynulej krivke chodbou
+s parketami v rybej kosti a tapetou s listami. Text leží na tmavých doskách nad scénou.
+
+| Časť | Miesto v scéne |
+| --- | --- |
+| Úvod | zelené dvere s mosadznými kruhmi, otvoria sa dnu |
+| Ako to prebieha | `voda` |
+| Rituály a ceny | `miestnost` |
+| Rezervácia | `lozka-sviecka` |
+| Poukážky | `komoda` |
+| Salón 30 | `okna`, `buddha` |
+| Galéria | stena s fotkami |
+| Otázky | `neon-spa` |
+| Kontakt | `neon-head-spa` a svietiaci lotos |
+
+- Fotky v scéne sa berú z obrázkov na stránke (`img[data-photo]`), nič sa nesťahuje navyše.
+- Trieda `world` sa pridá v hlave stránky (nie pri obmedzení pohybu, šetrení dát, nízkej
+  obrazovke a bez WebGL); `world-in` až keď je scéna nakreslená. Bez nich ostáva pokojný úvod
+  s fotkou a web funguje bez 3D.
+- Scéna sa načíta až po prvom pohybe alebo skrolovaní, kreslí len keď sa kamera hýbe a pri
+  skrytej karte stojí. Mobil: rozlíšenie 1, bez vyhladzovania, bez tieňov.
+- Lighthouse (lokálne, simulované): mobil 87, desktop 99, CLS pod 0,02.
+
 ## Úvod
 
 Úvod má jednu obrazovku, žiadne kapitoly. Po otvorení dverí sa miestnosť salónu so zelenými
