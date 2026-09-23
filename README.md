@@ -1,4 +1,4 @@
-# HEAD SPA 30, Nitra
+# HEADSPA 30, Nitra
 
 Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk). Čisté HTML, CSS a JavaScript bez frameworku; minifikáciu robí `node tools/build.mjs`, film používa Three.js v `assets/vendor/`.
 
