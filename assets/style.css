@@ -1560,3 +1560,14 @@ section{padding:var(--lux-space) 0}
 .hero .lift{transform:none!important;opacity:1!important}
 .ritual.light,.ritual.light.in{background:var(--canvas);clip-path:none}
 .site>.ritual{padding-top:clamp(40px,6vw,88px)}
+
+/* ================= Prechody medzi časťami =================
+   Namiesto prázdnej tmavej plochy menšia medzera a jemný oddeľovač: vlasová zlatá linka s lotosom
+   zo značky. Obsah je na mieste hneď, nadpisy sa neskladajú po riadkoch ani nevysúvajú. */
+:root{--lux-space:clamp(76px,9vw,128px)}
+.site>section+section::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+/* reveal: nič sa nevysúva ani neskladá, sekcia je hotová v momente, keď príde na obrazovku */
+.rv,.rv .part,.part,.h2 .li,.rv .h2 .li,.cat,.card.pop{opacity:1!important;transform:none!important;animation:none!important;transition-property:border-color,background,color!important}
+.h2 .ln{overflow:visible}
+.kicker::before,.band .kicker::before,.hero-static .kicker::before{transform:none}
+.contact .box::before,.contact .box::after{display:none}

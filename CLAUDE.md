@@ -32,7 +32,8 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   čiastočky ani poskakovanie. Rituály sú v pokojných okienkach (tenký rámik, bez ikon).
   Čitateľnosť má prednosť: tlačidlá, odkazy, filtre a popisky polí normálnym písmom (verzálky
   len na malých nadpiskoch sekcií), polia formulára ako zreteľné okienka. Žiadna zelená plocha,
-  všetko v tónoch orecha so zlatou. Nepridávaj ozdoby navyše.
+  všetko v tónoch orecha so zlatou. Časti oddeľuje zlatá linka s lotosom, obsah sa pri
+  skrolovaní nevysúva ani neskladá. Nepridávaj ozdoby navyše.
 - Úvod je jedna obrazovka: miestnosť salónu, ktorá sa po dverách vynorí z tmy, pri skrolovaní
   paralaxa (`makeReel`, README Úvod). Krátky a pokojný, žiadne kapitoly ani efekty navyše.
   Pohyb len cez transform a priehľadnosť. Dvere v úvode zostávajú.
