@@ -187,7 +187,7 @@ body.drawer-open{overflow:hidden}
 .hero-static .today-line{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 
 /* ---------- hero ---------- */
-.hero{position:relative;height:360vh;z-index:1}
+.hero{position:relative;height:100vh;height:100svh;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transform:translateZ(0)}
 .stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 71% 50%,rgba(240,166,90,.10),transparent 70%),linear-gradient(180deg,var(--canvas-2),var(--canvas))}
@@ -1325,59 +1325,29 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .rphoto::after{opacity:.6}
 }
 
-/* úvod: prelet miestnosťou (assets/app.js, makeReel)
-   štyri fotky na celú obrazovku nad sebou, kamera len cez transform, strih cez priehľadnosť */
-.reel{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:strict;background:var(--canvas)}
-.reel .fs{position:absolute;inset:0;overflow:hidden;visibility:hidden}
-.reel .fs:first-child{visibility:visible;bottom:5%;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
-/* prvý záber končí kúsok nad spodkom (pod tmavým prechodom, nevidno to); záber na celú obrazovku by prehliadač bral ako pozadie */
-.reel .fs picture,.reel .fs img{display:block;width:100%;height:100%;object-fit:cover}
-.reel .fs img{transform-origin:50% 50%;will-change:transform;transform:translate3d(0,1.5%,0) scale(1.04)}
-/* výrez každého záberu: na počítači pás z fotky na výšku, na telefóne celá výška */
-.reel .fs:nth-child(1) img{object-position:50% 40%}
-.reel .fs:nth-child(2) img{object-position:50% 62%}
-.reel .fs:nth-child(3) img{object-position:50% 78%}
-.reel .fs:nth-child(4) img{object-position:50% 42%}
-@media (max-width:720px),(orientation:portrait) and (max-width:1100px){.reel .fs img{object-position:50% 50%!important}}
-/* záverečný rám: mosadzná linka okolo miestnosti, keď kamera cúvne */
-.reel .end-ring{position:absolute;left:0;top:0;border-radius:22px;border:1px solid rgba(217,181,106,.75);opacity:0;box-shadow:0 0 0 8px rgba(217,181,106,.06),0 30px 80px -10px rgba(240,166,90,.35);z-index:1}
-/* teplé svetlo pri strihu: šikmý pás, ktorý prebehne ako odlesk lampy */
-.reel .sweep{position:absolute;top:-20%;bottom:-20%;left:0;width:100%;opacity:0;will-change:transform,opacity;
-  background:linear-gradient(100deg,transparent 30%,rgba(240,166,90,.10) 42%,rgba(255,226,170,.32) 50%,rgba(240,166,90,.10) 58%,transparent 70%)}
-/* zlaté čiastočky v popredí: rozmazané bodky vo vlastnej vrstve, paralaxa rýchlejšia ako fotka */
-.reel .dust{position:absolute;left:0;right:0;top:0;height:140%;will-change:transform}
-.reel .dust i{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,214,150,.55),rgba(240,166,90,.18) 45%,transparent 70%);animation:mote 14s var(--ease-soft) infinite alternate}
-.reel .dust i:nth-child(1){left:8%;top:12%;width:14px;height:14px}
-.reel .dust i:nth-child(2){left:22%;top:34%;width:6px;height:6px;animation-duration:11s;animation-delay:-3s}
-.reel .dust i:nth-child(3){left:37%;top:18%;width:22px;height:22px;opacity:.5;animation-duration:17s}
-.reel .dust i:nth-child(4){left:55%;top:40%;width:8px;height:8px;animation-delay:-6s}
-.reel .dust i:nth-child(5){left:68%;top:22%;width:30px;height:30px;opacity:.35;animation-duration:19s;animation-delay:-2s}
-.reel .dust i:nth-child(6){left:82%;top:48%;width:10px;height:10px;animation-duration:12s}
-.reel .dust i:nth-child(7){left:91%;top:14%;width:5px;height:5px;animation-delay:-8s}
-.reel .dust i:nth-child(8){left:14%;top:60%;width:18px;height:18px;opacity:.45;animation-duration:16s;animation-delay:-5s}
-.reel .dust i:nth-child(9){left:46%;top:66%;width:7px;height:7px;animation-duration:13s}
-.reel .dust i:nth-child(10){left:74%;top:72%;width:24px;height:24px;opacity:.4;animation-delay:-9s}
-.reel .dust i:nth-child(11){left:30%;top:84%;width:9px;height:9px;animation-duration:15s;animation-delay:-4s}
-.reel .dust i:nth-child(12){left:60%;top:92%;width:16px;height:16px;opacity:.5;animation-duration:18s}
-.reel .dust i:nth-child(13){left:86%;top:96%;width:6px;height:6px;animation-delay:-7s}
-.reel .dust i:nth-child(14){left:5%;top:104%;width:12px;height:12px;animation-duration:12s;animation-delay:-1s}
-@keyframes mote{from{transform:translate3d(0,0,0)}to{transform:translate3d(18px,-26px,0)}}
-/* závoj pod textom a vinetácia ako vo filme; text vľavo na počítači, dole na telefóne */
+/* úvod: jeden záber miestnosti (assets/app.js, makeReel)
+   po dverách sa fotka vynorí z tmy a usadí, pri skrolovaní zaostáva za stránkou */
+.reel{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:strict;background:var(--canvas);--p:0}
+.reel .fs{position:absolute;inset:0 0 5% 0;overflow:hidden;will-change:transform;
+  -webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
+/* prvý záber končí kúsok nad spodkom pod tmavým prechodom; záber na celú obrazovku by prehliadač bral ako pozadie */
+.reel .fs picture,.reel .fs img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.reel .fs img{animation:settle 3.2s cubic-bezier(.16,.72,.12,1) both;animation-delay:calc(var(--veil,0ms)*.5)}
+@keyframes settle{from{transform:scale(1.09)}to{transform:scale(1.02)}}
+.reel .shade-in{position:absolute;inset:0;background:var(--canvas);animation:shadeOut 2.4s cubic-bezier(.4,0,.2,1) both;animation-delay:calc(var(--veil,0ms)*.5)}
+@keyframes shadeOut{from{opacity:1}to{opacity:0}}
+/* závoj pod textom, pri skrolovaní miestnosť stmavne do stránky */
 .reel .veil-l{position:absolute;inset:0;background:
-  radial-gradient(ellipse 120% 95% at 60% 45%,transparent 45%,rgba(var(--ink),.6) 100%),
-  linear-gradient(90deg,rgba(var(--ink),.88) 0%,rgba(var(--ink),.62) 34%,rgba(var(--ink),.12) 62%,transparent 80%),
-  linear-gradient(0deg,rgba(var(--ink),.55),transparent 30%)}
+  radial-gradient(ellipse 120% 95% at 62% 42%,transparent 50%,rgba(var(--ink),.55) 100%),
+  linear-gradient(90deg,rgba(var(--ink),.86) 0%,rgba(var(--ink),.58) 34%,rgba(var(--ink),.1) 64%,transparent 82%),
+  linear-gradient(0deg,var(--canvas) 0%,rgba(var(--ink),.4) 22%,transparent 45%)}
+.reel::after{content:"";position:absolute;inset:0;background:var(--canvas);opacity:calc(var(--p)*.75)}
+.hero .lift{width:100%;will-change:transform,opacity}
 @media (max-width:720px),(orientation:portrait) and (max-width:1100px){
-  .reel .veil-l{background:radial-gradient(ellipse 140% 80% at 50% 30%,transparent 40%,rgba(var(--ink),.5) 100%),
-    linear-gradient(0deg,rgba(var(--ink),.96) 0%,rgba(var(--ink),.82) 38%,rgba(var(--ink),.28) 62%,rgba(var(--ink),.1) 80%,rgba(var(--ink),.35) 100%)}
+  .reel .fs img{object-position:50% 50%}
+  .reel .veil-l{background:radial-gradient(ellipse 140% 80% at 50% 28%,transparent 45%,rgba(var(--ink),.45) 100%),
+    linear-gradient(0deg,var(--canvas) 0%,rgba(var(--ink),.86) 34%,rgba(var(--ink),.3) 60%,rgba(var(--ink),.08) 78%,rgba(var(--ink),.4) 100%)}
   .hero .band{align-items:flex-end}
 }
 @media (min-width:721px) and (max-width:1100px) and (orientation:portrait){.hero .band{padding-bottom:9svh}.hero .band .inner{max-width:min(92%,720px)}}
-/* filmové zrno skryje mäkkosť fotiek pri priblížení */
-.reel .grain-l{position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* text sa v kapitole posúva pomalšie ako obraz, vzniká hĺbka */
-@media (min-width:641px){.hero .band:not([data-a="0"]) .inner{transform:translate3d(0,calc((.5 - var(--u,.5))*40px),0)}}
-/* menší počítač na šírku: posledný text sa nesmie dotknúť rámu vpravo */
-@media (min-width:721px) and (max-width:1280px) and (orientation:landscape){.hero .band .inner{max-width:min(720px,44vw)}}
-@media (prefers-reduced-motion:reduce){.reel .dust i{animation:none}}
-body.idle .reel .dust i,body.paused .reel .dust i{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.reel .fs img,.reel .shade-in{animation:none}.reel .shade-in{opacity:0}}
