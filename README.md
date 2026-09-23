@@ -28,8 +28,8 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 | Úvod | `okna` (tá istá miestnosť ako v otvore dverí a vo fotke úvodu bez 3D) |
 | Ako to prebieha | `voda` |
 | Rituály a ceny | `zhora`, potom v okne každej kategórie jej priestor (fotka kategórie z cenníka) |
-| Rezervácia | `lozko` |
 | Poukážky | `buddha` |
+| Tím | `lozko` |
 | Salón 30 | `miestnost` |
 | Galéria | `neon-spa` |
 | Otázky | `komoda` |
@@ -57,7 +57,11 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
 - Trieda `world` sa pridá v hlave stránky len pri WebGL2 (three r169 iný nevie), nie pri
   obmedzení pohybu, šetrení dát a nízkej obrazovke; `world-in` až keď je prvý záber nakreslený.
   Keď do 15 s nepríde žiadna fotka, film sa ukončí a ostáva pokojný web.
-- Lighthouse (lokálne, bez gzip): mobil 86, desktop 99, CLS pod 0,03, TBT 20 ms.
+- Telefón: fotky najviac 1448 px, do grafickej karty sa nahrávajú po pásoch 256 riadkov (štyri
+  pásy na snímku), takže prelínanie nezasekne. Vinetácia sa kreslí v tom istom prechode ako
+  fotka, shadery sú preložené vopred a posledný krok znižovania kvality je 30 snímok za sekundu.
+  Film sa zapne len pri aspoň 4 GB pamäti a 4 jadrách, slabší telefón dostane pokojný úvod s fotkou.
+- Lighthouse (lokálne, bez gzip): mobil 82 až 86, desktop 98, prístupnosť 100, TBT 0 ms.
 
 ## Úvodné dvere
 
@@ -106,9 +110,11 @@ Instagram a na tento web.
 
 ## Darčekové poukazy ako predajná sekcia
 
-Sekcia Poukaz má nadpis, dve vety, tlačidlo do obchodu Booqme a formulár, v ktorom
-sa vyberá jeden zo sedemnástich rituálov. Vedľa formulára je náhľad poukazu, ktorý
-sa podľa výberu prekreslí. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
+Sekcia Poukážky má nadpis, dve vety, tlačidlo do obchodu Booqme a poukážku salónu (`vzor`).
+Pod ňou je výber Poukaz na rituál so všetkými sedemnástimi rituálmi: prvé štyri Head Spa
+rituály ukážu vzor salónu, ostatné vlastnú poukážku s fotkou rituálu
+(`assets/img/poukaz/<rituál>-{800,1290}.{avif,webp}`, vyrobené z `docs/poukazky/dl/png/`).
+Obrázok sa stiahne až po výbere. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 
@@ -196,7 +202,9 @@ Kalendár online rezerváciu zostáva ako druhá možnosť pod formulárom.
 
 ## Darčekové poukážky
 
-Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku online rezerváciu (https://www.salon30.sk/rezervacia), kde sa po vytvorení typov poukážok v administrácii online rezerváciu automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
+Sekcia Poukážky (vlastná položka v lište): tlačidlo Kúpiť poukaz online vedie do obchodu Booqme
+(https://booqme.app/sk/eshop/barbershop-30), kde sa poukaz platí kartou. Objednávkový formulár
+na webe už nie je, všetko ide cez Booqme.
 
 ## Galéria
 
@@ -252,14 +260,15 @@ zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
 | Úvod | `okna` (pozri Úvod); pokojná verzia úvodu `neon-head-spa` |
 | Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
 | Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
-| Poukážky, lístok | tie isté fotky ako tlačené poukážky (`assets/img/poukaz/`, zdroj `docs/poukazky/dl/foto/`), menia sa podľa vybraného rituálu |
+| Poukážky | poukážka salónu `vzor`; po výbere rituálu jeho poukážka (`assets/img/poukaz/`, tie isté ako tlačené) |
 | Salón 30 | `okna`, `buddha`, `komoda` |
 | Galéria | všetkých 13 (poradie vyššie) |
 | Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“; mapa okolia `mapa-*` (podklad © OpenStreetMap, zafarbená do tónov webu, značka salónu v strede) namiesto vloženej Google mapy |
 
-Fotky na poukážkach pre pánske, detské a chodidlá sú z Pexels (licencia a autori
-v `docs/poukazky/dl/FOTKY.md`); ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
-v `docs/poukazky/dl/foto/` a znova vyrobiť `assets/img/poukaz/*` (480 a 800 px, 4 : 3, AVIF, WebP, JPG).
+Fotky na poukážkach rituálov sú čiastočne z Pexels (licencia a autori v
+`docs/poukazky/dl/FOTKY.md`), ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
+v `docs/poukazky/dl/foto/`, spustiť `node docs/poukazky/dl/build.mjs` a znova vyrobiť
+`assets/img/poukaz/*` (800 a 1290 px, 2 : 1, AVIF a WebP).
 
 ### Pohyb podľa miestnosti
 
@@ -374,9 +383,8 @@ cena, krátky popis) a pätička, dokopy dve strany A4.
 
 ## Poukaz na konkrétny rituál
 
-Poukaz nie je na sumu, ale na jeden zo sedemnástich rituálov. Vo formulári sa
-rituál vyberá v `#v-ritual`, hodnota `option` nesie názov, trvanie a cenu a
-náhľad poukazu sa podľa výberu prekreslí. V Booqme je sedemnásť typov poukazov,
+Poukaz nie je na sumu, ale na jeden zo sedemnástich rituálov. Na webe sa rituál vyberá
+v `#voucher-ritual` pod poukážkou, hodnota `option` je meno obrázka poukážky. V Booqme je sedemnásť typov poukazov,
 jeden na rituál (`docs/booqme-poukazy.csv`).
 
 ## Ponuka: sedemnásť rituálov pre hlavu

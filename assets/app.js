@@ -159,6 +159,8 @@
     updateCaptions(shown, now);
   }
   function onScroll() {
+    // mimo úvodu nie je čo počítať; pri návrate ho IntersectionObserver nastaví znova
+    if (!heroOnScreen) return;
     target = heroProgress();
     if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
   }
@@ -295,20 +297,26 @@
     }, { passive: true }));
   }
   let atBottom = false;
-  /* postup čítania: jedna vlasová linka, poháňa ju poslucháč skrolovania, ktorý tu už je */
+  /* postup čítania: jedna vlasová linka, poháňa ju poslucháč skrolovania, ktorý tu už je.
+     Výška stránky sa číta len keď sa zmení (ResizeObserver), nie pri každom skrole: čítanie
+     scrollHeight po zápise štýlu by v každej snímke vynútilo prepočet rozloženia */
   const prog = document.createElement('div');
   prog.className = 'prog'; prog.setAttribute('aria-hidden', 'true');
   if (!reduced.matches) document.body.appendChild(prog);
-  let progRaf = 0;
+  let progRaf = 0, maxY = 0, progK = '', progOn = false;
+  const measureMax = () => { maxY = document.documentElement.scrollHeight - innerHeight; };
+  measureMax();
+  new ResizeObserver(() => { measureMax(); if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg); }).observe(document.body);
+  addEventListener('resize', measureMax, { passive: true });
   function drawProg() {
     progRaf = 0;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const k = max > 40 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-    prog.style.transform = 'scaleX(' + k.toFixed(4) + ')';
-    prog.classList.toggle('on', scrollY > 120);
+    const y = scrollY, k = (maxY > 40 ? Math.min(1, Math.max(0, y / maxY)) : 0).toFixed(4);
+    if (k !== progK) { progK = k; prog.style.transform = 'scaleX(' + k + ')'; }
+    const on = y > 120;
+    if (on !== progOn) { progOn = on; prog.classList.toggle('on', on); }
   }
   addEventListener('scroll', () => {
-    const b = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+    const b = scrollY >= maxY - 2;
     if (b !== atBottom) { atBottom = b; if (b) document.body.dataset.scene = 'footer'; else sceneUpdate(); }
     if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg);
   }, { passive: true });
@@ -557,6 +565,25 @@
         track('voucher_order', { value: ritualName(), delivery: val('dorucenie') });
         done.hidden = false;
         location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      });
+    }
+    /* výber rituálu pod poukážkou: prvé štyri Head Spa rituály majú vzor salónu, ostatné vlastnú poukážku
+       s fotkou rituálu; obrázok sa stiahne až po výbere */
+    const pick = $('[data-voucher-pick]'), vPic = $('.gift .voucher-img picture');
+    if (pick && vPic) {
+      const [sAvif, sWebp] = vPic.querySelectorAll('source'), vImg = vPic.querySelector('img');
+      const label = $('label[for="voucher-ritual"]');
+      const set = (id) => {
+        const b = `assets/img/poukaz/${id}`, sizes = id === 'vzor' ? [480, 800, 1290] : [800, 1290];
+        const list = (ext) => sizes.map((w) => `${b}-${w}.${ext} ${w}w`).join(', ');
+        sAvif.srcset = list('avif'); sWebp.srcset = list('webp');
+        vImg.src = id === 'vzor' ? `${b}-800.jpg` : `${b}-800.webp`;
+      };
+      pick.addEventListener('change', () => {
+        const o = pick.options[pick.selectedIndex];
+        set(o.value);
+        vImg.alt = `${label ? label.textContent : ''}: ${o.textContent}`;
+        track('voucher_preview', { value: o.value });
       });
     }
   });

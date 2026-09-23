@@ -1240,16 +1240,9 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   body[data-scene="hero"] .lang-offer{bottom:22px}}
 @media (prefers-reduced-motion:reduce){.lang-offer{transition:none}}
 
-/* ---------- pohyb viazaný na skrol (bez skriptu): obrázky galérie sa pri príchode zľahka približujú,
-   nadpisy sekcií sa dvíhajú ---------- */
-@supports (animation-timeline: view()){
-  @media (prefers-reduced-motion:no-preference){
-    .shot picture,.shot .frame>canvas{display:block;height:100%;animation:shotIn linear both;animation-timeline:view();animation-range:entry 0% cover 55%}
-    @keyframes shotIn{from{transform:scale(1.05) translateY(3%)}to{transform:scale(1) translateY(0)}}
-    .site .head{animation:headIn linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
-    @keyframes headIn{from{transform:translateY(36px)}to{transform:none}}
-  }
-}
+/* ---------- galéria: obrázok vypĺňa rám. Bez pohybu viazaného na skrol: obsah sa pri skrolovaní nevysúva
+   a telefón nemusí pri každom posune skladať dvadsať vrstiev galérie navyše ---------- */
+.shot picture{display:block;height:100%}
 
 /* ================= Identita z prevádzky =================
    Farby, materiály a svetlo sú odpísané z fotiek salónu (assets/img/galeria/):
@@ -1660,3 +1653,118 @@ html.world-in .world-place.on{opacity:1}
 .world-place span{display:none;margin-top:4px;font-family:var(--display);font-style:italic;font-size:20px;color:#efe7da;text-shadow:0 1px 10px rgba(0,0,0,.75)}
 .world-place span.on{display:block}
 @media (max-width:640px){.world-place{bottom:96px}.world-place span{font-size:17px}}
+
+
+/* ================= Filmová vrstva (dizajn) =================
+   Posledné doladenie nad filmom: čitateľná lišta, titulky kategórií ako vo filme, dosky s hĺbkou,
+   poriadok v cenníku, poukaze, kontakte a pätičke. Zdržanlivo: žiadne žiary ani poskakovanie. */
+
+/* 1. lišta nad filmom: tmavý prechod pod odkazmi, kým lišta nie je plná (svetlé záclony v úvode) */
+.nav::after{content:"";position:absolute;left:0;right:0;top:0;height:150%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(var(--ink),.74) 0%,rgba(var(--ink),.4) 55%,rgba(var(--ink),0) 100%);transition:opacity .5s var(--ease-soft)}
+.nav.solid::after{opacity:0}
+.nav:not(.solid) .links a{color:#e9e0d2;text-shadow:0 1px 12px rgba(var(--ink),.85)}
+/* fokus z klávesnice: rovnaký hranatý tvar ako tlačidlá */
+:focus-visible{border-radius:2px}
+/* prepínač jazyka v tom istom jazyku ako tlačidlá: hranatý, vysoký ako menu */
+.lang-btn{border-radius:2px;min-height:44px;background:rgba(var(--ink),.4);border-color:rgba(239,231,218,.18)}
+.lang-menu,.lang-opt{border-radius:2px}
+
+/* 2. výzva Skroluj: namiesto skákajúcej kvapky tenká zlatá linka, ktorá sa pomaly kreslí nadol */
+.cue{gap:12px;font-size:10.5px;letter-spacing:.34em}
+.cue .drop{order:2;width:1px;height:46px;border:0;border-radius:0;background:linear-gradient(180deg,rgba(201,166,107,0),var(--accent));transform-origin:50% 0;animation:cueLine 2.8s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes cueLine{0%{transform:scaleY(0);opacity:1}55%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+@media (max-width:640px){.cue{gap:8px}.cue .drop{height:20px}}
+
+/* 3. popis miesta vo filme ako titulok na okraji: zvislo v ľavom okraji, nikdy pod doskou ani cez text */
+html.world-in .world-place{display:none;left:clamp(20px,2.2vw,36px);bottom:clamp(32px,7vh,72px);writing-mode:vertical-rl;transform:rotate(180deg)}
+.world-place span{margin-block-start:8px;font-size:18px}
+@media (min-width:1360px){html.world-in .world-place{display:block}}
+
+/* 4. dosky nad filmom: plnšie, zlatá vlasová hrana hore a hlboký mäkký tieň, aby ležali nad miestnosťou */
+html.world .site>section>.wrap{background:rgba(13,10,7,.965);border-top-color:rgba(201,166,107,.3);box-shadow:0 40px 110px -30px rgba(0,0,0,.75)}
+html.world #cennik>.wrap{box-shadow:none}
+html.world #cennik .head{background:rgba(13,10,7,.965);border-top-color:rgba(201,166,107,.3)}
+@media (min-width:641px){html.world #cennik .card{box-shadow:0 28px 70px -30px rgba(0,0,0,.7)}}
+@media (max-width:640px){html.world .site>section>.wrap{box-shadow:0 24px 60px -24px rgba(0,0,0,.7)}}
+
+/* 5. cenník: filter je štíhla plná lišta (nič cez ňu nepresvitá), tip pod ňou na celú šírku dosky */
+html.world #cennik .tools{padding:0 clamp(22px,3.4vw,48px);background:#0d0a07}
+html.world #cennik .first-tip{max-width:none;padding:20px clamp(22px,3.4vw,48px) 28px;background:rgba(13,10,7,.965)}
+/* telefón: kategórie v jednom riadku, posúvajú sa prstom */
+@media (max-width:640px){
+  #cennik .chip-row{flex-wrap:nowrap;overflow-x:auto;gap:0 26px;scrollbar-width:none;margin:0 -18px;padding:0 18px;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  #cennik .chip-row::-webkit-scrollbar{display:none}
+  html.world #cennik .tools{padding:0 18px}
+  html.world #cennik .first-tip{padding:16px 18px 22px}
+}
+
+/* 6. okno kategórie ako titulok vo filme: jeden spodný prechod, malý zlatý nadpis a veľký názov, žiadne schodíky */
+html.world #cennik .cat.has-ph{overflow:visible}
+html.world-in #cennik .cat.has-ph::before{opacity:1;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(0deg,rgba(var(--ink),0) 0%,rgba(var(--ink),.78) 22%,rgba(var(--ink),.42) 42%,rgba(var(--ink),0) 64%)}
+html.world #cennik .cat.has-ph>span,html.world #cennik .cat.has-ph>b{background:none;text-shadow:0 1px 18px rgba(0,0,0,.55)}
+html.world #cennik .cat.has-ph>span{display:flex;align-items:center;gap:14px;padding:0 clamp(22px,3.4vw,48px);font-size:11.5px;letter-spacing:.3em;color:var(--accent-hover)}
+html.world #cennik .cat.has-ph>span::before{content:"";width:34px;height:1px;background:var(--accent)}
+html.world #cennik .cat.has-ph>b{padding:12px clamp(22px,3.4vw,48px) clamp(48px,8vh,88px);font-size:clamp(34px,4.2vw,58px);line-height:1.04;letter-spacing:-.012em}
+@media (max-width:640px){html.world #cennik .cat.has-ph>span{padding:0 18px}html.world #cennik .cat.has-ph>b{padding:10px 18px 44px;font-size:34px}}
+
+/* 7. karty rituálov: tlačidlá čitateľné (boli 11 px), na telefóne text na celú šírku a čas s cenou v riadku */
+.card .actions .btn.small,.card .actions .card-toggle{font-size:14.5px;letter-spacing:.01em}
+@media (max-width:640px){
+  .card,.card.featured,.card.reco{grid-template-columns:minmax(0,1fr)}
+  .card .meta{flex-direction:row!important;align-items:baseline!important;justify-content:space-between;margin-top:4px;padding-top:14px;border-top:1px solid var(--line)}
+  .card .actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+  .card .actions .card-toggle,.card .actions .btn.small{width:100%;min-height:50px;justify-content:center;padding:0 10px!important;border:1px solid rgba(239,231,218,.2)!important;border-radius:2px}
+  .card:not(.featured) .actions .btn.small{border-color:var(--line-strong)!important;color:var(--accent-hover)}
+}
+
+/* 8. poukážky: text vľavo, poukaz vpravo, nič prázdne v pravom stĺpci */
+@media (min-width:901px){
+  .gift .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,5vw,72px);align-items:center}
+  .gift .head{grid-template-columns:1fr;row-gap:26px}
+  .gift .order{margin:0;grid-template-columns:1fr}
+}
+.gift .voucher-img{box-shadow:0 34px 80px -28px rgba(0,0,0,.8)}
+/* výber rituálu pod poukážkou: zreteľné okienko ako pole formulára */
+.gift .voucher-pick{margin:26px 0 0;max-width:420px}
+.gift .voucher-pick select{min-height:50px;cursor:pointer}
+
+/* 9. tím: dve fotky na celú šírku dosky, nie zaseknuté vľavo */
+.team-grid{max-width:none;gap:clamp(20px,3vw,48px)}
+.team-grid img{aspect-ratio:4/5}
+
+/* 10. kontakt: stĺpce zarovnané hore, štítky ako malé nadpisy (HTML má h3, štýl mieril na h4), bez bodky ako rádio */
+.contact .box{align-items:start}
+html.world .contact .box{padding:0 0 clamp(36px,5vw,64px)}
+.info h3,footer h3{font-family:var(--body);font-weight:400;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.info .pin{display:none}
+.info p,.info a{font-size:16px}
+.pin-map b{top:auto;bottom:26px}
+@media (max-width:640px){.contact .cta{display:grid;gap:10px}.contact .cta .btn{width:100%;min-height:52px}}
+
+/* 11. otázky: odpoveď väčšia a vzdušnejšia (bola 15 px), otvorená otázka v zlatej */
+.faq-q{padding:24px 0;line-height:1.3}
+.faq-a>div{font-size:16.5px;line-height:1.75;color:var(--text-secondary)}
+.faq-a p{max-width:56ch;padding-bottom:26px}
+.faq-q .pm{flex-basis:28px;width:28px;height:28px}
+.faq-item.open .faq-q{color:var(--accent-hover)}
+
+/* 12. pätička: film do nej prejde prechodom, nie tvrdým rezom; odkazy bez podčiarknutia a pod sebou */
+html.world footer::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:clamp(120px,20vh,220px);background:linear-gradient(180deg,rgba(13,10,7,0),var(--canvas));pointer-events:none}
+footer .col{display:grid;align-content:start}
+footer .col a::before{display:none}
+footer .col a{color:var(--text-secondary)}
+@media (max-width:640px){
+  footer .grid{grid-template-columns:1fr 1fr;row-gap:36px}
+  footer .grid>div:first-child{grid-column:1/-1}
+  footer .col a{display:flex}
+  footer .bottom{flex-direction:column;gap:6px}
+}
+
+/* 13. tablet a telefón s dotykom: bez rozmazania pozadia nad filmom (každý snímok by sa prekresľoval) */
+@media (pointer:coarse){
+  .nav::before,.lang-menu,.to-top,.map-link,.tools,.drawer::backdrop,.lb::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav::before{background:rgba(var(--ink),.95)}
+}
+
+/* čísla krokov sú čitateľné aj pred rozsvietením (kontrast nad 4,5 : 1) */
+.step .n{opacity:.7}

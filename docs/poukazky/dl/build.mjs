@@ -46,17 +46,37 @@ const seal = (() => {
   </svg></div>`;
 })();
 
+// Prvé štyri Head Spa rituály (Classic, Relax, Harmony, Hĺbkový) majú spoločnú poukážku podľa vzoru
+// majiteľa, ostatné rituály vlastnú s fotkou, ktorá ukazuje práve ten rituál.
 const VARIANTY = [
   { id: 'head-spa', foto: 'foto/head-spa.jpg', pos: '50% 48%', rule: 'Head Spa', cat: 'Relax • Obnova • Harmónia',
     lede: 'Dopraj sebe alebo svojim blízkym chvíľu hlbokého relaxu a starostlivosti.' },
-  { id: 'pansky', foto: 'foto/pansky.jpg', pos: '55% 60%', rule: 'Gentlemen Head Spa', cat: 'Pokoj • Starostlivosť • Elegancia',
-    lede: 'Rituály pripravené pre mužov: teplá voda, hĺbkové čistenie a masáž bez zhonu.' },
-  { id: 'detsky', foto: 'foto/detsky.jpg', pos: '60% 40%', rule: 'Little Fruit Head Spa', cat: 'Hravo • Jemne • S úsmevom',
+  { id: 'head-spa-beauty-ritual', foto: 'foto/head-spa-beauty-ritual.jpg', pos: '50% 30%', rule: 'Head Spa Beauty Ritual', cat: 'Head Spa rituály • 60 minút',
+    lede: 'Head Spa a kozmetika v jednom rituáli, pre pokožku hlavy, tvár aj vlasy.' },
+  { id: 'head-spa-fruit-fresh-ritual', foto: 'foto/head-spa-fruit-fresh-ritual.jpg', pos: '50% 55%', rule: 'Head Spa Fruit & Fresh Ritual', cat: 'Head Spa rituály • 75 minút',
+    lede: 'Svieži rituál s čerstvým ovocím, vodou, vôňou a striedaním tepla a chladu.' },
+  { id: 'head-spa-signature-ritual', foto: 'foto/head-spa-signature-ritual.jpg', pos: '42% 50%', rule: 'Head Spa Signature Ritual', cat: 'Head Spa rituály • 120 minút',
+    lede: 'Najkompletnejší rituál, aký v HEAD SPA 30 máme. Dve hodiny od pokožky hlavy cez tvár až po vlasy.' },
+  { id: 'gentlemen-head-spa', foto: 'foto/gentlemen-head-spa.jpg', pos: '45% 50%', rule: 'Gentlemen Head Spa', cat: 'Pánske rituály • 45 minút',
+    lede: 'Štyridsaťpäť minút pokoja a starostlivosti pripravených pre mužov.' },
+  { id: 'gentlemen-harmony-ritual', foto: 'foto/gentlemen-harmony-ritual.jpg', pos: '55% 40%', rule: 'Gentlemen Harmony Ritual', cat: 'Pánske rituály • 60 minút',
+    lede: 'Hodina v drevitých a sviežich tónoch, s teplým uterákom, vodou a jemným dotykom.' },
+  { id: 'gentlemen-deep-scalp-ritual', foto: 'foto/gentlemen-deep-scalp-ritual.jpg', pos: '45% 50%', rule: 'Gentlemen Deep Scalp Ritual', cat: 'Pánske rituály • 90 minút',
+    lede: 'Deväťdesiat minút pre mužov, ktorým sa pokožka hlavy rýchlo mastí, svrbí alebo má sklon k lupinám.' },
+  { id: 'gentlemen-signature-experience', foto: 'foto/gentlemen-signature-experience.jpg', pos: '40% 35%', rule: 'Gentlemen Signature Experience', cat: 'Pánske rituály • 120 minút',
+    lede: 'Dve hodiny bez telefónov a zhonu, jeden plynulý zážitok pre pokožku hlavy, vlasy aj tvár.' },
+  { id: 'little-fruit-head-spa', foto: 'foto/little-fruit-head-spa.jpg', pos: '40% 42%', rule: 'Little Fruit Head Spa', cat: 'Detské rituály • 50 minút',
     lede: 'Hravý a jemný rituál pripravený pre deti: voňavo, pomaly a s úsmevom.' },
-  { id: 'pre-dvoch', foto: 'foto/pre-dvoch.jpg', pos: '50% 62%', rule: 'Rituál pre dvoch', cat: 'Spolu • Teplo • Ticho',
-    lede: 'Niektoré chvíle sú krajšie, keď ich prežívame spolu. Dva rituály vedľa seba.' },
-  { id: 'chodidla', foto: 'foto/chodidla.jpg', pos: '50% 55%', rule: 'Rituál pre chodidlá', cat: 'Teplo • Vôňa • Dotyk',
-    lede: 'Teplý kúpeľ, peeling, maska a masáž chodidiel pre pocit ľahkosti a pokoja.' },
+  { id: 'spolocny-head-spa-ritual', foto: 'foto/spolocny-head-spa-ritual.jpg', pos: '50% 40%', rule: 'Spoločný Head Spa rituál', cat: 'Rituály pre dvoch • 65 minút',
+    lede: 'Dva rituály vedľa seba pre partnerov, mamu s dcérou, sestry či kamarátky.' },
+  { id: 'spolocny-ritual-pod-hviezdami', foto: 'foto/spolocny-ritual-pod-hviezdami.jpg', pos: '50% 62%', rule: 'Spoločný rituál pod hviezdami', cat: 'Rituály pre dvoch • 75 minút',
+    lede: 'Rituál pre dvoch v tlmenom svetle, s hviezdnou oblohou, vôňou, teplom a pokojnými zvukmi.' },
+  { id: 'klasicky-ritual-pre-chodidla', foto: 'foto/klasicky-ritual-pre-chodidla.jpg', pos: '50% 75%', rule: 'Klasický rituál pre chodidlá', cat: 'Rituály pre chodidlá • 40 minút',
+    lede: 'Teplý kúpeľ, peeling, masky, teplo a reflexné tlakové techniky pre pocit ľahkosti chodidiel.' },
+  { id: 'ovocny-a-bylinkovy-ritual-pre-chodidla', foto: 'foto/ovocny-a-bylinkovy-ritual-pre-chodidla.jpg', pos: '50% 66%', rule: 'Ovocný a bylinkový rituál pre chodidlá', cat: 'Rituály pre chodidlá • 60 minút',
+    lede: 'Teplý bylinný kúpeľ s čerstvými citrusmi, ovocný peeling, obklad a hydratačná maska pre chodidlá.' },
+  { id: 'zlaty-ritual-24k', foto: 'foto/zlaty-ritual-24k.jpg', pos: '50% 100%', rule: 'Zlatý rituál 24K', cat: 'Rituály pre chodidlá • 90 minút',
+    lede: 'Kúpeľ, luxusný peeling, zlatá maska a 24K zábal na päty a chodidlá, so sérom s kozmetickým zlatom.' },
 ];
 
 const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="${sq ? 'sq' : 'front'}-${v.id}">
@@ -72,7 +92,7 @@ const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="
     <div class="city">NITRA</div>
     <div class="kind"><span class="a gold">Darčeková</span><span class="b">poukážka</span></div>
     <div class="orn"><i></i></div>
-    <div class="rule gold">${v.rule}</div>
+    <div class="rule gold${v.rule.length > 21 ? ' long' : ''}">${v.rule}</div>
     <div class="cat">${v.cat}</div>
     <p class="lede">${v.lede}</p>
   </div>
