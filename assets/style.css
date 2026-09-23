@@ -1617,3 +1617,45 @@ html.world-in #cennik .cat.has-ph::before{opacity:0}
 html.world #cennik .cat.has-ph{gap:0;flex-direction:column;align-items:flex-start;justify-content:flex-end}
 html.world #cennik .cat.has-ph>span{padding:12px 18px 0}html.world #cennik .cat.has-ph>b{padding:4px 18px 12px}
 @media (max-width:640px){html.world #cennik .cat.has-ph{min-height:64vh}}
+
+/* ---------- poukážka na webe v štýle tlačenej (docs/poukazky): čierny mramor, saténová mašľa,
+   fotka za zlatým kruhom a pečať s lotosom. Rozmery sú v šírke lístka (cqw), takže sedí na
+   počítači aj na mobile. „poukážka“ je zlatá kurzíva Lora, na webe žiadne ďalšie písmo. ---------- */
+.gift .ticket.voucher{container-type:inline-size;display:block;position:relative;aspect-ratio:1.4/1;min-height:0;padding:0;border:0;border-radius:2px;overflow:hidden;background:#0a0908 url(img/poukaz/mramor.webp) center/cover;box-shadow:0 24px 60px rgba(0,0,0,.45);color:#efe7da;transform:none;animation:none}
+.gift .ticket.voucher::after{display:none}
+/* všetko na lístku je umiestnené presne (staršie pravidlo .ticket.has-ph dáva deťom relative) */
+.gift .ticket.voucher.has-ph>*{position:absolute}
+.gift .ticket.voucher::before{content:"";display:block;position:absolute;inset:2.4cqw;width:auto;height:auto;border-radius:0;background:none;border:1px solid rgba(212,174,98,.6);transform:none;z-index:3;pointer-events:none}
+.gift .voucher .t-ph{inset:0 0 0 55%;border-radius:0;
+  -webkit-mask-image:radial-gradient(circle 36cqw at 36cqw 50%,#000 99.5%,transparent 100%),linear-gradient(90deg,transparent 36cqw,#000 36cqw);
+  mask-image:radial-gradient(circle 36cqw at 36cqw 50%,#000 99.5%,transparent 100%),linear-gradient(90deg,transparent 36cqw,#000 36cqw)}
+.gift .voucher .t-ph picture,.gift .voucher .t-ph img{opacity:1}
+.gift .voucher .t-ph.swap img{opacity:0}
+.gift .voucher .t-ph::before{background:linear-gradient(90deg,rgba(10,9,8,.5),rgba(10,9,8,0) 30%),linear-gradient(180deg,rgba(10,9,8,0) 60%,rgba(10,9,8,.6))}
+.gift .voucher .v-arc{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.gift .voucher .v-arc path{fill:none;stroke:#d4ae62;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.gift .voucher .v-bow{position:absolute;left:0;top:-1%;width:21%;height:auto;z-index:4;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));pointer-events:none}
+.gift .voucher .v-txt{position:absolute;left:14%;width:41%;top:9%;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center}
+.gift .voucher .v-lotus{width:4.6cqw;height:3.6cqw;fill:#d4ae62}
+.gift .voucher .v-wm,.gift .voucher .v-a{background:linear-gradient(180deg,#f3dc9f,#d4ae62 55%,#a8823f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gift .voucher .v-wm{font-family:var(--mono);font-weight:400;font-size:max(4.4cqw,15px);line-height:1.05;letter-spacing:.07em;margin-top:.8cqw;padding-left:.07em}
+.gift .voucher .v-city{display:flex;align-items:center;gap:1cqw;margin-top:.6cqw;font-family:var(--mono);font-size:max(1.25cqw,8px);letter-spacing:.34em;padding-left:.34em;color:#d4ae62}
+.gift .voucher .v-city::before,.gift .voucher .v-city::after{content:"";width:3cqw;height:1px;background:#d4ae62;opacity:.8}
+.gift .voucher .v-a{margin-top:2.2cqw;font-family:var(--display);font-weight:500;font-size:max(4.3cqw,15px);line-height:1.05;letter-spacing:.04em;text-transform:uppercase}
+.gift .voucher .v-b{font-family:var(--display);font-style:italic;font-weight:400;font-size:max(6.2cqw,21px);line-height:1;color:#f3dc9f}
+.gift .voucher strong{margin-top:1.8cqw;font-family:var(--display);font-weight:500;font-size:max(2.8cqw,14px);line-height:1.2;letter-spacing:.03em;text-transform:uppercase;color:#d4ae62;text-wrap:balance}
+.gift .voucher strong.long{font-size:max(2.3cqw,12.5px)}
+.gift .voucher .t-for{margin-top:.9cqw;font-size:max(1.55cqw,11px);line-height:1.4;color:rgba(239,231,218,.86)}
+.gift .voucher .v-seal{position:absolute;left:80.5%;top:65%;width:13cqw;height:13cqw;z-index:3;filter:drop-shadow(0 6px 12px rgba(0,0,0,.55))}
+.gift .voucher .v-seal circle{fill:#d6b36a}
+.gift .voucher .v-seal .l{fill:none;stroke:#6b4f1f;stroke-opacity:.5;stroke-width:1}
+.gift .voucher .v-seal .k{fill:none;stroke:#4d3914;stroke-width:2.4;stroke-linejoin:round}
+.gift .voucher small{position:absolute;left:0;right:0;bottom:4.4%;z-index:3;text-align:center;font-size:max(1.2cqw,8.5px);letter-spacing:.2em;color:#d4ae62}
+@container (max-width:480px){
+  .gift .voucher .v-txt{left:15%;width:50%;top:8%}
+  .gift .voucher .t-ph{left:62%;
+    -webkit-mask-image:radial-gradient(circle 34cqw at 34cqw 50%,#000 99.5%,transparent 100%),linear-gradient(90deg,transparent 34cqw,#000 34cqw);
+    mask-image:radial-gradient(circle 34cqw at 34cqw 50%,#000 99.5%,transparent 100%),linear-gradient(90deg,transparent 34cqw,#000 34cqw)}
+  .gift .voucher .v-arc{display:none}
+  .gift .voucher .v-seal{left:78%;top:68%;width:16cqw;height:16cqw}
+}
