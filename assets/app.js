@@ -11,91 +11,313 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const phoneMQ = matchMedia('(max-width: 640px)');   // telefón má vlastné hranice kapitol, kameru, rampy a dobiehanie
 
-  /* ============ úvod: prelet miestnosťou, fotky zo salónu na celú obrazovku ============
-     Štyri zábery idú za sebou ako jeden záber kamerou: miestnosť so zelenými dverami, vane so
-     sviečkou, vodný oblúk zblízka a nakoniec kamera cúvne od svietiaceho nápisu. Kamera sa v zábere
-     pomaly posúva a približuje; nový záber pri strihu priletí zo zväčšenia („prejdenie cez scénu“),
-     v tej chvíli prebehne teplé svetlo. V popredí plávajú zlaté čiastočky s vlastnou paralaxou.
-     Všetko sú transformy a priehľadnosť, rozmery sa nemenia, preto nič neposkočí. */
-  function makeReel(root) {
-    const reel = $('.reel', root), sweep = $('.sweep', root), dust = $('.dust', root);
-    // ďalšie zábery sa sťahujú až keď scéna štartuje, prvá fotka tak má linku pre seba
-    $$('[data-srcset]', root).forEach((el) => { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); });
-    $$('img[data-src]', root).forEach((el) => { el.src = el.dataset.src; el.removeAttribute('data-src'); });
-    // kamera každého záberu: odkiaľ a kam (posun v % záberu, zväčšenie); zväčšenie drží okraje mimo obrazu
+  /* ============ the scene (water, light, steam), drawn from progress p ============ */
+  function makeScene(canvas, opts) {
+    const o = opts || {};
+    const view = o.view || 'room';          // room = the hero framing, close = tighter on the guest, steam = the abstract shot
+    const ctx = canvas.getContext('2d', { alpha: false });
+    let W = 0, H = 0, dpr = 1, lastP = -1, lastT = -1;
+    const R = rng(30);
+    /* telefón kreslí menej častíc a v nižšom rozlíšení, scéna vyzerá rovnako, ale stojí menej */
+    const lite = matchMedia('(max-width: 640px)').matches;
+    const n = (x) => (lite ? Math.round(x * 0.45) : x);
+    const steam = Array.from({ length: n(34) }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
+    const drops = Array.from({ length: n(16) }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
+    const puffs = Array.from({ length: n(54) }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
+    // the journey camera: p, zoom, shift x (of W), shift y (of H), tilt (how far we look down into the bowl), warmth of the light
     const CAM = [
-      [0, 1.5, 1.04, 0, -1.5, 1.13],    // miestnosť: krok dopredu k zeleným dverám
-      [-1.5, 0, 1.06, 1, -1.5, 1.13],   // vane so sviečkou: pomalý oblúk k sviečke
-      [0, 1.5, 1.06, 0, -.5, 1.14],     // vodný oblúk: nad hladinou
-      [0, -1, 1.14, 0, 0, 1.04]         // nápis: kamera cúvne, pokoj
+      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
+      [0.20, 1.10, 0.00, -.02, .36, 0.10],
+      [0.30, 1.48, -.06, -.10, .42, 0.28],
+      [0.46, 1.58, -.06, -.12, .46, 0.38],
+      [0.56, 2.25, 0.03, 0.20, .60, 0.52],
+      [0.72, 2.35, 0.04, 0.22, .62, 0.62],
+      [0.84, 1.26, 0.00, 0.03, .40, 0.92],
+      [1.00, 1.20, 0.00, 0.03, .40, 1.00]
     ];
-    // telefón a tablet na výšku: text je dole, kamera preto ťahá vane a vodu do hornej polovice
+    // kamera na telefóne: misa je vždy celá v zábere, kľúčové snímky ležia uprostred kapitol,
+    // takže pohyb kamery prekrýva prestrihy textu a v strede kapitoly je pokoj na čítanie;
+    // väzby: dopad vody 0.20 = Ticho, masáž 0.44 = Hĺbkové čistenie, pokoj 0.70 = finále
     const CAM_P = [
-      [0, 1.5, 1.04, 0, -1.5, 1.12],
-      [0, -9, 1.22, 0, -12, 1.28],
-      [0, -13, 1.3, 0, -16, 1.36],
-      [0, -1, 1.14, 0, 0, 1.04]
+      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
+      [0.12, 1.03, 0.00, 0.01, .35, 0.06],
+      [0.36, 1.20, 0.00, 0.09, .42, 0.30],
+      [0.62, 1.75, 0.00, 0.24, .58, 0.55],
+      [0.88, 1.24, 0.00, 0.09, .42, 0.92],
+      [1.00, 1.20, 0.00, 0.09, .40, 1.00]
     ];
-    const stackMQ = matchMedia('(max-width:720px),(orientation:portrait) and (max-width:1100px)');
-    const shots = $$('.fs', root).map((el, i) => ({ el, img: $('img', el), i, vis: null, op: -1, tr: '', clip: '' }));
-    const endRing = $('.end-ring', root), veilL = $('.veil-l', root);
-    let cuts = [0.22, 0.48, 0.74], last = '', W = 0, H = 0, stack = false, rect = null;
-    const T = 0.07;   // dĺžka strihu v progrese
+    function cam(p) {
+      if (!o.journey) return { z: 1, dx: 0, dy: 0, tilt: .34, warm: 1, grade: 0 };   // the gallery shots keep their fixed gold lamp and cool room
+      const T = (lite && W <= 720) ? CAM_P : CAM;   // telefón na výšku má vlastnú kameru
+      let i = 0; while (i < T.length - 2 && p > T[i + 1][0]) i++;
+      const a = T[i], b = T[i + 1], k = smoothstep(p, a[0], b[0]);
+      const m = (j) => a[j] + (b[j] - a[j]) * k;
+      const w = m(5); return { z: m(1), dx: m(2), dy: m(3), tilt: m(4), warm: w, grade: w };
+    }
+    const mix = (c1, c2, k) => c1.map((v, i) => Math.round(v + (c2[i] - v) * k));
+    const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+    const COOL = [214, 226, 218], GOLD = [236, 208, 143];
     function resize() {
-      W = root.clientWidth; H = root.clientHeight; stack = stackMQ.matches;
-      // záverečný rám, do ktorého kamera cúvne: vpravo od textu na počítači, hore nad textom na telefóne
-      // rám má tvar obrazovky, takže v ňom ostane presne ten istý záber, len menší
-      const k = stack ? 0.5 : 0.46, w = W * k, h = H * k;
-      const l = stack ? (W - w) / 2 : W - Math.max(24, W * 0.08) - w, t = stack ? H * 0.1 : (H - h) / 2;
-      rect = { l, t, w, h, r: W - l - w, b: H - t - h, z: k * 1.02 };
-      rect.dx = l + w / 2 - W / 2; rect.dy = t + h / 2 - H / 2;
-      Object.assign(endRing.style, { left: l + 'px', top: t + 'px', width: w + 'px', height: h + 'px' });
-      last = '';
+      const r = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.5);
+      W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      lastP = -1;
     }
-    function setCuts(c) { cuts = c; last = ''; }
-    function draw(p) {
-      if (!rect) resize();
-      const key = p.toFixed(4); if (key === last) return; last = key;
-      let flash = 0, fx = 0;
-      shots.forEach((sh, i) => {
-        const a = i ? cuts[i - 1] : 0, b = shots[i + 1] ? cuts[i] : 1;
-        const kin = i ? smoothstep(p, a - T / 2, a + T / 2) : 1;                 // príchod
-        const kout = shots[i + 1] ? smoothstep(p, b - T / 2, b + T / 2) : 0;     // odchod pod nový záber
-        const vis = kin > 0 && kout < 1;
-        if (vis !== sh.vis) { sh.vis = vis; sh.el.style.visibility = vis ? 'visible' : 'hidden'; }
-        if (!vis) return;
-        if (Math.abs(kin - sh.op) > 0.004 || kin === 1 && sh.op !== 1) { sh.op = kin; sh.el.style.opacity = kin.toFixed(3); }
-        // postup kamery cez celý čas, keď je záber vidieť (aj počas strihov), aby sa nikdy nezastavila
-        const u = clamp((p - (a - T / 2)) / ((b + T / 2) - (a - T / 2)), 0, 1);
-        const e = u * u * (3 - 2 * u) * 0.35 + u * 0.65;
-        const c = (stack ? CAM_P : CAM)[sh.i] || CAM[0];
-        const x = c[0] + (c[3] - c[0]) * e, y = c[1] + (c[4] - c[1]) * e;
-        // prejdenie cez scénu: nový záber priletí zo zväčšenia, starý pokračuje krokom dopredu
-        let z = (c[2] + (c[5] - c[2]) * e) + (1 - kin) * 0.12 + kout * 0.06;
-        let tr = `translate3d(${x.toFixed(2)}%,${y.toFixed(2)}%,0) scale(${z.toFixed(4)})`;
-        // posledný záber: kamera cúvne a miestnosť sa zmenší do rámu vedľa textu
-        if (!shots[i + 1]) {
-          const q = smoothstep(p, a + T / 2 + 0.02, a + 0.2), qq = q * q * (3 - 2 * q);
-          if (q > 0) {
-            z = z + (rect.z - z) * qq;
-            tr = `translate3d(${(rect.dx * qq).toFixed(1)}px,${(rect.dy * qq).toFixed(1)}px,0) translate3d(${(x * (1 - qq)).toFixed(2)}%,${(y * (1 - qq)).toFixed(2)}%,0) scale(${z.toFixed(4)})`;
+    // the abstract shot: a dark room, a vertical slit of gold light, steam drifting through it
+    function drawSteam(p, t) {
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#0b0806'); bg.addColorStop(.6, '#0d0a07'); bg.addColorStop(1, '#090605');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      const sx = W * 0.78, top = H * 0.06, bot = H * 0.94;
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      const halo = ctx.createLinearGradient(sx - W * .22, 0, sx + W * .07, 0);
+      halo.addColorStop(0, 'rgba(217,181,106,0)'); halo.addColorStop(.78, 'rgba(217,181,106,.16)'); halo.addColorStop(1, 'rgba(236,208,143,.05)');
+      ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
+      ctx.beginPath(); ctx.moveTo(sx, top); ctx.lineTo(sx, bot);
+      ctx.strokeStyle = 'rgba(255,236,190,.85)'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke();
+      ctx.strokeStyle = 'rgba(236,208,143,.18)'; ctx.lineWidth = 12; ctx.stroke();
+      for (const s of puffs) {
+        const k = (p * .5 + s.s + t * 0.035) % 1;
+        const x = W * (1.02 - k * 1.15) + s.w * W * .06, y = H * (0.98 - k * 0.9) + Math.sin(k * 5 + s.s * 7) * H * .05;
+        const r = s.r * (0.7 + k * 1.9), near = 1 - Math.min(1, Math.abs(x - sx) / (W * .22));
+        const a = k * (1 - k) * 4 * (0.035 + 0.075 * near) * s.v;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        const col = near > .35 ? '236,214,168' : '214,224,216';
+        g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(1, `rgba(${col},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+      const pool = ctx.createRadialGradient(sx, bot, 0, sx, bot, W * .3);
+      pool.addColorStop(0, 'rgba(217,181,106,.12)'); pool.addColorStop(1, 'rgba(217,181,106,0)');
+      ctx.fillStyle = pool; ctx.fillRect(0, H * .6, W, H * .4);
+      ctx.restore();
+      const v = ctx.createRadialGradient(W * .6, H * .5, H * .2, W * .6, H * .5, Math.max(W, H) * .8);
+      v.addColorStop(0, 'rgba(9,6,5,0)'); v.addColorStop(1, 'rgba(9,6,5,.78)');
+      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+    }
+
+    function draw(p, force, time) {
+      const t = time || 0;
+      if (!W) resize();
+      if (!force && Math.abs(p - lastP) < 0.0005 && t === lastT) return;
+      lastP = p; lastT = t;
+      if (view === 'steam') { drawSteam(p, t); return; }
+      const wide = view === 'still' ? W > 900 : W > 720;   // the still hero keeps the bowl above the text up to tablet width
+      // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
+      // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
+      const c = cam(p);
+      // telefón: misa vyššie a širšia, aby bola celá nad textom; na krátkej výške (lišta prehliadača) ešte vyššie;
+      // posun misy v kapitolách rieši dy v CAM_P, preto sa hodnoty pre telefón už nevracajú k desktopovým
+      const phone = lite && !wide && view !== 'close';
+      const pk = phone ? 1 : 0;
+      const short = H < 760, tiny = H < 620;   // tiny = najmenšie telefóny (320 x 568): misa ešte vyššie a užšia, nech sa nedotýka textu
+      const cyP = 0.31 + ((tiny ? 0.18 : short ? 0.22 : 0.26) - 0.31) * pk;
+      const rxP = 0.34 + ((tiny ? 0.33 : short ? 0.38 : 0.42) - 0.34) * pk;
+      const cx = (view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5)) + c.dx * W;
+      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * cyP)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
+      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * rxP, H * 0.5))) * c.z;
+      const ry = rx * c.tilt;
+      const warm = c.warm, lamp = mix(COOL, GOLD, warm);
+      // nábeh: prvú sekundu a pol sa misa skladá z prachu, z bodiek na kružniciach, potom stuhne do vody
+      const life = reduced.matches ? 1 : smoothstep(t || 0, 0.05, 1.1);
+      const topY = -H * 0.04, landY = cy - ry * 0.12;
+      const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
+      const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
+      const calm = smoothstep(p, 0.74, 1);         // the water settles, the light stays
+      const stream = fall * (1 - calm * 0.85);
+      // room
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, rgb(mix([19, 17, 13], [26, 18, 12], c.grade), 1)); bg.addColorStop(.55, rgb(mix([13, 12, 9], [18, 13, 9], c.grade), 1)); bg.addColorStop(1, '#0b0806');   // miestnosť v tónoch orecha, nie zelenočierna
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
+      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
+      const ca = (phone ? 0.25 : 0.15) + 0.13 * p;
+      cone.addColorStop(0, rgb(lamp, ca)); cone.addColorStop(.42, rgb(mix([160, 178, 168], [217, 181, 106], warm), ca * .42)); cone.addColorStop(1, 'rgba(217,181,106,0)');
+      ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
+      // the lamp itself: a small bright disc high above the bowl, only in the journey
+      if (o.journey) {
+        const ly = -H * 0.02, lr = rx * (0.07 + 0.05 * c.z);
+        const disc = ctx.createRadialGradient(cx, ly, 0, cx, ly, lr * 4);
+        disc.addColorStop(0, rgb(lamp, .55)); disc.addColorStop(.25, rgb(lamp, .16)); disc.addColorStop(1, rgb(lamp, 0));
+        ctx.fillStyle = disc; ctx.fillRect(cx - lr * 4, 0, lr * 8, lr * 4);
+      }
+      // a faint far wall line so the room has depth
+      ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
+      // floor sheen under the bowl
+      const floor = ctx.createRadialGradient(cx, cy + ry * 0.6, 0, cx, cy + ry * 0.6, rx * 1.8);
+      floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(12,9,6,0)');
+      ctx.fillStyle = floor; ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.6, rx * 1.8, ry * 2.2, 0, 0, Math.PI * 2); ctx.fill();
+      // the bowl body: a dark ceramic rim below the water line
+      if (life < 1) {
+        // prach: body na kružniciach misy, rozhodené o (1 - life), s vlastným pomalým rotovaním
+        const rings = 9, per = lite ? 26 : 44, scatter = (1 - life) * rx * 0.35;
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < rings; i++) {
+          const kr = 0.18 + i / rings * 0.9;
+          for (let j = 0; j < per; j++) {
+            const ang = j / per * Math.PI * 2 + i * 0.37 + (1 - life) * 1.6 + (t || 0) * 0.05;
+            const jx = Math.sin(i * 12.9 + j * 78.2) * scatter, jy = Math.cos(i * 7.3 + j * 31.7) * scatter * 0.6;
+            const x = cx + Math.cos(ang) * rx * kr + jx, y = cy + Math.sin(ang) * ry * kr + jy - (1 - life) * ry * 0.8;
+            const a = (0.35 + 0.65 * (j % 3 === 0 ? 1 : 0.4)) * (1 - life) * 0.9;
+            ctx.fillStyle = i % 3 === 0 ? `rgba(236,208,143,${a})` : `rgba(190,232,222,${a})`;
+            ctx.fillRect(x, y, 1.5, 1.5);
           }
-          const clip = q > 0 ? `inset(${(rect.t * qq).toFixed(1)}px ${(rect.r * qq).toFixed(1)}px ${(rect.b * qq).toFixed(1)}px ${(rect.l * qq).toFixed(1)}px round ${(qq * 22).toFixed(1)}px)` : 'none';
-          if (clip !== sh.clip) { sh.clip = clip; sh.el.style.clipPath = clip; }
-          endRing.style.opacity = smoothstep(q, 0.75, 1).toFixed(3);
-          veilL.style.opacity = (1 - qq * 0.75).toFixed(3);   // nad rámom netreba závoj pre text
         }
-        if (tr !== sh.tr) { sh.tr = tr; sh.img.style.transform = tr; }
-        if (i && kin > 0 && kin < 1) { flash = Math.sin(Math.PI * kin); fx = kin; }
-      });
-      // teplé svetlo prebehne cez obraz v strede strihu, ako keď kamera minie lampu
-      sweep.style.opacity = (flash * 0.9).toFixed(3);
-      sweep.style.transform = `translate3d(${(-60 + fx * 120).toFixed(1)}%,0,0)`;
-      // čiastočky v popredí sa hýbu rýchlejšie ako fotky, preto pôsobia bližšie
-      dust.style.transform = `translate3d(0,${(-p * 34).toFixed(2)}vh,0)`;
-      reel.style.setProperty('--p', p.toFixed(3));
+        ctx.restore();
+      }
+      ctx.save();
+      ctx.globalAlpha = 0.22 + 0.78 * life;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx * 1.03, ry * 1.03, 0, 0, Math.PI); ctx.lineTo(cx - rx * 1.03, cy);
+      const bowl = ctx.createLinearGradient(0, cy, 0, cy + ry * 1.6);
+      bowl.addColorStop(0, '#1a221d'); bowl.addColorStop(1, '#0a0e0c');
+      ctx.fillStyle = bowl;
+      ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.35, rx * 1.03, ry * 1.25, 0, 0, Math.PI); ctx.closePath(); ctx.fill();
+      ctx.restore();
+      // the water surface
+      ctx.save();
+      ctx.globalAlpha = 0.22 + 0.78 * life;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
+      const water = ctx.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx);
+      water.addColorStop(0, `rgba(96,150,140,${.55 + .15 * after})`); water.addColorStop(.55, 'rgba(46,84,78,.9)'); water.addColorStop(1, 'rgba(18,34,31,1)');
+      ctx.fillStyle = water; ctx.fillRect(cx - rx, cy - ry, rx * 2, ry * 2);
+      // the lamp reflected in the water: a soft vertical bar of gold
+      ctx.globalCompositeOperation = 'lighter';
+      const refl = ctx.createRadialGradient(cx, cy - ry * 0.15, 0, cx, cy - ry * 0.15, rx * 0.55);
+      refl.addColorStop(0, `rgba(236,208,143,${(phone ? .34 : .22) + .2 * calm})`); refl.addColorStop(.35, `rgba(217,181,106,${(phone ? .12 : .08) + .08 * calm})`); refl.addColorStop(1, 'rgba(217,181,106,0)');
+      ctx.fillStyle = refl; ctx.save(); ctx.scale(0.42, 1); ctx.beginPath(); ctx.arc(cx / 0.42, cy - ry * 0.15, rx * 0.55, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      // caustics: light that has been bent by the water, breathing slowly
+      for (let j = 0; j < 4; j++) {
+        const ph = t * 0.35 + j * 1.7 + p * 2.0;
+        const k = 0.22 + j * 0.19 + Math.sin(ph) * 0.04;
+        const a = (0.025 + 0.085 * after) * (1 - j * 0.15);
+        ctx.beginPath(); ctx.ellipse(cx + Math.sin(ph * 0.7) * rx * 0.04, cy + Math.cos(ph * 0.5) * ry * 0.06, rx * k, ry * k, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(236,214,168,${a})`; ctx.lineWidth = 7; ctx.stroke();
+        ctx.strokeStyle = `rgba(255,236,190,${a * 1.4})`; ctx.lineWidth = 2; ctx.stroke();
+      }
+      // rings: each drop that lands sends a ring to the rim
+      if (after > 0) {
+        const rings = 7;
+        for (let i = 0; i < rings; i++) {
+          let k = ((p - 0.30) * 1.7 + i / rings + t * 0.10) % 1; if (k < 0) k += 1;
+          const a = Math.pow(1 - k, 1.6) * 0.55 * after * (1 - calm * 0.65);
+          if (a < 0.01) continue;
+          const kr = 0.03 + k * 0.97;
+          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr, ry * kr, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(190,232,222,${a})`; ctx.lineWidth = 1.4 + (1 - k) * 1.2; ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr * 0.94, ry * kr * 0.94, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,208,143,${a * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+      // the massage: two slow hands, two sources of small ripples that take turns
+      const mass = o.journey ? smoothstep(p, 0.48, 0.56) * (1 - smoothstep(p, 0.72, 0.80)) : 0;
+      if (mass > 0) {
+        const hands = [[-0.36, 0.10, 0], [0.34, -0.06, 0.5]];
+        for (const h of hands) {
+          const hx = cx + h[0] * rx, hy = cy + h[1] * ry;
+          for (let i = 0; i < 4; i++) {
+            let k = ((p - 0.48) * 2.6 + i / 4 + h[2] + t * 0.12) % 1; if (k < 0) k += 1;
+            const a = Math.pow(1 - k, 1.8) * 0.5 * mass;
+            if (a < 0.01) continue;
+            const kr = 0.04 + k * 0.42;
+            ctx.beginPath(); ctx.ellipse(hx, hy, rx * kr, ry * kr, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(200,236,226,${a})`; ctx.lineWidth = 1 + (1 - k) * 1.4; ctx.stroke();
+          }
+          const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, rx * 0.14);
+          g.addColorStop(0, `rgba(230,246,240,${.22 * mass})`); g.addColorStop(1, 'rgba(230,246,240,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(hx, hy, rx * 0.14, ry * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      // the settle: the rings give way to one still gold circle, the mark of the house
+      if (o.journey && calm > 0) {
+        const pulse = 1 + Math.sin(t * 0.8) * 0.012;
+        for (const [kr, a, w] of [[0.58, 0.55, 1.6], [0.50, 0.22, 1], [0.66, 0.16, 1]]) {
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx * kr * pulse, ry * kr * pulse, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,208,143,${a * calm})`; ctx.lineWidth = w; ctx.stroke();
+        }
+      }
+      ctx.restore();
+      // the rim of the bowl catches the lamp
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 1.02, Math.PI * 1.98);
+      ctx.strokeStyle = `rgba(236,208,143,${.22 + .3 * calm})`; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 0.02, Math.PI * 0.98);
+      ctx.strokeStyle = 'rgba(242,237,226,.08)'; ctx.lineWidth = 1; ctx.stroke();
+      // the stream: one laminar thread of warm water from the lamp to the bowl
+      if (stream > 0.01) {
+        const endY = topY + (landY - topY) * fall;
+        ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = Math.min(1, stream * 1.2);
+        const sway = (y) => Math.sin(y * 0.014 + p * 4 + t * 0.9) * 2.8;
+        ctx.beginPath();
+        for (let y = topY; y <= endY; y += 6) { const x = cx + sway(y); y === topY ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+        ctx.strokeStyle = 'rgba(140,195,182,.08)'; ctx.lineWidth = 30; ctx.lineCap = 'round'; ctx.stroke();
+        ctx.strokeStyle = 'rgba(160,215,200,.18)'; ctx.lineWidth = 13; ctx.stroke();
+        ctx.strokeStyle = 'rgba(210,236,228,.5)'; ctx.lineWidth = 5; ctx.stroke();
+        ctx.strokeStyle = 'rgba(244,250,247,.9)'; ctx.lineWidth = 1.8; ctx.stroke();
+        for (let i = 0; i < 8; i++) {
+          const k = (p * 2.2 + i / 8 + t * 0.5) % 1; const y = topY + (endY - topY) * k;
+          if (y > endY - 10) continue;
+          ctx.beginPath(); ctx.ellipse(cx + sway(y) + (i % 2 ? 2 : -2), y, 1.8, 4.5, 0, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.fill();
+        }
+        if (fall < 1) { ctx.beginPath(); ctx.ellipse(cx + sway(endY), endY + 6, 5, 9, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(236,245,240,.85)'; ctx.fill(); }
+        else {
+          // where the thread meets the water: a small bright crown
+          const g = ctx.createRadialGradient(cx, landY, 0, cx, landY, rx * 0.12);
+          g.addColorStop(0, 'rgba(230,246,240,.5)'); g.addColorStop(1, 'rgba(230,246,240,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, landY, rx * 0.12, ry * 0.12, 0, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      }
+      // splash: a few drops leap at the moment the thread lands
+      if (after > 0 && after < 1) {
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        for (const d of drops) {
+          const k = clamp(after * 1.5 - d.s * 0.5, 0, 1);
+          if (k <= 0 || k >= 1) continue;
+          const x = cx + d.a * rx * 0.3 * k, y = landY - (k * 4 * (1 - k)) * H * 0.06 * d.v;
+          ctx.beginPath(); ctx.arc(x, y, 2 * (1 - k) + .5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(236,245,240,${.7 * (1 - k)})`; ctx.fill();
+        }
+        ctx.restore();
+      }
+      // steam lifts off the warm water
+      const sv = smoothstep(p, 0.34, 0.6);
+      if (sv > 0) {
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        for (const s of steam) {
+          const k = (p * 1.2 + s.s + t * 0.03) % 1;
+          const y = cy - ry * 0.2 - k * H * 0.55, x = cx + s.x * rx * 0.6 + Math.sin(k * 4 + s.s * 7 + t * 0.2) * 24;
+          const a = k * (1 - k) * 4 * 0.07 * sv * (1 - calm * 0.3), r = s.r * (0.6 + k * 1.7);
+          const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+          g.addColorStop(0, `rgba(228,236,230,${a})`); g.addColorStop(1, 'rgba(228,236,230,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      }
+      // dust in the lamp light: tiny motes drifting, only ever a whisper
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      for (const m of puffs) {
+        const k = (m.s + t * 0.012 + p * 0.3) % 1;
+        const x = cx + (m.x - 0.5) * rx * 2.2 * (0.3 + k * 0.7), y = H * 0.05 + k * (cy - H * 0.05);
+        const a = k * (1 - k) * 4 * 0.10 * (0.4 + 0.6 * p);
+        ctx.fillStyle = `rgba(236,214,168,${a})`; ctx.beginPath(); ctx.arc(x, y, 1 + m.v * 0.6, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+      // the gold settle: at the end the whole bowl glows
+      if (calm > 0) {
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        const g = ctx.createRadialGradient(cx, cy - ry, 0, cx, cy - ry, H * .55);
+        g.addColorStop(0, `rgba(217,181,106,${.18 * calm})`); g.addColorStop(1, 'rgba(217,181,106,0)');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        ctx.restore();
+      }
+      // vignette
+      const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
+      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
+      v.addColorStop(0, 'rgba(10,8,6,0)'); v.addColorStop(1, `rgba(10,8,6,${(phone ? .5 : .7) + .08 * (c.z - 1)})`);
+      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     }
-    return { resize, draw, setCuts };
+    return { resize, draw };
   }
 
   /* ============ text splitting with seeded offsets ============ */
@@ -158,7 +380,7 @@
   $$('.h2').forEach(wrapLines);
 
   /* ============ hero scrub ============ */
-  const hero = $('.hero'), stage = $('.stage'), env = $('.env');
+  const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene'), env = $('.env');
   const bands = $$('.band', stage).map((el, i) => ({
     el, a: +el.dataset.a, b: +el.dataset.b, i,
     ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, u: -1, on: false, live: false
@@ -172,7 +394,6 @@
       b.op = -1; b.k = -1; b.u = -1; b.on = false; b.live = false;
     });
   }
-  const reelCuts = () => bands.slice(1).map((b, i) => (bands[i].b + b.a) / 2);
   const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 1, loadStart = 0;
@@ -189,10 +410,9 @@
   function updateCaptions(p, now) {
     const ph = phoneMQ.matches;
     for (const b of bands) {
-      // telefón: prelínačka 0.06 leží na prekryve kapitol; starý text odíde v prvej polovici, nový príde v druhej,
-      // takže sa dva odseky nikdy neprekrývajú (predtým boli chvíľu viditeľné oba cez seba)
-      const f = Math.min(ph ? 0.06 : 0.02, (b.b - b.a) / 3), h = ph ? f / 2 : 0;
-      let op = (b.i === 0 ? 1 : smoothstep(p, b.a + h, b.a + f)) * (b.i === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b - h));
+      // telefón: prelínačka 0.06 (cca 130 px skrolu) leží presne na prekryve kapitol, súčet priehľadností je stále 1, obrazovka nie je nikdy prázdna
+      const f = Math.min(ph ? 0.06 : 0.02, (b.b - b.a) / 3);
+      let op = (b.i === 0 ? 1 : smoothstep(p, b.a, b.a + f)) * (b.i === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b));
       // telefón: rampa slov cca 200 px, aby choreografiu bolo vidieť v rámci jedného švihu palcom
       const ramp = ph ? Math.min(0.09, (b.b - b.a) * 0.35) : (b.ramp || Math.min(0.025, (b.b - b.a) * 0.35));
       let k = clamp((p - b.a) / ramp, 0, 1);
@@ -202,8 +422,8 @@
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (live !== b.live) { b.live = live; b.el.classList.toggle('live', live); }   // vrstvy vznikajú pred prelínačkou, nie v nej
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
-      {
-        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál (na počítači aj na telefóne)
+      if (ph) {
+        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál
         const u = live ? clamp((p - b.a) / (b.b - b.a), 0, 1) : 0;
         if (Math.abs(u - b.u) > 0.01 || (u === 0 && b.u !== 0) || (u === 1 && b.u !== 1)) { b.u = u; b.el.style.setProperty('--u', u.toFixed(2)); }
       }
@@ -217,6 +437,15 @@
     }
     if (cue) { const show = p < 0.04; if (cue.classList.contains('show') !== show) cue.classList.toggle('show', show); }
   }
+  // between scrolls the scene keeps breathing (steam, caustics, the stream) at a low frame rate, and rests with the visitor
+  const AMB_FPS = phoneMQ.matches ? 15 : 12;   // telefón 15 fps, kvapky v prúde nerobia také veľké kroky
+  let ambStart = 0, ambTimer = 0;
+  function ambientLive() { return scrubOn && heroOnScreen && !document.hidden && !reduced.matches && !document.body.classList.contains('idle'); }
+  function ambientLater() {
+    clearTimeout(ambTimer);
+    if (!ambientLive()) return;
+    ambTimer = setTimeout(() => { if (rafId === null && ambientLive()) rafId = requestAnimationFrame(tick); }, 1000 / AMB_FPS);
+  }
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
     lastTick = now;
@@ -227,19 +456,22 @@
     if (!heroOnScreen) shown = target;   // pri skoku na kotvu sa mimo obrazovky nič nedobieha
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
-    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; }
-    scene.draw(shown);
+    if (ambStart && now - ambStart < 1300) busy = true;   // nábeh misy z prachu beží plynulo, nie v ambientnom tempe
+    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
+    if (!ambStart) ambStart = now;
+    scene.draw(shown, false, (now - ambStart) / 1000);
     updateCaptions(shown, now);
   }
   function onScroll() {
     target = heroProgress();
     if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
   }
+  document.addEventListener('visibilitychange', ambientLater);
+  addEventListener('hs30wake', ambientLater);
   function initHeroOnce() {
     if (inited) return; inited = true;
-    scene = makeReel(stage);
+    scene = makeScene(canvas, { journey: true });
     scene.resize();
-    scene.setCuts(reelCuts());
     bands.forEach((b) => {
       const fx = b.el.dataset.fx;
       const spread = b.el.dataset.spread ? +b.el.dataset.spread : undefined;
@@ -257,10 +489,40 @@
       heroOnScreen = es[0].isIntersecting;
       // po skoku na kotvu a späť sa scéna postaví rovno na aktuálny progres, cesta sa neprehráva dozadu
       if (heroOnScreen && scrubOn) { target = shown = heroProgress(); onScroll(); }
+      ambientLater();
     }, { threshold: 0 }).observe(hero);
     let rt;
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown); }, 120); }, { passive: true });
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
   }
+  /* the gallery: drawn shots that breathe, but only while they are on screen */
+  const moods = $$('canvas[data-mood]').map((c) => ({ c, p: +c.dataset.mood, view: c.dataset.view || 'room', s: null, on: false }));
+  function drawMoods(t) { moods.forEach((m) => { if (!m.s) m.s = makeScene(m.c, { view: m.view }); m.s.resize(); m.s.draw(m.p, true, t || 0); }); }
+  let mdt; addEventListener('resize', () => { clearTimeout(mdt); mdt = setTimeout(() => drawMoods(0), 150); }, { passive: true });
+  drawMoods(0);
+
+  if (moods.length && !reduced.matches) {
+    const AMBIENT_FPS = 12;
+    let raf = 0, start = 0, lastFrame = 0;
+    const live = () => moods.some((m) => m.on) && !document.hidden && !document.body.classList.contains('idle');
+    function tick(now) {
+      if (!live()) { raf = 0; return; }
+      raf = requestAnimationFrame(tick);
+      if (now - lastFrame < 1000 / AMBIENT_FPS) return;
+      lastFrame = now;
+      if (!start) start = now;
+      const t = (now - start) / 1000;
+      moods.forEach((m) => { if (m.on && m.s) m.s.draw(m.p, true, t); });
+    }
+    const wake = () => { if (!raf && live()) raf = requestAnimationFrame(tick); };
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { const m = moods.find((x) => x.c === e.target); if (m) m.on = e.isIntersecting; });
+      wake();
+    }, { threshold: 0.35 });
+    moods.forEach((m) => io.observe(m.c));
+    document.addEventListener('visibilitychange', wake);
+    addEventListener('hs30wake', wake);
+  }
+
   /* the gallery lightbox: only real photographs open, drawn shots stay in the grid */
   const lb = $('#lightbox');
   if (lb) {
@@ -275,6 +537,31 @@
     $('.lb-close', lb).addEventListener('click', () => lb.close());
     lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   }
+  const staticCanvas = $('#scene-static');
+  let staticScene = null;
+  let srt;
+  addEventListener('resize', () => { if (!scrubOn) { clearTimeout(srt); srt = setTimeout(drawStatic, 120); } }, { passive: true });
+  const STATIC_P = 0.62, STATIC_FPS = 20;
+  let staticRaf = 0, staticStart = 0, staticLast = 0, staticOn = false;
+  function drawStatic() {
+    if (!staticCanvas) return;
+    if (!staticScene) staticScene = makeScene(staticCanvas, { view: 'still' });
+    staticScene.resize(); staticScene.draw(STATIC_P, true, staticStart ? (performance.now() - staticStart) / 1000 : 0);
+  }
+  function staticLive() { return staticOn && !scrubOn && !reduced.matches && !document.hidden && !document.body.classList.contains('idle'); }
+  function staticTick(now) {
+    if (!staticLive()) { staticRaf = 0; return; }
+    staticRaf = requestAnimationFrame(staticTick);
+    if (now - staticLast < 1000 / STATIC_FPS) return;
+    staticLast = now; if (!staticStart) staticStart = now;
+    staticScene.draw(STATIC_P, true, (now - staticStart) / 1000);
+  }
+  function staticWake() { if (!staticRaf && staticLive()) staticRaf = requestAnimationFrame(staticTick); }
+  if (staticCanvas) {
+    new IntersectionObserver((es) => { staticOn = es[0].isIntersecting; staticWake(); }, { threshold: 0.1 }).observe(staticCanvas);
+    document.addEventListener('visibilitychange', staticWake);
+    addEventListener('hs30wake', staticWake);
+  }
   function enableScrub() {
     if (scrubOn) return; scrubOn = true;
     initHeroOnce();
@@ -283,8 +570,7 @@
     unpinFinalStates();
     loadStart = performance.now(); loadK = 1;
     target = shown = heroProgress();
-    scene.setCuts(reelCuts());
-    scene.draw(shown);
+    scene.draw(shown, true);
     updateCaptions(shown, loadStart);
     onScroll();
   }
@@ -292,6 +578,7 @@
     if (!scrubOn) return; scrubOn = false;
     removeEventListener('scroll', onScroll);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    clearTimeout(ambTimer);
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
   // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
@@ -300,12 +587,12 @@
     '(prefers-reduced-motion: reduce)'
   ];
   function applyHeroMode() {
-    if (GATES.some((q) => matchMedia(q).matches)) disableScrub(); else enableScrub();
+    if (GATES.some((q) => matchMedia(q).matches)) { disableScrub(); drawStatic(); staticWake(); } else enableScrub();
   }
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
   // pri prechode cez 640 px (otočenie tabletu) sa hranice kapitol prepočítajú bez obnovenia stránky
-  phoneMQ.addEventListener('change', () => { if (scrubOn) { bandBounds(); scene.resize(); scene.setCuts(reelCuts()); target = shown = heroProgress(); scene.draw(shown); updateCaptions(shown); } });
+  phoneMQ.addEventListener('change', () => { if (scrubOn) { bandBounds(); target = shown = heroProgress(); scene.draw(shown, true); updateCaptions(shown); } });
 
   /* ============ dvere: raz za návštevu sa značka nakreslí a dvere sa otvoria ============ */
   const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
