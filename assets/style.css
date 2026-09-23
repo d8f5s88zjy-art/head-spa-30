@@ -1487,3 +1487,14 @@ section{padding:var(--lux-space) 0}
 .card .actions .btn,.card .actions .btn:hover{background:transparent!important}
 @media (max-width:640px){.card .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.card .meta strong{font-size:24px}}
 @media (max-width:640px){.card .meta{align-self:start;justify-content:flex-start;height:auto}.card .meta strong{margin-top:0}}
+.map-link{border-radius:2px;letter-spacing:.2em;text-transform:uppercase;font-size:11px;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--canvas)}
+.map-link:hover{transform:none}
+.map-link .arr{display:inline-block;vertical-align:middle;margin-left:8px}
+/* mapa, ktorá sa nemôže načítať (súkromný náhľad): namiesto prázdneho boxu riadok s adresou a odkazom */
+.map .part.nomap{min-height:0;aspect-ratio:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 28px;background:var(--panel)}
+.map .part.nomap::before{position:static;display:block;inset:auto}
+.map .part.nomap .map-link{position:static}
+@media (min-width:901px){.map:has(.nomap){align-items:start}.map:has(.nomap) .where{height:auto}}
+/* kontakt: telefón, e-mail, web a Instagram vždy pod sebou (na mobile boli zlepené v jednom riadku) */
+.info a{display:flex;width:fit-content}
+.where picture,.where img{object-position:50% 72%}
