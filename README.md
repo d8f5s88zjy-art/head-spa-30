@@ -65,6 +65,26 @@ Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do stran
   na konci `assets/style.css`), prechody medzi záberom a pásom sú mäkké, cenník je menu s vlasovými linkami.
 - Lighthouse (lokálne, bez gzip): mobil 82 až 86, desktop 98, prístupnosť 100, TBT 0 ms.
 
+## Admin (admin/)
+
+Admin je na adrese `/admin/` (Google ho neindexuje, robots.txt ho vylučuje). Prihlásenie je kľúčom
+GitHub (fine-grained token s právom Contents: Read and write len na tento repozitár), návod je priamo
+na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela okrem GitHub API.
+
+- Mení: oznam pod lištou (s prekladmi), cenu, dĺžku, podnadpis a popis každého rituálu (s prekladmi),
+  otváracie hodiny, telefón, kód štatistík GoatCounter. Obsahuje zoznam obrázkov poukážok do Booqme a odkazy.
+- Uloženie je jeden commit priamo do `main` (index.html a `assets/i18n/*.json`), GitHub Pages web
+  obnoví do dvoch minút. Minifikované súbory sa nemenia, build netreba.
+- Jediný zdroj údajov: blok `<script type="application/json" id="nastavenia">` v index.html (hodiny,
+  štatistiky), `app.js` z neho berie otváracie hodiny. Cena a dĺžka rituálu sú len v karte rituálu
+  a v dátach pre Google, otázky ceny neopakujú. Rozpätie cien a dĺžok v popisoch admin prepočíta.
+- Telefón admin vymení vo všetkých tvaroch (0911 153 136, +421 911 153 136, tel:) aj v prekladoch.
+- Keď admin uloží a súbor sa medzitým zmenil inde, uloženie odmietne a načíta aktuálny stav.
+- Štatistiky: GoatCounter bez cookies sa načíta len s kódom v nastaveniach; kliky na Rezervovať,
+  Zavolať, E-mail, Mapa, Kúpiť poukaz, Instagram alebo Facebook a náhľad poukazu sa počítajú ako udalosti.
+- Kontrola s Booqme: `node tools/booqme-kontrola.mjs` porovná ceny a dĺžky v online kalendári
+  a ceny poukazov v obchode s cenníkom webu (len verejné stránky, nič nemení).
+
 ## Úvodné dvere
 
 Raz za návštevu sa pri otvorení stránky ukážu skutočné dvere salónu (`.veil`): fotka dverí

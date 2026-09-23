@@ -1844,3 +1844,9 @@ html .site #cennik .card .actions .btn.small:hover{border-color:var(--accent)!im
 footer .care-note{margin-top:14px}
 @media (max-width:900px){.care{grid-template-columns:1fr}.care .care-c{white-space:normal}}
 @media (max-width:640px){#cennik .care{padding-left:20px;padding-right:20px}}
+
+/* oznam od admina (dovolenka, zmena hodín): jedna tichá linka pod lištou, odíde so stránkou */
+.oznam{position:absolute;top:80px;left:0;right:0;z-index:99;padding:11px 20px;background:rgba(13,10,7,.94);border-bottom:1px solid rgba(212,174,98,.35);text-align:center}
+.oznam p{margin:0 auto;max-width:70ch;font-size:14px;line-height:1.5;color:var(--text-primary)}
+.oznam p::before{content:"";display:inline-block;width:6px;height:6px;margin:0 10px 2px 0;background:var(--accent);transform:rotate(45deg)}
+@media (max-width:720px){.oznam{top:68px}}@media (max-width:640px){.oznam p{font-size:13.5px}}

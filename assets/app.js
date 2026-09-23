@@ -5,6 +5,16 @@
   const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+  /* Nastavenia, ktoré mení admin (admin/): otváracie hodiny a kód štatistík. Jediný zdroj pre celý web. */
+  const NASTAVENIA = (() => { try { return JSON.parse($('#nastavenia').textContent) || {}; } catch (e) { return {}; } })();
+  const HODINY = NASTAVENIA.hodiny || { 0: null, 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
+  /* Štatistiky bez cookies (GoatCounter), len keď admin zadal kód. */
+  if (/^[a-z0-9-]{2,40}$/.test(NASTAVENIA.statistiky || '') && !/^(localhost|127\.)/.test(location.hostname)) {
+    const gc = document.createElement('script');
+    gc.async = true; gc.src = 'https://gc.zgo.at/count.js';
+    gc.dataset.goatcounter = `https://${NASTAVENIA.statistiky}.goatcounter.com/count`;
+    window.addEventListener('load', () => document.body.appendChild(gc), { once: true });
+  }
   /* Časti stránky pod prvou obrazovkou sa spúšťajú až keď má prehliadač voľnú chvíľu. */
   const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
   function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
@@ -678,7 +688,7 @@
       const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
       const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
       const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
-      const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
+      const HOURS = HODINY;
       const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
       const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
       const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 15)' };
@@ -973,8 +983,14 @@
     }
   });
 
-  /* ============ háčiky pre analytiku (len dataLayer; nikam sa nič neposiela) ============ */
-  function track(event, data) { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {})); }
+  /* ============ háčiky pre analytiku: dataLayer a štatistiky bez cookies, ak ich admin zapol ============ */
+  const UDALOSTI = { reservation_click: 'Klik: Rezervovať', phone_click: 'Klik: Zavolať', email_click: 'Klik: E-mail',
+    map_click: 'Klik: Mapa', voucher_click: 'Klik: Kúpiť poukaz', voucher_preview: 'Poukaz: náhľad rituálu', social_click: 'Klik: Instagram alebo Facebook' };
+  function track(event, data) {
+    (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {}));
+    const name = UDALOSTI[event];
+    if (name && window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
+  }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a'); if (!a) return;
     const h = a.getAttribute('href') || '';
@@ -982,6 +998,8 @@
     else if (h.startsWith('tel:')) track('phone_click');
     else if (h.startsWith('mailto:')) track('email_click');
     else if (h.includes('google.com/maps')) track('map_click');
+    else if (h.includes('/eshop/')) track('voucher_click');
+    else if (/instagram\.com|facebook\.com/.test(h)) track('social_click');
   });
 
   /* ============ mobilné menu (natívny dialog: zachytenie fokusu a Escape zadarmo) ============ */
@@ -1025,7 +1043,7 @@
   };
   (function todayStatus() {
     const els = $$('[data-today]'); if (!els.length) return;
-    const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15], 0: null };
+    const HOURS = HODINY;
     function render(lang) {
       const W = TODAY_WORDS[lang] || TODAY_WORDS.sk;
       let parts;

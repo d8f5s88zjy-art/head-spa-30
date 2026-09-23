@@ -43,6 +43,7 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Komentáre v kóde po slovensky. Commity po slovensky, bez podpisov a bez odkazov na nástroje.
 
 ## Postup nasadenia
+0. Admin (`admin/`) ukladá priamo do `main`, preto pred prácou `git fetch origin main && git merge origin/main`.
 1. Práca na vetve `claude/head-spa-30-page-uil3m0`, commit, `git push -u origin <vetva>`.
 2. `git checkout main && git merge --ff-only <vetva> && git push origin main`.
 3. Overiť naživo (Pages beží zhruba minútu).
