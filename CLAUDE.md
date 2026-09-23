@@ -23,10 +23,13 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 ## Technika
 - Dve písma: Lora (nadpisy, zlatá kurzíva ako jediný akcent, čitateľná aj v malých veľkostiach) a Manrope (text aj štítky).
   Písma sú vyrezané v `assets/fonts/`, nepridávaj ďalšie.
-- Zdrojové súbory: `assets/style.css`, `assets/app.js`, `assets/i18n.js` a prémiová vrstva V9
-  `assets/premium-v9.css` + `assets/premium-v9.js` (načítava sa po základných súboroch, nič
-  z obsahu nemení). Web načítava minifikované verzie, preto po každej zmene spusti
-  `node tools/build.mjs` (potrebuje esbuild).
+- Zdrojové súbory: `assets/style.css`, `assets/app.js`, `assets/i18n.js`. Vrstva V9
+  (`assets/premium-v9.*`) sa už nenačítava, jej efekty pôsobili lacno. Web načítava
+  minifikované verzie, preto po každej zmene spusti `node tools/build.mjs` (potrebuje esbuild).
+- Štýl je elegantný a zdržanlivý (sekcia Luxusná vrstva na konci `assets/style.css`):
+  veľa priestoru, vlasové linky namiesto kariet, ploché hranaté tlačidlá s verzálkami,
+  rádius 2 px, zlatá len ako detail, žiadne žiary, prechody farieb, efekty pod kurzorom,
+  čiastočky ani poskakovanie. Cenník je zoznam ako menu. Nepridávaj ozdoby navyše.
 - Úvod je jedna obrazovka: miestnosť salónu, ktorá sa po dverách vynorí z tmy, pri skrolovaní
   paralaxa (`makeReel`, README Úvod). Krátky a pokojný, žiadne kapitoly ani efekty navyše.
   Pohyb len cez transform a priehľadnosť. Dvere v úvode zostávajú.

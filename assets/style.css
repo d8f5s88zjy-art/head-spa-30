@@ -1351,3 +1351,128 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 }
 @media (min-width:721px) and (max-width:1100px) and (orientation:portrait){.hero .band{padding-bottom:9svh}.hero .band .inner{max-width:min(92%,720px)}}
 @media (prefers-reduced-motion:reduce){.reel .fs img,.reel .shade-in{animation:none}.reel .shade-in{opacity:0}}
+
+/* ================= Luxusná vrstva =================
+   Jeden pokojný jazyk pre celú stránku: veľa priestoru, tenké linky namiesto kariet,
+   ploché tlačidlá, zlatá len ako detail, žiadne žiary, prechody farieb ani efekty pod kurzorom.
+   Cenník je zoznam ako menu v dobrej reštaurácii. Tieto pravidlá sú zámerne posledné. */
+:root{
+  --canvas:#0d0a07;--canvas-2:#110d0a;--panel:#14100c;--panel-2:#1a150f;
+  --accent:#c9a66b;--accent-hover:#dcc08b;--accent-muted:rgba(201,166,107,.10);
+  --text-primary:#efe7da;--text-secondary:#bfb3a2;--text-tertiary:#978b7b;
+  --line:rgba(239,231,218,.10);--line-strong:rgba(201,166,107,.38);--wood-line:rgba(239,231,218,.10);
+  --radius-s:2px;--radius-m:2px;--radius:2px;--radius-l:2px;
+  --lux-space:clamp(104px,12vw,176px);
+}
+body{letter-spacing:.005em}
+.env,.env .grain{display:none}
+section{padding:var(--lux-space) 0}
+.contact{padding:var(--lux-space) 0}
+.salon{background:none}
+.ritual.light{background:var(--panel)}
+.ritual.light::before,.ritual.light::after,.gallery::before,.gallery::after{display:none}
+
+/* písmo: pokojné nadpisy, zlatá kurzíva stlmená, štítky úzke a riedke */
+.kicker,.band .kicker,.hero-static .kicker{font-size:11px;letter-spacing:.3em;font-weight:400}
+.h2{font-weight:400;letter-spacing:-.012em;line-height:1.06;font-size:clamp(34px,4.2vw,58px);margin-top:22px}
+.h2 em,.band h1 .em,.hero-static h1 em{font-weight:400;color:var(--accent)}
+.lede{font-size:17px;line-height:1.8;color:var(--text-secondary)}
+.head{align-items:end;row-gap:28px}
+
+/* tlačidlá: ploché, hranaté, verzálky s rozostupom; bez žiary, bez nadskočenia */
+.btn{border-radius:2px;padding:17px 30px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;box-shadow:none!important;transform:none!important;transition:background .35s,color .35s,border-color .35s}
+.btn::before,.btn::after{display:none!important}
+.btn.primary{background:var(--accent);color:#17110a;border-color:var(--accent)}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.ghost{background:transparent;border-color:rgba(239,231,218,.26);color:var(--text-primary)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent-hover)}
+.btn.small{padding:12px 20px;font-size:11px}
+.nav .btn.primary{padding:13px 22px;font-size:11px}
+
+/* stav otvorené: jemná zlatá bodka, nie semafor */
+.today .dot,.today-line .today .dot{background:var(--accent)!important;box-shadow:none!important;animation:none!important}
+.confirm::before{background:var(--accent);box-shadow:none}
+
+/* ako to prebieha: bez tyrkysovej čiary, kroky oddelené linkou */
+.steps .stream{display:none}
+.step::after{background:var(--line)}
+.step .n{color:var(--accent);letter-spacing:.2em}
+.rphoto,.salon-photos figure,.where,.cat.has-ph,.shot .frame,.map .part{border-radius:2px;border-color:var(--line)}
+.rphoto::after{display:none}
+
+/* cenník ako menu: filtre sú text s linkou, rituály riadky oddelené vlasovou čiarou */
+.tools{padding:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:var(--canvas);backdrop-filter:none;-webkit-backdrop-filter:none;margin-bottom:8px}
+.chip-row{gap:0 34px}
+.chip{border:0;border-bottom:1px solid transparent;border-radius:0;background:none;padding:16px 0 14px;margin-bottom:-1px;font-size:11px;letter-spacing:.24em;color:var(--text-tertiary)}
+.chip:hover{color:var(--text-primary);background:none}
+.chip[aria-pressed="true"]{background:none;color:var(--text-primary);border-bottom-color:var(--accent)}
+.count{display:none}
+.first-tip{padding-left:0;margin-top:26px;font-family:var(--display);font-style:italic;font-size:17px;color:var(--text-secondary)}
+.first-tip::before{display:none}
+.list{row-gap:0}
+@media (min-width:901px){.list{column-gap:80px}}
+.cat{margin:84px 0 6px}
+.cat.has-ph{min-height:230px;border:0;padding:0 34px 28px;background:var(--panel)}
+.cat.has-ph b{font-size:30px}
+.cat.has-ph::after{display:none}
+.card,.card.featured,.card.reco{background:none!important;border:0;border-top:1px solid var(--line);border-radius:0;padding:32px 0 36px;box-shadow:none!important;transform:none!important}
+.card:hover{background:none;border-color:var(--line-strong)}
+.card::before,.card::after{display:none!important}
+.card .glyph{display:none}
+.card,.card.featured,.card.reco{grid-template-columns:minmax(0,1fr) auto;gap:10px 28px}
+.card .actions,.card .panel{grid-column:1/-1}
+.card .mini>span:not(.badge){display:none}
+.card .mini .badge{background:none;color:var(--accent);padding:0;border-radius:0;font-size:10.5px;letter-spacing:.26em}
+.card h3{font-size:clamp(22px,1.9vw,27px);margin-top:6px}
+.card .tag{font-family:var(--display);font-style:italic;font-size:16px;color:var(--text-secondary)}
+.card .desc{font-size:15px;color:var(--text-tertiary)}
+.card .meta strong{font-size:26px;color:var(--text-primary)}
+.card .meta strong::after{display:none}
+.card .meta span{letter-spacing:.2em}
+.card .actions{gap:30px;margin-top:10px}
+.card-toggle{border:0;border-radius:0;background:none;padding:8px 0;font-size:11px;letter-spacing:.22em;color:var(--text-secondary)}
+.card-toggle:hover{color:var(--text-primary)}
+.card-toggle i{border-color:transparent}
+.card .actions .btn{background:none;border:0;border-bottom:1px solid var(--line-strong);border-radius:0;padding:8px 0;color:var(--accent-hover);font-size:11px}
+.card .actions .btn:hover{border-bottom-color:var(--accent-hover);background:none}
+
+/* rezervácia a poukaz: formulár ako čistý list, polia s linkou pod textom */
+.vform{background:none;border:0;border-top:1px solid var(--line-strong);border-radius:0;box-shadow:none;padding:44px 0 0}
+.vf legend{font-size:24px}
+.vf legend span{width:auto;height:auto;border:0;border-radius:0;font-size:11px;letter-spacing:.2em}
+.field label{letter-spacing:.22em;font-size:10.5px}
+.field input,.field select,.field textarea{border:0;border-bottom:1px solid rgba(239,231,218,.22);border-radius:0;background-color:transparent;padding:12px 0;font-size:16px}
+.field select{padding-right:28px;background-position:right 2px center}
+.field input:focus,.field select:focus,.field textarea:focus{box-shadow:none;border-bottom-color:var(--accent)}
+.choice span,.day span{border-radius:2px;background:none;font-weight:400}
+.choice input:checked+span,.day input:checked+span{background:none;border-color:var(--accent);color:var(--text-primary)}
+.book-online{border-radius:2px}
+.ticket{transform:none;animation:none;border-radius:2px;box-shadow:none;border-color:var(--line-strong)}
+.ticket::before,.ticket::after,.t-ph::after{display:none}
+.sent,.err{border-radius:2px}
+
+/* Salón 30: bez rámčekov a čísel, len text pod linkou */
+.salon-grid{gap:0 64px}
+.scard{border:0;border-top:1px solid var(--line);border-radius:0;background:none;padding:30px 0 36px;transform:none!important}
+.scard::before,.scard::after{display:none!important}
+.scard .sn{display:none}
+.scard h3{margin-top:0}
+
+/* galéria: fotky bez vnútorných rámčekov a poradových čísel */
+.shot .frame::after{display:none}
+.shot .pill{display:none}
+.to-top{border-radius:2px}
+.card .actions{display:flex;flex-wrap:wrap;align-items:center;grid-template-columns:none}
+.card .actions .btn.small,.card .actions .card-toggle{width:auto;min-height:44px;font-size:11px}
+.choice span{text-transform:none;letter-spacing:.01em;font-size:15px}
+.book-online{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+@media (max-width:640px){
+  .card .meta{grid-auto-flow:row}
+  .mbar{border-radius:2px;border-color:var(--line);background:var(--canvas);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .mbar a{border-radius:2px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .mbar a:last-child{background:var(--accent);color:#17110a}
+  .mbar-top{border-radius:2px}
+  .cat.has-ph{min-height:150px;padding:0 20px 20px}
+  .cat.has-ph b{font-size:24px}
+}
+.prog{display:none}

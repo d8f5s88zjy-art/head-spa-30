@@ -155,6 +155,16 @@ zdroje v plnej veľkosti sú `*.jpg` bez prípony šírky. Každá fotka sa dá 
 Rozloženie mozaiky určujú triedy na `<figure>` (`door`, `voda`, `rings`, ..., `r3`, `r4`), nie fotky;
 pri výmene poradia sa presúva len obsah figúry a atribút `sizes` ostáva podľa miesta v mozaike.
 
+## Luxusná vrstva
+
+Na konci `assets/style.css` je vrstva, ktorá drží celú stránku v jednom pokojnom jazyku:
+veľa priestoru medzi sekciami (`--lux-space`), vlasové linky namiesto kariet, ploché hranaté
+tlačidlá s verzálkami, rádius 2 px, zlatá `#c9a66b` len na štítky, linky a akcent v nadpise.
+Cenník je zoznam ako menu (názov, podtitul kurzívou, trvanie a cena vpravo), filtre sú text
+s linkou. Preč sú štatistiky v úvode, odkazy Ďalej, zlaté deliace čiary, vzor listov,
+ikonky a čísla na kartách, naklonený lístok, prúžok postupu a vrstva V9 (magnetické tlačidlá,
+svetlo pod kurzorom).
+
 ## Identita z prevádzky
 
 Web má vyzerať ako miestnosť, do ktorej zákazník vojde. Farby, materiály aj pohyb sú odpísané
