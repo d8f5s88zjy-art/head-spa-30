@@ -160,8 +160,8 @@ pri výmene poradia sa presúva len obsah figúry a atribút `sizes` ostáva pod
 Na konci `assets/style.css` je vrstva, ktorá drží celú stránku v jednom pokojnom jazyku:
 veľa priestoru medzi sekciami (`--lux-space`), vlasové linky namiesto kariet, ploché hranaté
 tlačidlá s verzálkami, rádius 2 px, zlatá `#c9a66b` len na štítky, linky a akcent v nadpise.
-Cenník je zoznam ako menu (názov, podtitul kurzívou, trvanie a cena vpravo), filtre sú text
-s linkou. Preč sú štatistiky v úvode, odkazy Ďalej, zlaté deliace čiary, vzor listov,
+Každý rituál je v pokojnom okienku (jemné pozadie, tenký rámik, bez ikon a čísel): názov,
+podtitul kurzívou, trvanie a cena vpravo. Filtre sú text s linkou. Preč sú štatistiky v úvode, odkazy Ďalej, zlaté deliace čiary, vzor listov,
 ikonky a čísla na kartách, naklonený lístok, prúžok postupu a vrstva V9 (magnetické tlačidlá,
 svetlo pod kurzorom).
 

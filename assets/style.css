@@ -1476,3 +1476,14 @@ section{padding:var(--lux-space) 0}
   .cat.has-ph b{font-size:24px}
 }
 .prog{display:none}
+/* cenník: každý rituál vo vlastnom okienku (želanie majiteľa), v pokojnom štýle bez žiary a ikon */
+.list{gap:20px}
+@media (min-width:901px){.list{gap:22px}}
+.cat{margin:64px 0 4px}
+.card,.card.featured,.card.reco{background:var(--panel)!important;border:1px solid var(--line);border-radius:3px;padding:34px 36px 30px}
+.card:hover{border-color:var(--line-strong)}
+.card.featured{border-color:var(--line-strong)}
+@media (max-width:640px){.card,.card.featured,.card.reco{padding:26px 22px 22px}}
+.card .actions .btn,.card .actions .btn:hover{background:transparent!important}
+@media (max-width:640px){.card .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.card .meta strong{font-size:24px}}
+@media (max-width:640px){.card .meta{align-self:start;justify-content:flex-start;height:auto}.card .meta strong{margin-top:0}}
