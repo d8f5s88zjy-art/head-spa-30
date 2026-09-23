@@ -1059,7 +1059,8 @@
         : Promise.race([im.decode ? im.decode().then(() => true, () => false) : new Promise((r) => { im.onload = () => r(true); im.onerror = () => r(false); }),
           new Promise((r) => setTimeout(() => r(false), 900))]);
       ready.then((ok) => {
-        if (!ok) { endVeil(); return; }
+        // bez fotky dverí: tma sa pokojne rozplynie, nie tvrdým strihom
+        if (!ok) { veil.style.transition = 'opacity 420ms cubic-bezier(.4,0,.2,1)'; veil.style.opacity = '0'; setTimeout(endVeil, 440); return; }
         requestAnimationFrame(() => requestAnimationFrame(() => {
           veil.classList.add('pic');
           setTimeout(flipVeil, phoneMQ.matches ? 700 : 560);   // dvere chvíľu postoja, na telefóne o niečo dlhšie

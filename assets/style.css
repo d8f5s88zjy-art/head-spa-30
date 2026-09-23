@@ -84,7 +84,7 @@ body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .dro
 html.door .veil{display:block}
 .veil.gone{display:none!important}
 .veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 55%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
-.veil.through .scene{transform:scale(3.8);opacity:0}
+.veil.through .scene{transform:scale(2.6);opacity:0}
 /* skutočné dvere salónu: fotka dverí prekryje celú obrazovku, rám ostane stáť a obe krídla
    (vystrihnuté z tej istej fotky) sa otvoria dnu. Rozmery sú v podieloch fotky 800 × 992:
    krídla od 8 % do 90,25 % šírky, deliaca čiara na 49,75 %, vrch krídel na 8,27 % výšky. */
@@ -102,7 +102,7 @@ html.door .veil{display:block}
 .veil .jamb.l img,.veil .jamb.r img,.veil .leaf img{top:calc(var(--bh)*-.0827)}
 .veil .jamb.r img{left:calc(var(--bw)*-.9025)}
 /* v otvore je salón (fotka), text stránky sa ukáže až keď scéna zmizne */
-.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:#0d0a07 url(img/galeria/lozka-sviecka-480.webp) 50% 62%/cover}
+.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:#0d0a07 url(img/galeria/lozka-sviecka-800.webp) 50% 62%/cover;background-image:image-set(url(img/galeria/lozka-sviecka-800.webp) 1x,url(img/galeria/lozka-sviecka-1200.webp) 2x)}
 .veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 650ms var(--ease-soft) 180ms;pointer-events:none}
 .veil.lift .doorway::before{opacity:1}
 .veil .leaf{top:8.27%;bottom:0;backface-visibility:hidden;transition:transform 760ms cubic-bezier(.65,0,.25,1) 30ms}
@@ -1592,7 +1592,7 @@ html.world body{background:transparent}
 html.world .site,html.world footer{position:relative;z-index:1}
 html.world .site{background:none}
 /* po prvom pohybe sa vykreslia všetky sekcie: vo filme sú vyššie ako odhad content-visibility a skok cez menu by pristál vedľa */
-html.world-full .site>section,html.world-full .site>footer{content-visibility:visible}
+html.world-full .site>section,html.world-full .site>footer,html.cv-all .site>section,html.cv-all .site>footer,html.cv-all .site>.pull,html.cv-all .site>.finale{content-visibility:visible}
 html.world .stage{background:transparent}
 html.world .stage .fallback,html.world .reel{transition:opacity .7s cubic-bezier(.4,0,.2,1)}
 html.world-in .stage .fallback,html.world-in .reel{opacity:0}
