@@ -1646,5 +1646,8 @@ html.world #cennik .cat.has-ph>span{padding:12px 18px 0}html.world #cennik .cat.
 .team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,36px);margin-top:clamp(28px,4vw,48px);max-width:880px}
 .team-grid figure{margin:0}
 .team-grid img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);border-radius:2px}
-.team-grid figcaption{margin-top:14px;font-family:var(--display);font-size:24px;color:var(--text-primary)}
+.team-grid figcaption{margin-top:16px}
+.team-grid figcaption b{display:block;font-family:var(--display);font-weight:500;font-size:26px;color:var(--text-primary)}
+.team-grid figcaption span{display:block;margin-top:4px;font-size:14px;color:var(--accent)}
+.team-grid figcaption p{margin-top:8px;max-width:36ch;font-size:15px;line-height:1.6;color:var(--text-secondary)}
 @media (max-width:520px){.team-grid{grid-template-columns:1fr}}
