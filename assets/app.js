@@ -531,31 +531,15 @@
       const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
       const fieldVal = (id) => ($(id, vform).value || '').trim();
       function preview() {
+        // náhľad na lístku, keď na stránke je (inak je poukážka hotový obrázok od salónu)
+        if (!tVal) return;
         // poukaz je vždy na konkrétny rituál z ponuky
         const shown = ritualName().replace(/\s*\(.*$/, '');
         tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
         const pre = fieldVal('#v-pre');
-        tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
+        if (tFor) tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
         const ven = fieldVal('#v-ven');
-        tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
-        giftPhoto(ritualName());
-      }
-      // na lístku tá istá fotka ako na tlačenej poukážke danej kategórie (assets/img/poukaz/)
-      const ph = $('[data-gift-photo]');
-      let phKey = 'head-spa', phT;
-      function giftPhoto(name) {
-        if (!ph) return;
-        const key = /^Gentlemen/.test(name) ? 'pansky' : /^Little/.test(name) ? 'detsky' : /^Spoločný/.test(name) ? 'pre-dvoch'
-          : /chodidlá|24K/.test(name) ? 'chodidla' : 'head-spa';
-        if (key === phKey) return;
-        phKey = key; ph.classList.add('swap'); clearTimeout(phT);
-        phT = setTimeout(() => {
-          $$('source, img', ph).forEach((el) => {
-            if (el.srcset) el.srcset = el.srcset.replace(/poukaz\/[a-z-]+?-(\d+)/g, `poukaz/${key}-$1`);
-            if (el.tagName === 'IMG') el.src = `assets/img/poukaz/${key}-800.jpg`;
-          });
-          ph.classList.remove('swap');
-        }, reduced.matches ? 0 : 260);
+        if (tVen) tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
       }
       vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
       vform.addEventListener('submit', (e) => {
