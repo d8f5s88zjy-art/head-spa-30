@@ -39,6 +39,7 @@
 
   /* ---------- zábery: fotka, kam sa pozerá kamera a ako sa pohne ----------
      f  = bod záujmu na fotke (0 až 1, zľava a zhora), fm = to isté pre telefón
+     pm = presah fotky na telefóne na výšku (inak 1,24), mm = pohyb na telefóne (inak mv)
      mv = pohyb kamery počas záberu: [x, y, z] na začiatku a na konci, v podieloch obrazu
           (x a y ako časť šírky a výšky záberu, z ako časť vzdialenosti; mínus z = nájazd) */
   // jeden jednotný pohyb celého filmu: kamera ide stále pomaly dopredu (nájazd) s jemným
@@ -52,6 +53,8 @@
     left: [[ARC, 0, 0.04], [-ARC, 0, -0.12]],
     rise: [[-ARC * 0.4, -ARC * 0.5, 0.04], [ARC * 0.4, ARC * 0.5, -0.12]],
     down: [[ARC * 0.4, ARC * 0.5, 0.04], [-ARC * 0.4, -ARC * 0.5, -0.12]],
+    // len jemný nájazd: široký nápis ostane celý na úzkej obrazovke
+    near: [[-ARC * 0.5, 0, 0.02], [ARC * 0.5, 0, -0.03]],
   };
   const SHOTS = [
     // úvod: tá istá miestnosť, ktorú vidno cez otvorené dvere (a tá istá fotka ako úvod bez 3D)
@@ -74,7 +77,8 @@
     { at: '#salon', photo: 'miestnost', place: 'Miestnosť pre dvoch', f: [0.5, 0.55], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', place: 'Nápis Spa relax', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', place: 'Komoda s uterákmi', f: [0.5, 0.55], mv: 'down' },
-    { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in' },
+    // nápis je široký: na telefóne sa fotka zmenší tak, aby bolo celé HEAD SPA s okrajom po stranách
+    { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in', pm: 1.06, mm: 'near' },
   );
   /* ---------- renderer ---------- */
   const canvas = d.createElement('canvas');
@@ -86,11 +90,26 @@
   placeBox.className = 'world-place'; placeBox.setAttribute('aria-hidden', 'true');
   placeBox.innerHTML = '<b>Prehliadka salónu</b>' + SHOTS.filter((s) => s.place).map((s) => `<span data-p="${s.photo}">${s.place}</span>`).join('');
   canvas.after(placeBox);
-  let placeNow = null;
+  // popis sa vytvorí až po štarte filmu, preklad stránky ho nezachytil: preloží sa sám z tých istých súborov
+  const placeSk = [...placeBox.children].map((e) => e.textContent);
+  const placeLang = () => {
+    const code = (window.HS30_LANG && window.HS30_LANG.get()) || 'sk';
+    const put = (map) => { [...placeBox.children].forEach((e, k) => { e.textContent = (map && map[placeSk[k]]) || placeSk[k]; }); if (root.classList.contains('world-in')) measurePlace(); };
+    if (code === 'sk') { put(null); return; }
+    fetch(new URL(`i18n/${code}.json`, here).href, { cache: 'force-cache' }).then((r) => r.json()).then(put).catch(() => put(null));
+  };
+  placeLang();
+  d.addEventListener('langchange', placeLang);
+  // popis je vidieť, len kým ho celý odkrýva okno do filmu; doska s textom ho nikdy neprereže
+  let placeNow = null, placeBand = [0, 0], bands = [];
+  const measurePlace = () => { const r = placeBox.getBoundingClientRect(); placeBand = [r.top - 24, r.bottom + 24]; placeNow = -1; };
   const showPlace = (s) => {
-    const key = s && s.place && s.pi !== 0 ? s.photo : null;   // v úvode nie, tam je text úvodu
-    if (key === placeNow) return; placeNow = key;
-    placeBox.querySelectorAll('span').forEach((e) => e.classList.toggle('on', e.dataset.p === key));
+    const y0 = sy + placeBand[0], y1 = sy + placeBand[1];
+    const free = placeBand[1] > 0 && !bands.some((b) => b[0] < y1 && b[1] > y0);
+    const key = s && s.place && s.pi !== 0 && free ? s.photo : null;   // v úvode nie, tam je text úvodu
+    if (key === placeNow) return;
+    if (key) placeBox.querySelectorAll('span').forEach((e) => e.classList.toggle('on', e.dataset.p === key));
+    placeNow = key;
     placeBox.classList.toggle('on', !!key);
   };
   let renderer;
@@ -139,6 +158,47 @@
       }
       gl_FragColor = vec4(c, 1.0);
     }`;
+  /* hĺbková mapa sa po načítaní raz zjemní na grafike: popredie sa najprv mierne rozšíri (max filter),
+     potom sa hrana rozmaže na šírku asi dvoch buniek mriežky. Predmet sa tak hýbe ako celok a pri
+     pohybe sa naťahuje len úzky pás steny tesne za ním, hrana nesleduje bunky mriežky (žiadne zúbky) */
+  const soft = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
+    depthTest: false, depthWrite: false,
+    uniforms: { tSrc: { value: null }, uTexel: { value: new THREE.Vector2() }, uDir: { value: new THREE.Vector2() }, uR: { value: 1 }, uMode: { value: 0 } },
+    vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: `
+      uniform sampler2D tSrc; uniform vec2 uTexel, uDir; uniform float uR, uMode;
+      void main() {
+        vec2 uv = gl_FragCoord.xy * uTexel;
+        float acc = 0.0, ws = 0.0, s2 = uR * uR / 9.0;
+        for (int i = -40; i <= 40; i++) {
+          float f = float(i);
+          if (abs(f) > uR) continue;
+          float z = texture2D(tSrc, uv + uDir * uTexel * f).r;
+          if (uMode < 0.5) acc = max(acc, z);
+          else { float w = exp(-0.5 * f * f / s2); acc += z * w; ws += w; }
+        }
+        if (uMode > 0.5) acc /= ws;
+        gl_FragColor = vec4(acc, acc, acc, 1.0);
+      }`,
+  }));
+  soft.frustumCulled = false;
+  const softScene = new THREE.Scene(); softScene.add(soft);
+  function soften(t) {
+    const w = t.image.width, h = t.image.height, u = soft.material.uniforms;
+    const opt = { depthBuffer: false, stencilBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, generateMipmaps: false };
+    const a = new THREE.WebGLRenderTarget(w, h, opt), b = new THREE.WebGLRenderTarget(w, h, opt);
+    // polomer v texeloch hĺbkovej mapy podľa bunky mriežky: rozmazanie asi 1,2 bunky, rozšírenie dvojnásobok
+    const sig = Math.max(1.5, 1.2 * w / SEG[0]);
+    const pass = (src, dst, dx, dy, mode, r) => {
+      u.tSrc.value = src; u.uTexel.value.set(1 / w, 1 / h); u.uDir.value.set(dx, dy); u.uMode.value = mode; u.uR.value = r;
+      renderer.setRenderTarget(dst); renderer.render(softScene, postCam);
+    };
+    pass(t, a, 1, 0, 0, Math.round(2 * sig)); pass(a.texture, b, 0, 1, 0, Math.round(2 * sig));
+    pass(b.texture, a, 1, 0, 1, Math.min(40, Math.round(3 * sig))); pass(a.texture, b, 0, 1, 1, Math.min(40, Math.round(3 * sig)));
+    renderer.setRenderTarget(null); u.tSrc.value = null;
+    a.dispose(); t.dispose();
+    return b;
+  }
   const vig = { value: new THREE.Vector4(1, 1, 1, 0) };      // spoločná pre všetky zábery
   const px = (r, g, b) => { const t = new THREE.DataTexture(new Uint8Array([r, g, b, 255]), 1, 1); t.needsUpdate = true; return t; };
   const blank = px(13, 10, 7), flat = px(0, 0, 0);
@@ -249,7 +309,7 @@
         if (!map || (!upgrade && !depth) || !live()) { if (map) map.dispose(); if (depth) depth.dispose(); return; }
         const u = s.mat.uniforms, old = upgrade ? u.uMap.value : null;
         u.uMap.value = map;                                   // obraz je už celý v grafickej karte
-        if (depth) u.uDepth.value = depth;
+        if (depth) { s.drt = soften(depth); u.uDepth.value = s.drt.texture; }
         if (old) old.dispose();
         if (!upgrade) s.t0 = performance.now();
         s.ready = true; s.size = s.w = w; s.failedAt = 0; wake();
@@ -260,7 +320,7 @@
     if (s.loading) { s.ctl.abort(); s.loading = null; }   // preskočený záber sa ani nedotiahne
     if (!s.ready) return;
     const u = s.mat.uniforms;
-    u.uMap.value.dispose(); u.uDepth.value.dispose();
+    u.uMap.value.dispose(); if (s.drt) { s.drt.dispose(); s.drt = null; }
     u.uMap.value = blank; u.uDepth.value = flat; s.ready = false; s.size = 0;
   }
   let onScreen = new Set();
@@ -282,12 +342,14 @@
     const aspect = canvas.width / canvas.height;
     const vh = 2 * DIST * tanH, vw = vh * aspect, pa = 0.75;   // fotky salónu sú na výšku 3 : 4
     SHOTS.forEach((s) => {
-      let pw = vw * (1 + 2 * OVER), ph = pw / pa;
-      if (ph < vh * (1 + 2 * OVER)) { ph = vh * (1 + 2 * OVER); pw = ph * pa; }
+      // pm: menší presah na telefóne na výšku, aby sa široký záber (nápis) zmestil celý na šírku
+      const ov = phone && s.pm && aspect < 1 ? s.pm : 1 + 2 * OVER;
+      let pw = vw * ov, ph = pw / pa;
+      if (ph < vh * ov) { ph = vh * ov; pw = ph * pa; }
       s.mesh.scale.set(pw, ph, 1);
       s.pw = pw; s.ph = ph; s.vw = vw; s.vh = vh;
       const f = (phone && s.fm) || s.f;
-      const mx = (pw - vw) / 2 - vw * OVER * 0.5, my = (ph - vh) / 2 - vh * OVER * 0.5;
+      const mx = Math.max(0, (pw - vw) / 2 - vw * OVER * 0.5), my = Math.max(0, (ph - vh) / 2 - vh * OVER * 0.5);
       s.eye.set(clamp((f[0] - 0.5) * pw, -mx, mx), clamp((0.5 - f[1]) * ph, -my, my), DIST);
       s.mat.uniforms.uEye.value.copy(s.eye);
     });
@@ -343,6 +405,9 @@
       s.pi = P.length; P.push(s); An.push(a);
     });
     path = P; anchors = An; N = Math.max(0, P.length - 1);
+    // dosky s textom (aj ich mäkké prechody do filmu) v súradniciach stránky, pre popis miesta
+    bands = [...d.querySelectorAll('.site>section>.wrap,footer')].map((el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY - vh * 0.16, r.bottom + scrollY + vh * 0.1]; });
+    if (root.classList.contains('world-in')) measurePlace();
     // iné poradie záberov (filter v cenníku): film sa nastaví na nové miesto bez jazdy cez cudzie zábery
     if (P.map((s) => s.photo).join() !== was) { S = targetS(); V = 0; fadeK = -1; }
   }
@@ -362,7 +427,7 @@
   function place(s, now, push = 0) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
     const t = s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1);
-    const m = MOVES[s.mv], e = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
+    const m = MOVES[(phone && s.mm) || s.mv], e = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
     off.set(
       (m[0][0] + (m[1][0] - m[0][0]) * e) * s.vw,
       (m[0][1] + (m[1][1] - m[0][1]) * e) * s.vh,
@@ -482,7 +547,7 @@
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
     const busy = draw(now, dt);
-    if (drawn && !shown) { shown = true; requestAnimationFrame(() => root.classList.add('world-in')); }
+    if (drawn && !shown) { shown = true; requestAnimationFrame(() => { root.classList.add('world-in'); measurePlace(); wake(); }); }
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
     const moving = busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
     if (!shown) {
@@ -531,7 +596,7 @@
   on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); }, { passive: false });
   on(canvas, 'webglcontextrestored', () => {
     lost = false;
-    SHOTS.forEach((s) => { if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
+    SHOTS.forEach((s) => { if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
     cw = 0; resize();
   });
   // obsah stránky mení výšku (fotky, rozbalené karty, filter), kotvy sa preto prepočítajú

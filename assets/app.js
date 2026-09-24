@@ -204,10 +204,29 @@
   const lb = $('#lightbox');
   if (lb) {
     const lbImg = $('img', lb), lbCap = $('.lb-cap', lb);
+    let lbTok = 0;
+    // najväčšia fotka zo srcset toho istého formátu, aký prehliadač vybral pre dlaždicu
+    const largest = (img) => {
+      const cur = img.currentSrc || img.src, pic = img.closest('picture');
+      const sets = pic ? $$('source', pic).map((s) => s.srcset) : [];
+      if (img.srcset) sets.push(img.srcset);
+      const ext = (cur.match(/\.(\w+)(?:\?|$)/) || [])[1];
+      let best = null;
+      sets.forEach((set) => set.split(',').forEach((c) => {
+        const [u, w] = c.trim().split(/\s+/), n = parseInt(w, 10) || 0;
+        if (u && (!ext || u.endsWith('.' + ext)) && (!best || n > best.n)) best = { u, n };
+      }));
+      return best ? { src: new URL(best.u, location.href).href, w: best.n } : { src: cur, w: img.naturalWidth };
+    };
     $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
       const fig = btn.closest('.shot'), img = $('img', fig);
       if (!img) return;
+      const big = largest(img), ratio = (img.naturalHeight || img.height) / (img.naturalWidth || img.width) || 0.75;
+      // rozmer vopred, aby okno malo hneď tvar fotky; kým príde veľký súbor, ukáže sa dlaždica
+      lbImg.style.setProperty('--ar', ratio.toFixed(4)); lbImg.style.setProperty('--mw', big.w + 'px');
       lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+      const tok = ++lbTok;
+      if (big.src !== lbImg.src) { const pre = new Image(); pre.onload = () => { if (tok === lbTok) lbImg.src = big.src; }; pre.src = big.src; }
       lbCap.textContent = $('.cap b', fig) ? $('.cap b', fig).textContent + '. ' + $('.cap span', fig).textContent : img.alt;
       if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
     }));
@@ -576,6 +595,21 @@
       if (open) { const b = $('.card-toggle', target); if (b) b.click(); }
     }
   }));
+  /* tip Prvýkrát u nás: keď iný filter rituál skryl, zobrazí sa znova celý zoznam a stránka k nemu
+     doskroluje (aj opakovane, hoci adresa už kotvu má) */
+  $$('.first-tip a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if (!t || e.button > 0 || e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    if (t.classList.contains('hidden')) pickCat('all', true);
+    if (t.classList.contains('hidden') && fClear) fClear.click();
+    // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const nav = $('.nav'), off = (nav ? nav.offsetHeight : 72) + 16;
+      scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + scrollY - off), behavior: reduced.matches ? 'auto' : 'smooth' });
+      history.replaceState(null, '', a.getAttribute('href'));
+    }));
+  }));
   applyFilter(false);
   document.addEventListener('langchange', () => applyFilter(false));
   $$('.card .panel ol').forEach((ol) => [...ol.children].forEach((li, i) => li.style.setProperty('--i', i)));
@@ -642,10 +676,25 @@
         sAvif.srcset = list('avif'); sWebp.srcset = list('webp');
         vImg.src = id === 'vzor' ? `${b}-800.jpg` : `${b}-800.webp`;
       };
+      /* pod poľom vybraný rituál, dĺžka a cena z cenníka (článok rituálu má data-min a data-price);
+         dĺžka sa berie z textu karty, ktorý je už preložený (napr. 40 хв) */
+      const sum = $('[data-voucher-sum]');
+      const told = () => {
+        const o = pick.options[pick.selectedIndex], card = o && document.getElementById(o.dataset.card || '');
+        if (!sum || !card) return;
+        const t = $('.meta span', card), min = (t && t.textContent.trim()) || `${card.dataset.min} min`;
+        sum.textContent = '';
+        const b = document.createElement('b'), s = document.createElement('span');
+        b.textContent = o.textContent.trim(); s.textContent = `${min} · ${card.dataset.price} €`;
+        sum.append(b, s);
+      };
+      told();
+      document.addEventListener('langchange', told);
       pick.addEventListener('change', () => {
         const o = pick.options[pick.selectedIndex];
         set(o.value);
         vImg.alt = `${label ? label.textContent : ''}: ${o.textContent}`;
+        told();
         track('voucher_preview', { value: o.value });
       });
     }
