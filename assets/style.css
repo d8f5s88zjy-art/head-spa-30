@@ -1992,3 +1992,64 @@ html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 
   /* clona pod textom úvodu: na spodnom okraji rámca sa plynulo stratí, žiadna vodorovná hrana */
   .hero .band .inner{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%);mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%)}
 }
+
+/* ================= Opravy B1: úvod, prechody, kontakt a pätička ================= */
+/* úvod: zlaté slovo v nadpise je vždy kurzíva, na každej šírke aj v pokojnej verzii rovnaká */
+html .band h1 .w.em,html .hero-static h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+/* úvod na počítači: text začína na tej istej hrane ako logo v lište a obsah sekcií */
+@media (min-width:641px){html .hero .band{padding-left:max(24px,calc((100% - var(--wrap)) / 2));padding-right:max(24px,calc((100% - var(--wrap)) / 2))}}
+/* výzva Skroluj: pri odchode zmizne hneď, oneskorenie má len príchod */
+.cue:not(.show){transition:opacity .25s var(--ease-soft) 0s}
+/* text úvodu pri spodku (641 až 720 px a tablet na výšku): pod textom miesto pre výzvu, tmavý podklad
+   na celú šírku za textom, ktorý sa k spodku úvodu plynule stratí */
+@media (min-width:641px) and (max-width:720px),(min-width:641px) and (max-width:1100px) and (orientation:portrait){
+  html .hero .band{padding-bottom:max(9svh,136px)}
+  html.world .hero .band::before{left:0;width:100%;top:0;bottom:0;height:100%;opacity:1;
+    background:linear-gradient(180deg,rgba(var(--ink),0) 0%,rgba(var(--ink),.14) 22%,rgba(var(--ink),.5) 40%,rgba(var(--ink),.74) 56%,rgba(var(--ink),.78) 82%,rgba(var(--ink),.6) 89%,rgba(var(--ink),.3) 95%,rgba(var(--ink),0) 100%)}
+}
+/* stmavenie úvodu sa k spodku stráca pozvoľna (bez zlomu na začiatku prechodu) */
+html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.93) 65%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.52) 81%,rgba(0,0,0,.27) 89%,rgba(0,0,0,.08) 96%,transparent 100%);mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.93) 65%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.52) 81%,rgba(0,0,0,.27) 89%,rgba(0,0,0,.08) 96%,transparent 100%)}
+/* pokojný úvod na šírku a na tablete: nadpis ostáva v ľavom stĺpci, nezasiahne fotku nápisu */
+@media (min-width:641px){
+  html .hero-static h1{font-size:clamp(46px,6.4vw,88px)}
+  html .hero-static .wrap>*{max-width:52%}
+}
+/* telefónne číslo sa nikdy nerozdelí; poznámka o linke je v pokojnom úvode rovnako malá ako vo filme */
+.care-note a,.care a,.care-c a,a[href^="tel:"]{white-space:nowrap}
+html .hero-static p.care-note{font-size:14px;max-width:none}
+
+/* prechody pás a film: stmavenie ide po mäkkej krivke, na začiatku ani na konci nevznikne čiara;
+   dĺžky ostávajú, okná do filmu majú rovnakú veľkosť */
+html.world .site>section>.wrap::after{background:linear-gradient(180deg,#0d0a07 calc(100% - 18vh),rgba(13,10,7,.97) calc(100% - 16.2vh),rgba(13,10,7,.9) calc(100% - 14.4vh),rgba(13,10,7,.78) calc(100% - 12.6vh),rgba(13,10,7,.65) calc(100% - 10.8vh),rgba(13,10,7,.5) calc(100% - 9vh),rgba(13,10,7,.35) calc(100% - 7.2vh),rgba(13,10,7,.22) calc(100% - 5.4vh),rgba(13,10,7,.1) calc(100% - 3.6vh),rgba(13,10,7,.03) calc(100% - 1.8vh),rgba(13,10,7,0))}
+html.world .site>section>.wrap::before{background:linear-gradient(180deg,rgba(13,10,7,0),rgba(13,10,7,.03) 10%,rgba(13,10,7,.1) 20%,rgba(13,10,7,.22) 30%,rgba(13,10,7,.35) 40%,rgba(13,10,7,.5) 50%,rgba(13,10,7,.65) 60%,rgba(13,10,7,.78) 70%,rgba(13,10,7,.9) 80%,rgba(13,10,7,.97) 90%,#0d0a07)}
+
+/* zlatá linka s lotosom medzi časťami: aj keď medzi sekciami stojí iný prvok (galéria a otázky) */
+.site>section~section::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+/* vo filme leží linka na hornej hrane pásu, kde film prechádza do tmy */
+html.world .site>section~section::before{display:block;top:calc(78vh - 16px);z-index:1}
+@media (max-width:640px){html.world .site>section~section::before{top:calc(40vh - 16px)}}
+
+/* kontakt: fotka dverí má šírku stĺpca a mapy, nepretečie cez okraj */
+@media (max-width:900px){html .map .where{aspect-ratio:auto;width:auto;min-width:0}}
+/* adresa na mapovej karte sa láme po celých častiach */
+.map-card b{line-height:1.25;text-wrap:balance}
+/* pätička nekladie stmavenie na koniec kontaktu, pás kontaktu je plný */
+html.world footer::before{display:none}
+/* tablet: značka hore cez celú šírku, pod ňou dva rovnaké stĺpce */
+@media (max-width:900px){footer .grid{row-gap:36px}footer .grid>div:first-child{grid-column:1/-1}}
+/* dotyk na tablete: odkazy v kontakte a pätičke majú plochu aspoň 44 px */
+@media (pointer:coarse) and (min-width:641px){
+  .info a,footer .col a,.credit a{min-height:44px;display:inline-flex;align-items:center}
+  footer .bottom{align-items:center}
+}
+/* linka pod odkazom tesne pod textom, aj keď je plocha na ťuknutie vyššia */
+.info a::before,.info a::after{bottom:max(0px,calc(50% - .9em))}
+footer .bottom .credit a{border-bottom:0;text-decoration:underline;text-decoration-color:var(--line-strong);text-decoration-thickness:1px;text-underline-offset:4px}
+footer .bottom .credit a:hover{text-decoration-color:var(--accent)}
+@media (max-width:640px){
+  /* pätička má rovnaký okraj ako sekcie nad ňou */
+  html footer .wrap{width:calc(100% - 40px)}
+  /* miesto pre spodnú lištu patrí pätičke: jej tmavé pozadie siaha až po okraj, film nepresvitne */
+  html body{padding-bottom:0}
+  html footer{padding-bottom:calc(40px + 64px + env(safe-area-inset-bottom,0px))}
+}
