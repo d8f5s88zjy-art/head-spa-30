@@ -2149,7 +2149,7 @@ html.world footer::before{display:none}
 @media (max-width:900px){footer .grid{row-gap:36px}footer .grid>div:first-child{grid-column:1/-1}}
 /* dotyk na tablete: odkazy v kontakte a pätičke majú plochu aspoň 44 px */
 @media (pointer:coarse) and (min-width:641px){
-  .info a,footer .col a,.credit a{min-height:44px;display:inline-flex;align-items:center}
+  footer .col a,.credit a{min-height:44px;display:inline-flex;align-items:center}
   footer .bottom{align-items:center}
 }
 /* linka pod odkazom tesne pod textom, aj keď je plocha na ťuknutie vyššia */
@@ -2211,7 +2211,7 @@ html.world #cennik .list>.cat.has-ph:first-child{margin-top:clamp(32px,4vw,48px)
 .first-tip a:hover{text-decoration-color:var(--accent-hover)}
 /* tablet a iné dotykové obrazovky: rovnaké ciele ako na telefóne */
 @media (pointer:coarse){
-  .info a,footer .col a,.map-link,.slink,.credit a{min-height:44px;display:inline-flex;align-items:center}
+  footer .col a,.map-link,.slink,.credit a{min-height:44px;display:inline-flex;align-items:center}
 }
 
 /* telefón: jeden okraj 20 px pre celý cenník */
@@ -2310,3 +2310,76 @@ html .lb{width:fit-content;max-width:92vw;max-height:94vh;border-radius:2px}
 html .lb img{width:min(92vw,calc((94vh - 84px) / var(--ar,1.333)),var(--mw,1200px));height:auto;max-width:none;max-height:none;object-fit:contain}
 html .lb .lb-cap{width:0;min-width:100%;box-sizing:border-box}
 html .lb .lb-close{top:10px;right:10px;width:44px;height:44px;border-radius:2px;background:rgba(13,10,7,.78);border-color:rgba(239,231,218,.28)}
+
+/* ================= Opravy 2L: rozloženie kontaktu, cenníka, poukazu a pätičky ================= */
+/* kontakt: každý odkaz na vlastnom riadku; na dotyku a v úzkom okne plocha na ťuknutie 44 px */
+html .info a{display:flex;width:fit-content}
+@media (pointer:coarse),(max-width:640px){html .info a{min-height:44px;align-items:center}}
+
+/* dnešný stav: druhý riadok začína pod textom, nie pod bodkou (bodka 8 px a medzera 8 px) */
+html .info .today{padding-left:16px;text-indent:-16px}
+
+/* cenník, telefón: riadok filtra siaha po okraj obrazovky, mizne až posledných 44 px obrazovky */
+@media (max-width:640px){
+  html #cennik .chip-row{width:calc(100% + 32px);margin:0 -16px}
+  html.world #cennik .chip-row{width:calc(100% + 40px);margin:0 -20px}
+  /* krátky názov kategórie (Deti) má plochu na ťuknutie aspoň 44 px: neviditeľne o 10 px do strán, medzery ostávajú */
+  html #cennik .chip-row .chip{position:relative}
+  html #cennik .chip-row .chip::before{content:"";position:absolute;top:0;bottom:0;left:-10px;right:-10px}
+}
+
+/* rituál, ktorý nie je top, má sivú deliacu linku ako všetky ostatné */
+html .site #cennik .card.featured:not(.top){border-top-color:rgba(239,231,218,.12)!important}
+html .site #cennik .card.top+.card.featured{border-top-color:transparent!important}
+
+/* ceny v jednom stĺpci: bežné riadky majú cenu odsadenú o vnútorný okraj top karty (okraj + rámik 1 px) */
+html .site #cennik .card:not(.top) .meta{padding-right:var(--ci)}
+@media (max-width:640px){html .site #cennik .card:not(.top) .meta{padding-right:calc(var(--ci) + 1px)}}
+
+/* úzky telefón: v top karte sa tlačidlo a Čo rituál obsahuje zmestia vedľa seba ako v bežných riadkoch */
+@media (max-width:380px){
+  #cennik{--ci:14px}
+  html .site #cennik .card.top{padding:30px var(--ci) 28px!important}
+  html .site #cennik .card.top .actions{gap:6px 14px}
+  html .site #cennik .card.top .actions .btn.small{padding:0 16px!important}
+}
+
+/* kategória pre deti: nápis Spa relax cez celé okienko, bez prázdnej steny a odrezanej stoličky */
+@media (max-width:640px){
+  #cennik .cat[data-cat=kids] .cat-ph img{object-position:50% 4%!important;transform:scale(1.14);transform-origin:50% 12%}
+}
+
+/* linka 24/7: malý nadpis so zlatou čiarkou ako ostatné nadpisy v menu */
+html .care-k{display:inline-flex;align-items:center;gap:10px}
+html .care-k::before{content:"";flex:none;width:24px;height:1px;background:var(--accent)}
+
+/* poukaz: pod poľom len dĺžka a cena, hneď pod nimi nákup */
+html .gift .voucher-sum{display:block;margin:14px 0 0;font-size:15px;letter-spacing:.02em;color:var(--accent-hover)}
+html .gift .voucher-sum:empty{display:none}
+/* celý názov len keď sa do poľa nezmestí (app.js), inak by sa opakoval */
+html .gift .voucher-sum b{display:block;margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:18px;line-height:1.35;letter-spacing:0;color:var(--text-primary)}
+html .gift .voucher-sum span{font-size:15px;white-space:normal}
+html .gift .voucher-pick .cta{margin-top:24px;display:flex}
+/* dlhý názov rituálu v poli sa zmestí; keby nie, skončí trojbodkou */
+html .site .gift .voucher-pick select{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+@media (max-width:400px){html .site .gift .voucher-pick select{padding-left:14px;padding-right:34px;background-position:right 12px center}}
+@media (max-width:640px){
+  html .gift .voucher-pick .cta{display:grid}
+  html .gift .voucher-pick .cta .btn{width:100%;min-height:50px}
+}
+
+/* pätička na telefóne: značka cez celú šírku, pod ňou Stránka a Online v dvoch stĺpcoch */
+@media (max-width:440px){
+  html footer .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20px;row-gap:32px}
+  html footer .grid>div:first-child{grid-column:1/-1}
+  html footer .col a{white-space:normal;margin:0;padding-right:0;line-height:1.35}
+}
+
+/* zväčšená fotka: predchádzajúca a ďalšia, ploché hranaté tlačidlá 44 px po stranách fotky */
+html .lb .lb-nav{position:absolute;top:calc(50% - 50px);z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;
+  border:1px solid rgba(239,231,218,.28);border-radius:2px;background:rgba(13,10,7,.78);color:var(--text-primary);cursor:pointer;
+  transition:border-color var(--t-base) var(--e-out),color var(--t-base) var(--e-out)}
+html .lb .lb-nav:hover{border-color:var(--accent);color:var(--accent-hover)}
+html .lb .lb-nav:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+html .lb .lb-prev{left:10px}
+html .lb .lb-next{right:10px}

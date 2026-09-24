@@ -218,9 +218,13 @@
       }));
       return best ? { src: new URL(best.u, location.href).href, w: best.n } : { src: cur, w: img.naturalWidth };
     };
-    $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
+    // fotky, ktoré sa dajú zväčšiť, v poradí mriežky; listuje sa len medzi viditeľnými
+    const openers = () => $$('.shot .open').filter((b) => { const f = b.closest('.shot'); return $('img', f) && f.offsetParent !== null; });
+    let lbAt = -1;
+    const show = (btn) => {
       const fig = btn.closest('.shot'), img = $('img', fig);
       if (!img) return;
+      lbAt = openers().indexOf(btn);
       const big = largest(img), ratio = (img.naturalHeight || img.height) / (img.naturalWidth || img.width) || 0.75;
       // rozmer vopred, aby okno malo hneď tvar fotky; kým príde veľký súbor, ukáže sa dlaždica
       lbImg.style.setProperty('--ar', ratio.toFixed(4)); lbImg.style.setProperty('--mw', big.w + 'px');
@@ -228,11 +232,37 @@
       const tok = ++lbTok;
       if (big.src !== lbImg.src) { const pre = new Image(); pre.onload = () => { if (tok === lbTok) lbImg.src = big.src; }; pre.src = big.src; }
       lbCap.textContent = $('.cap b', fig) ? $('.cap b', fig).textContent + '. ' + $('.cap span', fig).textContent : img.alt;
+    };
+    // o jednu fotku ďalej alebo späť, na konci sa pokračuje od začiatku
+    const step = (d) => { const list = openers(); if (!list.length) return; show(list[(Math.max(lbAt, 0) + d + list.length) % list.length]); };
+    $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
+      show(btn);
+      if (lb.open) return;
       if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
     }));
     $('.lb-close', lb).addEventListener('click', () => lb.close());
+    const prev = $('.lb-prev', lb), next = $('.lb-next', lb);
+    if (prev) prev.addEventListener('click', () => step(-1));
+    if (next) next.addEventListener('click', () => step(1));
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); step(e.key === 'ArrowLeft' ? -1 : 1); }
+    });
+    // potiahnutie prstom do strany: vodorovný pohyb aspoň 40 px
+    let sx = null, sy = 0;
+    lb.addEventListener('touchstart', (e) => { const t = e.touches[0]; sx = e.touches.length === 1 ? t.clientX : null; sy = t.clientY; }, { passive: true });
+    lb.addEventListener('touchend', (e) => {
+      if (sx === null) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+    }, { passive: true });
     lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   }
+  /* filter cenníka na telefóne: ťuknutá kategória sa posunie celá do obrazu, mimo zmiznutia na okraji riadku */
+  $$('#cennik .chip-row .chip').forEach((c) => c.addEventListener('click', () => {
+    const row = c.parentElement; if (row.scrollWidth <= row.clientWidth + 1) return;
+    const r = c.getBoundingClientRect(), rr = row.getBoundingClientRect(), pad = 52;
+    const d = r.right > rr.right - pad ? r.right - (rr.right - pad) : r.left < rr.left + pad ? r.left - (rr.left + pad) : 0;
+    if (d) row.scrollBy({ left: d, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }));
   function enableScrub() {
     if (scrubOn) return; scrubOn = true;
     initHeroOnce();
@@ -676,20 +706,34 @@
         sAvif.srcset = list('avif'); sWebp.srcset = list('webp');
         vImg.src = id === 'vzor' ? `${b}-800.jpg` : `${b}-800.webp`;
       };
-      /* pod poľom vybraný rituál, dĺžka a cena z cenníka (článok rituálu má data-min a data-price);
-         dĺžka sa berie z textu karty, ktorý je už preložený (napr. 40 хв) */
+      /* pod poľom dĺžka a cena vybraného rituálu z cenníka (článok rituálu má data-min a data-price);
+         názov ukazuje pole a opakuje sa len vtedy, keď sa do úzkeho poľa celý nezmestí. Dĺžka sa berie
+         z textu karty, ktorý je už preložený (napr. 40 хв); pri rituáloch pre dvoch „75 min / 2 osoby“
+         má rovnaký tvar ako ostatné */
       const sum = $('[data-voucher-sum]');
+      let ctx2d = null;
+      const cut = (text) => {
+        try {
+          const cs = getComputedStyle(pick);
+          ctx2d = ctx2d || document.createElement('canvas').getContext('2d');
+          ctx2d.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+          return ctx2d.measureText(text).width > pick.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        } catch (e) { return false; }
+      };
       const told = () => {
         const o = pick.options[pick.selectedIndex], card = o && document.getElementById(o.dataset.card || '');
         if (!sum || !card) return;
-        const t = $('.meta span', card), min = (t && t.textContent.trim()) || `${card.dataset.min} min`;
+        const t = $('.meta span', card), min = ((t && t.textContent.trim()) || `${card.dataset.min} min`).replace(/\s*\/\s*/g, ' · ');
+        const name = o.textContent.trim(), meta = document.createElement('span');
+        meta.textContent = `${min} · ${card.dataset.price} €`;
         sum.textContent = '';
-        const b = document.createElement('b'), s = document.createElement('span');
-        b.textContent = o.textContent.trim(); s.textContent = `${min} · ${card.dataset.price} €`;
-        sum.append(b, s);
+        if (cut(name)) { const b = document.createElement('b'); b.textContent = name; sum.append(b); }
+        sum.append(meta);
       };
       told();
       document.addEventListener('langchange', told);
+      let rtv; addEventListener('resize', () => { clearTimeout(rtv); rtv = setTimeout(told, 200); }, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(told);
       pick.addEventListener('change', () => {
         const o = pick.options[pick.selectedIndex];
         set(o.value);
