@@ -3,8 +3,8 @@
 Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž sa ho.
 
 ## O čom to je
-- Statický web HEAD SPA 30 (Head Spa rituály, Mostná 30, Nitra). HEAD SPA 30 je samostatný podnik
-  s vlastným tímom, sídli v priestoroch Salónu 30.
+- Statický web HEAD SPA 30 (Head Spa rituály, Mostná 30, Nitra). HEAD SPA 30 je samostatná časť
+  s vlastným tímom; so Salónom 30 má spoločné priestory aj majiteľa.
 - Nasadenie: GitHub Pages z vetvy `main`, adresa https://d8f5s88zjy-art.github.io/head-spa-30/
 - Rezervácie a poukazy idú do Booqme: kalendár https://booqme.app/sk/rezervacia/barbershop-30,
   obchod s poukazmi https://booqme.app/sk/eshop/barbershop-30. Formuláre na webe sú druhá cesta.
@@ -13,9 +13,9 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Iba to, čo salón ponúka: 17 rituálov (12 Head Spa, 2 pre dvoch, 3 pre chodidlá) z `docs/booqme-sluzby.csv`, nič nevymýšľaj
   (názvy, ceny, trvania, telefón 0911 153 136, adresa). Keď niečo nevieš, spýtaj sa alebo vynechaj.
 - Poukaz je vždy na konkrétny rituál, nie na sumu (`docs/booqme-poukazy.csv`).
-- Nikde nepíš „Barber shop 30“ ani „salón 30“ ako názov tohto webu. HEAD SPA 30 nie je súčasť
-  ani značka Salónu 30: Salón 30 sa spomína len ako priestory („v priestoroch Salónu 30“)
-  s odkazom na www.salon30.sk. Služby Salónu 30 (kaderníctvo, kozmetika) na web nepatria.
+- Nikde nepíš „Barber shop 30“ ani „salón 30“ ako názov tohto webu. HEAD SPA 30 je samostatná časť
+  s vlastným tímom, so Salónom 30 zdieľa priestory aj majiteľa; Salón 30 sa môže spomenúť
+  (odkaz www.salon30.sk), ale nie ako by bol HEAD SPA 30 jeho súčasťou alebo značkou. Služby Salónu 30 (kaderníctvo, kozmetika) na web nepatria.
 - Žiadna zmienka o AI na webe, v kóde, v commitoch ani v názvoch vetiev.
 - Rituály pre chodidlá sú tri (Klasický, Ovocný a bylinkový, Zlatý rituál 24K); žiadny
   strieborný ani zlatý Head Spa rituál, tie salón neponúka.
