@@ -2256,3 +2256,16 @@ html.world #cennik .list>.cat.has-ph:first-child{margin-top:clamp(32px,4vw,48px)
 
 /* kroky: len tenký zlatý krúžok, bez žiary */
 .step .n::after{box-shadow:none}
+/* ================= Opravy C: zalomenie textov a odkazy v otázkach ================= */
+/* telefón, e-mail a názov rituálu v odkaze sa nikdy nerozdelia na dva riadky */
+.care a,.care-note a,.care-c a,a[href^="tel:"],a[href^="mailto:"],.first-tip a,.faq-a a{white-space:nowrap}
+/* poznámka pod úvodom je v statickom úvode rovnako drobná ako vo filmovom */
+.hero-static p.care-note{font-size:14px;max-width:none}
+/* nadpisy a krátke riadky sa delia rovnomerne, bez osamoteného slova na konci */
+.h2 .li,#cennik .card h3,#cennik .card .tag,#cennik .cat.has-ph>b,.step h3,.faq-q{text-wrap:balance}
+.band .sub,.hero-static p,.lede,.quote,.gift-occ,.first-tip,.step p,.care p,#cennik .card .desc,#cennik .card .about p,#cennik .card .panel li,
+.team-grid figcaption p,.salon-photos figcaption,.rphoto figcaption,.shot .cap span,.faq-a p,.info p,footer p,.map-card span{text-wrap:pretty}
+.map-card b{line-height:1.25}
+/* kontakty v odpovediach sú skutočné odkazy, vyzerajú ako ostatné tiché odkazy */
+.faq-a a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4);transition:border-color var(--t-base) var(--e-out)}
+.faq-a a:hover{border-bottom-color:var(--accent)}
