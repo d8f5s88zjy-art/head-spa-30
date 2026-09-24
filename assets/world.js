@@ -13,12 +13,19 @@
 
   const here = (d.currentScript && d.currentScript.src) || location.href;
   if (d.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
-  // film sa spustí až keď sa návštevník pohne (dotyk, myš, skrolovanie, klávesnica); dovtedy je
-  // v úvode fotka miestnosti, takže otvorenie stránky nič nebrzdí a kto len nazrie, nič nesťahuje
+  // film sa spustí až keď sa návštevník pohne (dotyk, myš, skrolovanie, klávesnica); dovtedy fotka
+  // úvodu drží všetky okná do filmu (style.css), takže nikde nie je prázdna plocha. Aby film prišiel
+  // skoro aj po prvom švihu na telefóne, knižnica sa po načítaní stránky vo voľnej chvíli len stiahne
+  // do vyrovnávacej pamäte (bez spustenia, prehliadač ňou nič nepočíta). Až po chvíli, aby nebrzdila
+  // fotku úvodu ani dvere.
+  const src = window.HS30_THREE || new URL('vendor/three.module.min.js', here).href;
+  const early = () => { if (!src.startsWith('data:')) fetch(src, { priority: 'low' }).catch(() => {}); };
   const INPUTS = ['pointerdown', 'pointermove', 'touchstart', 'wheel', 'scroll', 'keydown'];
   await new Promise((r) => {
-    const go = () => { INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
+    let t = 0;
+    const go = () => { clearTimeout(t); INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
     INPUTS.forEach((e) => addEventListener(e, go, { passive: true }));
+    t = setTimeout(() => { if ('requestIdleCallback' in window) requestIdleCallback(early, { timeout: 3000 }); else early(); }, 4000);
   });
   // sekcie sú vo filme vyššie ako odhad content-visibility, skok cez menu by pristál vedľa. Preto sa
   // po prvom pohybe postupne vo voľných chvíľach vykreslia všetky (nie naraz, aby dotyk nezamrzol)
@@ -28,8 +35,9 @@
   const step = (dl) => { while (secs.length && dl.timeRemaining() > 6) open(); if (secs.length) requestIdleCallback(step, { timeout: 800 }); };
   if ('requestIdleCallback' in window) requestIdleCallback(step, { timeout: 800 }); else setTimeout(() => open(true), 600);
   d.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('a[href^="#"]')) open(true); }, true);
-  const quit = () => { root.classList.remove('world'); };
-  const src = window.HS30_THREE || new URL('vendor/three.module.min.js', here).href;
+  // film nejde (sieť, grafika): rozloženie stránky ostáva rovnaké, nič neskočí ani pri čítaní.
+  // Okná do filmu ďalej drží pokojná fotka úvodu (trieda world-in nepríde).
+  const quit = () => { root.classList.add('world-off'); };
   let THREE;
   try { THREE = await import(src); } catch (e) { quit(); return; }
 
@@ -77,8 +85,11 @@
     { at: '#salon', photo: 'miestnost', place: 'Miestnosť pre dvoch', f: [0.5, 0.55], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', place: 'Nápis Spa relax', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', place: 'Komoda s uterákmi', f: [0.5, 0.55], mv: 'down' },
-    // nápis je široký: na telefóne sa fotka zmenší tak, aby bolo celé HEAD SPA s okrajom po stranách
-    { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in', pm: 1.06, mm: 'near' },
+    // kontakt: svietiace logo. Na telefóne je okno do filmu nízke a pás nad ním by veľké písmená nápisu
+    // vždy prerezal napoly, preto tam zelené dvere, za ktorými salón nájdeš (bez písma v zábere)
+    phone
+      ? { at: '#kontakt', photo: 'lozka-sviecka', f: [0.5, 0.3], mv: 'in' }
+      : { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in' },
   );
   /* ---------- renderer ---------- */
   const canvas = d.createElement('canvas');
@@ -367,8 +378,9 @@
       void main() {
         vec3 c = texture2D(tA, vUv).rgb;
         if (uMix > 0.0) {
-          c = mix(c, texture2D(tB, vUv).rgb, uMix);
-          c *= 1.0 - 0.12 * sin(3.14159 * uMix);   // prechod cez jemné šero ako vo filme
+          // prechod cez krátke šero ako vo filme: starý záber stmavne skôr, než sa nový rozsvieti,
+          // takže dva obrazy nikdy nestoja cez seba (žiadna dvojexpozícia)
+          c = c * (1.0 - smoothstep(0.0, 0.6, uMix)) + texture2D(tB, vUv).rgb * smoothstep(0.4, 1.0, uMix);
         }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
