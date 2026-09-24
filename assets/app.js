@@ -300,13 +300,19 @@
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
   // lišta sa pri čítaní smerom dole uhne a vráti sa hneď, ako sa skroluje hore
-  let lastY = scrollY, navHidden = false, navT = 0;
+  let lastY = scrollY, navHidden = false, navT = 0, navJump = false, navJumpT = 0;
+  // skok na časť z menu alebo lišty: hlavička ostane viditeľná, cieľ pristane pod ňou (inak nad časťou zostane prázdny pás)
+  const holdNav = (on) => {
+    navJump = on; clearTimeout(navJumpT);
+    if (on) { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } navJumpT = setTimeout(() => { navJump = false; lastY = scrollY; }, 6000); }
+    else lastY = scrollY;
+  };
   // na tablete lišta s menu ostáva stále; na telefóne sa uhne, len keď je dole spodná lišta s tlačidlom menu
   const touchNavMQ = matchMedia('(max-width: 1024px), (hover: none)');
   const navMayHide = () => !touchNavMQ.matches || (phoneMQ.matches && !!document.body.dataset.scene && document.body.dataset.scene !== 'hero');
   addEventListener('scroll', () => {
     const y = scrollY, down = y > lastY + 4, up = y < lastY - 4, may = navMayHide();
-    if (down && y > 260 && !navHidden && may && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
+    if (down && y > 260 && !navHidden && may && !navJump && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
     else if ((up || y < 120 || !may) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
     if (down || up) lastY = y;
     clearTimeout(navT); navT = setTimeout(() => { lastY = scrollY; }, 200);
@@ -368,11 +374,19 @@
     const behavior = reduced.matches ? 'auto' : 'smooth';
     const goal = () => { const nav = $('.nav'); return Math.max(0, Math.round(mark.getBoundingClientRect().top + scrollY - (nav ? nav.offsetHeight : 72) - 32)); };
     // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
+    holdNav(true);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       scrollTo({ top: goal(), behavior });
       history.replaceState(null, '', id);
-      // po dobehnutí jedna tichá oprava, keby sa medzitým niečo nad cieľom dopočítalo
-      if ('onscrollend' in window) addEventListener('scrollend', () => { const g = goal(); if (Math.abs(g - scrollY) > 3) scrollTo({ top: g, behavior: 'auto' }); }, { once: true });
+      // po dobehnutí tiché opravy, kým sa niečo nad cieľom dopočítava (najviac tri kolá), potom hlavička znova reaguje na čítanie
+      let kola = 0;
+      const dorovnaj = () => {
+        const g = goal();
+        if (Math.abs(g - scrollY) > 1 && kola++ < 3) { scrollTo({ top: g, behavior: 'auto' }); requestAnimationFrame(() => requestAnimationFrame(dorovnaj)); }
+        else holdNav(false);
+      };
+      if ('onscrollend' in window) addEventListener('scrollend', () => requestAnimationFrame(dorovnaj), { once: true });
+      else setTimeout(dorovnaj, 900);
     }));
   });
 
@@ -397,10 +411,21 @@
     let right = 0; $$('.site>section>.wrap').forEach((w) => { right = Math.max(right, w.getBoundingClientRect().right); });
     const free = document.documentElement.clientWidth - right;
     document.documentElement.classList.toggle('gutter-ok', right > 0 && free >= 80);
+    // popisy čiariek sa ukazujú len vtedy, keď sa celé zmestia do okraja (inak by zakryli obsah, napr. + pri otázkach)
+    let lbl = 0; $$('#rail .rail-list a span').forEach((s) => { lbl = Math.max(lbl, s.offsetWidth); });
+    const rail = document.getElementById('rail');
+    const railLeft = rail && rail.offsetWidth ? rail.getBoundingClientRect().left : document.documentElement.clientWidth - 64;
+    document.documentElement.classList.toggle('gutter-wide', right > 0 && free >= 80 && lbl > 0 && railLeft - 10 - lbl >= right + 12);
   };
+  // úzky okraj: namiesto popisu natívna bublina s názvom časti (text je už preložený v span)
+  $$('#rail .rail-list a').forEach((a) => a.addEventListener('pointerenter', () => {
+    const s = a.querySelector('span');
+    if (document.documentElement.classList.contains('gutter-wide')) a.removeAttribute('title'); else if (s) a.title = s.textContent.trim();
+  }));
   let fitT = 0;
   addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitGutter, 150); }, { passive: true });
   addEventListener('load', fitGutter);
+  document.addEventListener('langchange', () => requestAnimationFrame(fitGutter));
   fitGutter();
 
   const spied = new Set();
@@ -1112,7 +1137,12 @@
     let opener = menuBtns[0];
     $$('.drawer-links a', menu).forEach((a, i) => a.style.setProperty('--i', i));
     const expanded = (v) => menuBtns.forEach((b) => b.setAttribute('aria-expanded', String(v)));
-    const openMenu = (btn) => { if (menu.open) return; opener = btn || menuBtns[0]; menu.showModal(); document.body.classList.add('drawer-open'); expanded(true); track('menu_open'); };
+    const openMenu = (btn) => {
+      if (menu.open) return; opener = btn || menuBtns[0]; menu.showModal(); document.body.classList.add('drawer-open'); expanded(true); track('menu_open');
+      // menu sa vždy otvorí od začiatku, časť, v ktorej si, je vidieť
+      const inn = $('.drawer-in', menu); if (inn) inn.scrollTop = 0;
+      const on = $('.drawer-links a.on', menu); if (on && inn && on.getBoundingClientRect().bottom > inn.getBoundingClientRect().bottom) on.scrollIntoView({ block: 'nearest' });
+    };
     const closeMenu = () => { if (!menu.open) return; menu.close(); };
     menuBtns.forEach((b) => b.addEventListener('click', () => (menu.open ? closeMenu() : openMenu(b))));
     $('.drawer-close', menu).addEventListener('click', closeMenu);

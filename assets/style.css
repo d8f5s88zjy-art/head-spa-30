@@ -2043,16 +2043,7 @@ html .drawer-links a span{flex:none;width:2.6ch;min-width:0;font-variant-numeric
 /* časť, v ktorej práve si: zlatá kurzíva, jediný akcent písma na webe */
 html .drawer-links a.on{color:var(--accent-hover);font-style:italic}
 html .drawer-foot{flex:none;padding-top:24px}
-@media (max-height:760px){
-  html .drawer-links a{padding:10px 0;font-size:21px}
-  html .drawer-foot{padding-top:18px;gap:8px}
-}
-/* telefón na šírku: časti v dvoch stĺpcoch, nech sa zmestia bez dlhého posúvania */
-@media (max-height:500px) and (orientation:landscape){
-  html .drawer-in{width:min(640px,calc(100% - 48px))}
-  html .drawer-links{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;column-gap:28px}
-  html .drawer-links a{padding:8px 0;font-size:19px}
-}
+/* výška riadkov menu sa riadi výškou obrazovky (Opravy 2N) */
 
 /* --- hlavička --- */
 /* tablet a veľký dotykový displej: tlačidlo menu je vždy (lišta sa na dotyku neuhýba, app.js) */
@@ -2310,3 +2301,53 @@ html .lb{width:fit-content;max-width:92vw;max-height:94vh;border-radius:2px}
 html .lb img{width:min(92vw,calc((94vh - 84px) / var(--ar,1.333)),var(--mw,1200px));height:auto;max-width:none;max-height:none;object-fit:contain}
 html .lb .lb-cap{width:0;min-width:100%;box-sizing:border-box}
 html .lb .lb-close{top:10px;right:10px;width:44px;height:44px;border-radius:2px;background:rgba(13,10,7,.78);border-color:rgba(239,231,218,.28)}
+
+/* ================= Opravy 2N: navigácia, menu a lišta ================= */
+/* hlavička: kde nie je rozmazanie (telefón, dotyk, tablet), je plná, nič cez ňu nepresvitá; jedna vlasová linka ostáva */
+@media (max-width:640px),(pointer:coarse),(hover:none){
+  html .nav::before{background:#0d0a07}
+}
+/* pravá časť hlavičky: jazyk, Rezervovať a menu rovnako vysoké, jazyk a menu s rovnakou plnou výplňou */
+html .nav .nav-actions .btn{min-height:44px;padding-block:0}
+html .nav .lang-btn,html .nav .menu-btn{min-height:44px;background:#0d0a07;border:1px solid rgba(239,231,218,.18)}
+html .nav .lang-btn:hover,html .nav .lang-btn[aria-expanded="true"]{background:#0d0a07;border-color:var(--line-strong)}
+/* notebook bez voľného okraja pre bočnú lištu: časti otvára tlačidlo menu, žiadna časť nechýba */
+@media (min-width:1181px) and (hover:hover){html:not(.gutter-ok) .nav .menu-btn{display:block}}
+
+/* --- menu častí: zmestí sa na výšku obrazovky, tlačidlo Rezervovať nikdy nie je odrezané --- */
+html .drawer-in{--row:clamp(40px,calc((100dvh - 340px) / 9),58px)}
+html .drawer-top{border-bottom:0}
+html .drawer-links{margin-top:0}
+html .drawer-links a{min-height:var(--row);padding:0;align-items:center;font-size:clamp(19px,calc(var(--row) * .45),26px);line-height:1.2}
+html .drawer-links a span{align-self:center}
+/* pätka menu ide hneď za zoznamom, bez prázdneho pásu */
+html .drawer-foot{margin-top:0;padding-top:20px;gap:10px}
+html .drawer-foot .today{font-weight:400;color:var(--text-secondary)}
+@media (max-height:700px){
+  html .drawer-top{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px}
+  html .drawer-in{--row:clamp(36px,calc((100dvh - 312px) / 9),58px)}
+  html .drawer-foot{padding-top:14px;gap:8px}
+  html .drawer-foot p{line-height:1.45}
+}
+/* telefón na šírku: časti v dvoch stĺpcoch, pod nimi Rezervovať a Zavolať vedľa seba */
+@media (max-height:500px) and (orientation:landscape){
+  html .drawer-in{--row:clamp(32px,calc((100dvh - 210px) / 5),44px);width:min(640px,calc(100% - 48px));padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  html .drawer-top{padding-top:8px;padding-bottom:8px}
+  html .drawer-links{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;column-gap:28px}
+  html .drawer-links a{font-size:18px}
+  html .drawer-foot{grid-template-columns:1fr 1fr;padding-top:12px;gap:8px 28px}
+  html .drawer-foot .btn{min-height:44px;padding-block:0}
+  html .drawer-foot p{font-size:14px;line-height:1.4}
+}
+
+/* --- bočná lišta: tichý tmavý podklad, čiarky sú vidieť aj nad svetlou fotkou a linky stránky sa pri nej zastavia --- */
+@media (min-width:1025px) and (hover:hover){
+  html.gutter-ok .rail .rail-list{padding:6px 4px;background:rgba(13,10,7,.82);border:1px solid rgba(239,231,218,.08);border-radius:2px}
+  /* popis čiarky len keď sa celý zmestí do okraja (trieda gutter-wide, app.js); inak natívna bublina */
+  html:not(.gutter-wide) .rail .rail-list a:hover span,html:not(.gutter-wide) .rail .rail-list a:focus-visible span{opacity:0;visibility:hidden}
+}
+
+/* --- pätička: značka má plochu na ťuknutie 44 px aj na telefóne --- */
+html footer .brand{min-height:44px}
+/* otázky a priebeh na počítači: stĺpec s nadpisom sa prilepí presne tam, kam skok z menu kladie nadpisok (80 px lišta + 32 px) */
+@media (min-width:901px){html .ritual .sticky,html .faq .sticky{top:112px}}
