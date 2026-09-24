@@ -64,7 +64,7 @@
 <div class="env" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="glow g4"></div><div class="grain"></div></div>
 
 <div class="oznam" id="oznam" role="status" hidden><p></p></div>
-<nav class="rail" id="rail" aria-label="Časti stránky"><button class="rail-tab" type="button" aria-expanded="false" aria-controls="rail-list" aria-label="Časti stránky"><i></i><i></i><i></i></button><ol class="rail-list" id="rail-list"><li><a href="#top"><span>Úvod</span></a></li><li><a href="#ritual"><span>Ako to prebieha</span></a></li><li><a href="#cennik"><span>Rituály a ceny</span></a></li><li><a href="#poukaz"><span>Poukážky</span></a></li><li><a href="#tim"><span>Tím</span></a></li><li><a href="#salon"><span>Priestory</span></a></li><li><a href="#galeria"><span>Galéria</span></a></li><li><a href="#faq"><span>Otázky</span></a></li><li><a href="#kontakt"><span>Kontakt</span></a></li></ol></nav>
+<nav class="rail" id="rail" aria-label="Časti stránky"><ol class="rail-list" id="rail-list"><li><a href="#top"><span>Úvod</span></a></li><li><a href="#ritual"><span>Ako to prebieha</span></a></li><li><a href="#cennik"><span>Rituály a ceny</span></a></li><li><a href="#poukaz"><span>Poukážky</span></a></li><li><a href="#tim"><span>Tím</span></a></li><li><a href="#salon"><span>Priestory</span></a></li><li><a href="#galeria"><span>Galéria</span></a></li><li><a href="#faq"><span>Otázky</span></a></li><li><a href="#kontakt"><span>Kontakt</span></a></li></ol></nav>
 <nav class="nav" aria-label="Hlavná navigácia">
   <div class="wrap">
     <a class="brand" href="#top" title="HEAD SPA 30, domov">
@@ -74,7 +74,6 @@
     <div class="links">
       <a href="#ritual">Ako to prebieha</a>
       <a href="#cennik">Rituály a ceny</a>
-      <a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervácia</a>
       <a href="#poukaz">Poukážky</a>
       <a href="#galeria">Galéria</a>
       <a href="#faq">Otázky</a>
@@ -87,18 +86,19 @@
     </div>
   </div>
 </nav>
-<dialog class="drawer" id="drawer" aria-label="Menu">
+<dialog class="drawer" id="drawer" aria-labelledby="drawer-title">
   <div class="drawer-in">
-    <div class="drawer-top"><span class="drawer-brand">HEAD SPA 30 · Mostná 30 · Nitra</span><button class="drawer-close" type="button" aria-label="Zavrieť menu">&times;</button></div>
-    <nav class="drawer-links" aria-label="Sekcie">
-      <a href="#ritual"><span>01</span>Ako to prebieha</a>
-      <a href="#cennik"><span>02</span>Rituály a ceny</a>
-      <a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link><span>03</span>Rezervácia</a>
-      <a href="#poukaz"><span>04</span>Darčekové poukážky</a>
-      <a href="#salon"><span>05</span>Priestory</a>
-      <a href="#galeria"><span>06</span>Galéria</a>
-      <a href="#faq"><span>07</span>Otázky</a>
-      <a href="#kontakt"><span>08</span>Kontakt</a>
+    <div class="drawer-top"><h2 class="drawer-title" id="drawer-title">Časti stránky</h2><button class="drawer-close" type="button" aria-label="Zavrieť menu">&times;</button></div>
+    <nav class="drawer-links" aria-labelledby="drawer-title">
+      <a href="#top"><span>01</span>Úvod</a>
+      <a href="#ritual"><span>02</span>Ako to prebieha</a>
+      <a href="#cennik"><span>03</span>Rituály a ceny</a>
+      <a href="#poukaz"><span>04</span>Poukážky</a>
+      <a href="#tim"><span>05</span>Tím</a>
+      <a href="#salon"><span>06</span>Priestory</a>
+      <a href="#galeria"><span>07</span>Galéria</a>
+      <a href="#faq"><span>08</span>Otázky</a>
+      <a href="#kontakt"><span>09</span>Kontakt</a>
     </nav>
     <div class="drawer-foot">
       <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervovať termín</a>
@@ -633,10 +633,6 @@
 
 
 
-<button class="to-top" type="button" id="toTop" aria-label="Späť hore" hidden>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-  <span>Hore</span>
-</button>
 <dialog class="lb" id="lightbox" aria-label="Zväčšená fotografia">
   <button class="lb-close" type="button" aria-label="Zavrieť">&times;</button>
   <img src="" alt="">
@@ -717,14 +713,18 @@
         <p>Head Spa rituály na Mostnej 30 v Nitre, v priestoroch Salónu 30.</p>
         <p class="care-note">Linka 24/7 pre tvoju spätnú väzbu: <a href="tel:+421911153136">0911 153 136</a></p>
       </div>
-      <div class="col"><h3>Stránka</h3><a href="#ritual">Ako to prebieha</a><a href="#cennik">Rituály a ceny</a><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervácia</a><a href="#poukaz">Darčekové poukážky</a><a href="#salon">Priestory</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a></div>
+      <div class="col"><h3>Stránka</h3><a href="#ritual">Ako to prebieha</a><a href="#cennik">Rituály a ceny</a><a href="#poukaz">Poukážky</a><a href="#tim">Tím</a><a href="#salon">Priestory</a><a href="#galeria">Galéria</a><a href="#faq">Otázky</a><a href="#kontakt">Kontakt</a></div>
       <div class="col"><h3>Online</h3><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervácia</a><a href="https://www.instagram.com/salon30_nitra/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/Salon30_nitra-112861134668883" target="_blank" rel="noopener">Facebook</a><a href="https://www.salon30.sk/" target="_blank" rel="noopener">www.salon30.sk</a><a href="https://www.google.com/maps/search/?api=1&query=Mostn%C3%A1+226%2F30+Nitra" target="_blank" rel="noopener">Mapa</a></div>
     </div>
     <div class="bottom"><span>© <span id="year">2026</span> HEAD SPA 30</span><span class="credit">Web a grafický dizajn: <a href="mailto:samuelpavelka387@gmail.com" rel="author">Samuel Pavelka</a></span><span>Mostná 30 · Nitra</span></div>
   </div>
 </footer>
 
-<div class="mbar" aria-label="Rýchly kontakt"><button class="mbar-top" type="button" id="mbarTop" aria-label="Späť hore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button><a href="tel:+421911153136">Zavolať</a><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervovať rituál</a></div>
+<button class="to-top" type="button" id="toTop" aria-label="Späť hore" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  <span>Hore</span>
+</button>
+<div class="mbar" aria-label="Rýchly kontakt"><button class="mbar-menu" type="button" id="mbarMenu" aria-label="Časti stránky" aria-controls="drawer" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg></button><a href="tel:+421911153136">Zavolať</a><a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener" data-booking-link>Rezervovať rituál</a></div>
 
 <script src="assets/i18n.min.js" defer></script>
 <script src="assets/app.min.js" defer></script>

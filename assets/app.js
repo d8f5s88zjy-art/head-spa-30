@@ -282,10 +282,13 @@
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
   // lišta sa pri čítaní smerom dole uhne a vráti sa hneď, ako sa skroluje hore
   let lastY = scrollY, navHidden = false, navT = 0;
+  // na tablete lišta s menu ostáva stále; na telefóne sa uhne, len keď je dole spodná lišta s tlačidlom menu
+  const touchNavMQ = matchMedia('(max-width: 1024px), (hover: none)');
+  const navMayHide = () => !touchNavMQ.matches || (phoneMQ.matches && !!document.body.dataset.scene && document.body.dataset.scene !== 'hero');
   addEventListener('scroll', () => {
-    const y = scrollY, down = y > lastY + 4, up = y < lastY - 4;
-    if (down && y > 260 && !navHidden && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
-    else if ((up || y < 120) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
+    const y = scrollY, down = y > lastY + 4, up = y < lastY - 4, may = navMayHide();
+    if (down && y > 260 && !navHidden && may && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
+    else if ((up || y < 120 || !may) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
     if (down || up) lastY = y;
     clearTimeout(navT); navT = setTimeout(() => { lastY = scrollY; }, 200);
   }, { passive: true });
@@ -331,42 +334,55 @@
     if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg);
   }, { passive: true });
   const navLinks = $$('.links a');
-  /* ============ skok na časť: vo filme pristane priamo na nadpise, nie na zábere nad ním ============ */
+  /* ============ skok na časť: nadpisok časti pristane vždy rovnako pod lištou (aj cenník, ktorý nemá vnútorný okraj) ============ */
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href^="#"]');
-    if (!a || e.defaultPrevented || e.button > 0 || e.metaKey || e.ctrlKey) return;
-    const id = a.getAttribute('href'); if (id.length < 2 || !document.documentElement.classList.contains('world')) return;
-    const sec = document.querySelector(id), wrap = sec && sec.matches('.site>section') && sec.querySelector(':scope>.wrap');
-    if (!wrap) return;
+    if (!a || e.defaultPrevented || e.button > 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const id = a.getAttribute('href'); if (!/^#[\w-]+$/.test(id)) return;
+    if (id === '#top') { e.preventDefault(); scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' }); history.replaceState(null, '', location.pathname + location.search); return; }
+    const sec = document.querySelector(id);
+    if (!sec || !sec.matches('.site>section')) return;
+    const mark = sec.querySelector(':scope>.wrap .kicker') || sec.querySelector(':scope>.wrap') || sec;
     e.preventDefault();
+    // všetky časti sa vykreslia naraz, aby odhadnutá výška nepreskočených častí neposunula cieľ
+    document.documentElement.classList.add('cv-all');
+    const behavior = reduced.matches ? 'auto' : 'smooth';
+    const goal = () => { const nav = $('.nav'); return Math.max(0, Math.round(mark.getBoundingClientRect().top + scrollY - (nav ? nav.offsetHeight : 72) - 32)); };
     // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      const nav = $('.nav'), off = (nav ? nav.offsetHeight : 72) + 16;
-      scrollTo({ top: Math.max(0, wrap.getBoundingClientRect().top + scrollY - off), behavior: reduced.matches ? 'auto' : 'smooth' });
+      scrollTo({ top: goal(), behavior });
       history.replaceState(null, '', id);
+      // po dobehnutí jedna tichá oprava, keby sa medzitým niečo nad cieľom dopočítalo
+      if ('onscrollend' in window) addEventListener('scrollend', () => { const g = goal(); if (Math.abs(g - scrollY) > 3) scrollTo({ top: g, behavior: 'auto' }); }, { once: true });
     }));
   });
 
-  /* ============ bočná lišta: každá časť na jedno ťuknutie, aktívna časť zlatá ============ */
-  const rail = $('#rail');
-  if (rail) {
-    const tab = $('.rail-tab', rail), links = $$('.rail-list a', rail);
-    const setOpen = (o) => { rail.classList.toggle('open', o); tab.setAttribute('aria-expanded', String(o)); };
-    tab.addEventListener('click', () => setOpen(!rail.classList.contains('open')));
-    // ťuknutie na stmavené pozadie alebo na odkaz zoznam zavrie (odkaz sa pritom normálne otvorí)
-    rail.addEventListener('click', (e) => { if (e.target === rail || e.target.closest('.rail-list a')) setOpen(false); });
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && rail.classList.contains('open')) { setOpen(false); tab.focus(); } });
-    const targets = links.map((a) => [a, document.querySelector(a.getAttribute('href'))]).filter((x) => x[1]);
-    let cur = null, queued = false;
-    const mark = () => {
+  /* ============ časti stránky: bočná lišta (počítač) aj menu (telefón, tablet) ukazujú, kde práve si ============ */
+  const secLinks = $$('#rail .rail-list a, #drawer .drawer-links a');
+  const secTargets = [...new Set(secLinks.map((a) => a.getAttribute('href')))].map((id) => [id, document.querySelector(id)]).filter((x) => x[1]);
+  if (secTargets.length) {
+    let curSec = null, queued = false;
+    const markSec = () => {
       queued = false;
-      const y = innerHeight * 0.4; let on = targets[0][0];
-      targets.forEach(([a, t]) => { if (t.getBoundingClientRect().top < y) on = a; });
-      if (on !== cur) { if (cur) { cur.classList.remove('on'); cur.removeAttribute('aria-current'); } on.classList.add('on'); on.setAttribute('aria-current', 'true'); cur = on; }
+      const y = innerHeight * 0.4; let on = secTargets[0][0];
+      secTargets.forEach(([id, t]) => { if (t.getBoundingClientRect().top < y) on = id; });
+      if (on === curSec) return;
+      curSec = on;
+      secLinks.forEach((a) => { const m = a.getAttribute('href') === on; a.classList.toggle('on', m); if (m) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
     };
-    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(mark); } }, { passive: true });
-    mark();
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(markSec); } }, { passive: true });
+    markSec();
   }
+  /* bočná lišta a tlačidlo Späť hore sú len tam, kde je vedľa obsahu naozaj voľný okraj; inak stačí menu */
+  const fitGutter = () => {
+    let right = 0; $$('.site>section>.wrap').forEach((w) => { right = Math.max(right, w.getBoundingClientRect().right); });
+    const free = document.documentElement.clientWidth - right;
+    document.documentElement.classList.toggle('gutter-ok', right > 0 && free >= 80);
+  };
+  let fitT = 0;
+  addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitGutter, 150); }, { passive: true });
+  addEventListener('load', fitGutter);
+  fitGutter();
 
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
@@ -1040,17 +1056,22 @@
   });
 
   /* ============ mobilné menu (natívny dialog: zachytenie fokusu a Escape zadarmo) ============ */
-  const menu = $('#drawer'), menuBtn = $('.menu-btn');
-  if (menu && menuBtn) {
+  /* Jediné menu častí stránky: otvára ho tlačidlo v hlavičke aj tlačidlo v spodnej lište telefónu,
+     vysunie sa sprava, prekryje a stmaví aj hlavičku. */
+  const menu = $('#drawer'), menuBtns = $$('.menu-btn, #mbarMenu');
+  if (menu && menuBtns.length) {
+    let opener = menuBtns[0];
     $$('.drawer-links a', menu).forEach((a, i) => a.style.setProperty('--i', i));
-    const openMenu = () => { if (menu.open) return; menu.showModal(); document.body.classList.add('drawer-open'); menuBtn.setAttribute('aria-expanded', 'true'); track('menu_open'); };
+    const expanded = (v) => menuBtns.forEach((b) => b.setAttribute('aria-expanded', String(v)));
+    const openMenu = (btn) => { if (menu.open) return; opener = btn || menuBtns[0]; menu.showModal(); document.body.classList.add('drawer-open'); expanded(true); track('menu_open'); };
     const closeMenu = () => { if (!menu.open) return; menu.close(); };
-    menuBtn.addEventListener('click', () => (menu.open ? closeMenu() : openMenu()));
+    menuBtns.forEach((b) => b.addEventListener('click', () => (menu.open ? closeMenu() : openMenu(b))));
     $('.drawer-close', menu).addEventListener('click', closeMenu);
     menu.addEventListener('click', (e) => { if (e.target === menu) closeMenu(); });
-    menu.addEventListener('close', () => { document.body.classList.remove('drawer-open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus({ preventScroll: true }); });
+    menu.addEventListener('close', () => { document.body.classList.remove('drawer-open'); expanded(false); if (opener.offsetWidth) opener.focus({ preventScroll: true }); });
     $$('a[href^="#"]', menu).forEach((a) => a.addEventListener('click', () => { closeMenu(); }));
-    matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
+    // keď sa okno zväčší a žiadne tlačidlo menu už nie je vidieť, menu sa zavrie
+    addEventListener('resize', () => { if (menu.open && !menuBtns.some((b) => b.offsetWidth)) closeMenu(); }, { passive: true });
   }
 
   /* ============ dnešné otváracie hodiny, počítané v časovom pásme salónu ============ */
@@ -1157,16 +1178,15 @@
     }
   });
 
-  /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
+  /* Späť hore: objaví sa po dvoch obrazovkách, len na širokej obrazovke s voľným okrajom (CSS, trieda gutter-ok).
+     Na telefóne a tablete je Úvod v menu častí. */
   idle(function spatHore() {
     const btn = document.getElementById('toTop');
-    const mbtn = document.getElementById('mbarTop');
     const hore = () => {
       const jemne = matchMedia('(prefers-reduced-motion: reduce)').matches;
       scrollTo({ top: 0, behavior: jemne ? 'auto' : 'smooth' });
       (document.getElementById('main') || document.body).focus({ preventScroll: true });
     };
-    if (mbtn) mbtn.addEventListener('click', hore);
     if (!btn) return;
     btn.hidden = false;
     const prah = () => window.innerHeight * 2;

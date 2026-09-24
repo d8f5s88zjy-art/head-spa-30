@@ -1992,3 +1992,114 @@ html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 
   /* clona pod textom úvodu: na spodnom okraji rámca sa plynulo stratí, žiadna vodorovná hrana */
   .hero .band .inner{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%);mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%)}
 }
+
+/* ================= Opravy A: navigácia bez prekrývania ================= */
+/* Jeden zoznam častí stránky všade. Telefón a tablet: žiadny plávajúci jazýček nad textom, časti
+   otvára menu (hlavička, na telefóne aj spodná lišta), ktoré sa vysunie sprava. Počítač s myšou:
+   tenké čiarky len vo voľnom okraji vedľa obsahu (app.js zistí šírku okraja, trieda gutter-ok). */
+
+/* --- bočná lišta: na dotyku a v úzkom okne vôbec nie je --- */
+html .rail{display:none}
+@media (min-width:1025px) and (hover:hover){
+  /* samotná lišta nič nezachytáva, na myš reagujú len malé plochy čiarok v okraji */
+  html.gutter-ok .rail{display:block;right:20px;top:50%;transform:translateY(-50%);pointer-events:none}
+  html .rail .rail-list{gap:2px;align-items:flex-end}
+  html .rail .rail-list a{position:relative;width:44px;min-height:28px;padding:0;gap:0;justify-content:flex-end;pointer-events:auto;
+    color:rgba(239,231,218,.55);font-size:14px;letter-spacing:.01em;text-transform:none}
+  /* všetky čiarky majú rovnaký box, neaktívne sú len skrátené, preto sú popisy zarovnané */
+  html .rail .rail-list a::after,html .rail .rail-list a.on::after{width:36px;transform:scaleX(.45);transform-origin:right;
+    transition:transform var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out)}
+  html .rail .rail-list a.on::after{transform:none}
+  /* popis je mimo toku a mimo zásahov myši; ukáže sa len pri vlastnej čiarke */
+  html .rail .rail-list a span,html .rail:hover .rail-list a span{position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);
+    white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;padding:6px 12px;background:#0d0a07;border:1px solid rgba(239,231,218,.14);
+    font-family:var(--body);font-size:14px;line-height:1.3;letter-spacing:.01em;color:var(--text-primary);
+    transition:opacity var(--t-fast) var(--e-out),visibility 0s linear var(--t-fast)}
+  html .rail .rail-list a:hover span,html .rail .rail-list a:focus-visible span{opacity:1;visibility:visible;transition-delay:0s}
+  html .rail .rail-list a.on span{color:var(--accent-hover)}
+}
+
+/* --- Späť hore: len v širokom okne s voľným okrajom, hranatá ikona zarovnaná s čiarkami --- */
+html .to-top{display:none}
+@media (min-width:1025px) and (hover:hover){
+  html.gutter-ok .to-top{display:inline-flex;right:20px;bottom:24px;width:44px;height:44px;padding:0;justify-content:center;gap:0;
+    border-radius:2px;border-color:rgba(239,231,218,.2);background:#0d0a07;backdrop-filter:none;-webkit-backdrop-filter:none}
+  html.gutter-ok .to-top span{display:none}
+}
+
+/* --- menu častí: panel sprava, vlastný posuv vnútri, hlavička menu ostáva hore --- */
+html .drawer{overflow:hidden}
+html .drawer-in{width:min(420px,calc(100% - 48px));padding:0 24px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;
+  background:#0d0a07;border-left:1px solid rgba(212,174,98,.35);box-shadow:none;transform:none;opacity:1;transition:transform var(--t-slow) var(--e-out)}
+@starting-style{html .drawer[open] .drawer-in{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){html .drawer-in{transition:none}}
+html .drawer-top{position:sticky;top:0;z-index:1;flex:none;margin:0 -24px;padding:calc(14px + env(safe-area-inset-top,0px)) 24px 14px;background:#0d0a07;border-bottom:1px solid rgba(239,231,218,.1)}
+html .drawer-title{margin:0;font-family:var(--body);font-size:12px;font-weight:400;line-height:1.4;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+html .drawer-close{flex:none;border-radius:2px;border-color:rgba(239,231,218,.22);background:transparent}
+html .drawer-links{margin-top:6px}
+html .drawer[open] .drawer-links a{animation:none}
+html .drawer-links a{gap:14px;padding:13px 0;font-size:clamp(22px,5.6vw,26px);border-bottom-color:rgba(239,231,218,.1)}
+html .drawer-links a span{flex:none;width:2.6ch;min-width:0;font-variant-numeric:tabular-nums}
+/* časť, v ktorej práve si: zlatá kurzíva, jediný akcent písma na webe */
+html .drawer-links a.on{color:var(--accent-hover);font-style:italic}
+html .drawer-foot{flex:none;padding-top:24px}
+@media (max-height:760px){
+  html .drawer-links a{padding:10px 0;font-size:21px}
+  html .drawer-foot{padding-top:18px;gap:8px}
+}
+/* telefón na šírku: časti v dvoch stĺpcoch, nech sa zmestia bez dlhého posúvania */
+@media (max-height:500px) and (orientation:landscape){
+  html .drawer-in{width:min(640px,calc(100% - 48px))}
+  html .drawer-links{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;column-gap:28px}
+  html .drawer-links a{padding:8px 0;font-size:19px}
+}
+
+/* --- hlavička --- */
+/* tablet a veľký dotykový displej: tlačidlo menu je vždy (lišta sa na dotyku neuhýba, app.js) */
+@media (hover:none){html .nav .menu-btn{display:block}}
+html .nav .brand{min-height:44px}
+html .lang-btn{min-width:44px;justify-content:center}
+/* dlhé názvy (ukrajinčina): najprv sa zúžia medzery, lišta nevytŕča z obsahu */
+@media (min-width:1181px){html .nav .links{min-width:0;gap:clamp(12px,1.3vw,22px)}}
+/* po dverách sa lišta ukáže naraz, jedným pokojným prechodom */
+body.veiling .nav .lang,body.veiling .nav .menu-btn{opacity:0}
+html .nav .name,html .nav .links,html .nav .lang,html .nav .nav-actions .btn,html .nav .menu-btn{
+  transition:opacity 500ms var(--ease-soft),color var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out),border-color var(--t-base) var(--e-out)}
+/* ponuka jazykov na telefóne ostáva v obrazovke: zarovnaná k pravému okraju tlačidla */
+@media (max-width:860px){html .lang-menu{left:auto;right:0;transform:none;max-width:calc(100vw - 32px)}}
+/* ponuka jazykov je plná, text úvodu cez ňu nepresvitá */
+html .lang-menu{background:#15100b}
+
+/* --- linka 24/7 v úvode: číslo sa nezlomí a má väčšiu plochu na ťuknutie bez zmeny vzhľadu --- */
+html .care-note a{position:relative;white-space:nowrap}
+html .care-note a::before{content:"";position:absolute;left:-6px;right:-6px;top:-12px;bottom:-12px}
+
+/* --- ponuka jazyka pri prvej návšteve: tenký pás pod hlavičkou, nič v úvode nezakryje --- */
+html body .lang-offer[class]{left:0;right:0;top:80px;bottom:auto;z-index:99;justify-content:center;gap:14px;padding:6px 16px;
+  border:0;border-bottom:1px solid rgba(212,174,98,.35);border-radius:0;background:#0d0a07;box-shadow:none;
+  font-size:15px;line-height:1.4;color:var(--text-primary);transform:none;transition:opacity .35s var(--ease-soft),transform .5s var(--ease)}
+html body .lang-offer[class].in{opacity:1}
+html body .lang-offer [data-yes]{min-height:44px;padding:0 18px;border-radius:2px;background:var(--accent);color:#17110a;font-weight:700}
+html body .lang-offer [data-yes]:hover{background:var(--accent-hover)}
+html body .lang-offer [data-no]{flex:none;width:44px;height:44px;border-radius:2px;font-size:22px;color:var(--text-secondary)}
+/* keď sa lišta pri čítaní uhne, pás ide s ňou */
+.nav.hide ~ .lang-offer[class]{transform:translateY(-80px)}
+@media (max-width:640px){
+  html body .lang-offer[class]{top:68px;justify-content:space-between;padding:6px 8px 6px 16px}
+  .nav.hide ~ .lang-offer[class]{transform:translateY(-68px)}
+}
+
+/* --- spodná lišta telefónu: menu častí namiesto šípky hore, popisy nikdy nenarážajú na okraj --- */
+.mbar-menu{display:none}
+@media (max-width:640px){
+  html .mbar{grid-template-columns:46px minmax(max-content,.8fr) minmax(0,1.2fr)}
+  html .mbar a{min-width:0;padding-inline:10px;text-align:center;line-height:1.2}
+  html .mbar-menu{display:flex;align-items:center;justify-content:center;width:46px;min-height:46px;padding:0;border:1px solid var(--line);border-radius:2px;background:transparent;color:var(--text-primary)}
+  html .mbar-menu svg{width:20px;height:20px}
+  html .mbar-menu:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  html:lang(uk) .mbar a{font-size:13.5px;padding-inline:8px}
+}
+
+/* --- pätička: rovnaké krátke názvy častí ako v menu, na úzkom telefóne jeden stĺpec --- */
+html footer .col a{white-space:nowrap}
+@media (max-width:440px){html footer .grid{grid-template-columns:1fr}}
