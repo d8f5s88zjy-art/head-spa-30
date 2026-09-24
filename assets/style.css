@@ -176,7 +176,7 @@ html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .
 .drawer-brand{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .drawer-close{width:44px;height:44px;border-radius:var(--radius-s);border:1px solid var(--line);background:rgba(var(--ink),.5);font-size:26px;line-height:1;color:var(--text-primary)}
 .drawer-links{display:grid;margin-top:26px}
-.drawer-links a{display:flex;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--display);font-size:clamp(24px,6.4vw,30px);letter-spacing:-.01em;transition:color .3s,padding-left .35s var(--ease)}
+.drawer-links a{display:flex;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--display);font-size:clamp(24px,6.4vw,30px);letter-spacing:-.01em;transition:color .3s var(--ease)}
 .drawer-links a span{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;color:var(--accent);min-width:2.2ch}
 .drawer-links a:hover,.drawer-links a:focus-visible{color:var(--accent-hover);padding-left:6px}
 .drawer[open] .drawer-links a{animation:menuIn .6s var(--ease) both;animation-delay:calc(60ms + var(--i,0)*45ms)}
@@ -1850,3 +1850,23 @@ footer .care-note{margin-top:14px}
 .oznam p{margin:0 auto;max-width:70ch;font-size:14px;line-height:1.5;color:var(--text-primary)}
 .oznam p::before{content:"";display:inline-block;width:6px;height:6px;margin:0 10px 2px 0;background:var(--accent);transform:rotate(45deg)}
 @media (max-width:720px){.oznam{top:68px}}@media (max-width:640px){.oznam p{font-size:13.5px}}
+
+/* ================= Pohybový systém =================
+   Tri rýchlosti a dve krivky pre všetko, na čo sa dá ukázať alebo ťuknúť. Farba a linka sa menia
+   plynulo, nič neposkakuje ani nesleduje kurzor. */
+:root{--t-fast:180ms;--t-base:320ms;--t-slow:700ms;--e-out:cubic-bezier(.16,1,.3,1);--e-io:cubic-bezier(.65,0,.35,1)}
+.btn,.chip,.card-toggle,.faq-q,.nav .links a,.drawer-links a,.care a,.care-note a,footer a,.slink,.map-link,.info a,.lang-btn,.menu-btn,#toTop,.first-tip a,.gift select,.mbar a{
+  transition-property:color,background-color,border-color,box-shadow,opacity;transition-duration:var(--t-base);transition-timing-function:var(--e-out)}
+#cennik .card{transition:border-color var(--t-slow) var(--e-out)}
+.faq-q .pm{transition:transform var(--t-base) var(--e-io),border-color var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out)}
+/* stavy pod ukazovateľom: len farba a linka, žiadny posun */
+@media (hover:hover) and (pointer:fine){
+  .faq .faq-q:hover,.faq-item .faq-q:hover{color:var(--accent-hover)}
+  .faq-q:hover .pm{transform:none;border-color:var(--accent)}
+  footer a:hover,.info a:hover,.nav .links a:hover,.map-link:hover{color:var(--accent-hover)}
+  .chip:hover{color:var(--text-primary);border-color:rgba(212,174,98,.45)}
+  html .site #cennik .card:hover{border-top-color:rgba(212,174,98,.5)!important}
+}
+.drawer-links a:hover,.drawer-links a:focus-visible{padding-left:0}
+/* stlačenie: jemné potvrdenie dotyku, rovnaké všade */
+.btn:active,.chip:active,.mbar a:active{opacity:.82;transition-duration:var(--t-fast)}
