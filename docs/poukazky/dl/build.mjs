@@ -88,7 +88,7 @@ const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="
   ${seal}
   <div class="txt">
     ${lotus()}
-    <b class="wm gold">HEAD SPA 30</b>
+    <b class="wm gold">SALON30</b>
     <div class="city">NITRA</div>
     <div class="kind"><span class="a gold">Darčeková</span><span class="b">poukážka</span></div>
     <div class="orn"><i></i></div>
@@ -103,7 +103,7 @@ const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="
     <div class="f">Platnosť do:<span></span></div>
     <div class="f">Kód:<span></span></div>
   </div>
-  <div class="foot"><span>Mostná 30 · Nitra</span></div>
+  <div class="foot"><span>www.salon30.sk</span></div>
   <img class="bow" src="stuha.png" alt="">
 </div>`;
 
@@ -111,7 +111,7 @@ const back = () => `<div class="card back" id="back">
   <div class="bg"></div>
   <div class="frame"></div>
   <div class="txt">
-    <div class="brand">${lotus()}<div><b class="wm gold">HEAD SPA 30</b><div class="city">NITRA</div></div></div>
+    <div class="brand">${lotus()}<div><b class="wm gold">SALON30</b><div class="city">HEAD SPA · NITRA</div></div></div>
     <h2 class="gold">Ako poukážku využiť</h2>
     <ol>
       <li>Zavolaj na 0911 153 136 alebo si vyber termín v online kalendári.</li>
@@ -122,7 +122,7 @@ const back = () => `<div class="card back" id="back">
   </div>
   <div class="qr"><img src="qr-kalendar.png" alt="QR kód: online kalendár"></div>
   <div class="qrl"><b>Online kalendár</b>booqme.app/sk/rezervacia/barbershop-30</div>
-  <div class="foot"><span>Mostná 30 · Nitra · 0911 153 136</span></div>
+  <div class="foot"><span>Mostná 30 · Nitra · 0911 153 136 · www.salon30.sk</span></div>
 </div>`;
 
 const tpl = fs.readFileSync(path.join(ROOT, 'poukaz.html'), 'utf8');
