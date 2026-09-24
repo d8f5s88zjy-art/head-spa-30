@@ -86,6 +86,14 @@ na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela ok
 - Kontrola s Booqme: `node tools/booqme-kontrola.mjs` porovná ceny a dĺžky v online kalendári
   a ceny poukazov v obchode s cenníkom webu (len verejné stránky, nič nemení).
 
+## Bočná lišta a top rituály
+
+- Bočná lišta (`#rail`): na počítači tenké čiarky na pravom okraji, aktívna časť zlatá, názvy pri
+  ukázaní myšou; na mobile a tablete jazýček na okraji, ťuknutím sa zboku vysunie zoznam častí.
+  Skok vo filme pristane priamo na obsahu časti (app.js, „skok na časť“), nie na zábere nad ňou.
+- V každej kategórii cenníka je prvý jeden top rituál (`.card.top`, štítok Top rituál): Head Spa Relax,
+  Gentlemen Signature Experience, Little Fruit Head Spa, Spoločný rituál pod hviezdami, Zlatý rituál 24K.
+
 ## Úvodné dvere
 
 Raz za návštevu sa pri otvorení stránky ukážu skutočné dvere salónu (`.veil`): fotka dverí

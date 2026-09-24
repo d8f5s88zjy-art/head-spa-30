@@ -331,6 +331,43 @@
     if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg);
   }, { passive: true });
   const navLinks = $$('.links a');
+  /* ============ skok na časť: vo filme pristane priamo na nadpise, nie na zábere nad ním ============ */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button > 0 || e.metaKey || e.ctrlKey) return;
+    const id = a.getAttribute('href'); if (id.length < 2 || !document.documentElement.classList.contains('world')) return;
+    const sec = document.querySelector(id), wrap = sec && sec.matches('.site>section') && sec.querySelector(':scope>.wrap');
+    if (!wrap) return;
+    e.preventDefault();
+    // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const nav = $('.nav'), off = (nav ? nav.offsetHeight : 72) + 16;
+      scrollTo({ top: Math.max(0, wrap.getBoundingClientRect().top + scrollY - off), behavior: reduced.matches ? 'auto' : 'smooth' });
+      history.replaceState(null, '', id);
+    }));
+  });
+
+  /* ============ bočná lišta: každá časť na jedno ťuknutie, aktívna časť zlatá ============ */
+  const rail = $('#rail');
+  if (rail) {
+    const tab = $('.rail-tab', rail), links = $$('.rail-list a', rail);
+    const setOpen = (o) => { rail.classList.toggle('open', o); tab.setAttribute('aria-expanded', String(o)); };
+    tab.addEventListener('click', () => setOpen(!rail.classList.contains('open')));
+    // ťuknutie na stmavené pozadie alebo na odkaz zoznam zavrie (odkaz sa pritom normálne otvorí)
+    rail.addEventListener('click', (e) => { if (e.target === rail || e.target.closest('.rail-list a')) setOpen(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && rail.classList.contains('open')) { setOpen(false); tab.focus(); } });
+    const targets = links.map((a) => [a, document.querySelector(a.getAttribute('href'))]).filter((x) => x[1]);
+    let cur = null, queued = false;
+    const mark = () => {
+      queued = false;
+      const y = innerHeight * 0.4; let on = targets[0][0];
+      targets.forEach(([a, t]) => { if (t.getBoundingClientRect().top < y) on = a; });
+      if (on !== cur) { if (cur) { cur.classList.remove('on'); cur.removeAttribute('aria-current'); } on.classList.add('on'); on.setAttribute('aria-current', 'true'); cur = on; }
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(mark); } }, { passive: true });
+    mark();
+  }
+
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
