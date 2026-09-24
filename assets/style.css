@@ -1870,3 +1870,8 @@ footer .care-note{margin-top:14px}
 .drawer-links a:hover,.drawer-links a:focus-visible{padding-left:0}
 /* stlačenie: jemné potvrdenie dotyku, rovnaké všade */
 .btn:active,.chip:active,.mbar a:active{opacity:.82;transition-duration:var(--t-fast)}
+
+/* odkaz na Salón 30 v časti o priestoroch: tichý, ako podpis */
+.salon-link{margin:clamp(28px,4vw,48px) 0 0;font-size:15px;letter-spacing:.04em}
+.salon-link a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4);transition:border-color var(--t-base) var(--e-out)}
+.salon-link a:hover{border-bottom-color:var(--accent)}
