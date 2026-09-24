@@ -2125,7 +2125,7 @@ html.world .site>section>.wrap::after{background:linear-gradient(180deg,#0d0a07 
 html.world .site>section>.wrap::before{background:linear-gradient(180deg,rgba(13,10,7,0),rgba(13,10,7,.03) 10%,rgba(13,10,7,.1) 20%,rgba(13,10,7,.22) 30%,rgba(13,10,7,.35) 40%,rgba(13,10,7,.5) 50%,rgba(13,10,7,.65) 60%,rgba(13,10,7,.78) 70%,rgba(13,10,7,.9) 80%,rgba(13,10,7,.97) 90%,#0d0a07)}
 
 /* zlatá linka s lotosom medzi časťami: aj keď medzi sekciami stojí iný prvok (galéria a otázky) */
-.site>section~section::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.site>section~section::before,.site>#ritual::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
 /* vo filme leží linka na hornej hrane pásu, kde film prechádza do tmy */
 html.world .site>section~section::before{display:block;top:calc(78vh - 16px);z-index:1}
 @media (max-width:640px){html.world .site>section~section::before{top:calc(40vh - 16px)}}
@@ -2351,3 +2351,47 @@ html .drawer-foot .today{font-weight:400;color:var(--text-secondary)}
 html footer .brand{min-height:44px}
 /* otázky a priebeh na počítači: stĺpec s nadpisom sa prilepí presne tam, kam skok z menu kladie nadpisok (80 px lišta + 32 px) */
 @media (min-width:901px){html .ritual .sticky,html .faq .sticky{top:112px}}
+/* ================= Opravy 2F: úvod, okná do filmu a prechody ================= */
+/* kým film nie je na obrazovke (načítava sa, alebo nejde vôbec), fotka úvodu je pevné pozadie celej
+   stránky presne na mieste plátna filmu: okná do filmu nikdy nie sú prázdne, úvod nekončí rovnou hranou */
+html.world .reel{position:fixed;top:0;left:0;right:0;bottom:auto;height:100vh;height:100lvh}
+html.world .reel .fs{transform:none!important}
+/* po príchode filmu sa pevná fotka po dokončení prelínania úplne vypne (žiadna vrstva navyše pri skrolovaní) */
+html.world.world-in .reel{visibility:hidden;transition:opacity .6s cubic-bezier(.4,0,.2,1) 1.6s,visibility 0s linear 2.2s}
+
+/* pokojný úvod (obmedzený pohyb) na telefóne: fotka nápisu sa stratí skôr, jej rovná hrana steny
+   nikdy nepretne malý nadpis pod ňou */
+@media (max-width:640px){
+  html .hero-static .hero-photo{-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 74%);mask-image:linear-gradient(180deg,#000 30%,transparent 74%)}
+}
+/* pokojný úvod na tablete na výšku: ako na telefóne, fotka nápisu hore cez celú šírku, text pod ňou
+   na celú šírku, tlačidlá vedľa seba */
+@media (min-width:641px) and (max-width:1100px) and (orientation:portrait){
+  html .hero-static .wrap>*{max-width:none}
+  html .hero-static p:not(.care-note){max-width:46ch}
+  html .hero-static .hero-photo{left:0;width:auto;bottom:auto;height:56%;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 96%);mask-image:linear-gradient(180deg,#000 40%,transparent 96%)}
+  html .hero-static .hero-photo img{object-position:50% 36%!important}
+  html .hero-static .cta .btn{min-width:220px;justify-content:center}
+}
+
+/* zlatá linka s lotosom je aj medzi úvodom a prvou časťou a v galérii je plná (starý vzor tapety
+   jej bral farbu aj viditeľnosť) */
+html .site>#ritual::before,html .site>section.gallery::before{display:block;opacity:1;bottom:auto;-webkit-mask-image:none;mask-image:none;z-index:1}
+html.world .site>#ritual::before{top:calc(62vh - 16px)}
+@media (max-width:640px){html.world .site>#ritual::before{top:calc(46vh - 16px)}}
+
+/* ako to prebieha v jednom stĺpci (tablet): fotka má šírku stĺpca ako kroky pod ňou */
+@media (max-width:900px){html .ritual .rphoto{max-width:none}}
+
+/* galéria od tabletu: celý svietiaci kruh s hlavou je v dlaždici Nápis, popis ho neprekryje */
+@media (min-width:641px){html .shot.voda img{object-position:50% 38%!important}}
+@media (min-width:641px) and (max-width:900px){html .shot.voda img{object-position:50% 25%!important}}
+/* počítač: popis má vždy miesto na dva riadky, nadpisy dlaždíc v jednom rade sú na rovnakej výške */
+@media (min-width:901px){html .shot .cap span{min-height:3em}}
+
+/* úvod: tmavý podklad textu drží plnú silu až pod poslednú linku (dnes otvorené, linka 24/7),
+   až potom sa stratí; riadky nesedia na svetlej vani ani zlatom oblúku, bez tieňa okolo písma */
+html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 78%,rgba(0,0,0,.82) 84%,rgba(0,0,0,.55) 90%,rgba(0,0,0,.25) 95%,transparent 100%);mask-image:linear-gradient(180deg,#000 78%,rgba(0,0,0,.82) 84%,rgba(0,0,0,.55) 90%,rgba(0,0,0,.25) 95%,transparent 100%)}
+@media (min-width:721px){
+  html.world .stage .scrim{background:radial-gradient(ellipse 52% 34% at 14% 70%,rgba(var(--ink),.58) 0%,rgba(var(--ink),.32) 55%,rgba(var(--ink),0) 100%),linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+}
