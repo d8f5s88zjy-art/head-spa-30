@@ -2467,3 +2467,7 @@ html .lb .lb-nav:hover{border-color:var(--accent);color:var(--accent-hover)}
 html .lb .lb-nav:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 html .lb .lb-prev{left:10px}
 html .lb .lb-next{right:10px}
+
+/* ================= Opravy 3T: texty a galéria ================= */
+/* dnešný stav otvorenia sa zalomí vyvážene, čas nezostane sám na druhom riadku */
+html .today-line,html .info .today,html .drawer-foot p:has(> .today){text-wrap:balance}
