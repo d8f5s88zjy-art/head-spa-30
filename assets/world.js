@@ -31,7 +31,17 @@
   // po prvom pohybe postupne vo voľných chvíľach vykreslia všetky (nie naraz, aby dotyk nezamrzol)
   // a pri kliknutí na odkaz v stránke hneď všetky zvyšné.
   const secs = [...d.querySelectorAll('.site>section,.site>footer,.site>.pull,.site>.finale')];
-  const open = (all) => { do { const s = secs.shift(); if (s) s.style.contentVisibility = 'visible'; } while (all && secs.length); };
+  // prehliadač bez ukotvenia skrolu (Safari): keď sa otvorí časť nad oknom a zmení výšku, obsah na
+  // obrazovke by odskočil; posun sa preto vyrovná ručne, návštevník ostane na tom istom mieste
+  const anchorless = !(window.CSS && CSS.supports && CSS.supports('overflow-anchor', 'auto'));
+  const open = (all) => {
+    do {
+      const s = secs.shift(); if (!s) continue;
+      const r = anchorless && s.getBoundingClientRect(), above = r && r.bottom <= 0;
+      s.style.contentVisibility = 'visible';
+      if (above) { const dh = s.getBoundingClientRect().height - r.height; if (Math.abs(dh) > 1) scrollBy({ top: dh, behavior: 'instant' }); }
+    } while (all && secs.length);
+  };
   const step = (dl) => { while (secs.length && dl.timeRemaining() > 6) open(); if (secs.length) requestIdleCallback(step, { timeout: 800 }); };
   if ('requestIdleCallback' in window) requestIdleCallback(step, { timeout: 800 }); else setTimeout(() => open(true), 600);
   d.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('a[href^="#"]')) open(true); }, true);
@@ -85,11 +95,9 @@
     { at: '#salon', photo: 'miestnost', place: 'Miestnosť pre dvoch', f: [0.5, 0.55], mv: 'right' },
     { at: '#galeria', photo: 'neon-spa', place: 'Nápis Spa relax', f: [0.5, 0.42], mv: 'left' },
     { at: '#faq', photo: 'komoda', place: 'Komoda s uterákmi', f: [0.5, 0.55], mv: 'down' },
-    // kontakt: svietiace logo. Na telefóne je okno do filmu nízke a pás nad ním by veľké písmená nápisu
-    // vždy prerezal napoly, preto tam zelené dvere, za ktorými salón nájdeš (bez písma v zábere)
-    phone
-      ? { at: '#kontakt', photo: 'lozka-sviecka', f: [0.5, 0.3], mv: 'in' }
-      : { at: '#kontakt', photo: 'neon-head-spa', place: 'Svietiace logo HEAD SPA', f: [0.5, 0.3], mv: 'in' },
+    // kontakt: dve lôžka a zelené dvere, za ktorými salón nájdeš. Na každej šírke záber bez písma:
+    // svietiace logo by okraj okna prerezal a jeho nápis patrí inej značke
+    { at: '#kontakt', photo: 'lozka-sviecka', f: [0.5, 0.3], mv: 'in' },
   );
   /* ---------- renderer ---------- */
   const canvas = d.createElement('canvas');
@@ -459,7 +467,7 @@
   }
 
   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
-  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null;
+  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false;   // dark: po skoku sa ide zo šera
   const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
   function draw(now, dt) {
     if (!path.length || !compiled) return false;
@@ -474,17 +482,21 @@
     fade += (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
     let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
     if (!A.ready) {
-      // záber sa ešte načítava (napr. po skoku cez menu): ostane posledný obraz a cieľ sa doň prelnie
-      const H = held && held.ready ? held : B.ready ? B : null;
-      if (!H) return false;
+      // záber sa ešte načítava: ostane posledný obraz, ak je to susedný záber, a cieľ sa doň prelnie.
+      // Záber z iného miesta stránky (po skoku) sa neukáže, namiesto neho je šero farby stránky.
+      const H = held && held.ready && held.pi != null && Math.abs(held.pi - k) <= 1 ? held : B.ready && !dark ? B : null;
+      if (!H) { if (shown) { renderer.setRenderTarget(null); renderer.clear(); held = null; } return false; }
       A = H; mix = B.ready && B !== A ? fin(B, now) : 0;
     } else if (held && held !== A && held !== B && held.ready && fin(A, now) < 1) { B = A; A = held; mix = fin(B, now); }
+    else if (dark && fin(A, now) < 1) { B = A; A = null; mix = fin(B, now); }   // zo šera po skoku
+    if (dark && A && A.ready && fin(A, now) >= 1) dark = false;
     if (mix >= 0.999) { A = B; mix = 0; }
+    if (!A && mix <= 0.001) { renderer.setRenderTarget(null); renderer.clear(); return true; }
     if (mix > 0.001) {
-      // prelínanie: oba zábery do textúr a spolu na obrazovku
+      // prelínanie: oba zábery do textúr a spolu na obrazovku (bez prvého záberu len šero)
       vig.value.w = 0;
       renderer.setRenderTarget(rtA); renderer.clear();
-      A.mesh.visible = true; place(A, now, mix); renderer.render(scene, camera); A.mesh.visible = false;
+      if (A) { A.mesh.visible = true; place(A, now, mix); renderer.render(scene, camera); A.mesh.visible = false; }
       renderer.setRenderTarget(rtB); renderer.clear();
       B.mesh.visible = true; place(B, now, -(1 - mix)); renderer.render(scene, camera); B.mesh.visible = false;
       post.material.uniforms.uMix.value = mix;
@@ -498,10 +510,10 @@
     }
     held = mix > 0.5 ? B : A;
     showPlace(held);
-    onScreen = new Set(mix > 0.001 ? [A, B] : [A]);
+    onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean));
     drawn = true;
     // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej
-    return Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || fin(A, now) < 1;
+    return Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || !A || fin(A, now) < 1;
   }
   let drawn = false;
 
@@ -553,8 +565,9 @@
     const w0 = 5.2;
     V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
     if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
-    // skok cez menu alebo tlačidlo: žiadna dlhá jazda cez celý salón, len krátke prelínanie na cieľ
-    if (Math.abs(T - S) > 1.5) { S = T - Math.sign(T - S) * 0.45; V = 0; }
+    // skok cez menu alebo tlačidlo: žiadna jazda cez celý salón ani cudzie zábery; film je hneď na cieli
+    // a jeho záber sa rozsvieti zo šera, len čo je načítaný (posledný záber zďaleka sa už neukáže)
+    if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
