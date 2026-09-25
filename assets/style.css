@@ -2652,3 +2652,14 @@ html footer .bottom .legal a{display:inline-flex;align-items:center;min-height:4
 }
 /* menu: Instagram a salon30.sk s dotykovou plochou 44 px a väčším odstupom */
 html .drawer-foot p a{display:inline-flex;align-items:center;min-height:44px;border-bottom:0;text-decoration:underline;text-decoration-color:var(--line-strong);text-decoration-thickness:1px;text-underline-offset:4px}
+
+/* ================= Linka 24/7 v úvode a pätičke: jednoduché podčiarknutie ================= */
+/* Safari na iPhone kreslil pri čísle ďalšiu čiaru cez text (zväčšená dotyková plocha a hrubé podčiarknutie
+   zo skratky text-decoration). Odkaz je obyčajný riadok s tenkou linkou pod číslom, bez pseudo prvku. */
+html .care-note a{display:inline;padding:0;margin:0;position:static;text-decoration:none;
+  border-bottom:1px solid rgba(212,174,98,.45);transition:color var(--t-base) var(--e-out),border-color var(--t-base) var(--e-out)}
+html .care-note a::before,html .care-note a::after{content:none!important;display:none!important}
+@media (hover:hover) and (pointer:fine){html .care-note a:hover{border-bottom-color:var(--accent)}}
+/* odkaz 17 rituálov a ceny v úvode: tiež obyčajná linka pod textom (Safari posúval podčiarknutie tlačidla o riadok nižšie) */
+html .band .cta .btn.ghost,html .hero-static .cta .btn.ghost{display:inline-block;min-height:0;padding:10px 0 3px;margin-bottom:7px;line-height:1.3;
+  text-decoration:none;border-bottom:1px solid rgba(236,208,143,.45)}
