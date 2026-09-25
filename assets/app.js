@@ -323,10 +323,16 @@
 
   /* ============ navigácia: pod vrchom stránky plná a pri čítaní neprekáža ============ */
   const nav = $('.nav');
-  let navSolid = false;
+  let navSolid = false, navPrevY = 0;
+  // plná hlavička hneď, bez prelínania (skok, zmena jazyka, veľký posun): text pod ňou nikdy nepresvitá
+  const solidNow = () => {
+    nav.classList.add('now', 'solid'); navSolid = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => nav.classList.remove('now')));
+  };
   function navCheck() {
-    const s = scrollY > 40;
-    if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
+    const y = scrollY, s = y > 40;
+    if (s !== navSolid) { if (s && Math.abs(y - navPrevY) > innerHeight) solidNow(); else { navSolid = s; nav.classList.toggle('solid', s); } }
+    navPrevY = y;
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
   // lišta sa pri čítaní smerom dole uhne a vráti sa hneď, ako sa skroluje hore
@@ -348,6 +354,33 @@
     clearTimeout(navT); navT = setTimeout(() => { lastY = scrollY; }, 200);
   }, { passive: true });
   nav.addEventListener('focusin', () => { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } });
+
+  /* ============ zmena jazyka: čítaš ďalej na tom istom mieste ============ */
+  /* Preklad mení výšku textov nad tebou (a Safari nemá ukotvenie posunu). Pred zmenou sa zapamätá prvok
+     tesne pod hlavičkou, kým preklad dobehne, drží sa na svojom mieste; hlavička sa medzitým neuhne. */
+  document.addEventListener('click', (e) => {
+    const pick = e.target.closest && e.target.closest('[data-lang-pick], .lang-offer [data-yes]');
+    if (!pick || pick.getAttribute('aria-checked') === 'true' || scrollY < 2) return;
+    const nb = nav.classList.contains('hide') ? 0 : nav.getBoundingClientRect().bottom;
+    const y = Math.max(nb + 12, 0);
+    const hit = (document.elementsFromPoint(innerWidth / 2, y) || []).find((el) => el.closest('.site>section, footer'));
+    const sec = hit ? hit.closest('.site>section, footer') : [...document.querySelectorAll('.site>section, footer')].find((s) => s.getBoundingClientRect().bottom > y);
+    if (!sec) return;
+    const pins = [hit, sec].filter(Boolean).map((el) => [el, el.getBoundingClientRect().top]);
+    let done = false, lang = false, stopT = 0;
+    const stop = () => { if (done) return; done = true; clearTimeout(stopT); removeEventListener('wheel', stop); removeEventListener('touchstart', stop); removeEventListener('keydown', stop); holdNav(false); };
+    const keep = () => {
+      if (done) return;
+      const pin = pins.find(([el]) => el.isConnected);
+      if (pin) { const d = Math.round(pin[0].getBoundingClientRect().top - pin[1]); if (Math.abs(d) > 1) scrollTo({ top: scrollY + d, behavior: 'instant' }); }
+      requestAnimationFrame(keep);
+    };
+    holdNav(true); if (navSolid) solidNow();
+    addEventListener('wheel', stop, { passive: true }); addEventListener('touchstart', stop, { passive: true }); addEventListener('keydown', stop);
+    document.addEventListener('langchange', () => { lang = true; clearTimeout(stopT); stopT = setTimeout(stop, 700); }, { once: true });
+    stopT = setTimeout(() => { if (!lang) stop(); }, 6000);
+    requestAnimationFrame(keep);
+  }, true);
 
   /* ============ ruka: magnetické hlavné tlačidlá, svetlo pod kurzorom na kartách (len pri presnom ukazovadle) ============ */
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
@@ -402,9 +435,17 @@
     // všetky časti sa vykreslia naraz, aby odhadnutá výška nepreskočených častí neposunula cieľ
     document.documentElement.classList.add('cv-all');
     const behavior = reduced.matches ? 'auto' : 'smooth';
-    const goal = () => { const nav = $('.nav'); return Math.max(0, Math.round(mark.getBoundingClientRect().top + scrollY - (nav ? nav.offsetHeight : 72) - 32)); };
+    // nadpisok v prilepenom stĺpci (otázky, priebeh) sa meria na svojom mieste v toku, nie tam, kde práve visí;
+    // inak skok zdola skončí na konci zoznamu otázok
+    const stick = mark.closest('.sticky');
+    const markTop = () => {
+      if (!stick) return mark.getBoundingClientRect().top;
+      const was = stick.style.position; stick.style.position = 'static';
+      const t = mark.getBoundingClientRect().top; stick.style.position = was; return t;
+    };
+    const goal = () => Math.max(0, Math.round(markTop() + scrollY - (nav.offsetHeight || 72) - 32));
     // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
-    holdNav(true);
+    holdNav(true); solidNow();
     requestAnimationFrame(() => requestAnimationFrame(() => {
       scrollTo({ top: goal(), behavior });
       history.replaceState(null, '', id);
@@ -442,16 +483,15 @@
     const free = document.documentElement.clientWidth - right;
     document.documentElement.classList.toggle('gutter-ok', right > 0 && free >= 80);
     // popisy čiariek sa ukazujú len vtedy, keď sa celé zmestia do okraja (inak by zakryli obsah, napr. + pri otázkach)
+    // šírka sa meria vždy v podobe popisu vedľa čiarky (v úzkom okraji sa popis zalamuje a bol by užší)
+    document.documentElement.classList.add('gutter-wide');
     let lbl = 0; $$('#rail .rail-list a span').forEach((s) => { lbl = Math.max(lbl, s.offsetWidth); });
     const rail = document.getElementById('rail');
     const railLeft = rail && rail.offsetWidth ? rail.getBoundingClientRect().left : document.documentElement.clientWidth - 64;
     document.documentElement.classList.toggle('gutter-wide', right > 0 && free >= 80 && lbl > 0 && railLeft - 10 - lbl >= right + 12);
+    // úzky okraj: popis čiarky sa ukáže pod lištou, najviac taký široký, ako je voľný okraj (8 px od obsahu aj od kraja okna)
+    document.documentElement.style.setProperty('--rail-room', Math.max(0, Math.round(free - 16)) + 'px');
   };
-  // úzky okraj: namiesto popisu natívna bublina s názvom časti (text je už preložený v span)
-  $$('#rail .rail-list a').forEach((a) => a.addEventListener('pointerenter', () => {
-    const s = a.querySelector('span');
-    if (document.documentElement.classList.contains('gutter-wide')) a.removeAttribute('title'); else if (s) a.title = s.textContent.trim();
-  }));
   let fitT = 0;
   addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitGutter, 150); }, { passive: true });
   addEventListener('load', fitGutter);
