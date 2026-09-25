@@ -2441,7 +2441,7 @@ html .gift .voucher-sum:empty{display:none}
 /* celý názov len keď sa do poľa nezmestí (app.js), inak by sa opakoval */
 html .gift .voucher-sum b{display:block;margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:18px;line-height:1.35;letter-spacing:0;color:var(--text-primary)}
 html .gift .voucher-sum span{font-size:15px;white-space:normal}
-html .gift .voucher-pick .cta{margin-top:24px;display:flex}
+html .gift .voucher-pick .cta{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
 /* dlhý názov rituálu v poli sa zmestí; keby nie, skončí trojbodkou */
 html .site .gift .voucher-pick select{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
 @media (max-width:400px){html .site .gift .voucher-pick select{padding-left:14px;padding-right:34px;background-position:right 12px center}}

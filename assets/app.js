@@ -796,7 +796,21 @@
         sum.append(meta);
         return true;
       };
-      const told = () => { if (sum) fill(pick.options[pick.selectedIndex]); };
+      /* platba kartou: odkaz pre vybraný rituál z nastavení (admin, "platby"); bez platného https odkazu tlačidlo nie je */
+      const pay = $('[data-voucher-pay]'), shop = $('[data-voucher-link]'), PLATBY = NASTAVENIA.platby || {};
+      const payUrl = (o) => {
+        const u = o && PLATBY[o.dataset.card];
+        try { return typeof u === 'string' && new URL(u).protocol === 'https:' ? u : ''; } catch (e) { return ''; }
+      };
+      const payFor = (o) => {
+        if (!pay) return;
+        const u = payUrl(o);
+        pay.hidden = !u;
+        if (u) pay.href = u; else pay.removeAttribute('href');
+        /* pri platbe kartou je hlavné tlačidlo ono, obchod ostane ako druhá možnosť */
+        if (shop) { shop.classList.toggle('primary', !u); shop.classList.toggle('ghost', !!u); }
+      };
+      const told = () => { const o = pick.options[pick.selectedIndex]; if (sum) fill(o); payFor(o); };
       /* tlačidlo pod súhrnom stojí na mieste pri každom rituáli: súhrn má výšku najvyššieho z nich
          (dlhý názov na dva riadky); počíta sa pri načítaní, zmene jazyka a šírky, nie pri výbere */
       const hold = () => {
@@ -1217,7 +1231,7 @@
 
   /* ============ háčiky pre analytiku: dataLayer a štatistiky bez cookies, ak ich admin zapol ============ */
   const UDALOSTI = { reservation_click: 'Klik: Rezervovať', phone_click: 'Klik: Zavolať', email_click: 'Klik: E-mail',
-    map_click: 'Klik: Mapa', voucher_click: 'Klik: Kúpiť poukaz', voucher_preview: 'Poukaz: náhľad rituálu', social_click: 'Klik: Instagram alebo Facebook' };
+    map_click: 'Klik: Mapa', voucher_click: 'Klik: Kúpiť poukaz', voucher_preview: 'Poukaz: náhľad rituálu', voucher_pay: 'Klik: Zaplatiť kartou', social_click: 'Klik: sociálna sieť' };
   function track(event, data) {
     (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {}));
     const name = UDALOSTI[event];
@@ -1226,12 +1240,13 @@
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a'); if (!a) return;
     const h = a.getAttribute('href') || '';
-    if (h.includes('/rezervacia')) track('reservation_click', { label: a.textContent.trim() });
+    if (a.hasAttribute('data-voucher-pay')) track('voucher_pay');
+    else if (h.includes('/rezervacia')) track('reservation_click', { label: a.textContent.trim() });
     else if (h.startsWith('tel:')) track('phone_click');
     else if (h.startsWith('mailto:')) track('email_click');
     else if (h.includes('google.com/maps')) track('map_click');
     else if (h.includes('/eshop/')) track('voucher_click');
-    else if (/instagram\.com|facebook\.com/.test(h)) track('social_click');
+    else if (/instagram\.com|facebook\.com|tiktok\.com/.test(h)) track('social_click');
   });
 
   /* ============ mobilné menu (natívny dialog: zachytenie fokusu a Escape zadarmo) ============ */

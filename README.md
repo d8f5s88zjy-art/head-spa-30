@@ -72,17 +72,34 @@ Admin je na adrese `/admin/` (Google ho neindexuje, robots.txt ho vylučuje). Pr
 GitHub (fine-grained token s právom Contents: Read and write len na tento repozitár), návod je priamo
 na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela okrem GitHub API.
 
-- Mení: oznam pod lištou (s prekladmi), cenu, dĺžku, podnadpis a popis každého rituálu (s prekladmi),
-  otváracie hodiny, telefón, kód štatistík GoatCounter. Obsahuje zoznam obrázkov poukážok do Booqme a odkazy.
-- Uloženie je jeden commit priamo do `main` (index.html a `assets/i18n/*.json`), GitHub Pages web
-  obnoví do dvoch minút. Minifikované súbory sa nemenia, build netreba.
-- Jediný zdroj údajov: blok `<script type="application/json" id="nastavenia">` v index.html (hodiny,
-  štatistiky), `app.js` z neho berie otváracie hodiny. Cena a dĺžka rituálu sú len v karte rituálu
-  a v dátach pre Google, otázky ceny neopakujú. Rozpätie cien a dĺžok v popisoch admin prepočíta.
-- Telefón admin vymení vo všetkých tvaroch (0911 153 136, +421 911 153 136, tel:) aj v prekladoch.
-- Keď admin uloží a súbor sa medzitým zmenil inde, uloženie odmietne a načíta aktuálny stav.
+- Jedna záložka naraz (na telefóne vodorovne posúvateľný rad), dole pevná lišta „N zmien · Zrušiť ·
+  Uložiť na web“ so zoznamom zmien; obsah má pod lištou vždy miesto. Po prihlásení je zmien nula,
+  pôvodný stav sa berie z toho, čo polia naozaj ukazujú.
+- Záložky: Oznam (s prekladmi); Texty (každý viditeľný text index.html podľa častí, s hľadaním a
+  prekladmi; kurzíva, odkazy a `<br>` ostávajú, mení sa len text úsekov, pevné medzery sa doplnia
+  samé); Rituály (názov, dĺžka, cena, štítok, podnadpis, popis, O rituále, postup, preklady); Tím
+  (pridať, upraviť, poradie, odstrániť, fotka s výrezom 4:5); Poukazy a platby (odkaz na platbu kartou
+  pri každom rituáli a obrázky poukazov do Booqme); Kontakt a siete; Hodiny; Firma (údaje na
+  pravne.html); Ďalšie (štatistiky, odkazy).
+- Zmena slovenského textu presunie kľúč prekladu vo všetkých šiestich jazykoch, starý preklad
+  ostane v poli označený „skontroluj preklad“. Starý kľúč sa zmaže, len keď ho už nič nepoužíva.
+  Otázky v dátach pre Google sa zosúladia s textom na stránke.
+- Tím: fotka sa oreže v prehliadači a uloží ako WebP 480, 800 a 1086 px plus JPEG 800
+  (`assets/img/tim/<meno>-<šírka>.webp`); prehliadač bez WebP (starší Safari) uloží JPEG vo všetkých
+  šírkach. Odstránenie človeka zmaže jeho `<figure>` aj fotky. Bez `<figure>` je časť Tím skrytá.
+- Platby: `"platby": {"<id karty rituálu>": "<https odkaz>"}` v bloku nastavení; `app.js` pri výbere
+  poukazu ukáže tlačidlo Zaplatiť kartou len pri rituáli s platným https odkazom.
+- Siete: odkazy majú `data-siet="instagram|facebook|tiktok"`, ich rodičia `data-siete`. Prázdne pole
+  odkazy odstráni aj s bodkou medzi nimi, nová sieť sa pridá za posledný odkaz; `sameAs` sa zosúladí.
+- Telefón a e-mail admin vymení vo všetkých tvaroch v index.html, pravne.html, 404.html,
+  `assets/app.js`, `assets/app.min.js` aj v prekladoch.
+- Uloženie je jeden commit priamo do `main` (bloby, strom, commit, posun vetvy), GitHub Pages
+  web obnoví asi do minúty. Keď sa `main` medzitým zmenil, admin načíta novú verziu, zmeny do nej
+  prenesie a uloží znova; pole, ktoré sa zmenilo aj inde, ukáže na kontrolu.
+- Jediný zdroj nastavení: blok `<script type="application/json" id="nastavenia">` v index.html
+  (hodiny, štatistiky, platby). Rozpätie cien a dĺžok v popisoch admin prepočíta.
 - Štatistiky: GoatCounter bez cookies sa načíta len s kódom v nastaveniach; kliky na Rezervovať,
-  Zavolať, E-mail, Mapa, Kúpiť poukaz, Instagram alebo Facebook a náhľad poukazu sa počítajú ako udalosti.
+  Zavolať, E-mail, Mapa, Kúpiť poukaz, Zaplatiť kartou, sociálne siete a náhľad poukazu sa počítajú ako udalosti.
 - Kontrola s Booqme: `node tools/booqme-kontrola.mjs` porovná ceny a dĺžky v online kalendári
   a ceny poukazov v obchode s cenníkom webu (len verejné stránky, nič nemení).
 

@@ -2,176 +2,324 @@
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d0a07">
 <title>Admin · HEAD SPA 30</title>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <style>
-@font-face{font-family:'Lora';font-style:normal;font-weight:300 700;src:url(../assets/fonts/Lora-display.woff2) format('woff2')}
-@font-face{font-family:'Lora';font-style:italic;font-weight:300 700;src:url(../assets/fonts/Lora-italic.woff2) format('woff2')}
-@font-face{font-family:'Manrope';font-weight:400;src:url(../assets/fonts/Manrope-400.woff2) format('woff2')}
-@font-face{font-family:'Manrope';font-weight:700;src:url(../assets/fonts/Manrope-700.woff2) format('woff2')}
-/* Admin HEAD SPA 30: tie isté tóny orecha so zlatou ako web, všetko čitateľné a veľké na dotyk. */
-:root{--bg:#0d0a07;--panel:#16110b;--panel-2:#1d160e;--line:rgba(239,231,218,.14);--line-2:rgba(239,231,218,.26);--text:#efe7da;--muted:rgba(239,231,218,.66);--gold:#d4ae62;--gold-hi:#e7c987;--ok:#9fc79a;--bad:#e7a08f;color-scheme:dark}
+@font-face{font-family:'Lora';font-style:normal;font-weight:300 700;font-display:swap;src:url(../assets/fonts/Lora-display.woff2) format('woff2')}
+@font-face{font-family:'Lora';font-style:italic;font-weight:300 700;font-display:swap;src:url(../assets/fonts/Lora-italic.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;font-display:swap;src:url(../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:700;font-display:swap;src:url(../assets/fonts/Manrope-700.woff2) format('woff2')}
+/* Admin HEAD SPA 30: tóny orecha so zlatou ako web. Veľké polia, veľké dotykové plochy, jedna záložka naraz. */
+:root{--bg:#0d0a07;--panel:#15100b;--field:#1a140d;--line:rgba(239,231,218,.12);--line-2:rgba(239,231,218,.3);--text:#efe7da;--muted:rgba(239,231,218,.7);--gold:#d4ae62;--gold-hi:#e7c987;--bad:#eba08e;--bar:96px;color-scheme:dark}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--gold-hi)}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-header.top{position:sticky;top:0;z-index:10;background:rgba(13,10,7,.96);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap}
-.brand{font-family:'Lora',serif;font-size:20px;letter-spacing:.08em}
+[hidden]{display:none!important}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body.in{padding-bottom:calc(var(--bar) + 28px)}
+a{color:var(--gold-hi);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* hlavička a záložky */
+.top{border-bottom:1px solid var(--line)}
+.top .in{max-width:852px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:12px;min-height:60px}
+.brand{font-family:'Lora',serif;font-size:19px;letter-spacing:.06em;white-space:nowrap}
 .brand em{font-style:italic;color:var(--gold);letter-spacing:0;margin-left:8px;font-size:16px}
 .top .sp{flex:1}
-.top nav{display:flex;gap:4px;flex-wrap:wrap}
-.top nav a{padding:8px 12px;text-decoration:none;color:var(--muted);font-size:14px;border-radius:2px}
-.top nav a:hover{color:var(--text);background:var(--panel)}
-h1{font-family:'Lora',serif;font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.05;margin:56px 0 10px}
-h1 em{color:var(--gold);font-style:italic}
-h2{font-family:'Lora',serif;font-weight:400;font-size:30px;margin:0 0 6px}
-.lead{color:var(--muted);max-width:62ch;margin:0 0 28px}
-section.box{border-top:1px solid rgba(212,174,98,.4);padding:40px 0 48px;scroll-margin-top:80px}
-.kick{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-label{display:block;font-weight:700;font-size:14.5px;margin:0 0 6px}
-.hint{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:4px}
-input[type=text],input[type=number],input[type=time],input[type=password],input[type=tel],textarea{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line-2);border-radius:2px;padding:12px 14px;font:inherit;font-size:16px}
-textarea{min-height:84px;resize:vertical;line-height:1.5}
-input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,174,98,.16)}
-input.changed,textarea.changed{border-color:var(--gold)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border:1px solid var(--gold);background:var(--gold);color:#17120a;font:700 15px 'Manrope',sans-serif;border-radius:2px;cursor:pointer;text-decoration:none}
-.btn.ghost{background:none;color:var(--gold-hi)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.row{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.top .lnk{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font-size:15px;color:var(--muted);text-decoration:none;background:none;border:0;cursor:pointer}
+.top .lnk:hover{color:var(--text)}
+.tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .in{max-width:852px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 3px}
+.tabs .in::-webkit-scrollbar{display:none}
+.tabs button{flex:none;display:flex;align-items:center;min-height:50px;padding:0 13px;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--text)}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--gold)}
+.tabs .n{display:inline-block;min-width:20px;height:20px;margin-left:7px;padding:0 5px;border-radius:2px;background:var(--gold);color:#17120a;font-size:12px;line-height:20px;text-align:center}
+
+main{max-width:852px;margin:0 auto;padding:0 16px}
+.tab h1{font-family:'Lora',serif;font-weight:400;font-size:clamp(28px,5vw,38px);line-height:1.15;margin:30px 0 8px}
+.tab h1 em{font-style:italic;color:var(--gold)}
+.lead{color:var(--muted);margin:0 0 26px;max-width:62ch}
+h2{font-family:'Lora',serif;font-weight:400;font-size:24px;line-height:1.25;margin:40px 0 4px}
+h3{font-size:16px;margin:26px 0 10px}
+
+/* polia */
+.f{margin:0 0 18px}
+.f>label,.lbl{display:block;font-weight:700;font-size:15px;margin:0 0 6px}
+.hint{display:block;color:var(--muted);font-size:14px;margin-top:6px}
+input[type=text],input[type=url],input[type=tel],input[type=email],input[type=number],input[type=time],input[type=password],input[type=search],textarea,select{width:100%;min-height:50px;background:var(--field);color:var(--text);border:1px solid var(--line-2);border-radius:2px;padding:12px 14px;font:16px/1.5 'Manrope',sans-serif}
+textarea{resize:vertical;overflow:hidden;display:block}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:36px;background-image:linear-gradient(45deg,transparent 50%,var(--gold-hi) 50%),linear-gradient(135deg,var(--gold-hi) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+.changed{border-color:var(--gold)!important;background-color:#221a10!important}
+.stale{border-style:dashed!important;border-color:var(--gold-hi)!important}
+.stale-note{display:inline-block;margin-left:8px;font-weight:700;font-size:13px;color:var(--gold-hi)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.row.wide{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.err{color:var(--bad)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border:1px solid var(--gold);background:var(--gold);color:#17120a;font-weight:700;font-size:15px;border-radius:2px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--gold-hi)}
+.btn.quiet{background:transparent;border-color:var(--line-2);color:var(--text)}
+.btn.small{min-height:44px;padding:0 14px;font-size:14.5px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+
+details.tr{margin:4px 0 0}
+details.tr>summary,details.help>summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;color:var(--gold-hi);font-weight:700;font-size:15px;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details.tr>summary::before,details.help>summary::before{content:"+";display:inline-block;width:16px;text-align:center;font-size:18px}
+details.tr[open]>summary::before,details.help[open]>summary::before{content:"−"}
+.tr-box{border-left:1px solid rgba(212,174,98,.45);padding:6px 0 2px 14px;margin:4px 0 10px}
+.tr-t{font-size:14px;color:var(--muted);margin:12px 0 8px}
+.tr-f{margin-bottom:12px}
+.tr-f>label{font-weight:400;font-size:14px;color:var(--muted)}
+.code{display:inline-block;min-width:26px;font-weight:700;color:var(--text)}
 .msg{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--gold);background:var(--panel);font-size:15px}
-.msg.bad{border-color:var(--bad)}.msg.ok{border-color:var(--ok)}
-.hidden{display:none!important}
-/* rituály */
-.cat-h{font-family:'Lora',serif;font-size:22px;margin:30px 0 8px;color:var(--gold-hi)}
-.rit{border:1px solid var(--line);background:var(--panel);padding:18px;margin:0 0 12px;border-radius:2px}
-.rit.changed{border-color:rgba(212,174,98,.7)}
-.rit-head{display:grid;grid-template-columns:1fr 110px 110px;gap:12px;align-items:end}
-.rit-name{font-family:'Lora',serif;font-size:21px;line-height:1.2}
-.rit-name small{display:block;font-family:'Manrope',sans-serif;font-size:12.5px;color:var(--muted);margin-top:3px}
-.rit-body{display:grid;gap:12px;margin-top:14px}
-details.tr{margin-top:4px;border-top:1px solid var(--line);padding-top:10px}
-details.tr summary{cursor:pointer;color:var(--gold-hi);font-size:14.5px;font-weight:700;list-style:none}
-details.tr summary::-webkit-details-marker{display:none}
-details.tr summary::before{content:"+ "}
-details.tr[open] summary::before{content:"− "}
-.tr-grid{display:grid;gap:10px;margin-top:12px}
-.tr-grid label{font-weight:400;color:var(--muted);font-size:13px;margin:0 0 4px}
-@media (max-width:620px){.rit-head{grid-template-columns:1fr 1fr}.rit-name{grid-column:1/-1}}
+.msg.bad{border-color:var(--bad)}
+.note{padding:12px 14px;border:1px solid var(--line);border-radius:2px;color:var(--muted);font-size:14.5px;margin:0 0 22px}
+.note b{color:var(--text)}
+
+/* texty */
+.tools{position:sticky;top:51px;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-top:10px;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+@media (min-width:700px){.chips{flex-wrap:wrap;overflow:visible}}
+.chip{flex:none;min-height:40px;padding:0 13px;border:1px solid var(--line-2);background:transparent;border-radius:2px;font-size:14.5px;color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--gold);color:var(--text)}
+.tsec h2{margin-top:34px}
+.blk{padding:16px 0 6px;border-top:1px solid var(--line)}
+.tsec h2+.blk,.tsec h2+.qa{border-top:0}
+.blk-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0 0 6px}
+.kind{font-weight:700;font-size:15px}
+.times{font-size:13.5px;color:var(--muted)}
+.fmt{font-size:13px;color:var(--gold-hi);font-weight:400;margin-left:6px}
+.blk .f{margin-bottom:10px}
+.blk .f>label{font-weight:400;font-size:14px;color:var(--muted)}
+.fixed{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;margin:0 0 10px;font-size:14.5px}
+.fixed span{padding:6px 10px;border:1px dashed var(--line-2);border-radius:2px}
+.fixed small{color:var(--muted);font-size:13px}
+.br{font-size:13px;color:var(--muted);margin:-2px 0 8px}
+.qa{border:1px solid var(--line);border-radius:2px;padding:4px 14px 6px;margin:12px 0}
+.qa .blk:first-of-type{border-top:0}
+.qa-t{font-family:'Lora',serif;font-size:18px;color:var(--gold-hi);padding-top:12px}
+.empty{color:var(--muted);padding:20px 0}
+
+/* rituály a tím: zbalené okienka */
+.cat-h{font-family:'Lora',serif;font-size:21px;margin:30px 0 10px;color:var(--gold-hi)}
+.card{border:1px solid var(--line);border-radius:2px;margin:0 0 10px;background:var(--panel)}
+.card.changed{border-color:rgba(212,174,98,.75)!important;background-color:var(--panel)!important}
+.card>summary{display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 16px;cursor:pointer;list-style:none}
+.card>summary .nm{flex:1;font-family:'Lora',serif;font-size:18.5px;line-height:1.25}
+.card>summary .mt{color:var(--muted);font-size:14.5px;white-space:nowrap}
+.card>summary::after{content:"+";color:var(--gold-hi);font-size:20px;width:18px;text-align:center}
+.card[open]>summary::after{content:"−"}
+.card .body{padding:4px 16px 12px;border-top:1px solid var(--line)}
+.card .body>.f:first-child,.card .body>.row:first-child{margin-top:16px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:8px;vertical-align:middle}
+.member{display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.member:first-child{border-top:0}
+.member img,.member .ph{width:64px;height:80px;object-fit:cover;border:1px solid var(--line);border-radius:2px;flex:none;background:var(--field)}
+.member .who{flex:1;min-width:0}
+.member .who b{display:block;font-family:'Lora',serif;font-weight:400;font-size:19px}
+.member .who span{display:block;color:var(--muted);font-size:14px}
+.member .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.ico{min-width:44px;min-height:44px;padding:0 10px;border:1px solid var(--line-2);background:transparent;border-radius:2px;cursor:pointer;font-size:15px}
+.ico:disabled{opacity:.3;cursor:not-allowed}
+.editor{border:1px solid var(--line);border-radius:2px;padding:16px;margin:10px 0 18px;background:var(--panel)}
+.photo{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin:4px 0 16px}
+.photo img{width:120px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line-2);border-radius:2px;background:var(--field)}
+.photo .ph{width:120px;aspect-ratio:4/5;border:1px dashed var(--line-2);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;text-align:center;padding:8px}
+.file{position:relative;overflow:hidden}
+.file input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.crop{margin:6px 0 16px}
+.crop-frame{position:relative;width:min(100%,300px);aspect-ratio:4/5;overflow:hidden;border:1px solid var(--gold);border-radius:2px;background:#000;touch-action:none;cursor:grab;user-select:none}
+.crop-frame img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;pointer-events:none}
+.crop input[type=range]{display:block;width:min(100%,300px);accent-color:var(--gold);min-height:44px;margin:0}
+.crop .zl{display:block;margin:12px 0 0;font-size:14px;color:var(--muted)}
+
 /* hodiny */
-.days{display:grid;gap:8px}
-.day{display:grid;grid-template-columns:120px 140px 1fr 1fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.day{display:grid;grid-template-columns:110px 150px 1fr 1fr;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.day:first-child{border-top:0}
 .day b{font-weight:700}
-.day .sw{display:flex;align-items:center;gap:8px;font-weight:400;margin:0}
-.day input[type=checkbox]{width:22px;height:22px;accent-color:var(--gold)}
-@media (max-width:620px){.day{grid-template-columns:1fr 1fr}.day b{grid-column:1/-1}}
-/* ukladanie */
-.savebar{position:sticky;bottom:0;z-index:10;background:#0d0a07;box-shadow:0 -20px 40px rgba(0,0,0,.5);border-top:1px solid rgba(212,174,98,.5);padding:14px 0}
-.savebar .wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.savebar .count{flex:1;min-width:200px;color:var(--muted)}
-.savebar .count b{color:var(--text)}
-ul.changes{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:14.5px;max-height:26vh;overflow:auto}
+.sw{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;font-weight:400}
+.sw input{width:24px;height:24px;accent-color:var(--gold);flex:none}
+.day .f{margin:0}
+.day .f label{font-weight:400;font-size:13.5px;color:var(--muted);margin-bottom:2px}
 input:disabled{opacity:.35}
-.links{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.links a{display:block;padding:16px 18px;border:1px solid var(--line);background:var(--panel);text-decoration:none;color:var(--text);border-radius:2px}
-.links a b{display:block;font-family:'Lora',serif;font-weight:400;font-size:19px;color:var(--gold-hi)}
-.links a span{font-size:13.5px;color:var(--muted)}
+@media (max-width:620px){.day{grid-template-columns:1fr 1fr;gap:6px 12px}.day .sw{justify-self:end}}
+
+/* poukazy a odkazy */
+.pay{padding:14px 0;border-top:1px solid var(--line)}
+.pay .f{margin:0}
+.pay .f>label small{font-weight:400;color:var(--muted);margin-left:6px}
+.help{border:1px solid var(--line);border-radius:2px;padding:4px 14px;margin:0 0 22px}
+.help ol{padding-left:22px;margin:4px 0 12px;color:var(--muted)}
+.help li{margin:5px 0}
+.help b{color:var(--text)}
+.help p{margin:8px 0;color:var(--muted);font-size:15px}
+.vouch{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.vouch a{display:block;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:2px;background:var(--panel)}
+.vouch img{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;background:#000}
+.vouch span{display:block;padding:8px 10px;font-size:13.5px;line-height:1.35}
+.links{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.links a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:2px;text-decoration:none;color:var(--text);background:var(--panel)}
+.links a b{display:block;font-family:'Lora',serif;font-weight:400;font-size:18px;color:var(--gold-hi)}
+.links a span{font-size:14px;color:var(--muted)}
 ol.steps{padding-left:22px;color:var(--muted)}ol.steps li{margin:6px 0}ol.steps b{color:var(--text)}
-.login{max-width:560px}
-@media (max-width:720px){header.top{position:static}.top nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:0 14px 10px}.top nav a{white-space:nowrap}header.top .wrap{gap:8px;padding-top:8px}}
-.chk{display:flex;align-items:center;gap:10px;font-weight:400;margin:14px 0}
-.chk input{width:20px;height:20px;accent-color:var(--gold)}
-.vouch{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-.vouch a{display:block;text-decoration:none;color:var(--text);border:1px solid var(--line);background:var(--panel);border-radius:2px}
-.vouch img{display:block;width:100%;aspect-ratio:1.4/1;object-fit:cover;background:#000}
-.vouch span{display:block;padding:10px 12px;font-size:14px}
-.vouch small{display:block;color:var(--muted);font-size:12.5px}
-footer.foot{padding-block:40px 120px;color:var(--muted);font-size:13.5px}
+
+/* spodná lišta s uložením: pevná, miesto pod obsahom sa pre ňu vždy nechá */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid rgba(212,174,98,.6);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .in{max-width:820px;margin:0 auto}
+.bar .r{display:flex;align-items:center;gap:10px}
+.bar .count{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1px;min-height:48px;padding:0;background:none;border:0;text-align:left;cursor:pointer;font-size:15.5px;line-height:1.3}
+.bar .count .sub{font-size:13.5px}
+.bar .count b{font-weight:700}
+.bar .count .car{color:var(--gold-hi);font-size:14px;white-space:nowrap}
+.bar .count:disabled{cursor:default}
+.bar ul{list-style:none;margin:0 0 8px;padding:4px 0 8px;max-height:36vh;overflow:auto;border-bottom:1px solid var(--line);font-size:14.5px}
+.bar li{padding:0}
+.bar li button{display:block;width:100%;min-height:40px;padding:8px 0;background:none;border:0;border-top:1px solid var(--line);text-align:left;cursor:pointer;color:var(--text)}
+.bar li:first-child button{border-top:0}
+.bar li button small{color:var(--muted);margin-left:6px}
+.bar li.e button{color:var(--bad)}
+.bar .msg{margin:0 0 10px}
+@media (max-width:520px){.bar .btn{padding:0 14px}.bar .r{gap:8px}}
+
+/* prihlásenie */
+.login{max-width:560px;padding-bottom:60px}
+.login h1{font-family:'Lora',serif;font-weight:400;font-size:clamp(32px,6vw,46px);line-height:1.1;margin:48px 0 10px}
+.login h1 em{font-style:italic;color:var(--gold)}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;margin:10px 0 14px;cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--gold)}
+.loading{color:var(--muted);padding:40px 0}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
+<header class="top"><div class="in">
   <span class="brand">HEAD SPA 30<em>admin</em></span>
   <span class="sp"></span>
-  <nav id="nav" class="hidden" aria-label="Časti adminu"><a href="#oznam">Oznam</a><a href="#ritualy">Rituály</a><a href="#hodiny">Hodiny</a><a href="#kontakt">Kontakt</a><a href="#statistiky">Štatistiky</a><a href="#poukazky">Poukážky</a><a href="#odkazy">Odkazy</a></nav>
-  <button class="btn ghost hidden" id="odhlasit" type="button">Odhlásiť</button>
+  <a class="lnk" id="webLink" href="../" target="_blank" rel="noopener" hidden>Web</a>
+  <button class="lnk" id="odhlasit" type="button" hidden>Odhlásiť</button>
 </div></header>
 
-<main class="wrap">
+<nav class="tabs" id="tabs" aria-label="Časti adminu" hidden><div class="in" role="tablist"></div></nav>
+
+<main>
   <!-- prihlásenie -->
   <section id="login" class="login">
     <h1>Vitaj v <em>admine.</em></h1>
-    <p class="lead">Tu zmeníš ceny, dĺžky a texty rituálov, otváracie hodiny, telefón, oznam a štatistiky. Po uložení sa web sám aktualizuje asi do dvoch minút.</p>
-    <label for="token">Kľúč k webu</label>
-    <input type="password" id="token" autocomplete="off" spellcheck="false" placeholder="github_pat_...">
-    <span class="hint">Kľúč je heslo pre úpravy webu. Zadáš ho len raz na tomto zariadení.</span>
+    <p class="lead">Tu zmeníš texty, ceny, tím, kontakt, hodiny aj oznam. Po uložení sa web obnoví asi do minúty.</p>
+    <div class="f"><label for="token">Kľúč k webu</label>
+      <input type="password" id="token" autocomplete="off" spellcheck="false" placeholder="github_pat_...">
+      <span class="hint">Kľúč je heslo pre úpravy webu. Zadáš ho raz na tomto zariadení.</span></div>
     <label class="chk"><input type="checkbox" id="zapamatat" checked> Zapamätať na tomto zariadení</label>
     <button class="btn" id="prihlasit" type="button">Prihlásiť</button>
-    <div class="msg hidden" id="loginMsg"></div>
-    <details class="tr" style="margin-top:28px"><summary>Ako získam kľúč (raz, asi 2 minúty)</summary>
-      <ol class="steps">
+    <div class="msg" id="loginMsg" hidden></div>
+    <details class="help" style="margin-top:28px"><summary>Ako získam kľúč (raz, asi 2 minúty)</summary>
+      <ol>
         <li>Otvor <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> a prihlás sa.</li>
-        <li><b>Token name:</b> napíš „Admin webu“. <b>Expiration:</b> vyber 1 rok (Custom).</li>
+        <li><b>Token name:</b> napíš Admin webu. <b>Expiration:</b> vyber 1 rok (Custom).</li>
         <li><b>Repository access:</b> Only select repositories, vyber repozitár tohto webu.</li>
-        <li><b>Permissions → Repository permissions → Contents:</b> Read and write.</li>
+        <li><b>Permissions, Repository permissions, Contents:</b> Read and write.</li>
         <li>Klikni <b>Generate token</b>, kľúč skopíruj a vlož sem. Nikomu ho neposielaj.</li>
       </ol>
     </details>
   </section>
 
-  <div id="app" class="hidden">
-    <h1>Obsah <em>webu.</em></h1>
-    <p class="lead">Zmenené polia sa zlato orámujú. Nič sa neuloží, kým dole neklikneš <b>Uložiť na web</b>.</p>
+  <p class="loading" id="loading" hidden>Načítavam web…</p>
 
-    <section class="box" id="oznam">
-      <div class="kick">Oznam</div><h2>Oznam pod lištou</h2>
-      <p class="lead">Krátka správa hore na webe, napríklad dovolenka alebo zmena hodín. Keď pole vymažeš, oznam zmizne.</p>
-      <label for="oz-sk">Text oznamu</label>
-      <textarea id="oz-sk" maxlength="220" placeholder="Od 4. do 11. augusta máme dovolenku. Online rezervácie fungujú aj počas nej."></textarea>
-      <details class="tr"><summary>Preklady oznamu (nepovinné)</summary><div class="tr-grid" id="oz-tr"></div></details>
+  <div id="app" hidden>
+    <section class="tab" id="p-oznam" data-tab="oznam" data-name="Oznam">
+      <h1>Oznam <em>hore na webe.</em></h1>
+      <p class="lead">Krátka správa pod lištou, napríklad dovolenka alebo zmena hodín. Prázdne pole oznam skryje.</p>
+      <div id="ozBox"></div>
     </section>
 
-    <section class="box" id="ritualy">
-      <div class="kick">Rituály</div><h2>Ceny, dĺžky a texty</h2>
-      <p class="lead">Cena a dĺžka sa zmenia všade: v cenníku, vo filtri, v dátach pre Google aj v rozpätí cien. Pozor: v Booqme treba cenu zmeniť zvlášť, rezervácie a poukazy idú tam.</p>
+    <section class="tab" id="p-texty" data-tab="texty" data-name="Texty">
+      <h1>Texty <em>na webe.</em></h1>
+      <p class="lead">Všetky texty podľa častí stránky. Kurzíva, odkazy a zalomenia ostanú, meníš len slová.</p>
+      <div class="tools">
+        <input type="search" id="hladaj" placeholder="Hľadaj text, napríklad teplou vodou" aria-label="Hľadať v textoch" autocomplete="off">
+        <div class="chips" id="secChips" role="group" aria-label="Časť stránky"></div>
+      </div>
+      <div id="textList"></div>
+      <p class="empty" id="textEmpty" hidden>Nič sa nenašlo.</p>
+    </section>
+
+    <section class="tab" id="p-ritualy" data-tab="ritualy" data-name="Rituály">
+      <h1>Rituály <em>a ceny.</em></h1>
+      <p class="lead">Otvor rituál a zmeň, čo treba. Cena a dĺžka sa zmenia v cenníku, pri poukaze aj v dátach pre Google.</p>
+      <p class="note"><b>Nezabudni:</b> cenu a dĺžku zmeň aj v Booqme, rezervácie a poukazy idú tam.</p>
       <div id="ritList"></div>
     </section>
 
-    <section class="box" id="hodiny">
-      <div class="kick">Otváracie hodiny</div><h2>Kedy máte otvorené</h2>
-      <p class="lead">Zmenia sa v kontakte, v riadku „Dnes otvorené do…“ aj v dátach pre Google, vo všetkých jazykoch.</p>
-      <div class="days" id="days"></div>
+    <section class="tab" id="p-tim" data-tab="tim" data-name="Tím">
+      <h1>Tím <em>Head Spa.</em></h1>
+      <p class="lead">Kým tu nie je nikto, časť Tím sa na webe neukáže. Úvodný text časti je v záložke Texty.</p>
+      <div id="teamList"></div>
+      <div id="teamEditor"></div>
+      <button class="btn ghost" id="addMember" type="button">Pridať človeka do tímu</button>
     </section>
 
-    <section class="box" id="kontakt">
-      <div class="kick">Kontakt</div><h2>Telefón a linka 24/7</h2>
-      <p class="lead">Číslo sa zmení na všetkých miestach webu naraz, aj v linke 24/7 a v prekladoch.</p>
-      <div class="row"><div><label for="tel">Telefón</label><input type="tel" id="tel" placeholder="0911 153 136"><span class="hint">Formát 0911 153 136</span></div></div>
-    </section>
-
-    <section class="box" id="statistiky">
-      <div class="kick">Štatistiky</div><h2>Návštevnosť bez cookies</h2>
-      <p class="lead">Počet návštev, odkiaľ ľudia prišli a koľkí klikli na Rezervovať, Zavolať alebo Kúpiť poukaz. Bez cookie lišty, nič osobné sa neukladá.</p>
-      <ol class="steps">
-        <li>Zaregistruj sa zadarmo na <a href="https://www.goatcounter.com/signup" target="_blank" rel="noopener">goatcounter.com/signup</a>. Ako <b>Code</b> zvoľ napríklad <b>headspa30</b>.</li>
-        <li>Ten istý kód napíš sem a ulož na web.</li>
-        <li>Štatistiky potom uvidíš na adrese <b>https://kód.goatcounter.com</b>. Odkaz sa objaví nižšie.</li>
-      </ol>
-      <div class="row"><div><label for="gc">Kód GoatCounter</label><input type="text" id="gc" placeholder="headspa30" spellcheck="false" autocomplete="off"><span class="hint">Len malé písmená, číslice a pomlčka.</span></div></div>
-      <p id="gcLink" class="msg hidden"></p>
-    </section>
-
-    <section class="box" id="poukazky">
-      <div class="kick">Poukážky</div><h2>Obrázky poukazov do Booqme</h2>
-      <p class="lead">V Booqme sú zatiaľ staré poukážky podľa kategórií. Pri každom poukaze otvor obrázok, ulož ho a v Booqme ho nahraj pri tom istom poukaze (Poukazy, upraviť, fotka). Na tlač sú verzie s poliami v <a id="tlacLink" href="#" target="_blank" rel="noopener">priečinku na tlač</a>.</p>
+    <section class="tab" id="p-platby" data-tab="platby" data-name="Poukazy a platby">
+      <h1>Poukazy <em>a platby.</em></h1>
+      <p class="lead">Pri každom rituáli môžeš vložiť odkaz na platbu kartou. Na webe sa pri poukaze ukáže tlačidlo Zaplatiť kartou.</p>
+      <details class="help"><summary>Ako vytvorím odkaz na platbu</summary>
+        <p><b>Stripe</b> (Payment Links)</p>
+        <ol>
+          <li>Prihlás sa na <a href="https://dashboard.stripe.com/payment-links" target="_blank" rel="noopener">dashboard.stripe.com</a> a otvor <b>Payment Links</b>.</li>
+          <li>Klikni <b>+ New</b>, pridaj produkt: názov, napríklad Poukaz Head Spa Relax, a cenu v eurách.</li>
+          <li>Klikni <b>Create link</b> a potom <b>Copy</b>.</li>
+          <li>Odkaz vlož sem k tomu istému rituálu a klikni Uložiť na web.</li>
+        </ol>
+        <p><b>SumUp</b> (platobné odkazy)</p>
+        <ol>
+          <li>Prihlás sa na <a href="https://me.sumup.com/" target="_blank" rel="noopener">me.sumup.com</a> a otvor <b>Platobné odkazy</b>.</li>
+          <li>Vytvor nový odkaz, zadaj sumu a popis, napríklad Poukaz Head Spa Relax.</li>
+          <li>Skopíruj odkaz a vlož ho sem k rituálu.</li>
+        </ol>
+        <p>Funguje aj odkaz z platobnej brány banky, stačí, aby začínal https://. Po platbe ti príde e-mail, poukaz potom hosťovi pošli.</p>
+      </details>
+      <div id="payList"></div>
+      <h2>Obrázky poukazov do Booqme</h2>
+      <p class="lead">Otvor obrázok, ulož ho a v Booqme ho nahraj pri tom istom poukaze (Poukazy, upraviť, fotka). Verzie na tlač sú v <a id="tlacLink" href="#" target="_blank" rel="noopener">priečinku na tlač</a>.</p>
       <div class="vouch" id="vouchList"></div>
     </section>
 
-    <section class="box" id="odkazy">
-      <div class="kick">Odkazy</div><h2>Všetko na jednom mieste</h2>
-      <div class="links">
+    <section class="tab" id="p-kontakt" data-tab="kontakt" data-name="Kontakt a siete">
+      <h1>Kontakt <em>a siete.</em></h1>
+      <p class="lead">Telefón a e-mail sa zmenia na všetkých miestach webu naraz, aj v odkazoch na volanie a v prekladoch.</p>
+      <div id="contactBox"></div>
+    </section>
+
+    <section class="tab" id="p-hodiny" data-tab="hodiny" data-name="Hodiny">
+      <h1>Otváracie <em>hodiny.</em></h1>
+      <p class="lead">Zmenia sa v kontakte, v riadku Dnes otvorené do a v dátach pre Google, vo všetkých jazykoch.</p>
+      <div id="days"></div>
+    </section>
+
+    <section class="tab" id="p-firma" data-tab="firma" data-name="Firma">
+      <h1>Údaje <em>o firme.</em></h1>
+      <p class="lead">Ukážu sa na stránke Právne informácie. Prázdny riadok sa neukáže.</p>
+      <div id="firmaBox"></div>
+    </section>
+
+    <section class="tab" id="p-dalsie" data-tab="dalsie" data-name="Ďalšie">
+      <h1>Štatistiky <em>a odkazy.</em></h1>
+      <h2>Návštevnosť bez cookies</h2>
+      <p class="lead">Počet návštev a klikov na Rezervovať, Zavolať alebo Kúpiť poukaz. Bez cookie lišty, nič osobné sa neukladá.</p>
+      <ol class="steps">
+        <li>Zaregistruj sa zadarmo na <a href="https://www.goatcounter.com/signup" target="_blank" rel="noopener">goatcounter.com/signup</a>. Ako <b>Code</b> zvoľ napríklad <b>headspa30</b>.</li>
+        <li>Ten istý kód napíš sem a ulož na web.</li>
+        <li>Štatistiky potom uvidíš na adrese <b>kód.goatcounter.com</b>.</li>
+      </ol>
+      <div id="gcBox"></div>
+      <h2>Všetko na jednom mieste</h2>
+      <div class="links" style="margin-top:16px">
         <a href="../" target="_blank" rel="noopener"><b>Web</b><span>Ako ho vidia hostia</span></a>
         <a href="https://booqme.app/sk/rezervacia/barbershop-30" target="_blank" rel="noopener"><b>Online kalendár</b><span>Rezervácie v Booqme</span></a>
         <a href="https://booqme.app/sk/eshop/barbershop-30" target="_blank" rel="noopener"><b>Obchod s poukazmi</b><span>Poukazy v Booqme</span></a>
@@ -184,20 +332,23 @@ footer.foot{padding-block:40px 120px;color:var(--muted);font-size:13.5px}
   </div>
 </main>
 
-<div class="savebar hidden" id="savebar"><div class="wrap">
-  <div class="count" id="count">Žiadne zmeny.</div>
-  <button class="btn ghost" id="zrusit" type="button" disabled>Zrušiť zmeny</button>
-  <button class="btn" id="ulozit" type="button" disabled>Uložiť na web</button>
-</div><div class="wrap"><ul class="changes" id="changes"></ul><div class="msg hidden" id="saveMsg"></div></div></div>
-
-<footer class="foot wrap">Admin číta a ukladá súbory webu priamo cez GitHub. Kľúč ostáva len v tomto prehliadači.</footer>
+<div class="bar" id="bar" hidden><div class="in">
+  <div class="msg" id="saveMsg" hidden></div>
+  <ul id="changes" hidden></ul>
+  <div class="r">
+    <button class="count" id="count" type="button" aria-expanded="false" aria-controls="changes" disabled>Žiadne zmeny</button>
+    <button class="btn quiet" id="zrusit" type="button" disabled>Zrušiť</button>
+    <button class="btn" id="ulozit" type="button" disabled>Uložiť na web</button>
+  </div>
+</div></div>
 
 <script>
 (function () {
   'use strict';
-  const $ = (s) => document.querySelector(s);
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const LANGS = ['en', 'de', 'cs', 'hu', 'pl', 'uk'];
-  const LANG_NAMES = { en: 'Angličtina', de: 'Nemčina', cs: 'Čeština', hu: 'Maďarčina', pl: 'Poľština', uk: 'Ukrajinčina' };
+  const LN = { en: 'Angličtina', de: 'Nemčina', cs: 'Čeština', hu: 'Maďarčina', pl: 'Poľština', uk: 'Ukrajinčina' };
   const NB = ' ';
   // repozitár a vetva: na GitHub Pages z adresy, inak predvolené
   const onPages = /\.github\.io$/.test(location.hostname);
@@ -205,342 +356,1196 @@ footer.foot{padding-block:40px 120px;color:var(--muted);font-size:13.5px}
   const REPO = onPages ? location.pathname.split('/')[1] : 'head-spa-30';
   const BRANCH = 'main';
   const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
-  $('#repoLink').href = `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/docs/poukazky/dl/jpg`;
-
-  /* poukážky pre Booqme: prvé štyri Head Spa rituály majú spoločný vzor salónu */
+  const LIVE = `https://${OWNER}.github.io/${REPO}/`;
   const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/docs/poukazky/dl/jpg`;
-  $('#tlacLink').href = `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/docs/poukazky/dl/jpg`;
-  const VOUCH = [['Head Spa Classic', 'head-spa'], ['Head Spa Relax', 'head-spa'], ['Head Spa Harmony', 'head-spa'], ['Hĺbkový rituál pre pokožku hlavy', 'head-spa'],
-    ['Head Spa Beauty Ritual', 'head-spa-beauty-ritual'], ['Head Spa Fruit & Fresh Ritual', 'head-spa-fruit-fresh-ritual'], ['Head Spa Signature Ritual', 'head-spa-signature-ritual'],
-    ['Gentlemen Head Spa', 'gentlemen-head-spa'], ['Gentlemen Harmony Ritual', 'gentlemen-harmony-ritual'], ['Gentlemen Deep Scalp Ritual', 'gentlemen-deep-scalp-ritual'],
-    ['Gentlemen Signature Experience', 'gentlemen-signature-experience'], ['Little Fruit Head Spa', 'little-fruit-head-spa'], ['Spoločný Head Spa rituál', 'spolocny-head-spa-ritual'],
-    ['Spoločný rituál pod hviezdami', 'spolocny-ritual-pod-hviezdami'], ['Klasický rituál pre chodidlá', 'klasicky-ritual-pre-chodidla'],
-    ['Ovocný a bylinkový rituál pre chodidlá', 'ovocny-a-bylinkovy-ritual-pre-chodidla'], ['Zlatý rituál 24K', 'zlaty-ritual-24k']];
-  $('#vouchList').innerHTML = VOUCH.map(([n, id]) => `<a href="${RAW}/booqme/poukaz-${id}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="${RAW}/booqme/poukaz-${id}.jpg" alt=""><span>Poukaz: ${n.replace(/&/g, "&amp;")}<small>poukaz-${id}.jpg</small></span></a>`).join('');
+  $('#repoLink').href = `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/docs/poukazky/dl/jpg`;
+  $('#tlacLink').href = $('#repoLink').href;
 
-  let token = '';
-  try { token = localStorage.getItem('hs30.admin') || sessionStorage.getItem('hs30.admin') || ''; } catch (e) {}
+  /* ---------- pomocníci ---------- */
+  const norm = (s) => String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const escA = (s) => esc(s).replace(/"/g, '&quot;');
+  const reEsc = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const deca = document.createElement('textarea');
+  const dec = (s) => { deca.innerHTML = s; return deca.value; };
+  const decAttr = (s) => String(s).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, NB).replace(/&amp;/g, '&');
+  const short = (s, n = 46) => { s = norm(s); return s.length > n ? s.slice(0, n - 1).trim() + '…' : s; };
+  const plain = (s) => norm(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const safeJson = (o) => JSON.stringify(o).replace(/</g, '\\u003c');
+  const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:${String(Math.round((x % 1) * 60)).padStart(2, '0')}`;
+  const fromHm = (v) => { const [a, b] = String(v).split(':').map(Number); return a + (b || 0) / 60; };
+  const isHttps = (u) => { try { return new URL(u).protocol === 'https:' && !/[\s"<>]/.test(u); } catch (e) { return false; } };
+  const slugify = (s) => norm(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'clen';
+  const plural = (n, a, b, c) => (n === 1 ? a : n > 1 && n < 5 ? b : c);
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    if (props) for (const [k, v] of Object.entries(props)) {
+      if (v == null || v === false) continue;
+      if (k === 'class') el.className = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    for (const c of kids.flat(Infinity)) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+    return el;
+  }
+
+  /* Slovenská typografia pri zápise späť: čo bolo v pôvodnom texte spojené pevnou medzerou, ostane spojené,
+     plus jednopísmenové slová, číslo s jednotkou, Head Spa a telefónne číslo. */
+  function fixNb(t, old) {
+    t = norm(t);
+    const pairs = new Set();
+    String(old || '').replace(/(\S+) (?=(\S+))/g, (m, a, b) => { pairs.add(a + ' ' + b); return m; });
+    pairs.forEach((p) => {
+      const [a, b] = p.split(' ');
+      t = t.replace(new RegExp(`(^|\\s)${reEsc(a)} (?=${reEsc(b)}(?:\\s|$))`, 'g'), `$1${a}${NB}`);
+    });
+    for (let i = 0; i < 2; i++) t = t.replace(/(^|[\s(„"])([aiouksvzAIOUKSVZ]) /g, `$1$2${NB}`);
+    t = t.replace(/(\d) (?=(?:min|minút|minúty|€|dní|rokov|rituálov|rituály|rituál|osoby|osôb|hod|%)(?![\wÀ-ž]))/g, `$1${NB}`);
+    t = t.replace(/Head Spa/g, `Head${NB}Spa`).replace(/HEAD SPA/g, `HEAD${NB}SPA`).replace(/(\d{4}) (\d{3}) (\d{3})/g, `$1${NB}$2${NB}$3`);
+    return t;
+  }
 
   /* ---------- GitHub ---------- */
+  let token = '';
+  try { token = localStorage.getItem('hs30.admin') || sessionStorage.getItem('hs30.admin') || ''; } catch (e) {}
   async function gh(path, opts = {}) {
-    const r = await fetch(path.startsWith('http') ? path : API + path, Object.assign({}, opts, {
-      headers: Object.assign({ Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }, opts.headers || {}),
-      cache: 'no-store'
-    }));
-    if (!r.ok) { const t = await r.text(); const e = new Error(`${r.status} ${t.slice(0, 160)}`); e.status = r.status; throw e; }
+    let r;
+    try {
+      r = await fetch(path.startsWith('http') ? path : API + path, Object.assign({}, opts, {
+        headers: Object.assign({ Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }, opts.headers || {}),
+        cache: 'no-store'
+      }));
+    } catch (e) { throw Object.assign(new Error('sieť'), { net: true }); }
+    if (!r.ok) { let t = ''; try { t = await r.text(); } catch (e) {} throw Object.assign(new Error(`${r.status} ${t.slice(0, 160)}`), { status: r.status }); }
     return r.status === 204 ? null : r.json();
+  }
+  // chyba po slovensky, bez technických slov
+  function human(e) {
+    if (e.user) return e.message;
+    if (e.net) return 'Nepodarilo sa spojiť s GitHubom. Skontroluj internet a skús to znova.';
+    if (e.status === 401) return 'Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom.';
+    if (e.status === 403) return 'Kľúč nemá právo zapisovať (Contents: Read and write), alebo GitHub dočasne obmedzil požiadavky. Skús to o chvíľu.';
+    if (e.status === 404) return 'Kľúč nemá prístup k súborom webu. Pri kľúči vyber repozitár tohto webu.';
+    if (e.status >= 500) return 'GitHub práve neodpovedá. Skús to o pár minút, zmeny tu ostávajú.';
+    return `Niečo sa nepodarilo (${e.status || e.message}). Skús to o chvíľu znova.`;
   }
   const b64dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, '')), (c) => c.charCodeAt(0)));
   function b64enc(str) { const bytes = new TextEncoder().encode(str); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
-  async function readFile(path, ref) { const j = await gh(`/contents/${path}?ref=${ref}`); if (j.content) return b64dec(j.content); const blob = await gh(`/git/blobs/${j.sha}`); return b64dec(blob.content); }
+  async function readFile(path, ref) {
+    const j = await gh(`/contents/${path}?ref=${ref}`);
+    if (j.content) return b64dec(j.content);
+    const blob = await gh(`/git/blobs/${j.sha}`); return b64dec(blob.content);
+  }
 
-  /* ---------- text ---------- */
-  const norm = (s) => String(s).replace(/\s+/g, ' ').trim();
-  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const unesc = (s) => { const t = document.createElement('textarea'); t.innerHTML = s; return t.value; };
-  // slovenská typografia: jednoznakové predložky a číslo s jednotkou sa nerozdelia na konci riadku
-  const typo = (t) => t.replace(/(^|[\s(])([aiouksvzAIOUKSVZ]) /g, `$1$2${NB}`).replace(/(\d) (min|minút|€|dní)/g, `$1${NB}$2`);
-  const jsonStr = (s) => JSON.stringify(s).slice(1, -1);
-  const hm = (x) => `${String(Math.floor(x)).padStart(2, '0')}:${String(Math.round((x % 1) * 60)).padStart(2, '0')}`;
-  const fromHm = (v) => { const [h, m] = v.split(':').map(Number); return h + (m || 0) / 60; };
+  /* ---------- čítanie HTML: textové úseky s pozíciou a predkami ---------- */
+  const VOID = new Set('area base br col embed hr img input link meta param source track wbr'.split(' '));
+  const RAWTAG = new Set(['script', 'style', 'textarea', 'title']);
+  function scan(html) {
+    const TAG = /<!--[\s\S]*?-->|<![^>]*>|<(\/?)([a-zA-Z][\w:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*(\/?)>/g;
+    const low = html.toLowerCase(), out = [], stack = []; let last = 0, m;
+    const text = (a, b) => { if (b > a) out.push({ start: a, end: b, raw: html.slice(a, b), anc: stack.slice() }); };
+    while ((m = TAG.exec(html))) {
+      text(last, m.index); last = TAG.lastIndex;
+      if (!m[2]) continue;
+      const name = m[2].toLowerCase();
+      if (m[1]) { for (let i = stack.length - 1; i >= 0; i--) if (stack[i].name === name) { stack.length = i; break; } continue; }
+      if (RAWTAG.has(name)) { const c = low.indexOf('</' + name, TAG.lastIndex); if (c < 0) break; TAG.lastIndex = c; last = c; continue; }
+      if (VOID.has(name) || m[4]) continue;
+      stack.push({ name, attrs: m[3] || '', start: m.index, end: TAG.lastIndex });
+    }
+    text(last, html.length);
+    return out;
+  }
+  function at(el, n) {
+    const m = el.attrs.match(new RegExp(`(?:^|\\s)${n}(?:\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s"'>]+)))?(?=\\s|$)`));
+    return m ? (m[1] != null ? m[1] : m[2] != null ? m[2] : m[3] != null ? m[3] : '') : null;
+  }
+  const cls = (el) => (at(el, 'class') || '').split(/\s+/);
+
+  /* ---------- časti stránky pre záložku Texty ---------- */
+  const SECS = [['uvod', 'Úvod'], ['ritual', 'Ako to prebieha'], ['cennik', 'Rituály a ceny'], ['poukaz', 'Poukazy'], ['tim', 'Tím'], ['salon', 'Priestory'],
+    ['galeria', 'Galéria'], ['faq', 'Otázky'], ['kontakt', 'Kontakt'], ['paticka', 'Pätička'], ['menu', 'Menu']];
+  const SECNAME = Object.fromEntries(SECS);
+  const SECID = { ritual: 'ritual', cennik: 'cennik', poukaz: 'poukaz', tim: 'tim', salon: 'salon', galeria: 'galeria', faq: 'faq', kontakt: 'kontakt' };
+  const BLOCKS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'button', 'figcaption', 'label', 'summary', 'dt', 'dd', 'td', 'th', 'small']);
+  const HOURS = /^(Po|Ut|St|Št|Pi|So|Ne)(–(Po|Ut|St|Št|Pi|So|Ne))?: /;
+  const LETTER = /[A-Za-zÀ-ž]/;
+  function sectionOf(anc) {
+    for (let i = anc.length - 1; i >= 0; i--) {
+      const e = anc[i], id = at(e, 'id'), c = cls(e);
+      if (e.name === 'section' && id && SECID[id]) return SECID[id];
+      if (e.name === 'footer') return 'paticka';
+      if (c.includes('hero') || c.includes('hero-static')) return 'uvod';
+      if (id === 'lightbox') return 'galeria';
+    }
+    return 'menu';
+  }
+  // texty, ktoré sa menia inde (rituály, tím, oznam, siete) alebo sa neprekladajú
+  const skipText = (anc) => anc.some((e) => e.name === 'head' || e.name === 'svg' || e.name === 'select' || at(e, 'data-no-i18n') !== null ||
+    (e.name === 'article' && at(e, 'data-price') !== null) || at(e, 'id') === 'oznam' || cls(e).includes('team-grid') ||
+    (e.name === 'h1' && at(e, 'data-split') !== null) || at(e, 'data-siet') !== null || at(e, 'data-voucher-pay') !== null);
+  function kindOf(b) {
+    if (b.anc.some((e) => cls(e).includes('kicker'))) return 'Malý nadpis';
+    const n = b.el.name;
+    if (b.sec === 'faq') return n === 'button' ? 'Otázka' : 'Odpoveď';
+    if (/^h[1-6]$/.test(n)) return 'Nadpis';
+    if (n === 'button') return 'Tlačidlo';
+    if (n === 'a') return 'Odkaz alebo tlačidlo';
+    if (n === 'figcaption') return 'Popis fotky';
+    if (n === 'li') return 'Položka';
+    if (n === 'label') return 'Popis poľa';
+    return 'Text';
+  }
+  function parseTexts(html) {
+    const blocks = new Map();
+    let prevEnd = 0;
+    for (const t of scan(html)) {
+      const val = dec(t.raw), key = norm(val);
+      if (!key || skipText(t.anc)) { prevEnd = t.end; continue; }
+      const anc = t.anc; let bi = -1;
+      for (let i = anc.length - 1; i >= 0; i--) if (BLOCKS.has(anc[i].name)) { bi = i; break; }
+      if (bi < 0) for (let i = anc.length - 1; i >= 0; i--) if (anc[i].name === 'a') { bi = i; break; }
+      if (bi < 0) bi = anc.length - 1;
+      if (bi < 0) { prevEnd = t.end; continue; }
+      const bel = anc[bi];
+      let b = blocks.get(bel.start);
+      if (!b) {
+        const fi = anc.findIndex((e) => cls(e).includes('faq-item'));
+        b = { sec: sectionOf(anc), el: bel, anc: anc.slice(0, bi + 1), segs: [], group: fi >= 0 ? anc[fi].start : null };
+        blocks.set(bel.start, b);
+      }
+      let fmt = '';
+      for (let i = anc.length - 1; i > bi; i--) { const n = anc[i].name; if (n === 'em' || n === 'i') { fmt = 'kurzíva'; break; } if (n === 'b' || n === 'strong') { fmt = 'hrubé'; break; } if (n === 'a') { fmt = 'odkaz'; break; } }
+      const editable = LETTER.test(val) && !/@|^www\.|^https?:/.test(key) && !HOURS.test(key);
+      const brBefore = b.segs.length > 0 && /<br\b/i.test(html.slice(prevEnd, t.start));
+      b.segs.push({ start: t.start, end: t.end, raw: t.raw, val, key, fmt, editable, brBefore });
+      prevEnd = t.end;
+    }
+    // rovnaký blok v tej istej časti (napr. dva úvody, menu na troch miestach) je jedno pole
+    const merged = new Map();
+    for (const b of blocks.values()) {
+      if (!b.segs.some((s) => s.editable)) continue;
+      const sig = `${b.sec}|${b.el.name}|${b.segs.map((s) => s.key).join('¦')}`;
+      if (merged.has(sig)) merged.get(sig).occ.push(b);
+      else merged.set(sig, { sig, sec: b.sec, el: b.el, anc: b.anc, group: b.group, segs: b.segs, occ: [b] });
+    }
+    return Array.from(merged.values());
+  }
 
   /* ---------- stav ---------- */
-  let base = null;    // { sha, html, i18n:{lang:obj}, raw:{path:text} }
-  let model = null;   // pôvodné hodnoty
-  let form = null;    // aktuálne hodnoty z formulára
+  let base = null;      // načítané súbory { sha, raw:{path:text}, i18n:{lang:obj}, tim:[cesty fotiek] }
+  let model = null;     // pôvodné hodnoty z webu
+  let entries = new Map();  // každé pole: pôvodná a aktuálna hodnota
+  let team = [];        // aktuálny tím
+  let uid = 0;
 
-  function parse(html, i18n) {
-    const rituals = [];
-    const reArt = /<article\b([^>]*)>([\s\S]*?)<\/article>/g; let m;
-    while ((m = reArt.exec(html))) {
-      const attrs = m[1], body = m[2];
-      const id = (attrs.match(/\bid="([^"]+)"/) || [])[1]; if (!id || !/data-price="/.test(attrs)) continue;
-      const min = +(attrs.match(/data-min="(\d+)"/) || [])[1];
-      const price = +(attrs.match(/data-price="(\d+)"/) || [])[1];
-      const cat = (attrs.match(/data-cat="([^"]+)"/) || [])[1];
-      const name = unesc((body.match(/<h3>([\s\S]*?)<\/h3>/) || [])[1] || id).trim();
-      const tag = norm(unesc((body.match(/<p class="tag">([\s\S]*?)<\/p>/) || [])[1] || ''));
-      const desc = norm(unesc((body.match(/<p class="desc">([\s\S]*?)<\/p>/) || [])[1] || ''));
-      const tr = {}; LANGS.forEach((l) => { tr[l] = { tag: (i18n[l] || {})[tag] || '', desc: (i18n[l] || {})[desc] || '' }; });
-      rituals.push({ id, min, price, cat, name, tag, desc, tr });
-    }
-    const nast = JSON.parse((html.match(/<script type="application\/json" id="nastavenia">([\s\S]*?)<\/script>/) || [])[1] || '{}');
-    const oz = html.match(/<div class="oznam" id="oznam" role="status"( hidden)?><p>([\s\S]*?)<\/p><\/div>/);
-    const oznam = oz ? norm(unesc(oz[2])) : '';
-    const ozTr = {}; LANGS.forEach((l) => { ozTr[l] = oznam ? ((i18n[l] || {})[oznam] || '') : ''; });
-    const telIntl = (html.match(/"telephone":"(\+\d+)"/) || [])[1] || '+421911153136';
-    const tel = '0' + telIntl.replace(/^\+421/, '').replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
-    return { rituals, hodiny: nast.hodiny || {}, statistiky: nast.statistiky || '', oznam, ozTr, tel, nast };
-  }
-
-  /* ---------- formulár ---------- */
   const CATS = { classic: 'Head Spa rituály', gentlemen: 'Pánske rituály', kids: 'Detské rituály', couple: 'Rituály pre dvoch', feet: 'Rituály pre chodidlá' };
   const DAYS = [[1, 'Pondelok'], [2, 'Utorok'], [3, 'Streda'], [4, 'Štvrtok'], [5, 'Piatok'], [6, 'Sobota'], [0, 'Nedeľa']];
+  const NETS = [['instagram', 'Instagram'], ['facebook', 'Facebook'], ['tiktok', 'TikTok']];
+  const FIRMA = [['obchodne-meno', 'Obchodné meno', 'Napríklad Salón 30 s.r.o.'], ['ico', 'IČO', '8 číslic'], ['dic', 'DIČ', '10 číslic'], ['ic-dph', 'IČ DPH', 'SK a 10 číslic, ak ste platiteľ DPH'], ['register', 'Zápis v registri', 'Napríklad Obchodný register Okresného súdu Nitra, oddiel Sro, vložka č. 12345/N']];
+  const TIM_SIZES = '(max-width:520px) calc(100vw - 40px), (max-width:1280px) calc(50vw - 44px), 570px';
+  const ALT = { sk: (n) => `${n} z HEAD SPA 30`, en: (n) => `${n} from HEAD SPA 30`, de: (n) => `${n} von HEAD SPA 30`, cs: (n) => `${n} z HEAD SPA 30`, hu: (n) => `${n}, HEAD SPA 30`, pl: (n) => `${n} z HEAD SPA 30`, uk: (n) => `${n} з HEAD SPA 30` };
 
-  function field(id, label, value, type = 'text', extra = '') {
-    return `<div><label for="${id}">${label}</label>${type === 'area'
-      ? `<textarea id="${id}" ${extra}>${esc(value)}</textarea>`
-      : `<input type="${type}" id="${id}" value="${esc(value)}" ${extra}>`}</div>`;
-  }
-  function render() {
+  function parseAll() {
+    const html = base.raw['index.html'], i18n = base.i18n;
+    const m = {};
+    m.blocks = parseTexts(html);
+    // rituály
+    m.rituals = [];
+    const reArt = /<article\b([^>]*)>([\s\S]*?)<\/article>/g; let a;
+    while ((a = reArt.exec(html))) {
+      const attrs = a[1], body = a[2];
+      const id = (attrs.match(/\bid="([^"]+)"/) || [])[1]; if (!id || !/data-price="/.test(attrs)) continue;
+      const g = (re) => { const x = body.match(re); return x ? x[1] : ''; };
+      const about = (g(/<div class="about"><span class="lbl">[^<]*<\/span>([\s\S]*?)<\/div>/).match(/<p>[\s\S]*?<\/p>/g) || []).map((p) => dec(p.slice(3, -4)));
+      const steps = (g(/<ol>([\s\S]*?)<\/ol>/).match(/<li>[\s\S]*?<\/li>/g) || []).map((p) => dec(p.slice(4, -5)));
+      m.rituals.push({ id, cat: (attrs.match(/data-cat="([^"]+)"/) || [])[1], min: +(attrs.match(/data-min="(\d+)"/) || [])[1], price: +(attrs.match(/data-price="(\d+)"/) || [])[1],
+        name: dec(g(/<h3>([\s\S]*?)<\/h3>/)), badge: dec(g(/<span class="badge">([\s\S]*?)<\/span>/)), tag: dec(g(/<p class="tag">([\s\S]*?)<\/p>/)), desc: dec(g(/<p class="desc">([\s\S]*?)<\/p>/)), about, steps });
+    }
+    // tím
+    m.team = [];
+    const tg = html.match(/<div class="team-grid[^"]*">([\s\S]*?)<\/div>/);
+    if (tg) (tg[1].match(/<figure\b[\s\S]*?<\/figure>/g) || []).forEach((f, i) => {
+      const g = (re) => { const x = f.match(re); return x ? dec(x[1]) : ''; };
+      const cap = (f.match(/<figcaption>([\s\S]*?)<\/figcaption>/) || [])[1] || '';
+      const paths = Array.from(new Set((f.match(/assets\/img\/tim\/[^\s"',]+/g) || [])));
+      const slug = ((paths[0] || '').match(/assets\/img\/tim\/(.+?)-\d+\.\w+$/) || [])[1] || '';
+      const src = (f.match(/<img\b[^>]*\bsrc="([^"]+)"/) || [])[1] || '';
+      const name = norm(g(/<b>([\s\S]*?)<\/b>/)), role = norm((cap.match(/<span>([\s\S]*?)<\/span>/) || [])[1] ? dec(cap.match(/<span>([\s\S]*?)<\/span>/)[1]) : ''), bio = norm(g(/<p>([\s\S]*?)<\/p>/));
+      const tr = { role: {}, bio: {} }; LANGS.forEach((l) => { tr.role[l] = (role && i18n[l][role]) || ''; tr.bio[l] = (bio && i18n[l][bio]) || ''; });
+      m.team.push({ uid: 'm' + i, orig: true, html: f, pic: (f.match(/<picture>[\s\S]*?<\/picture>/) || [''])[0], paths, slug, src, name, role, bio, tr, photo: null });
+    });
     // oznam
-    $('#oz-sk').value = model.oznam;
-    $('#oz-tr').innerHTML = LANGS.map((l) => field(`oz-${l}`, LANG_NAMES[l], model.ozTr[l], 'area', 'maxlength="260"')).join('');
-    // rituály podľa kategórií
-    let out = '', last = '';
-    model.rituals.forEach((r, i) => {
-      if (r.cat !== last) { out += `<div class="cat-h">${esc(CATS[r.cat] || r.cat)}</div>`; last = r.cat; }
-      out += `<div class="rit" id="rit-${i}">
-        <div class="rit-head"><div class="rit-name">${esc(r.name)}<small>#${esc(r.id)}</small></div>
-          ${field(`r${i}-min`, 'Minúty', r.min, 'number', 'min="10" max="300" step="5" inputmode="numeric"')}
-          ${field(`r${i}-price`, 'Cena €', r.price, 'number', 'min="1" max="999" step="1" inputmode="numeric"')}</div>
-        <div class="rit-body">${field(`r${i}-tag`, 'Podnadpis', r.tag, 'text', 'maxlength="80"')}${field(`r${i}-desc`, 'Popis', r.desc, 'area', 'maxlength="260"')}
-          <details class="tr"><summary>Preklady podnadpisu a popisu</summary><div class="tr-grid">${LANGS.map((l) =>
-            field(`r${i}-${l}-tag`, `${LANG_NAMES[l]}: podnadpis`, r.tr[l].tag) + field(`r${i}-${l}-desc`, `${LANG_NAMES[l]}: popis`, r.tr[l].desc, 'area')).join('')}</div>
-            <span class="hint">Keď zmeníš slovenský text, uprav aj preklady. Prázdny preklad = návštevník v tom jazyku uvidí slovenčinu.</span></details></div></div>`;
+    const oz = html.match(/<div class="oznam" id="oznam" role="status"( hidden)?><p>([\s\S]*?)<\/p><\/div>/);
+    m.oznam = oz ? norm(dec(oz[2])) : '';
+    m.ozRaw = oz ? dec(oz[2]) : '';
+    // nastavenia a dáta pre Google
+    m.nast = JSON.parse((html.match(/<script type="application\/json" id="nastavenia">([\s\S]*?)<\/script>/) || [])[1] || '{}');
+    m.hodiny = m.nast.hodiny || {};
+    m.platby = m.nast.platby || {};
+    m.ldStr = (html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [])[1] || '{}';
+    const ld = JSON.parse(m.ldStr);
+    const nodes = []; (function walk(o) { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { nodes.push(o); Object.values(o).forEach(walk); } })(ld);
+    const biz = nodes.find((o) => o.openingHoursSpecification || o.priceRange) || {};
+    const telIntl = biz.telephone || (html.match(/href="tel:(\+\d+)"/) || [])[1] || '+421911153136';
+    m.tel = '0' + telIntl.replace(/^\+421/, '').replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+    m.email = biz.email || (html.match(/href="mailto:([^"?]+)"/) || [])[1] || '';
+    m.social = {};
+    NETS.forEach(([n]) => { const x = html.match(new RegExp(`<a\\b[^>]*\\bhref="([^"]*)"[^>]*\\bdata-siet="${n}"`)) || html.match(new RegExp(`<a\\b[^>]*\\bdata-siet="${n}"[^>]*\\bhref="([^"]*)"`)); m.social[n] = x ? decAttr(x[1]) : ''; });
+    // firma na stránke Právne informácie
+    m.firma = {};
+    try { m.firma = JSON.parse((base.raw['pravne.html'].match(/<script type="application\/json" id="firma">([\s\S]*?)<\/script>/) || [])[1] || '{}'); } catch (e) { m.firma = {}; }
+    return m;
+  }
+
+  /* ---------- polia a ich stav ---------- */
+  const F = { text: norm, trim: (v) => String(v).trim(), num: (v) => { const n = parseInt(String(v).trim(), 10); return isNaN(n) ? String(v).trim() : String(n); },
+    para: (v) => String(v).split(/\n\s*\n/).map(norm).filter(Boolean).join('\n\n'), lines: (v) => String(v).split('\n').map(norm).filter(Boolean).join('\n'),
+    trPara: (v) => String(v).split(/\n\s*\n/).map((x) => x.trim()).join('\n\n').trim(), trLines: (v) => String(v).split('\n').map((x) => x.trim()).join('\n').trim() };
+  function reg(key, o) {
+    const e = Object.assign({ key, f: F.trim, tab: '', item: '', what: '', trs: null }, o);
+    e.cur = e.orig; entries.set(key, e); return e;
+  }
+  const valOf = (e) => e.f(e.cur);
+  const changed = (e) => e.f(e.cur) !== e.f(e.orig);
+  function bind(e, el) {
+    if (el.type === 'checkbox') {
+      el.checked = e.cur === '1';
+      el.addEventListener('change', () => { e.cur = el.checked ? '1' : '0'; if (e.onInput) e.onInput(e); mark(e); refresh(); });
+    } else {
+      el.value = e.cur;
+      // prehliadač môže hodnotu nepatrne upraviť; pôvodný stav je to, čo pole naozaj ukazuje
+      if (e.cur === e.orig) e.orig = e.cur = el.value;
+      el.addEventListener('input', () => { e.cur = el.value; e.touched = true; if (e.stale) { e.stale = false; markStale(e); } if (e.onInput) e.onInput(e); mark(e); if (el.tagName === 'TEXTAREA') grow(el); refresh(); });
+    }
+    e.el = el; mark(e);
+    return el;
+  }
+  function mark(e) {
+    if (e.el) e.el.classList.toggle('changed', changed(e));
+    if (e.trs) e.trs.forEach(markStale);
+  }
+  function markStale(t) {
+    if (t.el) t.el.classList.toggle('stale', !!t.stale);
+    if (t.note) t.note.hidden = !t.stale;
+  }
+  // slovenský text sa zmenil: preklady ostanú, ale sú označené na kontrolu, kým sa ich niekto nedotkne
+  function staleUpdate(e) { const ch = changed(e); e.trs.forEach((t) => { t.stale = ch && !t.touched; markStale(t); }); }
+  function grow(t) { if (!t.offsetParent) return; t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
+  function field(e, o = {}) {
+    const id = 'f' + (++uid), type = o.type || 'area';
+    const inp = type === 'area' ? h('textarea', Object.assign({ id, rows: o.rows || 1, spellcheck: 'true' }, o.attrs || {})) : h('input', Object.assign({ id, type }, o.attrs || {}));
+    bind(e, inp);
+    const lab = o.label ? h('label', { for: id }, o.label, o.fmt ? h('span', { class: 'fmt' }, o.fmt) : null) : null;
+    if (!o.label && o.aria) inp.setAttribute('aria-label', o.aria);
+    return h('div', { class: 'f' + (o.cls ? ' ' + o.cls : '') }, lab, inp, o.hint ? h('span', { class: 'hint' }, o.hint) : null);
+  }
+  function trField(e, l, title) {
+    const id = 'f' + (++uid);
+    const inp = h('textarea', { id, rows: 1, lang: l, placeholder: 'Bez prekladu sa ukáže slovenčina' });
+    bind(e, inp);
+    e.note = h('span', { class: 'stale-note', hidden: true }, 'skontroluj preklad');
+    markStale(e);
+    return h('div', { class: 'f tr-f' }, h('label', { for: id }, h('span', { class: 'code' }, l.toUpperCase()), ' ', title || LN[l], e.note), inp);
+  }
+  // preklady sa vytvoria až pri otvorení, na telefóne je tak záložka rýchla
+  function trDetails(groups, label = 'Preklady') {
+    const d = h('details', { class: 'tr' }, h('summary', null, label));
+    let built = false;
+    d.addEventListener('toggle', () => {
+      if (!d.open) return;
+      if (!built) {
+        built = true;
+        const box = h('div', { class: 'tr-box' });
+        groups.forEach((g) => {
+          if (g.title) box.append(h('div', { class: 'tr-t' }, g.title));
+          g.rows.forEach(([e, l, t]) => box.append(trField(e, l, t)));
+        });
+        d.append(box);
+      }
+      $$('textarea', d).forEach(grow);
     });
-    $('#ritList').innerHTML = out;
+    return d;
+  }
+  const trRows = (trs) => LANGS.map((l) => [trs[l], l]);
+
+  /* ---------- polia pre všetky záložky ---------- */
+  function prepare() {
+    entries = new Map();
+    const i18n = base.i18n;
+    const T = (k, l) => (k && i18n[l][k] != null ? i18n[l][k] : '');
+    const trsFor = (prefix, k, o) => { const trs = {}; LANGS.forEach((l) => { trs[l] = reg(`${prefix}|${l}`, Object.assign({ orig: T(k, l) }, o, { what: `preklad ${l}` })); }); return trs; };
+    const withTr = (sk, trs) => { sk.trs = Object.values(trs); sk.tr = trs; sk.onInput = staleUpdate; return sk; };
+    // oznam
+    {
+      const o = { tab: 'oznam', item: 'Oznam' };
+      withTr(reg('oz|sk', Object.assign({ orig: model.oznam, f: F.text, what: 'text' }, o)), trsFor('oz', model.oznam, o));
+    }
+    // texty
+    model.blocks.forEach((b) => {
+      b.entries = b.segs.map((s, j) => {
+        if (!s.editable) return null;
+        const o = { tab: 'texty', item: `${SECNAME[b.sec]}: „${short(s.key, 38)}“`, go: b.sig };
+        return withTr(reg(`t|${b.sig}|${j}`, Object.assign({ orig: s.key, f: F.text, what: 'text' }, o)), trsFor(`t|${b.sig}|${j}`, s.key, o));
+      });
+    });
+    // rituály
+    model.rituals.forEach((r) => {
+      const o = { tab: 'ritualy', item: r.name, go: r.id };
+      r.e = {
+        name: reg(`r|${r.id}|name`, Object.assign({ orig: r.name, f: F.text, what: 'názov' }, o)),
+        min: reg(`r|${r.id}|min`, Object.assign({ orig: String(r.min), f: F.num, what: 'minúty' }, o)),
+        price: reg(`r|${r.id}|price`, Object.assign({ orig: String(r.price), f: F.num, what: 'cena' }, o)),
+        badge: reg(`r|${r.id}|badge`, Object.assign({ orig: r.badge, f: F.text, what: 'štítok' }, o)),
+        tag: reg(`r|${r.id}|tag`, Object.assign({ orig: r.tag, f: F.text, what: 'podnadpis' }, o)),
+        desc: reg(`r|${r.id}|desc`, Object.assign({ orig: r.desc, f: F.text, what: 'popis' }, o)),
+        about: reg(`r|${r.id}|about`, Object.assign({ orig: r.about.map(norm).join('\n\n'), f: F.para, what: 'o rituále' }, o)),
+        steps: reg(`r|${r.id}|steps`, Object.assign({ orig: r.steps.map(norm).join('\n'), f: F.lines, what: 'postup' }, o))
+      };
+      r.tr = {};
+      ['name', 'badge', 'tag', 'desc'].forEach((k) => { r.tr[k] = {}; LANGS.forEach((l) => { r.tr[k][l] = reg(`r|${r.id}|${k}|${l}`, Object.assign({ orig: T(norm(r[k]), l), what: `preklad ${l}` }, o)); }); });
+      r.tr.about = {}; r.tr.steps = {};
+      LANGS.forEach((l) => {
+        // chýbajúci preklad odseku alebo kroku ukáže slovenčinu, aby riadky sedeli
+        r.tr.about[l] = reg(`r|${r.id}|about|${l}`, Object.assign({ orig: r.about.map((p) => T(norm(p), l) || norm(p)).join('\n\n'), f: F.trPara, what: `preklad ${l}` }, o));
+        r.tr.steps[l] = reg(`r|${r.id}|steps|${l}`, Object.assign({ orig: r.steps.map((p) => T(norm(p), l) || norm(p)).join('\n'), f: F.trLines, what: `preklad ${l}` }, o));
+      });
+      ['name', 'badge', 'tag', 'desc', 'about', 'steps'].forEach((k) => withTr(r.e[k], r.tr[k]));
+    });
+    // platby
+    model.rituals.forEach((r) => { reg(`p|${r.id}`, { orig: model.platby[r.id] || '', tab: 'platby', item: `Platba kartou: ${r.name}`, what: '' }); });
+    // kontakt
+    reg('k|tel', { orig: model.tel, f: F.text, tab: 'kontakt', item: 'Telefón' });
+    reg('k|email', { orig: model.email, tab: 'kontakt', item: 'E-mail' });
+    NETS.forEach(([n, lab]) => reg(`k|${n}`, { orig: model.social[n], tab: 'kontakt', item: lab }));
     // hodiny
-    $('#days').innerHTML = DAYS.map(([d, name]) => { const h = model.hodiny[d];
-      return `<div class="day"><b>${name}</b><label class="sw"><input type="checkbox" id="d${d}-on" ${h ? 'checked' : ''}> Otvorené</label>
-        <div><label for="d${d}-od" class="hint">Od</label><input type="time" id="d${d}-od" value="${h ? hm(h[0]) : '09:00'}" step="900"></div>
-        <div><label for="d${d}-do" class="hint">Do</label><input type="time" id="d${d}-do" value="${h ? hm(h[1]) : '18:00'}" step="900"></div></div>`; }).join('');
-    $('#tel').value = model.tel;
-    $('#gc').value = model.statistiky;
-    gcLink();
-    document.querySelectorAll('#app input, #app textarea').forEach((el) => el.addEventListener('input', update));
-    // zatvorený deň: časy sa nedajú meniť
-    const dayState = () => DAYS.forEach(([d]) => { const on = $(`#d${d}-on`).checked; $(`#d${d}-od`).disabled = !on; $(`#d${d}-do`).disabled = !on; });
-    DAYS.forEach(([d]) => $(`#d${d}-on`).addEventListener('change', () => { dayState(); update(); })); dayState();
-    update();
-  }
-  function gcLink() {
-    const c = $('#gc').value.trim(); const el = $('#gcLink');
-    if (/^[a-z0-9-]{2,40}$/.test(c)) { el.classList.remove('hidden'); el.innerHTML = `Štatistiky: <a href="https://${c}.goatcounter.com" target="_blank" rel="noopener">${c}.goatcounter.com</a>`; }
-    else el.classList.add('hidden');
-  }
-
-  function readForm() {
-    const v = (id) => $('#' + id).value;
-    const f = { oznam: norm(v('oz-sk')), ozTr: {}, rituals: [], hodiny: {}, tel: norm(v('tel')), statistiky: v('gc').trim().toLowerCase() };
-    LANGS.forEach((l) => { f.ozTr[l] = norm(v(`oz-${l}`)); });
-    model.rituals.forEach((r, i) => {
-      const tr = {}; LANGS.forEach((l) => { tr[l] = { tag: norm(v(`r${i}-${l}-tag`)), desc: norm(v(`r${i}-${l}-desc`)) }; });
-      f.rituals.push(Object.assign({}, r, { min: +v(`r${i}-min`), price: +v(`r${i}-price`), tag: norm(v(`r${i}-tag`)), desc: norm(v(`r${i}-desc`)), tr }));
+    DAYS.forEach(([d, name]) => {
+      const x = model.hodiny[d], o = { tab: 'hodiny', item: `Hodiny: ${name}` };
+      reg(`h|${d}|on`, Object.assign({ orig: x ? '1' : '0' }, o));
+      reg(`h|${d}|od`, Object.assign({ orig: x ? hm(x[0]) : '09:00' }, o));
+      reg(`h|${d}|do`, Object.assign({ orig: x ? hm(x[1]) : '18:00' }, o));
     });
-    DAYS.forEach(([d]) => { f.hodiny[d] = $(`#d${d}-on`).checked ? [fromHm(v(`d${d}-od`)), fromHm(v(`d${d}-do`))] : null; });
-    return f;
+    FIRMA.forEach(([k, lab]) => reg(`firma|${k}`, { orig: String(model.firma[k] == null ? '' : model.firma[k]), tab: 'firma', item: `Firma: ${lab}` }));
+    reg('gc', { orig: model.nast.statistiky || '', f: (v) => v.trim().toLowerCase(), tab: 'dalsie', item: 'Štatistiky' });
+    team = clone(model.team);
   }
-  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-  function diff(f) {
-    const ch = [], errs = [];
-    if (f.oznam !== model.oznam) ch.push(f.oznam ? `Oznam: „${f.oznam}“` : 'Oznam sa skryje');
-    else if (!same(f.ozTr, model.ozTr)) ch.push('Preklady oznamu');
-    f.rituals.forEach((r, i) => { const o = model.rituals[i], p = [];
-      if (!(r.min >= 10 && r.min <= 300)) errs.push(`${r.name}: minúty musia byť 10 až 300`);
-      if (!(r.price >= 1 && r.price <= 999)) errs.push(`${r.name}: cena musí byť 1 až 999 €`);
-      if (!r.tag || !r.desc) errs.push(`${r.name}: podnadpis ani popis nesmú byť prázdne`);
-      if (r.min !== o.min) p.push(`${o.min} → ${r.min} min`);
-      if (r.price !== o.price) p.push(`${o.price} → ${r.price} €`);
-      if (r.tag !== o.tag) p.push('podnadpis');
-      if (r.desc !== o.desc) p.push('popis');
-      if (!same(r.tr, o.tr)) p.push('preklady');
-      $(`#rit-${i}`).classList.toggle('changed', p.length > 0);
-      if (p.length) ch.push(`${r.name}: ${p.join(', ')}`); });
-    DAYS.forEach(([d, name]) => { const h = f.hodiny[d];
-      if (h && !(h[1] > h[0])) errs.push(`${name}: zatváranie musí byť po otvorení`);
-      if (!same(h, model.hodiny[d] || null)) ch.push(`${name}: ${h ? hm(h[0]) + ' až ' + hm(h[1]) : 'zatvorené'}`); });
-    if (f.tel !== model.tel) { if (!/^0\d{3} \d{3} \d{3}$/.test(f.tel)) errs.push('Telefón zadaj v tvare 0911 153 136'); else ch.push(`Telefón: ${f.tel}`); }
-    if (f.statistiky !== model.statistiky) { if (f.statistiky && !/^[a-z0-9-]{2,40}$/.test(f.statistiky)) errs.push('Kód štatistík: len malé písmená, číslice a pomlčka'); else ch.push(f.statistiky ? `Štatistiky: ${f.statistiky}` : 'Štatistiky sa vypnú'); }
-    return { ch, errs };
+  /* ---------- vykreslenie ---------- */
+  function render() {
+    renderOznam(); renderTexty(); renderRituals(); renderTeam(); renderPay(); renderContact(); renderHours(); renderFirma(); renderGc();
+    refresh();
+    requestAnimationFrame(() => $$('.tab:not([hidden]) textarea').forEach(grow));
   }
-  function update(e) {
-    if (e && e.target) { const t = e.target; t.classList.add('changed'); }
-    form = readForm(); gcLink();
-    const { ch, errs } = diff(form);
-    $('#count').innerHTML = ch.length ? `<b>${ch.length}</b> ${ch.length === 1 ? 'zmena' : ch.length < 5 ? 'zmeny' : 'zmien'} čaká na uloženie.` : 'Žiadne zmeny.';
-    $('#changes').innerHTML = errs.map((x) => `<li style="color:var(--bad)">${esc(x)}</li>`).join('') + ch.map((x) => `<li>${esc(x)}</li>`).join('');
-    $('#ulozit').disabled = !ch.length || errs.length > 0;
-    // lišta s uložením sa ukáže, až keď je čo uložiť alebo je čo oznámiť
-    $('#savebar').classList.toggle('hidden', !ch.length && !errs.length && $('#saveMsg').classList.contains('hidden'));
-    $('#zrusit').disabled = !ch.length;
+  function renderOznam() {
+    const e = entries.get('oz|sk'), box = $('#ozBox'); box.textContent = '';
+    box.append(field(e, { label: 'Text oznamu', attrs: { maxlength: 220, rows: 2, placeholder: 'Od 4. do 11. augusta máme dovolenku. Online rezervácie fungujú aj počas nej.' }, hint: 'Jedna až dve vety.' }));
+    box.append(trDetails([{ rows: trRows(e.tr) }], 'Preklady oznamu'));
+  }
+
+  let secFilter = 'all';
+  function renderTexty() {
+    const list = $('#textList'); list.textContent = '';
+    const chips = $('#secChips'); chips.textContent = '';
+    const chip = (id, name) => { const b = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(secFilter === id) }, name); b.addEventListener('click', () => { secFilter = id; $$('.chip', chips).forEach((c) => c.setAttribute('aria-pressed', String(c === b))); filterTexts(); window.scrollTo(0, 0); }); return b; };
+    chips.append(chip('all', 'Všetko'));
+    SECS.forEach(([id, name]) => { if (model.blocks.some((b) => b.sec === id)) chips.append(chip(id, name)); });
+    SECS.forEach(([sec, title]) => {
+      const bs = model.blocks.filter((b) => b.sec === sec); if (!bs.length) return;
+      const sEl = h('section', { class: 'tsec', 'data-sec': sec }, h('h2', null, title));
+      let grp = null, qn = 0;
+      bs.forEach((b) => {
+        let host = sEl;
+        if (b.group != null) {
+          if (!grp || grp.g !== b.group) { qn++; grp = { g: b.group, el: h('div', { class: 'qa' }, h('div', { class: 'qa-t' }, `Otázka ${qn}`)) }; sEl.append(grp.el); }
+          host = grp.el;
+        } else grp = null;
+        host.append(blockEditor(b));
+      });
+      list.append(sEl);
+    });
+    filterTexts();
+  }
+  function fixedWhy(s) {
+    if (/@/.test(s.key)) return 'e-mail meníš v záložke Kontakt';
+    if (/\d{3}\s?\d{3}\s?\d{3}/.test(s.key)) return 'telefón meníš v záložke Kontakt';
+    if (HOURS.test(s.key)) return 'meníš v záložke Hodiny';
+    return '';
+  }
+  function blockEditor(b) {
+    const el = h('div', { class: 'blk', 'data-sig': b.sig });
+    const ed = b.segs.filter((s) => s.editable);
+    const kind = kindOf(b);
+    el.append(h('div', { class: 'blk-h' }, h('span', { class: 'kind' }, kind), b.occ.length > 1 ? h('span', { class: 'times' }, `na ${b.occ.length} miestach naraz`) : null));
+    const groups = [];
+    b.segs.forEach((s, j) => {
+      if (s.brBefore) el.append(h('div', { class: 'br' }, 'nový riadok'));
+      if (!s.editable) { const why = fixedWhy(s); if (why || /\d|[A-Za-zÀ-ž]/.test(s.key)) el.append(h('div', { class: 'fixed' }, h('span', null, s.key), why ? h('small', null, why) : null)); return; }
+      const e = b.entries[j];
+      const fmtLabel = s.fmt ? s.fmt[0].toUpperCase() + s.fmt.slice(1) : 'Text';
+      el.append(field(e, ed.length > 1 ? { label: fmtLabel } : { aria: kind, fmt: s.fmt }));
+      if (ed.length === 1 && s.fmt) el.querySelector('.blk-h').append(h('span', { class: 'fmt' }, s.fmt));
+      groups.push({ title: ed.length > 1 ? `${fmtLabel}: „${short(s.key, 40)}“` : null, rows: trRows(e.tr) });
+    });
+    el.append(trDetails(groups));
+    el._entries = b.entries.filter(Boolean);
+    return el;
+  }
+  function filterTexts() {
+    const q = plain($('#hladaj').value);
+    let any = false;
+    $$('#textList .tsec').forEach((sec) => {
+      let vis = 0;
+      const okSec = secFilter === 'all' || sec.dataset.sec === secFilter;
+      $$('.blk', sec).forEach((b) => {
+        const hay = q ? plain(b._entries.map((e) => [e.cur, e.orig, ...e.trs.map((t) => t.cur)].join(' ')).join(' ')) : '';
+        const show = okSec && (!q || hay.includes(q));
+        b.hidden = !show; if (show) vis++;
+      });
+      $$('.qa', sec).forEach((g) => { g.hidden = !$$('.blk', g).some((b) => !b.hidden); });
+      sec.hidden = !vis; if (vis) any = true;
+    });
+    $('#textEmpty').hidden = any;
+    $$('#textList textarea').forEach(grow);
+  }
+  $('#hladaj').addEventListener('input', filterTexts);
+
+  function renderRituals() {
+    const list = $('#ritList'); list.textContent = '';
+    let last = '';
+    model.rituals.forEach((r) => {
+      if (r.cat !== last) { list.append(h('div', { class: 'cat-h' }, CATS[r.cat] || r.cat)); last = r.cat; }
+      const nm = h('span', { class: 'nm' }), mt = h('span', { class: 'mt' });
+      const card = h('details', { class: 'card', id: 'rit-' + r.id }, h('summary', null, nm, mt));
+      const sum = () => {
+        nm.textContent = valOf(r.e.name) || r.name;
+        mt.textContent = `${valOf(r.e.min)} min · ${valOf(r.e.price)} €`;
+        const ch = Object.values(r.e).some(changed) || Object.values(r.tr).some((x) => Object.values(x).some(changed));
+        card.classList.toggle('changed', ch);
+      };
+      r.sum = sum; sum();
+      let built = false;
+      card.addEventListener('toggle', () => {
+        if (card.open && !built) {
+          built = true;
+          const body = h('div', { class: 'body' });
+          body.append(field(r.e.name, { label: 'Názov rituálu', type: 'text', attrs: { maxlength: 80 } }));
+          body.append(h('div', { class: 'row' },
+            field(r.e.min, { label: 'Dĺžka v minútach', type: 'number', attrs: { min: 10, max: 300, step: 5, inputmode: 'numeric' } }),
+            field(r.e.price, { label: 'Cena v €', type: 'number', attrs: { min: 1, max: 999, step: 1, inputmode: 'numeric' } })));
+          body.append(field(r.e.badge, { label: 'Štítok', type: 'text', attrs: { maxlength: 30 }, hint: 'Napríklad Top rituál. Prázdne pole štítok skryje.' }));
+          body.append(field(r.e.tag, { label: 'Podnadpis', attrs: { maxlength: 90 } }));
+          body.append(field(r.e.desc, { label: 'Krátky popis', attrs: { maxlength: 260 } }));
+          body.append(field(r.e.about, { label: 'O rituále', attrs: { rows: 4 }, hint: 'Odseky oddeľ prázdnym riadkom.' }));
+          body.append(field(r.e.steps, { label: 'Postup rituálu', attrs: { rows: 6 }, hint: 'Každý krok na samostatný riadok.' }));
+          const TL = { name: 'Názov', badge: 'Štítok', tag: 'Podnadpis', desc: 'Krátky popis', about: 'O rituále (odseky oddelené prázdnym riadkom)', steps: 'Postup (každý krok na riadok)' };
+          body.append(trDetails(LANGS.map((l) => ({ title: `${l.toUpperCase()} · ${LN[l]}`, rows: ['name', 'badge', 'tag', 'desc', 'about', 'steps'].map((k) => [r.tr[k][l], l, TL[k]]) }))));
+          card.append(body);
+        }
+        $$('textarea', card).forEach(grow);
+      });
+      list.append(card);
+    });
+  }
+
+  /* ---------- tím ---------- */
+  let editing = null;   // uid člena, ktorý je práve otvorený
+  // fotka priamo zo súborov webu v načítanej verzii, funguje hneď po uložení, aj keď sa web ešte obnovuje
+  function teamPhotoUrl(m) { return m.photo ? m.photo.preview : m.src ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${base.sha}/${m.src}` : ''; }
+  function renderTeam() {
+    const list = $('#teamList'); list.textContent = '';
+    if (!team.length) list.append(h('p', { class: 'note' }, 'Zatiaľ tu nie je nikto. Časť Tím a odkazy na ňu sú na webe skryté.'));
+    team.forEach((m, i) => {
+      const url = teamPhotoUrl(m);
+      const row = h('div', { class: 'member', 'data-uid': m.uid },
+        url ? h('img', { src: url, alt: '' }) : h('span', { class: 'ph' }),
+        h('div', { class: 'who' }, h('b', null, m.name || 'Nový človek'), h('span', null, m.role || 'Bez pozície')),
+        h('div', { class: 'acts' },
+          h('button', { class: 'ico', type: 'button', 'aria-label': 'Posunúť vyššie', disabled: i === 0, onclick: () => { team.splice(i - 1, 0, team.splice(i, 1)[0]); renderTeam(); refresh(); } }, '↑'),
+          h('button', { class: 'ico', type: 'button', 'aria-label': 'Posunúť nižšie', disabled: i === team.length - 1, onclick: () => { team.splice(i + 1, 0, team.splice(i, 1)[0]); renderTeam(); refresh(); } }, '↓'),
+          h('button', { class: 'btn quiet small', type: 'button', onclick: () => { editing = editing === m.uid ? null : m.uid; renderTeam(); } }, editing === m.uid ? 'Zavrieť' : 'Upraviť'),
+          h('button', { class: 'btn quiet small', type: 'button', onclick: () => { if (confirm(`Odstrániť ${m.name || 'tohto človeka'} z webu? Zmena sa uloží až tlačidlom Uložiť na web.`)) { team.splice(i, 1); if (editing === m.uid) editing = null; renderTeam(); refresh(); } } }, 'Odstrániť')));
+      list.append(row);
+      if (editing === m.uid) list.append(memberEditor(m));
+    });
+    requestAnimationFrame(() => $$('#teamList textarea').forEach(grow));
+  }
+  function mInput(m, k, label, o = {}) {
+    const id = 'f' + (++uid);
+    const inp = o.area ? h('textarea', { id, rows: 2, maxlength: o.max || 240 }) : h('input', { id, type: 'text', maxlength: o.max || 60 });
+    inp.value = m[k];
+    inp.addEventListener('input', () => { m[k] = inp.value; if (o.area) grow(inp); refresh(); const who = $(`.member[data-uid="${m.uid}"] .who`); if (who) { who.children[0].textContent = m.name || 'Nový človek'; who.children[1].textContent = m.role || 'Bez pozície'; } });
+    return h('div', { class: 'f' }, h('label', { for: id }, label), inp, o.hint ? h('span', { class: 'hint' }, o.hint) : null);
+  }
+  function mTr(m, k, l, label) {
+    const id = 'f' + (++uid);
+    const inp = h('textarea', { id, rows: 1, lang: l, placeholder: 'Bez prekladu sa ukáže slovenčina' });
+    inp.value = m.tr[k][l];
+    inp.addEventListener('input', () => { m.tr[k][l] = inp.value; grow(inp); refresh(); });
+    return h('div', { class: 'f tr-f' }, h('label', { for: id }, h('span', { class: 'code' }, l.toUpperCase()), ' ', label), inp);
+  }
+  function memberEditor(m) {
+    const box = h('div', { class: 'editor' });
+    const url = teamPhotoUrl(m);
+    const photo = h('div', { class: 'photo' }, url ? h('img', { src: url, alt: 'Fotka' }) : h('span', { class: 'ph' }, 'Bez fotky'));
+    const cropHost = h('div');
+    const pickLabel = url ? 'Vymeniť fotku' : 'Vybrať fotku';
+    const file = h('input', { type: 'file', accept: 'image/*', 'aria-label': pickLabel });
+    file.addEventListener('change', () => { const f = file.files && file.files[0]; if (f) openCropper(f, cropHost, m); file.value = ''; });
+    photo.append(h('div', null, h('span', { class: 'btn ghost file' }, pickLabel, file), h('span', { class: 'hint' }, 'Fotka na výšku, z galérie v telefóne. Výrez upravíš posunutím.')));
+    box.append(h('div', { class: 'lbl' }, 'Fotka'), photo, cropHost);
+    box.append(mInput(m, 'name', 'Meno', { max: 40, hint: 'Napríklad Simona.' }));
+    box.append(mInput(m, 'role', 'Pozícia', { max: 60, hint: 'Napríklad Head Spa terapeutka.' }));
+    box.append(mInput(m, 'bio', 'Krátky popis', { area: true, max: 240, hint: 'Jedna až dve vety.' }));
+    const d = h('details', { class: 'tr' }, h('summary', null, 'Preklady pozície a popisu'));
+    const trb = h('div', { class: 'tr-box' });
+    LANGS.forEach((l) => { trb.append(h('div', { class: 'tr-t' }, `${l.toUpperCase()} · ${LN[l]}`), mTr(m, 'role', l, 'Pozícia'), mTr(m, 'bio', l, 'Krátky popis')); });
+    d.append(trb); d.addEventListener('toggle', () => $$('textarea', d).forEach(grow));
+    box.append(d);
+    return box;
+  }
+  $('#addMember').addEventListener('click', () => {
+    const m = { uid: 'n' + Date.now().toString(36), orig: false, html: '', pic: '', paths: [], slug: '', src: '', name: '', role: '', bio: '', tr: { role: {}, bio: {} }, photo: null };
+    LANGS.forEach((l) => { m.tr.role[l] = ''; m.tr.bio[l] = ''; });
+    team.push(m); editing = m.uid; renderTeam(); refresh();
+    const ed = $('#teamList .editor'); if (ed) { ed.scrollIntoView({ block: 'start' }); const n = $$('input[type=text]', ed)[0]; if (n) n.focus({ preventScroll: true }); }
+  });
+
+  /* Výrez fotky na pomer 4:5 (tak ju ukazuje web). Posúva sa prstom alebo myšou, priblíženie posuvníkom. */
+  function openCropper(file, host, m) {
+    host.textContent = '';
+    const url = URL.createObjectURL(file), img = new Image();
+    const status = h('p', { class: 'hint' }, 'Otváram fotku…'); host.append(status);
+    img.onerror = () => { status.textContent = 'Túto fotku sa nepodarilo otvoriť. Skús inú, napríklad JPG.'; status.classList.add('err'); };
+    img.onload = () => {
+      host.textContent = '';
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const frame = h('div', { class: 'crop-frame', 'aria-label': 'Výrez fotky, posuň prstom' }), view = h('img', { src: url, alt: '' });
+      view.style.width = iw + 'px'; view.style.height = ih + 'px';
+      frame.append(view);
+      const zoom = h('input', { type: 'range', min: 1, max: 4, step: 0.01, value: 1, 'aria-label': 'Priblíženie' });
+      const done = h('button', { class: 'btn', type: 'button' }, 'Použiť výrez');
+      const cancel = h('button', { class: 'btn quiet', type: 'button', onclick: () => { host.textContent = ''; URL.revokeObjectURL(url); } }, 'Zrušiť');
+      const zid = 'f' + (++uid); zoom.id = zid;
+      host.append(h('div', { class: 'crop' }, h('div', { class: 'lbl' }, 'Výrez fotky'), h('p', { class: 'hint', style: 'margin:0 0 10px' }, 'Posuň fotku prstom tak, aby bola tvár v strede.'), frame, h('label', { class: 'zl', for: zid }, 'Priblíženie'), zoom, h('div', { class: 'btns', style: 'margin-top:12px' }, done, cancel)));
+      let fw = frame.clientWidth, fh = frame.clientHeight, s0 = Math.max(fw / iw, fh / ih), z = 1, s = s0, ox = (fw - iw * s) / 2, oy = (fh - ih * s) / 2;
+      const clamp = () => { ox = Math.min(0, Math.max(fw - iw * s, ox)); oy = Math.min(0, Math.max(fh - ih * s, oy)); };
+      const draw = () => { clamp(); view.style.transform = `translate(${ox}px,${oy}px) scale(${s})`; };
+      draw();
+      let drag = null;
+      frame.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, ox, oy }; frame.setPointerCapture(e.pointerId); frame.style.cursor = 'grabbing'; });
+      frame.addEventListener('pointermove', (e) => { if (!drag) return; ox = drag.ox + e.clientX - drag.x; oy = drag.oy + e.clientY - drag.y; draw(); });
+      const up = () => { drag = null; frame.style.cursor = ''; };
+      frame.addEventListener('pointerup', up); frame.addEventListener('pointercancel', up);
+      zoom.addEventListener('input', () => {
+        const cx = (fw / 2 - ox) / s, cy = (fh / 2 - oy) / s;
+        z = +zoom.value; s = s0 * z; ox = fw / 2 - cx * s; oy = fh / 2 - cy * s; draw();
+      });
+      done.addEventListener('click', async () => {
+        done.disabled = true; done.textContent = 'Pripravujem fotku…';
+        try {
+          const crop = { sx: -ox / s, sy: -oy / s, sw: fw / s, sh: fh / s };
+          m.photo = await encodePhoto(img, crop);
+          host.textContent = ''; URL.revokeObjectURL(url);
+          renderTeam(); refresh();
+        } catch (e) { done.disabled = false; done.textContent = 'Použiť výrez'; host.append(h('p', { class: 'hint err' }, 'Fotku sa nepodarilo pripraviť. Skús menšiu alebo inú fotku.')); }
+      });
+    };
+    img.src = url;
+  }
+  // WebP v troch šírkach a JPEG 800 ako záloha. Keď prehliadač WebP nevie uložiť (starší Safari), uloží sa JPEG vo všetkých šírkach.
+  async function encodePhoto(img, c) {
+    const W = [480, 800, 1086];
+    const canvas = (w) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = Math.round(w * 5 / 4); const x = cv.getContext('2d'); x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high'; x.drawImage(img, c.sx, c.sy, c.sw, c.sh, 0, 0, cv.width, cv.height); return cv; };
+    const blob = (cv, type, q) => new Promise((res, rej) => cv.toBlob((b) => (b ? res(b) : rej(new Error('blob'))), type, q));
+    const b64 = (b) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(b); });
+    const files = {}; let webp = true;
+    for (const w of W) { const b = await blob(canvas(w), 'image/webp', 0.82); if (b.type !== 'image/webp') { webp = false; break; } files[`${w}.webp`] = b; }
+    if (!webp) { for (const k of Object.keys(files)) delete files[k]; for (const w of W) files[`${w}.jpg`] = await blob(canvas(w), 'image/jpeg', 0.86); }
+    else files['800.jpg'] = await blob(canvas(800), 'image/jpeg', 0.86);
+    const out = { id: Date.now().toString(36), webp, files: {} };
+    for (const [k, b] of Object.entries(files)) out.files[k] = await b64(b);
+    out.preview = URL.createObjectURL(files[webp ? '480.webp' : '480.jpg']);
+    return out;
+  }
+  const teamSig = (list) => JSON.stringify(list.map((m) => ({ uid: m.uid, name: norm(m.name), role: norm(m.role), bio: norm(m.bio), tr: { role: LANGS.map((l) => norm(m.tr.role[l])), bio: LANGS.map((l) => norm(m.tr.bio[l])) }, photo: m.photo ? m.photo.id : null })));
+  function teamChanges() {
+    const out = [], byUid = Object.fromEntries(model.team.map((m) => [m.uid, m]));
+    const cur = new Set(team.map((m) => m.uid));
+    model.team.forEach((m) => { if (!cur.has(m.uid)) out.push(`Tím: odstrániť ${m.name}`); });
+    team.forEach((m) => {
+      const o = byUid[m.uid];
+      if (!o) { out.push(`Tím: pridať ${norm(m.name) || 'nového človeka'}`); return; }
+      const p = [];
+      if (norm(m.name) !== o.name) p.push('meno'); if (norm(m.role) !== o.role) p.push('pozícia'); if (norm(m.bio) !== o.bio) p.push('popis');
+      if (LANGS.some((l) => norm(m.tr.role[l]) !== norm(o.tr.role[l]) || norm(m.tr.bio[l]) !== norm(o.tr.bio[l]))) p.push('preklady');
+      if (m.photo) p.push('fotka');
+      if (p.length) out.push(`Tím: ${norm(m.name) || o.name} (${p.join(', ')})`);
+    });
+    const a = model.team.map((m) => m.uid).filter((u) => cur.has(u)), b = team.map((m) => m.uid).filter((u) => byUid[u]);
+    if (!same(a, b)) out.push('Tím: poradie');
+    return out;
+  }
+
+  function renderPay() {
+    const list = $('#payList'); list.textContent = '';
+    model.rituals.forEach((r) => {
+      const e = entries.get(`p|${r.id}`);
+      const f = field(e, { label: r.name, type: 'url', attrs: { inputmode: 'url', placeholder: 'https://…', autocomplete: 'off', spellcheck: 'false' } });
+      f.querySelector('label').append(h('small', null, `${r.min} min · ${r.price} €`));
+      list.append(h('div', { class: 'pay' }, f));
+    });
+    // obrázky poukazov pre Booqme: prvé štyri Head Spa rituály majú spoločný vzor
+    const VOUCH = [['Head Spa Classic', 'head-spa'], ['Head Spa Relax', 'head-spa'], ['Head Spa Harmony', 'head-spa'], ['Hĺbkový rituál pre pokožku hlavy', 'head-spa'],
+      ['Head Spa Beauty Ritual', 'head-spa-beauty-ritual'], ['Head Spa Fruit & Fresh Ritual', 'head-spa-fruit-fresh-ritual'], ['Head Spa Signature Ritual', 'head-spa-signature-ritual'],
+      ['Gentlemen Head Spa', 'gentlemen-head-spa'], ['Gentlemen Harmony Ritual', 'gentlemen-harmony-ritual'], ['Gentlemen Deep Scalp Ritual', 'gentlemen-deep-scalp-ritual'],
+      ['Gentlemen Signature Experience', 'gentlemen-signature-experience'], ['Little Fruit Head Spa', 'little-fruit-head-spa'], ['Spoločný Head Spa rituál', 'spolocny-head-spa-ritual'],
+      ['Spoločný rituál pod hviezdami', 'spolocny-ritual-pod-hviezdami'], ['Klasický rituál pre chodidlá', 'klasicky-ritual-pre-chodidla'],
+      ['Ovocný a bylinkový rituál pre chodidlá', 'ovocny-a-bylinkovy-ritual-pre-chodidla'], ['Zlatý rituál 24K', 'zlaty-ritual-24k']];
+    const v = $('#vouchList'); v.textContent = '';
+    VOUCH.forEach(([n, id]) => v.append(h('a', { href: `${RAW}/booqme/poukaz-${id}.jpg`, target: '_blank', rel: 'noopener' }, h('img', { loading: 'lazy', src: `${RAW}/booqme/poukaz-${id}.jpg`, alt: '' }), h('span', null, n))));
+  }
+  function renderContact() {
+    const box = $('#contactBox'); box.textContent = '';
+    box.append(h('div', { class: 'row wide' },
+      field(entries.get('k|tel'), { label: 'Telefón', type: 'tel', attrs: { placeholder: '0911 153 136', inputmode: 'tel' }, hint: 'V tvare 0911 153 136.' }),
+      field(entries.get('k|email'), { label: 'E-mail', type: 'email', attrs: { placeholder: 'info@salon30.sk', inputmode: 'email', spellcheck: 'false' } })));
+    box.append(h('h2', null, 'Sociálne siete'));
+    box.append(h('p', { class: 'lead' }, 'Odkazy sú v menu, v kontakte a v pätičke. Prázdne pole odkaz na web neukáže.'));
+    NETS.forEach(([n, lab]) => box.append(field(entries.get(`k|${n}`), { label: lab, type: 'url', attrs: { inputmode: 'url', placeholder: `https://www.${n}.com/…`, spellcheck: 'false', autocomplete: 'off' } })));
+  }
+  function renderHours() {
+    const box = $('#days'); box.textContent = '';
+    DAYS.forEach(([d, name]) => {
+      const on = entries.get(`h|${d}|on`), od = entries.get(`h|${d}|od`), dd = entries.get(`h|${d}|do`);
+      const cb = h('input', { type: 'checkbox' }); bind(on, cb);
+      const f1 = timeField(od, 'Od'), f2 = timeField(dd, 'Do');
+      const state = () => { $('select', f1).disabled = $('select', f2).disabled = on.cur !== '1'; };
+      on.onInput = state; state();
+      box.append(h('div', { class: 'day' }, h('b', null, name), h('label', { class: 'sw' }, cb, 'Otvorené'), f1, f2));
+    });
+  }
+  // čas ako výber po štvrťhodinách: vždy 24-hodinový formát, na telefóne pohodlné koliesko
+  function timeField(e, label) {
+    const id = 'f' + (++uid), sel = h('select', { id });
+    const opts = []; for (let m = 6 * 60; m <= 22 * 60; m += 15) opts.push(hm(m / 60));
+    if (!opts.includes(e.cur)) opts.push(e.cur);
+    opts.sort().forEach((t) => sel.append(h('option', { value: t }, t)));
+    bind(e, sel);
+    sel.addEventListener('change', () => { e.cur = sel.value; mark(e); refresh(); });
+    return h('div', { class: 'f' }, h('label', { for: id }, label), sel);
+  }
+  function renderFirma() {
+    const box = $('#firmaBox'); box.textContent = '';
+    FIRMA.forEach(([k, lab, hint]) => box.append(field(entries.get(`firma|${k}`), { label: lab, type: 'text', hint, attrs: { autocomplete: 'off', maxlength: 160 } })));
+  }
+  function renderGc() {
+    const box = $('#gcBox'); box.textContent = '';
+    const e = entries.get('gc');
+    const link = h('p', { class: 'msg', hidden: true });
+    const upd = () => { const c = valOf(e); link.hidden = !/^[a-z0-9-]{2,40}$/.test(c); link.textContent = ''; if (!link.hidden) link.append('Štatistiky: ', h('a', { href: `https://${c}.goatcounter.com`, target: '_blank', rel: 'noopener' }, `${c}.goatcounter.com`)); };
+    e.onInput = upd;
+    box.append(field(e, { label: 'Kód GoatCounter', type: 'text', attrs: { placeholder: 'headspa30', spellcheck: 'false', autocomplete: 'off' }, hint: 'Len malé písmená, číslice a pomlčka. Prázdne pole štatistiky vypne.' }), link);
+    upd();
+  }
+
+  /* ---------- zmeny a kontrola ---------- */
+  function collect() {
+    const items = new Map();
+    for (const e of entries.values()) {
+      if (!changed(e)) continue;
+      if (!items.has(e.item)) items.set(e.item, { tab: e.tab, go: e.go, whats: [] });
+      if (e.what && !items.get(e.item).whats.includes(e.what)) items.get(e.item).whats.push(e.what);
+    }
+    teamChanges().forEach((x) => items.set(x, { tab: 'tim', whats: [] }));
+    return items;
+  }
+  function validate() {
+    const errs = [];
+    const E = (tab, text) => errs.push({ tab, text });
+    for (const e of entries.values()) if (e.tab === 'texty' && e.what === 'text' && changed(e) && !valOf(e)) E('texty', `${e.item}: text nesmie byť prázdny`);
+    model.rituals.forEach((r) => {
+      const min = +valOf(r.e.min), price = +valOf(r.e.price);
+      if (!(min >= 10 && min <= 300)) E('ritualy', `${r.name}: dĺžka musí byť 10 až 300 minút`);
+      if (!(price >= 1 && price <= 999)) E('ritualy', `${r.name}: cena musí byť 1 až 999 €`);
+      if (!valOf(r.e.name) || !valOf(r.e.tag) || !valOf(r.e.desc)) E('ritualy', `${r.name}: názov, podnadpis ani popis nesmú byť prázdne`);
+      if (!valOf(r.e.steps)) E('ritualy', `${r.name}: postup musí mať aspoň jeden krok`);
+      const p = valOf(entries.get(`p|${r.id}`));
+      if (p && !isHttps(p)) E('platby', `${r.name}: odkaz na platbu musí začínať https://`);
+    });
+    const tel = valOf(entries.get('k|tel'));
+    if (changed(entries.get('k|tel')) && !/^0\d{3} \d{3} \d{3}$/.test(tel)) E('kontakt', 'Telefón zadaj v tvare 0911 153 136');
+    const em = valOf(entries.get('k|email'));
+    if (changed(entries.get('k|email')) && !/^[^\s@<>"]+@[^\s@<>"]+\.[a-z]{2,}$/i.test(em)) E('kontakt', 'E-mail nie je v správnom tvare');
+    NETS.forEach(([n, lab]) => { const u = valOf(entries.get(`k|${n}`)); if (u && !isHttps(u)) E('kontakt', `${lab}: odkaz musí začínať https://`); });
+    DAYS.forEach(([d, name]) => { if (entries.get(`h|${d}|on`).cur === '1' && !(fromHm(entries.get(`h|${d}|do`).cur) > fromHm(entries.get(`h|${d}|od`).cur))) E('hodiny', `${name}: zatváranie musí byť po otvorení`); });
+    const gc = valOf(entries.get('gc'));
+    if (gc && !/^[a-z0-9-]{2,40}$/.test(gc)) E('dalsie', 'Kód štatistík: len malé písmená, číslice a pomlčka');
+    team.forEach((m) => {
+      if (!norm(m.name)) E('tim', 'Tím: každý človek potrebuje meno');
+      if (!m.orig && !m.photo) E('tim', `Tím: ${norm(m.name) || 'nový človek'} ešte nemá fotku`);
+    });
+    return errs;
+  }
+  const TABS = () => $$('.tab');
+  function refresh() {
+    if (!model) return;
+    const items = collect(), errs = validate(), n = items.size;
+    const count = $('#count');
+    count.textContent = '';
+    const open = !$('#changes').hidden;
+    count.append(n ? h('b', null, `${n} ${plural(n, 'zmena', 'zmeny', 'zmien')}`) : h('span', null, 'Žiadne zmeny'));
+    if (errs.length) count.append(h('span', { class: 'sub err' }, `${errs.length} ${plural(errs.length, 'chyba', 'chyby', 'chýb')}, ${open ? 'skryť' : 'ukázať'}`));
+    else if (n) count.append(h('span', { class: 'sub car' }, open ? 'skryť zoznam' : 'ukázať zoznam'));
+    count.disabled = !n && !errs.length;
+    if (!n && !errs.length) { $('#changes').hidden = true; count.setAttribute('aria-expanded', 'false'); }
+    const ul = $('#changes'); ul.textContent = '';
+    const go = (tab, target) => { show(tab); if (target) setTimeout(() => focusTarget(tab, target), 30); };
+    errs.forEach((x) => ul.append(h('li', { class: 'e' }, h('button', { type: 'button', onclick: () => go(x.tab) }, x.text))));
+    items.forEach((v, k) => ul.append(h('li', null, h('button', { type: 'button', onclick: () => go(v.tab, v.go) }, k, v.whats.length ? h('small', null, v.whats.join(', ')) : null))));
+    $('#ulozit').disabled = !n || errs.length > 0 || saving;
+    $('#zrusit').disabled = !n || saving;
+    // počet zmien na záložke
+    const per = {}; items.forEach((v) => { per[v.tab] = (per[v.tab] || 0) + 1; });
+    $$('#tabs button').forEach((b) => { const c = per[b.dataset.tab] || 0; const s = $('.n', b); s.textContent = c; s.hidden = !c; });
+    model.rituals.forEach((r) => r.sum && r.sum());
+    fitBar();
+  }
+  function focusTarget(tab, target) {
+    if (tab === 'ritualy') { const c = document.getElementById('rit-' + target); if (c) { c.open = true; c.dispatchEvent(new Event('toggle')); c.scrollIntoView({ block: 'start' }); } }
+    if (tab === 'texty') { $('#hladaj').value = ''; secFilter = 'all'; renderChipsState(); filterTexts(); const b = $$('#textList .blk').find((x) => x.dataset.sig === target); if (b) b.scrollIntoView({ block: 'center' }); }
+  }
+  function renderChipsState() { $$('#secChips .chip').forEach((c, i) => c.setAttribute('aria-pressed', String(i === 0))); }
+  // obsah má pod sebou vždy toľko miesta, koľko zaberá lišta
+  function fitBar() { const b = $('#bar'); if (!b.hidden) document.documentElement.style.setProperty('--bar', b.offsetHeight + 'px'); }
+  if (window.ResizeObserver) new ResizeObserver(fitBar).observe($('#bar'));
+  $('#count').addEventListener('click', () => { const ul = $('#changes'); ul.hidden = !ul.hidden; $('#count').setAttribute('aria-expanded', String(!ul.hidden)); refresh(); });
+
+  /* ---------- záložky ---------- */
+  function buildTabs() {
+    const host = $('#tabs .in'); host.textContent = '';
+    TABS().forEach((t) => host.append(h('button', { type: 'button', role: 'tab', 'data-tab': t.dataset.tab, 'aria-controls': t.id, onclick: () => show(t.dataset.tab, true) }, t.dataset.name, h('span', { class: 'n', hidden: true }, '0'))));
+  }
+  function show(tab, fromUser) {
+    if (!TABS().some((t) => t.dataset.tab === tab)) tab = 'oznam';
+    TABS().forEach((t) => { t.hidden = t.dataset.tab !== tab; });
+    $$('#tabs button').forEach((b) => { const on = b.dataset.tab === tab; b.setAttribute('aria-selected', String(on)); if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); });
+    try { history.replaceState(null, '', '#' + tab); } catch (e) {}
+    if (fromUser) window.scrollTo(0, 0);
+    requestAnimationFrame(() => $$(`#p-${tab} textarea`).forEach(grow));
   }
 
   /* ---------- zápis do súborov ---------- */
   const DAY_WORDS = {
-    sk: { d: ['Ne', 'Po', 'Ut', 'St', 'Št', 'Pi', 'So'], to: ' až ', rng: ' až ', closed: 'zatvorené' },
-    en: { d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], to: ' to ', rng: ' to ', closed: 'closed' },
-    de: { d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], to: ' bis ', rng: ' bis ', closed: 'geschlossen' },
-    cs: { d: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'], to: ' až ', rng: ' až ', closed: 'zavřeno' },
-    hu: { d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'], to: '-', rng: '-', closed: 'zárva' },
-    pl: { d: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sob'], to: ' do ', rng: ' do ', closed: 'zamknięte' },
-    uk: { d: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'], to: ' до ', rng: ' до ', closed: 'зачинено' }
+    sk: { d: ['Ne', 'Po', 'Ut', 'St', 'Št', 'Pi', 'So'], closed: 'zatvorené' },
+    en: { d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], closed: 'closed' },
+    de: { d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], closed: 'geschlossen' },
+    cs: { d: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'], closed: 'zavřeno' },
+    hu: { d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'], closed: 'zárva' },
+    pl: { d: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sob'], closed: 'zamknięte' },
+    uk: { d: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'], closed: 'зачинено' }
   };
-  // riadky hodín: rovnaké susedné dni sa spoja (Po až Pi: 09:00 až 18:00)
+  // riadky hodín ako na webe: rovnaké susedné dni sa spoja (Po–Pi: 09:00–18:00)
   function hourLines(hod, lang) {
-    const W = DAY_WORDS[lang], order = [1, 2, 3, 4, 5, 6, 0], groups = [];
-    order.forEach((d) => { const h = hod[d] || null, g = groups[groups.length - 1];
-      if (g && same(g.h, h)) g.to = d; else groups.push({ from: d, to: d, h }); });
-    return groups.map((g) => `${W.d[g.from]}${g.from !== g.to ? W.rng + W.d[g.to] : ''}: ${g.h ? hm(g.h[0]) + W.to + hm(g.h[1]) : W.closed}`);
+    const W = DAY_WORDS[lang], groups = [];
+    [1, 2, 3, 4, 5, 6, 0].forEach((d) => { const x = hod[d] || null, g = groups[groups.length - 1]; if (g && same(g.h, x)) g.to = d; else groups.push({ from: d, to: d, h: x }); });
+    return groups.map((g) => `${W.d[g.from]}${g.from !== g.to ? '–' + W.d[g.to] : ''}: ${g.h ? hm(g.h[0]) + '–' + hm(g.h[1]) : W.closed}`);
   }
   const DAY_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   function openingLd(hod) {
-    const map = {}; [1, 2, 3, 4, 5, 6, 0].forEach((d) => { const h = hod[d]; if (!h) return; const k = hm(h[0]) + '-' + hm(h[1]); (map[k] = map[k] || []).push(DAY_EN[d]); });
+    const map = {}; [1, 2, 3, 4, 5, 6, 0].forEach((d) => { const x = hod[d]; if (!x) return; const k = hm(x[0]) + '-' + hm(x[1]); (map[k] = map[k] || []).push(DAY_EN[d]); });
     return Object.entries(map).map(([k, days]) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: days.length === 1 ? days[0] : days, opens: k.split('-')[0], closes: k.split('-')[1] }));
   }
+  // nový kľúč prekladu sa vloží hneď za starý, aby poradie v súbore ostalo prehľadné
+  function setKey(d, key, value, near) {
+    if (key in d || !near || !(near in d)) { d[key] = value; return; }
+    const list = Object.entries(d), i = list.findIndex(([k]) => k === near);
+    list.splice(i + 1, 0, [key, value]);
+    Object.keys(d).forEach((k) => delete d[k]); list.forEach(([k, v]) => { d[k] = v; });
+  }
+  function renameKey(d, oldK, newK, value) { if (!(oldK in d)) return; setKey(d, newK, value, oldK); if (oldK !== newK) delete d[oldK]; }
+  // preklad jedného textu: pri zmene slovenčiny sa kľúč presunie, starý sa zmaže až keď ho už nič nepoužíva
+  function i18nText(dicts, cands, oldK, newK, trs) {
+    LANGS.forEach((l) => {
+      const d = dicts[l], e = trs && trs[l], v = e ? valOf(e) : '';
+      if (oldK === newK) { if (e && changed(e)) { if (v) d[newK] = v; else delete d[newK]; } return; }
+      if (!newK || !v) return;
+      if (newK in d && !(e && e.touched)) return;
+      setKey(d, newK, v, oldK);
+    });
+    if (oldK && oldK !== newK) cands.add(oldK);
+  }
+  function i18nLines(dicts, cands, oldL, newL, trs, split) {
+    LANGS.forEach((l) => {
+      const e = trs[l], d = dicts[l], tl = split(e.cur);
+      newL.forEach((k, i) => {
+        const v = norm(tl[i] || ''), o = oldL[i];
+        if (k === o && !changed(e)) return;
+        if (!v || (v === k && !(k in d))) return;
+        if (k !== o && k in d && !e.touched) return;
+        setKey(d, k, v, o);
+      });
+    });
+    oldL.forEach((o) => { if (!newL.includes(o)) cands.add(o); });
+  }
+  const splitPara = (v) => String(v).split(/\n\s*\n/);
+  const splitLines = (v) => String(v).split('\n');
+  function swapNums(v, oldN, newN) { let k = 0; return String(v).replace(/\d+/g, (x) => (k < oldN.length && +x === oldN[k] ? String(newN[k++]) : x)); }
+  const SEP = '(?:<span aria-hidden="true">\\s*·\\s*<\\/span>|(?:&nbsp;|\\u00a0| )?·(?:&nbsp;|\\u00a0| )?)';
+  const LINK = (n) => `<a\\b[^>]*\\bdata-siet="${n}"[^>]*>(?:(?!<\\/a>)[\\s\\S])*<\\/a>`;
 
-  function apply(f) {
-    let html = base.html; const i18n = JSON.parse(JSON.stringify(base.i18n)); const notes = [];
-    // dáta pre Google sa upravujú ako objekt a zapíšu sa späť na konci
+  function build() {
+    const files = {}, notes = [], cands = new Set();
+    const dicts = clone(base.i18n);
+    let html = base.raw['index.html'];
+    let pravne = base.raw['pravne.html'];
+
+    // 1) texty: úseky podľa pozície v pôvodnom súbore, od konca, aby pozície sedeli
+    const reps = [];
+    model.blocks.forEach((b) => b.segs.forEach((s, j) => {
+      const e = b.entries[j]; if (!e) return;
+      const nv = valOf(e);
+      i18nText(dicts, cands, s.key, nv, e.tr);
+      if (nv === s.key) return;
+      b.occ.forEach((ob) => { const os = ob.segs[j]; const lead = os.raw.match(/^\s*/)[0], tail = os.raw.slice(lead.length).match(/\s*$/)[0]; reps.push([os.start, os.end, lead + esc(fixNb(nv, os.val)) + tail]); });
+    }));
+    reps.sort((a, b) => b[0] - a[0]).forEach(([a, z, t]) => { html = html.slice(0, a) + t + html.slice(z); });
+    // nadpis úvodu rozdelený na slová (film) nasleduje statický nadpis
+    {
+      const st = html.match(/<header class="hero-static"[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/), sp = html.match(/(<h1 data-split><span class="vh">)([\s\S]*?)(<\/span><span aria-hidden="true">)([\s\S]*?)(<\/span><\/h1>)/);
+      if (st && sp) {
+        const parts = (st[1].match(/[^<>]+(?=<|$)/g) || []).map((x) => x).filter((x) => LETTER.test(x));
+        let k = 0;
+        const words = sp[4].replace(/(<span class="w[^"]*"[^>]*>)([\s\S]*?)(<\/span>)/g, (m0, a, t, c) => (k < parts.length ? a + norm(parts[k++]).replace(/ /g, NB) + c : m0));
+        const whole = norm(dec(st[1].replace(/<[^>]+>/g, '')));
+        const oldWhole = norm(dec(sp[2]));
+        if (whole !== oldWhole) {
+          html = html.replace(sp[0], sp[1] + esc(fixNb(whole, dec(sp[2]))) + sp[3] + words + sp[5]);
+          LANGS.forEach((l) => { const d = dicts[l]; const ps = parts.map((p) => d[norm(dec(p))]); if (ps.every(Boolean)) setKey(d, whole, ps.join(' '), oldWhole); else if (d[oldWhole] && !(whole in d)) setKey(d, whole, d[oldWhole], oldWhole); });
+          cands.add(oldWhole);
+        }
+      }
+    }
+
+    // 2) dáta pre Google ako objekt, späť sa zapíšu na konci
     const reLd = /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/;
     const ld = JSON.parse(html.match(reLd)[2]);
     const nodes = []; (function walk(o) { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { nodes.push(o); Object.values(o).forEach(walk); } })(ld);
     const offers = nodes.filter((o) => o['@type'] === 'Offer');
-    const biz = nodes.find((o) => o.openingHoursSpecification || o.priceRange);
-    // preklad: starý kľúč preč, nový s prekladom (prázdny preklad = kľúč sa vynechá)
-    const retext = (oldSk, newSk, trs) => { LANGS.forEach((l) => { const d = i18n[l]; if (oldSk !== newSk) delete d[oldSk]; if (trs[l]) d[newSk] = trs[l]; else if (oldSk !== newSk) delete d[newSk]; }); };
+    const biz = nodes.find((o) => o.openingHoursSpecification || o.priceRange) || {};
+    const faqLd = nodes.find((o) => o['@type'] === 'FAQPage');
 
-    // rituály
-    f.rituals.forEach((r, i) => { const o = model.rituals[i];
-      if (same(r, o)) return;
-      const reArt = new RegExp(`<article\\b[^>]*\\bid="${r.id}"[^>]*>[\\s\\S]*?<\\/article>`);
-      const art = html.match(reArt); if (!art) throw new Error(`Rituál ${r.id} sa na webe nenašiel`);
+    // 3) rituály
+    model.rituals.forEach((r) => {
+      const all = [...Object.values(r.e), ...Object.values(r.tr).flatMap((x) => Object.values(x))];
+      if (!all.some(changed)) return;
+      const reArt = new RegExp(`<article\\b[^>]*\\bid="${reEsc(r.id)}"[^>]*>[\\s\\S]*?<\\/article>`);
+      const art = html.match(reArt); if (!art) throw Object.assign(new Error(`Rituál ${r.name} sa na webe nenašiel.`), { user: true });
       let a = art[0];
-      a = a.replace(/data-min="\d+"/, `data-min="${r.min}"`).replace(/data-price="\d+"/, `data-price="${r.price}"`);
-      a = a.replace(/(<div class="meta"><span>)\d+(\s|&nbsp;| )?min/, `$1${r.min}${NB}min`).replace(/(<strong>)\d+((?:\s|&nbsp;| )?€<\/strong>)/, `$1${r.price}$2`);
-      if (r.tag !== o.tag) a = a.replace(/<p class="tag">[\s\S]*?<\/p>/, `<p class="tag">${esc(typo(r.tag))}</p>`);
-      if (r.desc !== o.desc) a = a.replace(/<p class="desc">[\s\S]*?<\/p>/, `<p class="desc">${esc(typo(r.desc))}</p>`);
-      html = html.replace(art[0], a);
-      // Google: cena a dĺžka v ponuke
+      const v = (k) => valOf(r.e[k]);
+      const min = +v('min'), price = +v('price');
+      a = a.replace(/data-min="\d+"/, `data-min="${min}"`).replace(/data-price="\d+"/, `data-price="${price}"`);
+      a = a.replace(/(<div class="meta"><span>)\d+((?:\s|&nbsp;)?min)/, `$1${min}$2`).replace(/(<strong>)\d+((?:\s|&nbsp;)?€<\/strong>)/, `$1${price}$2`);
       const off = offers.find((x) => String(x.url || '').endsWith('#' + r.id));
-      if (off) { off.price = String(r.price); if (off.itemOffered) off.itemOffered.duration = `PT${r.min}M`; } else notes.push(`Dáta pre Google pri ${r.name} sa nenašli`);
-      const trTag = {}, trDesc = {}; LANGS.forEach((l) => { trTag[l] = r.tr[l].tag; trDesc[l] = r.tr[l].desc; });
-      retext(o.tag, r.tag, trTag); retext(o.desc, r.desc, trDesc);
+      if (off) { off.price = String(price); if (off.itemOffered) off.itemOffered.duration = `PT${min}M`; }
+      if (changed(r.e.name)) {
+        a = a.replace(/<h3>[\s\S]*?<\/h3>/, `<h3>${esc(fixNb(v('name'), r.name))}</h3>`).replace(/data-name="[^"]*"/, `data-name="${escA(v('name').toUpperCase())}"`);
+        if (off && off.itemOffered) off.itemOffered.name = v('name');
+      }
+      if (changed(r.e.badge)) {
+        const nb = v('badge');
+        if (/<span class="badge">/.test(a)) a = nb ? a.replace(/(<span class="badge">)[\s\S]*?(<\/span>)/, `$1${esc(fixNb(nb, r.badge))}$2`) : a.replace(/<span class="badge">[\s\S]*?<\/span>/, '');
+        else if (nb) a = a.replace(/(<div class="mini">[\s\S]*?)(<\/div>)/, `$1<span class="badge">${esc(fixNb(nb))}</span>$2`);
+      }
+      if (changed(r.e.tag)) a = a.replace(/(<p class="tag">)[\s\S]*?(<\/p>)/, `$1${esc(fixNb(v('tag'), r.tag))}$2`);
+      if (changed(r.e.desc)) a = a.replace(/(<p class="desc">)[\s\S]*?(<\/p>)/, `$1${esc(fixNb(v('desc'), r.desc))}$2`);
+      const oldAbout = r.about.map(norm), newAbout = v('about').split('\n\n').filter(Boolean), oldSteps = r.steps.map(norm), newSteps = v('steps').split('\n').filter(Boolean);
+      if (changed(r.e.about)) { const oldJoined = r.about.join(' '); a = a.replace(/(<div class="about"><span class="lbl">[^<]*<\/span>)[\s\S]*?(<\/div>)/, `$1${newAbout.map((p) => `<p>${esc(fixNb(p, oldJoined))}</p>`).join('')}$2`); }
+      if (changed(r.e.steps)) { const oldJoined = r.steps.join(' '); a = a.replace(/(<ol>)[\s\S]*?(<\/ol>)/, `$1${newSteps.map((p) => `<li>${esc(fixNb(p, oldJoined))}</li>`).join('')}$2`); }
+      html = html.replace(art[0], a);
+      if (changed(r.e.name)) html = html.replace(new RegExp(`(<option value="[^"]*" data-card="${reEsc(r.id)}">)[\\s\\S]*?(<\\/option>)`), `$1${esc(v('name'))}$2`);
+      ['name', 'badge', 'tag', 'desc'].forEach((k) => i18nText(dicts, cands, norm(r[k]), v(k), r.tr[k]));
+      i18nLines(dicts, cands, oldAbout, newAbout, r.tr.about, splitPara);
+      i18nLines(dicts, cands, oldSteps, newSteps, r.tr.steps, splitLines);
     });
-    // rozpätia cien a dĺžok
-    const mins = f.rituals.map((r) => r.min), prices = f.rituals.map((r) => r.price);
-    const oMins = model.rituals.map((r) => r.min), oPrices = model.rituals.map((r) => r.price);
-    const [minM, maxM, minP, maxP] = [Math.min(...mins), Math.max(...mins), Math.min(...prices), Math.max(...prices)];
-    const [oMinM, , oMinP, oMaxP] = [Math.min(...oMins), Math.max(...oMins), Math.min(...oPrices), Math.max(...oPrices)];
-    html = html.replace(/od \d+ do \d+ minút, ceny \d+ až \d+ €/, `od ${minM} do ${maxM} minút, ceny ${minP} až ${maxP} €`);
-    if (biz && biz.priceRange) biz.priceRange = `${minP} € až ${maxP} €`;
-    html = html.replace(/Od \d+ minút po dve hodiny\./g, `Od ${minM} minút po dve hodiny.`);
-    if (minM !== oMinM) {
-      const oldK = `17 rituálov, od ${oMinM} minút po dve hodiny`, newK = `17 rituálov, od ${minM} minút po dve hodiny`;
-      html = html.split(oldK).join(newK);
-      LANGS.forEach((l) => { const d = i18n[l]; if (d[oldK]) { d[newK] = d[oldK].replace(String(oMinM), String(minM)); delete d[oldK]; } });
+    // rozpätia dĺžok a cien v textoch, v popise pre Google a v prekladoch
+    {
+      const oM = model.rituals.map((r) => r.min), oP = model.rituals.map((r) => r.price);
+      const nM = model.rituals.map((r) => +valOf(r.e.min)), nP = model.rituals.map((r) => +valOf(r.e.price));
+      const o4 = [Math.min(...oM), Math.max(...oM), Math.min(...oP), Math.max(...oP)], n4 = [Math.min(...nM), Math.max(...nM), Math.min(...nP), Math.max(...nP)];
+      if (!same(o4, n4)) {
+        const S = '[ \\u00a0]';
+        const PH = [[new RegExp(`od${S}\\d+${S}do${S}\\d+${S}minút,${S}ceny${S}\\d+${S}až${S}\\d+${S}€`, 'g'), n4], [new RegExp(`Od${S}\\d+${S}do${S}\\d+${S}minút${S}a${S}od${S}\\d+${S}do${S}\\d+${S}€`, 'g'), n4], [new RegExp(`od${S}\\d+${S}minút${S}po${S}dve${S}hodiny`, 'g'), [n4[0]]]];
+        PH.forEach(([re, nn]) => {
+          const put = (m0) => { let k = 0; return m0.replace(/\d+/g, () => String(nn[k++])); };
+          html = html.replace(re, put);
+          LANGS.forEach((l) => { const d = dicts[l]; Object.keys(d).forEach((key) => { if (!re.test(key)) { re.lastIndex = 0; return; } re.lastIndex = 0; const on = (key.match(re)[0].match(/\d+/g) || []).map(Number); re.lastIndex = 0; renameKey(d, key, key.replace(re, put), swapNums(d[key], on, nn)); re.lastIndex = 0; }); });
+        });
+        biz.priceRange = `${n4[2]} € až ${n4[3]} €`;
+        if (n4[1] !== 120) notes.push('Najdlhší rituál už nemá 120 minút, text „po dve hodiny“ treba upraviť v záložke Texty.');
+      }
     }
-    if (maxM !== 120) notes.push('Najdlhší rituál už nemá 120 minút: v texte „po dve hodiny“ ostáva pôvodné znenie, daj vedieť správcovi webu.');
-    void oMinP; void oMaxP;
 
-    // hodiny
-    if (!same(f.hodiny, model.hodiny)) {
-      const nast = Object.assign({}, model.nast, { hodiny: f.hodiny });
-      html = html.replace(/(<script type="application\/json" id="nastavenia">)[\s\S]*?(<\/script>)/, `$1${JSON.stringify(nast)}$2`);
-      const oldSk = hourLines(model.hodiny, 'sk'), newSk = hourLines(f.hodiny, 'sk');
-      html = html.replace(/(<h3>Otváracie hodiny<\/h3><p class="today" data-today aria-live="polite"><\/p><p>)[\s\S]*?(<\/p>)/, `$1${newSk.join('<br>')}$2`);
-      LANGS.forEach((l) => { const d = i18n[l]; oldSk.forEach((k) => delete d[k]); const t = hourLines(f.hodiny, l); newSk.forEach((k, j) => { d[k] = t[j]; }); });
-      if (biz) biz.openingHoursSpecification = openingLd(f.hodiny);
+    // 4) tím
+    const del = new Set();
+    if (teamChanges().length) {
+      const byUid = Object.fromEntries(model.team.map((m) => [m.uid, m]));
+      const taken = new Set(base.tim.map((p) => (p.match(/assets\/img\/tim\/(.+?)-\d+\.\w+$/) || [])[1]).filter(Boolean));
+      const used = new Set(team.filter((m) => m.slug).map((m) => m.slug));
+      const figs = team.map((m) => {
+        const o = byUid[m.uid], name = norm(m.name), role = norm(m.role), bio = norm(m.bio), alt = ALT.sk(name);
+        const same0 = o && name === o.name && role === o.role && bio === o.bio && !m.photo;
+        if (same0) return o.html;
+        let pic = o ? o.pic : '';
+        if (m.photo) {
+          let slug = m.slug;
+          if (!slug) { const s0 = slugify(name); slug = s0; let i = 2; while (taken.has(slug) || used.has(slug)) slug = `${s0}-${i++}`; used.add(slug); m.slug = slug; }
+          const P = (w, ext) => `assets/img/tim/${slug}-${w}.${ext}`;
+          const newPaths = Object.keys(m.photo.files).map((k) => { const [w, ext] = k.split('.'); return P(w, ext); });
+          Object.entries(m.photo.files).forEach(([k, b64]) => { const [w, ext] = k.split('.'); files[P(w, ext)] = { b64 }; });
+          if (o) o.paths.forEach((p) => { if (!newPaths.includes(p) && base.tim.includes(p)) del.add(p); });
+          pic = m.photo.webp
+            ? `<picture><source type="image/webp" srcset="${P(480, 'webp')} 480w, ${P(800, 'webp')} 800w, ${P(1086, 'webp')} 1086w" sizes="${TIM_SIZES}"><img src="${P(800, 'jpg')}" alt="${escA(alt)}" width="800" height="1000" loading="lazy" decoding="async"></picture>`
+            : `<picture><img src="${P(800, 'jpg')}" srcset="${P(480, 'jpg')} 480w, ${P(800, 'jpg')} 800w, ${P(1086, 'jpg')} 1086w" sizes="${TIM_SIZES}" alt="${escA(alt)}" width="800" height="1000" loading="lazy" decoding="async"></picture>`;
+        } else pic = pic.replace(/alt="[^"]*"/, `alt="${escA(alt)}"`);
+        return `<figure class="part">${pic}<figcaption><b>${esc(fixNb(name))}</b>${role ? `<span>${esc(fixNb(role, o && o.role))}</span>` : ''}${bio ? `<p>${esc(fixNb(bio, o && o.bio))}</p>` : ''}</figcaption></figure>`;
+      });
+      html = html.replace(/(<div class="team-grid[^"]*">)[\s\S]*?(<\/div>)/, (m0, a, c) => a + figs.join('') + c);
+      // odstránení ľudia: fotky preč z webu, texty z prekladov
+      model.team.forEach((o) => { if (!team.some((m) => m.uid === o.uid)) { o.paths.forEach((p) => { if (base.tim.includes(p)) del.add(p); }); [o.name, ALT.sk(o.name), o.role, o.bio].forEach((k) => k && cands.add(k)); } });
+      team.forEach((m) => {
+        const o = byUid[m.uid], name = norm(m.name), role = norm(m.role), bio = norm(m.bio);
+        LANGS.forEach((l) => {
+          const d = dicts[l];
+          setKey(d, name, d[name] || name, o && o.name);
+          if (!o || o.name !== name || !(ALT.sk(name) in d)) setKey(d, ALT.sk(name), ALT[l](name), o && ALT.sk(o.name));
+          const tr = (k, val) => { const t = norm(m.tr[k][l]); if (!val) return; if (t) setKey(d, val, t, o && o[k]); else if (o && val === o[k]) delete d[val]; };
+          tr('role', role); tr('bio', bio);
+        });
+        if (o) { if (o.name !== name) { cands.add(o.name); cands.add(ALT.sk(o.name)); } if (o.role !== role) cands.add(o.role); if (o.bio !== bio) cands.add(o.bio); }
+      });
     }
-    // štatistiky (v tom istom bloku nastavení)
-    if (f.statistiky !== model.statistiky) {
-      const cur = JSON.parse((html.match(/<script type="application\/json" id="nastavenia">([\s\S]*?)<\/script>/) || [])[1] || '{}');
-      cur.statistiky = f.statistiky;
-      html = html.replace(/(<script type="application\/json" id="nastavenia">)[\s\S]*?(<\/script>)/, `$1${JSON.stringify(cur)}$2`);
+
+    // 5) oznam
+    {
+      const e = entries.get('oz|sk');
+      if (e.trs.concat([e]).some(changed)) {
+        const t = valOf(e);
+        html = html.replace(/<div class="oznam" id="oznam" role="status"( hidden)?><p>[\s\S]*?<\/p><\/div>/, `<div class="oznam" id="oznam" role="status"${t ? '' : ' hidden'}><p>${esc(fixNb(t, model.ozRaw))}</p></div>`);
+        i18nText(dicts, cands, model.oznam, t, e.tr);
+      }
     }
-    // oznam
-    if (f.oznam !== model.oznam || !same(f.ozTr, model.ozTr)) {
-      html = html.replace(/<div class="oznam" id="oznam" role="status"( hidden)?><p>[\s\S]*?<\/p><\/div>/,
-        `<div class="oznam" id="oznam" role="status"${f.oznam ? '' : ' hidden'}><p>${esc(typo(f.oznam))}</p></div>`);
-      if (model.oznam) LANGS.forEach((l) => delete i18n[l][model.oznam]);
-      if (f.oznam) LANGS.forEach((l) => { if (f.ozTr[l]) i18n[l][f.oznam] = f.ozTr[l]; });
+    // 6) nastavenia: hodiny, štatistiky, platby
+    const reNast = /(<script type="application\/json" id="nastavenia">)([\s\S]*?)(<\/script>)/;
+    const nast = JSON.parse(html.match(reNast)[2]);
+    const hod = {}; DAYS.forEach(([d]) => { hod[d] = entries.get(`h|${d}|on`).cur === '1' ? [fromHm(entries.get(`h|${d}|od`).cur), fromHm(entries.get(`h|${d}|do`).cur)] : null; });
+    const hod0 = {}; [0, 1, 2, 3, 4, 5, 6].forEach((d) => { hod0[d] = hod[d]; });
+    if (!same(hod0, Object.assign({}, { 0: null, 1: null, 2: null, 3: null, 4: null, 5: null, 6: null }, model.hodiny))) {
+      nast.hodiny = hod0;
+      const oldSk = hourLines(model.hodiny, 'sk'), newSk = hourLines(hod0, 'sk');
+      html = html.replace(/(<h3>Otváracie hodiny<\/h3><p class="today" data-today aria-live="polite"><\/p><p>)[\s\S]*?(<\/p>)/, `$1${newSk.map(esc).join('<br>')}$2`);
+      LANGS.forEach((l) => { const d = dicts[l], t = hourLines(hod0, l); newSk.forEach((k, j) => setKey(d, k, t[j], oldSk[j] || oldSk[oldSk.length - 1])); });
+      oldSk.forEach((k) => { if (!newSk.includes(k)) cands.add(k); });
+      biz.openingHoursSpecification = openingLd(hod0);
     }
-    // dáta pre Google späť do stránky (telefón v nich vymení krok nižšie spolu s textom)
-    html = html.replace(reLd, (m0, a, b, c) => a + JSON.stringify(ld) + c);
-    // telefón: všetky tvary čísla na webe aj v prekladoch
-    if (f.tel !== model.tel) {
-      const o = model.tel.replace(/\s/g, '').slice(1), n = f.tel.replace(/\s/g, '').slice(1);
-      const g = (x, sep) => [x.slice(0, 3), x.slice(3, 6), x.slice(6)].join(sep);
-      const pairs = [];
+    if (changed(entries.get('gc'))) nast.statistiky = valOf(entries.get('gc'));
+    const platby = {}; model.rituals.forEach((r) => { const u = valOf(entries.get(`p|${r.id}`)); if (u) platby[r.id] = u; });
+    if (!same(platby, model.platby)) nast.platby = platby;
+    if (JSON.stringify(nast) !== JSON.stringify(model.nast)) html = html.replace(reNast, (m0, a, b, c) => a + safeJson(nast) + c);
+
+    // 7) sociálne siete: adresa, odstránenie aj s bodkou medzi odkazmi, pridanie za posledný odkaz
+    NETS.forEach(([n, lab]) => {
+      const e = entries.get(`k|${n}`); if (!changed(e)) return;
+      const u = valOf(e);
+      if (!u) {
+        html = html.replace(new RegExp(LINK(n) + SEP, 'g'), '').replace(new RegExp(SEP + LINK(n), 'g'), '').replace(new RegExp(LINK(n), 'g'), '');
+        return;
+      }
+      if (new RegExp(LINK(n)).test(html)) { html = html.replace(new RegExp(`<a\\b[^>]*\\bdata-siet="${n}"[^>]*>`, 'g'), (t) => t.replace(/href="[^"]*"/, `href="${escA(u)}"`)); return; }
+      const tag = `<a href="${escA(u)}" target="_blank" rel="noopener" data-siet="${n}">${lab}</a>`;
+      const conts = []; const reC = /<(p|div)\b[^>]*\bdata-siete\b[^>]*>/g; let c;
+      while ((c = reC.exec(html))) { const endTag = html.indexOf(`</${c[1]}>`, reC.lastIndex); if (endTag > 0) conts.push([reC.lastIndex, endTag]); }
+      conts.reverse().forEach(([a, z]) => {
+        const inner = html.slice(a, z);
+        const links = Array.from(inner.matchAll(/<a\b[^>]*\bdata-siet="[^"]+"[^>]*>[\s\S]*?<\/a>/g));
+        const sm = inner.match(new RegExp(`<\\/a>(${SEP})<a\\b`)); const sep = sm ? sm[1] : '';
+        const pos = links.length ? a + links[links.length - 1].index + links[links.length - 1][0].length : z;
+        html = html.slice(0, pos) + (sep ? sep + tag : tag) + html.slice(pos);
+      });
+      LANGS.forEach((l) => { if (!(lab in dicts[l])) dicts[l][lab] = lab; });
+    });
+    {
+      const sameAs = NETS.map(([n]) => valOf(entries.get(`k|${n}`))).filter(Boolean);
+      if (NETS.some(([n]) => changed(entries.get(`k|${n}`)))) { if (sameAs.length) biz.sameAs = sameAs; else delete biz.sameAs; }
+    }
+
+    // 8) otázky pre Google podľa textov na stránke
+    if (faqLd && Array.isArray(faqLd.mainEntity)) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const items = $$('.faq-item', doc).map((it) => ({ q: norm($('.faq-q', it).textContent), a: norm($('.faq-a', it).textContent) }));
+      if (items.length === faqLd.mainEntity.length) faqLd.mainEntity.forEach((me, i) => {
+        if (norm(me.name) !== items[i].q) me.name = items[i].q;
+        if (me.acceptedAnswer && norm(me.acceptedAnswer.text) !== items[i].a) me.acceptedAnswer.text = items[i].a;
+      });
+      else notes.push('Počet otázok na stránke nesedí s dátami pre Google, otázky pre Google ostali bez zmeny.');
+    }
+    if (JSON.stringify(ld) !== JSON.stringify(JSON.parse(model.ldStr))) html = html.replace(reLd, (m0, a, b, c) => a + safeJson(ld) + c);
+
+    // 9) firma na stránke Právne informácie
+    if (FIRMA.some(([k]) => changed(entries.get(`firma|${k}`)))) {
+      const firma = {}; FIRMA.forEach(([k]) => { firma[k] = valOf(entries.get(`firma|${k}`)); });
+      pravne = pravne.replace(/(<script type="application\/json" id="firma">)[\s\S]*?(<\/script>)/, (m0, a, c) => a + safeJson(firma) + c);
+    }
+
+    // 10) telefón a e-mail: všetky tvary na webe, v skriptoch aj v prekladoch
+    const out = { 'index.html': html, 'pravne.html': pravne };
+    ['404.html', 'assets/app.js', 'assets/app.min.js'].forEach((p) => { if (base.raw[p] != null) out[p] = base.raw[p]; });
+    const pairs = [];
+    const te = entries.get('k|tel');
+    if (changed(te)) {
+      const o = model.tel.replace(/\s/g, '').slice(1), n = valOf(te).replace(/\s/g, '').slice(1);
+      const g = (x, sp) => [x.slice(0, 3), x.slice(3, 6), x.slice(6)].join(sp);
       [' ', NB, '&nbsp;'].forEach((sp) => { pairs.push(['0' + g(o, sp), '0' + g(n, sp)], ['+421' + sp + g(o, sp), '+421' + sp + g(n, sp)]); });
       pairs.push(['+421' + o, '+421' + n], ['421' + o, '421' + n]);
-      pairs.forEach(([a, b]) => { html = html.split(a).join(b); });
-      LANGS.forEach((l) => { const d = i18n[l], nd = {}; Object.keys(d).forEach((k) => { let k2 = k, v2 = d[k]; pairs.forEach(([a, b]) => { k2 = k2.split(a).join(b); v2 = v2.split(a).join(b); }); nd[k2] = v2; }); i18n[l] = nd; });
     }
-    // kontrola: dáta pre Google musia ostať platný JSON
-    (html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) || []).forEach((s) => JSON.parse(s.replace(/^<script[^>]*>|<\/script>$/g, '')));
-    JSON.parse((html.match(/<script type="application\/json" id="nastavenia">([\s\S]*?)<\/script>/) || [])[1]);
-    const files = {};
-    if (html !== base.html) files['index.html'] = html;
-    LANGS.forEach((l) => { const t = JSON.stringify(i18n[l], null, 1) + '\n'; if (t !== base.raw[`assets/i18n/${l}.json`]) files[`assets/i18n/${l}.json`] = t; });
+    const ee = entries.get('k|email');
+    if (changed(ee) && model.email) pairs.push([model.email, valOf(ee)]);
+    if (pairs.length) {
+      Object.keys(out).forEach((p) => { pairs.forEach(([a, b]) => { out[p] = out[p].split(a).join(b); }); });
+      LANGS.forEach((l) => { const d = dicts[l], nd = {}; Object.keys(d).forEach((k) => { let k2 = k, v2 = d[k]; pairs.forEach(([a, b]) => { k2 = k2.split(a).join(b); v2 = v2.split(a).join(b); }); nd[k2] = v2; }); dicts[l] = nd; });
+    }
+
+    // 11) starý kľúč prekladu sa zmaže, len keď sa jeho text už nikde nevyskytuje
+    const hay = norm(decAttr(Object.values(out).join(' ')));
+    cands.forEach((k) => { if (k && !hay.includes(k)) LANGS.forEach((l) => { delete dicts[l][k]; }); });
+
+    // kontrola: bloky JSON musia ostať platné
+    (out['index.html'].match(/<script type="application\/(?:ld\+)?json"[^>]*>[\s\S]*?<\/script>/g) || []).forEach((s) => JSON.parse(s.replace(/^<script[^>]*>|<\/script>$/g, '')));
+    JSON.parse((out['pravne.html'].match(/<script type="application\/json" id="firma">([\s\S]*?)<\/script>/) || [, '{}'])[1]);
+
+    Object.entries(out).forEach(([p, t]) => { if (t !== base.raw[p]) files[p] = { text: t }; });
+    LANGS.forEach((l) => { const p = `assets/i18n/${l}.json`; if (!same(dicts[l], base.i18n[l])) files[p] = { text: JSON.stringify(dicts[l], null, 1) + '\n' }; });
+    del.forEach((p) => { if (!files[p]) files[p] = null; });
     return { files, notes };
   }
 
-  async function commit(files, message) {
+  async function commit(files, message, progress) {
     const ref = await gh(`/git/ref/heads/${BRANCH}`);
-    if (ref.object.sha !== base.sha) throw Object.assign(new Error('Medzitým sa web zmenil inde. Načítam ho znova, zmeny zopakuj.'), { stale: true });
+    if (ref.object.sha !== base.sha) throw Object.assign(new Error('stale'), { stale: true });
     const head = await gh(`/git/commits/${base.sha}`);
-    const tree = [];
-    for (const [path, text] of Object.entries(files)) {
-      const blob = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: b64enc(text), encoding: 'base64' }) });
+    const tree = [], list = Object.entries(files);
+    let i = 0;
+    for (const [path, f] of list) {
+      i++;
+      if (f === null) { tree.push({ path, mode: '100644', type: 'blob', sha: null }); continue; }
+      progress(`Ukladám ${i} z ${list.length}…`);
+      const blob = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: f.b64 != null ? f.b64 : b64enc(f.text), encoding: 'base64' }) });
       tree.push({ path, mode: '100644', type: 'blob', sha: blob.sha });
     }
     const t = await gh('/git/trees', { method: 'POST', body: JSON.stringify({ base_tree: head.tree.sha, tree }) });
     const c = await gh('/git/commits', { method: 'POST', body: JSON.stringify({ message, tree: t.sha, parents: [base.sha] }) });
-    await gh(`/git/refs/heads/${BRANCH}`, { method: 'PATCH', body: JSON.stringify({ sha: c.sha, force: false }) });
+    try { await gh(`/git/refs/heads/${BRANCH}`, { method: 'PATCH', body: JSON.stringify({ sha: c.sha, force: false }) }); }
+    catch (e) { if (e.status === 422 || e.status === 409) throw Object.assign(new Error('stale'), { stale: true }); throw e; }
     return c.sha;
   }
 
   /* ---------- načítanie ---------- */
+  const FILES = ['index.html', 'pravne.html', '404.html', 'assets/app.js', 'assets/app.min.js', ...LANGS.map((l) => `assets/i18n/${l}.json`)];
   async function load() {
     const ref = await gh(`/git/ref/heads/${BRANCH}`);
     const sha = ref.object.sha;
-    const paths = ['index.html', ...LANGS.map((l) => `assets/i18n/${l}.json`)];
-    const texts = await Promise.all(paths.map((p) => readFile(p, sha)));
-    const raw = {}; paths.forEach((p, i) => { raw[p] = texts[i]; });
+    const texts = await Promise.all(FILES.map((p) => readFile(p, sha).catch((e) => { if (e.status === 404 && !/index\.html$|i18n/.test(p)) return null; throw e; })));
+    const raw = {}; FILES.forEach((p, i) => { raw[p] = texts[i]; });
     const i18n = {}; LANGS.forEach((l) => { i18n[l] = JSON.parse(raw[`assets/i18n/${l}.json`]); });
-    base = { sha, html: raw['index.html'], i18n, raw };
-    model = parse(base.html, i18n);
+    let tim = [];
+    // fotky tímu: priečinok sa číta len vtedy, keď existuje (bez zbytočnej chyby 404)
+    const img = await gh(`/contents/assets/img?ref=${sha}`).catch(() => []);
+    if (Array.isArray(img) && img.some((x) => x.path === 'assets/img/tim')) { const l = await gh(`/contents/assets/img/tim?ref=${sha}`); if (Array.isArray(l)) tim = l.map((x) => x.path); }
+    base = { sha, raw, i18n, tim };
+    model = parseAll();
+    prepare();
     render();
   }
+  // po konflikte: zmeny sa prenesú na novú verziu webu, ak sa to isté pole medzitým nezmenilo inde
+  function snapshot() {
+    const vals = []; entries.forEach((e) => { if (changed(e) || e.touched) vals.push({ key: e.key, orig: e.f(e.orig), cur: e.cur, touched: !!e.touched, item: e.item }); });
+    return { vals, team: teamChanges().length ? { sig: teamSig(model.team), team } : null };
+  }
+  function reapply(s) {
+    const lost = new Set();
+    s.vals.forEach((v) => {
+      const e = entries.get(v.key);
+      if (!e || e.f(e.orig) !== v.orig) { if (v.orig !== v.cur) lost.add(v.item); return; }
+      e.cur = v.cur; e.touched = v.touched; if (e.el) { if (e.el.type === 'checkbox') e.el.checked = e.cur === '1'; else e.el.value = e.cur; }
+    });
+    entries.forEach((e) => { if (e.trs) staleUpdate(e); mark(e); if (e.onInput && !e.trs) e.onInput(e); });
+    if (s.team) { if (teamSig(model.team) === s.team.sig) { team = s.team.team; renderTeam(); } else lost.add('Tím'); }
+    refresh();
+    return Array.from(lost);
+  }
 
-  function msg(el, text, kind) { el.textContent = text; el.className = 'msg' + (kind ? ' ' + kind : ''); }
+  function msg(el, content, kind) { el.textContent = ''; el.append(...[].concat(content)); el.className = 'msg' + (kind ? ' ' + kind : ''); el.hidden = false; fitBar(); }
   async function login() {
     const t = $('#token').value.trim() || token; if (!t) return msg($('#loginMsg'), 'Vlož kľúč.', 'bad');
     token = t; msg($('#loginMsg'), 'Overujem kľúč a načítavam web…');
     try {
       const repo = await gh('');
-      if (!repo.permissions || !repo.permissions.push) throw new Error('Kľúč nemá právo zápisu (Contents: Read and write).');
-      try { (($('#zapamatat').checked) ? localStorage : sessionStorage).setItem('hs30.admin', token); } catch (e) {}
+      if (!repo.permissions || !repo.permissions.push) throw Object.assign(new Error('Kľúč má len právo čítať. Pri kľúči nastav Contents: Read and write.'), { user: true });
+      try { ($('#zapamatat').checked ? localStorage : sessionStorage).setItem('hs30.admin', token); } catch (e) {}
+      $('#login').hidden = true; $('#loading').hidden = false;
       await load();
-      $('#login').classList.add('hidden'); ['#app', '#nav', '#odhlasit'].forEach((s) => $(s).classList.remove('hidden'));
+      $('#loading').hidden = true;
+      ['#app', '#tabs', '#odhlasit', '#webLink', '#bar'].forEach((s) => { $(s).hidden = false; });
+      document.body.classList.add('in');
+      buildTabs(); show((location.hash || '#oznam').slice(1)); refresh();
     } catch (e) {
-      token = ''; try { localStorage.removeItem('hs30.admin'); sessionStorage.removeItem('hs30.admin'); } catch (x) {}
-      msg($('#loginMsg'), e.status === 401 ? 'Kľúč nie je platný alebo mu vypršala platnosť.' : e.status === 404 ? 'Kľúč nemá prístup k repozitáru tohto webu.' : 'Prihlásenie zlyhalo: ' + e.message, 'bad');
+      $('#loading').hidden = true; $('#login').hidden = false;
+      if (e.status === 401 || e.status === 404 || e.user) { token = ''; try { localStorage.removeItem('hs30.admin'); sessionStorage.removeItem('hs30.admin'); } catch (x) {} }
+      msg($('#loginMsg'), human(e), 'bad');
     }
   }
   $('#prihlasit').addEventListener('click', login);
   $('#token').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
-  $('#odhlasit').addEventListener('click', () => { try { localStorage.removeItem('hs30.admin'); sessionStorage.removeItem('hs30.admin'); } catch (e) {} location.reload(); });
-  $('#zrusit').addEventListener('click', () => { render(); msg($('#saveMsg'), 'Zmeny zrušené.'); });
-  $('#ulozit').addEventListener('click', async () => {
-    const btn = $('#ulozit'), out = $('#saveMsg'); btn.disabled = true;
-    const { ch } = diff(form);
+  $('#odhlasit').addEventListener('click', () => { if (collect().size && !confirm('Máš neuložené zmeny. Naozaj sa odhlásiť?')) return; try { localStorage.removeItem('hs30.admin'); sessionStorage.removeItem('hs30.admin'); } catch (e) {} location.reload(); });
+  $('#zrusit').addEventListener('click', () => {
+    if (!confirm('Zrušiť všetky neuložené zmeny?')) return;
+    editing = null; prepare(); render(); msg($('#saveMsg'), 'Zmeny sú zrušené, všetko je ako na webe.');
+  });
+  let saving = false;
+  async function save(retried) {
+    const out = $('#saveMsg');
+    saving = true; refresh();
+    const items = Array.from(collect().keys());
+    const booqme = model.rituals.some((r) => changed(r.e.min) || changed(r.e.price));
     try {
       msg(out, 'Ukladám…');
-      const { files, notes } = apply(form);
-      if (!Object.keys(files).length) { msg(out, 'Nie je čo uložiť.'); return; }
-      const summary = ch.slice(0, 6).join('; ');
-      await commit(files, `Admin: ${summary}${ch.length > 6 ? ' a ďalšie' : ''}`);
-      msg(out, `Uložené. Web sa aktualizuje asi do dvoch minút, potom obnov stránku webu.${notes.length ? ' Pozor: ' + notes.join(' ') : ''} Nezabudni: ceny a dĺžky treba zmeniť aj v Booqme.`, 'ok');
+      const { files, notes } = build();
+      if (!Object.keys(files).length) { msg(out, 'Nie je čo uložiť, web už takto vyzerá.'); return; }
+      const summary = items.slice(0, 4).join('; ');
+      await commit(files, `Úprava webu: ${summary}${items.length > 4 ? ` a ďalšie (${items.length - 4})` : ''}`, (t) => msg(out, t));
+      editing = null;
       await load();
+      msg(out, ['Uložené. Na webe to bude o minútu. ', h('a', { href: LIVE, target: '_blank', rel: 'noopener' }, 'Otvoriť web'), '.', notes.length ? ' Pozor: ' + notes.join(' ') : '', booqme ? ' Cenu a dĺžku zmeň aj v Booqme.' : ''], 'ok');
     } catch (e) {
-      msg(out, e.stale ? e.message : 'Uloženie zlyhalo: ' + e.message, 'bad');
-      if (e.stale) await load();
-    } finally { update(); }
-  });
-  window.addEventListener('beforeunload', (e) => { if (form && model && diff(form).ch.length) { e.preventDefault(); e.returnValue = ''; } });
+      if (e.stale) {
+        try {
+          const snap = snapshot();
+          await load();
+          const lost = reapply(snap);
+          if (!lost.length && !retried) { saving = false; return save(true); }
+          msg(out, lost.length ? `Web sa medzitým zmenil inde. Načítal som novú verziu, tieto zmeny skontroluj a urob znova: ${lost.join(', ')}.` : 'Web sa medzitým zmenil inde. Načítal som novú verziu a tvoje zmeny do nej preniesol. Klikni Uložiť na web ešte raz.', 'bad');
+        } catch (e2) { msg(out, human(e2), 'bad'); }
+      } else msg(out, (e instanceof SyntaxError || e instanceof TypeError ? 'Uloženie sa zastavilo, web ostal bez zmeny. Daj vedieť správcovi webu. ' : 'Neuložené. ') + human(e), 'bad');
+    } finally { saving = false; refresh(); }
+  }
+  $('#ulozit').addEventListener('click', () => save(false));
+  // stará správa pod lištou zmizne pri ďalšej úprave
+  const quiet = () => { if (!saving) { $('#saveMsg').hidden = true; fitBar(); } };
+  $('#app').addEventListener('input', quiet); $('#app').addEventListener('change', quiet);
+  window.addEventListener('beforeunload', (e) => { if (model && collect().size) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('resize', () => { requestAnimationFrame(() => $$('.tab:not([hidden]) textarea').forEach(grow)); });
 
   if (token) { $('#token').value = ''; login(); }
 })();
