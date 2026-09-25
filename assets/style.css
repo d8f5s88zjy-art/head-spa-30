@@ -2467,3 +2467,12 @@ html .lb .lb-nav:hover{border-color:var(--accent);color:var(--accent-hover)}
 html .lb .lb-nav:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 html .lb .lb-prev{left:10px}
 html .lb .lb-next{right:10px}
+
+/* ================= Tím podľa adminu ================= */
+/* Kým v tíme nie je nikto, časť Tím a odkazy na ňu sa neukážu. Admin pridáva ľudí ako <figure> do .team-grid. */
+html #tim:not(:has(.team-grid figure)),html:not(:has(#tim .team-grid figure)) a[href="#tim"],html:not(:has(#tim .team-grid figure)) li:has(>a[href="#tim"]){display:none!important}
+/* čísla v menu počíta CSS, takže idú po sebe aj keď je niektorá časť skrytá */
+html .drawer-links{counter-reset:cast}
+html .drawer-links a:not([hidden]){counter-increment:cast}
+html .drawer-links a span::before{content:counter(cast,decimal-leading-zero)}
+html:not(:has(#tim .team-grid figure)) .drawer-links a[href="#tim"]{counter-increment:none}
