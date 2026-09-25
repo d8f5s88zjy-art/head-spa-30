@@ -732,11 +732,11 @@
         vImg.src = id === 'vzor' ? `${b}-800.jpg` : `${b}-800.webp`;
       };
       /* pod poľom dĺžka a cena vybraného rituálu z cenníka (článok rituálu má data-min a data-price);
-         názov ukazuje pole a opakuje sa len vtedy, keď sa do úzkeho poľa celý nezmestí. Dĺžka sa berie
+         názov ukazuje pole a opakuje sa len vtedy, keď sa do úzkeho poľa niektorý názov celý nezmestí (potom pri každom, súhrn vyzerá vždy rovnako). Dĺžka sa berie
          z textu karty, ktorý je už preložený (napr. 40 хв); pri rituáloch pre dvoch „75 min / 2 osoby“
          má rovnaký tvar ako ostatné */
       const sum = $('[data-voucher-sum]');
-      let ctx2d = null;
+      let ctx2d = null, anyCut = false;
       const cut = (text) => {
         try {
           const cs = getComputedStyle(pick);
@@ -745,20 +745,41 @@
           return ctx2d.measureText(text).width > pick.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         } catch (e) { return false; }
       };
-      const told = () => {
-        const o = pick.options[pick.selectedIndex], card = o && document.getElementById(o.dataset.card || '');
-        if (!sum || !card) return;
+      const fill = (o) => {
+        const card = o && document.getElementById(o.dataset.card || '');
+        if (!card) return false;
         const t = $('.meta span', card), min = ((t && t.textContent.trim()) || `${card.dataset.min} min`).replace(/\s*\/\s*/g, ' · ');
         const name = o.textContent.trim(), meta = document.createElement('span');
         meta.textContent = `${min} · ${card.dataset.price} €`;
         sum.textContent = '';
-        if (cut(name)) { const b = document.createElement('b'); b.textContent = name; sum.append(b); }
+        if (anyCut || cut(name)) { const b = document.createElement('b'); b.textContent = name; sum.append(b); }
         sum.append(meta);
+        return true;
       };
+      const told = () => { if (sum) fill(pick.options[pick.selectedIndex]); };
+      /* tlačidlo pod súhrnom stojí na mieste pri každom rituáli: súhrn má výšku najvyššieho z nich
+         (dlhý názov na dva riadky); počíta sa pri načítaní, zmene jazyka a šírky, nie pri výbere */
+      const hold = () => {
+        if (!sum || !sum.offsetParent) return;
+        sum.style.minHeight = '';
+        let hi = 0;
+        anyCut = [...pick.options].some((o) => cut(o.textContent.trim()));
+        for (const o of pick.options) if (fill(o)) hi = Math.max(hi, sum.offsetHeight);
+        told();
+        if (hi) sum.style.minHeight = `${hi}px`;
+      };
+      /* meranie až keď sa poukaz blíži k obrazovke, prvé vykreslenie stránky nič nebrzdí */
+      let near = !('IntersectionObserver' in window);
+      const both = () => { told(); if (near) hold(); };
       told();
-      document.addEventListener('langchange', told);
-      let rtv; addEventListener('resize', () => { clearTimeout(rtv); rtv = setTimeout(told, 200); }, { passive: true });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(told);
+      if (!near && sum) {
+        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); near = true; hold(); } }, { rootMargin: '600px 0px' });
+        io.observe(sum);
+      } else hold();
+      document.addEventListener('langchange', both);
+      let rtv, rw = innerWidth;
+      addEventListener('resize', () => { if (innerWidth === rw) return; rw = innerWidth; clearTimeout(rtv); rtv = setTimeout(both, 200); }, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(both);
       pick.addEventListener('change', () => {
         const o = pick.options[pick.selectedIndex];
         set(o.value);
