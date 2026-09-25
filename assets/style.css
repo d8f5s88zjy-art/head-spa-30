@@ -2546,4 +2546,55 @@ html.world .site>#kontakt{contain-intrinsic-size:auto 1350px}
   html.world .site>#galeria{contain-intrinsic-size:auto 1380vw}
   html.world .site>#faq{contain-intrinsic-size:auto 2150px}
   html.world .site>#kontakt{contain-intrinsic-size:auto 2050px}
+/* ================= Opravy 3L: rozloženie kariet, poukazu, galérie a stĺpcov ================= */
+/* ťuknutie: bez modrého alebo sivého obdĺžnika prehliadača; stlačenie ukáže farba a linka prvku */
+html{-webkit-tap-highlight-color:transparent}
+.card-toggle:active,.faq-q:active,.info a:active,.care a:active,.care-note a:active,.salon-link a:active,.first-tip a:active,
+footer a:active,.map-link:active,.slink:active,.drawer-links a:active,.nav .links a:active{color:var(--accent-hover);transition-duration:var(--t-fast)}
+
+/* telefón: karta rituálu drží šírku svojho rámu, obsah sa nikdy nerozšíri cez vnútorný zlatý rámik */
+@media (max-width:640px){
+  html .site #cennik .card{grid-template-columns:minmax(0,1fr)}
+  html .site #cennik .card>*{min-width:0}
+  html .site #cennik .card h3{overflow-wrap:break-word}
+  /* dĺžka a cena: keď sa nezmestia vedľa seba (75 Min. / 2 Personen na 320 px), cena ide pod dĺžku */
+  html .site #cennik .card .meta{flex-wrap:wrap;row-gap:6px}
+  /* názov top rituálu: najdlhší nezalomiteľný kus (Signature Experience) sa zmestí aj na 320 px */
+  html .site #cennik .card.top h3{font-size:min(31px,calc(10.1vw - 8px))}
+  /* tlačidlo a Čo rituál obsahuje vždy vedľa seba v každom jazyku; dlhý popis sa zalomí vo vlastnom stĺpci */
+  html .site #cennik .card .actions{flex-wrap:nowrap}
+  html .site #cennik .card .actions .btn.small{flex:none;white-space:nowrap}
+  /* obyčajný riadok textu: znamienko + ide hneď za posledné slovo, aj keď sa popis zalomí; výška aspoň 44 px */
+  html .site #cennik .card .actions .card-toggle{display:block;flex:0 1 auto;min-width:0;min-height:0;padding:12px 0!important;
+    white-space:normal;text-align:left;line-height:1.35;text-wrap:balance}
+}
+
+/* poukaz: pod poľom rezervované miesto pre súhrn (app.js), tlačidlo neposkakuje */
+html .gift .voucher-sum{box-sizing:border-box}
+
+/* priestory: popisok na polovičnej dlaždici bez osamoteného slova na druhom riadku */
+html .salon-photos figcaption{text-wrap:balance}
+
+/* kontakt: dnešný stav sa zalomí vyvážene, čas neostane sám na riadku */
+html .info .today{text-wrap:balance}
+
+/* galéria, dlaždica Nápis: popis nesmie ležať na svietiacom písme */
+@media (min-width:641px) and (max-width:900px){
+  /* tablet: dlaždica na výšku, celý kruh nad popisom */
+  html .shot.voda{aspect-ratio:4/5}
+  html .shot.voda img{object-position:50% 0!important}
+}
+@media (min-width:901px){
+  /* počítač: štvorcová dlaždica, kruh hore, popis len názvom (celý text je vo zväčšenej fotke) */
+  html .shot.voda img{object-position:50% 0!important}
+  html .shot.voda .cap{padding-top:36px}
+  html .shot.voda .cap span{display:none}
+}
+
+/* počítač: pravý stĺpec začína v časti Tím, Priestory aj Poukaz na tej istej línii */
+@media (min-width:901px){
+  html{--col-g:clamp(20px,3vw,48px)}
+  html #tim .head,html #salon .head{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--col-g)}
+  html .salon-photos{grid-template-columns:calc(50% + var(--col-g) / 2 - 14px) minmax(0,1fr) minmax(0,1fr)}
+  html .gift .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--col-g)}
 }
