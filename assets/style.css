@@ -101,12 +101,10 @@ html.door .veil{display:block}
 .veil .jamb.r{left:90.25%;right:0;top:8.27%;bottom:0}
 .veil .jamb.l img,.veil .jamb.r img,.veil .leaf img{top:calc(var(--bh)*-.0827)}
 .veil .jamb.r img{left:calc(var(--bw)*-.9025)}
-/* v otvore je salón (fotka), text stránky sa ukáže až keď scéna zmizne */
-.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:#0d0a07 50% 60%/cover}
-/* fotka v otvore sa sťahuje až keď sú dvere na obrazovke, nie počas načítania stránky */
-.veil.pic .doorway{background-image:url(img/galeria/okna-800.webp);background-image:image-set(url(img/galeria/okna-800.avif) type("image/avif"),url(img/galeria/okna-800.webp) type("image/webp"))}
-.veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 650ms var(--ease-soft) 180ms;pointer-events:none}
-.veil.lift .doorway::before{opacity:1}
+/* otvor je priehľadný: keď sa krídla otvoria, vidno cez ne skutočný úvod stránky (žiadna iná fotka,
+   žiadna dvojexpozícia). Tmavé pozadie scény zmizne až pri otváraní, dovtedy dvere prekrývajú všetko. */
+.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:none}
+.veil.lift .scene{background:transparent}
 .veil .leaf{top:8.27%;bottom:0;backface-visibility:hidden;transition:transform 760ms cubic-bezier(.65,0,.25,1) 30ms}
 .veil .leaf.l{left:8%;width:41.75%;transform-origin:left center}
 .veil .leaf.l img{left:calc(var(--bw)*-.08)}
@@ -2516,4 +2514,36 @@ html .nav.now::before{transition:none}
 @media (max-width:380px){
   html:lang(uk) .mbar{gap:6px}
   html:lang(uk) .mbar a{font-size:13px;padding-inline:6px;letter-spacing:0}
+/* ================= Opravy 3F: úvod, dvere a film ================= */
+/* úvod na šírku (tablet, počítač): tmavší podklad pod spodnými riadkami textu (dnes otvorené, linka 24/7),
+   aby nesedeli na svetlej vani a zlatom oblúku; stále len pokojné stmavenie, žiadny rámik ani tieň písma */
+@media (min-width:721px){
+  html.world .stage .scrim{background:radial-gradient(ellipse 60% 42% at 16% 72%,rgba(var(--ink),.74) 0%,rgba(var(--ink),.46) 55%,rgba(var(--ink),0) 100%),linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+}
+/* výzva Skroluj: čitateľná veľkosť, menšie rozostupy písmen, plná sýtosť */
+html .hero .cue{font-size:12px;letter-spacing:.18em;color:var(--text-secondary)}
+html .hero .cue.show{opacity:1}
+/* odhad výšky nevykreslených častí podľa skutočných výšok (zmerané na telefóne, tablete a počítači):
+   stránka má pred prvým dotykom takmer rovnakú výšku ako po ňom, skok na koniec pristane na konci aj bez
+   ukotvenia skrolu (Safari). Po prvom vykreslení si prehliadač pamätá skutočnú výšku (auto). */
+html.world .site>#cennik{contain-intrinsic-size:auto 8800px}
+html.world .site>#poukaz{contain-intrinsic-size:auto 800px}
+html.world .site>#tim{contain-intrinsic-size:auto 1550px}
+html.world .site>#salon{contain-intrinsic-size:auto 900px}
+html.world .site>#galeria{contain-intrinsic-size:auto 2450px}
+html.world .site>#faq{contain-intrinsic-size:auto 1800px}
+html.world .site>#kontakt{contain-intrinsic-size:auto 1350px}
+@media (max-width:900px){
+  html.world .site>#poukaz{contain-intrinsic-size:auto 1050px}
+  html.world .site>#tim{contain-intrinsic-size:auto 1200px}
+  html.world .site>#galeria{contain-intrinsic-size:auto 2850px}
+  html.world .site>#faq{contain-intrinsic-size:auto 1950px}
+  html.world .site>#kontakt{contain-intrinsic-size:auto 1950px}
+}
+@media (max-width:640px){
+  html.world .site>#poukaz{contain-intrinsic-size:auto 880px}
+  html.world .site>#tim{contain-intrinsic-size:auto 1750px}
+  html.world .site>#galeria{contain-intrinsic-size:auto 1380vw}
+  html.world .site>#faq{contain-intrinsic-size:auto 2150px}
+  html.world .site>#kontakt{contain-intrinsic-size:auto 2050px}
 }
