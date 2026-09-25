@@ -4,9 +4,9 @@ Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami (pri každom Rezervovať a Darovať ako poukaz), darčekové poukazy, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
-- `assets/app.js` – scrollom riadená úvodná scéna (jeden záber miestnosti s paralaxou), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
+- `assets/app.js` – scrollom riadená úvodná scéna (jeden záber miestnosti s paralaxou), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, odkazy do Booqme v jazyku návštevníka a platba kartou pri poukaze na karte rituálu. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
 - `assets/img/dvere.jpg` a `assets/img/galeria/` – fotografie salónu pre galériu (dvere, Budha, miestnosť, vodný oblúk, uteráky, lôžko)
 - `assets/fonts/` – dve písma: Lora (500 a kurzíva 400) na nadpisy, Manrope (400 a 700) na text aj štítky, hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
 - `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v 480 a 800 px v AVIF, WebP a JPG, pre dvere v úvode aj zaostrená 1600 a 2400 px WebP
@@ -87,8 +87,8 @@ na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela ok
 - Tím: fotka sa oreže v prehliadači a uloží ako WebP 480, 800 a 1086 px plus JPEG 800
   (`assets/img/tim/<meno>-<šírka>.webp`); prehliadač bez WebP (starší Safari) uloží JPEG vo všetkých
   šírkach. Odstránenie človeka zmaže jeho `<figure>` aj fotky. Bez `<figure>` je časť Tím skrytá.
-- Platby: `"platby": {"<id karty rituálu>": "<https odkaz>"}` v bloku nastavení; `app.js` pri výbere
-  poukazu ukáže tlačidlo Zaplatiť kartou len pri rituáli s platným https odkazom.
+- Platby: `"platby": {"<id karty rituálu>": "<https odkaz>"}` v bloku nastavení; `app.js` pri rituáli
+  s platným https odkazom zmení odkaz Darovať ako poukaz na Kúpiť poukaz kartou s týmto odkazom.
 - Siete: odkazy majú `data-siet="instagram|facebook|tiktok"`, ich rodičia `data-siete`. Prázdne pole
   odkazy odstráni aj s bodkou medzi nimi, nová sieť sa pridá za posledný odkaz; `sameAs` sa zosúladí.
 - Telefón a e-mail admin vymení vo všetkých tvaroch v index.html, pravne.html, 404.html,
@@ -99,7 +99,7 @@ na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela ok
 - Jediný zdroj nastavení: blok `<script type="application/json" id="nastavenia">` v index.html
   (hodiny, štatistiky, platby). Rozpätie cien a dĺžok v popisoch admin prepočíta.
 - Štatistiky: GoatCounter bez cookies sa načíta len s kódom v nastaveniach; kliky na Rezervovať,
-  Zavolať, E-mail, Mapa, Kúpiť poukaz, Zaplatiť kartou, sociálne siete a náhľad poukazu sa počítajú ako udalosti.
+  Zavolať, E-mail, Mapa, Kúpiť poukaz, Kúpiť poukaz kartou a sociálne siete sa počítajú ako udalosti.
 - Kontrola s Booqme: `node tools/booqme-kontrola.mjs` porovná ceny a dĺžky v online kalendári
   a ceny poukazov v obchode s cenníkom webu (len verejné stránky, nič nemení).
 
@@ -149,20 +149,20 @@ V Booqme (Poukážky, Typy poukážok) je sedemnásť typov poukazu, jeden na ka
 z ponuky, s cenou rituálu, platnosťou 365 dní od zakúpenia a popisom podľa
 docs/booqme-poukazy.csv. Žiadne poukazy na sumu, len to, čo salón ponúka. Verejný obchod
 je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo Kúpiť poukaz online.
-Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect);
-dovtedy je druhou cestou formulár na webe, ktorý otvorí e-mail s objednávkou. Na webe si
-zákazník vyberá rituál z rovnakých sedemnástich, karta poukazu ukáže jeho meno.
+Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect).
+Rituál si zákazník vyberá priamo v obchode Booqme.
 Obrázok poukazu v Booqme (misa s vodou, A6 na šírku) je v docs/poukaz-a6.jpg; rezervačná
 stránka Booqme má logo z assets/icon-512.png, tmavozelené pozadie, zlatý názov, odkaz na
 Instagram a na tento web.
 
 ## Darčekové poukazy ako predajná sekcia
 
-Sekcia Poukážky má nadpis, dve vety, tlačidlo do obchodu Booqme a poukážku salónu (`vzor`).
-Pod ňou je výber Poukaz na rituál so všetkými sedemnástimi rituálmi: prvé štyri Head Spa
-rituály ukážu vzor salónu, ostatné vlastnú poukážku s fotkou rituálu
-(`assets/img/poukaz/<rituál>-{800,1290}.{avif,webp}`, vyrobené z `docs/poukazky/dl/png/`).
-Obrázok sa stiahne až po výbere. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
+Sekcia Poukazy je krátka: nadpis, jedna veta, poukážka salónu (`vzor`), jedno tlačidlo Kúpiť poukaz
+rovno do obchodu Booqme a veta, že rituál sa vyberá v obchode. Bez formulára a bez výberu na webe,
+aby nákup mal čo najmenej krokov. Každá karta rituálu má pri tlačidle Rezervovať aj odkaz Darovať
+ako poukaz (obchod Booqme, alebo platba kartou z adminu). Poukážky jednotlivých rituálov
+(`assets/img/poukaz/<rituál>-{800,1290}.{avif,webp}`, z `docs/poukazky/dl/png/`) ostávajú v repozitári
+pre Booqme a tlač. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 
@@ -176,18 +176,18 @@ Stránku uzatvára kontakt s rezerváciou; samostatná záverečná sekcia bola 
 
 ## Kam vedú tlačidlá
 
-Adresa online kalendára je na jedinom mieste, v atribúte `data-booking` na
-`<html>` v `index.html`. Skript pri načítaní prepíše každé tlačidlo `a.btn`,
-ktoré smerovalo na `#rezervacia`, na túto adresu a otvorí ju v novej karte.
-Zmena rezervačného systému je teda úprava jedného reťazca.
+Každé tlačidlo Rezervovať je v `index.html` priamo odkaz do online kalendára Booqme
+(`target="_blank"`), bez medzikroku a bez závislosti od skriptu. Pri zmene jazyka `app.js`
+prepíše všetky odkazy na booqme.app na stránku v jazyku návštevníka (rezervácia sk
+`/sk/rezervacia/`, cs `/cs/rezervace/`, hu `/hu/foglalas/`, en, de, pl, uk `/<jazyk>/reservation/`,
+obchod `/<jazyk>/eshop/`); v HTML ostáva slovenčina.
 
 Pôvodný odkaz na Booqme (`booqme.app/sk/rezervacia/salon-30`) v septembri
 prestal existovať, vracal chybu 404, takže všetky tlačidlá aj nákup poukazu
 viedli do prázdna. Nahradila ho funkčná online rezervácia Salónu 30.
 
-Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kalendári
-ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
-JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
+Formuláre na webe (rezervácia, objednávka poukazu e-mailom) sú preč aj s kódom, nákup
+ide len cez Booqme; kto váha, má na každom mieste telefón.
 
 ## Bez opakovania
 
