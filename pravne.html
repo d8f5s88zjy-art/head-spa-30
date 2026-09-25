@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Právne informácie | HEAD SPA 30 Nitra</title>
+<meta name="description" content="Prevádzkovateľ, ochrana osobných údajov, darčekové poukazy a cookies na webe HEAD SPA 30 v Nitre.">
+<meta name="theme-color" content="#0c0906">
+<link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/pravne.html">
+<!-- Cesty sú relatívne, fungujú lokálne aj na GitHub Pages pod /head-spa-30/ -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/Manrope-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Lora';font-style:normal;font-weight:300 700;font-display:swap;src:url(assets/fonts/Lora-display.woff2) format('woff2')}
+@font-face{font-family:'Lora';font-style:italic;font-weight:300 700;font-display:swap;src:url(assets/fonts/Lora-italic.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/Manrope-400.woff2) format('woff2')}
+/* tóny orecha so zlatou ako na hlavnej stránke a na 404 */
+:root{--canvas:#0c0906;--text:#f2ede2;--muted:#b9b3a6;--accent:#d9b56a;--accent-hover:#ecd08f;--line:rgba(242,237,226,.22);--hair:rgba(217,181,106,.35)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--canvas);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;padding:56px 16px 72px;background:var(--canvas);color:var(--text);font-family:Manrope,system-ui,sans-serif;
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+main{width:100%;max-width:680px;margin:0 auto}
+a{color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+a:hover{color:var(--accent-hover)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* hlavička ako na 404: znak, malý nadpis, nadpis v Lore */
+header{text-align:center}
+.mark{display:block;width:56px;height:56px;margin:0 auto 24px}
+.home{display:inline-block;text-decoration:none}
+.kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:Lora,Georgia,serif;font-weight:400;font-size:clamp(34px,7vw,52px);line-height:1.1;margin:14px 0 0}
+.lead{color:var(--muted);margin:18px auto 0;max-width:44ch}
+.rule{width:48px;height:1px;background:var(--accent);margin:32px auto 0;border:0}
+
+/* obsah stránky ako odkazy, nie tlačidlá */
+.toc{margin:28px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-size:15px}
+
+section{margin-top:56px;padding-top:40px;border-top:1px solid var(--hair);scroll-margin-top:24px}
+h2{font-family:Lora,Georgia,serif;font-weight:400;font-size:clamp(26px,5vw,32px);line-height:1.2;margin:0}
+h3{font-family:Lora,Georgia,serif;font-style:italic;font-weight:400;font-size:19px;color:var(--accent);margin:28px 0 0}
+p{margin:14px 0 0;color:var(--muted)}
+ul,ol{margin:14px 0 0;padding-left:20px;color:var(--muted)}
+li{margin-top:6px}
+li::marker{color:var(--accent)}
+
+/* údaje v riadkoch s vlasovou linkou */
+dl{margin:20px 0 0}
+dl>div{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 20px;padding:10px 0;border-bottom:1px solid var(--line)}
+dl>div:first-child{border-top:1px solid var(--line)}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0}
+@media (max-width:520px){dl>div{grid-template-columns:1fr;gap:2px}}
+.firma{margin-top:0}
+.firma dl{margin-top:0}
+.firma dl>div:first-child{border-top:0}
+
+.line{color:var(--text)}
+
+/* ploché hranaté tlačidlá, normálne písmo */
+.cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:2px;
+  font-size:15px;text-decoration:none;border:1px solid var(--line);color:var(--text);background:transparent;transition:border-color .2s,background-color .2s,color .2s}
+.btn:hover{border-color:var(--accent);color:var(--accent-hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#17120a}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:#17120a}
+@media (max-width:420px){.cta .btn{width:100%}}
+
+footer{margin-top:64px;padding-top:32px;border-top:1px solid var(--hair);text-align:center}
+footer .cta{justify-content:center}
+.fine{font-size:14px;color:var(--muted);margin-top:24px}
+
+/* ponuka jazyka z assets/i18n.min.js, na tejto stránke v pokojnej podobe */
+.lang-offer{position:fixed;left:16px;right:16px;bottom:16px;max-width:460px;margin:0 auto;z-index:10;display:flex;align-items:center;gap:12px;
+  padding:10px 10px 10px 16px;background:#17120c;border:1px solid var(--line);border-radius:2px;font-size:15px;opacity:0;transition:opacity .3s}
+.lang-offer.in{opacity:1}
+.lang-offer span{flex:1}
+.lang-offer button{font:inherit;cursor:pointer;border-radius:2px}
+.lang-offer [data-yes]{min-height:40px;padding:0 16px;background:var(--accent);border:1px solid var(--accent);color:#17120a}
+.lang-offer [data-no]{width:40px;height:40px;background:transparent;border:0;color:var(--muted);font-size:20px;line-height:1}
+@media (prefers-reduced-motion:reduce){.lang-offer{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a class="home" href="./" title="HEAD SPA 30, domov" aria-label="HEAD SPA 30, domov">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M32 19c3.6 4.6 4.6 10.6 0 18.5c-4.6-7.9-3.6-13.9 0-18.5zM32 37.5c-5.2-1-9.6-5.2-10.8-11.4c5.3 1.1 8.9 5 10.8 11.4zM32 37.5c5.2-1 9.6-5.2 10.8-11.4c-5.3 1.1-8.9 5-10.8 11.4zM32 38.6c-7.2 0-12.6-2.9-15.6-7c6.2-.6 11.6 2 15.6 7zM32 38.6c7.2 0 12.6-2.9 15.6-7c-6.2-.6-11.6 2-15.6 7z" fill="none" stroke="#f3c98a" stroke-width="1.3" stroke-linejoin="round"/><path d="M21 45.5h22" stroke="#d9b56a" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </a>
+    <div class="kicker" data-no-i18n>HEAD&nbsp;SPA&nbsp;30 · Nitra</div>
+    <h1>Právne informácie</h1>
+    <p class="lead">Kto sme, ako narábame s&nbsp;tvojimi údajmi a&nbsp;čo platí pre poukazy.</p>
+    <hr class="rule">
+    <ul class="toc">
+      <li><a href="#prevadzkovatel">Prevádzkovateľ</a></li>
+      <li><a href="#osobne-udaje">Osobné údaje</a></li>
+      <li><a href="#poukazy">Darčekové poukazy</a></li>
+      <li><a href="#cookies">Cookies a&nbsp;štatistiky</a></li>
+    </ul>
+  </header>
+
+  <section id="prevadzkovatel" aria-labelledby="h-prevadzkovatel">
+    <h2 id="h-prevadzkovatel">Prevádzkovateľ</h2>
+    <p>HEAD&nbsp;SPA&nbsp;30 je samostatná časť s&nbsp;vlastným tímom. So Salónom 30 zdieľa priestory aj majiteľa.</p>
+    <dl>
+      <div><dt>Adresa</dt><dd data-no-i18n>Mostná 226/30, Nitra</dd></div>
+      <div><dt>Telefón</dt><dd data-no-i18n><a href="tel:+421911153136">0911&nbsp;153&nbsp;136</a></dd></div>
+      <div><dt>E-mail</dt><dd data-no-i18n><a href="mailto:info@salon30.sk">info@salon30.sk</a></dd></div>
+      <div><dt>Salón 30</dt><dd data-no-i18n><a href="https://www.salon30.sk/" rel="noopener">www.salon30.sk</a></dd></div>
+    </dl>
+    <!-- Údaje o firme. Hodnoty sú v JSON nižšie (id="firma"); prázdny riadok ani prázdny blok sa neukážu. -->
+    <div class="firma" hidden>
+      <dl>
+        <div hidden><dt>Obchodné meno</dt><dd data-firma="obchodne-meno" data-no-i18n></dd></div>
+        <div hidden><dt>IČO</dt><dd data-firma="ico" data-no-i18n></dd></div>
+        <div hidden><dt>DIČ</dt><dd data-firma="dic" data-no-i18n></dd></div>
+        <div hidden><dt>IČ DPH</dt><dd data-firma="ic-dph" data-no-i18n></dd></div>
+        <div hidden><dt>Zápis v&nbsp;registri</dt><dd data-firma="register" data-no-i18n></dd></div>
+      </dl>
+    </div>
+    <script type="application/json" id="firma">{"obchodne-meno":"","ico":"","dic":"","ic-dph":"","register":""}</script>
+    <script>
+    /* Vyplní údaje o firme z JSON vyššie. Riadok aj celý blok sa ukážu len s neprázdnou hodnotou. */
+    (function () {
+      var d = {};
+      try { d = JSON.parse(document.getElementById('firma').textContent) || {}; } catch (e) {}
+      var box = document.querySelector('.firma'), any = false;
+      Array.prototype.forEach.call(box.querySelectorAll('[data-firma]'), function (dd) {
+        var v = String(d[dd.getAttribute('data-firma')] == null ? '' : d[dd.getAttribute('data-firma')]).trim();
+        dd.textContent = v;
+        dd.parentNode.hidden = !v;
+        if (v) any = true;
+      });
+      box.hidden = !any;
+    })();
+    </script>
+    <p>Rezervácie a&nbsp;nákup poukazov bežia cez rezervačný systém Booqme. Ten má vlastné obchodné podmienky.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://booqme.app/sk/rezervacia/barbershop-30" rel="noopener">Rezervovať termín</a>
+      <a class="btn" href="https://booqme.app/sk/eshop/barbershop-30" rel="noopener">Obchod s&nbsp;poukazmi</a>
+    </div>
+  </section>
+
+  <section id="osobne-udaje" aria-labelledby="h-udaje">
+    <h2 id="h-udaje">Ochrana osobných údajov</h2>
+    <p>Tvoje údaje spracúvame, keď si rezervuješ termín cez Booqme, zavoláš nám alebo napíšeš.</p>
+
+    <h3>Čo spracúvame</h3>
+    <p>Meno, telefón, e-mail, zvolený rituál a&nbsp;termín.</p>
+
+    <h3>Na čo ich potrebujeme</h3>
+    <p>Na rezerváciu, poukazy, odpoveď na tvoju správu a&nbsp;účtovníctvo zaplatených služieb.</p>
+
+    <h3>Právny základ</h3>
+    <ul>
+      <li>Rezervácia a&nbsp;poukaz: zmluva a&nbsp;kroky pred jej uzavretím, čl. 6 ods. 1 písm. b) GDPR.</li>
+      <li>Účtovné doklady: zákonná povinnosť, čl. 6 ods. 1 písm. c) GDPR.</li>
+      <li>Odpoveď na správu: oprávnený záujem, čl. 6 ods. 1 písm. f) GDPR.</li>
+    </ul>
+
+    <h3>Kto ich dostane</h3>
+    <ul>
+      <li>Rezervačný systém Booqme, cez ktorý rezervácie a&nbsp;poukazy fungujú.</li>
+      <li>Účtovník, len v&nbsp;rozsahu, ktorý vyžaduje zákon.</li>
+    </ul>
+    <p>Nepoužívame cookies ani profilovanie. Údaje sami neposielame mimo EÚ.</p>
+
+    <h3>Ako dlho</h3>
+    <p>Kým ich treba na rezerváciu alebo poukaz. Účtovné doklady 10&nbsp;rokov, ako vyžaduje zákon o&nbsp;účtovníctve.</p>
+
+    <h3>Tvoje práva</h3>
+    <p>Máš právo na prístup k&nbsp;údajom, ich opravu, vymazanie a&nbsp;obmedzenie spracúvania. Máš aj právo na prenosnosť a&nbsp;právo namietať.</p>
+    <p>Stačí nám napísať alebo zavolať.</p>
+    <p class="line" data-no-i18n><a href="mailto:info@salon30.sk">info@salon30.sk</a> · <a href="tel:+421911153136">0911&nbsp;153&nbsp;136</a></p>
+    <p>Sťažnosť môžeš podať na Úrad na ochranu osobných údajov Slovenskej republiky.</p>
+    <p class="line" data-no-i18n>Hraničná 12, 820&nbsp;07 Bratislava 27 · <a href="https://www.dataprotection.gov.sk/" rel="noopener">www.dataprotection.gov.sk</a></p>
+  </section>
+
+  <section id="poukazy" aria-labelledby="h-poukazy">
+    <h2 id="h-poukazy">Darčekové poukazy</h2>
+    <p>Poukaz je vždy na konkrétny rituál, nie na sumu. Platí 365&nbsp;dní.</p>
+    <p>Kúpiš ho online v&nbsp;obchode Booqme.</p>
+
+    <h3>Ako ho uplatníš</h3>
+    <ol>
+      <li>Rezervuj si termín.</li>
+      <li>Povedz nám, že máš poukaz.</li>
+      <li>Uplatníš ho na rituál, ktorý je na ňom uvedený.</li>
+    </ol>
+
+    <h3>Nákup cez internet</h3>
+    <p>Ako spotrebiteľ máš práva podľa slovenského zákona č.&nbsp;108/2024 Z.&nbsp;z. o&nbsp;ochrane spotrebiteľa.</p>
+    <p>Ak ťa vybavenie reklamácie neuspokojí, môžeš využiť alternatívne riešenie sporov cez Slovenskú obchodnú inšpekciu.</p>
+    <p class="line" data-no-i18n><a href="https://www.soi.sk/" rel="noopener">www.soi.sk</a></p>
+    <p>Ak potrebuješ s&nbsp;poukazom čokoľvek vyriešiť, zavolaj nám alebo napíš.</p>
+    <div class="cta">
+      <a class="btn" href="https://booqme.app/sk/eshop/barbershop-30" rel="noopener">Obchod s&nbsp;poukazmi</a>
+    </div>
+  </section>
+
+  <section id="cookies" aria-labelledby="h-cookies">
+    <h2 id="h-cookies">Cookies a&nbsp;štatistiky</h2>
+    <p>Web nepoužíva cookies a&nbsp;nevkladá obsah iných služieb.</p>
+    <p>Návštevnosť meriame cez GoatCounter. Počíta len anonymné návštevy, bez cookies a&nbsp;bez osobných profilov.</p>
+    <p>Písma máme uložené priamo na webe, nenačítavajú sa od iných služieb.</p>
+  </section>
+
+  <footer>
+    <div class="cta">
+      <a class="btn primary" href="./">Späť na úvod</a>
+    </div>
+    <p class="fine">Posledná úprava: 25.&nbsp;9.&nbsp;2026</p>
+  </footer>
+</main>
+<script src="assets/i18n.min.js" defer></script>
+</body>
+</html>
