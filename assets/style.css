@@ -2603,3 +2603,34 @@ html .info .today{text-wrap:balance}
 /* ================= Opravy 3T: texty a galéria ================= */
 /* dnešný stav otvorenia sa zalomí vyvážene, čas nezostane sám na druhom riadku */
 html .today-line,html .info .today,html .drawer-foot p:has(> .today){text-wrap:balance}
+
+/* ================= Rýchla cesta k nákupu ================= */
+/* karta rituálu: Rezervovať a hneď vedľa tichý odkaz Darovať ako poukaz; Čo rituál obsahuje ide
+   na ďalší riadok, keď sa všetko nezmestí vedľa seba */
+html .site #cennik .card .actions{flex-wrap:wrap}
+html .site #cennik .card .actions .btn.small{order:1}
+html .site #cennik .card .actions .card-gift{order:2}
+html .site #cennik .card .actions .card-toggle{order:3}
+/* rovnaká rodina ako Čo rituál obsahuje, odkaz spozná jemná zlatá linka pod textom */
+.card-gift{display:inline-flex;align-items:center;min-height:46px;font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:.01em;
+  line-height:1.35;color:rgba(239,231,218,.72);text-decoration:underline;text-decoration-thickness:1px;
+  text-decoration-color:rgba(212,174,98,.45);text-underline-offset:5px}
+.card-gift:hover{color:var(--accent-hover);text-decoration-color:var(--accent-hover)}
+.card-gift:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+@media (max-width:640px){
+  /* telefón: tlačidlo a odkaz na darček vedľa seba, dlhý preklad odkazu sa zalomí vo vlastnom stĺpci;
+     Čo rituál obsahuje pod nimi cez celú šírku */
+  html .site #cennik .card .actions,html .site #cennik .card.top .actions{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:4px 20px}
+  html .site #cennik .card .actions .card-gift{justify-self:start;min-height:44px;padding:4px 0;text-wrap:balance}
+  html .site #cennik .card .actions .card-toggle{grid-column:1/-1;justify-self:start;min-height:44px;padding:10px 0!important}
+}
+@media (max-width:380px){
+  html .site #cennik .card .actions,html .site #cennik .card.top .actions{column-gap:14px}
+  html .site #cennik .card .actions .btn.small{padding:0 16px!important}
+}
+
+/* poukaz: poukážka, jedno tlačidlo do obchodu a pod ním veta, že rituál sa vyberá tam */
+.gift .voucher-buy{margin:28px 0 0}
+.gift .voucher-buy .btn{min-height:50px;padding:0 30px}
+.gift .voucher-note{margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--text-secondary)}
+@media (max-width:640px){.gift .voucher-buy .btn{width:100%}}

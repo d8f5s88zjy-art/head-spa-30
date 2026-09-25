@@ -267,7 +267,7 @@ ol.steps{padding-left:22px;color:var(--muted)}ol.steps li{margin:6px 0}ol.steps 
 
     <section class="tab" id="p-platby" data-tab="platby" data-name="Poukazy a platby">
       <h1>Poukazy <em>a platby.</em></h1>
-      <p class="lead">Pri každom rituáli môžeš vložiť odkaz na platbu kartou. Na webe sa pri poukaze ukáže tlačidlo Zaplatiť kartou.</p>
+      <p class="lead">Pri každom rituáli môžeš vložiť odkaz na platbu kartou. Na webe sa ukáže priamo na karte rituálu ako Kúpiť poukaz kartou. Bez odkazu vedie Darovať ako poukaz do obchodu Booqme.</p>
       <details class="help"><summary>Ako vytvorím odkaz na platbu</summary>
         <p><b>Stripe</b> (Payment Links)</p>
         <ol>
@@ -486,7 +486,7 @@ ol.steps{padding-left:22px;color:var(--muted)}ol.steps li{margin:6px 0}ol.steps 
   // texty, ktoré sa menia inde (rituály, tím, oznam, siete) alebo sa neprekladajú
   const skipText = (anc) => anc.some((e) => e.name === 'head' || e.name === 'svg' || e.name === 'select' || at(e, 'data-no-i18n') !== null ||
     (e.name === 'article' && at(e, 'data-price') !== null) || at(e, 'id') === 'oznam' || cls(e).includes('team-grid') ||
-    (e.name === 'h1' && at(e, 'data-split') !== null) || at(e, 'data-siet') !== null || at(e, 'data-voucher-pay') !== null);
+    (e.name === 'h1' && at(e, 'data-split') !== null) || at(e, 'data-siet') !== null || at(e, 'data-gift') !== null);
   function kindOf(b) {
     if (b.anc.some((e) => cls(e).includes('kicker'))) return 'Malý nadpis';
     const n = b.el.name;
@@ -1265,7 +1265,6 @@ ol.steps{padding-left:22px;color:var(--muted)}ol.steps li{margin:6px 0}ol.steps 
       if (changed(r.e.about)) { const oldJoined = r.about.join(' '); a = a.replace(/(<div class="about"><span class="lbl">[^<]*<\/span>)[\s\S]*?(<\/div>)/, `$1${newAbout.map((p) => `<p>${esc(fixNb(p, oldJoined))}</p>`).join('')}$2`); }
       if (changed(r.e.steps)) { const oldJoined = r.steps.join(' '); a = a.replace(/(<ol>)[\s\S]*?(<\/ol>)/, `$1${newSteps.map((p) => `<li>${esc(fixNb(p, oldJoined))}</li>`).join('')}$2`); }
       html = html.replace(art[0], a);
-      if (changed(r.e.name)) html = html.replace(new RegExp(`(<option value="[^"]*" data-card="${reEsc(r.id)}">)[\\s\\S]*?(<\\/option>)`), `$1${esc(v('name'))}$2`);
       ['name', 'badge', 'tag', 'desc'].forEach((k) => i18nText(dicts, cands, norm(r[k]), v(k), r.tr[k]));
       i18nLines(dicts, cands, oldAbout, newAbout, r.tr.about, splitPara);
       i18nLines(dicts, cands, oldSteps, newSteps, r.tr.steps, splitLines);
