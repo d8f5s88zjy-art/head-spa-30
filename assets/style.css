@@ -2514,6 +2514,7 @@ html .nav.now::before{transition:none}
 @media (max-width:380px){
   html:lang(uk) .mbar{gap:6px}
   html:lang(uk) .mbar a{font-size:13px;padding-inline:6px;letter-spacing:0}
+}
 /* ================= Opravy 3F: úvod, dvere a film ================= */
 /* úvod na šírku (tablet, počítač): tmavší podklad pod spodnými riadkami textu (dnes otvorené, linka 24/7),
    aby nesedeli na svetlej vani a zlatom oblúku; stále len pokojné stmavenie, žiadny rámik ani tieň písma */
@@ -2546,6 +2547,7 @@ html.world .site>#kontakt{contain-intrinsic-size:auto 1350px}
   html.world .site>#galeria{contain-intrinsic-size:auto 1380vw}
   html.world .site>#faq{contain-intrinsic-size:auto 2150px}
   html.world .site>#kontakt{contain-intrinsic-size:auto 2050px}
+}
 /* ================= Opravy 3L: rozloženie kariet, poukazu, galérie a stĺpcov ================= */
 /* ťuknutie: bez modrého alebo sivého obdĺžnika prehliadača; stlačenie ukáže farba a linka prvku */
 html{-webkit-tap-highlight-color:transparent}
@@ -2598,3 +2600,6 @@ html .info .today{text-wrap:balance}
   html .salon-photos{grid-template-columns:calc(50% + var(--col-g) / 2 - 14px) minmax(0,1fr) minmax(0,1fr)}
   html .gift .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--col-g)}
 }
+/* ================= Opravy 3T: texty a galéria ================= */
+/* dnešný stav otvorenia sa zalomí vyvážene, čas nezostane sám na druhom riadku */
+html .today-line,html .info .today,html .drawer-foot p:has(> .today){text-wrap:balance}

@@ -22,7 +22,7 @@
 
   var current = 'sk', applied = 'sk', busy = false;
   /* slovník, ktorý sa práve nasadzuje, a jeho obrátená verzia (preklad -> slovenský kľúč) */
-  var live = null, liveRev = null;
+  var live = null, liveRev = null, prevRev = null;
 
   /* Stránka sa otvára po slovensky. Iný jazyk sa nasadí len na vlastnú voľbu,
      alebo keď je v adrese ?lang=. Prehliadaču s iným jazykom sa jazyk ponúkne
@@ -62,7 +62,7 @@
       if (el.closest('svg')) return;
       ATTRS.forEach(function (a) {
         var v = el.getAttribute(a);
-        if (v && /[A-Za-zÀ-ž]/.test(v) && v.indexOf('http') !== 0) attrs.push({ el: el, attr: a, sk: v, key: norm(v) });
+        if (v && /[A-Za-zÀ-ž]/.test(v) && v.indexOf('http') !== 0) attrs.push({ el: el, attr: a, sk: v, key: norm(v), last: v });
       });
     });
     /* popisy pre vyhľadávače a zdieľanie */
@@ -105,10 +105,21 @@
   }
   function norm(s) { return String(s).replace(/\s+/g, ' ').trim(); }
 
-  /* Preklad zachová pôvodné medzery okolo textu, inak by sa slová zlepili. */
+  /* Preklad zachová pôvodné medzery okolo textu, inak by sa slová zlepili.
+     Názov Head Spa sa v žiadnom jazyku nerozdelí na dva riadky. */
   function put(sk, tr) {
     var lead = (sk.match(/^\s*/) || [''])[0], tail = (sk.match(/\s*$/) || [''])[0];
-    return lead + tr + tail;
+    return lead + tie(tr) + tail;
+  }
+  function tie(s) { return String(s).replace(/Head Spa/g, 'Head Spa'); }
+
+  /* Atribút, ktorý raz prepísal skript (napr. popis poukazu „Poukaz na rituál: názov“),
+     sa odvtedy prekladá z aktuálnej hodnoty po častiach: každá časť sa vráti na slovenský kľúč a preloží do nového jazyka. */
+  function retell(v, prevRev, map) {
+    return String(v).split(': ').map(function (part) {
+      var k = norm(part); k = (prevRev && prevRev[k]) || k;
+      return (map && map[k]) || k;
+    }).join(': ');
   }
 
   /* Preklad beží po dávkach. Prvá dávka pokryje hlavičku a úvod, zvyšok sa
@@ -117,6 +128,7 @@
 
   function apply(code, map) {
     if (!nodes) collect();
+    prevRev = liveRev;
     live = map; liveRev = reverse(map);
     var i = 0, CHUNK = 240;
     function chunk() {
@@ -136,7 +148,10 @@
   function finish(code, map) {
     attrs.forEach(function (x) {
       var tr = (map && map[x.key]) || x.sk;
-      if (x.attr === 'text') x.el.textContent = tr; else x.el.setAttribute(x.attr, tr);
+      if (x.attr === 'text') { x.el.textContent = tr; return; }
+      var now = x.el.getAttribute(x.attr);
+      if (x.last !== undefined && now !== null && (x.own || now !== x.last)) { x.own = true; tr = retell(now, prevRev, map); }
+      x.el.setAttribute(x.attr, tr); x.last = tr;
     });
     var L = byCode(code) || LANGS[0];
     document.documentElement.lang = L.locale;
