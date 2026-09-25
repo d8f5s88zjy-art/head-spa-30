@@ -469,7 +469,8 @@
     const markSec = () => {
       queued = false;
       const y = innerHeight * 0.4; let on = secTargets[0][0];
-      secTargets.forEach(([id, t]) => { if (t.getBoundingClientRect().top < y) on = id; });
+      // skrytá časť (napr. prázdny Tím) nemá polohu, preskočí sa
+      secTargets.forEach(([id, t]) => { if (t.offsetParent !== null && t.getBoundingClientRect().top < y) on = id; });
       if (on === curSec) return;
       curSec = on;
       secLinks.forEach((a) => { const m = a.getAttribute('href') === on; a.classList.toggle('on', m); if (m) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
