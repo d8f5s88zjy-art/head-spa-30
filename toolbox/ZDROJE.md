@@ -77,3 +77,10 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
 - Anthropic skills, github.com/anthropics/skills (kópia vybraných je v `skills/`)
 - Špecifikácia Agent Skills, agentskills.io
 - skills.sh, katalóg skills od komunity
+
+## Skills na animácie a 3D
+- GSAP skills, github.com/greensock/gsap-skills, MIT, v `toolbox/skills-animacie/gsap`
+- Design DNA, github.com/zanwei/design-dna, MIT, v `toolbox/skills-animacie/design-dna`
+- Motion Design Skill, github.com/lottiefiles/motion-design-skill, MIT, v `toolbox/skills-animacie/motion-design`
+- Genjutsu, github.com/AThevon/genjutsu, MIT, v `toolbox/skills-animacie/genjutsu`
+- Three.js skills, github.com/CloudAI-X/threejs-skills, bez licencie (len odkaz, neskopírované)

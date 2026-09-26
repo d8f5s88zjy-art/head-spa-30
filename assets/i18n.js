@@ -6,20 +6,23 @@
 (function () {
   'use strict';
 
+  /* page a close sú slová pre čítačky obrazovky (tlačidlo jazyka, zatvorenie ponuky), og je jazyk pre zdieľanie */
   var LANGS = [
-    { code: 'sk', label: 'Slovensky', short: 'SK', locale: 'sk-SK', offer: '' },
-    { code: 'cs', label: 'Česky', short: 'CZ', locale: 'cs-CZ', offer: 'Stránka je i v češtině.' },
-    { code: 'pl', label: 'Polski', short: 'PL', locale: 'pl-PL', offer: 'Strona jest też po polsku.' },
-    { code: 'hu', label: 'Magyar', short: 'HU', locale: 'hu-HU', offer: 'Az oldal magyarul is elérhető.' },
-    { code: 'de', label: 'Deutsch', short: 'DE', locale: 'de-AT', offer: 'Die Seite gibt es auch auf Deutsch.' },
-    { code: 'uk', label: 'Українська', short: 'UA', locale: 'uk-UA', offer: 'Сторінка є і українською.' },
-    { code: 'en', label: 'English', short: 'EN', locale: 'en', offer: 'This page is also in English.' }
+    { code: 'sk', label: 'Slovensky', short: 'SK', locale: 'sk-SK', og: 'sk_SK', page: 'jazyk stránky', close: 'Zavrieť', offer: '' },
+    { code: 'cs', label: 'Česky', short: 'CZ', locale: 'cs-CZ', og: 'cs_CZ', page: 'jazyk stránky', close: 'Zavřít', offer: 'Stránka je i v češtině.' },
+    { code: 'pl', label: 'Polski', short: 'PL', locale: 'pl-PL', og: 'pl_PL', page: 'język strony', close: 'Zamknij', offer: 'Strona jest też po polsku.' },
+    { code: 'hu', label: 'Magyar', short: 'HU', locale: 'hu-HU', og: 'hu_HU', page: 'az oldal nyelve', close: 'Bezárás', offer: 'Az oldal magyarul is elérhető.' },
+    { code: 'de', label: 'Deutsch', short: 'DE', locale: 'de-AT', og: 'de_AT', page: 'Sprache der Seite', close: 'Schließen', offer: 'Die Seite gibt es auch auf Deutsch.' },
+    { code: 'uk', label: 'Українська', short: 'UA', locale: 'uk-UA', og: 'uk_UA', page: 'мова сторінки', close: 'Закрити', offer: 'Сторінка є і українською.' },
+    { code: 'en', label: 'English', short: 'EN', locale: 'en', og: 'en_GB', page: 'page language', close: 'Close', offer: 'This page is also in English.' }
   ];
   var STORE = 'hs30.lang';
   var ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
   var SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, svg: 1 };
 
   var current = 'sk', applied = 'sk', busy = false;
+  /* slovník, ktorý sa práve nasadzuje, a jeho obrátená verzia (preklad -> slovenský kľúč) */
+  var live = null, liveRev = null, prevRev = null;
 
   /* Stránka sa otvára po slovensky. Iný jazyk sa nasadí len na vlastnú voľbu,
      alebo keď je v adrese ?lang=. Prehliadaču s iným jazykom sa jazyk ponúkne
@@ -39,17 +42,18 @@
 
   /* Zbierka všetkých textových uzlov a atribútov, ktoré sa dajú prekladať.
      Robí sa raz, na pôvodnom slovenskom obsahu. */
-  var nodes = null, attrs = null;
+  var nodes = null, attrs = null, known = new WeakSet();
+  function ok(n) {
+    var p = n.parentNode;
+    return !!p && !SKIP[p.nodeName] && !p.closest('svg') && !p.closest('[data-no-i18n]') && /[A-Za-zÀ-ž]/.test(n.nodeValue);
+  }
+  function walk(root, f) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return ok(n) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; } });
+    var n; while ((n = w.nextNode())) f(n);
+  }
   function collect() {
     nodes = []; attrs = [];
-    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-      acceptNode: function (n) {
-        var p = n.parentNode;
-        if (!p || SKIP[p.nodeName] || p.closest('svg') || p.closest('[data-no-i18n]')) return NodeFilter.FILTER_REJECT;
-        return /[A-Za-zÀ-ž]/.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-      }
-    });
-    var n; while ((n = w.nextNode())) nodes.push({ node: n, sk: n.nodeValue, key: norm(n.nodeValue) });
+    walk(document.body, function (n) { known.add(n); nodes.push({ node: n, sk: n.nodeValue, key: norm(n.nodeValue) }); });
     /* skripty, ktoré text delia na slová (filmové výroky), čakajú na túto zbierku, aby preklad písal do pôvodných uzlov */
     document.documentElement.setAttribute('data-i18n', 'ready');
     document.dispatchEvent(new CustomEvent('i18nready'));
@@ -58,23 +62,64 @@
       if (el.closest('svg')) return;
       ATTRS.forEach(function (a) {
         var v = el.getAttribute(a);
-        if (v && /[A-Za-zÀ-ž]/.test(v) && v.indexOf('http') !== 0) attrs.push({ el: el, attr: a, sk: v, key: norm(v) });
+        if (v && /[A-Za-zÀ-ž]/.test(v) && v.indexOf('http') !== 0) attrs.push({ el: el, attr: a, sk: v, key: norm(v), last: v });
       });
     });
     /* popisy pre vyhľadávače a zdieľanie */
-    ['description', 'og:description', 'og:title', 'twitter:description'].forEach(function (nm) {
+    ['description', 'og:description', 'og:title', 'og:image:alt', 'twitter:title', 'twitter:description'].forEach(function (nm) {
       var el = document.querySelector('meta[name="' + nm + '"],meta[property="' + nm + '"]');
       if (el) attrs.push({ el: el, attr: 'content', sk: el.content, key: norm(el.content) });
     });
     var ti = document.querySelector('title');
     if (ti) attrs.push({ el: ti, attr: 'text', sk: ti.textContent, key: norm(ti.textContent) });
+    watch();
+  }
+
+  /* Text, ktorý skripty vložia neskôr (dnešné hodiny, popis filmu, nadpisy rozdelené na riadky),
+     sa preloží hneď pri vložení a zaradí do zbierky, aby sa menil aj pri ďalšej zmene jazyka.
+     Uzol môže prísť po slovensky alebo už preložený (skopírovaný z preloženého textu). */
+  function adopt(n) {
+    if (known.has(n) || !ok(n)) return;
+    known.add(n);
+    var v = n.nodeValue, k = norm(v), x = { node: n, sk: v, key: k };
+    if (k.length > 1 && live) {
+      if (live[k] !== undefined) n.nodeValue = put(v, live[k]);
+      else if (liveRev[k] !== undefined) { x.key = liveRev[k]; x.sk = put(v, x.key); }
+    }
+    nodes.push(x);
+  }
+  function watch() {
+    if (!window.MutationObserver) return;
+    new MutationObserver(function (list) {
+      list.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          if (n.nodeType === 3) adopt(n);
+          else if (n.nodeType === 1 && !SKIP[n.nodeName]) walk(n, adopt);
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+  function reverse(map) {
+    var r = {}; if (map) for (var k in map) r[norm(map[k])] = k;
+    return r;
   }
   function norm(s) { return String(s).replace(/\s+/g, ' ').trim(); }
 
-  /* Preklad zachová pôvodné medzery okolo textu, inak by sa slová zlepili. */
+  /* Preklad zachová pôvodné medzery okolo textu, inak by sa slová zlepili.
+     Názov Head Spa sa v žiadnom jazyku nerozdelí na dva riadky. */
   function put(sk, tr) {
     var lead = (sk.match(/^\s*/) || [''])[0], tail = (sk.match(/\s*$/) || [''])[0];
-    return lead + tr + tail;
+    return lead + tie(tr) + tail;
+  }
+  function tie(s) { return String(s).replace(/Head Spa/g, 'Head Spa'); }
+
+  /* Atribút, ktorý raz prepísal skript (napr. popis poukazu „Poukaz na rituál: názov“),
+     sa odvtedy prekladá z aktuálnej hodnoty po častiach: každá časť sa vráti na slovenský kľúč a preloží do nového jazyka. */
+  function retell(v, prevRev, map) {
+    return String(v).split(': ').map(function (part) {
+      var k = norm(part); k = (prevRev && prevRev[k]) || k;
+      return (map && map[k]) || k;
+    }).join(': ');
   }
 
   /* Preklad beží po dávkach. Prvá dávka pokryje hlavičku a úvod, zvyšok sa
@@ -83,15 +128,18 @@
 
   function apply(code, map) {
     if (!nodes) collect();
-    var i = 0, N = nodes.length, CHUNK = 240;
+    prevRev = liveRev;
+    live = map; liveRev = reverse(map);
+    var i = 0, CHUNK = 240;
     function chunk() {
-      var end = Math.min(N, i + CHUNK);
+      /* zbierka môže počas prekladu narásť o vložené uzly, preto sa dĺžka číta zakaždým */
+      var end = Math.min(nodes.length, i + CHUNK);
       for (; i < end; i++) {
         var x = nodes[i], tr = map && map[x.key];
         x.node.nodeValue = tr ? put(x.sk, tr) : x.sk;
       }
       if (i === CHUNK) waiting(false);            /* úvod je preložený, môže sa ukázať */
-      if (i < N) { later(chunk); return; }
+      if (i < nodes.length) { later(chunk); return; }
       finish(code, map);
     }
     chunk();
@@ -100,10 +148,15 @@
   function finish(code, map) {
     attrs.forEach(function (x) {
       var tr = (map && map[x.key]) || x.sk;
-      if (x.attr === 'text') x.el.textContent = tr; else x.el.setAttribute(x.attr, tr);
+      if (x.attr === 'text') { x.el.textContent = tr; return; }
+      var now = x.el.getAttribute(x.attr);
+      if (x.last !== undefined && now !== null && (x.own || now !== x.last)) { x.own = true; tr = retell(now, prevRev, map); }
+      x.el.setAttribute(x.attr, tr); x.last = tr;
     });
     var L = byCode(code) || LANGS[0];
     document.documentElement.lang = L.locale;
+    var og = document.querySelector('meta[property="og:locale"]');
+    if (og) og.content = L.og;
     applied = code;
     document.querySelectorAll('[data-lang-pick]').forEach(function (b) {
       b.setAttribute('aria-checked', String(b.dataset.langPick === code));
@@ -111,7 +164,7 @@
     var cur = document.querySelector('[data-lang-current]');
     if (cur) cur.textContent = L.short;
     var lb = document.querySelector('.lang-btn');
-    if (lb) lb.setAttribute('aria-label', L.short + ', jazyk stránky');
+    if (lb) lb.setAttribute('aria-label', L.short + ', ' + L.page);
     waiting(false);
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: code } }));
   }
@@ -134,7 +187,8 @@
     var u = new URL(location.href);
     if (code === 'sk') u.searchParams.delete('lang'); else u.searchParams.set('lang', code);
     history.replaceState(null, '', u);
-    load(code, function (map) { apply(code, map); busy = false; });
+    /* keď sa preklad nenačíta, stránka zostane celá po slovensky, aj s jazykom v html */
+    load(code, function (map) { apply(map || code === 'sk' ? code : 'sk', map); busy = false; });
   }
 
   function build() {
@@ -142,7 +196,7 @@
     if (!host) return;
     var cur = byCode(current) || LANGS[0];
     host.innerHTML =
-      '<button class="lang-btn" type="button" aria-expanded="false" aria-haspopup="true" title="Jazyk stránky / language" aria-label="' + cur.short + ', jazyk stránky">' +
+      '<button class="lang-btn" type="button" aria-expanded="false" aria-haspopup="true" title="Jazyk stránky / language" aria-label="' + cur.short + ', ' + cur.page + '">' +
       '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' +
       '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>' +
       '<span data-lang-current>' + cur.short + '</span></button>' +
@@ -174,7 +228,7 @@
     box.className = 'lang-offer';
     box.innerHTML = '<span>' + L.offer + '</span>' +
       '<button type="button" data-yes>' + L.label + '</button>' +
-      '<button type="button" data-no aria-label="Zavrieť">&times;</button>';
+      '<button type="button" data-no aria-label="' + L.close + '">&times;</button>';
     box.addEventListener('click', function (e) {
       if (e.target.closest('[data-yes]')) { set(L.code); box.remove(); return; }
       if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) {} box.remove(); }
@@ -186,10 +240,15 @@
 
   function start() {
     current = pick(); build();
+    /* jazyk v html sa nastaví hneď, aby texty skladané v skriptoch (dnešné hodiny, počet rituálov)
+       vznikli rovno v správnom jazyku a nečakali na koniec prekladu */
+    if (current !== 'sk') document.documentElement.lang = byCode(current).locale;
     if (current !== 'sk') { waiting(true); setTimeout(function () { waiting(false); }, 1500); set(current, false); }
     else { later(offer); later(function () { if (!nodes) collect(); }); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 
-  window.HS30_LANG = { set: set, langs: LANGS, get: function () { return applied; } };
+  /* t(kľúč) vráti preklad slovenského textu v nasadenom jazyku, pre texty skladané v skriptoch */
+  function t(k) { var m = cache[applied], v = m && m[norm(k)]; return v === undefined ? k : v; }
+  window.HS30_LANG = { set: set, langs: LANGS, get: function () { return applied; }, t: t };
 })();

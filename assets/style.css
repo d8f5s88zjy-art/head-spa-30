@@ -1,15 +1,19 @@
-/* HEAD SPA 30, Nitra. Plain CSS, no build step. */
+/* HEAD SPA 30, Nitra. Čisté CSS, bez zostavovacieho kroku. */
 :root{
-  --canvas:#0a0d0b;--canvas-2:#0e1310;--panel:#131a15;--panel-2:#192219;
+  --canvas:#0c0906;--canvas-2:#120d09;--panel:#1a130d;--panel-2:#22190f;
+  /* farby odpísané z prevádzky: orech a parkety, fľaškovo zelené dvere, olivové závesy, biele uteráky, svit LED pásu za logom */
+  --ink:12,9,6;--walnut:26,19,13;--walnut-2:34,25,16;
+  --wood:#6b3f1f;--wood-line:rgba(160,104,58,.32);--door:#1f3328;--door-hi:#2b4435;
+  --olive:#5d5a2a;--cream:#efe5d4;--glow:#f0a65a;--glow-soft:rgba(240,166,90,.18);--orchid:#d98fb4;
   --accent:#d9b56a;--accent-hover:#ecd08f;--accent-muted:rgba(217,181,106,.16);
-  --water:#8cc3b6;--olive:#6f7a3d;
-  --text-primary:#f2ede2;--text-secondary:#c3c8bb;--text-tertiary:#9ba197;
+  --water:#8cc3b6;
+  --text-primary:#f4ece0;--text-secondary:#d2c6b5;--text-tertiary:#aa9d8b;
   --line:rgba(242,237,226,.10);--line-strong:rgba(217,181,106,.42);
   --display:"Lora",Georgia,"Times New Roman",serif;
   --body:"Manrope","Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;   /* štítky sú z toho istého písma ako text, len tučné a verzálkové */
   --ease:cubic-bezier(.22,.8,.2,1);--ease-soft:cubic-bezier(.4,0,.2,1);
-  --tshadow:0 1px 2px rgba(5,7,6,.9),0 3px 12px rgba(5,7,6,.6),0 10px 24px rgba(5,7,6,.5);
+  --tshadow:0 1px 2px rgba(var(--ink),.9),0 3px 12px rgba(var(--ink),.6),0 10px 24px rgba(var(--ink),.5);
   --radius-s:12px;--radius-m:16px;--radius:22px;--radius-l:28px;--label:11px;--wrap:1180px;--veil:0ms;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -28,10 +32,10 @@ ul,ol{margin:0;padding:0;list-style:none}
 .skip{position:fixed;left:16px;top:16px;z-index:200;padding:12px 16px;background:var(--accent);color:#141208;font-weight:700;border-radius:10px;transform:translateY(-120px);transition:transform .25s var(--ease)}
 .skip:focus{transform:none}
 
-/* ---------- the breath: one rhythm for every glow (4s in, 6s out) ---------- */
+/* ---------- dych: jeden rytmus pre každú žiaru (4 s nádych, 6 s výdych) ---------- */
 @keyframes breathe{0%{opacity:var(--bo,.5)}40%{opacity:var(--bh,1)}100%{opacity:var(--bo,.5)}}
 
-/* ---------- environment: one fixed background layer, one light handed through the rooms ---------- */
+/* ---------- prostredie: jedna pevná vrstva pozadia, jedno svetlo podávané cez miestnosti ---------- */
 .env{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .env.covered{visibility:hidden}
 .env.covered .glow{animation-play-state:paused}
@@ -62,12 +66,12 @@ body[data-scene="footer"] .env .g3,body[data-scene="footer"] .env .g4{--go:0}
 .env .grain{position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes envA{to{transform:translate(12vmax,10vmax)}}
 @keyframes envB{to{transform:translate(-14vmax,-8vmax)}}
-/* stillness: hidden tab, idle visitor, off-screen section */
+/* pokoj: skrytá karta prehliadača, nečinný návštevník, sekcia mimo obrazovky */
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
 body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .drop{animation-play-state:paused}
 .gift:not(.live) .ticket,.book:not(.live) .ticket,.contact:not(.live) .pin::after{animation-play-state:paused}
 
-/* ---------- the mark draws itself (dvere, ticket, footer) ---------- */
+/* ---------- značka sa nakreslí sama (dvere, lístok, pätička) ---------- */
 .mark .ring,.mark .wave{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 700ms var(--ease) 100ms}
 .mark .wave{transition-duration:600ms;transition-delay:450ms}
 .mark .ring{transform:rotate(-90deg);transform-origin:50% 50%}
@@ -79,35 +83,45 @@ body.idle .env .glow,body.idle .ticket,body.idle .pin::after,body.idle .cue .dro
 .veil{position:fixed;inset:0;z-index:300;pointer-events:none;display:none}
 html.door .veil{display:block}
 .veil.gone{display:none!important}
-.veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 52%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
-.veil.through .scene{transform:scale(3.8);opacity:0}
-.veil .door{--dh:min(84vh,136vw);position:absolute;left:50%;top:50%;width:calc(var(--dh)*.58);height:var(--dh);margin:calc(var(--dh)*-.5) 0 0 calc(var(--dh)*-.29);perspective:1400px;perspective-origin:50% 45%}
-.veil .doorway{position:absolute;inset:0;background:#0a0d0b;box-shadow:0 0 0 200vmax #e4dcd7;transition:background 500ms var(--ease-soft)}
-.veil.lift .doorway{background:transparent}
-.veil .doorway::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(217,181,106,.35),rgba(217,181,106,.08) 45%,transparent 70%);opacity:0;transition:opacity 650ms var(--ease-soft) 180ms;pointer-events:none}
-.veil.lift .doorway::before{opacity:1}
-.veil .frame{position:absolute;inset:calc(var(--dh)*-.05) calc(var(--dh)*-.055) 0;border:solid #3a4c41;border-width:calc(var(--dh)*.05) calc(var(--dh)*.055) 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),inset 0 0 0 calc(var(--dh)*.012) #2c3b32,inset 0 0 0 calc(var(--dh)*.014) rgba(255,255,255,.07),0 0 0 1px rgba(0,0,0,.25),0 24px 60px rgba(0,0,0,.28);pointer-events:none}
-.veil .sill{position:absolute;left:calc(var(--dh)*-.055);right:calc(var(--dh)*-.055);top:100%;height:5vh;background:linear-gradient(#5a5652,#3f3c39);box-shadow:0 30px 40px rgba(0,0,0,.18)}
-.veil .leaf{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(180deg,#34453b,#2d3d33 60%,#293830);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);backface-visibility:hidden;transition:transform 680ms cubic-bezier(.65,0,.25,1) 30ms}
-.veil .leaf.l{left:0;transform-origin:left center;border-right:1px solid rgba(0,0,0,.45)}
-.veil .leaf.r{right:0;transform-origin:right center;border-left:1px solid rgba(255,255,255,.04);transition-delay:90ms}
-.veil.lift .leaf.l{transform:rotateY(104deg)}
-.veil.lift .leaf.r{transform:rotateY(-104deg)}
-.veil .p{position:absolute;left:15%;right:15%;border:1px solid rgba(255,255,255,.10);box-shadow:inset 0 0 0 calc(var(--dh)*.006) rgba(0,0,0,.28),inset 0 0 0 calc(var(--dh)*.009) rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.04))}
-.veil .p.t{top:5.5%;height:47%}
-.veil .p.m{top:65%;height:8%}
-.veil .p.b{top:78.5%;height:15.5%}
-.veil .p.b2{display:none}
-.veil .knock{position:absolute;left:50%;top:59%;width:calc(var(--dh)*.075);height:calc(var(--dh)*.075);margin-left:calc(var(--dh)*-.0375);border-radius:50%;border:calc(var(--dh)*.007) solid #c9a45c;box-shadow:0 2px 3px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,255,255,.35)}
-.veil .knock::before{content:"";position:absolute;left:50%;top:calc(var(--dh)*-.028);width:calc(var(--dh)*.032);height:calc(var(--dh)*.032);margin-left:calc(var(--dh)*-.016);border-radius:50%;background:radial-gradient(circle at 35% 35%,#eed49a,#b8924a 70%);box-shadow:0 2px 3px rgba(0,0,0,.45)}
-.veil .handle{position:absolute;left:8%;top:60%;width:calc(var(--dh)*.02);height:calc(var(--dh)*.12);border-radius:999px;background:linear-gradient(90deg,#b8924a,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
-.veil .handle::after{content:"";position:absolute;left:0;top:22%;width:calc(var(--dh)*.05);height:calc(var(--dh)*.014);border-radius:999px;background:linear-gradient(180deg,#eed49a,#b8924a);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.veil .scene{position:absolute;inset:0;overflow:hidden;transform-origin:50% 55%;transition:transform 780ms cubic-bezier(.6,0,.2,1),opacity 520ms var(--ease-soft) 220ms}
+.veil.through .scene{transform:scale(2.6);opacity:0}
+/* skutočné dvere salónu: fotka dverí prekryje celú obrazovku, rám ostane stáť a obe krídla
+   (vystrihnuté z tej istej fotky) sa otvoria dnu. Rozmery sú v podieloch fotky 800 × 992:
+   krídla od 8 % do 90,25 % šírky, deliaca čiara na 49,75 %, vrch krídel na 8,27 % výšky. */
+/* na širokej obrazovke je fotka vyššia ako okno: kruhy a kľučka sú trochu pod stredom, nie na spodnom okraji */
+.veil .door{--bw:max(100vw,80.65vh);--bh:calc(var(--bw)*1.24);position:absolute;left:50%;top:0;width:var(--bw);height:var(--bh);margin:clamp(calc(100vh - var(--bh)),calc(50vh - var(--bh)*.7),0px) 0 0 calc(var(--bw)*-.5);perspective:calc(var(--bw)*1.1);perspective-origin:50% 55%}
+.veil .door img{position:absolute;left:0;top:0;width:var(--bw);height:var(--bh);max-width:none;display:block;user-select:none}
+.veil .jamb,.veil .leaf{position:absolute;overflow:hidden;background:#0d0a07}
+/* kým nie je fotka dverí pripravená, je vidieť len tmu a kreslenie značky, nie plochú zelenú */
+.veil .scene{background:var(--canvas)}
+.veil .door{opacity:0;transition:opacity 260ms var(--ease-soft)}
+.veil.pic .door{opacity:1}
+.veil .jamb.t{left:0;top:0;width:100%;height:8.27%}
+.veil .jamb.l{left:0;top:8.27%;width:8%;bottom:0}
+.veil .jamb.r{left:90.25%;right:0;top:8.27%;bottom:0}
+.veil .jamb.l img,.veil .jamb.r img,.veil .leaf img{top:calc(var(--bh)*-.0827)}
+.veil .jamb.r img{left:calc(var(--bw)*-.9025)}
+/* otvor je priehľadný: keď sa krídla otvoria, vidno cez ne skutočný úvod stránky (žiadna iná fotka,
+   žiadna dvojexpozícia). Tmavé pozadie scény zmizne až pri otváraní, dovtedy dvere prekrývajú všetko. */
+.veil .doorway{position:absolute;left:8%;top:8.27%;width:82.25%;bottom:0;background:none}
+.veil.lift .scene{background:transparent}
+.veil .leaf{top:8.27%;bottom:0;backface-visibility:hidden;transition:transform 760ms cubic-bezier(.65,0,.25,1) 30ms}
+.veil .leaf.l{left:8%;width:41.75%;transform-origin:left center}
+.veil .leaf.l img{left:calc(var(--bw)*-.08)}
+.veil .leaf.r{left:49.75%;width:40.5%;transform-origin:right center;transition-delay:90ms}
+.veil .leaf.r img{left:calc(var(--bw)*-.4975)}
+/* krídlo sa pri otváraní odvracia od svetla, preto stmavne ako v skutočnosti */
+.veil .leaf::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity 760ms cubic-bezier(.65,0,.25,1) 30ms}
+.veil .leaf.r::after{transition-delay:90ms}
+.veil.lift .leaf::after{opacity:.6}
+.veil.lift .leaf.l{transform:rotateY(100deg)}
+.veil.lift .leaf.r{transform:rotateY(-100deg)}
 .veil .mark{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;transform-origin:50% 50%;transition:transform 650ms cubic-bezier(.7,0,.2,1)}
 html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .name,body.veiling .nav .links,body.veiling .nav .btn{opacity:0}
 
-/* ---------- nav ---------- */
+/* ---------- navigácia ---------- */
 .nav{position:fixed;left:0;right:0;top:0;z-index:100;height:80px;display:flex;align-items:center}
-.nav::before{content:"";position:absolute;inset:0;background:rgba(10,13,11,0);opacity:0;transition:opacity .5s var(--ease-soft);pointer-events:none;background:rgba(10,13,11,.9);backdrop-filter:blur(16px) saturate(1.1);border-bottom:1px solid var(--line)}
+.nav::before{content:"";position:absolute;inset:0;background:rgba(var(--ink),0);opacity:0;transition:opacity .5s var(--ease-soft);pointer-events:none;background:rgba(var(--ink),.9);backdrop-filter:blur(16px) saturate(1.1);border-bottom:1px solid var(--line)}
 .nav.solid::before{opacity:1}
 .nav{transition:transform .5s var(--ease)}
 .nav.hide{transform:translateY(-100%)}
@@ -118,8 +132,9 @@ html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .
 .brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .brand .mark{width:44px;height:44px;flex:0 0 44px}
 .brand .name{display:grid;line-height:1.1;white-space:nowrap}
-.brand .name small{font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.brand .name strong{font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.02em}
+.brand .name strong{font-family:var(--display);font-weight:500;font-size:17px;letter-spacing:.12em}
+/* podnázov ako na svietiacom nápise: salon30 kurzívou, v teplom svite */
+.brand .name em{font-family:var(--display);font-style:italic;font-weight:400;font-size:13px;letter-spacing:.02em;color:var(--accent-hover);text-shadow:0 0 14px var(--glow-soft)}
 .links{display:flex;gap:22px;align-items:baseline;font-size:15px;font-weight:400;color:var(--text-secondary)}
 .links a{white-space:nowrap}
 .links a{position:relative;padding:4px 0;transition:color .3s}
@@ -132,7 +147,7 @@ html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .
 .btn.primary::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:0 16px 40px rgba(217,181,106,.28);opacity:0;transition:opacity .35s var(--ease);pointer-events:none;z-index:-1}
 .btn.primary:hover{transform:translateY(-2px)}
 .btn.primary:hover::after{opacity:1}
-.btn.ghost{border-color:rgba(242,237,226,.22);background:rgba(10,13,11,.5);color:var(--text-primary)}
+.btn.ghost{border-color:rgba(242,237,226,.22);background:rgba(var(--ink),.5);color:var(--text-primary)}
 .btn.ghost:hover{border-color:var(--line-strong);transform:translateY(-2px)}
 .btn.small{padding:11px 16px;font-size:15.5px}
 .nav .btn{padding:11px 18px;font-size:15px}
@@ -145,21 +160,21 @@ html.door body:not(.open) .nav .mark,body.veiling .nav .mark,body.veiling .nav .
   .btn:active,.mbar a:active,.chip:active{transform:scale(.97);transition-duration:80ms}
 }
 
-/* mobile menu: a full-height sheet from the right, native dialog */
+/* mobilné menu: panel na celú výšku sprava, natívny dialog */
 .nav-actions{display:flex;align-items:center;gap:10px}
-.menu-btn{display:none;position:relative;width:44px;height:44px;border-radius:var(--radius-s);border:1px solid var(--line);background:rgba(10,13,11,.5);padding:0}
+.menu-btn{display:none;position:relative;width:44px;height:44px;border-radius:var(--radius-s);border:1px solid var(--line);background:rgba(var(--ink),.5);padding:0}
 .menu-btn span{position:absolute;left:12px;right:12px;height:1.5px;background:var(--text-primary);transition:transform .35s var(--ease),top .35s var(--ease)}
 .menu-btn span:first-child{top:17px} .menu-btn span:last-child{top:25px}
 .menu-btn[aria-expanded="true"] span:first-child{top:21px;transform:rotate(45deg)} .menu-btn[aria-expanded="true"] span:last-child{top:21px;transform:rotate(-45deg)}
 .drawer{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:var(--text-primary)}
-.drawer::backdrop{background:rgba(6,8,7,.6);backdrop-filter:blur(6px)}
-.drawer-in{position:absolute;top:0;right:0;bottom:0;width:min(420px,100%);display:flex;flex-direction:column;padding:22px 24px 30px;background:linear-gradient(180deg,#121915,#0a0d0b);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(30px);opacity:0;transition:transform .45s var(--ease),opacity .35s var(--ease)}
+.drawer::backdrop{background:rgba(var(--ink),.6);backdrop-filter:blur(6px)}
+.drawer-in{position:absolute;top:0;right:0;bottom:0;width:min(420px,100%);display:flex;flex-direction:column;padding:22px 24px 30px;background:linear-gradient(180deg,var(--panel),var(--canvas));border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(30px);opacity:0;transition:transform .45s var(--ease),opacity .35s var(--ease)}
 .drawer[open] .drawer-in{transform:none;opacity:1}
 .drawer-top{display:flex;align-items:center;justify-content:space-between;min-height:44px}
 .drawer-brand{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-.drawer-close{width:44px;height:44px;border-radius:var(--radius-s);border:1px solid var(--line);background:rgba(10,13,11,.5);font-size:26px;line-height:1;color:var(--text-primary)}
+.drawer-close{width:44px;height:44px;border-radius:var(--radius-s);border:1px solid var(--line);background:rgba(var(--ink),.5);font-size:26px;line-height:1;color:var(--text-primary)}
 .drawer-links{display:grid;margin-top:26px}
-.drawer-links a{display:flex;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--display);font-size:clamp(24px,6.4vw,30px);letter-spacing:-.01em;transition:color .3s,padding-left .35s var(--ease)}
+.drawer-links a{display:flex;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--display);font-size:clamp(24px,6.4vw,30px);letter-spacing:-.01em;transition:color .3s var(--ease)}
 .drawer-links a span{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;color:var(--accent);min-width:2.2ch}
 .drawer-links a:hover,.drawer-links a:focus-visible{color:var(--accent-hover);padding-left:6px}
 .drawer[open] .drawer-links a{animation:menuIn .6s var(--ease) both;animation-delay:calc(60ms + var(--i,0)*45ms)}
@@ -181,12 +196,12 @@ body.drawer-open{overflow:hidden}
 .band[data-fx="rise"] .today-line{margin-top:14px}
 .hero-static .today-line{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 
-/* ---------- hero ---------- */
-.hero{position:relative;height:360vh;z-index:1}
+/* ---------- úvod ---------- */
+.hero{position:relative;height:100vh;height:100svh;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform;transform:translateZ(0)}
-.stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 66% -10%,rgba(217,181,106,.22),transparent 60%),radial-gradient(ellipse 30% 8% at 66% 80%,rgba(140,195,182,.35),transparent 70%),linear-gradient(180deg,#0e1310,#0a0d0b)}
-.stage .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(8,10,9,0) 35%,rgba(8,10,9,.62) 100%)}
+.stage .fallback{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 71% 50%,rgba(240,166,90,.10),transparent 70%),linear-gradient(180deg,var(--canvas-2),var(--canvas))}
+.stage .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(var(--ink),0) 35%,rgba(var(--ink),.62) 100%)}
 .band{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 max(24px,calc((100% - var(--wrap)) / 2 + 24px));opacity:0;pointer-events:none;text-shadow:var(--tshadow);--k:0}
 .band.on{pointer-events:auto}
 /* pri cudzom jazyku čaká úvod na preklad, aby sa text nevymieňal pred očami */
@@ -195,7 +210,7 @@ body.drawer-open{overflow:hidden}
 .band[data-a="0"]{opacity:1;--k:1}
 .band[data-a="0"] .inner{animation:heroRise 800ms var(--ease) both}
 @keyframes heroRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.band::before{content:"";position:absolute;left:-4%;top:-4%;width:64%;height:108%;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 70% 62% at 42% 50%,rgba(6,8,7,var(--scrim,.66)) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.66)) 46%,rgba(6,8,7,0) 76%)}
+.band::before{content:"";position:absolute;left:-4%;top:-4%;width:64%;height:108%;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 70% 62% at 42% 50%,rgba(var(--ink),var(--scrim,.66)) 0%,rgba(var(--ink),calc(var(--scrim,.66)*.66)) 46%,rgba(var(--ink),0) 76%)}
 .band .inner{position:relative;max-width:min(58%,720px)}
 .band .kicker{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
 .band .kicker::before{content:"";width:34px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 800ms var(--ease)}
@@ -210,19 +225,19 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .band .w{display:inline-block;white-space:nowrap}
 .band.on .w{will-change:transform}
 .band .c{display:inline-block}
-/* drift-down */
+/* zosun nadol */
 .band[data-fx="drift"] .cta{--kb:clamp(0,(var(--k,0) - .55)*3,1);opacity:var(--kb);transform:translateY(calc((1 - var(--kb))*14px))}
 .band[data-fx="drift"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.8,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*-26px))}
-/* punch */
+/* úder */
 .band[data-fx="punch"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);--ks:clamp(0,(var(--k,0) - var(--th,0) - var(--sd,.1))*var(--ss,3.2),1);opacity:var(--kc);transform:scale(calc(.6 + (.4 + var(--ov,.12))*var(--kc) - var(--ov,.12)*var(--ks)))}
 .band[data-fx="punch"] .w.em{--ov:.24;--sd:.16;--ss:2.6}
-/* blur-to-sharp */
+/* z rozmazania do ostrosti */
 .band[data-fx="blur"] .soft{position:absolute;inset:0;filter:blur(10px);opacity:calc(1 - var(--k,0));pointer-events:none}
 .band[data-fx="blur"] .sharp{opacity:var(--k,0)}
 .band[data-fx="blur"] .stack{position:relative}
-/* scatter */
+/* rozptýlenie */
 .band[data-fx="scatter"] .c{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.6,1);opacity:var(--kc);transform:translate(calc((1 - var(--kc))*var(--jx,0px)),calc((1 - var(--kc))*var(--jy,0px))) rotate(calc((1 - var(--kc))*var(--jr,0deg)))}
-/* rise, staged settle */
+/* stúpanie, postupné usadenie */
 .band[data-fx="rise"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3.2,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*22px))}
 .band[data-fx="rise"] .sub{--ks:clamp(0,(var(--k,0) - .62)*4,1);opacity:var(--ks);transform:translateY(calc((1 - var(--ks))*14px))}
 .band[data-fx="rise"] .cta{--kb:clamp(0,(var(--k,0) - .76)*5,1);opacity:var(--kb);transform:translateY(calc((1 - var(--kb))*14px))}
@@ -231,7 +246,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .cue .drop{width:14px;height:20px;border-radius:50% 50% 50% 50%/40% 40% 60% 60%;border:1px solid var(--accent);animation:dropBob 2.8s var(--ease-soft) infinite}
 .cue:not(.show) .drop{animation-play-state:paused}
 @keyframes dropBob{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(8px);opacity:1}}
-.hud{position:absolute;right:max(24px,calc((100% - var(--wrap)) / 2 + 24px));bottom:34px;display:grid;grid-template-columns:repeat(4,auto);gap:8px 18px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary);padding:11px 14px 12px;border-radius:10px;background:rgba(10,13,11,.7);border:1px solid var(--line);text-shadow:0 1px 3px rgba(5,7,6,.85);--p:0}
+.hud{position:absolute;right:max(24px,calc((100% - var(--wrap)) / 2 + 24px));bottom:34px;display:grid;grid-template-columns:repeat(4,auto);gap:8px 18px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary);padding:11px 14px 12px;border-radius:10px;background:rgba(var(--ink),.7);border:1px solid var(--line);text-shadow:0 1px 3px rgba(var(--ink),.85);--p:0}
 .hud .ch{opacity:.55;transition:opacity .5s var(--ease),color .5s var(--ease)}
 .hud .ch.on{opacity:1;color:var(--accent)}
 .hud .rail{grid-column:1/-1;position:relative;height:1px;background:rgba(242,237,226,.12);overflow:hidden}
@@ -239,7 +254,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .hud .rail::after{content:"";position:absolute;top:-2px;left:calc(var(--p)*100%);width:5px;height:5px;margin-left:-2px;border-radius:50%;background:var(--accent-hover);box-shadow:0 0 8px var(--accent)}
 @media (max-height:560px){.cue,.hud{display:none}}
 
-/* the facts row under the hero buttons */
+/* riadok faktov pod tlačidlami v úvode */
 .facts{display:flex;flex-wrap:wrap;gap:12px 30px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(242,237,226,.14);max-width:680px}
 .facts li{display:flex;align-items:baseline;gap:8px}
 .facts b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1;color:var(--accent-hover);white-space:nowrap}
@@ -247,11 +262,11 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 .band[data-fx="drift"] .facts{--kf:clamp(0,(var(--k,0) - .7)*3.4,1);opacity:var(--kf);transform:translateY(calc((1 - var(--kf))*12px))}
 .hero-static .facts{animation:heroRise 800ms var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
 
-/* static hero (two gates; strings identical in JS) */
+/* statický úvod (dve podmienky; reťazce rovnaké ako v JS) */
 .hero-static{display:none;position:relative;z-index:1;min-height:100svh;padding:130px 0 60px;align-items:flex-end;overflow:hidden}
 .hero-static .art{position:absolute;inset:0;z-index:0}
 .hero-static .art canvas{width:100%;height:100%;display:block}
-.hero-static .art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,13,11,.62) 0%,rgba(10,13,11,.34) 34%,rgba(10,13,11,.62) 72%,var(--canvas) 100%)}
+.hero-static .art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--ink),.62) 0%,rgba(var(--ink),.34) 34%,rgba(var(--ink),.62) 72%,var(--canvas) 100%)}
 .hero-static .wrap{position:relative;z-index:1}
 .hero-static .kicker{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
 .hero-static .kicker::before{content:"";width:28px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 800ms var(--ease)}
@@ -266,7 +281,7 @@ body.open .band .kicker::before,body.open .hero-static .kicker::before{transform
 }
 @media (min-width:901px){.hero-static{align-items:center}.hero-static p{max-width:30ch}}
 
-/* ---------- sections ---------- */
+/* ---------- sekcie ---------- */
 main{position:relative;z-index:1}
 .site{position:relative;background:linear-gradient(180deg,var(--canvas) 0,transparent 240px)}
 section{position:relative;padding:120px 0;scroll-margin-top:80px}
@@ -278,7 +293,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in .kicker::before{transform:scaleX(1)}
 .h2{font-family:var(--display);font-weight:400;letter-spacing:-.02em;line-height:1.02;font-size:clamp(38px,5vw,68px);margin-top:16px}
 .h2 em{font-style:italic;font-weight:300;color:var(--accent-hover)}
-/* headlines rise out of a masked slot, line by line */
+/* nadpisy stúpajú z maskovanej štrbiny, riadok po riadku */
 .h2.lines{display:flex;flex-direction:column;align-items:flex-start}
 .h2 .ln{display:block;overflow:hidden;padding:.1em .12em .2em .06em;margin:-.1em -.12em -.2em -.06em}
 .h2 .li{display:block;transform:translateY(125%);transition:transform 1100ms var(--ease)}
@@ -288,14 +303,14 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in .h2.part .ln:nth-child(2) .li{transition-delay:210ms}
 .rv .part.has-h2,.rv .part.h2{transform:none}
 .lede{color:var(--text-secondary);font-size:17px;line-height:1.7;max-width:52ch}
-/* the two gold dividers draw from the centre and let one light pass */
+/* dva zlaté oddeľovače sa kreslia od stredu a prepustia jedno svetlo */
 .divider{width:min(var(--wrap),calc(100% - 48px));height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);position:relative;overflow:hidden;transform:scaleX(0);transform-origin:center;transition:transform 1200ms var(--ease)}
 .divider.in{transform:scaleX(1)}
 .divider::after{content:"";position:absolute;top:0;left:0;width:18%;height:1px;background:linear-gradient(90deg,transparent,#fff0c2,transparent);transform:translateX(-120%)}
 .divider.in::after{animation:pass 2600ms var(--ease-soft) 500ms 1 forwards}
 @keyframes pass{to{transform:translateX(660%)}}
 
-/* entrances */
+/* príchody */
 .rv .part{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .rv.in .part{opacity:1;transform:none}
 .rv.in .part:nth-child(2){transition-delay:.09s}
@@ -307,9 +322,9 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .rv.in .part:nth-child(8){transition-delay:.63s}
 .rv.in.done .part{transition-delay:0s}
 
-/* ritual steps: the water line lights each numeral as it reaches it */
+/* kroky rituálu: vodná linka rozsvieti každú číslicu, keď k nej dorazí */
 /* kapitola Ako to prebieha: panel o odtieň teplejší než zvyšok stránky, prichádza stieracím prechodom zdola */
-.ritual.light{background:linear-gradient(180deg,#131b16 0%,#101713 100%);clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
+.ritual.light{background:linear-gradient(180deg,var(--panel) 0%,var(--panel) 100%);clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
 .ritual.light.in{clip-path:inset(0 0 0 0)}
 .ritual .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
 .ritual .sticky{position:sticky;top:120px}
@@ -343,29 +358,29 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .faq-more p{font-family:var(--display);font-size:22px}
 .faq-more .cta{display:flex;gap:10px;flex-wrap:wrap}
 
-/* links answer the hand the same way: a static hairline, a gold line that enters left and leaves right */
+/* odkazy reagujú na ruku rovnako: pevná vlasová linka a zlatá linka, ktorá príde zľava a odíde doprava */
 .info a::before,footer .col a::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line-strong)}
 .info a::after,footer .col a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
 .info a:hover::after,footer .col a:hover::after{transform:scaleX(1);transform-origin:left}
 
-/* the quote and the mood scenes in the ritual section */
+/* citát a náladové scény v sekcii rituálu */
 .ritual .quote{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--display);font-size:clamp(20px,1.7vw,24px);line-height:1.3;color:var(--text-secondary);max-width:26ch}
 .ritual .quote em{font-style:italic;font-weight:300;color:var(--accent-hover)}
 
-/* price list: a ledger */
+/* cenník: ako účtovná kniha */
 .head{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:end}
 .head .lede{margin-top:0}
 .menu .head{margin-bottom:44px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
-.stats div{padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-m);background:rgba(19,26,21,.6)}
+.stats div{padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-m);background:rgba(var(--walnut),.6)}
 .stats b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(22px,1.9vw,28px);line-height:1;color:var(--accent-hover);white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .stats i{font-style:normal}
 .stats span{display:block;margin-top:6px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.tools{position:sticky;top:72px;z-index:20;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(10,13,11,.86);backdrop-filter:blur(16px);margin-bottom:12px}
+.tools{position:sticky;top:72px;z-index:20;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(var(--ink),.86);backdrop-filter:blur(16px);margin-bottom:12px}
 .chip-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%}
 .chip-row + .chip-row{padding-top:10px;border-top:1px solid var(--line)}
 .chip-row > b{flex:none;min-width:104px;font-family:var(--mono);font-size:var(--label);font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
-.chip{appearance:none;border:1px solid var(--line);background:rgba(25,34,25,.7);color:var(--text-secondary);padding:9px 14px;border-radius:999px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.08em;text-transform:uppercase;transition:background .3s,color .3s,border-color .3s,transform .35s var(--ease)}
+.chip{appearance:none;border:1px solid var(--line);background:rgba(var(--walnut-2),.7);color:var(--text-secondary);padding:9px 14px;border-radius:999px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.08em;text-transform:uppercase;transition:background .3s,color .3s,border-color .3s,transform .35s var(--ease)}
 .chip:hover{border-color:var(--line-strong);color:var(--text-primary)}
 .chip[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208;border-color:var(--accent)}
 .count{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.1em;color:var(--text-tertiary);margin:10px 0 24px 0;min-height:1.6em}
@@ -378,13 +393,13 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .list{display:grid;gap:10px}
 /* Na širokej obrazovke idú karty rituálov v dvoch stĺpcoch, aby zoznam nebol natiahnutý */
 @media (min-width:901px){.list{grid-template-columns:1fr 1fr;gap:14px;align-items:start}.list .cat{grid-column:1/-1}.card{grid-template-columns:1fr auto;gap:14px 18px;padding:24px 26px}.card .glyph{display:none}.card .actions,.card .panel{grid-column:1/3}.card .desc{max-width:none}}
-.card{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:22px;padding:26px 28px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,rgba(25,34,25,.75),rgba(19,26,21,.85));transition:border-color .4s,transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:22px;padding:26px 28px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,rgba(var(--walnut-2),.75),rgba(var(--walnut),.85));transition:border-color .4s,transform .5s var(--ease),box-shadow .5s var(--ease)}
 .card:hover{border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 24px 60px rgba(0,0,0,.3)}
-.card.featured{border-color:var(--line-strong);background:radial-gradient(circle at 90% 10%,rgba(217,181,106,.14),transparent 30%),linear-gradient(160deg,rgba(29,40,29,.9),rgba(19,26,21,.9))}
+.card.featured{border-color:var(--line-strong);background:radial-gradient(circle at 90% 10%,rgba(217,181,106,.14),transparent 30%),linear-gradient(160deg,rgba(var(--walnut-2),.9),rgba(var(--walnut),.9))}
 .card.reco{border-color:var(--water);box-shadow:0 0 0 1px rgba(140,195,182,.35),0 0 40px rgba(140,195,182,.12)}
 @keyframes cardIn{from{opacity:0;transform:translateY(10px)}}
 .card.pop{animation:cardIn 700ms var(--ease) both;animation-delay:calc(min(var(--i,0),10)*45ms)}
-.card .glyph{width:56px;height:56px;border-radius:var(--radius-m);display:grid;place-items:center;border:1px solid var(--line);background:rgba(10,13,11,.5);color:var(--accent)}
+.card .glyph{width:56px;height:56px;border-radius:var(--radius-m);display:grid;place-items:center;border:1px solid var(--line);background:rgba(var(--ink),.5);color:var(--accent)}
 .card .glyph svg{width:26px;height:26px}
 .card .mini{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
 .card .mini .badge{color:#141208;background:var(--accent);padding:3px 8px;border-radius:999px;letter-spacing:.12em}
@@ -396,7 +411,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .card .meta strong{position:relative;font-family:var(--display);font-weight:400;font-size:34px;line-height:1;color:var(--accent-hover);transition:color 350ms,transform 350ms var(--ease)}
 .card .meta strong::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform 450ms var(--ease) 50ms}
 .card .actions{grid-column:2/4;display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px}
-.card-toggle{appearance:none;border:1px solid var(--line);background:rgba(10,13,11,.4);color:var(--text-primary);padding:10px 14px;border-radius:999px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.1em;text-transform:uppercase;transition:border-color .3s,background .3s}
+.card-toggle{appearance:none;border:1px solid var(--line);background:rgba(var(--ink),.4);color:var(--text-primary);padding:10px 14px;border-radius:999px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.1em;text-transform:uppercase;transition:border-color .3s,background .3s}
 .card-toggle:hover{border-color:var(--line-strong)}
 .card-toggle i{position:relative;display:inline-block;width:16px;height:16px;margin-left:8px;border-radius:50%;border:1px solid var(--line-strong);font-size:0;vertical-align:middle;transition:border-color .3s}
 .card-toggle i::before,.card-toggle i::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:1px;background:var(--accent);transform:translate(-50%,-50%);transition:transform .35s var(--ease)}
@@ -416,7 +431,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .card.open .panel>div{opacity:1;transform:none;transition-delay:80ms}
 .card.open .panel li{opacity:1;transform:none;transition-delay:calc(60ms + var(--i,0)*22ms)}
 .note{margin-top:20px;font-size:15.5px;color:var(--text-tertiary)}
-/* the hand: buttons lean toward the cursor, cards carry a light under it (fine pointers only, never with reduced motion) */
+/* ruka: tlačidlá sa nakláňajú ku kurzoru, karty majú pod ním svetlo (len pri presnom ukazovadle, nikdy pri obmedzenom pohybe) */
 @media (hover:hover) and (pointer:fine){
   .btn.primary{transition:transform .35s var(--ease),background .35s,border-color .35s,color .35s;transform:translate(var(--mx,0px),var(--my,0px))}
   .btn.primary:hover{transform:translate(var(--mx,0px),calc(var(--my,0px) - 2px))}
@@ -425,21 +440,21 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
   .whys li::before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--lx,50%) var(--ly,50%),rgba(140,195,182,.08),transparent 60%);opacity:0;transition:opacity .5s;pointer-events:none}
   .whys li:hover::before{opacity:1}
 }
-/* gold arrives with the hand (fine pointers only; touch keeps gold at rest) */
+/* zlatá prichádza s rukou (len pri presnom ukazovadle; pri dotyku zlatá ostáva v pokoji) */
 @media (hover:hover) and (pointer:fine){
   .card .meta strong{color:var(--text-primary)}
   .card:hover .meta strong,.card.featured .meta strong,.card.reco .meta strong{color:var(--accent-hover)}
   .card:hover .meta strong{transform:translateY(-1px)}
   .card:hover .meta strong::after{transform:scaleX(1);transform-origin:left}
   .card:hover .meta span{transform:translateY(-2px)}
-  .card:not(.featured):not(.reco):not(:hover) .btn.small{background:rgba(10,13,11,.4);color:var(--text-primary);border-color:var(--line);box-shadow:none}
+  .card:not(.featured):not(.reco):not(:hover) .btn.small{background:rgba(var(--ink),.4);color:var(--text-primary);border-color:var(--line);box-shadow:none}
   .faq-q:hover .pm{transform:scale(1.08);border-color:var(--accent)}
 }
 
-/* gift: pick, fill in, send */
+/* darček: vybrať, vyplniť, poslať */
 .gift .head .cta{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
 .order{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:start;margin-top:48px}
-.vform{padding:36px;border:1px solid var(--line-strong);border-radius:var(--radius-l);background:linear-gradient(150deg,rgba(29,40,29,.85),rgba(14,19,16,.95));box-shadow:0 40px 100px rgba(0,0,0,.35)}
+.vform{padding:36px;border:1px solid var(--line-strong);border-radius:var(--radius-l);background:linear-gradient(150deg,rgba(var(--walnut-2),.85),rgba(var(--walnut),.95));box-shadow:0 40px 100px rgba(0,0,0,.35)}
 .vf{border:0;padding:0;margin:0;min-width:0}
 .vf+.vf{margin-top:30px;padding-top:26px;border-top:1px solid var(--line)}
 .vf legend{display:flex;align-items:center;gap:12px;padding:0;margin-bottom:16px;font-family:var(--display);font-size:22px;color:var(--text-primary)}
@@ -447,7 +462,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .choices{display:flex;flex-wrap:wrap;gap:8px}
 .choice{position:relative;cursor:pointer}
 .choice input{position:absolute;opacity:0;width:1px;height:1px}
-.choice span{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(10,13,11,.45);font-size:15px;font-weight:600;color:var(--text-secondary);transition:border-color .3s,color .3s,background .3s,transform .3s var(--ease)}
+.choice span{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(var(--ink),.45);font-size:15px;font-weight:600;color:var(--text-secondary);transition:border-color .3s,color .3s,background .3s,transform .3s var(--ease)}
 .choice:hover span{border-color:var(--line-strong);color:var(--text-primary)}
 .choice input:checked+span{border-color:var(--accent);background:var(--accent-muted);color:var(--accent-hover)}
 .choice input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}
@@ -456,7 +471,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:10px}
 .day{position:relative;display:block;margin:0;cursor:pointer;font-family:inherit;letter-spacing:normal;text-transform:none;color:inherit}
 .day input{position:absolute;opacity:0;width:1px;height:1px}
-.day span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;padding:10px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(10,13,11,.45);transition:border-color .3s,color .3s,background .3s,transform .3s var(--ease)}
+.day span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;padding:10px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(var(--ink),.45);transition:border-color .3s,color .3s,background .3s,transform .3s var(--ease)}
 .day span b{font-family:var(--body);font-weight:700;font-size:15.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-primary);line-height:1}
 .day span i{font-family:var(--mono);font-weight:400;font-style:normal;font-size:12px;letter-spacing:.06em;color:var(--text-tertiary);line-height:1}
 .day:hover span{border-color:var(--line-strong)}
@@ -474,9 +489,9 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .field{margin-top:14px}
 .field label{display:block;margin-bottom:6px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 .field label b{color:var(--accent);font-weight:400}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-s);background:rgba(10,13,11,.55);color:var(--text-primary);font:inherit;font-size:15px;line-height:1.4;transition:border-color .3s,box-shadow .3s}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-s);background:rgba(var(--ink),.55);color:var(--text-primary);font:inherit;font-size:15px;line-height:1.4;transition:border-color .3s,box-shadow .3s}
 .field select{appearance:none;-webkit-appearance:none;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23d9b56a' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px}
-.field select option{background:#131a15;color:var(--text-primary)}
+.field select option{background:var(--panel);color:var(--text-primary)}
 .field textarea{resize:vertical;min-height:64px}
 .field input::placeholder,.field textarea::placeholder{color:var(--text-tertiary)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,181,106,.15)}
@@ -489,7 +504,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .sent{margin-top:18px;padding:16px 18px;border:1px solid var(--line-strong);border-radius:14px;background:var(--accent-muted);font-size:15.5px;line-height:1.6;color:var(--text-primary)}
 .sent a{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
 .order>.part:last-child{position:sticky;top:110px;padding:0 14px}
-.ticket{position:relative;min-height:300px;padding:32px;border-radius:24px;border:1px solid var(--accent);background:linear-gradient(145deg,#1b2a24,#0c1712);display:flex;flex-direction:column;justify-content:space-between;gap:22px;box-shadow:0 30px 70px rgba(0,0,0,.4);transform:rotate(1.5deg);animation:float 10s var(--ease-soft) -3s infinite alternate}
+.ticket{position:relative;min-height:300px;padding:32px;border-radius:24px;border:1px solid var(--accent);background:linear-gradient(145deg,var(--door-hi),var(--door) 55%,#13211a);display:flex;flex-direction:column;justify-content:space-between;gap:22px;box-shadow:0 30px 70px rgba(0,0,0,.4);transform:rotate(1.5deg);animation:float 10s var(--ease-soft) -3s infinite alternate}
 @keyframes float{to{transform:rotate(1.5deg) translateY(-8px)}}
 .ticket::before,.ticket::after{content:"";position:absolute;width:26px;height:26px;border-radius:50%;background:var(--canvas-2);border:1px solid var(--accent);top:50%;transform:translateY(-50%)}
 .ticket::before{left:-14px}
@@ -500,7 +515,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .ticket strong.long{font-size:24px}
 .ticket .t-for{display:block;margin-top:8px;font-size:15px;color:var(--text-secondary)}
 
-/* booking: pick a ritual, a day and a time window; the message leaves from the guest's own phone */
+/* rezervácia: výber rituálu, dňa a časového okna; správa odchádza z vlastného telefónu hosťa */
 .lbl{display:block;margin-bottom:6px;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 .field label small{font-family:var(--body);text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--text-tertiary)}
 .hint{margin-top:8px;font-size:15px;line-height:1.55;color:var(--text-tertiary)}
@@ -515,7 +530,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .choice input:disabled+span{opacity:.32;cursor:not-allowed}
 .field input[type="date"],.field input[type="time"]{color-scheme:dark;min-height:46px}
 .field input[type="date"]::-webkit-calendar-picker-indicator,.field input[type="time"]::-webkit-calendar-picker-indicator{filter:invert(.8) sepia(.6) saturate(2) hue-rotate(5deg);cursor:pointer}
-.field select optgroup{background:#131a15;color:var(--accent);font-style:normal}
+.field select optgroup{background:var(--panel);color:var(--accent);font-style:normal}
 .field select.flash{animation:flash 1300ms var(--ease)}
 @keyframes flash{0%{box-shadow:0 0 0 0 rgba(217,181,106,0)}25%{box-shadow:0 0 0 5px rgba(217,181,106,.38);border-color:var(--accent)}100%{box-shadow:0 0 0 0 rgba(217,181,106,0)}}
 .err ul{margin:6px 0 0 18px;padding:0;list-style:disc}
@@ -524,7 +539,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .vform .fine .btn.small{margin-top:4px}
 .book .ticket strong.long{font-size:24px}
 
-/* why: four facts, one grid, no cards for the sake of cards */
+/* prečo my: štyri fakty, jedna mriežka, žiadne karty len pre karty */
 .whys{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:54px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 
 .wn{display:block;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;color:var(--accent)}
@@ -539,10 +554,10 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .map .part{position:relative;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);aspect-ratio:21/9}
 .map .part::before{content:"Mostná 226/30 · Nitra";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
 .map iframe{position:relative;display:block;width:100%;height:100%;border:0;filter:grayscale(1) invert(.92) hue-rotate(160deg) saturate(.5) brightness(.85) contrast(1.05)}
-.map-link{position:absolute;right:16px;bottom:16px;padding:10px 16px;border-radius:999px;background:rgba(10,13,11,.85);border:1px solid var(--line-strong);backdrop-filter:blur(10px);font-size:15px;font-weight:700;color:var(--text-primary);transition:transform .35s var(--ease),border-color .3s}
+.map-link{position:absolute;right:16px;bottom:16px;padding:10px 16px;border-radius:999px;background:rgba(var(--ink),.85);border:1px solid var(--line-strong);backdrop-filter:blur(10px);font-size:15px;font-weight:700;color:var(--text-primary);transition:transform .35s var(--ease),border-color .3s}
 .map-link:hover{transform:translateY(-2px);border-color:var(--accent)}
 
-/* gallery: one real door, five quiet windows behind it */
+/* galéria: jedny skutočné dvere, za nimi päť tichých okien */
 .shots{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:48px}
 .shot{position:relative;margin:0;min-width:0}
 .shot .frame{position:relative;height:100%;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line-strong);background:var(--canvas-2)}
@@ -550,9 +565,9 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .shot img,.shot canvas{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1200ms var(--ease)}
 .shot .open{position:absolute;inset:0;appearance:none;border:0;background:none;cursor:zoom-in;padding:0}
 .shot .open:focus-visible{outline:2px solid var(--accent);outline-offset:-6px;border-radius:var(--radius)}
-.shot .pill{position:absolute;top:22px;left:22px;z-index:2;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(10,13,11,.62);backdrop-filter:blur(6px);font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;color:var(--text-secondary)}
+.shot .pill{position:absolute;top:22px;left:22px;z-index:2;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(var(--ink),.62);backdrop-filter:blur(6px);font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;color:var(--text-secondary)}
 .shot .pill.kresba{left:auto;right:22px;color:var(--accent);border-color:var(--line-strong)}
-.shot .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:64px 24px 22px;background:linear-gradient(0deg,rgba(8,11,9,.92),rgba(8,11,9,.55) 45%,rgba(8,11,9,0));pointer-events:none}
+.shot .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:64px 24px 22px;background:linear-gradient(0deg,rgba(var(--ink),.92),rgba(var(--ink),.55) 45%,rgba(var(--ink),0));pointer-events:none}
 .shot .cap b{display:block;font-family:var(--display);font-weight:400;font-size:21px;letter-spacing:-.01em;color:var(--text-primary)}
 .shot .cap span{display:block;margin-top:4px;color:var(--text-secondary);font-size:15px;line-height:1.5;max-width:42ch}
 .shot.door{grid-column:1/6;grid-row:1/3}
@@ -568,23 +583,23 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .gallery .note{margin-top:18px;text-align:right}
 @media (hover:hover) and (pointer:fine){
   .shot .frame:hover img,.shot .frame:hover canvas{transform:scale(1.04)}
-  .shot .frame:hover img{transform:scale(1.06)}
-  .shot.door .frame:hover img{transform:scale(1.18)}
+  .shot .frame:hover img{transform:scale(1.04)}
+  .shot.door .frame:hover img{transform:scale(1.05)}
   .shot .frame:hover::after{opacity:1;border-color:rgba(217,181,106,.5)}
 }
-/* lightbox: the native dialog gives focus trapping and Escape for free */
+/* zväčšenie fotky: natívny dialog dáva zachytenie fokusu a Escape zadarmo */
 .lb{width:min(92vw,900px);max-height:92vh;padding:0;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--canvas-2);color:var(--text-primary);overflow:hidden}
-.lb::backdrop{background:rgba(5,7,6,.86);backdrop-filter:blur(4px)}
+.lb::backdrop{background:rgba(var(--ink),.86);backdrop-filter:blur(4px)}
 .lb[open]{animation:lbIn .5s var(--ease)}
 .lb[open]::backdrop{animation:lbBack .5s var(--ease-soft)}
 @keyframes lbIn{from{opacity:0;transform:translateY(14px) scale(.98)}}
 @keyframes lbBack{from{opacity:0}}
-.lb img{display:block;width:100%;max-height:76vh;object-fit:contain;background:#070a08}
+.lb img{display:block;width:100%;max-height:76vh;object-fit:contain;background:var(--canvas)}
 .lb .lb-cap{padding:16px 22px 20px;font-size:15.5px;line-height:1.55;color:var(--text-secondary)}
-.lb .lb-close{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(10,13,11,.7);color:var(--text-primary);font-size:22px;line-height:1;cursor:pointer}
+.lb .lb-close{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(var(--ink),.7);color:var(--text-primary);font-size:22px;line-height:1;cursor:pointer}
 .lb .lb-close:hover{border-color:var(--accent)}
 
-/* faq */
+/* časté otázky */
 .faq .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
 .faq .sticky{position:sticky;top:120px}
 .faq .lede{margin-top:20px}
@@ -608,7 +623,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .faq-item.open .faq-a{grid-template-rows:1fr;transition:grid-template-rows 450ms var(--ease)}
 .faq-item.open .faq-a>div{opacity:1;transform:none;transition-delay:80ms}
 
-/* contact: the frame is drawn */
+/* kontakt: rám sa nakreslí */
 .contact{padding:120px 0}
 .contact .box{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end;padding:70px 0}
 .contact .box::before,.contact .box::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--line);transform:scaleX(0);transform-origin:left;transition:transform 1400ms var(--ease)}
@@ -631,7 +646,7 @@ section{position:relative;padding:120px 0;scroll-margin-top:80px}
 .pin{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:8px;position:relative;top:-1px}
 .pin::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--accent);--bo:.2;--bh:.7;opacity:.2;animation:breathe 10s var(--ease-soft) infinite}
 
-/* footer */
+/* pätička */
 footer{position:relative;z-index:1;padding:50px 0 40px;border-top:1px solid var(--line);background:var(--canvas)}
 footer .grid{display:grid;grid-template-columns:1.3fr .8fr .8fr;gap:30px}
 footer p{color:var(--text-tertiary);font-size:15px;line-height:1.7;max-width:36ch;margin-top:14px}
@@ -643,12 +658,12 @@ footer .bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wra
 footer .bottom .credit a{color:var(--text-secondary);border-bottom:1px solid var(--line-strong);transition:color .3s,border-color .3s}
 footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--accent)}
 
-/* mobile bar */
+/* mobilná lišta */
 .mbar{display:none}
 
 @media (max-width:1380px){.links{gap:17px;font-size:15.5px}}
 
-/* ---------- responsive ---------- */
+/* ---------- prispôsobenie veľkosti obrazovky ---------- */
 @media (max-width:1180px){
   /* desať odkazov sa do lišty už nezmestí, preberá to zásuvka */
   .links{display:none}
@@ -690,7 +705,6 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .wrap{width:calc(100% - 32px)}
   .divider{width:calc(100% - 32px)}
   section{padding:72px 0}
-  .brand .name small{display:none}
   .nav{height:68px}
   .nav .btn{padding:10px 14px;font-size:12px}
   .h2{font-size:clamp(34px,10vw,46px)}
@@ -733,7 +747,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .facts b{font-size:19px}
   .after,.faq-more{align-items:flex-start;flex-direction:column}
   .hero-static{padding-bottom:72px}
-  .mbar{display:grid;position:fixed;left:10px;right:10px;bottom:10px;z-index:90;grid-template-columns:auto .8fr 1.2fr;gap:7px;padding:7px;border:1px solid var(--line-strong);border-radius:var(--radius-m);background:rgba(10,13,11,.92);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .mbar{display:grid;position:fixed;left:10px;right:10px;bottom:10px;z-index:90;grid-template-columns:auto .8fr 1.2fr;gap:7px;padding:7px;border:1px solid var(--line-strong);border-radius:var(--radius-m);background:rgba(var(--ink),.92);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.4)}
   .mbar a{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:11px;font-size:15px;font-weight:700;transition:transform .35s var(--ease)}
   .mbar a:first-child{border:1px solid var(--line);color:var(--text-primary)}
   .mbar a:last-child{background:linear-gradient(135deg,var(--accent-hover),var(--accent));color:#141208}
@@ -743,11 +757,11 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   body{padding-bottom:76px}
 }
 
-/* ---------- the journey on a phone: text sits low, full width, above the fixed bar ---------- */
+/* ---------- prehliadka na telefóne: text sedí nízko, na celú šírku, nad pevnou lištou ---------- */
 @media (max-width:640px){
   .band{align-items:flex-end;padding:0 16px 84px}
   .band .inner{max-width:100%}
-  .band::before{left:-10%;top:auto;bottom:-8%;width:120%;height:86%;background:linear-gradient(180deg,rgba(6,8,7,0) 0%,rgba(6,8,7,calc(var(--scrim,.66)*.75)) 32%,rgba(6,8,7,var(--scrim,.66)) 100%)}
+  .band::before{left:-10%;top:auto;bottom:-8%;width:120%;height:86%;background:linear-gradient(180deg,rgba(var(--ink),0) 0%,rgba(var(--ink),calc(var(--scrim,.66)*.75)) 32%,rgba(var(--ink),var(--scrim,.66)) 100%)}
   .band h1{font-size:clamp(48px,14vw,64px);max-width:none;line-height:.98;letter-spacing:-.025em}
   .band h1 .w.em{font-style:italic;font-weight:300;color:var(--accent-hover)}
   .band h2{font-size:clamp(38px,11.4vw,54px);max-width:none;line-height:1.02}
@@ -764,7 +778,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .band .today-line,.hero-static .today-line{margin-top:12px}
   .band .today-line .today,.hero-static .today-line .today{font-size:15px}
   .hud{display:none}
-  /* the cue lives in its own strip between the text and the fixed bar, never over the copy */
+  /* výzva .cue má vlastný pás medzi textom a pevnou lištou, nikdy nie cez text */
   .cue{bottom:22px;gap:6px;font-size:12px;letter-spacing:.2em}
   .cue .drop{width:12px;height:17px}
   /* kapitoly s jedným riadkom sedia v dolnej tretine, nie na okraji */
@@ -780,8 +794,8 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   .band.live .inner,.band.live .w{will-change:transform}
   /* prvý text stúpa až keď sa dvere otvárajú, bez dverí hneď */
   .band[data-a="0"] .inner{animation-delay:calc(var(--veil,0ms)*.6)}
-  .stage .scrim{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.07) 0%,rgba(217,181,106,.03) 40%,rgba(217,181,106,0) 72%),radial-gradient(ellipse 140% 90% at 50% 40%,rgba(8,10,9,0) 32%,rgba(8,10,9,.56) 100%)}
-  .hero-static .art::after{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.12) 0%,rgba(217,181,106,.05) 40%,rgba(217,181,106,0) 72%),linear-gradient(180deg,rgba(10,13,11,.5) 0%,rgba(10,13,11,.3) 34%,rgba(10,13,11,.62) 72%,var(--canvas) 100%)}
+  .stage .scrim{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.07) 0%,rgba(217,181,106,.03) 40%,rgba(217,181,106,0) 72%),radial-gradient(ellipse 140% 90% at 50% 40%,rgba(var(--ink),0) 32%,rgba(var(--ink),.56) 100%)}
+  .hero-static .art::after{background:radial-gradient(ellipse 90% 42% at 50% 0%,rgba(236,232,220,.12) 0%,rgba(217,181,106,.05) 40%,rgba(217,181,106,0) 72%),linear-gradient(180deg,rgba(var(--ink),.5) 0%,rgba(var(--ink),.3) 34%,rgba(var(--ink),.62) 72%,var(--canvas) 100%)}
 }
 @media (max-width:640px) and (max-height:700px){
   .band{padding-bottom:76px}
@@ -801,7 +815,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .no-js .mark .num,.no-js .step .n,.no-js .step .n::after{opacity:1}
 .no-js .steps .stream path{stroke-dashoffset:0}
 
-/* ---------- reduced motion: final states, stopped drives ---------- */
+/* ---------- obmedzený pohyb: koncové stavy, zastavené pohyby zo skrolovania ---------- */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .veil{display:none!important}
@@ -825,10 +839,10 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ==========================================================
    MATERSKÝ SALÓN: Salón 30
    ========================================================== */
-.salon{background:linear-gradient(180deg,transparent,rgba(19,26,21,.55) 30%,rgba(19,26,21,.55) 70%,transparent)}
+.salon{background:linear-gradient(180deg,transparent,rgba(var(--walnut),.55) 30%,rgba(var(--walnut),.55) 70%,transparent)}
 .salon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:54px}
 .scard{position:relative;overflow:hidden;padding:32px 30px 34px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(165deg,rgba(25,34,25,.7),rgba(14,19,16,.92));transition:border-color .5s var(--ease),transform .5s var(--ease)}
+  background:linear-gradient(165deg,rgba(var(--walnut-2),.7),rgba(var(--walnut),.92));transition:border-color .5s var(--ease),transform .5s var(--ease)}
 .scard::before{content:"";position:absolute;left:-40%;top:-120%;width:55%;height:340%;pointer-events:none;
   background:linear-gradient(100deg,transparent,rgba(217,181,106,.10),transparent);transform:translateX(-40%) rotate(8deg);
   opacity:0;transition:opacity .5s var(--ease),transform 1.1s var(--ease)}
@@ -860,11 +874,11 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
    ========================================================== */
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
 .tcard{position:relative;overflow:hidden;padding:28px 28px 32px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(165deg,rgba(25,34,25,.7),rgba(14,19,16,.92));
+  background:linear-gradient(165deg,rgba(var(--walnut-2),.7),rgba(var(--walnut),.92));
   transition:border-color .5s var(--ease),transform .5s var(--ease)}
 .tcard:hover{border-color:var(--line-strong);transform:translateY(-3px)}
 .tface{position:relative;aspect-ratio:4/5;border-radius:calc(var(--radius) - 6px);overflow:hidden;
-  background:radial-gradient(120% 90% at 50% 15%,rgba(140,195,182,.10),rgba(10,13,11,.9) 70%);
+  background:radial-gradient(120% 90% at 50% 15%,rgba(140,195,182,.10),rgba(var(--ink),.9) 70%);
   display:flex;align-items:center;justify-content:center}
 .tface img{width:100%;height:100%;object-fit:cover;display:block}
 .tmark{width:84px;height:84px;opacity:.8}
@@ -930,14 +944,14 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
    ========================================================== */
 .lang{position:relative;flex:none}
 .lang-btn{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 12px;
-  border:1px solid var(--line);border-radius:999px;background:rgba(25,34,25,.7);color:var(--text-secondary);
+  border:1px solid var(--line);border-radius:999px;background:rgba(var(--walnut-2),.7);color:var(--text-secondary);
   font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.1em;
   transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease)}
-.lang-btn:hover,.lang-btn[aria-expanded="true"]{border-color:var(--line-strong);color:var(--text-primary);background:rgba(33,45,33,.85)}
+.lang-btn:hover,.lang-btn[aria-expanded="true"]{border-color:var(--line-strong);color:var(--text-primary);background:rgba(var(--walnut-2),.85)}
 .lang-btn svg{opacity:.8}
 .lang-menu{position:absolute;top:calc(100% + 10px);right:0;z-index:60;min-width:186px;display:grid;gap:2px;padding:7px;
-  border:1px solid var(--line-strong);border-radius:var(--radius-m);background:rgba(14,19,16,.97);
-  backdrop-filter:blur(18px);box-shadow:0 18px 46px rgba(3,5,4,.7);animation:langIn .26s var(--ease)}
+  border:1px solid var(--line-strong);border-radius:var(--radius-m);background:rgba(var(--walnut),.97);
+  backdrop-filter:blur(18px);box-shadow:0 18px 46px rgba(var(--ink),.7);animation:langIn .26s var(--ease)}
 @keyframes langIn{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}
 .lang-opt{display:flex;align-items:center;gap:11px;width:100%;padding:10px 12px;border:0;border-radius:10px;
   background:none;color:var(--text-secondary);text-align:left;transition:background .25s,color .25s}
@@ -989,7 +1003,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .fx{display:grid;gap:6px}
 .fx > span{font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary)}
 .fx select{appearance:none;min-height:46px;padding:0 38px 0 15px;border:1px solid var(--line);border-radius:999px;
-  background-color:rgba(25,34,25,.7);color:var(--text-primary);font-family:var(--body);font-size:15.5px;
+  background-color:rgba(var(--walnut-2),.7);color:var(--text-primary);font-family:var(--body);font-size:15.5px;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23d9b56a' stroke-width='1.6'><path d='M1 1.5 6 6.5 11 1.5'/></svg>");
   background-repeat:no-repeat;background-position:right 15px center;
   transition:border-color .3s var(--ease),background-color .3s var(--ease)}
@@ -1001,7 +1015,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   font-size:15.5px;text-decoration:underline;text-underline-offset:4px;transition:color .3s}
 .finder .fx-clear:hover{color:var(--accent-hover)}
 .no-hit{margin:6px 0 0;padding:16px 18px;border:1px dashed var(--line-strong);border-radius:var(--radius-m);
-  color:var(--text-secondary);font-size:15.5px;background:rgba(25,34,25,.4)}
+  color:var(--text-secondary);font-size:15.5px;background:rgba(var(--walnut-2),.4)}
 @media (max-width:640px){
   .finder{gap:8px}
   .fx{flex:1 1 calc(50% - 4px);min-width:0}
@@ -1014,7 +1028,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 
 .to-top{position:fixed;right:20px;bottom:24px;z-index:60;display:inline-flex;align-items:center;gap:8px;
   height:46px;padding:0 18px;border:1px solid var(--line-strong);border-radius:999px;
-  background:rgba(10,13,11,.82);backdrop-filter:blur(14px);color:var(--text-secondary);
+  background:rgba(var(--ink),.82);backdrop-filter:blur(14px);color:var(--text-secondary);
   font-family:var(--mono);font-weight:400;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;
   opacity:0;transform:translateY(10px);pointer-events:none;
   transition:opacity .4s var(--ease),transform .4s var(--ease),color .3s,border-color .3s}
@@ -1037,7 +1051,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .first-tip a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
 
 .pricelist{margin-top:38px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(165deg,rgba(25,34,25,.55),rgba(14,19,16,.85));overflow:hidden}
+  background:linear-gradient(165deg,rgba(var(--walnut-2),.55),rgba(var(--walnut),.85));overflow:hidden}
 
 /* ==========================================================
    TLAČ: cenník na papier
@@ -1082,7 +1096,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
    Textový blok má vľavo aj vpravo 16 px (predtým 16/52 px, statický úvod 0 px vľavo). */
 @media (max-width:640px){
   .hero .band .inner,.hero-static .wrap{padding:40px 18px 24px;margin:-40px -18px -24px;
-    background:radial-gradient(ellipse farthest-side at 30% 56%,rgba(10,13,11,.8) 0%,rgba(10,13,11,.5) 46%,rgba(10,13,11,0) 100%)}
+    background:radial-gradient(ellipse farthest-side at 30% 56%,rgba(var(--ink),.8) 0%,rgba(var(--ink),.5) 46%,rgba(var(--ink),0) 100%)}
   .hero .band .inner{width:calc(100% + 36px);max-width:none}
   .hero-static .wrap{width:auto;margin:-40px -2px -24px}
   /* kicker: jeden pokojný riadok 12 px, značka je už v navigácii nad ním; pri dlhšom preklade drží linka pri prvom riadku */
@@ -1114,7 +1128,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 .pull::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:84px;height:1px;background:var(--line-strong)}
 
 /* ---------- poradca: tri otázky nad cenníkom ---------- */
-.advisor{margin:0 0 30px;padding:30px 32px 32px;border:1px solid var(--line);border-radius:var(--radius-m);background:linear-gradient(180deg,rgba(25,34,25,.5),rgba(10,13,11,.35))}
+.advisor{margin:0 0 30px;padding:30px 32px 32px;border:1px solid var(--line);border-radius:var(--radius-m);background:linear-gradient(180deg,rgba(var(--walnut-2),.5),rgba(var(--ink),.35))}
 .adv-top .kicker{margin-bottom:12px}
 .adv-h{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.015em;color:var(--text-primary)}
 .adv-h em{font-style:italic;font-weight:300;color:var(--accent-hover)}
@@ -1142,12 +1156,12 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ---------- postup rituálu: číslovaný sled namiesto steny textu ---------- */
 .card .panel ol{gap:0 28px}
 .card .panel li{padding:11px 0 11px 42px;border-top:1px solid var(--line);font-size:15px}
-.card .panel li::before{top:11px;left:0;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line-strong);border-radius:50%;line-height:1;font-size:10.5px;color:var(--accent-hover);background:rgba(10,13,11,.5)}
+.card .panel li::before{top:11px;left:0;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line-strong);border-radius:50%;line-height:1;font-size:10.5px;color:var(--accent-hover);background:rgba(var(--ink),.5)}
 .card .panel li:first-child,.card .panel li:nth-child(2){border-top:0}
 @media (max-width:820px){.card .panel li:nth-child(2){border-top:1px solid var(--line)}}
 
 /* ---------- záverečná výzva pred pätičkou ---------- */
-.finale{position:relative;padding:96px 0 104px;background:linear-gradient(180deg,var(--canvas),rgba(25,34,25,.5))}
+.finale{position:relative;padding:96px 0 104px;background:linear-gradient(180deg,var(--canvas),rgba(var(--walnut-2),.5))}
 .finale::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:84px;height:1px;background:var(--line-strong)}
 .fin-in{max-width:760px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
 .fin-in .kicker{margin-bottom:18px}
@@ -1196,9 +1210,9 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ---------- mobil: efekty, ktoré telefón prekresľuje v každom snímku ---------- */
 @media (max-width:640px){
   .nav::before,.mbar,.lang-menu,.to-top,.shot .pill,.map-link,.drawer::backdrop,.lb::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
-  .nav::before{background:rgba(10,13,11,.95)}
-  .mbar{background:rgba(10,13,11,.97)}
-  .lang-menu{background:rgba(14,19,16,.98)}
+  .nav::before{background:rgba(var(--ink),.95)}
+  .mbar{background:rgba(var(--ink),.97)}
+  .lang-menu{background:rgba(var(--walnut),.98)}
   .env .grain{display:none}
   .env .g1,.env .g2{animation:none}
   .veil.through .scene{transform:scale(2.2)}
@@ -1211,7 +1225,7 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
 /* ---------- ponuka iného jazyka (len pre prehliadač s iným jazykom) ---------- */
 .lang-offer{position:fixed;left:50%;bottom:22px;z-index:120;display:flex;align-items:center;gap:10px;
   padding:10px 10px 10px 16px;border:1px solid var(--line-strong);border-radius:999px;
-  background:rgba(14,19,16,.96);box-shadow:0 18px 44px rgba(3,5,4,.6);
+  background:rgba(var(--walnut),.96);box-shadow:0 18px 44px rgba(var(--ink),.6);
   font-size:15.5px;color:var(--text-secondary);opacity:0;transform:translate(-50%,14px);
   transition:opacity .35s var(--ease-soft),transform .35s var(--ease)}
 .lang-offer.in{opacity:1;transform:translate(-50%,0)}
@@ -1224,13 +1238,1433 @@ footer .bottom .credit a:hover{color:var(--accent-hover);border-color:var(--acce
   body[data-scene="hero"] .lang-offer{bottom:22px}}
 @media (prefers-reduced-motion:reduce){.lang-offer{transition:none}}
 
-/* ---------- pohyb viazaný na skrol (bez skriptu): obrázky galérie sa pri príchode zľahka približujú,
-   nadpisy sekcií sa dvíhajú ---------- */
-@supports (animation-timeline: view()){
-  @media (prefers-reduced-motion:no-preference){
-    .shot picture,.shot .frame>canvas{display:block;height:100%;animation:shotIn linear both;animation-timeline:view();animation-range:entry 0% cover 55%}
-    @keyframes shotIn{from{transform:scale(1.16) translateY(5%)}to{transform:scale(1) translateY(0)}}
-    .site .head{animation:headIn linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
-    @keyframes headIn{from{transform:translateY(36px)}to{transform:none}}
-  }
+/* ---------- galéria: obrázok vypĺňa rám. Bez pohybu viazaného na skrol: obsah sa pri skrolovaní nevysúva
+   a telefón nemusí pri každom posune skladať dvadsať vrstiev galérie navyše ---------- */
+.shot picture{display:block;height:100%}
+
+/* ================= Identita z prevádzky =================
+   Farby, materiály a svetlo sú odpísané z fotiek salónu (assets/img/galeria/):
+   orech a parkety v paneloch, fľaškovo zelené dvere na lístkoch, tapeta s listami na okrajoch,
+   svit LED pásu za logom a plameň sviečky ako jediný pohyb. Fotky sa pri pohybe nezväčšujú o viac ako 5 %. */
+
+/* úvod: svietiaci nápis zo steny v prvej kapitole, potom sa z neho vynorí misa */
+.hero-photo{position:absolute;top:0;bottom:0;right:0;width:46%;z-index:0;pointer-events:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%)}
+.hero-photo picture,.hero-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--ink),.35) 0%,rgba(var(--ink),0) 22%,rgba(var(--ink),0) 70%,var(--canvas) 100%)}
+.hero-photo .led{position:absolute;left:8%;right:8%;top:6%;height:18%;z-index:1;background:radial-gradient(ellipse 60% 50% at 50% 50%,var(--glow-soft),transparent 70%);mix-blend-mode:screen;animation:ledBreath 10s var(--ease-soft) infinite}
+.band .inner{z-index:1}
+.hero-static .art .hero-photo{z-index:0}
+/* pokojná verzia úvodu: namiesto kreslenej misy stačí fotka nápisu */
+.hero-static .art canvas{display:none}
+@keyframes ledBreath{0%,100%{opacity:.45}40%{opacity:1}}
+@media (max-width:640px){
+  .hero-photo{left:0;width:auto;bottom:auto;height:62%;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 45%,transparent 100%)}
+  .hero-photo img{object-position:50% 40%!important}
+  .hero-photo::after{background:linear-gradient(180deg,rgba(var(--ink),.55) 0%,rgba(var(--ink),.1) 30%,rgba(var(--ink),.2) 100%)}
 }
+
+/* tapeta s listami: len na okrajoch sekcie, nikdy pod textom */
+.ritual.light,.gallery{position:relative}
+.ritual.light::before,.ritual.light::after,.gallery::before,.gallery::after{content:"";position:absolute;top:0;bottom:0;width:max(0px,calc((100% - var(--wrap)) / 2 - 8px));pointer-events:none;opacity:.16;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 160'%3E%3Cg fill='none' stroke='%23c9955a' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M20 150C30 110 40 80 70 40'/%3E%3Cpath d='M28 124c-12-4-18-12-20-22M34 108c-12-6-16-14-16-24M42 92c-10-8-12-16-10-26M52 76c-8-8-8-16-4-26M62 58c-6-8-4-16 2-24M30 118c12 0 20-6 26-16M38 100c12-2 20-8 24-18M48 82c12-4 18-12 20-22M58 64c10-4 16-12 16-22'/%3E%3Cpath d='M92 150c-4-30 4-56 22-74M96 128c-10-2-16-8-18-16M100 110c-10-4-12-10-12-18M106 94c-6-4-8-12-6-18M98 120c8-4 12-10 14-18M104 102c8-4 12-12 12-18'/%3E%3C/g%3E%3C/svg%3E") 0 0/120px 160px repeat;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent)}
+.ritual.light::before,.gallery::before{left:0}
+.ritual.light::after,.gallery::after{right:0;transform:scaleX(-1)}
+
+/* ako to prebieha: vodný oblúk pod textom, nad ním stúpa para */
+.rphoto{position:relative;margin:34px 0 0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--wood-line);aspect-ratio:16/10;max-width:520px;background:var(--canvas-2)}
+.rphoto picture,.rphoto img{display:block;width:100%;height:100%;object-fit:cover}
+.rphoto figcaption,.salon-photos figcaption,.where figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:36px 18px 14px;font-size:14px;line-height:1.4;color:var(--text-primary);background:linear-gradient(180deg,transparent,rgba(var(--ink),.86));text-shadow:var(--tshadow)}
+.rphoto::after{content:"";position:absolute;left:30%;bottom:18%;width:40%;height:60%;z-index:1;pointer-events:none;background:radial-gradient(ellipse 40% 30% at 40% 70%,rgba(244,236,224,.16),transparent 70%),radial-gradient(ellipse 30% 26% at 62% 60%,rgba(244,236,224,.12),transparent 70%);animation:steamRise 9s var(--ease-soft) infinite}
+@keyframes steamRise{0%{opacity:0;transform:translateY(12%)}35%{opacity:1}100%{opacity:0;transform:translateY(-22%)}}
+.ritual:not(.live) .rphoto::after{animation-play-state:paused}
+
+/* cenník: nad každou kategóriou miestnosť, v ktorej sa rituál robí */
+.cat.has-ph{position:relative;overflow:hidden;min-height:190px;align-items:flex-end;padding:0 26px 22px;border:1px solid var(--wood-line);border-radius:var(--radius);background:var(--panel)}
+.cat.has-ph:first-child{margin-top:0}
+.cat-ph{position:absolute;inset:0;z-index:0}
+.cat-ph img{display:block;width:100%;height:100%;object-fit:cover;opacity:.6}
+.cat.has-ph::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(var(--ink),.92) 0%,rgba(var(--ink),.55) 45%,rgba(var(--ink),.15) 100%),linear-gradient(0deg,rgba(var(--ink),.6),transparent 70%)}
+.cat.has-ph>span,.cat.has-ph>b,.cat.has-ph::after{position:relative;z-index:1}
+.cat.has-ph b{font-size:26px;text-shadow:var(--tshadow)}
+.cat.has-ph>span{color:var(--accent-hover)}
+@media (max-width:640px){.cat.has-ph{min-height:118px;padding:0 18px 16px;gap:12px}.cat.has-ph b{font-size:21px}}
+
+/* poukážky: lístok má farbu zelených dverí a tú istú fotku ako tlačená poukážka */
+.ticket.has-ph>*:not(.t-ph){position:relative;z-index:1}
+.t-ph{position:absolute;inset:0;z-index:0;border-radius:inherit;overflow:hidden}
+.t-ph picture,.t-ph img{display:block;width:100%;height:100%;object-fit:cover;opacity:.62;transition:opacity .5s var(--ease-soft)}
+.t-ph.swap img{opacity:0}
+.t-ph::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(24,40,31,.94) 0%,rgba(24,40,31,.78) 45%,rgba(24,40,31,.25) 100%)}
+/* plameň sviečky: blikne len žiara, nie text */
+.t-ph::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-30%;height:70%;z-index:1;background:radial-gradient(ellipse 50% 50% at 50% 60%,rgba(240,166,90,.22),transparent 70%);animation:candle 3.4s steps(1,end) infinite}
+@keyframes candle{0%{opacity:.8}12%{opacity:.95}24%{opacity:.72}37%{opacity:.9}51%{opacity:.78}66%{opacity:1}80%{opacity:.84}100%{opacity:.8}}
+.gift:not(.live) .t-ph::after,.book:not(.live) .t-ph::after,body.idle .t-ph::after{animation-play-state:paused}
+
+/* Salón 30: tri zábery z priestoru */
+.salon-photos{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-top:54px}
+.salon-photos figure{position:relative;margin:0;height:380px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--wood-line);background:var(--canvas-2)}
+.salon-photos picture,.salon-photos img{display:block;width:100%;height:100%;object-fit:cover}
+.salon-photos+.salon-grid{margin-top:18px}
+@media (max-width:640px){.salon-photos{grid-template-columns:1fr 1fr;margin-top:40px}.salon-photos figure{height:210px}.salon-photos figure:first-child{grid-column:1/-1;height:240px}}
+
+/* kontakt: dvere, ktoré na Mostnej hľadáš, vedľa mapy */
+.map{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:14px}
+.map .part{aspect-ratio:auto;min-height:420px}
+.map .where::before{content:none}
+.map .where{min-height:0;aspect-ratio:auto;background:var(--canvas-2)}
+.where{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--wood-line);background:var(--canvas-2)}
+.where picture,.where img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.where figcaption b{display:block;font-family:var(--display);font-weight:400;font-size:20px;color:var(--accent-hover)}
+@media (max-width:900px){.map{grid-template-columns:1fr}.where{height:360px}.map .part{min-height:0;aspect-ratio:16/10}}
+@media (max-width:640px){.map .part{aspect-ratio:4/3}.where{height:320px}}
+
+/* rámy v tóne orecha namiesto šedej linky */
+.card,.scard,.map .part,.faq-item{border-color:var(--wood-line)}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-photo .led,.rphoto::after,.t-ph::after{animation:none}
+  .rphoto::after{opacity:.6}
+}
+
+/* úvod: jeden záber miestnosti (assets/app.js, makeReel)
+   po dverách sa fotka vynorí z tmy a usadí, pri skrolovaní zaostáva za stránkou */
+.reel{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:strict;background:var(--canvas);--p:0}
+.reel .fs{position:absolute;inset:0 0 5% 0;overflow:hidden;will-change:transform;
+  -webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
+/* prvý záber končí kúsok nad spodkom pod tmavým prechodom; záber na celú obrazovku by prehliadač bral ako pozadie */
+.reel .fs picture,.reel .fs img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.reel .fs img{animation:settle 3.2s cubic-bezier(.16,.72,.12,1) both;animation-delay:calc(var(--veil,0ms)*.5)}
+@keyframes settle{from{transform:scale(1.09)}to{transform:scale(1.02)}}
+.reel .shade-in{position:absolute;inset:0;background:var(--canvas);animation:shadeOut 2.4s cubic-bezier(.4,0,.2,1) both;animation-delay:calc(var(--veil,0ms)*.5)}
+@keyframes shadeOut{from{opacity:1}to{opacity:0}}
+/* závoj pod textom, pri skrolovaní miestnosť stmavne do stránky */
+.reel .veil-l{position:absolute;inset:0;background:
+  radial-gradient(ellipse 120% 95% at 62% 42%,transparent 50%,rgba(var(--ink),.55) 100%),
+  linear-gradient(90deg,rgba(var(--ink),.86) 0%,rgba(var(--ink),.58) 34%,rgba(var(--ink),.1) 64%,transparent 82%),
+  linear-gradient(0deg,var(--canvas) 0%,rgba(var(--ink),.4) 22%,transparent 45%)}
+.reel::after{content:"";position:absolute;inset:0;background:var(--canvas);opacity:calc(var(--p)*.75)}
+.hero .lift{width:100%;will-change:transform,opacity}
+@media (max-width:720px),(orientation:portrait) and (max-width:1100px){
+  .reel .fs img{object-position:50% 50%}
+  .reel .veil-l{background:radial-gradient(ellipse 140% 80% at 50% 28%,transparent 45%,rgba(var(--ink),.45) 100%),
+    linear-gradient(0deg,var(--canvas) 0%,rgba(var(--ink),.86) 34%,rgba(var(--ink),.3) 60%,rgba(var(--ink),.08) 78%,rgba(var(--ink),.4) 100%)}
+  .hero .band{align-items:flex-end}
+}
+@media (min-width:721px) and (max-width:1100px) and (orientation:portrait){.hero .band{padding-bottom:9svh}.hero .band .inner{max-width:min(92%,720px)}}
+@media (prefers-reduced-motion:reduce){.reel .fs img,.reel .shade-in{animation:none}.reel .shade-in{opacity:0}}
+
+/* ================= Luxusná vrstva =================
+   Jeden pokojný jazyk pre celú stránku: veľa priestoru, tenké linky namiesto kariet,
+   ploché tlačidlá, zlatá len ako detail, žiadne žiary, prechody farieb ani efekty pod kurzorom.
+   Cenník je zoznam ako menu v dobrej reštaurácii. Tieto pravidlá sú zámerne posledné. */
+:root{
+  --canvas:#0d0a07;--canvas-2:#110d0a;--panel:#14100c;--panel-2:#1a150f;
+  --accent:#c9a66b;--accent-hover:#dcc08b;--accent-muted:rgba(201,166,107,.10);
+  --text-primary:#efe7da;--text-secondary:#bfb3a2;--text-tertiary:#978b7b;
+  --line:rgba(239,231,218,.10);--line-strong:rgba(201,166,107,.38);--wood-line:rgba(239,231,218,.10);
+  --radius-s:2px;--radius-m:2px;--radius:2px;--radius-l:2px;
+  --lux-space:clamp(104px,12vw,176px);
+}
+body{letter-spacing:.005em}
+.env,.env .grain{display:none}
+section{padding:var(--lux-space) 0}
+.contact{padding:var(--lux-space) 0}
+.salon{background:none}
+.ritual.light{background:var(--panel)}
+.ritual.light::before,.ritual.light::after,.gallery::before,.gallery::after{display:none}
+
+/* písmo: pokojné nadpisy, zlatá kurzíva stlmená, štítky úzke a riedke */
+.kicker,.band .kicker,.hero-static .kicker{font-size:11px;letter-spacing:.3em;font-weight:400}
+.h2{font-weight:400;letter-spacing:-.012em;line-height:1.06;font-size:clamp(34px,4.2vw,58px);margin-top:22px}
+.h2 em,.band h1 .em,.hero-static h1 em{font-weight:400;color:var(--accent)}
+.lede{font-size:17px;line-height:1.8;color:var(--text-secondary)}
+.head{align-items:end;row-gap:28px}
+
+/* tlačidlá: ploché, hranaté, verzálky s rozostupom; bez žiary, bez nadskočenia */
+.btn{border-radius:2px;padding:17px 30px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;box-shadow:none!important;transform:none!important;transition:background .35s,color .35s,border-color .35s}
+.btn::before,.btn::after{display:none!important}
+.btn.primary{background:var(--accent);color:#17110a;border-color:var(--accent)}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.ghost{background:transparent;border-color:rgba(239,231,218,.26);color:var(--text-primary)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent-hover)}
+.btn.small{padding:12px 20px;font-size:11px}
+.nav .btn.primary{padding:13px 22px;font-size:11px}
+
+/* stav otvorené: jemná zlatá bodka, nie semafor */
+.today .dot,.today-line .today .dot{background:var(--accent)!important;box-shadow:none!important;animation:none!important}
+.confirm::before{background:var(--accent);box-shadow:none}
+
+/* ako to prebieha: bez tyrkysovej čiary, kroky oddelené linkou */
+.steps .stream{display:none}
+.step::after{background:var(--line)}
+.step .n{color:var(--accent);letter-spacing:.2em}
+.rphoto,.salon-photos figure,.where,.cat.has-ph,.shot .frame,.map .part{border-radius:2px;border-color:var(--line)}
+.rphoto::after{display:none}
+
+/* cenník ako menu: filtre sú text s linkou, rituály riadky oddelené vlasovou čiarou */
+.tools{padding:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:var(--canvas);backdrop-filter:none;-webkit-backdrop-filter:none;margin-bottom:8px}
+.chip-row{gap:0 34px}
+.chip{border:0;border-bottom:1px solid transparent;border-radius:0;background:none;padding:16px 0 14px;margin-bottom:-1px;font-size:11px;letter-spacing:.24em;color:var(--text-tertiary)}
+.chip:hover{color:var(--text-primary);background:none}
+.chip[aria-pressed="true"]{background:none;color:var(--text-primary);border-bottom-color:var(--accent)}
+.count{display:none}
+.first-tip{padding-left:0;margin-top:26px;font-family:var(--display);font-style:italic;font-size:17px;color:var(--text-secondary)}
+.first-tip::before{display:none}
+.list{row-gap:0}
+@media (min-width:901px){.list{column-gap:80px}}
+.cat{margin:84px 0 6px}
+.cat.has-ph{min-height:230px;border:0;padding:0 34px 28px;background:var(--panel)}
+.cat.has-ph b{font-size:30px}
+.cat.has-ph::after{display:none}
+.card,.card.featured,.card.reco{background:none!important;border:0;border-top:1px solid var(--line);border-radius:0;padding:32px 0 36px;box-shadow:none!important;transform:none!important}
+.card:hover{background:none;border-color:var(--line-strong)}
+.card::before,.card::after{display:none!important}
+.card .glyph{display:none}
+.card,.card.featured,.card.reco{grid-template-columns:minmax(0,1fr) auto;gap:10px 28px}
+.card .actions,.card .panel{grid-column:1/-1}
+.card .mini>span:not(.badge){display:none}
+.card .mini .badge{background:none;color:var(--accent);padding:0;border-radius:0;font-size:10.5px;letter-spacing:.26em}
+.card h3{font-size:clamp(22px,1.9vw,27px);margin-top:6px}
+.card .tag{font-family:var(--display);font-style:italic;font-size:16px;color:var(--text-secondary)}
+.card .desc{font-size:15px;color:var(--text-tertiary)}
+.card .meta strong{font-size:26px;color:var(--text-primary)}
+.card .meta strong::after{display:none}
+.card .meta span{letter-spacing:.2em}
+.card .actions{gap:30px;margin-top:10px}
+.card-toggle{border:0;border-radius:0;background:none;padding:8px 0;font-size:11px;letter-spacing:.22em;color:var(--text-secondary)}
+.card-toggle:hover{color:var(--text-primary)}
+.card-toggle i{border-color:transparent}
+.card .actions .btn{background:none;border:0;border-bottom:1px solid var(--line-strong);border-radius:0;padding:8px 0;color:var(--accent-hover);font-size:11px}
+.card .actions .btn:hover{border-bottom-color:var(--accent-hover);background:none}
+
+/* rezervácia a poukaz: formulár ako čistý list, polia s linkou pod textom */
+.vform{background:none;border:0;border-top:1px solid var(--line-strong);border-radius:0;box-shadow:none;padding:44px 0 0}
+.vf legend{font-size:24px}
+.vf legend span{width:auto;height:auto;border:0;border-radius:0;font-size:11px;letter-spacing:.2em}
+.field label{letter-spacing:.22em;font-size:10.5px}
+.field input,.field select,.field textarea{border:0;border-bottom:1px solid rgba(239,231,218,.22);border-radius:0;background-color:transparent;padding:12px 0;font-size:16px}
+.field select{padding-right:28px;background-position:right 2px center}
+.field input:focus,.field select:focus,.field textarea:focus{box-shadow:none;border-bottom-color:var(--accent)}
+.choice span,.day span{border-radius:2px;background:none;font-weight:400}
+.choice input:checked+span,.day input:checked+span{background:none;border-color:var(--accent);color:var(--text-primary)}
+.book-online{border-radius:2px}
+.ticket{transform:none;animation:none;border-radius:2px;box-shadow:none;border-color:var(--line-strong)}
+.ticket::before,.ticket::after,.t-ph::after{display:none}
+.sent,.err{border-radius:2px}
+
+/* Salón 30: bez rámčekov a čísel, len text pod linkou */
+.salon-grid{gap:0 64px}
+.scard{border:0;border-top:1px solid var(--line);border-radius:0;background:none;padding:30px 0 36px;transform:none!important}
+.scard::before,.scard::after{display:none!important}
+.scard .sn{display:none}
+.scard h3{margin-top:0}
+
+/* galéria: fotky bez vnútorných rámčekov a poradových čísel */
+.shot .frame::after{display:none}
+.shot .pill{display:none}
+.to-top{border-radius:2px}
+.card .actions{display:flex;flex-wrap:wrap;align-items:center;grid-template-columns:none}
+.card .actions .btn.small,.card .actions .card-toggle{width:auto;min-height:44px;font-size:11px}
+.choice span{text-transform:none;letter-spacing:.01em;font-size:15px}
+.book-online{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+@media (max-width:640px){
+  .card .meta{grid-auto-flow:row}
+  .mbar{border-radius:2px;border-color:var(--line);background:var(--canvas);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .mbar a{border-radius:2px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .mbar a:last-child{background:var(--accent);color:#17110a}
+  .mbar-top{border-radius:2px}
+  .cat.has-ph{min-height:150px;padding:0 20px 20px}
+  .cat.has-ph b{font-size:24px}
+}
+.prog{display:none}
+/* cenník: každý rituál vo vlastnom okienku (želanie majiteľa), v pokojnom štýle bez žiary a ikon */
+.list{gap:20px}
+@media (min-width:901px){.list{gap:22px}}
+.cat{margin:64px 0 4px}
+.card,.card.featured,.card.reco{background:var(--panel)!important;border:1px solid var(--line);border-radius:3px;padding:34px 36px 30px}
+.card:hover{border-color:var(--line-strong)}
+.card.featured{border-color:var(--line-strong)}
+@media (max-width:640px){.card,.card.featured,.card.reco{padding:26px 22px 22px}}
+.card .actions .btn,.card .actions .btn:hover{background:transparent!important}
+@media (max-width:640px){.card .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.card .meta strong{font-size:24px}}
+@media (max-width:640px){.card .meta{align-self:start;justify-content:flex-start;height:auto}.card .meta strong{margin-top:0}}
+.map-link{border-radius:2px;letter-spacing:.2em;text-transform:uppercase;font-size:11px;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--canvas)}
+.map-link:hover{transform:none}
+.map-link .arr{display:inline-block;vertical-align:middle;margin-left:8px}
+/* mapa, ktorá sa nemôže načítať (súkromný náhľad): namiesto prázdneho boxu riadok s adresou a odkazom */
+.map .part.nomap{min-height:0;aspect-ratio:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 28px;background:var(--panel)}
+.map .part.nomap::before{position:static;display:block;inset:auto}
+.map .part.nomap .map-link{position:static}
+@media (min-width:901px){.map:has(.nomap){align-items:start}.map:has(.nomap) .where{height:auto}}
+/* kontakt: telefón, e-mail, web a Instagram vždy pod sebou (na mobile boli zlepené v jednom riadku) */
+.info a{display:flex;width:fit-content}
+.where picture,.where img{object-position:50% 72%}
+
+/* ================= Čitateľnosť =================
+   Riedke verzálky ostávajú len na malých nadpiskoch sekcií. Tlačidlá, odkazy, filtre a popisky
+   polí sú normálnym písmom, polia formulára sú zreteľné okienka, aby bolo jasné, kam písať. */
+.btn,.nav .btn.primary,.btn.small{text-transform:none;letter-spacing:.02em;font-size:15px;font-weight:700}
+.btn.small,.nav .btn.primary{font-size:14px}
+.kicker,.band .kicker,.hero-static .kicker{letter-spacing:.18em;font-size:12px}
+.chip{text-transform:none;letter-spacing:.01em;font-size:15px;font-weight:600}
+.card-toggle,.card .actions .btn{text-transform:none;letter-spacing:.01em;font-size:14.5px;font-weight:600}
+.card .meta span{letter-spacing:.08em;font-size:12px}
+.map-link,.mbar a{text-transform:none;letter-spacing:.01em;font-size:14.5px}
+/* formulár: popisok normálnym písmom, pole ako okienko s jemným rámikom */
+.field label,.field .lbl,.vform .lbl{text-transform:none;letter-spacing:0;font-family:var(--body);font-size:14.5px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+.field label small{font-weight:400;color:var(--text-tertiary)}
+.field input,.field select,.field textarea{border:1px solid rgba(239,231,218,.22);border-radius:3px;background-color:var(--panel);padding:14px 16px;font-size:16px;color:var(--text-primary)}
+.field select{padding-right:40px;background-position:right 14px center}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(239,231,218,.36)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,166,107,.14)}
+.field input::placeholder,.field textarea::placeholder{color:#7d7366}
+.field{margin-top:20px}
+.hint{font-size:14px;color:var(--text-tertiary)}
+/* kroky formulára: čiara už nepreškrtáva nadpis, kroky oddeľuje priestor */
+.vf+.vf{border-top:0;margin-top:44px;padding-top:0}
+.vf legend{font-size:24px;margin-bottom:6px}
+.vf legend span{font-family:var(--body);font-size:13px;letter-spacing:0;color:var(--accent);min-width:1.2em}
+.choice span{font-size:15px;color:var(--text-primary);border-color:rgba(239,231,218,.22);background:var(--panel)}
+.day span{background:var(--panel);border-color:rgba(239,231,218,.22)}
+/* lístok rezervácie a poukazu v tónoch webu (orech a zlatá), nie zelený */
+.ticket{background:var(--panel-2);border-color:var(--line-strong)}
+.t-ph::before{background:linear-gradient(100deg,rgba(var(--ink),.94) 0%,rgba(var(--ink),.8) 45%,rgba(var(--ink),.35) 100%)}
+.t-ph picture,.t-ph img{opacity:.5}
+.ticket small{letter-spacing:.14em}
+/* ostatné ovládacie prvky tiež normálnym písmom; verzálky ostávajú len nadpiskom sekcií, kategóriám a lístku */
+.linkbtn,.step-cta span,.card .about .lbl,.to-top span,.lbl{text-transform:none;letter-spacing:.01em;font-size:14.5px}
+.linkbtn{font-weight:600;color:var(--accent-hover)}
+.card .about .lbl{font-weight:600;color:var(--text-primary)}
+/* mapa v kontakte: vlastný obrázok okolia v tónoch webu (podklad © OpenStreetMap), bez cudzieho rámca */
+.map .part.mapimg{position:relative;min-height:0;aspect-ratio:auto;padding:0;background:var(--panel)}
+.map .part.mapimg::before{display:none}
+.mapimg picture,.mapimg img{display:block;width:100%;height:100%;object-fit:cover}
+.pin-map{position:absolute;left:50%;top:49.4%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:10px;pointer-events:none}
+.pin-map i{width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px rgba(201,166,107,.22),0 0 0 14px rgba(201,166,107,.08)}
+.pin-map b{position:absolute;top:26px;white-space:nowrap;padding:5px 10px;border-radius:2px;background:var(--canvas);border:1px solid var(--line-strong);font-family:var(--display);font-weight:400;font-size:14px;letter-spacing:.06em;color:var(--text-primary)}
+.map-card{position:absolute;left:20px;bottom:20px;display:grid;gap:4px;padding:18px 20px;border-radius:2px;background:rgba(var(--ink),.92);border:1px solid var(--line);max-width:calc(100% - 40px)}
+.map-card b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--text-primary)}
+.map-card span{font-size:14.5px;color:var(--text-secondary)}
+.map-card .map-link{position:static;margin-top:12px;justify-self:start;padding:10px 16px;border:1px solid var(--line-strong);background:transparent}
+.osm{position:absolute;right:8px;bottom:6px;font-size:10.5px;color:var(--text-tertiary)}
+@media (min-width:901px){.map .part.mapimg{min-height:420px}}
+@media (max-width:900px){.map .part.mapimg{aspect-ratio:auto;height:420px}.mapimg img{object-position:50% 49%}}
+@media (max-width:900px){
+  .map .part.mapimg{height:auto;display:grid}
+  .mapimg picture{height:300px}
+  .map-card{position:static;max-width:none;border:0;border-top:1px solid var(--line);background:var(--panel);padding:20px}
+  .pin-map{top:150px}
+  .osm{bottom:auto;top:280px}
+}
+/* prechod z úvodu do stránky: úvod končí v tej istej farbe, akou začína Ako to prebieha, bez clony a bez diery */
+.reel::after{display:none}
+.hero .lift{transform:none!important;opacity:1!important}
+.ritual.light,.ritual.light.in{background:var(--canvas);clip-path:none}
+.site>.ritual{padding-top:clamp(40px,6vw,88px)}
+
+/* ================= Prechody medzi časťami =================
+   Namiesto prázdnej tmavej plochy menšia medzera a jemný oddeľovač: vlasová zlatá linka s lotosom
+   zo značky. Obsah je na mieste hneď, nadpisy sa neskladajú po riadkoch ani nevysúvajú. */
+:root{--lux-space:clamp(76px,9vw,128px)}
+.site>section+section::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+/* odkrývanie (.rv): nič sa nevysúva ani neskladá, sekcia je hotová v momente, keď príde na obrazovku */
+.rv,.rv .part,.part,.h2 .li,.rv .h2 .li,.cat,.card.pop{opacity:1!important;transform:none!important;animation:none!important;transition-property:border-color,background,color!important}
+.h2 .ln{overflow:visible}
+.kicker::before,.band .kicker::before,.hero-static .kicker::before{transform:none}
+.contact .box::before,.contact .box::after{display:none}
+
+/* ================= 3D prehliadka (assets/world.js) =================
+   Scéna je pevné pozadie celej stránky. Časti webu sú tmavé dosky s tenkým rámikom nad ňou,
+   medzi nimi je vidieť do salónu. Bez 3D (trieda .world chýba) ostáva web ako doteraz. */
+.world-canvas{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:0;opacity:0;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);pointer-events:none}
+html.world-in .world-canvas{opacity:1}
+html.world,html.world body{background:var(--canvas)}
+html.world body{background:transparent}
+html.world .site,html.world footer{position:relative;z-index:1}
+html.world .site{background:none}
+/* príchod cez odkaz s kotvou: sekcie sa vykreslia hneď, aby stránka pristala presne (vo filme sa rozbaľujú postupne, world.js) */
+html.cv-all .site>section,html.cv-all .site>footer,html.cv-all .site>.pull,html.cv-all .site>.finale{content-visibility:visible}
+html.world .stage{background:transparent}
+html.world .stage .fallback,html.world .reel{transition:opacity .7s cubic-bezier(.4,0,.2,1)}
+html.world-in .stage .fallback,html.world-in .reel{opacity:0}
+html.world-in .stage .scrim{background:linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+@media (max-width:720px){html.world-in .stage .scrim{background:linear-gradient(0deg,rgba(var(--ink),.92) 0%,rgba(var(--ink),.6) 40%,transparent 70%)}}
+html.world .site>section{background:transparent!important;padding:32vh 0}
+html.world .site>section::before{display:none}
+html.world .site>section>.wrap{position:relative;background:rgba(13,10,7,.95);border:1px solid rgba(239,231,218,.09);padding:clamp(28px,4.4vw,64px)}
+@media (max-width:640px){html.world .site>section>.wrap{width:calc(100% - 24px);padding:26px 18px}html.world .site>section{padding:26vh 0}}
+html.world .site>.ritual{padding-top:70vh}
+html.world footer{background:var(--canvas)}
+
+/* 3D prehliadka: cenník ako výklenky. Karty sú samostatné dosky, hlavička kategórie je okno do
+   scény, v ktorom stojí priestor kategórie a tabuľa s jej rituálmi. Kým scéna nebeží, okno
+   ukazuje fotku ako doteraz. */
+html.world #cennik>.wrap{background:transparent;border:0;padding:0}
+html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{background:rgba(13,10,7,.9);border:1px solid rgba(239,231,218,.09);padding:clamp(22px,3.4vw,48px);margin:0}
+html.world #cennik .tools,html.world #cennik .first-tip{border-top:0;padding-top:0}
+html.world #cennik .head{padding-bottom:22px}
+html.world #cennik .count:empty{display:none}
+html.world #cennik .card{background:rgba(22,16,10,.94)!important}
+html.world #cennik .cat.has-ph{min-height:74vh;margin:26px 0 22px;background:transparent;border:0;padding:0;align-items:flex-end}
+html.world #cennik .cat.has-ph::before{background:linear-gradient(0deg,rgba(var(--ink),.7),transparent 30%)}
+html.world #cennik .cat.has-ph>span,html.world #cennik .cat.has-ph>b{background:rgba(13,10,7,.9);padding:10px 16px}
+html.world #cennik .cat.has-ph>span{padding-right:0}
+html.world #cennik .cat-ph{transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
+html.world-in #cennik .cat-ph{opacity:0}
+html.world-in #cennik .cat.has-ph::before{opacity:0}
+html.world #cennik .cat.has-ph{gap:0;flex-direction:column;align-items:flex-start;justify-content:flex-end}
+html.world #cennik .cat.has-ph>span{padding:12px 18px 0}html.world #cennik .cat.has-ph>b{padding:4px 18px 12px}
+@media (max-width:640px){html.world #cennik .cat.has-ph{min-height:64vh}}
+
+/* ---------- poukážka od majiteľa na webe presne tak, ako ide do tlače ---------- */
+.gift .voucher-img{margin:0;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.gift .voucher-img img{display:block;width:100%;height:auto;aspect-ratio:2/1}
+
+/* ---------- top rituály: zlatý rámik, zlatá linka hore a štítok (Na prvýkrát, Odporúčame,
+   Najkompletnejší, Najvýnimočnejší). Zdržanlivo: žiadna žiara, len zlato ako detail. ---------- */
+.card.featured,html.world #cennik .card.featured{position:relative;border-color:rgba(212,174,98,.6)!important;background:linear-gradient(180deg,rgba(212,174,98,.07),rgba(212,174,98,0) 45%),rgba(24,18,11,.96)!important}
+.card.featured::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:2px;background:linear-gradient(90deg,transparent,#d4ae62 20%,#f3dc9f 50%,#d4ae62 80%,transparent)}
+.card.featured .mini{display:flex;margin-bottom:12px}
+.card.featured .mini .badge{display:inline-block;border:1px solid rgba(212,174,98,.7);padding:5px 11px 4px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#f3dc9f;background:rgba(212,174,98,.08)}
+.card.featured h3{color:#f3dc9f}
+.card.featured .meta strong{color:#e6c886}
+.card.featured .actions .btn.small{background:#d4ae62!important;color:#141208!important;border:0!important;padding:10px 18px!important;text-decoration:none!important;border-radius:2px}
+.card.featured .actions .btn.small::after{display:none}
+
+/* ---------- tím: Simona a Katka, dve fotky na výšku ---------- */
+.team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,36px);margin-top:clamp(28px,4vw,48px);max-width:880px}
+.team-grid figure{margin:0}
+.team-grid img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);border-radius:2px}
+.team-grid figcaption{margin-top:16px}
+.team-grid figcaption b{display:block;font-family:var(--display);font-weight:500;font-size:26px;color:var(--text-primary)}
+.team-grid figcaption span{display:block;margin-top:4px;font-size:14px;color:var(--accent)}
+.team-grid figcaption p{margin-top:8px;max-width:36ch;font-size:15px;line-height:1.6;color:var(--text-secondary)}
+@media (max-width:520px){.team-grid{grid-template-columns:1fr}}
+
+/* ---------- prehliadka: popis miesta vľavo dole, pod doskami s textom (vidno ho len vo filme) ---------- */
+.world-place{position:fixed;left:clamp(16px,3vw,40px);bottom:clamp(20px,4vh,40px);z-index:0;pointer-events:none;opacity:0;transition:opacity .8s cubic-bezier(.4,0,.2,1);display:none}
+html.world-in .world-place{display:block}
+html.world-in .world-place.on{opacity:1}
+.world-place b{display:block;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#d4ae62;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.world-place span{display:none;margin-top:4px;font-family:var(--display);font-style:italic;font-size:20px;color:#efe7da;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.world-place span.on{display:block}
+@media (max-width:640px){.world-place{bottom:96px}.world-place span{font-size:17px}}
+
+
+/* ================= Filmová vrstva (dizajn) =================
+   Posledné doladenie nad filmom: čitateľná lišta, titulky kategórií ako vo filme, dosky s hĺbkou,
+   poriadok v cenníku, poukaze, kontakte a pätičke. Zdržanlivo: žiadne žiary ani poskakovanie. */
+
+/* 1. lišta nad filmom: tmavý prechod pod odkazmi, kým lišta nie je plná (svetlé záclony v úvode) */
+.nav::after{content:"";position:absolute;left:0;right:0;top:0;height:150%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(var(--ink),.74) 0%,rgba(var(--ink),.4) 55%,rgba(var(--ink),0) 100%);transition:opacity .5s var(--ease-soft)}
+.nav.solid::after{opacity:0}
+.nav:not(.solid) .links a{color:#e9e0d2;text-shadow:0 1px 12px rgba(var(--ink),.85)}
+/* fokus z klávesnice: rovnaký hranatý tvar ako tlačidlá */
+:focus-visible{border-radius:2px}
+/* prepínač jazyka v tom istom jazyku ako tlačidlá: hranatý, vysoký ako menu */
+.lang-btn{border-radius:2px;min-height:44px;background:rgba(var(--ink),.4);border-color:rgba(239,231,218,.18)}
+.lang-menu,.lang-opt{border-radius:2px}
+
+/* 2. výzva Skroluj: namiesto skákajúcej kvapky tenká zlatá linka, ktorá sa pomaly kreslí nadol */
+.cue{gap:12px;font-size:10.5px;letter-spacing:.34em}
+.cue .drop{order:2;width:1px;height:46px;border:0;border-radius:0;background:linear-gradient(180deg,rgba(201,166,107,0),var(--accent));transform-origin:50% 0;animation:cueLine 2.8s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes cueLine{0%{transform:scaleY(0);opacity:1}55%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+@media (max-width:640px){.cue{gap:8px}.cue .drop{height:20px}}
+
+/* 3. popis miesta vo filme ako titulok na okraji: zvislo v ľavom okraji, nikdy pod doskou ani cez text */
+html.world-in .world-place{display:none;left:clamp(20px,2.2vw,36px);bottom:clamp(32px,7vh,72px);writing-mode:vertical-rl;transform:rotate(180deg)}
+.world-place span{margin-block-start:8px;font-size:18px}
+@media (min-width:1360px){html.world-in .world-place{display:block}}
+
+/* 4. dosky nad filmom: plnšie, zlatá vlasová hrana hore a hlboký mäkký tieň, aby ležali nad miestnosťou */
+html.world .site>section>.wrap{background:rgba(13,10,7,.965);border-top-color:rgba(201,166,107,.3);box-shadow:0 40px 110px -30px rgba(0,0,0,.75)}
+html.world #cennik>.wrap{box-shadow:none}
+html.world #cennik .head{background:rgba(13,10,7,.965);border-top-color:rgba(201,166,107,.3)}
+@media (min-width:641px){html.world #cennik .card{box-shadow:0 28px 70px -30px rgba(0,0,0,.7)}}
+@media (max-width:640px){html.world .site>section>.wrap{box-shadow:0 24px 60px -24px rgba(0,0,0,.7)}}
+
+/* 5. cenník: filter je štíhla plná lišta (nič cez ňu nepresvitá), tip pod ňou na celú šírku dosky */
+html.world #cennik .tools{padding:0 clamp(22px,3.4vw,48px);background:#0d0a07}
+html.world #cennik .first-tip{max-width:none;padding:20px clamp(22px,3.4vw,48px) 28px;background:rgba(13,10,7,.965)}
+/* telefón: kategórie v jednom riadku, posúvajú sa prstom */
+@media (max-width:640px){
+  #cennik .chip-row{flex-wrap:nowrap;overflow-x:auto;gap:0 26px;scrollbar-width:none;margin:0 -18px;padding:0 18px;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  #cennik .chip-row::-webkit-scrollbar{display:none}
+  html.world #cennik .tools{padding:0 18px}
+  html.world #cennik .first-tip{padding:16px 18px 22px}
+}
+
+/* 6. okno kategórie ako titulok vo filme: jeden spodný prechod, malý zlatý nadpis a veľký názov, žiadne schodíky */
+html.world #cennik .cat.has-ph{overflow:visible}
+html.world-in #cennik .cat.has-ph::before{opacity:1;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(0deg,rgba(var(--ink),0) 0%,rgba(var(--ink),.78) 22%,rgba(var(--ink),.42) 42%,rgba(var(--ink),0) 64%)}
+html.world #cennik .cat.has-ph>span,html.world #cennik .cat.has-ph>b{background:none;text-shadow:0 1px 18px rgba(0,0,0,.55)}
+html.world #cennik .cat.has-ph>span{display:flex;align-items:center;gap:14px;padding:0 clamp(22px,3.4vw,48px);font-size:11.5px;letter-spacing:.3em;color:var(--accent-hover)}
+html.world #cennik .cat.has-ph>span::before{content:"";width:34px;height:1px;background:var(--accent)}
+html.world #cennik .cat.has-ph>b{padding:12px clamp(22px,3.4vw,48px) clamp(48px,8vh,88px);font-size:clamp(34px,4.2vw,58px);line-height:1.04;letter-spacing:-.012em}
+@media (max-width:640px){html.world #cennik .cat.has-ph>span{padding:0 18px}html.world #cennik .cat.has-ph>b{padding:10px 18px 44px;font-size:34px}}
+
+/* 7. karty rituálov: tlačidlá čitateľné (boli 11 px), na telefóne text na celú šírku a čas s cenou v riadku */
+.card .actions .btn.small,.card .actions .card-toggle{font-size:14.5px;letter-spacing:.01em}
+@media (max-width:640px){
+  .card,.card.featured,.card.reco{grid-template-columns:minmax(0,1fr)}
+  .card .meta{flex-direction:row!important;align-items:baseline!important;justify-content:space-between;margin-top:4px;padding-top:14px;border-top:1px solid var(--line)}
+  .card .actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+  .card .actions .card-toggle,.card .actions .btn.small{width:100%;min-height:50px;justify-content:center;padding:0 10px!important;border:1px solid rgba(239,231,218,.2)!important;border-radius:2px}
+  .card:not(.featured) .actions .btn.small{border-color:var(--line-strong)!important;color:var(--accent-hover)}
+}
+
+/* 8. poukážky: text vľavo, poukaz vpravo, nič prázdne v pravom stĺpci */
+@media (min-width:901px){
+  .gift .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,5vw,72px);align-items:center}
+  .gift .head{grid-template-columns:1fr;row-gap:26px}
+  .gift .order{margin:0;grid-template-columns:1fr}
+}
+.gift .voucher-img{box-shadow:0 34px 80px -28px rgba(0,0,0,.8)}
+/* výber rituálu pod poukážkou: zreteľné okienko ako pole formulára */
+.gift .voucher-pick{margin:26px 0 0;max-width:420px}
+.gift .voucher-pick select{min-height:50px;cursor:pointer}
+
+/* 9. tím: dve fotky na celú šírku dosky, nie zaseknuté vľavo */
+.team-grid{max-width:none;gap:clamp(20px,3vw,48px)}
+.team-grid img{aspect-ratio:4/5}
+
+/* 10. kontakt: stĺpce zarovnané hore, štítky ako malé nadpisy (HTML má h3, štýl mieril na h4), bez bodky ako rádio */
+.contact .box{align-items:start}
+html.world .contact .box{padding:0 0 clamp(36px,5vw,64px)}
+.info h3,footer h3{font-family:var(--body);font-weight:400;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.info .pin{display:none}
+.info p,.info a{font-size:16px}
+.pin-map b{top:auto;bottom:26px}
+@media (max-width:640px){.contact .cta{display:grid;gap:10px}.contact .cta .btn{width:100%;min-height:52px}}
+
+/* 11. otázky: odpoveď väčšia a vzdušnejšia (bola 15 px), otvorená otázka v zlatej */
+.faq-q{padding:24px 0;line-height:1.3}
+.faq-a>div{font-size:16.5px;line-height:1.75;color:var(--text-secondary)}
+.faq-a p{max-width:56ch;padding-bottom:26px}
+.faq-q .pm{flex-basis:28px;width:28px;height:28px}
+.faq-item.open .faq-q{color:var(--accent-hover)}
+
+/* 12. pätička: film do nej prejde prechodom, nie tvrdým rezom; odkazy bez podčiarknutia a pod sebou */
+html.world footer::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:clamp(120px,20vh,220px);background:linear-gradient(180deg,rgba(13,10,7,0),var(--canvas));pointer-events:none}
+footer .col{display:grid;align-content:start}
+footer .col a::before{display:none}
+footer .col a{color:var(--text-secondary)}
+@media (max-width:640px){
+  footer .grid{grid-template-columns:1fr 1fr;row-gap:36px}
+  footer .grid>div:first-child{grid-column:1/-1}
+  footer .col a{display:flex}
+  footer .bottom{flex-direction:column;gap:6px}
+}
+
+/* 13. tablet a telefón s dotykom: bez rozmazania pozadia nad filmom (každý snímok by sa prekresľoval) */
+@media (pointer:coarse){
+  .nav::before,.lang-menu,.to-top,.map-link,.tools,.drawer::backdrop,.lb::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav::before{background:rgba(var(--ink),.95)}
+}
+
+/* čísla krokov sú čitateľné aj pred rozsvietením (kontrast nad 4,5 : 1) */
+.step .n{opacity:.7}
+
+/* ================= Telefón: pokojné a čisté =================
+   Na telefóne dosky idú cez celú šírku a sú plné, film nepresvitá po krajoch ani medzi kartami.
+   Film ostáva ako krátke okno medzi časťami, cenník je jeden súvislý blok s fotkou kategórie. */
+@media (max-width:640px){
+  html.world .site>section{padding:34vh 0 0}
+  html.world .site>.ritual{padding-top:42vh}
+  html.world .site>section>.wrap{width:100%;max-width:none;margin:0;border-left:0;border-right:0;background:#0d0a07;box-shadow:none}
+  html.world #cennik>.wrap{background:#0d0a07}
+  html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{border-left:0;border-right:0;background:#0d0a07}
+  html.world #cennik .card,html.world #cennik .card.featured{background:#17110b!important}
+  html.world #cennik .cards,html.world #cennik .cat{margin-left:0;margin-right:0}
+  /* kategória: vlastná fotka namiesto okna do filmu, nižšia */
+  html.world #cennik .cat.has-ph{min-height:36vh;margin:28px 0 18px;overflow:hidden}
+  html.world-in #cennik .cat-ph,html.world-in #cennik .cat.has-ph::before{opacity:1}
+  html.world-in #cennik .cat.has-ph::before{left:0;right:0;background:linear-gradient(0deg,rgba(var(--ink),.88) 0%,rgba(var(--ink),.35) 45%,rgba(var(--ink),0) 75%)}
+  html.world #cennik .cat.has-ph>b{padding:8px 18px 20px;font-size:30px}
+  /* spodná lišta prilepená k okraju, bez rozmazania */
+  .mbar{left:0;right:0;bottom:0;border-radius:0;border-left:0;border-right:0;border-bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));backdrop-filter:none;background:#0d0a07}
+}
+
+/* ================= Luxusná kompozícia =================
+   Rytmus ako v hotelovom filme: veľký záber cez celú obrazovku, potom pokojný plný pás
+   s veľkým písmom. Žiadne plávajúce krabice nad fotkou, film nepresvitá za textom. */
+html.world .site>section{padding:78vh 0 0}
+html.world .site>.ritual{padding-top:62vh}
+html.world .site{overflow-x:clip}
+html.world .site>section>.wrap{background:#0d0a07;border:0;box-shadow:none;isolation:isolate;padding:clamp(72px,9vw,140px) 0}
+/* pás ide cez celú šírku; záber sa doň pomaly stratí a pod pásom sa pomaly vráti, bez ostrých hrán */
+html.world .site>section>.wrap::after{content:"";position:absolute;left:-100vmax;right:-100vmax;top:0;bottom:-18vh;z-index:-1;background:linear-gradient(180deg,#0d0a07 calc(100% - 18vh),rgba(13,10,7,0));pointer-events:none}
+html.world .site>section>.wrap::before{content:"";position:absolute;left:-100vmax;right:-100vmax;bottom:100%;height:26vh;background:linear-gradient(180deg,rgba(13,10,7,0),#0d0a07);pointer-events:none}
+
+/* väčšie, sebavedomé písmo */
+.h2{font-size:clamp(42px,5.6vw,88px);line-height:1;letter-spacing:-.022em}
+.lede{font-size:clamp(17px,1.35vw,19px);line-height:1.75;color:rgba(239,231,218,.8)}
+.kicker{letter-spacing:.32em}
+
+/* cenník ako menu luxusného spa: jeden pokojný blok, rituály oddelené vlasovou linkou */
+html.world #cennik>.wrap{background:#0d0a07}
+html.world #cennik .head,html.world #cennik .tools,html.world #cennik .first-tip{background:#0d0a07;border:0}
+html.world #cennik .cat.has-ph{min-height:48vh;margin:72px 0 8px;overflow:hidden}
+html.world-in #cennik .cat-ph,html.world-in #cennik .cat.has-ph::before{opacity:1}
+html.world-in #cennik .cat.has-ph::before{left:0;right:0;background:linear-gradient(0deg,rgba(13,10,7,.92) 0%,rgba(13,10,7,.3) 45%,rgba(13,10,7,0) 75%)}
+#cennik .list{column-gap:clamp(40px,5vw,88px)}
+html .site #cennik .card,html .site #cennik .card.featured{background:none!important;border:0!important;border-top:1px solid rgba(239,231,218,.12)!important;border-radius:0;box-shadow:none!important;padding:36px 0 30px}
+html .site #cennik .card.featured{border-top-color:rgba(212,174,98,.55)!important}
+html .site #cennik .card.featured::before,html .site #cennik .card.featured::after{display:none}
+#cennik .card .glyph{display:none}
+#cennik .card{grid-template-columns:1fr auto}
+#cennik .card .actions,#cennik .card .panel{grid-column:1/3}
+#cennik .card .mini .badge{background:none;color:var(--accent);padding:0;border:0;letter-spacing:.2em}
+#cennik .card h3{font-size:clamp(24px,2.3vw,32px)}
+#cennik .card .desc{font-size:16px}
+/* v karte jedno tiché tlačidlo namiesto zlatých blokov */
+html .site #cennik .card .actions .btn.small{background:none!important;color:var(--accent-hover)!important;border:1px solid rgba(212,174,98,.45)!important;box-shadow:none!important}
+html .site #cennik .card .actions .btn.small:hover{border-color:var(--accent)!important}
+@media (max-width:640px){
+  html.world .site>section{padding:40vh 0 0}
+  html.world .site>.ritual{padding-top:46vh}
+  html.world .site>section>.wrap{padding:56px 20px}
+  html.world #cennik>.wrap{padding-left:0;padding-right:0}
+  html.world #cennik .cat.has-ph{min-height:36vh;margin:48px 0 0}
+  html .site #cennik .card,html .site #cennik .card.featured{padding:28px 20px 24px}
+}
+
+/* linka 24/7 pre spätnú väzbu: tichý blok s vlasovou linkou, rovnaký v cenníku aj pri tíme */
+.care{margin:clamp(48px,6vw,88px) 0 0;padding:clamp(28px,3vw,40px) 0 0;border-top:1px solid rgba(212,174,98,.4);display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) auto;gap:14px clamp(24px,4vw,64px);align-items:baseline}
+.care-k{font-family:var(--body);font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent)}
+.care p{margin:0;font-family:var(--display);font-size:clamp(19px,1.7vw,24px);line-height:1.45;color:var(--text-primary);max-width:46ch}
+.care .care-c{font-family:var(--body);font-size:15px;white-space:nowrap}
+.care a,.care-note a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4)}
+.care a:hover,.care-note a:hover{border-bottom-color:var(--accent)}
+.care-note{margin-top:10px;font-size:14px;color:rgba(239,231,218,.72)}
+footer .care-note{margin-top:14px}
+@media (max-width:900px){.care{grid-template-columns:1fr}.care .care-c{white-space:normal}}
+@media (max-width:640px){#cennik .care{padding-left:20px;padding-right:20px}}
+
+/* oznam od admina (dovolenka, zmena hodín): jedna tichá linka pod lištou, odíde so stránkou */
+.oznam{position:absolute;top:80px;left:0;right:0;z-index:99;padding:11px 20px;background:rgba(13,10,7,.94);border-bottom:1px solid rgba(212,174,98,.35);text-align:center}
+.oznam p{margin:0 auto;max-width:70ch;font-size:14px;line-height:1.5;color:var(--text-primary)}
+.oznam p::before{content:"";display:inline-block;width:6px;height:6px;margin:0 10px 2px 0;background:var(--accent);transform:rotate(45deg)}
+@media (max-width:720px){.oznam{top:68px}}@media (max-width:640px){.oznam p{font-size:13.5px}}
+
+/* ================= Pohybový systém =================
+   Tri rýchlosti a dve krivky pre všetko, na čo sa dá ukázať alebo ťuknúť. Farba a linka sa menia
+   plynulo, nič neposkakuje ani nesleduje kurzor. */
+:root{--t-fast:180ms;--t-base:320ms;--t-slow:700ms;--e-out:cubic-bezier(.16,1,.3,1);--e-io:cubic-bezier(.65,0,.35,1)}
+.btn,.chip,.card-toggle,.faq-q,.nav .links a,.drawer-links a,.care a,.care-note a,footer a,.slink,.map-link,.info a,.lang-btn,.menu-btn,#toTop,.first-tip a,.gift select,.mbar a{
+  transition-property:color,background-color,border-color,box-shadow,opacity;transition-duration:var(--t-base);transition-timing-function:var(--e-out)}
+#cennik .card{transition:border-color var(--t-slow) var(--e-out)}
+.faq-q .pm{transition:transform var(--t-base) var(--e-io),border-color var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out)}
+/* stavy pod ukazovateľom: len farba a linka, žiadny posun */
+@media (hover:hover) and (pointer:fine){
+  .faq .faq-q:hover,.faq-item .faq-q:hover{color:var(--accent-hover)}
+  .faq-q:hover .pm{transform:none;border-color:var(--accent)}
+  footer a:hover,.info a:hover,.nav .links a:hover,.map-link:hover{color:var(--accent-hover)}
+  .chip:hover{color:var(--text-primary);border-color:rgba(212,174,98,.45)}
+  html .site #cennik .card:hover{border-top-color:rgba(212,174,98,.5)!important}
+}
+.drawer-links a:hover,.drawer-links a:focus-visible{padding-left:0}
+/* stlačenie: jemné potvrdenie dotyku, rovnaké všade */
+.btn:active,.chip:active,.mbar a:active{opacity:.82;transition-duration:var(--t-fast)}
+
+/* odkaz na Salón 30 v časti o priestoroch: tichý, ako podpis */
+.salon-link{margin:clamp(28px,4vw,48px) 0 0;font-size:15px;letter-spacing:.04em}
+.salon-link a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4);transition:border-color var(--t-base) var(--e-out)}
+.salon-link a:hover{border-bottom-color:var(--accent)}
+
+/* ================= Menu rituálov ako v luxusnom spa =================
+   Jeden pokojný stĺpec, veľký názov, zlatá kurzíva, čitateľný popis, cena a dĺžka ako v tlačenom
+   menu. Pri rituáli jedno tiché tlačidlo a odkaz na obsah, žiadne škatule ani drobné nálepky. */
+html .site #cennik .list{display:block;max-width:920px;margin:0 auto}
+html .site #cennik .tools{position:static}
+html .site #cennik .card,html .site #cennik .card.featured{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(24px,4vw,56px);row-gap:0;align-items:start;
+  padding:clamp(34px,4vw,48px) 0 clamp(30px,3.4vw,40px)!important;margin:0}
+#cennik .card>div:first-of-type{grid-column:1;grid-row:1}
+#cennik .card .meta{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding-top:6px;text-align:right}
+#cennik .card .meta strong{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.4vw,32px);line-height:1;color:var(--accent-hover)}
+#cennik .card .meta strong::after{display:none}
+#cennik .card .meta span{font-family:var(--body);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(239,231,218,.62);white-space:nowrap}
+/* štítok (Na prvýkrát, Odporúčame…): jeden tichý riadok nad názvom */
+#cennik .card .mini{display:block;margin:0 0 12px;min-height:0}
+#cennik .card .mini>span:not(.badge){display:none}
+html .site #cennik .card .mini .badge{display:inline-flex;align-items:center;gap:10px;border:0;padding:0;font-family:var(--body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+html .site #cennik .card .mini .badge::before{content:"";width:24px;height:1px;background:var(--accent)}
+#cennik .card h3{font-family:var(--display);font-weight:400;font-size:clamp(27px,2.8vw,36px);line-height:1.12;letter-spacing:-.01em;margin:0;color:var(--text-primary)}
+#cennik .card .tag{margin:10px 0 0;font-family:var(--display);font-style:italic;font-size:clamp(17px,1.4vw,19px);line-height:1.45;color:var(--accent-hover)}
+#cennik .card .desc{margin:14px 0 0;max-width:58ch;font-size:16.5px;line-height:1.7;color:rgba(239,231,218,.74)}
+/* akcie: tiché tlačidlo a textový odkaz v jednom riadku */
+#cennik .card .actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 28px;margin-top:24px}
+html .site #cennik .card .actions .btn.small{order:1;width:auto;min-height:46px;padding:0 26px!important;font-size:14px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(212,174,98,.6)!important;border-radius:2px;background:none!important;color:var(--accent-hover)!important}
+html .site #cennik .card .actions .btn.small:hover{background:rgba(212,174,98,.1)!important;border-color:var(--accent)!important}
+html .site #cennik .card .actions .card-toggle{order:2;width:auto;min-height:46px;padding:0!important;border:0!important;background:none!important;font-size:15px;letter-spacing:.01em;text-transform:none;color:rgba(239,231,218,.72)}
+html .site #cennik .card .actions .card-toggle:hover{color:var(--accent-hover)}
+#cennik .card .panel{grid-column:1/-1}
+#cennik .card .about{border-top:0;margin-top:20px;padding-top:0}
+#cennik .card .about p,#cennik .card .panel li{font-size:16px;line-height:1.7}
+/* kategória: fotka a názov ako titulok kapitoly v tom istom stĺpci */
+html.world #cennik .cat.has-ph{margin:88px 0 0}
+#cennik .list>.cat:first-child{margin-top:40px}
+/* telefón: názov cez celú šírku, cena a dĺžka pod ním v jednom riadku */
+@media (max-width:640px){
+  html .site #cennik .card,html .site #cennik .card.featured{grid-template-columns:1fr;padding:30px 20px 28px!important}
+  #cennik .card .meta{grid-column:1;grid-row:2;flex-direction:row-reverse;justify-content:flex-end;align-items:baseline;gap:14px;padding-top:14px;text-align:left}
+  #cennik .card .meta strong{font-size:25px}
+  #cennik .card h3{font-size:27px}
+  #cennik .card .desc{font-size:16px}
+  #cennik .card .actions{gap:6px 22px;margin-top:20px}
+  html .site #cennik .card .actions .btn.small{min-height:48px;padding:0 22px!important}
+}
+/* filter cenníka skrýva karty triedou .hidden, menu ju musí rešpektovať */
+html .site #cennik .card.hidden,html .site #cennik .cat.hidden{display:none!important}
+html .site #cennik .card .panel .lbl{display:block;margin:0 0 12px;font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+
+/* ================= Top rituál v každej kategórii =================
+   Jeden rituál na kategóriu je v zlatom ráme ako odporúčanie v menu: väčší názov, plné tlačidlo. */
+html .site #cennik .card.top{margin:36px 0 20px!important;padding:clamp(40px,4.6vw,58px) clamp(24px,4.4vw,56px) clamp(36px,4vw,50px)!important;
+  border:1px solid rgba(212,174,98,.62)!important;background:#15100b!important;box-shadow:inset 0 0 0 6px #15100b,inset 0 0 0 7px rgba(212,174,98,.2)!important}
+html .site #cennik .card.top+.card{border-top-color:transparent!important}
+html .site #cennik .card.top .mini .badge{font-size:12px;letter-spacing:.34em;color:var(--accent-hover)}
+html .site #cennik .card.top .mini .badge::before{width:34px}
+#cennik .card.top h3{font-size:clamp(32px,3.4vw,44px)}
+#cennik .card.top .tag{font-size:clamp(18px,1.6vw,21px)}
+#cennik .card.top .meta strong{font-size:clamp(30px,2.8vw,38px)}
+html .site #cennik .card.top .actions .btn.small{background:var(--accent)!important;border-color:var(--accent)!important;color:#17120a!important}
+html .site #cennik .card.top .actions .btn.small:hover{background:var(--accent-hover)!important;border-color:var(--accent-hover)!important}
+@media (max-width:640px){
+  html .site #cennik .card.top{margin:24px 12px 16px!important;padding:32px 20px 30px!important}
+  #cennik .card.top h3{font-size:31px}
+}
+
+/* ================= Bočná lišta: skok na ktorúkoľvek časť =================
+   Počítač: tenké čiarky na pravom okraji, aktívna časť zlatá, názvy pri ukázaní.
+   Mobil a tablet: jazýček na okraji, ťuknutím sa zboku vysunie zoznam častí. */
+.rail{position:fixed;z-index:95}
+.rail-list{list-style:none;margin:0;padding:0}
+.rail-list a{text-decoration:none;transition:color var(--t-base) var(--e-out)}
+@media (min-width:1025px) and (hover:hover){
+  .rail{right:20px;top:50%;transform:translateY(-50%)}
+  .rail-tab{display:none}
+  .rail-list{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  .rail-list a{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-height:26px;padding-left:12px;color:rgba(239,231,218,.5);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+  .rail-list a::after{content:"";width:16px;height:1px;background:currentColor;transition:width var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out)}
+  .rail-list a span{opacity:0;padding:3px 8px;background:rgba(13,10,7,.88);transition:opacity var(--t-base) var(--e-out)}
+  .rail:hover .rail-list a span,.rail-list a:focus-visible span{opacity:1}
+  .rail-list a:hover{color:var(--text-primary)}
+  .rail-list a.on{color:var(--accent-hover)}
+  .rail-list a.on::after{width:36px;background:var(--accent)}
+}
+@media (max-width:1024px),(hover:none){
+  .rail{right:0;top:calc(50% - 34px)}
+  .rail-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:32px;height:68px;padding:0;background:rgba(13,10,7,.92);border:1px solid rgba(212,174,98,.5);border-right:0;border-radius:2px 0 0 2px;cursor:pointer}
+  .rail-tab i{display:block;width:12px;height:1px;background:var(--accent)}
+  .rail-list{position:fixed;top:0;right:0;bottom:0;width:min(80vw,330px);display:flex;flex-direction:column;overflow:auto;
+    padding:calc(92px + env(safe-area-inset-top,0px)) 28px calc(28px + env(safe-area-inset-bottom,0px));background:#0d0a07;border-left:1px solid rgba(212,174,98,.4);
+    transform:translateX(100%);visibility:hidden;transition:transform var(--t-slow) var(--e-out),visibility 0s linear var(--t-slow)}
+  .rail.open .rail-list{transform:none;visibility:visible;transition:transform var(--t-slow) var(--e-out),visibility 0s}
+  .rail.open::before{content:"";position:fixed;inset:0;z-index:-1;background:rgba(0,0,0,.6)}
+  .rail.open .rail-tab{visibility:hidden}
+  .rail-list a{display:flex;align-items:center;min-height:52px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:22px;color:var(--text-primary)}
+  .rail-list a.on{color:var(--accent-hover)}
+  .rail-list a.on::before{content:"";width:22px;height:1px;margin-right:12px;background:var(--accent)}
+}
+@media print{.rail{display:none}}
+
+/* ================= Opravy detailov (kontrola kvality) ================= */
+/* stmavenie úvodu sa smerom dole plynule stratí, film pod úvodom nadväzuje bez ostrej hrany */
+html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 62%,transparent 100%)}
+/* jazýček bočnej lišty je užší a zmestí sa do okraja stránky, text nezakryje; plocha na ťuknutie ostáva väčšia */
+@media (max-width:1024px),(hover:none){
+  .rail{top:calc(50% - 32px)}
+  .rail-tab{position:relative;width:14px;height:64px;gap:5px;background:rgba(13,10,7,.9);border-color:rgba(212,174,98,.55)}
+  .rail-tab i{width:6px}
+  .rail-tab::before{content:"";position:absolute;top:-8px;bottom:-8px;right:0;width:40px}
+}
+/* telefón: tmavý podklad textu v úvode je najtmavší za textom a k spodku úvodu sa stratí (predtým ho spodok ostro odrezal) */
+@media (max-width:720px){
+  html.world .band::before{top:auto;bottom:0;height:94%;background:linear-gradient(180deg,rgba(var(--ink),0) 0%,rgba(var(--ink),calc(var(--scrim,.66)*.75)) 28%,rgba(var(--ink),var(--scrim,.66)) 58%,rgba(var(--ink),calc(var(--scrim,.66)*.9)) 80%,rgba(var(--ink),0) 100%)}
+}
+@media (max-width:640px){
+  /* clona pod textom úvodu: na spodnom okraji rámca sa plynulo stratí, žiadna vodorovná hrana */
+  .hero .band .inner{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%);mask-image:linear-gradient(180deg,#000 calc(100% - 24px),transparent 100%)}
+}
+
+/* ================= Opravy A: navigácia bez prekrývania ================= */
+/* Jeden zoznam častí stránky všade. Telefón a tablet: žiadny plávajúci jazýček nad textom, časti
+   otvára menu (hlavička, na telefóne aj spodná lišta), ktoré sa vysunie sprava. Počítač s myšou:
+   tenké čiarky len vo voľnom okraji vedľa obsahu (app.js zistí šírku okraja, trieda gutter-ok). */
+
+/* --- bočná lišta: na dotyku a v úzkom okne vôbec nie je --- */
+html .rail{display:none}
+@media (min-width:1025px) and (hover:hover){
+  /* samotná lišta nič nezachytáva, na myš reagujú len malé plochy čiarok v okraji */
+  html.gutter-ok .rail{display:block;right:20px;top:50%;transform:translateY(-50%);pointer-events:none}
+  html .rail .rail-list{gap:2px;align-items:flex-end}
+  html .rail .rail-list a{position:relative;width:44px;min-height:28px;padding:0;gap:0;justify-content:flex-end;pointer-events:auto;
+    color:rgba(239,231,218,.55);font-size:14px;letter-spacing:.01em;text-transform:none}
+  /* všetky čiarky majú rovnaký box, neaktívne sú len skrátené, preto sú popisy zarovnané */
+  html .rail .rail-list a::after,html .rail .rail-list a.on::after{width:36px;transform:scaleX(.45);transform-origin:right;
+    transition:transform var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out)}
+  html .rail .rail-list a.on::after{transform:none}
+  /* popis je mimo toku a mimo zásahov myši; ukáže sa len pri vlastnej čiarke */
+  html .rail .rail-list a span,html .rail:hover .rail-list a span{position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);
+    white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;padding:6px 12px;background:#0d0a07;border:1px solid rgba(239,231,218,.14);
+    font-family:var(--body);font-size:14px;line-height:1.3;letter-spacing:.01em;color:var(--text-primary);
+    transition:opacity var(--t-fast) var(--e-out),visibility 0s linear var(--t-fast)}
+  html .rail .rail-list a:hover span,html .rail .rail-list a:focus-visible span{opacity:1;visibility:visible;transition-delay:0s}
+  html .rail .rail-list a.on span{color:var(--accent-hover)}
+}
+
+/* --- Späť hore: len v širokom okne s voľným okrajom, hranatá ikona zarovnaná s čiarkami --- */
+html .to-top{display:none}
+@media (min-width:1025px) and (hover:hover){
+  html.gutter-ok .to-top{display:inline-flex;right:20px;bottom:24px;width:44px;height:44px;padding:0;justify-content:center;gap:0;
+    border-radius:2px;border-color:rgba(239,231,218,.2);background:#0d0a07;backdrop-filter:none;-webkit-backdrop-filter:none}
+  html.gutter-ok .to-top span{display:none}
+}
+
+/* --- menu častí: panel sprava, vlastný posuv vnútri, hlavička menu ostáva hore --- */
+html .drawer{overflow:hidden}
+html .drawer-in{width:min(420px,calc(100% - 48px));padding:0 24px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;
+  background:#0d0a07;border-left:1px solid rgba(212,174,98,.35);box-shadow:none;transform:none;opacity:1;transition:transform var(--t-slow) var(--e-out)}
+@starting-style{html .drawer[open] .drawer-in{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){html .drawer-in{transition:none}}
+html .drawer-top{position:sticky;top:0;z-index:1;flex:none;margin:0 -24px;padding:calc(14px + env(safe-area-inset-top,0px)) 24px 14px;background:#0d0a07;border-bottom:1px solid rgba(239,231,218,.1)}
+html .drawer-title{margin:0;font-family:var(--body);font-size:12px;font-weight:400;line-height:1.4;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+html .drawer-close{flex:none;border-radius:2px;border-color:rgba(239,231,218,.22);background:transparent}
+html .drawer-links{margin-top:6px}
+html .drawer[open] .drawer-links a{animation:none}
+html .drawer-links a{gap:14px;padding:13px 0;font-size:clamp(22px,5.6vw,26px);border-bottom-color:rgba(239,231,218,.1)}
+html .drawer-links a span{flex:none;width:2.6ch;min-width:0;font-variant-numeric:tabular-nums}
+/* časť, v ktorej práve si: zlatá kurzíva, jediný akcent písma na webe */
+html .drawer-links a.on{color:var(--accent-hover);font-style:italic}
+html .drawer-foot{flex:none;padding-top:24px}
+/* výška riadkov menu sa riadi výškou obrazovky (Opravy 2N) */
+
+/* --- hlavička --- */
+/* tablet a veľký dotykový displej: tlačidlo menu je vždy (lišta sa na dotyku neuhýba, app.js) */
+@media (hover:none){html .nav .menu-btn{display:block}}
+html .nav .brand{min-height:44px}
+html .lang-btn{min-width:44px;justify-content:center}
+/* dlhé názvy (ukrajinčina): najprv sa zúžia medzery, lišta nevytŕča z obsahu */
+@media (min-width:1181px){html .nav .links{min-width:0;gap:clamp(12px,1.3vw,22px)}}
+/* po dverách sa lišta ukáže naraz, jedným pokojným prechodom */
+body.veiling .nav .lang,body.veiling .nav .menu-btn{opacity:0}
+html .nav .name,html .nav .links,html .nav .lang,html .nav .nav-actions .btn,html .nav .menu-btn{
+  transition:opacity 500ms var(--ease-soft),color var(--t-base) var(--e-out),background-color var(--t-base) var(--e-out),border-color var(--t-base) var(--e-out)}
+/* ponuka jazykov na telefóne ostáva v obrazovke: zarovnaná k pravému okraju tlačidla */
+@media (max-width:860px){html .lang-menu{left:auto;right:0;transform:none;max-width:calc(100vw - 32px)}}
+/* ponuka jazykov je plná, text úvodu cez ňu nepresvitá */
+html .lang-menu{background:#15100b}
+
+/* --- linka 24/7 v úvode: číslo sa nezlomí a má väčšiu plochu na ťuknutie bez zmeny vzhľadu --- */
+html .care-note a{position:relative;white-space:nowrap}
+html .care-note a::before{content:"";position:absolute;left:-6px;right:-6px;top:-12px;bottom:-12px}
+
+/* --- ponuka jazyka pri prvej návšteve: tenký pás pod hlavičkou, nič v úvode nezakryje --- */
+html body .lang-offer[class]{left:0;right:0;top:80px;bottom:auto;z-index:99;justify-content:center;gap:14px;padding:6px 16px;
+  border:0;border-bottom:1px solid rgba(212,174,98,.35);border-radius:0;background:#0d0a07;box-shadow:none;
+  font-size:15px;line-height:1.4;color:var(--text-primary);transform:none;transition:opacity .35s var(--ease-soft),transform .5s var(--ease)}
+html body .lang-offer[class].in{opacity:1}
+html body .lang-offer [data-yes]{min-height:44px;padding:0 18px;border-radius:2px;background:var(--accent);color:#17110a;font-weight:700}
+html body .lang-offer [data-yes]:hover{background:var(--accent-hover)}
+html body .lang-offer [data-no]{flex:none;width:44px;height:44px;border-radius:2px;font-size:22px;color:var(--text-secondary)}
+/* keď sa lišta pri čítaní uhne, pás ide s ňou */
+.nav.hide ~ .lang-offer[class]{transform:translateY(-80px)}
+@media (max-width:640px){
+  html body .lang-offer[class]{top:68px;justify-content:space-between;padding:6px 8px 6px 16px}
+  .nav.hide ~ .lang-offer[class]{transform:translateY(-68px)}
+}
+
+/* --- spodná lišta telefónu: menu častí namiesto šípky hore, popisy nikdy nenarážajú na okraj --- */
+.mbar-menu{display:none}
+@media (max-width:640px){
+  html .mbar{grid-template-columns:46px minmax(max-content,.8fr) minmax(0,1.2fr)}
+  html .mbar a{min-width:0;padding-inline:10px;text-align:center;line-height:1.2}
+  html .mbar-menu{display:flex;align-items:center;justify-content:center;width:46px;min-height:46px;padding:0;border:1px solid var(--line);border-radius:2px;background:transparent;color:var(--text-primary)}
+  html .mbar-menu svg{width:20px;height:20px}
+  html .mbar-menu:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  html:lang(uk) .mbar a{font-size:13.5px;padding-inline:8px}
+}
+
+/* --- pätička: rovnaké krátke názvy častí ako v menu, na úzkom telefóne jeden stĺpec --- */
+html footer .col a{white-space:nowrap}
+@media (max-width:440px){html footer .grid{grid-template-columns:1fr}}
+/* ================= Opravy B1: úvod, prechody, kontakt a pätička ================= */
+/* úvod: zlaté slovo v nadpise je vždy kurzíva, na každej šírke aj v pokojnej verzii rovnaká */
+html .band h1 .w.em,html .hero-static h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+/* úvod na počítači: text začína na tej istej hrane ako logo v lište a obsah sekcií */
+@media (min-width:641px){html .hero .band{padding-left:max(24px,calc((100% - var(--wrap)) / 2));padding-right:max(24px,calc((100% - var(--wrap)) / 2))}}
+/* výzva Skroluj: pri odchode zmizne hneď, oneskorenie má len príchod */
+.cue:not(.show){transition:opacity .25s var(--ease-soft) 0s}
+/* text úvodu pri spodku (641 až 720 px a tablet na výšku): pod textom miesto pre výzvu, tmavý podklad
+   na celú šírku za textom, ktorý sa k spodku úvodu plynule stratí */
+@media (min-width:641px) and (max-width:720px),(min-width:641px) and (max-width:1100px) and (orientation:portrait){
+  html .hero .band{padding-bottom:max(9svh,136px)}
+  html.world .hero .band::before{left:0;width:100%;top:0;bottom:0;height:100%;opacity:1;
+    background:linear-gradient(180deg,rgba(var(--ink),0) 0%,rgba(var(--ink),.14) 22%,rgba(var(--ink),.5) 40%,rgba(var(--ink),.74) 56%,rgba(var(--ink),.78) 82%,rgba(var(--ink),.6) 89%,rgba(var(--ink),.3) 95%,rgba(var(--ink),0) 100%)}
+}
+/* stmavenie úvodu sa k spodku stráca pozvoľna (bez zlomu na začiatku prechodu) */
+html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.93) 65%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.52) 81%,rgba(0,0,0,.27) 89%,rgba(0,0,0,.08) 96%,transparent 100%);mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.93) 65%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.52) 81%,rgba(0,0,0,.27) 89%,rgba(0,0,0,.08) 96%,transparent 100%)}
+/* pokojný úvod na šírku a na tablete: nadpis ostáva v ľavom stĺpci, nezasiahne fotku nápisu */
+@media (min-width:641px){
+  html .hero-static h1{font-size:clamp(46px,6.4vw,88px)}
+  html .hero-static .wrap>*{max-width:52%}
+}
+/* telefónne číslo sa nikdy nerozdelí; poznámka o linke je v pokojnom úvode rovnako malá ako vo filme */
+.care-note a,.care a,.care-c a,a[href^="tel:"]{white-space:nowrap}
+html .hero-static p.care-note{font-size:14px;max-width:none}
+
+/* prechody pás a film: stmavenie ide po mäkkej krivke, na začiatku ani na konci nevznikne čiara;
+   dĺžky ostávajú, okná do filmu majú rovnakú veľkosť */
+html.world .site>section>.wrap::after{background:linear-gradient(180deg,#0d0a07 calc(100% - 18vh),rgba(13,10,7,.97) calc(100% - 16.2vh),rgba(13,10,7,.9) calc(100% - 14.4vh),rgba(13,10,7,.78) calc(100% - 12.6vh),rgba(13,10,7,.65) calc(100% - 10.8vh),rgba(13,10,7,.5) calc(100% - 9vh),rgba(13,10,7,.35) calc(100% - 7.2vh),rgba(13,10,7,.22) calc(100% - 5.4vh),rgba(13,10,7,.1) calc(100% - 3.6vh),rgba(13,10,7,.03) calc(100% - 1.8vh),rgba(13,10,7,0))}
+html.world .site>section>.wrap::before{background:linear-gradient(180deg,rgba(13,10,7,0),rgba(13,10,7,.03) 10%,rgba(13,10,7,.1) 20%,rgba(13,10,7,.22) 30%,rgba(13,10,7,.35) 40%,rgba(13,10,7,.5) 50%,rgba(13,10,7,.65) 60%,rgba(13,10,7,.78) 70%,rgba(13,10,7,.9) 80%,rgba(13,10,7,.97) 90%,#0d0a07)}
+
+/* zlatá linka s lotosom medzi časťami: aj keď medzi sekciami stojí iný prvok (galéria a otázky) */
+.site>section~section::before,.site>#ritual::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(480px,82%);height:32px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23c9a66b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23c9a66b' stop-opacity='.8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='15.5' width='208' height='1' fill='url%28%23a%29'/%3E%3Crect x='272' y='15.5' width='208' height='1' fill='url%28%23b%29'/%3E%3Cg transform='translate%28224 -1%29 scale%281%29' fill='none' stroke='%23c9a66b' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M16 5c2.9 3.7 3.7 8.5 0 14.8c-3.7-6.3-2.9-11.1 0-14.8zM16 19.8c-4.2-.8-7.7-4.2-8.6-9.1c4.2.9 7.1 4 8.6 9.1zM16 19.8c4.2-.8 7.7-4.2 8.6-9.1c-4.2.9-7.1 4-8.6 9.1zM16 20.7c-5.8 0-10.1-2.3-12.5-5.6c5-.5 9.3 1.6 12.5 5.6zM16 20.7c5.8 0 10.1-2.3 12.5-5.6c-5-.5-9.3 1.6-12.5 5.6z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+/* vo filme leží linka na hornej hrane pásu, kde film prechádza do tmy */
+html.world .site>section~section::before{display:block;top:calc(78vh - 16px);z-index:1}
+@media (max-width:640px){html.world .site>section~section::before{top:calc(40vh - 16px)}}
+
+/* kontakt: fotka dverí má šírku stĺpca a mapy, nepretečie cez okraj */
+@media (max-width:900px){html .map .where{aspect-ratio:auto;width:auto;min-width:0}}
+/* adresa na mapovej karte sa láme po celých častiach */
+.map-card b{line-height:1.25;text-wrap:balance}
+/* pätička nekladie stmavenie na koniec kontaktu, pás kontaktu je plný */
+html.world footer::before{display:none}
+/* tablet: značka hore cez celú šírku, pod ňou dva rovnaké stĺpce */
+@media (max-width:900px){footer .grid{row-gap:36px}footer .grid>div:first-child{grid-column:1/-1}}
+/* dotyk na tablete: odkazy v kontakte a pätičke majú plochu aspoň 44 px */
+@media (pointer:coarse) and (min-width:641px){
+  footer .col a,.credit a{min-height:44px;display:inline-flex;align-items:center}
+  footer .bottom{align-items:center}
+}
+/* linka pod odkazom tesne pod textom, aj keď je plocha na ťuknutie vyššia */
+.info a::before,.info a::after{bottom:max(0px,calc(50% - .9em))}
+footer .bottom .credit a{border-bottom:0;text-decoration:underline;text-decoration-color:var(--line-strong);text-decoration-thickness:1px;text-underline-offset:4px}
+footer .bottom .credit a:hover{text-decoration-color:var(--accent)}
+@media (max-width:640px){
+  /* pätička má rovnaký okraj ako sekcie nad ňou */
+  html footer .wrap{width:calc(100% - 40px)}
+  /* miesto pre spodnú lištu patrí pätičke: jej tmavé pozadie siaha až po okraj, film nepresvitne */
+  html body{padding-bottom:0}
+  html footer{padding-bottom:calc(40px + 64px + env(safe-area-inset-bottom,0px))}
+}
+/* ================= Opravy B2: menu rituálov, stredné časti a typografia =================
+   Cenník má rovnaké okraje ako ostatné pásy, jeden ľavý okraj pre všetko, fotky kategórií
+   ako pokojné okienka s tenkým rámikom. Väčšie dotykové ciele odkazov bez zmeny vzhľadu. */
+
+/* typografia: žiadne osamotené slovo na poslednom riadku, nadpisy vyvážené */
+p,li,figcaption,h3,.tag,.desc,.faq-q,.shot .cap span{text-wrap:pretty}
+h1,h2,.h2,#cennik .card h3,#cennik .cat.has-ph>b{text-wrap:balance}
+.first-tip a{white-space:nowrap}
+
+/* cenník: pás s rovnakým vnútorným okrajom hore aj dole ako ostatné časti */
+html.world #cennik>.wrap{padding-top:clamp(72px,9vw,140px);padding-bottom:clamp(72px,9vw,140px)}
+html.world #cennik .head{padding:0 0 clamp(22px,3vw,36px);border:0}
+html.world #cennik .tools{padding:0}
+html.world #cennik .first-tip{padding:20px 0 0}
+/* jeden stĺpec pre hlavičku, filter, kategórie, rituály aj linku 24/7 */
+html .site #cennik .list{max-width:none}
+
+/* filter: podčiarknutie vybranej kategórie je vidieť (nezasahuje pod tip) */
+#cennik .chip{margin-bottom:0}
+
+/* tlačidlo pri rituáli normálnym písmom ako všetky ostatné */
+html .site #cennik .card .actions .btn.small{font-size:15px;letter-spacing:.01em;text-transform:none;font-weight:600}
+
+/* kategória: fotka v tenkom rámiku, text vo vnútri na tej istej línii ako text top karty */
+#cennik{--ci:calc(clamp(24px,4.4vw,56px) + 1px)}
+html.world #cennik .cat.has-ph{border:1px solid rgba(239,231,218,.12);border-radius:2px;margin-left:0;margin-right:0}
+/* šero leží nad fotkou (predtým ho fotka zakrývala) a pod textom */
+html.world #cennik .cat.has-ph::before,html.world-in #cennik .cat.has-ph::before{z-index:1;opacity:1;left:0;right:0;
+  background:linear-gradient(0deg,rgba(13,10,7,.92) 0%,rgba(13,10,7,.74) 30%,rgba(13,10,7,.32) 56%,rgba(13,10,7,0) 78%)}
+html.world #cennik .cat.has-ph>span,html.world #cennik .cat.has-ph>b{text-shadow:0 1px 3px rgba(0,0,0,.6)}
+html.world #cennik .cat.has-ph>span{padding:0 var(--ci);font-size:12.5px;letter-spacing:.24em}
+html.world #cennik .cat.has-ph>b{padding:12px var(--ci) clamp(30px,4.4vw,52px)}
+html.world #cennik .list>.cat.has-ph:first-child{margin-top:clamp(32px,4vw,48px)}
+#cennik .cat[data-cat=classic] .cat-ph img{object-position:50% 45%!important}
+
+/* bez filmu: malý nadpis nad názvom kategórie, nie vedľa neho */
+.cat.has-ph{flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:6px}
+
+/* linka 24/7, odkaz na Salón 30 a telefón v pätičke: ťuknutie zachytí 44 px, vyzerajú rovnako */
+.care a,.care-note a,.salon-link a{display:inline-block;padding:11px 0;margin:-11px 0;border-bottom:0;
+  text-decoration:underline 1px rgba(212,174,98,.4);text-underline-offset:5px;transition:color var(--t-base) var(--e-out),text-decoration-color var(--t-base) var(--e-out)}
+.care a:hover,.care-note a:hover,.salon-link a:hover{text-decoration-color:var(--accent)}
+.care .care-c>span{padding:0 6px}
+.first-tip a{display:inline-block;padding:10px 0;margin:-10px 0;border-bottom:0;
+  text-decoration:underline 1px var(--line-strong);text-underline-offset:5px;transition:color var(--t-base) var(--e-out),text-decoration-color var(--t-base) var(--e-out)}
+.first-tip a:hover{text-decoration-color:var(--accent-hover)}
+/* tablet a iné dotykové obrazovky: rovnaké ciele ako na telefóne */
+@media (pointer:coarse){
+  footer .col a,.map-link,.slink,.credit a{min-height:44px;display:inline-flex;align-items:center}
+}
+
+/* telefón: jeden okraj 20 px pre celý cenník */
+@media (max-width:640px){
+  #cennik{--ci:18px}
+  html.world #cennik>.wrap{padding:56px 20px}
+  html.world #cennik .cat.has-ph{margin-top:48px}
+  html.world #cennik .list>.cat.has-ph:first-child{margin-top:32px}
+  html.world #cennik .cat.has-ph>b{padding:10px var(--ci) 24px}
+  html .site #cennik .card,html .site #cennik .card.featured{padding-left:0!important;padding-right:0!important}
+  html .site #cennik .card.top{margin:24px 0 16px!important;padding:30px 18px 28px!important}
+  #cennik .card.top .actions{gap:6px 18px}
+  #cennik .care{padding-left:0;padding-right:0}
+  .cat.has-ph{padding:0 18px 18px}
+  #cennik .cat[data-cat=kids] .cat-ph img{object-position:50% 26%!important}
+  /* riadok filtra: jemné zmiznutie na oboch stranách, posledná kategória sa dá posunúť úplne do obrazu */
+  #cennik .chip-row{margin:0 -16px;padding:0 44px 0 16px;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 44px),transparent);
+    mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 44px),transparent)}
+  html.world #cennik .chip-row{margin:0 -20px;padding-left:20px}
+}
+
+/* poukaz a výber rituálu na tej istej línii ako text */
+.gift .order>.part{padding:0;position:static}
+.gift .voucher-pick{max-width:none}
+
+/* popisky na fotkách: hlbšie a vyššie šero, aby text nesedel na svetlých uterákoch */
+.rphoto figcaption,.salon-photos figcaption,.where figcaption{padding-top:64px;
+  background:linear-gradient(180deg,rgba(13,10,7,0),rgba(13,10,7,.68) 42%,rgba(13,10,7,.92))}
+.shot .cap{background:linear-gradient(0deg,rgba(13,10,7,.94) 0%,rgba(13,10,7,.78) 50%,rgba(13,10,7,0) 100%)}
+.shot .cap span{color:rgba(239,231,218,.88)}
+/* nápis: svietiaci kruh vyššie v zábere, popisok pod ním nesedí na písme */
+.shot.voda img{object-position:50% 68%!important}
+
+/* počítač: línie stĺpcov v hlavičke sedia s fotkami pod ňou, prvý riadok galérie končí spolu */
+@media (min-width:901px){
+  #tim .head{grid-template-columns:1fr 1fr;column-gap:clamp(20px,3vw,48px)}
+  #salon .head{grid-template-columns:calc((100% - 28px)/2) minmax(0,1fr);column-gap:14px}
+  .shot.voda{aspect-ratio:auto;align-self:stretch}
+  .shot.voda .frame{position:absolute;inset:0;height:auto}
+}
+
+/* kroky: len tenký zlatý krúžok, bez žiary */
+.step .n::after{box-shadow:none}
+/* ================= Opravy C: zalomenie textov a odkazy v otázkach ================= */
+/* telefón, e-mail a názov rituálu v odkaze sa nikdy nerozdelia na dva riadky */
+.care a,.care-note a,.care-c a,a[href^="tel:"],a[href^="mailto:"],.first-tip a,.faq-a a{white-space:nowrap}
+/* poznámka pod úvodom je v statickom úvode rovnako drobná ako vo filmovom */
+.hero-static p.care-note{font-size:14px;max-width:none}
+/* nadpisy a krátke riadky sa delia rovnomerne, bez osamoteného slova na konci */
+.h2 .li,#cennik .card h3,#cennik .card .tag,#cennik .cat.has-ph>b,.step h3,.faq-q{text-wrap:balance}
+.band .sub,.hero-static p,.lede,.quote,.gift-occ,.first-tip,.step p,.care p,#cennik .card .desc,#cennik .card .about p,#cennik .card .panel li,
+.team-grid figcaption p,.salon-photos figcaption,.rphoto figcaption,.shot .cap span,.faq-a p,.info p,footer p,.map-card span{text-wrap:pretty}
+.map-card b{line-height:1.25}
+/* kontakty v odpovediach sú skutočné odkazy, vyzerajú ako ostatné tiché odkazy */
+.faq-a a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4);transition:border-color var(--t-base) var(--e-out)}
+.faq-a a:hover{border-bottom-color:var(--accent)}
+/* ================= Opravy D: film, poukaz, galéria ================= */
+/* úvod vo filme: fotka v úvode je presne prvý záber filmu (ten istý výrez, zväčšenie, vinetácia aj clona),
+   takže pri prvom pohybe sa obraz nepohne ani nestmavne. Výpočet zodpovedá world.js: fotka pokrýva
+   124 % obrazovky, kamera je o 4 % ďalej (124 / 1,04), bod záujmu 50 % 40 %, na telefóne 50 % 50 %. */
+html.world .reel .fs{inset:0;-webkit-mask-image:none;mask-image:none;container-type:size}
+html.world .reel .fs picture{display:contents}
+html.world .reel .fs img{--rw:max(119.231cqw,89.423lvh);--rh:max(158.974cqw,119.231lvh);position:absolute;left:50%;width:var(--rw);height:auto;max-width:none;margin-left:calc(var(--rw) / -2);top:min(calc(50lvh - .4 * var(--rh)),-3.846lvh);object-fit:fill;animation-name:settleW}
+@keyframes settleW{from{transform:scale(1.05)}to{transform:none}}
+@media (max-width:720px){html.world .reel .fs img{top:calc(50lvh - var(--rh) / 2)}}
+/* telefón: výrez okna-m je stredné dve tretiny fotky na celú výšku */
+@media (max-width:640px){html.world .reel .fs img{--rw:calc(max(119.231cqw,89.423lvh) * 2 / 3)}}
+/* namiesto závoja úvodu vinetácia filmu (kruh podľa dlhšej strany, 0,32 až 0,9, najviac 34 %) */
+html.world .reel .veil-l{background:radial-gradient(circle max(100vw,100lvh) at 50% 50lvh,transparent 32%,rgba(0,0,0,.053) 46.5%,rgba(0,0,0,.17) 61%,rgba(0,0,0,.287) 75.5%,rgba(0,0,0,.34) 90%)}
+/* clona pod textom je od začiatku tá istá ako vo filme */
+html.world .stage .scrim{background:linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+@media (max-width:720px){html.world .stage .scrim{background:linear-gradient(0deg,rgba(var(--ink),.92) 0%,rgba(var(--ink),.6) 40%,transparent 70%)}}
+/* fotka úvodu odíde až keď je film celý viditeľný, bez prepadu do tmy */
+html.world.world-in .reel{transition:opacity .6s cubic-bezier(.4,0,.2,1) 1.6s}
+
+/* popis miesta vo filme: vlastný tichý tmavý podklad, bez žiary; world.js ho skryje skôr, než príde doska */
+html.world-in .world-place{padding:16px 10px;background:rgba(13,10,7,.72);transition:opacity .45s cubic-bezier(.4,0,.2,1)}
+html.world-in .world-place b{font-size:12px;color:#dcbb74;text-shadow:none}
+html.world-in .world-place span{color:#f1e9dc;text-shadow:none}
+
+/* poukaz: pole ako ostatné tlačidlá, pod ním vybraný rituál s dĺžkou a cenou */
+html .site .gift .voucher-pick select{border-radius:2px}
+.gift .voucher-sum{margin:16px 0 0;max-width:420px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.gift .voucher-sum b{font-family:var(--display);font-weight:400;font-size:clamp(20px,1.8vw,24px);line-height:1.25;color:var(--text-primary)}
+.gift .voucher-sum span{font-size:15px;letter-spacing:.02em;color:var(--accent-hover);white-space:nowrap}
+
+/* galéria: fotka sa pod myšou nezväčšuje, zmení sa len linka rámu */
+html .site .shot img,html .site .shot canvas{transition:none}
+@media (hover:hover) and (pointer:fine){
+  html .site .shot .frame:hover img,html .site .shot .frame:hover canvas{transform:none}
+  html .site .shot.door .frame:hover img{transform:scale(1.3)}
+}
+/* zväčšená fotka: veľký súbor, okno podľa fotky (na výšku aj na šírku), popis na šírku fotky */
+html .lb{width:fit-content;max-width:92vw;max-height:94vh;border-radius:2px}
+html .lb img{width:min(92vw,calc((94vh - 84px) / var(--ar,1.333)),var(--mw,1200px));height:auto;max-width:none;max-height:none;object-fit:contain}
+html .lb .lb-cap{width:0;min-width:100%;box-sizing:border-box}
+html .lb .lb-close{top:10px;right:10px;width:44px;height:44px;border-radius:2px;background:rgba(13,10,7,.78);border-color:rgba(239,231,218,.28)}
+
+/* ================= Opravy 2N: navigácia, menu a lišta ================= */
+/* hlavička: kde nie je rozmazanie (telefón, dotyk, tablet), je plná, nič cez ňu nepresvitá; jedna vlasová linka ostáva */
+@media (max-width:640px),(pointer:coarse),(hover:none){
+  html .nav::before{background:#0d0a07}
+}
+/* pravá časť hlavičky: jazyk, Rezervovať a menu rovnako vysoké, jazyk a menu s rovnakou plnou výplňou */
+html .nav .nav-actions .btn{min-height:44px;padding-block:0}
+html .nav .lang-btn,html .nav .menu-btn{min-height:44px;background:#0d0a07;border:1px solid rgba(239,231,218,.18)}
+html .nav .lang-btn:hover,html .nav .lang-btn[aria-expanded="true"]{background:#0d0a07;border-color:var(--line-strong)}
+/* notebook bez voľného okraja pre bočnú lištu: časti otvára tlačidlo menu, žiadna časť nechýba */
+@media (min-width:1181px) and (hover:hover){html:not(.gutter-ok) .nav .menu-btn{display:block}}
+
+/* --- menu častí: zmestí sa na výšku obrazovky, tlačidlo Rezervovať nikdy nie je odrezané --- */
+html .drawer-in{--row:clamp(40px,calc((100dvh - 340px) / 9),58px)}
+html .drawer-top{border-bottom:0}
+html .drawer-links{margin-top:0}
+html .drawer-links a{min-height:var(--row);padding:0;align-items:center;font-size:clamp(19px,calc(var(--row) * .45),26px);line-height:1.2}
+html .drawer-links a span{align-self:center}
+/* pätka menu ide hneď za zoznamom, bez prázdneho pásu */
+html .drawer-foot{margin-top:0;padding-top:20px;gap:10px}
+html .drawer-foot .today{font-weight:400;color:var(--text-secondary)}
+@media (max-height:700px){
+  html .drawer-top{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px}
+  html .drawer-in{--row:clamp(36px,calc((100dvh - 312px) / 9),58px)}
+  html .drawer-foot{padding-top:14px;gap:8px}
+  html .drawer-foot p{line-height:1.45}
+}
+/* telefón na šírku: časti v dvoch stĺpcoch, pod nimi Rezervovať a Zavolať vedľa seba */
+@media (max-height:500px) and (orientation:landscape){
+  html .drawer-in{--row:clamp(32px,calc((100dvh - 210px) / 5),44px);width:min(640px,calc(100% - 48px));padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  html .drawer-top{padding-top:8px;padding-bottom:8px}
+  html .drawer-links{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;column-gap:28px}
+  html .drawer-links a{font-size:18px}
+  html .drawer-foot{grid-template-columns:1fr 1fr;padding-top:12px;gap:8px 28px}
+  html .drawer-foot .btn{min-height:44px;padding-block:0}
+  html .drawer-foot p{font-size:14px;line-height:1.4}
+}
+
+/* --- bočná lišta: tichý tmavý podklad, čiarky sú vidieť aj nad svetlou fotkou a linky stránky sa pri nej zastavia --- */
+@media (min-width:1025px) and (hover:hover){
+  html.gutter-ok .rail .rail-list{padding:6px 4px;background:rgba(13,10,7,.82);border:1px solid rgba(239,231,218,.08);border-radius:2px}
+  /* popis čiarky len keď sa celý zmestí do okraja (trieda gutter-wide, app.js); inak natívna bublina */
+  html:not(.gutter-wide) .rail .rail-list a:hover span,html:not(.gutter-wide) .rail .rail-list a:focus-visible span{opacity:0;visibility:hidden}
+}
+
+/* --- pätička: značka má plochu na ťuknutie 44 px aj na telefóne --- */
+html footer .brand{min-height:44px}
+/* otázky a priebeh na počítači: stĺpec s nadpisom sa prilepí presne tam, kam skok z menu kladie nadpisok (80 px lišta + 32 px) */
+@media (min-width:901px){html .ritual .sticky,html .faq .sticky{top:112px}}
+/* ================= Opravy 2F: úvod, okná do filmu a prechody ================= */
+/* kým film nie je na obrazovke (načítava sa, alebo nejde vôbec), fotka úvodu je pevné pozadie celej
+   stránky presne na mieste plátna filmu: okná do filmu nikdy nie sú prázdne, úvod nekončí rovnou hranou */
+html.world .reel{position:fixed;top:0;left:0;right:0;bottom:auto;height:100vh;height:100lvh}
+html.world .reel .fs{transform:none!important}
+/* po príchode filmu sa pevná fotka po dokončení prelínania úplne vypne (žiadna vrstva navyše pri skrolovaní) */
+html.world.world-in .reel{visibility:hidden;transition:opacity .6s cubic-bezier(.4,0,.2,1) 1.6s,visibility 0s linear 2.2s}
+
+/* pokojný úvod (obmedzený pohyb) na telefóne: fotka nápisu sa stratí skôr, jej rovná hrana steny
+   nikdy nepretne malý nadpis pod ňou */
+@media (max-width:640px){
+  html .hero-static .hero-photo{-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 74%);mask-image:linear-gradient(180deg,#000 30%,transparent 74%)}
+}
+/* pokojný úvod na tablete na výšku: ako na telefóne, fotka nápisu hore cez celú šírku, text pod ňou
+   na celú šírku, tlačidlá vedľa seba */
+@media (min-width:641px) and (max-width:1100px) and (orientation:portrait){
+  html .hero-static .wrap>*{max-width:none}
+  html .hero-static p:not(.care-note){max-width:46ch}
+  html .hero-static .hero-photo{left:0;width:auto;bottom:auto;height:56%;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 96%);mask-image:linear-gradient(180deg,#000 40%,transparent 96%)}
+  html .hero-static .hero-photo img{object-position:50% 36%!important}
+  html .hero-static .cta .btn{min-width:220px;justify-content:center}
+}
+
+/* zlatá linka s lotosom je aj medzi úvodom a prvou časťou a v galérii je plná (starý vzor tapety
+   jej bral farbu aj viditeľnosť) */
+html .site>#ritual::before,html .site>section.gallery::before{display:block;opacity:1;bottom:auto;-webkit-mask-image:none;mask-image:none;z-index:1}
+html.world .site>#ritual::before{top:calc(62vh - 16px)}
+@media (max-width:640px){html.world .site>#ritual::before{top:calc(46vh - 16px)}}
+
+/* ako to prebieha v jednom stĺpci (tablet): fotka má šírku stĺpca ako kroky pod ňou */
+@media (max-width:900px){html .ritual .rphoto{max-width:none}}
+
+/* galéria od tabletu: celý svietiaci kruh s hlavou je v dlaždici Nápis, popis ho neprekryje */
+@media (min-width:641px){html .shot.voda img{object-position:50% 38%!important}}
+@media (min-width:641px) and (max-width:900px){html .shot.voda img{object-position:50% 25%!important}}
+/* počítač: popis má vždy miesto na dva riadky, nadpisy dlaždíc v jednom rade sú na rovnakej výške */
+@media (min-width:901px){html .shot .cap span{min-height:3em}}
+
+/* úvod: tmavý podklad textu drží plnú silu až pod poslednú linku (dnes otvorené, linka 24/7),
+   až potom sa stratí; riadky nesedia na svetlej vani ani zlatom oblúku, bez tieňa okolo písma */
+html.world .stage .scrim{-webkit-mask-image:linear-gradient(180deg,#000 78%,rgba(0,0,0,.82) 84%,rgba(0,0,0,.55) 90%,rgba(0,0,0,.25) 95%,transparent 100%);mask-image:linear-gradient(180deg,#000 78%,rgba(0,0,0,.82) 84%,rgba(0,0,0,.55) 90%,rgba(0,0,0,.25) 95%,transparent 100%)}
+@media (min-width:721px){
+  html.world .stage .scrim{background:radial-gradient(ellipse 52% 34% at 14% 70%,rgba(var(--ink),.58) 0%,rgba(var(--ink),.32) 55%,rgba(var(--ink),0) 100%),linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+}
+/* ================= Opravy 2L: rozloženie kontaktu, cenníka, poukazu a pätičky ================= */
+/* kontakt: každý odkaz na vlastnom riadku; na dotyku a v úzkom okne plocha na ťuknutie 44 px */
+html .info a{display:flex;width:fit-content}
+@media (pointer:coarse),(max-width:640px){html .info a{min-height:44px;align-items:center}}
+
+/* dnešný stav: druhý riadok začína pod textom, nie pod bodkou (bodka 8 px a medzera 8 px) */
+html .info .today{padding-left:16px;text-indent:-16px}
+
+/* cenník, telefón: riadok filtra siaha po okraj obrazovky, mizne až posledných 44 px obrazovky */
+@media (max-width:640px){
+  html #cennik .chip-row{width:calc(100% + 32px);margin:0 -16px}
+  html.world #cennik .chip-row{width:calc(100% + 40px);margin:0 -20px}
+  /* krátky názov kategórie (Deti) má plochu na ťuknutie aspoň 44 px: neviditeľne o 10 px do strán, medzery ostávajú */
+  html #cennik .chip-row .chip{position:relative}
+  html #cennik .chip-row .chip::before{content:"";position:absolute;top:0;bottom:0;left:-10px;right:-10px}
+}
+
+/* rituál, ktorý nie je top, má sivú deliacu linku ako všetky ostatné */
+html .site #cennik .card.featured:not(.top){border-top-color:rgba(239,231,218,.12)!important}
+html .site #cennik .card.top+.card.featured{border-top-color:transparent!important}
+
+/* ceny v jednom stĺpci: bežné riadky majú cenu odsadenú o vnútorný okraj top karty (okraj + rámik 1 px) */
+html .site #cennik .card:not(.top) .meta{padding-right:var(--ci)}
+@media (max-width:640px){html .site #cennik .card:not(.top) .meta{padding-right:calc(var(--ci) + 1px)}}
+
+/* úzky telefón: v top karte sa tlačidlo a Čo rituál obsahuje zmestia vedľa seba ako v bežných riadkoch */
+@media (max-width:380px){
+  #cennik{--ci:14px}
+  html .site #cennik .card.top{padding:30px var(--ci) 28px!important}
+  html .site #cennik .card.top .actions{gap:6px 14px}
+  html .site #cennik .card.top .actions .btn.small{padding:0 16px!important}
+}
+
+/* kategória pre deti: nápis Spa relax cez celé okienko, bez prázdnej steny a odrezanej stoličky */
+@media (max-width:640px){
+  #cennik .cat[data-cat=kids] .cat-ph img{object-position:50% 4%!important;transform:scale(1.14);transform-origin:50% 12%}
+}
+
+/* linka 24/7: malý nadpis so zlatou čiarkou ako ostatné nadpisy v menu */
+html .care-k{display:inline-flex;align-items:center;gap:10px}
+html .care-k::before{content:"";flex:none;width:24px;height:1px;background:var(--accent)}
+
+/* poukaz: pod poľom len dĺžka a cena, hneď pod nimi nákup */
+html .gift .voucher-sum{display:block;margin:14px 0 0;font-size:15px;letter-spacing:.02em;color:var(--accent-hover)}
+html .gift .voucher-sum:empty{display:none}
+/* celý názov len keď sa do poľa nezmestí (app.js), inak by sa opakoval */
+html .gift .voucher-sum b{display:block;margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:18px;line-height:1.35;letter-spacing:0;color:var(--text-primary)}
+html .gift .voucher-sum span{font-size:15px;white-space:normal}
+html .gift .voucher-pick .cta{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+/* dlhý názov rituálu v poli sa zmestí; keby nie, skončí trojbodkou */
+html .site .gift .voucher-pick select{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+@media (max-width:400px){html .site .gift .voucher-pick select{padding-left:14px;padding-right:34px;background-position:right 12px center}}
+@media (max-width:640px){
+  html .gift .voucher-pick .cta{display:grid}
+  html .gift .voucher-pick .cta .btn{width:100%;min-height:50px}
+}
+
+/* pätička na telefóne: značka cez celú šírku, pod ňou Stránka a Online v dvoch stĺpcoch */
+@media (max-width:440px){
+  html footer .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20px;row-gap:32px}
+  html footer .grid>div:first-child{grid-column:1/-1}
+  html footer .col a{white-space:normal;margin:0;padding-right:0;line-height:1.35}
+}
+
+/* zväčšená fotka: predchádzajúca a ďalšia, ploché hranaté tlačidlá 44 px po stranách fotky */
+html .lb .lb-nav{position:absolute;top:calc(50% - 50px);z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;
+  border:1px solid rgba(239,231,218,.28);border-radius:2px;background:rgba(13,10,7,.78);color:var(--text-primary);cursor:pointer;
+  transition:border-color var(--t-base) var(--e-out),color var(--t-base) var(--e-out)}
+html .lb .lb-nav:hover{border-color:var(--accent);color:var(--accent-hover)}
+html .lb .lb-nav:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+html .lb .lb-prev{left:10px}
+html .lb .lb-next{right:10px}
+
+/* ================= Tím podľa adminu ================= */
+/* Kým v tíme nie je nikto, časť Tím a odkazy na ňu sa neukážu. Admin pridáva ľudí ako <figure> do .team-grid. */
+html #tim:not(:has(.team-grid figure)),html:not(:has(#tim .team-grid figure)) a[href="#tim"],html:not(:has(#tim .team-grid figure)) li:has(>a[href="#tim"]){display:none!important}
+/* čísla v menu počíta CSS, takže idú po sebe aj keď je niektorá časť skrytá */
+html .drawer-links{counter-reset:cast}
+html .drawer-links a:not([hidden]){counter-increment:cast}
+html .drawer-links a span::before{content:counter(cast,decimal-leading-zero)}
+html:not(:has(#tim .team-grid figure)) .drawer-links a[href="#tim"]{counter-increment:none}
+/* ================= Opravy 3N: navigácia, lišta, menu a pätička ================= */
+/* hlavička po skoku (a po zmene jazyka) je plná hneď, text pod ňou nepresvitá ani na okamih (app.js pridá triedu now) */
+html .nav.now::before{transition:none}
+
+/* --- bočná lišta na počítači: žiadna tmavá doska nad fotkou, čiarky nesú len vlastný tenký tmavý lem --- */
+@media (min-width:1025px) and (hover:hover){
+  html.gutter-ok .rail .rail-list{padding:0;background:none;border:0}
+  html .rail .rail-list a::after{box-shadow:0 0 0 1px rgba(13,10,7,.55)}
+  /* pod myšou aj pri klávesnici sa čiarka predĺži a zozlatne, popis sa ukáže */
+  html .rail .rail-list a:hover::after,html .rail .rail-list a:focus-visible::after{transform:none;background-color:var(--accent-hover)}
+  /* popis je vždy v strome prístupnosti (názov odkazu), skrytý je len opticky */
+  html .rail .rail-list a span,html .rail:hover .rail-list a span{visibility:visible}
+  /* úzky okraj: popis sa ukáže pod lištou, zarovnaný doprava a nie širší ako voľný okraj, obsah nezakryje */
+  html.gutter-ok:not(.gutter-wide) .rail .rail-list{position:relative}
+  html.gutter-ok:not(.gutter-wide) .rail .rail-list a{position:static}
+  html.gutter-ok:not(.gutter-wide) .rail .rail-list a span{top:calc(100% + 12px);right:-12px;transform:none;width:max-content;max-width:max(var(--rail-room,96px),64px);
+    white-space:normal;text-wrap:balance;text-align:right;padding:5px 8px;font-size:13px;line-height:1.3}
+  html:not(.gutter-wide) .rail .rail-list a:hover span,html:not(.gutter-wide) .rail .rail-list a:focus-visible span{opacity:1;visibility:visible}
+}
+
+/* --- pätička: horná vlasová linka len na šírku obsahu, nebeží popod bočnú lištu --- */
+@media screen{
+  html footer{border-top:0;padding-top:0}
+  html footer>.wrap{border-top:1px solid var(--line);padding-top:50px}
+}
+
+/* --- menu častí: riadky sa prispôsobia skutočnej výške pätky (aj keď sa stav zalomí), menu nikdy netečie cez okraj --- */
+@media (min-height:501px),(orientation:portrait){
+  html .drawer-links{flex:0 1 auto;min-height:324px;grid-template-rows:repeat(9,minmax(36px,58px));align-content:start}
+  html .drawer-links a{min-height:0}
+  /* spodok menu má vždy vzduch, aj nad domovským pruhom telefónu */
+  html .drawer-in{padding-bottom:max(24px,calc(16px + env(safe-area-inset-bottom,0px)))}
+}
+/* nízka obrazovka: tlačidlá v pätke menu o kúsok nižšie, aby sa zoznam zmestil bez posúvania */
+@media (max-height:700px) and (orientation:portrait){html .drawer-foot .btn{min-height:48px;padding-block:0}}
+
+/* --- spodná lišta, ukrajinčina na úzkom telefóne: Zarezervovať ostane v jednom riadku --- */
+@media (max-width:380px){
+  html:lang(uk) .mbar{gap:6px}
+  html:lang(uk) .mbar a{font-size:13px;padding-inline:6px;letter-spacing:0}
+}
+/* ================= Opravy 3F: úvod, dvere a film ================= */
+/* úvod na šírku (tablet, počítač): tmavší podklad pod spodnými riadkami textu (dnes otvorené, linka 24/7),
+   aby nesedeli na svetlej vani a zlatom oblúku; stále len pokojné stmavenie, žiadny rámik ani tieň písma */
+@media (min-width:721px){
+  html.world .stage .scrim{background:radial-gradient(ellipse 60% 42% at 16% 72%,rgba(var(--ink),.74) 0%,rgba(var(--ink),.46) 55%,rgba(var(--ink),0) 100%),linear-gradient(90deg,rgba(var(--ink),.72) 0%,rgba(var(--ink),.35) 38%,transparent 62%)}
+}
+/* výzva Skroluj: čitateľná veľkosť, menšie rozostupy písmen, plná sýtosť */
+html .hero .cue{font-size:12px;letter-spacing:.18em;color:var(--text-secondary)}
+html .hero .cue.show{opacity:1}
+/* odhad výšky nevykreslených častí podľa skutočných výšok (zmerané na telefóne, tablete a počítači):
+   stránka má pred prvým dotykom takmer rovnakú výšku ako po ňom, skok na koniec pristane na konci aj bez
+   ukotvenia skrolu (Safari). Po prvom vykreslení si prehliadač pamätá skutočnú výšku (auto). */
+html.world .site>#cennik{contain-intrinsic-size:auto 8800px}
+html.world .site>#poukaz{contain-intrinsic-size:auto 800px}
+html.world .site>#tim{contain-intrinsic-size:auto 1550px}
+html.world .site>#salon{contain-intrinsic-size:auto 900px}
+html.world .site>#galeria{contain-intrinsic-size:auto 2450px}
+html.world .site>#faq{contain-intrinsic-size:auto 1800px}
+html.world .site>#kontakt{contain-intrinsic-size:auto 1350px}
+@media (max-width:900px){
+  html.world .site>#poukaz{contain-intrinsic-size:auto 1050px}
+  html.world .site>#tim{contain-intrinsic-size:auto 1200px}
+  html.world .site>#galeria{contain-intrinsic-size:auto 2850px}
+  html.world .site>#faq{contain-intrinsic-size:auto 1950px}
+  html.world .site>#kontakt{contain-intrinsic-size:auto 1950px}
+}
+@media (max-width:640px){
+  html.world .site>#poukaz{contain-intrinsic-size:auto 880px}
+  html.world .site>#tim{contain-intrinsic-size:auto 1750px}
+  html.world .site>#galeria{contain-intrinsic-size:auto 1380vw}
+  html.world .site>#faq{contain-intrinsic-size:auto 2150px}
+  html.world .site>#kontakt{contain-intrinsic-size:auto 2050px}
+}
+/* ================= Opravy 3L: rozloženie kariet, poukazu, galérie a stĺpcov ================= */
+/* ťuknutie: bez modrého alebo sivého obdĺžnika prehliadača; stlačenie ukáže farba a linka prvku */
+html{-webkit-tap-highlight-color:transparent}
+.card-toggle:active,.faq-q:active,.info a:active,.care a:active,.care-note a:active,.salon-link a:active,.first-tip a:active,
+footer a:active,.map-link:active,.slink:active,.drawer-links a:active,.nav .links a:active{color:var(--accent-hover);transition-duration:var(--t-fast)}
+
+/* telefón: karta rituálu drží šírku svojho rámu, obsah sa nikdy nerozšíri cez vnútorný zlatý rámik */
+@media (max-width:640px){
+  html .site #cennik .card{grid-template-columns:minmax(0,1fr)}
+  html .site #cennik .card>*{min-width:0}
+  html .site #cennik .card h3{overflow-wrap:break-word}
+  /* dĺžka a cena: keď sa nezmestia vedľa seba (75 Min. / 2 Personen na 320 px), cena ide pod dĺžku */
+  html .site #cennik .card .meta{flex-wrap:wrap;row-gap:6px}
+  /* názov top rituálu: najdlhší nezalomiteľný kus (Signature Experience) sa zmestí aj na 320 px */
+  html .site #cennik .card.top h3{font-size:min(31px,calc(10.1vw - 8px))}
+  /* tlačidlo a Čo rituál obsahuje vždy vedľa seba v každom jazyku; dlhý popis sa zalomí vo vlastnom stĺpci */
+  html .site #cennik .card .actions{flex-wrap:nowrap}
+  html .site #cennik .card .actions .btn.small{flex:none;white-space:nowrap}
+  /* obyčajný riadok textu: znamienko + ide hneď za posledné slovo, aj keď sa popis zalomí; výška aspoň 44 px */
+  html .site #cennik .card .actions .card-toggle{display:block;flex:0 1 auto;min-width:0;min-height:0;padding:12px 0!important;
+    white-space:normal;text-align:left;line-height:1.35;text-wrap:balance}
+}
+
+/* poukaz: pod poľom rezervované miesto pre súhrn (app.js), tlačidlo neposkakuje */
+html .gift .voucher-sum{box-sizing:border-box}
+
+/* priestory: popisok na polovičnej dlaždici bez osamoteného slova na druhom riadku */
+html .salon-photos figcaption{text-wrap:balance}
+
+/* kontakt: dnešný stav sa zalomí vyvážene, čas neostane sám na riadku */
+html .info .today{text-wrap:balance}
+
+/* galéria, dlaždica Nápis: popis nesmie ležať na svietiacom písme */
+@media (min-width:641px) and (max-width:900px){
+  /* tablet: dlaždica na výšku, celý kruh nad popisom */
+  html .shot.voda{aspect-ratio:4/5}
+  html .shot.voda img{object-position:50% 0!important}
+}
+@media (min-width:901px){
+  /* počítač: štvorcová dlaždica, kruh hore, popis len názvom (celý text je vo zväčšenej fotke) */
+  html .shot.voda img{object-position:50% 0!important}
+  html .shot.voda .cap{padding-top:36px}
+  html .shot.voda .cap span{display:none}
+}
+
+/* počítač: pravý stĺpec začína v časti Tím, Priestory aj Poukaz na tej istej línii */
+@media (min-width:901px){
+  html{--col-g:clamp(20px,3vw,48px)}
+  html #tim .head,html #salon .head{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--col-g)}
+  html .salon-photos{grid-template-columns:calc(50% + var(--col-g) / 2 - 14px) minmax(0,1fr) minmax(0,1fr)}
+  html .gift .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--col-g)}
+}
+/* ================= Opravy 3T: texty a galéria ================= */
+/* dnešný stav otvorenia sa zalomí vyvážene, čas nezostane sám na druhom riadku */
+html .today-line,html .info .today,html .drawer-foot p:has(> .today){text-wrap:balance}
+
+/* ================= Rýchla cesta k nákupu ================= */
+/* karta rituálu: Rezervovať a hneď vedľa tichý odkaz Darovať ako poukaz; Čo rituál obsahuje ide
+   na ďalší riadok, keď sa všetko nezmestí vedľa seba */
+html .site #cennik .card .actions{flex-wrap:wrap}
+html .site #cennik .card .actions .btn.small{order:1}
+html .site #cennik .card .actions .card-gift{order:2}
+html .site #cennik .card .actions .card-toggle{order:3}
+/* rovnaká rodina ako Čo rituál obsahuje, odkaz spozná jemná zlatá linka pod textom */
+.card-gift{display:inline-flex;align-items:center;min-height:46px;font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:.01em;
+  line-height:1.35;color:rgba(239,231,218,.72);text-decoration:underline;text-decoration-thickness:1px;
+  text-decoration-color:rgba(212,174,98,.45);text-underline-offset:5px}
+.card-gift:hover{color:var(--accent-hover);text-decoration-color:var(--accent-hover)}
+.card-gift:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+@media (max-width:640px){
+  /* telefón: tlačidlo a odkaz na darček vedľa seba, dlhý preklad odkazu sa zalomí vo vlastnom stĺpci;
+     Čo rituál obsahuje pod nimi cez celú šírku */
+  html .site #cennik .card .actions,html .site #cennik .card.top .actions{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:4px 20px}
+  html .site #cennik .card .actions .card-gift{justify-self:start;min-height:44px;padding:4px 0;text-wrap:balance}
+  html .site #cennik .card .actions .card-toggle{grid-column:1/-1;justify-self:start;min-height:44px;padding:10px 0!important}
+}
+@media (max-width:380px){
+  html .site #cennik .card .actions,html .site #cennik .card.top .actions{column-gap:14px}
+  html .site #cennik .card .actions .btn.small{padding:0 16px!important}
+}
+
+/* poukaz: poukážka, jedno tlačidlo do obchodu a pod ním veta, že rituál sa vyberá tam */
+.gift .voucher-buy{margin:28px 0 0}
+.gift .voucher-buy .btn{min-height:50px;padding:0 30px}
+.gift .voucher-note{margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--text-secondary)}
+@media (max-width:640px){.gift .voucher-buy .btn{width:100%}}
+
+/* ================= Pätička: odkaz na právne informácie ================= */
+/* rovnako podčiarknutý ako ostatné odkazy v spodnom riadku, s dotykovou plochou 44 px */
+html footer .bottom .legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--text-secondary)}
+@media (hover:hover) and (pointer:fine){html footer .bottom .legal a:hover{color:var(--accent-hover)}}
+
+/* ================= Dotyk a menu: drobné opravy ================= */
+/* dotyková obrazovka: po ťuknutí tlačidlo neostane zosvetlené ani nadvihnuté, farbu zmení len počas stlačenia */
+@media (hover:none){
+  html .btn.primary:hover{background:var(--accent);border-color:var(--accent);transform:none}
+  html .btn.primary:active{background:var(--accent-hover);border-color:var(--accent-hover)}
+}
+/* menu: riadky len pre viditeľné časti (skrytý Tím nerezervuje prázdny riadok) */
+@media (min-height:501px),(orientation:portrait){
+  html .drawer-links{grid-template-rows:none;grid-auto-rows:minmax(44px,58px)}
+}
+/* menu: Instagram a salon30.sk s dotykovou plochou 44 px a väčším odstupom */
+html .drawer-foot p a{display:inline-flex;align-items:center;min-height:44px;border-bottom:0;text-decoration:underline;text-decoration-color:var(--line-strong);text-decoration-thickness:1px;text-underline-offset:4px}
+
+/* ================= Linka 24/7 v úvode a pätičke: jednoduché podčiarknutie ================= */
+/* Safari na iPhone kreslil pri čísle ďalšiu čiaru cez text (zväčšená dotyková plocha a hrubé podčiarknutie
+   zo skratky text-decoration). Odkaz je obyčajný riadok s tenkou linkou pod číslom, bez pseudo prvku. */
+html .care-note a{display:inline;padding:0;margin:0;position:static;text-decoration:none;
+  border-bottom:1px solid rgba(212,174,98,.45);transition:color var(--t-base) var(--e-out),border-color var(--t-base) var(--e-out)}
+html .care-note a::before,html .care-note a::after{content:none!important;display:none!important}
+@media (hover:hover) and (pointer:fine){html .care-note a:hover{border-bottom-color:var(--accent)}}
+/* odkaz 17 rituálov a ceny v úvode: tiež obyčajná linka pod textom (Safari posúval podčiarknutie tlačidla o riadok nižšie) */
+@media (max-width:640px){
+html .band .cta .btn.ghost,html .hero-static .cta .btn.ghost{display:inline-block;min-height:0;padding:10px 0 3px;margin-bottom:7px;line-height:1.3;
+  text-decoration:none;border-bottom:1px solid rgba(236,208,143,.45)}
+}
+/* galéria: Instagram a Kde nás nájdeš vedľa seba, na telefóne rovnako široké pod sebou */
+html #galeria .after{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;justify-content:flex-start;align-items:stretch}
+@media (max-width:640px){html #galeria .after .btn{flex:1 1 100%;justify-content:center;text-align:center}}

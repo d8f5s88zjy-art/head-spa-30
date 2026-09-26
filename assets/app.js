@@ -1,326 +1,40 @@
-/* HEAD SPA 30. Vanilla JS, no build step. */
+/* HEAD SPA 30. Čistý JavaScript bez frameworku; minifikáciu robí tools/build.mjs. */
 (function () {
   'use strict';
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+  /* Nastavenia, ktoré mení admin (admin/): otváracie hodiny a kód štatistík. Jediný zdroj pre celý web. */
+  const NASTAVENIA = (() => { try { return JSON.parse($('#nastavenia').textContent) || {}; } catch (e) { return {}; } })();
+  const HODINY = NASTAVENIA.hodiny || { 0: null, 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
+  /* Štatistiky bez cookies (GoatCounter), len keď admin zadal kód. */
+  if (/^[a-z0-9-]{2,40}$/.test(NASTAVENIA.statistiky || '') && !/^(localhost|127\.)/.test(location.hostname)) {
+    const gc = document.createElement('script');
+    gc.async = true; gc.src = 'https://gc.zgo.at/count.js';
+    gc.dataset.goatcounter = `https://${NASTAVENIA.statistiky}.goatcounter.com/count`;
+    window.addEventListener('load', () => document.body.appendChild(gc), { once: true });
+  }
   /* Časti stránky pod prvou obrazovkou sa spúšťajú až keď má prehliadač voľnú chvíľu. */
   const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
   function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const phoneMQ = matchMedia('(max-width: 640px)');   // telefón má vlastné hranice kapitol, kameru, rampy a dobiehanie
 
-  /* ============ the scene (water, light, steam), drawn from progress p ============ */
-  function makeScene(canvas, opts) {
-    const o = opts || {};
-    const view = o.view || 'room';          // room = the hero framing, close = tighter on the guest, steam = the abstract shot
-    const ctx = canvas.getContext('2d', { alpha: false });
-    let W = 0, H = 0, dpr = 1, lastP = -1, lastT = -1;
-    const R = rng(30);
-    /* telefón kreslí menej častíc a v nižšom rozlíšení, scéna vyzerá rovnako, ale stojí menej */
-    const lite = matchMedia('(max-width: 640px)').matches;
-    const n = (x) => (lite ? Math.round(x * 0.45) : x);
-    const steam = Array.from({ length: n(34) }, () => ({ s: R(), x: R() * 2 - 1, r: 14 + R() * 26, w: 1 + R() * 2 }));
-    const drops = Array.from({ length: n(16) }, () => ({ s: R(), a: (R() * 2 - 1) * 1.1, v: .5 + R() * .7 }));
-    const puffs = Array.from({ length: n(54) }, () => ({ s: R(), x: R(), r: 12 + R() * 34, v: .6 + R() * .8, w: R() * 2 - 1 }));
-    // the journey camera: p, zoom, shift x (of W), shift y (of H), tilt (how far we look down into the bowl), warmth of the light
-    const CAM = [
-      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
-      [0.20, 1.10, 0.00, -.02, .36, 0.10],
-      [0.30, 1.48, -.06, -.10, .42, 0.28],
-      [0.46, 1.58, -.06, -.12, .46, 0.38],
-      [0.56, 2.25, 0.03, 0.20, .60, 0.52],
-      [0.72, 2.35, 0.04, 0.22, .62, 0.62],
-      [0.84, 1.26, 0.00, 0.03, .40, 0.92],
-      [1.00, 1.20, 0.00, 0.03, .40, 1.00]
-    ];
-    // kamera na telefóne: misa je vždy celá v zábere, kľúčové snímky ležia uprostred kapitol,
-    // takže pohyb kamery prekrýva prestrihy textu a v strede kapitoly je pokoj na čítanie;
-    // väzby: dopad vody 0.20 = Ticho, masáž 0.44 = Hĺbkové čistenie, pokoj 0.70 = finále
-    const CAM_P = [
-      [0.00, 1.00, 0.00, 0.00, .34, 0.00],
-      [0.12, 1.03, 0.00, 0.01, .35, 0.06],
-      [0.36, 1.20, 0.00, 0.09, .42, 0.30],
-      [0.62, 1.75, 0.00, 0.24, .58, 0.55],
-      [0.88, 1.24, 0.00, 0.09, .42, 0.92],
-      [1.00, 1.20, 0.00, 0.09, .40, 1.00]
-    ];
-    function cam(p) {
-      if (!o.journey) return { z: 1, dx: 0, dy: 0, tilt: .34, warm: 1, grade: 0 };   // the gallery shots keep their fixed gold lamp and cool room
-      const T = (lite && W <= 720) ? CAM_P : CAM;   // telefón na výšku má vlastnú kameru
-      let i = 0; while (i < T.length - 2 && p > T[i + 1][0]) i++;
-      const a = T[i], b = T[i + 1], k = smoothstep(p, a[0], b[0]);
-      const m = (j) => a[j] + (b[j] - a[j]) * k;
-      const w = m(5); return { z: m(1), dx: m(2), dy: m(3), tilt: m(4), warm: w, grade: w };
+  /* ============ úvod: jeden záber miestnosti ============
+     Po otvorení dverí sa miestnosť pomaly vynorí z tmy (CSS). Pri skrolovaní text ide so stránkou
+     a fotka zaostáva (paralaxa), takže úvod plynulo prejde do obsahu, bez stmavnutia a bez medzery. */
+  function makeReel(root) {
+    const shot = $('.reel .fs', root);
+    let last = '';
+    function draw(p) {
+      const key = p.toFixed(3); if (key === last) return; last = key;
+      shot.style.transform = `translate3d(0,${(p * 30).toFixed(2)}%,0)`;
     }
-    const mix = (c1, c2, k) => c1.map((v, i) => Math.round(v + (c2[i] - v) * k));
-    const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
-    const COOL = [214, 226, 218], GOLD = [236, 208, 143];
-    function resize() {
-      const r = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, lite ? 1 : 1.5);
-      W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
-      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      lastP = -1;
-    }
-    // the abstract shot: a dark room, a vertical slit of gold light, steam drifting through it
-    function drawSteam(p, t) {
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#080c0a'); bg.addColorStop(.6, '#0a0f0c'); bg.addColorStop(1, '#070a08');
-      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-      const sx = W * 0.78, top = H * 0.06, bot = H * 0.94;
-      ctx.save(); ctx.globalCompositeOperation = 'lighter';
-      const halo = ctx.createLinearGradient(sx - W * .22, 0, sx + W * .07, 0);
-      halo.addColorStop(0, 'rgba(217,181,106,0)'); halo.addColorStop(.78, 'rgba(217,181,106,.16)'); halo.addColorStop(1, 'rgba(236,208,143,.05)');
-      ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
-      ctx.beginPath(); ctx.moveTo(sx, top); ctx.lineTo(sx, bot);
-      ctx.strokeStyle = 'rgba(255,236,190,.85)'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke();
-      ctx.strokeStyle = 'rgba(236,208,143,.18)'; ctx.lineWidth = 12; ctx.stroke();
-      for (const s of puffs) {
-        const k = (p * .5 + s.s + t * 0.035) % 1;
-        const x = W * (1.02 - k * 1.15) + s.w * W * .06, y = H * (0.98 - k * 0.9) + Math.sin(k * 5 + s.s * 7) * H * .05;
-        const r = s.r * (0.7 + k * 1.9), near = 1 - Math.min(1, Math.abs(x - sx) / (W * .22));
-        const a = k * (1 - k) * 4 * (0.035 + 0.075 * near) * s.v;
-        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-        const col = near > .35 ? '236,214,168' : '214,224,216';
-        g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(1, `rgba(${col},0)`);
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-      }
-      const pool = ctx.createRadialGradient(sx, bot, 0, sx, bot, W * .3);
-      pool.addColorStop(0, 'rgba(217,181,106,.12)'); pool.addColorStop(1, 'rgba(217,181,106,0)');
-      ctx.fillStyle = pool; ctx.fillRect(0, H * .6, W, H * .4);
-      ctx.restore();
-      const v = ctx.createRadialGradient(W * .6, H * .5, H * .2, W * .6, H * .5, Math.max(W, H) * .8);
-      v.addColorStop(0, 'rgba(6,8,7,0)'); v.addColorStop(1, 'rgba(6,8,7,.78)');
-      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
-    }
-
-    function draw(p, force, time) {
-      const t = time || 0;
-      if (!W) resize();
-      if (!force && Math.abs(p - lastP) < 0.0005 && t === lastT) return;
-      lastP = p; lastT = t;
-      if (view === 'steam') { drawSteam(p, t); return; }
-      const wide = view === 'still' ? W > 900 : W > 720;   // the still hero keeps the bowl above the text up to tablet width
-      // the basin: a dark bowl of warm water seen from a low angle, the light comes from a single lamp above it
-      // still = the one-frame hero on wide screens without the scroll journey: the bowl sits right of the headline
-      const c = cam(p);
-      // telefón: misa vyššie a širšia, aby bola celá nad textom; na krátkej výške (lišta prehliadača) ešte vyššie;
-      // posun misy v kapitolách rieši dy v CAM_P, preto sa hodnoty pre telefón už nevracajú k desktopovým
-      const phone = lite && !wide && view !== 'close';
-      const pk = phone ? 1 : 0;
-      const short = H < 760, tiny = H < 620;   // tiny = najmenšie telefóny (320 x 568): misa ešte vyššie a užšia, nech sa nedotýka textu
-      const cyP = 0.31 + ((tiny ? 0.18 : short ? 0.22 : 0.26) - 0.31) * pk;
-      const rxP = 0.34 + ((tiny ? 0.33 : short ? 0.38 : 0.42) - 0.34) * pk;
-      const cx = (view === 'close' ? W * (wide ? 0.55 : 0.5) : (wide ? W * (view === 'still' ? 0.72 : 0.66) : W * 0.5)) + c.dx * W;
-      const cy = (view === 'close' ? H * (wide ? 0.66 : 0.62) : (wide ? H * (view === 'still' ? 0.60 : 0.70) : H * cyP)) + c.dy * H;   // phones: the bowl sits in the upper third, the copy below it
-      const rx = (view === 'close' ? Math.min(W * 0.44, H * 0.72) : (wide ? Math.min(W * (view === 'still' ? 0.25 : 0.31), H * 0.56) : Math.min(W * rxP, H * 0.5))) * c.z;
-      const ry = rx * c.tilt;
-      const warm = c.warm, lamp = mix(COOL, GOLD, warm);
-      // nábeh: prvú sekundu a pol sa misa skladá z prachu, z bodiek na kružniciach, potom stuhne do vody
-      const life = reduced.matches ? 1 : smoothstep(t || 0, 0.05, 1.1);
-      const topY = -H * 0.04, landY = cy - ry * 0.12;
-      const fall = smoothstep(p, 0.04, 0.30);      // the stream reaches the water
-      const after = smoothstep(p, 0.30, 0.62);     // rings and steam build
-      const calm = smoothstep(p, 0.74, 1);         // the water settles, the light stays
-      const stream = fall * (1 - calm * 0.85);
-      // room
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, rgb(mix([15, 22, 19], [22, 20, 15], c.grade), 1)); bg.addColorStop(.55, rgb(mix([11, 16, 13], [16, 14, 11], c.grade), 1)); bg.addColorStop(1, '#090c0a');
-      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-      // the lamp: a cone of light that starts cool and white, warms to gold and widens as the ritual goes on
-      const cone = ctx.createRadialGradient(cx, -H * 0.2, 0, cx, -H * 0.2, H * (1.0 + 0.15 * p) * Math.sqrt(c.z));
-      const ca = (phone ? 0.25 : 0.15) + 0.13 * p;
-      cone.addColorStop(0, rgb(lamp, ca)); cone.addColorStop(.42, rgb(mix([160, 178, 168], [217, 181, 106], warm), ca * .42)); cone.addColorStop(1, 'rgba(217,181,106,0)');
-      ctx.fillStyle = cone; ctx.fillRect(0, 0, W, H);
-      // the lamp itself: a small bright disc high above the bowl, only in the journey
-      if (o.journey) {
-        const ly = -H * 0.02, lr = rx * (0.07 + 0.05 * c.z);
-        const disc = ctx.createRadialGradient(cx, ly, 0, cx, ly, lr * 4);
-        disc.addColorStop(0, rgb(lamp, .55)); disc.addColorStop(.25, rgb(lamp, .16)); disc.addColorStop(1, rgb(lamp, 0));
-        ctx.fillStyle = disc; ctx.fillRect(cx - lr * 4, 0, lr * 8, lr * 4);
-      }
-      // a faint far wall line so the room has depth
-      ctx.fillStyle = 'rgba(242,237,226,.025)'; ctx.fillRect(0, cy - ry * 3.2, W, 1);
-      // floor sheen under the bowl
-      const floor = ctx.createRadialGradient(cx, cy + ry * 0.6, 0, cx, cy + ry * 0.6, rx * 1.8);
-      floor.addColorStop(0, `rgba(140,195,182,${.07 + .05 * after})`); floor.addColorStop(.5, `rgba(217,181,106,${.03 + .03 * calm})`); floor.addColorStop(1, 'rgba(10,13,11,0)');
-      ctx.fillStyle = floor; ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.6, rx * 1.8, ry * 2.2, 0, 0, Math.PI * 2); ctx.fill();
-      // the bowl body: a dark ceramic rim below the water line
-      if (life < 1) {
-        // prach: body na kružniciach misy, rozhodené o (1 - life), s vlastným pomalým rotovaním
-        const rings = 9, per = lite ? 26 : 44, scatter = (1 - life) * rx * 0.35;
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        for (let i = 0; i < rings; i++) {
-          const kr = 0.18 + i / rings * 0.9;
-          for (let j = 0; j < per; j++) {
-            const ang = j / per * Math.PI * 2 + i * 0.37 + (1 - life) * 1.6 + (t || 0) * 0.05;
-            const jx = Math.sin(i * 12.9 + j * 78.2) * scatter, jy = Math.cos(i * 7.3 + j * 31.7) * scatter * 0.6;
-            const x = cx + Math.cos(ang) * rx * kr + jx, y = cy + Math.sin(ang) * ry * kr + jy - (1 - life) * ry * 0.8;
-            const a = (0.35 + 0.65 * (j % 3 === 0 ? 1 : 0.4)) * (1 - life) * 0.9;
-            ctx.fillStyle = i % 3 === 0 ? `rgba(236,208,143,${a})` : `rgba(190,232,222,${a})`;
-            ctx.fillRect(x, y, 1.5, 1.5);
-          }
-        }
-        ctx.restore();
-      }
-      ctx.save();
-      ctx.globalAlpha = 0.22 + 0.78 * life;
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx * 1.03, ry * 1.03, 0, 0, Math.PI); ctx.lineTo(cx - rx * 1.03, cy);
-      const bowl = ctx.createLinearGradient(0, cy, 0, cy + ry * 1.6);
-      bowl.addColorStop(0, '#1a221d'); bowl.addColorStop(1, '#0a0e0c');
-      ctx.fillStyle = bowl;
-      ctx.beginPath(); ctx.ellipse(cx, cy + ry * 0.35, rx * 1.03, ry * 1.25, 0, 0, Math.PI); ctx.closePath(); ctx.fill();
-      ctx.restore();
-      // the water surface
-      ctx.save();
-      ctx.globalAlpha = 0.22 + 0.78 * life;
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
-      const water = ctx.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx);
-      water.addColorStop(0, `rgba(96,150,140,${.55 + .15 * after})`); water.addColorStop(.55, 'rgba(46,84,78,.9)'); water.addColorStop(1, 'rgba(18,34,31,1)');
-      ctx.fillStyle = water; ctx.fillRect(cx - rx, cy - ry, rx * 2, ry * 2);
-      // the lamp reflected in the water: a soft vertical bar of gold
-      ctx.globalCompositeOperation = 'lighter';
-      const refl = ctx.createRadialGradient(cx, cy - ry * 0.15, 0, cx, cy - ry * 0.15, rx * 0.55);
-      refl.addColorStop(0, `rgba(236,208,143,${(phone ? .34 : .22) + .2 * calm})`); refl.addColorStop(.35, `rgba(217,181,106,${(phone ? .12 : .08) + .08 * calm})`); refl.addColorStop(1, 'rgba(217,181,106,0)');
-      ctx.fillStyle = refl; ctx.save(); ctx.scale(0.42, 1); ctx.beginPath(); ctx.arc(cx / 0.42, cy - ry * 0.15, rx * 0.55, 0, Math.PI * 2); ctx.fill(); ctx.restore();
-      // caustics: light that has been bent by the water, breathing slowly
-      for (let j = 0; j < 4; j++) {
-        const ph = t * 0.35 + j * 1.7 + p * 2.0;
-        const k = 0.22 + j * 0.19 + Math.sin(ph) * 0.04;
-        const a = (0.025 + 0.085 * after) * (1 - j * 0.15);
-        ctx.beginPath(); ctx.ellipse(cx + Math.sin(ph * 0.7) * rx * 0.04, cy + Math.cos(ph * 0.5) * ry * 0.06, rx * k, ry * k, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(236,214,168,${a})`; ctx.lineWidth = 7; ctx.stroke();
-        ctx.strokeStyle = `rgba(255,236,190,${a * 1.4})`; ctx.lineWidth = 2; ctx.stroke();
-      }
-      // rings: each drop that lands sends a ring to the rim
-      if (after > 0) {
-        const rings = 7;
-        for (let i = 0; i < rings; i++) {
-          let k = ((p - 0.30) * 1.7 + i / rings + t * 0.10) % 1; if (k < 0) k += 1;
-          const a = Math.pow(1 - k, 1.6) * 0.55 * after * (1 - calm * 0.65);
-          if (a < 0.01) continue;
-          const kr = 0.03 + k * 0.97;
-          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr, ry * kr, 0, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(190,232,222,${a})`; ctx.lineWidth = 1.4 + (1 - k) * 1.2; ctx.stroke();
-          ctx.beginPath(); ctx.ellipse(cx, landY + ry * 0.12, rx * kr * 0.94, ry * kr * 0.94, 0, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(236,208,143,${a * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
-        }
-      }
-      // the massage: two slow hands, two sources of small ripples that take turns
-      const mass = o.journey ? smoothstep(p, 0.48, 0.56) * (1 - smoothstep(p, 0.72, 0.80)) : 0;
-      if (mass > 0) {
-        const hands = [[-0.36, 0.10, 0], [0.34, -0.06, 0.5]];
-        for (const h of hands) {
-          const hx = cx + h[0] * rx, hy = cy + h[1] * ry;
-          for (let i = 0; i < 4; i++) {
-            let k = ((p - 0.48) * 2.6 + i / 4 + h[2] + t * 0.12) % 1; if (k < 0) k += 1;
-            const a = Math.pow(1 - k, 1.8) * 0.5 * mass;
-            if (a < 0.01) continue;
-            const kr = 0.04 + k * 0.42;
-            ctx.beginPath(); ctx.ellipse(hx, hy, rx * kr, ry * kr, 0, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(200,236,226,${a})`; ctx.lineWidth = 1 + (1 - k) * 1.4; ctx.stroke();
-          }
-          const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, rx * 0.14);
-          g.addColorStop(0, `rgba(230,246,240,${.22 * mass})`); g.addColorStop(1, 'rgba(230,246,240,0)');
-          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(hx, hy, rx * 0.14, ry * 0.14, 0, 0, Math.PI * 2); ctx.fill();
-        }
-      }
-      // the settle: the rings give way to one still gold circle, the mark of the house
-      if (o.journey && calm > 0) {
-        const pulse = 1 + Math.sin(t * 0.8) * 0.012;
-        for (const [kr, a, w] of [[0.58, 0.55, 1.6], [0.50, 0.22, 1], [0.66, 0.16, 1]]) {
-          ctx.beginPath(); ctx.ellipse(cx, cy, rx * kr * pulse, ry * kr * pulse, 0, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(236,208,143,${a * calm})`; ctx.lineWidth = w; ctx.stroke();
-        }
-      }
-      ctx.restore();
-      // the rim of the bowl catches the lamp
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 1.02, Math.PI * 1.98);
-      ctx.strokeStyle = `rgba(236,208,143,${.22 + .3 * calm})`; ctx.lineWidth = 1.2; ctx.stroke();
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI * 0.02, Math.PI * 0.98);
-      ctx.strokeStyle = 'rgba(242,237,226,.08)'; ctx.lineWidth = 1; ctx.stroke();
-      // the stream: one laminar thread of warm water from the lamp to the bowl
-      if (stream > 0.01) {
-        const endY = topY + (landY - topY) * fall;
-        ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = Math.min(1, stream * 1.2);
-        const sway = (y) => Math.sin(y * 0.014 + p * 4 + t * 0.9) * 2.8;
-        ctx.beginPath();
-        for (let y = topY; y <= endY; y += 6) { const x = cx + sway(y); y === topY ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-        ctx.strokeStyle = 'rgba(140,195,182,.08)'; ctx.lineWidth = 30; ctx.lineCap = 'round'; ctx.stroke();
-        ctx.strokeStyle = 'rgba(160,215,200,.18)'; ctx.lineWidth = 13; ctx.stroke();
-        ctx.strokeStyle = 'rgba(210,236,228,.5)'; ctx.lineWidth = 5; ctx.stroke();
-        ctx.strokeStyle = 'rgba(244,250,247,.9)'; ctx.lineWidth = 1.8; ctx.stroke();
-        for (let i = 0; i < 8; i++) {
-          const k = (p * 2.2 + i / 8 + t * 0.5) % 1; const y = topY + (endY - topY) * k;
-          if (y > endY - 10) continue;
-          ctx.beginPath(); ctx.ellipse(cx + sway(y) + (i % 2 ? 2 : -2), y, 1.8, 4.5, 0, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.fill();
-        }
-        if (fall < 1) { ctx.beginPath(); ctx.ellipse(cx + sway(endY), endY + 6, 5, 9, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(236,245,240,.85)'; ctx.fill(); }
-        else {
-          // where the thread meets the water: a small bright crown
-          const g = ctx.createRadialGradient(cx, landY, 0, cx, landY, rx * 0.12);
-          g.addColorStop(0, 'rgba(230,246,240,.5)'); g.addColorStop(1, 'rgba(230,246,240,0)');
-          ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, landY, rx * 0.12, ry * 0.12, 0, 0, Math.PI * 2); ctx.fill();
-        }
-        ctx.restore();
-      }
-      // splash: a few drops leap at the moment the thread lands
-      if (after > 0 && after < 1) {
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        for (const d of drops) {
-          const k = clamp(after * 1.5 - d.s * 0.5, 0, 1);
-          if (k <= 0 || k >= 1) continue;
-          const x = cx + d.a * rx * 0.3 * k, y = landY - (k * 4 * (1 - k)) * H * 0.06 * d.v;
-          ctx.beginPath(); ctx.arc(x, y, 2 * (1 - k) + .5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(236,245,240,${.7 * (1 - k)})`; ctx.fill();
-        }
-        ctx.restore();
-      }
-      // steam lifts off the warm water
-      const sv = smoothstep(p, 0.34, 0.6);
-      if (sv > 0) {
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        for (const s of steam) {
-          const k = (p * 1.2 + s.s + t * 0.03) % 1;
-          const y = cy - ry * 0.2 - k * H * 0.55, x = cx + s.x * rx * 0.6 + Math.sin(k * 4 + s.s * 7 + t * 0.2) * 24;
-          const a = k * (1 - k) * 4 * 0.07 * sv * (1 - calm * 0.3), r = s.r * (0.6 + k * 1.7);
-          const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-          g.addColorStop(0, `rgba(228,236,230,${a})`); g.addColorStop(1, 'rgba(228,236,230,0)');
-          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-        }
-        ctx.restore();
-      }
-      // dust in the lamp light: tiny motes drifting, only ever a whisper
-      ctx.save(); ctx.globalCompositeOperation = 'lighter';
-      for (const m of puffs) {
-        const k = (m.s + t * 0.012 + p * 0.3) % 1;
-        const x = cx + (m.x - 0.5) * rx * 2.2 * (0.3 + k * 0.7), y = H * 0.05 + k * (cy - H * 0.05);
-        const a = k * (1 - k) * 4 * 0.10 * (0.4 + 0.6 * p);
-        ctx.fillStyle = `rgba(236,214,168,${a})`; ctx.beginPath(); ctx.arc(x, y, 1 + m.v * 0.6, 0, Math.PI * 2); ctx.fill();
-      }
-      ctx.restore();
-      // the gold settle: at the end the whole bowl glows
-      if (calm > 0) {
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const g = ctx.createRadialGradient(cx, cy - ry, 0, cx, cy - ry, H * .55);
-        g.addColorStop(0, `rgba(217,181,106,${.18 * calm})`); g.addColorStop(1, 'rgba(217,181,106,0)');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-        ctx.restore();
-      }
-      // vignette
-      const vr = Math.max(W, H) * (.85 - .12 * (c.z - 1));
-      const v = ctx.createRadialGradient(W * .5, H * .45, H * .3, W * .5, H * .45, vr);
-      v.addColorStop(0, 'rgba(8,10,9,0)'); v.addColorStop(1, `rgba(8,10,9,${(phone ? .5 : .7) + .08 * (c.z - 1)})`);
-      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
-    }
-    return { resize, draw };
+    return { resize() { last = ''; }, draw, setCuts() {} };
   }
 
-  /* ============ text splitting with seeded offsets ============ */
+  /* ============ delenie textu s posunmi z pevného semienka ============ */
   function splitLine(el, mode, seed, spread) {
     const text = el.textContent.trim();
     const words = text.split(/\s+/);
@@ -354,7 +68,7 @@
     el.textContent = ''; el.appendChild(sr); el.appendChild(vis);
   }
 
-  /* ============ headlines rise out of a masked slot, line by line ============ */
+  /* ============ nadpisy stúpajú z maskovanej štrbiny, riadok po riadku ============ */
   function wrapLines(h) {
     const nodes = [...h.childNodes];
     const lines = []; let buf = '';
@@ -379,8 +93,8 @@
   }
   $$('.h2').forEach(wrapLines);
 
-  /* ============ hero scrub ============ */
-  const hero = $('.hero'), stage = $('.stage'), canvas = $('#scene'), env = $('.env');
+  /* ============ úvod riadený skrolovaním ============ */
+  const hero = $('.hero'), stage = $('.stage'), env = $('.env');
   const bands = $$('.band', stage).map((el, i) => ({
     el, a: +el.dataset.a, b: +el.dataset.b, i,
     ramp: el.dataset.ramp ? +el.dataset.ramp : null, op: -1, k: -1, u: -1, on: false, live: false
@@ -394,6 +108,7 @@
       b.op = -1; b.k = -1; b.u = -1; b.on = false; b.live = false;
     });
   }
+  const reelCuts = () => bands.slice(1).map((b, i) => (bands[i].b + b.a) / 2);
   const hud = $('.hud'), chapters = $$('.hud .ch'), cue = $('.cue');
   let scene = null, scrubOn = false, heroOnScreen = true, inited = false, covered = false;
   let target = 0, shown = 0, rafId = null, lastTick = 0, loadK = 1, loadStart = 0;
@@ -405,14 +120,16 @@
     const range = hero.offsetHeight - stage.offsetHeight;
     const c = r.top <= 0 && r.bottom >= window.innerHeight;
     if (c !== covered) { covered = c; env.classList.toggle('covered', c); }
-    return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
+    // úvod na jednu obrazovku: progres je, koľko z neho už odišlo hore
+    return range > 0 ? clamp(-r.top / range, 0, 1) : clamp(-r.top / hero.offsetHeight, 0, 1);
   }
   function updateCaptions(p, now) {
     const ph = phoneMQ.matches;
     for (const b of bands) {
-      // telefón: prelínačka 0.06 (cca 130 px skrolu) leží presne na prekryve kapitol, súčet priehľadností je stále 1, obrazovka nie je nikdy prázdna
-      const f = Math.min(ph ? 0.06 : 0.02, (b.b - b.a) / 3);
-      let op = (b.i === 0 ? 1 : smoothstep(p, b.a, b.a + f)) * (b.i === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b));
+      // telefón: prelínačka 0.06 leží na prekryve kapitol; starý text odíde v prvej polovici, nový príde v druhej,
+      // takže sa dva odseky nikdy neprekrývajú (predtým boli chvíľu viditeľné oba cez seba)
+      const f = Math.min(ph ? 0.06 : 0.02, (b.b - b.a) / 3), h = ph ? f / 2 : 0;
+      let op = (b.i === 0 ? 1 : smoothstep(p, b.a + h, b.a + f)) * (b.i === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b - h));
       // telefón: rampa slov cca 200 px, aby choreografiu bolo vidieť v rámci jedného švihu palcom
       const ramp = ph ? Math.min(0.09, (b.b - b.a) * 0.35) : (b.ramp || Math.min(0.025, (b.b - b.a) * 0.35));
       let k = clamp((p - b.a) / ramp, 0, 1);
@@ -422,8 +139,8 @@
       if (on !== b.on) { b.on = on; b.el.classList.toggle('on', on); b.el.inert = !on; }
       if (live !== b.live) { b.live = live; b.el.classList.toggle('live', live); }   // vrstvy vznikajú pred prelínačkou, nie v nej
       if (Math.abs(k - b.k) > 0.008 || (k === 1 && b.k !== 1) || (k === 0 && b.k !== 0)) { b.k = k; b.el.style.setProperty('--k', k.toFixed(3)); }
-      if (ph) {
-        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál
+      {
+        // pomalý posun bloku textu cez celú kapitolu, aby stred kapitoly nestál (na počítači aj na telefóne)
         const u = live ? clamp((p - b.a) / (b.b - b.a), 0, 1) : 0;
         if (Math.abs(u - b.u) > 0.01 || (u === 0 && b.u !== 0) || (u === 1 && b.u !== 1)) { b.u = u; b.el.style.setProperty('--u', u.toFixed(2)); }
       }
@@ -437,15 +154,6 @@
     }
     if (cue) { const show = p < 0.04; if (cue.classList.contains('show') !== show) cue.classList.toggle('show', show); }
   }
-  // between scrolls the scene keeps breathing (steam, caustics, the stream) at a low frame rate, and rests with the visitor
-  const AMB_FPS = phoneMQ.matches ? 15 : 12;   // telefón 15 fps, kvapky v prúde nerobia také veľké kroky
-  let ambStart = 0, ambTimer = 0;
-  function ambientLive() { return scrubOn && heroOnScreen && !document.hidden && !reduced.matches && !document.body.classList.contains('idle'); }
-  function ambientLater() {
-    clearTimeout(ambTimer);
-    if (!ambientLive()) return;
-    ambTimer = setTimeout(() => { if (rafId === null && ambientLive()) rafId = requestAnimationFrame(tick); }, 1000 / AMB_FPS);
-  }
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
     lastTick = now;
@@ -456,22 +164,21 @@
     if (!heroOnScreen) shown = target;   // pri skoku na kotvu sa mimo obrazovky nič nedobieha
     let busy = true;
     if (Math.abs(target - shown) < 0.0005) { shown = target; busy = false; }
-    if (ambStart && now - ambStart < 1300) busy = true;   // nábeh misy z prachu beží plynulo, nie v ambientnom tempe
-    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; ambientLater(); }
-    if (!ambStart) ambStart = now;
-    scene.draw(shown, false, (now - ambStart) / 1000);
+    if (busy) rafId = requestAnimationFrame(tick); else { rafId = null; lastTick = 0; }
+    scene.draw(shown);
     updateCaptions(shown, now);
   }
   function onScroll() {
+    // mimo úvodu nie je čo počítať; pri návrate ho IntersectionObserver nastaví znova
+    if (!heroOnScreen) return;
     target = heroProgress();
     if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
   }
-  document.addEventListener('visibilitychange', ambientLater);
-  addEventListener('hs30wake', ambientLater);
   function initHeroOnce() {
     if (inited) return; inited = true;
-    scene = makeScene(canvas, { journey: true });
+    scene = makeReel(stage);
     scene.resize();
+    scene.setCuts(reelCuts());
     bands.forEach((b) => {
       const fx = b.el.dataset.fx;
       const spread = b.el.dataset.spread ? +b.el.dataset.spread : undefined;
@@ -489,79 +196,73 @@
       heroOnScreen = es[0].isIntersecting;
       // po skoku na kotvu a späť sa scéna postaví rovno na aktuálny progres, cesta sa neprehráva dozadu
       if (heroOnScreen && scrubOn) { target = shown = heroProgress(); onScroll(); }
-      ambientLater();
     }, { threshold: 0 }).observe(hero);
     let rt;
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown, true); }, 120); }, { passive: true });
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { scene.resize(); if (scrubOn) scene.draw(shown); }, 120); }, { passive: true });
   }
-  /* the gallery: drawn shots that breathe, but only while they are on screen */
-  const moods = $$('canvas[data-mood]').map((c) => ({ c, p: +c.dataset.mood, view: c.dataset.view || 'room', s: null, on: false }));
-  function drawMoods(t) { moods.forEach((m) => { if (!m.s) m.s = makeScene(m.c, { view: m.view }); m.s.resize(); m.s.draw(m.p, true, t || 0); }); }
-  let mdt; addEventListener('resize', () => { clearTimeout(mdt); mdt = setTimeout(() => drawMoods(0), 150); }, { passive: true });
-  drawMoods(0);
-
-  if (moods.length && !reduced.matches) {
-    const AMBIENT_FPS = 12;
-    let raf = 0, start = 0, lastFrame = 0;
-    const live = () => moods.some((m) => m.on) && !document.hidden && !document.body.classList.contains('idle');
-    function tick(now) {
-      if (!live()) { raf = 0; return; }
-      raf = requestAnimationFrame(tick);
-      if (now - lastFrame < 1000 / AMBIENT_FPS) return;
-      lastFrame = now;
-      if (!start) start = now;
-      const t = (now - start) / 1000;
-      moods.forEach((m) => { if (m.on && m.s) m.s.draw(m.p, true, t); });
-    }
-    const wake = () => { if (!raf && live()) raf = requestAnimationFrame(tick); };
-    const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { const m = moods.find((x) => x.c === e.target); if (m) m.on = e.isIntersecting; });
-      wake();
-    }, { threshold: 0.35 });
-    moods.forEach((m) => io.observe(m.c));
-    document.addEventListener('visibilitychange', wake);
-    addEventListener('hs30wake', wake);
-  }
-
-  /* the gallery lightbox: only real photographs open, drawn shots stay in the grid */
+  /* zväčšenie v galérii: otvoria sa len skutočné fotky, kreslené zábery ostanú v mriežke */
   const lb = $('#lightbox');
   if (lb) {
     const lbImg = $('img', lb), lbCap = $('.lb-cap', lb);
-    $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
+    let lbTok = 0;
+    // najväčšia fotka zo srcset toho istého formátu, aký prehliadač vybral pre dlaždicu
+    const largest = (img) => {
+      const cur = img.currentSrc || img.src, pic = img.closest('picture');
+      const sets = pic ? $$('source', pic).map((s) => s.srcset) : [];
+      if (img.srcset) sets.push(img.srcset);
+      const ext = (cur.match(/\.(\w+)(?:\?|$)/) || [])[1];
+      let best = null;
+      sets.forEach((set) => set.split(',').forEach((c) => {
+        const [u, w] = c.trim().split(/\s+/), n = parseInt(w, 10) || 0;
+        if (u && (!ext || u.endsWith('.' + ext)) && (!best || n > best.n)) best = { u, n };
+      }));
+      return best ? { src: new URL(best.u, location.href).href, w: best.n } : { src: cur, w: img.naturalWidth };
+    };
+    // fotky, ktoré sa dajú zväčšiť, v poradí mriežky; listuje sa len medzi viditeľnými
+    const openers = () => $$('.shot .open').filter((b) => { const f = b.closest('.shot'); return $('img', f) && f.offsetParent !== null; });
+    let lbAt = -1;
+    const show = (btn) => {
       const fig = btn.closest('.shot'), img = $('img', fig);
       if (!img) return;
+      lbAt = openers().indexOf(btn);
+      const big = largest(img), ratio = (img.naturalHeight || img.height) / (img.naturalWidth || img.width) || 0.75;
+      // rozmer vopred, aby okno malo hneď tvar fotky; kým príde veľký súbor, ukáže sa dlaždica
+      lbImg.style.setProperty('--ar', ratio.toFixed(4)); lbImg.style.setProperty('--mw', big.w + 'px');
       lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+      const tok = ++lbTok;
+      if (big.src !== lbImg.src) { const pre = new Image(); pre.onload = () => { if (tok === lbTok) lbImg.src = big.src; }; pre.src = big.src; }
       lbCap.textContent = $('.cap b', fig) ? $('.cap b', fig).textContent + '. ' + $('.cap span', fig).textContent : img.alt;
+    };
+    // o jednu fotku ďalej alebo späť, na konci sa pokračuje od začiatku
+    const step = (d) => { const list = openers(); if (!list.length) return; show(list[(Math.max(lbAt, 0) + d + list.length) % list.length]); };
+    $$('.shot .open').forEach((btn) => btn.addEventListener('click', () => {
+      show(btn);
+      if (lb.open) return;
       if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
     }));
     $('.lb-close', lb).addEventListener('click', () => lb.close());
+    const prev = $('.lb-prev', lb), next = $('.lb-next', lb);
+    if (prev) prev.addEventListener('click', () => step(-1));
+    if (next) next.addEventListener('click', () => step(1));
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); step(e.key === 'ArrowLeft' ? -1 : 1); }
+    });
+    // potiahnutie prstom do strany: vodorovný pohyb aspoň 40 px
+    let sx = null, sy = 0;
+    lb.addEventListener('touchstart', (e) => { const t = e.touches[0]; sx = e.touches.length === 1 ? t.clientX : null; sy = t.clientY; }, { passive: true });
+    lb.addEventListener('touchend', (e) => {
+      if (sx === null) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+    }, { passive: true });
     lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   }
-  const staticCanvas = $('#scene-static');
-  let staticScene = null;
-  let srt;
-  addEventListener('resize', () => { if (!scrubOn) { clearTimeout(srt); srt = setTimeout(drawStatic, 120); } }, { passive: true });
-  const STATIC_P = 0.62, STATIC_FPS = 20;
-  let staticRaf = 0, staticStart = 0, staticLast = 0, staticOn = false;
-  function drawStatic() {
-    if (!staticCanvas) return;
-    if (!staticScene) staticScene = makeScene(staticCanvas, { view: 'still' });
-    staticScene.resize(); staticScene.draw(STATIC_P, true, staticStart ? (performance.now() - staticStart) / 1000 : 0);
-  }
-  function staticLive() { return staticOn && !scrubOn && !reduced.matches && !document.hidden && !document.body.classList.contains('idle'); }
-  function staticTick(now) {
-    if (!staticLive()) { staticRaf = 0; return; }
-    staticRaf = requestAnimationFrame(staticTick);
-    if (now - staticLast < 1000 / STATIC_FPS) return;
-    staticLast = now; if (!staticStart) staticStart = now;
-    staticScene.draw(STATIC_P, true, (now - staticStart) / 1000);
-  }
-  function staticWake() { if (!staticRaf && staticLive()) staticRaf = requestAnimationFrame(staticTick); }
-  if (staticCanvas) {
-    new IntersectionObserver((es) => { staticOn = es[0].isIntersecting; staticWake(); }, { threshold: 0.1 }).observe(staticCanvas);
-    document.addEventListener('visibilitychange', staticWake);
-    addEventListener('hs30wake', staticWake);
-  }
+  /* filter cenníka na telefóne: ťuknutá kategória sa posunie celá do obrazu, mimo zmiznutia na okraji riadku */
+  $$('#cennik .chip-row .chip').forEach((c) => c.addEventListener('click', () => {
+    const row = c.parentElement; if (row.scrollWidth <= row.clientWidth + 1) return;
+    const r = c.getBoundingClientRect(), rr = row.getBoundingClientRect(), pad = 52;
+    const d = r.right > rr.right - pad ? r.right - (rr.right - pad) : r.left < rr.left + pad ? r.left - (rr.left + pad) : 0;
+    if (d) row.scrollBy({ left: d, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }));
   function enableScrub() {
     if (scrubOn) return; scrubOn = true;
     initHeroOnce();
@@ -570,7 +271,8 @@
     unpinFinalStates();
     loadStart = performance.now(); loadK = 1;
     target = shown = heroProgress();
-    scene.draw(shown, true);
+    scene.setCuts(reelCuts());
+    scene.draw(shown);
     updateCaptions(shown, loadStart);
     onScroll();
   }
@@ -578,21 +280,20 @@
     if (!scrubOn) return; scrubOn = false;
     removeEventListener('scroll', onScroll);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-    clearTimeout(ambTimer);
     if (covered) { covered = false; env.classList.remove('covered'); }
   }
-  // the journey now runs on phones too; only a short landscape screen and reduced motion get the still
+  // prehliadka už beží aj na telefónoch; statický úvod dostane len nízka obrazovka na šírku a obmedzený pohyb
   const GATES = [
     '(max-height: 500px)',
     '(prefers-reduced-motion: reduce)'
   ];
   function applyHeroMode() {
-    if (GATES.some((q) => matchMedia(q).matches)) { disableScrub(); drawStatic(); staticWake(); } else enableScrub();
+    if (GATES.some((q) => matchMedia(q).matches)) disableScrub(); else enableScrub();
   }
   const MQLS = GATES.map((q) => matchMedia(q));
   MQLS.forEach((m) => m.addEventListener('change', applyHeroMode));
   // pri prechode cez 640 px (otočenie tabletu) sa hranice kapitol prepočítajú bez obnovenia stránky
-  phoneMQ.addEventListener('change', () => { if (scrubOn) { bandBounds(); target = shown = heroProgress(); scene.draw(shown, true); updateCaptions(shown); } });
+  phoneMQ.addEventListener('change', () => { if (scrubOn) { bandBounds(); scene.resize(); scene.setCuts(reelCuts()); target = shown = heroProgress(); scene.draw(shown); updateCaptions(shown); } });
 
   /* ============ dvere: raz za návštevu sa značka nakreslí a dvere sa otvoria ============ */
   const veil = $('.veil'), veilMark = veil && $('.mark', veil), navMark = $('.nav .mark');
@@ -620,26 +321,68 @@
     setTimeout(() => { if (!veilDone) veil.classList.add('through'); }, 260);   // a prejdeš cez ne
   }
 
-  /* ============ nav: solid after the top, and it holds your place ============ */
+  /* ============ navigácia: pod vrchom stránky plná a pri čítaní neprekáža ============ */
   const nav = $('.nav');
-  let navSolid = false;
+  let navSolid = false, navPrevY = 0;
+  // plná hlavička hneď, bez prelínania (skok, zmena jazyka, veľký posun): text pod ňou nikdy nepresvitá
+  const solidNow = () => {
+    nav.classList.add('now', 'solid'); navSolid = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => nav.classList.remove('now')));
+  };
   function navCheck() {
-    const s = scrollY > 40;
-    if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); }
+    const y = scrollY, s = y > 40;
+    if (s !== navSolid) { if (s && Math.abs(y - navPrevY) > innerHeight) solidNow(); else { navSolid = s; nav.classList.toggle('solid', s); } }
+    navPrevY = y;
   }
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
-  // the bar steps aside while you read downward and comes back the moment you scroll up
-  let lastY = scrollY, navHidden = false, navT = 0;
+  // lišta sa pri čítaní smerom dole uhne a vráti sa hneď, ako sa skroluje hore
+  let lastY = scrollY, navHidden = false, navT = 0, navJump = false, navJumpT = 0;
+  // skok na časť z menu alebo lišty: hlavička ostane viditeľná, cieľ pristane pod ňou (inak nad časťou zostane prázdny pás)
+  const holdNav = (on) => {
+    navJump = on; clearTimeout(navJumpT);
+    if (on) { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } navJumpT = setTimeout(() => { navJump = false; lastY = scrollY; }, 6000); }
+    else lastY = scrollY;
+  };
+  // na tablete lišta s menu ostáva stále; na telefóne sa uhne, len keď je dole spodná lišta s tlačidlom menu
+  const touchNavMQ = matchMedia('(max-width: 1024px), (hover: none)');
+  const navMayHide = () => !touchNavMQ.matches || (phoneMQ.matches && !!document.body.dataset.scene && document.body.dataset.scene !== 'hero');
   addEventListener('scroll', () => {
-    const y = scrollY, down = y > lastY + 4, up = y < lastY - 4;
-    if (down && y > 260 && !navHidden && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
-    else if ((up || y < 120) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
+    const y = scrollY, down = y > lastY + 4, up = y < lastY - 4, may = navMayHide();
+    if (down && y > 260 && !navHidden && may && !navJump && !(menu && menu.open)) { navHidden = true; nav.classList.add('hide'); }
+    else if ((up || y < 120 || !may) && navHidden) { navHidden = false; nav.classList.remove('hide'); }
     if (down || up) lastY = y;
     clearTimeout(navT); navT = setTimeout(() => { lastY = scrollY; }, 200);
   }, { passive: true });
   nav.addEventListener('focusin', () => { if (navHidden) { navHidden = false; nav.classList.remove('hide'); } });
 
-  /* ============ the hand: magnetic primary buttons, a light under the cursor on cards (fine pointers only) ============ */
+  /* ============ zmena jazyka: čítaš ďalej na tom istom mieste ============ */
+  /* Preklad mení výšku textov nad tebou (a Safari nemá ukotvenie posunu). Pred zmenou sa zapamätá prvok
+     tesne pod hlavičkou, kým preklad dobehne, drží sa na svojom mieste; hlavička sa medzitým neuhne. */
+  document.addEventListener('click', (e) => {
+    const pick = e.target.closest && e.target.closest('[data-lang-pick], .lang-offer [data-yes]');
+    if (!pick || pick.getAttribute('aria-checked') === 'true' || scrollY < 2) return;
+    const nb = nav.classList.contains('hide') ? 0 : nav.getBoundingClientRect().bottom;
+    const y = Math.max(nb + 12, 0);
+    const hit = (document.elementsFromPoint(innerWidth / 2, y) || []).find((el) => el.closest('.site>section, footer'));
+    const sec = hit ? hit.closest('.site>section, footer') : [...document.querySelectorAll('.site>section, footer')].find((s) => s.getBoundingClientRect().bottom > y);
+    if (!sec) return;
+    const pins = [hit, sec].filter(Boolean).map((el) => [el, el.getBoundingClientRect().top]);
+    let done = false, lang = false, stopT = 0;
+    const stop = () => { if (done) return; done = true; clearTimeout(stopT); removeEventListener('wheel', stop); removeEventListener('touchstart', stop); removeEventListener('keydown', stop); holdNav(false); };
+    const keep = () => {
+      if (done) return;
+      const pin = pins.find(([el]) => el.isConnected);
+      if (pin) { const d = Math.round(pin[0].getBoundingClientRect().top - pin[1]); if (Math.abs(d) > 1) scrollTo({ top: scrollY + d, behavior: 'instant' }); }
+      requestAnimationFrame(keep);
+    };
+    holdNav(true); if (navSolid) solidNow();
+    addEventListener('wheel', stop, { passive: true }); addEventListener('touchstart', stop, { passive: true }); addEventListener('keydown', stop);
+    document.addEventListener('langchange', () => { lang = true; clearTimeout(stopT); stopT = setTimeout(stop, 700); }, { once: true });
+    stopT = setTimeout(() => { if (!lang) stop(); }, 6000);
+    requestAnimationFrame(keep);
+  }, true);
+
+  /* ============ ruka: magnetické hlavné tlačidlá, svetlo pod kurzorom na kartách (len pri presnom ukazovadle) ============ */
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced.matches) {
     $$('.btn.primary').forEach((btn) => {
       btn.addEventListener('pointermove', (e) => {
@@ -655,33 +398,116 @@
     }, { passive: true }));
   }
   let atBottom = false;
-  /* reading progress: one hairline, driven by the scroll listener that is already here */
+  /* postup čítania: jedna vlasová linka, poháňa ju poslucháč skrolovania, ktorý tu už je.
+     Výška stránky sa číta len keď sa zmení (ResizeObserver), nie pri každom skrole: čítanie
+     scrollHeight po zápise štýlu by v každej snímke vynútilo prepočet rozloženia */
   const prog = document.createElement('div');
   prog.className = 'prog'; prog.setAttribute('aria-hidden', 'true');
   if (!reduced.matches) document.body.appendChild(prog);
-  let progRaf = 0;
+  let progRaf = 0, maxY = 0, progK = '', progOn = false;
+  const measureMax = () => { maxY = document.documentElement.scrollHeight - innerHeight; };
+  measureMax();
+  new ResizeObserver(() => { measureMax(); if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg); }).observe(document.body);
+  addEventListener('resize', measureMax, { passive: true });
   function drawProg() {
     progRaf = 0;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const k = max > 40 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-    prog.style.transform = 'scaleX(' + k.toFixed(4) + ')';
-    prog.classList.toggle('on', scrollY > 120);
+    const y = scrollY, k = (maxY > 40 ? Math.min(1, Math.max(0, y / maxY)) : 0).toFixed(4);
+    if (k !== progK) { progK = k; prog.style.transform = 'scaleX(' + k + ')'; }
+    const on = y > 120;
+    if (on !== progOn) { progOn = on; prog.classList.toggle('on', on); }
   }
   addEventListener('scroll', () => {
-    const b = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+    const b = scrollY >= maxY - 2;
     if (b !== atBottom) { atBottom = b; if (b) document.body.dataset.scene = 'footer'; else sceneUpdate(); }
     if (!reduced.matches && !progRaf) progRaf = requestAnimationFrame(drawProg);
   }, { passive: true });
   const navLinks = $$('.links a');
+  /* ============ skok na časť: nadpisok časti pristane vždy rovnako pod lištou (aj cenník, ktorý nemá vnútorný okraj) ============ */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button > 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const id = a.getAttribute('href'); if (!/^#[\w-]+$/.test(id)) return;
+    if (id === '#top') { e.preventDefault(); scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' }); history.replaceState(null, '', location.pathname + location.search); return; }
+    const sec = document.querySelector(id);
+    if (!sec || !sec.matches('.site>section')) return;
+    const mark = sec.querySelector(':scope>.wrap .kicker') || sec.querySelector(':scope>.wrap') || sec;
+    e.preventDefault();
+    // všetky časti sa vykreslia naraz, aby odhadnutá výška nepreskočených častí neposunula cieľ
+    document.documentElement.classList.add('cv-all');
+    const behavior = reduced.matches ? 'auto' : 'smooth';
+    // nadpisok v prilepenom stĺpci (otázky, priebeh) sa meria na svojom mieste v toku, nie tam, kde práve visí;
+    // inak skok zdola skončí na konci zoznamu otázok
+    const stick = mark.closest('.sticky');
+    const markTop = () => {
+      if (!stick) return mark.getBoundingClientRect().top;
+      const was = stick.style.position; stick.style.position = 'static';
+      const t = mark.getBoundingClientRect().top; stick.style.position = was; return t;
+    };
+    const goal = () => Math.max(0, Math.round(markTop() + scrollY - (nav.offsetHeight || 72) - 32));
+    // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
+    holdNav(true); solidNow();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      scrollTo({ top: goal(), behavior });
+      history.replaceState(null, '', id);
+      // po dobehnutí tiché opravy, kým sa niečo nad cieľom dopočítava (najviac tri kolá), potom hlavička znova reaguje na čítanie
+      let kola = 0;
+      const dorovnaj = () => {
+        const g = goal();
+        if (Math.abs(g - scrollY) > 1 && kola++ < 3) { scrollTo({ top: g, behavior: 'auto' }); requestAnimationFrame(() => requestAnimationFrame(dorovnaj)); }
+        else holdNav(false);
+      };
+      if ('onscrollend' in window) addEventListener('scrollend', () => requestAnimationFrame(dorovnaj), { once: true });
+      else setTimeout(dorovnaj, 900);
+    }));
+  });
+
+  /* ============ časti stránky: bočná lišta (počítač) aj menu (telefón, tablet) ukazujú, kde práve si ============ */
+  const secLinks = $$('#rail .rail-list a, #drawer .drawer-links a');
+  const secTargets = [...new Set(secLinks.map((a) => a.getAttribute('href')))].map((id) => [id, document.querySelector(id)]).filter((x) => x[1]);
+  if (secTargets.length) {
+    let curSec = null, queued = false;
+    const markSec = () => {
+      queued = false;
+      const y = innerHeight * 0.4; let on = secTargets[0][0];
+      // skrytá časť (napr. prázdny Tím) nemá polohu, preskočí sa
+      secTargets.forEach(([id, t]) => { if (t.offsetParent !== null && t.getBoundingClientRect().top < y) on = id; });
+      if (on === curSec) return;
+      curSec = on;
+      secLinks.forEach((a) => { const m = a.getAttribute('href') === on; a.classList.toggle('on', m); if (m) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(markSec); } }, { passive: true });
+    markSec();
+  }
+  /* bočná lišta a tlačidlo Späť hore sú len tam, kde je vedľa obsahu naozaj voľný okraj; inak stačí menu */
+  const fitGutter = () => {
+    let right = 0; $$('.site>section>.wrap').forEach((w) => { right = Math.max(right, w.getBoundingClientRect().right); });
+    const free = document.documentElement.clientWidth - right;
+    document.documentElement.classList.toggle('gutter-ok', right > 0 && free >= 80);
+    // popisy čiariek sa ukazujú len vtedy, keď sa celé zmestia do okraja (inak by zakryli obsah, napr. + pri otázkach)
+    // šírka sa meria vždy v podobe popisu vedľa čiarky (v úzkom okraji sa popis zalamuje a bol by užší)
+    document.documentElement.classList.add('gutter-wide');
+    let lbl = 0; $$('#rail .rail-list a span').forEach((s) => { lbl = Math.max(lbl, s.offsetWidth); });
+    const rail = document.getElementById('rail');
+    const railLeft = rail && rail.offsetWidth ? rail.getBoundingClientRect().left : document.documentElement.clientWidth - 64;
+    document.documentElement.classList.toggle('gutter-wide', right > 0 && free >= 80 && lbl > 0 && railLeft - 10 - lbl >= right + 12);
+    // úzky okraj: popis čiarky sa ukáže pod lištou, najviac taký široký, ako je voľný okraj (8 px od obsahu aj od kraja okna)
+    document.documentElement.style.setProperty('--rail-room', Math.max(0, Math.round(free - 16)) + 'px');
+  };
+  let fitT = 0;
+  addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitGutter, 150); }, { passive: true });
+  addEventListener('load', fitGutter);
+  document.addEventListener('langchange', () => requestAnimationFrame(fitGutter));
+  fitGutter();
+
   const spied = new Set();
   const spy = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) spied.add(e.target); else spied.delete(e.target); });
-    let cur = null; $$('#cennik,#rezervacia,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
+    let cur = null; $$('#cennik,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => { if (spied.has(s)) cur = s; });
     navLinks.forEach((a) => a.classList.toggle('cur', !!cur && a.getAttribute('href') === '#' + cur.id));
   }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-  $$('#cennik,#rezervacia,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
+  $$('#cennik,#poukaz,#ritual,#salon,#galeria,#faq,#kontakt').forEach((s) => spy.observe(s));
 
-  /* ============ the light is handed from room to room ============ */
+  /* ============ svetlo sa podáva z miestnosti do miestnosti ============ */
   const scenes = $$('[data-scene]');
   const inScene = new Set();
   document.body.dataset.scene = 'hero';
@@ -696,7 +522,7 @@
   }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
   scenes.forEach((s) => sceneIO.observe(s));
 
-  /* ============ stillness: sections rest off screen, the page rests when the visitor does ============ */
+  /* ============ pokoj: sekcie mimo obrazovky odpočívajú, stránka odpočíva spolu s návštevníkom ============ */
   const liveIO = new IntersectionObserver((es) => { es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)); if (typeof driveLines === 'function') driveLines(); }, { threshold: 0 });
   $$('.gift,.book,.contact').forEach((s) => liveIO.observe(s));
   let idleT;
@@ -709,7 +535,7 @@
   }
   ['scroll', 'pointermove', 'pointerdown', 'keydown', 'touchstart', 'wheel'].forEach((ev) => addEventListener(ev, wake, { passive: true }));
 
-  /* ============ entrances ============ */
+  /* ============ príchody ============ */
   const rv = $$('.rv');
   const rio = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
@@ -718,8 +544,8 @@
   }), { threshold: 0, rootMargin: '0px 0px -10% 0px' });
   rv.forEach((el) => rio.observe(el));
 
-  /* ============ scroll drives: the water line, the lit numerals, the quote (no extra loops) ============ */
-  /* every .steps block runs its own water line, independently of the others */
+  /* ============ pohyb zo skrolovania: vodná linka, rozsvietené číslice, citát (bez ďalších slučiek) ============ */
+  /* každý blok .steps má vlastnú vodnú linku, nezávisle od ostatných */
   let pinned = false;
   const streams = $$('.steps').map((box) => {
     const path = $('.stream .draw', box);
@@ -740,7 +566,7 @@
     if (pinned) return;
     streams.forEach((s) => {
       const r = s.box.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > innerHeight + 200) return;   // off screen, nothing to draw
+      if (r.bottom < -200 || r.top > innerHeight + 200) return;   // mimo obrazovky, nie je čo kresliť
       const p = clamp((innerHeight * 0.78 - r.top) / r.height, 0, 1);
       const d = Math.round(s.len * (1 - p));
       if (d !== s.lastDash) { s.lastDash = d; s.path.style.strokeDashoffset = d; }
@@ -749,7 +575,7 @@
   }
   addEventListener('scroll', driveLines, { passive: true }); driveLines();
 
-  /* ============ counters (ledger numerals) ============ */
+  /* ============ počítadlá (číslice ako v účtovnej knihe) ============ */
   const counters = $$('[data-count]');
   const counted = new Set();
   function runCounter(el) {
@@ -784,7 +610,7 @@
   }
   reduced.addEventListener('change', (e) => { if (e.matches) pinToFinalStates(); else { unpinFinalStates(); applyHeroMode(); } });
 
-  /* ============ price list: filters, finder, details, the cascade ============ */
+  /* ============ cenník: filtre, vyhľadávač, detaily, kaskáda ============ */
   const cards = $$('.card'), cats = $$('.cat'), count = $('.count');
   let activeCat = 'all';
   function cascade(list) {
@@ -793,7 +619,7 @@
     void document.body.offsetWidth;
     list.forEach((c, i) => { c.style.setProperty('--i', i); c.classList.add('pop'); }); sweepPop();
   }
-  // animationend can be missed (hidden tab, a card filtered out mid-animation), so a timer sweeps up too
+  // animationend sa môže stratiť (skrytá karta prehliadača, karta odfiltrovaná počas animácie), preto upratuje aj časovač
   let popSweep = 0;
   function sweepPop() { clearTimeout(popSweep); popSweep = setTimeout(() => cards.forEach((c) => c.classList.remove('pop')), 1400); }
   cards.forEach((c) => c.addEventListener('animationend', (e) => { if (e.animationName === 'cardIn') c.classList.remove('pop'); }));
@@ -817,15 +643,9 @@
     en: { all: (t) => `Showing all ${t} rituals`, some: (n, t) => `Showing ${n} of ${t} rituals` },
   };
 
-  /* Čas a rozpočet, aby sa dalo z 34 rituálov vybrať bez čítania všetkých. */
-  const fTime = $('#f-time'), fPrice = $('#f-price'), fClear = $('#f-clear'), noHit = $('#noHit');
-  let maxMin = Infinity, maxEur = Infinity;
-  const limited = () => maxMin !== Infinity || maxEur !== Infinity;
-  const fits = (c) => +c.dataset.min <= maxMin && +c.dataset.price <= maxEur;
-
   function applyFilter(fromChip) {
     let n = 0; const shown = [];
-    cards.forEach((c) => { const show = inCat(c) && fits(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
+    cards.forEach((c) => { const show = inCat(c); c.classList.toggle('hidden', !show); if (show) { n++; shown.push(c); } else c.classList.remove('pop'); });
     /* nadpis kategórie zmizne aj vtedy, keď v nej po obmedzení nič nezostalo */
     cats.forEach((l) => {
       const zije = shown.some((c) => c.dataset.cat === l.dataset.cat);
@@ -833,37 +653,28 @@
     });
     if (count) {
       const W = COUNT_WORDS[(document.documentElement.lang || 'sk').slice(0, 2)] || COUNT_WORDS.sk;
-      count.textContent = (activeCat === 'all' && !limited()) ? W.all(cards.length) : W.some(n, cards.length);
+      count.textContent = activeCat === 'all' ? W.all(cards.length) : W.some(n, cards.length);
     }
-    if (noHit) noHit.hidden = n > 0;
-    if (fClear) fClear.hidden = !limited();
     if (fromChip) cascade(shown);
   }
-  function readLimits() {
-    maxMin = fTime ? (+fTime.value || Infinity) : Infinity;
-    maxEur = fPrice ? (+fPrice.value || Infinity) : Infinity;
-    if (maxMin >= 999) maxMin = Infinity;
-    if (maxEur >= 9999) maxEur = Infinity;
-  }
-  [fTime, fPrice].forEach((s) => s && s.addEventListener('change', () => { readLimits(); applyFilter(true); }));
-  if (fClear) fClear.addEventListener('click', () => {
-    if (fTime) fTime.value = '999';
-    if (fPrice) fPrice.value = '9999';
-    readLimits(); applyFilter(true);
-  });
   function pickCat(cat, fromChip) {
     $$('.tools .chip').forEach((x) => x.setAttribute('aria-pressed', x.dataset.filter === cat ? 'true' : 'false'));
     activeCat = cat; applyFilter(fromChip);
   }
   $$('.tools .chip').forEach((b) => b.addEventListener('click', () => pickCat(b.dataset.filter, true)));
-  /* a link elsewhere on the page can open the list already filtered by category */
-  $$('[data-cat-jump]').forEach((a) => a.addEventListener('click', () => {
-    pickCat(a.dataset.catJump, true);
-    const id = (a.getAttribute('href') || '').slice(1), target = id && document.getElementById(id);
-    if (target && target.classList.contains('card')) {
-      const open = !target.classList.contains('open');
-      if (open) { const b = $('.card-toggle', target); if (b) b.click(); }
-    }
+  /* tip Prvýkrát u nás: keď iný filter rituál skryl, zobrazí sa znova celý zoznam a stránka k nemu
+     doskroluje (aj opakovane, hoci adresa už kotvu má) */
+  $$('.first-tip a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if (!t || e.button > 0 || e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    if (t.classList.contains('hidden')) pickCat('all', true);
+    // film práve otvoril všetky časti (world.js), výška stránky sa ustáli až v ďalšom snímku
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const nav = $('.nav'), off = (nav ? nav.offsetHeight : 72) + 16;
+      scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + scrollY - off), behavior: reduced.matches ? 'auto' : 'smooth' });
+      history.replaceState(null, '', a.getAttribute('href'));
+    }));
   }));
   applyFilter(false);
   document.addEventListener('langchange', () => applyFilter(false));
@@ -874,489 +685,110 @@
     $('.panel', c).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* ============ faq ============ */
+  /* ============ časté otázky ============ */
   $$('.faq-q').forEach((b) => b.addEventListener('click', () => {
     const it = b.closest('.faq-item'); const open = !it.classList.contains('open');
     it.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
     $('.faq-a', it).setAttribute('aria-hidden', String(!open));
   }));
 
-  /* ============ vouchers: pick, preview on the ticket, send as an e-mail order ============ */
-  idle(function poukazy() {
-    const vform = $('#vform');
-    if (vform) {
-      const sel = $('#v-ritual', vform), tVal = $('#t-val'), tFor = $('#t-for'), tVen = $('#t-ven');
-      const err = $('.err', vform), done = $('.sent', vform), emailField = $('#v-email', vform);
-      const val = (name) => (vform.querySelector(`input[name="${name}"]:checked`) || {}).value || '';
-      const ritualName = () => (sel.options[sel.selectedIndex] || {}).value || '';
-      const fieldVal = (id) => ($(id, vform).value || '').trim();
-      function preview() {
-        // poukaz je vždy na konkrétny rituál z ponuky
-        const shown = ritualName().replace(/\s*\(.*$/, '');
-        tVal.textContent = shown; tVal.classList.toggle('long', shown.length > 12);
-        const pre = fieldVal('#v-pre');
-        tFor.textContent = pre ? `Pre: ${pre}` : 'Daruj oddych.';
-        const ven = fieldVal('#v-ven');
-        tVen.textContent = ven || 'Mostná 30 · prémiový relaxačný zážitok';
-      }
-      vform.addEventListener('input', preview); vform.addEventListener('change', preview); preview();
-      vform.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = fieldVal('#v-email'), ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-        err.hidden = ok; emailField.closest('.field').classList.toggle('invalid', !ok);
-        if (!ok) { emailField.focus(); return; }
-        const what = `Rituál: ${ritualName()}`;
-        const lines = ['Dobrý deň,', '', 'objednávam darčekový poukaz HEAD SPA 30.', '', what,
-          `Pre: ${fieldVal('#v-pre') || '(nevyplnené)'}`, `Od: ${fieldVal('#v-od') || '(nevyplnené)'}`,
-          `E-mail: ${email}`, `Telefón: ${fieldVal('#v-tel') || '(nevyplnené)'}`,
-          `Doručenie: ${val('dorucenie')}`, `Venovanie: ${fieldVal('#v-ven') || '(bez venovania)'}`, '',
-          'Prosím o zaslanie platobných údajov.', 'Ďakujem.'];
-        const subject = `Objednávka poukazu: ${ritualName().replace(/\s*\(.*$/, '')}`;
-        track('voucher_order', { value: ritualName(), delivery: val('dorucenie') });
-        done.hidden = false;
-        location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-      });
-    }
+  /* ============ rýchla cesta k nákupu: rezervácia a poukaz idú rovno do Booqme ============
+     Každé tlačidlo Rezervovať a Kúpiť poukaz je obyčajný odkaz do Booqme (nová karta), bez medzikroku.
+     Pri rituáli je odkaz Darovať ako poukaz: keď admin k rituálu vložil platbu kartou (nastavenia, "platby"),
+     vedie na ňu a volá sa Kúpiť poukaz kartou, inak do obchodu s poukazmi. */
+  const PLATBY = NASTAVENIA.platby || {};
+  const httpsUrl = (u) => { try { return typeof u === 'string' && new URL(u).protocol === 'https:' ? u : ''; } catch (e) { return ''; } };
+  $$('.card [data-gift]').forEach((a) => {
+    const u = httpsUrl(PLATBY[a.dataset.gift]);
+    if (!u) return;
+    a.href = u; a.textContent = 'Kúpiť poukaz kartou'; a.dataset.pay = '';
   });
-
-  /* ============ booking: pick one of the 17 rituals, a day and a time window; the message leaves from the guest's own phone ============ */
-
-  /* ============ rezervácia: každé tlačidlo vedie do online kalendára ============
-     Adresa je na jedinom mieste, v atribúte data-booking na <html>. Formulár na
-     stránke zostáva ako záloha, vedie naň položka Rezervácia v menu. Bez
-     JavaScriptu tlačidlá stále fungujú, len skončia pri formulári. */
-  const BOOKING = (document.documentElement.dataset.booking || '').trim();
-  function toBooking(a) {
-    if (!a || !BOOKING) return;
-    a.href = BOOKING; a.target = '_blank'; a.rel = 'noopener';
-  }
-  if (BOOKING) {
-    $$('a[data-booking-link], a.btn[href="#rezervacia"], .mbar a[href="#rezervacia"]').forEach(toBooking);
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href^="http"][target="_blank"]');
-      if (a && a.href === BOOKING) track('booking_open', { from: (a.dataset.book || a.className || 'cta').slice(0, 40) });
+  /* Booqme má stránky v jazyku návštevníka; slovenčina ostáva v HTML ako predvolená */
+  const BQ_BOOK = { sk: 'rezervacia', cs: 'rezervace', hu: 'foglalas', en: 'reservation', de: 'reservation', pl: 'reservation', uk: 'reservation' };
+  const BQ_RE = /^https:\/\/booqme\.app\/[a-z]{2}\/(rezervacia|rezervace|foglalas|reservation|eshop)\//;
+  function booqmeLang(lang) {
+    const L = BQ_BOOK[lang] ? lang : 'sk';
+    $$('a[href^="https://booqme.app/"]').forEach((a) => {
+      const h = a.getAttribute('href'), m = h.match(BQ_RE); if (!m) return;
+      const to = h.replace(BQ_RE, `https://booqme.app/${L}/${m[1] === 'eshop' ? 'eshop' : BQ_BOOK[L]}/`);
+      if (to !== h) a.setAttribute('href', to);
     });
   }
+  booqmeLang((document.documentElement.lang || 'sk').slice(0, 2));
+  document.addEventListener('langchange', (e) => booqmeLang((e.detail && e.detail.lang) || (document.documentElement.lang || 'sk').slice(0, 2)));
 
-  /* ============ poradca: tri otázky nad cenníkom, odporúčanie z kariet ============ */
-  idle(function advisor() {
-    const box = $('#poradca'); if (!box) return;
-    const res = $('#advRes', box);
-    const answer = {};
-    // rituály čítame z kariet, aby cenník a poradca nikdy nešli od seba
-    const list = $$('.card').map((c) => ({
-      id: c.dataset.id, cat: c.dataset.cat, goal: c.dataset.goal || 'relax', duo: c.dataset.duo === '1' || c.dataset.cat === 'couple',
-      min: +c.dataset.min, eur: +c.dataset.price,
-      name: ($('h3', c) || {}).textContent || '', tag: ($('.tag', c) || {}).textContent || '',
-      dur: ($('.meta span', c) || {}).textContent || '', price: ($('.meta strong', c) || {}).textContent || '',
-    })).filter((r) => r.id);
-
-    const FITS = { self: (r) => r.cat !== 'kids' && r.cat !== 'gentlemen' && !r.duo, men: (r) => r.cat === 'gentlemen' && !r.duo, kid: (r) => r.cat === 'kids', duo: (r) => r.duo };
-    function pick() {
-      const kto = answer.kto, cas = +answer.cas, ciel = answer.ciel;
-      let pool = list.filter(FITS[kto] || (() => true));
-      if (!pool.length) pool = list.slice();
-      const scored = pool.map((r) => {
-        let sc = 0;
-        // to, čo človek chce, váži viac než presné dodržanie času; keď sa rituál do okna nezmestí, povieme to
-        if (r.goal === ciel) sc += 8;
-        else if ((ciel === 'lux' && r.eur >= 109) || (ciel === 'relax' && r.goal === 'beauty')) sc += 2;
-        if (r.min <= cas) sc += 4 - Math.min(3, (cas - r.min) / 20);
-        else sc -= 1.5 + (r.min - cas) / 60;
-        return { r, sc };
-      }).sort((a, b) => b.sc - a.sc || a.r.eur - b.r.eur);
-      return scored.map((x) => x.r);
-    }
-    function show() {
-      if (!answer.kto || !answer.cas || !answer.ciel) return;
-      const [best, second] = pick();
-      if (!best) return;
-      const fits = best.min <= +answer.cas;
-      const why = best.tag + (fits ? '.' : '. Trvá ' + best.min + ' minút, takže si treba vyhradiť o niečo viac času.');
-      res.hidden = false;
-      res.innerHTML = '<span class="r-lbl">Odporúčame</span>'
-        + '<p class="r-name">' + best.name + '</p>'
-        + '<p class="r-meta"><span>' + best.dur + '</span><b>' + best.price + '</b></p>'
-        + '<p class="r-why">' + why + '</p>'
-        + '<div class="r-cta"><a class="btn primary small" href="#rezervacia" data-book="' + best.id + '">Rezervovať</a>'
-        + '<a class="btn ghost small" href="#' + best.id + '" data-jump="' + best.id + '">Pozrieť rituál</a></div>'
-        + (second ? '<p class="r-alt">Alebo <a href="#' + second.id + '" data-jump="' + second.id + '">' + second.name + '</a>, ' + second.dur + ' · ' + second.price + '.</p>' : '');
-      const go = $('.btn.primary', res); if (typeof toBooking === 'function') toBooking(go);
-      track('advisor_result', { ritual: best.id, kto: answer.kto, cas: answer.cas, ciel: answer.ciel });
-    }
-    box.addEventListener('click', (e) => {
-      const b = e.target.closest('.adv-opts .chip');
-      if (b) {
-        const q = b.closest('.adv-q').dataset.q;
-        $$('.chip', b.parentElement).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-        answer[q] = b.dataset.v; show(); return;
-      }
-      const j = e.target.closest('[data-jump]');
-      if (j) {
-        const card = document.getElementById(j.dataset.jump);
-        if (card) { $$('.card.pick').forEach((c) => c.classList.remove('pick')); card.classList.add('pick'); setTimeout(() => card.classList.remove('pick'), 3000); }
-      }
-    });
-  });
-
-  idle(function rezervacia() {
-    const rform = $('#rform');
-    if (rform) {
-      const sel = $('#r-ritual'), rHint = $('#r-ritual-hint'), osobyWrap = $('#r-osoby-wrap'), osobyHint = $('#r-osoby-hint');
-      const datum = $('#r-datum'), datumHint = $('#r-datum-hint'), casBox = $('#r-cas'), casHint = $('#r-cas-hint');
-      const presnyWrap = $('#r-presny'), presny = $('#r-cas-presny'), presnyHint = $('#r-presny-hint');
-      const nahradny = $('#r-nahradny'), datum2 = $('#r-datum2'), cas2Box = $('#r-cas2');
-      const meno = $('#r-meno'), tel = $('#r-tel'), email = $('#r-email'), poukaz = $('#r-poukaz'), pozn = $('#r-pozn'), poznHint = $('#r-pozn-hint');
-      const err = $('.err', rform), wa = $('#r-wa'), sent = $('#r-sent'), sentText = $('#r-sent-text'), copyBtn = $('#r-copy'), copyText = $('#r-copytext'), sms = $('#r-sms');
-      const tVal = $('#rt-val'), tFor = $('#rt-for'), tWhen = $('#rt-when'), confirmEl = $('#r-confirm');
-      const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15] };
-      const DAYS = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
-      const WINDOW = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 16)', eve: 'podvečer (16 až 18)' };
-      const WINDOW_SAT = { any: 'kedykoľvek', am: 'dopoludnia (9 až 12)', pm: 'popoludní (12 až 15)' };
-      const NOTE_PH = { kids: 'Vek dieťaťa a čo má rado.', couple: 'Meno druhej osoby, alergie, darček.', deep: 'Čo ťa na pokožke hlavy trápi.', base: 'napr. citlivá pokožka, tehotenstvo, alergia, darček' };
-      const pad = (n) => String(n).padStart(2, '0');
-      const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
-      const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-      const parse = (v) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return null; const [y, m, d] = v.split('-').map(Number); const dt = new Date(y, m - 1, d); return isNaN(dt) || dt.getDate() !== d ? null : dt; };
-      const fmt = (d) => `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
-      const hm = (h) => `${pad(Math.floor(h))}:${pad(Math.round((h - Math.floor(h)) * 60))}`;
-      const val = (name) => (rform.querySelector(`input[name="${name}"]:checked`) || {}).value || 'any';
-      const setVal = (name, v) => { const i = rform.querySelector(`input[name="${name}"][value="${v}"]`); if (i) i.checked = true; };
-      const ritual = () => { const o = sel.options[sel.selectedIndex]; return o && o.value ? { slug: o.value, name: o.dataset.name, min: +o.dataset.min, price: o.dataset.price, cat: o.dataset.cat } : null; };
-      const isCouple = () => { const r = ritual(); return !!r && r.cat === 'couple'; };
-      const persons = () => (isCouple() ? 2 : +val('osoby'));
-      const duration = () => { const r = ritual(); return r ? r.min * (isCouple() ? 1 : persons()) : 0; };
-      const lastStart = (d) => { const h = HOURS[d.getDay()]; return h ? h[1] - duration() / 60 : null; };
-      const REF = 'HS30-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-      const t0 = today(), tMax = new Date(t0); tMax.setDate(tMax.getDate() + 180);
-      [datum, datum2].forEach((i) => { i.min = iso(t0); i.max = iso(tMax); });
-      let message = '', shortMessage = '', opened = 0, dayNote = '', dayNoteUntil = 0;
-      const note = (t) => { dayNote = t; dayNoteUntil = Date.now() + 6000; };
-
-      // ---- slová pre dni a pre vetu o potvrdení (dynamické, preto nie v i18n súboroch)
-      const DAY_WORDS = {
-        sk: { today: 'Dnes', tomorrow: 'Zajtra', d: ['ne', 'po', 'ut', 'st', 'št', 'pi', 'so'] },
-        cs: { today: 'Dnes', tomorrow: 'Zítra', d: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'] },
-        pl: { today: 'Dziś', tomorrow: 'Jutro', d: ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'] },
-        hu: { today: 'Ma', tomorrow: 'Holnap', d: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] },
-        de: { today: 'Heute', tomorrow: 'Morgen', d: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'] },
-        uk: { today: 'Сьогодні', tomorrow: 'Завтра', d: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'] },
-        en: { today: 'Today', tomorrow: 'Tomorrow', d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
-      };
-      const CONFIRM_WORDS = {
-        sk: { open: 'Sme otvorení. Ozveme sa ti dnes, zvyčajne do pár hodín.', soon: 'Dnes otvárame o {t}, vtedy ti napíšeme.', shut: 'Teraz máme zatvorené. Ozveme sa ti {d} po {t}.', tomorrow: 'zajtra', days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
-        cs: { open: 'Máme otevřeno. Ozveme se ti dnes, obvykle do pár hodin.', soon: 'Dnes otevíráme v {t}, tehdy ti napíšeme.', shut: 'Teď máme zavřeno. Ozveme se ti {d} po {t}.', tomorrow: 'zítra', days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
-        pl: { open: 'Jesteśmy otwarci. Odezwiemy się dziś, zwykle w ciągu kilku godzin.', soon: 'Dziś otwieramy o {t}, wtedy napiszemy.', shut: 'Teraz jest zamknięte. Odezwiemy się {d} po {t}.', tomorrow: 'jutro', days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
-        hu: { open: 'Nyitva vagyunk. Ma jelentkezünk, általában pár órán belül.', soon: 'Ma {t}-kor nyitunk, akkor írunk.', shut: 'Most zárva vagyunk. {d} {t} után jelentkezünk.', tomorrow: 'holnap', days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
-        de: { open: 'Wir haben geöffnet. Wir melden uns heute, meist innerhalb weniger Stunden.', soon: 'Wir öffnen heute um {t} und melden uns dann.', shut: 'Gerade ist geschlossen. Wir melden uns {d} nach {t}.', tomorrow: 'morgen', days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
-        uk: { open: 'Ми відчинені. Відповімо сьогодні, зазвичай за кілька годин.', soon: 'Сьогодні відчиняємо о {t}, тоді й напишемо.', shut: 'Зараз зачинено. Відповімо {d} після {t}.', tomorrow: 'завтра', days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
-        en: { open: 'We are open. We will get back to you today, usually within a few hours.', soon: 'We open today at {t} and will write to you then.', shut: 'We are closed right now. We will get back to you {d} after {t}.', tomorrow: 'tomorrow', days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
-      };
-      const lang = () => (document.documentElement.lang || 'sk').slice(0, 2);
-      const words = (map) => map[lang()] || map.sk;
-
-      // ---- deň sa vyberá ťuknutím: desať najbližších otvorených dní
-      const dniBox = $('#r-dni'), inyBtn = $('#r-iny'), datumWrap = $('#r-datum-wrap');
-      function buildDays() {
-        const W = words(DAY_WORDS), list = [], d = new Date(t0);
-        while (list.length < 10) { if (HOURS[d.getDay()]) list.push(new Date(d)); d.setDate(d.getDate() + 1); }
-        dniBox.innerHTML = list.map((dt) => {
-          const diff = Math.round((dt - t0) / 86400000);
-          const top = diff === 0 ? W.today : diff === 1 ? W.tomorrow : W.d[dt.getDay()];
-          return `<label class="day"><input type="radio" name="den" value="${iso(dt)}"><span><b>${top}</b><i>${dt.getDate()}. ${dt.getMonth() + 1}.</i></span></label>`;
-        }).join('');
-        syncDays();
-      }
-      // chip zapnutý podľa dátumu; dnešok zhasne, keď už rituál nestihneme
-      function syncDays() {
-        const v = datum.value, now = new Date();
-        $$('input[name="den"]', dniBox).forEach((i) => {
-          i.checked = i.value === v;
-          const d = parse(i.value), late = d && d.getTime() === t0.getTime() && ritual() && now.getHours() + now.getMinutes() / 60 > lastStart(d);
-          i.disabled = !!late; i.closest('.day').classList.toggle('off', !!late);
-          if (late && i.checked) { i.checked = false; datum.value = ''; note('Dnes už tento rituál nestihneme, vyber ďalší deň alebo nám zavolaj.'); }
-        });
-        const known = !!v && $$('input[name="den"]', dniBox).some((i) => i.value === v);
-        if (v && !known && datumWrap.hidden) openIny(true);
-      }
-      function openIny(open) { datumWrap.hidden = !open; inyBtn.setAttribute('aria-expanded', String(open)); }
-      dniBox.addEventListener('change', (e) => {
-        const i = e.target.closest('input[name="den"]'); if (!i) return;
-        datum.value = i.value; openIny(false); refresh();
-      });
-      inyBtn.addEventListener('click', () => {
-        const open = datumWrap.hidden; openIny(open);
-        if (open) datum.focus({ preventScroll: true }); else { datum.value = ''; refresh(); }
-      });
-
-      // ---- kedy sa ozveme, podľa skutočných otváracích hodín
-      // čas salónu, nie čas návštevníkovho telefónu
-      function salonNow() {
-        try {
-          const parts = new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
-          const get = (t) => (parts.find((x) => x.type === t) || {}).value;
-          const map = { ne: 0, po: 1, ut: 2, st: 3, št: 4, pi: 5, so: 6 };
-          const wd = map[(get('weekday') || '').toLowerCase().replace('.', '').slice(0, 2)];
-          const cur = (+get('hour') % 24) + (+get('minute') || 0) / 60;
-          if (wd !== undefined && !isNaN(cur)) return { wd, cur };
-        } catch (e) { /* staršie prehliadače: použijeme lokálny čas */ }
-        const d = new Date(); return { wd: d.getDay(), cur: d.getHours() + d.getMinutes() / 60 };
-      }
-      function confirmText() {
-        const W = words(CONFIRM_WORDS), now = salonNow(), h = HOURS[now.wd], cur = now.cur;
-        if (h && cur >= h[0] && cur < h[1]) return { text: W.open, open: true };
-        if (h && cur < h[0]) return { text: W.soon.replace('{t}', hm(h[0])), open: false };
-        let d = (now.wd + 1) % 7, n = 1;
-        while (!HOURS[d]) { d = (d + 1) % 7; n++; }
-        return { text: W.shut.replace('{d}', n === 1 ? W.tomorrow : W.days[d]).replace('{t}', hm(HOURS[d][0])), open: false };
-      }
-
-      // ---- rozpísaný formulár prežije obnovenie stránky (24 hodín, len v prehliadači)
-      const DRAFT = 'hs30-rezervacia';
-      const FIELDS = ['r-ritual', 'r-datum', 'r-cas-presny', 'r-datum2', 'r-meno', 'r-tel', 'r-email', 'r-poukaz', 'r-pozn'];
-      function saveDraft() {
-        try {
-          const v = {}; FIELDS.forEach((id) => { const el = $('#' + id); if (el && el.value) v[id] = el.value; });
-          ['osoby', 'cas', 'cas2'].forEach((n) => { v[n] = val(n); });
-          localStorage.setItem(DRAFT, JSON.stringify({ t: Date.now(), v }));
-        } catch (e) { /* súkromný režim: koncept sa jednoducho neuloží */ }
-      }
-      function loadDraft() {
-        let d; try { d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { return; }
-        if (!d || !d.v || Date.now() - d.t > 864e5) return;
-        const v = d.v;
-        FIELDS.forEach((id) => { const el = $('#' + id); if (el && v[id]) el.value = v[id]; });
-        ['osoby', 'cas', 'cas2'].forEach((n) => { if (v[n]) setVal(n, v[n]); });
-        const dd = parse(datum.value); if (!dd || dd < t0) datum.value = '';
-        if (v['r-cas-presny']) { presnyWrap.hidden = false; const b = rform.querySelector('[data-more="r-presny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-        if (v['r-datum2']) { nahradny.hidden = false; const b = rform.querySelector('[data-more="r-nahradny"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-        if (v['r-poukaz']) { $('#r-poukaz-wrap').hidden = false; const b = rform.querySelector('[data-more="r-poukaz-wrap"]'); if (b) b.setAttribute('aria-expanded', 'true'); }
-      }
-      const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch (e) { /* nič */ } };
-
-      // ---- pick a ritual from a card: same slug on the card and the option
-      function selectRitual(slug, flash) {
-        if (!rform.querySelector(`option[value="${slug}"]`)) return false;
-        sel.value = slug; refresh();
-        if (flash && !reduced.matches) { sel.classList.remove('flash'); void sel.offsetWidth; sel.classList.add('flash'); }
-        return true;
-      }
-      document.addEventListener('click', (e) => {
-        const a = e.target.closest('[data-book]'); if (!a) return;
-        selectRitual(a.dataset.book, true);
-        track('reservation_open', { ritual: a.dataset.book });
-      });
-      const fromUrl = new URLSearchParams(location.search).get('ritual');
-      if (fromUrl) selectRitual(fromUrl, false);
-
-      // ---- "more" toggles: exact time, alternative date, voucher code
-      $$('[data-more]', rform).forEach((b) => b.addEventListener('click', () => {
-        const box = $('#' + b.dataset.more); const open = box.hidden;
-        box.hidden = !open; b.setAttribute('aria-expanded', String(open));
-        if (!open) { $$('input,textarea', box).forEach((i) => { if (i.type === 'radio') { if (i.value === 'any') i.checked = true; } else i.value = ''; }); }
-        else { const f = $('input,select,textarea', box); if (f) f.focus({ preventScroll: true }); }
-        refresh();
-      }));
-
-      // ---- time windows: a chip is out when its window starts after the last possible start
-      function tuneWindows(box, d) {
-        const sat = d && d.getDay() === 6, last = d ? lastStart(d) : null;
-        $$('input', box).forEach((i) => {
-          const from = +i.dataset.from || 0, labels = sat ? WINDOW_SAT : WINDOW;
-          const out = i.value !== 'any' && (!(i.value in labels) || (last !== null && from >= last));
-          i.disabled = out; i.closest('.choice').hidden = i.value !== 'any' && !(i.value in labels);
-          if (i.nextElementSibling) i.nextElementSibling.textContent = (labels[i.value] || WINDOW[i.value]).replace(/^./, (c) => c.toUpperCase()).replace(/ \(.*\)$/, '');
-          if (out && i.checked) { setVal(i.name, 'any'); }
-        });
-      }
-      const windowText = (v, d) => ((d && d.getDay() === 6 ? WINDOW_SAT : WINDOW)[v] || WINDOW.any);
-
-      // ---- everything derived from the form, recomputed on every change
-      function refresh() {
-        const r = ritual(), d = parse(datum.value), d2 = parse(datum2.value), n = persons();
-        // ritual hint, persons, note placeholder
-        if (r) {
-          const base = `Vybraný rituál: ${r.name}, ${r.min} min`;
-          rHint.textContent = r.cat === 'couple' ? `${base}. Cena ${r.price} platí za obe osoby. Ležíte vedľa seba, rozprávať sa nemusíte. Meno druhej osoby napíš do poznámky.`
-            : r.cat === 'kids' ? `${base}, ${r.price}. Rodič môže zostať v miestnosti po celý čas, vek dieťaťa napíš do poznámky.`
-            : `${base}, ${r.price}.`;
-        } else rHint.textContent = 'Vyber rituál zo zoznamu alebo ťukni na Rezervovať pri rituáli v cenníku.';
-        $('.choices', osobyWrap).hidden = !!r && r.cat === 'couple'; osobyHint.hidden = !(r && r.cat === 'couple');
-        pozn.placeholder = r ? (NOTE_PH[r.cat] || (/hĺbkov/i.test(r.name) ? NOTE_PH.deep : NOTE_PH.base)) : NOTE_PH.base;
-        poznHint.hidden = !(r && r.cat === 'kids' && !pozn.value.trim());
-        if (!poznHint.hidden) poznHint.textContent = 'Napíš prosím vek dieťaťa, pomôže nám pripraviť rituál.';
-        // day and windows
-        tuneWindows(casBox, d); tuneWindows(cas2Box, d2);
-        const last = d ? lastStart(d) : null;
-        if (d && d.getDay() === 6 && r && last !== null && last < 15) casHint.textContent = `V sobotu máme do 15:00. Tento rituál trvá ${duration()} min, preto je posledný začiatok o ${hm(last)}.`;
-        else if (d && r && last !== null && last < HOURS[d.getDay()][1]) casHint.textContent = `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`;
-        else casHint.textContent = '';
-        const now = new Date(), openNow = HOURS[now.getDay()] && now.getHours() + now.getMinutes() / 60 >= HOURS[now.getDay()][0] && now.getHours() + now.getMinutes() / 60 < HOURS[now.getDay()][1];
-        datumHint.textContent = (dayNote && Date.now() < dayNoteUntil ? dayNote : '') || (d && d.getTime() === t0.getTime() && openNow ? 'Na dnes ti termín potvrdíme rýchlejšie telefonicky: 0911 153 136.' : 'Po až Pi 9:00 až 18:00, So 9:00 až 15:00, v nedeľu máme zatvorené.');
-        // exact time bounds
-        if (d && last !== null) { presny.max = hm(Math.max(9, last)); presnyHint.textContent = r ? `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.` : ''; }
-        else { presny.removeAttribute('max'); presnyHint.textContent = ''; }
-        // the message
-        const lines = ['Dobrý deň, chcem si rezervovať termín v HEAD SPA 30.', ''];
-        lines.push(r ? `Rituál: ${r.name} (${r.min} min, ${r.cat === 'couple' ? `2 osoby, ${r.price} za obe osoby` : r.price})` : 'Rituál: (nevybraný)');
-        let when = '';
-        if (d) {
-          const isToday = d.getTime() === t0.getTime();
-          if (presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number); const end = hh + mm / 60 + duration() / 60; when = `${isToday ? 'DNES ' : ''}${fmt(d)} o ${presny.value} (koniec cca ${hm(end)})`; }
-          else when = `${isToday ? 'DNES ' : ''}${fmt(d)}, ${windowText(val('cas'), d)}`;
-        }
-        lines.push(`Termín: ${when || '(nevybraný)'}`);
-        if (d2 && !nahradny.hidden) lines.push(`Náhradný termín: ${fmt(d2)}, ${windowText(val('cas2'), d2)}`);
-        if (r && r.cat !== 'couple' && n === 2) lines.push('Osoby: 2, každý svoj rituál');
-        lines.push(`Meno: ${meno.value.trim() || '(nevyplnené)'}`, `Telefón: ${tel.value.trim() || '(nevyplnený)'}`);
-        if (email.value.trim()) lines.push(`E-mail: ${email.value.trim()}`);
-        if (poukaz.value.trim() && !$('#r-poukaz-wrap').hidden) lines.push(`Kód poukazu: ${poukaz.value.trim().toUpperCase().replace(/\s+/g, '')}`);
-        if (pozn.value.trim()) lines.push(`Poznámka: ${pozn.value.trim()}`);
-        lines.push('', 'Prosím o potvrdenie termínu. Ďakujem.', `Ref: ${REF}`);
-        message = lines.join('\n');
-        shortMessage = `Rezervácia HEAD SPA 30: ${r ? `${r.name} (${r.min} min)` : 'rituál'}, ${when || 'termín'}. ${meno.value.trim()}, ${tel.value.trim()}. Ref ${REF}. Prosím o potvrdenie.`;
-        wa.href = `https://wa.me/421911153136?text=${encodeURIComponent(message)}`;
-        sms.href = `sms:+421911153136?&body=${encodeURIComponent(shortMessage)}`;
-        // the ticket
-        tVal.textContent = r ? r.name : 'Tvoja rezervácia'; tVal.classList.toggle('long', !r || r.name.length > 12);
-        tFor.textContent = r ? `${r.min} min · ${r.price}${r.cat === 'couple' ? ' za obe osoby' : n === 2 ? ' · 2 osoby' : ''}` : 'Vyber si rituál z cenníka alebo zo zoznamu.';
-        tWhen.textContent = when || 'Mostná 30 · termín potvrdíme správou';
-        // deň, kedy sa ozveme, a koncept
-        syncDays();
-        if (confirmEl) { const c = confirmText(); confirmEl.textContent = c.text; confirmEl.classList.toggle('shut', !c.open); }
-        saveDraft();
-      }
-
-      // ---- validation: one list of plain sentences, focus on the first wrong field
-      function validate() {
-        const problems = []; let first = null;
-        const bad = (el, msg) => { problems.push(msg); const f = el.closest('.field'); if (f) f.classList.add('invalid'); el.setAttribute('aria-invalid', 'true'); if (!first) first = el; };
-        $$('.field.invalid', rform).forEach((f) => f.classList.remove('invalid')); $$('[aria-invalid]', rform).forEach((i) => i.removeAttribute('aria-invalid'));
-        const r = ritual(); if (!r) bad(sel, 'Vyber rituál zo zoznamu.');
-        const d = parse(datum.value);
-        if (!datum.value) bad(datum, 'Vyber deň, kedy chceš prísť.');
-        else if (!d || d < t0) bad(datum, 'Tento deň už prešiel, vyber iný.');
-        else if (d > tMax) bad(datum, 'Tak ďaleko kalendár ešte neotvárame, vyber termín do pol roka.');
-        else if (d.getDay() === 0) bad(datum, 'V nedeľu máme zatvorené, vyber iný deň.');
-        else if (d.getTime() === t0.getTime() && r) { const now = new Date(); if (now.getHours() + now.getMinutes() / 60 > lastStart(d)) bad(datum, 'Dnes už nestíhame, vyber ďalší deň alebo nám zavolaj.'); }
-        if (d && r && presny.value && !presnyWrap.hidden) { const [hh, mm] = presny.value.split(':').map(Number), t = hh + mm / 60, last = lastStart(d); if (t < 9 || t > last) bad(presny, `Tento rituál trvá ${duration()} min, posledný začiatok je o ${hm(last)}.`); }
-        if (!nahradny.hidden && datum2.value) {
-          const d2 = parse(datum2.value);
-          if (!d2 || d2 < t0) bad(datum2, 'Náhradný deň už prešiel, vyber iný.');
-          else if (d2 > tMax) bad(datum2, 'Náhradný termín je príliš ďaleko, vyber termín do pol roka.');
-          else if (d2.getDay() === 0) bad(datum2, 'V nedeľu máme zatvorené, vyber iný náhradný deň.');
-          else if (d && d2.getTime() === d.getTime() && val('cas2') === val('cas')) bad(datum2, 'Náhradný termín je rovnaký ako hlavný, vyber iný deň alebo čas.');
-        }
-        if (meno.value.trim().length < 2) bad(meno, 'Napíš svoje meno.');
-        const digits = tel.value.replace(/[\s\-().]/g, '');
-        if (!/^\+?\d{9,15}$/.test(digits)) bad(tel, 'Napíš telefón, na ktorom ťa zastihneme, napr. 0900 123 456.');
-        if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) bad(email, 'E-mail nevyzerá správne, oprav ho alebo ho nechaj prázdny.');
-        if (message.length > 1500) bad(pozn, 'Skráť prosím poznámku.');
-        if (problems.length) {
-          err.hidden = false; err.innerHTML = problems.length === 1 ? problems[0] : 'Ešte doplň:<ul>' + problems.map((p) => `<li>${p}</li>`).join('') + '</ul>';
-          if (first) first.focus({ preventScroll: false });
-          return false;
-        }
-        err.hidden = true; return true;
-      }
-
-      // ---- sending: WhatsApp is a real link (a native gesture), e-mail is the submit; both share the validation
-      function showSent(kind) {
-        const r = ritual(), d = parse(datum.value);
-        const what = r && d ? ` ${r.name}, ${fmt(d)}${presny.value && !presnyWrap.hidden ? ' o ' + presny.value : ', ' + windowText(val('cas'), d)}.` : '';
-        sentText.textContent = kind === 'wa' ? `Otvorili sme WhatsApp s tvojou požiadavkou, stačí ju odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa WhatsApp neotvoril:`
-          : kind === 'mail' ? `Otvorili sme e-mail pre info@salon30.sk s tvojou požiadavkou, stačí ho odoslať.${what} Termín ti potvrdíme do 24 hodín. Ak sa nič neotvorilo:`
-          : `Vyzerá to, že tento prehliadač nemá nastavený e-mail. Skopíruj správu a pošli ju cez WhatsApp na 0911 153 136, alebo nám zavolaj. Termín ti potvrdíme rovnako rýchlo.`;
-        sent.hidden = false; copyText.value = message;
-        sms.hidden = !matchMedia('(pointer: coarse)').matches;
-        opened += 1;
-        if (opened > 1) { sentText.textContent += ' Správu si už raz otvoril. Ak ju vo WhatsApp nevidíš, pošli ju e-mailom alebo si ju skopíruj.'; }
-      }
-      wa.addEventListener('click', (e) => {
-        refresh();
-        if (!validate()) { e.preventDefault(); return; }
-        track('reservation_send', { channel: 'whatsapp', ritual: ritual().slug });
-        showSent('wa'); clearDraft();
-      });
-      rform.addEventListener('submit', (e) => {
-        e.preventDefault(); refresh();
-        if (!validate()) return;
-        const r = ritual(), d = parse(datum.value);
-        const subject = `Rezervácia: ${r.name}, ${fmt(d)}, ${meno.value.trim()}`.replace(/[&#?]/g, ' ');
-        track('reservation_send', { channel: 'email', ritual: r.slug });
-        let left = false; const mark = () => { left = true; };
-        addEventListener('blur', mark, { once: true }); document.addEventListener('visibilitychange', mark, { once: true });
-        showSent('mail'); clearDraft();
-        location.href = `mailto:info@salon30.sk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-        setTimeout(() => { removeEventListener('blur', mark); document.removeEventListener('visibilitychange', mark); if (!left && !document.hidden) showSent('fail'); }, 1500);
-      });
-      copyBtn.addEventListener('click', async () => {
-        let ok = false;
-        try { await navigator.clipboard.writeText(message); ok = true; } catch (e) { try { copyText.classList.remove('vh'); copyText.select(); ok = document.execCommand('copy'); copyText.classList.add('vh'); } catch (e2) { ok = false; } }
-        const old = copyBtn.textContent; copyBtn.textContent = ok ? 'Skopírované' : 'Nepodarilo sa, označ text ručne';
-        if (!ok) { copyText.classList.remove('vh'); copyText.removeAttribute('aria-hidden'); copyText.removeAttribute('tabindex'); copyText.rows = 8; copyText.focus(); copyText.select(); }
-        setTimeout(() => { copyBtn.textContent = old; }, 2200);
-      });
-      rform.addEventListener('input', refresh); rform.addEventListener('change', refresh);
-      document.addEventListener('langchange', () => { buildDays(); refresh(); });
-      datum.addEventListener('change', () => { const d = parse(datum.value); if (d && d.getDay() === 0) { const m = new Date(d); m.setDate(m.getDate() + 1); datum.value = iso(m); note('V nedeľu máme zatvorené, posunuli sme ti deň na pondelok.'); refresh(); } });
-      buildDays(); loadDraft(); refresh();
-    }
-  });
-
-  /* ============ analytics hooks (dataLayer only; nothing is sent anywhere) ============ */
-  function track(event, data) { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {})); }
+  /* ============ háčiky pre analytiku: dataLayer a štatistiky bez cookies, ak ich admin zapol ============ */
+  const UDALOSTI = { reservation_click: 'Klik: Rezervovať', phone_click: 'Klik: Zavolať', email_click: 'Klik: E-mail',
+    map_click: 'Klik: Mapa', voucher_click: 'Klik: Kúpiť poukaz', voucher_pay: 'Klik: Kúpiť poukaz kartou', social_click: 'Klik: sociálna sieť' };
+  function track(event, data) {
+    (window.dataLayer = window.dataLayer || []).push(Object.assign({ event, site: 'headspa30' }, data || {}));
+    const name = UDALOSTI[event];
+    if (name && window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
+  }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a'); if (!a) return;
     const h = a.getAttribute('href') || '';
-    if (h.includes('/rezervacia')) track('reservation_click', { label: a.textContent.trim() });
+    if (a.hasAttribute('data-pay')) track('voucher_pay', { ritual: a.dataset.gift });
+    else if (/booqme\.app\/[a-z]{2}\/(rezervacia|rezervace|foglalas|reservation)\//.test(h)) track('reservation_click', { label: a.textContent.trim(), ritual: a.dataset.book });
     else if (h.startsWith('tel:')) track('phone_click');
     else if (h.startsWith('mailto:')) track('email_click');
     else if (h.includes('google.com/maps')) track('map_click');
+    else if (h.includes('/eshop/')) track('voucher_click', { ritual: a.dataset.gift });
+    else if (/instagram\.com|facebook\.com|tiktok\.com/.test(h)) track('social_click');
   });
 
-  /* ============ mobile menu (native dialog: focus trap and Escape for free) ============ */
-  const menu = $('#drawer'), menuBtn = $('.menu-btn');
-  if (menu && menuBtn) {
+  /* ============ mobilné menu (natívny dialog: zachytenie fokusu a Escape zadarmo) ============ */
+  /* Jediné menu častí stránky: otvára ho tlačidlo v hlavičke aj tlačidlo v spodnej lište telefónu,
+     vysunie sa sprava, prekryje a stmaví aj hlavičku. */
+  const menu = $('#drawer'), menuBtns = $$('.menu-btn, #mbarMenu');
+  if (menu && menuBtns.length) {
+    let opener = menuBtns[0];
     $$('.drawer-links a', menu).forEach((a, i) => a.style.setProperty('--i', i));
-    const openMenu = () => { if (menu.open) return; menu.showModal(); document.body.classList.add('drawer-open'); menuBtn.setAttribute('aria-expanded', 'true'); track('menu_open'); };
+    const expanded = (v) => menuBtns.forEach((b) => b.setAttribute('aria-expanded', String(v)));
+    const openMenu = (btn) => {
+      if (menu.open) return; opener = btn || menuBtns[0]; menu.showModal(); document.body.classList.add('drawer-open'); expanded(true); track('menu_open');
+      // menu sa vždy otvorí od začiatku, časť, v ktorej si, je vidieť
+      const inn = $('.drawer-in', menu); if (inn) inn.scrollTop = 0;
+      const on = $('.drawer-links a.on', menu); if (on && inn && on.getBoundingClientRect().bottom > inn.getBoundingClientRect().bottom) on.scrollIntoView({ block: 'nearest' });
+    };
     const closeMenu = () => { if (!menu.open) return; menu.close(); };
-    menuBtn.addEventListener('click', () => (menu.open ? closeMenu() : openMenu()));
+    menuBtns.forEach((b) => b.addEventListener('click', () => (menu.open ? closeMenu() : openMenu(b))));
     $('.drawer-close', menu).addEventListener('click', closeMenu);
     menu.addEventListener('click', (e) => { if (e.target === menu) closeMenu(); });
-    menu.addEventListener('close', () => { document.body.classList.remove('drawer-open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus({ preventScroll: true }); });
+    menu.addEventListener('close', () => { document.body.classList.remove('drawer-open'); expanded(false); if (opener.offsetWidth) opener.focus({ preventScroll: true }); });
     $$('a[href^="#"]', menu).forEach((a) => a.addEventListener('click', () => { closeMenu(); }));
-    matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
+    // keď sa okno zväčší a žiadne tlačidlo menu už nie je vidieť, menu sa zavrie
+    addEventListener('resize', () => { if (menu.open && !menuBtns.some((b) => b.offsetWidth)) closeMenu(); }, { passive: true });
   }
 
-  /* ============ today's hours, computed in the salon's own time zone ============ */
+  /* ============ dnešné otváracie hodiny, počítané v časovom pásme salónu ============ */
   /* Tento text vzniká až v prehliadači, preto má vlastné preklady, nie je v assets/i18n. */
   const TODAY_WORDS = {
-    sk: { open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
+    sk: { nonstop: 'Online rezervácia je otvorená nonstop', open: 'Dnes otvorené do', soon: 'Dnes otvárame o', shut: 'Dnes už zatvorené', none: 'Dnes máme zatvorené',
           next: 'otvárame', at: 'o', tomorrow: 'zajtra',
           days: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'] },
-    cs: { open: 'Dnes otevřeno do', soon: 'Dnes otevíráme v', shut: 'Dnes už zavřeno', none: 'Dnes máme zavřeno',
+    cs: { nonstop: 'Online rezervace je otevřená nonstop', open: 'Dnes otevřeno do', soon: 'Dnes otevíráme v', shut: 'Dnes už zavřeno', none: 'Dnes máme zavřeno',
           next: 'otevíráme', at: 'v', tomorrow: 'zítra',
           days: ['v neděli', 'v pondělí', 'v úterý', 've středu', 've čtvrtek', 'v pátek', 'v sobotu'] },
-    pl: { open: 'Dziś otwarte do', soon: 'Dziś otwieramy o', shut: 'Dziś już zamknięte', none: 'Dziś mamy zamknięte',
+    pl: { nonstop: 'Rezerwacja online działa całą dobę', open: 'Dziś otwarte do', soon: 'Dziś otwieramy o', shut: 'Dziś już zamknięte', none: 'Dziś mamy zamknięte',
           next: 'otwieramy', at: 'o', tomorrow: 'jutro',
           days: ['w niedzielę', 'w poniedziałek', 'we wtorek', 'w środę', 'w czwartek', 'w piątek', 'w sobotę'] },
-    hu: { open: 'Ma nyitva eddig:', soon: 'Ma nyitunk ekkor:', shut: 'Ma már zárva', none: 'Ma zárva vagyunk',
+    hu: { nonstop: 'Az online foglalás éjjel-nappal elérhető', open: 'Ma nyitva eddig:', soon: 'Ma nyitunk ekkor:', shut: 'Ma már zárva', none: 'Ma zárva vagyunk',
           next: 'nyitás', at: '', tomorrow: 'holnap',
           days: ['vasárnap', 'hétfőn', 'kedden', 'szerdán', 'csütörtökön', 'pénteken', 'szombaton'] },
-    de: { open: 'Heute geöffnet bis', soon: 'Heute öffnen wir um', shut: 'Heute schon geschlossen', none: 'Heute haben wir geschlossen',
+    de: { nonstop: 'Online-Buchung rund um die Uhr', open: 'Heute geöffnet bis', soon: 'Heute öffnen wir um', shut: 'Heute schon geschlossen', none: 'Heute haben wir geschlossen',
           next: 'wir öffnen', at: 'um', tomorrow: 'morgen',
           days: ['am Sonntag', 'am Montag', 'am Dienstag', 'am Mittwoch', 'am Donnerstag', 'am Freitag', 'am Samstag'] },
-    uk: { open: 'Сьогодні відчинено до', soon: 'Сьогодні відчиняємо о', shut: 'Сьогодні вже зачинено', none: 'Сьогодні зачинено',
+    uk: { nonstop: 'Онлайн-бронювання працює цілодобово', open: 'Сьогодні відчинено до', soon: 'Сьогодні відчиняємо о', shut: 'Сьогодні вже зачинено', none: 'Сьогодні зачинено',
           next: 'відчиняємо', at: 'о', tomorrow: 'завтра',
           days: ['у неділю', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п\'ятницю', 'у суботу'] },
-    en: { open: 'Open today until', soon: 'We open today at', shut: 'Closed for today', none: 'We are closed today',
+    en: { nonstop: 'Online booking is open around the clock', open: 'Open today until', soon: 'We open today at', shut: 'Closed for today', none: 'We are closed today',
           next: 'we open', at: 'at', tomorrow: 'tomorrow',
           days: ['on Sunday', 'on Monday', 'on Tuesday', 'on Wednesday', 'on Thursday', 'on Friday', 'on Saturday'] },
   };
   (function todayStatus() {
     const els = $$('[data-today]'); if (!els.length) return;
-    const HOURS = { 1: [9, 18], 2: [9, 18], 3: [9, 18], 4: [9, 18], 5: [9, 18], 6: [9, 15], 0: null };
+    const HOURS = HODINY;
     function render(lang) {
       const W = TODAY_WORDS[lang] || TODAY_WORDS.sk;
       let parts;
@@ -1373,16 +805,18 @@
       else {
         let d = (wd + 1) % 7, n = 1; while (!HOURS[d]) { d = (d + 1) % 7; n++; }
         const when = n === 1 ? W.tomorrow : W.days[d];
-        // a day we never opened reads differently from a day that has just ended
+        // deň, keď sme vôbec neotvorili, znie inak ako deň, ktorý sa práve skončil
         text = `${h ? W.shut : W.none}, ${W.next} ${when} ${W.at ? W.at + ' ' : ''}${hm(HOURS[d][0])}`;
       }
-      els.forEach((el) => { el.innerHTML = `<span class="dot" aria-hidden="true"></span>${text}`; el.classList.toggle('closed', !open); });
+      // v úvode sa pri zatvorenom salóne neukazuje „zatvorené“, ale to, čo platí vždy: online rezervácia
+      els.forEach((el) => { const hero = !el.closest('.contact'); const t = !open && hero ? W.nonstop : text;
+        el.innerHTML = `<span class="dot" aria-hidden="true"></span>${t}`; el.classList.toggle('closed', !open && !hero); });
     }
     render((document.documentElement.lang || 'sk').slice(0, 2));
     document.addEventListener('langchange', (e) => render(e.detail.lang));
   })();
 
-  /* ============ housekeeping ============ */
+  /* ============ upratovanie ============ */
   document.addEventListener('visibilitychange', () => { document.body.classList.toggle('paused', document.hidden); if (!document.hidden) wake(); });
   const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 
@@ -1402,29 +836,44 @@
   addEventListener('keydown', heroStart, { once: true });
   if (reduced.matches) pinToFinalStates();
   wake();
-  void document.body.offsetWidth;   // settle the initial styles first
+  void document.body.offsetWidth;   // najprv nech sa ustália počiatočné štýly
   requestAnimationFrame(() => {
     document.body.classList.add('ready', 'open');
     if (veilMs) {
       veil.classList.add('drawn');
-      setTimeout(flipVeil, phoneMQ.matches ? 520 : 380);   // na telefóne dvere chvíľu postoja
       // koniec až po dobehnutí prelínania scény (opacity na .scene, nie na krídlach), časovač je poistka pre pomalý telefón
       const sc = $('.scene', veil);
       if (sc) sc.addEventListener('transitionend', (e) => { if (e.target === sc && e.propertyName === 'opacity') endVeil(); });
-      setTimeout(endVeil, 2200);
+      // dvere sa ukážu, až keď je fotka dverí pripravená a nakreslená; keď do 0,9 s nepríde,
+      // dvere sa preskočia (radšej žiadne dvere ako plochá plocha namiesto fotky)
+      const im = $('.leaf img', veil);
+      const ready = !im ? Promise.resolve(false) : im.complete && im.naturalWidth ? Promise.resolve(true)
+        : Promise.race([im.decode ? im.decode().then(() => true, () => false) : new Promise((r) => { im.onload = () => r(true); im.onerror = () => r(false); }),
+          new Promise((r) => setTimeout(() => r(false), 900))]);
+      // dvere sa dajú preskočiť: dotyk, klik, koliesko alebo kláves ich hneď jemne otvorí
+      const skip = () => { if (veilDone) return; veil.style.transition = 'opacity 320ms cubic-bezier(.4,0,.2,1)'; veil.style.opacity = '0'; setTimeout(endVeil, 330); };
+      ['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, skip, { once: true, passive: true }));
+      ready.then((ok) => {
+        // bez fotky dverí: tma sa pokojne rozplynie, nie tvrdým strihom
+        if (!ok) { veil.style.transition = 'opacity 420ms cubic-bezier(.4,0,.2,1)'; veil.style.opacity = '0'; setTimeout(endVeil, 440); return; }
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          veil.classList.add('pic');
+          setTimeout(flipVeil, phoneMQ.matches ? 700 : 560);   // dvere chvíľu postoja, na telefóne o niečo dlhšie
+          setTimeout(endVeil, 2600);
+        }));
+      });
     }
   });
 
-  /* Späť hore: objaví sa po dvoch obrazovkách, na mobile nad lištou s CTA. */
+  /* Späť hore: objaví sa po dvoch obrazovkách, len na širokej obrazovke s voľným okrajom (CSS, trieda gutter-ok).
+     Na telefóne a tablete je Úvod v menu častí. */
   idle(function spatHore() {
     const btn = document.getElementById('toTop');
-    const mbtn = document.getElementById('mbarTop');
     const hore = () => {
       const jemne = matchMedia('(prefers-reduced-motion: reduce)').matches;
       scrollTo({ top: 0, behavior: jemne ? 'auto' : 'smooth' });
       (document.getElementById('main') || document.body).focus({ preventScroll: true });
     };
-    if (mbtn) mbtn.addEventListener('click', hore);
     if (!btn) return;
     btn.hidden = false;
     const prah = () => window.innerHeight * 2;
