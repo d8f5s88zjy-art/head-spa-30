@@ -28,6 +28,8 @@ jobs:
           enablement: true
       - name: Pripraviť súbory webu
         run: mkdir -p _site && cp -r index.html 404.html pravne.html robots.txt sitemap.xml assets admin _site/
+      - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
+        run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

@@ -1,0 +1,44 @@
+name: Web na FTP (vlastný hosting)
+
+# Po každej zmene v main (aj po uložení v admine) nahrá web na FTP hosting.
+# Beží, len keď sú v GitHube nastavené tajomstvá (Settings → Secrets and variables → Actions):
+#   FTP_SERVER  napr. ftpx.forpsi.com
+#   FTP_USER    FTP login
+#   FTP_PASSWORD FTP heslo
+#   FTP_DIR     priečinok webu na serveri, napr. /www/ (ak chýba, použije sa /www/)
+#   FTP_DOMENA  doména webu, napr. headspa30.sk (ak chýba, použije sa headspa30.sk)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ftp
+  cancel-in-progress: false
+
+jobs:
+  ftp:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - name: FTP nie je nastavené
+        if: env.FTP_SERVER == ''
+        run: echo "Tajomstvo FTP_SERVER chýba, na FTP sa nič nenahráva."
+      - uses: actions/checkout@v4
+        if: env.FTP_SERVER != ''
+      - name: Pripraviť web pre vlastnú doménu
+        if: env.FTP_SERVER != ''
+        run: sh tools/ftp-balik.sh "${{ secrets.FTP_DOMENA || 'headspa30.sk' }}"
+      - name: Nahrať na FTP (len zmenené súbory)
+        if: env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./_ftp/
+          server-dir: ${{ secrets.FTP_DIR || '/www/' }}

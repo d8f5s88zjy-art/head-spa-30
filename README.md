@@ -584,3 +584,12 @@ miestach:
 
 Skript potom drží oboje zhodné. Bez JavaScriptu tlačidlá fungujú tiež, lebo
 adresa je priamo v HTML.
+
+## Web na vlastnom FTP hostingu (napr. Forpsi)
+- Hotový balík na nahratie: https://d8f5s88zjy-art.github.io/head-spa-30/headspa30-ftp.zip
+  (obsah ZIPu nahraj do koreňa webu, pri Forpsi priečinok `/www/`). Adresy sú na https://headspa30.sk/.
+- Ručne: `sh tools/ftp-balik.sh headspa30.sk` pripraví priečinok `_ftp` (s `.htaccess`).
+- Automaticky: po nastavení tajomstiev FTP_SERVER, FTP_USER, FTP_PASSWORD (a voliteľne FTP_DIR, FTP_DOMENA)
+  v GitHub Settings → Secrets and variables → Actions nahrá `.github/workflows/ftp.yml` web na FTP
+  po každej zmene, aj po uložení v admine.
+- V `.htaccess` je presmerovanie na https vypnuté; zapni ho, až keď má doména SSL certifikát.
