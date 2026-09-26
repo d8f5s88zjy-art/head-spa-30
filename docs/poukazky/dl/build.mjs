@@ -53,6 +53,12 @@ const VARIANTY = [
     lede: 'Niektoré chvíle sú krajšie, keď ich prežívame spolu. Dva rituály vedľa seba.' },
   { id: 'chodidla', foto: 'foto/chodidla.jpg', pos: '50% 55%', rule: 'Rituál pre chodidlá', cat: 'Teplo · Vôňa · Dotyk',
     lede: 'Teplý kúpeľ, peeling, maska a masáž chodidiel pre pocit ľahkosti a pokoja.' },
+  { id: 'pansky-b', foto: 'foto/pansky-b.jpg', pos: '50% 45%', rule: 'Gentlemen Head Spa', cat: 'Pokoj · Starostlivosť · Elegancia',
+    lede: 'Rituály pripravené pre mužov: teplá voda, hĺbkové čistenie a masáž bez zhonu.' },
+  { id: 'detsky-b', foto: 'foto/detsky-b.jpg', pos: '50% 60%', rule: 'Little Fruit Head Spa', cat: 'Hravo · Jemne · S úsmevom',
+    lede: 'Hravý a jemný rituál pripravený pre deti: voňavo, pomaly a s úsmevom.' },
+  { id: 'chodidla-b', foto: 'foto/chodidla-b.jpg', pos: '50% 50%', rule: 'Rituál pre chodidlá', cat: 'Teplo · Vôňa · Dotyk',
+    lede: 'Teplý kúpeľ, peeling, maska a masáž chodidiel pre pocit ľahkosti a pokoja.' },
 ];
 
 const front = (v, sq = false) => `<div class="card front${sq ? ' sq' : ''}" id="${sq ? 'sq' : 'front'}-${v.id}">

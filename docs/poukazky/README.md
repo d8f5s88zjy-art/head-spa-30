@@ -14,6 +14,7 @@ tlačové PDF má spadávku 3 mm (216 × 105 mm).
 | `poukaz-detsky` | Little Fruit Head Spa | dieťa v kresle |
 | `poukaz-pre-dvoch` | Spoločný Head Spa rituál, Spoločný rituál pod hviezdami | vlastná fotka: miestnosť s dvoma lôžkami |
 | `poukaz-chodidla` | Klasický, Ovocný a bylinkový, Zlatý rituál 24K | masáž chodidiel |
+| `poukaz-pansky-b`, `poukaz-detsky-b`, `poukaz-chodidla-b` | alternatívy B bez cudzích ľudí: nápis HEAD SPA zo salónu, lôžko pod nápisom Spa relax, lôžka zhora | vlastné fotky salónu |
 | `poukaz-back` | rub pre všetky: ako poukážku využiť, platnosť 365 dní, QR kód do online kalendára | |
 
 Polia na vyplnenie rukou: Rituál, Pre, Od, Platnosť do, Kód. Poukážka je vždy na
