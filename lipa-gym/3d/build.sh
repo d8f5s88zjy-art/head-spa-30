@@ -1,5 +1,6 @@
 #!/bin/sh
-# Zbalí 3D scénu (src/intro.js + použité časti three.js) do assets/intro.js.
+# Zbalí 3D scénu (src/intro.js + použité časti three.js vrátane HDRLoader z three/examples) do assets/intro.js.
+# Zábery (media/intro-*) a HDR prostredie (media/env-*.hdr) sa načítajú za behu, do balíka nepatria.
 # Potrebuje Node 18+. three a esbuild sa stiahnu len do dočasného priečinka, repozitár zostane bez node_modules.
 set -e
 cd "$(dirname "$0")"
