@@ -1,10 +1,20 @@
-// GYM KLUB – úvod: skutočná 20 kg jednoručka padá z neba nad Lipou a dopadne na terasu pred vchodom.
+// GYM KLUB – úvod: skutočná 20 kg jednoručka padá z neba nad Lipou a dopadne pred dvere fitka.
 //
-// Pozadie tvoria dva skutočné zábery z 26. 9. (nebo nad Lipa Centrom a terasa pred vchodom).
+// Pozadie tvoria dva skutočné zábery z 26. 9.: nebo nad Lipa Centrom (media/intro-nebo*)
+// a krytý chodník pred dverami pod tabuľou GYM KLUB (media/intro-dvere*, klip IMG_8983, 2,5 s).
 // Činka je 3D model, ktorý sa kreslí do samostatnej vrstvy s kamerou zladenou so záberom
-// (ohnisko odmerané z úbežníkov dlažby, výška a sklon kamery) a skladá sa na záber
-// s rovnakým orezom ako CSS object-fit: cover (na stred). Odrazy a svetlo dáva skutočné
-// HDR prostredie (Poly Haven, CC0), na terase doplnené o strop, podlahu a steny vo farbách zo záberu.
+// (ohnisko, výška, sklon a náklon kamery odmerané zo záberu, pozri nižšie) a skladá sa na záber
+// s rovnakým orezom ako CSS object-fit: cover. Odrazy a svetlo dáva skutočné HDR prostredie
+// (Poly Haven, CC0); pod strechou pred dverami ho dopĺňa strop, betónová podlaha, zábradlie
+// a biela budova oproti vo farbách zo záberu, bez priameho slnka.
+//
+// Orez záberu dverí (PLATE_FOCUS): na výšku (šírka ≤ výška, ako CSS orientation: portrait)
+// object-position 42 % 75 %, na šírku 50 % 70 %. Pri p = 1 je obraz presne
+// <img src="media/intro-dvere.*" style="object-fit:cover; object-position:42% 75%"> (na šírku 50% 70%)
+// s činkou navrchu. Obloha sa orezáva na stred.
+// Miesto dopadu: na výšku betón pred rohožou dole v strede (ako schválený vzhľad), na šírku
+// (vidno len pás zo stredu záberu) sa činka posunie bližšie k rohoži, aby bolo vidno dvere,
+// rohož aj činku; tabuľa sa na širokých obrazovkách môže orezať.
 //
 // Celý obraz je čistá funkcia čísla p (0 až 1), ktoré posiela skrolovanie: dopredu aj dozadu
 // vznikne rovnaký záber a po obnovení stránky v strede sa nič neskočí.
@@ -23,8 +33,8 @@ import {
 import { HDRLoader } from 'three/examples/jsm/loaders/HDRLoader.js';
 
 // ——— Časová os (p od 0 do 1) ———
-// skyEnd: koniec pádu z neba · whipEnd: kamera dosadne na terasu po prudkom švihu nadol
-// land: prvý dotyk s dlažbou · settle: činka leží, prach zmizol, obraz je odtiaľto nemenný
+// skyEnd: koniec pádu z neba · whipEnd: kamera dosadne pred dvere po prudkom švihu nadol
+// land: prvý dotyk s betónom · settle: činka leží, prach zmizol, obraz je odtiaľto nemenný
 // handoff: odporúčaný začiatok prelínania do prvej zastávky prehliadky
 export const T = { skyEnd: 0.42, whipEnd: 0.52, land: 0.62, settle: 0.72, handoff: 0.9 };
 const CUT = 0.47; // strih medzi zábermi v strede švihu, keď je rozmazanie najväčšie
@@ -35,25 +45,32 @@ const G = 9.81;
 
 // ——— Kamera záberov ———
 // Oba zábery sú z toho istého iPhonu (ultraširoký objektív, video 4K otočené na výšku).
-// Ohnisko 1665 px pri šírke 2160 px vyšlo z dvoch kolmých úbežníkov škár dlažby na terase
-// (úbežníky x ≈ −690 a 2676 px) → zvislý uhol záberu ≈ 98°. Zvislé hrany na terase sú zvislé
-// (sklon 0°), výška kamery 1,33 m vyšla z výšky stola 0,74 m. Záber oblohy je naklonený
-// asi 10° nahor (horizont je 280 px pod stredom).
+// Ohnisko 1665 px pri šírke 2160 px (zvislý uhol záberu ≈ 98°) bolo odmerané z dvoch kolmých
+// úbežníkov škár dlažby na terase pred vchodom z toho istého večera. Záber oblohy je naklonený asi 10° nahor.
+// Záber dverí (súradnice v pixeloch plného záberu 2160 × 3840):
+//  · úbežník chodníka (hrana strechy × horné madlo zábradlia) x ≈ 654, y ≈ 1985 → chodník smeruje
+//    14,35° vľavo od osi kamery, horizont je ≈ 65 px pod stredom → kamera je sklonená 2,2° nahor,
+//  · zvislé hrany (rám dverí, stĺp, roh budovy) sa pri tomto sklone vyrovnajú pri náklone −0,8°,
+//  · výška oka 1,38 m: rám dverí potom meria 2,14 m, madlo zábradlia 0,98 m, predná rohož 1,3 m.
 const PW = 2160, PH = 3840, F_PX = 1665;
 const PLATE_ASPECT = PW / PH;
 const VFOV = 2 * Math.atan(PH / 2 / F_PX) / DEG;
 const SKY_PITCH = 10 * DEG;
-const TER_EYE = 1.33;
+const DOOR_EYE = 1.38, DOOR_PITCH = 2.2 * DEG, DOOR_ROLL = -0.8 * DEG, WALK_YAW = 14.35 * DEG;
+
+// Orez záberu dverí ako CSS object-position (0 = ľavý / horný okraj, 1 = pravý / dolný).
+// portrait platí pre šírku ≤ výška (ako CSS orientation: portrait), inak landscape.
+export const PLATE_FOCUS = { portrait: { x: 0.42, y: 0.75 }, landscape: { x: 0.5, y: 0.7 } };
 
 // ——— Rozmery jednoručky 20 kg (okrúhle gumené hlavy, chrómová rúčka) ———
-const R = 0.095;        // polomer hlavy (priemer 19 cm)
-const HEAD_L = 0.108;   // dĺžka hlavy vrátane klenutého čela
+const R = 0.1;          // polomer hlavy (priemer 20 cm)
+const HEAD_L = 0.113;   // dĺžka hlavy vrátane klenutého čela
 const GRIP = 0.132;     // rúčka medzi objímkami
 const COLLAR = 0.014;   // chrómová objímka
 const HR = 0.0165;      // polomer rúčky (priemer 33 mm)
 const X_IN = GRIP / 2 + COLLAR;    // vnútorná stena hlavy od stredu
-const X_OUT = X_IN + HEAD_L;       // čelo hlavy (celková dĺžka ≈ 0,38 m)
-const CAP_R = 0.0515;              // medený štítok s číslom
+const X_OUT = X_IN + HEAD_L;       // čelo hlavy (celková dĺžka ≈ 0,39 m)
+const CAP_R = 0.054;               // medený štítok s číslom
 
 // ——— Náhodné čísla s pevným semienkom (rovnaký vzhľad pri každom načítaní) ———
 function rng(seed) { let s = seed >>> 0 || 1; return () => ((s = Math.imul(s ^ (s >>> 15), 0x2c1b3c6d) + 0x6d2b79f5 >>> 0) / 4294967296); }
@@ -201,16 +218,16 @@ function capMaps() {
   for (let i = 0; i < S * S; i++) {
     const x = i % S, y = (i / S) | 0, r = Math.hypot(x - S / 2, y - S / 2) / (S / 2);
     const m = mask[i], wear = 0.9 + rnd() * 0.12 - r * 0.08;
-    // meď s oxidáciou pri okraji, číslo svetlejšie (vyleštené)
-    im.data[i * 4] = Math.min(255, (160 * wear) * (1 - m) + 196 * m);
-    im.data[i * 4 + 1] = Math.min(255, (100 * wear) * (1 - m) + 150 * m);
-    im.data[i * 4 + 2] = Math.min(255, (84 * wear) * (1 - m) + 122 * m);
+    // tmavý bronz s oxidáciou pri okraji, číslo vyleštená meď (svetlejšie, dobre čitateľné)
+    im.data[i * 4] = Math.min(255, (118 * wear) * (1 - m) + 236 * m);
+    im.data[i * 4 + 1] = Math.min(255, (76 * wear) * (1 - m) + 178 * m);
+    im.data[i * 4 + 2] = Math.min(255, (56 * wear) * (1 - m) + 122 * m);
     im.data[i * 4 + 3] = 255;
   }
   cg.putImageData(im, 0, 0);
   const color = new CanvasTexture(cc); color.colorSpace = SRGBColorSpace;
   const [rc, rg] = canvas2d(S, S); const ri = rg.createImageData(S, S);
-  for (let i = 0; i < S * S; i++) { const v = 112 + mask[i] * 40 + (rnd() - 0.5) * 30; ri.data[i * 4] = ri.data[i * 4 + 1] = ri.data[i * 4 + 2] = v; ri.data[i * 4 + 3] = 255; }
+  for (let i = 0; i < S * S; i++) { const v = 150 - mask[i] * 62 + (rnd() - 0.5) * 30; ri.data[i * 4] = ri.data[i * 4 + 1] = ri.data[i * 4 + 2] = v; ri.data[i * 4 + 3] = 255; }
   rg.putImageData(ri, 0, 0);
   const rough = new CanvasTexture(rc);
   for (const t of [normal, color, rough]) t.anisotropy = 4;
@@ -283,12 +300,13 @@ function makeDumbbell() {
   const handle = new Mesh(new CylinderGeometry(HR, HR, GRIP + 0.008, 72, 1, true), knurl);
   handle.rotation.z = Math.PI / 2; g.add(handle);
   g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  g.userData.knurl = knurl;
   return g;
 }
 
 // ——— Tieňovanie ———
 
-// Kontaktné zatienenie dlažby: činka ako sada guľôčok, analyticky (ako ambientná oklúzia).
+// Kontaktné zatienenie podlahy: činka ako sada guľôčok, analyticky (ako ambientná oklúzia).
 const aoVert = `varying vec3 vW; void main(){ vec4 w = modelMatrix*vec4(position,1.); vW = w.xyz; gl_Position = projectionMatrix*viewMatrix*w; }`;
 const aoFrag = `
 uniform vec4 uS[10]; uniform float uK;
@@ -330,7 +348,7 @@ const dustFrag = `
 uniform sampler2D uMap; uniform vec3 uCol; varying float vA;
 void main(){ float m = texture2D(uMap, gl_PointCoord).a; float a = m*vA; if(a < .002) discard; gl_FragColor = vec4(uCol, a); }`;
 
-// Drobné úlomky (kúsky gumy a zrnká z dlažby): balistický let, jeden odskok, potom ležia.
+// Drobné úlomky (kúsky gumy a zrnká z betónu): balistický let, jeden odskok, potom ležia.
 const chipVert = `
 attribute vec4 aA; attribute vec4 aB;
 uniform float uT; uniform float uScale; uniform vec3 uC0; uniform vec3 uC1;
@@ -465,8 +483,12 @@ export function mount(canvas) {
   sun.shadow.normalBias = 0.002;
   sun.shadow.blurSamples = 12; // rovnaké pre oba zábery, inak by sa shader prekladal pri každom strihu
   scene.add(sun, sun.target);
+  // pred dverami: odraz svetlého stropu nad dverami (bez tieňa) – lesk chrómu a horných hrán gumy
+  const fill = new DirectionalLight(0xffffff, 0);
+  scene.add(fill, fill.target);
+  const FILL_DIR = new Vector3(-0.25, 0.8, -0.55).normalize();
 
-  // na terase: zachytávač tieňa a kontaktné zatienenie na dlažbe
+  // pred dverami: zachytávač tieňa a kontaktné zatienenie na betóne
   const catcher = new Mesh(new PlaneGeometry(2.4, 2.4), new ShadowMaterial({ opacity: 0.3, depthWrite: false }));
   catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; catcher.renderOrder = 1; scene.add(catcher);
   const aoSpheres = Array.from({ length: 10 }, () => new Vector4());
@@ -483,7 +505,7 @@ export function mount(canvas) {
   const dot = softDot();
   const dustMat = new ShaderMaterial({
     vertexShader: dustVert, fragmentShader: dustFrag, transparent: true, depthWrite: false, blending: NormalBlending,
-    uniforms: { uT: { value: 0 }, uScale: { value: 800 }, uMap: { value: dot }, uCol: { value: new Color(0.38, 0.35, 0.31) }, uC0: { value: new Vector3() }, uC1: { value: new Vector3() }, uDir: { value: new Vector3() } },
+    uniforms: { uT: { value: 0 }, uScale: { value: 800 }, uMap: { value: dot }, uCol: { value: new Color(0.3, 0.3, 0.31) }, uC0: { value: new Vector3() }, uC1: { value: new Vector3() }, uDir: { value: new Vector3() } },
   });
   const dust = new Points(dustGeo, dustMat); dust.frustumCulled = false; dust.renderOrder = 3; scene.add(dust);
   const chipGeo = new BufferGeometry();
@@ -495,8 +517,10 @@ export function mount(canvas) {
   // ——— Kamery zladené so zábermi ———
   const skyCam = new PerspectiveCamera(VFOV, PLATE_ASPECT, 0.05, 2000);
   skyCam.rotation.order = 'YXZ'; skyCam.rotation.x = SKY_PITCH;
-  const terCam = new PerspectiveCamera(VFOV, PLATE_ASPECT, 0.05, 200);
-  terCam.rotation.order = 'YXZ'; terCam.position.set(0, TER_EYE, 0);
+  // pred dverami: podlaha y = 0, kamera nad počiatkom, os −z = vodorovný smer pohľadu kamery
+  const doorCam = new PerspectiveCamera(VFOV, PLATE_ASPECT, 0.05, 200);
+  doorCam.rotation.order = 'YXZ'; doorCam.rotation.set(DOOR_PITCH, 0, DOOR_ROLL); doorCam.position.set(0, DOOR_EYE, 0);
+  doorCam.updateMatrixWorld();
 
   // ——— Zloženie ———
   const postCam = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -518,17 +542,21 @@ export function mount(canvas) {
   const blitScene = new Scene(); blitScene.add(new Mesh(quad, blitMat));
 
   let rtSub = null, rtAcc = null, W = 1, H = 1, cssW = 1, cssH = 1;
-  const crop = { x: 0, y: 0, w: 1, h: 1 }; // výrez v normovaných súradniciach záberu (y zhora)
+  // výrezy v normovaných súradniciach záberu (y zhora): obloha na stred, dvere podľa PLATE_FOCUS
+  const cropSky = { x: 0, y: 0, w: 1, h: 1 }, cropDoor = { x: 0, y: 0, w: 1, h: 1 };
+  skyCam.userData.crop = cropSky; doorCam.userData.crop = cropDoor;
   let fCss = 1; // ohnisko v CSS px
 
   // ——— Prostredie (HDR) a zábery ———
   const pmrem = new PMREMGenerator(renderer);
-  let hdr = null, envSky = null, envTer = null, plateSky = null, plateTer = null, loaded = false, disposed = false;
+  let hdr = null, envSky = null, envDoor = null, plateSky = null, plateDoor = null, loaded = false, disposed = false;
   const envRotY = { v: 0 };
   // smer slnka: nízko (asi 4°), za kamerou vpravo – na zábere oblohy svieti na čelo panelákov za stromom
   const SUN_SKY = new Vector3(0.62, 0.075, 0.78).normalize();
-  // na terase priame slnko nesvieti (strecha); hlavné svetlo prichádza otvorenou stranou vpravo
-  const OPEN_DIR = new Vector3(0.93, 0.36, 0.08).normalize();
+  // pod strechou priame slnko nesvieti; mäkké svetlo prichádza otvorenou stranou vpravo
+  // (nad zábradlím, od bielej budovy oproti), asi 50° nad podlahou
+  const qWalk = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), WALK_YAW);
+  const OPEN_DIR = new Vector3(0.62, 0.76, 0.18).normalize().applyQuaternion(qWalk);
   const HDR_SUN_PHI = Math.atan2(0.588, 0.809); // poloha slnka v HDR obrázku (u = 0,60, výška 3,3°)
 
   function makeTexture(img) {
@@ -539,32 +567,39 @@ export function mount(canvas) {
     return t;
   }
 
-  // prostredie terasy: HDR len cez otvorenú stranu, inak strop, dlažba a steny vo farbách zo záberu
+  // prostredie pred dverami: HDR len nad budovou oproti, inak strop, betón, zábradlie a steny
+  // vo farbách zo záberu (lineárne hodnoty pixelov, takže odrazy majú jas ako okolie na zábere)
   const spot = new Vector3(); let spotKey = '';
-  function buildTerraceEnv() {
+  function buildDoorEnv() {
     if (!hdr) return;
     const s = new Scene();
-    s.background = hdr; s.backgroundIntensity = 2.2; s.backgroundRotation.set(0, envRotY.v, 0);
-    const box = (w, h, d, x, y, z, r, g, b, ry = 0) => {
+    s.background = hdr; s.backgroundIntensity = 1.6; s.backgroundRotation.set(0, envRotY.v, 0);
+    // súradnice chodníka: −z k dverám, +x k zábradliu, kamera nad počiatkom
+    const walk = new Group(); walk.rotation.y = WALK_YAW; s.add(walk);
+    const box = (w, h, d, x, y, z, r, g, b) => {
       const m = new Mesh(new BoxGeometry(w, h, d), new MeshBasicMaterial({ color: new Color(r, g, b), side: DoubleSide }));
-      m.position.set(x, y, z); m.rotation.y = ry; s.add(m); return m;
+      m.position.set(x, y, z); walk.add(m); return m;
     };
-    // strop (svetlý, nepriamo osvetlený), okraj strechy nad zábradlím
-    box(14, 0.2, 18, -2.5, 3.9, -3, 0.24, 0.215, 0.165);
-    // dlažba (teraco) – svetlejšia smerom k otvorenej strane
-    box(12, 0.1, 18, -3, -0.05, -3, 0.23, 0.19, 0.15);
-    box(4, 0.1, 18, 4.5, -0.05, -3, 0.31, 0.29, 0.27);
-    // fasáda s oknami a vchodom (šikmo, 45°), sokel
-    box(12, 3.9, 0.3, -2.2, 1.95, -6.4, 0.14, 0.11, 0.07, -Math.PI / 4);
-    box(12, 0.9, 0.35, -2.1, 0.45, -6.2, 0.095, 0.083, 0.063, -Math.PI / 4);
-    // zábradlie s parapetom na pravej strane
-    box(0.2, 1.05, 18, 3.2, 0.52, -3, 0.33, 0.29, 0.24);
-    // stena za kamerou a bočná stena vľavo (bez medzier, cez ktoré by presvitalo HDR)
-    box(14, 3.9, 0.3, 0, 1.95, 4.2, 0.2, 0.19, 0.17);
-    box(0.3, 3.9, 18, -7.5, 1.95, -3, 0.16, 0.14, 0.11);
-    for (const o of s.children) o.geometry.computeBoundingSphere();
-    envTer?.dispose();
-    envTer = pmrem.fromScene(s, 0.012, 0.02, 60, { size: 256, position: new Vector3(spot.x, 0.12, spot.z) }).texture;
+    // betónová podlaha a strop (3,1 m), strecha presahuje za zábradlie
+    box(9, 0.1, 22, -1.8, -0.05, -2, 0.062, 0.065, 0.072);
+    box(9, 0.2, 22, -1.8, 3.2, -2, 0.125, 0.118, 0.104);
+    // stena s dverami (tabuľa, biele dvere so sklom, kamenný pilier)
+    box(9, 3.1, 0.2, -2.9, 1.55, -5.05, 0.045, 0.04, 0.034);
+    box(1.5, 2.14, 0.05, 0, 1.07, -4.93, 0.16, 0.17, 0.18);
+    box(1.4, 0.6, 0.05, 0, 2.45, -4.93, 0.014, 0.01, 0.01);
+    box(0.5, 3.1, 0.05, 1.0, 1.55, -4.93, 0.12, 0.15, 0.16);
+    // ľavá stena, stena za kamerou (chodník pokračuje, je tmavší)
+    box(0.2, 3.1, 22, -2.4, 1.55, -2, 0.05, 0.045, 0.036);
+    box(9, 3.1, 0.2, -1.8, 1.55, 7.5, 0.06, 0.058, 0.052);
+    // parapet zábradlia (1 m) s červeným madlom
+    box(0.12, 1.0, 22, 1.36, 0.5, -2, 0.23, 0.165, 0.11);
+    box(0.1, 0.06, 22, 1.36, 1.02, -2, 0.18, 0.02, 0.02);
+    // biela budova oproti, osvetlená oblohou (najjasnejšia plocha okolo činky)
+    box(0.4, 22, 26, 7.5, 11, -3, 0.31, 0.43, 0.53);
+    box(9, 0.1, 26, 3.4, -0.3, -3, 0.08, 0.085, 0.09); // terén za zábradlím
+    s.traverse(o => { if (o.isMesh) o.geometry.computeBoundingSphere(); });
+    envDoor?.dispose();
+    envDoor = pmrem.fromScene(s, 0.012, 0.02, 60, { size: 256, position: new Vector3(spot.x, 0.12, spot.z) }).texture;
     s.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } });
   }
 
@@ -587,36 +622,44 @@ export function mount(canvas) {
   }
   const tmpV = new Vector3(), tmpV2 = new Vector3();
 
-  // bod na obrazovke (0..1 v rámci plátna, y zhora) → lúč z kamery
-  function rayFrom(cam, sx, sy, out) {
-    // súradnice v rámci celého záberu
-    const px = (crop.x + sx * crop.w - 0.5) * PW, py = (crop.y + sy * crop.h - 0.5) * PH;
-    out.set(px / F_PX, -py / F_PX, -1).normalize();
+  // bod v pixeloch plného záberu → lúč z kamery
+  function rayPx(cam, px, py, out) {
+    out.set((px - PW / 2) / F_PX, -(py - PH / 2) / F_PX, -1).normalize();
     return out.applyQuaternion(cam.quaternion);
   }
+  // bod na obrazovke (0..1 v rámci plátna, y zhora) → lúč z kamery (podľa výrezu jej záberu)
+  function rayFrom(cam, sx, sy, out) {
+    const c = cam.userData.crop;
+    return rayPx(cam, (c.x + sx * c.w) * PW, (c.y + sy * c.h) * PH, out);
+  }
 
-  // ——— Terasa: miesto dopadu podľa viditeľnej časti záberu ———
-  // Na výšku (mobil) je vidno celú dlažbu: činka dopadne do voľného priestoru pred stoličkami (≈ 1,6 m).
-  // Na šírku zostane z výšky záberu len pás v strede; dlažba je vidno len vzadu vpravo pri zábradlí.
+  // ——— Pred dverami: miesto dopadu podľa viditeľnej časti záberu ———
+  // Predná hrana rohože je na zábere v y ≈ 2700–2755 px (3,1–3,3 m od kamery).
+  // Na výšku je vidno celý záber: činka leží na betóne asi 1,3 m pred rohožou, dole v strede
+  // (x ≈ 890, y ≈ 3230 px, 1,9 m od kamery), ako na schválenom vzhľade.
+  // Na šírku zostane z výšky záberu len pás; činka sa posunie k rohoži tak, aby jej spodok bol
+  // nad dolným okrajom obrazu, najbližšie však asi 0,45 m pred rohožou (y ≈ 2820 px).
+  const SPOT_NEAR = { x: 890, y: 3230 }, SPOT_FAR = { x: 860, y: 2820 };
   function chooseSpot() {
-    const bottom = (crop.y + crop.h) * PH;
-    let ix, iy;
-    if (bottom >= 3420) { ix = 1000; iy = 3280; }
-    else { ix = 1850; iy = Math.min(2520, bottom - Math.max(70, crop.h * PH * 0.07)); iy = Math.max(iy, 2380); }
-    const Z = F_PX * TER_EYE / (iy - PH / 2), X = (ix - PW / 2) * Z / F_PX;
-    spot.set(X, 0, -Z);
-    const key = `${ix}|${iy | 0}`;
+    const top = cropDoor.y * PH, bottom = (cropDoor.y + cropDoor.h) * PH, band = bottom - top;
+    const iy = clamp(bottom - Math.max(110, band * 0.12), SPOT_FAR.y, SPOT_NEAR.y);
+    const k = (iy - SPOT_FAR.y) / (SPOT_NEAR.y - SPOT_FAR.y);
+    const ix = MathUtils.lerp(SPOT_FAR.x, SPOT_NEAR.x, k);
+    rayPx(doorCam, ix, iy, tmpV);
+    const d = DOOR_EYE / -tmpV.y;
+    spot.set(tmpV.x * d, 0, tmpV.z * d);
+    const key = `${ix | 0}|${iy | 0}`;
     const changed = key !== spotKey; spotKey = key;
     return changed;
   }
 
-  // pokojová poloha na dlažbe: os činky natočená tak, aby čelo s medeným štítkom mierne mierilo ku kamere
+  // pokojová poloha na betóne: os činky natočená tak, aby čelo s medeným štítkom mierne mierilo ku kamere
   const axisRest = new Vector3(), rollDir = new Vector3();
   let restYaw = 0;
   function computeRest() {
-    const toCam = tmpV.set(terCam.position.x - spot.x, 0, terCam.position.z - spot.z).normalize();
+    const toCam = tmpV.set(doorCam.position.x - spot.x, 0, doorCam.position.z - spot.z).normalize();
     const camAz = Math.atan2(toCam.z, toCam.x);
-    restYaw = camAz - 48 * DEG; // os 48° od smeru ku kamere
+    restYaw = camAz - 57 * DEG; // os 57° od smeru ku kamere: skoro naprieč záberom, štítok 20 ešte vidno
     axisRest.set(Math.cos(restYaw), 0, Math.sin(restYaw));
     rollDir.set(-axisRest.z, 0, axisRest.x); // kolmo na os po zemi
     if (rollDir.dot(toCam) < 0) rollDir.negate();
@@ -625,14 +668,18 @@ export function mount(canvas) {
 
   function layout() {
     const A = cssW / cssH;
-    if (A > PLATE_ASPECT) { crop.w = 1; crop.h = PLATE_ASPECT / A; crop.x = 0; crop.y = (1 - crop.h) / 2; }
-    else { crop.h = 1; crop.w = A / PLATE_ASPECT; crop.y = 0; crop.x = (1 - crop.w) / 2; }
-    for (const cam of [skyCam, terCam]) {
-      cam.setViewOffset(9000, 16000, crop.x * 9000, crop.y * 16000, crop.w * 9000, crop.h * 16000);
+    let cw = 1, ch = 1;
+    if (A > PLATE_ASPECT) ch = PLATE_ASPECT / A; else cw = A / PLATE_ASPECT;
+    // object-fit: cover; obloha na stred, dvere podľa PLATE_FOCUS (object-position)
+    const f = A <= 1 ? PLATE_FOCUS.portrait : PLATE_FOCUS.landscape;
+    Object.assign(cropSky, { w: cw, h: ch, x: (1 - cw) / 2, y: (1 - ch) / 2 });
+    Object.assign(cropDoor, { w: cw, h: ch, x: (1 - cw) * f.x, y: (1 - ch) * f.y });
+    for (const cam of [skyCam, doorCam]) {
+      const c = cam.userData.crop;
+      cam.setViewOffset(9000, 16000, c.x * 9000, c.y * 16000, c.w * 9000, c.h * 16000);
       cam.updateProjectionMatrix(); cam.updateMatrixWorld();
     }
-    compMat.uniforms.uCrop.value.set(crop.x, 1 - crop.y - crop.h, crop.w, crop.h);
-    fCss = F_PX * cssW / (crop.w * PW);
+    fCss = F_PX * cssW / (cw * PW);
     // dráha z neba: zrnko vysoko na oblohe (≈ 5 px) → tesne pod kamerou (≈ 40 % šírky)
     const d0 = 0.38 * fCss / 5.5;
     const d1 = 0.38 * fCss / (0.4 * Math.min(cssW, cssH * 0.9));
@@ -641,9 +688,9 @@ export function mount(canvas) {
     rayFrom(skyCam, 0.46, 0.8, P1).multiplyScalar(d1);
     dirSky.subVectors(P1, P0); skyLen = dirSky.length(); dirSky.normalize();
     skyTf = tForS(skyLen);
-    if (chooseSpot() && loaded) buildTerraceEnv();
+    if (chooseSpot() && loaded) buildDoorEnv();
     computeRest();
-    const sc = H / (2 * Math.tan(VFOV * DEG / 2) * crop.h);
+    const sc = H / (2 * Math.tan(VFOV * DEG / 2) * ch);
     dustMat.uniforms.uScale.value = sc; chipMat.uniforms.uScale.value = sc;
   }
 
@@ -662,13 +709,13 @@ export function mount(canvas) {
   // ——— Stav činky ———
   const skyAxis = new Vector3(0.25, 0.35, 1).normalize(), skyAxis2 = new Vector3(1, 0, 0);
   const qSky0 = new Quaternion().setFromEuler(new Euler(0.4, 0.9, 0.2));
-  const terAxis = new Vector3(0.2, 1, 0.35).normalize();
-  const TER_H0 = 2.45, V_IMP = 7.0;
-  const TER_V0 = Math.sqrt(Math.max(0, V_IMP * V_IMP - 2 * G * (TER_H0 - R)));
-  const TER_TF = (V_IMP - TER_V0) / G; // čas pádu na terase (≈ 0,57 s)
+  const dropAxis = new Vector3(0.2, 1, 0.35).normalize();
+  const DROP_H0 = 2.45, V_IMP = 7.0;
+  const DROP_V0 = Math.sqrt(Math.max(0, V_IMP * V_IMP - 2 * G * (DROP_H0 - R)));
+  const DROP_TF = (V_IMP - DROP_V0) / G; // čas pádu pred dverami (≈ 0,57 s)
   const POST_T = 1.25; // fyzikálny čas od dopadu po úplné ustálenie
   const E1 = 0.12, E2 = 0.12;
-  const TILT0 = 7 * DEG, HALF = 0.172; // náklon pri dopade, vzdialenosť od stredu po spodnú hranu čela
+  const TILT0 = 7 * DEG, HALF = 0.18; // náklon pri dopade, vzdialenosť od stredu po spodnú hranu čela
 
   const pos = new Vector3(), quat = new Quaternion();
   const qa = new Quaternion(), qb = new Quaternion();
@@ -684,8 +731,8 @@ export function mount(canvas) {
     quat.copy(qSky0).multiply(qa).multiply(qb);
   }
 
-  // terasa: t < 0 pád (t = −TER_TF … 0), t ≥ 0 po dopade
-  function poseTer(t) {
+  // pred dverami: t < 0 pád (t = −DROP_TF … 0), t ≥ 0 po dopade
+  function poseDoor(t) {
     // pokojová orientácia: os vodorovne v smere restYaw, pootočenie okolo osi tak, aby číslo stálo zvislo
     const roll = t >= 0 ? rollAt(t) : 0;
     const tilt = t >= 0 ? tiltAt(t) : TILT0;
@@ -694,11 +741,11 @@ export function mount(canvas) {
     qa.setFromAxisAngle(vY, -yaw);
     qb.setFromAxisAngle(tmpV2.set(0, 0, 1), tilt);
     quat.copy(qa).multiply(qb);
-    qb.setFromAxisAngle(vX, roll + 0.35);
+    qb.setFromAxisAngle(vX, roll + 1.92);
     quat.multiply(qb);
     if (t < 0) {
       // pád: pred dopadom konštantné otáčanie, ktoré presne dosadne do polohy dopadu
-      qb.setFromAxisAngle(terAxis, 4.2 * t);
+      qb.setFromAxisAngle(dropAxis, 4.2 * t);
       quat.multiply(qb);
       const y = R * Math.cos(TILT0) + HALF * Math.sin(TILT0) - (V_IMP * t + 0.5 * G * t * t);
       pos.set(spot.x, y, spot.z).addScaledVector(rollDir, 0.15 * t); // mierny posun pri páde
@@ -717,7 +764,7 @@ export function mount(canvas) {
   function rollAt(t) { return -0.055 * (1 - Math.exp(-t / 0.32)) / R; }
 
   // guľôčky pozdĺž osí oboch hláv a rúčky (x v súradniciach činky, polomer)
-  const AO_BALLS = [[0.098, 0.083], [0.134, 0.083], [0.168, 0.083], [-0.098, 0.083], [-0.134, 0.083], [-0.168, 0.083], [0.03, 0.022], [-0.03, 0.022], [0.0, 0.022], [0.0, 0.0]];
+  const AO_BALLS = [[0.1025, 0.087], [0.14, 0.087], [0.176, 0.087], [-0.1025, 0.087], [-0.14, 0.087], [-0.176, 0.087], [0.03, 0.022], [-0.03, 0.022], [0.0, 0.022], [0.0, 0.0]];
   function setAO() {
     for (let i = 0; i < 10; i++) {
       tmpV.set(AO_BALLS[i][0], 0, 0).applyMatrix4(bell.matrixWorld);
@@ -746,7 +793,7 @@ export function mount(canvas) {
   const scissorBox = new Vector4();
   function boundsOf(cam, poseFn, t0, t1) {
     let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-    const fDev = F_PX * W / (crop.w * PW);
+    const fDev = F_PX * W / (cropDoor.w * PW);
     for (let i = 0; i <= 2; i++) {
       poseFn(t0 + (t1 - t0) * i / 2);
       tmpV.copy(pos).applyMatrix4(cam.matrixWorldInverse);
@@ -755,7 +802,7 @@ export function mount(canvas) {
       const x = (proj.x * 0.5 + 0.5) * W, y = (proj.y * 0.5 + 0.5) * H;
       x0 = Math.min(x0, x - r); x1 = Math.max(x1, x + r); y0 = Math.min(y0, y - r); y1 = Math.max(y1, y + r);
     }
-    if (mode === 'ter') { // na terase aj tieň, kontaktné zatienenie a prach okolo miesta dopadu
+    if (mode === 'door') { // pred dverami aj tieň, kontaktné zatienenie a prach okolo miesta dopadu
       for (let i = 0; i < 4; i++) {
         screenOf(tmpV.set(spot.x + (i & 1 ? 0.8 : -0.8), 0, spot.z + (i & 2 ? 0.8 : -0.8)), cam);
         const x = (proj.x * 0.5 + 0.5) * W, y = (proj.y * 0.5 + 0.5) * H;
@@ -775,7 +822,7 @@ export function mount(canvas) {
     if (!(az < 1)) move = 0;
     // dlhé rozmazanie by sa pri obmedzenom počte snímok rozpadlo na kópie → uzávierku skrátime
     if (move > 72) { shutter *= 72 / move; move = 72; }
-    const N = blurMask ? Math.min(24, Math.max(1, Math.ceil(move / 3))) : 1;
+    const N = blurMask ? Math.min(24, Math.max(1, Math.ceil(move / 2))) : 1;
     // činka je malá časť obrazu → čiastkové snímky sa kreslia len v jej obdĺžniku
     const sc = N > 1 ? boundsOf(cam, poseFn, t - shutter / 2, t + shutter / 2) : null;
     renderer.setClearColor(0x000000, 0);
@@ -809,6 +856,10 @@ export function mount(canvas) {
     } else {
       setAO();
       sun.position.copy(spot).addScaledVector(OPEN_DIR, 4); sun.target.position.copy(spot);
+      fill.position.copy(bell.position).addScaledVector(FILL_DIR, 3); fill.target.position.copy(bell.position);
+      // mäkké svetlo od otvorenej strany: tieň vo vzduchu rýchlo slabne, pri zemi je najtmavší
+      catcher.material.opacity = 0.42 * Math.exp(-Math.max(0, bell.position.y - R) / 0.16);
+      fill.target.updateMatrixWorld();
     }
     sun.target.updateMatrixWorld();
   }
@@ -820,15 +871,18 @@ export function mount(canvas) {
     sun.color.setRGB(1.0, 0.64, 0.4); sun.intensity = 3.2;
     const c = sun.shadow.camera; c.left = c.bottom = -0.3; c.right = c.top = 0.3; c.near = 0.5; c.far = 6; c.updateProjectionMatrix();
     sun.shadow.radius = 2;
+    fill.intensity = 0; bell.userData.knurl.normalScale.set(1.4, 1.4);
     catcher.visible = ao.visible = dust.visible = chips.visible = false;
   }
-  function useTer() {
-    mode = 'ter';
-    scene.environment = envTer; scene.environmentIntensity = 1.0;
+  function useDoor() {
+    mode = 'door';
+    scene.environment = envDoor; scene.environmentIntensity = 1.45;
     scene.environmentRotation.set(0, 0, 0);
-    sun.color.setRGB(1.0, 0.97, 0.93); sun.intensity = 0.55;
+    sun.color.setRGB(0.93, 0.97, 1.0); sun.intensity = 0.7;
     const c = sun.shadow.camera; c.left = c.bottom = -0.9; c.right = c.top = 0.9; c.near = 0.5; c.far = 9; c.updateProjectionMatrix();
     sun.shadow.radius = 14;
+    fill.color.setRGB(1.0, 0.96, 0.9); fill.intensity = 1.1;
+    bell.userData.knurl.normalScale.set(0.35, 0.35); // vrúbky sú z tejto vzdialenosti pod pixel (inak moaré)
     catcher.visible = ao.visible = true;
     catcher.position.set(spot.x, 0, spot.z); ao.position.set(spot.x, 0.0005, spot.z);
   }
@@ -844,17 +898,18 @@ export function mount(canvas) {
     }
     return skyTf + (p - T.skyEnd) / (CUT - T.skyEnd) * 0.14; // švih: skutočná rýchlosť
   }
-  const terTime = p => -TER_TF * (T.land - p) / (T.land - CUT);
+  const doorTime = p => -DROP_TF * (T.land - p) / (T.land - CUT);
   const postTime = p => Math.min(POST_T, (p - T.land) / (T.settle - T.land) * POST_T);
   // Uzávierka: ako film s 24 snímkami/s a uzávierkou 180°, ak by úvod trval 8 s:
   // jedna snímka = 1/192 skrolovania, uzávierka polovica. Pri spomalenom zábere je teda činka ostrá,
-  // pri skutočnej rýchlosti (švih, pád na terase) sa rozmaže tak, ako by sa rozmazala na kamere.
+  // pri skutočnej rýchlosti (švih, pád pred dverami) sa rozmaže tak, ako by sa rozmazala na kamere.
   const SHUTTER_P = 1 / 384;
   function shutter(fn, p, lo, hi) {
     const e = 0.0005, a = Math.max(lo, p - e), b = Math.min(hi, p + e);
     return Math.min(0.02, Math.abs(fn(b) - fn(a)) / Math.max(1e-6, b - a) * SHUTTER_P);
   }
 
+  const setCrop = c => compMat.uniforms.uCrop.value.set(c.x, 1 - c.y - c.h, c.w, c.h);
   function draw(p) {
     whip(p);
     const shift = wShift, speed = wSpeed;
@@ -863,26 +918,26 @@ export function mount(canvas) {
     let layerTex;
     if (p < CUT) {
       useSky();
-      cu.tPlate.value = plateSky;
+      cu.tPlate.value = plateSky; setCrop(cropSky);
       layerTex = renderLayer(skyCam, poseSky, skyTime(p), p <= T.skyEnd ? shutter(skyTime, p, 0, T.skyEnd) : shutter(skyTime, p, T.skyEnd, CUT), true);
     } else {
-      useTer();
-      cu.tPlate.value = plateTer;
+      useDoor();
+      cu.tPlate.value = plateDoor; setCrop(cropDoor);
       // prach a úlomky vychádzajú spod oboch hláv v okamihu dopadu
-      poseTer(0); bell.position.copy(pos); bell.quaternion.copy(quat); bell.updateMatrixWorld();
+      poseDoor(0); bell.position.copy(pos); bell.quaternion.copy(quat); bell.updateMatrixWorld();
       dustMat.uniforms.uC0.value.set(0.15, 0, 0).applyMatrix4(bell.matrixWorld).setY(0);
       dustMat.uniforms.uC1.value.set(-0.15, 0, 0).applyMatrix4(bell.matrixWorld).setY(0);
       dustMat.uniforms.uDir.value.copy(rollDir);
       if (p < T.land) {
         dust.visible = chips.visible = false;
-        layerTex = renderLayer(terCam, poseTer, terTime(p), shutter(terTime, p, CUT, T.land), true);
+        layerTex = renderLayer(doorCam, poseDoor, doorTime(p), shutter(doorTime, p, CUT, T.land), true);
       } else {
         const t = postTime(p);
         dustMat.uniforms.uT.value = t; chipMat.uniforms.uT.value = t;
         dust.visible = t < POST_T; chips.visible = true;
         // krátky náraz kamery (1–2 snímky), tlmený
-        impulse = 0.007 * Math.exp(-t / 0.03) * Math.sin(t * 2 * Math.PI * 14);
-        layerTex = renderLayer(terCam, poseTer, t, t < POST_T ? shutter(postTime, p, T.land, T.settle) : 0, t < POST_T);
+        impulse = t < POST_T ? 0.007 * Math.exp(-t / 0.03) * Math.sin(t * 2 * Math.PI * 14) : 0;
+        layerTex = renderLayer(doorCam, poseDoor, t, t < POST_T ? shutter(postTime, p, T.land, T.settle) : 0, t < POST_T);
       }
     }
     cu.tLayer.value = layerTex;
@@ -908,20 +963,20 @@ export function mount(canvas) {
 
   // ——— Načítanie ———
   // na veľkých displejoch by sa 1440 px záber zväčšoval → načíta sa plné rozlíšenie 2160 × 3840
-  const big = () => !small && W / (1440 * crop.w) > 1.15;
+  const big = () => !small && W / (1440 * cropDoor.w) > 1.15;
   const ready = (async () => {
     const useBig = big();
     const hdrP = new HDRLoader().setDataType(HalfFloatType).loadAsync(new URL('env-venice_sunset-1k.hdr', base).href);
     const skyP = loadPlate(base, 'intro-nebo', useBig);
-    const terP = loadPlate(base, 'intro-terasa', useBig);
+    const doorP = loadPlate(base, 'intro-dvere', useBig);
     hdr = await hdrP;
     if (disposed) return;
     hdr.mapping = EquirectangularReflectionMapping;
     envRotY.v = worldSunRotation();
     envSky = pmrem.fromEquirectangular(hdr).texture;
-    buildTerraceEnv();
+    buildDoorEnv();
     plateSky = makeTexture(await skyP);
-    plateTer = makeTexture(await terP);
+    plateDoor = makeTexture(await doorP);
     if (disposed) return;
     // predkompilovanie shaderov oboch záberov, aby prvé skrolovanie nezaseklo
     loaded = true; lastP = -1;
@@ -934,7 +989,7 @@ export function mount(canvas) {
 
   // bod dopadu na obrazovke (0..1, y zhora) – pre texty nad scénou
   function landScreenPoint() {
-    screenOf(tmpV.set(spot.x, R, spot.z), terCam);
+    screenOf(tmpV.set(spot.x, R, spot.z), doorCam);
     return { x: proj.x * 0.5 + 0.5, y: 0.5 - proj.y * 0.5 };
   }
 
@@ -952,8 +1007,8 @@ export function mount(canvas) {
     impactScreenPoint: landScreenPoint,
     dispose() {
       disposed = true; this.pause();
-      rtSub?.dispose(); rtAcc?.dispose(); envSky?.dispose(); envTer?.dispose(); hdr?.dispose(); pmrem.dispose();
-      plateSky?.dispose(); plateTer?.dispose(); dot.dispose();
+      rtSub?.dispose(); rtAcc?.dispose(); envSky?.dispose(); envDoor?.dispose(); hdr?.dispose(); pmrem.dispose();
+      plateSky?.dispose(); plateDoor?.dispose(); dot.dispose();
       scene.traverse(o => { if (o.isMesh || o.isPoints) { o.geometry.dispose(); for (const m of [].concat(o.material)) { for (const k in m) if (m[k] && m[k].isTexture) m[k].dispose(); m.dispose(); } } });
       compMat.dispose(); blitMat.dispose(); quad.dispose();
       renderer.dispose();
