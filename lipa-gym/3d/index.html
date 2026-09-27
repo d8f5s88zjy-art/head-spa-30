@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GYM KLUB Nitra | Prehliadka fitka v Lipa Centre</title>
+<meta name="description" content="Prehliadka GYM KLUB Fitness & Bodybuilding na Výstavnej 6 v Nitre (Lipa Centrum): hlavná sála, voľné váhy, funkčná zóna a tatami na skutočných záberoch z prevádzky.">
+<!-- Návrh na posúdenie: kým prevádzka neschváli obsah a fakty, stránka sa neindexuje. Pred zverejnením odstrániť. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0c0d0f">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:title" content="GYM KLUB Nitra | Prehliadka fitka">
+<meta property="og:description" content="Výstavná 6, Nitra (Lipa Centrum). Skutočné zábery z prevádzky.">
+<meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/media/vchod-poster.jpg">
+<link rel="preload" href="../assets/fonts/BebasNeue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#vstup">Preskočiť úvod a prejsť na obsah</a>
+
+<header class="bar">
+  <a class="brand" href="#top" aria-label="GYM KLUB Nitra, na začiatok">
+    <img src="../assets/img/logo-gymklub.png" width="104" height="38" alt="GYM KLUB">
+  </a>
+  <nav class="nav" aria-label="Hlavná navigácia">
+    <a href="#vstup">Vstup</a>
+    <a href="#sala">Sála</a>
+    <a href="#sila">Sila</a>
+    <a href="#zony">Zóny</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <div class="bar-tools">
+    <button class="tool" type="button" id="sound" aria-pressed="false" hidden>
+      <span class="tool-ico" aria-hidden="true"></span><span class="tool-txt">Zvuk vyp.</span>
+    </button>
+    <a class="tool tool-skip" href="#vstup" id="skipIntro">Preskočiť intro</a>
+  </div>
+</header>
+
+<!-- Scéna: 3D plátno a pás médií. Obsah je v HTML nižšie a nezávisí od nich. -->
+<div class="scene" aria-hidden="true">
+  <div class="sky"></div>
+  <canvas class="gl" id="gl"></canvas>
+  <picture class="still">
+    <source srcset="media/intro-still.avif" type="image/avif">
+    <source srcset="media/intro-still.webp" type="image/webp">
+    <img src="media/intro-still.jpg" alt="" width="1600" height="1000">
+  </picture>
+  <div class="stage" id="stage">
+    <div class="frame" id="frame"></div>
+    <div class="plate-ring" id="plateRing"></div>
+  </div>
+</div>
+
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <span class="loader-bar"><i></i></span><span class="loader-txt">Pripravujem 3D scénu</span>
+</div>
+
+<main id="top">
+  <!-- 1–3: nebo, pád, dopad -->
+  <section class="intro" id="intro" aria-labelledby="h-intro">
+    <div class="intro-pin">
+      <div class="beat beat-a" data-from="0" data-to=".2">
+        <p class="kicker">Nitra · Chrenová · Lipa Centrum</p>
+        <p class="lead">Dva kilometre nad mestom je všetko ľahké.</p>
+      </div>
+      <div class="beat beat-b" data-from=".24" data-to=".52">
+        <p class="lead">Dole platí gravitácia.<br>A tréning, ktorý ju berie vážne.</p>
+      </div>
+      <div class="beat beat-c" data-from=".73" data-to=".9">
+        <h1 id="h-intro" class="brand-reveal">GYM KLUB</h1>
+        <p class="kicker">Fitness &amp; Bodybuilding · Výstavná 6, Nitra</p>
+      </div>
+      <p class="scroll-hint" data-from="0" data-to=".06"><span aria-hidden="true"></span>Skrolujte</p>
+    </div>
+  </section>
+
+  <!-- 4–7: prehliadka po skutočných záberoch -->
+  <div class="tour" id="tour">
+    <section class="chapter" id="vstup" aria-labelledby="h-vstup" data-chapter="Vstup">
+      <article class="step" data-media="terasa">
+        <p class="num">01 · Vstup</p>
+        <h2 id="h-vstup" class="h2">Výstavná 6, <em>Lipa Centrum</em></h2>
+        <p>Vchod je na krytej terase Lipa Centra pod čiernou tabuľou GYM KLUB. Na terase sú stoly a stoličky, dá sa tu počkať na tréningového partnera.</p>
+      </article>
+      <article class="step" data-media="vchod">
+        <p>Dvere, pár krokov a ste pri recepcii.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="sala" aria-labelledby="h-sala" data-chapter="Sála">
+      <article class="step" data-media="sala-a">
+        <p class="num">02 · Hlavná sála</p>
+        <h2 id="h-sala" class="h2">Priestor, kde sa <em>nečaká na stroj</em></h2>
+        <p>Veľká sála so stropnou klimatizáciou, oknami do zelene a strojmi na všetky svalové partie. Trénovať sa dá samostatne počas otváracích hodín.</p>
+      </article>
+      <article class="step" data-media="hlavna-sala">
+        <p>Tyrkysové a zelené kladkové stroje, veže, lavice a zrkadlá pozdĺž celej steny.</p>
+      </article>
+      <article class="step" data-media="kardio-okna">
+        <p>Kardio rad pri veľkých oknách: bežecké pásy a ďalšie kardio stroje.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="sila" aria-labelledby="h-sila" data-chapter="Sila">
+      <article class="step" data-media="cinky">
+        <p class="num">03 · Voľné váhy</p>
+        <h2 id="h-sila" class="h2">Železo, <em>ktoré poctivo váži</em></h2>
+        <p>Rady jednoručiek, nakladacie kotúče, olympijské osi a nastaviteľné lavice.</p>
+      </article>
+      <article class="step" data-media="plate-loaded">
+        <p>Nakladacie stroje a racky v tmavej zóne pod šesťuholníkovým svetlom.</p>
+      </article>
+      <article class="step" data-media="jednorucky">
+        <p>Jednoručky do 20 kg na stojane, schodíkový trenažér a zrkadlá na kontrolu techniky.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="zony" aria-labelledby="h-zony" data-chapter="Zóny">
+      <article class="step" data-media="sala-c">
+        <p class="num">04 · Funkčná a bojová zóna</p>
+        <h2 id="h-zony" class="h2">Dráha, rig <em>a tatami</em></h2>
+        <p>Šprintérska dráha s metrážou, sane, kettlebelly a rig Life Fitness s TRX a boxovacím vrecom.</p>
+      </article>
+      <article class="step" data-media="ring">
+        <p>Priestor na funkčný tréning: ťahanie, tlačenie, švihy, údery do vreca a krátke šprinty.</p>
+      </article>
+      <article class="step" data-media="tatami">
+        <p>Samostatná miestnosť s tatami. V ponuke klubu sú bojové športy, Krav Maga, pilates a zdravý chrbát.</p>
+      </article>
+    </section>
+  </div>
+
+  <!-- 8: tréneri a komunita -->
+  <section class="block team" id="treneri" aria-labelledby="h-treneri">
+    <div class="wrap two">
+      <div>
+        <p class="num">05 · Tréneri</p>
+        <h2 id="h-treneri" class="h2">Ľudia za <em>tréningom</em></h2>
+      </div>
+      <div class="prose">
+        <p>Trénerov na tejto stránke ukážeme až s ich súhlasom a s aktuálnymi fotkami. Dovtedy nájdete zoznam trénerov a ich kontakty na oficiálnom webe klubu.</p>
+        <p><a class="link" href="https://www.gymklub.sk/treneri.html" rel="noopener">Tréneri na gymklub.sk</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9: členstvo a praktické informácie -->
+  <section class="block info" id="clenstvo" aria-labelledby="h-clenstvo">
+    <div class="wrap two">
+      <div>
+        <p class="num">06 · Členstvo</p>
+        <h2 id="h-clenstvo" class="h2">Vstup, permanentka, <em>hodiny</em></h2>
+      </div>
+      <div class="prose">
+        <p>Aktuálny cenník, otváracie hodiny a spôsob platby vám povedia na recepcii alebo po telefóne. Na tejto stránke ich zverejníme, keď ich prevádzka potvrdí.</p>
+        <ul class="facts">
+          <li><span>Telefón</span><a href="tel:+421944800394">+421 944 800 394</a></li>
+          <li><span>E-mail</span><a href="mailto:info@gymklub.sk">info@gymklub.sk</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10: kontakt -->
+  <section class="block contact" id="kontakt" aria-labelledby="h-kontakt">
+    <div class="wrap two">
+      <div>
+        <p class="num">07 · Kontakt</p>
+        <h2 id="h-kontakt" class="h2">Príďte sa <em>pozrieť</em></h2>
+        <address class="addr">
+          GYM KLUB Fitness &amp; Bodybuilding<br>
+          Výstavná 6 (Lipa Centrum)<br>
+          949 01 Nitra
+        </address>
+        <div class="cta">
+          <a class="btn btn-main" href="tel:+421944800394">Zavolať</a>
+          <a class="btn" href="mailto:info@gymklub.sk?subject=Prv%C3%A1%20n%C3%A1v%C5%A1teva">Napísať e-mail</a>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%BDstavn%C3%A1+6%2C+949+01+Nitra" rel="noopener">Navigovať</a>
+        </div>
+      </div>
+      <div class="map" id="map">
+        <button class="map-load" type="button" id="mapLoad">Zobraziť mapu <small>(načíta Mapy Google)</small></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>GYM KLUB Nitra · Výstavná 6 (Lipa Centrum), 949 01 Nitra · <a href="tel:+421944800394">+421 944 800 394</a> · <a href="mailto:info@gymklub.sk">info@gymklub.sk</a></p>
+    <p><a href="../">Klasická verzia webu</a> · <a href="https://www.gymklub.sk/" rel="noopener">gymklub.sk</a></p>
+  </div>
+</footer>
+
+<script src="assets/tour.js" type="module"></script>
+</body>
+</html>
