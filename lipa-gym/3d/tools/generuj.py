@@ -50,7 +50,7 @@ TIMETABLE = [  # deň 0 = pondelok
 ]
 DAYS = ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa']
 COACHES = [  # (meno, zameranie, text, telefón alebo None)
-    ('Michal Šášik', 'Bojové športy', 'MMA, Jiu Jitsu a Luta Livre. Postoj aj zem, od úplných základov po zápas.', '0905 930 597'),
+    ('Michal Šášik', 'Bojové športy · Panda Fight Club', 'MMA, Jiu Jitsu a Luta Livre. Postoj aj zem, od úplných základov po zápas.', '0905 930 597'),
     ('Mgr. Tomáš Králik', 'Fitness a výživa', 'Kondičný a kruhový tréning, TRX, kettlebell, kondičný box, výživové poradenstvo.', '+421 908 484 155'),
     ('Jakub Vrána', 'Fitness', 'Diagnostika pohybu, správna technika, tréningový plán a jedálniček podľa cieľa.', '0915 605 514'),
     ('Jozef Humay', 'Fitness', 'Osobné a kondičné tréningy, poradenstvo pre stravu, výživu a doplnky.', '+421 907 736 944'),
@@ -70,7 +70,18 @@ ZONES = [
     ('funkcna-zona', 'Funkčná zóna', 'Funkčný a kondičný tréning.', ['funkcna-zona-4', 'funkcna-zona-1', 'funkcna-zona-2', 'funkcna-zona-5', 'funkcna-zona-3', 'funkcna-zona-6', 'funkcna-zona-7'], 'funkcna-zona-6'),
     ('tatami', 'Tatami', 'Samostatná miestnosť na cvičenie na podložkách.', ['tatami-1', 'tatami-2', 'tatami-3'], 'tatami-2'),
 ]
-PAGES = [('index.html', 'Domov'), ('o-fitku.html', 'O fitku'), ('clenstva.html', 'Členstvá'), ('sluzby.html', 'Služby'), ('kontakt.html', 'Kontakt')]
+PAGES = [('index.html', 'Domov'), ('o-fitku.html', 'O fitku'), ('clenstva.html', 'Členstvá'), ('sluzby.html', 'Služby'), ('mma.html', 'MMA'), ('kontakt.html', 'Kontakt')]
+# Panda Fight Club: klub bojových športov, ktorý trénuje v GYM KLUB. Zdroje: pandafightclub.webnode.sk,
+# gymklub.sk, instagram.com/pandafightclubnitra, orlyfyzickejaktivity.eu (28. 9. 2026).
+PANDA = {
+    'name': 'Panda Fight Club Nitra', 'coach': 'Michal Šášik', 'phone': '0905 930 597', 'tel': '+421905930597',
+    'email': 'pandafightclub@gmail.com',
+    'instagram': 'https://www.instagram.com/pandafightclubnitra/', 'facebook': 'https://www.facebook.com/PFCNR/',
+    'web': 'https://pandafightclub.webnode.sk/',
+    'award': 'https://www.orlyfyzickejaktivity.eu/profile-28362-panda-fight-club-nitra',
+}
+PANDA_SCHEDULE_NOTE = ('Rozvrh sa v zdrojoch líši: gymklub.sk Ut a Št 17:00 – 19:00, So 13:00 – 15:00; '
+                       'web Panda Fight Club Št 16:00 – 18:00, So a Ne 13:00 – 15:00. Potvrdiť s trénerom.')
 ADDR = f"{GYM['street']} ({GYM['place']}), {GYM['zip']} {GYM['city']}"
 
 
@@ -90,6 +101,20 @@ def pic(sid, sizes, alt=None, lazy=True, cls='', eager_hi=False):
             f'<source type="image/webp" srcset="{ss("webp")}" sizes="{sizes}">'
             f'<img src="media/tour-{sid}-1280.jpg" srcset="{ss("jpg")}" sizes="{sizes}" width="1280" height="{h1280}" '
             f'alt="{e(f["alt"] if alt is None else alt)}" decoding="async" {load} style="object-position:{f["fx"]}% {f["fy"]}%"></picture>')
+
+
+def pic_panda(n, sizes, alt, lazy=True, eager_hi=False, cls=''):
+    """Fotky sály Panda Fight Club z gymklub.sk (1200 × 800, bez AVIF)."""
+    b = f'media/panda-sala-{n}'
+    load = 'fetchpriority="high"' if eager_hi else ('loading="lazy"' if lazy else '')
+    c = f' class="{cls}"' if cls else ''
+    return (f'<picture{c}><source type="image/webp" srcset="{b}-640.webp 640w, {b}-1200.webp 1200w" sizes="{sizes}">'
+            f'<img src="{b}-1200.jpg" srcset="{b}-640.jpg 640w, {b}-1200.jpg 1200w" sizes="{sizes}" width="1200" height="800" '
+            f'alt="{e(alt)}" decoding="async" {load}></picture>')
+
+
+PANDA_ALT = ['Sála Panda Fight Club: modro-červené tatami, boxovacie vrecia, hrazdy s loptami a steny s logom pandy.',
+             'Sála Panda Fight Club s veľkou plochou tatami a nápisom Luta Livre na stene.']
 
 
 def stage(sid, extra_cls=''):
@@ -321,6 +346,16 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
     </div>
   </section>
 
+  <section class="panda-band" aria-labelledby="h-panda-home">
+    {pic_panda(1, '100vw', PANDA_ALT[0], cls='panda-band-img')}
+    <div class="wrap panda-band-in rv">
+      <p class="kicker">Bojové športy v GYM KLUB</p>
+      <h2 class="h2" id="h-panda-home">Panda Fight Club</h2>
+      <p class="lead">MMA, Luta Livre a Jiu Jitsu s Michalom Šášikom v samostatnej sále na tatami. Nábor nových členov prebieha stále, začať sa dá od úplných základov.</p>
+      <div class="cta-row"><a class="btn" href="mma.html">MMA a Panda Fight Club</a><a class="btn btn-ghost" href="tel:{PANDA['tel']}">Zavolať trénerovi</a></div>
+    </div>
+  </section>
+
   <section class="sec sec-dark" aria-labelledby="h-clenstva">
     <div class="wrap">
       <div class="sec-head rv">
@@ -506,20 +541,21 @@ def when(name):
 SVC = [
     ('fitness', 'Fitness tréning', 'Každý deň počas otváracích hodín', 'Samostatný silový tréning na strojoch, s voľnými váhami a na kardio zariadeniach. Na samostatný tréning sa netreba objednávať.', 'hlavna-sala-4', None),
     ('osobny-trening', 'Osobný tréning', 'Termín podľa dohody s trénerom', 'Diagnostika pohybu, správna technika, tréningový plán a jedálniček podľa cieľa. Tréneri pripravia aj na súťaž vo fitness a silovom trojboji.', 'volne-vahy-1', None),
-    ('bojove-sporty', 'Bojové športy', when('Bojové športy'), 'MMA, Jiu Jitsu a Luta Livre (no-gi, bez kimona) s Michalom Šášikom. Postoj s prvkami boxu, kickboxu a juda, na zemi páky, škrtenia a obrana proti nim. Začať sa dá od úplných základov.', 'tatami-1', None),
+    ('bojove-sporty', 'Bojové športy · Panda Fight Club', when('Bojové športy'), 'MMA, Jiu Jitsu a Luta Livre (no-gi, bez kimona) s Michalom Šášikom a jeho klubom Panda Fight Club. Postoj s prvkami boxu, kickboxu a juda, na zemi páky, škrtenia a obrana proti nim. Začať sa dá od úplných základov.', 'panda:1', 'mma.html'),
     ('krav-maga', 'Krav Maga', when('Krav Maga'), 'Praktická sebaobrana s Tomášom Židekom a Slavom Jurom. Jednoduché techniky pre reálne situácie, bez predchádzajúcich skúseností.', 'tatami-3', None),
     ('zdravy-chrbat', 'Zdravý chrbát', when('Zdravý chrbát'), 'Cvičenie s Nikol Molnárovou: posilnenie trupu, správne držanie tela a uvoľnenie stuhnutých svalov. S malými činkami a na karimatke, vhodné aj pri sedavej práci.', 'tatami-2', None),
     ('pilates', 'Pilates', when('Pilates'), 'Pilates s Majkou Navrátilovou pre stabilitu, mobilitu a pevný stred tela. Pokojnejšie tempo a presné prevedenie.', 'tatami-1', None),
     ('vyziva', 'Nutričné poradenstvo', 'Podľa dohody', 'Analýza telesného zloženia a stravovací protokol s Jaroslavom Šoltísom, výživové poradenstvo aj u Mgr. Tomáša Králika.', 'recepcia-1', None),
 ]
 svc_html = []
-for i, (sid_, name, time, text, photo, _) in enumerate(SVC):
+for i, (sid_, name, time, text, photo, more) in enumerate(SVC):
     svc_html.append(f'''    <article class="svc-row rv{' svc-rev' if i % 2 else ''}" id="{sid_}" aria-labelledby="h-{sid_}">
-      <div class="svc-media">{pic(photo, "(max-width: 760px) 100vw, 50vw")}</div>
+      <div class="svc-media">{pic_panda(photo[6:], "(max-width: 760px) 100vw, 50vw", PANDA_ALT[int(photo[6:]) - 1]) if photo.startswith('panda:') else pic(photo, "(max-width: 760px) 100vw, 50vw")}</div>
       <div class="svc-body">
         <p class="kicker">{e(time)}</p>
         <h2 class="h2 h2-s" id="h-{sid_}">{e(name)}</h2>
         <p class="sec-p">{e(text)}</p>
+        {f'<p class="more"><a class="link" href="{more}">Viac o Panda Fight Club {ICON["arrow"]}</a></p>' if more else ''}
       </div>
     </article>''')
 lekcie_anchor = '<span id="lekcie" class="anchor"></span>'
@@ -570,6 +606,90 @@ services = phero('funkcna-zona-2', 'Služby', 'Vyberte si smer, ktorý vám sadn
 page('sluzby.html', 'Služby a tréneri | GYM KLUB Nitra',
      'Fitness tréning, osobní tréneri, MMA, Jiu Jitsu, Luta Livre, Krav Maga, pilates, zdravý chrbát a nutričné poradenstvo v GYM KLUB Nitra. Rozvrh lekcií a kontakty na trénerov.',
      services)
+
+# ---------------------------------------------------------------------------------------------
+# MMA · PANDA FIGHT CLUB
+bj = [(d, a, b) for d, a, b, n, c in TIMETABLE if n == 'Bojové športy']
+bj_rows = ''.join(f'<tr><th scope="row">{DAYS[d]}</th><td class="num">{a} – {b}</td></tr>' for d, a, b in bj)
+DISC = [
+    ('MMA', 'Zmiešané bojové umenia: postoj s prvkami boxu, kickboxu a juda, prechod na zem a boj na zemi.'),
+    ('Luta Livre', 'Brazílsky zápasnícky štýl bez kimona (no-gi): páky, škrtenia a obrana proti nim.'),
+    ('Jiu Jitsu', 'Boj na zemi: kontrola súpera, páky a škrtenia.'),
+]
+disc = ''.join(f'<li class="rv"><h3 class="h3">{e(n)}</h3><p>{e(t)}</p></li>' for n, t in DISC)
+mma = f'''<section class="phero" aria-labelledby="h-page">
+    {pic_panda(1, '100vw', PANDA_ALT[0], lazy=False, eager_hi=True, cls='phero-img')}
+    <div class="wrap phero-in">
+      <p class="kicker">MMA · Luta Livre · Jiu Jitsu</p>
+      <h1 class="h1" id="h-page">Panda Fight Club</h1>
+      <p class="lead">Klub bojových športov trénera Michala Šášika. Trénuje v GYM KLUB na Výstavnej 6, vo vlastnej sále s tatami. Nábor nových členov prebieha stále, stačí prísť.</p>
+      <div class="cta-row"><a class="btn" href="tel:{PANDA['tel']}">Zavolať trénerovi</a><a class="btn btn-ghost" href="#rozvrh-mma">Kedy sa trénuje</a></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-disc">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Čo sa trénuje</p>
+        <h2 class="h2" id="h-disc">Postoj aj zem</h2>
+        <p class="sec-p">Tréningy vedie Michal Šášik. Skúsenosti nie sú potrebné, začína sa od úplných základov. Prvýkrát stačí športové oblečenie a voda.</p>
+      </div>
+      <ol class="reasons">{disc}</ol>
+    </div>
+  </section>
+
+  <section class="sec sec-dark" aria-labelledby="h-sala">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Sála</p>
+        <h2 class="h2" id="h-sala">Tatami, vrecia a hrazdy</h2>
+        <p class="sec-p">Samostatná sála s veľkou plochou tatami. Podľa webu klubu sa na tréning vchádza zo zadnej strany budovy OC Lipa. {todo('vchod do sály Panda Fight Club (zadná strana budovy)')}</p>
+      </div>
+      <div class="panda-pics rv">
+        <figure>{pic_panda(1, '(max-width: 760px) 100vw, 50vw', PANDA_ALT[0])}</figure>
+        <figure>{pic_panda(2, '(max-width: 760px) 100vw, 50vw', PANDA_ALT[1])}</figure>
+      </div>
+      <p class="sec-p src">Fotky sály: gymklub.sk.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="rozvrh-mma" aria-labelledby="h-mma-rozvrh">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker">Rozvrh</p>
+        <h2 class="h2" id="h-mma-rozvrh">Kedy sa trénuje</h2>
+        <p class="sec-p">Cenu tréningov a členstva v klube dohodnete priamo s trénerom.</p>
+      </div>
+      <div class="rv">
+        <table class="table">
+          <caption class="sr-only">Tréningy Panda Fight Club</caption>
+          <tbody>{bj_rows}</tbody>
+        </table>
+        <p class="sec-p">{todo(PANDA_SCHEDULE_NOTE)}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-dark" aria-labelledby="h-trener">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker">Tréner a kontakt</p>
+        <h2 class="h2" id="h-trener">{PANDA['coach']}</h2>
+        <p class="sec-p">Hlavný tréner Panda Fight Club. Termín prvého tréningu, cenu aj otázky k začiatkom dohodnete priamo s ním.</p>
+        <p class="award">Panda Fight Club Nitra je laureát a držiteľ zlatej medaily v súťaži <a href="{PANDA['award']}" target="_blank" rel="noopener">Orly fyzickej aktivity 2024</a>.</p>
+      </div>
+      <ul class="c-list rv">
+        <li><span class="c-l">Telefón</span><a class="c-v" href="tel:{PANDA['tel']}">{PANDA['phone']}</a></li>
+        <li><span class="c-l">E-mail</span><a class="c-v" href="mailto:{PANDA['email']}">{PANDA['email']}</a></li>
+        <li><span class="c-l">Sociálne siete</span><span class="c-v c-soc"><a href="{PANDA['instagram']}" target="_blank" rel="noopener">Instagram</a> · <a href="{PANDA['facebook']}" target="_blank" rel="noopener">Facebook</a></span></li>
+        <li><span class="c-l">Web klubu</span><a class="c-v c-map" href="{PANDA['web']}" target="_blank" rel="noopener">pandafightclub.webnode.sk</a></li>
+      </ul>
+    </div>
+  </section>
+  {cta_band('Príďte na prvý tréning', 'Stačí športové oblečenie a voda. Ak chcete trénovať aj vo fitku, pozrite si vstupy a permanentky GYM KLUB.')}'''
+page('mma.html', 'MMA a Panda Fight Club | GYM KLUB Nitra',
+     'Panda Fight Club Nitra v GYM KLUB na Výstavnej 6: MMA, Luta Livre a Jiu Jitsu s trénerom Michalom Šášikom. Rozvrh, sála s tatami a kontakt.',
+     mma)
 
 # ---------------------------------------------------------------------------------------------
 # KONTAKT

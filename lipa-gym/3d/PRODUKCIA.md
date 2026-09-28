@@ -25,12 +25,14 @@ bez vymyslených cien, hodín a recenzií; chýbajúce údaje viditeľne označi
 | `o-fitku.html` | 7 priestorov s priestorovou fotkou a galériou 30 fotiek, fotky na celú obrazovku, zázemie |
 | `clenstva.html` | 3 hlavné vstupy, porovnanie (posuvník: jednotlivé vstupy vs. permanentka), ďalšie vstupy, podmienky |
 | `sluzby.html` | fitness, osobný tréning, bojové športy, Krav Maga, zdravý chrbát, pilates, výživa; týždenný rozvrh; tréneri |
+| `mma.html` | Panda Fight Club Nitra (MMA, Luta Livre, Jiu Jitsu, tréner Michal Šášik): disciplíny, sála (2 fotky z gymklub.sk), rozvrh, kontakt na trénera, ocenenie Orly fyzickej aktivity 2024; na domove pás s odkazom, v službách odkaz |
 | `kontakt.html` | adresa, telefón, e-mail, Instagram, Facebook, otváracie hodiny, mapa po kliknutí, formulár návštevy (pripraví e-mail), otázky |
 
 Stránky generuje `tools/generuj.py` (spoločná hlavička, menu, pätička, spodná lišta s tlačidlami
 na telefóne); všetky fakty sú v ňom na jednom mieste (`GYM`, `HOURS`, `PLANS`, `MORE`, `TERMS`,
 `TIMETABLE`, `COACHES`, `ZONES`). Po úprave: `python3 tools/generuj.py` v `lipa-gym/3d`.
-Údaje prevzaté z gymklub.sk a z klasického webu `lipa-gym/` sú na stránke označené žltou značkou
+Panda Fight Club: zdroje pandafightclub.webnode.sk, gymklub.sk, Instagram klubu a
+orlyfyzickejaktivity.eu (28. 9. 2026). Údaje prevzaté z gymklub.sk a z klasického webu `lipa-gym/` sú na stránke označené žltou značkou
 **OVERIŤ**; `TODO_VISIBLE = False` ich skryje, keď budú potvrdené. Recenzie z klasického webu sa
 nepoužili (nie je overený zdroj).
 
@@ -44,6 +46,8 @@ sekcie sa pri skrolovaní raz odkryjú; pri obmedzenom pohybe nič z toho.
 2. Otváracie hodiny cez víkend (08:00 – 17:00 alebo 08:30 – 18:00) a sviatky.
 3. Zoznam aktívnych trénerov a ich telefóny, rozvrh lekcií.
 4. Parkovanie pri Lipa Centre (otázka na kontakte).
+4a. Panda Fight Club: rozvrh (gymklub.sk Ut a Št 17:00 – 19:00, So 13:00 – 15:00; web klubu Št 16:00 – 18:00,
+    So a Ne 13:00 – 15:00), vchod do sály zo zadnej strany budovy, súhlas klubu s použitím mena, loga a fotiek.
 5. Fotky z tréningov a lekcií (ľudia so súhlasom), fotky trénerov; farby a logo vo vektore.
 6. Cieľová skupina a hlavný cieľ webu, ak má byť text zameraný inak (napr. študenti, bojové športy).
 7. Spracovanie formulára bez e-mailového programu (služba typu Formspree), ak ho chcete.
