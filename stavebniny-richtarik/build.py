@@ -282,7 +282,7 @@ def snippet(slug, n=110):
 NAV = [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), ('katalog/index.html', 'Katalóg'), ('novinky/index.html', 'Novinky'), ('sluzby.html', 'Služby'), ('galeria/index.html', 'Galéria'), ('o-nas.html', 'O nás'), ('kontakt.html', 'Kontakt')]
 
 
-def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', head=None, home=False):
+def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', head=None, home=False, head_img=None):
     pre = prefix(path)
     def _nav_a(p, t):
         cur = ' aria-current="page"' if (path == p or (p != "index.html" and path.startswith(p.split("/")[0] + "/"))) else ''
@@ -296,7 +296,8 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
     band = ''
     if head:
         kicker, h1, lede = head
-        band = f'<section class="page-head grainy"><div class="wrap">{crumb}<div class="head"><div class="eyebrow">{kicker}</div><h1>{h1}</h1>{f"<p class=lede>{lede}</p>" if lede else ""}</div></div></section>'
+        ph = f'<div class="ph" data-parallax="0.35"><img src="{pre}img/{head_img}.webp" alt="" width="1800" height="1200" fetchpriority="high"></div>' if head_img else ''
+        band = f'<section class="page-head grainy{" has-img" if head_img else ""}">{ph}<div class="wrap">{crumb}<div class="head"><div class="eyebrow">{kicker}</div><h1>{h1}</h1>{f"<p class=lede>{lede}</p>" if lede else ""}</div></div></section>'
     elif crumb:
         band = f'<section class="page-head"><div class="wrap">{crumb}</div></section>'
     crumb = band
@@ -398,7 +399,7 @@ def build_katalog_index():
 <div class="cats">{cards}</div>
 <div class="sort-note"><p>Nenašiel si, čo hľadáš? Zavolaj, väčšinu materiálu vieme objednať do niekoľkých dní a doviezť priamo na stavbu.</p><a class="btn dark" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div>
 </div></section>'''
-    write(path, page(path, 'Katalóg produktov', body, 'Katalóg stavebného materiálu Stavebniny Richtárik Nitra: sypké zmesi, murivo, krytiny, dlažby, izolácie, komíny, okná, hutný materiál, rezivo, náradie, sadrokartón, fasády, farby.', [('index.html', 'Úvod'), (None, 'Katalóg')], head=('Katalóg', 'Všetko na stavbu od základov po strechu', 'Produkty popredných slovenských aj svetových výrobcov. Vyber kategóriu alebo hľadaj podľa názvu výrobku či značky.')))
+    write(path, page(path, 'Katalóg produktov', body, 'Katalóg stavebného materiálu Stavebniny Richtárik Nitra: sypké zmesi, murivo, krytiny, dlažby, izolácie, komíny, okná, hutný materiál, rezivo, náradie, sadrokartón, fasády, farby.', [('index.html', 'Úvod'), (None, 'Katalóg')], head=('Katalóg', 'Všetko na stavbu od základov po strechu', 'Produkty popredných slovenských aj svetových výrobcov. Vyber kategóriu alebo hľadaj podľa názvu výrobku či značky.'), head_img='sklad'))
 
 
 def build_katalog_page(slug):
@@ -426,7 +427,7 @@ def build_katalog_page(slug):
 {subs}
 <div class="kat-cta"><p>Chceš cenu na konkrétne množstvo? Zavolaj alebo napíš, cenovú ponuku spravíme zadarmo.</p><div class="cta"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a><a class="btn ghost" href="mailto:{FIRMA['email']}?subject={html.escape(title)}">Napísať e-mail</a></div></div>
 </div></div></section>'''
-    write(path, page(path, title, body, f'{title}. Stavebniny Richtárik Nitra, {cat[3]}.', crumbs, head=('Katalóg' if len(parts) == 1 else cat[1], title, lede)))
+    write(path, page(path, title, body, f'{title}. Stavebniny Richtárik Nitra, {cat[3]}.', crumbs, head=('Katalóg' if len(parts) == 1 else cat[1], title, lede), head_img=cat[4]))
 
 
 def build_akcie():
@@ -435,12 +436,12 @@ def build_akcie():
     for slug, tag, h, p in AKCIE_KARTY:
         s = 'akcie__' + slug
         href = rel(path, PAGES[s]) if s in PAGES else None
-        cards += f'<a class="deal" href="{href}"><span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p><span class="more">Leták akcie</span></a>' if href else f'<div class="deal"><span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p></div>'
+        cards += f'<a class="deal" href="{href}">{letak_thumb(s, path)}<span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p><span class="more">Leták akcie</span></a>' if href else f'<div class="deal"><span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p></div>'
     body = f'''<section class="sec akcie-page"><div class="wrap">
 <div class="cta" style="margin-bottom:28px"><a class="btn primary" href="{rel(path, 'pdf/657.pdf')}" target="_blank" rel="noopener">Cenník aktuálnych akcií (PDF)</a><a class="btn ghost" href="{rel(path, 'letak.html')}">Akciový leták</a></div>
 <div class="deals">{cards}</div>
 </div></section>'''
-    write(path, page(path, 'Akcie', body, 'Aktuálne akcie Stavebniny Richtárik Nitra: Fakro, City Stone Design, Termobrik, Stadreko, Blachotrapez, Porfix, Ytong, rezivo, náradie.', [('index.html', 'Úvod'), (None, 'Akcie')], head=('Akcie', 'Aktuálne akcie na vybrané výrobky', 'Ceny v akcii platia do vypredania zásob. Z akciových cien dostaneš ďalšiu zľavu 5 % pri platbe v hotovosti a 3,3 % pri platbe kartou.')))
+    write(path, page(path, 'Akcie', body, 'Aktuálne akcie Stavebniny Richtárik Nitra: Fakro, City Stone Design, Termobrik, Stadreko, Blachotrapez, Porfix, Ytong, rezivo, náradie.', [('index.html', 'Úvod'), (None, 'Akcie')], head=('Akcie', 'Aktuálne akcie na vybrané výrobky', 'Ceny v akcii platia do vypredania zásob. Z akciových cien dostaneš ďalšiu zľavu 5 % pri platbe v hotovosti a 3,3 % pri platbe kartou.'), head_img='vzv'))
     karty = {s: (tag, h, p) for s, tag, h, p in AKCIE_KARTY}
     for s in children('akcie'):
         p = PAGES[s]; t = nice_title(SRC[s]['title'])
@@ -463,7 +464,7 @@ def build_akcie():
 </div>
 <aside class="side"><div class="side-in"><h2>Ďalšie akcie</h2><div class="others">{others}</div><a class="btn ghost small" href="{rel(p, 'akcie/index.html')}">Všetky akcie</a></div></aside>
 </div></section>'''
-        write(p, page(p, h + ' v akcii', body, f'Akcia {h}: {popis} Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), (None, h)], head=('Akcia', h, popis)))
+        write(p, page(p, h + ' v akcii', body, f'Akcia {h}: {popis} Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), (None, h)], head=('Akcia', h, popis), head_img='vzv'))
 
 
 def build_novinky():
@@ -477,14 +478,14 @@ def build_novinky():
     body = f'''<section class="sec"><div class="wrap">
 <div class="novs grid-page">{items}</div>
 </div></section>'''
-    write(path, page(path, 'Novinky', body, 'Novinky v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Novinky')], head=('Novinky', 'Čo sme pridali do ponuky', 'Nové materiály, dekoračné kamene, montované garáže a výrobky z recyklovaného plastu. Vzorky si pozrieš priamo v predajni.')))
+    write(path, page(path, 'Novinky', body, 'Novinky v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Novinky')], head=('Novinky', 'Čo sme pridali do ponuky', 'Nové materiály, dekoračné kamene, montované garáže a výrobky z recyklovaného plastu. Vzorky si pozrieš priamo v predajni.'), head_img='stavba'))
     for s in children('novinky'):
         p = PAGES[s]; t = nice_title(SRC[s]['title']); k = s.split('__')[1]
         body = f'''<section class="sec"><div class="wrap">
 <div class="content">{content(s, p)}</div>
 <p class="back"><a href="{rel(p, 'novinky/index.html')}">Všetky novinky</a></p>
 </div></section>'''
-        write(p, page(p, t, body, f'{t}. Novinka v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('novinky/index.html', 'Novinky'), (None, t)], head=('Novinka', t, NOVINKY_POPIS.get(k, None))))
+        write(p, page(p, t, body, f'{t}. Novinka v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('novinky/index.html', 'Novinky'), (None, t)], head=('Novinka', t, NOVINKY_POPIS.get(k, None)), head_img='stavba'))
 
 
 def build_galeria():
@@ -499,16 +500,16 @@ def build_galeria():
     body = f'''<section class="sec"><div class="wrap">
 {secs}
 </div></section>'''
-    write(path, page(path, 'Galéria', body, 'Fotogaléria Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z výstav a z predajne', 'Fotografie z výstav Agrokomplex, Gardenia a Domexpo v Nitre, kde sme vystavovali náš sortiment.')))
+    write(path, page(path, 'Galéria', body, 'Fotogaléria Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z výstav a z predajne', 'Fotografie z výstav Agrokomplex, Gardenia a Domexpo v Nitre, kde sme vystavovali náš sortiment.'), head_img='tehly-ruky'))
 
 
-def build_simple(slug, kicker, h1, lede=None, extra=''):
+def build_simple(slug, kicker, h1, lede=None, extra='', head_img='murar'):
     p = PAGES[slug]; t = nice_title(SRC[slug]['title'])
     body = f'''<section class="sec"><div class="wrap{" narrow" if slug != "sluzby" else ""}">
 <div class="content">{content(slug, p)}</div>
 {extra}
 </div></section>'''
-    write(p, page(p, t.capitalize() if t.isupper() else t, body, None, [('index.html', 'Úvod'), (None, h1)], head=(kicker, h1, lede)))
+    write(p, page(p, t.capitalize() if t.isupper() else t, body, None, [('index.html', 'Úvod'), (None, h1)], head=(kicker, h1, lede), head_img=head_img))
 
 
 def build_kontakt():
@@ -522,15 +523,27 @@ def build_kontakt():
 </div>
 <div class="kmapa"><a href="{FIRMA['mapa']}" target="_blank" rel="noopener"><img src="img/predajna.webp" alt="Sklad stavebnín" loading="lazy" width="1200" height="800"><span>Novozámocká 62/68, Nitra, Horné Krškany. Otvoriť navigáciu</span></a></div>
 </div></section>'''
-    write(p, page(p, 'Kontakt', body, 'Kontakt Stavebniny Richtárik: Novozámocká 62/68, Nitra Horné Krškany, 0905 622 223, 037 651 17 77, otvorené Po až Pia 7 až 16, So 7 až 12.', [('index.html', 'Úvod'), (None, 'Kontakt')], head=('Kontakt', 'Príď k nám do Horných Krškán', 'Predajňa a sklad na Novozámockej ulici v Nitre, pri hlavnej ceste smerom na Nové Zámky.')))
+    write(p, page(p, 'Kontakt', body, 'Kontakt Stavebniny Richtárik: Novozámocká 62/68, Nitra Horné Krškany, 0905 622 223, 037 651 17 77, otvorené Po až Pia 7 až 16, So 7 až 12.', [('index.html', 'Úvod'), (None, 'Kontakt')], head=('Kontakt', 'Príď k nám do Horných Krškán', 'Predajňa a sklad na Novozámockej ulici v Nitre, pri hlavnej ceste smerom na Nové Zámky.'), head_img='predajna'))
+
+
+def letak_thumb(slug, path):
+    """Náhľad letáku akcie do karty."""
+    if slug not in SRC: return ''
+    big = [i for i, e in SRC[slug]['imgs'] if i in IMG_SIZES and IMG_SIZES[i][1] >= 500]
+    return f'<img class="thumb" src="{rel(path, "img/p/" + big[0] + ".webp")}" alt="" loading="lazy" width="{IMG_SIZES[big[0]][0]}" height="{IMG_SIZES[big[0]][1]}">' if big else ''
 
 
 LOGA = ['18', '19', '23', '30', '31', '44', '45', '53', '54', '118', '126', '378', '416', '429', '137', '302', '35', '24', '57', '59', '61', '62', '64', '66', '68', '122', '125']
 
 
+def words(t, start=0):
+    """Titulok po slovách, každé so svojím oneskorením."""
+    return ' '.join(f'<span class="w" style="--i:{start + n}">{w}</span>' for n, w in enumerate(t.split()))
+
+
 def build_home():
     path = 'index.html'
-    deals = ''.join(f'<a class="deal" href="{rel(path, PAGES["akcie__" + s])}"><span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p></a>' for s, tag, h, p in AKCIE_KARTY[:6] if 'akcie__' + s in PAGES)
+    deals = ''.join(f'<a class="deal" href="{rel(path, PAGES["akcie__" + s])}">{letak_thumb("akcie__" + s, path)}<span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p></a>' for s, tag, h, p in AKCIE_KARTY[:6] if 'akcie__' + s in PAGES)
     cats = ''
     for n, k in enumerate(KATEGORIE):
         cls = ' big' if n == 0 else (' wide' if n in (5, 10) else '')
@@ -544,10 +557,10 @@ def build_home():
     tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" loading="lazy"></div>' for i in LOGA if i in IMG_SIZES)
     body = f'''
 <section class="hero" aria-labelledby="h-uvod">
-  <div class="bg" data-parallax><picture><source type="image/webp" srcset="img/hero.webp"><img src="img/hero.jpg" alt="Sklad stavebného materiálu" width="1600" height="1067" fetchpriority="high"></picture></div>
+  <div class="bg" data-parallax="0.28"><img class="base" src="img/hero.webp" alt="Sklad stavebného materiálu" width="1600" height="1067" fetchpriority="high"><img class="s s1" src="img/stavba.webp" alt="" width="1800" height="1010" loading="lazy"><img class="s s2" src="img/murar.webp" alt="" width="1800" height="1199" loading="lazy"><img class="s s3" src="img/strecha-praca.webp" alt="" width="1800" height="1200" loading="lazy"></div>
   <div class="wrap">
     <div class="eyebrow">Stavebniny Richtárik, Nitra. Od roku 1997</div>
-    <h1 id="h-uvod">Stavebný materiál <span class="thin">v celom sortimente.</span> <em>Za super ceny.</em></h1>
+    <h1 id="h-uvod">{words('Stavebný materiál')} <span class="thin">{words('v celom sortimente.', 2)}</span> <em>{words('Za super ceny.', 5)}</em></h1>
     <p>Rodinné stavebniny s vlastnou dopravou po celom Slovensku. Cenovú ponuku a výpočet spotreby materiálu ti spravíme zadarmo, s výberom poradíme na mieste.</p>
     <div class="search hero-search"><label for="q" class="vh">Hľadať v katalógu</label><input id="q" type="search" placeholder="Čo hľadáš? Cement, Ytong, škridla, Fakro, polystyrén…" autocomplete="off"><div class="res" id="res" hidden></div></div>
     <div class="cta"><a class="btn primary" href="katalog/index.html">Prezrieť katalóg</a><a class="btn outline" href="akcie/index.html">Aktuálne akcie</a></div>
@@ -565,6 +578,10 @@ def build_home():
   <div class="head row"><div><div class="eyebrow">Katalóg</div><h2>Všetko na stavbu od základov po strechu</h2></div><a class="btn dark" href="katalog/index.html">Celý katalóg</a></div>
   <div class="cats">{cats}</div>
 </div></section>
+<section class="band" aria-labelledby="h-band">
+  <div class="bg" data-parallax="0.18"><img src="img/vzv.webp" alt="" loading="lazy" width="1800" height="1561"></div>
+  <div class="wrap"><div class="eyebrow light">Sklad a doprava</div><h2 id="h-band">Materiál zložíme presne tam, kde ho na stavbe potrebuješ</h2><p>Vlastné autá s hydraulickou rukou, doprava po celom Slovensku, tovar bez zbytočného prekladania.</p><div class="cta"><a class="btn light" href="sluzby.html">Ako to funguje</a><a class="btn outline" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div></div>
+</section>
 <section class="sec akcie dark grainy"><div class="wrap">
   <div class="head row"><div><div class="eyebrow light">Akcie</div><h2>Aktuálne akcie na vybrané výrobky</h2></div><a class="btn outline" href="akcie/index.html">Všetky akcie</a></div>
   <div class="deals">{deals}</div>
@@ -577,7 +594,7 @@ def build_home():
 <section class="sec sluzby"><div class="wrap">
   <div class="head"><div class="eyebrow">Služby</div><h2>Poradíme, spočítame, dovezieme</h2><p class="lede">Tovar dovezieme priamo k tebe bez zbytočného skladovania, takže sa pri prekladaní nepoškodí.</p></div>
   <div class="grid">
-    <figure class="ph rv"><img src="img/p/885.webp" alt="Nákladné auto s hydraulickou rukou pri nakládke" loading="lazy" width="576" height="768"><figcaption>Vlastná doprava s hydraulickou rukou zloží materiál presne tam, kde ho potrebuješ.</figcaption></figure>
+    <figure class="ph rvimg"><img src="img/p/885.webp" alt="Nákladné auto s hydraulickou rukou pri nakládke" loading="lazy" width="576" height="768"><figcaption>Vlastná doprava s hydraulickou rukou zloží materiál presne tam, kde ho potrebuješ.</figcaption></figure>
     <div class="srvs">
       <article class="srv"><i>01</i><div><h3>Doprava po celom Slovensku</h3><p>Avia 3,5 t a nákladné auto 8 t s hydraulickou rukou. Materiál zložíme presne tam, kde ho na stavbe potrebuješ.</p></div></article>
       <article class="srv"><i>02</i><div><h3>Cenová ponuka zadarmo</h3><p>Prines projekt alebo rozmery a vypracujeme ti cenovú ponuku na celý dom aj na jednotlivé etapy.</p></div></article>
@@ -593,14 +610,14 @@ def build_home():
   <div class="novs">{novs}</div>
 </div></section>
 <section class="sec onas"><div class="wrap grid">
-  <div class="ph rv"><a href="img/p/110.webp" data-lb="1" data-cap="Predajňa Stavebniny Richtárik, Novozámocká 62/68"><img src="img/p/110.webp" alt="Predajňa Stavebniny Richtárik v Nitre" loading="lazy" width="533" height="400"></a><div class="year"><small>Od roku</small>1997</div></div>
+  <div class="ph rvimg"><a href="img/p/110.webp" data-lb="1" data-cap="Predajňa Stavebniny Richtárik, Novozámocká 62/68"><img src="img/p/110.webp" alt="Predajňa Stavebniny Richtárik v Nitre" loading="lazy" width="533" height="400"></a><div class="year"><small>Od roku</small>1997</div></div>
   <div class="tx"><div class="eyebrow">O nás</div><h2>Rodinná firma, ktorá stavbám rozumie</h2><p>Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997. Hlavným profilom firmy je predaj a sprostredkovanie stavebného materiálu, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.</p><p>Poradenstvo a vypracovanie cenových ponúk sú u nás zadarmo. Najdôležitejšia je pre nás tvoja spokojnosť.</p><a class="btn ghost" href="o-nas.html">Viac o nás</a></div>
 </div></section>
 <section class="sec kontakt-teaser dark grainy"><div class="wrap grid">
   <div><div class="eyebrow light">Kontakt</div><h2>Zavolaj, poradíme hneď</h2><a class="big-tel" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a>
   <div class="hours"><span><b>Po až Pia</b>7:00 až 16:00</span><span><b>Sobota</b>7:00 až 12:00</span></div>
   <p>{FIRMA['ulica']}, {FIRMA['mesto']}. Pri hlavnej ceste smerom na Nové Zámky.</p><div class="cta"><a class="btn primary" href="kontakt.html">Kontakt a mapa</a><a class="btn outline" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div></div>
-  <a class="ph" href="kontakt.html"><img src="img/predajna.webp" alt="" loading="lazy" width="1200" height="800"></a>
+  <a class="ph rvimg" href="kontakt.html"><img src="img/predajna.webp" alt="" loading="lazy" width="1200" height="800"></a>
 </div></section>
 '''
     ld = json.dumps({"@context": "https://schema.org", "@type": "HardwareStore", "name": "Stavebniny Richtárik", "alternateName": FIRMA['majitel'], "telephone": [FIRMA['mobil_tel'], FIRMA['pevna_tel']], "email": FIRMA['email'], "foundingDate": "1997", "address": {"@type": "PostalAddress", "streetAddress": FIRMA['ulica'], "addressLocality": "Nitra", "postalCode": "949 05", "addressCountry": "SK"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "16:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "12:00"}], "paymentAccepted": "Cash, Credit Card", "areaServed": "Slovensko", "vatID": FIRMA['dic']}, ensure_ascii=False)
@@ -630,9 +647,9 @@ if __name__ == '__main__':
     build_akcie()
     build_novinky()
     build_galeria()
-    build_simple('o-nas', 'O nás', 'Rodinná firma od roku 1997')
-    build_simple('sluzby', 'Služby', 'Poradíme, spočítame, dovezieme')
-    build_simple('akciovy-letak', 'Akciový leták', 'Akciové letáky na stiahnutie', 'Letáky s aktuálnymi akciami. Väčšie letáky sú na pôvodnej adrese webu.')
+    build_simple('o-nas', 'O nás', 'Rodinná firma od roku 1997', head_img='murar')
+    build_simple('sluzby', 'Služby', 'Poradíme, spočítame, dovezieme', head_img='nakladka')
+    build_simple('akciovy-letak', 'Akciový leták', 'Akciové letáky na stiahnutie', 'Letáky s aktuálnymi akciami. Väčšie letáky sú na pôvodnej adrese webu.', head_img='beton')
     build_kontakt()
     build_search_index()
     print('stránok:', len(PAGES))

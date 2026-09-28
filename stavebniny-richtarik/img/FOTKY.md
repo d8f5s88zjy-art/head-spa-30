@@ -21,3 +21,6 @@ Fotografie z Pexels (licencia Pexels, voľné aj na komerčné použitie). Po na
 - zahrada: https://www.pexels.com/photo/38220910/
 - dvere: https://www.pexels.com/photo/31620051/
 - hutny: https://www.pexels.com/photo/37426459/
+
+
+Doplnené fotky (Pexels, voľná licencia): murar.webp (30081237), strecha-praca.webp (11467876), vzv.webp (18699604), stavba.webp (39494022), beton.webp (37121400), tehly-ruky.webp (19688828).

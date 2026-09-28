@@ -85,11 +85,21 @@ body.home .top.scrolled{background:rgba(20,18,16,.92);backdrop-filter:blur(10px)
 .page-head .head .lede{font-size:clamp(17px,1.4vw,20px);color:rgba(255,255,255,.8);max-width:60ch}
 .page-head .eyebrow{margin-bottom:0;color:var(--brick-pale)}
 .page-head .head{display:grid;gap:12px}
+.page-head.has-img .ph{position:absolute;inset:-20% 0;z-index:0;will-change:transform}
+.page-head.has-img .ph img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.55;animation:hero-in 8s ease-out both}
+.page-head.has-img::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(20,18,16,.92) 0%,rgba(20,18,16,.7) 55%,rgba(20,18,16,.35) 100%)}
+.page-head.has-img::after{z-index:0}
+.page-head.has-img .wrap{padding-block:clamp(26px,3vw,40px) clamp(56px,7vw,96px)}
 
 /* úvod: celá obrazovka, fotka s paralaxou, obrovský titulok */
 .hero{position:relative;color:#fff;background:var(--ink);overflow:hidden;min-height:min(100svh,960px);display:grid;align-items:end}
 .hero .bg{position:absolute;inset:-8% 0;will-change:transform}
-.hero .bg img{width:100%;height:100%;object-fit:cover;object-position:center 55%;animation:hero-in 10s ease-out both}
+.hero .bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.hero .bg .base{animation:hero-in 10s ease-out both}
+.hero .bg .s{opacity:0;animation:slide 32s ease-in-out infinite}
+.hero .bg .s1{animation-delay:8s}.hero .bg .s2{animation-delay:16s}.hero .bg .s3{animation-delay:24s}
+@keyframes slide{0%{opacity:0;transform:scale(1.08)}6%{opacity:1}25%{opacity:1;transform:scale(1)}32%{opacity:0;transform:scale(1)}100%{opacity:0}}
+.hero h1 .w{display:inline-block;animation:rise .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.15s + var(--i) * .07s)}
 .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,.55) 0%,rgba(20,18,16,.25) 35%,rgba(20,18,16,.78) 75%,var(--ink) 100%);z-index:1}
 .hero::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.08;mix-blend-mode:screen;pointer-events:none;z-index:1}
 .hero .wrap{position:relative;z-index:2;padding-block:clamp(120px,16vh,170px) clamp(36px,5vw,64px);display:grid;gap:26px;width:100%}
@@ -105,7 +115,8 @@ body.home .top.scrolled{background:rgba(20,18,16,.92);backdrop-filter:blur(10px)
 @keyframes hero-in{from{transform:scale(1.1)}to{transform:scale(1)}}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .hero .wrap>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
-.hero .wrap>*:nth-child(2){animation-delay:.1s}.hero .wrap>*:nth-child(3){animation-delay:.2s}.hero .wrap>*:nth-child(4){animation-delay:.3s}.hero .wrap>*:nth-child(5){animation-delay:.4s}
+.hero .wrap>h1{animation:none}
+.hero .wrap>*:nth-child(3){animation-delay:.6s}.hero .wrap>*:nth-child(4){animation-delay:.75s}.hero .wrap>*:nth-child(5){animation-delay:.9s}
 @media (max-width:700px){.hero{min-height:100svh}.hero .cue{display:none}.hero .wrap{padding-top:120px}}
 
 /* fakty pod úvodom: tmavá lišta s počítadlami */
@@ -167,6 +178,10 @@ a.deal:hover::after{opacity:1;transform:none}
 .akcie-page .deal{background:#fff;color:var(--ink)}
 .akcie-page .deal p{color:var(--ink-2)}
 .akcie-page a.deal:hover{background:var(--mortar)}
+.deal .thumb{position:absolute;right:-18px;bottom:-40px;width:150px;height:auto;border-radius:3px;box-shadow:0 18px 40px rgba(0,0,0,.45);transform:rotate(6deg) translateY(30px);opacity:.25;transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s;pointer-events:none;max-height:190px;object-fit:cover;object-position:top}
+a.deal:hover .thumb{transform:rotate(3deg) translateY(0);opacity:1}
+.deal h3,.deal p,.deal .tag,.deal .more{position:relative;z-index:1;max-width:calc(100% - 130px)}
+.akcie-page .deal .thumb{opacity:.55;transform:rotate(4deg) translateY(16px)}
 .deal .tag{justify-self:start;background:var(--brick);color:#fff;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.1em;padding:5px 10px;border-radius:3px;text-transform:uppercase}
 .deal h3{font-size:30px;line-height:1}
 .deal p{color:rgba(255,255,255,.72);font-size:16px}
@@ -475,3 +490,38 @@ footer .bottom a{display:inline}
 .deals .deal,.cats .cat,.novs .nov,.srvs .srv,.sub-grid .sub{transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .3s,background .3s}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.hero .bg img,.hero .wrap>*{animation:none}}
 .content .figs.n3 .fig img{max-height:360px}
+
+/* fotografický pás s paralaxou */
+.band{position:relative;overflow:hidden;color:#fff;background:var(--ink);min-height:520px;display:grid;align-items:center}
+.band .bg{position:absolute;inset:-25% 0;will-change:transform}
+.band .bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,18,16,.85) 0%,rgba(20,18,16,.55) 50%,rgba(20,18,16,.2) 100%)}
+.band::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.07;mix-blend-mode:screen;pointer-events:none}
+.band .wrap{position:relative;z-index:1;padding-block:clamp(72px,10vw,140px);display:grid;gap:18px;justify-items:start}
+.band h2{max-width:14ch}
+.band p{font-size:19px;color:rgba(255,255,255,.85)}
+/* odhaľovanie fotiek: záves zhora, fotka sa zmenší na miesto */
+.rvimg{clip-path:inset(0 0 100% 0);transition:clip-path 1.1s cubic-bezier(.2,.7,.2,1);opacity:1!important;transform:none!important}
+.rvimg img{transform:scale(1.15);transition:transform 1.3s cubic-bezier(.2,.7,.2,1)}
+.rvimg.in,.rvimg.now{clip-path:inset(0)}
+.rvimg.in img,.rvimg.now img{transform:none}
+.onas .ph.rvimg a:hover img{transform:scale(1.04)}
+/* linka pri malom nadpise sa nakreslí */
+.head .eyebrow::before,.rv .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .9s .15s cubic-bezier(.2,.7,.2,1)}
+.head.in .eyebrow::before,.head.now .eyebrow::before,.rv.in .eyebrow::before,.rv.now .eyebrow::before,.hero .eyebrow::before,.page-head .eyebrow::before{transform:none}
+/* ukazovateľ prečítania stránky */
+.progress{position:fixed;left:0;top:0;height:3px;width:0;background:var(--brick);z-index:70;transition:width .1s linear}
+/* tlačidlá: šípka sa vysunie */
+.btn.primary::after,.btn.light::after,.btn.outline::after{content:"→";display:inline-block;width:0;overflow:hidden;opacity:0;transition:width .25s,opacity .25s,transform .25s;transform:translateX(-6px)}
+.btn.primary:hover::after,.btn.light:hover::after,.btn.outline:hover::after{width:1em;opacity:1;transform:none}
+/* náklon zákazníckej karty za kurzorom */
+.karta{perspective:900px}
+.karta img{transform-style:preserve-3d;will-change:transform}
+/* dlaždice katalógu: názov sa podčiarkne */
+.cat h3::after{content:"";display:block;width:0;height:3px;background:var(--brick);margin-top:6px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.cat:hover h3::after{width:44px}
+/* bočné menu: posun pri prejdení */
+.kat>li>a,.kat ul a{transition:color .2s,padding-left .25s}
+.kat>li>a:hover,.kat ul a:hover{padding-left:6px}
+@media (prefers-reduced-motion:reduce){.rvimg{clip-path:none}.rvimg img{transform:none}.hero .bg .s{animation:none}.hero h1 .w{animation:none}}
+@media (max-width:700px){.band{min-height:420px}.deal .thumb{display:none}.deal h3,.deal p,.deal .tag,.deal .more{max-width:none}}

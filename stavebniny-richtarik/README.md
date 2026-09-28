@@ -21,8 +21,10 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - `obsah.py` rozloží HTML pôvodného webu na bloky (produkt s parametrami a PDF, nadpis,
   text, zoznam, obrázky, logá, tabuľka, značky, galéria) a vykreslí ich ako moderné
   komponenty: produktové karty, karty značiek, kroky s obrázkom, figúry s popiskom.
-- Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, objavovanie blokov pri
-  skrolovaní, vyhľadávanie, lightbox s listovaním a popiskami).
+- Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, objavovanie blokov a fotiek pri
+  skrolovaní, paralaxa, počítadlá, ukazovateľ prečítania, náklon karty, vyhľadávanie,
+  lightbox s listovaním a popiskami). Úvod strieda štyri fotky, každá podstránka má
+  fotografickú hlavičku (`head_img` v `build.py`).
 - `img/logo.png` je pôvodné logo firmy, ostatné veľké fotky sú z Pexels (`img/FOTKY.md`),
   kým sa nenafotí predajňa a sklad. Nová fotka sa uloží pod rovnakým názvom.
 
