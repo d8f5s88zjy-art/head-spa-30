@@ -1,60 +1,134 @@
 {
-  "version": 1,
+  "version": 2,
   "zones": [
     {
       "id": "terasa",
       "name": "Terasa",
-      "blurb": "Krytá terasa s terazzovou dlažbou, stolom so stoličkami a vchodom pod nápisom GYM KLUB."
+      "blurb": "Krytá terasa Lipa Centra s terazzovou dlažbou, stolom so stoličkami a vchodom pod nápisom GYM KLUB & caffee."
     },
     {
       "id": "vstup",
       "name": "Vstup",
-      "blurb": "Biele presklené dvere pod nápisom GYM KLUB & caffee."
+      "blurb": "Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB & caffee, pred nimi rohož a rastlina."
     },
     {
       "id": "recepcia",
       "name": "Recepcia",
-      "blurb": "Pult s chladničkou na nápoje, drevená polička na obuv, rastliny a kreslá pri oknách."
-    },
-    {
-      "id": "funkcna-zona",
-      "name": "Funkčná zóna",
-      "blurb": "Tmavý priestor s čiernym stropom, šesťuholníkovými LED svetlami, červenou šprintérskou dráhou a rigom Life Fitness."
+      "blurb": "Pult s chladničkou na nápoje, drevená polička na obuv, rastliny a kreslá pri oknách so žalúziami."
     },
     {
       "id": "hlavna-sala",
       "name": "Hlavná sála",
-      "blurb": "Sála s nástennou maľbou GYM KLUB, zrkadlami, kamenným obkladom a čiernymi, zelenými a tyrkysovými strojmi."
+      "blurb": "Sála s nástennou maľbou GYM KLUB nad zrkadlami, kamennými stĺpmi, presklenou stenou a čiernymi, zelenými a tyrkysovými strojmi."
     },
     {
       "id": "stroje",
       "name": "Sála so strojmi",
-      "blurb": "Svetlá sála s tyrkysovými kladkovými strojmi, stojanom s činkami a oknami."
+      "blurb": "Svetlá sála s tyrkysovými kladkovými strojmi, stojanom s činkami, lavicami a oknami."
     },
     {
       "id": "kardio",
       "name": "Kardio",
-      "blurb": "Rad bežeckých pásov pri veľkých oknách, schodový trenažér a spinningové bicykle."
+      "blurb": "Rad bežeckých pásov pri veľkých oknách, eliptický a schodový trenažér a spinningové bicykle."
     },
     {
       "id": "volne-vahy",
       "name": "Voľné váhy",
-      "blurb": "Jednoručky, lavice, osi a lavice so stojanmi pri oknách."
+      "blurb": "Stojany s jednoručkami, lavice so stojanmi na osi a kladkové stroje pri zrkadlách a oknách."
     },
     {
       "id": "jednorucky",
       "name": "Jednoručky",
-      "blurb": "Biely stojan s jednoručkami do 20 kg vedľa schodového trenažéra."
+      "blurb": "Biely stojan s gumovými jednoručkami do 20 kg vedľa schodového trenažéra."
+    },
+    {
+      "id": "funkcna-zona",
+      "name": "Funkčná zóna",
+      "blurb": "Tmavý priestor s čiernym stropom, šesťuholníkovými LED svetlami, červenou šprintérskou dráhou, nakladacími strojmi a rigom Life Fitness."
     },
     {
       "id": "tatami",
       "name": "Tatami",
-      "blurb": "Samostatná miestnosť s ružovo-čiernymi podložkami, švédskou rebrinou, zrkadlami a závesnými popruhmi."
+      "blurb": "Samostatná biela miestnosť s ružovo-čiernymi podložkami tatami, švédskou rebrinou, zrkadlovou stenou a závesnými popruhmi."
     }
   ],
+  "zonesLayout": [
+    {
+      "id": "terasa",
+      "x": 2,
+      "y": 84,
+      "w": 22,
+      "h": 14
+    },
+    {
+      "id": "vstup",
+      "x": 26,
+      "y": 84,
+      "w": 12,
+      "h": 14
+    },
+    {
+      "id": "recepcia",
+      "x": 40,
+      "y": 84,
+      "w": 22,
+      "h": 14
+    },
+    {
+      "id": "hlavna-sala",
+      "x": 2,
+      "y": 48,
+      "w": 34,
+      "h": 32
+    },
+    {
+      "id": "stroje",
+      "x": 38,
+      "y": 48,
+      "w": 22,
+      "h": 32
+    },
+    {
+      "id": "kardio",
+      "x": 62,
+      "y": 48,
+      "w": 12,
+      "h": 32
+    },
+    {
+      "id": "volne-vahy",
+      "x": 76,
+      "y": 48,
+      "w": 22,
+      "h": 32
+    },
+    {
+      "id": "jednorucky",
+      "x": 76,
+      "y": 24,
+      "w": 22,
+      "h": 20
+    },
+    {
+      "id": "funkcna-zona",
+      "x": 24,
+      "y": 2,
+      "w": 50,
+      "h": 42
+    },
+    {
+      "id": "tatami",
+      "x": 2,
+      "y": 2,
+      "w": 20,
+      "h": 42
+    }
+  ],
+  "zonesLayoutNote": "schéma zón, nie pôdorys",
   "stops": [
     {
       "id": "terasa-1",
+      "order": 1,
       "zone": "terasa",
       "type": "video",
       "src": "tour-terasa-1",
@@ -66,8 +140,7 @@
       ],
       "video": {
         "mp4": "tour-terasa-1-1080.mp4",
-        "webm": "tour-terasa-1-1080.webm",
-        "poster": "tour-terasa-1-poster"
+        "webm": "tour-terasa-1-1080.webm"
       },
       "focus": {
         "x": 50,
@@ -90,12 +163,22 @@
       "walk": {
         "x": 56,
         "y": 84
-      }
+      },
+      "hotspot": {
+        "x": 56,
+        "y": 84,
+        "target": "vstup-1",
+        "label": "K vchodu",
+        "zone": "vstup"
+      },
+      "next": "vstup-1",
+      "source": "IMG_8989 od 0,1 s"
     },
     {
       "id": "vstup-1",
+      "order": 2,
       "zone": "vstup",
-      "type": "video",
+      "type": "photo",
       "src": "tour-vstup-1",
       "w": 2160,
       "h": 3840,
@@ -103,33 +186,48 @@
         2160,
         1280
       ],
-      "video": {
-        "mp4": "tour-vstup-1-1080.mp4",
-        "webm": "tour-vstup-1-1080.webm",
-        "poster": "tour-vstup-1-poster"
-      },
       "focus": {
-        "x": 60,
-        "y": 38
+        "x": 55,
+        "y": 45
       },
       "title": "Vchod",
-      "alt": "Biele presklené dvojkrídlové dvere pod veľkým nápisom GYM KLUB & caffee, vľavo izbová rastlina, pred dverami rohož.",
+      "alt": "Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB & caffee, na dverách piktogramy a oznamy, pred nimi čierna rohož, vľavo rastlina, vpravo kamenný obklad.",
       "pins": [
         {
-          "x": 62,
-          "y": 55,
+          "x": 58,
+          "y": 27,
+          "label": "Nápis GYM KLUB & caffee"
+        },
+        {
+          "x": 44,
+          "y": 50,
           "label": "Vchodové dvere"
+        },
+        {
+          "x": 60,
+          "y": 85,
+          "label": "Rohož pred dverami"
         }
       ],
       "walk": {
-        "x": 56,
-        "y": 86
-      }
+        "x": 60,
+        "y": 92
+      },
+      "hotspot": {
+        "x": 60,
+        "y": 92,
+        "target": "recepcia-1",
+        "label": "Do recepcie",
+        "zone": "recepcia"
+      },
+      "next": "recepcia-1",
+      "source": "IMG_8990, snímka 2,1 s"
     },
     {
       "id": "recepcia-1",
+      "order": 3,
       "zone": "recepcia",
-      "type": "photo",
+      "type": "video",
       "src": "tour-recepcia-1",
       "w": 2160,
       "h": 3840,
@@ -137,158 +235,56 @@
         2160,
         1280
       ],
+      "video": {
+        "mp4": "tour-recepcia-1-1080.mp4",
+        "webm": "tour-recepcia-1-1080.webm",
+        "loop": false
+      },
       "focus": {
-        "x": 62,
-        "y": 45
+        "x": 58,
+        "y": 48
       },
       "title": "Recepcia",
-      "alt": "Priestor za vchodovými dverami: pult s chladničkou na nápoje, drevená polička s obuvou a kvetmi, rastliny a kreslá pri oknách so žalúziami.",
+      "alt": "Priestor za vchodovými dverami: vľavo otvorené presklené dvere, drevená polička na obuv s kvetmi, rastliny, pult s chladničkou na nápoje a kreslá pri oknách so žalúziami; kamera vchádza dnu.",
       "pins": [
         {
-          "x": 78,
+          "x": 26,
           "y": 44,
+          "label": "Otvorené dvere"
+        },
+        {
+          "x": 76,
+          "y": 46,
           "label": "Pult"
         },
         {
           "x": 90,
-          "y": 39,
+          "y": 36,
           "label": "Chladnička s nápojmi"
         },
         {
-          "x": 84,
-          "y": 64,
+          "x": 81,
+          "y": 67,
           "label": "Polička na obuv"
         }
       ],
       "walk": {
-        "x": 42,
-        "y": 86
-      }
-    },
-    {
-      "id": "funkcna-zona-1",
-      "zone": "funkcna-zona",
-      "type": "video",
-      "src": "tour-funkcna-zona-1",
-      "w": 2160,
-      "h": 3840,
-      "sizes": [
-        2160,
-        1280
-      ],
-      "video": {
-        "mp4": "tour-funkcna-zona-1-1080.mp4",
-        "webm": "tour-funkcna-zona-1-1080.webm",
-        "poster": "tour-funkcna-zona-1-poster"
-      },
-      "focus": {
-        "x": 55,
-        "y": 50
-      },
-      "title": "Tmavá zóna pri oknách",
-      "alt": "Tmavá zóna s čiernym kazetovým stropom: v popredí strieborné nakladacie stroje s lavicou, vpravo červená šprintérska dráha, v pozadí červený rig a okná.",
-      "pins": [
-        {
-          "x": 91,
-          "y": 59,
-          "label": "Šprintérska dráha"
-        },
-        {
-          "x": 70,
-          "y": 44,
-          "label": "Rig Life Fitness"
-        },
-        {
-          "x": 38,
-          "y": 72,
-          "label": "Nakladacie stroje"
-        }
-      ],
-      "walk": {
-        "x": 86,
-        "y": 86
-      }
-    },
-    {
-      "id": "funkcna-zona-2",
-      "zone": "funkcna-zona",
-      "type": "photo",
-      "src": "tour-funkcna-zona-2",
-      "w": 1932,
-      "h": 2576,
-      "sizes": [
-        1932,
-        1280
-      ],
-      "focus": {
-        "x": 55,
-        "y": 42
-      },
-      "title": "Rig a šesťuholníkové svetlá",
-      "alt": "Červený rig Life Fitness so závesnými popruhmi TRX, boxovacím vrecom a kettlebellmi, nad ním šesťuholníkové LED svetlá v čiernom strope, na podlahe červené značenie dráhy.",
-      "pins": [
-        {
-          "x": 66,
-          "y": 32,
-          "label": "Rig Life Fitness s TRX"
-        },
-        {
-          "x": 52,
-          "y": 23,
-          "label": "Šesťuholníkové LED svetlá"
-        },
-        {
-          "x": 78,
-          "y": 52,
-          "label": "Boxovacie vrece"
-        }
-      ],
-      "walk": {
-        "x": 58,
-        "y": 88
-      }
-    },
-    {
-      "id": "funkcna-zona-3",
-      "zone": "funkcna-zona",
-      "type": "video",
-      "src": "tour-funkcna-zona-3",
-      "w": 2160,
-      "h": 3840,
-      "sizes": [
-        2160,
-        1280
-      ],
-      "video": {
-        "mp4": "tour-funkcna-zona-3-1080.mp4",
-        "webm": "tour-funkcna-zona-3-1080.webm",
-        "poster": "tour-funkcna-zona-3-poster"
-      },
-      "focus": {
         "x": 50,
-        "y": 60
-      },
-      "title": "Šprintérska dráha",
-      "alt": "Červená šprintérska dráha s číslami na čiernej gumovej podlahe, za ňou stroje pri presklenej stene a čierny kazetový strop so svetlami.",
-      "pins": [
-        {
-          "x": 45,
-          "y": 76,
-          "label": "Šprintérska dráha"
-        },
-        {
-          "x": 62,
-          "y": 52,
-          "label": "Stroje pri oknách"
-        }
-      ],
-      "walk": {
-        "x": 55,
         "y": 90
-      }
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 90,
+        "target": "hlavna-sala-1",
+        "label": "Do hlavnej sály",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-1",
+      "source": "IMG_8993 od 2,7 s (0,8 s, bez opakovania)"
     },
     {
       "id": "hlavna-sala-1",
+      "order": 4,
       "zone": "hlavna-sala",
       "type": "photo",
       "src": "tour-hlavna-sala-1",
@@ -324,10 +320,20 @@
       "walk": {
         "x": 45,
         "y": 80
-      }
+      },
+      "hotspot": {
+        "x": 45,
+        "y": 80,
+        "target": "hlavna-sala-2",
+        "label": "Ďalej: Hlavná sála",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-2",
+      "source": "ded57978"
     },
     {
       "id": "hlavna-sala-2",
+      "order": 5,
       "zone": "hlavna-sala",
       "type": "photo",
       "src": "tour-hlavna-sala-2",
@@ -363,10 +369,118 @@
       "walk": {
         "x": 45,
         "y": 76
-      }
+      },
+      "hotspot": {
+        "x": 45,
+        "y": 76,
+        "target": "hlavna-sala-4",
+        "label": "Ďalej: Hlavná sála",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-4",
+      "source": "9a523572"
+    },
+    {
+      "id": "hlavna-sala-4",
+      "order": 6,
+      "zone": "hlavna-sala",
+      "type": "photo",
+      "src": "tour-hlavna-sala-4",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 55,
+        "y": 48
+      },
+      "title": "Kladková veža pri zrkadlách",
+      "alt": "Čierna viacstaničná kladková veža so zelenými kladkami uprostred sály, vľavo zrkadlová stena s maľbou GYM KLUB a stojanom s jednoručkami, vzadu tyrkysové stroje a okná.",
+      "pins": [
+        {
+          "x": 65,
+          "y": 50,
+          "label": "Viacstaničná kladková veža"
+        },
+        {
+          "x": 35,
+          "y": 41,
+          "label": "Maľba GYM KLUB nad zrkadlom"
+        },
+        {
+          "x": 12,
+          "y": 58,
+          "label": "Jednoručky pri zrkadle"
+        }
+      ],
+      "walk": {
+        "x": 38,
+        "y": 85
+      },
+      "hotspot": {
+        "x": 38,
+        "y": 85,
+        "target": "hlavna-sala-5",
+        "label": "Ďalej: Hlavná sála",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-5",
+      "source": "1a601891"
+    },
+    {
+      "id": "hlavna-sala-5",
+      "order": 7,
+      "zone": "hlavna-sala",
+      "type": "photo",
+      "src": "tour-hlavna-sala-5",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 45,
+        "y": 45
+      },
+      "title": "Maľba a stroje pri oknách",
+      "alt": "Nástenná maľba GYM KLUB s televízorom, pod ňou zrkadlá, vpravo tyrkysový kladkový stroj so sedadlom, v pozadí okná so stromami a rad bežeckých pásov.",
+      "pins": [
+        {
+          "x": 25,
+          "y": 37,
+          "label": "Nástenná maľba GYM KLUB"
+        },
+        {
+          "x": 80,
+          "y": 60,
+          "label": "Tyrkysový kladkový stroj"
+        },
+        {
+          "x": 67,
+          "y": 52,
+          "label": "Bežecké pásy v pozadí"
+        }
+      ],
+      "walk": {
+        "x": 50,
+        "y": 88
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 88,
+        "target": "hlavna-sala-3",
+        "label": "Ďalej: Hlavná sála",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-3",
+      "source": "82585127"
     },
     {
       "id": "hlavna-sala-3",
+      "order": 8,
       "zone": "hlavna-sala",
       "type": "photo",
       "src": "tour-hlavna-sala-3",
@@ -402,10 +516,118 @@
       "walk": {
         "x": 50,
         "y": 80
-      }
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 80,
+        "target": "hlavna-sala-6",
+        "label": "Ďalej: Hlavná sála",
+        "zone": "hlavna-sala"
+      },
+      "next": "hlavna-sala-6",
+      "source": "e604ab34"
+    },
+    {
+      "id": "hlavna-sala-6",
+      "order": 9,
+      "zone": "hlavna-sala",
+      "type": "photo",
+      "src": "tour-hlavna-sala-6",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 50
+      },
+      "title": "Chodba pri kamennom stĺpe",
+      "alt": "Chodba medzi čiernym viacstaničným strojom a stenou s kamenným obkladom, uprostred kamenný stĺp, vzadu presklená stena so stromami a strieborný stroj so sedadlom.",
+      "pins": [
+        {
+          "x": 48,
+          "y": 45,
+          "label": "Kamenný stĺp"
+        },
+        {
+          "x": 20,
+          "y": 52,
+          "label": "Viacstaničný kladkový stroj"
+        },
+        {
+          "x": 72,
+          "y": 55,
+          "label": "Stroj pri presklenej stene"
+        }
+      ],
+      "walk": {
+        "x": 55,
+        "y": 85
+      },
+      "hotspot": {
+        "x": 55,
+        "y": 85,
+        "target": "stroje-4",
+        "label": "Do sály so strojmi",
+        "zone": "stroje"
+      },
+      "next": "stroje-4",
+      "source": "81d98737"
+    },
+    {
+      "id": "stroje-4",
+      "order": 10,
+      "zone": "stroje",
+      "type": "photo",
+      "src": "tour-stroje-4",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 50
+      },
+      "title": "Svetlá sála so strojmi",
+      "alt": "Svetlá sála s bielym stropom: uprostred tyrkysové kladkové stroje, vľavo stojan s činkami a maľba GYM KLUB na bielej stene, vpravo zrkadlá a hodiny, v popredí tyrkysová lavica.",
+      "pins": [
+        {
+          "x": 55,
+          "y": 50,
+          "label": "Kladkové stroje"
+        },
+        {
+          "x": 32,
+          "y": 42,
+          "label": "Maľba GYM KLUB"
+        },
+        {
+          "x": 18,
+          "y": 54,
+          "label": "Stojan s činkami"
+        }
+      ],
+      "walk": {
+        "x": 60,
+        "y": 82
+      },
+      "hotspot": {
+        "x": 60,
+        "y": 82,
+        "target": "stroje-1",
+        "label": "Ďalej: Sála so strojmi",
+        "zone": "stroje"
+      },
+      "next": "stroje-1",
+      "source": "4c899013"
     },
     {
       "id": "stroje-1",
+      "order": 11,
       "zone": "stroje",
       "type": "photo",
       "src": "tour-stroje-1",
@@ -441,10 +663,20 @@
       "walk": {
         "x": 62,
         "y": 82
-      }
+      },
+      "hotspot": {
+        "x": 62,
+        "y": 82,
+        "target": "stroje-2",
+        "label": "Ďalej: Sála so strojmi",
+        "zone": "stroje"
+      },
+      "next": "stroje-2",
+      "source": "50b58cdb"
     },
     {
       "id": "stroje-2",
+      "order": 12,
       "zone": "stroje",
       "type": "photo",
       "src": "tour-stroje-2",
@@ -475,10 +707,20 @@
       "walk": {
         "x": 76,
         "y": 86
-      }
+      },
+      "hotspot": {
+        "x": 76,
+        "y": 86,
+        "target": "stroje-3",
+        "label": "Ďalej: Sála so strojmi",
+        "zone": "stroje"
+      },
+      "next": "stroje-3",
+      "source": "30d967db"
     },
     {
       "id": "stroje-3",
+      "order": 13,
       "zone": "stroje",
       "type": "photo",
       "src": "tour-stroje-3",
@@ -514,10 +756,69 @@
       "walk": {
         "x": 60,
         "y": 88
-      }
+      },
+      "hotspot": {
+        "x": 60,
+        "y": 88,
+        "target": "kardio-3",
+        "label": "Do kardio zóny",
+        "zone": "kardio"
+      },
+      "next": "kardio-3",
+      "source": "31539524"
+    },
+    {
+      "id": "kardio-3",
+      "order": 14,
+      "zone": "kardio",
+      "type": "photo",
+      "src": "tour-kardio-3",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 45,
+        "y": 50
+      },
+      "title": "Bežecké pásy od strojov",
+      "alt": "Pohľad cez sálu k oknám so stromami: vľavo v pozadí rad bežeckých pásov, vpravo tyrkysové stroje so sedadlami a nakladací stroj, vzadu kamenný stĺp a maľba.",
+      "pins": [
+        {
+          "x": 18,
+          "y": 52,
+          "label": "Rad bežeckých pásov"
+        },
+        {
+          "x": 75,
+          "y": 60,
+          "label": "Tyrkysové stroje so sedadlom"
+        },
+        {
+          "x": 30,
+          "y": 42,
+          "label": "Okná s výhľadom na stromy"
+        }
+      ],
+      "walk": {
+        "x": 35,
+        "y": 86
+      },
+      "hotspot": {
+        "x": 35,
+        "y": 86,
+        "target": "kardio-1",
+        "label": "Ďalej: Kardio",
+        "zone": "kardio"
+      },
+      "next": "kardio-1",
+      "source": "7729db43"
     },
     {
       "id": "kardio-1",
+      "order": 15,
       "zone": "kardio",
       "type": "photo",
       "src": "tour-kardio-1",
@@ -548,10 +849,20 @@
       "walk": {
         "x": 87,
         "y": 78
-      }
+      },
+      "hotspot": {
+        "x": 87,
+        "y": 78,
+        "target": "kardio-2",
+        "label": "Ďalej: Kardio",
+        "zone": "kardio"
+      },
+      "next": "kardio-2",
+      "source": "ca5cd7a4"
     },
     {
       "id": "kardio-2",
+      "order": 16,
       "zone": "kardio",
       "type": "photo",
       "src": "tour-kardio-2",
@@ -587,10 +898,20 @@
       "walk": {
         "x": 58,
         "y": 80
-      }
+      },
+      "hotspot": {
+        "x": 58,
+        "y": 80,
+        "target": "volne-vahy-1",
+        "label": "K voľným váham",
+        "zone": "volne-vahy"
+      },
+      "next": "volne-vahy-1",
+      "source": "39186e4d"
     },
     {
       "id": "volne-vahy-1",
+      "order": 17,
       "zone": "volne-vahy",
       "type": "photo",
       "src": "tour-volne-vahy-1",
@@ -626,10 +947,20 @@
       "walk": {
         "x": 62,
         "y": 80
-      }
+      },
+      "hotspot": {
+        "x": 62,
+        "y": 80,
+        "target": "volne-vahy-2",
+        "label": "Ďalej: Voľné váhy",
+        "zone": "volne-vahy"
+      },
+      "next": "volne-vahy-2",
+      "source": "ea0dcc02"
     },
     {
       "id": "volne-vahy-2",
+      "order": 18,
       "zone": "volne-vahy",
       "type": "photo",
       "src": "tour-volne-vahy-2",
@@ -660,10 +991,69 @@
       "walk": {
         "x": 50,
         "y": 78
-      }
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 78,
+        "target": "volne-vahy-3",
+        "label": "Ďalej: Voľné váhy",
+        "zone": "volne-vahy"
+      },
+      "next": "volne-vahy-3",
+      "source": "750d9d90"
+    },
+    {
+      "id": "volne-vahy-3",
+      "order": 19,
+      "zone": "volne-vahy",
+      "type": "photo",
+      "src": "tour-volne-vahy-3",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 55
+      },
+      "title": "Činky a lavice pri zrkadle",
+      "alt": "Tyrkysový kladkový stroj so stohmi závaží vľavo, uprostred stojan s jednoručkami pred zrkadlovou stenou s televízorom, vpravo tyrkysová lavica na bicepsy a držiak na osi na bielej stene.",
+      "pins": [
+        {
+          "x": 55,
+          "y": 62,
+          "label": "Stojan s jednoručkami"
+        },
+        {
+          "x": 18,
+          "y": 58,
+          "label": "Kladkový stroj so závažím"
+        },
+        {
+          "x": 92,
+          "y": 53,
+          "label": "Držiak na osi"
+        }
+      ],
+      "walk": {
+        "x": 45,
+        "y": 85
+      },
+      "hotspot": {
+        "x": 45,
+        "y": 85,
+        "target": "jednorucky-1",
+        "label": "K jednoručkám",
+        "zone": "jednorucky"
+      },
+      "next": "jednorucky-1",
+      "source": "b57b28e1"
     },
     {
       "id": "jednorucky-1",
+      "order": 20,
       "zone": "jednorucky",
       "type": "photo",
       "src": "tour-jednorucky-1",
@@ -699,10 +1089,368 @@
       "walk": {
         "x": 62,
         "y": 82
-      }
+      },
+      "hotspot": {
+        "x": 62,
+        "y": 82,
+        "target": "funkcna-zona-4",
+        "label": "Do funkčnej zóny",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-4",
+      "source": "4a8527d5"
+    },
+    {
+      "id": "funkcna-zona-4",
+      "order": 21,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-4",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 55,
+        "y": 55
+      },
+      "title": "Tmavá zóna od okien",
+      "alt": "Tmavá zóna s čiernym kazetovým stropom od okien: v popredí strieborné nakladacie stroje s kotúčmi a rastlina, vzadu šesťuholníkové LED svetlá, červený rig a maľba, vpravo červená šprintérska dráha.",
+      "pins": [
+        {
+          "x": 35,
+          "y": 68,
+          "label": "Nakladacie stroje"
+        },
+        {
+          "x": 62,
+          "y": 43,
+          "label": "Šesťuholníkové LED svetlá"
+        },
+        {
+          "x": 85,
+          "y": 68,
+          "label": "Šprintérska dráha"
+        }
+      ],
+      "walk": {
+        "x": 80,
+        "y": 88
+      },
+      "hotspot": {
+        "x": 80,
+        "y": 88,
+        "target": "funkcna-zona-1",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-1",
+      "source": "a08cf80a"
+    },
+    {
+      "id": "funkcna-zona-1",
+      "order": 22,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-1",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 60
+      },
+      "title": "Dráha a nakladacie stroje",
+      "alt": "Červená šprintérska dráha s číslami na čiernej podlahe, vľavo čierne nakladacie stroje a stojan s medicinbalmi pri kamennej stene, vzadu červený rig s kotúčmi, zrkadlo a presklená stena k recepcii.",
+      "pins": [
+        {
+          "x": 80,
+          "y": 80,
+          "label": "Šprintérska dráha"
+        },
+        {
+          "x": 47,
+          "y": 57,
+          "label": "Rig s kotúčmi"
+        },
+        {
+          "x": 27,
+          "y": 62,
+          "label": "Nakladacie stroje"
+        }
+      ],
+      "walk": {
+        "x": 40,
+        "y": 86
+      },
+      "hotspot": {
+        "x": 40,
+        "y": 86,
+        "target": "funkcna-zona-2",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-2",
+      "source": "335ed77e"
+    },
+    {
+      "id": "funkcna-zona-2",
+      "order": 23,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-2",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 55,
+        "y": 42
+      },
+      "title": "Rig a šesťuholníkové svetlá",
+      "alt": "Červený rig Life Fitness so závesnými popruhmi TRX, boxovacím vrecom a kettlebellmi, nad ním šesťuholníkové LED svetlá v čiernom strope, na podlahe červené značenie dráhy.",
+      "pins": [
+        {
+          "x": 66,
+          "y": 32,
+          "label": "Rig Life Fitness s TRX"
+        },
+        {
+          "x": 52,
+          "y": 23,
+          "label": "Šesťuholníkové LED svetlá"
+        },
+        {
+          "x": 78,
+          "y": 52,
+          "label": "Boxovacie vrece"
+        }
+      ],
+      "walk": {
+        "x": 58,
+        "y": 88
+      },
+      "hotspot": {
+        "x": 58,
+        "y": 88,
+        "target": "funkcna-zona-5",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-5",
+      "source": "751e5e8a"
+    },
+    {
+      "id": "funkcna-zona-5",
+      "order": 24,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-5",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 52
+      },
+      "title": "Rig pri oknách",
+      "alt": "Červený rig Life Fitness s kettlebellmi vľavo, za ním okná, vzduchový bicykel, nakladací stroj, na stĺpe odporové gumy a fitlopta, vpravo lavica na brucho a drevená plyometrická debna.",
+      "pins": [
+        {
+          "x": 25,
+          "y": 55,
+          "label": "Kettlebelly na rigu"
+        },
+        {
+          "x": 52,
+          "y": 56,
+          "label": "Vzduchový bicykel"
+        },
+        {
+          "x": 88,
+          "y": 63,
+          "label": "Plyometrická debna"
+        }
+      ],
+      "walk": {
+        "x": 50,
+        "y": 86
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 86,
+        "target": "funkcna-zona-3",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-3",
+      "source": "101780bb"
+    },
+    {
+      "id": "funkcna-zona-3",
+      "order": 25,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-3",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 50,
+        "y": 60
+      },
+      "title": "Šprintérska dráha",
+      "alt": "Červená šprintérska dráha s číslami na čiernej gumovej podlahe, za ňou lavica na brucho a nakladací stroj pri presklenej stene, hore čierny kazetový strop so svetlami.",
+      "pins": [
+        {
+          "x": 25,
+          "y": 72,
+          "label": "Šprintérska dráha"
+        },
+        {
+          "x": 53,
+          "y": 56,
+          "label": "Lavica na brucho"
+        },
+        {
+          "x": 70,
+          "y": 54,
+          "label": "Nakladací stroj"
+        },
+        {
+          "x": 14,
+          "y": 50,
+          "label": "Presklená stena"
+        }
+      ],
+      "walk": {
+        "x": 58,
+        "y": 90
+      },
+      "hotspot": {
+        "x": 58,
+        "y": 90,
+        "target": "funkcna-zona-6",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-6",
+      "source": "f3cad8ed"
+    },
+    {
+      "id": "funkcna-zona-6",
+      "order": 26,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-6",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 48,
+        "y": 55
+      },
+      "title": "Koniec šprintérskej dráhy",
+      "alt": "Pohľad od konca červenej šprintérskej dráhy s číslami 4 až 8 pozdĺž zóny, hore šesťuholníkové LED svetlá, vzadu rig s kotúčmi, nakladací stroj, stojan s medicinbalmi a presklená stena.",
+      "pins": [
+        {
+          "x": 40,
+          "y": 80,
+          "label": "Šprintérska dráha s číslami"
+        },
+        {
+          "x": 52,
+          "y": 48,
+          "label": "Rig s kotúčmi"
+        },
+        {
+          "x": 12,
+          "y": 8,
+          "label": "Šesťuholníkové LED svetlá"
+        }
+      ],
+      "walk": {
+        "x": 45,
+        "y": 90
+      },
+      "hotspot": {
+        "x": 45,
+        "y": 90,
+        "target": "funkcna-zona-7",
+        "label": "Ďalej: Funkčná zóna",
+        "zone": "funkcna-zona"
+      },
+      "next": "funkcna-zona-7",
+      "source": "92861a6f"
+    },
+    {
+      "id": "funkcna-zona-7",
+      "order": 27,
+      "zone": "funkcna-zona",
+      "type": "photo",
+      "src": "tour-funkcna-zona-7",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 55,
+        "y": 45
+      },
+      "title": "Šesťuholníkové svetlá a rig",
+      "alt": "Strop s klimatizačnou jednotkou a šesťuholníkovými LED svetlami, vpravo červený rig Life Fitness s boxovacím vrecom a malá trampolína, uprostred šprintérska dráha a presklená stena, vľavo nakladací stroj.",
+      "pins": [
+        {
+          "x": 65,
+          "y": 15,
+          "label": "Šesťuholníkové LED svetlá"
+        },
+        {
+          "x": 88,
+          "y": 45,
+          "label": "Rig Life Fitness"
+        },
+        {
+          "x": 45,
+          "y": 65,
+          "label": "Šprintérska dráha"
+        }
+      ],
+      "walk": {
+        "x": 40,
+        "y": 86
+      },
+      "hotspot": {
+        "x": 40,
+        "y": 86,
+        "target": "tatami-1",
+        "label": "Na tatami",
+        "zone": "tatami"
+      },
+      "next": "tatami-1",
+      "source": "4f66d594"
     },
     {
       "id": "tatami-1",
+      "order": 28,
       "zone": "tatami",
       "type": "photo",
       "src": "tour-tatami-1",
@@ -733,10 +1481,20 @@
       "walk": {
         "x": 40,
         "y": 86
-      }
+      },
+      "hotspot": {
+        "x": 40,
+        "y": 86,
+        "target": "tatami-2",
+        "label": "Ďalej: Tatami",
+        "zone": "tatami"
+      },
+      "next": "tatami-2",
+      "source": "38aed571"
     },
     {
       "id": "tatami-2",
+      "order": 29,
       "zone": "tatami",
       "type": "photo",
       "src": "tour-tatami-2",
@@ -772,7 +1530,59 @@
       "walk": {
         "x": 50,
         "y": 86
-      }
+      },
+      "hotspot": {
+        "x": 50,
+        "y": 86,
+        "target": "tatami-3",
+        "label": "Ďalej: Tatami",
+        "zone": "tatami"
+      },
+      "next": "tatami-3",
+      "source": "f56a3d44"
+    },
+    {
+      "id": "tatami-3",
+      "order": 30,
+      "zone": "tatami",
+      "type": "photo",
+      "src": "tour-tatami-3",
+      "w": 1932,
+      "h": 2576,
+      "sizes": [
+        1932,
+        1280
+      ],
+      "focus": {
+        "x": 45,
+        "y": 50
+      },
+      "title": "Zrkadlová stena tatami",
+      "alt": "Zrkadlová stena miestnosti s tatami, v odraze dvere a rebrina, pri stene zrolované podložky a malé jednoručky, vpravo biele dvere a závesný popruh, na podlahe ružovo-čierne podložky.",
+      "pins": [
+        {
+          "x": 20,
+          "y": 45,
+          "label": "Zrkadlová stena"
+        },
+        {
+          "x": 45,
+          "y": 60,
+          "label": "Podložky a malé jednoručky"
+        },
+        {
+          "x": 67,
+          "y": 48,
+          "label": "Dvere"
+        }
+      ],
+      "walk": {
+        "x": 65,
+        "y": 85
+      },
+      "hotspot": null,
+      "next": null,
+      "source": "b95c2f9e"
     }
   ]
 }

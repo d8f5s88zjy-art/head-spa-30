@@ -406,10 +406,12 @@ a otvoriť `http://localhost:8080/lipa-gym/`.
 
 ## GYM KLUB 3D (priečinok `lipa-gym/3d/`)
 
-Návrh filmovej prehliadky GYM KLUB: činka padá z neba nad Nitrou a dopadne pred vchod.
-Z miesta dopadu sa kruhovou clonou otvorí skutočný záber terasy a pokračuje prehliadka
-po autentických fotkách a videách z 26. 9. 2026. Pôvodný web `lipa-gym/` zostal bez zmeny.
-3D scéna je v `lipa-gym/3d/src/intro.js` (three.js) a zbalí sa príkazom `lipa-gym/3d/build.sh`
-do `assets/intro.js`. Register faktov, audit médií, časovú os kamery, vykonané kontroly
-a obmedzenia opisuje `lipa-gym/3d/PRODUKCIA.md`. Stránka má `noindex`, kým prevádzka
+Prechádzka celým fitkom GYM KLUB na skutočných záberoch z 26. 9. 2026: začína na terase
+pred vchodom, vojde dverami k recepcii a prejde všetkých 10 zón (hlavná sála, sála so
+strojmi, kardio, voľné váhy, jednoručky, funkčná zóna, tatami) v 30 zastávkach. Skrolovanie
+(alebo šípky, disk na podlahe, pás zón a zoznam zón) vyberá zastávku, ťahaním obrazu sa
+človek rozhliadne v rámci ostrého záberu. Čisté HTML, CSS a JS bez knižníc a bez zostavovania;
+údaje zastávok sú v `lipa-gym/3d/assets/tour-data.json`, médiá v `lipa-gym/3d/media/`.
+Pôvodný web `lipa-gym/` zostal bez zmeny. Register faktov, zoznam médií, ovládanie, vykonané
+kontroly a obmedzenia opisuje `lipa-gym/3d/PRODUKCIA.md`. Stránka má `noindex`, kým prevádzka
 nepotvrdí hodiny, cenník a trénerov.
