@@ -14,6 +14,41 @@ LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale real
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
 
+## 0. Web s 5 stránkami (aktuálny stav)
+
+Zadanie: kompletný, luxusne pôsobiaci web fitka s cestou k návšteve a členstvu, mobil ako prvý,
+bez vymyslených cien, hodín a recenzií; chýbajúce údaje viditeľne označiť.
+
+| Stránka | Obsah |
+|---|---|
+| `index.html` | úvod so svetelnou 3D scénou („Tu sa nehrá na fitko. Tu sa trénuje.“, Pozrieť členstvá, Naplánovať návštevu), prečo GYM KLUB, ukážka priestorov (priestorová fotka + 4 dlaždice), služby, členstvá, prvá návšteva |
+| `o-fitku.html` | 7 priestorov s priestorovou fotkou a galériou 30 fotiek, fotky na celú obrazovku, zázemie |
+| `clenstva.html` | 3 hlavné vstupy, porovnanie (posuvník: jednotlivé vstupy vs. permanentka), ďalšie vstupy, podmienky |
+| `sluzby.html` | fitness, osobný tréning, bojové športy, Krav Maga, zdravý chrbát, pilates, výživa; týždenný rozvrh; tréneri |
+| `kontakt.html` | adresa, telefón, e-mail, Instagram, Facebook, otváracie hodiny, mapa po kliknutí, formulár návštevy (pripraví e-mail), otázky |
+
+Stránky generuje `tools/generuj.py` (spoločná hlavička, menu, pätička, spodná lišta s tlačidlami
+na telefóne); všetky fakty sú v ňom na jednom mieste (`GYM`, `HOURS`, `PLANS`, `MORE`, `TERMS`,
+`TIMETABLE`, `COACHES`, `ZONES`). Po úprave: `python3 tools/generuj.py` v `lipa-gym/3d`.
+Údaje prevzaté z gymklub.sk a z klasického webu `lipa-gym/` sú na stránke označené žltou značkou
+**OVERIŤ**; `TODO_VISIBLE = False` ich skryje, keď budú potvrdené. Recenzie z klasického webu sa
+nepoužili (nie je overený zdroj).
+
+Prechody medzi stránkami: View Transitions (`@view-transition`), v ostatných prehliadačoch
+obyčajné načítanie. Úvody podstránok sa po načítaní usadia (priblíženie fotky, vysunutie textu),
+sekcie sa pri skrolovaní raz odkryjú; pri obmedzenom pohybe nič z toho.
+
+### Pred zverejnením doplniť alebo potvrdiť
+
+1. Ceny, balíky (platnosť 10 a 20 vstupov), spôsob platby (len hotovosť?), MultiSport, Upbalansea.
+2. Otváracie hodiny cez víkend (08:00 – 17:00 alebo 08:30 – 18:00) a sviatky.
+3. Zoznam aktívnych trénerov a ich telefóny, rozvrh lekcií.
+4. Parkovanie pri Lipa Centre (otázka na kontakte).
+5. Fotky z tréningov a lekcií (ľudia so súhlasom), fotky trénerov; farby a logo vo vektore.
+6. Cieľová skupina a hlavný cieľ webu, ak má byť text zameraný inak (napr. študenti, bojové športy).
+7. Spracovanie formulára bez e-mailového programu (služba typu Formspree), ak ho chcete.
+8. Doména a finálna adresa webu (canonical, og:image), potom odstrániť `noindex` a značky OVERIŤ.
+
 ## 1. Register faktov
 
 Overené na gymklub.sk 27. 9. 2026 (hlavná stránka, pätička, FAQ, rozvrh).

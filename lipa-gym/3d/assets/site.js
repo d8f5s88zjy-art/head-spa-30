@@ -1,33 +1,114 @@
-// GYM KLUB – prehliadka fitka: úvod, odkrývanie sekcií, galérie priestorov a fotky na celú obrazovku.
-// Skrolovanie ostáva natívne; skript len pridáva triedy a reaguje na posun galérií (najviac raz za snímku).
+// GYM KLUB – web fitka: úvod so svetlami, menu, odkrývanie sekcií, galérie, fotky na celú obrazovku,
+// kalkulačka členstva, mapa po kliknutí a formulár návštevy.
+// Skrolovanie ostáva natívne; skript len pridáva triedy a reaguje na posun (najviac raz za snímku).
 
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
 
 // úvod: ak beží svetelná scéna (WebGL), titulok odkryje ona, keď sa rozsvieti; inak po dekódovaní fotky
-const heroImg = document.querySelector('.hero-scene img');
+const heroImg = $('.hero-scene img');
 const reveal = () => requestAnimationFrame(() => root.classList.add('ready'));
 const glOk = !reduce && 'IntersectionObserver' in window && !!window.WebGLRenderingContext;
-if (!glOk) Promise.race([
+if (!heroImg) reveal();
+else if (!glOk) Promise.race([
   (heroImg.complete ? Promise.resolve() : new Promise(r => heroImg.addEventListener('load', r, { once: true }))).then(() => heroImg.decode()).catch(() => {}),
   new Promise(r => setTimeout(r, 2500))
 ]).then(reveal);
 
-// lišta dostane pozadie, keď úvod odíde z obrazu
-const bar = document.querySelector('.bar');
-if ('IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => bar.classList.toggle('solid', !e.isIntersecting), { rootMargin: '-72px 0px 0px 0px' })
-    .observe(document.querySelector('.hero'));
+// menu na telefóne: celá obrazovka, zatvorí sa krížikom, klávesom Esc alebo výberom odkazu
+const menu = $('#menu'), menuBtn = $('#menuBtn');
+const ICON_MENU = menuBtn.innerHTML;
+const ICON_X = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8"/></svg>';
+function setMenu(open) {
+  menu.hidden = !open;
+  root.classList.toggle('menu-open', open);
+  menuBtn.setAttribute('aria-expanded', open);
+  menuBtn.setAttribute('aria-label', open ? 'Zavrieť menu' : 'Otvoriť menu');
+  menuBtn.innerHTML = open ? ICON_X : ICON_MENU;
+  if (open) menu.querySelector('a').focus(); else menuBtn.focus({ preventScroll: true });
+}
+menuBtn.addEventListener('click', () => setMenu(menu.hidden));
+menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
+matchMedia('(min-width: 1101px)').addEventListener?.('change', m => { if (m.matches && !menu.hidden) setMenu(false); });
 
-  // sekcie sa odkryjú raz, keď vojdú do obrazu
+// domov: lišta dostane pozadie a spodné tlačidlá sa ukážu, keď úvod odíde z obrazu
+const bar = $('#bar'), hero = $('.hero');
+if (hero && 'IntersectionObserver' in window) {
+  new IntersectionObserver(([e]) => bar.classList.toggle('solid', !e.isIntersecting), { rootMargin: '-72px 0px 0px 0px' }).observe(hero);
+  // spodné tlačidlá na telefóne: po odchode úvodných tlačidiel z obrazu (pol obrazovky skrolovania)
+  let dockPending = false;
+  const dock = () => { dockPending = false; document.body.classList.toggle('dock-on', scrollY > innerHeight * 0.5); };
+  addEventListener('scroll', () => { if (!dockPending) { dockPending = true; requestAnimationFrame(dock); } }, { passive: true });
+  dock();
+} else {
+  bar.classList.add('solid');
+  document.body.classList.add('dock-on');
+}
+
+// sekcie sa odkryjú raz, keď vojdú do obrazu
+if ('IntersectionObserver' in window) {
   root.classList.add('io');
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
   }), { rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
-} else {
-  bar.classList.add('solid');
-  document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+}
+
+// kalkulačka: pri zadanom počte tréningov za mesiac vyberie najlacnejšiu možnosť z cien na stránke
+const calc = $('#calc');
+if (calc) {
+  const n = $('#calcN'), out = $('#calcOut'), res = $('#calcR');
+  const c = k => +calc.dataset[k];
+  const eur = x => (Math.round(x * 100) / 100).toLocaleString('sk-SK', { minimumFractionDigits: Number.isInteger(x) ? 0 : 2 }) + ' €';
+  const run = () => {
+    const k = +n.value;
+    out.textContent = k;
+    const single = k * c('single'), month = c('month');
+    res.innerHTML = single <= month
+      ? `Jednotlivé vstupy: <b>${eur(single)}</b> mesačne. Permanentka by stála ${eur(month)}.`
+      : `Permanentka: <b>${eur(month)}</b> mesačne, teda ${eur(month / k)} za tréning. Jednotlivo by ste zaplatili ${eur(single)}.`;
+  };
+  n.addEventListener('input', run);
+  run();
+}
+
+// mapa sa načíta z Map Google až po kliknutí (rýchlosť a súkromie)
+const mapBtn = $('#mapLoad');
+mapBtn?.addEventListener('click', () => {
+  const f = document.createElement('iframe');
+  f.src = mapBtn.dataset.src; f.title = 'Mapa: GYM KLUB, Výstavná 6, Nitra'; f.loading = 'lazy';
+  f.referrerPolicy = 'no-referrer-when-downgrade'; f.allowFullscreen = true;
+  $('#map').append(f);
+  mapBtn.disabled = true;
+});
+
+// formulár návštevy: kontrola povinných polí a príprava e-mailu (nič sa neukladá ani neodosiela na server)
+const form = $('#form');
+if (form) {
+  const need = [['#fName', '#fNameErr'], ['#fContact', '#fContactErr']];
+  form.addEventListener('submit', ev => {
+    ev.preventDefault();
+    let first = null;
+    for (const [i, er] of need) {
+      const inp = $(i, form), bad = !inp.value.trim();
+      inp.setAttribute('aria-invalid', bad); $(er, form).hidden = !bad;
+      if (bad && !first) first = inp;
+    }
+    if (first) { first.focus(); return; }
+    const v = id => $(id, form).value.trim();
+    const date = v('#fDate') ? new Date(v('#fDate') + 'T12:00').toLocaleDateString('sk-SK') : '';
+    const lines = [
+      `Meno: ${v('#fName')}`, `Kontakt: ${v('#fContact')}`, `Téma: ${v('#fTopic')}`,
+      date || v('#fTime') ? `Kedy by som prišiel/prišla: ${[date, v('#fTime')].filter(Boolean).join(' o ')}` : '',
+      '', v('#fMsg')
+    ].filter((l, i, a) => l !== '' || (i > 0 && a[i - 1] !== ''));
+    const to = form.getAttribute('action').replace('mailto:', '');
+    location.href = `mailto:${to}?subject=${encodeURIComponent('GYM KLUB: ' + v('#fTopic'))}&body=${encodeURIComponent(lines.join('\n'))}`;
+    $('#fOk', form).hidden = false;
+  });
+  for (const [i, er] of need) $(i, form).addEventListener('input', e => { if (e.target.value.trim()) { e.target.setAttribute('aria-invalid', 'false'); $(er, form).hidden = true; } });
 }
 
 // galérie priestorov: počítadlo a šípky (na dotyku sa posúva prstom)
@@ -59,6 +140,7 @@ for (const zone of document.querySelectorAll('.zone')) {
 
 // fotky na celú obrazovku: jeden vodorovný pás všetkých 30 fotiek, posúva sa prstom, šípkami alebo klávesmi
 const lb = document.getElementById('lb');
+if (lb) {
 const track = document.getElementById('lbTrack');
 const cap = document.getElementById('lbCap');
 const lbPrev = lb.querySelector('.lb-prev');
@@ -150,6 +232,7 @@ if (typeof lb.showModal === 'function') {
     (opener && photos[cur] !== opener ? p : opener)?.focus({ preventScroll: true });
   });
   addEventListener('resize', () => { if (lb.open) track.scrollLeft = cur * track.clientWidth; });
+}
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -375,8 +458,8 @@ class HeroScene extends Space3D {
 
 if (glOk) {
   const heroEl = document.getElementById('heroScene');
-  const hero = new HeroScene(heroEl, document.getElementById('uvod'), document.getElementById('heroIn'));
-  const spaces = new Map([[heroEl, hero], ...[...document.querySelectorAll('.s3d')].map(el => [el, new Space3D(el)])]);
+  const spaces = new Map([...document.querySelectorAll('.s3d')].map(el => [el, new Space3D(el)]));
+  if (heroEl) spaces.set(heroEl, new HeroScene(heroEl, document.getElementById('uvod'), document.getElementById('heroIn')));
   // blízko obrazu: pripraviť kontext; v obraze: kresliť; ďaleko: uvoľniť
   const near = new IntersectionObserver(es => es.forEach(e => {
     const s = spaces.get(e.target);

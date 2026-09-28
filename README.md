@@ -406,15 +406,12 @@ a otvoriť `http://localhost:8080/lipa-gym/`.
 
 ## GYM KLUB 3D (priečinok `lipa-gym/3d/`)
 
-3D prehliadka celého fitka GYM KLUB na skutočných záberoch z 26. 9. 2026, aby si zákazník fitko
-pozrel skôr, než príde. Úvod je skutočná fotka funkčnej zóny: stránka sa otvorí v tme, LED
-šesťuholníky sa po jednom s blikaním rozsvietia, rozsvieti sa sála a pri skrolovaní kamera vojde
-do priestoru. Ďalej 30 ostrých fotiek v 7 priestoroch (príchod, hlavná sála, sála so strojmi,
-kardio, voľné váhy, funkčná zóna, tatami). Úvod a hlavná fotka každého priestoru sú priestorové:
-ku každej fotke je hĺbková mapa (`media/depth-*.png`) a WebGL podľa nej posúva popredie viac než
-pozadie; kamera sa pomaly pohybuje sama, myš alebo ťah prstom ju vedú. Pod tým je galéria všetkých
-fotiek priestoru a každá fotka sa otvorí na celú obrazovku. Skrolovanie je natívne. Čisté HTML,
-CSS a JS bez knižníc a bez zostavovania (`index.html`, `assets/style.css`, `assets/site.js`).
+Kompletný web fitka GYM KLUB s 5 stránkami: Domov (úvod: skutočná fotka funkčnej zóny v tme, LED
+šesťuholníky sa po jednom rozsvietia a pri skrolovaní kamera vojde do priestoru), O fitku (7 priestorov,
+30 fotiek, priestorové fotky z hĺbkových máp), Členstvá, Služby (rozvrh, tréneri) a Kontakt (hodiny,
+mapa, formulár návštevy). Stránky generuje `lipa-gym/3d/tools/generuj.py` z faktov na jednom mieste;
+nepotvrdené údaje sú označené OVERIŤ. Čisté HTML, CSS a JS bez knižníc (`assets/style.css`,
+`assets/site.js`), médiá v `lipa-gym/3d/media/`.
 Pôvodný web `lipa-gym/` zostal bez zmeny. Register faktov, zoznam médií, ovládanie, vykonané
 kontroly a obmedzenia opisuje `lipa-gym/3d/PRODUKCIA.md`. Stránka má `noindex`, kým prevádzka
 nepotvrdí hodiny, cenník a trénerov.
