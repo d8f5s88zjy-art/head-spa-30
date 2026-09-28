@@ -407,7 +407,9 @@ a otvoriť `http://localhost:8080/lipa-gym/`.
 ## GYM KLUB 3D (priečinok `lipa-gym/3d/`)
 
 3D prehliadka celého fitka GYM KLUB na skutočných záberoch z 26. 9. 2026, aby si zákazník fitko
-pozrel skôr, než príde: 30 ostrých fotiek v 7 priestoroch (príchod, hlavná sála, sála so strojmi,
+pozrel skôr, než príde. Úvod je skutočná fotka funkčnej zóny: stránka sa otvorí v tme, LED
+šesťuholníky sa po jednom s blikaním rozsvietia, rozsvieti sa sála a pri skrolovaní kamera vojde
+do priestoru. Ďalej 30 ostrých fotiek v 7 priestoroch (príchod, hlavná sála, sála so strojmi,
 kardio, voľné váhy, funkčná zóna, tatami). Úvod a hlavná fotka každého priestoru sú priestorové:
 ku každej fotke je hĺbková mapa (`media/depth-*.png`) a WebGL podľa nej posúva popredie viac než
 pozadie; kamera sa pomaly pohybuje sama, myš alebo ťah prstom ju vedú. Pod tým je galéria všetkých

@@ -4,12 +4,14 @@
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// úvod: fotka a titulok sa odkryjú, keď je úvodná fotka dekódovaná (poistka po 2,5 s)
-const heroImg = document.querySelector('.hero-img img');
-Promise.race([
+// úvod: ak beží svetelná scéna (WebGL), titulok odkryje ona, keď sa rozsvieti; inak po dekódovaní fotky
+const heroImg = document.querySelector('.hero-scene img');
+const reveal = () => requestAnimationFrame(() => root.classList.add('ready'));
+const glOk = !reduce && 'IntersectionObserver' in window && !!window.WebGLRenderingContext;
+if (!glOk) Promise.race([
   (heroImg.complete ? Promise.resolve() : new Promise(r => heroImg.addEventListener('load', r, { once: true }))).then(() => heroImg.decode()).catch(() => {}),
   new Promise(r => setTimeout(r, 2500))
-]).then(() => requestAnimationFrame(() => root.classList.add('ready')));
+]).then(reveal);
 
 // lišta dostane pozadie, keď úvod odíde z obrazu
 const bar = document.querySelector('.bar');
@@ -158,45 +160,76 @@ if (typeof lb.showModal === 'function') {
 // obyčajná fotka pod plátnom.
 
 const VS = 'attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}';
-const FS = `precision mediump float;
+// spoločná časť: kamera s hĺbkou (5 krokov hľadania povrchu po hĺbkovej mape)
+const CAM = `precision mediump float;
 varying vec2 v;
 uniform sampler2D img,dep;
 uniform vec2 cover,ctr,off;
-uniform float zoom,push,fade;
-void main(){
+uniform float zoom,push;
+vec2 look(){
   vec2 base=ctr+(vec2(v.x,1.-v.y)-.5)*cover/zoom;
   vec2 uv=base;
   for(int i=0;i<5;i++){
     float d=texture2D(dep,uv).r;
     uv=base+off*(d-.4)-(base-ctr)*push*d;
   }
-  gl_FragColor=vec4(texture2D(img,clamp(uv,.001,.999)).rgb*fade,1.);
+  return clamp(uv,.001,.999);
 }`;
+const FS = CAM + `
+uniform float fade;
+void main(){gl_FragColor=vec4(texture2D(img,look()).rgb*fade,1.);}`;
+// úvod: miestnosť v tme, LED trubice sa po jednej s blikaním rozsvietia, potom sa rozsvieti celá sála.
+// lit.r = maska svetla, lit.g = kedy sa trubica zapne, lit.b = náhodný rytmus blikania, lit.a = žiara
+const FS_HERO = CAM + `
+uniform sampler2D lit;
+uniform float T,room;
+float tube(float st,float sd){
+  float k=(T-(.35+st*2.3))/(.3+sd*.5);
+  if(k<0.)return 0.;
+  if(k>.85)return 1.;
+  return sin(k*47.+sd*60.)+sin(k*23.3+sd*17.)>.4?1.:.07;
+}
+void main(){
+  vec2 uv=look();
+  vec3 c=texture2D(img,uv).rgb;
+  vec4 L=texture2D(lit,uv);
+  float s=tube(L.g,L.b);
+  vec3 col=mix(c*.035+vec3(.003,.005,.008),c,room);
+  col=max(col,c*L.r*s*1.08);
+  col+=vec3(.85,.95,1.)*L.a*s*.3*(1.-room*.8);
+  gl_FragColor=vec4(col,1.);
+}`;
+// začiatky a rytmy 91 trubíc (rovnaké hodnoty ako v lit.g a lit.b), z nich sa počíta svetlo v miestnosti
+const CELLS = [[0.676,0.468],[0.244,0.548],[0.789,0.322],[0.377,0.751],[0.474,0.025],[0.52,0.372],[0.78,0.03],[0.654,0.123],[0.529,0.967],[0.251,0.658],[0.387,0.428],[0.753,0.524],[0.444,0.873],[0.611,0.344],[0.585,0.59],[0.69,0.684],[0.367,0.355],[0.525,0.519],[0.786,0.765],[0.557,0.909],[0.196,0.151],[0.422,0.933],[0.111,0.005],[0.419,0.753],[0.796,0.811],[0.346,0.137],[0.608,0.419],[0.406,0.815],[0.525,0.014],[0.455,0.628],[0.416,0.793],[0.531,0.513],[0.433,0.726],[0.469,0.226],[0.424,0.199],[0.553,0.363],[0.523,0.179],[0.508,0.346],[0.516,0.948],[0.628,0.573],[0.436,0.34],[0.437,0.272],[0.359,0.952],[0.42,0.444],[0.935,0.98],[0.202,0.516],[0.196,0.521],[0.497,0.897],[0.659,0.743],[0.501,0.581],[0.568,0.427],[0.232,0.878],[0.376,0.412],[0.524,0.923],[0.451,0.069],[0.733,0.43],[0.439,0.52],[0.646,0.951],[0.834,0.251],[0.501,0.806],[0.591,0.676],[0.515,0.717],[0.48,0.63],[0.393,0.972],[0.388,0.333],[0.561,0.398],[0.616,0.203],[0.773,0.051],[0.407,0.213],[0.311,0.915],[0.456,0.84],[0.549,0.112],[0.626,0.604],[0.587,0.479],[0.72,0.595],[0.621,0.659],[0.724,0.307],[0.542,0.961],[0.306,0.466],[0.274,0.628],[0.356,0.635],[0.561,0.184],[0.476,0.062],[0.501,0.412],[0.356,0.764],[0.333,0.815],[0.582,0.73],[0.275,0.113],[0.534,0.913],[0.299,0.802],[0.726,0.878]];
+const tubeState = (T, st, sd) => {
+  const k = (T - (0.35 + st * 2.3)) / (0.3 + sd * 0.5);
+  if (k < 0) return 0;
+  if (k > 0.85) return 1;
+  return Math.sin(k * 47 + sd * 60) + Math.sin(k * 23.3 + sd * 17) > 0.4 ? 1 : 0.07;
+};
+const LIGHTS_DONE = 3.6;   // po tomto čase (s) svietia všetky trubice
 
 const AMP = 0.02;          // najväčší posun pri pohybe kamery (podiel šírky obrazu)
 const ZOOM = 1.08;         // rezerva na okrajoch, aby posun neukázal hranu fotky
 const coarse = matchMedia('(pointer: coarse)').matches;
+const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+const loadImg = url => { const i = new Image(); i.src = url; return i.decode().then(() => i); };
 
 class Space3D {
-  constructor(el) {
-    this.el = el; this.img = el.querySelector('img');
+  constructor(el, inputEl = el) {
+    this.el = el; this.img = el.querySelector('img'); this.inputEl = inputEl;
     this.fx = (+el.dataset.fx || 50) / 100; this.fy = (+el.dataset.fy || 50) / 100;
-    this.cur = { x: 0, y: 0 }; this.user = null; this.t0 = 0; this.shown = 0; this.raf = 0; this.gl = null;
+    this.cur = { x: 0, y: 0 }; this.user = null; this.shown = 0; this.raf = 0; this.gl = null;
     this.visible = false;
+    this.fs = FS; this.extra = []; this.names = ['cover', 'ctr', 'off', 'zoom', 'push', 'fade'];
     this.onPointer();
-  }
-  depthUrl() {
-    // úvod má na šírku iný záber než na výšku; hĺbka musí patriť k fotke, ktorú prehliadač vybral
-    const land = this.el.dataset.depthLand;
-    return land && /hlavna-sala-3/.test(this.img.currentSrc) ? land : this.el.dataset.depth;
   }
   async start() {
     if (this.gl || this.starting) return;
     this.starting = true;
     try {
       if (!this.img.complete || !this.img.naturalWidth) await new Promise((res, rej) => { this.img.addEventListener('load', res, { once: true }); this.img.addEventListener('error', rej, { once: true }); });
-      const dep = new Image(); dep.src = this.depthUrl();
-      await dep.decode();
+      const maps = await Promise.all([this.el.dataset.depth, ...this.extra].map(loadImg));
       // fotka sa dekóduje mimo hlavného vlákna; na telefónoch stačí textúra do 1400 px
       let src = this.img, bmp = null;
       if (window.createImageBitmap) {
@@ -207,33 +240,34 @@ class Space3D {
       const c = document.createElement('canvas');
       c.setAttribute('aria-hidden', 'true');
       const gl = c.getContext('webgl', { alpha: false, antialias: false, depth: false, premultipliedAlpha: false, powerPreference: 'high-performance' });
-      if (!gl) { bmp?.close(); return; }
-      const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+      if (!gl) { bmp?.close(); throw 0; }
+      const sh = (type, code) => { const x = gl.createShader(type); gl.shaderSource(x, code); gl.compileShader(x); return x; };
       const pr = gl.createProgram();
-      gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr);
-      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+      gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, this.fs)); gl.linkProgram(pr);
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { bmp?.close(); throw 0; }
       gl.useProgram(pr);
       const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
       const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-      const tex = (unit, src) => {
+      const tex = (unit, source, fmt) => {
         const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, src);
+        gl.texImage2D(gl.TEXTURE_2D, 0, fmt, fmt, gl.UNSIGNED_BYTE, source);
       };
-      tex(0, src); tex(1, dep); bmp?.close();
+      tex(0, src, gl.RGB); bmp?.close();
+      maps.forEach((m, i) => tex(i + 1, m, i === 0 ? gl.RGB : gl.RGBA));
       const u = n => gl.getUniformLocation(pr, n);
-      gl.uniform1i(u('img'), 0); gl.uniform1i(u('dep'), 1);
-      this.u = { cover: u('cover'), ctr: u('ctr'), off: u('off'), zoom: u('zoom'), push: u('push'), fade: u('fade') };
+      ['img', 'dep', 'lit'].forEach((n, i) => { const l = u(n); if (l) gl.uniform1i(l, i); });
+      this.u = Object.fromEntries(this.names.map(n => [n, u(n)]));
       this.gl = gl; this.canvas = c; this.iw = this.img.naturalWidth; this.ih = this.img.naturalHeight;
       this.el.append(c);
+      if (!this.shown) this.shown = performance.now();
       this.size();
       c.addEventListener('webglcontextlost', e => { e.preventDefault(); this.drop(); });
-      if (!this.shown) this.shown = performance.now();
       this.el.classList.add('gl');
       this.loop();
-    } catch (e) { /* ostáva obyčajná fotka */ } finally { this.starting = false; }
+    } catch (e) { this.failed?.(); /* ostáva obyčajná fotka */ } finally { this.starting = false; }
   }
   size() {
     if (!this.gl) return;
@@ -243,26 +277,35 @@ class Space3D {
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     // ako object-fit: cover s object-position podľa bodu záujmu
     const A = w / h, I = this.iw / this.ih;
-    const cw = A < I ? A / I : 1, ch = A < I ? 1 : I / A;
-    this.gl.uniform2f(this.u.cover, cw, ch);
-    this.gl.uniform2f(this.u.ctr, cw / 2 + (1 - cw) * this.fx, ch / 2 + (1 - ch) * this.fy);
+    this.cw = A < I ? A / I : 1; this.ch = A < I ? 1 : I / A;
+    this.gl.uniform2f(this.u.cover, this.cw, this.ch);
+    this.aim(this.fx, this.fy, ZOOM);
     this.draw(performance.now());
+  }
+  // stred pohľadu v súradniciach fotky pre bod záujmu (fx, fy) a priblíženie
+  aim(fx, fy, zoom) {
+    const w = this.cw / zoom, h = this.ch / zoom;
+    this.gl.uniform2f(this.u.ctr, w / 2 + (1 - w) * fx, h / 2 + (1 - h) * fy);
+  }
+  steer(dt, t, amp) {
+    // samostatný pomalý pohyb kamery; vstup používateľa má prednosť a plynule sa doň prelieva
+    const auto = { x: Math.sin(t * 0.33) * amp, y: Math.sin(t * 0.21 + 1.3) * amp * 0.66 };
+    const tg = this.user || auto;
+    const k = 1 - Math.exp(-dt * (this.user ? 5 : 2));
+    this.cur.x += (tg.x - this.cur.x) * k; this.cur.y += (tg.y - this.cur.y) * k;
+    this.gl.uniform2f(this.u.off, this.cur.x * AMP, -this.cur.y * AMP * 0.6);
   }
   draw(now) {
     const t = now / 1000;
     const dt = this.last ? Math.min(t - this.last, 0.05) : 0.016; this.last = t;
-    // samostatný pomalý pohyb kamery; vstup používateľa má prednosť a plynule sa doň prelieva
-    const auto = { x: Math.sin(t * 0.33) * 0.75, y: Math.sin(t * 0.21 + 1.3) * 0.5 };
-    const tg = this.user || auto;
-    const k = 1 - Math.exp(-dt * (this.user ? 5 : 2));
-    this.cur.x += (tg.x - this.cur.x) * k; this.cur.y += (tg.y - this.cur.y) * k;
-    // pri prvom zobrazení kamera vojde do priestoru (popredie sa priblíži) a obraz sa rozsvieti
-    const r = Math.min(1, (now - this.shown) / 2400), e = 1 - Math.pow(1 - r, 3);
+    this.steer(dt, t, 0.75);
     const gl = this.gl, U = this.u;
-    gl.uniform2f(U.off, this.cur.x * AMP, -this.cur.y * AMP * 0.6);
+    // pri prvom zobrazení sa priestor rozsvieti ako žiarivky (krátke bliknutia) a kamera vojde dnu
+    const r = (now - this.shown) / 1000, e = 1 - Math.pow(1 - Math.min(1, r / 2.4), 3);
+    const fade = r < 0.7 ? (Math.sin(r * 47) + Math.sin(r * 23.3) > 0.4 ? 0.9 : 0.12) : Math.min(1, 0.9 + (r - 0.7) * 0.4);
     gl.uniform1f(U.zoom, ZOOM + 0.02 * Math.sin(t * 0.15));
     gl.uniform1f(U.push, 0.1 * (1 - e) + 0.025);
-    gl.uniform1f(U.fade, Math.min(1, 0.35 + e));
+    gl.uniform1f(U.fade, fade);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
   loop() {
@@ -278,23 +321,62 @@ class Space3D {
   }
   onPointer() {
     // myš: poloha nad fotkou; dotyk: vodorovný ťah (zvislý ostáva skrolovaniu stránky)
+    const el = this.inputEl;
     let sx = 0, sy = 0, bx = 0, by = 0;
-    this.el.addEventListener('pointermove', e => {
-      const r = this.el.getBoundingClientRect();
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
       if (e.pointerType === 'mouse') this.user = { x: ((e.clientX - r.left) / r.width) * 2 - 1, y: ((e.clientY - r.top) / r.height) * 2 - 1 };
       else if (this.user) this.user = { x: Math.max(-1, Math.min(1, bx + (e.clientX - sx) / (r.width * 0.5))), y: Math.max(-1, Math.min(1, by + (e.clientY - sy) / (r.height * 0.5))) };
     }, { passive: true });
-    this.el.addEventListener('pointerdown', e => {
+    el.addEventListener('pointerdown', e => {
       if (e.pointerType === 'mouse') return;
       sx = e.clientX; sy = e.clientY; bx = this.cur.x; by = this.cur.y; this.user = { x: bx, y: by };
     }, { passive: true });
     const end = e => { if (e.pointerType !== 'mouse' || e.type === 'pointerleave') this.user = null; };
-    for (const n of ['pointerup', 'pointercancel', 'pointerleave']) this.el.addEventListener(n, end, { passive: true });
+    for (const n of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(n, end, { passive: true });
   }
 }
 
-if (!reduce && 'IntersectionObserver' in window && window.WebGLRenderingContext) {
-  const spaces = new Map([...document.querySelectorAll('.s3d')].map(el => [el, new Space3D(el)]));
+// úvodná scéna: rozsvietenie a pri skrolovaní prelet do priestoru (kamera sa skloní od stropu k podlahe a vojde dnu)
+class HeroScene extends Space3D {
+  constructor(el, section, copy) {
+    super(el, section);
+    this.section = section; this.copy = copy; this.sp = 0; this.op = -1;
+    this.fs = FS_HERO; this.extra = [el.dataset.lights];
+    this.names = ['cover', 'ctr', 'off', 'zoom', 'push', 'T', 'room'];
+  }
+  failed() { reveal(); }
+  draw(now) {
+    const t = now / 1000;
+    const dt = this.last ? Math.min(t - this.last, 0.05) : 0.016; this.last = t;
+    // ak sa titulok už odkryl poistkou (pomalé načítanie), svetlá sa nezapínajú znova
+    if (!this.t0) this.t0 = root.classList.contains('ready') ? now - LIGHTS_DONE * 1000 : now;
+    const T = (now - this.t0) / 1000;
+    let room = 1;
+    if (T < LIGHTS_DONE) { room = 0; for (const [st, sd] of CELLS) room += tubeState(T, st, sd); room = Math.pow(room / CELLS.length, 1.3); }
+    if (room > 0.5 && !this.revealed) { this.revealed = true; reveal(); }
+    const r = this.section.getBoundingClientRect();
+    const p = clamp01(-r.top / Math.max(1, r.height - innerHeight));
+    this.sp += (p - this.sp) * (1 - Math.exp(-dt * 7));
+    const sp = this.sp, gl = this.gl, U = this.u;
+    this.steer(dt, t, 0.5);
+    const zoom = 1.14 + sp * 0.3;
+    this.aim(0.5, 0.2 + sp * 0.55, zoom);
+    gl.uniform1f(U.zoom, zoom);
+    gl.uniform1f(U.push, 0.03 + sp * 0.22);
+    gl.uniform1f(U.T, T);
+    gl.uniform1f(U.room, room);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    // titulok pri skrolovaní odíde
+    const op = +(1 - clamp01(sp / 0.35)).toFixed(3);
+    if (op !== this.op) { this.op = op; this.copy.style.opacity = op; this.copy.style.visibility = op ? '' : 'hidden'; }
+  }
+}
+
+if (glOk) {
+  const heroEl = document.getElementById('heroScene');
+  const hero = new HeroScene(heroEl, document.getElementById('uvod'), document.getElementById('heroIn'));
+  const spaces = new Map([[heroEl, hero], ...[...document.querySelectorAll('.s3d')].map(el => [el, new Space3D(el)])]);
   // blízko obrazu: pripraviť kontext; v obraze: kresliť; ďaleko: uvoľniť
   const near = new IntersectionObserver(es => es.forEach(e => {
     const s = spaces.get(e.target);

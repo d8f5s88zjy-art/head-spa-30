@@ -8,6 +8,8 @@ Zadanie od klienta: žiadny úvod s padajúcou činkou; prechádzka gymom „tak
 celý“, všetko skutočné a ostré. Verzia so zastávkami a kapitolami pôsobila ako katalóg,
 skrolovací film pôsobil zasekane. Posledné zadanie: zákazník si má pozrieť celé fitko skôr, než
 príde; profesionálne, bez popisov farieb a toho, čo je vidno na fotkách; „ako 3D stránka“.
+Potom: úvod má pôsobiť ako úvodná animácia z inej verzie (artefakt 63b74e51: three.js scéna,
+LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale realisticky.
 
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
@@ -64,7 +66,7 @@ IMG_8990) a presklená stena na fotke f3cad8ed boli skontrolované v plnom rozl�
 | 07 | Tatami | tatami-1, -2, -3 | 38aed571, f56a3d44, b95c2f9e |
 
 Každá fotka je v `media/` ako `tour-<id>-<1932|2160>` a `-1280` v AVIF, WebP a JPG, plus
-`og.jpg` a 30 hĺbkových máp; spolu 211 súborov, 69 MB. Na stránke sa načíta len to, čo je v obraze
+`og.jpg` a 30 hĺbkových máp a maska svetiel úvodu; spolu 212 súborov, 69 MB. Na stránke sa načíta len to, čo je v obraze
 (`loading="lazy"`), veľká verzia až pri otvorení na celú obrazovku.
 
 Viditeľné texty obsahujú len názvy priestorov, účel priestoru jednou vetou, overené fakty
@@ -79,13 +81,24 @@ depth-anything-v2-base`) z verzie 1280 px, vstup 518 px, normalizácia na 1. až
 potom rozšírenie popredia o 2 px (max filter 5) a rozmazanie 2 px, aby sa hrany popredia pri
 posune netrhali. Mapy sú odhad, nie meranie; slúžia len na priestorový dojem.
 
+### Svetlá úvodnej scény
+
+`media/lights-funkcna-zona-7.png` (966 × 1288, RGBA, 0,2 MB) patrí k fotke funkcna-zona-7:
+R = maska svetiel (jas nad 0,74, sýtosť pod 0,3, len horných 42 % obrazu, bez loga na rigu),
+G = kedy sa daný kúsok zapne, B = rytmus blikania, A = rozmazaná žiara. Maska je rozdelená na
+91 kúskov (Voronoiove bunky zo semien rovnomerne rozložených po maske, zodpovedajú približne
+jednotlivým trubiciam); zapínajú sa od najbližších vpravo hore k vzdialeným s náhodným posunom.
+Rovnaké hodnoty sú v `site.js` (`CELLS`), z nich sa počíta svetlo v miestnosti.
+
 ## 3. Štruktúra stránky
 
 1. Lišta: logo, Prehliadka, Tréningy (skrytá pod 400 px), Kontakt; po odchode úvodu z obrazu
    dostane tmavé pozadie.
-2. Úvod na celú obrazovku: priestorová fotka hlavnej sály (na šírku iný záber), GYM KLUB,
-   veta „Prezrite si celé fitko skôr, než prídete.“, tlačidlo Začať prehliadku a nápoveda
-   „Pohnite myšou / Potiahnite prstom – fotka je priestorová“.
+2. Úvod (230vh, obrazovka stojí): fotka funkčnej zóny v tme, LED šesťuholníky sa za 3,6 s
+   po kúskoch s blikaním rozsvietia a rozsvieti sa sála; potom sa odkryje GYM KLUB, veta
+   „Prezrite si celé fitko skôr, než prídete.“, tlačidlo a nápoveda „Skrolujte a vojdite
+   dnu“. Skrolovaním sa kamera skloní od stropu k dráhe, priblíži sa a vojde do priestoru
+   (posun podľa hĺbky), titulok odíde. Myš alebo ťah prstom kamerou jemne pohýbu.
 3. Pás základných informácií: adresa, 7 priestorov a 30 fotiek, plne klimatizované.
 4. Prehliadka: 7 priestorov, každý s číslom, názvom, jednou vetou, veľkou priestorovou fotkou
    (vstup-1, hlavna-sala-2, stroje-4, kardio-1, volne-vahy-2, funkcna-zona-6, tatami-2),
@@ -115,6 +128,12 @@ posune netrhali. Mapy sú odhad, nie meranie; slúžia len na priestorový dojem
   pri odchode ďaleko sa uvoľní (naraz najviac 2 až 3). Fotka sa na textúru dekóduje cez
   `createImageBitmap` mimo hlavného vlákna, na dotykových zariadeniach najviac 1400 px.
   Bez WebGL a pri obmedzenom pohybe ostáva obyčajná fotka pod plátnom.
+- Úvod: rovnaký shader s hĺbkou a navyše textúra svetiel. Tma = fotka × 0,035; trubica
+  svieti farbou z fotky, kým sa zapína, bliká; svetlo v miestnosti = priemer stavov 91
+  trubíc (umocnený 1,3), takže sála pri blikaní trubíc tiež poblikáva. Titulok sa odkryje,
+  keď svieti viac než polovica. Poistka v `<head>` odkryje titulok po 4,5 s; ak scéna naskočí
+  až potom, svetlá sa už nezapínajú (nebliká svetlo → tma → svetlo).
+- Hlavné fotky priestorov sa pri prvom zobrazení krátko rozblikajú ako žiarivky a rozsvietia.
 - Bez JS: stránka je celá viditeľná, galérie sa posúvajú, fotka sa otvorí ako súbor. Úvod sa
   odkryje najneskôr po 3 s aj bez skriptu. Obmedzený pohyb: žiadne animácie.
 
@@ -123,6 +142,9 @@ posune netrhali. Mapy sú odhad, nie meranie; slúžia len na priestorový dojem
 - iPhone 13 (emulácia, procesor spomalený 4×), plynulé skrolovanie celou stránkou kolieskom:
   medián aj 95. percentil snímky 16,7 až 16,8 ms, dve snímky nad 50 ms zo 794.
 - 1440 × 900: medián aj 95. percentil 16,7 až 16,8 ms, žiadna snímka nad 50 ms.
+- Úvod (snímky počas načítania a pri skrolovaní 35, 70 a 100 %): najprv tma, potom svietia
+  len trubice, potom celá sála s titulkom; pri skrolovaní kamera zíde k dráhe a vojde dnu.
+  Skript počas rozsvecovania 6,1 ms za sekundu, potom menej.
 - 3D: plátno sa vytvorí pri úvode a pri priestoroch v obraze; pri posune myši zľava doprava sa
   kamenný stĺp v popredí posunie výrazne viac než okná vzadu. Skript 3D slučky zaberie 1,8 ms za
   sekundu (iPhone 13, emulácia). Testovacie prostredie nemá GPU (softvérové WebGL), preto sa

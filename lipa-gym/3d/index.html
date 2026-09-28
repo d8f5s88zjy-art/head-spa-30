@@ -21,8 +21,8 @@
 <link rel="preload" href="../assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
-<!-- poistka: úvod sa odkryje najneskôr po 3 s, aj keby skript nenabehol -->
-<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},3000)</script>
+<!-- poistka: úvod sa odkryje najneskôr po 4,5 s, aj keby skript nenabehol alebo sa scéna načítavala dlho -->
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},4500)</script>
 </head>
 <body>
 <a class="skip" href="#prehliadka">Preskočiť na prehliadku</a>
@@ -39,23 +39,23 @@
 </header>
 
 <main id="top">
-  <section class="hero" aria-labelledby="h-hero">
-    <div class="s3d s3d-hero hero-img" data-depth="media/depth-hlavna-sala-1.png" data-depth-land="media/depth-hlavna-sala-3.png" data-fx="50" data-fy="45">
-    <picture>
-      <source media="(orientation: landscape)" type="image/avif" srcset="media/tour-hlavna-sala-3-1932.avif">
-      <source media="(orientation: landscape)" type="image/webp" srcset="media/tour-hlavna-sala-3-1932.webp">
-      <source media="(orientation: landscape)" srcset="media/tour-hlavna-sala-3-1932.jpg">
-      <source type="image/avif" srcset="media/tour-hlavna-sala-1-1280.avif 1280w, media/tour-hlavna-sala-1-1932.avif 1932w" sizes="100vw">
-      <source type="image/webp" srcset="media/tour-hlavna-sala-1-1280.webp 1280w, media/tour-hlavna-sala-1-1932.webp 1932w" sizes="100vw">
-      <img src="media/tour-hlavna-sala-1-1280.jpg" width="1280" height="1707" alt="Hlavná sála fitka GYM KLUB so strojmi a zrkadlovou stenou." fetchpriority="high" decoding="async">
-    </picture>
-    </div>
-    <div class="hero-in wrap">
-      <p class="hero-k">Fitness &amp; Bodybuilding <span aria-hidden="true">·</span> Nitra</p>
-      <h1 class="hero-h" id="h-hero">GYM KLUB</h1>
-      <p class="hero-p">Prezrite si celé fitko skôr, než prídete.</p>
-      <a class="btn" href="#prehliadka">Začať prehliadku</a>
-      <p class="hero-hint" aria-hidden="true"><span class="hint-m">Pohnite myšou – fotka je priestorová</span><span class="hint-t">Potiahnite prstom – fotka je priestorová</span></p>
+  <section class="hero" id="uvod" aria-labelledby="h-hero">
+    <div class="hero-stage">
+      <!-- úvodná scéna: skutočná fotka funkčnej zóny; skript ju zhasne, rozsvieti LED šesťuholníky a pri skrolovaní vojde kamera do priestoru -->
+      <div class="hero-img hero-scene" id="heroScene" data-depth="media/depth-funkcna-zona-7.png" data-lights="media/lights-funkcna-zona-7.png">
+        <picture>
+          <source type="image/avif" srcset="media/tour-funkcna-zona-7-1280.avif 1280w, media/tour-funkcna-zona-7-1932.avif 1932w" sizes="100vw">
+          <source type="image/webp" srcset="media/tour-funkcna-zona-7-1280.webp 1280w, media/tour-funkcna-zona-7-1932.webp 1932w" sizes="100vw">
+          <img src="media/tour-funkcna-zona-7-1280.jpg" srcset="media/tour-funkcna-zona-7-1280.jpg 1280w, media/tour-funkcna-zona-7-1932.jpg 1932w" sizes="100vw" width="1280" height="1707" alt="Funkčná zóna fitka GYM KLUB so stropom zo šesťuholníkových LED svetiel." fetchpriority="high" decoding="async">
+        </picture>
+      </div>
+      <div class="hero-in wrap" id="heroIn">
+        <p class="hero-k">Fitness &amp; Bodybuilding <span aria-hidden="true">·</span> Nitra</p>
+        <h1 class="hero-h" id="h-hero">GYM KLUB</h1>
+        <p class="hero-p">Prezrite si celé fitko skôr, než prídete.</p>
+        <a class="btn" href="#prehliadka">Začať prehliadku</a>
+        <p class="hero-hint" aria-hidden="true">Skrolujte a vojdite dnu</p>
+      </div>
     </div>
   </section>
 

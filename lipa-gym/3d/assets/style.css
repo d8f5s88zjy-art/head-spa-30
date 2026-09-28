@@ -50,12 +50,19 @@ html.io .rv.in{opacity:1;transform:none}
 .nav a:hover{color:var(--accent)}
 
 /* ---------- úvod ---------- */
-.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#000}
-.hero-img img{object-position:50% 45%}
-html.js .hero-img img{transform:scale(1.1);opacity:0;transition:transform 9s cubic-bezier(.2,.6,.2,1),opacity 1.6s ease}
-html.js.ready .hero-img img{transform:none;opacity:1}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0,rgba(0,0,0,0) 26%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.82) 100%)}
-.hero-in{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:clamp(40px,9vh,96px)}
+.hero{position:relative;background:#000}
+.hero-stage{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#000}
+/* s JS je úvod dlhší: obrazovka ostane stáť a skrolovanie vedie kameru do priestoru */
+html.js .hero{height:230vh}
+html.js .hero-stage{position:sticky;top:0;height:100vh;height:100lvh}
+.hero-scene{position:absolute;inset:0}
+.hero-scene picture,.hero-scene img{display:block;width:100%;height:100%}
+.hero-scene img{object-fit:cover;object-position:50% 30%}
+html.js .hero-scene img{opacity:0;transition:opacity 1.6s ease}
+html.js.ready .hero-scene img{opacity:1}
+.hero-scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.4) 0,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 48%,rgba(0,0,0,.8) 100%)}
+.hero-in{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:calc(100lvh - 100svh + clamp(40px,9vh,96px))}
 .hero-k{font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
 .hero-h{margin-top:10px;font:400 clamp(88px,20vw,280px)/.82 var(--font-d);letter-spacing:.01em}
 .hero-p{margin:18px 0 30px;font-size:clamp(17px,1.6vw,21px);color:#e6e5e1;max-width:34ch}
@@ -108,10 +115,7 @@ html.js.ready .hero-in>:nth-child(5){transition-delay:1.4s}
 .s3d.gl canvas{opacity:1}
 .zone .s3d{height:clamp(380px,78vh,860px);margin-bottom:clamp(14px,2vw,22px)}
 .zone .s3d::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,9,10,.35),rgba(8,9,10,0) 18%,rgba(8,9,10,0) 82%,rgba(8,9,10,.55))}
-.hero .s3d{position:absolute;inset:0}
 .hero-hint{margin-top:22px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-.hint-t{display:none}
-@media (pointer:coarse){.hint-m{display:none}.hint-t{display:inline}}
 html:not(.js) .hero-hint{display:none}
 
 /* ---------- tréningy ---------- */
@@ -180,6 +184,8 @@ html.lb-open{overflow:hidden}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  html.io .rv,html.js .hero-img img,html.js .hero-in>*{opacity:1!important;transform:none!important;transition:none!important}
+  html.js .hero{height:auto}
+  html.js .hero-stage{position:relative;height:100svh}
+  html.io .rv,html.js .hero-scene img,html.js .hero-in>*{opacity:1!important;transform:none!important;transition:none!important}
   .lb[open]{animation:none}
 }
