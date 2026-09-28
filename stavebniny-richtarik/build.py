@@ -282,7 +282,7 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head=''):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{html.escape(title)} | Stavebniny Richtárik Nitra</title>
+<title>{html.escape(title) if title == 'Stavebniny Richtárik Nitra' else html.escape(title) + ' | Stavebniny Richtárik Nitra'}</title>
 <meta name="description" content="{d}">
 <meta name="theme-color" content="#1c1a17">
 <meta property="og:title" content="{html.escape(title)} | Stavebniny Richtárik">
@@ -557,7 +557,7 @@ def build_home():
 </div></section>
 '''
     ld = json.dumps({"@context": "https://schema.org", "@type": "HardwareStore", "name": "Stavebniny Richtárik", "alternateName": FIRMA['majitel'], "telephone": [FIRMA['mobil_tel'], FIRMA['pevna_tel']], "email": FIRMA['email'], "foundingDate": "1997", "address": {"@type": "PostalAddress", "streetAddress": FIRMA['ulica'], "addressLocality": "Nitra", "postalCode": "949 05", "addressCountry": "SK"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "16:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "12:00"}], "paymentAccepted": "Cash, Credit Card", "areaServed": "Slovensko", "vatID": FIRMA['dic']}, ensure_ascii=False)
-    write(path, page(path, 'Stavebniny Richtárik Nitra', body, None, None, extra_head=f'<script type="application/ld+json">{ld}</script>'))
+    write(path, page(path, 'Stavebniny Richtárik Nitra', body, 'Stavebný materiál v celom sortimente za super ceny. Rodinné stavebniny v Nitre, Horné Krškany, doprava po celom Slovensku, cenová ponuka zadarmo.', None, extra_head=f'<script type="application/ld+json">{ld}</script>'))
 
 
 def build_search_index():
