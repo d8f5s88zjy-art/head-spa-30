@@ -7,7 +7,7 @@ bez zmeny. Stránka má `noindex`, kým ju prevádzka neschváli.
 Zadanie od klienta: žiadny úvod s padajúcou činkou; prechádzka gymom „tak, aby ho bolo vidno
 celý“, všetko skutočné a ostré. Verzia so zastávkami a kapitolami pôsobila ako katalóg,
 skrolovací film pôsobil zasekane. Posledné zadanie: zákazník si má pozrieť celé fitko skôr, než
-príde; profesionálne, bez popisov farieb a toho, čo je vidno na fotkách.
+príde; profesionálne, bez popisov farieb a toho, čo je vidno na fotkách; „ako 3D stránka“.
 
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
@@ -71,14 +71,25 @@ Viditeľné texty obsahujú len názvy priestorov, účel priestoru jednou vetou
 (adresa, klimatizácia, typy tréningov, kontakt) a pokyny na ovládanie. Farby ani vybavenie
 viditeľné na fotkách sa nepopisujú; podrobné opisy ostali len v `alt` textoch pre čítačky.
 
+### Hĺbkové mapy (3D)
+
+Ku každej z 30 fotiek je `media/depth-<id>.png` (512 px na šírku, 8-bit, bližšie = svetlejšie,
+spolu 0,8 MB). Vyrobené 28. 9. 2026 modelom Depth Anything V2 Base (ONNX, `onnx-community/
+depth-anything-v2-base`) z verzie 1280 px, vstup 518 px, normalizácia na 1. až 99,5. percentil;
+potom rozšírenie popredia o 2 px (max filter 5) a rozmazanie 2 px, aby sa hrany popredia pri
+posune netrhali. Mapy sú odhad, nie meranie; slúžia len na priestorový dojem.
+
 ## 3. Štruktúra stránky
 
 1. Lišta: logo, Prehliadka, Tréningy (skrytá pod 400 px), Kontakt; po odchode úvodu z obrazu
    dostane tmavé pozadie.
-2. Úvod na celú obrazovku: fotka hlavnej sály (na šírku iný záber), GYM KLUB, veta
-   „Prezrite si celé fitko skôr, než prídete.“ a tlačidlo Začať prehliadku.
+2. Úvod na celú obrazovku: priestorová fotka hlavnej sály (na šírku iný záber), GYM KLUB,
+   veta „Prezrite si celé fitko skôr, než prídete.“, tlačidlo Začať prehliadku a nápoveda
+   „Pohnite myšou / Potiahnite prstom – fotka je priestorová“.
 3. Pás základných informácií: adresa, 7 priestorov a 30 fotiek, plne klimatizované.
-4. Prehliadka: 7 priestorov, každý s číslom, názvom, jednou vetou, počítadlom a galériou.
+4. Prehliadka: 7 priestorov, každý s číslom, názvom, jednou vetou, veľkou priestorovou fotkou
+   (vstup-1, hlavna-sala-2, stroje-4, kardio-1, volne-vahy-2, funkcna-zona-6, tatami-2),
+   počítadlom a galériou všetkých fotiek priestoru.
 5. Tréningy: Fitness, MMA, Jiu Jitsu, Luta Livre, Krav Maga, Zdravý chrbát, Pilates.
 6. Kontakt: adresa, telefón a e-mail ako text aj odkaz, mapa v novom okne.
 7. Fotky na celú obrazovku (`dialog`): všetkých 30 fotiek v jednom páse, posun prstom,
@@ -97,6 +108,13 @@ viditeľné na fotkách sa nepopisujú; podrobné opisy ostali len v `alt` texto
   zostavovania. Skrolovanie stránky je natívne; galérie sú natívne vodorovné posúvanie
   s prichytávaním (`scroll-snap`), skript len aktualizuje počítadlo a šípky (najviac raz za
   snímku). Odkrývanie sekcií a tmavú lištu riadi `IntersectionObserver`.
+- 3D: WebGL fragment shader (5 krokov hľadania povrchu po hĺbkovej mape) posúva obraz o najviac
+  2 % šírky podľa hĺbky a pri prvom zobrazení kamera vojde do priestoru (popredie sa priblíži).
+  Kamera sa sama pomaly pohybuje, myš (poloha) alebo vodorovný ťah prstom ju vedie; zvislý ťah
+  ostáva skrolovaniu. Kontext vzniká 600 px pred príchodom do obrazu, kreslí sa len v obraze a
+  pri odchode ďaleko sa uvoľní (naraz najviac 2 až 3). Fotka sa na textúru dekóduje cez
+  `createImageBitmap` mimo hlavného vlákna, na dotykových zariadeniach najviac 1400 px.
+  Bez WebGL a pri obmedzenom pohybe ostáva obyčajná fotka pod plátnom.
 - Bez JS: stránka je celá viditeľná, galérie sa posúvajú, fotka sa otvorí ako súbor. Úvod sa
   odkryje najneskôr po 3 s aj bez skriptu. Obmedzený pohyb: žiadne animácie.
 
@@ -105,6 +123,10 @@ viditeľné na fotkách sa nepopisujú; podrobné opisy ostali len v `alt` texto
 - iPhone 13 (emulácia, procesor spomalený 4×), plynulé skrolovanie celou stránkou kolieskom:
   medián aj 95. percentil snímky 16,7 až 16,8 ms, dve snímky nad 50 ms zo 794.
 - 1440 × 900: medián aj 95. percentil 16,7 až 16,8 ms, žiadna snímka nad 50 ms.
+- 3D: plátno sa vytvorí pri úvode a pri priestoroch v obraze; pri posune myši zľava doprava sa
+  kamenný stĺp v popredí posunie výrazne viac než okná vzadu. Skript 3D slučky zaberie 1,8 ms za
+  sekundu (iPhone 13, emulácia). Testovacie prostredie nemá GPU (softvérové WebGL), preto sa
+  plynulosť 3D na skutočných telefónoch musí overiť.
 - Galéria (šípka aj posun prstom), otvorenie fotky, posun klávesmi a prstom cez hranicu
   priestorov, zatvorenie Esc: popis a poradie sedia, stránka sa odomkne, zameranie sa vráti na
   fotku.
@@ -113,6 +135,8 @@ viditeľné na fotkách sa nepopisujú; podrobné opisy ostali len v `alt` texto
 
 ## 7. Obmedzenia
 
+- 3D je odhadnutá hĺbka jednej fotky, nie model priestoru: dovoľuje malý pohľad do strán
+  (2 %), nie chôdzu. Na hranách predmetov môže byť pri najväčšom posune jemné roztiahnutie.
 - Nie je to video ani 360° prehliadka: súvislé video chôdze fitkom neexistuje (videá majú
   2,5 až 6,2 s a väčšina je mäkká alebo s odrazom osoby). Súvislé 4K video na gimbale alebo
   360° kamera by umožnili skutočný prelet.
