@@ -64,7 +64,7 @@ IMG_8990) a presklená stena na fotke f3cad8ed boli skontrolované v plnom rozl�
 | 07 | Tatami | tatami-1, -2, -3 | 38aed571, f56a3d44, b95c2f9e |
 
 Každá fotka je v `media/` ako `tour-<id>-<1932|2160>` a `-1280` v AVIF, WebP a JPG, plus
-`og.jpg`; spolu 181 súborov, 68 MB. Na stránke sa načíta len to, čo je v obraze
+`og.jpg` a 30 hĺbkových máp; spolu 211 súborov, 69 MB. Na stránke sa načíta len to, čo je v obraze
 (`loading="lazy"`), veľká verzia až pri otvorení na celú obrazovku.
 
 Viditeľné texty obsahujú len názvy priestorov, účel priestoru jednou vetou, overené fakty
