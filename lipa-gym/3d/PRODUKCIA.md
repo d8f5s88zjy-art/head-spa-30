@@ -146,6 +146,15 @@ značky zastávok (`#id`) a dialóg so zoznamom.
   so slovenskou diakritikou.
 - Texty krátke a vecné, bez superlatívov. Opisy vychádzajú z toho, čo je vidno na záberoch.
   Schéma zón je označená ako schéma, nie pôdorys.
+- Filmová vrstva: úvod s pásmi letterboxu, ktoré sa otvoria po dekódovaní záberu terasy,
+  postupné odhalenie titulku; pri vstupe do novej zóny krátka karta „Kapitola NN“ s názvom
+  a jednou vetou; prelínanie záberov s pomalým priblížením; vineta a statické zrno;
+  záverečná karta s kontaktom. Pri obmedzenom pohybe sa všetko zobrazí bez animácie.
+- Informačné okno pre každú zónu: 2–4 vecné vety a „Čo tu nájdete“ (len to, čo je vidno
+  na záberoch). Sekcie O fitku a Tréningy obsahujú len overené údaje; rozvrh, ceny ani
+  otváracie hodiny sa neuvádzajú.
+- Telefóny dostávajú vždy 1280 px súbory, obraz sa ukáže až po dekódovaní, animuje sa len
+  transform a opacity, sklo (rozmazanie pozadia) je len na počítači.
 
 ## 5. Technické riešenie
 

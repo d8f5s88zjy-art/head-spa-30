@@ -1,21 +1,59 @@
 // GYM KLUB – prechádzka fitkom.
 // Jeden stav: poloha skrolovania vyberá zastávku (dopredu aj dozadu, po obnovení aj z priameho odkazu #id),
 // ťahanie obrazom posúva pohľad v rámci ostrého záberu. Bez knižníc, bez cudzích požiadaviek.
+// Výkon: všetky pohyby sú transform/opacity cez Web Animations (bežia na kompozítore), rozmery rozhrania
+// sa čítajú len pri zmene veľkosti (ResizeObserver), nikdy uprostred zápisu v snímke.
 
 const root = document.documentElement;
 const $ = (s, el = document) => el.querySelector(s);
 const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
 const pad = n => String(n).padStart(2, '0');
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const idle = window.requestIdleCallback ? cb => requestIdleCallback(cb, { timeout: 900 }) : cb => setTimeout(cb, 200);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData = !!(navigator.connection && navigator.connection.saveData);
 const coarse = matchMedia('(pointer: coarse)').matches;
 const videoOK = !reduced && !saveData;
+const DPR = Math.min(window.devicePixelRatio || 1, 3);
 
 const tour = $('#prehliadka'), stage = $('#stage'), view = $('#view'), overlay = $('#overlay');
-const hud = $('#hud'), hero = $('#hero'), zoznam = $('#zoznam'), menu = $('#menu');
+const hud = $('#hud'), hero = $('#hero'), heroImg = $('#hero img'), zoznam = $('#zoznam'), menu = $('#menu');
 const hudZone = $('#hudZone'), hudTitle = $('#hudTitle'), hudCount = $('#hudCount'), desc = $('#stopDesc');
+const hudTL = $('#hudTL'), hudTR = $('#hudTR'), hudB = $('.hud-b');
 const strip = $('#strip'), minimap = $('#minimap'), ring = $('#compassRing');
 const prevBtn = $('#prev'), nextBtn = $('#next'), menuBtn = $('#menuBtn'), fsBtn = $('#fs'), motionBtn = $('#motion');
+const zp = $('#zp'), zpToggle = $('#zpToggle'), zpKicker = $('#zpKicker'), zpTitle = $('#zpTitle'), zpText = $('#zpText'), zpList = $('#zpList');
+const chapter = $('#chapter'), chK = $('#chK'), chT = $('#chT'), chS = $('#chS'), chRule = $('.ch-rule');
+
+// ——— úvodná sekvencia ———
+// Pásy letterboxu sa otvoria, titulky sa postupne odhalia (CSS, trieda intro-go) a záber terasy sa pomaly
+// približuje. Začne sa až keď je obraz dekódovaný, aby prvá snímka nebola prázdna ani sekaná.
+const PUSH = { kf: [{ transform: 'scale(1)' }, { transform: 'scale(1.08)' }], opt: { duration: 16000, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' } };
+let heroPush = null, introStarted = false, onIntro = null;
+const deepLink = decodeURIComponent(location.hash.slice(1));
+function startIntro() {
+  if (introStarted) return;
+  introStarted = true;
+  root.classList.add('intro-go');
+  if (!reduced && !hero.hidden) heroPush = heroImg.animate(PUSH.kf, PUSH.opt);
+  onIntro?.();
+}
+if (deepLink && deepLink !== 'top' && !/^(kontakt|koniec|o-fitku|treningy|hodiny|prehliadka)$/.test(deepLink)) {
+  root.classList.add('no-intro'); startIntro();
+} else {
+  Promise.race([heroImg.decode().catch(() => {}), wait(1800)]).then(startIntro);
+}
+
+// ——— odhalenie sekcií a záverečnej karty pri skrolovaní ———
+{
+  const els = document.querySelectorAll('.endcard, .block');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => {
+      for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  } else els.forEach(el => el.classList.add('in'));
+}
 
 async function main() {
   const r = await fetch('assets/tour-data.json');
@@ -25,13 +63,14 @@ async function main() {
   const N = STOPS.length;
   const ZONES = data.zones;
   const zoneById = Object.fromEntries(ZONES.map(z => [z.id, z]));
+  const zoneNo = Object.fromEntries(ZONES.map((z, k) => [z.id, k + 1]));
   const idx = Object.fromEntries(STOPS.map((s, i) => [s.id, i]));
 
   // ——— rozmery a poloha zastávok ———
   // Krok je odvodený zo stabilnej výšky okna (mení sa len pri otočení alebo veľkej zmene),
   // aby skrývanie adresného riadka na mobile neposúvalo zastávky.
   let vw = innerWidth, vh = innerHeight, vhBase = vh;
-  let step = Math.round(vhBase * 0.85), tail = Math.round(vhBase * 0.5), tTop = 0;
+  let step = Math.round(vhBase * 0.85), tail = Math.round(vhBase * 0.5), tTop = 0, tourH = 0;
   const posOf = i => tTop + i * step;
   const indexAt = y => clamp(Math.round((y - tTop) / step), 0, N - 1);
 
@@ -41,12 +80,26 @@ async function main() {
   const markers = STOPS.map(s => { const m = document.createElement('div'); m.className = 'mark'; m.id = s.id; return m; });
   stage.before(...markers);
   function layoutTour() {
-    tour.style.height = ((N - 1) * step + vhBase + tail) + 'px';
+    tourH = (N - 1) * step + vhBase + tail;
+    tour.style.height = tourH + 'px';
     markers.forEach((m, i) => { m.style.top = (i * step) + 'px'; });
-    tTop = Math.round(tour.getBoundingClientRect().top + scrollY);
+    tTop = Math.round(tour.getBoundingClientRect().top + scrollY);   // čítanie len tu (štart, zmena veľkosti)
   }
   layoutTour();
   hud.hidden = false;
+  // aktívna prechádzka sa počíta z uložených čísel, bez čítania rozloženia pri skrolovaní
+  const tourActive = () => { const top = tTop - scrollY; return top <= 1 && top + tourH >= vh * 0.5; };
+
+  // rozmery rozhrania z ResizeObserver (callback beží po rozložení, čítanie tu nič nevynúti)
+  let hb = 120, zpRect = null, stripW = 0, stripPos = [];
+  const measureStrip = () => { stripW = strip.clientWidth; stripPos = stripBtns.map(b => b.offsetLeft + b.offsetWidth / 2); };
+  const ro = new ResizeObserver(() => {
+    hb = hudB.offsetHeight || 120;
+    const z = zp.getBoundingClientRect();
+    zpRect = z.height ? { l: z.left, r: z.right, b: z.bottom } : null;
+    measureStrip();
+    requestRender();
+  });
 
   // ——— plátna so záberom ———
   const plates = new Map();
@@ -54,31 +107,37 @@ async function main() {
   // nad natívne rozlíšenie záberu v CSS px (ostrosť má prednosť; na 1920 px širokom okne ostáva len pokrytie).
   const OVER = 1.18;
   const coverScale = s => { const s0 = Math.max(vw / s.w, vh / s.h); return vw > vh ? s0 * clamp(1 / s0, 1, OVER) : s0; };
-  const sizesFor = s => `(orientation: landscape) ${Math.round(OVER * 100)}vw, (min-aspect-ratio: ${s.w}/${s.h}) 100vw, ${(s.w / s.h * 100).toFixed(2)}vh`;
+  // Veľkosť súboru: telefóny (kratšia strana do 430 px) vždy 1280 px; inak podľa skutočnej potreby
+  // (šírka záberu na obrazovke × DPR, najviac 2×), väčší súbor len keď 1280 px nestačí.
+  function pickSize(s) {
+    const [big, small] = s.sizes;
+    if (Math.min(vw, vh) <= 430 && DPR <= 3) return small;
+    return s.w * coverScale(s) * Math.min(DPR, 2) > small * 1.15 ? big : small;
+  }
   // úvodný obrázok (hero) musí mať rovnaké zväčšenie ako prvý záber, inak by pri prepnutí poskočil
   function syncHero() { const s = STOPS[0], s0 = Math.max(vw / s.w, vh / s.h); hero.style.transform = `scale(${(coverScale(s) / s0).toFixed(4)})`; }
   syncHero();
   function makePlate(s) {
     const el = document.createElement('div');
     el.className = 'plate'; el.dataset.id = s.id;
+    const kb = document.createElement('div'); kb.className = 'kb';
     const med = document.createElement('div');
     med.className = 'plate-media';
     med.style.width = s.w + 'px'; med.style.height = s.h + 'px';
-    const base = s.src, [big, small] = s.sizes, sizes = sizesFor(s);
-    const pic = document.createElement('picture');
-    for (const [type, ext] of [['image/avif', 'avif'], ['image/webp', 'webp']]) {
-      const so = document.createElement('source');
-      so.type = type; so.sizes = sizes;
-      so.srcset = `media/${base}-${big}.${ext} ${big}w, media/${base}-${small}.${ext} ${small}w`;
-      pic.append(so);
-    }
     const img = document.createElement('img');
-    img.sizes = sizes;
-    img.srcset = `media/${base}-${big}.jpg ${big}w, media/${base}-${small}.jpg ${small}w`;
-    img.src = `media/${base}-${small}.jpg`;
+    const size = pickSize(s), base = `media/${s.src}-${size}`;
+    if (s === STOPS[0] && heroImg.currentSrc) {
+      img.src = heroImg.currentSrc;   // ten istý súbor ako úvod: žiadne druhé sťahovanie, žiadny skok
+      med.append(img);
+    } else {
+      const pic = document.createElement('picture');
+      for (const [type, ext] of [['image/avif', 'avif'], ['image/webp', 'webp']]) {
+        const so = document.createElement('source'); so.type = type; so.srcset = `${base}.${ext}`; pic.append(so);
+      }
+      img.src = `${base}.jpg`;
+      pic.append(img); med.append(pic);
+    }
     img.width = s.w; img.height = s.h; img.alt = s.alt; img.decoding = 'async'; img.draggable = false;
-    pic.append(img);
-    med.append(pic);
     if (s.type === 'video' && s.video) {
       const v = document.createElement('video');
       v.muted = true; v.loop = s.video.loop !== false; v.playsInline = true; v.preload = 'none';   // krátky klip vstupu sa neopakuje, ostane na poslednej snímke
@@ -88,8 +147,8 @@ async function main() {
       med.append(v);
       el._video = v;
     }
-    el.append(med);
-    el._media = med; el._img = img; el._stop = s;
+    kb.append(med); el.append(kb);
+    el._kb = kb; el._media = med; el._img = img; el._stop = s;
     return el;
   }
   function plateFor(i) {
@@ -102,14 +161,15 @@ async function main() {
   function prunePlates(keep, keepShown = false) {
     for (const [id, el] of plates) if (!keep.has(id) && !(keepShown && el.classList.contains('on'))) { el._video?.pause(); el.remove(); plates.delete(id); }
   }
-  function loadVideo(el, preload) {
-    const v = el._video;
+  // Video: zdroje dostane len aktívna zastávka (preload auto) a nasledujúca (preload metadata); hrá len aktívna.
+  function loadVideo(el, active) {
+    const v = el?._video;
     if (!v || !videoOK) return;
     if (!v.dataset.src) {
       v.dataset.src = '1';
+      v.preload = active ? 'auto' : 'metadata';
       v.innerHTML = `<source src="media/${el._stop.video.webm}" type="video/webm"><source src="media/${el._stop.video.mp4}" type="video/mp4">`;
-    }
-    if (preload && v.preload !== 'auto') { v.preload = 'auto'; v.load(); }
+    } else if (active) v.preload = 'auto';
   }
   function playVideo(el) {
     const v = el?._video;
@@ -131,10 +191,31 @@ async function main() {
     return L;
   }
 
+  // ——— Ken Burns: veľmi pomalý drift pokojového záberu (len transform, na kompozítore) ———
+  // Rovnaká animácia beží aj na vrstve s bodmi, takže body ostávajú presne na svojich miestach.
+  const DRIFT = [[-1, -0.6], [1, -0.4], [-0.8, 0.6], [0.9, 0.5]];
+  let overlayKB = null;
+  function startKB(el, i) {
+    el._kbA?.cancel(); overlayKB?.cancel(); overlayKB = null;
+    if (reduced) return;
+    if (i === 0) {
+      if (!introStarted) return;   // priblíženie začne spolu s úvodnou sekvenciou
+      el._kbA = el._kb.animate(PUSH.kf, PUSH.opt);
+      // prvý záber pokračuje presne tam, kde je úvodný obrázok (spoločný čas začiatku)
+      if (heroPush && heroPush.startTime != null && heroPush.playState === 'running') el._kbA.startTime = heroPush.startTime;
+      return;
+    }
+    const [dx, dy] = DRIFT[i % DRIFT.length], k = Math.min(vw, vh) <= 430 ? 7 : 12;
+    const kf = [{ transform: 'translate3d(0,0,0) scale(1)' }, { transform: `translate3d(${(dx * k).toFixed(1)}px,${(dy * k).toFixed(1)}px,0) scale(1.045)` }];
+    const opt = { duration: 22000, easing: 'cubic-bezier(.3,.1,.3,1)', fill: 'forwards' };
+    el._kbA = el._kb.animate(kf, opt);
+    overlayKB = overlay.animate(kf, opt);
+    overlayKB.startTime = el._kbA.startTime;
+  }
+
   // ——— stav pohľadu ———
   let cur = null, pan = { x: 0, y: 0 }, zoom = 1, vel = { x: 0, y: 0 }, inertia = 0, rafR = 0;
   let overlayItems = [], discPos = null, shown = null;   // shown = záber, ktorý je práve vidno
-  const hudB = $('.hud-b');
   function bounds() {
     const el = plates.get(STOPS[cur].id); if (!el) return null;
     const s = el._stop, sc = coverScale(s) * zoom, dw = s.w * sc, dh = s.h * sc;
@@ -149,32 +230,39 @@ async function main() {
     pan.x = nx; pan.y = ny;
   }
   function requestRender() { if (!rafR) rafR = requestAnimationFrame(render); }
+  // render len zapisuje (transformácie); všetky rozmery sú vopred uložené
   function render() {
     rafR = 0;
     if (cur == null) return;
     const el = plates.get(STOPS[cur].id); if (!el) return;
     const L = applyView(el, pan, zoom);
-    const hb = hudB.offsetHeight || 120;
+    const P = zpRect;
     for (const o of overlayItems) {
       let x = L.tx + o.x / 100 * L.dw, y = L.ty + o.y / 100 * L.dh;
       if (o.disc) {
-        // disk smeru chôdze ostáva vždy v zábere (na šírku býva podlaha pod okrajom okna)
-        x = clamp(x, 96, vw - 96); y = clamp(y, vh * 0.3, vh - hb - 44);
-        o.el.classList.toggle('lab-top', y > vh - hb - 110);
+        // disk smeru chôdze ostáva vždy v zábere (na šírku býva podlaha pod okrajom okna) a nikdy pod informačným oknom
+        x = clamp(x, 96, vw - 96);
+        let top = vh * 0.3;
+        if (P && x > P.l - 60 && x < P.r + 60) top = Math.max(top, P.b + 56);
+        y = clamp(y, Math.min(top, vh - hb - 44), vh - hb - 44);
+        const lt = y > vh - hb - 110;
+        if (o.lt !== lt) { o.lt = lt; o.el.classList.toggle('lab-top', lt); }
         discPos = { x, y };
       } else {
-        // bod mimo okna sa dá nájsť rozhliadaním, ale klávesom Tab sa nepreskakuje (zameranie by posunulo scénu)
-        const vis = x >= 0 && x <= vw && y >= 0 && y <= vh;
+        // bod mimo okna alebo pod informačným oknom sa dá nájsť rozhliadaním, ale klávesom Tab sa nepreskakuje
+        const under = !!P && x > P.l - 16 && x < P.r + 16 && y < P.b + 16;
+        const vis = x >= 0 && x <= vw && y >= 0 && y <= vh && !under;
         if (o.vis !== vis) { o.vis = vis; o.el.tabIndex = vis ? 0 : -1; }
+        if (o.under !== under) { o.under = under; o.el.style.visibility = under ? 'hidden' : ''; }
       }
-      o.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+      o.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
     }
     const f = L.minX < -40 ? (L.tx - L.minX / 2) / (-L.minX / 2) : 0;   // -1 = pravý okraj, 1 = ľavý okraj
     const g = L.minY < -1 ? (L.ty - L.minY / 2) / (-L.minY / 2) : 0;
     // kompas sa otáča podľa vodorovného rozhliadania; kde záber nemá vodorovný priestor, podľa zvislého
-    ring.style.transform = `rotate(${((L.minX < -40 ? f : g) * 45).toFixed(1)}deg)`;
-    hud.style.setProperty('--px', (f * 7).toFixed(1) + 'px');
-    hud.style.setProperty('--py', (g * 5).toFixed(1) + 'px');
+    ring.setAttribute('transform', `rotate(${((L.minX < -40 ? f : g) * 45).toFixed(1)} 22 22)`);
+    const par = `translate3d(${(f * 7).toFixed(1)}px,${(g * 5).toFixed(1)}px,0)`;
+    hudTL.style.transform = par; hudTR.style.transform = par;
   }
   function setZoom(z) {
     const el = plates.get(STOPS[cur].id); if (!el) return;
@@ -188,41 +276,108 @@ async function main() {
     clampPan(); requestRender();
   }
 
-  // ——— prechod = krok vpred (alebo späť) ———
+  // ——— prechod = filmové prelínanie ———
+  // Odchádzajúci záber sa jemne pohne smerom chôdze a rozplynie, nový sa pod ním usadí.
+  // Web Animations (transform + opacity) bežia na kompozítore, hlavné vlákno počas prechodu nepracuje.
   let anim = null;
   function transition(fromEl, toEl, dir) {
     if (anim) anim.cancel();
     return new Promise(res => {
-      const dur = reduced ? 350 : 650;
+      const dur = reduced ? 380 : Math.min(vw, vh) <= 430 ? 1000 : 1200;
       let ox = vw / 2, oy = vh / 2;
       if (dir > 0 && discPos) { ox = discPos.x; oy = discPos.y; }
       fromEl.style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
-      toEl.style.transformOrigin = `${(vw / 2).toFixed(1)}px ${(vh / 2).toFixed(1)}px`;
+      toEl.style.transformOrigin = '50% 50%';
       fromEl.style.zIndex = 3; toEl.style.zIndex = 2;
       fromEl.classList.add('on'); toEl.classList.add('on');
-      const t0 = performance.now();
-      let raf = 0;
+      let a1, a2 = null, finished = false;
+      if (reduced) a1 = fromEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: dur, fill: 'forwards' });
+      else {
+        const s1 = dir > 0 ? 1.08 : 0.97, s2 = dir > 0 ? 1.04 : 1.06;
+        a1 = fromEl.animate([
+          { transform: 'scale(1)', opacity: 1, easing: 'cubic-bezier(.5,0,.3,1)' },
+          { transform: `scale(${s1})`, opacity: 0 }
+        ], { duration: dur, fill: 'forwards' });
+        a2 = toEl.animate([{ transform: `scale(${s2})` }, { transform: 'scale(1)' }], { duration: dur * 1.25, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'forwards' });
+      }
       const done = () => {
-        cancelAnimationFrame(raf);
-        for (const p of plates.values()) p.classList.toggle('on', p === toEl);   // aj pri zrušení ostáva vidno len cieľ
-        for (const el of [fromEl, toEl]) { el.style.opacity = ''; el.style.transform = ''; el.style.zIndex = ''; }
+        if (finished) return;
+        finished = true;
+        a1.cancel();
+        for (const p of plates.values()) {
+          const on = p === toEl;
+          p.classList.toggle('on', on);   // aj pri zrušení ostáva vidno len cieľ
+          if (!on) { p._kbA?.cancel(); p._kbA = null; }
+        }
+        fromEl.style.zIndex = ''; toEl.style.zIndex = '';
         shown = toEl; anim = null; res();
       };
-      const tick = now => {
-        const t = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - t, 3), fade = 1 - clamp(t / 0.8, 0, 1);
-        if (reduced) fromEl.style.opacity = (1 - t).toFixed(3);
-        else if (dir > 0) {
-          fromEl.style.transform = `scale(${(1 + 0.28 * e).toFixed(4)})`; fromEl.style.opacity = fade.toFixed(3);
-          toEl.style.transform = `scale(${(1.08 - 0.08 * e).toFixed(4)})`;
-        } else {
-          fromEl.style.transform = `scale(${(1 - 0.12 * e).toFixed(4)})`; fromEl.style.opacity = fade.toFixed(3);
-          toEl.style.transform = `scale(${(1.12 - 0.12 * e).toFixed(4)})`;
-        }
-        if (t < 1) raf = requestAnimationFrame(tick); else done();
-      };
-      anim = { cancel: done };
-      raf = requestAnimationFrame(tick);
+      a1.onfinish = done;
+      // usadenie nového záberu dobehne samo; pri zrušení ho treba zastaviť
+      anim = { cancel: () => { a2?.cancel(); done(); } };
+      if (a2) a2.onfinish = () => a2.cancel();
     });
+  }
+
+  // ——— kapitola pri vstupe do novej zóny ———
+  let chapAnims = [], chapTimer = 0, chapPending = 0, lastZone = null;
+  function showChapter(z) {
+    clearTimeout(chapTimer);
+    chapAnims.forEach(a => a.cancel()); chapAnims = [];
+    chK.textContent = `Kapitola ${pad(zoneNo[z.id])}`;
+    chT.textContent = z.name;
+    chS.textContent = z.chapter || '';
+    chapter.classList.add('show');
+    const hold = reduced ? 1500 : 2200, out = reduced ? 500 : 1200, total = hold + out;
+    const card = chapter.animate([
+      { opacity: 0 }, { opacity: 1, offset: (reduced ? 200 : 450) / total }, { opacity: 1, offset: hold / total }, { opacity: 0 }
+    ], { duration: total, fill: 'both' });
+    chapAnims.push(card);
+    if (!reduced) {
+      stage.classList.add('lb-on');
+      chapTimer = setTimeout(() => stage.classList.remove('lb-on'), hold);
+      [chK, chT, chRule, chS].forEach((el, k) => chapAnims.push(el.animate(
+        [{ transform: 'translate3d(0,20px,0)', opacity: 0 }, { transform: 'translate3d(0,0,0)', opacity: 1 }],
+        { duration: 1100, delay: 120 + k * 130, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' })));
+      // titul kapitoly sa počas držania ešte jemne priblíži
+      chapAnims.push(chT.animate([{ scale: '1' }, { scale: '1.04' }], { duration: total, easing: 'linear' }));
+    }
+    card.onfinish = () => { chapter.classList.remove('show'); chapAnims.forEach(a => a.cancel()); chapAnims = []; };
+  }
+  function hideChapter() {
+    clearTimeout(chapTimer); clearTimeout(chapPending);
+    stage.classList.remove('lb-on');
+    chapAnims.forEach(a => a.cancel()); chapAnims = []; chapter.classList.remove('show');
+  }
+
+  // ——— informačné okno o zóne ———
+  let zpZone = null, zpTouched = false, deskCollapsed = false;
+  try { deskCollapsed = localStorage.getItem('gk-zp') === '0'; } catch {}
+  const compactPanel = () => vw <= 760 || vh <= 500;
+  function setCollapsed(c) {
+    zp.classList.toggle('collapsed', c);
+    zpToggle.setAttribute('aria-expanded', String(!c));
+  }
+  zpToggle.addEventListener('click', () => {
+    const c = !zp.classList.contains('collapsed');
+    setCollapsed(c); zpTouched = true;
+    if (!compactPanel()) { deskCollapsed = c; try { localStorage.setItem('gk-zp', c ? '0' : '1'); } catch {} }
+  });
+  function updatePanel(s) {
+    const z = zoneById[s.zone];
+    if (zpZone === z.id) {
+      // na telefóne sa okno po prvej zastávke zóny samo zbalí, aby bolo vidno záber (ak ho návštevník neovládal)
+      if (compactPanel() && !zpTouched) setCollapsed(true);
+      return;
+    }
+    zpZone = z.id; zpTouched = false;
+    zpKicker.textContent = `Kapitola ${pad(zoneNo[z.id])}`;
+    zpTitle.textContent = z.name;
+    zpText.textContent = (z.about || [z.blurb]).join(' ');
+    zpList.replaceChildren(...(z.items || []).map(t => { const li = document.createElement('li'); li.textContent = t; return li; }));
+    setCollapsed(compactPanel() ? vh <= 500 : deskCollapsed);
+    if (!reduced) zp.animate([{ opacity: 0, transform: 'translate3d(0,12px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }],
+      { duration: 900, delay: lastZone == null ? 300 : 1400, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
   }
 
   // ——— HUD ———
@@ -285,7 +440,9 @@ async function main() {
     menuBtn.addEventListener('click', () => { menu.showModal(); menuBtns[cur]?.focus(); });
     menu.addEventListener('click', e => { if (e.target === menu) menu.close(); });
   }
+  ro.observe(hudB); ro.observe(zp); ro.observe(strip);
 
+  const toEnd = () => $('#koniec').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
   function buildOverlay(s, i) {
     overlayItems = [];
     const frag = document.createDocumentFragment();
@@ -307,10 +464,10 @@ async function main() {
     const last = i === N - 1;
     d.className = 'disc' + (last ? ' end' : '');
     const label = last ? 'Koniec prechádzky' : (s.hotspot?.label || `Ďalej: ${zoneById[STOPS[i + 1].zone].name}`);
-    d.setAttribute('aria-label', last ? 'Koniec prechádzky: prejsť na parametre priestoru' : label);
+    d.setAttribute('aria-label', last ? 'Koniec prechádzky: prejsť na záver a kontakt' : label);
     d.innerHTML = `<span class="disc-ring"><span class="disc-arrow"></span></span><span class="disc-lab" aria-hidden="true">${label}</span>`;
     d.addEventListener('click', () => {
-      if (last) $('#parametre').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      if (last) toEnd();
       else jump(s.hotspot?.target != null && idx[s.hotspot.target] != null ? idx[s.hotspot.target] : i + 1);
     });
     frag.append(d); overlayItems.push({ el: d, x: w.x, y: w.y, disc: true });
@@ -329,11 +486,11 @@ async function main() {
     stage.classList.toggle('is-open', i === 0);
     stripBtns.forEach((b, j) => b.setAttribute('aria-current', j === i ? 'true' : 'false'));
     menuBtns.forEach((b, j) => b.setAttribute('aria-current', j === i ? 'true' : 'false'));
-    const b = stripBtns[i];
-    if (b) strip.scrollTo({ left: b.offsetLeft - strip.clientWidth / 2 + b.offsetWidth / 2, behavior: reduced ? 'auto' : 'smooth' });
+    if (stripPos[i] != null) strip.scrollTo({ left: stripPos[i] - stripW / 2, behavior: reduced ? 'auto' : 'smooth' });   // uložené polohy, bez čítania rozloženia
     seen.add(s.zone);
     for (const [zid, r] of mmRects) { r.classList.toggle('cur', zid === s.zone); r.classList.toggle('seen', zid !== s.zone && seen.has(zid)); }
     prevBtn.disabled = i === 0; nextBtn.disabled = i === N - 1;
+    updatePanel(s);
     buildOverlay(s, i);
     const h = i === 0 ? '' : '#' + s.id;
     if (location.hash !== h) history.replaceState(null, '', h || location.pathname + location.search);
@@ -354,10 +511,20 @@ async function main() {
     updateHud(i);
     discPos = origin;
     for (const p of plates.values()) if (p !== el) p._video?.pause();
+    // kapitola pri zmene zóny (okrem terasy, tú uvádza úvod); pri rýchlom skrolovaní len pre cieľovú zónu
+    const zid = STOPS[i].zone;
+    clearTimeout(chapPending);
+    if (zid !== lastZone) {
+      if (i === 0) hideChapter();
+      else chapPending = setTimeout(() => { if (my === seq) showChapter(zoneById[zid]); }, lastZone == null ? 400 : 160);
+      lastZone = zid;
+    }
     if (shown && shown !== el && animate && !document.hidden) {
-      await Promise.race([el._img.decode().catch(() => {}), new Promise(r => setTimeout(r, 500))]);
+      // obraz sa ukáže až dekódovaný (inak by prvé snímky prechodu sekali)
+      await Promise.race([el._img.decode().catch(() => {}), wait(1500)]);
       if (my !== seq) return;   // predbehnuté volanie; novšie už uvoľnilo zábery a dokončí krok
       if (anim) { anim.cancel(); prunePlates(new Set([STOPS[i].id]), true); }   // zrušený prechod nechá vidno svoj cieľ, odtiaľ sa kráča ďalej
+      startKB(el, i);
       if (shown !== el) {
         const p = transition(shown, el, dir);   // počiatok prechodu = disk predchádzajúcej zastávky
         render();
@@ -368,13 +535,19 @@ async function main() {
       if (anim) anim.cancel();
       for (const p of plates.values()) p.classList.toggle('on', p === el);
       shown = el;
+      startKB(el, i);
       render();
     }
     if (!stage.classList.contains('ready')) { const mark = () => stage.classList.add('ready'); if (el._img.complete) mark(); else el._img.addEventListener('load', mark, { once: true }); }
-    // ponechať len predchádzajúcu, aktuálnu a nasledujúcu; nasledujúcu načítať dopredu
+    // ponechať len predchádzajúcu, aktuálnu a nasledujúcu; nasledujúcu načítať a dekódovať dopredu
     const keep = new Set([STOPS[i].id]);
     if (i > 0) keep.add(STOPS[i - 1].id);
-    if (i < N - 1) { keep.add(STOPS[i + 1].id); const nx = plateFor(i + 1); loadVideo(nx, true); }
+    if (i < N - 1) {
+      keep.add(STOPS[i + 1].id);
+      const nx = plateFor(i + 1);
+      loadVideo(nx, false);
+      idle(() => { if (my === seq && nx.isConnected) nx._img.decode().catch(() => {}); });
+    }
     prunePlates(keep);
     playVideo(el);
   }
@@ -383,7 +556,6 @@ async function main() {
     scrollTo({ top: posOf(i), behavior: 'instant' });
     setStop(i);
   }
-  const tourActive = () => { const r = tour.getBoundingClientRect(); return r.top <= 1 && r.bottom >= vh * 0.5; };
 
   // ——— skrolovanie → zastávka ———
   let ticking = false;
@@ -392,7 +564,9 @@ async function main() {
     ticking = true;
     requestAnimationFrame(() => {
       ticking = false;
-      root.classList.toggle('in-tour', tourActive());
+      const act = tourActive();
+      root.classList.toggle('in-tour', act);
+      if (!act) { clearTimeout(chapPending); if (chapter.classList.contains('show') && scrollY > tTop + tourH - vh) hideChapter(); }
       const i = indexAt(scrollY);
       if (i !== cur) setStop(i);
     });
@@ -407,18 +581,19 @@ async function main() {
   const dist = () => { const [a, b] = [...ptrs.values()]; return Math.hypot(a.x - b.x, a.y - b.y); };
   const SWIPE = 40;   // px zvislého ťahu prstom na jeden krok
   function swipeStep(dy) {
-    if (dy < 0) { if (cur < N - 1) jump(cur + 1); else $('#parametre').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); }
+    if (dy < 0) { if (cur < N - 1) jump(cur + 1); else toEnd(); }
     else if (cur > 0) jump(cur - 1);
   }
+  const PASSIVE = { passive: true };
   stage.addEventListener('pointerdown', e => {
     if (e.pointerType === 'mouse' && (e.button !== 0 || !e.target.closest('.view'))) return;
-    if (e.target.closest('a,dialog,.hud-b,.hud-tr')) return;   // prst môže švihnúť aj z bodu alebo disku, ťuknutie ostáva kliknutím
+    if (e.target.closest('a,dialog,.hud-b,.hud-tr,.zp')) return;   // prst môže švihnúť aj z bodu alebo disku, ťuknutie ostáva kliknutím
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
     stage.setPointerCapture(e.pointerId);
     cancelAnimationFrame(inertia); inertia = 0; vel = { x: 0, y: 0 };
     if (ptrs.size === 1) drag = { lx: e.clientX, ly: e.clientY, sx: e.clientX, sy: e.clientY, vx: 0, vy: 0, t: performance.now(), touch: e.pointerType !== 'mouse', axis: null };
     else if (ptrs.size === 2) { pinch = { d: dist(), z: zoom }; drag = null; }
-  });
+  }, PASSIVE);
   stage.addEventListener('pointermove', e => {
     if (!ptrs.has(e.pointerId)) return;
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -435,9 +610,9 @@ async function main() {
     pan.x += dx; pan.y += dy; clampPan();
     drag.vx = 0.7 * drag.vx + 0.3 * (dx / dt * 16); drag.vy = 0.7 * drag.vy + 0.3 * (dy / dt * 16);
     drag.lx = e.clientX; drag.ly = e.clientY; drag.t = now;
-    view.classList.add('dragging');
+    if (!drag.on) { drag.on = true; view.classList.add('dragging'); }
     requestRender();
-  });
+  }, PASSIVE);
   function endPtr(e) {
     if (!ptrs.has(e.pointerId)) return;
     ptrs.delete(e.pointerId);
@@ -448,9 +623,9 @@ async function main() {
       drag = null; view.classList.remove('dragging');
     }
   }
-  stage.addEventListener('pointerup', endPtr);
-  stage.addEventListener('pointercancel', endPtr);
-  stage.addEventListener('lostpointercapture', endPtr);
+  stage.addEventListener('pointerup', endPtr, PASSIVE);
+  stage.addEventListener('pointercancel', endPtr, PASSIVE);
+  stage.addEventListener('lostpointercapture', endPtr, PASSIVE);
   function startInertia() {
     cancelAnimationFrame(inertia);
     const tick = () => {
@@ -461,7 +636,7 @@ async function main() {
   }
   view.addEventListener('wheel', e => {
     if (!(e.ctrlKey || e.metaKey)) return;
-    e.preventDefault();
+    e.preventDefault();   // jediný aktívny poslucháč: priblíženie kolieskom s Ctrl
     setZoom(zoom * Math.exp(-e.deltaY * 0.0015));
   }, { passive: false });
   view.addEventListener('dblclick', e => { if (!e.target.closest('button,a')) setZoom(zoom > 1.05 ? 1 : 1.25); });
@@ -473,7 +648,7 @@ async function main() {
     const onOrient = e => {
       if (e.gamma == null || e.beta == null) return;
       if (!base) base = { g: e.gamma, b: e.beta };
-      const port = !matchMedia('(orientation: landscape)').matches;
+      const port = vh >= vw;
       const dxDeg = port ? e.gamma - base.g : e.beta - base.b;
       const dyDeg = port ? e.beta - base.b : -(e.gamma - base.g);
       target = { x: clamp(-dxDeg, -30, 30) * 10, y: clamp(-dyDeg, -30, 30) * 10 };
@@ -494,7 +669,7 @@ async function main() {
         }
       } catch { return; }
       on = true; base = null;
-      addEventListener('deviceorientation', onOrient);
+      addEventListener('deviceorientation', onOrient, PASSIVE);
       motionBtn.setAttribute('aria-pressed', 'true'); motionBtn.textContent = 'Pohyb zapnutý';
     });
   }
@@ -531,34 +706,42 @@ async function main() {
     if (i != null && i !== cur) jump(i);
   });
 
-  // ——— zmena veľkosti okna, skrytá karta ———
-  addEventListener('resize', () => {
-    const w = innerWidth, h = innerHeight;
-    const big = w !== vw || Math.abs(h - vhBase) > vhBase * 0.2;
-    vw = w; vh = h;
-    if (big) {
+  // ——— zmena veľkosti okna (lacné prekreslenie v snímke, drahé prepočítanie s oneskorením), skrytá karta ———
+  let rsRaf = 0, rsT = 0;
+  function relayout() {
+    const h = innerHeight;
+    if (vw !== innerWidth || Math.abs(h - vhBase) > vhBase * 0.2) {
       vhBase = h; step = Math.round(vhBase * 0.85); tail = Math.round(vhBase * 0.5);
       layoutTour();
       if (cur != null && tourActive()) scrollTo({ top: posOf(cur), behavior: 'instant' });
     }
-    syncHero();
-    for (const el of plates.values()) applyView(el, el === plates.get(STOPS[cur]?.id) ? pan : { x: 0, y: 0 }, el === plates.get(STOPS[cur]?.id) ? zoom : 1);
-    clampPan(); requestRender();
-  });
+  }
+  addEventListener('resize', () => {
+    if (!rsRaf) rsRaf = requestAnimationFrame(() => {
+      rsRaf = 0;
+      vw = innerWidth; vh = innerHeight;
+      syncHero();
+      const c = cur != null ? plates.get(STOPS[cur].id) : null;
+      for (const el of plates.values()) applyView(el, el === c ? pan : { x: 0, y: 0 }, el === c ? zoom : 1);
+      clampPan(); requestRender();
+    });
+    clearTimeout(rsT); rsT = setTimeout(relayout, 180);
+  }, PASSIVE);
   document.addEventListener('visibilitychange', () => {
     const el = cur != null ? plates.get(STOPS[cur].id) : null;
     if (document.hidden) el?._video?.pause(); else playVideo(el);
   });
 
+  onIntro = () => { if (cur === 0 && shown) startKB(shown, 0); };
+
   // ——— štart: priamy odkaz #id alebo obnovená poloha ———
-  const h = decodeURIComponent(location.hash.slice(1));
-  let start = idx[h];
+  let start = idx[deepLink];
   if (start != null) {
     scrollTo({ top: posOf(start), behavior: 'instant' });
     // po priamom odkaze má Tab pokračovať do ovládania prehliadky, nie za scénou (kde bol zoznam)
     stage.tabIndex = -1; stage.focus({ preventScroll: true });
   } else start = indexAt(scrollY);
-  if (start !== 0) hero.hidden = true;
+  if (start !== 0) { hero.hidden = true; heroPush?.cancel(); root.classList.add('no-intro'); startIntro(); }
   root.classList.toggle('in-tour', tourActive());
   await setStop(start, false);
 }
@@ -568,14 +751,4 @@ main().catch(err => {
   console.warn('Prechádzka sa nespustila, zobrazuje sa zoznam zastávok.', err);
   root.classList.remove('js');
   hud.hidden = true;
-});
-
-// mapa sa načíta až na požiadanie (žiadne cudzie požiadavky bez kliknutia)
-$('#mapLoad').addEventListener('click', () => {
-  const f = document.createElement('iframe');
-  f.title = 'Mapa: GYM KLUB, Výstavná 6, Nitra';
-  f.loading = 'lazy';
-  f.referrerPolicy = 'no-referrer-when-downgrade';
-  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent('GYM KLUB, Výstavná 6, 949 01 Nitra') + '&z=16&output=embed';
-  $('#map').replaceChildren(f);
 });

@@ -7,7 +7,7 @@
 <meta name="description" content="Prechádzka fitkom GYM KLUB na Výstavnej 6 v Nitre (Lipa Centrum): od terasy a vchodu cez recepciu, hlavnú sálu, stroje, kardio, voľné váhy a funkčnú zónu až po tatami. Skutočné zábery z prevádzky, 30 zastávok v 10 zónach.">
 <!-- Návrh na posúdenie: kým prevádzka neschváli obsah a fakty, stránka sa neindexuje. Pred zverejnením odstrániť. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0c0d0f">
+<meta name="theme-color" content="#060607">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/">
 <meta property="og:type" content="website">
@@ -21,7 +21,8 @@
 <link rel="preload" href="../assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
-<script>document.documentElement.classList.add('js')</script>
+<!-- Úvodná sekvencia začne, keď je obraz terasy dekódovaný (tour.js); poistka ju spustí najneskôr po 2,5 s aj bez skriptu. -->
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('intro-go')},2500)</script>
 </head>
 <body>
 <a class="skip" href="#kontakt">Preskočiť na kontakt</a>
@@ -32,6 +33,7 @@
   </a>
   <nav class="nav" aria-label="Hlavná navigácia">
     <a href="#prehliadka" id="navTour">Prehliadka</a>
+    <a href="#treningy" class="nav-opt">Tréningy</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
 </header>
@@ -42,27 +44,34 @@
     <div class="stage is-open" id="stage">
       <div class="view" id="view">
         <picture class="hero" id="hero">
-          <source type="image/avif" srcset="media/tour-terasa-1-2160.avif 2160w, media/tour-terasa-1-1280.avif 1280w" sizes="(min-aspect-ratio: 9/16) 100vw, 56.25vh">
-          <source type="image/webp" srcset="media/tour-terasa-1-2160.webp 2160w, media/tour-terasa-1-1280.webp 1280w" sizes="(min-aspect-ratio: 9/16) 100vw, 56.25vh">
-          <img src="media/tour-terasa-1-1280.jpg" srcset="media/tour-terasa-1-2160.jpg 2160w, media/tour-terasa-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 9/16) 100vw, 56.25vh" width="2160" height="3840" alt="Krytá terasa s terazzovou dlažbou, kovovým stolom a stoličkami s červenými sedákmi; v pozadí vchodové dvere pod nápisom GYM KLUB & caffee, vpravo zábradlie a zeleň." decoding="async" fetchpriority="high">
+          <!-- telefóny (šírka alebo výška do 430 px) dostanú vždy 1280 px -->
+          <source media="(max-width: 430px), (max-height: 430px)" type="image/avif" srcset="media/tour-terasa-1-1280.avif">
+          <source media="(max-width: 430px), (max-height: 430px)" type="image/webp" srcset="media/tour-terasa-1-1280.webp">
+          <source type="image/avif" srcset="media/tour-terasa-1-2160.avif 2160w, media/tour-terasa-1-1280.avif 1280w" sizes="(orientation: landscape) 118vw, (min-aspect-ratio: 9/16) 100vw, 56.25vh">
+          <source type="image/webp" srcset="media/tour-terasa-1-2160.webp 2160w, media/tour-terasa-1-1280.webp 1280w" sizes="(orientation: landscape) 118vw, (min-aspect-ratio: 9/16) 100vw, 56.25vh">
+          <img src="media/tour-terasa-1-1280.jpg" srcset="media/tour-terasa-1-2160.jpg 2160w, media/tour-terasa-1-1280.jpg 1280w" sizes="(orientation: landscape) 118vw, (min-aspect-ratio: 9/16) 100vw, 56.25vh" width="2160" height="3840" alt="Krytá terasa s terazzovou dlažbou, kovovým stolom a stoličkami s červenými sedákmi; v pozadí vchodové dvere pod nápisom GYM KLUB & caffee, vpravo zábradlie a zeleň." decoding="async" fetchpriority="high">
         </picture>
       </div>
+      <!-- filmový obraz: vineta a statické zrno (jedna malá textúra, žiadne kreslenie po snímkach) -->
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
 
       <div class="opening" id="opening">
-        <p class="kicker">Nitra · Lipa Centrum</p>
-        <h1 id="h-tour" class="h1">GYM KLUB <span class="dot" aria-hidden="true">·</span><span class="sr-only">·</span> <em>prechádzka fitkom</em></h1>
-        <p class="addr-line">Výstavná 6 (Lipa Centrum), Nitra</p>
-        <p class="enter-row"><a class="btn btn-main" id="enter" href="#vstup-1">Vstúpiť</a></p>
-        <p class="scroll-hint" aria-hidden="true"><span></span>Skrolujte alebo vstúpte</p>
+        <p class="kicker rv" style="--d:.9s">Prechádzka fitkom</p>
+        <h1 id="h-tour" class="h1"><span class="ln"><span class="ln-i">GYM KLUB</span></span><span class="sr-only"> – prechádzka fitkom</span></h1>
+        <span class="rule" aria-hidden="true"></span>
+        <p class="addr-line rv" style="--d:1.9s">Výstavná 6 <span aria-hidden="true">·</span> Lipa Centrum <span aria-hidden="true">·</span> Nitra</p>
+        <p class="enter-row rv" style="--d:2.4s"><a class="btn btn-main" id="enter" href="#vstup-1">Vstúpiť</a></p>
+        <p class="scroll-hint rv" style="--d:3s" aria-hidden="true"><span></span>Skrolujte alebo vstúpte</p>
       </div>
 
       <div class="hud" id="hud" hidden>
-        <div class="hud-tl">
+        <div class="hud-tl" id="hudTL">
           <p class="hud-zone" id="hudZone"></p>
           <p class="hud-title" id="hudTitle"></p>
           <p class="hud-count" id="hudCount"></p>
         </div>
-        <div class="hud-tr">
+        <div class="hud-tr" id="hudTR">
           <div class="compass" id="compass" aria-hidden="true">
             <svg viewBox="0 0 44 44" width="44" height="44">
               <circle cx="22" cy="22" r="21" class="c-bg"/>
@@ -83,6 +92,20 @@
 
         <div class="overlay" id="overlay"></div>
 
+        <!-- informačné okno o zóne: čo je vidno a na čo zóna slúži -->
+        <aside class="zp" id="zp" aria-labelledby="zpTitle">
+          <button class="zp-head" type="button" id="zpToggle" aria-expanded="true" aria-controls="zpBody">
+            <span class="zp-k" id="zpKicker"></span>
+            <span class="zp-t" id="zpTitle"></span>
+            <span class="zp-tog" aria-hidden="true"></span>
+          </button>
+          <div class="zp-body" id="zpBody">
+            <p class="zp-p" id="zpText"></p>
+            <h3 class="zp-h">Čo tu nájdete</h3>
+            <ul class="zp-list" id="zpList"></ul>
+          </div>
+        </aside>
+
         <div class="hud-b">
           <div class="minimap" id="minimap" aria-hidden="true"></div>
           <nav class="strip" id="strip" aria-label="Zóny a zastávky"></nav>
@@ -93,6 +116,16 @@
           </div>
         </div>
       </div>
+
+      <!-- kapitola pri vstupe do novej zóny (dekorácia; obsah nesie informačné okno a živý popis) -->
+      <div class="chapter" id="chapter" aria-hidden="true">
+        <p class="ch-k" id="chK"></p>
+        <p class="ch-t" id="chT"></p>
+        <span class="ch-rule"></span>
+        <p class="ch-s" id="chS"></p>
+      </div>
+      <div class="lb lb-t" aria-hidden="true"></div>
+      <div class="lb lb-b" aria-hidden="true"></div>
       <p class="sr-only" id="stopDesc" aria-live="polite"></p>
     </div>
 
@@ -406,18 +439,41 @@
     <!--zoznam:end-->
   </section>
 
-  <section class="block" id="parametre" aria-labelledby="h-par">
+  <!-- záverečná karta pred kontaktom -->
+  <section class="endcard" id="koniec" aria-labelledby="h-koniec">
+    <picture class="endcard-bg" aria-hidden="true">
+      <source type="image/avif" srcset="media/tour-funkcna-zona-6-1280.avif">
+      <source type="image/webp" srcset="media/tour-funkcna-zona-6-1280.webp">
+      <img src="media/tour-funkcna-zona-6-1280.jpg" width="1280" height="1707" alt="" loading="lazy" decoding="async">
+    </picture>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="endcard-in wrap">
+      <p class="kicker rv2" style="--d:0s">Koniec prechádzky</p>
+      <h2 id="h-koniec" class="endcard-t rv2" style="--d:.15s">GYM KLUB</h2>
+      <span class="rule rv2" style="--d:.35s" aria-hidden="true"></span>
+      <p class="endcard-s rv2" style="--d:.45s">Výstavná 6 <span aria-hidden="true">·</span> Lipa Centrum <span aria-hidden="true">·</span> Nitra</p>
+      <p class="endcard-p rv2" style="--d:.6s">Prejdite si fitko aj naživo. Prehliadku si dohodnete telefonicky alebo e-mailom.</p>
+      <ul class="reach reach-center rv2" style="--d:.75s">
+        <li><a class="btn btn-main" href="tel:+421944800394">Zavolať</a><span class="reach-v">+421 944 800 394</span></li>
+        <li><a class="btn" href="mailto:info@gymklub.sk?subject=Prehliadka%20fitka">Napísať e-mail</a><span class="reach-v">info@gymklub.sk</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="o-fitku" aria-labelledby="h-o">
     <div class="wrap two">
       <div>
-        <p class="num">Po prechádzke</p>
-        <h2 id="h-par" class="h2">Parametre <em>priestoru</em></h2>
+        <p class="num">O fitku</p>
+        <h2 id="h-o" class="h2">Fitko v Lipa <em>Centre</em></h2>
+        <div class="prose">
+          <p>GYM KLUB je fitko na Výstavnej 6 v Nitre, v budove Lipa Centrum. Vchádza sa z krytej terasy, dvere sú pod nápisom GYM KLUB &amp; caffee.</p>
+          <p>Za recepciou nasleduje hlavná sála so strojmi, svetlá sála s tyrkysovými kladkovými strojmi, kardio pri oknách, voľné váhy, tmavá funkčná zóna so šprintérskou dráhou a samostatná miestnosť s tatami. Celé fitko je plne klimatizované.</p>
+        </div>
         <table class="spec">
           <tbody>
             <tr><th scope="row">Adresa</th><td>Výstavná 6 (Lipa Centrum), 949 01 Nitra</td></tr>
             <tr><th scope="row">Zóny</th><td>terasa, vstup, recepcia, hlavná sála, sála so strojmi, kardio, voľné váhy, jednoručky, funkčná zóna, tatami – 10 zón, 30 zastávok prehliadky</td></tr>
-            <tr><th scope="row">Klimatizácia</th><td>áno</td></tr>
-            <tr><th scope="row">Tréningy</th><td>fitness, bojové športy (MMA, Jiu Jitsu, Luta Livre), Krav Maga, Zdravý chrbát, Pilates</td></tr>
-            <tr><th scope="row">Kontakt</th><td><a href="tel:+421944800394">+421 944 800 394</a><br><a href="mailto:info@gymklub.sk">info@gymklub.sk</a></td></tr>
+            <tr><th scope="row">Klimatizácia</th><td>plne klimatizované</td></tr>
           </tbody>
         </table>
       </div>
@@ -453,6 +509,21 @@
     </div>
   </section>
 
+  <section class="block" id="treningy" aria-labelledby="h-tr">
+    <div class="wrap">
+      <p class="num">Tréningy</p>
+      <h2 id="h-tr" class="h2">Čo sa tu <em>trénuje</em></h2>
+      <ol class="tr-list">
+        <li><span class="tr-n">01</span><h3>Fitness</h3><p>Tréning na strojoch, s voľnými váhami a na kardio zariadeniach, ktoré ste videli počas prechádzky.</p></li>
+        <li><span class="tr-n">02</span><h3>Bojové športy</h3><p>MMA, Jiu Jitsu a Luta Livre.</p></li>
+        <li><span class="tr-n">03</span><h3>Krav Maga</h3><p>Systém sebaobrany.</p></li>
+        <li><span class="tr-n">04</span><h3>Zdravý chrbát</h3><p>Cvičenie zamerané na chrbát a držanie tela.</p></li>
+        <li><span class="tr-n">05</span><h3>Pilates</h3><p>Cvičenie so zameraním na stred tela a držanie tela.</p></li>
+      </ol>
+      <p class="tr-note">Rozvrh tréningov a podmienky vstupu vám povieme telefonicky alebo e-mailom.</p>
+    </div>
+  </section>
+
   <section class="block" id="hodiny" aria-labelledby="h-hod">
     <div class="wrap two">
       <div>
@@ -479,15 +550,21 @@
           Výstavná 6 (Lipa Centrum)<br>
           949 01 Nitra
         </address>
-        <div class="cta">
-          <a class="btn btn-main" href="tel:+421944800394">Zavolať</a>
-          <a class="btn" href="mailto:info@gymklub.sk?subject=Prehliadka%20fitka">Napísať e-mail</a>
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%BDstavn%C3%A1+6%2C+949+01+Nitra" rel="noopener">Navigovať</a>
-        </div>
+        <!-- číslo a e-mail sú vždy viditeľné ako text: v prostredí, kde tel:/mailto: nefungujú, sa dajú označiť a skopírovať -->
+        <ul class="reach">
+          <li><a class="btn btn-main" href="tel:+421944800394">Zavolať</a><span class="reach-v">+421 944 800 394</span></li>
+          <li><a class="btn" href="mailto:info@gymklub.sk?subject=Prehliadka%20fitka">Napísať e-mail</a><span class="reach-v">info@gymklub.sk</span></li>
+          <li><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%BDstavn%C3%A1+6%2C+949+01+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a><span class="reach-v">Mapy Google v novom okne</span></li>
+        </ul>
       </div>
-      <div class="map" id="map">
-        <button class="map-load" type="button" id="mapLoad">Zobraziť mapu <small>(načíta Mapy Google)</small></button>
-      </div>
+      <figure class="loc">
+        <picture>
+          <source type="image/avif" srcset="media/tour-vstup-1-1280.avif">
+          <source type="image/webp" srcset="media/tour-vstup-1-1280.webp">
+          <img src="media/tour-vstup-1-1280.jpg" width="1280" height="2276" alt="Vchod do fitka: biele presklené dvere pod nápisom GYM KLUB &amp; caffee na krytej terase Lipa Centra." loading="lazy" decoding="async">
+        </picture>
+        <figcaption>Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB &amp; caffee.</figcaption>
+      </figure>
     </div>
   </section>
 </main>
@@ -495,7 +572,7 @@
 <footer class="foot">
   <div class="wrap">
     <p>GYM KLUB Nitra · Výstavná 6 (Lipa Centrum), 949 01 Nitra · <a href="tel:+421944800394">+421 944 800 394</a> · <a href="mailto:info@gymklub.sk">info@gymklub.sk</a></p>
-    <p><a href="../">Klasická verzia webu</a> · <a href="https://www.gymklub.sk/" rel="noopener">gymklub.sk</a></p>
+    <p><a href="../">Klasická verzia webu</a> · <a href="https://www.gymklub.sk/" target="_blank" rel="noopener">gymklub.sk</a></p>
   </div>
 </footer>
 

@@ -1,55 +1,175 @@
 {
-  "version": 2,
+  "version": 3,
   "zones": [
     {
       "id": "terasa",
       "name": "Terasa",
-      "blurb": "Krytá terasa Lipa Centra s terazzovou dlažbou, stolom so stoličkami a vchodom pod nápisom GYM KLUB & caffee."
+      "blurb": "Krytá terasa Lipa Centra s terazzovou dlažbou, stolom so stoličkami a vchodom pod nápisom GYM KLUB & caffee.",
+      "chapter": "Krytá terasa Lipa Centra pred vchodom do fitka.",
+      "about": [
+        "Prechádzka začína na krytej terase Lipa Centra na Výstavnej 6.",
+        "Terasa má terazzovú dlažbu, stolík so stoličkami a výhľad do zelene.",
+        "Vchod do fitka je pod nápisom GYM KLUB & caffee."
+      ],
+      "items": [
+        "Stolík so stoličkami",
+        "Nápis GYM KLUB & caffee",
+        "Vchodové dvere"
+      ]
     },
     {
       "id": "vstup",
       "name": "Vstup",
-      "blurb": "Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB & caffee, pred nimi rohož a rastlina."
+      "blurb": "Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB & caffee, pred nimi rohož a rastlina.",
+      "chapter": "Presklené dvere pod nápisom GYM KLUB & caffee.",
+      "about": [
+        "Do fitka sa vchádza bielymi presklenými dvojkrídlovými dverami.",
+        "Na dverách sú piktogramy a oznamy, pred nimi rohož.",
+        "Hneď za dverami je recepcia."
+      ],
+      "items": [
+        "Dvojkrídlové presklené dvere",
+        "Rohož pred vchodom",
+        "Rastlina pri dverách"
+      ]
     },
     {
       "id": "recepcia",
       "name": "Recepcia",
-      "blurb": "Pult s chladničkou na nápoje, drevená polička na obuv, rastliny a kreslá pri oknách so žalúziami."
+      "blurb": "Pult s chladničkou na nápoje, drevená polička na obuv, rastliny a kreslá pri oknách so žalúziami.",
+      "chapter": "Pult, polička na obuv a posedenie hneď za dverami.",
+      "about": [
+        "Za dverami je recepcia s pultom a chladničkou na nápoje.",
+        "Vedľa stojí drevená polička na obuv, pri oknách sú kreslá.",
+        "Odtiaľto sa pokračuje do tréningových priestorov."
+      ],
+      "items": [
+        "Pult recepcie",
+        "Chladnička s nápojmi",
+        "Polička na obuv",
+        "Kreslá pri oknách"
+      ]
     },
     {
       "id": "hlavna-sala",
       "name": "Hlavná sála",
-      "blurb": "Sála s nástennou maľbou GYM KLUB nad zrkadlami, kamennými stĺpmi, presklenou stenou a čiernymi, zelenými a tyrkysovými strojmi."
+      "blurb": "Sála s nástennou maľbou GYM KLUB nad zrkadlami, kamennými stĺpmi, presklenou stenou a čiernymi, zelenými a tyrkysovými strojmi.",
+      "chapter": "Stroje, zrkadlová stena a nástenná maľba GYM KLUB.",
+      "about": [
+        "Hlavná sála slúži na silový tréning na strojoch.",
+        "Nad zrkadlovou stenou je nástenná maľba GYM KLUB a televízor, priestor člení kamenný obklad a stĺpy.",
+        "Presklenou stenou je vidno stromy."
+      ],
+      "items": [
+        "Viacstaničné kladkové veže",
+        "Čierne a tyrkysové stroje",
+        "Kotúčové jednoručky",
+        "Zrkadlová stena",
+        "Fitlopta"
+      ]
     },
     {
       "id": "stroje",
       "name": "Sála so strojmi",
-      "blurb": "Svetlá sála s tyrkysovými kladkovými strojmi, stojanom s činkami, lavicami a oknami."
+      "blurb": "Svetlá sála s tyrkysovými kladkovými strojmi, stojanom s činkami, lavicami a oknami.",
+      "chapter": "Svetlá sála s tyrkysovými kladkovými strojmi.",
+      "about": [
+        "Svetlá sála s bielym stropom a veľkými oknami.",
+        "Tvoria ju tyrkysové kladkové stroje, stojan s činkami a lavice.",
+        "Na strope je kazetová klimatizačná jednotka."
+      ],
+      "items": [
+        "Tyrkysové kladkové stroje",
+        "Stojan s pevnými činkami",
+        "Polohovateľné lavice",
+        "Lavice so stojanmi na osi"
+      ]
     },
     {
       "id": "kardio",
       "name": "Kardio",
-      "blurb": "Rad bežeckých pásov pri veľkých oknách, eliptický a schodový trenažér a spinningové bicykle."
+      "blurb": "Rad bežeckých pásov pri veľkých oknách, eliptický a schodový trenažér a spinningové bicykle.",
+      "chapter": "Bežecké pásy a trenažéry pri veľkých oknách.",
+      "about": [
+        "Kardio zóna je pri veľkých oknách s výhľadom na stromy.",
+        "Stojí tu rad bežeckých pásov, eliptický a schodový trenažér.",
+        "Vedľa je Smithov stroj s lavicou."
+      ],
+      "items": [
+        "Bežecké pásy",
+        "Eliptický trenažér",
+        "Schodový trenažér",
+        "Smithov stroj"
+      ]
     },
     {
       "id": "volne-vahy",
       "name": "Voľné váhy",
-      "blurb": "Stojany s jednoručkami, lavice so stojanmi na osi a kladkové stroje pri zrkadlách a oknách."
+      "blurb": "Stojany s jednoručkami, lavice so stojanmi na osi a kladkové stroje pri zrkadlách a oknách.",
+      "chapter": "Jednoručky, lavice a stojany na osi.",
+      "about": [
+        "Zóna voľných váh je určená na tréning s jednoručkami a osami.",
+        "Pri zrkadlách sú stojany s jednoručkami, pri oknách rad lavíc so stojanmi a kotúčmi.",
+        "Dopĺňajú ju tyrkysové kladkové stroje."
+      ],
+      "items": [
+        "Stojany s jednoručkami",
+        "Lavice so stojanmi na osi",
+        "Kotúče",
+        "Lavica na bicepsy",
+        "Kladkové stroje"
+      ]
     },
     {
       "id": "jednorucky",
       "name": "Jednoručky",
-      "blurb": "Biely stojan s gumovými jednoručkami do 20 kg vedľa schodového trenažéra."
+      "blurb": "Biely stojan s gumovými jednoručkami do 20 kg vedľa schodového trenažéra.",
+      "chapter": "Stojan s gumovými jednoručkami do 20 kg.",
+      "about": [
+        "Na prechode do tmavej časti fitka stojí biely stojan s gumovými jednoručkami do 20 kg.",
+        "Vedľa je schodový trenažér, za ním zrkadlá a nakladacie stroje."
+      ],
+      "items": [
+        "Gumové jednoručky do 20 kg",
+        "Schodový trenažér",
+        "Nakladacie stroje"
+      ]
     },
     {
       "id": "funkcna-zona",
       "name": "Funkčná zóna",
-      "blurb": "Tmavý priestor s čiernym stropom, šesťuholníkovými LED svetlami, červenou šprintérskou dráhou, nakladacími strojmi a rigom Life Fitness."
+      "blurb": "Tmavý priestor s čiernym stropom, šesťuholníkovými LED svetlami, červenou šprintérskou dráhou, nakladacími strojmi a rigom Life Fitness.",
+      "chapter": "Tmavý priestor so šprintérskou dráhou a rigom.",
+      "about": [
+        "Funkčná zóna má čierny strop so šesťuholníkovými LED svetlami a červenú šprintérsku dráhu na podlahe.",
+        "Slúži na funkčný a kondičný tréning.",
+        "Stojí tu rig Life Fitness s popruhmi a boxovacím vrecom, pri oknách nakladacie stroje."
+      ],
+      "items": [
+        "Šprintérska dráha",
+        "Rig Life Fitness",
+        "Boxovacie vrece",
+        "Kettlebelly",
+        "Medicinbaly",
+        "Vzduchový bicykel"
+      ]
     },
     {
       "id": "tatami",
       "name": "Tatami",
-      "blurb": "Samostatná biela miestnosť s ružovo-čiernymi podložkami tatami, švédskou rebrinou, zrkadlovou stenou a závesnými popruhmi."
+      "blurb": "Samostatná biela miestnosť s ružovo-čiernymi podložkami tatami, švédskou rebrinou, zrkadlovou stenou a závesnými popruhmi.",
+      "chapter": "Samostatná miestnosť s podložkami tatami.",
+      "about": [
+        "Tatami je samostatná biela miestnosť s ružovo-čiernymi podložkami.",
+        "Pri stene je drevená rebrina, na jednej strane zrkadlová stena a pod stropom závesné popruhy.",
+        "Priestor je voľný, bez strojov."
+      ],
+      "items": [
+        "Podložky tatami",
+        "Švédska rebrina",
+        "Zrkadlová stena",
+        "Závesné popruhy"
+      ]
     }
   ],
   "zonesLayout": [
