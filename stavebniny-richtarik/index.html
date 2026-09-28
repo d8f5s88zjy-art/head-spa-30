@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stavebniny Richtárik Nitra</title>
+<meta name="description" content="Stavebniny Richtárik, Nitra Horné Krškany. Stavebný materiál v celom sortimente od roku 1997: sypké zmesi, murivo, strešné krytiny, izolácie, komíny, rezivo, náradie. Doprava po celom Slovensku, cenová ponuka a poradenstvo zadarmo.">
+<meta name="theme-color" content="#1c1a17">
+<meta property="og:title" content="Stavebniny Richtárik Nitra">
+<meta property="og:description" content="Stavebný materiál v celom sortimente za super ceny. Rodinná firma od roku 1997, doprava po celom Slovensku.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/hero.jpg">
+<meta property="og:locale" content="sk_SK">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<link rel="preload" as="image" href="img/hero.webp" fetchpriority="high">
+<style>
+/* Stavebniny Richtárik: tokeny. Farby z loga (čierna, tehlová červená), betón a malta ako neutrály. */
+:root{
+  --ink:#1c1a17;--ink-2:#3a3733;--ink-3:#6b665f;
+  --brick:#b8352b;--brick-dk:#932a22;--brick-lt:#f3e2df;
+  --concrete:#e6e2dc;--mortar:#f4f1ec;--paper:#fbfaf7;--line:#d9d4cc;
+  --white:#fff;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --wrap:1180px;--gutter:clamp(16px,4vw,40px);
+  --radius:6px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{font-family:var(--body);font-size:17px;line-height:1.55;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+h1,h2,h3{font-family:var(--display);line-height:1;letter-spacing:-.005em;text-wrap:balance}
+h1{font-weight:800;font-size:clamp(46px,7.2vw,96px);text-transform:uppercase}
+h2{font-weight:700;font-size:clamp(34px,4.6vw,56px);text-transform:uppercase}
+h3{font-weight:700;font-size:26px}
+p{max-width:62ch}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--brick)}
+.eyebrow::before{content:"";display:inline-block;width:26px;height:3px;background:var(--brick);vertical-align:middle;margin-right:12px;margin-top:-3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border-radius:var(--radius);border:2px solid transparent;transition:background .2s,color .2s,border-color .2s,transform .2s;cursor:pointer}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+.btn.primary{background:var(--brick);color:#fff}
+.btn.primary:hover{background:var(--brick-dk)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.dark:hover{background:#000}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.light{background:#fff;color:var(--ink)}
+.btn.light:hover{background:var(--concrete)}
+
+/* lišta */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(251,250,247,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:28px;min-height:76px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
+.brand img{height:40px;width:auto}
+.nav{display:flex;gap:26px;margin-left:auto;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.03em;text-transform:uppercase}
+.nav a{text-decoration:none;color:var(--ink-2);padding:8px 0;border-bottom:2px solid transparent}
+.nav a:hover{color:var(--ink);border-bottom-color:var(--brick)}
+.top .tel{margin-left:auto;font-family:var(--display);font-weight:700;font-size:20px;text-decoration:none;white-space:nowrap}
+.nav + .tel{margin-left:0}
+.menu-btn{display:none;margin-left:auto;background:none;border:2px solid var(--ink);border-radius:var(--radius);width:48px;height:44px;align-items:center;justify-content:center;cursor:pointer}
+.menu-btn span,.menu-btn span::before,.menu-btn span::after{display:block;width:22px;height:2px;background:var(--ink);position:relative;transition:transform .2s}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0}
+.menu-btn span::before{top:-7px}.menu-btn span::after{top:7px}
+.drawer{display:none}
+@media (max-width:900px){
+  .nav,.top .tel{display:none}
+  .menu-btn{display:flex}
+  .drawer{display:block;position:fixed;inset:0;z-index:60;background:var(--ink);color:#fff;padding:calc(24px + env(safe-area-inset-top,0px)) var(--gutter) 40px;transform:translateX(100%);transition:transform .3s;overflow:auto}
+  .drawer.open{transform:none}
+  .drawer nav{display:grid;gap:4px;margin-top:40px}
+  .drawer a{color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:34px;text-transform:uppercase;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+  .drawer .close{position:absolute;right:var(--gutter);top:calc(20px + env(safe-area-inset-top,0px));background:none;border:2px solid #fff;color:#fff;border-radius:var(--radius);width:48px;height:44px;font-size:26px;cursor:pointer}
+  .drawer .dtel{margin-top:32px;display:grid;gap:10px}
+  .drawer .dtel a{font-size:24px;border:0;color:#f2b6af}
+}
+
+/* úvod */
+.hero{position:relative;color:#fff;background:var(--ink);overflow:hidden}
+.hero picture,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,18,15,.9) 0%,rgba(20,18,15,.72) 45%,rgba(20,18,15,.25) 100%)}
+.hero .wrap{position:relative;z-index:1;padding-block:clamp(72px,11vw,150px) clamp(56px,8vw,110px);display:grid;gap:26px;max-width:var(--wrap)}
+.hero .eyebrow{color:#f2b6af}.hero .eyebrow::before{background:#f2b6af}
+.hero h1 em{font-style:normal;color:#f2b6af}
+.hero p{font-size:clamp(18px,1.6vw,22px);max-width:54ch;color:rgba(255,255,255,.88)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:#fff;border-radius:var(--radius);overflow:hidden;margin-top:-40px;position:relative;z-index:2}
+.facts div{padding:22px 24px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--display);font-weight:800;font-size:40px;line-height:1;color:var(--brick)}
+.facts span{display:block;margin-top:6px;font-size:15px;color:var(--ink-3);line-height:1.35}
+@media (max-width:900px){.facts{grid-template-columns:1fr 1fr}.facts div:nth-child(2){border-right:0}.facts div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:440px){.facts b{font-size:32px}}
+
+/* sekcie */
+section{padding-block:clamp(64px,8vw,110px)}
+.head{display:grid;gap:14px;margin-bottom:clamp(30px,4vw,52px)}
+.head .lede{font-size:19px;color:var(--ink-2)}
+.head.row{grid-template-columns:1fr auto;align-items:end}
+@media (max-width:700px){.head.row{grid-template-columns:1fr}}
+
+/* akcie */
+.akcie{background:var(--ink);color:#fff}
+.akcie .head .lede{color:rgba(255,255,255,.78)}
+.akcie .eyebrow{color:#f2b6af}.akcie .eyebrow::before{background:#f2b6af}
+.deals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.deal{background:#26231f;border:1px solid #38342e;border-radius:var(--radius);padding:26px 26px 28px;display:grid;gap:10px;align-content:start;position:relative}
+.deal .tag{position:static;justify-self:start;order:-1;margin-bottom:4px;background:var(--brick);color:#fff;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.08em;padding:4px 10px;border-radius:3px;text-transform:uppercase}
+.deal .tag.big{font-size:22px;padding:6px 12px}
+.deal h3{font-size:28px}
+.deal p{color:rgba(255,255,255,.8);font-size:16px}
+.deal small{color:rgba(255,255,255,.55);font-size:14px}
+.akcie .after{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:28px;color:rgba(255,255,255,.75);font-size:16px}
+@media (max-width:900px){.deals{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.deals{grid-template-columns:1fr}}
+
+/* sortiment */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat{display:grid;grid-template-rows:auto 1fr;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .25s,box-shadow .25s}
+.cat:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(28,26,23,.12)}
+.cat .ph{aspect-ratio:4/3;overflow:hidden;background:var(--concrete)}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.cat:hover img{transform:scale(1.05)}
+.cat .tx{padding:18px 20px 20px;display:grid;gap:6px;align-content:start}
+.cat h3{font-size:24px}
+.cat p{font-size:14.5px;color:var(--ink-3);line-height:1.45}
+.cat .brands{font-size:13px;color:var(--brick);font-weight:600;letter-spacing:.02em}
+@media (max-width:1000px){.cats{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:720px){.cats{grid-template-columns:1fr 1fr;gap:10px}.cat .tx{padding:14px 14px 16px}.cat h3{font-size:20px}.cat p{display:none}}
+.sort-note{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius)}
+.sort-note p{max-width:none;font-size:16px;color:var(--ink-2)}
+
+/* zľavy */
+.zlavy{background:var(--brick);color:#fff}
+.zlavy .eyebrow{color:#fff}.zlavy .eyebrow::before{background:#fff}
+.zlavy .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.zlavy p{color:rgba(255,255,255,.9);font-size:18px}
+.disc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.disc div{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.22);border-radius:var(--radius);padding:24px}
+.disc b{display:block;font-family:var(--display);font-weight:800;font-size:64px;line-height:.95;font-variant-numeric:tabular-nums}
+.disc span{display:block;margin-top:8px;font-size:16px;color:rgba(255,255,255,.9)}
+.karta{margin-top:14px;background:#fff;color:var(--ink);border-radius:var(--radius);padding:22px 24px;display:grid;gap:6px}
+.karta b{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.karta p{color:var(--ink-2);font-size:16px;max-width:none}
+@media (max-width:900px){.zlavy .grid{grid-template-columns:1fr}}
+@media (max-width:440px){.disc{grid-template-columns:1fr}}
+
+/* služby */
+.sluzby .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.srv{padding:26px 26px 28px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);display:grid;gap:10px;align-content:start}
+.srv .ic{width:46px;height:46px;border-radius:var(--radius);background:var(--brick-lt);color:var(--brick);display:grid;place-items:center}
+.srv .ic svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.srv h3{font-size:25px;margin-top:6px}
+.srv p{font-size:15.5px;color:var(--ink-2)}
+@media (max-width:900px){.sluzby .grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.sluzby .grid{grid-template-columns:1fr}}
+
+/* o nás */
+.onas{background:var(--mortar)}
+.onas .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.onas .ph{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3}
+.onas .ph img{width:100%;height:100%;object-fit:cover}
+.onas .tx{display:grid;gap:16px}
+.onas .tx p{font-size:17.5px;color:var(--ink-2)}
+.onas .stamp{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;color:var(--ink);letter-spacing:.02em}
+.onas .stamp b{font-size:52px;color:var(--brick);line-height:1}
+@media (max-width:820px){.onas .grid{grid-template-columns:1fr}}
+
+/* novinky */
+.novinky .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.nov{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 26px;display:grid;gap:8px;align-content:start}
+.nov h3{font-size:24px}
+.nov p{font-size:15.5px;color:var(--ink-2)}
+.nov table{width:100%;border-collapse:collapse;font-size:15px;margin-top:6px}
+.nov td{padding:7px 0;border-top:1px solid var(--line);vertical-align:top}
+.nov td:last-child{text-align:right;white-space:nowrap;font-family:var(--display);font-weight:700;font-size:18px;font-variant-numeric:tabular-nums}
+.nov small{color:var(--ink-3);font-size:13.5px}
+@media (max-width:900px){.novinky .grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.novinky .grid{grid-template-columns:1fr}}
+
+/* kontakt */
+.kontakt{background:var(--ink);color:#fff}
+.kontakt .eyebrow{color:#f2b6af}.kontakt .eyebrow::before{background:#f2b6af}
+.kontakt .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px)}
+.kontakt .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:8px}
+.kontakt h3{font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#f2b6af;font-weight:600;margin-bottom:10px}
+.kontakt .big{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.1;text-decoration:none;color:#fff;display:block}
+.kontakt .big + .big{margin-top:6px}
+.kontakt address{font-style:normal;font-size:18px;line-height:1.5;color:rgba(255,255,255,.88)}
+.kontakt .mail{color:#fff;font-size:18px;text-decoration:underline;text-underline-offset:3px}
+.hours{width:100%;border-collapse:collapse;font-size:18px}
+.hours td{padding:9px 0;border-top:1px solid rgba(255,255,255,.14)}
+.hours td:last-child{text-align:right;font-family:var(--display);font-weight:700;font-size:22px;font-variant-numeric:tabular-nums}
+.hours tr:first-child td{border-top:0}
+.hours .closed{color:rgba(255,255,255,.55)}
+.kontakt .box{background:#26231f;border:1px solid #38342e;border-radius:var(--radius);padding:28px;display:grid;gap:18px;align-content:start}
+.kontakt .box p{color:rgba(255,255,255,.8)}
+.kontakt .cta{display:flex;flex-wrap:wrap;gap:12px}
+.kontakt .fine{font-size:14px;color:rgba(255,255,255,.55)}
+@media (max-width:900px){.kontakt .grid{grid-template-columns:1fr}}
+@media (max-width:520px){.kontakt .cols{grid-template-columns:1fr}}
+
+footer{background:#0f0e0c;color:rgba(255,255,255,.7);font-size:15px;padding-block:28px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+footer a{color:#fff;text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* rýchly kontakt na telefóne */
+.mbar{display:none}
+@media (max-width:900px){
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(251,250,247,.96);border-top:1px solid var(--line)}
+  .mbar .btn{min-height:48px;font-size:17px}
+  footer{padding-bottom:calc(28px + 76px)}
+}
+.rv{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Stavebniny Richtárik, domov"><img src="img/logo.png" alt="Stavebniny Richtárik" width="480" height="142"></a>
+    <nav class="nav" aria-label="Hlavné menu">
+      <a href="#akcie">Akcie</a>
+      <a href="#sortiment">Sortiment</a>
+      <a href="#sluzby">Služby</a>
+      <a href="#o-nas">O nás</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="tel" href="tel:+421905622223">0905 622 223</a>
+    <button class="menu-btn" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="drawer"><span></span></button>
+  </div>
+</header>
+<div class="drawer" id="drawer" aria-label="Menu">
+  <button class="close" type="button" aria-label="Zavrieť menu">&times;</button>
+  <nav aria-label="Menu">
+    <a href="#akcie">Akcie</a>
+    <a href="#sortiment">Sortiment</a>
+    <a href="#sluzby">Služby</a>
+    <a href="#o-nas">O nás</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <div class="dtel">
+    <a href="tel:+421905622223">0905 622 223</a>
+    <a href="tel:+421376511777">037 651 17 77</a>
+  </div>
+</div>
+
+<section class="hero" aria-labelledby="h-uvod">
+  <picture>
+    <source type="image/webp" srcset="img/hero.webp">
+    <img src="img/hero.jpg" alt="Sklad stavebného materiálu, palety tehál a tvárnic" width="1600" height="1067" fetchpriority="high">
+  </picture>
+  <div class="wrap">
+    <div class="eyebrow">Nitra, Horné Krškany. Od roku 1997</div>
+    <h1 id="h-uvod">Stavebný materiál<br>v celom sortimente.<br><em>Za super ceny.</em></h1>
+    <p>Rodinné stavebniny s vlastnou dopravou po celom Slovensku. Cenovú ponuku a výpočet spotreby materiálu ti spravíme zadarmo, s výberom poradíme na mieste.</p>
+    <div class="cta">
+      <a class="btn primary" href="#kontakt">Vyžiadať cenovú ponuku</a>
+      <a class="btn light" href="#akcie">Aktuálne akcie</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="facts" aria-label="V skratke">
+    <div><b>1997</b><span>rodinná firma, 29 rokov v stavebninách</span></div>
+    <div><b>5 %</b><span>ďalšia zľava pri platbe v hotovosti</span></div>
+    <div><b>3,3 %</b><span>ďalšia zľava pri platbe kartou</span></div>
+    <div><b>SR</b><span>doprava vlastnými autami po celom Slovensku</span></div>
+  </div>
+</div>
+
+<section class="akcie" id="akcie" aria-labelledby="h-akcie">
+  <div class="wrap">
+    <div class="head row">
+      <div>
+        <div class="eyebrow">Akcie</div>
+        <h2 id="h-akcie">Aktuálne akcie na vybrané výrobky</h2>
+      </div>
+      <a class="btn light" href="http://www.stavebninyrichtarik.sk/files/657.pdf" target="_blank" rel="noopener">Cenník akcií (PDF)</a>
+    </div>
+    <div class="deals">
+      <article class="deal"><span class="tag big">Zľava 20 %</span><h3>Okná a schody Fakro</h3><p>Strešné okná, podkrovné sklápacie schody a strešné doplnky. Rôzne druhy, rôzne rozmery.</p></article>
+      <article class="deal"><span class="tag big">15 až 30 %</span><h3>Dlažba Citystone Design</h3><p>Zľava z cenníkových cien betónovej zámkovej dlažby a doplnkov. Objektové zľavy pre firmy.</p></article>
+      <article class="deal"><span class="tag">Super ceny</span><h3>Pezinská tehla Termobrik</h3><p>Brúsená tehla Termobrik a Dry systém s pojivom, lepidlo zdarma. Individuálnu ponuku spravíme priamo na tvoj dom.</p></article>
+      <article class="deal"><span class="tag">Na sklade</span><h3>Komín Stadreko</h3><p>Certifikovaný komínový systém so šamotovou vložkou za jednu z najnižších cien na Slovensku. Odber možný ihneď.</p></article>
+      <article class="deal"><span class="tag">Doprava 17 €</span><h3>Krytina Blachotrapez</h3><p>Škridloplech a trapézové plechy. Doprava nad 50 m² za 17 € s DPH po celom Slovensku.</p><small>Do 50 m² s ochrannou fóliou 0,55 €/m², do 30 m² 1,20 €/m², vykládka 40 € s DPH.</small></article>
+      <article class="deal"><span class="tag">Zdarma domov</span><h3>Zateplenie a sadrokartón</h3><p>Kompletný sortiment zatepľovacieho a sadrokartónového systému. Polystyrén dovezieme priamo domov zdarma.</p></article>
+      <article class="deal"><span class="tag">Špeciálne zľavy</span><h3>Porfix</h3><p>Obvodové murivo, priečky, strop, lepidlá a malty so špeciálnymi zľavami.</p></article>
+      <article class="deal"><span class="tag">Super ceny</span><h3>Stavebné rezivo</h3><p>Dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo a krovy na mieru.</p></article>
+      <article class="deal"><span class="tag">Na sklade</span><h3>Stavebné náradie</h3><p>Náradie na stavbu, do záhrady, do domácnosti aj do dielne. Široká ponuka priamo na sklade.</p></article>
+    </div>
+    <div class="after">
+      <span>Ceny v akcii platia do vypredania zásob. Stavebné firmy, živnostníci a predajne stavebnín dostanú ďalšie špeciálne zľavy.</span>
+    </div>
+  </div>
+</section>
+
+<section id="sortiment" aria-labelledby="h-sortiment">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Sortiment</div>
+      <h2 id="h-sortiment">Všetko na stavbu od základov po strechu</h2>
+      <p class="lede">Produkty popredných slovenských aj svetových výrobcov. Systém zliav dohodnutý priamo s výrobcami nám dovoľuje predávať výhodne stavebným firmám, individuálnym stavebníkom aj spolupracujúcim stavebninám.</p>
+    </div>
+    <div class="cats">
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/cement.webp" alt="Vrecia cementu na palete" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Sypké zmesi</h3><p>Cement, vápno, malty, omietky, lepidlá, stierky a samonivelačné hmoty.</p><span class="brands">Baumit, Cemmac, Calmit, Murexin, Univerbau</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/tehla.webp" alt="Stoh pálených tehál" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Murovací materiál</h3><p>Tehly, pórobetónové a betónové tvárnice, preklady, stropné systémy.</p><span class="brands">Pezinské tehelne, Ytong, Porfix, Betonárka Nadlice</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/strecha.webp" alt="Keramická strešná krytina" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Strešné krytiny</h3><p>Ťahané a razené škridly, betónová krytina, plechy a kompletné príslušenstvo.</p><span class="brands">Tondach, Bramac, Mediterran, Onduline, Blachotrapez</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/dlazba.webp" alt="Betónová zámková dlažba" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Dlažby a ploty</h3><p>Zámkové dlažby, obrubníky, palisády, plotové systémy v rôznych farbách.</p><span class="brands">Citystone Design, Premac, Stadreko</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/izolacia.webp" alt="Montáž tepelnej izolácie" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Izolačný materiál</h3><p>Minerálna vlna, polystyrén, asfaltové pásy, izolácie proti vode a radónu.</p><span class="brands">Knauf Insulation, Isover, Nobasil, Icopal, Den Braven</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/komin.webp" alt="Tehlové komíny na streche" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Komínové systémy</h3><p>Certifikované komíny so šamotovou alebo antikorovou vložkou, jedno- aj dvojprieduchové.</p><span class="brands">Stadreko, Schiedel</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/okna.webp" alt="Strešné okno v šikmej streche" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Strešné okná</h3><p>Kyvné a výklopné okná, výlezy, svetlíky, lemovania, rolety a žalúzie.</p><span class="brands">Velux, Fakro, Rooflite</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/hutny.webp" alt="Betonárska oceľ" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Hutný materiál</h3><p>Betonárska oceľ, siete, plechy, profily, rúry, zárubne a garážové brány.</p><span class="brands">Yssel Steel</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/dvere.webp" alt="Dom s drevenými oknami" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Dvere a okná</h3><p>Interiérové, vchodové a bezpečnostné dvere, drevené okná v rôznych rozmeroch.</p><span class="brands">Masonite</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/rezivo.webp" alt="Stohy dosiek na sklade reziva" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Stavebné rezivo</h3><p>Dosky, hranoly, foršne, strešné laty, tatranský profil, palubovky a krovy na mieru.</p><span class="brands">Sušené aj surové rezivo</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/naradie.webp" alt="Náradie na stene dielne" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Náradie a doplnky</h3><p>Stavebné, elektrické a záhradné náradie, spojovací materiál, rebríky, mriežky a poklopy.</p><span class="brands">Slovakia Trend, DS Haco</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/zahrada.webp" alt="Záhradný chodník z dlažby" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Podhľady a PVC</h3><p>Plastové zatrávňovacie dlažby, plotovky, profily, platne a káblové žľaby.</p><span class="brands">Transform Recykling</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/sadrokarton.webp" alt="Sadrokartónové dosky na sklade" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Sadrokartón a zateplenie</h3><p>Suchá výstavba, profily, polystyrén, sklotex, hmoždinky, fólie a strešné doplnky.</p><span class="brands">Stavebné profily, Masterplast</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/fasada.webp" alt="Štruktúrovaná fasádna omietka" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Fasádny systém</h3><p>Silikónové, silikátové a mozaikové omietky, fasádne farby a zatepľovacie systémy.</p><span class="brands">Baumit, Univerbau</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/farby.webp" alt="Plechovky farieb a štetce" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Farby a laky</h3><p>Interiérové a fasádne farby, laky, lepidlá, riedidlá a tónovacie systémy.</p><span class="brands">Het, Chemolak, Chemos, Elastik</span></div></a>
+      <a class="cat" href="#kontakt"><div class="ph"><img src="img/sklad.webp" alt="Sklad stavebnín s materiálom na paletách" loading="lazy" width="900" height="600"></div><div class="tx"><h3>Novinky a špeciality</h3><p>Dekoračné kamene, ohybný kamenný obklad Delap, vinylová podlaha Magic Floor, montované garáže.</p><span class="brands">Pozri novinky nižšie</span></div></a>
+    </div>
+    <div class="sort-note">
+      <p>Nenašiel si, čo hľadáš? Zavolaj, väčšinu materiálu vieme objednať do niekoľkých dní a doviezť priamo na stavbu.</p>
+      <a class="btn dark" href="tel:+421905622223">Zavolať 0905 622 223</a>
+    </div>
+  </div>
+</section>
+
+<section class="zlavy" aria-labelledby="h-zlavy">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Rozdávame zľavy</div>
+      <h2 id="h-zlavy">Z akciových cien dostaneš ešte ďalšiu zľavu</h2>
+      <p>Stačí spôsob platby. Stavebné firmy, živnostníci a predajne stavebnín majú navyše špeciálne dohodnuté ceny.</p>
+    </div>
+    <div>
+      <div class="disc">
+        <div><b>5 %</b><span>pri platbe v hotovosti</span></div>
+        <div><b>3,3 %</b><span>pri platbe platobnou kartou</span></div>
+      </div>
+      <div class="karta">
+        <b>Zákaznícka karta</b>
+        <p>Príď si k nám pre svoju zákaznícku kartu a získaš všetky zľavy, ktoré sme pre teba pripravili.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sluzby" id="sluzby" aria-labelledby="h-sluzby">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Služby</div>
+      <h2 id="h-sluzby">Poradíme, spočítame, dovezieme</h2>
+      <p class="lede">Tovar dovezieme priamo k tebe bez zbytočného skladovania, takže sa pri prekladaní nepoškodí.</p>
+    </div>
+    <div class="grid">
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div><h3>Doprava po celom Slovensku</h3><p>Avia 3,5 t a nákladné auto 8 t s hydraulickou rukou. Materiál zložíme presne tam, kde ho na stavbe potrebuješ.</p></article>
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></div><h3>Cenová ponuka zadarmo</h3><p>Prines projekt alebo rozmery a vypracujeme ti cenovú ponuku na celý dom aj na jednotlivé etapy.</p></article>
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-6h6v6"/></svg></div><h3>Výpočet spotreby materiálu</h3><p>Bezplatne spočítame, koľko tehál, izolácie, krytiny či omietky na stavbu skutočne potrebuješ.</p></article>
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><h3>Bezplatné poradenstvo</h3><p>Zaškolený personál s dlhoročnými skúsenosťami v stavebníctve ti pomôže vybrať správny materiál.</p></article>
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12l4-4 4 4-4 4zM13 12l4-4 4 4-4 4z"/></svg></div><h3>Množstevné zľavy</h3><p>Pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny špeciálne ceny.</p></article>
+      <article class="srv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Platba kartou a na splátky</h3><p>Platobný terminál priamo v predajni a nákup stavebného materiálu na splátky cez Quatro.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="onas" id="o-nas" aria-labelledby="h-onas">
+  <div class="wrap grid">
+    <div class="ph"><picture><source type="image/webp" srcset="img/nakladka.webp"><img src="img/nakladka.jpg" alt="Nakladanie stavebného materiálu na nákladné auto pred predajňou" loading="lazy" width="1400" height="933"></picture></div>
+    <div class="tx">
+      <div class="eyebrow">O nás</div>
+      <h2 id="h-onas">Rodinná firma, ktorá stavbám rozumie</h2>
+      <p>Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997. Hlavným profilom firmy je predaj a sprostredkovanie stavebného materiálu, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.</p>
+      <p>Personál predajne je neustále školený, pretože trh so stavebným materiálom sa stále mení. Poradenstvo a vypracovanie cenových ponúk sú u nás zadarmo. Najdôležitejšia je pre nás tvoja spokojnosť.</p>
+      <span class="stamp"><b>1997</b> rok založenia</span>
+    </div>
+  </div>
+</section>
+
+<section class="novinky" id="novinky" aria-labelledby="h-novinky">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Novinky</div>
+      <h2 id="h-novinky">Čo sme pridali do ponuky</h2>
+    </div>
+    <div class="grid">
+      <article class="nov"><h3>Dekoračné kamene</h3><p>Biely mramorový okruhliak, čierny Nero Ebano a kamenná kôra, balenie 25 kg.</p>
+        <table><tr><td>Mramor okruhliak biely 2 až 4 cm</td><td>11,20 €</td></tr><tr><td>Mramor okruhliak biely 4 až 6 cm</td><td>11,20 €</td></tr><tr><td>Nero Ebano okruhliak čierny 3 až 5 cm</td><td>10,75 €</td></tr><tr><td>Kamenná kôra 1 až 3 cm</td><td>8,95 €</td></tr><tr><td>Kamenná kôra 3 až 10 cm</td><td>8,95 €</td></tr></table>
+        <small>Ceny za vrece s DPH, po odpočítaní 5 % zľavy za platbu v hotovosti.</small></article>
+      <article class="nov"><h3>Montované garáže</h3><p>Plechové garáže so samonosnou kovovou konštrukciou, šírka 2,95 m, dĺžka 5 m, s dvojkrídlovými alebo výklopnými dverami. Rozmery na mieru.</p><p><strong>Doprava a montáž v rámci Slovenska zdarma.</strong></p></article>
+      <article class="nov"><h3>Nové materiály</h3><p>Ohybný kamenný obklad Delap, vinylová podlaha Magic Floor, Ekostyrén, betónové výrobky, výrobky z plastu a Stone na opravu starých chodníkov.</p><p>Vzorky si pozrieš priamo v predajni.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Kontakt</div>
+      <h2 id="h-kontakt">Príď k nám do Horných Krškán</h2>
+      <div class="cols">
+        <div>
+          <h3>Predajňa a sklad</h3>
+          <address>Ing. Mário Richtárik - Stavebniny<br>Novozámocká 62/68<br>949 05 Nitra, Horné Krškany</address>
+          <p style="margin-top:12px"><a class="mail" href="https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra" target="_blank" rel="noopener">Otvoriť mapu</a></p>
+        </div>
+        <div>
+          <h3>Zavolaj alebo napíš</h3>
+          <a class="big" href="tel:+421905622223">0905 622 223</a>
+          <a class="big" href="tel:+421376511777">037 651 17 77</a>
+          <p style="margin-top:12px"><a class="mail" href="mailto:info@stavebninyrichtarik.sk">info@stavebninyrichtarik.sk</a></p>
+        </div>
+      </div>
+      <div class="cols">
+        <div>
+          <h3>Otváracie hodiny</h3>
+          <table class="hours">
+            <tr><td>Pondelok až piatok</td><td>7:00 až 16:00</td></tr>
+            <tr><td>Sobota</td><td>7:00 až 12:00</td></tr>
+            <tr class="closed"><td>Nedeľa</td><td>zatvorené</td></tr>
+          </table>
+        </div>
+        <div>
+          <h3>Firemné údaje</h3>
+          <address>IČO 45959846<br>DIČ SK1083167855<br>Platba kartou cez terminál VÚB</address>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <h3 style="font-size:28px;letter-spacing:0;text-transform:none;color:#fff;font-weight:700;margin:0">Chceš cenovú ponuku?</h3>
+      <p>Pošli nám projekt alebo zoznam materiálu e-mailom, alebo sa zastav osobne. Ponuku aj výpočet spotreby spravíme zadarmo, zvyčajne do niekoľkých dní.</p>
+      <div class="cta">
+        <a class="btn primary" href="mailto:info@stavebninyrichtarik.sk?subject=Cenov%C3%A1%20ponuka">Poslať dopyt e-mailom</a>
+        <a class="btn light" href="tel:+421905622223">Zavolať</a>
+      </div>
+      <p class="fine">Pri väčších objednávkach dohodneme dopravu a vykládku hydraulickou rukou priamo na stavbe.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="rok">2026</span> Ing. Mário Richtárik - Stavebniny, Nitra</span>
+    <span><a href="#akcie">Akcie</a> · <a href="#sortiment">Sortiment</a> · <a href="#sluzby">Služby</a> · <a href="#kontakt">Kontakt</a></span>
+    <span><a href="http://www.stavebninyrichtarik.sk/files/657.pdf" target="_blank" rel="noopener">Cenník akcií (PDF)</a></span>
+  </div>
+</footer>
+
+<div class="mbar" aria-label="Rýchly kontakt">
+  <a class="btn dark" href="tel:+421905622223">Zavolať</a>
+  <a class="btn primary" href="#kontakt">Cenová ponuka</a>
+</div>
+
+<script>
+(function(){
+  var d=document,b=d.querySelector('.menu-btn'),dr=d.getElementById('drawer');
+  function open(o){dr.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));d.body.style.overflow=o?'hidden':'';}
+  b.addEventListener('click',function(){open(!dr.classList.contains('open'));});
+  dr.querySelector('.close').addEventListener('click',function(){open(false);});
+  dr.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){open(false);});});
+  d.addEventListener('keydown',function(e){if(e.key==='Escape')open(false);});
+  var r=d.getElementById('rok');if(r)r.textContent=new Date().getFullYear();
+})();
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HardwareStore","name":"Stavebniny Richtárik","alternateName":"Ing. Mário Richtárik - Stavebniny","url":"http://www.stavebninyrichtarik.sk/","telephone":["+421905622223","+421376511777"],"email":"info@stavebninyrichtarik.sk","foundingDate":"1997","address":{"@type":"PostalAddress","streetAddress":"Novozámocká 62/68","addressLocality":"Nitra","postalCode":"949 05","addressCountry":"SK"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:00","closes":"16:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"07:00","closes":"12:00"}],"paymentAccepted":"Cash, Credit Card","priceRange":"€€","areaServed":"Slovensko","image":"img/hero.jpg","vatID":"SK1083167855"}
+</script>
+</body>
+</html>
