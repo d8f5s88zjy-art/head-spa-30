@@ -8,6 +8,7 @@ a kontakt. Spustenie: python3 build.py (potrebuje lxml).
 """
 import json, os, re, html, shutil
 from lxml import html as LH, etree
+import obsah
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = ROOT
@@ -261,6 +262,22 @@ def clean(raw, page_path):
     return out
 
 
+def parser(path):
+    return obsah.Parser(IMG_SIZES, PDF_LOCAL, URL2PATH, path, rel)
+
+
+def content(slug, path):
+    """Obsah pôvodnej stránky prerobený do moderných blokov."""
+    p = parser(path)
+    return p.render(p.blocks(SRC[slug]['html']))
+
+
+def snippet(slug, n=110):
+    p = parser('x.html')
+    t = p.plain(p.blocks(SRC[slug]['html']))
+    return (t[:n].rsplit(' ', 1)[0] + '…') if len(t) > n else t
+
+
 # ---------- šablóna ----------
 NAV = [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), ('katalog/index.html', 'Katalóg'), ('novinky/index.html', 'Novinky'), ('sluzby.html', 'Služby'), ('galeria/index.html', 'Galéria'), ('o-nas.html', 'O nás'), ('kontakt.html', 'Kontakt')]
 
@@ -388,17 +405,19 @@ def build_katalog_page(slug):
     for i, p in enumerate(parts):
         acc += '__' + p
         crumbs.append((PAGES[acc], nice_title(SRC[acc]['title']) if i else KAT[p][1]) if acc != slug else (None, title))
-    content = clean(SRC[slug]['html'], path)
+    cont = content(slug, path)
     ch = children(slug)
     subs = ''
     if ch:
-        subs = '<div class="subs"><h2>Podrobnejšie</h2><div class="sub-grid">' + ''.join(f'<a class="sub" href="{rel(path, PAGES[c])}"><b>{nice_title(SRC[c]["title"])}</b><span>{text_of(SRC[c]["html"])[:110]}…</span></a>' for c in ch) + '</div></div>'
+        subs = '<div class="subs"><h2>Podrobnejšie</h2><div class="sub-grid">' + ''.join(f'<a class="sub rv" href="{rel(path, PAGES[c])}"><b>{nice_title(SRC[c]["title"])}</b><span>{snippet(c)}</span></a>' for c in ch) + '</div></div>'
     lede = cat[2] if len(parts) == 1 else None
+    if len(parts) == 1 and cont.strip():
+        cont = '<h2 class="sh rv"><span>Značky, ktoré máme v ponuke</span></h2>' + cont
     body = f'''<section class="sec kat-page"><div class="wrap two">
 {sidebar(path, slug)}
 <div class="main">
 {head_block('Katalóg' if len(parts) == 1 else cat[1], title, lede)}
-<div class="content">{content}</div>
+<div class="content">{cont}</div>
 {subs}
 <div class="kat-cta"><p>Chceš cenu na konkrétne množstvo? Zavolaj alebo napíš, cenovú ponuku spravíme zadarmo.</p><div class="cta"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a><a class="btn ghost" href="mailto:{FIRMA['email']}?subject={html.escape(title)}">Napísať e-mail</a></div></div>
 </div></div></section>'''
@@ -418,15 +437,30 @@ def build_akcie():
 <div class="deals">{cards}</div>
 </div></section>'''
     write(path, page(path, 'Akcie', body, 'Aktuálne akcie Stavebniny Richtárik Nitra: Fakro, City Stone Design, Termobrik, Stadreko, Blachotrapez, Porfix, Ytong, rezivo, náradie.', [('index.html', 'Úvod'), (None, 'Akcie')]))
+    karty = {s: (tag, h, p) for s, tag, h, p in AKCIE_KARTY}
     for s in children('akcie'):
         p = PAGES[s]; t = nice_title(SRC[s]['title'])
-        content = clean(SRC[s]['html'], p)
-        body = f'''<section class="sec"><div class="wrap narrow">
-{head_block('Akcia', t)}
-<div class="content letak">{content}</div>
-<p class="back"><a href="{rel(p, 'akcie/index.html')}">Všetky akcie</a></p>
+        k = s.split('__')[1]
+        tag, h, popis = karty.get(k, ('Akcia', t, ''))
+        pr = parser(p); bl = pr.blocks(SRC[s]['html'])
+        imgs = [x for kind, v in bl if kind == 'images' for x in v] + [x for kind, v in bl if kind == 'item' for x in v['imgs']]
+        pdfs = [x for kind, v in bl if kind == 'pdfs' for x in v] + [x for kind, v in bl if kind == 'item' for x in v['pdfs']]
+        letak = ''
+        if imgs:
+            i, alt = imgs[0]
+            letak = f'<figure class="letak rv"><a href="{pr._src(i)}" data-lb="1" data-cap="{html.escape(h)}"><img src="{pr._src(i)}" alt="Leták akcie {html.escape(h)}" width="{IMG_SIZES.get(i, (0, 0))[0]}" height="{IMG_SIZES.get(i, (0, 0))[1]}"></a><figcaption>Leták akcie, klikni pre zväčšenie</figcaption></figure>'
+        others = ''.join(f'<a href="{rel(p, PAGES["akcie__" + s2])}"><span class="tag">{tag2}</span><b>{h2}</b></a>' for s2, tag2, h2, _ in AKCIE_KARTY if s2 != k and 'akcie__' + s2 in PAGES)
+        body = f'''<section class="sec akcia"><div class="wrap two">
+<div class="main">
+{head_block('Akcia', h, popis)}
+<div class="akcia-tag"><span class="tag">{tag}</span><span>Ceny platia do vypredania zásob. K akciovej cene dostaneš ešte 5 % pri platbe v hotovosti alebo 3,3 % kartou.</span></div>
+{letak}
+<div class="pdfs rv">{''.join(pr._pdf(hh, tt) for hh, tt in pdfs)}<a class="pdf" href="{rel(p, 'pdf/657.pdf')}" target="_blank" rel="noopener"><span>Cenník všetkých akcií</span></a></div>
+<div class="kat-cta rv"><p>Chceš akciovú cenu na konkrétne množstvo? Zavolaj alebo napíš, cenovú ponuku spravíme zadarmo.</p><div class="cta"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a><a class="btn ghost" href="mailto:{FIRMA['email']}?subject=Akcia%20{html.escape(h)}">Napísať e-mail</a></div></div>
+</div>
+<aside class="side"><div class="side-in"><h2>Ďalšie akcie</h2><div class="others">{others}</div><a class="btn ghost small" href="{rel(p, 'akcie/index.html')}">Všetky akcie</a></div></aside>
 </div></section>'''
-        write(p, page(p, t + ' v akcii', body, f'Akcia {t}, Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), (None, t)]))
+        write(p, page(p, h + ' v akcii', body, f'Akcia {h}: {popis} Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('akcie/index.html', 'Akcie'), (None, h)]))
 
 
 def build_novinky():
@@ -443,10 +477,10 @@ def build_novinky():
 </div></section>'''
     write(path, page(path, 'Novinky', body, 'Novinky v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Novinky')]))
     for s in children('novinky'):
-        p = PAGES[s]; t = nice_title(SRC[s]['title'])
-        body = f'''<section class="sec"><div class="wrap narrow">
-{head_block('Novinka', t)}
-<div class="content">{clean(SRC[s]['html'], p)}</div>
+        p = PAGES[s]; t = nice_title(SRC[s]['title']); k = s.split('__')[1]
+        body = f'''<section class="sec"><div class="wrap">
+{head_block('Novinka', t, NOVINKY_POPIS.get(k, None))}
+<div class="content">{content(s, p)}</div>
 <p class="back"><a href="{rel(p, 'novinky/index.html')}">Všetky novinky</a></p>
 </div></section>'''
         write(p, page(p, t, body, f'{t}. Novinka v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('novinky/index.html', 'Novinky'), (None, t)]))
@@ -458,8 +492,9 @@ def build_galeria():
     secs = ''
     for s in albums:
         t = nice_title(SRC[s]['title']).replace('výstava', 'Výstava').replace('Fotky - ', '')
-        g = clean(SRC[s]['html'], path)
-        secs += f'<div class="album"><h2>{t}</h2>{g}</div>'
+        g = content(s, path)
+        n = len(SRC[s]['gallery']) if SRC[s].get('gallery') else g.count('data-lb')
+        secs += f'<div class="album"><h2 class="sh rv"><span>{t}</span><small>{n} fotografií</small></h2>{g}</div>'
     body = f'''<section class="sec"><div class="wrap">
 {head_block('Galéria', 'Z výstav a z predajne', 'Fotografie z výstav Agrokomplex, Gardenia a Domexpo v Nitre, kde sme vystavovali náš sortiment.')}
 {secs}
@@ -469,9 +504,9 @@ def build_galeria():
 
 def build_simple(slug, kicker, h1, lede=None, extra=''):
     p = PAGES[slug]; t = nice_title(SRC[slug]['title'])
-    body = f'''<section class="sec"><div class="wrap narrow">
+    body = f'''<section class="sec"><div class="wrap{" narrow" if slug != "sluzby" else ""}">
 {head_block(kicker, h1, lede)}
-<div class="content">{clean(SRC[slug]['html'], p)}</div>
+<div class="content">{content(slug, p)}</div>
 {extra}
 </div></section>'''
     write(p, page(p, t.capitalize() if t.isupper() else t, body, None, [('index.html', 'Úvod'), (None, h1)]))
@@ -513,7 +548,7 @@ def build_home():
     <div class="cta"><a class="btn primary" href="katalog/index.html">Prezrieť katalóg</a><a class="btn light" href="akcie/index.html">Aktuálne akcie</a></div>
   </div>
 </section>
-<div class="wrap"><div class="facts" aria-label="V skratke">
+<div class="wrap"><div class="facts rv" aria-label="V skratke">
   <div><b>1997</b><span>rodinná firma, 29 rokov v stavebninách</span></div>
   <div><b>5 %</b><span>ďalšia zľava pri platbe v hotovosti</span></div>
   <div><b>3,3 %</b><span>ďalšia zľava pri platbe kartou</span></div>
@@ -530,7 +565,7 @@ def build_home():
 <section class="sec zlavy"><div class="wrap grid">
   <div><div class="eyebrow light">Rozdávame zľavy</div><h2>Z akciových cien dostaneš ešte ďalšiu zľavu</h2><p>Stačí spôsob platby. Stavebné firmy, živnostníci a predajne stavebnín majú navyše špeciálne dohodnuté ceny.</p></div>
   <div><div class="disc"><div><b>5 %</b><span>pri platbe v hotovosti</span></div><div><b>3,3 %</b><span>pri platbe platobnou kartou</span></div></div>
-  <div class="karta"><b>Zákaznícka karta</b><p>Príď si k nám pre svoju zákaznícku kartu a získaš všetky zľavy, ktoré sme pre teba pripravili.</p></div></div>
+  <div class="karta"><img src="img/p/944.webp" alt="Zákaznícka karta Stavebniny Richtárik" loading="lazy" width="671" height="427"><div><b>Zákaznícka karta</b><p>Príď si k nám pre svoju zákaznícku kartu a získaš všetky zľavy, ktoré sme pre teba pripravili.</p></div></div></div>
 </div></section>
 <section class="sec sluzby"><div class="wrap">
   <div class="head"><div class="eyebrow">Služby</div><h2>Poradíme, spočítame, dovezieme</h2><p class="lede">Tovar dovezieme priamo k tebe bez zbytočného skladovania, takže sa pri prekladaní nepoškodí.</p></div>
@@ -548,7 +583,7 @@ def build_home():
   <div class="novs">{novs}</div>
 </div></section>
 <section class="sec onas"><div class="wrap grid">
-  <div class="ph"><picture><source type="image/webp" srcset="img/nakladka.webp"><img src="img/nakladka.jpg" alt="Nakladanie stavebného materiálu" loading="lazy" width="1400" height="933"></picture></div>
+  <div class="ph"><a href="img/p/110.webp" data-lb="1" data-cap="Predajňa Stavebniny Richtárik, Novozámocká 62/68"><img src="img/p/110.webp" alt="Predajňa Stavebniny Richtárik v Nitre" loading="lazy" width="533" height="400"></a></div>
   <div class="tx"><div class="eyebrow">O nás</div><h2>Rodinná firma, ktorá stavbám rozumie</h2><p>Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997. Hlavným profilom firmy je predaj a sprostredkovanie stavebného materiálu, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.</p><p>Poradenstvo a vypracovanie cenových ponúk sú u nás zadarmo. Najdôležitejšia je pre nás tvoja spokojnosť.</p><a class="btn ghost" href="o-nas.html">Viac o nás</a></div>
 </div></section>
 <section class="sec kontakt-teaser"><div class="wrap grid">
@@ -570,7 +605,7 @@ def build_search_index():
             kat = KAT[parts[1]][1]
         else:
             t = nice_title(SRC[s]['title']); kat = 'Akcie' if parts[0] == 'akcie' else 'Novinky'
-        txt = text_of(SRC[s]['html'])
+        pr = parser('x.html'); txt = pr.plain(pr.blocks(SRC[s]['html']))
         idx.append({'t': t, 'k': kat, 'p': p, 'x': txt[:900]})
     write('assets/index.json', json.dumps(idx, ensure_ascii=False))
 
