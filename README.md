@@ -406,12 +406,11 @@ a otvoriť `http://localhost:8080/lipa-gym/`.
 
 ## GYM KLUB 3D (priečinok `lipa-gym/3d/`)
 
-Prechádzka celým fitkom GYM KLUB na skutočných záberoch z 26. 9. 2026: začína na terase
-pred vchodom, vojde dverami k recepcii a prejde všetkých 10 zón (hlavná sála, sála so
-strojmi, kardio, voľné váhy, jednoručky, funkčná zóna, tatami) v 30 zastávkach. Skrolovanie
-(alebo šípky, disk na podlahe, pás zón a zoznam zón) vyberá zastávku, ťahaním obrazu sa
-človek rozhliadne v rámci ostrého záberu. Čisté HTML, CSS a JS bez knižníc a bez zostavovania;
-údaje zastávok sú v `lipa-gym/3d/assets/tour-data.json`, médiá v `lipa-gym/3d/media/`.
+Skrolovací film celým fitkom GYM KLUB na skutočných záberoch z 26. 9. 2026: 16 ostrých záberov
+od terasy cez vchod, recepciu, hlavnú sálu, stroje, kardio, voľné váhy a funkčnú zónu po tatami.
+Skrolovanie posúva kameru (pomalé priblíženie a prelet do ďalšieho priestoru) a počas toho sa
+odkrývajú overené informácie o fitku; na konci je kontakt. Čisté HTML, CSS a JS bez knižníc a bez
+zostavovania (`index.html`, `assets/style.css`, `assets/film.js`), médiá v `lipa-gym/3d/media/`.
 Pôvodný web `lipa-gym/` zostal bez zmeny. Register faktov, zoznam médií, ovládanie, vykonané
 kontroly a obmedzenia opisuje `lipa-gym/3d/PRODUKCIA.md`. Stránka má `noindex`, kým prevádzka
 nepotvrdí hodiny, cenník a trénerov.
