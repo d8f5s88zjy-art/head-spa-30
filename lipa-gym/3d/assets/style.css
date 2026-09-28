@@ -33,7 +33,7 @@ address{font-style:normal}
 .h2{margin-top:12px;font:400 clamp(48px,7vw,104px)/.9 var(--font-d);letter-spacing:.01em}
 .sec-head{margin-bottom:clamp(36px,6vh,64px)}
 .sec-p{margin-top:18px;max-width:52ch;font-size:16px;color:var(--mute)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;background:var(--accent);color:#0c0d0f;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:transform .3s var(--ease),background .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:52px;padding:0 28px;border-radius:999px;background:var(--accent);color:#0c0d0f;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:transform .3s var(--ease),background .2s}
 .btn:hover{transform:translateY(-2px);background:#d4fa66}
 
 /* odkrytie pri príchode do obrazu (trieda in od IntersectionObserver, len raz) */
@@ -44,7 +44,7 @@ html.io .rv.in{opacity:1;transform:none}
 .hero{position:relative;background:#000}
 .hero-stage{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#000}
 /* s JS je úvod dlhší: obrazovka ostane stáť a skrolovanie vedie kameru do priestoru */
-html.js .hero{height:230vh}
+html.js .hero{height:165vh}
 html.js .hero-stage{position:sticky;top:0;height:100vh;height:100lvh}
 .hero-scene{position:absolute;inset:0}
 .hero-scene picture,.hero-scene img{display:block;width:100%;height:100%}
@@ -56,7 +56,7 @@ html.js.ready .hero-scene img{opacity:1}
 .hero-in{text-shadow:0 2px 24px rgba(0,0,0,.45)}
 .hero-in{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:calc(100lvh - 100svh + clamp(40px,9vh,96px))}
 .hero-k{font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
-.hero-h{margin-top:12px;font:400 clamp(56px,11vw,168px)/.86 var(--font-d);letter-spacing:.01em}
+.hero-h{margin-top:12px;font:400 clamp(54px,10.5vw,156px)/.88 var(--font-d);letter-spacing:.01em}
 .hero-h span{display:block}
 .hero-h2{color:var(--accent)}
 .hero-p{margin:18px 0 28px;font-size:clamp(17px,1.6vw,21px);color:#e6e5e1;max-width:34ch}
@@ -108,7 +108,7 @@ html.js.ready .hero-in>:nth-child(5){transition-delay:1.4s}
 .s3d img{object-fit:cover}
 .s3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1s ease}
 .s3d.gl canvas{opacity:1}
-.zone .s3d{height:clamp(380px,78vh,860px);margin-bottom:clamp(14px,2vw,22px)}
+.zone .s3d{height:clamp(360px,66vh,720px);margin-bottom:clamp(14px,2vw,22px)}
 .zone .s3d::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,9,10,.35),rgba(8,9,10,0) 18%,rgba(8,9,10,0) 82%,rgba(8,9,10,.55))}
 .hero-hint{margin-top:22px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 html:not(.js) .hero-hint{display:none}
@@ -189,6 +189,20 @@ html.js .phero-in>*{animation:rise 1.1s var(--ease) both}
 html.js .phero-in>:nth-child(2){animation-delay:.12s}
 html.js .phero-in>:nth-child(3){animation-delay:.24s}
 @keyframes rise{from{opacity:0;transform:translate3d(0,24px,0)}}
+
+/* ---------- rýchle informácie pod úvodom ---------- */
+.quick{border-bottom:1px solid var(--line);background:var(--bg)}
+.quick-l{display:grid;grid-template-columns:repeat(4,1fr)}
+.quick-l li{display:grid;gap:4px;align-content:start;padding:22px 20px 22px 0}
+.quick-l li+li{padding-left:22px;border-left:1px solid var(--line)}
+.quick-k{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.quick-k svg{color:var(--accent)}
+.quick-v{font-size:16px;font-weight:600;line-height:1.35}
+.quick-a{justify-self:start;display:inline-block;margin-top:2px;padding:6px 0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none}
+.quick-a:hover{text-decoration:underline}
+.f-help{font-size:13px;color:var(--dim)}
+.form textarea::placeholder{color:#6d7178}
+.btn svg{margin-right:8px}
 
 /* ---------- domov ---------- */
 .reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);margin:0;padding:0;list-style:none}
@@ -341,22 +355,39 @@ a.c-v:hover,.c-soc a:hover{color:var(--accent)}
 @keyframes vtIn{from{opacity:0;transform:scale(1.015)}}
 
 /* ---------- telefóny ---------- */
+@media (max-width:900px){.plans{grid-template-columns:1fr;max-width:560px}}
 @media (max-width:1100px){
-  .nav,.bar-cta{display:none}
+  .quick-l{grid-template-columns:1fr 1fr}
+  .quick-l li:nth-child(3){padding-left:0;border-left:0}
+  .quick-l li:nth-child(n+3){border-top:1px solid var(--line)}
+  .nav{display:none}
   .menu-btn{display:grid}
   .svc{grid-template-columns:1fr 1fr}
   .tt{grid-template-columns:repeat(4,1fr)}
 }
 @media (max-width:760px){
   body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-  .dock{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:1fr 1.5fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(8,9,10,.96);box-shadow:0 -1px 0 var(--line);transition:transform .4s var(--ease)}
+  .bar-cta{display:none}
+  .plan .btn{letter-spacing:.06em}
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:1fr auto 1.7fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(8,9,10,.96);box-shadow:0 -1px 0 var(--line);transition:transform .4s var(--ease)}
   body.home:not(.dock-on) .dock{transform:translateY(110%)}
-  .dock-a{display:grid;place-items:center;min-height:48px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+  .dock-a{display:grid;place-items:center;min-height:48px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-align:center;white-space:nowrap;text-decoration:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
   .dock-main{background:var(--accent);color:#0c0d0f;box-shadow:none}
+  .dock-tel{grid-auto-flow:column;gap:6px;padding:0 14px}
+  .dock-tel span{font-size:12px}
+  .quick-l{grid-template-columns:1fr 1fr}
+  .quick-l li{padding:16px 12px 16px 0}
+  .quick-l li+li{padding-left:0;border-left:0}
+  .quick-l li:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}
+  .quick-l li:nth-child(n+3){border-top:1px solid var(--line)}
+  .quick-v{font-size:15px}
+  .svc-media{aspect-ratio:16/9}
+  .svc-list{gap:48px}
   html.menu-open .dock{display:none}
   .two,.first,.contact-grid,.svc-row,.preview{grid-template-columns:1fr}
   .svc-rev .svc-media{order:0}
-  .reasons,.plans,.panda-pics{grid-template-columns:1fr}
+  .reasons,.panda-pics{grid-template-columns:1fr}
+  .plan .btn{align-self:stretch}
   .panda-band::after{background:linear-gradient(180deg,rgba(8,9,10,.55),rgba(8,9,10,.35) 30%,rgba(8,9,10,.92) 75%)}
   .preview-stage{min-height:0;height:62svh}
   .svc{grid-template-columns:1fr}
@@ -380,7 +411,7 @@ a.c-v:hover,.c-soc a:hover{color:var(--accent)}
   .cta-row .btn{flex:1 1 auto}
   .table th,.table td{padding-right:8px}
 }
-@media (max-width:400px){.tt{grid-template-columns:1fr}}
+@media (max-width:400px){.tt{grid-template-columns:1fr}.dock-tel span{display:none}.dock{grid-template-columns:1fr auto 1.8fr}}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

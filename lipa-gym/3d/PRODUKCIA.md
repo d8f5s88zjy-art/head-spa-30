@@ -14,6 +14,25 @@ LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale real
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
 
+## 00. Prepracovanie (audit 28. 9. 2026)
+
+Audit na 360, 768 a 1440 px ukázal: úvod bol prvé 1 až 3 s tmavý a bez textu, prvé dve obrazovky
+zaberala animácia, adresa, hodiny a cena neboli na úvode, náhľady v galériách sa načítavali
+v 1280 px (O fitku 5 až 7,7 MB), nadpisy boli všeobecné a texty o priestoroch príliš krátke.
+
+Zmeny:
+- Úvod: text sa odkryje hneď (najneskôr po 0,9 s), LED svetlá sa rozsvecujú za ním; nadpis
+  „Fitko a bojové športy v Lipa Centre“ s adresou nad ním; úvod skrátený z 230vh na 165vh.
+- Pás rýchlych informácií pod úvodom: adresa s navigáciou, hodiny, cena vstupu, telefón.
+- Menu: „Cenník“ namiesto „Členstvá“; na tablete tlačidlo Naplánovať návštevu v lište; na mobile
+  spodná lišta Cenník, Volať, Naplánovať návštevu.
+- Texty: informatívne nadpisy (napr. „Jeden vstup za 6 €, mesiac za 50 €“), vybavenie každého
+  priestoru podľa fotiek, prvá návšteva v 4 krokoch, podmienky platby, pomocné texty formulára.
+- Značky „Doplniť: …“ pri každom chýbajúcom alebo nepotvrdenom údaji.
+- Náhľady 480 px (AVIF, WebP, JPG) pre galérie a dlaždice: O fitku na mobile 1,3 MB (predtým 5,2),
+  úvod 0,7 MB (predtým 1,9); fotky sály Panda aj v AVIF.
+- Slovenská typografia: pevná medzera za jednopísmenovými predložkami a pred €.
+
 ## 0. Web s 5 stránkami (aktuálny stav)
 
 Zadanie: kompletný, luxusne pôsobiaci web fitka s cestou k návšteve a členstvu, mobil ako prvý,
@@ -33,7 +52,7 @@ na telefóne); všetky fakty sú v ňom na jednom mieste (`GYM`, `HOURS`, `PLANS
 `TIMETABLE`, `COACHES`, `ZONES`). Po úprave: `python3 tools/generuj.py` v `lipa-gym/3d`.
 Panda Fight Club: zdroje pandafightclub.webnode.sk, gymklub.sk, Instagram klubu a
 orlyfyzickejaktivity.eu (28. 9. 2026). Údaje prevzaté z gymklub.sk a z klasického webu `lipa-gym/` sú na stránke označené žltou značkou
-**OVERIŤ**; `TODO_VISIBLE = False` ich skryje, keď budú potvrdené. Recenzie z klasického webu sa
+**Doplniť:**; `TODO_VISIBLE = False` ich skryje, keď budú potvrdené. Recenzie z klasického webu sa
 nepoužili (nie je overený zdroj).
 
 Prechody medzi stránkami: View Transitions (`@view-transition`), v ostatných prehliadačoch

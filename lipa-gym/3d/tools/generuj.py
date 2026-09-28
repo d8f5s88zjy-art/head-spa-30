@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Vygeneruje 5 stránok webu GYM KLUB (index, o-fitku, clenstva, sluzby, kontakt) so spoločnou
+"""Vygeneruje 6 stránok webu GYM KLUB (index, o-fitku, clenstva, sluzby, mma, kontakt) so spoločnou
 hlavičkou, navigáciou a pätičkou. Spustenie z priečinka lipa-gym/3d:  python3 tools/generuj.py
 
 Všetky fakty o prevádzke sú v slovníku GYM nižšie. Údaje, ktoré prevádzka ešte nepotvrdila,
-sú na stránke označené značkou OVERIŤ (funkcia todo); pred zverejnením ich treba potvrdiť alebo
-opraviť a značku odstrániť (TODO_VISIBLE = False ich skryje všetky naraz).
+sú na stránke označené značkou „Doplniť: …“ (funkcia todo); pred zverejnením ich treba získať
+alebo potvrdiť a značku odstrániť (TODO_VISIBLE = False ich skryje všetky naraz).
 """
 import html
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FOTKY = json.load(open(os.path.join(ROOT, 'tools', 'fotky.json'), encoding='utf-8'))
@@ -30,17 +31,19 @@ GYM = {
     'embed': 'https://www.google.com/maps?q=Gym+Klub,+V%C3%BDstavn%C3%A1+6,+949+01+Nitra&output=embed',
 }
 HOURS = [('Pondelok – štvrtok', '06:30 – 21:00'), ('Piatok', '06:30 – 23:00'), ('Sobota – nedeľa', '08:00 – 17:00')]
-HOURS_NOTE = 'Otázky na gymklub.sk uvádzajú cez víkend 08:00 – 17:00, pätička toho istého webu 08:30 – 18:00. Potvrdiť s prevádzkou.'
-PRICES_NOTE = 'Ceny, podmienky a spôsob platby sú prevzaté z gymklub.sk (27. 9. 2026). Pred zverejnením ich potvrdiť s prevádzkou.'
+HOURS_NOTE = 'potvrdené víkendové hodiny od prevádzky. Časté otázky na gymklub.sk uvádzajú 08:00 – 17:00, pätička toho istého webu 08:30 – 18:00.'
+PRICES_NOTE = 'potvrdenie cien a podmienok od prevádzky. Teraz sú prevzaté z gymklub.sk (27. 9. 2026).'
 PLANS = [
-    {'name': 'Jednorazový vstup', 'price': '6 €', 'per': '1 vstup', 'text': 'Príďte, kedy sa vám hodí, bez viazanosti. Vstup do celého fitness centra.', 'main': False},
-    {'name': 'Permanentka', 'price': '50 €', 'per': 'mesiac', 'text': 'Neobmedzené fitness tréningy počas mesiaca. Od deviateho vstupu v mesiaci vychádza lacnejšie než jednotlivé vstupy.', 'main': True},
-    {'name': 'Permanentka študent', 'price': '42 €', 'per': 'mesiac', 'text': 'Mesačná permanentka pre študentov. Pri kúpe a vstupe ukážte platný študentský preukaz.', 'main': False},
+    {'name': 'Jednorazový vstup', 'price': '6 €', 'per': '1 vstup', 'text': 'Na vyskúšanie alebo keď chodíte nepravidelne. Platí pre celé fitness centrum, bez viazanosti.', 'main': False},
+    {'name': 'Mesačná permanentka', 'price': '50 €', 'per': 'mesiac', 'text': 'Neobmedzený počet fitness tréningov počas mesiaca. Pri 9 a viac tréningoch vychádza lacnejšie než jednotlivé vstupy.', 'main': True},
+    {'name': 'Permanentka študent', 'price': '42 €', 'per': 'mesiac', 'text': 'Mesačná permanentka so zľavou pre študentov. Pri kúpe aj pri vstupe ukážte platný študentský preukaz.', 'main': False},
 ]
 MORE = [('10 vstupov', 'bez viazanosti na mesiac', '50 €'), ('20 vstupov', '4 € za vstup', '80 €'),
         ('Študent · 1 vstup', 'so študentským preukazom', '5 €'), ('Dôchodca · 1 vstup', '', '3,50 €')]
-TERMS = ['Platba na recepcii, podľa gymklub.sk len v hotovosti.', 'Prijímame MultiSport a Upbalansea app, kartu alebo aplikáciu ukážte pri príchode.',
-         'Ceny platia pre samostatný fitness tréning. Bojové športy, skupinové lekcie a osobné tréningy dohodnete s trénerom.']
+TERMS = ['Vstup aj permanentku platíte na recepcii. Podľa gymklub.sk len v hotovosti, bez platobnej karty.',
+         'Platí MultiSport aj Upbalansea app: kartu alebo aplikáciu ukážte pri príchode na recepcii.',
+         'Ceny platia pre samostatný fitness tréning. Bojové športy, skupinové lekcie a osobný tréning dohodnete priamo s trénerom.',
+         'Na samostatný tréning sa netreba objednávať ani vopred registrovať.']
 TIMETABLE = [  # deň 0 = pondelok
     (0, '16:00', '17:00', 'Pilates', 'Majka Navrátilová'), (0, '17:00', '18:30', 'Krav Maga', 'Tomáš Židek, Slavo Juro'),
     (1, '17:00', '19:00', 'Bojové športy', 'Michal Šášik'), (1, '18:00', '19:00', 'Zdravý chrbát', 'Nikol Molnárová'),
@@ -62,15 +65,15 @@ COACHES = [  # (meno, zameranie, text, telefón alebo None)
     ('Jaroslav Šoltís', 'Nutričné poradenstvo', 'Analýza telesného zloženia, stravovací protokol, príprava na súťaž vo fitness a silovom trojboji.', None),
 ]
 ZONES = [
-    ('prichod', 'Príchod', 'Výstavná 6, Lipa Centrum. Vchod je z krytej terasy, hneď za dverami je recepcia.', ['terasa-1', 'vstup-1', 'recepcia-1'], 'vstup-1'),
-    ('hlavna-sala', 'Hlavná sála', 'Silový tréning na strojoch.', ['hlavna-sala-1', 'hlavna-sala-2', 'hlavna-sala-4', 'hlavna-sala-5', 'hlavna-sala-3', 'hlavna-sala-6'], 'hlavna-sala-2'),
-    ('sala-so-strojmi', 'Sála so strojmi', 'Druhá sála na silový tréning.', ['stroje-4', 'stroje-1', 'stroje-2', 'stroje-3'], 'stroje-4'),
-    ('kardio', 'Kardio', 'Kardio tréning pri oknách.', ['kardio-3', 'kardio-1', 'kardio-2'], 'kardio-1'),
-    ('volne-vahy', 'Voľné váhy', 'Tréning s jednoručkami a osami.', ['volne-vahy-1', 'volne-vahy-2', 'volne-vahy-3', 'jednorucky-1'], 'volne-vahy-2'),
-    ('funkcna-zona', 'Funkčná zóna', 'Funkčný a kondičný tréning.', ['funkcna-zona-4', 'funkcna-zona-1', 'funkcna-zona-2', 'funkcna-zona-5', 'funkcna-zona-3', 'funkcna-zona-6', 'funkcna-zona-7'], 'funkcna-zona-6'),
-    ('tatami', 'Tatami', 'Samostatná miestnosť na cvičenie na podložkách.', ['tatami-1', 'tatami-2', 'tatami-3'], 'tatami-2'),
+    ('prichod', 'Príchod a recepcia', 'Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB & caffee. Hneď za nimi je recepcia s nápojmi a polička na obuv, tu zaplatíte vstup.', ['terasa-1', 'vstup-1', 'recepcia-1'], 'vstup-1'),
+    ('hlavna-sala', 'Hlavná sála', 'Najviac strojov na jednom mieste: viacstaničné kladkové veže, stroje so záťažou na jednotlivé partie, kotúčové jednoručky a zrkadlová stena.', ['hlavna-sala-1', 'hlavna-sala-2', 'hlavna-sala-4', 'hlavna-sala-5', 'hlavna-sala-3', 'hlavna-sala-6'], 'hlavna-sala-2'),
+    ('sala-so-strojmi', 'Sála so strojmi', 'Druhá, svetlá sála s veľkými oknami: kladkové stroje, polohovateľné lavice, lavice so stojanmi na osi a stojan s pevnými činkami.', ['stroje-4', 'stroje-1', 'stroje-2', 'stroje-3'], 'stroje-4'),
+    ('kardio', 'Kardio', 'Rad bežeckých pásov Life Fitness pri oknách s výhľadom do zelene, eliptický a schodový trenažér. Hodí sa na rozcvičenie aj samostatný kardio tréning.', ['kardio-3', 'kardio-1', 'kardio-2'], 'kardio-1'),
+    ('volne-vahy', 'Voľné váhy', 'Stojany s jednoručkami pri zrkadlách, samostatný stojan s gumovými jednoručkami do 20 kg, lavice so stojanmi na osi, kotúče a lavica na bicepsy.', ['volne-vahy-1', 'volne-vahy-2', 'volne-vahy-3', 'jednorucky-1'], 'volne-vahy-2'),
+    ('funkcna-zona', 'Funkčná zóna', 'Priestor na kondičný a funkčný tréning: šprintérska dráha na podlahe, rig Life Fitness so závesnými popruhmi a boxovacím vrecom, kettlebelly, medicinbaly a vzduchový bicykel.', ['funkcna-zona-4', 'funkcna-zona-1', 'funkcna-zona-2', 'funkcna-zona-5', 'funkcna-zona-3', 'funkcna-zona-6', 'funkcna-zona-7'], 'funkcna-zona-6'),
+    ('tatami', 'Tatami', 'Samostatná miestnosť bez strojov: podložky, zrkadlová stena, švédska rebrina a závesné popruhy.', ['tatami-1', 'tatami-2', 'tatami-3'], 'tatami-2'),
 ]
-PAGES = [('index.html', 'Domov'), ('o-fitku.html', 'O fitku'), ('clenstva.html', 'Členstvá'), ('sluzby.html', 'Služby'), ('mma.html', 'MMA'), ('kontakt.html', 'Kontakt')]
+PAGES = [('index.html', 'Domov'), ('o-fitku.html', 'O fitku'), ('clenstva.html', 'Cenník'), ('sluzby.html', 'Služby'), ('mma.html', 'MMA'), ('kontakt.html', 'Kontakt')]
 # Panda Fight Club: klub bojových športov, ktorý trénuje v GYM KLUB. Zdroje: pandafightclub.webnode.sk,
 # gymklub.sk, instagram.com/pandafightclubnitra, orlyfyzickejaktivity.eu (28. 9. 2026).
 PANDA = {
@@ -80,8 +83,8 @@ PANDA = {
     'web': 'https://pandafightclub.webnode.sk/',
     'award': 'https://www.orlyfyzickejaktivity.eu/profile-28362-panda-fight-club-nitra',
 }
-PANDA_SCHEDULE_NOTE = ('Rozvrh sa v zdrojoch líši: gymklub.sk Ut a Št 17:00 – 19:00, So 13:00 – 15:00; '
-                       'web Panda Fight Club Št 16:00 – 18:00, So a Ne 13:00 – 15:00. Potvrdiť s trénerom.')
+PANDA_SCHEDULE_NOTE = ('platný rozvrh od trénera. Zdroje sa líšia: gymklub.sk Ut a Št 17:00 – 19:00, So 13:00 – 15:00; '
+                       'web Panda Fight Club Št 16:00 – 18:00, So a Ne 13:00 – 15:00.')
 ADDR = f"{GYM['street']} ({GYM['place']}), {GYM['zip']} {GYM['city']}"
 
 
@@ -89,12 +92,12 @@ def todo(note):
     """Viditeľná značka pre údaj, ktorý treba doplniť alebo potvrdiť pred zverejnením."""
     if not TODO_VISIBLE:
         return ''
-    return f'<span class="todo"><b>Overiť</b> {e(note)}</span>'
+    return f'<span class="todo"><b>Doplniť:</b> {e(note)}</span>'
 
 
 def pic(sid, sizes, alt=None, lazy=True, cls='', eager_hi=False):
     f = FOTKY[sid]; big = f['big']; h1280 = round(f['h'] * 1280 / f['w'])
-    ss = lambda ext: f'media/tour-{sid}-1280.{ext} 1280w, media/tour-{sid}-{big}.{ext} {big}w'
+    ss = lambda ext: f'media/tour-{sid}-480.{ext} 480w, media/tour-{sid}-1280.{ext} 1280w, media/tour-{sid}-{big}.{ext} {big}w'
     load = 'fetchpriority="high"' if eager_hi else ('loading="lazy"' if lazy else '')
     c = f' class="{cls}"' if cls else ''
     return (f'<picture{c}><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}">'
@@ -104,11 +107,12 @@ def pic(sid, sizes, alt=None, lazy=True, cls='', eager_hi=False):
 
 
 def pic_panda(n, sizes, alt, lazy=True, eager_hi=False, cls=''):
-    """Fotky sály Panda Fight Club z gymklub.sk (1200 × 800, bez AVIF)."""
+    """Fotky sály Panda Fight Club z gymklub.sk (1200 × 800)."""
     b = f'media/panda-sala-{n}'
     load = 'fetchpriority="high"' if eager_hi else ('loading="lazy"' if lazy else '')
     c = f' class="{cls}"' if cls else ''
-    return (f'<picture{c}><source type="image/webp" srcset="{b}-640.webp 640w, {b}-1200.webp 1200w" sizes="{sizes}">'
+    return (f'<picture{c}><source type="image/avif" srcset="{b}-640.avif 640w, {b}-1200.avif 1200w" sizes="{sizes}">'
+            f'<source type="image/webp" srcset="{b}-640.webp 640w, {b}-1200.webp 1200w" sizes="{sizes}">'
             f'<img src="{b}-1200.jpg" srcset="{b}-640.jpg 640w, {b}-1200.jpg 1200w" sizes="{sizes}" width="1200" height="800" '
             f'alt="{e(alt)}" decoding="async" {load}></picture>')
 
@@ -128,6 +132,8 @@ ICON = {
     'ig': '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>',
     'fb': '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
     'menu': '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8"/></svg>',
+    'tel': '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.6 3h3l1.5 4.5-2 1.3a12 12 0 0 0 6.1 6.1l1.3-2 4.5 1.5v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+    'pin': '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
     'x': '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8"/></svg>',
 }
 
@@ -140,7 +146,7 @@ def head(file, title, desc, og_img='og.jpg', extra=''):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<!-- Návrh na posúdenie: kým prevádzka nepotvrdí údaje označené OVERIŤ, stránka sa neindexuje. Pred zverejnením odstrániť. -->
+<!-- Návrh na posúdenie: kým prevádzka nedodá údaje označené „Doplniť:“, stránka sa neindexuje. Pred zverejnením odstrániť. -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#08090a">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
@@ -156,8 +162,8 @@ def head(file, title, desc, og_img='og.jpg', extra=''):
 <link rel="preload" href="../assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
-<!-- poistka: úvod sa odkryje najneskôr po 4,5 s, aj keby skript nenabehol alebo sa scéna načítavala dlho -->
-<script>document.documentElement.classList.add('js');setTimeout(function(){{document.documentElement.classList.add('ready')}},4500)</script>
+<!-- poistka: text úvodu sa odkryje najneskôr po 1,5 s, aj keby skript nenabehol -->
+<script>document.documentElement.classList.add('js');setTimeout(function(){{document.documentElement.classList.add('ready')}},1500)</script>
 {extra}</head>'''
 
 
@@ -206,7 +212,7 @@ def footer():
     <div>
       <p class="foot-h">Otváracie hodiny</p>
       <ul class="foot-hours">{hours}</ul>
-      {todo('víkendové hodiny')}
+      {todo('potvrdené víkendové hodiny')}
     </div>
   </div>
   <div class="wrap foot-b">
@@ -215,10 +221,11 @@ def footer():
   </div>
 </footer>
 
-<div class="dock" id="dock">
-  <a class="dock-a" href="clenstva.html">Členstvá</a>
+<nav class="dock" id="dock" aria-label="Rýchle odkazy">
+  <a class="dock-a" href="clenstva.html">Cenník</a>
+  <a class="dock-a dock-tel" href="tel:{GYM['tel']}" aria-label="Zavolať do GYM KLUB {GYM['phone']}">{ICON['tel']}<span>Volať</span></a>
   <a class="dock-a dock-main" href="kontakt.html#navsteva">Naplánovať návštevu</a>
-</div>
+</nav>
 '''
 
 
@@ -233,8 +240,18 @@ def phero(sid, kicker, title, lead, alt=''):
   </section>'''
 
 
+def typo(html_doc):
+    """Slovenská typografia v texte (nie v skriptoch): pevná medzera za jednopísmenovými predložkami
+    a spojkami a pred znakom €, aby nezostali osamotené na konci alebo začiatku riadka."""
+    parts = re.split(r'(<script.*?</script>|<style.*?</style>)', html_doc, flags=re.S)
+    def fix(t):
+        t = re.sub(r'(?<=[\s(])([vVaAsSzZkKoOuUiI]) (?=\S)', r'\1&nbsp;', t)
+        return re.sub(r'(\d) (€|%)', r'\1&nbsp;\2', t)
+    return ''.join(p if p.startswith(('<script', '<style')) else re.sub(r'>([^<]+)<', lambda m: '>' + fix(m.group(1)) + '<', p) for p in parts)
+
+
 def page(file, title, desc, body, over_hero=False, extra_head='', scripts=True):
-    doc = head(file, title, desc, extra=extra_head) + '\n' + header(file, over_hero) + '\n<main id="obsah">\n' + body + '\n</main>\n\n' + footer()
+    doc = head(file, title, desc, extra=extra_head) + '\n' + header(file, over_hero) + '\n<main id="obsah">\n' + typo(body) + '\n</main>\n\n' + typo(footer())
     if file == 'o-fitku.html':
         doc += LIGHTBOX
     doc += '\n<script src="assets/site.js" type="module"></script>\n</body>\n</html>\n'
@@ -262,7 +279,7 @@ def plan_cards(link=True):
           <h3 class="plan-h">{e(p['name'])}</h3>
           <p class="plan-price"><span>{p['price']}</span> / {p['per']}</p>
           <p class="plan-p">{e(p['text'])}</p>
-          {f'<a class="btn{"" if p["main"] else " btn-ghost"}" href="kontakt.html#navsteva">Prísť si zacvičiť</a>' if link else ''}
+          {f'<a class="btn{"" if p["main"] else " btn-ghost"}" href="kontakt.html#navsteva">Naplánovať prvý tréning</a>' if link else ''}
         </li>''')
     return '<ul class="plans">' + '\n        '.join(out) + '</ul>'
 
@@ -277,41 +294,58 @@ JSONLD = json.dumps({
 }, ensure_ascii=False)
 
 SERVICES_SHORT = [
-    ('Fitness tréning', 'Samostatne na strojoch a s voľnými váhami, každý deň počas otváracích hodín. Netreba sa objednávať.', 'hlavna-sala-4'),
-    ('Osobný tréning', 'Tréningový plán, technika a jedálniček podľa cieľa. Termín dohodnete priamo s trénerom.', 'volne-vahy-1'),
-    ('Bojové športy', 'MMA, Jiu Jitsu a Luta Livre. Začať sa dá od úplných základov.', 'tatami-1'),
-    ('Skupinové lekcie', 'Krav Maga, pilates a zdravý chrbát podľa týždenného rozvrhu.', 'tatami-3'),
+    ('fitness', 'Samostatný tréning', 'Stroje, voľné váhy, kardio a funkčná zóna každý deň počas otváracích hodín. Bez objednávania.', 'hlavna-sala-4'),
+    ('osobny-trening', 'Osobný tréner', 'Plán podľa cieľa, kontrola techniky a jedálniček. Termín dohodnete priamo s trénerom.', 'volne-vahy-1'),
+    ('bojove-sporty', 'MMA a bojové športy', 'MMA, Jiu Jitsu a Luta Livre s Panda Fight Club. Začína sa od úplných základov.', 'panda:1'),
+    ('lekcie', 'Skupinové lekcie', 'Krav Maga, pilates a zdravý chrbát v pevných časoch podľa týždenného rozvrhu.', 'tatami-3'),
 ]
+
+
+def svc_pic(photo, sizes):
+    if photo.startswith('panda:'):
+        return pic_panda(photo[6:], sizes, PANDA_ALT[int(photo[6:]) - 1])
+    return pic(photo, sizes)
+
+
+QUICK = f'''<section class="quick" aria-label="Najdôležitejšie informácie">
+    <ul class="wrap quick-l">
+      <li><span class="quick-k">{ICON['pin']} Adresa</span><span class="quick-v">{GYM['street']}, {GYM['place']}, Nitra</span><a class="quick-a" href="{GYM['maps']}" target="_blank" rel="noopener">Navigovať</a></li>
+      <li><span class="quick-k">Otvorené každý deň</span><span class="quick-v">Po – Pi od 06:30, So – Ne od 08:00</span><a class="quick-a" href="kontakt.html#hodiny">Všetky hodiny</a></li>
+      <li><span class="quick-k">Vstup</span><span class="quick-v">6 € jednorazovo, 50 € na mesiac</span><a class="quick-a" href="clenstva.html">Cenník</a></li>
+      <li><span class="quick-k">{ICON['tel']} Telefón</span><span class="quick-v">{GYM['phone']}</span><a class="quick-a" href="tel:{GYM['tel']}">Zavolať</a></li>
+    </ul>
+  </section>'''
 
 home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
     <div class="hero-stage">
       <!-- úvodná scéna: skutočná fotka funkčnej zóny; skript ju zhasne, rozsvieti LED šesťuholníky a pri skrolovaní vojde kamera do priestoru -->
       <div class="hero-scene" id="heroScene" data-depth="media/depth-funkcna-zona-7.png" data-lights="media/lights-funkcna-zona-7.png">
-        {pic('funkcna-zona-7', '100vw', alt='Funkčná zóna fitka GYM KLUB so stropom zo šesťuholníkových LED svetiel a červenou šprintérskou dráhou.', lazy=False, eager_hi=True)}
+        {pic('funkcna-zona-7', '100vw', alt='Funkčná zóna fitka GYM KLUB so stropom zo šesťuholníkových LED svetiel a šprintérskou dráhou na podlahe.', lazy=False, eager_hi=True)}
       </div>
       <div class="hero-in wrap" id="heroIn">
-        <p class="hero-k">Fitness a bojové športy <span aria-hidden="true">·</span> Lipa Centrum, Nitra</p>
-        <h1 class="hero-h" id="h-hero"><span>Tu sa nehrá na fitko.</span> <span class="hero-h2">Tu sa trénuje.</span></h1>
-        <p class="hero-p">Plne klimatizované fitko na Výstavnej 6: stroje, voľné váhy, kardio, funkčná zóna so šprintérskou dráhou a samostatná miestnosť s tatami.</p>
+        <p class="hero-k">GYM KLUB · Výstavná 6, Lipa Centrum, Nitra</p>
+        <h1 class="hero-h" id="h-hero"><span>Fitko a bojové športy</span> <span class="hero-h2">v Lipa Centre</span></h1>
+        <p class="hero-p">Dve sály so strojmi, voľné váhy, kardio, funkčná zóna so šprintérskou dráhou a tatami pre MMA. Plne klimatizované, otvorené každý deň a bez objednávania.</p>
         <div class="cta-row">
-          <a class="btn" href="clenstva.html">Pozrieť členstvá</a>
+          <a class="btn" href="clenstva.html">Pozrieť cenník</a>
           <a class="btn btn-ghost" href="kontakt.html#navsteva">Naplánovať návštevu</a>
         </div>
-        <p class="hero-hint" aria-hidden="true">Skrolujte a vojdite dnu</p>
       </div>
     </div>
   </section>
 
+  {QUICK}
+
   <section class="sec" aria-labelledby="h-preco">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Prečo GYM KLUB</p>
-        <h2 class="h2" id="h-preco">Všetko na tréning pod jednou strechou</h2>
+        <p class="kicker">Prečo sem</p>
+        <h2 class="h2" id="h-preco">Silový tréning, kardio aj MMA na jednej adrese</h2>
       </div>
       <ol class="reasons">
-        <li class="rv"><span class="reason-n">01</span><h3 class="h3">Sedem priestorov</h3><p>Hlavná sála so strojmi, druhá sála s kladkami, kardio pri oknách, voľné váhy, funkčná zóna a tatami. Silový, kondičný aj bojový tréning na jednom mieste.</p></li>
-        <li class="rv"><span class="reason-n">02</span><h3 class="h3">Tréneri na fitness aj boj</h3><p>Osobný tréning, MMA, Jiu Jitsu, Luta Livre, Krav Maga, pilates a zdravý chrbát. Inštruktori začnú aj s úplným začiatočníkom.</p></li>
-        <li class="rv"><span class="reason-n">03</span><h3 class="h3">Bez objednávania</h3><p>Na samostatný tréning stačí prísť počas otváracích hodín. Jednorazový vstup alebo mesačná permanentka, MultiSport aj Upbalansea.</p></li>
+        <li class="rv"><span class="reason-n">01</span><h3 class="h3">Sedem priestorov, nie jedna sála</h3><p>Hlavná sála, druhá sála s kladkami, kardio pri oknách, voľné váhy, funkčná zóna a tatami. Každý typ tréningu má svoje miesto.</p></li>
+        <li class="rv"><span class="reason-n">02</span><h3 class="h3">Tréneri pre fitness aj boj</h3><p>Osobní tréneri, Panda Fight Club pre MMA a lekcie Krav Maga, pilates a zdravý chrbát. Začať sa dá aj bez skúseností.</p></li>
+        <li class="rv"><span class="reason-n">03</span><h3 class="h3">Prídete, zaplatíte, trénujete</h3><p>Na samostatný tréning sa netreba objednávať. Jednorazový vstup za 6 € alebo mesačná permanentka, platí aj MultiSport a Upbalansea.</p></li>
       </ol>
     </div>
   </section>
@@ -320,28 +354,28 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
     <div class="wrap sec-head rv">
       <p class="kicker">Priestory</p>
       <h2 class="h2" id="h-priestory">Pozrite sa dnu skôr, než prídete</h2>
-      <p class="sec-p">Fotky sú z 26. septembra 2026, priamo z prevádzky. Hlavná fotka je priestorová: pohnite myšou alebo potiahnite prstom.</p>
+      <p class="sec-p">Skutočné fotky z prevádzky z 26. septembra 2026. Veľká fotka je priestorová: pohnite myšou alebo potiahnite prstom do strany.</p>
     </div>
     <div class="wrap preview rv">
       {stage('hlavna-sala-2', ' preview-stage')}
       <ul class="preview-l">
-        <li><a class="tile" href="o-fitku.html#kardio">{pic('kardio-1', '(max-width: 760px) 50vw, 25vw')}<span>Kardio</span></a></li>
-        <li><a class="tile" href="o-fitku.html#funkcna-zona">{pic('funkcna-zona-6', '(max-width: 760px) 50vw, 25vw')}<span>Funkčná zóna</span></a></li>
-        <li><a class="tile" href="o-fitku.html#volne-vahy">{pic('volne-vahy-2', '(max-width: 760px) 50vw, 25vw')}<span>Voľné váhy</span></a></li>
-        <li><a class="tile" href="o-fitku.html#tatami">{pic('tatami-2', '(max-width: 760px) 50vw, 25vw')}<span>Tatami</span></a></li>
+        <li><a class="tile" href="o-fitku.html#kardio">{pic('kardio-1', '(max-width: 760px) 50vw, 300px')}<span>Kardio</span></a></li>
+        <li><a class="tile" href="o-fitku.html#funkcna-zona">{pic('funkcna-zona-6', '(max-width: 760px) 50vw, 300px')}<span>Funkčná zóna</span></a></li>
+        <li><a class="tile" href="o-fitku.html#volne-vahy">{pic('volne-vahy-2', '(max-width: 760px) 50vw, 300px')}<span>Voľné váhy</span></a></li>
+        <li><a class="tile" href="o-fitku.html#tatami">{pic('tatami-2', '(max-width: 760px) 50vw, 300px')}<span>Tatami</span></a></li>
       </ul>
     </div>
-    <div class="wrap more rv"><a class="link" href="o-fitku.html">Prejsť celé fitko {ICON['arrow']}</a></div>
+    <div class="wrap more rv"><a class="link" href="o-fitku.html">Prejsť všetkých 7 priestorov {ICON['arrow']}</a></div>
   </section>
 
   <section class="sec" aria-labelledby="h-sluzby">
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Služby</p>
-        <h2 class="h2" id="h-sluzby">Vyberte si, ako chcete trénovať</h2>
+        <h2 class="h2" id="h-sluzby">Samostatne, s trénerom alebo v skupine</h2>
       </div>
       <ul class="svc">
-        {''.join(f'<li class="svc-i rv"><a href="sluzby.html#{["fitness","osobny-trening","bojove-sporty","lekcie"][i]}">{pic(s[2], "(max-width: 760px) 100vw, 25vw")}<span class="svc-t"><span class="h3">{e(s[0])}</span><span class="svc-p">{e(s[1])}</span></span></a></li>' for i, s in enumerate(SERVICES_SHORT))}
+        {''.join(f'<li class="svc-i rv"><a href="sluzby.html#{s[0]}">{svc_pic(s[3], "(max-width: 760px) 40vw, 300px")}<span class="svc-t"><span class="h3">{e(s[1])}</span><span class="svc-p">{e(s[2])}</span></span></a></li>' for s in SERVICES_SHORT)}
       </ul>
     </div>
   </section>
@@ -349,22 +383,22 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
   <section class="panda-band" aria-labelledby="h-panda-home">
     {pic_panda(1, '100vw', PANDA_ALT[0], cls='panda-band-img')}
     <div class="wrap panda-band-in rv">
-      <p class="kicker">Bojové športy v GYM KLUB</p>
+      <p class="kicker">MMA v GYM KLUB</p>
       <h2 class="h2" id="h-panda-home">Panda Fight Club</h2>
-      <p class="lead">MMA, Luta Livre a Jiu Jitsu s Michalom Šášikom v samostatnej sále na tatami. Nábor nových členov prebieha stále, začať sa dá od úplných základov.</p>
-      <div class="cta-row"><a class="btn" href="mma.html">MMA a Panda Fight Club</a><a class="btn btn-ghost" href="tel:{PANDA['tel']}">Zavolať trénerovi</a></div>
+      <p class="lead">MMA, Luta Livre a Jiu Jitsu s trénerom Michalom Šášikom vo vlastnej sále s tatami. Klub neustále prijíma nových členov a začína sa od základov, stačí prísť na tréning.</p>
+      <div class="cta-row"><a class="btn" href="mma.html">Rozvrh a kontakt klubu</a><a class="btn btn-ghost" href="tel:{PANDA['tel']}">Zavolať trénerovi</a></div>
     </div>
   </section>
 
   <section class="sec sec-dark" aria-labelledby="h-clenstva">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Členstvá</p>
-        <h2 class="h2" id="h-clenstva">Začnite jedným vstupom</h2>
-        <p class="sec-p">Jednorazový vstup bez viazanosti alebo mesačná permanentka. {todo(PRICES_NOTE)}</p>
+        <p class="kicker">Cenník</p>
+        <h2 class="h2" id="h-clenstva">Jeden vstup za 6 €, mesiac za 50 €</h2>
+        <p class="sec-p">Žiadna dlhodobá zmluva. Kto trénuje viac ako dvakrát do týždňa, ušetrí s mesačnou permanentkou. {todo(PRICES_NOTE)}</p>
       </div>
       <div class="rv">{plan_cards()}</div>
-      <div class="more rv"><a class="link" href="clenstva.html">Všetky vstupy a podmienky {ICON['arrow']}</a></div>
+      <div class="more rv"><a class="link" href="clenstva.html">Balíky vstupov, zľavy a podmienky {ICON['arrow']}</a></div>
     </div>
   </section>
 
@@ -372,18 +406,20 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
     <div class="wrap first">
       <div class="rv">
         <p class="kicker">Prvá návšteva</p>
-        <h2 class="h2" id="h-prva">Príďte si to prejsť naživo</h2>
-        <div class="cta-row"><a class="btn" href="kontakt.html#navsteva">Naplánovať návštevu</a><a class="btn btn-ghost" href="tel:{GYM['tel']}">Zavolať {GYM['phone']}</a></div>
+        <h2 class="h2" id="h-prva">Čo si zobrať a ako to prebieha</h2>
+        <p class="sec-p">Na samostatný tréning netreba nič vopred vybavovať. Ak chcete začať s trénerom alebo na lekcii, dohodnite si termín vopred.</p>
+        <div class="cta-row"><a class="btn" href="kontakt.html#navsteva">Naplánovať návštevu</a><a class="btn btn-ghost" href="tel:{GYM['tel']}">{ICON['tel']} {GYM['phone']}</a></div>
       </div>
       <ol class="steps rv">
-        <li><b>Príďte počas otváracích hodín.</b> Na samostatný fitness tréning sa netreba objednávať. Vstup zaplatíte na recepcii.</li>
-        <li><b>Zoberte si čistú obuv, uterák a vodu.</b> Šatne a sprchy sú k dispozícii. MultiSport alebo Upbalansea ukážte pri príchode.</li>
-        <li><b>Chcete lekciu alebo trénera?</b> Na lekciu príďte podľa rozvrhu, osobný tréning dohodnete priamo s trénerom.</li>
+        <li><b>Príďte kedykoľvek počas otváracích hodín.</b> Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB &amp; caffee.</li>
+        <li><b>Na recepcii zaplaťte vstup.</b> Jednorazový vstup stojí 6 €. MultiSport alebo Upbalansea ukážte tu. Podľa gymklub.sk sa platí len v hotovosti.</li>
+        <li><b>Prezujte sa a prezlečte.</b> Potrebujete čistú obuv, uterák a vodu. Šatne a sprchy sú k dispozícii.</li>
+        <li><b>Trénujte sami alebo s trénerom.</b> Stroje a váhy sú voľne prístupné. Osobný tréning a lekcie si dohodnete priamo s trénerom.</li>
       </ol>
     </div>
   </section>'''
-page('index.html', 'GYM KLUB Nitra | Fitness a bojové športy v Lipa Centre',
-     'Plne klimatizované fitko na Výstavnej 6 v Nitre (Lipa Centrum): stroje, voľné váhy, kardio, funkčná zóna, tatami. Fitness, osobné tréningy, MMA, Jiu Jitsu, Krav Maga, pilates.',
+page('index.html', 'GYM KLUB Nitra | Fitko a bojové športy v Lipa Centre',
+     'Fitko GYM KLUB na Výstavnej 6 v Nitre (Lipa Centrum): dve sály so strojmi, voľné váhy, kardio, funkčná zóna a tatami. Vstup 6 €, permanentka 50 €, osobní tréneri, MMA a lekcie.',
      home, over_hero=True, extra_head=f'<script type="application/ld+json">{JSONLD}</script>\n')
 
 # ---------------------------------------------------------------------------------------------
@@ -415,13 +451,13 @@ for zi, (zid, name, line, ids, lead) in enumerate(ZONES, 1):
       </ul>
     </article>''')
 
-about = phero('hlavna-sala-3', 'O fitku', 'Old-school posilka, poriadne vybavenie',
-              'Fitko na Výstavnej 6 v Lipa Centre. Za recepciou sú dve sály so strojmi, kardio pri oknách, voľné váhy, tmavá funkčná zóna so šprintérskou dráhou a samostatná miestnosť s tatami.') + f'''
+about = phero('hlavna-sala-3', 'O fitku · 7 priestorov', 'Old-school posilka s poriadnym vybavením',
+              'Za recepciou nasledujú dve sály so strojmi, kardio pri oknách, voľné váhy, funkčná zóna so šprintérskou dráhou a samostatná miestnosť s tatami. Celé fitko je plne klimatizované.') + f'''
 
   <section class="facts" aria-label="Základné informácie">
     <ul class="wrap facts-l">
       <li><span class="facts-k">Adresa</span><span class="facts-v">{GYM['street']}, {GYM['place']}</span></li>
-      <li><span class="facts-k">Priestory</span><span class="facts-v">7 priestorov, 30 fotiek</span></li>
+      <li><span class="facts-k">Otvorené</span><span class="facts-v">každý deň, bez objednávania</span></li>
       <li><span class="facts-k">Klíma</span><span class="facts-v">Plne klimatizované</span></li>
     </ul>
   </section>
@@ -429,8 +465,8 @@ about = phero('hlavna-sala-3', 'O fitku', 'Old-school posilka, poriadne vybaveni
   <section class="tour" id="prehliadka" aria-labelledby="h-tour">
     <div class="wrap sec-head rv">
       <p class="kicker">Prehliadka</p>
-      <h2 class="h2" id="h-tour">Od vchodu po tatami</h2>
-      <p class="sec-p">Veľká fotka každého priestoru je priestorová, pohnite myšou alebo potiahnite prstom. Pod ňou potiahnutím prejdete ďalšie fotky, ťuknutím ich otvoríte na celú obrazovku.</p>
+      <h2 class="h2" id="h-tour">Prejdite si fitko od vchodu po tatami</h2>
+      <p class="sec-p">Priestory sú zoradené tak, ako nimi prejdete. Veľká fotka je priestorová, pohnite myšou alebo potiahnite prstom. Ďalšie fotky posuniete pod ňou, ťuknutím ich zväčšíte.</p>
     </div>
 {chr(10).join(zones)}
   </section>
@@ -439,44 +475,45 @@ about = phero('hlavna-sala-3', 'O fitku', 'Old-school posilka, poriadne vybaveni
     <div class="wrap two">
       <div class="rv">
         <p class="kicker">Zázemie</p>
-        <h2 class="h2" id="h-zazemie">Čo nájdete okrem strojov</h2>
+        <h2 class="h2" id="h-zazemie">Šatne, sprchy a recepcia s nápojmi</h2>
       </div>
       <ul class="checks rv">
-        <li>Recepcia s nápojmi, kde zaplatíte vstup alebo permanentku.</li>
+        <li>Recepcia hneď pri vchode: tu zaplatíte vstup, kúpite permanentku a ukážete MultiSport alebo Upbalansea.</li>
         <li>Šatne a sprchy.</li>
-        <li>Klimatizácia v celom fitku.</li>
-        <li>Samostatná miestnosť s tatami pre bojové športy a lekcie.</li>
+        <li>Klimatizácia v celom fitku, trénovať sa dá aj v lete.</li>
+        <li>Samostatná sála Panda Fight Club s tatami pre MMA a bojové športy.</li>
+        <li>{todo('počet a typ skriniek v šatniach, či treba vlastný zámok')}</li>
       </ul>
     </div>
   </section>
 '''
 
 
-def cta_band(title='Príďte si to prejsť naživo', text='Na samostatný tréning sa netreba objednávať. Ak chcete, aby vás niekto previedol, dajte vedieť vopred.'):
+def cta_band(title='Príďte si to prejsť naživo', text='Na samostatný tréning sa netreba objednávať. Stačí prísť počas otváracích hodín s čistou obuvou, uterákom a vodou.'):
     return f'''<section class="band" aria-labelledby="h-band">
     <div class="wrap band-in rv">
       <h2 class="h2" id="h-band">{title}</h2>
       <p class="sec-p">{text}</p>
-      <div class="cta-row"><a class="btn" href="kontakt.html#navsteva">Naplánovať návštevu</a><a class="btn btn-ghost" href="clenstva.html">Pozrieť členstvá</a></div>
+      <div class="cta-row"><a class="btn" href="kontakt.html#navsteva">Naplánovať návštevu</a><a class="btn btn-ghost" href="clenstva.html">Pozrieť cenník</a></div>
     </div>
   </section>'''
 
 
-page('o-fitku.html', 'O fitku | GYM KLUB Nitra',
-     'Prehliadka fitka GYM KLUB v Lipa Centre v Nitre: príchod, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna a tatami na 30 skutočných fotkách.',
+page('o-fitku.html', 'Priestory a vybavenie | GYM KLUB Nitra',
+     'Priestory fitka GYM KLUB v Lipa Centre v Nitre na 30 fotkách: hlavná sála, sála so strojmi, kardio s pásmi Life Fitness, voľné váhy, funkčná zóna so šprintérskou dráhou a tatami.',
      about + cta_band())
 
 # ---------------------------------------------------------------------------------------------
 # ČLENSTVÁ
 more_rows = ''.join(f'<tr><th scope="row">{a}</th><td>{b}</td><td class="num">{c}</td></tr>' for a, b, c in MORE)
 terms = ''.join(f'<li>{e(t)}</li>' for t in TERMS)
-members = phero('volne-vahy-2', 'Členstvá a cenník', 'Začnite jedným vstupom',
-                'Jednorazový vstup, balík vstupov alebo mesačná permanentka. Na samostatný tréning sa netreba objednávať.') + f'''
+members = phero('volne-vahy-2', 'Cenník a členstvá', 'Jeden vstup za 6 €, mesiac za 50 €',
+                'Vstup platí pre celé fitness centrum. Vyberte si jednorazový vstup, balík vstupov alebo mesačnú permanentku, bez dlhodobej zmluvy.') + f'''
 
   <section class="sec" aria-labelledby="h-plans">
     <div class="wrap">
       <div class="sec-head rv">
-        <h2 class="h2" id="h-plans">Fitness vstupy</h2>
+        <h2 class="h2" id="h-plans">Tri spôsoby, ako trénovať</h2>
         <p class="sec-p">{todo(PRICES_NOTE)}</p>
       </div>
       <div class="rv">{plan_cards()}</div>
@@ -487,7 +524,7 @@ members = phero('volne-vahy-2', 'Členstvá a cenník', 'Začnite jedným vstupo
     <div class="wrap two">
       <div class="rv">
         <p class="kicker">Porovnanie</p>
-        <h2 class="h2" id="h-calc">Čo sa vám oplatí</h2>
+        <h2 class="h2" id="h-calc">Vstupy alebo permanentka?</h2>
         <p class="sec-p">Posuňte, koľkokrát do mesiaca prídete. Porovnanie jednotlivých vstupov a mesačnej permanentky podľa cien vyššie. Balíky 10 a 20 vstupov vychádzajú na 5 € a 4 € za vstup.</p>
       </div>
       <div class="calc rv" id="calc" data-single="6" data-month="50">
@@ -502,7 +539,8 @@ members = phero('volne-vahy-2', 'Členstvá a cenník', 'Začnite jedným vstupo
   <section class="sec" aria-labelledby="h-more">
     <div class="wrap two">
       <div class="rv">
-        <h2 class="h2" id="h-more">Ďalšie vstupy</h2>
+        <h2 class="h2" id="h-more">Balíky a zľavnené vstupy</h2>
+        <p class="sec-p">Balík sa oplatí, ak chodíte pravidelne, ale nie každý týždeň rovnako často.</p>
       </div>
       <div class="rv">
         <table class="table">
@@ -510,7 +548,7 @@ members = phero('volne-vahy-2', 'Členstvá a cenník', 'Začnite jedným vstupo
           <thead><tr><th scope="col">Vstup</th><th scope="col">Poznámka</th><th scope="col" class="num">Cena</th></tr></thead>
           <tbody>{more_rows}</tbody>
         </table>
-        <p class="sec-p">{todo('platnosť balíkov 10 a 20 vstupov')}</p>
+        <p class="sec-p">{todo('ako dlho platia balíky 10 a 20 vstupov a či sú prenosné')}</p>
       </div>
     </div>
   </section>
@@ -518,16 +556,16 @@ members = phero('volne-vahy-2', 'Členstvá a cenník', 'Začnite jedným vstupo
   <section class="sec sec-dark" aria-labelledby="h-terms">
     <div class="wrap two">
       <div class="rv">
-        <h2 class="h2" id="h-terms">Podmienky</h2>
+        <h2 class="h2" id="h-terms">Ako a kde zaplatíte</h2>
       </div>
       <div class="rv">
         <ul class="checks">{terms}</ul>
-        <p class="sec-p">{todo('platba len v hotovosti, prijímanie MultiSport a Upbalansea')}</p>
+        <p class="sec-p">{todo('potvrdenie, či sa dá platiť kartou, a podmienky MultiSport a Upbalansea (napr. doplatok)')}</p>
       </div>
     </div>
   </section>
-  {cta_band('Prvý vstup si zaplatíte na recepcii', 'Príďte počas otváracích hodín, nič netreba vopred rezervovať. Ak máte otázku k permanentke, napíšte alebo zavolajte.')}'''
-page('clenstva.html', 'Členstvá a cenník | GYM KLUB Nitra',
+  {cta_band('Prvý vstup si zaplatíte na recepcii', 'Príďte počas otváracích hodín, nič netreba vopred rezervovať. Otázky k permanentke vám zodpovieme telefonicky alebo e-mailom.')}'''
+page('clenstva.html', 'Cenník a členstvá | GYM KLUB Nitra',
      'Ceny vstupov a permanentiek vo fitku GYM KLUB Nitra: jednorazový vstup, balíky vstupov, mesačná permanentka, študent a dôchodca. Podmienky a spôsob platby.',
      members)
 
@@ -570,8 +608,8 @@ coach_html = ''.join(
     + (f'<a class="coach-tel" href="tel:{p.replace(" ", "")}">{p}</a>' if p else '<p class="coach-tel coach-none">Kontakt na recepcii</p>') + '</li>'
     for n, t, x, p in COACHES)
 
-services = phero('funkcna-zona-2', 'Služby', 'Vyberte si smer, ktorý vám sadne',
-                 'Samostatný tréning celý deň, osobný tréner podľa dohody, bojové športy a skupinové lekcie podľa rozvrhu.') + f'''
+services = phero('funkcna-zona-2', 'Služby a tréneri', 'Samostatne, s trénerom alebo v skupine',
+                 'Fitness tréning je voľne prístupný počas otváracích hodín. Osobný tréning si dohodnete s trénerom, bojové športy a lekcie sú v pevných časoch.') + f'''
 
   <section class="sec" aria-label="Služby">
     <div class="wrap svc-list">
@@ -585,8 +623,8 @@ services = phero('funkcna-zona-2', 'Služby', 'Vyberte si smer, ktorý vám sadn
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Rozvrh</p>
-        <h2 class="h2" id="h-rozvrh">Lekcie v týždni</h2>
-        <p class="sec-p">Na lekciu príďte podľa rozvrhu, prvýkrát stačí športové oblečenie a voda. {todo('rozvrh lekcií podľa gymklub.sk k 27. 9. 2026')}</p>
+        <h2 class="h2" id="h-rozvrh">Kedy sú lekcie a bojové športy</h2>
+        <p class="sec-p">Na lekciu príďte podľa rozvrhu, prvýkrát stačí športové oblečenie a voda. {todo('aktuálny rozvrh lekcií od prevádzky, teraz podľa gymklub.sk (27. 9. 2026)')}</p>
       </div>
       <div class="tt rv">{''.join(rows)}</div>
     </div>
@@ -596,14 +634,14 @@ services = phero('funkcna-zona-2', 'Služby', 'Vyberte si smer, ktorý vám sadn
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Tréneri</p>
-        <h2 class="h2" id="h-treneri">Ľudia, ktorí vás posunú</h2>
-        <p class="sec-p">Osobný tréning dohodnete priamo s trénerom. Ak telefón nie je uvedený, pomôžu na recepcii alebo na čísle <a href="tel:{GYM['tel']}">{GYM['phone']}</a>. {todo('zoznam aktívnych trénerov: menu a stránka trénerov na gymklub.sk sa líšia')}</p>
+        <h2 class="h2" id="h-treneri">Tréneri a ich zameranie</h2>
+        <p class="sec-p">Osobný tréning dohodnete priamo s trénerom. Ak telefón nie je uvedený, pomôžu na recepcii alebo na čísle <a href="tel:{GYM['tel']}">{GYM['phone']}</a>. {todo('zoznam aktívnych trénerov a ich fotky; menu a stránka trénerov na gymklub.sk sa líšia')}</p>
       </div>
       <ul class="coaches rv">{coach_html}</ul>
     </div>
   </section>
   {cta_band('Nie ste si istí, čo si vybrať?', 'Napíšte, čo chcete dosiahnuť, a odporučíme lekciu alebo trénera. Prvýkrát stačí športové oblečenie a voda.')}'''
-page('sluzby.html', 'Služby a tréneri | GYM KLUB Nitra',
+page('sluzby.html', 'Osobný tréning, lekcie a tréneri | GYM KLUB Nitra',
      'Fitness tréning, osobní tréneri, MMA, Jiu Jitsu, Luta Livre, Krav Maga, pilates, zdravý chrbát a nutričné poradenstvo v GYM KLUB Nitra. Rozvrh lekcií a kontakty na trénerov.',
      services)
 
@@ -622,7 +660,7 @@ mma = f'''<section class="phero" aria-labelledby="h-page">
     <div class="wrap phero-in">
       <p class="kicker">MMA · Luta Livre · Jiu Jitsu</p>
       <h1 class="h1" id="h-page">Panda Fight Club</h1>
-      <p class="lead">Klub bojových športov trénera Michala Šášika. Trénuje v GYM KLUB na Výstavnej 6, vo vlastnej sále s tatami. Nábor nových členov prebieha stále, stačí prísť.</p>
+      <p class="lead">Klub bojových športov trénera Michala Šášika v GYM KLUB na Výstavnej 6, vo vlastnej sále s tatami. Nových členov prijíma stále, začať sa dá bez skúseností.</p>
       <div class="cta-row"><a class="btn" href="tel:{PANDA['tel']}">Zavolať trénerovi</a><a class="btn btn-ghost" href="#rozvrh-mma">Kedy sa trénuje</a></div>
     </div>
   </section>
@@ -643,7 +681,7 @@ mma = f'''<section class="phero" aria-labelledby="h-page">
       <div class="sec-head rv">
         <p class="kicker">Sála</p>
         <h2 class="h2" id="h-sala">Tatami, vrecia a hrazdy</h2>
-        <p class="sec-p">Samostatná sála s veľkou plochou tatami. Podľa webu klubu sa na tréning vchádza zo zadnej strany budovy OC Lipa. {todo('vchod do sály Panda Fight Club (zadná strana budovy)')}</p>
+        <p class="sec-p">Samostatná sála s veľkou plochou tatami. Podľa webu klubu sa na tréning vchádza zo zadnej strany budovy OC Lipa. {todo('potvrdenie vchodu do sály zo zadnej strany budovy a súhlas klubu s použitím mena, loga a fotiek')}</p>
       </div>
       <div class="panda-pics rv">
         <figure>{pic_panda(1, '(max-width: 760px) 100vw, 50vw', PANDA_ALT[0])}</figure>
@@ -658,7 +696,7 @@ mma = f'''<section class="phero" aria-labelledby="h-page">
       <div class="rv">
         <p class="kicker">Rozvrh</p>
         <h2 class="h2" id="h-mma-rozvrh">Kedy sa trénuje</h2>
-        <p class="sec-p">Cenu tréningov a členstva v klube dohodnete priamo s trénerom.</p>
+        <p class="sec-p">Pred prvým tréningom dajte trénerovi vedieť telefonicky alebo správou na Instagrame. {todo('cena tréningov a členstva v klube')}</p>
       </div>
       <div class="rv">
         <table class="table">
@@ -698,18 +736,19 @@ FAQ = [
     ('Musím sa objednať?', 'Na samostatný fitness tréning nie, stačí prísť počas otváracích hodín. Na lekcie príďte podľa rozvrhu, osobný tréning dohodnete priamo s trénerom.'),
     ('Potrebujem skúsenosti s bojovými športmi?', 'Nie. Inštruktori začnú aj od úplných základov. Prvýkrát stačí športové oblečenie a voda.'),
     ('Ako môžem zaplatiť?', 'Na recepcii, podľa gymklub.sk len v hotovosti. Prijímame MultiSport a Upbalansea app.'),
+    ('Sú k dispozícii šatne a sprchy?', 'Áno. Zoberte si uterák, čistú obuv na prezutie a vodu.'),
     ('Kde parkovať?', None),
 ]
 faq_html = ''.join(
-    f'<details class="faq-i"><summary>{e(q)}</summary><p>{e(a) if a else todo("parkovanie pri Lipa Centre – doplniť, ak je k dispozícii")}</p></details>'
+    f'<details class="faq-i"><summary>{e(q)}</summary><p>{e(a) if a else todo("parkovanie pri Lipa Centre (kde, či je bezplatné)")}</p></details>'
     for q, a in FAQ)
-contact = phero('vstup-1', 'Kontakt', 'Príďte sa pozrieť',
-                'Výstavná 6, Lipa Centrum, Nitra-Chrenová. Vchod je z krytej terasy, dvere pod nápisom GYM KLUB &amp; caffee.') + f'''
+contact = phero('vstup-1', 'Kontakt', 'Výstavná 6, Lipa Centrum, Nitra',
+                'Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB &amp; caffee. Zavolajte, napíšte alebo príďte rovno počas otváracích hodín.') + f'''
 
   <section class="sec" aria-labelledby="h-kde">
     <div class="wrap contact-grid">
       <div class="rv">
-        <h2 class="h2 h2-s" id="h-kde">Adresa a spojenie</h2>
+        <h2 class="h2 h2-s" id="h-kde">Adresa, telefón a e-mail</h2>
         <address class="c-addr">{e(GYM['full'])}<br>{GYM['street']} ({GYM['place']})<br>{GYM['zip']} {GYM['city']} – {GYM['district']}</address>
         <ul class="c-list">
           <li><span class="c-l">Telefón</span><a class="c-v" href="tel:{GYM['tel']}">{GYM['phone']}</a></li>
@@ -717,20 +756,21 @@ contact = phero('vstup-1', 'Kontakt', 'Príďte sa pozrieť',
           <li><span class="c-l">Sociálne siete</span><span class="c-v c-soc"><a href="{GYM['instagram']}" target="_blank" rel="noopener">Instagram</a> · <a href="{GYM['facebook']}" target="_blank" rel="noopener">Facebook</a></span></li>
         </ul>
       </div>
-      <div class="rv">
+      <div class="rv" id="hodiny">
         <h2 class="h2 h2-s">Otváracie hodiny</h2>
         <table class="table">
           <caption class="sr-only">Otváracie hodiny fitness centra</caption>
           <tbody>{hours_rows}</tbody>
         </table>
-        <p class="sec-p">Počas sviatkov overte hodiny telefonicky. {todo(HOURS_NOTE)}</p>
+        <p class="sec-p">Počas sviatkov overte hodiny telefonicky. {todo(HOURS_NOTE)} {todo('otváracie hodiny počas sviatkov')}</p>
       </div>
     </div>
   </section>
 
   <section class="sec sec-dark" aria-labelledby="h-mapa">
     <div class="wrap">
-      <h2 class="h2 h2-s rv" id="h-mapa">Mapa</h2>
+      <h2 class="h2 h2-s rv" id="h-mapa">Ako sa k nám dostanete</h2>
+      <p class="sec-p rv">GYM KLUB je v budove Lipa Centrum na Chrenovej. {todo('parkovanie a zastávka MHD v blízkosti')}</p>
       <div class="map rv" id="map">
         {pic('terasa-1', '(max-width: 760px) 100vw, 1240px', alt='')}
         <div class="map-in">
@@ -745,9 +785,9 @@ contact = phero('vstup-1', 'Kontakt', 'Príďte sa pozrieť',
     <div class="wrap two">
       <div class="rv">
         <p class="kicker">Naplánovať návštevu</p>
-        <h2 class="h2" id="h-form">Napíšte nám</h2>
-        <p class="sec-p">Kedy chcete prísť, čo vás zaujíma a ako vás máme kontaktovať. Formulár pripraví e-mail vo vašom e-mailovom programe, nič sa neukladá. Radšej voláte? <a href="tel:{GYM['tel']}">{GYM['phone']}</a></p>
-        <p class="sec-p">{todo('napojenie formulára na službu, ktorá doručí správu aj bez e-mailového programu (napr. Formspree), ak ho chcete')}</p>
+        <h2 class="h2" id="h-form">Dajte vedieť, kedy prídete</h2>
+        <p class="sec-p">Vyplňte meno, kontakt a čo vás zaujíma. Po odoslaní sa otvorí váš e-mail s pripravenou správou pre GYM KLUB, stačí ju odoslať. Radšej voláte? <a href="tel:{GYM['tel']}">{GYM['phone']}</a></p>
+        <p class="sec-p">{todo('ak majú správy chodiť priamo bez e-mailového programu návštevníka, napojenie formulára na službu (napr. Formspree) a súhlas so spracovaním osobných údajov')}</p>
       </div>
       <form class="form rv" id="form" action="mailto:{GYM['email']}" method="post" enctype="text/plain" novalidate>
         <div class="f-row">
@@ -757,7 +797,8 @@ contact = phero('vstup-1', 'Kontakt', 'Príďte sa pozrieť',
         </div>
         <div class="f-row">
           <label for="fContact">Telefón alebo e-mail <span aria-hidden="true">*</span></label>
-          <input id="fContact" name="kontakt" autocomplete="email" inputmode="email" required aria-describedby="fContactErr">
+          <input id="fContact" name="kontakt" autocomplete="email" inputmode="email" required aria-describedby="fContactHelp fContactErr">
+          <p class="f-help" id="fContactHelp">Ozveme sa na číslo alebo e-mail, ktorý uvediete.</p>
           <p class="f-err" id="fContactErr" hidden>Napíšte telefón alebo e-mail, aby sme vám vedeli odpovedať.</p>
         </div>
         <div class="f-row">
@@ -772,9 +813,9 @@ contact = phero('vstup-1', 'Kontakt', 'Príďte sa pozrieť',
         </div>
         <div class="f-row">
           <label for="fMsg">Správa</label>
-          <textarea id="fMsg" name="sprava" rows="4"></textarea>
+          <textarea id="fMsg" name="sprava" rows="4" placeholder="Napríklad: chcem začať s osobným trénerom, trénujem 3-krát týždenne."></textarea>
         </div>
-        <button class="btn" type="submit">Pripraviť e-mail</button>
+        <button class="btn" type="submit">Pripraviť správu</button>
         <p class="f-ok" id="fOk" role="status" hidden>Otvoril sa váš e-mailový program s pripravenou správou. Ak sa neotvoril, napíšte na <a href="mailto:{GYM['email']}">{GYM['email']}</a> alebo zavolajte.</p>
       </form>
     </div>

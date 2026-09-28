@@ -11,6 +11,7 @@ const heroImg = $('.hero-scene img');
 const reveal = () => requestAnimationFrame(() => root.classList.add('ready'));
 const glOk = !reduce && 'IntersectionObserver' in window && !!window.WebGLRenderingContext;
 if (!heroImg) reveal();
+else if (glOk) setTimeout(reveal, 900);   // text nečaká na 3D scénu
 else if (!glOk) Promise.race([
   (heroImg.complete ? Promise.resolve() : new Promise(r => heroImg.addEventListener('load', r, { once: true }))).then(() => heroImg.decode()).catch(() => {}),
   new Promise(r => setTimeout(r, 2500))
@@ -432,12 +433,12 @@ class HeroScene extends Space3D {
   draw(now) {
     const t = now / 1000;
     const dt = this.last ? Math.min(t - this.last, 0.05) : 0.016; this.last = t;
-    // ak sa titulok už odkryl poistkou (pomalé načítanie), svetlá sa nezapínajú znova
-    if (!this.t0) this.t0 = root.classList.contains('ready') ? now - LIGHTS_DONE * 1000 : now;
+    // ak scéna naskočí neskôr než 3 s po otvorení stránky (pomalé pripojenie), svetlá sa už nezapínajú
+    if (!this.t0) this.t0 = now > 3000 ? now - LIGHTS_DONE * 1000 : now;
     const T = (now - this.t0) / 1000;
     let room = 1;
     if (T < LIGHTS_DONE) { room = 0; for (const [st, sd] of CELLS) room += tubeState(T, st, sd); room = Math.pow(room / CELLS.length, 1.3); }
-    if (room > 0.5 && !this.revealed) { this.revealed = true; reveal(); }
+    if (!this.revealed) { this.revealed = true; setTimeout(reveal, 250); }  // text úvodu hneď, svetlá sa rozsvecujú za ním
     const r = this.section.getBoundingClientRect();
     const p = clamp01(-r.top / Math.max(1, r.height - innerHeight));
     this.sp += (p - this.sp) * (1 - Math.exp(-dt * 7));
