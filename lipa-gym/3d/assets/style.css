@@ -190,6 +190,73 @@ html.js .phero-in>:nth-child(2){animation-delay:.12s}
 html.js .phero-in>:nth-child(3){animation-delay:.24s}
 @keyframes rise{from{opacity:0;transform:translate3d(0,24px,0)}}
 
+/* ---------- 3D prehliadka (o-fitku.html) ---------- */
+.tv{padding-top:calc(64px + env(safe-area-inset-top));background:#000}
+.tv-stage{position:relative;height:calc(100vh - 64px);height:calc(100svh - 64px - env(safe-area-inset-top));min-height:520px;max-height:1100px;overflow:hidden;background:#050505;touch-action:pan-y;outline-offset:-3px;cursor:grab}
+.tv-stage:active{cursor:grabbing}
+.tv-img,.tv-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tv-img{object-fit:cover}
+.tv-canvas{opacity:0;transition:opacity .6s ease}
+.tv-stage.live .tv-canvas{opacity:1}
+.tv-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.62) 0,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 72%,rgba(0,0,0,.55) 100%)}
+.tv-cap{position:absolute;left:var(--gut);top:20px;right:var(--gut);z-index:3;pointer-events:none;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.tv-h{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.tv-zone{margin-top:10px;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#e4e4e2}
+.tv-title{margin-top:4px;font:400 clamp(34px,4.6vw,64px)/.95 var(--font-d);letter-spacing:.01em;max-width:18ch}
+.tv-count{margin-top:8px;font-size:13px;color:#cfd0d2}
+.tv-ctl{position:absolute;right:var(--gut);bottom:22px;z-index:4;display:flex;gap:10px}
+.tv-btn{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:rgba(8,9,10,.72);border:1px solid rgba(255,255,255,.28);color:#fff;transition:background .2s,border-color .2s,opacity .2s}
+.tv-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(8,9,10,.9)}
+.tv-btn:disabled{opacity:.35;cursor:default}
+.tv-help{position:absolute;left:var(--gut);bottom:26px;z-index:3;max-width:40ch;font-size:13px;color:#d9dadc;text-shadow:0 1px 10px rgba(0,0,0,.7);pointer-events:none}
+.tv-pins{position:absolute;inset:0;z-index:3;pointer-events:none}
+.tv-pin{position:absolute;left:0;top:0;translate:-50% -50%;display:grid;place-items:center;width:44px;height:44px;pointer-events:auto;transition:opacity .25s}
+.tv-pin i{width:18px;height:18px;border-radius:50%;background:rgba(8,9,10,.55);box-shadow:0 0 0 2px #fff,0 2px 10px rgba(0,0,0,.5);position:relative}
+.tv-pin i::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--accent)}
+.tv-pin span{position:absolute;left:36px;top:50%;translate:0 -50%;padding:7px 11px;border-radius:6px;background:rgba(8,9,10,.92);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;opacity:0;visibility:hidden;transition:opacity .2s}
+.tv-pin.flip span{left:auto;right:36px}
+.tv-pin:hover span,.tv-pin:focus-visible span,.tv-pin.on span{opacity:1;visibility:visible}
+.tv-go{position:absolute;left:0;top:0;translate:-50% -50%;z-index:3;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:999px;background:rgba(8,9,10,.78);border:1px solid rgba(198,242,74,.7);color:#fff;font-size:14px;font-weight:700;white-space:nowrap;transition:opacity .25s,background .2s}
+.tv-go:hover{background:rgba(8,9,10,.95)}
+.tv-go i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#0c0d0f}
+.tv-go[hidden]{display:none}
+.moving .tv-go,.moving .tv-pin{pointer-events:none}
+.tv-under{padding-top:18px;padding-bottom:28px}
+.tv-route ol{display:flex;gap:8px;margin:0;padding:0 0 6px;list-style:none;overflow-x:auto;scrollbar-width:none}
+.tv-route ol::-webkit-scrollbar{display:none}
+.tv-route button{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);color:#d9dadd;font-size:14px;font-weight:600;white-space:nowrap;transition:border-color .2s,background .2s,color .2s}
+.tv-route button b{font-size:11px;letter-spacing:.14em;color:var(--dim)}
+.tv-route button small{font-size:12px;color:var(--dim)}
+.tv-route button:hover{border-color:rgba(255,255,255,.4)}
+.tv-route button.on{border-color:var(--accent);background:rgba(198,242,74,.1);color:#fff}
+.tv-route button.on b{color:var(--accent)}
+.tv-note{margin-top:10px;font-size:13px;color:var(--dim)}
+.tv-info{margin-top:16px;display:grid;grid-template-columns:1.4fr 1fr;gap:12px 32px;align-items:start}
+.tv-info-p{font-size:15px;color:var(--mute);max-width:70ch}
+.tv-info-l{display:flex;flex-wrap:wrap;gap:6px}
+.tv-info-l li{padding:5px 11px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:#dfe0e2}
+.zone-a{margin-top:6px}
+.src{font-size:13px;color:var(--dim)}
+
+/* ---------- úvod: preskočiť, pre koho, cenník ---------- */
+.hero-skip{position:absolute;right:var(--gut);bottom:calc(100lvh - 100svh + 28px);z-index:3;padding:12px 18px;border-radius:999px;background:rgba(8,9,10,.6);border:1px solid rgba(255,255,255,.3);font-size:13px;font-weight:700;letter-spacing:.08em;text-decoration:none}
+.hero-skip:hover{border-color:var(--accent)}
+.hero-h span:first-child{font-size:1.18em}
+.hero-h2{display:block;margin-top:.12em;font-size:.44em;line-height:1;color:var(--accent)}
+.who{margin-top:clamp(40px,6vh,64px);padding:28px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+.who-l{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px 32px}
+.who-l li{color:var(--mute);font-size:15px}
+.who-l b{color:var(--ink)}
+.plan-cards{font-size:13px;color:var(--dim)}
+.plan-cards::before{content:"Karty a aplikácie: "}
+.table-wrap{overflow-x:auto}
+.price-t{min-width:640px}
+.price-t td{font-size:15px}
+.price-t .num{text-align:left;padding-right:24px}
+.price-t th:first-child{width:24%}
+.hero-skip-m{display:none}
+.menu-info{text-align:center;color:var(--mute);font-size:14px}
+
 /* ---------- rýchle informácie pod úvodom ---------- */
 .quick{border-bottom:1px solid var(--line);background:var(--bg)}
 .quick-l{display:grid;grid-template-columns:repeat(4,1fr)}
@@ -377,6 +444,13 @@ a.c-v:hover,.c-soc a:hover{color:var(--accent)}
   .dock-tel span{font-size:12px}
   .quick-l{grid-template-columns:1fr 1fr}
   .quick-l li{padding:16px 12px 16px 0}
+  .tv-stage{height:74svh;min-height:460px}
+  .tv-help{display:none}
+  .tv-info{grid-template-columns:1fr}
+  .who-l{grid-template-columns:1fr}
+  .tv-go{font-size:13px}
+  .hero-skip{display:none}
+  .hero-skip-m{display:inline-block;margin-top:12px;padding:10px 0;font-size:13px;font-weight:700;color:#e4e4e2;text-decoration:underline;text-underline-offset:4px}
   .quick-l li+li{padding-left:0;border-left:0}
   .quick-l li:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}
   .quick-l li:nth-child(n+3){border-top:1px solid var(--line)}

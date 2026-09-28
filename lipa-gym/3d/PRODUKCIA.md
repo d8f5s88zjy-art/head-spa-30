@@ -14,6 +14,27 @@ LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale real
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
 
+## 000. 3D prehliadka a overenie údajov (28. 9. 2026)
+
+**Názov:** oficiálne „Gym Klub Fitness & Bodybuilding“ (gymklub.sk), na webe GYM KLUB. „Lipa Gym“ je len
+pracovný názov priečinka odvodený od budovy Lipa Centrum; na stránkach sa nepoužíva.
+
+**Overené zo surového HTML gymklub.sk** (úvod, cenník, časté otázky, kontakt, tréneri, stránky tréningov;
+server uvádza poslednú úpravu 12. 4. 2025): ceny 6 / 50 / 42 / 50 (10×) / 80 (20×) / 5 / 3,50 €;
+Upbalansea app pri všetkých položkách, MultiSport len pri jednorazovom vstupe; platba len v hotovosti;
+Po – Št 06:30 – 21:00, Pi 06:30 – 23:00; víkend v rozpore (08:00 – 17:00 v otázkach a rozvrhu,
+08:30 – 18:00 v pätičke a na kontakte); rozvrh lekcií; tréneri a telefóny (Juro, Židek, Navrátilová a
+Filipčík majú iné čísla než starý web; Vrána a Šoltís bez telefónu).
+
+**3D prehliadka (`o-fitku.html`, `assets/tour.js`, `assets/tour.json`):** 32 skutočných záberov v 8 zónach
+(30 vlastných fotiek z 26. 9. 2026 + 2 fotky sály Panda Fight Club z gymklub.sk, všetky s hĺbkovou
+mapou). WebGL posúva obraz podľa hĺbky (rozhliadnutie ťahom alebo myšou, jemný pohyb kamery); prechod
+„Ďalej“ priblíži kameru k miestu chôdze a prelne sa do ďalšieho záberu; body pri vybavení; zoznam zón
+v poradí chôdze (nie pôdorys); šípky klávesnice; odkaz na záber `#zaber-<id>`. Bez WebGL alebo pri
+obmedzenom pohybe obyčajná fotka s rovnakým ovládaním. Mobil: textúry 1280 px, počítač 1932 až 2160 px;
+v pamäti najviac 5 záberov. Padajúca činka v projekte už nie je (klient ju skôr zrušil), úvod
+s rozsvietením LED sa dá preskočiť.
+
 ## 00. Prepracovanie (audit 28. 9. 2026)
 
 Audit na 360, 768 a 1440 px ukázal: úvod bol prvé 1 až 3 s tmavý a bez textu, prvé dve obrazovky

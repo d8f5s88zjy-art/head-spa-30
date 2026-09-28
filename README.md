@@ -408,7 +408,7 @@ a otvoriť `http://localhost:8080/lipa-gym/`.
 
 Kompletný web fitka GYM KLUB s 5 stránkami: Domov (úvod: skutočná fotka funkčnej zóny v tme, LED
 šesťuholníky sa po jednom rozsvietia a pri skrolovaní kamera vojde do priestoru), O fitku (7 priestorov,
-30 fotiek, priestorové fotky z hĺbkových máp), Členstvá, Služby (rozvrh, tréneri) a Kontakt (hodiny,
+32 záberov ako interaktívna 3D prehliadka so zónami, bodmi pri vybavení a prechodom Ďalej), Členstvá, Služby (rozvrh, tréneri) a Kontakt (hodiny,
 mapa, formulár návštevy). Stránky generuje `lipa-gym/3d/tools/generuj.py` z faktov na jednom mieste;
 nepotvrdené údaje sú označené OVERIŤ. Čisté HTML, CSS a JS bez knižníc (`assets/style.css`,
 `assets/site.js`), médiá v `lipa-gym/3d/media/`.
