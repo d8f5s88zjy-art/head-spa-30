@@ -5,9 +5,9 @@ z prevádzky. Je to samostatná varianta vedľa existujúceho webu `lipa-gym/`, 
 bez zmeny. Stránka má `noindex`, kým ju prevádzka neschváli.
 
 Zadanie od klienta: žiadny úvod s padajúcou činkou; prechádzka gymom „tak, aby ho bolo vidno
-celý“, všetko skutočné a ostré. Po verzii so zastávkami a kapitolami (pôsobila ako katalóg)
-chce klient elegantnú skrolovaciu animáciu fitka v reálnom prostredí, počas ktorej sa
-odkrývajú overené informácie o fitku: bez kapitol, bez náhľadov a zoznamov.
+celý“, všetko skutočné a ostré. Verzia so zastávkami a kapitolami pôsobila ako katalóg,
+skrolovací film pôsobil zasekane. Posledné zadanie: zákazník si má pozrieť celé fitko skôr, než
+príde; profesionálne, bez popisov farieb a toho, čo je vidno na fotkách.
 
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
@@ -51,90 +51,72 @@ odrazenými ľuďmi v zrkadlách: ae931f9a, b0ed9981, 67413462, e77dd2bd, de7727
 Na použitých fotkách sú nanajvýš drobné, neidentifikovateľné odrazy; sklo dverí (snímka
 IMG_8990) a presklená stena na fotke f3cad8ed boli skontrolované v plnom rozlíšení.
 
-### Zábery filmu (16, v poradí chôdze)
+### Fotky (30, v poradí chôdze, 7 priestorov)
 
-| # | záber | zdroj | text, ktorý sa odkryje |
+| # | priestor | fotky (id) | zdroj |
 |---|---|---|---|
-| 01 | terasa-1 | IMG_8989, snímka 0,1 s | úvodný titulok; „Začíname na terase“ |
-| 02 | vstup-1 | IMG_8990, snímka 2,1 s | Dvere pod nápisom GYM KLUB & caffee |
-| 03 | recepcia-1 | IMG_8993, snímka 2,7 s | Prvá zastávka za dverami |
-| 04 | hlavna-sala-1 | ded57978 | Silový tréning na strojoch |
-| 05 | hlavna-sala-5 | 82585127 | – |
-| 06 | hlavna-sala-3 | e604ab34 | Plne klimatizované |
-| 07 | stroje-4 | 4c899013 | Denné svetlo z veľkých okien |
-| 08 | stroje-1 | 50b58cdb | – |
-| 09 | kardio-3 | 7729db43 | – |
-| 10 | kardio-1 | ca5cd7a4 | Beh s výhľadom na stromy |
-| 11 | volne-vahy-2 | 750d9d90 | Jednoručky, osi a lavice |
-| 12 | jednorucky-1 | 4a8527d5 | Do tmavej časti fitka |
-| 13 | funkcna-zona-3 | f3cad8ed | Šprintérska dráha pod LED svetlami |
-| 14 | funkcna-zona-6 | 92861a6f | – |
-| 15 | funkcna-zona-2 | 751e5e8a | Rig Life Fitness |
-| 16 | tatami-2 | f56a3d44 | Samostatná miestnosť; Tréningy v GYM KLUB |
+| 01 | Príchod | terasa-1, vstup-1, recepcia-1 | snímky z videí IMG_8989 (0,1 s), IMG_8990 (2,1 s), IMG_8993 (2,7 s) |
+| 02 | Hlavná sála | hlavna-sala-1, -2, -4, -5, -3, -6 | ded57978, 9a523572, 1a601891, 82585127, e604ab34, 81d98737 |
+| 03 | Sála so strojmi | stroje-4, -1, -2, -3 | 4c899013, 50b58cdb, 30d967db, 31539524 |
+| 04 | Kardio | kardio-3, -1, -2 | 7729db43, ca5cd7a4, 39186e4d |
+| 05 | Voľné váhy | volne-vahy-1, -2, -3, jednorucky-1 | ea0dcc02, 750d9d90, b57b28e1, 4a8527d5 |
+| 06 | Funkčná zóna | funkcna-zona-4, -1, -2, -5, -3, -6, -7 | a08cf80a, 335ed77e, 751e5e8a, 101780bb, f3cad8ed, 92861a6f, 4f66d594 |
+| 07 | Tatami | tatami-1, -2, -3 | 38aed571, f56a3d44, b95c2f9e |
 
-Každý záber je v `media/` ako `tour-<id>-<1932|2160>` a `-1280` v AVIF, WebP a JPG, plus
-`og.jpg`; spolu 97 súborov, 37 MB. Žiadny iný súbor v `media/` nie je.
-Texty vychádzajú len z registra faktov (adresa, klimatizácia, typy tréningov) a z toho, čo
-je vidno na záberoch. Hodiny, ceny, platby a tréneri na stránke nie sú.
+Každá fotka je v `media/` ako `tour-<id>-<1932|2160>` a `-1280` v AVIF, WebP a JPG, plus
+`og.jpg`; spolu 181 súborov, 68 MB. Na stránke sa načíta len to, čo je v obraze
+(`loading="lazy"`), veľká verzia až pri otvorení na celú obrazovku.
+
+Viditeľné texty obsahujú len názvy priestorov, účel priestoru jednou vetou, overené fakty
+(adresa, klimatizácia, typy tréningov, kontakt) a pokyny na ovládanie. Farby ani vybavenie
+viditeľné na fotkách sa nepopisujú; podrobné opisy ostali len v `alt` textoch pre čítačky.
 
 ## 3. Štruktúra stránky
 
-1. Horná lišta: logo a odkaz Kontakt.
-2. Film (`#prehliadka`): jedna obrazovka prilepená počas celej dĺžky sekcie. Na prvom zábere
-   sa po načítaní odkryje titulok GYM KLUB; skrolovaním kamera prechádza 16 zábermi a
-   odkrývajú sa texty (malý nadpis zóny, veľký titulok, jedna veta). Na tatami sa obraz
-   stmaví a ukážu sa tréningy (Fitness, MMA, Jiu Jitsu, Luta Livre, Krav Maga, Zdravý chrbát,
-   Pilates). Film končí stmievačkou. Tenký zelený pás dole ukazuje priebeh.
-3. Kontakt (`#kontakt`): adresa, telefón a e-mail ako text aj odkaz, mapa v novom okne,
-   poznámka, že hodiny, cenník a rozvrh povedia telefonicky alebo e-mailom.
-4. Pätička: adresa, odkaz na klasickú verziu webu a gymklub.sk.
+1. Lišta: logo, Prehliadka, Tréningy (skrytá pod 400 px), Kontakt; po odchode úvodu z obrazu
+   dostane tmavé pozadie.
+2. Úvod na celú obrazovku: fotka hlavnej sály (na šírku iný záber), GYM KLUB, veta
+   „Prezrite si celé fitko skôr, než prídete.“ a tlačidlo Začať prehliadku.
+3. Pás základných informácií: adresa, 7 priestorov a 30 fotiek, plne klimatizované.
+4. Prehliadka: 7 priestorov, každý s číslom, názvom, jednou vetou, počítadlom a galériou.
+5. Tréningy: Fitness, MMA, Jiu Jitsu, Luta Livre, Krav Maga, Zdravý chrbát, Pilates.
+6. Kontakt: adresa, telefón a e-mail ako text aj odkaz, mapa v novom okne.
+7. Fotky na celú obrazovku (`dialog`): všetkých 30 fotiek v jednom páse, posun prstom,
+   šípkami alebo klávesmi, popis priestoru a poradie fotky v ňom, zatvorenie krížikom alebo Esc.
 
 ## 4. Umelecký smer
 
-- Skutočné ostré zábery, tmavý filmový obraz (vineta a stmavený spodok kvôli textu), jeden
-  akcent `#c6f24a` (zelená z rámov strojov).
-- Pohyb kamery: každý záber sa počas skrolovania pomaly približuje k miestu, kam sa ide
-  (bod medzi `focus` a `walk`); pri prechode sa záber zrýchlene priblíži a zmizne a pod ním
-  je už nasledujúci priestor, takže pôsobí ako prelet ďalej do fitka.
-- Texty sa odkrývajú po riadkoch (priehľadnosť a posun) a pri skrolovaní späť sa skryjú
-  obrátene. Písmo Bebas Neue na titulky, Manrope na text, lokálne, so slovenskou diakritikou.
+- Tmavá, pokojná stránka, veľké ostré fotky, písmo Bebas Neue na nadpisy a Manrope na text,
+  jeden akcent `#c6f24a`.
+- Pohyb len jemný: úvodná fotka sa po načítaní pomaly usadí, titulok sa odkryje, sekcie sa pri
+  príchode do obrazu raz vysunú. Nič sa nehýbe počas skrolovania.
 
 ## 5. Technické riešenie
 
-- Čisté HTML, CSS a JS (`index.html`, `assets/style.css`, `assets/film.js`), bez knižníc,
-  bez zostavovania a bez cudzích požiadaviek. Texty sú priamo v HTML, s JS ich riadi
-  `data-sc` (záber), `data-a` a `data-b` (od kedy do kedy v obrazovkách skrolovania).
-  Dĺžka záberu je `data-len`, prechod trvá 0,45 obrazovky.
-- Jednotka skrolovania je výška scény (100lvh), takže skrývanie adresného riadka na mobile
-  nič neposúva; texty dole sa odsadzujú o rozdiel `100lvh - 100svh`, aby boli vždy vidno.
-- Slučka `requestAnimationFrame` beží len pri zmene polohy, kamera ide za skrolovaním so
-  zotrvačnosťou 85 ms, veľký skok (odkaz Kontakt) dorovná naraz. Mení sa iba `transform`
-  a `opacity` a zapisuje sa len zmenená hodnota.
-- V DOM sú vykreslené najviac štyri zábery (predošlý, aktuálny a dva nasledujúce); tie sa
-  vopred načítajú a dekódujú. Kým nie je ďalší záber pripravený, predošlý nezmizne, takže
-  nikdy nebliká čierna.
-- Prehliadač vyberá veľkosť cez `srcset`/`sizes` (telefóny s 3× displejom dostanú 1932 px,
-  aby záber ostal ostrý aj pri priblížení), formát AVIF, WebP alebo JPG.
-- Obmedzený pohyb: bez priblíženia a posunov, len prelínanie. Bez JS: úvodný záber s
-  titulkom a všetky texty pod sebou.
+- Čisté HTML, CSS a JS (`index.html`, `assets/style.css`, `assets/site.js`), bez knižníc a bez
+  zostavovania. Skrolovanie stránky je natívne; galérie sú natívne vodorovné posúvanie
+  s prichytávaním (`scroll-snap`), skript len aktualizuje počítadlo a šípky (najviac raz za
+  snímku). Odkrývanie sekcií a tmavú lištu riadi `IntersectionObserver`.
+- Bez JS: stránka je celá viditeľná, galérie sa posúvajú, fotka sa otvorí ako súbor. Úvod sa
+  odkryje najneskôr po 3 s aj bez skriptu. Obmedzený pohyb: žiadne animácie.
 
 ## 6. Kontroly (28. 9. 2026, Chromium cez Playwright)
 
-- iPhone 13 (emulácia, procesor spomalený 4×), plynulé skrolovanie celým filmom kolieskom:
-  medián aj 95. percentil snímky 16,7 ms, žiadna snímka nad 50 ms.
-- 1440 × 900: medián 16,7 ms, 95. percentil 33,4 ms (softvérové vykresľovanie bez GPU).
-- Konzola bez chýb a varovaní, žiadna požiadavka s chybou; bez vodorovného pretečenia na
-  šírkach 320, 375, 768, 1024, 1440 a 1920 px (začiatok, stred filmu aj koniec stránky).
-- Snímky obrazovky na 13 polohách filmu na telefóne aj počítači (titulok, texty, prechody,
-  tréningy, stmievačka, kontakt).
+- iPhone 13 (emulácia, procesor spomalený 4×), plynulé skrolovanie celou stránkou kolieskom:
+  medián aj 95. percentil snímky 16,7 až 16,8 ms, dve snímky nad 50 ms zo 794.
+- 1440 × 900: medián aj 95. percentil 16,7 až 16,8 ms, žiadna snímka nad 50 ms.
+- Galéria (šípka aj posun prstom), otvorenie fotky, posun klávesmi a prstom cez hranicu
+  priestorov, zatvorenie Esc: popis a poradie sedia, stránka sa odomkne, zameranie sa vráti na
+  fotku.
+- Konzola bez chýb a varovaní, žiadna požiadavka s chybou, bez vodorovného pretečenia na
+  šírkach 320, 375, 768, 1024, 1440 a 1920 px.
 
 ## 7. Obmedzenia
 
-- Pohyb kamery je priblíženie ostrých fotiek, nie video: súvislý záber chôdze celým fitkom
-  neexistuje (videá majú 2,5 až 6,2 s a väčšina je mäkká alebo s odrazom osoby). Súvislé
-  4K video chôdze na gimbale by umožnilo skutočný prelet.
-- Na širokej obrazovke je z fotky na výšku vidno pás okolo bodu záujmu (asi 47 % výšky,
-  35 % pri záberoch terasy, vchodu a recepcie). Fotky na šírku by počítaču pomohli.
+- Nie je to video ani 360° prehliadka: súvislé video chôdze fitkom neexistuje (videá majú
+  2,5 až 6,2 s a väčšina je mäkká alebo s odrazom osoby). Súvislé 4K video na gimbale alebo
+  360° kamera by umožnili skutočný prelet.
+- Fotky sú na výšku; v galérii sa orezávajú na 3 : 4, celé sú na celej obrazovke.
 - Tatami je mäkšie než ostatné zábery (biela plochá miestnosť).
 - Testované len v Chromium; treba overiť v Safari na iPhone a Macu a na Androide.
 - Otváracie hodiny, cenník, platby a tréneri zámerne chýbajú, kým ich prevádzka nepotvrdí.

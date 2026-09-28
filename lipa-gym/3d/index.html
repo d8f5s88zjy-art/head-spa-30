@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>GYM KLUB Nitra | Prechádzka fitkom</title>
-<meta name="description" content="Prejdite si fitko GYM KLUB na Výstavnej 6 v Nitre (Lipa Centrum): od terasy cez recepciu, hlavnú sálu, stroje, kardio, voľné váhy a funkčnú zónu až po tatami. Skutočné zábery z prevádzky.">
+<title>GYM KLUB Nitra | Prehliadka fitka</title>
+<meta name="description" content="Prezrite si celé fitko GYM KLUB na Výstavnej 6 v Nitre (Lipa Centrum) skôr, než prídete: príchod, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna a tatami na skutočných fotkách.">
 <!-- Návrh na posúdenie: kým prevádzka neschváli obsah a fakty, stránka sa neindexuje. Pred zverejnením odstrániť. -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#060607">
@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="sk_SK">
-<meta property="og:title" content="GYM KLUB Nitra | Prechádzka fitkom">
+<meta property="og:title" content="GYM KLUB Nitra | Prehliadka fitka">
 <meta property="og:description" content="Výstavná 6, Nitra (Lipa Centrum). Prejdite si celé fitko od vchodu po tatami na skutočných záberoch.">
 <meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/media/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,222 +21,467 @@
 <link rel="preload" href="../assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
-<script>document.documentElement.classList.add('js')</script>
+<!-- poistka: úvod sa odkryje najneskôr po 3 s, aj keby skript nenabehol -->
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},3000)</script>
 </head>
 <body>
-<a class="skip" href="#kontakt">Preskočiť na kontakt</a>
+<a class="skip" href="#prehliadka">Preskočiť na prehliadku</a>
 
-<header class="bar" id="bar">
+<header class="bar">
   <a class="brand" href="#top" aria-label="GYM KLUB Nitra, na začiatok">
     <img src="../assets/img/logo-gymklub.png" width="104" height="38" alt="GYM KLUB">
   </a>
-  <a class="bar-cta" href="#kontakt">Kontakt</a>
+  <nav class="nav" aria-label="Hlavná navigácia">
+    <a href="#prehliadka">Prehliadka</a>
+    <a href="#treningy" class="nav-x">Tréningy</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
 </header>
 
 <main id="top">
-  <!-- Film: sticky scéna, skrolovanie posúva kameru cez skutočné zábery a odkrýva texty.
-       Bez JS sa zobrazí úvodný záber a texty pod sebou. -->
-  <section class="film" id="prehliadka" aria-labelledby="h-film">
-    <div class="stage" id="stage">
-      <div class="scenes" id="scenes">
+  <section class="hero" aria-labelledby="h-hero">
+    <picture class="hero-img">
+      <source media="(orientation: landscape)" type="image/avif" srcset="media/tour-hlavna-sala-3-1932.avif">
+      <source media="(orientation: landscape)" type="image/webp" srcset="media/tour-hlavna-sala-3-1932.webp">
+      <source media="(orientation: landscape)" srcset="media/tour-hlavna-sala-3-1932.jpg">
+      <source type="image/avif" srcset="media/tour-hlavna-sala-1-1280.avif 1280w, media/tour-hlavna-sala-1-1932.avif 1932w" sizes="100vw">
+      <source type="image/webp" srcset="media/tour-hlavna-sala-1-1280.webp 1280w, media/tour-hlavna-sala-1-1932.webp 1932w" sizes="100vw">
+      <img src="media/tour-hlavna-sala-1-1280.jpg" width="1280" height="1707" alt="Hlavná sála fitka GYM KLUB so strojmi a zrkadlovou stenou." fetchpriority="high" decoding="async">
+    </picture>
+    <div class="hero-in wrap">
+      <p class="hero-k">Fitness &amp; Bodybuilding <span aria-hidden="true">·</span> Nitra</p>
+      <h1 class="hero-h" id="h-hero">GYM KLUB</h1>
+      <p class="hero-p">Prezrite si celé fitko skôr, než prídete.</p>
+      <a class="btn" href="#prehliadka">Začať prehliadku</a>
+    </div>
+  </section>
 
-    <figure class="sc" data-len="1.5" style="--fx:50%;--fy:50%;--ox:52%;--oy:60%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-terasa-1-2160.avif 2160w, media/tour-terasa-1-1280.avif 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <source type="image/webp" srcset="media/tour-terasa-1-2160.webp 2160w, media/tour-terasa-1-1280.webp 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <img src="media/tour-terasa-1-1280.jpg" srcset="media/tour-terasa-1-2160.jpg 2160w, media/tour-terasa-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh" width="1280" height="2276" alt="Krytá terasa s terazzovou dlažbou, kovovým stolom a stoličkami s červenými sedákmi; v pozadí vchodové dvere pod nápisom GYM KLUB &amp; caffee, vpravo zábradlie a zeleň." decoding="async" fetchpriority="high">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.15" style="--fx:55%;--fy:26%;--ox:57%;--oy:45%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-vstup-1-2160.avif 2160w, media/tour-vstup-1-1280.avif 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <source type="image/webp" srcset="media/tour-vstup-1-2160.webp 2160w, media/tour-vstup-1-1280.webp 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <img src="media/tour-vstup-1-1280.jpg" srcset="media/tour-vstup-1-2160.jpg 2160w, media/tour-vstup-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh" width="1280" height="2276" alt="Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB &amp; caffee, na dverách piktogramy a oznamy, pred nimi čierna rohož, vľavo rastlina, vpravo kamenný obklad." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.15" style="--fx:58%;--fy:48%;--ox:55%;--oy:61%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-recepcia-1-2160.avif 2160w, media/tour-recepcia-1-1280.avif 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <source type="image/webp" srcset="media/tour-recepcia-1-2160.webp 2160w, media/tour-recepcia-1-1280.webp 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh">
-        <img src="media/tour-recepcia-1-1280.jpg" srcset="media/tour-recepcia-1-2160.jpg 2160w, media/tour-recepcia-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 2160/3840) 100vw, 56.25vh" width="1280" height="2276" alt="Priestor za vchodovými dverami: vľavo otvorené presklené dvere, drevená polička na obuv s kvetmi, rastliny, pult s chladničkou na nápoje a kreslá pri oknách so žalúziami." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.25" style="--fx:45%;--fy:42%;--ox:45%;--oy:53%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-hlavna-sala-1-1932.avif 1932w, media/tour-hlavna-sala-1-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-hlavna-sala-1-1932.webp 1932w, media/tour-hlavna-sala-1-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-hlavna-sala-1-1280.jpg" srcset="media/tour-hlavna-sala-1-1932.jpg 1932w, media/tour-hlavna-sala-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Hlavná sála s veľkou nástennou maľbou GYM KLUB a televízorom nad zrkadlami, pod nimi rad čiernych strojov so zelenými prvkami, tyrkysový stroj a modrá fitlopta." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="0.8" style="--fx:45%;--fy:45%;--ox:47%;--oy:58%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-hlavna-sala-5-1932.avif 1932w, media/tour-hlavna-sala-5-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-hlavna-sala-5-1932.webp 1932w, media/tour-hlavna-sala-5-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-hlavna-sala-5-1280.jpg" srcset="media/tour-hlavna-sala-5-1932.jpg 1932w, media/tour-hlavna-sala-5-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Nástenná maľba GYM KLUB s televízorom, pod ňou zrkadlá, vpravo tyrkysový kladkový stroj so sedadlom, v pozadí okná so stromami a rad bežeckých pásov." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.2" style="--fx:50%;--fy:45%;--ox:50%;--oy:56%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-hlavna-sala-3-1932.avif 1932w, media/tour-hlavna-sala-3-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-hlavna-sala-3-1932.webp 1932w, media/tour-hlavna-sala-3-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-hlavna-sala-3-1280.jpg" srcset="media/tour-hlavna-sala-3-1932.jpg 1932w, media/tour-hlavna-sala-3-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Pohľad cez sálu k presklenej stene so stromami: čierne stroje so zelenými a tyrkysovými rámami, vpravo stĺp obložený kameňom, v popredí kladkový stojan." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.2" style="--fx:50%;--fy:50%;--ox:54%;--oy:60%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-stroje-4-1932.avif 1932w, media/tour-stroje-4-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-stroje-4-1932.webp 1932w, media/tour-stroje-4-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-stroje-4-1280.jpg" srcset="media/tour-stroje-4-1932.jpg 1932w, media/tour-stroje-4-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Svetlá sála s bielym stropom: uprostred tyrkysové kladkové stroje, vľavo stojan s činkami a maľba GYM KLUB na bielej stene, vpravo zrkadlá a hodiny, v popredí tyrkysová lavica." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="0.8" style="--fx:45%;--fy:45%;--ox:52%;--oy:56%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-stroje-1-1932.avif 1932w, media/tour-stroje-1-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-stroje-1-1932.webp 1932w, media/tour-stroje-1-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-stroje-1-1280.jpg" srcset="media/tour-stroje-1-1932.jpg 1932w, media/tour-stroje-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Svetlá sála s tyrkysovým kladkovým strojom, stojanom s pevnými činkami a lavicou, na bielej stene maľba GYM KLUB, vzadu zrkadlá a stroje pri čiernej stene." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="0.8" style="--fx:45%;--fy:50%;--ox:41%;--oy:61%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-kardio-3-1932.avif 1932w, media/tour-kardio-3-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-kardio-3-1932.webp 1932w, media/tour-kardio-3-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-kardio-3-1280.jpg" srcset="media/tour-kardio-3-1932.jpg 1932w, media/tour-kardio-3-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Pohľad cez sálu k oknám so stromami: vľavo v pozadí rad bežeckých pásov, vpravo tyrkysové stroje so sedadlami a nakladací stroj, vzadu kamenný stĺp a maľba." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.2" style="--fx:45%;--fy:50%;--ox:62%;--oy:58%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-kardio-1-1932.avif 1932w, media/tour-kardio-1-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-kardio-1-1932.webp 1932w, media/tour-kardio-1-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-kardio-1-1280.jpg" srcset="media/tour-kardio-1-1932.jpg 1932w, media/tour-kardio-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Rad bežeckých pásov Life Fitness pri veľkých oknách s výhľadom na stromy a panelové domy, vzadu čiernobiela fotografia kulturistu na stene." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.2" style="--fx:55%;--fy:48%;--ox:53%;--oy:57%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-volne-vahy-2-1932.avif 1932w, media/tour-volne-vahy-2-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-volne-vahy-2-1932.webp 1932w, media/tour-volne-vahy-2-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-volne-vahy-2-1280.jpg" srcset="media/tour-volne-vahy-2-1932.jpg 1932w, media/tour-volne-vahy-2-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Rad čiernych lavíc so stojanmi a kotúčmi pri oknách so žalúziami, vľavo tyrkysový kladkový stroj, na stene hodiny a plagát." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.1" style="--fx:45%;--fy:50%;--ox:52%;--oy:60%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-jednorucky-1-1932.avif 1932w, media/tour-jednorucky-1-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-jednorucky-1-1932.webp 1932w, media/tour-jednorucky-1-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-jednorucky-1-1280.jpg" srcset="media/tour-jednorucky-1-1932.jpg 1932w, media/tour-jednorucky-1-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Biely stojan s gumovými jednoručkami Jordan do 20 kg, vľavo schodový trenažér, vpravo zrkadlá a čierne nakladacie stroje pod tmavým stropom." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.25" style="--fx:50%;--fy:60%;--ox:53%;--oy:69%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-funkcna-zona-3-1932.avif 1932w, media/tour-funkcna-zona-3-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-funkcna-zona-3-1932.webp 1932w, media/tour-funkcna-zona-3-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-funkcna-zona-3-1280.jpg" srcset="media/tour-funkcna-zona-3-1932.jpg 1932w, media/tour-funkcna-zona-3-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Červená šprintérska dráha s číslami na čiernej gumovej podlahe, za ňou lavica na brucho a nakladací stroj pri presklenej stene, hore čierny kazetový strop so svetlami." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="0.8" style="--fx:48%;--fy:55%;--ox:47%;--oy:66%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-funkcna-zona-6-1932.avif 1932w, media/tour-funkcna-zona-6-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-funkcna-zona-6-1932.webp 1932w, media/tour-funkcna-zona-6-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-funkcna-zona-6-1280.jpg" srcset="media/tour-funkcna-zona-6-1932.jpg 1932w, media/tour-funkcna-zona-6-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Pohľad od konca červenej šprintérskej dráhy s číslami 4 až 8 pozdĺž zóny, hore šesťuholníkové LED svetlá, vzadu rig s kotúčmi, nakladací stroj, stojan s medicinbalmi a presklená stena." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="1.2" style="--fx:55%;--fy:42%;--ox:56%;--oy:56%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-funkcna-zona-2-1932.avif 1932w, media/tour-funkcna-zona-2-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-funkcna-zona-2-1932.webp 1932w, media/tour-funkcna-zona-2-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-funkcna-zona-2-1280.jpg" srcset="media/tour-funkcna-zona-2-1932.jpg 1932w, media/tour-funkcna-zona-2-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Červený rig Life Fitness so závesnými popruhmi TRX, boxovacím vrecom a kettlebellmi, nad ním šesťuholníkové LED svetlá v čiernom strope, na podlahe červené značenie dráhy." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-    <figure class="sc" data-len="2.3" style="--fx:50%;--fy:50%;--ox:50%;--oy:61%">
-      <picture>
-        <source type="image/avif" srcset="media/tour-tatami-2-1932.avif 1932w, media/tour-tatami-2-1280.avif 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <source type="image/webp" srcset="media/tour-tatami-2-1932.webp 1932w, media/tour-tatami-2-1280.webp 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh">
-        <img src="media/tour-tatami-2-1280.jpg" srcset="media/tour-tatami-2-1932.jpg 1932w, media/tour-tatami-2-1280.jpg 1280w" sizes="(min-aspect-ratio: 1932/2576) 100vw, 75.0vh" width="1280" height="1707" alt="Miestnosť s podložkami tatami v ružovej a čiernej farbe, zrkadlovou stenou, dverami a závesnými popruhmi pod stropom." decoding="async" loading="lazy">
-      </picture>
-    </figure>
-  </div>
-  <div class="beats">
-    <div class="bt bt-l" data-sc="0" data-a="0.62" data-b="1.22">
-      <p class="bt-k">Výstavná 6 · Lipa Centrum</p>
-      <h2 class="bt-h">Začíname na terase</h2>
-      <p class="bt-p">Do fitka sa vchádza z krytej terasy Lipa Centra v Nitre.</p>
-    </div>
-    <div class="bt bt-r" data-sc="1" data-a="0.1" data-b="0.82">
-      <p class="bt-k">Vstup</p>
-      <h2 class="bt-h">Dvere pod nápisom GYM KLUB &amp; caffee</h2>
-      <p class="bt-p">Biele presklené dvere. Hneď za nimi je recepcia.</p>
-    </div>
-    <div class="bt bt-l" data-sc="2" data-a="0.1" data-b="0.82">
-      <p class="bt-k">Recepcia</p>
-      <h2 class="bt-h">Prvá zastávka za dverami</h2>
-      <p class="bt-p">Pult s chladničkou na nápoje, polička na obuv a kreslá pri oknách.</p>
-    </div>
-    <div class="bt bt-l" data-sc="3" data-a="0.12" data-b="0.9">
-      <p class="bt-k">Hlavná sála</p>
-      <h2 class="bt-h">Silový tréning na strojoch</h2>
-      <p class="bt-p">Kladkové veže, čierne a tyrkysové stroje a zrkadlová stena pod nástennou maľbou GYM KLUB.</p>
-    </div>
-    <div class="bt bt-r" data-sc="5" data-a="0.12" data-b="0.88">
-      <p class="bt-k">Priestor</p>
-      <h2 class="bt-h">Plne klimatizované</h2>
-      <p class="bt-p">Klimatizácia je v celom fitku, od hlavnej sály po tatami.</p>
-    </div>
-    <div class="bt bt-l" data-sc="6" data-a="0.12" data-b="0.88">
-      <p class="bt-k">Sála so strojmi</p>
-      <h2 class="bt-h">Denné svetlo z veľkých okien</h2>
-      <p class="bt-p">Tyrkysové kladkové stroje, polohovateľné lavice a stojan s pevnými činkami.</p>
-    </div>
-    <div class="bt bt-r" data-sc="9" data-a="0.12" data-b="0.88">
-      <p class="bt-k">Kardio</p>
-      <h2 class="bt-h">Beh s výhľadom na stromy</h2>
-      <p class="bt-p">Rad bežeckých pásov pri oknách, vedľa eliptický a schodový trenažér.</p>
-    </div>
-    <div class="bt bt-l" data-sc="10" data-a="0.12" data-b="0.88">
-      <p class="bt-k">Voľné váhy</p>
-      <h2 class="bt-h">Jednoručky, osi a lavice</h2>
-      <p class="bt-p">Stojany s jednoručkami pri zrkadlách, lavice so stojanmi na osi a kotúče.</p>
-    </div>
-    <div class="bt bt-r" data-sc="11" data-a="0.12" data-b="0.8">
-      <p class="bt-k">Prechod</p>
-      <h2 class="bt-h">Do tmavej časti fitka</h2>
-      <p class="bt-p">Stojan s gumovými jednoručkami do 20 kg a schodový trenažér.</p>
-    </div>
-    <div class="bt bt-l" data-sc="12" data-a="0.12" data-b="0.9">
-      <p class="bt-k">Funkčná zóna</p>
-      <h2 class="bt-h">Šprintérska dráha pod LED svetlami</h2>
-      <p class="bt-p">Červená dráha na podlahe a čierny strop so šesťuholníkovými svetlami. Priestor na funkčný a kondičný tréning.</p>
-    </div>
-    <div class="bt bt-r" data-sc="14" data-a="0.12" data-b="0.88">
-      <p class="bt-k">Funkčná zóna</p>
-      <h2 class="bt-h">Rig Life Fitness</h2>
-      <p class="bt-p">Závesné popruhy, boxovacie vrece, kettlebelly a medicinbaly.</p>
-    </div>
-    <div class="bt bt-l" data-sc="15" data-a="0.12" data-b="0.86">
-      <p class="bt-k">Tatami</p>
-      <h2 class="bt-h">Samostatná miestnosť</h2>
-      <p class="bt-p">Podložky tatami, zrkadlová stena a závesné popruhy. Voľný priestor bez strojov.</p>
-    </div>
-    <div class="bt bt-c" data-sc="15" data-a="1.02" data-b="2.3">
-      <p class="bt-k">Čo sa tu trénuje</p>
-      <h2 class="bt-h">Tréningy v GYM KLUB</h2>
-      <ul class="bt-tags"><li>Fitness</li><li>MMA</li><li>Jiu Jitsu</li><li>Luta Livre</li><li>Krav Maga</li><li>Zdravý chrbát</li><li>Pilates</li></ul>
-    </div>
+  <section class="facts" aria-label="Základné informácie">
+    <ul class="wrap facts-l">
+      <li><span class="facts-k">Adresa</span><span class="facts-v">Výstavná 6, Lipa Centrum</span></li>
+      <li><span class="facts-k">Priestory</span><span class="facts-v">7 priestorov, 30 fotiek</span></li>
+      <li><span class="facts-k">Klíma</span><span class="facts-v">Plne klimatizované</span></li>
+    </ul>
+  </section>
 
+  <section class="tour" id="prehliadka" aria-labelledby="h-tour">
+    <div class="wrap sec-head rv">
+      <p class="kicker">Prehliadka</p>
+      <h2 class="h2" id="h-tour">Od vchodu po tatami</h2>
+      <p class="sec-p">Potiahnutím prejdete ďalšie fotky priestoru, ťuknutím ich otvoríte na celú obrazovku.</p>
+    </div>
+    <!--zony:start-->
+    <article class="zone rv" id="prichod" aria-labelledby="h-prichod">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">01 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-prichod">Príchod</h3>
+          <p class="zone-p">Výstavná 6, Lipa Centrum. Vchod je z krytej terasy, hneď za dverami je recepcia.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 3</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Príchod"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Príchod"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
       </div>
-      <div class="shade" aria-hidden="true"></div>
-      <div class="hero" id="hero">
-        <p class="hero-k">Nitra <span aria-hidden="true">·</span> Lipa Centrum</p>
-        <h1 class="hero-h" id="h-film"><span class="hero-ln">GYM KLUB</span><span class="sr-only"> – prechádzka fitkom</span></h1>
-        <p class="hero-s">Fitness &amp; Bodybuilding</p>
-        <p class="hero-cue" aria-hidden="true"><span class="cue-line"></span>Skrolujte a prejdite si fitko</p>
+      <ul class="rail" aria-label="Fotky: Príchod">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-terasa-1-2160.jpg" data-i="0" data-src="tour-terasa-1" data-big="2160" data-w="2160" data-h="3840" data-zone="Príchod" aria-label="Príchod, fotka 1 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-terasa-1-1280.avif 1280w, media/tour-terasa-1-2160.avif 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-terasa-1-1280.webp 1280w, media/tour-terasa-1-2160.webp 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-terasa-1-1280.jpg" width="1280" height="2276" alt="Krytá terasa s terazzovou dlažbou, kovovým stolom a stoličkami s červenými sedákmi; v pozadí vchodové dvere pod nápisom GYM KLUB &amp; caffee, vpravo zábradlie a zeleň." loading="lazy" decoding="async" style="object-position:50% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-vstup-1-2160.jpg" data-i="1" data-src="tour-vstup-1" data-big="2160" data-w="2160" data-h="3840" data-zone="Príchod" aria-label="Príchod, fotka 2 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-vstup-1-1280.avif 1280w, media/tour-vstup-1-2160.avif 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-vstup-1-1280.webp 1280w, media/tour-vstup-1-2160.webp 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-vstup-1-1280.jpg" width="1280" height="2276" alt="Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB &amp; caffee, na dverách piktogramy a oznamy, pred nimi čierna rohož, vľavo rastlina, vpravo kamenný obklad." loading="lazy" decoding="async" style="object-position:55% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-recepcia-1-2160.jpg" data-i="2" data-src="tour-recepcia-1" data-big="2160" data-w="2160" data-h="3840" data-zone="Príchod" aria-label="Príchod, fotka 3 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-recepcia-1-1280.avif 1280w, media/tour-recepcia-1-2160.avif 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-recepcia-1-1280.webp 1280w, media/tour-recepcia-1-2160.webp 2160w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-recepcia-1-1280.jpg" width="1280" height="2276" alt="Priestor za vchodovými dverami: vľavo otvorené presklené dvere, drevená polička na obuv s kvetmi, rastliny, pult s chladničkou na nápoje a kreslá pri oknách so žalúziami." loading="lazy" decoding="async" style="object-position:58% 48%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="hlavna-sala" aria-labelledby="h-hlavna-sala">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">02 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-hlavna-sala">Hlavná sála</h3>
+          <p class="zone-p">Silový tréning na strojoch.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 6</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Hlavná sála"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Hlavná sála"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
       </div>
-      <div class="prog" aria-hidden="true"><span id="progBar"></span></div>
+      <ul class="rail" aria-label="Fotky: Hlavná sála">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-1-1932.jpg" data-i="3" data-src="tour-hlavna-sala-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 1 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-1-1280.avif 1280w, media/tour-hlavna-sala-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-1-1280.webp 1280w, media/tour-hlavna-sala-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-1-1280.jpg" width="1280" height="1707" alt="Hlavná sála s veľkou nástennou maľbou GYM KLUB a televízorom nad zrkadlami, pod nimi rad čiernych strojov so zelenými prvkami, tyrkysový stroj a modrá fitlopta." loading="lazy" decoding="async" style="object-position:45% 42%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-2-1932.jpg" data-i="4" data-src="tour-hlavna-sala-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 2 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-2-1280.avif 1280w, media/tour-hlavna-sala-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-2-1280.webp 1280w, media/tour-hlavna-sala-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-2-1280.jpg" width="1280" height="1707" alt="Čierny viacstaničný kladkový stroj so zelenými kladkami, vľavo stroj pri stene obloženej kameňom, vpravo zrkadlová stena s maľbou nad ňou a rad kotúčových jednoručiek." loading="lazy" decoding="async" style="object-position:45% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-4-1932.jpg" data-i="5" data-src="tour-hlavna-sala-4" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 3 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-4-1280.avif 1280w, media/tour-hlavna-sala-4-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-4-1280.webp 1280w, media/tour-hlavna-sala-4-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-4-1280.jpg" width="1280" height="1707" alt="Čierna viacstaničná kladková veža so zelenými kladkami uprostred sály, vľavo zrkadlová stena s maľbou GYM KLUB a stojanom s jednoručkami, vzadu tyrkysové stroje a okná." loading="lazy" decoding="async" style="object-position:55% 48%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-5-1932.jpg" data-i="6" data-src="tour-hlavna-sala-5" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 4 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-5-1280.avif 1280w, media/tour-hlavna-sala-5-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-5-1280.webp 1280w, media/tour-hlavna-sala-5-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-5-1280.jpg" width="1280" height="1707" alt="Nástenná maľba GYM KLUB s televízorom, pod ňou zrkadlá, vpravo tyrkysový kladkový stroj so sedadlom, v pozadí okná so stromami a rad bežeckých pásov." loading="lazy" decoding="async" style="object-position:45% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-3-1932.jpg" data-i="7" data-src="tour-hlavna-sala-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 5 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-3-1280.avif 1280w, media/tour-hlavna-sala-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-3-1280.webp 1280w, media/tour-hlavna-sala-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-3-1280.jpg" width="1280" height="1707" alt="Pohľad cez sálu k presklenej stene so stromami: čierne stroje so zelenými a tyrkysovými rámami, vpravo stĺp obložený kameňom, v popredí kladkový stojan." loading="lazy" decoding="async" style="object-position:50% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-hlavna-sala-6-1932.jpg" data-i="8" data-src="tour-hlavna-sala-6" data-big="1932" data-w="1932" data-h="2576" data-zone="Hlavná sála" aria-label="Hlavná sála, fotka 6 z 6: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-hlavna-sala-6-1280.avif 1280w, media/tour-hlavna-sala-6-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-hlavna-sala-6-1280.webp 1280w, media/tour-hlavna-sala-6-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-hlavna-sala-6-1280.jpg" width="1280" height="1707" alt="Chodba medzi čiernym viacstaničným strojom a stenou s kamenným obkladom, uprostred kamenný stĺp, vzadu presklená stena so stromami a strieborný stroj so sedadlom." loading="lazy" decoding="async" style="object-position:50% 50%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="sala-so-strojmi" aria-labelledby="h-sala-so-strojmi">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">03 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-sala-so-strojmi">Sála so strojmi</h3>
+          <p class="zone-p">Druhá sála na silový tréning.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 4</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Sála so strojmi"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Sála so strojmi"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
+      </div>
+      <ul class="rail" aria-label="Fotky: Sála so strojmi">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-stroje-4-1932.jpg" data-i="9" data-src="tour-stroje-4" data-big="1932" data-w="1932" data-h="2576" data-zone="Sála so strojmi" aria-label="Sála so strojmi, fotka 1 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-stroje-4-1280.avif 1280w, media/tour-stroje-4-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-stroje-4-1280.webp 1280w, media/tour-stroje-4-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-stroje-4-1280.jpg" width="1280" height="1707" alt="Svetlá sála s bielym stropom: uprostred tyrkysové kladkové stroje, vľavo stojan s činkami a maľba GYM KLUB na bielej stene, vpravo zrkadlá a hodiny, v popredí tyrkysová lavica." loading="lazy" decoding="async" style="object-position:50% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-stroje-1-1932.jpg" data-i="10" data-src="tour-stroje-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Sála so strojmi" aria-label="Sála so strojmi, fotka 2 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-stroje-1-1280.avif 1280w, media/tour-stroje-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-stroje-1-1280.webp 1280w, media/tour-stroje-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-stroje-1-1280.jpg" width="1280" height="1707" alt="Svetlá sála s tyrkysovým kladkovým strojom, stojanom s pevnými činkami a lavicou, na bielej stene maľba GYM KLUB, vzadu zrkadlá a stroje pri čiernej stene." loading="lazy" decoding="async" style="object-position:45% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-stroje-2-1932.jpg" data-i="11" data-src="tour-stroje-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Sála so strojmi" aria-label="Sála so strojmi, fotka 3 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-stroje-2-1280.avif 1280w, media/tour-stroje-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-stroje-2-1280.webp 1280w, media/tour-stroje-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-stroje-2-1280.jpg" width="1280" height="1707" alt="Tyrkysový kladkový stroj s dvoma stohmi závaží a lanom, za ním biela stena s maľbou GYM KLUB, zrkadlá a stroje pri čiernej stene." loading="lazy" decoding="async" style="object-position:50% 45%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-stroje-3-1932.jpg" data-i="12" data-src="tour-stroje-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Sála so strojmi" aria-label="Sála so strojmi, fotka 4 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-stroje-3-1280.avif 1280w, media/tour-stroje-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-stroje-3-1280.webp 1280w, media/tour-stroje-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-stroje-3-1280.jpg" width="1280" height="1707" alt="Sála s veľkými oknami: pri nich čierne lavice so stojanmi na osi, v popredí tyrkysová lavica s valcami na nohy a kladkový stroj, na strope kazetová klimatizačná jednotka." loading="lazy" decoding="async" style="object-position:50% 45%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="kardio" aria-labelledby="h-kardio">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">04 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-kardio">Kardio</h3>
+          <p class="zone-p">Kardio tréning.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 3</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Kardio"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Kardio"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
+      </div>
+      <ul class="rail" aria-label="Fotky: Kardio">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-kardio-3-1932.jpg" data-i="13" data-src="tour-kardio-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Kardio" aria-label="Kardio, fotka 1 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-kardio-3-1280.avif 1280w, media/tour-kardio-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-kardio-3-1280.webp 1280w, media/tour-kardio-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-kardio-3-1280.jpg" width="1280" height="1707" alt="Pohľad cez sálu k oknám so stromami: vľavo v pozadí rad bežeckých pásov, vpravo tyrkysové stroje so sedadlami a nakladací stroj, vzadu kamenný stĺp a maľba." loading="lazy" decoding="async" style="object-position:45% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-kardio-1-1932.jpg" data-i="14" data-src="tour-kardio-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Kardio" aria-label="Kardio, fotka 2 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-kardio-1-1280.avif 1280w, media/tour-kardio-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-kardio-1-1280.webp 1280w, media/tour-kardio-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-kardio-1-1280.jpg" width="1280" height="1707" alt="Rad bežeckých pásov Life Fitness pri veľkých oknách s výhľadom na stromy a panelové domy, vzadu čiernobiela fotografia kulturistu na stene." loading="lazy" decoding="async" style="object-position:45% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-kardio-2-1932.jpg" data-i="15" data-src="tour-kardio-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Kardio" aria-label="Kardio, fotka 3 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-kardio-2-1280.avif 1280w, media/tour-kardio-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-kardio-2-1280.webp 1280w, media/tour-kardio-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-kardio-2-1280.jpg" width="1280" height="1707" alt="Eliptický a schodový trenažér a spinningové bicykle pri oknách, vpravo biely Smithov stroj s lavicou pri kamennej stene a čiernobiela fotografia kulturistu." loading="lazy" decoding="async" style="object-position:50% 48%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="volne-vahy" aria-labelledby="h-volne-vahy">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">05 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-volne-vahy">Voľné váhy</h3>
+          <p class="zone-p">Tréning s jednoručkami a osami.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 4</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Voľné váhy"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Voľné váhy"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
+      </div>
+      <ul class="rail" aria-label="Fotky: Voľné váhy">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-volne-vahy-1-1932.jpg" data-i="16" data-src="tour-volne-vahy-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Voľné váhy" aria-label="Voľné váhy, fotka 1 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-volne-vahy-1-1280.avif 1280w, media/tour-volne-vahy-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-volne-vahy-1-1280.webp 1280w, media/tour-volne-vahy-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-volne-vahy-1-1280.jpg" width="1280" height="1707" alt="Stojan s kotúčovými jednoručkami, lavice, tyrkysový nakladací stroj a stojan s pevnými činkami, na bielej stene držiak na osi a maľba GYM KLUB." loading="lazy" decoding="async" style="object-position:55% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-volne-vahy-2-1932.jpg" data-i="17" data-src="tour-volne-vahy-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Voľné váhy" aria-label="Voľné váhy, fotka 2 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-volne-vahy-2-1280.avif 1280w, media/tour-volne-vahy-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-volne-vahy-2-1280.webp 1280w, media/tour-volne-vahy-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-volne-vahy-2-1280.jpg" width="1280" height="1707" alt="Rad čiernych lavíc so stojanmi a kotúčmi pri oknách so žalúziami, vľavo tyrkysový kladkový stroj, na stene hodiny a plagát." loading="lazy" decoding="async" style="object-position:55% 48%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-volne-vahy-3-1932.jpg" data-i="18" data-src="tour-volne-vahy-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Voľné váhy" aria-label="Voľné váhy, fotka 3 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-volne-vahy-3-1280.avif 1280w, media/tour-volne-vahy-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-volne-vahy-3-1280.webp 1280w, media/tour-volne-vahy-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-volne-vahy-3-1280.jpg" width="1280" height="1707" alt="Tyrkysový kladkový stroj so stohmi závaží vľavo, uprostred stojan s jednoručkami pred zrkadlovou stenou s televízorom, vpravo tyrkysová lavica na bicepsy a držiak na osi na bielej stene." loading="lazy" decoding="async" style="object-position:50% 55%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-jednorucky-1-1932.jpg" data-i="19" data-src="tour-jednorucky-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Voľné váhy" aria-label="Voľné váhy, fotka 4 z 4: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-jednorucky-1-1280.avif 1280w, media/tour-jednorucky-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-jednorucky-1-1280.webp 1280w, media/tour-jednorucky-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-jednorucky-1-1280.jpg" width="1280" height="1707" alt="Biely stojan s gumovými jednoručkami Jordan do 20 kg, vľavo schodový trenažér, vpravo zrkadlá a čierne nakladacie stroje pod tmavým stropom." loading="lazy" decoding="async" style="object-position:45% 50%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="funkcna-zona" aria-labelledby="h-funkcna-zona">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">06 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-funkcna-zona">Funkčná zóna</h3>
+          <p class="zone-p">Funkčný a kondičný tréning.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 7</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Funkčná zóna"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Funkčná zóna"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
+      </div>
+      <ul class="rail" aria-label="Fotky: Funkčná zóna">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-4-1932.jpg" data-i="20" data-src="tour-funkcna-zona-4" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 1 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-4-1280.avif 1280w, media/tour-funkcna-zona-4-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-4-1280.webp 1280w, media/tour-funkcna-zona-4-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-4-1280.jpg" width="1280" height="1707" alt="Tmavá zóna s čiernym kazetovým stropom od okien: v popredí strieborné nakladacie stroje s kotúčmi a rastlina, vzadu šesťuholníkové LED svetlá, červený rig a maľba, vpravo červená šprintérska dráha." loading="lazy" decoding="async" style="object-position:55% 55%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-1-1932.jpg" data-i="21" data-src="tour-funkcna-zona-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 2 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-1-1280.avif 1280w, media/tour-funkcna-zona-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-1-1280.webp 1280w, media/tour-funkcna-zona-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-1-1280.jpg" width="1280" height="1707" alt="Červená šprintérska dráha s číslami na čiernej podlahe, vľavo čierne nakladacie stroje a stojan s medicinbalmi pri kamennej stene, vzadu červený rig s kotúčmi, zrkadlo a presklená stena k recepcii." loading="lazy" decoding="async" style="object-position:50% 60%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-2-1932.jpg" data-i="22" data-src="tour-funkcna-zona-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 3 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-2-1280.avif 1280w, media/tour-funkcna-zona-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-2-1280.webp 1280w, media/tour-funkcna-zona-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-2-1280.jpg" width="1280" height="1707" alt="Červený rig Life Fitness so závesnými popruhmi TRX, boxovacím vrecom a kettlebellmi, nad ním šesťuholníkové LED svetlá v čiernom strope, na podlahe červené značenie dráhy." loading="lazy" decoding="async" style="object-position:55% 42%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-5-1932.jpg" data-i="23" data-src="tour-funkcna-zona-5" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 4 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-5-1280.avif 1280w, media/tour-funkcna-zona-5-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-5-1280.webp 1280w, media/tour-funkcna-zona-5-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-5-1280.jpg" width="1280" height="1707" alt="Červený rig Life Fitness s kettlebellmi vľavo, za ním okná, vzduchový bicykel, nakladací stroj, na stĺpe odporové gumy a fitlopta, vpravo lavica na brucho a drevená plyometrická debna." loading="lazy" decoding="async" style="object-position:50% 52%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-3-1932.jpg" data-i="24" data-src="tour-funkcna-zona-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 5 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-3-1280.avif 1280w, media/tour-funkcna-zona-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-3-1280.webp 1280w, media/tour-funkcna-zona-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-3-1280.jpg" width="1280" height="1707" alt="Červená šprintérska dráha s číslami na čiernej gumovej podlahe, za ňou lavica na brucho a nakladací stroj pri presklenej stene, hore čierny kazetový strop so svetlami." loading="lazy" decoding="async" style="object-position:50% 60%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-6-1932.jpg" data-i="25" data-src="tour-funkcna-zona-6" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 6 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-6-1280.avif 1280w, media/tour-funkcna-zona-6-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-6-1280.webp 1280w, media/tour-funkcna-zona-6-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-6-1280.jpg" width="1280" height="1707" alt="Pohľad od konca červenej šprintérskej dráhy s číslami 4 až 8 pozdĺž zóny, hore šesťuholníkové LED svetlá, vzadu rig s kotúčmi, nakladací stroj, stojan s medicinbalmi a presklená stena." loading="lazy" decoding="async" style="object-position:48% 55%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-funkcna-zona-7-1932.jpg" data-i="26" data-src="tour-funkcna-zona-7" data-big="1932" data-w="1932" data-h="2576" data-zone="Funkčná zóna" aria-label="Funkčná zóna, fotka 7 z 7: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-funkcna-zona-7-1280.avif 1280w, media/tour-funkcna-zona-7-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-funkcna-zona-7-1280.webp 1280w, media/tour-funkcna-zona-7-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-funkcna-zona-7-1280.jpg" width="1280" height="1707" alt="Strop s klimatizačnou jednotkou a šesťuholníkovými LED svetlami, vpravo červený rig Life Fitness s boxovacím vrecom a malá trampolína, uprostred šprintérska dráha a presklená stena, vľavo nakladací stroj." loading="lazy" decoding="async" style="object-position:55% 45%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <article class="zone rv" id="tatami" aria-labelledby="h-tatami">
+      <div class="wrap zone-head">
+        <div>
+          <p class="zone-n">07 <span>/ 07</span></p>
+          <h3 class="zone-h" id="h-tatami">Tatami</h3>
+          <p class="zone-p">Samostatná miestnosť na cvičenie na podložkách.</p>
+        </div>
+        <div class="rail-ctl" hidden>
+          <span class="rail-count" aria-hidden="true"><b>1</b> / 3</span>
+          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: Tatami"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: Tatami"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        </div>
+      </div>
+      <ul class="rail" aria-label="Fotky: Tatami">
+          <li class="rail-i">
+            <a class="ph" href="media/tour-tatami-1-1932.jpg" data-i="27" data-src="tour-tatami-1" data-big="1932" data-w="1932" data-h="2576" data-zone="Tatami" aria-label="Tatami, fotka 1 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-tatami-1-1280.avif 1280w, media/tour-tatami-1-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-tatami-1-1280.webp 1280w, media/tour-tatami-1-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-tatami-1-1280.jpg" width="1280" height="1707" alt="Biela miestnosť s ružovo-čiernymi podložkami tatami, drevenou švédskou rebrinou pri stene a veľkými oknami s matným sklom." loading="lazy" decoding="async" style="object-position:45% 55%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-tatami-2-1932.jpg" data-i="28" data-src="tour-tatami-2" data-big="1932" data-w="1932" data-h="2576" data-zone="Tatami" aria-label="Tatami, fotka 2 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-tatami-2-1280.avif 1280w, media/tour-tatami-2-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-tatami-2-1280.webp 1280w, media/tour-tatami-2-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-tatami-2-1280.jpg" width="1280" height="1707" alt="Miestnosť s podložkami tatami v ružovej a čiernej farbe, zrkadlovou stenou, dverami a závesnými popruhmi pod stropom." loading="lazy" decoding="async" style="object-position:50% 50%">
+              </picture>
+            </a>
+          </li>
+          <li class="rail-i">
+            <a class="ph" href="media/tour-tatami-3-1932.jpg" data-i="29" data-src="tour-tatami-3" data-big="1932" data-w="1932" data-h="2576" data-zone="Tatami" aria-label="Tatami, fotka 3 z 3: zväčšiť">
+              <picture>
+                <source type="image/avif" srcset="media/tour-tatami-3-1280.avif 1280w, media/tour-tatami-3-1932.avif 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <source type="image/webp" srcset="media/tour-tatami-3-1280.webp 1280w, media/tour-tatami-3-1932.webp 1932w" sizes="(max-width: 760px) 84vw, 31vw">
+                <img src="media/tour-tatami-3-1280.jpg" width="1280" height="1707" alt="Zrkadlová stena miestnosti s tatami, v odraze dvere a rebrina, pri stene zrolované podložky a malé jednoručky, vpravo biele dvere a závesný popruh, na podlahe ružovo-čierne podložky." loading="lazy" decoding="async" style="object-position:45% 50%">
+              </picture>
+            </a>
+          </li>
+      </ul>
+    </article>
+    <!--zony:end-->
+  </section>
+
+  <section class="train" id="treningy" aria-labelledby="h-tr">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Tréningy</p>
+        <h2 class="h2" id="h-tr">Čo sa tu trénuje</h2>
+      </div>
+      <ul class="tr-l rv">
+        <li>Fitness</li>
+        <li>MMA</li>
+        <li>Jiu Jitsu</li>
+        <li>Luta Livre</li>
+        <li>Krav Maga</li>
+        <li>Zdravý chrbát</li>
+        <li>Pilates</li>
+      </ul>
+      <p class="sec-p rv">Rozvrh tréningov, otváracie hodiny a cenník vám povieme telefonicky alebo e-mailom.</p>
     </div>
   </section>
 
   <section class="contact" id="kontakt" aria-labelledby="h-kontakt">
     <div class="wrap">
-      <p class="kicker">Kontakt</p>
-      <h2 id="h-kontakt" class="c-h">Príďte si to prejsť <em>naživo</em></h2>
-      <div class="c-grid">
+      <div class="sec-head rv">
+        <p class="kicker">Kontakt</p>
+        <h2 id="h-kontakt" class="h2">Príďte si to prejsť naživo</h2>
+      </div>
+      <div class="c-grid rv">
         <address class="c-addr">
           GYM KLUB Fitness &amp; Bodybuilding<br>
           Výstavná 6 (Lipa Centrum)<br>
@@ -249,7 +494,6 @@
           <li><span class="c-l">Mapa</span><a class="c-v c-map" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%BDstavn%C3%A1+6%2C+949+01+Nitra" target="_blank" rel="noopener">Otvoriť v Mapách Google <span aria-hidden="true">↗</span></a></li>
         </ul>
       </div>
-      <p class="c-note">Otváracie hodiny, cenník a rozvrh tréningov vám povieme telefonicky alebo e-mailom.</p>
     </div>
   </section>
 </main>
@@ -261,6 +505,16 @@
   </div>
 </footer>
 
-<script src="assets/film.js" type="module"></script>
+<dialog class="lb" id="lb" aria-label="Fotky fitka na celú obrazovku">
+  <div class="lb-track" id="lbTrack"></div>
+  <div class="lb-top">
+    <p class="lb-cap" id="lbCap" aria-live="polite"></p>
+    <button class="lb-x" type="button" id="lbClose" aria-label="Zavrieť"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+  </div>
+  <button class="lb-nav lb-prev" type="button" data-dir="-1" aria-label="Predchádzajúca fotka"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+  <button class="lb-nav lb-next" type="button" data-dir="1" aria-label="Ďalšia fotka"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+</dialog>
+
+<script src="assets/site.js" type="module"></script>
 </body>
 </html>
