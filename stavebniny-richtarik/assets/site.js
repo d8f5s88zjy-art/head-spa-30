@@ -42,6 +42,35 @@
 
   window.addEventListener('beforeprint', function () { rv.forEach(function (el) { el.classList.add('now'); }); });
 
+  // paralaxa úvodnej fotky: pomalší posun než stránka
+  var par = d.querySelector('[data-parallax]');
+  if (par && !reduce) {
+    var ticking = false;
+    function move() { var y = window.scrollY; if (y < window.innerHeight * 1.2) par.style.transform = 'translate3d(0,' + (y * 0.28) + 'px,0)'; ticking = false; }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(move); } }, { passive: true });
+    move();
+  }
+
+  // počítadlá: čísla nabehnú, keď sa dostanú do záberu
+  var counters = d.querySelectorAll('[data-count]');
+  if (counters.length) {
+    function run(el) {
+      var raw = el.getAttribute('data-count'), dec = raw.indexOf(',') >= 0 ? raw.split(',')[1].length : 0;
+      var target = parseFloat(raw.replace(',', '.')), t0 = null, dur = 1400;
+      function step(t) {
+        if (!t0) t0 = t; var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * e).toFixed(dec).replace('.', ',');
+        if (p < 1) requestAnimationFrame(step); else el.textContent = raw;
+      }
+      requestAnimationFrame(step);
+    }
+    if (!('IntersectionObserver' in window) || reduce) { /* čísla ostanú, ako sú */ }
+    else {
+      var co = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { run(e.target); co.unobserve(e.target); } }); }, { threshold: 0.4 });
+      counters.forEach(function (el) { co.observe(el); });
+    }
+  }
+
   // lightbox: všetky fotky na stránke, šípky, popisok, počítadlo
   var lb = d.getElementById('lb');
   if (lb) {

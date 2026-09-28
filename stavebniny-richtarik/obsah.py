@@ -471,7 +471,7 @@ class Parser:
     def _brand(self, b):
         logo = f'<div class="bl"><img src="{self._src(b["logo"])}" alt="{html.escape(b["name"])}" loading="lazy"></div>' if b['logo'] else f'<div class="bl txt"><span>{html.escape(b["name"][:1])}</span></div>'
         link = f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>' if b['url'] else ''
-        return f'<article class="brand rv">{logo}<div class="bt"><h3>{html.escape(b["name"])}</h3><p>{html.escape(b["text"])}</p>{link}</div></article>'
+        return f'<article class="znacka rv">{logo}<div class="bt"><h3>{html.escape(b["name"])}</h3><p>{html.escape(b["text"])}</p>{link}</div></article>'
 
     def plain(self, blocks):
         """Čistý text pre vyhľadávanie a úryvky."""
