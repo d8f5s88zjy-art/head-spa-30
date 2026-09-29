@@ -72,7 +72,25 @@
       <div class="tv-top">
         <button class="tv-pill tv-back" type="button" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Späť na web</span></button>
         <button class="tv-pill tv-open" type="button" aria-expanded="false" aria-controls="tvList"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Priestory</span></button>
+        <button class="tv-pill tv-resume" type="button" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 5v14l11-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Pokračovať vo filme</span></button>
+        <button class="tv-pill tv-film-btn" type="button" aria-label="Spustiť filmovú prehliadku od začiatku"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 5v14l11-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Film</span></button>
         <a class="tv-pill tv-cta" href="kontakt.html#navsteva">Naplánovať návštevu</a>
+      </div>
+      <!-- filmová cesta: popis záberu, priebeh a ovládanie (tour.js, FILM) -->
+      <div class="tv-lower" aria-live="polite"><p class="tv-lower-k mono"></p><p class="tv-lower-h"></p><p class="tv-lower-s"></p></div>
+      <div class="tv-filmbar" aria-hidden="true"><i></i></div>
+      <div class="tv-fctl">
+        <button class="tv-pill tv-pause" type="button" aria-pressed="false" hidden><svg class="i-pause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg><span>Pozastaviť</span></button>
+        <button class="tv-pill tv-skip" type="button" hidden>Preskočiť film <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 5l7 7-7 7M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="tv-end" hidden>
+        <div class="tv-end-in">
+          <p class="mono kicker">Koniec filmovej prehliadky</p>
+          <p class="tv-end-h">Príďte si to prejsť naživo</p>
+          <p class="tv-end-p">Na samostatný tréning sa netreba objednávať. Stačí prísť počas otváracích hodín, vstup zaplatíte na recepcii.</p>
+          <div class="cta-row"><a class="btn" href="kontakt.html#navsteva"><span class="btn-t"><span>Naplánovať návštevu</span><span aria-hidden="true">Naplánovať návštevu</span></span><i><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></i></a><button class="btn btn-ghost tv-explore" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
+          <button class="tv-again u mono" type="button">Pozrieť film znova</button>
+        </div>
       </div>
       <div class="tv-compass" aria-hidden="true" hidden><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="29" fill="rgba(6,7,7,.6)" stroke="rgba(241,239,233,.25)"/><path class="tv-arc" fill="none" stroke="rgba(241,239,233,.55)" stroke-width="3"/><path class="tv-cone" fill="rgba(255,58,36,.8)"/><circle cx="32" cy="32" r="3" fill="#f1efe9"/></svg><span class="mono tv-deg"></span></div>
       <div class="tv-card" hidden><p class="tv-card-h"></p><p class="tv-card-p"></p><button class="tv-card-x" type="button" aria-label="Zavrieť popis"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
@@ -101,8 +119,9 @@
         <div class="tv-intro-in">
           <p class="mono kicker">Výstavná 6 · Lipa Centrum · Nitra</p>
           <p class="tv-intro-h" data-kt>Vstúpte do GYM KLUB</p>
-          <p class="tv-intro-p">4 panorámy zo skutočného videa a&nbsp;30 fotiek, od terasy cez všetky sály až po tatami. Ťahaním sa rozhliadnete, bodmi v&nbsp;scéne zistíte, čo kde je, a&nbsp;tlačidlom Ďalej prejdete ďalej.</p>
-          <div class="cta-row"><button class="btn tv-enter" type="button"><span class="btn-t"><span>Vstúpiť</span><span aria-hidden="true">Vstúpiť</span></span><i><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></i></button><a class="btn btn-ghost" href="#obsah-prehliadky"><span class="btn-t"><span>Preskočiť na zoznam zón</span><span aria-hidden="true">Preskočiť na zoznam zón</span></span></a></div>
+          <p class="tv-intro-p">Filmová cesta od terasy cez všetky sály až po tatami, asi 45 sekúnd. Kedykoľvek ju zastavíte a&nbsp;rozhliadnete sa sami. Zábery sú skutočné: 4 čiastočné panorámy zložené z&nbsp;videa a&nbsp;30 fotiek.</p>
+          <div class="cta-row"><button class="btn tv-start" type="button"><span class="btn-t"><span>Spustiť prehliadku</span><span aria-hidden="true">Spustiť prehliadku</span></span><i><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></i></button><button class="btn btn-ghost tv-enter" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
+          <a class="tv-intro-skip u mono" href="#obsah-prehliadky">Zoznam zón pod prehliadkou</a>
         </div>
       </div>
       <p class="tv-state" hidden><span class="tv-state-t"></span> <button class="tv-retry" type="button" hidden>Skúsiť znova</button></p>

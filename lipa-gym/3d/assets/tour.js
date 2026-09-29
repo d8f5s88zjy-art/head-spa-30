@@ -5,6 +5,9 @@
 //    ostávajú priame, a rozhliadať sa dá len v rozsahu, ktorý kamera naozaj zachytila.
 //  • fotka: jeden skutočný záber s hĺbkovou mapou (media/depth-*.png) a jemným priestorovým posunom.
 // Prechod na ďalšie miesto priblíži kameru k bodu v scéne a prelne sa do nového miesta.
+// Filmová cesta (FILM): režírovaný prechod od terasy po sálu Panda, každý záber má pohyb kamery
+// so zrýchlením a spomalením, krátky pokoj na konci (vtedy sa objavia body v scéne) a strih alebo
+// prechod „dverami“. Dá sa pozastaviť alebo preskočiť; akýkoľvek zásah prepne na voľné skúmanie.
 // Bez WebGL ostáva obyčajný obrázok (panoráma sa dá posúvať do strany), pri obmedzenom pohybe
 // sa vypnú samovoľné pohyby a prechody sú len krátke prelínanie.
 
@@ -34,7 +37,7 @@ function init(root) {
   const small = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
   // ľahšia verzia: šetrenie dát, pomalé pripojenie alebo slabé zariadenie
   const conn = navigator.connection || {};
-  const light = !!(conn.saveData || /2g|3g/.test(conn.effectiveType || '') ||
+  let light = !!(conn.saveData || /2g|3g/.test(conn.effectiveType || '') ||
     (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2));
   root.classList.toggle('tv-light', light);
 
@@ -60,6 +63,26 @@ function init(root) {
   const cam = { yaw: 0, pitch: 0, fov: 1, tYaw: 0, tPitch: 0, tFov: 1, vy: 0 };
   let pan = { x: 0, y: 0 }, pz = 1, tpz = 1, look = { x: 0, y: 0 }, lookT = null;
   const EXTRA = 1.12, AMP = 0.018;
+
+  // ---------- filmová cesta: zábery (len skutočné miesta z tour.json) ----------
+  // pano: x = smer pohľadu v % šírky panorámy (od → do), f = zorný uhol voči základnému
+  // fotka: pz = priblíženie, pan/look = posun výrezu a hĺbkový posun (−1 … 1), push = nájazd do hĺbky
+  const FILM = [
+    { id: 'p-terasa', dur: 4.2, x: [28, 80], f: [1.2, .9], cap: 'Krytá terasa Lipa Centra', sub: 'Výstavná 6, Nitra', out: 'walk' },
+    { id: 'p-vchod', dur: 3.2, x: [52, 25], f: [1, .8], cap: 'Vchod', sub: 'Dvere pod nápisom GYM KLUB & caffee', out: 'walk' },
+    { id: 'recepcia-1', dur: 3, pz: [1, 1.1], push: [0, .07], look: [[-.4, 0], [.35, 0]], cap: 'Recepcia', sub: 'Hneď za dverami, tu zaplatíte vstup', out: 'walk' },
+    { id: 'hlavna-sala-1', dur: 4.2, pz: [1.42, 1], look: [[.5, 0], [-.3, 0]], cap: 'Hlavná sála', sub: 'Kladkové veže, stroje na partie, zrkadlová stena', out: 'cut' },
+    { id: 'stroje-4', dur: 3.4, pz: [1.2, 1.2], pan: [[-.7, 0], [.6, 0]], look: [[-.9, 0], [.9, 0]], dk: 1.6, cap: 'Sála so strojmi', sub: 'Svetlá sála s veľkými oknami', out: 'cut' },
+    { id: 'kardio-1', dur: 3.4, pz: [1.2, 1.18], pan: [[.6, 0], [-.6, 0]], look: [[.9, 0], [-.9, 0]], dk: 1.6, cap: 'Kardio', sub: 'Bežecké pásy pri oknách', out: 'cut' },
+    { id: 'jednorucky-1', dur: 3, pz: [1, 1.12], push: [0, .08], look: [[.3, 0], [-.3, 0]], cap: 'Voľné váhy', sub: 'Jednoručky do 20 kg', out: 'walk' },
+    { id: 'p-funkcna-okna', dur: 5, x: [16, 68], f: [1.05, .92], cap: 'Funkčná zóna', sub: 'Šprintérska dráha, rig a nakladacie stroje', out: 'cut' },
+    { id: 'funkcna-zona-7', dur: 3.4, pz: [1.24, 1.16], pan: [[0, .7], [0, -.6]], look: [[0, .5], [0, -.5]], cap: 'Šprintérska dráha a LED strop', sub: 'Funkčná zóna', out: 'cut' },
+    { id: 'tatami-2', dur: 3, pz: [1, 1.12], push: [0, .07], look: [[-.3, 0], [.3, 0]], cap: 'Tatami', sub: 'Samostatná miestnosť so zrkadlami', out: 'cut' },
+    { id: 'panda-sala-1', dur: 3.6, pz: [1.35, 1], look: [[.4, 0], [-.2, 0]], cap: 'Sála Panda Fight Club', sub: 'MMA, Luta Livre a Jiu Jitsu', out: 'end' },
+  ].map(f => ({ ...f, stop: stops.findIndex(s => s.id === f.id) })).filter(f => f.stop >= 0);
+  const HOLD = .9;   // pokoj na konci záberu (s)
+  const film = { on: false, paused: false, idx: 0, t0: 0, pt: 0, leaving: false, push: 0, dk: 1, hold: 1, ema: .016, slow: 0, perfLow: false };
+  const lerp = (a, b, t) => a + (b - a) * t;
 
   // ---------- WebGL ----------
   let gl = null, gl2 = false, maxTex = 4096, P = null, Q = null;
@@ -175,7 +198,7 @@ void main(){
     if (cache.size > 5) {
       for (const [id, v] of cache) {
         const k = stops.findIndex(x => x.id === id);
-        if (Math.abs(k - cur) > 1 && (!anim || anim.to !== k)) {
+        if (Math.abs(k - cur) > 1 && (!anim || anim.to !== k) && !(film.on && FILM[film.idx + 1]?.stop === k)) {
           if (v.tex) gl.deleteTexture(v.tex); if (v.dep) gl.deleteTexture(v.dep);
           cache.delete(id); if (cache.size <= 5) break;
         }
@@ -266,7 +289,7 @@ void main(){
       b.type = 'button'; b.className = 'tv-pin';
       b.innerHTML = `<i aria-hidden="true"></i><span>${p.label}</span>`;
       b.setAttribute('aria-label', p.label + (p.text ? ': zobraziť popis' : ''));
-      b.addEventListener('click', ev => { ev.stopPropagation(); showCard(p, b); dismissGuide(); });
+      b.addEventListener('click', ev => { ev.stopPropagation(); if (film.on) setPaused(true); showCard(p, b); dismissGuide(); });
       return b;
     }));
     infoList.replaceChildren(...s.pins.map(p => { const li = document.createElement('li'); li.textContent = p.label; return li; }));
@@ -296,7 +319,8 @@ void main(){
     }
     [...pinsEl.children].forEach((b, k) => {
       const p = s.pins[k]; const q = proj && proj(p.x, p.y);
-      const inside = q && q[0] > 24 && q[0] < W - 24 && q[1] > 90 && q[1] < H - 72;
+      // počas filmu nie v spodnej časti, kde je titulok záberu
+      const inside = q && q[0] > 24 && q[0] < W - 24 && q[1] > 90 && q[1] < (film.on ? H * (W < 700 ? .56 : .62) : H - 72);
       if (q) b.style.transform = `translate3d(${q[0].toFixed(1)}px,${q[1].toFixed(1)}px,0)`;
       b.style.opacity = inside ? alpha : 0;
       b.tabIndex = inside && alpha > .5 ? 0 : -1;
@@ -376,6 +400,8 @@ void main(){
       busy = busy || !reduce || Math.abs(tpz - pz) > 1e-4;
     }
 
+    if (film.on) busy = filmStep(now, s) || busy;
+
     let alpha = 1;
     if (gl) {
       const A = entry(cur);
@@ -401,13 +427,13 @@ void main(){
           drawPano(A, c, 1);
         } else {
           const vv = view(s, EXTRA * pz, pan);
-          let z = EXTRA * pz, push = 0, ctr = [vv.cx, vv.cy], foc = ctr;
+          let z = EXTRA * pz, push = film.on && !anim ? film.push : 0, ctr = [vv.cx, vv.cy], foc = ctr;
           if (anim && anim.via && !reduce) {
             const w = [clamp(anim.via.x / 100, vv.cx - vv.vw / 2, vv.cx + vv.vw / 2), clamp(anim.via.y / 100, vv.cy - vv.vh / 2, vv.cy + vv.vh / 2)];
             z = EXTRA * pz * (1 + .45 * eA); push = .16 * eA; foc = w;
             ctr = [vv.cx + (w[0] - vv.cx) * .55 * eA, vv.cy + (w[1] - vv.cy) * .55 * eA];
           }
-          drawPhoto(A, { vv, z, push, ctr, foc, depthK: 1 }, 1);
+          drawPhoto(A, { vv, z, push, ctr, foc, depthK: film.on ? film.dk : 1 }, 1);
         }
         // vrstva B (nové miesto) sa prelína; pri príchode sa jemne oddiali do normálu
         if (B && mixv > 0) {
@@ -417,8 +443,16 @@ void main(){
             const c = { ...anim.cam }; c.fov = anim.cam.fov * (walk ? .86 + .14 * mixv : 1);
             drawPano(B, c, mixv);
           } else {
-            const vv = view(B.s, EXTRA, { x: 0, y: 0 });
-            drawPhoto(B, { vv, z: EXTRA * (walk ? 1.07 - .07 * mixv : 1), push: 0, ctr: [vv.cx, vv.cy], foc: [vv.cx, vv.cy], depthK: 0 }, mixv);
+            const ph = anim.ph;
+            if (ph) {
+              const vv = view(B.s, EXTRA * ph.pz, ph.pan);
+              const saved = { ...look }; Object.assign(look, ph.look);
+              drawPhoto(B, { vv, z: EXTRA * ph.pz * (walk ? 1.07 - .07 * mixv : 1), push: ph.push, ctr: [vv.cx, vv.cy], foc: [vv.cx, vv.cy], depthK: ph.dk }, mixv);
+              Object.assign(look, saved);
+            } else {
+              const vv = view(B.s, EXTRA, { x: 0, y: 0 });
+              drawPhoto(B, { vv, z: EXTRA * (walk ? 1.07 - .07 * mixv : 1), push: 0, ctr: [vv.cx, vv.cy], foc: [vv.cx, vv.cy], depthK: 0 }, mixv);
+            }
           }
           gl.disable(gl.BLEND);
         }
@@ -430,7 +464,7 @@ void main(){
     } else if (anim) {
       finish();
     }
-    placeOverlay(anim ? alpha : 1);
+    placeOverlay(anim ? alpha : film.on ? film.hold : 1);
     paintCompass();
     if (visible && !document.hidden && (busy || anim)) raf = requestAnimationFrame(frame);
   }
@@ -500,37 +534,138 @@ void main(){
   function finish() {
     const a = anim; anim = null;
     cur = a.to; pan = { x: 0, y: 0 }; pz = tpz = 1;
+    if (a.ph) { pan = { ...a.ph.pan }; pz = tpz = a.ph.pz; Object.assign(look, a.ph.look); film.push = a.ph.push; film.dk = a.ph.dk; }
     if (isPano(stops[cur])) { Object.assign(cam, a.cam, { tYaw: a.cam.yaw, tPitch: a.cam.pitch, tFov: a.cam.fov, vy: 0 }); idleT0 = performance.now(); }
     describe(); showFlat();
     stage.classList.remove('moving');
+    if (film.on && FILM[film.idx]?.stop === cur) shotIn();
     kick();
   }
-  async function go(i, via) {
+  async function go(i, via, fx) {
     if (i < 0 || i >= stops.length || anim) return;
     if (i === cur) { if (isPano(stops[i])) { startCam(stops[i]); kick(); } return; }
     touched = true;
     const to = stops[i];
     const nc = { yaw: 0, pitch: 0, fov: 1 };
     if (isPano(to)) { nc.fov = defaultFov(to); nc.yaw = pinDir(to, to.x0 ?? 50, 50).yaw; clampCam(to, nc); }
+    if (fx?.cam) Object.assign(nc, fx.cam);
     if (gl && entry(cur)) {
       const e = ensure(i); stage.classList.add('moving');
-      try { await e.ready; } catch (err) { stage.classList.remove('moving'); cur = i; describe(); showFlat(); fail(); return; }
+      try { await e.ready; } catch (err) { stage.classList.remove('moving'); cur = i; describe(); showFlat(); fail(); if (film.on) stopFilm(); return; }
       if (anim) return;
-      anim = { t0: performance.now(), dur: via && !reduce ? 1150 : reduce ? 260 : 480, to: i, via, cam: nc };
+      anim = { t0: performance.now(), dur: fx?.dur && !reduce ? fx.dur : via && !reduce ? 1150 : reduce ? 260 : 480, to: i, via, cam: nc, ph: fx?.ph };
       kick();
     } else {
       cur = i; pan = { x: 0, y: 0 }; pz = tpz = 1;
+      if (fx?.ph) { pan = { ...fx.ph.pan }; pz = tpz = fx.ph.pz; }
       if (isPano(to)) Object.assign(cam, nc, { tYaw: nc.yaw, tPitch: 0, tFov: nc.fov, vy: 0 });
       describe(); showFlat();
+      if (film.on && FILM[film.idx]?.stop === cur) shotIn();
       if (gl) ensure(i);
       kick();
     }
   }
   const next = () => stops[cur + 1] ? go(cur + 1, stops[cur].walk) : (location.href = 'kontakt.html#navsteva');
 
+  // ---------- filmová cesta: riadenie ----------
+  const fEls = { lower: $('.tv-lower'), k: $('.tv-lower-k'), h: $('.tv-lower-h'), sub: $('.tv-lower-s'), bar: $('.tv-filmbar i'), pause: $('.tv-pause'), skip: $('.tv-skip'), end: $('.tv-end'), resume: $('.tv-resume') };
+  const filmTotal = FILM.reduce((a, f) => a + f.dur, 0);
+  const filmDone = () => FILM.slice(0, film.idx).reduce((a, f) => a + f.dur, 0);
+  // počiatočná póza záberu (pre prechod aj príchod)
+  function shotPose(f, k) {
+    const s = stops[f.stop];
+    if (isPano(s)) {
+      const c = { yaw: pinDir(s, lerp(f.x[0], f.x[1], k), 50).yaw, pitch: 0, fov: defaultFov(s) * lerp(f.f[0], f.f[1], k) };
+      clampCam(s, c); return { cam: c };
+    }
+    const P0 = f.pan || [[0, 0], [0, 0]], L0 = f.look || [[0, 0], [0, 0]], Z = f.pz || [1, 1], U = f.push || [0, 0];
+    return { ph: { pz: lerp(Z[0], Z[1], k), pan: { x: lerp(P0[0][0], P0[1][0], k), y: lerp(P0[0][1], P0[1][1], k) },
+      look: { x: lerp(L0[0][0], L0[1][0], k), y: lerp(L0[0][1], L0[1][1], k) }, push: lerp(U[0], U[1], k), dk: f.dk || 1 } };
+  }
+  const moveK = T => reduce ? 1 : ease(clamp(T / Math.max(.2, FILM[film.idx].dur - HOLD), 0, 1));
+  function applyPose(f, k) {
+    const q = shotPose(f, k);
+    if (q.cam) { cam.yaw = cam.tYaw = q.cam.yaw; cam.pitch = cam.tPitch = q.cam.pitch; cam.fov = cam.tFov = q.cam.fov; cam.vy = 0; }
+    else { pan = q.ph.pan; pz = tpz = q.ph.pz; look.x = q.ph.look.x; look.y = q.ph.look.y; film.push = q.ph.push; film.dk = q.ph.dk; }
+  }
+  // popis záberu (spodná tretina) a predbežné načítanie ďalšieho
+  function shotIn() {
+    const f = FILM[film.idx], s = stops[f.stop], zi = zones.findIndex(z => z.id === s.zone);
+    film.t0 = performance.now(); film.leaving = false; film.hold = 0;
+    fEls.k.textContent = `${String(zi + 1).padStart(2, '0')} / ${String(zones.length).padStart(2, '0')} · ${zoneName[s.zone]}`;
+    fEls.h.textContent = f.cap; fEls.sub.textContent = f.sub || '';
+    fEls.lower.classList.remove('in'); void fEls.lower.offsetWidth; fEls.lower.classList.add('in');
+    const nx = FILM[film.idx + 1]; if (nx && gl) load(nx.stop);
+  }
+  function filmStep(now, s) {
+    const f = FILM[film.idx];
+    if (!f || f.stop !== cur || anim) return !!anim;
+    if (!entry(cur) && gl) { film.t0 = now; return true; }        // čaká sa na obraz, čas záberu stojí
+    if (film.paused) { film.t0 = now - film.pt * 1000; return false; }
+    const T = (now - film.t0) / 1000;
+    applyPose(f, moveK(T));
+    film.hold = clamp((T - (f.dur - HOLD - .35)) / .5, 0, 1);
+    fEls.bar.style.transform = `scaleX(${((filmDone() + Math.min(T, f.dur)) / filmTotal).toFixed(4)})`;
+    // slabší výkon: po chvíli trhania sa zníži rozlíšenie plátna
+    const dt = Math.min(.2, (now - (film.lastNow || now)) / 1000); film.lastNow = now;
+    film.ema += (dt - film.ema) * .08;
+    if (!film.perfLow && film.ema > .036 && ++film.slow > 45) { film.perfLow = true; light = true; root.classList.add('tv-light'); size(); }
+    if (T >= f.dur && !film.leaving) { film.leaving = true; fEls.lower.classList.remove('in'); advanceFilm(); }
+    return true;
+  }
+  function advanceFilm() {
+    const f = FILM[film.idx], n = FILM[film.idx + 1];
+    if (!n || f.out === 'end') { endFilm(); return; }
+    film.idx++;
+    const walk = f.out === 'walk';
+    go(n.stop, walk ? stops[cur].walk : null, { dur: walk ? 1350 : 320, ...shotPose(n, reduce ? 1 : 0) });
+  }
+  function setFilmUI(on) {
+    root.classList.toggle('tv-film', on);
+    fEls.pause.hidden = fEls.skip.hidden = !on;
+    if (!on) { fEls.lower.classList.remove('in'); film.hold = 1; film.push = 0; film.dk = 1; }
+  }
+  function startFilm(from = 0) {
+    if (!FILM.length) return;
+    hideCard(); fEls.end.hidden = true; fEls.end.classList.remove('in'); root.classList.remove('tv-ended'); fEls.resume.hidden = true;
+    film.on = true; film.paused = false; film.idx = from; film.leaving = false; touched = true; setPaused(false);
+    setFilmUI(true);
+    const f = FILM[from];
+    if (cur === f.stop && !anim) { applyPose(f, reduce ? 1 : 0); shotIn(); }
+    else go(f.stop, null, { dur: 420, ...shotPose(f, reduce ? 1 : 0) });
+    kick();
+  }
+  // zásah návštevníka: film sa zastaví a dá sa v ňom pokračovať
+  function stopFilm(user) {
+    if (!film.on) return;
+    film.on = false; setFilmUI(false);
+    fEls.resume.hidden = !user || film.idx >= FILM.length - 1;
+    kick();
+  }
+  function endFilm() {
+    film.on = false; setFilmUI(false);
+    fEls.bar.style.transform = 'scaleX(1)';
+    root.classList.add('tv-ended');
+    fEls.end.hidden = false; requestAnimationFrame(() => fEls.end.classList.add('in'));
+    fEls.end.querySelector('a, button')?.focus({ preventScroll: true });
+  }
+  function setPaused(p) {
+    film.paused = p; if (p) film.pt = (performance.now() - film.t0) / 1000;
+    fEls.pause.setAttribute('aria-pressed', String(p));
+    fEls.pause.querySelector('span').textContent = p ? 'Pokračovať' : 'Pozastaviť';
+    fEls.pause.classList.toggle('is-paused', p);
+    kick();
+  }
+  fEls.pause.addEventListener('click', () => setPaused(!film.paused));
+  fEls.skip.addEventListener('click', () => { stopFilm(false); stage.focus({ preventScroll: true }); });
+  fEls.resume.addEventListener('click', () => startFilm(Math.min(film.idx, FILM.length - 1)));
+  $('.tv-film-btn').addEventListener('click', () => { dismissGuide(true); startFilm(0); });
+  fEls.end.querySelector('.tv-explore').addEventListener('click', () => { fEls.end.classList.remove('in'); fEls.end.hidden = true; root.classList.remove('tv-ended'); stage.focus({ preventScroll: true }); });
+  fEls.end.querySelector('.tv-again').addEventListener('click', () => startFilm(0));
+
   // ---------- priblíženie ----------
   function zoom(f) {
-    touched = true;
+    touched = true; stopFilm(true);
     const s = stops[cur];
     if (isPano(s)) { cam.tFov *= f; } else { tpz = clamp(tpz / f, 1, 2.4); }
     kick();
@@ -595,23 +730,23 @@ void main(){
   }
   const GK = 'gk-prehliadka-navod';
   // vstupná scéna: po „Vstúpiť“ zmizne a kamera vojde do priestoru (pri obmedzenom pohybe bez nájazdu)
-  function dismissGuide() {
+  function dismissGuide(forFilm) {
     if (guide.hidden || guide.classList.contains('out')) return;
     store.set(GK, '1'); touched = true;
     guide.classList.add('out');
     setTimeout(() => { guide.hidden = true; }, reduce ? 0 : 900);
     const s = stops[cur];
-    if (isPano(s) && !reduce) { cam.fov = Math.min(cam.fov * 1.35, fovLimits(s).max); cam.tFov = defaultFov(s); }
+    if (isPano(s) && !reduce && !forFilm) { cam.fov = Math.min(cam.fov * 1.35, fovLimits(s).max); cam.tFov = defaultFov(s); }
     kick();
   }
 
   // ---------- ovládanie ----------
-  goBtn.addEventListener('click', () => { dismissGuide(); next(); });
-  btn('next').addEventListener('click', () => { dismissGuide(); next(); });
-  btn('prev').addEventListener('click', () => go(cur - 1, null));
+  goBtn.addEventListener('click', () => { dismissGuide(); stopFilm(true); next(); });
+  btn('next').addEventListener('click', () => { dismissGuide(); stopFilm(true); next(); });
+  btn('prev').addEventListener('click', () => { stopFilm(true); go(cur - 1, null); });
   btn('zin').addEventListener('click', () => zoom(.8));
   btn('zout').addEventListener('click', () => zoom(1.25));
-  btn('home').addEventListener('click', () => { hideCard(); if (cur === 0) { startCam(stops[0]); kick(); } else go(0, null); });
+  btn('home').addEventListener('click', () => { hideCard(); stopFilm(true); if (cur === 0) { startCam(stops[0]); kick(); } else go(0, null); });
   btn('fs').addEventListener('click', toggleFs);
   // návrat na web: zavrie celú obrazovku a posunie na obsah pod prehliadkou
   backBtn.addEventListener('click', () => {
@@ -620,26 +755,30 @@ void main(){
     setTimeout(() => document.getElementById('obsah-prehliadky')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 120);
   });
   btn('gyro').addEventListener('click', toggleGyro);
-  openBtn.addEventListener('click', () => openList(list.hidden));
+  openBtn.addEventListener('click', () => { if (film.on) setPaused(true); openList(list.hidden); });
   $('.tv-list-x').addEventListener('click', () => openList(false));
   list.addEventListener('click', e => { if (e.target === list) openList(false); });
   list.querySelectorAll('[data-stop]').forEach(b => b.addEventListener('click', () => {
-    const i = stops.findIndex(s => s.id === b.dataset.stop); openList(false); dismissGuide(); go(i, null);
+    const i = stops.findIndex(s => s.id === b.dataset.stop); openList(false); dismissGuide(); stopFilm(true); go(i, null);
   }));
-  $('.tv-card-x').addEventListener('click', hideCard);
+  $('.tv-card-x').addEventListener('click', () => { hideCard(); if (film.on && film.paused) setPaused(false); });
   $('.tv-enter').addEventListener('click', () => { dismissGuide(); stage.focus({ preventScroll: true }); });
-  routeBtns.forEach(b => b.addEventListener('click', () => go(byZone[b.dataset.zone][0], null)));
+  $('.tv-start').addEventListener('click', () => { dismissGuide(true); stage.focus({ preventScroll: true }); startFilm(0); });
+  routeBtns.forEach(b => b.addEventListener('click', () => { dismissGuide(); stopFilm(true); go(byZone[b.dataset.zone][0], null); }));
   document.querySelectorAll('[data-tour-stop]').forEach(a => a.addEventListener('click', ev => {
     const i = stops.findIndex(s => s.id === a.dataset.tourStop);
     if (i < 0) return;
     ev.preventDefault();
     root.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     dismissGuide();
-    setTimeout(() => go(i, null), reduce ? 0 : 450);
+    stopFilm(false); setTimeout(() => go(i, null), reduce ? 0 : 450);
   }));
   stage.addEventListener('keydown', e => {
     if (e.target.closest('.tv-list') && e.key !== 'Escape') return;
     const s = stops[cur], k = e.key;
+    if (film.on && (k === ' ' || k === 'k' || k === 'K')) { e.preventDefault(); setPaused(!film.paused); return; }
+    if (film.on && k === 'Escape') { e.preventDefault(); stopFilm(false); return; }
+    if (film.on && /^(Arrow|\+|-|=|_|n|N|p|P|Page|0|Home)/.test(k)) stopFilm(true);
     const lookBy = (dx, dy) => {
       touched = true;
       if (isPano(s) && !gl) flat.scrollBy({ left: dx * flat.clientWidth * .25, behavior: reduce ? 'auto' : 'smooth' });
@@ -665,9 +804,11 @@ void main(){
   stage.addEventListener('pointerdown', e => {
     if (e.target.closest('button, a, .tv-list, .tv-card, .tv-intro')) return;
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; drag = { pinch: Math.hypot(a.x - b.x, a.y - b.y), fov: cam.tFov, pz: tpz }; return; }
-    drag = { x: e.clientX, y: e.clientY, lx: e.clientX, lt: performance.now(), yaw: cam.tYaw, pitch: cam.tPitch, px: pan.x, py: pan.y, sl: flat.scrollLeft, moved: false };
-    cam.vy = 0; touched = true; dismissGuide();
+    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; drag = { pinch: Math.hypot(a.x - b.x, a.y - b.y), fov: cam.tFov, pz: tpz }; stopFilm(true); dismissGuide(); return; }
+    // prst: kým nie je jasné, či ide o vodorovný ťah (rozhliadnutie) alebo skrolovanie stránky, nič sa nehýbe
+    const free = e.pointerType === 'mouse' || stage.classList.contains('tv-max') || !!fsEl();
+    drag = { x: e.clientX, y: e.clientY, lx: e.clientX, lt: performance.now(), yaw: cam.tYaw, pitch: cam.tPitch, px: pan.x, py: pan.y, sl: flat.scrollLeft, moved: false, pending: !free };
+    if (free) { cam.vy = 0; touched = true; dismissGuide(); }
   });
   stage.addEventListener('pointermove', e => {
     const r = stage.getBoundingClientRect();
@@ -679,8 +820,14 @@ void main(){
       kick(); return;
     }
     if (drag && !drag.pinch) {
-      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      if (Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true;
+      let dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (drag.pending) {
+        if (Math.abs(dx) + Math.abs(dy) < 10) return;
+        if (Math.abs(dx) < Math.abs(dy) * 1.2) { drag = null; ptrs.delete(e.pointerId); return; }   // zvislo: skrolovanie
+        drag.pending = false; drag.x = e.clientX; drag.y = e.clientY; drag.lx = e.clientX; dx = dy = 0;
+        cam.vy = 0; touched = true; dismissGuide();
+      }
+      if (Math.abs(dx) + Math.abs(dy) > 4 && !drag.moved) { drag.moved = true; stopFilm(true); }
       if (isPano(s) && !gl) {
         if (e.pointerType === 'mouse') flat.scrollLeft = drag.sl - dx;   // prst posúva obrázok natívne
       } else if (isPano(s)) {
@@ -696,7 +843,7 @@ void main(){
         lookT = { x: clamp(-dx / r.width * 3, -1, 1), y: 0 };
       }
       kick();
-    } else if (e.pointerType === 'mouse' && !isPano(s)) {
+    } else if (e.pointerType === 'mouse' && !isPano(s) && !film.on) {
       lookT = { x: ((e.clientX - r.left) / r.width) * 2 - 1, y: ((e.clientY - r.top) / r.height) * 2 - 1 }; kick();
     }
   }, { passive: true });
@@ -720,6 +867,8 @@ void main(){
 
   // kreslí sa len v obraze
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) kick(); }).observe(stage);
+  // spodná lišta na telefóne sa schová, kým je prehliadka v obraze (neprekrýva ovládanie ani popisy)
+  new IntersectionObserver(([e]) => document.body.classList.toggle('tv-dock-off', e.intersectionRatio > .25), { threshold: [0, .25, .5] }).observe(stage);
   document.addEventListener('visibilitychange', kick);
   new ResizeObserver(() => { size(); kick(); }).observe(stage);
 

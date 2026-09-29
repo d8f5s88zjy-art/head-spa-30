@@ -295,3 +295,25 @@ Rovnaké hodnoty sú v `site.js` (`CELLS`), z nich sa počíta svetlo v miestnos
 - Preskočenie: tlačidlo „Preskočiť“, Esc, medzerník, šípky, koliesko alebo ťah prstom.
 - Svetlá v hero scéne bežia 2,4× rýchlejšie (všetky svietia do 1,5 s). Miestnosť nie je pred rozsvietením čierna, ale tlmená.
 - Príchodový film „Takto k nám trafíte“ bol z webu odstránený. Súbory `media/prichod-*` ostávajú v projekte, balík artefaktu ich neobsahuje.
+
+## 00. Filmová prehliadka (assets/tour.js, FILM)
+
+- 11 záberov, spolu asi 45 s. Tlačidlo „Spustiť prehliadku“ ju spustí, „Preskúmať sám“ vedie rovno do voľného režimu.
+- Trasa: terasa (panoráma) → vchod (panoráma) → recepcia → hlavná sála → sála so strojmi → kardio → voľné váhy → funkčná zóna (panoráma) → šprintérska dráha a LED strop → tatami → sála Panda.
+- Záverečná karta ponúka „Naplánovať návštevu“, „Preskúmať sám“ a „Pozrieť film znova“.
+- Pohyb kamery:
+  - každý záber má pohyb s plynulým zrýchlením a spomalením a 0,9 s pokoja na konci;
+  - v tom pokoji sa objavia body v scéne s textom, nikdy nie v spodnej časti pod titulkom záberu;
+  - panorámy: otáčanie a zúženie záberu;
+  - fotky: nájazd do hĺbky, bočný posun s hĺbkovým posunom, náklon alebo odhalenie oddialením.
+- Prechody: „dverami“ (kamera sa priblíži k miestu prechodu, 1,35 s) medzi terasou, vchodom, recepciou a sálou, inde krátky strih (0,32 s).
+- Ovládanie:
+  - Pozastaviť/Pokračovať, Preskočiť film, medzerník, Esc;
+  - ťah, priblíženie, klik na zónu alebo bod film zastaví a objaví sa „Pokračovať vo filme“.
+- Mobil:
+  - rozhliadnutie sa spustí až pri jasne vodorovnom ťahu; zvislý ťah ostáva skrolovaniu;
+  - spodná lišta sa skryje, kým je prehliadka v obraze.
+- Výkon a obmedzený pohyb:
+  - ďalší záber sa načíta počas aktuálneho;
+  - pri trhaní (priemer nad 36 ms na snímku) sa zníži rozlíšenie plátna;
+  - pri obmedzenom pohybe sú zábery statické s krátkym prelínaním.
