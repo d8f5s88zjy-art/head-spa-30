@@ -593,10 +593,10 @@ STOP = {s['id']: s for s in TOUR['stops']}
 def gpic(sid, sizes, alt, lazy=True):
     """Upravená fotka 4:5 (AVIF, WebP, JPG)."""
     W = GRADE[sid]['w']; ws = sorted({w for w in (640, 1080, W) if w <= W})
-    ss = lambda x: ', '.join(f'media/g-{sid}-{w}.{x} {w}w' for w in ws)
+    ss = lambda x: ', '.join(f'media/g-{sid}-{w}.{x} {w}w' for w in ws if x == 'avif' or w <= 1080)   # WebP len do 1080 px (záloha)
     lz = ' loading="lazy"' if lazy else ''
     return (f'<picture><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}"><source type="image/webp" srcset="{ss("webp")}" sizes="{sizes}">'
-            f'<img src="media/g-{sid}-1080.jpg" width="{W}" height="{GRADE[sid]["h"]}" alt="{e(alt)}" decoding="async"{lz}></picture>')
+            f'<img src="media/g-{sid}-640.jpg" width="{W}" height="{GRADE[sid]["h"]}" alt="{e(alt)}" decoding="async"{lz}></picture>')
 
 
 def ch_photo(sid, zname):

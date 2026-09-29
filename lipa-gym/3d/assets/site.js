@@ -441,10 +441,10 @@ if (lb) {
     sl.loaded = true;
     const src = sl.p.dataset.src, big = sl.p.dataset.big, panda = src.startsWith('panda'), graded = src.startsWith('g-');
     // plné rozlíšenie v AVIF, záloha WebP 1280 px
-    const srcs = graded ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]] : panda ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]]
+    const srcs = graded ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-1080.webp`]] : panda ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]]
                        : [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-1280.webp`]];
     for (const [type, url] of srcs) { const so = document.createElement('source'); so.type = type; so.srcset = url; sl.pic.insertBefore(so, sl.img); }
-    sl.img.src = graded ? `media/${src}-1080.jpg` : panda ? `media/${src}-${big}.jpg` : `media/${src}-480.jpg`;
+    sl.img.src = graded ? `media/${src}-640.jpg` : panda ? `media/${src}-${big}.jpg` : `media/${src}-480.jpg`;
   };
   const show = i => {
     cur = i;

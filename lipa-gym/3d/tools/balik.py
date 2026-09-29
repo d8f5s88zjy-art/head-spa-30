@@ -14,7 +14,7 @@ for f in PAGES:
     # zväčšené fotky (lightbox): plné AVIF, WebP 1280, malé JPG
     for src, big in re.findall(r'data-src="([^"]+)" data-big="(\d+)"', t):
         if src.startswith('g-'):
-            media |= {f'media/{src}-{big}.avif', f'media/{src}-{big}.webp', f'media/{src}-1080.jpg'}
+            media |= {f'media/{src}-{big}.avif', f'media/{src}-1080.webp', f'media/{src}-640.jpg'}
         elif src.startswith('panda'):
             media |= {f'media/{src}-{big}.{x}' for x in ('avif', 'webp', 'jpg')}
         else:

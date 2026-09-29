@@ -118,8 +118,8 @@ def run(sid):
         r = im.resize((w, round(w * 5 / 4)), Image.LANCZOS)
         r.save(os.path.join(ROOT, 'media', f'g-{sid}-{w}.avif'), quality=62, speed=5)
         r.save(os.path.join(ROOT, 'media', f'g-{sid}-{w}.webp'), quality=80, method=5)
-        if w == 1080:
-            r.save(os.path.join(ROOT, 'media', f'g-{sid}-1080.jpg'), quality=84, optimize=True, progressive=True)
+        if w in (640, 1080):
+            r.save(os.path.join(ROOT, 'media', f'g-{sid}-{w}.jpg'), quality=84 if w == 1080 else 82, optimize=True, progressive=True)
     return {'w': W, 'h': round(W * 5 / 4), 'tilt': round(s * 1e4, 2)}
 
 
