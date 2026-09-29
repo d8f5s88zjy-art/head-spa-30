@@ -280,7 +280,7 @@
       if (started) return;
       started = true;
       d.body.classList.add('lights');
-      setTimeout(open, 1750);
+      setTimeout(open, 1000);
     }
     function open() {
       if (opened) return;
@@ -295,7 +295,7 @@
       d.body.classList.remove('intro');
       d.body.classList.add('intro-done');
     }
-    var t = setTimeout(start, 1200);
+    var t = setTimeout(start, 500);
     (img.decode ? img.decode() : Promise.resolve()).then(function () { clearTimeout(t); start(); }, function () { clearTimeout(t); start(); });
     $('.hero').addEventListener('click', function () { if (started && !opened) open(); });
   }
@@ -338,8 +338,53 @@
   }
 
   function marquee() {
-    var t = $('.marquee-track');
-    if (t) t.innerHTML += t.innerHTML;
+    var m = $('.marquee'), t = $('.marquee-track');
+    if (!t) return;
+    t.innerHTML += t.innerHTML;
+    // pás beží len v obraze
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { m.classList.toggle('run', en[0].isIntersecting); }).observe(m);
+    else m.classList.add('run');
+  }
+
+  /* ---------- úvod: hĺbka pod myšou (obraz a text sa posúvajú proti sebe) ---------- */
+  function heroDepth() {
+    if (reduce.matches || LITE || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var hero = $('.hero');
+    if (!hero) return;
+    var tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    function step() {
+      x += (tx - x) * 0.08; y += (ty - y) * 0.08;
+      hero.style.setProperty('--px', x.toFixed(4)); hero.style.setProperty('--py', y.toFixed(4));
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.001 ? requestAnimationFrame(step) : 0;
+    }
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width * 2 - 1; ty = (e.clientY - r.top) / r.height * 2 - 1;
+      if (!raf) raf = requestAnimationFrame(step);
+    }, { passive: true });
+    hero.addEventListener('pointerleave', function () { tx = ty = 0; if (!raf) raf = requestAnimationFrame(step); });
+  }
+
+  /* ---------- filmový pás: obraz sa pri rolovaní roztiahne z rámu na celú šírku ---------- */
+  function band() {
+    var b = $('.band');
+    if (!b) return;
+    if (reduce.matches || LITE) { b.classList.add('static'); return; }
+    var on = false, tick = false;
+    function frame() {
+      tick = false;
+      var r = b.getBoundingClientRect(), vh = window.innerHeight;
+      var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      var enter = Math.min(1, Math.max(0, (vh - r.top) / vh));          // príchod pásu do obrazu
+      var grow = Math.min(1, Math.max(0, p / 0.55));
+      b.style.setProperty('--bp', (1 - Math.pow(1 - grow, 3)).toFixed(4));
+      b.style.setProperty('--bt', Math.min(1, Math.max(0, (p - 0.3) / 0.35)).toFixed(3));
+      if (enter < 1 && p === 0) b.style.setProperty('--bt', '0');
+    }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { on = en[0].isIntersecting; if (on) frame(); }, { rootMargin: '200px 0px' }).observe(b);
+    window.addEventListener('scroll', function () { if (on && !tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
+    window.addEventListener('resize', frame);
+    frame();
   }
 
   /* ---------- rozvrh ---------- */
@@ -551,7 +596,6 @@
         h.el.style.transform = 'translate3d(0,' + ((1 - e) * 56).toFixed(1) + 'px,0)';
         if (h.k) h.k.style.transform = 'translate3d(' + ((1 - e) * -16).toFixed(1) + 'px,0,0)';
       });
-      if (marquee) marquee.style.transform = 'skewX(' + Math.max(-14, Math.min(14, -vel * 0.35)).toFixed(2) + 'deg)';
       var active = null;
       dots.forEach(function (dt) { if (dt.sec.getBoundingClientRect().top <= vh * 0.45) active = dt; });
       dots.forEach(function (dt) { dt.a.classList.toggle('is-active', dt === active); });
@@ -662,6 +706,8 @@
   dock();
   faq();
   heroParallax();
+  heroDepth();
+  band();
   scrollFx();
   smoothScroll();
   schema();

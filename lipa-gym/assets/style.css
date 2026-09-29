@@ -8,8 +8,8 @@
   --line:rgba(255,255,255,.09);
   --line2:rgba(255,255,255,.16);
   --ink:#f4f2ec;
-  --mute:#a3a7ae;
-  --dim:#6f747c;
+  --mute:#b1b5bc;
+  --dim:#8a8f97;
   --volt:#d4ff3f;
   --volt2:#b8ea1e;
   --volt-ink:#0b0c0f;
@@ -110,7 +110,7 @@ section{padding-block:clamp(72px,10vw,128px);position:relative}
 .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .progress{position:absolute;left:0;right:0;bottom:-1px;height:3px}
 .progress-bar{position:absolute;left:0;top:0;height:100%;width:100%;background:var(--volt);transform-origin:left;transform:scaleX(var(--sp,0))}
-.progress-db{position:absolute;top:50%;left:calc(var(--sp,0) * 100%);width:34px;height:17px;margin-left:-17px;transform:translateY(-50%) rotate(calc(var(--sp,0) * 720deg));color:var(--volt);will-change:transform}
+.progress-db{position:absolute;top:50%;left:calc(var(--sp,0) * 100%);width:34px;height:17px;margin-left:-17px;transform:translateY(-50%);color:var(--volt);will-change:transform}
 @media (max-width:1180px){.bar-cta .status{display:none}}
 @media (max-width:1000px){.nav a{padding:8px 10px;font-size:.86rem}}
 @media (max-width:860px){
@@ -134,12 +134,12 @@ section{padding-block:clamp(72px,10vw,128px);position:relative}
 .hero-img{object-fit:cover;object-position:50% 55%;transform:scale(1.14);transform-origin:50% 55%;will-change:transform}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.62) 0%,rgba(11,12,15,.18) 30%,rgba(11,12,15,.4) 60%,rgba(11,12,15,.94) 100%),linear-gradient(90deg,rgba(11,12,15,.8) 0%,rgba(11,12,15,.45) 40%,rgba(11,12,15,.05) 75%)}
 .hero-sweep{position:absolute;inset:-30% -20%;background:linear-gradient(100deg,transparent 42%,rgba(214,255,90,.12) 50%,transparent 58%);transform:translateX(-90%);opacity:0;pointer-events:none}
-body.lights .hero-media{animation:lightsOn 1.7s steps(1,end) forwards}
+body.lights .hero-media{animation:lightsOn 1s steps(1,end) forwards}
 body.lights .hero-img{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
 body.is-loaded:not(.lights) .hero-media{filter:none}
 body.is-loaded:not(.lights) .hero-img{animation:heroIn 7s cubic-bezier(.15,.55,.25,1) forwards}
 body.past-hero .hero-img{animation-play-state:paused}
-body.lights .hero-sweep{animation:sweep 1.8s cubic-bezier(.3,0,.2,1) 1.35s forwards}
+body.lights .hero-sweep{animation:sweep 1.6s cubic-bezier(.3,0,.2,1) .75s forwards}
 body.intro-done .hero-media{animation:none;filter:none;opacity:1}
 .hero-in{position:relative;z-index:2;max-width:var(--wrap);width:100%;will-change:transform,opacity}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
@@ -164,15 +164,17 @@ body.is-loaded .hero-h .line>span{transform:none}
   .eyebrow{font-size:.72rem;letter-spacing:.12em}
   .hero{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   .hero-scroll{display:none}
-  .hero-shade{background:linear-gradient(180deg,rgba(11,12,15,.72) 0%,rgba(11,12,15,.3) 30%,rgba(11,12,15,.6) 60%,rgba(11,12,15,.97) 100%)}
+  .hero-shade{background:linear-gradient(180deg,rgba(11,12,15,.7) 0%,rgba(11,12,15,.35) 24%,rgba(11,12,15,.72) 48%,rgba(11,12,15,.97) 78%)}
+  .hero-p{text-shadow:0 1px 14px rgba(0,0,0,.8)}
 }
 
 /* Bežiaci pás */
 .marquee{overflow:hidden;border-block:1px solid var(--line);background:var(--bg2);padding-block:14px;position:relative;will-change:transform}
-.marquee-track{display:flex;align-items:center;gap:34px;width:max-content;animation:marquee 34s linear infinite;font-family:var(--font-d);font-size:1.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+.marquee-track{display:flex;align-items:center;gap:34px;width:max-content;animation:marquee 60s linear infinite;animation-play-state:paused;font-family:var(--font-d);font-size:1.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
 .marquee-track i{display:inline-flex;width:36px;height:18px;color:var(--volt)}
 .marquee-track i svg{width:100%;height:100%}
-.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee.run .marquee-track{animation-play-state:running}
+.marquee.run:hover .marquee-track{animation-play-state:paused}
 
 /* Karty so svetlom pod kurzorom */
 .glowcard{position:relative;overflow:hidden}
@@ -397,7 +399,7 @@ body.is-loaded .hero-h .line>span{transform:none}
 @media (min-width:1100px){.rail{display:block}}
 .rail-track{position:relative;width:2px;height:min(40vh,340px);background:var(--line2);border-radius:2px}
 .rail-fill{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--volt);transform-origin:top;transform:scaleY(var(--sp,0));border-radius:2px}
-.rail-marker{position:absolute;left:50%;top:calc(var(--sp,0) * 100%);width:20px;height:20px;margin:-10px 0 0 -10px;color:var(--volt);transform:rotate(calc(var(--sp,0) * 540deg));pointer-events:none;will-change:transform}
+.rail-marker{position:absolute;left:50%;top:calc(var(--sp,0) * 100%);width:20px;height:20px;margin:-10px 0 0 -10px;color:var(--volt);pointer-events:none}
 .rail-dots a{position:absolute;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--dim);transform:translateY(-50%);transition:background .3s,transform .3s}
 .rail-dots a::before{content:"";position:absolute;inset:-8px}
 .rail-dots a::after{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translate(6px,-50%);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity .2s,transform .3s var(--ease);white-space:nowrap}
@@ -464,4 +466,104 @@ body.lite .glowcard::after{display:none}
   .hero-img{transform:none}
   .hero-scroll span{opacity:1}
   .bgfx,.rail,.wm{display:none}
+}
+
+/* =====================================================================
+   Réžia 2026-09: úvod s hĺbkou a svetlom, filmový pás, jednotné karty a pätička
+   ===================================================================== */
+
+/* ÚVOD: hĺbka (obraz a text sa pod myšou posúvajú v opačných smeroch), svetlo zo stropu */
+.hero-img{translate:calc(var(--px,0) * -14px) calc(var(--py,0) * -10px)}
+.hero-in{translate:calc(var(--px,0) * 8px) calc(var(--py,0) * 5px)}
+.hero-light{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0;background:radial-gradient(60% 45% at calc(62% + var(--px,0) * 6%) 12%,rgba(255,250,232,.16),transparent 70%),radial-gradient(30% 30% at 78% 70%,rgba(212,255,63,.07),transparent 70%);transition:opacity 1.4s ease}
+body.is-loaded .hero-light,body.intro-done .hero-light{opacity:1}
+/* jeden zapamätateľný moment: pri rozsvietení prejde svetlo cez „Tu sa trénuje.“ */
+.hero-h em{background:linear-gradient(100deg,var(--volt) 0 40%,#fbffe6 49%,var(--volt) 58% 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+body.is-loaded .hero-h em{animation:shine 1.5s cubic-bezier(.3,0,.2,1) .75s both}
+@keyframes shine{from{background-position:100% 0}to{background-position:0 0}}
+.hero-h{text-shadow:0 2px 40px rgba(0,0,0,.35)}
+.hero-p{max-width:46ch;font-size:clamp(1.02rem,1.35vw,1.2rem);color:#e2e4e8}
+/* rýchle informácie ako sklenená lišta */
+.hero-facts{gap:0;margin-top:30px;width:max-content;max-width:100%;padding:6px;border-radius:16px;background:rgba(14,16,20,.52);border:1px solid rgba(255,255,255,.1);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);color:#d6d8dc}
+.hero-fact{padding:9px 16px}
+.hero-fact+.hero-fact{border-left:1px solid rgba(255,255,255,.1)}
+/* tlačidlo so šípkou */
+.btn-arrow::after{content:"";width:16px;height:10px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath d='M0 5h14M10 1l4 4-4 4' fill='none' stroke='black' stroke-width='1.8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath d='M0 5h14M10 1l4 4-4 4' fill='none' stroke='black' stroke-width='1.8'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .3s var(--ease)}
+.btn-arrow:hover::after{transform:translateX(4px)}
+.btn-volt{position:relative;overflow:hidden}
+.btn-volt::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease);pointer-events:none}
+.btn-volt:hover::before{transform:translateX(120%)}
+@media (max-width:860px){
+  .hero-facts{display:grid;grid-template-columns:1fr 1fr;width:100%;font-size:.84rem}
+  .hero-fact{padding:9px 12px}
+  .hero-fact+.hero-fact{border-left:0}
+  .hero-fact:nth-child(even){border-left:1px solid rgba(255,255,255,.1)}
+  .hero-fact:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1)}
+  .hero-cta .btn{flex:1 1 auto}
+}
+
+/* pozadie bez plávajúcich tvarov: len svetlo a zrno */
+.wm{-webkit-text-stroke:1px rgba(255,255,255,.06)}
+
+/* FILMOVÝ PÁS: obraz sa pri rolovaní roztiahne z rámu na celú šírku, text vystúpi */
+.band{padding:0;height:190vh;background:var(--bg)}
+.band-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:flex-end}
+.band-frame{position:absolute;inset:0;overflow:hidden;clip-path:inset(calc((1 - var(--bp,0)) * 14%) calc((1 - var(--bp,0)) * 16%) round calc((1 - var(--bp,0)) * 28px));will-change:clip-path}
+.band-frame picture,.band-frame img{width:100%;height:100%}
+.band-frame img{object-fit:cover;object-position:50% 40%;transform:scale(calc(1.22 - var(--bp,0) * .16));will-change:transform}
+.band-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.25) 0%,rgba(11,12,15,0) 35%,rgba(11,12,15,.55) 70%,rgba(11,12,15,.92) 100%)}
+.band-in{position:relative;z-index:1;width:100%;padding-bottom:clamp(40px,9vh,96px);opacity:var(--bt,1);transform:translate3d(0,calc((1 - var(--bt,1)) * 40px),0)}
+.band-h{font-size:clamp(3rem,8vw,7rem);max-width:12ch}
+.band-p{margin-top:16px;max-width:44ch;color:#dfe1e5;font-size:clamp(1rem,1.3vw,1.15rem)}
+body.lite .band,.band.static{height:auto}
+body.lite .band-stage,.band.static .band-stage{position:relative;height:min(78svh,720px)}
+body.lite .band-frame,.band.static .band-frame{clip-path:none}
+body.lite .band-frame img,.band.static .band-frame img{transform:none}
+body.lite .band-in,.band.static .band-in{opacity:1;transform:none}
+
+/* KARTY: jednotná réžia (jemné svetlo zhora, svetelná linka pri prejdení) */
+.why-card,.tr-card,.price-card,.coach,.rev,.step-list li,.hours,.cform,.today,.tt,.price-t,.price-notes,.q{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 40%),var(--card)}
+.why-card,.tr-card,.price-card,.coach{position:relative}
+.why-card::before,.tr-card::before,.price-card::before,.coach::before{content:"";position:absolute;left:24px;right:24px;top:-1px;height:2px;background:var(--volt);transform:scaleX(0);transform-origin:0 0;transition:transform .5s var(--ease);z-index:2;border-radius:2px}
+.why-card:hover::before,.tr-card:hover::before,.price-card:hover::before,.coach:hover::before{transform:scaleX(1)}
+.price-card.is-hot::before{transform:scaleX(1)}
+.why-grid{counter-reset:why}
+.why-card{counter-increment:why}
+.why-card::after{content:counter(why,decimal-leading-zero);position:absolute;right:24px;top:22px;font-family:var(--font-d);font-size:1.4rem;letter-spacing:.06em;color:var(--dim)}
+.why-card.glowcard::after{content:counter(why,decimal-leading-zero);background:none;opacity:1;inset:auto;right:24px;top:22px}
+.tr-card picture{position:relative}
+.tr-card picture::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,0) 55%,rgba(21,24,30,.9))}
+.tr-tag{display:inline-flex;align-self:flex-start;padding:5px 10px;border-radius:999px;background:rgba(212,255,63,.1);border:1px solid rgba(212,255,63,.25);letter-spacing:.06em}
+.price-n{font-size:4.4rem}
+.coach-face{position:relative}
+.coach-face::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.gal-item{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.gal-item figcaption{font-size:.92rem;letter-spacing:.02em}
+.q summary{transition:color .2s}
+.q summary:hover{color:var(--volt)}
+.f-field input:hover,.f-field select:hover,.f-field textarea:hover{border-color:rgba(255,255,255,.28)}
+.lead{color:#c4c7cd}
+
+/* PÄTIČKA: výzva a kontakty */
+.foot{padding-top:0;background:linear-gradient(180deg,var(--bg) 0,var(--bg2) 60%)}
+.foot-cta{padding-block:clamp(64px,10vw,120px) clamp(40px,6vw,64px);border-bottom:1px solid var(--line);margin-bottom:36px;display:grid;gap:18px}
+.foot-k{font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--volt)}
+.foot-h{font-family:var(--font-d);font-size:clamp(3.2rem,10vw,8rem);line-height:.9;text-transform:uppercase;letter-spacing:.01em}
+.foot-h em{font-style:normal;color:var(--volt)}
+.foot-act{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.foot-status{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:.85rem}
+.foot-addr{line-height:1.5}
+@media (max-width:860px){.foot-act .btn{flex:1 1 auto}.foot-in{padding-bottom:24px}}
+
+/* ÚSPORNÝ A OBMEDZENÝ POHYB */
+body.lite .hero-light{display:none}
+body.lite .hero-facts{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(14,16,20,.82)}
+@media (prefers-reduced-motion:reduce){
+  .band{height:auto}
+  .band-stage{position:relative;height:min(78svh,720px)}
+  .band-frame{clip-path:none}
+  .band-frame img{transform:none}
+  .band-in{opacity:1;transform:none}
+  .hero-img,.hero-in{translate:none}
+  .hero-h em{background:none;color:var(--volt)}
 }
