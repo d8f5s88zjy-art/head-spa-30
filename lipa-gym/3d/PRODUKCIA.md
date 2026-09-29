@@ -283,25 +283,15 @@ Rovnaké hodnoty sú v `site.js` (`CELLS`), z nich sa počíta svetlo v miestnos
 - Testované len v Chromium; treba overiť v Safari na iPhone a Macu a na Androide.
 - Otváracie hodiny, cenník, platby a tréneri zámerne chýbajú, kým ich prevádzka nepotvrdí.
 
-## 000. Filmový úvod s činkou (assets/intro.js)
+## 000. Filmový nástup (index.html, .cut v style.css, site.js)
 
-- Zdroj `tools/intro/intro.src.js`, zostavenie `node tools/intro/build.mjs`. Potrebuje three 0.186 a esbuild v `/tmp/gymklub-3d-build/node_modules`. Výsledok je jeden modul, 586 kB (154 kB gzip).
-- Scéna je celá vymodelovaná v kóde, bez cudzích modelov a textúr:
-  - obloha Preetham s oblakmi (three Sky);
-  - strešná terasa s gumovou podlahou a červeným značením dráhy, betónový atik a mesto v opare;
-  - šesťhranná jednoručka 22,5 kg.
-- Fyzika:
-  - voľný pád z 12,5 m (g = 9,81), konštantná rotácia;
-  - dopad najprv jednou hlavou, potom druhou, odskok 1,6 cm;
-  - prach s odporom vzduchu a otras kamery.
-- Kamera a obraz:
-  - pohybová neostrosť z podsnímok (uzávierka 180°);
-  - hĺbka ostrosti podľa vzdialenosti činky;
-  - tlaková vlna po dopade otvorí priehľadný kruh a v ňom je skutočná fotka funkčnej zóny.
-- Svetlá v hero scéne začnú blikať 1,1 s pred dopadom.
-- Úvod je vyrobená filmová scéna, nie záber prevádzky. Skutočný priestor je až fotka v otvore.
-- Kedy sa hrá: rozhoduje skript v hlavičke `index.html` (trieda `intro-on`).
-  - Hrá len raz za reláciu a nie pri obmedzenom pohybe, šetrení dát, odkaze na kotvu ani bez WebGL.
-  - Ak scéna nie je pripravená do 2,6 s, alebo sú tri snímky pred dopadom dlhšie ako 120 ms, úvod sa vynechá alebo zoslabne.
-  - Poistka v hlavičke ho zruší po 7 s.
-- Preskočenie: tlačidlo „Preskočiť úvod“, Esc, medzerník, šípky, koliesko alebo ťah prstom.
+- Namiesto 3D činky je nástup zo skutočných záberov prevádzky:
+  - vchod GYM KLUB & caffee 0,5 s, jednoručky 0,38 s, sála so strojmi 0,37 s;
+  - potom strih do funkčnej zóny, kde už blikajú LED svetlá, a vyrazí titulok s tlačidlom „Vstúpiť do prehliadky“.
+- Spolu trvá 1,25 s.
+- Zábery sú v `<template id="cutTpl">`. Keď sa nástup hrá, skript v hlavičke ich vopred načíta.
+- Strih sa spustí, až keď sú zábery dekódované, najneskôr do 0,8 s. Inak sa vynechá a ukáže sa rovno fitko.
+- Kedy sa hrá: raz za reláciu, nie pri obmedzenom pohybe, šetrení dát ani odkaze na kotvu. Poistka po 4 s.
+- Preskočenie: tlačidlo „Preskočiť“, Esc, medzerník, šípky, koliesko alebo ťah prstom.
+- Svetlá v hero scéne bežia 2,4× rýchlejšie (všetky svietia do 1,5 s). Miestnosť nie je pred rozsvietením čierna, ale tlmená.
+- Príchodový film „Takto k nám trafíte“ bol z webu odstránený. Súbory `media/prichod-*` ostávajú v projekte, balík artefaktu ich neobsahuje.

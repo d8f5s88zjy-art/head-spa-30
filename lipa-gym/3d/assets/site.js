@@ -17,49 +17,51 @@ const heroImg = $('.hero-scene img');
 const reveal = () => requestAnimationFrame(() => root.classList.add('ready'));
 const glOk = !reduce && hasIO && !!window.WebGLRenderingContext;
 if (!heroImg) reveal();
-else if (glOk) setTimeout(reveal, 900);   // text nečaká na 3D scénu
+else if (glOk) setTimeout(reveal, 350);   // text nečaká na 3D scénu
 else Promise.race([
   (heroImg.complete ? Promise.resolve() : new Promise(r => heroImg.addEventListener('load', r, { once: true }))).then(() => heroImg.decode()).catch(() => {}),
   new Promise(r => setTimeout(r, 2500))
 ]).then(reveal);
 
-// ---------- filmový úvod: činka z oblohy (assets/intro.js, three.js) ----------
-// O spustení rozhodol skript v hlavičke (trieda intro-on). Scéna sa načíta na pozadí; ak nie je pripravená
-// do 2,6 s, úvod sa vynechá. Preskočiť ide tlačidlom, klávesom Esc, kolieskom aj ťahom prstom.
-// Svetlá v scéne pod plátnom sa rozsvietia v okamihu dopadu (lights.at).
+// ---------- filmový nástup: tri strihy zo skutočných záberov, potom funkčná zóna ----------
+// O spustení rozhodol skript v hlavičke (trieda intro-on) a začal načítavať zábery. Strih sa spustí, keď sú
+// zábery dekódované, najneskôr do 0,8 s; inak sa vynechá. Celý trvá 1,25 s (časovanie v style.css, .cut),
+// v okamihu strihu do fitka vyrazí titulok a svetlá v scéne už blikajú (lights.at).
+// Preskočiť ide tlačidlom, klávesom Esc, kolieskom aj ťahom prstom.
+const CUT_LEN = 1250;
 const lights = { wait: root.classList.contains('intro-on'), at: 0 };
 if (lights.wait) {
-  const host = $('#intro'), skipBtn = $('#introSkip');
-  let ctl = null, over = false;
-  const hit = () => {
-    if (!lights.at) lights.at = performance.now();
-    lights.wait = false;
-    root.classList.add('intro-hit'); root.classList.remove('intro-on');
-  };
+  const tpl = $('#cutTpl'), skipBtn = $('#introSkip');
+  let over = false, cut = null, timers = [];
+  const ev = [];
   const finish = () => {
     if (over) return; over = true;
-    try { sessionStorage.setItem('gk-intro', '1'); } catch (e) {}
-    if (!lights.at) lights.at = -1;   // bez dopadu: svetlá hneď svietia
-    hit();
+    timers.forEach(clearTimeout);
+    if (!lights.at) lights.at = -1;          // bez strihu: svetlá hneď svietia
+    lights.wait = false;
+    root.classList.add('intro-hit'); root.classList.remove('intro-on');
     for (const [t, f] of ev) removeEventListener(t, f);
-    setTimeout(() => root.classList.remove('intro-hit'), 2000);
+    cut?.classList.add('gone');
+    setTimeout(() => { cut?.remove(); root.classList.remove('intro-hit'); }, 1600);
   };
-  const skip = () => { if (ctl) ctl.skip(); else finish(); };
-  const ev = [['wheel', skip], ['touchmove', skip], ['keydown', e => { if (e.key === 'Escape' || e.key === ' ' || e.key.startsWith('Arrow') || e.key.startsWith('Page')) skip(); }]];
-  const giveUp = setTimeout(finish, 2600);
-  if (!host || !hasIO || scrollY > 40) finish();
+  const skip = () => { if (!over) { if (!lights.at || lights.at > performance.now()) lights.at = -1; finish(); } };
+  ev.push(['wheel', skip], ['touchmove', skip], ['keydown', e => { if (e.key === 'Escape' || e.key === ' ' || e.key.startsWith('Arrow') || e.key.startsWith('Page')) skip(); }]);
+  if (!tpl || scrollY > 40) finish();
   else {
     for (const [t, f] of ev) addEventListener(t, f, { passive: true });
     skipBtn?.addEventListener('click', skip);
-    import('./intro.js')
-      .then(m => m.createIntro(host, { onImpact: hit, onDone: finish }))
-      .then(c => {
-        if (over) { c.destroy(); return; }
-        clearTimeout(giveUp); ctl = c; c.play();
-        // svetlá pod plátnom začnú blikať tesne pred dopadom, aby otvor ukázal živý priestor
-        lights.at = performance.now() + (c.impactAt - 1.1) * 1000; lights.wait = false;
-      })
-      .catch(finish);
+    tpl.parentNode.insertBefore(tpl.content.cloneNode(true), tpl);
+    cut = $('#cut');
+    const imgs = $$('img', cut);
+    const ready = Promise.all(imgs.map(i => (i.complete && i.naturalWidth ? Promise.resolve() : new Promise((r, j) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', j, { once: true }); })).then(() => i.decode?.())));
+    const late = new Promise((r, j) => timers.push(setTimeout(() => j(new Error('late')), 800)));
+    Promise.race([ready, late]).then(() => {
+      if (over) return;
+      const t0 = performance.now();
+      cut.classList.add('run');
+      lights.at = t0 + CUT_LEN - 250; lights.wait = false;     // svetlá začnú tesne pred strihom do fitka
+      timers.push(setTimeout(finish, CUT_LEN));
+    }).catch(finish);
   }
 }
 
@@ -496,7 +498,7 @@ void main(){
   vec3 c=texture2D(img,uv).rgb;
   vec4 L=texture2D(lit,uv);
   float s=tube(L.g,L.b);
-  vec3 col=mix(c*.035+vec3(.003,.005,.008),c,room);
+  vec3 col=mix(c*.16+vec3(.003,.005,.008),c,room);
   col=max(col,c*L.r*s*1.08);
   col+=vec3(.85,.95,1.)*L.a*s*.3*(1.-room*.8);
   gl_FragColor=vec4(col,1.);
@@ -509,7 +511,8 @@ const tubeState = (T, st, sd) => {
   if (k > 0.85) return 1;
   return Math.sin(k * 47 + sd * 60) + Math.sin(k * 23.3 + sd * 17) > 0.4 ? 1 : 0.07;
 };
-const LIGHTS_DONE = 3.6;   // po tomto čase (s) svietia všetky trubice
+const LIGHTS_DONE = 3.6;   // po tomto čase (s, čas svetiel) svietia všetky trubice
+const LIGHT_SPEED = 2.4;   // svetlá bežia 2,4× rýchlejšie: všetky svietia do 1,5 s
 
 const AMP = 0.02;          // najväčší posun pri pohybe kamery (podiel šírky obrazu)
 const ZOOM = 1.08;         // rezerva na okrajoch, aby posun neukázal hranu fotky
@@ -652,23 +655,26 @@ class HeroScene extends Space3D {
     const t = now / 1000;
     const dt = this.last ? Math.min(t - this.last, 0.05) : 0.016; this.last = t;
     // ak scéna naskočí neskôr než 3 s po otvorení stránky (pomalé pripojenie), svetlá sa už nezapínajú
-    // pri filmovom úvode sa svetlá zapnú až pri dopade činky; inak ak scéna naskočí neskôr než 3 s
+    // pri filmovom nástupe sa svetlá zapnú tesne pred strihom do fitka; inak ak scéna naskočí neskôr než 3 s
     // po otvorení stránky (pomalé pripojenie), svetlá sa už nezapínajú a hneď svietia
     if (!this.t0) {
       if (lights.wait) this.t0 = 0;
       else if (lights.at) this.t0 = lights.at < 0 ? now - LIGHTS_DONE * 1000 : lights.at;
       else this.t0 = now > 3000 ? now - LIGHTS_DONE * 1000 : now;
     }
-    const T = this.t0 ? (now - this.t0) / 1000 : 0;
+    const Tr = this.t0 ? (now - this.t0) / 1000 : 0;
+    const T = Tr * LIGHT_SPEED;
     let room = 1;
     if (T < LIGHTS_DONE) { room = 0; for (const [st, sd] of CELLS) room += tubeState(T, st, sd); room = Math.pow(room / CELLS.length, 1.3); }
     if (!this.revealed) { this.revealed = true; setTimeout(reveal, 250); }  // text úvodu hneď, svetlá sa rozsvecujú za ním
     const r = this.section.getBoundingClientRect();
-    const p = clamp01(-r.top / Math.max(1, r.height - innerHeight));
+    const p = clamp01(-r.top / Math.max(innerHeight * 0.8, r.height - innerHeight));   // na mobile úvod neskroluje naprázdno
     this.sp += (p - this.sp) * (1 - Math.exp(-dt * 7));
     const sp = this.sp, gl = this.gl, U = this.u;
     this.steer(dt, t, 0.5);
-    const zoom = 1.14 + sp * 0.3;
+    // nástup: kamera ešte dobieha dnu (1,6 s), potom ostane pokojná
+    const ent = this.t0 ? 1 - Math.pow(1 - Math.min(1, Math.max(0, Tr) / 1.6), 3) : 0;
+    const zoom = 1.14 + 0.16 * (1 - ent) + sp * 0.3;
     this.aim(0.5, 0.2 + sp * 0.55, zoom);
     gl.uniform1f(U.zoom, zoom);
     gl.uniform1f(U.push, 0.03 + sp * 0.22);

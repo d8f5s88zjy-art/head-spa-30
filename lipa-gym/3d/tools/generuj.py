@@ -167,10 +167,11 @@ def btn(href, label, kind='', icon='arrow', extra=''):
             f'{f"<i>{ic}</i>" if ic else ""}</a>')
 
 
-# filmový úvod: rozhodne sa ešte pred prvým vykreslením, aby titulok neblikol. Nehrá pri obmedzenom pohybe,
-# šetrení dát, odkaze na kotvu ani pri ďalšej návšteve v tej istej relácii. Poistka ho po 7 s zruší.
+# filmový nástup: rozhodne sa ešte pred prvým vykreslením, aby titulok neblikol. Nehrá pri obmedzenom pohybe,
+# šetrení dát, odkaze na kotvu ani pri ďalšej návšteve v tej istej relácii. Poistka ho po 4 s zruší.
 INTRO_GATE = """
-<script>try{var d=document.documentElement,c=navigator.connection;if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!sessionStorage.getItem('gk-intro')&&window.WebGLRenderingContext&&!(c&&c.saveData)){d.classList.add('intro-on');sessionStorage.setItem('gk-intro','1');setTimeout(function(){d.classList.remove('intro-on')},7000)}}catch(e){}</script>"""
+<script>try{var d=document.documentElement,c=navigator.connection;if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!sessionStorage.getItem('gk-intro')&&!(c&&c.saveData)){d.classList.add('intro-on');sessionStorage.setItem('gk-intro','1');[CUT_SETS].forEach(function(n){var l=document.createElement('link');l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset',n);l.setAttribute('imagesizes','100vw');document.head.appendChild(l)});setTimeout(function(){d.classList.remove('intro-on')},4000)}}catch(e){}</script>"""
+INTRO_GATE = INTRO_GATE.replace('CUT_SETS', ','.join("'" + ', '.join(f'media/tour-{n}-{w}.avif {w}w' for w in (480, 1280, FOTKY[n]['big'])) + "'" for n in ('vstup-1', 'jednorucky-1', 'stroje-2')))
 
 
 def head(file, title, desc, og_img='og.jpg', extra=''):
@@ -417,7 +418,7 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
         <h1 class="hero-h" id="h-hero" aria-label="GYM KLUB, fitko a bojové športy v Nitre"><span class="hero-w" aria-hidden="true"><span>GYM</span></span><span class="hero-w" aria-hidden="true"><span>KLUB</span></span></h1>
         <div class="hero-row">
           <p class="hero-p">Fitko a bojové športy v Lipa Centre. Dve sály so strojmi, voľné váhy, kardio, funkčná zóna a tatami.</p>
-          <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Pozrieť fitko')}{btn('clenstva.html', 'Cenník', 'btn-ghost', None)}</div>
+          <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Vstúpiť do prehliadky')}{btn('clenstva.html', 'Cenník', 'btn-ghost', None)}</div>
         </div>
       </div>
       <ul class="hero-meta mono" aria-label="Rýchle informácie">
@@ -426,9 +427,16 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
         <li><span>Objednávanie</span><b>netreba</b></li>
       </ul>
       <a class="hero-skip mono" href="#rychle">Preskočiť úvod {ICON['down']}</a>
-      <!-- filmový úvod (len prvá návšteva v relácii): činka padne z oblohy a otvorí pohľad do funkčnej zóny; assets/intro.js -->
-      <div class="intro" id="intro" aria-hidden="true"></div>
-      <button class="intro-skip glass mono" type="button" id="introSkip">Preskočiť úvod</button>
+      <!-- filmový nástup (len prvá návšteva v relácii): tri rýchle strihy zo skutočných záberov – vchod, jednoručky, stroje –
+           potom strih do funkčnej zóny, kde sa rozsvietia LED svetlá. Obrázky sa vložia až pri prehrávaní (šablóna). -->
+      <template id="cutTpl">
+        <div class="cut" id="cut" aria-hidden="true">
+          <figure class="cut-f cut-1">{pic('vstup-1', '100vw', alt='', lazy=False)}<figcaption class="mono">Vchod · Výstavná 6</figcaption></figure>
+          <figure class="cut-f cut-2">{pic('jednorucky-1', '100vw', alt='', lazy=False)}<figcaption class="mono">Jednoručky</figcaption></figure>
+          <figure class="cut-f cut-3">{pic('stroje-2', '100vw', alt='', lazy=False)}<figcaption class="mono">Sála so strojmi</figcaption></figure>
+        </div>
+      </template>
+      <button class="intro-skip glass mono" type="button" id="introSkip">Preskočiť</button>
     </div>
   </section>
 
@@ -460,28 +468,6 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
 {chr(10).join(zone_scene)}
         <ol class="zones-ticks" aria-label="Zóny">{zone_ticks}</ol>
         <div class="zones-bar" aria-hidden="true"><i></i></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="film" id="prichod" aria-labelledby="h-film">
-    <div class="wrap film-grid">
-      <div class="film-copy">
-        <p class="mono kicker">Príchod · skutočné video z 26. 9. 2026</p>
-        <h2 class="h-xl" id="h-film" data-kt>Takto k&nbsp;nám trafíte</h2>
-        <p class="lead">Vchod je z krytej terasy Lipa Centra na Výstavnej 6, dvere pod nápisom GYM KLUB &amp; caffee. Hneď za nimi je recepcia.</p>
-        <ol class="film-steps" id="filmSteps">{film_steps}</ol>
-        <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Pokračovať dnu: prehliadka')}</div>
-      </div>
-      <div class="film-frame">
-        <video class="film-v" id="filmV" muted playsinline loop preload="none" poster="media/prichod-poster-900.jpg" aria-label="Video: cesta po krytom chodníku Lipa Centra cez terasu k dverám GYM KLUB a na recepciu.">
-          <source src="media/prichod-900.mp4" type="video/mp4" media="(min-width: 700px)">
-          <source src="media/prichod-900.webm" type="video/webm" media="(min-width: 700px)">
-          <source src="media/prichod-540.mp4" type="video/mp4">
-          <source src="media/prichod-540.webm" type="video/webm">
-        </video>
-        <p class="film-cap mono" aria-hidden="true"><span id="filmCap">Krytý chodník</span><span id="filmTc">00:00</span></p>
-        <button class="film-play" type="button" id="filmPlay" aria-label="Pozastaviť video">{ICON['pause']}</button>
       </div>
     </div>
   </section>
@@ -1015,7 +1001,7 @@ contact = phero('vstup-1', 'Kontakt · Lipa Centrum, Chrenová', 'Výstavná 6, 
       <div class="sec-head">
         <p class="mono kicker">Poloha</p>
         <h2 class="h-l" id="h-mapa" data-kt>Ako sa k&nbsp;nám dostanete</h2>
-        <p class="lead">GYM KLUB je v budove Lipa Centrum na Chrenovej. Vchod je z krytej terasy. {todo('parkovanie a zastávka MHD v blízkosti')}</p>
+        <p class="lead">Výstavná 6, budova Lipa Centrum na Chrenovej. Vchod je z krytej terasy, dvere pod nápisom GYM KLUB &amp; caffee. {todo('parkovanie a zastávka MHD v blízkosti')}</p>
       </div>
       <div class="map" id="map">
         {pic('terasa-1', '(max-width: 760px) 100vw, 1400px', alt='')}

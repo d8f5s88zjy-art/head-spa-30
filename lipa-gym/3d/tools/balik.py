@@ -34,7 +34,7 @@ for s in tour['stops']:
             media |= {f"media/{s['img']}-{s['sizes'][0]}.avif", f"media/{s['img']}-{s['sizes'][1]}.avif", f"media/{s['img']}-1280.webp"}
         else:
             media |= {f"media/{s['img']}-{z}.webp" for z in s['sizes']}
-for a in ['style.css', 'site.js', 'tour.js', 'intro.js', 'fonts/Archivo-latin.woff2', 'fonts/Archivo-latin-ext.woff2', 'fonts/PlexMono-latin.woff2', 'fonts/PlexMono-latin-ext.woff2']:
+for a in ['style.css', 'site.js', 'tour.js', 'fonts/Archivo-latin.woff2', 'fonts/Archivo-latin-ext.woff2', 'fonts/PlexMono-latin.woff2', 'fonts/PlexMono-latin-ext.woff2']:
     files['assets/' + a] = os.path.join(ROOT, 'assets', a)
 missing = [m for m in media if not os.path.exists(os.path.join(ROOT, m))]
 for m in sorted(media):
