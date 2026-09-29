@@ -522,7 +522,7 @@ void main(){
     if (compass) compass.hidden = !(isPano(s) && gl);
     list.querySelectorAll('[data-stop]').forEach(b => { const on = b.dataset.stop === s.id; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'location' : 'false'); });
     const next = stops[cur + 1];
-    goLbl.textContent = next ? (next.zone === s.zone ? `Ďalej: ${next.title}` : `Ďalej: ${zoneName[next.zone]}`) : 'Naplánovať návštevu';
+    goLbl.textContent = next ? (next.zone === s.zone ? `Ďalej: ${next.title}` : `Ďalej: ${zoneName[next.zone]}`) : 'Kontakt a otváracie hodiny';
     goBtn.classList.toggle('last', !next);
     btn('prev').disabled = cur === 0; btn('next').disabled = cur === stops.length - 1;
     try { history.replaceState(null, '', '#zaber-' + s.id); } catch (e) { /* napr. v náhľade */ }
@@ -565,7 +565,7 @@ void main(){
       kick();
     }
   }
-  const next = () => stops[cur + 1] ? go(cur + 1, stops[cur].walk) : (location.href = 'kontakt.html#navsteva');
+  const next = () => stops[cur + 1] ? go(cur + 1, stops[cur].walk) : (location.href = 'kontakt.html#hodiny');
 
   // ---------- filmová cesta: riadenie ----------
   const fEls = { lower: $('.tv-lower'), k: $('.tv-lower-k'), h: $('.tv-lower-h'), sub: $('.tv-lower-s'), bar: $('.tv-filmbar i'), pause: $('.tv-pause'), skip: $('.tv-skip'), end: $('.tv-end'), resume: $('.tv-resume') };

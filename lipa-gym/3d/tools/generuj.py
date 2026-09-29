@@ -216,7 +216,7 @@ def header(file, over_hero=False):
 {links}
   </nav>
   <p class="status" data-status aria-live="off"><i aria-hidden="true"></i><span class="st-l">Po – Št 06:30 – 21:00</span><span class="st-s">06:30 – 21:00</span></p>
-  <a class="btn btn-sm bar-cta" href="kontakt.html#navsteva"><span class="btn-t"><span>Naplánovať návštevu</span><span aria-hidden="true">Naplánovať návštevu</span></span></a>
+  <a class="btn btn-sm bar-cta" href="o-fitku.html#prehliadka"><span class="btn-t"><span>Pozrieť celé fitko</span><span aria-hidden="true">Pozrieť celé fitko</span></span></a>
   <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Otvoriť menu">{ICON['menu']}</button>
 </header>
 <div class="menu" id="menu" hidden>
@@ -225,7 +225,7 @@ def header(file, over_hero=False):
   </ol></nav>
   <div class="menu-foot">
     <p class="menu-info">{GYM['street']}, {GYM['place']}, Nitra<br><span data-status-text>Po – Št 06:30 – 21:00, Pi do 23:00</span></p>
-    <a class="btn" href="kontakt.html#navsteva"><span class="btn-t"><span>Naplánovať návštevu</span><span aria-hidden="true">Naplánovať návštevu</span></span></a>
+    <a class="btn" href="o-fitku.html#prehliadka"><span class="btn-t"><span>Pozrieť celé fitko</span><span aria-hidden="true">Pozrieť celé fitko</span></span></a>
     <a class="menu-tel" href="tel:{GYM['tel']}">{ICON['tel']} {GYM['phone']}</a>
   </div>
 </div>
@@ -267,7 +267,7 @@ def footer():
 <nav class="dock" id="dock" aria-label="Rýchle odkazy">
   <a class="dock-a" href="clenstva.html">Cenník</a>
   <a class="dock-a dock-tel" href="tel:{GYM['tel']}" aria-label="Zavolať do GYM KLUB {GYM['phone']}">{ICON['tel']}</a>
-  <a class="dock-a dock-main" href="kontakt.html#navsteva">Naplánovať návštevu</a>
+  <a class="dock-a dock-main" href="o-fitku.html#prehliadka">Pozrieť celé fitko</a>
 </nav>
 '''
 
@@ -342,7 +342,7 @@ def cta_band(title='Príďte si to prejsť naživo', text='Na samostatný tréni
       <p class="mono kicker">GYM KLUB · {GYM['street']}, Nitra</p>
       <h2 class="h-xl" id="h-final" data-kt>{title}</h2>
       <p class="lead">{text}</p>
-      <div class="cta-row">{btn('kontakt.html#navsteva', 'Naplánovať návštevu')}{btn('tel:' + GYM['tel'], GYM['phone'], 'btn-ghost', 'tel')}</div>
+      <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Pozrieť celé fitko')}{btn(GYM['maps'], 'Navigovať', 'btn-ghost', 'pin', NEWTAB)}</div>
     </div>
   </section>'''
 
@@ -644,7 +644,7 @@ about = f'''  <section class="tv" id="prehliadka" aria-labelledby="h-tv">
         <button class="tv-pill tv-open" type="button" aria-expanded="false" aria-controls="tvList">{IC('M4 7h16M4 12h16M4 17h10')} <span>Priestory</span></button>
         <button class="tv-pill tv-resume" type="button" hidden>{IC('M8 5v14l11-7z')} <span>Pokračovať vo filme</span></button>
         <button class="tv-pill tv-film-btn" type="button" aria-label="Spustiť filmovú prehliadku od začiatku">{IC('M8 5v14l11-7z')} <span>Film</span></button>
-        <a class="tv-pill tv-cta" href="kontakt.html#navsteva">Naplánovať návštevu</a>
+        <a class="tv-pill tv-cta" href="{GYM['maps']}" target="_blank" rel="noopener">Navigovať</a>
       </div>
       <!-- filmová cesta: popis záberu, priebeh a ovládanie (tour.js, FILM) -->
       <div class="tv-lower" aria-live="polite"><p class="tv-lower-k mono"></p><p class="tv-lower-h"></p><p class="tv-lower-s"></p></div>
@@ -658,7 +658,7 @@ about = f'''  <section class="tv" id="prehliadka" aria-labelledby="h-tv">
           <p class="mono kicker">Koniec filmovej prehliadky</p>
           <p class="tv-end-h">Príďte si to prejsť naživo</p>
           <p class="tv-end-p">Na samostatný tréning sa netreba objednávať. Stačí prísť počas otváracích hodín, vstup zaplatíte na recepcii.</p>
-          <div class="cta-row">{btn('kontakt.html#navsteva', 'Naplánovať návštevu')}<button class="btn btn-ghost tv-explore" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
+          <div class="cta-row">{btn(GYM['maps'], 'Navigovať do fitka', '', 'pin', NEWTAB)}<button class="btn btn-ghost tv-explore" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
           <button class="tv-again u mono" type="button">Pozrieť film znova</button>
         </div>
       </div>
@@ -989,8 +989,15 @@ FAQ = [
 faq_html = ''.join(
     f'<details class="faq-i"><summary>{e(q)}</summary><p>{e(a) if a else todo("parkovanie pri Lipa Centre (kde, či je bezplatné)")}</p></details>'
     for q, a in FAQ)
+WHOLE = [('funkcna-zona', 'Funkčná zóna', 'funkcna-zona-7'), ('hlavna-sala', 'Hlavná sála', 'hlavna-sala-1'),
+         ('sala-so-strojmi', 'Sála so strojmi', 'stroje-4'), ('kardio', 'Kardio', 'kardio-1'), ('volne-vahy', 'Voľné váhy', 'jednorucky-1'),
+         ('tatami', 'Tatami', 'tatami-2'), ('panda', 'Sála Panda Fight Club', 'panda:1'), ('prichod', 'Recepcia', 'recepcia-1')]
+whole_tiles = ''.join(
+    f'<li class="whole-i whole-{i}"><a href="o-fitku.html#{zid}">{any_pic(ph, "(max-width: 760px) 50vw, 33vw" if i else "(max-width: 760px) 100vw, 60vw", alt=name)}'
+    f'<span class="whole-t"><span class="mono">{i + 1:02d}</span><b>{e(name)}</b></span></a></li>'
+    for i, (zid, name, ph) in enumerate(WHOLE))
 contact = phero('vstup-1', 'Kontakt · Lipa Centrum, Chrenová', 'Výstavná 6, Nitra',
-                'Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB &amp; caffee. Zavolajte, napíšte alebo príďte rovno počas otváracích hodín.',
+                'Vchod je z krytej terasy Lipa Centra, dvere pod nápisom GYM KLUB &amp; caffee. Príďte rovno počas otváracích hodín, objednávať sa netreba.',
                 extra='<div class="cta-row">' + btn(GYM['maps'], 'Navigovať', '', 'pin', NEWTAB) + btn('tel:' + GYM['tel'], GYM['phone'], 'btn-ghost', 'tel') + '</div>') + f'''
 
   <section class="sec" aria-labelledby="h-kde">
@@ -1032,43 +1039,18 @@ contact = phero('vstup-1', 'Kontakt · Lipa Centrum, Chrenová', 'Výstavná 6, 
     </div>
   </section>
 
-  <section class="sec" id="navsteva" aria-labelledby="h-form">
-    <div class="wrap two">
-      <div>
-        <p class="mono kicker">Naplánovať návštevu</p>
-        <h2 class="h-l" id="h-form" data-kt>Dajte vedieť, kedy prídete</h2>
-        <p class="lead">Vyplňte meno, kontakt a čo vás zaujíma. Po odoslaní sa otvorí váš e-mail s pripravenou správou pre GYM KLUB, stačí ju odoslať. Radšej voláte? <a class="u" href="tel:{GYM['tel']}">{GYM['phone']}</a></p>
-        <p class="lead">{todo('ak majú správy chodiť priamo bez e-mailového programu návštevníka, napojenie formulára na službu (napr. Formspree) a súhlas so spracovaním osobných údajov')}</p>
+  <section class="sec whole" id="fitko" aria-labelledby="h-whole">
+    <span class="anchor" id="navsteva"></span>
+    <div class="wrap">
+      <div class="whole-head">
+        <div>
+          <p class="mono kicker">Priestory</p>
+          <h2 class="h-l" id="h-whole" data-kt>Celé fitko na jednom mieste</h2>
+        </div>
+        <p class="lead">Dve sály so strojmi, kardio pri oknách, voľné váhy, funkčná zóna so šprintérskou dráhou, tatami a samostatná sála Panda Fight Club. Na samostatný tréning sa netreba objednávať, stačí prísť počas otváracích hodín.</p>
       </div>
-      <form class="form" id="form" action="mailto:{GYM['email']}" method="post" enctype="text/plain" novalidate>
-        <div class="f-row">
-          <label for="fName">Meno <span aria-hidden="true">*</span></label>
-          <input id="fName" name="meno" autocomplete="name" required aria-describedby="fNameErr">
-          <p class="f-err" id="fNameErr" hidden>Napíšte meno.</p>
-        </div>
-        <div class="f-row">
-          <label for="fContact">Telefón alebo e-mail <span aria-hidden="true">*</span></label>
-          <input id="fContact" name="kontakt" autocomplete="email" inputmode="email" required aria-describedby="fContactHelp fContactErr">
-          <p class="f-help" id="fContactHelp">Ozveme sa na číslo alebo e-mail, ktorý uvediete.</p>
-          <p class="f-err" id="fContactErr" hidden>Napíšte telefón alebo e-mail, aby sme vám vedeli odpovedať.</p>
-        </div>
-        <div class="f-row">
-          <label for="fTopic">Čo vás zaujíma</label>
-          <select id="fTopic" name="tema">
-            <option>Prvá návšteva</option><option>Členstvo a ceny</option><option>Osobný tréning</option><option>Bojové športy</option><option>Skupinové lekcie</option><option>Iné</option>
-          </select>
-        </div>
-        <div class="f-2">
-          <div class="f-row"><label for="fDate">Kedy by ste prišli</label><input id="fDate" name="datum" type="date"></div>
-          <div class="f-row"><label for="fTime">Približný čas</label><input id="fTime" name="cas" type="time"></div>
-        </div>
-        <div class="f-row">
-          <label for="fMsg">Správa</label>
-          <textarea id="fMsg" name="sprava" rows="4" placeholder="Napríklad: chcem začať s osobným trénerom, trénujem 3-krát týždenne."></textarea>
-        </div>
-        <button class="btn" type="submit"><span class="btn-t"><span>Pripraviť správu</span><span aria-hidden="true">Pripraviť správu</span></span><i>{ICON['arrow']}</i></button>
-        <p class="f-ok" id="fOk" role="status" hidden>Otvoril sa váš e-mailový program s pripravenou správou. Ak sa neotvoril, napíšte na <a class="u" href="mailto:{GYM['email']}">{GYM['email']}</a> alebo zavolajte.</p>
-      </form>
+      <ul class="whole-g">{whole_tiles}</ul>
+      <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Spustiť prehliadku fitka')}{btn(GYM['maps'], 'Navigovať', 'btn-ghost', 'pin', NEWTAB)}</div>
     </div>
   </section>
 
@@ -1079,6 +1061,6 @@ contact = phero('vstup-1', 'Kontakt · Lipa Centrum, Chrenová', 'Výstavná 6, 
     </div>
   </section>'''
 page('kontakt.html', 'Kontakt a otváracie hodiny | GYM KLUB Nitra',
-     'GYM KLUB, Výstavná 6 (Lipa Centrum), 949 01 Nitra. Telefón +421 944 800 394, e-mail info@gymklub.sk, otváracie hodiny, mapa a formulár na naplánovanie návštevy.',
+     'GYM KLUB, Výstavná 6 (Lipa Centrum), 949 01 Nitra. Telefón +421 944 800 394, e-mail info@gymklub.sk, otváracie hodiny, mapa a všetky priestory fitka.',
      contact)
 print('hotovo')

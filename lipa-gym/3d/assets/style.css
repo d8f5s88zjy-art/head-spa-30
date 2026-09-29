@@ -1051,3 +1051,34 @@ html.js .marquee.run .marquee-t{animation-play-state:running}
   .tv-pin span{font-size:12.5px;padding:7px 10px}
 }
 @media (prefers-reduced-motion:reduce){.tv-lower>*{transition:opacity .2s linear;transform:none}}
+
+/* ---------- kontakt: celé fitko (mozaika všetkých priestorov) ---------- */
+.whole-head{display:grid;grid-template-columns:repeat(12,1fr);gap:18px 24px;align-items:end;margin-bottom:clamp(28px,5vh,52px)}
+.whole-head>div{grid-column:1/7}
+.whole-head .h-l{margin-top:20px}
+.whole-head .lead{grid-column:7/13;margin-top:0}
+.whole-g{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(180px,17vw,300px);gap:clamp(8px,.8vw,12px)}
+.whole-i{position:relative;overflow:hidden;background:var(--bg2)}
+.whole-0{grid-column:span 2;grid-row:span 2}
+.whole-7{grid-column:span 2}
+.whole-i a{position:absolute;inset:0;display:block;text-decoration:none;color:#fff}
+.whole-i picture,.whole-i img{width:100%;height:100%;object-fit:cover}
+.whole-i img{transition:transform 1.2s var(--ease)}
+.whole-i a::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.78))}
+.whole-t{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;display:flex;align-items:baseline;gap:10px;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.whole-t span{color:#e9e7e1;font-size:11.5px}
+.whole-t b{font-weight:800;font-stretch:80%;font-size:clamp(18px,1.5vw,24px);line-height:1.1;text-transform:uppercase}
+.whole-0 .whole-t b{font-size:clamp(26px,2.6vw,42px)}
+@media (hover:hover){.whole-i a:hover img{transform:scale(1.05)}}
+.whole .cta-row{margin-top:clamp(24px,4vh,40px)}
+@media (max-width:760px){
+  .whole-head{grid-template-columns:1fr}
+  .whole-head>div,.whole-head .lead{grid-column:1}
+  .whole-g{grid-template-columns:1fr 1fr;grid-auto-rows:44vw;gap:6px}
+  .whole-0{grid-column:span 2;grid-row:span 1}
+  .whole-7{grid-column:span 2}
+  .whole-t{left:10px;right:10px;bottom:10px;gap:6px}
+  .whole-t b{font-size:15px}
+  .whole-0 .whole-t b{font-size:26px}
+  .whole .cta-row{display:grid;gap:10px}
+}
