@@ -10,7 +10,7 @@ files, media = {}, set()
 for f in PAGES:
     t = open(os.path.join(ROOT, f), encoding='utf-8').read()
     t = t.replace('<a href="../">Klasická verzia webu</a> · ', '').replace('../assets/', 'shared/').replace('href="index.html"', 'href="./"')
-    media |= set(re.findall(r'media/[A-Za-z0-9_.-]+\.(?:avif|webp|jpg|png|mp4)', t))
+    media |= set(re.findall(r'media/[A-Za-z0-9_.-]+\.(?:avif|webp|jpg|png|mp4|webm)', t))
     # zväčšené fotky (lightbox): plné AVIF, WebP 1280, malé JPG
     for src, big in re.findall(r'data-src="([^"]+)" data-big="(\d+)"', t):
         if src.startswith('panda'):

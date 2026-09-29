@@ -161,7 +161,7 @@ html.js.ready .hero-meta,html.js.ready .hero-skip{transition-delay:1.1s}
 .hero-meta li{display:grid;gap:2px}
 .hero-meta span{color:var(--mute);font-size:11px}
 .hero-meta b{font-weight:500;color:var(--ink)}
-.hero-skip{position:absolute;right:var(--gut);bottom:calc(100lvh - 100svh + 18px);z-index:3;display:none;align-items:center;gap:8px;padding:10px 0;text-decoration:none;color:var(--mute)}
+.hero-skip{position:absolute;left:var(--gut);top:calc(var(--bar) + 26px + env(safe-area-inset-top));z-index:3;display:inline-flex;align-items:center;gap:8px;padding:10px 0;text-decoration:none;color:var(--mute)}
 .hero-skip:hover{color:var(--ink)}
 
 /* ---------- rýchle informácie ---------- */

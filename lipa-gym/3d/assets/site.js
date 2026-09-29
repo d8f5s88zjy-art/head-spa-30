@@ -203,6 +203,8 @@ if (film) {
   };
   const play = () => { if (!userPaused && inView) film.play().then(() => { setBtn(); if (!raf) raf = requestAnimationFrame(draw); }).catch(() => setBtn()); };
   film.addEventListener('pause', setBtn);
+  // keď načítanie prerušilo prvé spustenie, video sa rozbehne, len čo je pripravené
+  film.addEventListener('canplay', () => { if (inView && !userPaused && film.paused) play(); });
   film.addEventListener('play', () => { setBtn(); if (!raf) raf = requestAnimationFrame(draw); });
   film.addEventListener('seeked', draw);
   playBtn.addEventListener('click', () => { if (film.paused) { userPaused = false; inView = true; film.preload = 'auto'; film.play().catch(() => {}); } else { userPaused = true; film.pause(); } });

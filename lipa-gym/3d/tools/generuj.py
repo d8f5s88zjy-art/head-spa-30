@@ -466,7 +466,9 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
       <div class="film-frame">
         <video class="film-v" id="filmV" muted playsinline loop preload="none" poster="media/prichod-poster-900.jpg" aria-label="Video: cesta po krytom chodníku Lipa Centra cez terasu k dverám GYM KLUB a na recepciu.">
           <source src="media/prichod-900.mp4" type="video/mp4" media="(min-width: 700px)">
+          <source src="media/prichod-900.webm" type="video/webm" media="(min-width: 700px)">
           <source src="media/prichod-540.mp4" type="video/mp4">
+          <source src="media/prichod-540.webm" type="video/webm">
         </video>
         <p class="film-cap mono" aria-hidden="true"><span id="filmCap">Krytý chodník</span><span id="filmTc">00:00</span></p>
         <button class="film-play" type="button" id="filmPlay" aria-label="Pozastaviť video">{ICON['pause']}</button>
@@ -566,7 +568,7 @@ ZONE_TEXT['panda'] = 'Samostatná sála klubu Panda Fight Club s veľkou plochou
 ZONE_GEAR['panda'] = ['Tatami', 'Boxovacie vrecia', 'Hrazdy']
 ZONE_TEXT['prichod'] = 'Vchod je z krytej terasy Lipa Centra, dvere sú pod nápisom GYM KLUB & caffee. Hneď za nimi je recepcia s nápojmi a polička na obuv. Tu zaplatíte vstup.'
 TOUR_STOPS = [s for s in TOUR['stops'] if s.get('tour', True)]
-TOUR_PAGE = {'zones': TOUR['zones'], 'stops': TOUR_STOPS}
+TOUR_PAGE = {'zones': [dict(z, text=ZONE_TEXT[z['id']]) for z in TOUR['zones']], 'stops': TOUR_STOPS}
 N_PANO = sum(1 for s in TOUR_STOPS if s['type'] == 'pano')
 N_PHOTO = len(TOUR_STOPS) - N_PANO
 first = TOUR_STOPS[0]

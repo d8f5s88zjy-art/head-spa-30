@@ -15,6 +15,7 @@ function init(root) {
   const data = JSON.parse(document.getElementById('tourData').textContent);
   const stops = data.stops, zones = data.zones;
   const zoneName = Object.fromEntries(zones.map(z => [z.id, z.name]));
+  const zoneText = Object.fromEntries(zones.map(z => [z.id, z.text || '']));
   const $ = sel => root.querySelector(sel);
   const stage = $('.tv-stage'), flat = $('.tv-flat'), img = $('.tv-img');
   const pinsEl = $('.tv-pins'), goBtn = $('.tv-go'), goLbl = goBtn.querySelector('span');
@@ -276,7 +277,8 @@ void main(){
     if (was) { card.hidden = true; return; }
     b.classList.add('on');
     cardH.textContent = p.label;
-    cardP.textContent = p.text || `${zoneName[stops[cur].zone]} · ${stops[cur].title}`;
+    // bez vlastného popisu ukáže karta overený opis zóny, v ktorej bod je
+    cardP.textContent = p.text || zoneText[stops[cur].zone] || `${zoneName[stops[cur].zone]} · ${stops[cur].title}`;
     card.hidden = false;
   }
   const hideCard = () => { card.hidden = true; pinsEl.querySelectorAll('.tv-pin.on').forEach(o => o.classList.remove('on')); };
