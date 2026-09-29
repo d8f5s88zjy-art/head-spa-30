@@ -282,3 +282,26 @@ Rovnaké hodnoty sú v `site.js` (`CELLS`), z nich sa počíta svetlo v miestnos
 - Tatami je mäkšie než ostatné zábery (biela plochá miestnosť).
 - Testované len v Chromium; treba overiť v Safari na iPhone a Macu a na Androide.
 - Otváracie hodiny, cenník, platby a tréneri zámerne chýbajú, kým ich prevádzka nepotvrdí.
+
+## 000. Filmový úvod s činkou (assets/intro.js)
+
+- Zdroj `tools/intro/intro.src.js`, zostavenie `node tools/intro/build.mjs`. Potrebuje three 0.186 a esbuild v `/tmp/gymklub-3d-build/node_modules`. Výsledok je jeden modul, 586 kB (154 kB gzip).
+- Scéna je celá vymodelovaná v kóde, bez cudzích modelov a textúr:
+  - obloha Preetham s oblakmi (three Sky);
+  - strešná terasa s gumovou podlahou a červeným značením dráhy, betónový atik a mesto v opare;
+  - šesťhranná jednoručka 22,5 kg.
+- Fyzika:
+  - voľný pád z 12,5 m (g = 9,81), konštantná rotácia;
+  - dopad najprv jednou hlavou, potom druhou, odskok 1,6 cm;
+  - prach s odporom vzduchu a otras kamery.
+- Kamera a obraz:
+  - pohybová neostrosť z podsnímok (uzávierka 180°);
+  - hĺbka ostrosti podľa vzdialenosti činky;
+  - tlaková vlna po dopade otvorí priehľadný kruh a v ňom je skutočná fotka funkčnej zóny.
+- Svetlá v hero scéne začnú blikať 1,1 s pred dopadom.
+- Úvod je vyrobená filmová scéna, nie záber prevádzky. Skutočný priestor je až fotka v otvore.
+- Kedy sa hrá: rozhoduje skript v hlavičke `index.html` (trieda `intro-on`).
+  - Hrá len raz za reláciu a nie pri obmedzenom pohybe, šetrení dát, odkaze na kotvu ani bez WebGL.
+  - Ak scéna nie je pripravená do 2,6 s, alebo sú tri snímky pred dopadom dlhšie ako 120 ms, úvod sa vynechá alebo zoslabne.
+  - Poistka v hlavičke ho zruší po 7 s.
+- Preskočenie: tlačidlo „Preskočiť úvod“, Esc, medzerník, šípky, koliesko alebo ťah prstom.

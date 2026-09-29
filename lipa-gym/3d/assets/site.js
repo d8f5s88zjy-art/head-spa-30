@@ -23,6 +23,46 @@ else Promise.race([
   new Promise(r => setTimeout(r, 2500))
 ]).then(reveal);
 
+// ---------- filmový úvod: činka z oblohy (assets/intro.js, three.js) ----------
+// O spustení rozhodol skript v hlavičke (trieda intro-on). Scéna sa načíta na pozadí; ak nie je pripravená
+// do 2,6 s, úvod sa vynechá. Preskočiť ide tlačidlom, klávesom Esc, kolieskom aj ťahom prstom.
+// Svetlá v scéne pod plátnom sa rozsvietia v okamihu dopadu (lights.at).
+const lights = { wait: root.classList.contains('intro-on'), at: 0 };
+if (lights.wait) {
+  const host = $('#intro'), skipBtn = $('#introSkip');
+  let ctl = null, over = false;
+  const hit = () => {
+    if (!lights.at) lights.at = performance.now();
+    lights.wait = false;
+    root.classList.add('intro-hit'); root.classList.remove('intro-on');
+  };
+  const finish = () => {
+    if (over) return; over = true;
+    try { sessionStorage.setItem('gk-intro', '1'); } catch (e) {}
+    if (!lights.at) lights.at = -1;   // bez dopadu: svetlá hneď svietia
+    hit();
+    for (const [t, f] of ev) removeEventListener(t, f);
+    setTimeout(() => root.classList.remove('intro-hit'), 2000);
+  };
+  const skip = () => { if (ctl) ctl.skip(); else finish(); };
+  const ev = [['wheel', skip], ['touchmove', skip], ['keydown', e => { if (e.key === 'Escape' || e.key === ' ' || e.key.startsWith('Arrow') || e.key.startsWith('Page')) skip(); }]];
+  const giveUp = setTimeout(finish, 2600);
+  if (!host || !hasIO || scrollY > 40) finish();
+  else {
+    for (const [t, f] of ev) addEventListener(t, f, { passive: true });
+    skipBtn?.addEventListener('click', skip);
+    import('./intro.js')
+      .then(m => m.createIntro(host, { onImpact: hit, onDone: finish }))
+      .then(c => {
+        if (over) { c.destroy(); return; }
+        clearTimeout(giveUp); ctl = c; c.play();
+        // svetlá pod plátnom začnú blikať tesne pred dopadom, aby otvor ukázal živý priestor
+        lights.at = performance.now() + (c.impactAt - 1.1) * 1000; lights.wait = false;
+      })
+      .catch(finish);
+  }
+}
+
 // ---------- živý stav otvorenia (čas v Nitre) ----------
 // Po – Št 06:30 – 21:00, Pi 06:30 – 23:00 (gymklub.sk). Víkendové hodiny sa v zdrojoch líšia,
 // preto sa cez víkend nepíše „otvorené“ ani „zatvorené“, len výzva overiť ich telefonicky.
@@ -95,7 +135,7 @@ function split(el) {
 }
 $$('[data-kt], .zn-h').forEach(split);
 if (hasIO) {
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
   $$('[data-kt], .rv').forEach(el => io.observe(el));
 } else $$('[data-kt], .rv').forEach(el => el.classList.add('in'));
 
@@ -244,6 +284,13 @@ if (fine && !reduce) {
     });
     b.addEventListener('pointerleave', () => { b.style.transform = ''; });
   });
+  // svetlo pod kurzorom v úvode
+  const stage = $('.hero-stage');
+  if (stage) {
+    stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); stage.style.setProperty('--hx', `${e.clientX - r.left}px`); stage.style.setProperty('--hy', `${e.clientY - r.top}px`); stage.style.setProperty('--ho', 1); });
+    stage.addEventListener('pointerleave', () => stage.style.setProperty('--ho', 0));
+  }
+  $$('.svc-i a').forEach(c => c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', `${e.clientX - r.left}px`); c.style.setProperty('--my', `${e.clientY - r.top}px`); }));
   $$('[data-spot]').forEach(c => c.addEventListener('pointermove', e => {
     const r = c.getBoundingClientRect();
     c.style.setProperty('--mx', `${e.clientX - r.left}px`); c.style.setProperty('--my', `${e.clientY - r.top}px`);
@@ -605,8 +652,14 @@ class HeroScene extends Space3D {
     const t = now / 1000;
     const dt = this.last ? Math.min(t - this.last, 0.05) : 0.016; this.last = t;
     // ak scéna naskočí neskôr než 3 s po otvorení stránky (pomalé pripojenie), svetlá sa už nezapínajú
-    if (!this.t0) this.t0 = now > 3000 ? now - LIGHTS_DONE * 1000 : now;
-    const T = (now - this.t0) / 1000;
+    // pri filmovom úvode sa svetlá zapnú až pri dopade činky; inak ak scéna naskočí neskôr než 3 s
+    // po otvorení stránky (pomalé pripojenie), svetlá sa už nezapínajú a hneď svietia
+    if (!this.t0) {
+      if (lights.wait) this.t0 = 0;
+      else if (lights.at) this.t0 = lights.at < 0 ? now - LIGHTS_DONE * 1000 : lights.at;
+      else this.t0 = now > 3000 ? now - LIGHTS_DONE * 1000 : now;
+    }
+    const T = this.t0 ? (now - this.t0) / 1000 : 0;
     let room = 1;
     if (T < LIGHTS_DONE) { room = 0; for (const [st, sd] of CELLS) room += tubeState(T, st, sd); room = Math.pow(room / CELLS.length, 1.3); }
     if (!this.revealed) { this.revealed = true; setTimeout(reveal, 250); }  // text úvodu hneď, svetlá sa rozsvecujú za ním

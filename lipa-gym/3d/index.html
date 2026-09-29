@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="assets/style.css">
 <!-- poistka: obsah sa odkryje najneskôr po 1,5 s, aj keby skript nenabehol -->
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},1500)</script>
+<script>try{var d=document.documentElement,c=navigator.connection;if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!sessionStorage.getItem('gk-intro')&&window.WebGLRenderingContext&&!(c&&c.saveData)){d.classList.add('intro-on');sessionStorage.setItem('gk-intro','1');setTimeout(function(){d.classList.remove('intro-on')},7000)}}catch(e){}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ExerciseGym", "name": "GYM KLUB Fitness & Bodybuilding", "url": "https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/", "image": "https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/3d/media/og.jpg", "telephone": "+421 944 800 394", "email": "info@gymklub.sk", "address": {"@type": "PostalAddress", "streetAddress": "Výstavná 6", "addressLocality": "Nitra", "postalCode": "949 01", "addressCountry": "SK"}, "sameAs": ["https://www.instagram.com/gymklubnitra/", "https://www.facebook.com/profile.php?id=100057511568169", "https://www.gymklub.sk/"]}</script>
 </head>
 <body class="home p-index">
@@ -70,7 +71,7 @@
         <h1 class="hero-h" id="h-hero" aria-label="GYM KLUB, fitko a bojové športy v Nitre"><span class="hero-w" aria-hidden="true"><span>GYM</span></span><span class="hero-w" aria-hidden="true"><span>KLUB</span></span></h1>
         <div class="hero-row">
           <p class="hero-p">Fitko a&nbsp;bojové športy v&nbsp;Lipa Centre. Dve sály so strojmi, voľné váhy, kardio, funkčná zóna a&nbsp;tatami.</p>
-          <div class="cta-row"><a class="btn" href="o-fitku.html#prehliadka"><span class="btn-t"><span>Vstúpiť do prehliadky</span><span aria-hidden="true">Vstúpiť do prehliadky</span></span><i><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></i></a><a class="btn btn-ghost" href="clenstva.html"><span class="btn-t"><span>Cenník od 6&nbsp;€</span><span aria-hidden="true">Cenník od 6&nbsp;€</span></span></a></div>
+          <div class="cta-row"><a class="btn" href="o-fitku.html#prehliadka"><span class="btn-t"><span>Pozrieť fitko</span><span aria-hidden="true">Pozrieť fitko</span></span><i><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></i></a><a class="btn btn-ghost" href="clenstva.html"><span class="btn-t"><span>Cenník</span><span aria-hidden="true">Cenník</span></span></a></div>
         </div>
       </div>
       <ul class="hero-meta mono" aria-label="Rýchle informácie">
@@ -79,6 +80,9 @@
         <li><span>Objednávanie</span><b>netreba</b></li>
       </ul>
       <a class="hero-skip mono" href="#rychle">Preskočiť úvod <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v13M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <!-- filmový úvod (len prvá návšteva v relácii): činka padne z oblohy a otvorí pohľad do funkčnej zóny; assets/intro.js -->
+      <div class="intro" id="intro" aria-hidden="true"></div>
+      <button class="intro-skip glass mono" type="button" id="introSkip">Preskočiť úvod</button>
     </div>
   </section>
 
@@ -108,11 +112,12 @@
     <div class="zones-pin">
       <div class="zones-stage">
       <article class="zn" id="z-hlavna-sala" data-i="0" aria-labelledby="zh-hlavna-sala">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-hlavna-sala-2-480.avif 480w, media/tour-hlavna-sala-2-1280.avif 1280w, media/tour-hlavna-sala-2-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-hlavna-sala-2-1280.webp 1280w" sizes="12vw"><img src="media/tour-hlavna-sala-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:45% 45%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-hlavna-sala-2-480.avif 480w, media/tour-hlavna-sala-2-1280.avif 1280w, media/tour-hlavna-sala-2-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-hlavna-sala-2-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-hlavna-sala-2-480.jpg" width="1280" height="1707" alt="Čierny viacstaničný kladkový stroj so zelenými kladkami, vľavo stroj pri stene obloženej kameňom, vpravo zrkadlová stena s maľbou nad ňou a rad kotúčových jednoručiek." decoding="async" loading="lazy" style="object-position:45% 45%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-hlavna-sala-4-480.avif 480w, media/tour-hlavna-sala-4-1280.avif 1280w, media/tour-hlavna-sala-4-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-hlavna-sala-4-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-hlavna-sala-4-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:55% 48%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>01</b> / 06</p>
           <h3 class="zn-h" id="zh-hlavna-sala">Hlavná sála</h3>
           <p class="zn-p">Najviac strojov na jednom mieste: viacstaničné kladkové veže, stroje so záťažou na jednotlivé partie, kotúčové jednoručky a&nbsp;zrkadlová stena.</p>
@@ -121,11 +126,12 @@
         </div>
       </article>
       <article class="zn" id="z-sala-so-strojmi" data-i="1" aria-labelledby="zh-sala-so-strojmi">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-stroje-4-480.avif 480w, media/tour-stroje-4-1280.avif 1280w, media/tour-stroje-4-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-stroje-4-1280.webp 1280w" sizes="12vw"><img src="media/tour-stroje-4-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:50% 50%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-stroje-4-480.avif 480w, media/tour-stroje-4-1280.avif 1280w, media/tour-stroje-4-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-stroje-4-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-stroje-4-480.jpg" width="1280" height="1707" alt="Svetlá sála s bielym stropom: uprostred tyrkysové kladkové stroje, vľavo stojan s činkami a maľba GYM KLUB na bielej stene, vpravo zrkadlá a hodiny, v popredí tyrkysová lavica." decoding="async" loading="lazy" style="object-position:50% 50%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-stroje-2-480.avif 480w, media/tour-stroje-2-1280.avif 1280w, media/tour-stroje-2-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-stroje-2-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-stroje-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:50% 45%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>02</b> / 06</p>
           <h3 class="zn-h" id="zh-sala-so-strojmi">Sála so strojmi</h3>
           <p class="zn-p">Druhá, svetlá sála s&nbsp;veľkými oknami: kladkové stroje, polohovateľné lavice, lavice so stojanmi na osi a&nbsp;stojan s&nbsp;pevnými činkami.</p>
@@ -134,11 +140,12 @@
         </div>
       </article>
       <article class="zn" id="z-kardio" data-i="2" aria-labelledby="zh-kardio">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-kardio-1-480.avif 480w, media/tour-kardio-1-1280.avif 1280w, media/tour-kardio-1-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-kardio-1-1280.webp 1280w" sizes="12vw"><img src="media/tour-kardio-1-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:45% 50%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-kardio-1-480.avif 480w, media/tour-kardio-1-1280.avif 1280w, media/tour-kardio-1-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-kardio-1-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-kardio-1-480.jpg" width="1280" height="1707" alt="Rad bežeckých pásov Life Fitness pri veľkých oknách s výhľadom na stromy a panelové domy, vzadu čiernobiela fotografia kulturistu na stene." decoding="async" loading="lazy" style="object-position:45% 50%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-kardio-2-480.avif 480w, media/tour-kardio-2-1280.avif 1280w, media/tour-kardio-2-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-kardio-2-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-kardio-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:50% 48%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>03</b> / 06</p>
           <h3 class="zn-h" id="zh-kardio">Kardio</h3>
           <p class="zn-p">Rad bežeckých pásov Life Fitness pri oknách s&nbsp;výhľadom do zelene, eliptický a&nbsp;schodový trenažér. Hodí sa na rozcvičenie aj samostatný kardio tréning.</p>
@@ -147,11 +154,12 @@
         </div>
       </article>
       <article class="zn" id="z-volne-vahy" data-i="3" aria-labelledby="zh-volne-vahy">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-volne-vahy-2-480.avif 480w, media/tour-volne-vahy-2-1280.avif 1280w, media/tour-volne-vahy-2-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-volne-vahy-2-1280.webp 1280w" sizes="12vw"><img src="media/tour-volne-vahy-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:55% 48%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-volne-vahy-2-480.avif 480w, media/tour-volne-vahy-2-1280.avif 1280w, media/tour-volne-vahy-2-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-volne-vahy-2-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-volne-vahy-2-480.jpg" width="1280" height="1707" alt="Rad čiernych lavíc so stojanmi a kotúčmi pri oknách so žalúziami, vľavo tyrkysový kladkový stroj, na stene hodiny a plagát." decoding="async" loading="lazy" style="object-position:55% 48%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-jednorucky-1-480.avif 480w, media/tour-jednorucky-1-1280.avif 1280w, media/tour-jednorucky-1-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-jednorucky-1-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-jednorucky-1-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:45% 50%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>04</b> / 06</p>
           <h3 class="zn-h" id="zh-volne-vahy">Voľné váhy</h3>
           <p class="zn-p">Stojany s&nbsp;jednoručkami pri zrkadlách, samostatný stojan s&nbsp;gumovými jednoručkami do 20 kg, lavice so stojanmi na osi, kotúče a&nbsp;lavica na bicepsy.</p>
@@ -160,11 +168,12 @@
         </div>
       </article>
       <article class="zn" id="z-funkcna-zona" data-i="4" aria-labelledby="zh-funkcna-zona">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-funkcna-zona-6-480.avif 480w, media/tour-funkcna-zona-6-1280.avif 1280w, media/tour-funkcna-zona-6-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-funkcna-zona-6-1280.webp 1280w" sizes="12vw"><img src="media/tour-funkcna-zona-6-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:48% 55%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-funkcna-zona-6-480.avif 480w, media/tour-funkcna-zona-6-1280.avif 1280w, media/tour-funkcna-zona-6-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-funkcna-zona-6-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-funkcna-zona-6-480.jpg" width="1280" height="1707" alt="Pohľad od konca červenej šprintérskej dráhy s číslami 4 až 8 pozdĺž zóny, hore šesťuholníkové LED svetlá, vzadu rig s kotúčmi, nakladací stroj, stojan s medicinbalmi a presklená stena." decoding="async" loading="lazy" style="object-position:48% 55%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-funkcna-zona-2-480.avif 480w, media/tour-funkcna-zona-2-1280.avif 1280w, media/tour-funkcna-zona-2-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-funkcna-zona-2-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-funkcna-zona-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:55% 42%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>05</b> / 06</p>
           <h3 class="zn-h" id="zh-funkcna-zona">Funkčná zóna</h3>
           <p class="zn-p">Priestor na kondičný a&nbsp;funkčný tréning: šprintérska dráha na podlahe, rig Life Fitness so závesnými popruhmi a&nbsp;boxovacím vrecom, kettlebelly, medicinbaly a&nbsp;vzduchový bicykel.</p>
@@ -173,11 +182,12 @@
         </div>
       </article>
       <article class="zn" id="z-tatami" data-i="5" aria-labelledby="zh-tatami">
+        <div class="zn-bg" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-tatami-2-480.avif 480w, media/tour-tatami-2-1280.avif 1280w, media/tour-tatami-2-1932.avif 1932w" sizes="12vw"><source type="image/webp" srcset="media/tour-tatami-2-1280.webp 1280w" sizes="12vw"><img src="media/tour-tatami-2-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:50% 50%"></picture></div>
         <div class="zn-media">
           <div class="zn-main"><picture><source type="image/avif" srcset="media/tour-tatami-2-480.avif 480w, media/tour-tatami-2-1280.avif 1280w, media/tour-tatami-2-1932.avif 1932w" sizes="(max-width: 1023px) 86vw, 40vw"><source type="image/webp" srcset="media/tour-tatami-2-1280.webp 1280w" sizes="(max-width: 1023px) 86vw, 40vw"><img src="media/tour-tatami-2-480.jpg" width="1280" height="1707" alt="Miestnosť s podložkami tatami v ružovej a čiernej farbe, zrkadlovou stenou, dverami a závesnými popruhmi pod stropom." decoding="async" loading="lazy" style="object-position:50% 50%"></picture></div>
           <div class="zn-second" aria-hidden="true"><picture><source type="image/avif" srcset="media/tour-tatami-3-480.avif 480w, media/tour-tatami-3-1280.avif 1280w, media/tour-tatami-3-1932.avif 1932w" sizes="(max-width: 1023px) 40vw, 18vw"><source type="image/webp" srcset="media/tour-tatami-3-1280.webp 1280w" sizes="(max-width: 1023px) 40vw, 18vw"><img src="media/tour-tatami-3-480.jpg" width="1280" height="1707" alt="" decoding="async" loading="lazy" style="object-position:45% 50%"></picture></div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>06</b> / 06</p>
           <h3 class="zn-h" id="zh-tatami">Tatami</h3>
           <p class="zn-p">Samostatná miestnosť bez strojov: podložky, zrkadlová stena, švédska rebrina a&nbsp;závesné popruhy.</p>

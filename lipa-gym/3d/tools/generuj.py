@@ -167,6 +167,12 @@ def btn(href, label, kind='', icon='arrow', extra=''):
             f'{f"<i>{ic}</i>" if ic else ""}</a>')
 
 
+# filmový úvod: rozhodne sa ešte pred prvým vykreslením, aby titulok neblikol. Nehrá pri obmedzenom pohybe,
+# šetrení dát, odkaze na kotvu ani pri ďalšej návšteve v tej istej relácii. Poistka ho po 7 s zruší.
+INTRO_GATE = """
+<script>try{var d=document.documentElement,c=navigator.connection;if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!sessionStorage.getItem('gk-intro')&&window.WebGLRenderingContext&&!(c&&c.saveData)){d.classList.add('intro-on');sessionStorage.setItem('gk-intro','1');setTimeout(function(){d.classList.remove('intro-on')},7000)}}catch(e){}</script>"""
+
+
 def head(file, title, desc, og_img='og.jpg', extra=''):
     return f'''<!DOCTYPE html>
 <html lang="sk">
@@ -191,7 +197,7 @@ def head(file, title, desc, og_img='og.jpg', extra=''):
 <link rel="preload" href="assets/fonts/Archivo-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css">
 <!-- poistka: obsah sa odkryje najneskôr po 1,5 s, aj keby skript nenabehol -->
-<script>document.documentElement.classList.add('js');setTimeout(function(){{document.documentElement.classList.add('ready')}},1500)</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){{document.documentElement.classList.add('ready')}},1500)</script>{INTRO_GATE if file == 'index.html' else ''}
 {extra}</head>'''
 
 
@@ -354,11 +360,12 @@ zone_scene = []
 for i, (zid, name, text, photos, main, second, gear) in enumerate(TRAIN_ZONES):
     chips = ''.join(f'<li>{e(g)}</li>' for g in gear)
     zone_scene.append(f'''      <article class="zn" id="z-{zid}" data-i="{i}" aria-labelledby="zh-{zid}">
+        <div class="zn-bg" aria-hidden="true">{pic(main, '12vw', alt='')}</div>
         <div class="zn-media">
           <div class="zn-main">{pic(main, '(max-width: 1023px) 86vw, 40vw')}</div>
           <div class="zn-second" aria-hidden="true">{pic(second, '(max-width: 1023px) 40vw, 18vw', alt='')}</div>
         </div>
-        <div class="zn-copy">
+        <div class="zn-copy" data-spot>
           <p class="mono zn-n"><b>{i + 1:02d}</b> / {len(TRAIN_ZONES):02d}</p>
           <h3 class="zn-h" id="zh-{zid}">{e(name)}</h3>
           <p class="zn-p">{e(text)}</p>
@@ -410,7 +417,7 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
         <h1 class="hero-h" id="h-hero" aria-label="GYM KLUB, fitko a bojové športy v Nitre"><span class="hero-w" aria-hidden="true"><span>GYM</span></span><span class="hero-w" aria-hidden="true"><span>KLUB</span></span></h1>
         <div class="hero-row">
           <p class="hero-p">Fitko a bojové športy v Lipa Centre. Dve sály so strojmi, voľné váhy, kardio, funkčná zóna a tatami.</p>
-          <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Vstúpiť do prehliadky')}{btn('clenstva.html', 'Cenník od 6 €', 'btn-ghost', None)}</div>
+          <div class="cta-row">{btn('o-fitku.html#prehliadka', 'Pozrieť fitko')}{btn('clenstva.html', 'Cenník', 'btn-ghost', None)}</div>
         </div>
       </div>
       <ul class="hero-meta mono" aria-label="Rýchle informácie">
@@ -419,6 +426,9 @@ home = f'''  <section class="hero" id="uvod" aria-labelledby="h-hero">
         <li><span>Objednávanie</span><b>netreba</b></li>
       </ul>
       <a class="hero-skip mono" href="#rychle">Preskočiť úvod {ICON['down']}</a>
+      <!-- filmový úvod (len prvá návšteva v relácii): činka padne z oblohy a otvorí pohľad do funkčnej zóny; assets/intro.js -->
+      <div class="intro" id="intro" aria-hidden="true"></div>
+      <button class="intro-skip glass mono" type="button" id="introSkip">Preskočiť úvod</button>
     </div>
   </section>
 
