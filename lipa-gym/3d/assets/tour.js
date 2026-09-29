@@ -22,9 +22,11 @@ function init(root) {
   const live = $('.tv-live'), info = $('.tv-info-p'), infoList = $('.tv-info-l');
   const card = $('.tv-card'), cardH = $('.tv-card-h'), cardP = $('.tv-card-p');
   const list = $('.tv-list'), openBtn = $('.tv-open');
-  const guide = $('.tv-guide'), state = $('.tv-state'), stateT = $('.tv-state-t'), retryBtn = $('.tv-retry');
+  const guide = $('.tv-intro'), state = $('.tv-state'), stateT = $('.tv-state-t'), retryBtn = $('.tv-retry');
   const btn = n => $('.tv-' + n);
-  const routeBtns = [...root.querySelectorAll('.tv-route button')];
+  const routeBtns = [...root.querySelectorAll('.tv-rail button')];
+  const backBtn = $('.tv-back'), compass = $('.tv-compass');
+  const arcEl = compass?.querySelector('.tv-arc'), coneEl = compass?.querySelector('.tv-cone'), degEl = compass?.querySelector('.tv-deg');
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const coarse = matchMedia('(pointer: coarse)').matches;
@@ -43,9 +45,14 @@ function init(root) {
   const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* súkromné okno */ } } };
 
   // zdroje obrázkov
-  const photoUrl = (s, ext = 'webp') => `media/${s.img}-${(small || light) && s.sizes.length > 2 ? s.sizes[1] : s.sizes[0]}.${ext}`;
+  // fotky: AVIF (na počítači plné rozlíšenie, na telefóne 1280 px), záloha WebP 1280 px; Panda len WebP
+  const photoUrls = s => s.sizes.length > 2
+    ? [`media/${s.img}-${small || light ? s.sizes[1] : s.sizes[0]}.avif`, `media/${s.img}-1280.webp`]
+    : [`media/${s.img}-${small || light ? s.sizes[1] : s.sizes[0]}.webp`];
+  const flatUrl = s => s.sizes.length > 2 ? `media/${s.img}-1280.webp` : `media/${s.img}-${s.sizes[0]}.webp`;
   const panoUrl = (s, lvl) => `media/${s.img}-${lvl}.webp`;
 
+  const deepLink = /^#zaber-/.test(location.hash);
   let cur = Math.max(0, stops.findIndex(s => location.hash === '#zaber-' + s.id));
   let W = 1, H = 1, visible = true, raf = 0, last = 0, anim = null, touched = false, idleT0 = performance.now();
   // kamera panorámy (radiány) a pohľad na fotku
@@ -134,6 +141,7 @@ void main(){
     const b = await r.blob();
     return window.createImageBitmap ? createImageBitmap(b) : new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(b); });
   };
+  const loadAny = async urls => { let err; for (const u of urls) { try { return await loadBitmap(u); } catch (x) { err = x; } } throw err; };
 
   // načítanie miesta. Panoráma: najprv malý náhľad (okamžite), potom 1280 px na výšku,
   // na počítači napokon plné rozlíšenie zo 4K videa. Hotová položka je v e.ready.
@@ -154,7 +162,7 @@ void main(){
         if (!got) throw new Error('pano');
         e.base = true; if (stops[cur] === s) sharpen(e);
       } else {
-        const [a, d] = await Promise.all([loadBitmap(photoUrl(s)), loadBitmap('media/' + s.depth)]);
+        const [a, d] = await Promise.all([loadAny(photoUrls(s)), loadBitmap('media/' + s.depth)]);
         if (!gl) return e;
         e.dep = tex(d, false); d.close?.(); set(e, a, 1);
       }
@@ -302,6 +310,22 @@ void main(){
     goBtn.classList.toggle('edge', Math.abs(x - q[0]) > 4);
   }
 
+  // ---------- kompas panorámy ----------
+  const pt = (a, r) => `${(32 + Math.sin(a) * r).toFixed(2)} ${(32 - Math.cos(a) * r).toFixed(2)}`;
+  let compassKey = '';
+  function paintCompass() {
+    const s = stops[cur];
+    if (!compass || !isPano(s) || compass.hidden) return;
+    const g = pg(s), hh = Math.atan((W / H) * Math.tan(cam.fov / 2));
+    const key = `${s.id}${cam.yaw.toFixed(3)}${hh.toFixed(3)}`;
+    if (key === compassKey) return; compassKey = key;
+    const a0 = -g.hf / 2, a1 = g.hf / 2;
+    arcEl.setAttribute('d', `M${pt(a0, 24)} A24 24 0 ${g.hf > Math.PI ? 1 : 0} 1 ${pt(a1, 24)}`);
+    const c0 = cam.yaw - hh, c1 = cam.yaw + hh;
+    coneEl.setAttribute('d', `M32 32 L${pt(c0, 21)} A21 21 0 0 1 ${pt(c1, 21)} Z`);
+    degEl.textContent = `Záber ${s.hfov}°`;
+  }
+
   // ---------- kreslenie ----------
   function drawPano(e, c, alpha) {
     const s = e.s, g = pg(s);
@@ -405,6 +429,7 @@ void main(){
       finish();
     }
     placeOverlay(anim ? alpha : 1);
+    paintCompass();
     if (visible && !document.hidden && (busy || anim)) raf = requestAnimationFrame(frame);
   }
   const kick = () => { if (!raf && visible) raf = requestAnimationFrame(frame); };
@@ -432,7 +457,7 @@ void main(){
   function showFlat(full) {
     const s = stops[cur];
     stage.classList.toggle('pano', isPano(s));
-    img.src = isPano(s) ? `media/${s.img}-${gl && !full ? '240.webp' : '1280.jpg'}` : photoUrl(s, 'jpg');
+    img.src = isPano(s) ? `media/${s.img}-${gl && !full ? '240' : '1280'}.webp` : flatUrl(s);
     stage.classList.toggle('flat-full', !!full);
     img.alt = s.alt;
     img.style.objectPosition = isPano(s) ? `${s.x0 ?? 50}% 50%` : `${s.fx}% ${s.fy}%`;
@@ -448,11 +473,17 @@ void main(){
     capZone.textContent = `${String(zi + 1).padStart(2, '0')} / ${String(zones.length).padStart(2, '0')} · ${zoneName[s.zone]}`;
     capTitle.textContent = s.title;
     capBadge.textContent = isPano(s) ? `Panoráma ${s.hfov}°` : 'Fotka';
-    capBadge.className = 'tv-badge' + (isPano(s) ? ' is-pano' : '');
+    capBadge.className = 'tv-badge mono' + (isPano(s) ? ' is-pano' : '');
     capN.textContent = `Miesto ${zl.indexOf(cur) + 1} z ${zl.length}${s.src === 'gymklub.sk' ? ' · fotka z gymklub.sk' : ''}`;
     info.textContent = s.alt;
     live.textContent = `${zoneName[s.zone]}: ${s.title}. ${isPano(s) ? 'Panoráma, ' + s.hfov + ' stupňov.' : 'Fotka.'}`;
-    routeBtns.forEach(b => { const on = b.dataset.zone === s.zone; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'step' : 'false'); });
+    routeBtns.forEach((b, k) => {
+      const on = b.dataset.zone === s.zone, done = k < zi;
+      b.classList.toggle('on', on); b.classList.toggle('done', done);
+      b.setAttribute('aria-current', on ? 'step' : 'false');
+      b.style.setProperty('--f', on ? ((zl.indexOf(cur) + 1) / zl.length).toFixed(3) : done ? 1 : 0);
+    });
+    if (compass) compass.hidden = !(isPano(s) && gl);
     list.querySelectorAll('[data-stop]').forEach(b => { const on = b.dataset.stop === s.id; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'location' : 'false'); });
     const next = stops[cur + 1];
     goLbl.textContent = next ? (next.zone === s.zone ? `Ďalej: ${next.title}` : `Ďalej: ${zoneName[next.zone]}`) : 'Naplánovať návštevu';
@@ -517,12 +548,14 @@ void main(){
   }
   function setMax(on) {
     stage.classList.toggle('tv-max', on); document.documentElement.classList.toggle('tv-lock', on);
+    backBtn.hidden = !(on || fsEl() === stage);
     btn('fs').setAttribute('aria-pressed', String(on || fsEl() === stage));
     btn('fs').setAttribute('aria-label', on || fsEl() === stage ? 'Zavrieť celú obrazovku' : 'Celá obrazovka');
     requestAnimationFrame(() => { size(); kick(); });
   }
   ['fullscreenchange', 'webkitfullscreenchange'].forEach(n => document.addEventListener(n, () => {
     const on = fsEl() === stage; stage.classList.toggle('tv-fs', on);
+    backBtn.hidden = !(on || stage.classList.contains('tv-max'));
     btn('fs').setAttribute('aria-pressed', String(on)); btn('fs').setAttribute('aria-label', on ? 'Zavrieť celú obrazovku' : 'Celá obrazovka');
     setTimeout(() => { size(); kick(); }, 60);
   }));
@@ -559,7 +592,16 @@ void main(){
     else openBtn.focus();
   }
   const GK = 'gk-prehliadka-navod';
-  function dismissGuide() { if (!guide.hidden) { guide.hidden = true; store.set(GK, '1'); } }
+  // vstupná scéna: po „Vstúpiť“ zmizne a kamera vojde do priestoru (pri obmedzenom pohybe bez nájazdu)
+  function dismissGuide() {
+    if (guide.hidden || guide.classList.contains('out')) return;
+    store.set(GK, '1'); touched = true;
+    guide.classList.add('out');
+    setTimeout(() => { guide.hidden = true; }, reduce ? 0 : 900);
+    const s = stops[cur];
+    if (isPano(s) && !reduce) { cam.fov = Math.min(cam.fov * 1.35, fovLimits(s).max); cam.tFov = defaultFov(s); }
+    kick();
+  }
 
   // ---------- ovládanie ----------
   goBtn.addEventListener('click', () => { dismissGuide(); next(); });
@@ -569,6 +611,12 @@ void main(){
   btn('zout').addEventListener('click', () => zoom(1.25));
   btn('home').addEventListener('click', () => { hideCard(); if (cur === 0) { startCam(stops[0]); kick(); } else go(0, null); });
   btn('fs').addEventListener('click', toggleFs);
+  // návrat na web: zavrie celú obrazovku a posunie na obsah pod prehliadkou
+  backBtn.addEventListener('click', () => {
+    if (fsEl()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    setMax(false);
+    setTimeout(() => document.getElementById('obsah-prehliadky')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 120);
+  });
   btn('gyro').addEventListener('click', toggleGyro);
   openBtn.addEventListener('click', () => openList(list.hidden));
   $('.tv-list-x').addEventListener('click', () => openList(false));
@@ -577,13 +625,14 @@ void main(){
     const i = stops.findIndex(s => s.id === b.dataset.stop); openList(false); dismissGuide(); go(i, null);
   }));
   $('.tv-card-x').addEventListener('click', hideCard);
-  $('.tv-guide-ok').addEventListener('click', () => { dismissGuide(); stage.focus(); });
+  $('.tv-enter').addEventListener('click', () => { dismissGuide(); stage.focus({ preventScroll: true }); });
   routeBtns.forEach(b => b.addEventListener('click', () => go(byZone[b.dataset.zone][0], null)));
   document.querySelectorAll('[data-tour-stop]').forEach(a => a.addEventListener('click', ev => {
     const i = stops.findIndex(s => s.id === a.dataset.tourStop);
     if (i < 0) return;
     ev.preventDefault();
     root.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    dismissGuide();
     setTimeout(() => go(i, null), reduce ? 0 : 450);
   }));
   stage.addEventListener('keydown', e => {
@@ -612,7 +661,7 @@ void main(){
   // ostáva skrolovaniu stránky (touch-action: pan-y).
   let drag = null; const ptrs = new Map();
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('button, a, .tv-list, .tv-card, .tv-guide')) return;
+    if (e.target.closest('button, a, .tv-list, .tv-card, .tv-intro')) return;
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; drag = { pinch: Math.hypot(a.x - b.x, a.y - b.y), fov: cam.tFov, pz: tpz }; return; }
     drag = { x: e.clientX, y: e.clientY, lx: e.clientX, lt: performance.now(), yaw: cam.tYaw, pitch: cam.tPitch, px: pan.x, py: pan.y, sl: flat.scrollLeft, moved: false };
@@ -680,6 +729,7 @@ void main(){
   root.classList.toggle('tv-3d', glOn);
   describe();
   if (glOn) ensure(cur);
-  if (!store.get(GK)) guide.hidden = false;
+  // vstupná scéna pri príchode na prehliadku (nie pri odkaze priamo na miesto)
+  if (!deepLink) guide.hidden = false;
   kick();
 }

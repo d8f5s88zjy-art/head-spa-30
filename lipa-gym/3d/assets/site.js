@@ -1,23 +1,61 @@
-// GYM KLUB – web fitka: úvod so svetlami, menu, odkrývanie sekcií, galérie, fotky na celú obrazovku,
+// GYM KLUB – web fitka: úvod so svetlami, lišta a menu, živý stav otvorenia, kinetické nadpisy,
+// scéna šiestich priestorov, príchodový film s titulkami, galérie, fotky na celú obrazovku,
 // kalkulačka členstva, mapa po kliknutí a formulár návštevy.
-// Skrolovanie ostáva natívne; skript len pridáva triedy a reaguje na posun (najviac raz za snímku).
+// Skrolovanie ostáva natívne; skript len nastavuje triedy a premenné (--p) najviac raz za snímku.
+// Pri obmedzenom pohybe sa nič samo nehýbe a všetok obsah je viditeľný hneď.
 
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const hasIO = 'IntersectionObserver' in window;
 
 // úvod: ak beží svetelná scéna (WebGL), titulok odkryje ona, keď sa rozsvieti; inak po dekódovaní fotky
 const heroImg = $('.hero-scene img');
 const reveal = () => requestAnimationFrame(() => root.classList.add('ready'));
-const glOk = !reduce && 'IntersectionObserver' in window && !!window.WebGLRenderingContext;
+const glOk = !reduce && hasIO && !!window.WebGLRenderingContext;
 if (!heroImg) reveal();
 else if (glOk) setTimeout(reveal, 900);   // text nečaká na 3D scénu
-else if (!glOk) Promise.race([
+else Promise.race([
   (heroImg.complete ? Promise.resolve() : new Promise(r => heroImg.addEventListener('load', r, { once: true }))).then(() => heroImg.decode()).catch(() => {}),
   new Promise(r => setTimeout(r, 2500))
 ]).then(reveal);
 
-// menu na telefóne: celá obrazovka, zatvorí sa krížikom, klávesom Esc alebo výberom odkazu
+// ---------- živý stav otvorenia (čas v Nitre) ----------
+// Po – Št 06:30 – 21:00, Pi 06:30 – 23:00 (gymklub.sk). Víkendové hodiny sa v zdrojoch líšia,
+// preto sa cez víkend nepíše „otvorené“ ani „zatvorené“, len výzva overiť ich telefonicky.
+const OPEN = { 1: [390, 1260], 2: [390, 1260], 3: [390, 1260], 4: [390, 1260], 5: [390, 1380] };
+const hm = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+function nitraNow() {
+  try {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+    return { d: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(p.weekday) + 1, m: +p.hour * 60 + +p.minute };
+  } catch (e) { const n = new Date(); return { d: n.getDay() || 7, m: n.getHours() * 60 + n.getMinutes() }; }
+}
+function status() {
+  const { d, m } = nitraNow(), h = OPEN[d];
+  if (!h) return { open: false, short: 'overte telefonicky', long: 'Cez víkend kratšie, hodiny overte telefonicky', pill: 'Víkend: overte telefonicky', d };
+  if (m >= h[0] && m < h[1]) return { open: true, short: `do ${hm(h[1])}`, long: `Otvorené, dnes do ${hm(h[1])}`, pill: `Otvorené do ${hm(h[1])}`, d };
+  if (m < h[0]) return { open: false, short: `od ${hm(h[0])}`, long: `Zatvorené, dnes otvárame o ${hm(h[0])}`, pill: `Otvárame o ${hm(h[0])}`, d };
+  const nx = OPEN[d % 7 + 1];
+  return nx ? { open: false, short: `zajtra od ${hm(nx[0])}`, long: `Zatvorené, zajtra od ${hm(nx[0])}`, pill: `Zajtra od ${hm(nx[0])}`, d }
+            : { open: false, short: 'zatvorené', long: 'Zatvorené. Cez víkend kratšie, overte telefonicky', pill: 'Zatvorené', d };
+}
+function paintStatus() {
+  const s = status();
+  $$('[data-status]').forEach(el => { el.classList.toggle('open', s.open); el.querySelector('.st-l').textContent = s.pill; el.querySelector('.st-s').textContent = s.open ? s.short : s.pill.replace('Víkend: overte telefonicky', 'Víkend'); });
+  $$('[data-status-short]').forEach(el => { el.textContent = s.short; });
+  $$('[data-status-long]').forEach(el => { el.textContent = s.long; el.classList.toggle('open', s.open); });
+  $$('[data-status-text]').forEach(el => { el.textContent = s.long; });
+  $$('[data-hours] li').forEach(li => { const [a, b] = li.dataset.days.split('-').map(Number); li.classList.toggle('today', s.d >= a && s.d <= (b || a)); });
+  $$('.tt-day[data-day]').forEach(el => el.classList.toggle('today', +el.dataset.day === s.d));
+}
+paintStatus();
+setInterval(paintStatus, 60000);
+
+// ---------- menu na telefóne ----------
 const menu = $('#menu'), menuBtn = $('#menuBtn');
 const ICON_MENU = menuBtn.innerHTML;
 const ICON_X = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8"/></svg>';
@@ -32,32 +70,191 @@ function setMenu(open) {
 menuBtn.addEventListener('click', () => setMenu(menu.hidden));
 menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
 addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
-matchMedia('(min-width: 1101px)').addEventListener?.('change', m => { if (m.matches && !menu.hidden) setMenu(false); });
+matchMedia('(min-width: 1181px)').addEventListener?.('change', m => { if (m.matches && !menu.hidden) setMenu(false); });
 
-// domov: lišta dostane pozadie a spodné tlačidlá sa ukážu, keď úvod odíde z obrazu
+// ---------- kinetické nadpisy: slová v maskách ----------
+function split(el) {
+  let i = 0;
+  const walk = node => {
+    for (const n of [...node.childNodes]) {
+      if (n.nodeType === 3) {
+        const parts = n.textContent.split(/( +)/);
+        const frag = document.createDocumentFragment();
+        for (const p of parts) {
+          if (!p) continue;
+          if (/^ +$/.test(p)) { frag.append(' '); continue; }
+          const w = document.createElement('span'); w.className = 'w';
+          const inner = document.createElement('span'); inner.textContent = p; inner.style.setProperty('--i', i++);
+          w.append(inner); frag.append(w);
+        }
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && !n.classList.contains('w')) walk(n);
+    }
+  };
+  walk(el);
+}
+$$('[data-kt], .zn-h').forEach(split);
+if (hasIO) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
+  $$('[data-kt], .rv').forEach(el => io.observe(el));
+} else $$('[data-kt], .rv').forEach(el => el.classList.add('in'));
+
+// slová vyhlásenia sa rozsvecujú podľa skrolovania
+$$('[data-scrub]').forEach(el => {
+  const words = el.textContent.trim().split(/\s+/);
+  el.textContent = '';
+  words.forEach((w, i) => { const s = document.createElement('span'); s.className = 'sw'; s.textContent = w; s.style.setProperty('--i', i); el.append(s, ' '); });
+  el.style.setProperty('--n', words.length);
+});
+
+// ---------- lišta: pozadie po úvode, pri skrolovaní nadol sa skryje, nahor ukáže ----------
 const bar = $('#bar'), hero = $('.hero');
-if (hero && 'IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => bar.classList.toggle('solid', !e.isIntersecting), { rootMargin: '-72px 0px 0px 0px' }).observe(hero);
-  // spodné tlačidlá na telefóne: po odchode úvodných tlačidiel z obrazu (pol obrazovky skrolovania)
-  let dockPending = false;
-  const dock = () => { dockPending = false; document.body.classList.toggle('dock-on', scrollY > innerHeight * 0.5); };
-  addEventListener('scroll', () => { if (!dockPending) { dockPending = true; requestAnimationFrame(dock); } }, { passive: true });
-  dock();
-} else {
-  bar.classList.add('solid');
-  document.body.classList.add('dock-on');
+let lastY = scrollY;
+
+// ---------- scéna šiestich priestorov (počítač): pripnutá obrazovka, strih pri skrolovaní ----------
+const zones = $('.zones');
+const zoneEls = zones ? $$('.zn', zones) : [];
+const ticks = zones ? $$('.zones-ticks button', zones) : [];
+const pinMQ = matchMedia('(min-width: 1024px)');
+let zonePin = false, zoneCur = -1;
+function setPin() {
+  zonePin = !!zones && !reduce && pinMQ.matches;
+  zones?.classList.toggle('pin', zonePin);
+  zones?.style.setProperty('--n', zoneEls.length);
+  zoneCur = -1;
+  if (!zonePin) zoneEls.forEach(z => z.classList.remove('on', 'was'));
+}
+setPin();
+pinMQ.addEventListener?.('change', () => { setPin(); tick(); });
+function zoneFrame(vh) {
+  const pin = zones.querySelector('.zones-pin'), r = pin.getBoundingClientRect();
+  const n = zoneEls.length, p = clamp(-r.top / Math.max(1, r.height - vh));
+  const i = Math.min(n - 1, Math.floor(p * n * 0.9999));
+  if (i !== zoneCur) {
+    zoneEls.forEach((z, k) => { z.classList.toggle('was', k === zoneCur); z.classList.toggle('on', k === i); });
+    ticks.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    zoneCur = i;
+  }
+  zoneEls[i].style.setProperty('--lp', (p * n - i).toFixed(3));
+  zones.style.setProperty('--zp', p.toFixed(4));
+}
+ticks.forEach((t, k) => t.addEventListener('click', () => {
+  const pin = zones.querySelector('.zones-pin');
+  if (!zonePin) { zoneEls[k].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'start', block: 'nearest' }); return; }
+  const top = pin.getBoundingClientRect().top + scrollY, h = pin.offsetHeight - innerHeight;
+  scrollTo({ top: top + h * (k + 0.08) / zoneEls.length, behavior: 'smooth' });
+}));
+
+// ---------- jeden skrolovací cyklus pre všetko, čo závisí od polohy ----------
+const scEls = $$('[data-sc], [data-par], [data-scrub]');
+$$('[data-par]').forEach(el => el.style.setProperty('--par', el.dataset.par));
+let pending = false;
+function tick() {
+  pending = false;
+  const vh = innerHeight, y = scrollY;
+  // lišta
+  if (hero) bar.classList.toggle('solid', hero.getBoundingClientRect().bottom < 80);
+  const down = y > lastY + 4, up = y < lastY - 4;
+  if (!root.classList.contains('menu-open')) {
+    if (down && y > 500) bar.classList.add('hide');
+    else if (up || y < 200) bar.classList.remove('hide');
+  }
+  if (down || up) lastY = y;
+  if (hero) document.body.classList.toggle('dock-on', y > vh * 0.5);
+  if (reduce) return;
+  for (const el of scEls) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < -100 || r.top > vh + 100) continue;
+    let p;
+    if (el.hasAttribute('data-scrub')) p = clamp((vh * 0.88 - r.top) / (r.height + vh * 0.3));
+    else if (el.classList.contains('phero')) p = clamp(-r.top / r.height);
+    else p = clamp((vh - r.top) / (vh + r.height));
+    const v = p.toFixed(3);
+    if (el._p !== v) { el._p = v; el.style.setProperty('--p', v); }
+  }
+  if (zonePin) zoneFrame(vh);
+}
+const onScroll = () => { if (!pending) { pending = true; requestAnimationFrame(tick); } };
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+tick();
+
+// ---------- príchodový film: prehráva sa len v obraze, titulky podľa času ----------
+const film = $('#filmV');
+if (film) {
+  const steps = $$('#filmSteps li'), T = steps.map(li => +li.dataset.t);
+  const cap = $('#filmCap'), tc = $('#filmTc'), playBtn = $('#filmPlay');
+  const ICON_PLAY = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
+  const ICON_PAUSE = playBtn.innerHTML;
+  let userPaused = reduce, inView = false, raf = 0;
+  const setBtn = () => { const on = !film.paused; playBtn.innerHTML = on ? ICON_PAUSE : ICON_PLAY; playBtn.setAttribute('aria-label', on ? 'Pozastaviť video' : 'Prehrať video'); };
+  const draw = () => {
+    raf = 0;
+    const t = film.currentTime, dur = film.duration || 6.9;
+    let k = 0; for (let i = 0; i < T.length; i++) if (t >= T[i]) k = i;
+    steps.forEach((li, i) => {
+      li.classList.toggle('on', i === k);
+      const end = T[i + 1] ?? dur;
+      li.style.setProperty('--sp', i < k ? 1 : i > k ? 0 : clamp((t - T[i]) / (end - T[i])).toFixed(3));
+    });
+    cap.textContent = steps[k].querySelector('b').textContent;
+    tc.textContent = `00:${String(Math.floor(t)).padStart(2, '0')}`;
+    if (!film.paused) raf = requestAnimationFrame(draw);
+  };
+  const play = () => { if (!userPaused && inView) film.play().then(() => { setBtn(); if (!raf) raf = requestAnimationFrame(draw); }).catch(() => setBtn()); };
+  film.addEventListener('pause', setBtn);
+  film.addEventListener('play', () => { setBtn(); if (!raf) raf = requestAnimationFrame(draw); });
+  film.addEventListener('seeked', draw);
+  playBtn.addEventListener('click', () => { if (film.paused) { userPaused = false; inView = true; film.preload = 'auto'; film.play().catch(() => {}); } else { userPaused = true; film.pause(); } });
+  setBtn();
+  if (hasIO) {
+    new IntersectionObserver(([e]) => { if (e.isIntersecting && film.preload === 'none') { film.preload = 'auto'; film.load(); } }, { rootMargin: '600px 0px' }).observe(film);
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) play(); else film.pause(); }, { threshold: 0.35 }).observe(film);
+  }
+  draw();
 }
 
-// sekcie sa odkryjú raz, keď vojdú do obrazu
-if ('IntersectionObserver' in window) {
-  root.classList.add('io');
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+// ---------- dôvody: pri prejdení myšou sa pri kurzore ukáže fotka ----------
+const whyF = $('.why-float');
+if (whyF && fine && !reduce) {
+  const pics = $$('.why-f', whyF);
+  let tx = 0, ty = 0, x = 0, y = 0, on = false, raf = 0;
+  const loop = () => { x += (tx - x) * 0.14; y += (ty - y) * 0.14; whyF.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`; raf = on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(loop) : 0; };
+  $$('.why-i').forEach(li => {
+    li.addEventListener('pointerenter', e => {
+      if (innerWidth < 1024) return;
+      pics.forEach(p => p.classList.toggle('on', p.dataset.f === li.dataset.img));
+      if (!on) { tx = x = e.clientX + 30; ty = y = e.clientY - whyF.offsetHeight / 2; }
+      on = true; whyF.classList.add('on'); if (!raf) raf = requestAnimationFrame(loop);
+    });
+    li.addEventListener('pointermove', e => { tx = e.clientX + 30; ty = e.clientY - whyF.offsetHeight / 2; });
+  });
+  $('.why-l').addEventListener('pointerleave', () => { on = false; whyF.classList.remove('on'); pics.forEach(p => p.classList.remove('on')); });
 }
 
-// kalkulačka: pri zadanom počte tréningov za mesiac vyberie najlacnejšiu možnosť z cien na stránke
+// ---------- tlačidlá a karty reagujú na kurzor ----------
+if (fine && !reduce) {
+  $$('.btn').forEach(b => {
+    b.addEventListener('pointermove', e => {
+      const r = b.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) / r.width, dy = (e.clientY - r.top - r.height / 2) / r.height;
+      b.style.transform = `translate3d(${(dx * 10).toFixed(1)}px,${(dy * 8).toFixed(1)}px,0)`;
+    });
+    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+  });
+  $$('[data-spot]').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', `${e.clientX - r.left}px`); c.style.setProperty('--my', `${e.clientY - r.top}px`);
+  }));
+}
+
+// pásy s textom bežia len v obraze
+if (hasIO && !reduce) {
+  const mio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('run', e.isIntersecting)));
+  $$('.marquee').forEach(m => mio.observe(m));
+}
+
+// ---------- kalkulačka: pri zadanom počte tréningov za mesiac vyberie najlacnejšiu možnosť ----------
 const calc = $('#calc');
 if (calc) {
   const n = $('#calcN'), out = $('#calcOut'), res = $('#calcR');
@@ -75,7 +272,7 @@ if (calc) {
   run();
 }
 
-// mapa sa načíta z Map Google až po kliknutí (rýchlosť a súkromie)
+// ---------- mapa sa načíta z Map Google až po kliknutí (rýchlosť a súkromie) ----------
 const mapBtn = $('#mapLoad');
 mapBtn?.addEventListener('click', () => {
   const f = document.createElement('iframe');
@@ -85,7 +282,7 @@ mapBtn?.addEventListener('click', () => {
   mapBtn.disabled = true;
 });
 
-// formulár návštevy: kontrola povinných polí a príprava e-mailu (nič sa neukladá ani neodosiela na server)
+// ---------- formulár návštevy: kontrola povinných polí a príprava e-mailu ----------
 const form = $('#form');
 if (form) {
   const need = [['#fName', '#fNameErr'], ['#fContact', '#fContactErr']];
@@ -112,8 +309,8 @@ if (form) {
   for (const [i, er] of need) $(i, form).addEventListener('input', e => { if (e.target.value.trim()) { e.target.setAttribute('aria-invalid', 'false'); $(er, form).hidden = true; } });
 }
 
-// galérie priestorov: počítadlo a šípky (na dotyku sa posúva prstom)
-for (const zone of document.querySelectorAll('.zone')) {
+// ---------- galérie priestorov: počítadlo a šípky (na dotyku sa posúva prstom) ----------
+for (const zone of $$('.zone')) {
   const rail = zone.querySelector('.rail');
   const items = rail.children;
   const ctl = zone.querySelector('.rail-ctl');
@@ -121,16 +318,15 @@ for (const zone of document.querySelectorAll('.zone')) {
   const [prev, next] = ctl.querySelectorAll('.rail-btn');
   ctl.hidden = false;
   const step = () => items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : rail.clientWidth;
-  let pending = false;
+  let p = false;
   const update = () => {
-    pending = false;
+    p = false;
     const max = rail.scrollWidth - rail.clientWidth;
-    const i = Math.min(items.length - 1, Math.round(rail.scrollLeft / step()));
-    num.textContent = i + 1;
+    num.textContent = Math.min(items.length, Math.round(rail.scrollLeft / step()) + 1);
     prev.disabled = rail.scrollLeft <= 2;
     next.disabled = rail.scrollLeft >= max - 2;
   };
-  rail.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(update); } }, { passive: true });
+  rail.addEventListener('scroll', () => { if (!p) { p = true; requestAnimationFrame(update); } }, { passive: true });
   addEventListener('resize', update);
   for (const b of [prev, next]) b.addEventListener('click', () => {
     const perPage = Math.max(1, Math.floor(rail.clientWidth / step()) - 1);
@@ -139,101 +335,74 @@ for (const zone of document.querySelectorAll('.zone')) {
   update();
 }
 
-// fotky na celú obrazovku: jeden vodorovný pás všetkých 30 fotiek, posúva sa prstom, šípkami alebo klávesmi
+// ---------- fotky na celú obrazovku: jeden vodorovný pás všetkých fotiek ----------
 const lb = document.getElementById('lb');
 if (lb) {
-const track = document.getElementById('lbTrack');
-const cap = document.getElementById('lbCap');
-const lbPrev = lb.querySelector('.lb-prev');
-const lbNext = lb.querySelector('.lb-next');
-const photos = [...document.querySelectorAll('.ph')];
-const zoneTotal = {}, zonePos = [];
-for (const p of photos) { const z = p.dataset.zone; zoneTotal[z] = (zoneTotal[z] || 0) + 1; zonePos.push(zoneTotal[z]); }
-
-let slides = null, cur = 0, opener = null, raf = 0;
-
-function build() {
-  slides = photos.map(p => {
-    const s = document.createElement('div');
-    s.className = 'lb-s';
-    const pic = document.createElement('picture');
-    const img = document.createElement('img');
-    img.alt = p.querySelector('img').alt;
-    img.width = +p.dataset.w; img.height = +p.dataset.h;
-    img.decoding = 'async';
-    pic.append(img); s.append(pic); track.append(s);
-    return { s, pic, img, p, loaded: false };
-  });
-}
-
-function load(i) {
-  const sl = slides[i];
-  if (!sl || sl.loaded) return;
-  sl.loaded = true;
-  const base = `media/${sl.p.dataset.src}-${sl.p.dataset.big}`;
-  for (const [type, ext] of [['image/avif', 'avif'], ['image/webp', 'webp']]) {
-    const so = document.createElement('source'); so.type = type; so.srcset = `${base}.${ext}`;
-    sl.pic.insertBefore(so, sl.img);
-  }
-  sl.img.src = `${base}.jpg`;
-}
-
-function show(i) {
-  cur = i;
-  for (let k = i - 1; k <= i + 2; k++) load(k);
-  const p = photos[i];
-  cap.innerHTML = '';
-  cap.append(p.dataset.zone);
-  const n = document.createElement('span');
-  n.textContent = `${zonePos[i]} / ${zoneTotal[p.dataset.zone]}`;
-  cap.append(n);
-  lbPrev.disabled = i === 0;
-  lbNext.disabled = i === photos.length - 1;
-}
-
-function go(i, smooth = true) {
-  i = Math.max(0, Math.min(photos.length - 1, i));
-  track.scrollTo({ left: i * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
-  show(i);
-}
-
-if (typeof lb.showModal === 'function') {
-  photos.forEach((p, i) => p.addEventListener('click', ev => {
-    ev.preventDefault();
-    if (!slides) build();
-    opener = p;
-    root.classList.add('lb-open');
-    lb.showModal();
-    go(i, false);
-    lb.querySelector('.lb-x').focus();
-  }));
-
-  track.addEventListener('scroll', () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      const i = Math.round(track.scrollLeft / track.clientWidth);
-      if (i !== cur) show(i);
+  const track = document.getElementById('lbTrack');
+  const cap = document.getElementById('lbCap');
+  const lbPrev = lb.querySelector('.lb-prev'), lbNext = lb.querySelector('.lb-next');
+  const photos = $$('.ph');
+  const zoneTotal = {}, zonePos = [];
+  for (const p of photos) { const z = p.dataset.zone; zoneTotal[z] = (zoneTotal[z] || 0) + 1; zonePos.push(zoneTotal[z]); }
+  let slides = null, cur = 0, opener = null, raf = 0;
+  const build = () => {
+    slides = photos.map(p => {
+      const s = document.createElement('div'); s.className = 'lb-s';
+      const pic = document.createElement('picture'), img = document.createElement('img');
+      img.alt = p.querySelector('img').alt; img.width = +p.dataset.w; img.height = +p.dataset.h; img.decoding = 'async';
+      pic.append(img); s.append(pic); track.append(s);
+      return { s, pic, img, p, loaded: false };
     });
-  }, { passive: true });
-
-  lbPrev.addEventListener('click', () => go(cur - 1));
-  lbNext.addEventListener('click', () => go(cur + 1));
-  document.getElementById('lbClose').addEventListener('click', () => lb.close());
-  lb.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
-  });
-  lb.addEventListener('close', () => {
-    root.classList.remove('lb-open');
-    // galéria na stránke sa posunie na naposledy zobrazenú fotku a zameranie sa vráti na ňu
-    const p = photos[cur];
-    const rail = p.closest('.rail');
-    rail.scrollLeft = p.parentElement.offsetLeft - rail.firstElementChild.offsetLeft;
-    (opener && photos[cur] !== opener ? p : opener)?.focus({ preventScroll: true });
-  });
-  addEventListener('resize', () => { if (lb.open) track.scrollLeft = cur * track.clientWidth; });
-}
+  };
+  const load = i => {
+    const sl = slides[i];
+    if (!sl || sl.loaded) return;
+    sl.loaded = true;
+    const src = sl.p.dataset.src, big = sl.p.dataset.big, panda = src.startsWith('panda');
+    // plné rozlíšenie v AVIF, záloha WebP 1280 px
+    const srcs = panda ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]]
+                       : [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-1280.webp`]];
+    for (const [type, url] of srcs) { const so = document.createElement('source'); so.type = type; so.srcset = url; sl.pic.insertBefore(so, sl.img); }
+    sl.img.src = panda ? `media/${src}-${big}.jpg` : `media/${src}-480.jpg`;
+  };
+  const show = i => {
+    cur = i;
+    for (let k = i - 1; k <= i + 2; k++) load(k);
+    const p = photos[i];
+    cap.textContent = p.dataset.zone;
+    const n = document.createElement('span'); n.textContent = `${zonePos[i]} / ${zoneTotal[p.dataset.zone]}`; cap.append(n);
+    lbPrev.disabled = i === 0; lbNext.disabled = i === photos.length - 1;
+  };
+  const go = (i, smooth = true) => {
+    i = clamp(i, 0, photos.length - 1);
+    track.scrollTo({ left: i * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    show(i);
+  };
+  if (typeof lb.showModal === 'function') {
+    photos.forEach((p, i) => p.addEventListener('click', ev => {
+      ev.preventDefault();
+      if (!slides) build();
+      opener = p; root.classList.add('lb-open'); lb.showModal(); go(i, false); lb.querySelector('.lb-x').focus();
+    }));
+    track.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== cur) show(i); });
+    }, { passive: true });
+    lbPrev.addEventListener('click', () => go(cur - 1));
+    lbNext.addEventListener('click', () => go(cur + 1));
+    document.getElementById('lbClose').addEventListener('click', () => lb.close());
+    lb.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+    });
+    lb.addEventListener('close', () => {
+      root.classList.remove('lb-open');
+      const p = photos[cur], rail = p.closest('.rail');
+      rail.scrollLeft = p.parentElement.offsetLeft - rail.firstElementChild.offsetLeft;
+      (opener && photos[cur] !== opener ? p : opener)?.focus({ preventScroll: true });
+    });
+    addEventListener('resize', () => { if (lb.open) track.scrollLeft = cur * track.clientWidth; });
+  }
 }
 
 // ---------------------------------------------------------------------------------------------

@@ -14,6 +14,18 @@ LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale real
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
 
+## 00000. Nová art direction celého webu (29. 9. 2026)
+
+**Vizuálny systém.** Čierna #060707, kostená biela #f1efe9 a signálna červená #ff3a24 prevzatá zo značenia šprintérskej dráhy a rigov vo funkčnej zóne. Písmo Archivo (variabilná šírka 62–125 a váha 100–900, nadpisy kondenzované a ťažké) a IBM Plex Mono na údaje (hodiny, ceny, časy, štítky); oboje je v `assets/fonts`. Mriežka 12 stĺpcov, `--gut` a `--max` v `style.css`.
+
+**Päť momentov domovskej stránky:** 1) úvod s rozsvietením LED svetiel a nájazdom kamery, titul GYM KLUB sa pri nástupe „zovrie“ zo širokého písma do kondenzovaného; 2) šesť priestorov ako pripnutá filmová scéna (na počítači strih pri skrolovaní, na telefóne karty na posúvanie prstom); 3) príchodový film `media/prichod-900.mp4` / `-540.mp4` (IMG_8984 a IMG_8993 od 2,4 s, prevedené z HDR na SDR) s titulkami synchronizovanými s časom videa; 4) cenník s veľkými číslami; 5) záverečný nájazd na dvere. Medzi nimi pokojné pasáže (rýchle informácie, vyhlásenie s rozsvecovaním slov, dôvody, služby, prvá návšteva).
+
+**Pohyb** (`site.js`): kinetické nadpisy (atribút `data-kt`), premenná `--p` pre sekcie s `data-sc` / `data-par`, magnetické tlačidlá a svetlo pod kurzorom na kartách (`data-spot`) len pri myši, pásy textu bežia len v obraze, video hrá len v obraze. Živý stav otvorenia podľa času v Nitre (cez víkend bez tvrdenia, len „overte telefonicky“). Pri „obmedziť pohyb“ je všetko statické a hneď viditeľné, video sa samo nespustí.
+
+**Prehliadka:** vstupná scéna „Vstúpte do GYM KLUB“, trasa zón v scéne (poradie od vchodu, nie pôdorys), kompas panorámy (zachytený uhol a smer pohľadu), „Späť na web“ na celej obrazovke.
+
+**Médiá a veľkosť.** `tools/media_opt.py` prekódoval veľké AVIF (kvalita 50) a WebP 1280 (kvalita 66). Web používa AVIF 480/1280/plné, WebP 1280 ako zálohu a malé JPG pre najstaršie prehliadače. `tools/balik.py` zostaví balík len z použitých súborov: **222 súborov, 27,2 MB** vrátane panorám v plnom rozlíšení a videa.
+
 ## 0000. Panorámy zo skutočného videa (29. 9. 2026)
 
 **Podklady.** Žiadne 360° zábery ani pôdorys prevádzky nie sú k dispozícii. Z videí z 26. 9. 2026, v ktorých sa kamera otáča na mieste, sú zložené 4 skutočné panorámy (valcová projekcia, nič nie je domaľované):
