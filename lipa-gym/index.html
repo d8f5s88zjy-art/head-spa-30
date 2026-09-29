@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="GYM KLUB Nitra, činková zóna">
+<meta property="og:image:alt" content="GYM KLUB Nitra, funkčná zóna so šprintérskou dráhou">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GYM KLUB Nitra | Fitness a bojové športy na Chrenovej">
 <meta name="twitter:description" content="Plne klimatizované fitko v Lipa Centre: stroje, voľné váhy, osobné tréningy, MMA, Jiu Jitsu, Luta Livre, Krav Maga, pilates. Vstup 6 €.">
@@ -27,7 +27,8 @@
 <meta name="geo.placename" content="Nitra">
 <link rel="preload" href="assets/fonts/BebasNeue-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 700px)">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" imagesizes="100vw" media="(min-width: 861px)">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" imagesizes="100vw" media="(max-width: 860px)">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
 <!--
@@ -96,12 +97,7 @@
 <!-- ÚVOD: fotografia z prevádzky, otvorenie ako zapnutie svetiel -->
 <section class="hero" aria-labelledby="h-hero">
   <div class="hero-media" aria-hidden="true">
-    <picture>
-      <source type="image/avif" media="(max-width: 699px)" srcset="assets/img/hero-tall.avif"><source type="image/webp" media="(max-width: 699px)" srcset="assets/img/hero-tall.webp">
-      <source type="image/jpeg" media="(max-width: 699px)" srcset="assets/img/hero-tall.jpg">
-      <source type="image/avif" srcset="assets/img/hero-800.avif 800w, assets/img/hero.avif 1600w" sizes="100vw"><source type="image/webp" srcset="assets/img/hero-800.webp 800w, assets/img/hero.webp 1600w" sizes="100vw">
-      <img class="hero-img" src="assets/img/hero.jpg" srcset="assets/img/hero-800.jpg 800w, assets/img/hero.jpg 1600w" sizes="100vw" width="1600" height="899" alt="" fetchpriority="high" decoding="async">
-    </picture>
+    <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.webp 640w, assets/img/f/funkcna-zona-6-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.jpg 640w, assets/img/f/funkcna-zona-6-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-6-w-960.webp 960w, assets/img/f/funkcna-zona-6-w-1920.webp 1920w" sizes="100vw"><img class="hero-img" fetchpriority="high" src="assets/img/f/funkcna-zona-6-w-1920.jpg" srcset="assets/img/f/funkcna-zona-6-w-960.jpg 960w, assets/img/f/funkcna-zona-6-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async"></picture>
     <div class="hero-shade"></div>
     <div class="hero-light"></div>
     <div class="hero-sweep"></div>
@@ -178,61 +174,60 @@
       <h2 id="h-treningy" class="h2">Vyberte si smer, <em>ktorý vám sadne</em></h2>
       <p class="lead">Začínate, vraciate sa po pauze alebo chcete posunúť výkon. Posilňovňa je otvorená celý deň, skupinové lekcie idú podľa rozvrhu.</p>
     </header>
-    <div class="tr-grid">
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/stojany-640.avif 640w, assets/img/stojany.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/stojany-640.webp 640w, assets/img/stojany.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/stojany.jpg" srcset="assets/img/stojany-640.jpg 640w, assets/img/stojany.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Činková zóna GYM KLUBU so stojanmi a kotúčmi" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
+    <div class="duo">
+      <article class="duo-card reveal">
+        <picture class="duo-media"><source type="image/avif" srcset="assets/img/f/volne-vahy-2-640.avif 640w, assets/img/f/volne-vahy-2-1080.avif 1080w" sizes="(max-width: 760px) 100vw, 300px"><source type="image/webp" srcset="assets/img/f/volne-vahy-2-640.webp 640w, assets/img/f/volne-vahy-2-1080.webp 1080w" sizes="(max-width: 760px) 100vw, 300px"><img src="assets/img/f/volne-vahy-2-1080.jpg" srcset="assets/img/f/volne-vahy-2-640.jpg 640w, assets/img/f/volne-vahy-2-1080.jpg 1080w" sizes="(max-width: 760px) 100vw, 300px" width="1080" height="1350" alt="Rad čiernych lavíc so stojanmi a kotúčmi pri oknách, vľavo tyrkysový kladkový stroj" loading="lazy" decoding="async"></picture>
+        <div class="duo-body">
           <p class="tr-tag">Denne počas otváracích hodín</p>
           <h3>Fitness tréning</h3>
-          <p>Samostatný silový tréning na strojoch a s voľnými váhami, alebo vedenie osobným trénerom: diagnostika pohybu, správna technika, tréningový plán aj jedálniček podľa cieľa.</p>
+          <p>Samostatný silový tréning na strojoch a s voľnými váhami. Bez objednávania, vstup zaplatíte na recepcii.</p>
           <a class="tr-link" href="#cennik">Cenník vstupov</a>
         </div>
       </article>
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/ring-640.avif 640w, assets/img/ring.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/ring-640.webp 640w, assets/img/ring.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/ring.jpg" srcset="assets/img/ring-640.jpg 640w, assets/img/ring.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Sála bojových športov GYM KLUBU s tatami a vrecami" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
-          <p class="tr-tag">Ut · Št 17:00 – 19:00 · So 13:00 – 15:00</p>
-          <h3>Bojové športy</h3>
-          <p>MMA, Jiu Jitsu a Luta Livre (no-gi, bez kimona) s Michalom Šášikom. Postoj s prvkami boxu, kickboxu a juda, na zemi páky, škrtenia a obrana proti nim. Začať sa dá od úplných základov.</p>
-          <a class="tr-link" href="#rozvrh">Pozrieť rozvrh</a>
-        </div>
-      </article>
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/tatami-640.avif 640w, assets/img/tatami.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/tatami-640.webp 640w, assets/img/tatami.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/tatami.jpg" srcset="assets/img/tatami-640.jpg 640w, assets/img/tatami.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Tatami v tréningovej sále GYM KLUBU" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
-          <p class="tr-tag">Po 17:00 – 18:30</p>
-          <h3>Krav Maga</h3>
-          <p>Praktická sebaobrana pod vedením Tomáša Žideka a Slava Jura. Jednoduché, účinné techniky pre reálne situácie, bez predchádzajúcich skúseností.</p>
-          <a class="tr-link" href="#rozvrh">Pozrieť rozvrh</a>
-        </div>
-      </article>
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/rig2-640.avif 640w, assets/img/rig2.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/rig2-640.webp 640w, assets/img/rig2.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/rig2.jpg" srcset="assets/img/rig2-640.jpg 640w, assets/img/rig2.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Funkčná zóna GYM KLUBU s klietkou a vrecami" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
-          <p class="tr-tag">Ut · Št 18:00 – 19:00</p>
-          <h3>Zdravý chrbát</h3>
-          <p>Komplexné cvičenie s Nikol Molnárovou: posilní svaly trupu, naučí správne držanie tela a uvoľní stuhnuté svaly po dlhom dni. S malými činkami a na karimatke, mierne namáhavé, vhodné pre začiatočníkov aj ľudí so sedavou prácou.</p>
-          <a class="tr-link" href="#rozvrh">Pozrieť rozvrh</a>
-        </div>
-      </article>
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/about-640.avif 640w, assets/img/about.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/about-640.webp 640w, assets/img/about.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/about.jpg" srcset="assets/img/about-640.jpg 640w, assets/img/about.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Cardio a strojová časť GYM KLUBU" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
-          <p class="tr-tag">Po 16:00 – 17:00 · St 18:00 – 19:00</p>
-          <h3>Pilates</h3>
-          <p>Pilates s Majkou Navrátilovou pre stabilitu, mobilitu a pevný stred tela. Pokojnejšie tempo, presné prevedenie, vhodné ako doplnok k silovému tréningu aj samostatne.</p>
-          <a class="tr-link" href="#rozvrh">Pozrieť rozvrh</a>
-        </div>
-      </article>
-      <article class="tr-card reveal">
-        <picture><source type="image/avif" srcset="assets/img/stroje-640.avif 640w, assets/img/stroje.avif 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><source type="image/webp" srcset="assets/img/stroje-640.webp 640w, assets/img/stroje.webp 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"><img src="assets/img/stroje.jpg" srcset="assets/img/stroje-640.jpg 640w, assets/img/stroje.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" width="1200" height="800" alt="Posilňovacie stroje v GYM KLUBE" loading="lazy" decoding="async"></picture>
-        <div class="tr-body">
-          <p class="tr-tag">Po dohode s trénerom</p>
-          <h3>Osobné tréningy a výživa</h3>
-          <p>Individuálny tréningový program, kontrola techniky a motivácia. K tomu nutričné poradenstvo s analýzou telesného zloženia a stravovacím protokolom, alebo príprava na súťaž vo fitness a silovom trojboji.</p>
+      <article class="duo-card reveal">
+        <picture class="duo-media"><source type="image/avif" srcset="assets/img/f/stroje-2-640.avif 640w, assets/img/f/stroje-2-1080.avif 1080w" sizes="(max-width: 760px) 100vw, 300px"><source type="image/webp" srcset="assets/img/f/stroje-2-640.webp 640w, assets/img/f/stroje-2-1080.webp 1080w" sizes="(max-width: 760px) 100vw, 300px"><img src="assets/img/f/stroje-2-1080.jpg" srcset="assets/img/f/stroje-2-640.jpg 640w, assets/img/f/stroje-2-1080.jpg 1080w" sizes="(max-width: 760px) 100vw, 300px" width="1080" height="1350" alt="Tyrkysový kladkový stroj s dvoma stohmi závaží a lanom pred bielou stenou s maľbou GYM KLUB" loading="lazy" decoding="async"></picture>
+        <div class="duo-body">
+          <p class="tr-tag">Po dohode s trénerom</p>
+          <h3>Osobný tréning a výživa</h3>
+          <p>Diagnostika pohybu, technika, tréningový plán a jedálniček podľa cieľa. Nutričné poradenstvo s analýzou telesného zloženia aj príprava na súťaž vo fitness a silovom trojboji.</p>
           <a class="tr-link" href="#treneri">Vybrať trénera</a>
         </div>
       </article>
+    </div>
+    <div class="lessons">
+      <figure class="lessons-media reveal">
+        <picture><source type="image/avif" srcset="assets/img/f/tatami-2-640.avif 640w, assets/img/f/tatami-2-1080.avif 1080w" sizes="(max-width: 900px) 100vw, 460px"><source type="image/webp" srcset="assets/img/f/tatami-2-640.webp 640w, assets/img/f/tatami-2-1080.webp 1080w" sizes="(max-width: 900px) 100vw, 460px"><img src="assets/img/f/tatami-2-1080.jpg" srcset="assets/img/f/tatami-2-640.jpg 640w, assets/img/f/tatami-2-1080.jpg 1080w" sizes="(max-width: 900px) 100vw, 460px" width="1080" height="1350" alt="Miestnosť s ružovo-čiernymi podložkami tatami, zrkadlovou stenou a závesnými popruhmi pod stropom" loading="lazy" decoding="async"></picture>
+        <figcaption>Sála s tatami a zrkadlovou stenou</figcaption>
+      </figure>
+      <div class="lessons-list">
+        <h3 class="lessons-h">Skupinové lekcie</h3>
+        <p class="lessons-p">Vedú ich tréneri v pevných časoch. Začať sa dá bez skúseností, stačí prísť podľa rozvrhu.</p>
+        <article class="lesson reveal" data-tag="boj">
+          <p class="lesson-when">Ut · Št 17:00 – 19:00 · So 13:00 – 15:00</p>
+          <h4>Bojové športy <span>MMA, Jiu Jitsu, Luta Livre</span></h4>
+          <p class="lesson-who">Michal Šášik</p>
+          <p>No-gi, bez kimona. Postoj s prvkami boxu, kickboxu a juda, na zemi páky, škrtenia a obrana proti nim.</p>
+        </article>
+        <article class="lesson reveal" data-tag="kravmaga">
+          <p class="lesson-when">Po 17:00 – 18:30</p>
+          <h4>Krav Maga</h4>
+          <p class="lesson-who">Tomáš Židek, Slavo Juro</p>
+          <p>Praktická sebaobrana. Jednoduché a účinné techniky pre reálne situácie, bez predchádzajúcich skúseností.</p>
+        </article>
+        <article class="lesson reveal" data-tag="pilates">
+          <p class="lesson-when">Po 16:00 – 17:00 · St 18:00 – 19:00</p>
+          <h4>Pilates</h4>
+          <p class="lesson-who">Majka Navrátilová</p>
+          <p>Stabilita, mobilita a pevný stred tela. Pokojnejšie tempo a presné prevedenie, doplnok k silovému tréningu aj samostatne.</p>
+        </article>
+        <article class="lesson reveal" data-tag="chrbat">
+          <p class="lesson-when">Ut · Št 18:00 – 19:00</p>
+          <h4>Zdravý chrbát</h4>
+          <p class="lesson-who">Nikol Molnárová</p>
+          <p>Posilnenie trupu, správne držanie tela a uvoľnenie stuhnutých svalov. S malými činkami a na karimatke, vhodné aj pri sedavej práci.</p>
+        </article>
+        <a class="btn btn-ghost lessons-go" href="#rozvrh">Celý rozvrh podľa dní</a>
+      </div>
     </div>
   </div>
 </section>
@@ -265,6 +260,23 @@
         <p class="price-d">Zvýhodnená mesačná permanentka pre študentov. Platný študentský preukaz so sebou.</p>
         <a class="btn btn-ghost" href="#kontakt">Prísť si zacvičiť</a>
       </article>
+    </div>
+    <div class="calc reveal" data-calc>
+      <div class="calc-in">
+        <p class="calc-k">Čo sa vám oplatí</p>
+        <label class="calc-l" for="calc-n">Koľkokrát za mesiac prídete? <output data-calc-n for="calc-n">8×</output></label>
+        <input class="calc-r" type="range" id="calc-n" min="1" max="30" step="1" value="8">
+        <div class="calc-who" role="radiogroup" aria-label="Kto trénuje">
+          <button type="button" role="radio" aria-checked="true" data-who="a">Dospelý</button>
+          <button type="button" role="radio" aria-checked="false" data-who="s">Študent</button>
+          <button type="button" role="radio" aria-checked="false" data-who="d">Dôchodca</button>
+        </div>
+      </div>
+      <div class="calc-out" aria-live="polite">
+        <p class="calc-best"><span data-calc-name>Permanentka klasická</span><strong data-calc-sum>50 €</strong></p>
+        <ul class="calc-alt" data-calc-alt></ul>
+        <p class="calc-note">Orientačný mesačný výpočet z cenníka. Balíky 10 a 20 vstupov sú prepočítané na počet vstupov, ich platnosť overte na recepcii.</p>
+      </div>
     </div>
     <div class="price-more reveal">
       <table class="price-t">
@@ -403,45 +415,53 @@
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker"><span class="ch">06</span>Priestor</p>
-      <h2 id="h-priestor" class="h2">Old-school posilka, <em>poriadne vybavenie</em></h2>
-      <p class="lead">Osem záberov z prevádzky na Výstavnej 6, od činkovej zóny po recepciu.</p>
+      <h2 id="h-priestor" class="h2">Prejdite si <em>celé fitko</em></h2>
+      <p class="lead">Prechádzka prevádzkou na Výstavnej 6 v desiatich záberoch, od vchodu cez sálu až po terasu.</p>
     </header>
     <div class="reel" data-reel>
       <div class="reel-stage">
-      <figure class="shot is-on" data-full="assets/img/stojany.jpg" data-note="Stojany na drepy a tlaky, jednoručky a kotúče pri oknách.">
-        <picture><source type="image/avif" srcset="assets/img/stojany-640.avif 640w, assets/img/stojany.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/stojany-640.webp 640w, assets/img/stojany.webp 1200w" sizes="100vw"><img src="assets/img/stojany.jpg" srcset="assets/img/stojany-640.jpg 640w, assets/img/stojany.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Činková zóna so stojanmi a kotúčmi pri oknách" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">01</span><span class="shot-t">Činková zóna a stojany</span><span class="shot-d">Stojany na drepy a tlaky, jednoručky a kotúče pri oknách.</span></figcaption>
+      <figure class="shot is-on" data-full="assets/img/f/vstup-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/vstup-1-640.avif 640w, assets/img/f/vstup-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/vstup-1-640.webp 640w, assets/img/f/vstup-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/vstup-1-640.jpg 640w, assets/img/f/vstup-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/vstup-1-w-960.avif 960w, assets/img/f/vstup-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/vstup-1-w-960.webp 960w, assets/img/f/vstup-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/vstup-1-w-1920.jpg" srcset="assets/img/f/vstup-1-w-960.jpg 960w, assets/img/f/vstup-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Biele presklené dvojkrídlové dvere pod nápisom GYM KLUB & caffee, vľavo rastlina" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">01</span><span class="shot-t">Vchod</span><span class="shot-d">Presklené dvere pod nápisom GYM KLUB & caffee.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/rig.jpg" data-note="Klietka na príťahy, medicinbaly a funkčný tréning.">
-        <picture><source type="image/avif" srcset="assets/img/rig-640.avif 640w, assets/img/rig.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/rig-640.webp 640w, assets/img/rig.webp 1200w" sizes="100vw"><img src="assets/img/rig.jpg" srcset="assets/img/rig-640.jpg 640w, assets/img/rig.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Funkčná tréningová klietka s medicinbalmi" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">02</span><span class="shot-t">Funkčná klietka</span><span class="shot-d">Klietka na príťahy, medicinbaly a funkčný tréning.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/recepcia-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/recepcia-1-640.avif 640w, assets/img/f/recepcia-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/recepcia-1-640.webp 640w, assets/img/f/recepcia-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/recepcia-1-640.jpg 640w, assets/img/f/recepcia-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/recepcia-1-w-960.avif 960w, assets/img/f/recepcia-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/recepcia-1-w-960.webp 960w, assets/img/f/recepcia-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/recepcia-1-w-1920.jpg" srcset="assets/img/f/recepcia-1-w-960.jpg 960w, assets/img/f/recepcia-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Priestor za vchodovými dverami s drevenou poličkou na obuv, pultom s chladničkou na nápoje a kreslami pri oknách" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">02</span><span class="shot-t">Za dverami</span><span class="shot-d">Polička na obuv, pult s nápojmi a kreslá pri oknách.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/cardio.jpg" data-note="Bežecké pásy a bicykle na rozcvičenie aj kondíciu.">
-        <picture><source type="image/avif" srcset="assets/img/cardio-640.avif 640w, assets/img/cardio.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/cardio-640.webp 640w, assets/img/cardio.webp 1200w" sizes="100vw"><img src="assets/img/cardio.jpg" srcset="assets/img/cardio-640.jpg 640w, assets/img/cardio.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Cardio zóna s bežeckými pásmi pri oknách" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">03</span><span class="shot-t">Cardio zóna</span><span class="shot-d">Bežecké pásy a bicykle na rozcvičenie aj kondíciu.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/hlavna-sala-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-1-640.avif 640w, assets/img/f/hlavna-sala-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-1-640.webp 640w, assets/img/f/hlavna-sala-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-1-640.jpg 640w, assets/img/f/hlavna-sala-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/hlavna-sala-1-w-960.avif 960w, assets/img/f/hlavna-sala-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/hlavna-sala-1-w-960.webp 960w, assets/img/f/hlavna-sala-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/hlavna-sala-1-w-1920.jpg" srcset="assets/img/f/hlavna-sala-1-w-960.jpg 960w, assets/img/f/hlavna-sala-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Hlavná sála s nástennou maľbou GYM KLUB nad zrkadlami a radom strojov" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">03</span><span class="shot-t">Hlavná sála</span><span class="shot-d">Nástenná maľba, zrkadlá a rad strojov na celé telo.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/ring.jpg" data-note="Tatami a vrecia pre MMA, Luta Livre a Krav Maga.">
-        <picture><source type="image/avif" srcset="assets/img/ring-640.avif 640w, assets/img/ring.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/ring-640.webp 640w, assets/img/ring.webp 1200w" sizes="100vw"><img src="assets/img/ring.jpg" srcset="assets/img/ring-640.jpg 640w, assets/img/ring.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Sála bojových športov s tatami a vrecami" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">04</span><span class="shot-t">Sála bojových športov</span><span class="shot-d">Tatami a vrecia pre MMA, Luta Livre a Krav Maga.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/hlavna-sala-4-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-4-640.avif 640w, assets/img/f/hlavna-sala-4-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-4-640.webp 640w, assets/img/f/hlavna-sala-4-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/hlavna-sala-4-640.jpg 640w, assets/img/f/hlavna-sala-4-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/hlavna-sala-4-w-960.avif 960w, assets/img/f/hlavna-sala-4-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/hlavna-sala-4-w-960.webp 960w, assets/img/f/hlavna-sala-4-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/hlavna-sala-4-w-1920.jpg" srcset="assets/img/f/hlavna-sala-4-w-960.jpg 960w, assets/img/f/hlavna-sala-4-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Čierna viacstaničná kladková veža uprostred sály, vľavo zrkadlová stena so stojanom jednoručiek" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">04</span><span class="shot-t">Kladková veža</span><span class="shot-d">Viacstaničný kladkový stroj uprostred sály.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/stroje.jpg" data-note="Nakladacie a kladkové stroje na každú partiu.">
-        <picture><source type="image/avif" srcset="assets/img/stroje-640.avif 640w, assets/img/stroje.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/stroje-640.webp 640w, assets/img/stroje.webp 1200w" sizes="100vw"><img src="assets/img/stroje.jpg" srcset="assets/img/stroje-640.jpg 640w, assets/img/stroje.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Posilňovacie stroje" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">05</span><span class="shot-t">Stroje</span><span class="shot-d">Nakladacie a kladkové stroje na každú partiu.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/volne-vahy-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/volne-vahy-1-640.avif 640w, assets/img/f/volne-vahy-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/volne-vahy-1-640.webp 640w, assets/img/f/volne-vahy-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/volne-vahy-1-640.jpg 640w, assets/img/f/volne-vahy-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/volne-vahy-1-w-960.avif 960w, assets/img/f/volne-vahy-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/volne-vahy-1-w-960.webp 960w, assets/img/f/volne-vahy-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/volne-vahy-1-w-1920.jpg" srcset="assets/img/f/volne-vahy-1-w-960.jpg 960w, assets/img/f/volne-vahy-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Stojan s kotúčovými jednoručkami, lavice, nakladací stroj a stojan s pevnými činkami" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">05</span><span class="shot-t">Voľné váhy</span><span class="shot-d">Kotúčové aj pevné jednoručky, lavice a osi.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/tatami.jpg" data-note="Mäkká plocha na prácu na zemi a techniku.">
-        <picture><source type="image/avif" srcset="assets/img/tatami-640.avif 640w, assets/img/tatami.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/tatami-640.webp 640w, assets/img/tatami.webp 1200w" sizes="100vw"><img src="assets/img/tatami.jpg" srcset="assets/img/tatami-640.jpg 640w, assets/img/tatami.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Tatami na tréning Luta Livre a MMA" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">06</span><span class="shot-t">Tatami</span><span class="shot-d">Mäkká plocha na prácu na zemi a techniku.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/stroje-4-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/stroje-4-640.avif 640w, assets/img/f/stroje-4-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/stroje-4-640.webp 640w, assets/img/f/stroje-4-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/stroje-4-640.jpg 640w, assets/img/f/stroje-4-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/stroje-4-w-960.avif 960w, assets/img/f/stroje-4-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/stroje-4-w-960.webp 960w, assets/img/f/stroje-4-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/stroje-4-w-1920.jpg" srcset="assets/img/f/stroje-4-w-960.jpg 960w, assets/img/f/stroje-4-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Svetlá sála s tyrkysovými kladkovými strojmi, stojanom s činkami a lavicou" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">06</span><span class="shot-t">Svetlá sála</span><span class="shot-d">Kladkové a nakladacie stroje pri oknách.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/rig2.jpg" data-note="Rig a vrecia vo funkčnej zóne.">
-        <picture><source type="image/avif" srcset="assets/img/rig2-640.avif 640w, assets/img/rig2.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/rig2-640.webp 640w, assets/img/rig2.webp 1200w" sizes="100vw"><img src="assets/img/rig2.jpg" srcset="assets/img/rig2-640.jpg 640w, assets/img/rig2.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Funkčná zóna s klietkou a vrecami" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">07</span><span class="shot-t">Funkčná zóna</span><span class="shot-d">Rig a vrecia vo funkčnej zóne.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/funkcna-zona-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-1-640.avif 640w, assets/img/f/funkcna-zona-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-1-640.webp 640w, assets/img/f/funkcna-zona-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-1-640.jpg 640w, assets/img/f/funkcna-zona-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-1-w-960.avif 960w, assets/img/f/funkcna-zona-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-1-w-960.webp 960w, assets/img/f/funkcna-zona-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/funkcna-zona-1-w-1920.jpg" srcset="assets/img/f/funkcna-zona-1-w-960.jpg 960w, assets/img/f/funkcna-zona-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Červená šprintérska dráha s číslami, vľavo nakladacie stroje a stojan s medicinbalmi, vzadu rig" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">07</span><span class="shot-t">Funkčná zóna</span><span class="shot-d">Šprintérska dráha s číslami, rig a medicinbaly.</span></figcaption>
       </figure>
-      <figure class="shot" data-full="assets/img/recepcia.jpg" data-note="Tu zaplatíte vstup a dohodnete trénera.">
-        <picture><source type="image/avif" srcset="assets/img/recepcia-640.avif 640w, assets/img/recepcia.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/recepcia-640.webp 640w, assets/img/recepcia.webp 1200w" sizes="100vw"><img src="assets/img/recepcia.jpg" srcset="assets/img/recepcia-640.jpg 640w, assets/img/recepcia.jpg 1200w" sizes="100vw" width="1200" height="800" alt="Recepcia s barom" loading="lazy" decoding="async"></picture>
-        <figcaption><span class="shot-n">08</span><span class="shot-t">Recepcia</span><span class="shot-d">Tu zaplatíte vstup a dohodnete trénera.</span></figcaption>
+      <figure class="shot" data-full="assets/img/f/funkcna-zona-5-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-5-640.avif 640w, assets/img/f/funkcna-zona-5-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-5-640.webp 640w, assets/img/f/funkcna-zona-5-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-5-640.jpg 640w, assets/img/f/funkcna-zona-5-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-5-w-960.avif 960w, assets/img/f/funkcna-zona-5-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-5-w-960.webp 960w, assets/img/f/funkcna-zona-5-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/funkcna-zona-5-w-1920.jpg" srcset="assets/img/f/funkcna-zona-5-w-960.jpg 960w, assets/img/f/funkcna-zona-5-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Červený rig s kettlebellmi, vzduchový bicykel, nakladací stroj, odporové gumy a drevená debna" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">08</span><span class="shot-t">Rig</span><span class="shot-d">Kettlebelly, vzduchový bicykel, odporové gumy a plyometrická debna.</span></figcaption>
+      </figure>
+      <figure class="shot" data-full="assets/img/f/kardio-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/kardio-1-640.avif 640w, assets/img/f/kardio-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/kardio-1-640.webp 640w, assets/img/f/kardio-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/kardio-1-640.jpg 640w, assets/img/f/kardio-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/kardio-1-w-960.avif 960w, assets/img/f/kardio-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/kardio-1-w-960.webp 960w, assets/img/f/kardio-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/kardio-1-w-1920.jpg" srcset="assets/img/f/kardio-1-w-960.jpg 960w, assets/img/f/kardio-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Rad bežeckých pásov pri veľkých oknách s výhľadom na stromy" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">09</span><span class="shot-t">Kardio</span><span class="shot-d">Bežecké pásy pri veľkých oknách s výhľadom do zelene.</span></figcaption>
+      </figure>
+      <figure class="shot" data-full="assets/img/f/terasa-1-1080.jpg">
+        <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/terasa-1-640.avif 640w, assets/img/f/terasa-1-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/terasa-1-640.webp 640w, assets/img/f/terasa-1-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/terasa-1-640.jpg 640w, assets/img/f/terasa-1-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/terasa-1-w-960.avif 960w, assets/img/f/terasa-1-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/terasa-1-w-960.webp 960w, assets/img/f/terasa-1-w-1920.webp 1920w" sizes="100vw"><img src="assets/img/f/terasa-1-w-1920.jpg" srcset="assets/img/f/terasa-1-w-960.jpg 960w, assets/img/f/terasa-1-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Krytá terasa so stolom a stoličkami s červenými sedákmi, v pozadí vchod" loading="lazy" decoding="async"></picture>
+        <figcaption><span class="shot-n">10</span><span class="shot-t">Terasa</span><span class="shot-d">Krytá terasa pri vchode, so stolom a stoličkami.</span></figcaption>
       </figure>
         <div class="reel-hud" aria-hidden="true">
-          <p class="reel-tc"><span data-reel-n>01</span><span class="reel-of">/ 08</span></p>
+          <p class="reel-tc"><span data-reel-n>01</span><span class="reel-of">/ 10</span></p>
           <div class="reel-bar"><i data-reel-bar></i></div>
         </div>
       </div>
@@ -528,6 +548,7 @@
       <div class="contact-actions">
         <a class="btn btn-volt" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Navigovať</a>
         <a class="btn btn-ghost" data-fact="phone-link" href="#kontakt">Zavolať</a>
+        <button class="btn btn-ghost" type="button" data-copy-addr>Kopírovať adresu</button>
         <a class="btn btn-ghost" data-fact="ig-link" href="#kontakt" target="_blank" rel="noopener">Instagram</a>
         <a class="btn btn-ghost" data-fact="fb-link" href="#kontakt" target="_blank" rel="noopener">Facebook</a>
       </div>

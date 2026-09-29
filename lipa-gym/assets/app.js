@@ -400,10 +400,19 @@
         '<div class="tt-name">Samostatný tréning<span>Fitness centrum otvorené celý deň, stroje aj voľné váhy</span></div>' +
         '<div class="tt-coach">Bez objednania</div>' +
         '<a class="tt-go" href="#cennik">Cenník</a></div>';
+      var now = nowBA(), isToday = day === now.day;
+      function toMin(t) { var q = t.split(':'); return +q[0] * 60 + +q[1]; }
       html += rows.map(function (c, i) {
-        return '<div class="tt-row" style="animation-delay:' + ((i + 1) * 60) + 'ms">' +
+        var st = '', cls = '';
+        if (isToday) {
+          var a = toMin(c.from), b = toMin(c.to);
+          if (now.min >= a && now.min < b) { st = '<b class="tt-live">Práve prebieha</b>'; cls = ' is-live'; }
+          else if (now.min < a) { var dm = a - now.min; st = '<b class="tt-soon">' + (dm < 60 ? 'o ' + dm + ' min' : 'o ' + Math.floor(dm / 60) + ' h ' + (dm % 60 ? dm % 60 + ' min' : '')) + '</b>'; }
+          else { cls = ' is-past'; st = '<b class="tt-done">Skončilo</b>'; }
+        }
+        return '<div class="tt-row' + cls + '" style="animation-delay:' + ((i + 1) * 60) + 'ms">' +
           '<div class="tt-time">' + c.from + '<small>do ' + c.to + '</small></div>' +
-          '<div class="tt-name">' + c.name + (c.note ? '<span>' + c.note + '</span>' : '<span>Skupinový tréning</span>') + '</div>' +
+          '<div class="tt-name">' + c.name + st + (c.note ? '<span>' + c.note + '</span>' : '<span>Skupinový tréning</span>') + '</div>' +
           '<div class="tt-coach">' + c.coach + '</div>' +
           '<a class="tt-go" href="#treneri" data-filter-go="' + c.tag + '">Tréner</a></div>';
       }).join('');
@@ -491,6 +500,54 @@
     var dk = $('.dock'), foot = $('.foot');
     if (!dk || !foot || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(function (en) { dk.classList.toggle('is-hidden', en[0].isIntersecting); }, { threshold: 0.05 }).observe(foot);
+  }
+
+  /* ---------- cenník: čo sa oplatí pri danom počte vstupov za mesiac ----------
+     Ceny z cenníka fitness centra (overené na gymklub.sk). Balíky sa prepočítajú na počet vstupov. */
+  function calc() {
+    var root = $('[data-calc]');
+    if (!root) return;
+    var r = $('#calc-n', root), out = $('[data-calc-n]', root), name = $('[data-calc-name]', root), sum = $('[data-calc-sum]', root), alt = $('[data-calc-alt]', root);
+    var who = 'a';
+    var SINGLE = { a: 6, s: 5, d: 3.5 }, MONTH = { a: ['Permanentka klasická', 50], s: ['Permanentka študent', 42], d: ['Permanentka klasická', 50] };
+    function eur(x) { return (Math.round(x * 100) / 100).toFixed(x % 1 ? 2 : 0).replace('.', ',') + ' €'; }
+    function update() {
+      var n = +r.value;
+      out.textContent = n + '×';
+      r.style.setProperty('--v', ((n - 1) / 29 * 100).toFixed(1) + '%');
+      var opts = [
+        [who === 'a' ? 'Jednorazové vstupy' : who === 's' ? 'Študent, jednorazové vstupy' : 'Dôchodca, jednorazové vstupy', SINGLE[who] * n, eur(SINGLE[who]) + ' za vstup'],
+        ['Balík 10 vstupov', 5 * n, '5 € za vstup, balík 50 €'],
+        ['Balík 20 vstupov', 4 * n, '4 € za vstup, balík 80 €'],
+        [MONTH[who][0], MONTH[who][1], 'neobmedzene počas mesiaca']
+      ].sort(function (x, y) { return x[1] - y[1]; });
+      name.textContent = opts[0][0];
+      sum.textContent = eur(opts[0][1]) + ' / mesiac';
+      alt.innerHTML = opts.slice(1).map(function (o) {
+        return '<li><span>' + o[0] + '<small>' + o[2] + '</small></span><span>' + eur(o[1]) + '<small>+' + eur(o[1] - opts[0][1]) + '</small></span></li>';
+      }).join('');
+    }
+    r.addEventListener('input', update);
+    $$('[data-who]', root).forEach(function (b) {
+      b.addEventListener('click', function () {
+        who = b.dataset.who;
+        $$('[data-who]', root).forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); });
+        update();
+      });
+    });
+    update();
+  }
+
+  /* ---------- kontakt: kopírovanie adresy ---------- */
+  function copyAddr() {
+    var b = $('[data-copy-addr]');
+    if (!b) return;
+    b.addEventListener('click', function () {
+      var t = GYM.street + ', ' + GYM.zip + ' ' + GYM.city;
+      var done = function () { b.textContent = 'Adresa skopírovaná'; setTimeout(function () { b.textContent = 'Kopírovať adresu'; }, 2200); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () { b.textContent = t; });
+      else b.textContent = t;
+    });
   }
 
   /* ---------- priestor: filmový pás ----------
@@ -665,6 +722,8 @@
   heroDepth();
   band();
   reel();
+  calc();
+  copyAddr();
   filmCut();
   smoothScroll();
   schema();

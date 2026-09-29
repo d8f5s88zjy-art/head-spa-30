@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG = os.path.join(ROOT, 'assets', 'img')
 SRC = os.path.join(IMG, 'src')
 # veľkosti: plná a malá šírka
-SIZES = {'hero': (1600, 800), 'hero-tall': (900, None), 'band-led': (1920, 640), 'tim/': (480, 320)}
+SIZES = {'band-led': (1920, 640), 'tim/': (480, 320)}   # fotky priestoru: tools/vlastne_fotky.py
 
 
 def grade(im, strength=1.0):
