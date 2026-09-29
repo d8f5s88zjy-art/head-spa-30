@@ -317,3 +317,17 @@ Rovnaké hodnoty sú v `site.js` (`CELLS`), z nich sa počíta svetlo v miestnos
   - ďalší záber sa načíta počas aktuálneho;
   - pri trhaní (priemer nad 36 ms na snímku) sa zníži rozlíšenie plátna;
   - pri obmedzenom pohybe sú zábery statické s krátkym prelínaním.
+
+## 0. Prehliadka nanovo (o-fitku.html): redakčná stránka namiesto 3D prehliadača
+
+- Filmová prehliadka a WebGL prehliadač (`assets/tour.js`) sú odstránené. `assets/tour.json` ostáva ako zdroj názvov zón a údajov o panorámach.
+- Fotky upravuje `tools/grade.py` z originálov v nahratých súboroch (mapa `tools/grade_src.json`). Tri zábery z videa (terasa, vchod, recepcia) sa berú z `media/tour-*`.
+  - Úprava: vyváženie bielej, expozícia, stlmenie lámp, jemný lokálny kontrast, odšumenie, mierne doostrenie (zábery z videa bez doostrenia).
+  - Orez 4:5, výstupy `media/g-*` (AVIF, WebP a JPG, 640/1080/1600 px).
+  - Automatické narovnanie zvislíc je vypnuté (nespoľahlivé), dá sa zapnúť ručne cez `TUNE[id]['k']`.
+- Stránka:
+  - prehľad 8 priestorov;
+  - lepiaca navigácia so zvýraznenou aktuálnou zónou;
+  - kapitola pre každú zónu: číslo, názov, popis, vybavenie, 3–4 najlepšie fotky na výšku (na mobile posúvanie prstom), ťuknutím zväčšenie;
+  - panorámy zo skutočného videa: na počítači celé naraz, na mobile posúvanie do strany.
+- Výber fotiek je v `CHAPTERS` v `generuj.py`.

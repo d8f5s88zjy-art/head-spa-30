@@ -297,10 +297,13 @@ def typo(html_doc):
 
 
 def page(file, title, desc, body, over_hero=False, extra_head='', scripts=True):
-    doc = head(file, title, desc, extra=extra_head) + '\n' + header(file, over_hero) + '\n<main id="obsah">\n' + typo(body) + '\n</main>\n\n' + typo(footer())
+    foot = typo(footer())
+    if file == 'o-fitku.html':   # na stránke prehliadky vedie hlavné tlačidlo spodnej lišty rovno k navigácii
+        foot = foot.replace('<a class="dock-a dock-main" href="o-fitku.html#prehliadka">Pozrieť celé fitko</a>',
+                            f'<a class="dock-a dock-main" href="{GYM["maps"]}" target="_blank" rel="noopener">Navigovať</a>')
+    doc = head(file, title, desc, extra=extra_head) + '\n' + header(file, over_hero) + '\n<main id="obsah">\n' + typo(body) + '\n</main>\n\n' + foot
     if file == 'o-fitku.html':
         doc += LIGHTBOX
-        doc += '\n<script src="assets/tour.js" type="module"></script>'
     doc += '\n<script src="assets/site.js" type="module"></script>\n</body>\n</html>\n'
     open(os.path.join(ROOT, file), 'w', encoding='utf-8').write(doc)
 
@@ -570,150 +573,85 @@ N_PHOTO = len(TOUR_STOPS) - N_PANO
 first = TOUR_STOPS[0]
 PANO_ZONES = {s['zone'] for s in TOUR_STOPS if s['type'] == 'pano'}
 NO_PANO = [z['name'] for z in TOUR['zones'] if z['id'] not in PANO_ZONES]
-# trasa zón v scéne: poradie od vchodu (nie pôdorys), šírka úseku podľa počtu miest
-rail = ''.join(
-    f'<li style="--n:{sum(1 for s in TOUR_STOPS if s["zone"] == z["id"])}"><button type="button" data-zone="{z["id"]}" aria-label="{i:02d} {e(z["name"])}{", panoráma" if z["id"] in PANO_ZONES else ""}">'
-    f'<span class="mono">{i:02d}</span><em>{e(z["name"])}</em><i></i></button></li>'
-    for i, z in enumerate(TOUR['zones'], 1))
-places = []
-for i, z in enumerate(TOUR['zones'], 1):
-    li = ''.join(
-        f'<li><button type="button" data-stop="{s["id"]}"><span>{e(s["title"])}</span>'
-        f'<small class="mono">{"Panoráma " + str(s["hfov"]) + "°" if s["type"] == "pano" else "Fotka"}</small></button></li>'
-        for s in TOUR_STOPS if s['zone'] == z['id'])
-    places.append(f'<li><p class="tv-list-z mono"><b>{i:02d}</b> {e(z["name"])}</p><ol>{li}</ol></li>')
-places = ''.join(places)
+# Prehliadka ako redakčná stránka: prehľad všetkých priestorov, lepiaca navigácia a kapitola pre každú zónu
+# s upravenými fotkami na výšku (tools/grade.py, media/g-*) a skutočnou panorámou tam, kde existuje.
+GRADE = json.load(open(os.path.join(ROOT, 'tools', 'grade.json'), encoding='utf-8'))
+CHAPTERS = [
+    ('prichod', ['vstup-1', 'recepcia-1', 'terasa-1'], 'p-terasa'),
+    ('hlavna-sala', ['hlavna-sala-1', 'hlavna-sala-2', 'hlavna-sala-6'], None),
+    ('sala-so-strojmi', ['stroje-4', 'stroje-1', 'stroje-3'], None),
+    ('kardio', ['kardio-1', 'kardio-2', 'kardio-3'], None),
+    ('volne-vahy', ['volne-vahy-1', 'jednorucky-1', 'volne-vahy-3'], None),
+    ('funkcna-zona', ['funkcna-zona-7', 'funkcna-zona-3', 'funkcna-zona-5', 'funkcna-zona-2'], 'p-funkcna-okna'),
+    ('tatami', ['tatami-2', 'tatami-1', 'tatami-3'], None),
+    ('panda', ['panda:1', 'panda:2'], None),
+]
+ZN = {z['id']: z['name'] for z in TOUR['zones']}
+STOP = {s['id']: s for s in TOUR['stops']}
 
 
-def zone_pic(s, sizes):
-    if s['id'].startswith('panda'):
-        return pic_panda(s['id'][-1], sizes, s['alt'])
-    return pic(s['id'], sizes)
+def gpic(sid, sizes, alt, lazy=True):
+    """Upravená fotka 4:5 (AVIF, WebP, JPG)."""
+    W = GRADE[sid]['w']; ws = sorted({w for w in (640, 1080, W) if w <= W})
+    ss = lambda x: ', '.join(f'media/g-{sid}-{w}.{x} {w}w' for w in ws)
+    lz = ' loading="lazy"' if lazy else ''
+    return (f'<picture><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}"><source type="image/webp" srcset="{ss("webp")}" sizes="{sizes}">'
+            f'<img src="media/g-{sid}-1080.jpg" width="{W}" height="{GRADE[sid]["h"]}" alt="{e(alt)}" decoding="async"{lz}></picture>')
 
 
-zones_html = []
-gi = 0
-for zi, z in enumerate(TOUR['zones'], 1):
-    zs = [s for s in TOUR['stops'] if s['zone'] == z['id'] and s['type'] == 'photo']
-    first_stop = next(s for s in TOUR_STOPS if s['zone'] == z['id'])
-    items = []
-    for n, s in enumerate(zs, 1):
-        big = s['sizes'][0]
-        items.append(f'''          <li class="rail-i"><a class="ph" href="media/{s['img']}-{big}.{'jpg' if s['id'].startswith('panda') else 'avif'}" data-i="{gi}" data-src="{s['img']}" data-big="{big}" data-w="{s['w']}" data-h="{s['h']}" data-zone="{e(z['name'])}" aria-label="{e(z['name'])}, fotka {n} z {len(zs)}: zväčšiť">{zone_pic(s, "(max-width: 760px) 62vw, 300px")}</a></li>''')
-        gi += 1
-    src = '<p class="src mono">Fotky: gymklub.sk</p>' if z['id'] == 'panda' else ''
-    gear = ''.join(f'<li>{e(g)}</li>' for g in ZONE_GEAR[z['id']])
-    pano = ' <span class="mono tag-pano">Panoráma</span>' if z['id'] in PANO_ZONES else ''
-    zones_html.append(f'''    <article class="zone" id="{z['id']}" aria-labelledby="h-{z['id']}">
-      <div class="wrap zone-head">
-        <p class="mono zone-n"><b>{zi:02d}</b> / {len(TOUR['zones']):02d}{pano}</p>
-        <h2 class="zone-h" id="h-{z['id']}" data-kt>{e(z['name'])}</h2>
-        <div class="zone-side">
-          <p class="zone-p">{e(ZONE_TEXT[z['id']])}</p>
-          <ul class="chips" aria-label="Vybavenie">{gear}</ul>
-          <p class="zone-a"><a class="u" href="#prehliadka" data-tour-stop="{first_stop['id']}">Otvoriť v prehliadke {ICON['arrow']}</a></p>
-          {src}
-        </div>
-      </div>
-      <div class="rail-wrap">
-        <ul class="rail" aria-label="Fotky: {e(z['name'])}">
-{chr(10).join(items)}
-        </ul>
-        <div class="wrap rail-ctl" hidden>
-          <span class="mono rail-count" aria-hidden="true"><b>1</b> / {len(zs)}</span>
-          <button class="rail-btn" type="button" data-dir="-1" aria-label="Predchádzajúce fotky: {e(z['name'])}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-          <button class="rail-btn" type="button" data-dir="1" aria-label="Ďalšie fotky: {e(z['name'])}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        </div>
-      </div>
-    </article>''')
+def ch_photo(sid, zname):
+    if sid.startswith('panda:'):
+        n = int(sid[6:])
+        return (f'<a class="ph ch-ph wide" href="media/panda-sala-{n}-1200.jpg" data-src="panda-sala-{n}" data-big="1200" data-w="1200" data-h="800" data-zone="{e(zname)}" '
+                f'aria-label="{e(zname)}: zväčšiť fotku">{pic_panda(n, "(max-width: 760px) 86vw, 50vw", PANDA_ALT[n - 1])}</a>')
+    g = GRADE[sid]
+    return (f'<a class="ph ch-ph" href="media/g-{sid}-{g["w"]}.avif" data-src="g-{sid}" data-big="{g["w"]}" data-w="{g["w"]}" data-h="{g["h"]}" data-zone="{e(zname)}" '
+            f'aria-label="{e(zname)}: zväčšiť fotku">{gpic(sid, "(max-width: 760px) 78vw, 30vw", FOTKY[sid]["alt"])}</a>')
 
-IC = lambda d, w=20: f'<svg viewBox="0 0 24 24" width="{w}" height="{w}" aria-hidden="true"><path d="{d}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-about = f'''  <section class="tv" id="prehliadka" aria-labelledby="h-tv">
-    <div class="tv-stage" tabindex="0" aria-roledescription="prehliadka" aria-describedby="tvHelp">
-      <div class="tv-flat"><img class="tv-img" src="media/{first['img']}-240.webp" alt="{e(first['alt'])}" fetchpriority="high" decoding="async"></div>
-      <div class="tv-pins"></div>
-      <button class="tv-go" type="button"><i aria-hidden="true">{ICON['arrow']}</i><span>Ďalej</span></button>
-      <div class="tv-cap">
-        <h1 class="tv-h mono" id="h-tv">Prehliadka GYM KLUB</h1>
-        <p class="tv-zone mono"></p>
-        <p class="tv-title"></p>
-        <p class="tv-count"><span class="tv-badge mono"></span> <span class="tv-n"></span></p>
-      </div>
-      <div class="tv-top">
-        <button class="tv-pill tv-back" type="button" hidden>{IC('M15 5l-7 7 7 7')} <span>Späť na web</span></button>
-        <button class="tv-pill tv-open" type="button" aria-expanded="false" aria-controls="tvList">{IC('M4 7h16M4 12h16M4 17h10')} <span>Priestory</span></button>
-        <button class="tv-pill tv-resume" type="button" hidden>{IC('M8 5v14l11-7z')} <span>Pokračovať vo filme</span></button>
-        <button class="tv-pill tv-film-btn" type="button" aria-label="Spustiť filmovú prehliadku od začiatku">{IC('M8 5v14l11-7z')} <span>Film</span></button>
-        <a class="tv-pill tv-cta" href="{GYM['maps']}" target="_blank" rel="noopener">Navigovať</a>
-      </div>
-      <!-- filmová cesta: popis záberu, priebeh a ovládanie (tour.js, FILM) -->
-      <div class="tv-lower" aria-live="polite"><p class="tv-lower-k mono"></p><p class="tv-lower-h"></p><p class="tv-lower-s"></p></div>
-      <div class="tv-filmbar" aria-hidden="true"><i></i></div>
-      <div class="tv-fctl">
-        <button class="tv-pill tv-pause" type="button" aria-pressed="false" hidden><svg class="i-pause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg><span>Pozastaviť</span></button>
-        <button class="tv-pill tv-skip" type="button" hidden>Preskočiť film {IC('M5 5l7 7-7 7M13 5l7 7-7 7', 18)}</button>
-      </div>
-      <div class="tv-end" hidden>
-        <div class="tv-end-in">
-          <p class="mono kicker">Koniec filmovej prehliadky</p>
-          <p class="tv-end-h">Príďte si to prejsť naživo</p>
-          <p class="tv-end-p">Na samostatný tréning sa netreba objednávať. Stačí prísť počas otváracích hodín, vstup zaplatíte na recepcii.</p>
-          <div class="cta-row">{btn(GYM['maps'], 'Navigovať do fitka', '', 'pin', NEWTAB)}<button class="btn btn-ghost tv-explore" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
-          <button class="tv-again u mono" type="button">Pozrieť film znova</button>
-        </div>
-      </div>
-      <div class="tv-compass" aria-hidden="true" hidden><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="29" fill="rgba(6,7,7,.6)" stroke="rgba(241,239,233,.25)"/><path class="tv-arc" fill="none" stroke="rgba(241,239,233,.55)" stroke-width="3"/><path class="tv-cone" fill="rgba(255,58,36,.8)"/><circle cx="32" cy="32" r="3" fill="#f1efe9"/></svg><span class="mono tv-deg"></span></div>
-      <div class="tv-card" hidden><p class="tv-card-h"></p><p class="tv-card-p"></p><button class="tv-card-x" type="button" aria-label="Zavrieť popis">{IC('M6 6l12 12M18 6L6 18', 18)}</button></div>
-      <nav class="tv-rail" aria-label="Trasa zón od vchodu"><ol>{rail}</ol></nav>
-      <div class="tv-ctl" role="toolbar" aria-label="Ovládanie prehliadky">
-        <div class="tv-grp">
-          <button class="tv-btn tv-prev" type="button" aria-label="Predchádzajúce miesto" title="Späť (P)">{IC('M15 5l-7 7 7 7', 22)}</button>
-          <button class="tv-btn tv-next" type="button" aria-label="Ďalšie miesto" title="Ďalej (N)">{IC('M9 5l7 7-7 7', 22)}</button>
-        </div>
-        <div class="tv-grp tv-grp-s">
-          <button class="tv-btn tv-zout" type="button" aria-label="Oddialiť" title="Oddialiť (−)">{IC('M5 12h14')}</button>
-          <button class="tv-btn tv-zin" type="button" aria-label="Priblížiť" title="Priblížiť (+)">{IC('M12 5v14M5 12h14')}</button>
-          <button class="tv-btn tv-gyro" type="button" aria-pressed="false" aria-label="Rozhliadať sa pohybom telefónu" title="Pohyb telefónom" hidden>{IC('M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2M3 9c-1 2-1 4 0 6M21 9c1 2 1 4 0 6')}</button>
-          <button class="tv-btn tv-home" type="button" aria-label="Späť na začiatok prehliadky" title="Na začiatok (0)">{IC('M4 11l8-7 8 7M6 10v10h12V10')}</button>
-          <button class="tv-btn tv-fs" type="button" aria-pressed="false" aria-label="Celá obrazovka" title="Celá obrazovka (F)">{IC('M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5')}</button>
-        </div>
-      </div>
-      <div class="tv-list" id="tvList" hidden>
-        <div class="tv-list-in">
-          <div class="tv-list-head"><p class="tv-list-t">Priestory</p><button class="tv-btn tv-list-x" type="button" aria-label="Zavrieť zoznam">{IC('M6 6l12 12M18 6L6 18')}</button></div>
-          <ol class="tv-list-l">{places}</ol>
-          <p class="tv-list-note">Panoráma je zložená zo skutočného videa, v ktorom sa kamera otáčala na mieste. Fotka je jeden záber s jemným priestorovým efektom. Pôdorys prevádzky nie je k dispozícii, preto sú zóny v poradí od vchodu. Panoráma zatiaľ chýba: {e(', '.join(NO_PANO))}.</p>
-        </div>
-      </div>
-      <div class="tv-intro" hidden>
-        <div class="tv-intro-in">
-          <p class="mono kicker">Výstavná 6 · Lipa Centrum · Nitra</p>
-          <p class="tv-intro-h" data-kt>Vstúpte do GYM KLUB</p>
-          <p class="tv-intro-p">Filmová cesta od terasy cez všetky sály až po tatami, asi 45 sekúnd. Kedykoľvek ju zastavíte a rozhliadnete sa sami. Zábery sú skutočné: {N_PANO} čiastočné panorámy zložené z videa a {N_PHOTO} fotiek.</p>
-          <div class="cta-row"><button class="btn tv-start" type="button"><span class="btn-t"><span>Spustiť prehliadku</span><span aria-hidden="true">Spustiť prehliadku</span></span><i>{ICON['arrow']}</i></button><button class="btn btn-ghost tv-enter" type="button"><span class="btn-t"><span>Preskúmať sám</span><span aria-hidden="true">Preskúmať sám</span></span></button></div>
-          <a class="tv-intro-skip u mono" href="#obsah-prehliadky">Zoznam zón pod prehliadkou</a>
-        </div>
-      </div>
-      <p class="tv-state" hidden><span class="tv-state-t"></span> <button class="tv-retry" type="button" hidden>Skúsiť znova</button></p>
-      <p class="sr-only" id="tvHelp">Šípky: rozhliadanie. Plus a mínus: priblíženie. N a P: ďalšie a predchádzajúce miesto. 0: začiatok. F: celá obrazovka. Esc: zavrieť.</p>
-      <p class="sr-only tv-live" aria-live="polite"></p>
-    </div>
-    <div class="wrap tv-under">
-      <div class="tv-info" aria-live="off"><p class="tv-info-p"></p><ul class="tv-info-l chips" aria-label="Na tomto mieste"></ul></div>
-      <p class="tv-note mono">{N_PANO} panorámy zložené zo skutočného videa a {N_PHOTO} fotiek. Vlastné zábery sú z 26. 9. 2026, dve fotky sály Panda sú z gymklub.sk. Zóny idú v poradí od vchodu, nie je to pôdorys.</p>
-    </div>
-    <script type="application/json" id="tourData">{json.dumps(TOUR_PAGE, ensure_ascii=False, separators=(',', ':'))}</script>
-  </section>
 
-  <section class="tour" id="obsah-prehliadky" aria-labelledby="h-tour">
-    <div class="wrap tour-head">
-      <p class="mono kicker">Zóny a vybavenie</p>
-      <h2 class="h-xl" id="h-tour" data-kt>Čo nájdete v&nbsp;každej zóne</h2>
-      <p class="lead">Vybavenie, ktoré je vidno na fotkách. Fotky posuniete prstom alebo šípkami, ťuknutím ich zväčšíte.</p>
-    </div>
-{chr(10).join(zones_html)}
-  </section>
+tp_index, tp_nav, chapters = [], [], []
+for i, (zid, photos, pano) in enumerate(CHAPTERS, 1):
+    name = ZN[zid]; lead = photos[0]
+    if lead.startswith('panda:'):
+        thumb = pic_panda(int(lead[6:]), '(max-width: 760px) 46vw, 22vw', PANDA_ALT[int(lead[6:]) - 1])
+    else:
+        thumb = gpic(lead, '(max-width: 760px) 46vw, 22vw', FOTKY[lead]['alt'])
+    tp_index.append(f'<li><a href="#{zid}">{thumb}<span class="tp-t"><span class="mono">{i:02d}</span><b>{e(name)}</b></span></a></li>')
+    tp_nav.append(f'<li><a href="#{zid}"><span class="mono">{i:02d}</span> {e(name)}</a></li>')
+    gear = ''.join(f'<li>{e(g)}</li>' for g in ZONE_GEAR[zid])
+    strip = ''.join(ch_photo(p_, name) for p_ in photos)
+    pano_html = ''
+    if pano:
+        st = STOP[pano]
+        pw = round(1280 * st['w'] / st['h'])
+        pano_html = (f'\n      <figure class="wrap ch-pano">\n'
+                     f'        <div class="ch-pano-s" tabindex="0" data-x0="{st.get("x0", 50)}" aria-label="Panoráma {e(st["title"])}: posúvajte do strany">'
+                     f'<img src="media/{st["img"]}-1280.webp" width="{pw}" height="1280" alt="{e(st["alt"])}" loading="lazy" decoding="async"></div>\n'
+                     f'        <figcaption class="mono"><span>Panoráma zo skutočného videa · záber {st["hfov"]}°</span><span class="ch-pano-hint">Posuňte do strany</span></figcaption>\n'
+                     f'      </figure>')
+    src = '<p class="src mono">Fotky sály: gymklub.sk</p>' if zid == 'panda' else ''
+    cls = ' two' if len(photos) == 2 else ' four' if len(photos) == 4 else ''
+    chapters.append(
+        f'    <section class="ch" id="{zid}" aria-labelledby="h-{zid}">\n'
+        f'      <div class="wrap ch-head rv">\n'
+        f'        <div><p class="mono ch-n"><b>{i:02d}</b> / {len(CHAPTERS):02d}</p><h2 class="ch-h" id="h-{zid}">{e(name)}</h2></div>\n'
+        f'        <div class="ch-side"><p class="ch-p">{e(ZONE_TEXT[zid])}</p><ul class="chips" aria-label="Vybavenie">{gear}</ul>{src}</div>\n'
+        f'      </div>\n'
+        f'      <div class="ch-strip{cls}">{strip}</div>{pano_html}\n'
+        f'    </section>')
 
+TP_HEAD = (
+    '  <section class="tp" id="prehliadka" aria-labelledby="h-tp">\n'
+    '    <div class="wrap tp-head">\n'
+    '      <p class="mono kicker">Prehliadka · Výstavná 6, Nitra</p>\n'
+    '      <h1 class="tp-h" id="h-tp">Celé fitko, priestor po priestore</h1>\n'
+    '      <p class="lead">Osem priestorov v poradí, ako nimi prejdete od vchodu. Skutočné fotky prevádzky; ťuknutím ich zväčšíte, panorámy posuniete do strany.</p>\n'
+    '    </div>\n'
+    f'    <ol class="wrap tp-index">{"".join(tp_index)}</ol>\n'
+    '  </section>\n\n'
+    f'  <nav class="tp-nav" aria-label="Priestory"><ol>{"".join(tp_nav)}</ol></nav>\n\n'
+    '  <div class="tp-chapters" id="obsah-prehliadky">\n' + '\n'.join(chapters) + '\n  </div>\n')
+about = TP_HEAD + f'''
   <section class="facility" aria-labelledby="h-zazemie">
     <div class="wrap facility-grid">
       <div>
@@ -729,7 +667,7 @@ about = f'''  <section class="tv" id="prehliadka" aria-labelledby="h-tv">
   </section>
 '''
 page('o-fitku.html', 'Prehliadka fitka | GYM KLUB Nitra',
-     f'Prejdite si fitko GYM KLUB v Lipa Centre v Nitre: {N_PANO} panorámy zo skutočného videa a {N_PHOTO} fotiek. Príchod, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna, tatami a sála Panda Fight Club.',
+     'Prejdite si celé fitko GYM KLUB v Lipa Centre v Nitre: príchod a recepcia, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna, tatami a sála Panda Fight Club. Skutočné fotky a panorámy.',
      about + cta_band('Príďte si to prejsť naživo'))
 
 # ---------------------------------------------------------------------------------------------

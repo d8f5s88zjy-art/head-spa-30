@@ -386,6 +386,36 @@ for (const zone of $$('.zone')) {
   update();
 }
 
+// ---------- prehliadka: navigácia priestorov (aktívna kapitola) a panorámy na posúvanie ----------
+const tpNav = $('.tp-nav');
+if (tpNav && hasIO) {
+  const links = $$('a', tpNav), list = $('ol', tpNav);
+  const byId = Object.fromEntries(links.map(a => [a.hash.slice(1), a]));
+  let on = null;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const a = byId[e.target.id]; if (!a || a === on) return;
+    on?.classList.remove('on'); on?.removeAttribute('aria-current');
+    on = a; a.classList.add('on'); a.setAttribute('aria-current', 'location');
+    // aktívny odkaz vždy viditeľný v páse (na telefóne)
+    list.scrollTo({ left: a.parentElement.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  $$('.ch').forEach(c => io.observe(c));
+  new IntersectionObserver(([e]) => tpNav.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0)).observe($('.tp-index'));
+}
+for (const pv of $$('.ch-pano-s')) {
+  const img = $('img', pv);
+  const center = () => { pv.scrollLeft = (pv.scrollWidth - pv.clientWidth) * (+pv.dataset.x0 || 50) / 100; };
+  img.complete ? center() : img.addEventListener('load', center, { once: true });
+  // myšou sa panoráma ťahá (prst posúva natívne)
+  let d = null;
+  pv.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; d = { x: e.clientX, s: pv.scrollLeft }; pv.classList.add('drag'); pv.setPointerCapture(e.pointerId); });
+  pv.addEventListener('pointermove', e => { if (d) pv.scrollLeft = d.s - (e.clientX - d.x); });
+  const up = () => { d = null; pv.classList.remove('drag'); };
+  pv.addEventListener('pointerup', up); pv.addEventListener('pointercancel', up);
+  pv.addEventListener('scroll', () => pv.parentElement.classList.add('moved'), { once: true, passive: true });
+}
+
 // ---------- fotky na celú obrazovku: jeden vodorovný pás všetkých fotiek ----------
 const lb = document.getElementById('lb');
 if (lb) {
@@ -409,12 +439,12 @@ if (lb) {
     const sl = slides[i];
     if (!sl || sl.loaded) return;
     sl.loaded = true;
-    const src = sl.p.dataset.src, big = sl.p.dataset.big, panda = src.startsWith('panda');
+    const src = sl.p.dataset.src, big = sl.p.dataset.big, panda = src.startsWith('panda'), graded = src.startsWith('g-');
     // plné rozlíšenie v AVIF, záloha WebP 1280 px
-    const srcs = panda ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]]
+    const srcs = graded ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]] : panda ? [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-${big}.webp`]]
                        : [['image/avif', `media/${src}-${big}.avif`], ['image/webp', `media/${src}-1280.webp`]];
     for (const [type, url] of srcs) { const so = document.createElement('source'); so.type = type; so.srcset = url; sl.pic.insertBefore(so, sl.img); }
-    sl.img.src = panda ? `media/${src}-${big}.jpg` : `media/${src}-480.jpg`;
+    sl.img.src = graded ? `media/${src}-1080.jpg` : panda ? `media/${src}-${big}.jpg` : `media/${src}-480.jpg`;
   };
   const show = i => {
     cur = i;
@@ -448,8 +478,9 @@ if (lb) {
     });
     lb.addEventListener('close', () => {
       root.classList.remove('lb-open');
-      const p = photos[cur], rail = p.closest('.rail');
-      rail.scrollLeft = p.parentElement.offsetLeft - rail.firstElementChild.offsetLeft;
+      const p = photos[cur], rail = p.closest('.rail, .ch-strip');
+      if (rail?.classList.contains('rail')) rail.scrollLeft = p.parentElement.offsetLeft - rail.firstElementChild.offsetLeft;
+      else if (rail && rail.scrollWidth > rail.clientWidth) rail.scrollLeft = p.offsetLeft - rail.firstElementChild.offsetLeft;
       (opener && photos[cur] !== opener ? p : opener)?.focus({ preventScroll: true });
     });
     addEventListener('resize', () => { if (lb.open) track.scrollLeft = cur * track.clientWidth; });

@@ -13,7 +13,9 @@ for f in PAGES:
     media |= set(re.findall(r'media/[A-Za-z0-9_.-]+\.(?:avif|webp|jpg|png|mp4|webm)', t))
     # zväčšené fotky (lightbox): plné AVIF, WebP 1280, malé JPG
     for src, big in re.findall(r'data-src="([^"]+)" data-big="(\d+)"', t):
-        if src.startswith('panda'):
+        if src.startswith('g-'):
+            media |= {f'media/{src}-{big}.avif', f'media/{src}-{big}.webp', f'media/{src}-1080.jpg'}
+        elif src.startswith('panda'):
             media |= {f'media/{src}-{big}.{x}' for x in ('avif', 'webp', 'jpg')}
         else:
             media |= {f'media/{src}-{big}.avif', f'media/{src}-1280.webp', f'media/{src}-480.jpg'}
@@ -21,20 +23,7 @@ for f in PAGES:
     open(dst, 'w', encoding='utf-8').write(t)
     if f != 'index.html':
         files[f] = dst
-# dáta prehliadky
-tour = json.load(open(os.path.join(ROOT, 'assets', 'tour.json'), encoding='utf-8'))
-for s in tour['stops']:
-    if not s.get('tour', True):
-        continue
-    if s['type'] == 'pano':
-        media |= {f"media/{s['img']}-{l}.webp" for l in ('240', '1280', 'full')}
-    else:
-        media.add('media/' + s['depth'])
-        if len(s['sizes']) > 2:
-            media |= {f"media/{s['img']}-{s['sizes'][0]}.avif", f"media/{s['img']}-{s['sizes'][1]}.avif", f"media/{s['img']}-1280.webp"}
-        else:
-            media |= {f"media/{s['img']}-{z}.webp" for z in s['sizes']}
-for a in ['style.css', 'site.js', 'tour.js', 'fonts/Archivo-latin.woff2', 'fonts/Archivo-latin-ext.woff2', 'fonts/PlexMono-latin.woff2', 'fonts/PlexMono-latin-ext.woff2']:
+for a in ['style.css', 'site.js', 'fonts/Archivo-latin.woff2', 'fonts/Archivo-latin-ext.woff2', 'fonts/PlexMono-latin.woff2', 'fonts/PlexMono-latin-ext.woff2']:
     files['assets/' + a] = os.path.join(ROOT, 'assets', a)
 missing = [m for m in media if not os.path.exists(os.path.join(ROOT, m))]
 for m in sorted(media):
