@@ -444,10 +444,26 @@ TOUR = json.load(open(os.path.join(ROOT, 'assets', 'tour.json'), encoding='utf-8
 ZONE_TEXT = {z[0]: z[2] for z in ZONES}
 ZONE_TEXT['panda'] = 'Samostatná sála klubu Panda Fight Club s veľkou plochou tatami, boxovacími vrecami a hrazdami. Trénuje sa tu MMA, Luta Livre a Jiu Jitsu.'
 ZONE_TEXT['prichod'] = 'Vchod je z krytej terasy Lipa Centra, dvere sú pod nápisom GYM KLUB & caffee. Hneď za nimi je recepcia s nápojmi a polička na obuv. Tu zaplatíte vstup.'
-first = TOUR['stops'][0]
+TOUR_STOPS = [s for s in TOUR['stops'] if s.get('tour', True)]
+TOUR_PAGE = {'zones': TOUR['zones'], 'stops': TOUR_STOPS}
+N_PANO = sum(1 for s in TOUR_STOPS if s['type'] == 'pano')
+N_PHOTO = len(TOUR_STOPS) - N_PANO
+first = TOUR_STOPS[0]
+PANO_ZONES = {s['zone'] for s in TOUR_STOPS if s['type'] == 'pano'}
 route = ''.join(
-    f'<li><button type="button" data-zone="{z["id"]}"><b>{i:02d}</b> {e(z["name"])} <small>{sum(1 for s in TOUR["stops"] if s["zone"] == z["id"])}</small></button></li>'
+    f'<li><button type="button" data-zone="{z["id"]}"><b>{i:02d}</b> {e(z["name"])}'
+    f'{" <em>panoráma</em>" if z["id"] in PANO_ZONES else ""}'
+    f' <small>{sum(1 for s in TOUR_STOPS if s["zone"] == z["id"])}</small></button></li>'
     for i, z in enumerate(TOUR['zones'], 1))
+# zoznam miest v prehliadke (panel v scéne, funguje aj na celej obrazovke)
+places = []
+for i, z in enumerate(TOUR['zones'], 1):
+    li = ''.join(
+        f'<li><button type="button" data-stop="{s["id"]}"><span>{e(s["title"])}</span>'
+        f'<small>{"Panoráma " + str(s["hfov"]) + "°" if s["type"] == "pano" else "Fotka"}</small></button></li>'
+        for s in TOUR_STOPS if s['zone'] == z['id'])
+    places.append(f'<li><p class="tv-list-z"><b>{i:02d}</b> {e(z["name"])}</p><ol>{li}</ol></li>')
+places = ''.join(places)
 
 
 def zone_pic(s, sizes):
@@ -459,7 +475,8 @@ def zone_pic(s, sizes):
 zones_html = []
 gi = 0
 for zi, z in enumerate(TOUR['zones'], 1):
-    zs = [s for s in TOUR['stops'] if s['zone'] == z['id']]
+    zs = [s for s in TOUR['stops'] if s['zone'] == z['id'] and s['type'] == 'photo']
+    first_stop = next(s for s in TOUR_STOPS if s['zone'] == z['id'])
     items = []
     for n, s in enumerate(zs, 1):
         big = s['sizes'][0]
@@ -472,7 +489,7 @@ for zi, z in enumerate(TOUR['zones'], 1):
           <p class="zone-n">{zi:02d} <span>/ {len(TOUR['zones']):02d}</span></p>
           <h2 class="zone-h" id="h-{z['id']}">{e(z['name'])}</h2>
           <p class="zone-p">{e(ZONE_TEXT[z['id']])}</p>
-          <p class="zone-a"><a class="link" href="#prehliadka" data-tour-stop="{zs[0]['id']}">Otvoriť v 3D prehliadke {ICON['arrow']}</a></p>
+          <p class="zone-a"><a class="link" href="#prehliadka" data-tour-stop="{first_stop['id']}">Otvoriť v prehliadke {ICON['arrow']}</a></p>
           {src}
         </div>
         <div class="rail-ctl" hidden>
@@ -487,29 +504,62 @@ for zi, z in enumerate(TOUR['zones'], 1):
     </article>''')
 
 about = f'''  <section class="tv" id="prehliadka" aria-labelledby="h-tv">
-    <div class="tv-stage" tabindex="0" aria-describedby="tvHelp">
-      <img class="tv-img" src="media/tour-{first['id']}-1280.jpg" width="1280" height="{round(first['h'] * 1280 / first['w'])}" alt="{e(first['alt'])}" fetchpriority="high" decoding="async" style="object-position:{first['fx']}% {first['fy']}%">
+    <div class="tv-stage" tabindex="0" aria-roledescription="prehliadka" aria-describedby="tvHelp">
+      <div class="tv-flat"><img class="tv-img" src="media/{first['img']}-240.webp" alt="{e(first['alt'])}" fetchpriority="high" decoding="async"></div>
       <div class="tv-pins"></div>
       <button class="tv-go" type="button"><i aria-hidden="true">{ICON['arrow']}</i><span>Ďalej</span></button>
       <div class="tv-cap">
         <h1 class="tv-h" id="h-tv">Prehliadka GYM KLUB</h1>
         <p class="tv-zone"></p>
         <p class="tv-title"></p>
-        <p class="tv-count"></p>
+        <p class="tv-count"><span class="tv-badge"></span> <span class="tv-n"></span></p>
       </div>
-      <div class="tv-ctl">
-        <button class="tv-btn tv-prev" type="button" aria-label="Predchádzajúci záber"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="tv-btn tv-next" type="button" aria-label="Ďalší záber"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <div class="tv-top">
+        <button class="tv-pill tv-open" type="button" aria-expanded="false" aria-controls="tvList"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Priestory</span></button>
+        <a class="tv-pill tv-cta" href="kontakt.html#navsteva">Naplánovať návštevu</a>
       </div>
-      <p class="tv-help" id="tvHelp">Ťahaním sa rozhliadnete. Tlačidlo Ďalej alebo šípky vás posunú ďalej.</p>
+      <div class="tv-card" hidden><p class="tv-card-h"></p><p class="tv-card-p"></p><button class="tv-card-x" type="button" aria-label="Zavrieť popis"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="tv-ctl" role="toolbar" aria-label="Ovládanie prehliadky">
+        <div class="tv-grp">
+          <button class="tv-btn tv-prev" type="button" aria-label="Predchádzajúce miesto" title="Späť (P)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="tv-btn tv-next" type="button" aria-label="Ďalšie miesto" title="Ďalej (N)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="tv-grp tv-grp-s">
+          <button class="tv-btn tv-zout" type="button" aria-label="Oddialiť" title="Oddialiť (−)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="tv-btn tv-zin" type="button" aria-label="Priblížiť" title="Priblížiť (+)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="tv-btn tv-gyro" type="button" aria-pressed="false" aria-label="Rozhliadať sa pohybom telefónu" title="Pohyb telefónom" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2M3 9c-1 2-1 4 0 6M21 9c1 2 1 4 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="tv-btn tv-home" type="button" aria-label="Späť na začiatok prehliadky" title="Na začiatok (0)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 11l8-7 8 7M6 10v10h12V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="tv-btn tv-fs" type="button" aria-pressed="false" aria-label="Celá obrazovka" title="Celá obrazovka (F)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="tv-list" id="tvList" hidden>
+        <div class="tv-list-in">
+          <div class="tv-list-head"><p class="tv-list-t">Priestory v prehliadke</p><button class="tv-btn tv-list-x" type="button" aria-label="Zavrieť zoznam"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <ol class="tv-list-l">{places}</ol>
+          <p class="tv-list-note">Panoráma je zložená zo skutočného videa, ktoré sa otáča na mieste. Fotka je jeden záber s jemným priestorovým efektom. Pôdorys nie je k dispozícii, preto ide o zoznam v poradí od vchodu.</p>
+        </div>
+      </div>
+      <div class="tv-guide" hidden>
+        <div class="tv-guide-in">
+          <p class="tv-guide-h">Ako sa pohybovať</p>
+          <ul>
+            <li><b>Rozhliadanie:</b> ťahajte obraz myšou alebo prstom. Na klávesnici šípky.</li>
+            <li><b>Body v scéne:</b> kliknite na bod a zobrazí sa, čo na mieste nájdete.</li>
+            <li><b>Ďalej:</b> tlačidlo v scéne vás presunie na ďalšie miesto. Zoznam priestorov je vpravo hore.</li>
+          </ul>
+          <button class="btn tv-guide-ok" type="button">Rozumiem</button>
+        </div>
+      </div>
+      <p class="tv-state" hidden><span class="tv-state-t"></span> <button class="tv-retry" type="button" hidden>Skúsiť znova</button></p>
+      <p class="sr-only" id="tvHelp">Šípky: rozhliadanie. Plus a mínus: priblíženie. N a P: ďalšie a predchádzajúce miesto. 0: začiatok. F: celá obrazovka.</p>
       <p class="sr-only tv-live" aria-live="polite"></p>
     </div>
     <div class="wrap tv-under">
       <nav class="tv-route" aria-label="Zóny prehliadky"><ol>{route}</ol></nav>
-      <p class="tv-note">Zóny sú zoradené tak, ako nimi prejdete od vchodu. Je to poradie, nie pôdorys. Všetky zábery sú skutočné fotky z prevádzky.</p>
-      <div class="tv-info" aria-live="off"><p class="tv-info-p"></p><ul class="tv-info-l" aria-label="Na zábere"></ul></div>
+      <p class="tv-note">{N_PANO} panorámy zložené zo skutočného videa a {N_PHOTO} fotiek. Vlastné zábery sú z 26. 9. 2026, dve fotky sály Panda sú z gymklub.sk. Zóny idú v poradí od vchodu, nie je to pôdorys.</p>
+      <div class="tv-info" aria-live="off"><p class="tv-info-p"></p><ul class="tv-info-l" aria-label="Na tomto mieste"></ul></div>
     </div>
-    <script type="application/json" id="tourData">{json.dumps(TOUR, ensure_ascii=False, separators=(',', ':'))}</script>
+    <script type="application/json" id="tourData">{json.dumps(TOUR_PAGE, ensure_ascii=False, separators=(',', ':'))}</script>
   </section>
 
   <section class="facts" aria-label="Základné informácie">
@@ -555,8 +605,8 @@ def cta_band(title='Príďte si to prejsť naživo', text='Na samostatný tréni
   </section>'''
 
 
-page('o-fitku.html', '3D prehliadka fitka | GYM KLUB Nitra',
-     'Prejdite si fitko GYM KLUB v Lipa Centre v Nitre na 32 skutočných záberoch: príchod, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna, tatami a sála Panda Fight Club.',
+page('o-fitku.html', 'Prehliadka fitka | GYM KLUB Nitra',
+     f'Prejdite si fitko GYM KLUB v Lipa Centre v Nitre: {N_PANO} panorámy zo skutočného videa a {N_PHOTO} fotiek. Príchod, hlavná sála, sála so strojmi, kardio, voľné váhy, funkčná zóna, tatami a sála Panda Fight Club.',
      about + cta_band())
 
 # ---------------------------------------------------------------------------------------------

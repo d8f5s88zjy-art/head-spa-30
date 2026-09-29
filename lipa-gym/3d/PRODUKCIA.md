@@ -14,6 +14,31 @@ LED šesťuholníky sa s blikaním rozsvietia, kamera letí po dráhe), ale real
 Spustenie lokálne: v koreni repozitára `python3 -m http.server 8080` a otvoriť
 `http://localhost:8080/lipa-gym/3d/`. Žiadne zostavovanie ani knižnice nie sú potrebné.
 
+## 0000. Panorámy zo skutočného videa (29. 9. 2026)
+
+**Podklady.** Žiadne 360° zábery ani pôdorys prevádzky nie sú k dispozícii. Z videí z 26. 9. 2026, v ktorých sa kamera otáča na mieste, sú zložené 4 skutočné panorámy (valcová projekcia, nič nie je domaľované):
+
+| Miesto | Video | Uhol | Rozlíšenie |
+|---|---|---|---|
+| Terasa pred vchodom | IMG_8985 | 238° | 6644 × 3087 |
+| Vchod | IMG_8990 | 149° | 4165 × 3111 |
+| Celá funkčná zóna | IMG_8996 | 158° | 4425 × 3085 |
+| Pri rigu na začiatku dráhy | IMG_8998 | 173° | 4823 × 3187 |
+
+Postup: `python3 tools/panorama.py VIDEO.mov vystup.jpg` (reťaz najostrejších snímok, zarovnanie podľa zhodných bodov, šev v mieste najmenšieho rozdielu), potom `python3 tools/pano_export.py vystup.jpg ID` (mierne ladenie, exporty `media/pano-ID-{240,1280,full}.webp` a `-1280.jpg`). Údaje miesta sú v `assets/tour.json` (`type: "pano"`, `w`, `h`, `f` = ohnisko v px, `x0` = smer na začiatku, body `pins` a bod `walk` v % panorámy).
+
+**Obmedzenia.** Videá majú v strede otáčania pohybovú neostrosť a pri blízkych predmetoch (stôl na terase, strop vo funkčnej zóne) je vidno drobný šev z pohybu ruky. Priblíženie je preto obmedzené na skutočné rozlíšenie. Ostatné zóny (recepcia, hlavná sála, sála so strojmi, kardio, voľné váhy, tatami, Panda) majú len fotky, v prehliadke sú označené „Fotka“.
+
+**Prehliadač** (`assets/tour.js`): perspektívne zobrazenie panorámy (WebGL2 s mipmapami, inak WebGL1), ťah myšou/prstom so zotrvačnosťou, dva prsty = priblíženie, tlačidlá priblíženia, celá obrazovka (na iPhone náhradná), návrat na začiatok, zoznam priestorov, gyroskop len po ťuknutí a súhlase, návod pri prvej návšteve (localStorage), body v scéne s popisom, filmový prechod (priblíženie k bodu a prelnutie), postupné načítanie (náhľad 240 px → 1280 px → plné rozlíšenie len pre aktuálne miesto na počítači), ľahšia verzia pri šetrení dát / pomalom pripojení / slabom zariadení, chybové hlásenie s „Skúsiť znova“, bez WebGL posúvateľný obrázok, pri obmedzenom pohybe bez samovoľných pohybov. Klávesy: šípky, + / −, N / P, 0, F, Esc.
+
+**Na úplnú 360° prehliadku treba nafotiť** (360° kamera alebo telefón na statíve s panoramatickou hlavou, 3 riadky záberov, pomalé otáčanie, rovnaká výška ~160 cm, bez ľudí):
+- recepcia (zvnútra, od dverí aj od pultu),
+- hlavná sála (2 stanovištia), sála so strojmi, kardio, voľné váhy,
+- funkčná zóna celých 360° (teraz 158° a 173°),
+- tatami, sála Panda Fight Club (vlastné zábery, teraz len 2 fotky z gymklub.sk),
+- šatne a sprchy (chýbajú úplne),
+- pôdorys alebo náčrt dispozície s rozmermi, ak má byť v prehliadke mapa.
+
 ## 000. 3D prehliadka a overenie údajov (28. 9. 2026)
 
 **Názov:** oficiálne „Gym Klub Fitness & Bodybuilding“ (gymklub.sk), na webe GYM KLUB. „Lipa Gym“ je len
