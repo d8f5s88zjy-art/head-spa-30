@@ -841,3 +841,9 @@ body:not(.past-hero) .bar:not(.is-solid){background:linear-gradient(180deg,rgba(
 /* rytmus: rovnaké odsadenie sekcií, jemný prechod medzi nimi */
 main>section:not(.hero):not(.band)+section:not(.band){border-top:1px solid rgba(255,255,255,.04)}
 @media (prefers-reduced-motion:reduce){[data-par] img{transform:none!important}}
+/* lekcie: MMA sála a sála s tatami pod sebou */
+.lessons-stack{position:sticky;top:calc(var(--bar-h) + 28px);display:grid;gap:12px}
+.lessons-stack .lessons-media{position:relative;top:auto}
+.lessons-media.lm-wide img{aspect-ratio:3/2}
+.lessons-media.lm-sq img{aspect-ratio:4/3}
+@media (max-width:900px){.lessons-stack{position:relative;top:auto}}
