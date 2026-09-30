@@ -536,6 +536,18 @@
     });
   }
 
+  /* ---------- mozaika na telefóne: zbalená na 6 záberov ---------- */
+  function moreFold() {
+    var box = $('.more'), btn = $('[data-more-btn]');
+    if (!box || !btn) return;
+    if (!window.matchMedia('(max-width: 700px)').matches) return;
+    box.classList.add('is-folded'); btn.hidden = false;
+    btn.addEventListener('click', function () {
+      box.classList.remove('is-folded'); btn.hidden = true;
+      $$('.gal-f.reveal', box).forEach(function (f) { f.classList.add('in'); });
+    });
+  }
+
   /* ---------- priestor: filmový pás ----------
      Na počítači obraz stojí a zábery sa pri rolovaní strihajú jeden za druhým (tvrdý strih,
      pomalý nájazd kamery počas záberu). Na telefóne a pri obmedzení pohybu je to vodorovný pás na potiahnutie. */
@@ -744,6 +756,7 @@
   heroDepth();
   band();
   reel();
+  moreFold();
   copyAddr();
   filmCut();
   chapterLine();
