@@ -9,6 +9,7 @@ a kontakt. Spustenie: python3 build.py (potrebuje lxml).
 import json, os, re, html, shutil
 from lxml import html as LH, etree
 import obsah
+from popisy import ZNACKY
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = ROOT
@@ -73,6 +74,26 @@ NOVINKY_POPIS = {
     'garaze--zahradne-domceky': 'Montované plechové garáže na mieru, doprava a montáž v rámci Slovenska zdarma.',
     'ekostyren': 'Ekostyrén, ľahký tepelnoizolačný betón do podláh a striech.',
     'betonove--vyrobky': 'Šalovacie diely, tvárnice a betónové prvky v super cenách.',
+}
+
+
+# Podtitul kategórie s predajným hookom. Len fakty z pôvodného webu (sklad, zľavy, doprava, poradenstvo).
+HOOKY = {
+    'sypke-zmesy': 'Cement, vápno, malty, omietky a lepidlá od Baumit, Cemmac, Calmit a Holcim. Povieš rozmery, my spočítame vrecia aj palety zadarmo.',
+    'murovaci-material': 'Tehly TermoBrik, tvárnice Ytong a Porfix, preklady a stropné systémy. Prines projekt, spočítame kusy na celý dom a dohodneme dopravu na stavbu.',
+    'stresne-kritiny': 'Pálené a betónové škridly, plechové krytiny, asfaltové pásy a príslušenstvo. Pošli plochu strechy, vypočítame potrebu vrátane hrebeňov a doplnkov.',
+    'dlazby': 'Zámková dlažba, terasové platne, obrubníky, palisády a ploty. Pri väčšom odbere a pre firmy máme objektové zľavy.',
+    'izolacny-material': 'Minerálna vlna, polystyrén, asfaltové pásy a izolácie proti vode a radónu. Poradíme hrúbku a spočítame balíky presne na tvoju plochu.',
+    'kominove-systemy': 'Certifikované komíny Stadreko a Schiedel so šamotovou alebo nerezovou vložkou. Komín Stadreko máme priamo na sklade, odber možný ihneď.',
+    'stresne-okna': 'Strešné okná Velux, Fakro a Rooflite, výlezy, svetlíky a podkrovné schody. Okná a schody Fakro sú teraz so zľavou 20 %.',
+    'hutny-material': 'Betonárska oceľ, siete, plechy, profily, rúry, oceľové zárubne a garážové brány. Väčšie množstvá dovezieme priamo na stavbu.',
+    'dvere---okna': 'Interiérové, vchodové a bezpečnostné dvere Masonite v siedmich dekoroch. Bežné druhy máme priamo na sklade, ostatné na objednávku.',
+    'stavebne-rezivo': 'Dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru. Rezivo je priamo na sklade, v ponuke aj palivové drevo agát.',
+    'stavebne-naradie-doplnky': 'Náradie na stavbu, do dielne aj do záhrady, spojovací materiál, mriežky a poklopy. Všetko k materiálu kúpiš na jednom mieste.',
+    'podhlady---pvc': 'Zatrávňovacie dlažby, chodníky, plotovky, profily a palety z recyklovaného plastu. Sme výhradný predajca pre Nitru a okolie.',
+    'sadrokartonovy---zateplovaci-system': 'Sadrokartón, profily, polystyrén, sklotex, fólie a strešné doplnky. Polystyrén ti dovezieme domov zdarma.',
+    'fasadny-system': 'Omietky a fasádne farby Baumit, Univerbau a Delap, zatepľovacie systémy. Spočítame spotrebu na m² fasády zadarmo.',
+    'farby---laky': 'Interiérové a fasádne farby, laky, lepidlá a riedidlá Het, Chemolak, Chemos a Elastik. Čo nie je na sklade, zabezpečíme na požiadanie.',
 }
 
 
@@ -313,7 +334,7 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
     band = ''
     if head:
         kicker, h1, lede = head
-        ph = f'<div class="ph" data-parallax="0.35"><img src="{pre}img/{head_img}.webp" alt="" width="1800" height="1200" fetchpriority="high"></div>' if head_img else ''
+        ph = f'<div class="ph" data-parallax="0.35"><img src="{pre}img/hd/{head_img}.webp" alt="" width="2400" height="1600" fetchpriority="high"></div>' if head_img else ''
         band = f'<section class="page-head grainy{" has-img" if head_img else ""}">{ph}<div class="wrap">{crumb}<div class="head"><div class="eyebrow">{kicker}</div><h1>{h1}</h1>{f"<p class=lede>{lede}</p>" if lede else ""}</div></div></section>'
     elif crumb:
         band = f'<section class="page-head"><div class="wrap">{crumb}</div></section>'
@@ -434,7 +455,7 @@ def build_katalog_page(slug):
     subs = ''
     if ch:
         subs = '<div class="subs"><h2>Podrobnejšie</h2><div class="sub-grid">' + ''.join(f'<a class="sub rv" href="{rel(path, PAGES[c])}"><b>{nice_title(SRC[c]["title"])}</b><span>{snippet(c)}</span></a>' for c in ch) + '</div></div>'
-    lede = cat[2] if len(parts) == 1 else None
+    lede = HOOKY.get(parts[0], cat[2]) if len(parts) == 1 else None
     if len(parts) == 1 and cont.strip():
         cont = '<h2 class="sh rv"><span>Značky, ktoré máme v ponuke</span></h2>' + cont
     body = f'''<section class="sec kat-page"><div class="wrap two">
@@ -601,11 +622,11 @@ def build_home():
     tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" loading="lazy"></div>' for i in LOGA if i in IMG_SIZES)
     body = f'''
 <section class="hero" aria-labelledby="h-uvod">
-  <div class="bg" data-parallax="0.28" data-film="img/film/uvod"><img class="base" src="img/hero.webp" alt="Sklad stavebného materiálu" width="1600" height="1067" fetchpriority="high"><img class="s s1" src="img/stavba.webp" alt="" width="1800" height="1010" loading="lazy"><img class="s s2" src="img/murar.webp" alt="" width="1800" height="1199" loading="lazy"><img class="s s3" src="img/strecha-praca.webp" alt="" width="1800" height="1200" loading="lazy"></div>
+  <div class="bg" data-parallax="0.28" data-film="img/film/uvod"><img class="base" src="img/hd/hero.webp" alt="Sklad stavebného materiálu" width="2400" height="1600" fetchpriority="high"><img class="s s1" src="img/hd/stavba.webp" alt="" width="2400" height="1347" loading="lazy"><img class="s s2" src="img/hd/murar.webp" alt="" width="2400" height="1599" loading="lazy"><img class="s s3" src="img/hd/strecha-praca.webp" alt="" width="2400" height="1600" loading="lazy"></div>
   <div class="wrap">
     <div class="eyebrow">Stavebniny Richtárik, Nitra. Od roku 1997</div>
     <h1 id="h-uvod">{words('Stavebný materiál')} <span class="thin">{words('v celom sortimente.', 2)}</span> <em>{words('Za super ceny.', 5)}</em></h1>
-    <p>Rodinné stavebniny s vlastnou dopravou po celom Slovensku. Cenovú ponuku a výpočet spotreby materiálu ti spravíme zadarmo, s výberom poradíme na mieste.</p>
+    <p>Rodinné stavebniny v Nitre od roku 1997. Cenovú ponuku na celý dom aj výpočet spotreby ti spravíme zadarmo, materiál dovezieme vlastnými autami po celom Slovensku.</p>
     <div class="search hero-search"><label for="q" class="vh">Hľadať v katalógu</label><input id="q" type="search" placeholder="Čo hľadáš? Cement, Ytong, škridla, Fakro, polystyrén…" autocomplete="off"><div class="res" id="res" hidden></div></div>
     <div class="cta"><a class="btn primary" href="katalog/index.html">Prezrieť katalóg</a><a class="btn outline" href="akcie/index.html">Aktuálne akcie</a></div>
   </div>
@@ -619,15 +640,15 @@ def build_home():
 </div>
 <div class="marquee" aria-label="Značky v ponuke"><div class="lbl">Značky, ktoré máme na sklade alebo objednáme</div><div class="track">{tiles}{tiles}</div></div>
 <section class="sec"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow">Katalóg</div><h2>Všetko na stavbu od základov po strechu</h2></div><a class="btn dark" href="katalog/index.html">Celý katalóg</a></div>
+  <div class="head row"><div><div class="eyebrow">Katalóg</div><h2>Všetko na stavbu od základov po strechu</h2><p class="lede">{len(KATEGORIE)} kategórií a {len(ZNACKY)} značiek na jednom mieste. Vyber, čo staviaš, a my spočítame, koľko toho potrebuješ.</p></div><a class="btn dark" href="katalog/index.html">Celý katalóg</a></div>
   <div class="cats">{cats}</div>
 </div></section>
 <section class="band" aria-labelledby="h-band">
-  <div class="bg" data-parallax="0.18"><img src="img/vzv.webp" alt="" loading="lazy" width="1800" height="1561"></div>
+  <div class="bg" data-parallax="0.18"><img src="img/hd/vzv.webp" alt="" loading="lazy" width="2400" height="2081"></div>
   <div class="wrap"><div class="eyebrow light">Sklad a doprava</div><h2 id="h-band">Materiál zložíme presne tam, kde ho na stavbe potrebuješ</h2><p>Vlastné autá s hydraulickou rukou, doprava po celom Slovensku, tovar bez zbytočného prekladania.</p><div class="cta"><a class="btn light" href="sluzby.html">Ako to funguje</a><a class="btn outline" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div></div>
 </section>
 <section class="sec akcie dark grainy"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow light">Akcie</div><h2>Aktuálne akcie na vybrané výrobky</h2></div><a class="btn outline" href="akcie/index.html">Všetky akcie</a></div>
+  <div class="head row"><div><div class="eyebrow light">Akcie</div><h2>Aktuálne akcie na vybrané výrobky</h2><p class="lede">Ceny platia do vypredania zásob a k akciovej cene dostaneš ešte zľavu za spôsob platby.</p></div><a class="btn outline" href="akcie/index.html">Všetky akcie</a></div>
   <div class="deals">{deals}</div>
 </div></section>
 <section class="sec zlavy"><div class="wrap grid">
@@ -636,7 +657,7 @@ def build_home():
   <div class="karta rv"><img src="img/p/944.webp" alt="Zákaznícka karta Stavebniny Richtárik" loading="lazy" width="671" height="427"><div><b>Zákaznícka karta</b><p>Príď si k nám pre svoju zákaznícku kartu a získaš všetky zľavy, ktoré sme pre teba pripravili.</p></div></div>
 </div></section>
 <section class="sec sluzby"><div class="wrap">
-  <div class="head"><div class="eyebrow">Služby</div><h2>Poradíme, spočítame, dovezieme</h2><p class="lede">Tovar dovezieme priamo k tebe bez zbytočného skladovania, takže sa pri prekladaní nepoškodí.</p></div>
+  <div class="head"><div class="eyebrow">Služby</div><h2>Poradíme, spočítame, dovezieme</h2><p class="lede">Nemusíš nič voziť ani prekladať. Poradíme, spočítame, dovezieme a zložíme presne tam, kde materiál potrebuješ.</p></div>
   <div class="grid">
     <figure class="ph rvimg"><img src="img/p/885.webp" alt="Nákladné auto s hydraulickou rukou pri nakládke" loading="lazy" width="576" height="768"><figcaption>Vlastná doprava s hydraulickou rukou zloží materiál presne tam, kde ho potrebuješ.</figcaption></figure>
     <div class="srvs">
@@ -650,7 +671,7 @@ def build_home():
   </div>
 </div></section>
 <section class="sec"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow">Novinky</div><h2>Čo sme pridali do ponuky</h2></div><a class="btn ghost" href="novinky/index.html">Všetky novinky</a></div>
+  <div class="head row"><div><div class="eyebrow">Novinky</div><h2>Čo sme pridali do ponuky</h2><p class="lede">Materiály, ktoré u nás nájdeš nové. Vzorky si pozrieš priamo v predajni, ceny máš hneď.</p></div><a class="btn ghost" href="novinky/index.html">Všetky novinky</a></div>
   <div class="novs">{novs}</div>
 </div></section>
 <section class="sec onas"><div class="wrap grid">

@@ -99,10 +99,27 @@
   if (hbg && !reduce && window.innerWidth >= 800 && !conn.saveData && (hbg.getAttribute('data-film') || '')) {
     var v = d.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('aria-hidden', 'true'); v.preload = 'auto';
     var base = hbg.getAttribute('data-film');
-    v.innerHTML = '<source src="' + base + '.mp4" type="video/mp4">';
+    // kvalita podľa obrazovky: 4K na veľkých a ostrých displejoch, inak 1080p, na menších 720p; pri chybe o stupeň nižšie
+    var px = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2), et = (conn.effectiveType || '4g');
+    var levels = (px >= 2400 && et === '4g') ? ['-2160', '-1080', ''] : (px >= 1400 ? ['-1080', ''] : ['']);
+    var li = 0;
+    function src() { v.src = base + levels[li] + '.mp4'; var pl = v.play(); if (pl && pl.catch) pl.catch(function () {}); }
+    v.addEventListener('error', function () { if (++li < levels.length) src(); else v.remove(); });
     v.addEventListener('playing', function () { v.classList.add('on'); hbg.classList.add('has-video'); });
-    hbg.appendChild(v);
-    var pl = v.play(); if (pl && pl.catch) pl.catch(function () { v.remove(); });
+    hbg.appendChild(v); src();
+  }
+
+  // prechod pri preklikávaní bez View Transitions: stránka sa jemne stiahne a nová nabehne
+  if (!('startViewTransition' in d) && !reduce) {
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]'); if (!a) return;
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target === '_blank' || a.hasAttribute('download') || a.hasAttribute('data-lb')) return;
+      var href = a.getAttribute('href'); if (!href || /^(#|mailto:|tel:|javascript:)/.test(href) || !/\.html(#|$)|\/$/.test(href)) return;
+      e.preventDefault(); d.body.classList.add('leaving');
+      setTimeout(function () { location.href = href; }, 220);
+    });
+    window.addEventListener('pageshow', function () { d.body.classList.remove('leaving'); });
   }
 
   // služby: aktívna položka podľa polohy v okne

@@ -587,3 +587,21 @@ footer .bottom a{display:inline}
 .novs.grid-page{grid-auto-flow:row;grid-template-columns:repeat(4,1fr);overflow:visible}
 @media (max-width:900px){.novs.grid-page{grid-template-columns:1fr 1fr}}
 @media (max-width:480px){.novs.grid-page{grid-template-columns:1fr}}
+
+/* živé fotky: dlaždice katalógu a hlavičky sa pomaly hýbu aj bez kurzora */
+@keyframes drift{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.12) translate(-1.5%,1%)}}
+.cat img{animation:drift 22s ease-in-out infinite alternate}
+.cat:nth-child(2n) img{animation-duration:26s;animation-direction:alternate-reverse}
+.cat:nth-child(3n) img{animation-delay:-8s}
+.cat:hover img{animation-play-state:paused;transform:scale(1.1)}
+@keyframes headlive{0%{transform:scale(1.06)}100%{transform:scale(1.14) translate(-1%,-1%)}}
+.page-head.has-img .ph img{animation:headlive 26s ease-in-out infinite alternate}
+.band .bg img{animation:drift 30s ease-in-out infinite alternate}
+.head .lede{max-width:56ch}
+/* prechod pri preklikávaní tam, kde prehliadač nemá View Transitions */
+@supports not (view-transition-name:x){
+  body{animation:page-in .55s cubic-bezier(.2,.7,.2,1) both}
+  body.leaving{opacity:0;transform:translateY(-8px);transition:opacity .22s ease-in,transform .22s ease-in}
+}
+@keyframes page-in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){.cat img,.page-head.has-img .ph img,.band .bg img{animation:none}body{animation:none}}

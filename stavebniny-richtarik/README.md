@@ -26,9 +26,13 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   komponenty: produktové karty, karty značiek, kroky s obrázkom, figúry s popiskom.
 - Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, objavovanie blokov a fotiek pri
   skrolovaní, paralaxa, počítadlá, ukazovateľ prečítania, náklon karty, vyhľadávanie,
-  lightbox s listovaním a popiskami). Úvod na širokej obrazovke prehráva film `img/film/uvod.mp4`
-  (na telefóne strieda fotky), každá podstránka má fotografickú hlavičku (`head_img` v `build.py`).
-  Karty sa nakláňajú za kurzorom, medzi stránkami je filmový prechod (View Transitions).
+  lightbox s listovaním a popiskami). Úvod na širokej obrazovke prehráva film `img/film/uvod*.mp4`
+  v 720p, 1080p alebo 4K podľa obrazovky (na telefóne strieda fotky), každá podstránka má
+  fotografickú hlavičku z ostrej fotky `img/hd/` (`head_img` v `build.py`). Fotky v dlaždiciach
+  katalógu a v hlavičkách sa pomaly hýbu, karty sa nakláňajú za kurzorom, medzi stránkami je
+  filmový prechod (View Transitions, inde jemné stiahnutie a nábeh).
+- Predajné texty: hlavička každej kategórie má vlastnú vetu (`HOOKY` v `build.py`) len z faktov
+  pôvodného webu (sklad, doprava, výpočet spotreby zadarmo, zľavy).
 - `img/logo.png` je pôvodné logo firmy, ostatné veľké fotky sú z Pexels (`img/FOTKY.md`),
   kým sa nenafotí predajňa a sklad. Nová fotka sa uloží pod rovnakým názvom.
 

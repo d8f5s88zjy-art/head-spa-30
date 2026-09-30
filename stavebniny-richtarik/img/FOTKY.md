@@ -26,3 +26,7 @@ Fotografie z Pexels (licencia Pexels, voľné aj na komerčné použitie). Po na
 Doplnené fotky (Pexels, voľná licencia): murar.webp (30081237), strecha-praca.webp (11467876), vzv.webp (18699604), stavba.webp (39494022), beton.webp (37121400), tehly-ruky.webp (19688828).
 
 Film v úvode `img/film/uvod.mp4` je zložený z fotiek hero, stavba, murar, strecha-praca, vzv a beton (pomalý nájazd a prelínanie, 30 s, bez zvuku).
+
+Ostré verzie tých istých fotiek (2400 px) sú v `img/hd/` a používajú sa v úvode, v hlavičkách podstránok a v páse s vozíkom. Dlaždice ostávajú 900 px.
+
+Film má tri kvality: `uvod.mp4` (1280x720), `uvod-1080.mp4` (1920x1080) a `uvod-2160.mp4` (3840x2160, 4K). Skript vyberie podľa šírky a ostrosti obrazovky, pri chybe siahne o stupeň nižšie.
