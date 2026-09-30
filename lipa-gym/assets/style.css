@@ -847,3 +847,22 @@ main>section:not(.hero):not(.band)+section:not(.band){border-top:1px solid rgba(
 .lessons-media.lm-wide img{aspect-ratio:3/2}
 .lessons-media.lm-sq img{aspect-ratio:4/3}
 @media (max-width:900px){.lessons-stack{position:relative;top:auto}}
+/* galéria: mozaika ďalších záberov */
+.more{margin-top:clamp(56px,7vw,96px)}
+.more-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;margin-bottom:22px}
+.more-head p{color:#c9ccd2;font-size:.98rem}
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(120px,12.4vw,170px);grid-auto-flow:dense;gap:12px}
+.gal-f{position:relative;margin:0;grid-row:span 2;border-radius:14px;overflow:hidden;background:#000;cursor:zoom-in}
+.gal-f.gal-w{grid-column:span 2}
+.gal-f picture,.gal-f img{display:block;width:100%;height:100%}
+.gal-f img{object-fit:cover}
+.gal-f::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.72));pointer-events:none;transition:opacity .4s}
+.gal-f figcaption{position:absolute;left:14px;right:14px;bottom:12px;z-index:1;font-weight:700;font-size:.92rem;line-height:1.3;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.gal-f:hover img{transform:translate3d(0,var(--py2,0px),0) scale(1.18);transition:transform 1.2s var(--ease)}
+.gal-f:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
+.gal-f.reveal{opacity:1;transform:none}
+.gal-f.reveal picture,.gal-f.reveal figcaption{clip-path:inset(100% 0 0 0);transition:clip-path 1s var(--ease)}
+.gal-f.reveal.in picture,.gal-f.reveal.in figcaption{clip-path:inset(0)}
+.mosaic .gal-f:nth-child(4n+2) picture{transition-delay:.08s}.mosaic .gal-f:nth-child(4n+3) picture{transition-delay:.16s}.mosaic .gal-f:nth-child(4n) picture{transition-delay:.24s}
+@media (max-width:700px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:calc((100vw - 2 * var(--gut) - 12px) / 2 * 1.25 / 2 - 6px);gap:10px}.gal-f figcaption{font-size:.84rem;left:10px;right:10px;bottom:9px}}
+@media (prefers-reduced-motion:reduce){.gal-f.reveal picture,.gal-f.reveal figcaption{clip-path:none!important}}

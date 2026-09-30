@@ -22,6 +22,19 @@ WIDE = {
     'funkcna-zona-5': .56, 'kardio-1': .58,
 }
 TALL = list(WIDE) + ['volne-vahy-2', 'stroje-2', 'tatami-2']
+# galéria: ďalšie zábery (u-<id> = nahratý súbor <id>-image.jpg bez úprav v 3d); poškodený 907003c1 sa nepoužíva
+GAL_WIDE = {'u-66420587': .55, 'u-e77dd2bd': .58, 'hlavna-sala-3': .55, 'stroje-3': .58}
+GAL_TALL = ['u-38047dcd', 'u-97b23fd1', 'u-b4be27d3', 'u-0e350667', 'jednorucky-1', 'volne-vahy-3', 'kardio-2', 'tatami-1']
+WIDE.update(GAL_WIDE)
+TALL += list(GAL_WIDE) + GAL_TALL
+U = '/root/.claude/uploads/e4fc08a7-9804-506e-a6e2-06fd64c3d915/'
+
+
+def source(sid):
+    if sid.startswith('u-'):
+        from PIL import ImageOps
+        return ImageOps.exif_transpose(Image.open(U + sid[2:] + '-image.jpg')).convert('RGB')
+    return grade.source(sid)
 
 
 def natural(rgb, video=False):
@@ -30,22 +43,29 @@ def natural(rgb, video=False):
     lum = x.mean(2); m = (lum > .12) & (lum < .88)
     mean = x[m].mean(0)
     x *= (1 + .35 * (mean.mean() / np.maximum(mean, 1e-3) - 1))[None, None, :]
-    # expozícia: medián jasu k 0,40, polovičnou silou
+    # expozícia: medián jasu k 0,45 (všetko má byť vidno)
     Y = (x ** 2.2 * [.2126, .7152, .0722]).sum(2)
     med = float(np.median(Y)) ** (1 / 2.2)
-    x = x * (.40 / max(med, .05)) ** .5
+    x = x * (.45 / max(med, .05)) ** .6
+    # tiene: zdvihnutie, aby boli vidno stroje v tmavých kútoch
+    x = x + .07 * (1 - np.clip(x, 0, 1)) ** 3
     # svetlá: mäkké zbalenie nad 0,82 (lampy a okná nevypália)
     x = np.where(x > .82, .82 + .18 * (1 - np.exp(-(x - .82) / .18)), x)
     x = np.clip(x, 0, 1)
     # filmová krivka: jemné S, hlbšia čierna so zachovanou kresbou
     s = x * x * (3 - 2 * x)
-    x = x + .28 * (s - x)
+    x = x + .22 * (s - x)
     x = .012 + x * .985
     # sýtosť o niečo nižšia než z mobilu, pleť a červená dráha ostanú prirodzené
     g = x.mean(2, keepdims=True)
-    x = g + (x - g) * .92
+    x = g + (x - g) * 1.1                      # sýtejšie, pestrejšie farby
     out = (np.clip(x, 0, 1) * 255).astype(np.uint8)
-    return cv2.fastNlMeansDenoisingColored(out, None, 4 if video else 2.5, 4 if video else 2.5, 5, 15)
+    out = cv2.fastNlMeansDenoisingColored(out, None, 4 if video else 2.5, 4 if video else 2.5, 5, 15)
+    # jasnosť: lokálny kontrast na jase, polovičnou silou
+    lab = cv2.cvtColor(out, cv2.COLOR_RGB2LAB); l, a, b = cv2.split(lab)
+    l2 = cv2.createCLAHE(clipLimit=1.6, tileGridSize=(8, 8)).apply(l)
+    l = cv2.addWeighted(l, .5, l2, .5, 0)
+    return cv2.cvtColor(cv2.merge([l, a, b]), cv2.COLOR_LAB2RGB)
 
 
 def vignette(im, k=.10):
@@ -61,8 +81,8 @@ def save(im, base, sizes, ratio):
     for W in sizes:
         W2 = min(W, im.width)
         r = im.resize((W2, round(W2 * ratio)), Image.LANCZOS)
-        r = r.filter(ImageFilter.UnsharpMask(radius=.8, percent=35, threshold=2))
-        r = vignette(r)
+        r = r.filter(ImageFilter.UnsharpMask(radius=1.0, percent=75, threshold=2))
+        r = vignette(r, .05)
         b = f'{base}-{W}'
         r.save(b + '.avif', quality=64, speed=5)
         r.save(b + '.webp', quality=82, method=5)
@@ -70,8 +90,8 @@ def save(im, base, sizes, ratio):
 
 
 def run(sid):
-    src = np.asarray(grade.source(sid))
-    video = sid not in grade.ORIG
+    src = np.asarray(source(sid))
+    video = sid not in grade.ORIG and not sid.startswith('u-')
     h, w = src.shape[:2]
     if sid in WIDE:
         ch = int(w * 9 / 16); y0 = int(np.clip(WIDE[sid] * h - ch / 2, 0, h - ch))

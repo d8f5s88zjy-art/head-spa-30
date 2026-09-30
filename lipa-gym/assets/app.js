@@ -460,7 +460,7 @@
 
   /* ---------- galéria: lightbox ---------- */
   function lightbox() {
-    var figs = $$('.shot');
+    var figs = $$('.shot, .gal-f');
     var dlg = $('#lightbox');
     if (!figs.length || !dlg || !dlg.showModal) return;
     var img = $('img', dlg), cap = $('.lb-cap', dlg), cnt = $('.lb-count', dlg);
@@ -469,7 +469,7 @@
       i = (n + figs.length) % figs.length;
       var f = figs[i], src = f.dataset.full || $('img', f).currentSrc || $('img', f).src;
       img.src = src; img.alt = $('img', f).alt;
-      cap.textContent = $('.shot-t', f) ? $('.shot-t', f).textContent + ' · ' + $('.shot-d', f).textContent : '';
+      cap.textContent = $('.shot-t', f) ? $('.shot-t', f).textContent + ' · ' + $('.shot-d', f).textContent : ($('figcaption', f) ? $('figcaption', f).textContent : '');
       cnt.textContent = (i + 1) + ' / ' + figs.length;
     }
     figs.forEach(function (f, n) {
@@ -522,6 +522,10 @@
     if (!r) return;
     var shots = $$('.shot', r), n = shots.length, cur = 0;
     var nEl = $('[data-reel-n]', r), bar = $('[data-reel-bar]', r);
+    $$('.gal-f').forEach(function (f) {
+      f.tabIndex = 0; f.setAttribute('role', 'button');
+      f.setAttribute('aria-label', 'Zväčšiť: ' + $('figcaption', f).textContent);
+    });
     shots.forEach(function (f) {
       f.tabIndex = 0; f.setAttribute('role', 'button');
       f.setAttribute('aria-label', 'Zväčšiť: ' + $('.shot-t', f).textContent);
