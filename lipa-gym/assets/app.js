@@ -572,7 +572,7 @@
       if (!ch || !el) return;
       var pad0 = parseFloat(getComputedStyle(d.documentElement).scrollPaddingTop) || 0;
       var y = Math.max(0, Math.min(d.documentElement.scrollHeight - window.innerHeight, el.getBoundingClientRect().top + window.scrollY - pad0));
-      if (Math.abs(y - window.scrollY) < window.innerHeight * 1.2) return;   // blízko: plynulý posun
+      if (Math.abs(y - window.scrollY) < window.innerHeight * 1.2) { if (a.closest('.path, .bridge')) { el.classList.remove('is-focus'); void el.offsetWidth; el.classList.add('is-focus'); } return; }   // blízko: plynulý posun
       e.preventDefault();
       if (busy) return;
       busy = true;
@@ -583,6 +583,7 @@
         window.scrollTo({ top: y, behavior: 'instant' });
         try { history.replaceState(null, '', '#' + id); } catch (err) {}
         $$('.reveal', el).forEach(function (r) { r.classList.add('in'); });
+        el.classList.remove('is-focus'); void el.offsetWidth; el.classList.add('is-focus');
         if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
         el.focus({ preventScroll: true });
       }, 420);
