@@ -500,8 +500,10 @@ class Parser:
             src = f'{self.pre}img/{img}.webp'; fit = 'contain' if self.S.get(img[2:], (0, 0))[0] < 500 else 'cover'
         else:
             src = f'{self.pre}img/{self.ctx.get("kat_img", "sklad")}.webp'; fit = 'cover'
-        logo = f'<img class="lg" src="{self._src(b["logo"])}" alt="" loading="lazy">' if b['logo'] else f'<span class="lg txt">{html.escape(name[:1])}</span>'
-        media = f'<div class="zm {fit}"><img src="{src}" alt="" loading="lazy"><div class="badge">{logo}</div></div>'
+        # odznak s logom len keď je logo čitateľné; prázdny alebo písmenkový odznak vyzerá lacno
+        lw, lh = self.S.get(b['logo'], (0, 0)) if b['logo'] else (0, 0)
+        badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="" loading="lazy"></div>' if b['logo'] and lw >= 60 and lh >= 18 else ''
+        media = f'<div class="zm {fit}"><img src="{src}" alt="" loading="lazy">{badge}</div>'
         links = ''
         if sub: links += f'<a class="btn small primary" href="{self.rel(self.path, sub[0])}">Podrobnosti a výrobky</a>'
         if b['url']: links += f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>'

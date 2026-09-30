@@ -352,9 +352,9 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
 <meta property="og:description" content="{d}">
 <meta property="og:image" content="{pre}img/hero.jpg">
 <link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<link rel="preload" href="{pre}assets/fonts/BarlowCondensed-800-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{pre}assets/fonts/BarlowCondensed-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{pre}assets/fonts/Barlow-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{pre}assets/site.css">
 {extra_head}
 </head>
@@ -619,7 +619,7 @@ def build_home():
         first = [i for i, e in SRC[s]['imgs'] if i in IMG_SIZES and IMG_SIZES[i][0] >= 200]
         img = f'<div class="ph"><img src="img/p/{first[0]}.webp" alt="" loading="lazy"></div>' if first else nov_tile(k)
         novs += f'<a class="nov" href="{PAGES[s]}">{img}<div class="tx"><h3>{t}</h3><p>{NOVINKY_POPIS.get(k, "")}</p></div></a>'
-    tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" loading="lazy"></div>' for i in LOGA if i in IMG_SIZES)
+    tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" width="130" height="40"></div>' for i in LOGA if i in IMG_SIZES)
     body = f'''
 <section class="hero" aria-labelledby="h-uvod">
   <div class="bg" data-parallax="0.28" data-film="img/film/uvod"><img class="base" src="img/hd/hero.webp" alt="Sklad stavebného materiálu" width="2400" height="1600" fetchpriority="high"><img class="s s1" src="img/hd/stavba.webp" alt="" width="2400" height="1347" loading="lazy"><img class="s s2" src="img/hd/murar.webp" alt="" width="2400" height="1599" loading="lazy"><img class="s s3" src="img/hd/strecha-praca.webp" alt="" width="2400" height="1600" loading="lazy"></div>
