@@ -1005,3 +1005,24 @@ body.is-loaded .hero-h .line>span{transform:none}
 .hero-h{max-width:22ch}
 @media (max-width:700px){.hero-h{max-width:12ch;font-size:clamp(2.4rem,11vw,3rem)}.hero-p{font-size:1rem}}
 .hero{padding-top:calc(var(--bar-h) + 28px)}
+
+/* =========================================================
+   Réžia 2026-10g: plynulé otvorenie. Bez blikania, jeden mäkký nábeh svetla, plátno 3D sa prelína
+   ========================================================= */
+body.lights .hero-media{animation:lightsSoft .9s cubic-bezier(.2,.6,.2,1) forwards}
+body.lite.lights .hero-media{animation:lightsSoft .9s cubic-bezier(.2,.6,.2,1) forwards;opacity:1}
+@keyframes lightsSoft{0%{opacity:0}100%{opacity:1}}
+body.lights .hero-sweep{animation-delay:.3s;animation-duration:1.3s}
+.hero-bars i{transition:transform 1.1s cubic-bezier(.7,0,.2,1) .05s}
+.hero-h .line>span{transition-duration:.9s}
+body.is-loaded .hero-strip{transition-delay:.6s}
+/* 3D plátno sa prelína, fotka pod ním zostáva, kým plátno nenabehne */
+.depth-canvas{opacity:0;transition:opacity .9s ease}
+.gl>.depth-canvas,.gl .depth-canvas{opacity:1}
+.hero-media.gl .hero-img{opacity:1;transition:opacity .9s ease}
+.hero-media.gl.gl-ready .hero-img{opacity:0}
+.band-frame.gl img,.reel-stage.gl-on .shot img{transition:opacity .6s ease}
+@media (prefers-reduced-motion:reduce){body.lights .hero-media{animation:none;filter:none}}
+.hero-media{filter:none!important;opacity:0;will-change:opacity}
+body.lights .hero-media,body.is-loaded .hero-media,body.intro-done .hero-media{opacity:1}
+@media (prefers-reduced-motion:reduce){.hero-media{opacity:1}}

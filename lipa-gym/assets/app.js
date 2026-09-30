@@ -302,7 +302,7 @@
       if (started) return;
       started = true;
       d.body.classList.add('lights');
-      setTimeout(open, 1000);
+      setTimeout(open, 450);
     }
     function open() {
       if (opened) return;
@@ -311,13 +311,13 @@
       heroBits.forEach(function (el, i) {
         el.style.transition = '';
         void el.offsetWidth;
-        el.style.transitionDelay = (0.35 + i * 0.12) + 's';
+        el.style.transitionDelay = (0.1 + i * 0.08) + 's';
         el.classList.add('in');
       });
       d.body.classList.remove('intro');
       d.body.classList.add('intro-done');
     }
-    var t = setTimeout(start, 500);
+    var t = setTimeout(start, 250);
     (img.decode ? img.decode() : Promise.resolve()).then(function () { clearTimeout(t); start(); }, function () { clearTimeout(t); start(); });
     $('.hero').addEventListener('click', function () { if (started && !opened) open(); });
   }
@@ -724,7 +724,7 @@
 
   /* ---------- plynulé (zotrvačné) skrolovanie kolieskom ----------
      Len na počítači s myšou. Dotyk, klávesnica a posuvník ostávajú natívne. Vypnúť: SMOOTH_SCROLL = false. */
-  var SMOOTH_SCROLL = true;
+  var SMOOTH_SCROLL = false;
   function smoothScroll() {
     if (!SMOOTH_SCROLL || reduce.matches) return;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;

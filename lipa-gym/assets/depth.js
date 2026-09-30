@@ -13,7 +13,7 @@
   var COARSE = window.matchMedia('(pointer: coarse)').matches;
   var VS = 'attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}';
   var FS = 'precision mediump float;varying vec2 v;uniform sampler2D img,dep;uniform vec2 cover,ctr,off;uniform float zoom,push,fade;' +
-    'vec2 look(){vec2 base=ctr+(vec2(v.x,1.-v.y)-.5)*cover/zoom;vec2 uv=base;for(int i=0;i<5;i++){float d=texture2D(dep,uv).r;uv=base+off*(d-.4)-(base-ctr)*push*d;}return clamp(uv,.001,.999);}' +
+    'vec2 look(){vec2 base=ctr+(vec2(v.x,1.-v.y)-.5)*cover/zoom;vec2 uv=base;for(int i=0;i<3;i++){float d=texture2D(dep,uv).r;uv=base+off*(d-.4)-(base-ctr)*push*d;}return clamp(uv,.001,.999);}' +
     'void main(){gl_FragColor=vec4(texture2D(img,look()).rgb*fade,1.);}';
   var AMP = 0.022, ZOOM = 1.08;
   function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
@@ -21,7 +21,7 @@
   function loadImg(url) { return new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = url; }); }
   function bitmap(img) {
     if (!window.createImageBitmap) return Promise.resolve(img);
-    var mw = COARSE ? 1400 : 2200, iw = img.naturalWidth, ih = img.naturalHeight;
+    var mw = COARSE ? 1200 : 1600, iw = img.naturalWidth, ih = img.naturalHeight;
     var o = iw > mw ? { resizeWidth: mw, resizeHeight: Math.round(ih * mw / iw), resizeQuality: 'high' } : undefined;
     return createImageBitmap(img, o).catch(function () { return img; });
   }
@@ -70,12 +70,13 @@
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, self.tex[1]); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, r[1]);
       self.iw = r[0].width || r[0].naturalWidth; self.ih = r[0].height || r[0].naturalHeight;
       if (r[0].close) r[0].close();
-      self.size(); self.host.classList.add('gl'); self.t0 = performance.now(); self.loop();
+      self.size(); self.t0 = performance.now(); self.host.classList.add('gl'); self.loop();
+      setTimeout(function () { self.host.classList.add('gl-ready'); }, 900);
     });
   };
   Scene.prototype.size = function () {
     if (!this.gl || !this.iw) return;
-    var w = this.host.clientWidth, h = this.host.clientHeight, k = Math.min(window.devicePixelRatio || 1, 2, 2200 / Math.max(w, 1));
+    var w = this.host.clientWidth, h = this.host.clientHeight, k = Math.min(window.devicePixelRatio || 1, COARSE ? 1.25 : 1.5, 1600 / Math.max(w, 1));
     this.canvas.width = Math.round(w * k); this.canvas.height = Math.round(h * k);
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     var A = w / h, I = this.iw / this.ih;
@@ -133,13 +134,12 @@
   /* úvod: po rozsvietení kamera vojde dnu, potom pomalý pohyb; skrolovanie posúva scénu ako fotku */
   var hero = document.querySelector('.hero-media[data-depth-w]');
   if (hero) {
-    var hs = new Scene(hero, { input: hero.closest('.hero'), fx: 0.5, fy: MOBILE.matches ? 0.66 : 0.58, push: 0.14,
-      zoom: function (e, t) { var base = MOBILE.matches ? 1.42 : 1.14; return base - 0.06 * e + 0.015 * Math.sin(t * 0.15); } });
+    var hs = new Scene(hero, { input: hero.closest('.hero'), fx: 0.5, fy: MOBILE.matches ? 0.66 : 0.58, push: 0.08,
+      zoom: function (e, t) { var base = MOBILE.matches ? 1.4 : 1.12; return base - 0.05 * e + 0.012 * Math.sin(t * 0.15); } });
     var s = srcFor(hero);
     var startHero = function () { if (s && s.depth) hs.load(s.src, s.depth).catch(function () {}); };
     watch(hs, hero.closest('.hero'), '100px');
-    if (document.body.classList.contains('is-loaded')) startHero();
-    else { var mo = new MutationObserver(function () { if (document.body.classList.contains('lights') || document.body.classList.contains('is-loaded')) { mo.disconnect(); startHero(); } }); mo.observe(document.body, { attributes: true, attributeFilter: ['class'] }); }
+    if ('requestIdleCallback' in window) requestIdleCallback(startHero, { timeout: 1200 }); else setTimeout(startHero, 300);
   }
 
   /* pás LED: priblíženie ide podľa --bp z rolovania */
