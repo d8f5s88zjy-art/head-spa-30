@@ -175,6 +175,28 @@
     if (today) today.textContent = mm(h[0]) + ' – ' + mm(h[1]);
   }
 
+  /* ---------- úvod: čo je dnes (z rozvrhu a otváracích hodín) ---------- */
+  function todayLine() {
+    var el = $('[data-today-line]');
+    if (!el) return;
+    var t = nowBA(), h = HOURS[t.day];
+    function toMin(x) { var q = x.split(':'); return +q[0] * 60 + +q[1]; }
+    var rows = TIMETABLE.filter(function (c) { return c.day === t.day; }).sort(function (a, b) { return a.from.localeCompare(b.from); });
+    var live = rows.filter(function (c) { return t.min >= toMin(c.from) && t.min < toMin(c.to); })[0];
+    var next = rows.filter(function (c) { return toMin(c.from) > t.min; })[0];
+    var open = t.min >= h[0] && t.min < h[1];
+    var html;
+    if (live) html = '<b>Práve teraz</b><span>' + live.name + ' · ' + live.coach + ' · do ' + live.to + '</span>';
+    else if (next && open) html = '<b>Dnes o ' + next.from + '</b><span>' + next.name + ' · ' + next.coach + '</span>';
+    else if (next) html = '<b>Dnes</b><span>otvárame o ' + mm(h[0]) + ', o ' + next.from + ' ' + next.name + '</span>';
+    else if (open) html = '<b>Dnes</b><span>fitko otvorené do ' + mm(h[1]) + ', stroje a voľné váhy bez objednávania</span>';
+    else {
+      var nd = (t.day + 1) % 7, nr = TIMETABLE.filter(function (c) { return c.day === nd; }).sort(function (a, b) { return a.from.localeCompare(b.from); })[0];
+      html = '<b>Zajtra</b><span>od ' + mm(HOURS[nd][0]) + (nr ? ', o ' + nr.from + ' ' + nr.name : '') + '</span>';
+    }
+    el.innerHTML = html; el.hidden = false;
+  }
+
   function hoursTable() {
     $$('[data-hours] tbody').forEach(function (tb) {
       var today = nowBA().day;
@@ -705,7 +727,8 @@
   intro();
   fillFacts();
   openStatus();
-  setInterval(openStatus, 60000);
+  todayLine();
+  setInterval(function () { openStatus(); todayLine(); }, 60000);
   hoursTable();
   mapEmbed();
   header();
