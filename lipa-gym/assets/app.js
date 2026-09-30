@@ -360,7 +360,7 @@
   function band() {
     var b = $('.band');
     if (!b) return;
-    if (reduce.matches || LITE) { b.classList.add('static'); return; }
+    if (reduce.matches) { b.classList.add('static'); return; }
     var on = false, tick = false;
     function frame() {
       tick = false;
@@ -526,7 +526,7 @@
       f.tabIndex = 0; f.setAttribute('role', 'button');
       f.setAttribute('aria-label', 'Zväčšiť: ' + $('.shot-t', f).textContent);
     });
-    if (reduce.matches || LITE) { r.classList.add('static'); return; }
+    if (reduce.matches) { r.classList.add('static'); return; }
     r.style.setProperty('--n', n);
     var on = false, tick = false;
     function cutTo(i) {
@@ -554,8 +554,8 @@
   /* ---------- filmový strih pri skoku z menu ----------
      Clona sa zatvorí, na čiernej sa ukáže číslo a názov kapitoly, stránka skočí a clona sa otvorí.
      Pri obmedzení pohybu a pri krátkej vzdialenosti sa nepoužije. */
-  var CHAPTERS = { preco: ['01', 'Prečo'], treningy: ['02', 'Tréningy'], cennik: ['03', 'Cenník'], rozvrh: ['04', 'Rozvrh'],
-    treneri: ['05', 'Tréneri'], priestor: ['06', 'Priestor'], 'prva-navsteva': ['06', 'Prvá návšteva'], recenzie: ['07', 'Recenzie'],
+  var CHAPTERS = { preco: ['01', 'Prečo'], priestor: ['02', 'Priestor'], treningy: ['03', 'Tréningy'], treneri: ['04', 'Tréneri'],
+    rozvrh: ['05', 'Rozvrh'], cennik: ['06', 'Cenník'], 'prva-navsteva': ['06', 'Prvá návšteva'], recenzie: ['07', 'Recenzie'],
     faq: ['08', 'Otázky'], kontakt: ['09', 'Kontakt'] };
   function filmCut() {
     var c = $('.cut');
@@ -585,6 +585,36 @@
       setTimeout(function () { c.classList.remove('close'); c.classList.add('open'); }, 760);
       setTimeout(function () { c.classList.remove('open'); busy = false; }, 1300);
     }, true);
+  }
+
+  /* ---------- hlavička: aktuálna kapitola a jemná paralaxa fotiek ---------- */
+  function chapterLine() {
+    var sub = $('.brand-sub'), txt = sub && $('span', sub);
+    if (!txt) return;
+    var ids = ['preco', 'priestor', 'treningy', 'treneri', 'rozvrh', 'cennik', 'recenzie', 'faq', 'kontakt'];
+    var secs = ids.map(function (id) { return d.getElementById(id); }).filter(Boolean);
+    var base = txt.textContent, cur = base, tick = false, timer = 0;
+    var pars = reduce.matches ? [] : $$('[data-par]');
+    function frame() {
+      tick = false;
+      var line = window.innerHeight * 0.35, label = base;
+      secs.forEach(function (el) { if (el.getBoundingClientRect().top <= line) { var c = CHAPTERS[el.id]; label = c[0] + ' · ' + c[1]; } });
+      if (label !== cur) {
+        cur = label; clearTimeout(timer);
+        sub.classList.add('swap');
+        timer = setTimeout(function () { txt.textContent = cur; sub.classList.remove('swap'); }, 260);
+      }
+      var vh = window.innerHeight;
+      pars.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        var k = ((r.top + r.height / 2) - vh / 2) / vh;            // -1 až 1 okolo stredu obrazovky
+        el.style.setProperty('--py2', (k * -26).toFixed(1) + 'px');
+      });
+    }
+    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
+    window.addEventListener('resize', frame);
+    frame();
   }
 
   /* ---------- plynulé (zotrvačné) skrolovanie kolieskom ----------
@@ -688,6 +718,7 @@
   reel();
   copyAddr();
   filmCut();
+  chapterLine();
   smoothScroll();
   schema();
 })();

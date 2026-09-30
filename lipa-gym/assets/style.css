@@ -515,11 +515,11 @@ body.is-loaded .hero-h em{animation:shine 1.5s cubic-bezier(.3,0,.2,1) .75s both
 .band-in{position:relative;z-index:1;width:100%;padding-bottom:clamp(40px,9vh,96px);opacity:var(--bt,1);transform:translate3d(0,calc((1 - var(--bt,1)) * 40px),0)}
 .band-h{font-size:clamp(3rem,8vw,7rem);max-width:12ch}
 .band-p{margin-top:16px;max-width:44ch;color:#dfe1e5;font-size:clamp(1rem,1.3vw,1.15rem)}
-body.lite .band,.band.static{height:auto}
-body.lite .band-stage,.band.static .band-stage{position:relative;height:min(78svh,720px)}
-body.lite .band-frame,.band.static .band-frame{clip-path:none}
-body.lite .band-frame img,.band.static .band-frame img{transform:none}
-body.lite .band-in,.band.static .band-in{opacity:1;transform:none}
+.band.static{height:auto}
+.band.static .band-stage{position:relative;height:min(78svh,720px)}
+.band.static .band-frame{clip-path:none}
+.band.static .band-frame img{transform:none}
+.band.static .band-in{opacity:1;transform:none}
 
 /* KARTY: jednotná réžia (jemné svetlo zhora, svetelná linka pri prejdení) */
 .why-card,.tr-card,.price-card,.coach,.rev,.step-list li,.hours,.cform,.today,.tt,.price-t,.price-notes,.q{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 40%),var(--card)}
@@ -809,3 +809,35 @@ body:not(.past-hero) .bar:not(.is-solid){background:linear-gradient(180deg,rgba(
   .totop{display:none}
 }
 @media (max-width:860px){.nav a{font-family:var(--font-e);font-weight:600;font-stretch:80%;text-transform:none;letter-spacing:-.02em}}
+
+/* =========================================================
+   Réžia 2026-10d: jeden plynulý príbeh, skrolovanie aj na telefóne
+   ========================================================= */
+/* pás LED na telefóne: rám sa roztiahne na celú obrazovku */
+@media (max-width:860px){
+  .band:not(.static){height:170svh}
+  .band-frame{clip-path:inset(calc((1 - var(--bp,0)) * 10%) calc((1 - var(--bp,0)) * 7%) round calc((1 - var(--bp,0)) * 22px))}
+  .band-h{font-size:clamp(2.6rem,11vw,3.6rem)}
+}
+/* filmový pás priestoru na telefóne: obraz stojí, zábery sa strihajú pri skrolovaní */
+.reel:not(.static) .reel-stage{height:100vh;height:100svh}
+@media (max-width:860px){
+  .reel:not(.static){height:calc(var(--n,9) * 38svh + 100svh)}
+  .reel:not(.static) .reel-stage::before{display:none}
+  .reel:not(.static) .shot figcaption{left:var(--gut);right:var(--gut);bottom:calc(96px + env(safe-area-inset-bottom,0px));max-width:none}
+  .reel:not(.static) .shot-t{font-size:clamp(2.3rem,10vw,3.2rem)}
+  .reel:not(.static) .shot-d{font-size:1rem;margin-top:10px}
+  .reel-hud{top:calc(var(--bar-h) + 18px);bottom:auto;right:var(--gut);width:120px;gap:8px}
+  .reel-tc{font-size:1.8rem}
+  .reel:not(.static) .shot::after{background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 24%,rgba(0,0,0,0) 45%,rgba(0,0,0,.85))}
+}
+/* hlavička: aktuálna kapitola namiesto podtitulu */
+.brand-sub{display:block;overflow:hidden;height:1.3em}
+.brand-sub span{display:block;transition:transform .5s var(--ease),opacity .4s}
+.brand-sub.swap span{transform:translateY(-100%);opacity:0}
+/* jemná paralaxa fotiek pri skrolovaní */
+[data-par] img{transform:translate3d(0,var(--py2,0px),0) scale(1.12);will-change:transform}
+.duo-card:hover .duo-media[data-par] img{transform:translate3d(0,var(--py2,0px),0) scale(1.16)}
+/* rytmus: rovnaké odsadenie sekcií, jemný prechod medzi nimi */
+main>section:not(.hero):not(.band)+section:not(.band){border-top:1px solid rgba(255,255,255,.04)}
+@media (prefers-reduced-motion:reduce){[data-par] img{transform:none!important}}
