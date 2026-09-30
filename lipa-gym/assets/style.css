@@ -926,3 +926,82 @@ section.is-focus .sec-head{animation:secPulse 2.4s ease-out}
 .more-btn{margin-top:14px;width:100%}
 @media (max-width:700px){.more.is-folded .gal-f:nth-child(n+7){display:none}}
 @media (min-width:701px){.more-btn{display:none!important}}
+
+/* =========================================================
+   Réžia 2026-10f: ťah dole. 3D hĺbka (WebGL), filmové strihy, pás náhľadov, 3D karty, rastúce čísla
+   ========================================================= */
+/* plátno s hĺbkou prekryje fotku; fotka ostáva pod ním ako záloha */
+.depth-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;pointer-events:none}
+.hero-media .depth-canvas{z-index:1}
+.hero-media.gl .hero-img{opacity:0}
+.hero-media .hero-shade,.hero-media .hero-light,.hero-media .hero-sweep{z-index:2}
+.band-frame.gl img{opacity:0}
+.band-frame .depth-canvas{transform:none}
+.band-frame::after{z-index:2}
+.reel-stage .depth-canvas{z-index:0}
+.reel-stage.gl-on .shot img{opacity:0}
+.reel:not(.static) .shot{z-index:1;background:transparent}
+.reel-hud,.reel:not(.static) .reel-stage::before{z-index:3}
+
+/* filmový strih: nový záber vojde priblížením s krátkym rozostrením, starý odíde do čiernej */
+.reel:not(.static) .shot figcaption>*{will-change:transform,opacity}
+.reel.flash .reel-stage::after{animation:cutIn .55s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes cutIn{0%{opacity:1}30%{opacity:.35}100%{opacity:0}}
+.reel:not(.static) .shot.is-on img{animation:zoomThrough .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes zoomThrough{from{filter:blur(6px) brightness(1.3);transform:scale(1.22)}to{filter:none}}
+.reel-stage.gl-on .shot.is-on img{animation:none}
+
+/* úvod: pás náhľadov ťahá dole */
+.hero-strip{position:absolute;left:0;right:0;bottom:0;z-index:3;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:18px;padding:14px var(--gut) calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(8,9,11,0),rgba(8,9,11,.85) 40%);text-decoration:none;color:var(--ink);opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease) 1.4s,transform .9s var(--ease) 1.4s}
+body.is-loaded .hero-strip{opacity:1;transform:none}
+.hero-strip-l{display:flex;flex-direction:column;gap:2px;font-size:.82rem;color:#c9ccd2;white-space:nowrap;text-decoration:none}
+.hero-strip-l b{font-family:var(--font-e);font-weight:660;font-stretch:80%;font-size:1.05rem;color:var(--ink);letter-spacing:-.01em}
+.hero-strip-l b::after{content:"↓";display:inline-block;margin-left:8px;color:var(--volt);animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.hero-strip-t{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.hero-strip-run{display:flex;gap:8px;width:max-content;animation:strip 48s linear infinite}
+.hero-strip:hover .hero-strip-run{animation-play-state:paused}
+@keyframes strip{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero-strip-run a{position:relative;display:block;width:72px;height:90px;border-radius:8px;overflow:hidden;flex:none;border:1px solid rgba(255,255,255,.12);transition:transform .3s var(--ease),border-color .3s}
+.hero-strip-run a:hover{transform:translateY(-4px) scale(1.04);border-color:var(--volt)}
+.hero-strip-run img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-strip-run span{position:absolute;left:5px;right:5px;bottom:4px;font-size:.6rem;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-scroll{display:none}
+.hero{padding-bottom:clamp(120px,16vh,160px)}
+@media (max-width:700px){.hero-strip{grid-template-columns:1fr;gap:8px;padding-top:10px}.hero-strip-run a{width:56px;height:70px}.hero-strip-run span{display:none}.hero{padding-bottom:150px}}
+
+/* úvod: slová nadpisu vstupujú s 3D otočením */
+.hero-h .line>span{transform:translateY(125%) rotateX(-40deg);transform-origin:50% 100%;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.hero-h .line{perspective:600px}
+body.is-loaded .hero-h .line>span{transform:none}
+
+/* nadpisy sekcií: každé slovo príde zdola s otočením */
+.h2 .w{display:inline-block;transform:translateY(.6em) rotateX(-35deg);opacity:0;transform-origin:50% 100%;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .6s}
+.h2{perspective:500px}
+.sec-head.in .h2 .w,.band-in .h2 .w{transform:none;opacity:1}
+.sec-head .h2{clip-path:none!important;transform:none!important}
+.sec-head .h2 .w:nth-child(2){transition-delay:.06s}.sec-head .h2 .w:nth-child(3){transition-delay:.12s}.sec-head .h2 .w:nth-child(4){transition-delay:.18s}.sec-head .h2 .w:nth-child(5){transition-delay:.24s}.sec-head .h2 .w:nth-child(6){transition-delay:.3s}.sec-head .h2 .w:nth-child(7){transition-delay:.36s}.sec-head .h2 .w:nth-child(8){transition-delay:.42s}
+
+/* 3D naklápanie kariet pod myšou, s odleskom */
+[data-tilt]{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s!important}
+[data-tilt].is-tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-4px)!important;transition:transform .12s linear,border-color .3s!important}
+[data-tilt]::after{z-index:2}
+.tilt-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.14),transparent 55%);transition:opacity .3s;z-index:3}
+[data-tilt].is-tilt .tilt-glare{opacity:1}
+
+/* mostíky: šípka pulzuje, veta príde zľava */
+.bridge-t{opacity:0;transform:translateX(-20px);transition:opacity .7s var(--ease),transform .8s var(--ease)}
+.bridge.in .bridge-t{opacity:1;transform:none}
+.bridge .btn-arrow::after{animation:arrowGo 1.4s ease-in-out infinite}
+@keyframes arrowGo{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-strip-run{animation:none}.hero-strip-l b::after,.bridge .btn-arrow::after{animation:none}
+  .h2 .w,.hero-h .line>span{transform:none!important;opacity:1!important;transition:none!important}
+  [data-tilt].is-tilt{transform:none!important}
+  .reel:not(.static) .shot.is-on img{animation:none}
+}
+/* úvod: nadpis na dva riadky, celý úvod sa zmestí na obrazovku */
+.hero-h{max-width:22ch}
+@media (max-width:700px){.hero-h{max-width:12ch;font-size:clamp(2.4rem,11vw,3rem)}.hero-p{font-size:1rem}}
+.hero{padding-top:calc(var(--bar-h) + 28px)}

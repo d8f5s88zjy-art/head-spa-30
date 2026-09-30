@@ -548,6 +548,72 @@
     });
   }
 
+  /* ---------- slová nadpisov (pre vstup s otočením) ---------- */
+  function splitWords() {
+    $$('.sec-head .h2, .band-in .h2').forEach(function (h) {
+      h.innerHTML = h.innerHTML.replace(/(<em>)?([^<\s]+)(<\/em>)?/g, function (m, a, w, b) {
+        if (!w.trim()) return m;
+        return (a || '') + '<span class="w">' + w + '</span>' + (b || '');
+      });
+    });
+  }
+
+  /* ---------- rastúce čísla (ceny) ---------- */
+  function countUp() {
+    var els = $$('[data-count]');
+    if (!els.length || reduce.matches || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var el = e.target, to = +el.dataset.count, t0 = performance.now(), dur = 900 + to * 6;
+        (function f(now) {
+          var k = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+          el.textContent = v + ' €';
+          if (k < 1) requestAnimationFrame(f);
+        })(t0);
+      });
+    }, { threshold: 0.6 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- 3D naklápanie kariet pod myšou ---------- */
+  function tilt() {
+    if (LITE || reduce.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    $$('[data-tilt]').forEach(function (c) {
+      var g = d.createElement('span'); g.className = 'tilt-glare'; c.appendChild(g);
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.classList.add('is-tilt');
+        c.style.setProperty('--ry', ((x - 0.5) * 10).toFixed(2) + 'deg');
+        c.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
+        c.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      }, { passive: true });
+      c.addEventListener('pointerleave', function () { c.classList.remove('is-tilt'); c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+    });
+  }
+
+  /* ---------- mostíky: vstup vety ---------- */
+  function bridges() {
+    var els = $$('.bridge');
+    if (!els.length || !('IntersectionObserver' in window)) { els.forEach(function (b) { b.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.4 });
+    els.forEach(function (b) { io.observe(b); });
+  }
+
+  /* ---------- pás náhľadov v úvode: klik na záber skočí na ten záber v páse ---------- */
+  function stripJump() {
+    var strip = $('.hero-strip'); if (!strip) return;
+    strip.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-shot]'); if (!a) return;
+      var r = $('[data-reel]'); if (!r || r.classList.contains('static')) return;
+      e.preventDefault(); e.stopPropagation();
+      var n = $$('.shot', r).length, i = +a.dataset.shot;
+      var top = r.getBoundingClientRect().top + window.scrollY, h = r.offsetHeight - window.innerHeight;
+      window.scrollTo({ top: top + h * ((i + 0.5) / n), behavior: reduce.matches ? 'instant' : 'smooth' });
+    }, true);
+  }
+
   /* ---------- priestor: filmový pás ----------
      Na počítači obraz stojí a zábery sa pri rolovaní strihajú jeden za druhým (tvrdý strih,
      pomalý nájazd kamery počas záberu). Na telefóne a pri obmedzení pohybu je to vodorovný pás na potiahnutie. */
@@ -737,6 +803,7 @@
   /* ---------- štart ---------- */
   if (LITE) d.body.classList.add('lite');
   intro();
+  splitWords();
   fillFacts();
   openStatus();
   todayLine();
@@ -757,6 +824,10 @@
   band();
   reel();
   moreFold();
+  countUp();
+  tilt();
+  bridges();
+  stripJump();
   copyAddr();
   filmCut();
   chapterLine();
