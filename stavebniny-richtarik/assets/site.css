@@ -525,3 +525,65 @@ footer .bottom a{display:inline}
 .kat>li>a:hover,.kat ul a:hover{padding-left:6px}
 @media (prefers-reduced-motion:reduce){.rvimg{clip-path:none}.rvimg img{transform:none}.hero .bg .s{animation:none}.hero h1 .w{animation:none}}
 @media (max-width:700px){.band{min-height:420px}.deal .thumb{display:none}.deal h3,.deal p,.deal .tag,.deal .more{max-width:none}}
+
+/* karty značiek s fotkou, popiskom a sortimentom */
+.znacka{grid-template-columns:260px 1fr;gap:0;padding:0;overflow:hidden}
+.znacka .zm{position:relative;min-height:200px;background:var(--mortar);overflow:hidden}
+.znacka .zm>img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.znacka .zm.contain>img{object-fit:contain;padding:18px 18px 60px}
+.znacka:hover .zm>img{transform:scale(1.05)}
+.znacka .zm.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,0) 40%,rgba(20,18,16,.55))}
+.znacka .badge{position:absolute;left:12px;bottom:12px;z-index:1;background:#fff;border-radius:3px;padding:6px 10px;display:grid;place-items:center;min-width:60px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.znacka .badge .lg{max-height:32px;max-width:110px;width:auto;height:auto}
+.znacka .badge .lg.txt{font-family:var(--display);font-weight:800;font-size:24px;color:var(--brick)}
+.znacka .bt{padding:22px 24px 24px;gap:10px}
+.znacka .bt h3{font-size:26px}
+.znacka .bt .lede{font-size:16px;color:var(--ink-2)}
+.znacka details{font-size:14.5px;color:var(--ink-3)}
+.znacka summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--brick);list-style:none;display:inline-flex;align-items:center;gap:8px}
+.znacka summary::-webkit-details-marker{display:none}
+.znacka summary::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .25s;margin-top:-4px}
+.znacka details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+.znacka details p{margin-top:8px;line-height:1.55}
+.znacka .zl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:6px}
+@media (max-width:640px){.znacka{grid-template-columns:1fr}.znacka .zm{min-height:170px;aspect-ratio:16/9}}
+/* produkt bez fotky: značková dlaždica na fotke kategórie */
+.prod-media .tile{aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;background:var(--ink) center/cover no-repeat}
+.prod-media .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,18,16,.55),rgba(20,18,16,.85))}
+.prod-media .tile-in{position:absolute;inset:0;display:grid;place-content:center;gap:10px;justify-items:center;padding:18px;text-align:center}
+.prod-media .tile-in img{max-height:44px;max-width:150px;width:auto;height:auto;background:#fff;padding:6px 10px;border-radius:3px}
+.prod-media .tile-in span{font-family:var(--display);font-weight:800;font-size:44px;color:#fff;background:var(--brick);width:64px;height:64px;display:grid;place-items:center;border-radius:4px}
+.prod-media .tile-in b{font-family:var(--display);font-weight:700;font-size:20px;color:#fff;line-height:1.05;text-wrap:balance}
+/* cenník dekoračných kameňov */
+.cennik{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cen{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--brick);border-radius:var(--radius)}
+.cen b{display:block;font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink)}
+.cen span{font-size:14px;color:var(--ink-3)}
+.cen strong{font-family:var(--display);font-weight:800;font-size:34px;color:var(--brick);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:700px){.cennik{grid-template-columns:1fr}}
+.nov .ph.price{display:grid;place-content:center;justify-items:center;gap:4px;background:var(--ink);color:#fff;text-align:center;padding:16px}
+.nov .ph.price small{font-family:var(--display);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-pale)}
+.nov .ph.price b{font-family:var(--display);font-weight:800;font-size:44px;line-height:1}
+.nov .ph.price span{font-size:13px;color:rgba(255,255,255,.7)}
+/* filmové prechody medzi stránkami (prehliadače s podporou) */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .35s ease-in both}
+::view-transition-new(root){animation:vt-in .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes vt-out{to{opacity:0;transform:scale(.985)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+/* 3D náklon kariet za kurzorom */
+.tilt{transform-style:preserve-3d;will-change:transform}
+.cats{perspective:1200px}.prods{perspective:1200px}.deals{perspective:1200px}.brands-grid{perspective:1400px}
+/* video v úvode */
+.hero .bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;opacity:0;transition:opacity 1.2s}
+.hero .bg video.on{opacity:1}
+.hero .bg.has-video .s{animation:none;opacity:0}
+/* aktívna služba pri skrolovaní */
+.srv{transition:background .4s,padding-left .4s}
+.srv.on{background:linear-gradient(90deg,var(--brick-lt),transparent 70%);padding-left:12px}
+.srv.on i{color:var(--brick-dk)}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+.novs.grid-page{grid-auto-flow:row;grid-template-columns:repeat(4,1fr);overflow:visible}
+@media (max-width:900px){.novs.grid-page{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.novs.grid-page{grid-template-columns:1fr}}

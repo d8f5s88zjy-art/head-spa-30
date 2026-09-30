@@ -262,13 +262,30 @@ def clean(raw, page_path):
     return out
 
 
-def parser(path):
-    return obsah.Parser(IMG_SIZES, PDF_LOCAL, URL2PATH, path, rel)
+def parser(path, ctx=None):
+    return obsah.Parser(IMG_SIZES, PDF_LOCAL, URL2PATH, path, rel, ctx)
+
+
+def first_big(slug, minw=180, minh=100):
+    """Prvý väčší obrázok podstránky (na kartu značky, novinky)."""
+    for i, e in SRC[slug]['imgs']:
+        if i in IMG_SIZES and IMG_SIZES[i][0] >= minw and IMG_SIZES[i][1] >= minh: return i
+    return None
+
+
+def ctx_for(slug):
+    """Súvislosti pre katalógovú stránku: kategória, jej fotka, podstránky značiek."""
+    parts = slug.split('__')
+    if parts[0] != 'katalog-roduktov' or len(parts) < 2: return {}
+    cat = KAT[parts[1]]; catslug = 'katalog-roduktov__' + parts[1]
+    subs = {c.split('__')[2]: (PAGES[c], nice_title(SRC[c]['title'])) for c in children(catslug)}
+    sub_img = {PAGES[c]: ('p/' + first_big(c)) for c in children(catslug) if first_big(c)}
+    return {'kat': parts[1], 'kat_img': cat[4], 'subs': subs, 'sub_img': sub_img}
 
 
 def content(slug, path):
     """Obsah pôvodnej stránky prerobený do moderných blokov."""
-    p = parser(path)
+    p = parser(path, ctx_for(slug))
     return p.render(p.blocks(SRC[slug]['html']))
 
 
@@ -473,7 +490,7 @@ def build_novinky():
     for s in children('novinky'):
         k = s.split('__')[1]; t = nice_title(SRC[s]['title'])
         first = [i for i, e in SRC[s]['imgs'] if i in IMG_SIZES and IMG_SIZES[i][0] >= 200]
-        img = f'<div class="ph"><img src="{rel(path, "img/p/" + first[0] + ".webp")}" alt="" loading="lazy"></div>' if first else '<div class="ph empty"></div>'
+        img = f'<div class="ph"><img src="{rel(path, "img/p/" + first[0] + ".webp")}" alt="" loading="lazy"></div>' if first else nov_tile(k)
         items += f'<a class="nov" href="{rel(path, PAGES[s])}">{img}<div class="tx"><h3>{t}</h3><p>{NOVINKY_POPIS.get(k, "")}</p></div></a>'
     body = f'''<section class="sec"><div class="wrap">
 <div class="novs grid-page">{items}</div>
@@ -481,11 +498,38 @@ def build_novinky():
     write(path, page(path, 'Novinky', body, 'Novinky v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), (None, 'Novinky')], head=('Novinky', 'Čo sme pridali do ponuky', 'Nové materiály, dekoračné kamene, montované garáže a výrobky z recyklovaného plastu. Vzorky si pozrieš priamo v predajni.'), head_img='stavba'))
     for s in children('novinky'):
         p = PAGES[s]; t = nice_title(SRC[s]['title']); k = s.split('__')[1]
+        cont = cennik_kamene(s) if k == 'dekoracne-kamene' else content(s, p)
         body = f'''<section class="sec"><div class="wrap">
-<div class="content">{content(s, p)}</div>
+<div class="content">{cont}</div>
 <p class="back"><a href="{rel(p, 'novinky/index.html')}">Všetky novinky</a></p>
 </div></section>'''
         write(p, page(p, t, body, f'{t}. Novinka v ponuke Stavebniny Richtárik Nitra.', [('index.html', 'Úvod'), ('novinky/index.html', 'Novinky'), (None, t)], head=('Novinka', t, NOVINKY_POPIS.get(k, None)), head_img='stavba'))
+
+
+def kamene():
+    """Ceny dekoračných kameňov z pôvodnej stránky: (názov, cena za vrece)."""
+    t = text_of(SRC['novinky__dekoracne-kamene']['html']).replace('DEKORAČNÉ KAMEŇE', '')
+    out = []
+    for chunk in t.split('Eur/vr')[:-1]:
+        m = re.search(r'([A-ZÁ-Ž][^.]*?)\s*-\s*(\d+[,.]\d{2})\s*$', chunk.strip())
+        if m:
+            n = re.sub(r'\s+', ' ', m.group(1)).strip(' ,').replace(' ,', ',').replace(',biely', ', biely').replace(',cierny', ', čierny')
+            out.append((re.sub(r'(\d)cm', r'\1 cm', re.sub(r'(\d)kg', r'\1 kg', n)), m.group(2).replace('.', ',')))
+    return out
+
+
+def cennik_kamene(slug):
+    rows = ''.join(f'<article class="cen rv"><div><b>{html.escape(n)}</b><span>vrece 25 kg, cena s DPH</span></div><strong>{c} €</strong></article>' for n, c in kamene())
+    return f'''<h2 class="sh rv"><span>Dekoračné kamene</span><small>ceny za vrece</small></h2><div class="cennik">{rows}</div>
+<p class="txt rv">Z cien je už odrátaná 5 % zľava pri platbe v hotovosti. Vzorky kameňov si pozrieš priamo v predajni.</p>'''
+
+
+def nov_tile(k):
+    """Dlaždica novinky bez fotky: pri kameňoch najnižšia cena, inak logo."""
+    if k == 'dekoracne-kamene' and kamene():
+        low = min(float(c.replace(',', '.')) for _, c in kamene())
+        return f'<div class="ph price"><small>Dekoračné kamene</small><b>od {str(low).replace(".", ",")} €</b><span>za vrece 25 kg s DPH</span></div>'
+    return '<div class="ph empty"></div>'
 
 
 def build_galeria():
@@ -552,12 +596,12 @@ def build_home():
     for s in children('novinky')[:4]:
         k = s.split('__')[1]; t = nice_title(SRC[s]['title'])
         first = [i for i, e in SRC[s]['imgs'] if i in IMG_SIZES and IMG_SIZES[i][0] >= 200]
-        img = f'<div class="ph"><img src="img/p/{first[0]}.webp" alt="" loading="lazy"></div>' if first else '<div class="ph empty"></div>'
+        img = f'<div class="ph"><img src="img/p/{first[0]}.webp" alt="" loading="lazy"></div>' if first else nov_tile(k)
         novs += f'<a class="nov" href="{PAGES[s]}">{img}<div class="tx"><h3>{t}</h3><p>{NOVINKY_POPIS.get(k, "")}</p></div></a>'
     tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" loading="lazy"></div>' for i in LOGA if i in IMG_SIZES)
     body = f'''
 <section class="hero" aria-labelledby="h-uvod">
-  <div class="bg" data-parallax="0.28"><img class="base" src="img/hero.webp" alt="Sklad stavebného materiálu" width="1600" height="1067" fetchpriority="high"><img class="s s1" src="img/stavba.webp" alt="" width="1800" height="1010" loading="lazy"><img class="s s2" src="img/murar.webp" alt="" width="1800" height="1199" loading="lazy"><img class="s s3" src="img/strecha-praca.webp" alt="" width="1800" height="1200" loading="lazy"></div>
+  <div class="bg" data-parallax="0.28" data-film="img/film/uvod"><img class="base" src="img/hero.webp" alt="Sklad stavebného materiálu" width="1600" height="1067" fetchpriority="high"><img class="s s1" src="img/stavba.webp" alt="" width="1800" height="1010" loading="lazy"><img class="s s2" src="img/murar.webp" alt="" width="1800" height="1199" loading="lazy"><img class="s s3" src="img/strecha-praca.webp" alt="" width="1800" height="1200" loading="lazy"></div>
   <div class="wrap">
     <div class="eyebrow">Stavebniny Richtárik, Nitra. Od roku 1997</div>
     <h1 id="h-uvod">{words('Stavebný materiál')} <span class="thin">{words('v celom sortimente.', 2)}</span> <em>{words('Za super ceny.', 5)}</em></h1>

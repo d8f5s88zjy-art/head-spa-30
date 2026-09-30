@@ -18,13 +18,17 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   PDF v `pdf/`. Veľké letáky ostali odkazom na pôvodný web.
 - Generátor: `python3 build.py` (potrebuje lxml) prepíše všetky HTML stránky.
   Texty na úvode, popisy kategórií a akcií sú v konštantách na začiatku `build.py`.
+- `popisy.py` má popisky 48 značiek napísané len z pôvodného sortimentu; karta značky
+  má fotku (z podstránky alebo z kategórie), logo, popisok, rozbaľovací celý sortiment
+  a odkaz na podstránku. Produkty bez fotky dostanú značkovú dlaždicu.
 - `obsah.py` rozloží HTML pôvodného webu na bloky (produkt s parametrami a PDF, nadpis,
   text, zoznam, obrázky, logá, tabuľka, značky, galéria) a vykreslí ich ako moderné
   komponenty: produktové karty, karty značiek, kroky s obrázkom, figúry s popiskom.
 - Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, objavovanie blokov a fotiek pri
   skrolovaní, paralaxa, počítadlá, ukazovateľ prečítania, náklon karty, vyhľadávanie,
-  lightbox s listovaním a popiskami). Úvod strieda štyri fotky, každá podstránka má
-  fotografickú hlavičku (`head_img` v `build.py`).
+  lightbox s listovaním a popiskami). Úvod na širokej obrazovke prehráva film `img/film/uvod.mp4`
+  (na telefóne strieda fotky), každá podstránka má fotografickú hlavičku (`head_img` v `build.py`).
+  Karty sa nakláňajú za kurzorom, medzi stránkami je filmový prechod (View Transitions).
 - `img/logo.png` je pôvodné logo firmy, ostatné veľké fotky sú z Pexels (`img/FOTKY.md`),
   kým sa nenafotí predajňa a sklad. Nová fotka sa uloží pod rovnakým názvom.
 

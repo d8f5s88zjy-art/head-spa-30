@@ -24,3 +24,5 @@ Fotografie z Pexels (licencia Pexels, voľné aj na komerčné použitie). Po na
 
 
 Doplnené fotky (Pexels, voľná licencia): murar.webp (30081237), strecha-praca.webp (11467876), vzv.webp (18699604), stavba.webp (39494022), beton.webp (37121400), tehly-ruky.webp (19688828).
+
+Film v úvode `img/film/uvod.mp4` je zložený z fotiek hero, stavba, murar, strecha-praca, vzv a beton (pomalý nájazd a prelínanie, 30 s, bez zvuku).

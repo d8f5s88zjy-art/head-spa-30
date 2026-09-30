@@ -73,6 +73,45 @@
     box.addEventListener('mouseleave', function () { karta.style.transform = ''; karta.style.transition = 'transform .6s'; });
   }
 
+  // 3D náklon kariet za kurzorom (len myš, bez obmedzenia pohybu)
+  if (!reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    d.querySelectorAll('.cat, .prod, .deal, .znacka, .nov').forEach(function (el) {
+      el.classList.add('tilt');
+      var raf = null;
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () { el.style.transform = 'rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg) translateY(-3px)'; el.style.transition = 'transform .12s'; });
+      });
+      el.addEventListener('mouseleave', function () { el.style.transform = ''; el.style.transition = 'transform .6s cubic-bezier(.2,.7,.2,1)'; });
+    });
+    // hĺbka v úvode: text sa hýbe jemne proti fotke
+    var hero = d.querySelector('.hero'), hw = hero && hero.querySelector('.wrap');
+    if (hero && hw) hero.addEventListener('mousemove', function (e) {
+      var x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
+      hw.style.transform = 'translate3d(' + (-x * 14).toFixed(1) + 'px,' + (-y * 10).toFixed(1) + 'px,0)';
+    });
+  }
+
+  // film v úvode: na širokej obrazovke, bez šetrenia dát a bez obmedzenia pohybu
+  var hbg = d.querySelector('.hero .bg');
+  var conn = navigator.connection || {};
+  if (hbg && !reduce && window.innerWidth >= 800 && !conn.saveData && (hbg.getAttribute('data-film') || '')) {
+    var v = d.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('aria-hidden', 'true'); v.preload = 'auto';
+    var base = hbg.getAttribute('data-film');
+    v.innerHTML = '<source src="' + base + '.mp4" type="video/mp4">';
+    v.addEventListener('playing', function () { v.classList.add('on'); hbg.classList.add('has-video'); });
+    hbg.appendChild(v);
+    var pl = v.play(); if (pl && pl.catch) pl.catch(function () { v.remove(); });
+  }
+
+  // služby: aktívna položka podľa polohy v okne
+  var srvs = d.querySelectorAll('.srvs .srv');
+  if (srvs.length && 'IntersectionObserver' in window) {
+    var so = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('on', e.isIntersecting); }); }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    srvs.forEach(function (el) { so.observe(el); });
+  }
+
   // počítadlá: čísla nabehnú, keď sa dostanú do záberu
   var counters = d.querySelectorAll('[data-count]');
   if (counters.length) {

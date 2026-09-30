@@ -2,6 +2,10 @@
 # zoznam, obrázky, logá, PDF, tabuľka, značky, galéria) a vykreslí ich do moderných komponentov.
 import re, html, os
 from lxml import html as LH, etree
+try:
+    from popisy import ZNACKY
+except ImportError:
+    ZNACKY = {}
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OLD = 'http://www.stavebninyrichtarik.sk'
@@ -32,9 +36,11 @@ def _img_id(src):
 
 
 class Parser:
-    def __init__(self, img_sizes, pdf_local, url2path, page_path, rel):
+    def __init__(self, img_sizes, pdf_local, url2path, page_path, rel, ctx=None):
         self.S = img_sizes; self.PDF = pdf_local; self.U = url2path; self.path = page_path; self.rel = rel
         self.pre = '../' * page_path.count('/')
+        self.ctx = ctx or {}  # kat: kľúč kategórie, kat_img: fotka kategórie, subs: {slug: (cesta, názov)}
+        self.logo = None
 
     # ---------- 1. HTML -> riadky ----------
     def lines(self, raw):
@@ -376,6 +382,9 @@ class Parser:
     # ---------- 3. bloky -> HTML ----------
     def render(self, blocks, kind='katalog'):
         out = []; i = 0
+        self.logo = next((v[0] for k, v in blocks if k == 'logos' and v), None)
+        if not self.logo:
+            self.logo = next((x for k, v in blocks if k == 'images' for x in v if not x[0].startswith('g') and self.S.get(x[0], (999, 999))[0] <= 320 and self.S.get(x[0], (999, 999))[1] <= 200), None)
         while i < len(blocks):
             k, v = blocks[i]
             if k == 'item':
@@ -448,6 +457,11 @@ class Parser:
             if imgs and all(not x[0].startswith('g') and self.S.get(x[0], (0, 0))[0] <= 160 and self.S.get(x[0], (0, 0))[1] <= 160 for x in imgs):
                 ic = ''.join(self._img(x, cls='', lb=False) for x in imgs[:2])
                 return f'<article class="prod icon rv"><div class="prod-icon">{ic}</div><div class="prod-body">{f"<h3>{title}</h3>" if title else ""}{body}</div></article>'
+            if not imgs and (it['params'] or it['pdfs']) and (self.logo or self.ctx.get('kat_img')):
+                bg = f' style="background-image:url({self.pre}img/{self.ctx["kat_img"]}.webp)"' if self.ctx.get('kat_img') else ''
+                lg = f'<img src="{self._src(self.logo[0])}" alt="" loading="lazy">' if self.logo else f'<span>{html.escape(_nice(it["title"])[:1])}</span>'
+                media = f'<div class="prod-media"><div class="tile"{bg}><div class="tile-in">{lg}<b>{title}</b></div></div></div>'
+                return f'<article class="prod rv">{media}<div class="prod-body"><h3>{title}</h3>{body}</div></article>'
             if imgs:
                 big = imgs[0]
                 media = f'<div class="prod-media">{self._img(big, cls="main")}'
@@ -469,9 +483,31 @@ class Parser:
         return f'<div class="scroll rv"><table class="tbl">{rows}</table></div>'
 
     def _brand(self, b):
-        logo = f'<div class="bl"><img src="{self._src(b["logo"])}" alt="{html.escape(b["name"])}" loading="lazy"></div>' if b['logo'] else f'<div class="bl txt"><span>{html.escape(b["name"][:1])}</span></div>'
-        link = f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>' if b['url'] else ''
-        return f'<article class="znacka rv">{logo}<div class="bt"><h3>{html.escape(b["name"])}</h3><p>{html.escape(b["text"])}</p>{link}</div></article>'
+        name = b['name']; key = (self.ctx.get('kat', ''), name.lower())
+        popis, img = ZNACKY.get(key, (None, None))
+        # podstránka značky podľa slugu alebo názvu
+        norm = lambda t: re.sub(r'[^a-z0-9]', '', t.lower().translate(str.maketrans('áäčďéíľĺňóôŕšťúýž', 'aacdeillnoorstuyz')))
+        sub = None
+        for slug, (path, title) in (self.ctx.get('subs') or {}).items():
+            a, c, d = norm(name), norm(slug), norm(title)
+            if a and (a == c or a == d or a in c or c in a or a in d or d in a): sub = (path, title); break
+        if not img and sub:
+            img = self.ctx.get('sub_img', {}).get(sub[0])
+        if img and img.startswith('p/'):
+            w, h = self.S.get(img[2:], (0, 0))
+            if h < 100 or w / max(1, h) > 2.4: img = None  # úzke bannery na kartu nepatria
+        if img and img.startswith('p/'):
+            src = f'{self.pre}img/{img}.webp'; fit = 'contain' if self.S.get(img[2:], (0, 0))[0] < 500 else 'cover'
+        else:
+            src = f'{self.pre}img/{self.ctx.get("kat_img", "sklad")}.webp'; fit = 'cover'
+        logo = f'<img class="lg" src="{self._src(b["logo"])}" alt="" loading="lazy">' if b['logo'] else f'<span class="lg txt">{html.escape(name[:1])}</span>'
+        media = f'<div class="zm {fit}"><img src="{src}" alt="" loading="lazy"><div class="badge">{logo}</div></div>'
+        links = ''
+        if sub: links += f'<a class="btn small primary" href="{self.rel(self.path, sub[0])}">Podrobnosti a výrobky</a>'
+        if b['url']: links += f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>'
+        full = html.escape(b['text'])
+        body = f'<p class="lede">{html.escape(popis)}</p><details><summary>Celý sortiment</summary><p>{full}</p></details>' if popis else f'<p>{full}</p>'
+        return f'<article class="znacka rv">{media}<div class="bt"><h3>{html.escape(name)}</h3>{body}<div class="zl">{links}</div></div></article>'
 
     def plain(self, blocks):
         """Čistý text pre vyhľadávanie a úryvky."""
