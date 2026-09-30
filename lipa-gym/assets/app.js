@@ -502,42 +502,6 @@
     new IntersectionObserver(function (en) { dk.classList.toggle('is-hidden', en[0].isIntersecting); }, { threshold: 0.05 }).observe(foot);
   }
 
-  /* ---------- cenník: čo sa oplatí pri danom počte vstupov za mesiac ----------
-     Ceny z cenníka fitness centra (overené na gymklub.sk). Balíky sa prepočítajú na počet vstupov. */
-  function calc() {
-    var root = $('[data-calc]');
-    if (!root) return;
-    var r = $('#calc-n', root), out = $('[data-calc-n]', root), name = $('[data-calc-name]', root), sum = $('[data-calc-sum]', root), alt = $('[data-calc-alt]', root);
-    var who = 'a';
-    var SINGLE = { a: 6, s: 5, d: 3.5 }, MONTH = { a: ['Permanentka klasická', 50], s: ['Permanentka študent', 42], d: ['Permanentka klasická', 50] };
-    function eur(x) { return (Math.round(x * 100) / 100).toFixed(x % 1 ? 2 : 0).replace('.', ',') + ' €'; }
-    function update() {
-      var n = +r.value;
-      out.textContent = n + '×';
-      r.style.setProperty('--v', ((n - 1) / 29 * 100).toFixed(1) + '%');
-      var opts = [
-        [who === 'a' ? 'Jednorazové vstupy' : who === 's' ? 'Študent, jednorazové vstupy' : 'Dôchodca, jednorazové vstupy', SINGLE[who] * n, eur(SINGLE[who]) + ' za vstup'],
-        ['Balík 10 vstupov', 5 * n, '5 € za vstup, balík 50 €'],
-        ['Balík 20 vstupov', 4 * n, '4 € za vstup, balík 80 €'],
-        [MONTH[who][0], MONTH[who][1], 'neobmedzene počas mesiaca']
-      ].sort(function (x, y) { return x[1] - y[1]; });
-      name.textContent = opts[0][0];
-      sum.textContent = eur(opts[0][1]) + ' / mesiac';
-      alt.innerHTML = opts.slice(1).map(function (o) {
-        return '<li><span>' + o[0] + '<small>' + o[2] + '</small></span><span>' + eur(o[1]) + '<small>+' + eur(o[1] - opts[0][1]) + '</small></span></li>';
-      }).join('');
-    }
-    r.addEventListener('input', update);
-    $$('[data-who]', root).forEach(function (b) {
-      b.addEventListener('click', function () {
-        who = b.dataset.who;
-        $$('[data-who]', root).forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); });
-        update();
-      });
-    });
-    update();
-  }
-
   /* ---------- kontakt: kopírovanie adresy ---------- */
   function copyAddr() {
     var b = $('[data-copy-addr]');
@@ -722,7 +686,6 @@
   heroDepth();
   band();
   reel();
-  calc();
   copyAddr();
   filmCut();
   smoothScroll();
