@@ -27,6 +27,9 @@ GAL_WIDE = {'u-66420587': .55, 'funkcna-zona-3': .6, 'hlavna-sala-3': .55, 'stro
 GAL_TALL = ['u-38047dcd', 'u-97b23fd1', 'u-b4be27d3', 'u-0e350667', 'jednorucky-1', 'volne-vahy-3', 'kardio-2', 'tatami-1']
 WIDE.update(GAL_WIDE)
 TALL += list(GAL_WIDE) + GAL_TALL
+# karty „Čo je o vás?“ a „Prečo“: zábery, ktoré na stránke inde nie sú (žiadna fotka sa neopakuje)
+CARDS = ['stroje-1', 'funkcna-zona-2', 'tatami-3', 'kardio-3', 'hlavna-sala-5']
+TALL += CARDS
 U = '/root/.claude/uploads/e4fc08a7-9804-506e-a6e2-06fd64c3d915/'
 
 
