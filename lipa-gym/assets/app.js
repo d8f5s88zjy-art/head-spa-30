@@ -26,6 +26,7 @@
   /* Otváracie hodiny (HOURS), rozvrh (TIMETABLE) a sviatky (HOLIDAYS) sú v index.html v skripte hneď za úvodom
      (window.GK), aby úvod ukázal správny stav už pri prvom vykreslení. Upravujú sa len tam. */
   var GK = window.GK;
+  window.GK_APP = true;
   var HOURS = GK.HOURS;
   var TIMETABLE = GK.TIMETABLE;
 
@@ -123,12 +124,19 @@
   function nowBA() { return GK.now(); }
 
   function hoursTable() {
-    $$('[data-hours] tbody').forEach(function (tb) {
-      var today = nowBA().day;
-      tb.innerHTML = HOURS.map(function (h, i) {
-        return '<tr' + (i === today ? ' class="is-today"' : '') + '><td>' + DAYS[i] + (i === today ? ' <small>dnes</small>' : '') + '</td><td>' + mm(h[0]) + ' – ' + mm(h[1]) + '</td></tr>';
-      }).join('');
-    });
+    var shown = -1;
+    function draw() {
+      var t = nowBA(), today = t.day, hol = GK.info(t, 0).hol;
+      if (today === shown) return;
+      shown = today;
+      $$('[data-hours] tbody').forEach(function (tb) {
+        tb.innerHTML = HOURS.map(function (h, i) {
+          return '<tr' + (i === today ? ' class="is-today"' : '') + '><td>' + DAYS[i] + (i === today ? ' <small>' + (hol ? 'dnes · sviatok' : 'dnes') + '</small>' : '') + '</td><td>' + mm(h[0]) + ' – ' + mm(h[1]) + '</td></tr>';
+        }).join('');
+      });
+    }
+    draw();
+    d.addEventListener('gk:tick', draw);
   }
 
   function mapEmbed() {
@@ -298,27 +306,34 @@
     if (!root) return;
     var tabs = $('.tt-days', root), list = $('.tt-list', root);
     var today = nowBA().day, sel = today;
-    tabs.innerHTML = DAYS.map(function (n, i) {
-      var cnt = TIMETABLE.filter(function (c) { return c.day === i; }).length;
-      return '<button class="tt-day' + (i === today ? ' is-today' : '') + '" role="tab" type="button" data-day="' + i + '" aria-selected="' + (i === sel) + '" id="tt-tab-' + i + '">' +
-        DAYS_SHORT[i] + '<small>' + (i === today ? 'dnes' : (cnt ? cnt + (cnt === 1 ? ' lekcia' : ' lekcie') : 'fitness')) + '</small></button>';
-    }).join('');
-    function render(day) {
+    /* najbližší výskyt dňa v týždni (dnes alebo o 1–6 dní) je sviatok? */
+    function holOf(day) { var t = nowBA(); return GK.info(t, (day - t.day + 7) % 7).hol; }
+    function drawTabs() {
+      tabs.innerHTML = DAYS.map(function (n, i) {
+        var cnt = TIMETABLE.filter(function (c) { return c.day === i; }).length, hol = holOf(i);
+        return '<button class="tt-day' + (i === today ? ' is-today' : '') + '" role="tab" type="button" data-day="' + i + '" aria-selected="' + (i === sel) + '" id="tt-tab-' + i + '">' +
+          DAYS_SHORT[i] + '<small>' + (i === today ? (hol ? 'dnes · sviatok' : 'dnes') : hol ? 'sviatok' : (cnt ? cnt + (cnt === 1 ? ' lekcia' : ' lekcie') : 'fitness')) + '</small></button>';
+      }).join('');
+    }
+    drawTabs();
+    function render(day, quiet) {
       sel = day;
+      list.classList.toggle('tt-quiet', !!quiet);
       $$('.tt-day', tabs).forEach(function (b) { b.setAttribute('aria-selected', String(+b.dataset.day === day)); });
       list.setAttribute('aria-labelledby', 'tt-tab-' + day);
-      var h = HOURS[day];
+      var h = HOURS[day], hol = holOf(day), wk = day >= 5;
       var rows = TIMETABLE.filter(function (c) { return c.day === day; }).sort(function (a, b) { return a.from.localeCompare(b.from); });
       var html = '<div class="tt-row tt-open" style="animation-delay:0ms">' +
         '<div class="tt-time">' + mm(h[0]) + '<small>do ' + mm(h[1]) + '</small></div>' +
-        '<div class="tt-name">Samostatný tréning<span>Fitness centrum otvorené celý deň, stroje aj voľné váhy</span></div>' +
+        '<div class="tt-name">Samostatný tréning<span>' + (hol ? 'Sviatok, otváracie hodiny overte telefonicky' : wk ? 'Víkend, otváracie hodiny overte telefonicky' : 'Fitness centrum otvorené celý deň, stroje aj voľné váhy') + '</span></div>' +
         '<div class="tt-coach">Bez objednania</div>' +
         '<a class="tt-go" href="#cennik">Cenník</a></div>';
       var now = nowBA(), isToday = day === now.day;
       function toMin(t) { var q = t.split(':'); return +q[0] * 60 + +q[1]; }
       html += rows.map(function (c, i) {
         var st = '', cls = '';
-        if (isToday) {
+        if (hol) { cls = ' is-past'; st = '<b class="tt-done">Sviatok · overte telefonicky</b>'; }
+        else if (isToday) {
           var a = toMin(c.from), b = toMin(c.to);
           if (now.min >= a && now.min < b) { st = '<b class="tt-live">Práve prebieha</b>'; cls = ' is-live'; }
           else if (now.min < a) { var dm = a - now.min; st = '<b class="tt-soon">' + (dm < 60 ? 'o ' + dm + ' min' : 'o ' + Math.floor(dm / 60) + ' h ' + (dm % 60 ? dm % 60 + ' min' : '')) + '</b>'; }
@@ -330,7 +345,7 @@
           '<div class="tt-coach">' + c.coach + '</div>' +
           '<a class="tt-go" href="#treneri" data-filter-go="' + c.tag + '">Tréner</a></div>';
       }).join('');
-      if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. Fitness centrum je otvorené na samostatný tréning.</p>';
+      if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. ' + (hol || wk ? 'Otváracie hodiny overte telefonicky.' : 'Fitness centrum je otvorené na samostatný tréning.') + '</p>';
       list.innerHTML = html;
     }
     tabs.addEventListener('click', function (e) {
@@ -349,6 +364,12 @@
       if (a) setCoachFilter(a.dataset.filterGo);
     });
     render(sel);
+    /* každú minútu: nový deň prekreslí záložky, dnešný deň sa obnoví bez animácie riadkov */
+    d.addEventListener('gk:tick', function () {
+      var t = nowBA().day;
+      if (t !== today) { if (sel === today) sel = t; today = t; drawTabs(); render(sel, true); }
+      else if (sel === today) render(sel, true);
+    });
   }
 
   /* ---------- tréneri: filter ---------- */
@@ -695,7 +716,12 @@
   filmCut();
   heroExit();
   heroFit();
-  var later = [splitWords, hoursTable, timetable, coaches, chapterLine, band, reel, moreFold, countUp, tilt, bridges,
+  /* menia výšku stránky (filmový pás, rozvrh, hodiny, mozaika): hneď, aby skok v menu pristál presne */
+  hoursTable();
+  timetable();
+  reel();
+  moreFold();
+  var later = [splitWords, coaches, chapterLine, band, countUp, tilt, bridges,
     cardGlow, lightbox, faq, copyAddr, mapEmbed, smoothScroll, schema];
   (function () {
     var i = 0, started = false;
@@ -711,8 +737,12 @@
     function start() { if (started) return; started = true; next(); }
     function flush() { window.removeEventListener('scroll', onScroll); if (i < later.length) { started = true; run(true); } }
     function onScroll() { if (window.scrollY > window.innerHeight * 0.3) flush(); }
+    /* klik na odkaz v stránke: najprv dokončiť všetko, až potom sa meria cieľ */
+    window.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a[href^="#"]')) flush(); }, true);
     if (GK.heroDone || location.hash.length > 1) { flush(); return; }
     d.addEventListener('gk:hero-done', start);
     window.addEventListener('scroll', onScroll, { passive: true });
   })();
+  function smoothOn() { requestAnimationFrame(function () { requestAnimationFrame(function () { d.documentElement.classList.add('sm'); }); }); }
+  if (d.readyState === 'complete') smoothOn(); else window.addEventListener('load', smoothOn);
 })();

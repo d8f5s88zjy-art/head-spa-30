@@ -27,7 +27,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 html:has(.bar){scroll-padding-top:calc(var(--bar-h) + 12px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:17px;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img,svg{display:block;max-width:100%}
@@ -390,7 +390,6 @@ section{padding-block:clamp(72px,10vw,128px);position:relative}
 /* Odľahčený režim na telefóne a dotykových zariadeniach (body.lite): bez videa, pozadia, vodoznakov a paralaxy */
 body.lite .bgfx,body.lite .rail,body.lite .wm{display:none}
 body.lite .has-wm .sec-head,body.lite .marquee,body.lite .bar{will-change:auto}
-body.lite section:not(.hero){content-visibility:auto;contain-intrinsic-size:auto 900px}
 body.lite .reveal{transition-duration:.45s,.5s}
 body.lite .tr-card img,body.lite .gal-item img,body.lite .coach-face img{transform:none;transition:none}
 body.lite .glowcard::after{display:none}
@@ -787,11 +786,11 @@ section.is-focus .sec-head{animation:secPulse 2.4s ease-out}
 
 /* mostíky: jedna veta a tlačidlo medzi sekciami */
 .bridge{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(212,255,63,.06),rgba(212,255,63,0) 60%)}
-.bridge-in{display:flex;align-items:center;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;padding:22px 0}
+.bridge-in{display:flex;align-items:center;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;padding-block:22px}
 .bridge-t{font-family:var(--font-e);font-weight:640;font-stretch:80%;letter-spacing:-.015em;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.15;max-width:34ch}
 .bridge-t em{font-style:normal;color:var(--volt)}
 .bridge .btn{flex:none}
-@media (max-width:700px){.bridge-in{padding:18px 0}.bridge .btn{width:100%}}
+@media (max-width:700px){.bridge-in{padding-block:18px}.bridge .btn{width:100%}}
 
 /* živá fotka pri lekciách */
 .live-photo{position:relative;margin:0;border-radius:var(--r);overflow:hidden;background:#000}
@@ -1123,3 +1122,32 @@ section.is-focus .sec-head{animation:secPulse 2.4s ease-out}
   :root .hero-pin .hero-h .line>span{transform:none}
   :root .hero-pin .hero-cam{animation:none}
 }
+
+/* =========================================================
+   Réžia 2026-10i: opravy po kontrole (každé okno sedí, skoky v menu, bez JS, kontrast, fakty)
+   ========================================================= */
+/* plynulé rolovanie až po načítaní: skok na #kotvu a obnova polohy pri načítaní idú hneď na miesto */
+@media (prefers-reduced-motion:no-preference){html.sm{scroll-behavior:smooth}}
+/* bez JS alebo keď app.js nenabehne (trieda no-anim): nič neostane skryté */
+:root.no-anim .reveal,:root.no-anim .sec-head .kicker,:root.no-anim .sec-head .h2,:root.no-anim .sec-head .lead,:root.no-anim .bridge-t,
+:root.no-anim .tr-card.reveal picture,:root.no-anim .coach.reveal .coach-face,:root.no-anim .duo-card.reveal .duo-media,
+:root.no-anim .gal-f.reveal picture,:root.no-anim .gal-f.reveal figcaption,:root.no-anim .why-card.reveal .why-pic{opacity:1!important;transform:none!important;clip-path:none!important}
+/* pás „Funkčná zóna“: popis nad dockom aj na nízkom telefóne */
+@media (max-width:860px){.band-in{padding-bottom:calc(var(--dock-z) + 20px)}}
+@media (max-width:960px) and (max-height:440px) and (orientation:landscape){.band-h{font-size:clamp(2rem,9svh,2.6rem)}.band-in .kicker{margin-bottom:8px}.band-p{margin-top:8px}}
+/* úvod na telefóne: menej prázdneho stropu, rig a dráha v čistej zóne nad textom */
+@media (max-width:860px) and (orientation:portrait){:root .hero-pin .hero-cam{top:-30%;height:130%}}
+/* úvod na počítači: adresa čitateľná aj nad svetlým rigom */
+@media (min-width:861px){:root .hero-pin .hero-addr{color:var(--ink);text-shadow:0 0 2px rgba(8,9,11,.9),0 0 6px rgba(8,9,11,.55),0 1px 10px rgba(0,0,0,.6)}}
+/* kolofón: viditeľný fokus z klávesnice na živej lekcii */
+:root .hero-pin .colo-live a:focus-visible{outline:none}
+:root .hero-pin .colo-live a:focus-visible::after{outline:2px solid var(--volt);outline-offset:0;border-radius:10px}
+:root .hero-pin .colo-live:focus-within dd{color:var(--volt)}
+/* „Čo je o vás?“ na počítači: názvy kariet na jednej línii aj pri 3-riadkovom popise */
+@media (min-width:861px){:root .hero-pin .cesta-d{min-height:calc(3 * 1.4em)}}
+/* osobný tréning: mená trénerov pod tvárami, nie po jednom slove */
+@media (min-width:1001px){.duo-body .faces{flex-wrap:wrap;row-gap:8px}.duo-body .faces-l{flex:1 0 100%;margin-left:0}}
+/* štítok „Z tréningu“: tmavý podklad, kontrast aj na červenom tatami */
+.live-tag{width:fit-content;padding:4px 10px 4px 8px;border-radius:999px;background:rgba(8,9,11,.72)}
+/* rozvrh sa každú minútu obnoví bez opätovnej animácie riadkov */
+.tt-quiet .tt-row{animation:none}

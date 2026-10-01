@@ -4,7 +4,8 @@ Zdroj: originály z mobilu (rovnaké ako pre web 3d, výrezy z videa pre vchod, 
   vyváženie bielej, expozícia, jemná filmová krivka (hlbšia čierna, mäkké svetlá), mierne nižšia sýtosť,
   odšumenie, zmenšenie v plnej kvalite, veľmi jemné doostrenie až vo výslednej veľkosti a slabá vinetácia.
 Výstup: assets/img/f/<id>-{640,1080}.* (4:5) a <id>-w-{960,1920}.* (16:9)
-python3 tools/vlastne_fotky.py [id ...]"""
+python3 tools/vlastne_fotky.py [id ...]
+Karta „Bojové športy“ (assets/img/f/mma-2-card-640.*) je výrez 4:5 (540, 0, 1180, 800) z mma-2-32-1200.jpg, sála Panda Fight Club."""
 import os, sys
 import numpy as np, cv2
 from PIL import Image, ImageFilter
@@ -30,6 +31,8 @@ TALL += list(GAL_WIDE) + GAL_TALL
 # karty „Čo je o vás?“ a „Prečo“: zábery, ktoré na stránke inde nie sú (žiadna fotka sa neopakuje)
 CARDS = ['stroje-1', 'funkcna-zona-2', 'tatami-3', 'kardio-3', 'hlavna-sala-5']
 TALL += CARDS
+# úvod na telefóne je zväčšený výrez (strop menej, dráha viac), preto aj 1600 px na výšku
+BIG = ['funkcna-zona-6']
 U = '/root/.claude/uploads/e4fc08a7-9804-506e-a6e2-06fd64c3d915/'
 
 
@@ -101,7 +104,7 @@ def run(sid):
         save(Image.fromarray(natural(src[y0:y0 + ch], video)), os.path.join(OUT, f'{sid}-w'), (960, 1920), 9 / 16)
     bgr = grade.crop45(cv2.cvtColor(src, cv2.COLOR_RGB2BGR), grade.TUNE.get(sid, {}).get('fy', .62))
     tall = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-    save(Image.fromarray(natural(tall, video)), os.path.join(OUT, sid), (640, 1080), 5 / 4)
+    save(Image.fromarray(natural(tall, video)), os.path.join(OUT, sid), (640, 1080) + ((1600,) if sid in BIG else ()), 5 / 4)
 
 
 if __name__ == '__main__':
