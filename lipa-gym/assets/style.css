@@ -1026,3 +1026,19 @@ body.is-loaded .hero-strip{transition-delay:.6s}
 .hero-media{filter:none!important;opacity:0;will-change:opacity}
 body.lights .hero-media,body.is-loaded .hero-media,body.intro-done .hero-media{opacity:1}
 @media (prefers-reduced-motion:reduce){.hero-media{opacity:1}}
+/* karty Prečo: fotka namiesto ikony */
+.why-card{padding-top:0;overflow:hidden}
+.why-pic{display:block;margin:0 -28px 20px;aspect-ratio:16/9;overflow:hidden;background:#000}
+.why-pic img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;transition:transform 1.2s var(--ease)}
+.why-card:hover .why-pic img{transform:scale(1.06)}
+.why-card::after{top:14px;right:18px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.7);z-index:1}
+.why-card.reveal .why-pic{clip-path:inset(0 0 100% 0);transition:clip-path 1s var(--ease) .1s}
+.why-card.reveal.in .why-pic{clip-path:inset(0)}
+@media (max-width:700px){.why-pic{margin:0 -22px 18px;aspect-ratio:3/2}}
+/* úvod na telefóne: pás náhľadov pod obsahom, nie cez neho */
+@media (max-width:700px){
+  .hero{padding-bottom:28px;flex-direction:column;align-items:stretch}
+  .hero-strip{position:relative;left:auto;right:auto;bottom:auto;margin-top:26px;padding:0;background:none;width:100%}
+  .hero-strip-t{margin-inline:calc(-1 * var(--gut));padding-inline:var(--gut)}
+}
+@media (prefers-reduced-motion:reduce){.why-card.reveal .why-pic{clip-path:none!important}}
