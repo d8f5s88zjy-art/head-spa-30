@@ -23,7 +23,7 @@ WIDE = {
 }
 TALL = list(WIDE) + ['volne-vahy-2', 'stroje-2', 'tatami-2']
 # galéria: ďalšie zábery (u-<id> = nahratý súbor <id>-image.jpg bez úprav v 3d); poškodený 907003c1 sa nepoužíva
-GAL_WIDE = {'u-66420587': .55, 'u-e77dd2bd': .58, 'hlavna-sala-3': .55, 'stroje-3': .58}
+GAL_WIDE = {'u-66420587': .55, 'funkcna-zona-3': .6, 'hlavna-sala-3': .55, 'stroje-3': .58}
 GAL_TALL = ['u-38047dcd', 'u-97b23fd1', 'u-b4be27d3', 'u-0e350667', 'jednorucky-1', 'volne-vahy-3', 'kardio-2', 'tatami-1']
 WIDE.update(GAL_WIDE)
 TALL += list(GAL_WIDE) + GAL_TALL

@@ -1042,3 +1042,7 @@ body.lights .hero-media,body.is-loaded .hero-media,body.intro-done .hero-media{o
   .hero-strip-t{margin-inline:calc(-1 * var(--gut));padding-inline:var(--gut)}
 }
 @media (prefers-reduced-motion:reduce){.why-card.reveal .why-pic{clip-path:none!important}}
+/* pätička: tváre ani nadpis nesmú rozšíriť stránku na úzkom telefóne */
+.foot-cta{grid-template-columns:minmax(0,1fr)}
+.foot-faces{flex-wrap:wrap;row-gap:10px}
+@media (max-width:420px){.foot-faces .face{width:34px;height:34px;margin-left:-9px}.foot-faces .face:first-child{margin-left:0}}
