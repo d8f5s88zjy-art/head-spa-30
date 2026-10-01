@@ -25,17 +25,32 @@
 <meta name="twitter:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/assets/og.jpg">
 <meta name="geo.region" content="SK-NI">
 <meta name="geo.placename" content="Nitra">
-<link rel="preload" href="assets/fonts/Archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" imagesizes="100vw" media="(min-width: 861px)">
-<link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" imagesizes="100vw" media="(max-width: 860px)">
-<link rel="preload" as="image" href="assets/img/d/funkcna-zona-6-w.png" media="(min-width: 861px)">
-<link rel="preload" as="image" href="assets/img/d/funkcna-zona-6.png" media="(max-width: 860px)">
-<link rel="preload" as="script" href="assets/depth.js">
+<link rel="preload" href="assets/fonts/Manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" imagesizes="100vw" media="(min-width: 861px)">
+<link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" imagesizes="100vw" media="(max-width: 860px)">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
+<script>
+/* Úvod: rozhodne ešte pred prvým vykreslením. hx = celé otvorenie, hx-quick = opakovaná návšteva v tej istej karte,
+   bez triedy = všetko hneď (obmedzený pohyb, odkaz na sekciu, šetrenie dát, 2G). */
+(function (h) {
+  var c = h.classList, n = navigator.connection || {}, seen = null;
+  function mq(q) { return !!(window.matchMedia && window.matchMedia(q).matches); }
+  c.add('js', 'live-wait');
+  /* poistka: keby skript za úvodom zlyhal, text aj tak ukázať */
+  setTimeout(function () { c.remove('live-wait'); c.add('hx-lit', 'hx-go', 'hx-done'); }, 3000);
+  if (mq('(max-width: 860px), (hover: none) and (pointer: coarse)')) c.add('lite-root');
+  if (location.hash.length > 1) return;
+  c.add('in-hero');
+  if (mq('(prefers-reduced-motion: reduce)') || n.saveData || /2g/.test(n.effectiveType || '')) return;
+  try { seen = sessionStorage.getItem('gk-hero'); sessionStorage.setItem('gk-hero', '1'); } catch (e) {}
+  c.add(seen ? 'hx-quick' : 'hx');
+})(document.documentElement);
+</script>
 <!--
-  Kontakty, hodiny, rozvrh a štruktúrované dáta sa vypĺňajú z assets/app.js (GYM, HOURS, TIMETABLE).
+  Kontakty a štruktúrované dáta sa vypĺňajú z assets/app.js (GYM). Otváracie hodiny, rozvrh lekcií a sviatky
+  sú v skripte hneď za úvodom (window.GK: HOURS, TIMETABLE, HOLIDAYS).
 -->
 </head>
 <body>
@@ -87,7 +102,7 @@
       <a class="nav-phone" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg><span data-fact="phone">+421 944 800 394</span></a>
     </nav>
     <div class="bar-cta">
-      <span class="status" aria-live="polite"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></span>
+      <span class="status"><span class="dot"></span><span data-open-status="short">Otváracie hodiny</span></span>
       <a class="btn btn-volt" href="#kontakt">Prísť si zacvičiť</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Otvoriť menu"><span></span><span></span><span></span></button>
     </div>
@@ -97,49 +112,226 @@
 
 <main id="main">
 
-<!-- ÚVOD: fotografia z prevádzky, otvorenie ako zapnutie svetiel -->
+<!-- ÚVOD „Stačí prísť“ a ČO JE O VÁS: úvod stojí (sticky), druhá obrazovka ho pri rolovaní prekryje ako list -->
+<div class="hero-pin">
 <section class="hero" aria-labelledby="h-hero">
   <div class="hero-media" aria-hidden="true" data-depth-w="assets/img/d/funkcna-zona-6-w.png" data-depth-t="assets/img/d/funkcna-zona-6.png">
-    <picture><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.webp 640w, assets/img/f/funkcna-zona-6-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.jpg 640w, assets/img/f/funkcna-zona-6-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-6-w-960.webp 960w, assets/img/f/funkcna-zona-6-w-1920.webp 1920w" sizes="100vw"><img class="hero-img" fetchpriority="high" data-src-w="assets/img/f/funkcna-zona-6-w-1920.jpg" data-src-t="assets/img/f/funkcna-zona-6-1080.jpg" src="assets/img/f/funkcna-zona-6-w-1920.jpg" srcset="assets/img/f/funkcna-zona-6-w-960.jpg 960w, assets/img/f/funkcna-zona-6-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async"></picture>
+    <picture class="hero-cam"><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.webp 640w, assets/img/f/funkcna-zona-6-1080.webp 1080w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.jpg 640w, assets/img/f/funkcna-zona-6-1080.jpg 1080w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-6-w-960.webp 960w, assets/img/f/funkcna-zona-6-w-1920.webp 1920w" sizes="100vw"><img class="hero-img" fetchpriority="high" data-src-w="assets/img/f/funkcna-zona-6-w-1920.jpg" data-src-t="assets/img/f/funkcna-zona-6-1080.jpg" src="assets/img/f/funkcna-zona-6-w-1920.jpg" srcset="assets/img/f/funkcna-zona-6-w-960.jpg 960w, assets/img/f/funkcna-zona-6-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async"></picture>
     <div class="hero-shade"></div>
-    <div class="hero-light"></div>
-    <div class="hero-sweep"></div>
+    <div class="hero-expo"></div>
+    <div class="hero-dim"></div>
   </div>
-  <div class="hero-bars" aria-hidden="true"><i></i><i></i></div>
   <div class="wrap hero-in">
-    <p class="eyebrow reveal"><span class="eyebrow-dot"></span><span>GYM KLUB Fitness &amp; Bodybuilding · Výstavná 6, Nitra-Chrenová</span></p>
-    <h1 id="h-hero" class="hero-h">
-      <span class="line"><span>Tréning, ktorý sa zmestí</span></span>
-      <span class="line"><span><em>do vášho týždňa.</em></span></span>
-    </h1>
-    <p class="hero-p reveal">Bez objednávania, 6 € na recepcii. Cez týždeň od 06:30, v piatok do 23:00.</p>
-    <div class="hero-cta reveal">
-      <a class="btn btn-volt btn-lg btn-arrow" href="#prva-navsteva">Prísť na prvý tréning</a>
-      <a class="btn btn-ghost btn-lg" href="#rozvrh">Pozrieť rozvrh lekcií</a>
+    <p class="hero-live"><span class="hero-dot" aria-hidden="true"></span><span data-open-status>Po–Št 06:30–21:00, Pi do 23:00</span><span class="hero-sep" aria-hidden="true">·</span><a class="hero-addr" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Výstavná 6<span class="hero-city">, Nitra-Chrenová</span></a></p>
+    <h1 id="h-hero" class="hero-h"><span class="line"><span>Stačí prísť.</span></span><span class="line"><span><em>Vstup 6&nbsp;€.</em></span></span></h1>
+    <p class="hero-p">Bez objednávania. Vstup zaplatíte v&nbsp;hotovosti na recepcii, MultiSport ukážete pri príchode.</p>
+    <div class="hero-cta">
+      <a class="btn btn-volt btn-lg btn-arrow" href="#prva-navsteva">Ako prísť prvýkrát</a>
+      <a class="hero-link" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Navigovať na Výstavnú 6</a>
     </div>
-    <nav class="path reveal" aria-label="Výber cesty">
-      <p class="path-q">Čo je o vás?</p>
-      <div class="path-opts">
-        <a class="path-opt" href="#prva-navsteva">Začínam<small>Prvá návšteva má tri kroky a žiadny z nich nebolí.</small></a>
-        <a class="path-opt" href="#priestor">Sila a postava<small>Voľné váhy, stroje a funkčná zóna – pozrite si, kde budete trénovať.</small></a>
-        <a class="path-opt" href="#treningy">Bojové športy<small>MMA, Jiu Jitsu a Luta Livre od úplných základov, s Panda Fight Club.</small></a>
-        <a class="path-opt" href="#rozvrh">Skupinové lekcie<small>Pilates, Krav Maga, zdravý chrbát – pevný deň a hodina v týždni.</small></a>
-      </div>
-    </nav>
-    <ul class="hero-facts reveal" aria-label="Rýchle informácie">
-      <li class="hero-fact"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></li>
-      <li class="hero-fact"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg><span><span data-fact="street">Výstavná 6</span>, <span data-fact="city">Nitra</span></span></li>
-      <li class="hero-fact"><svg viewBox="0 0 24 24"><use href="#i-snow"/></svg>Plne klimatizované</li>
-      <li class="hero-fact"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>Bez objednávania</li>
-    </ul>
-    <p class="hero-today reveal" data-today-line hidden></p>
   </div>
-  <div class="hero-strip">
-    <a class="hero-strip-l" href="#priestor"><b>Prejdite si fitko</b>11 záberov, od vchodu po terasu</a>
-    <div class="hero-strip-t"><div class="hero-strip-run"><a href="#priestor" data-shot="0"><img src="assets/img/f/vstup-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>01 Vchod z Výstavnej</span></a><a href="#priestor" data-shot="1"><img src="assets/img/f/recepcia-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>02 Recepcia a obuv</span></a><a href="#priestor" data-shot="2"><img src="assets/img/f/hlavna-sala-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>03 Štart na strojoch</span></a><a href="#priestor" data-shot="3"><img src="assets/img/f/hlavna-sala-4-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>04 Veža na všetko</span></a><a href="#priestor" data-shot="4"><img src="assets/img/f/volne-vahy-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>05 Voľné váhy</span></a><a href="#priestor" data-shot="5"><img src="assets/img/f/stroje-4-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>06 Svetlá sála</span></a><a href="#priestor" data-shot="6"><img src="assets/img/f/funkcna-zona-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>07 Šprintérska dráha</span></a><a href="#priestor" data-shot="7"><img src="assets/img/f/funkcna-zona-5-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>08 Rig a kettlebelly</span></a><a href="#priestor" data-shot="8"><img src="assets/img/f/mma-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>09 Panda Fight Club</span></a><a href="#priestor" data-shot="9"><img src="assets/img/f/kardio-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>10 Kardio pri oknách</span></a><a href="#priestor" data-shot="10"><img src="assets/img/f/terasa-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>11 Krytá terasa</span></a><a href="#priestor" data-shot="0"><img src="assets/img/f/vstup-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>01 Vchod z Výstavnej</span></a><a href="#priestor" data-shot="1"><img src="assets/img/f/recepcia-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>02 Recepcia a obuv</span></a><a href="#priestor" data-shot="2"><img src="assets/img/f/hlavna-sala-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>03 Štart na strojoch</span></a><a href="#priestor" data-shot="3"><img src="assets/img/f/hlavna-sala-4-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>04 Veža na všetko</span></a><a href="#priestor" data-shot="4"><img src="assets/img/f/volne-vahy-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>05 Voľné váhy</span></a><a href="#priestor" data-shot="5"><img src="assets/img/f/stroje-4-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>06 Svetlá sála</span></a><a href="#priestor" data-shot="6"><img src="assets/img/f/funkcna-zona-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>07 Šprintérska dráha</span></a><a href="#priestor" data-shot="7"><img src="assets/img/f/funkcna-zona-5-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>08 Rig a kettlebelly</span></a><a href="#priestor" data-shot="8"><img src="assets/img/f/mma-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>09 Panda Fight Club</span></a><a href="#priestor" data-shot="9"><img src="assets/img/f/kardio-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>10 Kardio pri oknách</span></a><a href="#priestor" data-shot="10"><img src="assets/img/f/terasa-1-640.jpg" alt="" loading="lazy" decoding="async" width="96" height="120"><span>11 Krytá terasa</span></a></div></div>
+  <div class="wrap hero-colo">
+    <dl>
+      <div><dt>Cez týždeň</dt><dd>06:30–21:00, v piatok do 23:00</dd></div>
+      <div><dt>Víkend</dt><dd>08:00–17:00, overte telefonicky</dd></div>
+      <div class="colo-live"><dt data-today-k>Lekcie</dt><dd><a href="#rozvrh" data-today-line>Pilates, Krav Maga, zdravý chrbát</a></dd></div>
+      <div class="colo-c4"><dt>Priestor</dt><dd>Plne klimatizované, šatne a sprchy</dd></div>
+    </dl>
   </div>
-  <a class="hero-scroll" href="#preco" aria-label="Posunúť ďalej"><span></span></a>
 </section>
+<script>
+/* ŽIVÉ ÚDAJE GYM KLUB: otváracie hodiny, rozvrh lekcií a sviatky. Jediné miesto, kde sa upravujú;
+   app.js ich preberá z window.GK. Beží hneď za úvodom, takže prvé vykreslenie už má správny text. */
+(function (w, d) {
+  'use strict';
+  var GK = w.GK = {};
+  /* [od, do] v minútach od polnoci, čas Európa/Bratislava. Index 0 = pondelok. */
+  GK.HOURS = [
+    [6 * 60 + 30, 21 * 60],   // pondelok
+    [6 * 60 + 30, 21 * 60],   // utorok
+    [6 * 60 + 30, 21 * 60],   // streda
+    [6 * 60 + 30, 21 * 60],   // štvrtok
+    [6 * 60 + 30, 23 * 60],   // piatok
+    [8 * 60, 17 * 60],        // sobota (vždy s „overte telefonicky“)
+    [8 * 60, 17 * 60]         // nedeľa (vždy s „overte telefonicky“)
+  ];
+  /* Skupinové lekcie. day: 0 = pondelok … 6 = nedeľa. tag zodpovedá filtru trénerov. */
+  GK.TIMETABLE = [
+    { day: 0, from: '16:00', to: '17:00', name: 'Pilates', coach: 'Majka Navrátilová', tag: 'pilates' },
+    { day: 0, from: '17:00', to: '18:30', name: 'Krav Maga', coach: 'Tomáš Židek a Slavo Juro', tag: 'kravmaga' },
+    { day: 1, from: '17:00', to: '19:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' },
+    { day: 1, from: '18:00', to: '19:00', name: 'Zdravý chrbát', coach: 'Nikol Molnárová', tag: 'chrbat' },
+    { day: 2, from: '18:00', to: '19:00', name: 'Pilates', coach: 'Majka Navrátilová', tag: 'pilates' },
+    { day: 3, from: '17:00', to: '19:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' },
+    { day: 3, from: '18:00', to: '19:00', name: 'Zdravý chrbát', coach: 'Nikol Molnárová', tag: 'chrbat' },
+    { day: 5, from: '13:00', to: '15:00', name: 'Bojové športy', coach: 'Michal Šášik', tag: 'boj', note: 'MMA, Jiu Jitsu, Luta Livre' }
+  ];
+  /* Štátne sviatky SR (MM-DD). Veľký piatok a Veľkonočný pondelok sa dopočítajú. V sviatok web nikdy
+     nehlási „Otvorené“, ale „overte telefonicky“, a lekcie v ten deň neponúka. Pri zmene zákona upraviť. */
+  GK.HOLIDAYS = ['01-01', '01-06', '05-01', '05-08', '07-05', '08-29', '09-01', '09-15', '11-01', '11-17', '12-24', '12-25', '12-26'];
+  GK.DAYS = ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'];
+
+  var DAY = 864e5, fmt = null;
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function hm(m) { return p2(Math.floor(m / 60)) + ':' + p2(m % 60); }
+  function tm(s) { var q = s.split(':'); return +q[0] * 60 + +q[1]; }
+  GK.hm = hm; GK.tm = tm;
+
+  /* teraz v Bratislave: date = UTC polnoc toho dňa (na počítanie dní), day 0 = pondelok, min = minúta dňa.
+     Test: ?gk-at=2026-12-24T18:12 */
+  GK.now = function () {
+    var q = /[?&]gk-at=(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/.exec(location.search), t, o = {}, n = new Date();
+    if (q) t = { date: Date.UTC(+q[1], q[2] - 1, +q[3]), min: q[4] * 60 + +q[5] };
+    else try {
+      fmt = fmt || new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      fmt.formatToParts(n).forEach(function (x) { o[x.type] = x.value; });
+      t = { date: Date.UTC(+o.year, o.month - 1, +o.day), min: (o.hour % 24) * 60 + +o.minute };
+    } catch (e) { t = { date: Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()), min: n.getHours() * 60 + n.getMinutes() }; }
+    t.day = (new Date(t.date).getUTCDay() + 6) % 7;
+    return t;
+  };
+  function easter(y) {
+    var a = y % 19, b = Math.floor(y / 100), c = y % 100, e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
+      h = (19 * a + b - Math.floor(b / 4) - g + 15) % 30, l = (32 + 2 * e + 2 * Math.floor(c / 4) - h - c % 4) % 7,
+      m = Math.floor((a + 11 * h + 22 * l) / 451), x = h + l - 7 * m + 114;
+    return Date.UTC(y, Math.floor(x / 31) - 1, x % 31 + 1);
+  }
+  function holiday(date) {
+    var x = new Date(date), e = easter(x.getUTCFullYear());
+    return GK.HOLIDAYS.indexOf(p2(x.getUTCMonth() + 1) + '-' + p2(x.getUTCDate())) >= 0 || date === e - 2 * DAY || date === e + DAY;
+  }
+  function info(t, k) { var dow = (t.day + k) % 7; return { dow: dow, wk: dow >= 5, hol: holiday(t.date + k * DAY), H: GK.HOURS[dow] }; }
+
+  /* stav prevádzky: text (lišta, úvod, menu, kontakt, pätička), meta (karta Začínam), bar (podtitul v lište) */
+  GK.status = function (t) {
+    t = t || GK.now();
+    var a = info(t, 0), b = info(t, 1), H = a.H, m = t.min, s = { open: false, check: false };
+    if (a.hol) { s.check = true; s.text = 'Dnes je sviatok · overte telefonicky'; s.meta = 'Sviatok: overte telefonicky'; }
+    else if (m >= H[0] && m < H[1]) {
+      if (a.wk) { s.check = true; s.text = 'Víkend do ' + hm(H[1]) + ' · overte telefonicky'; s.meta = 'Víkend: overte telefonicky'; }
+      else { s.open = true; s.text = (H[1] - m <= 60 ? 'Otvorené, zatvárame o ' : 'Otvorené do ') + hm(H[1]); s.meta = 'Dnes do ' + hm(H[1]); }
+    } else if (m < H[0]) {
+      if (a.wk) { s.check = true; s.text = 'Dnes od ' + hm(H[0]) + ' · overte telefonicky'; s.meta = 'Víkend: overte telefonicky'; }
+      else { s.text = 'Dnes otvárame o ' + hm(H[0]); s.meta = 'Dnes od ' + hm(H[0]); }
+    } else if (b.hol) { s.text = 'Zajtra je sviatok · overte telefonicky'; s.meta = 'Sviatok: overte telefonicky'; }
+    else if (b.wk) { s.text = 'Zajtra od ' + hm(b.H[0]) + ' · overte telefonicky'; s.meta = 'Víkend: overte telefonicky'; }
+    else { s.text = 'Zatvorené · zajtra od ' + hm(b.H[0]); s.meta = 'Zajtra od ' + hm(b.H[0]); }
+    s.bar = s.open ? 'Otvorené do ' + hm(H[1]) : s.meta;
+    s.today = hm(H[0]) + ' – ' + hm(H[1]);
+    return s;
+  };
+
+  /* lekcia, ktorá práve beží, alebo najbližšia (do 7 dní); tags = filter, sviatočné dni sa preskočia */
+  GK.lesson = function (t, tags) {
+    t = t || GK.now();
+    for (var k = 0; k < 8; k++) {
+      var f = info(t, k);
+      if (f.hol) continue;
+      var rows = GK.TIMETABLE.filter(function (c) { return c.day === f.dow && (!tags || tags.indexOf(c.tag) >= 0); })
+        .sort(function (x, y) { return tm(x.from) - tm(y.from); });
+      var live = k ? [] : rows.filter(function (c) { return t.min >= tm(c.from) && t.min < tm(c.to); });
+      if (live.length) return { now: true, k: 0, dow: f.dow, list: live };
+      var nx = rows.filter(function (c) { return k > 0 || tm(c.from) > t.min; })[0];
+      if (nx) return { now: false, k: k, dow: f.dow, list: [nx] };
+    }
+    return null;
+  };
+  function when(L, o) { return (L.k === 0 ? 'Dnes' : L.k === 1 ? 'Zajtra' : GK.DAYS[L.dow]) + (o ? ' o ' : ' ') + L.list[0].from; }
+  function names(L) { return L.list.map(function (c) { return c.name; }).join(' a '); }
+
+  function each(sel, fn) { Array.prototype.forEach.call(d.querySelectorAll(sel), fn); }
+  function put(sel, text, now) { each(sel, function (el) { if (el.textContent !== text) el.textContent = text; if (now != null) el.classList.toggle('is-now', now); }); }
+
+  /* vypíše všetky živé údaje, ktoré sú práve v DOM; volá sa za úvodom, z app.js a každú minútu */
+  GK.paint = function () {
+    var t = GK.now(), s = GK.status(t), L, c;
+    GK.last = s;
+    each('[data-open-status]', function (el) {
+      var tx = el.getAttribute('data-open-status') === 'short' ? s.bar : s.text;
+      if (el.textContent !== tx) el.textContent = tx;
+      var wr = el.closest && el.closest('.status, .nav-status, .hero-live');
+      if (wr) { wr.classList.toggle('is-open', s.open); wr.classList.toggle('is-check', s.check); }
+    });
+    put('[data-today-hours]', s.today);
+    /* kolofón úvodu (počítač): všetky lekcie */
+    L = GK.lesson(t);
+    if (L) {
+      c = L.list[0];
+      put('[data-today-k]', L.now ? 'Práve teraz' : when(L, true));
+      put('[data-today-line]', L.now ? names(L) + (L.list.length === 1 ? ', do ' + c.to : '') :
+        c.name + ((c.name + c.coach).length <= 29 ? ' · ' + c.coach : ''));
+    }
+    /* obrazovka „Čo je o vás?“ */
+    put('[data-live="c-open"]', s.meta);
+    L = GK.lesson(t, ['boj']);
+    if (L) put('[data-live="c-boj"]', L.now ? 'Teraz, do ' + L.list[0].to : when(L), L.now);
+    L = GK.lesson(t, ['pilates', 'kravmaga', 'chrbat']);
+    if (L) put('[data-live="c-lekcie"]', L.now ? 'Teraz · ' + names(L) : when(L) + ' · ' + L.list[0].name, L.now);
+    d.documentElement.classList.remove('live-wait');
+    try { d.dispatchEvent(new Event('gk:tick')); } catch (e) {}
+  };
+  /* tik presne na celú minútu (+0,5 s) a po návrate na kartu */
+  GK.start = function () {
+    if (GK.timer) return;
+    GK.timer = setTimeout(function () { GK.paint(); GK.timer = setInterval(GK.paint, 60000); }, 60500 - Date.now() % 60000);
+    d.addEventListener('visibilitychange', function () { if (!d.hidden) GK.paint(); });
+  };
+  GK.paint();
+
+  /* ---------- otvorenie úvodu ----------
+     Dve nezávislé stopy: fotka (závoj sa zdvihne po dekódovaní) a text (štart po písme, najneskôr o 300 ms).
+     Hýbe sa len transform a opacity. gk:hero-done = text dobehol a kamera dosadla; až potom WebGL a ťažké JS. */
+  (function (h) {
+    var cl = h.classList, full = cl.contains('hx'), quick = cl.contains('hx-quick'), t0 = Date.now(), lit = false, go = false;
+    function done() {
+      if (GK.heroDone) return;
+      GK.heroDone = true;
+      try { d.dispatchEvent(new Event('gk:hero-done')); } catch (e) {}
+    }
+    if (!full && !quick) { cl.add('hx-done'); done(); return; }
+    var img = d.querySelector('.hero-img');
+    function light() { if (!lit) { lit = true; cl.add('hx-lit'); } }
+    if (img && img.decode) img.decode().then(light, light); else light();
+    setTimeout(light, 1200);
+    function play() {
+      if (go) return;
+      go = true;
+      requestAnimationFrame(function () {
+        cl.add('hx-go');
+        setTimeout(function () { cl.add('hx-done'); }, quick ? 350 : 1650);
+        setTimeout(done, quick ? 350 : Math.max(1650, 2450 - (Date.now() - t0)));
+      });
+    }
+    setTimeout(play, 300);
+    if (d.fonts && d.fonts.load) Promise.all([
+      d.fonts.load('640 100px "GK Hero"', 'Stačí prísť. Vstup 6 €.'),
+      d.fonts.load('600 14px Manrope', 'Otvorené do 21:00'),
+      d.fonts.load('500 16px Manrope', 'Bez objednávania ukážete')
+    ]).then(play, play);
+    else play();
+  })(d.documentElement);
+})(window, document);
+</script>
+
+<!-- ČO JE O VÁS: výber cesty, samostatná obrazovka -->
+<section class="cesta" id="cesta" aria-labelledby="h-cesta">
+  <div class="wrap cesta-in">
+    <header class="cesta-head reveal">
+      <div><p class="kicker">Kde začať</p><h2 id="h-cesta" class="cesta-h">Čo je <em>o vás?</em></h2></div>
+      <p class="cesta-lead">Vyberte si a ukážeme vám, kam ísť ďalej.</p>
+    </header>
+    <nav aria-label="Výber cesty">
+      <ol class="cesta-list">
+        <li class="reveal"><a class="cesta-card" href="#prva-navsteva"><picture class="cesta-pic"><source type="image/avif" srcset="assets/img/f/recepcia-1-640.avif 640w, assets/img/f/recepcia-1-1080.avif 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><source type="image/webp" srcset="assets/img/f/recepcia-1-640.webp 640w, assets/img/f/recepcia-1-1080.webp 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><img src="assets/img/f/recepcia-1-640.jpg" srcset="assets/img/f/recepcia-1-640.jpg 640w, assets/img/f/recepcia-1-1080.jpg 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw" width="640" height="800" alt="" loading="lazy" decoding="async"></picture><span class="cesta-n">01</span><span class="cesta-t">Začínam</span><span class="cesta-m" data-live="c-open">Bez objednávania</span><span class="cesta-d">Tri kroky: prídete, zaplatíte na recepcii, cvičíte.</span><span class="cesta-go" aria-hidden="true">→</span></a></li>
+        <li class="reveal"><a class="cesta-card" href="#priestor"><picture class="cesta-pic"><source type="image/avif" srcset="assets/img/f/volne-vahy-1-640.avif 640w, assets/img/f/volne-vahy-1-1080.avif 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><source type="image/webp" srcset="assets/img/f/volne-vahy-1-640.webp 640w, assets/img/f/volne-vahy-1-1080.webp 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><img src="assets/img/f/volne-vahy-1-640.jpg" srcset="assets/img/f/volne-vahy-1-640.jpg 640w, assets/img/f/volne-vahy-1-1080.jpg 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw" width="640" height="800" alt="" loading="lazy" decoding="async"></picture><span class="cesta-n">02</span><span class="cesta-t">Sila a postava</span><span class="cesta-m">11 záberov priestoru</span><span class="cesta-d">Voľné váhy, stroje a funkčná zóna s rigom Life Fitness.</span><span class="cesta-go" aria-hidden="true">→</span></a></li>
+        <li class="reveal"><a class="cesta-card" href="#treningy"><picture class="cesta-pic"><source type="image/avif" srcset="assets/img/f/mma-live-640.avif 640w, assets/img/f/mma-live-1200.avif 1200w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><source type="image/webp" srcset="assets/img/f/mma-live-640.webp 640w, assets/img/f/mma-live-1200.webp 1200w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><img src="assets/img/f/mma-live-640.jpg" srcset="assets/img/f/mma-live-640.jpg 640w, assets/img/f/mma-live-1200.jpg 1200w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw" width="640" height="443" alt="" loading="lazy" decoding="async"></picture><span class="cesta-n">03</span><span class="cesta-t">Bojové športy</span><span class="cesta-m" data-live="c-boj">Ut a Št 17:00, So 13:00</span><span class="cesta-d">MMA, Jiu Jitsu a Luta Livre s Panda Fight Club, od úplných základov.</span><span class="cesta-go" aria-hidden="true">→</span></a></li>
+        <li class="reveal"><a class="cesta-card" href="#rozvrh"><picture class="cesta-pic"><source type="image/avif" srcset="assets/img/f/tatami-2-640.avif 640w, assets/img/f/tatami-2-1080.avif 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><source type="image/webp" srcset="assets/img/f/tatami-2-640.webp 640w, assets/img/f/tatami-2-1080.webp 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw"><img src="assets/img/f/tatami-2-640.jpg" srcset="assets/img/f/tatami-2-640.jpg 640w, assets/img/f/tatami-2-1080.jpg 1080w" sizes="(max-width: 560px) 88px, (max-width: 860px) 50vw, 25vw" width="640" height="800" alt="" loading="lazy" decoding="async"></picture><span class="cesta-n">04</span><span class="cesta-t">Skupinové lekcie</span><span class="cesta-m" data-live="c-lekcie">Pondelok až štvrtok</span><span class="cesta-d">Pilates, Krav Maga a zdravý chrbát v pevných časoch.</span><span class="cesta-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </nav>
+    <p class="cesta-foot"><span>Plne klimatizované</span><span>Šatne a sprchy</span><span>MultiSport a Upbalansea</span></p>
+  </div>
+</section>
+</div>
 
 <!-- PREČO -->
 <section class="why" id="preco" aria-labelledby="h-preco">
@@ -661,7 +853,7 @@
 
 <div class="dock" aria-label="Rýchle akcie">
   <a class="dock-call" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg>Zavolať</a>
-  <a class="dock-cta" href="#cennik"><svg viewBox="0 0 64 32" aria-hidden="true"><use href="#i-dumbbell"/></svg>Cenník a vstup</a>
+  <a class="dock-cta" href="#cennik"><svg viewBox="0 0 64 32" aria-hidden="true"><use href="#i-dumbbell"/></svg><span class="dock-l dock-l-hero">Ako prísť prvýkrát</span><span class="dock-l dock-l-std">Cenník a vstup</span></a>
 </div>
 
 <a class="totop" href="#top" aria-label="Späť hore"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 7-1.4 1.4L13 8.8V20h-2V8.8l-4.6 4.6L5 12z" fill="currentColor"/></svg></a>

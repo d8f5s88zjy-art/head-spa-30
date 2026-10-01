@@ -4,7 +4,7 @@
    viac než pozadie. Kreslí sa len to, čo je v obraze. Bez WebGL, pri obmedzenom pohybe alebo pri
    chybe ostáva obyčajná fotka pod plátnom.
    - [data-depth-w] / [data-depth-t]: mapa pre široký (počítač) a vysoký (telefón) výrez
-   - .hero-media: kamera po rozsvietení vojde do priestoru; .band-frame: priblíženie podľa --bp
+   - .hero-media: len počítač, po otvorení úvodu sa plátno prelína cez fotku a kamera pomaly vojde dnu; .band-frame: priblíženie podľa --bp
    - .reel-stage: jedno plátno pre všetky zábery, pri strihu prejde kamera cez obraz */
 (function () {
   'use strict';
@@ -19,9 +19,9 @@
   function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
   function ease(x) { return 1 - Math.pow(1 - clamp(x, 0, 1), 3); }
   function loadImg(url) { return new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = url; }); }
-  function bitmap(img) {
+  function bitmap(img, max) {
     if (!window.createImageBitmap) return Promise.resolve(img);
-    var mw = COARSE ? 1200 : 1600, iw = img.naturalWidth, ih = img.naturalHeight;
+    var mw = max || (COARSE ? 1200 : 1600), iw = img.naturalWidth, ih = img.naturalHeight;
     var o = iw > mw ? { resizeWidth: mw, resizeHeight: Math.round(ih * mw / iw), resizeQuality: 'high' } : undefined;
     return createImageBitmap(img, o).catch(function () { return img; });
   }
@@ -60,10 +60,11 @@
     if (window.ResizeObserver) new ResizeObserver(function () { self.size(); }).observe(this.host);
     return true;
   };
-  /* načíta fotku a mapu, nahrá ich do textúr */
+  /* načíta fotku a mapu, nahrá ich do textúr; src môže byť aj už zobrazený <img> (bez druhého sťahovania) */
   Scene.prototype.load = function (src, depth) {
-    var self = this;
-    return Promise.all([loadImg(src).then(bitmap), loadImg(depth)]).then(function (r) {
+    var self = this, max = this.o.maxTex;
+    var pic = typeof src === 'string' ? loadImg(src) : (src.decode ? src.decode().then(function () { return src; }) : Promise.resolve(src));
+    return Promise.all([pic.then(function (i) { return bitmap(i, max); }), loadImg(depth)]).then(function (r) {
       if (!self.gl && !self.init()) throw new Error('webgl');
       var gl = self.gl;
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, self.tex[0]); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, r[0]);
@@ -76,7 +77,7 @@
   };
   Scene.prototype.size = function () {
     if (!this.gl || !this.iw) return;
-    var w = this.host.clientWidth, h = this.host.clientHeight, k = Math.min(window.devicePixelRatio || 1, COARSE ? 1.25 : 1.5, 1600 / Math.max(w, 1));
+    var w = this.host.clientWidth, h = this.host.clientHeight, k = Math.min(window.devicePixelRatio || 1, this.o.maxDpr || (COARSE ? 1.25 : 1.5), (this.o.maxPx || 1600) / Math.max(w, 1));
     this.canvas.width = Math.round(w * k); this.canvas.height = Math.round(h * k);
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     var A = w / h, I = this.iw / this.ih;
@@ -90,13 +91,14 @@
     var auto = { x: Math.sin(t * 0.33) * 0.75, y: Math.sin(t * 0.21 + 1.3) * 0.5 };
     var tg = this.user || auto, k = 1 - Math.exp(-dt * (this.user ? 5 : 2));
     this.cur.x += (tg.x - this.cur.x) * k; this.cur.y += (tg.y - this.cur.y) * k;
-    gl.uniform2f(u.off, this.cur.x * AMP, -this.cur.y * AMP * 0.6);
-    var r = (now - this.t0) / 1000, e = ease(r / 2.2);
+    var r = Math.max(0, (now - this.t0) / 1000 - (this.o.hold || 0)), e = ease(r / (this.o.dur || 2.2));   // hold: kamera stojí, kým sa plátno prelína
+    var amp = this.o.amp ? this.o.amp * ease(r / 2) : AMP;              // úvod: pohyb narastá od nuly, prvý snímok = fotka
+    gl.uniform2f(u.off, this.cur.x * amp, -this.cur.y * amp * 0.6);
     var zoom = (this.o.zoom ? this.o.zoom(e, t) : ZOOM + 0.02 * Math.sin(t * 0.15));
     var w = this.cw / zoom, h = this.ch / zoom;
     gl.uniform2f(u.ctr, w / 2 + (1 - w) * this.fx, h / 2 + (1 - h) * this.fy);
     gl.uniform1f(u.zoom, zoom);
-    gl.uniform1f(u.push, (this.o.push == null ? 0.1 : this.o.push) * (1 - e) + 0.025);
+    gl.uniform1f(u.push, typeof this.o.push === 'function' ? this.o.push(e) : (this.o.push == null ? 0.1 : this.o.push) * (1 - e) + 0.025);
     gl.uniform1f(u.fade, this.o.fade ? this.o.fade(r) : 1);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
@@ -131,15 +133,30 @@
     return { src: img.getAttribute(mob ? 'data-src-t' : 'data-src-w') || img.currentSrc || img.src, depth: el.getAttribute(mob ? 'data-depth-t' : 'data-depth-w') };
   }
 
-  /* úvod: po rozsvietení kamera vojde dnu, potom pomalý pohyb; skrolovanie posúva scénu ako fotku */
+  /* úvod: len počítač (nie telefón, dotyk, šetrenie dát, slabé zariadenie). Štartuje až po otvorení úvodu (gk:hero-done)
+     pri nečinnosti; textúra z už zobrazenej fotky. Prvý snímok sa zhoduje s fotkou v CSS (object-position čítaný
+     z CSS, zoom 1, posun 0), plátno sa prelína (.gl → .gl-ready) a až potom kamera pomaly vojde do priestoru. */
   var hero = document.querySelector('.hero-media[data-depth-w]');
-  if (hero) {
-    var hs = new Scene(hero, { input: hero.closest('.hero'), fx: 0.5, fy: MOBILE.matches ? 0.66 : 0.58, push: 0.08,
-      zoom: function (e, t) { var base = MOBILE.matches ? 1.4 : 1.12; return base - 0.05 * e + 0.012 * Math.sin(t * 0.15); } });
-    var s = srcFor(hero);
-    var startHero = function () { if (s && s.depth) hs.load(s.src, s.depth).catch(function () {}); };
-    watch(hs, hero.closest('.hero'), '100px');
-    if ('requestIdleCallback' in window) requestIdleCallback(startHero, { timeout: 1200 }); else setTimeout(startHero, 300);
+  var NC = navigator.connection || {};
+  var LITE = window.matchMedia('(max-width: 860px), (hover: none) and (pointer: coarse)').matches;
+  if (hero && !LITE && !NC.saveData && !(navigator.deviceMemory && navigator.deviceMemory < 4)) {
+    var himg = hero.querySelector('.hero-img'), heroEl = hero.closest('.hero');
+    var op = getComputedStyle(himg).objectPosition.split(' '), hfx = parseFloat(op[0]) / 100, hfy = parseFloat(op[1]) / 100;
+    var hs = new Scene(hero, { input: heroEl, fx: isNaN(hfx) ? 0.5 : hfx, fy: isNaN(hfy) ? 0.62 : hfy,
+      maxTex: 1920, maxPx: 2048, maxDpr: 2, hold: 0.9, dur: 6, amp: 0.016,
+      push: function (e) { return 0.025 * e; },
+      zoom: function (e, t) { return 1 + 0.035 * e + 0.006 * Math.sin(t * 0.15) * e; } });
+    var startHero = function () { hs.load(himg, hero.getAttribute('data-depth-w')).catch(function () {}); };
+    var armHero = function () { if ('requestIdleCallback' in window) requestIdleCallback(startHero, { timeout: 1000 }); else setTimeout(startHero, 200); };
+    if (window.GK && window.GK.heroDone) armHero(); else document.addEventListener('gk:hero-done', armHero);
+    /* slučka beží, len kým úvod nie je celý prekrytý listom „Čo je o vás?“ (sticky úvod je pre observer stále viditeľný) */
+    var heroIn = true, heroVis = function () {
+      var v = heroIn && window.scrollY < window.innerHeight;
+      if (v !== hs.visible) { hs.visible = v; if (v) hs.loop(); }
+    };
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { heroIn = en[0].isIntersecting; heroVis(); }).observe(heroEl);
+    window.addEventListener('scroll', heroVis, { passive: true });
+    heroVis();
   }
 
   /* pás LED: priblíženie ide podľa --bp z rolovania */
