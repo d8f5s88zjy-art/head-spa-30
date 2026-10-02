@@ -321,11 +321,11 @@
       list.classList.toggle('tt-quiet', !!quiet);
       $$('.tt-day', tabs).forEach(function (b) { b.setAttribute('aria-selected', String(+b.dataset.day === day)); });
       list.setAttribute('aria-labelledby', 'tt-tab-' + day);
-      var h = HOURS[day], hol = holOf(day), wk = day >= 5;
+      var h = HOURS[day], hol = holOf(day);
       var rows = TIMETABLE.filter(function (c) { return c.day === day; }).sort(function (a, b) { return a.from.localeCompare(b.from); });
       var html = '<div class="tt-row tt-open" style="animation-delay:0ms">' +
         '<div class="tt-time">' + mm(h[0]) + '<small>do ' + mm(h[1]) + '</small></div>' +
-        '<div class="tt-name">Samostatný tréning<span>' + (hol ? 'Sviatok, otváracie hodiny overte telefonicky' : wk ? 'Víkend, otváracie hodiny overte telefonicky' : 'Fitness centrum otvorené celý deň, stroje aj voľné váhy') + '</span></div>' +
+        '<div class="tt-name">Samostatný tréning<span>' + (hol ? 'Sviatok, otváracie hodiny overte telefonicky' : 'Fitness centrum otvorené celý deň, stroje aj voľné váhy') + '</span></div>' +
         '<div class="tt-coach">Bez objednania</div>' +
         '<a class="tt-go" href="#cennik">Cenník</a></div>';
       var now = nowBA(), isToday = day === now.day;
@@ -345,7 +345,7 @@
           '<div class="tt-coach">' + c.coach + '</div>' +
           '<a class="tt-go" href="#treneri" data-filter-go="' + c.tag + '">Tréner</a></div>';
       }).join('');
-      if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. ' + (hol || wk ? 'Otváracie hodiny overte telefonicky.' : 'Fitness centrum je otvorené na samostatný tréning.') + '</p>';
+      if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. ' + (hol ? 'Otváracie hodiny overte telefonicky.' : 'Fitness centrum je otvorené na samostatný tréning.') + '</p>';
       /* minútové obnovenie: bez zmeny nič neprepisovať; inak vrátiť fokus na ten istý odkaz */
       if (html === list._h) return;
       var fi = -1, ae = d.activeElement;
