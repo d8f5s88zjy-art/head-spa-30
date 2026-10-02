@@ -29,10 +29,10 @@
 <link rel="preload" href="assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" imagesizes="100vw" media="(min-width: 861px)">
-<link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w, assets/img/f/funkcna-zona-6-1600.avif 1600w" imagesizes="100vw" media="(max-width: 860px)">
+<link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w, assets/img/f/funkcna-zona-6-1600.avif 1600w" imagesizes="(orientation: portrait) 104vh, 100vw" media="(max-width: 860px)">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
-<noscript><style>.reel:not(.static){height:auto}.reel:not(.static) .reel-stage{position:relative;height:auto;display:grid;gap:12px}.reel:not(.static) .shot{position:relative;inset:auto;visibility:visible;aspect-ratio:16/9}.reel:not(.static) .reel-stage::before,.reel-hud{display:none}</style></noscript>
+<noscript><style>.reel:not(.static){height:auto}.reel:not(.static) .reel-stage{position:relative;height:auto;display:grid;gap:12px}.reel:not(.static) .shot{position:relative;inset:auto;visibility:visible;aspect-ratio:16/9}.reel:not(.static) .shot figcaption{bottom:16px}.reel:not(.static) .reel-stage::before,.reel-hud{display:none}</style></noscript>
 <script>
 /* Úvod: rozhodne ešte pred prvým vykreslením. hx = celé otvorenie, hx-quick = opakovaná návšteva v tej istej karte,
    bez triedy = všetko hneď (obmedzený pohyb, odkaz na sekciu, šetrenie dát, 2G). */
@@ -42,7 +42,7 @@
   c.remove('no-anim');
   c.add('js', 'live-wait');
   /* poistka: ak sa app.js nenačíta (sieť, blokovač), obsah pod úvodom sa ukáže bez animácií */
-  window.addEventListener('load', function () { setTimeout(function () { if (!window.GK_APP) c.add('no-anim'); }, 2500); });
+  document.addEventListener('DOMContentLoaded', function () { if (window.GK_APP) return; c.add('no-anim'); c.remove('in-hero'); [].forEach.call(document.querySelectorAll('.reel'), function (r) { r.classList.add('static'); }); });
   /* poistka: keby skript za úvodom zlyhal, text aj tak ukázať */
   setTimeout(function () { c.remove('live-wait'); c.add('hx-lit', 'hx-go', 'hx-done'); }, 3000);
   if (mq('(max-width: 860px), (hover: none) and (pointer: coarse)')) c.add('lite-root');
@@ -104,7 +104,7 @@
       <a href="#cennik">Cenník</a>
       <a href="#kontakt">Kontakt</a>
       <p class="nav-status"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></p>
-      <a class="nav-phone" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg><span data-fact="phone">+421 944 800 394</span></a>
+      <a class="nav-phone" data-fact="phone-link" href="tel:+421944800394"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg><span data-fact="phone">+421 944 800 394</span></a>
     </nav>
     <div class="bar-cta">
       <span class="status"><span class="dot"></span><span data-open-status="short">Otváracie hodiny</span></span>
@@ -121,7 +121,7 @@
 <div class="hero-pin">
 <section class="hero" aria-labelledby="h-hero">
   <div class="hero-media" aria-hidden="true" data-depth-w="assets/img/d/funkcna-zona-6-w.png" data-depth-t="assets/img/d/funkcna-zona-6.png">
-    <picture class="hero-cam"><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w, assets/img/f/funkcna-zona-6-1600.avif 1600w" sizes="100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.webp 640w, assets/img/f/funkcna-zona-6-1080.webp 1080w, assets/img/f/funkcna-zona-6-1600.webp 1600w" sizes="100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.jpg 640w, assets/img/f/funkcna-zona-6-1080.jpg 1080w, assets/img/f/funkcna-zona-6-1600.jpg 1600w" sizes="100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-6-w-960.webp 960w, assets/img/f/funkcna-zona-6-w-1920.webp 1920w" sizes="100vw"><img class="hero-img" fetchpriority="high" data-src-w="assets/img/f/funkcna-zona-6-w-1920.jpg" data-src-t="assets/img/f/funkcna-zona-6-1080.jpg" src="assets/img/f/funkcna-zona-6-w-1920.jpg" srcset="assets/img/f/funkcna-zona-6-w-960.jpg 960w, assets/img/f/funkcna-zona-6-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async"></picture>
+    <picture class="hero-cam"><source type="image/avif" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.avif 640w, assets/img/f/funkcna-zona-6-1080.avif 1080w, assets/img/f/funkcna-zona-6-1600.avif 1600w" sizes="(orientation: portrait) 104vh, 100vw"><source type="image/webp" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.webp 640w, assets/img/f/funkcna-zona-6-1080.webp 1080w, assets/img/f/funkcna-zona-6-1600.webp 1600w" sizes="(orientation: portrait) 104vh, 100vw"><source type="image/jpeg" media="(max-width: 860px)" srcset="assets/img/f/funkcna-zona-6-640.jpg 640w, assets/img/f/funkcna-zona-6-1080.jpg 1080w, assets/img/f/funkcna-zona-6-1600.jpg 1600w" sizes="(orientation: portrait) 104vh, 100vw"><source type="image/avif" srcset="assets/img/f/funkcna-zona-6-w-960.avif 960w, assets/img/f/funkcna-zona-6-w-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="assets/img/f/funkcna-zona-6-w-960.webp 960w, assets/img/f/funkcna-zona-6-w-1920.webp 1920w" sizes="100vw"><img class="hero-img" fetchpriority="high" data-src-w="assets/img/f/funkcna-zona-6-w-1920.jpg" data-src-t="assets/img/f/funkcna-zona-6-1080.jpg" src="assets/img/f/funkcna-zona-6-w-1920.jpg" srcset="assets/img/f/funkcna-zona-6-w-960.jpg 960w, assets/img/f/funkcna-zona-6-w-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async"></picture>
     <div class="hero-shade"></div>
     <div class="hero-expo"></div>
     <div class="hero-dim"></div>
@@ -261,6 +261,7 @@
       if (wr) { wr.classList.toggle('is-open', s.open); wr.classList.toggle('is-check', s.check); }
     });
     put('[data-today-hours]', s.today);
+    put('[data-today-label]', 'Dnes');
     /* kolofón úvodu (počítač): všetky lekcie */
     L = GK.lesson(t);
     if (L) {
@@ -285,6 +286,8 @@
     d.addEventListener('visibilitychange', function () { if (!d.hidden) GK.paint(); });
   };
   GK.paint();
+  /* živé údaje aj v sekciách nižšie, aj keby app.js nenabehol */
+  document.addEventListener('DOMContentLoaded', GK.paint);
 
   /* ---------- otvorenie úvodu ----------
      Dve nezávislé stopy: fotka (závoj sa zdvihne po dekódovaní) a text (štart po písme, najneskôr o 300 ms).
@@ -502,9 +505,9 @@
         <div class="duo-body">
           <p class="tr-tag">S trénerom · po dohode</p>
           <h3>Osobný tréning a výživa</h3>
-          <p>Začiatočníkom tréner nastaví techniku a napíše tréningový plán s jedálničkom. Pokročilým nutričné poradenstvo s analýzou telesného zloženia aj prípravu na súťaž vo fitness a silovom trojboji. Cenu a termín dohodnete s trénerom, alebo stačí povedať na recepcii.</p>
+          <p>Začiatočníkom tréner nastaví techniku a napíše tréningový plán s jedálničkom. Pokročilým nutričné poradenstvo s analýzou telesného zloženia aj prípravu na súťaž vo fitness a silovom trojboji. Cenu a termín dohodnete priamo s trénerom.</p>
           <a class="tr-link" href="#treneri">Vybrať trénera</a>
-          <div class="faces" aria-label="Jakub Vrána, Jozef Humay, Tomáš Králik a Jaroslav Šoltís"><picture class="face"><source type="image/avif" srcset="assets/img/tim/vrana-320.avif"><source type="image/webp" srcset="assets/img/tim/vrana-320.webp"><img src="assets/img/tim/vrana-320.jpg" width="48" height="48" alt="Jakub Vrána" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/humay-320.avif"><source type="image/webp" srcset="assets/img/tim/humay-320.webp"><img src="assets/img/tim/humay-320.jpg" width="48" height="48" alt="Jozef Humay" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/kralik-320.avif"><source type="image/webp" srcset="assets/img/tim/kralik-320.webp"><img src="assets/img/tim/kralik-320.jpg" width="48" height="48" alt="Tomáš Králik" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/soltis-320.avif"><source type="image/webp" srcset="assets/img/tim/soltis-320.webp"><img src="assets/img/tim/soltis-320.jpg" width="48" height="48" alt="Jaroslav Šoltís" loading="lazy" decoding="async"></picture><span class="faces-l">Jakub Vrána, Jozef Humay, Tomáš Králik a Jaroslav Šoltís</span></div>
+          <div class="faces" aria-label="Jakub Vrána, Jozef Humay, Tomáš Králik a Jaroslav Šoltís"><picture class="face"><source type="image/avif" srcset="assets/img/tim/vrana-320.avif"><source type="image/webp" srcset="assets/img/tim/vrana-320.webp"><img src="assets/img/tim/vrana-320.jpg" width="48" height="48" alt="Jakub Vrána" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/humay-320.avif"><source type="image/webp" srcset="assets/img/tim/humay-320.webp"><img src="assets/img/tim/humay-320.jpg" width="48" height="48" alt="Jozef Humay" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/kralik-320.avif"><source type="image/webp" srcset="assets/img/tim/kralik-320.webp"><img src="assets/img/tim/kralik-320.jpg" width="48" height="48" alt="Tomáš Králik" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/soltis-320.avif"><source type="image/webp" srcset="assets/img/tim/soltis-320.webp"><img src="assets/img/tim/soltis-320.jpg" width="48" height="48" alt="Jaroslav Šoltís" loading="lazy" decoding="async"></picture><span class="faces-l">Jakub Vrána, Jozef Humay, Tomáš Králik a Jaroslav Šoltís</span></div>
         </div>
       </article>
     </div>
@@ -521,7 +524,7 @@
       </div>
       <div class="lessons-list">
         <h3 class="lessons-h">Štyri pevné body vášho týždňa</h3>
-        <p class="lessons-p">Každá lekcia má svoj deň a hodinu, prídete podľa rozvrhu. Cena lekcie nie je v cenníku fitka, povie vám ju tréner alebo recepcia.</p>
+        <p class="lessons-p">Každá lekcia má svoj deň a hodinu, prídete podľa rozvrhu. Cena lekcie nie je v cenníku fitka, dohodnete ju priamo s trénerom.</p>
         <article class="lesson reveal" data-tag="boj">
           <p class="lesson-when">Ut a Št 17:00–19:00 · So 13:00–15:00</p>
           <h4>Bojové športy <span>MMA · Jiu Jitsu · Luta Livre (no-gi, bez kimona)</span></h4>
@@ -562,7 +565,7 @@
     <header class="sec-head reveal">
       <p class="kicker"><span class="ch">04</span>Tréneri</p>
       <h2 id="h-treneri" class="h2">Plán, ktorý <em>vydrží aj v stredu.</em></h2>
-      <p class="lead">Desať trénerov pre fitness, výživu, bojové športy, Krav Maga, pilates a zdravý chrbát. Začiatočníkom nastavia techniku a plán, pokročilým prípravu na súťaž. Osobný tréning dohodnete s trénerom, alebo stačí povedať na recepcii.</p>
+      <p class="lead">Desať trénerov pre fitness, výživu, bojové športy, Krav Maga, pilates a zdravý chrbát. Začiatočníkom nastavia techniku a plán, pokročilým prípravu na súťaž. Osobný tréning dohodnete priamo s trénerom.</p>
     </header>
     <div class="chips reveal" role="group" aria-label="Filter trénerov">
       <button class="chip" type="button" data-tag="all" aria-pressed="true">Všetci</button>
@@ -579,7 +582,7 @@
         <div class="coach-face"><picture><source type="image/avif" srcset="assets/img/tim/sasik-320.avif 320w, assets/img/tim/sasik.avif 480w" sizes="(max-width: 600px) 45vw, 220px"><source type="image/webp" srcset="assets/img/tim/sasik-320.webp 320w, assets/img/tim/sasik.webp 480w" sizes="(max-width: 600px) 45vw, 220px"><img src="assets/img/tim/sasik.jpg" srcset="assets/img/tim/sasik-320.jpg 320w, assets/img/tim/sasik.jpg 480w" sizes="(max-width: 600px) 45vw, 220px" width="480" height="600" alt="Michal Šášik" loading="lazy" decoding="async"></picture></div>
         <h3 class="coach-name">Michal Šášik</h3>
         <p class="coach-role">Bojové športy</p>
-        <p class="coach-bio">MMA a Luta Livre, tréner Panda Fight Club. Postoj aj zem, od úplných základov po zápas.</p>
+        <p class="coach-bio">MMA a Luta Livre, tréner Panda Fight Club. Postoj aj zem, od úplných základov.</p>
         <a class="coach-tel" href="tel:+421905930597">0905 930 597</a>
       </article>
       <article class="coach reveal" data-tilt data-tags="fitness boj vyziva">
@@ -607,13 +610,13 @@
         <div class="coach-face"><picture><source type="image/avif" srcset="assets/img/tim/zidek-320.avif 320w, assets/img/tim/zidek.avif 480w" sizes="(max-width: 600px) 45vw, 220px"><source type="image/webp" srcset="assets/img/tim/zidek-320.webp 320w, assets/img/tim/zidek.webp 480w" sizes="(max-width: 600px) 45vw, 220px"><img src="assets/img/tim/zidek.jpg" srcset="assets/img/tim/zidek-320.jpg 320w, assets/img/tim/zidek.jpg 480w" sizes="(max-width: 600px) 45vw, 220px" width="480" height="600" alt="Tomáš Židek" loading="lazy" decoding="async"></picture></div>
         <h3 class="coach-name">Tomáš Židek</h3>
         <p class="coach-role">Krav Maga</p>
-        <p class="coach-bio">Praktická sebaobrana pre reálne situácie. Lekcia každý pondelok o 17:00.</p>
+        <p class="coach-bio">Praktická sebaobrana. Lekcia každý pondelok o 17:00.</p>
       </article>
       <article class="coach reveal" data-tilt data-tags="kravmaga">
         <div class="coach-face"><picture><source type="image/avif" srcset="assets/img/tim/juro-320.avif 320w, assets/img/tim/juro.avif 480w" sizes="(max-width: 600px) 45vw, 220px"><source type="image/webp" srcset="assets/img/tim/juro-320.webp 320w, assets/img/tim/juro.webp 480w" sizes="(max-width: 600px) 45vw, 220px"><img src="assets/img/tim/juro.jpg" srcset="assets/img/tim/juro-320.jpg 320w, assets/img/tim/juro.jpg 480w" sizes="(max-width: 600px) 45vw, 220px" width="480" height="600" alt="Slavo Juro" loading="lazy" decoding="async"></picture></div>
         <h3 class="coach-name">Slavo Juro</h3>
         <p class="coach-role">Krav Maga</p>
-        <p class="coach-bio">Inštruktor Krav Maga. Techniky, ktoré fungujú aj pod tlakom.</p>
+        <p class="coach-bio">Krav Maga. Praktická sebaobrana, aj bez predchádzajúcich skúseností. Pondelok o 17:00.</p>
       </article>
       <article class="coach reveal" data-tilt data-tags="chrbat">
         <div class="coach-face"><picture><source type="image/avif" srcset="assets/img/tim/molnarova-320.avif 320w, assets/img/tim/molnarova.avif 480w" sizes="(max-width: 600px) 45vw, 220px"><source type="image/webp" srcset="assets/img/tim/molnarova-320.webp 320w, assets/img/tim/molnarova.webp 480w" sizes="(max-width: 600px) 45vw, 220px"><img src="assets/img/tim/molnarova.jpg" srcset="assets/img/tim/molnarova-320.jpg 320w, assets/img/tim/molnarova.jpg 480w" sizes="(max-width: 600px) 45vw, 220px" width="480" height="600" alt="Nikol Molnárová" loading="lazy" decoding="async"></picture></div>
@@ -641,7 +644,7 @@
         <p class="coach-bio">Individuálne nutričné poradenstvo, analýza telesného zloženia a stravovací protokol. Osobné tréningy a príprava na súťaž vo fitness a silovom trojboji.</p>
       </article>
     </div>
-    <p class="team-note reveal">Ak tréner nemá uvedený telefón, dohodnite sa na recepcii alebo na <a data-fact="phone-link" href="#kontakt"><span data-fact="phone">+421 944 800 394</span></a>.</p>
+    <p class="team-note reveal">Ak tréner nemá uvedený telefón, dohodnite sa na recepcii alebo na <a data-fact="phone-link" href="tel:+421944800394"><span data-fact="phone">+421 944 800 394</span></a>.</p>
   </div>
 </section>
 
@@ -655,11 +658,11 @@
     </header>
     <div class="today reveal">
       <div class="today-l">
-        <p class="today-k">Dnes</p>
-        <p class="today-h" data-today-hours>06:30 – 21:00</p>
+        <p class="today-k" data-today-label>Otváracie hodiny</p>
+        <p class="today-h" data-today-hours>Po–Št 06:30–21:00 · Pi do 23:00</p>
       </div>
       <p class="status status-big"><span class="dot"></span><span data-open-status>Otváracie hodiny</span></p>
-      <a class="btn btn-ghost" data-fact="phone-link" href="#kontakt"><svg class="btn-ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>Overiť telefonicky</a>
+      <a class="btn btn-ghost" data-fact="phone-link" href="tel:+421944800394"><svg class="btn-ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg>Overiť telefonicky</a>
     </div>
     <div class="tt reveal" data-timetable>
       <div class="tt-days" role="tablist" aria-label="Dni v týždni"></div>
@@ -694,7 +697,7 @@
       <article class="price-card glowcard reveal" data-tilt data-price="42" data-name="Permanentka študent, mesiac">
         <p class="price-name">Permanentka študent</p>
         <p class="price"><span class="price-n">42 €</span><span class="price-u">mesiac</span></p>
-        <p class="price-d">Tá istá permanentka, nižšia cena – ráno pred školou aj večer po nej.</p>
+        <p class="price-d">Mesačná permanentka za študentskú cenu.</p>
         <a class="btn btn-ghost" href="#prva-navsteva">Ako prebieha prvá návšteva</a>
       </article>
     </div>
@@ -768,7 +771,7 @@
       <details class="q">
         <summary>Aké sú otváracie hodiny?</summary>
         <div class="a">
-          <table class="hours-t hours-inline" data-hours><caption class="sr-only">Otváracie hodiny</caption><tbody></tbody></table>
+          <table class="hours-t hours-inline" data-hours><caption class="sr-only">Otváracie hodiny</caption><tbody><tr><td>Pondelok</td><td>06:30 – 21:00</td></tr><tr><td>Utorok</td><td>06:30 – 21:00</td></tr><tr><td>Streda</td><td>06:30 – 21:00</td></tr><tr><td>Štvrtok</td><td>06:30 – 21:00</td></tr><tr><td>Piatok</td><td>06:30 – 23:00</td></tr><tr><td>Sobota</td><td>08:00 – 17:00</td></tr><tr><td>Nedeľa</td><td>08:00 – 17:00</td></tr></tbody></table>
           <p>Cez víkend a počas sviatkov odporúčame hodiny overiť telefonicky.</p>
         </div>
       </details>
@@ -778,7 +781,7 @@
       </details>
       <details class="q">
         <summary>Môžem trénovať s osobným trénerom?</summary>
-        <div class="a"><p>Áno. GYM KLUB ponúka osobné fitness tréningy aj tréningy bojových športov s kvalifikovanými trénermi. Kontakty nájdete v sekcii Tréneri.</p></div>
+        <div class="a"><p>Áno. GYM KLUB ponúka osobné fitness tréningy aj tréningy bojových športov s trénermi. Kontakty nájdete v sekcii Tréneri.</p></div>
       </details>
       <details class="q">
         <summary>Kde vás nájdem?</summary>
@@ -797,12 +800,12 @@
       <address class="addr">
         <p class="addr-line"><strong data-fact="fullname">GYM KLUB Fitness &amp; Bodybuilding</strong></p>
         <p class="addr-line"><span data-fact="street">Výstavná 6</span> (<span data-fact="place">Lipa Centrum</span>)<br><span data-fact="zip">949 01</span> <span data-fact="city">Nitra</span>, <span data-fact="district">Chrenová</span></p>
-        <p class="addr-line"><a data-fact="phone-link" href="#kontakt"><span data-fact="phone">+421 944 800 394</span></a></p>
+        <p class="addr-line"><a data-fact="phone-link" href="tel:+421944800394"><span data-fact="phone">+421 944 800 394</span></a></p>
         <p class="addr-line"><a data-fact="mail-link" href="#kontakt"><span data-fact="email">info@gymklub.sk</span></a></p>
       </address>
       <div class="contact-actions">
         <a class="btn btn-volt" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Navigovať</a>
-        <a class="btn btn-ghost" data-fact="phone-link" href="#kontakt">Zavolať</a>
+        <a class="btn btn-ghost" data-fact="phone-link" href="tel:+421944800394">Zavolať</a>
         <button class="btn btn-ghost" type="button" data-copy-addr>Kopírovať adresu</button>
         <a class="btn btn-ghost" data-fact="ig-link" href="#kontakt" target="_blank" rel="noopener">Instagram</a>
         <a class="btn btn-ghost" data-fact="fb-link" href="#kontakt" target="_blank" rel="noopener">Facebook</a>
@@ -814,7 +817,7 @@
         <h3 class="h3">Otváracie hodiny</h3>
         <table class="hours-t" data-hours>
           <caption class="sr-only">Otváracie hodiny podľa dní</caption>
-          <tbody></tbody>
+          <tbody><tr><td>Pondelok</td><td>06:30 – 21:00</td></tr><tr><td>Utorok</td><td>06:30 – 21:00</td></tr><tr><td>Streda</td><td>06:30 – 21:00</td></tr><tr><td>Štvrtok</td><td>06:30 – 21:00</td></tr><tr><td>Piatok</td><td>06:30 – 23:00</td></tr><tr><td>Sobota</td><td>08:00 – 17:00</td></tr><tr><td>Nedeľa</td><td>08:00 – 17:00</td></tr></tbody>
         </table>
         <p class="hours-note">Fitness centrum. Skupinové lekcie podľa rozvrhu. Víkend, sviatky a výnimky overte telefonicky.</p>
       </div>
@@ -831,7 +834,7 @@
     <p class="foot-h">Tento týždeň máte <em>ešte voľný večer.</em></p>
     <div class="foot-act">
       <a class="btn btn-volt btn-lg btn-arrow" data-fact="map-link" href="#kontakt" target="_blank" rel="noopener">Navigovať na Výstavnú 6</a>
-      <a class="btn btn-ghost btn-lg" data-fact="phone-link" href="#kontakt"><svg class="btn-ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg><span data-fact="phone">+421 944 800 394</span></a>
+      <a class="btn btn-ghost btn-lg" data-fact="phone-link" href="tel:+421944800394"><svg class="btn-ico" viewBox="0 0 24 24"><use href="#i-phone"/></svg><span data-fact="phone">+421 944 800 394</span></a>
     </div>
     <div class="faces faces-sm foot-faces" aria-label="10 trénerov, ktorí vás vezmú"><picture class="face"><source type="image/avif" srcset="assets/img/tim/sasik-320.avif"><source type="image/webp" srcset="assets/img/tim/sasik-320.webp"><img src="assets/img/tim/sasik-320.jpg" width="40" height="40" alt="Michal Šášik" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/kralik-320.avif"><source type="image/webp" srcset="assets/img/tim/kralik-320.webp"><img src="assets/img/tim/kralik-320.jpg" width="40" height="40" alt="Tomáš Králik" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/vrana-320.avif"><source type="image/webp" srcset="assets/img/tim/vrana-320.webp"><img src="assets/img/tim/vrana-320.jpg" width="40" height="40" alt="Jakub Vrána" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/humay-320.avif"><source type="image/webp" srcset="assets/img/tim/humay-320.webp"><img src="assets/img/tim/humay-320.jpg" width="40" height="40" alt="Jozef Humay" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/zidek-320.avif"><source type="image/webp" srcset="assets/img/tim/zidek-320.webp"><img src="assets/img/tim/zidek-320.jpg" width="40" height="40" alt="Tomáš Židek" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/juro-320.avif"><source type="image/webp" srcset="assets/img/tim/juro-320.webp"><img src="assets/img/tim/juro-320.jpg" width="40" height="40" alt="Slavo Juro" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/molnarova-320.avif"><source type="image/webp" srcset="assets/img/tim/molnarova-320.webp"><img src="assets/img/tim/molnarova-320.jpg" width="40" height="40" alt="Nikol Molnárová" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/navratilova-320.avif"><source type="image/webp" srcset="assets/img/tim/navratilova-320.webp"><img src="assets/img/tim/navratilova-320.jpg" width="40" height="40" alt="Majka Navrátilová" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/filipcik-320.avif"><source type="image/webp" srcset="assets/img/tim/filipcik-320.webp"><img src="assets/img/tim/filipcik-320.jpg" width="40" height="40" alt="Kristián Filipčík" loading="lazy" decoding="async"></picture><picture class="face"><source type="image/avif" srcset="assets/img/tim/soltis-320.avif"><source type="image/webp" srcset="assets/img/tim/soltis-320.webp"><img src="assets/img/tim/soltis-320.jpg" width="40" height="40" alt="Jaroslav Šoltís" loading="lazy" decoding="async"></picture><span class="faces-l">10 trénerov, ktorí vás vezmú</span></div>
   </div>
@@ -856,7 +859,7 @@
 </footer>
 
 <div class="dock" aria-label="Rýchle akcie">
-  <a class="dock-call" data-fact="phone-link" href="#kontakt"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg>Zavolať</a>
+  <a class="dock-call" data-fact="phone-link" href="tel:+421944800394"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg>Zavolať</a>
   <a class="dock-cta" href="#cennik"><svg viewBox="0 0 64 32" aria-hidden="true"><use href="#i-dumbbell"/></svg><span class="dock-l dock-l-hero">Ako prísť prvýkrát</span><span class="dock-l dock-l-std">Cenník a vstup</span></a>
 </div>
 

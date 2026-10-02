@@ -346,7 +346,12 @@
           '<a class="tt-go" href="#treneri" data-filter-go="' + c.tag + '">Tréner</a></div>';
       }).join('');
       if (!rows.length) html += '<p class="tt-empty">' + DAYS[day] + ' bez skupinových lekcií. ' + (hol || wk ? 'Otváracie hodiny overte telefonicky.' : 'Fitness centrum je otvorené na samostatný tréning.') + '</p>';
-      list.innerHTML = html;
+      /* minútové obnovenie: bez zmeny nič neprepisovať; inak vrátiť fokus na ten istý odkaz */
+      if (html === list._h) return;
+      var fi = -1, ae = d.activeElement;
+      if (list.contains(ae)) fi = $$('a, button', list).indexOf(ae);
+      list.innerHTML = list._h = html;
+      if (fi >= 0) { var nf = $$('a, button', list)[fi]; if (nf) nf.focus({ preventScroll: true }); }
     }
     tabs.addEventListener('click', function (e) {
       var b = e.target.closest('.tt-day');
@@ -580,6 +585,8 @@
       $('.cut-h', c).textContent = ch[1];
       c.classList.remove('open'); c.classList.add('close');
       setTimeout(function () {
+        /* cieľ zmerať až teraz: počas clony sa mohlo dočítať písmo alebo dokresliť sekcia */
+        y = Math.max(0, Math.min(d.documentElement.scrollHeight - window.innerHeight, el.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(d.documentElement).scrollPaddingTop) || 0)));
         window.scrollTo({ top: y, behavior: 'instant' });
         try { history.replaceState(null, '', '#' + id); } catch (err) {}
         $$('.reveal', el).forEach(function (r) { r.classList.add('in'); });
