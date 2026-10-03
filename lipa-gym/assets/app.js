@@ -709,6 +709,37 @@
     });
   }
 
+  /* ---------- ukážka z tréningu: video sa načíta až pri priblížení, hrá potichu, keď je aspoň z polovice
+     na obrazovke, mimo nej stojí; zvuk zapne tlačidlo. Pri obmedzení pohybu sa samo nespúšťa. ---------- */
+  function liveVideo() {
+    $$('[data-live-video]').forEach(function (box) {
+      var v = $('video', box), snd = $('.lv-sound', box), play = $('.lv-play', box), want = false, user = false;
+      if (!v) return;
+      /* MP4 (H.264) hrá všade bežne; kde prehliadač H.264 nemá, WebM */
+      function load() { if (!v.getAttribute('src')) { v.src = v.canPlayType('video/mp4; codecs="avc1.640028"') || !v.dataset.srcWebm ? v.dataset.src : v.dataset.srcWebm; v.load(); } }
+      /* tlačidlo Prehrať len vtedy, keď prehliadač automatické prehrávanie naozaj zakázal */
+      function go() { load(); var p = v.play(); if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError' && v.paused) play.hidden = false; }); }
+      function stop() { if (!v.paused) v.pause(); }
+      if (reduce.matches) play.hidden = false;
+      play.addEventListener('click', function () { user = true; play.hidden = true; go(); });
+      v.addEventListener('click', function () { if (v.paused) { user = true; play.hidden = true; go(); } else { stop(); play.hidden = false; } });
+      v.addEventListener('playing', function () { play.hidden = true; });
+      snd.addEventListener('click', function () {
+        v.muted = !v.muted;
+        snd.setAttribute('aria-pressed', String(!v.muted));
+        snd.setAttribute('aria-label', v.muted ? 'Zapnúť zvuk' : 'Vypnúť zvuk');
+        if (!v.muted && v.paused) { user = true; go(); }
+      });
+      if (!('IntersectionObserver' in window)) { if (!reduce.matches) go(); return; }
+      new IntersectionObserver(function (en) { if (en[0].isIntersecting) load(); }, { rootMargin: '600px 0px' }).observe(box);
+      new IntersectionObserver(function (en) {
+        want = en[0].intersectionRatio >= 0.5;
+        if (want && (!reduce.matches || user)) go();
+        else if (!want) stop();
+      }, { threshold: [0, 0.5] }).observe(box);
+    });
+  }
+
   /* ---------- štart ----------
      Hneď: to, čo je vidieť v úvode alebo hneď pod ním. Zvyšok po jednej funkcii pri nečinnosti až po otvorení úvodu
      (gk:hero-done), aby hlavné vlákno počas úvodnej sekvencie nič nezdržalo. Pri skoku na sekciu alebo pri rolovaní
@@ -728,7 +759,7 @@
   timetable();
   reel();
   moreFold();
-  var later = [splitWords, coaches, chapterLine, band, countUp, tilt, bridges,
+  var later = [splitWords, coaches, chapterLine, band, liveVideo, countUp, tilt, bridges,
     cardGlow, lightbox, faq, copyAddr, mapEmbed, smoothScroll, schema];
   (function () {
     var i = 0, started = false;
