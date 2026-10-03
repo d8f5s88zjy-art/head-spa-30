@@ -82,7 +82,7 @@
       areaServed: { '@type': 'City', name: 'Nitra' },
       hasMap: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(GYM.mapQuery),
       currenciesAccepted: 'EUR',
-      paymentAccepted: 'Cash',
+      paymentAccepted: 'Cash, Credit Card',
       priceRange: '3,50 € až 80 €',
       openingHoursSpecification: HOURS.map(function (h, i) {
         return { '@type': 'OpeningHoursSpecification', dayOfWeek: days[i], opens: mm(h[0]), closes: mm(h[1]) };
