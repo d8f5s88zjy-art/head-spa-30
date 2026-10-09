@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Darčekové poukážky HEAD SPA 30, formát DL</title>
+<style>
+@font-face{font-family:'Lora';font-style:normal;font-weight:300 700;src:url(../../../assets/fonts/Lora-display.woff2) format('woff2')}
+@font-face{font-family:'Lora';font-style:italic;font-weight:300 700;src:url(../../../assets/fonts/Lora-italic.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;src:url(../../../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:700;src:url(../../../assets/fonts/Manrope-700.woff2) format('woff2')}
+/* písané „poukážka“ podľa vzoru salónu, len na poukážkach, nie na webe (Pinyon Script, licencia OFL) */
+@font-face{font-family:'Pinyon';font-weight:400;src:url(pismo/PinyonScript.woff2) format('woff2')}
+:root{--gold:#d4ae62;--gold-hi:#f3dc9f;--gold-dk:#a8823f;--ink:#efe7da;--bg:#0a0908;--field:#d8c6a3}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#222}
+body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+/* Karta DL na šírku so spadávkou 3 mm: 216 × 105 mm, 1 mm = 5 px. Vzor: poukážka od majiteľa
+   (čierny mramor, zlatá saténová mašľa vľavo, fotka vpravo za zlatým kruhom, pečať s lotosom). */
+.card{position:relative;width:1080px;height:525px;overflow:hidden;background:var(--bg);margin:0 auto}
+.bg{position:absolute;inset:0;background:url(mramor.jpg) center/cover}
+/* zlatý text s jemným prechodom ako razba */
+.gold{background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-dk) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* fotka vpravo: kruh vľavo a obdĺžnik doprava až po okraj */
+.photo{position:absolute;left:560px;top:0;right:0;bottom:0;
+  -webkit-mask-image:radial-gradient(circle 275px at 275px 262px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 275px,#000 275px);
+  mask-image:radial-gradient(circle 275px at 275px 262px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 275px,#000 275px)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 45%);filter:saturate(1.02) contrast(1.04) brightness(.92)}
+.photo::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(10,9,8,0) 55%,rgba(10,9,8,.55) 80%,rgba(10,9,8,.9) 100%),
+  linear-gradient(90deg,rgba(10,9,8,.55) 0%,rgba(10,9,8,0) 30%),
+  linear-gradient(0deg,rgba(10,9,8,0) 85%,rgba(10,9,8,.35) 100%)}
+.arc{position:absolute;left:0;top:0;width:1080px;height:525px;pointer-events:none}
+.frame{position:absolute;inset:24px;border:1px solid rgba(212,174,98,.7)}
+.branch{position:absolute;left:496px;top:262px;width:190px;height:170px}
+/* pečať: zlatá minca s lotosom */
+.seal{position:absolute;left:873px;top:298px;width:124px;height:124px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#f6e3aa 0%,#dcb86c 42%,#b48b45 78%,#8a6a31 100%);
+  box-shadow:0 10px 24px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,240,200,.35)}
+.seal svg{position:absolute;inset:0;width:124px;height:124px}
+/* text vľavo, zarovnaný na stred stĺpca */
+.txt{position:absolute;left:128px;top:34px;width:460px;text-align:center}
+.lotus{display:block;width:46px;height:36px;margin:0 auto}
+.wm{display:block;font-family:'Manrope',sans-serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:.07em;margin-top:6px;padding-left:.07em}
+.city{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:7px;font-family:'Manrope',sans-serif;font-weight:400;font-size:12.5px;letter-spacing:.34em;color:var(--gold);padding-left:.34em}
+.city::before,.city::after{content:"";width:30px;height:1px;background:var(--gold);opacity:.8}
+.kind{margin-top:20px;line-height:1}
+.kind .a{display:inline-block;font-family:'Lora',serif;font-weight:500;font-size:43px;letter-spacing:.04em;text-transform:uppercase}
+.kind .b{display:block;font-family:'Pinyon',cursive;font-weight:400;font-size:74px;line-height:.95;color:var(--gold-hi);margin-top:-2px;text-shadow:0 2px 16px rgba(243,220,159,.18)}
+.orn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:0}
+.orn::before,.orn::after{content:"";width:62px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.orn i{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.rule{display:inline-block;margin-top:8px;font-family:'Lora',serif;font-weight:500;font-size:25px;letter-spacing:.06em;text-transform:uppercase}
+.rule.long{font-size:21px;letter-spacing:.05em;max-width:330px;line-height:1.25;background-size:100% 1.25em}
+.cat{margin-top:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.lede{margin:11px auto 0;font-size:11.5px;line-height:1.55;color:rgba(239,231,218,.86);max-width:330px;text-wrap:balance}
+/* polia na vyplnenie a spodný riadok */
+.fields{position:absolute;left:100px;right:88px;top:438px;display:grid;grid-template-columns:1.35fr 1.1fr 1fr 1.15fr .9fr;gap:16px}
+.f{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.f span{display:block;flex:1;height:24px;background:linear-gradient(180deg,#e0cfad,var(--field));box-shadow:inset 0 0 0 1px rgba(168,130,63,.45)}
+.foot{position:absolute;left:0;right:0;top:480px;display:flex;align-items:center;justify-content:center;gap:16px;font-family:'Manrope',sans-serif;font-weight:400;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);padding-left:.32em}
+.foot::before,.foot::after{content:"";width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,174,98,.7))}
+.foot::after{background:linear-gradient(90deg,rgba(212,174,98,.7),transparent)}
+/* saténová mašľa so stuhou po ľavom okraji */
+.bow{position:absolute;left:-2px;top:-6px;width:186px;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
+/* verzia pre Booqme a sociálne siete: 980 × 700 px, bez polí na vyplnenie */
+.card.sq{width:980px;height:700px}
+.card.sq .photo{left:552px;
+  -webkit-mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px);
+  mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px)}
+.card.sq .arc{width:980px;height:700px}
+.card.sq .txt{left:150px;top:132px;width:390px}
+.card.sq .seal{left:812px;top:520px}
+.card.sq .branch{left:470px;top:420px}
+.card.sq .fields{display:none}
+.card.sq .rule.long{max-width:300px}
+.card.sq .foot{top:640px}
+.card.sq .bow{width:220px}
+/* rub */
+.back .txt{width:560px;top:62px;text-align:left;left:96px}
+.back .brand{display:flex;align-items:center;gap:14px}
+.back .brand .lotus{margin:0;width:40px;height:32px}
+.back .brand .wm{font-size:30px;margin:0}
+.back .brand .city{justify-content:flex-start;margin-top:4px;font-size:10.5px}
+.back .brand .city::before{display:none}
+.back h2{font-family:'Lora',serif;font-weight:500;font-size:27px;letter-spacing:.02em;margin-top:26px}
+.back ol{margin-top:14px;padding-left:18px;font-size:12.5px;line-height:1.7;color:rgba(239,231,218,.86)}
+.back ol li::marker{color:var(--gold)}
+.back li+li{margin-top:4px}
+.back .list{margin:18px 0 0;font-size:11.5px;line-height:1.6;color:rgba(239,231,218,.7);max-width:470px}
+.back .qr{position:absolute;right:104px;top:92px;width:172px;height:172px;background:#fff;padding:10px;box-shadow:0 0 0 2px rgba(212,174,98,.8),0 0 0 8px var(--bg),0 0 0 9px rgba(212,174,98,.35)}
+.back .qr img{width:100%;height:100%;display:block}
+.back .qrl{position:absolute;right:64px;top:288px;width:252px;text-align:center;font-family:'Manrope',sans-serif;font-weight:400;font-size:9px;letter-spacing:.02em;color:var(--gold);line-height:1.9}
+.back .qrl b{display:block;font-family:'Lora',serif;font-weight:500;font-size:15px;letter-spacing:.04em;text-transform:none;color:var(--ink)}
+.back .seal{left:auto;right:128px;top:auto;bottom:62px}
+.back .foot{top:480px}
+</style>
+</head>
+<body>
+<!--CARDS-->
+</body>
+</html>

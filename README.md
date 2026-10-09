@@ -1,29 +1,168 @@
-# HEAD SPA 30, Nitra
+# HEADSPA 30, Nitra
 
-Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk). Čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí.
+Profesionálny web pre HEAD SPA 30 (Salón 30, Mostná 30, Nitra, www.salon30.sk). Čisté HTML, CSS a JavaScript bez frameworku; minifikáciu robí `node tools/build.mjs`, film používa Three.js v `assets/vendor/`.
 
 ## Štruktúra
 
-- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami, rezervácia, objednávka darčekového poukazu, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
+- `index.html` – celá stránka v poradí: úvod, 17 rituálov v piatich kategóriách s cenami (pri každom Rezervovať a Darovať ako poukaz), darčekové poukazy, ako to prebieha (5 krokov), prečo k nám (4 fakty), materský salón (Salón 30), galéria, otázky, kontakt s mapou. V hlavičke sú štruktúrované dáta (schema.org: salón so súradnicami, otváracie hodiny, 17 ponúk s cenou a trvaním, FAQ)
 - `assets/style.css` – štýly
-- `assets/app.js` – scrollom riadená úvodná scéna (misa s teplou vodou, prúd vody, kruhy, para a zlaté svetlo, bez kreslenej postavy), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, objednávkový formulár poukazov. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
-- `assets/img/dvere.jpg` – fotografia vstupných dverí (galéria); ďalšie fotky z rituálov sem pribudnú po nafotení
-- `assets/fonts/` – písma Fraunces (400, 500, 300 kurzíva), Manrope (400, 600, 700) a JetBrains Mono (400, 600), hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
-- `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v dvoch veľkostiach a troch formátoch, prehliadač si vyberie najmenší, ktorý vie zobraziť
+- `assets/app.js` – scrollom riadená úvodná scéna (jeden záber miestnosti s paralaxou), otvárací moment (zelené dvere sa otvoria, značka prejde do lišty), animácie, filter rituálov, odkazy do Booqme v jazyku návštevníka a platba kartou pri poukaze na karte rituálu. Pri krátkej výške okna a pri obmedzení pohybu sa namiesto scrollovanej cesty ukáže jedna živá scéna nad nadpisom.
+- `assets/img/dvere.jpg` a `assets/img/galeria/` – fotografie salónu pre galériu (dvere, Budha, miestnosť, vodný oblúk, uteráky, lôžko)
+- `assets/fonts/` – dve písma: Lora (500 a kurzíva 400) na nadpisy, Manrope (400 a 700) na text aj štítky, hostované lokálne, každý rez v jednom súbore orezanom na latinku so slovenskou, českou, poľskou a maďarskou diakritikou
+- `assets/img/dvere*.{avif,webp,jpg}` – fotografia dverí v 480 a 800 px v AVIF, WebP a JPG, pre dvere v úvode aj zaostrená 1600 a 2400 px WebP
+- `assets/img/film/` – fotky filmu na pozadí (README Film zo skutočných fotiek), `assets/world.js` – film
 - `robots.txt`, `sitemap.xml` – pre vyhľadávače, nasadzujú sa spolu s webom
 - `assets/og.jpg` – obrázok pre zdieľanie na sociálnych sieťach
-- `assets/favicon.svg` – ikona
+- `assets/favicon.svg` – ikona, lotos v zlatom kruhu ako na svietiacom nápise v salóne
 
-## Úvodná cesta
+## Film zo skutočných fotiek
 
-Úvod má štyri kapitoly: Teplo, Voda, Ticho, Termín. Kamera sa počas skrolovania hýbe: začína širokým záberom na misu, v druhej kapitole sa k nej priblíži, v tretej sa pozerá zhora do vody (dve pomalé ruky, dva zdroje malých vlniek, ako masáž) a na konci sa vráti do širokého záberu, kde sa kruhy upokoja do jedného zlatého kruhu. Svetlo lampy začína chladné a biele a postupne teplie do zlata, s ním sa zohrieva aj miestnosť. Vpravo dole je namiesto percent lišta kapitol so zlatou linkou, ktorá sa plní. Aj bez skrolovania scéna dýcha (para, lomené svetlo vo vode, prúd) pri nízkej snímkovej frekvencii (12 snímok za sekundu), zastaví sa, keď je úvod mimo obrazovky, keď je karta skrytá, keď návštevník 45 sekúnd nič nerobí alebo keď má zapnuté obmedzenie pohybu. Galéria a pokojná verzia úvodu používajú tú istú scénu s pevnou kamerou a pôvodnými farbami.
+Pozadie celého webu je film zo skutočných fotiek salónu (`assets/world.js`, Three.js r169
+v `assets/vendor/`), nie vymodelovaná scéna. Každá fotka má hĺbkovú mapu, takže kamera sa v nej
+pohne ako v skutočnej miestnosti: lôžka a misy vpredu sa posúvajú viac ako stena za nimi.
+Pri skrolovaní ide kamera pomalým filmovým pohybom (nájazd, prejazd do strany, zdvih) a medzi
+časťami webu sa zábery prelínajú, kým ich zakrýva textová doska. Text leží na tmavých doskách.
+
+| Časť | Záber |
+| --- | --- |
+| Úvod | `okna` (tá istá miestnosť ako v otvore dverí a vo fotke úvodu bez 3D) |
+| Ako to prebieha | `voda` |
+| Rituály a ceny | `zhora`, potom v okne každej kategórie jej priestor (fotka kategórie z cenníka) |
+| Poukážky | `buddha` |
+| Tím | `lozko` |
+| Salón 30 | `miestnost` |
+| Galéria | `neon-spa` |
+| Otázky | `komoda` |
+| Kontakt | `neon-head-spa` |
+
+- Fotky sú v `assets/img/film/`: zaostrené, v šírkach 2172 (dvojnásobok originálu), 1448 a
+  1086 px, každá v AVIF (o tretinu menšie) aj WebP, a `<meno>-hlbka.webp` (svetlá = blízko).
+  Zaostrená fotka je z polovice zmiešaná s verným zväčšením originálu, aby mach, tapeta,
+  uteráky a mosadz ostali také, aké sú. Skript vyberie najmenšiu šírku, ktorá na obrazovke
+  nebude zväčšená o viac ako 5 %, AVIF s návratom na WebP.
+- Načítanie: najprv záber, kde návštevník je (pri skoku cez menu cieľ), potom susedia. V pamäti
+  sú najviac štyri zábery, preskočené sťahovanie sa ruší. Obrázok sa po nahratí do grafickej
+  karty uvoľní. Skrytá kategória cenníka (filter) z filmu vypadne.
+- Ostrosť: plné rozlíšenie displeja do 2x, fotky bez tónovania a bez hmly, farby presne ako na
+  fotke. Jediná úprava obrazu je jemná vinetácia na okrajoch a pri prelínaní krátke stmavnutie o 22 %.
+- Oblúk: kamera sa pri každom zábere posúva do strany (4 % šírky, na telefóne 2,6 %) a pozerá sa stále na bod záujmu, takže popredie sa posúva voči stene. Myš a naklonenie telefónu pridajú ďalší oblúk.
+- Pohyb: kriticky tlmená pružina, prelínanie v strede medzi časťami, v pokoji sa dokončí na
+  bližší záber. V pokoji jemné dýchanie kamery 30 snímok za sekundu, po 25 s bez pohybu kreslenie
+  stojí. Na počítači sa perspektíva pohne za myšou, na Androide pri naklonení (mŕtva zóna 0,7°),
+  iPhone nie (vyžadoval by povolenie).
+  Pomalé zariadenie si zníži rozlíšenie (meria sa voči najkratšej snímke, 30 Hz nie je pomalé).
+- Sekcie sú vo filme vyššie ako odhad `content-visibility`, preto sa po prvom pohybe postupne vo
+  voľných chvíľach vykreslia všetky a pri kliknutí na odkaz v stránke hneď. Príchod s `#kotvou`
+  (trieda `cv-all` z hlavičky) vykreslí všetko hneď, aby stránka pristala presne.
+- Hlavička kategórie v cenníku je okno do filmu (74 % výšky, na mobile 64 %); bez 3D ukazuje fotku.
+- Trieda `world` sa pridá v hlave stránky len pri WebGL2 (three r169 iný nevie), nie pri
+  obmedzení pohybu, šetrení dát a nízkej obrazovke; `world-in` až keď je prvý záber nakreslený.
+  Keď do 15 s nepríde žiadna fotka, film sa ukončí a ostáva pokojný web.
+- Telefón: fotky najviac 1448 px, do grafickej karty sa nahrávajú po pásoch 256 riadkov (štyri
+  pásy na snímku), takže prelínanie nezasekne. Vinetácia sa kreslí v tom istom prechode ako
+  fotka, shadery sú preložené vopred a posledný krok znižovania kvality je 30 snímok za sekundu.
+  Film sa zapne len pri aspoň 4 GB pamäti a 4 jadrách, slabší telefón dostane pokojný úvod s fotkou.
+- Rytmus: záber cez celú obrazovku, potom plný pás cez celú šírku s veľkým písmom (vrstva Luxusná kompozícia
+  na konci `assets/style.css`), prechody medzi záberom a pásom sú mäkké, cenník je menu s vlasovými linkami.
+- Lighthouse (lokálne, bez gzip): mobil 82 až 86, desktop 98, prístupnosť 100, TBT 0 ms.
+
+## Admin (admin/)
+
+Admin je na adrese `/admin/` (Google ho neindexuje, robots.txt ho vylučuje). Prihlásenie je kľúčom
+GitHub (fine-grained token s právom Contents: Read and write len na tento repozitár), návod je priamo
+na prihlasovacej stránke. Kľúč ostáva v prehliadači, nikam sa neposiela okrem GitHub API.
+
+- Jedna záložka naraz (na telefóne vodorovne posúvateľný rad), dole pevná lišta „N zmien · Zrušiť ·
+  Uložiť na web“ so zoznamom zmien; obsah má pod lištou vždy miesto. Po prihlásení je zmien nula,
+  pôvodný stav sa berie z toho, čo polia naozaj ukazujú.
+- Záložky: Oznam (s prekladmi); Texty (každý viditeľný text index.html podľa častí, s hľadaním a
+  prekladmi; kurzíva, odkazy a `<br>` ostávajú, mení sa len text úsekov, pevné medzery sa doplnia
+  samé); Rituály (názov, dĺžka, cena, štítok, podnadpis, popis, O rituále, postup, preklady); Tím
+  (pridať, upraviť, poradie, odstrániť, fotka s výrezom 4:5); Poukazy a platby (odkaz na platbu kartou
+  pri každom rituáli a obrázky poukazov do Booqme); Kontakt a siete; Hodiny; Firma (údaje na
+  pravne.html); Ďalšie (štatistiky, odkazy).
+- Zmena slovenského textu presunie kľúč prekladu vo všetkých šiestich jazykoch, starý preklad
+  ostane v poli označený „skontroluj preklad“. Starý kľúč sa zmaže, len keď ho už nič nepoužíva.
+  Otázky v dátach pre Google sa zosúladia s textom na stránke.
+- Tím: fotka sa oreže v prehliadači a uloží ako WebP 480, 800 a 1086 px plus JPEG 800
+  (`assets/img/tim/<meno>-<šírka>.webp`); prehliadač bez WebP (starší Safari) uloží JPEG vo všetkých
+  šírkach. Odstránenie človeka zmaže jeho `<figure>` aj fotky. Bez `<figure>` je časť Tím skrytá.
+- Platby: `"platby": {"<id karty rituálu>": "<https odkaz>"}` v bloku nastavení; `app.js` pri rituáli
+  s platným https odkazom zmení odkaz Darovať ako poukaz na Kúpiť poukaz kartou s týmto odkazom.
+- Siete: odkazy majú `data-siet="instagram|facebook|tiktok"`, ich rodičia `data-siete`. Prázdne pole
+  odkazy odstráni aj s bodkou medzi nimi, nová sieť sa pridá za posledný odkaz; `sameAs` sa zosúladí.
+- Telefón a e-mail admin vymení vo všetkých tvaroch v index.html, pravne.html, 404.html,
+  `assets/app.js`, `assets/app.min.js` aj v prekladoch.
+- Uloženie je jeden commit priamo do `main` (bloby, strom, commit, posun vetvy), GitHub Pages
+  web obnoví asi do minúty. Keď sa `main` medzitým zmenil, admin načíta novú verziu, zmeny do nej
+  prenesie a uloží znova; pole, ktoré sa zmenilo aj inde, ukáže na kontrolu.
+- Jediný zdroj nastavení: blok `<script type="application/json" id="nastavenia">` v index.html
+  (hodiny, štatistiky, platby). Rozpätie cien a dĺžok v popisoch admin prepočíta.
+- Štatistiky: GoatCounter bez cookies sa načíta len s kódom v nastaveniach; kliky na Rezervovať,
+  Zavolať, E-mail, Mapa, Kúpiť poukaz, Kúpiť poukaz kartou a sociálne siete sa počítajú ako udalosti.
+- Kontrola s Booqme: `node tools/booqme-kontrola.mjs` porovná ceny a dĺžky v online kalendári
+  a ceny poukazov v obchode s cenníkom webu (len verejné stránky, nič nemení).
+
+## Bočná lišta a top rituály
+
+- Bočná lišta (`#rail`): na počítači tenké čiarky na pravom okraji, aktívna časť zlatá, názvy pri
+  ukázaní myšou; na mobile a tablete jazýček na okraji, ťuknutím sa zboku vysunie zoznam častí.
+  Skok vo filme pristane priamo na obsahu časti (app.js, „skok na časť“), nie na zábere nad ňou.
+- V každej kategórii cenníka je prvý jeden top rituál (`.card.top`, štítok Top rituál): Head Spa Relax,
+  Gentlemen Signature Experience, Little Fruit Head Spa, Spoločný rituál pod hviezdami, Zlatý rituál 24K.
+
+## Úvodné dvere
+
+Raz za návštevu sa pri otvorení stránky ukážu skutočné dvere salónu (`.veil`): fotka dverí
+(`assets/img/dvere-*.webp`, zaostrená) prekryje obrazovku, rám ostane stáť a obe krídla vystrihnuté
+z tej istej fotky sa v CSS 3D otvoria dnu a stmavnú. V otvore je salón (`okna`), potom
+kamera prejde dnu. Krídla sa otočia 0,56 s (telefón 0,7 s) po načítaní fotky, celé to trvá asi
+1,7 s. Kým fotka dverí nie je pripravená, je tma a kreslí sa značka; keď do 0,9 s nepríde, dvere
+sa preskočia a tma sa rozplynie.
+
+## Úvod
+
+Úvod má jednu obrazovku, žiadne kapitoly. Po otvorení dverí sa miestnosť salónu pri oknách
+(`okna`, tá istá ako v otvore dverí) pomaly vynorí z tmy a usadí sa, nadpis nastúpi po slovách. Pri skrolovaní
+fotka zaostáva za stránkou, miestnosť stmavne a text odíde rýchlejšie, takže sa vrstvy od seba
+oddelia; hneď pod tým začína Ako to prebieha.
+
+Technika (`makeReel` v `assets/app.js`, štýly `.reel` v `assets/style.css`):
+- Nástup je čisté CSS (`settle`, `shadeOut`), čaká na dvere cez `--veil`. Pri skrolovaní
+  skript mení len `transform` a priehľadnosť (`.fs`, `.lift`) a premennú `--p` na stmavnutie.
+- Fotka (`okna`, miestnosť pri oknách, tá istá ako v otvore dverí) má `fetchpriority="high"` a pre telefón vlastný výrez na výšku (`okna-m`).
+  Končí 5 % nad spodkom pod tmavým prechodom; záber na celú obrazovku by prehliadač bral ako
+  pozadie a LCP by meral až nadpis.
+- Pri obmedzení pohybu a na nízkej obrazovke na šírku sa ukáže pokojný úvod s fotkou nápisu.
+## Vrstva V9 (agentúrny vzhľad, už sa nenačítava)
+
+`assets/premium-v9.css` a `assets/premium-v9.js` sú prekrytie nad základným webom: väčšie
+editoriálne nadpisy, číslovanie sekcií 01 až 11, tenká linka priebehu skrolu hore, aktívna
+položka v navigácii, atmosféra podľa sekcie, svetlo pod kurzorom a odlesk na kartách (len
+na počítači s myšou, nie pri obmedzenom pohybu ani pri šetrení dát). Obsah, ceny, Booqme,
+formuláre ani preklady nemení. Vypnutie: zmazať dva riadky `premium-v9.min.*` v `index.html`.
+Podklady sú v `docs/v9/`.
+
+## Poukazy online cez Booqme
+
+V Booqme (Poukážky, Typy poukážok) je sedemnásť typov poukazu, jeden na každý rituál
+z ponuky, s cenou rituálu, platnosťou 365 dní od zakúpenia a popisom podľa
+docs/booqme-poukazy.csv. Žiadne poukazy na sumu, len to, čo salón ponúka. Verejný obchod
+je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo Kúpiť poukaz online.
+Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect).
+Rituál si zákazník vyberá priamo v obchode Booqme.
+Obrázok poukazu v Booqme (misa s vodou, A6 na šírku) je v docs/poukaz-a6.jpg; rezervačná
+stránka Booqme má logo z assets/icon-512.png, tmavozelené pozadie, zlatý názov, odkaz na
+Instagram a na tento web.
 
 ## Darčekové poukazy ako predajná sekcia
 
-Nad objednávkovým formulárom je šesť kariet hodnôt: 50, 70, 100, 149, 249 eur
-a konkrétny rituál. Každá hovorí, čo za tie peniaze obdarovaný dostane, podľa
-skutočného cenníka. Ťuknutie kartu zvýrazní, vyplní hodnotu vo formulári nižšie
-a posunie na neho; pri konkrétnom rituále rovno otvorí zoznam sedemnástich.
+Sekcia Poukazy je krátka: nadpis, jedna veta, poukážka salónu (`vzor`), jedno tlačidlo Kúpiť poukaz
+rovno do obchodu Booqme a veta, že rituál sa vyberá v obchode. Bez formulára a bez výberu na webe,
+aby nákup mal čo najmenej krokov. Každá karta rituálu má pri tlačidle Rezervovať aj odkaz Darovať
+ako poukaz (obchod Booqme, alebo platba kartou z adminu). Poukážky jednotlivých rituálov
+(`assets/img/poukaz/<rituál>-{800,1290}.{avif,webp}`, z `docs/poukazky/dl/png/`) ostávajú v repozitári
+pre Booqme a tlač. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 
@@ -33,58 +172,54 @@ stĺpcoch, na telefóne v jednom. Zmena je len v CSS, obsah krokov zostal.
 
 ## Záverečná výzva pred pätičkou
 
-Sekcia `.finale` uzatvára stránku jednou vetou a dvoma tlačidlami: Rezervovať
-rituál a Darovať poukaz. Rezervačné tlačidlo prepíše skript na kalendár rovnako
-ako ostatných tridsať.
+Stránku uzatvára kontakt s rezerváciou; samostatná záverečná sekcia bola zrušená.
 
 ## Kam vedú tlačidlá
 
-Adresa online kalendára je na jedinom mieste, v atribúte `data-booking` na
-`<html>` v `index.html`. Skript pri načítaní prepíše každé tlačidlo `a.btn`,
-ktoré smerovalo na `#rezervacia`, na túto adresu a otvorí ju v novej karte.
-Zmena rezervačného systému je teda úprava jedného reťazca.
+Každé tlačidlo Rezervovať je v `index.html` priamo odkaz do online kalendára Booqme
+(`target="_blank"`), bez medzikroku a bez závislosti od skriptu. Pri zmene jazyka `app.js`
+prepíše všetky odkazy na booqme.app na stránku v jazyku návštevníka (rezervácia sk
+`/sk/rezervacia/`, cs `/cs/rezervace/`, hu `/hu/foglalas/`, en, de, pl, uk `/<jazyk>/reservation/`,
+obchod `/<jazyk>/eshop/`); v HTML ostáva slovenčina.
 
 Pôvodný odkaz na Booqme (`booqme.app/sk/rezervacia/salon-30`) v septembri
 prestal existovať, vracal chybu 404, takže všetky tlačidlá aj nákup poukazu
 viedli do prázdna. Nahradila ho funkčná online rezervácia Salónu 30.
 
-Formulár v sekcii `#rezervacia` zostáva ako záloha pre rituály, ktoré v kalendári
-ešte nie sú. Vedie naň položka Rezervácia v menu a odkaz v otázkach. Bez
-JavaScriptu tlačidlá skončia pri formulári, takže sa nikto nestratí.
+Formuláre na webe (rezervácia, objednávka poukazu e-mailom) sú preč aj s kódom, nákup
+ide len cez Booqme; kto váha, má na každom mieste telefón.
 
-## Poradca nad cenníkom
+## Bez opakovania
 
-Nad cenníkom je blok `#poradca`: tri otázky (pre koho, koľko času, čo od toho
-čakáš) a odporúčanie jedného rituálu s cenou, trvaním, tlačidlom Rezervovať
-a odkazom na kartu v cenníku. Pod tým je jedna alternatíva.
+Zo stránky odišlo všetko, čo len opakovalo iné miesto: sekcie Prečo k nám, Tím
+a Čo je Head Spa (hovorila to isté ako Ako to prebieha), citáty medzi sekciami,
+mantra, zoznamy Solo/Duo/Darček a Kedy príde vhod, rýchly prehľad cien a dlaždice
+rituálov pri poukaze (tretí a štvrtý zoznam tých istých sedemnástich rituálov)
+a stĺpec Kontakt v pätičke (kontakt je hneď nad ňou). Rezervovať vedie z úvodu,
+z kariet rituálov, z kontaktu a zo spodnej lišty na telefóne.
 
-Poradca si nedrží vlastný zoznam rituálov. Číta karty v cenníku, takže keď
-pribudne alebo sa zmení rituál, poradca to vie hneď. Každá karta má `data-goal`
-(`relax`, `deep`, `beauty`, `lux`) a `data-duo` pri rituáloch pre dvoch.
+Karty rituálov sú na počítači v dvoch stĺpcoch, aby cenník nebol natiahnutý na
+celú šírku s prázdnym miestom vpravo. Na tablete a telefóne zostáva jeden stĺpec.
 
-Bodovanie v `assets/app.js`: zhoda cieľa má váhu osem, tesnosť času do štyroch
-bodov, prekročenie času je mierny mínus. Preto keď si niekto vyberie hĺbkové
-čistenie a hodinu času, dostane hĺbkový rituál aj s vetou, že trvá deväťdesiat
-minút, nie iný rituál, ktorý sa do hodiny zmestí. Pri zhode rozhoduje nižšia cena.
+## Nadväznosť sekcií
 
-Pri tom sa opravila stará chyba: Zlatý Head Spa rituál 24K pre dvoch patrí
-do luxusnej kategórie, preto sa pod filtrom Pre dvoch nezobrazoval, hoci
-otázky na stránke hovoria o troch rituáloch pre dve osoby. Filter aj poradca
-teraz berú `data-duo`, takže Pre dvoch ukáže všetky tri.
+Poradie sekcií je príbeh návštevy: úvod, Ako to prebieha (čo Head Spa je), Rituály
+a ceny (výber), Rezervácia (termín), Darčekové poukážky (ten istý rituál ako dar),
+Salón 30 (kde), Galéria (pohľad za dvere), Otázky (pred návštevou) a Kontakt. Menu,
+mobilné menu aj pätička majú rovnaké poradie.
 
-## Citáty medzi sekciami
+Každá sekcia končí riadkom `p.next`: štítok Ďalej a jedna veta kurzívou, ktorá je
+odkazom na nasledujúcu sekciu („Vybrané? Termín si dohodneš hneď nižšie.“). Za ním
+je zlatá deliaca čiara (`div.divider`), rovnaká medzi všetkými sekciami. Sekcia Ako
+to prebieha má namiesto riadku tlačidlo Vybrať si rituál. Vety sú v prekladoch ako
+ostatné texty.
 
-Medzi sekcie pribudli tri tiché citáty (`section.pull`). Každý je veta, ktorá už
-na stránke je, prevzatá z obsahu konkrétneho rituálu, a rovnaká veta nesie
-aj sériu Instagram storiek, takže web a profil hovoria jedným hlasom:
+## Cenník bez poradcu a filtrov
 
-- `Záver patrí tichu.` z Prémiového Head Spa rituálu, za sekciou Ako to prebieha
-- `Tempo určuje pokoj, nie hodiny.` z Relaxačného Head Spa, za sekciou Prečo k nám
-- `Dve osoby. Jedna hviezdna obloha.` zo Spoločného rituálu pod hviezdami, za galériou
-
-Popisok pod citátom je odkaz na kartu toho rituálu v cenníku, takže citát nie je
-len ozdoba. Trieda je `pull`, nie `quote`, lebo `quote` už patrí odseku v sekcii
-Rituál a nesmie sa prepísať.
+Nad cenníkom sú len kategórie (Head Spa, Pánske, Deti, Pre dvoch, Chodidlá). Poradca s tromi
+otázkami, filter podľa času a rozpočtu, číselný prehľad (17 rituálov, 40 až 120 minút,
+45 až 149 €) aj kadernícky cenník Salónu 30 boli odstránené: na stránke sú iba rituály
+a ceny HEAD SPA 30.
 
 ## Čo web robí sám
 
@@ -115,20 +250,83 @@ Kalendár online rezerváciu zostáva ako druhá možnosť pod formulárom.
 
 ## Darčekové poukážky
 
-Sekcia Poukážky (vlastná položka v lište) má dve cesty: tlačidlo Kúpiť poukaz online vedie na rezervačnú stránku online rezerváciu (https://www.salon30.sk/rezervacia), kde sa po vytvorení typov poukážok v administrácii online rezerváciu automaticky objaví ich predaj kartou. Druhá cesta je objednávkový formulár (hodnota alebo konkrétny rituál, pre koho, kontakt, venovanie, doručenie), ktorý otvorí pripravený e-mail na info@salon30.sk.
+Sekcia Poukážky (vlastná položka v lište): tlačidlo Kúpiť poukaz online vedie do obchodu Booqme
+(https://booqme.app/sk/eshop/barbershop-30), kde sa poukaz platí kartou. Objednávkový formulár
+na webe už nie je, všetko ide cez Booqme.
 
 ## Galéria
 
-Sekcia Galéria je mozaika šiestich dlaždíc: fotografia dverí, makro detail zlatých kruhov (výrez z tej istej fotky), tri kreslené zábery (teplá voda, para, zlaté svetlo) a jedna typografická dlaždica. Kreslené zábery sa jemne hýbu, ale len keď sú na obrazovke, a stoja pri zapnutom obmedzení pohybu aj po 45 sekundách nečinnosti. Fotografia sa dá zväčšiť kliknutím.
+Sekcia Galéria je mozaika trinástich fotografií salónu, zoradená ako prechádzka: zelené dvere,
+svietiaci nápis HEAD SPA, miestnosť s dvoma lôžkami, lôžka s vodnými misami, vodný oblúk,
+lôžko s orchideou, pripravené lôžka, lôžko pod nápisom Spa relax, pohľad zhora, komoda
+s uterákmi, Budha so sviečkami, nápis Spa relax a miestnosť pri oknách.
+Obrázky sú v `assets/img/galeria/` v troch šírkach (480, 800, 1200 px) ako AVIF, WebP a JPG,
+zdroje v plnej veľkosti sú `*.jpg` bez prípony šírky. Každá fotka sa dá otvoriť vo zväčšení.
+Rozloženie mozaiky určujú triedy na `<figure>` (`door`, `voda`, `rings`, ..., `r3`, `r4`), nie fotky;
+pri výmene poradia sa presúva len obsah figúry a atribút `sizes` ostáva podľa miesta v mozaike.
 
-Výmena kreslených záberov za skutočné fotografie nevyžaduje zásah do kódu. Stačí uložiť súbor do `assets/img/galeria/` s presným názvom a spustiť `python3 scratchpad/build.py`:
+## Luxusná vrstva
 
-- `voda.jpg` nahradí záber Teplá voda
-- `para.jpg` nahradí záber Para a ticho
-- `zlate.jpg` nahradí záber Zlaté svetlo
-- `kruhy.jpg` nahradí makro detail kruhov
+Na konci `assets/style.css` je vrstva, ktorá drží celú stránku v jednom pokojnom jazyku:
+veľa priestoru medzi sekciami (`--lux-space`), vlasové linky namiesto kariet, ploché hranaté
+tlačidlá s verzálkami, rádius 2 px, zlatá `#c9a66b` len na štítky, linky a akcent v nadpise.
+Každý rituál je v pokojnom okienku (jemné pozadie, tenký rámik, bez ikon a čísel): názov,
+podtitul kurzívou, trvanie a cena vpravo. Filtre sú text s linkou. Preč sú štatistiky v úvode, odkazy Ďalej, zlaté deliace čiary, vzor listov,
+ikonky a čísla na kartách, naklonený lístok, prúžok postupu a vrstva V9 (magnetické tlačidlá,
+svetlo pod kurzorom).
 
-Ak fotografia existuje, použije sa namiesto kresby a štítok Kresba zmizne.
+## Identita z prevádzky
+
+Web má vyzerať ako miestnosť, do ktorej zákazník vojde. Farby, materiály aj pohyb sú odpísané
+z fotiek salónu, nič nie je všeobecná „spa“ paleta.
+
+| V prevádzke | Na webe |
+| --- | --- |
+| Svietiace logo: machový kruh, **HEAD SPA** verzálkami, pod tým **salon30**, lotos, **NITRA** | značka v lište, v pätičke, na lístkoch aj na dverách v úvode: lotos v zlatom kruhu (`.mark`), vedľa **HEAD SPA 30** verzálkami a *salon30 · Nitra* zlatou kurzívou Lora; rovnaký lotos je `favicon.svg` |
+| Orech, parkety rybia kosť, drevená mozaika za logom | plátno a panely v tónoch orecha (`--canvas #0c0906`, `--panel #1a130d`, `--panel-2 #22190f`), rámy kariet a fotiek `--wood-line` |
+| Fľaškovo zelené dvojkrídlové dvere s mosadznými kruhmi | `--door #1f3328`: lístok rezervácie a poukazu, dvere pri vstupe na stránku |
+| Olivové zamatové závesy a stena | `--olive #5d5a2a` |
+| Tapeta so zlatohnedými listami | jemný vzor listov len v bočných okrajoch sekcií Ako to prebieha a Galéria, nikdy pod textom |
+| Mosadzné misky, zlaté rámy | zlatá `--accent #d9b56a` ostáva jediným akcentom rozhrania |
+| LED pás za logom, sviečky | `--glow #f0a65a`: svit pod nápisom v úvode, plameň na poukaze |
+| Biele uteráky, orchidey | `--cream`, `--orchid` len ako rezerva, nie farba rozhrania |
+| Vane s modrou a zelenou vodou | tyrkys `--water` len pri vode (linka krokov a voda na fotkách) |
+
+Zelenočierne odtiene z predchádzajúcej verzie sú v `assets/style.css` a `assets/premium-v9.css`
+nahradené premennými: `rgba(var(--ink),a)` pre tiene a clony, `rgba(var(--walnut),a)`
+a `rgba(var(--walnut-2),a)` pre panely. Aj kreslená scéna v úvode (`assets/app.js`) má miestnosť
+v tónoch orecha.
+
+Kontrast textu (WCAG): hlavný text `#f4ece0` 16,9 : 1 na plátne a 11,5 : 1 na zelenom lístku,
+vedľajší `#d2c6b5` 11,8 : 1 a 8,0 : 1, najslabší `#aa9d8b` 7,5 : 1 na plátne a 5,1 : 1 na lístku,
+zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
+
+### Kde je ktorá fotka
+
+| Miesto | Fotka |
+| --- | --- |
+| Úvod | `okna` (pozri Úvod); pokojná verzia úvodu `neon-head-spa` |
+| Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
+| Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
+| Poukážky | poukážka salónu `vzor`; po výbere rituálu jeho poukážka (`assets/img/poukaz/`, tie isté ako tlačené) |
+| Salón 30 | `okna`, `buddha`, `komoda` |
+| Galéria | všetkých 13 (poradie vyššie) |
+| Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“; mapa okolia `mapa-*` (podklad © OpenStreetMap, zafarbená do tónov webu, značka salónu v strede) namiesto vloženej Google mapy |
+
+Fotky na poukážkach rituálov sú čiastočne z Pexels (licencia a autori v
+`docs/poukazky/dl/FOTKY.md`), ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
+v `docs/poukazky/dl/foto/`, spustiť `node docs/poukazky/dl/build.mjs` a znova vyrobiť
+`assets/img/poukaz/*` (800 a 1290 px, 2 : 1, AVIF a WebP).
+
+### Pohyb podľa miestnosti
+
+- svit LED pásu nad nápisom v úvode sa pomaly nadýchne (`ledBreath`, 10 s),
+- na poukaze bliká plameň sviečky, len žiara, text stojí (`candle`),
+- nad vodným oblúkom v sekcii Ako to prebieha stúpa para (`steamRise`).
+
+Fotky sa pri pohybe nezväčšujú o viac ako 5 % (dosadnutie galérie, prejdenie myšou).
+Pri `prefers-reduced-motion: reduce` stojí všetko a všetko je viditeľné; mimo obrazovky
+a pri nečinnosti sa animácie pozastavia.
 
 ## Rezervácie
 
@@ -149,34 +347,6 @@ Ak sa hodiny zmenia, treba ich upraviť na všetkých týchto miestach naraz.
 Sekcia `#salon` opisuje materské kaderníctvo: kozmetika Oroexpert, trichologické vyšetrenie
 mikrokamerou (vlasová stylistka Kristína Salayová), šesť kaderníčok a orientačné ceny
 kaderníckych služieb. Všetko je prevzaté z www.salon30.sk, stav 11. 9. 2026. Nič nie je vymyslené.
-
-## Sekcia Tím
-
-Sekcia `#tim` je pripravená, ale zatiaľ prázdna. Obsahuje tri karty v stave
-„pripravujeme“: prerušovaný rámik, monogram 30 a text `Meno doplníme`.
-Web tak nikde netvrdí nič, čo nie je overené.
-
-Ako kartu vyplniť (jedna karta = jeden človek), v `index.html` v sekcii `#tim`:
-
-1. z `<article class="tcard part is-empty">` zmazať `is-empty`,
-2. `<h3 class="tname">` prepísať na meno,
-3. `<p class="trole">` prepísať na rolu, napríklad `Head Spa terapeutka · Salón 30`,
-4. `<p class="tbio">` prepísať na jednu vetu o tom, čo robí najradšej,
-5. celý `<div class="tface"> ... </div>` nahradiť fotografiou:
-
-```html
-<div class="tface"><img src="assets/img/tim-meno.jpg" alt="Meno, Head Spa terapeutka"
-     width="600" height="750" loading="lazy" decoding="async"></div>
-```
-
-Fotografie na výšku, minimálne 600 × 750 px, tvár v hornej tretine. Kariet môže
-byť ľubovoľný počet, mriežka sa prispôsobí sama (tri v rade na počítači, jedna
-pod druhou na mobile). Rovnaký návod je aj v komentári priamo nad sekciou.
-
-Keď pribudnú mená, treba ich pridať aj do prekladov: v `assets/i18n/<jazyk>.json`
-sa prekladá podľa slovenského textu, takže kľúče `Meno doplníme`,
-`Head Spa terapeut · Salón 30` a veta v `tbio` sa nahradia novými. Meno človeka
-sa neprekladá, stačí ho nechať bez kľúča.
 
 ## Typografia po slovensky
 
@@ -253,75 +423,31 @@ súboroch by nemali kľúč. Pri zmene jazyka sa dlaždice prekreslia.
 Odkaz na online kalendár je na jednom jedinom mieste, v bloku `Radšej kalendár?`
 v tej istej sekcii. Keď salón prejde na iný rezervačný systém, mení sa jedna adresa.
 
-## Rýchly prehľad cien a tlač
+## Tlač
 
-Pod kartami rituálov je `<details id="prehlad-cien">` s tabuľkou všetkých sedemnástich
-rituálov: názov (odkaz na kartu), trvanie a cena, rozdelené podľa kategórií.
-Slúži tým, čo chcú len ceny, a zároveň je z neho tlačový cenník.
+`@media print` v `assets/style.css` skryje navigáciu, animácie a ostatné sekcie
+a vytlačí sa hlavička so značkou, karty rituálov v jednom stĺpci (názov, trvanie,
+cena, krátky popis) a pätička, dokopy dve strany A4.
 
-`@media print` v `assets/style.css` skryje navigáciu, animácie, karty rituálov
-aj ostatné sekcie a vytlačí sa hlavička so značkou, tabuľka a pätička s kontaktom,
-dokopy dve strany A4. `assets/app.js` pri tlači tabuľku sám otvorí
-(`beforeprint`), aby sa nevytlačila zatvorená.
+## Poukaz na konkrétny rituál
 
-Pri zmene ponuky treba tabuľku prepísať ručne rovnako ako karty, alebo ju
-vygenerovať z `data-min`, `data-price` a `.meta` kariet.
-
-## Hodnoty darčekových poukazov
-
-Rebríček je odvodený od cenníka, nie zvolený od oka: **50, 70, 100, 149 a 249 €**.
-Spodná hodnota presne pokryje najlacnejší rituál (50 €), horná aj ten najdrahší
-(Zlatý Head Spa rituál 24K pre dvoch za 249 €). Vyššie hodnoty zámerne nie sú,
-aby obdarovanému nezostal zostatok, ktorý nemá ako minúť.
-
-Sú to dva ručne udržiavané zoznamy v rôznych častiach `index.html`: hodnoty
-poukazu (`name="hodnota"`) a ceny rituálov (`data-price` na kartách). Keď sa
-rozídu, `assets/app.js` vypíše varovanie do konzoly prehliadača:
-
-```
-HEAD SPA 30: poukaz za 400 € presahuje najdrahší rituál (249 €).
-```
-
-Kontrola sa ozve len vtedy, keď je naozaj čo hlásiť. **Pri zmene cien rituálov
-preto treba prejsť aj hodnoty poukazov** a upraviť aj vetu pod nimi, ktorá obe
-čísla menuje, plus jej preklady v šiestich jazykových súboroch.
-
-
-## Výber podľa času a rozpočtu
-
-Popri filtri podľa kategórie sú nad zoznamom dva výbery, ktoré sa s kategóriou
-kombinujú: **Mám čas** (do 45, 60, 75 alebo 90 minút) a **Rozpočet**
-(do 60, 80, 100 alebo 149 €).
-
-Každá karta má `data-min` a `data-price`, takže sa filtruje priamo z hodnôt,
-nie z parsovania textu. Nadpis kategórie zmizne, keď v nej po obmedzení nič
-nezostane, a keď nezodpovedá nič, zobrazí sa vysvetlenie s návrhom, čo zmeniť.
-Tlačidlo Zrušiť obmedzenia sa objaví len vtedy, keď je naozaj čo rušiť.
-
-Riadok "Zobrazených N zo 17 rituálov" sa skladá až v prehliadači, preto má
-vlastné preklady v `assets/app.js` (`COUNT_WORDS`), rovnako ako text otváracích
-hodín. Po zmene jazyka sa prekreslí.
-
-Pozor pri úprave cien alebo trvaní: hodnoty v `data-min` a `data-price` musia
-sedieť s tým, čo je napísané v `.meta` karty, inak filter ukáže niečo iné,
-než karta tvrdí.
-
+Poukaz nie je na sumu, ale na jeden zo sedemnástich rituálov. Na webe sa rituál vyberá
+v `#voucher-ritual` pod poukážkou, hodnota `option` je meno obrázka poukážky. V Booqme je sedemnásť typov poukazov,
+jeden na rituál (`docs/booqme-poukazy.csv`).
 
 ## Ponuka: sedemnásť rituálov pre hlavu
 
-Cenník má **17 Head Spa rituálov** v piatich kategóriách: Head Spa (7), pánske (4),
-detský (1), pre dvoch (2) a luxusné (3). Trvanie 40 až 120 minút, ceny 50 až 249 €,
-pri rituáloch pre dvoch platí cena za obe osoby.
+Cenník má **17 rituálov** v piatich kategóriách: Head Spa (7), pánske (4), detský (1),
+pre dvoch (2) a pre chodidlá (3). Trvanie 40 až 120 minút, ceny 45 až 149 €, presne
+podľa ponuky salónu (`docs/booqme-sluzby.csv`). Žiadny strieborný ani zlatý Head Spa
+rituál, tie salón neponúka.
 
-Štrnásť z nich zodpovedá programom v `docs/booqme-programy.xlsx`. Tri luxusné
-(Strieborný Head Spa rituál 109 €, Zlatý Head Spa rituál 24K 129 €, Zlatý Head Spa
-rituál 24K pre dvoch 249 €) sa vrátili 15. 9. 2026 na pokyn majiteľa, že ponuka
-má sedemnásť rituálov. Rituály pre chodidlá na webe nie sú a slovo chodidlá sa
-na ňom nevyskytuje.
+Všetkých sedemnásť je z podkladov salónu (maily s obsahom rituálov). Rituály pre chodidlá
+sú tri a majú vlastnú kategóriu.
 
 Pri zmene ponuky treba prejsť aj miesta, kde je počet alebo rozpätie napísané
-slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, rýchly prehľad
-cien, výber rituálu v rezervácii a v poukaze, hodnoty poukazov, `priceRange`
+slovami: hlavička cenníka, dlaždice v hlavičke a v hrdinskej sekcii, výber rituálu
+v rezervácii a v poukaze, `priceRange`
 a ponuky v štruktúrovaných dátach, odpovede v otázkach, meta popisy a preklady.
 
 ## Jazyky
@@ -350,56 +476,124 @@ Ako to funguje:
 jazykových súborov. Kým tam nie je, tá jedna veta sa zobrazí po slovensky
 a zvyšok stránky ostane preložený.
 
----
+## Rýchlosť a prístupnosť
 
-# GYM KLUB Nitra, pracovný názov LIPA GYM (priečinok `lipa-gym/`)
+Stránka je postavená tak, aby sa prvá obrazovka vykreslila bez čakania na skript.
+Čo to v praxi znamená:
 
-Web pre **GYM KLUB Fitness & Bodybuilding**, Výstavná 6 (Lipa Centrum), 949 01 Nitra-Chrenová. Rovnaký princíp ako HEAD SPA 30: čisté HTML, CSS a JavaScript, bez build kroku a bez externých závislostí. Nasadzuje sa spolu s hlavným webom (`.github/workflows/pages.yml` kopíruje aj `lipa-gym/`), takže beží na https://d8f5s88zjy-art.github.io/head-spa-30/lipa-gym/. Pri presune na vlastnú doménu stačí priečinok skopírovať do vlastného repozitára a v `index.html` upraviť `canonical`, `og:url` a `og:image` (miesto je označené komentárom `DEPLOY STEP`).
+- Písma sú priamo v hlavičke stránky a štýl sa načítava ako prvý súbor, ešte pred
+  popismi pre vyhľadávače a zdieľanie.
+- Prvý nadpis je rozdelený na slová už v HTML, takže ho prehliadač vykreslí hneď.
+  Skript ho znova nerozdeľuje, iba prevezme animáciu pri skrolovaní.
+- Úvodná kapitola cesty má plnú viditeľnosť priamo v CSS a jej nábeh je obyčajná
+  CSS animácia. Telo stránky sa už neskrýva, kým nenabehne skript.
+- Scéna hero sekcie (plátno s vodou a parou) sa zapína až keď má prehliadač voľnú
+  chvíľu, najneskôr pri prvom skrolovaní. Do vtedy je na jej mieste rovnaký
+  farebný podklad.
+- Štruktúrované dáta pre vyhľadávače sú na konci stránky, aby nebrzdili prvé
+  vykreslenie.
 
-## Zdroj údajov
+Merané cez Lighthouse na serveri s kompresiou (rovnako ako GitHub Pages):
+výkon, prístupnosť, osvedčené postupy aj SEO 100 zo 100 na počítači.
 
-Všetky fakty pochádzajú z oficiálneho webu **gymklub.sk** (stav 19. 9. 2026) a zo zadania klienta. Nič nie je vymyslené:
+Pri prístupnosti platí: tlačidlá hodnoty poukazu nie sú zoznam, ale skupina
+tlačidiel s aria-pressed, výber jazyka je menu s aria-checked a značka v hlavičke
+aj v pätičke nesie svoj viditeľný text (popis je v title).
 
-| Údaj | Hodnota | Zdroj |
-|---|---|---|
-| Názov | GYM KLUB Fitness & Bodybuilding | gymklub.sk |
-| Adresa | Výstavná 6 (Lipa Centrum), 949 01 Nitra, Chrenová | gymklub.sk/contact.html |
-| Telefón, e-mail | +421 944 800 394, info@gymklub.sk | gymklub.sk |
-| Hodiny | Po až Št 06:30 – 21:00, Pi 06:30 – 23:00, So a Ne 08:00 – 17:00 | gymklub.sk (kontakt, FAQ, harmonogram); pätička webu uvádza pre víkend 08:30 – 18:00, preto je na stránke poznámka „cez víkend overte telefonicky“ |
-| Cenník | vstup 6 €, permanentka 50 €/mesiac, študentská 42 €/mesiac, 10 vstupov 50 €, 20 vstupov 80 €, študent 5 €, dôchodca 3,50 €; platba len v hotovosti; MultiSport a Upbalansea app | gymklub.sk, sekcia Cenník a FAQ |
-| Rozvrh | Po Pilates 16:00 a Krav Maga 17:00, Ut a Št Bojové športy 17:00 a Zdravý chrbát 18:00, St Pilates 18:00, So Bojové športy 13:00 | gymklub.sk, časový harmonogram |
-| Tréneri (10) | mená, špecializácie, fotografie, telefóny a popisy | gymklub.sk/treneri.html a stránky tréningov |
-| Recenzie (4) | Nika D., Jozef K., Andrea F., Marcel Š. | gymklub.sk, sekcia Recenzie |
-| Fotografie | výlučne zábery z prevádzky: 10 fotografií priestoru (aj pri tréningoch), 10 portrétov trénerov, logo | gymklub.sk |
-| Sociálne siete | Instagram gymklubnitra, Facebook | gymklub.sk |
+## Seniorský prechod
 
-Kontakty, hodiny a rozvrh sú na jednom mieste v `assets/app.js` (`GYM`, `HOURS`, `TIMETABLE`); z nich sa vypĺňa stránka aj štruktúrované dáta (schema.org HealthClub s hodinami, cenníkom a trénermi, FAQPage).
+Zadanie pre tento prechod je v `docs/prompt-senior.md`. Čo z neho vyplynulo:
 
-## Štruktúra
+- Sekcia Tím už neukazuje prázdne karty s nápisom "Meno doplníme". Namiesto nich
+  sú tri karty o tom, ako rituál vedie človek: konzultácia, tlak a teplota na
+  mieru, záver v kaderníckych rukách. Keď budú fotografie, karty sa vymenia za
+  profily podľa poznámky priamo v HTML.
+- Bez JavaScriptu stránka už nie je poloprázdna. Na `<html>` je trieda `no-js`,
+  ktorú skript hneď zmaže. Kým tam je, ukáže sa statický úvod a všetko ostatné je
+  v koncovom stave.
+- Tlačidlá do kalendára majú adresu priamo v HTML (`data-booking-link`), takže
+  vedú do kalendára aj bez skriptu. Skript ich už len drží zhodné s `data-booking`
+  na `<html>`.
+- Kapitoly úvodnej cesty, ktoré nie sú na obrazovke, majú `inert`. Klávesnica cez
+  ne už neprechádza.
+- Hlavička sa zmestí aj do 320 px.
+- Pribudla stránka `404.html` v štýle webu. GitHub Pages ju ukáže pri zlom odkaze.
 
-- `lipa-gym/index.html` – úvod (fotografia z prevádzky, zapnutie svetiel, nájazd kamery), bežiaci pás, dôvody, 6 tréningov s fotografiami, cenník (3 karty + tabuľka + podmienky), rozvrh s dňami a živým stavom otvorené, 10 trénerov s filtrom podľa disciplíny, galéria 9 fotografií s lightboxom, prvá návšteva, recenzie, otázky, kontakt s mapou, hodinami a formulárom
-- `lipa-gym/assets/style.css` – štýly, tmavá paleta s limetkovou, Bebas Neue + Manrope
-- `lipa-gym/assets/app.js` – údaje o prevádzke, živé hodiny (Bratislava), rozvrh, filter trénerov, lightbox, formulár (otvorí pripravený e-mail na info@gymklub.sk, nič neukladá), mapa načítaná až pri posune, animácie, koľajnica, zotrvačné skrolovanie, schema.org
-- `lipa-gym/assets/img/` – fotografie prevádzky (`hero`, `stojany`, `rig`, `cardio`, `ring`, `stroje`, `recepcia`, `rig2`, `tatami`, `bar`, `about`) s mobilnými variantmi `-640`, `tim/` portréty trénerov (+ `-320`), `logo-gymklub.png`; každý obrázok v JPG aj WebP
-- `lipa-gym/assets/fonts/` – Bebas Neue a Manrope lokálne
+## Dvere na úvode
 
-## Animácie
+Dvere sa otvárajú raz za návštevu (drží to `sessionStorage`). Sú to skutočné dvere salónu
+z fotky (README Úvodné dvere): krídla sa otočia 0,56 s (telefón 0,7 s) po načítaní fotky, celé to
+trvá asi 1,7 s a medzitým zlatý lotos zo stredu dverí preletí na svoje miesto v lište. Pri
+obmedzení pohybu, šetrení dát, v skrytej karte alebo pri príchode cez odkaz na konkrétnu časť
+(`#rituály`) sa dvere preskočia a stránka je hneď hotová.
 
-- **Otvorenie (zapnutie svetiel):** úvod je pri načítaní tmavý, svetlá dvakrát bliknú a zostanú svietiť, po hale prejde odlesk, kamera 12 sekúnd pomaly nabieha a nadpis vybehne po riadkoch. Preskočí sa klikom do úvodu, pri obmedzení pohybu, pri odkaze na sekciu a pri druhom načítaní v tej istej karte.
-- **Skrolovacia vrstva:** obrysové kotúče a činka v pozadí plynú rôznou rýchlosťou, za nadpismi sekcií plávajú obrysové nápisy, nadpisy nabiehajú podľa skrolu, bežiaci pás sa pri rýchlom skrole nakloní, vpravo koľajnica s kotúčom a bodkami sekcií.
-- **Zotrvačné skrolovanie** kolieskom na počítači (`SMOOTH_SCROLL` v `app.js`), odkazy na sekcie idú tou istou cestou, dotyk a klávesnica ostávajú natívne.
-- **Telefón (odľahčený režim, `body.lite`):** na dotykových zariadeniach a do šírky 860 px nebeží pohyblivé pozadie, obrysové nápisy, paralaxa ani nájazd kamery, obrázky sa berú v menších variantoch (`*-640`, `tim/*-320`) a sekcie mimo obrazovky sa nevykresľujú (`content-visibility`). Zapnutie svetiel ostáva ako prelínanie priehľadnosti.
-- **Plynulosť:** žiadne filtre na hýbucich sa prvkoch, `will-change` na vrstvách, premenná postupu len na prvkoch, ktoré ju používajú, lišta bez rozostrenia na mobile.
-- Pri zapnutom **obmedzení pohybu** je všetko statické a nič sa neschováva.
+Stará verzia dverí stála devätnásť bodov výkonu, lebo telo stránky bolo do
+konca animácie neviditeľné. Teraz je stránka vykreslená hneď a dvere sú len
+vrstva nad ňou. Fotka dverí sa prednačíta s bežnou prioritou a fotka v otvore sa
+sťahuje až keď sú dvere na obrazovke, takže stoja zhruba jeden bod.
 
-## Kontakt a formulár
+## Mobil
 
-Hlavná akcia je „Prísť si zacvičiť“ (kontakt s hodinami, mapou a navigáciou) a „Pozrieť cenník“. Na telefóne je dole lišta Zavolať a Cenník a vstup. Formulár „Napíšte nám“ pripraví e-mail do klientovho programu, web nič neukladá ani neposiela.
+- Odstupy sekcií 60 px, kontakt 76/96 px. Stránka je hustejšia a menej prázdna.
+- Karta rituálu má obe tlačidlá pod sebou cez celú šírku, hlavné je zlaté.
+  Čas a cena sú v jednom riadku, cena vpravo.
+- Dvojice tlačidiel pod textom (poukazy, salón, tím) idú tiež na celú šírku.
+- Tri čísla nad cenníkom sú kompaktnejšie, záber dverí v galérii je 3:4, aby
+  bolo vidieť aj popis.
 
-## Náhľad
+## Výkon na mobile
 
-```
-npx http-server -p 8080
-```
+Mobilné meranie Lighthouse simuluje pomalú 4G a štyrikrát pomalší procesor, takže
+tu rozhoduje každý kilobajt a každá dlhá úloha. Čo sa spravilo:
 
-a otvoriť `http://localhost:8080/lipa-gym/`.
+- **Písma.** Z ôsmich súborov zostalo šesť a všetky sú orezané len na znaky, ktoré
+  sa na stránke naozaj používajú. Lora je z premenlivého písma vyrezaná v jednej
+  hrúbke (500, kurzíva 400), spolu s Manrope asi 93 kB.
+- **Menší kód.** `tools/build.mjs` robí z `assets/style.css`, `assets/app.js` a
+  `assets/i18n.js` zmenšené súbory `*.min.*`, ktoré stránka načítava. Zdrojom
+  zostávajú pôvodné súbory, minifikované sa needitujú.
+  **Po každej zmene CSS alebo JS treba spustiť `node tools/build.mjs`.**
+- **Menej práce na začiatku.** Poukazy, rezervačný formulár, poradca a ďalšie
+  časti pod prvou obrazovkou sa spúšťajú až vo voľnej chvíli prehliadača.
+  Scéna v úvode kreslí na telefóne menej častíc a v nižšom rozlíšení.
+- **Sekcie pod úvodom** majú `content-visibility:auto`, prehliadač ich rieši až
+  keď sa k nim návštevník priblíži.
+- **Bez drahých efektov na mobile.** Žiadne `backdrop-filter`, žiadne zrno,
+  statické svetelné škvrny.
+- **Jazyk.** Stránka sa otvára po slovensky a sama sa neprepína. Prehliadaču s
+  iným jazykom sa po načítaní ukáže malý prúžok s ponukou. Preklad sa nasadzuje
+  po dávkach, takže nezasekne prehliadač.
+
+Merané na serveri s kompresiou (rovnako ako GitHub Pages): počítač 100,
+mobil 94 až 96 podľa toho, ako je stroj zaťažený.
+
+## Kam vedú tlačidlá Rezervovať
+
+Do vlastného online kalendára na Booqme:
+`https://booqme.app/sk/rezervacia/barbershop-30` (prevádzka Salon 30 - Head Spa,
+Mostná 30, Nitra). Formulár na stránke zostáva ako druhá cesta, vedie naň
+položka Rezervácia v menu.
+
+Adresa je na jedinom mieste, v atribúte `data-booking` na `<html>`, a v
+`href` tlačidiel s `data-booking-link`. Zmena adresy je jedna náhrada na dvoch
+miestach:
+
+1. v `index.html` v `<html ... data-booking="">` doplniť adresu kalendára
+2. tým istým odkazom nahradiť `href="#rezervacia"` pri tlačidlách, ktoré majú
+   `data-booking-link` (je ich tridsať)
+
+Skript potom drží oboje zhodné. Bez JavaScriptu tlačidlá fungujú tiež, lebo
+adresa je priamo v HTML.
+
+## Web na vlastnom FTP hostingu (napr. Forpsi)
+- Hotový balík na nahratie: https://d8f5s88zjy-art.github.io/head-spa-30/headspa30-ftp.zip
+  (obsah ZIPu nahraj do koreňa webu, pri Forpsi priečinok `/www/`). Adresy sú na https://headspa30.sk/.
+  Pre hosting s limitom na ZIP sú tu aj časti do 19 MB: headspa30-ftp-1-z-2.zip, headspa30-ftp-2-z-2.zip
+  (`python3 tools/ftp-rozdel.py <priečinok> 18`); rozbaľ všetky do toho istého priečinka.
+- Ručne: `sh tools/ftp-balik.sh headspa30.sk` pripraví priečinok `_ftp` (s `.htaccess`).
+- Automaticky: po nastavení tajomstiev FTP_SERVER, FTP_USER, FTP_PASSWORD (a voliteľne FTP_DIR, FTP_DOMENA)
+  v GitHub Settings → Secrets and variables → Actions nahrá `.github/workflows/ftp.yml` web na FTP
+  po každej zmene, aj po uložení v admine.
+- V `.htaccess` je presmerovanie na https vypnuté; zapni ho, až keď má doména SSL certifikát.
+- Forpsi presmerúva `headspa30.sk` na `www.headspa30.sk` sám, preto `.htaccess` nesmie mať pravidlo
+  www → bez www (naháňali by sa dokola). Po zmene `.htaccess` treba súbor na FTP nahrať znova.

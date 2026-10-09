@@ -1,0 +1,670 @@
+/* Písma Barlow a Barlow Condensed sú uložené lokálne v assets/fonts (bez závislosti na Google) */
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/Barlow-400-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/Barlow-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/Barlow-500-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/Barlow-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/Barlow-600-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/Barlow-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/BarlowCondensed-600-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/BarlowCondensed-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/BarlowCondensed-700-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/BarlowCondensed-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/BarlowCondensed-800-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/BarlowCondensed-800-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+
+/* Stavebniny Richtárik: spoločné štýly. Tmavá industriálna prémia: uhoľ, betón, tehlová červená, veľká fotografia a veľké písmo. */
+:root{
+  --ink:#141210;--ink-2:#2b2824;--ink-3:#6b665f;--ink-soft:#1d1a17;--ink-line:#2e2a26;
+  --brick:#c1382c;--brick-dk:#96291f;--brick-lt:#f3e2df;--brick-pale:#f0b4ac;
+  --concrete:#e6e2dc;--mortar:#f3f0ea;--paper:#faf8f4;--line:#dcd7cf;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --wrap:1280px;--gutter:clamp(18px,4vw,48px);--radius:4px;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{font-family:var(--body);font-size:17px;line-height:1.55;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--brick);color:#fff;padding:8px 14px;z-index:100}
+.skip:focus{left:8px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.wrap.narrow{max-width:940px}
+h1,h2,h3{font-family:var(--display);line-height:.98;letter-spacing:-.01em;text-wrap:balance}
+h1{font-weight:800;font-size:clamp(44px,6.4vw,84px);text-transform:uppercase}
+h2{font-weight:800;font-size:clamp(34px,4.6vw,60px);text-transform:uppercase}
+h3{font-weight:700;font-size:26px}
+p{max-width:64ch}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--brick);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";display:inline-block;width:34px;height:2px;background:currentColor}
+.eyebrow.light{color:var(--brick-pale)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-radius:var(--radius);border:2px solid transparent;transition:background .2s,color .2s,transform .2s,border-color .2s;cursor:pointer;white-space:nowrap}
+.btn.small{min-height:42px;font-size:16px;padding:0 16px}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+.btn.primary{background:var(--brick);color:#fff}.btn.primary:hover{background:var(--brick-dk)}
+.btn.dark{background:var(--ink);color:#fff}.btn.dark:hover{background:#000}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.light{background:#fff;color:var(--ink)}.btn.light:hover{background:var(--concrete)}
+.btn.outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}.btn.outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.dark{background:var(--ink);color:#fff}
+.grainy{position:relative;isolation:isolate}
+.grainy::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:.07;pointer-events:none;z-index:0;mix-blend-mode:screen}
+.grainy>*{position:relative;z-index:1}
+
+/* lišta a menu: tmavá, nad úvodom priehľadná */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(20,18,16,.92);backdrop-filter:blur(10px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08);transition:background .35s,border-color .35s}
+body.home .top{position:fixed;left:0;right:0;background:transparent;border-color:transparent;backdrop-filter:none}
+body.home .top.scrolled{background:rgba(20,18,16,.92);backdrop-filter:blur(10px);border-color:rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;gap:28px;min-height:78px}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand img{height:40px;width:auto}
+.nav{display:flex;gap:22px;margin-left:auto;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.nav a{text-decoration:none;color:rgba(255,255,255,.78);padding:6px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.nav a:hover,.nav a[aria-current]{color:#fff;border-bottom-color:var(--brick)}
+.top .tel{font-family:var(--display);font-weight:700;font-size:20px;text-decoration:none;white-space:nowrap;color:#fff;padding:8px 16px;border:1.5px solid rgba(255,255,255,.35);border-radius:var(--radius);transition:background .2s,border-color .2s}
+.top .tel:hover{background:var(--brick);border-color:var(--brick)}
+.menu-btn{display:none;margin-left:auto;background:none;border:2px solid rgba(255,255,255,.7);border-radius:var(--radius);width:48px;height:44px;align-items:center;justify-content:center;cursor:pointer}
+.menu-btn span,.menu-btn span::before,.menu-btn span::after{display:block;width:22px;height:2px;background:#fff;position:relative}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0}
+.menu-btn span::before{top:-7px}.menu-btn span::after{top:7px}
+.drawer{display:none}
+@media (max-width:980px){
+  .nav,.top .tel{display:none}
+  .menu-btn{display:flex}
+  .drawer{display:block;position:fixed;inset:0;z-index:60;background:var(--ink);color:#fff;padding:calc(24px + env(safe-area-inset-top,0px)) var(--gutter) 40px;transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);overflow:auto}
+  .drawer.open{transform:none}
+  .drawer nav{display:grid;gap:2px;margin-top:44px}
+  .drawer a{color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:34px;text-transform:uppercase;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+  .drawer .close{position:absolute;right:var(--gutter);top:calc(20px + env(safe-area-inset-top,0px));background:none;border:2px solid #fff;color:#fff;border-radius:var(--radius);width:48px;height:44px;font-size:26px;cursor:pointer}
+  .drawer .dtel{margin-top:28px;display:grid;gap:8px}
+  .drawer .dtel a{font-size:24px;border:0;color:var(--brick-pale)}
+}
+
+/* hlavička podstránky: tmavý pás s cestou, názvom a podtitulom */
+.page-head{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.page-head::after{content:"";position:absolute;right:-8vw;top:-40%;width:52vw;height:180%;background:radial-gradient(closest-side,rgba(193,56,44,.28),transparent 70%);pointer-events:none}
+.page-head .wrap{position:relative;z-index:1;padding-block:clamp(22px,3vw,34px) clamp(40px,5vw,64px);display:grid;gap:18px}
+.crumbs{font-size:14.5px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px 0;color:rgba(255,255,255,.55)}
+.crumbs li+li::before{content:"/";padding:0 10px;color:rgba(255,255,255,.25)}
+.crumbs a{color:rgba(255,255,255,.75);text-decoration:none}.crumbs a:hover{color:#fff}
+.crumbs li[aria-current]{color:#fff;font-weight:500}
+.page-head h1{font-size:clamp(40px,5.6vw,74px)}
+.page-head .head .lede{font-size:clamp(17px,1.4vw,20px);color:rgba(255,255,255,.8);max-width:60ch}
+.page-head .eyebrow{margin-bottom:0;color:var(--brick-pale)}
+.page-head .head{display:grid;gap:12px}
+.page-head.has-img .ph{position:absolute;inset:-20% 0;z-index:0;will-change:transform}
+.page-head.has-img .ph img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.55;animation:hero-in 8s ease-out both}
+.page-head.has-img::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(20,18,16,.92) 0%,rgba(20,18,16,.7) 55%,rgba(20,18,16,.35) 100%)}
+.page-head.has-img::after{z-index:0}
+.page-head.has-img .wrap{padding-block:clamp(26px,3vw,40px) clamp(56px,7vw,96px)}
+
+/* úvod: celá obrazovka, fotka s paralaxou, obrovský titulok */
+.hero{position:relative;color:#fff;background:var(--ink);overflow:hidden;min-height:min(100svh,960px);display:grid;align-items:end}
+.hero .bg{position:absolute;inset:-8% 0;will-change:transform}
+.hero .bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.hero .bg .base{animation:hero-in 10s ease-out both}
+.hero .bg .s{opacity:0;animation:slide 32s ease-in-out infinite}
+.hero .bg .s1{animation-delay:8s}.hero .bg .s2{animation-delay:16s}.hero .bg .s3{animation-delay:24s}
+@keyframes slide{0%{opacity:0;transform:scale(1.08)}6%{opacity:1}25%{opacity:1;transform:scale(1)}32%{opacity:0;transform:scale(1)}100%{opacity:0}}
+.hero h1 .w{display:inline-block;animation:rise .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.15s + var(--i) * .07s)}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,.55) 0%,rgba(20,18,16,.25) 35%,rgba(20,18,16,.78) 75%,var(--ink) 100%);z-index:1}
+.hero::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.08;mix-blend-mode:screen;pointer-events:none;z-index:1}
+.hero .wrap{position:relative;z-index:2;padding-block:clamp(120px,16vh,170px) clamp(36px,5vw,64px);display:grid;gap:26px;width:100%}
+.hero .eyebrow{color:var(--brick-pale)}
+.hero h1{font-size:clamp(52px,9.2vw,132px);line-height:.9;letter-spacing:-.015em;max-width:12ch}
+.hero h1 em{font-style:normal;color:var(--brick);-webkit-text-stroke:0;position:relative}
+.hero h1 .thin{font-weight:600;color:rgba(255,255,255,.85)}
+.hero p{font-size:clamp(18px,1.5vw,22px);max-width:52ch;color:rgba(255,255,255,.86)}
+.hero .row{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center}
+.hero .cue{position:absolute;right:var(--gutter);bottom:34px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.hero .cue::after{content:"";width:1px;height:56px;background:linear-gradient(180deg,#fff,transparent);animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes hero-in{from{transform:scale(1.1)}to{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.hero .wrap>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.hero .wrap>h1{animation:none}
+.hero .wrap>*:nth-child(3){animation-delay:.6s}.hero .wrap>*:nth-child(4){animation-delay:.75s}.hero .wrap>*:nth-child(5){animation-delay:.9s}
+@media (max-width:700px){.hero{min-height:100svh}.hero .cue{display:none}.hero .wrap{padding-top:120px}}
+
+/* fakty pod úvodom: tmavá lišta s počítadlami */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink);color:#fff;border-top:1px solid var(--ink-line)}
+.facts div{padding:30px var(--gutter);border-right:1px solid var(--ink-line);display:grid;gap:8px;align-content:start}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(44px,4.4vw,64px);line-height:.95;color:#fff;font-variant-numeric:tabular-nums}
+.facts b i{font-style:normal;color:var(--brick)}
+.facts span{display:block;font-size:15px;color:rgba(255,255,255,.62);line-height:1.4;max-width:24ch}
+@media (max-width:900px){.facts{grid-template-columns:1fr 1fr}.facts div{padding:22px var(--gutter)}.facts div:nth-child(2){border-right:0}.facts div:nth-child(-n+2){border-bottom:1px solid var(--ink-line)}}
+
+/* pás značiek */
+.marquee{background:var(--ink-soft);color:#fff;border-top:1px solid var(--ink-line);border-bottom:1px solid var(--ink-line);padding:22px 0;overflow:hidden}
+.marquee .lbl{font-family:var(--display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;margin-bottom:16px}
+.marquee .track{display:flex;gap:14px;width:max-content;animation:marquee 60s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee .tile{flex:none;display:grid;place-items:center;width:170px;height:70px;background:#fff;border-radius:var(--radius);padding:12px 18px}
+.marquee .tile img{max-height:40px;max-width:130px;width:auto;height:auto}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee .track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}}
+
+/* vyhľadávanie */
+.search{position:relative;max-width:640px}
+.search input{width:100%;min-height:58px;padding:0 18px 0 50px;font:inherit;font-size:17px;border:2px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--ink)}
+.search::before{content:"";position:absolute;left:18px;top:19px;width:16px;height:16px;border:2.5px solid var(--ink-3);border-radius:50%;box-sizing:border-box}
+.search::after{content:"";position:absolute;left:32px;top:33px;width:9px;height:2.5px;background:var(--ink-3);transform:rotate(45deg);transform-origin:left}
+.search input:focus{border-color:var(--brick);outline:0}
+.hero-search input{border-color:transparent;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.res{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 18px 40px rgba(28,26,23,.18);z-index:30;max-height:380px;overflow:auto;text-align:left}
+.res a{display:grid;gap:2px;padding:12px 16px;text-decoration:none;border-top:1px solid var(--line)}
+.res a:first-child{border-top:0}
+.res a:hover,.res a.on{background:var(--mortar)}
+.res b{font-family:var(--display);font-size:19px;font-weight:700}
+.res small{font-size:13px;color:var(--brick);letter-spacing:.06em;text-transform:uppercase}
+.res span{font-size:14px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .none{padding:14px 16px;color:var(--ink-3);font-size:15px}
+.search{margin-bottom:34px}
+.hero-search{margin:0;max-width:620px;width:100%}
+
+/* sekcie */
+.sec{padding-block:clamp(64px,8vw,120px)}
+.head{display:grid;gap:14px;margin-bottom:clamp(30px,4vw,52px)}
+.head .lede{font-size:19px;color:var(--ink-2)}
+.dark .head .lede{color:rgba(255,255,255,.75)}
+.head.row{grid-template-columns:1fr auto;align-items:end}
+@media (max-width:700px){.head.row{grid-template-columns:1fr}}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){.grid3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.grid3{grid-template-columns:1fr}}
+
+/* akcie: tmavá scéna */
+.akcie{background:var(--ink);color:#fff}
+.deals{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--ink-line);border:1px solid var(--ink-line)}
+.deal{background:var(--ink);color:#fff;padding:30px 28px 32px;display:grid;gap:12px;align-content:start;text-decoration:none;position:relative;overflow:hidden;transition:background .3s}
+a.deal::after{content:"→";position:absolute;right:24px;bottom:22px;font-family:var(--display);font-size:26px;color:var(--brick);opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .3s}
+a.deal:hover{background:var(--ink-soft)}
+a.deal:hover::after{opacity:1;transform:none}
+.akcie-page .deals{background:var(--line);border-color:var(--line)}
+.akcie-page .deal{background:#fff;color:var(--ink)}
+.akcie-page .deal p{color:var(--ink-2)}
+.akcie-page a.deal:hover{background:var(--mortar)}
+.deal .thumb{position:absolute;right:-18px;bottom:-40px;width:150px;height:auto;border-radius:3px;box-shadow:0 18px 40px rgba(0,0,0,.45);transform:rotate(6deg) translateY(30px);opacity:.25;transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s;pointer-events:none;max-height:190px;object-fit:cover;object-position:top}
+a.deal:hover .thumb{transform:rotate(3deg) translateY(0);opacity:1}
+.deal h3,.deal p,.deal .tag,.deal .more{position:relative;z-index:1;max-width:calc(100% - 130px)}
+.akcie-page .deal .thumb{opacity:.55;transform:rotate(4deg) translateY(16px)}
+.deal .tag{justify-self:start;background:var(--brick);color:#fff;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.1em;padding:5px 10px;border-radius:3px;text-transform:uppercase}
+.deal h3{font-size:30px;line-height:1}
+.deal p{color:rgba(255,255,255,.72);font-size:16px}
+.akcie-page .deal p{color:var(--ink-2)}
+.deal .more{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--brick)}
+@media (max-width:900px){.deals{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.deals{grid-template-columns:1fr}}
+
+/* katalóg: fotografické dlaždice */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:240px;gap:10px}
+.cat{position:relative;display:block;text-decoration:none;color:#fff;background:var(--ink);overflow:hidden;border-radius:var(--radius)}
+.cat.big{grid-column:span 2;grid-row:span 2}
+.cat.wide{grid-column:span 2}
+.cat .ph{position:absolute;inset:0}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .6s;filter:saturate(.92)}
+.cat:hover img{transform:scale(1.06);filter:saturate(1.05)}
+.cat .tx{position:absolute;inset:auto 0 0 0;padding:22px 20px;display:grid;gap:4px;background:linear-gradient(180deg,rgba(20,18,16,0),rgba(20,18,16,.85) 70%);transition:padding .35s}
+.cat:hover .tx{padding-bottom:28px}
+.cat h3{font-size:28px;line-height:1;text-transform:uppercase;font-weight:800;letter-spacing:.01em}
+.cat.big h3{font-size:clamp(34px,3.4vw,48px)}
+.cat p{font-size:15px;color:rgba(255,255,255,.75);line-height:1.4;max-width:40ch;display:none}
+.cat.big p{display:block}
+.cat .brands{font-size:13px;color:var(--brick-pale);font-weight:600;letter-spacing:.04em}
+.cat .n{position:absolute;top:16px;left:18px;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.14em;color:rgba(255,255,255,.7)}
+@media (max-width:1000px){.cats{grid-template-columns:repeat(3,1fr);grid-auto-rows:210px}}
+@media (max-width:720px){.cats{grid-template-columns:1fr 1fr;grid-auto-rows:170px;gap:8px}.cat.big{grid-column:span 2;grid-row:span 1}.cat.wide{grid-column:span 1}.cat h3,.cat.big h3{font-size:21px}.cat p{display:none!important}.cat .tx{padding:14px}.cat .brands{display:none}}
+
+/* katalóg: strany kategórií a obsah */
+.sort-note{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius)}
+.sort-note p{max-width:none;font-size:16px;color:var(--ink-2)}
+.two{display:grid;grid-template-columns:280px 1fr;gap:clamp(28px,4vw,56px);align-items:start}
+.side-in{position:sticky;top:94px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.side h2{font-size:15px;letter-spacing:.14em;color:var(--brick);font-weight:600;margin-bottom:10px}
+.kat{list-style:none}
+.kat>li{border-top:1px solid var(--line)}
+.kat>li>a{display:block;padding:9px 0;text-decoration:none;font-family:var(--display);font-weight:600;font-size:18px;color:var(--ink-2)}
+.kat>li>a:hover,.kat>li.act>a{color:var(--brick)}
+.kat ul{list-style:none;padding:0 0 10px 14px;border-left:2px solid var(--brick-lt);margin:0 0 6px 4px}
+.kat ul a{display:block;padding:5px 0;font-size:15px;text-decoration:none;color:var(--ink-2)}
+.kat ul a:hover,.kat ul a[aria-current]{color:var(--brick);font-weight:600}
+.side .btn{margin-top:14px;width:100%}
+@media (max-width:900px){.two{grid-template-columns:1fr}.side{order:2}.side-in{position:static}}
+.kat-page h1{font-size:clamp(34px,4.6vw,56px)}
+.subs{margin-top:36px}
+.subs h2{font-size:16px;letter-spacing:.14em;color:var(--brick);font-weight:600;margin-bottom:12px}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sub{display:grid;gap:4px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--brick);border-radius:var(--radius);text-decoration:none;transition:transform .2s}
+.sub:hover{transform:translateY(-2px)}
+.sub b{font-family:var(--display);font-size:22px;font-weight:700}
+.sub span{font-size:14px;color:var(--ink-3)}
+@media (max-width:600px){.sub-grid{grid-template-columns:1fr}}
+.kat-cta{margin-top:36px;padding:22px 26px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius);display:grid;gap:14px}
+.kat-cta p{max-width:none;color:var(--ink-2)}
+
+/* obsah prevzatý z pôvodného webu, prerobený do komponentov */
+.content{display:grid;gap:22px;font-size:16.5px;line-height:1.6;color:var(--ink-2)}
+.content p{max-width:none}
+.content strong{color:var(--ink);font-weight:600}
+.content a{color:var(--brick)}
+.sh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:18px;color:var(--ink);font-size:clamp(24px,2.6vw,32px);letter-spacing:.01em}
+.sh::after{content:"";flex:1;height:1px;background:var(--line);min-width:40px;align-self:center}
+h3.sh{font-size:22px;color:var(--brick);text-transform:none;letter-spacing:0}
+.sh small{font-family:var(--body);font-size:14px;color:var(--ink-3);font-weight:400;text-transform:none;letter-spacing:0}
+.txt{display:grid;gap:10px}
+.ticks{list-style:none;display:grid;gap:8px;padding:0}
+.ticks li{position:relative;padding-left:26px}
+.ticks li::before{content:"";position:absolute;left:0;top:9px;width:14px;height:8px;border-left:2.5px solid var(--brick);border-bottom:2.5px solid var(--brick);transform:rotate(-45deg)}
+.logos{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;padding:16px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.logos img{max-height:64px;width:auto;max-width:220px}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.figs.n1{grid-template-columns:1fr}.figs.n2{grid-template-columns:1fr 1fr}
+.figs.n4{grid-template-columns:repeat(4,1fr)}
+.fig{margin:0;display:grid;gap:8px}
+.fig.wide{grid-column:1/-1}
+.fig a,.fig span{display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;padding:8px}
+.fig img{width:auto;max-width:100%;height:auto;max-height:520px;object-fit:contain;transition:transform .5s}
+.fig a:hover img{transform:scale(1.03)}
+.figs.n1 .fig img{max-height:none}
+.figs:not(.n1) .fig a,.figs:not(.n1) .fig span{min-height:160px}
+.fig figcaption{font-size:14px;color:var(--ink-3)}
+@media (max-width:700px){.figs,.figs.n4{grid-template-columns:1fr 1fr}.figs.n1{grid-template-columns:1fr}}
+.pdfs{display:flex;flex-wrap:wrap;gap:10px}
+.pdf{display:inline-flex;align-items:center;gap:10px;padding:9px 14px 9px 10px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;font-weight:500;color:var(--ink);font-size:15px;transition:border-color .2s,transform .2s}
+.pdf::before{content:"PDF";font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.08em;background:var(--brick);color:#fff;padding:3px 7px;border-radius:3px}
+.pdf:hover{border-color:var(--brick);transform:translateY(-1px)}
+.prods{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.prods.noimg{grid-template-columns:1fr 1fr}
+.prod{display:grid;grid-template-rows:auto 1fr;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .25s,box-shadow .25s}
+.prod:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(28,26,23,.1)}
+.prod-media{padding:16px 16px 0;display:grid;gap:8px}
+.prod-media .main{display:block;aspect-ratio:4/3;background:var(--mortar);border-radius:4px;overflow:hidden}
+.prod-media .main img{width:100%;height:100%;object-fit:contain;padding:8px;transition:transform .5s}
+.prod-media a.main:hover img{transform:scale(1.04)}
+.prod-media .thumbs{display:flex;gap:6px}
+.prod-media .th{display:block;width:64px;height:48px;background:var(--mortar);border-radius:3px;overflow:hidden}
+.prod-media .th img{width:100%;height:100%;object-fit:contain;padding:3px}
+.prod-body{padding:18px 20px 22px;display:grid;gap:10px;align-content:start}
+.prod-body h3{font-size:23px;color:var(--ink);line-height:1.05}
+.prod-body p{font-size:15.5px}
+.content .lbl{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--brick);margin-top:4px}
+.prod.icon{grid-template-rows:auto;grid-template-columns:auto 1fr;align-items:start}
+.prod-icon{padding:20px 0 0 20px;display:flex;gap:8px}
+.prod-icon img{width:auto;max-width:96px;max-height:96px;height:auto;border-radius:4px}
+.prod.icon .prod-body{padding-left:16px}
+.prod.step .prod-media .main{aspect-ratio:auto}
+.prod.step .prod-media .main img{height:auto}
+.params{display:grid;gap:0;margin:0;font-size:14.5px;border-top:1px solid var(--line)}
+.params div{display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.params dt{color:var(--ink-3)}
+.params dd{margin:0;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.params .na{color:var(--ink-3);font-weight:400}
+.prod .pdfs{margin-top:4px}
+.arts{display:grid;gap:14px}
+.art{display:grid;gap:10px;padding:20px 22px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--brick);border-radius:var(--radius)}
+.art h3{font-size:22px;color:var(--ink)}
+.art p{font-size:15.5px}
+.art .figs{margin-top:6px}
+.brands-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.znacka{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:start;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);transition:transform .25s,box-shadow .25s}
+.znacka:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(28,26,23,.1)}
+.bl{display:grid;place-items:center;height:78px;background:var(--mortar);border-radius:4px;padding:10px}
+.bl img{max-width:120px;max-height:56px;width:auto;height:auto}
+.bl.txt span{font-family:var(--display);font-weight:800;font-size:40px;color:var(--brick)}
+.bt{display:grid;gap:6px;justify-items:start}
+.bt h3{font-size:22px;color:var(--ink)}
+.bt p{font-size:15px;color:var(--ink-2)}
+.bt .site{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--brick);margin-top:4px}
+.bt .site::after{content:" ↗"}
+@media (max-width:560px){.znacka{grid-template-columns:1fr}.bl{height:64px;justify-items:start}}
+.scroll{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.tbl{border-collapse:collapse;width:100%;font-size:14.5px;min-width:480px}
+.tbl td,.tbl th{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:9px 12px;vertical-align:top;text-align:left}
+.tbl td:last-child,.tbl th:last-child{border-right:0}
+.tbl th{background:var(--mortar);font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.02em}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td strong{font-weight:600}
+@media (max-width:900px){.prods,.prods.noimg{grid-template-columns:1fr}}
+@media (min-width:1100px){.wrap:not(.two) .prods{grid-template-columns:repeat(3,1fr)}.wrap:not(.two) .brands-grid{grid-template-columns:1fr 1fr}}
+.galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.galeria a{display:block;aspect-ratio:4/3;overflow:hidden;border-radius:var(--radius);background:var(--concrete)}
+.galeria img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.galeria a:hover img{transform:scale(1.05)}
+@media (max-width:700px){.galeria{grid-template-columns:1fr 1fr}}
+.album{margin-top:34px}
+.album .sh{margin-bottom:14px}
+.back{margin-top:30px;font-family:var(--display);font-weight:600;font-size:18px;text-transform:uppercase;letter-spacing:.04em}
+.back a{color:var(--brick);text-decoration:none}
+/* akcia */
+.akcia .two{grid-template-columns:1fr 300px}
+@media (max-width:900px){.akcia .two{grid-template-columns:1fr}}
+.letak{max-width:680px}
+.akcia .side-in h2{margin-bottom:4px}
+.akcia .others{display:grid}
+.akcia .others a{display:grid;gap:4px;padding:10px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.akcia .others a:hover b{color:var(--brick)}
+.akcia .others b{font-family:var(--display);font-size:18px;font-weight:700}
+.akcia .others .tag,.akcia-tag .tag{justify-self:start;background:var(--brick);color:#fff;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.08em;padding:3px 8px;border-radius:3px;text-transform:uppercase}
+.akcia-tag{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px 18px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:22px;font-size:15px;color:var(--ink-2)}
+.akcia-tag .tag{font-size:15px;padding:5px 10px}
+.letak{margin:0 0 22px;display:grid;gap:8px}
+.letak a{display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px;overflow:hidden}
+.letak img{width:100%;height:auto;transition:transform .5s}
+.letak a:hover img{transform:scale(1.015)}
+.letak figcaption{font-size:14px;color:var(--ink-3)}
+.akcia .kat-cta{margin-top:22px}
+
+
+/* novinky: vodorovný pás kariet */
+.novs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,1fr);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}
+.nov{scroll-snap-align:start;display:grid;grid-template-rows:auto 1fr;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.nov:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(20,18,16,.14)}
+.nov .ph{aspect-ratio:4/3;background:var(--concrete);overflow:hidden}
+.nov .ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s}
+.nov:hover .ph img{transform:scale(1.05)}
+.nov .ph.empty{background:var(--ink) url("../img/logo.png") center/40% no-repeat;opacity:.9}
+.nov .tx{padding:18px 20px 22px;display:grid;gap:6px;align-content:start}
+.nov h3{font-size:24px;color:var(--ink)}
+.nov p{font-size:15px;color:var(--ink-3)}
+@media (min-width:1100px){.novs{grid-auto-columns:minmax(0,1fr);overflow:visible}}
+
+/* zľavy: tehlová scéna s obrovskými číslami */
+.zlavy{background:var(--brick);color:#fff;position:relative;overflow:hidden}
+.zlavy::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.09;mix-blend-mode:multiply;pointer-events:none}
+.zlavy .wrap{position:relative;z-index:1}
+.zlavy .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);align-items:center}
+.zlavy .eyebrow{color:#fff}
+.zlavy h2{font-size:clamp(38px,5vw,66px)}
+.zlavy p{color:rgba(255,255,255,.9);font-size:18px}
+.disc{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(255,255,255,.35);margin-top:28px}
+.disc div{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.35)}
+.disc div+div{border-left:1px solid rgba(255,255,255,.35);padding-left:24px}
+.disc b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(64px,7vw,104px);line-height:.9;font-variant-numeric:tabular-nums}
+.disc span{display:block;margin-top:10px;font-size:16px;color:rgba(255,255,255,.9)}
+.karta{position:relative}
+.karta img{width:100%;height:auto;border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,.35);transform:rotate(-3deg);transition:transform .6s}
+.karta:hover img{transform:rotate(-1deg) scale(1.02)}
+.karta div{margin-top:30px;display:grid;gap:6px}
+.karta b{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase}
+.karta p{font-size:16px;max-width:none}
+@media (max-width:900px){.zlavy .grid{grid-template-columns:1fr}}
+@media (max-width:440px){.disc{grid-template-columns:1fr}.disc div+div{border-left:0;padding-left:0}}
+
+/* služby: číslovaný zoznam a fotka */
+.sluzby .grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(28px,5vw,72px);align-items:start}
+.sluzby .ph{position:sticky;top:100px;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;max-height:640px}
+.sluzby .ph img{width:100%;height:100%;object-fit:cover}
+.sluzby .ph figcaption{position:absolute;left:18px;bottom:16px;right:18px;color:#fff;font-size:14px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.srvs{display:grid}
+.srv{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:24px 0;border-top:1px solid var(--line)}
+.srv:last-child{border-bottom:1px solid var(--line)}
+.srv i{font-style:normal;font-family:var(--display);font-weight:800;font-size:40px;line-height:.9;color:var(--brick)}
+.srv h3{font-size:25px;margin-bottom:6px}
+.srv p{font-size:16px;color:var(--ink-2)}
+@media (max-width:900px){.sluzby .grid{grid-template-columns:1fr}.sluzby .ph{position:static;aspect-ratio:4/3}}
+
+/* o nás */
+.onas{background:var(--mortar)}
+.onas .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.onas .ph{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;position:relative}
+.onas .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.onas .ph a{display:block;height:100%}
+.onas .ph a:hover img{transform:scale(1.04)}
+.onas .year{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;padding:18px 24px;font-family:var(--display);font-weight:800;font-size:44px;line-height:1}
+.onas .year small{display:block;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--brick-pale)}
+.onas .tx{display:grid;gap:16px;justify-items:start}
+.onas .tx p{font-size:17.5px;color:var(--ink-2)}
+@media (max-width:820px){.onas .grid{grid-template-columns:1fr}}
+
+/* kontakt na úvode: finále */
+.kontakt-teaser{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.kontakt-teaser .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center}
+.kontakt-teaser .big-tel{font-family:var(--display);font-weight:800;font-size:clamp(44px,6.4vw,92px);line-height:.95;color:#fff;text-decoration:none;display:block;margin:6px 0 14px;letter-spacing:-.01em}
+.kontakt-teaser .big-tel:hover{color:var(--brick-pale)}
+.kontakt-teaser p{color:rgba(255,255,255,.8);font-size:18px;margin-bottom:22px}
+.kontakt-teaser .ph{display:block;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3}
+.kontakt-teaser .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.kontakt-teaser .ph:hover img{transform:scale(1.04)}
+.kontakt-teaser .hours{display:grid;gap:4px;font-size:16px;color:rgba(255,255,255,.75);margin-bottom:22px}
+.kontakt-teaser .hours b{color:#fff;font-family:var(--display);font-size:20px;font-weight:700;margin-right:10px}
+@media (max-width:820px){.kontakt-teaser .grid{grid-template-columns:1fr}}
+
+/* kontakt */
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kbox{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:grid;gap:10px;align-content:start;justify-items:start}
+.kbox h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick);font-weight:600}
+.kbox address{font-style:normal;line-height:1.5;color:var(--ink-2)}
+.kbox .big{font-family:var(--display);font-weight:700;font-size:30px;text-decoration:none;color:var(--ink)}
+.kbox .mail{color:var(--brick)}
+.hours{border-collapse:collapse;width:100%}
+.hours td{padding:6px 0;border-top:1px solid var(--line)}
+.hours tr:first-child td{border-top:0}
+.hours td:last-child{text-align:right;font-family:var(--display);font-weight:700;font-size:20px;font-variant-numeric:tabular-nums}
+.hours .closed{color:var(--ink-3)}
+.kmapa{margin-top:20px}
+.kmapa a{display:block;position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:21/9;background:var(--concrete)}
+.kmapa img{width:100%;height:100%;object-fit:cover}
+.kmapa span{position:absolute;left:20px;bottom:20px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:var(--radius);font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.03em}
+@media (max-width:900px){.kgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.kgrid{grid-template-columns:1fr}}
+
+/* výzva a pätička */
+.cta-pas{background:var(--brick);color:#fff;padding-block:clamp(44px,5vw,72px)}
+.cta-pas .wrap{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
+.cta-pas .eyebrow{color:#fff}
+.cta-pas h2{font-size:clamp(30px,3.6vw,48px)}
+.cta-pas p{color:rgba(255,255,255,.9);margin-top:10px}
+@media (max-width:800px){.cta-pas .wrap{grid-template-columns:1fr}}
+footer{background:#0d0c0a;color:rgba(255,255,255,.7);font-size:15px;padding-block:52px 28px}
+footer .grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:28px}
+footer h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-pale);font-weight:600;margin-bottom:12px}
+footer a{display:block;color:#fff;text-decoration:none;padding:3px 0}
+footer a:hover{color:var(--brick-pale)}
+footer p{margin-top:12px;line-height:1.5;max-width:none}
+.flogo{width:180px;height:auto}
+footer .bottom{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;margin-top:36px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+footer .bottom a{display:inline}
+@media (max-width:900px){footer .grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){footer .grid{grid-template-columns:1fr}}
+
+/* rýchly kontakt na telefóne a lightbox */
+.mbar{display:none}
+@media (max-width:980px){
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(20,18,16,.94);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.1)}
+  .mbar .btn{min-height:48px;font-size:17px}
+  .mbar .btn.dark{background:transparent;border-color:rgba(255,255,255,.5)}
+  footer{padding-bottom:calc(28px + 76px)}
+}
+.lb[hidden]{display:none}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(13,12,10,.94);display:grid;place-items:center;padding:24px;grid-template-rows:1fr auto;align-content:center}
+.lb figure{margin:0;display:grid;gap:12px;justify-items:center;max-width:min(96vw,1400px)}
+.lb img{max-width:min(96vw,1400px);max-height:84vh;width:auto;height:auto;border-radius:var(--radius)}
+.lb figcaption{color:#fff;font-size:15px;text-align:center;display:flex;gap:14px;align-items:center}
+.lb figcaption small{color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums}
+.lb-x{position:absolute;right:18px;top:calc(14px + env(safe-area-inset-top,0px));background:none;border:2px solid #fff;color:#fff;border-radius:var(--radius);width:48px;height:44px;font-size:26px;cursor:pointer}
+.lb-n{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.7);color:#fff;border-radius:var(--radius);width:48px;height:56px;font-size:28px;cursor:pointer;transition:background .2s}
+.lb-n:hover{background:rgba(255,255,255,.25)}
+.lb-p{left:18px}.lb-nx{right:18px}
+.lb-n[hidden]{display:none}
+@media (max-width:700px){.lb-n{top:auto;bottom:16px;transform:none;height:44px}.lb img{max-height:72vh}}
+
+/* animácie: objavenie pri skrolovaní, tieň lišty */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.no-js .rv,.rv.now{opacity:1;transform:none}
+.top.scrolled{box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.deals .deal,.cats .cat,.novs .nov,.srvs .srv,.sub-grid .sub{transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .3s,background .3s}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.hero .bg img,.hero .wrap>*{animation:none}}
+.content .figs.n3 .fig img{max-height:360px}
+
+/* fotografický pás s paralaxou */
+.band{position:relative;overflow:hidden;color:#fff;background:var(--ink);min-height:520px;display:grid;align-items:center}
+.band .bg{position:absolute;inset:-25% 0;will-change:transform}
+.band .bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,18,16,.85) 0%,rgba(20,18,16,.55) 50%,rgba(20,18,16,.2) 100%)}
+.band::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.07;mix-blend-mode:screen;pointer-events:none}
+.band .wrap{position:relative;z-index:1;padding-block:clamp(72px,10vw,140px);display:grid;gap:18px;justify-items:start}
+.band h2{max-width:14ch}
+.band p{font-size:19px;color:rgba(255,255,255,.85)}
+/* odhaľovanie fotiek: záves zhora, fotka sa zmenší na miesto */
+.rvimg{clip-path:inset(0 0 100% 0);transition:clip-path 1.1s cubic-bezier(.2,.7,.2,1);opacity:1!important;transform:none!important}
+.rvimg img{transform:scale(1.15);transition:transform 1.3s cubic-bezier(.2,.7,.2,1)}
+.rvimg.in,.rvimg.now{clip-path:inset(0)}
+.rvimg.in img,.rvimg.now img{transform:none}
+.onas .ph.rvimg a:hover img{transform:scale(1.04)}
+/* linka pri malom nadpise sa nakreslí */
+.head .eyebrow::before,.rv .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .9s .15s cubic-bezier(.2,.7,.2,1)}
+.head.in .eyebrow::before,.head.now .eyebrow::before,.rv.in .eyebrow::before,.rv.now .eyebrow::before,.hero .eyebrow::before,.page-head .eyebrow::before{transform:none}
+/* ukazovateľ prečítania stránky */
+.progress{position:fixed;left:0;top:0;height:3px;width:0;background:var(--brick);z-index:70;transition:width .1s linear}
+/* tlačidlá: šípka sa vysunie */
+.btn.primary::after,.btn.light::after,.btn.outline::after{content:"→";display:inline-block;width:0;overflow:hidden;opacity:0;transition:width .25s,opacity .25s,transform .25s;transform:translateX(-6px)}
+.btn.primary:hover::after,.btn.light:hover::after,.btn.outline:hover::after{width:1em;opacity:1;transform:none}
+/* náklon zákazníckej karty za kurzorom */
+.karta{perspective:900px}
+.karta img{transform-style:preserve-3d;will-change:transform}
+/* dlaždice katalógu: názov sa podčiarkne */
+.cat h3::after{content:"";display:block;width:0;height:3px;background:var(--brick);margin-top:6px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.cat:hover h3::after{width:44px}
+/* bočné menu: posun pri prejdení */
+.kat>li>a,.kat ul a{transition:color .2s,padding-left .25s}
+.kat>li>a:hover,.kat ul a:hover{padding-left:6px}
+@media (prefers-reduced-motion:reduce){.rvimg{clip-path:none}.rvimg img{transform:none}.hero .bg .s{animation:none}.hero h1 .w{animation:none}}
+@media (max-width:700px){.band{min-height:420px}.deal .thumb{display:none}.deal h3,.deal p,.deal .tag,.deal .more{max-width:none}}
+
+/* karty značiek s fotkou, popiskom a sortimentom */
+.znacka{grid-template-columns:260px 1fr;gap:0;padding:0;overflow:hidden}
+.znacka .zm{position:relative;min-height:200px;background:var(--mortar);overflow:hidden}
+.znacka .zm>img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.znacka .zm.contain>img{object-fit:contain;padding:18px 18px 60px}
+.znacka:hover .zm>img{transform:scale(1.05)}
+.znacka .zm.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,0) 40%,rgba(20,18,16,.55))}
+.znacka .badge{position:absolute;left:12px;bottom:12px;z-index:1;background:#fff;border-radius:3px;padding:6px 10px;display:grid;place-items:center;min-width:60px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.znacka .badge .lg{max-height:32px;max-width:110px;width:auto;height:auto}
+.znacka .badge .lg.txt{font-family:var(--display);font-weight:800;font-size:24px;color:var(--brick)}
+.znacka .bt{padding:22px 24px 24px;gap:10px}
+.znacka .bt h3{font-size:26px}
+.znacka .bt .lede{font-size:16px;color:var(--ink-2)}
+.znacka details{font-size:14.5px;color:var(--ink-3)}
+.znacka summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--brick);list-style:none;display:inline-flex;align-items:center;gap:8px}
+.znacka summary::-webkit-details-marker{display:none}
+.znacka summary::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .25s;margin-top:-4px}
+.znacka details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+.znacka details p{margin-top:8px;line-height:1.55}
+.znacka .zl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:6px}
+@media (max-width:640px){.znacka{grid-template-columns:1fr}.znacka .zm{min-height:170px;aspect-ratio:16/9}}
+/* produkt bez fotky: značková dlaždica na fotke kategórie */
+.prod-media .tile{aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;background:var(--ink) center/cover no-repeat}
+.prod-media .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,18,16,.55),rgba(20,18,16,.85))}
+.prod-media .tile-in{position:absolute;inset:0;display:grid;place-content:center;gap:10px;justify-items:center;padding:18px;text-align:center}
+.prod-media .tile-in img{max-height:44px;max-width:150px;width:auto;height:auto;background:#fff;padding:6px 10px;border-radius:3px}
+.prod-media .tile-in span{font-family:var(--display);font-weight:800;font-size:44px;color:#fff;background:var(--brick);width:64px;height:64px;display:grid;place-items:center;border-radius:4px}
+.prod-media .tile-in b{font-family:var(--display);font-weight:700;font-size:20px;color:#fff;line-height:1.05;text-wrap:balance}
+/* cenník dekoračných kameňov */
+.cennik{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cen{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--brick);border-radius:var(--radius)}
+.cen b{display:block;font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink)}
+.cen span{font-size:14px;color:var(--ink-3)}
+.cen strong{font-family:var(--display);font-weight:800;font-size:34px;color:var(--brick);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:700px){.cennik{grid-template-columns:1fr}}
+.nov .ph.price{display:grid;place-content:center;justify-items:center;gap:4px;background:var(--ink);color:#fff;text-align:center;padding:16px}
+.nov .ph.price small{font-family:var(--display);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-pale)}
+.nov .ph.price b{font-family:var(--display);font-weight:800;font-size:44px;line-height:1}
+.nov .ph.price span{font-size:13px;color:rgba(255,255,255,.7)}
+/* filmové prechody medzi stránkami (prehliadače s podporou) */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .35s ease-in both}
+::view-transition-new(root){animation:vt-in .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes vt-out{to{opacity:0;transform:scale(.985)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+/* 3D náklon kariet za kurzorom */
+.tilt{transform-style:preserve-3d;will-change:transform}
+.cats{perspective:1200px}.prods{perspective:1200px}.deals{perspective:1200px}.brands-grid{perspective:1400px}
+/* video v úvode */
+.hero .bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;opacity:0;transition:opacity 1.2s}
+.hero .bg video.on{opacity:1}
+.hero .bg.has-video .s{animation:none;opacity:0}
+/* aktívna služba pri skrolovaní */
+.srv{transition:background .4s,padding-left .4s}
+.srv.on{background:linear-gradient(90deg,var(--brick-lt),transparent 70%);padding-left:12px}
+.srv.on i{color:var(--brick-dk)}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+.novs.grid-page{grid-auto-flow:row;grid-template-columns:repeat(4,1fr);overflow:visible}
+@media (max-width:900px){.novs.grid-page{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.novs.grid-page{grid-template-columns:1fr}}
+
+/* živé fotky: dlaždice katalógu a hlavičky sa pomaly hýbu aj bez kurzora */
+@keyframes drift{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.12) translate(-1.5%,1%)}}
+.cat img{animation:drift 22s ease-in-out infinite alternate}
+.cat:nth-child(2n) img{animation-duration:26s;animation-direction:alternate-reverse}
+.cat:nth-child(3n) img{animation-delay:-8s}
+.cat:hover img{animation-play-state:paused;transform:scale(1.1)}
+@keyframes headlive{0%{transform:scale(1.06)}100%{transform:scale(1.14) translate(-1%,-1%)}}
+.page-head.has-img .ph img{animation:headlive 26s ease-in-out infinite alternate}
+.band .bg img{animation:drift 30s ease-in-out infinite alternate}
+.head .lede{max-width:56ch}
+/* prechod pri preklikávaní tam, kde prehliadač nemá View Transitions */
+@supports not (view-transition-name:x){
+  body{animation:page-in .55s cubic-bezier(.2,.7,.2,1) both}
+  body.leaving{opacity:0;transform:translateY(-8px);transition:opacity .22s ease-in,transform .22s ease-in}
+}
+@keyframes page-in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){.cat img,.page-head.has-img .ph img,.band .bg img{animation:none}body{animation:none}}
+
+/* Doladenie: mobil a drahší dojem */
+@media (max-width:700px){
+  .hero{min-height:auto}
+  .hero .wrap{padding:112px 0 44px;gap:18px}
+  .hero h1{font-size:clamp(42px,12.5vw,58px);line-height:.92}
+  .hero p{font-size:16px;line-height:1.55;color:rgba(255,255,255,.82)}
+  .hero .row{gap:10px}
+  .hero .row .btn{padding:13px 18px;font-size:14px}
+  .hero-search input{font-size:15px;padding:14px 16px 14px 46px}
+  .hero::before{background:linear-gradient(180deg,rgba(20,18,16,.7) 0%,rgba(20,18,16,.45) 40%,rgba(20,18,16,.86) 78%,var(--ink) 100%)}
+  .facts b{font-size:40px}
+  .facts span{font-size:14px}
+  .band::before{background:linear-gradient(180deg,rgba(20,18,16,.88) 0%,rgba(20,18,16,.72) 100%)}
+  .band .wrap{padding-block:64px}
+  .band p{font-size:17px}
+  .deal{padding:24px 20px 26px}
+  .deal h3{font-size:26px}
+  .deal h3,.deal p,.deal .tag,.deal .more{max-width:100%}
+  .cat .n{font-size:12px;top:12px;left:14px}
+  .disc b{font-size:56px}
+  .karta{padding:18px}
+  .sec{padding-block:64px}
+  .head .lede{font-size:16px}
+  .page-head .head .lede{font-size:16px}
+}
+/* značky: menšie, tichšie dlaždice */
+.marquee{padding:20px 0 24px}
+.marquee .lbl{font-size:12px;color:rgba(255,255,255,.42);margin-bottom:14px}
+.marquee .tile{width:156px;height:62px;border-radius:4px;background:#f6f3ee;padding:10px 16px;opacity:.94}
+.marquee .tile img{max-height:34px;max-width:118px;filter:saturate(.9)}
+/* zľavy: tmavá sekcia s červenou len ako akcent, karta na červenej podložke */
+.zlavy{background:var(--ink-soft)}
+.zlavy::after{opacity:.06;mix-blend-mode:screen}
+.zlavy .eyebrow{color:var(--brick-pale)}
+.zlavy p{color:rgba(255,255,255,.78)}
+.disc{border-top-color:rgba(255,255,255,.14)}
+.disc div{border-bottom-color:rgba(255,255,255,.14)}
+.disc div+div{border-left-color:rgba(255,255,255,.14)}
+.disc b{color:#fff}
+.disc b i{color:var(--brick)}
+.disc span{color:rgba(255,255,255,.66)}
+.karta{padding:clamp(20px,4vw,44px) clamp(16px,4vw,44px) 0}
+.karta::before{content:"";position:absolute;inset:0 0 auto 0;height:min(78%,360px);background:var(--brick);border-radius:var(--radius)}
+.karta img{position:relative;z-index:1;box-shadow:0 36px 70px rgba(0,0,0,.55)}
+.karta div{position:relative;z-index:1;margin-top:26px;padding-bottom:6px}
+.karta b{font-size:24px}
+.karta p{color:rgba(255,255,255,.72)}
+@media (max-width:700px){.hero .eyebrow{font-size:11px;letter-spacing:.16em}.page-head .eyebrow{font-size:12px}}
