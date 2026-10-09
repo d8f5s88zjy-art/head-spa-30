@@ -32,7 +32,7 @@
 
   var DAYS = ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'];
   var DAYS_SHORT = ['Po', 'Ut', 'St', 'Št', 'Pi', 'So', 'Ne'];
-  var TAGS = { fitness: 'Fitness', boj: 'Bojové športy', kravmaga: 'Krav Maga', pilates: 'Pilates', chrbat: 'Zdravý chrbát', vyziva: 'Výživa' };
+  var TAGS = { fitness: 'Fitness', boj: 'Bojové športy', kravmaga: 'Krav Maga', mds: 'Mastro Defence System', pilates: 'Pilates', chrbat: 'Zdravý chrbát', vyziva: 'Výživa' };
 
   var d = document;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');

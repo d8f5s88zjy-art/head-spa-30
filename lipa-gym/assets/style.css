@@ -1169,3 +1169,45 @@ section.is-focus .sec-head{animation:secPulse 2.4s ease-out}
 .live-video .lv-play[hidden]{display:none}
 /* video je vyššie než fotka: stĺpec s ukážkou sa prilepí len tam, kde sa celý zmestí na obrazovku */
 @media (min-width:901px) and (max-height:1100px){.lessons-stack{position:relative;top:auto}}
+
+/* =========================================================
+   Mastro Defence System: lekcia s logom, blok s ukážkou z tréningu, tréner s časom tréningu pod fotkou
+   ========================================================= */
+.lesson-logo{display:inline-block;width:34px;height:34px;margin-right:10px;vertical-align:-7px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.lesson-logo img{display:block;width:100%;height:100%}
+.lesson-more{display:inline-block;margin-top:6px;color:var(--volt);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(212,255,63,.4)}
+.lesson-more::after{content:" ↓"}
+.lesson-more:hover{border-color:var(--volt)}
+.mds{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center;margin-top:clamp(56px,7vw,96px);padding:clamp(20px,3vw,36px);border:1px solid var(--line);border-radius:calc(var(--r) + 6px);background:radial-gradient(120% 80% at 100% 0,rgba(226,30,38,.10),transparent 60%),var(--card);scroll-margin-top:calc(var(--bar-h) + 16px)}
+.mds-video{margin:0}
+.mds-video video{aspect-ratio:464/832;max-height:min(680px,calc(100svh - var(--bar-h) - 80px));width:auto;max-width:100%;margin-inline:auto;background-image:url(video/mds-poster.jpg)}
+.mds-body{position:relative;min-width:0}
+.mds-logo{display:block;width:104px;height:104px;margin-bottom:18px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 12px 30px rgba(0,0,0,.45)}
+.mds-logo img{display:block;width:100%;height:100%}
+.mds-h{font-family:var(--font-e);font-weight:640;font-stretch:80%;letter-spacing:-.022em;font-size:clamp(2rem,3.6vw,3rem);line-height:1.02}
+.mds-h em{display:block;font-style:normal;color:var(--volt)}
+.mds-when{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.mds-when li{display:flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:14px;border:1px solid rgba(212,255,63,.35);background:rgba(212,255,63,.08)}
+.mds-when b{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--volt)}
+.mds-when span{font-family:var(--font-e);font-weight:640;font-stretch:80%;font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.mds-lady{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.mds-lady h4{font-family:var(--font-e);font-weight:640;font-stretch:80%;font-size:1.35rem;letter-spacing:-.01em}
+.mds-lady ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px;color:#d4d7dc}
+.mds-lady li{position:relative;padding-left:22px}
+.mds-lady li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:2px;background:#e21e26}
+.mds-note{margin-top:16px;color:#b9bdc4;font-size:.92rem}
+.mds-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:20px}
+.mds-tel{font-weight:700;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+.mds-tel:hover{color:var(--volt);border-color:var(--volt)}
+@media (max-width:900px){
+  .mds{grid-template-columns:1fr;padding:16px}
+  .mds-video video{max-height:calc(100svh - var(--bar-h) - var(--dock-z) - 40px)}
+  .mds-logo{width:84px;height:84px;margin-top:6px}
+  .mds-act .btn{flex:1 1 auto}
+}
+.coach-when{margin:-4px 0 12px;padding:7px 10px;border-radius:10px;background:rgba(212,255,63,.1);border:1px solid rgba(212,255,63,.3);color:var(--ink);font-size:.8rem;font-weight:700;line-height:1.3}
+@media (max-width:600px){.coach-when{font-size:.74rem;padding:6px 8px}}
+.mds-video{justify-self:center;width:fit-content;max-width:100%}
+.mds-video::after{display:none}
+/* atribút hidden vždy skryje (filter trénerov, tlačidlá): inak ho prebije display:flex/grid v pravidlách prvkov */
+[hidden]{display:none!important}
