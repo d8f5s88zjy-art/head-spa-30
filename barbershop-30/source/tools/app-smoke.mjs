@@ -46,8 +46,9 @@ async function openPage(browser, { mobile = false, query = '', reducedMotion = '
 }
 async function scrollTo(page, y) {
   await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), Math.round(y));
-  await sleep(600); // v SwiftShaderi sú snímky pomalé – daj slučke čas zaregistrovať scroll
-  await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 30000 }).catch(() => {});
+  // v SwiftShaderi (CPU) trvá snímok stovky ms až sekundy: najprv počkaj, kým slučka zaregistruje scroll (settled=false), potom na dobehnutie
+  await page.waitForFunction(() => window.__scrollSettled === false, null, { timeout: 15000 }).catch(() => {});
+  await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 90000 }).catch(() => {});
   await sleep(300);
 }
 const vars = (page) => page.evaluate(() => {

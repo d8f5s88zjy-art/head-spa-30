@@ -90,7 +90,7 @@ try {
       await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), Math.round(y));
       await page.waitForTimeout(wait);
       // lerp režiséra v SwiftShaderi dobieha pomaly – počkaj, kým sa stav ustáli, a potom na vykreslenie snímky
-      await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 30000 }).catch(() => logs.push(`[shot] ${id}: scroll sa neustálil`));
+      await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 90000 }).catch(() => logs.push(`[shot] ${id}: scroll sa neustálil`));
       await page.waitForTimeout(700);
       const st = await page.evaluate(() => {
         const cs = getComputedStyle(document.documentElement);
