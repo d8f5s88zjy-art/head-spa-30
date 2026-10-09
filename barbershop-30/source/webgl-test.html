@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebGL test – BARBERSHOP 30</title>
+  <link rel="stylesheet" href="../assets/fonts.css">
+  <style>
+    html, body { margin: 0; height: 100%; background: #0b0b0d; color: #e8e2d8; }
+    body { font-family: "Manrope", system-ui, sans-serif; overflow: hidden; }
+    #stage { position: fixed; inset: 0; display: block; }
+    #label {
+      position: fixed; left: 16px; bottom: 16px; z-index: 2;
+      font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 28px; line-height: 1.1;
+      letter-spacing: -0.01em; pointer-events: none;
+    }
+    #label i { font-style: italic; }
+    #label b { font-weight: 800; }
+    #label small { display: block; font-family: "Manrope", system-ui, sans-serif; font-weight: 400; font-size: 13px; opacity: .7; margin-top: 6px; }
+    #err { position: fixed; left: 16px; top: 16px; z-index: 3; color: #ff6b6b; font-size: 14px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+  <div id="label"><b>30</b> <i>Holičstvo</i> – ľščťžýáíéôäňďú ĽŠČŤŽ<small>WebGL test: MeshPhysicalMaterial, metalness 1, roughness 0.3, PMREM RoomEnvironment</small></div>
+  <div id="err"></div>
+
+  <script type="module">
+    import * as THREE from './../assets/vendor/three.module.min.js';
+    import { RoomEnvironment } from './../assets/vendor/RoomEnvironment.js';
+
+    window.__renderDone = false;
+    window.__renderError = null;
+    window.__renderMs = null;
+
+    const t0 = performance.now();
+    const canvas = document.getElementById('stage');
+    const errBox = document.getElementById('err');
+
+    try {
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.0;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0b0b0d);
+
+      const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0.35, 4.2);
+      camera.lookAt(0, 0, 0);
+
+      // PMREM from RoomEnvironment -> scene.environment
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
+      scene.environment = envRT.texture;
+      pmrem.dispose();
+
+      const material = new THREE.MeshPhysicalMaterial({
+        color: 0xcfc3b2,
+        metalness: 1.0,
+        roughness: 0.3,
+        envMapIntensity: 1.0,
+        clearcoat: 0.0
+      });
+      const sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64), material);
+      scene.add(sphere);
+
+      // Key + rim light for a hard specular highlight on top of the env reflections
+      const key = new THREE.DirectionalLight(0xfff1dc, 3.0);
+      key.position.set(2.5, 3.0, 2.0);
+      scene.add(key);
+      const rim = new THREE.DirectionalLight(0x9fb4ff, 1.2);
+      rim.position.set(-3, 1, -2);
+      scene.add(rim);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.15));
+
+      function render() {
+        renderer.setSize(window.innerWidth, window.innerHeight, false);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        // keep the whole sphere in frame on portrait viewports (move the camera back)
+        const dist = 4.2 / Math.min(1, camera.aspect);
+        camera.position.set(0, 0.35 * dist / 4.2, dist);
+        camera.lookAt(0, 0, 0);
+        camera.updateProjectionMatrix();
+        renderer.render(scene, camera);
+      }
+
+      render();
+      // force GPU flush before reporting done (readback of 1px)
+      const gl = renderer.getContext();
+      gl.finish();
+      window.__renderMs = Math.round(performance.now() - t0);
+      window.__renderDone = true;
+      document.documentElement.dataset.renderDone = '1';
+      console.log('[webgl-test] rendered in', window.__renderMs, 'ms;', 'GL:', gl.getParameter(gl.VERSION), '|', gl.getParameter(gl.RENDERER));
+
+      window.addEventListener('resize', render);
+    } catch (e) {
+      window.__renderError = String(e && e.stack || e);
+      errBox.textContent = 'WebGL error: ' + window.__renderError;
+      document.documentElement.dataset.renderDone = 'error';
+      console.error(e);
+    }
+  </script>
+</body>
+</html>
