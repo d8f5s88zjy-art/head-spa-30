@@ -59,6 +59,41 @@ Prvý čitateľný obraz je teda hlboko pod cieľom 1,5 MB; prológ sa sťahuje 
 LCP/CLS Lighthouse: lokálne nemerané (bez Lighthouse); CLS: zálohy aj plátno majú pevné
 rozmery, doska úvodu nastupuje len animáciou `transform/opacity`.
 
+## 6. Maximálny detail a prechody (2026‑10‑09, druhá verzia)
+
+**Zábery**: `source/tools/film.py` – stupne 1086/1448/2172/2896 px (fasáda `vstup` aj 4096),
+AVIF q66 / WebP q84, nič sa nezväčšuje nad originál; pre telefón výrezy na výšku 9 : 16 okolo bodu
+záujmu (`<meno>-m-{1086,1448}` + vlastná hĺbková mapa; rohožka z foto‑30 na výšku). 14 záberov,
+`assets/img/film` 39 MB na disku (sťahuje sa vždy len to, čo zariadenie potrebuje).
+
+**Ostrosť** – `node source/tools/ostrost.mjs --a=<naživo stará> --shots=sala,kreslo,recepcia`
+(telefón 390×844 @3×, počítač 1440×900 @2×, film na rovnakej polohe, rozptyl Laplaciánu v strede
+obrazu; väčšie = viac detailu; rôzna kompozícia výrezu číslo ovplyvňuje, preto aj výrezy 1 : 1
+v `docs/screenshots/ostrost/`):
+
+| záber | telefón pred (1448 px na šírku) | telefón po (výrez -m 1448) | počítač pred (2172) | počítač po (2896) |
+|---|---|---|---|---|
+| recepcia | 402 | **512** | 284 | **394** |
+| kreslo (plytká hĺbka ostrosti) | 7 | **23** | 37 | **55** |
+| sála | 560 | 546 (iná kompozícia výrezu) | 176 | 174 |
+
+Výrezy 1 : 1 (`ostrost/porovnanie-mobil-recepcia.jpg`, `porovnanie-desktop-recepcia.jpg`): neónový
+nápis a lamely na telefóne predtým rozmazané, teraz kreslené bod na bod; na počítači ostrejšie hrany
+kruhového svetla a obrazu. Film na telefóne kreslí plátno 2× (strop `dpr` 2), textúra výrezu
+1448 px pokrýva 1,24 šírky okna.
+
+**Prechod cez priestor** – `node source/tools/prechod-shot.mjs` (desktop + mobil, dvojice sála →
+kreslo a sud → vstup, prechod zastavený na 0 / 0,25 / 0,5 / 0,75 / 1 cez `BS30_FILM.fadeFreeze`):
+snímky `docs/screenshots/prechod-*.jpg`. Ďaleký koniec nového záberu sa vynára prvý, blízke kreslo
+starého záberu mizne posledné, nič nie je rozmazané, v strede 82 % jasu. Ten istý prechod má prológ
+(`uvod-*-s050.jpg`: interiér sa vynára cez dvere).
+
+**Hook úvodu a telefón**: filmové pásy počas prológu (`uvod-mobile-s018.jpg`, `uvod-desktop-pred-filmom.jpg`),
+choreografia nadpisu, doska pláva nad filmom (±14 px), kompaktná doska na telefóne („Zavolať“ ako
+odkaz, hlavné tlačidlo v spodnej lište), výzva „Prejdi si podnik“ nad lištou (`uvod-mobile-s100.jpg`).
+Dymový test po zmenách: všetky kontroly prešli; úvod (desktop + mobil) prechádza polohami 0 → 1,
+na telefóne so zábermi `vstup-m` → `rohozka-m`.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,
