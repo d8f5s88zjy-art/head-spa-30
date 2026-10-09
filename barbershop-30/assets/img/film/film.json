@@ -4,167 +4,670 @@
   "place": "Vstup z Mostnej ulice",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 227805,
-   "1448": 118241,
-   "1086": 72535
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 94664
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 154033
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 296137
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 457496
+   },
+   "4096": {
+    "w": 4096,
+    "h": 2731,
+    "avif": 781985
+   }
   },
-  "hlbka": 46870
+  "hlbka": 46870,
+  "m": {
+   "source": "source/web-povodny/gallery/43.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 2345,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 219672
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 327096
+    }
+   },
+   "hlbka": 17812
+  }
  },
  "recepcia": {
   "source": "source/web-povodny/gallery/35.jpg",
   "place": "Recepcia a predná sála",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 197644,
-   "1448": 92969,
-   "1086": 57923
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 75281
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 122106
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 268502
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 519014
+   }
   },
-  "hlbka": 56372
+  "hlbka": 56372,
+  "m": {
+   "source": "source/web-povodny/gallery/35.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1075,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 231011
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 447580
+    }
+   },
+   "hlbka": 31596
+  }
  },
  "sala": {
   "source": "source/web-povodny/gallery/38.jpg",
   "place": "Hlavná sála",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 102855,
-   "1448": 59074,
-   "1086": 39899
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 50561
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 74732
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 132722
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 226733
+   }
   },
-  "hlbka": 59764
+  "hlbka": 59764,
+  "m": {
+   "source": "source/web-povodny/gallery/38.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 111084
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 205070
+    }
+   },
+   "hlbka": 29142
+  }
  },
  "kreslo": {
   "source": "source/web-povodny/gallery/28.jpg",
   "place": "Kreslo pri okne",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 163937,
-   "1448": 88707,
-   "1086": 57937
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 74522
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 114176
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 213627
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 353913
+   }
   },
-  "hlbka": 66704
+  "hlbka": 66704,
+  "m": {
+   "source": "source/web-povodny/gallery/28.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1608,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 132979
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 227927
+    }
+   },
+   "hlbka": 42008
+  }
  },
  "stol": {
   "source": "source/web-povodny/gallery/40.jpg",
   "place": "Pracovné miesto",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 136166,
-   "1448": 75618,
-   "1086": 50272
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 64275
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 96916
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 177168
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 291564
+   }
   },
-  "hlbka": 55232
+  "hlbka": 55232,
+  "m": {
+   "source": "source/web-povodny/gallery/40.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 126678
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 227905
+    }
+   },
+   "hlbka": 24230
+  }
  },
  "naradie": {
   "source": "source/web-povodny/gallery/39.jpg",
   "place": "Pomády, štetka a karafa",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 110918,
-   "1448": 61853,
-   "1086": 41294
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 52727
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 78975
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 146919
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 263932
+   }
   },
-  "hlbka": 43114
+  "hlbka": 43114,
+  "m": {
+   "source": "source/web-povodny/gallery/39.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 98609
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 210839
+    }
+   },
+   "hlbka": 16986
+  }
  },
  "zadna": {
   "source": "source/web-povodny/gallery/31.jpg",
   "place": "Zadná miestnosť",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 174512,
-   "1448": 88394,
-   "1086": 56248
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 73068
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 114676
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 234254
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 446629
+   }
   },
-  "hlbka": 45282
+  "hlbka": 45282,
+  "m": {
+   "source": "source/web-povodny/gallery/31.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 194718
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 362087
+    }
+   },
+   "hlbka": 18968
+  }
  },
  "cakaren": {
   "source": "source/web-povodny/gallery/36.jpg",
   "place": "Kútik s pumpou Route 66",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 149269,
-   "1448": 78324,
-   "1086": 51393
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 66346
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 101517
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 202739
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 386791
+   }
   },
-  "hlbka": 57564
+  "hlbka": 57564,
+  "m": {
+   "source": "source/web-povodny/gallery/36.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 158646
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 313723
+    }
+   },
+   "hlbka": 25132
+  }
  },
  "sala-rano": {
   "source": "source/web-povodny/gallery/33.jpg",
   "place": "Sála v rannom svetle",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 162327,
-   "1448": 83812,
-   "1086": 53615
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 69626
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 109668
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 221929
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 425953
+   }
   },
-  "hlbka": 58406
+  "hlbka": 58406,
+  "m": {
+   "source": "source/web-povodny/gallery/33.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 189513
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 365722
+    }
+   },
+   "hlbka": 22932
+  }
  },
  "kreslo-stred": {
   "source": "source/web-povodny/gallery/34.jpg",
   "place": "Kreslo uprostred sály",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 167765,
-   "1448": 84833,
-   "1086": 53462
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 69316
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 109999
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 223164
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 416528
+   }
   },
-  "hlbka": 55172
+  "hlbka": 55172,
+  "m": {
+   "source": "source/web-povodny/gallery/34.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 164234
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 329310
+    }
+   },
+   "hlbka": 25564
+  }
  },
  "kava": {
   "source": "source/web-povodny/gallery/41.jpg",
   "place": "Káva pre hostí",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 141884,
-   "1448": 75430,
-   "1086": 48759
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 63306
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 98076
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 184185
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 292088
+   }
   },
-  "hlbka": 52954
+  "hlbka": 52954,
+  "m": {
+   "source": "source/web-povodny/gallery/41.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 135120
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 214347
+    }
+   },
+   "hlbka": 26018
+  }
  },
  "sud": {
   "source": "source/web-povodny/gallery/30.jpg",
   "place": "Predná sála so sudom",
   "width": 4096,
   "height": 2731,
-  "avif": {
-   "2172": 247716,
-   "1448": 110659,
-   "1086": 66489
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 724,
+    "avif": 87370
+   },
+   "1448": {
+    "w": 1448,
+    "h": 965,
+    "avif": 147208
+   },
+   "2172": {
+    "w": 2172,
+    "h": 1448,
+    "avif": 341744
+   },
+   "2896": {
+    "w": 2896,
+    "h": 1931,
+    "avif": 679853
+   }
   },
-  "hlbka": 56876
+  "hlbka": 56876,
+  "m": {
+   "source": "source/web-povodny/gallery/30.jpg",
+   "width": 1536,
+   "height": 2731,
+   "left": 1280,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 1086,
+     "h": 1931,
+     "avif": 290242
+    },
+    "1448": {
+     "w": 1448,
+     "h": 2575,
+     "avif": 552850
+    }
+   },
+   "hlbka": 25034
+  }
  },
  "noznice": {
   "source": "source/web-povodny/slider/4.jpg",
   "place": "Nožnice a hrebeň",
   "width": 1920,
   "height": 1200,
-  "avif": {
-   "2172": 73696,
-   "1448": 50645,
-   "1086": 35052
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 679,
+    "avif": 44598
+   },
+   "1448": {
+    "w": 1448,
+    "h": 905,
+    "avif": 64539
+   },
+   "2172": {
+    "w": 1920,
+    "h": 1200,
+    "avif": 95835
+   }
   },
-  "hlbka": 22610
+  "hlbka": 22610,
+  "m": {
+   "source": "source/web-povodny/slider/4.jpg",
+   "width": 675,
+   "height": 1200,
+   "left": 622,
+   "fx": 0.501,
+   "tiers": {
+    "1086": {
+     "w": 675,
+     "h": 1200,
+     "avif": 38913
+    }
+   },
+   "hlbka": 8124
+  }
  },
  "rohozka": {
   "source": "source/web-povodny/slider/3.jpg",
   "place": "Na rohožke, hneď za dverami",
   "width": 1920,
   "height": 1200,
-  "avif": {
-   "2172": 129019,
-   "1448": 73745,
-   "1086": 43734
+  "tiers": {
+   "1086": {
+    "w": 1086,
+    "h": 679,
+    "avif": 57253
+   },
+   "1448": {
+    "w": 1448,
+    "h": 905,
+    "avif": 97265
+   },
+   "2172": {
+    "w": 1920,
+    "h": 1200,
+    "avif": 176450
+   }
   },
-  "hlbka": 19980
+  "hlbka": 19980,
+  "m": {
+   "source": "source/photos/foto-30.jpg",
+   "width": 900,
+   "height": 1600,
+   "left": 150,
+   "fx": 0.5,
+   "tiers": {
+    "1086": {
+     "w": 900,
+     "h": 1600,
+     "avif": 135626
+    }
+   },
+   "hlbka": 11126
+  }
  }
 }

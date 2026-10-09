@@ -116,26 +116,39 @@
     const w = img && parseFloat(img.getAttribute('width')), h = img && parseFloat(img.getAttribute('height'));
     return w > 0 && h > 0 ? w / h : 1.5;
   };
-  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].map((el) => {
-    const f = pair(el.dataset.f, [0.5, 0.5]);
-    // záloha ukazuje ten istý bod záujmu ako film (object-position cez vlastné premenné)
-    el.style.setProperty('--fx', (f[0] * 100).toFixed(1) + '%'); el.style.setProperty('--fy', (f[1] * 100).toFixed(1) + '%');
+  // stupne šírky, ktoré pre záber existujú (data-tiers="1086,1448,2172"); bez údaju pôvodné tri
+  const tiersOf = (v) => { const a = (v || '').split(/[\s,;]+/).map((x) => parseInt(x, 10)).filter((x) => x > 0); return a.length ? a.sort((p, q) => p - q) : [1086, 1448, 2172]; };
+  /* telefón: každý záber má vlastný výrez na výšku (data-m="meno-m", data-m-size, data-m-tiers, bod záujmu
+     data-fm vo výreze), takže sa na displeji nezväčšuje ako výsek z fotky na šírku. Bez výrezu sa berie
+     fotka na šírku a data-fm je bod záujmu v nej. */
+  const shotOf = (el, p) => {
+    // p = '' pre záber kotvy, 'pro' pre záber prológu (atribúty data-pro-*)
+    const g = (k) => el.dataset[p ? 'pro' + k[0].toUpperCase() + k.slice(1) : k];
+    const f = pair(g('f'), [0.5, 0.5]), fm = pair(g('fm'), null), m = phone && g('m');
     return {
-      at: el, photo: el.dataset.shot, place: el.dataset.place || '', f, fm: pair(el.dataset.fm, null),
-      mv: MOVES[el.dataset.mv] ? el.dataset.mv : 'in',
-      pa: ratio(el.dataset.size, el.querySelector('img')),
+      at: el, photo: m || g(p ? '' : 'shot') || g('pro'), place: g('place') || '', f: m && fm ? fm : f, fm: m ? null : fm,
+      mv: MOVES[g('mv')] ? g('mv') : 'in',
+      pa: m ? ratio(g('mSize'), null) : ratio(g('size'), el.querySelector('img')),
+      tiers: tiersOf(m ? g('mTiers') : g('tiers')),
     };
+  };
+  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].map((el) => {
+    const s = shotOf(el, '');
+    s.photo = (phone && el.dataset.m) || el.dataset.shot;
+    // záloha ukazuje ten istý bod záujmu ako film (object-position cez vlastné premenné; výrez na
+    // telefón má vlastné --fmx/--fmy zo stránky)
+    const f = pair(el.dataset.f, [0.5, 0.5]);
+    el.style.setProperty('--fx', (f[0] * 100).toFixed(1) + '%'); el.style.setProperty('--fy', (f[1] * 100).toFixed(1) + '%');
+    return s;
   });
   if (!SHOTS.length) { quit(); return; }
   /* záber prológu: nemá vlastnú kotvu, stojí pred úvodom (index 0 v ceste, kotva jednu obrazovku nad
      začiatkom stránky), takže skrolovaním sa k nemu nedá vrátiť; po prológu sa uvoľní a už sa nekreslí */
   let PRO = null;
   if (proArmed) {
-    const e = proEl;
-    PRO = {
-      at: e, photo: e.dataset.pro, place: e.dataset.proPlace || '', f: pair(e.dataset.proF, [0.5, 0.5]), fm: pair(e.dataset.proFm, null),
-      mv: MOVES[e.dataset.proMv] ? e.dataset.proMv : 'in', pa: ratio(e.dataset.proSize, null), pro: true,
-    };
+    PRO = shotOf(proEl, 'pro');
+    PRO.photo = (phone && proEl.dataset.proM) || proEl.dataset.pro;
+    PRO.pro = true;
     SHOTS.unshift(PRO);
   }
   api.shots = SHOTS.map((s) => s.photo);
@@ -184,8 +197,9 @@
   const scene = new THREE.Scene();
 
   /* ---------- záber = fotka na mriežke, ktorú hĺbková mapa vytlačí k oku ---------- */
-  // mriežka na telefóne: bunka asi 20 px, pohyb kamery je malý a rozdiel oproti hustejšej nevidno
-  const SEG = phone ? [96, 72] : [256, 192];                   // fotky sú na šírku: viac buniek vodorovne
+  // mriežka: na počítači bunka asi 7 px; na telefóne sú zábery výrezy na výšku, preto viac buniek
+  // zvislo (bunka asi 4 × 5 px pri 1448 × 2575), aby hrany hĺbky neschodíkovali
+  const SEG = phone ? [112, 200] : [256, 192];
   const grid = new THREE.PlaneGeometry(1, 1, SEG[0], SEG[1]);
   const VERT = `
     uniform sampler2D uDepth; uniform float uAmt; uniform vec3 uEye;
@@ -269,15 +283,16 @@
   });
 
   /* ---------- načítanie fotiek: najprv aktuálny záber, potom susedia; ostatné sa uvoľnia ---------- */
-  const SIZES = [1086, 1448, 2172];
   const base = new URL('img/film/', here).href;
   let maxTex = 4096;
-  // telefón: najviac 1448 px. Na displeji 2x je to takmer bod na bod, no do grafiky sa nahrá
-  // trikrát rýchlejšie ako 2172 a zaberie o polovicu menej pamäte
-  const CAP = phone ? 1448 : Infinity;
+  // telefón: najviac 1448 px (výrez na výšku je pri tom takmer bod na bod aj na displeji 3x);
+  // počítač: do 2896 px (displej 2x pri 1440 px), záber prológu aj 4096 px, lebo kamera doň
+  // nabieha 1,5× a po prológu sa uvoľní
+  const CAP = phone ? 1448 : 2896;
   function pickSize(s) {
     // najmenšia fotka, ktorá na obrazovke nebude zväčšená (ostrosť ako na fotke)
-    const fit = SIZES.filter((w) => w <= maxTex && w <= CAP);
+    const fit = s.tiers.filter((w) => w <= maxTex && w <= (s.pro ? 4096 : CAP));
+    if (!fit.length) fit.push(s.tiers[0]);
     const need = s.pw / s.vw * canvas.width;
     return fit.find((w) => w >= need * 0.95) || fit[fit.length - 1];
   }
@@ -311,10 +326,14 @@
   /* nahratie do grafiky po pásoch: jedno veľké nahratie by zastavilo stránku (na telefóne 40 až 250 ms),
      pásy po 256 riadkoch idú po jednom v ďalších snímkach, každý pár milisekúnd */
   const gl = renderer.getContext(), BAND = 256;
+  // fotky záberov: mipmapy + trilineárne filtrovanie + anizotropia, aby bola fotka ostrá aj tam, kde ju
+  // perspektíva naklonená hĺbkou vzorkuje šikmo, a bez moaré, keď je väčšia než obrazovka
+  const ANISO = Math.min(8, renderer.capabilities.getMaxAnisotropy() || 1);
   let jobs = [];
-  function upload(bmp, live) {
+  function upload(bmp, live, photo) {
     return new Promise((res) => {
       const t = tex(bmp);
+      if (photo) { t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = ANISO; }
       t.userData.w = bmp.width; t.userData.h = bmp.height;  // rozmery ostanú známe aj po zavretí obrázka
       t.source.dataReady = false;                           // three len vyhradí miesto, obsah príde po pásoch
       renderer.initTexture(t);
@@ -329,6 +348,8 @@
         gl.pixelStorei(gl.UNPACK_SKIP_ROWS, 0);
         y += h;
         if (y < bmp.height) return false;
+        // mipmapy až keď je fotka celá (jeden krok na grafike, nie po pásoch)
+        if (photo) gl.generateMipmap(gl.TEXTURE_2D);
         bmp.close(); res(t); return true;
       });
       wake();
@@ -358,7 +379,7 @@
     const live = () => !ctl.signal.aborted && !lost && !(upgrade && !s.ready);
     s.ctl = ctl;
     s.loading = Promise.all([photo(s, w, ctl.signal), upgrade ? null : depthBitmap(`${base}${s.photo}-hlbka.webp`, ctl.signal)])
-      .then(([img, dep]) => Promise.all([upload(img, live), dep && upload(dep, live)]))
+      .then(([img, dep]) => Promise.all([upload(img, live, true), dep && upload(dep, live, false)]))
       .then(([map, depth]) => {
         if (s.ctl === ctl) s.loading = null;
         if (!map || (!upgrade && !depth) || !live()) { if (map) map.dispose(); if (depth) depth.dispose(); return; }

@@ -18,9 +18,17 @@ Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní (v strede pr
 36 % jasu – nikdy tma, nikdy zreteľná dvojexpozícia; prelínanie zaberá 30 % cesty medzi
 kotvami a v pokoji sa vždy dokončí na bližší záber).
 
-- Zábery: `assets/img/film/<meno>-{2172,1448,1086}.{avif,webp}` + `<meno>-hlbka.webp`,
-  zoznam a pôvod v `assets/img/film/film.json` (skript `source/tools/film.py`,
-  hĺbka `source/tools/hlbka.py` – Depth Anything V2 small, ONNX, lokálne, ~2 s/fotka).
+- Zábery (maximálny detail): `assets/img/film/<meno>-{1086,1448,2172,2896}.{avif,webp}`
+  (fasáda `vstup` aj 4096 px pre nájazd k dverám) + `<meno>-hlbka.webp`; nič sa nezväčšuje nad
+  originál (rohozka-2172 = 1920 px). Pre telefón má každý záber vlastný výrez na výšku 9 : 16
+  okolo bodu záujmu `<meno>-m-{1086,1448}` + `<meno>-m-hlbka.webp` (rohožka z fotky majiteľa
+  foto-30 na výšku), takže sa na displeji 3× nezväčšuje ako výsek zo záberu na šírku. AVIF q66,
+  WebP q84. Zoznam, rozmery, stupne a bod záujmu výrezu v `assets/img/film/film.json`
+  (skript `source/tools/film.py`, hĺbka `source/tools/hlbka.py` – Depth Anything V2 small, ONNX,
+  lokálne); zálohy a kotvy v index.html z neho prepíše `source/tools/stills.py`.
+- Film si vyberie najmenší stupeň, ktorý sa na obrazovke nezväčší (do 2896 px na počítači, záber
+  prológu do 4096 px, telefón 1448 px výrezu); fotky majú mipmapy, trilineárne filtrovanie a
+  anizotropiu 8; mriežka 256 × 192 (počítač), 112 × 200 (výrez na telefóne).
 - Knižnica: three.js (vendor), jeden canvas `position: fixed` pod obsahom, WebGL2;
   bez WebGL2, pri `prefers-reduced-motion`, `saveData`, nízkej obrazovke alebo slabom
   telefóne (< 4 GB, < 4 jadrá) ostáva **pokojná verzia**: tie isté fotky ako statické
@@ -31,7 +39,7 @@ kotvami a v pokoji sa vždy dokončí na bližší záber).
 - Kamera: jeden jednotný pohyb celého filmu – stále pomaly dopredu s jemným bočným
   oblúkom (4 % šírky na desktope, 2,6 % na telefóne), pozerá na bod záujmu `f`;
   myš na počítači pridá ďalší oblúk, telefón nie (žiadne povolenia).
-- Mobil: fotky najviac 1448 px, presah na výšku 1,24, text dole nad spodným CTA.
+- Mobil: výrez na výšku najviac 1448 px (bod na bod aj pri 3×), presah 1,24, text dole nad spodným CTA.
 
 ## Úvod ako film (prológ): z ulice cez dvere dnu
 
@@ -93,9 +101,10 @@ pokojnú verziu, videá `assets/video/*`, texty a údaje (CONTENT_SOURCES.md).
 
 ## Mobil
 
-Zábery sú na šírku (4096×2731); na telefóne film ukáže ich stred s presahom 1,24 na
-výšku a bod záujmu `f` drží, čo je dôležité (dvere, pult, kreslo). Text je v dolnej
-polovici na doske, spodné tlačidlo „Rezervovať termín“ stále dostupné.
+Zábery sú na šírku (4096×2731); na telefóne film aj záloha ukážu vlastný výrez na výšku
+(`<meno>-m`, 9 : 16 okolo bodu záujmu: dvere, pult, kreslo) s presahom 1,24, bod záujmu vo
+výreze je `data-fm`. Text je v dolnej polovici na doske, spodné tlačidlo „Rezervovať termín“
+stále dostupné.
 
 ## Podmienky prijatia (doplnenie k zadaniu)
 

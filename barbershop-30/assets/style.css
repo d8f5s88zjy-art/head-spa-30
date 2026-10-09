@@ -449,6 +449,10 @@ html.world-in .film-canvas { opacity: 1; }
 }
 html[data-motion="on"] .film-still img { will-change: transform; }
 html[data-motion="off"] .film-still img { transform: none; }
+/* telefón (rovnaký prah ako film.js): záloha je výrez na výšku s vlastným bodom záujmu --fmx/--fmy */
+@media (max-width: 720px) {
+  .film-still img { object-position: var(--fmx, var(--fx, 50%)) var(--fmy, var(--fy, 50%)); transform-origin: var(--fmx, var(--fx, 50%)) var(--fmy, var(--fy, 50%)); }
+}
 /* vinetácia a šero pri okrajoch, aby doska aj chip držali na fotke (fotka sa netónuje) */
 .film-still::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;

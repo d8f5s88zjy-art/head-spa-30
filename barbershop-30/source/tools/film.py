@@ -1,43 +1,87 @@
 #!/usr/bin/env python3
-"""Film prehliadky: z vybraných fotiek vyrobí zábery pre assets/img/film/ – šírky 2172/1448/1086
-v AVIF aj WebP a hĺbkovú mapu <meno>-hlbka.webp (svetlá = blízko) cez Depth Anything V2 (ONNX, lokálne).
+"""Film prehliadky: z vybraných fotiek vyrobí zábery pre assets/img/film/ a hĺbkové mapy
+(<meno>-hlbka.webp, svetlá = blízko) cez Depth Anything V2 (ONNX, lokálne).
+
+Maximálny detail: každý záber má stupne šírky 1086 / 1448 / 2172 / 2896 px (a fasáda vstupu aj
+4096 px pre nájazd k dverám v úvode), nikdy sa nezväčšuje nad originál (najmenší stupeň nad
+originálom je kópia originálu, napr. rohozka-2172 = 1920 px). Pre telefón má každý záber vlastný
+výrez na výšku 9 : 16 okolo bodu záujmu (<meno>-m-1086/-m-1448 + <meno>-m-hlbka.webp), takže sa
+na displeji nezväčšuje 2× ako výsek zo záberu na šírku. Zoznam, pôvod, rozmery, stupne a bod
+záujmu výrezu zapíše do film.json (z neho ide index.html cez stills.py).
+
 Spustenie z koreňa barbershop-30: python3 -I source/tools/film.py [meno ...]"""
-import os, sys, subprocess, json
+import os, sys, subprocess, json, tempfile
 from PIL import Image, ImageOps
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'assets', 'img', 'film'); os.makedirs(OUT, exist_ok=True)
 MODEL = '/tmp/claude-0/-home-user/9632978b-2b69-5a1e-a151-fbbea674fc3a/scratchpad/depth/model.onnx'
 G = os.path.join(ROOT, 'source', 'web-povodny', 'gallery'); F = os.path.join(ROOT, 'source', 'photos'); SL = os.path.join(ROOT, 'source', 'web-povodny', 'slider')
-# meno záberu: (zdroj, popis miesta)
+# meno záberu: zdroj, popis miesta, x bodu záujmu pre výrez na telefón (0–1), voliteľne:
+#   'm': iný zdroj pre telefón (fotka na výšku toho istého miesta), 'big': aj stupeň 4096 px
 SHOTS = {
-  'vstup':        (G+'/43.jpg', 'Vstup z Mostnej ulice'),
-  'recepcia':     (G+'/35.jpg', 'Recepcia a predná sála'),
-  'sala':         (G+'/38.jpg', 'Hlavná sála'),
-  'kreslo':       (G+'/28.jpg', 'Kreslo pri okne'),
-  'stol':         (G+'/40.jpg', 'Pracovné miesto'),
-  'naradie':      (G+'/39.jpg', 'Pomády, štetka a karafa'),
-  'zadna':        (G+'/31.jpg', 'Zadná miestnosť'),
-  'cakaren':      (G+'/36.jpg', 'Kútik s pumpou Route 66'),
-  'sala-rano':    (G+'/33.jpg', 'Sála v rannom svetle'),
-  'kreslo-stred': (G+'/34.jpg', 'Kreslo uprostred sály'),
-  'kava':         (G+'/41.jpg', 'Káva pre hostí'),
-  'sud':          (G+'/30.jpg', 'Predná sála so sudom'),
-  'noznice':      (SL+'/4.jpg', 'Nožnice a hrebeň'),
-  # úvod: hneď za dverami, na rohožke (1920 px; súbor -2172 je originál bez zväčšenia)
-  'rohozka':      (SL+'/3.jpg', 'Na rohožke, hneď za dverami'),
+  'vstup':        (G+'/43.jpg', 'Vstup z Mostnej ulice', 0.76, {'big': True}),
+  'rohozka':      (SL+'/3.jpg', 'Na rohožke, hneď za dverami', 0.44, {'m': F+'/foto-30.jpg', 'mfx': 0.5}),
+  'recepcia':     (G+'/35.jpg', 'Recepcia a predná sála', 0.45, {}),
+  'sala':         (G+'/38.jpg', 'Hlavná sála', 0.5, {}),
+  'kreslo':       (G+'/28.jpg', 'Kreslo pri okne', 0.58, {}),
+  'stol':         (G+'/40.jpg', 'Pracovné miesto', 0.5, {}),
+  'naradie':      (G+'/39.jpg', 'Pomády, štetka a karafa', 0.5, {}),
+  'zadna':        (G+'/31.jpg', 'Zadná miestnosť', 0.5, {}),
+  'cakaren':      (G+'/36.jpg', 'Kútik s pumpou Route 66', 0.5, {}),
+  'sala-rano':    (G+'/33.jpg', 'Sála v rannom svetle', 0.5, {}),
+  'kreslo-stred': (G+'/34.jpg', 'Kreslo uprostred sály', 0.5, {}),
+  'kava':         (G+'/41.jpg', 'Káva pre hostí', 0.5, {}),
+  'sud':          (G+'/30.jpg', 'Predná sála so sudom', 0.5, {}),
+  'noznice':      (SL+'/4.jpg', 'Nožnice a hrebeň', 0.5, {}),
 }
-WIDTHS = (2172, 1448, 1086)
+WIDTHS = (1086, 1448, 2172, 2896)      # stupne na šírku (desktop)
+M_WIDTHS = (1086, 1448)                # stupne výrezu na výšku (telefón; film tam berie najviac 1448)
+M_RATIO = 9 / 16                       # výrez na telefón: šírka / výška
+AVIF_Q, WEBP_Q = 66, 84                # maximálny detail: vyššia kvalita než pôvodných 58 / 80
+
+def tiers_for(W, widths, big=False):
+    """Stupne, ktoré sa vyrobia: všetky pod šírkou originálu a prvý nad ňou ako kópia originálu."""
+    out = []
+    for w in sorted(widths):
+        out.append(w)
+        if w >= W: break
+    if big and W > max(widths): out.append(W)
+    return out
+
+def save_tiers(im, name, widths, big=False):
+    W, H = im.size; made = {}
+    for w in tiers_for(W, widths, big):
+        r = im if w >= W else im.resize((w, round(H * w / W)), Image.LANCZOS)
+        r.save(f'{OUT}/{name}-{w}.avif', quality=AVIF_Q, speed=6); r.save(f'{OUT}/{name}-{w}.webp', quality=WEBP_Q, method=5)
+        made[w] = {'w': r.width, 'h': r.height, 'avif': os.path.getsize(f'{OUT}/{name}-{w}.avif')}
+    return made
+
+def depth(src_path, out):
+    subprocess.run([sys.executable, '-I', os.path.join(ROOT, 'source', 'tools', 'hlbka.py'), MODEL, src_path, out], check=True, stdout=subprocess.DEVNULL)
+
+def load(path):
+    return ImageOps.exif_transpose(Image.open(path)).convert('RGB')
+
 only = sys.argv[1:]
 man = {}
-for name,(src,place) in SHOTS.items():
+for name, (src, place, fx, o) in SHOTS.items():
     if only and name not in only: continue
-    im = ImageOps.exif_transpose(Image.open(src)).convert('RGB'); W,H = im.size
-    for w in WIDTHS:
-        r = im if w >= W else im.resize((w, round(H*w/W)), Image.LANCZOS)
-        r.save(f'{OUT}/{name}-{w}.avif', quality=58, speed=6); r.save(f'{OUT}/{name}-{w}.webp', quality=80, method=5)
-    subprocess.run([sys.executable, '-I', os.path.join(ROOT,'source','tools','hlbka.py'), MODEL, src, f'{OUT}/{name}-hlbka.webp'], check=True, stdout=subprocess.DEVNULL)
-    sizes = {w: os.path.getsize(f'{OUT}/{name}-{w}.avif') for w in WIDTHS}
-    man[name] = {'source': os.path.relpath(src, ROOT), 'place': place, 'width': W, 'height': H, 'avif': sizes, 'hlbka': os.path.getsize(f'{OUT}/{name}-hlbka.webp')}
-    print(name, W, H, {w: round(s/1024) for w,s in sizes.items()}, 'KB', flush=True)
-mp = os.path.join(OUT, 'film.json'); old = json.load(open(mp)) if os.path.exists(mp) else {}; old.update(man); json.dump(old, open(mp,'w'), ensure_ascii=False, indent=1)
+    im = load(src); W, H = im.size
+    tiers = save_tiers(im, name, WIDTHS, o.get('big', False))
+    depth(src, f'{OUT}/{name}-hlbka.webp')
+    rec = {'source': os.path.relpath(src, ROOT), 'place': place, 'width': W, 'height': H,
+           'tiers': tiers, 'hlbka': os.path.getsize(f'{OUT}/{name}-hlbka.webp')}
+    # výrez na telefón: 9 : 16 na celú výšku, vodorovne okolo bodu záujmu (fx), nikdy cez okraj
+    msrc = o.get('m'); mim = load(msrc) if msrc else im; mfx = o.get('mfx', fx)
+    MW, MH = mim.size; cw = min(MW, round(MH * M_RATIO)); left = min(max(round(mfx * MW - cw / 2), 0), MW - cw)
+    crop = mim.crop((left, 0, left + cw, MH))
+    mt = save_tiers(crop, name + '-m', M_WIDTHS)
+    with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tf: crop.save(tf.name); tmp = tf.name
+    try: depth(tmp, f'{OUT}/{name}-m-hlbka.webp')
+    finally: os.unlink(tmp)
+    rec['m'] = {'source': os.path.relpath(msrc or src, ROOT), 'width': cw, 'height': MH, 'left': left,
+                'fx': round((mfx * MW - left) / cw, 3), 'tiers': mt, 'hlbka': os.path.getsize(f'{OUT}/{name}-m-hlbka.webp')}
+    man[name] = rec
+    print(name, W, H, {w: round(t['avif'] / 1024) for w, t in tiers.items()}, 'KB; telefón', cw, 'x', MH, 'fx', rec['m']['fx'], {w: round(t['avif'] / 1024) for w, t in mt.items()}, 'KB', flush=True)
+mp = os.path.join(OUT, 'film.json'); old = json.load(open(mp)) if os.path.exists(mp) else {}; old.update(man); json.dump(old, open(mp, 'w'), ensure_ascii=False, indent=1)
 print('done', len(man))
