@@ -102,6 +102,14 @@ Lighthouse z verejnej adresy (headless, SwiftShader; súbežne bežali iné test
 mobil `?film=off` 87 (LCP 2,8 s, CLS 0, TBT 300 ms), mobil `?uvod=off` 97 (LCP 2,4 s, CLS 0,
 TBT 50 ms), desktop 99 (LCP 0,5 s, CLS 0); prístupnosť, osvedčené postupy a SEO 100.
 
+## 7. Návrat na otváraciu scénu (2026‑10‑09, naživo 6f94263)
+
+`node source/tools/uvod-shot.mjs --url=<naživo>`: po prológu `uvod.von()` → stav vonku (S = 0, záber
+`vstup` / `vstup-m`, tlačidlo „Vojdi dnu“, pásy zasunuté), potom koliesko nadol (počítač) alebo
+tlačidlo (telefón) → prológ znova a kamera na rohožke (S = 1); pri druhej návšteve (bez
+automatického prológu) sa dá vyjsť von rovnako. Desktop aj mobil prešli z verejnej adresy; dymový
+test po úpravách prešiel celý. Snímky: `docs/screenshots/uvod-*-vonku.jpg`, `uvod-*-znova.jpg`.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,
