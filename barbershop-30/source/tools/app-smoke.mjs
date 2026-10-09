@@ -236,9 +236,9 @@ try {
     const { ctx, page, problems } = await openPage(browser, {});
     await sleep(1500);
     const st = await page.evaluate(() => ({ world: document.documentElement.classList.contains('world'), done: window.__renderDone,
-      stillVisible: getComputedStyle(document.querySelector('[data-shot="vstup"] .film-still')).opacity, imgW: document.querySelector('[data-shot="vstup"] .film-still img').naturalWidth }));
+      stillVisible: getComputedStyle(document.querySelector('#uvod .film-still')).opacity, imgW: document.querySelector('#uvod .film-still img').naturalWidth }));
     ok(!st.world && st.done === true, '[bez WebGL] html bez triedy world, __renderDone', JSON.stringify(st));
-    ok(st.stillVisible === '1' && st.imgW > 0, '[bez WebGL] záloha vstupu je viditeľná a načítaná');
+    ok(st.stillVisible === '1' && st.imgW > 0, '[bez WebGL] záloha úvodu je viditeľná a načítaná');
     const L = await layout(page);
     await scrollTo(page, L.shots[L.shots.length - 1].top);
     const cta = await page.locator('#rezervacia .btn-primary').isVisible();

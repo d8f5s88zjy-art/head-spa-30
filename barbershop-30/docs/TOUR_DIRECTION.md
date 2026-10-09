@@ -14,7 +14,9 @@ README „Film zo skutočných fotiek“): každá fotka má hĺbkovú mapu (`<m
 svetlá = blízko), kamera sa v nej pohne ako v skutočnej miestnosti (popredie sa posúva
 voči stene), pri skrolovaní ide pomalým filmovým pohybom (nájazd, prejazd, zdvih) a
 medzi časťami webu sa zábery prelínajú. Text, tlačidlá a cenník sú HTML nad filmom.
-Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní.
+Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní (v strede prelínania ostáva asi
+36 % jasu – nikdy tma, nikdy zreteľná dvojexpozícia; prelínanie zaberá 30 % cesty medzi
+kotvami a v pokoji sa vždy dokončí na bližší záber).
 
 - Zábery: `assets/img/film/<meno>-{2172,1448,1086}.{avif,webp}` + `<meno>-hlbka.webp`,
   zoznam a pôvod v `assets/img/film/film.json` (skript `source/tools/film.py`,
@@ -31,11 +33,35 @@ Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní.
   myš na počítači pridá ďalší oblúk, telefón nie (žiadne povolenia).
 - Mobil: fotky najviac 1448 px, presah na výšku 1,24, text dole nad spodným CTA.
 
+## Úvod ako film (prológ): z ulice cez dvere dnu
+
+Rozhodnutie majiteľa (2026‑10‑09, podľa referencie s filmovým úvodom): web sa otvorí ako film,
+ale namiesto cudzieho mesta sú v ňom naše dvere a naša miestnosť. Raz za návštevu (sessionStorage
+`bs30uvod`), len keď film ide (trieda `world`), bez kotvy v adrese a v zobrazenej karte:
+
+1. Prvý obraz stránky je fasáda s dverami (`vstup`, statická záloha, LCP) s H1 a tlačidlami.
+2. Film začne tým istým záberom: kamera ide z chodníka k dverám (pohyb `door`, dopredu o tretinu
+   vzdialenosti, bod záujmu dvere [0.76, 0.53]) – 2,0 s na počítači, 2,3 s na telefóne.
+3. Cez krátke šero (prelínanie ako medzi miestnosťami) prejde dnu na záber úvodu `rohozka`
+   (slider/3: rohožka s logom, kreslo, sála) – 1,4 s / 1,6 s; kamera v ňom ďalej stúpa (`rise`)
+   a od tejto chvíle ju vedie skrolovanie. Celý prológ asi 3,5 s; skrolovanie ho hneď ukončí.
+4. Kým záber úvodu nie je načítaný, kamera pri dverách počká (najviac 4 s); ak film nepríde do 7 s
+   od štartu, prológ sa vynechá a web beží ako bez neho.
+
+Rozhranie: kotva úvodu `.film-shot[data-shot="rohozka"]` nesie `data-pro="vstup"`, `data-pro-f`,
+`data-pro-fm`, `data-pro-mv="door"`, `data-pro-size="4096x2731"`, `data-pro-place`; o prológu
+rozhodne skript v hlavičke (trieda `pro` na `<html>`, `?uvod=znova` ho pustí aj opakovane) a
+statickú zálohu úvodu (fasáda pri prológu, inak rohožka) vloží skript v kotve z dvoch `<template>`.
+Pokojná verzia (bez WebGL, obmedzený pohyb, šetrenie dát, druhá návšteva): rohožka hneď, bez prológu.
+Kontrola: `node source/tools/uvod-shot.mjs` (snímky prológu na polohách 0 … 1, druhé načítanie,
+`?film=off`).
+
 ## Cesta (poradie záberov = poradie sekcií)
 
 | # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |
 |---|---|---|---|---|---|---|
-| 1 | `#uvod` | `vstup` – fasáda s dverami a barber pole (gallery/43) | [0.55, 0.5] dvere | `in` (nájazd k dverám) | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
+| 0 | prológ (bez kotvy) | `vstup` – fasáda s dverami a barber pole (gallery/43) | [0.76, 0.53] dvere | `door` (chôdza k dverám) | to isté ako úvod (doska je HTML, nemení sa) | – |
+| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px) | [0.5, 0.55], telefón [0.44, 0.58] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
 | 2 | `#recepcia` | `recepcia` – pult, lampy, barber pole (gallery/35) | [0.45, 0.55] pult | `right` | H2 „Príď ako k známym.“, 3 riadky: recepčná ťa privíta · káva a minerálka zdarma · 8 kresiel, minimálne čakanie | – |
 | 3 | `#sala` | `sala` – rad kresiel, zrkadlá (gallery/38) → `kreslo` (gallery/28) | [0.5, 0.55] → [0.58, 0.55] | `left` → `in` | H2 „Osem kresiel. Jedno je tvoje.“ + chip „Hlavná sála“ | Pozri služby → |
 | 4 | `#remeslo` | `stol` (gallery/40) + **video** `remeslo-strojcek` v portrétovom okne vedľa textu; detail `naradie` (gallery/39) | [0.5, 0.5] | `rise` | H2 „Presnosť, ktorú vidíš v detaile.“, odsek z opisov služieb (konzultácia, strojček aj nožnice, fade, horúci uterák, britva, styling, kolínska) | – |
@@ -46,7 +72,8 @@ Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní.
 | 9 | `#rezervacia` + kontakt | `vstup` znova – kruh sa uzavrie pri dverách | [0.55, 0.5] | `in` (ustáli sa) | H2 „Tvoj termín je na jedno klepnutie.“, adresa, hodiny, telefón, Navigovať | Rezervovať termín, Zavolať, Navigovať |
 
 Pohyby: `in` nájazd, `right`/`left` prejazd po oblúku, `rise`/`down` zdvih/klesanie,
-`near` len jemný nájazd (pre symetrické zábery s textovou doskou).
+`near` len jemný nájazd (pre symetrické zábery s textovou doskou), `door` chôdza k dverám
+(len prológ: dopredu o 34 % vzdialenosti, asi 1,5× priblíženie).
 
 ## Čo sa z webu odstraňuje
 
@@ -72,7 +99,9 @@ polovici na doske, spodné tlačidlo „Rezervovať termín“ stále dostupné.
 
 ## Podmienky prijatia (doplnenie k zadaniu)
 
-- Prvý záber (fasáda) je silná kompozícia aj bez filmu; H1 a CTA čitateľné do 1 s.
+- Prvý obraz (fasáda pri prológu, inak rohožka) je silná kompozícia aj bez filmu; H1 a CTA
+  čitateľné do 1 s. Prológ nikdy neblokuje: skrolovanie ho ukončí, stránka je od začiatku
+  použiteľná, bez filmu sa jednoducho nekoná.
 - Prechody medzi zábermi sú plynulé dopredu aj dozadu; skok cez menu pristane bez jazdy.
 - Film sa nenačíta pred prvým čitateľným obrazom; three.js + prvý záber až po pohybe
   návštevníka (ako head spa).

@@ -10,7 +10,10 @@
   <!-- Brána filmu (assets/film.js): trieda world len pri WebGL2, bez obmedzenia pohybu a šetrenia dát,
        pri výške okna nad 500 px a aspoň 4 GB pamäte a 4 jadrách. Bez triedy ostáva pokojná verzia
        (statické zábery s jemným prejazdom). ?film=off alebo ?motion=off film vypne (ladenie, snímky). -->
-  <script>(function(h){try{if(/[?&](film|motion)=off\b/.test(location.search))return;var c=document.createElement('canvas'),g=c.getContext('webgl2');if(g&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');var x=g&&g.getExtension('WEBGL_lose_context');if(x)x.loseContext();}catch(e){}})(document.documentElement);</script>
+  <script>(function(h){try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}var c=document.createElement('canvas'),g=c.getContext('webgl2');if(g&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');var x=g&&g.getExtension('WEBGL_lose_context');if(x)x.loseContext();}catch(e){}
+  /* úvod ako film (prológ, assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte;
+     ?uvod=znova ho pustí aj opakovane (ladenie). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
+  try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}})(document.documentElement);</script>
   <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
        Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
   <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/">
@@ -127,15 +130,37 @@
   <main id="main">
 
     <!-- =================================================================== -->
-    <!-- 1 ÚVOD – vstup z Mostnej ulice                                        -->
+    <!-- 1 ÚVOD – hneď za dverami, na rohožke; úvod ako film začína z ulice     -->
     <!-- =================================================================== -->
     <section class="scene" id="uvod" data-scene="1" aria-labelledby="h-uvod">
-      <div class="film-shot" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice">
-        <picture class="film-still" style="--fx: 55%; --fy: 50%">
-          <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w" sizes="100vw">
-          <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w" sizes="100vw" width="4096" height="2731" fetchpriority="high" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
-        </picture>
+      <!-- Záber úvodu je rohožka (slider/3). Prológ (data-pro, len s triedou pro na <html>): film začne
+           fasádou s dverami (vstup), kamera dôjde k dverám a cez šero prejde dnu na rohožku. Statická
+           záloha sa vyberie podľa triedy pro, aby prvý obraz stránky bol ten, ktorým film začne:
+           obe sú v <template> (prehliadač ich nesťahuje), skript vloží tú správnu hneď pri čítaní. -->
+      <div class="film-shot" data-shot="rohozka" data-size="1920x1200" data-f="0.5,0.55" data-fm="0.44,0.58" data-mv="rise" data-place="Na rohožke, hneď za dverami"
+           data-pro="vstup" data-pro-size="4096x2731" data-pro-f="0.76,0.53" data-pro-fm="0.76,0.53" data-pro-mv="door" data-pro-place="Vstup z Mostnej ulice">
+        <template id="still-uvod">
+          <picture class="film-still" style="--fx: 50%; --fy: 55%">
+            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="100vw">
+            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw">
+            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
+          </picture>
+        </template>
+        <template id="still-vstup">
+          <picture class="film-still" style="--fx: 76%; --fy: 53%">
+            <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w" sizes="100vw">
+            <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w" sizes="100vw">
+            <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w" sizes="100vw" width="4096" height="2731" fetchpriority="high" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
+          </picture>
+        </template>
+        <script>(function(d){var t=d.getElementById(d.documentElement.classList.contains('pro')?'still-vstup':'still-uvod');t.after(t.content.cloneNode(true));})(document);</script>
+        <noscript>
+          <picture class="film-still" style="--fx: 50%; --fy: 55%">
+            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="100vw">
+            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw">
+            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw" width="1920" height="1200" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
+          </picture>
+        </noscript>
         <div class="film-content container">
           <div class="board board-hero">
             <p class="eyebrow">Barbershop 30 · Nitra</p>
@@ -146,7 +171,7 @@
                 Rezervovať termín
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
-              <a class="btn btn-secondary" href="tel:+421951267203">Zavolať na recepciu</a>
+              <a class="btn btn-secondary" href="tel:+421951267203"><span>Zavolať<span class="sm-hide"> na recepciu</span></span></a>
             </div>
           </div>
           <p class="scroll-hint" aria-hidden="true"><span class="chip">Vojdi dnu</span></p>

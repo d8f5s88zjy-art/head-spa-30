@@ -131,19 +131,17 @@ function readTarget() {
   targetP = clamp01((window.scrollY || 0) / maxScroll);
 }
 
-// Sekcia, ktorej stred je najbližšie k stredu viewportu (+ pätička pre navigáciu).
+// Aktívna sekcia: tá, v ktorej leží bod 40 % výšky okna (sekcie sú rôzne dlhé – záber + pás);
+// pred prvou je prvá, za poslednou posledná. Pätička vyhráva pre navigáciu, keď bod leží v nej.
 function closestSection(y) {
-  const mid = y + vh / 2;
-  let best = null, bestD = Infinity;
+  const mark = y + vh * 0.4;
+  let best = null;
   for (const s of sections) {
-    const d = Math.abs(s.top + s.height / 2 - mid);
-    if (d < bestD) { bestD = d; best = s; }
+    if (mark >= s.top && mark < s.top + s.height) { best = s; break; }
+    if (mark < s.top) { best = best || s; break; }
+    best = s;
   }
-  let footerWins = false;
-  if (footerBox && footerBox.height > 0) {
-    const d = Math.abs(footerBox.top + footerBox.height / 2 - mid);
-    if (d < bestD) footerWins = true;
-  }
+  const footerWins = !!(footerBox && footerBox.height > 0 && mark >= footerBox.top);
   return { section: best, footerWins };
 }
 

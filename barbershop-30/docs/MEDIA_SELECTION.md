@@ -35,6 +35,14 @@ gallery/42 (chodci na chodníku), foto-39 (odraz fotografa v prilbe astronauta).
 Šírky: 640, 1080, 1600, 2200 px (na šírku) / 640, 1080, 1600 (na výšku, strop = originál).
 Formáty: AVIF (q 55) + WebP (q 78) + JPEG (q 82, progressive). Portréty: 640, 960.
 
+## Film prehliadky (assets/img/film/, zoznam a pôvod v `film.json`, skript `source/tools/film.py`)
+
+Zábery filmu s hĺbkovými mapami idú len z profesionálnych fotiek (gallery, slider), pretože
+sa na obrazovke zväčšujú: 13 záberov podľa TOUR_DIRECTION a k nim `rohozka` (slider/3,
+1920×1200, originál bez zväčšenia) ako záber úvodu hneď za dverami. Telefónne fotky
+majiteľa (1200 px) sa vo filme nepoužívajú, iba v galérii. Prológ (úvod ako film) ide
+z `vstup` (gallery/43, bod záujmu dvere 76,53) do `rohozka` (50,55; telefón 44,58).
+
 ## Videá (assets/video/, zdroj: 3 telefónne videá od majiteľa, `source/video/video-1..3.mp4`, 576×1024, 9–13 s)
 
 | slug | zdroj | výrez | scéna | použitie | ľudia |

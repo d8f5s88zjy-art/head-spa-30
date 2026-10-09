@@ -30,6 +30,21 @@ rezervoval termín.
 - **Pokoj**: scroll vždy funguje natívne, nič ho nezamyká ani nespomaľuje; v pokoji
   kamera dýcha (30 snímok/s) a po 25 s sa zastaví.
 
+## 2b. Úvod ako film: dvere a miestnosť
+
+Majiteľ chce úvod ako vo filmovom hero (referencia: video s pomaly letiacou kamerou nad mestom
+a veľkým nadpisom), ale s našimi dverami a našou miestnosťou. Riešenie (TOUR_DIRECTION, časť
+„Úvod ako film“): film sa raz za návštevu rozbehne sám hneď po prvom obraze – z chodníka
+k dverám na Mostnej, cez šero dnu na rohožku s logom, odtiaľ vedie skrolovanie. Pravidlá:
+- Nič sa nedokresľuje: dvere sú dvere z fotky fasády, miestnosť je rohožka zo slidera. Krídla
+  dverí sa neotvárajú, lebo zblízka odfotené dvere nemáme (z fasády by boli rozmazané); keď
+  majiteľ dodá fotku dverí spredu zblízka (zavreté, z 2 m), doplní sa otvorenie krídla.
+- Prológ nesmie nič blokovať ani zdržať: H1 a tlačidlá sú od prvej sekundy, skrolovanie prológ
+  hneď ukončí, bez filmu (WebGL, pohyb, dáta) sa nekoná a úvod je rovno rohožka.
+- Prvý obraz stránky je ten, ktorým film začne (fasáda), aby prechod do filmu nebolo vidieť.
+- Dĺžka asi 3,5 s, prelínanie cez šero, žiadne čierne plochy, žiadny skok po skončení
+  (kamera pokračuje v pohybe záberu úvodu).
+
 ## 3. Detail, na ktorom sa nepoľaví (kontrolný zoznam)
 
 Každý bod sa overuje screenshotom alebo meraním, nie odhadom.

@@ -23,6 +23,8 @@ SHOTS = {
   'kava':         (G+'/41.jpg', 'Káva pre hostí'),
   'sud':          (G+'/30.jpg', 'Predná sála so sudom'),
   'noznice':      (SL+'/4.jpg', 'Nožnice a hrebeň'),
+  # úvod: hneď za dverami, na rohožke (1920 px; súbor -2172 je originál bez zväčšenia)
+  'rohozka':      (SL+'/3.jpg', 'Na rohožke, hneď za dverami'),
 }
 WIDTHS = (2172, 1448, 1086)
 only = sys.argv[1:]

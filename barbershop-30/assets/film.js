@@ -17,6 +17,12 @@
      nedala, rozhodne sa tu podľa tých istých pravidiel (WebGL2, pohyb, dáta, výška, pamäť, jadrá).
      html[data-film="force"] (vývojová stránka) obíde rozhodovanie aj čakanie na pohyb návštevníka.
    - dosky s textom .board (a pätička): popis miesta vľavo dole sa ukazuje len tam, kde ich nie je.
+   - úvod ako film (prológ): kotva úvodu má data-pro="meno" (+ data-pro-f, data-pro-fm, data-pro-mv,
+     data-pro-size="ŠxV", data-pro-place). Keď stránka v hlavičke dala triedu pro (raz za návštevu, len
+     s filmom, bez kotvy v adrese), film sa nečaká na pohyb návštevníka, začne záberom prológu (fasáda,
+     kamera dôjde k dverám), cez šero prejde do záberu úvodu a odtiaľ už vedie skrolovanie. Prológ sa
+     dá kedykoľvek preskočiť skrolovaním; bez triedy pro sa nič z toho nedeje.
+   - data-size="ŠxV" na kotve: rozmery fotky záberu, keď ich nedáva <img> (viac záloh v kotve).
    - window.BS30_FILM = { ready, shots, goTo(meno, t), state } na ladenie. */
 (async function () {
   'use strict';
@@ -27,6 +33,7 @@
     ready: new Promise((r) => { readyDone = r; }),       // true = prvý snímok, false = film nejde (world-off)
     shots: [],
     goTo() { return false; },
+    proFreeze() { return false; },
     get state() { return { on: false }; },
   };
   window.BS30_FILM = api;
@@ -55,14 +62,20 @@
   const me = d.currentScript || d.querySelector('script[src$="film.js"],script[src*="film.js?"]');
   const here = (me && me.src) || location.href;
   if (d.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
+  // prológ (úvod ako film) len keď návštevník naozaj stojí na začiatku stránky: obnovený scroll
+  // uprostred stránky alebo skrytá karta ho zrušia a web sa správa ako bez neho
+  const proEl = d.querySelector('.film-shot[data-pro]');
+  let proArmed = root.classList.contains('pro') && !!proEl && scrollY < innerHeight * 0.25 && !d.hidden;
+  if (!proArmed) root.classList.remove('pro');
   // film sa spustí až keď sa návštevník pohne (dotyk, myš, skrolovanie, klávesnica); dovtedy drží
   // každé okno do filmu statická fotka (.film-still), takže nikde nie je prázdna plocha. Aby film
   // prišiel skoro aj po prvom švihu na telefóne, knižnica sa po načítaní stránky vo voľnej chvíli
   // len stiahne do vyrovnávacej pamäte (bez spustenia), až po chvíli, aby nebrzdila fotku úvodu.
+  // S prológom sa nečaká: knižnica aj prvé dva zábery idú hneď po načítaní stránky (po jej prvom obraze).
   const src = new URL('vendor/three.module.min.js', here).href;
   const early = () => { fetch(src, { priority: 'low' }).catch(() => {}); };
   const INPUTS = ['pointerdown', 'pointermove', 'touchstart', 'wheel', 'scroll', 'keydown'];
-  if (!force) await new Promise((r) => {
+  if (!force && !proArmed) await new Promise((r) => {
     let t = 0;
     const go = () => { clearTimeout(t); INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
     INPUTS.forEach((e) => addEventListener(e, go, { passive: true }));
@@ -92,20 +105,39 @@
     down: [[ARC * 0.4, ARC * 0.5, 0.04], [-ARC * 0.4, -ARC * 0.5, -0.12]],
     // len jemný nájazd: pokojný záber pod doskou s cenníkom
     near: [[-ARC * 0.5, 0, 0.02], [ARC * 0.5, 0, -0.03]],
+    // prológ: chôdza z ulice k dverám, kamera ide dopredu o tretinu vzdialenosti (asi 1,5× priblíženie)
+    door: [[-ARC * 0.3, 0, 0.05], [ARC * 0.3, 0, -0.34]],
   };
   const pair = (v, dflt) => { const a = (v || '').split(/[\s,;]+/).map(parseFloat); return a.length === 2 && a.every(isFinite) ? [clamp(a[0], 0, 1), clamp(a[1], 0, 1)] : dflt; };
-  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].map((el) => {
-    const f = pair(el.dataset.f, [0.5, 0.5]), img = el.querySelector('img');
+  // pomer strán fotky: z data-size="ŠxV", inak z width/height prvej zálohy <img> (zábery podniku sú 3 : 2)
+  const ratio = (size, img) => {
+    const a = (size || '').split(/[x×,\s]+/).map(parseFloat);
+    if (a.length === 2 && a[0] > 0 && a[1] > 0) return a[0] / a[1];
     const w = img && parseFloat(img.getAttribute('width')), h = img && parseFloat(img.getAttribute('height'));
+    return w > 0 && h > 0 ? w / h : 1.5;
+  };
+  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].map((el) => {
+    const f = pair(el.dataset.f, [0.5, 0.5]);
     // záloha ukazuje ten istý bod záujmu ako film (object-position cez vlastné premenné)
     el.style.setProperty('--fx', (f[0] * 100).toFixed(1) + '%'); el.style.setProperty('--fy', (f[1] * 100).toFixed(1) + '%');
     return {
       at: el, photo: el.dataset.shot, place: el.dataset.place || '', f, fm: pair(el.dataset.fm, null),
       mv: MOVES[el.dataset.mv] ? el.dataset.mv : 'in',
-      pa: w > 0 && h > 0 ? w / h : 1.5,                    // pomer strán fotky (zábery podniku sú 3 : 2)
+      pa: ratio(el.dataset.size, el.querySelector('img')),
     };
   });
   if (!SHOTS.length) { quit(); return; }
+  /* záber prológu: nemá vlastnú kotvu, stojí pred úvodom (index 0 v ceste, kotva jednu obrazovku nad
+     začiatkom stránky), takže skrolovaním sa k nemu nedá vrátiť; po prológu sa uvoľní a už sa nekreslí */
+  let PRO = null;
+  if (proArmed) {
+    const e = proEl;
+    PRO = {
+      at: e, photo: e.dataset.pro, place: e.dataset.proPlace || '', f: pair(e.dataset.proF, [0.5, 0.5]), fm: pair(e.dataset.proFm, null),
+      mv: MOVES[e.dataset.proMv] ? e.dataset.proMv : 'in', pa: ratio(e.dataset.proSize, null), pro: true,
+    };
+    SHOTS.unshift(PRO);
+  }
   api.shots = SHOTS.map((s) => s.photo);
 
   /* ---------- renderer ---------- */
@@ -204,7 +236,8 @@
   soft.frustumCulled = false;
   const softScene = new THREE.Scene(); softScene.add(soft);
   function soften(t) {
-    const w = t.image.width, h = t.image.height, u = soft.material.uniforms;
+    // rozmery z nahratia: samotný obrázok je po nahratí zavretý (bitmap.close) a hlási 0 × 0
+    const w = t.userData.w, h = t.userData.h, u = soft.material.uniforms;
     const opt = { depthBuffer: false, stencilBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, generateMipmaps: false };
     const a = new THREE.WebGLRenderTarget(w, h, opt), b = new THREE.WebGLRenderTarget(w, h, opt);
     // polomer v texeloch hĺbkovej mapy podľa bunky mriežky: rozmazanie asi 1,2 bunky, rozšírenie dvojnásobok
@@ -255,6 +288,17 @@
     // bez volieb (Safari ich nepozná); prvý riadok obrázka je hore, shader to otočí sám
     return createImageBitmap(blob);
   }
+  // hĺbková mapa: mriežka má 256 buniek na šírku, mapa širšia než 768 px by len zabrala pamäť grafiky
+  // (4096 px = 45 MB na záber) a predĺžila zjemnenie; väčšia sa preto po rozbalení zmenší
+  const DEPTH_W = 768;
+  async function depthBitmap(url, signal) {
+    const b = await bitmap(url, signal);
+    if (b.width <= DEPTH_W) return b;
+    const w = DEPTH_W, h = Math.round(b.height * w / b.width);
+    const c = typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(w, h) : Object.assign(d.createElement('canvas'), { width: w, height: h });
+    const x = c.getContext('2d'); x.drawImage(b, 0, 0, w, h); b.close();
+    return createImageBitmap(c);
+  }
   function tex(bmp) {
     const t = new THREE.Texture(bmp);
     t.flipY = false; t.generateMipmaps = false;
@@ -271,6 +315,7 @@
   function upload(bmp, live) {
     return new Promise((res) => {
       const t = tex(bmp);
+      t.userData.w = bmp.width; t.userData.h = bmp.height;  // rozmery ostanú známe aj po zavretí obrázka
       t.source.dataReady = false;                           // three len vyhradí miesto, obsah príde po pásoch
       renderer.initTexture(t);
       const glt = renderer.properties.get(t).__webglTexture;
@@ -307,12 +352,12 @@
   function load(s) {
     // raz načítaná veľkosť sa drží (z cache), aj keď pomalé zariadenie zníži rozlíšenie; väčšia len keď treba
     const w = Math.max(pickSize(s), s.w || 0);
-    if (s.loading || (s.ready && s.size >= w) || !retryOk(s)) return;
+    if (s.done || s.loading || (s.ready && s.size >= w) || !retryOk(s)) return;   // done: prológ, ktorý už prebehol
     // hotový záber v menšej veľkosti (napr. po otočení telefónu) sa vymení až keď je väčší načítaný
     const ctl = new AbortController(), upgrade = s.ready;
     const live = () => !ctl.signal.aborted && !lost && !(upgrade && !s.ready);
     s.ctl = ctl;
-    s.loading = Promise.all([photo(s, w, ctl.signal), upgrade ? null : bitmap(`${base}${s.photo}-hlbka.webp`, ctl.signal)])
+    s.loading = Promise.all([photo(s, w, ctl.signal), upgrade ? null : depthBitmap(`${base}${s.photo}-hlbka.webp`, ctl.signal)])
       .then(([img, dep]) => Promise.all([upload(img, live), dep && upload(dep, live)]))
       .then(([map, depth]) => {
         if (s.ctl === ctl) s.loading = null;
@@ -335,8 +380,9 @@
   }
   let onScreen = new Set();
   function keepAround(ci) {
-    // v pamäti je aktuálny záber, susedia a ďalší v smere skrolovania (najviac štyri)
-    const dir = V < 0 ? -1 : 1, keep = (s) => s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
+    // v pamäti je aktuálny záber, susedia a ďalší v smere skrolovania (najviac štyri);
+    // prológ, ktorý už prebehol (done), sa uvoľní, len čo zíde z obrazovky
+    const dir = V < 0 ? -1 : 1, keep = (s) => !s.done && s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
     SHOTS.forEach((s) => { if (!keep(s) && !onScreen.has(s)) drop(s); });
     const cur = path[ci];
     if (!cur) return;
@@ -377,9 +423,10 @@
       void main() {
         vec3 c = texture2D(tA, vUv).rgb;
         if (uMix > 0.0) {
-          // prechod cez krátke šero ako vo filme: starý záber stmavne skôr, než sa nový rozsvieti,
-          // takže dva obrazy nikdy nestoja cez seba (žiadna dvojexpozícia); v strede ostáva 78 % jasu
-          c = c * (1.0 - smoothstep(0.0, 0.6, uMix)) + texture2D(tB, vUv).rgb * smoothstep(0.4, 1.0, uMix);
+          // prechod cez krátke šero ako medzi dvoma miestnosťami: starý záber stmavne skôr, než sa nový
+          // rozsvieti, cez seba stoja len slabo (v strede 16 % + 20 %, spolu asi 36 % jasu), takže nikdy
+          // nie je tma ani zreteľná dvojexpozícia
+          c = c * (1.0 - smoothstep(0.0, 0.7, uMix)) + texture2D(tB, vUv).rgb * smoothstep(0.3, 1.0, uMix);
         }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
@@ -410,7 +457,8 @@
     SHOTS.forEach((s) => {
       s.pi = null;
       if (!s.at.offsetParent && getComputedStyle(s.at).position !== 'fixed') return;   // skrytá kotva vypadne
-      const a = Math.max(0, pageTop(s.at));
+      // prológ stojí jednu obrazovku pred začiatkom stránky: pri scrollY 0 je film presne na zábere úvodu
+      const a = s.pro ? -vh : Math.max(0, pageTop(s.at));
       if (An.length && a <= An[An.length - 1] + 1) return;
       s.pi = P.length; P.push(s); An.push(a);
     });
@@ -467,11 +515,14 @@
     let A = path[k], B = path[clamp(k + 1, 0, N)];
     const want = A === B ? 0 : smooth(0.35, 0.65, S - k);
     if (k !== fadeK) { fade = want; fadeK = k; }
-    // až keď skrolovanie naozaj stojí (nie medzi dvomi zárezmi kolieska), dokončí sa prelínanie
+    // až keď skrolovanie naozaj stojí (nie medzi dvomi zárezmi kolieska), dokončí sa prelínanie;
+    // v prológu vedie čas, prelínanie ide presne podľa neho
     still = Math.abs(V) < 0.03 ? still + dt : 0;
-    fadeGoal = still > 0.6 ? Math.round(want) : want;
-    fade += (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
+    fadeGoal = pro ? want : still > 0.6 ? Math.round(want) : want;
+    fade = pro ? want : fade + (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
     let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
+    // prológ začína vždy svojím záberom (fasáda), nikdy záberom úvodu, keby sa náhodou načítal skôr
+    if (pro && !A.ready) return false;
     if (!A.ready) {
       // záber sa ešte načítava: ostane posledný obraz, ak je to susedný záber, a cieľ sa doň prelnie.
       // Záber z iného miesta stránky (po skoku) sa neukáže, namiesto neho je šero farby stránky.
@@ -553,25 +604,37 @@
     drawnAt = now;
     const dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
     const T = targetS();
-    // kriticky tlmená pružina: plynulé rozbehnutie aj dobehnutie, žiadne trhnutie pri rýchlom skrole
-    const w0 = 5.2;
-    V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
-    if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
-    // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
-    // a jeho záber sa rozsvieti zo šera, len čo je načítaný (posledný záber zďaleka sa už neukáže)
-    if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
+    if (pro) {
+      // prológ: polohu vo filme vedie čas, nie pružina; skrolovanie ho hneď ukončí a ďalej vedie pružina
+      if (Math.abs(T - 1) > 0.02) endPro(false);
+      else if (pro.t0) S = proS(now);
+      V = 0;
+    } else {
+      // kriticky tlmená pružina: plynulé rozbehnutie aj dobehnutie, žiadne trhnutie pri rýchlom skrole
+      const w0 = 5.2;
+      V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
+      if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
+      // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
+      // a jeho záber sa rozsvieti zo šera, len čo je načítaný (posledný záber zďaleka sa už neukáže)
+      if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
+    }
     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
     const busy = draw(now, dt);
     if (drawn && !shown) {
       shown = true; firstMs = Math.round(performance.now() - tStart);
+      if (pro) pro.t0 = now;                                   // prológ beží od prvého nakresleného snímku
       requestAnimationFrame(() => { root.classList.add('world-in'); measurePlace(); wake(); readyDone(true); });
     }
+    // prológ sa skončil: film stojí na zábere úvodu a ďalej vedie skrolovanie
+    if (pro && pro.t0 && S >= 1) endPro(true);
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
-    const moving = busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
+    const moving = !!pro || busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
     if (!shown) {
-      // prvý záber ešte nie je: čakať, a keď nič nepríde (sieť), vrátiť pokojný web
+      // prvý záber ešte nie je: čakať, a keď nič nepríde (sieť), vrátiť pokojný web.
+      // Prológ, ktorý nepríde do 7 s (pomalá sieť), sa vynechá a film začne rovno záberom úvodu.
+      if (pro && now - started > 7000) endPro(false);
       if (now - started > 15000) { stop(); return; }
       if (jobs.length) wake(); else setTimeout(wake, 120);   // fotka ide do grafiky: ďalší pás hneď v ďalšej snímke
       last = 0;
@@ -581,6 +644,30 @@
   }
   function wake() { if (!raf && running && !lost) raf = requestAnimationFrame(frame); }
   const poke = () => { lastInput = performance.now(); wake(); };
+
+  /* ---------- prológ: úvod ako film ----------
+     čas -> poloha S v ceste: 0 = záber prológu (fasáda), 1 = záber úvodu. Najprv chôdza k dverám
+     (S 0 -> 0,35, pomalý rozbeh aj dobeh), potom cez šero dnu (prelínanie je medzi 0,35 a 0,65) a
+     dojazd na kotvu úvodu. Kým nie je záber úvodu načítaný, kamera pri dverách počká (najviac 4 s). */
+  let pro = PRO ? { t0: 0, walk: phone ? 2300 : 2000, into: phone ? 1600 : 1400, wait: 0 } : null;
+  const ease = (t) => t * t * (3 - 2 * t), easeOut = (t) => 1 - (1 - t) * (1 - t);
+  function proS(now) {
+    if (pro.freeze != null) return pro.freeze;               // ladenie: prológ stojí na danej polohe
+    const el = now - pro.t0 - pro.wait;
+    if (el < pro.walk) return 0.35 * ease(el / pro.walk);
+    const hero = path[1];
+    if (!(hero && hero.ready) && now - pro.t0 < pro.walk + 4000) { pro.wait = el - pro.walk + pro.wait; return 0.35; }
+    return 0.35 + 0.65 * easeOut(Math.min(1, (el - pro.walk) / pro.into));
+  }
+  function endPro(finished) {
+    if (!pro) return;
+    pro = null;
+    if (finished) { S = 1; V = 0; }
+    else if (!shown) { S = targetS(); V = 0; held = null; fadeK = -1; }   // prológ sa ani nezačal: film začne tam, kde návštevník je
+    if (PRO) PRO.done = true;                                 // uvoľní sa, len čo zíde z obrazovky (keepAround)
+    root.classList.remove('pro');
+    lastInput = performance.now(); wake();
+  }
 
   /* ---------- udalosti; všetko sa dá naraz odpojiť, keď film skončí ---------- */
   const ac = new AbortController();
@@ -643,11 +730,19 @@
     sy = scrollY; S = targetS(); V = 0; still = 1; held = null; fadeK = -1; lastInput = performance.now(); wake();
     return true;
   };
+  // proFreeze(s): prológ zastaví na polohe s (0 fasáda, 1 úvod) pre snímky; proFreeze(null) ho pustí ďalej
+  // od toho miesta. Vráti false, keď prológ nebeží.
+  api.proFreeze = (s) => {
+    if (!pro) return false;
+    if (s == null) { if (pro.freeze != null) { pro.t0 = performance.now() - (pro.freeze < 0.35 ? pro.walk * pro.freeze / 0.35 : pro.walk + pro.into * (pro.freeze - 0.35) / 0.65); pro.wait = 0; } pro.freeze = null; }
+    else pro.freeze = clamp(s, 0, 1);
+    wake(); return true;
+  };
   Object.defineProperty(api, 'state', {
     get: () => ({
-      on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, anchors: anchors.slice(), firstFrameMs: firstMs,
+      on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro,
       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
-      ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading })),
+      ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
     }),
   });
 
@@ -655,6 +750,7 @@
   await new Promise((r) => setTimeout(r, 0));                  // vytvorenie grafiky a meranie stránky nie v jednej dlhej úlohe
   resize();
   S = targetS();
+  if (pro) { S = 0; V = 0; }                                   // prológ začína záberom fasády
   // prvé použitie shaderu čaká na grafiku: shadery sa preložia vopred a bez čakania
   // (KHR_parallel_shader_compile), nie až pri prvom zábere či prelínaní počas skrolu
   try { await Promise.all([renderer.compileAsync(scene, camera), renderer.compileAsync(postScene, postCam)]); } catch (e) { /* preloží sa pri prvom kreslení */ }

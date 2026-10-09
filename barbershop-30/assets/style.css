@@ -288,6 +288,12 @@ p + p { margin-top: var(--s4); }
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--line);
 }
+.site-header::before {
+  content: ""; position: absolute; inset: 0 0 -56px 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(14, 13, 12, 0.6), rgba(14, 13, 12, 0.3) 55%, rgba(14, 13, 12, 0));
+  opacity: 1; transition: opacity 300ms var(--ease-out);
+}
+.site-header.is-scrolled::before { opacity: 0; }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; gap: var(--s5); }
 .brand {
   display: inline-flex; align-items: baseline; gap: var(--s2);
@@ -457,6 +463,20 @@ html.world-in:not(.world-off) .film-still {
 }
 html.world-in:not(.world-off) .film-still img { transform: none; will-change: auto; }
 
+/* popis miesta z film.js: vľavo dole, len kým ho nezakrýva doska; HTML chip (.place-tag) je pre pokojnú verziu */
+.film-place {
+  position: fixed; left: var(--gutter); bottom: clamp(20px, 4vh, 40px); z-index: 0;
+  display: none; pointer-events: none;
+  opacity: 0; transition: opacity 0.8s var(--ease-in-out);
+}
+html.world-in:not(.world-off) .film-place { display: block; }
+html.world-in:not(.world-off) .film-place.on { opacity: 1; }
+.film-place b { display: block; font-family: var(--font-text); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lamp-2); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7); }
+.film-place span { display: none; margin-top: 4px; font-family: var(--font-display); font-weight: 500; font-style: italic; font-variation-settings: "opsz" 144; font-size: 1.25rem; color: var(--paper); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75); }
+.film-place span.on { display: block; }
+@media (max-width: 900px) { .film-place { bottom: calc(var(--cta-h) + var(--s5)); } }
+html.world-in:not(.world-off) .place-tag { opacity: 0 !important; visibility: hidden; }
+
 /* obsah záberu: doska vľavo (5/12), zvislo v strede; na mobile v dolnej polovici */
 .film-content {
   grid-area: 1 / 1;
@@ -499,7 +519,7 @@ html.world-in:not(.world-off) .film-still img { transform: none; will-change: au
 @keyframes text-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 .board-hero { animation: text-in 600ms var(--ease-out) 350ms both; }
 
-.fact-list { margin-top: var(--s5); display: grid; gap: var(--s3); }
+.fact-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
 .fact-list li { display: flex; align-items: baseline; gap: var(--s3); font-size: 1.0625rem; color: var(--paper); }
 .fact-list li::before { content: ""; flex: none; width: 10px; height: 2px; background: var(--lamp); transform: translateY(-0.3em); }
 .chips { margin-top: var(--s5); gap: var(--s2); }
@@ -516,6 +536,8 @@ html[data-motion="off"] .place-tag { opacity: 1 !important; transform: none !imp
   transition: opacity 300ms var(--ease-out);
 }
 .scroll-hint::after { content: ""; width: 48px; height: 2px; background: var(--lamp); }
+/* počas úvodu ako filmu (html.pro, film.js triedu po prológu zloží) výzva na skrolovanie ešte nesvieti */
+html.pro .scroll-hint { opacity: 0; }
 
 /* --------------------------------------------------------------------------
    P3. Pásy – nepriehľadné plochy s textom cez celú šírku
@@ -528,7 +550,7 @@ html[data-motion="off"] .place-tag { opacity: 1 !important; transform: none !imp
   padding-block: var(--s9);
 }
 @media (max-width: 640px) { .band { padding-block: var(--s8); } }
-.band-head { margin-bottom: var(--s7); align-items: end; }
+.band-head { margin-bottom: var(--s7); align-items: center; }
 .band-head-text { grid-column: 1 / span 7; }
 .band-head-text .lead { margin-top: var(--s4); }
 .team-video { grid-column: 9 / span 4; grid-row: 1; aspect-ratio: 4 / 3; }
