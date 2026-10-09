@@ -415,7 +415,14 @@ export async function createChairStage(canvas, options = {}) {
       const loader = new GLTFLoader();
       try { const { MeshoptDecoder } = await import('./vendor/meshopt_decoder.module.js'); loader.setMeshoptDecoder(MeshoptDecoder); } catch (_) { /* bez meshopt */ }
       const gltf = await loader.loadAsync(url);
+      if (glbLate || disposed) return;
       const model = gltf.scene;
+      // Orientácia: kreslo má pozerať do +Z. Ak modelYaw nie je zadané, zruší sa otočenie koreňového uzla GLB
+      // (Tripo export nesie yaw v uzle); modelYaw (rad) sa pripočíta.
+      const root = model.children.length === 1 ? model.children[0] : null;
+      const e = root ? new THREE.Euler().setFromQuaternion(root.quaternion, 'YXZ') : null;
+      const yaw = options.modelYaw === undefined ? (e ? -e.y : 0) : (Number(options.modelYaw) || 0);
+      model.rotation.y = yaw;
       const box = new THREE.Box3().setFromObject(model);
       const size = new THREE.Vector3(); box.getSize(size);
       const sc = 1.6 / Math.max(size.y, 1e-6);
@@ -423,9 +430,10 @@ export async function createChairStage(canvas, options = {}) {
       box.setFromObject(model);
       const c = new THREE.Vector3(); box.getCenter(c);
       model.position.set(-c.x, -box.min.y, -c.z);
+      model.rotation.y = 0;
       model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; if (o.material && 'envMapIntensity' in o.material) o.material.envMapIntensity = 0.55; } });
       if (disposed || glbLate) return;
-      const wrap = new THREE.Group(); wrap.rotation.y = Number(options.modelYaw) || 0; wrap.add(model);
+      const wrap = new THREE.Group(); wrap.rotation.y = yaw; wrap.add(model);
       scene.remove(chair); chair = wrap; scene.add(wrap);
       modelKind = 'glb'; dirty = true; schedule();
     } catch (_) { /* fallback: procedurálne kreslo */ }
