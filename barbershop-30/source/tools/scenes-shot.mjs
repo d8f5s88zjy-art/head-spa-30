@@ -5,9 +5,10 @@
 //   node source/tools/scenes-shot.mjs --only=desktop --scenes=1,2,2a
 //   node source/tools/scenes-shot.mjs --out=/tmp/iter1 --wait=800
 //
-// Výstup: <out>/scena-<id>-{desktop,mobile}.png, kde id ∈ 1, 2, 2a, 2b, 3, 3a, 3b, 3c, 4, 5, 6, 7.
+// Výstup: <out>/scena-<id>-{desktop,mobile}.png, kde id ∈ 1, 1b, 2, 2a, 2b, 3, 3a, 3b, 3c, 4, 4a, 5, 5a, 6, 6a, 7.
 //  - filmové scény (1, 2, 3, 7): scroll na lokálne t (t = (scrollY − top) / (výška − viewport)), stred = t 0.5
-//  - toková scéna (4, 5, 6): stred sekcie v strede viewportu
+//  - toková scéna (4, 5, 6): stred sekcie v strede viewportu; 4a/5a/6a = začiatok sekcie (hlavička)
+//  - 1 = t 0 (prvý dojem), 1b = t 0.5 (nájazd kamery)
 //  - 2a (t2 0.80) = prelínanie 3D → fotografia kresla, 2b (t2 0.94) = fotografia kresla → fotografia nástrojov
 //  - 3a/3b/3c (t3 0.16 / 0.47 / 0.84) = tri fotografie priestoru
 // Scroll: window.scrollTo({top, behavior:'instant'}) + dočasne html{scroll-behavior:auto}; po scrolle sa čaká 800 ms.
@@ -36,8 +37,11 @@ const SHOTS = {
   '3a': { section: 'miesto', t: 0.16 },
   '3b': { section: 'miesto', t: 0.47 },
   '3c': { section: 'miesto', t: 0.84 },
+  '4a': { section: 'tim', head: true },
   4: { section: 'tim', mid: true },
+  '5a': { section: 'sluzby', head: true },
   5: { section: 'sluzby', mid: true },
+  '6a': { section: 'galeria', head: true },
   6: { section: 'galeria', mid: true },
   7: { section: 'rezervacia', t: 0.75 },
 };
@@ -82,9 +86,12 @@ try {
       if (!def) { console.warn('neznáma scéna', id); continue; }
       const m = metrics[def.section];
       const vh = metrics.vh;
-      const y = def.mid ? m.top + m.height / 2 - vh / 2 : m.top + def.t * Math.max(0, m.height - vh);
+      const y = def.head ? m.top - 64 : def.mid ? m.top + m.height / 2 - vh / 2 : m.top + def.t * Math.max(0, m.height - vh);
       await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), Math.round(y));
       await page.waitForTimeout(wait);
+      // lerp režiséra v SwiftShaderi dobieha pomaly – počkaj, kým sa stav ustáli, a potom na vykreslenie snímky
+      await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 30000 }).catch(() => logs.push(`[shot] ${id}: scroll sa neustálil`));
+      await page.waitForTimeout(700);
       const st = await page.evaluate(() => {
         const cs = getComputedStyle(document.documentElement);
         return { y: Math.round(scrollY), p: cs.getPropertyValue('--p'), t1: cs.getPropertyValue('--t1'), t2: cs.getPropertyValue('--t2'), t3: cs.getPropertyValue('--t3'), t7: cs.getPropertyValue('--t7'), active: document.documentElement.dataset.sceneActive, webgl: document.documentElement.dataset.webgl };

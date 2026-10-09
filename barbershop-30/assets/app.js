@@ -5,7 +5,7 @@
  * počíta celkový progress --p a lokálne t filmových scén, zapisuje CSS premenné na <html>,
  * prepína stavy (is-in, data-scene-active, lišta, javisko) a volá 3D javisko (chair.js).
  * Žiadne externé požiadavky, žiadna analytika, žiadne globálne premenné
- * (iba window.__stage na ladenie a window.__renderDone pre source/shot.mjs).
+ * (iba window.__stage na ladenie a window.__renderDone / window.__scrollSettled pre source/shot.mjs a testy).
  */
 
 const html = document.documentElement;
@@ -15,6 +15,7 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 // shot.mjs čaká, kým nebude true (prvý 3D snímok alebo rozhodnutie motion/webgl = off)
 window.__renderDone = false;
+window.__scrollSettled = false; // true, keď slučka dobehla cieľ (scrollY) – testy čakajú na túto hodnotu
 
 /* ----------------------------------------------------------------------------
    1. Brána pohybu
@@ -241,6 +242,7 @@ function tick(now) {
     shownP = targetP;
     apply(shownP);
     lastFrame = 0; // slučka sa zastaví; ďalší štart začne čistým dt
+    window.__scrollSettled = true;
     return;
   }
   apply(shownP);
@@ -248,6 +250,7 @@ function tick(now) {
 }
 
 function start() {
+  window.__scrollSettled = false;
   if (rafId || document.visibilityState === 'hidden') return;
   rafId = requestAnimationFrame(tick);
 }

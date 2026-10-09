@@ -26,20 +26,21 @@ const COL = {
 // m: mobil – dist = násobok vzdialenosti kamery od cieľa, ty = zdvih cieľa, sh = posun obrazu.
 const KEYS = {
   1: [
-    { t: 0.00, pos: [-2.76, 1.36, 3.42], target: [0.15, 0.74, 0], fov: 32, key: 1.0, rim: 0.6, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
-    { t: 1.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
+    { t: 0.00, pos: [-2.76, 1.36, 3.42], target: [0.15, 0.74, 0], fov: 32, key: 1.0, rim: 0.6, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.54, ty: 0.02, sh: [0.03, 0.17] } },
+    { t: 1.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.54, ty: 0.02, sh: [0.03, 0.17] } },
   ],
   2: [
-    { t: 0.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
+    { t: 0.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.54, ty: 0.02, sh: [0.03, 0.17] } },
     // oblúk spredu: kamera obíde kreslo zľava doprava a zastaví sa pri prešívanej opierke, ramene a rámu
-    { t: 0.40, pos: [-0.3, 1.2, 3.1], target: [0.1, 0.95, 0], fov: 30, key: 1.1, rim: 1.0, ptr: 1, sh: [0.16, 0.0], m: { dist: 1.3, ty: 0.05, sh: [0, 0.12] } },
-    { t: 0.80, pos: [2.2, 1.4, 2.4], target: [0.1, 1.0, -0.1], fov: 30, key: 1.15, rim: 1.0, ptr: 0.6, sh: [0.064, 0], m: { dist: 1.15, ty: 0.0, sh: [0, 0.1] } },
-    { t: 1.00, pos: [2.2, 1.4, 2.4], target: [0.1, 1.0, -0.1], fov: 30, key: 0.9, rim: 0.8, ptr: 0, sh: [0.064, 0], m: { dist: 1.15, ty: 0.0, sh: [0, 0.1] } },
+    { t: 0.40, pos: [-0.3, 1.2, 3.1], target: [0.1, 0.95, 0], fov: 30, key: 1.1, rim: 1.0, ptr: 1, sh: [0.3, 0.02], m: { dist: 1.6, ty: 0.05, sh: [0, 0.02] } },
+    // t ≥ 0.8: zhoda tvaru s fotografiou kreslo-slnko (headrest, opierka, rameno); fotografia má v CSS scale 1.5 + posun
+    { t: 0.80, pos: [1.7, 1.32, 1.87], target: [0.1, 1.0, -0.1], fov: 30, key: 1.15, rim: 1.0, ptr: 0.6, sh: [0.32, 0.07], m: { dist: 1.15, ty: 0.0, sh: [0, 0] } },
+    { t: 1.00, pos: [1.7, 1.32, 1.87], target: [0.1, 1.0, -0.1], fov: 30, key: 0.9, rim: 0.8, ptr: 0, sh: [0.32, 0.07], m: { dist: 1.15, ty: 0.0, sh: [0, 0] } },
   ],
   7: [
-    { t: 0.00, pos: [3.0, 1.45, 4.0], target: [0, 0.75, 0], fov: 32, key: 0.8, rim: 0.7, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
-    { t: 0.60, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.7, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
-    { t: 1.00, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.5, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
+    { t: 0.00, pos: [3.0, 1.45, 4.0], target: [0, 0.75, 0], fov: 32, key: 0.8, rim: 0.7, ptr: 1, sh: [0.32, 0.02], m: { dist: 2.0, ty: 0.02, sh: [0, -0.25] } },
+    { t: 0.60, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.7, sh: [0.32, 0.02], m: { dist: 2.0, ty: 0.02, sh: [0, -0.25] } },
+    { t: 1.00, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.5, sh: [0.32, 0.02], m: { dist: 2.0, ty: 0.02, sh: [0, -0.25] } },
   ],
 };
 const POSTER_VIEWS = {
