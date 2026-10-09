@@ -75,6 +75,18 @@ Pokojná verzia (bez WebGL, obmedzený pohyb, šetrenie dát, druhá návšteva)
 Kontrola: `node source/tools/uvod-shot.mjs` (snímky prológu na polohách 0 … 1, druhé načítanie,
 `?film=off`).
 
+### Hook úvodu (rozhodnutie majiteľa 2026‑10‑09: na telefóne rovnako prepracované ako na počítači)
+
+- **Filmové pásy**: počas prológu sú hore a dole čierne pásy ako v kine (8 % výšky, na telefóne
+  9 %); keď kamera príde dnu, odsunú sa von (900 ms). Poistka: keby film neprišiel, odsunú sa po 9 s.
+- **Choreografia nadpisu**: doska nastúpi (350 ms), potom vety nadpisu po jednej (420 / 560 ms),
+  odsek (760 ms) a tlačidlá (900 ms); pri obmedzení pohybu bez animácie.
+- **Doska pláva nad filmom**: obsah záberu ide pri skrolovaní o kúsok pomalšie než stránka
+  (±14 px podľa `--sp`), takže text má vlastnú hĺbku oproti miestnosti.
+- **Telefón**: doska úvodu kompaktná (hlavné tlačidlo je v spodnej lište, v doske ostáva
+  „Zavolať“ ako odkaz), výzva „Prejdi si podnik“ nad spodnou lištou, výrezy na výšku s vlastným
+  bodom záujmu a hĺbkou (časť Technika), ten istý prechod cez priestor ako na počítači.
+
 ## Cesta (poradie záberov = poradie sekcií)
 
 | # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |

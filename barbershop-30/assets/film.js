@@ -710,7 +710,9 @@
     if (finished) { S = 1; V = 0; }
     else if (!shown) { S = targetS(); V = 0; held = null; fadeK = -1; }   // prológ sa ani nezačal: film začne tam, kde návštevník je
     if (PRO) PRO.done = true;                                 // uvoľní sa, len čo zíde z obrazovky (keepAround)
-    root.classList.remove('pro');
+    // filmové pásy sa odsunú (style.css, html.pro-end), potom trieda zmizne
+    root.classList.remove('pro'); root.classList.add('pro-end');
+    setTimeout(() => root.classList.remove('pro-end'), 1100);
     lastInput = performance.now(); wake();
   }
 
@@ -767,7 +769,7 @@
   // goTo(meno, t): skočí na záber bez jazdy; t 0..1 je poloha v jeho pohybe kamery (0,5 = kotva),
   // drží sa mimo prelínania, aby bol záber celý. Vráti false, keď taký záber v stránke nie je.
   api.goTo = (name, t = 0.5) => {
-    const s = path.find((x) => x.photo === name);
+    const s = path.find((x) => x.photo === name || x.photo === name + '-m');   // na telefóne je záber výrez -m
     if (!s) return false;
     const k = s.pi, a = anchors[k], gap = k < N ? anchors[k + 1] - a : (k > 0 ? a - anchors[k - 1] : innerHeight);
     const y = Math.max(0, Math.round(a + (clamp(t, 0, 1) - 0.5) * 0.7 * gap));

@@ -140,6 +140,8 @@
   </nav>
 
   <!-- Filmový canvas (position fixed, z-index 0) vytvára assets/film.js sám; .site je nad ním. -->
+  <!-- filmové pásy (letterbox) počas úvodu ako filmu: po príchode dnu sa odsunú (film.js dá pro-end) -->
+  <div class="film-bars" aria-hidden="true"><i></i><i></i></div>
   <div class="site">
   <main id="main">
 
@@ -184,7 +186,7 @@
         <div class="film-content container">
           <div class="board board-hero">
             <p class="eyebrow">Barbershop 30 · Nitra</p>
-            <h1 id="h-uvod">Tvoj strih. Tvoje miesto.</h1>
+            <h1 id="h-uvod"><span class="w">Tvoj strih.</span> <span class="w">Tvoje miesto.</span></h1>
             <p class="lead measure">Barbershop 30 v Nitre. Spoznaj náš tím, vyber si službu a rezervuj si svoj termín.</p>
             <div class="cluster board-actions">
               <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">
@@ -194,7 +196,7 @@
               <a class="btn btn-secondary" href="tel:+421951267203"><span>Zavolať<span class="sm-hide"> na recepciu</span></span></a>
             </div>
           </div>
-          <p class="scroll-hint" aria-hidden="true"><span class="chip">Vojdi dnu</span></p>
+          <p class="scroll-hint" aria-hidden="true"><span class="chip">Prejdi si podnik</span></p>
         </div>
       </div>
     </section>

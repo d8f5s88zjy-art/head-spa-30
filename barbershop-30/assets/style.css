@@ -524,6 +524,28 @@ html.world-in:not(.world-off) .place-tag { opacity: 0 !important; visibility: hi
 /* nástup dosky (jednorazový, IntersectionObserver); hero sa objaví časovo aj bez skriptu */
 @keyframes text-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 .board-hero { animation: text-in 600ms var(--ease-out) 350ms both; }
+/* úvod: nadpis nastúpi po vetách, potom odsek a tlačidlá – krátka choreografia ako titulok vo filme */
+.board-hero h1 .w { display: inline-block; animation: text-in 700ms var(--ease-out) both; }
+.board-hero h1 .w:nth-child(2) { animation-delay: 560ms; }
+.board-hero h1 .w:first-child { animation-delay: 420ms; }
+.board-hero .lead { animation: text-in 600ms var(--ease-out) 760ms both; }
+.board-hero .board-actions { animation: text-in 600ms var(--ease-out) 900ms both; }
+html[data-motion="off"] .board-hero h1 .w, html[data-motion="off"] .board-hero .lead, html[data-motion="off"] .board-hero .board-actions { animation: none; }
+
+/* obsah záberu ide pri skrolovaní o kúsok pomalšie než stránka (doska pláva nad filmom, hĺbka aj v texte) */
+html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.5 - var(--sp, 0.5)) * 28px)); will-change: transform; }
+
+/* filmové pásy: počas úvodu ako filmu (html.pro) sú hore a dole čierne pásy ako v kine; keď kamera
+   príde dnu (film.js vymení pro za pro-end), odsunú sa von. Poistka: keby film vôbec neprišiel,
+   pásy sa po 9 s odsunú samy. */
+.film-bars { position: fixed; inset: 0; z-index: 38; pointer-events: none; display: none; }
+html.pro .film-bars, html.pro-end .film-bars { display: block; }
+.film-bars i { position: absolute; left: 0; right: 0; height: 8vh; background: var(--ink); transition: transform 900ms cubic-bezier(.7, 0, .2, 1); animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 9s forwards; }
+.film-bars i:first-child { top: 0; --dir: -100%; }
+.film-bars i:last-child { bottom: 0; --dir: 100%; }
+@keyframes bars-out { to { transform: translateY(var(--dir)); } }
+html.pro-end .film-bars i { transform: translateY(var(--dir)); }
+@media (max-width: 900px) { .film-bars i { height: 9vh; } }
 
 .fact-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
 .fact-list li { display: flex; align-items: baseline; gap: var(--s3); font-size: 1.0625rem; color: var(--paper); }
@@ -778,7 +800,15 @@ html.pro .scroll-hint { opacity: 0; }
   .contact-list { margin-top: var(--s4); gap: var(--s2); }
   .contact-row { grid-template-columns: 5.5rem 1fr; gap: var(--s3); font-size: 0.9375rem; padding-bottom: var(--s2); }
   .board-contact .body { display: none; } /* údaje a tlačidlá majú prednosť, aby sa doska zmestila */
-  .scroll-hint { display: none; }
+  /* výzva na prehliadku aj na telefóne: nad spodným tlačidlom, kratšia linka */
+  .scroll-hint { right: var(--gutter); bottom: calc(var(--cta-h) + 18px + env(safe-area-inset-bottom, 0px)); }
+  .scroll-hint::after { width: 28px; }
+  /* úvod na telefóne: doska kompaktná, hlavné tlačidlo je stále v spodnej lište, v doske ostáva Zavolať ako odkaz */
+  .board-hero { padding: var(--s4) var(--s4) var(--s4); }
+  .board-hero .lead { font-size: 0.95rem; line-height: 1.45; }
+  .board-hero .board-actions { margin-top: var(--s3); }
+  .film-shot .board-hero .board-actions .btn-primary { display: none; }
+  .film-shot .board-hero .board-actions .btn-secondary { width: auto; flex: none; padding-inline: 0; flex: none; padding: 0; min-height: 0; border: 0; background: none; color: var(--paper); font-size: 0.85rem; letter-spacing: 0.06em; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp); }
   .film-still::after {
     background:
       linear-gradient(to top, rgba(14, 13, 12, 0.7) 0%, rgba(14, 13, 12, 0.25) 45%, rgba(14, 13, 12, 0) 70%),
