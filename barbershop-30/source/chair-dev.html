@@ -34,6 +34,8 @@
     let scene = Number(q.get('scene') || 1), t = Number(q.get('t') || 0), mobile = q.get('mobile') === '1';
     if (view && VIEWS[view]) { [scene, t, mobile] = VIEWS[view]; }
     const quality = q.get('quality') === 'low' ? 'low' : 'high';
+    const model = q.get('glb') === '0' ? 'procedural' : 'auto';          // &glb=0 → vždy procedurálne kreslo
+    const modelYaw = (Number(q.get('yaw')) || 0) * Math.PI / 180;        // &yaw=deg → otočenie GLB okolo Y
     const hud = document.getElementById('hud');
     const t0 = performance.now();
 
@@ -42,13 +44,16 @@
         dpr: Number(q.get('dpr')) || undefined,
         mobile,
         quality,
+        model,
+        modelYaw,
         onFirstFrame() {
           window.__renderMs = Math.round(performance.now() - t0);
           window.__renderDone = true;
-          hud.textContent = `scene=${scene} t=${t} mobile=${mobile ? 1 : 0} quality=${quality} first frame ${window.__renderMs} ms`;
         },
       });
       window.__stage = stage;
+      window.__model = stage.modelKind();
+      hud.textContent = `scene=${scene} t=${t} mobile=${mobile ? 1 : 0} quality=${quality} model=${window.__model} first frame ${window.__renderMs} ms`;
       stage.setProgress({ scene, t });
       if (q.get('sweep') === '1') stage.playIntroSweep();
       if (!mobile) window.addEventListener('pointermove', (e) => stage.setPointer(e.clientX / innerWidth, e.clientY / innerHeight));

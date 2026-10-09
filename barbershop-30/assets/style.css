@@ -305,7 +305,10 @@ p + p { margin-top: var(--s4); }
   .nav-toggle { display: inline-flex; }
   .site-header[data-menu="open"] .nav {
     display: flex; flex-direction: column; align-items: flex-start; gap: var(--s4);
-    position: fixed; inset: var(--nav-h) 0 0 0;
+    /* Lišta má backdrop-filter, preto je pre fixed potomkov „containing block“ –
+       výška je explicitná, aby menu vyplnilo obrazovku v oboch prípadoch. */
+    position: fixed; inset: var(--nav-h) 0 auto 0;
+    height: calc(100vh - var(--nav-h)); height: calc(100svh - var(--nav-h));
     padding: var(--s6) var(--gutter) calc(var(--cta-h) + var(--s6));
     background: rgba(14, 13, 12, 0.96);
     -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
@@ -348,6 +351,7 @@ p + p { margin-top: var(--s4); }
    7. Obrázky a 2.5D
    -------------------------------------------------------------------------- */
 .media { position: relative; overflow: hidden; background: var(--ink-3); }
+.media picture { height: 100%; }
 .media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
 .media[data-depth="2.5d"] img { will-change: transform; transform: scale(var(--depth-scale, 1)); transform-origin: var(--focal, 50% 50%); }
 .media .chip { position: absolute; left: var(--s4); bottom: var(--s4); }
@@ -506,19 +510,22 @@ html:not([data-scene-active]) .scene-text-1 { animation: text-in 600ms var(--eas
 /* tmavý závoj pre čitateľnosť textu nad fotografiou */
 .scene2-media::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(14, 13, 12, 0.78) 0%, rgba(14, 13, 12, 0.25) 45%, rgba(14, 13, 12, 0) 70%);
+  background:
+    linear-gradient(to top, rgba(14, 13, 12, 0.7) 0%, rgba(14, 13, 12, 0.2) 45%, rgba(14, 13, 12, 0) 70%),
+    linear-gradient(to right, rgba(14, 13, 12, 0.6) 0%, rgba(14, 13, 12, 0) 55%);
   opacity: clamp(0, (var(--t2) - 0.72) / 0.16, 1);
   pointer-events: none;
 }
-.scene-text-2 { grid-column: 8 / span 5; align-self: end; }
-@media (max-width: 1100px) { .scene-text-2 { grid-column: 7 / span 6; } }
+.scene-text-2 { grid-column: 1 / span 5; align-self: end; }
+@media (max-width: 1100px) { .scene-text-2 { grid-column: 1 / span 6; } }
 @media (max-width: 800px) {
-  .scene2-media { inset: 0 0 42% 0; }
+  .scene2-media { inset: 0 0 40% 0; }
   .scene2-media .media img { object-position: var(--focal, 50% 50%); }
-  .scene2-media::after { inset: auto 0 -1px 0; height: 50%; background: linear-gradient(to top, var(--ink), rgba(14, 13, 12, 0)); }
+  .scene2-media::after { inset: auto 0 -1px 0; height: 55%; opacity: 1; background: linear-gradient(to top, var(--ink), rgba(14, 13, 12, 0)); }
   .scene-2 .scene-grid { align-content: end; }
   .scene-text-2 { grid-column: 1 / -1; align-self: end; }
 }
+html[data-motion="off"] .scene-2 .scene-sticky { background: var(--ink); }
 html[data-motion="off"] .scene2-media { position: relative; height: 60vh; }
 html[data-motion="off"] .media-kreslo { opacity: 0; }
 html[data-motion="off"] .media-naradie { opacity: 1; transform: none; filter: none; }
@@ -557,13 +564,13 @@ html[data-motion="off"] .media-naradie { opacity: 1; transform: none; filter: no
   .scene3-media .media .chip { display: none; }
   .scene3-vignette {
     background:
-      linear-gradient(to top, rgba(14, 13, 12, 0.92) 0%, rgba(14, 13, 12, 0.7) 40%, rgba(14, 13, 12, 0) 70%),
+      linear-gradient(to top, rgba(14, 13, 12, 0.94) 0%, rgba(14, 13, 12, 0.8) 45%, rgba(14, 13, 12, 0.35) 65%, rgba(14, 13, 12, 0) 85%),
       radial-gradient(140% 100% at 50% 50%, rgba(22, 59, 60, 0) 55%, rgba(22, 59, 60, 0.5) 100%);
   }
   .scene-3 .scene-grid { align-content: end; }
   .scene-text-3 { align-self: end; padding-top: 0; }
-  .space-list { margin-top: var(--s5); gap: var(--s2); }
-  .space-row .space-note { font-size: 0.875rem; }
+  .space-list { margin-top: var(--s5); display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .space-row .space-note { display: none; }
 }
 html[data-motion="off"] .scene-3 .scene-sticky { padding-bottom: var(--s7); }
 html[data-motion="off"] .scene3-media { position: relative; display: grid; gap: 2px; }
@@ -580,10 +587,11 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
 .section-head-text .lead { margin-top: var(--s5); }
 @media (max-width: 800px) { .section-head-text { grid-column: 1 / -1; } }
 
-/* Vstup prvkov zdola bez skriptu (scroll-driven animations), app.js môže pridať .is-in */
+/* Vstup prvkov zdola aj bez skriptu (scroll-driven animations); .is-in od app.js ho ukončí.
+   V prehliadači bez view() ostáva .reveal viditeľný, kým app.js nenastaví data-scene-active. */
 @supports (animation-timeline: view()) {
   @keyframes reveal-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-  html:not([data-scene-active]) .reveal:not(.is-in) {
+  .reveal:not(.is-in) {
     animation: reveal-in 450ms var(--ease-out) both;
     animation-timeline: view();
     animation-range: entry 0% entry 35%;
@@ -617,6 +625,7 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
     linear-gradient(to bottom, #2a241f, var(--ink-3));
   overflow: hidden;
 }
+.team-portrait picture { height: 100%; }
 .team-portrait img {
   width: 100%; height: 100%;
   object-fit: cover; object-position: var(--focal, 50% 35%);
@@ -819,6 +828,20 @@ html[data-motion="off"] .scene7-fallback { display: block; }
 .footer-top { color: var(--paper); font-size: 0.9375rem; }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px)  { .footer-grid { grid-template-columns: 1fr; gap: var(--s5); } }
+
+/* Podklad lišty bez app.js (scroll-driven animation); app.js prepne na .is-scrolled */
+@supports (animation-timeline: scroll()) {
+  @keyframes header-bg {
+    from { background-color: rgba(14, 13, 12, 0); box-shadow: none; }
+    to   { background-color: rgba(14, 13, 12, 0.72); box-shadow: 0 1px 0 var(--line); }
+  }
+  html:not([data-scene-active]) .site-header:not(.is-scrolled) {
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    animation: header-bg linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120px;
+  }
+}
 
 /* Ikona menu: hamburger ↔ krížik */
 .nav-toggle-close { display: none; }

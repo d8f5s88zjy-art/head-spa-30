@@ -1302,5 +1302,161 @@
    "name": "Adrian",
    "role": "Barber"
   }
- ]
+ ],
+ "posters": {
+  "uvod-desktop": {
+   "aspect": [
+    16,
+    9
+   ],
+   "widths": [
+    2200,
+    1600,
+    1080
+   ],
+   "heights": [
+    1238,
+    900,
+    608
+   ],
+   "formats": [
+    "avif",
+    "webp",
+    "jpg"
+   ],
+   "scene": 1,
+   "t": 0,
+   "alt": "Štylizované barberské kreslo s čiernou prešívanou kožou a mosadzným rámom",
+   "background": "radial-gradient(130% 95% at 0% 100%, #1a1511 0%, #0e0d0c 72%)",
+   "files": {
+    "1080": {
+     "avif": 6213,
+     "webp": 10374,
+     "jpg": 21370
+    },
+    "1600": {
+     "avif": 11555,
+     "webp": 18850,
+     "jpg": 40982
+    },
+    "2200": {
+     "avif": 17580,
+     "webp": 30222,
+     "jpg": 68807
+    }
+   }
+  },
+  "uvod-mobile": {
+   "aspect": [
+    9,
+    16
+   ],
+   "widths": [
+    1080,
+    640
+   ],
+   "heights": [
+    1920,
+    1138
+   ],
+   "formats": [
+    "avif",
+    "webp",
+    "jpg"
+   ],
+   "scene": 1,
+   "t": 0,
+   "alt": "Štylizované barberské kreslo s čiernou prešívanou kožou a mosadzným rámom",
+   "background": "radial-gradient(130% 95% at 0% 100%, #1a1511 0%, #0e0d0c 72%)",
+   "files": {
+    "640": {
+     "avif": 11405,
+     "webp": 17468,
+     "jpg": 34752
+    },
+    "1080": {
+     "avif": 22913,
+     "webp": 36568,
+     "jpg": 78944
+    }
+   }
+  },
+  "rezervacia-desktop": {
+   "aspect": [
+    16,
+    9
+   ],
+   "widths": [
+    2200,
+    1600,
+    1080
+   ],
+   "heights": [
+    1238,
+    900,
+    608
+   ],
+   "formats": [
+    "avif",
+    "webp",
+    "jpg"
+   ],
+   "scene": 7,
+   "t": 0,
+   "alt": "Štylizované barberské kreslo s čiernou prešívanou kožou a mosadzným rámom",
+   "background": "radial-gradient(130% 95% at 0% 100%, #1a1511 0%, #0e0d0c 72%)",
+   "files": {
+    "1080": {
+     "avif": 7379,
+     "webp": 13474,
+     "jpg": 26232
+    },
+    "1600": {
+     "avif": 13300,
+     "webp": 24030,
+     "jpg": 49030
+    },
+    "2200": {
+     "avif": 21467,
+     "webp": 38126,
+     "jpg": 82205
+    }
+   }
+  },
+  "rezervacia-mobile": {
+   "aspect": [
+    9,
+    16
+   ],
+   "widths": [
+    1080,
+    640
+   ],
+   "heights": [
+    1920,
+    1138
+   ],
+   "formats": [
+    "avif",
+    "webp",
+    "jpg"
+   ],
+   "scene": 7,
+   "t": 0,
+   "alt": "Štylizované barberské kreslo s čiernou prešívanou kožou a mosadzným rámom",
+   "background": "radial-gradient(130% 95% at 0% 100%, #1a1511 0%, #0e0d0c 72%)",
+   "files": {
+    "640": {
+     "avif": 13289,
+     "webp": 22376,
+     "jpg": 42538
+    },
+    "1080": {
+     "avif": 29361,
+     "webp": 47136,
+     "jpg": 98147
+    }
+   }
+  }
+ }
 }

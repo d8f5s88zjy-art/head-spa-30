@@ -2,14 +2,13 @@
  * BARBERSHOP 30 – 3D kreslo (autorský štylizovaný symbol).
  * ES modul bez závislostí mimo ./vendor/. API podľa docs/CONTRACT.md §5.
  *
- *   const stage = await createChairStage(canvas, { dpr, mobile, onFirstFrame, quality });
+ *   const stage = await createChairStage(canvas, { dpr, mobile, onFirstFrame, quality, model: 'auto'|'procedural', modelYaw: rad });
  *   stage.setProgress({ scene: 1, t: 0.4 });  stage.setPointer(x, y);  stage.setVisible(true);
  *   await stage.playIntroSweep();  stage.resize();  stage.renderPoster(w, h, 'uvod-desktop');  stage.dispose();
  */
 import * as THREE from './vendor/three.module.min.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { RoundedBoxGeometry } from './vendor/RoundedBoxGeometry.js';
-import { mergeVertices } from './vendor/BufferGeometryUtils.js';
 
 const COL = {
   leather: 0x1a1614,
@@ -159,12 +158,26 @@ function strokeShape(points, width) {
   shape.closePath();
   return shape;
 }
+// Hladké normály podľa polohy (ExtrudeGeometry je neindexovaná a plochá; UV švy nevadia).
+function smoothNormals(g) {
+  g.computeVertexNormals();
+  const pos = g.attributes.position.array, nor = g.attributes.normal.array, n = pos.length / 3, acc = new Map(), keys = new Array(n);
+  for (let i = 0; i < n; i++) {
+    const k = keys[i] = `${Math.round(pos[i * 3] * 2e3)},${Math.round(pos[i * 3 + 1] * 2e3)},${Math.round(pos[i * 3 + 2] * 2e3)}`;
+    const a = acc.get(k) || [0, 0, 0];
+    a[0] += nor[i * 3]; a[1] += nor[i * 3 + 1]; a[2] += nor[i * 3 + 2]; acc.set(k, a);
+  }
+  for (let i = 0; i < n; i++) {
+    const a = acc.get(keys[i]), l = Math.hypot(a[0], a[1], a[2]) || 1;
+    nor[i * 3] = a[0] / l; nor[i * 3 + 1] = a[1] / l; nor[i * 3 + 2] = a[2] / l;
+  }
+  g.attributes.normal.needsUpdate = true;
+}
 function extrude(shape, depth, bevel, curveSegments = 24) {
   const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: bevel > 0, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments, steps: 1 });
   g.translate(0, 0, -depth / 2);
-  const m = mergeVertices(g, 1e-4); g.dispose();
-  m.computeVertexNormals();
-  return m;
+  smoothNormals(g);
+  return g;
 }
 // Tvar opierky: „náhrobný kameň“ – rovné boky, eliptický vrch.
 function backShape(hw, hStraight, ry) {
@@ -298,8 +311,8 @@ export async function createChairStage(canvas, options = {}) {
   const contactTex = makeContact();
 
   const mats = {
-    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.18, sheenColor: 0x3a2a1c, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(0.65, 0.65), envMapIntensity: 0.25 }),
-    pad: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.45, sheen: 0.25, sheenColor: 0x3a2a1c, envMapIntensity: 0.25 }),
+    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.14, sheenColor: 0x3a2a1c, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(0.65, 0.65), envMapIntensity: 0.14 }),
+    pad: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.45, sheen: 0.14, sheenColor: 0x3a2a1c, envMapIntensity: 0.14 }),
     brass: new THREE.MeshPhysicalMaterial({ color: COL.brass, metalness: 1, roughness: 0.32, envMapIntensity: 0.55 }),
     lattice: new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: latticeTex, bumpMap: latticeTex, bumpScale: -0.006, metalness: 1, roughness: 0.36, envMapIntensity: 0.55 }),
     satin: new THREE.MeshPhysicalMaterial({ color: COL.satin, roughness: 0.55, metalness: 0.12, clearcoat: 0.15, clearcoatRoughness: 0.4, envMapIntensity: 0.4 }),
@@ -329,7 +342,7 @@ export async function createChairStage(canvas, options = {}) {
   scene.add(rim, rim.target);
   const hemi = new THREE.HemisphereLight(COL.hemiSky, COL.hemiGround, 1.0);
   scene.add(hemi);
-  const KEY_I = 24, RIM_I = 70;
+  const KEY_I = 21, RIM_I = 70;
 
   // Stav
   const state = { scene: 1, t: 0, mobile };
@@ -389,14 +402,19 @@ export async function createChairStage(canvas, options = {}) {
     dirty = true; schedule();
   }
 
-  // Voliteľný GLB (fotogrametria): ak existuje, nahradí procedurálne kreslo; pri chybe ticho ostáva procedurálne.
+  // Voliteľný GLB (fotogrametria): ak existuje, nahradí procedurálne kreslo ešte pred prvým snímkom
+  // (aby poster = prvý frame); pri chybe / timeoute ticho ostáva procedurálne.
+  let modelKind = 'procedural';
   async function tryLoadGLB() {
+    if (options.model === 'procedural') return;
     const url = new URL('./model/kreslo.glb', import.meta.url).href;
     try {
       const head = await fetch(url, { method: 'HEAD' });
       if (!head.ok) return;
       const { GLTFLoader } = await import('./vendor/GLTFLoader.js');
-      const gltf = await new GLTFLoader().loadAsync(url);
+      const loader = new GLTFLoader();
+      try { const { MeshoptDecoder } = await import('./vendor/meshopt_decoder.module.js'); loader.setMeshoptDecoder(MeshoptDecoder); } catch (_) { /* bez meshopt */ }
+      const gltf = await loader.loadAsync(url);
       const model = gltf.scene;
       const box = new THREE.Box3().setFromObject(model);
       const size = new THREE.Vector3(); box.getSize(size);
@@ -406,16 +424,20 @@ export async function createChairStage(canvas, options = {}) {
       const c = new THREE.Vector3(); box.getCenter(c);
       model.position.set(-c.x, -box.min.y, -c.z);
       model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; if (o.material && 'envMapIntensity' in o.material) o.material.envMapIntensity = 0.55; } });
-      if (disposed) return;
-      scene.remove(chair); chair = model; scene.add(model);
-      dirty = true; schedule();
+      if (disposed || glbLate) return;
+      const wrap = new THREE.Group(); wrap.rotation.y = Number(options.modelYaw) || 0; wrap.add(model);
+      scene.remove(chair); chair = wrap; scene.add(wrap);
+      modelKind = 'glb'; dirty = true; schedule();
     } catch (_) { /* fallback: procedurálne kreslo */ }
   }
 
   resize();
   renderer.compile(scene, camera);
+  // GLB sa čaká max. 6 s; bez GLB je to jeden HEAD request (404) a prvý snímok ide hneď.
+  let glbLate = false;
+  await Promise.race([tryLoadGLB(), new Promise((r) => setTimeout(r, 6000))]);
+  glbLate = true;
   frame(performance.now());
-  tryLoadGLB();
 
   const api = {
     setProgress({ scene: sc, t }) {
@@ -459,6 +481,7 @@ export async function createChairStage(canvas, options = {}) {
       dirty = true; schedule();
       return url;
     },
+    modelKind: () => modelKind,
     dispose() {
       disposed = true;
       if (rafId) cancelAnimationFrame(rafId);
