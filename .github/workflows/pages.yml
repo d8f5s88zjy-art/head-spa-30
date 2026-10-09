@@ -28,6 +28,11 @@ jobs:
           enablement: true
       - name: Pripraviť súbory webu
         run: mkdir -p _site && cp -r index.html 404.html pravne.html robots.txt sitemap.xml assets admin stavebniny-richtarik _site/
+      - name: Pripraviť web BARBERSHOP 30 (podpriečinok /barbershop-30/)
+        run: |
+          mkdir -p _site/barbershop-30
+          cp -r barbershop-30/index.html barbershop-30/robots.txt barbershop-30/sitemap.xml barbershop-30/assets _site/barbershop-30/
+          sed -i 's#https://d8f5s88zjy-art.github.io/barbershop30/#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#g' _site/barbershop-30/index.html _site/barbershop-30/robots.txt _site/barbershop-30/sitemap.xml
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)
