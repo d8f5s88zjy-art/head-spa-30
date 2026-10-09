@@ -34,6 +34,7 @@
     shots: [],
     goTo() { return false; },
     proFreeze() { return false; },
+    fadeFreeze() { return false; },
     get state() { return { on: false }; },
   };
   window.BS30_FILM = api;
@@ -203,26 +204,28 @@
   const grid = new THREE.PlaneGeometry(1, 1, SEG[0], SEG[1]);
   const VERT = `
     uniform sampler2D uDepth; uniform float uAmt; uniform vec3 uEye;
-    varying vec2 vUv;
+    varying vec2 vUv; varying float vZ;
     void main() {
       vUv = vec2(uv.x, 1.0 - uv.y);
       float z = texture2D(uDepth, vUv).r;
+      vZ = z;                                                  // hĺbka bodu (1 = blízko) pre prechod medzi zábermi
       vec4 w = modelMatrix * vec4(position, 1.0);
       // bod sa posunie po priamke k oku: z pokojného miesta kamery je obraz presne fotka,
       // pri pohybe kamery sa bližšie veci posúvajú viac ako stena za nimi
       w.xyz = uEye + (w.xyz - uEye) * (1.0 - uAmt * z);
       gl_Position = projectionMatrix * viewMatrix * w;
     }`;
-  // uVig: 1/šírka, 1/výška plátna, pomer strán, 1 = kreslí sa rovno na obrazovku (vinetácia už tu)
+  // uVig: 1/šírka, 1/výška plátna, pomer strán, 1 = kreslí sa rovno na obrazovku (vinetácia už tu);
+  // do textúry prechodu ide v alfe hĺbka bodu, podľa nej sa zábery prelínajú (blízke veci posledné)
   const FRAG = `
-    uniform sampler2D uMap; uniform vec4 uVig; varying vec2 vUv;
+    uniform sampler2D uMap; uniform vec4 uVig; varying vec2 vUv; varying float vZ;
     void main() {
       vec3 c = texture2D(uMap, vUv).rgb;
       if (uVig.w > 0.5) {
         vec2 q = (gl_FragCoord.xy * uVig.xy - 0.5) * vec2(uVig.z, 1.0) / max(uVig.z, 1.0);
         c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * 0.34;
       }
-      gl_FragColor = vec4(c, 1.0);
+      gl_FragColor = vec4(c, vZ);
     }`;
   /* hĺbková mapa sa po načítaní raz zjemní na grafike: popredie sa najprv mierne rozšíri (max filter),
      potom sa hrana rozmaže na šírku asi dvoch buniek mriežky. Predmet sa tak hýbe ako celok a pri
@@ -442,16 +445,27 @@
     fragmentShader: `
       uniform sampler2D tA, tB; uniform float uMix, uAspect; varying vec2 vUv;
       void main() {
-        vec3 c = texture2D(tA, vUv).rgb;
+        vec4 a = texture2D(tA, vUv);
+        vec3 c = a.rgb;
+        float vs = 0.34;
         if (uMix > 0.0) {
-          // prechod cez krátke šero ako medzi dvoma miestnosťami: starý záber stmavne skôr, než sa nový
-          // rozsvieti, cez seba stoja len slabo (v strede 16 % + 20 %, spolu asi 36 % jasu), takže nikdy
-          // nie je tma ani zreteľná dvojexpozícia
-          c = c * (1.0 - smoothstep(0.0, 0.7, uMix)) + texture2D(tB, vUv).rgb * smoothstep(0.3, 1.0, uMix);
+          /* prechod cez priestor, rovnaký pre všetky zábery: každý bod obrazu sa prelína vo vlastnom čase
+             podľa hĺbky (alfa = 1 blízko). Ďaleký koniec novej miestnosti sa vynorí prvý, blízke veci
+             odchádzajúceho záberu (kreslo, sud, pult) miznú posledné, akoby popri tebe prešli. Každý bod
+             sa prelína v okne širokom 0,55 z celého prechodu, takže nikde nie je tvrdá hrana ani
+             dvojexpozícia celého obrazu; ostrosť ostáva, nič sa nerozmazáva. */
+          vec4 b = texture2D(tB, vUv);
+          float o = 0.5 * a.a + 0.5 * b.a;
+          float m = smoothstep(o * 0.45, o * 0.45 + 0.55, uMix);
+          c = mix(a.rgb, b.rgb, m);
+          // krátke šero uprostred (82 % jasu) a o niečo užšia vinetácia: oko ide do stredu, ako strih vo filme
+          float s = sin(3.14159265 * uMix);
+          c *= 1.0 - 0.18 * s;
+          vs += 0.16 * s;
         }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
-        c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * 0.34;
+        c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * vs;
         gl_FragColor = vec4(c, 1.0);
       }`,
   }));
@@ -516,9 +530,9 @@
     off.x += (Math.sin(sec * 0.37) * 0.006 * breath + pmx * 0.03) * s.vw;
     off.y += (Math.sin(sec * 0.29 + 1.3) * 0.004 * breath + pmy * 0.018) * s.vh;
     off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
-    // pri prechode kamera odchádzajúceho záberu pokračuje dopredu, akoby prešla do ďalšej miestnosti;
-    // prichádzajúci záber: kamera prichádza zo vzdialenosti
-    off.z -= push > 0 ? Math.pow(push, 1.4) * 0.2 * DIST : push * 0.07 * DIST;
+    // pri prechode kamera odchádzajúceho záberu zrýchľuje dopredu, akoby prešla do ďalšej miestnosti
+    // (do štvrtiny vzdialenosti); prichádzajúci záber dobieha zozadu a spomalí na svojom mieste
+    off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * 0.1 * DIST;
     camera.position.copy(s.eye).add(off);
     // pohľad ostáva takmer na bode záujmu: posun kamery sa mení na oblúk okolo neho
     tmp.set(s.eye.x + off.x * 0.08, s.eye.y + off.y * 0.08, 0);
@@ -526,7 +540,7 @@
   }
 
   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
-  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false;   // dark: po skoku sa ide zo šera
+  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: po skoku sa ide zo šera
   const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
   let mixNow = 0;
   function draw(now, dt) {
@@ -534,13 +548,17 @@
     keepAround(clamp(Math.round(S), 0, N));
     const k = clamp(Math.floor(S), 0, N);
     let A = path[k], B = path[clamp(k + 1, 0, N)];
-    const want = A === B ? 0 : smooth(0.35, 0.65, S - k);
+    // prechod má na obrazovke vždy rovnakú dĺžku (asi 55 % výšky okna skrolu), nech je medzera medzi
+    // kotvami akákoľvek: medzi 16 a 30 % cesty medzi nimi, okolo stredu
+    const gap = k < N ? anchors[k + 1] - anchors[k] : innerHeight, span = clamp(0.55 * innerHeight / Math.max(1, gap), 0.16, 0.3);
+    const want = A === B ? 0 : smooth(0.5 - span / 2, 0.5 + span / 2, S - k);
     if (k !== fadeK) { fade = want; fadeK = k; }
     // až keď skrolovanie naozaj stojí (nie medzi dvomi zárezmi kolieska), dokončí sa prelínanie;
     // v prológu vedie čas, prelínanie ide presne podľa neho
     still = Math.abs(V) < 0.03 ? still + dt : 0;
     fadeGoal = pro ? want : still > 0.6 ? Math.round(want) : want;
     fade = pro ? want : fade + (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
+    if (fadeFreeze != null) { fade = fadeFreeze; fadeGoal = fadeFreeze; }   // ladenie: prechod stojí
     let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
     // prológ začína vždy svojím záberom (fasáda), nikdy záberom úvodu, keby sa náhodou načítal skôr
     if (pro && !A.ready) return false;
@@ -558,10 +576,16 @@
     if (mix > 0.001) {
       // prelínanie: oba zábery do textúr a spolu na obrazovku (bez prvého záberu len šero)
       vig.value.w = 0;
+      // hĺbka sa pri prechode otvorí: blízke veci odchádzajúceho záberu sa posúvajú viac (prechádzajú popri
+      // tebe), prichádzajúci záber sa z otvorenej hĺbky usadí na bežnú
+      if (A) A.mat.uniforms.uAmt.value = 0.42 + 0.1 * mix;
+      B.mat.uniforms.uAmt.value = 0.52 - 0.1 * mix;
       renderer.setRenderTarget(rtA); renderer.clear();
       if (A) { A.mesh.visible = true; place(A, now, mix); renderer.render(scene, camera); A.mesh.visible = false; }
       renderer.setRenderTarget(rtB); renderer.clear();
       B.mesh.visible = true; place(B, now, -(1 - mix)); renderer.render(scene, camera); B.mesh.visible = false;
+      if (A) A.mat.uniforms.uAmt.value = 0.42;
+      B.mat.uniforms.uAmt.value = 0.42;
       post.material.uniforms.uMix.value = mix;
       renderer.setRenderTarget(null); renderer.clear();
       renderer.render(postScene, postCam);
@@ -759,6 +783,8 @@
     else pro.freeze = clamp(s, 0, 1);
     wake(); return true;
   };
+  // fadeFreeze(v): prechod medzi aktuálnym a ďalším záberom zastaví na v (0 až 1) pre snímky; null pustí ďalej
+  api.fadeFreeze = (v) => { fadeFreeze = v == null ? null : clamp(v, 0, 1); still = 0; wake(); return true; };
   Object.defineProperty(api, 'state', {
     get: () => ({
       on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro,

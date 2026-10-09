@@ -14,9 +14,20 @@ README „Film zo skutočných fotiek“): každá fotka má hĺbkovú mapu (`<m
 svetlá = blízko), kamera sa v nej pohne ako v skutočnej miestnosti (popredie sa posúva
 voči stene), pri skrolovaní ide pomalým filmovým pohybom (nájazd, prejazd, zdvih) a
 medzi časťami webu sa zábery prelínajú. Text, tlačidlá a cenník sú HTML nad filmom.
-Fotky sa netónujú; len vinetácia a krátke šero pri prelínaní (v strede prelínania ostáva asi
-36 % jasu – nikdy tma, nikdy zreteľná dvojexpozícia; prelínanie zaberá 30 % cesty medzi
-kotvami a v pokoji sa vždy dokončí na bližší záber).
+Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** medzi zábermi
+(rozhodnutie majiteľa 2026‑10‑09: prechody jednotné, filmové, s efektom, bez straty ostrosti):
+- každý bod obrazu sa prelína vo vlastnom čase podľa hĺbky: ďaleký koniec novej miestnosti sa
+  vynorí prvý, blízke veci odchádzajúceho záberu (kreslo, sud, pult) miznú posledné, akoby popri
+  návštevníkovi prešli; každý bod sa prelína v okne 0,55 z celého prechodu (post shader,
+  hĺbka ide v alfe textúry záberu);
+- kamera odchádzajúceho záberu zrýchli dopredu (do štvrtiny vzdialenosti), prichádzajúca dobehne
+  zozadu a usadí sa; hĺbka sa pri tom „otvorí“ (uAmt 0,42 → 0,52 a späť);
+- uprostred krátke šero (82 % jasu) a o niečo užšia vinetácia, ako strih vo filme; nikdy tma,
+  nikdy dvojexpozícia celého obrazu, nikdy rozmazanie;
+- prechod má na obrazovke vždy rovnakú dĺžku (asi 55 % výšky okna skrolu, 16–30 % cesty medzi
+  kotvami, okolo stredu) a v pokoji sa vždy dokončí na bližší záber;
+- ten istý prechod má aj prológ (z fasády cez dvere dnu). Snímky: `source/tools/prechod-shot.mjs`
+  (zastavený prechod cez `BS30_FILM.fadeFreeze`).
 
 - Zábery (maximálny detail): `assets/img/film/<meno>-{1086,1448,2172,2896}.{avif,webp}`
   (fasáda `vstup` aj 4096 px pre nájazd k dverám) + `<meno>-hlbka.webp`; nič sa nezväčšuje nad
