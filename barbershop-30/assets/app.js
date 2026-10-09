@@ -474,6 +474,46 @@ if (navToggle && nav && header) {
 })();
 
 /* ----------------------------------------------------------------------------
+   10b. Tiché videoslučky (scéna 2 Remeslo, scéna 4 Ľudia)
+   Pravidlá: play pri viditeľnosti >= 35 %, pause mimo viewportu a pri skrytej karte; súčasne hrá
+   najviac jedno video; video v prvku s data-at hrá, len kým je prvok zobrazený (.is-in); pri
+   data-motion=off a prefers-reduced-motion sa nič nesťahuje ani neprehráva (ostáva poster).
+   ---------------------------------------------------------------------------- */
+(function setupVideos() {
+  const vids = $$('video[data-video]');
+  if (!vids.length || motionOff || !('IntersectionObserver' in window)) return;
+  const ratio = new Map(vids.map((v) => [v, 0]));
+
+  const pause = (v) => { if (!v.paused) v.pause(); };
+  const play = (v) => { if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => { /* autoplay zamietnutý – ostáva poster */ }); } };
+  const wanted = (v) => {
+    if ((ratio.get(v) || 0) < 0.35) return false;
+    const gate = v.closest('[data-at]');
+    return !gate || gate.classList.contains('is-in');
+  };
+  function sync() {
+    if (document.visibilityState !== 'visible') { vids.forEach(pause); return; }
+    let best = null, bestRatio = 0;
+    for (const v of vids) {
+      if (wanted(v) && ratio.get(v) > bestRatio) { best = v; bestRatio = ratio.get(v); }
+    }
+    for (const v of vids) if (v !== best) pause(v);
+    if (best) play(best);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) ratio.set(en.target, en.isIntersecting ? en.intersectionRatio : 0);
+    sync();
+  }, { threshold: [0, 0.2, 0.35, 0.5, 0.75, 1] });
+  vids.forEach((v) => io.observe(v));
+
+  // prvky s data-at menia triedu is-in zo slučky – sleduj zmenu a prehodnoť
+  const mo = 'MutationObserver' in window ? new MutationObserver(sync) : null;
+  new Set(vids.map((v) => v.closest('[data-at]')).filter(Boolean)).forEach((g) => mo?.observe(g, { attributes: true, attributeFilter: ['class'] }));
+  document.addEventListener('visibilitychange', sync);
+})();
+
+/* ----------------------------------------------------------------------------
    11. Rok v pätičke
    ---------------------------------------------------------------------------- */
 $$('.year').forEach((el) => { el.textContent = String(new Date().getFullYear()); });

@@ -8,7 +8,7 @@
 //   node source/shot.mjs https://example.com/ remote
 //
 // Options (anywhere in argv):
-//   --scroll=<px>     scroll window to Y before the shot (same as positional scrollY)
+//   --scroll=<px>     scroll window to Y before the shot (same as positional scrollY); uses scrollTo({behavior:'instant'})
 //   --wait=<ms>       extra settle time after load / render (default 400)
 //   --preset=<n>      Chromium launch preset index (see PRESETS below; default 0)
 //   --dpr=<n>         deviceScaleFactor for both viewports (default 1)
@@ -144,7 +144,9 @@ export async function shoot({ url, name, scrollY = 0, waitMs = 400, preset = 0, 
       } catch { logs.push('[shot] timeout waiting for window.__renderDone'); }
       await page.evaluate(() => (document.fonts ? document.fonts.ready : null));
       if (scrollY) {
-        await page.evaluate((y) => window.scrollTo(0, y), Number(scrollY));
+        // okamžitý scroll (nie plynulý) – inak html{scroll-behavior:smooth} spôsobí čierne/rozbehnuté snímky
+        await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
+        await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), Number(scrollY));
         await page.waitForTimeout(150);
       }
       if (waitMs > 0) await page.waitForTimeout(Number(waitMs));
@@ -154,6 +156,8 @@ export async function shoot({ url, name, scrollY = 0, waitMs = 400, preset = 0, 
         renderDone: window.__renderDone ?? null,
       }));
       const file = path.join(outDir, `${name}-${kind}.png`);
+      // pred snímkou dočasne vypni plynulé scrollovanie (screenshot s fullPage scrolluje stránku)
+      await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
       await page.screenshot({ path: file, fullPage: !!full });
       const elapsed = Date.now() - t0;
       results.push({ kind, file, elapsedMs: elapsed, ...info, logs });

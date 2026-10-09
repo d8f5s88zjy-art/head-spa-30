@@ -15,30 +15,31 @@ const COL = {
   brass: 0xb5924e,
   satin: 0x15120f,
   key: 0xffd8b4,
-  rim: 0xff9a58,
+  rim: 0xffb48a,
   hemiSky: 0x2a2622,
   hemiGround: 0x0e0d0c,
 };
 
 /* ---------- kľúčové snímky kamery (SCENE_MAP, tabuľka „Kamera 3D kresla“) ---------- */
 // pos/target: súradnice scény; fov: vertikálny; key/rim: intenzita svetiel; ptr: vplyv kurzora;
-// sh: posun obrazu (šošovkový shift, zlomok šírky/výšky; + = kreslo doprava/nadol) – kamera sa nenakláňa;
+// sh: posun obrazu (šošovkový shift v zlomkoch VÝŠKY obrazovky – nezávisle od pomeru strán, aby sedel s posterom; + = kreslo doprava/nadol) – kamera sa nenakláňa;
 // m: mobil – dist = násobok vzdialenosti kamery od cieľa, ty = zdvih cieľa, sh = posun obrazu.
 const KEYS = {
   1: [
-    { t: 0.00, pos: [-2.76, 1.36, 3.42], target: [0.15, 0.74, 0], fov: 32, key: 1.0, rim: 0.6, ptr: 1, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
-    { t: 1.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
+    { t: 0.00, pos: [-2.76, 1.36, 3.42], target: [0.15, 0.74, 0], fov: 32, key: 1.0, rim: 0.6, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
+    { t: 1.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
   ],
   2: [
-    { t: 0.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
-    { t: 0.55, pos: [1.3, 1.05, 1.9], target: [0.62, 0.62, 0.35], fov: 30, key: 1.1, rim: 1.0, ptr: 1, sh: [0.2, 0], m: { dist: 1.25, ty: 0.15, sh: [0, 0] } },
-    { t: 0.80, pos: [1.15, 0.95, 1.55], target: [0.66, 0.6, 0.38], fov: 28, key: 1.15, rim: 1.0, ptr: 0.6, sh: [0.2, 0], m: { dist: 1.25, ty: 0.15, sh: [0, 0] } },
-    { t: 1.00, pos: [1.15, 0.95, 1.55], target: [0.66, 0.6, 0.38], fov: 28, key: 0.9, rim: 0.8, ptr: 0, sh: [0.2, 0], m: { dist: 1.25, ty: 0.15, sh: [0, 0] } },
+    { t: 0.00, pos: [-2.25, 1.22, 2.75], target: [0.15, 0.78, 0], fov: 32, key: 1.0, rim: 0.9, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0.0, 0.17] } },
+    // oblúk spredu: kamera obíde kreslo zľava doprava a zastaví sa pri prešívanej opierke, ramene a rámu
+    { t: 0.40, pos: [-0.3, 1.2, 3.1], target: [0.1, 0.95, 0], fov: 30, key: 1.1, rim: 1.0, ptr: 1, sh: [0.16, 0.0], m: { dist: 1.3, ty: 0.05, sh: [0, 0.12] } },
+    { t: 0.80, pos: [2.2, 1.4, 2.4], target: [0.1, 1.0, -0.1], fov: 30, key: 1.15, rim: 1.0, ptr: 0.6, sh: [0.064, 0], m: { dist: 1.15, ty: 0.0, sh: [0, 0.1] } },
+    { t: 1.00, pos: [2.2, 1.4, 2.4], target: [0.1, 1.0, -0.1], fov: 30, key: 0.9, rim: 0.8, ptr: 0, sh: [0.064, 0], m: { dist: 1.15, ty: 0.0, sh: [0, 0.1] } },
   ],
   7: [
-    { t: 0.00, pos: [3.0, 1.45, 4.0], target: [0, 0.75, 0], fov: 32, key: 0.8, rim: 0.7, ptr: 1, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
-    { t: 0.60, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.7, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
-    { t: 1.00, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.5, sh: [0.2, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
+    { t: 0.00, pos: [3.0, 1.45, 4.0], target: [0, 0.75, 0], fov: 32, key: 0.8, rim: 0.7, ptr: 1, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
+    { t: 0.60, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.7, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
+    { t: 1.00, pos: [2.4, 1.3, 3.2], target: [0, 0.78, 0], fov: 32, key: 1.0, rim: 0.8, ptr: 0.5, sh: [0.32, 0.02], m: { dist: 1.3, ty: 0.02, sh: [0, 0.17] } },
   ],
 };
 const POSTER_VIEWS = {
@@ -74,11 +75,11 @@ function sampleKeys(scene, t) {
    cez options.grade (JSON) sa dajú prepísať pri vývoji (source/chair-dev.html?grade={...}). */
 const GRADE = {
   color: [1, 1, 1],          // násobok albedo
-  rough: 1, metal: 1, env: 0.55,
-  leatherGain: 0.35,         // jas kože (násobok luminancie)
+  rough: 1, metal: 1, env: 1.0,
+  leatherGain: 0.42,         // jas kože (násobok luminancie albeda) – čierna koža
   leatherTint: [1.0, 0.97, 0.95],
-  leatherRough: 0.52,        // minimálna drsnosť kože
-  goldGain: 1.0, goldTint: [1.0, 0.78, 0.42], goldMix: 0.8,
+  leatherRough: 0.72,        // minimálna drsnosť kože (mäkký lesk, bez oranžových zrkadlení)
+  goldGain: 2.6, goldTint: [1.0, 0.86, 0.58], goldMix: 0.95,   // šampanská mosadz
   debug: 0,
 };
 
@@ -361,7 +362,7 @@ export async function createChairStage(canvas, options = {}) {
   scene.add(rim, rim.target);
   const hemi = new THREE.HemisphereLight(COL.hemiSky, COL.hemiGround, 1.0);
   scene.add(hemi);
-  const KEY_I = 21, RIM_I = 70;
+  const KEY_I = 24, RIM_I = 50;
 
   // Stav
   const state = { scene: 1, t: 0, mobile };
@@ -376,7 +377,7 @@ export async function createChairStage(canvas, options = {}) {
     if (isMobile) { pos.sub(target).multiplyScalar(k.m.dist).add(target); target.y += k.m.ty; sh = k.m.sh; }
     camera.position.copy(pos); camera.lookAt(target); camera.fov = k.fov;
     // posun obrazu bez naklonenia kamery (off-axis frustum): + = kreslo doprava / nadol
-    camera.setViewOffset(viewW, viewH, -sh[0] * viewW, -sh[1] * viewH, viewW, viewH);
+    camera.setViewOffset(viewW, viewH, -sh[0] * viewH, -sh[1] * viewH, viewW, viewH);
   }
   function applyLights(k, sweepOff, sweepGain) {
     key.position.set(KEY_BASE.x + ptr.x * k.ptr + sweepOff.x, KEY_BASE.y + ptr.y * k.ptr + sweepOff.y, KEY_BASE.z + sweepOff.z);
@@ -442,8 +443,11 @@ export async function createChairStage(canvas, options = {}) {
     };
     mat.onBeforeCompile = (sh) => {
       Object.assign(sh.uniforms, u);
+      sh.vertexShader = sh.vertexShader
+        .replace('void main() {', 'varying vec3 vWorldP;\nvoid main() {')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\n  vWorldP = (modelMatrix * vec4(transformed, 1.0)).xyz;');
       sh.fragmentShader = sh.fragmentShader
-        .replace('void main() {', 'uniform vec3 uLeather; uniform vec3 uGold; uniform float uGoldMix; uniform float uLeatherRough; uniform float uDebug;\nvoid main() {')
+        .replace('void main() {', 'varying vec3 vWorldP; uniform vec3 uLeather; uniform vec3 uGold; uniform float uGoldMix; uniform float uLeatherRough; uniform float uDebug;\nvoid main() {')
         .replace('#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>
         {
           float mm = smoothstep(0.35, 0.65, clamp(metalnessFactor, 0.0, 1.0));
@@ -453,10 +457,15 @@ export async function createChairStage(canvas, options = {}) {
           diffuseColor.rgb = mix(leatherC, metalC, mm);
           roughnessFactor = mix(max(roughnessFactor, uLeatherRough), roughnessFactor, mm);
           metalnessFactor = metalnessFactor * mm;
+          // základňa (disk pri podlahe): textúra ju mylne robí krémovo‑drevenou → tmavý satén
+          float baseM = (1.0 - smoothstep(0.17, 0.25, vWorldP.y)) * (1.0 - smoothstep(0.50, 0.58, length(vWorldP.xz)));
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(lum) * vec3(0.22, 0.215, 0.21), baseM);
+          roughnessFactor = mix(roughnessFactor, 0.5, baseM);
+          metalnessFactor = mix(metalnessFactor, 0.35, baseM);
           if (uDebug > 0.5) diffuseColor.rgb = vec3(mm, 0.0, 1.0 - mm);
         }`);
     };
-    mat.customProgramCacheKey = () => 'kreslo-grade-v1';
+    mat.customProgramCacheKey = () => 'kreslo-grade-v2';
     mat.needsUpdate = true;
   }
 
@@ -552,7 +561,7 @@ export async function createChairStage(canvas, options = {}) {
       return url;
     },
     // vývojové ladenie kamery: setCamera({pos,target,fov,key,rim,ptr,sh,m}) alebo setCamera(null)
-    setCamera(k) { camOverride = k ? { key: 1, rim: 1, ptr: 0, sh: [0, 0], m: { dist: 1.3, ty: 0, sh: [0, 0] }, ...k } : null; dirty = true; schedule(); },
+    setCamera(k) { camOverride = k ? { key: 1, rim: 1, ptr: 0, sh: [0.0, 0], m: { dist: 1.3, ty: 0, sh: [0, 0] }, ...k } : null; dirty = true; schedule(); },
     modelKind: () => modelKind,
     dispose() {
       disposed = true;

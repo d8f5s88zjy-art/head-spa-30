@@ -28,9 +28,9 @@ const IMG = path.join(ROOT, 'assets', 'img');
 // Rovnaký záber ako 3D v scéne 1 (uvod) a 7 (rezervacia); šírky podľa CONTRACT §1.
 export const POSTERS = {
   'uvod-desktop': { aspect: [16, 9], sizes: [[2200, 1238], [1600, 900], [1080, 608]] },
-  'uvod-mobile': { aspect: [9, 16], sizes: [[1080, 1920], [640, 1138]] },
+  'uvod-mobile': { aspect: [9, 19.5], sizes: [[1080, 2340], [640, 1387]] },
   'rezervacia-desktop': { aspect: [16, 9], sizes: [[2200, 1238], [1600, 900], [1080, 608]] },
-  'rezervacia-mobile': { aspect: [9, 16], sizes: [[1080, 1920], [640, 1138]] },
+  'rezervacia-mobile': { aspect: [9, 19.5], sizes: [[1080, 2340], [640, 1387]] },
 };
 
 function parseArgs(argv) {
@@ -70,19 +70,27 @@ async function renderAll(views, outDir, extra = '') {
   return files;
 }
 
-// Pillow: podklad = CSS gradient javiska (--ink → #1A1511 vľavo dole), alfa‑kompozícia renderu, export 3 formátov.
+// Pillow: podklad = CSS gradient javiska (.stage-bg v style.css, rovnaké vrstvy), alfa‑kompozícia renderu, export 3 formátov.
 function encode(files) {
   const py = `
 import sys, json, io
 from PIL import Image
 import numpy as np
-INK=(0x0E,0x0D,0x0C); WARM=(0x1A,0x15,0x11)
+INK=np.array((0x0E,0x0D,0x0C),np.float32); WARM=np.array((0x1A,0x15,0x11),np.float32); LAMP=np.array((224,96,28),np.float32)
 def backdrop(w,h):
-    # radial-gradient(130% 95% at 0% 100%, #1A1511 0%, #0E0D0C 72%)
-    x=np.arange(w,dtype=np.float32)[None,:]/(1.30*w)
-    y=(h-1-np.arange(h,dtype=np.float32))[:,None]/(0.95*h)
-    t=np.clip(np.sqrt(x*x+y*y)/0.72,0,1)[...,None]
-    rgb=(np.array(WARM,np.float32)*(1-t)+np.array(INK,np.float32)*t)
+    # PRESNE rovnaké vrstvy ako .stage-bg v assets/style.css (poster → 3D bez skoku):
+    #   radial-gradient(60% 50% at 88% 30%, rgba(224,96,28,.08) 0%, transparent 70%),
+    #   radial-gradient(120% 90% at 18% 100%, #1a1511 0%, transparent 60%), #0e0d0c
+    x=(np.arange(w,dtype=np.float32)[None,:]+0.5)
+    y=(np.arange(h,dtype=np.float32)[:,None]+0.5)
+    # spodná vrstva: farba --ink, nad ňou teplý gradient s alfa 1 → 0
+    r1=np.sqrt(((x-0.18*w)/(1.20*w))**2+((y-h)/(0.90*h))**2)/0.60
+    a1=np.clip(1-r1,0,1)[...,None]
+    base=INK*(1-a1)+WARM*a1
+    # horná vrstva: oranžový závoj s alfa 0.08 → 0
+    r2=np.sqrt(((x-0.88*w)/(0.60*w))**2+((y-0.30*h)/(0.50*h))**2)/0.70
+    a2=(0.08*np.clip(1-r2,0,1))[...,None]
+    rgb=base*(1-a2)+LAMP*a2
     return Image.fromarray(np.round(rgb).astype(np.uint8),'RGB')
 out={}
 for f in json.loads(sys.argv[1]):
@@ -115,7 +123,7 @@ function writeManifest(sizes) {
       scene: view.startsWith('uvod') ? 1 : 7,
       t: 0,
       alt: 'Štylizované barberské kreslo s čiernou prešívanou kožou a mosadzným rámom',
-      background: 'radial-gradient(130% 95% at 0% 100%, #1a1511 0%, #0e0d0c 72%)',
+      background: 'zhodné s .stage-bg v assets/style.css (dve radiálne vrstvy nad #0e0d0c)',
       files: bySize,
     };
   }

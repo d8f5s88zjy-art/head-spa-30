@@ -7,15 +7,16 @@
   <meta name="description" content="Barbershop 30 na Mostnej 30 v Nitre: pánske strihy, úprava brady, holenie britvou a balíčky. Tím desiatich barberov, 8 kresiel, recepcia a káva zdarma. Rezervuj si termín online 24/7.">
   <meta name="theme-color" content="#0E0D0C">
   <meta name="color-scheme" content="dark">
-  <!-- DEPLOY STEP: pri nasadení na vlastnú doménu nahraď placeholder URL (canonical, og:url, og:image). -->
-  <link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/">
+  <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
+       Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
+  <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/">
   <meta property="og:type" content="business.business">
   <meta property="og:locale" content="sk_SK">
   <meta property="og:site_name" content="Barbershop 30">
   <meta property="og:title" content="Barbershop 30 Nitra – Tvoj strih. Tvoje miesto.">
   <meta property="og:description" content="Pánske strihy, brada a holenie na Mostnej 30 v Nitre. Rezervuj si termín online.">
-  <meta property="og:url" content="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/">
-  <meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/og.jpg">
+  <meta property="og:url" content="https://d8f5s88zjy-art.github.io/barbershop30/">
+  <meta property="og:image" content="https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle">
@@ -40,8 +41,8 @@
     "@type": "BarberShop",
     "name": "Barbershop 30",
     "alternateName": "Barbershop30",
-    "url": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
-    "image": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/og.jpg",
+    "url": "https://d8f5s88zjy-art.github.io/barbershop30/",
+    "image": "https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg",
     "telephone": "+421951267203",
     "email": "info@barbershop30.sk",
     "foundingDate": "2019",
@@ -159,7 +160,7 @@
                 Rezervovať termín
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
-              <a class="btn btn-secondary" href="tel:+421951267203">Zavolať na recepciu</a>
+              <a class="btn btn-secondary" href="tel:+421951267203">Zavolať<span class="sm-hide">&nbsp;na recepciu</span></a>
             </div>
           </div>
         </div>
@@ -205,6 +206,13 @@
             <p class="body measure">Každý strih začína konzultáciou. Potom strojček aj nožnice, fade podľa tvaru hlavy, umytie a fénovanie. Pri brade horúci uterák a britva. Na záver styling a kolínska.</p>
             <p><a class="link-arrow" href="#sluzby">Pozri služby <span aria-hidden="true">→</span></a></p>
           </div>
+          <figure class="video-window scene2-video" data-at="0.3,0.97">
+            <video muted playsinline loop preload="none" poster="assets/video/remeslo-strojcek-poster-576.webp" width="576" height="1024" aria-hidden="true" tabindex="-1" data-video>
+              <source src="assets/video/remeslo-strojcek-576.webm" type="video/webm">
+              <source src="assets/video/remeslo-strojcek-576.mp4" type="video/mp4">
+            </video>
+            <figcaption class="chip">Záber z prevádzky</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -267,7 +275,7 @@
             <ul class="space-list" role="list">
               <li class="space-row" data-space="1"><span class="chip">Recepcia</span><span class="space-note">Pult pri vstupe, káva a minerálka zdarma.</span></li>
               <li class="space-row" data-space="2"><span class="chip">Hlavná sála</span><span class="space-note">Rad kresiel pod oranžovými lampami.</span></li>
-              <li class="space-row" data-space="3"><span class="chip">Zadná miestnosť</span><span class="space-note">Zelené sedačky, kým sa uvoľní kreslo.</span></li>
+              <li class="space-row" data-space="3"><span class="chip">Zadná miestnosť</span><span class="space-note">Zelené zamatové sedačky.</span></li>
             </ul>
             <p><a class="link-arrow" href="#kontakt">Ako sa k nám dostaneš <span aria-hidden="true">→</span></a></p>
           </div>
@@ -286,6 +294,13 @@
             <h2 id="h-tim">Tím barberov a barberiek.</h2>
             <p class="lead measure">Desať ľudí, jeden kalendár. Termín si vyberieš v spoločnej rezervácii, ktorá je otvorená 24 hodín denne.</p>
           </div>
+          <figure class="video-window team-video">
+            <video muted playsinline loop preload="none" poster="assets/video/tim-v-akcii-poster-576.webp" width="576" height="1024" aria-hidden="true" tabindex="-1" data-video>
+              <source src="assets/video/tim-v-akcii-576.webm" type="video/webm">
+              <source src="assets/video/tim-v-akcii-576.mp4" type="video/mp4">
+            </video>
+            <figcaption class="chip">Tím v akcii</figcaption>
+          </figure>
         </div>
         <ul class="team-grid" role="list">
           <li class="team-card reveal">

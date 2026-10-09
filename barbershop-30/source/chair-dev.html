@@ -9,8 +9,11 @@
     html, body { margin: 0; height: 100%; }
     body {
       overflow: hidden;
-      /* rovnaký podklad ako .stage-bg: --ink → #1A1511 vľavo dole */
-      background: radial-gradient(130% 95% at 0% 100%, #1a1511 0%, var(--ink) 72%), var(--ink);
+      /* rovnaký podklad ako .stage-bg v assets/style.css */
+      background:
+        radial-gradient(120% 90% at 18% 100%, #1a1511 0%, rgba(26, 21, 17, 0) 60%),
+        radial-gradient(60% 50% at 88% 30%, rgba(224, 96, 28, 0.08) 0%, rgba(224, 96, 28, 0) 70%),
+        var(--ink);
     }
     #stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
     #hud { position: fixed; left: 12px; top: 10px; z-index: 2; font: 12px/1.4 system-ui, sans-serif; color: rgba(241,233,221,.7); pointer-events: none; white-space: pre; }
