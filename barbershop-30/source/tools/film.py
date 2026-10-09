@@ -14,7 +14,9 @@ import os, sys, subprocess, json, tempfile
 from PIL import Image, ImageOps
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'assets', 'img', 'film'); os.makedirs(OUT, exist_ok=True)
-MODEL = '/tmp/claude-0/-home-user/9632978b-2b69-5a1e-a151-fbbea674fc3a/scratchpad/depth/model.onnx'
+# model Depth Anything V2 small (ONNX, ~99 MB) nie je v gite: stiahni ho do source/tools/depth/model.onnx
+# alebo daj cestu v premennej prostredia DEPTH_MODEL
+MODEL = os.environ.get('DEPTH_MODEL', os.path.join(ROOT, 'source', 'tools', 'depth', 'model.onnx'))
 G = os.path.join(ROOT, 'source', 'web-povodny', 'gallery'); F = os.path.join(ROOT, 'source', 'photos'); SL = os.path.join(ROOT, 'source', 'web-povodny', 'slider')
 # meno záberu: zdroj, popis miesta, x bodu záujmu pre výrez na telefón (0–1), voliteľne:
 #   'm': iný zdroj pre telefón (fotka na výšku toho istého miesta), 'big': aj stupeň 4096 px
@@ -32,7 +34,6 @@ SHOTS = {
   'kreslo-stred': (G+'/34.jpg', 'Kreslo uprostred sály', 0.5, {}),
   'kava':         (G+'/41.jpg', 'Káva pre hostí', 0.5, {}),
   'sud':          (G+'/30.jpg', 'Predná sála so sudom', 0.5, {}),
-  'noznice':      (SL+'/4.jpg', 'Nožnice a hrebeň', 0.5, {}),
 }
 WIDTHS = (1086, 1448, 2172, 2896)      # stupne na šírku (desktop)
 M_WIDTHS = (1086, 1448)                # stupne výrezu na výšku (telefón; film tam berie najviac 1448)

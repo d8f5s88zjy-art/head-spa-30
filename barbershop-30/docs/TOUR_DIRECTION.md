@@ -50,7 +50,8 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
 - Kamera: jeden jednotný pohyb celého filmu – stále pomaly dopredu s jemným bočným
   oblúkom (4 % šírky na desktope, 2,6 % na telefóne), pozerá na bod záujmu `f`;
   myš na počítači pridá ďalší oblúk, telefón nie (žiadne povolenia).
-- Mobil: výrez na výšku najviac 1448 px (bod na bod aj pri 3×), presah 1,24, text dole nad spodným CTA.
+- Mobil: výrez na výšku najviac 1448 px (zábery z galérie bod na bod aj pri 3×; rohožka na telefóne je
+  z foto‑30 majiteľa, 900 px, pri 3× zväčšená 1,3×), presah 1,24, text dole nad spodným CTA.
 
 ## Úvod ako film (prológ): z ulice cez dvere dnu
 
@@ -105,7 +106,7 @@ Bez filmu (pokojná verzia) tlačidlo nie je.
 | # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |
 |---|---|---|---|---|---|---|
 | 0 | prológ (bez kotvy) | `vstup` – fasáda s dverami a barber pole (gallery/43) | [0.76, 0.53] dvere | `door` (chôdza k dverám) | to isté ako úvod (doska je HTML, nemení sa) | – |
-| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px) | [0.5, 0.55], telefón [0.44, 0.58] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
+| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px; telefón foto‑30 na výšku) | [0.5, 0.55], telefón [0.50, 0.55] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
 | 2 | `#recepcia` | `recepcia` – pult, lampy, barber pole (gallery/35) | [0.45, 0.55] pult | `right` | H2 „Príď ako k známym.“, 3 riadky: recepčná ťa privíta · káva a minerálka zdarma · 8 kresiel, minimálne čakanie | – |
 | 3 | `#sala` | `sala` – rad kresiel, zrkadlá (gallery/38) → `kreslo` (gallery/28) | [0.5, 0.55] → [0.58, 0.55] | `left` → `in` | H2 „Osem kresiel. Jedno je tvoje.“ + chip „Hlavná sála“ | Pozri služby → |
 | 4 | `#remeslo` | `stol` (gallery/40) + **video** `remeslo-strojcek` v portrétovom okne vedľa textu; detail `naradie` (gallery/39) | [0.5, 0.5] | `rise` | H2 „Presnosť, ktorú vidíš v detaile.“, odsek z opisov služieb (konzultácia, strojček aj nožnice, fade, horúci uterák, britva, styling, kolínska) | – |

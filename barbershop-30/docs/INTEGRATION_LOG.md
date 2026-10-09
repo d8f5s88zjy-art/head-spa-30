@@ -16,7 +16,7 @@
    - šero v strede prelínania bolo takmer čierne – zjemnené na asi 36 % jasu;
    - popis miesta vľavo dole sa pri úvode ukazuje pod doskou (neprekrýva ju) – ponechané.
 4. Kontroly: CHECKS.md (dymový test, prológ, scény, váha). Snímky v `docs/screenshots/`.
-5. Nasadenie: vetva `claude/head-spa-page-5yf2fw` → `main` (GitHub Pages head‑spa‑30,
+5. Nasadenie: pracovná vetva → `main` (GitHub Pages head‑spa‑30,
    podpriečinok `/barbershop-30/`), po nasadení kontrola naživo.
 
 Otvorené: fotka dverí zblízka od majiteľa (otvorenie krídla v prológu), mobilné výrezy záberov
