@@ -94,6 +94,14 @@ odkaz, hlavné tlačidlo v spodnej lište), výzva „Prejdi si podnik“ nad li
 Dymový test po zmenách: všetky kontroly prešli; úvod (desktop + mobil) prechádza polohami 0 → 1,
 na telefóne so zábermi `vstup-m` → `rohozka-m`.
 
+**Naživo po nasadení (cd58607, 2026‑10‑09)**: nová verzia na Pages po 61 s; súbory `film.js`,
+`style.css`, `rohozka-m-1086.avif`, `vstup-m-1448.avif`, `vstup-4096.avif`, `sala-2896.avif`,
+`sala-m-hlbka.webp` 200. Úvod z verejnej adresy: desktop `vstup` → `rohozka`, mobil `vstup-m` →
+`rohozka-m`, polohy 0 → 1, druhé načítanie bez prológu, `?film=off` pokojná verzia.
+Lighthouse z verejnej adresy (headless, SwiftShader; súbežne bežali iné testy, preto rozptyl):
+mobil `?film=off` 87 (LCP 2,8 s, CLS 0, TBT 300 ms), mobil `?uvod=off` 97 (LCP 2,4 s, CLS 0,
+TBT 50 ms), desktop 99 (LCP 0,5 s, CLS 0); prístupnosť, osvedčené postupy a SEO 100.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

@@ -87,6 +87,19 @@ Kontrola: `node source/tools/uvod-shot.mjs` (snímky prológu na polohách 0 …
   „Zavolať“ ako odkaz), výzva „Prejdi si podnik“ nad spodnou lištou, výrezy na výšku s vlastným
   bodom záujmu a hĺbkou (časť Technika), ten istý prechod cez priestor ako na počítači.
 
+### Návrat na otváraciu scénu (rozhodnutie majiteľa 2026‑10‑09)
+
+Zákazník sa po skrolovaní môže vrátiť na otváraciu scénu: na začiatku stránky je tlačidlo
+„Späť na ulicu“ (vpravo dole nad výzvou, len keď film beží) – kamera prejde z rohožky cez dvere von
+na Mostnú (časová os 1,9 s / 2,2 s na telefóne, filmové pásy sa zasunú) a ostane stáť pred podnikom
+(`html.outside`, S = 0); tlačidlo sa zmení na „Vojdi dnu“ a vojdenie je ten istý prológ, len o tretinu
+rýchlejší. To isté spraví koliesko nahor na vrchu stránky, potiahnutie prstom nadol na vrchu
+(`overscroll-behavior-y: none`, aby to nebolo obnovenie stránky), šípka hore / Home; z ulice dnu
+koliesko nadol, potiahnutie nahor, šípka dole / medzerník, tlačidlo, alebo jednoducho skrolovanie
+(pružina prejde cez dvere). Záber fasády sa načíta len vtedy, keď ho treba, a po vojdení sa uvoľní.
+Rozhranie: `BS30_FILM.uvod.von()`, `BS30_FILM.uvod.znova()`, stav `state.outside`, `state.leaving`.
+Bez filmu (pokojná verzia) tlačidlo nie je.
+
 ## Cesta (poradie záberov = poradie sekcií)
 
 | # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |

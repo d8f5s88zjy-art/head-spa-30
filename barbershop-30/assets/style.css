@@ -535,17 +535,38 @@ html[data-motion="off"] .board-hero h1 .w, html[data-motion="off"] .board-hero .
 /* obsah záberu ide pri skrolovaní o kúsok pomalšie než stránka (doska pláva nad filmom, hĺbka aj v texte) */
 html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.5 - var(--sp, 0.5)) * 28px)); will-change: transform; }
 
-/* filmové pásy: počas úvodu ako filmu (html.pro) sú hore a dole čierne pásy ako v kine; keď kamera
-   príde dnu (film.js vymení pro za pro-end), odsunú sa von. Poistka: keby film vôbec neprišiel,
-   pásy sa po 9 s odsunú samy. */
-.film-bars { position: fixed; inset: 0; z-index: 38; pointer-events: none; display: none; }
-html.pro .film-bars, html.pro-end .film-bars { display: block; }
-.film-bars i { position: absolute; left: 0; right: 0; height: 8vh; background: var(--ink); transition: transform 900ms cubic-bezier(.7, 0, .2, 1); animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 9s forwards; }
+/* filmové pásy: počas úvodu ako filmu (html.pro) a kým návštevník stojí na ulici (html.outside) sú hore
+   a dole čierne pásy ako v kine; keď kamera príde dnu, odsunú sa von (900 ms). Poistka: keby film
+   vôbec neprišiel, pásy sa po 9 s odsunú samy. */
+.film-bars { position: fixed; inset: 0; z-index: 38; pointer-events: none; }
+.film-bars i { position: absolute; left: 0; right: 0; height: 8vh; background: var(--ink); transform: translateY(var(--dir)); transition: transform 900ms cubic-bezier(.7, 0, .2, 1); }
 .film-bars i:first-child { top: 0; --dir: -100%; }
 .film-bars i:last-child { bottom: 0; --dir: 100%; }
+html.pro .film-bars i, html.outside .film-bars i { transform: none; }
 @keyframes bars-out { to { transform: translateY(var(--dir)); } }
-html.pro-end .film-bars i { transform: translateY(var(--dir)); }
+html.pro:not(.outside) .film-bars i { animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 9s forwards; }
+html.world-off .film-bars { display: none; }
 @media (max-width: 900px) { .film-bars i { height: 9vh; } }
+/* bez odrazu a obnovenia potiahnutím na vrchu: potiahnutie nadol na vrchu stránky vedie von na ulicu (film.js) */
+html { overscroll-behavior-y: none; }
+
+/* dvere: tlačidlo „Späť na ulicu“ / „Vojdi dnu“ v úvode, len keď film beží a stránka je na začiatku */
+.film-door {
+  position: absolute; right: var(--gutter); bottom: calc(var(--s6) + 52px); z-index: 2;
+  display: none; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px;
+  border: 1px solid rgba(241, 233, 221, 0.25); background: rgba(14, 13, 12, 0.55); color: var(--paper);
+  font-family: var(--font-text); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1;
+  cursor: pointer; opacity: clamp(0, 1 - var(--p) / 0.02, 1); transition: opacity 300ms var(--ease-out), border-color 200ms;
+}
+.film-door:hover, .film-door:focus-visible { border-color: var(--lamp); outline: none; }
+.film-door::before { content: "↑"; color: var(--lamp); font-size: 0.9rem; }
+html.outside .film-door::before { content: "↓"; }
+html.world-in:not(.world-off) .film-door { display: inline-flex; }
+html.pro .film-door { opacity: 0; pointer-events: none; }
+.film-door .film-door-dnu, html.outside .film-door .film-door-von { display: none; }
+html.outside .film-door .film-door-dnu { display: inline; }
+html.outside .scroll-hint { opacity: 0; }
+@media (max-width: 900px) { .film-door { bottom: calc(var(--cta-h) + 18px + 46px + env(safe-area-inset-bottom, 0px)); } }
 
 .fact-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
 .fact-list li { display: flex; align-items: baseline; gap: var(--s3); font-size: 1.0625rem; color: var(--paper); }

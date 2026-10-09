@@ -64,6 +64,18 @@ try {
     await page.waitForTimeout(1200);
     const done = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(3), pro: s.pro, htmlPro: document.documentElement.classList.contains('pro') }; });
     states.push({ stop: 'koniec', ...done });
+    // návrat na otváraciu scénu: von na ulicu (tlačidlo), snímka, dnu kolieskom / potiahnutím, snímka
+    const von = await page.evaluate(() => window.BS30_FILM.uvod.von());
+    try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 15000 }); } catch { logs.push('[uvod] von: nedošlo do stavu vonku'); }
+    await page.waitForTimeout(600);
+    const outside = await page.evaluate(() => { const s = window.BS30_FILM.state; return { von: true, S: +s.S.toFixed(2), outside: s.outside, cur: s.current, htmlOutside: document.documentElement.classList.contains('outside'), door: (document.querySelector('.film-door') || {}).innerText, bar: getComputedStyle(document.querySelector('.film-bars i')).transform }; });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-vonku.png`) });
+    // dnu: koliesko (počítač) alebo tlačidlo (telefón; potiahnutie prstom headless nevie)
+    if (kind === 'desktop') await page.mouse.wheel(0, 120); else await page.click('.film-door');
+    try { await page.waitForFunction(() => !window.BS30_FILM.state.pro && !window.BS30_FILM.state.outside && Math.abs(window.BS30_FILM.state.S - 1) < 0.01, null, { timeout: 15000 }); } catch { logs.push('[uvod] znova: prológ nedobehol'); }
+    const back = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(2), pro: s.pro, outside: s.outside, cur: s.current, htmlPro: document.documentElement.classList.contains('pro') }; });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-znova.png`) });
+    states.push({ stop: 'von', ...outside }, { stop: 'znova', ...back });
     // skrolovanie po prológu
     await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
     await page.evaluate(() => window.scrollTo({ top: 700, behavior: 'instant' }));
@@ -74,6 +86,14 @@ try {
     await page.goto(base, { waitUntil: 'load', timeout: 60000 });
     await page.waitForTimeout(800);
     const second = await page.evaluate(() => ({ pro: document.documentElement.classList.contains('pro'), worldIn: document.documentElement.classList.contains('world-in'), still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
+    // druhá návšteva: film sa spustí pohybom a aj bez prológu sa dá vyjsť von a vojsť dnu
+    await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
+    await page.evaluate(() => { window.scrollTo(0, 10); window.scrollTo(0, 0); });
+    try { await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 30000 }); } catch { logs.push('[uvod] druhá návšteva: film sa nerozbehol'); }
+    await page.evaluate(() => window.BS30_FILM.uvod.von());
+    try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 15000 }); } catch { logs.push('[uvod] druhá návšteva: von nedošlo'); }
+    second.vonDruhyKrat = await page.evaluate(() => window.BS30_FILM.state.outside);
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat-vonku.png`) });
     await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat.png`) });
     // pokojná verzia
     await page.goto(base + '?film=off', { waitUntil: 'load', timeout: 60000 });
@@ -89,9 +109,9 @@ try {
 }
 for (const s of summary) {
   console.log(`\n== ${s.kind}: prvý snímok ${s.loadMs} ms po načítaní; pred filmom pro=${s.pro0.pro} záloha=${path.basename(s.pro0.still)}`);
-  for (const st of s.states) console.log(`  stop=${String(st.stop).padStart(6)} S=${st.S} mix=${st.mix ?? '-'} záber=${st.cur ?? '-'} prológ=${st.pro} html.pro=${st.htmlPro}`);
+  for (const st of s.states) console.log(`  stop=${String(st.stop).padStart(6)} S=${st.S} mix=${st.mix ?? '-'} záber=${st.cur ?? '-'} prológ=${st.pro} html.pro=${st.htmlPro}${st.outside != null ? ` vonku=${st.outside}` : ''}${st.door ? ` tlačidlo=„${st.door}“` : ''}`);
   console.log(`  po skrole 700 px: S=${s.afterScroll.S} T=${s.afterScroll.T} záber=${s.afterScroll.cur} prológ=${s.afterScroll.pro}`);
-  console.log(`  druhé načítanie: pro=${s.second.pro} world-in=${s.second.worldIn} záloha=${path.basename(s.second.still)}`);
+  console.log(`  druhé načítanie: pro=${s.second.pro} world-in=${s.second.worldIn} záloha=${path.basename(s.second.still)} von aj pri druhej návšteve=${s.second.vonDruhyKrat}`);
   console.log(`  film=off: pro=${s.off.pro} plátno=${s.off.canvas} záloha=${path.basename(s.off.still)}`);
   for (const l of s.logs) console.log('  ', l);
 }
