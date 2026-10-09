@@ -253,6 +253,38 @@ document.addEventListener('click', (e) => {
 window.addEventListener('hashchange', () => snapNow(motionOn ? 900 : 100));
 
 /* ----------------------------------------------------------------------------
+   6b. Plynulý skrol kolieskom (len počítač s myšou)
+   Koliesko stránku neposúva skokmi po zárezoch, ale posúva cieľ, ku ktorému stránka plynulo dobieha
+   (časová konštanta 140 ms), takže film, dosky aj prechody idú ako jeden pomalý pohyb kamery.
+   Dotyk, klávesy, posuvník a odkazy na kotvy ostávajú natívne; pri obmedzení pohybu, Ctrl/Cmd+koliesko
+   (lupa), vodorovnom skrole, otvorenom menu alebo lightboxe sa koliesko nechá prehliadaču.
+   ---------------------------------------------------------------------------- */
+if (motionOn && mqFinePointer.matches) {
+  const lightbox = $('#lightbox');
+  let target = 0, cur = 0, raf = 0, last = 0, ours = false;
+  const maxY = () => Math.max(0, (document.scrollingElement || html).scrollHeight - window.innerHeight);
+  const step = (now) => {
+    raf = 0;
+    const dt = last ? Math.min(100, now - last) : 16.667; last = now;
+    cur += (target - cur) * (1 - Math.exp(-dt / 140));
+    if (Math.abs(target - cur) < 0.5) cur = target;
+    ours = true; window.scrollTo({ top: cur, left: 0, behavior: 'instant' }); ours = false;
+    if (cur !== target) raf = requestAnimationFrame(step); else last = 0;
+  };
+  window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || e.metaKey || menuOpen || (lightbox && !lightbox.hidden) || document.body.style.overflow === 'hidden') return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+    e.preventDefault();
+    if (!raf) { cur = target = window.scrollY; }
+    target = Math.min(maxY(), Math.max(0, target + e.deltaY * unit));
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: false });
+  // posun odinakiaľ (posuvník, klávesy, skok na kotvu): cieľ sa vyrovná so skutočnou polohou
+  window.addEventListener('scroll', () => { if (!ours && !raf) cur = target = window.scrollY; }, { passive: true });
+}
+
+/* ----------------------------------------------------------------------------
    7. Kurzor (iba desktop s hover a presným ukazovateľom) – --pointer-x/y pre CSS
    ---------------------------------------------------------------------------- */
 function setPointerVars(x, y) {

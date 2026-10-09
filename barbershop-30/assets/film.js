@@ -193,7 +193,7 @@
   // shadery sú hotové a overené; kontrola chýb by pri každom preklade čakala na grafiku (stovky ms na telefóne)
   renderer.debug.checkShaderErrors = false;
   // ostrosť: plné rozlíšenie displeja do 2x; pomalé zariadenie si ho samo zníži
-  let dpr = Math.min(devicePixelRatio || 1, 2);
+  let dpr = Math.min(devicePixelRatio || 1, phone ? 3 : 2);   // telefón 3x (ostrosť), quality() pri pomalom zariadení zníži
 
   const FOV = phone ? 50 : 38, DIST = 10;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
@@ -517,7 +517,9 @@
   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
   let raf = 0, last = 0, running = true, lost = false, shown = false, lastInput = performance.now();
   const started = performance.now();
-  const BREATH_MS = 25000;                                    // po chvíli bez pohybu sa obraz upokojí a prestane kresliť
+  // kamera sa hýbe stále (ako video): 60 s po poslednom pohybe plnou frekvenciou, potom 30 snímok/s,
+  // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
+  const FULL_MS = 60000, BREATH_MS = 180000;
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
   function place(s, now, push = 0) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
@@ -528,10 +530,12 @@
       (m[0][1] + (m[1][1] - m[0][1]) * e) * s.vh,
       (m[0][2] + (m[1][2] - m[0][2]) * e) * DIST,
     );
+    // stály pomalý pohyb kamery ako zo steadicamu aj bez skrolovania (ako záber z videa, nie fotka):
+    // dva pomalé oblúky v každej osi, spolu asi 1,7 % šírky, 1 % výšky a 2 % vzdialenosti
     const sec = now / 1000;
-    off.x += (Math.sin(sec * 0.37) * 0.006 * breath + pmx * 0.03) * s.vw;
-    off.y += (Math.sin(sec * 0.29 + 1.3) * 0.004 * breath + pmy * 0.018) * s.vh;
-    off.z += Math.sin(sec * 0.21 + 0.4) * 0.008 * DIST * breath;
+    off.x += ((Math.sin(sec * 0.37) * 0.006 + Math.sin(sec * 0.13 + 0.7) * 0.011) * breath + pmx * 0.03) * s.vw;
+    off.y += ((Math.sin(sec * 0.29 + 1.3) * 0.004 + Math.sin(sec * 0.09 + 2.1) * 0.006) * breath + pmy * 0.018) * s.vh;
+    off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * breath;
     // pri prechode kamera odchádzajúceho záberu zrýchľuje dopredu, akoby prešla do ďalšej miestnosti
     // (do štvrtiny vzdialenosti); prichádzajúci záber dobieha zozadu a spomalí na svojom mieste
     off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * 0.1 * DIST;
@@ -674,7 +678,7 @@
       else { S = 0; V = 0; }
     } else {
       // kriticky tlmená pružina: plynulé rozbehnutie aj dobehnutie, žiadne trhnutie pri rýchlom skrole
-      const w0 = 5.2;
+      const w0 = 4.2;                                          // ťažšia kamera: zárezy kolieska sa nestratia, ale zlejú do jedného pohybu
       V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
       if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
       // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
@@ -684,6 +688,7 @@
     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
+    const active = idle < FULL_MS;                             // nedávny pohyb: kresliť každú snímku
     const busy = draw(now, dt);
     if (drawn && !shown) {
       shown = true; firstMs = Math.round(performance.now() - tStart);
@@ -695,7 +700,7 @@
     // prológ sa skončil: film stojí na zábere úvodu a ďalej vedie skrolovanie
     if (pro && pro.t0 && S >= 1) endPro(true);
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
-    const moving = !!pro || !!leaving || busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
+    const moving = !!pro || !!leaving || active || busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
     if (!shown) {
       // prvý záber ešte nie je: čakať, a keď nič nepríde (sieť), vrátiť pokojný web.
       // Prológ, ktorý nepríde do 7 s (pomalá sieť), sa vynechá a film začne rovno záberom úvodu.
@@ -747,11 +752,14 @@
   const ease = (t) => t * t * (3 - 2 * t), easeOut = (t) => 1 - (1 - t) * (1 - t);
   function proS(now) {
     if (pro.freeze != null) return pro.freeze;               // ladenie: prológ stojí na danej polohe
-    const el = now - pro.t0 - pro.wait;
-    if (el < pro.walk) return 0.35 * ease(el / pro.walk);
+    // jedna plynulá krivka: pomalý rozbeh na chodníku, najrýchlejšie v dverách (tam je prelínanie),
+    // pomalý dojazd na rohožke; kamera v dverách nezastaví
+    const total = pro.walk + pro.into, el = now - pro.t0 - pro.wait;
+    const s = ease(clamp(el / total, 0, 1));
     const hero = path[1];
-    if (!(hero && hero.ready) && now - pro.t0 < pro.walk + 4000) { pro.wait = el - pro.walk + pro.wait; return 0.35; }
-    return 0.35 + 0.65 * easeOut(Math.min(1, (el - pro.walk) / pro.into));
+    // záber úvodu ešte nie je načítaný: kamera počká pred dverami (S 0,33 = 38,6 % času), najviac 4 s
+    if (s > 0.33 && !(hero && hero.ready) && now - pro.t0 < total + 4000) { pro.wait = (now - pro.t0) - 0.386 * total; return 0.33; }
+    return s;
   }
   function endPro(finished) {
     if (!pro) return;
@@ -849,7 +857,7 @@
   // od toho miesta. Vráti false, keď prológ nebeží.
   api.proFreeze = (s) => {
     if (!pro) return false;
-    if (s == null) { if (pro.freeze != null) { pro.t0 = performance.now() - (pro.freeze < 0.35 ? pro.walk * pro.freeze / 0.35 : pro.walk + pro.into * (pro.freeze - 0.35) / 0.65); pro.wait = 0; } pro.freeze = null; }
+    if (s == null) { if (pro.freeze != null) { const f = pro.freeze; let x = f; for (let i = 0; i < 8; i++) x -= (ease(x) - f) / Math.max(1e-3, 6 * x * (1 - x)); pro.t0 = performance.now() - clamp(x, 0, 1) * (pro.walk + pro.into); pro.wait = 0; } pro.freeze = null; }
     else pro.freeze = clamp(s, 0, 1);
     wake(); return true;
   };

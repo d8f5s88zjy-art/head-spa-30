@@ -27,8 +27,13 @@ rezervoval termín.
   v zábere pohybuje doprava, ďalší záber začína z ľavej strany bodu záujmu.
 - **Prelínanie** medzi zábermi trvá presne po dĺžke pásu s textom medzi nimi; v jeho
   strede je na obrazovke doska s textom, takže strih nikdy nevidno „nahý“.
-- **Pokoj**: scroll vždy funguje natívne, nič ho nezamyká ani nespomaľuje; v pokoji
-  kamera dýcha (30 snímok/s) a po 25 s sa zastaví.
+- **Plynulosť ako video** (rozhodnutie majiteľa 2026‑10‑09, podľa referencie s filmovým hero):
+  kamera sa hýbe stále, aj bez skrolovania – pomalé oblúky ako zo steadicamu (asi 1,7 % šírky,
+  1 % výšky, 2 % vzdialenosti), 60 snímok/s minútu po poslednom pohybe, potom 30, po troch
+  minútach bez pohybu stojí. Skrol kolieskom na počítači neposúva stránku skokmi po zárezoch,
+  ale cieľ, ku ktorému stránka plynulo dobieha (140 ms); dotyk, klávesy a posuvník ostávajú
+  natívne, nič sa nezamyká. Kamera za skrolom ide ako ťažšia (pružina 4,2), prológ je jedna
+  plynulá krivka bez zastavenia v dverách.
 
 ## 2b. Úvod ako film: dvere a miestnosť
 

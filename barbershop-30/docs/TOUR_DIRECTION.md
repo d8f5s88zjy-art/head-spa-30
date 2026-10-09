@@ -39,7 +39,13 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
   lokálne); zálohy a kotvy v index.html z neho prepíše `source/tools/stills.py`.
 - Film si vyberie najmenší stupeň, ktorý sa na obrazovke nezväčší (do 2896 px na počítači, záber
   prológu do 4096 px, telefón 1448 px výrezu); fotky majú mipmapy, trilineárne filtrovanie a
-  anizotropiu 8; mriežka 256 × 192 (počítač), 112 × 200 (výrez na telefóne).
+  anizotropiu 8; mriežka 256 × 192 (počítač), 112 × 200 (výrez na telefóne); plátno na telefóne
+  až 3× (pri pomalom zariadení sa samo zníži).
+- Plynulosť ako video: kamera sa hýbe stále (pomalé oblúky aj bez skrolovania; 60 snímok/s minútu
+  po poslednom pohybe, potom 30, po 3 min stojí), kamera za skrolom ide ako ťažšia (pružina 4,2),
+  koliesko na počítači posúva stránku plynulo (app.js, časová konštanta 140 ms; dotyk, klávesy a
+  posuvník natívne), prológ je jedna plynulá krivka (najrýchlejšie v dverách, bez zastavenia).
+  Kontrola: `node source/tools/koliesko-test.mjs`.
 - Knižnica: three.js (vendor), jeden canvas `position: fixed` pod obsahom, WebGL2;
   bez WebGL2, pri `prefers-reduced-motion`, `saveData`, nízkej obrazovke alebo slabom
   telefóne (< 4 GB, < 4 jadrá) ostáva **pokojná verzia**: tie isté fotky ako statické
