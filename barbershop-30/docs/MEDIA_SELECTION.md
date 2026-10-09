@@ -34,3 +34,19 @@ gallery/42 (chodci na chodníku), foto-39 (odraz fotografa v prilbe astronauta).
 
 Šírky: 640, 1080, 1600, 2200 px (na šírku) / 640, 1080, 1600 (na výšku, strop = originál).
 Formáty: AVIF (q 55) + WebP (q 78) + JPEG (q 82, progressive). Portréty: 640, 960.
+
+## Videá (assets/video/, zdroj: 3 telefónne videá od majiteľa, `source/video/video-1..3.mp4`, 576×1024, 9–13 s)
+
+| slug | zdroj | výrez | scéna | použitie | ľudia |
+|---|---|---|---|---|---|
+| remeslo-strojcek | video-3.mp4 | 0,5–7,5 s | 2 Remeslo | tichá slučka v portrétovom okne vedľa textu (desktop), na mobile cez celú šírku; nadväzuje na detail 3D opierky | barber (zamestnanec) pri práci, klient zozadu |
+| tim-v-akcii | video-2.mp4 | 1–9 s | 4 Ľudia | tichá slučka „tím v akcii“ pri portrétoch (hlavná sála, traja barberi pri práci) | barberi, klienti zozadu, recepčná v pozadí |
+| remeslo-styling | video-1.mp4 | 0–8 s | záloha / galéria | barber so sprejom pri stylingu | barber, klient zozadu |
+
+Formáty: MP4 H.264 (crf 23, faststart) + WebM VP9 (crf 34), bez zvuku, poster AVIF/WebP/JPEG
+576 px. Veľkosť 0,8–1,5 MB na slučku – načítavajú sa až pri priblížení sekcie
+(`preload="none"`, `IntersectionObserver`), prehrávajú sa `muted playsinline loop`,
+pri `prefers-reduced-motion` ostáva poster. Rozlíšenie 576 px stačí na portrétové
+okno do ~430 px šírky; na desktope sa nepoužíva ako full‑bleed pozadie (bolo by
+rozmazané). **Súhlas:** klienti sú zozadu, barberi sú zamestnanci – potvrdiť
+u majiteľa pred zverejnením (poznámka v CONTENT_SOURCES.md).

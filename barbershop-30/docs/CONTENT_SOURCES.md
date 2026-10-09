@@ -102,3 +102,10 @@ nezobrazujú, aby neboli dva cenníky na jednom mieste.
 - Vzťah so Salónom 30 (spoločná budova; žiadny web nespomína druhý).
 - Vernostná karta – žiadny zdroj; na webe sa nezobrazuje.
 - Výsledky strihov (pred/po) – žiadne fotky; galéria zatiaľ ukazuje priestor a remeslo.
+
+## Videá od majiteľa (2026‑10‑09)
+
+Tri telefónne videá z prevádzky (barberi pri práci). Vidno zamestnancov spredu a
+klientov zozadu. Na webe len ako tiché slučky; **pred zverejnením potvrdiť súhlas
+zamestnancov a to, že klienti nie sú rozpoznateľní** (v `remeslo-strojcek` a
+`tim-v-akcii` sú klienti zozadu alebo z profilu v diaľke).

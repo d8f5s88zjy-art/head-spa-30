@@ -373,3 +373,454 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 /* ==========================================================================
    SCÉNY – doplní stavba stránky (index.html + tento súbor)
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   S0. Javisko (fixed canvas + poster) a spoločné pravidlá filmových scén
+   -------------------------------------------------------------------------- */
+.stage {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.stage-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 100%, #1a1511 0%, rgba(26, 21, 17, 0) 60%),
+    radial-gradient(60% 50% at 88% 30%, rgba(224, 96, 28, 0.08) 0%, rgba(224, 96, 28, 0) 70%),
+    var(--ink);
+}
+.stage-poster, .stage-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage-poster img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.stage-poster { transition: opacity 500ms var(--ease-out); }
+.stage.is-3d .stage-poster { opacity: 0; }
+.stage-canvas { opacity: 1; transition: opacity 500ms var(--ease-out); }
+.stage[data-visible="0"] .stage-canvas { opacity: 0; }
+html[data-webgl="off"] .stage-canvas,
+html[data-motion="off"] .stage-canvas { display: none; }
+
+main { position: relative; z-index: 1; }
+
+/* Filmová scéna: dlhá sekcia + prilepené javisko s výškou obrazovky */
+.scene-film { position: relative; }
+.scene-sticky {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+}
+.scene-1 { height: 180vh; }
+.scene-2 { height: 180vh; }
+.scene-3 { height: 220vh; }
+.scene-7 { height: 150vh; }
+@media (max-width: 900px) {
+  .scene-1 { height: 140vh; }
+  .scene-2 { height: 130vh; }
+  .scene-3 { height: 180vh; }
+  .scene-7 { height: 120vh; }
+}
+
+/* Mriežka textu v filmových scénach */
+.scene-grid {
+  position: relative; z-index: 2;
+  height: 100%;
+  padding-top: calc(var(--nav-h) + var(--s6));
+  padding-bottom: var(--s7);
+  align-content: center;
+}
+.scene-text { grid-column: 1 / span 5; }
+.scene-text .lead, .scene-text .body { margin-top: var(--s5); }
+.scene-text h1 + .lead { margin-top: var(--s5); }
+.scene-text .link-arrow { margin-top: var(--s2); }
+.scene-text > p:last-child { margin-top: var(--s5); }
+.scene-actions { margin-top: var(--s6); }
+@media (max-width: 1100px) { .scene-text { grid-column: 1 / span 6; } }
+@media (max-width: 800px) {
+  .scene-grid { padding-top: calc(var(--nav-h) + var(--s6)); padding-bottom: calc(var(--cta-h) + var(--s5)); align-content: start; }
+  .scene-text { grid-column: 1 / -1; }
+  .scene-actions { flex-direction: column; align-items: stretch; gap: var(--s3); margin-top: var(--s6); }
+  .scene-actions .btn { width: 100%; }
+}
+
+/* Stavové texty: skryté len keď app.js riadi stránku (data-scene-active),
+   inak sú viditeľné – progressive enhancement. */
+.scene-film [data-at] {
+  transition: opacity var(--t-text) var(--ease-out), transform var(--t-text) var(--ease-out);
+}
+html[data-scene-active] .scene-film [data-at]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+}
+html[data-scene-active] .scene-film [data-at].is-in { opacity: 1; transform: none; }
+
+/* Režim bez pohybu: filmové scény sa správajú ako bežný tok */
+html[data-motion="off"] .scene-film { height: auto; }
+html[data-motion="off"] .scene-sticky { position: relative; height: auto; min-height: 100vh; min-height: 100svh; }
+html[data-motion="off"] .scene-film [data-at] { opacity: 1 !important; transform: none !important; pointer-events: auto; }
+
+/* --------------------------------------------------------------------------
+   SCÉNA 1 – Prvý dojem
+   -------------------------------------------------------------------------- */
+.scene-1 .scene-sticky { background: transparent; }
+.scene-text-1 { max-width: 44rem; }
+.scene-text-1 h1 { text-shadow: 0 2px 24px rgba(14, 13, 12, 0.5); }
+
+/* Nástup textu bez skriptu (450 ms po načítaní), kým app.js neprevezme riadenie */
+@keyframes text-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+html:not([data-scene-active]) .scene-text-1 { animation: text-in 600ms var(--ease-out) 450ms both; }
+
+.scroll-hint {
+  position: absolute; right: var(--gutter); bottom: var(--s6); z-index: 2;
+  display: flex; align-items: center; gap: var(--s3);
+  opacity: clamp(0, 1 - var(--p) / 0.02, 1);
+  transition: opacity 300ms var(--ease-out);
+}
+.scroll-hint::after { content: ""; width: 48px; height: 2px; background: var(--lamp); }
+@media (max-width: 800px) {
+  .scroll-hint { display: none; }
+  /* Kreslo je v spodnej polovici; text hore dostane jemný podklad pre čitateľnosť */
+  .scene-1 .scene-grid::before {
+    content: ""; position: absolute; inset: 0 calc(-1 * var(--gutter)) 45%;
+    background: linear-gradient(to bottom, rgba(14, 13, 12, 0.72), rgba(14, 13, 12, 0.35) 70%, transparent);
+    z-index: -1; pointer-events: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SCÉNA 2 – Remeslo (3D detail → fotografia kresla → fotografia nástrojov)
+   Prelínanie riadi app.js cez --t2 (0–1) na <html>.
+   -------------------------------------------------------------------------- */
+.scene-2 .scene-sticky { --t: var(--t2); }
+.scene2-media { position: absolute; inset: 0; z-index: 1; }
+.scene2-media .media { position: absolute; inset: 0; background: transparent; }
+.scene2-media .media img { width: 100%; height: 100%; }
+
+/* fotografia kresla: zhoda tvaru s 3D opierkou, nástup t 0.72–0.88 */
+.media-kreslo { opacity: clamp(0, (var(--t2) - 0.72) / 0.16, 1); }
+/* fotografia nástrojov: nástup t 0.9–0.98, ku koncu sa zmenší na 0.96 a stmavne na 70 % */
+.media-naradie {
+  opacity: clamp(0, (var(--t2) - 0.9) / 0.08, 1);
+  transform: scale(calc(1 - 0.04 * clamp(0, (var(--t2) - 0.97) / 0.03, 1)));
+  filter: brightness(calc(1 - 0.3 * clamp(0, (var(--t2) - 0.97) / 0.03, 1)));
+  transform-origin: 50% 50%;
+}
+/* tmavý závoj pre čitateľnosť textu nad fotografiou */
+.scene2-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(14, 13, 12, 0.78) 0%, rgba(14, 13, 12, 0.25) 45%, rgba(14, 13, 12, 0) 70%);
+  opacity: clamp(0, (var(--t2) - 0.72) / 0.16, 1);
+  pointer-events: none;
+}
+.scene-text-2 { grid-column: 8 / span 5; align-self: end; }
+@media (max-width: 1100px) { .scene-text-2 { grid-column: 7 / span 6; } }
+@media (max-width: 800px) {
+  .scene2-media { inset: 0 0 42% 0; }
+  .scene2-media .media img { object-position: var(--focal, 50% 50%); }
+  .scene2-media::after { inset: auto 0 -1px 0; height: 50%; background: linear-gradient(to top, var(--ink), rgba(14, 13, 12, 0)); }
+  .scene-2 .scene-grid { align-content: end; }
+  .scene-text-2 { grid-column: 1 / -1; align-self: end; }
+}
+html[data-motion="off"] .scene2-media { position: relative; height: 60vh; }
+html[data-motion="off"] .media-kreslo { opacity: 0; }
+html[data-motion="off"] .media-naradie { opacity: 1; transform: none; filter: none; }
+
+/* --------------------------------------------------------------------------
+   SCÉNA 3 – Miesto (tri 2.5D fotografie, crossfade cez --t3)
+   -------------------------------------------------------------------------- */
+.scene-3 .scene-sticky { background: var(--teal); }
+.scene3-media { position: absolute; inset: 0; z-index: 1; }
+.scene3-media .media { position: absolute; inset: 0; }
+.scene3-media .media img { width: 100%; height: 100%; }
+.scene3-media .media[data-depth="2.5d"] img { --depth-scale: calc(1 + 0.06 * var(--t3)); }
+.media-3a { opacity: clamp(0, 1 - (var(--t3) - 0.3) / 0.06, 1); }
+.media-3b { opacity: min(clamp(0, (var(--t3) - 0.3) / 0.06, 1), clamp(0, 1 - (var(--t3) - 0.64) / 0.06, 1)); }
+.media-3c { opacity: clamp(0, (var(--t3) - 0.64) / 0.06, 1); }
+.scene3-media .media .chip { left: auto; right: var(--gutter); bottom: var(--s6); }
+
+/* teal vignette na okrajoch + tmavý podklad pod textom */
+.scene3-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(14, 13, 12, 0.82) 0%, rgba(14, 13, 12, 0.55) 34%, rgba(14, 13, 12, 0) 62%),
+    radial-gradient(140% 100% at 50% 50%, rgba(22, 59, 60, 0) 55%, rgba(22, 59, 60, 0.55) 100%);
+}
+.scene-text-3 { align-self: start; padding-top: var(--s5); }
+.space-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
+.space-row { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }
+.space-row .chip { background: rgba(14, 13, 12, 0.45); }
+.space-row .space-note { font-size: 0.9375rem; color: var(--paper-2); }
+/* aktívny priestor podľa --t3 (Recepcia 0–.33, Hlavná sála .33–.67, Zadná .67–1) */
+.space-row[data-space="1"] { --on: clamp(0, 1 - (var(--t3) - 0.3) / 0.06, 1); }
+.space-row[data-space="2"] { --on: min(clamp(0, (var(--t3) - 0.3) / 0.06, 1), clamp(0, 1 - (var(--t3) - 0.64) / 0.06, 1)); }
+.space-row[data-space="3"] { --on: clamp(0, (var(--t3) - 0.64) / 0.06, 1); }
+.space-row .chip::before { opacity: calc(0.35 + 0.65 * var(--on, 1)); transform: scale(calc(0.8 + 0.4 * var(--on, 1))); transition: transform var(--t-micro); }
+@media (max-width: 800px) {
+  .scene3-media .media .chip { display: none; }
+  .scene3-vignette {
+    background:
+      linear-gradient(to top, rgba(14, 13, 12, 0.92) 0%, rgba(14, 13, 12, 0.7) 40%, rgba(14, 13, 12, 0) 70%),
+      radial-gradient(140% 100% at 50% 50%, rgba(22, 59, 60, 0) 55%, rgba(22, 59, 60, 0.5) 100%);
+  }
+  .scene-3 .scene-grid { align-content: end; }
+  .scene-text-3 { align-self: end; padding-top: 0; }
+  .space-list { margin-top: var(--s5); gap: var(--s2); }
+  .space-row .space-note { font-size: 0.875rem; }
+}
+html[data-motion="off"] .scene-3 .scene-sticky { padding-bottom: var(--s7); }
+html[data-motion="off"] .scene3-media { position: relative; display: grid; gap: 2px; }
+html[data-motion="off"] .scene3-media .media { position: relative; opacity: 1; height: 50vh; }
+html[data-motion="off"] .scene3-vignette { display: none; }
+html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-scale: 1; }
+
+/* --------------------------------------------------------------------------
+   Pokojné plochy – spoločné (scény 4–6)
+   -------------------------------------------------------------------------- */
+.scene-flow { position: relative; background: var(--ink-2); }
+.scene-flow + .scene-flow { border-top: 1px solid var(--line); }
+.section-head-text { grid-column: 1 / span 7; }
+.section-head-text .lead { margin-top: var(--s5); }
+@media (max-width: 800px) { .section-head-text { grid-column: 1 / -1; } }
+
+/* Vstup prvkov zdola bez skriptu (scroll-driven animations), app.js môže pridať .is-in */
+@supports (animation-timeline: view()) {
+  @keyframes reveal-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  html:not([data-scene-active]) .reveal:not(.is-in) {
+    animation: reveal-in 450ms var(--ease-out) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SCÉNA 4 – Ľudia
+   -------------------------------------------------------------------------- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s5);
+}
+@media (max-width: 1100px) { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); } }
+@media (max-width: 640px)  { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); } }
+.team-card {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--ink-3);
+  overflow: hidden;
+  transition: border-color var(--t-micro) var(--ease-out), transform var(--t-micro) var(--ease-out);
+}
+.team-card:hover { border-color: var(--line-strong); }
+.team-portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background:
+    radial-gradient(90% 60% at 50% 100%, rgba(224, 96, 28, 0.14), rgba(224, 96, 28, 0) 70%),
+    linear-gradient(to bottom, #2a241f, var(--ink-3));
+  overflow: hidden;
+}
+.team-portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: var(--focal, 50% 35%);
+}
+.team-body { padding: var(--s4) var(--s4) var(--s5); display: flex; flex-direction: column; gap: var(--s1); flex: 1; }
+.team-name { font-size: clamp(1.25rem, 1.6vw, 1.5rem); }
+.team-role { font-size: 0.875rem; color: var(--paper-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+.team-cta { margin-top: auto; padding-top: var(--s3); align-self: flex-start; font-size: 0.9375rem; }
+.team-note { margin-top: var(--s6); }
+.team-note a { color: var(--paper-2); }
+.team-note a:hover { color: var(--lamp-2); }
+
+/* --------------------------------------------------------------------------
+   SCÉNA 5 – Služby a ceny („cardless“ cenník s vlasovými linkami)
+   -------------------------------------------------------------------------- */
+.scene-5 {
+  background:
+    radial-gradient(80% 50% at 100% 0%, rgba(224, 96, 28, 0.05), rgba(224, 96, 28, 0) 60%),
+    var(--ink-2);
+}
+.price-list { display: grid; gap: var(--s8); }
+.price-group-title {
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  color: var(--paper-2);
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--line-strong);
+}
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6rem 7rem auto;
+  column-gap: var(--s5);
+  align-items: center;
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.price-name {
+  font-family: var(--font-display); font-weight: 800;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em;
+  color: var(--paper); margin: 0;
+  text-wrap: balance;
+}
+.price-desc { margin-top: var(--s1); font-size: 0.9375rem; color: var(--paper-3); max-width: 62ch; }
+.price-time { font-size: 0.9375rem; color: var(--paper-2); white-space: nowrap; text-align: right; }
+.price-amount {
+  font-family: var(--font-display); font-weight: 800;
+  font-variation-settings: "opsz" 144;
+  font-size: 1.625rem; line-height: 1; color: var(--paper);
+  white-space: nowrap; text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.price-cta.btn { min-height: 44px; padding-inline: var(--s3); width: auto; font-size: 0.8125rem; border: 1px solid var(--line); border-radius: var(--radius-btn); }
+.price-cta.btn:hover { border-color: var(--lamp-2); color: var(--lamp-2); }
+.price-extra {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s6);
+  padding: var(--s5); border: 1px dashed var(--line-strong); border-radius: var(--radius);
+}
+.price-extra .price-main { flex: 1 1 28rem; }
+@media (max-width: 800px) {
+  .price-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "main amount" "foot foot";
+    row-gap: var(--s3);
+  }
+  .price-main { grid-area: main; }
+  .price-amount { grid-area: amount; align-self: start; }
+  .price-time { grid-area: foot; text-align: left; align-self: center; }
+  .price-cta.btn { grid-area: foot; justify-self: end; }
+  .price-row .price-time { margin-right: auto; }
+  .price-name { font-size: 1.125rem; }
+}
+
+/* --------------------------------------------------------------------------
+   SCÉNA 6 – Výsledky a dôvera (galéria + lightbox)
+   -------------------------------------------------------------------------- */
+.gallery { container-type: inline-size; }
+.gallery-grid {
+  --cols: 4; --gap: var(--s4);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-flow: dense;
+  grid-auto-rows: 180px;
+  grid-auto-rows: calc((100cqw - (var(--cols) - 1) * var(--gap)) / var(--cols) * 2 / 3);
+  gap: var(--gap);
+}
+.gallery-item.is-portrait { grid-row: span 2; }
+.gallery-item.is-wide { grid-column: span 2; }
+.gallery-btn {
+  display: block; width: 100%; height: 100%;
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--ink-3);
+  transition: transform var(--t-micro) var(--ease-out), box-shadow var(--t-micro) var(--ease-out);
+}
+.gallery-btn picture, .gallery-btn img { width: 100%; height: 100%; }
+.gallery-btn img { transition: transform 600ms var(--ease-out); }
+.gallery-btn:hover img { transform: scale(1.03); }
+.gallery-btn:focus-visible { outline-offset: 2px; }
+@media (max-width: 900px) { .gallery-grid { --cols: 2; --gap: var(--s3); } }
+
+.trust {
+  margin-top: var(--s8);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5);
+}
+.trust-item {
+  padding: var(--s5) 0 0;
+  border-top: 1px solid var(--line-strong);
+}
+.trust-text { font-size: 1.0625rem; color: var(--paper-2); max-width: 46ch; margin-bottom: var(--s4); }
+@media (max-width: 800px) { .trust { grid-template-columns: 1fr; gap: var(--s6); } }
+
+.results-placeholder { margin-bottom: var(--s7); }
+
+.lightbox { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: var(--s6); }
+.lightbox[hidden] { display: none; }
+.lightbox-backdrop { position: absolute; inset: 0; background: rgba(14, 13, 12, 0.94); }
+.lightbox-figure { position: relative; margin: 0; max-width: min(1400px, 100%); max-height: 100%; display: grid; gap: var(--s3); justify-items: center; }
+.lightbox-img { max-width: 100%; max-height: calc(100vh - 2 * var(--s6) - 3rem); max-height: calc(100svh - 2 * var(--s6) - 3rem); width: auto; height: auto; object-fit: contain; border-radius: var(--radius); background: var(--ink-3); }
+.lightbox-caption { font-size: 0.9375rem; color: var(--paper-2); text-align: center; }
+.lightbox-btn {
+  position: absolute; z-index: 1;
+  width: 48px; height: 48px; display: grid; place-items: center;
+  border-radius: 50%; color: var(--paper);
+  background: rgba(14, 13, 12, 0.6); border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: background-color var(--t-micro), border-color var(--t-micro);
+}
+.lightbox-btn:hover { border-color: var(--paper); }
+.lightbox-btn svg { width: 22px; height: 22px; }
+.lightbox-close { top: var(--s4); right: var(--s4); }
+.lightbox-prev { left: var(--s4); top: 50%; transform: translateY(-50%); }
+.lightbox-next { right: var(--s4); top: 50%; transform: translateY(-50%); }
+@media (max-width: 640px) {
+  .lightbox { padding: var(--s7) var(--s3); }
+  .lightbox-prev, .lightbox-next { top: auto; bottom: var(--s4); transform: none; }
+  .lightbox-prev { left: var(--s4); }
+}
+
+/* --------------------------------------------------------------------------
+   SCÉNA 7 – Rezervácia (návrat 3D kresla; bez WebGL fotografia vstupu)
+   -------------------------------------------------------------------------- */
+.scene-7 .scene-sticky { background: transparent; }
+.scene7-fallback { display: none; position: absolute; inset: 0; z-index: 1; }
+.scene7-fallback img { width: 100%; height: 100%; }
+.scene7-fallback::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(14, 13, 12, 0.9) 0%, rgba(14, 13, 12, 0.6) 45%, rgba(14, 13, 12, 0.2) 100%);
+}
+html[data-webgl="off"] .scene7-fallback,
+html[data-motion="off"] .scene7-fallback { display: block; }
+.scene-text-7 { grid-column: 1 / span 6; }
+.contact-list { margin: var(--s6) 0 0; display: grid; gap: var(--s3); max-width: 36rem; }
+.contact-row { display: grid; grid-template-columns: 7rem 1fr; gap: var(--s4); padding-bottom: var(--s3); border-bottom: 1px solid var(--line); font-size: 1.0625rem; }
+.contact-row dt { color: var(--paper-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding-top: 0.25em; }
+.contact-row dd { margin: 0; color: var(--paper); font-variant-numeric: tabular-nums; }
+.contact-row a { color: var(--paper); text-decoration-color: var(--line-strong); }
+.contact-row a:hover { color: var(--lamp-2); }
+@media (max-width: 800px) {
+  .scene-7 .scene-grid { padding-bottom: var(--s6); align-content: start; }
+  .scene-text-7 { grid-column: 1 / -1; }
+  .scene-7 .scene-grid::before {
+    content: ""; position: absolute; inset: 0 calc(-1 * var(--gutter)) 0;
+    background: linear-gradient(to bottom, rgba(14, 13, 12, 0.8) 0%, rgba(14, 13, 12, 0.55) 60%, rgba(14, 13, 12, 0.1) 100%);
+    z-index: -1; pointer-events: none;
+  }
+  .contact-list { margin-top: var(--s5); gap: var(--s2); }
+  .contact-row { grid-template-columns: 5.5rem 1fr; gap: var(--s3); font-size: 0.9375rem; padding-bottom: var(--s2); }
+  .scene-7 .scene-actions { margin-top: var(--s5); }
+  .scene7-fallback::after { background: linear-gradient(to bottom, rgba(14, 13, 12, 0.85), rgba(14, 13, 12, 0.3)); }
+}
+@media (max-height: 760px) and (max-width: 800px) {
+  .scene-text-7 .body { display: none; }
+  .scene-text-7 h2 { font-size: 1.85rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Pätička
+   -------------------------------------------------------------------------- */
+.site-footer {
+  position: relative; z-index: 1;
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+  padding: var(--s8) 0 var(--s7);
+}
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--s6); }
+.footer-brand .brand { margin-bottom: var(--s3); }
+.footer-title { font-family: var(--font-text); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-3); margin-bottom: var(--s3); }
+.site-footer address, .site-footer .hours { color: var(--paper-2); font-size: 1.0625rem; }
+.site-footer a { color: var(--paper-2); text-decoration-color: var(--line-strong); }
+.site-footer a:hover { color: var(--paper); }
+.hours { margin: 0; display: grid; gap: var(--s1); font-variant-numeric: tabular-nums; }
+.hours div { display: grid; grid-template-columns: 4rem 1fr; }
+.hours dd { margin: 0; }
+.footer-links { display: grid; gap: var(--s2); font-size: 1.0625rem; }
+.footer-bottom {
+  margin-top: var(--s7); padding-top: var(--s5);
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s4);
+}
+.footer-top { color: var(--paper); font-size: 0.9375rem; }
+@media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px)  { .footer-grid { grid-template-columns: 1fr; gap: var(--s5); } }
+
+/* Ikona menu: hamburger ↔ krížik */
+.nav-toggle-close { display: none; }
+.site-header[data-menu="open"] .nav-toggle-open { display: none; }
+.site-header[data-menu="open"] .nav-toggle-close { display: block; }

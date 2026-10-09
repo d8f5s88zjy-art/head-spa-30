@@ -9,6 +9,7 @@
 import * as THREE from './vendor/three.module.min.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { RoundedBoxGeometry } from './vendor/RoundedBoxGeometry.js';
+import { mergeVertices } from './vendor/BufferGeometryUtils.js';
 
 const COL = {
   leather: 0x1a1614,
@@ -75,10 +76,10 @@ function makeStitchNormal(size = 1024, cells = 4, strength = 3.0) {
       const u = (x + y) / cell, v = (x - y) / cell;          // mriežka otočená o 45°
       const fu = u - Math.floor(u) - 0.5, fv = v - Math.floor(v) - 0.5;
       const au = Math.abs(fu), av = Math.abs(fv);
-      const d = Math.max(au, av) * 2;                        // 0 stred → 1 šev
-      let z = Math.pow(Math.max(0, 1 - d * d), 0.55);         // vyvýšený vankúšik
-      const seam = 1 - Math.min(1, (1 - d) / 0.09);          // mäkký žliabok šva
-      if (seam > 0) z -= 0.16 * seam * seam;
+      let z = Math.pow(Math.max(0, Math.cos(Math.PI * fu) * Math.cos(Math.PI * fv)), 0.62); // hladký vankúšik, 0 na šve
+      const e = Math.min(0.5 - au, 0.5 - av) * 2;            // vzdialenosť od šva
+      const seam = 1 - Math.min(1, e / 0.08);                 // mäkký žliabok šva
+      if (seam > 0) z -= 0.1 * seam * seam;
       const r = Math.hypot(0.5 - au, 0.5 - av) * 2;          // gombík v priesečníku
       if (r < 0.19) { const k = 1 - r / 0.19; z = Math.min(z, 0.12 - 0.42 * Math.pow(k, 0.5)) + 0.08 * Math.sin(k * 6.5) * k; }
       const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
@@ -106,27 +107,12 @@ function makeStitchNormal(size = 1024, cells = 4, strength = 3.0) {
   return tex;
 }
 
-// Zrnitý odliatok (bump pre mosadz) – jemný šum.
-function makeGrain(size = 256) {
-  const c = makeCanvas(size, size), ctx = c.getContext('2d');
-  const img = ctx.createImageData(size, size), p = img.data;
-  for (let i = 0; i < size * size; i++) {
-    const v = 110 + Math.random() * 40;
-    p[i * 4] = p[i * 4 + 1] = p[i * 4 + 2] = v; p[i * 4 + 3] = 255;
-  }
-  ctx.putImageData(img, 0, 0);
-  const tex = new THREE.CanvasTexture(c);
-  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-  tex.repeat.set(6, 6);
-  return tex;
-}
-
 // Zdobená mriežka (podnožka, pás pod sedákom): mosadz s tmavými prelamovanými otvormi.
 function makeLattice(w = 512, h = 256) {
   const c = makeCanvas(w, h), ctx = c.getContext('2d');
   ctx.fillStyle = '#d9bd74'; ctx.fillRect(0, 0, w, h);
   ctx.fillStyle = '#0d0b0a';
-  const s = 32;
+  const s = 24;
   for (let y = s; y < h - s; y += s) {
     for (let x = s; x < w - s; x += s) {
       const k = ((x / s) + (y / s)) & 1;
@@ -176,8 +162,9 @@ function strokeShape(points, width) {
 function extrude(shape, depth, bevel, curveSegments = 24) {
   const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: bevel > 0, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments, steps: 1 });
   g.translate(0, 0, -depth / 2);
-  g.computeVertexNormals();
-  return g;
+  const m = mergeVertices(g, 1e-4); g.dispose();
+  m.computeVertexNormals();
+  return m;
 }
 // Tvar opierky: „náhrobný kameň“ – rovné boky, eliptický vrch.
 function backShape(hw, hStraight, ry) {
@@ -185,6 +172,14 @@ function backShape(hw, hStraight, ry) {
   s.moveTo(-hw, 0); s.lineTo(hw, 0); s.lineTo(hw, hStraight);
   s.absellipse(0, hStraight, hw, ry, 0, Math.PI, false, 0);
   s.lineTo(-hw, 0); s.closePath();
+  return s;
+}
+function roundedRect(w, h, r) {
+  const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); s.closePath();
   return s;
 }
 function capsuleBetween(a, b, r, mat) {
@@ -226,19 +221,19 @@ function buildChair(mats) {
   add(rbox(0.72, 0.17, 0.04, 0.012), mats.satin, [0, 0.29, 0.40]);
   add(rbox(0.74, 0.055, 0.045, 0.01), mats.lattice, [0, 0.355, 0.405]);
   add(rbox(0.74, 0.05, 0.045, 0.01), mats.lattice, [0, 0.225, 0.405]);
-  // Sedák – kožený vankúš s prešívaním
-  add(rbox(0.96, 0.14, 0.76, 0.055, 6), mats.leather, [0, 0.545, 0.03]);
+  // Sedák – kožený vankúš s prešívaním (extrude so skosením → UV v jednotkách scény ako na opierke)
+  add(extrude(roundedRect(0.96, 0.76, 0.1), 0.07, 0.036), mats.leather, [0, 0.555, 0.03], [-Math.PI / 2, 0, 0]);
 
   // Ramená: liatinové C‑profily s drážkou a koženým vankúšikom
   const armPts = [[-0.26, 0.44], [-0.275, 0.58], [-0.245, 0.675], [-0.12, 0.712], [0.12, 0.718], [0.30, 0.702], [0.385, 0.655], [0.405, 0.56], [0.385, 0.45]];
   const armGeo = extrude(strokeShape(armPts, 0.046), 0.05, 0.009);
-  const grooveGeo = extrude(strokeShape(armPts, 0.01), 0.056, 0);
+  const grooveGeo = extrude(strokeShape(armPts, 0.01), 0.075, 0);
   for (const sx of [-1, 1]) {
     add(armGeo, mats.brass, [sx * 0.555, 0, 0], [0, -Math.PI / 2, 0]);
     add(grooveGeo, mats.satin, [sx * 0.555, 0, 0], [0, -Math.PI / 2, 0]);
     add(rbox(0.085, 0.04, 0.40, 0.016), mats.pad, [sx * 0.555, 0.742, 0.06]);
     // vzpery sklápania opierky a kĺbové gombíky
-    add(capsuleBetween([sx * 0.50, 0.44, -0.16], [sx * 0.445, 0.86, -0.385], 0.019, mats.brass));
+    add(capsuleBetween([sx * 0.50, 0.44, -0.16], [sx * 0.45, 0.9, -0.395], 0.019, mats.brass));
     add(new THREE.CylinderGeometry(0.042, 0.042, 0.05, 24), mats.brass, [sx * 0.465, 0.56, -0.30], [0, 0, Math.PI / 2]);
     add(new THREE.CylinderGeometry(0.018, 0.018, 0.012, 16), mats.satin, [sx * 0.497, 0.56, -0.30], [0, 0, Math.PI / 2]);
   }
@@ -246,16 +241,16 @@ function buildChair(mats) {
   // Opierka chrbta: mosadzná škrupina + prešívaný kožený vankúš + opierka hlavy
   const back = new THREE.Group();
   back.position.set(0, 0.50, -0.30); back.rotation.x = -0.21;
-  const shell = new THREE.Mesh(extrude(backShape(0.43, 0.46, 0.34), 0.06, 0.016), mats.brass);
+  const shell = new THREE.Mesh(extrude(backShape(0.43, 0.52, 0.36), 0.06, 0.016), mats.brass);
   shell.position.z = -0.03; back.add(shell);
-  const cushion = new THREE.Mesh(extrude(backShape(0.385, 0.44, 0.29), 0.05, 0.034), mats.leather);
+  const cushion = new THREE.Mesh(extrude(backShape(0.385, 0.50, 0.31), 0.05, 0.034), mats.leather);
   cushion.position.set(0, 0.025, 0.055); back.add(cushion);
-  const post = new THREE.Mesh(rbox(0.07, 0.24, 0.026, 0.01), mats.satin);
-  post.position.set(0, 0.84, -0.03); back.add(post);
+  const post = new THREE.Mesh(rbox(0.07, 0.2, 0.026, 0.01), mats.satin);
+  post.position.set(0, 0.90, -0.03); back.add(post);
   const head = new THREE.Mesh(rbox(0.36, 0.115, 0.095, 0.035, 5), mats.pad);
-  head.position.set(0, 0.985, 0.03); back.add(head);
+  head.position.set(0, 1.0, 0.03); back.add(head);
   const headKnob = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.01, 16), mats.brass);
-  headKnob.position.set(0, 0.80, -0.075); headKnob.rotation.x = Math.PI / 2; back.add(headKnob);
+  headKnob.position.set(0, 0.87, -0.075); headKnob.rotation.x = Math.PI / 2; back.add(headKnob);
   g.add(back);
 
   // Podnožka: zdobená mriežková platňa na kĺbe + dve prehnuté ramená + gumené nožičky
@@ -299,16 +294,15 @@ export async function createChairStage(canvas, options = {}) {
   pmrem.dispose();
 
   const stitch = makeStitchNormal(1024, 5, 2.6);
-  const grain = makeGrain(256);
   const latticeTex = makeLattice();
   const contactTex = makeContact();
 
   const mats = {
-    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.25, sheenColor: 0x3a2a1c, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(0.65, 0.65), envMapIntensity: 0.25 }),
+    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.18, sheenColor: 0x3a2a1c, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(0.65, 0.65), envMapIntensity: 0.25 }),
     pad: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.45, sheen: 0.25, sheenColor: 0x3a2a1c, envMapIntensity: 0.25 }),
-    brass: new THREE.MeshPhysicalMaterial({ color: COL.brass, metalness: 1, roughness: 0.32, bumpMap: grain, bumpScale: 0.0012, envMapIntensity: 0.55 }),
+    brass: new THREE.MeshPhysicalMaterial({ color: COL.brass, metalness: 1, roughness: 0.32, envMapIntensity: 0.55 }),
     lattice: new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: latticeTex, bumpMap: latticeTex, bumpScale: -0.006, metalness: 1, roughness: 0.36, envMapIntensity: 0.55 }),
-    satin: new THREE.MeshPhysicalMaterial({ color: COL.satin, roughness: 0.45, metalness: 0.25, clearcoat: 0.3, clearcoatRoughness: 0.35, envMapIntensity: 0.45 }),
+    satin: new THREE.MeshPhysicalMaterial({ color: COL.satin, roughness: 0.55, metalness: 0.12, clearcoat: 0.15, clearcoatRoughness: 0.4, envMapIntensity: 0.4 }),
   };
   mats.lattice.color.setHex(0xb5924e).multiplyScalar(0.85);
   stitch.repeat.set(2, 2);
@@ -317,17 +311,17 @@ export async function createChairStage(canvas, options = {}) {
   scene.add(chair);
 
   // Podlaha: skutočný tieň + kontaktný gradient
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.7, transparent: true }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.45, transparent: true }));
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
   const contact = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshBasicMaterial({ map: contactTex, transparent: true, depthWrite: false, opacity: 0.85 }));
   contact.rotation.x = -Math.PI / 2; contact.position.set(0.02, 0.002, 0.08); contact.scale.set(1, 0.9, 1); scene.add(contact);
 
   // Svetlá
-  const KEY_BASE = new THREE.Vector3(-2.7, 2.8, 3.1);
+  const KEY_BASE = new THREE.Vector3(-2.7, 3.3, 3.0);
   const key = new THREE.SpotLight(COL.key, 1, 14, 0.8, 0.5, 1.6);
   key.position.copy(KEY_BASE); key.target.position.set(0, 0.7, 0);
   key.castShadow = quality !== 'low';
-  key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.015; key.shadow.radius = 4;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.015; key.shadow.radius = 6;
   key.shadow.camera.near = 1; key.shadow.camera.far = 10;
   scene.add(key, key.target);
   const rim = new THREE.SpotLight(COL.rim, 1, 14, 0.5, 0.4, 1.6);
@@ -335,7 +329,7 @@ export async function createChairStage(canvas, options = {}) {
   scene.add(rim, rim.target);
   const hemi = new THREE.HemisphereLight(COL.hemiSky, COL.hemiGround, 1.0);
   scene.add(hemi);
-  const KEY_I = 40, RIM_I = 70;
+  const KEY_I = 24, RIM_I = 70;
 
   // Stav
   const state = { scene: 1, t: 0, mobile };
@@ -345,7 +339,7 @@ export async function createChairStage(canvas, options = {}) {
   function applyCamera(k, isMobile) {
     const target = new THREE.Vector3(...k.target);
     const pos = new THREE.Vector3(...k.pos);
-    if (isMobile) { pos.sub(target).multiplyScalar(1.25).add(target); target.y += 0.15; pos.y += 0.15; }
+    if (isMobile) { pos.sub(target).multiplyScalar(1.25).add(target); target.y += 0.15; }
     camera.position.copy(pos); camera.lookAt(target); camera.fov = k.fov; camera.updateProjectionMatrix();
   }
   function applyLights(k, sweepOff, sweepGain) {
@@ -471,7 +465,7 @@ export async function createChairStage(canvas, options = {}) {
       if (sweep) { sweep.resolve(); sweep = null; }
       scene.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); } });
       Object.values(mats).forEach((m) => m.dispose());
-      [stitch, grain, latticeTex, contactTex].forEach((t) => t.dispose());
+      [stitch, latticeTex, contactTex].forEach((t) => t.dispose());
       floor.material.dispose(); contact.material.dispose();
       envRT.dispose();
       renderer.dispose();

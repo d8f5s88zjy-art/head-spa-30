@@ -1,0 +1,7 @@
+# Barbershop 30 – statický web nasadený v podpriečinku /barbershop-30/
+User-agent: *
+Allow: /barbershop-30/
+Disallow: /barbershop-30/source/
+
+# DEPLOY STEP: pri nasadení na vlastnú doménu nahraď URL sitemapy.
+Sitemap: https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/sitemap.xml
