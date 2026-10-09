@@ -1,5 +1,7 @@
 # BARBERSHOP 30 – prehliadka podniku (smer 2, nahrádza 3D kreslo)
 
+> Nadradený dokument: `docs/MASTER_BRIEF.md` (zámer, kontrolný zoznam detailov, postup bez chýb). Pri rozpore platí MASTER_BRIEF.
+
 Rozhodnutie majiteľa (2026‑10‑09): web má od prvej sekundy pôsobiť ako **prehliadka
 podniku**, bez 3D kresla, čo najreálnejšie a profesionálne. Hero objektom je sám
 priestor na skutočných fotkách. Platí ďalej ART_DIRECTION.md (paleta, typografia,
