@@ -36,6 +36,8 @@
     const quality = q.get('quality') === 'low' ? 'low' : 'high';
     const model = q.get('glb') === '0' ? 'procedural' : 'auto';          // &glb=0 → vždy procedurálne kreslo
     const modelYaw = q.has('yaw') ? Number(q.get('yaw')) * Math.PI / 180 : undefined; // &yaw=deg → otočenie GLB (bez parametra: auto = zrušiť yaw koreňového uzla)
+    const grade = q.get('grade') ? JSON.parse(q.get('grade')) : undefined; // &grade={"leatherGain":0.3} → ladenie materiálu GLB
+    const cam = q.get('cam') ? JSON.parse(q.get('cam')) : null;             // &cam={"pos":[..],"target":[..],"fov":32,"sh":[.2,0]} → vlastná kamera
     const hud = document.getElementById('hud');
     const t0 = performance.now();
 
@@ -46,12 +48,14 @@
         quality,
         model,
         modelYaw,
+        grade,
         onFirstFrame() { window.__renderMs = Math.round(performance.now() - t0); },
       });
       window.__stage = stage;
       window.__model = stage.modelKind();
       hud.textContent = `scene=${scene} t=${t} mobile=${mobile ? 1 : 0} quality=${quality} model=${window.__model} first frame ${window.__renderMs} ms`;
       stage.setProgress({ scene, t });
+      if (cam) stage.setCamera(cam);
       // __renderDone až keď je vykreslený snímok so zadanou scénou/t (setProgress renderuje v ďalšom rAF)
       requestAnimationFrame(() => requestAnimationFrame(() => { window.__renderDone = true; }));
       if (q.get('sweep') === '1') stage.playIntroSweep();
