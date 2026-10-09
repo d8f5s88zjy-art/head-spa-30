@@ -126,21 +126,20 @@
   </nav>
 
   <!-- ===================================================================== -->
-  <!-- Javisko: gradient, poster (LCP) a canvas pre 3D kreslo                 -->
+  <!-- Javisko: gradient a fotografia kresla v prevádzke (LCP)                 -->
   <!-- ===================================================================== -->
   <div class="stage" id="stage" aria-hidden="true" data-visible="1">
     <div class="stage-bg"></div>
     <picture class="stage-poster" id="stage-poster">
-      <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/poster-uvod-mobile-640.avif 640w, assets/img/poster-uvod-mobile-1080.avif 1080w" sizes="100vw">
-      <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/poster-uvod-mobile-640.webp 640w, assets/img/poster-uvod-mobile-1080.webp 1080w" sizes="100vw">
-      <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/poster-uvod-mobile-640.jpg 640w, assets/img/poster-uvod-mobile-1080.jpg 1080w" sizes="100vw">
-      <source type="image/avif" srcset="assets/img/poster-uvod-desktop-1080.avif 1080w, assets/img/poster-uvod-desktop-1600.avif 1600w, assets/img/poster-uvod-desktop-2200.avif 2200w" sizes="100vw">
-      <source type="image/webp" srcset="assets/img/poster-uvod-desktop-1080.webp 1080w, assets/img/poster-uvod-desktop-1600.webp 1600w, assets/img/poster-uvod-desktop-2200.webp 2200w" sizes="100vw">
-      <img src="assets/img/poster-uvod-desktop-1600.jpg"
-           srcset="assets/img/poster-uvod-desktop-1080.jpg 1080w, assets/img/poster-uvod-desktop-1600.jpg 1600w, assets/img/poster-uvod-desktop-2200.jpg 2200w"
-           sizes="100vw" width="1600" height="900" alt="" fetchpriority="high" decoding="async">
+      <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/kreslo-detail-640.avif 640w, assets/img/kreslo-detail-1080.avif 1080w, assets/img/kreslo-detail-1600.avif 1600w" sizes="100vw">
+      <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/kreslo-detail-640.webp 640w, assets/img/kreslo-detail-1080.webp 1080w, assets/img/kreslo-detail-1600.webp 1600w" sizes="100vw">
+      <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/kreslo-detail-640.jpg 640w, assets/img/kreslo-detail-1080.jpg 1080w, assets/img/kreslo-detail-1600.jpg 1600w" sizes="100vw">
+      <source type="image/avif" srcset="assets/img/kreslo-slnko-1080.avif 1080w, assets/img/kreslo-slnko-1600.avif 1600w, assets/img/kreslo-slnko-2200.avif 2200w" sizes="100vw">
+      <source type="image/webp" srcset="assets/img/kreslo-slnko-1080.webp 1080w, assets/img/kreslo-slnko-1600.webp 1600w, assets/img/kreslo-slnko-2200.webp 2200w" sizes="100vw">
+      <img src="assets/img/kreslo-slnko-1600.jpg"
+           srcset="assets/img/kreslo-slnko-1080.jpg 1080w, assets/img/kreslo-slnko-1600.jpg 1600w, assets/img/kreslo-slnko-2200.jpg 2200w"
+           sizes="100vw" width="1600" height="1067" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle" fetchpriority="high" decoding="async" style="object-position: 58% 55%">
     </picture>
-    <canvas class="stage-canvas" id="stage-canvas"></canvas>
   </div>
 
   <main id="main">
@@ -174,7 +173,7 @@
     <section class="scene scene-film scene-2" id="remeslo" data-scene="2" aria-labelledby="h-remeslo">
       <div class="scene-sticky">
         <div class="scene2-media" aria-hidden="true">
-          <!-- Zhoda tvaru s koncovým záberom 3D kamery: fotografia kresla v rannom svetle (desktop priblíženie 1.5×, mobil horná časť kresla) -->
+          <!-- Fotografia kresla v rannom svetle -->
           <div class="media media-kreslo" style="--focal: 58% 55%">
             <picture>
               <source type="image/avif" srcset="assets/img/kreslo-slnko-1080.avif 1080w, assets/img/kreslo-slnko-1600.avif 1600w, assets/img/kreslo-slnko-2200.avif 2200w" sizes="150vw">
