@@ -4,7 +4,9 @@
    Prehliadka (zábery, dosky, pásy) je v druhej polovici súboru (hľadaj „PREHLIADKA“), docs/TOUR_DIRECTION.md.
    ========================================================================== */
 
-@import url("fonts.css");
+/* Písma (@font-face) sú priamo v hlavičke index.html, aby prvé vykreslenie nečakalo na ďalší
+   súbor v reťazi (HTML -> style.css -> fonts.css -> písmo). Vývojové stránky v source/ si
+   načítajú assets/fonts.css samostatne. */
 
 /* --------------------------------------------------------------------------
    1. Tokeny

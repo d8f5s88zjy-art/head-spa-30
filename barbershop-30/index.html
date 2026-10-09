@@ -12,8 +12,11 @@
        (statické zábery s jemným prejazdom). ?film=off alebo ?motion=off film vypne (ladenie, snímky). -->
   <script>(function(h){try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}var c=document.createElement('canvas'),g=c.getContext('webgl2');if(g&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');var x=g&&g.getExtension('WEBGL_lose_context');if(x)x.loseContext();}catch(e){}
   /* úvod ako film (prológ, assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte;
-     ?uvod=znova ho pustí aj opakovane (ladenie). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
-  try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}})(document.documentElement);</script>
+     ?uvod=znova ho pustí aj opakovane, ?uvod=off ho vynechá (ladenie, merania). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
+  try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&!/[?&]uvod=off\b/.test(location.search)&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}
+  /* záloha úvodu (fasáda pri prológu, inak rohožka) sa začne sťahovať hneď s hlavičkou, nie až keď ju
+     prehliadač nájde v tele stránky; rovnaký srcset/sizes ako <picture> v kotve, takže ide z cache */
+  try{var p=h.classList.contains('pro'),n=p?'vstup':'rohozka',l=document.createElement('link');l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset','assets/img/film/'+n+'-1086.avif 1086w, assets/img/film/'+n+'-1448.avif 1448w, assets/img/film/'+n+'-2172.avif '+(p?'2172':'1920')+'w');l.setAttribute('imagesizes','100vw');l.fetchPriority='high';document.head.appendChild(l);}catch(e){}})(document.documentElement);</script>
   <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
        Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
   <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/">
@@ -32,6 +35,14 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="preload" href="assets/fonts/Fraunces-800.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/Manrope-400.woff2" as="font" type="font/woff2" crossorigin>
+  <style>/* písma priamo v stránke (to isté ako assets/fonts.css), aby prvé vykreslenie nečakalo na ďalší súbor */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/Fraunces-500.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:800;font-display:swap;src:url("assets/fonts/Fraunces-800.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:500;font-display:swap;src:url("assets/fonts/Fraunces-500i.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/Manrope-400.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/Manrope-600.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/Manrope-700.woff2") format("woff2")}
+  </style>
   <link rel="stylesheet" href="assets/style.css">
   <script type="application/ld+json">
   {
