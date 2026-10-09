@@ -11,7 +11,8 @@
      záloha <picture class="film-still"> s <img width height> (z rozmerov sa berie pomer strán fotky).
      Záber je celý na obrazovke, keď je horný okraj kotvy (pri sticky/fixed kotve jej rodiča) na
      hornom okraji okna; medzi susednými kotvami sa zábery prelínajú v polovici vzdialenosti.
-   - fotky: img/film/<meno>-{2172,1448,1086}.{avif,webp} + <meno>-hlbka.webp vedľa tohto skriptu.
+   - fotky: img/film/<meno>-{1086,1448,2172,2896}.{avif,webp} (+ -4096 pre fasádu) a pre telefón výrezy
+     <meno>-m-{1086,1448}; k nim <meno>-hlbka.webp / <meno>-m-hlbka.webp vedľa tohto skriptu (data-tiers na kotve).
    - triedy na <html>: world (film sa použije), world-in (prvý snímok je nakreslený, zálohy zmiznú),
      world-off (film zlyhal alebo skončil, zálohy ostávajú). Keď stránka v hlavičke triedu world
      nedala, rozhodne sa tu podľa tých istých pravidiel (WebGL2, pohyb, dáta, výška, pamäť, jadrá).
@@ -39,7 +40,7 @@
   };
   window.BS30_FILM = api;
   // film nejde (grafika, sieť, zariadenie): zálohy .film-still ostávajú, rozloženie stránky sa nemení
-  const quit = () => { root.classList.add('world-off'); readyDone(false); };
+  const quit = () => { root.classList.add('world-off'); root.classList.remove('pro', 'outside'); readyDone(false); };
 
   /* ---------- či sa film vôbec použije ----------
      ideálne to rozhodne už skript v hlavičke stránky (trieda world), aby stránka mohla štýly

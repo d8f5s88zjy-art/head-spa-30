@@ -566,7 +566,12 @@ html.pro .film-door { opacity: 0; pointer-events: none; }
 .film-door .film-door-dnu, html.outside .film-door .film-door-von { display: none; }
 html.outside .film-door .film-door-dnu { display: inline; }
 html.outside .scroll-hint { opacity: 0; }
-@media (max-width: 900px) { .film-door { bottom: calc(var(--cta-h) + 18px + 46px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 900px) {
+  /* telefón: tlačidlo dverí hore vpravo pod lištou (dole je doska a spodné tlačidlo) */
+  .film-door { bottom: auto; top: calc(var(--nav-h) + 12px); }
+  /* na ulici ostáva spodné tlačidlo Rezervovať termín nad filmovým pásom */
+  html.outside .mobile-cta { z-index: 39; }
+}
 
 .fact-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
 .fact-list li { display: flex; align-items: baseline; gap: var(--s3); font-size: 1.0625rem; color: var(--paper); }
@@ -586,7 +591,7 @@ html[data-motion="off"] .place-tag { opacity: 1 !important; transform: none !imp
 }
 .scroll-hint::after { content: ""; width: 48px; height: 2px; background: var(--lamp); }
 /* počas úvodu ako filmu (html.pro, film.js triedu po prológu zloží) výzva na skrolovanie ešte nesvieti */
-html.pro .scroll-hint { opacity: 0; }
+html.pro:not(.world-off) .scroll-hint { opacity: 0; }
 
 /* --------------------------------------------------------------------------
    P3. Pásy – nepriehľadné plochy s textom cez celú šírku

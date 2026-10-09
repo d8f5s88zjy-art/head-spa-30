@@ -18,7 +18,7 @@
      prehliadač nájde v tele stránky; rovnaký srcset/sizes ako <picture> v kotve, takže ide z cache */
   try{var p=h.classList.contains('pro'),m=matchMedia('(max-width: 720px)').matches,n=(p?'vstup':'rohozka')+(m?'-m':''),l=document.createElement('link');
   /* DEPLOY STEP: tie isté srcset ako v kotve úvodu (stills.py); telefón = výrez na výšku -m */
-  var S={'vstup':'1086w,1448w,2172w,2896w','vstup-m':'1086w,1448w','rohozka':'1086w,1448w,1920w','rohozka-m':'900w'},W={'vstup':[1086,1448,2172,2896],'vstup-m':[1086,1448],'rohozka':[1086,1448,2172],'rohozka-m':[1086]};
+  var S={'vstup':'1086w,1448w,2172w,2896w,4096w','vstup-m':'1086w,1448w','rohozka':'1086w,1448w,1920w','rohozka-m':'900w'},W={'vstup':[1086,1448,2172,2896,4096],'vstup-m':[1086,1448],'rohozka':[1086,1448,2172],'rohozka-m':[1086]};
   l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset',W[n].map(function(w,i){return 'assets/img/film/'+n+'-'+w+'.avif '+S[n].split(',')[i];}).join(', '));l.setAttribute('imagesizes','100vw');l.fetchPriority='high';document.head.appendChild(l);}catch(e){}})(document.documentElement);</script>
   <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
        Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
