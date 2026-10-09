@@ -1211,3 +1211,8 @@ section.is-focus .sec-head{animation:secPulse 2.4s ease-out}
 .mds-video::after{display:none}
 /* atribút hidden vždy skryje (filter trénerov, tlačidlá): inak ho prebije display:flex/grid v pravidlách prvkov */
 [hidden]{display:none!important}
+.nw{white-space:nowrap}
+/* skok na #mds: odsadenie od lišty rieši len scroll-padding na html; video sa zmestí medzi lištu a spodok (na telefóne dock) */
+.mds{scroll-margin-top:0;align-items:start}
+.mds-video video{max-height:calc(100svh - var(--bar-h) - 2 * clamp(20px,3vw,36px) - 32px)}
+@media (max-width:900px){.mds-video video{max-height:calc(100svh - var(--bar-h) - var(--dock-z) - 64px)}}
