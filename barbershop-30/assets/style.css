@@ -355,7 +355,10 @@ p + p { margin-top: var(--s4); }
 /* --------------------------------------------------------------------------
    8. Pohyb – spoločné stavy
    -------------------------------------------------------------------------- */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--t-text) var(--ease-out), transform var(--t-text) var(--ease-out); }
+/* .reveal je skrytý až keď app.js prevezme riadenie (nastaví data-scene-active) –
+   bez skriptu je obsah viditeľný (progressive enhancement). */
+.reveal { transition: opacity var(--t-text) var(--ease-out), transform var(--t-text) var(--ease-out); }
+html[data-scene-active] .reveal:not(.is-in) { opacity: 0; transform: translateY(16px); }
 .reveal.is-in { opacity: 1; transform: none; }
 .reveal[data-delay="1"] { transition-delay: 80ms; }
 .reveal[data-delay="2"] { transition-delay: 160ms; }

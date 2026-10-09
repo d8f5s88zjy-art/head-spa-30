@@ -124,7 +124,7 @@ function makeGrain(size = 256) {
 // Zdobená mriežka (podnožka, pás pod sedákom): mosadz s tmavými prelamovanými otvormi.
 function makeLattice(w = 512, h = 256) {
   const c = makeCanvas(w, h), ctx = c.getContext('2d');
-  ctx.fillStyle = '#e8c977'; ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#d9bd74'; ctx.fillRect(0, 0, w, h);
   ctx.fillStyle = '#0d0b0a';
   const s = 32;
   for (let y = s; y < h - s; y += s) {
@@ -231,8 +231,8 @@ function buildChair(mats) {
 
   // Ramená: liatinové C‑profily s drážkou a koženým vankúšikom
   const armPts = [[-0.26, 0.44], [-0.275, 0.58], [-0.245, 0.675], [-0.12, 0.712], [0.12, 0.718], [0.30, 0.702], [0.385, 0.655], [0.405, 0.56], [0.385, 0.45]];
-  const armGeo = extrude(strokeShape(armPts, 0.058), 0.062, 0.011);
-  const grooveGeo = extrude(strokeShape(armPts, 0.012), 0.07, 0);
+  const armGeo = extrude(strokeShape(armPts, 0.046), 0.05, 0.009);
+  const grooveGeo = extrude(strokeShape(armPts, 0.01), 0.056, 0);
   for (const sx of [-1, 1]) {
     add(armGeo, mats.brass, [sx * 0.555, 0, 0], [0, -Math.PI / 2, 0]);
     add(grooveGeo, mats.satin, [sx * 0.555, 0, 0], [0, -Math.PI / 2, 0]);
@@ -246,28 +246,28 @@ function buildChair(mats) {
   // Opierka chrbta: mosadzná škrupina + prešívaný kožený vankúš + opierka hlavy
   const back = new THREE.Group();
   back.position.set(0, 0.50, -0.30); back.rotation.x = -0.21;
-  const shell = new THREE.Mesh(extrude(backShape(0.39, 0.42, 0.34), 0.06, 0.016), mats.brass);
+  const shell = new THREE.Mesh(extrude(backShape(0.43, 0.46, 0.34), 0.06, 0.016), mats.brass);
   shell.position.z = -0.03; back.add(shell);
-  const cushion = new THREE.Mesh(extrude(backShape(0.345, 0.40, 0.29), 0.05, 0.034), mats.leather);
+  const cushion = new THREE.Mesh(extrude(backShape(0.385, 0.44, 0.29), 0.05, 0.034), mats.leather);
   cushion.position.set(0, 0.025, 0.055); back.add(cushion);
-  const post = new THREE.Mesh(rbox(0.07, 0.32, 0.026, 0.01), mats.satin);
-  post.position.set(0, 0.86, -0.03); back.add(post);
+  const post = new THREE.Mesh(rbox(0.07, 0.24, 0.026, 0.01), mats.satin);
+  post.position.set(0, 0.84, -0.03); back.add(post);
   const head = new THREE.Mesh(rbox(0.36, 0.115, 0.095, 0.035, 5), mats.pad);
-  head.position.set(0, 1.04, 0.025); back.add(head);
+  head.position.set(0, 0.985, 0.03); back.add(head);
   const headKnob = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.01, 16), mats.brass);
-  headKnob.position.set(0, 0.78, -0.075); headKnob.rotation.x = Math.PI / 2; back.add(headKnob);
+  headKnob.position.set(0, 0.80, -0.075); headKnob.rotation.x = Math.PI / 2; back.add(headKnob);
   g.add(back);
 
   // Podnožka: zdobená mriežková platňa na kĺbe + dve prehnuté ramená + gumené nožičky
   const foot = new THREE.Group(); foot.position.set(0, 0, 0.58);
   const plate = new THREE.Mesh(rbox(0.52, 0.034, 0.30, 0.012), mats.lattice);
-  plate.position.set(0, 0.20, 0); plate.rotation.x = 0.5; foot.add(plate);
+  plate.position.set(0, 0.19, 0); plate.rotation.x = 0.46; foot.add(plate);
   const hinge = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.56, 18), mats.brass);
   hinge.position.set(0, 0.272, -0.13); hinge.rotation.z = Math.PI / 2; foot.add(hinge);
   g.add(foot);
   for (const sx of [-1, 1]) {
     add(tube([[sx * 0.31, 0.37, 0.36], [sx * 0.33, 0.31, 0.50], [sx * 0.27, 0.26, 0.58], [sx * 0.21, 0.24, 0.66], [sx * 0.19, 0.15, 0.70]], 0.02, mats.brass));
-    add(new THREE.CylinderGeometry(0.02, 0.024, 0.11, 14), mats.satin, [sx * 0.19, 0.055, 0.70]);
+    add(new THREE.CylinderGeometry(0.018, 0.022, 0.07, 14), mats.satin, [sx * 0.19, 0.045, 0.70]);
   }
 
   g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
@@ -287,7 +287,7 @@ export async function createChairStage(canvas, options = {}) {
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = quality !== 'low';
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap; // PCFSoft bol v r186 odstránený; mäkkosť cez shadow.radius
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 40);
@@ -295,46 +295,47 @@ export async function createChairStage(canvas, options = {}) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
   scene.environment = envRT.texture;
+  scene.environmentIntensity = 0.6; // RoomEnvironment je sám o sebe svetlý; materiály majú envMapIntensity podľa ART_DIRECTION
   pmrem.dispose();
 
-  const stitch = makeStitchNormal(1024, 4, 3.2);
+  const stitch = makeStitchNormal(1024, 5, 2.6);
   const grain = makeGrain(256);
   const latticeTex = makeLattice();
   const contactTex = makeContact();
 
   const mats = {
-    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.25, sheenColor: 0x6b4a2e, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(1, 1), envMapIntensity: 0.35 }),
-    pad: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.45, sheen: 0.25, sheenColor: 0x6b4a2e, envMapIntensity: 0.35 }),
+    leather: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.55, metalness: 0, clearcoat: 0.22, clearcoatRoughness: 0.5, sheen: 0.25, sheenColor: 0x3a2a1c, sheenRoughness: 0.6, normalMap: stitch, normalScale: new THREE.Vector2(0.65, 0.65), envMapIntensity: 0.25 }),
+    pad: new THREE.MeshPhysicalMaterial({ color: COL.leather, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.45, sheen: 0.25, sheenColor: 0x3a2a1c, envMapIntensity: 0.25 }),
     brass: new THREE.MeshPhysicalMaterial({ color: COL.brass, metalness: 1, roughness: 0.32, bumpMap: grain, bumpScale: 0.0012, envMapIntensity: 0.55 }),
     lattice: new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: latticeTex, bumpMap: latticeTex, bumpScale: -0.006, metalness: 1, roughness: 0.36, envMapIntensity: 0.55 }),
     satin: new THREE.MeshPhysicalMaterial({ color: COL.satin, roughness: 0.45, metalness: 0.25, clearcoat: 0.3, clearcoatRoughness: 0.35, envMapIntensity: 0.45 }),
   };
-  mats.lattice.color.setHex(0xb5924e).multiplyScalar(1.15);
+  mats.lattice.color.setHex(0xb5924e).multiplyScalar(0.85);
   stitch.repeat.set(2, 2);
 
   let chair = buildChair(mats);
   scene.add(chair);
 
   // Podlaha: skutočný tieň + kontaktný gradient
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.55, transparent: true }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.7, transparent: true }));
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
   const contact = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshBasicMaterial({ map: contactTex, transparent: true, depthWrite: false, opacity: 0.85 }));
   contact.rotation.x = -Math.PI / 2; contact.position.set(0.02, 0.002, 0.08); contact.scale.set(1, 0.9, 1); scene.add(contact);
 
   // Svetlá
-  const KEY_BASE = new THREE.Vector3(-2.3, 3.2, 2.7);
-  const key = new THREE.SpotLight(COL.key, 1, 14, 0.62, 0.65, 1.6);
+  const KEY_BASE = new THREE.Vector3(-2.7, 2.8, 3.1);
+  const key = new THREE.SpotLight(COL.key, 1, 14, 0.8, 0.5, 1.6);
   key.position.copy(KEY_BASE); key.target.position.set(0, 0.7, 0);
   key.castShadow = quality !== 'low';
-  key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.015;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.015; key.shadow.radius = 4;
   key.shadow.camera.near = 1; key.shadow.camera.far = 10;
   scene.add(key, key.target);
-  const rim = new THREE.SpotLight(COL.rim, 1, 14, 0.42, 0.5, 1.6);
-  rim.position.set(2.6, 2.3, -2.7); rim.target.position.set(0, 0.8, 0);
+  const rim = new THREE.SpotLight(COL.rim, 1, 14, 0.5, 0.4, 1.6);
+  rim.position.set(3.0, 2.5, -2.4); rim.target.position.set(0, 0.8, 0);
   scene.add(rim, rim.target);
-  const hemi = new THREE.HemisphereLight(COL.hemiSky, COL.hemiGround, 2.2);
+  const hemi = new THREE.HemisphereLight(COL.hemiSky, COL.hemiGround, 1.0);
   scene.add(hemi);
-  const KEY_I = 38, RIM_I = 46;
+  const KEY_I = 40, RIM_I = 70;
 
   // Stav
   const state = { scene: 1, t: 0, mobile };

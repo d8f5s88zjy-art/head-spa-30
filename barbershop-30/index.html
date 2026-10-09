@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="sk" data-motion="on" data-webgl="pending">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Barbershop 30 Nitra | Pánske strihy, brada a holenie – rezervácia online</title>
+  <meta name="description" content="Barbershop 30 na Mostnej 30 v Nitre: pánske strihy, úprava brady, holenie britvou a balíčky. Tím desiatich barberov, 8 kresiel, recepcia a káva zdarma. Rezervuj si termín online 24/7.">
+  <meta name="theme-color" content="#0E0D0C">
+  <meta name="color-scheme" content="dark">
+  <!-- DEPLOY STEP: pri nasadení na vlastnú doménu nahraď placeholder URL (canonical, og:url, og:image). -->
+  <link rel="canonical" href="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/">
+  <meta property="og:type" content="business.business">
+  <meta property="og:locale" content="sk_SK">
+  <meta property="og:site_name" content="Barbershop 30">
+  <meta property="og:title" content="Barbershop 30 Nitra – Tvoj strih. Tvoje miesto.">
+  <meta property="og:description" content="Pánske strihy, brada a holenie na Mostnej 30 v Nitre. Rezervuj si termín online.">
+  <meta property="og:url" content="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/">
+  <meta property="og:image" content="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230E0D0C'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Fraunces,Georgia,serif' font-weight='800' font-size='34' fill='%23F1E9DD'%3E30%3C/text%3E%3Crect x='20' y='49' width='24' height='3' rx='1.5' fill='%23E0601C'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="assets/style.css">
+  <noscript>
+    <style>
+      .scene-film { height: auto !important; }
+      .scene-sticky { position: relative !important; height: auto !important; min-height: 100svh; }
+      .scene-2 .scene2-media, .scene-3 .scene3-media { position: relative; height: 60vh; }
+      .scene-2 .media-kreslo { opacity: 0 !important; }
+      .scene-2 .media-naradie { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .scene-3 .media { opacity: 1 !important; position: relative !important; height: 50vh; margin-top: 2px; }
+      .stage-canvas { display: none; }
+    </style>
+  </noscript>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "name": "Barbershop 30",
+    "alternateName": "Barbershop30",
+    "url": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
+    "image": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/og.jpg",
+    "telephone": "+421951267203",
+    "email": "info@barbershop30.sk",
+    "foundingDate": "2019",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mostná 30",
+      "postalCode": "949 01",
+      "addressLocality": "Nitra",
+      "addressCountry": "SK"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "19:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/barbershop30_nitra/",
+      "https://www.facebook.com/barbershop30nitra/"
+    ],
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": "https://www.barbershop30.sk/rezervacia"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Služby a ceny",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pánsky strih" }, "price": "18", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pánsky strih a úprava brady" }, "price": "28", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pánsky strih – dĺžka vlasov nad 10 cm" }, "price": "22", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strih pre malých gentlemanov" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Oholenie hlavy" }, "price": "13", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Úprava brady" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Holenie do hladka Hot Towel" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Farbenie brady" }, "price": "10", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Balíček 1" }, "price": "30", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ultra inclusive Barbershop30" }, "price": "40", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starostlivosť o pleť PREMIUM" }, "price": "21.50", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Úprava obočia" }, "price": "3", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Depilácia uší a nosa voskom" }, "price": "5.50", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Kreatívny ornament na hlave" }, "price": "4", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Farbenie obočia" }, "price": "5", "priceCurrency": "EUR" }
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Preskočiť na obsah</a>
+
+  <!-- ===================================================================== -->
+  <!-- Lišta                                                                  -->
+  <!-- ===================================================================== -->
+  <header class="site-header" data-menu="closed">
+    <div class="container">
+      <a class="brand" href="#uvod" aria-label="Barbershop 30 Nitra – na začiatok">Barbershop 30 <small>Nitra</small></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path class="nav-toggle-open" d="M4 7h16M4 12h16M4 17h16"/>
+          <path class="nav-toggle-close" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Hlavná navigácia">
+        <a href="#sluzby">Služby</a>
+        <a href="#tim">Tím</a>
+        <a href="#miesto">Miesto</a>
+        <a href="#galeria">Galéria</a>
+        <a href="#kontakt">Kontakt</a>
+        <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="story-line" aria-label="Kapitoly">
+    <a href="#uvod" data-chapter="1" aria-label="Úvod"></a>
+    <a href="#remeslo" data-chapter="2" aria-label="Remeslo"></a>
+    <a href="#miesto" data-chapter="3" aria-label="Miesto"></a>
+    <a href="#tim" data-chapter="4" aria-label="Ľudia"></a>
+    <a href="#sluzby" data-chapter="5" aria-label="Služby a ceny"></a>
+    <a href="#galeria" data-chapter="6" aria-label="Galéria"></a>
+    <a href="#rezervacia" data-chapter="7" aria-label="Rezervácia"></a>
+  </nav>
+
+  <!-- ===================================================================== -->
+  <!-- Javisko: gradient, poster (LCP) a canvas pre 3D kreslo                 -->
+  <!-- ===================================================================== -->
+  <div class="stage" id="stage" aria-hidden="true" data-visible="1">
+    <div class="stage-bg"></div>
+    <picture class="stage-poster" id="stage-poster">
+      <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/poster-uvod-mobile-640.avif 640w, assets/img/poster-uvod-mobile-1080.avif 1080w" sizes="100vw">
+      <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/poster-uvod-mobile-640.webp 640w, assets/img/poster-uvod-mobile-1080.webp 1080w" sizes="100vw">
+      <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/poster-uvod-mobile-640.jpg 640w, assets/img/poster-uvod-mobile-1080.jpg 1080w" sizes="100vw">
+      <source type="image/avif" srcset="assets/img/poster-uvod-desktop-1080.avif 1080w, assets/img/poster-uvod-desktop-1600.avif 1600w, assets/img/poster-uvod-desktop-2200.avif 2200w" sizes="100vw">
+      <source type="image/webp" srcset="assets/img/poster-uvod-desktop-1080.webp 1080w, assets/img/poster-uvod-desktop-1600.webp 1600w, assets/img/poster-uvod-desktop-2200.webp 2200w" sizes="100vw">
+      <img src="assets/img/poster-uvod-desktop-1600.jpg"
+           srcset="assets/img/poster-uvod-desktop-1080.jpg 1080w, assets/img/poster-uvod-desktop-1600.jpg 1600w, assets/img/poster-uvod-desktop-2200.jpg 2200w"
+           sizes="100vw" width="1600" height="900" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <canvas class="stage-canvas" id="stage-canvas"></canvas>
+  </div>
+
+  <main id="main">
+
+    <!-- =================================================================== -->
+    <!-- Scéna 1 – PRVÝ DOJEM                                                 -->
+    <!-- =================================================================== -->
+    <section class="scene scene-film scene-1" id="uvod" data-scene="1" aria-labelledby="h-uvod">
+      <div class="scene-sticky">
+        <div class="container grid scene-grid">
+          <div class="scene-text scene-text-1" data-at="0,0.9">
+            <p class="eyebrow">Barbershop 30 · Nitra</p>
+            <h1 id="h-uvod">Tvoj strih. Tvoje miesto.</h1>
+            <p class="lead measure">Barbershop 30 v Nitre. Spoznaj náš tím, vyber si službu a rezervuj si svoj termín.</p>
+            <div class="cluster scene-actions">
+              <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">
+                Rezervovať termín
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="btn btn-secondary" href="tel:+421951267203">Zavolať na recepciu</a>
+            </div>
+          </div>
+        </div>
+        <p class="scroll-hint" aria-hidden="true"><span class="chip">Scrolluj</span></p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 2 – REMESLO                                                    -->
+    <!-- =================================================================== -->
+    <section class="scene scene-film scene-2" id="remeslo" data-scene="2" aria-labelledby="h-remeslo">
+      <div class="scene-sticky">
+        <div class="scene2-media" aria-hidden="true">
+          <!-- Zhoda tvaru s 3D opierkou: mobil detail kresla, desktop kreslo v rannom svetle -->
+          <div class="media media-kreslo" style="--focal: 58% 55%">
+            <picture>
+              <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/kreslo-detail-640.avif 640w, assets/img/kreslo-detail-1080.avif 1080w, assets/img/kreslo-detail-1600.avif 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/kreslo-detail-640.webp 640w, assets/img/kreslo-detail-1080.webp 1080w, assets/img/kreslo-detail-1600.webp 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/kreslo-detail-640.jpg 640w, assets/img/kreslo-detail-1080.jpg 1080w, assets/img/kreslo-detail-1600.jpg 1600w" sizes="100vw">
+              <source type="image/avif" srcset="assets/img/kreslo-slnko-1080.avif 1080w, assets/img/kreslo-slnko-1600.avif 1600w, assets/img/kreslo-slnko-2200.avif 2200w" sizes="100vw">
+              <source type="image/webp" srcset="assets/img/kreslo-slnko-1080.webp 1080w, assets/img/kreslo-slnko-1600.webp 1600w, assets/img/kreslo-slnko-2200.webp 2200w" sizes="100vw">
+              <img src="assets/img/kreslo-slnko-1600.jpg"
+                   srcset="assets/img/kreslo-slnko-1080.jpg 1080w, assets/img/kreslo-slnko-1600.jpg 1600w, assets/img/kreslo-slnko-2200.jpg 2200w"
+                   sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async"
+                   alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle">
+            </picture>
+          </div>
+          <div class="media media-naradie" style="--focal: 50% 50%">
+            <picture>
+              <source type="image/avif" srcset="assets/img/naradie-noznice-640.avif 640w, assets/img/naradie-noznice-1080.avif 1080w, assets/img/naradie-noznice-1600.avif 1600w, assets/img/naradie-noznice-1920.avif 1920w" sizes="100vw">
+              <source type="image/webp" srcset="assets/img/naradie-noznice-640.webp 640w, assets/img/naradie-noznice-1080.webp 1080w, assets/img/naradie-noznice-1600.webp 1600w, assets/img/naradie-noznice-1920.webp 1920w" sizes="100vw">
+              <img src="assets/img/naradie-noznice-1600.jpg"
+                   srcset="assets/img/naradie-noznice-640.jpg 640w, assets/img/naradie-noznice-1080.jpg 1080w, assets/img/naradie-noznice-1600.jpg 1600w, assets/img/naradie-noznice-1920.jpg 1920w"
+                   sizes="100vw" width="1920" height="1200" loading="lazy" decoding="async"
+                   alt="Nožnice a hrebeň na barberskej podložke s logom">
+            </picture>
+          </div>
+        </div>
+        <div class="container grid scene-grid">
+          <div class="scene-text scene-text-2" data-at="0.3,0.95">
+            <p class="eyebrow">Remeslo</p>
+            <h2 id="h-remeslo">Presnosť, ktorú vidíš v detaile.</h2>
+            <p class="body measure">Každý strih začína konzultáciou. Potom strojček aj nožnice, fade podľa tvaru hlavy, umytie a fénovanie. Pri brade horúci uterák a britva. Na záver styling a kolínska.</p>
+            <p><a class="link-arrow" href="#sluzby">Pozri služby <span aria-hidden="true">→</span></a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 3 – MIESTO                                                     -->
+    <!-- =================================================================== -->
+    <section class="scene scene-film scene-3" id="miesto" data-scene="3" aria-labelledby="h-miesto">
+      <div class="scene-sticky">
+        <div class="scene3-media" aria-hidden="true">
+          <div class="media media-3a" data-depth="2.5d" data-space="1" style="--focal: 45% 55%">
+            <picture>
+              <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/sala-recepcia-m-640.avif 640w, assets/img/sala-recepcia-m-1080.avif 1080w, assets/img/sala-recepcia-m-1600.avif 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/sala-recepcia-m-640.webp 640w, assets/img/sala-recepcia-m-1080.webp 1080w, assets/img/sala-recepcia-m-1600.webp 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/sala-recepcia-m-640.jpg 640w, assets/img/sala-recepcia-m-1080.jpg 1080w, assets/img/sala-recepcia-m-1600.jpg 1600w" sizes="100vw">
+              <source type="image/avif" srcset="assets/img/sala-recepcia-1080.avif 1080w, assets/img/sala-recepcia-1600.avif 1600w, assets/img/sala-recepcia-2200.avif 2200w" sizes="100vw">
+              <source type="image/webp" srcset="assets/img/sala-recepcia-1080.webp 1080w, assets/img/sala-recepcia-1600.webp 1600w, assets/img/sala-recepcia-2200.webp 2200w" sizes="100vw">
+              <img src="assets/img/sala-recepcia-1600.jpg"
+                   srcset="assets/img/sala-recepcia-1080.jpg 1080w, assets/img/sala-recepcia-1600.jpg 1600w, assets/img/sala-recepcia-2200.jpg 2200w"
+                   sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async"
+                   alt="Predná sála s recepciou, oranžovými lampami a barber pole">
+            </picture>
+            <span class="chip">Recepcia</span>
+          </div>
+          <div class="media media-3b" data-depth="2.5d" data-space="2" style="--focal: 50% 55%">
+            <picture>
+              <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/sala-hlavna-m-640.avif 640w, assets/img/sala-hlavna-m-1080.avif 1080w, assets/img/sala-hlavna-m-1600.avif 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/sala-hlavna-m-640.webp 640w, assets/img/sala-hlavna-m-1080.webp 1080w, assets/img/sala-hlavna-m-1600.webp 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/sala-hlavna-m-640.jpg 640w, assets/img/sala-hlavna-m-1080.jpg 1080w, assets/img/sala-hlavna-m-1600.jpg 1600w" sizes="100vw">
+              <source type="image/avif" srcset="assets/img/sala-hlavna-1080.avif 1080w, assets/img/sala-hlavna-1600.avif 1600w, assets/img/sala-hlavna-2200.avif 2200w" sizes="100vw">
+              <source type="image/webp" srcset="assets/img/sala-hlavna-1080.webp 1080w, assets/img/sala-hlavna-1600.webp 1600w, assets/img/sala-hlavna-2200.webp 2200w" sizes="100vw">
+              <img src="assets/img/sala-hlavna-1600.jpg"
+                   srcset="assets/img/sala-hlavna-1080.jpg 1080w, assets/img/sala-hlavna-1600.jpg 1600w, assets/img/sala-hlavna-2200.jpg 2200w"
+                   sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async"
+                   alt="Hlavná sála s radom kresiel, zrkadlami a Edisonovými lampami">
+            </picture>
+            <span class="chip">Hlavná sála</span>
+          </div>
+          <div class="media media-3c" data-depth="2.5d" data-space="3" style="--focal: 50% 55%">
+            <picture>
+              <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/zadna-miestnost-m-640.avif 640w, assets/img/zadna-miestnost-m-1080.avif 1080w, assets/img/zadna-miestnost-m-1600.avif 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/zadna-miestnost-m-640.webp 640w, assets/img/zadna-miestnost-m-1080.webp 1080w, assets/img/zadna-miestnost-m-1600.webp 1600w" sizes="100vw">
+              <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/zadna-miestnost-m-640.jpg 640w, assets/img/zadna-miestnost-m-1080.jpg 1080w, assets/img/zadna-miestnost-m-1600.jpg 1600w" sizes="100vw">
+              <source type="image/avif" srcset="assets/img/zadna-miestnost-1080.avif 1080w, assets/img/zadna-miestnost-1600.avif 1600w, assets/img/zadna-miestnost-2200.avif 2200w" sizes="100vw">
+              <source type="image/webp" srcset="assets/img/zadna-miestnost-1080.webp 1080w, assets/img/zadna-miestnost-1600.webp 1600w, assets/img/zadna-miestnost-2200.webp 2200w" sizes="100vw">
+              <img src="assets/img/zadna-miestnost-1600.jpg"
+                   srcset="assets/img/zadna-miestnost-1080.jpg 1080w, assets/img/zadna-miestnost-1600.jpg 1600w, assets/img/zadna-miestnost-2200.jpg 2200w"
+                   sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async"
+                   alt="Zadná miestnosť s čiernymi obkladmi, červeným kreslom a benzínovou pumpou">
+            </picture>
+            <span class="chip">Zadná miestnosť</span>
+          </div>
+          <div class="scene3-vignette"></div>
+        </div>
+        <div class="container grid scene-grid">
+          <div class="scene-text scene-text-3" data-at="0.04,0.98">
+            <p class="eyebrow">Miesto</p>
+            <h2 id="h-miesto">Príď ako k známym.</h2>
+            <p class="body measure">Na Mostnej 30 sme od roku 2019. Pri vstupe ťa privíta recepčná, káva alebo minerálka je zdarma. Osem kresiel v troch miestnostiach – a striháme aj deti.</p>
+            <ul class="space-list" role="list">
+              <li class="space-row" data-space="1"><span class="chip">Recepcia</span><span class="space-note">Pult pri vstupe, káva a minerálka zdarma.</span></li>
+              <li class="space-row" data-space="2"><span class="chip">Hlavná sála</span><span class="space-note">Rad kresiel pod oranžovými lampami.</span></li>
+              <li class="space-row" data-space="3"><span class="chip">Zadná miestnosť</span><span class="space-note">Zelené sedačky, kým sa uvoľní kreslo.</span></li>
+            </ul>
+            <p><a class="link-arrow" href="#kontakt">Ako sa k nám dostaneš <span aria-hidden="true">→</span></a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 4 – ĽUDIA                                                      -->
+    <!-- =================================================================== -->
+    <section class="scene scene-flow scene-4 section" id="tim" data-scene="4" aria-labelledby="h-tim">
+      <div class="container">
+        <div class="section-head grid">
+          <div class="section-head-text">
+            <p class="eyebrow">Ľudia</p>
+            <h2 id="h-tim">Tím barberov a barberiek.</h2>
+            <p class="lead measure">Desať ľudí, jeden kalendár. Termín si vyberieš v spoločnej rezervácii, ktorá je otvorená 24 hodín denne.</p>
+          </div>
+        </div>
+        <ul class="team-grid" role="list">
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-nikolas-480.avif 480w, assets/img/tim-nikolas-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-nikolas-480.webp 480w, assets/img/tim-nikolas-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-nikolas-820.png" srcset="assets/img/tim-nikolas-480.png 480w, assets/img/tim-nikolas-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Nikolas, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Nikolas</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-kristian-480.avif 480w, assets/img/tim-kristian-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-kristian-480.webp 480w, assets/img/tim-kristian-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-kristian-820.png" srcset="assets/img/tim-kristian-480.png 480w, assets/img/tim-kristian-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Kristián, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Kristián</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-damian-480.avif 480w, assets/img/tim-damian-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-damian-480.webp 480w, assets/img/tim-damian-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-damian-820.png" srcset="assets/img/tim-damian-480.png 480w, assets/img/tim-damian-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Damian, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Damian</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-michal-480.avif 480w, assets/img/tim-michal-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-michal-480.webp 480w, assets/img/tim-michal-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-michal-820.png" srcset="assets/img/tim-michal-480.png 480w, assets/img/tim-michal-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Michal, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Michal</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-andy-480.avif 480w, assets/img/tim-andy-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-andy-480.webp 480w, assets/img/tim-andy-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-andy-820.png" srcset="assets/img/tim-andy-480.png 480w, assets/img/tim-andy-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Andy, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Andy</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-dominika-480.avif 480w, assets/img/tim-dominika-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-dominika-480.webp 480w, assets/img/tim-dominika-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-dominika-820.png" srcset="assets/img/tim-dominika-480.png 480w, assets/img/tim-dominika-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Dominika, Barberka v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dominika</h3>
+              <p class="team-role">Barberka</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-kevin-480.avif 480w, assets/img/tim-kevin-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-kevin-480.webp 480w, assets/img/tim-kevin-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-kevin-820.png" srcset="assets/img/tim-kevin-480.png 480w, assets/img/tim-kevin-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Kevin, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Kevin</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-lajko-480.avif 480w, assets/img/tim-lajko-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-lajko-480.webp 480w, assets/img/tim-lajko-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-lajko-820.png" srcset="assets/img/tim-lajko-480.png 480w, assets/img/tim-lajko-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Lajko, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Lajko</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-jojo-480.avif 480w, assets/img/tim-jojo-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-jojo-480.webp 480w, assets/img/tim-jojo-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-jojo-820.png" srcset="assets/img/tim-jojo-480.png 480w, assets/img/tim-jojo-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Jojo, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Jojo</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card reveal">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-adrian-480.avif 480w, assets/img/tim-adrian-820.avif 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <source type="image/webp" srcset="assets/img/tim-adrian-480.webp 480w, assets/img/tim-adrian-820.webp 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw">
+                <img src="assets/img/tim-adrian-820.png" srcset="assets/img/tim-adrian-480.png 480w, assets/img/tim-adrian-820.png 820w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Adrian, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Adrian</h3>
+              <p class="team-role">Barber</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+        </ul>
+        <p class="small team-note">Farbenie, melír a trvalú robí Romana – <a href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">rezervuješ ich samostatne</a>.</p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 5 – SLUŽBY A CENY                                              -->
+    <!-- =================================================================== -->
+    <section class="scene scene-flow scene-5 section" id="sluzby" data-scene="5" aria-labelledby="h-sluzby">
+      <div class="container">
+        <div class="section-head grid">
+          <div class="section-head-text">
+            <p class="eyebrow">Služby a ceny</p>
+            <h2 id="h-sluzby">Vyber si službu.</h2>
+            <p class="lead measure">Ceny sú konečné, trvanie orientačné. Termín si rezervuješ online, službu vyberieš priamo v rezervácii.</p>
+          </div>
+        </div>
+
+        <div class="price-list">
+          <section class="price-group" aria-labelledby="g-strih">
+            <h3 class="price-group-title" id="g-strih">Strih</h3>
+            <ul role="list">
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Pánsky strih</h4><p class="price-desc">Konzultácia, strih strojčekom aj nožnicami vrátane fade, umytie vlasov, fénovanie, styling a kolínska.</p></div>
+                <p class="price-time">40 min</p>
+                <p class="price-amount">18 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Pánsky strih a úprava brady</h4><p class="price-desc">Kompletný strih a k nemu úprava brady s horúcim uterákom, britvou a stylingom.</p></div>
+                <p class="price-time">60 min</p>
+                <p class="price-amount">28 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih a úprava brady</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Pánsky strih – dĺžka vlasov nad 10 cm</h4><p class="price-desc">Rovnaký postup ako pánsky strih, s viac času na dlhšie vlasy.</p></div>
+                <p class="price-time">60 min</p>
+                <p class="price-amount">22 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih, dĺžka vlasov nad 10 cm</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Strih pre malých gentlemanov</h4><p class="price-desc">Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.</p></div>
+                <p class="price-time">45 min</p>
+                <p class="price-amount">15 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Strih pre malých gentlemanov</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Oholenie hlavy</h4><p class="price-desc">Príprava pokožky, holenie britvou, umytie, sušenie a styling.</p></div>
+                <p class="price-time">25 min</p>
+                <p class="price-amount">13 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Oholenie hlavy</span></a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="price-group" aria-labelledby="g-brada">
+            <h3 class="price-group-title" id="g-brada">Brada a holenie</h3>
+            <ul role="list">
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Úprava brady</h4><p class="price-desc">Tvarovanie brady, naparenie horúcim uterákom, britva a styling s prípravkami.</p></div>
+                <p class="price-time">20 min</p>
+                <p class="price-amount">15 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Úprava brady</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Holenie do hladka Hot Towel</h4><p class="price-desc">Holenie britvou s naparením horúcim uterákom a ošetrením pleti po holení.</p></div>
+                <p class="price-time">30 min</p>
+                <p class="price-amount">15 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Holenie do hladka Hot Towel</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Farbenie brady</h4><p class="price-desc">Farbenie profesionálnymi farbami, 20 ml farby.</p></div>
+                <p class="price-time">30 min</p>
+                <p class="price-amount">10 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Farbenie brady</span></a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="price-group" aria-labelledby="g-balicky">
+            <h3 class="price-group-title" id="g-balicky">Balíčky</h3>
+            <ul role="list">
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Balíček 1</h4><p class="price-desc">Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska.</p></div>
+                <p class="price-time">65 min</p>
+                <p class="price-amount">30 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Balíček 1</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Ultra inclusive Barbershop30</h4><p class="price-desc">Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.</p></div>
+                <p class="price-time">80 min</p>
+                <p class="price-amount">40 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Ultra inclusive Barbershop30</span></a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="price-group" aria-labelledby="g-doplnky">
+            <h3 class="price-group-title" id="g-doplnky">Doplnky</h3>
+            <ul role="list">
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Starostlivosť o pleť PREMIUM</h4><p class="price-desc">Naparenie tváre, peeling a relaxačná maska podľa vlastného výberu.</p></div>
+                <p class="price-time">30 min</p>
+                <p class="price-amount">21,50 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Starostlivosť o pleť PREMIUM</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Úprava obočia</h4><p class="price-desc">Vytrhanie a úprava obočia.</p></div>
+                <p class="price-time">5 min</p>
+                <p class="price-amount">3 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Úprava obočia</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Depilácia uší a nosa voskom</h4><p class="price-desc">Odstránenie chĺpkov z uší a nosa voskom.</p></div>
+                <p class="price-time">10 min</p>
+                <p class="price-amount">5,50 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Depilácia uší a nosa voskom</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Kreatívny ornament na hlave</h4><p class="price-desc">Vzor vystrihnutý do vlasov.</p></div>
+                <p class="price-time">10 min</p>
+                <p class="price-amount">4 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Kreatívny ornament na hlave</span></a>
+              </li>
+              <li class="price-row">
+                <div class="price-main"><h4 class="price-name">Farbenie obočia</h4><p class="price-desc">Farbenie obočia profesionálnymi farbami.</p></div>
+                <p class="price-time">10 min</p>
+                <p class="price-amount">5 €</p>
+                <a class="btn btn-ghost price-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Farbenie obočia</span></a>
+              </li>
+            </ul>
+          </section>
+
+          <div class="price-extra">
+            <div class="price-main">
+              <p class="price-name">Farbenie, melír a trvalá</p>
+              <p class="price-desc">Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.</p>
+            </div>
+            <a class="link-arrow" href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">Rezervovať na Booqme <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 6 – VÝSLEDKY A DÔVERA                                          -->
+    <!-- =================================================================== -->
+    <section class="scene scene-flow scene-6 section" id="galeria" data-scene="6" aria-labelledby="h-galeria">
+      <div class="container">
+        <div class="section-head grid">
+          <div class="section-head-text">
+            <p class="eyebrow">Výsledky</p>
+            <h2 id="h-galeria">Práca, ktorá hovorí za nás.</h2>
+            <p class="lead measure">Nástroje, kreslá a miesto, kde strihy vznikajú. Klepni na fotku a pozri si ju zväčšenú.</p>
+          </div>
+        </div>
+
+        <!-- Fotky výsledkov strihov (pred/po) zatiaľ nie sú k dispozícii – blok ostáva skrytý. -->
+        <div class="results-placeholder" hidden data-required="results">
+          <h3>Výsledky strihov</h3>
+          <p class="body">Galéria strihov bude doplnená po nafotení.</p>
+        </div>
+
+        <div class="gallery">
+          <ul class="gallery-grid" role="list">
+            <li class="gallery-item is-portrait">
+              <button class="gallery-btn media" type="button" style="--focal: 62% 28%" data-lightbox-src="assets/img/galeria-barberpole-1600.jpg" data-lightbox-srcset="assets/img/galeria-barberpole-1080.jpg 1080w, assets/img/galeria-barberpole-1600.jpg 1600w" data-lightbox-alt="Dva svietiace barber pole na stĺpe" data-lightbox-w="1932" data-lightbox-h="2576" aria-label="Zväčšiť: Dva svietiace barber pole na stĺpe">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-barberpole-640.avif 640w, assets/img/galeria-barberpole-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-barberpole-640.webp 640w, assets/img/galeria-barberpole-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-barberpole-1080.jpg" srcset="assets/img/galeria-barberpole-640.jpg 640w, assets/img/galeria-barberpole-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="1932" height="2576" loading="lazy" decoding="async" alt="Dva svietiace barber pole na stĺpe">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item">
+              <button class="gallery-btn media" type="button" style="--focal: 50% 55%" data-lightbox-src="assets/img/galeria-buldog-1600.jpg" data-lightbox-srcset="assets/img/galeria-buldog-1080.jpg 1080w, assets/img/galeria-buldog-1600.jpg 1600w, assets/img/galeria-buldog-2200.jpg 2200w" data-lightbox-alt="Kreslá, farebná soška buldoga a retro benzínová pumpa" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Zväčšiť: Kreslá, farebná soška buldoga a retro benzínová pumpa">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-buldog-640.avif 640w, assets/img/galeria-buldog-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-buldog-640.webp 640w, assets/img/galeria-buldog-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-buldog-1080.jpg" srcset="assets/img/galeria-buldog-640.jpg 640w, assets/img/galeria-buldog-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Kreslá, farebná soška buldoga a retro benzínová pumpa">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item is-portrait">
+              <button class="gallery-btn media" type="button" style="--focal: 45% 55%" data-lightbox-src="assets/img/galeria-zrkadlo-1600.jpg" data-lightbox-srcset="assets/img/galeria-zrkadlo-1080.jpg 1080w, assets/img/galeria-zrkadlo-1600.jpg 1600w" data-lightbox-alt="Pracovné miesto s dreveným rámom zrkadla a produktmi" data-lightbox-w="1932" data-lightbox-h="2576" aria-label="Zväčšiť: Pracovné miesto s dreveným rámom zrkadla a produktmi">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-zrkadlo-640.avif 640w, assets/img/galeria-zrkadlo-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-zrkadlo-640.webp 640w, assets/img/galeria-zrkadlo-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-zrkadlo-1080.jpg" srcset="assets/img/galeria-zrkadlo-640.jpg 640w, assets/img/galeria-zrkadlo-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="1932" height="2576" loading="lazy" decoding="async" alt="Pracovné miesto s dreveným rámom zrkadla a produktmi">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item is-portrait">
+              <button class="gallery-btn media" type="button" style="--focal: 45% 48%" data-lightbox-src="assets/img/galeria-neon-1080.jpg" data-lightbox-srcset="assets/img/galeria-neon-640.jpg 640w, assets/img/galeria-neon-1080.jpg 1080w" data-lightbox-alt="Svietiaci nápis Barbershop 30 v machovom ráme na lamelovej stene" data-lightbox-w="1200" data-lightbox-h="1600" aria-label="Zväčšiť: Svietiaci nápis Barbershop 30 v machovom ráme na lamelovej stene">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-neon-640.avif 640w, assets/img/galeria-neon-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-neon-640.webp 640w, assets/img/galeria-neon-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-neon-1080.jpg" srcset="assets/img/galeria-neon-640.jpg 640w, assets/img/galeria-neon-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Svietiaci nápis Barbershop 30 v machovom ráme na lamelovej stene">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item">
+              <button class="gallery-btn media" type="button" style="--focal: 50% 50%" data-lightbox-src="assets/img/galeria-kava-1600.jpg" data-lightbox-srcset="assets/img/galeria-kava-1080.jpg 1080w, assets/img/galeria-kava-1600.jpg 1600w, assets/img/galeria-kava-2200.jpg 2200w" data-lightbox-alt="Káva a voda na drevenom podnose v rannom slnku" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Zväčšiť: Káva a voda na drevenom podnose v rannom slnku">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-kava-640.avif 640w, assets/img/galeria-kava-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-kava-640.webp 640w, assets/img/galeria-kava-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-kava-1080.jpg" srcset="assets/img/galeria-kava-640.jpg 640w, assets/img/galeria-kava-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Káva a voda na drevenom podnose v rannom slnku">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item is-wide">
+              <button class="gallery-btn media" type="button" style="--focal: 58% 55%" data-lightbox-src="assets/img/kreslo-slnko-1600.jpg" data-lightbox-srcset="assets/img/kreslo-slnko-1080.jpg 1080w, assets/img/kreslo-slnko-1600.jpg 1600w, assets/img/kreslo-slnko-2200.jpg 2200w" data-lightbox-alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Zväčšiť: Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/kreslo-slnko-640.avif 640w, assets/img/kreslo-slnko-1080.avif 1080w, assets/img/kreslo-slnko-1600.avif 1600w" sizes="(max-width: 900px) 100vw, 50vw">
+                  <source type="image/webp" srcset="assets/img/kreslo-slnko-640.webp 640w, assets/img/kreslo-slnko-1080.webp 1080w, assets/img/kreslo-slnko-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw">
+                  <img src="assets/img/kreslo-slnko-1080.jpg" srcset="assets/img/kreslo-slnko-640.jpg 640w, assets/img/kreslo-slnko-1080.jpg 1080w, assets/img/kreslo-slnko-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item">
+              <button class="gallery-btn media" type="button" style="--focal: 50% 55%" data-lightbox-src="assets/img/galeria-sud-1600.jpg" data-lightbox-srcset="assets/img/galeria-sud-1080.jpg 1080w, assets/img/galeria-sud-1600.jpg 1600w, assets/img/galeria-sud-2200.jpg 2200w" data-lightbox-alt="Predná sála so sudom, uterákmi a kruhovými svietidlami" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Zväčšiť: Predná sála so sudom, uterákmi a kruhovými svietidlami">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/galeria-sud-640.avif 640w, assets/img/galeria-sud-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/galeria-sud-640.webp 640w, assets/img/galeria-sud-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/galeria-sud-1080.jpg" srcset="assets/img/galeria-sud-640.jpg 640w, assets/img/galeria-sud-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Predná sála so sudom, uterákmi a kruhovými svietidlami">
+                </picture>
+              </button>
+            </li>
+            <li class="gallery-item">
+              <button class="gallery-btn media" type="button" style="--focal: 45% 55%" data-lightbox-src="assets/img/detail-stol-1600.jpg" data-lightbox-srcset="assets/img/detail-stol-1080.jpg 1080w, assets/img/detail-stol-1600.jpg 1600w, assets/img/detail-stol-2200.jpg 2200w" data-lightbox-alt="Karafa, pomády a štetka na holenie na pracovnom stole" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Zväčšiť: Karafa, pomády a štetka na holenie na pracovnom stole">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/detail-stol-640.avif 640w, assets/img/detail-stol-1080.avif 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <source type="image/webp" srcset="assets/img/detail-stol-640.webp 640w, assets/img/detail-stol-1080.webp 1080w" sizes="(max-width: 900px) 50vw, 25vw">
+                  <img src="assets/img/detail-stol-1080.jpg" srcset="assets/img/detail-stol-640.jpg 640w, assets/img/detail-stol-1080.jpg 1080w" sizes="(max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Karafa, pomády a štetka na holenie na pracovnom stole">
+                </picture>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="trust">
+          <div class="trust-item">
+            <p class="eyebrow">Dôvera</p>
+            <p class="trust-text">Na Mostnej 30 striháme od roku 2019. Čo o nás hovoria zákazníci, si prečítaš priamo na Google.</p>
+            <a class="link-arrow" href="https://www.google.com/maps/search/Barbershop30+Mostn%C3%A1+30+Nitra" target="_blank" rel="noopener">Hodnotenie na Google <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="trust-item">
+            <p class="eyebrow">Instagram</p>
+            <p class="trust-text">Aktuálne strihy a dianie v shope sledujeme na Instagrame.</p>
+            <a class="link-arrow" href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">@barbershop30_nitra <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Scéna 7 – REZERVÁCIA                                                 -->
+    <!-- =================================================================== -->
+    <section class="scene scene-film scene-7" id="rezervacia" data-scene="7" aria-labelledby="h-rezervacia">
+      <div class="scene-sticky">
+        <!-- Náhrada za 3D kreslo pri vypnutom WebGL / pohybe: fotografia vstupu -->
+        <div class="scene7-fallback media" aria-hidden="true" style="--focal: 55% 50%">
+          <picture>
+            <source media="(max-width: 900px)" type="image/avif" srcset="assets/img/vstup-rohozka-640.avif 640w, assets/img/vstup-rohozka-1080.avif 1080w" sizes="100vw">
+            <source media="(max-width: 900px)" type="image/webp" srcset="assets/img/vstup-rohozka-640.webp 640w, assets/img/vstup-rohozka-1080.webp 1080w" sizes="100vw">
+            <source media="(max-width: 900px)" type="image/jpeg" srcset="assets/img/vstup-rohozka-640.jpg 640w, assets/img/vstup-rohozka-1080.jpg 1080w" sizes="100vw">
+            <source type="image/avif" srcset="assets/img/vstup-fasada-1080.avif 1080w, assets/img/vstup-fasada-1600.avif 1600w, assets/img/vstup-fasada-2200.avif 2200w" sizes="100vw">
+            <source type="image/webp" srcset="assets/img/vstup-fasada-1080.webp 1080w, assets/img/vstup-fasada-1600.webp 1600w, assets/img/vstup-fasada-2200.webp 2200w" sizes="100vw">
+            <img src="assets/img/vstup-fasada-1600.jpg" srcset="assets/img/vstup-fasada-1080.jpg 1080w, assets/img/vstup-fasada-1600.jpg 1600w, assets/img/vstup-fasada-2200.jpg 2200w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre">
+          </picture>
+        </div>
+        <div class="container grid scene-grid">
+          <div class="scene-text scene-text-7" data-at="0.08,1">
+            <p class="eyebrow">Rezervácia</p>
+            <h2 id="h-rezervacia">Tvoj termín je na jedno klepnutie.</h2>
+            <p class="body measure">Rezervuj online kedykoľvek – aj v noci. Alebo zavolaj na recepciu v otváracích hodinách.</p>
+            <dl class="contact-list">
+              <div class="contact-row">
+                <dt>Adresa</dt>
+                <dd><address>Mostná 30, 949 01 Nitra</address></dd>
+              </div>
+              <div class="contact-row">
+                <dt>Telefón</dt>
+                <dd><a href="tel:+421951267203">0951 267 203</a></dd>
+              </div>
+              <div class="contact-row">
+                <dt>E‑mail</dt>
+                <dd><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></dd>
+              </div>
+              <div class="contact-row">
+                <dt>Otvorené</dt>
+                <dd>Po–Pi 9:00–19:00<br>So 9:00–14:00<br>Ne zatvorené</dd>
+              </div>
+            </dl>
+            <div class="cluster scene-actions">
+              <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">
+                Rezervovať termín
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="btn btn-secondary" href="tel:+421951267203">Zavolať</a>
+              <a class="btn btn-secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Navigovať</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- Pätička                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="site-footer" id="kontakt">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <p class="brand" aria-hidden="true">Barbershop 30 <small>Nitra</small></p>
+          <p class="small">Pánske strihy, brada a holenie na Mostnej 30. Od roku 2019.</p>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Kontakt</h2>
+          <address class="body">
+            Mostná 30<br>949 01 Nitra<br>
+            <a href="tel:+421951267203">0951 267 203</a><br>
+            <a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a>
+          </address>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Otváracie hodiny</h2>
+          <dl class="hours">
+            <div><dt>Po–Pi</dt><dd>9:00–19:00</dd></div>
+            <div><dt>So</dt><dd>9:00–14:00</dd></div>
+            <div><dt>Ne</dt><dd>zatvorené</dd></div>
+          </dl>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Sleduj nás</h2>
+          <ul class="footer-links" role="list">
+            <li><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.facebook.com/barbershop30nitra/" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Navigovať</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="small">© 2026 Barbershop 30 · Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381</p>
+        <a class="link-arrow footer-top" href="#uvod">Späť hore <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mobile-cta" id="mobile-cta">
+    <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať termín</a>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Zväčšená fotografia">
+    <div class="lightbox-backdrop" data-lightbox="close"></div>
+    <figure class="lightbox-figure">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="" width="1600" height="1067" decoding="async">
+      <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox-btn lightbox-close" type="button" data-lightbox="close" aria-label="Zavrieť">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-prev" type="button" data-lightbox="prev" aria-label="Predchádzajúca fotografia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-next" type="button" data-lightbox="next" aria-label="Nasledujúca fotografia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
