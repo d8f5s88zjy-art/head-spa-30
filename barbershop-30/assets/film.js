@@ -126,7 +126,7 @@
     const g = (k) => el.dataset[p ? 'pro' + k[0].toUpperCase() + k.slice(1) : k];
     const f = pair(g('f'), [0.5, 0.5]), fm = pair(g('fm'), null), m = phone && g('m');
     return {
-      at: el, photo: m || g(p ? '' : 'shot') || g('pro'), place: g('place') || '', f: m && fm ? fm : f, fm: m ? null : fm,
+      at: el, photo: '', place: g('place') || '', f: m && fm ? fm : f, fm: m ? null : fm,   // photo doplní volajúci
       mv: MOVES[g('mv')] ? g('mv') : 'in',
       pa: m ? ratio(g('mSize'), null) : ratio(g('size'), el.querySelector('img')),
       tiers: tiersOf(m ? g('mTiers') : g('tiers')),
