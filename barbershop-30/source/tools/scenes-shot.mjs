@@ -1,18 +1,17 @@
 #!/usr/bin/env node
-// Snímky stredu každej zo 7 scén (+ medzistavy crossfade) pre desktop 1440×900 a mobil 390×844.
+// Snímky prehliadky (9 sekcií, 13 kotiev .film-shot) pre desktop 1440×900 a mobil 390×844.
 //
-//   node source/tools/scenes-shot.mjs                      # všetko -> docs/screenshots/scena-*.png
-//   node source/tools/scenes-shot.mjs --only=desktop --scenes=1,2,2a
-//   node source/tools/scenes-shot.mjs --out=/tmp/iter1 --wait=800
+//   node source/tools/scenes-shot.mjs                        # všetko -> docs/screenshots/scena-*.png
+//   node source/tools/scenes-shot.mjs --only=desktop --scenes=1,3,3x
+//   node source/tools/scenes-shot.mjs --out=/tmp/iter1 --wait=800 --query=?film=off
 //
-// Výstup: <out>/scena-<id>-{desktop,mobile}.png, kde id ∈ 1, 1b, 2, 2a, 2b, 3, 3a, 3b, 3c, 4, 4a, 5, 5a, 6, 6a, 7.
-//  - filmové scény (1, 2, 3, 7): scroll na lokálne t (t = (scrollY − top) / (výška − viewport)), stred = t 0.5
-//  - toková scéna (4, 5, 6): stred sekcie v strede viewportu; 4a/5a/6a = začiatok sekcie (hlavička)
-//  - 1 = t 0 (prvý dojem), 1b = t 0.5 (nájazd kamery)
-//  - 2a (t2 0.80) = prelínanie 3D → fotografia kresla, 2b (t2 0.94) = fotografia kresla → fotografia nástrojov
-//  - 3a/3b/3c (t3 0.16 / 0.47 / 0.84) = tri fotografie priestoru
-// Scroll: window.scrollTo({top, behavior:'instant'}) + dočasne html{scroll-behavior:auto}; po scrolle sa čaká 800 ms.
-// Vypíše aj namerané rozmery sekcií (offsetTop/výška) a stav (--p, --t*, data-scene-active).
+// Výstup: <out>/scena-<id>-{desktop,mobile}.png
+//  - <n>      = prvá kotva sekcie n (1–9), horný okraj kotvy na hornom okraji okna = záber cez celú obrazovku
+//  - <n>b     = druhá kotva sekcie (3b kreslo, 4b naradie, 5b cakaren, 8c sud) alebo pás sekcie (2b fakty, 6b tím, 8b galéria)
+//  - <n>x     = prelínanie: polovica vzdialenosti medzi kotvou n a nasledujúcou kotvou (tam film prelína zábery)
+//  - 7m       = cenník uprostred (doska scrolluje nad prilepenou zálohou), 9f = pätička
+// Scroll: window.scrollTo({top, behavior:'instant'}) + dočasne html{scroll-behavior:auto}; čaká sa na
+// window.__scrollSettled (režisér dobehol) a potom ešte `wait` ms. Vypíše polohy kotiev, --p, --sp a data-scene-active.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,29 +25,37 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 
 const VIEWPORTS = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
 
-// id -> { section, t } (film) | { section, mid: true } (flow)
+// id -> { shot: index kotvy v dokumente } | { shot, cross: true } | { band: selektor } | { sel, t }
+// kotvy v poradí dokumentu: 0 vstup, 1 recepcia, 2 sala, 3 kreslo, 4 stol, 5 naradie, 6 zadna, 7 cakaren,
+//                           8 sala-rano, 9 kreslo-stred, 10 kava, 11 sud, 12 vstup (rezervácia)
 const SHOTS = {
-  1: { section: 'uvod', t: 0.0 },
-  '1b': { section: 'uvod', t: 0.5 },
-  2: { section: 'remeslo', t: 0.55 },
-  '2a': { section: 'remeslo', t: 0.8 },
-  '2b': { section: 'remeslo', t: 0.94 },
-  3: { section: 'miesto', t: 0.5 },
-  '3a': { section: 'miesto', t: 0.16 },
-  '3b': { section: 'miesto', t: 0.47 },
-  '3c': { section: 'miesto', t: 0.84 },
-  '4a': { section: 'tim', head: true },
-  4: { section: 'tim', mid: true },
-  '5a': { section: 'sluzby', head: true },
-  5: { section: 'sluzby', mid: true },
-  '6a': { section: 'galeria', head: true },
-  6: { section: 'galeria', mid: true },
-  7: { section: 'rezervacia', t: 0.75 },
+  1: { shot: 0 },
+  '1x': { shot: 0, cross: true },
+  2: { shot: 1 },
+  '2b': { band: '#recepcia .band' },
+  3: { shot: 2 },
+  '3x': { shot: 2, cross: true },
+  '3b': { shot: 3 },
+  4: { shot: 4 },
+  '4x': { shot: 4, cross: true },
+  '4b': { shot: 5 },
+  5: { shot: 6 },
+  '5b': { shot: 7 },
+  6: { shot: 8 },
+  '6b': { band: '#tim .band' },
+  7: { shot: 9 },
+  '7m': { sel: '#sluzby .film-shot', t: 0.5 },
+  8: { shot: 10 },
+  '8b': { band: '#galeria .band' },
+  '8c': { shot: 11 },
+  '8x': { shot: 11, cross: true },
+  9: { shot: 12 },
+  '9f': { sel: '.site-footer', t: 1 },
 };
 
 const args = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
 const out = path.resolve(args.out || path.join(ROOT, 'docs', 'screenshots'));
-const wait = Number(args.wait || 800);
+const wait = Number(args.wait || 700);
 const only = args.only;
 const ids = args.scenes ? String(args.scenes).split(',') : Object.keys(SHOTS);
 const query = args.query || '';
@@ -68,37 +75,55 @@ try {
     await page.waitForFunction(() => window.__renderDone !== false, null, { timeout: 60000 }).catch(() => logs.push('[shot] timeout __renderDone'));
     await page.evaluate(() => document.fonts.ready);
     await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
-    await page.waitForTimeout(1200);
+    // film (ak existuje a beží): počkaj na prvý snímok alebo na zlyhanie, najviac 20 s
+    const world = await page.evaluate(() => document.documentElement.classList.contains('world'));
+    if (world) {
+      await page.mouse.move(10, 10); // film sa spúšťa až po pohybe návštevníka
+      await page.waitForFunction(() => /world-(in|off)/.test(document.documentElement.className), null, { timeout: 20000 }).catch(() => logs.push('[shot] film nedal world-in ani world-off do 20 s'));
+    }
+    await page.waitForTimeout(800);
 
     const metrics = await page.evaluate(() => {
-      const y = window.scrollY, o = {};
-      for (const el of document.querySelectorAll('.scene[data-scene]')) {
+      const y = window.scrollY, o = { shots: [], sections: {} };
+      for (const el of document.querySelectorAll('.film-shot')) {
         const r = el.getBoundingClientRect();
-        o[el.id] = { top: Math.round(r.top + y), height: Math.round(r.height) };
+        o.shots.push({ name: el.dataset.shot, top: Math.round(r.top + y), height: Math.round(r.height) });
+      }
+      for (const el of document.querySelectorAll('section[data-scene]')) {
+        const r = el.getBoundingClientRect();
+        o.sections[el.id] = { top: Math.round(r.top + y), height: Math.round(r.height) };
       }
       o.vh = window.innerHeight; o.docH = document.documentElement.scrollHeight;
+      o.world = document.documentElement.className;
       return o;
     });
-    console.log(`${kind}: ${JSON.stringify(metrics)}`);
+    console.log(`${kind}: vh=${metrics.vh} docH=${metrics.docH} html.class="${metrics.world}"`);
+    console.log(`  kotvy: ${metrics.shots.map((s, i) => `${i}:${s.name}@${s.top}/${s.height}`).join(' ')}`);
 
     for (const id of ids) {
       const def = SHOTS[id];
       if (!def) { console.warn('neznáma scéna', id); continue; }
-      const m = metrics[def.section];
-      const vh = metrics.vh;
-      const y = def.head ? m.top - 64 : def.mid ? m.top + m.height / 2 - vh / 2 : m.top + def.t * Math.max(0, m.height - vh);
+      let y = 0;
+      if (def.shot !== undefined) {
+        const s = metrics.shots[def.shot], n = metrics.shots[def.shot + 1];
+        y = def.cross && n ? (s.top + n.top) / 2 : s.top;
+      } else if (def.band) {
+        y = await page.evaluate((sel) => { const el = document.querySelector(sel); return el ? el.getBoundingClientRect().top + scrollY - 64 : 0; }, def.band);
+      } else if (def.sel) {
+        y = await page.evaluate(([sel, t]) => { const el = document.querySelector(sel); if (!el) return 0; const r = el.getBoundingClientRect(); return r.top + scrollY + t * Math.max(0, r.height - innerHeight); }, [def.sel, def.t]);
+      }
       await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), Math.round(y));
       await page.waitForTimeout(wait);
-      // lerp režiséra v SwiftShaderi dobieha pomaly – počkaj, kým sa stav ustáli, a potom na vykreslenie snímky
       await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 90000 }).catch(() => logs.push(`[shot] ${id}: scroll sa neustálil`));
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(500);
       const st = await page.evaluate(() => {
         const cs = getComputedStyle(document.documentElement);
-        return { y: Math.round(scrollY), p: cs.getPropertyValue('--p'), t1: cs.getPropertyValue('--t1'), t2: cs.getPropertyValue('--t2'), t3: cs.getPropertyValue('--t3'), t7: cs.getPropertyValue('--t7'), active: document.documentElement.dataset.sceneActive, webgl: document.documentElement.dataset.webgl };
+        const near = [...document.querySelectorAll('.film-shot')].map((el) => ({ n: el.dataset.shot, r: el.getBoundingClientRect(), sp: el.style.getPropertyValue('--sp') })).filter((s) => s.r.bottom > 0 && s.r.top < innerHeight).map((s) => `${s.n}:${s.sp || '-'}`);
+        return { y: Math.round(scrollY), p: cs.getPropertyValue('--p').trim(), active: document.documentElement.dataset.sceneActive, near: near.join(' ') };
       });
       const file = path.join(out, `scena-${id}-${kind}.png`);
       await page.screenshot({ path: file });
-      console.log(`  ${id.padEnd(3)} y=${st.y} p=${st.p} t1=${st.t1} t2=${st.t2} t3=${st.t3} t7=${st.t7} scene=${st.active} webgl=${st.webgl} -> ${path.basename(file)}`);
+      console.log(`  ${String(id).padEnd(3)} y=${st.y} p=${st.p} scene=${st.active} [${st.near}] -> ${path.basename(file)}`);
     }
     for (const l of logs) console.log('   ', l);
     await ctx.close();

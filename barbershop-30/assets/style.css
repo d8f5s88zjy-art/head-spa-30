@@ -1,7 +1,7 @@
 /* ==========================================================================
    BARBERSHOP 30 – štýly
    Základ (tokeny, typografia, komponenty) je dizajnový systém z docs/ART_DIRECTION.md.
-   Scény majú vlastné bloky nižšie (hľadaj „SCÉNA“).
+   Prehliadka (zábery, dosky, pásy) je v druhej polovici súboru (hľadaj „PREHLIADKA“), docs/TOUR_DIRECTION.md.
    ========================================================================== */
 
 @import url("fonts.css");
@@ -42,11 +42,13 @@
   --t-micro: 200ms;
   --t-text: 560ms;
 
-  /* Nastavuje app.js z jedného zdroja scroll progressu (0–1). */
+  /* Nastavuje app.js z jedného zdroja scroll progressu (0–1); --sp dostáva každá kotva .film-shot. */
   --p: 0;
-  --t1: 0; --t2: 0; --t3: 0; --t7: 0;
   --pointer-x: 0.5;
   --pointer-y: 0.5;
+
+  /* Tmavá doska pod textom nad filmom (TOUR_DIRECTION: --ink 0.72, zreteľný okraj). */
+  --board: rgba(14, 13, 12, 0.72);
 }
 
 @media (max-width: 1024px) { :root { --gutter: 24px; } }
@@ -259,6 +261,7 @@ p + p { margin-top: var(--s4); }
   letter-spacing: 0.02em;
 }
 .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lamp); }
+@media (max-width: 900px) { .chip { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(14, 13, 12, 0.78); } }
 
 .card {
   border: 1px solid var(--line);
@@ -301,6 +304,7 @@ p + p { margin-top: var(--s4); }
 .nav-toggle svg { width: 24px; height: 24px; }
 
 @media (max-width: 900px) {
+  .site-header.is-scrolled { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(14, 13, 12, 0.9); }
   .nav { display: none; }
   .nav-toggle { display: inline-flex; }
   .site-header[data-menu="open"] .nav {
@@ -310,8 +314,7 @@ p + p { margin-top: var(--s4); }
     position: fixed; inset: var(--nav-h) 0 auto 0;
     height: calc(100vh - var(--nav-h)); height: calc(100svh - var(--nav-h));
     padding: var(--s6) var(--gutter) calc(var(--cta-h) + var(--s6));
-    background: rgba(14, 13, 12, 0.96);
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    background: rgba(14, 13, 12, 0.97);
     overflow: auto;
   }
   .site-header[data-menu="open"] .nav a { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--paper); }
@@ -330,7 +333,7 @@ p + p { margin-top: var(--s4); }
 .mobile-cta.is-hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
 @media (max-width: 900px) { .mobile-cta { display: block; } body { padding-bottom: calc(var(--cta-h) + 24px); } }
 
-/* Linka príbehu: 7 kapitol, čisto informatívna */
+/* Linka príbehu: 9 kapitol prehliadky, čisto informatívna */
 .story-line {
   position: fixed; z-index: 30;
   left: 6px; top: 50%; transform: translateY(-50%);
@@ -348,12 +351,11 @@ p + p { margin-top: var(--s4); }
 @media (max-width: 1100px) { .story-line { display: none; } }
 
 /* --------------------------------------------------------------------------
-   7. Obrázky a 2.5D
+   7. Obrázky a videá
    -------------------------------------------------------------------------- */
 .media { position: relative; overflow: hidden; background: var(--ink-3); }
 .media picture { height: 100%; }
 .media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
-.media[data-depth="2.5d"] img { will-change: transform; transform: scale(var(--depth-scale, 1)); transform-origin: var(--focal, 50% 50%); }
 .media .chip { position: absolute; left: var(--s4); bottom: var(--s4); }
 
 /* Tiché videoslučky z prevádzky (riadi app.js: play pri viditeľnosti, pri motion=off ostáva poster) */
@@ -387,261 +389,165 @@ html[data-scene-active] .reveal:not(.is-in) { opacity: 0; transform: translateY(
 html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 
 /* ==========================================================================
-   SCÉNY – doplní stavba stránky (index.html + tento súbor)
+   PREHLIADKA PODNIKU (docs/TOUR_DIRECTION.md)
+   Každá sekcia má 1–2 kotvy .film-shot: záber cez celú obrazovku so statickou zálohou
+   <picture class="film-still"> a HTML textom na tmavej doske .board. Film (assets/film.js)
+   kreslí pod stránkou do pevného canvasu .film-canvas; keď beží (html.world-in), zálohy
+   sa skryjú a sekcie sú priehľadné. Pásy .band sú nepriehľadné plochy medzi zábermi.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   S0. Javisko (fixed canvas + poster) a spoločné pravidlá filmových scén
+   P0. Vrstvy: canvas filmu (z 0) pod stránkou (.site z 1)
    -------------------------------------------------------------------------- */
-.stage {
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
+.film-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100vh; height: 100lvh;
+  z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity 1.2s var(--ease-in-out);
 }
-.stage-bg {
-  /* MUSÍ byť rovnaký ako podklad posterov (source/tools/posters.mjs, funkcia backdrop) – bez skoku poster → 3D */
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(120% 90% at 18% 100%, #1a1511 0%, rgba(26, 21, 17, 0) 60%),
-    radial-gradient(60% 50% at 88% 30%, rgba(224, 96, 28, 0.08) 0%, rgba(224, 96, 28, 0) 70%),
-    var(--ink);
-}
-.stage-poster, .stage-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.stage-poster img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.stage-poster { transition: opacity 500ms var(--ease-out); }
-.stage.is-3d .stage-poster { opacity: 0; }
-.stage-canvas { opacity: 1; transition: opacity 500ms var(--ease-out); }
-.stage[data-visible="0"] .stage-canvas { opacity: 0; }
-html[data-webgl="off"] .stage-canvas,
-html[data-motion="off"] .stage-canvas { display: none; }
-
-main { position: relative; z-index: 1; }
-
-/* Filmová scéna: dlhá sekcia + prilepené javisko s výškou obrazovky */
-.scene-film { position: relative; }
-.scene-sticky {
-  position: sticky; top: 0;
-  height: 100vh; height: 100svh;
-  overflow: hidden;
-}
-.scene-1 { height: 180vh; }
-.scene-2 { height: 180vh; }
-.scene-3 { height: 220vh; }
-.scene-7 { height: 150vh; }
-@media (max-width: 900px) {
-  .scene-1 { height: 140vh; }
-  .scene-2 { height: 130vh; }
-  .scene-3 { height: 180vh; }
-  .scene-7 { height: 120vh; }
-}
-
-/* Mriežka textu v filmových scénach */
-.scene-grid {
-  position: relative; z-index: 2;
-  height: 100%;
-  padding-top: calc(var(--nav-h) + var(--s6));
-  padding-bottom: var(--s7);
-  align-content: center;
-}
-.scene-text { grid-column: 1 / span 5; }
-.scene-text .lead, .scene-text .body { margin-top: var(--s5); }
-.scene-text h1 + .lead { margin-top: var(--s5); }
-.scene-text .link-arrow { margin-top: var(--s2); }
-.scene-text > p:last-child { margin-top: var(--s5); }
-.scene-actions { margin-top: var(--s6); }
-@media (max-width: 1100px) { .scene-text { grid-column: 1 / span 6; } }
-@media (max-width: 800px) {
-  .scene-grid { padding-top: calc(var(--nav-h) + var(--s6)); padding-bottom: calc(var(--cta-h) + var(--s5)); align-content: start; }
-  .scene-text { grid-column: 1 / -1; }
-  .scene-actions { flex-direction: column; align-items: stretch; gap: var(--s3); margin-top: var(--s6); }
-  .scene-actions .btn { width: 100%; }
-}
-
-/* Stavové texty: skryté len keď app.js riadi stránku (data-scene-active),
-   inak sú viditeľné – progressive enhancement. */
-.scene-film [data-at] {
-  transition: opacity var(--t-text) var(--ease-out), transform var(--t-text) var(--ease-out);
-}
-html[data-scene-active] .scene-film [data-at]:not(.is-in) {
-  opacity: 0;
-  transform: translateY(24px);
-  pointer-events: none;
-}
-html[data-scene-active] .scene-film [data-at].is-in { opacity: 1; transform: none; }
-
-/* Režim bez pohybu: filmové scény sa správajú ako bežný tok */
-html[data-motion="off"] .scene-film { height: auto; }
-html[data-motion="off"] .scene-sticky { position: relative; height: auto; min-height: 100vh; min-height: 100svh; }
-html[data-motion="off"] .scene-film [data-at] { opacity: 1 !important; transform: none !important; pointer-events: auto; }
+html.world-in .film-canvas { opacity: 1; }
+.site { position: relative; z-index: 1; }
 
 /* --------------------------------------------------------------------------
-   SCÉNA 1 – Prvý dojem
+   P1. Záber: kotva .film-shot (min 100svh) so zálohou a obsahom v tej istej bunke mriežky.
+       Záloha je sticky (drží pri dlhšom obsahu, napr. cenník), obsah ide cez ňu.
    -------------------------------------------------------------------------- */
-.scene-1 .scene-sticky { background: transparent; }
-.scene-text-1 { max-width: 44rem; }
-.scene-text-1 h1 { text-shadow: 0 2px 24px rgba(14, 13, 12, 0.5); }
+.scene { position: relative; }
+.film-shot {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh; min-height: 100svh;
+  isolation: isolate;
+  overflow: clip;
+}
+.film-still {
+  grid-area: 1 / 1;
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink-2);
+  z-index: 0;
+}
+.film-still img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: var(--fx, 50%) var(--fy, 50%);
+  /* jemný prejazd 1 → 1.06 podľa lokálneho t záberu (--sp z app.js); bez skriptu stojí */
+  transform: scale(calc(1 + 0.06 * var(--sp, 0)));
+  transform-origin: var(--fx, 50%) var(--fy, 50%);
+}
+html[data-motion="on"] .film-still img { will-change: transform; }
+html[data-motion="off"] .film-still img { transform: none; }
+/* vinetácia a šero pri okrajoch, aby doska aj chip držali na fotke (fotka sa netónuje) */
+.film-still::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(14, 13, 12, 0.55) 0%, rgba(14, 13, 12, 0) 38%),
+    linear-gradient(to bottom, rgba(14, 13, 12, 0.45) 0%, rgba(14, 13, 12, 0) 22%),
+    radial-gradient(120% 90% at 50% 50%, rgba(14, 13, 12, 0) 55%, rgba(14, 13, 12, 0.35) 100%);
+}
 
-/* Nástup textu bez skriptu (450 ms po načítaní), kým app.js neprevezme riadenie */
+/* film beží: zálohy preč, sekcie priehľadné; zlyhanie (world-off) ich nechá navždy */
+html.world-in:not(.world-off) .film-still {
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.7s var(--ease-in-out), visibility 0s linear 0.7s;
+}
+html.world-in:not(.world-off) .film-still img { transform: none; will-change: auto; }
+
+/* obsah záberu: doska vľavo (5/12), zvislo v strede; na mobile v dolnej polovici */
+.film-content {
+  grid-area: 1 / 1;
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: calc(var(--nav-h) + var(--s6));
+  padding-bottom: var(--s7);
+  min-height: 100vh; min-height: 100svh;
+}
+.film-content-caption { justify-content: flex-end; }
+.film-content-wide { justify-content: flex-start; padding-top: calc(var(--nav-h) + var(--s7)); padding-bottom: var(--s9); }
+
+/* --------------------------------------------------------------------------
+   P2. Doska s textom nad filmom – vždy tmavá, nikdy text voľne nad fotkou
+   -------------------------------------------------------------------------- */
+.board {
+  width: min(100%, 36rem);
+  padding: var(--s6);
+  background: var(--board);
+  border: 1px solid rgba(241, 233, 221, 0.18);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+@media (min-width: 901px) {
+  .board { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+}
+.board .eyebrow { margin-bottom: var(--s4); }
+.board h1 + .lead, .board h2 + .lead, .board h2 + .body, .board h1 + .body { margin-top: var(--s5); }
+.board .link-arrow { margin-top: var(--s2); }
+.board > p:last-child { margin-top: var(--s5); }
+.board-actions { margin-top: var(--s6); }
+.board-hero { width: min(100%, 44rem); }
+.board-hero h1 { max-width: 12ch; }
+.board-wide { width: min(100%, 60rem); margin-inline: auto; }
+.board-media { width: min(100%, 52rem); display: grid; grid-template-columns: minmax(0, 1fr) 13.5rem; gap: var(--s6); align-items: end; }
+.board-media .board-text { min-width: 0; }
+.board-contact { width: min(100%, 40rem); }
+
+/* nástup dosky (jednorazový, IntersectionObserver); hero sa objaví časovo aj bez skriptu */
 @keyframes text-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
-html:not([data-scene-active]) .scene-text-1 { animation: text-in 600ms var(--ease-out) 450ms both; }
+.board-hero { animation: text-in 600ms var(--ease-out) 350ms both; }
+
+.fact-list { margin-top: var(--s5); display: grid; gap: var(--s3); }
+.fact-list li { display: flex; align-items: baseline; gap: var(--s3); font-size: 1.0625rem; color: var(--paper); }
+.fact-list li::before { content: ""; flex: none; width: 10px; height: 2px; background: var(--lamp); transform: translateY(-0.3em); }
+.chips { margin-top: var(--s5); gap: var(--s2); }
+.chips .chip { background: rgba(241, 233, 221, 0.06); }
+
+.place-tag { margin: 0 0 var(--s4); align-self: flex-start; transition: opacity var(--t-text) var(--ease-out), transform var(--t-text) var(--ease-out); }
+html[data-scene-active] .place-tag:not(.is-in) { opacity: 0; transform: translateY(12px); }
+html[data-motion="off"] .place-tag { opacity: 1 !important; transform: none !important; }
 
 .scroll-hint {
-  position: absolute; right: var(--gutter); bottom: var(--s6); z-index: 2;
+  position: absolute; right: var(--gutter); bottom: var(--s6); z-index: 2; margin: 0;
   display: flex; align-items: center; gap: var(--s3);
   opacity: clamp(0, 1 - var(--p) / 0.02, 1);
   transition: opacity 300ms var(--ease-out);
 }
 .scroll-hint::after { content: ""; width: 48px; height: 2px; background: var(--lamp); }
-@media (max-width: 800px) {
-  /* tlačidlá hero textu vedľa seba, aby text zabral čo najmenej výšky a kreslo mohlo byť v spodnej polovici */
-  .scene-1 .scene-actions { flex-direction: row; align-items: stretch; flex-wrap: nowrap; gap: var(--s2); margin-top: var(--s5); }
-  .scene-1 .scene-actions .btn { width: auto; flex: 1 1 0; min-width: 0; padding-inline: var(--s3); font-size: 0.78rem; letter-spacing: 0.05em; }
-  .scene-1 .scene-actions .btn-primary { flex-grow: 1.7; }
-  .scene-1 .scene-actions .btn svg { display: none; }
-  .scroll-hint { display: none; }
-  /* Kreslo je v spodnej polovici; text hore dostane jemný podklad pre čitateľnosť */
-  .scene-1 .scene-grid::before {
-    content: ""; position: absolute; inset: 0 calc(-1 * var(--gutter)) 45%;
-    background: linear-gradient(to bottom, rgba(14, 13, 12, 0.72), rgba(14, 13, 12, 0.35) 70%, transparent);
-    z-index: -1; pointer-events: none;
-  }
-}
 
 /* --------------------------------------------------------------------------
-   SCÉNA 2 – Remeslo (3D detail → fotografia kresla → fotografia nástrojov)
-   Prelínanie riadi app.js cez --t2 (0–1) na <html>.
+   P3. Pásy – nepriehľadné plochy s textom cez celú šírku
    -------------------------------------------------------------------------- */
-.scene-2 .scene-sticky { --t: var(--t2); }
-.scene2-media { position: absolute; inset: 0; z-index: 1; }
-.scene2-media .media { position: absolute; inset: 0; background: transparent; }
-.scene2-media .media img { width: 100%; height: 100%; }
-
-/* fotografia kresla: zhoda tvaru s 3D opierkou, nástup t 0.72–0.88 */
-.media-kreslo { opacity: clamp(0, (var(--t2) - 0.72) / 0.16, 1); }
-/* fotografia nástrojov: nástup t 0.9–0.98, ku koncu sa zmenší na 0.96 a stmavne na 70 % */
-.media-naradie {
-  opacity: clamp(0, (var(--t2) - 0.9) / 0.08, 1);
-  transform: scale(calc(1 - 0.04 * clamp(0, (var(--t2) - 0.97) / 0.03, 1)));
-  filter: brightness(calc(1 - 0.3 * clamp(0, (var(--t2) - 0.97) / 0.03, 1)));
-  transform-origin: 50% 50%;
+.band {
+  position: relative;
+  background: var(--ink-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-block: var(--s9);
 }
-/* desktop: fotografia je priblížená na prešívanú opierku a rameno (rovnaký výrez ako koncový záber 3D kamery v chair.js) */
-@media (min-width: 801px) {
-  .media-kreslo img { transform-origin: 0 0; transform: translate(-31.1vh, -1.7vh) scale(1.5); }
-}
-/* tmavý závoj pre čitateľnosť textu nad fotografiou */
-.scene2-media::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    linear-gradient(to top, rgba(14, 13, 12, 0.7) 0%, rgba(14, 13, 12, 0.2) 45%, rgba(14, 13, 12, 0) 70%),
-    linear-gradient(to right, rgba(14, 13, 12, 0.6) 0%, rgba(14, 13, 12, 0) 55%);
-  opacity: clamp(0, (var(--t2) - 0.72) / 0.16, 1);
-  pointer-events: none;
-}
-.scene-text-2 { grid-column: 1 / span 4; align-self: end; }
-/* portrétové okno so slučkou: medzi textom a 3D detailom / fotografiou kresla */
-.scene2-video {
-  grid-column: 5 / span 3; grid-row: 1; align-self: end; justify-self: start;
-  width: min(100%, calc((100vh - var(--nav-h) - 9rem) * 9 / 16));
-  width: min(100%, calc((100svh - var(--nav-h) - 9rem) * 9 / 16));
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-}
-@media (max-width: 1100px) {
-  .scene-text-2 { grid-column: 1 / span 5; }
-  .scene2-video { grid-column: 6 / span 3; }
-}
-@media (max-width: 800px) {
-  /* mobil: fotografia je rovnako ako 3D javisko na celú obrazovku; zhoda tvaru = horná časť kresla (headrest, opierka) v hornej tretine,
-     spodok zmizne pod závojom, ktorý drží text a video čitateľné */
-  .scene2-media .media-kreslo img { object-position: 74% 50%; transform: translateY(-4.4vh); }
-  .scene2-media::after { inset: auto 0 -1px 0; height: 70%; opacity: 1; background: linear-gradient(to top, var(--ink) 0%, rgba(14, 13, 12, 0.92) 45%, rgba(14, 13, 12, 0) 100%); }
-  .scene-2 .scene-grid { align-content: end; }
-  .scene-text-2 { grid-column: 1 / -1; align-self: end; }
-  .scene-text-2 .body { font-size: 0.9375rem; line-height: 1.5; margin-top: var(--s4); }
-  .scene-text-2 h2 { font-size: 1.85rem; }
-  .scene-text-2 > p:last-child { display: none; } /* odkaz „Pozri služby“ – služby sú v menu a v spodnom CTA */
-  /* mobil: video cez celú šírku pod textom (výrez na šírku zo stredu portrétového záberu) */
-  .scene2-video { grid-column: 1 / -1; grid-row: auto; justify-self: stretch; width: 100%; aspect-ratio: 16 / 9; margin-top: var(--s4); box-shadow: none; }
-}
-html[data-motion="off"] .scene-2 .scene-sticky { background: var(--ink); }
-html[data-motion="off"] .scene2-media { position: relative; height: 60vh; }
-html[data-motion="off"] .media-kreslo { opacity: 0; }
-html[data-motion="off"] .media-naradie { opacity: 1; transform: none; filter: none; }
-
-/* --------------------------------------------------------------------------
-   SCÉNA 3 – Miesto (tri 2.5D fotografie, crossfade cez --t3)
-   -------------------------------------------------------------------------- */
-.scene-3 .scene-sticky { background: var(--teal); }
-.scene3-media { position: absolute; inset: 0; z-index: 1; }
-.scene3-media .media { position: absolute; inset: 0; }
-.scene3-media .media img { width: 100%; height: 100%; }
-.scene3-media .media[data-depth="2.5d"] img { --depth-scale: calc(1 + 0.06 * var(--t3)); }
-.media-3a { opacity: clamp(0, 1 - (var(--t3) - 0.3) / 0.06, 1); }
-.media-3b { opacity: min(clamp(0, (var(--t3) - 0.3) / 0.06, 1), clamp(0, 1 - (var(--t3) - 0.64) / 0.06, 1)); }
-.media-3c { opacity: clamp(0, (var(--t3) - 0.64) / 0.06, 1); }
-.scene3-media .media .chip { left: auto; right: var(--gutter); bottom: var(--s6); }
-
-/* teal vignette na okrajoch + tmavý podklad pod textom */
-.scene3-vignette {
-  position: absolute; inset: 0; pointer-events: none;
-  background:
-    linear-gradient(to right, rgba(14, 13, 12, 0.82) 0%, rgba(14, 13, 12, 0.55) 34%, rgba(14, 13, 12, 0) 62%),
-    radial-gradient(140% 100% at 50% 50%, rgba(22, 59, 60, 0) 55%, rgba(22, 59, 60, 0.55) 100%);
-}
-.scene-text-3 { align-self: start; padding-top: var(--s5); }
-.scene-text .space-list { margin-top: var(--s6); display: grid; gap: var(--s3); } /* (špecifickosť: ul[role=list] má margin 0) */
-.space-row { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }
-.space-row .chip { background: rgba(14, 13, 12, 0.45); }
-.space-row .space-note { font-size: 0.9375rem; color: var(--paper-2); }
-/* aktívny priestor podľa --t3 (Recepcia 0–.33, Hlavná sála .33–.67, Zadná .67–1) */
-.space-row[data-space="1"] { --on: clamp(0, 1 - (var(--t3) - 0.3) / 0.06, 1); }
-.space-row[data-space="2"] { --on: min(clamp(0, (var(--t3) - 0.3) / 0.06, 1), clamp(0, 1 - (var(--t3) - 0.64) / 0.06, 1)); }
-.space-row[data-space="3"] { --on: clamp(0, (var(--t3) - 0.64) / 0.06, 1); }
-.space-row .chip::before { opacity: calc(0.35 + 0.65 * var(--on, 1)); transform: scale(calc(0.8 + 0.4 * var(--on, 1))); transition: transform var(--t-micro); }
-@media (max-width: 800px) {
-  .scene3-media .media .chip { display: none; }
-  .scene3-vignette {
-    background:
-      linear-gradient(to top, rgba(14, 13, 12, 0.94) 0%, rgba(14, 13, 12, 0.8) 45%, rgba(14, 13, 12, 0.35) 65%, rgba(14, 13, 12, 0) 85%),
-      radial-gradient(140% 100% at 50% 50%, rgba(22, 59, 60, 0) 55%, rgba(22, 59, 60, 0.5) 100%);
-  }
-  .scene-3 .scene-grid { align-content: end; }
-  .scene-text-3 { align-self: end; padding-top: 0; }
-  .scene-text .space-list { margin-top: var(--s5); display: flex; flex-wrap: wrap; gap: var(--s2); }
-  .space-row .space-note { display: none; }
-}
-html[data-motion="off"] .scene-3 .scene-sticky { padding-bottom: var(--s7); }
-html[data-motion="off"] .scene3-media { position: relative; display: grid; gap: 2px; }
-html[data-motion="off"] .scene3-media .media { position: relative; opacity: 1; height: 50vh; }
-html[data-motion="off"] .scene3-vignette { display: none; }
-html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-scale: 1; }
-
-/* --------------------------------------------------------------------------
-   Pokojné plochy – spoločné (scény 4–6)
-   -------------------------------------------------------------------------- */
-.scene-flow { position: relative; background: var(--ink-2); }
-.scene-flow + .scene-flow { border-top: 1px solid var(--line); }
-.section-head-text { grid-column: 1 / span 7; }
-.team-video { grid-column: 9 / span 4; grid-row: 1; align-self: end; aspect-ratio: 4 / 3; }
+@media (max-width: 640px) { .band { padding-block: var(--s8); } }
+.band-head { margin-bottom: var(--s7); align-items: end; }
+.band-head-text { grid-column: 1 / span 7; }
+.band-head-text .lead { margin-top: var(--s4); }
+.team-video { grid-column: 9 / span 4; grid-row: 1; aspect-ratio: 4 / 3; }
 .team-video video { object-position: 50% 55%; }
 @media (max-width: 1100px) { .team-video { grid-column: 8 / span 5; } }
-@media (max-width: 800px) { .team-video { grid-column: 1 / -1; grid-row: auto; margin-top: var(--s6); } }
-.section-head-text .lead { margin-top: var(--s5); }
-@media (max-width: 800px) { .section-head-text { grid-column: 1 / -1; } }
-
-/* Vstup prvkov zdola aj bez skriptu (scroll-driven animations); .is-in od app.js ho ukončí.
-   V prehliadači bez view() ostáva .reveal viditeľný, kým app.js nenastaví data-scene-active. */
-@supports (animation-timeline: view()) {
-  @keyframes reveal-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-  .reveal:not(.is-in) {
-    animation: reveal-in 450ms var(--ease-out) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 35%;
-  }
+@media (max-width: 800px) {
+  .band-head-text { grid-column: 1 / -1; }
+  .team-video { grid-column: 1 / -1; grid-row: auto; margin-top: var(--s6); }
 }
 
+.band-facts { padding-block: var(--s7); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5); }
+.facts li { display: grid; gap: var(--s1); padding-left: var(--s4); border-left: 2px solid var(--lamp); }
+.facts strong { font-family: var(--font-display); font-weight: 800; font-variation-settings: "opsz" 144; font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.1; color: var(--paper); }
+.facts span { font-size: 0.9375rem; color: var(--paper-2); }
+@media (max-width: 800px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s4); } }
+
 /* --------------------------------------------------------------------------
-   SCÉNA 4 – Ľudia
+   P4. Tím – mriežka portrétov 5 / 3 / 2
    -------------------------------------------------------------------------- */
 .team-grid {
   display: grid;
@@ -668,10 +574,7 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
   overflow: hidden;
 }
 .team-portrait picture { height: 100%; }
-.team-portrait img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: var(--focal, 50% 35%);
-}
+.team-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 35%); }
 .team-body { padding: var(--s4) var(--s4) var(--s5); display: flex; flex-direction: column; gap: var(--s1); flex: 1; }
 .team-name { font-size: clamp(1.25rem, 1.6vw, 1.5rem); }
 .team-role { font-size: 0.875rem; color: var(--paper-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
@@ -679,16 +582,19 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
 .team-note { margin-top: var(--s6); }
 .team-note a { color: var(--paper-2); }
 .team-note a:hover { color: var(--lamp-2); }
+@media (max-width: 640px) { .team-body { padding: var(--s3) var(--s3) var(--s4); } .team-cta { font-size: 0.875rem; } }
 
 /* --------------------------------------------------------------------------
-   SCÉNA 5 – Služby a ceny („cardless“ cenník s vlasovými linkami)
+   P5. Služby a ceny – doska s cenníkom nad záberom (tabulárne číslice)
    -------------------------------------------------------------------------- */
-.scene-5 {
+.film-shot-tall .film-still::after {
   background:
-    radial-gradient(80% 50% at 100% 0%, rgba(224, 96, 28, 0.05), rgba(224, 96, 28, 0) 60%),
-    var(--ink-2);
+    linear-gradient(to bottom, rgba(14, 13, 12, 0.55) 0%, rgba(14, 13, 12, 0.15) 30%, rgba(14, 13, 12, 0.15) 70%, rgba(14, 13, 12, 0.6) 100%),
+    radial-gradient(120% 90% at 50% 50%, rgba(14, 13, 12, 0) 55%, rgba(14, 13, 12, 0.35) 100%);
 }
-.price-list { display: grid; gap: var(--s8); }
+.board-prices { padding: var(--s7); background: rgba(14, 13, 12, 0.84); }
+.board-head { margin-bottom: var(--s7); }
+.price-list { display: grid; gap: var(--s7); font-variant-numeric: tabular-nums; }
 .price-group-title {
   font-size: clamp(1.25rem, 1.6vw, 1.5rem);
   color: var(--paper-2);
@@ -697,12 +603,11 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
 }
 .price-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 6rem 7rem auto;
+  grid-template-columns: minmax(0, 1fr) 5.5rem 6.5rem auto;
   column-gap: var(--s5);
   align-items: center;
   padding: var(--s4) 0;
   border-bottom: 1px solid var(--line);
-  font-variant-numeric: tabular-nums;
 }
 .price-name {
   font-family: var(--font-display); font-weight: 800;
@@ -712,7 +617,7 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
   text-wrap: balance;
 }
 .price-desc { margin-top: var(--s1); font-size: 0.9375rem; color: var(--paper-3); max-width: 62ch; }
-.price-time { font-size: 0.9375rem; color: var(--paper-2); white-space: nowrap; text-align: right; }
+.price-time { font-size: 0.9375rem; color: var(--paper-2); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
 .price-amount {
   font-family: var(--font-display); font-weight: 800;
   font-variation-settings: "opsz" 144;
@@ -726,23 +631,25 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s6);
   padding: var(--s5); border: 1px dashed var(--line-strong); border-radius: var(--radius);
 }
-.price-extra .price-main { flex: 1 1 28rem; }
+.price-extra .price-main { flex: 1 1 24rem; }
 @media (max-width: 800px) {
+  .board-prices { padding: var(--s5) var(--s4); }
+  .board-head { margin-bottom: var(--s6); }
+  .price-list { gap: var(--s6); }
   .price-row {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "main amount" "foot foot";
     row-gap: var(--s3);
   }
   .price-main { grid-area: main; }
   .price-amount { grid-area: amount; align-self: start; }
-  .price-time { grid-area: foot; text-align: left; align-self: center; }
+  .price-time { grid-area: foot; text-align: left; align-self: center; margin-right: auto; }
   .price-cta.btn { grid-area: foot; justify-self: end; }
-  .price-row .price-time { margin-right: auto; }
   .price-name { font-size: 1.125rem; }
 }
 
 /* --------------------------------------------------------------------------
-   SCÉNA 6 – Výsledky a dôvera (galéria + lightbox)
+   P6. Galéria 4 / 2 + lightbox, dôvera
    -------------------------------------------------------------------------- */
 .gallery { container-type: inline-size; }
 .gallery-grid {
@@ -772,10 +679,7 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
   margin-top: var(--s8);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5);
 }
-.trust-item {
-  padding: var(--s5) 0 0;
-  border-top: 1px solid var(--line-strong);
-}
+.trust-item { padding: var(--s5) 0 0; border-top: 1px solid var(--line-strong); }
 .trust-text { font-size: 1.0625rem; color: var(--paper-2); max-width: 46ch; margin-bottom: var(--s4); }
 @media (max-width: 800px) { .trust { grid-template-columns: 1fr; gap: var(--s6); } }
 
@@ -802,46 +706,70 @@ html[data-motion="off"] .scene3-media .media[data-depth="2.5d"] img { --depth-sc
 .lightbox-next { right: var(--s4); top: 50%; transform: translateY(-50%); }
 @media (max-width: 640px) {
   .lightbox { padding: var(--s7) var(--s3); }
+  .lightbox-btn { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(14, 13, 12, 0.85); }
   .lightbox-prev, .lightbox-next { top: auto; bottom: var(--s4); transform: none; }
   .lightbox-prev { left: var(--s4); }
 }
 
 /* --------------------------------------------------------------------------
-   SCÉNA 7 – Rezervácia (návrat 3D kresla; bez WebGL fotografia vstupu)
+   P7. Rezervácia – kontakty na doske
    -------------------------------------------------------------------------- */
-.scene-7 .scene-sticky { background: transparent; }
-.scene7-fallback { display: none; position: absolute; inset: 0; z-index: 1; }
-.scene7-fallback img { width: 100%; height: 100%; }
-.scene7-fallback::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(14, 13, 12, 0.9) 0%, rgba(14, 13, 12, 0.6) 45%, rgba(14, 13, 12, 0.2) 100%);
-}
-html[data-webgl="off"] .scene7-fallback,
-html[data-motion="off"] .scene7-fallback { display: block; }
-.scene-text-7 { grid-column: 1 / span 6; }
 .contact-list { margin: var(--s6) 0 0; display: grid; gap: var(--s3); max-width: 36rem; }
 .contact-row { display: grid; grid-template-columns: 7rem 1fr; gap: var(--s4); padding-bottom: var(--s3); border-bottom: 1px solid var(--line); font-size: 1.0625rem; }
 .contact-row dt { color: var(--paper-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding-top: 0.25em; }
 .contact-row dd { margin: 0; color: var(--paper); font-variant-numeric: tabular-nums; }
 .contact-row a { color: var(--paper); text-decoration-color: var(--line-strong); }
 .contact-row a:hover { color: var(--lamp-2); }
+
+/* --------------------------------------------------------------------------
+   P8. Remeslo – video v portrétovom okne vedľa textu
+   -------------------------------------------------------------------------- */
+.remeslo-video { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45); }
+
+/* --------------------------------------------------------------------------
+   P9. Mobil – samostatná kompozícia: text v dolnej polovici, tlačidlá na plnú šírku
+   -------------------------------------------------------------------------- */
 @media (max-width: 800px) {
-  /* mobil: kreslo hore (3D), text so záväznými údajmi pod ním; „body“ odsek sa skrýva, aby sa všetko zmestilo */
-  .scene-7 .scene-grid { padding-bottom: var(--s5); align-content: end; }
-  .scene-text-7 { grid-column: 1 / -1; }
-  .scene-text-7 .body { display: none; }
-  .scene-text-7 h2 { font-size: 1.85rem; }
-  .scene-7 .scene-grid::before {
-    content: ""; position: absolute; inset: 30% calc(-1 * var(--gutter)) 0;
-    background: linear-gradient(to top, rgba(14, 13, 12, 0.9) 0%, rgba(14, 13, 12, 0.82) 70%, rgba(14, 13, 12, 0) 100%);
-    z-index: -1; pointer-events: none;
+  .film-content {
+    justify-content: flex-end;
+    padding-top: calc(var(--nav-h) + var(--s5));
+    padding-bottom: calc(var(--cta-h) + var(--s5));
   }
+  .film-content-wide { justify-content: flex-start; padding-bottom: calc(var(--cta-h) + var(--s7)); }
+  .board { padding: var(--s5) var(--s4); width: 100%; box-shadow: none; }
+  .board-hero h1 { font-size: clamp(2.5rem, 12vw, 3.25rem); max-width: none; }
+  .board h2 { font-size: clamp(1.75rem, 8vw, 2.25rem); }
+  .board .body, .board .lead { font-size: 1rem; line-height: 1.5; }
+  .board h1 + .lead, .board h2 + .body, .board h2 + .lead { margin-top: var(--s4); }
+  .board-actions { flex-direction: column; align-items: stretch; gap: var(--s3); margin-top: var(--s5); }
+  .board-actions .btn { width: 100%; }
+  .board-media { grid-template-columns: 1fr; gap: var(--s4); }
+  .remeslo-video { aspect-ratio: 16 / 9; width: 100%; box-shadow: none; }
+  .contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .contact-actions .btn-primary { grid-column: 1 / -1; }
   .contact-list { margin-top: var(--s4); gap: var(--s2); }
   .contact-row { grid-template-columns: 5.5rem 1fr; gap: var(--s3); font-size: 0.9375rem; padding-bottom: var(--s2); }
-  .scene-7 .scene-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); margin-top: var(--s4); }
-  .scene-7 .scene-actions .btn-primary { grid-column: 1 / -1; }
-  .scene7-fallback::after { background: linear-gradient(to bottom, rgba(14, 13, 12, 0.3), rgba(14, 13, 12, 0.88) 55%); }
+  .board-contact .body { display: none; } /* údaje a tlačidlá majú prednosť, aby sa doska zmestila */
+  .scroll-hint { display: none; }
+  .film-still::after {
+    background:
+      linear-gradient(to top, rgba(14, 13, 12, 0.7) 0%, rgba(14, 13, 12, 0.25) 45%, rgba(14, 13, 12, 0) 70%),
+      linear-gradient(to bottom, rgba(14, 13, 12, 0.5) 0%, rgba(14, 13, 12, 0) 24%);
+  }
 }
+/* hero na telefóne: dve tlačidlá vedľa seba, aby fasáda ostala vidieť */
+@media (max-width: 800px) and (min-width: 361px) {
+  .board-hero .board-actions { flex-direction: row; flex-wrap: nowrap; gap: var(--s2); }
+  .board-hero .board-actions .btn { width: auto; flex: 1 1 0; min-width: 0; padding-inline: var(--s3); font-size: 0.78rem; letter-spacing: 0.05em; }
+  .board-hero .board-actions .btn-primary { flex-grow: 1.4; }
+  .board-hero .board-actions .btn svg { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   P10. Režim bez pohybu: všetko viditeľné, bez prejazdu
+   -------------------------------------------------------------------------- */
+html[data-motion="off"] .reveal { opacity: 1; transform: none; }
+html[data-motion="off"] .board-hero { animation: none; }
 
 /* --------------------------------------------------------------------------
    Pätička

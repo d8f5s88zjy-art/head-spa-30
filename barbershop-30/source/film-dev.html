@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Film – vývojová stránka (BARBERSHOP 30)</title>
+<meta name="robots" content="noindex">
+<!-- Vývojová stránka filmu (assets/film.js): 9 sekcií podľa docs/TOUR_DIRECTION.md, 12 kotiev .film-shot,
+     dlhé prázdne sekcie. Nenasadzuje sa.
+     URL: ?force=1  obíde rozhodovanie o filme aj čakanie na pohyb návštevníka (headless Chromium, source/shot.mjs)
+          ?shot=<meno>&t=0..1  skočí na záber a nastaví polohu v jeho pohybe kamery (0,5 = kotva, bez prelínania)
+          ?mid=<meno>  zastaví sa uprostred prelínania zo záberu <meno> do nasledujúceho (snímka v polovici šera)
+     window.__renderDone = true po prvom snímku (alebo pri world-off); window.__renderMs = čas do prvého snímku. -->
+<script>
+  (function (h) {
+    window.__renderDone = false;
+    var q = new URLSearchParams(location.search);
+    if (q.get('force') === '1') h.dataset.film = 'force';
+    else {
+      // rovnaké rozhodovanie ako má mať stránka v hlavičke (film.js ho vie urobiť aj sám, tu je kvôli štýlom pred prvým vykreslením)
+      try {
+        var c = document.createElement('canvas'), g = c.getContext('webgl2');
+        if (g && !matchMedia('(prefers-reduced-motion: reduce)').matches && !(navigator.connection && navigator.connection.saveData)
+          && !matchMedia('(max-height: 500px)').matches && (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4) h.classList.add('world');
+        var x = g && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
+      } catch (e) { /* bez filmu */ }
+    }
+  })(document.documentElement);
+</script>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/film.css">
+<style>
+  :root { --ink: #0e0d0c; --paper: #f1e9dd; --paper-2: #c9beae; --lamp: #e0601c; --cta-h: 56px; }
+  html { background: var(--ink); scroll-behavior: auto; }
+  body { margin: 0; background: var(--ink); color: var(--paper); font: 17px/1.6 "Manrope", "Segoe UI", Arial, sans-serif; }
+  .site { position: relative; z-index: 1; }
+  section { position: relative; min-height: 220vh; }
+  /* kotva záberu: prilepená cez celú obrazovku; druhý záber sekcie je v toku pod doskou */
+  .film-shot { position: sticky; top: 0; height: 100vh; height: 100lvh; }
+  .film-shot.flow { position: relative; margin-top: 10vh; }
+  .board { position: relative; z-index: 2; width: min(720px, calc(100% - 32px)); margin: -60vh auto 0; padding: clamp(28px, 4.4vw, 56px);
+    background: rgba(14, 13, 12, .72); border: 1px solid rgba(241, 233, 221, .14); }
+  @media (min-width: 721px) { .board { backdrop-filter: blur(12px); } }
+  h1, h2 { font-family: "Fraunces", Georgia, serif; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin: 0 0 .5em; }
+  h1 { font-size: clamp(2.75rem, 7.2vw, 6.75rem); } h2 { font-size: clamp(2rem, 4.4vw, 3.5rem); }
+  p { color: var(--paper-2); max-width: 62ch; margin: 0 0 1em; }
+  .eyebrow { font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-2); }
+  .btn { display: inline-block; height: 52px; line-height: 52px; padding: 0 22px; border-radius: 6px; background: var(--lamp); color: var(--ink);
+    font-weight: 700; font-size: .875rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+  footer { position: relative; z-index: 1; padding: 20vh 24px 24vh; background: var(--ink); color: var(--paper-2); }
+  .dbg { position: fixed; right: 12px; top: 12px; z-index: 50; font: 11px/1.4 ui-monospace, monospace; color: #c9beae; background: rgba(14,13,12,.7); padding: 6px 8px; white-space: pre; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="site">
+  <!-- 1 úvod -->
+  <section id="uvod">
+    <div class="film-shot" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/vstup-1448.webp" width="4096" height="2731" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+    <div class="board">
+      <div class="eyebrow">Barbershop 30 · Nitra</div>
+      <h1>Tvoj strih. Tvoje miesto.</h1>
+      <p>Vývojová stránka filmu. Text je iba výplň rozloženia, obsah stránky je v index.html.</p>
+      <a class="btn" href="#rezervacia">Rezervovať termín</a>
+    </div>
+  </section>
+
+  <!-- 2 recepcia -->
+  <section id="recepcia">
+    <div class="film-shot" data-shot="recepcia" data-f="0.45,0.55" data-mv="right" data-place="Recepcia a predná sála">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/recepcia-1086.avif 1086w, ../assets/img/film/recepcia-1448.avif 1448w, ../assets/img/film/recepcia-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/recepcia-1086.webp 1086w, ../assets/img/film/recepcia-1448.webp 1448w, ../assets/img/film/recepcia-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/recepcia-1448.webp" width="4096" height="2731" alt="Predná sála s recepciou, oranžovými lampami a barber pole" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Príď ako k známym.</h2><p>Výplň rozloženia.</p></div>
+  </section>
+
+  <!-- 3 sála: dva zábery -->
+  <section id="sala">
+    <div class="film-shot" data-shot="sala" data-f="0.5,0.55" data-mv="left" data-place="Hlavná sála">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/sala-1086.avif 1086w, ../assets/img/film/sala-1448.avif 1448w, ../assets/img/film/sala-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/sala-1448.webp" width="4096" height="2731" alt="Hlavná sála s radom kresiel, zrkadlami a Edisonovými lampami" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Osem kresiel. Jedno je tvoje.</h2><p>Výplň rozloženia.</p></div>
+    <div class="film-shot flow" data-shot="kreslo" data-f="0.58,0.55" data-mv="in" data-place="Kreslo pri okne">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/kreslo-1086.avif 1086w, ../assets/img/film/kreslo-1448.avif 1448w, ../assets/img/film/kreslo-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/kreslo-1086.webp 1086w, ../assets/img/film/kreslo-1448.webp 1448w, ../assets/img/film/kreslo-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/kreslo-1448.webp" width="4096" height="2731" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom v rannom svetle" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </section>
+
+  <!-- 4 remeslo -->
+  <section id="remeslo">
+    <div class="film-shot" data-shot="stol" data-f="0.5,0.5" data-mv="rise" data-place="Pracovné miesto">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/stol-1086.avif 1086w, ../assets/img/film/stol-1448.avif 1448w, ../assets/img/film/stol-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/stol-1448.webp" width="4096" height="2731" alt="Pracovné miesto s dreveným rámom zrkadla a produktmi" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Presnosť, ktorú vidíš v detaile.</h2><p>Výplň rozloženia.</p></div>
+  </section>
+
+  <!-- 5 zadná: dva zábery -->
+  <section id="zadna">
+    <div class="film-shot" data-shot="zadna" data-f="0.5,0.55" data-mv="right" data-place="Zadná miestnosť">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/zadna-1086.avif 1086w, ../assets/img/film/zadna-1448.avif 1448w, ../assets/img/film/zadna-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/zadna-1086.webp 1086w, ../assets/img/film/zadna-1448.webp 1448w, ../assets/img/film/zadna-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/zadna-1448.webp" width="4096" height="2731" alt="Zadná miestnosť s čiernymi obkladmi, červeným kreslom a benzínovou pumpou" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Druhá miestnosť, iná nálada.</h2><p>Výplň rozloženia.</p></div>
+    <div class="film-shot flow" data-shot="cakaren" data-f="0.5,0.55" data-mv="in" data-place="Kútik s pumpou Route 66">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/cakaren-1086.avif 1086w, ../assets/img/film/cakaren-1448.avif 1448w, ../assets/img/film/cakaren-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/cakaren-1448.webp" width="4096" height="2731" alt="Kreslá, farebná soška buldoga a retro benzínová pumpa" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </section>
+
+  <!-- 6 tím -->
+  <section id="tim">
+    <div class="film-shot" data-shot="sala-rano" data-f="0.5,0.55" data-mv="left" data-place="Sála v rannom svetle">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/sala-rano-1086.avif 1086w, ../assets/img/film/sala-rano-1448.avif 1448w, ../assets/img/film/sala-rano-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/sala-rano-1448.webp" width="4096" height="2731" alt="Hlavná sála v rannom svetle" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Tím barberov a barberiek.</h2><p>Výplň rozloženia.</p></div>
+  </section>
+
+  <!-- 7 služby -->
+  <section id="sluzby">
+    <div class="film-shot" data-shot="kreslo-stred" data-f="0.5,0.55" data-mv="near" data-place="Kreslo v strede sály">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/kreslo-stred-1086.avif 1086w, ../assets/img/film/kreslo-stred-1448.avif 1448w, ../assets/img/film/kreslo-stred-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/kreslo-stred-1448.webp" width="4096" height="2731" alt="Barberské kreslo v strede hlavnej sály" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Vyber si službu.</h2><p>Výplň rozloženia (cenník je v index.html).</p></div>
+  </section>
+
+  <!-- 8 galéria: dva zábery -->
+  <section id="galeria">
+    <div class="film-shot" data-shot="kava" data-f="0.5,0.5" data-mv="down" data-place="Káva pre hostí">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/kava-1086.avif 1086w, ../assets/img/film/kava-1448.avif 1448w, ../assets/img/film/kava-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/kava-1448.webp" width="4096" height="2731" alt="Káva a voda na drevenom podnose v rannom slnku" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Detaily, ktoré robia miesto.</h2><p>Výplň rozloženia.</p></div>
+    <div class="film-shot flow" data-shot="sud" data-f="0.5,0.55" data-mv="in" data-place="Predná sála so sudom">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/sud-1086.avif 1086w, ../assets/img/film/sud-1448.avif 1448w, ../assets/img/film/sud-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/sud-1448.webp" width="4096" height="2731" alt="Predná sála so sudom, uterákmi a kruhovými svietidlami" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </section>
+
+  <!-- 9 rezervácia: kruh sa uzavrie pri dverách -->
+  <section id="rezervacia">
+    <div class="film-shot" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice">
+      <picture class="film-still">
+        <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w" sizes="100vw">
+        <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w" sizes="100vw">
+        <img src="../assets/img/film/vstup-1448.webp" width="4096" height="2731" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="board"><h2>Tvoj termín je na jedno klepnutie.</h2><p>Výplň rozloženia.</p><a class="btn" href="#uvod">Rezervovať termín</a></div>
+  </section>
+  <footer>Pätička (výplň). Mostná 30, Nitra.</footer>
+</div>
+<div class="dbg" id="dbg" hidden></div>
+
+<script src="../assets/film.js" defer></script>
+<script>
+  // ladenie: po prvom snímku skok podľa URL a hlásenie pre source/shot.mjs
+  (function () {
+    var q = new URLSearchParams(location.search), t0 = performance.now();
+    var done = function (ms) { window.__renderMs = Math.round(ms); window.__renderDone = true; };
+    var tick = function () {
+      var F = window.BS30_FILM; if (!F) return requestAnimationFrame(tick);
+      F.ready.then(function (ok) {
+        var st = F.state;
+        if (!ok) { done(performance.now() - t0); return; }
+        var dbg = document.getElementById('dbg');
+        if (q.get('dbg') === '1') { dbg.hidden = false; (function loop() { var s = F.state; dbg.textContent = 'S ' + s.S.toFixed(3) + ' T ' + s.T.toFixed(3) + ' mix ' + s.mix.toFixed(2) + '\n' + s.current + ' dpr ' + s.dpr + ' ' + s.firstFrameMs + ' ms'; requestAnimationFrame(loop); })(); }
+        var shot = q.get('shot'), mid = q.get('mid'), t = q.has('t') ? parseFloat(q.get('t')) : 0.5;
+        var settled = function (name, cb) {
+          // záber je načítaný a prelínanie dokončené
+          var n = 0;
+          (function w() { var s = F.state, r = s.ready.find(function (x) { return x.shot === name; });
+            if (r && r.ready && s.current === name && (s.mix < 0.001 || s.mix > 0.999) && Math.abs(s.T - s.S) < 0.002) { if (++n > 12) return cb(); } else n = 0;
+            requestAnimationFrame(w); })();
+        };
+        if (mid) {
+          // najprv celý záber, potom skrol doprostred k nasledujúcemu; hlásenie v momente, keď je prelínanie v polovici
+          F.goTo(mid, 0.5);
+          settled(mid, function () {
+            var s = F.state, i = s.ready.findIndex(function (x) { return x.shot === mid; }), a = s.anchors[i], b = s.anchors[i + 1];
+            if (b == null) return done(st.firstFrameMs);
+            // susedný záber musí byť načítaný, inak sa prelínanie ani nezačne
+            scrollTo({ top: Math.round((a + b) / 2), behavior: 'instant' });
+            (function w() { var s2 = F.state, r = s2.ready[i + 1]; if (r.ready && s2.mix > 0.4 && s2.mix < 0.6) return done(st.firstFrameMs); requestAnimationFrame(w); })();
+          });
+        } else if (shot && F.shots.indexOf(shot) >= 0) {
+          F.goTo(shot, isFinite(t) ? t : 0.5);
+          settled(shot, function () { setTimeout(function () { done(st.firstFrameMs); }, 500); });
+        } else done(st.firstFrameMs);
+      });
+    };
+    tick();
+  })();
+</script>
+</body>
+</html>

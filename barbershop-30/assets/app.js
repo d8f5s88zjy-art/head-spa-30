@@ -1,11 +1,13 @@
 /*
- * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; docs/ART_DIRECTION.md §8).
+ * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; docs/TOUR_DIRECTION.md; docs/ART_DIRECTION.md §8).
  *
- * Jediný zdroj pravdy je scroll. Jedna slučka requestAnimationFrame číta window.scrollY,
- * počíta celkový progress --p a lokálne t filmových scén, zapisuje CSS premenné na <html>,
- * prepína stavy (is-in, data-scene-active, lišta, javisko) a volá 3D javisko (chair.js).
+ * Jediný zdroj pravdy je scroll. Jedna slučka requestAnimationFrame číta window.scrollY, počíta celkový
+ * progress --p a lokálne t každého záberu (.film-shot), zapisuje CSS premenné, prepína stavy
+ * (is-in, data-scene-active, lišta, linka príbehu, mobilné CTA) a riadi tiché videoslučky, menu a lightbox.
+ * Film zo skutočných fotiek (assets/film.js) je samostatný modul: číta kotvy .film-shot a triedy world /
+ * world-in / world-off na <html> – tento súbor ich nenastavuje ani nečíta.
  * Žiadne externé požiadavky, žiadna analytika, žiadne globálne premenné
- * (iba window.__stage na ladenie a window.__renderDone / window.__scrollSettled pre source/shot.mjs a testy).
+ * (iba window.__renderDone / window.__scrollSettled pre source/shot.mjs a testy).
  */
 
 const html = document.documentElement;
@@ -13,7 +15,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-// shot.mjs čaká, kým nebude true (prvý 3D snímok alebo rozhodnutie motion/webgl = off)
+// shot.mjs čaká, kým nebude true – stránka je čitateľná hneď po prvom nastavení stavu (bez 3D)
 window.__renderDone = false;
 window.__scrollSettled = false; // true, keď slučka dobehla cieľ (scrollY) – testy čakajú na túto hodnotu
 
@@ -23,7 +25,6 @@ window.__scrollSettled = false; // true, keď slučka dobehla cieľ (scrollY) �
 const params = new URLSearchParams(location.search);
 const mqReduced = matchMedia('(prefers-reduced-motion: reduce)');
 const mqMobile = matchMedia('(max-width: 900px)');
-const mqCoarse = matchMedia('(pointer: coarse)');
 const mqFinePointer = matchMedia('(hover: hover) and (pointer: fine)');
 const deviceMemory = typeof navigator.deviceMemory === 'number' ? navigator.deviceMemory : undefined;
 
@@ -37,7 +38,7 @@ const motionOn = !motionOff;
 html.dataset.motion = motionOn ? 'on' : 'off';
 
 /* ----------------------------------------------------------------------------
-   2. DOM (prvky nemusia existovať – stránka vzniká paralelne)
+   2. DOM
    ---------------------------------------------------------------------------- */
 const header = $('.site-header');
 const navToggle = $('.nav-toggle');
@@ -45,27 +46,17 @@ const nav = $('#nav') || $('.nav');
 const storyLine = $('.story-line');
 const storyLinks = storyLine ? $$('a[data-chapter]', storyLine) : [];
 const navLinks = nav ? $$('a[href^="#"]', nav) : [];
-const stageEl = $('#stage');
-const canvas = $('#stage-canvas');
 const mobileCta = $('#mobile-cta');
 const footer = $('.site-footer');
-
-// Filmové scény s 3D kreslom (1, 2, 7) a scéna 3 (len CSS).
-const FILM_DEFS = [
-  { id: 'uvod', scene: 1, cssVar: '--t1' },
-  { id: 'remeslo', scene: 2, cssVar: '--t2' },
-  { id: 'miesto', scene: 3, cssVar: '--t3' },
-  { id: 'rezervacia', scene: 7, cssVar: '--t7' },
-];
-const STAGE_SCENES = new Set([1, 2, 7]);
 
 /* ----------------------------------------------------------------------------
    3. Meranie rozsahov (resize, obrázky, fonty)
    ---------------------------------------------------------------------------- */
 let vh = window.innerHeight;
 let maxScroll = 1;
-let films = [];     // { el, scene, cssVar, top, height, range, items: [{ el, a, b }] }
-let sections = [];  // všetky .scene[data-scene]: { el, scene, id, top, height }
+let shots = [];     // .film-shot: { el, top, height, items: [{ el, a, b }] }
+let sections = [];  // section[data-scene]: { el, scene, id, top, height }
+let lastScene = 0;  // číslo poslednej kapitoly (rezervácia) – tam sa skryje mobilné CTA
 let footerBox = null;
 
 function parseAt(value) {
@@ -81,18 +72,17 @@ function measure() {
   maxScroll = Math.max(1, scrollH - vh);
   const y = window.scrollY || 0;
 
-  sections = $$('.scene[data-scene]').map((el) => {
+  sections = $$('section[data-scene]').map((el) => {
     const r = el.getBoundingClientRect();
     return { el, id: el.id, scene: Number(el.dataset.scene) || 0, top: r.top + y, height: r.height };
   });
+  lastScene = sections.reduce((m, s) => Math.max(m, s.scene), 0);
 
-  films = FILM_DEFS.map((def) => {
-    const el = document.getElementById(def.id);
-    if (!el) return null;
+  shots = $$('.film-shot').map((el) => {
     const r = el.getBoundingClientRect();
     const items = $$('[data-at]', el).map((node) => ({ el: node, ...parseAt(node.dataset.at) }));
-    return { el, scene: def.scene, cssVar: def.cssVar, top: r.top + y, height: r.height, range: Math.max(1, r.height - vh), items };
-  }).filter(Boolean);
+    return { el, top: r.top + y, height: Math.max(1, r.height), items };
+  });
 
   if (footer) {
     const r = footer.getBoundingClientRect();
@@ -104,13 +94,14 @@ function measure() {
    4. Zápis CSS premenných a stavov (len pri zmene)
    ---------------------------------------------------------------------------- */
 const varCache = new Map();
-function setVar(name, value) {
+function setVar(name, value, el = html) {
   const v = clamp01(value);
-  const last = varCache.get(name);
+  const key = el === html ? name : el;
+  const last = el === html ? varCache.get(key) : el.__v;
   // zapisuj len pri zmene > 0.002; krajné hodnoty 0 a 1 vždy dosadni presne
   if (last !== undefined && Math.abs(v - last) <= 0.002 && !((v === 0 || v === 1) && v !== last)) return;
-  varCache.set(name, v);
-  html.style.setProperty(name, v.toFixed(4));
+  if (el === html) varCache.set(key, v); else el.__v = v;
+  el.style.setProperty(name, v.toFixed(4));
 }
 
 function setClass(el, cls, on) {
@@ -132,35 +123,12 @@ let shownP = 0;        // zobrazený (dobieha lerpom)
 let rafId = 0;
 let lastFrame = 0;
 let snapUntil = performance.now() + 600; // do tohto času sa stav nastavuje okamžite (bez lerpu)
-let textGate = motionOff;                // nástup textu scény 1 až 450 ms po štarte
 let menuOpen = false;
 let activeScene = 0;
-let stage = null;        // API z chair.js
-let stageVisible = null; // posledná hodnota odovzdaná stage.setVisible
-let lastStageKey = '';
 let lastHeaderScrolled = null;
 
 function readTarget() {
   targetP = clamp01((window.scrollY || 0) / maxScroll);
-}
-
-// Scéna a lokálne t, ktoré dostane 3D javisko (len scény 1, 2, 7).
-// Medzi dvoma 3D scénami sa prepne v polovici medzery, keď je canvas skrytý.
-function stageTarget(y) {
-  const f3d = films.filter((f) => STAGE_SCENES.has(f.scene));
-  if (!f3d.length) return { scene: 1, t: 0 };
-  if (y < f3d[0].top) return { scene: f3d[0].scene, t: 0 };
-  for (let i = 0; i < f3d.length; i++) {
-    const f = f3d[i];
-    if (y >= f.top && y < f.top + f.height) return { scene: f.scene, t: clamp01((y - f.top) / f.range) };
-    const next = f3d[i + 1];
-    if (next && y < next.top) {
-      const mid = (f.top + f.height + next.top) / 2;
-      return y > mid ? { scene: next.scene, t: 0 } : { scene: f.scene, t: 1 };
-    }
-  }
-  const last = f3d[f3d.length - 1];
-  return { scene: last.scene, t: 1 };
 }
 
 // Sekcia, ktorej stred je najbližšie k stredu viewportu (+ pätička pre navigáciu).
@@ -183,15 +151,12 @@ function apply(p) {
   const y = p * maxScroll;
   setVar('--p', p);
 
-  // lokálne t + data-at prvky filmových scén
-  for (const f of films) {
-    const t = clamp01((y - f.top) / f.range);
-    setVar(f.cssVar, t);
-    for (const it of f.items) {
-      const inside = t >= it.a && t <= it.b;
-      if (inside && !textGate) continue; // pred otvorením brány len neodkrývame
-      setClass(it.el, 'is-in', inside);
-    }
+  // lokálne t záberu: 0 keď stred obrazovky vstúpi na jeho horný okraj, 1 keď vyjde spodným okrajom.
+  // Z neho CSS odvodí jemný prejazd zálohy (scale 1 → 1.06, premenná --sp na kotve) a stav data-at prvkov.
+  for (const s of shots) {
+    const t = clamp01((y + vh * 0.5 - s.top) / s.height);
+    setVar('--sp', t, s.el);
+    for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
   }
 
   // aktívna kapitola
@@ -211,18 +176,7 @@ function apply(p) {
   const scrolled = (window.scrollY || 0) > 80;
   if (scrolled !== lastHeaderScrolled) { lastHeaderScrolled = scrolled; setClass(header, 'is-scrolled', scrolled); }
   setClass(storyLine, 'is-visible', p > 0.02);
-  setClass(mobileCta, 'is-hidden', activeScene === 7 || menuOpen);
-
-  // javisko
-  const visible = STAGE_SCENES.has(activeScene);
-  setAttr(stageEl, 'data-visible', visible ? '1' : '0');
-  if (stage) {
-    const st = stageTarget(y);
-    const key = `${st.scene}:${st.t.toFixed(4)}`;
-    if (key !== lastStageKey) { lastStageKey = key; stage.setProgress(st); }
-    const shouldRender = visible && document.visibilityState !== 'hidden';
-    if (shouldRender !== stageVisible) { stageVisible = shouldRender; stage.setVisible(shouldRender); }
-  }
+  setClass(mobileCta, 'is-hidden', activeScene === lastScene || menuOpen);
 }
 
 function tick(now) {
@@ -270,7 +224,6 @@ function scheduleMeasure() {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     measure();
-    stage?.resize();
     snapNow(0); // po zmene rozmerov bez dobiehania
   }, 120);
 }
@@ -288,9 +241,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
     lastFrame = 0;
-    if (stage && stageVisible) { stageVisible = false; stage.setVisible(false); }
   } else {
-    stageVisible = null; // apply() znovu rozhodne
     snapNow(0);
   }
 });
@@ -304,7 +255,7 @@ document.addEventListener('click', (e) => {
 window.addEventListener('hashchange', () => snapNow(motionOn ? 900 : 100));
 
 /* ----------------------------------------------------------------------------
-   7. Kurzor (iba desktop s hover a presným ukazovateľom)
+   7. Kurzor (iba desktop s hover a presným ukazovateľom) – --pointer-x/y pre CSS
    ---------------------------------------------------------------------------- */
 function setPointerVars(x, y) {
   setVar('--pointer-x', x);
@@ -315,24 +266,21 @@ setPointerVars(0.5, 0.5);
 let pointerBound = false;
 function onPointerMove(e) {
   if (e.pointerType && e.pointerType !== 'mouse') return;
-  const x = clamp01(e.clientX / (window.innerWidth || 1));
-  const y = clamp01(e.clientY / (window.innerHeight || 1));
-  setPointerVars(x, y);
-  stage?.setPointer(x, y);
+  setPointerVars(clamp01(e.clientX / (window.innerWidth || 1)), clamp01(e.clientY / (window.innerHeight || 1)));
 }
 function bindPointer() {
   const want = mqFinePointer.matches && motionOn;
   if (want && !pointerBound) { window.addEventListener('pointermove', onPointerMove, { passive: true }); pointerBound = true; }
-  if (!want && pointerBound) { window.removeEventListener('pointermove', onPointerMove); pointerBound = false; setPointerVars(0.5, 0.5); stage?.setPointer(0.5, 0.5); }
+  if (!want && pointerBound) { window.removeEventListener('pointermove', onPointerMove); pointerBound = false; setPointerVars(0.5, 0.5); }
 }
 bindPointer();
 mqFinePointer.addEventListener?.('change', bindPointer);
 
 /* ----------------------------------------------------------------------------
-   8. Prvky .reveal a data-at mimo filmových scén – IntersectionObserver
+   8. Prvky .reveal (dosky, karty) – IntersectionObserver, jednorazový nástup
    ---------------------------------------------------------------------------- */
 (function setupReveal() {
-  const nodes = $$('.reveal, [data-at]').filter((el) => !el.closest('.scene-film'));
+  const nodes = $$('.reveal');
   if (!nodes.length) return;
   if (motionOff || !('IntersectionObserver' in window)) {
     nodes.forEach((el) => el.classList.add('is-in'));
@@ -342,7 +290,7 @@ mqFinePointer.addEventListener?.('change', bindPointer);
     for (const en of entries) {
       if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
     }
-  }, { rootMargin: '-10% 0px -10% 0px', threshold: 0 });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
   nodes.forEach((el) => io.observe(el));
 })();
 
@@ -364,7 +312,7 @@ function setMenu(open, { restoreFocus = true } = {}) {
   navToggle.setAttribute('aria-expanded', String(open));
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
-  setClass(mobileCta, 'is-hidden', open || activeScene === 7);
+  setClass(mobileCta, 'is-hidden', open || activeScene === lastScene);
   if (open) {
     const first = $('a, button', nav);
     first?.focus({ preventScroll: true });
@@ -477,10 +425,10 @@ if (navToggle && nav && header) {
 })();
 
 /* ----------------------------------------------------------------------------
-   10b. Tiché videoslučky (scéna 2 Remeslo, scéna 4 Ľudia)
+   11. Tiché videoslučky (Remeslo, Tím)
    Pravidlá: play pri viditeľnosti >= 35 %, pause mimo viewportu a pri skrytej karte; súčasne hrá
-   najviac jedno video; video v prvku s data-at hrá, len kým je prvok zobrazený (.is-in); pri
-   data-motion=off a prefers-reduced-motion sa nič nesťahuje ani neprehráva (ostáva poster).
+   najviac jedno video; video v prvku s data-at alebo .reveal hrá, len kým je prvok zobrazený (.is-in);
+   pri data-motion=off a prefers-reduced-motion sa nič nesťahuje ani neprehráva (ostáva poster).
    ---------------------------------------------------------------------------- */
 (function setupVideos() {
   const vids = $$('video[data-video]');
@@ -489,9 +437,10 @@ if (navToggle && nav && header) {
 
   const pause = (v) => { if (!v.paused) v.pause(); };
   const play = (v) => { if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => { /* autoplay zamietnutý – ostáva poster */ }); } };
+  const gateOf = (v) => v.closest('[data-at], .reveal');
   const wanted = (v) => {
     if ((ratio.get(v) || 0) < 0.35) return false;
-    const gate = v.closest('[data-at]');
+    const gate = gateOf(v);
     return !gate || gate.classList.contains('is-in');
   };
   function sync() {
@@ -510,82 +459,16 @@ if (navToggle && nav && header) {
   }, { threshold: [0, 0.2, 0.35, 0.5, 0.75, 1] });
   vids.forEach((v) => io.observe(v));
 
-  // prvky s data-at menia triedu is-in zo slučky – sleduj zmenu a prehodnoť
+  // brány menia triedu is-in (slučka alebo IntersectionObserver) – sleduj zmenu a prehodnoť
   const mo = 'MutationObserver' in window ? new MutationObserver(sync) : null;
-  new Set(vids.map((v) => v.closest('[data-at]')).filter(Boolean)).forEach((g) => mo?.observe(g, { attributes: true, attributeFilter: ['class'] }));
+  new Set(vids.map(gateOf).filter(Boolean)).forEach((g) => mo?.observe(g, { attributes: true, attributeFilter: ['class'] }));
   document.addEventListener('visibilitychange', sync);
 })();
 
 /* ----------------------------------------------------------------------------
-   11. Rok v pätičke
+   12. Rok v pätičke
    ---------------------------------------------------------------------------- */
 $$('.year').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
-
-/* ----------------------------------------------------------------------------
-   12. 3D javisko (iba motion=on, po load + idle)
-   ---------------------------------------------------------------------------- */
-function hasWebGL() {
-  try {
-    const probe = document.createElement('canvas');
-    const gl = probe.getContext('webgl2') || probe.getContext('webgl');
-    if (!gl) return false;
-    gl.getExtension('WEBGL_lose_context')?.loseContext();
-    return true;
-  } catch (_) {
-    return false;
-  }
-}
-
-function markRenderDone() { window.__renderDone = true; }
-
-async function init3D() {
-  if (!canvas || !stageEl || !hasWebGL()) {
-    html.dataset.webgl = 'off';
-    markRenderDone();
-    return;
-  }
-  try {
-    const mobile = mqMobile.matches || mqCoarse.matches;
-    const quality = (deviceMemory !== undefined && deviceMemory < 6) || mqCoarse.matches ? 'low' : 'high';
-    const { createChairStage } = await import('./chair.js');
-    const created = await createChairStage(canvas, {
-      dpr: mobile ? 1.25 : 1.5,
-      mobile,
-      quality,
-      onFirstFrame: () => {
-        html.dataset.webgl = 'on';
-        stageEl.classList.add('is-3d');
-        markRenderDone();
-      },
-    });
-    stage = created;
-    window.__stage = created; // len na ladenie
-    lastStageKey = '';
-    stageVisible = null;
-    apply(shownP); // odovzdaj aktuálny stav (scéna, t, viditeľnosť)
-    if (pointerBound) stage.setPointer(0.5, 0.5);
-    if (shownP < 0.05) stage.playIntroSweep();
-  } catch (err) {
-    console.warn('3D javisko sa nepodarilo spustiť, ostáva poster.', err);
-    stage = null;
-    html.dataset.webgl = 'off';
-    markRenderDone();
-  }
-}
-
-function whenIdle(fn) {
-  if ('requestIdleCallback' in window) window.requestIdleCallback(fn, { timeout: 1500 });
-  else setTimeout(fn, 300);
-}
-
-if (motionOff) {
-  html.dataset.webgl = 'off';
-  markRenderDone();
-} else {
-  const afterLoad = () => whenIdle(() => { init3D(); });
-  if (document.readyState === 'complete') afterLoad();
-  else window.addEventListener('load', afterLoad, { once: true });
-}
 
 /* ----------------------------------------------------------------------------
    13. Štart – stav okamžite (aj po obnovení stránky uprostred príbehu)
@@ -593,10 +476,6 @@ if (motionOff) {
 measure();
 readTarget();
 shownP = targetP;
-if (!textGate) {
-  // nástup textu scény 1: 450 ms po štarte; pri obnovení uprostred príbehu hneď
-  if (targetP >= 0.05) textGate = true;
-  else setTimeout(() => { textGate = true; start(); }, 450);
-}
 apply(shownP);
+window.__renderDone = true;
 start();
