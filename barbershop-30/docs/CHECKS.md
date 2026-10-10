@@ -63,7 +63,8 @@ rozmery, doska úvodu nastupuje len animáciou `transform/opacity`.
 
 **Zábery**: `source/tools/film.py` – stupne 1086/1448/2172/2896 px (fasáda `vstup` aj 4096),
 AVIF q66 / WebP q84, nič sa nezväčšuje nad originál; pre telefón výrezy na výšku 9 : 16 okolo bodu
-záujmu (`<meno>-m-{1086,1448}` + vlastná hĺbková mapa; rohožka z foto‑30 na výšku). 14 záberov,
+záujmu (`<meno>-m-{1086,1448}` + vlastná hĺbková mapa; rohožka z foto‑30 na výšku; karafa,
+pracovné miesto a káva s užším oknom okolo predmetu, `mh`). 14 záberov,
 `assets/img/film` 39 MB na disku (sťahuje sa vždy len to, čo zariadenie potrebuje).
 
 **Ostrosť** – `node source/tools/ostrost.mjs --a=<naživo stará> --shots=sala,kreslo,recepcia`

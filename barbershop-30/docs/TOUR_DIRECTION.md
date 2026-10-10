@@ -34,8 +34,10 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
   (fasáda `vstup` aj 4096 px pre nájazd k dverám) + `<meno>-hlbka.webp`; nič sa nezväčšuje nad
   originál (rohozka-2172 = 1920 px). Pre telefón má každý záber vlastný výrez na výšku 9 : 16
   okolo bodu záujmu `<meno>-m-{1086,1448}` + `<meno>-m-hlbka.webp` (rohožka z fotky majiteľa
-  foto-30 na výšku), takže sa na displeji 3× nezväčšuje ako výsek zo záberu na šírku. AVIF q66,
-  WebP q84. Zoznam, rozmery, stupne a bod záujmu výrezu v `assets/img/film/film.json`
+  foto-30 na výšku), takže sa na displeji 3× nezväčšuje ako výsek zo záberu na šírku. Detailné
+  zábery (karafa, pracovné miesto, káva) majú okno len na časť výšky fotky (`mh` vo film.py), aby
+  telefón ukázal predmet nad doskou s textom a nie stenu okolo neho. AVIF q66, WebP q84. Zoznam,
+  rozmery, stupne a bod záujmu výrezu v `assets/img/film/film.json`
   (skript `source/tools/film.py`, hĺbka `source/tools/hlbka.py` – Depth Anything V2 small, ONNX,
   lokálne); zálohy a kotvy v index.html z neho prepíše `source/tools/stills.py`.
 - Film si vyberie najmenší stupeň, ktorý sa na obrazovke nezväčší (do 2896 px na počítači, záber
@@ -148,8 +150,8 @@ pokojnú verziu, videá `assets/video/*`, texty a údaje (CONTENT_SOURCES.md).
 ## Mobil
 
 Zábery sú na šírku (4096×2731); na telefóne film aj záloha ukážu vlastný výrez na výšku
-(`<meno>-m`, 9 : 16 okolo bodu záujmu: dvere, pult, kreslo) s presahom 1,24, bod záujmu vo
-výreze je `data-fm`. Text je v dolnej polovici na doske, spodné tlačidlo „Rezervovať termín“
+(`<meno>-m`, 9 : 16 okolo bodu záujmu: dvere, pult, kreslo; pri detailoch užšie okno okolo
+predmetu) s presahom 1,24, bod záujmu vo výreze je `data-fm`. Text je v dolnej polovici na doske, spodné tlačidlo „Rezervovať termín“
 stále dostupné.
 
 ## Podmienky prijatia (doplnenie k zadaniu)

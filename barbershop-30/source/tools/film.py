@@ -19,20 +19,22 @@ OUT = os.path.join(ROOT, 'assets', 'img', 'film'); os.makedirs(OUT, exist_ok=Tru
 MODEL = os.environ.get('DEPTH_MODEL', os.path.join(ROOT, 'source', 'tools', 'depth', 'model.onnx'))
 G = os.path.join(ROOT, 'source', 'web-povodny', 'gallery'); F = os.path.join(ROOT, 'source', 'photos'); SL = os.path.join(ROOT, 'source', 'web-povodny', 'slider')
 # meno záberu: zdroj, popis miesta, x bodu záujmu pre výrez na telefón (0–1), voliteľne:
-#   'm': iný zdroj pre telefón (fotka na výšku toho istého miesta), 'mfy': y bodu záujmu vo výreze, 'big': aj stupeň 4096 px
+#   'm': iný zdroj pre telefón (fotka na výšku toho istého miesta), 'mfy': y bodu záujmu (0–1, inak 0.5),
+#   'mh': výška okna výrezu ako podiel výšky fotky (0–1, inak celá výška; detailné zábery sa tak na
+#   telefóne zúžia na predmet a nie na stenu okolo neho), 'big': aj stupeň 4096 px
 SHOTS = {
   'vstup':        (G+'/43.jpg', 'Vstup z Mostnej ulice', 0.76, {'big': True}),
   'rohozka':      (SL+'/3.jpg', 'Na rohožke, hneď za dverami', 0.44, {'m': F+'/foto-40.jpg', 'mfx': 0.5, 'mfy': 0.5}),
   'recepcia':     (G+'/35.jpg', 'Recepcia a predná sála', 0.30, {}),
   'sala':         (G+'/38.jpg', 'Hlavná sála', 0.5, {}),
   'kreslo':       (G+'/28.jpg', 'Kreslo pri okne', 0.58, {'mfy': 0.5}),
-  'stol':         (G+'/40.jpg', 'Pracovné miesto', 0.62, {}),
-  'naradie':      (G+'/39.jpg', 'Pomády, štetka a karafa', 0.5, {}),
+  'stol':         (G+'/40.jpg', 'Pracovné miesto', 0.62, {'mfx': 0.38, 'mfy': 0.64, 'mh': 0.75}),
+  'naradie':      (G+'/39.jpg', 'Pomády, štetka a karafa', 0.5, {'mfx': 0.32, 'mfy': 0.55, 'mh': 0.8}),
   'zadna':        (G+'/31.jpg', 'Zadná miestnosť', 0.5, {}),
   'cakaren':      (G+'/36.jpg', 'Kútik s pumpou Route 66', 0.72, {}),
   'sala-rano':    (G+'/33.jpg', 'Sála v rannom svetle', 0.5, {}),
   'kreslo-stred': (G+'/34.jpg', 'Kreslo uprostred sály', 0.5, {}),
-  'kava':         (G+'/41.jpg', 'Káva pre hostí', 0.5, {}),
+  'kava':         (G+'/41.jpg', 'Káva pre hostí', 0.5, {'mfy': 0.42, 'mh': 0.8}),
   'sud':          (G+'/30.jpg', 'Predná sála so sudom', 0.78, {}),
 }
 WIDTHS = (1086, 1448, 2172, 2896)      # stupne na šírku (desktop)
@@ -72,18 +74,20 @@ for name, (src, place, fx, o) in SHOTS.items():
     depth(src, f'{OUT}/{name}-hlbka.webp')
     rec = {'source': os.path.relpath(src, ROOT), 'place': place, 'width': W, 'height': H,
            'tiers': tiers, 'hlbka': os.path.getsize(f'{OUT}/{name}-hlbka.webp')}
-    # výrez na telefón: 9 : 16 na celú výšku, vodorovne okolo bodu záujmu (fx), nikdy cez okraj
-    msrc = o.get('m'); mim = load(msrc) if msrc else im; mfx = o.get('mfx', fx)
-    MW, MH = mim.size; cw = min(MW, round(MH * M_RATIO)); left = min(max(round(mfx * MW - cw / 2), 0), MW - cw)
-    crop = mim.crop((left, 0, left + cw, MH))
+    # výrez na telefón: okno 9 : 16 okolo bodu záujmu (mfx, mfy), na celú výšku alebo (mh) len na
+    # jej časť pri detailných záberoch; nikdy cez okraj fotky
+    msrc = o.get('m'); mim = load(msrc) if msrc else im; mfx = o.get('mfx', fx); mfy = o.get('mfy', 0.5)
+    MW, MH = mim.size; ch = round(MH * o.get('mh', 1)); cw = min(MW, round(ch * M_RATIO))
+    left = min(max(round(mfx * MW - cw / 2), 0), MW - cw); top = min(max(round(mfy * MH - ch / 2), 0), MH - ch)
+    crop = mim.crop((left, top, left + cw, top + ch))
     mt = save_tiers(crop, name + '-m', M_WIDTHS)
     with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tf: crop.save(tf.name); tmp = tf.name
     try: depth(tmp, f'{OUT}/{name}-m-hlbka.webp')
     finally: os.unlink(tmp)
-    rec['m'] = {'source': os.path.relpath(msrc or src, ROOT), 'width': cw, 'height': MH, 'left': left,
+    rec['m'] = {'source': os.path.relpath(msrc or src, ROOT), 'width': cw, 'height': ch, 'left': left, 'top': top,
                 'fx': round((mfx * MW - left) / cw, 3), 'tiers': mt, 'hlbka': os.path.getsize(f'{OUT}/{name}-m-hlbka.webp')}
-    if 'mfy' in o: rec['m']['fy'] = o['mfy']
+    if 'mfy' in o: rec['m']['fy'] = round((mfy * MH - top) / ch, 3)
     man[name] = rec
-    print(name, W, H, {w: round(t['avif'] / 1024) for w, t in tiers.items()}, 'KB; telefón', cw, 'x', MH, 'fx', rec['m']['fx'], {w: round(t['avif'] / 1024) for w, t in mt.items()}, 'KB', flush=True)
+    print(name, W, H, {w: round(t['avif'] / 1024) for w, t in tiers.items()}, 'KB; telefón', cw, 'x', ch, 'fx', rec['m']['fx'], {w: round(t['avif'] / 1024) for w, t in mt.items()}, 'KB', flush=True)
 mp = os.path.join(OUT, 'film.json'); old = json.load(open(mp)) if os.path.exists(mp) else {}; old.update(man); json.dump(old, open(mp, 'w'), ensure_ascii=False, indent=1)
 print('done', len(man))
