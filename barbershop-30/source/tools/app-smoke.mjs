@@ -120,8 +120,10 @@ try {
     // 2. sekcie 1→10: v tretine pripnutia prvej kotvy je kapitola aktívna a jej titulná karta svieti
     const L = await layout(page);
     let prev = null; const seen = []; let cardsOn = 0;
+    await page.evaluate(() => document.fonts && document.fonts.ready);
     for (let n = 1; n <= 10; n++) {
-      const s = L.shots.find((x) => Number(x.scene) === n);
+      // poloha kotvy sa meria tesne pred skokom (písma a obrázky v pásoch môžu stránku ešte posunúť)
+      const s = await page.evaluate((n) => { const el = document.querySelector(`section[data-scene="${n}"] .film-shot`); const r = el.getBoundingClientRect(); return { name: el.dataset.shot, top: r.top + scrollY, height: r.height }; }, n);
       await scrollTo(page, n === 1 ? 0 : s.top + s.height * 0.3);
       const v = await vars(page);
       seen.push(v.scene);
@@ -217,8 +219,9 @@ try {
     await sleep(600);
     const st = await page.evaluate(() => ({
       motion: document.documentElement.dataset.motion, world: document.documentElement.classList.contains('world'), done: window.__renderDone,
-      stillOpacity: getComputedStyle(document.querySelector('[data-shot="recepcia"] .film-still')).opacity,
-      stillTransform: getComputedStyle(document.querySelector('[data-shot="recepcia"] .film-still img')).transform,
+      // s kartami stoja zábery cez celé okno a prelínajú sa pri svojej scéne: na vrchu je to záber úvodu
+      stillOpacity: getComputedStyle(document.querySelector('#uvod .film-still')).opacity,
+      stillTransform: getComputedStyle(document.querySelector('#uvod .film-still img')).transform,
       canvas: !!document.querySelector('.film-canvas'),
     }));
     ok(st.motion === 'off' && st.done === true && !st.world, `[${name}] data-motion=off, bez triedy world, __renderDone`, JSON.stringify(st));

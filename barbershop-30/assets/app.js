@@ -563,14 +563,14 @@ start();
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches || root.dataset.motion === 'off';
   const io = (els, fn, opt) => { if (!('IntersectionObserver' in window)) { els.forEach((el) => fn(el, true)); return; } const o = new IntersectionObserver((es) => es.forEach((e) => fn(e.target, e.isIntersecting, o)), opt); els.forEach((el) => o.observe(el)); };
 
-  // nadpis po slovách: slová do <span class="kw"><span>…</span></span>, zalomenia a vnorené značky ostanú
+  // nadpis po slovách: každé slovo do <span class="kw"> s poradím --i (oneskorenie), zalomenia a vnorené značky ostanú
   const kins = [...d.querySelectorAll('.kin')];
   kins.forEach((h) => {
     let i = 0;
     const walk = (node) => [...node.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
         const parts = n.textContent.split(/(\s+)/), f = d.createDocumentFragment();
-        parts.forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) { f.append(p); return; } const w = d.createElement('span'); w.className = 'kw'; const s = d.createElement('span'); s.textContent = p; s.style.setProperty('--i', i++); w.append(s); f.append(w); });
+        parts.forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) { f.append(p); return; } const w = d.createElement('span'); w.className = 'kw'; w.style.setProperty('--i', i++); w.textContent = p; f.append(w); });
         n.replaceWith(f);
       } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
     });

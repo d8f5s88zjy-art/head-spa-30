@@ -64,6 +64,13 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
   Body záujmu výrezov sú na veci z názvu miesta (recepcia 0,30 = pult, stôl 0,62, čakáreň 0,72 = pumpa,
   sud 0,78), kreslo pri okne o 5 % vyššie (opierka celá).
 
+## Brána filmu
+
+Film beží len s grafickou kartou: hlavička aj film.js skúšajú WebGL2 s `failIfMajorPerformanceCaveat`
+a meno vykresľovača (SwiftShader, llvmpipe, software → pokojná verzia, film by sa tam trhal). Platí to aj pre
+Lighthouse a PageSpeed Insights, ktoré kreslia softvérovo: merajú pokojnú verziu, ktorú dostane každé také
+zariadenie. `?film=on` film povolí aj pri softvérovom kreslení (všetky testy v `source/tools/` ho pridávajú).
+
 ## Úvod ako film (prológ): z ulice cez dvere dnu
 
 Rozhodnutie majiteľa (2026‑10‑09, podľa referencie s filmovým úvodom): web sa otvorí ako film,
@@ -121,20 +128,30 @@ koliesko nadol, potiahnutie nahor, šípka dole / medzerník, tlačidlo, alebo j
 Rozhranie: `BS30_FILM.uvod.von()`, `BS30_FILM.uvod.znova()`, stav `state.outside`, `state.leaving`.
 Bez filmu (pokojná verzia) tlačidlo nie je.
 
-## Cesta (poradie záberov = poradie sekcií)
+## Cesta (poradie záberov = poradie sekcií; titulné karty od 2026‑10‑10)
 
-| # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |
-|---|---|---|---|---|---|---|
-| 0 | prológ (bez kotvy) | `vstup` – fasáda s dverami a barber pole (gallery/43) | [0.76, 0.53] dvere | `door` (chôdza k dverám) | to isté ako úvod (doska je HTML, nemení sa) | – |
-| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px; telefón foto‑40 na výšku) | [0.5, 0.55], telefón [0.50, 0.50] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
-| 2 | `#recepcia` | `recepcia` – pult, lampy, barber pole (gallery/35) | [0.45, 0.55] pult | `right` | H2 „Príď ako k známym.“, 3 riadky: recepčná ťa privíta · káva a minerálka zdarma · 8 kresiel, minimálne čakanie | – |
-| 3 | `#sala` | `sala` – rad kresiel, zrkadlá (gallery/38) → `kreslo` (gallery/28) | [0.5, 0.55] → [0.58, 0.55] | `left` → `in` | H2 „Osem kresiel. Jedno je tvoje.“ + chip „Hlavná sála“ | Pozri služby → |
-| 4 | `#remeslo` | `stol` (gallery/40) + **video** `remeslo-strojcek` v portrétovom okne vedľa textu; detail `naradie` (gallery/39) | [0.5, 0.5] | `rise` | H2 „Presnosť, ktorú vidíš v detaile.“, odsek z opisov služieb (konzultácia, strojček aj nožnice, fade, horúci uterák, britva, styling, kolínska) | – |
-| 5 | `#zadna` | `zadna` (gallery/31) → `cakaren` (gallery/36) | [0.5, 0.55] → [0.5, 0.55] | `right` → `in` | H2 „Druhá miestnosť, iná nálada.“ + chipy Zadná miestnosť · Čakáreň | – |
-| 6 | `#tim` | `sala-rano` (gallery/33) ako pozadie, nad ním **portréty tímu** (10) + video `tim-v-akcii` | [0.5, 0.55] | `left` | H2 „Tím barberov a barberiek.“, karty s menom a rolou (len overené) | Rezervovať termín |
-| 7 | `#sluzby` | `kreslo-stred` (gallery/34) – pokojný symetrický záber, nad ním doska s cenníkom | [0.5, 0.55] | `near` (len jemný nájazd) | H2 „Vyber si službu.“, cenník 15 služieb (názov, opis 1 veta, cena, trvanie, Objednať) + odkaz Booqme na farbenie | Objednať pri každej položke |
-| 8 | `#galeria` | `kava` (gallery/41) → `sud` (gallery/30) | [0.5, 0.5] | `down` | H2 „Detaily, ktoré robia miesto.“, galéria 8 fotiek (lightbox): noznice, naradie, barber pole, neón, zrkadlo, buldog, káva, sud; dôvera: Google hodnotenie (odkaz), Instagram | – |
-| 9 | `#rezervacia` + kontakt | `vstup` znova – kruh sa uzavrie pri dverách | [0.55, 0.5] | `in` (ustáli sa) | H2 „Tvoj termín je na jedno klepnutie.“, adresa, hodiny, telefón, Navigovať | Rezervovať termín, Zavolať, Navigovať |
+Každá kotva začína titulnou kartou priamo na zábere (nadpisok, nadpis Fraunces 800, jeden riadok, bez
+dosky; style.css P11). Karta je pripnutá, kým kotva prechádza oknom, a mení sa len krytím (app.js `--o`,
+`is-on`); nadpis karty nastúpi po slovách (P12). Poloha karty sa strieda: vľavo, vpravo, v strede.
+Na telefóne sú tri zábery skutočné videá majiteľa (`data-video`, film.js `VideoTexture`, bez tónovania).
+
+| # | sekcia (id) | záber počítač / telefón | karta | nadpisok · nadpis · riadok | tlačidlá |
+|---|---|---|---|---|---|
+| 0 | prológ (bez kotvy) | `vstup` fasáda s dverami | – | to isté ako úvod | – |
+| 1 | `#uvod` | `rohozka` | stred | Barbershop 30 · Nitra · „Tvoj strih. *Tvoje miesto.*“ · Za dverami na Mostnej 30 sa strihá od roku 2019. | Rezervovať termín, Zavolať |
+| 2 | `#recepcia` | `recepcia` | vpravo | Recepcia · „Najprv káva. Potom strih.“ · recepčná, káva a minerálka zdarma | – |
+| 3 | `#vstup-dnu` | počítač bez vlastného záberu (`data-desk="skip"`, film ide z recepcie do sály) / telefón **video** `vstup-dnu` (video‑3 0–5 s, riadené skrolom, kamera ide sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Drevená podlaha, kreslá a zrkadlá. Mostná ostala za dverami. | – |
+| 4 | `#sala` | `sala` → `kreslo` | vľavo → vpravo | Tri miestnosti · „Osem kresiel. Jedno je tvoje.“ → Kreslo pri okne · „Sadni si a vydýchni.“ | – |
+| 5 | `#remeslo` | `stol` / telefón **video** `okolo-kresla` (video‑3 5–9,3 s, skrol) → `naradie` | vľavo → vpravo | Remeslo · „Povedz, ako to chceš.“ → Ultra inclusive · „Dopraj si všetko.“ (40 €) | – |
+| 6 | `#zadna` | `zadna` → `cakaren` | vľavo → vpravo | „Vzadu je iná nálada.“ → „Route 66 na Mostnej.“ | – |
+| 7 | `#tim` | `sala-rano` / telefón **video** `tim-slucka` (video‑2 1–9 s, tichá slučka) + pás tímu | vľavo | Ľudia · „Komu zveríš hlavu?“ · Desať ľudí, jeden kalendár. | – |
+| 8 | `#sluzby` | `kreslo-stred` + pás: bežiaci pás služieb, kroky strihu, cenník | stred | Služby a ceny · „Čo to bude dnes?“ · 18 € / 28 € | Objednať pri položkách |
+| 9 | `#galeria` | `kava` + pás galérie → `sud` | vľavo → vpravo | „Pozri si to zblízka.“ → Cestou von · „Odchádzaš s hlavou hore.“ | – |
+| 10 | `#rezervacia` + kontakt | `vstup` znova + pás kontaktu (tabuľa dnešných hodín, svetlo po okraji karty) | stred | Rezervácia · „Kedy *si sadneš?*“ · Online kedykoľvek, aj v noci. | Rezervovať termín, Zavolať, Navigovať |
+
+Spodné tlačidlo na telefóne je kompaktné vpravo dole (telefón + Rezervovať termín), skryté v úvode, v páse
+cenníka, v rezervácii a pri menu. Texty sú po porote dvoch hodnotiteľov; každý údaj má zdroj v
+CONTENT_SOURCES.md alebo v pôvodnom index.html.
 
 Pohyby: `in` nájazd, `right`/`left` prejazd po oblúku, `rise`/`down` zdvih/klesanie,
 `near` len jemný nájazd (pre symetrické zábery s textovou doskou), `door` chôdza k dverám
