@@ -14,6 +14,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 MAN = json.load(open(os.path.join(ROOT, 'assets', 'img', 'film', 'film.json')))
 HTML = os.path.join(ROOT, 'index.html')
 PHONE = '(max-width: 720px)'
+# šírka pre výber stupňa: rovnaký stupeň, aký si vyberie film (rovina záberu 1,24 × okno; telefón kreslí 2×,
+# preto 93vw dá pri 3× aj 2× displeji 1086 px), takže fotku zálohy film už má v cache
+SIZES = '(max-width: 720px) 93vw, 124vw'
 P = 'assets/img/film/'
 
 def srcset(name, tiers, ext):
@@ -22,30 +25,35 @@ def srcset(name, tiers, ext):
 def mid(tiers):
     ws = sorted(int(w) for w in tiers); return ws[min(1, len(ws) - 1)]
 
-def picture(name, style, img_attrs, indent):
+def picture(name, style, img_attrs, indent, cls='film-still'):
     r = MAN[name]; m = r['m']
     fmx = f'{m["fx"] * 100:.1f}%'
-    st = re.sub(r'\s*--fmx:[^;]*;?|\s*--fmy:[^;]*;?', '', style).rstrip('; ')
-    fy = re.search(r'--fy:\s*([^;"]+)', st); fmy = f'{m["fy"] * 100:.0f}%' if 'fy' in m else (fy.group(1).strip() if fy else '50%')
-    st = f'{st}; --fmx: {fmx}; --fmy: {fmy}'
+    st = re.sub(r'\s*--(?:fmx|fmy|fxn|fyn|fmxn|fmyn|pa|pam):[^;]*;?', '', style).rstrip('; ')
+    fx = re.search(r'--fx:\s*([\d.]+)%', st); fy = re.search(r'--fy:\s*([\d.]+)%', st)
+    fmy = f'{m["fy"] * 100:.0f}%' if 'fy' in m else (fy.group(1).strip() + '%' if fy else '50%')
+    # bezrozmerné hodnoty pre rámovanie zálohy ako prvý snímok filmu (style.css, html.world .film-still img)
+    fxn = float(fx.group(1)) / 100 if fx else 0.5; fyn = float(fy.group(1)) / 100 if fy else 0.5
+    fmyn = m['fy'] if 'fy' in m else fyn
+    st = (f'{st}; --fmx: {fmx}; --fmy: {fmy}; --fxn: {fxn:g}; --fyn: {fyn:g}; --fmxn: {m["fx"]:g}; --fmyn: {fmyn:g}; '
+          f'--pa: {r["width"] / r["height"]:.4f}; --pam: {m["width"] / m["height"]:.4f}')
     i = indent
-    return (f'{i}<picture class="film-still" style="{st}">\n'
-            f'{i}  <source media="{PHONE}" type="image/avif" srcset="{srcset(name + "-m", m["tiers"], "avif")}" sizes="100vw">\n'
-            f'{i}  <source media="{PHONE}" type="image/webp" srcset="{srcset(name + "-m", m["tiers"], "webp")}" sizes="100vw">\n'
-            f'{i}  <source type="image/avif" srcset="{srcset(name, r["tiers"], "avif")}" sizes="100vw">\n'
-            f'{i}  <source type="image/webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="100vw">\n'
-            f'{i}  <img src="{P}{name}-{mid(r["tiers"])}.webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="100vw" width="{r["width"]}" height="{r["height"]}"{img_attrs}>\n'
+    return (f'{i}<picture class="{cls}" style="{st}">\n'
+            f'{i}  <source media="{PHONE}" type="image/avif" srcset="{srcset(name + "-m", m["tiers"], "avif")}" sizes="{SIZES}">\n'
+            f'{i}  <source media="{PHONE}" type="image/webp" srcset="{srcset(name + "-m", m["tiers"], "webp")}" sizes="{SIZES}">\n'
+            f'{i}  <source type="image/avif" srcset="{srcset(name, r["tiers"], "avif")}" sizes="{SIZES}">\n'
+            f'{i}  <source type="image/webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{SIZES}">\n'
+            f'{i}  <img src="{P}{name}-{mid(r["tiers"])}.webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{SIZES}" width="{r["width"]}" height="{r["height"]}"{img_attrs}>\n'
             f'{i}</picture>')
 
-PIC = re.compile(r'^([ \t]*)<picture class="film-still" style="([^"]*)">\s*\n(.*?)^[ \t]*</picture>', re.S | re.M)
+PIC = re.compile(r'^([ \t]*)<picture class="(film-still[^"]*)" style="([^"]*)">\s*\n(.*?)^[ \t]*</picture>', re.S | re.M)
 def rewrite_pictures(html):
     def rep(mo):
-        indent, style, body = mo.group(1), mo.group(2), mo.group(3)
+        indent, cls, style, body = mo.group(1), mo.group(2), mo.group(3), mo.group(4)
         img = re.search(r'<img\b([^>]*)>', body).group(1)
         name = re.search(r'assets/img/film/([a-z0-9-]+?)(?:-m)?-\d+\.(?:avif|webp)', body).group(1)
         # atribúty <img> okrem src/srcset/sizes/width/height
         keep = re.sub(r'\s+(?:src|srcset|sizes|width|height)="[^"]*"', '', img)
-        return picture(name, style, keep, indent)
+        return picture(name, style, keep, indent, cls)
     return PIC.sub(rep, html)
 
 def set_attrs(tag, attrs):

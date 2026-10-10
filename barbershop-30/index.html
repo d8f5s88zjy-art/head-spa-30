@@ -19,7 +19,7 @@
   try{var p=h.classList.contains('pro'),m=matchMedia('(max-width: 720px)').matches,n=(p?'vstup':'rohozka')+(m?'-m':''),l=document.createElement('link');
   /* DEPLOY STEP: tie isté srcset ako v kotve úvodu (stills.py); telefón = výrez na výšku -m */
   var S={"vstup":"1086w,1448w,2172w,2896w,4096w","vstup-m":"1086w,1448w","rohozka":"1086w,1448w,1920w","rohozka-m":"1086w,1448w"},W={"vstup":[1086,1448,2172,2896,4096],"vstup-m":[1086,1448],"rohozka":[1086,1448,2172],"rohozka-m":[1086,1448]};
-  l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset',W[n].map(function(w,i){return 'assets/img/film/'+n+'-'+w+'.avif '+S[n].split(',')[i];}).join(', '));l.setAttribute('imagesizes','100vw');l.fetchPriority='high';document.head.appendChild(l);}catch(e){}})(document.documentElement);</script>
+  l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset',W[n].map(function(w,i){return 'assets/img/film/'+n+'-'+w+'.avif '+S[n].split(',')[i];}).join(', '));l.setAttribute('imagesizes','(max-width: 720px) 93vw, 124vw');l.fetchPriority='high';document.head.appendChild(l);}catch(e){}})(document.documentElement);</script>
   <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
        Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
   <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/">
@@ -156,31 +156,31 @@
       <div class="film-shot" data-shot="rohozka" data-size="1920x1200" data-f="0.5,0.55" data-fm="0.50,0.5" data-mv="rise" data-place="Na rohožke, hneď za dverami"
            data-pro="vstup" data-pro-size="4096x2731" data-pro-f="0.76,0.53" data-pro-fm="0.50,0.53" data-pro-mv="door" data-pro-place="Vstup z Mostnej ulice" data-tiers="1086,1448,2172" data-m="rohozka-m" data-m-size="1449x2576" data-m-tiers="1086,1448" data-pro-tiers="1086,1448,2172,2896,4096" data-pro-m="vstup-m" data-pro-m-size="1536x2731" data-pro-m-tiers="1086,1448">
         <template id="still-uvod">
-          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%">
-            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/rohozka-m-1086.avif 1086w, assets/img/film/rohozka-m-1448.avif 1448w" sizes="100vw">
-            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/rohozka-m-1086.webp 1086w, assets/img/film/rohozka-m-1448.webp 1448w" sizes="100vw">
-            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="100vw">
-            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw">
-            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
+          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
+            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/rohozka-m-1086.avif 1086w, assets/img/film/rohozka-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/rohozka-m-1086.webp 1086w, assets/img/film/rohozka-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 93vw, 124vw">
+            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 93vw, 124vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
           </picture>
         </template>
         <template id="still-vstup">
-          <picture class="film-still" style="--fx: 76%; --fy: 53%; --fmx: 50.0%; --fmy: 53%">
-            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/vstup-m-1086.avif 1086w, assets/img/film/vstup-m-1448.avif 1448w" sizes="100vw">
-            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/vstup-m-1086.webp 1086w, assets/img/film/vstup-m-1448.webp 1448w" sizes="100vw">
-            <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w, assets/img/film/vstup-2896.avif 2896w, assets/img/film/vstup-4096.avif 4096w" sizes="100vw">
-            <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="100vw">
-            <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="100vw" width="4096" height="2731" fetchpriority="high" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
+          <picture class="film-still film-still-pro" style="--fx: 76%; --fy: 53%; --fmx: 50.0%; --fmy: 53%; --fxn: 0.76; --fyn: 0.53; --fmxn: 0.5; --fmyn: 0.53; --pa: 1.4998; --pam: 0.5624">
+            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/vstup-m-1086.avif 1086w, assets/img/film/vstup-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/vstup-m-1086.webp 1086w, assets/img/film/vstup-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w, assets/img/film/vstup-2896.avif 2896w, assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+            <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" fetchpriority="high" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
           </picture>
         </template>
         <script>(function(d){var t=d.getElementById(d.documentElement.classList.contains('pro')?'still-vstup':'still-uvod');t.after(t.content.cloneNode(true));})(document);</script>
         <noscript>
-          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%">
-            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/rohozka-m-1086.avif 1086w, assets/img/film/rohozka-m-1448.avif 1448w" sizes="100vw">
-            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/rohozka-m-1086.webp 1086w, assets/img/film/rohozka-m-1448.webp 1448w" sizes="100vw">
-            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="100vw">
-            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw">
-            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="100vw" width="1920" height="1200" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
+          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
+            <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/rohozka-m-1086.avif 1086w, assets/img/film/rohozka-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/rohozka-m-1086.webp 1086w, assets/img/film/rohozka-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/avif" srcset="assets/img/film/rohozka-1086.avif 1086w, assets/img/film/rohozka-1448.avif 1448w, assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 93vw, 124vw">
+            <img src="assets/img/film/rohozka-1448.webp" srcset="assets/img/film/rohozka-1086.webp 1086w, assets/img/film/rohozka-1448.webp 1448w, assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 93vw, 124vw" width="1920" height="1200" decoding="async" alt="Rohožka s logom Barbershop 30 hneď za dverami, pred ňou barberské kreslo a sála s kruhovými svetlami">
           </picture>
         </noscript>
         <div class="film-content container">
@@ -208,12 +208,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="recepcia" data-scene="2" aria-labelledby="h-recepcia">
       <div class="film-shot" data-shot="recepcia" data-f="0.45,0.55" data-mv="right" data-place="Recepcia a predná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="recepcia-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 45%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/recepcia-m-1086.avif 1086w, assets/img/film/recepcia-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/recepcia-m-1086.webp 1086w, assets/img/film/recepcia-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/recepcia-1086.avif 1086w, assets/img/film/recepcia-1448.avif 1448w, assets/img/film/recepcia-2172.avif 2172w, assets/img/film/recepcia-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/recepcia-1448.webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Recepcia a predná sála s dreveným pultom, oranžovými lampami, barber pole a sudom">
+        <picture class="film-still" style="--fx: 45%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.45; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/recepcia-m-1086.avif 1086w, assets/img/film/recepcia-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/recepcia-m-1086.webp 1086w, assets/img/film/recepcia-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/recepcia-1086.avif 1086w, assets/img/film/recepcia-1448.avif 1448w, assets/img/film/recepcia-2172.avif 2172w, assets/img/film/recepcia-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/recepcia-1448.webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Recepcia a predná sála s dreveným pultom, oranžovými lampami, barber pole a sudom">
         </picture>
         <div class="film-content container">
           <div class="board reveal">
@@ -244,12 +244,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="sala" data-scene="3" aria-labelledby="h-sala">
       <div class="film-shot" data-shot="sala" data-f="0.5,0.55" data-mv="left" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-m-1086.avif 1086w, assets/img/film/sala-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-m-1086.webp 1086w, assets/img/film/sala-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/sala-1086.avif 1086w, assets/img/film/sala-1448.avif 1448w, assets/img/film/sala-2172.avif 2172w, assets/img/film/sala-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/sala-1448.webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála s radom barberských kresiel, zrkadlami, kruhovými svetlami a barber pole">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-m-1086.avif 1086w, assets/img/film/sala-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-m-1086.webp 1086w, assets/img/film/sala-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/sala-1086.avif 1086w, assets/img/film/sala-1448.avif 1448w, assets/img/film/sala-2172.avif 2172w, assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/sala-1448.webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála s radom barberských kresiel, zrkadlami, kruhovými svetlami a barber pole">
         </picture>
         <div class="film-content container">
           <div class="board reveal">
@@ -261,12 +261,12 @@
         </div>
       </div>
       <div class="film-shot" data-shot="kreslo" data-f="0.58,0.55" data-mv="in" data-place="Kreslo pri okne" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 58%; --fy: 55%; --fmx: 50.0%; --fmy: 50%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-m-1086.avif 1086w, assets/img/film/kreslo-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-m-1086.webp 1086w, assets/img/film/kreslo-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/kreslo-1086.avif 1086w, assets/img/film/kreslo-1448.avif 1448w, assets/img/film/kreslo-2172.avif 2172w, assets/img/film/kreslo-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/kreslo-1448.webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom pri okne v rannom svetle">
+        <picture class="film-still" style="--fx: 58%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.58; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-m-1086.avif 1086w, assets/img/film/kreslo-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-m-1086.webp 1086w, assets/img/film/kreslo-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/kreslo-1086.avif 1086w, assets/img/film/kreslo-1448.avif 1448w, assets/img/film/kreslo-2172.avif 2172w, assets/img/film/kreslo-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/kreslo-1448.webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom pri okne v rannom svetle">
         </picture>
         <div class="film-content container film-content-caption">
           <p class="place-tag" data-at="0.15,1"><span class="chip">Kreslo pri okne</span></p>
@@ -279,12 +279,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="remeslo" data-scene="4" aria-labelledby="h-remeslo">
       <div class="film-shot" data-shot="stol" data-f="0.5,0.5" data-mv="rise" data-place="Pracovné miesto" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="stol-m" data-m-size="1152x2048" data-m-tiers="1086,1448" data-fm="0.50,0.52">
-        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 52%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/stol-m-1086.avif 1086w, assets/img/film/stol-m-1448.avif 1152w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/stol-m-1086.webp 1086w, assets/img/film/stol-m-1448.webp 1152w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/stol-1086.avif 1086w, assets/img/film/stol-1448.avif 1448w, assets/img/film/stol-2172.avif 2172w, assets/img/film/stol-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/stol-1086.webp 1086w, assets/img/film/stol-1448.webp 1448w, assets/img/film/stol-2172.webp 2172w, assets/img/film/stol-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/stol-1448.webp" srcset="assets/img/film/stol-1086.webp 1086w, assets/img/film/stol-1448.webp 1448w, assets/img/film/stol-2172.webp 2172w, assets/img/film/stol-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Pracovné miesto barbera so zrkadlom, Edisonovými lampami a nástrojmi na stole">
+        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 52%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.52; --pa: 1.4998; --pam: 0.5625">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/stol-m-1086.avif 1086w, assets/img/film/stol-m-1448.avif 1152w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/stol-m-1086.webp 1086w, assets/img/film/stol-m-1448.webp 1152w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/stol-1086.avif 1086w, assets/img/film/stol-1448.avif 1448w, assets/img/film/stol-2172.avif 2172w, assets/img/film/stol-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/stol-1086.webp 1086w, assets/img/film/stol-1448.webp 1448w, assets/img/film/stol-2172.webp 2172w, assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/stol-1448.webp" srcset="assets/img/film/stol-1086.webp 1086w, assets/img/film/stol-1448.webp 1448w, assets/img/film/stol-2172.webp 2172w, assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Pracovné miesto barbera so zrkadlom, Edisonovými lampami a nástrojmi na stole">
         </picture>
         <div class="film-content container">
           <div class="board board-media reveal">
@@ -304,12 +304,12 @@
         </div>
       </div>
       <div class="film-shot" data-shot="naradie" data-f="0.5,0.5" data-mv="near" data-place="Pomády, štetka a karafa" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="naradie-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/naradie-m-1086.avif 1086w, assets/img/film/naradie-m-1448.avif 1229w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/naradie-m-1086.webp 1086w, assets/img/film/naradie-m-1448.webp 1229w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/naradie-1086.avif 1086w, assets/img/film/naradie-1448.avif 1448w, assets/img/film/naradie-2172.avif 2172w, assets/img/film/naradie-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/naradie-1448.webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Karafa, pomády a štetka na holenie na pracovnom stole">
+        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/naradie-m-1086.avif 1086w, assets/img/film/naradie-m-1448.avif 1229w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/naradie-m-1086.webp 1086w, assets/img/film/naradie-m-1448.webp 1229w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/naradie-1086.avif 1086w, assets/img/film/naradie-1448.avif 1448w, assets/img/film/naradie-2172.avif 2172w, assets/img/film/naradie-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/naradie-1448.webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Karafa, pomády a štetka na holenie na pracovnom stole">
         </picture>
         <div class="film-content container film-content-caption">
           <p class="place-tag" data-at="0.15,1"><span class="chip">Pomády, štetka a karafa</span></p>
@@ -322,12 +322,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="zadna" data-scene="5" aria-labelledby="h-zadna">
       <div class="film-shot" data-shot="zadna" data-f="0.5,0.55" data-mv="right" data-place="Zadná miestnosť" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="zadna-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/zadna-m-1086.avif 1086w, assets/img/film/zadna-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/zadna-m-1086.webp 1086w, assets/img/film/zadna-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/zadna-1086.avif 1086w, assets/img/film/zadna-1448.avif 1448w, assets/img/film/zadna-2172.avif 2172w, assets/img/film/zadna-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/zadna-1448.webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Zadná miestnosť s čiernymi lesklými obkladmi, červeným kreslom, sedačkou a benzínovou pumpou">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/zadna-m-1086.avif 1086w, assets/img/film/zadna-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/zadna-m-1086.webp 1086w, assets/img/film/zadna-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/zadna-1086.avif 1086w, assets/img/film/zadna-1448.avif 1448w, assets/img/film/zadna-2172.avif 2172w, assets/img/film/zadna-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/zadna-1448.webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Zadná miestnosť s čiernymi lesklými obkladmi, červeným kreslom, sedačkou a benzínovou pumpou">
         </picture>
         <div class="film-content container">
           <div class="board reveal">
@@ -342,12 +342,12 @@
         </div>
       </div>
       <div class="film-shot" data-shot="cakaren" data-f="0.5,0.55" data-mv="in" data-place="Kútik s pumpou Route 66" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="cakaren-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/cakaren-m-1086.avif 1086w, assets/img/film/cakaren-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/cakaren-m-1086.webp 1086w, assets/img/film/cakaren-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/cakaren-1086.avif 1086w, assets/img/film/cakaren-1448.avif 1448w, assets/img/film/cakaren-2172.avif 2172w, assets/img/film/cakaren-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/cakaren-1086.webp 1086w, assets/img/film/cakaren-1448.webp 1448w, assets/img/film/cakaren-2172.webp 2172w, assets/img/film/cakaren-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/cakaren-1448.webp" srcset="assets/img/film/cakaren-1086.webp 1086w, assets/img/film/cakaren-1448.webp 1448w, assets/img/film/cakaren-2172.webp 2172w, assets/img/film/cakaren-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Kútik s kreslami, farebnou soškou buldoga a retro benzínovou pumpou Route 66">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/cakaren-m-1086.avif 1086w, assets/img/film/cakaren-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/cakaren-m-1086.webp 1086w, assets/img/film/cakaren-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/cakaren-1086.avif 1086w, assets/img/film/cakaren-1448.avif 1448w, assets/img/film/cakaren-2172.avif 2172w, assets/img/film/cakaren-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/cakaren-1086.webp 1086w, assets/img/film/cakaren-1448.webp 1448w, assets/img/film/cakaren-2172.webp 2172w, assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/cakaren-1448.webp" srcset="assets/img/film/cakaren-1086.webp 1086w, assets/img/film/cakaren-1448.webp 1448w, assets/img/film/cakaren-2172.webp 2172w, assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Kútik s kreslami, farebnou soškou buldoga a retro benzínovou pumpou Route 66">
         </picture>
         <div class="film-content container film-content-caption">
           <p class="place-tag" data-at="0.15,1"><span class="chip">Kútik s pumpou Route 66</span></p>
@@ -360,12 +360,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="tim" data-scene="6" aria-labelledby="h-tim">
       <div class="film-shot" data-shot="sala-rano" data-f="0.5,0.55" data-mv="left" data-place="Sála v rannom svetle" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-rano-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-rano-m-1086.avif 1086w, assets/img/film/sala-rano-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-rano-m-1086.webp 1086w, assets/img/film/sala-rano-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/sala-rano-1086.avif 1086w, assets/img/film/sala-rano-1448.avif 1448w, assets/img/film/sala-rano-2172.avif 2172w, assets/img/film/sala-rano-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/sala-rano-1086.webp 1086w, assets/img/film/sala-rano-1448.webp 1448w, assets/img/film/sala-rano-2172.webp 2172w, assets/img/film/sala-rano-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/sala-rano-1448.webp" srcset="assets/img/film/sala-rano-1086.webp 1086w, assets/img/film/sala-rano-1448.webp 1448w, assets/img/film/sala-rano-2172.webp 2172w, assets/img/film/sala-rano-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála v rannom svetle s kreslami a svietiacim nápisom Barbershop">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-rano-m-1086.avif 1086w, assets/img/film/sala-rano-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-rano-m-1086.webp 1086w, assets/img/film/sala-rano-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/sala-rano-1086.avif 1086w, assets/img/film/sala-rano-1448.avif 1448w, assets/img/film/sala-rano-2172.avif 2172w, assets/img/film/sala-rano-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/sala-rano-1086.webp 1086w, assets/img/film/sala-rano-1448.webp 1448w, assets/img/film/sala-rano-2172.webp 2172w, assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/sala-rano-1448.webp" srcset="assets/img/film/sala-rano-1086.webp 1086w, assets/img/film/sala-rano-1448.webp 1448w, assets/img/film/sala-rano-2172.webp 2172w, assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála v rannom svetle s kreslami a svietiacim nápisom Barbershop">
         </picture>
         <div class="film-content container">
           <div class="board reveal">
@@ -545,12 +545,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="sluzby" data-scene="7" aria-labelledby="h-sluzby">
       <div class="film-shot film-shot-tall" data-shot="kreslo-stred" data-f="0.5,0.55" data-mv="near" data-place="Kreslo uprostred sály" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-stred-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-stred-m-1086.webp 1086w, assets/img/film/kreslo-stred-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/kreslo-stred-1086.avif 1086w, assets/img/film/kreslo-stred-1448.avif 1448w, assets/img/film/kreslo-stred-2172.avif 2172w, assets/img/film/kreslo-stred-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/kreslo-stred-1086.webp 1086w, assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/kreslo-stred-1448.webp" srcset="assets/img/film/kreslo-stred-1086.webp 1086w, assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo uprostred hlavnej sály medzi dvoma pracovnými stolmi so zrkadlami">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-stred-m-1086.webp 1086w, assets/img/film/kreslo-stred-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/kreslo-stred-1086.avif 1086w, assets/img/film/kreslo-stred-1448.avif 1448w, assets/img/film/kreslo-stred-2172.avif 2172w, assets/img/film/kreslo-stred-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/kreslo-stred-1086.webp 1086w, assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/kreslo-stred-1448.webp" srcset="assets/img/film/kreslo-stred-1086.webp 1086w, assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo uprostred hlavnej sály medzi dvoma pracovnými stolmi so zrkadlami">
         </picture>
         <div class="film-content container film-content-wide">
           <div class="board board-wide board-prices reveal">
@@ -693,12 +693,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="galeria" data-scene="8" aria-labelledby="h-galeria">
       <div class="film-shot" data-shot="kava" data-f="0.5,0.5" data-mv="down" data-place="Káva pre hostí" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kava-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kava-m-1086.avif 1086w, assets/img/film/kava-m-1448.avif 1229w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kava-m-1086.webp 1086w, assets/img/film/kava-m-1448.webp 1229w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/kava-1086.avif 1086w, assets/img/film/kava-1448.avif 1448w, assets/img/film/kava-2172.avif 2172w, assets/img/film/kava-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/kava-1086.webp 1086w, assets/img/film/kava-1448.webp 1448w, assets/img/film/kava-2172.webp 2172w, assets/img/film/kava-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/kava-1448.webp" srcset="assets/img/film/kava-1086.webp 1086w, assets/img/film/kava-1448.webp 1448w, assets/img/film/kava-2172.webp 2172w, assets/img/film/kava-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Káva a voda na drevenom podnose v rannom slnku">
+        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kava-m-1086.avif 1086w, assets/img/film/kava-m-1448.avif 1229w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kava-m-1086.webp 1086w, assets/img/film/kava-m-1448.webp 1229w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/kava-1086.avif 1086w, assets/img/film/kava-1448.avif 1448w, assets/img/film/kava-2172.avif 2172w, assets/img/film/kava-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/kava-1086.webp 1086w, assets/img/film/kava-1448.webp 1448w, assets/img/film/kava-2172.webp 2172w, assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/kava-1448.webp" srcset="assets/img/film/kava-1086.webp 1086w, assets/img/film/kava-1448.webp 1448w, assets/img/film/kava-2172.webp 2172w, assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Káva a voda na drevenom podnose v rannom slnku">
         </picture>
         <div class="film-content container">
           <div class="board reveal">
@@ -808,12 +808,12 @@
         </div>
       </div>
       <div class="film-shot" data-shot="sud" data-f="0.5,0.55" data-mv="down" data-place="Predná sála so sudom" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sud-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sud-m-1086.avif 1086w, assets/img/film/sud-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sud-m-1086.webp 1086w, assets/img/film/sud-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/sud-1086.avif 1086w, assets/img/film/sud-1448.avif 1448w, assets/img/film/sud-2172.avif 2172w, assets/img/film/sud-2896.avif 2896w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/sud-1086.webp 1086w, assets/img/film/sud-1448.webp 1448w, assets/img/film/sud-2172.webp 2172w, assets/img/film/sud-2896.webp 2896w" sizes="100vw">
-          <img src="assets/img/film/sud-1448.webp" srcset="assets/img/film/sud-1086.webp 1086w, assets/img/film/sud-1448.webp 1448w, assets/img/film/sud-2172.webp 2172w, assets/img/film/sud-2896.webp 2896w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Predná sála so sudom, uterákmi, kreslom a kruhovými svietidlami">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sud-m-1086.avif 1086w, assets/img/film/sud-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sud-m-1086.webp 1086w, assets/img/film/sud-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/sud-1086.avif 1086w, assets/img/film/sud-1448.avif 1448w, assets/img/film/sud-2172.avif 2172w, assets/img/film/sud-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/sud-1086.webp 1086w, assets/img/film/sud-1448.webp 1448w, assets/img/film/sud-2172.webp 2172w, assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/sud-1448.webp" srcset="assets/img/film/sud-1086.webp 1086w, assets/img/film/sud-1448.webp 1448w, assets/img/film/sud-2172.webp 2172w, assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Predná sála so sudom, uterákmi, kreslom a kruhovými svietidlami">
         </picture>
         <div class="film-content container film-content-caption">
           <p class="place-tag" data-at="0.15,1"><span class="chip">Predná sála so sudom</span></p>
@@ -826,12 +826,12 @@
     <!-- =================================================================== -->
     <section class="scene" id="rezervacia" data-scene="9" aria-labelledby="h-rezervacia">
       <div class="film-shot" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice" data-size="4096x2731" data-tiers="1086,1448,2172,2896,4096" data-m="vstup-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 55%; --fy: 50%; --fmx: 50.0%; --fmy: 50%">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/vstup-m-1086.avif 1086w, assets/img/film/vstup-m-1448.avif 1448w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/vstup-m-1086.webp 1086w, assets/img/film/vstup-m-1448.webp 1448w" sizes="100vw">
-          <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w, assets/img/film/vstup-2896.avif 2896w, assets/img/film/vstup-4096.avif 4096w" sizes="100vw">
-          <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="100vw">
-          <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="100vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
+        <picture class="film-still" style="--fx: 55%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.55; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/vstup-m-1086.avif 1086w, assets/img/film/vstup-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/vstup-m-1086.webp 1086w, assets/img/film/vstup-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/avif" srcset="assets/img/film/vstup-1086.avif 1086w, assets/img/film/vstup-1448.avif 1448w, assets/img/film/vstup-2172.avif 2172w, assets/img/film/vstup-2896.avif 2896w, assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+          <source type="image/webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+          <img src="assets/img/film/vstup-1448.webp" srcset="assets/img/film/vstup-1086.webp 1086w, assets/img/film/vstup-1448.webp 1448w, assets/img/film/vstup-2172.webp 2172w, assets/img/film/vstup-2896.webp 2896w, assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole">
         </picture>
         <div class="film-content container">
           <div class="board board-contact reveal">

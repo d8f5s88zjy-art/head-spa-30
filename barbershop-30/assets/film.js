@@ -422,7 +422,7 @@
     if (!cur) return;
     load(cur);
     if (!cur.ready) return;                                   // pri skoku najprv cieľ, susedia až potom
-    for (const k of [ci + dir, ci - dir, ci + 2 * dir]) if (path[k]) load(path[k]);
+    for (const k of [ci + dir, ci - dir, ci + 2 * dir]) if (path[k] && !(pro && k === ci + 2 * dir)) load(path[k]);
   }
 
   /* ---------- rozloženie záberu podľa obrazovky ---------- */
@@ -523,7 +523,7 @@
 
   /* ---------- kamera: tlmená pružina, jemné dýchanie ako zo steadicamu ---------- */
   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
-  let raf = 0, last = 0, running = true, lost = false, shown = false, lastInput = performance.now();
+  let raf = 0, last = 0, running = true, lost = false, shown = false, shownAt = 0, lastInput = performance.now();
   const started = performance.now();
   // kamera sa hýbe stále (ako video): 60 s po poslednom pohybe plnou frekvenciou, potom 30 snímok/s,
   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
@@ -541,7 +541,7 @@
     );
     // stály pomalý pohyb kamery ako zo steadicamu aj bez skrolovania (ako záber z videa, nie fotka):
     // dva pomalé oblúky v každej osi, spolu asi 1,7 % šírky, 1 % výšky a 2 % vzdialenosti
-    const sec = now / 1000, dr = DRIFT * breath;
+    const sec = now / 1000, dr = DRIFT * breath * (shownAt ? clamp((now - shownAt) / 1500, 0, 1) : 0);   // nabieha od prvého snímku, ktorý sedí na zálohe
     off.x += ((Math.sin(sec * 0.37) * 0.006 + Math.sin(sec * 0.13 + 0.7) * 0.011) * dr + pmx * 0.03) * s.vw;
     off.y += ((Math.sin(sec * 0.29 + 1.3) * 0.004 + Math.sin(sec * 0.09 + 2.1) * 0.006) * dr + pmy * 0.018) * s.vh;
     off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * dr;
@@ -626,6 +626,9 @@
   let fastest = 0, cap = false;
   const ft = [];
   function quality(dt) {
+    // pri nahrávaní fotiek do grafiky a počas prológu či odchodu sa nemeria: dlhé snímky z nahrávania by
+    // zmenili rozlíšenie uprostred úvodu (viditeľný skok), meria sa až bežné skrolovanie
+    if (jobs.length || pro || leaving) { ft.length = 0; return; }
     if (dt <= 0 || dt >= 0.1) return;
     fastest = fastest ? Math.min(fastest, dt) : dt;
     ft.push(dt); if (ft.length < 40) return;
@@ -700,15 +703,21 @@
     const active = idle < FULL_MS;                             // nedávny pohyb: kresliť každú snímku
     const busy = draw(now, dt);
     if (drawn && !shown) {
-      shown = true; firstMs = Math.round(performance.now() - tStart);
+      shown = true; shownAt = now; firstMs = Math.round(performance.now() - tStart);
       requestAnimationFrame(() => { root.classList.add('world-in'); measurePlace(); wake(); readyDone(true); });
     }
-    // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený
-    if (pro && !pro.t0 && frameDrawn && PRO && PRO.ready) pro.t0 = now;
+    // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený; chôdza začne až keď je
+    // načítaný aj záber úvodu (inak by kamera pri dverách čakala a úvod by nebol jeden plynulý pohyb);
+    // na pomalej sieti sa stojí pred podnikom najviac 6 s, potom sa ide aj tak (proS počká pri dverách)
+    if (pro && !pro.t0 && frameDrawn && PRO && PRO.ready) {
+      if (!pro.seen) pro.seen = now;
+      const hero = path[1];
+      if ((hero && hero.ready) || now - pro.seen > 6000) pro.t0 = now;
+    }
     if (leaving && !leaving.t0 && frameDrawn && PRO && PRO.ready) leaving.t0 = now;
     // fasáda neprišla (pomalá sieť): odchod aj opakované vojdenie sa po 12 s vzdajú a stránka ide ďalej normálne
     if (leaving && !leaving.t0 && now - leaving.since > 12000) cancelLeave();
-    if (pro && !pro.t0 && pro.since && now - pro.since > 12000) endPro(false);
+    if (pro && !pro.t0 && !pro.seen && pro.since && now - pro.since > 12000) endPro(false);
     // prológ sa skončil: film stojí na zábere úvodu a ďalej vedie skrolovanie
     if (pro && pro.t0 && S >= 1) endPro(true);
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo

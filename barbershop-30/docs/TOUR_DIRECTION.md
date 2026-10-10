@@ -76,8 +76,16 @@ ale namiesto cudzieho mesta sú v ňom naše dvere a naša miestnosť. Raz za n�
 3. Cez krátke šero (prelínanie ako medzi miestnosťami) prejde dnu na záber úvodu `rohozka`
    (slider/3: rohožka s logom, kreslo, sála) – 1,4 s / 1,6 s; kamera v ňom ďalej stúpa (`rise`)
    a od tejto chvíle ju vedie skrolovanie. Celý prológ asi 3,5 s; skrolovanie ho hneď ukončí.
-4. Kým záber úvodu nie je načítaný, kamera pri dverách počká (najviac 4 s); ak film nepríde do 7 s
-   od štartu, prológ sa vynechá a web beží ako bez neho.
+4. Chôdza začne, až keď je načítaný aj záber úvodu (dovtedy kamera stojí pred podnikom na
+   prvom snímku, ktorý sedí na zálohe); na pomalej sieti najviac 6 s po fasáde, potom ide aj tak
+   a pri dverách počká (najviac 4 s). Ak film nepríde do 7 s od štartu, prológ sa vynechá.
+   Počas prológu sa nesťahuje nič iné než záber úvodu a kvalita (rozlíšenie plátna) sa nemení.
+5. Statická záloha (fasáda, aj rohožka pri druhej návšteve) má presne rámovanie prvého snímku filmu:
+   rovina záberu s presahom 1,24, bod záujmu, začiatočná vzdialenosť kamery (`--z0` v style.css:
+   0,05 prológ, −0,04 záber pri kotve, −0,005 jemný nájazd) a rovnakú vinetáciu; stály pohyb kamery
+   nabieha 1,5 s od nuly. Prelínanie zálohy do filmu tak nič neposunie ani nepriblíži (posun do
+   7 px, mierka do 2 %, zvyšok je hĺbkový posun). Záloha si vyberá ten istý stupeň fotky ako film
+   (`sizes="(max-width: 720px) 93vw, 124vw"`: telefón 1086, počítač 2172), film ju má z cache.
 
 Rozhranie: kotva úvodu `.film-shot[data-shot="rohozka"]` nesie `data-pro="vstup"`, `data-pro-f`,
 `data-pro-fm`, `data-pro-mv="door"`, `data-pro-size="4096x2731"`, `data-pro-place`; o prológu
@@ -85,7 +93,8 @@ rozhodne skript v hlavičke (trieda `pro` na `<html>`, `?uvod=znova` ho pustí a
 statickú zálohu úvodu (fasáda pri prológu, inak rohožka) vloží skript v kotve z dvoch `<template>`.
 Pokojná verzia (bez WebGL, obmedzený pohyb, šetrenie dát, druhá návšteva): rohožka hneď, bez prológu.
 Kontrola: `node source/tools/uvod-shot.mjs` (snímky prológu na polohách 0 … 1, druhé načítanie,
-`?film=off`).
+`?film=off`); plynulosť: `node source/tools/uvod-meranie.mjs` (časová os prológu pri rýchlej aj
+pomalej sieti, dvojice záloha/film) a `python3 -I source/tools/uvod-zhoda.py` (posun a mierka dvojíc).
 
 ### Hook úvodu (rozhodnutie majiteľa 2026‑10‑09: na telefóne rovnako prepracované ako na počítači)
 

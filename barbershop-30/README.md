@@ -33,7 +33,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 - `stills.py` – z `assets/img/film/film.json` prepíše zálohy a kotvy záberov v `index.html`.
 - `build_images.py` – fotky galérie, tímu a videopostery (`assets/img/manifest.json`).
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
-  `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `prechod-shot.mjs` – zastavený
+  `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
+  plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený
   prechod medzi zábermi; `ostrost.mjs` + `ostrost.py` – porovnanie ostrosti dvoch adries;
   `vaha.mjs` – prenesené bajty prvého obrazu; `../shot.mjs` – snímka ľubovoľnej adresy (desktop + mobil).
 

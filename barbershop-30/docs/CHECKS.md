@@ -149,6 +149,29 @@ Lighthouse z verejnej adresy: mobil `?uvod=off` 90 (LCP 3,3 s, CLS 0, TBT 160 ms
 postupy a SEO 100. LCP na mobile vzrástol oproti 2,1 s, lebo záloha úvodu na telefóne je teraz
 výrez z foto‑40 (278 KB AVIF namiesto 132 KB) – cena za ostrý prvý obraz; na skutočnom 4G je to pod 1 s.
 
+## 9. Plynulý úvod na telefóne (2026‑10‑10) – `node source/tools/uvod-meranie.mjs`
+
+Podnet majiteľa: úvod a prvé prechody na telefóne nie sú také plynulé ako na referenčnom videu.
+Zmerané pred úpravou (telefón 390×844 2×, headless, softvérové kreslenie):
+- chôdza začínala hneď po fasáde a pri dverách čakala na záber úvodu (S 0,33: 1,8 s pri rýchlej
+  sieti, 5,8 s pri 1,6 Mb/s) – úvod bol dva pohyby s pauzou;
+- rozlíšenie plátna sa znižovalo uprostred prológu (dpr 2 → 1,5 → 1) kvôli dlhým snímkam pri
+  nahrávaní fotiek do grafiky;
+- statická záloha a prvý snímok filmu mali iné rámovanie (film 1,18× bližšie a posunutý na bod
+  záujmu), prelínanie zálohy do filmu bolo viditeľný skok;
+- záloha a film sťahovali rôzne stupne fotky (záloha 1448, film 1086 na telefóne, 2172 na počítači).
+Po úprave (film.js, style.css, stills.py):
+- chôdza začne až s načítaným záberom úvodu, kamera dovtedy stojí na prvom snímku; zastavenia
+  počas chôdze: žiadne pri rýchlej ani pomalej sieti (ostáva len prvý snímok po štarte chôdze,
+  ktorý v softvérovom kreslení trvá 1,5 s), dpr 2 celý prológ, bez stropu 30 fps;
+- zhoda zálohy s prvým snímkom (`uvod-zhoda.py`, fázová korelácia bez jasu, výrez 12–88 %):
+  telefón prológ dx 0 / dy −6 px (z 780×1282), mierka 0,99; telefón úvod bez prológu dx +1 / dy 0,
+  0,99; počítač prológ dx +7 / dy −5 px (z 1440×684), 0,98; počítač úvod bez prológu dx +5 / dy −3,
+  0,98 (2 % sú hĺbkový posun filmu voči plochej fotke, pri prelínaní 0,7 s nevidno);
+- záloha berie ten istý stupeň ako film (telefón `vstup-m-1086`, počítač `vstup-2172`);
+- `uvod-shot.mjs` (desktop + mobil), `koliesko-test.mjs`, `prechod-shot.mjs --only=mobile`,
+  `app-smoke.mjs`: všetko prešlo.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

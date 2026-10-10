@@ -462,6 +462,34 @@ html[data-motion="off"] .film-still img { transform: none; }
     radial-gradient(120% 90% at 50% 50%, rgba(14, 13, 12, 0) 55%, rgba(14, 13, 12, 0.35) 100%);
 }
 
+/* film pôjde (html.world z hlavičky): záloha má presne rámovanie prvého snímku filmu (presah 1,24 ako
+   rovina záberu, bod záujmu, začiatočná vzdialenosť kamery --z0 podľa pohybu záberu), takže prelínanie
+   zálohy do filmu nič neposunie ani nepriblíži. Rozmery v jednotkách okna, rovnaký výpočet ako layout()
+   vo film.js; pri zlyhaní (world-off) sa vráti bežné pokrytie okna. */
+html.world:not(.world-off) .film-still img {
+  --k: calc(1 / (1 + var(--z0, -0.04)));
+  --pw: calc(1.24 * var(--k) * max(100vw, 100vh * var(--pa, 1.5)));
+  --ph: calc(var(--pw) / var(--pa, 1.5));
+  --mx: calc((var(--pw) - 100vw * var(--k)) / 2 - 6vw * var(--k));
+  --my: calc((var(--ph) - 100vh * var(--k)) / 2 - 6vh * var(--k));
+  --ex: clamp(-1 * var(--mx), (var(--fxn, 0.5) - 0.5) * var(--pw), var(--mx));
+  --ey: clamp(-1 * var(--my), (0.5 - var(--fyn, 0.5)) * var(--ph), var(--my));
+  position: absolute; max-width: none;
+  width: var(--pw); height: var(--ph);
+  left: calc(50vw - var(--pw) / 2 - var(--ex)); top: calc(50vh - var(--ph) / 2 + var(--ey));
+  object-fit: fill; transform: none;
+}
+/* s filmom má záloha aj rovnakú vinetáciu ako film (len radiálnu, 0,34 v rohoch), aby sa pri prelínaní nerozjasnila */
+html.world:not(.world-off) .film-still::after {
+  background: radial-gradient(120% 90% at 50% 50%, rgba(14, 13, 12, 0) 36%, rgba(14, 13, 12, 0.34) 100%);
+}
+/* záber pri svojej kotve je v polovici pohybu (z = -0,04; jemný nájazd -0,005), prológ na začiatku chôdze (0,05) */
+.film-shot[data-mv="near"] .film-still img { --z0: -0.005; }
+.film-still-pro img { --z0: 0.05; }
+@media (max-width: 720px) {
+  html.world:not(.world-off) .film-still img { --pa: var(--pam, 0.5625); --fxn: var(--fmxn, 0.5); --fyn: var(--fmyn, 0.5); }
+}
+
 /* film beží: zálohy preč, sekcie priehľadné; zlyhanie (world-off) ich nechá navždy */
 html.world-in:not(.world-off) .film-still {
   opacity: 0; visibility: hidden;
