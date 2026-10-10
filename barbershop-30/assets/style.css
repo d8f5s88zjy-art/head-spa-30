@@ -544,7 +544,8 @@ html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.
 .film-bars i:last-child { bottom: 0; --dir: 100%; }
 html.pro .film-bars i, html.outside .film-bars i { transform: none; }
 @keyframes bars-out { to { transform: translateY(var(--dir)); } }
-html.pro:not(.outside) .film-bars i { animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 9s forwards; }
+html.pro:not(.outside):not(.world-in) .film-bars i { animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 12s forwards; }
+html.pro .film-place, html.outside .film-place { opacity: 0 !important; }
 html.world-off .film-bars { display: none; }
 @media (max-width: 900px) { .film-bars i { height: 9vh; } }
 /* bez odrazu a obnovenia potiahnutím na vrchu: potiahnutie nadol na vrchu stránky vedie von na ulicu (film.js) */
@@ -552,7 +553,7 @@ html { overscroll-behavior-y: none; }
 
 /* dvere: tlačidlo „Späť na ulicu“ / „Vojdi dnu“ v úvode, len keď film beží a stránka je na začiatku */
 .film-door {
-  position: absolute; right: var(--gutter); bottom: calc(var(--s6) + 52px); z-index: 2;
+  position: absolute; left: var(--gutter); top: calc(var(--nav-h) + 16px); z-index: 2;
   display: none; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px;
   border: 1px solid rgba(241, 233, 221, 0.25); background: rgba(14, 13, 12, 0.55); color: var(--paper);
   font-family: var(--font-text); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1;
@@ -568,9 +569,10 @@ html.outside .film-door .film-door-dnu { display: inline; }
 html.outside .scroll-hint { opacity: 0; }
 @media (max-width: 900px) {
   /* telefón: tlačidlo dverí hore vpravo pod lištou (dole je doska a spodné tlačidlo) */
-  .film-door { bottom: auto; top: calc(var(--nav-h) + 12px); }
-  /* na ulici ostáva spodné tlačidlo Rezervovať termín nad filmovým pásom */
-  html.outside .mobile-cta { z-index: 39; }
+  .film-door { left: auto; right: var(--gutter); top: calc(var(--nav-h) + 12px); }
+  .scroll-hint { display: none; }
+  /* spodné tlačidlo Rezervovať termín ostáva nad filmovým pásom aj počas úvodu a na ulici */
+  html.pro .mobile-cta, html.outside .mobile-cta { z-index: 39; }
 }
 
 .fact-list { margin-top: var(--s6); display: grid; gap: var(--s3); }
@@ -833,7 +835,8 @@ html.pro:not(.world-off) .scroll-hint { opacity: 0; }
   .board-hero { padding: var(--s4) var(--s4) var(--s4); }
   .board-hero .lead { font-size: 0.95rem; line-height: 1.45; }
   .board-hero .board-actions { margin-top: var(--s3); }
-  .film-shot .board-hero .board-actions .btn-primary { display: none; }
+  .film-shot .board:not(.board-contact) .board-actions .btn-primary { display: none; }
+  .film-shot .board:not(.board-contact) .board-actions:not(:has(.btn-secondary)) { display: none; }
   .film-shot .board-hero .board-actions .btn-secondary { width: auto; flex: none; padding-inline: 0; flex: none; padding: 0; min-height: 0; border: 0; background: none; color: var(--paper); font-size: 0.85rem; letter-spacing: 0.06em; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp); }
   .film-still::after {
     background:

@@ -267,7 +267,8 @@ if (motionOn && mqFinePointer.matches) {
     raf = 0;
     const dt = last ? Math.min(100, now - last) : 16.667; last = now;
     cur += (target - cur) * (1 - Math.exp(-dt / 140));
-    if (Math.abs(target - cur) < 0.5) cur = target;
+    // na krajoch (vrch, spodok) dobehne hneď, aby koliesko nahor na vrchu bez čakania viedlo von na ulicu
+    if (Math.abs(target - cur) < 0.5 || ((target === 0 || target >= maxY()) && Math.abs(target - cur) < 12)) cur = target;
     ours = true; window.scrollTo({ top: cur, left: 0, behavior: 'instant' }); ours = false;
     if (cur !== target) raf = requestAnimationFrame(step); else last = 0;
   };

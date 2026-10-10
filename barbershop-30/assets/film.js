@@ -69,6 +69,8 @@
   const proEl = d.querySelector('.film-shot[data-pro]');
   let proArmed = root.classList.contains('pro') && !!proEl && scrollY < innerHeight * 0.25 && !d.hidden;
   if (!proArmed) root.classList.remove('pro');
+  // prológ začína vždy z vrchu stránky (obnovený skrol o pár desiatok px by ho hneď zrušil)
+  if (proArmed && scrollY > 0) jumpTo(0);
   // film sa spustí až keď sa návštevník pohne (dotyk, myš, skrolovanie, klávesnica); dovtedy drží
   // každé okno do filmu statická fotka (.film-still), takže nikde nie je prázdna plocha. Aby film
   // prišiel skoro aj po prvom švihu na telefóne, knižnica sa po načítaní stránky vo voľnej chvíli
@@ -87,8 +89,11 @@
   let THREE;
   try { THREE = await import(src); } catch (e) { quit(); return; }
 
-  const phone = matchMedia('(max-width: 720px)').matches;
+  // telefón podľa zariadenia (aj naležato), nie len podľa aktuálnej šírky okna
+  const phone = matchMedia('(max-width: 720px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(innerWidth, innerHeight) <= 720);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  // okamžitý skok bez plynulého skrolu z CSS (scroll-behavior: smooth); staré Safari nepozná 'instant'
+  const jumpTo = (y) => { try { scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { const s = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; scrollTo(0, y); root.style.scrollBehavior = s; } };
   const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
   /* ---------- zábery z kotiev v stránke ----------
@@ -108,7 +113,7 @@
     // len jemný nájazd: pokojný záber pod doskou s cenníkom
     near: [[-ARC * 0.5, 0, 0.02], [ARC * 0.5, 0, -0.03]],
     // prológ: chôdza z ulice k dverám, kamera ide dopredu o tretinu vzdialenosti (asi 1,5× priblíženie)
-    door: [[-ARC * 0.3, 0, 0.05], [ARC * 0.3, 0, -0.34]],
+    door: [[-ARC * 0.3, 0, 0.05], [phone ? ARC * 0.3 : 0.15, 0, -0.34]],   // na počítači aj bokom k dverám (oko je pri okraji záberu zaseknuté)
   };
   const pair = (v, dflt) => { const a = (v || '').split(/[\s,;]+/).map(parseFloat); return a.length === 2 && a.every(isFinite) ? [clamp(a[0], 0, 1), clamp(a[1], 0, 1)] : dflt; };
   // pomer strán fotky: z data-size="ŠxV", inak z width/height prvej zálohy <img> (zábery podniku sú 3 : 2)
@@ -338,7 +343,8 @@
   function upload(bmp, live, photo) {
     return new Promise((res) => {
       const t = tex(bmp);
-      if (photo) { t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = ANISO; }
+      // generateMipmaps = true: three vyhradí všetky úrovne (texStorage2D), obsah doplní ručný generateMipmap po pásoch
+      if (photo) { t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = ANISO; }
       t.userData.w = bmp.width; t.userData.h = bmp.height;  // rozmery ostanú známe aj po zavretí obrázka
       t.source.dataReady = false;                           // three len vyhradí miesto, obsah príde po pásoch
       renderer.initTexture(t);
@@ -452,13 +458,13 @@
         float vs = 0.34;
         if (uMix > 0.0) {
           /* prechod cez priestor, rovnaký pre všetky zábery: každý bod obrazu sa prelína vo vlastnom čase
-             podľa hĺbky (alfa = 1 blízko). Ďaleký koniec novej miestnosti sa vynorí prvý, blízke veci
-             odchádzajúceho záberu (kreslo, sud, pult) miznú posledné, akoby popri tebe prešli. Každý bod
-             sa prelína v okne širokom 0,55 z celého prechodu, takže nikde nie je tvrdá hrana ani
-             dvojexpozícia celého obrazu; ostrosť ostáva, nič sa nerozmazáva. */
+             podľa bližšej z dvoch hĺbok (alfa = 1 blízko). Ďaleký koniec oboch miestností sa vymení prvý,
+             blízke veci (kreslo, sud, pult – staré aj nové popredie) posledné, akoby popri tebe prešli.
+             Každý bod sa prelína v okne širokom 0,45 z celého prechodu, takže nikde nie je tvrdá hrana
+             ani dvojexpozícia celého obrazu; ostrosť ostáva, nič sa nerozmazáva. */
           vec4 b = texture2D(tB, vUv);
-          float o = 0.5 * a.a + 0.5 * b.a;
-          float m = smoothstep(o * 0.45, o * 0.45 + 0.55, uMix);
+          float o = max(a.a, b.a);
+          float m = smoothstep(o * 0.55, o * 0.55 + 0.45, uMix);
           c = mix(a.rgb, b.rgb, m);
           // krátke šero uprostred (82 % jasu) a o niečo užšia vinetácia: oko ide do stredu, ako strih vo filme
           float s = sin(3.14159265 * uMix);
@@ -554,8 +560,8 @@
     keepAround(clamp(Math.round(S), 0, N));
     const k = clamp(Math.floor(S), 0, N);
     let A = path[k], B = path[clamp(k + 1, 0, N)];
-    // prechod má na obrazovke vždy rovnakú dĺžku (asi 55 % výšky okna skrolu), nech je medzera medzi
-    // kotvami akákoľvek: medzi 16 a 30 % cesty medzi nimi, okolo stredu
+    // prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere 1 obrazovka = 0,3 obrazovky skrolu),
+    // pri väčších medzerách asi 55 % výšky okna, najmenej 16 %; vždy okolo stredu
     const gap = k < N ? anchors[k + 1] - anchors[k] : innerHeight, span = clamp(0.55 * innerHeight / Math.max(1, gap), 0.16, 0.3);
     const want = A === B ? 0 : smooth(0.5 - span / 2, 0.5 + span / 2, S - k);
     if (k !== fadeK) { fade = want; fadeK = k; }
@@ -697,10 +703,13 @@
     // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený
     if (pro && !pro.t0 && frameDrawn && PRO && PRO.ready) pro.t0 = now;
     if (leaving && !leaving.t0 && frameDrawn && PRO && PRO.ready) leaving.t0 = now;
+    // fasáda neprišla (sieť): odchod aj opakované vojdenie sa po 6 s vzdajú a stránka ide ďalej normálne
+    if (leaving && !leaving.t0 && now - leaving.since > 6000) cancelLeave();
+    if (pro && !pro.t0 && pro.since && now - pro.since > 6000) endPro(false);
     // prológ sa skončil: film stojí na zábere úvodu a ďalej vedie skrolovanie
     if (pro && pro.t0 && S >= 1) endPro(true);
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
-    const moving = !!pro || !!leaving || active || busy || jobs.length > 0 || Math.abs(T - S) > 0.0004 || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
+    const moving = !!pro || !!leaving || active || busy || jobs.length > 0 || (!outside && Math.abs(T - S) > 0.0004) || Math.abs(V) > 0.0004 || (!phone && (Math.abs(mx - pmx) > 0.0008 || Math.abs(my - pmy) > 0.0008));
     if (!shown) {
       // prvý záber ešte nie je: čakať, a keď nič nepríde (sieť), vrátiť pokojný web.
       // Prológ, ktorý nepríde do 7 s (pomalá sieť), sa vynechá a film začne rovno záberom úvodu.
@@ -732,16 +741,17 @@
     if (!PRO || pro) return false;
     leaving = null; outside = false; root.classList.remove('outside');
     PRO.done = false; load(PRO);
-    pro = proMs(); if (fast) { pro.walk *= 0.65; pro.into *= 0.75; pro.fast = true; }
+    pro = proMs(); pro.since = performance.now(); if (fast) { pro.walk *= 0.65; pro.into *= 0.75; pro.fast = true; }
     S = 0; V = 0; held = null; fadeK = -1; dark = false;
     root.classList.add('pro');
-    if (scrollY > 0) scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    sy = scrollY; lastInput = performance.now(); wake(); return true;
+    if (scrollY > 0) jumpTo(0);
+    sy = Math.max(0, scrollY); lastInput = performance.now(); wake(); return true;
   }
   function leave() {
-    if (!PRO || pro || leaving || outside || !shown || scrollY > 2 || Math.abs(S - 1) > 0.02) return false;
+    // stačí stáť na vrchu stránky; pružina S dobehne na 1 sama, odchod začne až keď je fasáda načítaná
+    if (!PRO || pro || leaving || outside || !shown || scrollY > 4) return false;
     PRO.done = false; load(PRO);
-    leaving = { t0: 0, dur: phone ? 2200 : 1900 };
+    leaving = { t0: 0, dur: phone ? 2200 : 1900, since: performance.now() };
     root.classList.add('pro');                              // pásy dnu, výzva na skrol preč
     lastInput = performance.now(); wake(); return true;
   }
@@ -776,7 +786,10 @@
   const on = (t, e, f, o) => t.addEventListener(e, f, Object.assign({ passive: true, signal: ac.signal }, o));
   // poloha skrolu sa číta hneď na začiatku udalosti (zachytávanie, pred ostatnými poslucháčmi), keď je
   // štýl ešte čistý; čítanie scrollY v snímke až po zápisoch iných skriptov by vynútilo prepočet štýlu
-  on(window, 'scroll', () => { sy = scrollY; poke(); }, { capture: true });
+  // záporný scrollY je odraz (Safari), nie poloha v stránke; topSince = odkedy stránka stojí na vrchu
+  let topSince = scrollY <= 4 ? performance.now() : 0;
+  on(window, 'scroll', () => { sy = Math.max(0, scrollY); if (sy > 4) topSince = 0; else if (!topSince) topSince = performance.now(); poke(); }, { capture: true });
+  const atTopSettled = () => scrollY <= 4 && topSince && performance.now() - topSince > 350;
   on(window, 'resize', resize);
   on(window, 'touchstart', poke);
   if (!phone) on(window, 'pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = -(e.clientY / innerHeight - 0.5); poke(); });
@@ -804,23 +817,27 @@
   // z ulice dnu: tlačidlo, koliesko nadol, potiahnutie nahor, šípka dole alebo medzerník
   const door = d.querySelector('.film-door');
   if (door) on(door, 'click', () => { if (outside) startPro(true); else leave(); });
+  // gestá neplatia, keď je otvorené menu alebo lightbox (stránka je zamknutá), ani z polí a tlačidiel
+  const locked = () => d.body.style.overflow === 'hidden' || d.documentElement.classList.contains('menu-open');
+  const typing = (e) => e.target && e.target.closest && e.target.closest('input, textarea, select, button, a, [contenteditable]');
   on(window, 'wheel', (e) => {
-    if (e.deltaY < -8 && scrollY <= 0 && !pro && !leaving && !outside) leave();
+    if (locked()) return;
+    if (e.deltaY < -8 && atTopSettled() && !pro && !leaving && !outside) leave();
     else if (e.deltaY > 8 && outside) startPro(true);
   });
   let ty0 = null;
   on(window, 'touchstart', (e) => { ty0 = e.touches && e.touches[0] ? e.touches[0].clientY : null; });
   on(window, 'touchmove', (e) => {
-    if (ty0 == null || !e.touches || !e.touches[0]) return;
+    if (ty0 == null || !e.touches || !e.touches[0] || locked()) return;
     const dy = e.touches[0].clientY - ty0;
-    if (dy > 28 && scrollY <= 0 && !pro && !leaving && !outside) { if (leave()) ty0 = null; }
+    if (dy > 28 && atTopSettled() && !pro && !leaving && !outside) { if (leave()) ty0 = null; }
     else if (dy < -28 && outside) { startPro(true); ty0 = null; }
   });
   on(window, 'keydown', (e) => {
-    if (e.altKey || e.ctrlKey || e.metaKey) return;
-    if ((e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Home') && scrollY <= 0 && !pro && !leaving && !outside) leave();
-    else if ((e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') && outside) startPro(true);
-  });
+    if (e.altKey || e.ctrlKey || e.metaKey || locked() || typing(e)) return;
+    if ((e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Home') && atTopSettled() && !pro && !leaving && !outside) leave();
+    else if ((e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') && outside) { e.preventDefault(); startPro(true); }
+  }, { passive: false });
   // strata grafického kontextu (málo pamäte): rozrobené pásy sa hneď zrušia (uvoľnia rozbalené fotky),
   // po obnove sa fotky načítajú znova
   on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); }, { passive: false });
@@ -849,8 +866,8 @@
     if (!s) return false;
     const k = s.pi, a = anchors[k], gap = k < N ? anchors[k + 1] - a : (k > 0 ? a - anchors[k - 1] : innerHeight);
     const y = Math.max(0, Math.round(a + (clamp(t, 0, 1) - 0.5) * 0.7 * gap));
-    scrollTo({ top: y, left: 0, behavior: 'instant' });
-    sy = scrollY; S = targetS(); V = 0; still = 1; held = null; fadeK = -1; lastInput = performance.now(); wake();
+    jumpTo(y);
+    sy = Math.max(0, scrollY); S = targetS(); V = 0; still = 1; held = null; fadeK = -1; lastInput = performance.now(); wake();
     return true;
   };
   // proFreeze(s): prológ zastaví na polohe s (0 fasáda, 1 úvod) pre snímky; proFreeze(null) ho pustí ďalej

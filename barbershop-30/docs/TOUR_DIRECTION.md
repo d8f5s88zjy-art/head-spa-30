@@ -16,16 +16,17 @@ voči stene), pri skrolovaní ide pomalým filmovým pohybom (nájazd, prejazd, 
 medzi časťami webu sa zábery prelínajú. Text, tlačidlá a cenník sú HTML nad filmom.
 Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** medzi zábermi
 (rozhodnutie majiteľa 2026‑10‑09: prechody jednotné, filmové, s efektom, bez straty ostrosti):
-- každý bod obrazu sa prelína vo vlastnom čase podľa hĺbky: ďaleký koniec novej miestnosti sa
-  vynorí prvý, blízke veci odchádzajúceho záberu (kreslo, sud, pult) miznú posledné, akoby popri
-  návštevníkovi prešli; každý bod sa prelína v okne 0,55 z celého prechodu (post shader,
+- každý bod obrazu sa prelína vo vlastnom čase podľa bližšej z dvoch hĺbok: ďaleký koniec oboch
+  miestností sa vymení prvý, blízke veci (kreslo, sud, pult – staré aj nové popredie) posledné, akoby
+  popri návštevníkovi prešli; každý bod sa prelína v okne 0,45 z celého prechodu (post shader,
   hĺbka ide v alfe textúry záberu);
 - kamera odchádzajúceho záberu zrýchli dopredu (do štvrtiny vzdialenosti), prichádzajúca dobehne
   zozadu a usadí sa; hĺbka sa pri tom „otvorí“ (uAmt 0,42 → 0,52 a späť);
 - uprostred krátke šero (82 % jasu) a o niečo užšia vinetácia, ako strih vo filme; nikdy tma,
   nikdy dvojexpozícia celého obrazu, nikdy rozmazanie;
-- prechod má na obrazovke vždy rovnakú dĺžku (asi 55 % výšky okna skrolu, 16–30 % cesty medzi
-  kotvami, okolo stredu) a v pokoji sa vždy dokončí na bližší záber;
+- prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere jednej obrazovky 0,3 obrazovky
+  skrolu; pri väčších medzerách asi 55 % výšky okna, najmenej 16 %), vždy okolo stredu, a v pokoji
+  sa vždy dokončí na bližší záber;
 - ten istý prechod má aj prológ (z fasády cez dvere dnu). Snímky: `source/tools/prechod-shot.mjs`
   (zastavený prechod cez `BS30_FILM.fadeFreeze`).
 
@@ -56,8 +57,10 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
 - Kamera: jeden jednotný pohyb celého filmu – stále pomaly dopredu s jemným bočným
   oblúkom (4 % šírky na desktope, 2,6 % na telefóne), pozerá na bod záujmu `f`;
   myš na počítači pridá ďalší oblúk, telefón nie (žiadne povolenia).
-- Mobil: výrez na výšku najviac 1448 px (zábery z galérie bod na bod aj pri 3×; rohožka na telefóne je
-  z foto‑30 majiteľa, 900 px, pri 3× zväčšená 1,3×), presah 1,24, text dole nad spodným CTA.
+- Mobil: výrez na výšku najviac 1448 px (bod na bod aj pri 3×; rohožka na telefóne je z foto‑40
+  majiteľa, 1932×2576, výrez 1449 px: pult, rohožka, kreslá, sud), presah 1,24, text dole nad spodným CTA.
+  Body záujmu výrezov sú na veci z názvu miesta (recepcia 0,30 = pult, stôl 0,62, čakáreň 0,72 = pumpa,
+  sud 0,78), kreslo pri okne o 5 % vyššie (opierka celá).
 
 ## Úvod ako film (prológ): z ulice cez dvere dnu
 
@@ -112,7 +115,7 @@ Bez filmu (pokojná verzia) tlačidlo nie je.
 | # | sekcia (id) | záber (`film.json`) | bod záujmu f | pohyb | text nad filmom | CTA |
 |---|---|---|---|---|---|---|
 | 0 | prológ (bez kotvy) | `vstup` – fasáda s dverami a barber pole (gallery/43) | [0.76, 0.53] dvere | `door` (chôdza k dverám) | to isté ako úvod (doska je HTML, nemení sa) | – |
-| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px; telefón foto‑30 na výšku) | [0.5, 0.55], telefón [0.50, 0.55] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
+| 1 | `#uvod` | `rohozka` – hneď za dverami: rohožka s logom, kreslo, sála (slider/3, 1920 px; telefón foto‑40 na výšku) | [0.5, 0.55], telefón [0.50, 0.50] | `rise` | eyebrow BARBERSHOP 30 · NITRA, H1 „Tvoj strih. Tvoje miesto.“, lead, 2 tlačidlá | Rezervovať termín, Zavolať na recepciu |
 | 2 | `#recepcia` | `recepcia` – pult, lampy, barber pole (gallery/35) | [0.45, 0.55] pult | `right` | H2 „Príď ako k známym.“, 3 riadky: recepčná ťa privíta · káva a minerálka zdarma · 8 kresiel, minimálne čakanie | – |
 | 3 | `#sala` | `sala` – rad kresiel, zrkadlá (gallery/38) → `kreslo` (gallery/28) | [0.5, 0.55] → [0.58, 0.55] | `left` → `in` | H2 „Osem kresiel. Jedno je tvoje.“ + chip „Hlavná sála“ | Pozri služby → |
 | 4 | `#remeslo` | `stol` (gallery/40) + **video** `remeslo-strojcek` v portrétovom okne vedľa textu; detail `naradie` (gallery/39) | [0.5, 0.5] | `rise` | H2 „Presnosť, ktorú vidíš v detaile.“, odsek z opisov služieb (konzultácia, strojček aj nožnice, fade, horúci uterák, britva, styling, kolínska) | – |

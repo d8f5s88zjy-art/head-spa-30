@@ -26,7 +26,7 @@ def picture(name, style, img_attrs, indent):
     r = MAN[name]; m = r['m']
     fmx = f'{m["fx"] * 100:.1f}%'
     st = re.sub(r'\s*--fmx:[^;]*;?|\s*--fmy:[^;]*;?', '', style).rstrip('; ')
-    fy = re.search(r'--fy:\s*([^;"]+)', st); fmy = fy.group(1).strip() if fy else '50%'
+    fy = re.search(r'--fy:\s*([^;"]+)', st); fmy = f'{m["fy"] * 100:.0f}%' if 'fy' in m else (fy.group(1).strip() if fy else '50%')
     st = f'{st}; --fmx: {fmx}; --fmy: {fmy}'
     i = indent
     return (f'{i}<picture class="film-still" style="{st}">\n'
@@ -60,7 +60,7 @@ def rewrite_anchors(html):
         name = re.search(r'data-shot="([^"]+)"', tag).group(1); r = MAN[name]; m = r['m']
         a = {'data-size': f'{r["width"]}x{r["height"]}', 'data-tiers': ','.join(str(w) for w in sorted(map(int, r['tiers']))),
              'data-m': f'{name}-m', 'data-m-size': f'{m["width"]}x{m["height"]}', 'data-m-tiers': ','.join(str(w) for w in sorted(map(int, m['tiers'])))}
-        fy = re.search(r'data-f="[^,"]+,([^"]+)"', tag); a['data-fm'] = f'{m["fx"]:.2f},{fy.group(1).strip() if fy else "0.5"}'
+        fy = re.search(r'data-f="[^,"]+,([^"]+)"', tag); a['data-fm'] = f'{m["fx"]:.2f},{m["fy"] if "fy" in m else (fy.group(1).strip() if fy else "0.5")}'
         pro = re.search(r'data-pro="([^"]+)"', tag)
         if pro:
             pr = MAN[pro.group(1)]; pm = pr['m']

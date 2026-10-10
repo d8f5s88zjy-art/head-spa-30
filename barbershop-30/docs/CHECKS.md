@@ -110,6 +110,31 @@ tlačidlo (telefón) → prológ znova a kamera na rohožke (S = 1); pri druhej 
 automatického prológu) sa dá vyjsť von rovnako. Desktop aj mobil prešli z verejnej adresy; dymový
 test po úpravách prešiel celý. Snímky: `docs/screenshots/uvod-*-vonku.jpg`, `uvod-*-znova.jpg`.
 
+## 8. Nezávislé kontroly (2026‑10‑09/10) a čo sa z nich zmenilo
+
+Tri kontroly (stránka a súbory; kód film.js; mobilná kompozícia a hook) – nálezy a opravy:
+- preload fasády bez stupňa 4096 → tabuľky preloadu sa generujú z film.json (zhodné so šablónou);
+- mipmapy sa v skutočnosti netvorili (three s `generateMipmaps=false` vyhradí jednu úroveň) →
+  `generateMipmaps = true` pred `initTexture`, ručný `generateMipmap` po pásoch doplní obsah;
+- na ulici (outside) bežalo kreslenie naplno → vonku sa kreslí pokojovo;
+- zotrvačnosť kolieska/trackpadu po dojazde hore mohla vyviesť von → von až keď stránka stojí na
+  vrchu aspoň 350 ms; odraz (záporný scrollY) sa berie ako 0; gestá neplatia pri otvorenom menu či
+  lightboxe; medzerník/šípka dole z ulice vojdú dnu bez skoku stránky;
+- telefón sa určuje podľa zariadenia (aj naležato), odchod/opakované vojdenie bez fasády sa po 6 s
+  vzdá, prológ pri obnovenom skrole začne z vrchu, `scrollTo` so zálohou pre staré Safari;
+- chôdza k dverám na počítači ide aj bokom k dverám (dvere skončia vedľa dosky);
+- prechod radí body podľa bližšej z dvoch hĺbok (ďaleký koniec oboch miestností prvý, popredie
+  posledné), okno 0,45;
+- výrezy na telefón míňali bod záujmu z názvu (sud, pumpa, pult, stôl) → nové x (0,78 / 0,72 /
+  0,30 / 0,62), kreslo pri okne o 5 % vyššie; hero na telefóne z foto‑40 (1932×2576, výrez 1449 px)
+  namiesto foto‑30 (900 px);
+- počas prológu nebolo na telefóne vidieť „Rezervovať termín“ → spodná lišta nad pásom aj pri úvode;
+  poistka pásov platí len kým film nenakreslil prvý snímok (12 s); popis miesta pod pásmi skrytý;
+  druhé „Rezervovať termín“ v doske tímu na telefóne skryté; tlačidlo dverí na počítači hore vľavo
+  pod značkou (nie dve pilulky nad sebou), výzva na skrol na telefóne skrytá (vedie spodná lišta).
+Neriešené (vyžadujú majiteľa): fasáda bez rozmazaného auta (nová fotka), fotka dverí zblízka.
+Nepotvrdené skeptikmi (limit relácie), nálezy prijaté po vlastnom overení kódu a snímok.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,
