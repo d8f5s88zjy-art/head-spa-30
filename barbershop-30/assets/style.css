@@ -1247,3 +1247,19 @@ html[data-motion="off"] .btn-primary::after, html[data-motion="off"] .beam > .be
 .band-contact .flap { margin-bottom: var(--s5); }
 /* na telefóne je tím pri práci priamo vo filme (slučka cez celú plochu), okno s tým istým videom by sa opakovalo */
 @media (max-width: 720px) { .team-video { display: none; } }
+
+/* telefón: tím a galéria ako vodorovný pás, ktorý sa posúva prstom (kratšia stránka, ako v aplikácii);
+   prvá karta je zarovnaná s textom, ďalšia vykukuje sprava, aby bolo jasné, že pás pokračuje */
+@media (max-width: 640px) {
+  .team-grid, .gallery-grid {
+    display: grid; grid-auto-flow: column; grid-template-columns: none; grid-template-rows: none;
+    grid-auto-columns: 64%; gap: var(--s3);
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .team-grid::-webkit-scrollbar, .gallery-grid::-webkit-scrollbar { display: none; }
+  .team-grid > *, .gallery-grid > * { scroll-snap-align: start; }
+  .gallery-grid { grid-auto-columns: 78%; grid-auto-rows: auto; }
+  .gallery-item, .gallery-item.is-portrait, .gallery-item.is-wide { grid-row: auto; grid-column: auto; aspect-ratio: 4 / 5; }
+}
