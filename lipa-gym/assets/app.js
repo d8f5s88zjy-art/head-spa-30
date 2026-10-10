@@ -513,7 +513,7 @@
 
   /* ---------- mostíky: vstup vety ---------- */
   function bridges() {
-    var els = $$('.bridge');
+    var els = $$('.bridge, .pole-rule');
     if (!els.length || !('IntersectionObserver' in window)) { els.forEach(function (b) { b.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.4 });
     els.forEach(function (b) { io.observe(b); });
