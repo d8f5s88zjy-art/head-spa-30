@@ -159,10 +159,12 @@ Instagram a na tento web.
 
 Sekcia Poukazy je krátka: nadpis, jedna veta, poukážka salónu (`vzor`), jedno tlačidlo Kúpiť poukaz
 rovno do obchodu Booqme a veta, že rituál sa vyberá v obchode. Bez formulára a bez výberu na webe,
-aby nákup mal čo najmenej krokov. Každá karta rituálu má pri tlačidle Rezervovať aj odkaz Darovať
+aby nákup mal čo najmenej krokov. Pod tým je pás Poukážka na konkrétny rituál: 17 poukážok
+v štýle poukážky salónu (`docs/poukazky`), každá je odkaz do obchodu s poukazmi, na počítači
+so šípkami, na telefóne na posúvanie prstom. Každá karta rituálu má pri tlačidle Rezervovať aj odkaz Darovať
 ako poukaz (obchod Booqme, alebo platba kartou z adminu). Poukážky jednotlivých rituálov
-(`assets/img/poukaz/<rituál>-{800,1290}.{avif,webp}`, z `docs/poukazky/dl/png/`) ostávajú v repozitári
-pre Booqme a tlač. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
+(`assets/img/poukaz/<rituál>-{480,800,1290}.{avif,webp}` a `-800.jpg`, z `docs/poukazky/dl/png/`) sú
+v tom páse a slúžia aj pre Booqme a tlač. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 

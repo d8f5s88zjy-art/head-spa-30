@@ -1265,6 +1265,9 @@ ol.steps{padding-left:22px;color:var(--muted)}ol.steps li{margin:6px 0}ol.steps 
       if (changed(r.e.about)) { const oldJoined = r.about.join(' '); a = a.replace(/(<div class="about"><span class="lbl">[^<]*<\/span>)[\s\S]*?(<\/div>)/, `$1${newAbout.map((p) => `<p>${esc(fixNb(p, oldJoined))}</p>`).join('')}$2`); }
       if (changed(r.e.steps)) { const oldJoined = r.steps.join(' '); a = a.replace(/(<ol>)[\s\S]*?(<\/ol>)/, `$1${newSteps.map((p) => `<li>${esc(fixNb(p, oldJoined))}</li>`).join('')}$2`); }
       html = html.replace(art[0], a);
+      // pás poukážok v sekcii Poukazy: rovnaký názov a dĺžka ako karta rituálu (obrázok poukážky sa vyrába zvlášť, docs/poukazky)
+      html = html.replace(new RegExp(`(<a class="vch"[^>]*\\bdata-gift="${reEsc(r.id)}"[\\s\\S]*?<span class="vch-t"><b>)([\\s\\S]*?)(<\\/b><span>)\\d+`),
+        (m, p1, nm, p3) => p1 + (changed(r.e.name) ? esc(fixNb(v('name'), r.name)) : nm) + p3 + min);
       ['name', 'badge', 'tag', 'desc'].forEach((k) => i18nText(dicts, cands, norm(r[k]), v(k), r.tr[k]));
       i18nLines(dicts, cands, oldAbout, newAbout, r.tr.about, splitPara);
       i18nLines(dicts, cands, oldSteps, newSteps, r.tr.steps, splitLines);

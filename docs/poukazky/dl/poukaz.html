@@ -13,9 +13,9 @@
 :root{--gold:#d4ae62;--gold-hi:#f3dc9f;--gold-dk:#a8823f;--ink:#efe7da;--bg:#0a0908;--field:#d8c6a3}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#222}
-body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
 /* Karta DL na šírku so spadávkou 3 mm: 216 × 105 mm, 1 mm = 5 px. Vzor: poukážka od majiteľa
-   (čierny mramor, zlatá saténová mašľa vľavo, fotka vpravo za zlatým kruhom, pečať s lotosom). */
+   (čierny mramor, zlatá saténová mašľa vľavo, fotka vpravo za zlatým kruhom, pečať s lotosom PRE VÁS). */
 .card{position:relative;width:1080px;height:525px;overflow:hidden;background:var(--bg);margin:0 auto}
 .bg{position:absolute;inset:0;background:url(mramor.jpg) center/cover}
 /* zlatý text s jemným prechodom ako razba */
@@ -32,6 +32,9 @@ body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:an
 .arc{position:absolute;left:0;top:0;width:1080px;height:525px;pointer-events:none}
 .frame{position:absolute;inset:24px;border:1px solid rgba(212,174,98,.7)}
 .branch{position:absolute;left:496px;top:262px;width:190px;height:170px}
+/* motívy rituálov: ovocie a bylinky namiesto vetvičky, hviezdy a plátkové zlato pri oblúku fotky */
+.motif{position:absolute;left:490px;top:254px;width:250px;height:225px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55))}
+.motif-sky{position:absolute;left:0;top:0;width:1080px;height:525px;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
 /* pečať: zlatá minca s lotosom */
 .seal{position:absolute;left:873px;top:298px;width:124px;height:124px;border-radius:50%;
   background:radial-gradient(circle at 34% 28%,#f6e3aa 0%,#dcb86c 42%,#b48b45 78%,#8a6a31 100%);
@@ -46,7 +49,7 @@ body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:an
 .kind{margin-top:20px;line-height:1}
 .kind .a{display:inline-block;font-family:'Lora',serif;font-weight:500;font-size:43px;letter-spacing:.04em;text-transform:uppercase}
 .kind .b{display:block;font-family:'Pinyon',cursive;font-weight:400;font-size:74px;line-height:.95;color:var(--gold-hi);margin-top:-2px;text-shadow:0 2px 16px rgba(243,220,159,.18)}
-.orn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:0}
+.orn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
 .orn::before,.orn::after{content:"";width:62px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
 .orn::after{background:linear-gradient(90deg,var(--gold),transparent)}
 .orn i{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
@@ -55,7 +58,8 @@ body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:an
 .cat{margin-top:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
 .lede{margin:11px auto 0;font-size:11.5px;line-height:1.55;color:rgba(239,231,218,.86);max-width:330px;text-wrap:balance}
 /* polia na vyplnenie a spodný riadok */
-.fields{position:absolute;left:100px;right:88px;top:438px;display:grid;grid-template-columns:1.35fr 1.1fr 1fr 1.15fr .9fr;gap:16px}
+/* štyri polia ako vo vzore: Pre a Od dlhšie, Platnosť do a Kód kratšie */
+.fields{position:absolute;left:104px;right:84px;top:438px;display:grid;grid-template-columns:1.45fr 1.3fr 1.25fr .95fr;gap:22px}
 .f{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
 .f span{display:block;flex:1;height:24px;background:linear-gradient(180deg,#e0cfad,var(--field));box-shadow:inset 0 0 0 1px rgba(168,130,63,.45)}
 .foot{position:absolute;left:0;right:0;top:480px;display:flex;align-items:center;justify-content:center;gap:16px;font-family:'Manrope',sans-serif;font-weight:400;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);padding-left:.32em}
@@ -65,13 +69,15 @@ body{font-family:'Manrope',sans-serif;color:var(--ink);-webkit-font-smoothing:an
 .bow{position:absolute;left:-2px;top:-6px;width:186px;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
 /* verzia pre Booqme a sociálne siete: 980 × 700 px, bez polí na vyplnenie */
 .card.sq{width:980px;height:700px}
-.card.sq .photo{left:552px;
-  -webkit-mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px);
-  mask-image:radial-gradient(circle 352px at 340px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 340px,#000 340px)}
+.card.sq .photo{left:540px;
+  -webkit-mask-image:radial-gradient(circle 352px at 352px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 352px,#000 352px);
+  mask-image:radial-gradient(circle 352px at 352px 350px,#000 99.6%,transparent 100%),linear-gradient(90deg,transparent 352px,#000 352px)}
 .card.sq .arc{width:980px;height:700px}
 .card.sq .txt{left:150px;top:132px;width:390px}
 .card.sq .seal{left:812px;top:520px}
-.card.sq .branch{left:470px;top:420px}
+.card.sq .branch{left:484px;top:430px}
+.card.sq .motif{left:478px;top:424px}
+.card.sq .motif-sky{transform:translate(-26px,96px)}
 .card.sq .fields{display:none}
 .card.sq .rule.long{max-width:300px}
 .card.sq .foot{top:640px}

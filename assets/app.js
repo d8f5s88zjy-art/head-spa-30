@@ -703,6 +703,25 @@
     if (!u) return;
     a.href = u; a.textContent = 'Kúpiť poukaz kartou'; a.dataset.pay = '';
   });
+  /* pás poukážok jednotlivých rituálov: rovnaká platba kartou z adminu ako pri karte rituálu,
+     šípky posúvajú o šírku pásu a na kraji sa vypnú */
+  $$('.vch[data-gift]').forEach((a) => { const u = httpsUrl(PLATBY[a.dataset.gift]); if (u) { a.href = u; a.dataset.pay = ''; } });
+  const vList = $('.vouchers-list'), vBtns = $$('.vouchers-btn');
+  if (vList && vBtns.length) {
+    const vEdge = () => {
+      const max = vList.scrollWidth - vList.clientWidth - 2;
+      vBtns.forEach((b) => {
+        const off = +b.dataset.dir < 0 ? vList.scrollLeft <= 2 : vList.scrollLeft >= max;
+        // vypínané tlačidlo s fokusom ho odovzdá druhej šípke, aby sa fokus nestratil na začiatok stránky
+        if (off && document.activeElement === b) { const o = vBtns.find((x) => x !== b); if (o) o.focus(); }
+        b.disabled = off;
+      });
+    };
+    vBtns.forEach((b) => b.addEventListener('click', () => vList.scrollBy({ left: +b.dataset.dir * vList.clientWidth * 0.9 })));
+    vList.addEventListener('scroll', vEdge, { passive: true });
+    addEventListener('resize', vEdge, { passive: true });
+    vEdge();
+  }
   /* Booqme má stránky v jazyku návštevníka; slovenčina ostáva v HTML ako predvolená */
   const BQ_BOOK = { sk: 'rezervacia', cs: 'rezervace', hu: 'foglalas', en: 'reservation', de: 'reservation', pl: 'reservation', uk: 'reservation' };
   const BQ_RE = /^https:\/\/booqme\.app\/[a-z]{2}\/(rezervacia|rezervace|foglalas|reservation|eshop)\//;
