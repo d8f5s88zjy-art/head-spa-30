@@ -165,10 +165,10 @@ Poukaz na Zlatý rituál 24K, 90 minút. Keď obyčajný relax nestačí, prich�
 
 ## 7. Adresa rezervácie
 
-Adresa je `booqme.app/sk/rezervacia/barbershop-30`. Slovo barbershop tam klient vidí pri
-rezervácii aj platbe. Ak Booqme dovolí zmeniť adresu profilu (napríklad na `head-spa-30`),
-zmeň ju a napíš mi novú adresu, prepíšem všetky odkazy na webe naraz. Kým sa to nezmení,
-web ostáva na súčasnej adrese, inak by tlačidlá Rezervovať prestali fungovať.
+Hotovo: profil v Booqme má novú adresu `booqme.app/salon-30-head-spa` (presmeruje na
+`booqme.app/sk/rezervacia/salon-30-head-spa`, obchod s poukazmi je `booqme.app/sk/eshop/salon-30-head-spa`).
+Všetky tlačidlá na webe vedú na novú adresu, stará adresa s barbershop-30 už v Booqme neexistuje.
+Obrázky poukazov s QR kódom (`docs/poukazky/dl`) ešte nesú starú adresu, treba ich pregenerovať.
 
 ## 8. Platba kartou
 

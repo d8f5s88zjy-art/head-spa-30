@@ -148,7 +148,7 @@ Podklady sú v `docs/v9/`.
 V Booqme (Poukážky, Typy poukážok) je sedemnásť typov poukazu, jeden na každý rituál
 z ponuky, s cenou rituálu, platnosťou 365 dní od zakúpenia a popisom podľa
 docs/booqme-poukazy.csv. Žiadne poukazy na sumu, len to, čo salón ponúka. Verejný obchod
-je na https://booqme.app/sk/eshop/barbershop-30 a vedie naň tlačidlo Kúpiť poukaz online.
+je na https://booqme.app/sk/eshop/salon-30-head-spa a vedie naň tlačidlo Kúpiť poukaz online.
 Platba kartou funguje až po prepojení Stripe Connect v Booqme (Nastavenia, Stripe Connect).
 Rituál si zákazník vyberá priamo v obchode Booqme.
 Obrázok poukazu v Booqme (misa s vodou, A6 na šírku) je v docs/poukaz-a6.jpg; rezervačná
@@ -251,7 +251,7 @@ Kalendár online rezerváciu zostáva ako druhá možnosť pod formulárom.
 ## Darčekové poukážky
 
 Sekcia Poukážky (vlastná položka v lište): tlačidlo Kúpiť poukaz online vedie do obchodu Booqme
-(https://booqme.app/sk/eshop/barbershop-30), kde sa poukaz platí kartou. Objednávkový formulár
+(https://booqme.app/sk/eshop/salon-30-head-spa), kde sa poukaz platí kartou. Objednávkový formulár
 na webe už nie je, všetko ide cez Booqme.
 
 ## Galéria
@@ -570,7 +570,7 @@ mobil 94 až 96 podľa toho, ako je stroj zaťažený.
 ## Kam vedú tlačidlá Rezervovať
 
 Do vlastného online kalendára na Booqme:
-`https://booqme.app/sk/rezervacia/barbershop-30` (prevádzka Salon 30 - Head Spa,
+`https://booqme.app/sk/rezervacia/salon-30-head-spa` (prevádzka Salon 30 - Head Spa,
 Mostná 30, Nitra). Formulár na stránke zostáva ako druhá cesta, vedie naň
 položka Rezervácia v menu.
 

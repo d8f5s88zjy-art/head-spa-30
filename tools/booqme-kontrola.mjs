@@ -5,8 +5,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const KALENDAR = 'https://booqme.app/sk/rezervacia/barbershop-30';
-const OBCHOD = 'https://booqme.app/sk/eshop/barbershop-30';
+const KALENDAR = 'https://booqme.app/sk/rezervacia/salon-30-head-spa';
+const OBCHOD = 'https://booqme.app/sk/eshop/salon-30-head-spa';
 const dec = (s) => s.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&euro;/g, '€').replace(/&#039;/g, "'").replace(/&quot;/g, '"');
 
 // web: rituály z cenníka

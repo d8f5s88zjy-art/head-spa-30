@@ -6,8 +6,8 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Statický web HEAD SPA 30 (Head Spa rituály, Mostná 30, Nitra). HEAD SPA 30 je samostatná časť
   s vlastným tímom, sídli v priestoroch Salónu 30.
 - Nasadenie: GitHub Pages z vetvy `main`, adresa https://d8f5s88zjy-art.github.io/head-spa-30/
-- Rezervácie a poukazy idú do Booqme: kalendár https://booqme.app/sk/rezervacia/barbershop-30,
-  obchod s poukazmi https://booqme.app/sk/eshop/barbershop-30. Na webe nie sú žiadne formuláre, každé tlačidlo vedie rovno do Booqme.
+- Rezervácie a poukazy idú do Booqme: kalendár https://booqme.app/sk/rezervacia/salon-30-head-spa,
+  obchod s poukazmi https://booqme.app/sk/eshop/salon-30-head-spa. Na webe nie sú žiadne formuláre, každé tlačidlo vedie rovno do Booqme.
 
 ## Pravidlá obsahu (majiteľ ich dal, nemeň ich)
 - Iba to, čo salón ponúka: 17 rituálov (12 Head Spa, 2 pre dvoch, 3 pre chodidlá) z `docs/booqme-sluzby.csv`, nič nevymýšľaj

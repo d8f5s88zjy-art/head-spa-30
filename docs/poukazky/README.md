@@ -52,7 +52,7 @@ konkrétny rituál, nie na sumu, preto je prvé pole Rituál.
 Každý zo 17 typov poukazov v Booqme dostane obrázok zo `dl/jpg/booqme/` podľa tabuľky vyššie
 (prvé štyri Head Spa rituály ten istý `poukaz-head-spa`). Skript nahrá obrázok cez pole
 `photoInput` na stránke úpravy typu poukazu. Obchod s poukazmi:
-https://booqme.app/sk/eshop/barbershop-30
+https://booqme.app/sk/eshop/salon-30-head-spa
 
 ## Zmena textov
 
