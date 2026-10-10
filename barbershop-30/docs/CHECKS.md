@@ -140,6 +140,14 @@ dymový test celý, úvod desktop + mobil vrátane von/znova a druhej návštevy
 (ďaleký koniec prvý, popredie posledné), scény na telefóne s novými výrezmi (pult, opierka celá, stôl
 bez TV, pumpa Route 66, sud s uterákmi) – `docs/screenshots/kolo3-*`.
 
+**Naživo (10d80ac, 2026‑10‑10)**: nová verzia na Pages po 41 s, súbory 200; úvod z verejnej adresy desktop
+aj mobil vrátane von/znova; pri druhej návšteve na telefóne odchod von v headless prehliadači nestihol
+6 s limit na načítanie fasády (pomalé sťahovanie + softvérová grafika) – limit zvýšený na 12 s.
+Lighthouse z verejnej adresy: mobil `?uvod=off` 90 (LCP 3,3 s, CLS 0, TBT 160 ms), mobil `?film=off`
+94 (LCP 3,1 s, CLS 0, TBT 40 ms), desktop 100 (LCP 0,5 s, CLS 0, TBT 0); prístupnosť, osvedčené
+postupy a SEO 100. LCP na mobile vzrástol oproti 2,1 s, lebo záloha úvodu na telefóne je teraz
+výrez z foto‑40 (278 KB AVIF namiesto 132 KB) – cena za ostrý prvý obraz; na skutočnom 4G je to pod 1 s.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

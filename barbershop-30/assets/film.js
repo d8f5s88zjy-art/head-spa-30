@@ -703,9 +703,9 @@
     // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený
     if (pro && !pro.t0 && frameDrawn && PRO && PRO.ready) pro.t0 = now;
     if (leaving && !leaving.t0 && frameDrawn && PRO && PRO.ready) leaving.t0 = now;
-    // fasáda neprišla (sieť): odchod aj opakované vojdenie sa po 6 s vzdajú a stránka ide ďalej normálne
-    if (leaving && !leaving.t0 && now - leaving.since > 6000) cancelLeave();
-    if (pro && !pro.t0 && pro.since && now - pro.since > 6000) endPro(false);
+    // fasáda neprišla (pomalá sieť): odchod aj opakované vojdenie sa po 12 s vzdajú a stránka ide ďalej normálne
+    if (leaving && !leaving.t0 && now - leaving.since > 12000) cancelLeave();
+    if (pro && !pro.t0 && pro.since && now - pro.since > 12000) endPro(false);
     // prológ sa skončil: film stojí na zábere úvodu a ďalej vedie skrolovanie
     if (pro && pro.t0 && S >= 1) endPro(true);
     // naklonenie telefónu dobehne v pokojových 30 snímkach za sekundu, myš na počítači plynulo
