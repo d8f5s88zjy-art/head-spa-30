@@ -570,7 +570,7 @@ html.outside .scroll-hint { opacity: 0; }
 @media (max-width: 900px) {
   /* telefón: tlačidlo dverí hore vpravo pod lištou (dole je doska a spodné tlačidlo) */
   .film-door { left: auto; right: var(--gutter); top: calc(var(--nav-h) + 12px); }
-  .scroll-hint { display: none; }
+  .film-shot .scroll-hint { display: none; }   /* na telefóne vedie ďalej spodná lišta */
   /* spodné tlačidlo Rezervovať termín ostáva nad filmovým pásom aj počas úvodu a na ulici */
   html.pro .mobile-cta, html.outside .mobile-cta { z-index: 39; }
 }

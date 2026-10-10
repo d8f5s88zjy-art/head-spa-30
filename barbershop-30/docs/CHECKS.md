@@ -135,6 +135,11 @@ Tri kontroly (stránka a súbory; kód film.js; mobilná kompozícia a hook) –
 Neriešené (vyžadujú majiteľa): fasáda bez rozmazaného auta (nová fotka), fotka dverí zblízka.
 Nepotvrdené skeptikmi (limit relácie), nálezy prijaté po vlastnom overení kódu a snímok.
 
+**Po opravách (47fe7cb+)**: koliesko (plynulý dobeh, von na ulicu z vrchu, dnu z ulice, prológ dobehol),
+dymový test celý, úvod desktop + mobil vrátane von/znova a druhej návštevy, prechod sála → kreslo
+(ďaleký koniec prvý, popredie posledné), scény na telefóne s novými výrezmi (pult, opierka celá, stôl
+bez TV, pumpa Route 66, sud s uterákmi) – `docs/screenshots/kolo3-*`.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,
