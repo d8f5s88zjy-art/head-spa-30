@@ -544,7 +544,7 @@ html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.
 .film-bars i:last-child { bottom: 0; --dir: 100%; }
 html.pro .film-bars i, html.outside .film-bars i { transform: none; }
 @keyframes bars-out { to { transform: translateY(var(--dir)); } }
-html.pro:not(.outside):not(.world-in) .film-bars i { animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 12s forwards; }
+html.pro:not(.outside):not(.world-in) .film-bars i { animation: bars-out 900ms cubic-bezier(.7, 0, .2, 1) 5s forwards; }
 html.pro .film-place, html.outside .film-place { opacity: 0 !important; }
 html.world-off .film-bars { display: none; }
 @media (max-width: 900px) { .film-bars i { height: 9vh; } }

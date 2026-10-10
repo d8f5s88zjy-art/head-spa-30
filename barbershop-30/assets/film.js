@@ -103,7 +103,7 @@
      Jeden jednotný pohyb celého filmu: kamera ide stále pomaly dopredu s jemným bočným oblúkom
      okolo bodu záujmu (pozerá sa stále naň), popredie sa tak posúva voči stene ako pri skutočnej
      prechádzke podnikom. */
-  const ARC = phone ? 0.026 : 0.04;
+  const ARC = phone ? 0.02 : 0.04;                            // telefón: menší oblúk, výrez má blízke popredie
   const MOVES = {
     in: [[-ARC * 0.5, 0, 0.04], [ARC * 0.5, 0, -0.12]],
     right: [[-ARC, 0, 0.04], [ARC, 0, -0.12]],
@@ -198,7 +198,7 @@
   // shadery sú hotové a overené; kontrola chýb by pri každom preklade čakala na grafiku (stovky ms na telefóne)
   renderer.debug.checkShaderErrors = false;
   // ostrosť: plné rozlíšenie displeja do 2x; pomalé zariadenie si ho samo zníži
-  let dpr = Math.min(devicePixelRatio || 1, phone ? 3 : 2);   // telefón 3x (ostrosť), quality() pri pomalom zariadení zníži
+  let dpr = Math.min(devicePixelRatio || 1, 2);                // 2x stačí (textúra výrezu 1448 px), 3x brzdilo slabšie telefóny
 
   const FOV = phone ? 50 : 38, DIST = 10;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
@@ -277,13 +277,15 @@
     return b;
   }
   const vig = { value: new THREE.Vector4(1, 1, 1, 0) };      // spoločná pre všetky zábery
+  // sila hĺbky: na telefóne menšia, lebo výrez na výšku má blízke popredie (kreslo, pult) a väčší posun by ho krútil
+  const AMT = phone ? 0.3 : 0.42;
   const px = (r, g, b) => { const t = new THREE.DataTexture(new Uint8Array([r, g, b, 255]), 1, 1); t.needsUpdate = true; return t; };
   const blank = px(14, 13, 12), flat = px(0, 0, 0);
 
   SHOTS.forEach((s) => {
     s.mat = new THREE.ShaderMaterial({
       vertexShader: VERT, fragmentShader: FRAG,
-      uniforms: { uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: 0.42 }, uEye: { value: new THREE.Vector3() }, uVig: vig },
+      uniforms: { uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: AMT }, uEye: { value: new THREE.Vector3() }, uVig: vig },
     });
     s.mesh = new THREE.Mesh(grid, s.mat);
     s.mesh.visible = false; s.mesh.frustumCulled = false;
@@ -468,8 +470,8 @@
           c = mix(a.rgb, b.rgb, m);
           // krátke šero uprostred (82 % jasu) a o niečo užšia vinetácia: oko ide do stredu, ako strih vo filme
           float s = sin(3.14159265 * uMix);
-          c *= 1.0 - 0.18 * s;
-          vs += 0.16 * s;
+          c *= 1.0 - ${phone ? 0.1 : 0.18} * s;
+          vs += ${phone ? 0.1 : 0.16} * s;
         }
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
@@ -527,6 +529,7 @@
   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
   const FULL_MS = 60000, BREATH_MS = 180000;
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
+  const DRIFT = phone ? 0.6 : 1;                              // stály pohyb kamery: na telefóne jemnejší
   function place(s, now, push = 0) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
     const t = s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1);
@@ -538,10 +541,10 @@
     );
     // stály pomalý pohyb kamery ako zo steadicamu aj bez skrolovania (ako záber z videa, nie fotka):
     // dva pomalé oblúky v každej osi, spolu asi 1,7 % šírky, 1 % výšky a 2 % vzdialenosti
-    const sec = now / 1000;
-    off.x += ((Math.sin(sec * 0.37) * 0.006 + Math.sin(sec * 0.13 + 0.7) * 0.011) * breath + pmx * 0.03) * s.vw;
-    off.y += ((Math.sin(sec * 0.29 + 1.3) * 0.004 + Math.sin(sec * 0.09 + 2.1) * 0.006) * breath + pmy * 0.018) * s.vh;
-    off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * breath;
+    const sec = now / 1000, dr = DRIFT * breath;
+    off.x += ((Math.sin(sec * 0.37) * 0.006 + Math.sin(sec * 0.13 + 0.7) * 0.011) * dr + pmx * 0.03) * s.vw;
+    off.y += ((Math.sin(sec * 0.29 + 1.3) * 0.004 + Math.sin(sec * 0.09 + 2.1) * 0.006) * dr + pmy * 0.018) * s.vh;
+    off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * dr;
     // pri prechode kamera odchádzajúceho záberu zrýchľuje dopredu, akoby prešla do ďalšej miestnosti
     // (do štvrtiny vzdialenosti); prichádzajúci záber dobieha zozadu a spomalí na svojom mieste
     off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * 0.1 * DIST;
@@ -591,14 +594,14 @@
       vig.value.w = 0;
       // hĺbka sa pri prechode otvorí: blízke veci odchádzajúceho záberu sa posúvajú viac (prechádzajú popri
       // tebe), prichádzajúci záber sa z otvorenej hĺbky usadí na bežnú
-      if (A) A.mat.uniforms.uAmt.value = 0.42 + 0.1 * mix;
-      B.mat.uniforms.uAmt.value = 0.52 - 0.1 * mix;
+      if (A) A.mat.uniforms.uAmt.value = AMT + 0.1 * mix;
+      B.mat.uniforms.uAmt.value = AMT + 0.1 - 0.1 * mix;
       renderer.setRenderTarget(rtA); renderer.clear();
       if (A) { A.mesh.visible = true; place(A, now, mix); renderer.render(scene, camera); A.mesh.visible = false; }
       renderer.setRenderTarget(rtB); renderer.clear();
       B.mesh.visible = true; place(B, now, -(1 - mix)); renderer.render(scene, camera); B.mesh.visible = false;
-      if (A) A.mat.uniforms.uAmt.value = 0.42;
-      B.mat.uniforms.uAmt.value = 0.42;
+      if (A) A.mat.uniforms.uAmt.value = AMT;
+      B.mat.uniforms.uAmt.value = AMT;
       post.material.uniforms.uMix.value = mix;
       renderer.setRenderTarget(null); renderer.clear();
       renderer.render(postScene, postCam);
