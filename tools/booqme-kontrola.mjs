@@ -7,7 +7,7 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const KALENDAR = 'https://booqme.app/sk/rezervacia/salon-30-head-spa';
 const OBCHOD = 'https://booqme.app/sk/eshop/salon-30-head-spa';
-const dec = (s) => s.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&euro;/g, '€').replace(/&#039;/g, "'").replace(/&quot;/g, '"');
+const dec = (s) => s.replace(/&nbsp;|\u00a0/g, ' ').replace(/&amp;/g, '&').replace(/&euro;/g, '€').replace(/&#039;/g, "'").replace(/&quot;/g, '"');
 
 // web: rituály z cenníka
 const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
@@ -16,6 +16,10 @@ for (const m of html.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/g)) {
   const a = m[1]; if (!/data-price="/.test(a)) continue;
   const name = dec((m[2].match(/<h3>([\s\S]*?)<\/h3>/) || [])[1] || '').trim();
   web.push({ name, min: +(a.match(/data-min="(\d+)"/) || [])[1], price: +(a.match(/data-price="(\d+)"/) || [])[1] });
+}
+// fúkaná a žehlenie pod cenníkom: názov v Booqme je v data-booqme, poukaz sa na ne nepredáva
+for (const m of html.matchAll(/<li data-booqme="([^"]+)" data-min="(\d+)" data-price="([\d.]+)"/g)) {
+  web.push({ name: dec(m[1]).trim(), min: +m[2], price: Math.round(+m[3]), bezPoukazu: true });
 }
 
 async function get(url) {
@@ -45,6 +49,7 @@ for (const r of web) {
     if (s.price !== r.price) chyby.push(`${r.name}: kalendár ${s.price} €, web ${r.price} €`);
     if (s.min !== r.min) chyby.push(`${r.name}: kalendár ${s.min} min, web ${r.min} min`);
   }
+  if (r.bezPoukazu) continue;
   if (!p) chyby.push(`${r.name}: v obchode chýba poukaz`);
   else if (p.price !== r.price) chyby.push(`${r.name}: poukaz ${p.price} €, web ${r.price} €`);
 }

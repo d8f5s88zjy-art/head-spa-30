@@ -13,6 +13,10 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Iba to, čo salón ponúka: 17 rituálov (12 Head Spa, 2 pre dvoch, 3 pre chodidlá) z `docs/booqme-sluzby.csv`, nič nevymýšľaj
   (názvy, ceny, trvania, telefón 0911 153 136, adresa). Keď niečo nevieš, spýtaj sa alebo vynechaj.
 - Poukaz je vždy na konkrétny rituál, nie na sumu (`docs/booqme-poukazy.csv`).
+- Ceny, dĺžky a obsah rituálov sa riadia online kalendárom Booqme (salón ich mení tam). Po zmene v Booqme
+  sa web zosúladí a `node tools/booqme-kontrola.mjs` musí hlásiť, že kalendár sedí. Fúkaná a žehlenie sú
+  v online kalendári HEAD SPA 30 (pridal ich salón), preto sú v cenníku pod rituálmi v časti Fúkaná a žehlenie
+  (`li[data-booqme]`); nie sú to rituály a poukaz sa na ne nepredáva.
 - Nikde nepíš „Barber shop 30“ ani „salón 30“ ako názov tohto webu. HEAD SPA 30 je samostatná časť
   s vlastným tímom v priestoroch Salónu 30; o majiteľovi sa na webe nepíše nič. Salón 30 sa môže spomenúť
   (odkaz www.salon30.sk), ale nie ako by bol HEAD SPA 30 jeho súčasťou alebo značkou. Služby Salónu 30 (kaderníctvo, kozmetika) na web nepatria.
