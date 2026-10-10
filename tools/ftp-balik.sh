@@ -19,5 +19,7 @@ for f in _ftp/index.html _ftp/pravne.html _ftp/404.html _ftp/robots.txt _ftp/sit
 done
 # stránka 404 má cesty od koreňa /head-spa-30/ (GitHub Pages); na vlastnej doméne je koreň /
 sed -i 's#"/head-spa-30/#"/#g; s#(/head-spa-30/#(/#g' _ftp/404.html
+# robots.txt na GitHub Pages ohlasuje aj mapu stránok barbershopu; na doméne HEAD SPA ten priečinok nie je
+sed -i '/barbershop/d' _ftp/robots.txt
 if [ -n "$ZIP" ]; then rm -f "$ZIP"; (cd _ftp && zip -q -r -9 "$ZIP" . ); fi
 echo "Hotovo: _ftp${ZIP:+ a $ZIP}"
