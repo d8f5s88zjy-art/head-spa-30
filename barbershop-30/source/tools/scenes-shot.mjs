@@ -58,7 +58,8 @@ const out = path.resolve(args.out || path.join(ROOT, 'docs', 'screenshots'));
 const wait = Number(args.wait || 700);
 const only = args.only;
 const ids = args.scenes ? String(args.scenes).split(',') : Object.keys(SHOTS);
-const query = args.query || '';
+// prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
+const query = /film=off|motion=off/.test(args.query || '') ? args.query : (args.query ? args.query + '&' : '?') + 'film=on';
 fs.mkdirSync(out, { recursive: true });
 
 const srv = await startStaticServer(ROOT);

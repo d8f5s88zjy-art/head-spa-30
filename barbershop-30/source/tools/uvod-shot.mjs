@@ -30,7 +30,9 @@ const VIEW = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, heig
 const STOPS = [0, 0.18, 0.35, 0.5, 0.62, 0.8, 1];
 
 const srv = opt.url ? null : await startStaticServer(ROOT);
-const base = opt.url || `${srv.origin}/index.html`;
+// prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
+const raw = opt.url || `${srv.origin}/index.html`;
+const base = raw + (raw.includes('?') ? '&' : '?') + 'film=on';
 const browser = await chromium.launch(PRESETS[0]);
 const summary = [];
 try {
@@ -96,7 +98,7 @@ try {
     await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat-vonku.png`) });
     await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat.png`) });
     // pokojná verzia
-    await page.goto(base + '?film=off', { waitUntil: 'load', timeout: 60000 });
+    await page.goto(raw + (raw.includes('?') ? '&' : '?') + 'film=off', { waitUntil: 'load', timeout: 60000 });
     await page.waitForTimeout(800);
     const off = await page.evaluate(() => ({ pro: document.documentElement.classList.contains('pro'), canvas: !!document.querySelector('.film-canvas'), still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
     await page.screenshot({ path: path.join(OUT, `uvod-${kind}-pokojna.png`) });

@@ -63,13 +63,20 @@ Každý bod sa overuje screenshotom alebo meraním, nie odhadom.
       viewportu × DPR (do 2×); AVIF s návratom na WebP.
 - [ ] Žiadne čierne/prázdne plochy pri načítavaní: pod filmom je vždy statická
       fotografia záberu (`.film-still`), film sa nad ňu len prelína.
-- [ ] Video (barber pri práci) hrá len vo svojom okne, potichu, bez skoku pri štarte
-      (poster = prvý snímok), bez prehrávania mimo obrazovky.
+- [ ] Video (barber pri práci) hrá potichu, bez skoku pri štarte (plagát = snímka, ktorú film
+      ukáže ako prvú), bez prehrávania mimo obrazovky. Rozhodnutie majiteľa 2026‑10‑10 (podľa
+      referenčného videa): na telefóne sú tri videá majiteľa priamo vo filme cez celú plochu
+      (Poď ďalej: kamera ide sálou, riadená skrolom; Remeslo: kamera okolo kresla; Tím: tichá
+      slučka plnej sály). Videá sa netónujú, len stabilizujú (`source/tools/videa.sh`). Zdroj má
+      576 × 1024 px, čo je pod pravidlom šírky súboru; ostáva výnimkou, kým majiteľ nepošle originály.
 
 **Typografia a text**
 - [ ] Fraunces 800 pre nadpisy, Manrope pre text; žiadne iné písma, žiadne faux‑bold.
-- [ ] Text výlučne na doske (`.board`, rgba(14,13,12,.72)); kontrast ≥ 4,5:1 pre
-      text, ≥ 3:1 pre veľké nadpisy, overené výpočtom nad najsvetlejším miestom fotky.
+- [ ] Rozhodnutie majiteľa 2026‑10‑10 (podľa referenčného videa): text je priamo na zábere ako
+      titulná karta (nadpisok, veľký nadpis, jeden riadok), bez dosky; pod textom len mäkké
+      stmavenie a vinetácia. Karta stojí na mieste a mení sa len krytím. Podrobný obsah (tím,
+      cenník, galéria, kontakt) je v pásoch za kartou. Kontrast ≥ 4,5:1 pre text, ≥ 3:1 pre
+      veľké nadpisy (99. percentil nad fotkou aj nad snímkami videa).
 - [ ] Odsek najviac 62 znakov na riadok, nadpisy `text-wrap: balance`, žiadne
       osamotené slovo na poslednom riadku v H1/H2 (ručne skontrolovať pri 390 px).
 - [ ] Slovenčina s diakritikou, tykanie, bez marketingových fráz, bez superlatívov
@@ -78,13 +85,14 @@ Každý bod sa overuje screenshotom alebo meraním, nie odhadom.
       rezervačného systému (oprava preklepov v zdroji je poznačená v CONTENT_SOURCES).
 
 **Rozloženie**
-- [ ] Rytmus: celoobrazovkový záber → pás s textom → záber; dve susedné sekcie nikdy
-      nemajú rovnakú kostru.
+- [ ] Rytmus ako v referencii: každá scéna = záber cez celé okno s titulnou kartou (karta sa
+      strieda vľavo, vpravo, v strede); pásy s obsahom len pri tíme, službách, galérii a kontakte.
+      Hlavné tlačidlo len v úvode a v rezervácii, inak malé tlačidlo vpravo dole.
 - [ ] Lišta: priehľadná v úvode (s horným prechodom pre čitateľnosť), po 80 px
       scrollu s podkladom; na mobile menu cez celú obrazovku + spodné tlačidlo
       „Rezervovať termín“ (nezakrýva obsah, safe‑area).
-- [ ] Linka kapitol (desktop vľavo) ukazuje, kde v prevádzke návštevník je; popis
-      miesta vľavo dole („Prehliadka podniku · Recepcia“) len mimo dosiek.
+- [ ] Linka kapitol (desktop vľavo) ukazuje, kde v prevádzke návštevník je; miesto pomenúva
+      nadpisok titulnej karty (samostatný popis miesta vľavo dole je s kartami vypnutý).
 - [ ] Cenník: tabulárne číslice, cena a trvanie zarovnané, „Objednať“ pri každej
       položke, mobil jeden stĺpec; 15 služieb, ceny na cent presne.
 - [ ] Tím: 10 portrétov v rovnakom výreze (4:5, ohnisko 50 % 35 %), mená a roly

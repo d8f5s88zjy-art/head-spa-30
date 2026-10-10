@@ -27,7 +27,9 @@ const OUT = opt.out ? path.resolve(opt.out) : path.join(ROOT, 'docs', 'screensho
 fs.mkdirSync(OUT, { recursive: true });
 const VIEW = { mobile: { vp: { width: 390, height: 844 }, dsf: 2, mob: true }, desktop: { vp: { width: 1440, height: 900 }, dsf: 1, mob: false } };
 const srv = opt.url ? null : await startStaticServer(ROOT);
-const base = opt.url || `${srv.origin}/index.html`;
+// prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
+const raw = opt.url || `${srv.origin}/index.html`;
+const base = raw + (raw.includes('?') ? '&' : '?') + 'film=on';
 const browser = await chromium.launch(PRESETS[0]);
 let bad = 0;
 

@@ -43,7 +43,9 @@ async function openPage(browser, { viewport = { width: 1440, height: 900 }, mobi
   page.on('requestfailed', (r) => { if (!filmNoise(r.url())) problems.push(`requestfailed: ${r.url()}`); });
   page.on('response', (r) => { if (r.status() >= 400 && !filmNoise(r.url())) problems.push(`HTTP ${r.status()}: ${r.url()}`); });
   page.on('request', (r) => requests.push(r.url()));
-  await page.goto(`${base}/index.html${query}`, { waitUntil: 'load', timeout: 60000 });
+  // prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
+  const q = /film=off|motion=off/.test(query) ? query : (query ? query + '&' : '?') + 'film=on';
+  await page.goto(`${base}/index.html${q}`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForFunction(() => window.__renderDone !== false, null, { timeout: 60000 });
   await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
   return { ctx, page, problems, requests };
@@ -110,38 +112,36 @@ try {
         worldIn: document.documentElement.classList.contains('world-in'),
       };
     });
-    ok(stills.count === 13 && stills.allHaveStill && stills.allHaveMeta, `[${label}] 13 kotiev .film-shot s data-shot/f/mv a zálohou`, JSON.stringify({ count: stills.count, still: stills.allHaveStill, meta: stills.allHaveMeta }));
+    ok(stills.count === 14 && stills.allHaveStill && stills.allHaveMeta, `[${label}] 14 kotiev .film-shot s data-shot/f/mv a zálohou`, JSON.stringify({ count: stills.count, still: stills.allHaveStill, meta: stills.allHaveMeta }));
     ok(stills.allTall, `[${label}] každá kotva má aspoň výšku okna`);
     ok(stills.firstHigh && stills.lazyRest, `[${label}] prvá záloha fetchpriority=high, ostatné lazy`);
     ok(stills.worldIn || stills.firstVisible, `[${label}] prvá záloha je viditeľná a načítaná (alebo beží film)`, JSON.stringify(stills));
 
-    // 2. sekcie 1→9
+    // 2. sekcie 1→10: v tretine pripnutia prvej kotvy je kapitola aktívna a jej titulná karta svieti
     const L = await layout(page);
-    let prev = null; const seen = [];
-    for (let n = 1; n <= 9; n++) {
+    let prev = null; const seen = []; let cardsOn = 0;
+    for (let n = 1; n <= 10; n++) {
       const s = L.shots.find((x) => Number(x.scene) === n);
-      await scrollTo(page, s.top);
+      await scrollTo(page, n === 1 ? 0 : s.top + s.height * 0.3);
       const v = await vars(page);
       seen.push(v.scene);
       ok(v.scene === String(n), `[${label}] kotva ${s.name}: data-scene-active=${v.scene} (čakané ${n})`);
       if (prev) ok(v.p > prev.p, `[${label}] kotva ${s.name}: --p rastie (${prev.p.toFixed(3)} → ${v.p.toFixed(3)})`);
+      cardsOn += await page.evaluate((n) => !!document.querySelector(`section[data-scene="${n}"] .film-shot.is-title.is-on`), n) ? 1 : 0;
       prev = v;
     }
-    ok(new Set(seen).size === 9, `[${label}] kapitoly sa prepínajú (${seen.join('→')})`);
+    ok(new Set(seen).size === 10, `[${label}] kapitoly sa prepínajú (${seen.join('→')})`);
+    ok(cardsOn === 10, `[${label}] titulná karta svieti v každej kapitole (${cardsOn}/10)`);
     const sp = await page.evaluate(() => [...document.querySelectorAll('.film-shot')].map((el) => parseFloat(el.style.getPropertyValue('--sp'))).filter((v) => Number.isFinite(v)));
-    ok(sp.length === 13 && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na všetkých kotvách v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
+    ok(sp.length === stills.count && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na všetkých kotvách v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
 
-    // data-at: chip druhého záberu sály (kreslo) – skrytý pred vstupom, viditeľný v strede
+    // titulná karta druhého záberu sály (kreslo): zhasnutá pred kotvou, svieti v pripnutí
     const kreslo = L.shots.find((x) => x.name === 'kreslo');
     await scrollTo(page, kreslo.top - L.vh * 0.9);
-    const early = await page.evaluate(() => document.querySelector('[data-shot="kreslo"] .place-tag').classList.contains('is-in'));
-    await scrollTo(page, kreslo.top);
-    const late = await page.evaluate(() => document.querySelector('[data-shot="kreslo"] .place-tag').classList.contains('is-in'));
-    ok(!early && late, `[${label}] data-at: popis záberu kreslo skrytý pred vstupom, viditeľný v zábere`);
-
-    // dosky .reveal sa odkryjú
-    const boards = await page.evaluate(() => ({ seen: document.querySelectorAll('.board.reveal.is-in').length, all: document.querySelectorAll('.board.reveal').length }));
-    ok(boards.seen >= 2, `[${label}] dosky sa odkrývajú (.reveal.is-in ${boards.seen}/${boards.all})`);
+    const early = await page.evaluate(() => document.querySelector('[data-shot="kreslo"]').classList.contains('is-on'));
+    await scrollTo(page, kreslo.top + kreslo.height * 0.4);
+    const late = await page.evaluate(() => document.querySelector('[data-shot="kreslo"]').classList.contains('is-on'));
+    ok(!early && late, `[${label}] karta kreslo zhasnutá pred kotvou, svieti v pripnutí`);
 
     // späť hore
     await scrollTo(page, 0);
@@ -189,19 +189,24 @@ try {
     const galCount = await page.evaluate(() => document.querySelectorAll('.gallery-btn[data-lightbox-src]').length);
     ok(galCount === 8, `[${label}] galéria má 8 fotiek (${galCount})`);
 
-    /* ---- videá ---- */
-    const vidState = () => page.evaluate(() => [...document.querySelectorAll('video[data-video]')].map((v) => ({ cls: v.closest('figure').classList.contains('team-video') ? 'team-video' : 'remeslo-video', paused: v.paused, t: v.currentTime, ready: v.readyState })));
-    const stol = L.shots.find((x) => x.name === 'stol');
-    await scrollTo(page, stol.top); await sleep(2500);
-    let vs = await vidState();
-    ok(vs.filter((v) => !v.paused).length === 1 && !vs.find((v) => v.cls === 'remeslo-video').paused, `[${label}] remeslo: hrá video Remeslo, Tím nie`, JSON.stringify(vs));
-    await scrollTo(page, L.sections.sluzby.top + 600); await sleep(800);
-    vs = await vidState();
-    ok(vs.every((v) => v.paused), `[${label}] mimo viewportu sa video pozastaví`, JSON.stringify(vs));
+    /* ---- videá v okne (tím na počítači; na telefóne je tím vo filme, okno je skryté) ---- */
+    const vidState = () => page.evaluate(() => [...document.querySelectorAll('video[data-video]')].map((v) => ({ shown: !!v.offsetParent, paused: v.paused, t: v.currentTime })));
     const tv = await page.evaluate(() => document.querySelector('.team-video').getBoundingClientRect().top + scrollY - innerHeight * 0.3);
-    await scrollTo(page, tv); await sleep(2500);
-    vs = await vidState();
-    ok(vs.filter((v) => !v.paused).length === 1 && !vs.find((v) => v.cls === 'team-video').paused, `[${label}] tím: hrá len video Tím`, JSON.stringify(vs));
+    if (!mobile) {
+      await scrollTo(page, tv); await sleep(2500);
+      let vs = await vidState();
+      ok(vs.filter((v) => !v.paused).length === 1, `[${label}] tím: hrá video Tím`, JSON.stringify(vs));
+      await scrollTo(page, L.sections.sluzby.top + 600); await sleep(800);
+      vs = await vidState();
+      ok(vs.every((v) => v.paused), `[${label}] mimo viewportu sa video pozastaví`, JSON.stringify(vs));
+    } else {
+      await scrollTo(page, tv); await sleep(1500);
+      const vs = await vidState();
+      ok(vs.every((v) => !v.shown && v.paused), `[${label}] okno s videom tímu je na telefóne skryté a nehrá (tím je vo filme)`, JSON.stringify(vs));
+    }
+    /* ---- pohyblivé detaily ---- */
+    const det = await page.evaluate(() => ({ flap: (document.querySelector('[data-flap]') || {}).getAttribute?.('aria-label') || '', marquee: document.querySelectorAll('.marquee-track span').length, steps: document.querySelectorAll('.steps li').length, kin: document.querySelectorAll('.kin .kw').length }));
+    ok(/^Dnes /.test(det.flap) && det.marquee >= 10 && det.steps === 5 && det.kin > 20, `[${label}] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách`, JSON.stringify(det));
     await ctx.close(); await browser.close();
   }
 
@@ -214,13 +219,14 @@ try {
       motion: document.documentElement.dataset.motion, world: document.documentElement.classList.contains('world'), done: window.__renderDone,
       stillOpacity: getComputedStyle(document.querySelector('[data-shot="recepcia"] .film-still')).opacity,
       stillTransform: getComputedStyle(document.querySelector('[data-shot="recepcia"] .film-still img')).transform,
-      boardOpacity: getComputedStyle(document.querySelector('#recepcia .board')).opacity,
-      tagOpacity: getComputedStyle(document.querySelector('[data-shot="kreslo"] .place-tag')).opacity,
       canvas: !!document.querySelector('.film-canvas'),
     }));
     ok(st.motion === 'off' && st.done === true && !st.world, `[${name}] data-motion=off, bez triedy world, __renderDone`, JSON.stringify(st));
     ok(st.stillOpacity === '1' && st.stillTransform === 'none' && !st.canvas, `[${name}] záloha stojí (bez prejazdu), žiadny canvas`);
-    ok(st.boardOpacity === '1' && st.tagOpacity === '1', `[${name}] dosky a popisy viditeľné`);
+    const rec = await page.evaluate(() => { const r = document.querySelector('[data-shot="recepcia"]').getBoundingClientRect(); return r.top + scrollY + r.height * 0.4; });
+    await scrollTo(page, rec); await sleep(300);
+    const cardOp = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('[data-shot="recepcia"] .title-frame')).opacity));
+    ok(cardOp > 0.98, `[${name}] titulná karta recepcie je v pripnutí celá viditeľná (${cardOp})`);
     ok(problems.length === 0, `[${name}] bez chýb`, problems.slice(0, 3).join(' | '));
     ok(!requests.some((u) => /three\.module|\.mp4|\.webm/.test(u)), `[${name}] nesťahuje three.js ani video`, requests.filter((u) => /three|mp4|webm/.test(u)).join(' '));
     const h = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -240,8 +246,9 @@ try {
     ok(!st.world && st.done === true, '[bez WebGL] html bez triedy world, __renderDone', JSON.stringify(st));
     ok(st.stillVisible === '1' && st.imgW > 0, '[bez WebGL] záloha úvodu je viditeľná a načítaná');
     const L = await layout(page);
-    await scrollTo(page, L.shots[L.shots.length - 1].top);
-    const cta = await page.locator('#rezervacia .btn-primary').isVisible();
+    const lastShot = L.shots[L.shots.length - 1];
+    await scrollTo(page, lastShot.top + (lastShot.height - L.vh) * 0.3); await sleep(300);
+    const cta = await page.locator('#rezervacia .title-card .btn-primary').isVisible();
     ok(cta, '[bez WebGL] tlačidlo Rezervovať termín v rezervácii je viditeľné');
     ok(problems.filter((p) => !/WebGL|GPU|webgl/i.test(p)).length === 0, '[bez WebGL] bez chýb okrem správy o WebGL', problems.slice(0, 3).join(' | '));
     await ctx.close(); await browser.close();

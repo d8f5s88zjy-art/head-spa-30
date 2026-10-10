@@ -14,6 +14,9 @@ const html = document.documentElement;
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const ease01 = (v) => { const x = clamp01(v); return x * x * (3 - 2 * x); };
+// titulná karta: nábeh a odchod ako podiel jej voľnej dĺžky (referencia: nový text za 0,12 až 0,18 obrazovky, starý za 0,1)
+const CARD_IN = 0.12, CARD_OUT = 0.08;
 
 // shot.mjs čaká, kým nebude true – stránka je čitateľná hneď po prvom nastavení stavu (bez 3D)
 window.__renderDone = false;
@@ -58,6 +61,8 @@ let shots = [];     // .film-shot: { el, top, height, items: [{ el, a, b }] }
 let sections = [];  // section[data-scene]: { el, scene, id, top, height }
 let lastScene = 0;  // číslo poslednej kapitoly (rezervácia) – tam sa skryje mobilné CTA
 let footerBox = null;
+let titles = [];    // kotvy s titulnou kartou v poradí dokumentu (zábery bez filmu sa prelínajú medzi nimi)
+let pricesBox = null; // pás cenníka: tam sa plávajúce tlačidlo skryje (každá služba má vlastné Objednať)
 
 function parseAt(value) {
   const parts = String(value || '').split(',').map((s) => parseFloat(s));
@@ -81,8 +86,17 @@ function measure() {
   shots = $$('.film-shot').map((el) => {
     const r = el.getBoundingClientRect();
     const items = $$('[data-at]', el).map((node) => ({ el: node, ...parseAt(node.dataset.at) }));
-    return { el, top: r.top + y, height: Math.max(1, r.height), items };
+    // titulná karta (P11): first = úvod, ten je viditeľný hneď od vrchu stránky (bez nábehu)
+    const top = r.top + y, title = el.classList.contains('is-title');
+    // voľná dĺžka karty: celá kotva, pri .title-long (za kartou je pás) bez poslednej výšky okna
+    const free = Math.max(1, r.height - (el.classList.contains('title-long') ? vh : 0));
+    return { el, top, height: Math.max(1, r.height), items, title, free, first: title && top < 1 };
   });
+
+  const pr = $('.band-prices');
+  if (pr) { const r = pr.getBoundingClientRect(); pricesBox = { top: r.top + y, bottom: r.bottom + y }; }
+
+  titles = shots.filter((s) => s.title);
 
   if (footer) {
     const r = footer.getBoundingClientRect();
@@ -96,11 +110,12 @@ function measure() {
 const varCache = new Map();
 function setVar(name, value, el = html) {
   const v = clamp01(value);
-  const key = el === html ? name : el;
-  const last = el === html ? varCache.get(key) : el.__v;
+  // posledná zapísaná hodnota pre každú premennú zvlášť (kotva má --sp aj --o)
+  const cache = el === html ? varCache : (el.__v || (el.__v = new Map()));
+  const last = cache.get(name);
   // zapisuj len pri zmene > 0.002; krajné hodnoty 0 a 1 vždy dosadni presne
   if (last !== undefined && Math.abs(v - last) <= 0.002 && !((v === 0 || v === 1) && v !== last)) return;
-  if (el === html) varCache.set(key, v); else el.__v = v;
+  cache.set(name, v);
   el.style.setProperty(name, v.toFixed(4));
 }
 
@@ -155,6 +170,27 @@ function apply(p) {
     const t = clamp01((y + vh * 0.5 - s.top) / s.height);
     setVar('--sp', t, s.el);
     for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
+    // titulná karta: u = 0 keď horný okraj kotvy dosiahne horný okraj okna (karta sa pripne), 1 keď spodný.
+    // Krytie: nábeh 0 až 0,12 (úvod bez nábehu), odchod 0,92 až 1; nikdy sa nehýbe, mení sa len krytie.
+    if (s.title) {
+      const u = (y - s.top) / s.free;
+      const o = Math.min(s.first ? 1 : ease01(u / CARD_IN), 1 - ease01((u - 1 + CARD_OUT) / CARD_OUT));
+      setVar('--o', o, s.el);
+      setClass(s.el, 'is-on', o > 0.01);
+    }
+  }
+  // zábery bez filmu (pokojná verzia, záloha kým film nebeží): stoja cez celé okno; ďalší sa prelína navrch
+  // počas nábehu svojej karty a predchádzajúci zmizne, až keď je nový celý (nikdy nevyjde zdola cez text)
+  const footerIn = !!footerBox && y + vh > footerBox.top;
+  for (let i = 0; i < titles.length; i++) {
+    const s = titles[i], n = titles[i + 1];
+    const fin = s.first ? 1 : ease01((y - s.top) / s.free / CARD_IN);
+    const nextIn = n ? ease01((y - n.top) / n.free / CARD_IN) : 0;
+    const so = footerIn || nextIn >= 1 ? 0 : fin;
+    setVar('--so', so, s.el);
+    setClass(s.el, 'is-shown', so > 0.001);
+    // okolie: záloha sa načíta (display) až keď je kotva do 2 obrazoviek pred oknom alebo práve za ním
+    setClass(s.el, 'is-near', y + vh * 3 > s.top && y < s.top + s.height + vh);
   }
 
   // aktívna kapitola
@@ -174,7 +210,14 @@ function apply(p) {
   const scrolled = (window.scrollY || 0) > 80;
   if (scrolled !== lastHeaderScrolled) { lastHeaderScrolled = scrolled; setClass(header, 'is-scrolled', scrolled); }
   setClass(storyLine, 'is-visible', p > 0.02);
-  setClass(mobileCta, 'is-hidden', activeScene === lastScene || menuOpen);
+  setClass(mobileCta, 'is-hidden', ctaHidden(y));
+}
+
+// spodné tlačidlo: nie v úvode (titulná karta má vlastné tlačidlá), nie v rezervácii, nie pri menu
+function ctaHidden(y = window.scrollY || 0) {
+  const hero = shots[0] && shots[0].first && y < shots[0].height * 0.6;
+  const mid = y + vh * 0.5, prices = !!pricesBox && mid > pricesBox.top && mid < pricesBox.bottom;
+  return activeScene === lastScene || menuOpen || !!hero || prices;
 }
 
 function tick(now) {
@@ -343,7 +386,7 @@ function setMenu(open, { restoreFocus = true } = {}) {
   navToggle.setAttribute('aria-expanded', String(open));
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
-  setClass(mobileCta, 'is-hidden', open || activeScene === lastScene);
+  setClass(mobileCta, 'is-hidden', ctaHidden());
   if (open) {
     const first = $('a, button', nav);
     first?.focus({ preventScroll: true });
@@ -510,3 +553,70 @@ shownP = targetP;
 apply(shownP);
 window.__renderDone = true;
 start();
+
+/* ----------------------------------------------------------------------------
+   12. Pohyblivé detaily (style.css P12): nadpis po slovách, kroky strihu, pás služieb len keď je
+   vidieť, tabuľa dnešných hodín podľa otváracích hodín. Pri obmedzenom pohybe všetko stojí.
+   ---------------------------------------------------------------------------- */
+(() => {
+  const d = document, root = d.documentElement;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches || root.dataset.motion === 'off';
+  const io = (els, fn, opt) => { if (!('IntersectionObserver' in window)) { els.forEach((el) => fn(el, true)); return; } const o = new IntersectionObserver((es) => es.forEach((e) => fn(e.target, e.isIntersecting, o)), opt); els.forEach((el) => o.observe(el)); };
+
+  // nadpis po slovách: slová do <span class="kw"><span>…</span></span>, zalomenia a vnorené značky ostanú
+  const kins = [...d.querySelectorAll('.kin')];
+  kins.forEach((h) => {
+    let i = 0;
+    const walk = (node) => [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const parts = n.textContent.split(/(\s+)/), f = d.createDocumentFragment();
+        parts.forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) { f.append(p); return; } const w = d.createElement('span'); w.className = 'kw'; const s = d.createElement('span'); s.textContent = p; s.style.setProperty('--i', i++); w.append(s); f.append(w); });
+        n.replaceWith(f);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+    });
+    walk(h);
+  });
+  if (!still && kins.length) { root.classList.add('js-kin'); io(kins.filter((h) => !h.closest('.film-shot.is-title')), (el, on, o) => { if (on) { el.classList.add('is-in'); o && o.unobserve(el); } }, { threshold: 0.4 }); }
+
+  // zoznam krokov: položky po jednej, keď je zoznam z tretiny na obrazovke
+  const steps = [...d.querySelectorAll('.steps')];
+  steps.forEach((ul) => [...ul.children].forEach((li, i) => li.style.setProperty('--i', i)));
+  if (!still && steps.length) { root.classList.add('js-steps'); io(steps, (el, on, o) => { if (on) { el.classList.add('is-in'); o && o.unobserve(el); } }, { threshold: 0.35 }); }
+
+  // pás služieb beží len na obrazovke (batéria)
+  io([...d.querySelectorAll('.marquee')], (el, on) => el.classList.toggle('is-off', !on));
+
+  // tabuľa dnešných hodín podľa otváracích hodín v Nitre (Po–Pi 9–19, So 9–14, Ne zatvorené)
+  const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14], 0: null };
+  const nowNitra = () => {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return { dow: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), h: +p.hour + +p.minute / 60 };
+  };
+  const GLYPHS = '0123456789:–ZATVORENÉ';
+  d.querySelectorAll('[data-flap]').forEach((box) => {
+    const { dow, h } = nowNitra(), t = HOURS[dow];
+    const text = t ? `${t[0]}:00 – ${t[1]}:00` : 'ZATVORENÉ';
+    // najbližší otvorený deň po dnešku (sobota → pondelok), pomenovaný ako v reči: zajtra, v pondelok
+    let n = (dow + 1) % 7; while (!HOURS[n]) n = (n + 1) % 7;
+    const KDY = ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'];
+    const next = `${n === (dow + 1) % 7 ? 'zajtra' : KDY[n]} od ${HOURS[n][0]}:00`;
+    let state;
+    if (t && h >= t[0] && h < t[1]) state = 'Teraz otvorené';
+    else if (t && h < t[0]) state = `Otvárame o ${t[0]}:00`;
+    else state = `Teraz zatvorené, ${next}`;
+    const cells = box.querySelector('.flap-cells'), st = box.querySelector('.flap-state');
+    box.setAttribute('aria-label', `Dnes ${t ? text.replace(' – ', ' až ') : 'zatvorené'}. ${state}.`);
+    cells.setAttribute('aria-hidden', 'true');
+    cells.textContent = '';
+    const bs = [...text].map((c) => { const b = d.createElement('b'); if (c === ' ') b.className = 'sp'; b.textContent = still ? c : (c === ' ' ? ' ' : GLYPHS[Math.floor(Math.random() * 10)]); cells.append(b); return [b, c]; });
+    if (st) st.textContent = state;
+    if (still) return;
+    const run = () => bs.forEach(([b, c], i) => {
+      if (c === ' ') return;
+      let n = 4 + i * 2;
+      const tick = () => { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); b.textContent = --n <= 0 ? c : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; if (n > 0) setTimeout(tick, 70); };
+      setTimeout(tick, i * 40);
+    });
+    io([box], (el, on, o) => { if (on) { run(); o && o.unobserve(el); } }, { threshold: 0.6 });
+  });
+})();

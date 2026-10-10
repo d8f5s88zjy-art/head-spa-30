@@ -28,7 +28,7 @@ try {
       page.on('response', async (r) => {
         try { const b = await r.body(); rows.push({ url: r.url(), bytes: b.length, type: (r.headers()['content-type'] || '').split(';')[0] }); } catch { /* zrušené */ }
       });
-      await page.goto(base + (mode.startsWith('bez') ? '?film=off' : ''), { waitUntil: 'load', timeout: 60000 });
+      await page.goto(base + (base.includes('?') ? '&' : '?') + (mode.startsWith('bez') ? 'film=off' : 'film=on'), { waitUntil: 'load', timeout: 60000 });
       const atLoad = rows.reduce((a, r) => a + r.bytes, 0);
       let extra = 0;
       if (!mode.startsWith('bez')) {

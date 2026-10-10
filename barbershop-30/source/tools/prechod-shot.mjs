@@ -30,7 +30,7 @@ try {
     const page = await ctx.newPage();
     const errs = [];
     page.on('pageerror', (e) => errs.push(e.message));
-    await page.goto(base + '?uvod=off', { waitUntil: 'load', timeout: 60000 });
+    await page.goto(base + (base.includes('?') ? '&' : '?') + 'uvod=off&film=on', { waitUntil: 'load', timeout: 60000 });
     await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
     await page.evaluate(() => { window.scrollTo(0, 10); window.scrollTo(0, 0); });
     try { await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 40000 }); }

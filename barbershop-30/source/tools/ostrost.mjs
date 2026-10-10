@@ -34,7 +34,7 @@ try {
       const page = await ctx.newPage();
       const errs = [];
       page.on('pageerror', (e) => errs.push(e.message));
-      await page.goto(base + (base.includes('?') ? '&' : '?') + 'uvod=off&v=' + key + dev, { waitUntil: 'load', timeout: 90000 });
+      await page.goto(base + (base.includes('?') ? '&' : '?') + 'uvod=off&film=on&v=' + key + dev, { waitUntil: 'load', timeout: 90000 });
       await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
       // film sa spustí pohybom: skrol o kúsok a späť
       await page.evaluate(() => { window.scrollTo(0, 10); window.scrollTo(0, 0); });

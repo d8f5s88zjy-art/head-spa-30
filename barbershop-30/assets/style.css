@@ -932,3 +932,318 @@ html[data-motion="off"] .board-hero { animation: none; }
 .nav-toggle-close { display: none; }
 .site-header[data-menu="open"] .nav-toggle-open { display: none; }
 .site-header[data-menu="open"] .nav-toggle-close { display: block; }
+
+/* ==========================================================================
+   P11. FILMOVÉ TITULNÉ KARTY (rozhodnutie 2026-10-10, podľa referenčného videa)
+   Každá kotva .film-shot.is-title začína titulnou kartou: nadpisok, veľký nadpis a jeden riadok priamo
+   na zábere, bez dosky. Karta je pripnutá, kým jej kotva prechádza oknom (sticky s nulovou výškou,
+   takže drží celú výšku kotvy), a mení sa len krytím: --o a trieda is-on z app.js (nábeh 0 až 0,12,
+   odchod 0,92 až 1 voľnej dĺžky kotvy). Film má kotvu takého záberu v strede pripnutia (film.js), takže
+   záber aj text sa vymenia na tom istom mieste. Podrobný obsah (tím, cenník, galéria, kontakt) je
+   v pásoch .band za titulnou kartou. Poloha karty: data-card="left|right|center".
+   ========================================================================== */
+:root {
+  --title-size: clamp(2.75rem, 6.6vw, 6rem);      /* počítač 1440: 95 px (verzálky asi 7,3 % výšky okna) */
+  --hero-size: clamp(3.25rem, 7.6vw, 7rem);       /* počítač 1440: 109 px */
+  --title-w: 46rem;
+  --ink-rgb: 14, 13, 12;                           /* --ink pre polopriehľadné tiene */
+  /* tieň drobného textu (nadpisok, riadok): tesný lem + mäkký tieň, aby držal aj nad svetlým miestom fotky */
+  --halo: 0 0 1px rgba(14, 13, 12, 0.9), 0 1px 3px rgba(14, 13, 12, 0.8), 0 0 6px rgba(14, 13, 12, 0.7), 0 0 16px rgba(14, 13, 12, 0.8);
+}
+
+/* kotva s titulnou kartou: vodorovne orezaná, zvislo nie (karta je pripnutá aj nad nasledujúcou kotvou) */
+.film-shot.is-title { overflow-x: clip; overflow-y: visible; }
+/* za kartou ide nepriehľadný pás (tím, cenník, galéria, kontakt): kotva má dve výšky okna, aby bola karta
+   celú obrazovku voľná a pás ju zakryl až potom (app.js aj film.js počítajú voľnú dĺžku = výška − okno) */
+.film-shot.is-title.title-long { min-height: 200vh; min-height: 200svh; }
+
+/* pripnutie: nulová výška, preto drží od horného po spodný okraj kotvy; rám s textom má výšku okna */
+.title-pin {
+  grid-area: 1 / 1; align-self: start;
+  position: sticky; top: 0; z-index: 1;
+  height: 0;
+}
+.title-frame {
+  position: absolute; inset: 0 0 auto 0;
+  height: 100vh; height: 100svh;
+  display: grid; align-content: center; justify-items: start;
+  padding: calc(var(--nav-h) + var(--s5)) max(var(--gutter), (100% - var(--container)) / 2) var(--s7);
+  opacity: var(--o, 1);
+  pointer-events: none;
+}
+/* neviditeľná karta (mimo svojho okna) sa nedá kliknúť, ale čítačka obrazovky ju číta (nadpisy ostávajú
+   v strome prístupnosti); fokus klávesnicou ju ukáže (:focus-within) */
+.title-frame a, .title-frame button { pointer-events: auto; }
+html[data-scene-active] .film-shot.is-title:not(.is-on) .title-frame a,
+html[data-scene-active] .film-shot.is-title:not(.is-on) .title-frame button { pointer-events: none; }
+.film-shot.is-title:focus-within .title-frame { opacity: 1; }
+
+.film-shot[data-card="right"] .title-frame { justify-items: end; text-align: right; }
+.film-shot[data-card="center"] .title-frame { justify-items: center; text-align: center; }
+
+.title-card { position: relative; width: min(100%, var(--title-w)); }
+/* jemné stmavenie len tam, kde je text (fotka sa netónuje): mäkká elipsa za blokom, mizne s kartou */
+.title-card::before {
+  content: ""; position: absolute; z-index: -1; inset: -55% -28%;
+  background: radial-gradient(closest-side, rgba(var(--ink-rgb), 0.7), rgba(var(--ink-rgb), 0.64) 62%, rgba(var(--ink-rgb), 0.42) 80%, rgba(var(--ink-rgb), 0));
+  pointer-events: none;
+}
+
+.kicker {
+  display: flex; align-items: center; gap: var(--s3);
+  margin: 0 0 var(--s4);
+  font-family: var(--font-text); font-weight: 700; font-size: 0.75rem; line-height: 1;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--paper);
+  text-shadow: var(--halo);
+}
+.kicker::before { content: ""; flex: none; width: 24px; height: 2px; background: var(--lamp); }
+.film-shot[data-card="right"] .kicker { flex-direction: row-reverse; }
+.film-shot[data-card="center"] .kicker { justify-content: center; }
+.film-shot[data-card="center"] .kicker::after { content: ""; flex: none; width: 24px; height: 2px; background: var(--lamp); }
+
+.title {
+  font-size: var(--title-size); line-height: 0.95; letter-spacing: -0.02em;
+  max-width: 13ch;
+  text-shadow: 0 0 2px rgba(var(--ink-rgb), 0.5), 0 2px 30px rgba(var(--ink-rgb), 0.6);
+}
+.title em { font-weight: 500; font-style: italic; }
+.title-hero .title { font-size: var(--hero-size); max-width: 11ch; }
+.title-sub {
+  margin-top: var(--s5);
+  font-size: clamp(1rem, 1.2vw, 1.1875rem); line-height: 1.5; color: var(--paper);
+  max-width: 34ch; text-wrap: balance;
+  text-shadow: var(--halo);
+}
+.film-shot[data-card="right"] .title, .film-shot[data-card="right"] .title-sub { margin-left: auto; }
+.film-shot[data-card="center"] .title, .film-shot[data-card="center"] .title-sub { margin-inline: auto; }
+.title-actions { margin-top: var(--s6); display: flex; flex-wrap: wrap; gap: var(--s3); }
+.film-shot[data-card="center"] .title-actions { justify-content: center; }
+.title-actions .btn { min-height: 48px; }
+.title-actions .btn-secondary { background: rgba(var(--ink-rgb), 0.35); }
+
+/* úvod: nadpis po vetách, potom riadok a tlačidlá (rovnaká choreografia ako predtým na doske) */
+.title-hero h1 .w { display: inline-block; animation: text-in 700ms var(--ease-out) both; }
+.title-hero h1 .w:first-child { animation-delay: 420ms; }
+.title-hero h1 .w:nth-child(2) { animation-delay: 560ms; }
+.title-hero .kicker { animation: text-in 600ms var(--ease-out) 300ms both; }
+.title-hero .title-sub { animation: text-in 600ms var(--ease-out) 760ms both; }
+.title-hero .title-actions { animation: text-in 600ms var(--ease-out) 900ms both; }
+html[data-motion="off"] .title-hero * { animation: none !important; }
+
+/* výzva na prehliadku: drobný nápis s linkou dole v strede úvodu (ako SCROLL v referencii) */
+.title-frame .scroll-hint {
+  position: absolute; left: 50%; right: auto; bottom: var(--s6); transform: translateX(-50%);
+  flex-direction: column; gap: var(--s3);
+  font-family: var(--font-text); font-weight: 700; font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--paper); text-shadow: 0 1px 8px rgba(var(--ink-rgb), 0.9);
+}
+.title-frame .scroll-hint::after { width: 1px; height: 28px; background: var(--lamp); }
+
+/* stály šerý okraj filmu (vinetácia, nie tónovanie): hore pod lištou a spodná tretina, ako v referencii.
+   S filmom je to jedna pevná vrstva medzi plátnom a stránkou (nebliká pri výmene kariet), bez filmu
+   má ten istý okraj každá záloha .film-still. */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity 0.7s var(--ease-in-out);
+  background:
+    linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 16%, rgba(var(--ink-rgb), 0) 52%, rgba(var(--ink-rgb), 0.42) 80%, rgba(var(--ink-rgb), 0.62) 100%);
+}
+html.world-in:not(.world-off) body::after { opacity: 1; }
+.film-shot.is-title .film-still::after,
+html.world:not(.world-off) .film-shot.is-title .film-still::after {
+  background:
+    linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 16%, rgba(var(--ink-rgb), 0) 52%, rgba(var(--ink-rgb), 0.42) 80%, rgba(var(--ink-rgb), 0.62) 100%),
+    radial-gradient(120% 90% at 50% 50%, rgba(var(--ink-rgb), 0) 36%, rgba(var(--ink-rgb), 0.34) 100%);
+}
+
+/* záber bez filmu (pokojná verzia) a kým film nebeží: zábery titulných kariet stoja cez celé okno ako film
+   (pevná vrstva) a nasledujúci sa prelína navrch počas nábehu svojej karty (--so a is-shown z app.js), takže
+   ďalšia fotka nikdy nevyjde zdola cez text. Trieda karty je z hlavičky (pred prvým vykreslením, žiadny posun);
+   bez skriptu ide záloha bežne so stránkou a karta nie je pripnutá. */
+html.karty .film-shot.is-title .film-still {
+  position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh;
+  opacity: var(--so, 0); visibility: hidden;
+}
+html.karty .film-shot.is-title.is-shown .film-still, html.karty .film-shot.is-title[data-pro] .film-still { visibility: visible; }
+html.karty .film-shot.is-title[data-pro] .film-still { opacity: var(--so, 1); }
+/* pevná záloha je stále „v okne“, takže by sa načítala hneď (loading=lazy nepomôže): mimo okolia (is-near
+   z app.js, záber do 2 obrazoviek pred oknom) ostáva display none a nesťahuje sa */
+html.karty .film-shot.is-title:not(.is-near):not([data-pro]) .film-still { display: none; }
+html.karty.world-in:not(.world-off) .film-shot.is-title .film-still {
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.7s var(--ease-in-out), visibility 0s linear 0.7s;
+}
+html:not(.karty) .title-pin { position: relative; }
+
+/* skok z menu (#recepcia, #tim, #sluzby…): pristane v tretine pripnutia, kde je karta celá a film na zábere,
+   nie 76 px nad kotvou (scroll-padding-top lišty), kde by karta ešte nebola vidieť */
+.scene:not(#uvod) { scroll-margin-top: calc(-30vh - var(--nav-h) - 16px); scroll-margin-top: calc(-30svh - var(--nav-h) - 16px); }
+
+/* popis miesta vľavo dole je zbytočný: miesto pomenuje nadpisok karty */
+.film-place { display: none !important; }
+
+/* pásy s obsahom za titulnou kartou: cenník a kontakt */
+.band-prices .price-list { max-width: 60rem; margin-inline: auto; }
+.band-contact .contact-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s7); align-items: start; }
+.band-contact .h2 { margin-bottom: var(--s5); }
+.band-contact .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s6) var(--s5); }
+.band-contact .contact-actions { margin-top: var(--s6); }
+@media (max-width: 800px) {
+  .band-contact .contact-grid { grid-template-columns: 1fr; gap: var(--s7); }
+  .band-contact .contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .band-contact .contact-row { grid-template-columns: 5.5rem 1fr; gap: var(--s3); font-size: 0.9375rem; }
+}
+
+/* telefón (rovnaký prah ako výrezy filmu): blok dole nad spodným tlačidlom, kde sú na záberoch podlahy
+   a pulty; bod záujmu (kreslo, pult, pumpa) ostáva vidieť nad textom */
+@media (max-width: 720px) {
+  :root { --title-size: clamp(2.75rem, 13vw, 3.5rem); --hero-size: clamp(3.1rem, 15.2vw, 4.25rem); }
+  .title-frame {
+    align-content: end;
+    padding: calc(var(--nav-h) + var(--s5)) var(--gutter) calc(var(--cta-h) + 7svh + env(safe-area-inset-bottom, 0px));
+  }
+  .title-card { width: 100%; }
+  .title-card::before { inset: -34% calc(-1 * var(--gutter)) -22%; background: radial-gradient(farthest-side at 50% 52%, rgba(var(--ink-rgb), 0.66), rgba(var(--ink-rgb), 0.6) 60%, rgba(var(--ink-rgb), 0.4) 80%, rgba(var(--ink-rgb), 0)); }
+  .title { max-width: 11ch; }
+  .title-hero .title { max-width: none; }
+  .title-sub { margin-top: var(--s4); font-size: 1rem; max-width: 30ch; }
+  .title-actions { margin-top: var(--s5); flex-wrap: nowrap; gap: var(--s2); }
+  .title-actions .btn { width: auto; flex: 1 1 auto; min-width: 0; padding-inline: var(--s4); font-size: 0.8125rem; letter-spacing: 0.06em; }
+  /* úvod: blok v strede (ako referencia), dole výzva na prehliadku; spodné tlačidlo sa tu ešte neukáže */
+  .film-shot.is-title[data-card="center"] .title-frame { align-content: center; padding-bottom: calc(var(--s8) + env(safe-area-inset-bottom, 0px)); }
+  .title-frame .scroll-hint { display: flex; bottom: calc(var(--s5) + env(safe-area-inset-bottom, 0px)); }
+  body::after, .film-shot.is-title .film-still::after, html.world:not(.world-off) .film-shot.is-title .film-still::after {
+    background: linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 14%, rgba(var(--ink-rgb), 0) 40%, rgba(var(--ink-rgb), 0.5) 70%, rgba(var(--ink-rgb), 0.72) 100%);
+  }
+}
+@media (max-width: 359px) { .title-actions { flex-wrap: wrap; } .title-actions .btn { flex-basis: 100%; } }
+
+/* spodné tlačidlo na telefóne: kompaktné vpravo dole (zavolať + rezervovať), nie oranžový pás cez celú
+   šírku; skryje sa v úvode (karta má vlastné tlačidlá), v cenníku (každá služba má Objednať), v rezervácii
+   a pri otvorenom menu (app.js) */
+@media (max-width: 900px) {
+  .mobile-cta {
+    left: auto; right: 0; display: flex; align-items: center; gap: var(--s2);
+    padding: 0 var(--gutter) calc(var(--s4) + env(safe-area-inset-bottom, 0px));
+    background: none; pointer-events: none;
+  }
+  .mobile-cta .btn { pointer-events: auto; width: auto; min-height: 46px; padding-inline: var(--s4); font-size: 0.78rem; letter-spacing: 0.07em; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+  .mobile-cta .btn-call { width: 46px; padding: 0; background: rgba(var(--ink-rgb), 0.78); border: 1px solid var(--line-strong); color: var(--paper); }
+  .mobile-cta .btn-call svg { width: 20px; height: 20px; }
+  .mobile-cta.is-hidden { transform: translateY(140%); }
+}
+/* ===== prototyp: video ako záber filmu (film.js, data-video) ===== */
+/* prvok videa je v kotve (Safari), neviditeľný; obraz kreslí film */
+.film-video { position: absolute; top: 0; left: 0; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
+/* záloha kotvy s videom na telefóne: plagát s rovnakým presahom ako film (1,12, nie 1,24) */
+@media (max-width: 720px) {
+  html.world:not(.world-off) .film-shot[data-video] .film-still img { --pw: calc(1.12 * var(--k) * max(100vw, 100vh * var(--pa, 1.5))); --z0: -0.005; }
+}
+
+/* ==========================================================================
+   P12. Pohyblivé detaily (lesk tlačidla, svetlo po okraji karty, pás služieb, tabuľa dnešných hodín,
+   zoznam krokov, nadpis po slovách). Všetko tlmené, vo farbe lampy, len transform a opacity;
+   pri obmedzenom pohybe (prefers-reduced-motion, data-motion="off") stojí v konečnom stave.
+   ========================================================================== */
+
+/* --- lesk na hlavnom tlačidle: úzky pás svetla prejde raz za 6 s, ako odlesk lampy na kovovom znaku --- */
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after {
+  content: ""; position: absolute; inset: -1px; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 236, 214, 0.55) 49%, rgba(255, 236, 214, 0.0) 60%);
+  transform: translateX(-110%);
+  animation: lesk 6s cubic-bezier(0.45, 0, 0.2, 1) 1.8s infinite;
+}
+@keyframes lesk { 0% { transform: translateX(-110%); } 18%, 100% { transform: translateX(110%); } }
+
+/* --- svetlo po okraji karty: krátky teplý pás obieha tenký rámik (rezervácia) --- */
+.beam { position: relative; }
+.beam > .beam-line {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1px;
+  /* len 1 px rámik: obsah karty zostane priehľadný nad filmom */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  overflow: hidden;
+}
+.beam > .beam-line::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 200vmax; height: 200vmax; margin: -100vmax 0 0 -100vmax;
+  background: conic-gradient(from 0deg, transparent 0deg 300deg, rgba(240, 126, 60, 0.0) 300deg, rgba(240, 126, 60, 0.95) 345deg, rgba(255, 220, 190, 1) 352deg, transparent 360deg);
+  animation: obeh 7s linear infinite;
+}
+@keyframes obeh { to { transform: rotate(1turn); } }
+
+/* --- pás služieb: pomaly beží ako titulky, okraje sa strácajú do tmy --- */
+.marquee {
+  --marquee-dur: 46s;
+  overflow: hidden; padding-block: var(--s5, 24px);
+  border-block: 1px solid var(--line, rgba(241, 233, 221, 0.14));
+  -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track { display: flex; width: max-content; animation: pas var(--marquee-dur) linear infinite; }
+.marquee.is-off .marquee-track { animation-play-state: paused; }
+.marquee-track span {
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: clamp(1.5rem, 5.4vw, 3rem); line-height: 1; color: var(--paper-2, #c9beae);
+  white-space: nowrap; padding-inline: 0.55em;
+}
+.marquee-track i { align-self: center; width: 6px; height: 6px; flex: none; transform: rotate(45deg); background: var(--lamp); }
+@keyframes pas { to { transform: translateX(-50%); } }
+
+/* --- tabuľa dnešných hodín: preklápacie políčka, ustália sa na skutočnom čase z otváracích hodín --- */
+.flap { display: flex; align-items: center; gap: var(--s3, 12px); flex-wrap: wrap; }
+.flap-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-3, #8e8578); }
+.flap-cells { display: inline-flex; gap: 2px; }
+.flap-cells b {
+  position: relative; display: inline-grid; place-items: center;
+  min-width: 0.78em; height: 1.36em; padding-inline: 0.06em;
+  font-family: var(--font-text); font-weight: 700; font-size: clamp(1.125rem, 4.6vw, 1.5rem); font-variant-numeric: tabular-nums;
+  color: var(--paper, #f1e9dd); background: var(--ink-3, #221d19); border-radius: 3px;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+/* deliaca linka uprostred políčka ako na mechanickej tabuli */
+.flap-cells b::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.55); }
+.flap-cells b.sp { background: none; box-shadow: none; min-width: 0.4em; }
+.flap-cells b.sp::after { display: none; }
+.flap-cells b.flip { animation: preklop 90ms linear; }
+@keyframes preklop { 0% { transform: scaleY(1); } 50% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
+.flap-state { font-size: 0.8125rem; font-weight: 600; color: var(--lamp-2, #f07e3c); }
+
+/* --- zoznam krokov: položky prídu po jednej zdola s rozmazaním, ako správy na telefóne --- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: krok; }
+.steps li {
+  counter-increment: krok; display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline;
+  padding-block: 0.7em; border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14));
+  font-size: 1rem; color: var(--paper);
+}
+.steps li:last-child { border-bottom: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.steps li::before { content: counter(krok, decimal-leading-zero); font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--lamp-2); }
+.js-steps .steps li { opacity: 0; transform: translateY(14px); filter: blur(6px); transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out), filter 0.5s var(--ease-out); transition-delay: calc(var(--i, 0) * 110ms); }
+.js-steps .steps.is-in li { opacity: 1; transform: none; filter: none; }
+
+/* --- nadpis po slovách: každé slovo vystúpi o kúsok a zaostrí sa (kinetická typografia, tlmená). Bez orezu,
+   aby sa nestratila diakritika nad veľkými písmenami (Č, Ď). Nadpis titulnej karty nastúpi zakaždým, keď sa
+   jej karta rozsvieti (is-on z app.js), ostatné pri prvom zobrazení (is-in). --- */
+.kin .kw { display: inline-block; }
+.js-kin .kin .kw { transform: translateY(0.38em); filter: blur(6px); opacity: 0; transition: transform 0.9s cubic-bezier(0.2, 0.75, 0.15, 1), filter 0.7s ease, opacity 0.5s ease; transition-delay: calc(90ms + var(--i, 0) * 85ms); }
+.js-kin .kin.is-in .kw, .js-kin .film-shot.is-title.is-on .kin .kw { transform: none; filter: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::after, .beam > .beam-line::before, .marquee-track { animation: none; }
+  .beam > .beam-line::before { transform: rotate(0.9turn); }
+  .js-steps .steps li, .js-kin .kin .kw { transition: none; opacity: 1; transform: none; filter: none; }
+}
+html[data-motion="off"] .btn-primary::after, html[data-motion="off"] .beam > .beam-line::before, html[data-motion="off"] .marquee-track { animation: none; }
+
+/* umiestnenie detailov na stránke */
+.band-prices .marquee { margin-bottom: var(--s8); }
+.steps-wrap { max-width: 60rem; margin: 0 auto var(--s8); }
+.steps-wrap .eyebrow { margin-bottom: var(--s4); }
+@media (min-width: 901px) {
+  .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s4); }
+  .steps li { grid-template-columns: 1fr; gap: var(--s2); border-bottom: 1px solid var(--line, rgba(241, 233, 221, 0.14)); align-content: start; }
+}
+.band-contact .contact-main { border: 1px solid var(--line-strong); border-radius: 4px; padding: var(--s6); }
+@media (max-width: 640px) { .band-contact .contact-main { padding: var(--s5) var(--s4); } }
+.band-contact .flap { margin-bottom: var(--s5); }
+/* na telefóne je tím pri práci priamo vo filme (slučka cez celú plochu), okno s tým istým videom by sa opakovalo */
+@media (max-width: 720px) { .team-video { display: none; } }

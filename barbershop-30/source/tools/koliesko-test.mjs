@@ -13,7 +13,7 @@ const browser = await chromium.launch(PRESETS[0]);
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: 'dark' });
 const page = await ctx.newPage();
 const errs = []; page.on('pageerror', (e) => errs.push(e.message));
-await page.goto(`${srv.origin}/index.html?uvod=off`, { waitUntil: 'load' });
+await page.goto(`${srv.origin}/index.html?uvod=off&film=on`, { waitUntil: 'load' });
 await page.mouse.move(720, 450);
 await page.mouse.wheel(0, 300);
 const samples = [];

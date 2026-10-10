@@ -24,6 +24,15 @@
      kamera dôjde k dverám), cez šero prejde do záberu úvodu a odtiaľ už vedie skrolovanie. Prológ sa
      dá kedykoľvek preskočiť skrolovaním; bez triedy pro sa nič z toho nedeje.
    - data-size="ŠxV" na kotve: rozmery fotky záberu, keď ich nedáva <img> (viac záloh v kotve).
+   - skutočné video ako záber (data-video="assets/video/meno-576", bez prípony; súbory .mp4 a .webm):
+     data-video-mode="scroll" (čas videa vedie skrolovanie, súbor má každú snímku kľúčovú) alebo "play"
+     (tichá slučka v čase, len kým je záber na obrazovke), data-video-t="od,do" (sekundy súboru na celý
+     pohyb záberu), data-video-size="576x1024", data-video-f="x,y" (bod záujmu vo videu),
+     data-video-poster="assets/video/meno-poster-576" (+ .avif/.webp/.jpg; ukáže sa, kým video nemá
+     snímku, a ostane, keď video nejde), data-video-fps (snímky za sekundu súboru, pre posun po snímkach),
+     data-video-on="phone" (predvolené; na počítači je kotva bežný záber fotky z data-shot) alebo "all".
+     Video nemá hĺbkovú mapu (rovina bez posunu popredia), prelína sa s fotkami tým istým prechodom.
+     Súbor sa začne sťahovať až po prvom pohybe návštevníka a len blízko scény (keepAround).
    - window.BS30_FILM = { ready, shots, goTo(meno, t), state } na ladenie. */
 (async function () {
   'use strict';
@@ -49,8 +58,12 @@
   if (!force && !root.classList.contains('world')) {
     let ok = false;
     try {
-      const c = d.createElement('canvas'), g = c.getContext('webgl2');
-      ok = !!g && !matchMedia('(prefers-reduced-motion: reduce)').matches
+      // softvérové kreslenie (bez grafickej karty) dá pokojnú verziu, film by sa tam trhal; ?film=on ho vynúti (testy)
+      const on = /[?&]film=on\b/.test(location.search), c = d.createElement('canvas');
+      const g = c.getContext('webgl2', { failIfMajorPerformanceCaveat: !on }) || (on ? c.getContext('webgl2') : null);
+      const ri = g && !on && g.getExtension('WEBGL_debug_renderer_info');
+      const sw = !!ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL) || '');
+      ok = !!g && !sw && !matchMedia('(prefers-reduced-motion: reduce)').matches
         && !(navigator.connection && navigator.connection.saveData)
         && !matchMedia('(max-height: 500px)').matches
         && (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
@@ -79,6 +92,9 @@
   const src = new URL('vendor/three.module.min.js', here).href;
   const early = () => { fetch(src, { priority: 'low' }).catch(() => {}); };
   const INPUTS = ['pointerdown', 'pointermove', 'touchstart', 'wheel', 'scroll', 'keydown'];
+  // videá vo filme sa sťahujú až po skutočnom pohybe návštevníka (meranie stránky bez pohybu ich nestiahne)
+  let userMoved = force;
+  if (!force && !proArmed) userMoved = true;                  // film bez prológu štartuje až po pohybe (nižšie)
   if (!force && !proArmed) await new Promise((r) => {
     let t = 0;
     const go = () => { clearTimeout(t); INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
@@ -114,6 +130,8 @@
     near: [[-ARC * 0.5, 0, 0.02], [ARC * 0.5, 0, -0.03]],
     // prológ: chôdza z ulice k dverám, kamera ide dopredu o tretinu vzdialenosti (asi 1,5× priblíženie)
     door: [[-ARC * 0.3, 0, 0.05], [phone ? ARC * 0.3 : 0.15, 0, -0.34]],   // na počítači aj bokom k dverám (oko je pri okraji záberu zaseknuté)
+    // záber z videa: pohyb robí kamera vo videu, film pridá len nepatrný nájazd a dýchanie
+    still: [[0, 0, 0.01], [0, 0, -0.02]],
   };
   const pair = (v, dflt) => { const a = (v || '').split(/[\s,;]+/).map(parseFloat); return a.length === 2 && a.every(isFinite) ? [clamp(a[0], 0, 1), clamp(a[1], 0, 1)] : dflt; };
   // pomer strán fotky: z data-size="ŠxV", inak z width/height prvej zálohy <img> (zábery podniku sú 3 : 2)
@@ -139,9 +157,25 @@
       tiers: tiersOf(m ? g('mTiers') : g('tiers')),
     };
   };
-  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].map((el) => {
+  // video ako záber: na telefóne (alebo všade pri data-video-on="all"); na počítači je kotva fotkou z data-shot
+  const range = (v) => { const a = (v || '').split(/[\s,;]+/).map(parseFloat); return a.length === 2 && a.every(isFinite) && a[1] > a[0] ? a : null; };
+  const videoOf = (el) => {
+    const x = el.dataset;
+    if (!x.video || !(phone || x.videoOn === 'all')) return null;
+    return { src: x.video, mode: x.videoMode === 'play' ? 'play' : 'scroll', t: range(x.videoT), poster: x.videoPoster || '', fps: parseFloat(x.videoFps) || 30 };
+  };
+  // kotva s data-desk="skip" (Poď ďalej) má vlastný záber len na telefóne (video); na počítači ju film
+  // preskočí a plynulo pokračuje zo susedného záberu, text karty sa vymení nad súvislým záberom
+  const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].filter((el) => phone || el.dataset.desk !== 'skip').map((el) => {
     const s = shotOf(el, '');
     s.photo = (phone && el.dataset.m) || el.dataset.shot;
+    const v = videoOf(el);
+    if (v) {
+      s.video = v; s.photo = el.dataset.shot + '-video';
+      s.f = pair(el.dataset.videoF, [0.5, 0.5]); s.fm = null;
+      s.pa = el.dataset.videoSize ? ratio(el.dataset.videoSize, null) : 0.5625;
+      s.mv = MOVES[el.dataset.videoMv] ? el.dataset.videoMv : 'still';
+    }
     // záloha ukazuje ten istý bod záujmu ako film (object-position cez vlastné premenné; výrez na
     // telefón má vlastné --fmx/--fmy zo stránky)
     const f = pair(el.dataset.f, [0.5, 0.5]);
@@ -384,6 +418,7 @@
   }
   const retryOk = (s) => !s.failedAt || performance.now() - s.failedAt > 10000;   // po výpadku siete skúsi znova
   function load(s) {
+    if (s.video) { loadClip(s); return; }
     // raz načítaná veľkosť sa drží (z cache), aj keď pomalé zariadenie zníži rozlíšenie; väčšia len keď treba
     const w = Math.max(pickSize(s), s.w || 0);
     if (s.done || s.loading || (s.ready && s.size >= w) || !retryOk(s)) return;   // done: prológ, ktorý už prebehol
@@ -407,10 +442,127 @@
   }
   function drop(s) {
     if (s.loading) { s.ctl.abort(); s.loading = null; }   // preskočený záber sa ani nedotiahne
+    if (s.video) detach(s, false);
     if (!s.ready) return;
     const u = s.mat.uniforms;
     u.uMap.value.dispose(); if (s.drt) { s.drt.dispose(); s.drt = null; }
-    u.uMap.value = blank; u.uDepth.value = flat; s.ready = false; s.size = 0;
+    u.uMap.value = blank; u.uDepth.value = flat; s.ready = false; s.size = 0; s.pmap = null;
+  }
+
+  /* ---------- video ako záber (data-video) ----------
+     Plagát sa nahrá ako fotka (bez hĺbky), záber je tým hotový a prelína sa ako každý iný. Video sa pripojí
+     až po prvom pohybe návštevníka a plagát nahradí, keď má snímku na správnom mieste:
+     - scroll: video stojí, jeho čas vedie poloha vo filme (S cez pružinu, takže aj čas ide plynulo);
+       posun po celých snímkach, súbor má každú snímku kľúčovú (-g 1), takže každý posun je jedna snímka;
+     - play: tichá slučka v čase, hrá len kým je záber na obrazovke (a nie po 3 min bez pohybu).
+     Keď video nejde (sieť, formát, úsporný režim telefónu nedovolí play), ostáva plagát s jemným nájazdom. */
+  const vType = (() => {
+    const v = d.createElement('video');
+    const mp4 = v.canPlayType('video/mp4; codecs="avc1.640028"'), webm = v.canPlayType('video/webm; codecs="vp9"');
+    return mp4 === 'probably' || (mp4 && !webm) ? '.mp4' : webm ? '.webm' : '';
+  })();
+  async function posterBitmap(s, signal) {
+    const u = new URL(s.video.poster, d.baseURI).href;
+    if (avif) {
+      try { return await bitmap(u + '.avif', signal); }
+      catch (e) { if (signal.aborted) throw e; avif = false; }
+    }
+    return bitmap(u + '.webp', signal);
+  }
+  function loadClip(s) {
+    if (s.loading || !retryOk(s)) return;
+    if (s.ready) { if (userMoved && !s.vel && !s.vfail) attach(s); return; }
+    if (!s.video.poster) { s.ready = true; s.t0 = performance.now(); if (userMoved) attach(s); return; }
+    const ctl = new AbortController(), live = () => !ctl.signal.aborted && !lost;
+    s.ctl = ctl;
+    s.loading = posterBitmap(s, ctl.signal).then((img) => upload(img, live, false)).then((map) => {
+      if (s.ctl === ctl) s.loading = null;
+      if (!map || !live()) { if (map) map.dispose(); return; }
+      s.mat.uniforms.uMap.value = map; s.pmap = map;
+      s.t0 = performance.now(); s.ready = true; s.size = s.w = 1; s.failedAt = 0; wake();
+      if (userMoved) attach(s);
+    }).catch(() => { if (s.ctl === ctl) s.loading = null; if (!ctl.signal.aborted) s.failedAt = performance.now(); });
+  }
+  /* súbor videa sa stiahne raz celý a drží sa v pamäti ako blob (1 až 2 MB): návrat k scéne ho nesťahuje
+     znova (prehliadač žiadosti s rozsahom bajtov často nevezme z cache) a posun po snímkach nečaká na sieť */
+  function clipBlob(s) {
+    if (!s.vblob) {
+      s.vblob = fetch(new URL(s.video.src + vType, d.baseURI).href, { priority: 'low' })
+        .then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+        .then((b) => URL.createObjectURL(b))
+        .catch((e) => { s.vblob = null; throw e; });
+    }
+    return s.vblob;
+  }
+  function attach(s) {
+    // vfail: súbor sa nedá prehrať (formát, chyba dekódovania) – ostáva plagát; výpadok siete skúsi znova o 10 s
+    if (s.vel || s.vfail || s.vwait || (s.vneterr && performance.now() - s.vneterr < 10000)) return;
+    if (!vType) { s.vfail = true; return; }
+    s.vwait = true;
+    clipBlob(s).then((url) => { s.vwait = false; s.vneterr = 0; if (s.ready && !s.vel && !lost) attachUrl(s, url); }, () => { s.vwait = false; s.vneterr = performance.now(); });
+  }
+  function attachUrl(s, url) {
+    const c = s.video, v = d.createElement('video');
+    v.muted = v.defaultMuted = true; v.playsInline = true;
+    ['muted', 'playsinline', 'webkit-playsinline', 'disablepictureinpicture', 'disableremoteplayback'].forEach((a) => v.setAttribute(a, ''));
+    v.loop = c.mode === 'play'; v.preload = 'auto'; v.className = 'film-video';
+    v.setAttribute('aria-hidden', 'true'); v.tabIndex = -1;
+    const vt = new THREE.VideoTexture(v);
+    vt.flipY = false; vt.colorSpace = THREE.NoColorSpace; vt.generateMipmaps = false;
+    vt.minFilter = vt.magFilter = THREE.LinearFilter; vt.wrapS = vt.wrapT = THREE.ClampToEdgeWrapping;
+    s.vel = v; s.vt = vt; s.vlive = false; s.vwant = -1; s.vblock = false;
+    // nová snímka videa: prekresliť (v pokoji film sám nekreslí); prvá snímka na správnom mieste nahradí plagát
+    const onFrame = () => {
+      if (s.vel !== v) return;
+      if (v.readyState >= 2) vt.needsUpdate = true;
+      if (!s.vlive && v.readyState >= 2 && (c.mode === 'play' ? !v.paused : !v.seeking && s.vwant >= 0)) {
+        s.vlive = true; s.mat.uniforms.uMap.value = vt;
+      }
+      wake();
+    };
+    if ('requestVideoFrameCallback' in v) { const f = () => { if (s.vel !== v) return; onFrame(); v.requestVideoFrameCallback(f); }; v.requestVideoFrameCallback(f); }
+    v.addEventListener('seeked', onFrame); v.addEventListener('playing', onFrame); v.addEventListener('loadeddata', onFrame);
+    v.addEventListener('loadedmetadata', wake);
+    v.addEventListener('error', () => { if (s.vel === v) detach(s, true); });   // nie chyba z uvoľnenia (detach maže src)
+    v.src = url;
+    s.at.appendChild(v);                                      // v stránke: Safari nemusí dodávať snímky videu mimo dokumentu
+    v.load();
+  }
+  function detach(s, failed) {
+    const v = s.vel;
+    if (failed) s.vfail = true;
+    if (!v) return;
+    s.vel = null;
+    try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) { /* nič */ }
+    v.remove();
+    if (s.vt) { if (s.mat.uniforms.uMap.value === s.vt) s.mat.uniforms.uMap.value = s.pmap || blank; s.vt.dispose(); s.vt = null; }
+    s.vlive = false; s.vwant = -1; wake();
+  }
+  // poloha v pohybe záberu 0..1 (to isté t ako v place): čas videa v režime scroll
+  const shotT = (s) => (s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1));
+  function drive(s, now) {
+    const v = s.vel, c = s.video;
+    if (!v || v.readyState < 1) return false;
+    if (c.mode === 'scroll') {
+      const r = c.t || [0, v.duration || 0], fr = 1 / c.fps;
+      // stred snímky (presný posun aj v prehliadačoch, ktoré zaokrúhľujú čas), nikdy nie za poslednou snímkou
+      const t = r[0] + (r[1] - r[0]) * shotT(s);
+      const want = Math.min(r[1] - fr * 0.5, (Math.floor(t / fr) + 0.5) * fr);
+      if (Math.abs(want - s.vwant) > fr * 0.25 && !v.seeking) {
+        s.vwant = want;
+        if (typeof v.fastSeek === 'function') v.fastSeek(want); else v.currentTime = want;   // každá snímka kľúčová: fastSeek je presný
+      }
+      return v.seeking;
+    }
+    // hrá len záber, ktorý je naozaj vidieť (aj pri skoku cez menu, keď sa nový záber ešte načítava)
+    const vis = onScreen.has(s) && Math.abs(s.pi - S) < 1 && now - lastInput < BREATH_MS;
+    if (vis && !s.vblock) {
+      if (v.paused && !s.vpend) {
+        s.vpend = true;
+        v.play().then(() => { s.vpend = false; }, () => { s.vpend = false; s.vblock = true; });   // úsporný režim: ostáva plagát
+      }
+    } else if (!v.paused) v.pause();
+    return vis && !v.paused;
   }
   let onScreen = new Set();
   function keepAround(ci) {
@@ -428,18 +580,19 @@
   /* ---------- rozloženie záberu podľa obrazovky ---------- */
   const tanH = Math.tan(THREE.MathUtils.degToRad(FOV) / 2);
   const OVER = 0.12;                                          // presah fotky za okraj (1,24), aby pohyb nikdy neodhalil hranu
+  const OVER_V = 0.06;                                        // video: presah 1,12 (zdroj 576 px, každý presah ho zväčšuje); stačí na dýchanie a prechod
   function layout() {
     const aspect = canvas.width / canvas.height;
     const vh = 2 * DIST * tanH, vw = vh * aspect;
     SHOTS.forEach((s) => {
       // fotka pokryje okno s presahom na oboch stranách; na telefóne na výšku vidno jej stred okolo bodu záujmu
-      const ov = 1 + 2 * OVER;
+      const ovr = s.video ? OVER_V : OVER, ov = 1 + 2 * ovr;
       let pw = vw * ov, ph = pw / s.pa;
       if (ph < vh * ov) { ph = vh * ov; pw = ph * s.pa; }
       s.mesh.scale.set(pw, ph, 1);
       s.pw = pw; s.ph = ph; s.vw = vw; s.vh = vh;
       const f = (phone && s.fm) || s.f;
-      const mx = Math.max(0, (pw - vw) / 2 - vw * OVER * 0.5), my = Math.max(0, (ph - vh) / 2 - vh * OVER * 0.5);
+      const mx = Math.max(0, (pw - vw) / 2 - vw * ovr * 0.5), my = Math.max(0, (ph - vh) / 2 - vh * ovr * 0.5);
       s.eye.set(clamp((f[0] - 0.5) * pw, -mx, mx), clamp((0.5 - f[1]) * ph, -my, my), DIST);
       s.mat.uniforms.uEye.value.copy(s.eye);
     });
@@ -503,7 +656,17 @@
       s.pi = null;
       if (!s.at.offsetParent && getComputedStyle(s.at).position !== 'fixed') return;   // skrytá kotva vypadne
       // prológ stojí jednu obrazovku pred začiatkom stránky: pri scrollY 0 je film presne na zábere úvodu
-      const a = s.pro ? -vh : Math.max(0, pageTop(s.at));
+      // titulná karta (.is-title, P11 v style.css) je pripnutá celú výšku kotvy: záber je celý na obrazovke
+      // v strede pripnutia, a zábery sa menia na hornom okraji kotvy (cut), kde sa mení aj text. Úvod
+      // (kotva s prológom) ostáva na vrchu stránky, aby bol pri scrollY 0 film presne na ňom.
+      const top = s.pro ? -vh : Math.max(0, pageTop(s.at));
+      const card = !s.pro && s.at.classList.contains('is-title') && !s.at.hasAttribute('data-pro');
+      // voľná dĺžka karty (pri .title-long za ňou ide pás, ten ju po jednej obrazovke zakryje)
+      const free = s.at.offsetHeight - (s.at.classList.contains('title-long') ? vh : 0);
+      const a = card ? top + free / 2 : top;
+      // pred kartou je pás (tím, cenník, galéria): záber sa vymení ešte pod pásom, aby spod neho vyšiel hotový
+      const prev = s.at.previousElementSibling || (s.at.parentElement.previousElementSibling || {}).lastElementChild;
+      s.cut = card ? top - (prev && prev.classList && prev.classList.contains('band') ? 1.5 * vh : 0) : null;
       if (An.length && a <= An[An.length - 1] + 1) return;
       s.pi = P.length; P.push(s); An.push(a);
     });
@@ -532,8 +695,9 @@
   const DRIFT = phone ? 0.6 : 1;                              // stály pohyb kamery: na telefóne jemnejší
   function place(s, now, push = 0) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
-    const t = s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1);
-    const m = MOVES[s.mv], e = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
+    const t = shotT(s);
+    // video nejde (úsporný režim, sieť, formát): plagát dostane bežný nájazd ako fotka, nech záber nestojí
+    const m = MOVES[s.video && (s.vblock || s.vfail || s.vneterr) ? 'in' : s.mv], e = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
     off.set(
       (m[0][0] + (m[1][0] - m[0][0]) * e) * s.vw,
       (m[0][1] + (m[1][1] - m[0][1]) * e) * s.vh,
@@ -547,7 +711,7 @@
     off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * dr;
     // pri prechode kamera odchádzajúceho záberu zrýchľuje dopredu, akoby prešla do ďalšej miestnosti
     // (do štvrtiny vzdialenosti); prichádzajúci záber dobieha zozadu a spomalí na svojom mieste
-    off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * 0.1 * DIST;
+    off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * (s.video ? 0.04 : 0.1) * DIST;
     camera.position.copy(s.eye).add(off);
     // pohľad ostáva takmer na bode záujmu: posun kamery sa mení na oblúk okolo neho
     tmp.set(s.eye.x + off.x * 0.08, s.eye.y + off.y * 0.08, 0);
@@ -561,12 +725,18 @@
   function draw(now, dt) {
     if (!path.length || !compiled) return false;
     keepAround(clamp(Math.round(S), 0, N));
+    // videá: posun podľa polohy vo filme (scroll) alebo prehrávanie, kým je záber na obrazovke (play);
+    // ešte pred kreslením, aby sa slučka zastavila aj vtedy, keď sa po skoku nový záber ešte načítava
+    let vbusy = false;
+    for (const s of path) if (s.vel) vbusy = drive(s, now) || vbusy;
     const k = clamp(Math.floor(S), 0, N);
     let A = path[k], B = path[clamp(k + 1, 0, N)];
     // prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere 1 obrazovka = 0,3 obrazovky skrolu),
     // pri väčších medzerách asi 55 % výšky okna, najmenej 16 %; vždy okolo stredu
     const gap = k < N ? anchors[k + 1] - anchors[k] : innerHeight, span = clamp(0.55 * innerHeight / Math.max(1, gap), 0.16, 0.3);
-    const want = A === B ? 0 : smooth(0.5 - span / 2, 0.5 + span / 2, S - k);
+    // stred prechodu: pri titulnej karte tam, kde sa mení text (horný okraj jej kotvy), inak v polovici
+    const c = A !== B && B.cut != null ? clamp((B.cut - anchors[k]) / Math.max(1, gap), span / 2 + 0.02, 1 - span / 2 - 0.02) : 0.5;
+    const want = A === B ? 0 : smooth(c - span / 2, c + span / 2, S - k);
     if (k !== fadeK) { fade = want; fadeK = k; }
     // až keď skrolovanie naozaj stojí (nie medzi dvomi zárezmi kolieska), dokončí sa prelínanie;
     // v prológu vedie čas, prelínanie ide presne podľa neho
@@ -576,6 +746,9 @@
     fade = tl ? want : fade + (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
     if (fadeFreeze != null) { fade = fadeFreeze; fadeGoal = fadeFreeze; }   // ladenie: prechod stojí
     let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
+    // prechod je celý na prichádzajúcom zábere (titulná karta po skoku, pol obrazovky pred kotvou):
+    // nečaká sa na odchádzajúci záber, ktorý už nie je vidieť
+    if (A !== B && !A.ready && B.ready && fade > 0.999) { A = B; mix = 0; }
     // prológ začína vždy svojím záberom (fasáda), nikdy záberom úvodu, keby sa náhodou načítal skôr
     if ((pro || outside) && !A.ready) return false;
     if (!A.ready) {
@@ -617,7 +790,7 @@
     onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean));
     drawn = true;
     // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej
-    return Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || !A || fin(A, now) < 1;
+    return vbusy || Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || !A || fin(A, now) < 1;
   }
   let drawn = false;
 
@@ -803,6 +976,17 @@
   on(window, 'scroll', () => { sy = Math.max(0, scrollY); if (sy > 4) topSince = 0; else if (!topSince) topSince = performance.now(); poke(); }, { capture: true });
   const atTopSettled = () => scrollY <= 4 && topSince && performance.now() - topSince > 350;
   on(window, 'resize', resize);
+  // skutočný pohyb návštevníka: až potom sa sťahujú videá (meranie stránky bez pohybu ich nestiahne)
+  const moved = () => { if (!userMoved) { userMoved = true; wake(); } };
+  ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((t) => on(window, t, moved));
+  // úsporný režim (iPhone) nedovolí video spustiť samo, ťuknutie je však gesto: skúsi sa znova v ňom;
+  // video riadené skrolovaním sa pri prvom geste raz pustí a zastaví (Safari potom dodáva snímky aj pri posune)
+  const gesture = () => SHOTS.forEach((s) => {
+    const v = s.vel; if (!v) return;
+    if (s.video.mode === 'play' && s.vblock && onScreen.has(s)) { s.vblock = false; v.play().catch(() => { s.vblock = true; }); }
+    else if (s.video.mode === 'scroll' && !s.vunlock && v.readyState < 2) { s.vunlock = true; v.play().then(() => { v.pause(); s.vwant = -1; wake(); }, () => {}); }
+  });
+  on(window, 'touchend', gesture); on(window, 'click', gesture);
   on(window, 'touchstart', poke);
   if (!phone) on(window, 'pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = -(e.clientY / innerHeight - 0.5); poke(); });
   // telefón: pri naklonení sa perspektíva jemne pohne ako pri pohľade do skutočnej miestnosti.
@@ -855,7 +1039,7 @@
   on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); }, { passive: false });
   on(canvas, 'webglcontextrestored', () => {
     lost = false;
-    SHOTS.forEach((s) => { if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
+    SHOTS.forEach((s) => { if (s.video) { detach(s, false); s.pmap = null; } if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
     cw = 0; resize();
   });
   // obsah stránky mení výšku (fotky, rozbalené karty, menu), kotvy sa preto prepočítajú
@@ -866,6 +1050,7 @@
     running = false; ac.abort(); ro.disconnect(); clearTimeout(mt); jobs = [];
     if (raf) cancelAnimationFrame(raf);
     SHOTS.forEach(drop);
+    SHOTS.forEach((s) => { if (s.vblob) s.vblob.then((u) => URL.revokeObjectURL(u), () => {}); s.vblob = null; });
     renderer.dispose(); try { renderer.forceContextLoss(); } catch (e) { /* nič */ }
     canvas.remove(); placeBox.remove(); quit();
   }
@@ -899,6 +1084,8 @@
       on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
       ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
+      userMoved,
+      video: path.filter((s) => s.video).map((s) => ({ shot: s.photo, mode: s.video.mode, src: s.vel ? s.vel.currentSrc.split('/').pop() : null, rs: s.vel ? s.vel.readyState : null, t: s.vel ? +s.vel.currentTime.toFixed(3) : null, want: +(s.vwant || 0).toFixed(3), seeking: s.vel ? s.vel.seeking : null, paused: s.vel ? s.vel.paused : null, live: !!s.vlive, poster: !!s.pmap, blocked: !!s.vblock, fail: !!s.vfail, netErr: !!s.vneterr, onScreen: onScreen.has(s) })),
     }),
   });
 
