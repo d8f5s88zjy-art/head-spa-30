@@ -5,8 +5,8 @@
 ### Business truth
 - [ ] 17 services remain the existing verified set.
 - [ ] Prices and durations are unchanged unless explicitly approved from source data.
-- [ ] Booking stays on `https://booqme.app/sk/rezervacia/barbershop-30`.
-- [ ] Voucher shop stays on `https://booqme.app/sk/eshop/barbershop-30`.
+- [ ] Booking stays on `https://booqme.app/sk/rezervacia/salon-30-head-spa`.
+- [ ] Voucher shop stays on `https://booqme.app/sk/eshop/salon-30-head-spa`.
 - [ ] Phone, email, address, hours and schema.org remain aligned with current production.
 - [ ] No fake reviews, staff profiles, awards, claims or availability.
 
