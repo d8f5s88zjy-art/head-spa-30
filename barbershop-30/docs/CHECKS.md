@@ -171,6 +171,14 @@ Po úprave (film.js, style.css, stills.py):
 - záloha berie ten istý stupeň ako film (telefón `vstup-m-1086`, počítač `vstup-2172`);
 - `uvod-shot.mjs` (desktop + mobil), `koliesko-test.mjs`, `prechod-shot.mjs --only=mobile`,
   `app-smoke.mjs`: všetko prešlo.
+Naživo (af5ef46, Pages): `uvod-meranie.mjs --url=…`: bez čakania pri dverách pri rýchlej aj pomalej
+sieti, dpr 2 celý prológ; zhoda zálohy s filmom rovnaká ako lokálne (do 7 px, mierka 0,98–0,99).
+Lighthouse z verejnej adresy ako v skorších záznamoch (`?uvod=off`, headless): mobil 100 (LCP 1,6 s,
+predtým 2,4–3,3 s – záloha berie na telefóne stupeň 1086 ako film; TBT 0, CLS 0), desktop 100 (LCP
+0,6 s, TBT 0, CLS 0). Predvolená adresa s prológom sa v headless Lighthouse (softvérové kreslenie,
+snímka filmu trvá 1,7 s) merať nedá: TBT desiatky sekúnd je artefakt laboratória, rovnaký aj pred
+touto úpravou (lokálne b878ff0: 41 bodov, TBT 40,7 s; teraz 38 bodov, TBT 55,6 s), na telefóne
+s grafikou sa netýka.
 
 ## 5. Čo ostáva overiť naživo
 
