@@ -13,7 +13,8 @@
 //  6. videá: hrá najviac jedno; hrá len keď je viditeľné; po odscrollovaní sa pozastaví; pri motion=off sa nič nesťahuje
 //  7. bez WebGL (chromium --disable-gpu --disable-3d-apis): film nejde (bez world alebo world-off), zálohy ostávajú, stránka použiteľná
 //     softvérové kreslenie bez ?film=on: film sa po prvom vykreslení vypne (world-frame), CLS 0, rámovanie zálohy ostáva
-//  8. šírky 375 / 390 / 430 px: žiadne vodorovné pretekanie (scrollWidth <= innerWidth)
+//  8. šírky 375 / 390 / 430 px: žiadne vodorovné pretekanie (scrollWidth <= innerWidth), aj pri páse tímu a galérie
+//     po nástupe kariet a bez app.js (412 px, telefón stránku neoddiali)
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -287,8 +288,11 @@ try {
       await sleep(400);
       const h = await page.evaluate(() => document.documentElement.scrollHeight);
       let overflow = false, where = '';
-      for (const y of [0, h * 0.25, h * 0.5, h * 0.75, h]) {
+      // aj pri páse tímu a galérie po nástupe kariet (is-in, karta už bez posunu)
+      const strips = await page.evaluate(() => ['.team-grid', '.gallery-grid'].map((q) => { const el = document.querySelector(q); return el ? el.getBoundingClientRect().top + scrollY - innerHeight * 0.3 : 0; }));
+      for (const y of [0, h * 0.25, h * 0.5, h * 0.75, h, ...strips]) {
         await scrollTo(page, y);
+        if (strips.includes(y)) await sleep(900);
         const r = await page.evaluate(() => {
           const wide = [...document.querySelectorAll('body *')].filter((el) => { const b = el.getBoundingClientRect(); return b.width > 0 && b.right > innerWidth + 1 && getComputedStyle(el).position !== 'fixed'; }).slice(0, 2).map((el) => el.className || el.tagName);
           return { sw: document.documentElement.scrollWidth, iw: innerWidth, wide };
@@ -296,6 +300,17 @@ try {
         if (r.sw > r.iw) { overflow = true; where = `${r.sw}>${r.iw} ${r.wide.join(',')}`; break; }
       }
       ok(!overflow, `[${w} px] žiadne vodorovné pretekanie`, where);
+      await ctx.close();
+    }
+    // bez skriptov (kým app.js nedobehne, aj pri jeho zlyhaní): šírka okna ostáva šírkou telefónu
+    {
+      const ctx = await browser.newContext({ viewport: { width: 412, height: 823 }, deviceScaleFactor: 1.75, isMobile: true, hasTouch: true });
+      const page = await ctx.newPage();
+      await page.route(/assets\/(app|film)\.js/, (r) => r.abort());
+      await page.goto(`${base}/index.html`, { waitUntil: 'load', timeout: 60000 });
+      await sleep(500);
+      const r = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: innerWidth }));
+      ok(r.iw === 412 && r.sw <= r.iw, '[412 px bez app.js] žiadne vodorovné pretekanie, telefón stránku neoddiali', JSON.stringify(r));
       await ctx.close();
     }
     await browser.close();

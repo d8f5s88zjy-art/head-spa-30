@@ -478,7 +478,8 @@ html.world:not(.world-off) .film-still img, html.world-frame .film-still img {
   position: absolute; max-width: none;
   width: var(--pw); height: var(--ph);
   left: calc(50vw - var(--pw) / 2 - var(--ex)); top: calc(50vh - var(--ph) / 2 + var(--ey));
-  object-fit: fill; transform: none;
+  /* rámik má pomer strán fotky, cover tu kreslí to isté ako fill a pri zaokrúhlení nikdy nedeformuje */
+  object-fit: cover; transform: none;
 }
 /* s filmom má záloha aj rovnakú vinetáciu ako film (len radiálnu, 0,34 v rohoch), aby sa pri prelínaní nerozjasnila */
 html.world:not(.world-off) .film-still::after, html.world-frame .film-still::after {
@@ -1256,9 +1257,12 @@ html[data-motion="off"] .btn-primary::after, html[data-motion="off"] .beam > .be
 @media (max-width: 720px) { .team-video { display: none; } }
 
 /* telefón: tím a galéria ako vodorovný pás, ktorý sa posúva prstom (kratšia stránka, ako v aplikácii);
-   prvá karta je zarovnaná s textom, ďalšia vykukuje sprava, aby bolo jasné, že pás pokračuje */
+   prvá karta je zarovnaná s textom, ďalšia vykukuje sprava, aby bolo jasné, že pás pokračuje.
+   position: relative drží v páse aj absolútne umiestnené prvky (skryté popisky .visually-hidden),
+   inak by z neho unikli a stránku roztiahli do šírky (telefón by ju oddialil) */
 @media (max-width: 640px) {
   .team-grid, .gallery-grid {
+    position: relative;
     display: grid; grid-auto-flow: column; grid-template-columns: none; grid-template-rows: none;
     grid-auto-columns: 64%; gap: var(--s3);
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
