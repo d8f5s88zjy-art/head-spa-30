@@ -106,7 +106,9 @@ try {
       const first = document.querySelector('.film-shot .film-still img');
       return {
         count: shots.length,
-        allTall: shots.every((s) => s.getBoundingClientRect().height >= innerHeight - 1),
+        // výšky kotiev (kratšia cesta 2026‑10‑11): úvod celé okno, karta bez pásu 0,7 okna, karta pred pásom 1,6 okna
+        allTall: shots.every((s) => { const h = s.getBoundingClientRect().height / innerHeight, long = s.classList.contains('title-long');
+          return s.hasAttribute('data-pro') ? h >= 0.99 : long ? h >= 1.59 && h <= 1.61 : h >= 0.69 && h <= 0.71; }),
         allHaveStill: shots.every((s) => s.querySelector('picture.film-still img[width][height][alt]')),
         allHaveMeta: shots.every((s) => s.dataset.shot && /^[\d.]+,[\d.]+$/.test(s.dataset.f || '') && /^(in|right|left|rise|down|near)$/.test(s.dataset.mv || '')),
         firstHigh: first?.getAttribute('fetchpriority') === 'high' && first?.getAttribute('loading') !== 'lazy',
@@ -116,7 +118,7 @@ try {
       };
     });
     ok(stills.count === 9 && stills.allHaveStill && stills.allHaveMeta, `[${label}] 9 kotiev .film-shot s data-shot/f/mv a zálohou`, JSON.stringify({ count: stills.count, still: stills.allHaveStill, meta: stills.allHaveMeta }));
-    ok(stills.allTall, `[${label}] každá kotva má aspoň výšku okna`);
+    ok(stills.allTall, `[${label}] výšky kotiev: úvod 1, karta 0,7, karta pred pásom 1,6 okna`);
     ok(stills.firstHigh && stills.lazyRest, `[${label}] prvá záloha fetchpriority=high, ostatné lazy`);
     ok(stills.worldIn || stills.firstVisible, `[${label}] prvá záloha je viditeľná a načítaná (alebo beží film)`, JSON.stringify(stills));
 

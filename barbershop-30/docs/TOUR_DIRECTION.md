@@ -139,7 +139,10 @@ Majiteľ 2026‑10‑11: úvod bol dlhý a cesta k obsahu tiež; káva sa nepod�
 Preto 9 kariet namiesto 14: vypadli recepcia („Najprv káva“), samostatná sála („Osem kresiel“, ide do riadku
 karty Poď ďalej), kreslo pri okne („Sadni si“), Ultra inclusive („Dopraj si všetko“, ostáva v cenníku) a zadná
 miestnosť (spojená s čakárňou, kde je káva). Na telefóne je tím na 6. obrazovke namiesto 11., cenník asi na 9.
-namiesto 14. Prológ: chôdza 1,7 s, vstup 1,3 s, pred podnikom sa čaká na ďalší záber najviac 1,5 s.
+namiesto 14. Prológ: chôdza 1,3 s, vstup 1,0 s, pred podnikom sa čaká na ďalší záber najviac 1,5 s.
+Ďalšie skrátenie (majiteľ: úvod pri skrolovaní trval dlho): so skriptom má karta bez pásu 70 % výšky okna
+skrolu a karta pred pásom 1,6 okna (predtým 1 a 2); kamera dobieha skrol rýchlejšie (pružina w0 6,5, asi 0,7 s
+namiesto 1,1 s). Telefón: tím na 4,7. obrazovke, cenník 7,3, kontakt 16,5, celá stránka 18,7 obrazovky.
 Chôdza kamery (Poď ďalej, Povedz, ako to chceš) je video rozložené na fotky po 0,1 s (majiteľ 2026‑10‑11):
 skrol vyberá dve susedné snímky a film ich prelína pri každej snímke displeja (60 až 240 Hz), v pokoji sa
 dorovná na celú ostrú snímku. Pretáčanie videa skrolom bolo na telefóne trhané a pri zastavení obraz stál.

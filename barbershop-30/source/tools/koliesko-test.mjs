@@ -30,7 +30,8 @@ await page.waitForTimeout(500);                              // film berie kolie
 console.log('scrollY po návrate hore:', await page.evaluate(() => window.scrollY));
 await page.mouse.wheel(0, -100);
 try { await page.waitForFunction(() => window.BS30_FILM.state.leaving || window.BS30_FILM.state.outside, null, { timeout: 8000 }); console.log('OK   koliesko nahor na vrchu: kamera ide von'); } catch { console.log('FAIL koliesko nahor na vrchu nevyviedlo von', JSON.stringify(await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: s.S, outside: s.outside, leaving: s.leaving, pro: s.pro }; }))); }
-try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 8000 }); } catch {}
+// von na ulicu treba znova načítať fasádu: pri softvérovom kreslení aj viac než 8 s
+try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 25000 }); } catch {}
 await page.mouse.wheel(0, 100);
 try { await page.waitForFunction(() => window.BS30_FILM.state.pro, null, { timeout: 5000 }); console.log('OK   koliesko nadol z ulice: prológ beží'); } catch { console.log('FAIL koliesko nadol z ulice nespustilo prológ'); }
 try { await page.waitForFunction(() => !window.BS30_FILM.state.pro && Math.abs(window.BS30_FILM.state.S - 1) < 0.05, null, { timeout: 15000 }); console.log('OK   prológ dobehol na rohožku (S≈1), scrollY', await page.evaluate(() => window.scrollY)); } catch { console.log('FAIL prológ nedobehol', JSON.stringify(await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: s.S, T: s.T, pro: s.pro }; }))); }

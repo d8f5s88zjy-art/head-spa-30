@@ -960,6 +960,11 @@ html[data-motion="off"] .board-hero { animation: none; }
 /* za kartou ide nepriehľadný pás (tím, cenník, galéria, kontakt): kotva má dve výšky okna, aby bola karta
    celú obrazovku voľná a pás ju zakryl až potom (app.js aj film.js počítajú voľnú dĺžku = výška − okno) */
 .film-shot.is-title.title-long { min-height: 200vh; min-height: 200svh; }
+/* kratšia cesta (majiteľ 2026‑10‑11: úvod pri skrolovaní trval dlho): so skriptom (karty sú pripnuté a zábery
+   stoja cez celé okno) má karta bez pásu 70 % výšky okna skrolu a karta pred pásom 1,6 okna (voľných 0,6);
+   prvá karta (úvod) ostáva na celé okno. Bez skriptu ostávajú plné výšky. */
+html.karty .film-shot.is-title:not(.title-long):not([data-pro]) { min-height: 70vh; min-height: 70svh; }
+html.karty .film-shot.is-title.title-long { min-height: 160vh; min-height: 160svh; }
 
 /* pripnutie: nulová výška, preto drží od horného po spodný okraj kotvy; rám s textom má výšku okna */
 .title-pin {

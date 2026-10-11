@@ -1227,7 +1227,7 @@
       else { S = 0; V = 0; }
     } else {
       // kriticky tlmená pružina: plynulé rozbehnutie aj dobehnutie, žiadne trhnutie pri rýchlom skrole
-      const w0 = 4.2;                                          // ťažšia kamera: zárezy kolieska sa nestratia, ale zlejú do jedného pohybu
+      const w0 = 6.5;                                          // kamera dobehne skrol asi za 0,7 s (predtým 4,2 = 1,1 s, pôsobilo pomaly); zárezy kolieska sa stále zlejú
       V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
       if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
       // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
@@ -1276,8 +1276,8 @@
      čas -> poloha S v ceste: 0 = záber prológu (fasáda), 1 = záber úvodu. Najprv chôdza k dverám
      (S 0 -> 0,35, pomalý rozbeh aj dobeh), potom cez šero dnu (prelínanie je medzi 0,35 a 0,65) a
      dojazd na kotvu úvodu. Kým nie je záber úvodu načítaný, kamera pri dverách počká (najviac 4 s). */
-  // kratší úvod (majiteľ 2026‑10‑11: úvod bol dlhý): chôdza 1,7 s a vstup 1,3 s na telefóne
-  const proMs = () => ({ t0: 0, walk: phone ? 1700 : 1500, into: phone ? 1300 : 1100, wait: 0 });
+  // kratší úvod (majiteľ 2026‑10‑11: úvod bol dlhý): chôdza 1,3 s a vstup 1,0 s na telefóne
+  const proMs = () => ({ t0: 0, walk: phone ? 1300 : 1100, into: phone ? 1000 : 900, wait: 0 });
   let pro = PRO && proArmed ? proMs() : null;
   /* návrat na otváraciu scénu (rozhodnutie majiteľa): z vrchu stránky sa dá vyjsť von na ulicu
      (tlačidlo „Späť na ulicu“, potiahnutie nadol na vrchu, koliesko nahor, šípka hore) – kamera prejde
