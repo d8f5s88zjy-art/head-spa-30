@@ -66,10 +66,15 @@ Fotky sa netónujú; len vinetácia a jeden jednotný **prechod cez priestor** m
 
 ## Brána filmu
 
-Film beží len s grafickou kartou: hlavička aj film.js skúšajú WebGL2 s `failIfMajorPerformanceCaveat`
-a meno vykresľovača (SwiftShader, llvmpipe, software → pokojná verzia, film by sa tam trhal). Platí to aj pre
-Lighthouse a PageSpeed Insights, ktoré kreslia softvérovo: merajú pokojnú verziu, ktorú dostane každé také
-zariadenie. `?film=on` film povolí aj pri softvérovom kreslení (všetky testy v `source/tools/` ho pridávajú).
+Film beží len s grafickou kartou. Hlavička rozhoduje lacno, bez WebGL kontextu (WebGL2 v prehliadači, pohyb,
+šetrenie dát, výška okna, pamäť a jadrá): kontext pred prvým obrazom by štartoval grafiku a prvý obraz by prišiel
+asi o sekundu neskôr (Lighthouse telefón: FCP 1,5 s namiesto 0,5 s). Grafickú kartu overí film.js až po načítaní
+a prvom vykreslení: WebGL2 s `failIfMajorPerformanceCaveat` a meno vykresľovača (SwiftShader, llvmpipe, software →
+pokojná verzia, film by sa tam trhal). Pri takom neskorom vypnutí dostane `<html>` triedu `world-frame`: záloha si
+nechá rámovanie prvého snímku filmu, takže nič neposkočí (CLS 0). Platí to aj pre Lighthouse a PageSpeed Insights,
+ktoré kreslia softvérovo: merajú pokojnú verziu, ktorú dostane každé také zariadenie. Pohyb návštevníka počas
+načítania si film zapamätá, takže film bez prológu sa po ňom rozbehne aj vtedy. `?film=on` overenie grafiky
+vynechá a film pustí aj pri softvérovom kreslení (všetky testy v `source/tools/` ho pridávajú).
 
 ## Úvod ako film (prológ): z ulice cez dvere dnu
 

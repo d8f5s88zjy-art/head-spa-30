@@ -26,7 +26,7 @@ console.log(smooth ? 'OK   koliesko: stránka dobieha plynulo' : 'FAIL koliesko:
 try { await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 40000 }); } catch { console.log('film sa nerozbehol'); }
 await page.mouse.wheel(0, -600);
 try { await page.waitForFunction(() => window.scrollY === 0, null, { timeout: 15000 }); } catch { console.log('FAIL stránka sa nevrátila na vrch'); }
-await page.waitForTimeout(300);
+await page.waitForTimeout(500);                              // film berie koliesko nahor až po 350 ms pokoja na vrchu (atTopSettled)
 console.log('scrollY po návrate hore:', await page.evaluate(() => window.scrollY));
 await page.mouse.wheel(0, -100);
 try { await page.waitForFunction(() => window.BS30_FILM.state.leaving || window.BS30_FILM.state.outside, null, { timeout: 8000 }); console.log('OK   koliesko nahor na vrchu: kamera ide von'); } catch { console.log('FAIL koliesko nahor na vrchu nevyviedlo von', JSON.stringify(await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: s.S, outside: s.outside, leaving: s.leaving, pro: s.pro }; }))); }

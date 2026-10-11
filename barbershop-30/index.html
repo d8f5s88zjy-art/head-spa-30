@@ -7,12 +7,13 @@
   <meta name="description" content="Barbershop 30 na Mostnej 30 v Nitre: pánske strihy, úprava brady, holenie britvou a balíčky. Tím desiatich barberov, 8 kresiel, recepcia a káva zdarma. Rezervuj si termín online 24/7.">
   <meta name="theme-color" content="#0E0D0C">
   <meta name="color-scheme" content="dark">
-  <!-- Brána filmu (assets/film.js): trieda world len pri WebGL2 s grafickou kartou (nie softvérové kreslenie,
-       kde by sa film trhal), bez obmedzenia pohybu a šetrenia dát, pri výške okna nad 500 px a aspoň 4 GB pamäte
-       a 4 jadrách. Bez triedy ostáva pokojná verzia (statické zábery s jemným prejazdom). ?film=off alebo
-       ?motion=off film vypne, ?film=on ho povolí aj pri softvérovom kreslení (testy v prehliadači bez grafiky). -->
+  <!-- Brána filmu (assets/film.js): trieda world pri WebGL2, bez obmedzenia pohybu a šetrenia dát, pri výške okna
+       nad 500 px a aspoň 4 GB pamäte a 4 jadrách. WebGL kontext sa tu nevytvára (pred prvým obrazom by prehliadač
+       štartoval grafiku); grafickú kartu overí film.js po prvom vykreslení a pri softvérovom kreslení sa vypne
+       (pokojná verzia, statické zábery). ?film=off alebo ?motion=off film vypne, ?film=on vynechá overenie
+       grafiky (testy v prehliadači bez grafiky). -->
   <!-- karty: titulné karty a zábery stoja cez celé okno (P11 v style.css); bez skriptu ide záloha bežne so stránkou -->
-  <script>(function(h){h.classList.add('karty');try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}var o=/[?&]film=on\b/.test(location.search),c=document.createElement('canvas'),g=c.getContext('webgl2',{failIfMajorPerformanceCaveat:!o})||(o?c.getContext('webgl2'):null),ri=g&&!o&&g.getExtension('WEBGL_debug_renderer_info'),sw=!!ri&&/swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL)||'');if(g&&!sw&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');var x=g&&g.getExtension('WEBGL_lose_context');if(x)x.loseContext();}catch(e){}
+  <script>(function(h){h.classList.add('karty');try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');}catch(e){}
   /* úvod ako film (prológ, assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte;
      ?uvod=znova ho pustí aj opakovane, ?uvod=off ho vynechá (ladenie, merania). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
   try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&!/[?&]uvod=off\b/.test(location.search)&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}

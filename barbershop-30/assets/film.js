@@ -54,31 +54,46 @@
   const quit = () => { root.classList.add('world-off'); root.classList.remove('pro', 'outside'); readyDone(false); };
 
   /* ---------- či sa film vôbec použije ----------
-     ideálne to rozhodne už skript v hlavičke stránky (trieda world), aby stránka mohla štýly
-     prispôsobiť pred prvým vykreslením; keď to neurobil, rozhodne sa tu podľa rovnakých pravidiel */
+     lacné podmienky rozhodne už skript v hlavičke stránky (trieda world), aby stránka mohla štýly
+     prispôsobiť pred prvým vykreslením; keď to neurobil, rozhodne sa tu podľa rovnakých pravidiel.
+     Grafickú kartu overí film až po prvom vykreslení (nižšie). */
+  const filmOn = /[?&]film=on\b/.test(location.search);
   if (root.classList.contains('world-off')) return;
   if (!force && !root.classList.contains('world')) {
-    let ok = false;
-    try {
-      // softvérové kreslenie (bez grafickej karty) dá pokojnú verziu, film by sa tam trhal; ?film=on ho vynúti (testy)
-      const on = /[?&]film=on\b/.test(location.search), c = d.createElement('canvas');
-      const g = c.getContext('webgl2', { failIfMajorPerformanceCaveat: !on }) || (on ? c.getContext('webgl2') : null);
-      const ri = g && !on && g.getExtension('WEBGL_debug_renderer_info');
-      const sw = !!ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL) || '');
-      ok = !!g && !sw && !matchMedia('(prefers-reduced-motion: reduce)').matches
-        && !(navigator.connection && navigator.connection.saveData)
-        && !matchMedia('(max-height: 500px)').matches
-        && (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
-      const x = g && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
-    } catch (e) { ok = false; }
+    const ok = 'WebGL2RenderingContext' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches
+      && !(navigator.connection && navigator.connection.saveData)
+      && !matchMedia('(max-height: 500px)').matches
+      && (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
     if (!ok) { quit(); return; }
     root.classList.add('world');
   } else if (force) root.classList.add('world');
+  // pohyb návštevníka sa zapamätá už od začiatku: film bez prológu čaká naň (nižšie) a pohyb počas
+  // načítania alebo overenia grafiky by sa inak stratil
+  const INPUTS = ['pointerdown', 'pointermove', 'touchstart', 'wheel', 'scroll', 'keydown'];
+  let movedEarly = false;
+  const markMove = () => { movedEarly = true; INPUTS.forEach((e) => removeEventListener(e, markMove)); };
+  INPUTS.forEach((e) => addEventListener(e, markMove, { passive: true }));
 
   // adresa tohto skriptu (aj keď je načítaný ako modul, kde currentScript chýba): od nej sa odvíja vendor/ a img/film/
   const me = d.currentScript || d.querySelector('script[src$="film.js"],script[src*="film.js?"]');
   const here = (me && me.src) || location.href;
   if (d.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
+  /* grafická karta: WebGL kontext vznikne až po prvom vykreslení stránky (pred ním by prehliadač štartoval
+     grafiku a prvý obraz by prišiel o sekundu neskôr). Softvérové kreslenie (SwiftShader, llvmpipe) dá pokojnú
+     verziu, film by sa tam trhal; záloha si nechá rámovanie prvého snímku filmu (world-frame), aby nič
+     neposkočilo. ?film=on overenie vynechá a pri softvérovom kreslení film pustí (testy v prehliadači bez grafiky). */
+  if (!force) {
+    await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+    let gpu = false;
+    try {
+      const c = d.createElement('canvas');
+      const g = c.getContext('webgl2', { failIfMajorPerformanceCaveat: !filmOn }) || (filmOn ? c.getContext('webgl2') : null);
+      const ri = g && !filmOn && g.getExtension('WEBGL_debug_renderer_info');
+      gpu = !!g && !(ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL) || ''));
+      const x = g && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
+    } catch (e) { gpu = false; }
+    if (!gpu) { root.classList.add('world-frame'); quit(); return; }
+  }
   // prológ (úvod ako film) len keď návštevník naozaj stojí na začiatku stránky: obnovený scroll
   // uprostred stránky alebo skrytá karta ho zrušia a web sa správa ako bez neho
   const proEl = d.querySelector('.film-shot[data-pro]');
@@ -93,11 +108,10 @@
   // S prológom sa nečaká: knižnica aj prvé dva zábery idú hneď po načítaní stránky (po jej prvom obraze).
   const src = new URL('vendor/three.module.min.js', here).href;
   const early = () => { fetch(src, { priority: 'low' }).catch(() => {}); };
-  const INPUTS = ['pointerdown', 'pointermove', 'touchstart', 'wheel', 'scroll', 'keydown'];
   // videá vo filme sa sťahujú až po skutočnom pohybe návštevníka (meranie stránky bez pohybu ich nestiahne)
   let userMoved = force;
   if (!force && !proArmed) userMoved = true;                  // film bez prológu štartuje až po pohybe (nižšie)
-  if (!force && !proArmed) await new Promise((r) => {
+  if (!force && !proArmed && !movedEarly) await new Promise((r) => {
     let t = 0;
     const go = () => { clearTimeout(t); INPUTS.forEach((e) => removeEventListener(e, go)); r(); };
     INPUTS.forEach((e) => addEventListener(e, go, { passive: true }));

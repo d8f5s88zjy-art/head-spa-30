@@ -200,6 +200,10 @@ o Magic UI (drobné pohyblivé detaily) a o štýloch animácií (kinetická typ
 - Pohyblivé detaily: lesk na hlavnom tlačidle, bežiaci pás služieb, kroky strihu, tabuľa dnešných hodín
   (Europe/Bratislava), svetlo po okraji kontaktnej karty, tím a galéria ako pás posúvaný prstom.
 - Brána filmu: softvérové kreslenie dá pokojnú verziu (aj Lighthouse a PageSpeed Insights); testy `?film=on`.
+  Grafiku overuje film.js až po prvom vykreslení (hlavička bez WebGL kontextu, ten oneskoroval prvý obraz
+  telefónu o 1 s); pri neskorom vypnutí trieda `world-frame` drží rámovanie zálohy. `app-smoke.mjs` to kontroluje
+  bez `?film=on` (desktop aj telefón: world-frame + world-off, CLS do 0,0001, záloha s presahom).
+  `koliesko-test.mjs` čaká na vrchu 500 ms (film berie koliesko nahor až po 350 ms pokoja na vrchu).
 Overené lokálne (headless): `app-smoke.mjs` všetko prešlo; `uvod-shot.mjs` desktop aj mobil (prológ,
 von a dnu, druhá návšteva, `?film=off`); `koliesko-test.mjs` OK; `uvod-meranie.mjs` bez čakania pri
 dverách, dpr stále; `uvod-zhoda.py` posun do 7 px, mierka 0,98–0,99; `strih-shot.mjs` všetkých 14 prechodov

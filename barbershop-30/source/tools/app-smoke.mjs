@@ -11,7 +11,8 @@
 //  4. ?motion=off a prefers-reduced-motion: data-motion=off, __renderDone=true, dosky viditeľné, žiadne video, bez three.js
 //  5. mobilné menu (aria-expanded, Esc), lightbox (otvorenie, šípky, Esc, návrat fokusu), mobilné CTA skryté v poslednej sekcii
 //  6. videá: hrá najviac jedno; hrá len keď je viditeľné; po odscrollovaní sa pozastaví; pri motion=off sa nič nesťahuje
-//  7. bez WebGL (chromium --disable-gpu --disable-3d-apis): html bez triedy world, zálohy ostávajú, stránka použiteľná
+//  7. bez WebGL (chromium --disable-gpu --disable-3d-apis): film nejde (bez world alebo world-off), zálohy ostávajú, stránka použiteľná
+//     softvérové kreslenie bez ?film=on: film sa po prvom vykreslení vypne (world-frame), CLS 0, rámovanie zálohy ostáva
 //  8. šírky 375 / 390 / 430 px: žiadne vodorovné pretekanie (scrollWidth <= innerWidth)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -34,7 +35,7 @@ const base = srv.origin;
 // chýbajúci film.js nie je chyba stránky (modul ešte nemusí existovať)
 const filmNoise = (s) => !FILM_EXISTS && /film\.js/.test(s);
 
-async function openPage(browser, { viewport = { width: 1440, height: 900 }, mobile = false, query = '', reducedMotion = 'no-preference' } = {}) {
+async function openPage(browser, { viewport = { width: 1440, height: 900 }, mobile = false, query = '', reducedMotion = 'no-preference', raw = false } = {}) {
   const ctx = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1, colorScheme: 'dark', reducedMotion });
   const page = await ctx.newPage();
   const problems = [], requests = [];
@@ -44,7 +45,8 @@ async function openPage(browser, { viewport = { width: 1440, height: 900 }, mobi
   page.on('response', (r) => { if (r.status() >= 400 && !filmNoise(r.url())) problems.push(`HTTP ${r.status()}: ${r.url()}`); });
   page.on('request', (r) => requests.push(r.url()));
   // prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
-  const q = /film=off|motion=off/.test(query) ? query : (query ? query + '&' : '?') + 'film=on';
+  // (raw: adresa bez ?film=on, film overí grafiku sám a pri softvérovom kreslení sa vypne)
+  const q = raw || /film=off|motion=off/.test(query) ? query : (query ? query + '&' : '?') + 'film=on';
   await page.goto(`${base}/index.html${q}`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForFunction(() => window.__renderDone !== false, null, { timeout: 60000 });
   await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
@@ -245,8 +247,9 @@ try {
     const { ctx, page, problems } = await openPage(browser, {});
     await sleep(1500);
     const st = await page.evaluate(() => ({ world: document.documentElement.classList.contains('world'), done: window.__renderDone,
+      off: document.documentElement.classList.contains('world-off'), in: document.documentElement.classList.contains('world-in'),
       stillVisible: getComputedStyle(document.querySelector('#uvod .film-still')).opacity, imgW: document.querySelector('#uvod .film-still img').naturalWidth }));
-    ok(!st.world && st.done === true, '[bez WebGL] html bez triedy world, __renderDone', JSON.stringify(st));
+    ok((!st.world || st.off) && !st.in && st.done === true, '[bez WebGL] film nejde (bez world alebo world-off), __renderDone', JSON.stringify(st));
     ok(st.stillVisible === '1' && st.imgW > 0, '[bez WebGL] záloha úvodu je viditeľná a načítaná');
     const L = await layout(page);
     const lastShot = L.shots[L.shots.length - 1];
@@ -254,6 +257,25 @@ try {
     const cta = await page.locator('#rezervacia .title-card .btn-primary').isVisible();
     ok(cta, '[bez WebGL] tlačidlo Rezervovať termín v rezervácii je viditeľné');
     ok(problems.filter((p) => !/WebGL|GPU|webgl/i.test(p)).length === 0, '[bez WebGL] bez chýb okrem správy o WebGL', problems.slice(0, 3).join(' | '));
+    await ctx.close(); await browser.close();
+  }
+
+  /* ------------------------------------------------------------------ softvérové kreslenie bez ?film=on */
+  // brána v hlavičke WebGL nevytvára (rýchly prvý obraz), film overí grafiku po prvom vykreslení a pri
+  // softvérovom kreslení sa vypne s triedou world-frame: záloha si nechá rámovanie, nič neposkočí
+  if (FILM_EXISTS) for (const mobile of [false, true]) {
+    const name = mobile ? 'softvér mobil' : 'softvér desktop';
+    const browser = await chromium.launch(PRESETS[0]);
+    const { ctx, page, problems } = await openPage(browser, mobile ? { viewport: { width: 412, height: 823 }, mobile: true, raw: true } : { raw: true });
+    await page.evaluate(() => { window.__cls = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); });
+    await page.waitForFunction(() => document.documentElement.classList.contains('world-off'), null, { timeout: 10000 }).catch(() => {});
+    await sleep(800);
+    const st = await page.evaluate(() => { const c = document.documentElement.classList, r = document.querySelector('#uvod .film-still img').getBoundingClientRect();
+      return { world: c.contains('world'), frame: c.contains('world-frame'), off: c.contains('world-off'), in: c.contains('world-in'), cls: +window.__cls.toFixed(4), w: Math.round(r.width) }; });
+    ok(st.world && st.frame && st.off && !st.in, `[${name}] film sa po prvom vykreslení vypne (world-frame, world-off)`, JSON.stringify(st));
+    ok(st.cls < 0.01, `[${name}] bez posunu rozloženia (CLS ${st.cls})`);
+    ok(st.w > (mobile ? 412 : 1440), `[${name}] záloha úvodu má rámovanie filmu (presah), šírka ${st.w}`);
+    ok(problems.length === 0, `[${name}] bez chýb`, problems.slice(0, 3).join(' | '));
     await ctx.close(); await browser.close();
   }
 

@@ -465,8 +465,9 @@ html[data-motion="off"] .film-still img { transform: none; }
 /* film pôjde (html.world z hlavičky): záloha má presne rámovanie prvého snímku filmu (presah 1,24 ako
    rovina záberu, bod záujmu, začiatočná vzdialenosť kamery --z0 podľa pohybu záberu), takže prelínanie
    zálohy do filmu nič neposunie ani nepriblíži. Rozmery v jednotkách okna, rovnaký výpočet ako layout()
-   vo film.js; pri zlyhaní (world-off) sa vráti bežné pokrytie okna. */
-html.world:not(.world-off) .film-still img {
+   vo film.js; pri zlyhaní (world-off) sa vráti bežné pokrytie okna, okrem vypnutia až po prvom vykreslení
+   (softvérové kreslenie, world-frame), kde rámovanie ostane, aby obraz neposkočil. */
+html.world:not(.world-off) .film-still img, html.world-frame .film-still img {
   --k: calc(1 / (1 + var(--z0, -0.04)));
   --pw: calc(1.24 * var(--k) * max(100vw, 100vh * var(--pa, 1.5)));
   --ph: calc(var(--pw) / var(--pa, 1.5));
@@ -480,14 +481,14 @@ html.world:not(.world-off) .film-still img {
   object-fit: fill; transform: none;
 }
 /* s filmom má záloha aj rovnakú vinetáciu ako film (len radiálnu, 0,34 v rohoch), aby sa pri prelínaní nerozjasnila */
-html.world:not(.world-off) .film-still::after {
+html.world:not(.world-off) .film-still::after, html.world-frame .film-still::after {
   background: radial-gradient(120% 90% at 50% 50%, rgba(14, 13, 12, 0) 36%, rgba(14, 13, 12, 0.34) 100%);
 }
 /* záber pri svojej kotve je v polovici pohybu (z = -0,04; jemný nájazd -0,005), prológ na začiatku chôdze (0,05) */
 .film-shot[data-mv="near"] .film-still img { --z0: -0.005; }
 .film-still-pro img { --z0: 0.05; }
 @media (max-width: 720px) {
-  html.world:not(.world-off) .film-still img { --pa: var(--pam, 0.5625); --fxn: var(--fmxn, 0.5); --fyn: var(--fmyn, 0.5); }
+  html.world:not(.world-off) .film-still img, html.world-frame .film-still img { --pa: var(--pam, 0.5625); --fxn: var(--fmxn, 0.5); --fyn: var(--fmyn, 0.5); }
 }
 
 /* film beží: zálohy preč, sekcie priehľadné; zlyhanie (world-off) ich nechá navždy */
@@ -1056,7 +1057,7 @@ body::after {
 }
 html.world-in:not(.world-off) body::after { opacity: 1; }
 .film-shot.is-title .film-still::after,
-html.world:not(.world-off) .film-shot.is-title .film-still::after {
+html.world:not(.world-off) .film-shot.is-title .film-still::after, html.world-frame .film-shot.is-title .film-still::after {
   background:
     linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 16%, rgba(var(--ink-rgb), 0) 52%, rgba(var(--ink-rgb), 0.42) 80%, rgba(var(--ink-rgb), 0.62) 100%),
     radial-gradient(120% 90% at 50% 50%, rgba(var(--ink-rgb), 0) 36%, rgba(var(--ink-rgb), 0.34) 100%);
@@ -1118,7 +1119,7 @@ html:not(.karty) .title-pin { position: relative; }
   /* úvod: blok v strede (ako referencia), dole výzva na prehliadku; spodné tlačidlo sa tu ešte neukáže */
   .film-shot.is-title[data-card="center"] .title-frame { align-content: center; padding-bottom: calc(var(--s8) + env(safe-area-inset-bottom, 0px)); }
   .title-frame .scroll-hint { display: flex; bottom: calc(var(--s5) + env(safe-area-inset-bottom, 0px)); }
-  body::after, .film-shot.is-title .film-still::after, html.world:not(.world-off) .film-shot.is-title .film-still::after {
+  body::after, .film-shot.is-title .film-still::after, html.world:not(.world-off) .film-shot.is-title .film-still::after, html.world-frame .film-shot.is-title .film-still::after {
     background: linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 14%, rgba(var(--ink-rgb), 0) 40%, rgba(var(--ink-rgb), 0.5) 70%, rgba(var(--ink-rgb), 0.72) 100%);
   }
 }
@@ -1143,7 +1144,7 @@ html:not(.karty) .title-pin { position: relative; }
 .film-video { position: absolute; top: 0; left: 0; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
 /* záloha kotvy s videom na telefóne: plagát s rovnakým presahom ako film (1,12, nie 1,24) */
 @media (max-width: 720px) {
-  html.world:not(.world-off) .film-shot[data-video] .film-still img { --pw: calc(1.12 * var(--k) * max(100vw, 100vh * var(--pa, 1.5))); --z0: -0.005; }
+  html.world:not(.world-off) .film-shot[data-video] .film-still img, html.world-frame .film-shot[data-video] .film-still img { --pw: calc(1.12 * var(--k) * max(100vw, 100vh * var(--pa, 1.5))); --z0: -0.005; }
 }
 
 /* ==========================================================================
