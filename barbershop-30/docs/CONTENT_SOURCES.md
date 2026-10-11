@@ -19,6 +19,7 @@ Dátum získania všetkých údajov: **2026‑10‑09**, pokiaľ nie je uvedené
 | farbenie, melír, trvalá | https://booqme.app/sk/rezervacia/barbershop30 | samostatná Booqme stránka (pracovníčka Romana); na novom webe len ako odkaz v sekcii služieb |
 | založenie | 2019 („Sme tu pre vás už od roku 2019“) | majiteľ uvádza recepciu „8 rokov“ (= 2018) – **nesúlad, neoverené**; na webe používame „od roku 2019“ |
 | kapacita | 8 kresiel, recepčná, káva a minerálka zdarma, online rezervácie 24/7, strihanie detí | prevzaté z „Prečo práve my?“ na aktuálnom webe |
+| kde sa podáva káva | vzadu, kde ľudia čakajú (čakáreň s kreslami a pumpou Route 66), nie pri recepcii | majiteľ 2026‑10‑11; na webe v karte Čakáreň |
 | Instagram | https://www.instagram.com/barbershop30_nitra/ | |
 | Facebook | https://www.facebook.com/barbershop30nitra/ | |
 | TikTok | nenájdený | |
@@ -42,6 +43,10 @@ webu (`source/team/`). Priezviská ani špecializácie web neuvádza – nevymý
 | team/18.png | Lajko | Barber |
 | team/2.png | Jojo | Barber |
 | team/42.png | Adrian | Barber |
+
+Popisy pod menami (od 2026‑10‑11) sú na želanie majiteľa krátke pochvalné vety o remesle a prístupe,
+nie fakty o osobe: žiadne roky praxe, špecializácie ani ocenenia. Ak majiteľ pošle skutočné údaje
+o jednotlivých barberoch, popisy sa môžu prispôsobiť.
 
 Romana (farbenie/melír/trvalá) je uvedená len na Booqme – na webe ju spomenieme
 iba v odkaze na Booqme, bez portrétu.

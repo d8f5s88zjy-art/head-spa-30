@@ -122,7 +122,7 @@
         </svg>
       </button>
       <nav class="nav" id="nav" aria-label="Hlavná navigácia">
-        <a href="#recepcia">Prehliadka</a>
+        <a href="#vstup-dnu">Prehliadka</a>
         <a href="#sluzby">Služby</a>
         <a href="#tim">Tím</a>
         <a href="#galeria">Galéria</a>
@@ -134,15 +134,13 @@
 
   <nav class="story-line" aria-label="Kapitoly prehliadky">
     <a href="#uvod" data-chapter="1" aria-label="Úvod"></a>
-    <a href="#recepcia" data-chapter="2" aria-label="Recepcia"></a>
-    <a href="#vstup-dnu" data-chapter="3" aria-label="Poď ďalej"></a>
-    <a href="#sala" data-chapter="4" aria-label="Hlavná sála"></a>
-    <a href="#remeslo" data-chapter="5" aria-label="Remeslo"></a>
-    <a href="#zadna" data-chapter="6" aria-label="Zadná miestnosť"></a>
-    <a href="#tim" data-chapter="7" aria-label="Tím"></a>
-    <a href="#sluzby" data-chapter="8" aria-label="Služby a ceny"></a>
-    <a href="#galeria" data-chapter="9" aria-label="Galéria"></a>
-    <a href="#rezervacia" data-chapter="10" aria-label="Rezervácia"></a>
+    <a href="#vstup-dnu" data-chapter="2" aria-label="Poď ďalej"></a>
+    <a href="#remeslo" data-chapter="3" aria-label="Remeslo"></a>
+    <a href="#cakaren" data-chapter="4" aria-label="Čakáreň"></a>
+    <a href="#tim" data-chapter="5" aria-label="Tím"></a>
+    <a href="#sluzby" data-chapter="6" aria-label="Služby a ceny"></a>
+    <a href="#galeria" data-chapter="7" aria-label="Galéria"></a>
+    <a href="#rezervacia" data-chapter="8" aria-label="Rezervácia"></a>
   </nav>
 
   <!-- Filmový canvas (position fixed, z-index 0) vytvára assets/film.js sám; .site je nad ním. -->
@@ -209,40 +207,16 @@
       </div>
     </section>
 
-
     <!-- =================================================================== -->
-    <!-- 2 RECEPCIA                                                            -->
+    <!-- 2 POĎ ĎALEJ – ako „STEP INSIDE“: na telefóne skutočné video (kamera ide sálou), -->
+    <!--   na počítači fotka hlavnej sály                                       -->
     <!-- =================================================================== -->
-    <section class="scene" id="recepcia" data-scene="2" aria-labelledby="h-recepcia">
-      <div class="film-shot is-title" data-card="right" data-shot="recepcia" data-f="0.45,0.55" data-mv="right" data-place="Recepcia a predná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="recepcia-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 45%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.45; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/recepcia-m-1086.avif 1086w, assets/img/film/recepcia-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/recepcia-m-1086.webp 1086w, assets/img/film/recepcia-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/avif" srcset="assets/img/film/recepcia-1086.avif 1086w, assets/img/film/recepcia-1448.avif 1448w, assets/img/film/recepcia-2172.avif 2172w, assets/img/film/recepcia-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <img src="assets/img/film/recepcia-1448.webp" srcset="assets/img/film/recepcia-1086.webp 1086w, assets/img/film/recepcia-1448.webp 1448w, assets/img/film/recepcia-2172.webp 2172w, assets/img/film/recepcia-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Recepcia a predná sála s dreveným pultom, oranžovými lampami, barber pole a sudom">
-        </picture>
-        <div class="title-pin">
-          <div class="title-frame">
-            <div class="title-card">
-              <p class="kicker">Recepcia</p>
-              <h2 class="title kin" id="h-recepcia">Najprv káva.<br> Potom strih.</h2>
-              <p class="title-sub">Pri drevenom pulte ťa privíta recepčná. Káva aj minerálka sú zdarma.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- =================================================================== -->
-    <!-- 3 POĎ ĎALEJ – ako „STEP INSIDE“: na telefóne skutočné video (kamera ide sálou), -->
-    <!--   na počítači film plynulo pokračuje z recepcie do sály (kotva bez vlastného záberu) -->
-    <!-- =================================================================== -->
-    <section class="scene" id="vstup-dnu" data-scene="3" aria-labelledby="h-vstup-dnu">
-      <div class="film-shot is-title" data-card="left" data-desk="skip" data-shot="sala" data-f="0.5,0.55" data-mv="in" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55"
-           data-video="assets/video/vstup-dnu-576" data-video-mode="scroll" data-video-t="0,5" data-video-fps="15" data-video-size="576x1024" data-video-f="0.56,0.5" data-video-poster="assets/video/vstup-dnu-poster-576">
+    <section class="scene" id="vstup-dnu" data-scene="2" aria-labelledby="h-vstup-dnu">
+      <div class="film-shot is-title" data-card="left" data-shot="sala" data-f="0.5,0.55" data-mv="in" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55"
+           data-video="assets/video/vstup-dnu-864" data-video-mode="scroll" data-video-t="0,5" data-video-fps="15" data-video-size="864x1536" data-video-f="0.56,0.5" data-video-poster="assets/video/vstup-dnu-poster-864">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 56%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.56; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/video/vstup-dnu-poster-576.avif 576w" sizes="100vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/video/vstup-dnu-poster-576.webp 576w" sizes="100vw">
+          <source media="(max-width: 720px)" type="image/avif" srcset="assets/video/vstup-dnu-poster-864.avif 864w" sizes="100vw">
+          <source media="(max-width: 720px)" type="image/webp" srcset="assets/video/vstup-dnu-poster-864.webp 864w" sizes="100vw">
           <source type="image/avif" srcset="assets/img/film/sala-1086.avif 1086w, assets/img/film/sala-1448.avif 1448w, assets/img/film/sala-2172.avif 2172w, assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
           <img src="assets/img/film/sala-1448.webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála s barberom pri práci, oranžovými lampami a drevenou podlahou">
         </picture>
@@ -251,7 +225,7 @@
             <div class="title-card">
               <p class="kicker">Prvý krok</p>
               <h2 class="title kin" id="h-vstup-dnu">Poď ďalej.</h2>
-              <p class="title-sub">Drevená podlaha, kreslá a zrkadlá. Mostná ostala za dverami.</p>
+              <p class="title-sub">Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje.</p>
             </div>
           </div>
         </div>
@@ -259,53 +233,11 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- 3 HLAVNÁ SÁLA – rad kresiel → kreslo pri okne                         -->
+    <!-- 3 REMESLO – pracovné miesto (na telefóne video okolo kresla)          -->
     <!-- =================================================================== -->
-    <section class="scene" id="sala" data-scene="4" aria-labelledby="h-sala">
-      <div class="film-shot is-title" data-card="left" data-shot="sala" data-f="0.5,0.55" data-mv="left" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-m-1086.avif 1086w, assets/img/film/sala-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-m-1086.webp 1086w, assets/img/film/sala-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/avif" srcset="assets/img/film/sala-1086.avif 1086w, assets/img/film/sala-1448.avif 1448w, assets/img/film/sala-2172.avif 2172w, assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <img src="assets/img/film/sala-1448.webp" srcset="assets/img/film/sala-1086.webp 1086w, assets/img/film/sala-1448.webp 1448w, assets/img/film/sala-2172.webp 2172w, assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Hlavná sála s radom barberských kresiel, zrkadlami, kruhovými svetlami a barber pole">
-        </picture>
-        <div class="title-pin">
-          <div class="title-frame">
-            <div class="title-card">
-              <p class="kicker">Tri miestnosti</p>
-              <h2 class="title kin" id="h-sala">Osem kresiel.<br> Jedno je tvoje.</h2>
-              <p class="title-sub">Zrkadlá, kruhové svetlá a barber pole. Stačí si vybrať čas.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="film-shot is-title" data-card="right" data-shot="kreslo" data-f="0.58,0.55" data-mv="in" data-place="Kreslo pri okne" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 58%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.58; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-m-1086.avif 1086w, assets/img/film/kreslo-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-m-1086.webp 1086w, assets/img/film/kreslo-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/avif" srcset="assets/img/film/kreslo-1086.avif 1086w, assets/img/film/kreslo-1448.avif 1448w, assets/img/film/kreslo-2172.avif 2172w, assets/img/film/kreslo-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <img src="assets/img/film/kreslo-1448.webp" srcset="assets/img/film/kreslo-1086.webp 1086w, assets/img/film/kreslo-1448.webp 1448w, assets/img/film/kreslo-2172.webp 2172w, assets/img/film/kreslo-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Barberské kreslo s čiernou prešívanou kožou a zlatým rámom pri okne v rannom svetle">
-        </picture>
-        <div class="title-pin">
-          <div class="title-frame">
-            <div class="title-card">
-              <p class="kicker">Kreslo pri okne</p>
-              <h3 class="title kin">Sadni si<br> a vydýchni.</h3>
-              <p class="title-sub">Čierna prešívaná koža, zlatý rám, svetlo z okna. Zvyšok je na nás.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- 4 REMESLO – pracovné miesto, video, detail náradia                    -->
-    <!-- =================================================================== -->
-    <section class="scene" id="remeslo" data-scene="5" aria-labelledby="h-remeslo">
+    <section class="scene" id="remeslo" data-scene="3" aria-labelledby="h-remeslo">
       <div class="film-shot is-title" data-card="left" data-shot="stol" data-f="0.5,0.5" data-mv="rise" data-place="Pracovné miesto" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="stol-m" data-m-size="1152x2048" data-m-tiers="1086,1448" data-fm="0.50,0.52"
-           data-video="assets/video/okolo-kresla-576" data-video-mode="scroll" data-video-t="0,4.3" data-video-fps="15" data-video-size="576x1024" data-video-f="0.5,0.5" data-video-poster="assets/video/okolo-kresla-poster-576">
+           data-video="assets/video/okolo-kresla-864" data-video-mode="scroll" data-video-t="0,4.3" data-video-fps="15" data-video-size="864x1536" data-video-f="0.5,0.5" data-video-poster="assets/video/okolo-kresla-poster-864">
         <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 52%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.52; --pa: 1.4998; --pam: 0.5625">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/stol-m-1086.avif 1086w, assets/img/film/stol-m-1448.avif 1152w" sizes="(max-width: 720px) 93vw, 124vw">
           <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/stol-m-1086.webp 1086w, assets/img/film/stol-m-1448.webp 1152w" sizes="(max-width: 720px) 93vw, 124vw">
@@ -323,48 +255,12 @@
           </div>
         </div>
       </div>
-      <div class="film-shot is-title" data-card="right" data-shot="naradie" data-f="0.5,0.5" data-mv="near" data-place="Pomády, štetka a karafa" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="naradie-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
-        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/naradie-m-1086.avif 1086w, assets/img/film/naradie-m-1448.avif 1229w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/naradie-m-1086.webp 1086w, assets/img/film/naradie-m-1448.webp 1229w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/avif" srcset="assets/img/film/naradie-1086.avif 1086w, assets/img/film/naradie-1448.avif 1448w, assets/img/film/naradie-2172.avif 2172w, assets/img/film/naradie-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <img src="assets/img/film/naradie-1448.webp" srcset="assets/img/film/naradie-1086.webp 1086w, assets/img/film/naradie-1448.webp 1448w, assets/img/film/naradie-2172.webp 2172w, assets/img/film/naradie-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Karafa, pomády a štetka na holenie na pracovnom stole">
-        </picture>
-        <div class="title-pin">
-          <div class="title-frame">
-            <div class="title-card">
-              <p class="kicker">Ultra inclusive</p>
-              <h3 class="title kin">Dopraj si<br> všetko.</h3>
-              <p class="title-sub">Strih, brada, horúci uterák, maska a pohárik whisky. Spolu za 40 €.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- 5 ZADNÁ MIESTNOSŤ → čakáreň                                           -->
+    <!-- 4 ČAKÁREŇ – vzadu, kde sa čaká; tam sa podáva káva (majiteľ 2026‑10‑11) -->
     <!-- =================================================================== -->
-    <section class="scene" id="zadna" data-scene="6" aria-labelledby="h-zadna">
-      <div class="film-shot is-title" data-card="left" data-shot="zadna" data-f="0.5,0.55" data-mv="right" data-place="Zadná miestnosť" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="zadna-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
-        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/zadna-m-1086.avif 1086w, assets/img/film/zadna-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/zadna-m-1086.webp 1086w, assets/img/film/zadna-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/avif" srcset="assets/img/film/zadna-1086.avif 1086w, assets/img/film/zadna-1448.avif 1448w, assets/img/film/zadna-2172.avif 2172w, assets/img/film/zadna-2896.avif 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <source type="image/webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw">
-          <img src="assets/img/film/zadna-1448.webp" srcset="assets/img/film/zadna-1086.webp 1086w, assets/img/film/zadna-1448.webp 1448w, assets/img/film/zadna-2172.webp 2172w, assets/img/film/zadna-2896.webp 2896w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Zadná miestnosť s čiernymi lesklými obkladmi, červeným kreslom, sedačkou a benzínovou pumpou">
-        </picture>
-        <div class="title-pin">
-          <div class="title-frame">
-            <div class="title-card">
-              <p class="kicker">Zadná miestnosť</p>
-              <h2 class="title kin" id="h-zadna">Vzadu je<br> iná nálada.</h2>
-              <p class="title-sub">Čierne obklady, zelený zamat a červené kreslo. A v kúte čaká Route 66.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section class="scene" id="cakaren" data-scene="4" aria-labelledby="h-cakaren">
       <div class="film-shot is-title" data-card="right" data-shot="cakaren" data-f="0.5,0.55" data-mv="in" data-place="Kútik s pumpou Route 66" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="cakaren-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/cakaren-m-1086.avif 1086w, assets/img/film/cakaren-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
@@ -377,8 +273,8 @@
           <div class="title-frame">
             <div class="title-card">
               <p class="kicker">Čakáreň</p>
-              <h3 class="title kin">Route 66<br> na Mostnej.</h3>
-              <p class="title-sub">Retro pumpa a farebný buldog. Kým prídeš na rad, zoznám sa s tímom.</p>
+              <h2 class="title kin" id="h-cakaren">Vzadu ťa<br> čaká káva.</h2>
+              <p class="title-sub">Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.</p>
             </div>
           </div>
         </div>
@@ -386,11 +282,11 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- 6 TÍM – sála v rannom svetle, portréty, video                         -->
+    <!-- 5 TÍM – sála v rannom svetle, portréty, video                         -->
     <!-- =================================================================== -->
-    <section class="scene" id="tim" data-scene="7" aria-labelledby="h-tim">
+    <section class="scene" id="tim" data-scene="5" aria-labelledby="h-tim">
       <div class="film-shot is-title title-long" data-card="left" data-shot="sala-rano" data-f="0.5,0.55" data-mv="left" data-place="Sála v rannom svetle" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-rano-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55"
-           data-video="assets/video/tim-slucka-576" data-video-mode="play" data-video-size="576x1024" data-video-f="0.5,0.5" data-video-poster="assets/video/tim-slucka-poster-576">
+           data-video="assets/video/tim-slucka-864" data-video-mode="play" data-video-size="864x1536" data-video-f="0.5,0.5" data-video-poster="assets/video/tim-slucka-poster-864">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/sala-rano-m-1086.avif 1086w, assets/img/film/sala-rano-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
           <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/sala-rano-m-1086.webp 1086w, assets/img/film/sala-rano-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
@@ -413,7 +309,7 @@
           <div class="band-head grid">
             <div class="band-head-text">
               <p class="eyebrow">Kto ťa ostrihá</p>
-              <p class="lead measure">Mená a roly presne tak, ako ich tím uvádza. Každý z nich je v rezervácii, vyber si toho svojho.</p>
+              <p class="lead measure">Poctivé remeslo, moderný štýl a ľudský prístup. To spája celý tím.</p>
             </div>
             <figure class="video-window team-video">
               <video muted playsinline loop preload="none" data-poster="assets/video/tim-v-akcii-poster-576.webp" width="576" height="1024" aria-hidden="true" tabindex="-1" data-video>
@@ -435,6 +331,7 @@
               <div class="team-body">
                 <h3 class="team-name">Nikolas</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Strih ti pristane, akoby si ho nosil odjakživa.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -449,6 +346,7 @@
               <div class="team-body">
                 <h3 class="team-name">Kristián</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Elegancia bez námahy. Taký je jeho rukopis.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -463,6 +361,7 @@
               <div class="team-body">
                 <h3 class="team-name">Damian</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Pozorne ťa vypočuje. Potom už hovoria len nožnice.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -477,6 +376,7 @@
               <div class="team-body">
                 <h3 class="team-name">Michal</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Zavrieš oči pri horúcom uteráku a otvoríš ich spokojný.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -491,6 +391,7 @@
               <div class="team-body">
                 <h3 class="team-name">Andy</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Každý detail na svojom mieste, aj ten, ktorý vidíš len z profilu.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -505,6 +406,7 @@
               <div class="team-body">
                 <h3 class="team-name">Dominika</h3>
                 <p class="team-role">Barberka</p>
+                <p class="team-bio">Jemná ruka, prísne oko. U nej je hotovo, až keď sedí každý vlas.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -519,6 +421,7 @@
               <div class="team-body">
                 <h3 class="team-name">Kevin</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Pracuje pokojne a čisto. Výsledok ťa poteší aj o týždeň.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -533,6 +436,7 @@
               <div class="team-body">
                 <h3 class="team-name">Lajko</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Ostrá línia na krku, mäkký prechod na bokoch. Remeslo vidno zblízka.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -547,6 +451,7 @@
               <div class="team-body">
                 <h3 class="team-name">Jojo</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Rozhovor alebo ticho, ako ti je milšie. Strih dotiahne tak či tak.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
@@ -561,19 +466,20 @@
               <div class="team-body">
                 <h3 class="team-name">Adrian</h3>
                 <p class="team-role">Barber</p>
+                <p class="team-bio">Dôveru získa skôr, než si sadneš do kresla. Rád sa k nemu vrátiš.</p>
                 <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Rezervovať <span class="visually-hidden">termín</span><span aria-hidden="true">→</span></a>
               </div>
             </li>
           </ul>
-          <p class="small team-note">Farbenie, melír a trvalú robí Romana – <a href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">rezervuješ ich samostatne</a>.</p>
+          <p class="small team-note">Farbenie, melír a trvalú robí Romana. <a href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">Rezervuješ ich samostatne</a>.</p>
         </div>
       </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- 7 SLUŽBY A CENY – kreslo uprostred sály, doska s cenníkom             -->
+    <!-- 6 SLUŽBY A CENY – kreslo uprostred sály, doska s cenníkom             -->
     <!-- =================================================================== -->
-    <section class="scene" id="sluzby" data-scene="8" aria-labelledby="h-sluzby">
+    <section class="scene" id="sluzby" data-scene="6" aria-labelledby="h-sluzby">
       <div class="film-shot is-title title-long" data-card="center" data-shot="kreslo-stred" data-f="0.5,0.55" data-mv="near" data-place="Kreslo uprostred sály" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-stred-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
@@ -733,9 +639,9 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- 8 GALÉRIA – káva pre hostí, detaily, sud                               -->
+    <!-- 7 GALÉRIA – káva pre hostí, detaily, sud                               -->
     <!-- =================================================================== -->
-    <section class="scene" id="galeria" data-scene="9" aria-labelledby="h-galeria">
+    <section class="scene" id="galeria" data-scene="7" aria-labelledby="h-galeria">
       <div class="film-shot is-title title-long" data-card="left" data-shot="kava" data-f="0.5,0.5" data-mv="down" data-place="Káva pre hostí" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kava-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
         <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kava-m-1086.avif 1086w, assets/img/film/kava-m-1448.avif 1229w" sizes="(max-width: 720px) 93vw, 124vw">
@@ -874,9 +780,9 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- 9 REZERVÁCIA – kruh sa uzavrie pri dverách                            -->
+    <!-- 8 REZERVÁCIA – kruh sa uzavrie pri dverách                            -->
     <!-- =================================================================== -->
-    <section class="scene" id="rezervacia" data-scene="10" aria-labelledby="h-rezervacia">
+    <section class="scene" id="rezervacia" data-scene="8" aria-labelledby="h-rezervacia">
       <div class="film-shot is-title title-long" data-card="center" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice" data-size="4096x2731" data-tiers="1086,1448,2172,2896,4096" data-m="vstup-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
         <picture class="film-still" style="--fx: 55%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.55; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
           <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/vstup-m-1086.avif 1086w, assets/img/film/vstup-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">

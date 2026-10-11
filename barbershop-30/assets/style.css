@@ -686,11 +686,13 @@ html.pro:not(.world-off) .scroll-hint { opacity: 0; }
 .team-body { padding: var(--s4) var(--s4) var(--s5); display: flex; flex-direction: column; gap: var(--s1); flex: 1; }
 .team-name { font-size: clamp(1.25rem, 1.6vw, 1.5rem); }
 .team-role { font-size: 0.875rem; color: var(--paper-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+/* krátky popis barbera: kurzíva nadpisového písma ako tichý citát pod menom (žiadne nové písmo, 500i je už načítané) */
+.team-bio { margin-top: var(--s2); font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.0625rem; line-height: 1.4; color: var(--paper-2, #c9beae); text-wrap: pretty; }
 .team-cta { margin-top: auto; padding-top: var(--s3); align-self: flex-start; font-size: 0.9375rem; }
 .team-note { margin-top: var(--s6); }
 .team-note a { color: var(--paper-2); }
 .team-note a:hover { color: var(--lamp-2); }
-@media (max-width: 640px) { .team-body { padding: var(--s3) var(--s3) var(--s4); } .team-cta { font-size: 0.875rem; } }
+@media (max-width: 640px) { .team-body { padding: var(--s3) var(--s3) var(--s4); } .team-cta { font-size: 0.875rem; } .team-bio { font-size: 1rem; } }
 
 /* --------------------------------------------------------------------------
    P5. Služby a ceny – doska s cenníkom nad záberom (tabulárne číslice)

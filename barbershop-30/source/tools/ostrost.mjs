@@ -19,7 +19,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
 const OUT = opt.out ? path.resolve(opt.out) : path.join(ROOT, 'docs', 'screenshots', 'ostrost');
 fs.mkdirSync(OUT, { recursive: true });
-const SHOTS = (opt.shots || 'sala,kreslo,recepcia').split(',');
+const SHOTS = (opt.shots || 'sala,stol,cakaren').split(',');
 const srv = opt.b ? null : await startStaticServer(ROOT);
 const URLS = { a: opt.a, b: opt.b || `${srv.origin}/` };
 const DEV = { mobil: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true }, desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 } };

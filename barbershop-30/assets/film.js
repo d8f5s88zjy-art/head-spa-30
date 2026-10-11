@@ -24,11 +24,11 @@
      kamera dôjde k dverám), cez šero prejde do záberu úvodu a odtiaľ už vedie skrolovanie. Prológ sa
      dá kedykoľvek preskočiť skrolovaním; bez triedy pro sa nič z toho nedeje.
    - data-size="ŠxV" na kotve: rozmery fotky záberu, keď ich nedáva <img> (viac záloh v kotve).
-   - skutočné video ako záber (data-video="assets/video/meno-576", bez prípony; súbory .mp4 a .webm):
+   - skutočné video ako záber (data-video="assets/video/meno-864", bez prípony; súbory .mp4 a .webm):
      data-video-mode="scroll" (čas videa vedie skrolovanie, súbor má každú snímku kľúčovú) alebo "play"
      (tichá slučka v čase, len kým je záber na obrazovke), data-video-t="od,do" (sekundy súboru na celý
-     pohyb záberu), data-video-size="576x1024", data-video-f="x,y" (bod záujmu vo videu),
-     data-video-poster="assets/video/meno-poster-576" (+ .avif/.webp/.jpg; ukáže sa, kým video nemá
+     pohyb záberu), data-video-size="864x1536", data-video-f="x,y" (bod záujmu vo videu),
+     data-video-poster="assets/video/meno-poster-864" (+ .avif/.webp/.jpg; ukáže sa, kým video nemá
      snímku, a ostane, keď video nejde), data-video-fps (snímky za sekundu súboru, pre posun po snímkach),
      data-video-on="phone" (predvolené; na počítači je kotva bežný záber fotky z data-shot) alebo "all".
      Video nemá hĺbkovú mapu (rovina bez posunu popredia), prelína sa s fotkami tým istým prechodom.
@@ -183,14 +183,10 @@
   const CUT_DIRS = { right: [1, 0], left: [-1, 0], rise: [0, 1], up: [0, 1], down: [0, -1], in: [0, 0] };
   const CUTS = {
     'vstup>rohozka': 'najazd a:0.76,0.53 ma:0.50,0.53',                         // prológ: cez dvere dnu (von je to isté odzadu)
-    'rohozka>recepcia': 'pohyb in',                                            // krok dnu pokračuje až k pultu
-    'recepcia>sala': 'svih right',                                             // od pultu švihom k radu kresiel (telefón: do videa Poď ďalej)
-    'sala>sala': 'pohyb in',                                                   // len telefón: z videa Poď ďalej krok dopredu do sály
-    'sala>kreslo': 'popredie left a:0.27,0.55 m:najazd ma:0.33,0.55 mb:0.5,0.45', // za operadlom kresla k oknu (telefón: z kresla do kresla)
-    'kreslo>stol': 'pohyb rise',                                               // zdvih pokračuje k pracovnému miestu
-    'stol>naradie': 'najazd a:0.305,0.57 b:0.30,0.50 ma:0.5,0.45 mb:0.44,0.45', // do karafy na stole a z nej na jej detail (telefón: zo stredu videa remesla)
-    'naradie>zadna': 'svih right',                                             // z detailu švihom do zadnej miestnosti
-    'zadna>cakaren': 'pohyb right',                                            // prejazd doprava pokračuje k pumpe
+    'rohozka>sala': 'pohyb in',                                                // krok z rohožky dopredu do sály (telefón: do videa Poď ďalej)
+    'sala>stol': 'popredie left a:0.27,0.55 m:prelinanie',                     // za operadlom kresla k pracovnému miestu; telefón: obe videá
+                                                                               // sú jeden súvislý záber (0–5 s a 5–9,3 s), stačí prelínanie
+    'stol>cakaren': 'svih right',                                              // od kresla švihom dozadu do čakárne
     'cakaren>sala-rano': 'popredie right b:0.30,0.62 m:rise mb:0.5,0.78',       // popri operadle do rannej sály
     'sala-rano>kreslo-stred': 'najazd a:0.635,0.56 b:0.5,0.45 ma:0.52,0.45',    // do kresla v sále, z neho na kreslo uprostred
     'kreslo-stred>kava': 'svih down',                                          // švih nadol na stolík s kávou
@@ -244,7 +240,7 @@
     if (!x.video || !(phone || x.videoOn === 'all')) return null;
     return { src: x.video, mode: x.videoMode === 'play' ? 'play' : 'scroll', t: range(x.videoT), poster: x.videoPoster || '', fps: parseFloat(x.videoFps) || 30 };
   };
-  // kotva s data-desk="skip" (Poď ďalej) má vlastný záber len na telefóne (video); na počítači ju film
+  // kotva s data-desk="skip" má vlastný záber len na telefóne (video); na počítači ju film
   // preskočí a plynulo pokračuje zo susedného záberu, text karty sa vymení nad súvislým záberom
   const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].filter((el) => phone || el.dataset.desk !== 'skip').map((el) => {
     const s = shotOf(el, '');
@@ -1137,11 +1133,11 @@
     }
     // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený; chôdza začne až keď je
     // načítaný aj záber úvodu (inak by kamera pri dverách čakala a úvod by nebol jeden plynulý pohyb);
-    // na pomalej sieti sa stojí pred podnikom najviac 6 s, potom sa ide aj tak (proS počká pri dverách)
+    // pred podnikom sa stojí najviac 1,5 s (úvod nemá zdržiavať), potom sa ide aj tak a proS počká pri dverách
     if (pro && !pro.t0 && frameDrawn && PRO && PRO.ready) {
       if (!pro.seen) pro.seen = now;
       const hero = path[1];
-      if ((hero && hero.ready) || now - pro.seen > 6000) pro.t0 = now;
+      if ((hero && hero.ready) || now - pro.seen > 1500) pro.t0 = now;
     }
     if (leaving && !leaving.t0 && frameDrawn && PRO && PRO.ready) leaving.t0 = now;
     // fasáda neprišla (pomalá sieť): odchod aj opakované vojdenie sa po 12 s vzdajú a stránka ide ďalej normálne
@@ -1169,7 +1165,8 @@
      čas -> poloha S v ceste: 0 = záber prológu (fasáda), 1 = záber úvodu. Najprv chôdza k dverám
      (S 0 -> 0,35, pomalý rozbeh aj dobeh), potom cez šero dnu (prelínanie je medzi 0,35 a 0,65) a
      dojazd na kotvu úvodu. Kým nie je záber úvodu načítaný, kamera pri dverách počká (najviac 4 s). */
-  const proMs = () => ({ t0: 0, walk: phone ? 2300 : 2000, into: phone ? 1600 : 1400, wait: 0 });
+  // kratší úvod (majiteľ 2026‑10‑11: úvod bol dlhý): chôdza 1,7 s a vstup 1,3 s na telefóne
+  const proMs = () => ({ t0: 0, walk: phone ? 1700 : 1500, into: phone ? 1300 : 1100, wait: 0 });
   let pro = PRO && proArmed ? proMs() : null;
   /* návrat na otváraciu scénu (rozhodnutie majiteľa): z vrchu stránky sa dá vyjsť von na ulicu
      (tlačidlo „Späť na ulicu“, potiahnutie nadol na vrchu, koliesko nahor, šípka hore) – kamera prejde

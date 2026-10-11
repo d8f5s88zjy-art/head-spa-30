@@ -133,7 +133,13 @@ koliesko nadol, potiahnutie nahor, šípka dole / medzerník, tlačidlo, alebo j
 Rozhranie: `BS30_FILM.uvod.von()`, `BS30_FILM.uvod.znova()`, stav `state.outside`, `state.leaving`.
 Bez filmu (pokojná verzia) tlačidlo nie je.
 
-## Cesta (poradie záberov = poradie sekcií; titulné karty od 2026‑10‑10)
+## Cesta (poradie záberov = poradie sekcií; titulné karty od 2026‑10‑10, skrátená 2026‑10‑11)
+
+Majiteľ 2026‑10‑11: úvod bol dlhý a cesta k obsahu tiež; káva sa nepodáva pri recepcii, ale vzadu, kde sa čaká.
+Preto 9 kariet namiesto 14: vypadli recepcia („Najprv káva“), samostatná sála („Osem kresiel“, ide do riadku
+karty Poď ďalej), kreslo pri okne („Sadni si“), Ultra inclusive („Dopraj si všetko“, ostáva v cenníku) a zadná
+miestnosť (spojená s čakárňou, kde je káva). Na telefóne je tím na 6. obrazovke namiesto 11., cenník asi na 9.
+namiesto 14. Prológ: chôdza 1,7 s, vstup 1,3 s, pred podnikom sa čaká na ďalší záber najviac 1,5 s.
 
 Každá kotva začína titulnou kartou priamo na zábere (nadpisok, nadpis Fraunces 800, jeden riadok, bez
 dosky; style.css P11). Karta je pripnutá, kým kotva prechádza oknom, a mení sa len krytím (app.js `--o`,
@@ -144,15 +150,13 @@ Na telefóne sú tri zábery skutočné videá majiteľa (`data-video`, film.js 
 |---|---|---|---|---|---|
 | 0 | prológ (bez kotvy) | `vstup` fasáda s dverami | – | to isté ako úvod | – |
 | 1 | `#uvod` | `rohozka` | stred | Barbershop 30 · Nitra · „Tvoj strih. *Tvoje miesto.*“ · Za dverami na Mostnej 30 sa strihá od roku 2019. | Rezervovať termín, Zavolať |
-| 2 | `#recepcia` | `recepcia` | vpravo | Recepcia · „Najprv káva. Potom strih.“ · recepčná, káva a minerálka zdarma | – |
-| 3 | `#vstup-dnu` | počítač bez vlastného záberu (`data-desk="skip"`, film ide z recepcie do sály) / telefón **video** `vstup-dnu` (video‑3 0–5 s, riadené skrolom, kamera ide sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Drevená podlaha, kreslá a zrkadlá. Mostná ostala za dverami. | – |
-| 4 | `#sala` | `sala` → `kreslo` | vľavo → vpravo | Tri miestnosti · „Osem kresiel. Jedno je tvoje.“ → Kreslo pri okne · „Sadni si a vydýchni.“ | – |
-| 5 | `#remeslo` | `stol` / telefón **video** `okolo-kresla` (video‑3 5–9,3 s, skrol) → `naradie` | vľavo → vpravo | Remeslo · „Povedz, ako to chceš.“ → Ultra inclusive · „Dopraj si všetko.“ (40 €) | – |
-| 6 | `#zadna` | `zadna` → `cakaren` | vľavo → vpravo | „Vzadu je iná nálada.“ → „Route 66 na Mostnej.“ | – |
-| 7 | `#tim` | `sala-rano` / telefón **video** `tim-slucka` (video‑2 1–9 s, tichá slučka) + pás tímu | vľavo | Ľudia · „Komu zveríš hlavu?“ · Desať ľudí, jeden kalendár. | – |
-| 8 | `#sluzby` | `kreslo-stred` + pás: bežiaci pás služieb, kroky strihu, cenník | stred | Služby a ceny · „Čo to bude dnes?“ · 18 € / 28 € | Objednať pri položkách |
-| 9 | `#galeria` | `kava` + pás galérie → `sud` | vľavo → vpravo | „Pozri si to zblízka.“ → Cestou von · „Odchádzaš s hlavou hore.“ | – |
-| 10 | `#rezervacia` + kontakt | `vstup` znova + pás kontaktu (tabuľa dnešných hodín, svetlo po okraji karty) | stred | Rezervácia · „Kedy *si sadneš?*“ · Online kedykoľvek, aj v noci. | Rezervovať termín, Zavolať, Navigovať |
+| 2 | `#vstup-dnu` | `sala` / telefón **video** `vstup-dnu` (video‑3 0–5 s, riadené skrolom, kamera ide sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje. | – |
+| 3 | `#remeslo` | `stol` / telefón **video** `okolo-kresla` (video‑3 5–9,3 s, skrol; nadväzuje na Poď ďalej bez strihu) | vľavo | Remeslo · „Povedz, ako to chceš.“ | – |
+| 4 | `#cakaren` | `cakaren` | vpravo | Čakáreň · „Vzadu ťa čaká káva.“ · Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma. | – |
+| 5 | `#tim` | `sala-rano` / telefón **video** `tim-slucka` (video‑2 1–9 s, tichá slučka) + pás tímu | vľavo | Ľudia · „Komu zveríš hlavu?“ · Desať ľudí, jeden kalendár. | – |
+| 6 | `#sluzby` | `kreslo-stred` + pás: bežiaci pás služieb, kroky strihu, cenník | stred | Služby a ceny · „Čo to bude dnes?“ · 18 € / 28 € | Objednať pri položkách |
+| 7 | `#galeria` | `kava` + pás galérie → `sud` | vľavo → vpravo | „Pozri si to zblízka.“ → Cestou von · „Odchádzaš s hlavou hore.“ | – |
+| 8 | `#rezervacia` + kontakt | `vstup` znova + pás kontaktu (tabuľa dnešných hodín, svetlo po okraji karty) | stred | Rezervácia · „Kedy *si sadneš?*“ · Online kedykoľvek, aj v noci. | Rezervovať termín, Zavolať, Navigovať |
 
 Spodné tlačidlo na telefóne je kompaktné vpravo dole (telefón + Rezervovať termín), skryté v úvode, v páse
 cenníka, v rezervácii a pri menu. Texty sú po porote dvoch hodnotiteľov; každý údaj má zdroj v

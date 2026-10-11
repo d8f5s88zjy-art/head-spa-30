@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Snímky zastavených strihov (BS30_FILM.cutFreeze) na počítači 1440×900 a telefóne 390×844 @2 a prehľad.
-//   node source/tools/strih-shot.mjs [--only=desktop|mobile] [--cuts=pro,recepcia,...] [--mixes=0,0.5,1] [--out=dir] [--content]
+//   node source/tools/strih-shot.mjs [--only=desktop|mobile] [--cuts=pro,rohozka,...] [--mixes=0,0.5,1] [--out=dir] [--content]
 // Strih sa vyberá podľa záberu, z ktorého ide (pro = prológ). Na telefóne sú tri zábery videá (meno-video).
 // Výstup: <out>/<odkiaľ>-<zariadenie>-m<mix>.png, prehľad <out>/strihy-<zariadenie>.jpg; chyby konzoly do <out>/konzola.txt
 import path from 'node:path';
@@ -17,8 +17,8 @@ const OUT = path.resolve(opt.out || path.join(SITE, 'docs', 'screenshots', 'stri
 fs.mkdirSync(OUT, { recursive: true });
 const MIXES = (opt.mixes || '0,0.2,0.35,0.5,0.65,0.8,1').split(',').map(Number);
 const ALL = {
-  desktop: ['pro', 'rohozka', 'recepcia', 'sala', 'kreslo', 'stol', 'naradie', 'zadna', 'cakaren', 'sala-rano', 'kreslo-stred', 'kava', 'sud'],
-  mobile: ['pro', 'rohozka', 'recepcia', 'sala-video', 'sala', 'kreslo', 'stol-video', 'naradie', 'zadna', 'cakaren', 'sala-rano-video', 'kreslo-stred', 'kava', 'sud'],
+  desktop: ['pro', 'rohozka', 'sala', 'stol', 'cakaren', 'sala-rano', 'kreslo-stred', 'kava', 'sud'],
+  mobile: ['pro', 'rohozka', 'sala-video', 'stol-video', 'cakaren', 'sala-rano-video', 'kreslo-stred', 'kava', 'sud'],
 };
 const VIEW = { desktop: { width: 1440, height: 900, dpr: 1 }, mobile: { width: 390, height: 844, dpr: 2 } };
 const srv = await startStaticServer(SITE);

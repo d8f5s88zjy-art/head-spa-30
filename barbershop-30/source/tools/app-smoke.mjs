@@ -6,7 +6,7 @@
 // Kontroly (každá vypíše OK/FAIL, na konci exit 1 pri akomkoľvek FAIL):
 //  1. načítanie bez pageerror / console.error / zlyhaných požiadaviek (404), žiadne absolútne cesty (/assets/…)
 //     (chýbajúci assets/film.js sa toleruje, kým súbor neexistuje – stránka musí fungovať aj bez neho)
-//  2. 9 sekcií: scroll na každú kotvu .film-shot – data-scene-active ide 1→9, --p rastie, --sp kotvy v rozsahu 0–1
+//  2. všetky kapitoly (section[data-scene], dnes 8): scroll na prvú kotvu každej – data-scene-active ide 1→N, --p rastie, --sp kotvy v rozsahu 0–1
 //  3. zálohy: každá .film-shot má min. výšku okna, .film-still viditeľná (bez world-in), prvá má fetchpriority=high
 //  4. ?motion=off a prefers-reduced-motion: data-motion=off, __renderDone=true, dosky viditeľné, žiadne video, bez three.js
 //  5. mobilné menu (aria-expanded, Esc), lightbox (otvorenie, šípky, Esc, návrat fokusu), mobilné CTA skryté v poslednej sekcii
@@ -115,16 +115,17 @@ try {
         worldIn: document.documentElement.classList.contains('world-in'),
       };
     });
-    ok(stills.count === 14 && stills.allHaveStill && stills.allHaveMeta, `[${label}] 14 kotiev .film-shot s data-shot/f/mv a zálohou`, JSON.stringify({ count: stills.count, still: stills.allHaveStill, meta: stills.allHaveMeta }));
+    ok(stills.count === 9 && stills.allHaveStill && stills.allHaveMeta, `[${label}] 9 kotiev .film-shot s data-shot/f/mv a zálohou`, JSON.stringify({ count: stills.count, still: stills.allHaveStill, meta: stills.allHaveMeta }));
     ok(stills.allTall, `[${label}] každá kotva má aspoň výšku okna`);
     ok(stills.firstHigh && stills.lazyRest, `[${label}] prvá záloha fetchpriority=high, ostatné lazy`);
     ok(stills.worldIn || stills.firstVisible, `[${label}] prvá záloha je viditeľná a načítaná (alebo beží film)`, JSON.stringify(stills));
 
-    // 2. sekcie 1→10: v tretine pripnutia prvej kotvy je kapitola aktívna a jej titulná karta svieti
+    // 2. kapitoly 1→N: v tretine pripnutia prvej kotvy je kapitola aktívna a jej titulná karta svieti
     const L = await layout(page);
+    const NS = await page.evaluate(() => document.querySelectorAll('section[data-scene]').length);
     let prev = null; const seen = []; let cardsOn = 0;
     await page.evaluate(() => document.fonts && document.fonts.ready);
-    for (let n = 1; n <= 10; n++) {
+    for (let n = 1; n <= NS; n++) {
       // poloha kotvy sa meria tesne pred skokom (písma a obrázky v pásoch môžu stránku ešte posunúť)
       const s = await page.evaluate((n) => { const el = document.querySelector(`section[data-scene="${n}"] .film-shot`); const r = el.getBoundingClientRect(); return { name: el.dataset.shot, top: r.top + scrollY, height: r.height }; }, n);
       await scrollTo(page, n === 1 ? 0 : s.top + s.height * 0.3);
@@ -135,18 +136,18 @@ try {
       cardsOn += await page.evaluate((n) => !!document.querySelector(`section[data-scene="${n}"] .film-shot.is-title.is-on`), n) ? 1 : 0;
       prev = v;
     }
-    ok(new Set(seen).size === 10, `[${label}] kapitoly sa prepínajú (${seen.join('→')})`);
-    ok(cardsOn === 10, `[${label}] titulná karta svieti v každej kapitole (${cardsOn}/10)`);
+    ok(NS >= 8 && new Set(seen).size === NS, `[${label}] kapitoly sa prepínajú (${seen.join('→')})`);
+    ok(cardsOn === NS, `[${label}] titulná karta svieti v každej kapitole (${cardsOn}/${NS})`);
     const sp = await page.evaluate(() => [...document.querySelectorAll('.film-shot')].map((el) => parseFloat(el.style.getPropertyValue('--sp'))).filter((v) => Number.isFinite(v)));
     ok(sp.length === stills.count && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na všetkých kotvách v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
 
-    // titulná karta druhého záberu sály (kreslo): zhasnutá pred kotvou, svieti v pripnutí
-    const kreslo = L.shots.find((x) => x.name === 'kreslo');
-    await scrollTo(page, kreslo.top - L.vh * 0.9);
-    const early = await page.evaluate(() => document.querySelector('[data-shot="kreslo"]').classList.contains('is-on'));
-    await scrollTo(page, kreslo.top + kreslo.height * 0.4);
-    const late = await page.evaluate(() => document.querySelector('[data-shot="kreslo"]').classList.contains('is-on'));
-    ok(!early && late, `[${label}] karta kreslo zhasnutá pred kotvou, svieti v pripnutí`);
+    // titulná karta druhého záberu v kapitole (galéria: sud, Cestou von): zhasnutá pred kotvou, svieti v pripnutí
+    const sud = L.shots.find((x) => x.name === 'sud');
+    await scrollTo(page, sud.top - L.vh * 0.9);
+    const early = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
+    await scrollTo(page, sud.top + sud.height * 0.4);
+    const late = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
+    ok(!early && late, `[${label}] karta sud zhasnutá pred kotvou, svieti v pripnutí`);
 
     // späť hore
     await scrollTo(page, 0);
@@ -229,10 +230,10 @@ try {
     }));
     ok(st.motion === 'off' && st.done === true && !st.world, `[${name}] data-motion=off, bez triedy world, __renderDone`, JSON.stringify(st));
     ok(st.stillOpacity === '1' && st.stillTransform === 'none' && !st.canvas, `[${name}] záloha stojí (bez prejazdu), žiadny canvas`);
-    const rec = await page.evaluate(() => { const r = document.querySelector('[data-shot="recepcia"]').getBoundingClientRect(); return r.top + scrollY + r.height * 0.4; });
+    const rec = await page.evaluate(() => { const r = document.querySelector('[data-shot="cakaren"]').getBoundingClientRect(); return r.top + scrollY + r.height * 0.4; });
     await scrollTo(page, rec); await sleep(300);
-    const cardOp = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('[data-shot="recepcia"] .title-frame')).opacity));
-    ok(cardOp > 0.98, `[${name}] titulná karta recepcie je v pripnutí celá viditeľná (${cardOp})`);
+    const cardOp = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('[data-shot="cakaren"] .title-frame')).opacity));
+    ok(cardOp > 0.98, `[${name}] titulná karta čakárne je v pripnutí celá viditeľná (${cardOp})`);
     ok(problems.length === 0, `[${name}] bez chýb`, problems.slice(0, 3).join(' | '));
     ok(!requests.some((u) => /three\.module|\.mp4|\.webm/.test(u)), `[${name}] nesťahuje three.js ani video`, requests.filter((u) => /three|mp4|webm/.test(u)).join(' '));
     const h = await page.evaluate(() => document.documentElement.scrollHeight);
