@@ -248,6 +248,10 @@ sa podáva vzadu, kde sa čaká, nie pri recepcii; ku každému barberovi elegan
 - Testy: `app-smoke.mjs` 105 OK (9 kotiev, 8 kapitol, karta sud ako druhý záber kapitoly, čakáreň pri
   motion=off); `koliesko-test.mjs` OK; `uvod-zhoda.py` posun do 6 px; `uvod-shot.mjs` OK;
   `karty-shot.mjs --wait=5000` telefón: 9 kariet, každý záber ostrý a k svojej karte.
+- Naživo (4f7b589), Lighthouse 12.8.2: telefón 8 behov 97 / 97 / 93 / 97 / 94 / 99 / 97 / 96 (medián 97),
+  prístupnosť, osvedčené postupy a SEO 100, CLS 0, LCP 2,1–2,5 s; počítač 100 / 100 / 100 / 100. Behy pod 95
+  majú prvý obraz v laboratórnom prehliadači (softvérové kreslenie) až po 2,5 s pri rovnakom hlavnom vlákne
+  ako rýchle behy; rovnaký rozptyl bol aj pred touto úpravou.
 
 ## 5. Čo ostáva overiť naživo
 
