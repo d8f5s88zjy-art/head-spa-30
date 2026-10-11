@@ -11,7 +11,7 @@
   .linka { position: absolute; height: 1.4px; }
   .linka.l { background: linear-gradient(90deg, rgba(185,150,105,0), rgba(185,150,105,.85)); }
   .linka.r { background: linear-gradient(90deg, rgba(185,150,105,.85), rgba(185,150,105,0)); }
-  .web { position: absolute; left: 0; white-space: nowrap; font-family: 'Montserrat', sans-serif; font-weight: 600; line-height: 1; padding: .45em 0 .25em; color: #97815f; }
+  .web { position: absolute; left: 0; white-space: nowrap; font-family: 'Montserrat', sans-serif; font-weight: 600; line-height: 1; padding: .45em 0 .25em; color: #84725a; }
 </style></head>
 <body><div id="p"></div>
 <script>
@@ -67,7 +67,7 @@
       var spod = VRCH + (CAP + cap) / 2;
     } else {
       // dva riadky: menšie písmo; horný riadok začína ako HEAD SPA v šablóne, aby sa nedotýkal slova poukážka
-      const C2 = 14.5, c2 = vel('t', C2); let s2 = c2, top = VRCH, gap = 7, rs;
+      const C2 = 14.5, c2 = vel('t', C2); let s2 = c2, top = VRCH - 4, gap = 11, rs;
       const skus = () => { p.querySelectorAll('.t').forEach((e) => e.remove()); rs = riadky.map((t, i) => riadok('t', t, s2, LS, STRED, top + i * (C2 * s2 / c2 + gap), p)); };
       skus();
       while (Math.max(...rs.map((r) => r.w)) > ST_P - ST_L - 16 && s2 > 14) { s2 -= 0.5; skus(); }
