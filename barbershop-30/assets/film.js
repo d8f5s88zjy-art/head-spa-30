@@ -1242,6 +1242,9 @@
   const gesture = () => SHOTS.forEach((s) => {
     const v = s.vel; if (!v) return;
     if (s.video.mode === 'play' && s.vblock && onScreen.has(s)) { s.vblock = false; v.play().catch(() => { s.vblock = true; }); }
+    // úsporný režim: ťuknutie odomkne aj videá, ktoré ešte nie sú na obrazovke (pustia sa a hneď zastavia),
+    // aby sa neskôr rozbehli samé a neostal namiesto nich stáť plagát
+    else if (s.video.mode === 'play' && !s.vunlock && !onScreen.has(s)) { s.vunlock = true; v.play().then(() => { s.vblock = false; if (!onScreen.has(s)) v.pause(); }, () => {}); }
     else if (s.video.mode === 'scroll' && !s.vunlock && v.readyState < 2) { s.vunlock = true; v.play().then(() => { v.pause(); s.vwant = -1; wake(); }, () => {}); }
   });
   on(window, 'touchend', gesture); on(window, 'click', gesture);
