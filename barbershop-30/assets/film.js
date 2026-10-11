@@ -25,9 +25,10 @@
      dá kedykoľvek preskočiť skrolovaním; bez triedy pro sa nič z toho nedeje.
    - data-size="ŠxV" na kotve: rozmery fotky záberu, keď ich nedáva <img> (viac záloh v kotve).
    - skutočné video ako záber (data-video="assets/video/meno-864", bez prípony; súbory .mp4 a .webm):
-     data-video-mode="play" (tichá slučka v čase, len kým je záber na obrazovke; všetky videá webu) alebo
-     "scroll" (čas videa vedie skrolovanie, súbor má každú snímku kľúčovú; na telefóne pri posune trhané
-     a pri zastavení stojí, preto ho web od 2026‑10‑11 nepoužíva), data-video-t="od,do" (sekundy súboru na celý
+     data-video-mode="seq" (video rozložené na fotky po 0,1 s v priečinku data-video, f000.avif|webp…,
+     počet data-video-n; skrol vyberá a prelína dve susedné snímky, plynulé pri 60 až 240 Hz), "play"
+     (tichá slučka v čase, len kým je záber na obrazovke) alebo "scroll" (čas videa vedie skrolovanie;
+     na telefóne pri posune trhané a pri zastavení stojí, preto ho web od 2026‑10‑11 nepoužíva), data-video-t="od,do" (sekundy súboru na celý
      pohyb záberu), data-video-size="864x1536", data-video-f="x,y" (bod záujmu vo videu),
      data-video-poster="assets/video/meno-poster-864" (+ .avif/.webp/.jpg; ukáže sa, kým video nemá
      snímku, a ostane, keď video nejde), data-video-fps (snímky za sekundu súboru, pre posun po snímkach),
@@ -239,7 +240,8 @@
   const videoOf = (el) => {
     const x = el.dataset;
     if (!x.video || !(phone || x.videoOn === 'all')) return null;
-    return { src: x.video, mode: x.videoMode === 'play' ? 'play' : 'scroll', t: range(x.videoT), poster: x.videoPoster || '', fps: parseFloat(x.videoFps) || 30 };
+    const mode = x.videoMode === 'play' || x.videoMode === 'seq' ? x.videoMode : 'scroll';
+    return { src: x.video, mode, t: range(x.videoT), poster: x.videoPoster || '', fps: parseFloat(x.videoFps) || 30, n: parseInt(x.videoN, 10) || 0 };
   };
   // kotva s data-desk="skip" má vlastný záber len na telefóne (video); na počítači ju film
   // preskočí a plynulo pokračuje zo susedného záberu, text karty sa vymení nad súvislým záberom
@@ -349,6 +351,9 @@
       }
       gl_FragColor = vec4(c, vZ);
     }`;
+  // sekvencia snímok (data-video-mode="seq"): dve susedné snímky a ich prelínanie podľa presnej polohy
+  const FRAG_SEQ = FRAG.replace('uniform sampler2D uMap;', 'uniform sampler2D uMap; uniform sampler2D uMap2; uniform float uMix;')
+    .replace('vec3 c = texture2D(uMap, vUv).rgb;', 'vec3 c = mix(texture2D(uMap, vUv).rgb, texture2D(uMap2, vUv).rgb, uMix);');
   /* hĺbková mapa sa po načítaní raz zjemní na grafike: popredie sa najprv mierne rozšíri (max filter),
      potom sa hrana rozmaže na šírku asi dvoch buniek mriežky. Predmet sa tak hýbe ako celok a pri
      pohybe sa naťahuje len úzky pás steny tesne za ním, hrana nesleduje bunky mriežky (žiadne zúbky) */
@@ -398,9 +403,11 @@
   const blank = px(14, 13, 12), flat = px(0, 0, 0);
 
   SHOTS.forEach((s) => {
+    const sq = s.video && s.video.mode === 'seq';
     s.mat = new THREE.ShaderMaterial({
-      vertexShader: VERT, fragmentShader: FRAG,
-      uniforms: { uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: AMT }, uEye: { value: new THREE.Vector3() }, uVig: vig },
+      vertexShader: VERT, fragmentShader: sq ? FRAG_SEQ : FRAG,
+      uniforms: Object.assign({ uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: AMT }, uEye: { value: new THREE.Vector3() }, uVig: vig },
+        sq ? { uMap2: { value: blank }, uMix: { value: 0 } } : {}),
     });
     s.mesh = new THREE.Mesh(grid, s.mat);
     s.mesh.visible = false; s.mesh.frustumCulled = false;
@@ -552,7 +559,7 @@
   }
   function loadClip(s) {
     if (s.loading || !retryOk(s)) return;
-    if (s.ready) { if (userMoved && !s.vel && !s.vfail) attach(s); return; }
+    if (s.ready) { if (userMoved && !s.vel && !s.sq && !s.vfail) attach(s); return; }
     if (!s.video.poster) { s.ready = true; s.t0 = performance.now(); if (userMoved) attach(s); return; }
     const ctl = new AbortController(), live = () => !ctl.signal.aborted && !lost;
     s.ctl = ctl;
@@ -576,6 +583,7 @@
     return s.vblob;
   }
   function attach(s) {
+    if (s.video.mode === 'seq') { seqStart(s); return; }
     // vfail: súbor sa nedá prehrať (formát, chyba dekódovania) – ostáva plagát; výpadok siete skúsi znova o 10 s
     if (s.vel || s.vfail || s.vwait || (s.vneterr && performance.now() - s.vneterr < 10000)) return;
     if (!vType) { s.vfail = true; return; }
@@ -610,6 +618,7 @@
     v.load();
   }
   function detach(s, failed) {
+    if (s.sq) seqStop(s);
     const v = s.vel;
     if (failed) s.vfail = true;
     if (!v) return;
@@ -620,6 +629,103 @@
     s.vlive = false; s.vwant = -1; wake();
   }
   // poloha v pohybe záberu 0..1 (to isté t ako v place): čas videa v režime scroll
+  /* ---------- sekvencia snímok ako záber (data-video-mode="seq") ----------
+     Video rozložené na fotky po 0,1 s (majiteľ 2026‑10‑11, source/tools/sekvencie.sh): pri skrole sa nepretáča
+     video, vyberú sa dve susedné snímky podľa presnej polohy vo filme a shader ich prelína (uMix), takže pohyb
+     ide pri každej snímke displeja (60 až 240 Hz) a nikdy nečaká na dekodér videa. Snímky sa sťahujú od hrubých
+     k jemným (každá 8., 4., 2., potom všetky) a kým jemnejšia chýba, prelína sa medzi najbližšími stiahnutými.
+     Stiahnuté súbory ostávajú v pamäti (asi 40 kB na snímku), rozbalené sú len okolo aktuálnej polohy:
+     dekódovanie mimo hlavného vlákna (createImageBitmap), v grafike najviac SEQ_TEX snímok. */
+  const SEQ_TEX = 6, SEQ_NET = 4;
+  const pad3 = (i) => String(i).padStart(3, '0');
+  function seqStart(s) {
+    const n = s.video.n;
+    if (s.sq || !n) return;
+    // poradie sťahovania: najprv každá 8. snímka (pohyb funguje hneď), potom 4., 2. a nakoniec zvyšné
+    if (!s.sqBlobs) s.sqBlobs = new Array(n);
+    const order = [], seen = new Set();
+    for (const st of [8, 4, 2, 1]) for (let i = 0; i < n; i += st) if (!seen.has(i)) { seen.add(i); order.push(i); }
+    if (!seen.has(n - 1)) order.splice(1, 0, n - 1);
+    s.sq = { n, order, next: 0, net: 0, tex: new Map(), dec: new Set(), up: [], dead: false, lo: -1, hi: -1, m: 0, at: 0, ext: avif ? '.avif' : '.webp' };
+    seqFetch(s);
+  }
+  function seqFetch(s) {
+    const q = s.sq;
+    if (!q || q.dead) return;
+    while (q.net < SEQ_NET && q.next < q.order.length) {
+      const i = q.order[q.next++];
+      if (s.sqBlobs[i]) continue;
+      q.net++;
+      fetch(new URL(`${s.video.src}/f${pad3(i)}${q.ext}`, d.baseURI).href, { priority: 'low' })
+        .then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+        .then((b) => { s.sqBlobs[i] = b; wake(); }, () => { if (q.ext === '.avif') { q.ext = '.webp'; q.order.push(i); } })
+        .finally(() => { q.net--; seqFetch(s); });
+    }
+  }
+  function seqStop(s) {
+    const q = s.sq; s.sq = null;
+    q.dead = true;
+    for (const t of q.tex.values()) t.dispose();
+    for (const [, b] of q.up) b.close();
+    const u = s.mat.uniforms; u.uMap.value = s.pmap || blank; u.uMap2.value = blank; u.uMix.value = 0;
+  }
+  // snímka v grafike, alebo undefined (rozbalí sa a nahrá v niektorej z ďalších snímok)
+  function seqTex(s, i) {
+    const q = s.sq, t = q.tex.get(i);
+    if (t) { q.tex.delete(i); q.tex.set(i, t); return t; }  // naposledy použitá ide na koniec (LRU)
+    if (!q.dec.has(i) && s.sqBlobs[i]) {
+      q.dec.add(i);
+      createImageBitmap(s.sqBlobs[i]).then((b) => { if (q.dead) b.close(); else { q.up.push([i, b]); wake(); } }, () => {}).finally(() => q.dec.delete(i));
+    }
+    return undefined;
+  }
+  function seqDrive(s) {
+    const q = s.sq, n = q.n, u = s.mat.uniforms;
+    const ft = clamp(shotT(s), 0, 1) * (n - 1), has = (i) => !!s.sqBlobs[i];
+    // rozbalené snímky ďaleko od polohy (rýchly skrol ich prebehol) sa zahodia, nenahrávajú sa
+    for (let k = q.up.length - 1; k >= 0; k--) if (Math.abs(q.up[k][0] - ft) > 4) { q.up[k][1].close(); q.up.splice(k, 1); }
+    // najviac dve nahratia do grafiky za snímku displeja (720 × 1280, po 1 až 3 ms), najbližšie k polohe prvé
+    q.up.sort((a, b) => Math.abs(a[0] - ft) - Math.abs(b[0] - ft));
+    for (let k = 0; k < 2 && q.up.length; k++) {
+      const [i, b] = q.up.shift();
+      if (q.tex.has(i)) { b.close(); continue; }
+      const t = tex(b); renderer.initTexture(t); b.close();
+      q.tex.set(i, t);
+    }
+    let lo = Math.floor(ft), hi = Math.ceil(ft);
+    while (lo > 0 && !has(lo)) lo--;
+    while (hi < n - 1 && !has(hi)) hi++;
+    if (!has(lo)) lo = hi; if (!has(hi)) hi = lo;
+    if (!has(lo)) return q.net > 0;                           // ešte nič: ostáva plagát
+    const ta = seqTex(s, lo), tb = hi === lo ? ta : seqTex(s, hi);
+    // vopred rozbaliť susedov v smere pohybu (len keď sa nečaká na veľa iných)
+    if (q.up.length + q.dec.size < 3) {
+      const dir = V < 0 ? -1 : 1;
+      for (const k of [hi + dir, lo - dir, hi + 2 * dir]) if (k >= 0 && k < n && has(k) && !q.tex.has(k)) seqTex(s, k);
+    }
+    // prelínanie dvoch snímok: počas skrolu len v strednej tretine medzi nimi (inak jedna ostrá snímka, pri
+    // rýchlom pohybe kamery by trvalé prelínanie zdvojovalo hrany); keď skrol stojí, obraz sa do 0,2 s dorovná
+    // na najbližšiu celú snímku, takže v pokoji je vždy ostrý
+    const now = performance.now(), dt = q.at ? Math.min(0.1, (now - q.at) / 1000) : 0; q.at = now;
+    const show = (a, z, ta2, tz2) => {
+      const raw = z > a ? clamp((ft - a) / (z - a), 0, 1) : 0;
+      const goal = still > 0.25 ? Math.round(raw) : smooth(0.33, 0.67, raw);
+      if (a !== q.lo || z !== q.hi) q.m = goal;              // nová dvojica snímok: bez dobiehania
+      else q.m += (goal - q.m) * (1 - Math.pow(0.0005, dt));
+      u.uMap.value = ta2; u.uMap2.value = tz2; u.uMix.value = q.m; q.lo = a; q.hi = z;
+    };
+    if (ta && tb) show(lo, hi, ta, tb);
+    else {
+      // presné snímky ešte nie sú v grafike: prelínať medzi najbližšími, ktoré tam už sú (obraz nestojí)
+      let a = -1, z = -1;
+      for (const k of q.tex.keys()) { if (k <= ft && k > a) a = k; if (k >= ft && (z < 0 || k < z)) z = k; }
+      if (a < 0) a = z; if (z < 0) z = a;
+      if (a >= 0) show(a, z, q.tex.get(a), q.tex.get(z));
+    }
+    // v grafike najviac SEQ_TEX snímok; práve kreslené sa neuvoľnia
+    for (const [k, t] of q.tex) { if (q.tex.size <= SEQ_TEX) break; if (t !== u.uMap.value && t !== u.uMap2.value) { t.dispose(); q.tex.delete(k); } }
+    return q.up.length > 0 || q.dec.size > 0 || q.net > 0;
+  }
   const shotT = (s) => (s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1));
   function drive(s, now) {
     const v = s.vel, c = s.video;
@@ -962,7 +1068,7 @@
     // videá: posun podľa polohy vo filme (scroll) alebo prehrávanie, kým je záber na obrazovke (play);
     // ešte pred kreslením, aby sa slučka zastavila aj vtedy, keď sa po skoku nový záber ešte načítava
     let vbusy = false;
-    for (const s of path) if (s.vel) vbusy = drive(s, now) || vbusy;
+    for (const s of path) if (s.vel) vbusy = drive(s, now) || vbusy; else if (s.sq) vbusy = seqDrive(s) || vbusy;
     const k = clamp(Math.floor(S), 0, N);
     let A = path[k], B = path[clamp(k + 1, 0, N)];
     // prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere 1 obrazovka = 0,3 obrazovky skrolu),
@@ -1367,6 +1473,7 @@
       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
       ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
       userMoved,
+      seq: path.filter((s) => s.video && s.video.mode === 'seq').map((s) => ({ shot: s.photo, on: !!s.sq, got: s.sqBlobs ? s.sqBlobs.filter(Boolean).length : 0, n: s.video.n, lo: s.sq ? s.sq.lo : -1, hi: s.sq ? s.sq.hi : -1, mix: +s.mat.uniforms.uMix.value.toFixed(3), tex: s.sq ? [...s.sq.tex.keys()].join(',') : '', up: s.sq ? s.sq.up.length : 0, dec: s.sq ? s.sq.dec.size : 0, t: +shotT(s).toFixed(3) })),
       video: path.filter((s) => s.video).map((s) => ({ shot: s.photo, mode: s.video.mode, src: s.vel ? s.vel.currentSrc.split('/').pop() : null, rs: s.vel ? s.vel.readyState : null, t: s.vel ? +s.vel.currentTime.toFixed(3) : null, want: +(s.vwant || 0).toFixed(3), seeking: s.vel ? s.vel.seeking : null, paused: s.vel ? s.vel.paused : null, live: !!s.vlive, poster: !!s.pmap, blocked: !!s.vblock, fail: !!s.vfail, netErr: !!s.vneterr, onScreen: onScreen.has(s) })),
     }),
   });

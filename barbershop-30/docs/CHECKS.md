@@ -253,6 +253,26 @@ sa podáva vzadu, kde sa čaká, nie pri recepcii; ku každému barberovi elegan
   majú prvý obraz v laboratórnom prehliadači (softvérové kreslenie) až po 2,5 s pri rovnakom hlavnom vlákne
   ako rýchle behy; rovnaký rozptyl bol aj pred touto úpravou.
 
+## 12. Plynulosť 60 až 240 snímok za sekundu, videá ako fotky po 0,1 s (2026‑10‑11)
+
+Podnet majiteľa: videá pôsobia zaseknuto; celá stránka aspoň 60 a podľa zariadenia až 240 snímok za sekundu;
+video rozložiť na snímky po 0,10 s.
+- Film: kreslí plnou frekvenciou displeja aj v pokoji (predtým po 60 s len 30 snímok/s), bez stropu 30 snímok.
+  Rozlíšenie sa prispôsobuje: medián snímky pod 60 snímok/s (alebo 90. percentil pod 40) zníži dpr o 0,25
+  (najnižšie 1x); pri plnej frekvencii displeja s rezervou sa po 8 s vráti. Interval displeja do 1/250 s.
+- Poď ďalej a Povedz, ako to chceš: `sekvencie.sh` (video‑3 stabilizované, každá 3. snímka = 0,1 s, lanczos
+  720×1280 + CAS, AVIF 56 / WebP 80): 51 a 44 fotiek, 2,0 a 1,6 MB AVIF (menej než predchádzajúce videá).
+  film.js `data-video-mode="seq"`: sťahovanie od hrubých k jemným (8., 4., 2., všetky, 4 naraz), dekódovanie
+  `createImageBitmap`, v grafike najviac 6 snímok, najviac 2 nahratia za snímku displeja (najbližšie k polohe
+  prvé, vzdialené sa zahodia), prelínanie dvoch susedných snímok v strednej tretine intervalu, v pokoji
+  dorovnanie na celú snímku (0,2 s). Test v prehliadači (390×844): snímka a prelínanie sledujú skrol bez
+  zastavenia, v pokoji `mix` 0 alebo 1 (ostrý obraz bez zdvojenia), bez chýb konzoly.
+- Video tímu: slučka 60 snímok/s (medzisnímky `minterpolate` z pohybu, aj cez šev: slučka 3× za sebou,
+  vystrihnutá prostredná perióda); šev 1,6 pri bežnom rozdiele susedných snímok 1,7.
+- Obmedzenie: Safari na iPhone kreslí webové stránky najviac 60 snímok/s (nastavenie Apple); 90 až 240 Hz
+  platí pre Chrome na Androide a počítače s rýchlym monitorom. Na skutočnom zariadení nemerané (kontajner
+  nemá grafickú kartu).
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

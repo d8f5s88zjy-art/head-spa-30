@@ -39,16 +39,10 @@ seamless() { # $1 zdroj, $2 od, $3 do, $4 prelínanie švu (s), $5 výstup bez p
   ffmpeg -v error -y -i "$5.mp4" $VP9_PLAY "$5.webm"
 }
 
-# Videá vo filme hrajú v čase ako slučky (60 snímok/s), nie podľa skrolu: posun videa skrolom bol na telefóne
+# Video tímu hrá v čase ako slučka (60 snímok/s), nie podľa skrolu: posun videa skrolom bol na telefóne
 # trhaný (pretáčanie pri každom posune) a pri zastavení obraz stál (majiteľ 2026‑10‑11: video pôsobí zaseknuto).
 # Šev slučky je prelínanie konca do začiatku, plagát = prvá snímka slučky (pri prepnutí na video nič neposkočí).
-stab "$V/video-3.mp4" 0 13.2 tmp/v3-stab.mp4
-# 1) vstup dnu: video-3 0,0–5,6 s, nájazd do sály popod lampy k barberovi, šev 0,6 s
-seamless tmp/v3-stab.mp4 0.0 5.6 0.6 "$OUT/vstup-dnu-864"
-poster "$OUT/vstup-dnu-864.mp4" 0 "$OUT/vstup-dnu-poster-864"
-# 2) okolo kresla: video-3 5,0–12,6 s, kamera obchádza barbera a odstúpi do sály, šev 0,8 s
-seamless tmp/v3-stab.mp4 5.0 12.6 0.8 "$OUT/okolo-kresla-864"
-poster "$OUT/okolo-kresla-864.mp4" 0 "$OUT/okolo-kresla-poster-864"
+# Poď ďalej a Povedz, ako to chceš (video-3) sú od 2026‑10‑11 sekvencie fotiek po 0,1 s: source/tools/sekvencie.sh.
 # 5) tím (slučka v čase): video-2 1,0–9,0 s, šev 0,6 s; video-2 je stabilné samo (chvenie 0,033 % š), bez vid.stab
 seamless "$V/video-2.mp4" 1.0 9.0 0.6 "$OUT/tim-slucka-864"
 poster "$OUT/tim-slucka-864.mp4" 0 "$OUT/tim-slucka-poster-864"   # slučka začína od 0
