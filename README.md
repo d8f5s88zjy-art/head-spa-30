@@ -159,12 +159,13 @@ Instagram a na tento web.
 
 Sekcia Poukazy je krátka: nadpis, jedna veta, poukážka salónu (`vzor`), jedno tlačidlo Kúpiť poukaz
 rovno do obchodu Booqme a veta, že rituál sa vyberá v obchode. Bez formulára a bez výberu na webe,
-aby nákup mal čo najmenej krokov. Pod tým je pás Poukážka na konkrétny rituál: 17 poukážok
-v štýle poukážky salónu (`docs/poukazky`), každá je odkaz do obchodu s poukazmi, na počítači
-so šípkami, na telefóne na posúvanie prstom. Každá karta rituálu má pri tlačidle Rezervovať aj odkaz Darovať
-ako poukaz (obchod Booqme, alebo platba kartou z adminu). Poukážky jednotlivých rituálov
-(`assets/img/poukaz/<rituál>-{480,800,1290}.{avif,webp}` a `-800.jpg`, z `docs/poukazky/dl/png/`) sú
-v tom páse a slúžia aj pre Booqme a tlač. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
+aby nákup mal čo najmenej krokov. Pod tým je pás Poukážka na konkrétny rituál: šesť ukážok
+od salónu (HEAD SPA 30, fotka rituálu a dĺžka, `docs/poukazky/salon/`), každá je odkaz do obchodu
+s poukazmi. Poukážky všetkých 17 rituálov sú len v obchode Booqme (salón to tak chce). Na počítači sa
+posúvajú šípkami (keď sa všetky zmestia vedľa seba, šípky sa skryjú), na telefóne prstom. Každá karta rituálu má pri tlačidle
+Rezervovať aj odkaz Darovať ako poukaz (obchod Booqme, alebo platba kartou z adminu). Obrázky ukážok
+(`assets/img/poukaz/<rituál>-{480,800,1290}.{avif,webp}` a `-800.jpg`) robí `docs/poukazky/sablona/export.py`
+pre rituály s `"web": true` v `ritualy.json`. Žiadne hodnoty v eurách, poukaz je vždy na rituál.
 
 ## Postup rituálu ako číslovaný sled
 
@@ -310,15 +311,13 @@ zlatá 10,2 : 1, tmavý text na zlatom tlačidle 9,6 : 1.
 | Úvod | `okna` (pozri Úvod); pokojná verzia úvodu `neon-head-spa` |
 | Ako to prebieha | `voda` pod textom, nad vodou stúpa para |
 | Cenník, hlavičky kategórií | Head Spa `lozka-sviecka`, Pánske `komoda`, Deti `spa-relax-lozko`, Pre dvoch `miestnost`, Chodidlá `lozka-spa` |
-| Poukážky | poukážka salónu `vzor`; po výbere rituálu jeho poukážka (`assets/img/poukaz/`, tie isté ako tlačené) |
+| Poukážky | poukážka salónu `vzor`; pás šiestich ukážok od salónu (`docs/poukazky/salon/`, export do `assets/img/poukaz/`) |
 | Salón 30 | `okna`, `buddha`, `komoda` |
 | Galéria | všetkých 13 (poradie vyššie) |
 | Kontakt | `dvere` vedľa mapy, „Hľadaj zelené dvere“; mapa okolia `mapa-*` (podklad © OpenStreetMap, zafarbená do tónov webu, značka salónu v strede) namiesto vloženej Google mapy |
 
-Fotky na poukážkach rituálov sú čiastočne z Pexels (licencia a autori v
-`docs/poukazky/dl/FOTKY.md`), ostatné sú zo salónu. Keď budú vlastné, stačí prepísať súbory
-v `docs/poukazky/dl/foto/`, spustiť `node docs/poukazky/dl/build.mjs` a znova vyrobiť
-`assets/img/poukaz/*` (800 a 1290 px, 2 : 1, AVIF a WebP).
+Ukážky poukážok na webe sú hotové poukážky od salónu (`docs/poukazky/salon/`); obrázky do
+`assets/img/poukaz/` robí `python3 docs/poukazky/sablona/export.py` pre rituály s `"web": true`.
 
 ### Pohyb podľa miestnosti
 

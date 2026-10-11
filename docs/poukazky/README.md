@@ -1,8 +1,9 @@
 # Darčekové poukážky HEAD SPA 30
 
 **Platí `sablona/`:** salón chce poukážky presne podľa svojej šablóny, na každej len názov rituálu
-a cenu. Tie sú na webe (`assets/img/poukaz/`) aj v obchode Booqme (`sablona/booqme/`), postup je
-v `sablona/README.md`. Návrh nižšie (`dl/`, vlastné fotky ku každému rituálu, bez ceny) sa už
+a cenu. Všetkých 17 je v obchode Booqme (`sablona/booqme/`), na webe je šesť ukážok
+(`assets/img/poukaz/`), postup je v `sablona/README.md`. Trinásť poukážok poslal salón v novej podobe
+(`salon/`: HEAD SPA 30, fotka rituálu, dĺžka); tie nahrádzajú šablónu pri svojich rituáloch. Návrh nižšie (`dl/`, vlastné fotky ku každému rituálu, bez ceny) sa už
 nepoužíva.
 
 Podľa vzoru salónu (poukážka Head Spa na webe, `assets/img/poukaz/vzor-*`): čierny mramor so
