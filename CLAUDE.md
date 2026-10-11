@@ -64,3 +64,18 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - `toolbox/skills-z-praxe/` sú naše overené postupy z prác na weboch (film z fotiek, plynulé video, výkon,
   testy a nasadenie, texty, Booqme, Instagram, učenie z videí, krátke video, pohyblivá grafika, web dizajn, workflowy). Pred podobnou prácou si prečítaj príslušný SKILL.md.
 - Prevádzka webu (nahratie na headspa30.sk, Booqme, poukážky): `toolbox/head-spa-30/SKILL.md`.
+
+## Ako využiť skills a nástroje naplno
+- Skills z toolboxu sú prepojené v `.claude/skills/` (zoznam a dôvody v `toolbox/prepoj-skills.sh`) a ponúkajú
+  sa samy. Pred každou úlohou načítaj všetky, ktoré sa jej týkajú, nie len jeden: web a dizajn `web-dizajn`,
+  `frontend-design`, `design-dna`, `rychly-web`, `testy-a-nasadenie`, `obsah-a-texty`; pohyb `motion-principles`,
+  `css-native`, `gsap-*`; video a reels `kratke-video`, `motion-grafika`, `video-a-sekvencie`; Instagram
+  `instagram-salon`; Booqme a poukážky `head-spa-30`, `booqme-rezervacie`; odkaz na video `referencie-z-videi`.
+- Väčšiu úlohu rozdeľ medzi viac agentov s nezávislou kontrolou (`workflowy`). Nič neodovzdaj bez overenia
+  nástrojom: `dizajn-audit.mjs` (web-dizajn), `app-smoke.mjs` a Lighthouse (rychly-web, testy-a-nasadenie),
+  `node tools/booqme-kontrola.mjs`, kontrola poukážok (head-spa-30), snímky a ich prehliadnutie.
+- Pripojené služby používaj, keď pomôžu, ale s ohľadom na limity: Figma (plán Starter, miesto View: 20 čítaní
+  mesačne, súbory vo Figme vytváraj len so súhlasom), platené generovanie (Figma AI, Higgsfield) len so súhlasom
+  a rozpočtom majiteľa.
+- Čo sa nové naučíš (z videa, z chyby, od majiteľa), zapíš do toolboxu: do príslušného skillu alebo ako nový
+  skill v `toolbox/skills-z-praxe/`, a pridaj ho do `toolbox/prepoj-skills.sh`.
