@@ -171,6 +171,9 @@ Poučenie: pred napojením zisti, aký systém podnik naozaj používa a pre kto
 
 ## V tomto repozitári
 
+Prevádzka HEAD SPA 30 (výmena poukazov v obchode Booqme, poukážky, nahratie na headspa30.sk) má vlastný
+skill `toolbox/head-spa-30/SKILL.md` so stavom otvorených úloh; tento skill rieši napojenie webu a zosúladenie.
+
 | Čo | Kde |
 | --- | --- |
 | pravidlá (Booqme je zdroj pravdy, žiadne formuláre, fúkaná v `li[data-booqme]`) | `CLAUDE.md` |

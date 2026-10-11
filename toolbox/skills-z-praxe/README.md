@@ -16,5 +16,8 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 | [`booqme-rezervacie`](booqme-rezervacie/SKILL.md) | rezervácie a poukazy cez Booqme, zosúladenie webu po zmene v kalendári |
 | [`workflowy`](workflowy/SKILL.md) | väčšia úloha pre viac agentov naraz: stavba, kontrola, porota návrhov, audit s overením |
 
+Prevádzka webu HEAD SPA 30 (nahratie na Forpsi, poukazy v Booqme, poukážky) je v samostatnom skille
+[`../head-spa-30/`](../head-spa-30/SKILL.md), projekt GYM KLUB v [`../gym-klub/`](../gym-klub/README.md).
+
 Spoločné pravidlá platia vždy: fakty len zo zdrojov, slovenčina a tykanie, krátke texty bez
 pomlčky em dash, žiadna zmienka o AI na webe, v kóde ani v commitoch (podrobne `CLAUDE.md`).

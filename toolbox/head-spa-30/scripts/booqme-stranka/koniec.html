@@ -1,0 +1,33 @@
+</ol>
+<footer>
+  <span>Po uložení skontrolujte <a href="https://booqme.app/sk/eshop/salon-30-head-spa" target="_blank" rel="noopener">obchod Booqme</a>: pri každom poukaze má byť nový obrázok a rovnaká cena ako na obrázku.</span>
+  <span>Odškrtnutie si pamätá len tento prehliadač.</span>
+</footer>
+</div>
+<script>
+(function () {
+  var KEY = 'bq-poukazy-hotovo';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.done input'));
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
+  function update() {
+    var n = 0;
+    boxes.forEach(function (b) {
+      var li = b.closest('.item');
+      li.classList.toggle('is-done', b.checked);
+      if (b.checked) n++;
+    });
+    document.getElementById('count').textContent = n + ' / ' + boxes.length;
+    document.getElementById('fill').style.width = (100 * n / boxes.length) + '%';
+  }
+  boxes.forEach(function (b) {
+    b.checked = !!saved[b.dataset.id];
+    b.addEventListener('change', function () {
+      saved[b.dataset.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+      update();
+    });
+  });
+  update();
+})();
+</script>

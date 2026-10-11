@@ -196,6 +196,7 @@ Podrobne, vrátane overenia a commitov: [references/nasadenie.md](references/nas
 
 ## V tomto repozitári
 
+- Nahratie HEAD SPA 30 na www.headspa30.sk (Forpsi, balík len so zmenami, kontrola nahratia): `toolbox/head-spa-30/SKILL.md`.
 - Testy BARBERSHOP 30: `barbershop-30/source/shot.mjs` (server, predvoľby, snímky), `barbershop-30/source/tools/`
   (`app-smoke.mjs`, `koliesko-test.mjs`, `uvod-meranie.mjs`, `uvod-zhoda.py`, `uvod-shot.mjs`, `karty-shot.mjs`,
   `scenes-shot.mjs`, `strih-shot.mjs`, `prechod-shot.mjs`, `ostrost.mjs`, `ostrost.py`, `vaha.mjs`).

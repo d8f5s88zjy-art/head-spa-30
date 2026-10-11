@@ -1,0 +1,74 @@
+<title>Poukazy do Booqme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Jeden stĺpec do mobilu: krátky postup hore, pod ním 17 poukazov v poradí obchodu, každý s cenou, odkazom a odškrtnutím */
+:root {
+  --bg: #f6f3ee; --surface: #fffdf9; --fg: #1f1a14; --muted: #6d6458; --line: #e4dccf;
+  --gold: #8a6a35; --gold-ink: #fff; --ok: #2f6b45; --ok-bg: #e6f1ea;
+  --display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12100d; --surface: #1b1814; --fg: #f1ebe1; --muted: #a89d8d; --line: #2e2922;
+  --gold: #c9a467; --gold-ink: #17130d; --ok: #8fd0a6; --ok-bg: #1d2a21; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12100d; --surface: #1b1814; --fg: #f1ebe1; --muted: #a89d8d; --line: #2e2922;
+  --gold: #c9a467; --gold-ink: #17130d; --ok: #8fd0a6; --ok-bg: #1d2a21; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); }
+.wrap { max-width: 640px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; display: grid; gap: 24px }
+header { display: grid; gap: 6px }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted) }
+h1 { font: 600 clamp(28px, 7vw, 36px)/1.1 var(--display); letter-spacing: .04em; margin: 0; text-wrap: balance }
+.lead { margin: 0; color: var(--muted) }
+.steps { margin: 0; padding: 16px 16px 16px 36px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 8px }
+.steps li::marker { color: var(--gold); font-weight: 600 }
+.steps a { color: var(--gold); font-weight: 600 }
+.note { font-size: 14px; color: var(--muted); margin: 0 }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--bg); padding-block: 8px; display: grid; gap: 6px }
+.bar-row { display: flex; justify-content: space-between; align-items: baseline; font-variant-numeric: tabular-nums }
+.bar-row b { font-size: 18px }
+.track { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden }
+.fill { height: 100%; width: 0; background: var(--gold); transition: width .3s }
+ol.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px }
+.item { display: grid; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--line) }
+.item img { width: 100%; height: auto; border-radius: 10px; display: block; background: #0d0b09 }
+.meta { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 4px; min-width: 0 }
+.no { grid-row: span 2; font: 600 22px/1.2 var(--display); color: var(--gold); font-variant-numeric: tabular-nums }
+.meta h2 { margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; text-wrap: balance }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; font-size: 17px }
+.old { color: var(--muted); text-decoration: line-through }
+.arr { color: var(--muted) }
+.chg .price b { color: var(--gold) }
+.same { font-size: 13px; color: var(--muted) }
+.file { grid-column: 2; font-size: 13px; color: var(--muted); overflow-wrap: anywhere }
+.acts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px }
+.btn { flex: 1 1 180px; text-align: center; padding: 12px 16px; border-radius: 10px; background: var(--gold); color: var(--gold-ink); font-weight: 600; text-decoration: none }
+.btn:focus-visible, .done input:focus-visible { outline: 3px solid var(--fg); outline-offset: 2px }
+.done { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-weight: 600; cursor: pointer }
+.done input { width: 20px; height: 20px; accent-color: var(--ok) }
+.item.is-done .done { background: var(--ok-bg); color: var(--ok); border-color: transparent }
+.item.is-done img { opacity: .55 }
+footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px }
+footer a { color: var(--gold) }
+@media (prefers-reduced-motion: reduce) { .fill { transition: none } }
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Salon 30 · Head Spa · obchod Booqme</div>
+  <h1>Poukazy do Booqme</h1>
+  <p class="lead">{{UVOD}}</p>
+</header>
+<ol class="steps">
+  <li>V Safari sa prihláste na <a href="https://dashboard.booqme.app/login" target="_blank" rel="noopener">dashboard.booqme.app</a>.</li>
+  <li>Pri každom poukaze nižšie ťuknite na <b>Otvoriť v Booqme</b>. Vymeňte obrázok za súbor s rovnakým číslom, prepíšte cenu a uložte.</li>
+  <li>Odškrtnite <b>Hotovo</b> a pokračujte ďalším.</li>
+</ol>
+<p class="note">Obrázky sú v ZIPe <b>headspa30-poukazky-booqme.zip</b> v chate, súbor sa volá rovnako ako pod obrázkom. Ak odkaz neotvorí priamo úpravu poukazu, otvorte zoznam <a href="https://dashboard.booqme.app/gift-cards/types" target="_blank" rel="noopener">Darčekové poukážky</a> a poukaz vyberte podľa názvu.</p>
+<div class="bar" aria-live="polite">
+  <div class="bar-row"><span>Hotovo</span><b id="count">0 / 17</b></div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+<ol class="list">
