@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Značka na konci</title>
+<link rel="stylesheet" href="mg.css">
+<style>
+  /* Značka na konci: názov podniku, adresa a výzva na stmavenom zábere. Ostáva až do konca
+     (posledná snímka je hotová karta, prekrytie ju pri dlhšom zábere drží).
+     Vrstvy a ich časy: references/vrstvy-sablon.md (Značka na konci). */
+  .clona { position: absolute; inset: 0; background: rgba(var(--f-podklad-rgb), var(--clona, 0.86)); }
+  .zn { display: grid; justify-items: inherit; max-width: 100%; }
+  #kompozicia[data-zarovnanie="stred"] .zn { justify-items: center; }
+  #kompozicia[data-zarovnanie="vlavo"] .zn { justify-items: start; }
+  .zn-stitok { font-size: calc(var(--j) * 26px); color: var(--f-text-2); margin-bottom: calc(var(--j) * 34px); }
+  .zn-nazov { font-size: calc(var(--j) * 132px); white-space: nowrap; line-height: 1; padding-bottom: 0.06em; }
+  .zn-linka { margin: calc(var(--j) * 40px) 0 calc(var(--j) * 38px); width: calc(var(--j) * 72px); transform-origin: center; }
+  #kompozicia[data-zarovnanie="vlavo"] .zn-linka { transform-origin: left center; }
+  .zn-adresa { font-size: calc(var(--j) * 40px); white-space: nowrap; color: var(--f-text); }
+  .zn-vyzva { margin-top: calc(var(--j) * 72px); font-size: calc(var(--j) * 32px); padding: calc(var(--j) * 30px) calc(var(--j) * 44px); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="kompozicia" data-dlzka="4" data-zarovnanie="stred" data-zvisle="stred">
+  <div class="clona" data-layer="Clona" data-in="0" data-out="koniec" data-vstup="fade" data-vstup-ms="700" data-vstup-krivka="odchod" data-mimo-zony
+       data-popis="stmavenie celého záberu v tóne podkladu, sila v nastavenia.clona (0 až 1)"></div>
+  <div class="zona">
+    <div class="zn">
+      <p class="mg-stitok zn-stitok" data-layer="Nadpisok" data-text="nadpisok" data-in="0.35" data-out="koniec" data-vstup="fade"
+         data-popis="voliteľný drobný nadpisok verzálkami nad názvom"></p>
+      <p class="mg-nadpis zn-nazov" data-layer="Názov" data-text="nazov" data-prisposob="0.55" data-in="0.45" data-out="koniec" data-vstup="hore" data-vstup-ms="700"
+         data-popis="názov podniku, nadpisové písmo značky; dlhý názov sa zmenší"></p>
+      <span class="mg-linka zn-linka" data-layer="Linka" data-in="0.85" data-out="koniec" data-vstup="linka" data-vstup-ms="650"
+            data-popis="krátka linka akcentu pod názvom, rastie od stredu"></span>
+      <p class="mg-riadok zn-adresa" data-layer="Adresa" data-text="adresa" data-prisposob="0.7" data-in="1.0" data-out="koniec" data-vstup="hore"
+         data-popis="adresa alebo iný krátky riadok"></p>
+      <p class="mg-vyzva zn-vyzva" data-layer="Výzva" data-text="vyzva" data-prisposob="0.7" data-in="1.35" data-out="koniec" data-vstup="hore"
+         data-popis="výzva ako ploché tlačidlo webu (farba akcentu, text v tóne podkladu)"></p>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="predvolene">
+{ "texty": { "nadpisok": "", "nazov": "Názov podniku", "adresa": "Ulica 1, Mesto", "vyzva": "Výzva" },
+  "nastavenia": { "zarovnanie": "stred", "zvisle": "stred", "clona": 0.86 } }
+</script>
+<script src="mg.js"></script>
+</body>
+</html>

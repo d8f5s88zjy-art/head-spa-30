@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Titulná karta</title>
+<link rel="stylesheet" href="mg.css">
+<style>
+  /* Titulná karta: drobný nadpisok a až tri krátke riadky nadpisu priamo na zábere, bez dosky.
+     Za textom jemné stmavenie (ako titulné karty na webe BARBERSHOP 30), záber sa netónuje.
+     Vrstvy a ich časy: references/vrstvy-sablon.md (Titulná karta). */
+  .tk { position: relative; display: grid; justify-items: inherit; max-width: 100%; }
+  #kompozicia[data-zarovnanie="stred"] .tk { justify-items: center; }
+  #kompozicia[data-zarovnanie="vlavo"] .tk { justify-items: start; }
+  .tk-clona {
+    position: absolute; z-index: -1; inset: -42% -24%;
+    opacity: var(--clona, 0.8);
+    background: radial-gradient(closest-side, rgba(var(--f-podklad-rgb), 0.7), rgba(var(--f-podklad-rgb), 0.64) 62%, rgba(var(--f-podklad-rgb), 0.42) 80%, rgba(var(--f-podklad-rgb), 0));
+  }
+  .tk-nadpisok { display: flex; align-items: center; gap: calc(var(--j) * 18px); font-size: calc(var(--j) * 26px); margin-bottom: calc(var(--j) * 34px); }
+  .tk-nadpisok::before, .tk-nadpisok::after { content: ""; flex: none; width: calc(var(--j) * 36px); height: calc(var(--j) * 3px); background: var(--f-akcent); }
+  .tk-nadpisok::after { display: none; }
+  #kompozicia[data-zarovnanie="stred"] .tk-nadpisok::after { display: block; }
+  .tk-riadok { font-size: calc(var(--j) * 128px); white-space: nowrap; line-height: 1; padding-bottom: 0.08em; }
+</style>
+</head>
+<body>
+<div id="kompozicia" data-dlzka="3.5" data-zarovnanie="stred" data-zvisle="stred">
+  <div class="zona">
+    <div class="tk">
+      <div class="tk-clona" data-layer="Clona" data-in="0" data-out="-0.05" data-vstup="fade" data-vstup-ms="500" data-vstup-krivka="odchod" data-odchod="fade" data-odchod-ms="450" data-mimo-zony
+           data-popis="mäkké stmavenie za textom v tóne podkladu, sila v nastavenia.clona (0 až 1)"></div>
+      <p class="mg-stitok mg-tien tk-nadpisok" data-layer="Nadpisok" data-text="nadpisok" data-in="0.2" data-out="-0.1" data-vstup="fade" data-odchod="fade"
+         data-popis="drobný nadpisok verzálkami s linkou akcentu (pri strede z oboch strán)"></p>
+      <p class="mg-nadpis mg-tien tk-riadok" data-layer="Riadok 1" data-text="riadok1" data-prisposob="0.6" data-in="0.35" data-out="-0.1" data-vstup="hore" data-odchod="dole"
+         data-popis="prvý riadok nadpisu; *slovo* = zvýraznenie kurzívou"></p>
+      <p class="mg-nadpis mg-tien tk-riadok" data-layer="Riadok 2" data-text="riadok2" data-prisposob="0.6" data-in="0.5" data-out="-0.1" data-vstup="hore" data-odchod="dole"
+         data-popis="druhý riadok (voliteľný)"></p>
+      <p class="mg-nadpis mg-tien tk-riadok" data-layer="Riadok 3" data-text="riadok3" data-prisposob="0.6" data-in="0.65" data-out="-0.1" data-vstup="hore" data-odchod="dole"
+         data-popis="tretí riadok (voliteľný)"></p>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="predvolene">
+{ "texty": { "nadpisok": "Nadpisok", "riadok1": "Prvý riadok", "riadok2": "Druhý *riadok*", "riadok3": "" },
+  "nastavenia": { "zarovnanie": "stred", "zvisle": "stred", "clona": 0.8 } }
+</script>
+<script src="mg.js"></script>
+</body>
+</html>

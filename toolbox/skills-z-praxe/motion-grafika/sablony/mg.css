@@ -1,0 +1,86 @@
+/* Spoločný základ kompozícií pohyblivej grafiky (motion-grafika).
+   Kompozícia je jeden prvok #kompozicia s rozmerom výstupu; pozadie je priehľadné, aby PNG
+   snímky mali alfu. Farby, písma a krivky pohybu dosadí mg.js zo značky ako premenné:
+   --f-<farba>, --p-<písmo>, --e-vstup, --e-odchod, --r. Rozmery sú v jednotkách --j
+   (1 = kratšia strana 1080 px), takže šablóna drží pomer aj pri 720 × 1280 alebo 1920 × 1080. */
+html, body { margin: 0; padding: 0; background: transparent; }
+* { box-sizing: border-box; }
+/* pri renderovaní nesmú bežať CSS prechody: idú v reálnom čase, nie podľa času kompozície */
+html.mg-render *, html.mg-render *::before, html.mg-render *::after { transition: none !important; caret-color: transparent; }
+
+#kompozicia {
+  position: relative; overflow: hidden;
+  width: calc(var(--sirka) * 1px); height: calc(var(--vyska) * 1px);
+  font-family: var(--p-text), sans-serif; font-weight: var(--p-text-vaha, 400);
+  color: var(--f-text);
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+  font-kerning: normal; font-feature-settings: "kern" 1;
+}
+:where(#kompozicia) :where(p, h1, h2) { margin: 0; }  /* nulová váha, aby okraje v šablóne platili */
+
+/* bezpečná zóna: priestor bez rozhrania aplikácie (hore meno účtu, vpravo ikony, dole popis) */
+.zona {
+  position: absolute;
+  top: calc(var(--zona-hore) * 1px); bottom: calc(var(--zona-dole) * 1px);
+  left: calc(var(--zona-vlavo) * 1px); right: calc(var(--zona-vpravo) * 1px);
+  display: flex; flex-direction: column;
+}
+/* pri zarovnaní na stred je zóna súmerná (inak by text uhol doľava o rozdiel okrajov) */
+#kompozicia[data-zarovnanie="stred"] .zona {
+  left: calc(var(--zona-bok) * 1px); right: calc(var(--zona-bok) * 1px);
+  align-items: center; text-align: center;
+}
+#kompozicia[data-zarovnanie="vlavo"] .zona { align-items: flex-start; text-align: left; }
+#kompozicia[data-zarovnanie="vpravo"] .zona { align-items: flex-end; text-align: right; }
+#kompozicia[data-zvisle="hore"] .zona { justify-content: flex-start; }
+#kompozicia[data-zvisle="stred"] .zona { justify-content: center; }
+#kompozicia[data-zvisle="dole"] .zona { justify-content: flex-end; }
+
+/* vrstva mimo svojho času (data-in, data-out) je skrytá cez visibility, nie display:
+   display:none by zrušil jej CSS animácie */
+[data-layer].mg-mimo { visibility: hidden; }
+/* prázdny text (parameter chýba) vrstvu vynechá úplne */
+.mg-prazdna { display: none !important; }
+
+/* typografia značky */
+.mg-nadpis {
+  font-family: var(--p-nadpis), serif; font-weight: var(--p-nadpis-vaha, 700);
+  letter-spacing: var(--p-nadpis-rozostup, 0); line-height: 0.98;
+  color: var(--f-text); margin: 0;
+}
+.mg-nadpis em {
+  font-style: italic; font-weight: var(--p-zvyraznenie-vaha, 400);
+  font-family: var(--p-zvyraznenie, var(--p-nadpis)), serif;
+  color: var(--f-zvyraznenie, var(--f-text));
+}
+.mg-stitok {
+  font-family: var(--p-text), sans-serif; font-weight: var(--p-stitok-vaha, 700);
+  text-transform: uppercase; letter-spacing: var(--p-stitok-rozostup, 0.18em);
+  line-height: 1; color: var(--f-stitok, var(--f-text));
+}
+.mg-riadok { font-family: var(--p-text), sans-serif; font-weight: var(--p-riadok-vaha, 600); line-height: 1.3; color: var(--f-text-2); }
+.mg-vyzva {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--f-akcent); color: var(--f-na-akcente);
+  font-family: var(--p-text), sans-serif; font-weight: 700;
+  text-transform: var(--p-vyzva-velkost, none); letter-spacing: var(--p-vyzva-rozostup, 0.02em);
+  border-radius: var(--r-tlacidlo, 2px); line-height: 1;
+}
+/* krátka linka akcentu (ako pred nadpiskom na webe) */
+.mg-linka { display: block; height: calc(var(--j) * 3px); width: calc(var(--j) * 56px); background: var(--f-akcent); }
+/* tieň pod textom priamo na zábere, rovnaký ako na webe značky (--tien-text, --tien-nadpis zo style.css):
+   tesný lem a mäkký tieň v tóne podkladu, nie žiara */
+.mg-tien { text-shadow: var(--tien-text, 0 0 1px rgba(var(--f-podklad-rgb), 0.9), 0 1px 3px rgba(var(--f-podklad-rgb), 0.8), 0 0 14px rgba(var(--f-podklad-rgb), 0.7)); }
+.mg-nadpis.mg-tien { text-shadow: var(--tien-nadpis, var(--tien-text)); }
+
+/* náhľad v prehliadači (parameter nahlad): šachovnica a ovládanie, pri renderovaní sa nekreslí */
+html.mg-nahlad body { background: #1b1b1b; color: #ddd; font: 14px/1.4 system-ui, sans-serif; display: grid; justify-items: center; gap: 12px; padding: 12px 0 24px; }
+html.mg-nahlad .mg-ram { position: relative; overflow: hidden; background: repeating-conic-gradient(#5a5a5a 0 25%, #787878 0 50%) 0 0 / 48px 48px; }
+html.mg-nahlad .mg-ram > #kompozicia { transform-origin: 0 0; }
+.mg-ovladanie { width: min(96vw, 900px); display: grid; gap: 6px; }
+.mg-ovladanie .riadok { display: flex; gap: 10px; align-items: center; }
+.mg-ovladanie input[type=range] { flex: 1; }
+.mg-os { display: grid; grid-template-columns: 180px 1fr; gap: 2px 8px; font-size: 12px; }
+.mg-os .pas { position: relative; height: 14px; background: #2a2a2a; }
+.mg-os .pas i { position: absolute; top: 2px; bottom: 2px; background: #5d7fa8; }
+.mg-os .pas b { position: absolute; top: 0; bottom: 0; width: 1px; background: #f0c040; }

@@ -1,0 +1,49 @@
+{
+  "_popis": "Reel BARBERSHOP 30 v troch vetách (instagram-salon: sľub, čo dostaneš, ako si rezervuješ). Fakty overené v barbershop-30/docs/CONTENT_SOURCES.md 2026-10-11. Bez hudby: licenciu nemáme. Spustenie z koreňa repozitára: python3 -I toolbox/skills-z-praxe/kratke-video/scripts/reel.py toolbox/skills-z-praxe/kratke-video/references/scenar-barbershop-30.json -o <scratchpad>/reel-demo/barbershop30-reel.mp4",
+  "podnik": "Barbershop 30",
+  "znacka": "barbershop-30",
+  "format": "9:16",
+  "zaklad": "../../../..",
+  "zabery": [
+    {
+      "src": "barbershop-30/source/web-povodny/gallery/36.jpg",
+      "_odkial": "záber filmu cakaren: kotva data-shot=\"cakaren\" v barbershop-30/index.html (karta Čakáreň), zdroj podľa assets/img/film/film.json je tento originál 4096x2731; vlastný výrez (stred 0.62), aby biela tabuľa Route 66 bola vpravo od textu, nie pod ním",
+      "trvanie": 4.0,
+      "pohyb": "najazd",
+      "sila": 0.07,
+      "stred": [0.62, 0.5],
+      "stitok": "Barbershop 30 · Nitra",
+      "text": "Vzadu ťa čaká káva zdarma.",
+      "zdroj": "CONTENT_SOURCES.md, Identita a kontakt: kapacita (káva a minerálka zdarma), kde sa podáva káva (vzadu, kde ľudia čakajú; majiteľ 2026-10-11)",
+      "ludia": "nie"
+    },
+    {
+      "src": "barbershop-30/source/video/video-2.mp4",
+      "_odkial": "MEDIA_SELECTION.md, Videá: tim-v-akcii (video-2, 1 až 9 s), hlavná sála pod oranžovými lampami",
+      "od": 1.0,
+      "do": 5.2,
+      "prechod": "prelinanie",
+      "prechod_dlzka": 0.4,
+      "text": "Osem kresiel, *jedno je tvoje.*",
+      "zdroj": "CONTENT_SOURCES.md, Identita a kontakt: kapacita (8 kresiel); index.html, karta Poď ďalej",
+      "ludia": "barberi pri práci spredu (zamestnanci), klienti zozadu, recepčná v pozadí"
+    },
+    {
+      "src": "barbershop-30/assets/img/film/vstup-m-1448.avif",
+      "_odkial": "kotva data-pro=\"vstup\" v barbershop-30/index.html (prológ, bod záujmu dvere), výrez na výšku z gallery/43.jpg",
+      "trvanie": 4.6,
+      "pohyb": "najazd",
+      "sila": 0.08,
+      "stred": [0.5, 0.5],
+      "prechod": "prelinanie",
+      "prechod_dlzka": 0.4,
+      "stitok": "Mostná 30, Nitra",
+      "text": "Rezervuj online 24/7.",
+      "riadok": "barbershop30.sk/rezervacia",
+      "zdroj": "CONTENT_SOURCES.md, Identita a kontakt: adresa, kapacita (online rezervácie 24/7), rezervácia https://www.barbershop30.sk/rezervacia",
+      "ludia": "nie (rozmazané auto a chodec sú mimo výrezu)"
+    }
+  ],
+  "hudba": null,
+  "hlas": null
+}

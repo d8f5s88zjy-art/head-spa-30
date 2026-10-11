@@ -1,0 +1,79 @@
+{
+  "_popis": "Vzor scenára pre scripts/reel.py. Kľúče začínajúce _ sú poznámky, skript ich ignoruje. Spustiteľný (zábery BARBERSHOP 30 z repozitára). Hotové scenáre: scenar-barbershop-30.json, scenar-head-spa-30.json.",
+  "_polia_scenara": {
+    "podnik": "názov podniku (len na výpis)",
+    "znacka": "barbershop-30 | head-spa-30 (references/znacky.json), alebo celý objekt značky (iný podnik)",
+    "format": "9:16 (predvolený, 1080x1920) | 16:9 (1920x1080) | 1:1 (1080x1080); prepíše --format",
+    "fps": "30 (predvolené)",
+    "zaklad": "priečinok, od ktorého sa berú relatívne cesty (relatívne k scenáru); prepíše --zaklad",
+    "pisma / farby / velkosti / stmavenie / zarovnanie": "voliteľne prepíše časť predvoľby značky",
+    "bezpecna_zona": "voliteľne {\"dole\": 0.2, \"vpravo\": 0.12, \"hore\": 0.12, \"vlavo\": 0.06}",
+    "text_fade": "[ms nábehu, ms odchodu] textu, predvolené [300, 250]",
+    "titulka": "čas titulnej snímky v s (predvolene chvíľu po objavení prvého nadpisu)",
+    "hlas": "null alebo {src, povod (povinné), od (s vo videu), zaciatok (s v nahrávke), hlasitost_db}",
+    "hudba": "null alebo {src, licencia (povinné), zaciatok, hlasitost_db (predvolene -18 pod hlasom, -6 bez hlasu)}"
+  },
+  "_polia_zaberu": {
+    "src": "fotka (jpg, png, webp, avif, tif) alebo video (mp4, mov, m4v, webm, mkv); typ podľa prípony alebo \"typ\"",
+    "trvanie": "fotka: dĺžka v s (povinné)",
+    "od / do": "video: úsek v s (do predvolene koniec)",
+    "pohyb": "fotka: najazd (predvolený) | odjazd | vlavo | vpravo | hore | dole | ziadny",
+    "sila": "veľkosť pohybu, predvolené 0.08 (nájazd o 8 %, posun o 8 % šírky výrezu)",
+    "zoom": "nájazd: [od, do], napr. [1.0, 1.06]; posun: číslo",
+    "priebeh": "linearny (predvolený, najlepšie cez prelínanie) | plynuly (mäkký rozbeh a dobeh)",
+    "stred": "[x, y] bod záujmu 0..1 vo fotke alebo videu (výrez a cieľ nájazdu)",
+    "vypln": "video: orez (predvolený) | pas (celé video v strede na farbe pozadia značky, napr. 9:16 video v 16:9)",
+    "stabilizuj": "video: true = vid.stab v dvoch prechodoch",
+    "prechod": "do tohto záberu: strih (predvolený) | prelinanie; prechod_dlzka v s (0.4)",
+    "stitok / text / riadok": "nadpisok (verzálky), hlavná veta (*kurzíva* ako akcent), riadok pod ňou (web, telefón)",
+    "poloha / zarovnanie": "dole (predvolená) | stred | hore; vlavo (predvolené) | stred",
+    "stmavenie": "0..1 krytie mäkkej elipsy za textom (predvolene zo značky)",
+    "overlay": "prekrytie s alfou (ProRes 4444 .mov alebo WebM VP9 s alfou) od začiatku záberu cez celý obraz, najviac do konca záberu",
+    "zdroj": "odkiaľ je fakt v texte (súbor a časť); bez neho upozornenie",
+    "ludia": "kto je v zábere (nie | zamestnanci so súhlasom | klienti zozadu ...); všetko okrem nie ide do Treba potvrdiť"
+  },
+  "podnik": "Barbershop 30",
+  "znacka": "barbershop-30",
+  "format": "9:16",
+  "zaklad": "../../../..",
+  "zabery": [
+    {
+      "src": "barbershop-30/source/web-povodny/gallery/36.jpg",
+      "trvanie": 4.0,
+      "pohyb": "najazd",
+      "sila": 0.07,
+      "stred": [0.62, 0.5],
+      "stitok": "Barbershop 30 · Nitra",
+      "text": "Vzadu ťa čaká káva zdarma.",
+      "zdroj": "barbershop-30/docs/CONTENT_SOURCES.md, Identita a kontakt (kapacita, kde sa podáva káva)",
+      "ludia": "nie"
+    },
+    {
+      "src": "barbershop-30/source/video/video-2.mp4",
+      "od": 1.0,
+      "do": 5.2,
+      "prechod": "prelinanie",
+      "prechod_dlzka": 0.4,
+      "text": "Osem kresiel, *jedno je tvoje.*",
+      "zdroj": "barbershop-30/docs/CONTENT_SOURCES.md, Identita a kontakt (kapacita)",
+      "ludia": "barberi pri práci spredu (zamestnanci), klienti zozadu",
+      "_overlay": "napr. \"overlay\": \"<cesta>/lower-third.mov\" (ProRes 4444) alebo \"<cesta>/lower-third.webm\" (VP9 s alfou) zo skillu motion-grafika"
+    },
+    {
+      "src": "barbershop-30/assets/img/film/vstup-m-1448.avif",
+      "trvanie": 4.6,
+      "pohyb": "najazd",
+      "stred": [0.5, 0.5],
+      "prechod": "prelinanie",
+      "stitok": "Mostná 30, Nitra",
+      "text": "Rezervuj online 24/7.",
+      "riadok": "barbershop30.sk/rezervacia",
+      "zdroj": "barbershop-30/docs/CONTENT_SOURCES.md, Identita a kontakt (adresa, rezervácia)",
+      "ludia": "nie"
+    }
+  ],
+  "hlas": null,
+  "hudba": null,
+  "_hlas_priklad": {"src": "hlas-majitel.m4a", "povod": "nahral majiteľ 2026-10-12 na telefón", "od": 0.3},
+  "_hudba_priklad": {"src": "hudba.mp3", "licencia": "licencia od majiteľa: <kto, kedy, na aké použitie>", "hlasitost_db": -18}
+}

@@ -1,0 +1,102 @@
+{
+  "nazov": "BARBERSHOP 30",
+  "zdroj": "barbershop-30/docs/ART_DIRECTION.md (paleta, typografia, pohyb); farby, polomery a krivky sa pri každom renderovaní čítajú z premenných v :root súboru css",
+  "css": "barbershop-30/assets/style.css",
+  "farby": {
+    "podklad": "{--ink}",
+    "plocha": "{--ink-2}",
+    "text": "{--paper}",
+    "text-2": "{--paper-2}",
+    "text-3": "{--paper-3}",
+    "akcent": "{--lamp}",
+    "na-akcente": "{--ink}",
+    "stitok": "{--paper}",
+    "linka": "{--line}",
+    "linka-silna": "{--line-strong}",
+    "doska": "{--board}"
+  },
+  "farby_zaloha": {
+    "podklad": "#0e0d0c",
+    "plocha": "#171412",
+    "text": "#f1e9dd",
+    "text-2": "#c9beae",
+    "text-3": "#8e8578",
+    "akcent": "#e0601c",
+    "na-akcente": "#0e0d0c",
+    "stitok": "#f1e9dd",
+    "linka": "rgba(241, 233, 221, 0.14)",
+    "linka-silna": "rgba(241, 233, 221, 0.3)",
+    "doska": "rgba(14, 13, 12, 0.72)"
+  },
+  "pohyb": {
+    "vstup": "{--ease-out}",
+    "odchod": "{--ease-in-out}",
+    "vstup_ms": "{--t-text}",
+    "odchod_ms": 400
+  },
+  "pohyb_zaloha": {
+    "vstup": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+    "odchod": "cubic-bezier(0.65, 0, 0.35, 1)",
+    "vstup_ms": 560
+  },
+  "premenne": {
+    "--p-nadpis": "\"Fraunces\", Georgia, serif",
+    "--p-nadpis-vaha": "800",
+    "--p-nadpis-rozostup": "-0.02em",
+    "--p-zvyraznenie-vaha": "500",
+    "--p-text": "\"Manrope\", \"Segoe UI\", Arial, sans-serif",
+    "--p-text-vaha": "400",
+    "--p-riadok-vaha": "600",
+    "--p-stitok-vaha": "700",
+    "--p-stitok-rozostup": "0.2em",
+    "--p-vyzva-velkost": "uppercase",
+    "--p-vyzva-rozostup": "0.08em",
+    "--r-doska": "{--radius}",
+    "--r-tlacidlo": "{--radius-btn}",
+    "--tien-text": "{--halo}",
+    "--tien-nadpis": "0 0 2px rgba({--ink-rgb}, 0.5), 0 2px 30px rgba({--ink-rgb}, 0.6)"
+  },
+  "premenne_zaloha": {
+    "--r-doska": "8px",
+    "--r-tlacidlo": "6px",
+    "--tien-text": "0 0 1px rgba(14, 13, 12, 0.9), 0 1px 3px rgba(14, 13, 12, 0.8), 0 0 6px rgba(14, 13, 12, 0.7), 0 0 16px rgba(14, 13, 12, 0.8)",
+    "--tien-nadpis": "0 0 2px rgba(14, 13, 12, 0.5), 0 2px 30px rgba(14, 13, 12, 0.6)"
+  },
+  "fonty": [
+    {
+      "rodina": "Fraunces",
+      "vaha": 800,
+      "styl": "normal",
+      "subor": "barbershop-30/assets/fonts/Fraunces-800.woff2"
+    },
+    {
+      "rodina": "Fraunces",
+      "vaha": 500,
+      "styl": "italic",
+      "subor": "barbershop-30/assets/fonts/Fraunces-500i.woff2"
+    },
+    {
+      "rodina": "Manrope",
+      "vaha": 400,
+      "styl": "normal",
+      "subor": "barbershop-30/assets/fonts/Manrope-400.woff2"
+    },
+    {
+      "rodina": "Manrope",
+      "vaha": 600,
+      "styl": "normal",
+      "subor": "barbershop-30/assets/fonts/Manrope-600.woff2"
+    },
+    {
+      "rodina": "Manrope",
+      "vaha": 700,
+      "styl": "normal",
+      "subor": "barbershop-30/assets/fonts/Manrope-700.woff2"
+    }
+  ],
+  "pravidla": [
+    "jediný akcent je oranžová lámp (--lamp): linka, výzva, priebeh; mosadz nie je v grafike",
+    "nástupy textu 450 až 700 ms, len krytie a posun do 24 px; žiadne rozmazanie textu, blikanie ani čiastočky",
+    "fakty len z barbershop-30/docs/CONTENT_SOURCES.md; názov značky Barbershop 30"
+  ]
+}

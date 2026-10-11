@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Priebeh a odpočet</title>
+<link rel="stylesheet" href="mg.css">
+<style>
+  /* Priebeh / odpočet: popis, počítadlo, dráha s výplňou a bodom, až štyri kroky pod dráhou.
+     Priebeh ide od nastavenia.priebeh_od do priebeh_do (sekundy), krivka linear alebo plynulo.
+     Počítadlo ide od pocitadlo_od do pocitadlo_do vo formáte nastavenia.pocitadlo ("{n} %",
+     "{n}", "{mm}:{ss}"); prázdny formát počítadlo skryje. Vrstvy: references/vrstvy-sablon.md (Priebeh). */
+  .pr { display: grid; width: 100%; }
+  .pr > * { grid-area: 1 / 1; }
+  .pr-doska { background: var(--f-doska); border: 1px solid var(--f-linka); border-radius: var(--r-doska, 2px); }
+  .pr-obsah { position: relative; padding: calc(var(--j) * 36px) calc(var(--j) * 44px) calc(var(--j) * 40px); }
+  .pr-hlava { display: flex; align-items: baseline; justify-content: space-between; gap: calc(var(--j) * 24px); margin-bottom: calc(var(--j) * 34px); }
+  .pr-popis { font-size: calc(var(--j) * 28px); white-space: nowrap; }
+  .pr-cislo { font-family: var(--p-text), sans-serif; font-weight: 700; font-size: calc(var(--j) * 56px); line-height: 1; font-variant-numeric: tabular-nums; color: var(--f-text); white-space: nowrap; }
+  .pr-os { position: relative; height: calc(var(--j) * 18px); }
+  .pr-draha { position: absolute; left: 0; right: 0; top: 50%; height: calc(var(--j) * 2px); margin-top: calc(var(--j) * -1px); background: var(--f-linka-silna); transform-origin: left center; }
+  .pr-vypln { position: absolute; left: 0; right: 0; top: 50%; height: calc(var(--j) * 4px); margin-top: calc(var(--j) * -2px); background: var(--f-akcent); transform-origin: left center; transform: scaleX(var(--p, 0)); }
+  .pr-bod { position: absolute; top: 50%; left: calc(var(--p, 0) * 100%); width: calc(var(--j) * 18px); height: calc(var(--j) * 18px); margin: calc(var(--j) * -9px) 0 0 calc(var(--j) * -9px); background: var(--f-akcent); border-radius: var(--r-tlacidlo, 2px); }
+  .pr-kroky { position: relative; height: calc(var(--j) * 46px); margin-top: calc(var(--j) * 20px); }
+  .pr-krok { position: absolute; top: 0; left: calc(var(--poloha, 0) * 100%); transform: translateX(calc(var(--poloha, 0) * -100%)); font-size: calc(var(--j) * 34px); white-space: nowrap; }
+  .pr-krok::before { content: ""; position: absolute; top: calc(var(--j) * -30px); left: calc(var(--poloha, 0) * 100%); width: calc(var(--j) * 2px); height: calc(var(--j) * 12px); margin-left: calc(var(--j) * -1px); }
+  /* --hotovo (0 až 1) nastavuje mg.js podľa priebehu: krok sa rozsvieti, keď ho výplň prejde */
+  .pr-krok { color: color-mix(in srgb, var(--f-text) calc(var(--hotovo, 0) * 100%), var(--f-text-3)); }
+  .pr-krok::before { background: color-mix(in srgb, var(--f-akcent) calc(var(--hotovo, 0) * 100%), var(--f-linka-silna)); }
+</style>
+</head>
+<body>
+<div id="kompozicia" data-dlzka="4.2" data-zarovnanie="vlavo" data-zvisle="dole" data-priebeh-od="@priebeh_od" data-priebeh-do="@priebeh_do" data-krivka="@krivka">
+  <div class="zona">
+    <div class="pr">
+      <div class="pr-doska" data-layer="Doska" data-in="0.1" data-out="-0.1" data-vstup="stierka" data-vstup-ms="700" data-odchod="fade" data-odchod-ms="420"
+           data-popis="polopriehľadná doska pod priebehom (skryť: vrstvy.Doska.skry = true)"></div>
+      <div class="pr-obsah">
+        <div class="pr-hlava">
+          <p class="mg-stitok pr-popis" data-layer="Popis" data-text="popis" data-in="0.35" data-out="-0.25" data-vstup="hore" data-odchod="fade"
+             data-popis="čo sa práve deje, drobný nadpisok verzálkami"></p>
+          <p class="pr-cislo" data-layer="Počítadlo" data-ak="@pocitadlo" data-pocitadlo data-od="@pocitadlo_od" data-do="@pocitadlo_do" data-format="@pocitadlo" data-in="0.45" data-out="-0.25" data-vstup="hore" data-odchod="fade"
+             data-popis="číslo od pocitadlo_od do pocitadlo_do podľa priebehu (odpočet zaokrúhľuje nahor)"></p>
+        </div>
+        <div class="pr-os">
+          <span class="pr-draha" data-layer="Dráha" data-in="0.5" data-out="-0.25" data-vstup="linka" data-vstup-ms="700" data-odchod="fade"
+                data-popis="vlasová dráha cez celú šírku, rastie zľava"></span>
+          <span class="pr-vypln" data-layer="Výplň" data-in="0.5" data-out="-0.25" data-odchod="fade"
+                data-popis="výplň v akcente, dĺžka = priebeh (--p od priebeh_od do priebeh_do)"></span>
+          <span class="pr-bod" data-layer="Bod" data-in="0.75" data-out="-0.25" data-vstup="fade" data-odchod="fade"
+                data-popis="štvorček na čele výplne (ako značka bežca vo videu)"></span>
+        </div>
+        <div class="pr-kroky" data-kroky data-layer="Kroky" data-in="0.65" data-out="-0.25" data-vstup="hore" data-odchod="fade"
+             data-popis="až štyri kroky rovnomerne pod dráhou; rozsvietia sa, keď ich výplň dosiahne">
+          <p class="mg-riadok pr-krok" data-text="krok1" data-prah="auto"></p>
+          <p class="mg-riadok pr-krok" data-text="krok2" data-prah="auto"></p>
+          <p class="mg-riadok pr-krok" data-text="krok3" data-prah="auto"></p>
+          <p class="mg-riadok pr-krok" data-text="krok4" data-prah="auto"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="predvolene">
+{ "texty": { "popis": "Priebeh", "krok1": "Začiatok", "krok2": "Stred", "krok3": "Koniec", "krok4": "" },
+  "nastavenia": { "zarovnanie": "vlavo", "zvisle": "dole", "priebeh_od": 0.9, "priebeh_do": 3.4, "krivka": "plynulo",
+                  "pocitadlo": "{n} %", "pocitadlo_od": 0, "pocitadlo_do": 100 } }
+</script>
+<script src="mg.js"></script>
+</body>
+</html>

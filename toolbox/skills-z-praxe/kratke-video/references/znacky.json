@@ -1,0 +1,75 @@
+{
+  "_popis": "Predvoľby značiek pre scripts/reel.py. Cesty sú od koreňa repozitára (_koren je relatívne k tomuto súboru). Farby sa čítajú zo style.css webu (posledná definícia premennej vyhráva, ako v CSS); 'zaloha' platí, keď súbor chýba (iný počítač). Veľkosti sú v px pri šírke 1080 (pri inom formáte sa prepočítajú podľa kratšej strany). Polia s _ skript ignoruje.",
+  "_koren": "../../../..",
+
+  "barbershop-30": {
+    "nazov": "Barbershop 30",
+    "css": "barbershop-30/assets/style.css",
+    "_zdroj": "barbershop-30/assets/style.css: :root --paper, --ink, --lamp; .title (Fraunces 800, letter-spacing -0.02em, line-height 0.95), .title em (Fraunces 500 kurzíva), .kicker (Manrope 700, verzálky, 0.2em, pred ním linka 24x2 v --lamp), .title-sub (Manrope), .title-card::before (stmavenie za textom rgba(--ink, 0.7))",
+    "pisma": {
+      "nadpis": "barbershop-30/assets/fonts/Fraunces-800.woff2",
+      "kurziva": "barbershop-30/assets/fonts/Fraunces-500i.woff2",
+      "stitok": "barbershop-30/assets/fonts/Manrope-700.woff2",
+      "riadok": "barbershop-30/assets/fonts/Manrope-600.woff2"
+    },
+    "farby": {
+      "text": {"css": "--paper", "zaloha": "#f1e9dd"},
+      "akcent": {"css": "--paper", "zaloha": "#f1e9dd"},
+      "stitok": {"css": "--paper", "zaloha": "#f1e9dd"},
+      "linka": {"css": "--lamp", "zaloha": "#e0601c"},
+      "tien": {"css": "--ink", "zaloha": "#0e0d0c"},
+      "pozadie": {"css": "--ink", "zaloha": "#0e0d0c"}
+    },
+    "velkosti": {"nadpis": 96, "stitok": 32, "riadok": 40},
+    "riadkovanie": {"nadpis": 1.0, "riadok": 1.3},
+    "rozostup": {"nadpis": -0.02, "stitok": 0.2, "riadok": 0.0},
+    "linka": {"sirka": 60, "hrubka": 5, "medzera": 22},
+    "stmavenie": 0.62,
+    "zarovnanie": "vlavo",
+    "zakazane": [
+      {"vzor": "8 rokov|od roku 2018", "uroven": "chyba", "preco": "neoverené (CONTENT_SOURCES.md, Čo ostáva neoverené); platí od roku 2019"},
+      {"vzor": "[Ss]al[oó]n\\w* 30|HEAD SPA", "uroven": "chyba", "preco": "vzťah so Salónom 30 a HEAD SPA 30 je neoverený"},
+      {"vzor": "[Vv]ernostn", "uroven": "chyba", "preco": "vernostná karta nemá zdroj"},
+      {"vzor": "[Šš]kolen", "uroven": "chyba", "preco": "školenia pod značkou Barbershop 30 sú neoverené"},
+      {"vzor": "[Pp]laket|Zlat\\w* [Ff]irm|Orl\\w* kadern|hodnoteni|recenzi", "uroven": "pozor", "preco": "ocenenia a hodnotenia len s odkazom na zdroj a po súhlase majiteľa"},
+      {"vzor": "pri recepcii|pri vstupe", "uroven": "pozor", "preco": "káva sa podáva vzadu v čakárni (majiteľ 2026-10-11)"},
+      {"vzor": "Barbershop30", "uroven": "pozor", "preco": "v texte Barbershop 30; Barbershop30 len v právnych údajoch"}
+    ]
+  },
+
+  "head-spa-30": {
+    "nazov": "HEAD SPA 30",
+    "css": "assets/style.css",
+    "_zdroj": "assets/style.css: Luxusná vrstva na konci (:root --text-primary, --accent, --canvas), --ink (12,9,6), .h2 (Lora, letter-spacing -0.012em až -0.02em), .h2 em (zlatá kurzíva), .kicker (Manrope, verzálky, --accent, pred ním linka 28x1 v --accent). CLAUDE.md: zlatá kurzíva ako jediný akcent, žiadne žiary ani prechody farieb.",
+    "pisma": {
+      "nadpis": "assets/fonts/Lora-display.woff2",
+      "kurziva": "assets/fonts/Lora-italic.woff2",
+      "stitok": "assets/fonts/Manrope-700.woff2",
+      "riadok": "assets/fonts/Manrope-400.woff2"
+    },
+    "farby": {
+      "text": {"css": "--text-primary", "zaloha": "#efe7da"},
+      "akcent": {"css": "--accent", "zaloha": "#c9a66b"},
+      "stitok": {"css": "--accent", "zaloha": "#c9a66b"},
+      "linka": {"css": "--accent", "zaloha": "#c9a66b"},
+      "tien": {"css": "--ink", "zaloha": "#0c0906"},
+      "pozadie": {"css": "--canvas", "zaloha": "#0d0a07"}
+    },
+    "velkosti": {"nadpis": 92, "stitok": 30, "riadok": 40},
+    "riadkovanie": {"nadpis": 1.06, "riadok": 1.35},
+    "rozostup": {"nadpis": -0.012, "stitok": 0.3, "riadok": 0.0},
+    "linka": {"sirka": 78, "hrubka": 3, "medzera": 24},
+    "stmavenie": 0.62,
+    "zarovnanie": "vlavo",
+    "zakazane": [
+      {"vzor": "[Bb]arber ?[Ss]hop", "uroven": "chyba", "preco": "HEAD SPA 30 nie je Barbershop 30 ani Barber shop 30 (CLAUDE.md)"},
+      {"vzor": "[Ss]al[oó]n\\w* ?30", "uroven": "pozor", "preco": "Salón 30 len ako miesto (v priestoroch Salónu 30), nikdy ako názov alebo značka HEAD SPA 30"},
+      {"vzor": "([Ss]trieborn|[Zz]lat)\\w* [Hh]ead [Ss]pa", "uroven": "chyba", "preco": "strieborný ani zlatý Head Spa rituál neexistuje; Zlatý rituál 24K je pre chodidlá"},
+      {"vzor": "[Pp]oukaz\\w* na \\d", "uroven": "chyba", "preco": "poukaz je vždy na konkrétny rituál, nie na sumu"},
+      {"vzor": "[Mm]ajite", "uroven": "chyba", "preco": "o majiteľovi sa nepíše nič"},
+      {"vzor": "[Kk]adern|[Kk]ozmetik", "uroven": "pozor", "preco": "služby Salónu 30 sem nepatria; fúkaná a žehlenie nie sú rituály"},
+      {"vzor": "[Pp]latb\\w* kart|kartou online", "uroven": "pozor", "preco": "platba kartou funguje až po prepojení Stripe Connect (CLAUDE.md)"},
+      {"vzor": "[Hh]odnoteni|recenzi", "uroven": "pozor", "preco": "profil v Booqme zatiaľ recenzie nemal (docs/booqme-opravy.md)"}
+    ]
+  }
+}

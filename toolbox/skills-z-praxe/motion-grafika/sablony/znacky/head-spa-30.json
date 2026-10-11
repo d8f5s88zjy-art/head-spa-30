@@ -1,0 +1,98 @@
+{
+  "nazov": "HEAD SPA 30",
+  "zdroj": "CLAUDE.md (Technika), assets/style.css časť Luxusná vrstva a Čitateľnosť; farby, polomery a krivky sa pri každom renderovaní čítajú z premenných v :root súboru css (posledná hodnota platí)",
+  "css": "assets/style.css",
+  "farby": {
+    "podklad": "{--canvas}",
+    "plocha": "{--panel}",
+    "text": "{--text-primary}",
+    "text-2": "{--text-secondary}",
+    "text-3": "{--text-tertiary}",
+    "akcent": "{--accent}",
+    "zvyraznenie": "{--accent}",
+    "na-akcente": "#17110a",
+    "stitok": "{--accent}",
+    "linka": "{--line}",
+    "linka-silna": "{--line-strong}",
+    "doska": "rgba({--ink}, 0.72)"
+  },
+  "farby_zaloha": {
+    "podklad": "#0d0a07",
+    "plocha": "#14100c",
+    "text": "#efe7da",
+    "text-2": "#bfb3a2",
+    "text-3": "#978b7b",
+    "akcent": "#c9a66b",
+    "zvyraznenie": "#c9a66b",
+    "na-akcente": "#17110a",
+    "stitok": "#c9a66b",
+    "linka": "rgba(239, 231, 218, 0.1)",
+    "linka-silna": "rgba(201, 166, 107, 0.38)",
+    "doska": "rgba(12, 9, 6, 0.72)"
+  },
+  "poznamky_k_farbam": "na-akcente #17110a je farba textu tlačidla .btn.primary v Luxusnej vrstve (nie je v premennej)",
+  "pohyb": {
+    "vstup": "{--ease}",
+    "odchod": "{--ease-soft}",
+    "vstup_ms": 700,
+    "odchod_ms": 450
+  },
+  "pohyb_zaloha": {
+    "vstup": "cubic-bezier(.22,.8,.2,1)",
+    "odchod": "cubic-bezier(.4,0,.2,1)"
+  },
+  "premenne": {
+    "--p-nadpis": "\"Lora\", Georgia, serif",
+    "--p-nadpis-vaha": "400",
+    "--p-nadpis-rozostup": "-0.02em",
+    "--p-zvyraznenie-vaha": "400",
+    "--p-text": "\"Manrope\", \"Segoe UI\", Arial, sans-serif",
+    "--p-text-vaha": "400",
+    "--p-riadok-vaha": "400",
+    "--p-stitok-vaha": "400",
+    "--p-stitok-rozostup": "0.18em",
+    "--p-vyzva-velkost": "none",
+    "--p-vyzva-rozostup": "0.02em",
+    "--r-doska": "{--radius}",
+    "--r-tlacidlo": "{--radius}",
+    "--tien-text": "{--tshadow}",
+    "--tien-nadpis": "{--tshadow}"
+  },
+  "premenne_zaloha": {
+    "--r-doska": "2px",
+    "--r-tlacidlo": "2px",
+    "--tien-text": "0 1px 2px rgba(12, 9, 6, 0.9), 0 3px 12px rgba(12, 9, 6, 0.6), 0 10px 24px rgba(12, 9, 6, 0.5)",
+    "--tien-nadpis": "0 1px 2px rgba(12, 9, 6, 0.9), 0 3px 12px rgba(12, 9, 6, 0.6), 0 10px 24px rgba(12, 9, 6, 0.5)"
+  },
+  "fonty": [
+    {
+      "rodina": "Lora",
+      "vaha": "300 700",
+      "styl": "normal",
+      "subor": "assets/fonts/Lora-display.woff2"
+    },
+    {
+      "rodina": "Lora",
+      "vaha": "300 700",
+      "styl": "italic",
+      "subor": "assets/fonts/Lora-italic.woff2"
+    },
+    {
+      "rodina": "Manrope",
+      "vaha": 400,
+      "styl": "normal",
+      "subor": "assets/fonts/Manrope-400.woff2"
+    },
+    {
+      "rodina": "Manrope",
+      "vaha": 700,
+      "styl": "normal",
+      "subor": "assets/fonts/Manrope-700.woff2"
+    }
+  ],
+  "pravidla": [
+    "zlatá kurzíva (*slovo* v texte) je jediný akcent; zlatá len ako detail, žiadne žiary ani prechody farieb",
+    "tlačidlá a výzvy normálnym písmom, verzálky len na drobnom nadpisku",
+    "fakty len z CLAUDE.md, docs/booqme-sluzby.csv a docs/booqme-poukazy.csv; názov vždy HEAD SPA 30, Salón 30 len ako miesto"
+  ]
+}

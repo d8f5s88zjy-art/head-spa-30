@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Lower third</title>
+<link rel="stylesheet" href="mg.css">
+<style>
+  /* Lower third: meno a jedna informácia na doske v spodnej tretine bezpečnej zóny.
+     Vrstvy a ich časy: references/vrstvy-sablon.md (Lower third). */
+  /* stĺpec najviac šírky zóny: pri automatickom stĺpci by dlhé meno (nowrap) roztiahlo mriežku za zónu,
+     max-width obsahu by sa rátal z nej a doska by pretiekla mimo obrazu (overené pri 1080 x 1080) */
+  .lt { display: grid; grid-template-columns: minmax(0, max-content); justify-items: start; max-width: 100%; }
+  #kompozicia[data-zarovnanie="stred"] .lt { justify-items: center; }
+  #kompozicia[data-zarovnanie="vpravo"] .lt { justify-items: end; }
+  .lt > * { grid-area: 1 / 1; }
+  .lt-doska {
+    justify-self: stretch; align-self: stretch;
+    background: var(--f-doska); border: 1px solid var(--f-linka);
+    border-radius: var(--r-doska, 2px);
+  }
+  .lt-obsah { position: relative; max-width: 100%; padding: calc(var(--j) * 34px) calc(var(--j) * 46px) calc(var(--j) * 38px) calc(var(--j) * 42px); display: grid; justify-items: inherit; }
+  .lt-linka { margin-bottom: calc(var(--j) * 24px); transform-origin: left center; }
+  #kompozicia[data-zarovnanie="stred"] .lt-linka { transform-origin: center; }
+  #kompozicia[data-zarovnanie="vpravo"] .lt-linka { transform-origin: right center; }
+  .lt-meno { font-size: calc(var(--j) * 92px); white-space: nowrap; line-height: 1.02; padding-bottom: 0.04em; }
+  .lt-info { margin-top: calc(var(--j) * 18px); font-size: calc(var(--j) * 40px); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="kompozicia" data-dlzka="4" data-zarovnanie="vlavo" data-zvisle="dole">
+  <div class="zona">
+    <div class="lt">
+      <div class="lt-doska" data-layer="Doska" data-in="0.15" data-out="-0.12" data-vstup="stierka" data-vstup-ms="700" data-odchod="fade" data-odchod-ms="420"
+           data-popis="polopriehľadná doska v tóne podkladu s vlasovou linkou, odhalí sa zľava"></div>
+      <div class="lt-obsah">
+        <span class="mg-linka lt-linka" data-layer="Linka" data-in="0.45" data-out="-0.3" data-vstup="linka" data-vstup-ms="650" data-odchod="fade"
+              data-popis="krátka linka akcentu nad menom, rastie zľava"></span>
+        <p class="mg-nadpis lt-meno" data-layer="Meno" data-text="meno" data-prisposob="0.6" data-in="0.55" data-out="-0.3" data-vstup="hore" data-odchod="dole"
+           data-popis="meno, nadpisové písmo značky; dlhé meno sa zmenší, aby sa zmestilo"></p>
+        <p class="mg-riadok lt-info" data-layer="Info" data-text="info" data-prisposob="0.7" data-in="0.75" data-out="-0.36" data-vstup="hore" data-odchod="dole"
+           data-popis="jedna informácia (rola, miesto, služba), textové písmo"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="predvolene">
+{ "texty": { "meno": "Meno", "info": "Jedna informácia" },
+  "nastavenia": { "zarovnanie": "vlavo", "zvisle": "dole" } }
+</script>
+<script src="mg.js"></script>
+</body>
+</html>

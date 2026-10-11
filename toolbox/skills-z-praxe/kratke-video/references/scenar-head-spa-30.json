@@ -1,0 +1,57 @@
+{
+  "_popis": "Reel HEAD SPA 30 v troch vetách (instagram-salon: sľub, čo dostaneš, ako si rezervuješ). Vety doslovne z index.html, telefón z CLAUDE.md, overené 2026-10-11. Fotky filmu bez ľudí, netónované. Bez hudby: licenciu nemáme. Spustenie z koreňa repozitára: python3 -I toolbox/skills-z-praxe/kratke-video/scripts/reel.py toolbox/skills-z-praxe/kratke-video/references/scenar-head-spa-30.json -o <scratchpad>/reel-demo/headspa30-reel.mp4",
+  "podnik": "HEAD SPA 30",
+  "znacka": "head-spa-30",
+  "format": "9:16",
+  "zaklad": "../../../..",
+  "zabery": [
+    {
+      "src": "assets/img/dvere-2400.webp",
+      "_odkial": "skutočné dvere salónu z úvodu webu (CLAUDE.md: Dvere v úvode zostávajú a sú skutočné)",
+      "trvanie": 4.0,
+      "pohyb": "najazd",
+      "sila": 0.07,
+      "stred": [0.5, 0.45],
+      "stitok": "HEAD SPA 30 · Nitra",
+      "text": "Vstúpiš s hlavou plnou chaosu.",
+      "poloha": "hore",
+      "_poloha": "text hore na pokojnej zelenej ploche, zlaté kruhy a kľučka ostanú voľné",
+      "zdroj": "index.html, časť Ako to prebieha (citát Vstúpiš s hlavou plnou chaosu. Odídeš s čistou hlavou.)",
+      "ludia": "nie"
+    },
+    {
+      "src": "assets/img/film/voda-2172.avif",
+      "_odkial": "záber filmu voda (assets/img/film/), Head Spa lôžko s prúdom vody",
+      "trvanie": 4.0,
+      "pohyb": "najazd",
+      "sila": 0.06,
+      "stred": [0.45, 0.4],
+      "prechod": "prelinanie",
+      "prechod_dlzka": 0.5,
+      "text": "Nie umytie vlasov. *Rituál pre hlavu.*",
+      "poloha": "hore",
+      "_poloha": "dole by zlatá kurzíva bola na zlatom oblúku a bielej vode",
+      "zdroj": "index.html, nadpis časti Ako to prebieha (Nie umytie vlasov. Rituál pre hlavu.)",
+      "ludia": "nie"
+    },
+    {
+      "src": "assets/img/film/lozka-sviecka-2172.avif",
+      "_odkial": "záber filmu lozka-sviecka (assets/img/film/), dve lôžka a zelené dvere",
+      "trvanie": 4.6,
+      "pohyb": "najazd",
+      "sila": 0.06,
+      "stred": [0.5, 0.35],
+      "prechod": "prelinanie",
+      "prechod_dlzka": 0.5,
+      "stitok": "Mostná 30, Nitra",
+      "text": "Rezervuj online alebo nám zavolaj.",
+      "riadok": "0911 153 136",
+      "poloha": "hore",
+      "_poloha": "dole by číslo telefónu ležalo na displeji lôžka so stupňami, hore je tmavá stena a dvere",
+      "zdroj": "index.html, kontakt (Rezervuj online alebo nám zavolaj.); CLAUDE.md (telefón 0911 153 136, adresa Mostná 30)",
+      "ludia": "nie"
+    }
+  ],
+  "hudba": null,
+  "hlas": null
+}
