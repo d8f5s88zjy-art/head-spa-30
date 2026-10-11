@@ -219,6 +219,15 @@ Lighthouse lokálne (bez kompresie, python http.server): počítač 99 / 100 / 1
 pre nekomprimované súbory; CLS 0,13 od spodného tlačidla, opravené: tlačidlo začína skryté, karty okrem úvodu
 čakajú na app.js). Naživo pozri nižšie.
 
+**Naživo (5f45af8, 2026‑10‑11)**, Lighthouse 12.8.2 z verejnej adresy, predvolená adresa (s prológom):
+- telefón 5 behov: výkon 96 / 99 / 97 / 96 / 98, prístupnosť 100, osvedčené postupy 100, SEO 100;
+  FCP 1,2–1,5 s, LCP 2,1–2,4 s, TBT 3–137 ms, CLS 0 (pred úpravami 88–94, LCP 2,9–3,3 s, CLS až 0,14);
+- počítač 2 behy: 100 / 100 / 100 / 100 (FCP 0,3 s, LCP 0,6 s, TBT 0, CLS 0).
+Snímky kariet z verejnej adresy (`karty-shot.mjs --wait=5000`): telefón aj počítač, každý záber ostrý
+a k svojej karte. Pri čakaní 1,5 s zachytí softvérové kreslenie (asi 7 snímok/s) strih ešte v pohybe;
+zastavený strih sa dokreslí (mix 0,999 za 4 s), na zariadení s grafikou za zlomok sekundy.
+Známe: pri skoku cez menu do vzdialenej časti je film, kým sa fotka záberu načíta, tmavý (v teste 2–3 s).
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,
