@@ -33,7 +33,9 @@
      data-video-on="phone" (predvolené; na počítači je kotva bežný záber fotky z data-shot) alebo "all".
      Video nemá hĺbkovú mapu (rovina bez posunu popredia), prelína sa s fotkami tým istým prechodom.
      Súbor sa začne sťahovať až po prvom pohybe návštevníka a len blízko scény (keepAround).
-   - window.BS30_FILM = { ready, shots, goTo(meno, t), state } na ladenie. */
+   - data-cut="druh [smer] [a:x,y] [b:x,y] [m:…]" na kotve: strih z predchádzajúceho záberu do tohto
+     (pohyb, svih, najazd, odjazd, popredie, prelinanie); bez atribútu platí tabuľka CUTS (časť Strihy).
+   - window.BS30_FILM = { ready, shots, goTo(meno, t), state, cuts, cutFreeze(meno, mix), pause, dbg } na ladenie. */
 (async function () {
   'use strict';
   const d = document, root = d.documentElement;
@@ -134,6 +136,61 @@
     still: [[0, 0, 0.01], [0, 0, -0.02]],
   };
   const pair = (v, dflt) => { const a = (v || '').split(/[\s,;]+/).map(parseFloat); return a.length === 2 && a.every(isFinite) ? [clamp(a[0], 0, 1), clamp(a[1], 0, 1)] : dflt; };
+
+  /* ---------- strihy: každý prechod medzi miestnosťami má vlastný strih, ako od strihača ----------
+     Všetky sú strihmi pohybom kamery, jeden vkus a jedna farebnosť: fotky sa netónujú, nikde záblesk,
+     zrno ani farebný efekt; v mix 0 a 1 je obraz presne pôvodný a ostrý. Strih je len funkciou polohy
+     v prechode (skrolovanie, v prológu čas), preto ide rovnako plynulo tam aj späť.
+     Zápis: atribút data-cut na kotve prichádzajúceho záberu, inak tabuľka CUTS podľa dvojice záberov:
+       "druh [smer] [a:x,y] [b:x,y] [m:druh] [m:smer] [ma:x,y] [mb:x,y]"
+     smer = kam ide kamera (right, left, rise, down, in); a: bod na odchádzajúcej fotke, b: na prichádzajúcej
+     (0 až 1 zľava a zhora); m… platí len pre telefón (výrez na výšku má predmety inde).
+     - pohyb: pokračovanie pohybu; prichádzajúca kamera prevezme smer aj rýchlosť odchádzajúcej, nová
+       miestnosť sa prelína zo strany, kam kamera ide (vzdialené skôr, blízke neskôr), ľahko rozmazaná pohybom
+     - svih: švih kamery; obraz sa rozmaže v smere pohybu, strih padne do najväčšieho rozmazania a
+       prichádzajúci záber zabrzdí z toho istého švihu
+     - najazd: nájazd cez predmet; kamera vletí k bodu a:, rozmazanie zoomom okolo neho, nový záber
+       sa otvorí z toho istého miesta a kamera v ňom dobehne k svojmu bodu b:
+     - odjazd: nájazd pustený odzadu; kamera vycúva a starý záber sa stiahne do bodu b: (dvere)
+     - popredie: kamera ide tesne popri blízkom predmete z hĺbkovej mapy; predmet (a: jeho hrana) sa priblíži
+       k objektívu, neostrý a v tieni prejde cez obraz a za ním je už nová miestnosť. S bodom b: patrí
+       predmet prichádzajúcemu záberu: prejde cez obraz a usadí sa na svojom mieste.
+     - prelinanie: pôvodné prelínanie cez priestor (aj po skoku či pri čakaní na fotku) */
+  const CUT_KINDS = { prelinanie: 0, pohyb: 1, svih: 2, najazd: 3, odjazd: 3, popredie: 4 };
+  const CUT_DIRS = { right: [1, 0], left: [-1, 0], rise: [0, 1], up: [0, 1], down: [0, -1], in: [0, 0] };
+  const CUTS = {
+    'vstup>rohozka': 'najazd a:0.76,0.53 ma:0.50,0.53',                         // prológ: cez dvere dnu (von je to isté odzadu)
+    'rohozka>recepcia': 'pohyb in',                                            // krok dnu pokračuje až k pultu
+    'recepcia>sala': 'svih right',                                             // od pultu švihom k radu kresiel (telefón: do videa Poď ďalej)
+    'sala>sala': 'pohyb in',                                                   // len telefón: z videa Poď ďalej krok dopredu do sály
+    'sala>kreslo': 'popredie left a:0.27,0.55 m:najazd ma:0.33,0.55 mb:0.5,0.45', // za operadlom kresla k oknu (telefón: z kresla do kresla)
+    'kreslo>stol': 'pohyb rise',                                               // zdvih pokračuje k pracovnému miestu
+    'stol>naradie': 'najazd a:0.305,0.57 b:0.30,0.50 ma:0.5,0.45 mb:0.44,0.45', // do karafy na stole a z nej na jej detail (telefón: zo stredu videa remesla)
+    'naradie>zadna': 'svih right',                                             // z detailu švihom do zadnej miestnosti
+    'zadna>cakaren': 'pohyb right',                                            // prejazd doprava pokračuje k pumpe
+    'cakaren>sala-rano': 'popredie right b:0.30,0.62 m:rise mb:0.5,0.78',       // popri operadle do rannej sály
+    'sala-rano>kreslo-stred': 'najazd a:0.635,0.56 b:0.5,0.45 ma:0.52,0.45',    // do kresla v sále, z neho na kreslo uprostred
+    'kreslo-stred>kava': 'svih down',                                          // švih nadol na stolík s kávou
+    'kava>sud': 'popredie left b:0.88,0.45 mb:0.78,0.4',                        // popri stĺpe do prednej sály
+    'sud>vstup': 'odjazd b:0.76,0.53 mb:0.50,0.53',                            // von cez dvere na Mostnú
+  };
+  function parseCut(spec) {
+    const gen = [], mob = [];
+    for (const t of String(spec || '').trim().toLowerCase().split(/\s+/)) {
+      if (/^m[ab]:/.test(t)) mob.push(t.slice(1)); else if (t.startsWith('m:')) mob.push(t.slice(2)); else if (t) gen.push(t);
+    }
+    const c = { name: '', k: 0, dir: [0, 0], a: null, b: null, own: '' };
+    // telefón: jeho údaje prepíšu spoločné, nech sú v zápise kdekoľvek
+    for (const t of phone ? gen.concat(mob) : gen) {
+      if (t in CUT_KINDS) { c.name = t; c.k = CUT_KINDS[t]; }
+      else if (CUT_DIRS[t]) c.dir = CUT_DIRS[t];
+      else if (/^[ab]:/.test(t)) { c[t[0]] = pair(t.slice(2), null); c.own = t[0]; }
+    }
+    if (!c.name) return null;
+    // strih odzadu: shader ho kreslí ako opačný strih (zábery vymenené, čas naspäť)
+    c.rev = c.name === 'odjazd' || (c.k === 4 && c.own === 'b');
+    return c;
+  }
   // pomer strán fotky: z data-size="ŠxV", inak z width/height prvej zálohy <img> (zábery podniku sú 3 : 2)
   const ratio = (size, img) => {
     const a = (size || '').split(/[x×,\s]+/).map(parseFloat);
@@ -169,6 +226,7 @@
   const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].filter((el) => phone || el.dataset.desk !== 'skip').map((el) => {
     const s = shotOf(el, '');
     s.photo = (phone && el.dataset.m) || el.dataset.shot;
+    s.name = el.dataset.shot;                                // meno záberu bez výrezu (tabuľka strihov)
     const v = videoOf(el);
     if (v) {
       s.video = v; s.photo = el.dataset.shot + '-video';
@@ -189,6 +247,7 @@
   if (proEl) {
     PRO = shotOf(proEl, 'pro');
     PRO.photo = (phone && proEl.dataset.proM) || proEl.dataset.pro;
+    PRO.name = proEl.dataset.pro;
     PRO.pro = true;
     PRO.done = !proArmed;                                    // bez prológu sa nenačíta, kým ho návštevník nevyvolá
     SHOTS.unshift(PRO);
@@ -600,36 +659,139 @@
 
   /* ---------- skladanie: dva zábery do textúr, prelínanie a vinetácia ---------- */
   // hĺbkový buffer ostáva: mriežka záberu sa pri pohybe môže prekrývať sama so sebou
-  const rtA = new THREE.WebGLRenderTarget(1, 1), rtB = new THREE.WebGLRenderTarget(1, 1);
+  /* textúry záberov majú mipmapy (počítajú sa len počas prechodu, keď sa do nich kreslí): veľké rozmazanie
+     strihu sa tak skladá z mála vzoriek, každá z úrovne podľa ich rozostupu, takže je hladké, bez pásov,
+     kópií a šumu. Mimo okraja sa berie zrkadlový obraz, pod rozmazaním splynie (nikdy tvrdá hrana). */
+  const rtOpt = { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.MirroredRepeatWrapping, wrapT: THREE.MirroredRepeatWrapping };
+  const rtA = new THREE.WebGLRenderTarget(1, 1, rtOpt), rtB = new THREE.WebGLRenderTarget(1, 1, rtOpt);
+  /* parametre strihov; telefón má menej vzoriek a slabšie efekty (rozmery v podieloch obrazu):
+     dip/vs šero a vinetácia v strede, mbx,mby/mz pohyb (rozmazanie vodorovne, zvislo, zoomom),
+     nt/sx,sy/bx,by švih (vzorky, posun a rozmazanie vodorovne a zvislo), za/kz najazd (zoom, rozmazanie),
+     pe/pw/pd/pf/bow popredie (presah, šírka neostrej hrany, tieň, neostrosť a vypuklosť predmetu), lat/yaw/nz/walk pohyb kamery */
+  const CK = phone
+    ? { dip: 0.1, vs: 0.1, mbx: 0.07, mby: 0.035, mz: 0.08, nt: 6, sx: 0.24, sy: 0.12, bx: 0.24, by: 0.12, za: 0.3, kz: 0.13, pe: 0.3, pw: 0.085, pd: 0.35, pf: 3.5, bow: 0.1,
+      lat: [0, 0.07, 0.07, 0, 0.08], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.34, walk: 0.2, walkB: 0.1, amp: 0.12 }
+    : { dip: 0.18, vs: 0.16, mbx: 0.05, mby: 0.06, mz: 0.08, nt: 8, sx: 0.16, sy: 0.2, bx: 0.11, by: 0.15, za: 0.35, kz: 0.15, pe: 0.25, pw: 0.05, pd: 0.35, pf: 4.0, bow: 0.08,
+      lat: [0, 0.1, 0.08, 0, 0.1], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.4, walk: 0.24, walkB: 0.12, amp: 0.16 };
+  const F = (v) => v.toFixed(4);
   const post = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
     depthTest: false, depthWrite: false,
-    uniforms: { tA: { value: rtA.texture }, tB: { value: rtB.texture }, uMix: { value: 0 }, uAspect: { value: 1 } },
+    uniforms: {
+      tA: { value: rtA.texture }, tB: { value: rtB.texture }, uMix: { value: 0 }, uAspect: { value: 1 },
+      // uKind = druh strihu (0 prelínanie, 1 pohyb, 2 švih, 3 nájazd, 4 popredie), uDir = smer kamery na obrazovke
+      // (x doprava, y nahor), uFoc / uFoc2 = bod strihu na odchádzajúcom / prichádzajúcom zábere (0 až 1, zdola),
+      // uLead = hrana predmetu popredia v smere jeho letu, uRes = plátno v pixeloch
+      uKind: { value: 0 }, uDir: { value: new THREE.Vector2() }, uFoc: { value: new THREE.Vector2(0.5, 0.5) }, uFoc2: { value: new THREE.Vector2(0.5, 0.5) },
+      uLead: { value: 0.5 }, uRes: { value: new THREE.Vector2(1, 1) }, uDbg: { value: 0 },
+    },
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
     fragmentShader: `
-      uniform sampler2D tA, tB; uniform float uMix, uAspect; varying vec2 vUv;
+      uniform sampler2D tA, tB; uniform float uMix, uAspect, uKind, uLead, uDbg; uniform vec2 uDir, uFoc, uFoc2, uRes;
+      varying vec2 vUv;
+      #define PI 3.14159265
+      #define NT ${CK.nt}
+      // úroveň mipmapy pre vzorky vzdialené px pixelov od seba: rozmazanie je súvislé
+      float lodOf(float px) { return log2(max(px, 1.0)); }
+      // blízke veci podľa hĺbky (alfa 1 = blízko); záber bez hĺbky (video) nemá popredie
+      float near(float z) { return smoothstep(0.5, 0.78, z); }
+      /* rozmazanie pohybom: n vzoriek na úsečke st okolo uv; úroveň mipmapy o niečo menšia, než je ich
+         rozostup, takže stopa je súvislá, ale naprieč pohybom ostáva skoro ostrá (šmuha, nie neostrosť) */
+      vec4 streak(sampler2D t, vec2 uv, vec2 st, int n) {
+        float lod = lodOf(length(st * uRes) / float(n)) - 0.6;
+        vec4 acc = vec4(0.0);
+        for (int i = 0; i < 2 * NT; i++) { if (i >= n) break; acc += textureLod(t, uv + st * ((float(i) + 0.5) / float(n) - 0.5), lod); }
+        return acc / float(n);
+      }
+      // rozmazanie zoomom: n vzoriek od bodu uv smerom k stredu f (k = dĺžka stopy ako podiel vzdialenosti, z = zväčšenie)
+      vec3 zoom(sampler2D t, vec2 f, vec2 q, float k, float z, int n) {
+        float lod = lodOf(length(q * uRes) * k / z / float(n)) - 0.5;
+        vec3 acc = vec3(0.0);
+        for (int i = 0; i < 2 * NT; i++) { if (i >= n) break; acc += textureLod(t, f + q * ((1.0 - k * (float(i) + 0.5) / float(n)) / z), lod).rgb; }
+        return acc / float(n);
+      }
       void main() {
-        vec4 a = texture2D(tA, vUv);
-        vec3 c = a.rgb;
-        float vs = 0.34;
-        if (uMix > 0.0) {
-          /* prechod cez priestor, rovnaký pre všetky zábery: každý bod obrazu sa prelína vo vlastnom čase
-             podľa bližšej z dvoch hĺbok (alfa = 1 blízko). Ďaleký koniec oboch miestností sa vymení prvý,
-             blízke veci (kreslo, sud, pult – staré aj nové popredie) posledné, akoby popri tebe prešli.
-             Každý bod sa prelína v okne širokom 0,45 z celého prechodu, takže nikde nie je tvrdá hrana
-             ani dvojexpozícia celého obrazu; ostrosť ostáva, nič sa nerozmazáva. */
-          vec4 b = texture2D(tB, vUv);
+        float x = uMix, s = sin(PI * x), vs = 0.34, dip = ${F(CK.dip)};
+        vec3 c;
+        if (x <= 0.0) c = texture2D(tA, vUv).rgb;
+        else if (uKind < 0.5) {
+          /* prelínanie cez priestor: každý bod vo vlastnom čase podľa bližšej z dvoch hĺbok,
+             ďaleký koniec miestností sa vymení prvý, blízke veci posledné */
+          vec4 a = texture2D(tA, vUv), b = texture2D(tB, vUv);
           float o = max(a.a, b.a);
-          float m = smoothstep(o * 0.55, o * 0.55 + 0.45, uMix);
-          c = mix(a.rgb, b.rgb, m);
-          // krátke šero uprostred (82 % jasu) a o niečo užšia vinetácia: oko ide do stredu, ako strih vo filme
-          float s = sin(3.14159265 * uMix);
-          c *= 1.0 - ${phone ? 0.1 : 0.18} * s;
-          vs += ${phone ? 0.1 : 0.16} * s;
+          c = mix(a.rgb, b.rgb, smoothstep(o * 0.55, o * 0.55 + 0.45, x));
+        } else if (uKind < 1.5) {
+          /* pokračovanie pohybu: kamera ide ďalej tým istým smerom aj rýchlosťou, nová miestnosť prichádza
+             zo strany, kam ide (pri kroku dopredu z diaľky v strede), vzdialené body skôr ako blízke;
+             ľahké rozmazanie pohybom podľa rýchlosti */
+          bool lat = dot(uDir, uDir) > 0.0;
+          vec2 q = vUv - uFoc, st = lat ? uDir * vec2(${F(CK.mbx)}, ${F(CK.mby)}) * s * s : q * ${F(CK.mz)} * s * s;
+          // oba zábery rozmazané pohybom: kde sa prekrývajú, je to šmuha pohybu, nie dva ostré obrazy
+          vec4 a = streak(tA, vUv, st, NT), b = streak(tB, vUv, st, NT);
+          float h = lat ? clamp(dot(vUv - 0.5, uDir) * 0.9 + 0.5, 0.0, 1.0)
+                        : 1.0 - clamp(length(q * vec2(uAspect, 1.0)) / max(uAspect, 1.0) * 1.3, 0.0, 1.0);
+          float t0 = 0.6 * (1.0 - h) + 0.12 * max(a.a, b.a);
+          c = mix(a.rgb, b.rgb, smoothstep(t0, t0 + 0.22, x));
+          dip *= 0.5;
+        } else if (uKind < 2.5) {
+          /* švih: obraz ide v smere švihu, rýchlosť sin³ (poloha je jej integrál), rozmazanie podľa
+             rýchlosti; výmena záberov len v najväčšom rozmazaní */
+          float cx = cos(PI * x), P = (2.0 - 3.0 * cx + cx * cx * cx) * 0.25, v = s * s * s;
+          vec2 sh = uDir * vec2(${F(CK.sx)}, ${F(CK.sy)});
+          vec2 sa = vUv + sh * P, sb = vUv - sh * (1.0 - P), st = uDir * vec2(${F(CK.bx)}, ${F(CK.by)}) * v;
+          float m = smoothstep(0.45, 0.55, x);
+          // mimo krátkej výmeny sa kreslí len jeden záber, s dvojnásobkom vzoriek
+          if (m <= 0.0) c = streak(tA, sa, st, 2 * NT).rgb;
+          else if (m >= 1.0) c = streak(tB, sb, st, 2 * NT).rgb;
+          else c = mix(streak(tA, sa, st, NT).rgb, streak(tB, sb, st, NT).rgb, m);
+          dip *= 0.4;
+        } else if (uKind < 3.5) {
+          /* nájazd cez predmet: starý záber sa navyše zväčšuje k bodu, rozmazanie zoomom okolo neho
+             (bod sám ostáva ostrý); nový záber sa rozvinie z toho istého miesta von a dobehne svojím
+             rozmazaním k pokoju. Odjazd je ten istý strih s vymenenými zábermi a časom naspäť. */
+          vec2 asp = vec2(uAspect, 1.0), q = vUv - uFoc, q2 = vUv - uFoc2;
+          float r = clamp(length(q * asp) / length(max(uFoc, 1.0 - uFoc) * asp), 0.0, 1.0);
+          float t0 = 0.39 + 0.14 * r, m = smoothstep(t0, t0 + 0.08, x);
+          float zA = 1.0 + ${F(CK.za)} * x * x, k = ${F(CK.kz)} * s * s;
+          if (m <= 0.0) c = zoom(tA, uFoc, q, k, zA, 2 * NT);
+          else if (m >= 1.0) c = zoom(tB, uFoc2, q2, k, 1.0, 2 * NT);
+          else c = mix(zoom(tA, uFoc, q, k, zA, NT), zoom(tB, uFoc2, q2, k, 1.0, NT), m);
+          dip *= 0.5;
+        } else {
+          /* popredie: kamera ide tesne popri blízkom predmete odchádzajúceho záberu (hĺbková mapa). Predmet
+             (pás obrazu od okraja R0 po jeho hranu uLead) sa naťahuje k objektívu: jeho predná hrana L letí
+             cez obraz, zadná R ide za ňou, medzi nimi je ten istý predmet zväčšený, čoraz neostrejší a v tieni.
+             Za zadnou hranou je už nový záber; výmena je pod predmetom, kde kryje celý obraz. */
+          vec2 md = -uDir, pd = vec2(md.y, -md.x);
+          float u = dot(vUv - 0.5, md) + 0.5, w = dot(vUv - 0.5, pd) + 0.5, wF = dot(uFoc - 0.5, pd) + 0.5;
+          const float R0 = -0.15;
+          float L = mix(uLead, ${F(1 + CK.pe)}, smoothstep(0.0, 0.56, x));
+          float R = mix(R0, ${F(1 + CK.pe)}, smoothstep(0.2, 0.86, x));
+          float g = smoothstep(0.0, 0.5, x), fill = smoothstep(0.04, 0.26, x), k = (L - R) / max(uLead - R0, 0.05);
+          // bod predmetu, ktorý sa kreslí na tomto mieste (pozdĺž letu natiahnutý, naprieč zväčšený okolo jeho bodu)
+          float us = R0 + (u - R) / k, ws = wF + (w - wF) / k;
+          /* časť predmetu za okrajom obrazu: krajný riadok, ku okraju čoraz neostrejší, takže predmet do tmy
+             plynule pokračuje (zrkadlo by z neho urobilo súmerný obrazec, opakovaný riadok pruhy); je blízko */
+          float inside = smoothstep(0.0, 0.12 * g + 1e-4, us);     // na začiatku strihu presne obraz (g = 0)
+          vec2 ps = clamp(0.5 + md * (us - 0.5) + pd * (ws - 0.5), 0.002, 0.998);
+          vec4 o = textureLod(tA, ps, mix(6.5, g * ${F(CK.pf)}, inside));
+          o.a = mix(1.0, o.a, inside);
+          float pw = ${F(CK.pw)} * (0.4 + 0.6 * g);                  // hrana predmetu neostrá podľa toho, ako blízko je
+          // predmet je oblý (operadlo, sud, stĺp zblízka): obe hrany sú v strede o kúsok vypuklé, nie rovná čiara
+          float bow = ${F(CK.bow)} * g * (1.0 - min(1.0, 4.0 * (w - wF) * (w - wF)));
+          float Re = R - bow, Le = L + bow;
+          float cov = smoothstep(Re - pw, Re + pw, u) * (1.0 - smoothstep(Le - pw, Le + pw, u)) * mix(near(o.a), 1.0, fill);
+          vec3 base = (u < Re + 2.0 * pw && fill >= 1.0) ? texture2D(tB, vUv).rgb : texture2D(tA, vUv).rgb;
+          c = mix(base, o.rgb * (1.0 - ${F(CK.pd)} * g), cov);
+          dip *= 0.2;
         }
+        // krátke šero uprostred a o niečo užšia vinetácia: oko ide do stredu, ako strih vo filme
+        c *= 1.0 - dip * s;
+        vs += ${F(CK.vs)} * s;
         // jemná vinetácia ako pri filmovom objektíve, stred ostáva nedotknutý
         vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0) / max(uAspect, 1.0);
         c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * vs;
         gl_FragColor = vec4(c, 1.0);
+        if (uDbg > 0.5) gl_FragColor = vec4(vec3(uDbg > 1.5 ? texture2D(tB, vUv).a : texture2D(tA, vUv).a), 1.0);   // ladenie: hĺbka
       }`,
   }));
   post.frustumCulled = false;
@@ -693,7 +855,9 @@
   const FULL_MS = 60000, BREATH_MS = 180000;
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
   const DRIFT = phone ? 0.6 : 1;                              // stály pohyb kamery: na telefóne jemnejší
-  function place(s, now, push = 0) {
+  // bod fotky záberu (0 až 1 zľava a zhora) vo svete: rovina záberu stojí v strede sveta
+  const ptOf = (s, p) => [(p[0] - 0.5) * s.pw, (0.5 - p[1]) * s.ph];
+  function place(s, now, push = 0, cut = null) {
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
     const t = shotT(s);
     // video nejde (úsporný režim, sieť, formát): plagát dostane bežný nájazd ako fotka, nech záber nestojí
@@ -711,17 +875,65 @@
     off.z += (Math.sin(sec * 0.21 + 0.4) * 0.008 + Math.sin(sec * 0.07 + 1.9) * 0.014) * DIST * dr;
     // pri prechode kamera odchádzajúceho záberu zrýchľuje dopredu, akoby prešla do ďalšej miestnosti
     // (do štvrtiny vzdialenosti); prichádzajúci záber dobieha zozadu a spomalí na svojom mieste
-    off.z -= push > 0 ? Math.pow(push, 1.6) * 0.25 * DIST : -Math.pow(-push, 1.3) * (s.video ? 0.04 : 0.1) * DIST;
+    let zp = push > 0 ? Math.pow(push, 1.6) * 0.25 : push < 0 ? -Math.pow(-push, 1.3) * (s.video ? 0.04 : 0.1) : 0;
+    // strih: kamera bokom (svet) s natočením navyše v jej smere, krok dopredu, alebo let k bodu strihu
+    let dx = 0, dy = 0, yaw = 0, fx = 0, fy = 0;
+    if (cut && push) {
+      const out = push > 0, x = out ? push : 1 + push, y = 1 - x, k = cut.k, dr = cut.dir;
+      if (k === 1 || k === 2 || k === 4) {
+        if (dr[0] || dr[1]) {
+          // rovnaká rýchlosť v strede strihu: odchádzajúca kamera zrýchľuje (x²), prichádzajúca prichádza
+          // z opačnej strany tou istou rýchlosťou a zabrzdí na svojom mieste ((1 − x)²)
+          const L = CK.lat[k], dd = out ? L * x * x : -L * y * y;
+          dx = dr[0] * dd * s.vw; dy = dr[1] * dd * s.vh; yaw = CK.yaw[k];
+          zp = out ? Math.pow(x, 1.6) * 0.06 : -Math.pow(y, 1.3) * 0.04;
+        } else zp = out ? CK.walk * x * x : -CK.walkB * y * y;   // krok dopredu: tá istá rýchlosť cez strih
+      } else if (k === 3) {
+        // nájazd: odchádzajúca kamera vletí k bodu a:, prichádzajúca dobieha zozadu od svojho bodu b:;
+        // odjazd je to isté odzadu: odchádzajúca cúva, prichádzajúca začína tesne pri bode b: (dvere)
+        const close = (cut.name === 'najazd') === out, v = out ? x : y, p = out ? cut.a : cut.b;
+        zp = close ? CK.nz * Math.pow(v, 1.6) : -0.12 * Math.pow(v, 1.3);
+        if (p) { const pt = ptOf(s, p), w = (close ? 0.85 : 0.6) * v * v * (3 - 2 * v); fx = (pt[0] - s.eye.x) * w; fy = (pt[1] - s.eye.y) * w; }
+      }
+    }
+    off.z -= zp * DIST;
     camera.position.copy(s.eye).add(off);
     // pohľad ostáva takmer na bode záujmu: posun kamery sa mení na oblúk okolo neho
     tmp.set(s.eye.x + off.x * 0.08, s.eye.y + off.y * 0.08, 0);
+    const lx = dx * (1 + yaw) + fx, ly = dy * (1 + yaw) + fy;
+    if (lx || ly) {
+      // posun strihu len kým okno ostáva na fotke (nikdy neodhalí jej okraj); okraj fotky má tiež hĺbku:
+      // pri posune kamery bokom sa jeho blízke body posunú o kúsok proti nej (rezerva podľa uAmt)
+      const D = Math.max(0.2 * DIST, DIST + off.z), hw = s.vw / 2 * D / DIST, hh = s.vh / 2 * D / DIST;
+      const ea = s.mat.uniforms.uAmt.value * 0.6, par = ea / (1 - ea);
+      const ax = Math.max(Math.abs(tmp.x), s.pw / 2 - hw - s.vw * 0.005 - Math.abs(dx + fx) * par);
+      const ay = Math.max(Math.abs(tmp.y), s.ph / 2 - hh - s.vh * 0.005 - Math.abs(dy + fy) * par);
+      const nx = clamp(tmp.x + lx, -ax, ax) - tmp.x, ny = clamp(tmp.y + ly, -ay, ay) - tmp.y;
+      const kx = lx ? nx / lx : 1, ky = ly ? ny / ly : 1;
+      camera.position.x += (dx + fx * 0.9) * kx; camera.position.y += (dy + fy * 0.9) * ky;
+      tmp.x += nx; tmp.y += ny;
+    }
     camera.lookAt(tmp);
   }
+  // strih pre dvojicu susedných záberov: atribút kotvy prichádzajúceho záberu, inak tabuľka
+  const cutCache = new Map();
+  function cutOf(A, B) {
+    const key = A.name + '>' + B.name;
+    if (!cutCache.has(key)) {
+      const c = parseCut(B.at.dataset.cut || CUTS[key]);
+      if (c) c.key = key;
+      cutCache.set(key, c);
+    }
+    return cutCache.get(key);
+  }
+  const fv = new THREE.Vector3();
+  // bod sveta na obrazovke (0 až 1, zľava a zdola) pre kameru, ktorou sa práve kreslilo
+  const screenOf = (w) => { fv.set(w[0], w[1], 0).project(camera); return [fv.x * 0.5 + 0.5, fv.y * 0.5 + 0.5]; };
 
   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
   let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: po skoku sa ide zo šera
   const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
-  let mixNow = 0;
+  let mixNow = 0, cutNow = null, sFreeze = null;
   function draw(now, dt) {
     if (!path.length || !compiled) return false;
     keepAround(clamp(Math.round(S), 0, N));
@@ -765,17 +977,36 @@
     if (mix > 0.001) {
       // prelínanie: oba zábery do textúr a spolu na obrazovku (bez prvého záberu len šero)
       vig.value.w = 0;
+      // strih medzi susednými zábermi (po skoku či pri čakaní na fotku len pôvodné prelínanie)
+      let cut = A && B.pi === A.pi + 1 ? cutOf(A, B) : null;
+      const pu = post.material.uniforms;
+      // popredie potrebuje hĺbku záberu, ktorému predmet patrí; záber bez nej (video) dostane pokračovanie pohybu
+      if (cut && cut.k === 4 && (cut.own === 'b' ? B : A).mat.uniforms.uDepth.value === flat) cut = cut.alt || (cut.alt = Object.assign({}, cut, { k: 1, name: 'pohyb', rev: false }));
+      cutNow = cut;
       // hĺbka sa pri prechode otvorí: blízke veci odchádzajúceho záberu sa posúvajú viac (prechádzajú popri
-      // tebe), prichádzajúci záber sa z otvorenej hĺbky usadí na bežnú
-      if (A) A.mat.uniforms.uAmt.value = AMT + 0.1 * mix;
-      B.mat.uniforms.uAmt.value = AMT + 0.1 - 0.1 * mix;
+      // tebe), prichádzajúci záber sa z otvorenej hĺbky usadí na bežnú; popri predmete výraznejšie
+      const amp = cut && cut.k === 4 ? CK.amp : 0.1;
+      if (A) A.mat.uniforms.uAmt.value = AMT + amp * mix;
+      B.mat.uniforms.uAmt.value = AMT + amp - amp * mix;
+      let fA = [0.5, 0.5], fB = [0.5, 0.5];
       renderer.setRenderTarget(rtA); renderer.clear();
-      if (A) { A.mesh.visible = true; place(A, now, mix); renderer.render(scene, camera); A.mesh.visible = false; }
+      if (A) {
+        A.mesh.visible = true; place(A, now, mix, cut); renderer.render(scene, camera); A.mesh.visible = false;
+        if (cut) fA = screenOf(cut.a ? ptOf(A, cut.a) : [A.eye.x, A.eye.y]);   // bod strihu tak, ako ho vidí kamera
+      }
       renderer.setRenderTarget(rtB); renderer.clear();
-      B.mesh.visible = true; place(B, now, -(1 - mix)); renderer.render(scene, camera); B.mesh.visible = false;
+      B.mesh.visible = true; place(B, now, -(1 - mix), cut); renderer.render(scene, camera); B.mesh.visible = false;
+      if (cut) fB = screenOf(cut.b ? ptOf(B, cut.b) : [B.eye.x, B.eye.y]);
       if (A) A.mat.uniforms.uAmt.value = AMT;
       B.mat.uniforms.uAmt.value = AMT;
-      post.material.uniforms.uMix.value = mix;
+      // strih odzadu (odjazd, predmet prichádzajúceho záberu): shader kreslí opačný strih, zábery vymenené, čas naspäť
+      const rev = !!(cut && cut.rev), dS = cut ? (rev ? [-cut.dir[0], -cut.dir[1]] : cut.dir) : [0, 0];
+      const f1 = rev ? fB : fA, f2 = rev ? fA : fB;
+      pu.tA.value = rev ? rtB.texture : rtA.texture; pu.tB.value = rev ? rtA.texture : rtB.texture;
+      pu.uKind.value = cut ? cut.k : 0;
+      pu.uDir.value.set(dS[0], dS[1]); pu.uFoc.value.set(f1[0], f1[1]); pu.uFoc2.value.set(f2[0], f2[1]);
+      pu.uLead.value = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1];   // hrana predmetu v smere jeho letu (−smer kamery)
+      pu.uMix.value = rev ? 1 - mix : mix;
       renderer.setRenderTarget(null); renderer.clear();
       renderer.render(postScene, postCam);
     } else {
@@ -784,7 +1015,7 @@
       renderer.setRenderTarget(null); renderer.clear();
       A.mesh.visible = true; place(A, now, 0); renderer.render(scene, camera); A.mesh.visible = false;
     }
-    mixNow = mix; frameDrawn = true;
+    mixNow = mix; frameDrawn = true; frames++;
     held = mix > 0.5 ? B : A;
     showPlace(held);
     onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean));
@@ -792,7 +1023,7 @@
     // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej
     return vbusy || Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || !A || fin(A, now) < 1;
   }
-  let drawn = false;
+  let drawn = false, frames = 0;                             // frames: počet nakreslených snímok (ladenie)
 
   /* ---------- adaptívna kvalita: keď zariadenie nestíha, zníži sa rozlíšenie ----------
      porovnáva sa s najkratšou snímkou zariadenia, takže displej s 30 Hz (šetrenie energie) nie je „pomalý“ */
@@ -827,6 +1058,7 @@
       for (const rt of [rtA, rtB]) { renderer.setRenderTarget(rt); renderer.clear(); }
       renderer.setRenderTarget(null);
       post.material.uniforms.uAspect.value = w / h;
+      post.material.uniforms.uRes.value.set(canvas.width, canvas.height);
       vig.value.set(1 / canvas.width, 1 / canvas.height, w / h, vig.value.w);
       layout();
     }
@@ -842,7 +1074,8 @@
     const dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
     const T = targetS();
     frameDrawn = false;
-    if (pro) {
+    if (sFreeze != null) { S = sFreeze; V = 0; }               // ladenie: film stojí na danom mieste prechodu
+    else if (pro) {
       // prológ: polohu vo filme vedie čas, nie pružina; skrolovanie ho hneď ukončí a ďalej vedie pružina
       // (pri opakovanom vojdení z ulice až pri posune cez pol obrazovky, aby nudge kolieskom nezrušil chôdzu)
       if (Math.abs(T - 1) > (pro.fast ? 0.5 : 0.02)) endPro(false);
@@ -1077,11 +1310,32 @@
   };
   // fadeFreeze(v): prechod medzi aktuálnym a ďalším záberom zastaví na v (0 až 1) pre snímky; null pustí ďalej
   api.fadeFreeze = (v) => { fadeFreeze = v == null ? null : clamp(v, 0, 1); still = 0; wake(); return true; };
+  /* cutFreeze(meno, mix): prechod zo záberu meno (pro = prológ) do nasledujúceho zastaví na mix (0 až 1) aj s kamerou
+     na tom mieste cesty, kde sa pri skrolovaní tento mix kreslí; cutFreeze(null) pustí ďalej. dbg(1|2): hĺbka A|B */
+  api.dbg = (v) => { post.material.uniforms.uDbg.value = v; wake(); };
+  // pause(true): film prestane kresliť (posledný snímok ostane), pause(false) pokračuje; pre snímky pri pomalej grafike
+  api.pause = (v) => { running = !v && !d.hidden; if (running) { last = 0; wake(); } return true; };
+  api.cutFreeze = (name, v) => {
+    if (name == null) { sFreeze = null; fadeFreeze = null; still = 0; wake(); return true; }
+    const s = name === 'pro' ? path[0] : path.find((x) => !x.pro && (x.photo === name || x.photo === name + '-m'));
+    if (!s || s.pi >= N) return false;
+    if (s.pro) { s.done = false; load(s); }                   // prológ, ktorý už prebehol, sa na snímku znova načíta
+    const k = s.pi, gap = anchors[k + 1] - anchors[k], span = clamp(0.55 * innerHeight / Math.max(1, gap), 0.16, 0.3);
+    const m = clamp(v, 0, 1);
+    // poloha v ceste, kde je prechod presne na m (inverzia smoothstep)
+    let u = m; for (let i = 0; i < 30; i++) u -= (u * u * (3 - 2 * u) - m) / Math.max(1e-3, 6 * u * (1 - u)); u = clamp(u, 0, 1);
+    if (m <= 0) u = 0; if (m >= 1) u = 1;
+    sFreeze = k + 0.5 - span / 2 + u * span; fadeFreeze = m; still = 0;
+    if (!s.pro) jumpTo(Math.max(0, Math.round(anchors[k] + (sFreeze - k) * gap)));
+    sy = Math.max(0, scrollY); held = null; fadeK = -1; lastInput = performance.now(); wake();
+    return true;
+  };
+  Object.defineProperty(api, 'cuts', { get: () => path.slice(0, -1).map((s, i) => { const c = cutOf(s, path[i + 1]); return { from: s.name, to: path[i + 1].name, cut: c ? c.name : 'prelinanie', dir: c && c.dir, rev: !!(c && c.rev) }; }) });
   // uvod.von(): kamera vyjde na ulicu a ostane tam; uvod.znova(): prológ (vojdenie dnu) znova
   api.uvod = { von: leave, znova: () => startPro(outside) };
   Object.defineProperty(api, 'state', {
     get: () => ({
-      on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
+      on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, cut: cutNow && mixNow > 0 ? cutNow.key + ' ' + cutNow.name : null, frames, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
       ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
       userMoved,

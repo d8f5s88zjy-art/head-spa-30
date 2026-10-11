@@ -76,10 +76,10 @@ async function zhoda(kind, second) {
   await page.goto(base, { waitUntil: 'load', timeout: 90000 });
   if (second) { if (mob) await page.touchscreen.tap(200, 400); else await page.mouse.move(300, 300); }   // bez prológu film čaká na prvý pohyb
   await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 60000 });
-  await page.waitForTimeout(300);                            // skoro po prvom snímku: stály pohyb kamery ešte len nabieha (1,5 s)
+  await page.waitForTimeout(600);                            // skoro po prvom snímku: stály pohyb kamery ešte len nabieha (1,5 s)
   const tag = `${kind}${second ? '-2' : ''}`;
   const clip = { x: 0, y: Math.round(vp.height * 0.12), width: vp.width, height: Math.round(vp.height * 0.76) };
-  await page.evaluate(() => { document.querySelectorAll('#uvod .board, #uvod .film-content, .film-place, .film-bars, .film-door, .site-header, .mobile-cta, header, nav').forEach((e) => e.style.visibility = 'hidden'); });
+  await page.evaluate(() => { document.querySelectorAll('#uvod .board, #uvod .film-content, #uvod .title-pin, .film-place, .film-bars, .film-door, .site-header, .mobile-cta, header, nav').forEach((e) => e.style.visibility = 'hidden'); });
   // zálohu vrátiť nad film cez setProperty (cssText by zmazal vlastné premenné bodu záujmu v inline štýle)
   const show = (on) => page.evaluate((on) => { const st = document.querySelector('#uvod .film-still').style; st.setProperty('opacity', on ? '1' : '0', 'important'); st.setProperty('visibility', on ? 'visible' : 'hidden', 'important'); st.setProperty('transition', 'none', 'important'); }, on);
   await show(true);
