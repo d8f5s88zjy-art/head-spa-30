@@ -706,10 +706,12 @@
   /* pás poukážok jednotlivých rituálov: rovnaká platba kartou z adminu ako pri karte rituálu,
      šípky posúvajú o šírku pásu a na kraji sa vypnú */
   $$('.vch[data-gift]').forEach((a) => { const u = httpsUrl(PLATBY[a.dataset.gift]); if (u) { a.href = u; a.dataset.pay = ''; } });
-  const vList = $('.vouchers-list'), vBtns = $$('.vouchers-btn');
+  const vList = $('.vouchers-list'), vBtns = $$('.vouchers-btn'), vNav = $('.vouchers-nav');
   if (vList && vBtns.length) {
     const vEdge = () => {
       const max = vList.scrollWidth - vList.clientWidth - 2;
+      // keď sa všetky poukážky zmestia vedľa seba, šípky nemajú čo posúvať
+      if (vNav) vNav.style.visibility = max > 0 ? '' : 'hidden';
       vBtns.forEach((b) => {
         const off = +b.dataset.dir < 0 ? vList.scrollLeft <= 2 : vList.scrollLeft >= max;
         // vypínané tlačidlo s fokusom ho odovzdá druhej šípke, aby sa fokus nestratil na začiatok stránky

@@ -16,7 +16,9 @@ byť aj pri poukazoch v obchode Booqme (`docs/booqme-poukazy.csv`).
 - `sablona-cista.png`: šablóna bez nápisov, ktoré sa menia (`python3 cisti.py`)
 - `poukazka.html`: rozloženie textu na šablóne; písmo Cinzel (ako HEAD SPA v šablóne) a Montserrat
 - `ritualy.json`: rituály, riadkovanie názvov, ceny, poradie v obchode Booqme a meno súboru na webe
-- `booqme/`: hotové obrázky do obchodu Booqme (16 : 9), číslo v názve = poradie produktu v obchode
+- `booqme/`: hotové obrázky do obchodu Booqme (1600 × 1200, 4 : 3, aby obchod ukázal celú poukážku na mobile
+  aj na počítači), číslo v názve = poradie produktu v obchode
+- na webe sú len tri ukážky (`"web": true` v `ritualy.json`), ostatné poukážky sú len v obchode Booqme
 
 ## Keď sa zmenia ceny
 
@@ -25,7 +27,7 @@ Z koreňa repozitára:
 ```
 python3 docs/poukazky/sablona/ceny.py      # ceny z index.html do ritualy.json
 node docs/poukazky/sablona/vyrob.mjs       # vykreslí poukážky (Playwright a Chromium)
-python3 docs/poukazky/sablona/export.py    # booqme/*.jpg a assets/img/poukaz/<rituál>-*.{avif,webp,jpg}
+python3 docs/poukazky/sablona/export.py    # booqme/*.jpg a ukážky na web assets/img/poukaz/<rituál>-*.{avif,webp,jpg}
 ```
 
 Potom nové obrázky z `booqme/` nahrať k príslušným poukazom v obchode Booqme.
