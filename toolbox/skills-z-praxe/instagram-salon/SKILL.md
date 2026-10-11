@@ -170,6 +170,16 @@ python3 -I -c "import re,sys; t=open(sys.argv[1],encoding='utf-8').read(); print
 - Učenie z videí: `toolbox/skills-z-praxe/referencie-z-videi/`.
 - Šablóny a fakty: `toolbox/skills-z-praxe/instagram-salon/references/`.
 
+## Mimo tohto repozitára
+
+V inom chate (Claude.ai so skillom nahratým ako zip, Claude Code v inom projekte) zdrojové súbory
+webov nie sú. Vtedy:
+
+- `references/fakty-*.md` ber ako východisko so stavom k dátumu v nich, nie ako dnešnú pravdu.
+- Ceny, hodiny, mená a ponuku si vypýtaj od majiteľa alebo nech vloží aktuálny zdroj (napr. obsah
+  `CONTENT_SOURCES.md` alebo snímku cenníka); bez toho ich do návrhu nedávaj.
+- Pravidlá (len návrhy, tykanie, bez em dash, bez zmienky o AI, správny názov podniku) platia rovnako.
+
 ## Kontrolný zoznam
 
 - [ ] Viem, pre ktorý podnik píšem, a použil som jeho správny názov.

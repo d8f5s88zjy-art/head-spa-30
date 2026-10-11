@@ -86,4 +86,9 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
 - Three.js skills, github.com/CloudAI-X/threejs-skills, bez licencie (len odkaz, neskopírované)
 - Instagram Agent (nategold.ai), github.com/nategoldai/instagram-agent, 11 skills na správu Instagramu; licencia
   neznáma, repozitár sme neotvárali (len video). Náš vlastný postup len s návrhmi je `skills-z-praxe/instagram-salon`
+- MoneyPrinterTurbo, github.com/harry0703/MoneyPrinterTurbo, podľa videí MIT, krátke videá z jednej témy
+  (scenár, zábery z fotobánky, hlas, titulky, hudba); repozitár sme neotvárali, náš postup na skutočných
+  záberoch podniku je `skills-z-praxe/kratke-video`
+- Higgsfield, higgsfield.ai, generovanie obrázkov a videa, plugin do After Effects; platené kredity, len so súhlasom
+  majiteľa; náš postup pohyblivej grafiky bez After Effects je `skills-z-praxe/motion-grafika`
 - Naše overené postupy z prác na weboch: `skills-z-praxe/` (prehľad v `skills-z-praxe/README.md`)

@@ -19,5 +19,15 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 Prevádzka webu HEAD SPA 30 (nahratie na Forpsi, poukazy v Booqme, poukážky) je v samostatnom skille
 [`../head-spa-30/`](../head-spa-30/SKILL.md), projekt GYM KLUB v [`../gym-klub/`](../gym-klub/README.md).
 
+## Použitie v iných chatoch
+
+- **Claude Code v tomto repozitári:** netreba nič, `CLAUDE.md` na skills odkazuje.
+- **Claude.ai (každý nový chat):** zabaľ skill do zipu a nahraj ho v nastaveniach (Settings,
+  Capabilities, Skills). Zipy vyrobí `python3 -I toolbox/skills-z-praxe/zabal.py <priečinok>`
+  (všetky) alebo s menami skills (len vybrané).
+- **Claude Code na inom počítači:** rozbaľ zip do `~/.claude/skills/`, skill sa načíta sám.
+- Mimo repozitára chýbajú zdrojové súbory webov (fakty, zábery, písma): skills, ktoré ich
+  potrebujú, to hovoria v časti „Mimo tohto repozitára“ a pýtajú si ich od majiteľa.
+
 Spoločné pravidlá platia vždy: fakty len zo zdrojov, slovenčina a tykanie, krátke texty bez
 pomlčky em dash, žiadna zmienka o AI na webe, v kóde ani v commitoch (podrobne `CLAUDE.md`).

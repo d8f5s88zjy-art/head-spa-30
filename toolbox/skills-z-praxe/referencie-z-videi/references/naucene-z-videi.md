@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Štyri videá, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Sedem videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -60,6 +60,37 @@ nie overené fakty.
 - Čo prešlo: vlastný skill `toolbox/skills-z-praxe/instagram-salon/`, ktorý pripravuje len
   návrhy. Automatické komentovanie a odpovedanie z účtu sme odmietli: Instagram ho obmedzuje
   a pôsobí ako spam.
+
+## 5. rourke.heath: Higgsfield v After Effects
+
+- Adresa: https://www.tiktok.com/@rourke.heath/video/7683918425810324758 (61 s, titulky eng-US ASR)
+- Titulky a obraz: plugin Higgsfield v After Effects, panel „Supercomputer“ s modelom „GPT 6 Astra“.
+  Z referenčného obrázka štýlu a jedného zadania postaví pohyblivú grafiku po vrstvách, každá vrstva
+  ostane upraviteľná. Na časovej osi sú pomenované vrstvy (Glass cards, Orbit animation, Presenter
+  cutout, Run progress bar, Map transition, Route + clock, logá). Príklad zadania: upraviteľný
+  lower third so štatistikou hráča vo farbách a značke tímu, vložený do kompozície. Alternatíva cez
+  plugin Higgsfield v ChatGPT. Je to reklama na Higgsfield; výzva „napíš AR do komentárov“ ignorovaná.
+- Čo prešlo: skill `toolbox/skills-z-praxe/motion-grafika/` (kompozícia v HTML s pomenovanými
+  vrstvami a časmi, render po snímkach do videa s priehľadnosťou, bez After Effects).
+- Čo nie: After Effects ani plugin tu nemáme; pripojený Higgsfield v účte Claude je platený,
+  preto len so súhlasom a rozpočtom majiteľa, a nikdy na vymyslené zábery podniku.
+
+## 6. valeridoesai a 7. agilesingh: MoneyPrinterTurbo
+
+- Adresy: https://www.tiktok.com/@valeridoesai/video/7679200985264229655 (39 s) a
+  https://www.tiktok.com/@agilesingh/video/7688058236380925204 (35 s), titulky eng-US ASR.
+- Titulky a obraz: bezplatný nástroj MoneyPrinterTurbo (na snímkach github.com/harry0703/MoneyPrinterTurbo
+  a štítok MIT license): z jednej témy napíše scenár, nájde zábery z fotobánky, vygeneruje hlas,
+  titulky, pridá hudbu a vyrenderuje 9:16, 16:9 alebo štvorec. Pripája sa na rôzne jazykové modely.
+  Druhé video tvrdí aj automatické uverejnenie na TikTok, Instagram a YouTube Shorts. Počet hviezd
+  sa v popise a v reči líši (115K a 125K), neoverené. Prvé video je z veľkej časti lákadlo na
+  vlastný webinár („DM video“, ignorované).
+- Repozitár sme neotvárali; nič z neho nie je skopírované.
+- Čo prešlo: skill `toolbox/skills-z-praxe/kratke-video/` s rovnakým reťazcom (scenár, zábery,
+  titulky, hlas, hudba, render), ale na skutočných záberoch a fotkách podniku, s faktami zo zdrojov
+  a scenárom zo skillu `instagram-salon`.
+- Čo nie: zábery z fotobánky (naše weby ukazujú len skutočný podnik), automatické uverejňovanie
+  (uverejňuje majiteľ), hlas a hudba bez súhlasu a licencie.
 
 ## Spoločné lekcie
 
