@@ -21,6 +21,25 @@ licenciou Apache 2.0 (licencia je v každom priečinku):
 | `skill-creator` | tvorba vlastných skills a ich meranie |
 | `mcp-builder` | tvorba MCP serverov (prepojenie na iné služby) |
 
+`skills-animacie/` – skills na pohyb, 3D a vizuálnu identitu z verejných repozitárov
+(MIT), zoznam a pôvod v `skills-animacie/README.md`.
+
+`skills-z-praxe/` – naše vlastné postupy z prác na weboch HEAD SPA 30 a BARBERSHOP 30,
+spísané z kódu, ktorý na webe naozaj beží, a overené proti nemu. Prehľad je
+v `skills-z-praxe/README.md`:
+
+| Skill | Na čo je |
+| --- | --- |
+| `instagram-salon` | návrhy príspevkov, reels, odpovedí, bio a týždenného plánu pre Instagram salónu (len návrhy, uverejňuje majiteľ) |
+| `referencie-z-videi` | ako sa poučiť z odkazu na TikTok: popis, titulky, video, prehľad snímok |
+| `film-z-fotiek` | film zo skutočných fotiek s hĺbkovou mapou na pozadí webu (WebGL2), strihy, kamera, zálohy |
+| `video-a-sekvencie` | plynulé video pri skrolovaní ako sekvencia snímok po 0,1 s, slučky videa bez švu |
+| `rychly-web` | Lighthouse mobil 95+ a desktop 100, plynulý skrol, pasce s CLS, LCP a prepočtom štýlu |
+| `testy-a-nasadenie` | testy v prehliadači (Playwright), nasadenie na GitHub Pages, FTP balík |
+| `obsah-a-texty` | pravdivé texty po slovensky, zdroje faktov, šesť jazykov, štruktúrované dáta |
+| `booqme-rezervacie` | web napojený na Booqme (rezervácie, poukazy), zosúladenie po zmene v kalendári |
+| `workflowy` | práca s viacerými agentmi naraz: stavba, kontroly, porota návrhov, audit s overením |
+
 `sablona-skillu/` – šablóna nového skillu, `specifikacia/` – špecifikácia formátu
 Agent Skills. `ZDROJE.md` – vybrané bezplatné zdroje (písma, ikony, fotky, šablóny,
 nástroje) s licenciami.
@@ -39,5 +58,9 @@ inou licenciou. V Claude Code ich dostaneš celé jedným príkazom:
   `cp -r toolbox/skills/frontend-design .claude/skills/`.
 - **Claude.ai:** v nastaveniach (Settings, Capabilities, Skills) nahraj priečinok
   skillu ako zip.
-- Vlastný skill pre salón (texty na Instagram, odpovede na recenzie, správy
-  zákazníkom v šiestich jazykoch) sa dá spraviť zo `sablona-skillu/`.
+- Na Instagram salónu je hotový `skills-z-praxe/instagram-salon`. Ďalší vlastný
+  skill (napríklad správy zákazníkom v šiestich jazykoch) sa dá spraviť zo
+  `sablona-skillu/`.
+- Postupy zo `skills-z-praxe/` sa pri práci v tomto repozitári dajú čítať priamo,
+  netreba ich kopírovať; do `.claude/skills/` ich skopíruj, ak ich chceš mať
+  k dispozícii automaticky alebo v inom projekte.

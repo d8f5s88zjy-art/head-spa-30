@@ -84,3 +84,6 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
 - Motion Design Skill, github.com/lottiefiles/motion-design-skill, MIT, v `toolbox/skills-animacie/motion-design`
 - Genjutsu, github.com/AThevon/genjutsu, MIT, v `toolbox/skills-animacie/genjutsu`
 - Three.js skills, github.com/CloudAI-X/threejs-skills, bez licencie (len odkaz, neskopírované)
+- Instagram Agent (nategold.ai), github.com/nategoldai/instagram-agent, 11 skills na správu Instagramu; licencia
+  neznáma, repozitár sme neotvárali (len video). Náš vlastný postup len s návrhmi je `skills-z-praxe/instagram-salon`
+- Naše overené postupy z prác na weboch: `skills-z-praxe/` (prehľad v `skills-z-praxe/README.md`)
