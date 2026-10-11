@@ -32,6 +32,9 @@ node docs/poukazky/sablona/vyrob.mjs       # vykreslí poukážky (Playwright a 
 python3 docs/poukazky/sablona/export.py    # booqme/*.jpg a ukážky na web assets/img/poukaz/<rituál>-*.{avif,webp,jpg}
 ```
 
+Playwright mimo projektu a plné Chromium (headless shell kazí rozostupy písmen) sa zadajú premennými
+`PLAYWRIGHT_MODULE` a `PLAYWRIGHT_CHROMIUM`. Pri zmene len poukážok od salónu stačí export.py.
+
 Potom nové obrázky z `booqme/` nahrať k príslušným poukazom v obchode Booqme.
 
 Poukážky so `"salon": true` nemajú cenu, ale v obrázku majú názov a dĺžku. Keď sa zmení dĺžka alebo

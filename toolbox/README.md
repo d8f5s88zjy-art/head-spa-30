@@ -21,6 +21,10 @@ licenciou Apache 2.0 (licencia je v každom priečinku):
 | `skill-creator` | tvorba vlastných skills a ich meranie |
 | `mcp-builder` | tvorba MCP serverov (prepojenie na iné služby) |
 
+`head-spa-30/` – prevádzka webu HEAD SPA 30: nahratie na Forpsi, kontrola nahratia, poukazy a ceny
+v Booqme, orez poukážok (skripty v `scripts/`, návody v `references/`, začína sa v `SKILL.md`).
+`gym-klub/` – kde je projekt GYM KLUB (iná vetva) a pravidlá pre jeho fotky.
+
 `sablona-skillu/` – šablóna nového skillu, `specifikacia/` – špecifikácia formátu
 Agent Skills. `ZDROJE.md` – vybrané bezplatné zdroje (písma, ikony, fotky, šablóny,
 nástroje) s licenciami.

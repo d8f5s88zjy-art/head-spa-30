@@ -61,3 +61,4 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 
 ## Nástroje
 - `toolbox/` obsahuje skills na dizajn, témy, testovanie a tvorbu skills, plus zoznam zdrojov.
+- Prevádzka webu (nahratie na headspa30.sk, Booqme, poukážky): `toolbox/head-spa-30/SKILL.md`.
