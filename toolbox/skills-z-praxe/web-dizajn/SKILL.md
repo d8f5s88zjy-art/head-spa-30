@@ -168,7 +168,7 @@ README HEAD SPA 30). Nový text potrebuje kľúč vo všetkých šiestich `asset
 
 | Vo videu | U nás |
 | --- | --- |
-| Figma MCP: Claude číta návrh z Figmy | konektor Figma je v adresári Claude; 2026-10-11 počas písania tohto skillu bol pripojený, nástroje sme neskúšali (weby nemajú návrh vo Figme). Pripája sa na https://claude.ai/customize/connectors a platí od novej relácie. Postup s Figmou aj bez nej: [references/figma-mcp.md](references/figma-mcp.md) |
+| Figma MCP: Claude číta návrh z Figmy | konektor Figma je v adresári Claude; 2026-10-11 počas písania tohto skillu bol pripojený, nástroje sme neskúšali (weby nemajú návrh vo Figme). Pripája sa na https://claude.ai/customize/connectors; ak sa nástroje neukážu, nová relácia. Postup s Figmou aj bez nej: [references/figma-mcp.md](references/figma-mcp.md) |
 | Playwright: test a snímky | Playwright beží priamo z Node skriptov (`dizajn-audit.mjs`, `dymovy-test.mjs`), MCP server na to netreba |
 | „opíš web obyčajnými slovami“ | šablóna `references/zadanie.md`, fakty len zo zdrojov |
 | skill „taste“ | `references/vkus.md`: referencie, rozbor, princípy bez kopírovania |
