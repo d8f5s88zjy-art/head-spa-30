@@ -228,6 +228,27 @@ a k svojej karte. Pri čakaní 1,5 s zachytí softvérové kreslenie (asi 7 sní
 zastavený strih sa dokreslí (mix 0,999 za 4 s), na zariadení s grafikou za zlomok sekundy.
 Známe: pri skoku cez menu do vzdialenej časti je film, kým sa fotka záberu načíta, tmavý (v teste 2–3 s).
 
+## 11. Kratšia cesta, káva v čakárni, popisy barberov, ostrejšie videá (2026‑10‑11)
+
+Podnet majiteľa (snímka z iPhonu, karta Remeslo): čo najostrejšie, úvod a cesta k obsahu sú dlhé, káva
+sa podáva vzadu, kde sa čaká, nie pri recepcii; ku každému barberovi elegantný popis.
+- Cesta: 9 kariet namiesto 14 (TOUR_DIRECTION, Cesta). Telefón 390×844: tím na 6. obrazovke (predtým 11.),
+  cenník 8,9 (13,9), kontakt 19,2 (24,2), celá stránka 21,4 obrazovky (26,4). Nové strihy `rohozka>sala`
+  (krok dopredu), `sala>stol` (popri operadle; telefón prelínanie, obe videá sú jeden súvislý záber),
+  `stol>cakaren` (švih); snímky strihov na telefóne aj počítači bez chýb.
+- Prológ: chôdza 1,7 s, vstup 1,3 s (2,3 a 1,6), pred podnikom najviac 1,5 s (6 s). `uvod-meranie.mjs`:
+  rýchla sieť koniec prológu 7,7 s od načítania (11,7 s), bez čakania pri dverách; pomalá sieť 1,6 Mb/s
+  pri dverách 0,3 až 0,45 s (test povoľuje do 1 s, kompromis kratšieho úvodu).
+- Videá: originály 576×1024; `videa.sh` ich zväčší na 864×1536 (lanczos), doostrí CAS 0,5 a kóduje s menšou
+  kompresiou (H.264 crf 20, kľúčová každá 4. snímka; VP9 crf 33). Výrez tváre pri zväčšení na displej
+  telefónu je zreteľne ostrejší. Cena: videá vo filme spolu asi 10 MB H.264 (predtým 3,8 MB), sťahujú sa
+  až po pohybe a blízko scény. Ostrejší obraz dá len originál z telefónu (1080p alebo 4K).
+- Popisy barberov: workflow (traja textári, porota pravidiel a zákazníka, syntéza, korektúra), 43 až 68
+  znakov, bez faktov o osobe (CONTENT_SOURCES, Tím). Pás tímu na telefóne aj počítači skontrolovaný.
+- Testy: `app-smoke.mjs` 105 OK (9 kotiev, 8 kapitol, karta sud ako druhý záber kapitoly, čakáreň pri
+  motion=off); `koliesko-test.mjs` OK; `uvod-zhoda.py` posun do 6 px; `uvod-shot.mjs` OK;
+  `karty-shot.mjs --wait=5000` telefón: 9 kariet, každý záber ostrý a k svojej karte.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

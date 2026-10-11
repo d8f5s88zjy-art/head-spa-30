@@ -59,10 +59,13 @@ async function os(name, throttle) {
     else if (hs) { if (b.t - hs.t > 250) holds.push({ S: hs.S, od: hs.t, ms: b.t - hs.t }); hs = null; }
   }
   const dprs = [...new Set(samples.filter((x) => x.dpr).map((x) => x.dpr))];
-  const door = holds.filter((h) => Math.abs(h.S - 0.33) < 0.001);
+  // kratší úvod (majiteľ 2026‑10‑11): pred podnikom sa čaká na záber úvodu najviac 1,5 s, takže na pomalej
+  // sieti môže kamera pri dverách krátko postáť; povolené do 1 s, na rýchlej sieti vôbec
+  const doorMax = throttle ? 1000 : 0;
+  const door = holds.filter((h) => Math.abs(h.S - 0.33) < 0.001 && h.ms > doorMax);
   console.log(`\n== os: ${name} ==\n  prvý snímok ${first ? first.t : '-'} ms, chôdza od ${start ? start.t : '-'} ms, koniec prológu ${end ? end.t : '-'} ms, dpr ${dprs.join(' > ') || '-'}, strop 30 fps ${samples.some((x) => x.cap)}`);
   console.log(`  zastavenia počas chôdze: ${holds.length ? JSON.stringify(holds) : 'žiadne'}`);
-  console.log(`  ${door.length ? 'CHYBA čakanie pri dverách (S 0,33)' : 'OK   bez čakania pri dverách'}; ${dprs.length > 1 ? 'CHYBA rozlíšenie sa menilo počas prológu' : 'OK   rozlíšenie stále'}`);
+  console.log(`  ${door.length ? 'CHYBA čakanie pri dverách (S 0,33)' : throttle ? 'OK   pri dverách najviac 1 s' : 'OK   bez čakania pri dverách'}; ${dprs.length > 1 ? 'CHYBA rozlíšenie sa menilo počas prológu' : 'OK   rozlíšenie stále'}`);
   if (door.length || dprs.length > 1) bad++;
   if (logs.length) console.log('  chyby stránky:', logs.slice(0, 3));
   await ctx.close();
