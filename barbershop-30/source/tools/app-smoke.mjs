@@ -60,8 +60,8 @@ async function scrollTo(page, y) {
   await sleep(250);
 }
 const vars = (page) => page.evaluate(() => {
-  const cs = getComputedStyle(document.documentElement);
-  return { p: parseFloat(cs.getPropertyValue('--p')) || 0, scene: document.documentElement.dataset.sceneActive || '' };
+  // priebeh skrolu (0 až 1) z polohy; app.js už nepíše --p na <html> (prepočet celej stránky)
+  return { p: scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight), scene: document.documentElement.dataset.sceneActive || '' };
 });
 const layout = (page) => page.evaluate(() => {
   const y = scrollY, o = { shots: [], sections: {} };

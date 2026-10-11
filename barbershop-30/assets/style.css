@@ -44,10 +44,8 @@
   --t-micro: 200ms;
   --t-text: 560ms;
 
-  /* Nastavuje app.js z jedného zdroja scroll progressu (0–1); --sp dostáva každá kotva .film-shot. */
-  --p: 0;
-  --pointer-x: 0.5;
-  --pointer-y: 0.5;
+  /* app.js píše premenné len na kotvy (--sp, --o, --so, v úvode --hint), nikdy na <html>: premenná na
+     koreni sa dedí do celej stránky a každý zápis by prepočítal štýl všetkých prvkov */
 
   /* Tmavá doska pod textom nad filmom (TOUR_DIRECTION: --ink 0.72, zreteľný okraj). */
   --board: rgba(14, 13, 12, 0.72);
@@ -587,7 +585,7 @@ html { overscroll-behavior-y: none; }
   display: none; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px;
   border: 1px solid rgba(241, 233, 221, 0.25); background: rgba(14, 13, 12, 0.55); color: var(--paper);
   font-family: var(--font-text); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1;
-  cursor: pointer; opacity: clamp(0, 1 - var(--p) / 0.02, 1); transition: opacity 300ms var(--ease-out), border-color 200ms;
+  cursor: pointer; opacity: var(--hint, 1); transition: opacity 300ms var(--ease-out), border-color 200ms;
 }
 .film-door:hover, .film-door:focus-visible { border-color: var(--lamp); outline: none; }
 .film-door::before { content: "↑"; color: var(--lamp); font-size: 0.9rem; }
@@ -618,7 +616,7 @@ html[data-motion="off"] .place-tag { opacity: 1 !important; transform: none !imp
 .scroll-hint {
   position: absolute; right: var(--gutter); bottom: var(--s6); z-index: 2; margin: 0;
   display: flex; align-items: center; gap: var(--s3);
-  opacity: clamp(0, 1 - var(--p) / 0.02, 1);
+  opacity: var(--hint, 1);
   transition: opacity 300ms var(--ease-out);
 }
 .scroll-hint::after { content: ""; width: 48px; height: 2px; background: var(--lamp); }
@@ -1196,7 +1194,7 @@ html:not(.karty) .title-pin { position: relative; }
   mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 .marquee-track { display: flex; width: max-content; animation: pas var(--marquee-dur) linear infinite; }
-.marquee.is-off .marquee-track { animation-play-state: paused; }
+.marquee.is-off .marquee-track, .beam.is-off > .beam-line::before, .btn-primary.is-off::after { animation-play-state: paused; }
 .marquee-track span {
   font-family: var(--font-display); font-style: italic; font-weight: 500;
   font-size: clamp(1.5rem, 5.4vw, 3rem); line-height: 1; color: var(--paper-2, #c9beae);

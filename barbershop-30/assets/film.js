@@ -929,7 +929,7 @@
   /* ---------- skrolovanie -> poloha vo filme ----------
      path = zábery, ktorých kotvy sú teraz v stránke (skrytá vypadne), anchors = kde na stránke je
      každý záber celý na obrazovke. S = poloha vo filme (index v path, s desatinami). */
-  let path = [], anchors = [], N = 0;
+  let path = [], anchors = [], N = 0, vhNow = innerHeight;   // vhNow: výška okna z measure() (nečíta sa v každej snímke)
   // horný okraj kotvy v súradniciach stránky; prilepená (sticky) alebo pevná kotva, aj jej prilepený
   // obal, sa pri skrolovaní hýbe, preto sa berie jej rodič: tam sa kotva začína lepiť
   function pageTop(el) {
@@ -942,6 +942,7 @@
   }
   function measure() {
     const vh = innerHeight, P = [], An = [], was = path.map((s) => s.photo).join();
+    vhNow = vh;
     SHOTS.forEach((s) => {
       s.pi = null;
       if (!s.at.offsetParent && getComputedStyle(s.at).position !== 'fixed') return;   // skrytá kotva vypadne
@@ -1061,10 +1062,17 @@
   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
   let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: po skoku sa ide zo šera
   const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
-  let mixNow = 0, cutNow = null, sFreeze = null;
+  let mixNow = 0, cutNow = null, sFreeze = null, keepT = 0, keptCi = -1, keptDir = 0, keptAt = 0;
   function draw(now, dt) {
     if (!path.length || !compiled) return false;
-    keepAround(clamp(Math.round(S), 0, N));
+    {
+      const ci = clamp(Math.round(S), 0, N), kd = V < 0 ? -1 : 1;
+      if (!keepT && (ci !== keptCi || kd !== keptDir || now - keptAt > 100)) {
+        keptCi = ci; keptDir = kd; keptAt = now;
+        // načítanie a uvoľnenie záberov (fetch, textúry, zastavenie videa) v samostatnej úlohe po snímke
+        keepT = setTimeout(() => { keepT = 0; if (running && !lost && path.length) keepAround(clamp(Math.round(S), 0, N)); }, 0);
+      }
+    }
     // videá: posun podľa polohy vo filme (scroll) alebo prehrávanie, kým je záber na obrazovke (play);
     // ešte pred kreslením, aby sa slučka zastavila aj vtedy, keď sa po skoku nový záber ešte načítava
     let vbusy = false;
@@ -1073,7 +1081,7 @@
     let A = path[k], B = path[clamp(k + 1, 0, N)];
     // prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere 1 obrazovka = 0,3 obrazovky skrolu),
     // pri väčších medzerách asi 55 % výšky okna, najmenej 16 %; vždy okolo stredu
-    const gap = k < N ? anchors[k + 1] - anchors[k] : innerHeight, span = clamp(0.55 * innerHeight / Math.max(1, gap), 0.16, 0.3);
+    const gap = k < N ? anchors[k + 1] - anchors[k] : vhNow, span = clamp(0.55 * vhNow / Math.max(1, gap), 0.16, 0.3);
     // stred prechodu: pri titulnej karte tam, kde sa mení text (horný okraj jej kotvy), inak v polovici
     const c = A !== B && B.cut != null ? clamp((B.cut - anchors[k]) / Math.max(1, gap), span / 2 + 0.02, 1 - span / 2 - 0.02) : 0.5;
     const want = A === B ? 0 : smooth(c - span / 2, c + span / 2, S - k);
@@ -1339,7 +1347,12 @@
   let topSince = scrollY <= 4 ? performance.now() : 0;
   on(window, 'scroll', () => { sy = Math.max(0, scrollY); if (sy > 4) topSince = 0; else if (!topSince) topSince = performance.now(); poke(); }, { capture: true });
   const atTopSettled = () => scrollY <= 4 && topSince && performance.now() - topSince > 350;
-  on(window, 'resize', resize);
+  // lišta prehliadača na telefóne pri skrolovaní posiela resize, plátno (100lvh) sa pritom nemení: kotvy sa
+  // prepočítajú až o 150 ms, nie synchrónne uprostred skrolu; skutočná zmena rozmeru ide hneď
+  on(window, 'resize', () => {
+    if ((canvas.clientWidth || innerWidth) === cw && (canvas.clientHeight || innerHeight) === ch) { clearTimeout(mt); mt = setTimeout(() => { measure(); wake(); }, 150); }
+    else resize();
+  });
   // skutočný pohyb návštevníka: až potom sa sťahujú videá (meranie stránky bez pohybu ich nestiahne)
   const moved = () => { if (!userMoved) { userMoved = true; wake(); } };
   ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((t) => on(window, t, moved));
@@ -1485,7 +1498,14 @@
   if (pro) { S = 0; V = 0; }                                   // prológ začína záberom fasády
   // prvé použitie shaderu čaká na grafiku: shadery sa preložia vopred a bez čakania
   // (KHR_parallel_shader_compile), nie až pri prvom zábere či prelínaní počas skrolu
-  try { await Promise.all([renderer.compileAsync(scene, camera), renderer.compileAsync(postScene, postCam)]); } catch (e) { /* preloží sa pri prvom kreslení */ }
+  try { await Promise.all([renderer.compileAsync(scene, camera), renderer.compileAsync(postScene, postCam), renderer.compileAsync(softScene, postCam)]); } catch (e) { /* preloží sa pri prvom kreslení */ }
+  // prvé použitie programu číta zoznam uniformov synchrónne z grafiky: urobí sa teraz do cieľa 1 × 1 px,
+  // nie pri prvom strihu uprostred skrolu
+  try {
+    const w1 = new THREE.WebGLRenderTarget(1, 1, { depthBuffer: false });
+    renderer.setRenderTarget(w1); renderer.render(postScene, postCam); renderer.render(softScene, postCam);
+    renderer.setRenderTarget(null); w1.dispose();
+  } catch (e) { /* nič */ }
   compiled = true;
   // prvý obraz až keď je načítaný záber na mieste, kde návštevník je; potom sa statická fotka prelnie do filmu
   wake();

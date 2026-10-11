@@ -2,7 +2,7 @@
  * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; docs/TOUR_DIRECTION.md; docs/ART_DIRECTION.md §8).
  *
  * Jediný zdroj pravdy je scroll. Jedna slučka requestAnimationFrame číta window.scrollY, počíta celkový
- * progress --p a lokálne t každého záberu (.film-shot), zapisuje CSS premenné, prepína stavy
+ * progress a lokálne t každého záberu (.film-shot), zapisuje CSS premenné na kotvy (nikdy na <html>), prepína stavy
  * (is-in, data-scene-active, lišta, linka príbehu, mobilné CTA) a riadi tiché videoslučky, menu a lightbox.
  * Film zo skutočných fotiek (assets/film.js) je samostatný modul: číta kotvy .film-shot a triedy world /
  * world-in / world-off na <html> – tento súbor ich nenastavuje ani nečíta.
@@ -142,8 +142,10 @@ let menuOpen = false;
 let activeScene = 0;
 let lastHeaderScrolled = null;
 
+let curY = 0;
 function readTarget() {
-  targetP = clamp01((window.scrollY || 0) / maxScroll);
+  curY = window.scrollY || 0;
+  targetP = clamp01(curY / maxScroll);
 }
 
 // Aktívna sekcia: tá, v ktorej leží bod 40 % výšky okna (sekcie sú rôzne dlhé – záber + pás);
@@ -162,7 +164,9 @@ function closestSection(y) {
 
 function apply(p) {
   const y = p * maxScroll;
-  setVar('--p', p);
+  // výzva a dvere v úvode zmiznú v prvých 2 % skrolu; premenná ide len na kotvu úvodu (na <html> by sa
+  // dedila do celej stránky a každý zápis by prepočítal asi 750 prvkov v každej snímke skrolu)
+  if (shots[0] && shots[0].first) setVar('--hint', 1 - p / 0.02, shots[0].el);
 
   // lokálne t záberu: 0 keď stred obrazovky vstúpi na jeho horný okraj, 1 keď vyjde spodným okrajom.
   // Z neho CSS odvodí jemný prejazd zálohy (scale 1 → 1.06, premenná --sp na kotve) a stav data-at prvkov.
@@ -213,7 +217,7 @@ function apply(p) {
   }
 
   // lišta, linka príbehu, plávajúce CTA
-  const scrolled = (window.scrollY || 0) > 80;
+  const scrolled = curY > 80;                               // nečítať scrollY po zápisoch štýlu
   if (scrolled !== lastHeaderScrolled) { lastHeaderScrolled = scrolled; setClass(header, 'is-scrolled', scrolled); }
   setClass(storyLine, 'is-visible', p > 0.02);
   setClass(mobileCta, 'is-hidden', ctaHidden(y));
@@ -334,27 +338,8 @@ if (motionOn && mqFinePointer.matches) {
   window.addEventListener('scroll', () => { if (!ours && !raf) cur = target = window.scrollY; }, { passive: true });
 }
 
-/* ----------------------------------------------------------------------------
-   7. Kurzor (iba desktop s hover a presným ukazovateľom) – --pointer-x/y pre CSS
-   ---------------------------------------------------------------------------- */
-function setPointerVars(x, y) {
-  setVar('--pointer-x', x);
-  setVar('--pointer-y', y);
-}
-setPointerVars(0.5, 0.5);
-
-let pointerBound = false;
-function onPointerMove(e) {
-  if (e.pointerType && e.pointerType !== 'mouse') return;
-  setPointerVars(clamp01(e.clientX / (window.innerWidth || 1)), clamp01(e.clientY / (window.innerHeight || 1)));
-}
-function bindPointer() {
-  const want = mqFinePointer.matches && motionOn;
-  if (want && !pointerBound) { window.addEventListener('pointermove', onPointerMove, { passive: true }); pointerBound = true; }
-  if (!want && pointerBound) { window.removeEventListener('pointermove', onPointerMove); pointerBound = false; setPointerVars(0.5, 0.5); }
-}
-bindPointer();
-mqFinePointer.addEventListener?.('change', bindPointer);
+/* 7. (kurzor) zrušené: --pointer-x/y na <html> pri každom pohybe myši prepočítali štýl celej stránky a nič
+   ich nečítalo; film má na posun pohľadu vlastný pointermove */
 
 /* ----------------------------------------------------------------------------
    8. Prvky .reveal (dosky, karty) – IntersectionObserver, jednorazový nástup
@@ -600,7 +585,8 @@ start();
   if (!still && steps.length) { root.classList.add('js-steps'); io(steps, (el, on, o) => { if (on) { el.classList.add('is-in'); o && o.unobserve(el); } }, { threshold: 0.35 }); }
 
   // pás služieb beží len na obrazovke (batéria)
-  io([...d.querySelectorAll('.marquee')], (el, on) => el.classList.toggle('is-off', !on));
+  // nekonečné animácie bežia len na obrazovke: mimo okna ich Chrome nepustí na kompozitor a tikajú v hlavnom vlákne
+  io([...d.querySelectorAll('.marquee, .beam, .btn-primary')], (el, on) => el.classList.toggle('is-off', !on));
 
   // tabuľa dnešných hodín podľa otváracích hodín v Nitre (Po–Pi 9–19, So 9–14, Ne zatvorené)
   const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14], 0: null };

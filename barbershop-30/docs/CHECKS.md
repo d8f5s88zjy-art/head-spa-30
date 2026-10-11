@@ -273,6 +273,27 @@ video rozložiť na snímky po 0,10 s.
   platí pre Chrome na Androide a počítače s rýchlym monitorom. Na skutočnom zariadení nemerané (kontajner
   nemá grafickú kartu).
 
+## 13. Audit výkonu a úpravy (2026‑10‑11)
+
+Workflow (3 audity: JS filmu, grafika, stránka a CSS; každý overený skeptikom), merania v scratchpad `fps/`.
+Zapracované (overené nálezy s nízkym rizikom):
+- app.js: `--p` sa už nepíše na `<html>` (dedil sa do ~750 prvkov, prepočet štýlu v každej snímke skrolu);
+  výzva a dvere v úvode čítajú `--hint` len z kotvy úvodu. Zrušené `--pointer-x/y` (nikto ich nečítal,
+  prepočet celej stránky pri každom pohybe myši). `scrollY` sa číta raz na začiatku snímky. Nekonečné
+  animácie (pás služieb, svetlo po okraji karty, lesk tlačidla) sa mimo obrazovky pozastavia.
+- film.js: výška okna z measure() namiesto `innerHeight` v každej snímke (vynútený prepočet na telefóne);
+  správa okolia (načítanie, uvoľnenie, zastavenie videa) v samostatnej úlohe najviac raz za 100 ms alebo
+  pri zmene záberu, nie v každej snímke; lišta prehliadača (resize pri skrole) prepočíta kotvy až po 150 ms;
+  programy zjemnenia a postprocesu sa preložia a raz použijú vopred (prvý strih bez zaseknutia).
+- Hĺbkové mapy uložené v šírke ≤ 768 px (970 → 222 kB); film ich už nezmenšuje na hlavnom vlákne
+  (audit: zastavenie 36 až 320 ms pri každom novom zábere). hlbka.py ukladá rovno v tejto šírke.
+- Meranie skrolu (telefón 390×844, CPU 4×, film vypnutý): hlavné vlákno 10,9 → 9,6 ms na snímku, prepočet
+  štýlu 5,1 → 4,8 ms (audit inou metódou 48,7 → 7,4 ms). Testy: app-smoke 105 OK, koliesko, uvod-zhoda, uvod-shot.
+Nezapracované (väčší zásah alebo zmena vzhľadu, na ďalšie kolo): kreslenie len potrebného cieľa v strihu,
+mipmapy cieľov len pri rozmazaní, šero `body::after` do shadera, prispôsobivé pásy nahrávania fotiek,
+menej vzoriek pri krátkej stope strihu, skryté zálohy bez sťahovania pri bežiacom filme, matné sklo
+lišty a dosiek na počítači (rozhoduje majiteľ).
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

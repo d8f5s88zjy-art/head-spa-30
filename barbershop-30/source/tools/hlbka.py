@@ -12,7 +12,10 @@ def run(path, out, size=518):
     x = x.transpose(2,0,1)[None].astype(np.float32)
     d = sess.run(None, {inp.name: x})[0][0]
     d = (d - d.min()) / (d.max() - d.min() + 1e-6)   # svetlá = blízko (Depth Anything dáva inverznú hĺbku)
-    dm = Image.fromarray((d*255).astype(np.uint8)).resize((W,H), Image.BICUBIC)
+    # najviac 768 px na šírku: film viac nepotrebuje (mriežka 256 buniek) a väčšiu mapu by pri každom zábere
+    # zmenšoval na hlavnom vlákne (zastavenie 36 až 320 ms na telefóne)
+    tw = min(W, 768)
+    dm = Image.fromarray((d*255).astype(np.uint8)).resize((tw, round(H*tw/W)), Image.BICUBIC)
     dm.save(out, quality=90); return d.shape
 import time
 for p,o in zip(sys.argv[2::2], sys.argv[3::2]):
