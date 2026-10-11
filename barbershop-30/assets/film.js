@@ -25,8 +25,9 @@
      dá kedykoľvek preskočiť skrolovaním; bez triedy pro sa nič z toho nedeje.
    - data-size="ŠxV" na kotve: rozmery fotky záberu, keď ich nedáva <img> (viac záloh v kotve).
    - skutočné video ako záber (data-video="assets/video/meno-864", bez prípony; súbory .mp4 a .webm):
-     data-video-mode="scroll" (čas videa vedie skrolovanie, súbor má každú snímku kľúčovú) alebo "play"
-     (tichá slučka v čase, len kým je záber na obrazovke), data-video-t="od,do" (sekundy súboru na celý
+     data-video-mode="play" (tichá slučka v čase, len kým je záber na obrazovke; všetky videá webu) alebo
+     "scroll" (čas videa vedie skrolovanie, súbor má každú snímku kľúčovú; na telefóne pri posune trhané
+     a pri zastavení stojí, preto ho web od 2026‑10‑11 nepoužíva), data-video-t="od,do" (sekundy súboru na celý
      pohyb záberu), data-video-size="864x1536", data-video-f="x,y" (bod záujmu vo videu),
      data-video-poster="assets/video/meno-poster-864" (+ .avif/.webp/.jpg; ukáže sa, kým video nemá
      snímku, a ostane, keď video nejde), data-video-fps (snímky za sekundu súboru, pre posun po snímkach),
@@ -658,7 +659,7 @@
   /* ---------- rozloženie záberu podľa obrazovky ---------- */
   const tanH = Math.tan(THREE.MathUtils.degToRad(FOV) / 2);
   const OVER = 0.12;                                          // presah fotky za okraj (1,24), aby pohyb nikdy neodhalil hranu
-  const OVER_V = 0.06;                                        // video: presah 1,12 (zdroj 576 px, každý presah ho zväčšuje); stačí na dýchanie a prechod
+  const OVER_V = 0.06;                                        // video: presah 1,12 (zdroj 576 px zväčšený na 864, každý presah ho zväčšuje); stačí na dýchanie a prechod
   function layout() {
     const aspect = canvas.width / canvas.height;
     const vh = 2 * DIST * tanH, vw = vh * aspect;

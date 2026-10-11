@@ -140,6 +140,8 @@ Preto 9 kariet namiesto 14: vypadli recepcia („Najprv káva“), samostatná s
 karty Poď ďalej), kreslo pri okne („Sadni si“), Ultra inclusive („Dopraj si všetko“, ostáva v cenníku) a zadná
 miestnosť (spojená s čakárňou, kde je káva). Na telefóne je tím na 6. obrazovke namiesto 11., cenník asi na 9.
 namiesto 14. Prológ: chôdza 1,7 s, vstup 1,3 s, pred podnikom sa čaká na ďalší záber najviac 1,5 s.
+Videá vo filme hrajú v čase ako tiché slučky (30 snímok/s, šev prelínaním), nie podľa skrolu: posun videa
+skrolom bol na telefóne trhaný a pri zastavení obraz stál (majiteľ: video pôsobí zaseknuto).
 
 Každá kotva začína titulnou kartou priamo na zábere (nadpisok, nadpis Fraunces 800, jeden riadok, bez
 dosky; style.css P11). Karta je pripnutá, kým kotva prechádza oknom, a mení sa len krytím (app.js `--o`,
@@ -150,8 +152,8 @@ Na telefóne sú tri zábery skutočné videá majiteľa (`data-video`, film.js 
 |---|---|---|---|---|---|
 | 0 | prológ (bez kotvy) | `vstup` fasáda s dverami | – | to isté ako úvod | – |
 | 1 | `#uvod` | `rohozka` | stred | Barbershop 30 · Nitra · „Tvoj strih. *Tvoje miesto.*“ · Za dverami na Mostnej 30 sa strihá od roku 2019. | Rezervovať termín, Zavolať |
-| 2 | `#vstup-dnu` | `sala` / telefón **video** `vstup-dnu` (video‑3 0–5 s, riadené skrolom, kamera ide sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje. | – |
-| 3 | `#remeslo` | `stol` / telefón **video** `okolo-kresla` (video‑3 5–9,3 s, skrol; nadväzuje na Poď ďalej bez strihu) | vľavo | Remeslo · „Povedz, ako to chceš.“ | – |
+| 2 | `#vstup-dnu` | `sala` / telefón **video** `vstup-dnu` (video‑3 0–5,6 s, slučka 30 snímok/s, kamera ide sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje. | – |
+| 3 | `#remeslo` | `stol` / telefón **video** `okolo-kresla` (video‑3 5–12,6 s, slučka 30 snímok/s, kamera obchádza barbera) | vľavo | Remeslo · „Povedz, ako to chceš.“ | – |
 | 4 | `#cakaren` | `cakaren` | vpravo | Čakáreň · „Vzadu ťa čaká káva.“ · Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma. | – |
 | 5 | `#tim` | `sala-rano` / telefón **video** `tim-slucka` (video‑2 1–9 s, tichá slučka) + pás tímu | vľavo | Ľudia · „Komu zveríš hlavu?“ · Desať ľudí, jeden kalendár. | – |
 | 6 | `#sluzby` | `kreslo-stred` + pás: bežiaci pás služieb, kroky strihu, cenník | stred | Služby a ceny · „Čo to bude dnes?“ · 18 € / 28 € | Objednať pri položkách |
