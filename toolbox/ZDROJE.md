@@ -91,4 +91,8 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
   záberoch podniku je `skills-z-praxe/kratke-video`
 - Higgsfield, higgsfield.ai, generovanie obrázkov a videa, plugin do After Effects; platené kredity, len so súhlasom
   majiteľa; náš postup pohyblivej grafiky bez After Effects je `skills-z-praxe/motion-grafika`
+- Taste Skill (taste-skill/taste-skill, podľa videa MIT) a „claude-web-design-skills“ (24 skills na web dizajn,
+  vlastník neznámy); repozitáre sme neotvárali, náš postup je `skills-z-praxe/web-dizajn`
+- Galérie inšpirácie: Awwwards (awwwards.com), Godly (godly.website), SiteInspire (siteinspire.com),
+  Land-book (land-book.com), minimal.gallery; len na princípy, nič z nich nekopírovať
 - Naše overené postupy z prác na weboch: `skills-z-praxe/` (prehľad v `skills-z-praxe/README.md`)

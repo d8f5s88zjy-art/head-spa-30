@@ -38,6 +38,9 @@ v `skills-z-praxe/README.md`:
 | `testy-a-nasadenie` | testy v prehliadači (Playwright), nasadenie na GitHub Pages, FTP balík |
 | `obsah-a-texty` | pravdivé texty po slovensky, zdroje faktov, šesť jazykov, štruktúrované dáta |
 | `booqme-rezervacie` | web napojený na Booqme (rezervácie, poukazy), zosúladenie po zmene v kalendári |
+| `kratke-video` | krátke vertikálne video zo skutočných záberov podniku (scenár, titulky, render 9:16) |
+| `motion-grafika` | pohyblivá grafika vo vrstvách bez After Effects (lower third, titulná karta, značka) |
+| `web-dizajn` | postup web dizajnu od zadania slovami po kontrolu v prehliadači, s auditom stránky |
 | `workflowy` | práca s viacerými agentmi naraz: stavba, kontroly, porota návrhov, audit s overením |
 
 `head-spa-30/` – prevádzka webu HEAD SPA 30: nahratie na Forpsi, kontrola nahratia, poukazy a ceny

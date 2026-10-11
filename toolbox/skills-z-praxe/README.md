@@ -14,6 +14,9 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 | [`testy-a-nasadenie`](testy-a-nasadenie/SKILL.md) | testy v prehliadači, snímky obrazovky, nasadenie na GitHub Pages alebo cez FTP |
 | [`obsah-a-texty`](obsah-a-texty/SKILL.md) | texty webu, fakty o podniku, preklady, štruktúrované dáta, opravy od majiteľa |
 | [`booqme-rezervacie`](booqme-rezervacie/SKILL.md) | rezervácie a poukazy cez Booqme, zosúladenie webu po zmene v kalendári |
+| [`kratke-video`](kratke-video/SKILL.md) | krátke vertikálne video (reel, TikTok, Shorts) zo skutočných záberov a fotiek podniku s titulkami |
+| [`motion-grafika`](motion-grafika/SKILL.md) | pohyblivá grafika vo vrstvách: lower third, titulná karta, priebeh, značka na konci, s priehľadnosťou |
+| [`web-dizajn`](web-dizajn/SKILL.md) | nový web alebo redizajn: zadanie slovami, vkus z referencií, dizajnový systém, kontrola a snímky v prehliadači |
 | [`workflowy`](workflowy/SKILL.md) | väčšia úloha pre viac agentov naraz: stavba, kontrola, porota návrhov, audit s overením |
 
 Prevádzka webu HEAD SPA 30 (nahratie na Forpsi, poukazy v Booqme, poukážky) je v samostatnom skille

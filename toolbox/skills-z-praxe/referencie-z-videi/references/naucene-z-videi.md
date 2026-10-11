@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Sedem videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Osem videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -91,6 +91,26 @@ nie overené fakty.
   a scenárom zo skillu `instagram-salon`.
 - Čo nie: zábery z fotobánky (naše weby ukazujú len skutočný podnik), automatické uverejňovanie
   (uverejňuje majiteľ), hlas a hudba bez súhlasu a licencie.
+
+## 8. sebintel: sada skills na web dizajn
+
+- Adresa: https://www.tiktok.com/@sebintel/video/7695026678812167446 (35 s, titulky eng-US ASR)
+- Titulky a obraz: pár open-source skills na typografiu, rozostupy, rozloženia a animácie; skill
+  „taste“, aby sa dizajn inšpiroval skvelými webmi namiesto generického vzhľadu; Figma MCP a Playwright,
+  aby sa web navrhol, postavil, otestoval a odfotil v jednom postupe; web stačí opísať slovami.
+  Na snímkach repozitár „claude-web-design-skills“ (vlastník nečitateľný) so zoznamom 24 skills
+  (typography-system, spacing-rules, layout-composer, grid-systems, responsive-reviewer, color-harmony,
+  ui-component-library, landing-page-planner, accessibility-auditor, motion-principles,
+  interaction-patterns, form-ux-checker, figma-mcp, design-token-manager, css-architecture,
+  tailwind-helper, visual-hierarchy, wireframe-builder, hero-section-crafter, card-layouts,
+  navigation-systems, playwright-tester, docs-lookup, prototype-reviewer) a repozitár „taste-skill“
+  (štítok MIT). Výzva „napíš DESIGN do komentárov“ ignorovaná.
+- Repozitáre sme neotvárali; nič z nich nie je skopírované.
+- Čo prešlo: skill `toolbox/skills-z-praxe/web-dizajn/` (postup od zadania slovami cez vkus z referencií
+  a dizajnový systém po kontrolu v prehliadači) a nástroj `scripts/dizajn-audit.mjs`, ktorý stránku
+  premeria v troch šírkach a odfotí.
+- Čo nie: Figma MCP v tejto relácii nie je pripojená; pravidlá projektu (`CLAUDE.md`) majú vždy
+  prednosť pred „vkusom“ z referencií.
 
 ## Spoločné lekcie
 
