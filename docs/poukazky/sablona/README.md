@@ -1,7 +1,7 @@
 # Darčekové poukážky podľa šablóny salónu
 
 Poukážky na jednotlivé rituály sú presne pôvodná šablóna salónu (Salon 30 Nitra, fotka Head Spa,
-zlatá mašľa a pečať). Mení sa na nich len:
+zlatá mašľa a pečať), okrem šiestich, ktoré salón poslal hotové (`../salon/`). Mení sa na nich len:
 
 - **názov rituálu** namiesto nápisu HEAD SPA (veľkými písmenami, dlhé názvy na dva riadky),
 - **cena** pod názvom namiesto riadku RELAX • OBNOVA • HARMÓNIA,
@@ -18,7 +18,9 @@ byť aj pri poukazoch v obchode Booqme (`docs/booqme-poukazy.csv`).
 - `ritualy.json`: rituály, riadkovanie názvov, ceny, poradie v obchode Booqme a meno súboru na webe
 - `booqme/`: hotové obrázky do obchodu Booqme (1600 × 1200, 4 : 3, aby obchod ukázal celú poukážku na mobile
   aj na počítači), číslo v názve = poradie produktu v obchode
-- na webe sú len tri ukážky (`"web": true` v `ritualy.json`), ostatné poukážky sú len v obchode Booqme
+- `"salon": true` v `ritualy.json`: rituál má hotovú poukážku od salónu v `../salon/<súbor>.png` (1290 × 645),
+  export ju použije namiesto šablóny
+- na webe sú len ukážky s `"web": true` v `ritualy.json`, ostatné poukážky sú len v obchode Booqme
 
 ## Keď sa zmenia ceny
 
@@ -31,5 +33,9 @@ python3 docs/poukazky/sablona/export.py    # booqme/*.jpg a ukážky na web asse
 ```
 
 Potom nové obrázky z `booqme/` nahrať k príslušným poukazom v obchode Booqme.
+
+Poukážky so `"salon": true` nemajú cenu, ale v obrázku majú názov a dĺžku. Keď sa zmení dĺžka alebo
+názov, treba od salónu novú poukážku do `../salon/`. Obrázky do Booqme majú pri nich hore a dole
+len tmavý pás (fotka a stuha idú až po okraj poukážky).
 Pôvodná šablóna má rozlíšenie len 1290 px na šírku; na tlač vo veľkom formáte treba šablónu
 od salónu vo vyššom rozlíšení.

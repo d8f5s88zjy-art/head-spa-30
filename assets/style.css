@@ -2689,8 +2689,7 @@ html #galeria .after{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;jus
 .gift .vouchers-list>li{min-width:0;scroll-snap-align:start}
 .gift .vch{display:block;color:inherit;text-decoration:none}
 .gift .vch picture{display:block;overflow:hidden;box-shadow:0 22px 44px -24px rgba(0,0,0,.9)}
-.gift .vch img{display:block;width:100%;height:auto;aspect-ratio:2592/1260;transition:transform .7s var(--ease)}
-.gift .vch:hover img{transform:scale(1.03)}
+.gift .vch img{display:block;width:100%;height:auto;aspect-ratio:2592/1260}
 .gift .vch-t{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-top:16px}
 .gift .vch-t b{font-family:var(--display);font-weight:400;font-size:19px;line-height:1.3;color:var(--text-primary)}
 .gift .vch-t span{flex:none;font-size:13px;letter-spacing:.06em;color:var(--text-tertiary);white-space:nowrap}
@@ -2705,7 +2704,7 @@ html #galeria .after{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;jus
   .gift .vouchers-head{display:block;margin-bottom:22px}
   .gift .vouchers-list{grid-auto-columns:78vw;gap:16px}
 }
-@media (prefers-reduced-motion:reduce){.gift .vouchers-list{scroll-behavior:auto}.gift .vch img{transition:none}}
+@media (prefers-reduced-motion:reduce){.gift .vouchers-list{scroll-behavior:auto}}
 
 /* ================= Fúkaná a žehlenie ================= */
 /* kadernícke služby z online kalendára pod rituálmi: riadok s názvom a popisom, dĺžka a cena ako na kartách rituálov */
