@@ -11,7 +11,7 @@
 //  - <n>x     = prelínanie: polovica vzdialenosti medzi kotvou n a nasledujúcou kotvou (tam film prelína zábery)
 //  - 7m       = cenník uprostred (doska scrolluje nad prilepenou zálohou), 9f = pätička
 // Scroll: window.scrollTo({top, behavior:'instant'}) + dočasne html{scroll-behavior:auto}; čaká sa na
-// window.__scrollSettled (režisér dobehol) a potom ešte `wait` ms. Vypíše polohy kotiev, --p, --sp a data-scene-active.
+// window.__scrollSettled (režisér dobehol) a potom ešte `wait` ms. Vypíše polohy kotiev, priebeh skrolu, --sp a data-scene-active.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -120,7 +120,7 @@ try {
       const st = await page.evaluate(() => {
         const cs = getComputedStyle(document.documentElement);
         const near = [...document.querySelectorAll('.film-shot')].map((el) => ({ n: el.dataset.shot, r: el.getBoundingClientRect(), sp: el.style.getPropertyValue('--sp') })).filter((s) => s.r.bottom > 0 && s.r.top < innerHeight).map((s) => `${s.n}:${s.sp || '-'}`);
-        return { y: Math.round(scrollY), p: cs.getPropertyValue('--p').trim(), active: document.documentElement.dataset.sceneActive, near: near.join(' ') };
+        return { y: Math.round(scrollY), p: (scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4), active: document.documentElement.dataset.sceneActive, near: near.join(' ') };
       });
       const file = path.join(out, `scena-${id}-${kind}.png`);
       await page.screenshot({ path: file });

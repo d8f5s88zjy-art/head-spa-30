@@ -8,7 +8,7 @@ WebGL cez SwiftShader), preto sú časy snímkov orientačné; prenesené bajty 
 
 Výsledok: **všetky kontroly prešli** (desktop 1440×900, mobil 390×844).
 - načítanie bez chýb konzoly, bez 404, bez absolútnych ciest;
-- 9 sekcií: `data-scene-active` ide 1 → 9, `--p` rastie, `--sp` kotiev v rozsahu 0–1;
+- 9 sekcií: `data-scene-active` ide 1 → 9, priebeh skrolu rastie, `--sp` kotiev v rozsahu 0–1;
 - každá kotva `.film-shot` má výšku okna, záloha `.film-still` viditeľná, záloha úvodu
   `fetchpriority="high"` a načítaná (aj bez WebGL: `naturalWidth` 1440);
 - `?motion=off` a `prefers-reduced-motion`: `data-motion="off"`, bez triedy `world`, bez plátna,

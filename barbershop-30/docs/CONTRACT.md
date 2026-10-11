@@ -75,9 +75,10 @@ barbershop-30/
 ## 3. Premenné, ktoré nastavuje app.js
 
 Na `<html>`:
-- `--p` celkový progress 0–1 (plynulý, lerp 0.12/snímok; pri motion=off bez lerpu)
+- celkový progress 0–1 (plynulý lerp; pri motion=off bez lerpu) sa počíta v app.js, ale nepíše na `<html>`:
+  premenná na koreni sa dedí do celej stránky a každý zápis prepočítal štýl všetkých prvkov (2026‑10‑11).
+  Výzva a dvere v úvode čítajú `--hint` (1 → 0 v prvých 2 % skrolu) z kotvy úvodu.
 - `--t1`, `--t2`, `--t3`, `--t7` lokálne t filmových scén (0–1)
-- `--pointer-x`, `--pointer-y` 0–1 (iba desktop s hover; inak 0.5)
 - `data-scene-active="1…7"` aktívna kapitola (pre lištu a navigáciu)
 - `data-motion`: `on`, alebo `off` pri `prefers-reduced-motion`, `saveData`,
   `deviceMemory < 4`, alebo keď používateľ prepne (bez UI prepínača v v1)
@@ -85,7 +86,7 @@ Na `<html>`:
 
 Na `.site-header`: trieda `is-scrolled` (scrollY > 80), `data-menu`.
 Na `#mobile-cta`: trieda `is-hidden` v scéne 7 a pri otvorenom menu.
-Na `.story-line`: `is-visible` od `--p > 0.02`; `aria-current="true"` na aktívnej kapitole.
+Na `.story-line`: `is-visible` od progressu nad 0,02; `aria-current="true"` na aktívnej kapitole.
 Na `#stage`: trieda `is-3d` po prvom frame (CSS skryje poster), `data-visible="1|0"`
 (canvas má opacity 1 v scénach 1–2 a 7, inak 0 – prechod 500 ms; mimo
 viditeľnosti sa nerenderuje).
@@ -141,8 +142,8 @@ export async function createChairStage(canvas, options)
 ## 6. app.js – povinnosti
 
 1. Zistí `data-motion` a (ak on) po `load` + `requestIdleCallback` načíta
-   `chair.js`, vytvorí javisko, zavolá `playIntroSweep()` ak `--p < 0.05`.
-2. Jedna slučka `requestAnimationFrame`: číta `scrollY`, počíta `--p`, lokálne t,
+   `chair.js`, vytvorí javisko, zavolá `playIntroSweep()` ak je progress pod 0,05.
+2. Jedna slučka `requestAnimationFrame`: číta `scrollY`, počíta progress, lokálne t,
    nastavuje CSS premenné, `is-in` podľa `data-at`, aktívnu kapitolu, viditeľnosť
    canvasu, volá `setProgress`.
 3. Navigácia: menu na mobile (aria-expanded, Esc zatvára, fokus v menu),
