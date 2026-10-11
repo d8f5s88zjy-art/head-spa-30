@@ -11,8 +11,12 @@ GRADE="format=yuv420p"
 # Zväčšenie na 864×1536 kvalitným filtrom (lanczos) a jemné doostrenie CAS tu, nie v prehliadači, ktorý
 # zväčšuje bilineárne; menšia kompresia (crf 21). Detaily nepribúdajú, ubúda rozmazanie a kocky.
 UP="scale=864:1536:flags=lanczos+accurate_rnd+full_chroma_int,cas=strength=0.5"
-H264_PLAY="-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -crf 21 -g 60 -movflags +faststart -an"
-VP9_PLAY="-c:v libvpx-vp9 -pix_fmt yuv420p -crf 32 -b:v 0 -g 120 -row-mt 1 -deadline good -cpu-used 2 -an"
+# 60 snímok za sekundu (majiteľ 2026‑10‑11: celá stránka 60 až 120 snímok): originály sú 30 snímok/s, každá druhá
+# snímka sa dopočíta z pohybu (kompenzácia pohybu, obojsmerný odhad), ešte pred zväčšením (presnejší odhad).
+# Skontrolované na rukách a nožniciach: medzisnímky bez krivenia. Skutočné 60 snímok dá len originál nahraný v 60.
+MI="minterpolate=fps=60:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1"
+H264_PLAY="-c:v libx264 -profile:v high -level 4.2 -pix_fmt yuv420p -crf 21 -g 120 -movflags +faststart -an"
+VP9_PLAY="-c:v libvpx-vp9 -pix_fmt yuv420p -crf 32 -b:v 0 -g 240 -row-mt 1 -deadline good -cpu-used 2 -an"
 
 stab() { # $1 zdroj, $2 začiatok, $3 dĺžka, $4 výstup: medzivýsledok bez straty, vid.stab (vyhladenie 0,5 s, orez 1,4 %); doostruje sa až po zväčšení (UP)
   ffmpeg -v error -y -ss "$2" -i "$1" -t "$3" -an -c:v libx264 -crf 8 -preset veryfast tmp/cut.mp4
@@ -28,11 +32,11 @@ poster() { # $1 video, $2 čas, $3 meno bez prípony
 seamless() { # $1 zdroj, $2 od, $3 do, $4 prelínanie švu (s), $5 výstup bez prípony: slučka bez skoku (koniec sa prelinie do začiatku)
   local L; L=$(python3 -c "print($3-$2)")
   local OFF; OFF=$(python3 -c "print(round($3-$2-2*$4,3))")
-  ffmpeg -v error -y -i "$1" -filter_complex "[0:v]trim=start=$(python3 -c "print($2+$4)"):end=$3,setpts=PTS-STARTPTS[b];[0:v]trim=start=$2:end=$(python3 -c "print($2+$4)"),setpts=PTS-STARTPTS[h];[b][h]xfade=transition=fade:duration=$4:offset=$OFF,$UP,$GRADE[o]" -map "[o]" $H264_PLAY "$5.mp4"
+  ffmpeg -v error -y -i "$1" -filter_complex "[0:v]trim=start=$(python3 -c "print($2+$4)"):end=$3,setpts=PTS-STARTPTS[b];[0:v]trim=start=$2:end=$(python3 -c "print($2+$4)"),setpts=PTS-STARTPTS[h];[b][h]xfade=transition=fade:duration=$4:offset=$OFF,$MI,$UP,$GRADE[o]" -map "[o]" $H264_PLAY "$5.mp4"
   ffmpeg -v error -y -i "$5.mp4" $VP9_PLAY "$5.webm"
 }
 
-# Videá vo filme hrajú v čase ako slučky (30 snímok/s), nie podľa skrolu: posun videa skrolom bol na telefóne
+# Videá vo filme hrajú v čase ako slučky (60 snímok/s), nie podľa skrolu: posun videa skrolom bol na telefóne
 # trhaný (pretáčanie pri každom posune) a pri zastavení obraz stál (majiteľ 2026‑10‑11: video pôsobí zaseknuto).
 # Šev slučky je prelínanie konca do začiatku, plagát = prvá snímka slučky (pri prepnutí na video nič neposkočí).
 stab "$V/video-3.mp4" 0 13.2 tmp/v3-stab.mp4

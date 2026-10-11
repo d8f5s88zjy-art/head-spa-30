@@ -311,7 +311,9 @@
   // shadery sú hotové a overené; kontrola chýb by pri každom preklade čakala na grafiku (stovky ms na telefóne)
   renderer.debug.checkShaderErrors = false;
   // ostrosť: plné rozlíšenie displeja do 2x; pomalé zariadenie si ho samo zníži
-  let dpr = Math.min(devicePixelRatio || 1, 2);                // 2x stačí (textúra výrezu 1448 px), 3x brzdilo slabšie telefóny
+  const DPR_MAX = Math.min(devicePixelRatio || 1, 2);          // 2x stačí (textúra výrezu 1448 px), 3x brzdilo slabšie telefóny
+  const DPR_MIN = Math.min(DPR_MAX, 1);
+  let dpr = DPR_MAX;
 
   const FOV = phone ? 50 : 38, DIST = 10;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
@@ -870,9 +872,9 @@
   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
   let raf = 0, last = 0, running = true, lost = false, shown = false, shownAt = 0, lastInput = performance.now();
   const started = performance.now();
-  // kamera sa hýbe stále (ako video): 60 s po poslednom pohybe plnou frekvenciou, potom 30 snímok/s,
+  // kamera sa hýbe stále (ako video): plnou frekvenciou displeja (60 až 120 snímok/s, majiteľ 2026‑10‑11),
   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
-  const FULL_MS = 60000, BREATH_MS = 180000;
+  const BREATH_MS = 180000, FULL_MS = BREATH_MS;
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
   const DRIFT = phone ? 0.6 : 1;                              // stály pohyb kamery: na telefóne jemnejší
   // bod fotky záberu (0 až 1 zľava a zhora) vo svete: rovina záberu stojí v strede sveta
@@ -1045,25 +1047,31 @@
   }
   let drawn = false, frames = 0;                             // frames: počet nakreslených snímok (ladenie)
 
-  /* ---------- adaptívna kvalita: keď zariadenie nestíha, zníži sa rozlíšenie ----------
-     porovnáva sa s najkratšou snímkou zariadenia, takže displej s 30 Hz (šetrenie energie) nie je „pomalý“ */
-  let fastest = 0, cap = false;
+  /* ---------- adaptívna kvalita: 60 až 120 snímok za sekundu, čo najostrejšie ----------
+     meria sa medián a 90. percentil dĺžky snímky za 30 snímok. Keď film nedrží aspoň 60 snímok (alebo
+     frekvenciu displeja, ak je nižšia), rozlíšenie klesne o 0,25 (najnižšie 1x); keď beží plnou frekvenciou
+     displeja s rezervou, po 8 s bez poklesu sa o 0,25 vráti k ostrosti. Strop 30 snímok už nie je.
+     Najkratšia snímka zariadenia = frekvencia displeja (60, 90, 120 Hz; 30 Hz pri šetrení energie nie je „pomalé“). */
+  let fastest = 0, lowAt = 0;
   const ft = [];
-  function quality(dt) {
+  function quality(dt, now) {
     // pri nahrávaní fotiek do grafiky a počas prológu či odchodu sa nemeria: dlhé snímky z nahrávania by
     // zmenili rozlíšenie uprostred úvodu (viditeľný skok), meria sa až bežné skrolovanie
     if (jobs.length || pro || leaving) { ft.length = 0; return; }
     if (dt <= 0 || dt >= 0.1) return;
     fastest = fastest ? Math.min(fastest, dt) : dt;
-    ft.push(dt); if (ft.length < 40) return;
-    const avg = ft.reduce((a, b) => a + b, 0) / ft.length; ft.length = 0;
-    if (avg > fastest * 1.6 && avg > 0.024) {
-      if (dpr > 1) { dpr = Math.max(1, dpr - 0.5); resize(); }
-      else cap = true;          // ani pri najnižšom rozlíšení nestíha: film ide 30 snímok za sekundu ako v kine
+    ft.push(dt); if (ft.length < 30) return;
+    ft.sort((a, b) => a - b);
+    const med = ft[15], p90 = ft[27]; ft.length = 0;
+    const hz = Math.max(fastest, 1 / 125);                   // interval displeja
+    if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
+      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
+    } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
+      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize();
     }
   }
 
-  let cw = 0, ch = 0, cd = 0, drawnAt = 0, compiled = false, firstMs = 0;
+  let cw = 0, ch = 0, cd = 0, compiled = false, firstMs = 0;
   function resize() {
     // plátno má výšku veľkého výrezu (100lvh), takže lišta prehliadača na mobile ho pri skrolovaní nemení
     const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
@@ -1088,9 +1096,6 @@
     raf = 0;
     if (!running || lost) return;
     if (jobs.length) pump(4);
-    // strop 30 snímok za sekundu (len keď zariadenie nestíha): stránka sa pritom skroluje plynulo ďalej
-    if (cap && shown && now - drawnAt < 30) { raf = requestAnimationFrame(frame); return; }
-    drawnAt = now;
     const dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
     const T = targetS();
     frameDrawn = false;
@@ -1155,8 +1160,7 @@
       if (now - started > 15000) { stop(); return; }
       if (jobs.length) wake(); else setTimeout(wake, 120);   // fotka ide do grafiky: ďalší pás hneď v ďalšej snímke
       last = 0;
-    } else if (moving) { quality(dt); if (!raf) raf = requestAnimationFrame(frame); }
-    else if (breath > 0) setTimeout(() => { if (!raf && running) raf = requestAnimationFrame(frame); }, 1000 / 30 - 4);   // v pokoji 30 snímok za sekundu
+    } else if (moving || breath > 0) { quality(dt, now); if (!raf) raf = requestAnimationFrame(frame); }   // plnou frekvenciou displeja
     else last = 0;
   }
   function wake() { if (!raf && running && !lost) raf = requestAnimationFrame(frame); }
@@ -1356,7 +1360,7 @@
   api.uvod = { von: leave, znova: () => startPro(outside) };
   Object.defineProperty(api, 'state', {
     get: () => ({
-      on: true, shown, phone, dpr, cap, S, T: targetS(), mix: mixNow, cut: cutNow && mixNow > 0 ? cutNow.key + ' ' + cutNow.name : null, frames, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
+      on: true, shown, phone, dpr, S, T: targetS(), mix: mixNow, cut: cutNow && mixNow > 0 ? cutNow.key + ' ' + cutNow.name : null, frames, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
       ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
       userMoved,
