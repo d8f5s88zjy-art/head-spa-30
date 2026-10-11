@@ -872,7 +872,7 @@
   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
   let raf = 0, last = 0, running = true, lost = false, shown = false, shownAt = 0, lastInput = performance.now();
   const started = performance.now();
-  // kamera sa hýbe stále (ako video): plnou frekvenciou displeja (60 až 120 snímok/s, majiteľ 2026‑10‑11),
+  // kamera sa hýbe stále (ako video): plnou frekvenciou displeja (60 až 240 snímok/s, majiteľ 2026‑10‑11),
   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
   const BREATH_MS = 180000, FULL_MS = BREATH_MS;
   const tmp = new THREE.Vector3(), off = new THREE.Vector3();
@@ -1047,11 +1047,11 @@
   }
   let drawn = false, frames = 0;                             // frames: počet nakreslených snímok (ladenie)
 
-  /* ---------- adaptívna kvalita: 60 až 120 snímok za sekundu, čo najostrejšie ----------
+  /* ---------- adaptívna kvalita: aspoň 60 snímok za sekundu, inak frekvencia displeja (až 240 Hz), čo najostrejšie ----------
      meria sa medián a 90. percentil dĺžky snímky za 30 snímok. Keď film nedrží aspoň 60 snímok (alebo
      frekvenciu displeja, ak je nižšia), rozlíšenie klesne o 0,25 (najnižšie 1x); keď beží plnou frekvenciou
      displeja s rezervou, po 8 s bez poklesu sa o 0,25 vráti k ostrosti. Strop 30 snímok už nie je.
-     Najkratšia snímka zariadenia = frekvencia displeja (60, 90, 120 Hz; 30 Hz pri šetrení energie nie je „pomalé“). */
+     Najkratšia snímka zariadenia = frekvencia displeja (60, 90, 120, 144, 240 Hz; 30 Hz pri šetrení energie nie je „pomalé“). */
   let fastest = 0, lowAt = 0;
   const ft = [];
   function quality(dt, now) {
@@ -1063,7 +1063,7 @@
     ft.push(dt); if (ft.length < 30) return;
     ft.sort((a, b) => a - b);
     const med = ft[15], p90 = ft[27]; ft.length = 0;
-    const hz = Math.max(fastest, 1 / 125);                   // interval displeja
+    const hz = Math.max(fastest, 1 / 250);                   // interval displeja (60 až 240 Hz)
     if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
       if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
     } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
