@@ -83,7 +83,16 @@
      verziu, film by sa tam trhal; záloha si nechá rámovanie prvého snímku filmu (world-frame), aby nič
      neposkočilo. ?film=on overenie vynechá a pri softvérovom kreslení film pustí (testy v prehliadači bez grafiky). */
   if (!force) {
-    await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+    // prvé vykreslenie: záznam first-contentful-paint príde až keď je obraz naozaj na displeji (samotné
+    // requestAnimationFrame nestačí, kontext by zdržal ešte rozpracovaný snímok); záloha po 3 s (skrytá karta)
+    await new Promise((r) => {
+      let t = 0;
+      const fin = () => { clearTimeout(t); requestAnimationFrame(() => setTimeout(r, 50)); };
+      const fcp = (list) => list.some((e) => e.name === 'first-contentful-paint');
+      if (fcp(performance.getEntriesByType('paint'))) { fin(); return; }
+      t = setTimeout(fin, 3000);
+      try { const po = new PerformanceObserver((l) => { if (fcp(l.getEntries())) { po.disconnect(); fin(); } }); po.observe({ type: 'paint', buffered: true }); } catch (e) { /* bez Paint Timing čaká záloha */ }
+    });
     let gpu = false;
     try {
       const c = d.createElement('canvas');
