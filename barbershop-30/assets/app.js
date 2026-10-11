@@ -182,6 +182,11 @@ function apply(p) {
   // zábery bez filmu (pokojná verzia, záloha kým film nebeží): stoja cez celé okno; ďalší sa prelína navrch
   // počas nábehu svojej karty a predchádzajúci zmizne, až keď je nový celý (nikdy nevyjde zdola cez text)
   const footerIn = !!footerBox && y + vh > footerBox.top;
+  // aktuálna karta podľa poradia (posledná, ktorej horný okraj je nad stredom okna); okolie sa ráta v kartách,
+  // nie v pixeloch, aby ho neobišlo rozloženie, ktoré sa pri načítaní ešte dopočítava (inak by sa naraz
+  // začali sťahovať zálohy celej stránky)
+  let cur = 0;
+  for (let i = 0; i < titles.length; i++) if (titles[i].top <= y + vh * 0.5) cur = i;
   for (let i = 0; i < titles.length; i++) {
     const s = titles[i], n = titles[i + 1];
     const fin = s.first ? 1 : ease01((y - s.top) / s.free / CARD_IN);
@@ -189,8 +194,9 @@ function apply(p) {
     const so = footerIn || nextIn >= 1 ? 0 : fin;
     setVar('--so', so, s.el);
     setClass(s.el, 'is-shown', so > 0.001);
-    // okolie: záloha sa načíta (display) až keď je kotva do 2 obrazoviek pred oknom alebo práve za ním
-    setClass(s.el, 'is-near', y + vh * 3 > s.top && y < s.top + s.height + vh);
+    // okolie: záloha sa načíta (display) len pri aktuálnej karte, dvoch ďalších a jednej predchádzajúcej;
+    // kým sa stránka nenačíta celá, len úvod (prvý obraz má sieť sám pre seba)
+    setClass(s.el, 'is-near', document.readyState === 'complete' ? i >= cur - 1 && i <= cur + 2 : i === 0);
   }
 
   // aktívna kapitola
@@ -506,6 +512,16 @@ if (navToggle && nav && header) {
    ---------------------------------------------------------------------------- */
 (function setupVideos() {
   const vids = $$('video[data-video]');
+  // plagát sa načíta až keď je okno s videom do dvoch obrazoviek od okna (nie hneď pri štarte stránky);
+  // pri obmedzenom pohybe a bez IntersectionObserver sa dá hneď, aby okno nebolo prázdne
+  const posters = vids.filter((v) => v.dataset.poster);
+  const setPoster = (v) => { if (!v.poster) v.poster = v.dataset.poster; };
+  if (posters.length) {
+    if ('IntersectionObserver' in window) {
+      const pio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { setPoster(e.target); pio.unobserve(e.target); } }), { rootMargin: '200% 0px' });
+      posters.forEach((v) => pio.observe(v));
+    } else posters.forEach(setPoster);
+  }
   if (!vids.length || motionOff || !('IntersectionObserver' in window)) return;
   const ratio = new Map(vids.map((v) => [v, 0]));
 
