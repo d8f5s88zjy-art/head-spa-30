@@ -2,7 +2,7 @@
 
 **Platí `sablona/`:** salón chce poukážky presne podľa svojej šablóny, na každej len názov rituálu
 a cenu. Všetkých 17 je v obchode Booqme (`sablona/booqme/`), na webe je šesť ukážok
-(`assets/img/poukaz/`), postup je v `sablona/README.md`. Šesť poukážok poslal salón v novej podobe
+(`assets/img/poukaz/`), postup je v `sablona/README.md`. Trinásť poukážok poslal salón v novej podobe
 (`salon/`: HEAD SPA 30, fotka rituálu, dĺžka); tie nahrádzajú šablónu pri svojich rituáloch. Návrh nižšie (`dl/`, vlastné fotky ku každému rituálu, bez ceny) sa už
 nepoužíva.
 

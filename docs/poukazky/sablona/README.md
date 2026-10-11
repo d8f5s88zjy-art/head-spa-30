@@ -1,7 +1,7 @@
 # Darčekové poukážky podľa šablóny salónu
 
 Poukážky na jednotlivé rituály sú presne pôvodná šablóna salónu (Salon 30 Nitra, fotka Head Spa,
-zlatá mašľa a pečať), okrem šiestich, ktoré salón poslal hotové (`../salon/`). Mení sa na nich len:
+zlatá mašľa a pečať), okrem trinástich, ktoré salón poslal hotové (`../salon/`). Mení sa na nich len:
 
 - **názov rituálu** namiesto nápisu HEAD SPA (veľkými písmenami, dlhé názvy na dva riadky),
 - **cena** pod názvom namiesto riadku RELAX • OBNOVA • HARMÓNIA,
