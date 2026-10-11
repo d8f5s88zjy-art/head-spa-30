@@ -41,6 +41,9 @@ WIDTHS = (1086, 1448, 2172, 2896)      # stupne na šírku (desktop)
 M_WIDTHS = (1086, 1448)                # stupne výrezu na výšku (telefón; film tam berie najviac 1448)
 M_RATIO = 9 / 16                       # výrez na telefón: šírka / výška
 AVIF_Q, WEBP_Q = 66, 84                # maximálny detail: vyššia kvalita než pôvodných 58 / 80
+# prvý obraz stránky na telefóne (záloha úvodu, stupeň 1086): úspornejšie, aby text úvodu nečakal na veľkú
+# fotku (Lighthouse telefón); pri 100 % rozdiel takmer neviditeľný, vyššie stupne ostávajú v plnej kvalite
+FIRST_Q = {'vstup-m-1086': (46, 74), 'rohozka-m-1086': (46, 74)}
 
 def tiers_for(W, widths, big=False):
     """Stupne, ktoré sa vyrobia: všetky pod šírkou originálu a prvý nad ňou ako kópia originálu."""
@@ -55,7 +58,8 @@ def save_tiers(im, name, widths, big=False):
     W, H = im.size; made = {}
     for w in tiers_for(W, widths, big):
         r = im if w >= W else im.resize((w, round(H * w / W)), Image.LANCZOS)
-        r.save(f'{OUT}/{name}-{w}.avif', quality=AVIF_Q, speed=6); r.save(f'{OUT}/{name}-{w}.webp', quality=WEBP_Q, method=5)
+        aq, wq = FIRST_Q.get(f'{name}-{w}', (AVIF_Q, WEBP_Q))
+        r.save(f'{OUT}/{name}-{w}.avif', quality=aq, speed=6); r.save(f'{OUT}/{name}-{w}.webp', quality=wq, method=5)
         made[w] = {'w': r.width, 'h': r.height, 'avif': os.path.getsize(f'{OUT}/{name}-{w}.avif')}
     return made
 
