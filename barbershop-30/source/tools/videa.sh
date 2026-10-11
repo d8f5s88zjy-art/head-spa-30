@@ -30,9 +30,12 @@ poster() { # $1 video, $2 čas, $3 meno bez prípony
   ffmpeg -v error -y -i tmp/p.png -q:v 3 "$3.jpg"
 }
 seamless() { # $1 zdroj, $2 od, $3 do, $4 prelínanie švu (s), $5 výstup bez prípony: slučka bez skoku (koniec sa prelinie do začiatku)
-  local L; L=$(python3 -c "print($3-$2)")
   local OFF; OFF=$(python3 -c "print(round($3-$2-2*$4,3))")
-  ffmpeg -v error -y -i "$1" -filter_complex "[0:v]trim=start=$(python3 -c "print($2+$4)"):end=$3,setpts=PTS-STARTPTS[b];[0:v]trim=start=$2:end=$(python3 -c "print($2+$4)"),setpts=PTS-STARTPTS[h];[b][h]xfade=transition=fade:duration=$4:offset=$OFF,$MI,$UP,$GRADE[o]" -map "[o]" $H264_PLAY "$5.mp4"
+  local T; T=$(python3 -c "print(round($3-$2-$4,4))")     # perióda slučky (s)
+  # 1) slučka 30 snímok/s: koniec sa prelinie do začiatku (medzivýsledok takmer bez straty)
+  ffmpeg -v error -y -i "$1" -filter_complex "[0:v]trim=start=$(python3 -c "print($2+$4)"):end=$3,setpts=PTS-STARTPTS[b];[0:v]trim=start=$2:end=$(python3 -c "print($2+$4)"),setpts=PTS-STARTPTS[h];[b][h]xfade=transition=fade:duration=$4:offset=$OFF[o]" -map "[o]" -an -c:v libx264 -crf 6 -preset veryfast tmp/loop30.mp4
+  # 2) 60 snímok/s aj cez šev: slučka trikrát za sebou, medzisnímky sa dopočítajú, vystrihne sa presne prostredná perióda
+  ffmpeg -v error -y -stream_loop 2 -i tmp/loop30.mp4 -an -vf "$MI,trim=start=$T:end=$(python3 -c "print(2*$T)"),setpts=PTS-STARTPTS,$UP,$GRADE" $H264_PLAY "$5.mp4"
   ffmpeg -v error -y -i "$5.mp4" $VP9_PLAY "$5.webm"
 }
 
