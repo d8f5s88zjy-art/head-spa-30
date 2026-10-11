@@ -121,14 +121,18 @@ def nad_zonou(a, y0):
     return m
 
 
-def popis_farbou(out, maska_vzoru, I, x, y_cap, pismo, text):
-    """Vykreslí popis tak, aby mal farbu a prechod ako vzorový popis (OD:) po riadkoch."""
+def popis_farbou(out, maska_vzoru, I, x, y_cap, pismo, text, n=4):
+    """Vykreslí popis tak, aby mal farbu a prechod ako vzorový popis (OD:) po riadkoch. Kreslí sa
+    v n-násobnom rozlíšení s tenkým obrysom (písmo salónu má hrubšie vlasové ťahy ako Cormorant) a o pol
+    pixelu vyššie, aby sedel na úpätnici OD:."""
     H, W = out.shape[:2]
-    pl = Image.new('L', (W, H), 0)
-    bb = pismo.getbbox(text)
-    ImageDraw.Draw(pl).text((x - bb[0], y_cap - pismo.getbbox('R')[1]), text, font=pismo, fill=255)
-    a = np.asarray(pl).astype(np.float32) / 255
-    jadro = maska_vzoru & (jas(I) > np.percentile(jas(I)[maska_vzoru], 40))
+    velke = ImageFont.truetype(pismo.path, pismo.size * n)
+    pl = Image.new('L', (W * n, H * n), 0)
+    bb = velke.getbbox(text)
+    ImageDraw.Draw(pl).text((x * n - bb[0], y_cap * n - velke.getbbox('R')[1] - n // 2), text, font=velke,
+                            fill=255, stroke_width=1, stroke_fill=255)
+    a = np.asarray(pl.resize((W, H), Image.LANCZOS)).astype(np.float32) / 255
+    jadro = maska_vzoru & (jas(I) > np.percentile(jas(I)[maska_vzoru], 60))
     riadky = np.where(jadro.any(1))[0]
     farby = {r: I[r][jadro[r]].mean(0) for r in riadky}
     for r in np.where(a.any(1))[0]:
@@ -136,7 +140,7 @@ def popis_farbou(out, maska_vzoru, I, x, y_cap, pismo, text):
         while rr not in farby:
             rr += 1
         out[r] = out[r] * (1 - a[r][:, None]) + farby[rr][None, :] * a[r][:, None]
-    return bb[2] - bb[0]
+    return (bb[2] - bb[0]) / n
 
 
 def urob(meno, subor, zona, veta):
