@@ -1,5 +1,10 @@
 # Darčekové poukážky HEAD SPA 30
 
+**Platí `sablona/`:** salón chce poukážky presne podľa svojej šablóny, na každej len názov rituálu
+a cenu. Tie sú na webe (`assets/img/poukaz/`) aj v obchode Booqme (`sablona/booqme/`), postup je
+v `sablona/README.md`. Návrh nižšie (`dl/`, vlastné fotky ku každému rituálu, bez ceny) sa už
+nepoužíva.
+
 Podľa vzoru salónu (poukážka Head Spa na webe, `assets/img/poukaz/vzor-*`): čierny mramor so
 zlatými žilkami, zlatá saténová mašľa so stuhou po ľavom okraji (`dl/stuha.png`), lotos a nápis
 SALON30 · NITRA, zlaté „DARČEKOVÁ“ a písané „poukážka“, fotka vpravo za zlatým kruhom až po okraj,

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="sk"><head><meta charset="utf-8">
+<link rel="stylesheet" href="pismo/pismo.css">
+<style>
+  /* Pôvodná šablóna salónu bez nápisu HEAD SPA, podtitulu a domény; tie sa vkladajú nižšie. */
+  html, body { margin: 0; background: #0a0907; }
+  body { text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased; }
+  #p { position: relative; width: 1290px; height: 648px; background: url('sablona-cista.png') 0 0 / 1290px 648px no-repeat; overflow: hidden; }
+  .t { position: absolute; left: 0; white-space: nowrap; font-family: 'Cinzel', serif; font-weight: 600; line-height: 1; padding: .45em 0 .25em;
+       background: linear-gradient(180deg, #c4a476 0%, #ad8c60 55%, #8e6f4a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .linka { position: absolute; height: 1.4px; }
+  .linka.l { background: linear-gradient(90deg, rgba(185,150,105,0), rgba(185,150,105,.85)); }
+  .linka.r { background: linear-gradient(90deg, rgba(185,150,105,.85), rgba(185,150,105,0)); }
+  .web { position: absolute; left: 0; white-space: nowrap; font-family: 'Montserrat', sans-serif; font-weight: 600; line-height: 1; padding: .45em 0 .25em; color: #97815f; }
+</style></head>
+<body><div id="p"></div>
+<script>
+  // rozmery z pôvodnej šablóny (px): stred stĺpca s textom, horná hrana veľkých písmen, výška písmen
+  const STRED = 408, VRCH = 380, CAP = 19, MAXW = 330;
+  const merac = document.createElement('canvas').getContext('2d');
+  function metriky(font) {
+    merac.font = font;
+    const m = merac.measureText('H');
+    return { asc: m.fontBoundingBoxAscent, desc: m.fontBoundingBoxDescent, cap: m.actualBoundingBoxAscent };
+  }
+  // vloží riadok textu tak, aby horná hrana veľkých písmen bola na y a stred na x
+  function riadok(cls, text, size, ls, x, capTop, rodic) {
+    const el = document.createElement('div');
+    el.className = cls; el.textContent = text;
+    el.style.fontSize = size + 'px'; el.style.letterSpacing = ls + 'em';
+    rodic.appendChild(el);
+    const ff = getComputedStyle(el); const m = metriky(`${ff.fontWeight} ${size}px ${ff.fontFamily}`);
+    // pri line-height 1 je účaria na top + (size - (asc + desc)) / 2 + asc
+    const base = capTop + m.cap;
+    el.style.top = (base - ((size - (m.asc + m.desc)) / 2 + m.asc) - 0.45 * size) + 'px';
+    const w = el.getBoundingClientRect().width - size * ls; // posledná medzera za písmenom sa neráta
+    el.style.left = (x - w / 2) + 'px';
+    return { el, w, cap: m.cap, base };
+  }
+  function vel(cls, capPx) { // veľkosť písma pre danú výšku veľkých písmen
+    const el = document.createElement('div'); el.className = cls; document.body.appendChild(el);
+    const ff = getComputedStyle(el), font = `${ff.fontWeight} 100px ${ff.fontFamily}`; el.remove();
+    return capPx / metriky(font).cap * 100;
+  }
+  window.vykresli = function (d) {
+    const p = document.getElementById('p'); p.innerHTML = '';
+    const LS = 0.06;
+    let size = vel('t', CAP);
+    const riadky = d.riadky.map((s) => s.toUpperCase());
+    // stĺpec s textom medzi rámom a vetvičkou: x 232 až 584
+    const ST_L = 232, ST_P = 584;
+    if (riadky.length === 1) {
+      // veľkosť ako HEAD SPA v šablóne; dlhší názov sa mierne zmenší a skrátia sa linky po stranách
+      const s0 = size; let r, cap = CAP;
+      for (;;) {
+        r = riadok('t', riadky[0], size, LS, STRED, VRCH + (CAP - cap) / 2, p);
+        const volno = Math.min(STRED - ST_L, ST_P - STRED) - r.w / 2 - 14;
+        if (volno >= 26 || cap <= 15) break;
+        r.el.remove(); cap -= 0.5; size = s0 * cap / CAP;
+      }
+      const dl = Math.max(20, Math.min(66, Math.min(STRED - ST_L, ST_P - STRED) - r.w / 2 - 14));
+      const y = VRCH + CAP / 2;
+      for (const [cls, x0] of [['l', STRED - r.w / 2 - 14 - dl], ['r', STRED + r.w / 2 + 14]]) {
+        const l = document.createElement('div'); l.className = 'linka ' + cls;
+        Object.assign(l.style, { left: x0 + 'px', top: y + 'px', width: dl + 'px' }); p.appendChild(l);
+      }
+      var spod = VRCH + (CAP + cap) / 2;
+    } else {
+      // dva riadky: menšie písmo; horný riadok začína ako HEAD SPA v šablóne, aby sa nedotýkal slova poukážka
+      const C2 = 14.5, c2 = vel('t', C2); let s2 = c2, top = VRCH, gap = 7, rs;
+      const skus = () => { p.querySelectorAll('.t').forEach((e) => e.remove()); rs = riadky.map((t, i) => riadok('t', t, s2, LS, STRED, top + i * (C2 * s2 / c2 + gap), p)); };
+      skus();
+      while (Math.max(...rs.map((r) => r.w)) > ST_P - ST_L - 16 && s2 > 14) { s2 -= 0.5; skus(); }
+      var spod = rs[rs.length - 1].base;
+    }
+    // cena pod názvom
+    const cena = riadok('t', `${d.cena} €`, vel('t', riadky.length === 1 ? 18 : 15), 0.08, STRED, spod + (riadky.length === 1 ? 15 : 11), p);
+    // doména v pätičke (pôvodná salon30nitra.sk neexistuje)
+    riadok('web', 'HEADSPA30.SK', vel('web', 11), 0.3, 644, 596, p);
+    return { cenaSpod: cena.base, riadky: riadky.length };
+  };
+</script>
+</body></html>
