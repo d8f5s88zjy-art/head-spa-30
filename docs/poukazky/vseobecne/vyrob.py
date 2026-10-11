@@ -1,6 +1,6 @@
 # Tri všeobecné poukážky HEAD SPA 30 z poukážok od salónu: žena, muž, chodidlá (zadanie salónu 11. 10. 2026).
 # Z pôvodnej poukážky sa odstráni názov rituálu a dĺžka (mramor sa dopočíta z okolia), veta
-# „Darujte chvíľu pokoja.“ sa posunie do stredu uvoľneného miesta a pole „PRE:“ sa zmení na „RITUÁL:“,
+# „Darujte chvíľu pokoja.“ sa posunie do uvoľneného miesta (na všetkých troch rovnako) a pole „PRE:“ sa zmení na „RITUÁL:“,
 # rituál dopíše salón ručne. Písmo popisu je Cormorant Garamond SemiBold (najbližšie k popisom
 # na poukážkach salónu, OFL); ak nie je v ~/.cache/headspa30, stiahne sa z Google Fonts.
 # Spustenie z koreňa repozitára: python3 -I docs/poukazky/vseobecne/vyrob.py [--tlac]
@@ -45,7 +45,6 @@ POUKAZKY = {
 }
 X0, X1 = 240, 605              # textový stĺpec (bez mašle a oblúka fotky)
 RIADOK = (520, 560)            # riadok polí PRE, OD, PLATNOSŤ DO, KÓD
-FARBA_POPISU = (227, 215, 154)  # farba popisov polí v originále
 POPIS = 'RITUÁL:'
 
 
@@ -78,43 +77,33 @@ def vymaz(bgr, maska, polomer=5, rozsir=3):
     return cv2.inpaint(bgr, m, polomer, cv2.INPAINT_TELEA), m > 0
 
 
-def vymaz_blok(rgb, maska_textu, chran, okraj=12, seed=1):
-    """Vymaže celý obdĺžnik okolo textu aj s jeho tieňom; chránené pixely (nápis nad ním) ostanú.
-    Mramor sa dopočíta z okolia a dostane zrnitosť ako okolitý mramor."""
-    ys, xs = np.where(maska_textu)
-    y0, y1 = max(0, ys.min() - okraj), ys.max() + 1 + okraj
-    x0, x1 = max(0, xs.min() - okraj), xs.max() + 1 + okraj
-    m = np.zeros(maska_textu.shape, np.uint8)
-    m[y0:y1, x0:x1] = 255
-    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
-    ch = cv2.dilate(chran.astype(np.uint8), k) > 0
+TIEN = 13          # tmavý tieň písma siaha asi 13 px (pri písme jas 0 až 0,3, mramor okolo 1 až 1,7)
+VETA_Y = 416       # horný okraj vety „Darujte chvíľu pokoja.“ na všetkých troch rovnako (asi v strede)
+
+
+def kruh(r):
+    return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))
+
+
+def vymaz_pismo(rgb, maska_textu, chran, seed):
+    """Vymaže písmo aj s jeho tieňom (pás TIEN px okolo písmen); mramor mimo pásu ostane pôvodný aj so
+    žilkami. Výplň sú náhodne vybrané skutočné pixely tmavého mramoru z prstenca za tieňom."""
+    m = cv2.dilate(maska_textu.astype(np.uint8), kruh(TIEN))
+    ch = cv2.dilate(chran.astype(np.uint8), kruh(3)) > 0
     m[ch] = 0
-    src = rgb.copy()
-    # chránený nápis na chvíľu stmaviť, aby sa jeho zlato nerozlialo do výplne
-    tmave = np.percentile(rgb[y0:y1, x0:x1].reshape(-1, 3), 20, axis=0)
-    src[ch] = tmave
-    # okraj výplne len z tmavého mramoru: svetlé žilky a zvyšky písma na hrane by sa rozliali do celej plochy
-    hrana = cv2.dilate(m, np.ones((5, 5), np.uint8)) > 0
-    strop = np.percentile(rgb[hrana & (m == 0)].reshape(-1, 3), 55, axis=0)
-    src = np.where(hrana[..., None], np.minimum(src, strop), src).astype(np.uint8)
-    bgr = cv2.cvtColor(src, cv2.COLOR_RGB2BGR)
-    vypln = cv2.cvtColor(cv2.inpaint(bgr, m, 9, cv2.INPAINT_TELEA), cv2.COLOR_BGR2RGB).astype(np.float32)
-    # zrnitosť: jemná štruktúra tmavého mramoru v prstenci okolo bloku (bez žiliek a textu)
-    Y0, Y1, X0_, X1_ = max(0, y0 - 14), y1 + 14, max(0, x0 - 14), x1 + 14
-    okno = rgb[Y0:Y1, X0_:X1_].astype(np.float32)
-    jemne = okno - cv2.GaussianBlur(okno, (0, 0), 1.2)
-    prsten = np.ones(okno.shape[:2], bool)
-    prsten[y0 - Y0:y1 - Y0, x0 - X0_:x1 - X0_] = False
-    prsten &= okno.mean(2) < 45
-    sd = jemne[prsten].std(0) * 0.45
+    # prstenec tmavého mramoru za tieňom (bez žiliek a písma)
+    dist = cv2.distanceTransform((1 - maska_textu.astype(np.uint8)), cv2.DIST_L2, 5)
+    L = jas(rgb)
+    prsten = (dist > TIEN + 2) & (dist < TIEN + 30) & (L < 20) & ~ch
+    # výplň zo skutočných pixelov tmavého mramoru v prstenci okolo (rovnaký jas, zrno aj farba ako okolie)
+    vzorky = rgb[prsten]
     rng = np.random.default_rng(seed)
-    sum_ = rng.normal(0, 1, vypln.shape[:2])[..., None] * sd[None, None, :]
-    # mäkký okraj výplne (6 px), aby obdĺžnik nebolo vidieť
-    mm = cv2.GaussianBlur((m > 0).astype(np.float32), (0, 0), 2.5)
-    mm = np.maximum(mm, cv2.erode((m > 0).astype(np.uint8), np.ones((7, 7), np.uint8)).astype(np.float32))[..., None]
-    out = rgb.astype(np.float32)
-    out = out * (1 - mm) + (vypln + sum_) * mm
-    out[ch] = rgb[ch]
+    mm = m > 0
+    out = rgb.copy()
+    out[mm] = vzorky[rng.integers(0, len(vzorky), int(mm.sum()))]
+    # zrno mramoru nie je bodové: výplň jemne zmäkčiť (len vnútri, okolie ostáva)
+    mekke = cv2.GaussianBlur(out, (0, 0), 0.7)
+    out[mm] = mekke[mm]
     return np.clip(out, 0, 255).astype(np.uint8)
 
 
@@ -132,95 +121,106 @@ def nad_zonou(a, y0):
     return m
 
 
-def spodok_poukazky(a, y0):
-    """Najnižší svetlý pixel nápisu nad zónou (koniec slova „poukážka“ so zostupmi)."""
-    L = jas(a)
-    svetle = np.zeros(L.shape, bool)
-    svetle[:, X0:X1] = L[:, X0:X1] > 118
-    n, lab, st = komponenty(svetle)
-    dno = 0
-    for i in range(1, n):
-        x, y, w, h, plocha = st[i]
-        if y < y0 and y + h > 250 and plocha > 30:
-            dno = max(dno, y + h)
-    return dno
+def popis_farbou(out, maska_vzoru, I, x, y_cap, pismo, text):
+    """Vykreslí popis tak, aby mal farbu a prechod ako vzorový popis (OD:) po riadkoch."""
+    H, W = out.shape[:2]
+    pl = Image.new('L', (W, H), 0)
+    bb = pismo.getbbox(text)
+    ImageDraw.Draw(pl).text((x - bb[0], y_cap - pismo.getbbox('R')[1]), text, font=pismo, fill=255)
+    a = np.asarray(pl).astype(np.float32) / 255
+    jadro = maska_vzoru & (jas(I) > np.percentile(jas(I)[maska_vzoru], 40))
+    riadky = np.where(jadro.any(1))[0]
+    farby = {r: I[r][jadro[r]].mean(0) for r in riadky}
+    for r in np.where(a.any(1))[0]:
+        rr = min(max(r, riadky.min()), riadky.max())
+        while rr not in farby:
+            rr += 1
+        out[r] = out[r] * (1 - a[r][:, None]) + farby[rr][None, :] * a[r][:, None]
+    return bb[2] - bb[0]
 
 
 def urob(meno, subor, zona, veta):
     rgb = np.asarray(Image.open(os.path.join(SALON, subor)).convert('RGB'))
-    bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
-    H, W = rgb.shape[:2]
+    I = rgb.astype(np.float32)
 
-    # 1) názov rituálu, dĺžka a veta preč, pozadie dopočítané z okolitého mramoru
+    # 1) písmo: názov rituálu a dĺžka, veta, nápis „poukážka“ nad nimi (chránený)
     m_nazov = text_v_zone(rgb, *zona)
     m_veta = text_v_zone(rgb, *veta)
     chran = nad_zonou(rgb, zona[0])
-    cisty = vymaz_blok(rgb, m_nazov, chran, seed=1)
-    cisty = vymaz_blok(cisty, m_veta, chran, seed=2)
-    cisty_rgb = cisty.astype(np.float32)
 
-    # 2) veta ako vrstva s priehľadnosťou: alfa z rozdielu jasu oproti vyčistenému pozadiu
-    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-    okolie = cv2.dilate(m_veta.astype(np.uint8), k) > 0
-    I = rgb.astype(np.float32)
+    # 2) veta ako vrstva: krytie z jasu nad tmavým mramorom, farba z jej jadra (je jednofarebná)
+    okolie = cv2.dilate(m_veta.astype(np.uint8), kruh(2)) > 0
     jadro = I[m_veta]
     farba = jadro[jadro.mean(1) > np.percentile(jadro.mean(1), 70)].mean(0)
-    Lb = cisty_rgb.mean(2)
-    alfa = np.clip((I.mean(2) - Lb) / np.maximum(farba.mean() - Lb, 1.0), 0, 1) * okolie
+    alfa = np.clip((jas(I) - 1.0) / max(farba.mean() - 1.0, 1.0), 0, 1) * okolie
     ys, xs = np.where(alfa > 0.02)
     t0, t1, l0, l1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
 
-    # 3) veta do stredu medzi „poukážka“ a riadok polí
-    dno = spodok_poukazky(rgb, zona[0])
-    vyska = t1 - t0
-    novy = int(round((dno + RIADOK[0]) / 2 - vyska / 2))
-    out = cisty_rgb.copy()
-    a = alfa[t0:t1, l0:l1, None]
-    out[novy:novy + vyska, l0:l1] = out[novy:novy + vyska, l0:l1] * (1 - a) + farba * a
+    # 3) názov aj vetu preč spolu s tieňom, potom veta na nové miesto (rovnaký stĺpec ako u salónu)
+    out = vymaz_pismo(rgb, m_nazov | m_veta, chran, seed=1).astype(np.float32)
+    dy = VETA_Y - t0
+    a = np.zeros(alfa.shape, np.float32)
+    a[t0 + dy:t1 + dy, l0:l1] = alfa[t0:t1, l0:l1]
+    # tieň ako pri ostatnom písme (tmavý pás okolo písmen)
+    tien = cv2.GaussianBlur(cv2.dilate((a > 0.3).astype(np.uint8), kruh(6)).astype(np.float32), (0, 0), 3)
+    out = out * (1 - 0.8 * tien[..., None])
+    out = out * (1 - a[..., None]) + farba[None, None, :] * a[..., None]
 
     # 4) pole „PRE:“ -> „RITUÁL:“: popis preč, okienko sa skráti zľava, nový popis písmom ako originál
     m_pre = text_v_zone(rgb, RIADOK[0], RIADOK[1], 80, 152, prah=110)
     px = np.where(m_pre.any(0))[0]
     pre_l, pre_r = px.min(), px.max() + 1
     py = np.where(m_pre.any(1))[0]
-    cap0, cap1 = py.min(), py.max() + 1
+    cap0 = py.min()
+    m_od = text_v_zone(rgb, RIADOK[0], RIADOK[1], 400, 458, prah=110)
     out_bgr = cv2.cvtColor(np.clip(out, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR)
     out_bgr, _ = vymaz(out_bgr, m_pre, polomer=4, rozsir=2)
     out = cv2.cvtColor(out_bgr, cv2.COLOR_BGR2RGB).astype(np.float32)
 
-    # okienko: krémová plocha v riadku polí
+    # okienká: krémové plochy v riadku polí (PRE a OD)
     krem = (I[..., 0] > 215) & (I[..., 1] > 195) & (I[..., 2] > 165)
-    riadok = krem[RIADOK[0]:RIADOK[1], pre_r:pre_r + 300]
-    stlpce = np.where(riadok.sum(0) > 10)[0]
-    box_l = pre_r + stlpce.min()
-    box_r = pre_r + stlpce[np.where(np.diff(stlpce) > 1)[0][0]] + 1 if (np.diff(stlpce) > 1).any() else pre_r + stlpce.max() + 1
+    def okienko(od_x):
+        st = np.where(krem[RIADOK[0]:RIADOK[1], od_x:od_x + 300].sum(0) > 10)[0]
+        l = od_x + st.min()
+        skok = np.where(np.diff(st) > 1)[0]
+        r = od_x + (st[skok[0]] + 1 if len(skok) else st.max() + 1)
+        return l, r
+    box_l, box_r = okienko(pre_r)
+    od_l, _ = okienko(np.where(m_od.any(0))[0].max() + 1)
     riadky = np.where(krem[:, box_l + 5])[0]
     riadky = riadky[(riadky >= RIADOK[0] - 5) & (riadky < RIADOK[1] + 5)]
     box_t, box_b = riadky.min(), riadky.max() + 1
     medzera = box_l - pre_r
 
     pismo = ImageFont.truetype(PISMO, 22)
-    bb = pismo.getbbox(POPIS)
-    sirka = bb[2] - bb[0]
+    sirka = pismo.getbbox(POPIS)[2] - pismo.getbbox(POPIS)[0]
     novy_box_l = pre_l + sirka + medzera
     # časť okienka vľavo prekryť mramorom z pásu priamo nad ním; plná váha v celom okienku aj s jeho
     # tieňom (3 px), mäkký prechod len v mramore okolo
-    t0, t1 = box_t - 8, box_b + 8
-    l0, l1 = box_l - 8, novy_box_l
-    posun = (t1 - t0) + 2
-    zaplata = out[t0 - posun:t1 - posun, l0:l1].copy()
-    ciel = out[t0:t1, l0:l1]
+    t0b, t1b = box_t - 8, box_b + 8
+    l0b, l1b = box_l - 8, novy_box_l
+    posun = (t1b - t0b) + 2
+    zaplata = out[t0b - posun:t1b - posun, l0b:l1b].copy()
+    ciel = out[t0b:t1b, l0b:l1b]
     hh, ww = ciel.shape[:2]
     vaha = np.zeros((hh, ww), np.float32)
-    vaha[box_t - 3 - t0:box_b + 3 - t0, box_l - 3 - l0:] = 1
+    vaha[box_t - 3 - t0b:box_b + 3 - t0b, box_l - 3 - l0b:] = 1
     vaha = np.maximum(vaha, cv2.GaussianBlur(vaha, (0, 0), 2.0))[..., None]
-    out[t0:t1, l0:l1] = ciel * (1 - vaha) + zaplata * vaha
-    # okraj okienka znova čistý (tvrdá hrana ako pri ostatných okienkach)
+    out[t0b:t1b, l0b:l1b] = ciel * (1 - vaha) + zaplata * vaha
+    # okienko ostáva pôvodné; nová ľavá hrana dostane rovnaký lem ako hrana okienka OD (2 px vonku, 2 dnu)
     out[box_t:box_b, novy_box_l:box_r] = I[box_t:box_b, novy_box_l:box_r]
+    out[box_t - 2:box_b + 2, novy_box_l - 2:novy_box_l + 2] = I[box_t - 2:box_b + 2, od_l - 2:od_l + 2]
+    # medzera medzi popisom a okienkom: žiadne svetlé zrnko z prenesenej záplaty
+    zx0, zx1 = pre_l + sirka + 1, novy_box_l - 3
+    zona_m = np.zeros(out.shape[:2], np.uint8)
+    zona_m[box_t:box_b, zx0:zx1] = (out[box_t:box_b, zx0:zx1].mean(2) > 25)
+    if zona_m.any():
+        o = cv2.cvtColor(np.clip(out, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR)
+        o = cv2.inpaint(o, cv2.dilate(zona_m, kruh(1)) * 255, 3, cv2.INPAINT_TELEA)
+        out = cv2.cvtColor(o, cv2.COLOR_BGR2RGB).astype(np.float32)
 
+    popis_farbou(out, m_od, I, pre_l, cap0, pismo, POPIS)
     img = Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
-    d = ImageDraw.Draw(img)
-    d.text((pre_l - bb[0], cap0 - pismo.getbbox('R')[1]), POPIS, font=pismo, fill=FARBA_POPISU)
     os.makedirs(CIEL, exist_ok=True)
     cesta = os.path.join(CIEL, f'poukazka-{meno}.png')
     img.save(cesta, optimize=True)

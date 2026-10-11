@@ -15,10 +15,12 @@ od salónu.
 
 ## Čo sa zmenilo oproti poukážke salónu
 
-- Názov rituálu a dĺžka sú preč, mramor pod nimi je dopočítaný z okolia.
-- Veta „Darujte chvíľu pokoja.“ je posunutá do stredu medzi nápis „poukážka“ a riadok polí.
-- Pole „PRE:“ je teraz „RITUÁL:“ (písmo Cormorant Garamond SemiBold, rovnaká veľkosť a farba ako
-  ostatné popisy), okienko je o šírku dlhšieho popisu kratšie.
+- Názov rituálu a dĺžka sú preč aj s tmavým tieňom písma (pás 13 px); miesto vyplnili skutočné pixely
+  tmavého mramoru z okolia, mramor mimo tohto pásu je pôvodný aj so žilkami.
+- Veta „Darujte chvíľu pokoja.“ je posunutá vyššie do uvoľneného miesta, na všetkých troch v rovnakej
+  výške a v tom istom stĺpci ako u salónu, so svojím tieňom.
+- Pole „PRE:“ je teraz „RITUÁL:“ (písmo Cormorant Garamond SemiBold, rovnaká veľkosť, farba a prechod
+  ako popis „OD:“), okienko je o šírku dlhšieho popisu kratšie a jeho nová hrana má lem ako ostatné.
 - Pole pre obdarovaného už na poukážke nie je, ostali polia OD, PLATNOSŤ DO a KÓD.
 - Všetko ostatné (mašľa, nápisy, fotka, rámik, HEADSPA30.SK) je pôvodné od salónu.
 
