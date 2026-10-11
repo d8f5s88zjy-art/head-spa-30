@@ -180,6 +180,34 @@ snímka filmu trvá 1,7 s) merať nedá: TBT desiatky sekúnd je artefakt labora
 touto úpravou (lokálne b878ff0: 41 bodov, TBT 40,7 s; teraz 38 bodov, TBT 55,6 s), na telefóne
 s grafikou sa netýka.
 
+## 10. Ako na videu: titulné karty, skutočné videá, rôzne strihy (2026‑10‑10/11)
+
+Podnet majiteľa: vojdenie a celý web majú byť na telefóne plynulé a pekné ako referenčné video
+(antenucci.studio), texty elegantné so silným hookom, každý prechod vlastný strih. Ďalej videá
+o Magic UI (drobné pohyblivé detaily) a o štýloch animácií (kinetická typografia).
+- Rozbor referencie po snímkach (scratchpad `rozbor/`): text pripnutý a mení sa len krytím za 0,17–0,2 s,
+  kamera bokom až 30 % šírky za scénu, 3 tvrdé strihy + 3 prelínania + 1 záblesk na 7 scén, tmavý obraz,
+  tlačidlá len v úvode a na konci.
+- Texty: 3 textári, 2 porotcovia (pravidlá a fakty; zákazník), syntéza; každý údaj má zdroj.
+- Rozloženie: titulné karty bez dosky (P11), nadpis po slovách (P12), spodné tlačidlo kompaktné vpravo.
+- Videá (telefón): Poď ďalej = video‑3 0–5 s (skrol), Remeslo = video‑3 5–9,3 s (skrol), Tím = video‑2
+  slučka; bez tónovania, len stabilizácia (`videa.sh`); stiahnu sa až po pohybe a blízko scény.
+- Strihy (film.js, tabuľka CUTS, atribút `data-cut`): nájazd cez dvere (prológ), krok dopredu, švih,
+  nájazd z kresla do kresla a do karafy, prechod popri operadle a stĺpe, odjazd von na Mostnú. Návrh troch
+  strihačov (kamera, svetlo, tvar); porota a syntéza nedobehli (limit relácie), zvolený je slovník
+  strihača „kamera“, lebo najviac zodpovedá pohybu kamery v referencii. Na telefóne 12, na počítači 16 vzoriek
+  textúry na pixel počas strihu (mimo strihu 1 ako doteraz); na skutočnom iPhone nemerané.
+- Pohyblivé detaily: lesk na hlavnom tlačidle, bežiaci pás služieb, kroky strihu, tabuľa dnešných hodín
+  (Europe/Bratislava), svetlo po okraji kontaktnej karty, tím a galéria ako pás posúvaný prstom.
+- Brána filmu: softvérové kreslenie dá pokojnú verziu (aj Lighthouse a PageSpeed Insights); testy `?film=on`.
+Overené lokálne (headless): `app-smoke.mjs` všetko prešlo; `uvod-shot.mjs` desktop aj mobil (prológ,
+von a dnu, druhá návšteva, `?film=off`); `koliesko-test.mjs` OK; `uvod-meranie.mjs` bez čakania pri
+dverách, dpr stále; `uvod-zhoda.py` posun do 7 px, mierka 0,98–0,99; `strih-shot.mjs` všetkých 14 prechodov
+na telefóne bez chýb konzoly (snímky `strihy-mobile.jpg`); `karty-shot.mjs` telefón aj počítač.
+Lighthouse lokálne (bez kompresie, python http.server): počítač 99 / 100 / 100 / 100, telefón 69 (LCP 5,3 s
+pre nekomprimované súbory; CLS 0,13 od spodného tlačidla, opravené: tlačidlo začína skryté, karty okrem úvodu
+čakajú na app.js). Naživo pozri nižšie.
+
 ## 5. Čo ostáva overiť naživo
 
 - Po nasadení: `curl` hlavných súborov (index, style.css, app.js, film.js, three, prvé zábery,

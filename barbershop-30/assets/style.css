@@ -977,6 +977,10 @@ html[data-motion="off"] .board-hero { animation: none; }
 html[data-scene-active] .film-shot.is-title:not(.is-on) .title-frame a,
 html[data-scene-active] .film-shot.is-title:not(.is-on) .title-frame button { pointer-events: none; }
 .film-shot.is-title:focus-within .title-frame { opacity: 1; }
+/* so skriptom (html.karty) sú karty okrem úvodu pred prvým výpočtom app.js skryté (nikdy nebliknú všetky
+   naraz, ani pre meranie prvého obrazu); fokus klávesnicou ich ukáže aj tak */
+html.karty .film-shot.is-title:not([data-pro]) .title-frame { opacity: var(--o, 0); }
+html.karty .film-shot.is-title:not([data-pro]):focus-within .title-frame { opacity: 1; }
 
 .film-shot[data-card="right"] .title-frame { justify-items: end; text-align: right; }
 .film-shot[data-card="center"] .title-frame { justify-items: center; text-align: center; }
