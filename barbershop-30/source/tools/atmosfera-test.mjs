@@ -89,7 +89,7 @@ try {
   await page.mouse.click(1000, 600); await sleep(2500);
   s = await audioState(page);
   ok(s.pressed === 'true' && s.ctx[0] === 'running' && s.fetched >= 1, 'prvé kliknutie pustí hudbu', JSON.stringify(s));
-  ok(s.src.length === 1 && s.src[0].loop && Math.abs(s.src[0].end - 46.829) < 0.01, 'slučka bez medzery (loop, loopEnd 46,829 s)', JSON.stringify(s.src));
+  ok(s.src.length === 1 && s.src[0].loop && Math.abs(s.src[0].end - 50.526) < 0.01, 'slučka bez medzery (loop, loopEnd 50,526 s)', JSON.stringify(s.src));
   ok(s.snips === 1, 'prvé kliknutie zároveň strihne', JSON.stringify(s));
   const t1 = s.t; await sleep(800); s = await audioState(page);
   ok(s.t > t1, 'zvuk beží (čas kontextu rastie)', `${t1} → ${s.t}`);

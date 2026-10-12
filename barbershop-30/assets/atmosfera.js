@@ -8,7 +8,7 @@
  * 1. Svetlo: teplý kruh pod kurzorom (len myš), aby sa návštevník na tmavej stránke nestratil. Hýbe sa iba
  *    transform na vlastnom prvku (nič sa nezapisuje na <html>, nič sa neprepočítava na celej stránke).
  * 2. Zvuk (Web Audio, jeden spoločný kontext):
- *    - hudba: vlastná skladba (source/tools/hudba.py), slučka bez medzery. Prehliadač zvuk dovolí až po kliknutí
+ *    - hudba: vlastná skladba (source/tools/hudba.py, pokojná bossa nova), tichá slučka bez medzery. Prehliadač zvuk dovolí až po kliknutí
  *      alebo ťuknutí, preto sa pustí pri prvom kliknutí na stránke (nie pri klávese, aby nerušila čítačku);
  *      súbor sa stiahne až pri prvom pustení;
  *    - strihnutie: krátky zvuk nožníc (source/tools/strih.py, 3 varianty) pri kliknutí myšou (spolu so zatvorením
@@ -69,8 +69,8 @@ function zvuk(btn, gesto) {
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!btn || !AC || !window.fetch) { if (btn) btn.remove(); return; }
   const KEY = 'b30-hudba';
-  const LOOP = 16 * 4 * 60 / 82;          // dĺžka slučky hudby v s (16 taktov, 82 BPM)
-  const VOL = 0.5;                        // hlasitosť hudby
+  const LOOP = 16 * 4 * 60 / 76;          // dĺžka slučky hudby v s (16 taktov, 76 BPM)
+  const VOL = 0.3;                        // hlasitosť hudby: tiché pozadie (skladba má RMS -22 dBFS)
   const SNIP_VOL = 0.42, SLOT = 0.25, SNIPS = 3;   // strihnutie: 3 varianty po 0,25 s (source/tools/strih.py)
   const opus = !!document.createElement('audio').canPlayType('audio/webm; codecs="opus"');
   const file = (name) => new URL(`audio/${name}.${opus ? 'webm' : 'm4a'}`, import.meta.url);
@@ -150,7 +150,7 @@ function zvuk(btn, gesto) {
         src.buffer = buf; src.loop = true; src.loopStart = 0; src.loopEnd = Math.min(LOOP, buf.duration);
         src.connect(gain); src.start();
       }
-      ramp(VOL, 2.5);
+      ramp(VOL, 4);                     // pomalý nástup
     }).catch(fail);
   }
   function stop() {
