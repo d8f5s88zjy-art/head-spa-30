@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Šesť videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Sedem videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -112,6 +112,21 @@ nie overené fakty.
   overené na skúšobnom videu: 2 pauzy po 1,5 s nájdené, 0,4 s ignorovaná, 8,0 s → 5,5 s), `references/sablona-hlas.md`,
   audit profilu s jednou vecou, retencia a výnimočné reels (pozretia ÷ medián).
 - Čo nie: pripojenie k účtu, automatické uverejňovanie, kopírovanie cudzích videí („rebuilds them end to end“).
+
+## 7. torontowebsites: „Lawyer Website“
+
+- Adresa: https://www.tiktok.com/@torontowebsites/video/7253066917328653573 (21 s, bez titulkov a reči, pozreté 2026-10-12)
+- Obraz (snímky po 0,5 s): tmavý web advokáta na naklonenej obrazovke. Úvod: malé „Law Firm Name“, veľký svetlý pätkový
+  nadpis, ktorý sa preklopí z perspektívy, drevené kladivko sudcu v kuželi teplého svetla, ktoré ide za kurzorom, zlatá
+  minca so šípkou a točiacim sa textom „scroll down“, bodky sekcií vpravo. Ďalej portrét, ktorý svetlo odhalí, oblasti práva
+  ako knihy v drevených priehradkách (vodorovný pás, knihy sa pri posune natáčajú), recenzie v tmavých kartách s bronzovým
+  levom, na konci široká fotka knižnice a „Let's Talk“ v teplej žiare s kruhom textu.
+- Čo prešlo (web `zentury/`, README tam): 3D kladivko (three.js, LatheGeometry, drevo kreslené v canvase, mosadzné pásy
+  z farby loga) so svetlom za kurzorom a úderom na klik; nadpis preklopený do svetla; minca; bodky; fotka odhalená svetlom
+  (maska radial-gradient, `@property` na plynulý pohyb); služby ako 3D knihy v CSS (obal, chrbát, orezy strán), kniha sa
+  otvorí v dialógu s preklopením obalu; zásady ako paragrafy § 1 až § 6 namiesto vymyslených recenzií; „Poďme sa porozprávať“.
+- Čo nie: recenzie klientov (nemáme skutočné), ilustračné fotky tímu, naklonená obrazovka a modré pozadie (to je len
+  prezentácia vo videu).
 
 ## Spoločné lekcie
 

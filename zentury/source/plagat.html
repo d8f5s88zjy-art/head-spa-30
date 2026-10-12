@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}#h{width:1200px;height:1000px}canvas{width:100%;height:100%;display:block}</style></head>
+<body><div id="h"><canvas id="c"></canvas></div>
+<script type="module">
+// Plagát kladivka (statický obrázok pred načítaním 3D a pre obmedzený pohyb): node source/plagat.mjs
+import { spusti } from './kladivko.js';
+const api = spusti(document.getElementById('c'), { host: document.getElementById('h'), still: true, preserve: true, dpr: 1, motion: false });
+api.svetlo(0.35, 0.25); api.snimok(); api.snimok();
+window.PNG = document.getElementById('c').toDataURL('image/png');
+</script></body></html>

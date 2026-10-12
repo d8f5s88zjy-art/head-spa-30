@@ -206,6 +206,10 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | Doplnok (kurzor, hudba, tlačidlo) v HTML a `style.css`: HTML 14,2 → 14,8 kB gzip prešlo prvé okno TCP (asi 14,6 kB), LCP +150 ms, telefón 97 → 95 | HTML a blokujúce CSS nezväčšovať; doplnok s vlastným CSS načítať `import()` až pri prvom pohybe myši, dotyku či klávese (inak pár sekúnd po `load`), tlačidlo vytvoriť skriptom; overiť A/B starej a novej verzie na serveri s gzipom, striedavo, 5 až 6 behov (BARBERSHOP 30, `assets/atmosfera.js`, 10/2026) |
 | Malý súbor stiahnutý po `load`, ale pred pozorovaným LCP (animovaný nadpis), Lantern ho zaráta do LCP | doplnky až po geste alebo po LCP |
 | Lighthouse v kontajneri: `ERR_CERT_AUTHORITY_INVALID` cez proxy | nevypínať kontrolu; `--chrome-flags="--ignore-certificate-errors-spki-list=<SPKI CA proxy>"` (SPKI: `openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout \| openssl pkey -pubin -outform der \| openssl dgst -sha256 -binary \| base64`) |
+| WebGL v Lighthouse (a PageSpeed) beží na SwiftShader: 3D slučka dala TBT 70 s, výkon 40 | pred načítaním 3D zistiť `WEBGL_debug_renderer_info`; pri SwiftShader, llvmpipe, software ostane statický plagát; test cez `?3d` (ZENTURY, 10/2026: 40 → 98) |
+| Čas z `requestAnimationFrame` je menší ako `performance.now()` z predošlého volania | krok orezať `clamp(dt, 0, 0.05)`, inak záporný krok rozkmitá tlmenie |
+| Otáčajúci sa štvorcový prvok (kruh textu) zväčší šírku stránky na telefóne | sekcia s `overflow-x: clip` |
+| Cormorant Garamond (Google Fonts): mäkčene nad š, č, ň príliš vysoko | pred výberom písma vykresliť „š ň č ť ľ ž ď Ľ Č“; dobré: Gilda Display, EB Garamond, Spectral |
 
 ## V tomto repozitári
 
