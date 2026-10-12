@@ -1,6 +1,6 @@
 ---
 name: workflowy
-description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov v priklady/.
+description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a šablóna smerovania podľa náročnosti v priklady/.
 ---
 
 # Workflowy: viac agentov naraz pri tvorbe a kontrole webu
@@ -228,6 +228,21 @@ Pipeline cez skills: autor číta skutočný kód a dokumenty a píše; hneď po
 každé konkrétne tvrdenie (funkcia, parameter, číslo, príkaz, cesta, fakt o podniku) s kódom a chyby opraví
 priamo v súboroch skillu. Takto vznikol tento toolbox.
 
+## Smerovanie podľa náročnosti a spoločná pamäť (`smerovanie-podla-narocnosti.js`, šablóna)
+
+Myšlienky z RuFlo (orchestrácia agentov pre Claude Code; rozbor videa a overenie v
+[`../referencie-z-videi/references/naucene-z-videi.md`](../referencie-z-videi/references/naucene-z-videi.md), časť 5)
+prevedené na nástroj Workflow bez inštalácie čohokoľvek. Šablóna zatiaľ nebola spustená; čísla úspor z videa
+(75 %) ani z dokumentácie RuFlo (30 až 50 %) sme nemerali.
+
+| RuFlo | U nás | Prečo |
+| --- | --- | --- |
+| Agent Booster: jednoduché úpravy bez LLM (WASM, AST) | mechanickú zmenu urobí hlavná relácia skriptom (sed, python); triedenie ju len pomenuje a dá príkaz | rýchle, lacné, overiteľné diffom |
+| smerovanie: jednoduché Haiku, stredné Sonnet, zložité Opus | `agent(…, { model: 'haiku', effort: 'low' })` len na triedenie a jednoduché fázy; inak model relácie, `effort` podľa náročnosti | model meň len tam, kde si istý; skeptik vždy silný |
+| zdieľaná pamäť (vektorová databáza) | priečinok `<scratch>/pamat/`: každý agent si ho prečíta a zapíše najviac 10 riadkov zistení | vidno, čo si agenti odovzdali; prežije obnovenie |
+| roj s kráľovnou a hlasovaním | hlavná relácia riadi, porota hlasuje (vzor 5), skeptik vyvracia (vzor 4) | už overené na našich behoch |
+| 60 agentov naraz | nástroj púšťa naraz najviac asi 16 a relácia má týždenný limit agentov | menej, ale cielených agentov (pasca nižšie) |
+
 ## Ako písať zadania agentom
 
 Agent nevidí rozhovor ani ostatných agentov; vie len to, čo je v zadaní (a v CLAUDE.md repozitára).
@@ -271,6 +286,7 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 | Kód sa mení počas auditu | `audit-fps.js`: „Toto upravujem sám.“ | časť „už vieme“, nech sa nálezy netýkajú starého stavu |
 | Veľká stavba pred potvrdením smeru | 3D kreslo postavené, integrované a skontrolované, potom „NOVÝ SMER majiteľa … 3D kreslo sa odstraňuje“ | smer si nechaj potvrdiť skôr (návrhová fáza bez editácie repozitára) |
 | Domyslený podklad | chýbajúci súbor s analýzou videí | v zadaní napíš, čo chýba a že sa to nemá vymýšľať |
+| Týždenný limit agentov | 2026-10-11: dva workflowy (10 a 5 agentov, spolu okolo 2 miliónov tokenov) dobehli len čiastočne, porota, syntéza a 4 kontroly zlyhali s „You've hit your weekly limit“ | pred spustením spočítaj agentov a tokeny; triedenie a jednoduché fázy lacnejším modelom; medzivýsledky do súborov, aby sa dalo pokračovať ručne |
 
 ## V tomto repozitári
 
@@ -296,6 +312,7 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 | `textari-popisov.js` | popisy-barberov | 5 | Písanie, Porota, Syntéza, Kontrola (7) | popisy barberov, CHECKS 11 |
 | `audit-fps.js` | audit-fps | 4B | Audit, Overenie (6) | plynulosť, CHECKS 13 |
 | `spisanie-toolboxu.js` | toolbox-skills-z-praxe | 6 | Písanie, Overenie (14) | tento toolbox |
+| `smerovanie-podla-narocnosti.js` | (šablóna) | smerovanie | Triedenie, Práca, Overenie (1 + úlohy + zložité) | zatiaľ nespustená, z rozboru RuFlo 2026-10-12 |
 
 ## Kontrolný zoznam
 

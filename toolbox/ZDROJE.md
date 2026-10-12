@@ -87,3 +87,7 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
 - Instagram Agent (nategold.ai), github.com/nategoldai/instagram-agent, 11 skills na správu Instagramu; licencia
   neznáma, repozitár sme neotvárali (len video). Náš vlastný postup len s návrhmi je `skills-z-praxe/instagram-salon`
 - Naše overené postupy z prác na weboch: `skills-z-praxe/` (prehľad v `skills-z-praxe/README.md`)
+- RuFlo (predtým Claude Flow), github.com/ruvnet/ruflo, MIT: orchestrácia mnohých agentov pre Claude Code (roje,
+  pamäť, smerovanie úloh medzi modelmi). Neinštalované: zapisuje `CLAUDE.md`, `.claude/`, hooky a MCP server.
+  Rozbor a čo sme si vzali: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 5)
+  a `skills-z-praxe/workflowy` (smerovanie podľa náročnosti)

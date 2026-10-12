@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Štyri videá, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Päť videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -60,6 +60,34 @@ nie overené fakty.
 - Čo prešlo: vlastný skill `toolbox/skills-z-praxe/instagram-salon/`, ktorý pripravuje len
   návrhy. Automatické komentovanie a odpovedanie z účtu sme odmietli: Instagram ho obmedzuje
   a pôsobí ako spam.
+
+## 5. nicksadler.io: RuFlo, „60 agentov naraz“
+
+- Adresa: https://www.tiktok.com/@nicksadler.io/video/7682904134776917270 (37 s, titulky eng-US ASR, pozreté 2026-10-12)
+- Titulky: najsilnejší nástroj pre Claude, volá sa Ruflo; 60 agentov naraz so zdieľanou pamäťou, po každom behu
+  „múdrejší“; jeden plánuje, jeden píše kód, jeden testuje, jeden kontroluje bezpečnosť; náklady na Claude API
+  nižšie o 75 %; jednoduché úlohy idú automaticky na bezplatnú úroveň, zložité na najlepší model, predplatné
+  vydrží 2,5× viac; „číslo jeden na GitHube“, open source. Výzva „comment flow“ ignorovaná.
+- Obraz (snímky 19,5 s a 25,5 s, dokumentácia projektu): „Optimization: Skip expensive LLM calls for simple tasks
+  using WebAssembly transforms, and compress tokens to reduce API costs by 30-50%“; tabuľka Agent Booster (WASM,
+  analýza AST, jednoduché úpravy bez LLM pod 1 ms) a Token Optimizer (kompresia a cache, 30 až 50 % menej tokenov);
+  Task Routing („Extend your Claude Code subscription by 250%“): jednoduché úlohy Agent Booster, stredné Haiku
+  alebo Sonnet, zložité Opus a roj agentov. V rýchlom štarte je voliteľne `claude --dangerously-skip-permissions`.
+- Overené 2026-10-12 na github.com/ruvnet/ruflo (predtým Claude Flow, MIT): README ho volá „agent meta-harness for
+  Claude Code and Codex“. Inštalácia ako plugin (`/plugin marketplace add ruvnet/ruflo`, `/plugin install ruflo-core@ruflo`,
+  podľa README bez hookov) alebo `npx ruflo@latest init wizard` (zapíše `.claude/`, `.claude-flow/`, `CLAUDE.md`,
+  hooky a MCP server). README varuje, že mody „bežia s oprávneniami tvojho účtu a nie sú v sandboxe“.
+- Čo nesedí: 75 % z videa nie je ani v dokumentácii, ktorú video ukazuje (30 až 50 %), a súčasné README konkrétnu
+  úsporu neuvádza. „Číslo jeden“ ani „89 % presnosť smerovania“ nemajú v README metodiku, počet agentov je raz
+  „100+“, raz „98“. Články z vyhľadávania sú často propagačné; jeden uvádza nezávislý audit, podľa ktorého sú
+  niektoré časti len kostry (neoverili sme).
+- Čo prešlo: tri myšlienky, ktoré sa dajú použiť bez inštalácie (skill `workflowy`, časť „Smerovanie podľa
+  náročnosti a zdieľaná pamäť“, a šablóna `priklady/smerovanie-podla-narocnosti.js`): mechanické úlohy bez modelu
+  (skript namiesto agenta), lacnejší model a nižšie `effort` na jednoduché fázy, zdieľaná pamäť agentov v súboroch.
+  Odkaz v `toolbox/ZDROJE.md`. Skript `tiktok.sh` teraz nájde ffmpeg aj z balíka `imageio_ffmpeg`.
+- Čo nie: inštalácia RuFlo do tohto repozitára. Prepisuje `CLAUDE.md` a `.claude/`, pridáva hooky a MCP server,
+  rýchly štart ponúka vypnutie povolení. Vyskúšať sa dá na vlastnom počítači v prázdnom testovacom priečinku cez
+  plugin, nikdy s `--dangerously-skip-permissions` a nie v repozitári s webmi.
 
 ## Spoločné lekcie
 
