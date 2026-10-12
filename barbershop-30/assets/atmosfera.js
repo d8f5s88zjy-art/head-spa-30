@@ -9,7 +9,8 @@
  *      alebo ťuknutí, preto sa pustí pri prvom kliknutí na stránke (nie pri klávese, aby nerušila čítačku);
  *      súbor sa stiahne až pri prvom pustení;
  *    - strihnutie: krátky zvuk nožníc (source/tools/strih.py, 3 varianty) pri kliknutí myšou (spolu so zatvorením
- *      kurzora) a pri ťuknutí prstom, nie pri skrolovaní ani klávese; malý súbor sa načíta po načítaní stránky.
+ *      kurzora) a pri ťuknutí prstom, nie pri skrolovaní ani klávese; malý súbor sa načíta po načítaní stránky
+ *      (pri data-motion=off až pri prvom kliknutí).
  *    Tlačidlo „Hudba“ v lište vypne aj zapne hudbu aj strihanie; voľba sa pamätá (localStorage).
  *    ?hudba=off vypne zvuk, ?svetlo=off vypne svetlo.
  */
@@ -116,9 +117,10 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
     };
     if (snipBuf) play(); else loadSnip().then(play);
   };
-  // malý súbor (asi 15 kB) až po načítaní stránky, mimo prvého obrazu
+  // malý súbor (asi 15 kB) až po načítaní stránky, mimo prvého obrazu; pri šetrení dát a pokojnej verzii
+  // (data-motion=off) sa vopred nesťahuje nič, zvuk sa načíta až pri prvom kliknutí
   const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
-  if (!muted()) {
+  if (!muted() && html.dataset.motion !== 'off') {
     if (document.readyState === 'complete') idle(() => loadSnip());
     else addEventListener('load', () => idle(() => loadSnip()), { once: true });
   }
