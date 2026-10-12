@@ -18,8 +18,9 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   rezervačného systému podniku.
 - **Kurzor a hudba** (`assets/atmosfera.js`, koniec `assets/style.css`): kurzor v tvare nožníc (len myš;
   nad odkazom otvorené, pri kliknutí zatvorené, `assets/img/kurzor/`), teplé svetlo pod kurzorom a vlastná
-  hudba na pozadí (`assets/audio/hudba.webm` a `.m4a`, slučka 46,8 s). Hudba sa pustí pri prvom kliknutí alebo
-  ťuknutí (nie klávesom), tlačidlo „Hudba“ v lište ju vypne a voľba sa pamätá; súbor sa stiahne až pri pustení.
+  hudba na pozadí (`assets/audio/hudba.webm` a `.m4a`, slučka 46,8 s) a zvuk strihnutia pri kliknutí myšou
+  alebo ťuknutí (`assets/audio/strih.*`, 3 varianty). Hudba sa pustí pri prvom kliknutí alebo ťuknutí (nie
+  klávesom), tlačidlo „Hudba“ v lište vypne hudbu aj strihanie a voľba sa pamätá; hudba sa stiahne až pri pustení.
   `?hudba=off` a `?svetlo=off` ich vypnú.
 
 ## Nasadenie
@@ -45,7 +46,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
   ako zábery filmu (úseky, stabilizácia, kódovanie, plagáty, bez tónovania);
   `vaha.mjs` – prenesené bajty prvého obrazu; `../shot.mjs` – snímka ľubovoľnej adresy (desktop + mobil).
 - `hudba.py` – hudba na pozadí (syntéza v Pythone, bez licencií tretích strán; lo-fi jazz 82 BPM, 16 taktov);
-  `kurzor.mjs` – kurzory nožníc (SVG → PNG 32/64 px); `atmosfera-test.mjs` – test kurzora, svetla a hudby.
+  `strih.py` – zvuk strihnutia (syntéza); `kurzor.mjs` – kurzory nožníc (SVG → PNG 32/64 px);
+  `atmosfera-test.mjs` – test kurzora, svetla, hudby a strihania.
 
 Záznamy kontrol: `docs/CHECKS.md`, `docs/INTEGRATION_LOG.md`, `docs/COMPARISON.md`,
 snímky v `docs/screenshots/`.

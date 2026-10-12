@@ -1,13 +1,17 @@
 /*
- * BARBERSHOP 30 – atmosféra: svetlo pod kurzorom a hudba na pozadí.
+ * BARBERSHOP 30 – atmosféra: svetlo pod kurzorom, hudba na pozadí a zvuk strihnutia pri kliknutí.
  *
- * Kurzor v tvare nožníc je čisto v CSS (style.css, časť 12), funguje aj bez tohto súboru.
+ * Kurzor v tvare nožníc je čisto v CSS (koniec style.css), funguje aj bez tohto súboru.
  * 1. Svetlo: teplý kruh pod kurzorom (len myš), aby sa návštevník na tmavej stránke nestratil. Hýbe sa iba
  *    transform na vlastnom prvku (nič sa nezapisuje na <html>, nič sa neprepočítava na celej stránke).
- * 2. Hudba: vlastná skladba (source/tools/hudba.py), slučka bez medzery cez Web Audio. Prehliadač zvuk dovolí
- *    až po kliknutí alebo ťuknutí, preto sa pustí pri prvom kliknutí na stránke (nie pri klávese, aby nerušila
- *    čítačku obrazovky). Tlačidlo „Hudba“ v lište ju vypne a zapne; voľba sa pamätá (localStorage).
- *    Súbor sa stiahne až pri prvom pustení. ?hudba=off ju vypne, ?svetlo=off vypne svetlo.
+ * 2. Zvuk (Web Audio, jeden spoločný kontext):
+ *    - hudba: vlastná skladba (source/tools/hudba.py), slučka bez medzery. Prehliadač zvuk dovolí až po kliknutí
+ *      alebo ťuknutí, preto sa pustí pri prvom kliknutí na stránke (nie pri klávese, aby nerušila čítačku);
+ *      súbor sa stiahne až pri prvom pustení;
+ *    - strihnutie: krátky zvuk nožníc (source/tools/strih.py, 3 varianty) pri kliknutí myšou (spolu so zatvorením
+ *      kurzora) a pri ťuknutí prstom, nie pri skrolovaní ani klávese; malý súbor sa načíta po načítaní stránky.
+ *    Tlačidlo „Hudba“ v lište vypne aj zapne hudbu aj strihanie; voľba sa pamätá (localStorage).
+ *    ?hudba=off vypne zvuk, ?svetlo=off vypne svetlo.
  */
 const html = document.documentElement;
 const params = new URLSearchParams(location.search);
@@ -55,24 +59,74 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
 })();
 
 /* ----------------------------------------------------------------------------
-   2. Hudba
+   2. Zvuk: hudba a strihnutie
    ---------------------------------------------------------------------------- */
-(function hudba() {
+(function zvuk() {
   const btn = document.querySelector('.hudba');
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!btn || !AC || !window.fetch || params.get('hudba') === 'off') return;
   const KEY = 'b30-hudba';
-  const LOOP = 16 * 4 * 60 / 82;          // dĺžka slučky v s (16 taktov, 82 BPM)
-  const VOL = 0.5;
-  const probe = document.createElement('audio');
-  const url = new URL(probe.canPlayType('audio/webm; codecs="opus"') ? 'audio/hudba.webm' : 'audio/hudba.m4a', import.meta.url);
+  const LOOP = 16 * 4 * 60 / 82;          // dĺžka slučky hudby v s (16 taktov, 82 BPM)
+  const VOL = 0.5;                        // hlasitosť hudby
+  const SNIP_VOL = 0.42, SLOT = 0.25, SNIPS = 3;   // strihnutie: 3 varianty po 0,25 s (source/tools/strih.py)
+  const opus = !!document.createElement('audio').canPlayType('audio/webm; codecs="opus"');
+  const file = (name) => new URL(`audio/${name}.${opus ? 'webm' : 'm4a'}`, import.meta.url);
   const read = () => { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
   const save = (v) => { try { localStorage.setItem(KEY, v); } catch (e) { /* súkromné okno */ } };
-  let ctx = null, gain = null, src = null, buf = null, loading = null, playing = false;
+  const muted = () => read() === 'vyp';
+  let ctx = null, gain = null, src = null, loading = null, playing = false;
 
+  // dekódovanie bez kontextu, ktorý by čakal na gesto (OfflineAudioContext gesto nepotrebuje);
+  // AudioBuffer sa dá prehrať v ktoromkoľvek kontexte
+  const decode = (url) => fetch(url)
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+    .then((a) => {
+      const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      const dc = ctx || new OAC(2, 1, 48000);
+      return new Promise((res, rej) => dc.decodeAudioData(a, res, rej));
+    });
+
+  // kontext sa vytvorí a rozbehne priamo v obsluhe kliknutia (v rámci gesta)
+  const ensure = () => {
+    if (!ctx) {
+      ctx = new AC();
+      gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
+    }
+    if (ctx.state !== 'running') ctx.resume();
+    return ctx;
+  };
+
+  /* ---- strihnutie ---- */
+  let snipBuf = null, snipLoad = null, lastSnip = -1;
+  const loadSnip = () => snipLoad || (snipLoad = decode(file('strih')).then((b) => (snipBuf = b)).catch(() => null));
+  const snip = () => {
+    if (muted()) return;
+    try { ensure(); } catch (e) { return; }
+    const play = () => {
+      if (!snipBuf || muted()) return;
+      let i = Math.floor(Math.random() * SNIPS);
+      if (i === lastSnip) i = (i + 1) % SNIPS;            // nie dvakrát za sebou ten istý
+      lastSnip = i;
+      const s = ctx.createBufferSource(), g = ctx.createGain();
+      s.buffer = snipBuf;
+      s.playbackRate.value = 0.94 + Math.random() * 0.12;
+      g.gain.value = SNIP_VOL;
+      s.connect(g); g.connect(ctx.destination);
+      s.start(0, i * SLOT, SLOT);
+    };
+    if (snipBuf) play(); else loadSnip().then(play);
+  };
+  // malý súbor (asi 15 kB) až po načítaní stránky, mimo prvého obrazu
+  const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
+  if (!muted()) {
+    if (document.readyState === 'complete') idle(() => loadSnip());
+    else addEventListener('load', () => idle(() => loadSnip()), { once: true });
+  }
+
+  /* ---- hudba ---- */
   const show = () => {
     btn.setAttribute('aria-pressed', String(playing));
-    btn.title = playing ? 'Vypnúť hudbu' : 'Zapnúť hudbu';
+    btn.title = playing ? 'Vypnúť hudbu a zvuky' : 'Zapnúť hudbu a zvuky';
   };
   const ramp = (to, sec) => {
     const t = ctx.currentTime;
@@ -80,23 +134,12 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
     gain.gain.setValueAtTime(gain.gain.value, t);
     gain.gain.linearRampToValueAtTime(to, t + sec);
   };
-  const load = () => loading || (loading = fetch(url)
-    .then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
-    .then((a) => new Promise((res, rej) => ctx.decodeAudioData(a, res, rej))));
-
-  // volá sa priamo z kliknutia: kontext sa vytvorí a rozbehne ešte v rámci gesta, súbor sa načíta potom
+  const loadMusic = () => loading || (loading = decode(file('hudba')));
   function start() {
     if (playing) return;
     playing = true; show();
-    try {
-      if (!ctx) {
-        ctx = new AC();
-        gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
-      }
-      if (ctx.state !== 'running') ctx.resume();
-    } catch (e) { fail(); return; }
-    load().then((b) => {
-      buf = b;
+    try { ensure(); } catch (e) { fail(); return; }
+    loadMusic().then((buf) => {
       if (!playing) return;
       if (!src) {
         src = ctx.createBufferSource();
@@ -117,21 +160,32 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
 
   btn.hidden = false; show();
   btn.addEventListener('click', () => {
-    if (playing) { stop(); save('vyp'); } else { start(); save('zap'); }
+    if (playing) { stop(); save('vyp'); } else { save('zap'); start(); loadSnip(); }
   });
 
-  // prvé kliknutie alebo ťuknutie na stránke pustí hudbu, ak ju návštevník predtým nevypol
-  const GESTA = ['pointerdown', 'pointerup', 'touchend', 'click'];
-  const first = (e) => {
-    if (e.target instanceof Element && e.target.closest('.hudba')) return;   // tlačidlo rieši samo
-    if (read() === 'vyp') { done(); return; }
-    if (e.type === 'pointerdown' && e.pointerType !== 'mouse') return;    // pri dotyku až pointerup/touchend
+  /* ---- gestá ----
+     myš: strihnutie hneď pri stlačení (spolu so zatvorením kurzora); prst a pero: až pri ťuknutí (click),
+     aby skrolovanie nestrihalo; kláves ani tlačidlo Hudba nestrihá. Prvé gesto pustí aj hudbu. */
+  let firstDone = muted();
+  const first = () => {
+    if (firstDone || muted()) { firstDone = true; return; }
     if (!playing) start(); else if (ctx && ctx.state !== 'running') ctx.resume();
-    if (ctx && ctx.state === 'running') done();
-    else if (ctx) ctx.addEventListener('statechange', () => { if (ctx.state === 'running') done(); }, { once: true });
+    if (ctx && ctx.state === 'running') firstDone = true;
+    else if (ctx) ctx.addEventListener('statechange', () => { if (ctx.state === 'running') firstDone = true; }, { once: true });
   };
-  const done = () => GESTA.forEach((g) => removeEventListener(g, first, true));
-  if (read() !== 'vyp') GESTA.forEach((g) => addEventListener(g, first, { capture: true, passive: true }));
+  const onBtn = (e) => e.target instanceof Element && e.target.closest('.hudba');
+  let lastType = 'mouse';
+  addEventListener('pointerdown', (e) => {
+    lastType = e.pointerType;
+    if (e.pointerType !== 'mouse' || e.button !== 0 || onBtn(e)) return;
+    first(); snip();
+  }, { capture: true, passive: true });
+  addEventListener('click', (e) => {
+    if (lastType === 'mouse' || e.detail === 0 || onBtn(e)) return;   // detail 0 = kliknutie klávesom
+    first(); snip();
+  }, { capture: true, passive: true });
+  // iOS Safari odomkne zvuk až pri touchend; prvé ťuknutie pustí hudbu
+  addEventListener('touchend', (e) => { if (!onBtn(e)) first(); }, { capture: true, passive: true });
 
   // skrytá karta: zvuk sa zastaví, po návrate pokračuje
   document.addEventListener('visibilitychange', () => {

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// Test kurzora (nožnice), svetla pod kurzorom a hudby (assets/atmosfera.js) – Playwright, statický server.
+// Test kurzora (nožnice), svetla pod kurzorom, hudby a zvuku strihnutia (assets/atmosfera.js) – Playwright, statický server.
 //   NODE_PATH=/cesta/k/node_modules node source/tools/atmosfera-test.mjs [--snimky=priečinok]
 // Kontroly: kurzor v CSS a jeho PNG, svetlo ide za myšou, hudba sa nesťahuje pred kliknutím, pustí sa pri prvom
 // kliknutí (nie pri klávese), slučka bez medzery (loop, loopEnd), tlačidlo vypne a voľba sa pamätá, skrytá karta
 // zastaví zvuk, ?hudba=off, telefón: bez svetla, ťuknutie pustí hudbu, tlačidlo 44 × 44 px v lište.
+// Strihnutie: pri kliknutí myšou a ťuknutí áno, pri klávese, na tlačidle Hudba a pri vypnutom zvuku nie.
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -32,7 +33,9 @@ const audioState = (page) => page.evaluate(() => ({
   hidden: document.querySelector('.hudba')?.hidden,
   ctx: window.__ac.map((c) => c.state),
   t: window.__ac[0] ? +window.__ac[0].currentTime.toFixed(2) : null,
-  src: window.__src.map((s) => ({ loop: s.loop, end: +s.loopEnd.toFixed(3), dur: s.buffer ? +s.buffer.duration.toFixed(3) : null })),
+  src: window.__src.filter((s) => s.loop).map((s) => ({ loop: s.loop, end: +s.loopEnd.toFixed(3), dur: s.buffer ? +s.buffer.duration.toFixed(3) : null })),
+  snips: window.__src.filter((s) => !s.loop).length,
+  snipFetched: performance.getEntriesByType('resource').filter((r) => /strih\.(webm|m4a)/.test(r.name)).length,
   fetched: performance.getEntriesByType('resource').filter((r) => /hudba\.(webm|m4a)/.test(r.name)).length,
   pref: localStorage.getItem('b30-hudba'),
 }));
@@ -78,16 +81,21 @@ try {
   // klávesa hudbu nepustí
   await page.keyboard.press('Tab'); await sleep(400);
   s = await audioState(page);
-  ok(s.pressed === 'false' && s.fetched === 0, 'klávesa (Tab) hudbu nepustí');
+  ok(s.pressed === 'false' && s.fetched === 0 && s.snips === 0, 'klávesa (Tab) hudbu nepustí ani nestrihne');
+  ok(s.snipFetched === 1, 'zvuk strihnutia je načítaný vopred (po načítaní stránky)', JSON.stringify(s));
   // prvé kliknutie na stránke (mimo odkazov) hudbu pustí
   await page.mouse.click(1000, 600); await sleep(2500);
   s = await audioState(page);
   ok(s.pressed === 'true' && s.ctx[0] === 'running' && s.fetched >= 1, 'prvé kliknutie pustí hudbu', JSON.stringify(s));
   ok(s.src.length === 1 && s.src[0].loop && Math.abs(s.src[0].end - 46.829) < 0.01, 'slučka bez medzery (loop, loopEnd 46,829 s)', JSON.stringify(s.src));
+  ok(s.snips === 1, 'prvé kliknutie zároveň strihne', JSON.stringify(s));
   const t1 = s.t; await sleep(800); s = await audioState(page);
   ok(s.t > t1, 'zvuk beží (čas kontextu rastie)', `${t1} → ${s.t}`);
   await page.mouse.click(900, 650); await sleep(300); s = await audioState(page);
   ok(s.src.length === 1, 'ďalšie kliknutie nespustí druhú stopu');
+  ok(s.snips === 2, 'každé kliknutie strihne', JSON.stringify(s));
+  await page.mouse.click(900, 650, { button: 'right' }); await sleep(200); s = await audioState(page);
+  ok(s.snips === 2, 'pravé tlačidlo myši nestrihá');
   // skrytá karta
   await page.evaluate(() => { Object.defineProperty(document, 'hidden', { value: true, configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
   await sleep(300); s = await audioState(page);
@@ -98,6 +106,9 @@ try {
   // vypnutie tlačidlom
   await page.click('.hudba'); await sleep(1000); s = await audioState(page);
   ok(s.pressed === 'false' && s.ctx[0] === 'suspended' && s.pref === 'vyp', 'tlačidlo hudbu vypne a voľba sa uloží', JSON.stringify(s));
+  ok(s.snips === 2, 'kliknutie na tlačidlo Hudba nestrihá');
+  await page.mouse.click(1000, 600); await sleep(300); s = await audioState(page);
+  ok(s.snips === 2, 'pri vypnutom zvuku kliknutie nestrihá');
   // po obnovení stránky a kliknutí ostane vypnutá
   await page.reload({ waitUntil: 'load' }); await sleep(500);
   await page.mouse.click(1000, 600); await sleep(1200); s = await audioState(page);
@@ -111,7 +122,7 @@ try {
   await p2.goto(`${srv.origin}/index.html?uvod=off&hudba=off`, { waitUntil: 'load' }); await sleep(400);
   await p2.mouse.click(1000, 600); await sleep(800);
   const s2 = await audioState(p2);
-  ok(s2.hidden === true && s2.ctx.length === 0, '?hudba=off: bez tlačidla a bez zvuku', JSON.stringify(s2));
+  ok(s2.hidden === true && s2.ctx.length === 0 && s2.snips === 0, '?hudba=off: bez tlačidla, hudby aj strihania', JSON.stringify(s2));
   await ctx.close();
 
   // ---------------------------------------------------------------- telefón
@@ -129,6 +140,7 @@ try {
   await sleep(2500);
   const ms = await audioState(mp);
   ok(ms.pressed === 'true' && ms.ctx[0] === 'running', 'telefón: ťuknutie pustí hudbu', JSON.stringify(ms));
+  ok(ms.snips === 1, 'telefón: ťuknutie strihne raz', JSON.stringify(ms));
   ok(merr.length === 0, 'telefón: bez chýb', merr.join(' | '));
   await m.close();
 } finally {
