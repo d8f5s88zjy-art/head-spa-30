@@ -100,6 +100,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--s7) 0; }
 
 ::selection { background: var(--lamp); color: var(--ink); }
 
+/* iný jazyk: úvod a menu až s prekladom (i18n.js), najneskôr po 2,5 s */
+html.t-wait .title-hero, html.t-wait .nav { visibility: hidden; animation: t-ukaz 0s 2.5s forwards; }
+@keyframes t-ukaz { to { visibility: visible; } }
+
 .visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;

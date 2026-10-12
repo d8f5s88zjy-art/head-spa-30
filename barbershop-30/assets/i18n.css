@@ -1,0 +1,65 @@
+/* BARBERSHOP 30 – prepínač jazyka a ponuka jazyka (assets/i18n.js). Načíta ho i18n.js, nie je v prvom obraze. */
+.lang { position: relative; margin-left: auto; display: flex; }
+.lang ~ .hudba { margin-left: 0; }
+.lang-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-width: 44px; min-height: 44px; padding: 0 var(--s2);
+  color: var(--paper-2);
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 999px;
+  transition: color var(--t-micro) var(--ease-out);
+}
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--paper); }
+.lang-btn[hidden] { display: none; }
+.lang-btn svg { width: 18px; height: 18px; flex: none; }
+.lang-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 50;
+  min-width: 210px; max-height: calc(100vh - var(--nav-h) - 24px); overflow: auto;
+  display: grid; gap: 2px; padding: 6px;
+  background: rgba(14, 13, 12, 0.97); border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.lang-menu[hidden] { display: none; }
+.lang-opt {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
+  min-height: 44px; padding: 0 var(--s3); border-radius: 6px;
+  color: var(--paper-2); text-align: left; font-size: 0.9375rem;
+  transition: background-color var(--t-micro) var(--ease-out), color var(--t-micro) var(--ease-out);
+}
+.lang-opt b { flex: none; width: 2.2em; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; color: var(--paper-3); }
+.lang-opt:hover, .lang-opt:focus-visible { background: rgba(241, 233, 221, 0.06); color: var(--paper); }
+.lang-opt[aria-checked="true"] { color: var(--paper); }
+.lang-opt[aria-checked="true"] b { color: var(--lamp); }
+
+/* ponuka jazyka podľa prehliadača: prúžok dole, nad mobilným tlačidlom rezervácie */
+.lang-offer {
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 58;
+  display: flex; align-items: center; gap: var(--s3); max-width: calc(100vw - 32px);
+  padding: 8px 8px 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+  background: rgba(14, 13, 12, 0.94); color: var(--paper); font-size: 0.9375rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  transform: translate(-50%, 140%); opacity: 0;
+  transition: transform 400ms var(--ease-out), opacity 400ms var(--ease-out);
+}
+.lang-offer.in { transform: translate(-50%, 0); opacity: 1; }
+.lang-offer [data-yes] { min-height: 40px; padding: 0 var(--s4); border-radius: 999px; background: var(--lamp); color: var(--ink); font-weight: 700; }
+.lang-offer [data-no] { min-width: 40px; min-height: 40px; border-radius: 50%; color: var(--paper-2); font-size: 1.25rem; }
+html[data-motion="off"] .lang-offer { transition: none; }
+@media (max-width: 900px) {
+  .lang-offer { bottom: calc(var(--cta-h) + 28px + env(safe-area-inset-bottom)); }
+}
+/* telefón: jazyky ako rad skratiek na začiatku rozbaľovacieho menu */
+.lang.lang-v-menu { margin: 0 0 var(--s2); width: 100%; }
+.lang-v-menu .lang-menu {
+  position: static; display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; max-height: none; overflow: visible;
+  padding: 0; background: none; border: 0; box-shadow: none;
+}
+.lang-v-menu .lang-opt { width: auto; min-width: 48px; min-height: 44px; justify-content: center; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; }
+.lang-v-menu .lang-opt b { width: auto; font-size: 0.8125rem; color: var(--paper-2); }
+.lang-v-menu .lang-opt span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lang-v-menu .lang-opt[aria-checked="true"] { border-color: var(--lamp); }
+
+/* ukrajinčina: Manrope s cyrilikou sa stiahne len pri cyrilike (pre ostatné jazyky 0 B); nadpisy prejdú
+   na pätkové písmo systému, Fraunces cyriliku nemá */
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/Manrope-cyr-400.woff2") format("woff2"); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 500 800; font-display: swap; src: url("fonts/Manrope-cyr-700.woff2") format("woff2"); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }

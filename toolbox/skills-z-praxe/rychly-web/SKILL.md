@@ -210,6 +210,7 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | Čas z `requestAnimationFrame` je menší ako `performance.now()` z predošlého volania | krok orezať `clamp(dt, 0, 0.05)`, inak záporný krok rozkmitá tlmenie |
 | Otáčajúci sa štvorcový prvok (kruh textu) zväčší šírku stránky na telefóne | sekcia s `overflow-x: clip` |
 | Cormorant Garamond (Google Fonts): mäkčene nad š, č, ň príliš vysoko | pred výberom písma vykresliť „š ň č ť ľ ž ď Ľ Č“; dobré: Gilda Display, EB Garamond, Spectral |
+| Skript v hlavičke pre jazyk (+106 B) posunul HTML cez prvé okno TCP (prenos 14 616 B), LCP na telefóne 2,6 → 3,1 s | dlhé komentáre z hlavičky presunúť do README, záložné odkrytie po 2,5 s do CSS animácie; HTML 14 160 B, LCP opäť 2,6 s (BARBERSHOP 30, jazyky, 10/2026) |
 
 ## V tomto repozitári
 

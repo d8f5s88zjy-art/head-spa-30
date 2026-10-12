@@ -7,13 +7,9 @@
   <meta name="description" content="Barbershop 30 na Mostnej 30 v Nitre: pánske strihy, úprava brady, holenie britvou a balíčky. Tím desiatich barberov, 8 kresiel, recepcia a káva zdarma. Rezervuj si termín online 24/7.">
   <meta name="theme-color" content="#0E0D0C">
   <meta name="color-scheme" content="dark">
-  <!-- Brána filmu (assets/film.js): trieda world pri WebGL2, bez obmedzenia pohybu a šetrenia dát, pri výške okna
-       nad 500 px a aspoň 4 GB pamäte a 4 jadrách. WebGL kontext sa tu nevytvára (pred prvým obrazom by prehliadač
-       štartoval grafiku); grafickú kartu overí film.js po prvom vykreslení a pri softvérovom kreslení sa vypne
-       (pokojná verzia, statické zábery). ?film=off alebo ?motion=off film vypne, ?film=on vynechá overenie
-       grafiky (testy v prehliadači bez grafiky). -->
+  <!-- Brána filmu (trieda world): podmienky a prepínače ?film=off|on, ?motion=off sú v README, časť Film zo skutočných fotiek. -->
   <!-- karty: titulné karty a zábery stoja cez celé okno (P11 v style.css); bez skriptu ide záloha bežne so stránkou -->
-  <script>(function(h){h.classList.add('karty');try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');}catch(e){}
+  <script>(function(h){h.classList.add('karty');try{var g=(/[?&]lang=(\w+)/.exec(location.search)||0)[1]||localStorage.getItem('b30.lang');g&&g!='sk'&&h.classList.add('t-wait')}catch(e){}try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');}catch(e){}
   /* úvod ako film (prológ, assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte;
      ?uvod=znova ho pustí aj opakovane, ?uvod=off ho vynechá (ladenie, merania). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
   try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&!/[?&]uvod=off\b/.test(location.search)&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}
@@ -109,9 +105,7 @@
 <body>
   <a class="skip-link" href="#main">Preskočiť na obsah</a>
 
-  <!-- ===================================================================== -->
-  <!-- Lišta                                                                  -->
-  <!-- ===================================================================== -->
+  <!-- Lišta -->
   <header class="site-header" data-menu="closed">
     <div class="container">
       <a class="brand" href="#uvod" aria-label="Barbershop 30 Nitra – na začiatok">Barbershop 30 <small>Nitra</small></a>
@@ -499,7 +493,7 @@
         </div>
       </div>
       <div class="band band-prices">
-      <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Pánsky strih</span><i></i><span>Fade</span><i></i><span>Úprava brady</span><i></i><span>Hot Towel</span><i></i><span>Holenie britvou</span><i></i><span>Strih pre malých gentlemenov</span><i></i><span>Ultra inclusive</span><i></i><span>Pánsky strih</span><i></i><span>Fade</span><i></i><span>Úprava brady</span><i></i><span>Hot Towel</span><i></i><span>Holenie britvou</span><i></i><span>Strih pre malých gentlemenov</span><i></i><span>Ultra inclusive</span><i></i></div></div>
+      <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Pánsky strih</span><i></i><span>Fade</span><i></i><span>Úprava brady</span><i></i><span>Hot Towel</span><i></i><span>Holenie britvou</span><i></i><span>Strih pre malých gentlemanov</span><i></i><span>Ultra inclusive</span><i></i><span>Pánsky strih</span><i></i><span>Fade</span><i></i><span>Úprava brady</span><i></i><span>Hot Towel</span><i></i><span>Holenie britvou</span><i></i><span>Strih pre malých gentlemanov</span><i></i><span>Ultra inclusive</span><i></i></div></div>
         <div class="container">
           <div class="steps-wrap">
             <p class="eyebrow">Pánsky strih krok za krokom</p>
@@ -833,9 +827,7 @@
     </section>
   </main>
 
-  <!-- ===================================================================== -->
-  <!-- Pätička                                                                -->
-  <!-- ===================================================================== -->
+  <!-- Pätička -->
   <footer class="site-footer" id="kontakt">
     <div class="container">
       <div class="footer-grid">

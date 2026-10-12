@@ -128,10 +128,13 @@ function zvuk(btn, gesto) {
   }
 
   /* ---- hudba ---- */
+  // titulok tlačidla v jazyku stránky (assets/i18n.js, ak je načítaný)
+  const T = (s) => (window.B30_LANG ? window.B30_LANG.t(s) : s);
   const show = () => {
     btn.setAttribute('aria-pressed', String(playing));
-    btn.title = playing ? 'Vypnúť hudbu a zvuky' : 'Zapnúť hudbu a zvuky';
+    btn.title = T(playing ? 'Vypnúť hudbu a zvuky' : 'Zapnúť hudbu a zvuky');
   };
+  document.addEventListener('langchange', show);
   const ramp = (to, sec) => {
     const t = ctx.currentTime;
     gain.gain.cancelScheduledValues(t);

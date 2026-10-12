@@ -362,6 +362,25 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
+   7c. Jazyky (assets/i18n.js, slovníky assets/i18n/*.json). Pri ?lang= alebo uloženej voľbe sa modul načíta hneď
+   (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak pri prvom geste alebo 3,5 s po načítaní (prepínač, ponuka).
+   ---------------------------------------------------------------------------- */
+(function jazyky() {
+  let lang = new URLSearchParams(location.search).get('lang');
+  try { lang = lang || localStorage.getItem('b30.lang'); } catch (e) { /* súkromné okno */ }
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    import('./i18n.js').then((m) => m.spusti()).catch(() => html.classList.remove('t-wait'));
+  };
+  if (lang && lang !== 'sk') { load(); return; }
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+  const later = () => setTimeout(load, 3500);
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+})();
+
+/* ----------------------------------------------------------------------------
    8. Prvky .reveal (dosky, karty) – IntersectionObserver, jednorazový nástup
    ---------------------------------------------------------------------------- */
 (function setupReveal() {
@@ -455,8 +474,9 @@ if (navToggle && nav && header) {
     img.src = srcOf(btn);
     if (btn.dataset.lightboxSrcset) { img.srcset = btn.dataset.lightboxSrcset; img.sizes = '100vw'; }
     if (btn.dataset.lightboxW && btn.dataset.lightboxH) { img.width = Number(btn.dataset.lightboxW); img.height = Number(btn.dataset.lightboxH); }
-    img.alt = alt;
-    if (caption) caption.textContent = alt;
+    const popis = window.B30_LANG ? window.B30_LANG.t(alt) : alt;   // popis fotky v jazyku stránky
+    img.alt = popis;
+    if (caption) caption.textContent = popis;
     const single = items.length < 2;
     if (btnPrev) btnPrev.hidden = single;
     if (btnNext) btnNext.hidden = single;
@@ -586,7 +606,7 @@ start();
 
   // nadpis po slovách: každé slovo do <span class="kw"> s poradím --i (oneskorenie), zalomenia a vnorené značky ostanú
   const kins = [...d.querySelectorAll('.kin')];
-  kins.forEach((h) => {
+  const rozdel = (h) => {
     let i = 0;
     const walk = (node) => [...node.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -596,6 +616,20 @@ start();
       } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
     });
     walk(h);
+  };
+  // jazyky: slová sa po delení prekladať nedajú (slovosled), preto si nadpis pamätá pôvodné riadky
+  // a pri zmene jazyka sa preloží celý riadok (kľúč = pôvodný riadok) a rozdelí znova
+  kins.forEach((h) => { h.__sk = h.cloneNode(true); h.setAttribute('data-no-i18n', ''); rozdel(h); });
+  d.addEventListener('langchange', () => {
+    const T = window.B30_LANG ? window.B30_LANG.t : (k) => k;
+    kins.forEach((h) => {
+      const c = h.__sk.cloneNode(true), tw = d.createTreeWalker(c, NodeFilter.SHOW_TEXT);
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+        const k = n.nodeValue.replace(/\s+/g, ' ').trim(); if (!k) continue;
+        n.nodeValue = (n.nodeValue.match(/^\s*/) || [''])[0] + T(k) + (n.nodeValue.match(/\s*$/) || [''])[0];
+      }
+      h.replaceChildren(...c.childNodes); rozdel(h);
+    });
   });
   if (!still && kins.length) { root.classList.add('js-kin'); io(kins.filter((h) => !h.closest('.film-shot.is-title')), (el, on, o) => { if (on) { el.classList.add('is-in'); o && o.unobserve(el); } }, { threshold: 0.4 }); }
 
@@ -614,31 +648,43 @@ start();
     const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
     return { dow: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), h: +p.hour + +p.minute / 60 };
   };
-  const GLYPHS = '0123456789:–ZATVORENÉ';
-  d.querySelectorAll('[data-flap]').forEach((box) => {
+  // slová tabule po slovensky; ostatné jazyky ich majú v slovníku (assets/i18n/<jazyk>.json, kľúč __tabula)
+  const SK = { zatvorene: 'ZATVORENÉ', dni: ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'], zajtra: 'zajtra',
+    dalsi: '{kedy} od {cas}', terazOtvorene: 'Teraz otvorené', otvarameO: 'Otvárame o {cas}', terazZatvorene: 'Teraz zatvorené, {dalsi}',
+    aria: 'Dnes {od} až {do}. {stav}.', ariaZatvorene: 'Dnes zatvorené. {stav}.' };
+  const vypln = (sablona, v) => sablona.replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined ? v[k] : m));
+  const tabula = (box, ticho) => {
+    const W = (window.B30_LANG && window.B30_LANG.data('__tabula')) || SK;
+    const GLYPHS = '0123456789:–' + W.zatvorene.replace(/\s/g, '');
     const { dow, h } = nowNitra(), t = HOURS[dow];
-    const text = t ? `${t[0]}:00 – ${t[1]}:00` : 'ZATVORENÉ';
+    const text = t ? `${t[0]}:00 – ${t[1]}:00` : W.zatvorene;
     // najbližší otvorený deň po dnešku (sobota → pondelok), pomenovaný ako v reči: zajtra, v pondelok
     let n = (dow + 1) % 7; while (!HOURS[n]) n = (n + 1) % 7;
-    const KDY = ['v nedeľu', 'v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu'];
-    const next = `${n === (dow + 1) % 7 ? 'zajtra' : KDY[n]} od ${HOURS[n][0]}:00`;
+    const dalsi = vypln(W.dalsi, { kedy: n === (dow + 1) % 7 ? W.zajtra : W.dni[n], cas: `${HOURS[n][0]}:00` });
     let state;
-    if (t && h >= t[0] && h < t[1]) state = 'Teraz otvorené';
-    else if (t && h < t[0]) state = `Otvárame o ${t[0]}:00`;
-    else state = `Teraz zatvorené, ${next}`;
-    const cells = box.querySelector('.flap-cells'), st = box.querySelector('.flap-state');
-    box.setAttribute('aria-label', `Dnes ${t ? text.replace(' – ', ' až ') : 'zatvorené'}. ${state}.`);
+    if (t && h >= t[0] && h < t[1]) state = W.terazOtvorene;
+    else if (t && h < t[0]) state = vypln(W.otvarameO, { cas: `${t[0]}:00` });
+    else state = vypln(W.terazZatvorene, { dalsi });
+    const cells = box.querySelector('.flap-cells'), st = box.querySelector('.flap-state'), lab = box.querySelector('.flap-label');
+    box.setAttribute('data-no-i18n', '');
+    box.setAttribute('aria-label', t ? vypln(W.aria, { od: `${t[0]}:00`, do: `${t[1]}:00`, stav: state }) : vypln(W.ariaZatvorene, { stav: state }));
+    if (lab) lab.textContent = window.B30_LANG ? window.B30_LANG.t('Dnes') : 'Dnes';
     cells.setAttribute('aria-hidden', 'true');
     cells.textContent = '';
-    const bs = [...text].map((c) => { const b = d.createElement('b'); if (c === ' ') b.className = 'sp'; b.textContent = still ? c : (c === ' ' ? ' ' : GLYPHS[Math.floor(Math.random() * 10)]); cells.append(b); return [b, c]; });
+    const bs = [...text].map((c) => { const b = d.createElement('b'); if (c === ' ') b.className = 'sp'; b.textContent = ticho ? c : (c === ' ' ? ' ' : GLYPHS[Math.floor(Math.random() * 10)]); cells.append(b); return [b, c]; });
     if (st) st.textContent = state;
-    if (still) return;
-    const run = () => bs.forEach(([b, c], i) => {
+    if (ticho) return null;
+    return () => bs.forEach(([b, c], i) => {
       if (c === ' ') return;
       let n = 4 + i * 2;
       const tick = () => { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); b.textContent = --n <= 0 ? c : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; if (n > 0) setTimeout(tick, 70); };
       setTimeout(tick, i * 40);
     });
+  };
+  d.querySelectorAll('[data-flap]').forEach((box) => {
+    const run = tabula(box, still);
+    d.addEventListener('langchange', () => tabula(box, true));
+    if (!run) return;
     io([box], (el, on, o) => { if (on) { run(); o && o.unobserve(el); } }, { threshold: 0.6 });
   });
 })();

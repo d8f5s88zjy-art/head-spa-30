@@ -1,15 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- DEPLOY STEP: pri inej doméne nahraď URL jedným príkazom sed (README.md, „Nasadenie“). -->
+<!-- Jazykové verzie (?lang=) prekladá assets/i18n.js; hreflang je tu, nie v HTML, aby HTML ostalo v prvom okne TCP. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://d8f5s88zjy-art.github.io/barbershop30/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
     <image:image>
       <image:loc>https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg</image:loc>
       <image:title>Barbershop 30 Nitra</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=en</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=de</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+  </url>
+  <url>
+    <loc>https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu"/>
+    <xhtml:link rel="alternate" hreflang="sr-Latn" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://d8f5s88zjy-art.github.io/barbershop30/"/>
   </url>
 </urlset>

@@ -65,3 +65,6 @@ html[data-motion="off"] .hudba[aria-pressed="true"] .hudba-eq i { animation: non
   .hudba { padding: 0; }
   .hudba-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 }
+/* lišta na úzkom telefóne (320 px): tlačidlá Hudba a Menu sa nezmenšia pod 44 px, uberie sa z medzier */
+.site-header .hudba, .site-header .nav-toggle { flex-shrink: 0; }
+@media (max-width: 359px) { .site-header .container { gap: 12px; } }
