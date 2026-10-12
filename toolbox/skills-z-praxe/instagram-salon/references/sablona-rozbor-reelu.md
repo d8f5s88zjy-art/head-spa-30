@@ -9,6 +9,7 @@ neprihlasuj a reels nevyhľadávaj za majiteľa. Čo nevidíš alebo nepočuješ
 ```
 Reel: <autor, odkaz alebo „snímky od majiteľa“>, <trvanie>
 Čísla: <len čitateľné na snímke, napr. pozretia; inak „nevidno“>
+Výnimočnosť: <pozretia ÷ medián posledných reelov toho istého účtu; od 3× stojí za rozbor; bez čísel „nevieme“>
 
 Úvod (HOOK): <prvá veta doslovne> → aký sľub dáva
 Obraz (VISUAL): <je tam tvár? aké rozpoznateľné miesto alebo vec?>

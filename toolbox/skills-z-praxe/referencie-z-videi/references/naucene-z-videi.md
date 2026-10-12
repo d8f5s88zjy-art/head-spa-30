@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Päť videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Šesť videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -88,6 +88,30 @@ nie overené fakty.
 - Čo nie: inštalácia RuFlo do tohto repozitára. Prepisuje `CLAUDE.md` a `.claude/`, pridáva hooky a MCP server,
   rýchly štart ponúka vypnutie povolení. Vyskúšať sa dá na vlastnom počítači v prázdnom testovacom priečinku cez
   plugin, nikdy s `--dangerously-skip-permissions` a nie v repozitári s webmi.
+
+## 6. joshfpocock: „YouTube agent“, 11 skills na kanál
+
+- Adresa: https://www.tiktok.com/@joshfpocock/video/7695119366140087570 (55 s, titulky eng-US ASR, pozreté 2026-10-12)
+- Titulky a popis: 11 skills pre YouTube zadarmo (licencia MIT podľa videa): scenár podľa 21 vzorcov úvodnej vety
+  a skóre úvodu pred natáčaním; názov a obálka spolu; nájde mŕtve pauzy a opakované zábery a Claude ich vystrihne
+  cez ffmpeg; nájde krátke videá v dlhých; audit kanála s jednou vecou na opravu; z údajov retencie presná sekunda,
+  keď ľudia odišli, a čo vtedy zaznelo; „virality engine“ s videami, ktorým sa v odbore darí; hlas z vlastných
+  videí; kapitoly, popisy, odpovede, týždenný plán. „It writes, you upload.“ Výzva „comment YOUTUBE“ ignorovaná.
+- Obraz (prehľad snímok): príkazy `/yt-script`, `/yt-package`, `/yt-edit`, `/yt-shorts`, `/yt-audit`,
+  `/yt-retention`, `/yt-viral`; karta hookscore (Specificity 62, Address 100, Stakes 88, Curiosity 92,
+  Brevity 100, spolu „78 STRONG“); vzorce The Reveal, The Superlative, The Comparison, The Origin, The Deadline,
+  The Result, The Mistake, Contrarian, Insider, The Impossible Claim; audit (posledných 10 názvov, obálky vo
+  veľkosti v zozname, prvých 15 s, rytmus nahrávania, tvar retencie); retencia s poklesom v 0:07 pri vete
+  „so before we start, a quick bit of backstory“; virality engine s násobkami 9,35×, 7,23×, 4,19× a 1,00×
+  (video proti mediánu kanála); `voice.md` (komu hovorím, ako naozaj hovorím, slová, ktoré nepoužívam, čo netvrdím).
+- Overenie 2026-10-12: repozitár sme nenašli (vyhľadávanie „youtube-agent-skill“ bez výsledku). Odkaz z popisu
+  vedie na stránku, ktorá knižnicu odomkne až po zadaní e-mailu; e-mail za majiteľa nezadávame. Licenciu ani kód
+  sme preto nevideli, výkon („murdered YouTube“) je reklama.
+- Čo prešlo (skill `instagram-salon`, časť „Doplnky z videa YouTube agent“): `scripts/hook_skore.py` (vlastné
+  pravidlá pre slovenčinu, kalibrované na vetách z našich webov), `scripts/pauzy.py` (ffmpeg silencedetect a strih,
+  overené na skúšobnom videu: 2 pauzy po 1,5 s nájdené, 0,4 s ignorovaná, 8,0 s → 5,5 s), `references/sablona-hlas.md`,
+  audit profilu s jednou vecou, retencia a výnimočné reels (pozretia ÷ medián).
+- Čo nie: pripojenie k účtu, automatické uverejňovanie, kopírovanie cudzích videí („rebuilds them end to end“).
 
 ## Spoločné lekcie
 

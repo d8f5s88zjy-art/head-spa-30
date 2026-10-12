@@ -113,6 +113,23 @@ U nás: **00 sľub, 01 čo dostaneš, 02 ako si rezervuješ.** Príklad z overen
 Zdroj: `CONTENT_SOURCES.md` (kapacita, káva vzadu v čakárni podľa majiteľa 2026-10-11, online
 rezervácie 24/7). Príklad pre HEAD SPA 30 je v `references/sablona-reel.md`.
 
+## Doplnky z videa „YouTube agent“ (joshfpocock, 2026-10-12)
+
+Video ukazuje 11 skills pre YouTube; repozitár je len po zadaní e-mailu, preto nič z neho tu nie je.
+Prevzali sme postupy, ktoré sa dajú urobiť a overiť u nás (rozbor: `../referencie-z-videi/references/naucene-z-videi.md`, časť 6):
+
+| Vo videu | U nás | Nástroj |
+| --- | --- | --- |
+| hook score (Specificity, Address, Stakes, Curiosity, Brevity) | skóre úvodnej vety po slovensky, porovnanie variantov | `scripts/hook_skore.py "veta 1" "veta 2"` |
+| /yt-edit: mŕtve pauzy, strih cez ffmpeg | pauzy v reeli s rečou, strih s nádychom 0,12 s | `scripts/pauzy.py video.mp4 [--strih out.mp4]` |
+| voice.md (komu, ako, zakázané slová, čo netvrdiť) | hlas podniku zo zdrojov, nie z dojmu | `references/sablona-hlas.md` |
+| audit kanála: „jedna vec, ktorú opraviť prvú“ | audit profilu: posledných 9 príspevkov v mriežke, čitateľnosť obálok v mriežke, prvé 1,5 s reelov, rytmus uverejňovania, kde ľudia odchádzajú; výstup je jedna vec | režim 4 a 11, `sablona-tyzden.md` |
+| retencia: presná sekunda, keď ľudia odišli, a čo vtedy zaznelo | majiteľ pošle snímku grafu udržania pozornosti z prehľadov reelu; sekundu poklesu priradíme k vete scenára | režim 8, `sablona-reel.md` |
+| virality engine: video ÷ medián kanála (napr. 9,35×) | výnimočný reel = pozretia ÷ medián posledných reelov toho istého účtu, od 3× rozobrať | režim 6, `sablona-rozbor-reelu.md` |
+
+Čo nepreberáme: pripojenie k účtu, výzvu „comment YOUTUBE“ a sľub „rebuilds them end to end“ (cudzie reels
+len ako vzorec, nikdy kópia).
+
 ## Postup krok za krokom
 
 1. **Podnik a režim.** Zisti, pre koho a čo (tabuľky vyššie). Pri inom podniku najprv zdroje faktov.
