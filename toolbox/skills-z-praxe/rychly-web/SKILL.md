@@ -203,6 +203,9 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | `scrollY`/`innerHeight` po zápise štýlu | čítať raz na začiatku snímky, rozmery v `measure()` |
 | Nekonečné animácie mimo okna | IntersectionObserver, `is-off`, `animation-play-state: paused` |
 | Audit sľúbil prepočet štýlu 48,7 → 7,4 ms | merať pred a po; zapísať skutočné čísla |
+| Doplnok (kurzor, hudba, tlačidlo) v HTML a `style.css`: HTML 14,2 → 14,8 kB gzip prešlo prvé okno TCP (asi 14,6 kB), LCP +150 ms, telefón 97 → 95 | HTML a blokujúce CSS nezväčšovať; doplnok s vlastným CSS načítať `import()` až pri prvom pohybe myši, dotyku či klávese (inak pár sekúnd po `load`), tlačidlo vytvoriť skriptom; overiť A/B starej a novej verzie na serveri s gzipom, striedavo, 5 až 6 behov (BARBERSHOP 30, `assets/atmosfera.js`, 10/2026) |
+| Malý súbor stiahnutý po `load`, ale pred pozorovaným LCP (animovaný nadpis), Lantern ho zaráta do LCP | doplnky až po geste alebo po LCP |
+| Lighthouse v kontajneri: `ERR_CERT_AUTHORITY_INVALID` cez proxy | nevypínať kontrolu; `--chrome-flags="--ignore-certificate-errors-spki-list=<SPKI CA proxy>"` (SPKI: `openssl x509 -in /root/.ccr/agent-proxy-ca.crt -pubkey -noout \| openssl pkey -pubin -outform der \| openssl dgst -sha256 -binary \| base64`) |
 
 ## V tomto repozitári
 
