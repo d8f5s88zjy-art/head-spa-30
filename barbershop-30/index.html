@@ -115,13 +115,6 @@
   <header class="site-header" data-menu="closed">
     <div class="container">
       <a class="brand" href="#uvod" aria-label="Barbershop 30 Nitra – na začiatok">Barbershop 30 <small>Nitra</small></a>
-      <button class="hudba" type="button" aria-pressed="false" hidden>
-        <span class="hudba-ikona" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path class="hudba-preskrt" d="M3.5 3.5l17 17"/></svg>
-          <span class="hudba-eq"><i></i><i></i><i></i></span>
-        </span>
-        <span class="hudba-text">Hudba</span>
-      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
           <path class="nav-toggle-open" d="M4 7h16M4 12h16M4 17h16"/>
@@ -906,8 +899,6 @@
   </div>
 
   <script type="module" src="assets/app.js"></script>
-  <!-- Svetlo pod kurzorom a hudba na pozadí (kurzor nožnice je v style.css) -->
-  <script type="module" src="assets/atmosfera.js"></script>
   <!-- Film zo skutočných fotiek (three r169, hĺbkové mapy). Modul si sám overí triedu world na <html>,
        načíta knižnicu až po pohybe návštevníka a vytvorí canvas .film-canvas; kým neexistuje alebo zlyhá,
        stránka ostáva v pokojnej verzii so statickými zábermi. -->

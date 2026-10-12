@@ -1,7 +1,10 @@
 /*
- * BARBERSHOP 30 – atmosféra: svetlo pod kurzorom, hudba na pozadí a zvuk strihnutia pri kliknutí.
+ * BARBERSHOP 30 – atmosféra: kurzor nožnice, svetlo pod kurzorom, hudba na pozadí a zvuk strihnutia pri kliknutí.
  *
- * Kurzor v tvare nožníc je čisto v CSS (koniec style.css), funguje aj bez tohto súboru.
+ * Modul načíta app.js (časť 7b) až pri prvom pohybe myši, dotyku či klávese, inak 3,5 s po načítaní stránky,
+ * a zavolá spusti(gesto); gesto = návštevník už klikol alebo ťukol, kým sa modul načítaval. Nič z toho
+ * sa nesťahuje pred prvým obrazom: HTML aj style.css ostávajú bez zmeny (Lighthouse telefón, LCP).
+ * 0. Štýly (atmosfera.css): kurzor v tvare nožníc, svetlo a tlačidlo Hudba; tlačidlo sa ukáže až s nimi.
  * 1. Svetlo: teplý kruh pod kurzorom (len myš), aby sa návštevník na tmavej stránke nestratil. Hýbe sa iba
  *    transform na vlastnom prvku (nič sa nezapisuje na <html>, nič sa neprepočítava na celej stránke).
  * 2. Zvuk (Web Audio, jeden spoločný kontext):
@@ -9,7 +12,7 @@
  *      alebo ťuknutí, preto sa pustí pri prvom kliknutí na stránke (nie pri klávese, aby nerušila čítačku);
  *      súbor sa stiahne až pri prvom pustení;
  *    - strihnutie: krátky zvuk nožníc (source/tools/strih.py, 3 varianty) pri kliknutí myšou (spolu so zatvorením
- *      kurzora) a pri ťuknutí prstom, nie pri skrolovaní ani klávese; malý súbor sa načíta po načítaní stránky
+ *      kurzora) a pri ťuknutí prstom, nie pri skrolovaní ani klávese; malý súbor sa načíta hneď po module
  *      (pri data-motion=off až pri prvom kliknutí).
  *    Tlačidlo „Hudba“ v lište vypne aj zapne hudbu aj strihanie; voľba sa pamätá (localStorage).
  *    ?hudba=off vypne zvuk, ?svetlo=off vypne svetlo.
@@ -21,7 +24,7 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
 /* ----------------------------------------------------------------------------
    1. Svetlo pod kurzorom
    ---------------------------------------------------------------------------- */
-(function svetlo() {
+function svetlo() {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches || params.get('svetlo') === 'off') return;
   const el = document.createElement('div');
   el.className = 'kurzor-svetlo';
@@ -57,15 +60,14 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
   }, { passive: true });
   // kurzor mimo okna: svetlo zhasne
   document.addEventListener('mouseout', (e) => { if (!e.relatedTarget) { on = false; el.classList.remove('is-on'); } });
-})();
+}
 
 /* ----------------------------------------------------------------------------
    2. Zvuk: hudba a strihnutie
    ---------------------------------------------------------------------------- */
-(function zvuk() {
-  const btn = document.querySelector('.hudba');
+function zvuk(btn, gesto) {
   const AC = window.AudioContext || window.webkitAudioContext;
-  if (!btn || !AC || !window.fetch || params.get('hudba') === 'off') return;
+  if (!btn || !AC || !window.fetch) { if (btn) btn.remove(); return; }
   const KEY = 'b30-hudba';
   const LOOP = 16 * 4 * 60 / 82;          // dĺžka slučky hudby v s (16 taktov, 82 BPM)
   const VOL = 0.5;                        // hlasitosť hudby
@@ -194,4 +196,33 @@ const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-mo
     if (!ctx) return;
     if (document.hidden) ctx.suspend(); else if (playing) ctx.resume();
   });
-})();
+
+  // kliknutie alebo ťuknutie pred načítaním modulu pustí hudbu teraz (prehliadač si interakciu so stránkou
+  // pamätá; Safari na iPhone ju pustí až pri ďalšom ťuknutí, first() to zvládne)
+  if (gesto && !muted() && !document.hidden) first();
+}
+
+/* ----------------------------------------------------------------------------
+   0. Štýly a tlačidlo Hudba; spustenie
+   ---------------------------------------------------------------------------- */
+const TLACIDLO = '<span class="hudba-ikona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path class="hudba-preskrt" d="M3.5 3.5l17 17"/></svg><span class="hudba-eq"><i></i><i></i><i></i></span></span><span class="hudba-text">Hudba</span>';
+
+export function spusti(gesto = false) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = new URL('atmosfera.css', import.meta.url).href;
+  // tlačidlo do lišty pred prepínač menu (na počítači je prepínač skrytý, tlačidlo stojí pred navigáciou)
+  let btn = null;
+  const head = document.querySelector('.site-header .container');
+  if (head && params.get('hudba') !== 'off') {
+    btn = document.createElement('button');
+    btn.className = 'hudba'; btn.type = 'button'; btn.hidden = true;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = TLACIDLO;
+    head.insertBefore(btn, head.querySelector('.nav-toggle'));
+  }
+  const ready = () => { svetlo(); zvuk(btn, gesto); };
+  link.addEventListener('load', ready, { once: true });
+  link.addEventListener('error', () => { if (btn) btn.remove(); }, { once: true });
+  document.head.append(link);
+}

@@ -55,6 +55,8 @@ try {
   page.on('response', (r) => { if (r.status() >= 400) bad.push(r.status() + ' ' + r.url()); });
   await page.goto(URL0, { waitUntil: 'load' });
   await sleep(800);
+  ok(await page.evaluate(() => !performance.getEntriesByType('resource').some((r) => /atmosfera\.(js|css)|strih\./.test(r.name))), 'pred prvým gestom sa atmosféra nesťahuje (prvý obraz)');
+  await page.mouse.move(600, 400); await page.waitForSelector('.hudba:not([hidden])', { timeout: 5000 }).catch(() => {}); await sleep(1700);
   const cur = await page.evaluate(() => ({
     html: getComputedStyle(document.documentElement).cursor,
     link: getComputedStyle(document.querySelector('.nav a')).cursor,
@@ -111,6 +113,7 @@ try {
   ok(s.snips === 2, 'pri vypnutom zvuku kliknutie nestrihá');
   // po obnovení stránky a kliknutí ostane vypnutá
   await page.reload({ waitUntil: 'load' }); await sleep(500);
+  await page.mouse.move(600, 400); await page.waitForSelector('.hudba:not([hidden])', { timeout: 5000 }).catch(() => {});
   await page.mouse.click(1000, 600); await sleep(1200); s = await audioState(page);
   ok(s.pressed === 'false' && s.fetched === 0 && s.ctx.length === 0, 'vypnutá hudba sa po obnovení nepustí', JSON.stringify(s));
   await page.click('.hudba'); await sleep(2000); s = await audioState(page);
@@ -120,9 +123,10 @@ try {
   // ?hudba=off
   const p2 = await ctx.newPage();
   await p2.goto(`${srv.origin}/index.html?uvod=off&hudba=off`, { waitUntil: 'load' }); await sleep(400);
+  await p2.mouse.move(600, 400); await sleep(800);
   await p2.mouse.click(1000, 600); await sleep(800);
   const s2 = await audioState(p2);
-  ok(s2.hidden === true && s2.ctx.length === 0 && s2.snips === 0, '?hudba=off: bez tlačidla, hudby aj strihania', JSON.stringify(s2));
+  ok(s2.hidden !== false && s2.ctx.length === 0 && s2.snips === 0, '?hudba=off: bez tlačidla, hudby aj strihania', JSON.stringify(s2));
   await ctx.close();
 
   // ---------------------------------------------------------------- telefón
@@ -131,7 +135,7 @@ try {
   const mp = await m.newPage();
   const merr = [];
   mp.on('pageerror', (e) => merr.push(String(e)));
-  await mp.goto(URL0, { waitUntil: 'load' }); await sleep(800);
+  await mp.goto(URL0, { waitUntil: 'load' }); await sleep(4500);   // bez gesta sa modul načíta 3,5 s po načítaní
   const mb = await mp.evaluate(() => { const b = document.querySelector('.hudba').getBoundingClientRect(); const h = document.querySelector('.site-header').getBoundingClientRect(); return { w: b.width, h: b.height, inHeader: b.top >= h.top && b.bottom <= h.bottom, right: b.right, vw: innerWidth, svetlo: !!document.querySelector('.kurzor-svetlo'), text: getComputedStyle(document.querySelector('.hudba-text')).clipPath }; });
   ok(mb.w >= 44 && mb.h >= 44 && mb.inHeader, 'telefón: tlačidlo Hudba 44 × 44 px v lište', JSON.stringify(mb));
   ok(!mb.svetlo, 'telefón: bez svetla pod kurzorom');
@@ -142,6 +146,12 @@ try {
   ok(ms.pressed === 'true' && ms.ctx[0] === 'running', 'telefón: ťuknutie pustí hudbu', JSON.stringify(ms));
   ok(ms.snips === 1, 'telefón: ťuknutie strihne raz', JSON.stringify(ms));
   ok(merr.length === 0, 'telefón: bez chýb', merr.join(' | '));
+  // ťuknutie ešte pred načítaním modulu: hudba sa pustí hneď po jeho načítaní
+  const mp2 = await m.newPage();
+  await mp2.goto(URL0, { waitUntil: 'load' }); await sleep(300);
+  await mp2.touchscreen.tap(200, 500); await sleep(3000);
+  const ms2 = await audioState(mp2);
+  ok(ms2.pressed === 'true' && ms2.ctx[0] === 'running', 'telefón: ťuknutie pred načítaním modulu pustí hudbu po načítaní', JSON.stringify(ms2));
   await m.close();
 } finally {
   await browser.close();

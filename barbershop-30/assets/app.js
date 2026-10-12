@@ -342,6 +342,26 @@ if (motionOn && mqFinePointer.matches) {
    ich nečítalo; film má na posun pohľadu vlastný pointermove */
 
 /* ----------------------------------------------------------------------------
+   7b. Atmosféra (assets/atmosfera.js: kurzor nožnice, svetlo pod kurzorom, hudba, zvuk strihnutia)
+   Načíta sa až pri prvom pohybe myši, dotyku či klávese, inak 3,5 s po načítaní stránky, aby nič z nej
+   nesúperilo s prvým obrazom. Kliknutie alebo ťuknutie pred načítaním sa odovzdá (hudba sa pustí hneď).
+   ---------------------------------------------------------------------------- */
+(function atmosfera() {
+  let loaded = false, gesture = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    import('./atmosfera.js').then((m) => m.spusti(gesture)).catch(() => {});
+  };
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+  ['pointerdown', 'touchend', 'click'].forEach((t) => addEventListener(t, (e) => {
+    if (!(e.pointerType === 'mouse' && e.button)) gesture = true;
+  }, { once: true, passive: true }));
+  const later = () => setTimeout(load, 3500);
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+})();
+
+/* ----------------------------------------------------------------------------
    8. Prvky .reveal (dosky, karty) – IntersectionObserver, jednorazový nástup
    ---------------------------------------------------------------------------- */
 (function setupReveal() {

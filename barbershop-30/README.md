@@ -16,7 +16,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   pustí prológ aj opakovane, `?uvod=off` ho vynechá, `?film=off` film vypne.
 - Texty, ceny a údaje len z overených zdrojov (`docs/CONTENT_SOURCES.md`), rezervácia vedie do
   rezervačného systému podniku.
-- **Kurzor a hudba** (`assets/atmosfera.js`, koniec `assets/style.css`): kurzor v tvare nožníc (len myš;
+- **Kurzor a hudba** (`assets/atmosfera.js` a `atmosfera.css`, načíta ich `app.js` až pri prvom pohybe myši,
+  dotyku či klávese, inak 3,5 s po načítaní, aby nesúperili s prvým obrazom): kurzor v tvare nožníc (len myš;
   nad odkazom otvorené, pri kliknutí zatvorené, `assets/img/kurzor/`), teplé svetlo pod kurzorom a vlastná
   hudba na pozadí (`assets/audio/hudba.webm` a `.m4a`, slučka 46,8 s) a zvuk strihnutia pri kliknutí myšou
   alebo ťuknutí (`assets/audio/strih.*`, 3 varianty). Hudba sa pustí pri prvom kliknutí alebo ťuknutí (nie

@@ -1,0 +1,67 @@
+/* BARBERSHOP 30 – kurzor nožnice, svetlo pod kurzorom a tlačidlo Hudba. Načíta ho assets/atmosfera.js až po prvom
+   geste, aby sa nič z toho nesťahovalo pred prvým obrazom (style.css je blokujúci, LCP na telefóne). */
+/* Kurzor: nožnice (len myš). Pootvorené, nad odkazom a tlačidlom otvorené, pri kliknutí zatvorené.
+   Horúci bod je hrot (2 2). Najprv obyčajný PNG, potom image-set pre ostré zobrazenie na 2x displeji. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: url(img/kurzor/noznice-32.png) 2 2, auto;
+    cursor: -webkit-image-set(url(img/kurzor/noznice-32.png) 1x, url(img/kurzor/noznice-64.png) 2x) 2 2, auto;
+    cursor: image-set(url(img/kurzor/noznice-32.png) 1x, url(img/kurzor/noznice-64.png) 2x) 2 2, auto;
+  }
+  a, button, [role="button"], label, summary, select, .btn {
+    cursor: url(img/kurzor/noznice-otvorene-32.png) 2 2, pointer;
+    cursor: -webkit-image-set(url(img/kurzor/noznice-otvorene-32.png) 1x, url(img/kurzor/noznice-otvorene-64.png) 2x) 2 2, pointer;
+    cursor: image-set(url(img/kurzor/noznice-otvorene-32.png) 1x, url(img/kurzor/noznice-otvorene-64.png) 2x) 2 2, pointer;
+  }
+  html:active, a:active, button:active, [role="button"]:active, .btn:active {
+    cursor: url(img/kurzor/noznice-zatvorene-32.png) 2 2, auto;
+    cursor: -webkit-image-set(url(img/kurzor/noznice-zatvorene-32.png) 1x, url(img/kurzor/noznice-zatvorene-64.png) 2x) 2 2, auto;
+    cursor: image-set(url(img/kurzor/noznice-zatvorene-32.png) 1x, url(img/kurzor/noznice-zatvorene-64.png) 2x) 2 2, auto;
+  }
+  input, textarea, [contenteditable="true"] { cursor: text; }
+}
+
+/* Svetlo: teplý kruh (farba lámp) pod kurzorom, nad stránkou aj lištou, pod lightboxom; nezachytáva kliknutia */
+.kurzor-svetlo {
+  position: fixed; left: 0; top: 0; z-index: 45;
+  width: 400px; height: 400px; margin: -200px 0 0 -200px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle closest-side, rgba(240, 126, 60, 0.3), rgba(224, 96, 28, 0.14) 38%, rgba(224, 96, 28, 0.05) 68%, rgba(224, 96, 28, 0));
+  opacity: 0; transition: opacity 400ms var(--ease-out), filter 200ms var(--ease-out);
+  will-change: transform;
+}
+.kurzor-svetlo.is-on { opacity: 1; }
+.kurzor-svetlo.is-strih { animation: svetlo-strih 320ms var(--ease-out); }
+@keyframes svetlo-strih { 30% { filter: brightness(1.8); } }
+html[data-motion="off"] .kurzor-svetlo.is-strih { animation: none; }
+
+/* Hudba: prepínač v lište (ikona ekvalizéra, na počítači aj nápis) */
+.hudba {
+  margin-left: auto;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-width: 44px; min-height: 44px; padding: 0 var(--s2);
+  color: var(--paper-2);
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 999px;
+  transition: color var(--t-micro) var(--ease-out);
+}
+.hudba[hidden] { display: none; }
+.hudba:hover, .hudba[aria-pressed="true"] { color: var(--paper); }
+.hudba + .nav-toggle, .hudba ~ .nav { margin-left: 0; }
+.hudba-ikona { display: inline-flex; align-items: center; gap: 3px; }
+.hudba-ikona svg { width: 20px; height: 20px; }
+.hudba-preskrt { transition: opacity var(--t-micro) var(--ease-out); }
+.hudba[aria-pressed="true"] .hudba-preskrt { opacity: 0; }
+/* ekvalizér: len keď hrá */
+.hudba-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; width: 0; opacity: 0; overflow: hidden; transition: width 300ms var(--ease-out), opacity 300ms var(--ease-out); }
+.hudba[aria-pressed="true"] .hudba-eq { width: 13px; opacity: 1; }
+.hudba-eq i { flex: none; width: 3px; height: 100%; border-radius: 1px; background: var(--lamp); transform-origin: 50% 100%; transform: scaleY(0.3); }
+.hudba[aria-pressed="true"] .hudba-eq i { animation: hudba-eq 0.9s ease-in-out infinite alternate; }
+.hudba[aria-pressed="true"] .hudba-eq i:nth-child(2) { animation-duration: 0.7s; animation-delay: -0.35s; }
+.hudba[aria-pressed="true"] .hudba-eq i:nth-child(3) { animation-duration: 1.05s; animation-delay: -0.6s; }
+@keyframes hudba-eq { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
+html[data-motion="off"] .hudba[aria-pressed="true"] .hudba-eq i { animation: none; transform: scaleY(0.8); }
+@media (max-width: 900px) {
+  .hudba { padding: 0; }
+  .hudba-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+}
