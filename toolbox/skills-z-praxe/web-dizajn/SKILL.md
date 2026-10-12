@@ -87,7 +87,7 @@ Ako to vyzerá u nás (hodnoty zo štýlov 2026-10-11):
 | Text v troch stupňoch | `#efe7da`, `#bfb3a2`, `#978b7b` | `#f1e9dd`, `#c9beae`, `#8e8578` |
 | Akcent | `--accent #c9a66b`, zlatá len ako detail | `--lamp #e0601c`, jediný akcent |
 | Rozostupy | medzi časťami `--lux-space: clamp(76px,9vw,128px)` | škála `--s1` až `--s10`: 4, 8, 12, 16, 24, 32, 48, 64, 96, 144 px |
-| Rádius | 2 px (tlačidlá aj okienka) | 8 px karty, 6 px tlačidlá, 999 px štítky |
+| Rádius | 2 px (`--radius*`, tlačidlá); rituály v cenníku bez zaoblenia | 8 px karty, 6 px tlačidlá, 999 px štítky |
 | Šírka obsahu | `.wrap`: `min(1180px, 100% - 48px)`, do 640 px `100% - 32px` | `--container 1360px`, okraj 40 / 24 / 16 px |
 | Pohyb | `--t-fast 180ms`, `--t-base 320ms`, `--t-slow 700ms`, `--e-out cubic-bezier(.16,1,.3,1)` | `--t-micro 200ms`, `--t-text 560ms`, `--ease-out cubic-bezier(.2,.7,.2,1)` |
 
@@ -119,10 +119,12 @@ nevysúva; BARBERSHOP 30 nástupy textu 450 až 700 ms, paralaxa najviac 6 %, ž
 ### 6. Kontrola v prehliadači
 
 Nástroj [scripts/dizajn-audit.mjs](scripts/dizajn-audit.mjs) otvorí stránku v Chromiu cez Playwright, premeria
-ju v zadaných šírkach a odfotí celú stránku. Rozhranie:
+ju v zadaných šírkach a odfotí celú stránku. Súbor `.html` si servíruje sám (malý server nad jeho priečinkom),
+adresu `http(s)://` otvorí priamo. Podrobnosti a obmedzenia nástroja: hlavička skriptu a `references/audit.md`.
+Rozhranie:
 
 ```bash
-# z koreňa repozitára; výstup vždy mimo repozitára (napr. scratchpad relácie)
+# z koreňa repozitára; OUT je priečinok mimo repozitára (napr. scratchpad relácie)
 node toolbox/skills-z-praxe/web-dizajn/scripts/dizajn-audit.mjs <url-alebo-cesta-k-html> <výstupný-priečinok> [--sirky=390,768,1440] [--bez-snimok]
 
 node toolbox/skills-z-praxe/web-dizajn/scripts/dizajn-audit.mjs index.html "$OUT/hs"
@@ -135,15 +137,28 @@ node toolbox/skills-z-praxe/web-dizajn/scripts/dizajn-audit.mjs https://d8f5s88z
 | `sprava.md` | čitateľný súhrn: nálezy po oblastiach so závažnosťou |
 | `sprava.json` | to isté strojovo, na porovnanie pred a po oprave |
 | `snimka-<šírka>.png` | celá stránka v danej šírke (nie pri `--bez-snimok`) |
-| kód 1 | len pri závažných nálezoch; inak 0, takže sa dá použiť ako brána pred nasadením |
+| kód 1 | len pri závažných nálezoch (kontrast bežného textu pod 3 : 1, vodorovné pretečenie, žiadny alebo viac ako jeden viditeľný h1, obrázok bez `alt`, chyby konzoly a zlyhané požiadavky); bez nich 0, takže sa dá použiť ako brána pred nasadením; 2 je chyba nástroja |
+
+Oblasti v správe a ich čísla v `references/oblasti.md`: typografia (1), rozostupy (2), farby a kontrast (6, 9),
+dotykové plochy pod 44 × 44 px v šírkach pod 600 px (9), štruktúra: h1, poradie nadpisov, `alt`, prístupné mená,
+jazyk (9), rozloženie: vodorovné pretečenie (4, 5), pohyb: druhý beh s `prefers-reduced-motion` (10), konzola
+a požiadavky. Voľba `--cakaj=ms` (predvolene 1500) predĺži čakanie po načítaní, kým dobehne úvod stránky.
+
+Overené 2026-10-11 pri 390 px: BARBERSHOP 30 za 31 s (0 závažných, 9 pozor: 14 zo 41 ovládacích prvkov pod
+44 px, napr. telefón v kontakte 21 px, odkazy v pätičke 23 px; 16 veľkostí písma; text 11 px), HEAD SPA 30 za 71 s
+(0 závažných, 8 pozor: 24 veľkostí písma, 30 prvkov pod 12 px, rozostupy mimo škály 4 px, 4 zo 117 dotykových
+plôch pod 44 px, napr. „17 rituálov a ceny“ v úvode 33,5 px vysoké; znak U+2011 v „24‑karátovým“ kreslí
+systémové písmo, lebo orezaná Manrope ho nemá). Snímky celej stránky z tohto behu sa od 8192 px opakovali
+(pasca nižšie); nálezy z merania to neovplyvňuje.
 
 Ako s tým pracovať:
 
 1. **Najprv závažné nálezy**, potom ostatné podľa oblastí. Každý nález over na snímke alebo v kóde, kým ho
    opravíš; nástroj meria, vkus neposudzuje.
 2. **Snímky pozri okom** (nástroj Read na PNG). Dlhú stránku rozdeľ na dlaždice (Pillow, `python3 -I`) a pozri
-   úvod, stred a koniec v každej šírke. Pýtaj sa: je jedna dominanta na obrazovku, dýcha to, je zrejmé, kam
-   ťuknúť, nevyzerá to ako generický návrh (vkus.md)?
+   úvod, stred a koniec v každej šírke. Pri stránke vyššej ako 8192 px najprv over, že sa snímka neopakuje
+   (pasca so SwiftShaderom nižšie) a že nemá prázdne časti. Pýtaj sa: je jedna dominanta na obrazovku, dýcha
+   to, je zrejmé, kam ťuknúť, nevyzerá to ako generický návrh (vkus.md)?
 3. **Doplň ostatné kontroly**, ktoré audit nerobí: `../testy-a-nasadenie/scripts/dymovy-test.mjs` (chyby konzoly,
    CLS, beh bez skriptu, šírky 375 až 430), Lighthouse naživo (`rychly-web`), texty
    (`../obsah-a-texty/scripts/typografia-kontrola.mjs`, `i18n-kontrola.mjs`), pri HEAD SPA 30 ceny
@@ -178,7 +193,9 @@ README HEAD SPA 30). Nový text potrebuje kľúč vo všetkých šiestich `asset
 
 | Pasca | Ako sa stala | Riešenie |
 | --- | --- | --- |
-| Snímka celej stránky je skoro prázdna | 2026-10-11, telefón 390 px bez skrolu: HEAD SPA 30 nevykreslil sekcie s `content-visibility: auto` (7 sekcií) a načítal 8 z 30 obrázkov s `loading="lazy"`; BARBERSHOP 30 2 z 26 (prázdny tím a galéria). Po prejdení stránky skrolom 26 a 23, stránka celá | pred snímkou celej stránky ju prejsť skrolom po kúskoch a vrátiť hore; výška HEAD SPA 30 sa tým zmení z 25 715 na 24 679 px (odhad `contain-intrinsic-size`) |
+| Snímka celej stránky sa od 8192 px opakuje | 2026-10-11: Chromium so SwiftShaderom (`--use-gl=angle --use-angle=swiftshader`, predvoľba testov s WebGL) má `MAX_TEXTURE_SIZE` 8192; snímka celej stránky BARBERSHOP 30 (390 px, výška 15 767) mala od riadku 8192 znova vrch stránky, HEAD SPA 30 (24 679 px) trikrát úvod a cenník, poukaz až kontakt chýbali. Bez týchto prepínačov bola snímka správna | celú stránku fotiť v prehliadači bez prepínačov SwiftShaderu alebo po úsekoch do 8192 px; pri dlhej stránke vždy skontrolovať, či sa úvod neopakuje |
+| Snímka celej stránky je skoro prázdna alebo poskladaná zle | 2026-10-11, telefón 390 px bez skrolu: HEAD SPA 30 nevykreslil sekcie s `content-visibility: auto` (7 sekcií) a načítal 8 z 30 obrázkov s `loading="lazy"`; BARBERSHOP 30 2 z 26 (prázdny tím a galéria). Po prejdení stránky skrolom 26 a 23, stránka celá | pred snímkou celej stránky ju prejsť skrolom po kúskoch a vrátiť hore (snímka z odskrolovanej polohy, `scrollY` 14 923, mala chybné úseky aj bez SwiftShaderu); výška HEAD SPA 30 sa tým zmení z 25 715 na 24 679 px (odhad `contain-intrinsic-size`) |
+| Správa píše „kreslí sa Manrope ExtraLight“ | orezané súbory `Manrope-400.woff2` a `Manrope-700.woff2` majú v tabuľke mien „Manrope ExtraLight“ (vyrezané z premenného písma), váha v nich je správna (`usWeightClass` 400 a 700, overené fontTools) | meno z tabuľky nie je chyba; chýbajúce znaky áno (U+2011 v Manrope HEAD SPA 30 chýba, v BARBERSHOP 30 je) |
 | Vrstva „agentúrneho“ vzhľadu pôsobila lacno | HEAD SPA 30 vrstva V9: číslovanie sekcií 01 až 11, linka priebehu skrolu, svetlo pod kurzorom, odlesk na kartách, magnetické tlačidlá (README, Vrstva V9 a Luxusná vrstva) | vypnutá; prémiovosť robí priestor, písmo a zdržanlivosť, nie efekty |
 | `ch` nie je znak | BARBERSHOP 30 `.price-desc` `max-width: 62ch` pri 15 px dal na počítači 83 znakov na riadok; HEAD SPA 30 `.desc` `58ch` pri 16,5 px dal 71 | dĺžku riadku meraj v prehliadači, nie z CSS |
 | Číslo kontrastu v dokumente nesedí | `ART_DIRECTION.md` uvádza `--ink` na `--lamp` 6,3 : 1, výpočet WCAG dáva 5,4 : 1 (stále nad 4,5) | kontrast vždy prepočítať z hodnôt v CSS |

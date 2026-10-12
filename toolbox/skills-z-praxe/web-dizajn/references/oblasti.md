@@ -47,6 +47,8 @@ Vo videu: „Better type hierarchy“ (UI).
     Telo 16 px / 1,6, `.lede` `clamp(17px,1.35vw,19px)` / 1,75 a `max-width: 52ch`, štítok `.kicker` 12 px
     verzálky. Pomer nadpisu úvodu k telu 6,7 : 1 na počítači, 3,4 : 1 na telefóne. Riadky (1440): popis rituálu
     71 znakov (`58ch` pri 16,5 px), odpoveď v otázkach 71 až 73, úvod časti Rituál 58; na telefóne 36 až 49.
+    Písma sú orezané na použité znaky: znak U+2011 (pevný spojovník v „24‑karátovým“ v popise rituálu) v nich
+    nie je a kreslí ho systémové písmo (`dizajn-audit.mjs`, 2026-10-11). Nový znak v texte = skontrolovať písmo.
   - BARBERSHOP 30: Fraunces 800 (opsz 144) a Manrope 400/600/700; škála v `docs/ART_DIRECTION.md` časť 3
     (H1 `clamp(2.75rem,7.2vw,6.75rem)` / 0,94, H2 `clamp(2rem,4.4vw,3.5rem)` / 1, H3 `clamp(1.35rem,2vw,1.75rem)`,
     `.lead` `clamp(1.125rem,1.5vw,1.375rem)` / 1,45, `.body` 17 px / 1,6, štítok 13 px verzálky .14 em).
@@ -410,7 +412,7 @@ Vo videu: „Fast layout planning“ (UX).
 +------------------------------+
 ```
 
-  Čísla krokov rituálu sú na mieste, lebo ide o skutočný sled (README, Postup rituálu ako číslovaný sled).
+  Čísla krokov rituálu sú na mieste, lebo ide o skutočný sled krokov (`frontend-design`: čísla len pri sekvencii).
 - **Rieši:** `../../skills/frontend-design/` (ASCII drôtové modely), `../workflowy/`.
 
 ## 19. hero-section-crafter: úvod
@@ -478,7 +480,9 @@ Vo videu: „Browser and UI testing“ (Testing).
 - **Pravidlá:**
   - Čakať na stav, nie na čas (`waitForFunction`, príznaky v stránke ako `window.__renderDone`).
   - Pred snímkou písma načítané (`document.fonts.ready`), `scroll-behavior: auto`; pred snímkou celej stránky
-    ju prejsť skrolom (obrázky `loading="lazy"`, `content-visibility: auto`; pasca v SKILL.md).
+    ju prejsť skrolom (obrázky `loading="lazy"`, `content-visibility: auto`) a vrátiť sa hore (pasce v SKILL.md).
+  - Snímka celej stránky vyššej ako 8192 px v Chromiu so SwiftShaderom sa od riadku 8192 opakuje od vrchu
+    (`MAX_TEXTURE_SIZE` 8192); fotiť bez prepínačov SwiftShaderu alebo po úsekoch.
   - Pred a po oprave tie isté šírky a podmienky; výstupy mimo repozitára.
   - Kontajner bez grafickej karty: WebGL kreslí softvérovo, časy sú len orientačné.
 - **U nás:** `scripts/dizajn-audit.mjs` (tento skill), `../testy-a-nasadenie/scripts/dymovy-test.mjs`,

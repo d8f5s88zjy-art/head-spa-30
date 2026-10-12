@@ -1,7 +1,8 @@
 # Figma MCP
 
 Video hovorí: „pripoj Figma MCP a Playwright, aby Claude navrhol, postavil a otestoval všetko v jednom
-postupe“. Tu je, čo to znamená, kedy to pomôže, čo treba na pripojenie a ako pracujeme bez Figmy.
+postupe“. Tu je, čo to znamená, kedy to pomôže, čo treba na pripojenie a ako pracujeme bez Figmy. Cesty
+k súborom sú vzhľadom na priečinok skillu (`web-dizajn/`).
 
 ## Čo to je
 
@@ -47,8 +48,9 @@ texty v rámcoch bývajú zástupné (vymyslené ceny, recenzie) a nahrádzajú 
 1. **Účet Figma s prístupom k súboru** (aspoň na čítanie). Niektoré funkcie môžu závisieť od plánu alebo
    typu miesta vo Figme; over to v dokumentácii Figmy (https://help.figma.com), nie z pamäti.
 2. **Konektor v nastaveniach Claude:** https://claude.ai/customize/connectors, vybrať Figmu, prihlásiť sa do
-   Figmy a povoliť prístup. Konektory sa spravidla načítajú pri štarte relácie: **ak sa nástroje Figmy po pripojení neukážu, začni novú
-   reláciu**. (2026-10-11 sa server pripojil aj do bežiacej relácie, chvíľu ako „connecting“.)
+   Figmy a povoliť prístup. Konektory sa spravidla načítajú pri štarte relácie: **ak sa nástroje Figmy po
+   pripojení neukážu, začni novú reláciu**. (2026-10-11 sa server pripojil aj do bežiacej relácie, chvíľu
+   ako „connecting“.)
 3. **Claude Code v termináli na vlastnom počítači:** MCP server sa pridá príkazom `claude mcp add`; typ
    prenosu a adresu servera ber z dokumentácie Figmy.
 4. **Odkaz na konkrétny súbor alebo rámec**, ktorý sa má preniesť.

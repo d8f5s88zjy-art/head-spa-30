@@ -2,7 +2,8 @@
 
 Video hovorí o skille „taste“: aby sa návrh inšpiroval skvelými webmi namiesto obvyklého generického dizajnu.
 Tu je náš postup, ako na to: vkus je **výber**, nie výzdoba. Z mnohých možností vyberieš tú, ktorá sedí
-k podniku, a zvyšok vynecháš. Repozitár „taste-skill“ z videa sme neotvárali; nič z neho tu nie je.
+k podniku, a zvyšok vynecháš. Repozitár „taste-skill“ z videa sme neotvárali; nič z neho tu nie je. Cesty
+k súborom sú vzhľadom na priečinok skillu (`web-dizajn/`), cesty k webom vzhľadom na koreň repozitára.
 
 ## Tri zásady
 

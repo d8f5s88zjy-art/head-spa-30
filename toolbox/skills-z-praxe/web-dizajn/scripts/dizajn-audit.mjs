@@ -62,9 +62,10 @@ const vyskaPre = (w) => (w < 600 ? 844 : w < 1024 ? 1024 : 900);
 function nacitajPlaywright() {
   const req = createRequire(import.meta.url);
   const skusane = [];
-  // 1) node_modules projektu (aktuálny priečinok, priečinok skriptu a ich rodičia)
+  // 1) node_modules projektu (aktuálny priečinok, priečinok skriptu a ich rodičia); require berie aj NODE_PATH,
+  //    preto sa do správy zapíše skutočná cesta, odkiaľ sa modul načítal
   for (const zaklad of [path.join(process.cwd(), 'x.js'), fileURLToPath(import.meta.url)]) {
-    try { return { pw: createRequire(zaklad)('playwright'), odkial: 'node_modules projektu' }; } catch (e) { skusane.push(zaklad); }
+    try { const r = createRequire(zaklad); const cesta = r.resolve('playwright'); return { pw: r('playwright'), odkial: path.dirname(cesta) }; } catch (e) { skusane.push(zaklad); }
   }
   // 2) globálne priečinky s balíkmi
   const korene = [...(process.env.NODE_PATH || '').split(path.delimiter).filter(Boolean)];
@@ -199,13 +200,14 @@ function kniznica() {
   const esc = (s) => (window.CSS && CSS.escape ? CSS.escape(s) : s);
   const kolo = (x, d = 2) => Math.round(x * 10 ** d) / 10 ** d;
 
-  // krátky selektor: id, inak značka s dvoma triedami (a poradím); skupina = bez poradia (opakované komponenty)
+  // krátky selektor: id, inak značka s dvoma triedami (a poradím); skupina = bez id a poradia, aby sa
+  // opakované komponenty (karty, položky zoznamu) zlúčili do jedného nálezu
   function selektor(el, bezPoradia) {
     if (!el || el.nodeType !== 1) return '';
     const casti = [];
     let e = el;
     for (let i = 0; e && e.nodeType === 1 && i < 4; i++) {
-      if (e.id && !/\s/.test(e.id)) { casti.unshift('#' + esc(e.id)); break; }
+      if (!bezPoradia && e.id && !/\s/.test(e.id)) { casti.unshift('#' + esc(e.id)); break; }
       const tag = e.tagName.toLowerCase();
       if (tag === 'html' || tag === 'body') { casti.unshift(tag); break; }
       let s = tag;
@@ -462,7 +464,8 @@ function kniznica() {
       const o = obdlznik(el, 1);
       if (!o) continue;
       const r = el.getBoundingClientRect();
-      if (r.right <= 0 || r.bottom + scrollY <= 0) continue;   // odložené mimo stránky (napr. odkaz na preskočenie)
+      // odložené mimo stránky (odkaz na preskočenie, vysúvacie menu posunuté transformom vpravo)
+      if (r.right <= 0 || r.bottom + scrollY <= 0 || r.left >= D.documentElement.clientWidth) continue;
       spolu++;
       let w = r.width, h = r.height;
       // pole vnútri <label> alebo s label[for]: ťuká sa na celý popis
@@ -546,7 +549,9 @@ function kniznica() {
   const hotove = new Set();
   function kontrastKrok() {
     opCache = new Map();
-    const vw = D.documentElement.clientWidth, vh = innerHeight;
+    // viditeľné okno: pri pretečení na telefóne rastie innerHeight/innerWidth, snímka má rozmer visualViewport
+    const vv = window.visualViewport;
+    const vw = Math.min(D.documentElement.clientWidth, vv ? vv.width : Infinity), vh = Math.min(innerHeight, vv ? vv.height : Infinity);
     const naSnimku = [];
     let zmerane = 0;
     T.forEach((el, i) => {
@@ -706,12 +711,12 @@ function kniznica() {
     if (!el) return '';
     const s = gcs(el);
     const prva = s.fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
-    const znaky = [...new Set((el.textContent || '').replace(/\s/g, ''))].slice(0, 200);
+    const znaky = [...new Set(vlastnyText(el).replace(/\s/g, ''))].slice(0, 200);
     const sirka = (ch, zal) => { plat.font = `${s.fontStyle} ${s.fontWeight} 40px "${prva}", ${zal}`; return plat.measureText(ch).width; };
     return znaky.filter((ch) => Math.abs(sirka(ch, 'monospace') - sirka(ch, 'serif')) > 0.01).join('');
   }
   // popis prvku pre nálezy z CDP (prístupný strom)
-  function popis(el) { return { sel: selektor(el), skupina: selektor(el, true), tag: el.tagName, vykresleny: vykresleny(el), text: (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40), html: el.outerHTML.slice(0, 120) }; }
+  function popis(el) { return { sel: selektor(el), skupina: selektor(el, true), tag: el.tagName, rolaAttr: el.getAttribute('role') || '', vOvladaci: !!el.parentElement?.closest('a[href], button, [role="button"], [role="link"]'), vykresleny: vykresleny(el), text: (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40), html: el.outerHTML.slice(0, 120) }; }
 
   window.__da = { dobehni, animacie, zoznamTextov, typografia, rozostupy, dotyk, struktura, rozlozenie, kontrastKrok, kontrastVysledky, popis, selektor, chybajuceZnaky, get T() { return T; } };
 }
@@ -770,8 +775,11 @@ async function odoberStyly(page) { return page.evaluate(() => { document.querySe
 
 async function behSirky(browser, url, W, zaznamy) {
   const t0 = Date.now();
-  const vysledok = { sirka: W, vyska: vyskaPre(W) };
+  const vysledok = { sirka: W, vyska: vyskaPre(W), casy: {} };
+  let tf = t0;
+  const faza = (meno) => { const t = Date.now(); vysledok.casy[meno] = Math.round((t - tf) / 100) / 10; tf = t; };   // sekundy po fázach
   const { ctx, page, H } = await otvor(browser, url, W, false, zaznamy);
+  faza('nacitanie');
   const cdp = await ctx.newCDPSession(page);
   try {
     // pohyb hore na stránke (pred skrolom)
@@ -789,6 +797,7 @@ async function behSirky(browser, url, W, zaznamy) {
     await skrolNa(page, 0);
     await page.evaluate((ms) => window.__da.dobehni(ms), 3000);
     await sleep(300);
+    faza('odkrytie');
 
     // merania bez skrolu
     await page.evaluate(() => window.__da.zoznamTextov());
@@ -797,6 +806,7 @@ async function behSirky(browser, url, W, zaznamy) {
     vysledok.dotyk = W < 600 ? await page.evaluate(() => window.__da.dotyk()) : null;
     vysledok.struktura = await page.evaluate(() => window.__da.struktura());
     vysledok.rozlozenie = await page.evaluate((W) => window.__da.rozlozenie(W), W);
+    faza('merania');
 
     // písma, ktoré prehliadač naozaj kreslí (CDP CSS.getPlatformFontsForNode), vrátane náhradných pre chýbajúce znaky
     const kreslene = {};
@@ -824,13 +834,16 @@ async function behSirky(browser, url, W, zaznamy) {
         k.hlavne = hlavne;
         k.nahradne = [];
         k.nahradnychPrvkov = 0;
+        // CDP ráta aj obsah ::before/::after (číslo kroku, druhý riadok loga) v inom písme; náhrada sa hlási,
+        // len keď vlastný text prvku naozaj obsahuje znak, ktorý prvé písmo nemá
         for (const { i, uzol } of k.uzly) {
           const ine = uzol.filter(([m]) => m !== hlavne);
           if (!ine.length) continue;
+          const znaky = await page.evaluate((i) => window.__da.chybajuceZnaky(i), i);
+          if (!znaky) continue;
           k.nahradnychPrvkov++;
           if (k.nahradne.length >= 5) continue;
           const sel = await page.evaluate((i) => window.__da.selektor(window.__da.T[i]), i);
-          const znaky = await page.evaluate((i) => window.__da.chybajuceZnaky(i), i);
           k.nahradne.push({ sel, fonty: ine.map(([m, g]) => `${m} ${g}×`).join(', '), znaky, systemove: ine.some(([m]) => m.endsWith('(systémové)')) });
         }
         delete k.uzly;
@@ -839,6 +852,7 @@ async function behSirky(browser, url, W, zaznamy) {
     typo.kreslene = kreslene;
     delete typo.fontPrvky;
     vysledok.typografia = typo;
+    faza('pisma');
 
     // prístupné mená ovládacích prvkov (CDP prístupný strom: mená počíta prehliadač)
     const bezMena = [];
@@ -854,17 +868,20 @@ async function behSirky(browser, url, W, zaznamy) {
           const { result } = await cdp.send('Runtime.callFunctionOn', { objectId: object.objectId, functionDeclaration: 'function () { return window.__da.popis(this); }', returnByValue: true });
           const p = result.value;
           if (!p || !p.vykresleny || p.tag === 'IMG') continue;   // <img> rieši kontrola alt
+          // grafika: len s výslovným role="img" (inline <svg> bez roly býva ozdoba) a nie vnútri odkazu či tlačidla
+          if ((n.role.value === 'image' || n.role.value === 'img') && (p.rolaAttr !== 'img' || p.vOvladaci)) continue;
           bezMena.push({ rola: n.role.value, ...p });
         } catch { /* uzol medzitým zmizol */ }
       }
       await cdp.send('Runtime.releaseObjectGroup', { objectGroup: 'da' });
     } catch (e) { vysledok.struktura.chybaMien = String(e.message || e).slice(0, 200); }
     vysledok.struktura.bezMena = bezMena;
+    faza('mena');
 
     // 2. prechod: kontrast textov proti skutočnému pozadiu, okno po okne
     await pridajStyl(page, STYL_KLIK);
     vyska = await vyskaStranky(page);
-    const krok2 = Math.max(H * 0.6, vyska / 150);
+    const krok2 = Math.max(H * 0.7, vyska / 150);
     const pixely = {};
     let snimokPozadia = 0;
     for (let y = 0; y < vyska; y += krok2) {
@@ -889,9 +906,17 @@ async function behSirky(browser, url, W, zaznamy) {
     await odoberStyly(page);
     await page.addStyleTag({ content: STYL_SKROL }).catch(() => {});
     const kontrast = await page.evaluate(() => window.__da.kontrastVysledky());
-    for (const v of kontrast.vysledky) if (pixely[v.i]) v.pixely = { median: +pixely[v.i].median.toFixed(2), najhorsich10: +pixely[v.i].najhorsich10.toFixed(2), vzoriek: pixely[v.i].vzoriek };
+    // pod textom je obrázok alebo prechod: hlavný pomer je medián z pixelov, pomer zo štýlov ostáva na porovnanie
+    for (const v of kontrast.vysledky) {
+      if (!pixely[v.i]) continue;
+      v.pixely = { median: +pixely[v.i].median.toFixed(2), najhorsich10: +pixely[v.i].najhorsich10.toFixed(2), vzoriek: pixely[v.i].vzoriek };
+      v.pomerZoStylov = v.pomer;
+      v.pomer = v.pixely.median;
+      v.pozadie = 'pixely';
+    }
     kontrast.snimokPozadia = snimokPozadia;
     vysledok.kontrast = kontrast;
+    faza('kontrast');
 
     // snímka celej stránky
     if (!BEZ_SNIMOK) {
@@ -906,6 +931,7 @@ async function behSirky(browser, url, W, zaznamy) {
       }
     }
     vysledok.pohyb = { bezny: { hore: pohybHore, stred: pohybStred } };
+    faza('snimka');
   } finally {
     await ctx.close();
   }
@@ -921,6 +947,7 @@ async function behSirky(browser, url, W, zaznamy) {
   } finally {
     await r.ctx.close();
   }
+  faza('reduce');
   vysledok.trvanieMs = Date.now() - t0;
   return vysledok;
 }
@@ -930,9 +957,14 @@ const LIMIT_RIADOK = (W) => (W < 600 ? [30, 75] : [45, 75]);
 function vyhodnot(sirky, zaznamy) {
   const N = [];
   // kluc: čo musí byť rovnaké, aby sa nálezy zlúčili (okrem závažnosti, oblasti, kódu a skupiny selektora)
-  const pridaj = (zavaznost, oblast, kod, sirka, sel, hodnota, popis, skupina, kluc) => N.push({ zavaznost, oblast, kod, sirka, selektor: sel || '', skupina: skupina || sel || '', hodnota, popis, kluc: kluc ?? (sel ? '' : hodnota) });
+  const pridaj = (zavaznost, oblast, kod, sirka, sel, hodnota, popis, skupina, kluc) => N.push({ zavaznost, oblast, kod, sirka, selektor: sel || '', skupina: skupina || sel || '', hodnota, popis, kluc: kluc ?? '' });
   for (const S of sirky) {
     const W = S.sirka;
+    if (S.chyba) {
+      const nacitanie = /page\.goto|net::ERR|ERR_|navigation/i.test(S.chyba);
+      pridaj(nacitanie ? 'závažné' : 'pozor', 'konzola', nacitanie ? 'nacitanie' : 'meranie', W, '', S.chyba, nacitanie ? 'stránka sa nenačítala' : 'meranie tejto šírky zlyhalo (chyba nástroja alebo stránky), výsledky chýbajú', '', S.chyba);
+      continue;
+    }
     // typografia
     const t = S.typografia;
     if (t) {
@@ -941,30 +973,30 @@ function vyhodnot(sirky, zaznamy) {
       // susedné veľkosti bližšie ako 1 px: oko ich nerozlíši, stupnica sa rozpadá (typicky clamp() s vw)
       t.blizkeDvojice = vel.slice(1).filter((v, i) => v - vel[i] < 1).length;
       if (vel.length > 12) pridaj('pozor', 'typografia', 'vela-velkosti', W, '', `${vel.length} veľkostí, ${t.blizkeDvojice} susedných bližších ako 1 px`, 'veľa rôznych veľkostí písma, stupnica nie je zjavná (zvyčajne stačí 6 až 9)');
-      else pridaj('info', 'typografia', 'velkosti', W, '', `${vel.length} veľkostí: ${vel.join(', ')} px`, 'použité veľkosti písma');
+      else pridaj('info', 'typografia', 'velkosti', W, '', `${vel.length} veľkostí: ${vel.map((v) => fmt(v)).join(', ')} px`, 'použité veľkosti písma');
       const male = vel.filter((v) => v < 12);
-      if (male.length) pridaj('pozor', 'typografia', 'maly-text', W, '', `${male.join(', ')} px (${male.reduce((s, v) => s + t.velkosti[v], 0)} prvkov)`, 'text pod 12 px je ťažko čitateľný');
+      if (male.length) pridaj('pozor', 'typografia', 'maly-text', W, '', `${male.map((v) => fmt(v)).join(', ')} px (${male.reduce((s, v) => s + t.velkosti[v], 0)} prvkov)`, 'text pod 12 px je ťažko čitateľný');
       const deklarovane = new Set(t.fonty.map((f) => f.rodina.toLowerCase()));
       const rodiny = new Set(Object.values(t.rodiny).map((r) => r.rodina.toLowerCase()));
       if (rodiny.size > 3) pridaj('pozor', 'typografia', 'vela-rodin', W, '', [...rodiny].join(', '), 'viac ako tri rodiny písma');
-      for (const f of t.fonty) if (f.stav === 'error') pridaj('pozor', 'typografia', 'pismo-chyba', W, '', `${f.rodina} ${f.vaha} ${f.rez}`, 'písmo sa nepodarilo načítať (FontFace status error)');
+      for (const f of t.fonty) if (f.stav === 'error') pridaj('pozor', 'typografia', 'pismo-chyba', W, '', `${f.rodina} ${f.vaha} ${f.rez}`, 'písmo sa nepodarilo načítať (FontFace status error)', '', `${f.rodina} ${f.vaha} ${f.rez}`);
       for (const [kluc, r] of Object.entries(t.rodiny)) {
         const k = t.kreslene?.[kluc];
         if (!k) continue;
         const vlastne = Object.keys(k.fonty).filter((m) => !m.endsWith('(systémové)'));
         if (deklarovane.has(r.rodina.toLowerCase())) {
-          if (!vlastne.length) pridaj('pozor', 'typografia', 'pismo-nekresli', W, '', `${r.rodina} ${r.vaha} ${r.rez}: ${Object.keys(k.fonty).join(', ')}`, `písmo ${r.rodina} je v @font-face, ale kreslí sa náhradné (${r.prvkov} prvkov)`);
-          for (const n of k.nahradne) pridaj(n.systemove ? 'pozor' : 'info', 'typografia', 'pismo-znaky', W, n.sel, `${n.fonty}${n.znaky ? `, znaky „${n.znaky}“` : ''}`, `znaky chýbajú v písme ${r.rodina} ${r.vaha} ${r.rez} (podmnožina?), kreslí ich ${n.systemove ? 'systémové písmo (na každom zariadení iné)' : 'ďalšie písmo zo zásobníka'}; prvkov s náhradou ${k.nahradnychPrvkov}`, `${r.rodina} ${r.vaha} ${r.rez}`, n.znaky);
+          if (!vlastne.length) pridaj('pozor', 'typografia', 'pismo-nekresli', W, '', `${r.rodina} ${r.vaha} ${r.rez}: ${Object.keys(k.fonty).join(', ')}`, `písmo ${r.rodina} je v @font-face, ale kreslí sa náhradné (${r.prvkov} prvkov)`, '', kluc);
+          for (const n of k.nahradne) pridaj(n.systemove ? 'pozor' : 'info', 'typografia', 'pismo-znaky', W, n.sel, `znaky „${n.znaky}“ (U+${[...n.znaky].map((c) => c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).join(', U+')}): ${n.fonty}`, `znaky chýbajú v písme ${r.rodina} ${r.vaha} ${r.rez} (podmnožina?), kreslí ich ${n.systemove ? 'systémové písmo (na každom zariadení iné)' : 'ďalšie písmo zo zásobníka'}; prvkov s náhradou ${k.nahradnychPrvkov}`, `${r.rodina} ${r.vaha} ${r.rez}`, n.znaky);
         } else if (!/^(serif|sans-serif|monospace|system-ui|cursive|fantasy|-apple-system|ui-)/i.test(r.rodina)) {
-          pridaj('info', 'typografia', 'pismo-systemove', W, '', `${r.rodina}: ${Object.keys(k.fonty).join(', ')}`, `${r.rodina} nie je v @font-face; na tomto stroji sa kreslí systémovým písmom`);
+          pridaj('info', 'typografia', 'pismo-systemove', W, '', `${r.rodina}: ${Object.keys(k.fonty).join(', ')}`, `${r.rodina} nie je v @font-face; na tomto stroji sa kreslí systémovým písmom`, '', r.rodina);
         }
       }
       const [lo, hi] = LIMIT_RIADOK(W);
       for (const o of t.odseky) {
-        if (o.znakov > hi) pridaj('pozor', 'typografia', 'riadok-dlhy', W, o.sel, `${o.znakov} znakov, ${o.velkost} px`, `dlhý riadok (nad ${hi} znakov)`, o.skupina);
-        else if (o.znakov < lo) pridaj('info', 'typografia', 'riadok-kratky', W, o.sel, `${o.znakov} znakov, ${o.velkost} px`, `krátky riadok (pod ${lo} znakov)`, o.skupina);
-        if (o.velkost <= 20 && o.riadkovanie < 1.3) pridaj('pozor', 'typografia', 'riadkovanie-tesne', W, o.sel, `${o.riadkovanie} × ${o.velkost} px`, 'tesné riadkovanie bežného textu (pod 1,3)', o.skupina);
-        else if (o.riadkovanie > 2) pridaj('info', 'typografia', 'riadkovanie-velke', W, o.sel, `${o.riadkovanie}`, 'veľké riadkovanie (nad 2)', o.skupina);
+        if (o.znakov > hi) pridaj('pozor', 'typografia', 'riadok-dlhy', W, o.sel, `${o.znakov} znakov, ${fmt(o.velkost)} px`, `dlhý riadok (nad ${hi} znakov)`, o.skupina);
+        else if (o.znakov < lo) pridaj('info', 'typografia', 'riadok-kratky', W, o.sel, `${o.znakov} znakov, ${fmt(o.velkost)} px`, `krátky riadok (pod ${lo} znakov)`, o.skupina);
+        if (o.velkost <= 20 && o.riadkovanie < 1.3) pridaj('pozor', 'typografia', 'riadkovanie-tesne', W, o.sel, `${fmt(o.riadkovanie)} × ${fmt(o.velkost)} px${o.lhNormal ? ' (line-height: normal)' : ''}`, 'tesné riadkovanie bežného textu (pod 1,3)', o.skupina);
+        else if (o.riadkovanie > 2) pridaj('info', 'typografia', 'riadkovanie-velke', W, o.sel, fmt(o.riadkovanie), 'veľké riadkovanie (nad 2)', o.skupina);
       }
     }
     // rozostupy
@@ -1045,7 +1077,7 @@ function vyhodnot(sirky, zaznamy) {
       const bez = { beziace: b1.beziace + b2.beziace, nekonecne: b1.nekonecne + b2.nekonecne, raf: Math.max(b1.raf, b2.raf) };
       const red = { beziace: r1.beziace + r2.beziace, nekonecne: r1.nekonecne + r2.nekonecne, raf: Math.max(r1.raf, r2.raf) };
       po.porovnanie = { bezny: bez, reduce: red };
-      const hodnota = `animácie ${bez.beziace} → ${red.beziace}, nekonečné ${bez.nekonecne} → ${red.nekonecne}, rAF ${bez.raf} → ${red.raf}/s`;
+      const hodnota = `bežiace animácie (hore + v strede) ${bez.beziace} → ${red.beziace}, z toho nekonečné ${bez.nekonecne} → ${red.nekonecne}, rAF ${bez.raf} → ${red.raf}/s`;
       const mena = Object.keys({ ...(po.reduce.hore?.mena || {}), ...(po.reduce.stred?.mena || {}) }).filter((m) => /nekonečná/.test(m)).slice(0, 5).join(', ');
       if (red.nekonecne > 0) pridaj('pozor', 'pohyb', 'reduce-nekonecne', W, '', hodnota, `pri prefers-reduced-motion bežia nekonečné animácie (${mena})`);
       if (red.raf >= 20) pridaj('pozor', 'pohyb', 'reduce-raf', W, '', hodnota, 'pri prefers-reduced-motion beží slučka requestAnimationFrame');
@@ -1061,7 +1093,7 @@ function vyhodnot(sirky, zaznamy) {
     videne.add(kluc);
     const sirkyZ = [...new Set(zaznamy.filter((x) => x.druh + x.text === kluc).map((x) => x.sirka))];
     const behy = [...new Set(zaznamy.filter((x) => x.druh + x.text === kluc).map((x) => x.beh))];
-    pridaj(z.prerusena ? 'info' : 'závažné', 'konzola', z.druh, sirkyZ.join(', '), '', z.text, `${z.druh === 'requestfailed' ? (z.prerusena ? 'prerušená požiadavka (zvyčajne neškodné)' : 'neúspešná požiadavka') : z.druh === 'http' ? 'odpoveď s chybou' : 'chyba v konzole'} (beh: ${behy.join(', ')})`);
+    pridaj(z.prerusena ? 'info' : 'závažné', 'konzola', z.druh, sirkyZ.join(', '), '', z.text, `${z.druh === 'requestfailed' ? (z.prerusena ? 'prerušená požiadavka (zvyčajne neškodné)' : 'neúspešná požiadavka') : z.druh === 'http' ? 'odpoveď s chybou' : 'chyba v konzole'} (beh: ${behy.join(', ')})`, '', z.text);
   }
   return N;
 }
@@ -1074,12 +1106,22 @@ function zluc(nalezy) {
   for (const n of nalezy) {
     const kluc = [n.zavaznost, n.oblast, n.kod, n.skupina || n.selektor, n.kluc].join('|');
     const z = m.get(kluc);
-    if (!z) { const { kluc: _k, ...bez } = n; m.set(kluc, { ...bez, sirky: [n.sirka], pocet: 1, hodnoty: [n.hodnota] }); continue; }
+    if (!z) { const { kluc: _k, ...bez } = n; m.set(kluc, { ...bez, sirky: [n.sirka], pocet: 1, polozky: [[n.sirka, n.hodnota]] }); continue; }
     if (!z.sirky.includes(n.sirka)) z.sirky.push(n.sirka);
     z.pocet++;
-    if (z.hodnoty.length < 4 && !z.hodnoty.includes(n.hodnota)) z.hodnoty.push(n.hodnota);
+    z.polozky.push([n.sirka, n.hodnota]);
   }
-  return [...m.values()].sort((a, b) => PORADIE[a.zavaznost] - PORADIE[b.zavaznost] || b.pocet - a.pocet);
+  const out = [...m.values()];
+  for (const z of out) {
+    // rovnaká hodnota na všetkých šírkach sa vypíše raz, inak s šírkou pred hodnotou (najviac 4)
+    const rozne = [...new Set(z.polozky.map(([, h]) => h))];
+    const viacSirok = new Set(z.polozky.map(([w]) => w)).size > 1;
+    z.hodnoty = rozne.length === 1 ? rozne : viacSirok
+      ? [...new Map(z.polozky.map(([w, h]) => [w, `${w}: ${h}`])).values()].slice(0, 4)
+      : rozne.slice(0, 4);
+    delete z.polozky;
+  }
+  return out.sort((a, b) => PORADIE[a.zavaznost] - PORADIE[b.zavaznost] || b.pocet - a.pocet);
 }
 
 // ---------------------------------------------------------------- správa
@@ -1087,7 +1129,7 @@ const OBLASTI = [['typografia', 'Typografia'], ['rozostupy', 'Rozostupy'], ['kon
 function spravaMd(sprava) {
   const L = [];
   const z = sprava.suhrn;
-  L.push(`# Dizajn audit`, '', `- Stránka: ${sprava.adresa}${sprava.subor ? ` (súbor ${sprava.subor})` : ''}`, `- Čas: ${sprava.cas}, ${sprava.nastroj}, Chromium ${sprava.prehliadac}`, `- Šírky: ${sprava.sirky.map((s) => `${s.sirka} × ${s.vyska}`).join(', ')}`, `- Výsledok: **${z['závažné']} závažné, ${z.pozor} pozor, ${z.info} info** (zlúčené naprieč šírkami), návratový kód ${z['závažné'] ? 1 : 0}`, '');
+  L.push(`# Dizajn audit`, '', `- Stránka: ${sprava.adresa}${sprava.subor ? ` (súbor ${sprava.subor})` : ''}`, `- Čas: ${sprava.cas}, ${sprava.nastroj}, Chromium ${sprava.prehliadac}, Playwright z ${sprava.playwright}`, `- Šírky: ${sprava.sirky.map((s) => `${s.sirka} × ${s.vyska}`).join(', ')}`, `- Výsledok: **${z['závažné']} závažné, ${z.pozor} pozor, ${z.info} info** (zlúčené naprieč šírkami), návratový kód ${z['závažné'] ? 1 : 0}`, '');
   L.push('## Súhrn po oblastiach', '', '| Oblasť | závažné | pozor | info | čísla |', '| --- | --- | --- | --- | --- |');
   for (const [k, meno] of OBLASTI) {
     const o = sprava.nalezy.filter((n) => n.oblast === k);
@@ -1103,11 +1145,12 @@ function spravaMd(sprava) {
   L.push('## Po šírkach', '');
   for (const S of sprava.sirky) {
     L.push(`### ${S.sirka} × ${S.vyska}${S.snimka ? ` (${S.snimka})` : ''}`, '');
+    if (S.chyba) { L.push(`- Meranie zlyhalo: ${S.chyba}`, ''); continue; }
     const t = S.typografia;
     if (t) {
       const vel = Object.entries(t.velkosti).map(([v, n]) => [Number(v), n]).sort((a, b) => a[0] - b[0]);
       L.push(`- Typografia: ${t.pocet} textových prvkov, ${vel.length} veľkostí (${vel.map(([v, n]) => `${fmt(v)} px ×${n}`).join(', ')})`);
-      for (const [kl, r] of Object.entries(t.rodiny)) L.push(`  - ${r.rodina} ${r.vaha} ${r.rez}: ${r.prvkov} prvkov, kreslí sa ${Object.entries(t.kreslene?.[kl]?.fonty || {}).map(([m, g]) => `${m} (${g} znakov)`).join(', ') || '?'}`);
+      for (const [kl, r] of Object.entries(t.rodiny)) L.push(`  - ${r.rodina} ${r.vaha} ${r.rez}: ${r.prvkov} prvkov, kreslí sa ${Object.entries(t.kreslene?.[kl]?.fonty || {}).map(([m, g]) => `${m} (${g} znakov)`).join(', ') || '?'} (meno zo súboru písma, aj s obsahom ::before/::after)`);
       const ods = t.odseky.map((o) => o.znakov).sort((a, b) => a - b);
       if (ods.length) L.push(`  - Odseky: ${ods.length}, znakov na riadok ${ods[0]} až ${ods[ods.length - 1]}, medián ${ods[Math.floor(ods.length / 2)]}`);
       const rl = Object.entries(t.riadkovanie).sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -1136,7 +1179,7 @@ function spravaMd(sprava) {
     if (l) L.push(`- Rozloženie: scrollWidth ${l.scrollWidth} px, innerWidth ${l.innerWidth} px, overflow-x koreňa ${l.korenOx}, pretečenie ${l.pretecenie ? 'áno' : 'nie'}${l.orezane.length ? `, orezaných prvkov ${l.orezane.length}` : ''}`);
     const po = S.pohyb?.porovnanie;
     if (po) L.push(`- Pohyb (hore + stred stránky): bežný beh ${po.bezny.beziace} animácií (nekonečných ${po.bezny.nekonecne}), rAF ${po.bezny.raf}/s; reduce ${po.reduce.beziace} (nekonečných ${po.reduce.nekonecne}), rAF ${po.reduce.raf}/s`);
-    L.push(`- Trvanie: ${Math.round(S.trvanieMs / 1000)} s${S.snimkaPozn ? '; ' + S.snimkaPozn : ''}`, '');
+    L.push(`- Trvanie: ${Math.round(S.trvanieMs / 1000)} s (${Object.entries(S.casy || {}).map(([k, v]) => `${k} ${fmt(v, 1)}`).join(', ')})${S.snimkaPozn ? '; ' + S.snimkaPozn : ''}`, '');
   }
   const info = sprava.nalezy.filter((n) => n.zavaznost === 'info');
   L.push('## Info', '');
@@ -1146,7 +1189,7 @@ function spravaMd(sprava) {
   return L.join('\n');
 }
 function cislaOblasti(k, sirky) {
-  const po = (f) => sirky.map((s) => { try { return `${s.sirka}: ${f(s)}`; } catch { return `${s.sirka}: ?`; } }).join('; ');
+  const po = (f) => sirky.map((s) => { if (s.chyba) return `${s.sirka}: chyba`; try { return `${s.sirka}: ${f(s)}`; } catch { return `${s.sirka}: ?`; } }).join('; ');
   switch (k) {
     case 'typografia': return po((s) => `${s.typografia.pocetVelkosti} veľkostí, ${Object.keys(s.typografia.rodiny).length} rezov`);
     case 'rozostupy': return po((s) => `${s.rozostupy.rozne} hodnôt, mimo 4 px ${Math.round(s.rozostupy.podielMimo4 * 100)} %`);
@@ -1161,7 +1204,6 @@ function cislaOblasti(k, sirky) {
 
 // ---------------------------------------------------------------- hlavný beh
 async function main() {
-  fs.mkdirSync(VYSTUP, { recursive: true });
   let url = CIEL, subor = null, srv = null;
   if (!/^https?:\/\//i.test(CIEL)) {
     subor = path.resolve(CIEL.startsWith('file://') ? fileURLToPath(CIEL) : CIEL);
@@ -1171,15 +1213,24 @@ async function main() {
     url = `${srv.origin}/${encodeURIComponent(path.basename(subor))}`;
   }
   const { pw, odkial } = nacitajPlaywright();
+  fs.mkdirSync(VYSTUP, { recursive: true });
   const browser = await spustiPrehliadac(pw.chromium);
   const zaznamy = [];
   const sirky = [];
   try {
     for (const W of SIRKY) {
       process.stderr.write(`šírka ${W} ... `);
-      const S = await behSirky(browser, url, W, zaznamy);
-      process.stderr.write(`${Math.round(S.trvanieMs / 1000)} s\n`);
-      sirky.push(S);
+      const t = Date.now();
+      try {
+        const S = await behSirky(browser, url, W, zaznamy);
+        process.stderr.write(`${Math.round(S.trvanieMs / 1000)} s\n`);
+        sirky.push(S);
+      } catch (e) {
+        // zlyhaná šírka sa zapíše do správy, ostatné šírky bežia ďalej
+        const chyba = String(e && e.message || e).split('\n')[0].slice(0, 300);
+        process.stderr.write(`chyba: ${chyba}\n`);
+        sirky.push({ sirka: W, vyska: vyskaPre(W), chyba, trvanieMs: Date.now() - t });
+      }
     }
   } finally {
     await browser.close().catch(() => {});
@@ -1199,4 +1250,5 @@ async function main() {
   for (const n of nalezy.filter((x) => x.zavaznost !== 'info').slice(0, 12)) console.log(`  ${n.zavaznost.padEnd(8)} ${n.oblast.padEnd(11)} ${n.selektor ? n.selektor + '  ' : ''}${n.hodnoty[0]}`);
   return suhrn['závažné'] ? 1 : 0;
 }
-main().then((kod) => process.exit(kod)).catch((e) => { console.error('chyba nástroja:', e && e.stack || e); process.exit(2); });
+// chyba nástroja: krátka správa, celý zásobník volaní s DIZAJN_AUDIT_LADENIE=1
+main().then((kod) => process.exit(kod)).catch((e) => { console.error('chyba nástroja:', (process.env.DIZAJN_AUDIT_LADENIE ? e && e.stack : e && e.message) || e); process.exit(2); });
