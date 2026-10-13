@@ -1,13 +1,21 @@
-"""Písma webu: skopíruje stiahnuté rezy (woff2 z Google Fonts, podmnožiny latin a latin-ext) do assets/fonts/
-pod stálymi menami, ktoré používa generátor (nadpisy-*.woff2, text-*.woff2), a vypíše @font-face pre style.css.
+"""Písma webu: zo stiahnutých rezov (woff2 z Google Fonts, podmnožiny latin a latin-ext) vyrobí do assets/fonts/
+súbory so stálymi menami, ktoré používa generátor (nadpisy-*.woff2, text-*.woff2), a vypíše @font-face pre style.css.
+Variabilné písmo vie orezať na použité osi (menší súbor pre prvé okno TCP) a každý súbor podsadí na znaky svojej
+podmnožiny (latin, latin-ext), aby v ňom nezostali nepoužité glyfy.
 
-Spustenie: ZDROJ=/priečinok/s/woff2 NADPISY=Fraunces TEXT=InstrumentSans python3 source/pisma.py
+Spustenie: ZDROJ=/priečinok/s/woff2 NADPISY=BricolageGrotesque TEXT=InstrumentSans \
+           OSI_NADPISY="wght=500:700,wdth=85:100,opsz=96" python3 source/pisma.py
 Mená rodín zodpovedajú predponám súborov v ZDROJ (napr. Fraunces-normal-300-700-latin.woff2).
+OSI_NADPISY / OSI_TEXT: os=min:max ponechá rozsah, os=hodnota os zafixuje; ostatné osi ostanú celé.
 """
+import io
 import os
 import re
-import shutil
 import sys
+
+from fontTools import subset
+from fontTools.ttLib import TTFont
+from fontTools.varLib import instancer
 
 ZDROJ = os.environ.get('ZDROJ') or sys.exit('chýba ZDROJ=/priečinok/s/woff2')
 ROLY = {'nadpisy': os.environ.get('NADPISY'), 'text': os.environ.get('TEXT')}
@@ -22,6 +30,38 @@ ROZSAHY = {
 }
 MENA = {'nadpisy': 'Nadpisy', 'text': 'Text'}            # mená rodín v CSS (nezávislé od zdroja)
 
+
+def rozsah_unicode(sada):
+    """Zoznam kódových bodov pre podmnožinu podľa jej unicode-range."""
+    body = []
+    for cast in ROZSAHY[sada].split(','):
+        a, _, b = cast.strip()[2:].partition('-')
+        body.extend(range(int(a, 16), int(b or a, 16) + 1))
+    return body
+
+
+def uprav(vstup, vystup, sada, osi, vaha):
+    """Oreže osi variabilného písma (ak sú zadané) a podsadí glyfy na znaky podmnožiny; vráti font-weight pre CSS."""
+    f = TTFont(vstup)
+    if osi and 'fvar' in f:
+        limity = {}
+        for cast in osi.split(','):
+            os_, _, hod = cast.strip().partition('=')
+            limity[os_] = tuple(float(x) for x in hod.split(':')) if ':' in hod else float(hod)
+        f = instancer.instantiateVariableFont(f, limity, inplace=False, updateFontNames=False)
+        buf = io.BytesIO(); f.save(buf); f = TTFont(io.BytesIO(buf.getvalue()))    # po orezaní znovu načítať (gvar)
+        if 'wght' in limity:
+            w = limity['wght']
+            vaha = f'{int(w[0])} {int(w[1])}' if isinstance(w, tuple) else str(int(w))
+    o = subset.Options(flavor='woff2', layout_features=['*'], notdef_outline=True, name_IDs=['*'], hinting=False)
+    o.drop_tables += ['DSIG']
+    sub = subset.Subsetter(o)
+    sub.populate(unicodes=rozsah_unicode(sada))
+    sub.subset(f)
+    f.flavor = 'woff2'
+    f.save(vystup)
+    return vaha
+
 for stary in os.listdir(OUT):
     os.remove(os.path.join(OUT, stary))
 css = []
@@ -29,17 +69,20 @@ for rola, rodina in ROLY.items():
     subory = sorted(f for f in os.listdir(ZDROJ) if f.startswith(rodina + '-') and f.endswith('.woff2'))
     if not subory:
         sys.exit(f'v {ZDROJ} nie je žiadny {rodina}-*.woff2')
+    # OSI_<ROLA>: jedna alebo viac inštancií oddelených bodkočiarkou, každá voliteľne s menom: "700:opsz=96,wdth=92,wght=700;500:opsz=12,wdth=87.5,wght=500"
+    instancie = [(i.split(':', 1)[0], i.split(':', 1)[1]) if re.match(r'^\w+:', i) else ('', i) for i in os.environ.get('OSI_' + rola.upper(), '').split(';') if i.strip()] or [('', '')]
     for f in subory:
         m = re.match(rf'{re.escape(rodina)}-(normal|italic)-(\d+)(?:-(\d+))?-(latin|latin-ext)\.woff2$', f)
-        if not m:
+        if not m or (m.group(1) == 'italic' and os.environ.get('BEZ_KURZIVY')):
             continue
         styl, v1, v2, sada = m.groups()
         sada = sada.replace('-', '')
-        cast = ('-kurziva' if styl == 'italic' else '') + (f'-{v1}' if not v2 and styl == 'normal' and len(subory) > 2 else '')
-        meno = f'{rola}{cast}-{sada}.woff2'
-        shutil.copyfile(os.path.join(ZDROJ, f), os.path.join(OUT, meno))
-        vaha = f'{v1} {v2}' if v2 else v1
-        css.append(f"@font-face{{font-family:'{MENA[rola]}';font-style:{styl};font-weight:{vaha};font-display:swap;"
-                   f"src:url(fonts/{meno}) format('woff2');unicode-range:{ROZSAHY[sada]}}}")
-        print(meno, os.path.getsize(os.path.join(OUT, meno)) // 1024, 'kB')
+        for znacka, osi in instancie:
+            cast = ('-kurziva' if styl == 'italic' else '') + (f'-{znacka}' if znacka else '') + (f'-{v1}' if not v2 and not znacka and styl == 'normal' and len(subory) > 2 else '')
+            meno = f'{rola}{cast}-{sada}.woff2'
+            vaha = f'{v1} {v2}' if v2 else v1
+            vaha = uprav(os.path.join(ZDROJ, f), os.path.join(OUT, meno), sada, osi, vaha)
+            css.append(f"@font-face{{font-family:'{MENA[rola]}';font-style:{styl};font-weight:{vaha};font-display:swap;"
+                       f"src:url(fonts/{meno}) format('woff2');unicode-range:{ROZSAHY[sada]}}}")
+            print(meno, os.path.getsize(os.path.join(OUT, meno)) // 1024, 'kB')
 print('\n'.join(css))

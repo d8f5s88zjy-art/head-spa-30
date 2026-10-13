@@ -52,8 +52,8 @@ async function stranka(opts, url) {
 async function prejdi(p) {
   await p.evaluate(async () => {
     const krok = Math.max(400, innerHeight * 0.8);
-    for (let y = 0; y < document.documentElement.scrollHeight; y += krok) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
-    scrollTo(0, 0);
+    for (let y = 0; y < document.documentElement.scrollHeight; y += krok) { scrollTo({ top: y, behavior: 'instant' }); await new Promise((r) => setTimeout(r, 60)); }
+    scrollTo({ top: 0, behavior: 'instant' });
   });
   await p.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 8000 }).catch(() => {});
   await p.waitForTimeout(200);
@@ -105,101 +105,118 @@ for (const w of [320, 375, 390, 768, 1024, 1440]) {
   }
 }
 
-// 3. výber bytu: filter, panel, klávesnica, dotyk
+// 3. výber bytu: panel, filter, klávesnica, dotyk, tabuľka
 {
   const { p, chyby } = await stranka({ viewport: { width: 1440, height: 900 } }, 'byty.html');
-  await p.hover('.bunka[data-id="E2"]'); await p.waitForTimeout(200);
-  const panel = await p.evaluate(() => ({ hidden: document.querySelector('.vyber-detail-obsah').hidden, text: document.querySelector('.vyber-detail-obsah').innerText.replace(/\s+/g, ' ').slice(0, 120), vybrana: document.querySelector('.bunka.je-vybrana')?.dataset.id }));
-  ok('výber: ukázanie myšou naplní panel bytom E2', !panel.hidden && /Byt E2/.test(panel.text) && /114/.test(panel.text) && panel.vybrana === 'E2', panel);
-  await p.click('.filter[data-filter="t3"]'); await p.waitForTimeout(200);
-  const f = await p.evaluate(() => ({ mimo: document.querySelectorAll('.bunka.je-mimo').length, karty: [...document.querySelectorAll('.byt-karta')].filter((k) => !k.hidden).length, pocet: document.querySelector('.vyber-pocet')?.textContent, pressed: document.querySelector('.filter[data-filter="t3"]').getAttribute('aria-pressed') }));
-  ok('výber: filter Trojizbové nechá 6 bytov', f.mimo === 6 && f.karty === 6 && /6/.test(f.pocet || '') && f.pressed === 'true', f);
-  await p.click('.filter[data-filter="p1"]'); await p.waitForTimeout(100);
-  const f2 = await p.evaluate(() => ({ mimo: document.querySelectorAll('.bunka.je-mimo').length, akt: document.querySelector('.podlazie.je-aktivne')?.dataset.podlazie }));
-  ok('výber: filter 1. podlažie nechá 4 byty a zvýrazní podlažie', f2.mimo === 8 && f2.akt === '1', f2);
-  await p.click('.filter[data-filter="vsetky"]');
-  await p.focus('.bunka[data-id="A1"]'); await p.keyboard.press('ArrowRight'); await p.keyboard.press('ArrowUp');
+  await p.waitForTimeout(400);
+  const z0 = await p.evaluate(() => ({ on: document.querySelector('.fasada .byt.je-on')?.dataset.id, pressed: document.querySelector('.fasada .byt[data-id=A1]').getAttribute('aria-pressed'), panel: document.querySelector('.panel-byt').textContent, riadok: document.querySelector('.tabulka-bytov tr.je-on')?.dataset.id }));
+  ok('výber: predvolene je zvolený A1 (fasáda, panel, tabuľka)', z0.on === 'A1' && z0.pressed === 'true' && /A1/.test(z0.panel) && z0.riadok === 'A1', z0);
+  await p.click('.fasada .byt[data-id="E2"]'); await p.waitForTimeout(400);
+  const e2 = await p.evaluate(() => ({ on: document.querySelector('.fasada .byt.je-on')?.dataset.id, panel: document.querySelector('.panel-vnutro').innerText.replace(/\s+/g, ' ').slice(0, 160), obr: (document.querySelector('.panel-plan img').currentSrc || '').split('/').pop(), live: document.querySelector('.panel-live').textContent, detail: document.querySelector('.panel-detail').getAttribute('href'), zaujem: document.querySelector('.panel-zaujem').getAttribute('href'), riadok: document.querySelector('.tabulka-bytov tr.je-on')?.dataset.id }));
+  ok('výber: klik na E2 prepíše panel (cena, výrez pôdorysu, odkazy, stavový riadok, tabuľka)', e2.on === 'E2' && /Byt E2/.test(e2.panel) && /114/.test(e2.panel) && /byt-e2/.test(e2.obr) && /Byt E2/.test(e2.live) && /byt\/e2\.html$/.test(e2.detail) && /byt=E2$/.test(e2.zaujem) && e2.riadok === 'E2', e2);
+  await p.click('.filter [data-filter="t3"]'); await p.waitForTimeout(500);
+  const f = await p.evaluate(() => ({ off: document.querySelectorAll('.fasada .byt.je-off').length, riadky: document.querySelectorAll('.tabulka-bytov tr.je-off').length, pocet: document.querySelector('.filter-pocet').textContent, checked: document.querySelector('.filter [data-filter="t3"]').getAttribute('aria-checked'), on: document.querySelector('.fasada .byt.je-on')?.dataset.id, hash: location.hash, tab: [...document.querySelectorAll('.fasada .byt')].filter((b) => b.tabIndex === 0).length }));
+  ok('výber: filter Trojizbové stlmí 6 bytov, prepíše počet, presunie výber na B1, zapíše #trojizbove', f.off === 6 && f.riadky === 6 && /6 bytov/.test(f.pocet) && f.checked === 'true' && f.on === 'B1' && f.hash === '#trojizbove' && f.tab === 6, f);
+  await p.click('.filter [data-filter="vsetky"]'); await p.waitForTimeout(300);
+  const f2 = await p.evaluate(() => ({ off: document.querySelectorAll('.je-off').length, pocet: document.querySelector('.filter-pocet').textContent }));
+  ok('výber: filter Všetky vráti 12 bytov', f2.off === 0 && /12 bytov/.test(f2.pocet), f2);
+  await p.focus('.fasada .byt[data-id="A1"]'); await p.keyboard.press('ArrowRight'); await p.keyboard.press('ArrowUp');
   const k = await p.evaluate(() => document.activeElement.dataset.id);
   ok('výber: šípky na klávesnici idú A1 → B1 → F2', k === 'F2', { k });
-  await p.keyboard.press('Enter'); await p.waitForURL(/byt\/f2\.html/, { timeout: 5000 }).catch(() => {});
-  ok('výber: Enter otvorí detail bytu F2', /byt\/f2\.html/.test(p.url()), p.url());
+  await p.keyboard.press('Enter'); await p.waitForTimeout(400);
+  const en = await p.evaluate(() => ({ on: document.querySelector('.fasada .byt.je-on')?.dataset.id, panel: document.querySelector('.panel-byt').textContent, url: location.pathname }));
+  ok('výber: Enter zvolí F2 bez prechodu na inú stránku', en.on === 'F2' && /F2/.test(en.panel) && /byty\.html$/.test(en.url), en);
+  await p.click('.panel-detail'); await p.waitForURL(/byt\/f2\.html/, { timeout: 5000 }).catch(() => {});
+  ok('výber: Detail bytu F2 otvorí jeho stránku', /byt\/f2\.html/.test(p.url()), p.url());
   ok('výber: bez chýb', chyby.length === 0, chyby.slice(0, 3));
   await p.close();
   const { p: m, chyby: ch2 } = await stranka({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, 'byty.html');
-  await m.locator('.bunka[data-id="C1"]').scrollIntoViewIfNeeded(); await m.tap('.bunka[data-id="C1"]'); await m.waitForTimeout(300);
-  const t1 = await m.evaluate(() => { const o = document.querySelector('.vyber-detail-obsah'); return { url: location.pathname, hidden: o ? o.hidden : null, text: o ? o.innerText.slice(0, 40) : '' }; });
-  ok('výber na dotyku: prvé ťuknutie ukáže údaje bez prechodu', /byty\.html$/.test(t1.url) && !t1.hidden && /C1/.test(t1.text), t1);
-  await m.tap('.bunka[data-id="C1"]'); await m.waitForURL(/byt\/c1\.html/, { timeout: 5000 }).catch(() => {});
-  ok('výber na dotyku: druhé ťuknutie otvorí detail', /byt\/c1\.html/.test(m.url()), m.url());
+  await m.locator('.fasada .byt[data-id="C1"]').scrollIntoViewIfNeeded(); await m.tap('.fasada .byt[data-id="C1"]'); await m.waitForTimeout(600);
+  const t1 = await m.evaluate(() => ({ url: location.pathname, on: document.querySelector('.fasada .byt.je-on')?.dataset.id, panel: document.querySelector('.panel-byt').textContent, panelY: Math.round(document.querySelector('.panel').getBoundingClientRect().top) }));
+  ok('výber na dotyku: ťuknutie zvolí C1, panel sa posunie do okna', /byty\.html$/.test(t1.url) && t1.on === 'C1' && /C1/.test(t1.panel) && t1.panelY >= 0 && t1.panelY < 400, t1);
+  await m.tap('.panel-detail'); await m.waitForURL(/byt\/c1\.html/, { timeout: 5000 }).catch(() => {});
+  ok('výber na dotyku: Detail bytu otvorí stránku C1', /byt\/c1\.html/.test(m.url()), m.url());
   ok('výber na dotyku: bez chýb', ch2.length === 0, ch2.slice(0, 3));
   await m.close();
 }
 
-// 4. prezeranie obrázkov a pôdorys
+// 4. prezeranie obrázkov, pôdorys, pásy miestností
 {
   const { p, chyby } = await stranka({ viewport: { width: 1440, height: 900 } }, 'galeria.html');
-  await p.click('.galeria-polozka >> nth=1'); await p.waitForTimeout(400);
+  await p.click('.lupa >> nth=1'); await p.waitForTimeout(400);
   const o = await p.evaluate(() => { const d = document.querySelector('dialog.prezeranie'); const i = d.querySelector('img'); return { open: d.open, src: i.currentSrc.split('/').pop(), pocet: d.querySelector('.prezeranie-pocet').textContent, fokus: document.activeElement.className }; });
-  ok('prezeranie: otvorí druhý obrázok, počítadlo, fokus na zatvoriť', o.open && o.src && /2 \//.test(o.pocet) && /zavriet/.test(o.fokus), o);
-  await p.keyboard.press('ArrowRight'); await p.waitForTimeout(100);
-  const n = await p.evaluate(() => document.querySelector('.prezeranie-pocet').textContent);
-  ok('prezeranie: šípka doprava ide na tretí', /3 \//.test(n), n);
+  ok('prezeranie: otvorí druhý obrázok, počítadlo 2 / 6, fokus na zatvoriť', o.open && o.src && /2 \/ 6/.test(o.pocet) && /zavriet/.test(o.fokus), o);
+  await p.keyboard.press('ArrowRight'); await p.waitForTimeout(300);
+  const n = await p.evaluate(() => ({ pocet: document.querySelector('.prezeranie-pocet').textContent, src: document.querySelector('dialog.prezeranie img').currentSrc.split('/').pop() }));
+  ok('prezeranie: šípka doprava ide na tretí', /3 \/ 6/.test(n.pocet) && /exterier-03/.test(n.src), n);
   await p.keyboard.press('Escape'); await p.waitForTimeout(200);
   const z = await p.evaluate(() => ({ open: document.querySelector('dialog.prezeranie').open, fokus: document.activeElement.className }));
-  ok('prezeranie: Escape zavrie a vráti fokus na tlačidlo galérie', !z.open && /galeria-polozka/.test(z.fokus), z);
+  ok('prezeranie: Escape zavrie a vráti fokus na tlačidlo galérie', !z.open && /lupa/.test(z.fokus), z);
   ok('prezeranie: bez chýb', chyby.length === 0, chyby.slice(0, 3));
   await p.close();
   const { p: b, chyby: ch } = await stranka({ viewport: { width: 1440, height: 900 } }, 'byt/j3.html');
-  await b.click('.podorys-zvacsit'); await b.waitForTimeout(400);
+  await b.click('.lupa[data-galeria="podorys"]'); await b.waitForTimeout(400);
   const pd = await b.evaluate(() => { const d = document.querySelector('dialog.prezeranie'); return { open: d.open, src: d.querySelector('img').currentSrc.split('/').pop(), jeden: d.querySelector('.prezeranie-dal').hidden }; });
   ok('pôdorys J3: zväčšenie otvorí správny pôdorys bez šípok', pd.open && /podorys-j3/.test(pd.src) && pd.jeden, pd);
-  const pasy = await b.evaluate(() => [...document.querySelectorAll('.miestnosti-pasy li i')].length);
-  ok('byt J3: 9 pásov miestností', pasy === 9, pasy);
+  await b.keyboard.press('Escape');
+  const pasy = await b.evaluate(() => ({ n: document.querySelectorAll('.miestnosti-pasy li i').length, mini: document.querySelector('.fasada-mini .byt[aria-current]')?.dataset.id, akcie: !!document.querySelector('.byt-akcie a[href$="byt=J3"]') }));
+  ok('byt J3: 9 pásov miestností, mini fasáda zvýrazní J3, výzva s bytom J3', pasy.n === 9 && pasy.mini === 'J3' && pasy.akcie, pasy);
   ok('byt J3: bez chýb', ch.length === 0, ch.slice(0, 3));
   await b.close();
 }
 
-// 5. formulár: predvyplnenie z adresy, overenie, mailto
+// 5. formulár: predvyplnenie z adresy, overenie pod poľami, mailto
 {
   const { p, chyby } = await stranka({ viewport: { width: 1440, height: 900 } }, 'kontakt.html?byt=H2');
   const pre = await p.evaluate(() => ({ byt: document.querySelector('[name=byt]').value, sprava: document.querySelector('[name=sprava]').value }));
   ok('formulár: ?byt=H2 predvyplní byt aj správu', pre.byt === 'H2' && /H2/.test(pre.sprava), pre);
+  await p.fill('[name=sprava]', '');
   await p.click('#formular button[type=submit]'); await p.waitForTimeout(100);
-  const ch = await p.evaluate(() => ({ chyba: document.querySelectorAll('.pole[data-chyba]').length, pozn: document.querySelector('#formular-pozn').textContent, fokus: document.activeElement.name }));
-  ok('formulár: prázdne meno a e-mail sa označia, fokus na prvé', ch.chyba >= 2 && /Vyplňte/.test(ch.pozn) && ch.fokus === 'meno', ch);
-  await p.fill('[name=meno]', 'Test Testovič'); await p.fill('[name=email]', 'zle'); await p.click('#formular button[type=submit]'); await p.waitForTimeout(100);
-  const em = await p.evaluate(() => document.querySelector('.pole[data-chyba] input')?.name);
-  ok('formulár: neplatný e-mail sa označí', em === 'email', em);
-  let mailto = '';
-  await p.route('**/*', (r) => r.continue());
+  const ch = await p.evaluate(() => ({ chyba: document.querySelectorAll('.pole[data-chyba]').length, texty: [...document.querySelectorAll('.pole-chyba')].map((x) => x.textContent).filter(Boolean), pozn: document.querySelector('#formular-pozn').textContent, fokus: document.activeElement.name, aria: document.querySelector('[name=email]').getAttribute('aria-invalid') }));
+  ok('formulár: prázdne meno, e-mail a správa sa označia s textom pod poľom, fokus na prvé', ch.chyba === 3 && ch.texty.length === 3 && /Doplňte/.test(ch.pozn) && ch.fokus === 'meno' && ch.aria === 'true', ch);
+  await p.fill('[name=meno]', 'Test Testovič'); await p.fill('[name=email]', 'zle'); await p.fill('[name=sprava]', 'Dobrý deň'); await p.click('#formular button[type=submit]'); await p.waitForTimeout(100);
+  const em = await p.evaluate(() => ({ n: document.querySelectorAll('.pole[data-chyba]').length, pole: document.querySelector('.pole[data-chyba] input')?.name, text: document.querySelector('.pole[data-chyba] .pole-chyba')?.textContent }));
+  ok('formulár: neplatný e-mail sa označí s pokynom', em.n === 1 && em.pole === 'email' && /meno@domena/.test(em.text || ''), em);
   p.on('request', (r) => { if (r.url().startsWith('mailto:')) mailto = r.url(); });
+  let mailto = '';
   await p.fill('[name=email]', 'test@example.sk'); await p.click('#formular button[type=submit]'); await p.waitForTimeout(400);
-  const href = await p.evaluate(() => document.querySelector('#formular-pozn').textContent);
-  ok('formulár: po vyplnení pripraví e-mail', /Otvárame/.test(href), href);
+  const href = await p.evaluate(() => ({ pozn: document.querySelector('#formular-pozn').textContent, chyby: document.querySelectorAll('.pole[data-chyba]').length }));
+  ok('formulár: po vyplnení pripraví e-mail bez chýb', /Otvárame/.test(href.pozn) && href.chyby === 0, href);
   ok('formulár: bez chýb', chyby.filter((c) => !/mailto/.test(c)).length === 0, chyby.slice(0, 3));
   await p.close();
 }
 
-// 6. bez JavaScriptu a s obmedzeným pohybom: obsah je viditeľný
+// 6. cesta na Financovaní: čiara sa odvinie so skrolom, krokomer, bez JS a s obmedzeným pohybom je všetko viditeľné
 {
-  const p = await browser.newPage({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
-  await p.goto(BASE + 'index.html'); await p.waitForTimeout(300);
-  const r = await p.evaluate(() => ({ h1: getComputedStyle(document.querySelector('.uvod-nadpis .riadok > span')).opacity, odhal: getComputedStyle(document.querySelector('[data-odhal]')).opacity, bunka: getComputedStyle(document.querySelector('.bunka')).opacity }));
-  ok('bez JS: nadpis, odhaľované prvky aj byty sú viditeľné', +r.h1 === 1 && +r.odhal === 1 && +r.bunka === 1, r);
+  const { p, chyby } = await stranka({ viewport: { width: 1440, height: 900 } }, 'financovanie.html');
+  await p.waitForTimeout(300);
+  const c0 = await p.evaluate(() => ({ p: getComputedStyle(document.querySelector('.cesta-ciara i')).getPropertyValue('--p').trim(), on: document.querySelectorAll('.krok.je-on').length }));
+  await p.evaluate(() => scrollTo(0, document.documentElement.scrollHeight)); await p.waitForTimeout(500);
+  const c1 = await p.evaluate(() => ({ p: getComputedStyle(document.querySelector('.cesta-ciara i')).getPropertyValue('--p').trim(), on: document.querySelectorAll('.krok.je-on').length, krokomer: document.querySelector('.krokomer-cislo').textContent, akt: document.querySelector('.krok.je-aktualny')?.dataset.krok }));
+  ok('cesta: hore je čiara krátka, dole celá, 4 uzly zapnuté, krokomer 4', +c0.p < 0.9 && +c1.p >= 0.99 && c1.on === 4 && c1.krokomer === '4' && c1.akt === '4', { c0, c1 });
+  ok('cesta: bez chýb', chyby.length === 0, chyby.slice(0, 3));
   await p.close();
+  const n = await browser.newPage({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
+  await n.goto(BASE + 'index.html'); await n.waitForTimeout(300);
+  const r = await n.evaluate(() => ({ h1: getComputedStyle(document.querySelector('.titul h1 .riadok > span')).opacity, id: getComputedStyle(document.querySelector('.fasada .byt-id')).opacity, ciara: getComputedStyle(document.querySelector('.podlazie::after') || document.querySelector('.podlazie'), '::after').transform, menu: getComputedStyle(document.querySelector('.menu')).visibility, panel: document.querySelector('.panel-byt').textContent, kota: getComputedStyle(document.querySelector('.kota-znacka')).opacity }));
+  ok('bez JS: nadpis, fasáda, kóta aj menu sú viditeľné, panel ukazuje A1', +r.h1 === 1 && +r.id === 1 && r.ciara === 'none' && r.menu === 'visible' && /A1/.test(r.panel) && +r.kota === 1, r);
+  await n.close();
   const q = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   await q.goto(BASE + 'index.html'); await q.waitForTimeout(300);
-  const r2 = await q.evaluate(() => ({ odhal: [...document.querySelectorAll('[data-odhal]')].every((e) => getComputedStyle(e).opacity === '1'), h1: getComputedStyle(document.querySelector('.uvod-nadpis .riadok > span')).opacity }));
-  ok('obmedzený pohyb: všetko viditeľné hneď', r2.odhal && +r2.h1 === 1, r2);
+  const r2 = await q.evaluate(() => ({ id: [...document.querySelectorAll('.fasada .byt-id')].every((e) => getComputedStyle(e).opacity === '1'), h1: getComputedStyle(document.querySelector('.titul h1 .riadok > span')).opacity, peciatka: getComputedStyle(document.querySelector('.peciatka')).opacity }));
+  ok('obmedzený pohyb: všetko viditeľné hneď', r2.id && +r2.h1 === 1 && +r2.peciatka === 1, r2);
   await q.close();
 }
 
-// 7. klávesnica: Tab prejde lištou a prvým tlačidlom úvodu s viditeľným fokusom
+// 7. úvodná sekvencia dobehne a klávesnica: Tab prejde lištou s viditeľným fokusom
 {
   const { p } = await stranka({ viewport: { width: 1440, height: 900 } }, 'index.html');
+  await p.waitForTimeout(1600);
+  const u = await p.evaluate(() => ({ podtitul: getComputedStyle(document.querySelector('.titul-podtitul')).opacity, peciatka: getComputedStyle(document.querySelector('.peciatka')).opacity, kota: getComputedStyle(document.querySelectorAll('.kota-titul .kota-znacka')[4]).opacity, foto: getComputedStyle(document.querySelector('.titul-foto img')).transform }));
+  ok('úvod: po 1,6 s je podtitul, kóta aj pečiatka viditeľná a fotka usadená', +u.podtitul === 1 && +u.peciatka === 1 && +u.kota === 1 && (u.foto === 'none' || /matrix\(1, 0, 0, 1, 0, 0\)/.test(u.foto)), u);
   const z = [];
   for (let i = 0; i < 9; i++) { await p.keyboard.press('Tab'); z.push(await p.evaluate(() => { const a = document.activeElement; const cs = getComputedStyle(a); return (a.textContent.trim().slice(0, 18) || a.className) + (cs.outlineStyle !== 'none' || cs.boxShadow !== 'none' ? '' : ' (bez fokusu)'); })); }
-  ok('klávesnica: poradie Tab a viditeľný fokus', z.every((t) => !/bez fokusu/.test(t)) && /Preskočiť/.test(z[0]), z);
+  ok('klávesnica: poradie Tab a viditeľný fokus', z.every((t) => !/bez fokusu/.test(t)) && /Preskočiť/.test(z[0]) && /Visionary/.test(z[1]) && /Úvod/.test(z[2]), z);
   await p.close();
 }
 

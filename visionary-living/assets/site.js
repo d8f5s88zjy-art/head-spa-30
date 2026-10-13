@@ -1,27 +1,21 @@
-// VISIONARY LIVING – správanie stránky. Bez knižníc. Všetko, čo sa hýbe, mení len transform a opacity;
-// pri prefers-reduced-motion sa obsah ukáže hneď a nič sa nehýbe.
+// VISIONARY LIVING – správanie stránky. Bez knižníc. Čo sa hýbe, mení len transform a opacity;
+// pri prefers-reduced-motion sa výkresy ukážu hneď nakreslené a nič sa nehýbe.
 const d = document, html = d.documentElement;
 const $ = (s, r = d) => r.querySelector(s);
 const $$ = (s, r = d) => [...r.querySelectorAll(s)];
-const pohyb = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-const mys = matchMedia('(hover: hover) and (pointer: fine)').matches;
-const NBSP = ' ';
+const pohyb = !matchMedia('(prefers-reduced-motion: reduce)').matches && !(navigator.connection && navigator.connection.saveData);
+const NBSP = ' ';
 const cena = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, NBSP) + NBSP + '€';
-const plocha = (x) => x.toFixed(2).replace('.', ',') + NBSP + 'm²';
+const plocha = (x) => Number(x).toFixed(2).replace('.', ',') + NBSP + 'm²';
 
-// 1. úvodná sekvencia: jediná animácia, ktorá beží sama (nadpis, text, tlačidlá, fakty)
-requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod-start')));
-
-// 2. lišta: po posunutí dostane pozadie; menu na telefóne
-(function hlavicka() {
-  const h = $('.hlavicka'); if (!h) return;
-  const posun = () => h.classList.toggle('je-posunuta', scrollY > 8);
-  addEventListener('scroll', posun, { passive: true }); posun();
+// 1. lišta: menu na telefóne
+(function lista() {
+  const h = $('.lista'); if (!h) return;
   const btn = $('.menu-prepinac', h), nav = $('#menu', h);
   const nastav = (on) => {
     h.dataset.menu = on ? 'otvorene' : 'zatvorene';
     btn.setAttribute('aria-expanded', String(on));
-    $('.visually-hidden', btn).textContent = on ? 'Zavrieť menu' : 'Menu';
+    $('.menu-prepinac-text', btn).textContent = on ? 'Zavrieť' : 'Menu';
     d.body.classList.toggle('menu-otvorene', on);
   };
   btn.addEventListener('click', () => nastav(btn.getAttribute('aria-expanded') !== 'true'));
@@ -30,111 +24,122 @@ requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod
   matchMedia('(min-width: 901px)').addEventListener('change', (e) => e.matches && nastav(false));
 })();
 
-// 3. odhaľovanie pri skrole: prvok s data-odhal dostane triedu je-in, keď vojde do okna (raz)
-(function odhal() {
-  const els = $$('[data-odhal]');
+// 2. výkresy sa kreslia raz, keď prídu do okna (fasáda, kóty, časová os, cesta, pásy miestností)
+(function kresli() {
+  const els = $$('[data-kresli]');
   if (!els.length) return;
-  if (!pohyb || !('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('je-in')); return; }
-  const io = new IntersectionObserver((zs, o) => zs.forEach((z) => { if (z.isIntersecting) { z.target.classList.add('je-in'); o.unobserve(z.target); } }), { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+  if (!pohyb || !('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('je-nakreslene')); return; }
+  const io = new IntersectionObserver((zs, o) => zs.forEach((z) => { if (z.isIntersecting) { z.target.classList.add('je-nakreslene'); o.unobserve(z.target); } }),
+    { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
   els.forEach((el) => io.observe(el));
 })();
 
-// 4. počítadlá: číslo nabehne od nuly, keď je na obrazovke
-(function pocitadla() {
-  const els = $$('[data-pocitadlo]');
-  if (!els.length || !pohyb) return;
-  const io = new IntersectionObserver((zs, o) => zs.forEach((z) => {
-    if (!z.isIntersecting) return; o.unobserve(z.target);
-    const el = z.target, ciel = +el.dataset.pocitadlo, t0 = performance.now(), T = 900;
-    const krok = (t) => { const p = Math.min(1, (t - t0) / T), k = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(ciel * k); if (p < 1) requestAnimationFrame(krok); };
-    requestAnimationFrame(krok);
-  }), { threshold: 0.6 });
-  els.forEach((el) => io.observe(el));
-})();
-
-// 5. úvodný obraz: pomalý posun pri skrole (len počítač a myš; na telefóne obraz stojí)
-(function uvodParallax() {
-  const obraz = $('.uvod-obraz'), sekcia = $('.uvod');
-  if (!obraz || !sekcia || !pohyb || !mys) return;
-  let raf = 0;
-  const krok = () => { raf = 0; const h = sekcia.offsetHeight, y = Math.min(scrollY, h); obraz.style.transform = `translate3d(0, ${(y * 0.28).toFixed(1)}px, 0)`; };
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(krok); }, { passive: true });
-})();
-
-// 6. výber bytu: schéma bytovky, filter, panel s údajmi
+// 3. výber bytu: fasáda z tlačidiel, filter typov, panel zvoleného bytu, tabuľka
 (function vyber() {
   const sekcia = $('.vyber'); if (!sekcia) return;
   const data = JSON.parse($('#byty-data').textContent);
-  const bunky = $$('.bunka', sekcia), karty = $$('.byt-karta', sekcia), filtre = $$('.filter', sekcia);
-  const panel = $('.vyber-detail-obsah', sekcia), tip = $('.vyber-detail-tip', sekcia), stav = $('.vyber-stav', sekcia);
-  let vybrany = null;
+  const bunky = $$('.fasada .byt', sekcia), riadky = $$('.tabulka-bytov tbody tr', sekcia), filtre = $$('.filter [role=radio]', sekcia);
+  const panel = $('.panel', sekcia), live = $('.panel-live', sekcia), pocet = $('.filter-pocet', sekcia);
+  const uzky = () => matchMedia('(max-width: 1023px)').matches;
+  let vybrany = null, filter = 'vsetky', casovac = 0;
 
-  const ukaz = (id) => {
-    const b = data[id]; if (!b) return;
-    vybrany = id;
-    bunky.forEach((c) => c.classList.toggle('je-vybrana', c.dataset.id === id));
-    karty.forEach((k) => k.classList.toggle('je-vybrana', k.dataset.id === id));
-    const miest = b.miestnosti.map((m) => `<li><span>${m[0]}</span><span>${plocha(m[1])}</span></li>`).join('');
-    panel.innerHTML = `<p class="vyber-detail-kicker">${b.podlazie}. podlažie · ${b.stav}</p><h3>Byt ${id}<span>${b.nazov}</span></h3>` +
-      `<p class="vyber-detail-cena">${cena(b.cena)}<small>${plocha(b.plocha)} vrátane loggie</small></p>` +
-      `<ul class="miestnosti miestnosti-male">${miest}</ul><a class="tlacidlo tlacidlo-maly" href="${b.url}">Pôdorys a detail bytu ${id}</a>`;
-    panel.hidden = false; tip.hidden = true;
-    sekcia.classList.add('ma-vyber');
-    // čítačke stačí krátky stav; celý panel nie je živá oblasť
-    if (stav) stav.textContent = `Byt ${id}, ${b.nazov.toLowerCase()}, ${b.podlazie}. podlažie, ${cena(b.cena)}, ${b.stav}`;
+  const prepis = (id) => {
+    const b = data[id];
+    $('.panel-byt', panel).textContent = `Byt ${id}`; $('.panel-byt', panel).href = b.url;
+    const stav = $('.stav', panel); stav.textContent = b.stav; stav.className = `stav stav-${b.stav === 'voľný' ? 'volny' : 'iny'}`;
+    $('.panel-typ', panel).textContent = `${b.nazov}, ${b.podlazie}. podlažie`;
+    $('.panel-cena strong', panel).textContent = cena(b.cena);
+    $('.panel-cena span', panel).textContent = `${plocha(b.plocha)} vrátane loggie`;
+    const src = $('.panel-plan source', panel), img = $('.panel-plan img', panel);
+    if (src && img && b.obr) { src.srcset = b.obr.avif; img.srcset = b.obr.webp; img.src = b.obr.src; img.width = b.obr.w; img.height = b.obr.h; img.alt = `Výrez z pôdorysu podlažia, byt ${id} vyznačený`; const fc = $('.panel-plan figcaption', panel); if (fc) fc.textContent = img.alt + '.'; }
+    $('.panel-miestnosti', panel).innerHTML = b.miestnosti.map((m) => `<li><span>${m[0]}</span><span>${plocha(m[1])}</span></li>`).join('');
+    $('.panel-spolu span:last-child', panel).textContent = `${plocha(b.plocha)} vrátane loggie`;
+    const det = $('.panel-detail', panel); det.textContent = `Detail bytu ${id}`; det.href = b.url;
+    $('.panel-zaujem', panel).href = $('.panel-zaujem', panel).href.replace(/byt=\w+/, `byt=${id}`);
   };
-  // druh vstupu podľa poslednej udalosti (nie podľa media query, tá na hybridoch a v emulácii klame):
-  // myš ukazuje pri prejdení, klávesnica pri fokuse, dotyk prvým ťuknutím (druhé otvorí detail)
-  let dotyk = false;
-  sekcia.addEventListener('pointerdown', (e) => { dotyk = e.pointerType === 'touch'; }, true);
-  sekcia.addEventListener('keydown', () => { dotyk = false; }, true);
-  bunky.forEach((c) => {
-    c.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') ukaz(c.dataset.id); });
-    c.addEventListener('focus', () => { if (!dotyk) ukaz(c.dataset.id); });
-    c.addEventListener('click', (e) => {
-      if (!dotyk || vybrany === c.dataset.id) return;
-      e.preventDefault(); ukaz(c.dataset.id);
-      panel.scrollIntoView({ block: 'nearest', behavior: pohyb ? 'smooth' : 'auto' });
+  const vyberByt = (id, oznam = true) => {
+    if (!data[id] || id === vybrany) return;
+    vybrany = id;
+    bunky.forEach((c) => { const on = c.dataset.id === id; c.classList.toggle('je-on', on); c.setAttribute('aria-pressed', String(on)); });
+    riadky.forEach((r) => r.classList.toggle('je-on', r.dataset.id === id));
+    clearTimeout(casovac);
+    if (pohyb) { panel.classList.add('je-prepis'); casovac = setTimeout(() => { prepis(id); panel.classList.remove('je-prepis'); }, 140); }
+    else prepis(id);
+    const b = data[id];
+    if (oznam) live.textContent = `Byt ${id}, ${b.nazov.toLowerCase()}, ${b.podlazie}. podlažie, ${b.stav}, ${cena(b.cena)}, ${plocha(b.plocha)}`;
+  };
+  const sedi = (el) => filter === 'vsetky' || el.dataset.typ === filter[1];
+  const filtruj = (f, zHash = false) => {
+    filter = f;
+    filtre.forEach((b) => { const on = b.dataset.filter === f; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+    let n = 0;
+    bunky.forEach((c) => { const ok = sedi(c); c.classList.toggle('je-off', !ok); c.tabIndex = ok ? 0 : -1; if (ok) n++; if (ok && pohyb && !zHash) { c.classList.add('je-pulz'); c.addEventListener('animationend', () => c.classList.remove('je-pulz'), { once: true }); } });
+    riadky.forEach((r) => r.classList.toggle('je-off', !sedi(r)));
+    pocet.textContent = n === 12 ? '12 bytov' : n === 1 ? '1 byt' : n < 5 ? `${n} byty` : `${n} bytov`;
+    if (vybrany && !sedi(bunky.find((c) => c.dataset.id === vybrany))) { const prvy = Object.keys(data).find((id) => f === 'vsetky' || data[id].typ === f[1]); vyberByt(prvy); }
+    const hash = { t2: '#dvojizbove', t3: '#trojizbove' }[f] || '';
+    if (!zHash && history.replaceState) history.replaceState(null, '', location.pathname + location.search + (hash || '#byty'));
+  };
+  filtre.forEach((b) => {
+    b.addEventListener('click', () => filtruj(b.dataset.filter));
+    b.addEventListener('keydown', (e) => {                        // radiogroup: šípky prepínajú
+      const i = filtre.indexOf(b), j = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? i - 1 : -1;
+      if (j < 0 || j >= filtre.length) return; e.preventDefault(); filtre[j].focus(); filtruj(filtre[j].dataset.filter);
     });
   });
-  karty.forEach((k) => {
-    k.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') ukaz(k.dataset.id); });
-    $('a', k).addEventListener('focus', () => { if (!dotyk) ukaz(k.dataset.id); });
+  bunky.forEach((c) => {
+    c.addEventListener('click', () => {
+      const prve = c.dataset.id !== vybrany; vyberByt(c.dataset.id);
+      if (uzky() && prve) panel.scrollIntoView({ block: 'start', behavior: pohyb ? 'smooth' : 'auto' });
+    });
+    c.addEventListener('keydown', (e) => {                        // šípky: ← → po podlaží, ↑ ↓ v stĺpci, Home/End
+      const p = c.parentElement, vRade = $$('.byt', p).filter((x) => !x.classList.contains('je-off')), i = vRade.indexOf(c);
+      let ciel = null;
+      if (e.key === 'ArrowRight') ciel = vRade[i + 1]; else if (e.key === 'ArrowLeft') ciel = vRade[i - 1];
+      else if (e.key === 'Home') ciel = vRade[0]; else if (e.key === 'End') ciel = vRade[vRade.length - 1];
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        const stlpec = [...p.children].indexOf(c), sused = e.key === 'ArrowUp' ? p.previousElementSibling : p.nextElementSibling;
+        if (sused && sused.classList.contains('podlazie')) { const k = sused.children[stlpec]; if (k && !k.classList.contains('je-off')) ciel = k; }
+      }
+      if (ciel) { e.preventDefault(); ciel.focus(); }
+    });
   });
+  if (matchMedia('(hover: hover)').matches) riadky.forEach((r) => r.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') vyberByt(r.dataset.id, false); }));
+  const zHash = { '#dvojizbove': 't2', '#trojizbove': 't3' }[location.hash];
+  filtruj(zHash || 'vsetky', true);
+  const prvy = Object.keys(data).find((id) => filter === 'vsetky' || data[id].typ === filter[1]);
+  vyberByt(prvy, false);
+})();
 
-  const filtruj = (f) => {
-    filtre.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
-    let n = 0;
-    const sedi = (el) => f === 'vsetky' || (f[0] === 'p' && el.dataset.podlazie === f[1]) || (f[0] === 't' && el.dataset.typ === f[1]);
-    bunky.forEach((c) => { const ok = sedi(c); c.classList.toggle('je-mimo', !ok); c.tabIndex = ok ? 0 : -1; if (ok) n++; });
-    karty.forEach((k) => { k.hidden = !sedi(k); });
-    $$('.podlazie', sekcia).forEach((p) => p.classList.toggle('je-aktivne', f[0] === 'p' && p.dataset.podlazie === f[1]));
-    sekcia.dataset.filter = f;
-    const ziv = $('.vyber-pocet', sekcia) || sekcia.querySelector('.vyber-filtre').appendChild(Object.assign(d.createElement('p'), { className: 'vyber-pocet', role: 'status' }));
-    ziv.textContent = n === 12 ? `${n} bytov` : n === 1 ? '1 byt' : n < 5 ? `${n} byty` : `${n} bytov`;
+// 4. cesta na stránke Financovanie: čiara sa odvíja so skrolom (jediný skrolom riadený prvok webu)
+(function cesta() {
+  const c = $('.cesta-plna'); if (!c) return;
+  const kroky = $$('.krok', c), ciara = $('.cesta-ciara', c), i = $('.cesta-ciara i', c), km = $('.krokomer', c);
+  const hotovo = () => { i.style.setProperty('--p', '1'); kroky.forEach((k) => k.classList.add('je-on')); };
+  if (!pohyb) { hotovo(); return; }
+  let top = 0, vyska = 1, uzly = [], p = -1, akt = -1, raf = 0;
+  const measure = () => {
+    const r = ciara.getBoundingClientRect(); top = r.top + scrollY; vyska = Math.max(1, r.height);
+    uzly = kroky.map((k) => $('.krok-uzol', k).getBoundingClientRect().top + scrollY + 7 - top);
+    krok();
   };
-  filtre.forEach((b) => b.addEventListener('click', () => filtruj(b.dataset.filter)));
-  filtruj('vsetky');
-  // panel nikdy nie je prázdny: predvolene prvý byt (bez hlásenia čítačke)
-  const prvy = bunky.find((c) => c.dataset.id === 'A1') || bunky[0];
-  if (prvy) { ukaz(prvy.dataset.id); if (stav) stav.textContent = ''; }
-  // klávesnica v schéme: šípky medzi bytmi
-  bunky.forEach((c, i) => c.addEventListener('keydown', (e) => {
-    const map = { ArrowRight: i + 1, ArrowLeft: i - 1, ArrowDown: i + 4, ArrowUp: i - 4 };
-    if (!(e.key in map)) return; const j = map[e.key]; if (bunky[j] && !bunky[j].classList.contains('je-mimo')) { e.preventDefault(); bunky[j].focus(); }
-  }));
+  const krok = () => {
+    raf = 0;
+    const y = scrollY + innerHeight * 0.62;
+    const np = Math.min(1, Math.max(0, (y - top) / vyska));
+    if (Math.abs(np - p) > 0.002) { p = np; i.style.setProperty('--p', p.toFixed(3)); }
+    let a = -1;
+    kroky.forEach((k, j) => { const on = p * vyska >= uzly[j] - 1; k.classList.toggle('je-on', on); if (on) a = j; });
+    if (a !== akt) { akt = a; const j = Math.max(0, a); kroky.forEach((k, x) => k.classList.toggle('je-aktualny', x === j));
+      if (km) { $('.krokomer-cislo', km).textContent = j + 1; $('.krokomer-nazov', km).textContent = kroky[j].dataset.nazov || ''; $('.krokomer-z', km).textContent = `krok ${j + 1} z${NBSP}${kroky.length}`; } }
+  };
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(krok); }, { passive: true });
+  let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(measure, 150); });
+  if (d.fonts && d.fonts.ready) d.fonts.ready.then(measure);
+  addEventListener('load', measure); measure();
 })();
 
-// 7. pásy miestností (detail bytu, karty typov): šírka podľa podielu plochy
-(function pasy() {
-  const zoznamy = $$('[data-miestnosti]');
-  if (!zoznamy.length) return;
-  if (!pohyb) { zoznamy.forEach((z) => z.classList.add('je-in')); return; }
-  const io = new IntersectionObserver((zs, o) => zs.forEach((z) => { if (z.isIntersecting) { z.target.classList.add('je-in'); o.unobserve(z.target); } }), { threshold: 0.3 });
-  zoznamy.forEach((z) => io.observe(z));
-})();
-
-// 8. prezeranie obrázkov (galéria, pôdorys): dialóg so šípkami, klávesnicou a návratom fokusu
+// 5. prezeranie obrázkov (galéria, pôdorys): natívny dialóg so šípkami, klávesnicou, potiahnutím a návratom fokusu
 (function prezeranie() {
   const tlacidla = $$('[data-galeria]'); if (!tlacidla.length) return;
   const dlg = d.createElement('dialog'); dlg.className = 'prezeranie'; dlg.setAttribute('aria-label', 'Zväčšený obrázok');
@@ -146,52 +151,50 @@ requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod
   d.body.append(dlg);
   const img = $('img', dlg), cap = $('figcaption', dlg), pocet = $('.prezeranie-pocet', dlg), pred = $('.prezeranie-pred', dlg), dal = $('.prezeranie-dal', dlg);
   let skupina = [], i = 0, otvaral = null;
-  const ukaz = (n) => {
+  const popis = (b) => (b.getAttribute('aria-label') || '').replace(/^Zväčšiť: /, '');
+  const ukaz = (n, prvy = false) => {
     i = (n + skupina.length) % skupina.length; const b = skupina[i];
-    img.src = b.dataset.src; img.width = +b.dataset.w; img.height = +b.dataset.h;
-    const alt = ($('img', b) || {}).alt || b.getAttribute('aria-label').replace(/^Zväčšiť: /, '');
-    img.alt = alt; cap.textContent = alt;
+    const nastav = () => { img.src = b.dataset.src; img.width = +b.dataset.w; img.height = +b.dataset.h; img.alt = popis(b); cap.textContent = img.alt; img.classList.remove('je-vymena'); };
+    if (prvy || !pohyb) nastav(); else { img.classList.add('je-vymena'); setTimeout(nastav, 140); }
     const jeden = skupina.length < 2; pred.hidden = dal.hidden = jeden;
     pocet.textContent = jeden ? '' : `${i + 1} / ${skupina.length}`;
-    if (!jeden) { const dalsi = skupina[(i + 1) % skupina.length]; new Image().src = dalsi.dataset.src; }
+    if (!jeden) { new Image().src = skupina[(i + 1) % skupina.length].dataset.src; }
   };
-  const otvor = (b) => {
-    otvaral = b; skupina = tlacidla.filter((x) => x.dataset.galeria === b.dataset.galeria);
-    ukaz(skupina.indexOf(b)); dlg.showModal(); $('.prezeranie-zavriet', dlg).focus();
-  };
-  const zavri = () => { dlg.close(); };
+  const otvor = (b) => { otvaral = b; skupina = tlacidla.filter((x) => x.dataset.galeria === b.dataset.galeria); ukaz(skupina.indexOf(b), true); dlg.showModal(); $('.prezeranie-zavriet', dlg).focus(); };
   dlg.addEventListener('close', () => { img.removeAttribute('src'); otvaral && otvaral.focus(); });
   tlacidla.forEach((b) => b.addEventListener('click', () => otvor(b)));
   pred.addEventListener('click', () => ukaz(i - 1)); dal.addEventListener('click', () => ukaz(i + 1));
-  $('.prezeranie-zavriet', dlg).addEventListener('click', zavri);
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) zavri(); });
+  $('.prezeranie-zavriet', dlg).addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') ukaz(i + 1); if (e.key === 'ArrowLeft') ukaz(i - 1); });
-  // potiahnutie prstom
   let x0 = null;
   dlg.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
   dlg.addEventListener('pointerup', (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 50 && skupina.length > 1) ukaz(dx < 0 ? i + 1 : i - 1); });
 })();
 
-// 9. formulár: predvyplní byt z adresy (?byt=A1), overí polia a pripraví e-mail
+// 6. formulár: predvyplní byt z adresy (?byt=A1), overí polia (chyba pod poľom) a pripraví e-mail
 (function formular() {
   const f = $('#formular'); if (!f) return;
-  const byt = new URLSearchParams(location.search).get('byt');
+  const byt = (new URLSearchParams(location.search).get('byt') || '').toUpperCase();
   const sel = f.elements.byt;
-  if (byt && sel && [...sel.options].some((o) => o.value === byt.toUpperCase())) {
-    sel.value = byt.toUpperCase();
-    if (!f.elements.sprava.value) f.elements.sprava.value = `Mám záujem o byt ${byt.toUpperCase()}. `;
-  }
+  if (byt && sel && [...sel.options].some((o) => o.value === byt)) { sel.value = byt; if (!f.elements.sprava.value) f.elements.sprava.value = `Mám záujem o byt ${byt}. `; }
+  const SPRAVY = { meno: 'Zadajte meno a priezvisko.', email: 'Zadajte e-mail v tvare meno@domena.sk.', sprava: 'Napíšte správu, na ktorú máme odpovedať.' };
+  const chyba = (el, text) => {
+    const pole = el.closest('.pole'), p = $('.pole-chyba', pole);
+    if (text) { pole.setAttribute('data-chyba', ''); p.textContent = text; el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', p.id); }
+    else { pole.removeAttribute('data-chyba'); p.textContent = ''; el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); }
+  };
+  const over = (el) => { const zle = !el.value.trim() || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)); chyba(el, zle ? SPRAVY[el.name] : ''); return !zle; };
   const pozn = $('#formular-pozn');
   f.addEventListener('submit', (e) => {
     e.preventDefault();
-    $$('.pole', f).forEach((p) => p.removeAttribute('data-chyba'));
-    const zle = $$('[required]', f).filter((el) => !el.value.trim() || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)));
-    if (zle.length) { zle.forEach((el) => el.closest('.pole').setAttribute('data-chyba', '')); pozn.textContent = 'Vyplňte, prosím, meno, platný e-mail a správu.'; zle[0].focus(); return; }
+    const zle = $$('[required]', f).filter((el) => !over(el));
+    if (zle.length) { pozn.textContent = 'Doplňte, prosím, označené polia.'; zle[0].focus(); return; }
     const v = Object.fromEntries(new FormData(f));
     const predmet = v.byt ? `Záujem o byt ${v.byt} – Visionary Living` : 'Dopyt – Visionary Living';
     const telo = `Meno: ${v.meno}\nTelefón: ${v.telefon || ''}\nE-mail: ${v.email}\nByt: ${v.byt || 'zatiaľ neviem'}\n\n${v.sprava}\n`;
     pozn.textContent = 'Otvárame váš e-mailový program s pripravenou správou.';
     location.href = `mailto:${f.getAttribute('action').replace('mailto:', '')}?subject=${encodeURIComponent(predmet)}&body=${encodeURIComponent(telo)}`;
   });
-  f.addEventListener('input', (e) => { const p = e.target.closest('.pole'); if (p && e.target.value.trim()) p.removeAttribute('data-chyba'); });
+  f.addEventListener('input', (e) => { if (e.target.closest('.pole') && e.target.closest('.pole').hasAttribute('data-chyba')) over(e.target); });
 })();
