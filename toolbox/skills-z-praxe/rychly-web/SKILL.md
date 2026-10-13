@@ -210,6 +210,11 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | Čas z `requestAnimationFrame` je menší ako `performance.now()` z predošlého volania | krok orezať `clamp(dt, 0, 0.05)`, inak záporný krok rozkmitá tlmenie |
 | Otáčajúci sa štvorcový prvok (kruh textu) zväčší šírku stránky na telefóne | sekcia s `overflow-x: clip` |
 | Cormorant Garamond (Google Fonts): mäkčene nad š, č, ň príliš vysoko | pred výberom písma vykresliť „š ň č ť ľ ž ď Ľ Č“; dobré: Gilda Display, EB Garamond, Spectral |
+| Snímka celej stránky (Playwright `fullPage`) ukázala prázdne lenivé fotky a nenakreslené výkresy (IntersectionObserver), hoci v prehliadači fungujú; skript stránku „prešiel“ cez `scrollTo(0, y)`, ale `html{scroll-behavior:smooth}` ho menil na plynulý skrol, ktorý nikde nezostal | pred snímkou prejsť stránku `scrollTo({top, behavior:'instant'})` po krokoch s pauzou, počkať na `document.images` `complete` a na prechody; rovnako v teste obrázkov (VISIONARY LIVING, 10/2026) |
+| Variabilné písmo s tromi osami (Bricolage Grotesque, latin 128 kB) v prvom okne | `fontTools.varLib.instancer` (osi zafixovať alebo orezať) + `subset` na unicode-range podmnožiny: 700/opsz 96/wdth 92 → 20 kB, 500/opsz 12/wdth 87,5 → 20 kB; po orezaní font uložiť a znovu načítať, inak `subset` padne na `gvar` (`KeyError 'uni200B'`); skript `visionary-living/source/pisma.py` |
+| Popis podlažia `<span>3.<em> podlažie</em></span>` (časť skrytá na mobile) sa vykreslil kurzívou | `em`/`i` použité ako „vrstva“ majú predvolenú kurzívu: `font-style:normal`, alebo použiť `span` |
+| `grid-row` len na prvom popise v stĺpci mriežky; ďalšie popisy auto-umiestnenie dalo do prvého voľného riadku (nad prvý) | explicitný `grid-row` pre každý prvok, ktorý má sedieť vedľa riadkov iného gridu |
+| Lighthouse telefón 96 prístupnosť: odkazy v pätke za `<br>` pod sebou majú ciele pod 24 px | `display:inline-block;padding:5px 0` (ciele 24 px a odstup) |
 | Skript v hlavičke pre jazyk (+106 B) posunul HTML cez prvé okno TCP (prenos 14 616 B), LCP na telefóne 2,6 → 3,1 s | dlhé komentáre z hlavičky presunúť do README, záložné odkrytie po 2,5 s do CSS animácie; HTML 14 160 B, LCP opäť 2,6 s (BARBERSHOP 30, jazyky, 10/2026) |
 
 ## V tomto repozitári

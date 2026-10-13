@@ -37,6 +37,10 @@ jobs:
         run: |
           mkdir -p _site/zentury
           cp -r zentury/index.html zentury/assets _site/zentury/
+      - name: Pripraviť návrh webu VISIONARY LIVING (podpriečinok /visionary-living/)
+        run: |
+          mkdir -p _site/visionary-living
+          cp -r visionary-living/*.html visionary-living/byt visionary-living/assets visionary-living/robots.txt visionary-living/sitemap.xml _site/visionary-living/
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)

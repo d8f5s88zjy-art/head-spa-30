@@ -1,0 +1,538 @@
+/* VISIONARY LIVING – štýl webu. Reč: projektová dokumentácia (plotrový papier s mriežkou, tušové linky, kóty, pečiatka).
+   Pohyb: pero plotra – len transform a opacity, krivka cubic-bezier(.2,0,0,1), 140/320/560 ms; pri obmedzenom pohybe nič. */
+@font-face{font-family:'Nadpisy';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/nadpisy-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Nadpisy';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/nadpisy-700-latinext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Nadpisy';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/nadpisy-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Nadpisy';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/nadpisy-500-latinext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Text';font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/text-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Text';font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/text-latinext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --papier:#F5F6F3;--tus:#1C2328;--grafit:#5A6168;--okr:#B9891F;--okr-t:#7F5C12;--les:#2C4A33;--mach:#7E9A63;--beton:#E3E5E0;--okr-vypln:#EFE3C4;
+  --linka:rgba(28,35,40,.06);--vlas:rgba(28,35,40,.16);--ram:1.5px solid var(--tus);
+  --ease:cubic-bezier(.2,0,0,1);--ease-out:cubic-bezier(.3,0,1,1);--d-fast:140ms;--d-base:320ms;--d-slow:560ms;
+  --vonk:clamp(12px,2vw,24px);--okraj:clamp(16px,3vw,40px);--sekcia:clamp(40px,5vw,64px);
+  --t-h1:clamp(40px,5.4vw,72px);--t-h2:clamp(32px,3.6vw,48px);--t-h3:clamp(22px,2vw,28px);--t-num:clamp(28px,2.6vw,36px);
+  --t-lead:clamp(18px,1.5vw,20px);--t-small:clamp(14px,1.1vw,15px);--t-kota:clamp(13px,1vw,14px);
+  --r-strecha:22px;--r-byt:clamp(56px,7vw,84px);--r-teren:14px;
+  --nadpisy:'Nadpisy','Instrument Sans',system-ui,sans-serif;--text:'Text','Instrument Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;font:400 17px/1.6 var(--text);color:var(--tus);background-color:var(--papier);
+  background-image:linear-gradient(var(--linka) 1px,transparent 1px),linear-gradient(90deg,var(--linka) 1px,transparent 1px);background-size:48px 48px;overflow-x:clip}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{font-family:var(--nadpisy);font-weight:700;line-height:1.05;letter-spacing:-.01em;margin:0 0 .5em;overflow-wrap:anywhere}
+h1{font-size:var(--t-h1);line-height:1;letter-spacing:-.02em}
+h2{font-size:var(--t-h2)}
+h3{font-size:var(--t-h3);line-height:1.15}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+a{color:var(--les)}
+button{font:inherit}
+strong{font-weight:600}
+.kota-text,.list-nazov,.fasada-popisy,.fasada-kota,dt{font-family:var(--nadpisy);font-weight:500;font-size:var(--t-kota);line-height:1.2;color:var(--grafit)}
+:focus-visible{outline:2px solid var(--okr);outline-offset:2px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.preskocit{position:absolute;left:16px;top:-60px;z-index:50;padding:10px 16px;background:var(--tus);color:#fff;text-decoration:none}
+.preskocit:focus{top:12px}
+.cislo,.panel-cena strong,.byt-cisla dd,.koty-obce strong,.kota-zoznam strong,.krok-suma,.krokomer-cislo,.kontakt-velky a,.peciatka dd strong{font-variant-numeric:tabular-nums}
+
+/* tlačidlá a odkazy */
+.tlacidlo{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;font:600 16px/1.1 var(--text);text-decoration:none;color:#fff;background:var(--les);border:1.5px solid var(--les);cursor:pointer;text-align:center;transition:transform var(--d-fast) var(--ease),opacity var(--d-fast) var(--ease)}
+.tlacidlo svg{width:18px;height:18px;flex:none}
+.tlacidlo:active{transform:scale(.98)}
+.tlacidlo-obrys{background:transparent;color:var(--tus);border-color:var(--tus)}
+.tlacidlo-obrys::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--beton);opacity:0;transition:opacity var(--d-fast) var(--ease)}
+.tlacidlo:disabled{background:var(--beton);border-color:var(--beton);color:var(--grafit);cursor:default}
+.odkaz{font-weight:600;color:var(--les);text-decoration-thickness:1px;text-underline-offset:4px}
+.akcie{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 0}
+.sekcia-odkaz{margin:28px 0 0}
+@media (hover:hover){
+  .tlacidlo:hover{transform:translateY(-1px);opacity:.92}
+  .tlacidlo-obrys:hover{opacity:1}
+  .tlacidlo-obrys:hover::before{opacity:1}
+  .odkaz:hover{text-decoration-thickness:2px}
+}
+
+/* lišta */
+.lista{position:sticky;top:0;z-index:20;background:rgba(245,246,243,.98);border-bottom:var(--ram)}
+.lista-vnutro{display:flex;align-items:center;gap:24px;height:64px;padding:0 var(--okraj);max-width:1360px;margin:0 auto}
+.znacka{display:inline-flex;align-items:center;gap:7px;color:var(--tus);text-decoration:none;font:600 15px/1 var(--nadpisy);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.znacka-roh{width:9px;height:15px;border:1.5px solid var(--tus);border-right:0}
+.znacka-roh-p{border-right:1.5px solid var(--tus);border-left:0}
+.menu{display:flex;align-items:center;gap:28px;margin-left:auto}
+.menu ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.menu a{position:relative;display:inline-block;padding:6px 0;font:500 15px/1.2 var(--text);color:var(--tus);text-decoration:none}
+.menu ul a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--okr);transform:scaleX(0);transform-origin:left;transition:transform var(--d-fast) var(--ease)}
+.menu ul a[aria-current]::after{transform:scaleX(1)}
+.menu-kontakt{display:none}
+.lista-telefon{min-height:40px;padding:0 14px;font-size:15px}
+.menu-prepinac{display:none;align-items:center;gap:10px;min-height:44px;min-width:44px;padding:0 12px;background:none;border:1.5px solid var(--tus);color:var(--tus);font:600 15px/1 var(--text);cursor:pointer}
+.menu-ciary{position:relative;width:18px;height:12px}
+.menu-ciary::before,.menu-ciary::after{content:"";position:absolute;left:0;right:0;height:1.5px;background:currentColor;transition:transform var(--d-base) var(--ease)}
+.menu-ciary::before{top:0}
+.menu-ciary::after{bottom:0}
+[data-menu=otvorene] .menu-ciary::before{transform:translateY(5.25px) rotate(45deg)}
+[data-menu=otvorene] .menu-ciary::after{transform:translateY(-5.25px) rotate(-45deg)}
+@media (hover:hover){.menu ul a:hover::after{transform:scaleX(1)}}
+@media (max-width:900px){
+  .lista-vnutro{gap:12px}
+  .menu{position:absolute;top:64px;left:0;right:0;z-index:19;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:8px var(--okraj) 20px;background:var(--papier);border-bottom:var(--ram);box-shadow:0 12px 32px rgba(28,35,40,.18);transform:translateY(-8px);opacity:0;visibility:hidden;transition:transform var(--d-base) var(--ease),opacity var(--d-base) var(--ease),visibility 0s var(--d-base)}
+  [data-menu=otvorene] .menu{transform:none;opacity:1;visibility:visible;transition-delay:0s}
+  .no-js .menu{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px}
+  .no-js .lista-vnutro{flex-wrap:wrap;height:auto;padding-top:12px}
+  .menu ul{flex-direction:column;gap:0}
+  .menu ul a{display:block;padding:14px 0;font-size:17px;border-bottom:1px solid var(--vlas)}
+  .menu ul a::after{bottom:-1px}
+  .menu-kontakt{display:flex;flex-direction:column;gap:4px;padding-top:14px}
+  .menu-kontakt a{font-weight:600}
+  .menu-prepinac{display:inline-flex;margin-left:auto}
+  .no-js .menu-prepinac{display:none}
+  .lista-telefon{margin-left:auto}
+  .menu-prepinac{margin-left:0}
+}
+@media (max-width:460px){
+  .lista-telefon-text{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .lista-telefon{padding:0 11px;min-width:44px}
+  .menu-prepinac-text{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+
+/* rám listu */
+.list{position:relative;width:min(1360px,100% - 2*var(--vonk));margin:var(--vonk) auto 0;border:var(--ram);padding:0 var(--okraj)}
+.list-nazov{position:absolute;top:-1.5px;left:-1.5px;margin:0;padding:6px 12px;border:var(--ram);border-top:0;border-left:0;background:var(--papier)}
+.list>section{padding:var(--sekcia) 0}
+.list>*+*:not(.list-nazov){border-top:1px solid var(--tus)}
+.list>.list-nazov+*{border-top:0}
+.list>.foto-sirka{margin:0;padding:clamp(24px,3vw,40px) 0}
+.list>.poznamka,.list>.akcie-zaver{padding:clamp(24px,3vw,40px) 0;margin:0}
+.poznamka{font-size:var(--t-small);color:var(--grafit);max-width:40rem}
+.sekcia-hlava{max-width:40rem;margin-bottom:28px}
+.sekcia-hlava p{font-size:var(--t-lead);line-height:1.5}
+.list>section>h2::after,.sekcia-hlava h2::after,.situacia-text h2::after,.list-hlava h1::after{content:"";display:block;width:64px;height:3px;background:var(--okr);margin-top:14px}
+.list-hlava h1{margin-bottom:24px}
+.list-perex{font-size:var(--t-lead);line-height:1.5;max-width:36rem}
+.body{list-style:none;margin:28px 0 0;padding:0;max-width:36rem}
+.body li{padding:10px 0;border-top:1px solid var(--tus)}
+.list-spat{margin:0 0 20px}
+.list-spat a{display:inline-flex;align-items:center;gap:10px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit);text-decoration:none}
+.list-spat a::before{content:"";width:24px;height:1.5px;background:currentColor}
+.standard p{max-width:36rem}
+
+/* fotografie v rohových značkách */
+.foto{margin:0;position:relative}
+.foto picture{display:block;position:relative}
+.foto picture::before{content:"";position:absolute;inset:-9px;pointer-events:none;transition:transform var(--d-fast) var(--ease);
+  background:
+    linear-gradient(var(--tus),var(--tus)) top left/10px 1.5px no-repeat,linear-gradient(var(--tus),var(--tus)) top left/1.5px 10px no-repeat,
+    linear-gradient(var(--tus),var(--tus)) top right/10px 1.5px no-repeat,linear-gradient(var(--tus),var(--tus)) top right/1.5px 10px no-repeat,
+    linear-gradient(var(--tus),var(--tus)) bottom left/10px 1.5px no-repeat,linear-gradient(var(--tus),var(--tus)) bottom left/1.5px 10px no-repeat,
+    linear-gradient(var(--tus),var(--tus)) bottom right/10px 1.5px no-repeat,linear-gradient(var(--tus),var(--tus)) bottom right/1.5px 10px no-repeat}
+.foto img{width:100%}
+.foto figcaption{margin-top:12px;font-size:var(--t-small);color:var(--grafit)}
+.lupa{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;color:inherit;text-align:left}
+@media (hover:hover){.lupa:hover picture::before{transform:scale(1.02)}}
+
+/* titulný list */
+.titul{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,6fr);gap:40px 56px;align-items:start;padding-top:clamp(44px,6vw,80px)!important}
+.titul h1 .riadok{display:block}
+.titul-podtitul{font-size:var(--t-lead);line-height:1.5;max-width:30rem;margin:24px 0 0}
+.titul .akcie{margin-top:32px}
+.titul-obraz{display:grid;gap:28px}
+.peciatka{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);margin:16px 0 0;border:var(--ram)}
+.peciatka>div{padding:14px 16px 16px;border-left:1px solid var(--tus)}
+.peciatka>div:first-child{border-left:0}
+.peciatka>div:nth-child(n+5){border-top:1px solid var(--tus)}
+.peciatka>div:nth-child(5){border-left:0}
+.peciatka dd{margin:4px 0 0}
+.peciatka dd strong{display:block;font:700 clamp(18px,1.6vw,22px)/1.15 var(--nadpisy);letter-spacing:-.01em}
+.peciatka dd span{display:block;font-size:var(--t-small);color:var(--grafit);margin-top:2px}
+
+/* kóta vzdialeností */
+.kota-svg{display:block;width:100%;height:auto;font:500 14px var(--nadpisy)}
+.kota-os{stroke:var(--tus);stroke-width:1.5}
+.kota-znacka line{stroke:var(--tus);stroke-width:1}
+.kota-znacka text{fill:var(--grafit)}
+.kota-zoznam{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.kota-zoznam li{display:flex;align-items:baseline;gap:12px;padding-left:14px;border-left:1.5px solid var(--tus)}
+.kota-zoznam strong{font:700 28px/1 var(--nadpisy)}
+@media (min-width:640px){.kota-zoznam{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (max-width:639px){.kota-svg{display:none}}
+
+/* výber bytu */
+.filter{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:0 0 28px}
+.filter button{min-height:48px;padding:9px 16px;border:1.5px solid var(--tus);background:none;color:var(--tus);font:600 15px/1.2 var(--text);text-align:left;cursor:pointer;transition:transform var(--d-fast) var(--ease)}
+.filter button span{display:block;margin-top:3px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit)}
+.filter button[aria-checked=true]{background:var(--les);border-color:var(--les);color:#fff}
+.filter button[aria-checked=true] span{color:rgba(255,255,255,.82)}
+.filter button:active{transform:scale(.98)}
+.filter-pocet{margin:0 0 0 auto;align-self:center;font:500 var(--t-small)/1.2 var(--text);color:var(--grafit)}
+.vyber-telo{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:48px;align-items:start}
+.fasada{position:relative;max-width:640px;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"popisy kresba" ". kota" "popis popis";gap:0 12px}
+.fasada-mini{max-width:520px}
+.fasada-obrys{grid-area:kresba;position:relative;z-index:0;transform:translate(16px,-16px);border:1px dashed var(--grafit);opacity:.6;pointer-events:none}
+.fasada-popisy{grid-area:popisy;display:grid;grid-template-rows:var(--r-strecha) repeat(3,var(--r-byt)) var(--r-teren);align-items:center;justify-items:end;padding-right:4px;white-space:nowrap}
+.fasada-popisy em{font-style:normal}
+.fasada-popisy span:nth-child(1){grid-row:2}
+.fasada-popisy span:nth-child(2){grid-row:3}
+.fasada-popisy span:nth-child(3){grid-row:4}
+.fasada-kresba{grid-area:kresba;position:relative;z-index:1;display:grid;grid-template-rows:var(--r-strecha) repeat(3,var(--r-byt)) var(--r-teren)}
+.strecha{position:relative;background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(28,35,40,.22) 5px 6px)}
+.strecha::after,.podlazie::after,.teren::before{content:"";position:absolute;left:0;right:0;height:2px;background:var(--tus);transform-origin:left}
+.strecha::after{bottom:0}
+.podlazie{position:relative;display:grid;grid-template-columns:196fr 304fr 304fr 196fr}
+.podlazie::after{bottom:0}
+.teren{position:relative;background:rgba(126,154,99,.35)}
+.teren::before{top:0;height:2px}
+.teren::after{content:"";position:absolute;left:-4%;right:-4%;top:2px;height:8px;background:repeating-linear-gradient(135deg,transparent 0 4px,rgba(28,35,40,.3) 4px 5px)}
+.byt{position:relative;display:block;min-height:0;min-width:0;margin:0;padding:0;border:0;background:none;color:var(--tus);font:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:opacity var(--d-base) var(--ease)}
+.byt::before{content:"";position:absolute;inset:0 0 2px;background:var(--okr);opacity:0;transition:opacity var(--d-fast) var(--ease)}
+.byt::after{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--tus);transform-origin:top}
+.byt:first-child::after{display:none}
+.byt:nth-child(3)::after{width:3px}
+.byt-id{position:absolute;left:8%;bottom:11%;font:700 clamp(14px,1.5vw,18px)/1 var(--nadpisy);letter-spacing:-.01em;transition:opacity var(--d-base) var(--ease)}
+.okna{position:absolute;left:10%;right:10%;top:16%;height:36%;display:flex;gap:7%;transition:opacity var(--d-base) var(--ease)}
+.okna i{position:relative;flex:1;border:1px solid var(--tus)}
+.okna .loggia{flex:1.5;border-bottom-width:3px}
+.okna .okno::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--tus)}
+.okna i::before{content:"";position:absolute;inset:0;background:var(--okr);opacity:0;transition:opacity var(--d-fast) var(--ease)}
+.byt:focus-visible::before,.byt.je-on::before{opacity:.34;transition-duration:var(--d-base)}
+.byt:focus-visible .okna i::before,.byt.je-on .okna i::before{opacity:.75}
+.byt.je-off{opacity:.18;pointer-events:none}
+.byt.je-pulz .byt-id{animation:pulz var(--d-base) var(--ease)}
+.podlazie.je-aktivne~.x{}
+.vchod{position:absolute;left:50%;bottom:0;width:5.5%;height:46%;transform:translateX(-50%);border:1px solid var(--tus);border-bottom:0;background:var(--papier)}
+.fasada-kota{grid-area:kota;display:grid;grid-template-columns:196fr 304fr 304fr 196fr;margin-top:10px;text-align:center}
+.fasada-kota span{position:relative;padding-top:12px}
+.fasada-kota span::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--grafit)}
+.fasada-kota span::after{content:"";position:absolute;left:0;top:-4px;width:1px;height:9px;background:var(--grafit)}
+.fasada-kota span:last-child{border-right:1px solid var(--grafit)}
+.fasada-popis{grid-area:popis;margin:14px 0 0;font-size:var(--t-small);color:var(--grafit)}
+@media (hover:hover){
+  .byt:hover::before{opacity:.16}
+  .byt:hover .okna i::before{opacity:.55}
+  .byt.je-on:hover::before{opacity:.34}
+}
+/* panel zvoleného bytu */
+.panel{border:var(--ram);background:var(--papier)}
+.panel-vnutro{padding:20px 22px 24px;transition:opacity var(--d-fast) var(--ease)}
+.panel.je-prepis .panel-vnutro{opacity:.4}
+.panel-hlava{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0}
+.panel-byt{font:700 var(--t-h3)/1.1 var(--nadpisy);color:var(--tus);text-decoration:none}
+.stav{display:inline-flex;align-items:center;gap:8px;font:600 14px/1.2 var(--text);color:var(--les);white-space:nowrap}
+.stav::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--les);flex:none}
+.stav-iny{color:var(--grafit)}
+.stav-iny::before{background:var(--grafit)}
+.stav small{font-weight:500;color:var(--grafit)}
+.panel-typ{margin:4px 0 0;color:var(--grafit)}
+.panel-cena{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:14px 0 0;padding:12px 0;border-top:var(--ram);border-bottom:var(--ram)}
+.panel-cena strong{font:700 var(--t-num)/1 var(--nadpisy);letter-spacing:-.01em}
+.panel-cena span{font-size:var(--t-small);color:var(--grafit)}
+.panel-plan{margin:22px 0 0}
+.panel-plan figcaption{margin-top:14px;font-size:var(--t-kota)}
+.panel-miestnosti{list-style:none;counter-reset:m;margin:18px 0 0;padding:0;font-size:var(--t-small)}
+.panel-miestnosti li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--vlas)}
+.panel-miestnosti li::before{counter-increment:m;content:counter(m);width:18px;flex:none;font:500 var(--t-kota)/1.6 var(--nadpisy);color:var(--grafit)}
+.panel-miestnosti li span:first-of-type{flex:1}
+.panel-miestnosti li span:last-of-type{font-weight:600;white-space:nowrap}
+.panel-spolu{display:flex;justify-content:space-between;gap:12px;margin:10px 0 0;font-weight:600;font-size:var(--t-small)}
+.panel-akcie{display:grid;gap:8px;margin-top:20px}
+.panel-akcie .tlacidlo{width:100%}
+/* tabuľka bytov */
+.tabulka-obal{margin-top:40px}
+.tabulka-bytov{width:100%;border-collapse:collapse;font-size:var(--t-small)}
+.tabulka-bytov th,.tabulka-bytov td{padding:11px 12px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--vlas)}
+.tabulka-bytov thead th{font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit);border-bottom:1px solid var(--tus)}
+.tabulka-bytov tbody th{font:700 16px/1.2 var(--nadpisy)}
+.tabulka-bytov tbody tr:nth-child(even){background:rgba(227,229,224,.55)}
+.tabulka-bytov tbody tr.je-on{background:var(--okr-vypln)}
+.tabulka-bytov tbody tr.je-off{opacity:.35}
+.tabulka-bytov tbody tr{transition:opacity var(--d-base) var(--ease)}
+.tabulka-detail{text-align:right}
+.tabulka-detail a{font-weight:600;white-space:nowrap}
+@media (hover:hover){.tabulka-bytov tbody tr:hover:not(.je-on){background:var(--beton)}}
+@media (max-width:699px){
+  .tabulka-bytov thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tabulka-bytov tr{display:block;padding:12px 0;border-bottom:1px solid var(--tus)}
+  .tabulka-bytov tbody tr:nth-child(even){background:none}
+  .tabulka-bytov th,.tabulka-bytov td{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border:0}
+  .tabulka-bytov [data-label]::before{content:attr(data-label);font:500 var(--t-kota)/1.6 var(--nadpisy);color:var(--grafit)}
+  .tabulka-bytov tbody th{font-size:18px}
+  .tabulka-detail{justify-content:flex-start}
+  .tabulka-bytov tbody tr.je-on{padding-left:12px;padding-right:12px}
+}
+
+/* situácia, piliere */
+.situacia-mriezka{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px 56px;align-items:center;margin-bottom:clamp(32px,4vw,48px)}
+.situacia-text p{max-width:36rem}
+.koty-obce{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;list-style:none;margin:28px 0 20px;padding:16px 0 0;border-top:var(--ram)}
+.koty-obce strong{display:block;font:700 var(--t-num)/1 var(--nadpisy);letter-spacing:-.01em}
+.koty-obce span{display:block;margin-top:6px;font-size:var(--t-small);color:var(--grafit)}
+.situacia-vzdialenosti{font-size:var(--t-small);color:var(--grafit)}
+.piliere-uvod{font-size:var(--t-lead);line-height:1.5;max-width:36rem}
+.piliere-zoznam{display:grid;grid-template-columns:repeat(3,1fr);list-style:none;margin:32px 0;padding:0}
+.piliere-zoznam li{padding:4px 28px 4px 24px;border-left:1px solid var(--tus)}
+.piliere-zoznam li:first-child{padding-left:0;border-left:0}
+.piliere-zoznam p{color:var(--grafit)}
+.piliere-zaver{color:var(--grafit);max-width:36rem}
+
+/* cesta kúpy */
+.cesta-telo{position:relative}
+.kroky{position:relative;list-style:none;margin:0;padding:0}
+.krok{position:relative}
+.krok-uzol{position:absolute;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--tus);background:var(--papier);transition:opacity var(--d-base) var(--ease)}
+.krok h2,.krok h3{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.krok-cislo{font:700 var(--t-num)/1 var(--nadpisy);color:var(--okr-t);flex:none}
+.krok-suma{margin:2px 0 8px;font:700 var(--t-h3)/1.1 var(--nadpisy)}
+.krok p:last-child{color:var(--grafit);max-width:34rem}
+.cesta-ciara{position:absolute;background:var(--vlas)}
+.cesta-ciara i{position:absolute;inset:0;display:block;background:var(--tus)}
+.cesta-kratka .kroky{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding-top:36px}
+.cesta-kratka .cesta-ciara{left:0;right:0;top:0;height:1.5px}
+.cesta-kratka .cesta-ciara i{transform-origin:left}
+.cesta-kratka .krok-uzol{top:-7px;left:0}
+.cesta-kratka .krok{padding-right:16px}
+.cesta-zvisla .kroky,.cesta-plna .kroky{padding-left:44px}
+.cesta-zvisla .krok,.cesta-plna .krok{padding-bottom:36px}
+.cesta-zvisla .krok:last-child,.cesta-plna .krok:last-child{padding-bottom:0}
+.cesta-zvisla .cesta-ciara,.cesta-plna .cesta-ciara{left:6px;top:8px;bottom:8px;width:1.5px}
+.cesta-zvisla .cesta-ciara i,.cesta-plna .cesta-ciara i{transform-origin:top}
+.cesta-plna .cesta-ciara i{background:var(--les);transform:scaleY(var(--p,0));will-change:transform}
+.cesta-zvisla .krok-uzol,.cesta-plna .krok-uzol{left:0;top:6px}
+.cesta-zvisla .krok-cislo,.cesta-plna .krok-cislo{font-size:var(--t-h3)}
+.cesta-plna .krok.je-on .krok-uzol{background:var(--mach);border-color:var(--mach)}
+.cesta-plna .krok.je-aktualny .krok-uzol{box-shadow:0 0 0 3px var(--papier),0 0 0 5px var(--okr)}
+.cesta-plna .cesta-telo{display:grid;grid-template-columns:minmax(200px,1fr) minmax(0,2fr);gap:48px;align-items:start}
+.cesta-plna .krok h3{font-size:var(--t-h3)}
+.krokomer{position:sticky;top:96px}
+.krokomer p{margin:0;padding:20px 0 0;border-top:var(--ram)}
+.krokomer-cislo{display:block;font:700 clamp(40px,4vw,56px)/1 var(--nadpisy);color:var(--okr-t)}
+.krokomer-nazov{display:block;margin-top:8px;font:600 var(--t-lead)/1.3 var(--text)}
+.krokomer-z{display:block;margin-top:4px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit)}
+.no-js .cesta-plna .cesta-ciara i{--p:1}
+.no-js .cesta-plna .krok .krok-uzol{background:var(--mach);border-color:var(--mach)}
+
+/* kontakt v skratke, pätka */
+.kontakt-blok h2{margin-bottom:20px}
+.kontakt-velky{display:grid;gap:8px;margin:0 0 20px}
+.kontakt-velky a{font:700 var(--t-num)/1.15 var(--nadpisy);letter-spacing:-.01em;color:var(--tus);text-decoration:none;overflow-wrap:anywhere;width:fit-content}
+.kontakt-text{max-width:36rem}
+.kontakt-blok .akcie{margin-top:20px}
+@media (hover:hover){.kontakt-velky a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}}
+.paticka{width:min(1360px,100% - 2*var(--vonk));margin:var(--vonk) auto 0;padding:32px 0 40px;border-top:var(--ram)}
+.paticka-mriezka{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;font-size:var(--t-small)}
+.paticka p{margin:0}
+.paticka-znacka{font:600 15px/1.4 var(--nadpisy);letter-spacing:.08em;text-transform:uppercase}
+.paticka-nadpis{font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit);margin-bottom:6px!important}
+.paticka a{display:inline-block;padding:5px 0;color:var(--tus);text-decoration-thickness:1px;text-underline-offset:3px}
+.paticka p:not(.paticka-nadpis){line-height:1.5}
+.paticka-stav{margin:28px 0 0;font-size:var(--t-small);color:var(--grafit)}
+
+/* O projekte */
+.charakteristika-mriezka{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px 56px}
+.charakteristika h2{font-size:var(--t-h3);margin-bottom:16px}
+.charakteristika p{max-width:36rem}
+.tabulka-udaje{width:100%;border-collapse:collapse;font-size:var(--t-small)}
+.tabulka-udaje th,.tabulka-udaje td{padding:10px 0;text-align:left;vertical-align:top;border-top:1px solid var(--vlas)}
+.tabulka-udaje th{width:30%;padding-right:16px;font:500 var(--t-kota)/1.6 var(--nadpisy);color:var(--grafit)}
+.vyhody-zoznam{display:grid;grid-template-columns:repeat(4,1fr);gap:32px 28px;list-style:none;margin:28px 0 0;padding:0}
+.vyhody-zoznam h3{font-size:20px;margin:14px 0 6px}
+.vyhody-zoznam p{font-size:var(--t-small);color:var(--grafit)}
+.schema{display:block;width:48px;height:48px;color:var(--tus)}
+.schema svg{width:48px;height:48px}
+.casova-os{position:relative;display:grid;grid-template-columns:1fr 1fr;list-style:none;margin:36px 0 0;padding:28px 0 0;max-width:640px}
+.casova-os::before{content:"";position:absolute;left:0;right:0;top:0;height:1.5px;background:var(--tus);transform-origin:left}
+.casova-os li{position:relative;padding-right:16px;transition:opacity var(--d-base) var(--ease)}
+.casova-os li:last-child{text-align:right;padding-right:0}
+.os-znacka{position:absolute;top:-28px;left:0;width:1.5px;height:16px;background:var(--tus)}
+.casova-os li:last-child .os-znacka{left:auto;right:0}
+.casova-os strong{display:block;font:700 var(--t-num)/1 var(--nadpisy)}
+.casova-os span:not(.os-znacka){display:block;margin-top:6px;font-size:var(--t-small);color:var(--grafit)}
+.lokalita-mriezka{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px 56px;align-items:start;margin-bottom:40px}
+.lokalita-text p{max-width:36rem}
+.lokalita-bok{position:sticky;top:96px}
+.susedia{margin-top:20px;font-size:var(--t-small);color:var(--grafit)}
+.legenda{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;margin:0}
+.legenda>div{padding:14px 0;border-top:1px solid var(--vlas)}
+.legenda dt{font:600 17px/1.4 var(--text);color:var(--tus)}
+.legenda dd{margin:4px 0 0;font-size:var(--t-small);color:var(--grafit)}
+
+/* galéria a dialóg zväčšenia */
+.galeria-mriezka{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));grid-auto-flow:dense;align-items:start;gap:36px 28px;list-style:none;margin:28px 0 0;padding:0}
+.galeria-polozka.na-vysku{grid-row:span 2}
+.galeria-skupina h2{font-size:var(--t-h3)}
+.prezeranie{border:0;padding:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;background:transparent;color:var(--papier)}
+.prezeranie::backdrop{background:rgba(28,35,40,.92)}
+.prezeranie[open]{animation:dialog-in var(--d-base) var(--ease)}
+.prezeranie-obsah{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:72px 80px 64px}
+.prezeranie-obsah img{max-width:100%;max-height:calc(100dvh - 136px);width:auto;height:auto;object-fit:contain;transition:opacity var(--d-fast) var(--ease)}
+.prezeranie-obsah img.je-vymena{opacity:0}
+.prezeranie-obsah figcaption{position:absolute;left:24px;right:24px;bottom:22px;text-align:center;font-size:var(--t-small)}
+.prezeranie-tl{position:absolute;display:grid;place-items:center;width:48px;height:48px;border:1.5px solid var(--papier);background:rgba(28,35,40,.55);color:var(--papier);cursor:pointer}
+.prezeranie-tl svg{width:24px;height:24px}
+.prezeranie-pred{left:16px;top:50%;transform:translateY(-50%)}
+.prezeranie-dal{right:16px;top:50%;transform:translateY(-50%)}
+.prezeranie-zavriet{right:16px;top:16px}
+.prezeranie-pocet{position:absolute;left:24px;top:28px;margin:0;font:500 var(--t-kota)/1.2 var(--nadpisy)}
+.prezeranie:focus-visible{outline:0}
+@media (max-width:699px){.prezeranie-obsah{padding:72px 12px 56px}.prezeranie-pred{left:8px}.prezeranie-dal{right:8px}.prezeranie-zavriet{right:8px;top:12px}}
+
+/* kontakt a formulár */
+.kontakt-mriezka{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px 64px;align-items:start}
+.tabulka-dl{margin:28px 0 0}
+.tabulka-dl>div{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--vlas);font-size:var(--t-small)}
+.tabulka-dl dd{margin:0}
+.formular-nadpis{font-size:var(--t-h3);margin-bottom:20px}
+.polia{display:grid;grid-template-columns:1fr 1fr;gap:22px 24px}
+.pole-sirka{grid-column:1/-1}
+.pole label{display:block;margin-bottom:6px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit)}
+.pole input,.pole select,.pole textarea{display:block;width:100%;padding:10px 0;font:inherit;color:var(--tus);background:transparent;border:0;border-bottom:1.5px solid var(--tus);border-radius:0}
+.pole select{appearance:none;padding-right:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='%231C2328' stroke-width='1.5'/%3E%3C/svg%3E") right center/16px no-repeat}
+.pole textarea{resize:vertical;min-height:120px}
+.pole[data-chyba] input,.pole[data-chyba] textarea,.pole[data-chyba] select{border-bottom:2px solid var(--okr-t)}
+.pole-chyba{margin:6px 0 0;font-size:var(--t-small);color:var(--tus)}
+.pole-chyba:empty{display:none}
+.formular-spodok{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:28px}
+.formular-pozn{margin:0;font-size:var(--t-small);color:var(--grafit);max-width:34rem}
+
+/* detail bytu */
+.byt-hlava-mriezka{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end}
+.byt-hlava h1{margin-bottom:8px}
+.byt-typ{font-size:var(--t-lead);margin:0 0 10px}
+.byt-cisla{display:flex;gap:40px;margin:0}
+.byt-cisla dd{margin:6px 0 0;font:700 var(--t-num)/1 var(--nadpisy);letter-spacing:-.01em}
+.byt-cisla small{display:block;margin-top:6px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit)}
+.byt-miestnosti-mriezka{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:40px 56px;align-items:start}
+.byt-plan{margin:0}
+.miestnosti-pasy{list-style:none;counter-reset:m;margin:8px 0 0;padding:0}
+.miestnosti-pasy li{display:grid;grid-template-columns:22px minmax(0,1.1fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--vlas);font-size:var(--t-small)}
+.miestnosti-pasy li::before{counter-increment:m;content:counter(m);font:500 var(--t-kota)/1.6 var(--nadpisy);color:var(--grafit)}
+.miestnost-pas{position:relative;height:10px;background:var(--beton)}
+.miestnost-pas i{position:absolute;inset:0;width:calc(var(--podiel)*100%);background:var(--okr);opacity:.65;transform-origin:left;transition:transform var(--d-slow) var(--ease) calc(var(--i,0)*60ms)}
+.miestnost-plocha{font-weight:600;white-space:nowrap}
+.miestnosti-spolu{display:flex;justify-content:space-between;gap:12px;margin:12px 0 0;font-weight:600;font-size:var(--t-small)}
+.byt-galeria>p{max-width:36rem}
+.susedia-nav{display:flex;justify-content:space-between;gap:16px;margin:0 0 28px}
+.susedia-odkaz{color:var(--tus);text-decoration:none;font:700 var(--t-h3)/1.1 var(--nadpisy)}
+.susedia-odkaz span{display:block;margin-bottom:4px;font:500 var(--t-kota)/1.2 var(--nadpisy);color:var(--grafit)}
+.susedia-vsetky{align-self:center;font:600 15px/1.2 var(--text);text-decoration:underline;text-underline-offset:4px}
+.susedia-dalsi{text-align:right}
+.byt-akcie{display:flex;flex-wrap:wrap;gap:12px;padding:20px 0;margin:0;background:var(--papier)}
+.byt-akcie .tlacidlo{flex:1 1 220px}
+@media (max-width:899px){.byt-akcie{position:sticky;bottom:0;z-index:5;padding:12px 0;border-top:var(--ram)!important}.byt-akcie .tlacidlo{min-height:44px;flex-basis:140px}}
+
+/* právne texty */
+.pravny-text{max-width:40rem}
+.pravny-text h2{font-size:var(--t-h3);margin:1.6em 0 .5em}
+.pravny-text ul{padding-left:1.2em}
+
+/* rozloženie na užších oknách */
+@media (max-width:1023px){
+  .vyber-telo{grid-template-columns:1fr;gap:32px}
+  .fasada{max-width:none}
+  .panel{position:static}
+  .lokalita-bok{position:static}
+  .cesta-plna .cesta-telo{grid-template-columns:1fr;gap:24px}
+  .krokomer{position:static}
+  .krokomer p{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-top:14px}
+}
+@media (max-width:899px){
+  .titul{grid-template-columns:1fr;gap:32px}
+  .titul .akcie{margin-top:28px}
+  .situacia-mriezka,.charakteristika-mriezka,.lokalita-mriezka,.kontakt-mriezka,.byt-miestnosti-mriezka{grid-template-columns:1fr}
+  .byt-hlava-mriezka{grid-template-columns:1fr;align-items:start}
+  .vyhody-zoznam{grid-template-columns:1fr 1fr}
+  .peciatka{grid-template-columns:1fr 1fr}
+  .peciatka>div:nth-child(n+3){border-top:1px solid var(--tus)}
+  .peciatka>div:nth-child(odd){border-left:0}
+  .peciatka>div:nth-child(even){border-left:1px solid var(--tus)}
+  .legenda{grid-template-columns:1fr}
+  .paticka-mriezka{grid-template-columns:1fr 1fr}
+}
+@media (max-width:719px){
+  body{background-size:32px 32px;background-image:linear-gradient(rgba(28,35,40,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(28,35,40,.04) 1px,transparent 1px)}
+  .piliere-zoznam{grid-template-columns:1fr;gap:0}
+  .piliere-zoznam li{padding:16px 0;border-left:0;border-top:1px solid var(--tus)}
+  .piliere-zoznam li:first-child{border-top:0;padding-top:0}
+  .cesta-kratka .kroky{grid-template-columns:1fr;gap:0;padding:0 0 0 36px}
+  .cesta-kratka .krok{padding:0 0 28px}
+  .cesta-kratka .krok:last-child{padding-bottom:0}
+  .cesta-kratka .cesta-ciara{left:6px;top:8px;bottom:8px;right:auto;width:1.5px;height:auto}
+  .cesta-kratka .cesta-ciara i{transform-origin:top}
+  .cesta-kratka .krok-uzol{top:6px;left:-36px}
+  .koty-obce{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .polia{grid-template-columns:1fr}
+  .fasada{grid-template-columns:28px 1fr;gap:0 8px}
+  .fasada-obrys{display:none}
+  .fasada-popisy em{display:none}
+  .okna{display:none}
+  .byt-id{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;font-size:16px}
+  .byt-cisla{gap:24px}
+  .susedia-odkaz{font-size:20px}
+  .galeria-mriezka{grid-template-columns:1fr 1fr;gap:28px 16px}
+  .galeria-polozka.na-vysku{grid-row:auto}
+  .paticka-mriezka{grid-template-columns:1fr}
+}
+@media (max-width:479px){
+  .koty-obce{grid-template-columns:1fr 1fr}
+  .galeria-mriezka{grid-template-columns:1fr}
+  .tabulka-dl>div{grid-template-columns:1fr;gap:4px}
+  .byt-cisla{flex-direction:column;gap:14px}
+  .akcie .tlacidlo,.titul .akcie .tlacidlo{flex:1 1 auto}
+}
+
+/* ---------- pohyb: východiskové stavy len pod .js a bez obmedzenia pohybu ---------- */
+@keyframes kresliX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes kresliY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes vystup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes vystup-maly{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes vystup-peciatka{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes objav{from{opacity:0}to{opacity:1}}
+@keyframes usad{from{transform:scale(1.03)}to{transform:none}}
+@keyframes pulz{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes dialog-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  /* titulný list: jedna orchestrovaná sekvencia (1,2 s), fotka je viditeľná od začiatku */
+  .js .je-uvodna .list{border-color:transparent}
+  .js .je-uvodna .list::before,.js .je-uvodna .list::after{content:"";position:absolute;inset:-1.5px;pointer-events:none;border:0 solid var(--tus)}
+  .js .je-uvodna .list::before{border-width:1.5px 0;transform-origin:left;animation:kresliX var(--d-slow) var(--ease) both}
+  .js .je-uvodna .list::after{border-width:0 1.5px;transform-origin:top;animation:kresliY var(--d-slow) var(--ease) 120ms both}
+  .js .titul h1 .riadok>span{display:inline-block;animation:vystup 420ms var(--ease) both}
+  .js .titul h1 .riadok:nth-child(1)>span{animation-delay:140ms}
+  .js .titul h1 .riadok:nth-child(2)>span{animation-delay:210ms}
+  .js .titul h1 .riadok:nth-child(3)>span{animation-delay:280ms}
+  .js .titul-podtitul{animation:objav var(--d-base) var(--ease) 420ms both}
+  .js .titul .akcie{animation:vystup-maly var(--d-base) var(--ease) 520ms both}
+  .js .titul-foto img{animation:usad 760ms var(--ease) both}
+  .js .titul-foto picture::before{animation:objav var(--d-base) var(--ease) 640ms both}
+  .js .kota-titul .kota-os{transform-origin:24px 60px;animation:kresliX 700ms var(--ease) 640ms both}
+  .js .kota-titul .kota-znacka{animation:objav 240ms var(--ease) calc(760ms + var(--i,0)*100ms) both}
+  .js .peciatka{animation:vystup-peciatka 420ms var(--ease) 820ms both}
+  /* výkresy sa kreslia raz pri príchode do okna (trieda je-nakreslene dáva skript) */
+  .js [data-kresli]{--k:0}
+  .js [data-kresli].je-nakreslene{--k:1}
+  .js .fasada[data-kresli] .teren::before{transform:scaleX(var(--k));transition:transform var(--d-slow) var(--ease)}
+  .js .fasada[data-kresli] .strecha::after{transform:scaleX(var(--k));transition:transform var(--d-slow) var(--ease) 120ms}
+  .js .fasada[data-kresli] .podlazie::after{transform:scaleX(var(--k));transition:transform var(--d-slow) var(--ease) calc(200ms + (2 - var(--p))*220ms)}
+  .js .fasada[data-kresli] .byt::after{transform:scaleY(var(--k));transition:transform var(--d-base) var(--ease) calc(280ms + (2 - var(--p))*220ms + var(--i)*70ms)}
+  .js .fasada[data-kresli] .byt-id,.js .fasada[data-kresli] .okna,.js .fasada[data-kresli] .vchod{opacity:var(--k);transition:opacity var(--d-base) var(--ease) calc(320ms + (2 - var(--p))*220ms + var(--i)*70ms)}
+  .js .fasada[data-kresli] .strecha,.js .fasada[data-kresli] .teren{opacity:calc(.35 + .65*var(--k))}
+  .js .fasada[data-kresli] .fasada-obrys{opacity:calc(.6*var(--k));transition:opacity var(--d-slow) var(--ease) 1000ms}
+  .js .fasada[data-kresli] .fasada-kota{opacity:var(--k);transition:opacity var(--d-base) var(--ease) 1000ms}
+  .js .fasada[data-kresli] .byt.je-off .byt-id,.js .fasada[data-kresli] .byt.je-off .okna{transition-delay:0s}
+  .js .kroky[data-kresli] .cesta-ciara i{transform:scale(var(--k));transition:transform var(--d-slow) var(--ease)}
+  .js .cesta-plna .kroky[data-kresli] .cesta-ciara i{transform:scaleY(var(--p,0));transition:none}
+  .js .kroky[data-kresli] .krok{opacity:var(--k);transition:opacity var(--d-base) var(--ease) calc(160ms + var(--i)*120ms)}
+  .js .cesta-plna .kroky[data-kresli] .krok{opacity:1}
+  .js .casova-os[data-kresli]::before{transform:scaleX(var(--k));transition:transform var(--d-slow) var(--ease)}
+  .js .casova-os[data-kresli] li{opacity:var(--k);transition:opacity var(--d-base) var(--ease) calc(300ms + var(--i)*160ms)}
+  .js .miestnosti-pasy[data-kresli] .miestnost-pas i{transform:scaleX(var(--k))}
+  .js .kota-lokalita[data-kresli] .kota-os{transform-origin:24px 60px;transform:scaleX(var(--k));transition:transform 700ms var(--ease)}
+  .js .kota-lokalita[data-kresli] .kota-znacka{opacity:var(--k);transition:opacity 240ms var(--ease) calc(400ms + var(--i,0)*100ms)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;transition-delay:0ms!important}
+  html{scroll-behavior:auto}
+  .cesta-plna .cesta-ciara i{--p:1}
+  .cesta-plna .krok .krok-uzol{background:var(--mach);border-color:var(--mach)}
+}
