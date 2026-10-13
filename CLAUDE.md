@@ -10,6 +10,7 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
   obchod s poukazmi https://booqme.app/sk/eshop/salon-30-head-spa. Na webe nie sú žiadne formuláre, každé tlačidlo vedie rovno do Booqme.
 
 ## Pravidlá obsahu (majiteľ ich dal, nemeň ich)
+- Recenzie len doslovne a len z vlastných profilov HEAD SPA 30, nikdy zo Salónu 30 (docs/recenzie.md).
 - Iba to, čo salón ponúka: 17 rituálov (12 Head Spa, 2 pre dvoch, 3 pre chodidlá) z `docs/booqme-sluzby.csv`, nič nevymýšľaj
   (názvy, ceny, trvania, telefón 0911 153 136, adresa). Keď niečo nevieš, spýtaj sa alebo vynechaj.
 - Poukaz je vždy na konkrétny rituál, nie na sumu (`docs/booqme-poukazy.csv`).

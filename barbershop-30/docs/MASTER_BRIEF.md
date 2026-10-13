@@ -118,7 +118,8 @@ Každý bod sa overuje screenshotom alebo meraním, nie odhadom.
 **Dôvera a pravda**
 - [ ] Rezervácia vedie na https://www.barbershop30.sk/rezervacia; žiadne fiktívne
       termíny ani potvrdenia.
-- [ ] Hodnotenie na Google len ako odkaz, bez čísla hviezdičiek; žiadne vymyslené recenzie.
+- [ ] Hodnotenie na Google ako odkaz na profil, bez čísla hviezdičiek; recenzie len doslovné a overené
+      (docs/CONTENT_SOURCES.md, časť Recenzie), žiadne vymyslené.
 - [ ] Na webe nie je zmienka o 3D modeli, AI ani o nástrojoch; len „prehliadka podniku“.
 - [ ] Súhlasy: portréty a videá zamestnancov potvrdiť u majiteľa pred ostrým spustením.
 

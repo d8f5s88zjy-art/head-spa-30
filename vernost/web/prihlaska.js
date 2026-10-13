@@ -68,8 +68,11 @@
       dlg = el('dialog', { id: 'v30p', 'data-p': P, 'data-no-i18n': true, translate: 'no', 'aria-labelledby': 'v30h' });
       dlg.addEventListener('click', function (e) {
         if (Date.now() - (dlg._t || 0) < 500) { e.preventDefault(); e.stopImmediatePropagation(); return; }
-        if (e.target === dlg) dlg.close();
+        if (e.target === dlg) { if (dlg._teraz) dlg._teraz(); dlg.close(); }
       }, true);
+      /* Esc spustí cancel hneď (close príde až neskôr), preto sa „teraz nie“ zapíše už tu */
+      dlg.addEventListener('cancel', function () { if (dlg._teraz) dlg._teraz(); });
+      dlg.addEventListener('close', function () { if (dlg._teraz) dlg._teraz(); });
       document.body.append(dlg);
     }
     dlg.setAttribute('lang', document.documentElement.lang || 'sk');
@@ -90,7 +93,7 @@
     ]);
     var tl = el('button', { class: 'v30tl', type: 'submit' }, [rezervacia ? L.dalej : L.zaloz]);
     var zavri = el('button', { class: 'v30x', type: 'button', 'aria-label': L.zavri }, ['×']);
-    zavri.addEventListener('click', function () { dlg.close(); });
+    zavri.addEventListener('click', function () { if (dlg._teraz) dlg._teraz(); dlg.close(); });
     var form = el('form', { method: 'dialog', novalidate: true }, [
       el('h2', { id: 'v30h' }, [L.t + ' ' + NAZOV]), el('p', {}, [L.u]), chyba,
       el('label', { class: 'v30v v30chcem' }, [chcem, el('span', {}, [L.chcem])]), polia, tl,
@@ -133,7 +136,7 @@
     });
     dlg.replaceChildren(zavri, form);
     /* zatvorenie bez voľby (×, Esc, klik vedľa) = „teraz nie“: do konca návštevy webu sa už nepýtame, rezervácia ide rovno */
-    dlg.addEventListener('close', function () { if (rezervacia && !rozhodnute) relacia(K_TERAZ, '1'); }, { once: true });
+    dlg._teraz = function () { if (rezervacia && !rozhodnute) relacia(K_TERAZ, '1'); };
     if (!dlg.open) { dlg._t = Date.now(); dlg.showModal(); }
     chcem.focus();
   }

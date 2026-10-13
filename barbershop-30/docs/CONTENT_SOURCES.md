@@ -129,7 +129,25 @@ Stupeň: **tvrdenie majiteľa** – ide na web, lebo ho majiteľ výslovne chce;
 | Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termín sprav online, jednoducho cez náš rezervačný systém. | karta rezervácie | „Recepcia zavolaj si počas dňa od 9 do 19 alebo sprav online termín jednoducho cez náš rezervačný systém“ | „v pracovné dni“ doplnené podľa otváracích hodín (So 9:00–14:00) |
 
 Ďalšie želania z toho istého zadania, ktoré zatiaľ **nie sú na webe**:
-- „nejaké slová s recenziami“ – verejné recenzie sme nenašli (web podniku žiadne nemá, vyhľadávanie nič nevrátilo);
-  na web pôjdu len skutočné recenzie, ktoré pošle majiteľ (text, meno alebo iniciála, zdroj), nie vymyslené.
-- vernostná karta prepojená na admin s hromadnými správami – čaká na rozhodnutie o systéme (pozri `docs/VERNOSTNA-KARTA.md`
-  v koreni repozitára).
+- „nejaké slová s recenziami“ – **na webe od 13. 10. 2026**, pozri časť Recenzie nižšie.
+- vernostná karta prepojená na admin s hromadnými správami – **postavená** (`vernost/`, návod `vernost/README.md`).
+
+## Recenzie (doslovné citácie, overené 13. 10. 2026)
+
+Zdroj: Google Maps, profil „Barbershop30 Nitra“, https://www.google.com/maps?cid=18132360254733427623
+(5,0 z 945 recenzií; rozdelenie 928× 5★, 11× 4★, 1× 3★, 1× 2★, 4× 1★). Ďalšie verejné zdroje: Facebook (28 odporúčaní, 100 %),
+Zľavomat (4,9 zo 14), Zlatá Firma a QuickBook (preberajú Google). Každú citáciu druhý nezávislý kontrolór znova otvoril
+na Google a porovnal znak po znaku. Text sa neopravuje (ani preklepy); „…“ označuje vynechanú časť dlhšej recenzie.
+Mená sú skrátené na meno a iniciálu priezviska. Na webe sú v `assets/recenzie.js` (samostatný modul, HTML ostáva v prvom okne TCP).
+
+| Na webe | Hodnotenie, vek na Google k 13. 10. 2026 | Poznámka |
+|---|---|---|
+| Marek J. | 5★, pred 2 mesiacmi | celá recenzia |
+| Kristián V. | 5★, pred 11 mesiacmi | celá recenzia |
+| Stanislava B. | 5★, pred 10 mesiacmi | celá recenzia |
+| Marcel W. | 5★, pred 4 mesiacmi | úryvok z anglickej recenzie (dve celé vety, medzi nimi „…“) |
+| Jana U. | 5★, pred mesiacom | celá recenzia |
+| Ladislav T. | 5★, pred rokom | celá recenzia |
+
+Nepoužité zámerne: recenzie, ktoré zhadzujú iné podniky, a texty s menom tretej osoby celým priezviskom.
+Hodnotenie na Google ostáva aj ako odkaz (teraz priamo na profil, nie na vyhľadávanie).

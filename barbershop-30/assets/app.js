@@ -363,6 +363,18 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
+   7b2. Recenzie (assets/recenzie.js): doslovné citácie z Google. Sú v samostatnom module, aby HTML ostalo v prvom
+   okne TCP; bez skriptu ostáva odkaz na hodnotenie na Google.
+   ---------------------------------------------------------------------------- */
+(function recenzie() {
+  const zoznam = document.querySelector('[data-recenzie]');
+  if (!zoznam) return;
+  // hneď (malý modul, ďaleko pod prvou obrazovkou): obsah pod ním sa tak posunie ešte pred načítaním stránky,
+  // nie počas skrolovania, a kotvy filmu sa merajú už s recenziami
+  import('./recenzie.js').then((m) => m.spusti(zoznam)).catch(() => {});
+})();
+
+/* ----------------------------------------------------------------------------
    7c. Jazyky (assets/i18n.js, slovníky assets/i18n/*.json). Pri ?lang= alebo uloženej voľbe sa modul načíta hneď
    (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak pri prvom geste alebo 3,5 s po načítaní (prepínač, ponuka).
    ---------------------------------------------------------------------------- */

@@ -2725,3 +2725,13 @@ html #galeria .after{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;jus
   #cennik .extra-list strong{grid-column:1;grid-row:2}
   #cennik .extra-min{grid-column:2;grid-row:2}
 }
+
+/* recenzie: doslovné citácie len z vlastného Google profilu HEAD SPA 30 */
+.reviews .review{margin:clamp(36px,5vw,64px) 0 0;max-width:880px}
+.reviews blockquote{margin:0}
+.reviews blockquote p{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(21px,2.3vw,30px);line-height:1.5;color:var(--text-primary);overflow-wrap:anywhere}
+.reviews figcaption{margin-top:20px;font-family:var(--body);font-size:14px;letter-spacing:.04em;color:var(--text-secondary)}
+.review-hv{color:var(--accent);letter-spacing:.14em;margin-right:12px}
+.review-more{margin:28px 0 0;font-size:15px}
+.review-more a{color:var(--accent-hover);text-decoration:none;border-bottom:1px solid rgba(212,174,98,.4)}
+.review-more a:hover{border-bottom-color:var(--accent)}

@@ -796,6 +796,21 @@ html.pro:not(.world-off) .scroll-hint { opacity: 0; }
 .trust-text { font-size: 1.0625rem; color: var(--paper-2); max-width: 46ch; margin-bottom: var(--s4); }
 @media (max-width: 800px) { .trust { grid-template-columns: 1fr; gap: var(--s6); } }
 
+/* recenzie z Google (assets/recenzie.js): na telefóne pás na posun prstom, na počítači mriežka */
+.recenzie { margin-top: var(--s8); }
+.rec-list { list-style: none; margin: var(--s4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); }
+.rec-list li { margin: 0; display: flex; }
+.rec-list figure { margin: 0; padding: var(--s5); display: flex; flex-direction: column; gap: var(--s4); width: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: var(--ink-2); }
+.rec-list blockquote { margin: 0; }
+.rec-list blockquote p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--paper); white-space: pre-line; overflow-wrap: anywhere; }
+.rec-list figcaption { margin-top: auto; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; color: var(--paper-2); }
+.rec-hv { color: var(--lamp-2); letter-spacing: 0.12em; margin-right: var(--s2); }
+@media (max-width: 1000px) { .rec-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .rec-list { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; gap: var(--s3); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: var(--s3); scrollbar-width: thin; }
+  .rec-list li { scroll-snap-align: start; }
+}
+
 .results-placeholder { margin-bottom: var(--s7); }
 
 .lightbox { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: var(--s6); }
