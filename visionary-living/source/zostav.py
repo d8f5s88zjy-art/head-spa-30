@@ -57,7 +57,7 @@ def hlavicka(base, aktivna):
       <ul>{odkazy}</ul>
       <a class="menu-telefon" href="tel:{K['telefon_tel']}">{K['telefon']}</a>
     </nav>
-    <a class="tlacidlo tlacidlo-maly hlavicka-cta" href="tel:{K['telefon_tel']}"><span class="visually-hidden">Zavolať </span>{K['telefon']}</a>
+    <a class="tlacidlo tlacidlo-maly hlavicka-cta" href="tel:{K['telefon_tel']}"><svg class="hlavicka-cta-ikona" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3h3l1.6 4.2-2 1.4a12 12 0 0 0 6.2 6.2l1.4-2L21 14.4v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span class="visually-hidden">Zavolať </span><span class="hlavicka-cta-text">{K['telefon']}</span></a>
     <button class="menu-prepinac" type="button" aria-expanded="false" aria-controls="menu"><span class="visually-hidden">Menu</span><span class="menu-ciary" aria-hidden="true"></span></button>
   </div>
 </header>'''
@@ -165,7 +165,8 @@ def vyber_bytov(base, s_zoznamom=False, nadpis='Vyberte si byt'):
         {poschodia}
         <div class="zaklad" aria-hidden="true"></div>
       </div>
-      <aside class="vyber-detail" aria-live="polite">
+      <aside class="vyber-detail" aria-label="Údaje o zvolenom byte">
+        <p class="vyber-stav visually-hidden" role="status"></p>
         <p class="vyber-detail-tip">Ukážte na byt v schéme, zobrazia sa jeho údaje.</p>
         <div class="vyber-detail-obsah" hidden></div>
       </aside>
@@ -210,7 +211,8 @@ IKONY = {
 def uvod_piliere(base):
     ik = ['slnko', 'list', 'cesta']
     polozky = ''.join(f'<li data-odhal style="--i:{i}"><span class="ikona">{IKONY[ik[i]]}</span><h3>{p["nazov"]}</h3><p>{typo(p["text"])}</p></li>' for i, p in enumerate(O['uvod']['piliere']))
-    return f'<section class="piliere" aria-label="Prečo Visionary Living"><div class="wrap"><ul class="piliere-zoznam">{polozky}</ul></div></section>'
+    return (f'<section class="piliere" aria-labelledby="piliere-nadpis"><div class="wrap"><h2 id="piliere-nadpis" class="visually-hidden">Prečo Visionary Living</h2>'
+            f'<ul class="piliere-zoznam">{polozky}</ul></div></section>')
 
 def uvod_projekt(base):
     P = O['projekt']

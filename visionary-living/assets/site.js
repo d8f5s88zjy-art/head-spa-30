@@ -66,7 +66,7 @@ requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod
   const sekcia = $('.vyber'); if (!sekcia) return;
   const data = JSON.parse($('#byty-data').textContent);
   const bunky = $$('.bunka', sekcia), karty = $$('.byt-karta', sekcia), filtre = $$('.filter', sekcia);
-  const panel = $('.vyber-detail-obsah', sekcia), tip = $('.vyber-detail-tip', sekcia);
+  const panel = $('.vyber-detail-obsah', sekcia), tip = $('.vyber-detail-tip', sekcia), stav = $('.vyber-stav', sekcia);
   let vybrany = null;
 
   const ukaz = (id) => {
@@ -80,14 +80,27 @@ requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod
       `<ul class="miestnosti miestnosti-male">${miest}</ul><a class="tlacidlo tlacidlo-maly" href="${b.url}">Pôdorys a detail bytu ${id}</a>`;
     panel.hidden = false; tip.hidden = true;
     sekcia.classList.add('ma-vyber');
+    // čítačke stačí krátky stav; celý panel nie je živá oblasť
+    if (stav) stav.textContent = `Byt ${id}, ${b.nazov.toLowerCase()}, ${b.podlazie}. podlažie, ${cena(b.cena)}, ${b.stav}`;
   };
+  // druh vstupu podľa poslednej udalosti (nie podľa media query, tá na hybridoch a v emulácii klame):
+  // myš ukazuje pri prejdení, klávesnica pri fokuse, dotyk prvým ťuknutím (druhé otvorí detail)
+  let dotyk = false;
+  sekcia.addEventListener('pointerdown', (e) => { dotyk = e.pointerType === 'touch'; }, true);
+  sekcia.addEventListener('keydown', () => { dotyk = false; }, true);
   bunky.forEach((c) => {
-    c.addEventListener('pointerenter', () => mys && ukaz(c.dataset.id));
-    c.addEventListener('focus', () => ukaz(c.dataset.id));
-    // na dotyku prvé ťuknutie ukáže údaje, druhé otvorí detail
-    c.addEventListener('click', (e) => { if (!mys && vybrany !== c.dataset.id) { e.preventDefault(); ukaz(c.dataset.id); panel.scrollIntoView({ block: 'nearest', behavior: pohyb ? 'smooth' : 'auto' }); } });
+    c.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') ukaz(c.dataset.id); });
+    c.addEventListener('focus', () => { if (!dotyk) ukaz(c.dataset.id); });
+    c.addEventListener('click', (e) => {
+      if (!dotyk || vybrany === c.dataset.id) return;
+      e.preventDefault(); ukaz(c.dataset.id);
+      panel.scrollIntoView({ block: 'nearest', behavior: pohyb ? 'smooth' : 'auto' });
+    });
   });
-  karty.forEach((k) => { k.addEventListener('pointerenter', () => mys && ukaz(k.dataset.id)); $('a', k).addEventListener('focus', () => ukaz(k.dataset.id)); });
+  karty.forEach((k) => {
+    k.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') ukaz(k.dataset.id); });
+    $('a', k).addEventListener('focus', () => { if (!dotyk) ukaz(k.dataset.id); });
+  });
 
   const filtruj = (f) => {
     filtre.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
@@ -102,6 +115,9 @@ requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('uvod
   };
   filtre.forEach((b) => b.addEventListener('click', () => filtruj(b.dataset.filter)));
   filtruj('vsetky');
+  // panel nikdy nie je prázdny: predvolene prvý byt (bez hlásenia čítačke)
+  const prvy = bunky.find((c) => c.dataset.id === 'A1') || bunky[0];
+  if (prvy) { ukaz(prvy.dataset.id); if (stav) stav.textContent = ''; }
   // klávesnica v schéme: šípky medzi bytmi
   bunky.forEach((c, i) => c.addEventListener('keydown', (e) => {
     const map = { ArrowRight: i + 1, ArrowLeft: i - 1, ArrowDown: i + 4, ArrowUp: i - 4 };

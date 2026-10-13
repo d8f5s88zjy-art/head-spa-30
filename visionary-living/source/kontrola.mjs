@@ -48,14 +48,25 @@ async function stranka(opts, url) {
   return { p, chyby };
 }
 
+// prejde stránku po krokoch (lenivé obrázky sa načítajú), vráti sa hore a počká, kým sú všetky obrázky hotové
+async function prejdi(p) {
+  await p.evaluate(async () => {
+    const krok = Math.max(400, innerHeight * 0.8);
+    for (let y = 0; y < document.documentElement.scrollHeight; y += krok) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
+    scrollTo(0, 0);
+  });
+  await p.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 8000 }).catch(() => {});
+  await p.waitForTimeout(200);
+}
+
 // 1. každá stránka: bez chýb, odkazy a obrázky existujú, prístupnosť základov
 const videne = new Set();
 for (const s of STRANKY) {
   const { p, chyby } = await stranka({ viewport: { width: 1440, height: 900 } }, s);
-  await p.waitForTimeout(500);
+  await prejdi(p);
   const info = await p.evaluate(() => {
     const odkazy = [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')).filter((h) => !/^(https?:|mailto:|tel:|#)/.test(h));
-    const obrazky = [...document.querySelectorAll('img')].map((i) => ({ src: i.currentSrc || i.src, ok: i.complete && i.naturalWidth > 0, alt: i.hasAttribute('alt') }));
+    const obrazky = [...document.querySelectorAll('img')].filter((i) => i.getAttribute('src') || i.srcset).map((i) => ({ src: i.currentSrc || i.src, ok: i.complete && i.naturalWidth > 0, alt: i.hasAttribute('alt') }));
     return { h1: document.querySelectorAll('h1').length, title: document.title, lang: document.documentElement.lang, odkazy, obrazky: obrazky.filter((o) => !o.ok || !o.alt).length, nadpisySkok: (() => { const hs = [...document.querySelectorAll('h1,h2,h3')].map((h) => +h.tagName[1]); return hs.some((h, i) => i && h - hs[i - 1] > 1); })(), sample: document.querySelector('.sample, [class*="Sample"]') ? 1 : 0, lorem: /lorem ipsum|Sample Subtitle/i.test(document.body.innerText) };
   });
   // odkazy existujú na disku (lokálne) alebo odpovedajú (naživo)
@@ -116,7 +127,7 @@ for (const w of [320, 375, 390, 768, 1024, 1440]) {
   await p.close();
   const { p: m, chyby: ch2 } = await stranka({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, 'byty.html');
   await m.locator('.bunka[data-id="C1"]').scrollIntoViewIfNeeded(); await m.tap('.bunka[data-id="C1"]'); await m.waitForTimeout(300);
-  const t1 = await m.evaluate(() => ({ url: location.pathname, hidden: document.querySelector('.vyber-detail-obsah').hidden, text: document.querySelector('.vyber-detail-obsah').innerText.slice(0, 40) }));
+  const t1 = await m.evaluate(() => { const o = document.querySelector('.vyber-detail-obsah'); return { url: location.pathname, hidden: o ? o.hidden : null, text: o ? o.innerText.slice(0, 40) : '' }; });
   ok('výber na dotyku: prvé ťuknutie ukáže údaje bez prechodu', /byty\.html$/.test(t1.url) && !t1.hidden && /C1/.test(t1.text), t1);
   await m.tap('.bunka[data-id="C1"]'); await m.waitForURL(/byt\/c1\.html/, { timeout: 5000 }).catch(() => {});
   ok('výber na dotyku: druhé ťuknutie otvorí detail', /byt\/c1\.html/.test(m.url()), m.url());
