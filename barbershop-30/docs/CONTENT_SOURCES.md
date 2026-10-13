@@ -17,7 +17,7 @@ Dátum získania všetkých údajov: **2026‑10‑09**, pokiaľ nie je uvedené
 | otváracie hodiny | Po–Pi 09:00–19:00, So 09:00–14:00, Ne zatvorené | |
 | rezervácia | https://www.barbershop30.sk/rezervacia | vlastný rezervačný systém podniku (Vue komponent, endpoint /rezervacia/ajax); nie Bookio. Nový web naň odkazuje, neembeduje ho. Predvoľba služby/barbera cez URL nie je zdokumentovaná → neprenáša sa. |
 | farbenie, melír, trvalá | https://booqme.app/sk/rezervacia/barbershop30 | samostatná Booqme stránka (pracovníčka Romana); na novom webe len ako odkaz v sekcii služieb |
-| založenie | 2019 („Sme tu pre vás už od roku 2019“) | majiteľ uvádza recepciu „8 rokov“ (= 2018) – **nesúlad, neoverené**; na webe používame „od roku 2019“ |
+| založenie | 2019 („Sme tu pre vás už od roku 2019“) | na webe len ako „na Mostnej 30 od roku 2019“ (viazané na adresu); recepcia „8 rokov“ pozri nižšie |
 | kapacita | 8 kresiel, recepčná, káva a minerálka zdarma, online rezervácie 24/7, strihanie detí | prevzaté z „Prečo práve my?“ na aktuálnom webe |
 | kde sa podáva káva | vzadu, kde ľudia čakajú (čakáreň s kreslami a pumpou Route 66), nie pri recepcii | majiteľ 2026‑10‑11; na webe v karte Čakáreň |
 | Instagram | https://www.instagram.com/barbershop30_nitra/ | |
@@ -114,3 +114,22 @@ Tri telefónne videá z prevádzky (barberi pri práci). Vidno zamestnancov spre
 klientov zozadu. Na webe len ako tiché slučky; **pred zverejnením potvrdiť súhlas
 zamestnancov a to, že klienti nie sú rozpoznateľní** (v `remeslo-strojcek` a
 `tim-v-akcii` sú klienti zozadu alebo z profilu v diaľke).
+
+## Texty na želanie majiteľa (Lajko, 2026‑10‑13, odovzdané cez správcu webu)
+
+Stupeň: **tvrdenie majiteľa** – ide na web, lebo ho majiteľ výslovne chce; nie je overené z iného zdroja.
+
+| text na webe | kde | doslovné zadanie | poznámka |
+|---|---|---|---|
+| Lokálny barber na Mostnej 30, kde stretneš hocikoho. | podtitul úvodu | „Lokálny Barber kde stretneš hoci koho“ | nahradil „Za dverami na Mostnej 30 sa strihá od roku 2019.“ |
+| Pri dverách ťa privíta recepčná. Ako jediný barbershop v Nitre ju máme už 8 rokov. | karta „Poď ďalej“ | „Máme ako jediný v Nitre 8 rokov recepčnú“ | recepcia je v prednej sále pri vchode (ART_DIRECTION); „8 rokov“ = od 2018, kým „na Mostnej 30 od roku 2019“ – možné, ak podnik začínal inde; **potvrdiť u majiteľa** |
+| Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek. | karta tímu | „pod značkou Barber shop 30 pracuje tím barberov a barberiek“ | nahradil „Desať ľudí, jeden kalendár.“ |
+| Školenia – na poschodí, pod značkou Barbershop 30 | zoznam faktov pri kontakte | „hore sú školenia pod značkou Barbershop 30“ | „hore“ chápeme ako poschodie v tej istej budove; **potvrdiť u majiteľa** |
+| Recepcia – ako jediný barbershop v Nitre, už 8 rokov | zoznam faktov pri kontakte | ako vyššie | |
+| Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termín sprav online, jednoducho cez náš rezervačný systém. | karta rezervácie | „Recepcia zavolaj si počas dňa od 9 do 19 alebo sprav online termín jednoducho cez náš rezervačný systém“ | „v pracovné dni“ doplnené podľa otváracích hodín (So 9:00–14:00) |
+
+Ďalšie želania z toho istého zadania, ktoré zatiaľ **nie sú na webe**:
+- „nejaké slová s recenziami“ – verejné recenzie sme nenašli (web podniku žiadne nemá, vyhľadávanie nič nevrátilo);
+  na web pôjdu len skutočné recenzie, ktoré pošle majiteľ (text, meno alebo iniciála, zdroj), nie vymyslené.
+- vernostná karta prepojená na admin s hromadnými správami – čaká na rozhodnutie o systéme (pozri `docs/VERNOSTNA-KARTA.md`
+  v koreni repozitára).

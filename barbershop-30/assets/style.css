@@ -651,7 +651,8 @@ html.pro:not(.world-off) .scroll-hint { opacity: 0; }
 
 .band-facts { padding-block: var(--s7); }
 .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5); }
-.facts li { display: grid; gap: var(--s1); padding-left: var(--s4); border-left: 2px solid var(--lamp); }
+.facts li { display: grid; gap: var(--s1); min-width: 0; padding-left: var(--s4); border-left: 2px solid var(--lamp); }
+.facts li > * { min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
 .facts strong { font-family: var(--font-display); font-weight: 800; font-variation-settings: "opsz" 144; font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.1; color: var(--paper); }
 .facts span { font-size: 0.9375rem; color: var(--paper-2); }
 @media (max-width: 800px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s4); } }

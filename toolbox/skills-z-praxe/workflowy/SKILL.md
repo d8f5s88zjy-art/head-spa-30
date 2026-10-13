@@ -327,3 +327,18 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 - [ ] Počet agentov je spočítaný voči limitu relácie; medzivýsledky sú v súboroch.
 - [ ] Opravy sú overené tou istou metódou a zapísané (aj zamietnuté a nezapracované, s dôvodom).
 - [ ] Commit a nasadenie robí hlavná relácia; osvedčený skript je v `priklady/`.
+
+## Lekcia: smer vizuálu potvrdiť u majiteľa skôr, než sa postaví celý web (VISIONARY LIVING, 10/2026)
+
+Porota (tri návrhy, traja sudcovia, syntéza) vybrala smer „projektová dokumentácia“ (rám listu, pečiatka, kóty) a web sa podľa
+neho celý postavil, otestoval a nasadil. Majiteľ ho potom odmietol jednou vetou: „nech to nepôsobí ako dokument, nech je to
+profesionálny web s animáciami“. Porota optimalizovala odlišnosť a remeslo, nie očakávanie majiteľa, ktorý chcel bežný prémiový
+realitný web, len živší.
+
+- Po porote poslať majiteľovi 2 až 3 snímky víťaza (titulka počítač + telefón) s jednou vetou „staviam toto“ a počkať na krátke
+  áno, ak sa smer odlišuje od toho, čo majiteľ pozná (jeho starý web, konkurencia). Stavba 20 stránok trvá hodiny; odpoveď minútu.
+- Do kritérií poroty pridať „očakávanie majiteľa“ (čo videl, čo pozná, aký web si predstavuje) ako samostatné kritérium s váhou,
+  nie len „odlišnosť“. Sudca „kupujúci“ nestačí – treba aj sudcu „majiteľ“, ktorý číta pôvodné zadanie doslovne.
+- Odlišné metafory (výkres, noviny, film) ponúkať ako jednu z možností, nie ako víťaza bez potvrdenia.
+- Obsah, generátor, výberovník, testy a výkon ostali použiteľné – oddeliť vizuál (CSS, markup sekcií) od dát a správania
+  sa oplatilo: nový vizuál je nová porota + prepis štýlu, nie nový web.
