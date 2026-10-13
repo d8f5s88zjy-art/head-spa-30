@@ -1,7 +1,10 @@
 # Vernostná karta pre BARBERSHOP 30 a HEAD SPA 30 – rozhodnutie a plán
 
-Stav k 2026‑10‑13: **čaká na rozhodnutie o systéme**. Na weboch zatiaľ nič nie je, aby sme klientom nesľúbili
-kartu, ktorú recepcia ešte nevie vydať.
+Stav k 2026‑10‑13 (večer): **rozhodnuté a postavené – vlastný systém (možnosť B)**, priečinok `vernost/`,
+návod `vernost/README.md`. Upresnenie od Lajka: kartičku si klient pri rezervácii **sám** zaškrtne („Áno, chcem
+vernostnú kartičku“), nikoho nenútime; akcie a odmeny tvorí Lajko v admine, žiadne 30–40 % zľavy (napr. mesiac
+študentov, ostrihaj sa a styling máš za polovicu). Body sa menia na zľavu alebo produkt (napr. puder).
+Text nižšie je pôvodné porovnanie možností pred rozhodnutím.
 
 ## Čo chce majiteľ (Lajko)
 

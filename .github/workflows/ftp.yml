@@ -33,8 +33,36 @@ jobs:
       - name: Pripraviť web pre vlastnú doménu
         if: env.FTP_SERVER != ''
         run: sh tools/ftp-balik.sh "${{ secrets.FTP_DOMENA || 'headspa30.sk' }}"
-      - name: Nahrať na FTP (len zmenené súbory)
+      - name: Vernostná kartička – konfigurácia z tajomstiev (heslá admina len ako odtlačky)
         if: env.FTP_SERVER != ''
+        env:
+          HESLO_B: ${{ secrets.VERNOST_HESLO_BARBERSHOP }}
+          HESLO_H: ${{ secrets.VERNOST_HESLO_HEADSPA }}
+          EMAIL_OD: ${{ secrets.VERNOST_EMAIL_OD }}
+          DOMENA: ${{ secrets.FTP_DOMENA || 'headspa30.sk' }}
+        run: php tools/vernost-config.php > _ftp/vernost/config.php
+      - name: Vernostná kartička – zapnúť prihlášku na webe HEAD SPA 30, ak má prevádzka heslo do adminu
+        if: env.FTP_SERVER != ''
+        env:
+          HESLO_H: ${{ secrets.VERNOST_HESLO_HEADSPA }}
+        run: |
+          if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _ftp/index.html; echo "prihláška zapnutá"; else echo "prihláška vypnutá (chýba VERNOST_HESLO_HEADSPA)"; fi
+      # Najprv šifrovane (FTPS), aby heslo, konfigurácia vernostnej kartičky a súbory nešli sieťou čitateľne.
+      # Ak hosting FTPS nepodporuje, nahrá sa po starom cez FTP (stav synchronizácie je spoločný).
+      - name: Nahrať na FTP šifrovane (len zmenené súbory)
+        id: ftps
+        if: env.FTP_SERVER != ''
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./_ftp/
+          server-dir: ${{ secrets.FTP_DIR || '/www/' }}
+      - name: Nahrať na FTP (záloha, ak FTPS nejde)
+        if: env.FTP_SERVER != '' && steps.ftps.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}

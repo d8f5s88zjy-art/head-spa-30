@@ -326,7 +326,8 @@ if (motionOn && mqFinePointer.matches) {
     if (cur !== target) raf = requestAnimationFrame(step); else last = 0;
   };
   window.addEventListener('wheel', (e) => {
-    if (e.ctrlKey || e.metaKey || menuOpen || (lightbox && !lightbox.hidden) || document.body.style.overflow === 'hidden') return;
+    // otvorený dialóg (napr. prihláška k vernostnej kartičke) sa posúva sám, stránka za ním nie
+    if (e.ctrlKey || e.metaKey || menuOpen || (lightbox && !lightbox.hidden) || document.body.style.overflow === 'hidden' || document.querySelector('dialog[open]')) return;
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
     const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
     e.preventDefault();

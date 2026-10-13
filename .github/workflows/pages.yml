@@ -41,6 +41,15 @@ jobs:
         run: |
           mkdir -p _site/visionary-living
           cp -r visionary-living/*.html visionary-living/byt visionary-living/assets visionary-living/robots.txt visionary-living/sitemap.xml _site/visionary-living/
+      - name: Prihláška k vernostnej kartičke (skript pre weby; server beží na www.headspa30.sk/vernost/)
+        env:
+          HESLO_B: ${{ secrets.VERNOST_HESLO_BARBERSHOP }}
+          HESLO_H: ${{ secrets.VERNOST_HESLO_HEADSPA }}
+        run: |
+          mkdir -p _site/vernost/web && cp vernost/web/prihlaska.js _site/vernost/web/
+          # prihláška sa zapne len pre prevádzku, ktorá má heslo do adminu (recepcia vie kartičky obsluhovať)
+          if [ ${#HESLO_B} -ge 10 ]; then sed -i 's#data-prevadzka="barbershop"#data-prevadzka="barbershop" data-zapnute#' _site/barbershop-30/index.html; fi
+          if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _site/index.html; fi
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)

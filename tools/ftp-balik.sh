@@ -11,6 +11,10 @@ cd "$(dirname "$0")/.."
 rm -rf _ftp && mkdir -p _ftp
 cp -r index.html 404.html pravne.html robots.txt sitemap.xml assets admin _ftp/
 cp tools/ftp.htaccess _ftp/.htaccess
+# vernostná kartička (PHP + SQLite); testy, návod a vzor konfigurácie na hosting netreba, config.php dopíše nasadenie
+mkdir -p _ftp/vernost
+cp -r vernost/.htaccess vernost/index.html vernost/api vernost/lib vernost/data vernost/karta vernost/admin vernost/web vernost/pisma vernost/ochrana-udajov.html _ftp/vernost/
+rm -f _ftp/vernost/data/meno.php _ftp/vernost/data/*.sqlite*
 # zdrojové a nepoužívané súbory na hosting netreba
 rm -f _ftp/assets/premium-v9.* _ftp/assets/i18n/README.txt
 # adresy webu na vlastnú doménu (kanonická adresa, zdieľanie, údaje pre Google, mapa stránok)

@@ -11,3 +11,12 @@ _ftp/
 _balik/
 _vyrez/
 __pycache__/
+
+# vernostná kartička: konfigurácia s odtlačkami hesiel a databáza vznikajú až na serveri
+vernost/config.php
+vernost/data/*
+!vernost/data/index.html
+!vernost/data/.htaccess
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

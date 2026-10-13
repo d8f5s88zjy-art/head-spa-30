@@ -1,0 +1,116 @@
+/* Vernostná kartička 30 – karta klienta. Dve témy podľa prevádzky: data-p="barbershop" | "headspa". */
+@font-face { font-family: "Fraunces"; font-weight: 800; font-display: swap; src: url(../pisma/Fraunces-800.woff2) format("woff2"); }
+@font-face { font-family: "Lora"; font-weight: 300 700; font-display: swap; src: url(../pisma/Lora-display.woff2) format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 400; font-display: swap; src: url(../pisma/Manrope-400.woff2) format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 700; font-display: swap; src: url(../pisma/Manrope-700.woff2) format("woff2"); }
+
+:root {
+  --bg: #0e0d0c; --bg2: #1a1816; --text: #f1e9dd; --muted: #b9ae9f; --accent: #e0601c; --accent-text: #0e0d0c; --line: rgba(241, 233, 221, .14);
+  --nadpis: "Fraunces", Georgia, "Times New Roman", serif; --nadpis-w: 800;
+  --telo: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r: 18px; --ease: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: dark;
+}
+[data-p="headspa"] {
+  --bg: #0c0906; --bg2: #18120c; --text: #efe5d4; --muted: #bfb19a; --accent: #d4ae62; --accent-text: #0c0906; --line: rgba(239, 229, 212, .14);
+  --nadpis: "Lora", Georgia, "Times New Roman", serif; --nadpis-w: 500;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 400 16px/1.55 var(--telo); -webkit-font-smoothing: antialiased; }
+main { width: min(100%, 32rem); margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom)); }
+a { color: inherit; text-underline-offset: 3px; }
+h1, h2 { font-family: var(--nadpis); font-weight: var(--nadpis-w); line-height: 1.12; margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 1.35rem; margin-bottom: 12px; }
+.nacitavam { color: var(--muted); text-align: center; padding: 30vh 0; margin: 0; }
+.skryte { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* hlavička */
+.hlava { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.znacka { font-family: var(--nadpis); font-weight: var(--nadpis-w); font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.hlava small { color: var(--muted); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+
+/* kartička */
+.karta { position: relative; overflow: hidden; border-radius: 22px; padding: 22px 22px 20px; min-height: 13.5rem; display: grid; align-content: space-between; gap: 18px;
+  background: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 60%), linear-gradient(150deg, #2a2522, #121110 70%);
+  border: 1px solid var(--line); box-shadow: 0 18px 50px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06); animation: prichod .7s var(--ease) both; }
+[data-p="headspa"] .karta { background: radial-gradient(90% 90% at 92% 8%, rgba(212, 174, 98, .30), transparent 62%), linear-gradient(150deg, #2a2016, #100c08 72%); }
+.karta::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .10) 48%, transparent 60%); transform: translateX(-120%); animation: lesk 2.4s .5s var(--ease) both; pointer-events: none; }
+[data-p="headspa"] .karta::before { content: ""; position: absolute; width: 15rem; height: 15rem; right: -5rem; top: -6rem; border-radius: 50%; border: 1px solid rgba(217, 181, 106, .45); box-shadow: 0 0 0 18px rgba(217, 181, 106, .05); }
+[data-p="barbershop"] .karta::before { content: ""; position: absolute; left: 22px; right: 22px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.karta-hore { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; }
+.karta-hore span { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.karta-hore strong { font-family: var(--nadpis); font-weight: var(--nadpis-w); font-size: 1.05rem; letter-spacing: .04em; }
+.body-cislo { display: flex; align-items: baseline; gap: 10px; position: relative; }
+.body-cislo b { font-family: var(--nadpis); font-weight: var(--nadpis-w); font-size: clamp(3.6rem, 18vw, 4.6rem); line-height: .9; font-variant-numeric: tabular-nums; }
+.body-cislo span { color: var(--muted); font-size: 1rem; }
+.karta-dole { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; position: relative; }
+.karta-dole .meno { font-weight: 700; font-size: 1.05rem; overflow-wrap: anywhere; }
+.karta-dole .od { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+
+/* ďalšia odmena */
+.dalsia { margin: 16px 2px 0; }
+.dalsia p { margin: 0 0 8px; font-size: .95rem; }
+.pas { height: 8px; border-radius: 8px; background: var(--line); overflow: hidden; }
+.pas i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--accent); transition: width 1.1s var(--ease) .25s; }
+
+/* QR na recepciu */
+.qr { margin-top: 22px; display: grid; grid-template-columns: 8.5rem 1fr; gap: 16px; align-items: center; padding: 16px; border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); }
+.qr-obr { background: #fff; border-radius: 12px; padding: 6px; aspect-ratio: 1; }
+.qr-obr svg { display: block; width: 100%; height: 100%; }
+.qr p { margin: 0; font-size: .92rem; color: var(--muted); }
+.qr p strong { display: block; color: var(--text); font-size: 1rem; margin-bottom: 4px; }
+
+/* tlačidlá */
+.tlacidla { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.tl { appearance: none; border: 1px solid var(--line); background: transparent; color: var(--text); font: 700 .95rem/1 var(--telo); padding: 0 18px; min-height: 46px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: background .2s, border-color .2s, transform .2s var(--ease); }
+.tl:hover { border-color: var(--accent); }
+.tl:active { transform: scale(.97); }
+.tl.hlavne { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.tl:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tl[disabled] { opacity: .55; cursor: default; }
+
+/* sekcie */
+section { margin-top: 34px; animation: prichod .7s var(--ease) both; }
+section:nth-of-type(2) { animation-delay: .08s; } section:nth-of-type(3) { animation-delay: .16s; }
+.zoznam { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.zoznam li { padding: 14px 16px; border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: start; }
+.zoznam li > :not(.cena) { grid-column: 1; min-width: 0; overflow-wrap: anywhere; }
+.zoznam .nazov { font-weight: 700; }
+.zoznam .popis { color: var(--muted); font-size: .92rem; }
+.zoznam .cena { grid-column: 2; grid-row: 1 / span 3; text-align: right; font-family: var(--nadpis); font-weight: var(--nadpis-w); font-size: 1.25rem; white-space: nowrap; }
+.zoznam .cena small { display: block; font: 400 .75rem var(--telo); color: var(--muted); }
+.zoznam li.mozes { border-color: color-mix(in srgb, var(--accent) 70%, transparent); }
+.stitok { display: inline-block; margin-top: 4px; font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-text); justify-self: start; }
+.datum { color: var(--muted); font-size: .82rem; }
+.prazdne { color: var(--muted); margin: 0; }
+.ako { color: var(--muted); margin: 0; }
+.ako b { color: var(--text); }
+
+details { border-top: 1px solid var(--line); padding: 14px 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; min-height: 28px; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 1.3rem; color: var(--muted); transition: transform .25s var(--ease); }
+details[open] summary::after { transform: rotate(45deg); }
+.historia { list-style: none; padding: 0; margin: 10px 0 0; }
+.historia li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
+.historia li:last-child { border-bottom: 0; }
+.historia .plus { color: var(--accent); font-weight: 700; white-space: nowrap; }
+
+.prepinac { display: flex; gap: 12px; align-items: flex-start; margin: 12px 0 0; cursor: pointer; }
+.prepinac input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--accent); flex: none; }
+.pozn { color: var(--muted); font-size: .88rem; margin: 8px 0 0; }
+.chyba { color: #ffb4a0; }
+.pata { margin-top: 36px; color: var(--muted); font-size: .88rem; display: grid; gap: 6px; }
+.pata a { color: var(--text); }
+.offline { margin: 0 0 14px; padding: 10px 14px; border-radius: 12px; background: var(--bg2); color: var(--muted); font-size: .88rem; border: 1px solid var(--line); }
+.ulozene { list-style: none; padding: 0; display: grid; gap: 10px; }
+
+@keyframes prichod { from { opacity: 0; transform: translateY(14px); } }
+@keyframes lesk { to { transform: translateX(120%); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 360px) { .qr { grid-template-columns: 1fr; justify-items: center; text-align: center; } .qr-obr { width: 11rem; } }
+/* Fraunces má pri tejto hrúbke výrazne kreslené číslice; body sa majú prečítať na prvý pohľad */
+[data-p="barbershop"] .body-cislo b, [data-p="barbershop"] .zoznam .cena { font-family: var(--telo); font-weight: 700; letter-spacing: -.03em; }
+.qr p .kod { display: block; margin-top: 8px; color: var(--text); font: 700 .95rem/1.2 var(--telo); letter-spacing: .12em; font-variant-numeric: tabular-nums; }
