@@ -44,3 +44,21 @@ Stupeň: overené-oficiálne (web podniku). Údaje sú v `source/obsah.json`, st
 - Dostupnosť bytov: všetky „voľný“ podľa stavu z 13. 10. 2026.
 - Adresa stavby (ulica, parcela), IČO, mená predajcov, otváracie hodiny kancelárie: web neuvádza, preto nie sú ani tu.
 - Ceny: uvedené ako na webe; či sú s DPH a či ešte platia, web nehovorí.
+
+## Texty odvodené zo zdroja (nie doslovné)
+
+Nový web niektoré vety skladá z údajov vyššie; nič v nich nie je navyše oproti zdroju:
+
+- „Dve dispozične rovnaké bytovky, 3 nadzemné podlažia, 4 byty na podlaží. Schéma, poradie bytov podľa pôdorysov.“ –
+  popis nakreslenej fasády (projekt + pôdorysy; fasáda je schéma, nie fotka, lebo web neuvádza orientáciu).
+- Filter „Všetky – 3 podlažia“, „Dvojizbové – 114 900 €, 44,20 m²“, „Trojizbové – 149 900 €, 68,67 m²“.
+- „Vyberte si byt. Dvojizbový alebo trojizbový byt, všetky s loggiou a vlastným parkovacím miestom v cene.“ – prvý krok
+  skrátenej cesty na úvode (typy bytov, loggia v zozname miestností, parkovanie v cene).
+- „Vzorový interiér … vizualizácie nie sú priradené ku konkrétnemu bytu.“ – pôvodný web má sériu byt-a1 pri byte A1,
+  ostatné interiéry bez priradenia.
+- „Loggia a vlastné parkovacie miesto sú v cene bytu.“ – štandard + výhody.
+- Pätka: „Ceny a dostupnosť bytov podľa stavu ponuky k 13. 10. 2026.“ – dátum stiahnutia zdroja.
+- Názvy listov („List 1 – Titulný list“ … „List 7 – Kontakt“, „Príloha“) sú reč dizajnu (projektová dokumentácia),
+  nie údaj o projekte.
+- Pôdorysy: na webe sú výrezy z klientových pôdorysov (výkres bez pravého horného rohu, legenda, výrez bytu); pravý
+  horný roh s cudzím označením projektu výrezy neobsahujú. Pred nasadením klient potvrdí, že pôdorysy možno zobraziť.
