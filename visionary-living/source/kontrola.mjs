@@ -1,5 +1,6 @@
 // Kontrola webu VISIONARY LIVING v prehliadači (Playwright, Chromium, bez grafickej karty).
 // Spustenie z priečinka visionary-living/: node source/kontrola.mjs [--url=https://…/visionary-living/]
+// CHROME_ARGS="--flag …" pridá argumenty prehliadaču (napr. pripnutie certifikátu proxy cez --ignore-certificate-errors-spki-list=<SPKI>).
 // Overí: každá stránka bez chýb v konzole a bez zlyhaných požiadaviek, všetky odkazy a obrázky existujú,
 // žiadne vodorovné pretekanie pri 320, 375, 390, 768 a 1440 px, výber bytu (filter, klávesnica, panel),
 // prezeranie obrázkov, formulár, beh bez JavaScriptu a s obmedzeným pohybom, základná prístupnosť.
@@ -31,7 +32,7 @@ function server(root) {
 const argUrl = process.argv.find((a) => a.startsWith('--url='));
 const srv = argUrl ? null : await server(ROOT);
 const BASE = argUrl ? argUrl.slice(6) : srv.url;
-const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', ...(process.env.CHROME_ARGS || '').split(' ').filter(Boolean)] });
 let fails = 0;
 const ok = (name, cond, info) => { console.log(`${cond ? 'OK   ' : 'CHYBA'} ${name}${info !== undefined ? '  ' + JSON.stringify(info) : ''}`); if (!cond) fails++; };
 
