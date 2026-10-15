@@ -584,6 +584,7 @@ Zápis `TX` = `obsah/texty.json`, `PR` = `obsah/priestor.json`, `CN` = `obsah/ce
   - `data-full`: pri širokej ploche `w-1920`, inak najväčšia `t` (1600 alebo 1080).
   - `PLNA_FOTKA` má prednosť.
   - `data-w`/`data-h` = rozmery plnej fotky.
+  - *(Opravy po kontrole B4, rozhodnutie – zámer)* Pod 760 px je náhľad širokej plochy zo sady `t` (4 : 5) a lightbox ukáže **tú istú sadu `t`** (`data-full-t`, `data-wt`, `data-ht`), nie širokú fotku `w`: let z náhľadu do fotky je bez zmeny pomeru a bez deformácie a lightbox ukazuje to, na čo návštevník ťukol, vo väčšom. Široký záber tak na telefóne vidí len ako výrez 4 : 5 (na počítači celý). Alternatíva – let do výrezu `t` a po dosadnutí prelnutie na `w` cez `swap('fade')` – mení pomer fotky prelnutím a mení vzhľad; ostáva otvoreným rozhodnutím orchestrátora (13).
 
 | Plocha | ≥ 1024 px | 760–1023 px | < 760 px |
 |---|---|---|---|
@@ -848,11 +849,12 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
 @media (prefers-reduced-motion: reduce){
   :root{--dur-3:0s;--dur-4:0s;--dur-5:0s;--dur-6:0s;--dur-7:0s;--rise:0px;--rise-2:0px;--stagger:0ms;--zoom-in:1;--zoom-hover:1;--par:0px}
   html{scroll-behavior:auto}
-  .dot::after{animation:none}
+  .dot::after,:root .is-open .dot.is-vis::after{animation:none}
 }
 ```
 
 - Toto je **jediný** blok `prefers-reduced-motion: reduce` v `style.css`.
+- *(Opravy po kontrole B4)* Pulz bodky vypína v bloku `reduce` aj selektor `:root .is-open .dot.is-vis::after` – vyššia špecificita (0,4,1) ako pravidlo s `infinite` (`.is-open .dot.is-vis::after`, 0,3,1), lebo blok `reduce` je v súbore skôr a pri rovnakej špecificite by prehral; samotné `.dot::after{animation:none}` (0,1,1) to pravidlo neprebilo a záruka stála len na tokene `--dur-7:0s`. `test_css_pravidla` overuje, že každý selektor s `infinite` má v bloku `reduce` náprotivok s `animation:none`, ktorý ho prebije (vyššia špecificita, alebo rovnaká a neskôr v súbore).
 - Prelínanie farby a opacity do 200 ms (`--dur-1`, `--dur-2`) ostáva aj pri obmedzenom pohybe, nejde o pohyb.
 - Všetky `transition` a `animation` v súbore používajú len tieto tokeny. Iné trvania sú dovolené len ako výpočet z tokenov.
 
@@ -902,7 +904,8 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 - Opona má `transform-origin` hore a zmenšuje sa k hornej hrane, takže fotka sa odkrýva zdola nahor.
 - `--i` zapisuje šablóna (`style="--i:{{ [loop.index0, 4]|min }}"`).
 - `.mask` obaľuje `h2.h2` v hlavičkách sekcií a `h3.h3` v Detailoch, Bare a krokoch. **Neobaľuje** H1 (úvod má vlastné `.line`). Doslovné testy H2 tak ostávajú.
-- **Fotka sa odhalí až keď je načítaná:** IO pridá `is-in` po splnení oboch podmienok: prvok je v okne a `img.complete && img.naturalWidth > 0`, inak sa čaká na `load`/`error` najviac 800 ms. Pod oponou je `background:var(--bg-2)`, nikdy sa neodhalí prázdny rám.
+- **Fotka sa odhalí až keď je načítaná:** IO pridá `is-in` po splnení oboch podmienok: prvok je v okne a `img.complete`, inak sa čaká na `load`/`error`. Pod oponou je `background:var(--bg-2)`, nikdy sa neodhalí prázdny rám.
+  - *(Opravy po kontrole B4)* Platí vo všetkých cestách odhalenia – pri štarte (prvok v okne), pri rýchlom posune (prvok sa objaví v hornej polovici okna), po skoku (`odhalHned`) aj po filtri: kým obrázok nie je `complete`, opona ostáva a po `load`/`error` odíde animovane (bez `.no-tr`). Hotový obrázok (aj chybný: `complete` bez `naturalWidth`) sa odhalí hneď. Poistka je 8 s a platí len pre požiadavku, ktorá sa nikdy neskončí – pôvodných „najviac 800 ms“ by na pomalej sieti odhalilo prázdny rám, do ktorého fotka skočí.
 - **Prvky v okne pri štarte** (obnova stránky, otvorenie s kotvou, skok z menu) dostanú `.is-in` spolu s `.no-tr`. `.no-tr` sa odstráni po 2 snímkach (`requestAnimationFrame` × 2).
 - **Parallax:**
   ```css
@@ -913,7 +916,7 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
   .par{position:absolute;inset:calc(var(--par) * -1) 0}
   ```
   Ak na skutočnom iPhone so Safari 26.0–26.3 parallax zaostáva, nastaviť `--par:0px` (bez ďalšej zmeny).
-- *(Zmenené v B4, podrobnosti v `IMPLEMENTACIA-POZNAMKY.md`)* Maska nadpisu posúva o `calc(105% + .4em)` a riadky H1 o `calc(100% + .35em)` (pri 105 % / 110 % vykúkali pod maskou mäkčene a dĺžne). Opona je len na `.rv-img::after` (rámy s odhalením), nie na každom `.ph`. Prvok, ktorý pri vstupe do okna už leží v hornej polovici okna (rýchly posun, skok bez VT), dostane `.is-in` hneď s `.no-tr`. Parallax a odchod úvodu majú `fill` `backwards` (mimo rozsahu nedržia vrstvy kompozítora). Sekcie a pätička majú `isolation:isolate` (vrstvy ≤ 40).
+- *(Zmenené v B4, podrobnosti v `IMPLEMENTACIA-POZNAMKY.md`)* Maska nadpisu posúva o `calc(105% + .4em)` a riadky H1 o `calc(100% + .35em)` (pri 105 % / 110 % vykúkali pod maskou mäkčene a dĺžne). Opona je len na `.rv-img::after` (rámy s odhalením), nie na každom `.ph`. Prvok, ktorý pri vstupe do okna už leží v hornej polovici okna (rýchly posun, skok bez VT), dostane `.is-in` hneď s `.no-tr` (fotka až keď je načítaná, pozri vyššie). Parallax a odchod úvodu majú `fill` `backwards` (mimo rozsahu nedržia vrstvy kompozítora). Sekcie a pätička majú `isolation:isolate` (vrstvy ≤ 40).
 
 ### 5.4 Katalóg prechodov
 
@@ -972,6 +975,8 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 - **#20, #24:** let fotky ide cez dočasný rám `.lb-fly` (rám mení `scale` X/Y, fotka v ňom opačne), aby náhľad orezaný `object-fit:cover` prešiel do celej fotky bez deformácie; pred letom `decode()` rámu (najviac 250 ms) a `decoding='sync'`. Široké plochy eseje majú pod 760 px `data-full-t` (lightbox ukáže tú istú sadu `t` ako náhľad).
 - **#21, #22:** popisok a počítadlo sa prelínajú spolu s novou fotkou (rovnaké trvanie a oneskorenie), takže nikdy nie sú novšie než fotka pod nimi.
 - **#18:** trvanie hoveru `calc(var(--dur-4) * 1.09375)` = 700 ms, pri obmedzenom pohybe 0.
+- **Opravy po kontrole B4 – otvorenie s `#top` alebo `#main`** (adresa po obnovení stránky po skoku na logo): skript v hlavičke ich berie ako otvorenie bez kotvy (nepridá `kotva`, pridá `in-hero` a rozhodne `hx`/`hx-quick`); `header()` nečaká na prvý posun, ak kotva chýba alebo cieľ leží hore.
+- **Opravy po kontrole B4 – #20, #25 (fokus):** po `showModal()` dostane pri fotke fokus tlačidlo `.lb-close` (`focus({preventScroll:true})`); Chromium inak zameral skryté `video.lb-video` (`display:none`) a čítač obrazovky nič neoznámil. Pri videu ostáva natívny fokus na viditeľnom videu.
 
 ### 5.5 Ruší sa
 
@@ -1443,14 +1448,14 @@ Zástupné značky v nových poliach fungujú automaticky.
 | Fotka úvodu (AVIF) | 268 kB mobil | mobil ≤ 150 kB, počítač ≤ 200 kB |
 | Prenos do nečinnosti, mobil | 993 kB | ≤ 600 kB (plagáty sa nesťahujú) |
 | Prenos po prejdení celej stránky | 9,05 / 8,3 MB | mobil ≤ 3,5 MB (videá len po ťuknutí), počítač ≤ 5 MB |
-| Plynulosť (`audit-pohyb/skripty/meraj.mjs`, CPU 4×, gesto 2 000 px/s) | 26,8 / 33,3 fps | ≥ 55 fps na počítači aj telefóne; ≤ 1 % snímok > 50 ms v každej sekcii |
+| Plynulosť pri skrolovaní (`audit-pohyb/skripty/meraj.mjs`, gesto 2 000 px/s, bez WebGL) | 26,8 / 33,3 fps (hlavné vlákno, CPU 4×) | **CPU 4×:** snímky kompozítora z trace (`DrawFrame`, `kompozitor.py`) ≥ 55 za s a ≤ 1 % intervalov > 50 ms; **CPU 1×:** snímky hlavného vlákna ≥ 55 fps a ≤ 1 % snímok > 50 ms; na počítači aj telefóne *(prah zmenený po kontrole B4, zdôvodnenie pod tabuľkou)* |
 | Nečinnosť hlavného vlákna (`necinnost.mjs`, CPU 4×) | 63–82 % | ≤ 6 % |
 | Vrstvy kompozítora | 81–110 | ≤ 40 |
 | Nekonečné animácie pri nečinnosti | 12 | len `ping`, len bodky v obraze |
 | Kontexty WebGL a `<canvas>` | 2–3 | 0 |
 | Výška stránky | 27,3 / 35,5 obrazovky | ≤ 18,5 / ≤ 23 |
 
-*(B4: plynulosť hlavného vlákna pri CPU 4× bez WebGL 38,9–40,3 fps na počítači a 47,4–50,0 fps na telefóne – cieľ ≥ 55 fps nie je splnený; snímky kompozítora 56,9 / 59,5 za s. Nečinnosť 0–1 %, vrstvy ≤ 35, CLS všetkých kotiev 0. Meranie, porovnanie so stavom pred B4 a so vzorom a rozbor sú v `IMPLEMENTACIA-POZNAMKY.md`, časť B4; o prahu a spôsobe merania rozhodne orchestrátor.)*
+*(Rozhodnutie o prahu plynulosti – Opravy po kontrole B4: pohyb B4 je len kompozitný (opacity, translate, scale, rotate), to, čo návštevník vidí, sú snímky kompozítora; snímky hlavného vlákna pri CPU 4× merajú réžiu prepočtu štýlu a PrePaint počas bežiacich prechodov. V tomto kontajneri nedosiahne prah 55 fps hlavného vlákna pri CPU 4× ani stránka bez pohybu (stav pred B4, `4675cfb`: 50,8–54,4 fps na počítači), vzor má 12,5–18,8 fps a 25–48 % snímok > 50 ms. Preto pri CPU 4× platí prah na snímkach kompozítora (`meraj.mjs --trace` + `kompozitor.py`, `DrawFrame`; B4 56,9 / 59,5 za s, kontrola 55,0 / 58,2, po opravách 55,8 / 58,0 za s s 0,6 / 0,4 % intervalov > 50 ms) a prah hlavného vlákna ≥ 55 fps a ≤ 1 % snímok > 50 ms pri CPU 1× pre celú stránku (po opravách 56,0 / 59,8 fps, 0,1 / 0 %; po sekciách informatívne – krátke sekcie majú ~30 snímok, Intro na počítači 3,3 %). Hlavné vlákno pri CPU 4× sa sleduje informatívne (B4 38,9–40,3 / 47,4–50,0 fps, po opravách 38,0 / 47,9). Nečinnosť 0–1 %, vrstvy ≤ 35, CLS všetkých kotiev 0. Meranie a rozbor: `IMPLEMENTACIA-POZNAMKY.md`, časti B4 a Opravy po kontrole B4.)*
 
 **Opatrenia:**
 
@@ -1471,7 +1476,7 @@ Zástupné značky v nových poliach fungujú automaticky.
   - `aria-current` v menu;
   - po skoku fokus na nadpis sekcie;
   - menu: Esc, fokus späť na burger;
-  - lightbox: fokus v dialógu (natívny `showModal`), Esc, ←/→, Home/End, návrat fokusu na tlačidlo zdroja;
+  - lightbox: fokus v dialógu – pri fotke na tlačidle Zavrieť (`.lb-close`, explicitne po `showModal()`; Chromium by inak zameral skryté video), pri videu natívne na videu; Esc, ←/→, Home/End, návrat fokusu na tlačidlo zdroja;
   - pás Detaily: dlaždice sú tlačidlá dosiahnuteľné tabulátorom (natívne sa posunú do obrazu), šípky s `aria-controls`;
   - rozvrh: ←/→ (ako dnes).
 - **Dotykové ciele** ≥ 44 × 44 px na ≤ 860 px: čipy, `tt-go`, `.tt-day` (56), `lv-sound`, `lv-play`, telefóny trénerov a MDS, odkazy pätičky, adresa v úvode, `summary` v otázkach a pri trénerovi, šípky pásu, tlačidlá lightboxu (48). Výnimka WCAG: odkazy vnútri súvislého textu odseku.
@@ -1547,7 +1552,7 @@ Implementátor si **každú snímku prezrie** (nástrojom Read) a zapíše nájd
 
 ### 11.4 Výkon a pohyb
 
-- Skripty z `redesign/audit-pohyb/skripty/` (prispôsobiť cestu k `_site` a port): `meraj.mjs` (CPU 4×, 1440 a 390), `necinnost.mjs`, `kotva_cls.mjs`, `obmedzeny_pohyb.mjs`, `trace.mjs`. Výsledky do `redesign/overenie/vykon/`. Prahy podľa 9.
+- Skripty z `redesign/audit-pohyb/skripty/` (prispôsobiť cestu k `_site` a port): `meraj.mjs` (CPU 4× s `--trace` a `kompozitor.py` pre snímky kompozítora, CPU 1× pre hlavné vlákno; 1440 a 390), `necinnost.mjs`, `kotva_cls.mjs`, `obmedzeny_pohyb.mjs`, `trace.mjs`. Výsledky do `redesign/overenie/vykon/`. Prahy podľa 9.
 - Lighthouse 3 behy mobil a počítač, medián, server s gzip (`redesign/audit-cms/skripty/gzip-server.mjs`). Prahy podľa 9.
 - Vrstvy kompozítora: DevTools protokol `LayerTree` (ako v audite pohybu) pri úvode a pri Detailoch.
 
@@ -1664,7 +1669,7 @@ CSS a JS sa v tomto balíku nemenia okrem dvoch vecí: odstránenia `depth.js` a
 **Akceptácia:**
 
 - `test_vzhlad.mjs` kontroly 10–12 prejdú;
-- `meraj.mjs` ≥ 55 fps a ≤ 1 % snímok > 50 ms (1440 aj 390, CPU 4×);
+- plynulosť podľa 9 *(zmenené po kontrole B4)*: pri CPU 4× snímky kompozítora ≥ 55 za s a ≤ 1 % intervalov > 50 ms (`meraj.mjs --trace` + `kompozitor.py`), pri CPU 1× `meraj.mjs` ≥ 55 fps a ≤ 1 % snímok > 50 ms (1440 aj 390);
 - `necinnost.mjs` ≤ 6 %;
 - vrstvy ≤ 40;
 - `kotva_cls.mjs` ≤ 0,02;

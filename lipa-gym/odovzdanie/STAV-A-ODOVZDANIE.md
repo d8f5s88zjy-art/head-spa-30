@@ -40,7 +40,8 @@ repozitára. Stačí napísať „nahraj do Lupa-gym“, alebo to nahrať sám (
 - Opravy: svetlejší úvod na telefóne (fitko je vidno), nová fotka v medzihre „Funkčná zóna“ (`u-38047dcd`),
   cenník na telefóne, lightbox, tlačidlo hore, záložné formáty fotiek.
 - B4: pohybový systém: jemné odhalenia, otvorenie úvodu, skok z menu cez View Transition, lightbox s letom fotky.
-  Commit `d450017`. Nezávislá kontrola B4 bola v čase zápisu rozbehnutá (výsledok nie je v tejto zálohe).
+  Commit `d450017`, po nezávislej kontrole opravy v `809bc02` (fotka sa odhalí až načítaná, fokus v lightboxe,
+  pulz bodky pri obmedzenom pohybe).
 
 ## 3. Postup pri odovzdaní (v tomto poradí)
 
@@ -62,7 +63,7 @@ repozitára. Stačí napísať „nahraj do Lupa-gym“, alebo to nahrať sám (
 
 | Krok | Čo | Stav |
 | --- | --- | --- |
-| Kontrola B4 | nezávislá kontrola pohybového systému a prípadné opravy | rozbehnutá, výsledok neuložený |
+| Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); otvorené: tlačidlo Späť po skoku z menu nevráti na pôvodné miesto (stredná), biela plocha mapy, keď sa Google mapa nenačíta |
 | B5 | výkon a prístupnosť (SPEC kap. 9 a 10), Lighthouse, klávesnica | nezačaté |
 | Filmová vrstva | **nová požiadavka majiteľa**: „viac profesionálne, filmové animácie, filmové prechody, ukáž fitko čo najlepšie“ | koncept nezačatý (prvý pokus zastavil limit relácie) |
 | B6 | záverečná kontrola, snímky 390–1920 px, návody, zoznam pre majiteľa | nezačaté |
@@ -73,7 +74,8 @@ skutočné zábery (žiadne AI), žiadne video riadené skrolovaním (klient ho 
 žiadne pripínanie obsahu, plynulosť na bežnom telefóne, pri „obmedziť pohyb“ všetko statické. Pôvodné klipy
 boli len v dočasnom priestore a v tejto zálohe nie sú; zdroj sú videá od majiteľa z 26. 9.
 
-**Známe otvorené body z kontrol:** plynulosť na počítači pri 4× spomalenom CPU je pod cieľom 55 fps (asi 40–50);
+**Známe otvorené body z kontrol:** plynulosť: prah sa meria na snímkach kompozítora pri 4× spomalenom CPU a na hlavnom
+vlákne pri bežnom CPU (zmena zapísaná v SPEC 9); rozpočet `app.js` 14 kB gzip je vyčerpaný;
 úvod na telefóne pri výške okna 781–880 px ukazuje málo fitka; fotka `volne-vahy-2` je na webe dvakrát;
 treba ručne overiť na skutočnom iPhone a Androide.
 

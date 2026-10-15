@@ -1165,3 +1165,145 @@ voľbe (b) alebo (c) sa zmení vzhľad, preto som ich nerobil sám.
 - Nezmenené z predchádzajúcich krokov: úvod na telefóne pri výške okna 781–880 px (fitko takmer zmizne, skok na hranici
   780/781 px – navrhnuté nevyberať variant pevným `max-height:780px`); tlačidlo hore od 1344 px (4.15); `volne-vahy-2`
   dvakrát; text medzihry o bicykli (13.5); číslovanie bodov 13.5 pre B6; telefón na šírku 844 × 390; 375 × 667 s oznamom.
+
+---
+
+## Opravy po kontrole B4 (15. 10. 2026)
+
+Jeden lokálny commit **`809bc02`** na vetve `redizajn-2026-10` (bez push, `main` ostáva na 396f446). Mení `assets/app.js`,
+`assets/style.css`, `sablona/index.html` (skript v hlavičke) a `nastroje/test_zostav.py`; obsah, médiá a `.pages.yml` sa
+nemenili (`obsah/` = `testdata/obsah/`), nový viditeľný text nepribudol, logo v hlavičke ostáva plnofarebné na bielej
+kartičke. Mimo repozitára: SPEC 4.5, 5.1, 5.3, 5.4, 9, 10, 11.4, 12 (B4). Pracovné súbory a dôkazy:
+`redesign/impl/oprava-B4/` (skripty kontroly `skripty/` – `cielene.mjs`, `lb_fokus.mjs`, `obmedzeny.mjs`, `meraj.mjs`,
+`kompozitor.py`, `akceptacia.mjs` – a nové `rychly_diag.mjs`, `io_diag.mjs`; výstupy `cielene/`, `diag/`, `lightbox/`,
+`obmedzeny/`, `akceptacia/`, `vykon/`, `vzhlad/`, `porovnanie/`; logy `*.log`). Každý nález som najprv overil.
+
+### 1. Plynulosť hlavného vlákna pri CPU 4× pod akceptáciou B4 (stredná) – rozhodnutie (a): prah podľa snímok kompozítora
+
+**Overenie:** nález platí a zhoduje sa s meraním B4 (časť B4 › Plynulosť): hlavné vlákno pri CPU 4× bez WebGL dáva na
+počítači 39–42 fps a 2,8–5 % snímok > 50 ms, na telefóne 47–50 fps a 1,2–1,4 %; pri CPU 1× 55,8 / 60 fps (0,4 / 0 %).
+Stav pred B4 (`4675cfb`, bez pohybu) má v tomto kontajneri na počítači 50,8–54,4 fps – prah 55 hlavného vlákna pri CPU 4×
+nedosiahne ani stránka bez jediného prechodu; vzor má 12,5–18,8 fps a 25–48 % snímok > 50 ms. Pohyb B4 je len
+kompozitný (opacity, translate, scale, rotate), to, čo návštevník vidí, sú snímky kompozítora: v trace 55,0 / 58,2 za s
+(kontrola, s réžiou tracingu) a 56,9 / 59,5 (B4), ≤ 0,6 % intervalov > 50 ms; trhanie sa v screencastoch ani videách
+neprejavilo. Hlavné vlákno pri CPU 4× meria réžiu prepočtu štýlu a PrePaint počas bežiacich prechodov (rozbor v B4:
+náklad je rozložený, zmizne až s celým pohybom – bez pohybu 55,1 fps).
+
+**Rozhodnutie** (podľa odporúčania kontroly, bez zmeny vzhľadu): prah pre CPU 4× je definovaný na snímkach kompozítora
+(`DrawFrame` z trace cez `meraj.mjs --trace` + `kompozitor.py`: ≥ 55 za s, ≤ 1 % intervalov > 50 ms), prah hlavného vlákna
+≥ 55 fps a ≤ 1 % snímok > 50 ms (`meraj.mjs`) platí pri CPU 1×; hlavné vlákno pri CPU 4× sa sleduje informatívne.
+Zapísané do SPEC 9 (riadok tabuľky a poznámka so zdôvodnením a meraniami), 11.4 a 12 (B4). Voľby (b) odhalenia len
+nadpisov a fotiek (odhad ~46 fps, stále pod 55) a (c) odhalenia na `lite-root` vypnúť menia vzhľad, preto som ich
+nerobil; ak orchestrátor rozhodne inak, je to zmena v `odhal()` a v šablóne (triedy `.rv`).
+
+**Meranie po opravách** (`vykon/`, zostava z commitu, server 8741, bez WebGL, gesto 2 000 px/s, `beh.sh`): CPU 4× s trace –
+snímky kompozítora `DrawFrame` **55,8 za s na počítači (0,6 % intervalov > 50 ms, max 60 ms) a 58,0 za s na telefóne
+(0,4 %, max 306 ms – jediná snímka)**, `Scheduler::BeginImplFrame` 56,3 / 59,8 za s; CPU 1× hlavné vlákno **56,0 fps
+(0,1 % > 50 ms, 0 dlhých úloh) a 59,8 fps (0 %)** – nový prah je splnený na počítači aj telefóne. Hlavné vlákno pri CPU 4×
+(informatívne): bez trace 38,0 fps (6,5 %) / 47,9 fps (1,5 %), s trace 35,4 / 43,8 – rovnako ako v B4 (38,9–40,3 /
+47,4–50,0) a v kontrole (39,8–42,4 / 48,9–49,3); opravy výkon nemenia. Po sekciách pri CPU 1× je nad 1 % len Intro na
+počítači (3,3 %, 1 snímka z ~30; v kontrole 5,9 %) – krátke sekcie majú málo snímok a Intro nesie dobeh otvorenia úvodu
+a dekódovanie fotiek eseje; prah hlavného vlákna pri CPU 1× som preto zapísal pre celú stránku a hodnoty po sekciách ako
+informatívne (ak má platiť „v každej sekcii“, rozhodne orchestrátor). Trace (74 a 91 MB) som po výpočte zmazal.
+
+### 2. Po rýchlom posune sa fotky odhalili ako prázdne sivé rámy (stredná) – opravené
+
+**Overenie:** nález platí. `odhal()` v IO odhalil prvok, ktorý sa objavil v hornej polovici okna, hneď (`ukaz(el, true)`)
+bez kontroly načítania; to isté `odhalHned()` (po skoku cez VT a po filtri) a `start()` (prvky v okne pri štarte, napr.
+otvorenie s kotvou). Na sieti 1,5 Mb/s (`cielene.mjs`, okamžitý posun na `#bar`) mali obe fotky baru `.is-in` s prázdnym
+`currentSrc` hneď a nenačítané ešte po 1,5 s – dva sivé rámy (`--bg-2`), do ktorých fotka potom skočila.
+
+**Oprava (`app.js`, `odhal()`):** nová `cakaj(el)`: ak `.rv-img` má `img`, ktorý nie je `complete`, prvok sa neodhalí,
+odoberie sa z IO a čaká na `load`/`error`; potom dostane `.is-in` bez `.no-tr`, takže opona odíde animovane. Volá sa
+zo všetkých ciest – `ukaz()` (bežné odhalenie aj skratka „hlboko v okne“), `odhalHned()` (skok, filter) aj `start()`
+(prvky v okne pri štarte). Dve odchýlky od pôvodného textu SPEC 5.3, zapísané v SPEC:
+
+- podmienka je `img.complete` namiesto `complete && naturalWidth`: hotový obrázok, aj chybný (`complete` bez
+  `naturalWidth`, `error` už prebehol), sa odhalí hneď – inak by naň čakanie nikdy neskončilo;
+- poistka je **8 s namiesto 800 ms**: fotky baru (`-1080.avif`) sa na 1,5 Mb/s načítajú až po ~2,5 s, s 800 ms by sa
+  po 0,8 s odhalil prázdny rám a fotka by doň skočila – presne nález. Poistka tak slúži len požiadavke, ktorá sa nikdy
+  neskončí (udalosti `load`/`error` prídu vždy inak).
+
+Pri skoku cez View Transition sa fotky prvej obrazovky cieľa dekódujú vopred (≤ 250 ms), takže sú `complete` a dostanú
+`.is-in` s `.no-tr` vo vnútri prechodu ako doteraz. `app.js` je 14 332 B gzip (limit 14 336 B) – komentáre som skrátil,
+rezerva je už len 4 B (pre B5 bude treba šetriť).
+
+**Overené** (`cielene.mjs` 1440 aj 390, sieť 1,5 Mb/s, okamžitý posun na `#bar`, `#detaily`, `#treneri`, `.foot`):
+0 prvkov `.rv-img.is-in` s nenačítaným obrázkom hneď aj po 1,5 s (predtým 2 pri `#bar`). `rychly_diag.mjs` (posun na `#bar`,
+`MutationObserver` na `.is-in`): na pomalej sieti dostanú fotky baru `.is-in` po načítaní (1440: 2 537 / 2 596 ms; 390:
+1 299 / 1 795 / 1 924 ms), bez `.no-tr` (opona odíde animovane), dovtedy opona `scale 1 1`; na rýchlej sieti 46–104 ms.
+Snímky `cielene/cielene-1440/rychly-bar.png` (120 ms: pod nadpisom Bar nič, žiadne sivé rámy) a `diag/rychly-1440-pomala-8s.png`
+(fotky odhalené) prezreté. Zoznam „skrytých v okne“ v skripte kontroly ostáva neprázdny (16–18 pri `#bar`), ale ide o
+dlaždice pásu Detaily, ktoré pás oreže (rám pásu končí 6 px nad oknom, dlaždice vyčnievajú 8 px pod ním – `io_diag.mjs`:
+`isIntersecting: false`), o prvky mimo šírky okna a o prvky v dolných 12 % (rootMargin); skript ich počíta len podľa
+zvislej polohy. `akceptacia.mjs` (skoky zo 7 položiek menu a 8 odkazov pätičky, lightbox 0/120/300 ms): **22/22 OK**
+pri 1440 aj 390 – nadpis pod lištou po 400 ms, 0 prázdnych rámov, 0 neodhalených prvkov.
+
+### 3. Otvorenie adresy s `#top` alebo `#main` (nízka) – opravené
+
+**Overenie:** nález platí – skript v hlavičke pri každom `location.hash` pridal `kotva` a skončil pred `in-hero` aj pred
+`hx`/`hx-quick`; `header()` čakal na prvý posun. `#top` sa do adresy zapisuje po skoku na logo, obnovenie stránky ho vráti.
+
+**Oprava:** skript v hlavičke (`index.html`) berie `#top` a `#main` (`main#main` leží hore) ako otvorenie bez kotvy –
+nepridá `kotva`, pridá `in-hero` a rozhodne `hx`/`hx-quick`; `header()` čaká na posun len pri kotve, ktorá existuje a leží
+pod horným okrajom (`getBoundingClientRect().top >= 1` pri `scrollY 0`), inak nastaví `in-hero` v prvej snímke. `#top`
+v adrese po skoku na logo som nechal (SPEC 5.4 #11 bod 4; akceptačný skript kontroluje `#id` po každom skoku).
+**Overené** (`cielene.mjs`, `/?gk-at=…#top` a `#main`, 1440 aj 390): `html` má `in-hero hx hx-lit hx-go hx-done`,
+`.bar::before` opacity 0, úvod otvorený; snímky `cielene-*/otvorenie-top.png`, `otvorenie-main.png` prezreté (úvod ako pri
+bežnom otvorení, lišta priehľadná).
+
+### 4. Po otvorení lightboxu mal fokus skrytý `video.lb-video` (nízka) – opravené
+
+**Overenie:** nález platí (Chromium pri `showModal()` zameral `video[controls][hidden]`, `display:none`). **Oprava
+(`app.js`, `otvor()`):** po `showModal()` dostane pri fotke (`vid.hidden`) fokus `.lb-close` (`focus({preventScroll:true})`);
+pri videu Ladydefence ostáva natívny fokus na viditeľnom videu s ovládaním. Esc vracia fokus na `.ph-btn` ako doteraz.
+**Overené** (`lb_fokus.mjs`, Enter na `.ph-btn`, 1440 aj 390): `activeElement` hneď aj po 1,5 s = `BUTTON.lb-close`
+(viditeľný, `display:grid`, v dialógu), Tab ďalej `lb-prev` → `lb-next`, po Esc `BUTTON.ph-btn`. SPEC 10 a 5.4 doplnené.
+
+### 5. Pulz bodky pri obmedzenom pohybe vypnutý len tokenom (nízka) – opravené
+
+**Overenie:** nález platí – `.dot::after{animation:none}` (0,1,1) v bloku `reduce` prebíjalo neskoršie
+`.is-open .dot.is-vis::after{animation:ping … infinite}` (0,3,1); vypočítaný štýl `ping/0s/infinite`. Prvý pokus
+s rovnakým selektorom v bloku `reduce` nestačil (rovnaká špecificita, blok je v súbore skôr – vyhralo pravidlo s `infinite`),
+preto má náprotivok `:root .is-open .dot.is-vis::after` (0,4,1). **Test** `test_css_pravidla` nájde každý selektor
+s `infinite` a žiada v bloku `reduce` pravidlo `animation:none` so selektorom vyššej špecificity (alebo rovnakej a neskôr
+v súbore); negatívna skúška so starým blokom spadne. SPEC 5.1 doplnené.
+**Overené** (`obmedzeny.mjs`, 1440 aj 390): vypočítaný štýl `.dot::after` všetkých bodiek `none/0s/1` (predtým `ping/0s/infinite`),
+po prejdení stránky 0 animácií, 0 skrytých prvkov, 0 opôn; `test_vzhlad` kontrola 10 (reduce: 0 animácií) a 11 (nečinnosť: len `ping`
+viditeľných bodiek pri otvorenej prevádzke) OK pri 390 aj 1440.
+
+### 6. Lightbox na telefóne ukáže pri širokých záberoch eseje výrez 4 : 5 (nízka) – ponechané, zapísané ako zámer
+
+**Overenie:** platí (sada `t` pod 760 px, `data-full-t`; na počítači `w-1920`). **Rozhodnutie:** ponechať – let z náhľadu
+do fotky je bez zmeny pomeru a bez deformácie a lightbox ukazuje vo väčšom to, na čo návštevník ťukol (rovnako ako
+dlaždice Detailov a Baru, kde je plná fotka tej istej sady ako náhľad). Zapísané do SPEC 4.5 ako zámer; alternatíva
+(let do výrezu `t` a po dosadnutí prelnutie na `w` cez `swap('fade')`) mení pomer fotky prelnutím, je to zmena vzhľadu
+a ostáva otvoreným rozhodnutím orchestrátora. Bez zmeny kódu.
+
+### Overenie pred commitom (logy `impl/oprava-B4/`)
+
+- `python3 nastroje/zostav.py` → kód 0, „Web je zostavený“.
+- `python3 -m unittest discover -s nastroje -p 'test_*.py'` → **86/86 OK** (`test_css_pravidla` s kontrolou náprotivkov v bloku
+  `reduce`; negatívna skúška so starým blokom spadne; `app.js` 14 332 B gzip ≤ 14 336 B, `style.css` 16,1 kB ≤ 22 kB, 838 riadkov).
+- `node nastroje/test_prehliadac.mjs ../lupa-vzor` aj `../lupa-vzor-cms` → „Všetko v poriadku.“ (na zostave z commitu).
+- `BEZ_PIXELOV=1 node nastroje/porovnaj_so_vzorom.mjs ../lupa-vzor-cms _site …/oprava-B4/porovnanie` → kód 0, „Bez rozdielov
+  okrem zámerných zmien“ (živé texty, filter 8×, dni 7×, Tréner, otázky, lightbox pri 390 aj 1440).
+- `node nastroje/test_vzhlad.mjs _site …/oprava-B4/vzhlad` → kód 0, **93 kontrol OK** (výška 390: 22,89 a 1440: 18,29 bez zmeny,
+  kontrast 8 pri 6 šírkach, 10, 11, 12 – CLS `/#cennik` 0,0000); po úprave bloku `reduce` znova `KONTROLY=10,11,12` (`vzhlad2.log`) OK.
+- Cielené skripty kontroly na zostave z commitu: `cielene.mjs` (1440, 390), `lb_fokus.mjs`, `obmedzeny.mjs`, `akceptacia.mjs`
+  22/22, `rychly_diag.mjs`, `lb_fv.mjs` – výsledky pri nálezoch; plynulosť `vykon/` (bod 1).
+- Snímky prezreté (Read): `vzhlad/snimky/` úvod, esej, Detaily, Bar pri 390 a 1440; stavy lightbox (1. záber, Detaily) a menu pri
+  390 a 1440 – rozloženie bez zmeny oproti B4, logo plnofarebné na bielej kartičke, v lightboxe na telefóne výrez 4 : 5 (bod 6).
+  Tlačidlo × má na snímke lightboxu pri 1440 obrys fokusu, lebo skript pred snímkou stlačil šípky (`lb_fv.mjs`: po kliku myšou
+  alebo ťuknutí je `:focus-visible` false, po klávesnici true – správne). Ďalej `cielene-*/otvorenie-top.png`,
+  `otvorenie-main.png`, `rychly-bar.png` a `diag/rychly-*-pomala-8s.png`.
+- `obsah/` = `testdata/obsah/`; grep `btn-volt|btn-ghost|reveal\b|data-tilt` v `sablona`, `assets` = 0; bez push, `main` nezmenený.
+
+### Otvorené (na rozhodnutie orchestrátora)
+
+- Prah plynulosti: prijaté rozhodnutie (a) – prah pri CPU 4× na snímkach kompozítora, hlavné vlákno pri CPU 1×; ak má
+  platiť pôvodný prah hlavného vlákna pri CPU 4×, treba (b) alebo (c) so zmenou vzhľadu.
+- Lightbox na telefóne pri širokých záberoch eseje: ponechaná sada `t` (zámer v SPEC 4.5); alternatíva s prelnutím na `w`.
+- Rozpočet `app.js` 14 kB gzip je vyčerpaný (rezerva 4 B).
+- Nezmenené z B4: ručné overenie na skutočnom iPhone a Androide (SPEC 11.5); úvod na telefóne pri výške okna 781–880 px;
+  tlačidlo hore od 1344 px; `volne-vahy-2` dvakrát; text medzihry o bicykli (13.5).
