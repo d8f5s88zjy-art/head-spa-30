@@ -11,6 +11,7 @@ mkdir -p "$OUT"
 run() { echo "=== $(date +%T) $*"; timeout 3600 node --max-old-space-size=8000 "$D/meraj.mjs" --out="$OUT" --vernost=1 "$@" 2>&1 | tail -40; }
 run --url="$URL" --zariadenie=telefon --cpu=4 --film=off --meno=telefon-cpu4-film-off-fast4g-r2
 run --url="$URL" --zariadenie=telefon --cpu=4 --film=predvolene --meno=telefon-cpu4-film-predvolene-fast4g-r2
+run --url="$URL" --zariadenie=telefon --cpu=4 --film=on --maxPass=200 --meno=telefon-cpu4-film-on-fast4g-r2
 for i in 1 2 3; do run --url="$GZ" --zariadenie=telefon --cpu=4 --film=predvolene --fazy=nacitanie --meno=gzip-telefon-cpu4-predvolene-r$i; done
 for i in 1 2; do run --url="$GZ" --zariadenie=telefon --cpu=4 --film=on --fazy=nacitanie,uvod --meno=gzip-telefon-cpu4-on-r$i; done
 for i in 1 2; do run --url="$GZ" --zariadenie=pocitac --cpu=1 --film=predvolene --fazy=nacitanie --meno=gzip-pocitac-cpu1-predvolene-r$i; done

@@ -359,11 +359,10 @@ await ctx.addInitScript(INIT);
 // pokus A/B bez zmeny repozitára: --css="pravidlá" sa vloží do stránky (napr. vypnúť backdrop-filter a overiť príčinu)
 if (opt.css) await ctx.addInitScript((css) => { const put = () => { const st = document.createElement('style'); st.textContent = css; document.head.append(st); }; if (document.head) put(); else document.addEventListener('DOMContentLoaded', put); }, opt.css);
 if (opt.vernost === '1') {
-  // prihláška k vernostnej karte ako po nasadení s adminom (data-zapnute); stránka sa inak nemení
-  await ctx.route((u) => /\/barbershop-30\/(\?.*)?$/.test(u.toString()) || /\/barbershop-30\/index\.html/.test(u.toString()), async (route) => {
-    const r = await route.fetch(); const body = (await r.text()).replace('data-prevadzka="barbershop" defer', 'data-prevadzka="barbershop" data-zapnute defer');
-    await route.fulfill({ response: r, body });
-  });
+  // prihláška k vernostnej karte ako po nasadení s adminom (data-zapnute): atribút sa doplní skriptu vernost.js pri
+  // jeho vložení do stránky (pred spustením, je defer). Nie cez page.route – zachytávanie vypína HTTP cache
+  // prehliadača a film by pri návrate k záberu sťahoval fotky znova (skreslilo by to sieť aj čierne okná).
+  await ctx.addInitScript(() => { const mo = new MutationObserver((ms) => { for (const m of ms) for (const n of m.addedNodes) if (n.tagName === 'SCRIPT' && /vernost\.js/.test(n.src || n.getAttribute('src') || '')) { n.setAttribute('data-zapnute', ''); mo.disconnect(); } }); mo.observe(document, { childList: true, subtree: true }); });
 }
 const page = await ctx.newPage();
 const errors = [];

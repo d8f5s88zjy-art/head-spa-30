@@ -1,0 +1,24 @@
+p390 rohozka 0.35 {"cur":"rohozka-m","mix":0.22,"cut":"rohozka>sala pohyb"}
+p390 rohozka 0.5 {"cur":"sala-video","mix":0.5,"cut":"rohozka>sala pohyb"}
+p390 rohozka 0.65 {"cur":"sala-video","mix":0.65,"cut":"rohozka>sala pohyb"}
+p390 sala 0.35 {"cur":"sala-video","mix":0.35,"cut":"sala>stol prelinanie"}
+p390 sala 0.5 {"cur":"stol-video","mix":0.5,"cut":"sala>stol prelinanie"}
+p390 sala 0.65 {"cur":"stol-video","mix":0.65,"cut":"sala>stol prelinanie"}
+p390 cakaren 0.35 {"cur":"cakaren-m","mix":0.35,"cut":"cakaren>sala-rano pohyb"}
+p390 cakaren 0.5 {"cur":"sala-rano-video","mix":0.5,"cut":"cakaren>sala-rano pohyb"}
+p390 cakaren 0.65 {"cur":"sala-rano-video","mix":0.65,"cut":"cakaren>sala-rano pohyb"}
+p390 kava 0.35 {"cur":"kava-m","mix":0,"cut":null}
+p390 kava 0.5 {"cur":"sud-m","mix":0.5,"cut":"kava>sud popredie"}
+p390 kava 0.65 {"cur":"sud-m","mix":0.65,"cut":"kava>sud popredie"}
+d1440 rohozka 0.35 {"cur":"rohozka","mix":0.35,"cut":"rohozka>sala pohyb"}
+d1440 rohozka 0.5 {"cur":"sala","mix":0.5,"cut":"rohozka>sala pohyb"}
+d1440 rohozka 0.65 {"cur":"sala","mix":0.5,"cut":"rohozka>sala pohyb"}
+d1440 sala 0.35 {"cur":"sala","mix":0.35,"cut":"sala>stol popredie"}
+d1440 sala 0.5 {"cur":"stol","mix":0.5,"cut":"sala>stol popredie"}
+d1440 sala 0.65 {"cur":"stol","mix":0.65,"cut":"sala>stol popredie"}
+d1440 cakaren 0.35 {"cur":"cakaren","mix":0.35,"cut":"cakaren>sala-rano popredie"}
+d1440 cakaren 0.5 {"cur":"sala-rano","mix":0.5,"cut":"cakaren>sala-rano popredie"}
+d1440 cakaren 0.65 {"cur":"sala-rano","mix":0.65,"cut":"cakaren>sala-rano popredie"}
+d1440 kava 0.35 {"cur":"kava","mix":0,"cut":null}
+d1440 kava 0.5 {"cur":"sud","mix":0.5,"cut":"kava>sud popredie"}
+d1440 kava 0.65 {"cur":"sud","mix":0.65,"cut":"kava>sud popredie"}

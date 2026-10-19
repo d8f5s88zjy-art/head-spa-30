@@ -1,0 +1,235 @@
+{
+ "kontrast": null,
+ "dev": "p390",
+ "mode": "on",
+ "url": "http://127.0.0.1:8211/barbershop-30/?film=on&uvod=off",
+ "classes": "karty world js-kin js-steps world-in",
+ "vh": 844,
+ "max": 15591,
+ "screens": 19.472748815165875,
+ "layoutShifts": [],
+ "errs": [],
+ "beats": [
+  {
+   "name": "karta-07-sud",
+   "y": 12731,
+   "kind": "karta",
+   "file": "00-karta-07-sud.jpg",
+   "ciste": "00-karta-07-sud-ciste.png",
+   "scrollY": 12731,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Cestou von",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    16,
+    20,
+    50.7
+   ],
+   "film": {
+    "S": 7.989,
+    "T": 7.989,
+    "cur": "sud-m",
+    "mix": 0,
+    "cut": null,
+    "dpr": 2,
+    "ready": true,
+    "size": 1448,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "strih-08-vstup",
+   "y": 13076,
+   "kind": "strih",
+   "file": "01-strih-08-vstup.jpg",
+   "ciste": null,
+   "scrollY": 13076,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    },
+    {
+     "fs": 20,
+     "t": "Barbershop 30",
+     "cls": "brand"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    20
+   ],
+   "film": {
+    "S": 8.575,
+    "T": 8.575,
+    "cur": "vstup-m",
+    "mix": 0.993,
+    "cut": "sud>vstup odjazd",
+    "dpr": 2,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "vstup",
+     "o": 0.26,
+     "so": 0.26
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-08-vstup",
+   "y": 13284,
+   "kind": "karta",
+   "file": "02-karta-08-vstup.jpg",
+   "ciste": "02-karta-08-vstup-ciste.png",
+   "scrollY": 13284,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Rezervácia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    16,
+    20,
+    50.7
+   ],
+   "film": {
+    "S": 8.955,
+    "T": 8.955,
+    "cur": "vstup-m",
+    "mix": 0,
+    "cut": null,
+    "dpr": 2,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "kontakt-pas-nastup",
+   "y": 14069,
+   "kind": "prechod",
+   "file": "03-kontakt-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 14069,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    18,
+    20,
+    32
+   ],
+   "film": {
+    "S": 9,
+    "T": 9,
+    "cur": "vstup-m",
+    "mix": 0,
+    "cut": null,
+    "dpr": 2,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  }
+ ]
+}
