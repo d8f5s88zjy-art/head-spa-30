@@ -97,13 +97,13 @@ export function analyze(events, { from = 0, to = Infinity } = {}) {
     ulohy: tasks.length,
     dlhe_ulohy: long,
     hlavne_vlakno_ms: { spolu: r1(tasks.reduce((a, t) => a + t.dur / 1000, 0)), skript: sum('FunctionCall'), styl: sum('UpdateLayoutTree'), layout: sum('Layout'), prepaint: sum('PrePaint'), paint: sum('Paint'), layerize: sum('Layerize'), commit: sum('Commit'), dekodovanie: r1(decodeMain.reduce((a, e) => a + e.dur / 1000, 0)) },
-    styl_prepocty: { n: ult.length, prvkov_p50: pct(counts, 0.5), prvkov_p95: pct(counts, 0.95), prvkov_max: Math.max(0, ...counts), velke: bigUlt.slice(0, 30) },
+    styl_prepocty: { n: ult.length, prvkov_p50: pct(counts, 0.5), prvkov_p95: pct(counts, 0.95), prvkov_max: counts.reduce((a, b) => Math.max(a, b), 0), velke: bigUlt.slice(0, 30) },
     vynutene: [...forced.entries()].sort((a, b) => b[1].ms - a[1].ms).slice(0, 15).map(([k, v]) => ({ k, n: v.n, ms: r1(v.ms) })),
     paint: { n: paints.length, ms: r1(paints.reduce((a, e) => a + e.dur / 1000, 0)), podla_uzla: [...paintByNode.entries()].sort((a, b) => b[1].ms - a[1].ms).slice(0, 12).map(([id, v]) => ({ nodeId: id, n: v.n, ms: r1(v.ms), plocha_kpx: Math.round(v.area / 1000) })) },
     skripty: [...scripts.entries()].sort((a, b) => b[1].ms - a[1].ms).slice(0, 15).map(([k, v]) => ({ k, n: v.n, ms: r1(v.ms), max: r1(v.max) })),
     raster: byThread(['RasterTask']),
     dekod_vlakna: byThread(['Decode Image', 'ImageDecodeTask', 'Decode LazyPixelRef', 'ImageFrameGenerator::decode', 'ImageFrameGenerator::decodeAndScale']),
-    dekod_hlavne: decodeMain.length ? { n: decodeMain.length, ms: r1(decodeMain.reduce((a, e) => a + e.dur / 1000, 0)), max: r1(Math.max(...decodeMain.map((e) => e.dur / 1000))) } : null,
+    dekod_hlavne: decodeMain.length ? { n: decodeMain.length, ms: r1(decodeMain.reduce((a, e) => a + e.dur / 1000, 0)), max: r1(decodeMain.reduce((a, e) => Math.max(a, e.dur / 1000), 0)) } : null,
   };
 }
 
@@ -111,7 +111,7 @@ function stackTop(e) {
   const st = e.args?.beginData?.stackTrace || e.args?.data?.stackTrace || e.args?.stackTrace;
   if (!st || !st.length) return '';
   const f = st[0];
-  return `${(f.url || '').split('/').pop()}:${f.functionName || '(anon)'}:${(f.lineNumber ?? -1) + 1}`;
+  return `${(f.url || '').split('/').pop()}:${f.functionName || '(anon)'}:${f.lineNumber ?? -1}`;
 }
 
 // zneplatnenia štýlu (invalidationTracking): čo zmenilo triedu/atribút a koľko uzlov tým zasiahlo
@@ -132,4 +132,23 @@ export function invalidations(events, { from = 0, to = Infinity } = {}) {
   }
   const top = (m) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25).map(([k, n]) => `${n}× ${k}`);
   return { naplanovane: top(sched), prepocet: top(recalc), n: ev.length };
+}
+
+// rozklad úloh s vykreslením (PrePaint/Commit) na časti; percentily cez snímky
+export function frameBreakdown(events) {
+  const mt = mainThread(events);
+  const X = events.filter((e) => `${e.pid}:${e.tid}` === mt && e.ph === 'X').sort((a, b) => a.ts - b.ts || b.dur - a.dur);
+  const tasks = X.filter((e) => e.name === 'RunTask');
+  const K = ['FireAnimationFrame', 'UpdateLayoutTree', 'Layout', 'PrePaint', 'Paint', 'Layerize', 'Commit', 'HitTest', 'IntersectionObserverController::computeIntersections'];
+  const frames = []; let j = 0;
+  for (const t of tasks) {
+    while (j < X.length && X[j].ts < t.ts) j++;
+    const parts = Object.fromEntries(K.map((k) => [k, 0])); let isFrame = false;
+    for (let i = j; i < X.length && X[i].ts < t.ts + t.dur; i++) { const e = X[i]; if (e === t) continue; if (e.name === 'PrePaint' || e.name === 'Commit') isFrame = true; if (K.includes(e.name)) parts[e.name] += e.dur / 1000; }
+    if (isFrame) frames.push({ ms: t.dur / 1000, ...parts });
+  }
+  const q = (arr, p) => { const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))] || 0; };
+  const out = { n: frames.length, nad16_pct: +(100 * frames.filter((f) => f.ms > 16.7).length / Math.max(1, frames.length)).toFixed(1), nad50: frames.filter((f) => f.ms > 50).length };
+  for (const k of ['ms', ...K]) { const v = frames.map((f) => f[k]); out[k === 'ms' ? 'spolu' : k.replace('IntersectionObserverController::computeIntersections', 'IO')] = { p50: +q(v, 0.5).toFixed(2), p95: +q(v, 0.95).toFixed(2), avg: +(v.reduce((a, b) => a + b, 0) / Math.max(1, v.length)).toFixed(2) }; }
+  return out;
 }

@@ -1,0 +1,26 @@
+--- beh 1
+   183 ms: 522 ms (blok 15) [http://127.0.0.1:8285/barber ?uvod=off: 15 ms, vynútený štýl/layout 0]
+   713 ms: 98 ms (blok 43) 
+   820 ms: 99 ms (blok 41) 
+   939 ms: 83 ms (blok 23) 
+   1034 ms: 172 ms (blok 60) [http://127.0.0.1:8285/barber app.js: 78 ms, vynútený štýl/layout 1]
+   1300 ms: 177 ms (blok 114) 
+   1479 ms: 61 ms (blok 0) [TimerHandler:setTimeout : 11 ms, vynútený štýl/layout 0] [TimerHandler:setTimeout app.js: 41 ms, vynútený štýl/layout 40]
+   5151 ms: 275 ms (blok 206) [LINK.onload i18n.js:build 6 ms, vynútený štýl/layout 0]
+--- beh 2
+   176 ms: 528 ms (blok 22) [http://127.0.0.1:8285/barber ?uvod=off: 15 ms, vynútený štýl/layout 0]
+   730 ms: 123 ms (blok 40) 
+   864 ms: 201 ms (blok 142) 
+   1086 ms: 132 ms (blok 35) 
+   1266 ms: 296 ms (blok 245) [http://127.0.0.1:8285/barber app.js: 209 ms, vynútený štýl/layout 3]
+   1603 ms: 147 ms (blok 96) [import.then app.js: 9 ms, vynútený štýl/layout 0]
+   1838 ms: 88 ms (blok 0) 
+   5402 ms: 227 ms (blok 163) [LINK.onload i18n.js:build 8 ms, vynútený štýl/layout 0]
+--- beh 3
+   189 ms: 556 ms (blok 34) 
+   786 ms: 244 ms (blok 180) 
+   1049 ms: 75 ms (blok 13) 
+   1127 ms: 202 ms (blok 123) [http://127.0.0.1:8285/barber app.js: 117 ms, vynútený štýl/layout 3]
+   1370 ms: 263 ms (blok 213) 
+   1633 ms: 156 ms (blok 14) [TimerHandler:setTimeout : 23 ms, vynútený štýl/layout 0] [TimerHandler:setTimeout app.js: 57 ms, vynútený štýl/layout 54]
+   5254 ms: 133 ms (blok 79) 

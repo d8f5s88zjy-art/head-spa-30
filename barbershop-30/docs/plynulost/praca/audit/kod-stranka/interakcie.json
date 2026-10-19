@@ -1,0 +1,789 @@
+{
+ "parametre": {
+  "q": "uvod=off",
+  "cpu": 4,
+  "net": "fast4g"
+ },
+ "kroky": [
+  {
+   "krok": "otvoriť menu",
+   "y": 0,
+   "udalosti": [
+    "pointerover 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerenter 176 ms (čakanie 8, spracovanie 0, vykreslenie 168)",
+    "pointerdown 176 ms (čakanie 8, spracovanie 5, vykreslenie 163)",
+    "touchstart 176 ms (čakanie 13, spracovanie 1, vykreslenie 162)",
+    "gotpointercapture 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerup 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "lostpointercapture 176 ms (čakanie 14, spracovanie 1, vykreslenie 161)",
+    "pointerout 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "pointerleave 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "touchend 176 ms (čakanie 15, spracovanie 38, vykreslenie 123)",
+    "mouseout 176 ms (čakanie 71, spracovanie 0, vykreslenie 106)",
+    "mouseover 176 ms (čakanie 71, spracovanie 0, vykreslenie 106)",
+    "mousedown 176 ms (čakanie 71, spracovanie 0, vykreslenie 105)",
+    "mouseup 176 ms (čakanie 71, spracovanie 0, vykreslenie 105)",
+    "click 176 ms (čakanie 71, spracovanie 70, vykreslenie 36)",
+    "mouseout 32 ms (čakanie 0, spracovanie 0, vykreslenie 32)",
+    "mouseover 32 ms (čakanie 0, spracovanie 0, vykreslenie 32)"
+   ],
+   "loaf": [
+    {
+     "t": 5729,
+     "d": 59,
+     "s": []
+    },
+    {
+     "t": 5896,
+     "d": 140,
+     "s": [
+      "atmosfera.js::DOMWindow.ontouchend 37/0",
+      "app.js::BUTTON.onclick 62/60",
+      "i18n.js::#document.onclick 6/0"
+     ]
+    },
+    {
+     "t": 6267,
+     "d": 88,
+     "s": []
+    },
+    {
+     "t": 6513,
+     "d": 58,
+     "s": []
+    }
+   ],
+   "snimky": {
+    "n": 61,
+    "p95": 33,
+    "max": 133,
+    "nad33": 3
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  },
+  {
+   "krok": "skok z menu na Kontakt (pätička)",
+   "y": 15416,
+   "udalosti": [
+    "pointerover 120 ms (čakanie 22, spracovanie 1, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerenter 120 ms (čakanie 23, spracovanie 0, vykreslenie 97)",
+    "pointerdown 120 ms (čakanie 23, spracovanie 6, vykreslenie 91)",
+    "touchstart 120 ms (čakanie 30, spracovanie 2, vykreslenie 89)",
+    "gotpointercapture 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerup 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "lostpointercapture 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerout 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "pointerleave 120 ms (čakanie 40, spracovanie 0, vykreslenie 80)",
+    "touchend 120 ms (čakanie 40, spracovanie 2, vykreslenie 77)",
+    "mouseout 120 ms (čakanie 51, spracovanie 0, vykreslenie 69)",
+    "mouseover 120 ms (čakanie 51, spracovanie 0, vykreslenie 69)",
+    "mousedown 120 ms (čakanie 52, spracovanie 1, vykreslenie 67)",
+    "mouseup 120 ms (čakanie 55, spracovanie 0, vykreslenie 65)",
+    "click 120 ms (čakanie 55, spracovanie 15, vykreslenie 49)",
+    "mouseout 48 ms (čakanie 1, spracovanie 0, vykreslenie 47)",
+    "mouseover 48 ms (čakanie 1, spracovanie 0, vykreslenie 47)"
+   ],
+   "loaf": [
+    {
+     "t": 7114,
+     "d": 63,
+     "s": []
+    },
+    {
+     "t": 7269,
+     "d": 80,
+     "s": [
+      "atmosfera.js::BaseAudioContext.decodeAudioDa 17/0"
+     ]
+    },
+    {
+     "t": 7419,
+     "d": 57,
+     "s": [
+      "app.js:tick:FrameRequestCallback 5/1"
+     ]
+    },
+    {
+     "t": 7877,
+     "d": 54,
+     "s": []
+    },
+    {
+     "t": 8606,
+     "d": 63,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 7/3",
+      "app.js:tick:TimerHandler:setTimeout 6/5",
+      "app.js:tick:TimerHandler:setTimeout 6/4",
+      "app.js:tick:TimerHandler:setTimeout 6/4"
+     ]
+    },
+    {
+     "t": 8679,
+     "d": 54,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 5/3",
+      "app.js:tick:TimerHandler:setTimeout 7/4",
+      "app.js:tick:TimerHandler:setTimeout 7/4"
+     ]
+    },
+    {
+     "t": 8844,
+     "d": 66,
+     "s": []
+    },
+    {
+     "t": 9095,
+     "d": 93,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 10/6"
+     ]
+    },
+    {
+     "t": 9199,
+     "d": 55,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 7/6",
+      "app.js:tick:TimerHandler:setTimeout 9/8",
+      "app.js:tick:TimerHandler:setTimeout 5/3",
+      "app.js:tick:TimerHandler:setTimeout 6/4"
+     ]
+    },
+    {
+     "t": 9626,
+     "d": 56,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 6/4",
+      "app.js:tick:TimerHandler:setTimeout 10/7",
+      "app.js:tick:TimerHandler:setTimeout 5/3"
+     ]
+    }
+   ],
+   "snimky": {
+    "n": 119,
+    "p95": 67,
+    "max": 100,
+    "nad33": 19
+   },
+   "obrazky": [
+    "cakaren-m-1448.avif",
+    "sala-rano-m-1448.avif",
+    "tim-nikolas-820.avif",
+    "tim-kristian-820.avif",
+    "tim-damian-820.avif",
+    "tim-michal-820.avif",
+    "tim-andy-820.avif",
+    "kreslo-stred-m-1448.avif",
+    "kava-m-1448.avif",
+    "sud-m-1448.avif",
+    "naradie-noznice-1600.avif",
+    "detail-stol-640.avif",
+    "galeria-barberpole-640.avif",
+    "galeria-neon-640.avif",
+    "vstup-m-1448.avif"
+   ],
+   "kotvy_near": [
+    "stol",
+    "sala",
+    "cakaren",
+    "sala-rano",
+    "kreslo-stred",
+    "kava",
+    "sud",
+    "vstup"
+   ],
+   "kotvy_shown": [
+    "stol",
+    "sala",
+    "sala-rano",
+    "kreslo-stred",
+    "kava",
+    "sud",
+    "vstup"
+   ]
+  },
+  {
+   "krok": "Späť hore z pätičky",
+   "y": 0,
+   "udalosti": [
+    "pointerover 64 ms (čakanie 28, spracovanie 0, vykreslenie 36)",
+    "pointerenter 64 ms (čakanie 28, spracovanie 0, vykreslenie 36)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerenter 64 ms (čakanie 29, spracovanie 0, vykreslenie 35)",
+    "pointerdown 64 ms (čakanie 29, spracovanie 4, vykreslenie 31)",
+    "touchstart 64 ms (čakanie 33, spracovanie 0, vykreslenie 31)",
+    "gotpointercapture 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerup 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "lostpointercapture 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerout 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "pointerleave 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "touchend 64 ms (čakanie 35, spracovanie 0, vykreslenie 29)",
+    "mouseout 96 ms (čakanie 55, spracovanie 0, vykreslenie 41)",
+    "mouseover 96 ms (čakanie 56, spracovanie 0, vykreslenie 40)",
+    "mousedown 96 ms (čakanie 56, spracovanie 0, vykreslenie 39)",
+    "mouseup 96 ms (čakanie 58, spracovanie 0, vykreslenie 38)",
+    "click 96 ms (čakanie 58, spracovanie 8, vykreslenie 30)",
+    "mouseout 32 ms (čakanie 6, spracovanie 0, vykreslenie 26)",
+    "mouseover 32 ms (čakanie 6, spracovanie 0, vykreslenie 26)"
+   ],
+   "loaf": [
+    {
+     "t": 10650,
+     "d": 53,
+     "s": []
+    },
+    {
+     "t": 10732,
+     "d": 103,
+     "s": [
+      "app.js:tick:TimerHandler:setTimeout 20/16"
+     ]
+    },
+    {
+     "t": 10894,
+     "d": 62,
+     "s": []
+    },
+    {
+     "t": 11043,
+     "d": 74,
+     "s": []
+    }
+   ],
+   "snimky": {
+    "n": 198,
+    "p95": 33,
+    "max": 117,
+    "nad33": 6
+   },
+   "obrazky": [],
+   "kotvy_near": [
+    "vstup",
+    "sud",
+    "kreslo-stred",
+    "kava",
+    "sala-rano",
+    "cakaren",
+    "stol",
+    "sala",
+    "rohozka"
+   ],
+   "kotvy_shown": [
+    "vstup",
+    "sud",
+    "kava",
+    "kreslo-stred",
+    "sala-rano",
+    "cakaren",
+    "stol",
+    "sala",
+    "rohozka"
+   ]
+  },
+  {
+   "krok": "otvoriť menu 2",
+   "y": 0,
+   "udalosti": [
+    "pointerover 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerenter 136 ms (čakanie 33, spracovanie 0, vykreslenie 103)",
+    "pointerdown 136 ms (čakanie 33, spracovanie 11, vykreslenie 92)",
+    "touchstart 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "gotpointercapture 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerup 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "lostpointercapture 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerout 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "pointerleave 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "touchend 136 ms (čakanie 44, spracovanie 0, vykreslenie 92)",
+    "mouseout 136 ms (čakanie 63, spracovanie 0, vykreslenie 74)",
+    "mouseover 136 ms (čakanie 63, spracovanie 0, vykreslenie 74)",
+    "mousedown 136 ms (čakanie 63, spracovanie 0, vykreslenie 73)",
+    "mouseup 136 ms (čakanie 64, spracovanie 0, vykreslenie 72)",
+    "click 136 ms (čakanie 65, spracovanie 43, vykreslenie 28)",
+    "mouseout 24 ms (čakanie 2, spracovanie 0, vykreslenie 22)",
+    "mouseover 24 ms (čakanie 2, spracovanie 0, vykreslenie 22)"
+   ],
+   "loaf": [
+    {
+     "t": 14077,
+     "d": 81,
+     "s": [
+      "atmosfera.js::DOMWindow.onclick 5/0",
+      "app.js::BUTTON.onclick 37/34"
+     ]
+    }
+   ],
+   "snimky": {
+    "n": 62,
+    "p95": 17,
+    "max": 83,
+    "nad33": 1
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  },
+  {
+   "krok": "jazyk EN v menu",
+   "y": 0,
+   "udalosti": [
+    "pointerover 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerenter 64 ms (čakanie 18, spracovanie 0, vykreslenie 46)",
+    "pointerdown 64 ms (čakanie 18, spracovanie 3, vykreslenie 43)",
+    "touchstart 64 ms (čakanie 21, spracovanie 0, vykreslenie 43)",
+    "gotpointercapture 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerup 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "lostpointercapture 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerout 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "pointerleave 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "touchend 64 ms (čakanie 22, spracovanie 0, vykreslenie 42)",
+    "mouseout 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "mouseover 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "mousedown 64 ms (čakanie 31, spracovanie 0, vykreslenie 33)",
+    "mouseup 64 ms (čakanie 32, spracovanie 0, vykreslenie 32)",
+    "click 64 ms (čakanie 32, spracovanie 9, vykreslenie 23)",
+    "mouseout 32 ms (čakanie 0, spracovanie 0, vykreslenie 32)",
+    "mouseover 32 ms (čakanie 0, spracovanie 0, vykreslenie 32)"
+   ],
+   "loaf": [
+    {
+     "t": 15413,
+     "d": 73,
+     "s": [
+      "i18n.js::Response.json.then 6/0"
+     ]
+    },
+    {
+     "t": 15499,
+     "d": 186,
+     "s": [
+      "i18n.js:chunk:IdleRequestCallback 18/0"
+     ]
+    }
+   ],
+   "snimky": {
+    "n": 144,
+    "p95": 17,
+    "max": 183,
+    "nad33": 2
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  },
+  {
+   "krok": "jazyk SK v menu",
+   "y": 0,
+   "udalosti": [
+    "pointerover 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerenter 152 ms (čakanie 14, spracovanie 0, vykreslenie 138)",
+    "pointerdown 152 ms (čakanie 14, spracovanie 0, vykreslenie 137)",
+    "touchstart 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "gotpointercapture 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerup 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "lostpointercapture 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerout 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "pointerleave 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "touchend 152 ms (čakanie 15, spracovanie 0, vykreslenie 137)",
+    "mouseout 152 ms (čakanie 27, spracovanie 0, vykreslenie 125)",
+    "mouseover 152 ms (čakanie 27, spracovanie 0, vykreslenie 125)",
+    "mousedown 152 ms (čakanie 28, spracovanie 0, vykreslenie 125)",
+    "mouseup 152 ms (čakanie 28, spracovanie 0, vykreslenie 124)",
+    "click 152 ms (čakanie 28, spracovanie 13, vykreslenie 111)",
+    "mouseout 56 ms (čakanie 0, spracovanie 0, vykreslenie 56)",
+    "mouseover 56 ms (čakanie 0, spracovanie 0, vykreslenie 56)"
+   ],
+   "loaf": [
+    {
+     "t": 17862,
+     "d": 93,
+     "s": [
+      "i18n.js::DIV.onclick 12/0"
+     ]
+    },
+    {
+     "t": 18002,
+     "d": 145,
+     "s": [
+      "i18n.js:chunk:IdleRequestCallback 14/0"
+     ]
+    }
+   ],
+   "snimky": {
+    "n": 148,
+    "p95": 17,
+    "max": 150,
+    "nad33": 2
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  },
+  {
+   "krok": "zavrieť menu",
+   "y": 0,
+   "udalosti": [
+    "pointerover 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerenter 120 ms (čakanie 30, spracovanie 0, vykreslenie 90)",
+    "pointerdown 120 ms (čakanie 30, spracovanie 3, vykreslenie 87)",
+    "touchstart 120 ms (čakanie 33, spracovanie 0, vykreslenie 87)",
+    "gotpointercapture 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerup 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "lostpointercapture 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerout 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "pointerleave 120 ms (čakanie 36, spracovanie 0, vykreslenie 84)",
+    "touchend 120 ms (čakanie 36, spracovanie 1, vykreslenie 83)",
+    "mouseout 120 ms (čakanie 48, spracovanie 0, vykreslenie 72)",
+    "mouseover 120 ms (čakanie 48, spracovanie 0, vykreslenie 72)",
+    "mousedown 120 ms (čakanie 49, spracovanie 0, vykreslenie 71)",
+    "mouseup 120 ms (čakanie 51, spracovanie 0, vykreslenie 69)",
+    "click 120 ms (čakanie 51, spracovanie 8, vykreslenie 61)",
+    "mouseout 64 ms (čakanie 1, spracovanie 0, vykreslenie 63)",
+    "mouseover 64 ms (čakanie 1, spracovanie 0, vykreslenie 63)"
+   ],
+   "loaf": [],
+   "snimky": {
+    "n": 61,
+    "p95": 17,
+    "max": 50,
+    "nad33": 1
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  },
+  {
+   "krok": "skok z menu na Galériu",
+   "y": 9989,
+   "udalosti": [
+    "pointerover 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerenter 72 ms (čakanie 20, spracovanie 0, vykreslenie 52)",
+    "pointerdown 72 ms (čakanie 20, spracovanie 1, vykreslenie 51)",
+    "touchstart 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "gotpointercapture 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerup 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "lostpointercapture 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerout 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerleave 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "touchend 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "mouseout 72 ms (čakanie 31, spracovanie 0, vykreslenie 41)",
+    "mouseover 72 ms (čakanie 31, spracovanie 0, vykreslenie 41)",
+    "mousedown 72 ms (čakanie 32, spracovanie 0, vykreslenie 40)",
+    "mouseup 72 ms (čakanie 32, spracovanie 0, vykreslenie 40)",
+    "click 72 ms (čakanie 32, spracovanie 5, vykreslenie 35)",
+    "mouseout 32 ms (čakanie 3, spracovanie 0, vykreslenie 29)",
+    "mouseover 32 ms (čakanie 3, spracovanie 0, vykreslenie 29)",
+    "pointerover 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerenter 176 ms (čakanie 14, spracovanie 0, vykreslenie 162)",
+    "pointerdown 176 ms (čakanie 14, spracovanie 2, vykreslenie 161)",
+    "touchstart 176 ms (čakanie 15, spracovanie 0, vykreslenie 161)",
+    "gotpointercapture 176 ms (čakanie 16, spracovanie 0, vykreslenie 160)",
+    "pointerup 176 ms (čakanie 16, spracovanie 0, vykreslenie 159)",
+    "lostpointercapture 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerout 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "pointerleave 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "touchend 176 ms (čakanie 17, spracovanie 0, vykreslenie 159)",
+    "mouseout 176 ms (čakanie 23, spracovanie 0, vykreslenie 153)",
+    "mouseover 176 ms (čakanie 23, spracovanie 0, vykreslenie 153)",
+    "mousedown 176 ms (čakanie 24, spracovanie 0, vykreslenie 152)",
+    "mouseup 176 ms (čakanie 25, spracovanie 0, vykreslenie 152)",
+    "click 176 ms (čakanie 25, spracovanie 109, vykreslenie 43)",
+    "mouseout 40 ms (čakanie 0, spracovanie 0, vykreslenie 40)",
+    "mouseover 40 ms (čakanie 0, spracovanie 0, vykreslenie 40)"
+   ],
+   "loaf": [
+    {
+     "t": 22320,
+     "d": 123,
+     "s": [
+      "app.js::NAV#nav.onclick 101/2"
+     ]
+    },
+    {
+     "t": 22666,
+     "d": 54,
+     "s": []
+    },
+    {
+     "t": 22729,
+     "d": 61,
+     "s": []
+    }
+   ],
+   "snimky": {
+    "n": 206,
+    "p95": 33,
+    "max": 133,
+    "nad33": 8
+   },
+   "obrazky": [],
+   "kotvy_near": [
+    "cakaren",
+    "rohozka",
+    "sala",
+    "sala-rano",
+    "stol",
+    "kreslo-stred",
+    "kava",
+    "sud",
+    "vstup"
+   ],
+   "kotvy_shown": [
+    "sala",
+    "stol",
+    "sala-rano",
+    "kreslo-stred",
+    "kava"
+   ]
+  },
+  {
+   "krok": "fotka v galérii (lightbox)",
+   "y": 10865,
+   "udalosti": [
+    "pointerover 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerenter 72 ms (čakanie 21, spracovanie 0, vykreslenie 51)",
+    "pointerdown 72 ms (čakanie 21, spracovanie 1, vykreslenie 50)",
+    "touchstart 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "gotpointercapture 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerup 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "lostpointercapture 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerout 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "pointerleave 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "touchend 72 ms (čakanie 22, spracovanie 0, vykreslenie 50)",
+    "mouseout 72 ms (čakanie 25, spracovanie 0, vykreslenie 47)",
+    "mouseover 72 ms (čakanie 25, spracovanie 0, vykreslenie 47)",
+    "mousedown 72 ms (čakanie 28, spracovanie 0, vykreslenie 44)",
+    "mouseup 72 ms (čakanie 29, spracovanie 0, vykreslenie 43)",
+    "click 72 ms (čakanie 29, spracovanie 12, vykreslenie 31)",
+    "pointerout 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerleave 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerover 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerenter 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerenter 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "mouseout 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "mouseover 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)"
+   ],
+   "loaf": [],
+   "snimky": {
+    "n": 174,
+    "p95": 17,
+    "max": 33,
+    "nad33": 1
+   },
+   "obrazky": [
+    "naradie-noznice-1600.jpg"
+   ],
+   "kotvy_near": [
+    "kava"
+   ],
+   "kotvy_shown": [
+    "kava"
+   ]
+  },
+  {
+   "krok": "zavrieť lightbox",
+   "y": 10865,
+   "udalosti": [
+    "pointerover 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerenter 64 ms (čakanie 20, spracovanie 0, vykreslenie 44)",
+    "pointerdown 64 ms (čakanie 20, spracovanie 2, vykreslenie 42)",
+    "touchstart 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "gotpointercapture 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerup 64 ms (čakanie 23, spracovanie 1, vykreslenie 41)",
+    "lostpointercapture 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerout 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "pointerleave 64 ms (čakanie 23, spracovanie 0, vykreslenie 41)",
+    "touchend 64 ms (čakanie 23, spracovanie 1, vykreslenie 40)",
+    "mouseout 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "mouseover 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "mousedown 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "mouseup 64 ms (čakanie 30, spracovanie 0, vykreslenie 34)",
+    "click 64 ms (čakanie 30, spracovanie 8, vykreslenie 26)",
+    "pointerout 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerleave 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerleave 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerover 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "pointerenter 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "mouseout 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)",
+    "mouseover 24 ms (čakanie 0, spracovanie 0, vykreslenie 24)"
+   ],
+   "loaf": [],
+   "snimky": {
+    "n": 68,
+    "p95": 17,
+    "max": 17,
+    "nad33": 0
+   },
+   "obrazky": [],
+   "kotvy_near": [],
+   "kotvy_shown": []
+  }
+ ]
+}

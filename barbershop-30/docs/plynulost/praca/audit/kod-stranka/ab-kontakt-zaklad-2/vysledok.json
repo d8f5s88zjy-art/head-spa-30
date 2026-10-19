@@ -1,0 +1,899 @@
+{
+ "okno_s": 9462.3,
+ "ulohy": 6756,
+ "dlhe_ulohy": [
+  {
+   "ts": 35.5,
+   "ms": 65,
+   "parts": [
+    "UpdateLayoutTree 23.8",
+    "Paint 16.5",
+    "FireAnimationFrame 6.7",
+    "FunctionCall app.js:tick:233 5.7",
+    "PrePaint 3.8",
+    "Layout 3.1",
+    "Layerize 2.9",
+    "EventDispatch scroll 2.3"
+   ]
+  },
+  {
+   "ts": 3200.6,
+   "ms": 91.8,
+   "parts": [
+    "FunctionCall :?:0 0.4"
+   ]
+  }
+ ],
+ "hlavne_vlakno_ms": {
+  "spolu": 5186.7,
+  "skript": 1093.9,
+  "styl": 1162.4,
+  "layout": 393.7,
+  "prepaint": 473.1,
+  "paint": 147.1,
+  "layerize": 175.6,
+  "commit": 456.4,
+  "dekodovanie": 0
+ },
+ "styl_prepocty": {
+  "n": 735,
+  "prvkov_p50": 6,
+  "prvkov_p95": 32,
+  "prvkov_max": 217,
+  "velke": [
+   {
+    "ts": 48.7,
+    "ms": 23.5,
+    "prvkov": 217,
+    "js": ""
+   }
+  ]
+ },
+ "vynutene": [
+  {
+   "k": "Layout <- app.js:tick:693",
+   "n": 145,
+   "ms": 246.2
+  },
+  {
+   "k": "UpdateLayoutTree <- app.js:tick:693",
+   "n": 149,
+   "ms": 168.5
+  },
+  {
+   "k": "UpdateLayoutTree <- app.js:readTarget:147",
+   "n": 106,
+   "ms": 96.8
+  },
+  {
+   "k": "Layout <- app.js:readTarget:147",
+   "n": 9,
+   "ms": 15.2
+  }
+ ],
+ "paint": {
+  "n": 437,
+  "ms": 225.6,
+  "podla_uzla": [
+   {
+    "nodeId": 2,
+    "n": 90,
+    "ms": 147.1,
+    "plocha_kpx": 506170,
+    "prvok": "#document"
+   },
+   {
+    "nodeId": 160,
+    "n": 38,
+    "ms": 41,
+    "plocha_kpx": 212139,
+    "prvok": "div.site"
+   },
+   {
+    "nodeId": 28,
+    "n": 23,
+    "ms": 5.6,
+    "plocha_kpx": 7571,
+    "prvok": "header.site-header.is-scrolled"
+   },
+   {
+    "nodeId": 104,
+    "n": 23,
+    "ms": 2.7,
+    "plocha_kpx": 6473923692593,
+    "prvok": "b.flip"
+   },
+   {
+    "nodeId": 51,
+    "n": 2,
+    "ms": 2.6,
+    "plocha_kpx": 721359,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 32,
+    "n": 4,
+    "ms": 2.5,
+    "plocha_kpx": 1125899772625,
+    "prvok": "div.mobile-cta.is-hidden"
+   },
+   {
+    "nodeId": 102,
+    "n": 20,
+    "ms": 2.4,
+    "plocha_kpx": 5629498863125,
+    "prvok": "b.flip"
+   },
+   {
+    "nodeId": 150,
+    "n": 4,
+    "ms": 2.3,
+    "plocha_kpx": 2423781,
+    "prvok": "img"
+   },
+   {
+    "nodeId": 64,
+    "n": 3,
+    "ms": 1.9,
+    "plocha_kpx": 1082038,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 105,
+    "n": 26,
+    "ms": 1.9,
+    "plocha_kpx": 7318348522062,
+    "prvok": "b.flip"
+   },
+   {
+    "nodeId": 97,
+    "n": 6,
+    "ms": 1.8,
+    "plocha_kpx": 1688849658937,
+    "prvok": "b.flip"
+   },
+   {
+    "nodeId": 103,
+    "n": 22,
+    "ms": 1.4,
+    "plocha_kpx": 6192448749437,
+    "prvok": "b.flip"
+   }
+  ]
+ },
+ "skripty": [
+  {
+   "k": "FunctionCall app.js:tick:693",
+   "n": 152,
+   "ms": 585.2,
+   "max": 12.5
+  },
+  {
+   "k": "FunctionCall :f:1",
+   "n": 462,
+   "ms": 206.9,
+   "max": 7.6
+  },
+  {
+   "k": "FunctionCall app.js:tick:233",
+   "n": 106,
+   "ms": 194.6,
+   "max": 8.9
+  },
+  {
+   "k": "FunctionCall atmosfera.js:addEventListener.capture:195",
+   "n": 4,
+   "ms": 42.5,
+   "max": 41.9
+  },
+  {
+   "k": "FunctionCall i18n.js:MutationObserver.observe.childList:98",
+   "n": 152,
+   "ms": 30.3,
+   "max": 3.1
+  },
+  {
+   "k": "FunctionCall app.js:?:618",
+   "n": 5,
+   "ms": 9.5,
+   "max": 5.8
+  },
+  {
+   "k": "FunctionCall app.js:start:257",
+   "n": 51,
+   "ms": 8.1,
+   "max": 1.6
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:4",
+   "n": 12,
+   "ms": 5.2,
+   "max": 2.2
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:5",
+   "n": 3,
+   "ms": 4.7,
+   "max": 2.5
+  },
+  {
+   "k": "FunctionCall :?:7",
+   "n": 8,
+   "ms": 2.4,
+   "max": 1.1
+  },
+  {
+   "k": "FunctionCall atmosfera.js:addEventListener.capture:185",
+   "n": 4,
+   "ms": 2.1,
+   "max": 1
+  },
+  {
+   "k": "FunctionCall film.js:markMove:76",
+   "n": 1,
+   "ms": 2,
+   "max": 2
+  },
+  {
+   "k": "FunctionCall :?:0",
+   "n": 1,
+   "ms": 0.4,
+   "max": 0.4
+  },
+  {
+   "k": "FunctionCall app.js:addEventListener.once:358",
+   "n": 2,
+   "ms": 0.1,
+   "max": 0
+  },
+  {
+   "k": "FunctionCall app.js:load:352",
+   "n": 3,
+   "ms": 0,
+   "max": 0
+  }
+ ],
+ "raster": {
+  "ThreadPoolForegroundWorker": {
+   "n": 384,
+   "ms": 95.1,
+   "max": 5.8
+  }
+ },
+ "dekod_vlakna": {
+  "ThreadPoolForegroundWorker": {
+   "n": 9,
+   "ms": 141.2,
+   "max": 51.9
+  }
+ },
+ "dekod_hlavne": null,
+ "snimky_hlavne": {
+  "n": 503,
+  "nad16_pct": 8.2,
+  "nad50": 1,
+  "spolu": {
+   "p50": 4.86,
+   "p95": 20.3,
+   "avg": 7.43
+  },
+  "FireAnimationFrame": {
+   "p50": 0.74,
+   "p95": 3.35,
+   "avg": 0.96
+  },
+  "UpdateLayoutTree": {
+   "p50": 1.12,
+   "p95": 7.89,
+   "avg": 1.97
+  },
+  "Layout": {
+   "p50": 0,
+   "p95": 2.13,
+   "avg": 0.28
+  },
+  "PrePaint": {
+   "p50": 0.86,
+   "p95": 2.3,
+   "avg": 0.94
+  },
+  "Paint": {
+   "p50": 0,
+   "p95": 3.18,
+   "avg": 0.45
+  },
+  "Layerize": {
+   "p50": 0,
+   "p95": 2.4,
+   "avg": 0.35
+  },
+  "Commit": {
+   "p50": 0.85,
+   "p95": 2.43,
+   "avg": 0.91
+  },
+  "HitTest": {
+   "p50": 0,
+   "p95": 0.65,
+   "avg": 0.09
+  },
+  "IO": {
+   "p50": 0.14,
+   "p95": 1.27,
+   "avg": 0.45
+  }
+ },
+ "invalidacie": {
+  "naplanovane": [],
+  "prepocet": [],
+  "n": 0
+ },
+ "snimky": {
+  "n": 460,
+  "p50": 16.7,
+  "p95": 33.4,
+  "max": 150,
+  "nad33_pct": 3.7,
+  "nad100": 5
+ },
+ "loaf": [
+  {
+   "t": 12,
+   "d": 58,
+   "blk": 0,
+   "rs": 15,
+   "sl": 29,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 6,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 1200,
+   "d": 122,
+   "blk": 0,
+   "rs": 103,
+   "sl": 113,
+   "scripts": [
+    {
+     "inv": "IntersectionObserverCallback",
+     "src": "app.js",
+     "fn": "",
+     "pos": 29635,
+     "d": 5,
+     "forced": 0
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 0
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 1
+    }
+   ]
+  },
+  {
+   "t": 1333,
+   "d": 74,
+   "blk": 0,
+   "rs": 55,
+   "sl": 64,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 8,
+     "forced": 5
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 8,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 1417,
+   "d": 96,
+   "blk": 25,
+   "rs": 70,
+   "sl": 85,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 4
+    },
+    {
+     "inv": "DOMWindow.ontouchend",
+     "src": "atmosfera.js",
+     "fn": "",
+     "pos": 9859,
+     "d": 41,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 1528,
+   "d": 70,
+   "blk": 0,
+   "rs": 55,
+   "sl": 67,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 5
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 1906,
+   "d": 89,
+   "blk": 0,
+   "rs": 84,
+   "sl": 87,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 8,
+     "forced": 6
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 0
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 3
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 5
+    }
+   ]
+  },
+  {
+   "t": 2009,
+   "d": 125,
+   "blk": 0,
+   "rs": 103,
+   "sl": 114,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 9,
+     "forced": 5
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 12,
+     "forced": 8
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 6
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 2143,
+   "d": 71,
+   "blk": 0,
+   "rs": 58,
+   "sl": 65,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 2224,
+   "d": 126,
+   "blk": 0,
+   "rs": 104,
+   "sl": 115,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 3
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 2394,
+   "d": 57,
+   "blk": 0,
+   "rs": 48,
+   "sl": 56,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 6,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 3173,
+   "d": 124,
+   "blk": 53,
+   "rs": 113,
+   "sl": 124,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 5,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35038,
+     "d": 7,
+     "forced": 4
+    },
+    {
+     "inv": "BaseAudioContext.decodeAudioData.then",
+     "src": "atmosfera.js",
+     "fn": "",
+     "pos": -1,
+     "d": 24,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 4182,
+   "d": 53,
+   "blk": 0,
+   "rs": 51,
+   "sl": 53,
+   "scripts": []
+  }
+ ],
+ "loaf_nad50": 12,
+ "layout_shift": [
+  {
+   "t": 8172,
+   "v": 0,
+   "src": [
+    "B.flip",
+    "B.flip",
+    "B.flip",
+    "B.flip"
+   ]
+  },
+  {
+   "t": 8298,
+   "v": 0,
+   "src": [
+    "B.flip"
+   ]
+  }
+ ],
+ "zmeny_kotiev": 30,
+ "near_zmeny": [
+  {
+   "t": 6221,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 6222,
+   "shot": "cakaren",
+   "c": "is-title is-on is-shown is-near"
+  },
+  {
+   "t": 6222,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 6222,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 6222,
+   "shot": "sala",
+   "c": "is-title"
+  },
+  {
+   "t": 6222,
+   "shot": "cakaren",
+   "c": "is-title is-on is-shown is-near"
+  },
+  {
+   "t": 6222,
+   "shot": "cakaren",
+   "c": "is-title is-on is-shown is-near"
+  },
+  {
+   "t": 6222,
+   "shot": "sala-rano",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6222,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6285,
+   "shot": "cakaren",
+   "c": "is-title"
+  },
+  {
+   "t": 6285,
+   "shot": "stol",
+   "c": "is-title"
+  },
+  {
+   "t": 6285,
+   "shot": "cakaren",
+   "c": "is-title"
+  },
+  {
+   "t": 6285,
+   "shot": "cakaren",
+   "c": "is-title"
+  },
+  {
+   "t": 6285,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 6285,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6285,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6326,
+   "shot": "sala-rano",
+   "c": "is-title"
+  },
+  {
+   "t": 6326,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6326,
+   "shot": "kava",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 6326,
+   "shot": "vstup",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6411,
+   "shot": "kreslo-stred",
+   "c": "is-title"
+  },
+  {
+   "t": 6444,
+   "shot": "sud",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6444,
+   "shot": "kava",
+   "c": "is-title"
+  },
+  {
+   "t": 6444,
+   "shot": "kava",
+   "c": "is-title"
+  },
+  {
+   "t": 6444,
+   "shot": "sud",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6498,
+   "shot": "sud",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 6521,
+   "shot": "vstup",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6521,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6521,
+   "shot": "vstup",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6687,
+   "shot": "vstup",
+   "c": "is-title is-near is-shown"
+  }
+ ],
+ "poziadavky": [
+  {
+   "t": 94,
+   "u": "assets/img/film/cakaren-m-1448.avif"
+  },
+  {
+   "t": 94,
+   "u": "assets/img/film/sala-rano-m-1448.avif"
+  },
+  {
+   "t": 94,
+   "u": "assets/img/film/kreslo-stred-m-1448.avif"
+  },
+  {
+   "t": 143,
+   "u": "assets/img/film/kava-m-1448.avif"
+  },
+  {
+   "t": 143,
+   "u": "assets/img/film/sud-m-1448.avif"
+  },
+  {
+   "t": 160,
+   "u": "assets/img/film/vstup-m-1448.avif"
+  },
+  {
+   "t": 1482,
+   "u": "assets/audio/hudba.webm"
+  }
+ ],
+ "parametre": {
+  "url": "http://127.0.0.1:8285/barbershop-30/?uvod=off",
+  "scen": "kontakt",
+  "cpu": 4,
+  "patch": "",
+  "net": "fast4g",
+  "desk": false,
+  "H": 15591
+ },
+ "dom": {
+  "prvkov": 838,
+  "kw": 28,
+  "flap_b": 12,
+  "hlbka": 13,
+  "html_class": "karty world js-kin js-steps world-frame world-off"
+ }
+}

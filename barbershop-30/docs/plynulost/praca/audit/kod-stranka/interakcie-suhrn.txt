@@ -1,0 +1,47 @@
+--- otvoriť menu: y 0; INP kandidát click 176 ms (čakanie 71, spracovanie 70, vykreslenie 36); rAF n=61 p95 33 max 133 >33ms 3
+     najdlhšie spracovanie: [(70, 'click'), (38, 'touchend'), (5, 'pointerdown')]
+     LoAF 59 ms 
+     LoAF 140 ms atmosfera.js::DOMWindow.ontouchend 37/0 | app.js::BUTTON.onclick 62/60 | i18n.js::#document.onclick 6/0
+     LoAF 88 ms 
+     LoAF 58 ms 
+--- skok z menu na Kontakt (pätička): y 15416; INP kandidát click 120 ms (čakanie 55, spracovanie 15, vykreslenie 49); rAF n=119 p95 67 max 100 >33ms 19
+     najdlhšie spracovanie: [(15, 'click'), (6, 'pointerdown'), (2, 'touchstart')]
+     LoAF 63 ms 
+     LoAF 80 ms atmosfera.js::BaseAudioContext.decodeAudioDa 17/0
+     LoAF 57 ms app.js:tick:FrameRequestCallback 5/1
+     LoAF 54 ms 
+     LoAF 63 ms app.js:tick:TimerHandler:setTimeout 7/3 | app.js:tick:TimerHandler:setTimeout 6/5 | app.js:tick:TimerHandler:setTimeout 6/4 | app.js:tick:TimerHandler:setTimeout 6/4
+     obrázky počas kroku: 15 cakaren-m-1448.avif, sala-rano-m-1448.avif, tim-nikolas-820.avif, tim-kristian-820.avif, tim-damian-820.avif, tim-michal-820.avif, tim-andy-820.avif, kreslo-stred-m-1448.avif, kava-m-1448.avif, sud-m-1448.avif, naradie-noznice-1600.avif, detail-stol-640.avif, galeria-barberpole-640.avif, galeria-neon-640.avif
+     is-near: stol,sala,cakaren,sala-rano,kreslo-stred,kava,sud,vstup | is-shown: stol,sala,sala-rano,kreslo-stred,kava,sud,vstup
+--- Späť hore z pätičky: y 0; INP kandidát click 96 ms (čakanie 58, spracovanie 8, vykreslenie 30); rAF n=198 p95 33 max 117 >33ms 6
+     najdlhšie spracovanie: [(8, 'click'), (4, 'pointerdown'), (0, 'touchstart')]
+     LoAF 53 ms 
+     LoAF 103 ms app.js:tick:TimerHandler:setTimeout 20/16
+     LoAF 62 ms 
+     LoAF 74 ms 
+     is-near: vstup,sud,kreslo-stred,kava,sala-rano,cakaren,stol,sala,rohozka | is-shown: vstup,sud,kava,kreslo-stred,sala-rano,cakaren,stol,sala,rohozka
+--- otvoriť menu 2: y 0; INP kandidát click 136 ms (čakanie 65, spracovanie 43, vykreslenie 28); rAF n=62 p95 17 max 83 >33ms 1
+     najdlhšie spracovanie: [(43, 'click'), (11, 'pointerdown'), (0, 'touchstart')]
+     LoAF 81 ms atmosfera.js::DOMWindow.onclick 5/0 | app.js::BUTTON.onclick 37/34
+--- jazyk EN v menu: y 0; INP kandidát click 64 ms (čakanie 32, spracovanie 9, vykreslenie 23); rAF n=144 p95 17 max 183 >33ms 2
+     najdlhšie spracovanie: [(9, 'click'), (3, 'pointerdown'), (0, 'touchstart')]
+     LoAF 73 ms i18n.js::Response.json.then 6/0
+     LoAF 186 ms i18n.js:chunk:IdleRequestCallback 18/0
+--- jazyk SK v menu: y 0; INP kandidát click 152 ms (čakanie 28, spracovanie 13, vykreslenie 111); rAF n=148 p95 17 max 150 >33ms 2
+     najdlhšie spracovanie: [(13, 'click'), (0, 'touchstart'), (0, 'touchend')]
+     LoAF 93 ms i18n.js::DIV.onclick 12/0
+     LoAF 145 ms i18n.js:chunk:IdleRequestCallback 14/0
+--- zavrieť menu: y 0; INP kandidát click 120 ms (čakanie 51, spracovanie 8, vykreslenie 61); rAF n=61 p95 17 max 50 >33ms 1
+     najdlhšie spracovanie: [(8, 'click'), (3, 'pointerdown'), (1, 'touchend')]
+--- skok z menu na Galériu: y 9989; INP kandidát click 176 ms (čakanie 25, spracovanie 109, vykreslenie 43); rAF n=206 p95 33 max 133 >33ms 8
+     najdlhšie spracovanie: [(109, 'click'), (5, 'click'), (2, 'pointerdown')]
+     LoAF 123 ms app.js::NAV#nav.onclick 101/2
+     LoAF 54 ms 
+     LoAF 61 ms 
+     is-near: cakaren,rohozka,sala,sala-rano,stol,kreslo-stred,kava,sud,vstup | is-shown: sala,stol,sala-rano,kreslo-stred,kava
+--- fotka v galérii (lightbox): y 10865; INP kandidát click 72 ms (čakanie 29, spracovanie 12, vykreslenie 31); rAF n=174 p95 17 max 33 >33ms 1
+     najdlhšie spracovanie: [(12, 'click'), (1, 'pointerdown'), (0, 'touchstart')]
+     obrázky počas kroku: 1 naradie-noznice-1600.jpg
+     is-near: kava | is-shown: kava
+--- zavrieť lightbox: y 10865; INP kandidát click 64 ms (čakanie 30, spracovanie 8, vykreslenie 26); rAF n=68 p95 17 max 17 >33ms 0
+     najdlhšie spracovanie: [(8, 'click'), (2, 'pointerdown'), (1, 'touchend')]

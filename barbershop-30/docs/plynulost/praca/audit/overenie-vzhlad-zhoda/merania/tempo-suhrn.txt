@@ -1,0 +1,18 @@
+VZ-05 – tempo textu a obrazu, skutočné meranie (tempo-over.mjs; film aj text v prehliadači, plátno filmu DPR 0,25,
+textúry do 1086 px, bez filtrov rozmazania – len kvôli rýchlosti softvérového kreslenia; logika času nezmenená).
+Štart y=560, hranica Úvod → Poď ďalej y=844 (telefón) / 900 (počítač). Čas od prvého pohybu skrolu, ms.
+Snímkovanie v kontajneri 8–21 snímok/s (presnosť ±50–120 ms); pri < 10 snímkach/s je dt orezané na 0,1 s (počítač skreslený).
+
+zar   ťah        beh  nový text 50/90   starý text <50   obraz 50/90     rozdiel t50   nový nadpis nad starým záberom
+p390  švih       1    267 / 267         167              667 / 1083      400           67
+p390  švih       2    267 / 267         267              500 / 900       233           133
+p390  stredne    1    400 / 400         233              750 / 3050      350           317
+p390  stredne    2    333 / 583         267              833 / 2850      500           484
+p390  pomaly     1    – (zastal y=845)  466              3216 / 3600     –             0 (koniec: o0=0, o1=0, obraz 0,98)
+p390  pomaly     2    – (zastal y=845)  534              3817 / 4167     –             0 (koniec: o0=0, o1=0, obraz 0,94)
+d1440 koliesko5  1    1884 / 2000       1284             2100 / 2783     216           116   (6–8 snímok/s, skreslené)
+d1440 koliesko5  2    1366 / 1366       1066             1700 / 2683     334           234   (10 snímok/s, skreslené)
+
+Pásmo bez nadpisu (pasma.mjs, ustálený skrol, krok 3 px; o0 < 0,5 a o1 < 0,5):
+p390: 814–877, 1414–1468, 2005–2062, 2595–2646 (54–63 px na hranici)
+d1440: 870–951, 1515–1581, 2142–2205, 2769–2832 (63–81 px)

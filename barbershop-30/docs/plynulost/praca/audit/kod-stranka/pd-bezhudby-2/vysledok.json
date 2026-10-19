@@ -1,0 +1,640 @@
+{
+ "okno_s": 6146.2,
+ "ulohy": 3759,
+ "dlhe_ulohy": [
+  {
+   "ts": 460.6,
+   "ms": 219.2,
+   "parts": [
+    "Layout 136.1",
+    "UpdateLayoutTree 41.5",
+    "Paint 19.1",
+    "PrePaint 13",
+    "Commit 3.9",
+    "Layerize 3.3",
+    "PaintImage 2",
+    "FireAnimationFrame 0.7"
+   ]
+  },
+  {
+   "ts": 1436.7,
+   "ms": 84.3,
+   "parts": [
+    "UpdateLayoutTree 49.1",
+    "Paint 7.8",
+    "FireAnimationFrame 6.2",
+    "Layerize 5.1",
+    "FunctionCall :?:7 4.4",
+    "Layout 3.7",
+    "Commit 3.1",
+    "PrePaint 2.6"
+   ]
+  },
+  {
+   "ts": 2236.4,
+   "ms": 62.5,
+   "parts": [
+    "UpdateLayoutTree 32.9",
+    "FireAnimationFrame 6.3",
+    "Layerize 4.2",
+    "FunctionCall app.js:tick:233 4.1",
+    "Paint 4",
+    "HitTest 3.9",
+    "Layout 3.5",
+    "Commit 3.3"
+   ]
+  },
+  {
+   "ts": 2314.4,
+   "ms": 70.4,
+   "parts": [
+    "UpdateLayoutTree 38.5",
+    "Paint 8.8",
+    "FireAnimationFrame 4.8",
+    "Layout 3.8",
+    "FunctionCall app.js:tick:233 3.4",
+    "Commit 2.8",
+    "PrePaint 2.7",
+    "Layerize 1.7"
+   ]
+  }
+ ],
+ "hlavne_vlakno_ms": {
+  "spolu": 3869,
+  "skript": 450.3,
+  "styl": 1319.5,
+  "layout": 205.7,
+  "prepaint": 172.4,
+  "paint": 175.1,
+  "layerize": 284.1,
+  "commit": 259.9,
+  "dekodovanie": 0
+ },
+ "styl_prepocty": {
+  "n": 352,
+  "prvkov_p50": 12,
+  "prvkov_p95": 55,
+  "prvkov_max": 122,
+  "velke": []
+ },
+ "vynutene": [
+  {
+   "k": "UpdateLayoutTree <- app.js:readTarget:147",
+   "n": 122,
+   "ms": 138.8
+  },
+  {
+   "k": "Layout <- app.js:readTarget:147",
+   "n": 7,
+   "ms": 17.8
+  }
+ ],
+ "paint": {
+  "n": 310,
+  "ms": 224,
+  "podla_uzla": [
+   {
+    "nodeId": 2,
+    "n": 72,
+    "ms": 175.1,
+    "plocha_kpx": 410249,
+    "prvok": "#document"
+   },
+   {
+    "nodeId": 38,
+    "n": 48,
+    "ms": 6.3,
+    "plocha_kpx": 38831,
+    "prvok": "ul.gallery-grid"
+   },
+   {
+    "nodeId": 37,
+    "n": 48,
+    "ms": 5.5,
+    "plocha_kpx": 57576,
+    "prvok": "ul.team-grid"
+   },
+   {
+    "nodeId": 92,
+    "n": 2,
+    "ms": 4.9,
+    "plocha_kpx": 698969,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 46,
+    "n": 14,
+    "ms": 3.9,
+    "plocha_kpx": 4571637,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 39,
+    "n": 14,
+    "ms": 3.5,
+    "plocha_kpx": 4470565,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 22,
+    "n": 2,
+    "ms": 2.5,
+    "plocha_kpx": 1211890,
+    "prvok": "img"
+   },
+   {
+    "nodeId": 97,
+    "n": 1,
+    "ms": 2,
+    "plocha_kpx": 349484,
+    "prvok": "div.title-frame"
+   },
+   {
+    "nodeId": 61,
+    "n": 2,
+    "ms": 1.9,
+    "plocha_kpx": 701822,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 106,
+    "n": 3,
+    "ms": 1.8,
+    "plocha_kpx": 1084672,
+    "prvok": "div.title-card"
+   },
+   {
+    "nodeId": 88,
+    "n": 1,
+    "ms": 1.5,
+    "plocha_kpx": 605945,
+    "prvok": "img"
+   },
+   {
+    "nodeId": 55,
+    "n": 2,
+    "ms": 1.3,
+    "plocha_kpx": 562949886312,
+    "prvok": "div.title-actions"
+   }
+  ]
+ },
+ "skripty": [
+  {
+   "k": "FunctionCall app.js:tick:233",
+   "n": 126,
+   "ms": 285.8,
+   "max": 11.3
+  },
+  {
+   "k": "FunctionCall :f:1",
+   "n": 231,
+   "ms": 88.5,
+   "max": 3.6
+  },
+  {
+   "k": "FunctionCall i18n.js:?:267",
+   "n": 1,
+   "ms": 23.7,
+   "max": 23.7
+  },
+  {
+   "k": "FunctionCall app.js:start:257",
+   "n": 84,
+   "ms": 19.5,
+   "max": 2.7
+  },
+  {
+   "k": "FunctionCall :?:7",
+   "n": 13,
+   "ms": 11.1,
+   "max": 4.4
+  },
+  {
+   "k": "FunctionCall i18n.js:build:190",
+   "n": 1,
+   "ms": 6.9,
+   "max": 6.9
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:4",
+   "n": 8,
+   "ms": 3.7,
+   "max": 1.4
+  },
+  {
+   "k": "FunctionCall app.js:load:352",
+   "n": 4,
+   "ms": 2.5,
+   "max": 2.3
+  },
+  {
+   "k": "FunctionCall app.js:?:618",
+   "n": 2,
+   "ms": 2.4,
+   "max": 1.4
+  },
+  {
+   "k": "FunctionCall app.js:load:385",
+   "n": 4,
+   "ms": 1.4,
+   "max": 1.4
+  },
+  {
+   "k": "FunctionCall i18n.js:offer:237",
+   "n": 1,
+   "ms": 1.2,
+   "max": 1.2
+  },
+  {
+   "k": "FunctionCall vernost.js:overUlozenu:180",
+   "n": 1,
+   "ms": 1.2,
+   "max": 1.2
+  },
+  {
+   "k": "FunctionCall film.js:markMove:76",
+   "n": 1,
+   "ms": 1,
+   "max": 1
+  },
+  {
+   "k": "FunctionCall atmosfera.js:ready:227",
+   "n": 1,
+   "ms": 0.8,
+   "max": 0.8
+  },
+  {
+   "k": "FunctionCall app.js:addEventListener.once:358",
+   "n": 2,
+   "ms": 0.6,
+   "max": 0.6
+  }
+ ],
+ "raster": {
+  "ThreadPoolForegroundWorker": {
+   "n": 295,
+   "ms": 102.9,
+   "max": 4
+  }
+ },
+ "dekod_vlakna": {
+  "ThreadPoolForegroundWorker": {
+   "n": 14,
+   "ms": 414.5,
+   "max": 66.7
+  }
+ },
+ "dekod_hlavne": null,
+ "snimky_hlavne": {
+  "n": 296,
+  "nad16_pct": 23.3,
+  "nad50": 4,
+  "spolu": {
+   "p50": 7.61,
+   "p95": 33.81,
+   "avg": 11.54
+  },
+  "FireAnimationFrame": {
+   "p50": 0.84,
+   "p95": 4.79,
+   "avg": 1.45
+  },
+  "UpdateLayoutTree": {
+   "p50": 1.12,
+   "p95": 14.67,
+   "avg": 4.46
+  },
+  "Layout": {
+   "p50": 0,
+   "p95": 2.56,
+   "avg": 0.69
+  },
+  "PrePaint": {
+   "p50": 0.16,
+   "p95": 2.05,
+   "avg": 0.58
+  },
+  "Paint": {
+   "p50": 0,
+   "p95": 4.1,
+   "avg": 0.76
+  },
+  "Layerize": {
+   "p50": 0.01,
+   "p95": 3.52,
+   "avg": 0.96
+  },
+  "Commit": {
+   "p50": 0.6,
+   "p95": 3.15,
+   "avg": 0.88
+  },
+  "HitTest": {
+   "p50": 0,
+   "p95": 2.44,
+   "avg": 0.47
+  },
+  "IO": {
+   "p50": 0.1,
+   "p95": 1.18,
+   "avg": 0.29
+  }
+ },
+ "invalidacie": {
+  "naplanovane": [],
+  "prepocet": [],
+  "n": 0
+ },
+ "snimky": {
+  "n": 229,
+  "p50": 16.7,
+  "p95": 50.1,
+  "max": 266.7,
+  "nad33_pct": 12.2,
+  "nad100": 1
+ },
+ "loaf": [
+  {
+   "t": 415,
+   "d": 232,
+   "blk": 151,
+   "rs": 39,
+   "sl": 219,
+   "scripts": [
+    {
+     "inv": "LINK.onload",
+     "src": "i18n.js",
+     "fn": "build",
+     "pos": 10705,
+     "d": 7,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 674,
+   "d": 53,
+   "blk": 0,
+   "rs": 32,
+   "sl": 37,
+   "scripts": []
+  },
+  {
+   "t": 1399,
+   "d": 95,
+   "blk": 18,
+   "rs": 32,
+   "sl": 39,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 6,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 1766,
+   "d": 51,
+   "blk": 0,
+   "rs": 19,
+   "sl": 28,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 5,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 2001,
+   "d": 53,
+   "blk": 0,
+   "rs": 27,
+   "sl": 35,
+   "scripts": []
+  },
+  {
+   "t": 2214,
+   "d": 66,
+   "blk": 1,
+   "rs": 24,
+   "sl": 32,
+   "scripts": []
+  },
+  {
+   "t": 2293,
+   "d": 74,
+   "blk": 12,
+   "rs": 16,
+   "sl": 23,
+   "scripts": []
+  },
+  {
+   "t": 3235,
+   "d": 65,
+   "blk": 0,
+   "rs": 59,
+   "sl": 60,
+   "scripts": []
+  }
+ ],
+ "loaf_nad50": 8,
+ "layout_shift": [],
+ "zmeny_kotiev": 23,
+ "near_zmeny": [
+  {
+   "t": 3096,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 3740,
+   "shot": "rohozka",
+   "c": "is-title is-shown is-near"
+  },
+  {
+   "t": 3741,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 3741,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 3820,
+   "shot": "rohozka",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 4177,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 4177,
+   "shot": "sala-rano",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 4700,
+   "shot": "sala",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 4700,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 4700,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 4994,
+   "shot": "sala",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5107,
+   "shot": "sala",
+   "c": "is-title"
+  },
+  {
+   "t": 5108,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5775,
+   "shot": "stol",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 5775,
+   "shot": "cakaren",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 5775,
+   "shot": "cakaren",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 5823,
+   "shot": "stol",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5920,
+   "shot": "stol",
+   "c": "is-title"
+  },
+  {
+   "t": 5920,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6555,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 6591,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6591,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6623,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  }
+ ],
+ "poziadavky": [
+  {
+   "t": 25,
+   "u": "assets/atmosfera.js"
+  },
+  {
+   "t": 25,
+   "u": "assets/i18n.js"
+  },
+  {
+   "t": 253,
+   "u": "assets/atmosfera.css"
+  },
+  {
+   "t": 256,
+   "u": "assets/i18n.css"
+  },
+  {
+   "t": 738,
+   "u": "assets/img/film/cakaren-m-1448.avif"
+  },
+  {
+   "t": 1817,
+   "u": "assets/img/film/sala-rano-m-1448.avif"
+  },
+  {
+   "t": 2741,
+   "u": "assets/img/film/kreslo-stred-m-1448.avif"
+  },
+  {
+   "t": 3418,
+   "u": "assets/img/tim-nikolas-820.avif"
+  },
+  {
+   "t": 3420,
+   "u": "assets/img/tim-kristian-820.avif"
+  },
+  {
+   "t": 3420,
+   "u": "assets/img/tim-damian-820.avif"
+  },
+  {
+   "t": 3421,
+   "u": "assets/img/tim-michal-820.avif"
+  },
+  {
+   "t": 3421,
+   "u": "assets/img/tim-andy-820.avif"
+  },
+  {
+   "t": 3557,
+   "u": "assets/img/film/kava-m-1448.avif"
+  }
+ ],
+ "parametre": {
+  "url": "http://127.0.0.1:8285/barbershop-30/?uvod=off&hudba=off",
+  "scen": "prvy-dotyk",
+  "cpu": 4,
+  "patch": "",
+  "net": "fast4g",
+  "desk": false,
+  "H": 15591
+ },
+ "dom": {
+  "prvkov": 826,
+  "kw": 28,
+  "flap_b": 12,
+  "hlbka": 13,
+  "html_class": "karty world js-kin js-steps world-frame world-off"
+ }
+}

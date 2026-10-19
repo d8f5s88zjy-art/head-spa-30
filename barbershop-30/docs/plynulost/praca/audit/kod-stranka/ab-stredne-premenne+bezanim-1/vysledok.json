@@ -1,0 +1,1234 @@
+{
+ "okno_s": 41918.9,
+ "ulohy": 18991,
+ "dlhe_ulohy": [
+  {
+   "ts": 602.7,
+   "ms": 75.5,
+   "parts": [
+    "EventDispatch touchend 69.7",
+    "FunctionCall atmosfera.js:addEventListener.capture:195 69.5",
+    "HitTest 2",
+    "FunctionCall app.js:addEventListener.once:358 0",
+    "PrePaint 0"
+   ]
+  },
+  {
+   "ts": 1488.6,
+   "ms": 65.3,
+   "parts": [
+    "UpdateLayoutTree 31.6",
+    "Paint 8.2",
+    "EventDispatch scroll 6.6",
+    "FireAnimationFrame 5.7",
+    "PrePaint 5.5",
+    "FunctionCall app.js:tick:233 3",
+    "Layerize 2.1",
+    "Commit 1.7"
+   ]
+  },
+  {
+   "ts": 2223.2,
+   "ms": 67.3,
+   "parts": [
+    "FunctionCall :?:0 1.3"
+   ]
+  },
+  {
+   "ts": 5407,
+   "ms": 99.6,
+   "parts": [
+    "Commit 93.6",
+    "IntersectionObserverController::computeIntersections 15.3",
+    "EventDispatch scroll 2.6",
+    "UpdateLayoutTree 1.9",
+    "FireAnimationFrame 0.8",
+    "FunctionCall app.js:tick:233 0.8",
+    "ScrollLayer 0.1",
+    "PrePaint 0.1"
+   ]
+  },
+  {
+   "ts": 30065.7,
+   "ms": 59.5,
+   "parts": [
+    "UpdateLayoutTree 24.7",
+    "Paint 11.5",
+    "FireAnimationFrame 6.7",
+    "Layerize 5.7",
+    "FunctionCall app.js:tick:233 5.6",
+    "Commit 3.7",
+    "PrePaint 2.8",
+    "ScrollLayer 1.4"
+   ]
+  },
+  {
+   "ts": 30129.2,
+   "ms": 57.5,
+   "parts": [
+    "UpdateLayoutTree 17.7",
+    "Paint 9.9",
+    "FireAnimationFrame 7.2",
+    "FunctionCall app.js:tick:233 6.8",
+    "Layout 5.2",
+    "PrePaint 4.4",
+    "HitTest 3.9",
+    "Layerize 3.5"
+   ]
+  },
+  {
+   "ts": 30199.2,
+   "ms": 75.7,
+   "parts": [
+    "UpdateLayoutTree 25",
+    "Paint 22.8",
+    "FireAnimationFrame 10.2",
+    "FunctionCall app.js:tick:233 7.6",
+    "PrePaint 5.9",
+    "Layerize 5.1",
+    "Commit 2.7",
+    "PaintImage 1.3"
+   ]
+  }
+ ],
+ "hlavne_vlakno_ms": {
+  "spolu": 19426.4,
+  "skript": 3821.8,
+  "styl": 3007.4,
+  "layout": 557.9,
+  "prepaint": 1166.4,
+  "paint": 674.2,
+  "layerize": 1341,
+  "commit": 2485.8,
+  "dekodovanie": 0
+ },
+ "styl_prepocty": {
+  "n": 1968,
+  "prvkov_p50": 2,
+  "prvkov_p95": 18,
+  "prvkov_max": 98,
+  "velke": []
+ },
+ "vynutene": [
+  {
+   "k": "UpdateLayoutTree <- app.js:readTarget:147",
+   "n": 832,
+   "ms": 949.1
+  },
+  {
+   "k": "Layout <- app.js:tick:693",
+   "n": 147,
+   "ms": 240.6
+  },
+  {
+   "k": "UpdateLayoutTree <- app.js:tick:693",
+   "n": 147,
+   "ms": 158.1
+  },
+  {
+   "k": "Layout <- app.js:readTarget:147",
+   "n": 51,
+   "ms": 101.6
+  }
+ ],
+ "paint": {
+  "n": 1360,
+  "ms": 922.9,
+  "podla_uzla": [
+   {
+    "nodeId": 20,
+    "n": 339,
+    "ms": 674.2,
+    "plocha_kpx": 1975928,
+    "prvok": "#document"
+   },
+   {
+    "nodeId": 43,
+    "n": 151,
+    "ms": 39.5,
+    "plocha_kpx": 181125,
+    "prvok": "ul.team-grid"
+   },
+   {
+    "nodeId": 36,
+    "n": 31,
+    "ms": 29.8,
+    "plocha_kpx": 168336,
+    "prvok": "div.site"
+   },
+   {
+    "nodeId": 44,
+    "n": 144,
+    "ms": 28.3,
+    "plocha_kpx": 116493,
+    "prvok": "ul.gallery-grid"
+   },
+   {
+    "nodeId": 52,
+    "n": 111,
+    "ms": 18.8,
+    "plocha_kpx": 39543970,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 140,
+    "n": 5,
+    "ms": 11.2,
+    "plocha_kpx": 32048,
+    "prvok": "div.band.band-prices"
+   },
+   {
+    "nodeId": 46,
+    "n": 23,
+    "ms": 9.7,
+    "plocha_kpx": 7571,
+    "prvok": "header.site-header"
+   },
+   {
+    "nodeId": 45,
+    "n": 13,
+    "ms": 7.1,
+    "plocha_kpx": 4345396,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 124,
+    "n": 9,
+    "ms": 4.9,
+    "plocha_kpx": 3607647,
+    "prvok": "div.title-frame"
+   },
+   {
+    "nodeId": 202,
+    "n": 9,
+    "ms": 4.5,
+    "plocha_kpx": 3607647,
+    "prvok": "div.title-frame"
+   },
+   {
+    "nodeId": 105,
+    "n": 8,
+    "ms": 4.2,
+    "plocha_kpx": 2251799545250,
+    "prvok": "span.kw"
+   },
+   {
+    "nodeId": 58,
+    "n": 14,
+    "ms": 4.1,
+    "plocha_kpx": 2251799547226,
+    "prvok": "div.mobile-cta.is-hidden"
+   }
+  ]
+ },
+ "skripty": [
+  {
+   "k": "FunctionCall app.js:tick:233",
+   "n": 1742,
+   "ms": 2356.7,
+   "max": 28.2
+  },
+  {
+   "k": "FunctionCall :f:1",
+   "n": 2010,
+   "ms": 598,
+   "max": 5.5
+  },
+  {
+   "k": "FunctionCall app.js:tick:693",
+   "n": 152,
+   "ms": 563.7,
+   "max": 13.2
+  },
+  {
+   "k": "FunctionCall app.js:start:257",
+   "n": 790,
+   "ms": 115,
+   "max": 8.1
+  },
+  {
+   "k": "FunctionCall atmosfera.js:addEventListener.capture:195",
+   "n": 92,
+   "ms": 96.1,
+   "max": 69.5
+  },
+  {
+   "k": "FunctionCall i18n.js:MutationObserver.observe.childList:98",
+   "n": 152,
+   "ms": 28.2,
+   "max": 3.2
+  },
+  {
+   "k": "FunctionCall :?:7",
+   "n": 59,
+   "ms": 18.9,
+   "max": 3
+  },
+  {
+   "k": "FunctionCall app.js:?:618",
+   "n": 26,
+   "ms": 17.3,
+   "max": 2.9
+  },
+  {
+   "k": "FunctionCall atmosfera.js:addEventListener.capture:185",
+   "n": 92,
+   "ms": 15.3,
+   "max": 3.1
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:4",
+   "n": 29,
+   "ms": 8.2,
+   "max": 2.1
+  },
+  {
+   "k": "FunctionCall :?:0",
+   "n": 1,
+   "ms": 1.3,
+   "max": 1.3
+  },
+  {
+   "k": "FunctionCall app.js:IntersectionObserver.rootMargin:406",
+   "n": 1,
+   "ms": 1.2,
+   "max": 1.2
+  },
+  {
+   "k": "FunctionCall film.js:markMove:76",
+   "n": 1,
+   "ms": 0.8,
+   "max": 0.8
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:5",
+   "n": 2,
+   "ms": 0.7,
+   "max": 0.7
+  },
+  {
+   "k": "FunctionCall app.js:addEventListener.once:358",
+   "n": 2,
+   "ms": 0.5,
+   "max": 0.5
+  }
+ ],
+ "raster": {
+  "ThreadPoolForegroundWorker": {
+   "n": 1399,
+   "ms": 1028.8,
+   "max": 32.6
+  }
+ },
+ "dekod_vlakna": {
+  "ThreadPoolForegroundWorker": {
+   "n": 98,
+   "ms": 3526.3,
+   "max": 289
+  }
+ },
+ "dekod_hlavne": null,
+ "snimky_hlavne": {
+  "n": 2736,
+  "nad16_pct": 6.9,
+  "nad50": 6,
+  "spolu": {
+   "p50": 3.81,
+   "p95": 18.83,
+   "avg": 6.05
+  },
+  "FireAnimationFrame": {
+   "p50": 0.6,
+   "p95": 4.42,
+   "avg": 1.21
+  },
+  "UpdateLayoutTree": {
+   "p50": 0,
+   "p95": 4.71,
+   "avg": 1.03
+  },
+  "Layout": {
+   "p50": 0,
+   "p95": 0.39,
+   "avg": 0.11
+  },
+  "PrePaint": {
+   "p50": 0.09,
+   "p95": 1.91,
+   "avg": 0.43
+  },
+  "Paint": {
+   "p50": 0,
+   "p95": 2.49,
+   "avg": 0.34
+  },
+  "Layerize": {
+   "p50": 0,
+   "p95": 2.82,
+   "avg": 0.49
+  },
+  "Commit": {
+   "p50": 0.22,
+   "p95": 3.65,
+   "avg": 0.91
+  },
+  "HitTest": {
+   "p50": 0,
+   "p95": 2.07,
+   "avg": 0.39
+  },
+  "IO": {
+   "p50": 0.06,
+   "p95": 1.02,
+   "avg": 0.23
+  }
+ },
+ "invalidacie": {
+  "naplanovane": [],
+  "prepocet": [],
+  "n": 0
+ },
+ "snimky": {
+  "n": 2008,
+  "p50": 16.7,
+  "p95": 33.4,
+  "max": 149.9,
+  "nad33_pct": 3.7,
+  "nad100": 2
+ },
+ "loaf": [
+  {
+   "t": 135,
+   "d": 52,
+   "blk": 0,
+   "rs": 42,
+   "sl": 47,
+   "scripts": []
+  },
+  {
+   "t": 583,
+   "d": 107,
+   "blk": 44,
+   "rs": 85,
+   "sl": 102,
+   "scripts": [
+    {
+     "inv": "DOMWindow.ontouchend",
+     "src": "atmosfera.js",
+     "fn": "",
+     "pos": 9859,
+     "d": 69,
+     "forced": 0
+    },
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 14,
+     "forced": 10
+    }
+   ]
+  },
+  {
+   "t": 1347,
+   "d": 59,
+   "blk": 0,
+   "rs": 45,
+   "sl": 48,
+   "scripts": []
+  },
+  {
+   "t": 1413,
+   "d": 116,
+   "blk": 16,
+   "rs": 64,
+   "sl": 77,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 5,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 1752,
+   "d": 59,
+   "blk": 0,
+   "rs": 48,
+   "sl": 54,
+   "scripts": []
+  },
+  {
+   "t": 1859,
+   "d": 63,
+   "blk": 0,
+   "rs": 56,
+   "sl": 61,
+   "scripts": []
+  },
+  {
+   "t": 2208,
+   "d": 84,
+   "blk": 25,
+   "rs": 77,
+   "sl": 82,
+   "scripts": [
+    {
+     "inv": "BaseAudioContext.decodeAudioData.then",
+     "src": "atmosfera.js",
+     "fn": "",
+     "pos": -1,
+     "d": 17,
+     "forced": 0
+    }
+   ]
+  },
+  {
+   "t": 3743,
+   "d": 64,
+   "blk": 0,
+   "rs": 48,
+   "sl": 57,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 6,
+     "forced": 2
+    }
+   ]
+  },
+  {
+   "t": 4680,
+   "d": 54,
+   "blk": 0,
+   "rs": 51,
+   "sl": 52,
+   "scripts": []
+  },
+  {
+   "t": 5533,
+   "d": 52,
+   "blk": 0,
+   "rs": 37,
+   "sl": 41,
+   "scripts": []
+  },
+  {
+   "t": 11563,
+   "d": 77,
+   "blk": 0,
+   "rs": 74,
+   "sl": 77,
+   "scripts": []
+  },
+  {
+   "t": 13113,
+   "d": 52,
+   "blk": 0,
+   "rs": 49,
+   "sl": 51,
+   "scripts": []
+  },
+  {
+   "t": 15419,
+   "d": 73,
+   "blk": 0,
+   "rs": 72,
+   "sl": 73,
+   "scripts": []
+  },
+  {
+   "t": 22821,
+   "d": 51,
+   "blk": 0,
+   "rs": 14,
+   "sl": 43,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 27,
+     "forced": 19
+    }
+   ]
+  },
+  {
+   "t": 22898,
+   "d": 55,
+   "blk": 0,
+   "rs": 18,
+   "sl": 54,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 28,
+     "forced": 24
+    }
+   ]
+  },
+  {
+   "t": 23708,
+   "d": 79,
+   "blk": 0,
+   "rs": 68,
+   "sl": 76,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 23900,
+   "d": 55,
+   "blk": 0,
+   "rs": 40,
+   "sl": 52,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 6,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 7,
+     "forced": 5
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 6,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 6,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 24684,
+   "d": 87,
+   "blk": 0,
+   "rs": 74,
+   "sl": 86,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 13,
+     "forced": 10
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 5,
+     "forced": 0
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 13,
+     "forced": 8
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 13,
+     "forced": 5
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 6,
+     "forced": 5
+    }
+   ]
+  },
+  {
+   "t": 24786,
+   "d": 56,
+   "blk": 0,
+   "rs": 50,
+   "sl": 55,
+   "scripts": [
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 9,
+     "forced": 6
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 9,
+     "forced": 4
+    },
+    {
+     "inv": "TimerHandler:setTimeout",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 35183,
+     "d": 7,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 29739,
+   "d": 76,
+   "blk": 0,
+   "rs": 69,
+   "sl": 74,
+   "scripts": []
+  },
+  {
+   "t": 30036,
+   "d": 54,
+   "blk": 0,
+   "rs": 19,
+   "sl": 28,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 30177,
+   "d": 56,
+   "blk": 0,
+   "rs": 15,
+   "sl": 28,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 7,
+     "forced": 4
+    }
+   ]
+  },
+  {
+   "t": 30307,
+   "d": 54,
+   "blk": 0,
+   "rs": 44,
+   "sl": 53,
+   "scripts": []
+  },
+  {
+   "t": 32461,
+   "d": 52,
+   "blk": 0,
+   "rs": 38,
+   "sl": 45,
+   "scripts": []
+  },
+  {
+   "t": 34261,
+   "d": 57,
+   "blk": 0,
+   "rs": 52,
+   "sl": 57,
+   "scripts": []
+  },
+  {
+   "t": 34579,
+   "d": 73,
+   "blk": 0,
+   "rs": 72,
+   "sl": 73,
+   "scripts": []
+  },
+  {
+   "t": 38656,
+   "d": 63,
+   "blk": 0,
+   "rs": 45,
+   "sl": 51,
+   "scripts": []
+  },
+  {
+   "t": 39763,
+   "d": 95,
+   "blk": 0,
+   "rs": 77,
+   "sl": 88,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 6,
+     "forced": 5
+    }
+   ]
+  },
+  {
+   "t": 40141,
+   "d": 52,
+   "blk": 0,
+   "rs": 27,
+   "sl": 34,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11495,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  }
+ ],
+ "loaf_nad50": 29,
+ "layout_shift": [],
+ "zmeny_kotiev": 94,
+ "near_zmeny": [
+  {
+   "t": 6880,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 7823,
+   "shot": "rohozka",
+   "c": "is-title is-shown is-near"
+  },
+  {
+   "t": 7823,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 7823,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 7910,
+   "shot": "rohozka",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 7980,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 7980,
+   "shot": "sala-rano",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 8800,
+   "shot": "sala",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 8800,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 8800,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 8874,
+   "shot": "sala",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 8976,
+   "shot": "sala",
+   "c": "is-title"
+  },
+  {
+   "t": 8976,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 9787,
+   "shot": "stol",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 9787,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 9822,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 9859,
+   "shot": "stol",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 9958,
+   "shot": "stol",
+   "c": "is-title"
+  },
+  {
+   "t": 9959,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 10792,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 10792,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 10792,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 10859,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 11907,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 14714,
+   "shot": "cakaren",
+   "c": "is-title"
+  },
+  {
+   "t": 14714,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 15507,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 15507,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 15622,
+   "shot": "sala-rano",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 16233,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 22616,
+   "shot": "sala-rano",
+   "c": "is-title"
+  },
+  {
+   "t": 22616,
+   "shot": "vstup",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 23330,
+   "shot": "kava",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 23330,
+   "shot": "kava",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 23419,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 24242,
+   "shot": "kava",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 27095,
+   "shot": "kreslo-stred",
+   "c": "is-title"
+  },
+  {
+   "t": 27881,
+   "shot": "sud",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 27906,
+   "shot": "sud",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 28005,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 28098,
+   "shot": "kava",
+   "c": "is-title"
+  },
+  {
+   "t": 28901,
+   "shot": "sud",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 28901,
+   "shot": "vstup",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 28901,
+   "shot": "vstup",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 28969,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 29780,
+   "shot": "vstup",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 31487,
+   "shot": "vstup",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 34833,
+   "shot": "vstup",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 35680,
+   "shot": "vstup",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 36050,
+   "shot": "sud",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 36146,
+   "shot": "sud",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 36146,
+   "shot": "vstup",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 36146,
+   "shot": "vstup",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 36466,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 36537,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 36537,
+   "shot": "kava",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 36537,
+   "shot": "sud",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 36981,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 38393,
+   "shot": "kava",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 38775,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near is-shown"
+  }
+ ],
+ "poziadavky": [
+  {
+   "t": 549,
+   "u": "assets/img/film/cakaren-m-1448.avif"
+  },
+  {
+   "t": 659,
+   "u": "assets/audio/hudba.webm"
+  },
+  {
+   "t": 1651,
+   "u": "assets/img/film/sala-rano-m-1448.avif"
+  },
+  {
+   "t": 2650,
+   "u": "assets/img/film/kreslo-stred-m-1448.avif"
+  },
+  {
+   "t": 3422,
+   "u": "assets/img/tim-nikolas-820.avif"
+  },
+  {
+   "t": 3426,
+   "u": "assets/img/tim-kristian-820.avif"
+  },
+  {
+   "t": 3426,
+   "u": "assets/img/tim-damian-820.avif"
+  },
+  {
+   "t": 3427,
+   "u": "assets/img/tim-michal-820.avif"
+  },
+  {
+   "t": 3427,
+   "u": "assets/img/tim-andy-820.avif"
+  },
+  {
+   "t": 3640,
+   "u": "assets/img/film/kava-m-1448.avif"
+  },
+  {
+   "t": 8394,
+   "u": "assets/img/film/sud-m-1448.avif"
+  },
+  {
+   "t": 15893,
+   "u": "assets/img/naradie-noznice-1600.avif"
+  },
+  {
+   "t": 15893,
+   "u": "assets/img/detail-stol-640.avif"
+  },
+  {
+   "t": 15893,
+   "u": "assets/img/galeria-barberpole-640.avif"
+  },
+  {
+   "t": 15894,
+   "u": "assets/img/galeria-neon-640.avif"
+  },
+  {
+   "t": 16290,
+   "u": "assets/img/film/vstup-m-1448.avif"
+  }
+ ],
+ "parametre": {
+  "url": "http://127.0.0.1:8285/barbershop-30/?uvod=off",
+  "scen": "stredne",
+  "cpu": 4,
+  "patch": "premenne,bezanim",
+  "net": "fast4g",
+  "desk": false,
+  "H": 15591
+ },
+ "dom": {
+  "prvkov": 838,
+  "kw": 28,
+  "flap_b": 12,
+  "hlbka": 13,
+  "html_class": "karty world js-kin js-steps world-frame world-off"
+ }
+}

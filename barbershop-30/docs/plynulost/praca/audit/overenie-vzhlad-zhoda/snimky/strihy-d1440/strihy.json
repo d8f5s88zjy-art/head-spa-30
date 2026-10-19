@@ -1,0 +1,26 @@
+{
+ "dev": "d1440",
+ "tabulka": [
+  "vstup>rohozka najazd",
+  "rohozka>sala pohyb",
+  "sala>stol popredie",
+  "stol>cakaren svih",
+  "cakaren>sala-rano popredie",
+  "sala-rano>kreslo-stred najazd",
+  "kreslo-stred>kava svih",
+  "kava>sud popredie",
+  "sud>vstup odjazd"
+ ],
+ "kreslene": [
+  {
+   "from": "sala",
+   "cut": "sala>stol popredie",
+   "mix": 0.5
+  },
+  {
+   "from": "cakaren",
+   "cut": "cakaren>sala-rano popredie",
+   "mix": 0.5
+  }
+ ]
+}

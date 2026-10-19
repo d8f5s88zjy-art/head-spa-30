@@ -1,0 +1,17 @@
+FCP 716 ms; písma: Fraunces-800.woff2 446 ms, Manrope-400.woff2 475 ms, Fraunces-500i.woff2 512 ms, Manrope-700.woff2 897 ms, Manrope-600.woff2 894 ms
+dlhé úlohy:
+   647 ms 60.6 ms Layout 27.4, UpdateLayoutTree 17.8, Commit 3.6, Paint 2.4, UpdateLayer 2.4
+   751.3 ms 197.2 ms Layout 153.6, Paint 13.3, PrePaint 13, UpdateLayoutTree 11.3, Layerize 2.7
+   983.1 ms 74.7 ms Layout 31.4, Paint 20.2, PrePaint 10.5, Commit 6.9, HitTest 6.5
+   1070.8 ms 164.6 ms v8.evaluateModule  156.6, UpdateLayoutTree 6.3, EvaluateScript vernost.js 4.4, EventDispatch readystatechange 1.6, Layout 0.6
+   1253.7 ms 86.1 ms UpdateLayoutTree 50.4, Layout 15.2, Paint 12, PrePaint 4.3, FireAnimationFrame 2.6
+   1392.6 ms 124.4 ms Layout 56.4, PrePaint 44.8, Paint 7.2, UpdateLayoutTree 3.5, Layerize 2.1
+   5268.6 ms 309.2 ms Layout 174.6, UpdateLayoutTree 87.1, Paint 28.1, PrePaint 16.2, Layerize 3.7
+štýl/rozloženie > 20 ms:
+   Layout o 664 ms trvá 26 ms
+   Layout o 762 ms trvá 154 ms
+   Layout o 984 ms trvá 31 ms
+   UpdateLayoutTree o 1255 ms trvá 50 ms (360 prvkov)
+   Layout o 1397 ms trvá 56 ms
+   UpdateLayoutTree o 5269 ms trvá 87 ms (87 prvkov)
+   Layout o 5356 ms trvá 175 ms

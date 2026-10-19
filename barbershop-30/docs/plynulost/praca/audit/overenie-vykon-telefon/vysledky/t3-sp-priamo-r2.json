@@ -1,0 +1,128 @@
+{
+ "meno": "t3-sp-priamo-r2",
+ "url": "http://127.0.0.1:8544/barbershop-30/?film=off&uvod=off&hudba=off",
+ "cpu": 4,
+ "gesto": "stredne",
+ "js": "ab/sp-priamo.js",
+ "css": null,
+ "zatazPred": [
+  6.16,
+  3.89,
+  3.95
+ ],
+ "zatazPo": [
+  5.31,
+  3.9,
+  3.95
+ ],
+ "trvanieS": 25.6,
+ "y": [
+  0,
+  15591
+ ],
+ "cls": "karty world-off js-kin js-steps",
+ "film": {
+  "on": false
+ },
+ "animacieBezia": [],
+ "snimkyRaf": {
+  "n": 963,
+  "p50": 16.7,
+  "p95": 50,
+  "max": 1183.2,
+  "priem": 26.57,
+  "nad33": 9.9,
+  "nad100": 9
+ },
+ "vlaknoNaSnimku": {
+  "snimok": 964,
+  "cpu": {
+   "n": 964,
+   "p50": 6.6,
+   "p95": 26.7,
+   "max": 536.9,
+   "priem": 9.71
+  },
+  "nad16": 14.2,
+  "stylPriem": 1.44,
+  "layoutPriem": 0.55,
+  "paintPriem": 3.88,
+  "skriptPriem": 4.44,
+  "gcPriem": 0.03,
+  "prvkovStylPriem": 7.3,
+  "prvkovStylP95": 34
+ },
+ "dlheUlohy": {
+  "stena50": 2,
+  "vlakno50": 2,
+  "maxVlaknoMs": 533.5,
+  "maxStenaMs": 985.7
+ },
+ "sekcie": {
+  "-": {
+   "snimok": 964,
+   "cpuPriem": 9.7,
+   "cpuP95": 26.7,
+   "styl": 1.44,
+   "layout": 0.55,
+   "paint": 3.88,
+   "skript": 4.44
+  }
+ },
+ "funkcie": [
+  [
+   ":2 f",
+   932,
+   965,
+   9.9
+  ],
+  [
+   "app.js:694 tick",
+   568,
+   152,
+   9.1
+  ],
+  [
+   "app.js:234 tick",
+   396,
+   693,
+   4.1
+  ],
+  [
+   "app.js:258 start",
+   49,
+   431,
+   1.1
+  ],
+  [
+   "i18n.js:99 MutationObserver.observe.childList",
+   27,
+   152,
+   1.4
+  ],
+  [
+   "app.js:619 ",
+   9,
+   14,
+   3.1
+  ],
+  [
+   "app.js:353 load",
+   0,
+   1,
+   0
+  ],
+  [
+   "app.js:386 load",
+   0,
+   1,
+   0
+  ],
+  [
+   "app.js:407 IntersectionObserver.rootMargin",
+   0,
+   1,
+   0.1
+  ]
+ ]
+}

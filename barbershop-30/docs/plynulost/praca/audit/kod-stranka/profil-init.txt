@@ -1,0 +1,27 @@
+vlastný čas (ms, priemer z 3 behov, CPU 4×) do 2,5 s od navigácie:
+   1410.9  ((program)):(program):0
+   1120.6  ((idle)):(idle):0
+     53.6  app.js:nowNitra:660
+     31.1  app.js:(anon):1
+     29.9  film.js:(anon):41
+     12.1  app.js:measure:74
+      5.3  ((garbage collector)):(garbage collector):0
+      3.8  app.js:apply:165
+      2.8  app.js:$$:15
+      2.7  app.js:(anon):624
+      2.0  app.js:(anon):656
+      1.9  app.js:recenzie:369
+      1.5  app.js:(anon):86
+      1.5  app.js:readTarget:146
+      1.4  app.js:$:14
+      1.4  app.js:setVar:111
+      1.4  app.js:(anon):374
+      1.2  app.js:(anon):615
+      1.2  app.js:setupVideos:551
+      1.1  app.js:tabula:669
+      1.0  film.js:gpu:90
+      1.0  app.js:(anon):697
+      0.8  app.js:jazyky:381
+      0.8  app.js:setupReveal:399
+      0.7  app.js:setupLightbox:457
+spolu app.js 130.6 film.js 31.0 vernost.js 0.3

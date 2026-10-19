@@ -1,0 +1,248 @@
+{
+ "info": {
+  "pisma": [
+   "Fraunces-800.woff2 490 ms",
+   "Manrope-400.woff2 466 ms",
+   "Fraunces-500i.woff2 537 ms",
+   "Manrope-700.woff2 925 ms",
+   "Manrope-600.woff2 920 ms"
+  ],
+  "fcp": 804
+ },
+ "dlhe": [
+  {
+   "ts": 187,
+   "ms": 63.5,
+   "parts": [
+    "EventDispatch pagehide 0",
+    "EventDispatch visibilitychange 0",
+    "EventDispatch webkitvisibilitychange 0",
+    "EventDispatch unload 0"
+   ]
+  },
+  {
+   "ts": 678.9,
+   "ms": 97.8,
+   "parts": [
+    "Layout 48.7",
+    "UpdateLayoutTree 23.4",
+    "Layerize 4.2",
+    "Paint 3.9",
+    "PrePaint 3.6",
+    "Commit 3.5",
+    "PaintImage 0.6",
+    "UpdateLayer 0.1"
+   ]
+  },
+  {
+   "ts": 800,
+   "ms": 60.6,
+   "parts": [
+    "Layout 32.6",
+    "UpdateLayoutTree 15.3",
+    "Paint 4.5",
+    "PrePaint 2",
+    "Layerize 0.9",
+    "Commit 0.8",
+    "PaintImage 0.4",
+    "UpdateLayer 0.1"
+   ]
+  },
+  {
+   "ts": 876.9,
+   "ms": 117.5,
+   "parts": [
+    "Layout 70.1",
+    "Paint 19.7",
+    "UpdateLayoutTree 10.7",
+    "PrePaint 9",
+    "Layerize 2.6",
+    "Commit 1.3",
+    "HitTest 1.1",
+    "PaintImage 0.2"
+   ]
+  },
+  {
+   "ts": 1028.3,
+   "ms": 71.3,
+   "parts": [
+    "Layout 31.3",
+    "Paint 11.8",
+    "UpdateLayoutTree 10",
+    "PrePaint 7.1",
+    "Commit 5.7",
+    "Layerize 1.6",
+    "IntersectionObserverController::computeIntersections 1.2",
+    "UpdateLayer 1.1"
+   ]
+  },
+  {
+   "ts": 1107.6,
+   "ms": 99.3,
+   "parts": [
+    "v8.evaluateModule  96.3",
+    "UpdateLayoutTree 2.7",
+    "Layout 1.9",
+    "EvaluateScript vernost.js 1.2",
+    "ParseHTML 0",
+    "EventDispatch load 0",
+    "EventDispatch readystatechange 0"
+   ]
+  },
+  {
+   "ts": 1210.1,
+   "ms": 64.7,
+   "parts": [
+    "Layout 15",
+    "Paint 13.9",
+    "UpdateLayoutTree 13.1",
+    "PrePaint 7.6",
+    "FireAnimationFrame 3.5",
+    "Layerize 2.8",
+    "FunctionCall app.js:tick:233 2.5",
+    "Commit 1.7"
+   ]
+  },
+  {
+   "ts": 1323.3,
+   "ms": 164,
+   "parts": [
+    "PrePaint 111",
+    "Layout 34.3",
+    "UpdateLayoutTree 5.3",
+    "Paint 3.4",
+    "Layerize 1.5",
+    "Commit 1.2",
+    "IntersectionObserverController::computeIntersections 1",
+    "FunctionCall app.js:scheduleMeasure:274 0.6"
+   ]
+  },
+  {
+   "ts": 5200.9,
+   "ms": 172.8,
+   "parts": [
+    "Layout 107.8",
+    "UpdateLayoutTree 35",
+    "Paint 16.7",
+    "PrePaint 9.3",
+    "Layerize 2.3",
+    "PaintImage 2.3",
+    "Commit 2.2",
+    "IntersectionObserverController::computeIntersections 1.2"
+   ]
+  }
+ ],
+ "lay": [
+  "UpdateLayoutTree o 680 ms trvá 23 ms (41 prvkov)",
+  "Layout o 703 ms trvá 49 ms",
+  "Layout o 815 ms trvá 33 ms",
+  "Layout o 890 ms trvá 70 ms",
+  "Layout o 1040 ms trvá 31 ms",
+  "Layout o 1328 ms trvá 34 ms",
+  "UpdateLayoutTree o 5202 ms trvá 35 ms (76 prvkov)",
+  "Layout o 5237 ms trvá 108 ms"
+ ],
+ "vlakno": {
+  "spolu": 1860.5,
+  "skript": 56.6,
+  "styl": 220.3,
+  "layout": 345.5,
+  "prepaint": 217.3,
+  "paint": 63.4,
+  "layerize": 94.6,
+  "commit": 105.2,
+  "dekodovanie": 22.5
+ },
+ "skripty": [
+  {
+   "k": "FunctionCall i18n.js:?:267",
+   "n": 1,
+   "ms": 27.9,
+   "max": 27.9
+  },
+  {
+   "k": "FunctionCall app.js:tick:233",
+   "n": 3,
+   "ms": 7.2,
+   "max": 4
+  },
+  {
+   "k": "FunctionCall i18n.js:build:190",
+   "n": 1,
+   "ms": 6.5,
+   "max": 6.5
+  },
+  {
+   "k": "FunctionCall app.js:load:352",
+   "n": 1,
+   "ms": 3,
+   "max": 3
+  },
+  {
+   "k": "FunctionCall atmosfera.js:ready:227",
+   "n": 1,
+   "ms": 2.5,
+   "max": 2.5
+  },
+  {
+   "k": "FunctionCall app.js:?:276",
+   "n": 1,
+   "ms": 2.1,
+   "max": 2.1
+  },
+  {
+   "k": "FunctionCall i18n.js:offer:237",
+   "n": 1,
+   "ms": 1.8,
+   "max": 1.8
+  },
+  {
+   "k": "FunctionCall app.js:scheduleMeasure:274",
+   "n": 2,
+   "ms": 1.3,
+   "max": 0.8
+  },
+  {
+   "k": "FunctionCall app.js:?:288",
+   "n": 1,
+   "ms": 0.9,
+   "max": 0.9
+  },
+  {
+   "k": "FunctionCall atmosfera.js:?:126",
+   "n": 1,
+   "ms": 0.8,
+   "max": 0.8
+  },
+  {
+   "k": "FunctionCall vernost.js:addEventListener.once:187",
+   "n": 1,
+   "ms": 0.7,
+   "max": 0.7
+  },
+  {
+   "k": "FunctionCall app.js:IntersectionObserver.threshold:584",
+   "n": 1,
+   "ms": 0.6,
+   "max": 0.6
+  },
+  {
+   "k": "FunctionCall app.js:load:385",
+   "n": 1,
+   "ms": 0.4,
+   "max": 0.4
+  },
+  {
+   "k": "FunctionCall vernost.js:overUlozenu:180",
+   "n": 1,
+   "ms": 0.3,
+   "max": 0.3
+  },
+  {
+   "k": "FunctionCall app.js:?:618",
+   "n": 3,
+   "ms": 0.2,
+   "max": 0.2
+  }
+ ]
+}

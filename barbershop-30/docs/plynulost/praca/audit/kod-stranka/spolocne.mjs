@@ -14,15 +14,17 @@ export const NET = {
   none: null,
 };
 
-export const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true,
+export const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: 'sk-SK',
   userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36' };
-export const DESK = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 };
+export const DESK = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'sk-SK' };
 
+// 'cc' a 'disabled-by-default-devtools.timeline.picture' sa nezapínajú: snímky vrstiev (picture) v Commit dekódujú
+// obrázky na hlavnom vlákne a predĺžia commit na sekundy (artefakt merania, overené v prvom behu)
 export const CATS = [
   'toplevel', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'disabled-by-default-devtools.timeline.frame',
-  'disabled-by-default-devtools.timeline.stack', 'disabled-by-default-devtools.timeline.invalidationTracking',
-  'blink.user_timing', 'loading', 'v8.execute', 'cc', 'disabled-by-default-devtools.timeline.picture',
+  'disabled-by-default-devtools.timeline.stack', 'blink.user_timing', 'loading', 'v8.execute', 'latencyInfo',
 ];
+export const CATS_INV = [...CATS, 'disabled-by-default-devtools.timeline.invalidationTracking'];
 
 export async function launch() {
   return chromium.launch({ headless: true, args: ['--enable-gpu-rasterization', '--ignore-gpu-blocklist'] });

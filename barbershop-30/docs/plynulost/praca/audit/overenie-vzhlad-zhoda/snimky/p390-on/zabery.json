@@ -1,0 +1,523 @@
+{
+ "dev": "p390",
+ "mode": "on",
+ "vp": {
+  "width": 390,
+  "height": 844
+ },
+ "dsf": 3,
+ "res": [
+  {
+   "i": 0,
+   "kk": 1,
+   "shot": "rohozka",
+   "y": 0,
+   "top": 0,
+   "free": 844,
+   "scrollY": 0,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 1,
+    "cur": "rohozka-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "rohozka-m",
+     "ready": true,
+     "size": 1448,
+     "loading": false,
+     "depth": [
+      768,
+      1365
+     ]
+    },
+    "seq": [
+     {
+      "shot": "sala-video",
+      "on": true,
+      "got": 51,
+      "n": 51,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     },
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     }
+    ],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "00-rohozka"
+  },
+  {
+   "i": 1,
+   "kk": 2,
+   "shot": "sala",
+   "y": 1140,
+   "top": 844,
+   "free": 591,
+   "scrollY": 1140,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 2.001,
+    "cur": "sala-video",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "sala-video",
+     "ready": true,
+     "size": 1,
+     "loading": false,
+     "depth": null
+    },
+    "seq": [
+     {
+      "shot": "sala-video",
+      "on": true,
+      "got": 51,
+      "n": 51,
+      "lo": 25,
+      "hi": 26,
+      "mix": 0,
+      "tex": "23,27,24,28,25,26",
+      "up": 0,
+      "dec": 0,
+      "t": 0.5
+     },
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "sala-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": true
+     }
+    ]
+   },
+   "vis": [
+    {
+     "shot": "sala",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "01-sala"
+  },
+  {
+   "i": 2,
+   "kk": 3,
+   "shot": "stol",
+   "y": 1730,
+   "top": 1435,
+   "free": 591,
+   "scrollY": 1730,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 2.999,
+    "cur": "stol-video",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "stol-video",
+     "ready": true,
+     "size": 1,
+     "loading": false,
+     "depth": null
+    },
+    "seq": [
+     {
+      "shot": "sala-video",
+      "on": true,
+      "got": 51,
+      "n": 51,
+      "lo": 50,
+      "hi": 50,
+      "mix": 0,
+      "tex": "42,48,47,49,46,50",
+      "up": 0,
+      "dec": 0,
+      "t": 1
+     },
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 21,
+      "hi": 22,
+      "mix": 0,
+      "tex": "19,23,20,24,21,22",
+      "up": 0,
+      "dec": 0,
+      "t": 0.5
+     }
+    ],
+    "video": [
+     {
+      "shot": "stol-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": true
+     }
+    ]
+   },
+   "vis": [
+    {
+     "shot": "stol",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "02-stol"
+  },
+  {
+   "i": 3,
+   "kk": 4,
+   "shot": "cakaren",
+   "y": 2321,
+   "top": 2026,
+   "free": 591,
+   "scrollY": 2321,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 3.999,
+    "cur": "cakaren-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "cakaren-m",
+     "ready": true,
+     "size": 1448,
+     "loading": false,
+     "depth": [
+      768,
+      1366
+     ]
+    },
+    "seq": [
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 43,
+      "hi": 43,
+      "mix": 0,
+      "tex": "38,37,40,39,42,43",
+      "up": 0,
+      "dec": 0,
+      "t": 1
+     }
+    ],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "cakaren",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "03-cakaren"
+  },
+  {
+   "i": 4,
+   "kk": 5,
+   "shot": "sala-rano",
+   "y": 2869,
+   "top": 2616,
+   "free": 506,
+   "scrollY": 2869,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 4.999,
+    "cur": "sala-rano-video",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "sala-rano-video",
+     "ready": true,
+     "size": 1,
+     "loading": false,
+     "depth": null
+    },
+    "seq": [],
+    "video": [
+     {
+      "shot": "sala-rano-video",
+      "mode": "play",
+      "src": "f596c701-8b2d-42f1-abe2-00ff8406dcf7",
+      "rs": 4,
+      "t": 7.02,
+      "want": -1,
+      "seeking": false,
+      "paused": false,
+      "live": true,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": true
+     }
+    ]
+   },
+   "vis": [
+    {
+     "shot": "sala-rano",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "04-sala-rano"
+  },
+  {
+   "i": 5,
+   "kk": 6,
+   "shot": "kreslo-stred",
+   "y": 5051,
+   "top": 4798,
+   "free": 506,
+   "scrollY": 5051,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 5.999,
+    "cur": "kreslo-stred-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "kreslo-stred-m",
+     "ready": true,
+     "size": 1448,
+     "loading": false,
+     "depth": [
+      768,
+      1366
+     ]
+    },
+    "seq": [],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "kreslo-stred",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "05-kreslo-stred"
+  },
+  {
+   "i": 6,
+   "kk": 7,
+   "shot": "kava",
+   "y": 9988,
+   "top": 9735,
+   "free": 506,
+   "scrollY": 9988,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 7,
+    "cur": "kava-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "kava-m",
+     "ready": true,
+     "size": 1448,
+     "loading": false,
+     "depth": [
+      768,
+      1365
+     ]
+    },
+    "seq": [],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "kava",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "06-kava"
+  },
+  {
+   "i": 7,
+   "kk": 8,
+   "shot": "sud",
+   "y": 12760,
+   "top": 12465,
+   "free": 591,
+   "scrollY": 12760,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 8,
+    "cur": "sud-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "sud-m",
+     "ready": true,
+     "size": 1448,
+     "loading": false,
+     "depth": [
+      768,
+      1366
+     ]
+    },
+    "seq": [],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "sud",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "07-sud"
+  },
+  {
+   "i": 8,
+   "kk": 9,
+   "shot": "vstup",
+   "y": 13309,
+   "top": 13056,
+   "free": 506,
+   "scrollY": 13309,
+   "canvas": [
+    780,
+    1688,
+    390,
+    844
+   ],
+   "film": {
+    "S": 9,
+    "cur": "vstup-m",
+    "mix": 0,
+    "dpr": 2,
+    "ready": {
+     "shot": "vstup-m",
+     "ready": false,
+     "size": 0,
+     "loading": false,
+     "depth": null
+    },
+    "seq": [],
+    "video": []
+   },
+   "vis": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "still": [],
+   "file": "08-vstup"
+  }
+ ]
+}

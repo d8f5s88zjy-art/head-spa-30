@@ -1,0 +1,193 @@
+{
+ "cpu": 4,
+ "zataz": [
+  "0.89",
+  "4.13",
+  "4.65"
+ ],
+ "ulohy": {
+  "pas256@0": {
+   "wallMs": 16.27,
+   "vlaknoMs": 16.04
+  },
+  "pas256@256": {
+   "wallMs": 12.29,
+   "vlaknoMs": 10.96
+  },
+  "pas256@512": {
+   "wallMs": 11.01,
+   "vlaknoMs": 10.07
+  },
+  "pas256@768": {
+   "wallMs": 10.07,
+   "vlaknoMs": 10.07
+  },
+  "pas256@1024": {
+   "wallMs": 10.93,
+   "vlaknoMs": 10.2
+  },
+  "pas256@1280": {
+   "wallMs": 9.76,
+   "vlaknoMs": 8.64
+  },
+  "pas256@1536": {
+   "wallMs": 8.62,
+   "vlaknoMs": 8.62
+  },
+  "pas256@1792": {
+   "wallMs": 9.42,
+   "vlaknoMs": 9.41
+  },
+  "pas256@2048": {
+   "wallMs": 3.42,
+   "vlaknoMs": 2.7
+  },
+  "pas256@2304": {
+   "wallMs": 54.41,
+   "vlaknoMs": 13.8
+  },
+  "pas256@2560": {
+   "wallMs": 1.24,
+   "vlaknoMs": 1.23
+  },
+  "mipmap": {
+   "wallMs": 1.77,
+   "vlaknoMs": 1.77
+  },
+  "seq720x1280#0": {
+   "wallMs": 27.91,
+   "vlaknoMs": 26.96
+  },
+  "seq720x1280#1": {
+   "wallMs": 8.25,
+   "vlaknoMs": 8.24
+  },
+  "seq720x1280#2": {
+   "wallMs": 21.57,
+   "vlaknoMs": 21.39
+  },
+  "seq720x1280#3": {
+   "wallMs": 22.65,
+   "vlaknoMs": 22.62
+  },
+  "seq720x1280#4": {
+   "wallMs": 25.7,
+   "vlaknoMs": 21.92
+  },
+  "seq720x1280#5": {
+   "wallMs": 18.93,
+   "vlaknoMs": 18.13
+  },
+  "seq720x1280#6": {
+   "wallMs": 23.02,
+   "vlaknoMs": 23.02
+  },
+  "seq720x1280#7": {
+   "wallMs": 20.31,
+   "vlaknoMs": 20.26
+  },
+  "seq2x": {
+   "wallMs": 42.25,
+   "vlaknoMs": 41.2
+  },
+  "decode#0": {
+   "wallMs": 3.29,
+   "vlaknoMs": 3.28
+  },
+  "decode#1": {
+   "wallMs": 1.39,
+   "vlaknoMs": 1.38
+  },
+  "decode#2": {
+   "wallMs": 3.21,
+   "vlaknoMs": 3.21
+  },
+  "decode#3": {
+   "wallMs": 3.23,
+   "vlaknoMs": 3.23
+  }
+ },
+ "jsCas": {
+  "pas256@0": 13.9,
+  "finish:pas256@0": 0.1,
+  "pas256@256": 12,
+  "finish:pas256@256": 0.1,
+  "pas256@512": 8.5,
+  "finish:pas256@512": 0.1,
+  "pas256@768": 9.1,
+  "finish:pas256@768": 0,
+  "pas256@1024": 9.8,
+  "finish:pas256@1024": 0,
+  "pas256@1280": 9.5,
+  "finish:pas256@1280": 0.5,
+  "pas256@1536": 8.4,
+  "finish:pas256@1536": 0,
+  "pas256@1792": 8.9,
+  "finish:pas256@1792": 0.1,
+  "pas256@2048": 2.2,
+  "finish:pas256@2048": 0,
+  "pas256@2304": 53.6,
+  "finish:pas256@2304": 1.2,
+  "pas256@2560": 1.1,
+  "finish:pas256@2560": 5.9,
+  "mipmap": 0.7,
+  "finish:mipmap": 0.2,
+  "seq720x1280#0": 27.7,
+  "finish:seq720x1280#0": 0.2,
+  "seq720x1280#1": 7.6,
+  "finish:seq720x1280#1": 0.9,
+  "seq720x1280#2": 20.2,
+  "finish:seq720x1280#2": 0.1,
+  "seq720x1280#3": 21.1,
+  "finish:seq720x1280#3": 0.6,
+  "seq720x1280#4": 24.9,
+  "finish:seq720x1280#4": 0,
+  "seq720x1280#5": 18.2,
+  "finish:seq720x1280#5": 0.1,
+  "seq720x1280#6": 22.1,
+  "finish:seq720x1280#6": 0.1,
+  "seq720x1280#7": 19,
+  "finish:seq720x1280#7": 0.1,
+  "seq2x": 42,
+  "finish:seq2x": 0.1,
+  "decode-call#0": 1.9,
+  "decode-wall#0": 15.7,
+  "decode-call#1": 1.2,
+  "decode-wall#1": 15.1,
+  "decode-call#2": 2.3,
+  "decode-wall#2": 16.6,
+  "decode-call#3": 2.6,
+  "decode-wall#3": 16.7
+ },
+ "suhrn": {
+  "pasy": {
+   "n": 11,
+   "vlaknoSpolu": 101.7,
+   "wallSpolu": 147.4,
+   "vlaknoMax": 16.04,
+   "vlaknoP50": 10.07
+  },
+  "seq": {
+   "n": 8,
+   "vlaknoSpolu": 162.5,
+   "wallSpolu": 168.3,
+   "vlaknoMax": 26.96,
+   "vlaknoP50": 21.92
+  },
+  "seq2x": {
+   "wallMs": 42.25,
+   "vlaknoMs": 41.2
+  },
+  "mipmap": {
+   "wallMs": 1.77,
+   "vlaknoMs": 1.77
+  },
+  "dekodovanie": {
+   "n": 4,
+   "vlaknoSpolu": 11.1,
+   "wallSpolu": 11.1,
+   "vlaknoMax": 3.28,
+   "vlaknoP50": 3.23
+  }
+ }
+}

@@ -4,8 +4,9 @@
 // merania, zmeny tried kotiev) a <out>/trace.json.gz.
 import fs from 'fs';
 import zlib from 'zlib';
-import { opt, BASE, launch, open, swipe, sleep, traceStart } from './spolocne.mjs';
-import { analyze, invalidations } from './analyza.mjs';
+import { opt, BASE, launch, open, swipe, sleep, traceStart, CATS, CATS_INV } from './spolocne.mjs';
+import { analyze, invalidations, frameBreakdown } from './analyza.mjs';
+import { patch } from './zaplaty.mjs';
 
 const scen = opt.scen || 'stredne';
 const out = new URL(`./${opt.out || 'beh-' + scen}/`, import.meta.url).pathname;
@@ -26,6 +27,7 @@ await page.addInitScript(() => {
     document.querySelectorAll('.film-shot').forEach((el) => mo.observe(el, { attributes: true, attributeFilter: ['class'] }));
   });
 });
+if (opt.patch) await patch(page, String(opt.patch).split(','));
 const reqs = [];
 page.on('request', (r) => { if (r.resourceType() === 'image' || r.resourceType() === 'media' || /\.(avif|webp|jpg|png|mp4|webm|json|js|css|woff2)(\?|$)/.test(r.url())) reqs.push({ t: Date.now(), u: r.url().replace(BASE, ''), typ: r.resourceType() }); });
 
@@ -35,7 +37,7 @@ if (scen !== 'prvy-dotyk') await sleep(5000); else await sleep(1200);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
 
 const H = await page.evaluate(() => document.scrollingElement.scrollHeight - innerHeight);
-const stop = await traceStart(cdp);
+const stop = await traceStart(cdp, opt.inv ? CATS_INV : CATS);
 const tStart = await page.evaluate(() => { const m = window.__m; m.fr = []; m.loaf = m.loaf.filter(() => false); m.t0 = performance.now(); let last = 0; const f = (t) => { if (last) m.fr.push(+(t - last).toFixed(1)); last = t; if (!m.stopFr) requestAnimationFrame(f); }; requestAnimationFrame(f); return m.t0; });
 const tReq0 = Date.now();
 
@@ -70,8 +72,11 @@ await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
 
 // rozbor
 const mt = ev.filter((e) => e.ph === 'X');
-const tsMin = Math.min(...mt.map((e) => e.ts));
+console.error('udalostí', ev.length);
+let tsMin = Infinity; for (const e of mt) if (e.ts < tsMin) tsMin = e.ts;
+if (opt.save) fs.writeFileSync(out + 'trace.json.gz', zlib.gzipSync(JSON.stringify({ traceEvents: ev })));
 const res = analyze(ev, { from: tsMin });
+res.snimky_hlavne = frameBreakdown(ev);
 res.invalidacie = invalidations(ev, { from: tsMin });
 // uzly kreslenia -> názov prvku
 for (const p of res.paint.podla_uzla) {
@@ -87,10 +92,9 @@ res.layout_shift = m.ls;
 res.zmeny_kotiev = m.cls.filter((e) => e.t >= tStart).length;
 res.near_zmeny = m.cls.filter((e) => e.t >= tStart).slice(0, 60);
 res.poziadavky = reqs.filter((r) => r.t >= tReq0).map((r) => ({ t: r.t - tReq0, u: r.u }));
-res.parametre = { url, scen, cpu, net: opt.net || 'fast4g', desk: !!opt.desk, H };
+res.parametre = { url, scen, cpu, patch: opt.patch || '', net: opt.net || 'fast4g', desk: !!opt.desk, H };
 res.dom = await page.evaluate(() => ({ prvkov: document.getElementsByTagName('*').length, kw: document.querySelectorAll('.kw').length, flap_b: document.querySelectorAll('.flap-cells b').length, hlbka: (() => { let mx = 0; const w = (n, d) => { if (d > mx) mx = d; for (const c of n.children) w(c, d + 1); }; w(document.documentElement, 1); return mx; })(), html_class: document.documentElement.className }));
 fs.writeFileSync(out + 'vysledok.json', JSON.stringify(res, null, 1));
-fs.writeFileSync(out + 'trace.json.gz', zlib.gzipSync(JSON.stringify({ traceEvents: ev })));
 await ctx.close(); await browser.close();
 const { near_zmeny, loaf, ...kratko } = res;
 console.log(JSON.stringify({ ...kratko, loaf_top: [...loaf].sort((a, b) => b.d - a.d).slice(0, 6) }, null, 1).slice(0, 12000));
