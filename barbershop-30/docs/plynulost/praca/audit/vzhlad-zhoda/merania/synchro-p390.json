@@ -1,0 +1,204 @@
+{
+ "vh": 844,
+ "anchors": [
+  -844,
+  0,
+  1140,
+  1730,
+  2321,
+  2869,
+  5051,
+  9988,
+  12760,
+  13309
+ ],
+ "path": [
+  "vstup-m",
+  "rohozka-m",
+  "sala-video",
+  "stol-video",
+  "cakaren-m",
+  "sala-rano-video",
+  "kreslo-stred-m",
+  "kava-m",
+  "sud-m",
+  "vstup-m"
+ ],
+ "cards": [
+  {
+   "shot": "rohozka",
+   "top": 0,
+   "free": 844,
+   "long": false
+  },
+  {
+   "shot": "sala",
+   "top": 844,
+   "free": 591,
+   "long": false
+  },
+  {
+   "shot": "stol",
+   "top": 1435,
+   "free": 591,
+   "long": false
+  },
+  {
+   "shot": "cakaren",
+   "top": 2026,
+   "free": 591,
+   "long": false
+  },
+  {
+   "shot": "sala-rano",
+   "top": 2616,
+   "free": 506,
+   "long": true
+  },
+  {
+   "shot": "kreslo-stred",
+   "top": 4798,
+   "free": 506,
+   "long": true
+  },
+  {
+   "shot": "kava",
+   "top": 9735,
+   "free": 506,
+   "long": true
+  },
+  {
+   "shot": "sud",
+   "top": 12465,
+   "free": 591,
+   "long": false
+  },
+  {
+   "shot": "vstup",
+   "top": 13056,
+   "free": 506,
+   "long": true
+  }
+ ],
+ "hranice": [
+  {
+   "z": "rohozka",
+   "do": "sala",
+   "pas_pred": false,
+   "text_von": [
+    776,
+    844
+   ],
+   "text_dnu": [
+    844,
+    915
+   ],
+   "film_strih": [
+    673,
+    1015
+   ]
+  },
+  {
+   "z": "sala",
+   "do": "stol",
+   "pas_pred": false,
+   "text_von": [
+    1388,
+    1435
+   ],
+   "text_dnu": [
+    1435,
+    1506
+   ],
+   "film_strih": [
+    1347,
+    1524
+   ]
+  },
+  {
+   "z": "stol",
+   "do": "cakaren",
+   "pas_pred": false,
+   "text_von": [
+    1979,
+    2026
+   ],
+   "text_dnu": [
+    2026,
+    2097
+   ],
+   "film_strih": [
+    1937,
+    2115
+   ]
+  },
+  {
+   "z": "cakaren",
+   "do": "sala-rano",
+   "pas_pred": false,
+   "text_von": [
+    2569,
+    2616
+   ],
+   "text_dnu": [
+    2616,
+    2677
+   ],
+   "film_strih": [
+    2534,
+    2698
+   ]
+  },
+  {
+   "z": "sala-rano",
+   "do": "kreslo-stred",
+   "pas_pred": true,
+   "text_von": [
+    4758,
+    4798
+   ],
+   "text_dnu": [
+    4798,
+    4859
+   ],
+   "film_strih": [
+    3300,
+    3764
+   ]
+  },
+  {
+   "z": "kreslo-stred",
+   "do": "kava",
+   "pas_pred": true,
+   "text_von": [
+    9695,
+    9735
+   ],
+   "text_dnu": [
+    9735,
+    9796
+   ],
+   "film_strih": [
+    8074,
+    8864
+   ]
+  },
+  {
+   "z": "kava",
+   "do": "sud",
+   "pas_pred": true,
+   "text_von": [
+    12425,
+    12465
+   ],
+   "text_dnu": [
+    12465,
+    12536
+   ],
+   "film_strih": [
+    10967,
+    11431
+   ]
+  }
+ ]
+}

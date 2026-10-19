@@ -356,6 +356,8 @@ const load1 = os.loadavg();
 const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const ctx = await browser.newContext(Object.assign({ colorScheme: 'dark', locale: 'sk-SK' }, DEV === 'telefon' ? PHONE : DESK));
 await ctx.addInitScript(INIT);
+// pokus A/B bez zmeny repozitára: --css="pravidlá" sa vloží do stránky (napr. vypnúť backdrop-filter a overiť príčinu)
+if (opt.css) await ctx.addInitScript((css) => { const put = () => { const st = document.createElement('style'); st.textContent = css; document.head.append(st); }; if (document.head) put(); else document.addEventListener('DOMContentLoaded', put); }, opt.css);
 if (opt.vernost === '1') {
   // prihláška k vernostnej karte ako po nasadení s adminom (data-zapnute); stránka sa inak nemení
   await ctx.route((u) => /\/barbershop-30\/(\?.*)?$/.test(u.toString()) || /\/barbershop-30\/index\.html/.test(u.toString()), async (route) => {
@@ -371,7 +373,7 @@ const cdp = await ctx.newCDPSession(page);
 await cdp.send('Network.enable');
 if (NETS[NET]) await cdp.send('Network.emulateNetworkConditions', NETS[NET]);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
-const out = { meta: { meno: MENO, url: URLX, zariadenie: DEV, cpu: CPU, siet: NET, film: FILM, cas: new Date().toISOString(), zataz: load1.map((x) => +x.toFixed(2)), prehliadac: browser.version(), poznamka: 'WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.' } };
+const out = { meta: { meno: MENO, url: URLX, css: opt.css || null, zariadenie: DEV, cpu: CPU, siet: NET, film: FILM, cas: new Date().toISOString(), zataz: load1.map((x) => +x.toFixed(2)), prehliadac: browser.version(), poznamka: 'WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.' } };
 const perfNow = () => page.evaluate(() => performance.now());
 const mark = async (name) => page.evaluate((n) => { performance.mark(n); return performance.getEntriesByName(n).pop().startTime; }, name);
 let sections = [];

@@ -17,4 +17,11 @@ for i in 1 2; do run --url="$GZ" --zariadenie=pocitac --cpu=1 --film=predvolene 
 echo "=== $(date +%T) necinnost"; timeout 600 node "$D/necinnost.mjs" --url="$URL" --cpu=4 --sekund=15 2>&1 | tail -20
 echo "=== $(date +%T) nahravanie"; timeout 600 node "$D/nahravanie.mjs" --url="$URL" --cpu=4 2>&1 | tail -80
 echo "=== $(date +%T) styl"; timeout 600 node --max-old-space-size=8000 "$D/styl.mjs" --url="$URL" --film=off --cpu=4 2>&1 | tail -45
+# pokusy A/B (príčina overená vypnutím jedného mechanizmu cez vložené CSS, repozitár sa nemení)
+AB="--fazy=skrol --skrol=stredne,svih"
+run --url="$URL" --zariadenie=telefon --cpu=4 --film=off $AB --meno=ab-telefon-off-zaklad
+run --url="$URL" --zariadenie=telefon --cpu=4 --film=off $AB --css=".film-still img{transform:none!important;will-change:auto!important}" --meno=ab-telefon-off-bez-scale-zaloh
+run --url="$URL" --zariadenie=telefon --cpu=4 --film=off $AB --css=".hudba-eq i,.btn-primary::after,.beam>.beam-line::before,.marquee-track{animation:none!important}.js-kin .kin .kw,.js-steps .steps li{transition:none!important;filter:none!important;opacity:1!important;transform:none!important}" --meno=ab-telefon-off-bez-animacii
+run --url="$URL" --zariadenie=pocitac --cpu=1 --film=off $AB --meno=ab-pocitac-off-zaklad
+run --url="$URL" --zariadenie=pocitac --cpu=1 --film=off $AB --css="*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}" --meno=ab-pocitac-off-bez-backdrop
 echo "=== $(date +%T) hotovo"

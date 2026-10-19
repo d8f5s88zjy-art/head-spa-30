@@ -1,0 +1,1316 @@
+{
+ "kontrast": null,
+ "dev": "d1440",
+ "mode": "on",
+ "url": "http://127.0.0.1:8211/barbershop-30/?film=on&uvod=off",
+ "classes": "karty world js-kin js-steps world-in",
+ "vh": 900,
+ "max": 15224,
+ "screens": 17.915555555555557,
+ "layoutShifts": [
+  {
+   "v": 0.00010943474579903978,
+   "t": 234,
+   "src": [
+    "#nav.nav"
+   ]
+  }
+ ],
+ "errs": [],
+ "beats": [
+  {
+   "name": "karta-00-rohozka",
+   "y": 0,
+   "kind": "karta",
+   "file": "00-karta-00-rohozka.jpg",
+   "ciste": "00-karta-00-rohozka-ciste.png",
+   "scrollY": 0,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 11,
+     "t": "Prejdi si podnik",
+     "cls": "scroll-hint"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    }
+   ],
+   "fonts": [
+    11,
+    12,
+    12.48,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    109.44
+   ],
+   "film": {
+    "S": 1,
+    "T": 1,
+    "cur": "rohozka",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-01-sala",
+   "y": 925,
+   "kind": "strih",
+   "file": "01-strih-01-sala.jpg",
+   "ciste": null,
+   "scrollY": 925,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    109.44
+   ],
+   "film": {
+    "S": 1.532,
+    "T": 1.761,
+    "cur": "sala",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-01-sala",
+   "y": 1184,
+   "kind": "karta",
+   "file": "02-karta-01-sala.jpg",
+   "ciste": "02-karta-01-sala-ciste.png",
+   "scrollY": 1184,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Prvý krok",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 1.974,
+    "T": 1.974,
+    "cur": "sala",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sala",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-02-stol",
+   "y": 1555,
+   "kind": "strih",
+   "file": "03-strih-02-stol.jpg",
+   "ciste": null,
+   "scrollY": 1555,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Prvý krok",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 2.349,
+    "T": 2.54,
+    "cur": "sala",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sala",
+     "o": 0.89,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-02-stol",
+   "y": 1814,
+   "kind": "karta",
+   "file": "04-karta-02-stol.jpg",
+   "ciste": "04-karta-02-stol-ciste.png",
+   "scrollY": 1814,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Remeslo",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 2.95,
+    "T": 2.951,
+    "cur": "stol",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-03-cakaren",
+   "y": 2185,
+   "kind": "strih",
+   "file": "05-strih-03-cakaren.jpg",
+   "ciste": null,
+   "scrollY": 2185,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 3.362,
+    "T": 3.54,
+    "cur": "stol",
+    "mix": 0.002,
+    "cut": "stol>cakaren svih",
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 0.18,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-03-cakaren",
+   "y": 2444,
+   "kind": "karta",
+   "file": "06-karta-03-cakaren.jpg",
+   "ciste": "06-karta-03-cakaren-ciste.png",
+   "scrollY": 2444,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Čakáreň",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 3.95,
+    "T": 3.951,
+    "cur": "cakaren",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-04-sala-rano",
+   "y": 2812,
+   "kind": "strih",
+   "file": "07-strih-04-sala-rano.jpg",
+   "ciste": null,
+   "scrollY": 2812,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 4.576,
+    "T": 4.576,
+    "cur": "sala-rano",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sala-rano",
+     "o": 0.27,
+     "so": 0.27
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-04-sala-rano",
+   "y": 3033,
+   "kind": "karta",
+   "file": "08-karta-04-sala-rano.jpg",
+   "ciste": "08-karta-04-sala-rano-ciste.png",
+   "scrollY": 3033,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Ľudia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 4.897,
+    "T": 4.954,
+    "cur": "sala-rano",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "tim-pas-nastup",
+   "y": 3870,
+   "kind": "prechod",
+   "file": "09-tim-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 3870,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    21.6
+   ],
+   "film": {
+    "S": 5.167,
+    "T": 5.258,
+    "cur": "sala-rano",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-05-kreslo-stred",
+   "y": 5947,
+   "kind": "strih",
+   "file": "10-strih-05-kreslo-stred.jpg",
+   "ciste": null,
+   "scrollY": 5947,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 5.773,
+    "T": 5.921,
+    "cur": "kreslo-stred",
+    "mix": 0.783,
+    "cut": "sala-rano>kreslo-stred najazd",
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-05-kreslo-stred",
+   "y": 6169,
+   "kind": "karta",
+   "file": "11-karta-05-kreslo-stred.jpg",
+   "ciste": "11-karta-05-kreslo-stred-ciste.png",
+   "scrollY": 6169,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Služby a ceny",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 5.988,
+    "T": 5.991,
+    "cur": "kreslo-stred",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-pas-nastup",
+   "y": 7006,
+   "kind": "prechod",
+   "file": "12-sluzby-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 7006,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    48
+   ],
+   "film": {
+    "S": 6.211,
+    "T": 6.212,
+    "cur": "kreslo-stred",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-06-kava",
+   "y": 9776,
+   "kind": "strih",
+   "file": "13-strih-06-kava.jpg",
+   "ciste": null,
+   "scrollY": 9776,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 6.768,
+    "T": 6.935,
+    "cur": "kava",
+    "mix": 0.607,
+    "cut": "kreslo-stred>kava svih",
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-06-kava",
+   "y": 9998,
+   "kind": "karta",
+   "file": "14-karta-06-kava.jpg",
+   "ciste": "14-karta-06-kava-ciste.png",
+   "scrollY": 9998,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Galéria",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 6.991,
+    "T": 6.993,
+    "cur": "kava",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-pas-nastup",
+   "y": 10835,
+   "kind": "prechod",
+   "file": "15-galeria-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 10835,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      672,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.61,
+     "plocha": 0.113
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.112
+    },
+    {
+     "src": "img/detail-stol-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.055
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.053
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.053
+    },
+    {
+     "src": "img/galeria-buldog-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.053
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 7.253,
+    "T": 7.253,
+    "cur": "kava",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-07-sud",
+   "y": 12932,
+   "kind": "strih",
+   "file": "16-strih-07-sud.jpg",
+   "ciste": null,
+   "scrollY": 12932,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 7.838,
+    "T": 7.909,
+    "cur": "sud",
+    "mix": 0.9,
+    "cut": "kava>sud popredie",
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sud",
+     "o": 0.11,
+     "so": 0.11
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-07-sud",
+   "y": 13190,
+   "kind": "karta",
+   "file": "17-karta-07-sud.jpg",
+   "ciste": "17-karta-07-sud-ciste.png",
+   "scrollY": 13190,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Cestou von",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 7.963,
+    "T": 7.99,
+    "cur": "sud",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-08-vstup",
+   "y": 13559,
+   "kind": "strih",
+   "file": "18-strih-08-vstup.jpg",
+   "ciste": null,
+   "scrollY": 13559,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": {
+    "S": 8.4,
+    "T": 8.576,
+    "cur": "sud",
+    "mix": 0.001,
+    "cut": "sud>vstup odjazd",
+    "dpr": 1,
+    "ready": true,
+    "size": 2172,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 0.24,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-08-vstup",
+   "y": 13780,
+   "kind": "karta",
+   "file": "19-karta-08-vstup.jpg",
+   "ciste": "19-karta-08-vstup-ciste.png",
+   "scrollY": 13780,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Rezervácia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": {
+    "S": 8.954,
+    "T": 8.954,
+    "cur": "vstup",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "kontakt-pas-nastup",
+   "y": 14617,
+   "kind": "prechod",
+   "file": "20-kontakt-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 14617,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17,
+    20,
+    24,
+    28,
+    56
+   ],
+   "film": {
+    "S": 9,
+    "T": 9,
+    "cur": "vstup",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "paticka",
+   "y": 15224,
+   "kind": "sekcia",
+   "file": "21-paticka.jpg",
+   "ciste": null,
+   "scrollY": 15224,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    24,
+    28
+   ],
+   "film": {
+    "S": 9,
+    "T": 9,
+    "cur": "vstup",
+    "mix": 0,
+    "cut": null,
+    "dpr": 1,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [],
+   "cls": 0.00010943474579903978
+  }
+ ]
+}

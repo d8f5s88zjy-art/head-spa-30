@@ -165,21 +165,23 @@ const waitSettled = async () => {
 
 const out = [];
 let k = 0;
+const LEN = opt.len ? new RegExp(opt.len) : null;
 for (const b of beats.beats) {
+  if (LEN && !LEN.test(b.name)) continue;
   const tb = Date.now();
   await page.evaluate((y) => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, y); }, b.y);
   await waitSettled();
   const m = await measureNow();
   const nm = `${String(k).padStart(2, '0')}-${b.name}`;
   const f = path.join(OUT, `${nm}.jpg`);
-  await page.screenshot({ path: f, type: 'jpeg', quality: 90 });
+  await page.screenshot({ path: f, type: 'jpeg', quality: 90, timeout: 120000 });
   let fc = null;
   if (b.kind === 'karta') {
     // tá istá poloha bez textu a lišty: ostrosť fotky (záloha alebo film)
     await page.addStyleTag({ content: '.title-pin,.site-header,.mobile-cta,.story-line,.film-door,.film-bars{visibility:hidden!important} body::after{display:none!important}' }).then((h) => h.evaluate((n) => n.setAttribute('data-ciste', '')));
     await page.waitForTimeout(MODE === 'on' ? 700 : 150);
     fc = path.join(OUT, `${nm}-ciste.png`);
-    await page.screenshot({ path: fc });
+    await page.screenshot({ path: fc, timeout: 120000 });
     await page.evaluate(() => document.querySelectorAll('style[data-ciste]').forEach((s) => s.remove()));
     if (opt.kontrast) {
       // pozadie textu karty (stmavenie karty ostáva, text a tiene preč) + obdĺžniky textu v css px
@@ -190,7 +192,7 @@ for (const b of beats.beats) {
       await page.addStyleTag({ content: '.title-card .kicker,.title-card .title,.title-card .title-sub,.title-card .title *{color:transparent!important;text-shadow:none!important}.title-card .kicker::before,.title-card .kicker::after,.title-actions,.scroll-hint,.film-door{visibility:hidden!important}' }).then((h) => h.evaluate((n) => n.setAttribute('data-ciste', '')));
       await page.waitForTimeout(MODE === 'on' ? 700 : 150);
       const fp = path.join(OUT, `${nm}-pozadie.png`);
-      await page.screenshot({ path: fp });
+      await page.screenshot({ path: fp, timeout: 120000 });
       await page.evaluate(() => document.querySelectorAll('style[data-ciste]').forEach((s) => s.remove()));
       out.__kontrast = out.__kontrast || {}; out.__kontrast[nm] = { file: path.basename(fp), rects };
     }
