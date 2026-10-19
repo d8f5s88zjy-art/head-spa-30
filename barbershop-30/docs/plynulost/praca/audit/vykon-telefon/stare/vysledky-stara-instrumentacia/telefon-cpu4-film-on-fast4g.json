@@ -1,0 +1,848 @@
+{
+ "meta": {
+  "meno": "telefon-cpu4-film-on-fast4g",
+  "url": "http://127.0.0.1:8433/barbershop-30/?film=on",
+  "zariadenie": "telefon",
+  "cpu": 4,
+  "siet": "fast4g",
+  "film": "on",
+  "cas": "2026-10-19T08:51:57.691Z",
+  "zataz": [
+   12.34,
+   10.67,
+   8.54
+  ],
+  "prehliadac": "141.0.7390.37",
+  "poznamka": "WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.",
+  "sekcie": [
+   {
+    "id": "uvod",
+    "top": 0,
+    "bottom": 844
+   },
+   {
+    "id": "vstup-dnu",
+    "top": 844,
+    "bottom": 1435
+   },
+   {
+    "id": "remeslo",
+    "top": 1435,
+    "bottom": 2026
+   },
+   {
+    "id": "cakaren",
+    "top": 2026,
+    "bottom": 2616
+   },
+   {
+    "id": "tim",
+    "top": 2616,
+    "bottom": 4798
+   },
+   {
+    "id": "sluzby",
+    "top": 4798,
+    "bottom": 9735
+   },
+   {
+    "id": "galeria",
+    "top": 9735,
+    "bottom": 13056
+   },
+   {
+    "id": "rezervacia",
+    "top": 13056,
+    "bottom": 15492
+   },
+   {
+    "id": "kontakt",
+    "top": 15492,
+    "bottom": 16355
+   }
+  ],
+  "vyskaStranky": 16435,
+  "zatazPo": [
+   11.87,
+   10.71,
+   8.61
+  ]
+ },
+ "nacitanie": {
+  "fcp": 808,
+  "lcp": 808,
+  "lcpPrvok": "SPAN.w Tvoje miesto.",
+  "load": 1284,
+  "trvanieMerania": 21347,
+  "cls": 0,
+  "posuny": [],
+  "tbt": 1127,
+  "dlheUlohy": [
+   [
+    548,
+    64
+   ],
+   [
+    663,
+    87
+   ],
+   [
+    795,
+    325
+   ],
+   [
+    1152,
+    84
+   ],
+   [
+    1451,
+    81
+   ],
+   [
+    1567,
+    771
+   ],
+   [
+    3335,
+    277
+   ],
+   [
+    3634,
+    110
+   ],
+   [
+    3759,
+    83
+   ],
+   [
+    5600,
+    71
+   ],
+   [
+    9837,
+    305
+   ],
+   [
+    12588,
+    50
+   ]
+  ],
+  "blokujuceZdroje": [
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 104,
+    "d": 429,
+    "kb": 71
+   }
+  ],
+  "zdrojeDoLCP": [
+   {
+    "u": "assets/fonts/Fraunces-800.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 102,
+    "d": 303,
+    "kb": 21
+   },
+   {
+    "u": "assets/fonts/Manrope-400.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 104,
+    "d": 281,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Fraunces-500i.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 104,
+    "d": 324,
+    "kb": 26
+   },
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 104,
+    "d": 429,
+    "kb": 71
+   },
+   {
+    "u": "assets/app.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 105,
+    "d": 364,
+    "kb": 36
+   },
+   {
+    "u": "assets/vernost.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 105,
+    "d": 527,
+    "kb": 24
+   },
+   {
+    "u": "assets/film.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 105,
+    "d": 490,
+    "kb": 102
+   },
+   {
+    "u": "assets/img/film/vstup-m-1448.avif",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 128,
+    "d": 845,
+    "kb": 320
+   },
+   {
+    "u": "assets/fonts/Manrope-700.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 569,
+    "d": 292,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Manrope-600.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 570,
+    "d": 285,
+    "kb": 17
+   }
+  ],
+  "prenesenoKB": 2413,
+  "zdrojov": 25,
+  "triedy": [
+   [
+    110,
+    ""
+   ],
+   [
+    129,
+    "karty world pro"
+   ],
+   [
+    1091,
+    "karty world pro js-kin js-steps"
+   ],
+   [
+    4804,
+    "karty world pro js-kin js-steps world-in"
+   ],
+   [
+    14034,
+    "karty world js-kin js-steps world-in"
+   ]
+  ],
+  "webglKontext": [
+   [
+    1567,
+    736.1,
+    "webgl2",
+    true,
+    "{\"failIfMajorPerformanceCaveat\":false}"
+   ],
+   [
+    3359,
+    50.5,
+    "webgl2",
+    true,
+    "{\"alpha\":true,\"depth\":true,\"stencil\":false,\"antialias\":false,\"premultipliedAlpha\":true,\"preserveDrawingBuffer\":false,\"powerPreference\":\"high-performance\",\"failIfMajorPerformanceCaveat\":false}"
+   ]
+  ],
+  "loaf": [
+   {
+    "kde": "(bez skriptu: štýl/layout/paint)",
+    "ms": 1454,
+    "n": 10,
+    "max": 314.3,
+    "styl": 21.299999999999997
+   },
+   {
+    "kde": "TimerHandler:setTimeout  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 881,
+    "n": 2,
+    "max": 771,
+    "vynutenyStylLayout": 2
+   },
+   {
+    "kde": "assets/app.js:1  (module-script)",
+    "fn": "",
+    "typ": "module-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/assets/app.js",
+    "ms": 294,
+    "n": 1,
+    "max": 294,
+    "vynutenyStylLayout": 192
+   },
+   {
+    "kde": "assets/film.js  (resolve-promise)",
+    "fn": "",
+    "typ": "resolve-promise",
+    "inv": "import.then",
+    "ms": 285,
+    "n": 3,
+    "max": 259,
+    "vynutenyStylLayout": 36
+   },
+   {
+    "kde": "assets/film.js:1209 frame (user-callback)",
+    "fn": "frame",
+    "typ": "user-callback",
+    "inv": "FrameRequestCallback",
+    "ms": 194,
+    "n": 14,
+    "max": 38,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/vendor/three.module.min.js:6 n (user-callback)",
+    "fn": "n",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 83,
+    "n": 1,
+    "max": 83,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/film.js:1073  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 45,
+    "n": 3,
+    "max": 32,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/atmosfera.js:227 ready (event-listener)",
+    "fn": "ready",
+    "typ": "event-listener",
+    "inv": "LINK.onload",
+    "ms": 41,
+    "n": 1,
+    "max": 41,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/i18n.js:267  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "IdleRequestCallback",
+    "ms": 32,
+    "n": 1,
+    "max": 32,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/app.js  (resolve-promise)",
+    "fn": "",
+    "typ": "resolve-promise",
+    "inv": "import.then",
+    "ms": 25,
+    "n": 3,
+    "max": 13,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/i18n.js:190 build (event-listener)",
+    "fn": "build",
+    "typ": "event-listener",
+    "inv": "LINK.onload",
+    "ms": 20,
+    "n": 1,
+    "max": 20,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "?film=on:1  (classic-script)",
+    "fn": "",
+    "typ": "classic-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/?film=on",
+    "ms": 19,
+    "n": 1,
+    "max": 19,
+    "vynutenyStylLayout": 0
+   }
+  ],
+  "film": [
+   [
+    4095,
+    2,
+    0,
+    "vstup-m",
+    0,
+    0
+   ],
+   [
+    5105,
+    2,
+    0,
+    "vstup-m",
+    1,
+    15
+   ],
+   [
+    6089,
+    2,
+    0,
+    "vstup-m",
+    1,
+    15
+   ],
+   [
+    7090,
+    2,
+    0,
+    "vstup-m",
+    1,
+    15
+   ],
+   [
+    8089,
+    2,
+    0,
+    "vstup-m",
+    1,
+    15
+   ],
+   [
+    9089,
+    2,
+    0,
+    "vstup-m",
+    1,
+    15
+   ],
+   [
+    10199,
+    2,
+    0.05,
+    "vstup-m",
+    1,
+    17
+   ],
+   [
+    11108,
+    2,
+    0.33,
+    "vstup-m",
+    1,
+    20
+   ],
+   [
+    12096,
+    2,
+    0.33,
+    "vstup-m",
+    1,
+    25
+   ],
+   [
+    13089,
+    2,
+    0.75,
+    "rohozka-m",
+    2,
+    35
+   ],
+   [
+    14090,
+    2,
+    1,
+    "rohozka-m",
+    2,
+    41
+   ],
+   [
+    15089,
+    2,
+    1,
+    "rohozka-m",
+    2,
+    45
+   ],
+   [
+    16090,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    46
+   ],
+   [
+    17090,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    46
+   ],
+   [
+    18092,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    46
+   ],
+   [
+    19089,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    47
+   ],
+   [
+    20092,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    47
+   ],
+   [
+    21089,
+    2,
+    1,
+    "rohozka-m",
+    3,
+    47
+   ]
+  ],
+  "stopaMB": 24.5,
+  "vlakno": {
+   "kat": {
+    "skript": 1318.3,
+    "gpu-cakanie": 907.9,
+    "ine": 859.2,
+    "layout": 433.6,
+    "styl": 317.3,
+    "html-siet-ipc": 301.6,
+    "paint": 235.7,
+    "snimka-ostatne": 156.3,
+    "gc": 94.9,
+    "cakanie-kompozitor": 68,
+    "animacie-css": 39,
+    "dekodovanie": 5.7
+   },
+   "sekcie": {
+    "-": {
+     "skript": 1318.3,
+     "gpu-cakanie": 907.9,
+     "ine": 859.2,
+     "layout": 433.6,
+     "styl": 317.3,
+     "html-siet-ipc": 301.6,
+     "paint": 235.7,
+     "snimka-ostatne": 156.3,
+     "gc": 94.9,
+     "cakanie-kompozitor": 68,
+     "animacie-css": 39,
+     "dekodovanie": 5.7
+    }
+   },
+   "mena": {
+    "FunctionCall": 637,
+    "CommandBufferProxyImpl::WaitForGetOffset": 604.3,
+    "RunMicrotasks": 399,
+    "LocalFrameView::performLayout": 343.3,
+    "ThreadControllerImpl::RunTask": 310.1,
+    "Document::recalcStyle": 251.7,
+    "CommandBufferProxyImpl::Initialize": 234.9,
+    "Receive mojo message": 173.7,
+    "InlineNode::ShapeTextIncludingFirstLine": 159.7,
+    "v8.evaluateModule": 104.3,
+    "ResourceFetcher::requestResource": 83.1,
+    "LayerTreeHost::WaitForCommitCompletion": 68,
+    "Blink.PrePaint.UpdateTime": 65.4,
+    "ResponseBodyLoader::OnStateChange": 58.3,
+    "MainFrameAborted": 58,
+    "LocalFrameView::ScheduleAnimation": 57.4,
+    "BlinkScheduler_PerformMicrotaskCheckpoint": 51.2,
+    "IntersectionObserverController::computeIntersections": 48.9,
+    "Paint": 46.3,
+    "Blink.Paint.UpdateTime": 41.8,
+    "Document::updateStyle": 41.3,
+    "ProxyMain::BeginMainFrame::commit": 41.1,
+    "EventDispatch": 40.2,
+    "ProxyMain::BeginMainFrame": 36.1,
+    "V8.BytecodeBudgetInterrupt": 33.9
+   },
+   "vstupy": {
+    "assets/film.js:1210 frame": 461.3,
+    "?:?": 312.8,
+    "?:32 loop": 73.2,
+    "assets/film.js:1074": 67,
+    "assets/atmosfera.js:228 ready": 36.5,
+    "assets/i18n.js:268": 32.6,
+    "?:46": 20.4,
+    "?film=on:12": 20,
+    "?:34 PerformanceObserver.observe.Object.assign.type.type": 19.7,
+    "assets/film.js:1253": 19.4,
+    "assets/i18n.js:191 build": 16.2,
+    "assets/app.js:353 load": 9.4,
+    "assets/film.js:1281 wake": 8.3,
+    "assets/app.js:386 load": 7.4,
+    "assets/app.js:277": 6.6
+   },
+   "ulohy": {
+    "url_loader/background_url_loader.cc:PostTaskToMainThread": 49.2,
+    "loader/image_loader.cc:ImageNotifyFinished": 19.9,
+    "ipc/ipc_mojo_bootstrap.cc:Accept": 16,
+    "cppgc/sweeper.cc:static Handle cppgc::internal::Sweeper::SweeperImpl::IncrementalSweepTask::Post(SweeperImpl &, const std::shared_ptr<cppgc::TaskRunner> &, cppgc::TaskPriority, std::optional<v8::base::TimeDelta>)": 10.3,
+    "exported/resource_load_info_notifier_wrapper.cc:NotifyResourceLoadCompleted": 8.7,
+    "trees/proxy_impl.cc:ScheduledActionSendBeginMainFrame": 6,
+    "scheduler/dom_timer.cc:DOMTimer": 5.5,
+    "exported/resource_load_info_notifier_wrapper.cc:NotifyResourceResponseReceived": 4.8,
+    "trees/proxy_impl.cc:DidPresentCompositorFrameOnImplThread": 4.7,
+    "animation/document_timeline.cc:WakeAfter": 4.6
+   },
+   "prvkov": 1779,
+   "prvkySek": {
+    "-": 1779
+   },
+   "pracaNaSnimku": {
+    "snimok": 151,
+    "p50": 7.5,
+    "p95": 114.5,
+    "max": 463.3,
+    "nad16": 25.2,
+    "nad50": 11
+   },
+   "pracaNaSnimkuSekcie": {
+    "nacitanie": {
+     "snimok": 151,
+     "p50": 7.5,
+     "p95": 114.5,
+     "max": 463.3,
+     "nad16": 25.2,
+     "nad50": 11
+    }
+   }
+  },
+  "vlakna": {
+   "Renderer/CrRendererMain": 4737.3,
+   "Renderer/PerfettoTrace": 9.4,
+   "GPU/VizCompositorThread": 239.8,
+   "Renderer/Compositor": 407.4,
+   "GPU/CrGpuMain": 11972.9,
+   "Renderer/Chrome_ChildIOThread": 191.1,
+   "Renderer/ThreadPoolForegroundWorker": 2638.3,
+   "Renderer/ThreadPoolServiceThread": 4.4
+  }
+ },
+ "uvod": {
+  "prolog": true,
+  "prvySnimokFilmu": 4804,
+  "koniecProlog": 14034,
+  "okno": [
+   808,
+   14034
+  ],
+  "snimky": {
+   "snimok": 145,
+   "fps": 10.8,
+   "p50": 16.7,
+   "p95": 266.7,
+   "p99": 766.6,
+   "max": 4749.7,
+   "podiel33": 21.38,
+   "podiel50": 20.69,
+   "nad100": 26
+  },
+  "dlheUlohy": {
+   "pocet": 9,
+   "max": 771,
+   "spolu": 1832,
+   "blokovanie": 1382
+  },
+  "glNaHlavnomVlakneMs": 308.6,
+  "dpr": [
+   [
+    4095,
+    2
+   ],
+   [
+    5105,
+    2
+   ],
+   [
+    6089,
+    2
+   ],
+   [
+    7090,
+    2
+   ],
+   [
+    8089,
+    2
+   ],
+   [
+    9089,
+    2
+   ],
+   [
+    10199,
+    2
+   ],
+   [
+    11108,
+    2
+   ],
+   [
+    12096,
+    2
+   ],
+   [
+    13089,
+    2
+   ]
+  ],
+  "loaf": [
+   {
+    "kde": "(bez skriptu: štýl/layout/paint)",
+    "ms": 1357,
+    "n": 9,
+    "max": 314.3,
+    "styl": 21.099999999999998
+   },
+   {
+    "kde": "TimerHandler:setTimeout  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 881,
+    "n": 2,
+    "max": 771,
+    "vynutenyStylLayout": 2
+   },
+   {
+    "kde": "assets/film.js  (resolve-promise)",
+    "fn": "",
+    "typ": "resolve-promise",
+    "inv": "import.then",
+    "ms": 278,
+    "n": 2,
+    "max": 259,
+    "vynutenyStylLayout": 36
+   },
+   {
+    "kde": "assets/film.js:1209 frame (user-callback)",
+    "fn": "frame",
+    "typ": "user-callback",
+    "inv": "FrameRequestCallback",
+    "ms": 171,
+    "n": 13,
+    "max": 38,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/vendor/three.module.min.js:6 n (user-callback)",
+    "fn": "n",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 83,
+    "n": 1,
+    "max": 83,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/atmosfera.js:227 ready (event-listener)",
+    "fn": "ready",
+    "typ": "event-listener",
+    "inv": "LINK.onload",
+    "ms": 41,
+    "n": 1,
+    "max": 41,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/film.js:1073  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 40,
+    "n": 2,
+    "max": 32,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/i18n.js:267  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "IdleRequestCallback",
+    "ms": 32,
+    "n": 1,
+    "max": 32,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/app.js  (resolve-promise)",
+    "fn": "",
+    "typ": "resolve-promise",
+    "inv": "import.then",
+    "ms": 25,
+    "n": 3,
+    "max": 13,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/i18n.js:190 build (event-listener)",
+    "fn": "build",
+    "typ": "event-listener",
+    "inv": "LINK.onload",
+    "ms": 20,
+    "n": 1,
+    "max": 20,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/vendor/three.module.min.js:1  (module-script)",
+    "fn": "",
+    "typ": "module-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/assets/vendor/three.module.min.js",
+    "ms": 16,
+    "n": 1,
+    "max": 16,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/app.js:352 load (user-callback)",
+    "fn": "load",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 9,
+    "n": 1,
+    "max": 9,
+    "vynutenyStylLayout": 0
+   }
+  ],
+  "snimkyFilmu": {
+   "snimok": 39,
+   "fps": 4.2,
+   "p50": 33.4,
+   "p95": 766.6,
+   "p99": 4749.7,
+   "max": 4749.7,
+   "podiel33": 48.72,
+   "podiel50": 48.72,
+   "nad100": 18
+  }
+ }
+}

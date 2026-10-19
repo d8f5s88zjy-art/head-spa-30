@@ -1,0 +1,154 @@
+{
+ "run": "p-off-f4-cold-pomaly",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "pomaly",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=off"
+ },
+ "snimok": 1204,
+ "trvanie_s": 131.1,
+ "prvy_svetly_snimok_ms": 1879,
+ "fps_nahravky": 9.2,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 1,
+ "najdlhsie_ms": 1100,
+ "spolu_ms": 1100,
+ "tmave_zabery": [
+  {
+   "y": 2000,
+   "ms": 5956.65283203125,
+   "max": 0.282,
+   "file": "f00175.jpg"
+  },
+  {
+   "y": 13000,
+   "ms": 1079.220947265625,
+   "max": 0.399,
+   "file": "f00852.jpg"
+  },
+  {
+   "y": 13200,
+   "ms": 891.654052734375,
+   "max": 0.392,
+   "file": "f00854.jpg"
+  },
+  {
+   "y": 12800,
+   "ms": 536.77978515625,
+   "max": 0.205,
+   "file": "f00832.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 1879,
+   "do_ms": 2980,
+   "trvanie_ms": 1100,
+   "snimok": 7,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.976,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "first-paint@920",
+    "first-contentful-paint@920",
+    "lcp:@920",
+    "load"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00007.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

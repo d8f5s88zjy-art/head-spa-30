@@ -1,0 +1,253 @@
+{
+ "run": "d-off-s4-cold-svih",
+ "nastavenie": {
+  "dev": "desk",
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "svih",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=off"
+ },
+ "snimok": 1205,
+ "trvanie_s": 205.9,
+ "prvy_svetly_snimok_ms": 4240,
+ "fps_nahravky": 5.9,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 2,
+ "najdlhsie_ms": 3734,
+ "spolu_ms": 4292,
+ "tmave_zabery": [
+  {
+   "y": 0,
+   "ms": 6066.251220703125,
+   "max": 0.231,
+   "file": "f00014.jpg"
+  },
+  {
+   "y": 200,
+   "ms": 2564.729736328125,
+   "max": 0.246,
+   "file": "f01144.jpg"
+  },
+  {
+   "y": 600,
+   "ms": 2089.511962890625,
+   "max": 0.244,
+   "file": "f00038.jpg"
+  },
+  {
+   "y": 400,
+   "ms": 2039.60791015625,
+   "max": 0.246,
+   "file": "f00030.jpg"
+  },
+  {
+   "y": 800,
+   "ms": 1345.333251953125,
+   "max": 0.252,
+   "file": "f00047.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 3457,
+   "do_ms": 7191,
+   "trvanie_ms": 3734,
+   "snimok": 13,
+   "max_tmavej_plochy": 0.937,
+   "tmava_celkom": 0.961,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "goto http://127.0.0.1:8174/barbershop-30/?film=off",
+    "first-paint@2896",
+    "first-contentful-paint@2896",
+    "lcp:@2896"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00013.jpg"
+   ]
+  },
+  {
+   "od_ms": 23387,
+   "do_ms": 23945,
+   "trvanie_ms": 558,
+   "snimok": 1,
+   "max_tmavej_plochy": 0.581,
+   "tmava_celkom": 0.598,
+   "scrollY": 2256,
+   "scrollY_koniec": 2256,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00096.jpg",
+    "f00096.jpg",
+    "f00096.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

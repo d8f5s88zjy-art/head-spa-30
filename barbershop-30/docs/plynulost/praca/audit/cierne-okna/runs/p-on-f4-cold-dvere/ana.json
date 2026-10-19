@@ -1,0 +1,65 @@
+{
+ "run": "p-on-f4-cold-dvere",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "dvere",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=on"
+ },
+ "snimok": 302,
+ "trvanie_s": 32.0,
+ "prvy_svetly_snimok_ms": 1059,
+ "fps_nahravky": 9.5,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 1,
+ "najdlhsie_ms": 169,
+ "spolu_ms": 169,
+ "tmave_zabery": [],
+ "udalosti": [
+  {
+   "od_ms": 1059,
+   "do_ms": 1228,
+   "trvanie_ms": 169,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.976,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "load",
+    "first-paint@856",
+    "first-contentful-paint@856",
+    "lcp:@856"
+   ],
+   "cls": "karty world pro",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     "bv1.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00002.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

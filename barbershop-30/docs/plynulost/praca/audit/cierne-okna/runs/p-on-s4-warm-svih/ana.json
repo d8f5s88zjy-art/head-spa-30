@@ -1,0 +1,374 @@
+{
+ "run": "p-on-s4-warm-svih",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "warm",
+  "scen": "svih",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=on"
+ },
+ "snimok": 186,
+ "trvanie_s": 56.8,
+ "prvy_svetly_snimok_ms": 756,
+ "fps_nahravky": 3.3,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 4,
+ "najdlhsie_ms": 5890,
+ "spolu_ms": 14285,
+ "tmave_zabery": [],
+ "udalosti": [
+  {
+   "od_ms": 232,
+   "do_ms": 1416,
+   "trvanie_ms": 1184,
+   "snimok": 7,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 1.0,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": true,
+   "znacky": [
+    "goto http://127.0.0.1:8174/barbershop-30/?film=on"
+   ],
+   "cls": "karty world pro",
+   "film": null,
+   "zalohy": [],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00007.jpg"
+   ]
+  },
+  {
+   "od_ms": 23503,
+   "do_ms": 27050,
+   "trvanie_ms": 3547,
+   "snimok": 4,
+   "max_tmavej_plochy": 0.545,
+   "tmava_celkom": 0.654,
+   "scrollY": 10568.69921875,
+   "scrollY_koniec": 10568.69921875,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 7.731,
+    "T": 7.957,
+    "mix": 0,
+    "cur": "sud-m",
+    "cut": null,
+    "frames": 48,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0000000120",
+    "seq": "5/51:|6/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     6,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     1,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ]
+   ],
+   "subory": [
+    "f00098.jpg",
+    "f00098.jpg",
+    "f00101.jpg"
+   ]
+  },
+  {
+   "od_ms": 27489,
+   "do_ms": 31153,
+   "trvanie_ms": 3664,
+   "snimok": 3,
+   "max_tmavej_plochy": 0.787,
+   "tmava_celkom": 0.884,
+   "scrollY": 12034.4755859375,
+   "scrollY_koniec": 12332.74609375,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 8.345,
+    "T": 9,
+    "mix": 0,
+    "cur": "sud-m",
+    "cut": null,
+    "frames": 52,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0000000120",
+    "seq": "5/51:|6/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ]
+   ],
+   "subory": [
+    "f00104.jpg",
+    "f00106.jpg",
+    "f00106.jpg"
+   ]
+  },
+  {
+   "od_ms": 50871,
+   "do_ms": 56761,
+   "trvanie_ms": 5890,
+   "snimok": 41,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.955,
+   "scrollY": 4801.88134765625,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 6.263,
+    "T": 5.815,
+    "mix": 0,
+    "cur": "kreslo-stred-m",
+    "cut": null,
+    "frames": 86,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0000002210",
+    "seq": "5/51:|6/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00145.jpg",
+    "f00145.jpg",
+    "f00185.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

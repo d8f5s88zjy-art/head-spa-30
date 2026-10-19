@@ -1,0 +1,129 @@
+{
+ "run": "p-off-s4-cold-uvod",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "uvod",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=off"
+ },
+ "snimok": 1188,
+ "trvanie_s": 36.8,
+ "prvy_svetly_snimok_ms": 3341,
+ "fps_nahravky": 32.3,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 1,
+ "najdlhsie_ms": 3038,
+ "spolu_ms": 3038,
+ "tmave_zabery": [],
+ "udalosti": [
+  {
+   "od_ms": 3341,
+   "do_ms": 6380,
+   "trvanie_ms": 3038,
+   "snimok": 37,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.976,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "goto http://127.0.0.1:8174/barbershop-30/?film=off",
+    "first-paint@2884",
+    "first-contentful-paint@2884",
+    "lcp:@2884"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00039.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

@@ -1,0 +1,647 @@
+{
+ "meta": {
+  "meno": "t7",
+  "url": "http://127.0.0.1:8433/barbershop-30/?film=off",
+  "zariadenie": "telefon",
+  "cpu": 4,
+  "siet": "fast4g",
+  "film": "off",
+  "cas": "2026-10-19T08:33:55.277Z",
+  "zataz": [
+   8.72,
+   9.24,
+   6.35
+  ],
+  "prehliadac": "141.0.7390.37",
+  "poznamka": "WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.",
+  "sekcie": [
+   {
+    "id": "uvod",
+    "top": 0,
+    "bottom": 844
+   },
+   {
+    "id": "vstup-dnu",
+    "top": 844,
+    "bottom": 1435
+   },
+   {
+    "id": "remeslo",
+    "top": 1435,
+    "bottom": 2026
+   },
+   {
+    "id": "cakaren",
+    "top": 2026,
+    "bottom": 2616
+   },
+   {
+    "id": "tim",
+    "top": 2616,
+    "bottom": 4798
+   },
+   {
+    "id": "sluzby",
+    "top": 4798,
+    "bottom": 9735
+   },
+   {
+    "id": "galeria",
+    "top": 9735,
+    "bottom": 13056
+   },
+   {
+    "id": "rezervacia",
+    "top": 13056,
+    "bottom": 15492
+   },
+   {
+    "id": "kontakt",
+    "top": 15492,
+    "bottom": 16355
+   }
+  ],
+  "vyskaStranky": 16435,
+  "zatazPo": [
+   8.44,
+   9.11,
+   6.41
+  ]
+ },
+ "nacitanie": {
+  "fcp": 908,
+  "lcp": 908,
+  "lcpPrvok": "SPAN.w Tvoje miesto.",
+  "load": 1328,
+  "trvanieMerania": 7504,
+  "cls": 0,
+  "posuny": [],
+  "tbt": 70,
+  "dlheUlohy": [
+   [
+    597,
+    151
+   ],
+   [
+    749,
+    80
+   ],
+   [
+    1057,
+    61
+   ],
+   [
+    5255,
+    109
+   ]
+  ],
+  "blokujuceZdroje": [
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 86,
+    "d": 435,
+    "kb": 71
+   }
+  ],
+  "zdrojeDoLCP": [
+   {
+    "u": "assets/fonts/Fraunces-800.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 79,
+    "d": 318,
+    "kb": 21
+   },
+   {
+    "u": "assets/fonts/Manrope-400.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 85,
+    "d": 288,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Fraunces-500i.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 85,
+    "d": 334,
+    "kb": 26
+   },
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 86,
+    "d": 435,
+    "kb": 71
+   },
+   {
+    "u": "assets/app.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 87,
+    "d": 363,
+    "kb": 36
+   },
+   {
+    "u": "assets/vernost.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 87,
+    "d": 503,
+    "kb": 24
+   },
+   {
+    "u": "assets/film.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 89,
+    "d": 483,
+    "kb": 102
+   },
+   {
+    "u": "assets/fonts/Manrope-700.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 546,
+    "d": 272,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Manrope-600.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 546,
+    "d": 275,
+    "kb": 17
+   },
+   {
+    "u": "assets/img/film/rohozka-m-1448.avif",
+    "t": "img",
+    "b": "non-blocking",
+    "s": 581,
+    "d": 739,
+    "kb": 428
+   },
+   {
+    "u": "assets/recenzie.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 764,
+    "d": 245,
+    "kb": 3
+   }
+  ],
+  "prenesenoKB": 1006,
+  "zdrojov": 18,
+  "triedy": [
+   [
+    102,
+    ""
+   ],
+   [
+    107,
+    "karty world-off"
+   ],
+   [
+    824,
+    "karty world-off js-kin js-steps"
+   ]
+  ],
+  "webglKontext": [],
+  "loaf": [
+   {
+    "kde": "(bez skriptu: štýl/layout/paint)",
+    "ms": 1363,
+    "n": 12,
+    "max": 238,
+    "styl": 78.8
+   },
+   {
+    "kde": "assets/app.js:1  (module-script)",
+    "fn": "",
+    "typ": "module-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/assets/app.js",
+    "ms": 74,
+    "n": 1,
+    "max": 74,
+    "vynutenyStylLayout": 2
+   },
+   {
+    "kde": "assets/app.js:276  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "TimerHandler:setTimeout",
+    "ms": 6,
+    "n": 1,
+    "max": 6,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/atmosfera.js:126  (user-callback)",
+    "fn": "",
+    "typ": "user-callback",
+    "inv": "IdleRequestCallback",
+    "ms": 6,
+    "n": 1,
+    "max": 6,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "?film=off:1  (classic-script)",
+    "fn": "",
+    "typ": "classic-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/?film=off",
+    "ms": 5,
+    "n": 1,
+    "max": 5,
+    "vynutenyStylLayout": 0
+   }
+  ],
+  "film": []
+ },
+ "prechody": {
+  "menuOtvor": {
+   "snimky": {
+    "snimok": 69,
+    "fps": 45,
+    "p50": 16.7,
+    "p95": 66.6,
+    "p99": 149.9,
+    "max": 149.9,
+    "podiel33": 7.25,
+    "podiel50": 7.25,
+    "nad100": 1
+   },
+   "dlheUlohy": {
+    "pocet": 3,
+    "max": 158,
+    "spolu": 284,
+    "blokovanie": 134
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 152,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 152,
+      "cakanie": 14.7,
+      "spracovanie": 2.6
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 181,
+     "n": 2,
+     "max": 108.8,
+     "styl": 7.6000000000000005
+    },
+    {
+     "kde": "assets/app.js:443  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "BUTTON.onclick",
+     "ms": 34,
+     "n": 1,
+     "max": 34,
+     "vynutenyStylLayout": 32
+    },
+    {
+     "kde": "assets/atmosfera.js:195  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "DOMWindow.ontouchend",
+     "ms": 30,
+     "n": 1,
+     "max": 30,
+     "vynutenyStylLayout": 0
+    },
+    {
+     "kde": "assets/atmosfera.js  (resolve-promise)",
+     "fn": "",
+     "typ": "resolve-promise",
+     "inv": "BaseAudioContext.decodeAudioData.then",
+     "ms": 17,
+     "n": 1,
+     "max": 17,
+     "vynutenyStylLayout": 0
+    }
+   ]
+  },
+  "menuZavri": {
+   "snimky": {
+    "snimok": 77,
+    "fps": 60,
+    "p50": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "podiel33": 0,
+    "podiel50": 0,
+    "nad100": 0
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 56,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 56,
+      "cakanie": 4.9,
+      "spracovanie": 0.1
+     }
+    ]
+   },
+   "loaf": []
+  },
+  "skokZMenu": {
+   "snimky": {
+    "snimok": 132,
+    "fps": 42.6,
+    "p50": 16.7,
+    "p95": 50,
+    "p99": 183.3,
+    "max": 300.1,
+    "podiel33": 6.82,
+    "podiel50": 3.79,
+    "nad100": 3
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 72,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 72,
+      "cakanie": 14.6,
+      "spracovanie": 0.6
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 806,
+     "n": 6,
+     "max": 305.2,
+     "styl": 39.699999999999996
+    }
+   ]
+  },
+  "jazykEN": {
+   "snimky": {
+    "snimok": 139,
+    "fps": 53.5,
+    "p50": 16.7,
+    "p95": 16.8,
+    "p99": 99.9,
+    "max": 200.1,
+    "podiel33": 1.44,
+    "podiel50": 1.44,
+    "nad100": 1
+   },
+   "dlheUlohy": {
+    "pocet": 2,
+    "max": 216,
+    "spolu": 296,
+    "blokovanie": 196
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 48,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 48,
+      "cakanie": 20,
+      "spracovanie": 0.9
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "assets/i18n.js  (resolve-promise)",
+     "fn": "",
+     "typ": "resolve-promise",
+     "inv": "Response.json.then",
+     "ms": 13,
+     "n": 1,
+     "max": 13,
+     "vynutenyStylLayout": 0
+    },
+    {
+     "kde": "assets/i18n.js:123 chunk (user-callback)",
+     "fn": "chunk",
+     "typ": "user-callback",
+     "inv": "IdleRequestCallback",
+     "ms": 10,
+     "n": 1,
+     "max": 10,
+     "vynutenyStylLayout": 0
+    }
+   ]
+  },
+  "jazykSK": {
+   "snimky": {
+    "snimok": 147,
+    "fps": 55.1,
+    "p50": 16.7,
+    "p95": 16.8,
+    "p99": 50,
+    "max": 183.3,
+    "podiel33": 1.36,
+    "podiel50": 0.68,
+    "nad100": 1
+   },
+   "dlheUlohy": {
+    "pocet": 2,
+    "max": 196,
+    "spolu": 249,
+    "blokovanie": 149
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 88,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 88,
+      "cakanie": 6.5,
+      "spracovanie": 0.1
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 64,
+     "n": 1,
+     "max": 63.5,
+     "styl": 2.3
+    },
+    {
+     "kde": "assets/i18n.js:123 chunk (user-callback)",
+     "fn": "chunk",
+     "typ": "user-callback",
+     "inv": "IdleRequestCallback",
+     "ms": 9,
+     "n": 1,
+     "max": 9,
+     "vynutenyStylLayout": 0
+    }
+   ]
+  },
+  "videoTim": {
+   "video": {
+    "paused": true,
+    "rs": 0
+   },
+   "snimky": {
+    "snimok": 184,
+    "fps": 60,
+    "p50": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "podiel33": 0,
+    "podiel50": 0,
+    "nad100": 0
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 0,
+    "inp": null,
+    "najhorsie": []
+   },
+   "loaf": [],
+   "poPrehravani": {
+    "paused": true,
+    "rs": 0,
+    "t": 0
+   }
+  },
+  "vernostOtvor": {
+   "snimky": {
+    "snimok": 50,
+    "fps": 33,
+    "p50": 16.7,
+    "p95": 66.7,
+    "p99": 249.9,
+    "max": 249.9,
+    "podiel33": 18,
+    "podiel50": 10,
+    "nad100": 2
+   },
+   "dlheUlohy": {
+    "pocet": 1,
+    "max": 149,
+    "spolu": 149,
+    "blokovanie": 99
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 280,
+    "najhorsie": [
+     {
+      "udalost": "click",
+      "ms": 280,
+      "cakanie": 80.8,
+      "spracovanie": 111.4
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 506,
+     "n": 6,
+     "max": 228.4,
+     "styl": 16
+    },
+    {
+     "kde": "assets/vernost.js:159  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "#document.onclick",
+     "ms": 109,
+     "n": 1,
+     "max": 109,
+     "vynutenyStylLayout": 82
+    }
+   ],
+   "dialog": true
+  },
+  "vernostZavri": {
+   "snimky": {
+    "snimok": 68,
+    "fps": 56.7,
+    "p50": 16.7,
+    "p95": 16.8,
+    "p99": 66.7,
+    "max": 66.7,
+    "podiel33": 1.47,
+    "podiel50": 1.47,
+    "nad100": 0
+   },
+   "dlheUlohy": {
+    "pocet": 1,
+    "max": 65,
+    "spolu": 65,
+    "blokovanie": 15
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 152,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 152,
+      "cakanie": 21,
+      "spracovanie": 0.2
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "assets/vernost.js:96  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "BUTTON.onclick",
+     "ms": 46,
+     "n": 1,
+     "max": 46,
+     "vynutenyStylLayout": 44
+    }
+   ]
+  },
+  "cls": 0
+ },
+ "film": {
+  "on": false,
+  "triedy": "karty world-off js-kin js-steps"
+ },
+ "chyby": []
+}

@@ -1,0 +1,762 @@
+{
+ "run": "p-rm-s4-cold-svih",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "default",
+  "cache": "cold",
+  "scen": "svih",
+  "rm": true,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/"
+ },
+ "snimok": 191,
+ "trvanie_s": 23.5,
+ "prvy_svetly_snimok_ms": 3252,
+ "fps_nahravky": 8.2,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 7,
+ "najdlhsie_ms": 2485,
+ "spolu_ms": 6990,
+ "tmave_zabery": [
+  {
+   "y": 9000,
+   "ms": 118.708984375,
+   "max": 0.287,
+   "file": "f00157.jpg"
+  },
+  {
+   "y": 2200,
+   "ms": 93.33203125,
+   "max": 0.262,
+   "file": "f00040.jpg"
+  },
+  {
+   "y": 2000,
+   "ms": 64.830078125,
+   "max": 0.256,
+   "file": "f00041.jpg"
+  },
+  {
+   "y": 9200,
+   "ms": 63.880126953125,
+   "max": 0.375,
+   "file": "f00062.jpg"
+  },
+  {
+   "y": 11800,
+   "ms": 59.053955078125,
+   "max": 0.303,
+   "file": "f00142.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 3252,
+   "do_ms": 5738,
+   "trvanie_ms": 2485,
+   "snimok": 10,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.976,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "goto http://127.0.0.1:8174/barbershop-30/",
+    "first-paint@3036",
+    "first-contentful-paint@3036",
+    "lcp:@3036"
+   ],
+   "cls": "karty",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     "bv1.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00010.jpg"
+   ]
+  },
+  {
+   "od_ms": 13326,
+   "do_ms": 13787,
+   "trvanie_ms": 460,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.777,
+   "tmava_celkom": 0.81,
+   "scrollY": 1547.7020263671875,
+   "scrollY_koniec": 1589.5921630859375,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "film ready: false",
+    "svih dole"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00034.jpg",
+    "f00034.jpg",
+    "f00035.jpg"
+   ]
+  },
+  {
+   "od_ms": 14015,
+   "do_ms": 15410,
+   "trvanie_ms": 1395,
+   "snimok": 12,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 2415.751953125,
+   "scrollY_koniec": 5464.330078125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih dole"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00043.jpg",
+    "f00052.jpg",
+    "f00054.jpg"
+   ]
+  },
+  {
+   "od_ms": 15799,
+   "do_ms": 16310,
+   "trvanie_ms": 511,
+   "snimok": 7,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.955,
+   "scrollY": 9756.400390625,
+   "scrollY_koniec": 14119.4453125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih dole"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     1,
+     1,
+     1,
+     0,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ]
+   ],
+   "subory": [
+    "f00063.jpg",
+    "f00063.jpg",
+    "f00069.jpg"
+   ]
+  },
+  {
+   "od_ms": 19708,
+   "do_ms": 20794,
+   "trvanie_ms": 1087,
+   "snimok": 46,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.955,
+   "scrollY": 14137.185546875,
+   "scrollY_koniec": 12073,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih hore"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ]
+   ],
+   "subory": [
+    "f00096.jpg",
+    "f00110.jpg",
+    "f00141.jpg"
+   ]
+  },
+  {
+   "od_ms": 20998,
+   "do_ms": 21210,
+   "trvanie_ms": 212,
+   "snimok": 4,
+   "max_tmavej_plochy": 0.758,
+   "tmava_celkom": 0.861,
+   "scrollY": 11141.552734375,
+   "scrollY_koniec": 10507.7939453125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih hore"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ]
+   ],
+   "subory": [
+    "f00147.jpg",
+    "f00150.jpg",
+    "f00150.jpg"
+   ]
+  },
+  {
+   "od_ms": 21430,
+   "do_ms": 21503,
+   "trvanie_ms": 73,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.577,
+   "tmava_celkom": 0.776,
+   "scrollY": 9423.1376953125,
+   "scrollY_koniec": 9301.9267578125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih hore"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     0,
+     "bv1.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00155.jpg",
+    "f00155.jpg",
+    "f00156.jpg"
+   ]
+  },
+  {
+   "od_ms": 22269,
+   "do_ms": 23109,
+   "trvanie_ms": 840,
+   "snimok": 13,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 4998.8427734375,
+   "scrollY_koniec": 1286.25927734375,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih hore"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     3,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     0,
+     "bv1.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00171.jpg",
+    "f00171.jpg",
+    "f00183.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

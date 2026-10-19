@@ -1,0 +1,718 @@
+{
+ "meta": {
+  "meno": "t6",
+  "url": "http://127.0.0.1:8433/barbershop-30/?film=off",
+  "zariadenie": "pocitac",
+  "cpu": 1,
+  "siet": "fast4g",
+  "film": "off",
+  "cas": "2026-10-19T08:33:24.018Z",
+  "zataz": [
+   7.32,
+   9.12,
+   6.22
+  ],
+  "prehliadac": "141.0.7390.37",
+  "poznamka": "WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.",
+  "sekcie": [
+   {
+    "id": "uvod",
+    "top": 0,
+    "bottom": 900
+   },
+   {
+    "id": "vstup-dnu",
+    "top": 900,
+    "bottom": 1530
+   },
+   {
+    "id": "remeslo",
+    "top": 1530,
+    "bottom": 2160
+   },
+   {
+    "id": "cakaren",
+    "top": 2160,
+    "bottom": 2790
+   },
+   {
+    "id": "tim",
+    "top": 2790,
+    "bottom": 5926
+   },
+   {
+    "id": "sluzby",
+    "top": 5926,
+    "bottom": 9755
+   },
+   {
+    "id": "galeria",
+    "top": 9755,
+    "bottom": 13537
+   },
+   {
+    "id": "rezervacia",
+    "top": 13537,
+    "bottom": 15754
+   },
+   {
+    "id": "kontakt",
+    "top": 15754,
+    "bottom": 16124
+   }
+  ],
+  "vyskaStranky": 16124,
+  "zatazPo": [
+   8.72,
+   9.24,
+   6.35
+  ]
+ },
+ "nacitanie": {
+  "fcp": 696,
+  "lcp": 696,
+  "lcpPrvok": "SPAN.w Tvoje miesto.",
+  "load": 962,
+  "trvanieMerania": 8863,
+  "cls": 0.0002,
+  "posuny": [
+   [
+    894.6,
+    0.00010943474579903978,
+    "NAV.nav"
+   ],
+   [
+    4885.4,
+    0.00004506172839506173,
+    "A.btn btn-primary"
+   ]
+  ],
+  "tbt": 0,
+  "dlheUlohy": [
+   [
+    518,
+    65
+   ]
+  ],
+  "blokujuceZdroje": [
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 35,
+    "d": 438,
+    "kb": 71
+   }
+  ],
+  "zdrojeDoLCP": [
+   {
+    "u": "assets/fonts/Fraunces-800.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 35,
+    "d": 315,
+    "kb": 21
+   },
+   {
+    "u": "assets/fonts/Manrope-400.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 35,
+    "d": 292,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Fraunces-500i.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 35,
+    "d": 335,
+    "kb": 26
+   },
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 35,
+    "d": 438,
+    "kb": 71
+   },
+   {
+    "u": "assets/app.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 36,
+    "d": 367,
+    "kb": 36
+   },
+   {
+    "u": "assets/film.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 36,
+    "d": 483,
+    "kb": 102
+   },
+   {
+    "u": "assets/vernost.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 36,
+    "d": 507,
+    "kb": 24
+   },
+   {
+    "u": "assets/img/film/rohozka-2172.avif",
+    "t": "img",
+    "b": "non-blocking",
+    "s": 479,
+    "d": 429,
+    "kb": 173
+   },
+   {
+    "u": "assets/fonts/Manrope-700.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 492,
+    "d": 239,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Manrope-600.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 493,
+    "d": 239,
+    "kb": 17
+   },
+   {
+    "u": "assets/recenzie.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 587,
+    "d": 227,
+    "kb": 3
+   }
+  ],
+  "prenesenoKB": 867,
+  "zdrojov": 20,
+  "triedy": [
+   [
+    43,
+    ""
+   ],
+   [
+    44,
+    "karty world-off"
+   ],
+   [
+    607,
+    "karty world-off js-kin js-steps"
+   ]
+  ],
+  "webglKontext": [],
+  "loaf": [
+   {
+    "kde": "(bez skriptu: štýl/layout/paint)",
+    "ms": 2111,
+    "n": 11,
+    "max": 483.6,
+    "styl": 68.19999999999999
+   },
+   {
+    "kde": "assets/app.js:1  (module-script)",
+    "fn": "",
+    "typ": "module-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/assets/app.js",
+    "ms": 23,
+    "n": 1,
+    "max": 23,
+    "vynutenyStylLayout": 0
+   }
+  ],
+  "film": [],
+  "stopaMB": 19.7,
+  "vlakno": {
+   "kat": {
+    "ine": 170.3,
+    "layout": 107,
+    "styl": 99.4,
+    "skript": 85.2,
+    "cakanie-kompozitor": 77.3,
+    "html-siet-ipc": 66.6,
+    "paint": 62.3,
+    "snimka-ostatne": 52.4,
+    "animacie-css": 21,
+    "gpu-cakanie": 9.3,
+    "dekodovanie": 2,
+    "gc": 1.5
+   },
+   "sekcie": {
+    "-": {
+     "ine": 170.3,
+     "layout": 107,
+     "styl": 99.4,
+     "skript": 85.2,
+     "cakanie-kompozitor": 77.3,
+     "html-siet-ipc": 66.6,
+     "paint": 62.3,
+     "snimka-ostatne": 52.4,
+     "animacie-css": 21,
+     "gpu-cakanie": 9.3,
+     "dekodovanie": 2,
+     "gc": 1.5
+    }
+   },
+   "mena": {
+    "Document::recalcStyle": 83.4,
+    "LocalFrameView::performLayout": 82.3,
+    "LayerTreeHost::WaitForCommitCompletion": 77.3,
+    "ResponseBodyLoader::OnStateChange": 39.2,
+    "ThreadControllerImpl::RunTask": 35.7,
+    "InlineNode::ShapeTextIncludingFirstLine": 34.8,
+    "FunctionCall": 34.7,
+    "MainFrameAborted": 31.2,
+    "v8.evaluateModule": 21.2,
+    "ProxyMain::BeginMainFrame": 20.3,
+    "LocalFrameView::ScheduleAnimation": 20.2,
+    "Blink.PrePaint.UpdateTime": 20,
+    "IntersectionObserverController::computeIntersections": 16.4,
+    "Receive mojo message": 14.5,
+    "AnimationTimeline::serviceAnimations": 13.6,
+    "Blink.Paint.UpdateTime": 12,
+    "PageAnimator::serviceScriptedAnimations": 11.1,
+    "ResourceFetcher::requestResource": 10.9,
+    "Document::updateStyle": 10.1,
+    "Blink.CompositingInputs.UpdateTime": 7.8,
+    "Paint": 6.6,
+    "ParseHTML": 6.5,
+    "PaintArtifactCompositor::Update": 6.5,
+    "AnimationHost::TickAnimations": 6.4,
+    "WebFrameWidgetImpl::UpdateLifecycle": 6.2
+   },
+   "vstupy": {
+    "?:26 loop": 33.8,
+    "?:?": 24.5,
+    "assets/i18n.js:268": 4.8,
+    "assets/app.js:234 tick": 2.6,
+    "?film=off:174": 2.2,
+    "?:28 PerformanceObserver.observe.Object.assign.type.type": 2.1,
+    "assets/app.js:277": 1.9,
+    "assets/app.js:585 IntersectionObserver.threshold": 1.2,
+    "assets/atmosfera.js:228 ready": 1.2,
+    "?film=off:12": 1,
+    "assets/atmosfera.js:127": 0.8,
+    "assets/app.js:353 load": 0.6,
+    "assets/i18n.js:191 build": 0.6,
+    "assets/vernost.js:1": 0.6,
+    "?:40": 0.5
+   },
+   "ulohy": {},
+   "prvkov": 2817,
+   "prvkySek": {
+    "-": 2817
+   },
+   "pracaNaSnimku": {
+    "snimok": 297,
+    "p50": 0.8,
+    "p95": 5.1,
+    "max": 125.3,
+    "nad16": 1.7,
+    "nad50": 1
+   },
+   "pracaNaSnimkuSekcie": {
+    "nacitanie": {
+     "snimok": 297,
+     "p50": 0.8,
+     "p95": 5.1,
+     "max": 125.3,
+     "nad16": 1.7,
+     "nad50": 1
+    }
+   }
+  },
+  "vlakna": {
+   "Renderer/PerfettoTrace": 2.5,
+   "Renderer/CrRendererMain": 754.2,
+   "GPU/CrGpuMain": 2018.1,
+   "GPU/VizCompositorThread": 180.2,
+   "Renderer/Compositor": 336.3,
+   "Renderer/Chrome_ChildIOThread": 91.2,
+   "Renderer/ThreadPoolForegroundWorker": 934.9,
+   "Renderer/ThreadPoolServiceThread": 0.1
+  }
+ },
+ "prechody": {
+  "skokZMenu": {
+   "snimky": {
+    "snimok": 45,
+    "fps": 10.8,
+    "p50": 33.4,
+    "p95": 266.7,
+    "p99": 900.1,
+    "max": 900.1,
+    "podiel33": 48.89,
+    "podiel50": 40,
+    "nad100": 10
+   },
+   "dlheUlohy": {
+    "pocet": 1,
+    "max": 185,
+    "spolu": 185,
+    "blokovanie": 135
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 224,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 224,
+      "cakanie": 1.7,
+      "spracovanie": 167.7
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 2164,
+     "n": 15,
+     "max": 353.4,
+     "styl": 20.7
+    },
+    {
+     "kde": "assets/atmosfera.js:185  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "DOMWindow.onpointerdown",
+     "ms": 131,
+     "n": 1,
+     "max": 131,
+     "vynutenyStylLayout": 0
+    },
+    {
+     "kde": "Promise.resolve  (resolve-promise)",
+     "fn": "",
+     "typ": "resolve-promise",
+     "inv": "Promise.resolve",
+     "ms": 11,
+     "n": 1,
+     "max": 11,
+     "vynutenyStylLayout": 10
+    },
+    {
+     "kde": "assets/atmosfera.js  (resolve-promise)",
+     "fn": "",
+     "typ": "resolve-promise",
+     "inv": "BaseAudioContext.decodeAudioData.then",
+     "ms": 5,
+     "n": 1,
+     "max": 5,
+     "vynutenyStylLayout": 0
+    }
+   ]
+  },
+  "jazykOtvor": {
+   "snimky": {
+    "snimok": 9,
+    "fps": 11.7,
+    "p50": 83.3,
+    "p95": 183.4,
+    "p99": 183.4,
+    "max": 183.4,
+    "podiel33": 88.89,
+    "podiel50": 77.78,
+    "nad100": 2
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 400,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 400,
+      "cakanie": 3.3,
+      "spracovanie": 16.8
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 164,
+     "n": 2,
+     "max": 98.5,
+     "styl": 0.6
+    },
+    {
+     "kde": "assets/i18n.js:219  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "BUTTON.onclick",
+     "ms": 27,
+     "n": 1,
+     "max": 27,
+     "vynutenyStylLayout": 27
+    }
+   ]
+  },
+  "jazykEN": {
+   "snimky": {
+    "snimok": 35,
+    "fps": 11.4,
+    "p50": 66.7,
+    "p95": 366.6,
+    "p99": 416.5,
+    "max": 416.5,
+    "podiel33": 65.71,
+    "podiel50": 54.29,
+    "nad100": 10
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 392,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 392,
+      "cakanie": 1.9,
+      "spracovanie": 12.3
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 1846,
+     "n": 15,
+     "max": 358.5,
+     "styl": 8.7
+    },
+    {
+     "kde": "assets/app.js:276  (user-callback)",
+     "fn": "",
+     "typ": "user-callback",
+     "inv": "TimerHandler:setTimeout",
+     "ms": 28,
+     "n": 1,
+     "max": 28,
+     "vynutenyStylLayout": 27
+    },
+    {
+     "kde": "assets/i18n.js:220  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "DIV.onclick",
+     "ms": 11,
+     "n": 1,
+     "max": 11,
+     "vynutenyStylLayout": 8
+    },
+    {
+     "kde": "assets/i18n.js:123 chunk (user-callback)",
+     "fn": "chunk",
+     "typ": "user-callback",
+     "inv": "IdleRequestCallback",
+     "ms": 6,
+     "n": 1,
+     "max": 6,
+     "vynutenyStylLayout": 0
+    }
+   ]
+  },
+  "jazykSK": {
+   "snimky": {
+    "snimok": 42,
+    "fps": 15,
+    "p50": 33.4,
+    "p95": 166.6,
+    "p99": 400,
+    "max": 400,
+    "podiel33": 50,
+    "podiel50": 40.48,
+    "nad100": 6
+   },
+   "dlheUlohy": {
+    "pocet": 1,
+    "max": 66,
+    "spolu": 66,
+    "blokovanie": 16
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 392,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 392,
+      "cakanie": 1.8,
+      "spracovanie": 14.7
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 1883,
+     "n": 16,
+     "max": 389.6,
+     "styl": 67.20000000000002
+    },
+    {
+     "kde": "assets/i18n.js:220  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "DIV.onclick",
+     "ms": 21,
+     "n": 1,
+     "max": 21,
+     "vynutenyStylLayout": 18
+    }
+   ]
+  },
+  "videoTim": {
+   "video": {
+    "paused": true,
+    "rs": 0
+   },
+   "snimky": {
+    "snimok": 38,
+    "fps": 12.7,
+    "p50": 50,
+    "p95": 416.6,
+    "p99": 533.3,
+    "max": 533.3,
+    "podiel33": 63.16,
+    "podiel50": 44.74,
+    "nad100": 5
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 0,
+    "inp": null,
+    "najhorsie": []
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 2473,
+     "n": 21,
+     "max": 543.7,
+     "styl": 8.1
+    }
+   ],
+   "poPrehravani": {
+    "paused": false,
+    "rs": 4,
+    "t": 2.3
+   }
+  },
+  "vernostOtvor": {
+   "snimky": {
+    "snimok": 53,
+    "fps": 38.3,
+    "p50": 16.7,
+    "p95": 99.9,
+    "p99": 116.8,
+    "max": 116.8,
+    "podiel33": 15.09,
+    "podiel50": 9.43,
+    "nad100": 1
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 88,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 88,
+      "cakanie": 1.6,
+      "spracovanie": 13.4
+     }
+    ]
+   },
+   "loaf": [
+    {
+     "kde": "(bez skriptu: štýl/layout/paint)",
+     "ms": 489,
+     "n": 6,
+     "max": 102.9,
+     "styl": 5.2
+    },
+    {
+     "kde": "assets/vernost.js:159  (event-listener)",
+     "fn": "",
+     "typ": "event-listener",
+     "inv": "#document.onclick",
+     "ms": 31,
+     "n": 1,
+     "max": 31,
+     "vynutenyStylLayout": 28
+    }
+   ],
+   "dialog": true
+  },
+  "vernostZavri": {
+   "snimky": {
+    "snimok": 72,
+    "fps": 60,
+    "p50": 16.7,
+    "p95": 16.7,
+    "p99": 16.7,
+    "max": 16.7,
+    "podiel33": 0,
+    "podiel50": 0,
+    "nad100": 0
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "spolu": 0,
+    "blokovanie": 0
+   },
+   "interakcie": {
+    "interakcii": 1,
+    "inp": 40,
+    "najhorsie": [
+     {
+      "udalost": "pointerdown",
+      "ms": 40,
+      "cakanie": 0.4,
+      "spracovanie": 12.3
+     }
+    ]
+   },
+   "loaf": []
+  },
+  "cls": 0.0002
+ },
+ "film": {
+  "on": false,
+  "triedy": "karty world-off js-kin js-steps"
+ },
+ "chyby": []
+}

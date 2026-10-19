@@ -1,0 +1,388 @@
+{
+ "run": "p-on-f4-cold-svih",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "svih",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=on"
+ },
+ "snimok": 299,
+ "trvanie_s": 41.8,
+ "prvy_svetly_snimok_ms": 1005,
+ "fps_nahravky": 7.2,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 3,
+ "najdlhsie_ms": 3497,
+ "spolu_ms": 7001,
+ "tmave_zabery": [
+  {
+   "y": 3000,
+   "ms": 279.7900390625,
+   "max": 0.328,
+   "file": "f00244.jpg"
+  },
+  {
+   "y": 5000,
+   "ms": 233.2861328125,
+   "max": 0.328,
+   "file": "f00241.jpg"
+  },
+  {
+   "y": 0,
+   "ms": 164.5810546875,
+   "max": 0.456,
+   "file": "f00296.jpg"
+  },
+  {
+   "y": 13600,
+   "ms": 86.18994140625,
+   "max": 0.222,
+   "file": "f00157.jpg"
+  },
+  {
+   "y": 13400,
+   "ms": 24.105224609375,
+   "max": 0.23,
+   "file": "f00156.jpg"
+  },
+  {
+   "y": 3200,
+   "ms": 19.3330078125,
+   "max": 0.257,
+   "file": "f00243.jpg"
+  },
+  {
+   "y": 5200,
+   "ms": 14.908935546875,
+   "max": 0.231,
+   "file": "f00238.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 1005,
+   "do_ms": 1313,
+   "trvanie_ms": 308,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 0.976,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "load",
+    "first-paint@816",
+    "first-contentful-paint@816",
+    "lcp:@816"
+   ],
+   "cls": "karty world pro",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     -1,
+     1,
+     "bv1.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     -1,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     -1,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00002.jpg"
+   ]
+  },
+  {
+   "od_ms": 10404,
+   "do_ms": 13600,
+   "trvanie_ms": 3196,
+   "snimok": 30,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 2975.11279296875,
+   "scrollY_koniec": 5601.6962890625,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "svih dole"
+   ],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 4.8,
+    "T": 5.081,
+    "mix": 0.324,
+    "cur": "sala-rano-video",
+    "cut": "rohozka>sala pohyb",
+    "frames": 37,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0110220000",
+    "seq": "16/51:48|12/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     4,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00100.jpg",
+    "f00115.jpg",
+    "f00129.jpg"
+   ]
+  },
+  {
+   "od_ms": 38088,
+   "do_ms": 41586,
+   "trvanie_ms": 3497,
+   "snimok": 31,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 941.3391723632812,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 1.765,
+    "T": 1.238,
+    "mix": 0,
+    "cur": "sala-video",
+    "cut": null,
+    "frames": 133,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0021010000",
+    "seq": "22/51:|17/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     3,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00265.jpg",
+    "f00265.jpg",
+    "f00295.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

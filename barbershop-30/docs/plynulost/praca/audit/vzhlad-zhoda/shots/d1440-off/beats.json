@@ -1,0 +1,4194 @@
+{
+ "dev": "d1440",
+ "mode": "off",
+ "url": "http://127.0.0.1:8211/barbershop-30/?film=off",
+ "classes": "karty world-off js-kin js-steps",
+ "vh": 900,
+ "max": 15224,
+ "screens": 17.915555555555557,
+ "layoutShifts": [
+  {
+   "v": 0.00010943474579903978,
+   "t": 176,
+   "src": [
+    "#nav.nav"
+   ]
+  },
+  {
+   "v": 0.0000013438786008230452,
+   "t": 92691,
+   "src": [
+    ".flip"
+   ]
+  },
+  {
+   "v": 0.000010306418252743484,
+   "t": 92772,
+   "src": [
+    ".flap-state",
+    ".flip",
+    "B",
+    "B"
+   ]
+  },
+  {
+   "v": 0.000004031635802469136,
+   "t": 92929,
+   "src": [
+    ".flip",
+    ".flip",
+    ".flip"
+   ]
+  },
+  {
+   "v": 0.0000013438786008230452,
+   "t": 93313,
+   "src": [
+    ".flip"
+   ]
+  },
+  {
+   "v": 0.000002626671810699589,
+   "t": 93431,
+   "src": [
+    ".flip",
+    ".flip"
+   ]
+  },
+  {
+   "v": 0.0000031507201646090536,
+   "t": 93546,
+   "src": [
+    ".flap-state"
+   ]
+  },
+  {
+   "v": 0.0000013438786008230452,
+   "t": 93772,
+   "src": [
+    ".flip"
+   ]
+  },
+  {
+   "v": 0.0000031507201646090536,
+   "t": 94121,
+   "src": [
+    ".flap-state"
+   ]
+  }
+ ],
+ "errs": [],
+ "beats": [
+  {
+   "name": "karta-00-rohozka",
+   "y": 0,
+   "kind": "karta",
+   "file": "00-karta-00-rohozka.jpg",
+   "ciste": "00-karta-00-rohozka-ciste.png",
+   "scrollY": 0,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/rohozka-2172.avif",
+     "nat": [
+      1920,
+      1200
+     ],
+     "css": [
+      1483,
+      927
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 11,
+     "t": "Prejdi si podnik",
+     "cls": "scroll-hint"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    }
+   ],
+   "fonts": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    109.44
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-00",
+   "y": 0,
+   "kind": "krok",
+   "file": "01-krok-00.jpg",
+   "ciste": null,
+   "scrollY": 0,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/rohozka-2172.avif",
+     "nat": [
+      1920,
+      1200
+     ],
+     "css": [
+      1483,
+      927
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 11,
+     "t": "Prejdi si podnik",
+     "cls": "scroll-hint"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    }
+   ],
+   "fonts": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    109.44
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-01",
+   "y": 810,
+   "kind": "krok",
+   "file": "02-krok-01.jpg",
+   "ciste": null,
+   "scrollY": 810,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/rohozka-2172.avif",
+     "nat": [
+      1920,
+      1200
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.26,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    109.44
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-01-sala",
+   "y": 925,
+   "kind": "strih",
+   "file": "03-strih-01-sala.jpg",
+   "ciste": null,
+   "scrollY": 925,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/rohozka-2172.avif",
+     "nat": [
+      1920,
+      1200
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.26,
+     "plocha": 1
+    },
+    {
+     "src": "film/sala-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1505,
+      941
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sala",
+     "o": 0.26,
+     "so": 0.26
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-01-sala",
+   "y": 1184,
+   "kind": "karta",
+   "file": "04-karta-01-sala.jpg",
+   "ciste": "04-karta-01-sala-ciste.png",
+   "scrollY": 1184,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Prvý krok",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-02-stol",
+   "y": 1555,
+   "kind": "strih",
+   "file": "05-strih-02-stol.jpg",
+   "ciste": null,
+   "scrollY": 1555,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/stol-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1505,
+      941
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "stol",
+     "o": 0.26,
+     "so": 0.26
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-02",
+   "y": 1620,
+   "kind": "krok",
+   "file": "06-krok-02.jpg",
+   "ciste": null,
+   "scrollY": 1620,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/stol-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1514,
+      946
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.43,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Remeslo",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-02-stol",
+   "y": 1814,
+   "kind": "karta",
+   "file": "07-karta-02-stol.jpg",
+   "ciste": "07-karta-02-stol-ciste.png",
+   "scrollY": 1814,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/stol-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Remeslo",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-03-cakaren",
+   "y": 2185,
+   "kind": "strih",
+   "file": "08-strih-03-cakaren.jpg",
+   "ciste": null,
+   "scrollY": 2185,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/stol-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/cakaren-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1505,
+      941
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "cakaren",
+     "o": 0.26,
+     "so": 0.26
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-03",
+   "y": 2430,
+   "kind": "krok",
+   "file": "09-krok-03.jpg",
+   "ciste": null,
+   "scrollY": 2430,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/cakaren-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Čakáreň",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-03-cakaren",
+   "y": 2444,
+   "kind": "karta",
+   "file": "10-karta-03-cakaren.jpg",
+   "ciste": "10-karta-03-cakaren-ciste.png",
+   "scrollY": 2444,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/cakaren-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Čakáreň",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-04-sala-rano",
+   "y": 2812,
+   "kind": "strih",
+   "file": "11-strih-04-sala-rano.jpg",
+   "ciste": null,
+   "scrollY": 2812,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/cakaren-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1468,
+      918
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.48,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sala-rano",
+     "o": 0.27,
+     "so": 0.27
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-04-sala-rano",
+   "y": 3033,
+   "kind": "karta",
+   "file": "12-karta-04-sala-rano.jpg",
+   "ciste": "12-karta-04-sala-rano-ciste.png",
+   "scrollY": 3033,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1482,
+      926
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.47,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Ľudia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-04",
+   "y": 3240,
+   "kind": "krok",
+   "file": "13-krok-04.jpg",
+   "ciste": null,
+   "scrollY": 3240,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1494,
+      934
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.45,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Ľudia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "tim-pas-nastup",
+   "y": 3870,
+   "kind": "prechod",
+   "file": "14-tim-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 3870,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    21.6
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-05",
+   "y": 4050,
+   "kind": "krok",
+   "file": "15-krok-05.jpg",
+   "ciste": null,
+   "scrollY": 4050,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/tim-nikolas-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.048
+    },
+    {
+     "src": "img/tim-kristian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.048
+    },
+    {
+     "src": "img/tim-damian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.048
+    },
+    {
+     "src": "img/tim-michal-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.048
+    },
+    {
+     "src": "img/tim-andy-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      314
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 0.048
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    21.6
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "tim-pas",
+   "y": 4230,
+   "kind": "sekcia",
+   "file": "16-tim-pas.jpg",
+   "ciste": null,
+   "scrollY": 4230,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/tim-nikolas-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-kristian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-damian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-michal-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-andy-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      314
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 0.061
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    21.6,
+    23.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "tim-mriezka",
+   "y": 4623,
+   "kind": "sekcia",
+   "file": "17-tim-mriezka.jpg",
+   "ciste": null,
+   "scrollY": 4623,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/tim-nikolas-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-kristian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-damian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-michal-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-andy-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      314
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 0.061
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    23.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-06",
+   "y": 4860,
+   "kind": "krok",
+   "file": "18-krok-06.jpg",
+   "ciste": null,
+   "scrollY": 4860,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/tim-dominika-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-kevin-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-lajko-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-jojo-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      313
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.3,
+     "plocha": 0.061
+    },
+    {
+     "src": "img/tim-adrian-480.avif",
+     "nat": [
+      480,
+      406
+     ],
+     "css": [
+      251,
+      314
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.29,
+     "plocha": 0.061
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    23.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-07",
+   "y": 5670,
+   "kind": "krok",
+   "file": "19-krok-07.jpg",
+   "ciste": null,
+   "scrollY": 5670,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-05-kreslo-stred",
+   "y": 5947,
+   "kind": "strih",
+   "file": "20-strih-05-kreslo-stred.jpg",
+   "ciste": null,
+   "scrollY": 5947,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sala-rano-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1468,
+      918
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.48,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "kreslo-stred",
+     "o": 0.25,
+     "so": 0.25
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-05-kreslo-stred",
+   "y": 6169,
+   "kind": "karta",
+   "file": "21-karta-05-kreslo-stred.jpg",
+   "ciste": "21-karta-05-kreslo-stred-ciste.png",
+   "scrollY": 6169,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1482,
+      926
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.47,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Služby a ceny",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-08",
+   "y": 6480,
+   "kind": "krok",
+   "file": "22-krok-08.jpg",
+   "ciste": null,
+   "scrollY": 6480,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1500,
+      938
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.45,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-pas-nastup",
+   "y": 7006,
+   "kind": "prechod",
+   "file": "23-sluzby-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 7006,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    48
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-09",
+   "y": 7290,
+   "kind": "krok",
+   "file": "24-krok-09.jpg",
+   "ciste": null,
+   "scrollY": 7290,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26,
+    48
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-pas",
+   "y": 7366,
+   "kind": "sekcia",
+   "file": "25-sluzby-pas.jpg",
+   "ciste": null,
+   "scrollY": 7366,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26,
+    48
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-kroky",
+   "y": 7545,
+   "kind": "sekcia",
+   "file": "26-sluzby-kroky.jpg",
+   "ciste": null,
+   "scrollY": 7545,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-cennik-1",
+   "y": 7755,
+   "kind": "sekcia",
+   "file": "27-sluzby-cennik-1.jpg",
+   "ciste": null,
+   "scrollY": 7755,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-10",
+   "y": 8100,
+   "kind": "krok",
+   "file": "28-krok-10.jpg",
+   "ciste": null,
+   "scrollY": 8100,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-cennik-2",
+   "y": 8315,
+   "kind": "sekcia",
+   "file": "29-sluzby-cennik-2.jpg",
+   "ciste": null,
+   "scrollY": 8315,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-cennik-3",
+   "y": 8658,
+   "kind": "sekcia",
+   "file": "30-sluzby-cennik-3.jpg",
+   "ciste": null,
+   "scrollY": 8658,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-11",
+   "y": 8910,
+   "kind": "krok",
+   "file": "31-krok-11.jpg",
+   "ciste": null,
+   "scrollY": 8910,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-cennik-4",
+   "y": 8963,
+   "kind": "sekcia",
+   "file": "32-sluzby-cennik-4.jpg",
+   "ciste": null,
+   "scrollY": 8963,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    23.04,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "sluzby-extra",
+   "y": 9116,
+   "kind": "sekcia",
+   "file": "33-sluzby-extra.jpg",
+   "ciste": null,
+   "scrollY": 9116,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20,
+    26
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-12",
+   "y": 9720,
+   "kind": "krok",
+   "file": "34-krok-12.jpg",
+   "ciste": null,
+   "scrollY": 9720,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-06-kava",
+   "y": 9776,
+   "kind": "strih",
+   "file": "35-strih-06-kava.jpg",
+   "ciste": null,
+   "scrollY": 9776,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kreslo-stred-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1468,
+      918
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.48,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "kava",
+     "o": 0.25,
+     "so": 0.25
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-06-kava",
+   "y": 9998,
+   "kind": "karta",
+   "file": "36-karta-06-kava.jpg",
+   "ciste": "36-karta-06-kava-ciste.png",
+   "scrollY": 9998,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1482,
+      926
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.47,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Galéria",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-13",
+   "y": 10530,
+   "kind": "krok",
+   "file": "37-krok-13.jpg",
+   "ciste": null,
+   "scrollY": 10530,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1514,
+      946
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    },
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      672,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.61,
+     "plocha": 0.072
+    },
+    {
+     "src": "img/detail-stol-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.035
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.035
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-pas-nastup",
+   "y": 10835,
+   "kind": "prechod",
+   "file": "38-galeria-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 10835,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      672,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.61,
+     "plocha": 0.113
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.112
+    },
+    {
+     "src": "img/detail-stol-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.055
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.053
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.053
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-pas",
+   "y": 11195,
+   "kind": "sekcia",
+   "file": "39-galeria-pas.jpg",
+   "ciste": null,
+   "scrollY": 11195,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      692,
+      225
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.56,
+     "plocha": 0.12
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/detail-stol-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.055
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-mriezka",
+   "y": 11212,
+   "kind": "sekcia",
+   "file": "40-galeria-mriezka.jpg",
+   "ciste": null,
+   "scrollY": 11212,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      672,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.61,
+     "plocha": 0.113
+    },
+    {
+     "src": "img/detail-stol-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.055
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-14",
+   "y": 11340,
+   "kind": "krok",
+   "file": "41-krok-14.jpg",
+   "ciste": null,
+   "scrollY": 11340,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      338,
+      467
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.83,
+     "plocha": 0.122
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.115
+    },
+    {
+     "src": "img/galeria-barberpole-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.103
+    },
+    {
+     "src": "img/naradie-noznice-1080.avif",
+     "nat": [
+      1080,
+      675
+     ],
+     "css": [
+      672,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.61,
+     "plocha": 0.088
+    },
+    {
+     "src": "img/galeria-buldog-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.055
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-recenzie",
+   "y": 11964,
+   "kind": "sekcia",
+   "file": "42-galeria-recenzie.jpg",
+   "ciste": null,
+   "scrollY": 11964,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "img/galeria-neon-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.004
+    },
+    {
+     "src": "img/galeria-zrkadlo-640.avif",
+     "nat": [
+      640,
+      853
+     ],
+     "css": [
+      328,
+      453
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.88,
+     "plocha": 0.004
+    },
+    {
+     "src": "img/galeria-kava-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.004
+    },
+    {
+     "src": "img/galeria-sud-640.avif",
+     "nat": [
+      640,
+      427
+     ],
+     "css": [
+      328,
+      219
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.95,
+     "plocha": 0.004
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    17,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-15",
+   "y": 12150,
+   "kind": "krok",
+   "file": "43-krok-15.jpg",
+   "ciste": null,
+   "scrollY": 12150,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    17,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "galeria-dovera",
+   "y": 12569,
+   "kind": "sekcia",
+   "file": "44-galeria-dovera.jpg",
+   "ciste": null,
+   "scrollY": 12569,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    16,
+    17,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-07-sud",
+   "y": 12932,
+   "kind": "strih",
+   "file": "45-strih-07-sud.jpg",
+   "ciste": null,
+   "scrollY": 12932,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/sud-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1505,
+      941
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sud",
+     "o": 0.26,
+     "so": 0.26
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-16",
+   "y": 12960,
+   "kind": "krok",
+   "file": "46-krok-16.jpg",
+   "ciste": null,
+   "scrollY": 12960,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/kava-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/sud-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1509,
+      943
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.44,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Cestou von",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sud",
+     "o": 0.79,
+     "so": 0.79
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-07-sud",
+   "y": 13190,
+   "kind": "karta",
+   "file": "47-karta-07-sud.jpg",
+   "ciste": "47-karta-07-sud-ciste.png",
+   "scrollY": 13190,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sud-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Cestou von",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "strih-08-vstup",
+   "y": 13559,
+   "kind": "strih",
+   "file": "48-strih-08-vstup.jpg",
+   "ciste": null,
+   "scrollY": 13559,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/sud-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    },
+    {
+     "src": "film/vstup-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1468,
+      918
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.48,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    20
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "sud",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "vstup",
+     "o": 0.27,
+     "so": 0.27
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-17",
+   "y": 13770,
+   "kind": "krok",
+   "file": "49-krok-17.jpg",
+   "ciste": null,
+   "scrollY": 13770,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/vstup-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1481,
+      926
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.47,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Rezervácia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "karta-08-vstup",
+   "y": 13780,
+   "kind": "karta",
+   "file": "50-karta-08-vstup.jpg",
+   "ciste": "50-karta-08-vstup-ciste.png",
+   "scrollY": 13780,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/vstup-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1482,
+      926
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.47,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Rezervácia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17.28,
+    20,
+    95.04
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0.00010943474579903978
+  },
+  {
+   "name": "krok-18",
+   "y": 14580,
+   "kind": "krok",
+   "file": "51-krok-18.jpg",
+   "ciste": null,
+   "scrollY": 14580,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/vstup-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17,
+    20,
+    24,
+    28,
+    56
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.00013358182763203015
+  },
+  {
+   "name": "kontakt-pas-nastup",
+   "y": 14617,
+   "kind": "prechod",
+   "file": "52-kontakt-pas-nastup.jpg",
+   "ciste": null,
+   "scrollY": 14617,
+   "dpr": 1,
+   "imgs": [
+    {
+     "src": "film/vstup-2172.avif",
+     "nat": [
+      2172,
+      1448
+     ],
+     "css": [
+      1526,
+      954
+     ],
+     "complete": true,
+     "zdroj_na_px": 1.42,
+     "plocha": 1
+    }
+   ],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 13,
+     "t": "SK",
+     "cls": "SPAN"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    15,
+    17,
+    20,
+    24,
+    28,
+    56
+   ],
+   "film": null,
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0.0001367325477966392
+  },
+  {
+   "name": "kontakt-pas",
+   "y": 14977,
+   "kind": "sekcia",
+   "file": "53-kontakt-pas.jpg",
+   "ciste": null,
+   "scrollY": 14977,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    24,
+    28,
+    56
+   ],
+   "film": null,
+   "cards": [],
+   "cls": 0.0001367325477966392
+  },
+  {
+   "name": "kontakt-fakty",
+   "y": 14994,
+   "kind": "sekcia",
+   "file": "54-kontakt-fakty.jpg",
+   "ciste": null,
+   "scrollY": 14994,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    24,
+    28,
+    56
+   ],
+   "film": null,
+   "cards": [],
+   "cls": 0.0001367325477966392
+  },
+  {
+   "name": "krok-19",
+   "y": 15224,
+   "kind": "krok",
+   "file": "55-krok-19.jpg",
+   "ciste": null,
+   "scrollY": 15224,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    24,
+    28
+   ],
+   "film": null,
+   "cards": [],
+   "cls": 0.0001367325477966392
+  },
+  {
+   "name": "paticka",
+   "y": 15224,
+   "kind": "sekcia",
+   "file": "56-paticka.jpg",
+   "ciste": null,
+   "scrollY": 15224,
+   "dpr": 1,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Dnes",
+     "cls": "flap-label"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    20,
+    24,
+    28
+   ],
+   "film": null,
+   "cards": [],
+   "cls": 0.0001367325477966392
+  }
+ ]
+}

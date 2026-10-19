@@ -1,0 +1,30 @@
+
+off-stredne  (záťaž 9.33/10.12/8.54)
+načítanie: FCP 832 LCP 832 (SPAN.w Tvoje miesto.) TBT 296 CLS 0 dlhé úlohy 4
+skrol stredne: p50 16.7 p95 150 max 3199.8 >33ms 14.68% (1240 sn.) | dlhé 41 max 1924 | GL 0 ms/sn.
+práca hl. vlákna stredne: {"snimok":1239,"p50":7.7,"p95":44.4,"max":440,"nad16":19.2,"nad50":49}
+  vlákno uvod: {"spolu":28.46,"styl":7.61,"skript":4.76,"paint":4.37,"layout":3.93,"ine":3.49,"snimka-ostatne":2.53,"cakanie-kompozitor":0.57,"animacie-css":0.48,"html-siet-ipc":0.4,"gpu-cakanie":0.31,"gc":0.02,"dekodovanie":0}
+  vlákno vstup-dnu: {"spolu":80.79,"cakanie-kompozitor":37.61,"ine":18.47,"styl":6.42,"html-siet-ipc":4.6,"layout":4.14,"skript":3.64,"paint":3.28,"snimka-ostatne":1.68,"animacie-css":0.48,"gpu-cakanie":0.37,"gc":0.09,"dekodovanie":0}
+  vlákno remeslo: {"spolu":8.37,"styl":2.06,"ine":1.92,"paint":1.87,"layout":0.88,"snimka-ostatne":0.65,"skript":0.53,"animacie-css":0.27,"cakanie-kompozitor":0.12,"gpu-cakanie":0.07,"html-siet-ipc":0.02,"gc":0,"dekodovanie":0}
+  vlákno cakaren: {"spolu":55.33,"cakanie-kompozitor":29.16,"styl":7.57,"paint":6,"ine":5.45,"layout":2.04,"skript":1.93,"snimka-ostatne":1.32,"html-siet-ipc":1.22,"animacie-css":0.33,"gpu-cakanie":0.28,"dekodovanie":0.03,"gc":0}
+  vlákno tim: {"spolu":17.39,"cakanie-kompozitor":6.16,"styl":2.7,"paint":2.29,"ine":1.6,"skript":1.48,"layout":1.37,"snimka-ostatne":1.01,"animacie-css":0.53,"html-siet-ipc":0.15,"gpu-cakanie":0.1,"gc":0.01,"dekodovanie":0}
+  vlákno sluzby: {"spolu":9.27,"ine":2.21,"paint":1.53,"styl":1.3,"layout":1.25,"skript":1,"snimka-ostatne":0.76,"gc":0.43,"animacie-css":0.39,"html-siet-ipc":0.19,"gpu-cakanie":0.16,"cakanie-kompozitor":0.06,"dekodovanie":0}
+  vlákno galeria: {"spolu":20.86,"cakanie-kompozitor":7.86,"styl":3.8,"ine":2.6,"paint":2.35,"layout":1.32,"skript":1.22,"snimka-ostatne":0.99,"animacie-css":0.35,"html-siet-ipc":0.16,"gpu-cakanie":0.12,"gc":0.07,"dekodovanie":0}
+  vlákno rezervacia: {"spolu":27.51,"styl":6.04,"skript":4.66,"layout":4.07,"paint":3.58,"ine":3.34,"cakanie-kompozitor":2.73,"snimka-ostatne":1.48,"animacie-css":0.61,"gc":0.42,"gpu-cakanie":0.41,"html-siet-ipc":0.16,"dekodovanie":0.02}
+  vlákno kontakt: {"spolu":8.27,"ine":2.31,"skript":1.33,"paint":0.98,"styl":0.93,"layout":0.81,"gc":0.73,"snimka-ostatne":0.57,"animacie-css":0.31,"gpu-cakanie":0.19,"html-siet-ipc":0.11,"cakanie-kompozitor":0.01}
+
+on-skrol  (záťaž 15.08/11.99/9.37)
+načítanie: FCP 1356 LCP 1356 (SPAN.w Tvoje miesto.) TBT 2987 CLS 0 dlhé úlohy 15
+skrol stredne: p50 683.3 p95 5399.7 max 12116.2 >33ms 90% (140 sn.) | dlhé 61 max 2595 | GL 68.19 ms/sn.
+skrol svih: p50 183.3 p95 3049.9 max 21015.8 >33ms 75.59% (295 sn.) | dlhé 47 max 10957 | GL 65.87 ms/sn.
+práca hl. vlákna stredne: {"snimok":139,"p50":63,"p95":473.3,"max":831,"nad16":87.1,"nad50":79}
+práca hl. vlákna svih: {"snimok":294,"p50":21,"p95":155.9,"max":561.2,"nad16":60.2,"nad50":68}
+  vlákno uvod: {"spolu":186.9,"skript":58.58,"ine":39.35,"html-siet-ipc":29.07,"styl":22.07,"cakanie-kompozitor":15.08,"paint":8.6,"layout":7.89,"snimka-ostatne":3.76,"gpu-cakanie":1.65,"animacie-css":0.71,"gc":0.15,"dekodovanie":0}
+  vlákno vstup-dnu: {"spolu":330.76,"gpu-cakanie":143.99,"skript":108.81,"ine":23.24,"html-siet-ipc":18.59,"styl":10.83,"gc":8.41,"paint":7.02,"snimka-ostatne":3.99,"layout":2.73,"cakanie-kompozitor":2.71,"animacie-css":0.43,"dekodovanie":0}
+  vlákno remeslo: {"spolu":347.95,"gpu-cakanie":247.36,"skript":42.78,"html-siet-ipc":14.03,"ine":13.35,"paint":9.22,"styl":6.66,"layout":4.26,"snimka-ostatne":4.13,"gc":3.63,"cakanie-kompozitor":1.86,"animacie-css":0.67,"dekodovanie":0}
+  vlákno cakaren: {"spolu":567.18,"gpu-cakanie":383.23,"skript":98.64,"ine":28.72,"html-siet-ipc":20.72,"gc":9.76,"styl":9.31,"paint":7.16,"layout":3.5,"cakanie-kompozitor":3.3,"snimka-ostatne":2.3,"animacie-css":0.54,"dekodovanie":0}
+  vlákno tim: {"spolu":84.6,"skript":30.6,"ine":19.1,"styl":8.79,"gc":7.67,"paint":5.95,"gpu-cakanie":4.57,"layout":3.5,"snimka-ostatne":1.84,"cakanie-kompozitor":1.56,"html-siet-ipc":0.63,"animacie-css":0.38,"dekodovanie":0.01}
+  vlákno sluzby: {"spolu":30.77,"skript":8.64,"ine":6.66,"paint":2.9,"styl":2.9,"cakanie-kompozitor":2.29,"snimka-ostatne":2.06,"layout":2.04,"gpu-cakanie":1.31,"gc":0.84,"html-siet-ipc":0.78,"animacie-css":0.34,"dekodovanie":0.01}
+  vlákno galeria: {"spolu":22.19,"ine":4.32,"skript":4.32,"styl":3.93,"paint":3.3,"snimka-ostatne":2.53,"layout":1.58,"cakanie-kompozitor":0.77,"gpu-cakanie":0.73,"animacie-css":0.44,"html-siet-ipc":0.22,"gc":0.03,"dekodovanie":0}
+  vlákno rezervacia: {"spolu":112.63,"cakanie-kompozitor":39.6,"gpu-cakanie":27.5,"styl":11.45,"layout":10.28,"skript":8.15,"ine":7.39,"paint":4.04,"snimka-ostatne":1.82,"gc":1.19,"html-siet-ipc":0.66,"animacie-css":0.46,"dekodovanie":0.09}
+  vlákno kontakt: {"spolu":26.66,"cakanie-kompozitor":6.92,"ine":6.78,"skript":4.65,"snimka-ostatne":2.71,"paint":2.26,"layout":1.09,"styl":0.87,"gpu-cakanie":0.56,"animacie-css":0.45,"html-siet-ipc":0.36,"gc":0}

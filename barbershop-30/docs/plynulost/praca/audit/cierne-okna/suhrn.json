@@ -1,0 +1,1068 @@
+[
+ {
+  "run": "d-def-s4-cold-uvod",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "default",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 1.8,
+  "uvod_ms": 6391,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "d-off-s4-cold-menu",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 3.7,
+  "uvod_ms": 603,
+  "okien": 3,
+  "max_ms": 1125,
+  "spolu_ms": 2254,
+  "okna": [
+   [
+    16776,
+    1125,
+    0.79,
+    6196
+   ],
+   [
+    33490,
+    585,
+    0.86,
+    13227
+   ],
+   [
+    48903,
+    544,
+    0.81,
+    0
+   ]
+  ],
+  "tmave_zabery_ms": 6727,
+  "chyby": 0
+ },
+ {
+  "run": "d-off-s4-cold-svih",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 5.9,
+  "uvod_ms": 3734,
+  "okien": 1,
+  "max_ms": 558,
+  "spolu_ms": 558,
+  "okna": [
+   [
+    23387,
+    558,
+    0.58,
+    2256
+   ]
+  ],
+  "tmave_zabery_ms": 14105,
+  "chyby": 0
+ },
+ {
+  "run": "d-on-f4-cold-dvere",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "dvere",
+  "fps": 1.9,
+  "uvod_ms": 1074,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 9142,
+  "chyby": 0
+ },
+ {
+  "run": "d-on-f4-cold-svih",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 1.3,
+  "uvod_ms": 992,
+  "okien": 2,
+  "max_ms": 1278,
+  "spolu_ms": 2432,
+  "okna": [
+   [
+    75288,
+    1278,
+    0.36,
+    2945
+   ],
+   [
+    257014,
+    1154,
+    0.36,
+    2656
+   ]
+  ],
+  "tmave_zabery_ms": 10555,
+  "chyby": 0
+ },
+ {
+  "run": "d-on-f4-cold-uvod",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 3.7,
+  "uvod_ms": 1115,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "d-on-s4-cold-menu",
+  "dev": "desk",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 2.4,
+  "uvod_ms": 3226,
+  "okien": 3,
+  "max_ms": 9850,
+  "spolu_ms": 13198,
+  "okna": [
+   [
+    32862,
+    1450,
+    0.81,
+    3060
+   ],
+   [
+    45789,
+    1898,
+    0.85,
+    14186
+   ],
+   [
+    48331,
+    9850,
+    0.86,
+    1170
+   ]
+  ],
+  "tmave_zabery_ms": 1148,
+  "chyby": 0
+ },
+ {
+  "run": "p-def-f4-cold-uvod",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "default",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 19.5,
+  "uvod_ms": 605,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-def-s4-cold-svih",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "default",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 19.5,
+  "uvod_ms": 2466,
+  "okien": 5,
+  "max_ms": 1922,
+  "spolu_ms": 6369,
+  "okna": [
+   [
+    13700,
+    686,
+    0.88,
+    2540
+   ],
+   [
+    14671,
+    1588,
+    0.88,
+    3053
+   ],
+   [
+    16806,
+    1922,
+    0.92,
+    9282
+   ],
+   [
+    19073,
+    1785,
+    0.88,
+    12122
+   ],
+   [
+    31451,
+    388,
+    0.88,
+    1441
+   ]
+  ],
+  "tmave_zabery_ms": 648,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-f4-cold-menu",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 40.9,
+  "uvod_ms": 1170,
+  "okien": 4,
+  "max_ms": 359,
+  "spolu_ms": 1085,
+  "okna": [
+   [
+    11253,
+    322,
+    0.49,
+    3857
+   ],
+   [
+    11777,
+    359,
+    0.83,
+    5051
+   ],
+   [
+    22014,
+    152,
+    0.84,
+    9988
+   ],
+   [
+    27052,
+    252,
+    0.84,
+    13145
+   ]
+  ],
+  "tmave_zabery_ms": 530,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-f4-cold-pomaly",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "pomaly",
+  "fps": 9.2,
+  "uvod_ms": 1100,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 8464,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-f4-cold-svih",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 34.2,
+  "uvod_ms": 1072,
+  "okien": 6,
+  "max_ms": 989,
+  "spolu_ms": 3976,
+  "okna": [
+   [
+    6032,
+    507,
+    0.81,
+    970
+   ],
+   [
+    7439,
+    151,
+    0.83,
+    1992
+   ],
+   [
+    8763,
+    733,
+    0.33,
+    3910
+   ],
+   [
+    10125,
+    761,
+    0.81,
+    5054
+   ],
+   [
+    18759,
+    835,
+    0.76,
+    12604
+   ],
+   [
+    20090,
+    989,
+    0.77,
+    13293
+   ]
+  ],
+  "tmave_zabery_ms": 3887,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-f4-warm-svih",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "warm",
+  "scen": "svih",
+  "fps": 25.9,
+  "uvod_ms": 205,
+  "okien": 4,
+  "max_ms": 757,
+  "spolu_ms": 2646,
+  "okna": [
+   [
+    4141,
+    737,
+    0.77,
+    2061
+   ],
+   [
+    5226,
+    634,
+    0.88,
+    3002
+   ],
+   [
+    6309,
+    757,
+    0.81,
+    5348
+   ],
+   [
+    17177,
+    518,
+    0.88,
+    11113
+   ]
+  ],
+  "tmave_zabery_ms": 1309,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-s4-cold-menu-b",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 12.8,
+  "uvod_ms": 3071,
+  "okien": 5,
+  "max_ms": 4134,
+  "spolu_ms": 5659,
+  "okna": [
+   [
+    15856,
+    4134,
+    0.88,
+    2291
+   ],
+   [
+    20978,
+    507,
+    0.82,
+    5041
+   ],
+   [
+    27582,
+    155,
+    0.84,
+    9988
+   ],
+   [
+    37552,
+    171,
+    0.56,
+    12098
+   ],
+   [
+    51817,
+    692,
+    0.25,
+    14124
+   ]
+  ],
+  "tmave_zabery_ms": 266,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-s4-cold-menu",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 16.2,
+  "uvod_ms": 2932,
+  "okien": 4,
+  "max_ms": 3636,
+  "spolu_ms": 4713,
+  "okna": [
+   [
+    16535,
+    3636,
+    0.88,
+    3074
+   ],
+   [
+    21650,
+    568,
+    0.82,
+    5049
+   ],
+   [
+    27316,
+    293,
+    0.84,
+    9988
+   ],
+   [
+    51791,
+    216,
+    0.25,
+    14124
+   ]
+  ],
+  "tmave_zabery_ms": 633,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-s4-cold-svih",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 14.9,
+  "uvod_ms": 3032,
+  "okien": 5,
+  "max_ms": 4676,
+  "spolu_ms": 8157,
+  "okna": [
+   [
+    9032,
+    409,
+    0.88,
+    1517
+   ],
+   [
+    10816,
+    1520,
+    0.88,
+    3056
+   ],
+   [
+    15231,
+    186,
+    0.92,
+    9842
+   ],
+   [
+    15769,
+    1366,
+    0.88,
+    13501
+   ],
+   [
+    20725,
+    4676,
+    0.92,
+    13988
+   ]
+  ],
+  "tmave_zabery_ms": 1123,
+  "chyby": 0
+ },
+ {
+  "run": "p-off-s4-cold-uvod",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 32.3,
+  "uvod_ms": 3038,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-dvere",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "dvere",
+  "fps": 9.5,
+  "uvod_ms": 169,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-hore",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "hore",
+  "fps": 8.0,
+  "uvod_ms": 421,
+  "okien": 3,
+  "max_ms": 3893,
+  "spolu_ms": 7083,
+  "okna": [
+   [
+    11723,
+    745,
+    0.92,
+    3016
+   ],
+   [
+    13201,
+    2445,
+    0.92,
+    9577
+   ],
+   [
+    25088,
+    3893,
+    0.89,
+    0
+   ]
+  ],
+  "tmave_zabery_ms": 96,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-jazyk",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "jazyk",
+  "fps": 4.6,
+  "uvod_ms": 438,
+  "okien": 2,
+  "max_ms": 4909,
+  "spolu_ms": 5977,
+  "okna": [
+   [
+    21173,
+    1068,
+    0.88,
+    3052
+   ],
+   [
+    29756,
+    4909,
+    0.88,
+    12757
+   ]
+  ],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-menu-b",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 2.3,
+  "uvod_ms": 759,
+  "okien": 2,
+  "max_ms": 498,
+  "spolu_ms": 659,
+  "okna": [
+   [
+    37565,
+    161,
+    0.88,
+    5051
+   ],
+   [
+    70005,
+    498,
+    0.86,
+    1097
+   ]
+  ],
+  "tmave_zabery_ms": 484,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-menu",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 3.2,
+  "uvod_ms": 248,
+  "okien": 3,
+  "max_ms": 5072,
+  "spolu_ms": 5755,
+  "okna": [
+   [
+    27437,
+    5072,
+    0.88,
+    5051
+   ],
+   [
+    58335,
+    294,
+    0.92,
+    1097
+   ],
+   [
+    70998,
+    389,
+    0.89,
+    638
+   ]
+  ],
+  "tmave_zabery_ms": 3632,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-pomaly",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "pomaly",
+  "fps": 1.7,
+  "uvod_ms": 684,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 2577,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-svih",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 7.2,
+  "uvod_ms": 308,
+  "okien": 2,
+  "max_ms": 3497,
+  "spolu_ms": 6693,
+  "okna": [
+   [
+    10404,
+    3196,
+    0.88,
+    2975
+   ],
+   [
+    38088,
+    3497,
+    0.88,
+    941
+   ]
+  ],
+  "tmave_zabery_ms": 822,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-cold-uvod",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 7.3,
+  "uvod_ms": 494,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-warm-menu",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "warm",
+  "scen": "menu",
+  "fps": 2.3,
+  "uvod_ms": 235,
+  "okien": 2,
+  "max_ms": 6188,
+  "spolu_ms": 6773,
+  "okna": [
+   [
+    32437,
+    6188,
+    0.27,
+    4226
+   ],
+   [
+    77329,
+    585,
+    0.92,
+    1097
+   ]
+  ],
+  "tmave_zabery_ms": 8995,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-f4-warm-uvod",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "warm",
+  "scen": "uvod",
+  "fps": 10.2,
+  "uvod_ms": 160,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-s4-cold-menu",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 4.3,
+  "uvod_ms": 492,
+  "okien": 4,
+  "max_ms": 1987,
+  "spolu_ms": 5547,
+  "okna": [
+   [
+    37223,
+    1283,
+    0.88,
+    5051
+   ],
+   [
+    44933,
+    799,
+    0.82,
+    5051
+   ],
+   [
+    75751,
+    1987,
+    0.92,
+    1097
+   ],
+   [
+    84191,
+    1478,
+    0.88,
+    0
+   ]
+  ],
+  "tmave_zabery_ms": 440,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-s4-cold-svih",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 6.1,
+  "uvod_ms": 882,
+  "okien": 4,
+  "max_ms": 2752,
+  "spolu_ms": 5135,
+  "okna": [
+   [
+    23360,
+    691,
+    0.92,
+    3012
+   ],
+   [
+    26556,
+    694,
+    0.92,
+    9989
+   ],
+   [
+    37483,
+    998,
+    0.92,
+    13944
+   ],
+   [
+    42145,
+    2752,
+    0.92,
+    4912
+   ]
+  ],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-s4-cold-uvod",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "uvod",
+  "fps": 12.5,
+  "uvod_ms": 2009,
+  "okien": 0,
+  "max_ms": 0,
+  "spolu_ms": 0,
+  "okna": [],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-on-s4-warm-svih",
+  "dev": "phone",
+  "dpr": 1,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "warm",
+  "scen": "svih",
+  "fps": 3.3,
+  "uvod_ms": 0,
+  "okien": 3,
+  "max_ms": 5890,
+  "spolu_ms": 13101,
+  "okna": [
+   [
+    23503,
+    3547,
+    0.55,
+    10569
+   ],
+   [
+    27489,
+    3664,
+    0.79,
+    12034
+   ],
+   [
+    50871,
+    5890,
+    0.92,
+    4802
+   ]
+  ],
+  "tmave_zabery_ms": 0,
+  "chyby": 0
+ },
+ {
+  "run": "p-rm-s4-cold-svih",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "default+rm",
+  "cache": "cold",
+  "scen": "svih",
+  "fps": 8.2,
+  "uvod_ms": 2485,
+  "okien": 6,
+  "max_ms": 1395,
+  "spolu_ms": 4505,
+  "okna": [
+   [
+    13326,
+    460,
+    0.78,
+    1548
+   ],
+   [
+    14015,
+    1395,
+    0.88,
+    2416
+   ],
+   [
+    15799,
+    511,
+    0.92,
+    9756
+   ],
+   [
+    19708,
+    1087,
+    0.92,
+    14137
+   ],
+   [
+    20998,
+    212,
+    0.76,
+    11142
+   ],
+   [
+    22269,
+    840,
+    0.88,
+    4999
+   ]
+  ],
+  "tmave_zabery_ms": 400,
+  "chyby": 0
+ },
+ {
+  "run": "p-sd-s4-cold-menu",
+  "dev": "phone",
+  "dpr": 3,
+  "net": "slow4g",
+  "cpu": 4,
+  "film": "default+saveData",
+  "cache": "cold",
+  "scen": "menu",
+  "fps": 8.6,
+  "uvod_ms": 2489,
+  "okien": 2,
+  "max_ms": 3873,
+  "spolu_ms": 4163,
+  "okna": [
+   [
+    19469,
+    3873,
+    0.78,
+    2912
+   ],
+   [
+    35152,
+    290,
+    0.76,
+    12925
+   ]
+  ],
+  "tmave_zabery_ms": 593,
+  "chyby": 0
+ }
+]
