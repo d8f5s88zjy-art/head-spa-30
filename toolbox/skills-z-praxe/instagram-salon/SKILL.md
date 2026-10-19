@@ -1,6 +1,6 @@
 ---
 name: instagram-salon
-description: Návrhy pre Instagram salónu alebo malého podniku (Barbershop 30, HEAD SPA 30, barbershop, head spa, kaderníctvo, kozmetika): príspevok (post), popis, úvodná veta (hook), scenár reelu (reels), odpovede na komentáre, bio profilu, týždenný plán obsahu (content plan), mriežka profilu (grid), rozbor cudzích reels (virality, trend), zapájanie (engagement). Použi, keď majiteľ chce text, plán alebo nápad na Instagram či Stories. Skill len navrhuje, uverejňuje a komentuje majiteľ sám. Fakty len zo zdrojov podniku.
+description: Návrhy pre Instagram salónu alebo malého podniku (Barbershop 30, HEAD SPA 30, barbershop, head spa, kaderníctvo, kozmetika), teda príspevok (post), popis, úvodná veta (hook), scenár reelu (reels), odpovede na komentáre, bio profilu, týždenný plán obsahu (content plan), mriežka profilu (grid), rozbor cudzích reels (virality, trend), zapájanie (engagement). Aj reklama na Facebooku a Instagrame (Meta Ads, Ad Library, varianty, UTM, týždenný súhrn) a posúdenie ponúk „AI marketingového tímu“, hlasového agenta či automatických odpovedí (zákon 452/2021 § 116, GDPR, AI Act čl. 50). Použi, keď majiteľ chce text, plán, reklamu alebo nápad na Instagram či Stories. Skill len navrhuje, uverejňuje, komentuje a odpovedá majiteľ sám. Fakty len zo zdrojov podniku.
 ---
 
 # Instagram pre salón
@@ -30,7 +30,9 @@ Nepoužívaj na automatické uverejňovanie, komentovanie ani prihlasovanie do �
    sa menia, preto ich tento skill neobsahuje; hovorí, kde sú (`references/fakty-*.md`). Čo nie je
    v zdroji, vynechaj alebo sa spýtaj.
 3. **Hlas:** slovenčina, tykanie, krátko (myšlienka na jeden až dva riadky), bez pomlčky em dash.
-   **Nikdy nespomínaj AI** v texte príspevku, odpovede ani bio.
+   **Nikdy nespomínaj AI** v texte príspevku, odpovede ani bio. Jediná výnimka: keď majiteľ výslovne schváli
+   AI obraz alebo hlas (pri HEAD SPA 30 nikdy), má prednosť označenie na platforme a v obraze, inak by bol obsah
+   klamlivý (AI Act čl. 50 ods. 4, `references/pravne-hranice.md`).
 4. **Ľudia v zábere:** zamestnanci len so súhlasom, klienti nerozpoznateľní (zozadu, z profilu
    v diaľke) alebo so súhlasom, deti len so súhlasom rodičov.
 5. **Žiadne sľuby výsledkov.** Ani dosah, ani „virálne“, ani zdravotné účinky, ktoré nie sú na webe.
@@ -77,6 +79,9 @@ Mená sú z videa; čo presne režim u nás robí, je náš výklad (video väč
   a bez odkazu. Píše ho majiteľ ručne a len tam, kde chce.
 - **Reply Handler.** Sťažnosť sa rieši pokojne a mimo komentárov: telefón zo zdroja faktov. Cenu
   uvádzaj len overenú v ten deň, inak odkáž na rezerváciu, kde je aktuálna.
+  Pevná okamžitá odpoveď v Meta Business Suite (napr. „Ďakujeme za správu, odpíšeme v otváracích hodinách.
+  Termín si vyberieš online: [odkaz zo zdroja]“) je povolená, ak ju majiteľ schváli a sám nastaví; generované
+  automatické odpovede nie.
 - **Profile Optimizer.** Bio obsahuje len overené fakty a jednu výzvu s odkazom na rezerváciu.
 - **Content Planner.** Video ukazuje týždeň Po reel, Ut príspevok, St story, Št reel, Pi príspevok,
   So story, Ne bez príspevku. Ber to ako východisko, nie ako pravidlo; čas uverejnenia navrhni
@@ -129,6 +134,74 @@ Prevzali sme postupy, ktoré sa dajú urobiť a overiť u nás (rozbor: `../refe
 
 Čo nepreberáme: pripojenie k účtu, výzvu „comment YOUTUBE“ a sľub „rebuilds them end to end“ (cudzie reels
 len ako vzorec, nikdy kópia).
+
+## Reklamy, dopyty a schvaľovanie (z videa restructureai, 2026-10-17)
+
+Video „AI Social Media Team That Runs Your Marketing“ ukazuje systém, kde AI hľadá úspešné cudzie reklamy, píše
+20 reklám, robí video z fotiek, dáva im syntetické hlasy, presúva rozpočet, odpisuje na komentáre a správy a hlasový
+agent volá zákazníkovi do 60 s. Schválenie majiteľa v ňom pokrýva len reklamy a príspevky. Kód ani súbory nie sú
+verejné. Rozbor: `../referencie-z-videi/references/naucene-z-videi.md`, záznam 10. Berieme **poriadok, nie
+automatiku**. Zákony a pravidlá platforiem so zdrojmi: [references/pravne-hranice.md](references/pravne-hranice.md)
+(nie je to právne poradenstvo).
+
+Zásady:
+
+1. **Všetko, čo ide von, schvaľuje majiteľ:** príspevok, reel, short, reklama, odpoveď, správa, odpoveď na recenziu,
+   zmena rozpočtu. Schvaľuje presný text a súbor (`../youtube-shorts/scripts/schvalenie.py`), klikne zo svojho účtu.
+2. **Žiadna automatika smerom k zákazníkovi:** žiadne automatické komentáre, správy ani hovory. Jediná výnimka je
+   pevná okamžitá odpoveď v Meta Business Suite, ktorú majiteľ schváli a nastaví (režim 3).
+3. **Žiadny hlasový agent ani AI hovor.** Automatické volanie na priamy marketing len s predchádzajúcim
+   preukázateľným súhlasom (zákon 452/2021 § 116 ods. 3), súhlas sa nesmie získavať volaním (ods. 4), AI treba
+   oznámiť pri prvej interakcii (AI Act čl. 50), nahrávka hlasu len s privolením (Občiansky zákonník § 12).
+4. **AI video z fotiek a AI hlasy pri službách nie.** Zákazník by videl niečo, čo sa nestalo (zákon 108/2024 § 10).
+5. **Fakty a čísla len zo zdrojov** (`references/fakty-*.md`); žiadne vymyslené čísla ani recenzie; o recenziu
+   žiadame všetkých rovnako a bez odmeny (Google; zákon 108/2024, príloha č. 1, body 31 a 32).
+6. **Konkurencia je vzorec, nie predloha:** typ úvodu a ponuky áno, text, obraz ani zvuk nie.
+7. **Prístupy majú ľudia, nie agenti:** reklamný účet, platby a schránku správ má majiteľ. Agent, ktorý číta
+   komentáre alebo cudzie stránky, nič neodosiela („lethal trifecta“, `../tim-roly/`, rola bezpečnosť).
+
+| Čo | Ako | Nástroj |
+| --- | --- | --- |
+| konkurenčné reklamy (raz týždenne, 15 minút) | majiteľ dodá konkurentov; adresy hľadania v Meta Ad Library, človek reklamy prezrie a zapíše do CSV, skript spočíta dni behu a typy úvodu. Dĺžka behu je slabý signál; výdavky knižnica pri bežných reklamách neukazuje; automatické sťahovanie nie (Meta povoľuje len API) | `scripts/reklamy_konkurencie.py odkazy`, `sablona`, `prehlad` |
+| varianty reklamy | 5 až 8 variantov z `fakty-*.md` (prvá veta, text v obraze, popis, výzva na online rezerváciu), každá veta so zdrojom, úvodné vety cez `hook_skore.py`; majiteľ vyberie 2 až 3, nie 20 (pri malom rozpočte by 20 variantov nedostalo dosť zobrazení); rozpočet a limit nastaví majiteľ, vyhodnotenie po 7 dňoch podľa rezervácií | `scripts/hook_skore.py`, režim 1 a 7 |
+| reklama → rezervácia | každý variant vlastný odkaz s UTM (hodnoty bez diakritiky); meranie návštev s cookies len so súhlasom a len keď to majiteľ chce (zákon 452/2021 § 109 ods. 8); bez techniky otázka pri príchode „Odkiaľ ste sa o nás dozvedeli?“; na web HEAD SPA 30 formulár nepatrí (rezervácie len cez Booqme) | `scripts/reklamy_konkurencie.py utm` |
+| komentáre a správy | triedenie (otázka na termín alebo cenu, pochvala, sťažnosť, iné) a návrhy odpovedí; odošle majiteľ | režim 3, `sablona-odpovede.md` |
+| týždenný súhrn | päť riadkov nižšie, len čísla, ktoré majiteľ poslal alebo exportoval; čo chýba: „nemám údaj“ | režim 11 |
+
+```bash
+R=toolbox/skills-z-praxe/instagram-salon/scripts/reklamy_konkurencie.py
+python3 -I $R odkazy "head spa Nitra" "barbershop Nitra"        # adresy do Meta Ad Library (krajina SK)
+python3 -I $R sablona > <scratchpad>/reklamy/zaznam.csv        # prázdny záznam so stĺpcami
+python3 -I $R prehlad <scratchpad>/reklamy/zaznam.csv --k-datumu 2026-10-17 --dlho 21
+python3 -I $R utm https://www.headspa30.sk/ --kampan jesen-2026 --variant v1-ticho
+```
+
+Kódy: 0 v poriadku, 1 chyba v údajoch (zlý dátum, prázdny záznam), 2 zlé argumenty (neúplná adresa). Overené
+2026-10-17 na skúšobných údajoch: zlý dátum nahlási riadok a vráti 1, UTM odstráni diakritiku, staré `utm_*` nahradí
+a kotvu ponechá, neúplná adresa vráti 2. Záznam konkurencie patrí do scratchpadu, nie do repozitára.
+
+Týždenný súhrn:
+
+```
+Súhrn [prevádzka], [dátum]
+1. Rezervácie: [počet] za týždeň (zdroj: Booqme alebo rezervačný systém, [dátum exportu])
+2. Reklama: minuté [€] z limitu [€], kliky [n], rezervácie zo zdroja reklama [n]
+3. Čaká na odpoveď: [n] komentárov a správ (návrhy odpovedí na schválenie)
+4. Recenzie: [n] nových, na ktoré treba odpovedať
+5. Jedna vec na tento týždeň: [ ]
+```
+
+Kedy zastaviť a dať vedieť majiteľovi (naša verzia „What Interrupts The Loop“ z videa):
+
+| Situácia | Čo spravíme | Čo nespravíme |
+| --- | --- | --- |
+| Meta zamietne reklamu | zapíšeme dôvod, navrhneme opravu | neposielame znova bez majiteľa |
+| výdavky dosiahnu limit | nič | nezvyšujeme limit |
+| sťažnosť, nahnevaný komentár, hodnotenie 1 až 2 hviezdy | návrh pokojnej odpovede, telefón zo zdroja | neodpovedáme sami, nemažeme |
+| zdravotná otázka | odpoveď ako web (povedz nám vopred, zavolaj) | nesľubujeme účinky |
+| človek chce hovoriť s človekom | telefón prevádzky | žiadny robot |
+| osobné údaje v správe | posunieme majiteľovi | neprepisujeme do nástrojov bez zmluvy |
+| konkurencia spustí akciu | zapíšeme do prehľadu | nereagujeme zľavou bez majiteľa |
 
 ## Postup krok za krokom
 
@@ -185,6 +258,9 @@ python3 -I -c "import re,sys; t=open(sys.argv[1],encoding='utf-8').read(); print
   `index.html` (texty, otázky a odpovede, štruktúrované dáta s hodinami), `docs/fotenie.md` (zábery
   a pravidlá fotenia), `docs/booqme-opravy.md` (stav profilu v Booqme).
 - Učenie z videí: `toolbox/skills-z-praxe/referencie-z-videi/`.
+- Ten istý scenár ako YouTube Short (titulky do obrazu, hlasitosť, kontrola, schválenie presného súboru):
+  `toolbox/skills-z-praxe/youtube-shorts/`; `hook_skore.py` a `pauzy.py` z tohto skillu používa aj tam.
+- Reklamy a právne hranice: `references/pravne-hranice.md`, skript `scripts/reklamy_konkurencie.py`.
 - Šablóny a fakty: `toolbox/skills-z-praxe/instagram-salon/references/`.
 
 ## Kontrolný zoznam
@@ -198,3 +274,5 @@ python3 -I -c "import re,sys; t=open(sys.argv[1],encoding='utf-8').read(); print
 - [ ] Ľudia v zábere: súhlas, klienti nerozpoznateľní, deti len so súhlasom rodičov.
 - [ ] Odpoveď na sťažnosť je pokojná a ponúka telefón; nič sa nerieši verejne.
 - [ ] Výstup je návrh so zdrojmi a „Treba potvrdiť“; uverejní ho majiteľ.
+- [ ] Pri reklame a dopytoch: žiadna automatika k zákazníkovi, žiadny AI hovor ani hlas, varianty z faktov,
+      odkazy s UTM, limit a rozpočet nastavil majiteľ, presný text a súbor schválil majiteľ.

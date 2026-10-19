@@ -1,6 +1,6 @@
 ---
 name: workflowy
-description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a šablóna smerovania podľa náročnosti v priklady/.
+description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps), brána dvoch recenzentov pred odovzdaním majiteľovi a revízia plánu tímom rolí (podľa ECC a gstack). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a tri šablóny (smerovanie podľa náročnosti, brána, tím rolí) v priklady/.
 ---
 
 # Workflowy: viac agentov naraz pri tvorbe a kontrole webu
@@ -243,6 +243,53 @@ prevedené na nástroj Workflow bez inštalácie čohokoľvek. Šablóna zatiaľ
 | roj s kráľovnou a hlasovaním | hlavná relácia riadi, porota hlasuje (vzor 5), skeptik vyvracia (vzor 4) | už overené na našich behoch |
 | 60 agentov naraz | nástroj púšťa naraz najviac asi 16 a relácia má týždenný limit agentov | menej, ale cielených agentov (pasca nižšie) |
 
+## Vzor 7: brána dvoch recenzentov pred odovzdaním majiteľovi (`brana-dvoch-recenzentov.js`, šablóna)
+
+Podľa `santa-method` z ECC (github.com/affaan-m/ECC, MIT; rozbor `../tim-roly/references/ecc.md`). Vzor 4 overuje
+nálezy kontroly (nález platí, keď ho aspoň jeden skeptik nevyvráti). Tu je to naopak: overuje sa hotový výstup
+pre majiteľa (scenár, titulky a popis shortu, text na web) a prejde, len keď **obaja** recenzenti dajú PASS.
+
+- Rovnaká rubrika a podklady pre oboch; žiadny nevidí hodnotenie druhého; súbory needitujú.
+- Zlyhaný recenzent (`null`) je FAIL, nie PASS:
+
+```js
+const pass = v.length === 2 && v.every((x) => x && x.verdikt === 'PASS')
+```
+
+- Pri FAIL opravár opraví v `args.dir` len nájdené veci, nové fakty nepridáva, čo nevie doložiť, vyhodí; čo sa nedá
+  bez majiteľa (privolenie, nový záber), vráti v `neopravitelne` a brána skončí eskaláciou.
+- Najviac 3 kolá, potom rozhodne majiteľ alebo hlavná relácia. Cena: 2 agenti na kolo + opravár, najviac 8.
+- Po PASS ide presný súbor majiteľovi na schválenie (`../youtube-shorts/scripts/schvalenie.py`). Rubriky pre short
+  a text na web: `../tim-roly/references/sablony-rol.md`, časť 8.
+
+## Vzor 8: tím rolí pred stavbou (`tim-roly-plan.js`, šablóna)
+
+Podľa gstack (`/plan-ceo-review`, `/plan-design-review`, `/plan-eng-review`, poradie z `/autoplan`; MIT, Garry Tan).
+Rozsah (CEO, štyri režimy) a dizajn (prechody 0 až 10, pre web alebo pre short) bežia naraz, technika ide posledná,
+aby videla ich čakajúce návrhy:
+
+```js
+const [rozsah, dizajn] = await Promise.all([
+  agent(ROLA_ROZSAH, { label: 'rola: rozsah (CEO)', phase: 'Revízia', schema: ROZSAH, effort: 'high' }),
+  agent(ROLA_DIZAJN, { label: 'rola: dizajn 0-10', phase: 'Revízia', schema: DIZAJN, effort: 'high' }),
+])
+const technika = await agent(rolaTechnika(rozsah, dizajn), { label: 'rola: technika (eng)', phase: 'Revízia', schema: TECHNIKA, effort: 'high' })
+```
+
+Jeden skeptik na rolu vyvráti nálezy bez citátu; nález roly, ktorej skeptik zlyhal, ostane s príznakom `neoverene`.
+Syntéza vráti otázky pre majiteľa D1, D2 (jedno rozhodnutie = jedna otázka, najviac 4 možnosti, odporúčanie,
+úplnosť) a zoznam mechanických úprav pre hlavnú reláciu. Nikto needituje. 7 agentov. Na rozdiel od gstacku agent
+nikdy nevolí odporúčanie za majiteľa. Otázky, kontrolné zoznamy a schémy ďalších rolí (staff recenzent, QA,
+bezpečnosť, release): `../tim-roly/`.
+
+**Skúška šablón 7 a 8 (2026-10-17, bez nástroja Workflow):** skript sa celý preložil ako asynchrónna funkcia a
+spustil s falošnými `agent`, `parallel`, `phase`, `log`; každý výstup falošného agenta bol vygenerovaný a overený
+podľa schémy a v žiadnom zadaní nebolo `undefined` ani `[object Object]`. Výsledky: `tim-roly-plan.js` 7 agentov pri
+všetkých rolách (vyvrátený nález vypadol), 6 pri zlyhanom dizajne a skeptikovi (príznak `neoverene`), 3 pri zlyhaní
+všetkých rolí, 0 bez args; `brana-dvoch-recenzentov.js` 2 agenti pri dvoch PASS, 5 pri oprave a PASS v 2. kole,
+8 a eskalácia pri zlyhanom recenzentovi, 3 a eskalácia pri neopraviteľnom náleze, 0 bez args. Rovnaká skúška
+odhalila zámerne vložené chyby (syntax, chýbajúci argument v zadaní).
+
 ## Ako písať zadania agentom
 
 Agent nevidí rozhovor ani ostatných agentov; vie len to, čo je v zadaní (a v CLAUDE.md repozitára).
@@ -297,7 +344,8 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
   `COMPARISON.md`, `CONTENT_SOURCES.md`, `MEDIA_SELECTION.md`. Správy kontrolórov `docs/reviews/*.md` v repozitári
   nie sú; nálezy a opravy zhŕňa `CHECKS.md`.
 - Súvisiace skills: [`../rychly-web/references/audit.md`](../rychly-web/references/audit.md) (audit-fps), [`../obsah-a-texty/references/popisy-ludi.md`](../obsah-a-texty/references/popisy-ludi.md)
-  (textári), [`../film-z-fotiek/references/strihy.md`](../film-z-fotiek/references/strihy.md) (strihy).
+  (textári), [`../film-z-fotiek/references/strihy.md`](../film-z-fotiek/references/strihy.md) (strihy),
+  [`../tim-roly/`](../tim-roly/SKILL.md) (roly podľa gstack a ECC: otázky, kontrolné zoznamy, zadania a schémy; vzory 7 a 8).
 
 | Príklad | Pôvodné meno | Vzor | Fázy (agenti) | Kedy sa osvedčil |
 | --- | --- | --- | --- | --- |
@@ -313,6 +361,8 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 | `audit-fps.js` | audit-fps | 4B | Audit, Overenie (6) | plynulosť, CHECKS 13 |
 | `spisanie-toolboxu.js` | toolbox-skills-z-praxe | 6 | Písanie, Overenie (14) | tento toolbox |
 | `smerovanie-podla-narocnosti.js` | (šablóna) | smerovanie | Triedenie, Práca, Overenie (1 + úlohy + zložité) | zatiaľ nespustená, z rozboru RuFlo 2026-10-12 |
+| `brana-dvoch-recenzentov.js` | (šablóna) | 7 | Recenzia, Oprava (2 na kolo + opravár, najviac 8) | skúška s falošnými agentmi, z rozboru ECC 2026-10-17 |
+| `tim-roly-plan.js` | (šablóna) | 8 | Revízia, Overenie, Otázky (3 + 3 + 1) | skúška s falošnými agentmi, z rozboru gstack 2026-10-17 |
 
 ## Kontrolný zoznam
 

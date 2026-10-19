@@ -187,6 +187,10 @@ Všetky čísla a vývoj riešenia krok po kroku: [references/merania.md](refere
 15. **Test s krátkym čakaním** v softvérovom kreslení hlási falošné chyby. Čakaj na stav, nie na čas.
 16. **Komentáre a dokumenty starnú**: `film.js` uvádza pre scroll „-g 1“, skript mal naposledy `-g 4`; blob „1 až 2 MB“,
     slučka má 3,4 MB. Platí kód a merania.
+17. **Kódovanie pre web nie je pre YouTube.** Slučka na web je bez zvuku a s `-g 120`; YouTube chce uzavretý GOP
+    s polovicou snímkovej frekvencie, najviac 2 B-snímky, AAC 48 kHz a MP4 bez edit listu (staršie
+    `gymklub-reel-v1.mp4` prešlo kontrolou len 7 z 11 bodov). Short alebo reel na YouTube rob cez
+    `../youtube-shorts/scripts/short.py`, hotové video skontroluj `short.py video.mp4 --kontrola`.
 
 ## V tomto repozitári
 

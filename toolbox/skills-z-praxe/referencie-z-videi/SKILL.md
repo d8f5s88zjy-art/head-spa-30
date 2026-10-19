@@ -124,7 +124,8 @@ mkdir -p f && ffmpeg -v error -y -i video.mp4 -vf "fps=1/2,scale=360:-1" f/f%02d
 ffmpeg -v error -y -i video.mp4 -vf "fps=1/2,scale=300:-1,tile=6x4" -frames:v 1 sheet.jpg
 ```
 
-Pri videách majiteľa sa osvedčil ten istý prehľad so `scale=320:-1`. Na rozbor strihu a pohybu
+Pri videách majiteľa sa osvedčil ten istý prehľad so `scale=320:-1`. Strihy, dĺžky záberov a hustotu naraz
+vypíše `bash toolbox/skills-z-praxe/youtube-shorts/scripts/strihy.sh video.mp4 --harok` (overené na troch videách 2026-10-17). Na rozbor strihu a pohybu
 (referencia antenucci.studio) slúžili hustejšie snímky, časy strihov a snímka v presnom čase:
 
 ```bash
@@ -174,6 +175,10 @@ Titulky prečítaj celé a porovnaj s obrazom. Zapíš podľa `references/zapis-
 | repozitár sa nedá otvoriť | cudzí repozitár mimo relácie | nepredstieraj obsah, pýtaj povolenie alebo stav vlastný postup |
 | časy strihov sa nevypíšu | `showinfo` píše na úrovni info, `-v error` ho umlčí (overené znova pri písaní skillu) | `-hide_banner` namiesto `-v error` |
 | `cj.txt` v priečinku | cookies s tokenmi relácie | zmaž, necommituj (skript to robí sám) |
+| „blueprint zadarmo“, odkaz nie je v popise | odkaz je v bio alebo sa dáva za komentár či e-mail (restructureai) | prečítaj `signature` a `bioLink` z kľúča `webapp.user-detail` stránky profilu (ten istý JSON ako pri videu); nekomentuj, e-mail ani telefón nezadávaj |
+| titulky slovenského videa sú nezmysel | ASR prepísal slovenčinu ako angličtinu („Vola sa gistek az cloud code“, martin.gocik) | reč čítaj z titulkov v obraze (snímky po 0,25 s v páse titulkov) |
+| `tiktok.sh` nestiahne video | stránka bez dát alebo zmena TikToku | záložne yt-dlp s `--impersonate chrome` (balík curl_cffi); pri V1 až V3 dal `video.mp4` (HEVC), `video.eng-US.vtt`, `video.description` a `video.info.json` s počtom pozretí a uložení |
+| treba vedieť, ako je video strihnuté | prehľad po 2 s strihy neukáže | `bash toolbox/skills-z-praxe/youtube-shorts/scripts/strihy.sh video.mp4 --harok` (strihy, medián záberu, hustota, hárok) |
 
 ## Čo sme sa naučili z doterajších videí
 
@@ -187,6 +192,15 @@ Podrobne v `references/naucene-z-videi.md`. Stručne:
   Motion Design, Genjutsu s licenciou MIT; Three.js skills bez licencie len ako odkaz).
 - **nategold.ai** (Instagram Agent, 11 skills): vznikol `../instagram-salon/`, len návrhy, bez
   automatického uverejňovania; pôvodný repozitár sa nepodarilo otvoriť.
+- **martin.gocik** (gstack, 44 s, 2026-10-17): vznikol `../tim-roly/` (roly CEO, dizajnér 0 až 10, eng manažér,
+  staff recenzent, QA, bezpečnosť, release) a šablóna `../workflowy/priklady/tim-roly-plan.js`; „23 nástrojov“ je
+  dnes 56 skills a „inštalácia za 30 s“ je maketa. Formát: reč od 0,0 s, dôkaz do 1,5 s, kroky jednou šablónou.
+- **sadie.ontech** (ECC, 54 s): brána dvoch recenzentov (`../workflowy/`, vzor 7), schválenie presného súboru
+  (`../youtube-shorts/scripts/schvalenie.py`), zásady krátkeho videa; čísla 64/261 sú zo starej verzie (dnes 71/311).
+- **restructureai** (AI marketingový tím, 97 s): do `../instagram-salon/` časť Reklamy, dopyty a schvaľovanie
+  a právne hranice; z videa poriadok (schválenie všetkého, konkurencia v Ad Library, varianty z faktov, UTM, súhrn),
+  nie automatika k zákazníkovi (AI hovor, automatické DM, AI hlasy). Čísla v ukážke sú vymyslené a nesedia.
+- Z formátu všetkých troch vznikol `../youtube-shorts/` (recept, titulky, zóny, `short.py`, `strihy.sh`).
 - Spoločná lekcia pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš
   a ako rezervovať.
 

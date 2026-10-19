@@ -30,7 +30,7 @@ v `skills-z-praxe/README.md`:
 
 | Skill | Na čo je |
 | --- | --- |
-| `instagram-salon` | návrhy príspevkov, reels, odpovedí, bio a týždenného plánu pre Instagram salónu (len návrhy, uverejňuje majiteľ) |
+| `instagram-salon` | návrhy príspevkov, reels, odpovedí, bio a týždenného plánu pre Instagram salónu, reklamy a dopyty bez automatiky (len návrhy, uverejňuje majiteľ) |
 | `referencie-z-videi` | ako sa poučiť z odkazu na TikTok: popis, titulky, video, prehľad snímok |
 | `film-z-fotiek` | film zo skutočných fotiek s hĺbkovou mapou na pozadí webu (WebGL2), strihy, kamera, zálohy |
 | `video-a-sekvencie` | plynulé video pri skrolovaní ako sekvencia snímok po 0,1 s, slučky videa bez švu |
@@ -39,6 +39,8 @@ v `skills-z-praxe/README.md`:
 | `obsah-a-texty` | pravdivé texty po slovensky, zdroje faktov, šesť jazykov, štruktúrované dáta |
 | `booqme-rezervacie` | web napojený na Booqme (rezervácie, poukazy), zosúladenie po zmene v kalendári |
 | `workflowy` | práca s viacerými agentmi naraz: stavba, kontroly, porota návrhov, audit s overením |
+| `youtube-shorts` | YouTube Shorts zo skutočných záberov: recept, titulky, -14 LUFS, kontrola a balík na nahratie (nahráva majiteľ) |
+| `tim-roly` | tím rolí podľa gstack a ECC: otázky majiteľovi, revízie, recenzent, QA, bezpečnosť, release, brána dvoch recenzentov |
 
 `head-spa-30/` – prevádzka webu HEAD SPA 30: nahratie na Forpsi, kontrola nahratia, poukazy a ceny
 v Booqme, orez poukážok (skripty v `scripts/`, návody v `references/`, začína sa v `SKILL.md`).

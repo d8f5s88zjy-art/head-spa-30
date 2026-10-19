@@ -91,3 +91,31 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
   pamäť, smerovanie úloh medzi modelmi). Neinštalované: zapisuje `CLAUDE.md`, `.claude/`, hooky a MCP server.
   Rozbor a čo sme si vzali: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 5)
   a `skills-z-praxe/workflowy` (smerovanie podľa náročnosti)
+- gstack, github.com/garrytan/gstack, MIT (Copyright (c) 2026 Garry Tan), verzia 1.91.101.0, commit 47d639a: skills pre
+  Claude Code ako roly (CEO, dizajnér, eng manažér, review, QA, ship, cso). Neinštalované (Bun, binárky, Stop hook
+  v `~/.claude/settings.json`, vlastný prehliadač, telemetria). Prevzaté postupy po slovensky s krátkymi citátmi
+  a odkazom na súbor: `skills-z-praxe/tim-roly`; rozbor videa: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 8)
+- ECC (Everything Claude Code), github.com/affaan-m/ECC, MIT (Copyright (c) 2026 Affaan Mustafa), verzia 2.2.3, commit 76aaa77;
+  8 skills z oblasti supply chain má Apache-2.0 a `osint-investigation` CC-BY-SA-4.0 (tie nepreberáme). Neinštalované
+  (27 hookov predvolene zapnutých, zápis práce mimo projektu). Prevzaté myšlienky ako vlastný text: brána dvoch recenzentov
+  (`santa-method`, pôvod podľa skillu Ronald Skelton), schválenie presného súboru (`operator-approval-loop`), zásady krátkeho
+  videa (`content-engine`, `video-editing`), správa PRIPRAVENÉ alebo NEPRIPRAVENÉ (`verification-loop`), „lethal trifecta“:
+  `skills-z-praxe/tim-roly`, `skills-z-praxe/youtube-shorts`, `skills-z-praxe/workflowy` (vzor 7); rozbor videa: časť 9
+- „AI Social Media Team“ (ReStructure AI, re-structure.ai): kód ani súbory nie sú verejné, nič neprevzaté; rozbor videa
+  a právne hranice: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 10),
+  `skills-z-praxe/instagram-salon/references/pravne-hranice.md`
+
+## Video, zvuk a krátke videá (len odkazy, nič neskopírované, ak nie je uvedené inak)
+- FFmpeg, ffmpeg.org, LGPL alebo GPL podľa zostavy: strih, titulky (libass), tónovanie HDR (zimg), hlasitosť; skripty
+  v `skills-z-praxe/youtube-shorts/scripts/`
+- Manrope, github.com/sharanda/manrope, SIL OFL 1.1: písmo titulkov, premenovaná kópia rezu 700 s celou slovenskou
+  diakritikou v `skills-z-praxe/youtube-shorts/assets/pisma/` aj s textom licencie (`OFL.txt`)
+- yt-dlp, github.com/yt-dlp/yt-dlp, Unlicense: stiahnutie referenčného videa s titulkami a metadátami, keď nestačí
+  `referencie-z-videi/scripts/tiktok.sh` (len na rozbor, nie na zverejnenie)
+- Knižnica zvukov YouTube (YouTube Studio, Audio Library): hudba bez nároku Content ID (support.google.com/youtube/answer/15424877)
+- Google Ads, bezpečná zóna zvislého videa, support.google.com/google-ads/answer/9128498 (288/672/48/192 px pri 1080×1920)
+- Remotion, remotion.dev: video z kódu; vlastná licencia, zadarmo pre jednotlivcov, neziskovky a firmy do 3 zamestnancov,
+  inak firemná licencia (github.com/remotion-dev/remotion/blob/main/LICENSE.md, pozreté 2026-10-17); nepoužívame
+- Nástroje z videa restructureai, len na posúdenie, nič nenapojené: Meta Ad Library (facebook.com/ads/library, ručne),
+  ElevenLabs (hlasy a hlasoví agenti; podmienky oznámenia AI a nahrávania), Higgsfield (video z obrázkov), Jev od
+  TypeSafe AI (rozhodovací model, skorý prístup). Prečo nie: `skills-z-praxe/instagram-salon/references/pravne-hranice.md`

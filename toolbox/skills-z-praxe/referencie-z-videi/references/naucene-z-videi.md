@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Sedem videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
+Desať videí, z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu
 alebo titulkov), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty.
 
@@ -128,9 +128,116 @@ nie overené fakty.
 - Čo nie: recenzie klientov (nemáme skutočné), ilustračné fotky tímu, naklonená obrazovka a modré pozadie (to je len
   prezentácia vo videu).
 
+## 8. martin.gocik: gstack, „celý tím v Claude Code“
+
+- Adresa: https://www.tiktok.com/@martin.gocik/video/7696528372595444995 (44,78 s, po slovensky, uverejnené 2026-10-15,
+  3 247 pozretí a 222 uložení pri stiahnutí 7 h po uverejnení, pozreté 2026-10-17)
+- Popis autora: šéf Y Combinatoru dal na GitHub svoj setup pre Claude Code, úplne zadarmo; volá sa gstack a z Claude Code
+  spraví celý tím (CEO, engineering manažér, dizajnér, review, QA); inštalácia jedným príkazom, open source.
+- Titulky: automatický prepis (Source: ASR) je slovenčina prepísaná ako angličtina a skoro nepoužiteľný: „Vola sa gistek
+  az cloud code“ = „Volá sa gstack a z Claude Code“, „trigger with a fraction“ = „spúšťaš cez lomítko“, „Tory will lock
+  your own architecture“ = „ktorý ti zamkne vlastnú architektúru“. Reč sme preto čítali z titulkov v obraze.
+- Obraz (snímky s časmi): hovoriaca hlava striedaná s grafikou hore; 0 až 1,4 s fotka Garryho Tana so štítkom „šéf
+  Y Combinatoru“; 1,4 s skutočná stránka repozitára s hviezdami (135.7k na snímke); 8,2 s číslo rastie na „23 nástrojov
+  cez /“; 10,9 až 29,9 s roly vždy „rola + čo ti urobí“ (CEO, Eng manažér, Dizajnér, Review, QA, ilustračný test
+  „checkout keeps cart“); 29,9 s maketa terminálu „git clone …/gstack.git && ./setup ✓ hotovo za ~30 sekúnd“; 35,2 s
+  „Prémiová verzia“ prečiarknutá, „Všetko zadarmo“; 37,6 až 38,6 s počítadlo „130 000+ hviezd na GitHube“; 41,9 s výzva
+  „follow“ (ignorovaná).
+- Formát (merané): 23 záberov, medián 2,00 s, prvá zmena obrazu 1,43 s, 188 slov/min bez páuz, -15,8 LUFS, druhý hook
+  „Najlepšie na tom je“ v 33,1 s (74 %), titulky v pilulke na švíku delenej obrazovky; pri tvári na celú obrazovku
+  titulok dvakrát na očiach. Podrobne `../../youtube-shorts/references/anatomia-referencii.md`.
+- Overené 2026-10-17 na klone github.com/garrytan/gstack (verzia 1.91.101.0, commit 47d639a, MIT, Copyright (c) 2026
+  Garry Tan), len čítanie, nič nespustené: Garry Tan je „President & CEO“ Y Combinatoru (ycombinator.com/people).
+  „23“ je z vety README „Twenty-three specialists and eight power tools“ (`README.md:23`), tabuľky README majú 34 rolí
+  a 13 power tools, repozitár 56 skills. Inštalácia: `./setup` meral autor 31 s po klonovaní na 4-vCPU stroji
+  (`README.md:45`), treba Git, Bun 1.4.2+ a na Windows Node.js (`:47`); setup stiahne Chromium a skompiluje nástroje.
+  Bez prémiovej verzie: MIT a „No premium tier, no waitlist“ (`:606`); prevádzka však potrebuje Claude Code a predvolene
+  zapnuté outside reviews cez Codex. Hviezdy 136,7k (stránka repozitára 2026-10-17).
+- Čo nesedí: „23“ (stav je 56 skills), „menej ako 30 s“ (31 s po klonovaní, bez Bunu viac), terminál je maketa, nie
+  nahrávka; „celý tím“ sú sady pokynov v Markdowne; počítadlá od nuly sú efekt.
+- Čo prešlo: skill `../../tim-roly/` (otázky majiteľovi, režimy rozsahu, dizajn 0 až 10 a AI slop, eng manažér,
+  staff recenzent s AUTO-FIX a ASK, QA s charterom, vyšetrovateľ s Iron Law a stopom po 3, bezpečnosť podľa `/cso`,
+  release s „žiadne tvrdenie o hotovom bez čerstvého dôkazu“), šablóna `../../workflowy/priklady/tim-roly-plan.js`
+  (vzor 8). Pre Shorts: reč od 0,0 s, dôkaz do 1,5 s, kroky jednou vetnou šablónou, druhý hook (`../../youtube-shorts/`).
+- Čo nie: inštalácia gstacku (Bun, binárky, Stop hook v `~/.claude/settings.json`, vlastný prehliadač s cookies,
+  telemetria a kontrola aktualizácií), outside reviews cez Codex a OpenAI, automatické rozhodnutie za človeka,
+  automatický merge, VERSION a CHANGELOG. Vo videu: cudzia tvár ako hook, makety ako dôkaz, počítadlá od nuly.
+
+## 9. sadie.ontech: ECC, „64 agentov, 261 skills“
+
+- Adresa: https://www.tiktok.com/@sadie.ontech/video/7696238669086068000 (54,22 s, titulky eng-US ASR, uverejnené
+  2026-10-13, 186 500 pozretí a 13 301 uložení, pozreté 2026-10-17)
+- Titulky: jeden človek nahradil celý inžiniersky tím a dal to zadarmo na GitHub, „No exaggeration“; „One developer shipped
+  it alone in 10 months“, „crossed 250,000 stars“; inštalácia za 30 s v Claude Code, Cursor alebo Codex cez
+  `/plugin marketplace add` a `/plugin install`; „Tell it to plan / build / secure / test“; „64 agents, 261 skills, all
+  free“. Chyba prepisu: „cloud code“ = Claude Code. Výzva „save … follow“ ignorovaná.
+- Obraz: hore text po slovách, v strede pevný nadpis „ONE DEVELOPER VS / AN ENTIRE TEAM“, dole moderátor (13 % času;
+  či je to skutočný človek, z obrazu neurčíme); ~73 % času b-roll cudzích kancelárií a ľudí bez vzťahu k nástroju;
+  karty s maketami (README, „256.0k stars“, písanie `/plugin`), teplé záblesky 0,2 až 0,4 s; na konci „64 AGENTS, 261
+  SKILLS, ALL FREE“.
+- Formát (merané): 27 záberov, medián 1,57 s, prvá zmena 1,57 s, 159 slov/min, basový podklad, -10,8 LUFS, druhý hook
+  „Here's the part that makes this insane“ v 26,6 s (49 %), titulky po jednom slove v dolnom páse.
+- Overené 2026-10-17 na klone github.com/affaan-m/ECC (presmerované z everything-claude-code; verzia 2.2.3, commit 76aaa77,
+  MIT, Copyright (c) 2026 Affaan Mustafa), len čítanie: 71 agentov, 311 skills, 97 príkazov, 27 hookov. 64/261 sú čísla
+  verzie 2.0.0 z 2026-06-09 („2.0.0 shipped 64/261/84“, `docs/releases/2.1.0/release-notes.md:52`). Hviezdy 281.8k
+  (stránka repozitára), prispievateľov 412 (shields.io), takže „alone“ neplatí; „10 months“ je v návode autora dĺžka
+  jeho používania Claude Code (`the-shortform-guide.md:9`). Príkaz build neexistuje (len `/build-fix` a opravári
+  zostavenia); „secure“ skenuje konfiguráciu agenta (AgentShield) a dáva kontrolný zoznam OWASP, na aplikáciu neútočí;
+  80 % je pokyn v `/test-coverage`. Presné príkazy: `/plugin marketplace add https://github.com/affaan-m/ECC`
+  a `/plugin install ecc@ecc` (`README.md:290-291`), Cursor a Codex majú iné. Pri plugine je 27 hookov predvolene
+  zapnutých a zapisujú pozorovania nástrojov a súhrny relácií mimo projektu.
+- Čo nesedí: zastarané počty, „alone“, „build“, „attacks on your app“, „30 s“ (balík 76 MB, treba Claude Code 2.1+,
+  Git a Node.js 18+); ilustračné zábery naznačujú tím, ktorý neexistuje.
+- Čo prešlo: brána dvoch recenzentov (podľa `santa-method`; `../../workflowy/priklady/brana-dvoch-recenzentov.js`,
+  vzor 7), schválenie presného súboru podľa sha256 (podľa `operator-approval-loop`;
+  `../../youtube-shorts/scripts/schvalenie.py`), zásady krátkeho videa z `content-engine` (zo skutočného materiálu,
+  jedno video jedno tvrdenie, prvé sekundy výsledok alebo problém, bez „engagement bait“) a „edit, don't generate“
+  z `video-editing`, správa PRIPRAVENÉ alebo NEPRIPRAVENÉ (podľa `verification-loop`), „lethal trifecta“ a „executable
+  configuration“ do roly bezpečnosť (`../../tim-roly/`).
+- Čo nie: inštalácia ECC (hooky, GateGuard podľa autorov asi o 45 % viac kôl bez nameraného účinku, `npx` z npm),
+  automatická pamäť relácií, uverejňovanie cez `social-publisher` a oslovovanie cez `lead-intelligence`, generovaný
+  obraz a hlas bez súhlasu, pravidlá pre aplikácie (80 % pokrytie). Video samo je ukážka, čo v Shorts nerobiť:
+  staré čísla, sľuby, ktoré nástroj nerobí, a ilustračné zábery.
+
+## 10. restructureai: „AI Social Media Team That Runs Your Marketing“
+
+- Adresa: https://www.tiktok.com/@restructureai/video/7697097038286130453 (97,58 s, titulky eng-US ASR, uverejnené
+  2026-10-16, 107 300 pozretí, 5 676 páči sa, 5 920 uložení, pozreté 2026-10-17)
+- Titulky: „200 hours“, „exact blueprint for free“; tri moduly. Reklamy: rozpočet $500 na týždeň, Jev nájde cudzie
+  reklamy, ktoré bežia týždne, Claude napíše 20 reklám, Higgsfield spraví video z fotiek, ElevenLabs dá každej iný hlas,
+  schválenie, 48 h test, rozpočet na víťazov. Dopyty: číta všetky komentáre a DM na Instagrame, TikToku a Facebooku,
+  označí kupujúcich a pošle odkaz „nechaj číslo“. Predaj: hlasový agent ElevenLabs volá do 60 s, rezervuje termín.
+  Claude Code spája reklamy, komentáre a hovory; ranný súhrn; „no ad or post goes live until you sign off on it“.
+  Chyby prepisu (overené v obraze): „Jeff“ = Jev, „Hicksfield“ = Higgsfield, „11 Labs“ = ElevenLabs, „Cloud code“ =
+  Claude Code, „Leeds“ = leads. Výzva „like a follow“ ignorovaná, za „blueprint“ sa v článku autora chce komentár.
+- Obraz: hustý plagát (01 Signals, 02 System of Record, 03 The Brain, 05 Departments s ôsmimi oddeleniami, What Interrupts
+  The Loop, 07 Human Handoff), veta „Claude writes. Jev decides. ElevenLabs talks. You just approve.“; mini toky modulov
+  s vymyslenou značkou „Groove & Grain“ a číslami, ktoré nesedia ($41,200 proti $40,800, „within 60 seconds“ proti 0:47,
+  „10x“ a o sekundu „95x“); formulár „Get your quote“ bez súhlasu a bez informácie o AI hovore či nahrávaní.
+- Formát (merané): 14 záberov s 36 krokmi vnútri (medián kroku 2,51 s), statický úvod do 2,77 s, 172 slov/min, pauzy
+  0,3 až 0,5 s pred kapitolami, -16,6 LUFS; titulky len v 33 % času.
+- Overené 2026-10-17: Jev je rozhodovací model firmy TypeSafe AI (nepíše text; skorý prístup od 15. 9. 2026, výkon
+  uvádza len výrobca). „Blueprint“ nie je kód: text videa je verejne v článku na re-structure.ai, plná mapa za komentár
+  (nekomentovali sme, e-mail ani telefón nezadávali). Schválenie vo videu pokrýva len reklamy a príspevky; odpovede,
+  správy, hovory a presun rozpočtu idú bez majiteľa. Zákony (primárne zdroje, slov-lex.sk): zákon 452/2021 § 116 ods. 3
+  (automatické volacie systémy na priamy marketing len s predchádzajúcim preukázateľným súhlasom), § 109 ods. 8 (cookies),
+  Občiansky zákonník § 12 (záznam hlasu len s privolením), AI Act čl. 50 (oznámiť AI, označiť deepfake), zákon 108/2024
+  (§ 10, príloha č. 1 body 31 a 32 o hodnoteniach). Meta: automatický zber len cez API, správy v okne 24 h; Ad Library
+  pri bežných reklamách výdavky neukazuje. Podrobne `../../instagram-salon/references/pravne-hranice.md`.
+- Čo prešlo: do `../../instagram-salon/` časť „Reklamy, dopyty a schvaľovanie“ (schválenie všetkého, čo ide von,
+  konkurencia v Meta Ad Library ručne a skriptom `scripts/reklamy_konkurencie.py`, 2 až 3 varianty reklamy z overených
+  faktov namiesto 20, odkazy s UTM, súhrn v piatich riadkoch, kedy zastaviť), právne hranice v
+  `references/pravne-hranice.md`. Pre Shorts: poistka nahlas, kapitoly s pauzou, domovský záber, reťaz uzlov ako
+  ukazovateľ postupu (`../../youtube-shorts/`).
+- Čo nie: AI hovor do 60 s, automatické komentáre a DM, video z fotiek a AI hlasy pri službách, učenie z cudzích
+  reklám ako predloha, agent s prístupom k reklamnému účtu a platbám, žiadosti o recenzie len od spokojných, vymyslené
+  čísla. Ako zistiť, kam vedie „blueprint“: odkaz v bio (`signature`, `bioLink` v `webapp.user-detail`, pasca v `../SKILL.md`).
+
 ## Spoločné lekcie
 
 - Hook pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš a ako rezervovať.
 - Rozbor rob po snímkach a s časmi; popis autora o obsahu nevypovedá.
+- Tvrdenia z videí o nástrojoch over v repozitári a na stránke projektu s dátumom (záznamy 8 až 10: čísla boli
+  zastarané, inštalácia zjednodušená, makety vydávané za nahrávku). Nástroj čítaj, neinštaluj.
 - Každé rozhodnutie z referencie zapíš do dokumentu projektu (tu `CHECKS.md`, `TOUR_DIRECTION.md`),
   inak sa o mesiac nebude vedieť, prečo je web taký, aký je.

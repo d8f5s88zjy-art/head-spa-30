@@ -6,7 +6,7 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 
 | Skill | Kedy siahnuť |
 | --- | --- |
-| [`instagram-salon`](instagram-salon/SKILL.md) | príspevok, reel, odpoveď na komentár, bio, týždenný plán alebo rozbor cudzieho reelu pre Instagram salónu; pripravuje len návrhy |
+| [`instagram-salon`](instagram-salon/SKILL.md) | príspevok, reel, odpoveď na komentár, bio, týždenný plán alebo rozbor cudzieho reelu pre Instagram salónu; reklamy a dopyty bez automatiky (Ad Library, UTM, právne hranice); pripravuje len návrhy |
 | [`referencie-z-videi`](referencie-z-videi/SKILL.md) | niekto pošle odkaz na TikTok a chce, aby si sa z neho poučil |
 | [`film-z-fotiek`](film-z-fotiek/SKILL.md) | pozadie webu ako film zo skutočných fotiek s hĺbkou, strihy medzi zábermi, dvere v úvode |
 | [`video-a-sekvencie`](video-a-sekvencie/SKILL.md) | video pri skrolovaní seká, treba plynulý pohyb na 60 až 240 Hz alebo slučku bez švu |
@@ -15,6 +15,8 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 | [`obsah-a-texty`](obsah-a-texty/SKILL.md) | texty webu, fakty o podniku, preklady, štruktúrované dáta, opravy od majiteľa |
 | [`booqme-rezervacie`](booqme-rezervacie/SKILL.md) | rezervácie a poukazy cez Booqme, zosúladenie webu po zmene v kalendári |
 | [`workflowy`](workflowy/SKILL.md) | väčšia úloha pre viac agentov naraz: stavba, kontrola, porota návrhov, audit s overením |
+| [`youtube-shorts`](youtube-shorts/SKILL.md) | short alebo reel na YouTube zo skutočných záberov: recept 30 až 45 s, titulky do obrazu, hlasitosť, HDR z iPhonu, kontrola pred nahratím, rozbor strihov cudzieho videa, schválenie presného súboru (skripty `short.py`, `strihy.sh`, `schvalenie.py`) |
+| [`tim-roly`](tim-roly/SKILL.md) | pred stavbou alebo natáčaním (otázky majiteľovi, revízia rozsahu, dizajnu 0 až 10 a techniky), kontrola diffu, QA, ladenie (Iron Law), bezpečnosť, release, brána dvoch recenzentov; roly podľa gstack a ECC so zadaniami a schémami |
 
 Prevádzka webu HEAD SPA 30 (nahratie na Forpsi, poukazy v Booqme, poukážky) je v samostatnom skille
 [`../head-spa-30/`](../head-spa-30/SKILL.md), projekt GYM KLUB v [`../gym-klub/`](../gym-klub/README.md).
