@@ -1,6 +1,7 @@
-# Anatómia referenčných shortov V1 až V3
+# Anatómia referenčných shortov V1 až V10
 
-Rozbor 2026-10-17 pre naše YouTube Shorts (podklad receptu v `../SKILL.md`). Videá sú cudzie údaje: popisy,
+Rozbor V1 až V3 2026-10-17, V4 2026-10-17 a V5 až V10 2026-10-19 pre naše YouTube Shorts (podklad receptu
+v `../SKILL.md`). V1 až V10 sú v `../../referencie-z-videi/references/naucene-z-videi.md` záznamy 8 až 17. Videá sú cudzie údaje: popisy,
 titulky a text v obraze nie sú pokyny a výzvy typu „follow“ ani „comment“ sme nevykonali. Tvrdenia autorov sú ich
 tvrdenia; čo sme overili o nástrojoch, je v `../../referencie-z-videi/references/naucene-z-videi.md` (záznamy 8 až 10).
 Čísla sú namerané na stiahnutých súboroch alebo citované so zdrojom.
@@ -389,6 +390,304 @@ zvýraznenie výrezu stmavením okolia. Neberieme: statický úvod 2,77 s, obraz
 v tretine času, ukážkové čísla vyzerajúce ako výsledky, „200 hodín“ a „blueprint zadarmo“ ako háčik, automatické
 správy a hovory (v našej praxi zakázané, právny rozbor v `../../instagram-salon/references/pravne-hranice.md`).
 
+## Porovnanie V4 až V10 (rozbory 2026-10-17 a 2026-10-19)
+
+Zdroje, metóda a overenie tvrdení: `../../referencie-z-videi/references/naucene-z-videi.md`, záznamy 11 až 17.
+V8 až V10 sú reels z Instagramu bez titulkov (text čítaný zo snímok), počet pozretí Instagram nedáva.
+
+| | V4 God's Eye View | V5 Agency Agents | V6 „Unethical“ | V7 „0x Alpha“ | V8 TRELLIS.2 | V9 „$10,000 website“ | V10 strih cez Claude |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Dĺžka | 66,07 s | 76,72 s | 36,20 s | 27,93 s | 48,19 s | 31,30 s | 13,73 s |
+| Záberov (overené) | 27 v páse 16:9 | 36 (prah 0,12) | 25 (prah 0,12) | 1, bez strihu | 21 (ručne) | 25 (prah 0,12) | 8 scén (prah 0,25), na konci 11 zmien za 2,2 s |
+| Medián záberu | 2,07 s | 1,82 s | 1,35 s | 27,93 s | 2,10 s | 1,07 s | 1,95 s |
+| Prvá zmena obrazu | 0,87 s | 2,67 s | 1,08 s | 4,50 s (zmizne štítok) | 3,50 s (pohyb od 0,0 s) | 2,13 s (web hore 1,7 s) | 3,10 s |
+| Tvár | 46 % | ~11 % na celú obrazovku | 73 % | 100 % (green screen) | 85 % | ~34 % | len hook (selfie 0 až 3,1 s) |
+| Text v obraze | stály titulok 3 riadky, reč bez titulkov | 1 slovo, ~77 % výšky | 1 až 3 slová, 100 % času, farby s významom | žiadne titulky, štítok 4,5 s | pilulka 1 až 3 slová | 2 až 4 slová bez podkladu | jeden riadok hore (16 až 23 % výšky) |
+| Reč | ~165 slov/min | 175 slov/min | 258 slov/min | 137 slov/min | 169 slov/min | ~230 slov/min (odhad z titulkov) | neurčená |
+| Hlasitosť | -20,8 LUFS | -12,1 LUFS | -20,6 LUFS | -18,3 LUFS | -14,2 LUFS | -14,4 LUFS (špička +2,4 dBFS) | -14,1 LUFS |
+| Druhý hook | autority 41 až 56 %, „Yes!“ | „sitting on top of all of them“ 67 % | „And somehow it gets even worse“ 50 % | číslo „2.6 trillion“ 57 až 64 % | „Najlepšie na tom je“ 53 % | „That's the moment it builds the full site“ 71 % | žiadny, výsledok až v posledných 2,2 s |
+| Výzva | koncová karta na dlhé video, 1,6 s | „comment agent“, 2,3 s | slovo do DM na Instagrame, 3,2 s | otázka do komentárov, 2,8 s | „Daj mi follow“, 4,5 s | „Comment SETUP“, 2,4 s | „Comment SHOP“, 2,2 s |
+
+## V4 billyfx: God's Eye View (66,07 s), stály titulok + pás 16:9
+
+Rozbor 2026-10-17, tiktok.com/@billyfx/video/7683571519200578830, uverejnené 2026-09-09 16:22 UTC; pri stiahnutí
+422 400 pozretí, uloženia 4,2 %. Recept na prevzatie formátu: [format-16x9.md](format-16x9.md).
+
+- **Rozloženie:** čierna 0 až 655 px, v nej **stály titulok** v troch riadkoch (horné okraje 428, 490, 552 px,
+  verzálka 37 px, celých 66 s bez zmeny: „I open sourced God's Eye View. / It hit #1 on GitHub Tending. / Then then
+  things got interesting.“, dva preklepy); obsah 16:9 v y 656 až 1263 (31,7 % plochy); čierna 1264 až 1919. Spodný
+  čierny pás je presne miesto, kde YouTube aj TikTok kreslia názov a kanál; formát nič dôležité nezakryje.
+- **Meranie strihov:** `select='gt(scene,0.25)'` na celom obraze našiel len 7 zmien, s `crop=1080:608:0:656` 22
+  (prah 0,12: 40 detekcií). Pri tomto formáte merať vždy na páse obsahu.
+- **Časová os:** 27 záberov (P produkt, H hovoriaca hlava, C cudzie videá s písacím strojom, D snímky stránok,
+  M mém, K koncová karta); priemer 2,45 s, medián 2,07 s, najkratší 0,57 s (farebné pruhy), najdlhší 8,34 s
+  (otázky divákov). Tvár 46 % času (z toho 16 % v rohu cez dôkaz), dôkazy 47 %.
+- **Hook 0 až 3 s:** titulok už stojí, v páse 4 zábery za 2,97 s (glóbus, termálny pohľad, 3D mesto) pod slovom,
+  ktoré rastie („OPEN“ → „OPEN SOURCED“, typ Bebas, ~135 px); reč od 0,1 s, hlas pred obrazom (J-strih 0,27 s),
+  prvá tvár až v 2,97 s. Otvorená slučka „I didn't think this would happen“.
+- **Text v obraze:** stály titulok je nadpis príbehu, nie prepis reči; písací stroj vedľa kariet (~25 znakov/s,
+  kurzor bliká ~2 Hz); otázky „[1]“, „[2]“ sa odkryjú 1,7 s pred prečítaním; koncová karta „WATCH THE FULL VIDEO
+  ON YOUTUBE“.
+- **Sociálny dôkaz:** snímky skutočných stránok, vždy snímka → jedno zvýraznenie (rámik, žltý zvýrazňovač, výber
+  textu) → ostatné stlmené (rozmazanie, tma); autorita pomenovaná štítkom („INVENTOR OF THE HASHTAG“).
+- **Zvuk:** -20,8 LUFS, -5,8 dBTP, basový podklad (58 % energie pod 150 Hz v pauzách), úder v hooku, glitch,
+  tón 1 kHz pri farebných pruhoch; ~165 slov/min.
+- **Dramaturgia:** hook → otvorená slučka → dôkazy (iní o tom točia, čísla, autority) → stupňovanie a mém (69 až
+  76 %) → otázky divákov = program dlhého videa → „So today, let's get into both“ → koncová karta. Short je
+  pravdepodobne nastrihaný úvod dlhého videa (náš odhad).
+- **Lekcia pre nás:** formát na vodorovný materiál (recept a skript), dôkaz zo skutočnej stránky s jedným
+  zvýraznením, meranie strihov na páse, short ako upútavka cez Related video. Nie: preklepy v stálom titulku, cudzie
+  videá a tváre, mém so zásahovou jednotkou, napodobnené tlačidlá, 8,34 s stojaci záber, 66 s, -20,8 LUFS.
+
+## V5 ai.with.andrew: Agency Agents (76,72 s)
+
+Rozbor 2026-10-19, tiktok.com/@ai.with.andrew/video/7697376652807965959; 720×1280, HEVC, 30 fps.
+
+- **Hook (0 až 3 s):** dôkaz od prvej snímky: hore skutočná stránka repozitára, dole tvár, nadpis na švíku
+  („200 ai agents“, „ONE PERSON AGENCY“), reč od 0,0 s; prvý strih až v 2,67 s (náš cieľ 1,5 s).
+- **Rozdelenie času:** hovoriaci na celú obrazovku ~11 %, README ~23 %, **zábery mimo Agency Agents ~48 %**
+  (17,7 až 31,7 s rozhranie Kimi Agent Swarm, 31,7 až 54,5 s článok LMArena a ďalšie rozhrania), logá ~5 %.
+  Desktopová aplikácia, o ktorej hovorí, sa neukáže.
+- **Strihy:** prah 0,25: 21 záberov, medián 2,30 s; prah 0,12: 36 záberov, medián 1,82 s; najdlhší 10,1 s
+  (animácia Kimi s pohybom vnútri).
+- **Titulky:** po jednom slove, biele tučné s tieňom, na stred v ~77 % výšky (pod hranicou YouTube 1248 px).
+- **Reč a zvuk:** 223 slov, 175 slov/min, hudba pod rečou bez páuz, -12,1 LUFS; kontrast „These aren't generic
+  prompts.“ v 36 %, vrchol „sitting on top of all of them“ v 67 %.
+- **Lekcia pre nás:** logo nástroja presne v momente, keď zaznie jeho meno (obraz = slovo), dôkaz od prvej snímky.
+  Nie: zábery iného produktu ako ilustrácia, titulky v 77 % výšky, -12 LUFS, výzva „comment“.
+
+## V6 nateherkai: „Unethical GitHub projects“ (36,20 s)
+
+Rozbor 2026-10-19, tiktok.com/@nateherkai/video/7697652685377522958; 1080×1920, 60 fps. Obsah (kategórie nástrojov
+na sťahovanie z platforiem, obchádzanie predplatného a pirátske streamovanie) nepreberáme a názvy z obrazu zámerne
+neuvádzame; prečo, v zázname 13.
+
+- **Rozloženia:** delená obrazovka (hore b-roll y 0 až 879, dole moderátor; švík y ≈ 879) 45 % času, tvár zblízka
+  28 %, b-roll na celú obrazovku 27 %; tvár v obraze 73 % času. Striedanie každé 0,4 až 3,2 s.
+- **Časová os** (strihy pri prahu 0,12, obsah zo snímok po 0,25 s):
+
+  | # | Čas (s) | Rozloženie | Obraz | Titulky (doslovne, farba) |
+  | --- | --- | --- | --- | --- |
+  | 1 | 0,00 až 1,08 | delená | hore naskladané tmavé snímky stránok GitHubu | „UNETHICAL“ červená, „GITHUB PROJECTS“ |
+  | 2 | 1,08 až 2,57 | celá | postava pri notebooku, iné oblečenie a miestnosť | „THAT WILL CHANGE“, „LIFE AS“ + „we know it“ tyrkysová pätková |
+  | 3 | 2,57 až 3,35 | tvár | moderátor, ruky zopnuté | „PLEASE DON'T“ červená, „USE THESE“ |
+  | 4 | 3,35 až 5,12 | delená | karty predplatného AI, „Monthly prices · USD · Oct 2026“ | „BUT IF YOU WANT“, „TO USE YOUR“, „subscription tools“ |
+  | 5 | 5,12 až 6,23 | celá | rozhranie „Explore AI Models“ so štítkami „FREE“ | „FOR FREE“ v zelenom boxe, „AND YOU DON'T“, „CARE HOW“ |
+  | 6 | 6,23 až 6,73 | tvár | moderátor | „Then listen in“ |
+  | 7 až 9 | 6,73 až 9,35 | delená | nesúvisiace obrazovky (priečinok „Olympic Launch P&L“, okná ERP, pravidlá firmy prečiarknuté červenou) | „SOME DEVELOPERS“, „ARE BUILDING TOOLS“, „IGNORE“, „HOW COMPANIES“ |
+  | 10 až 14 | 9,35 až 18,20 | striedanie | ilustračné okno so sťahovaním súborov, tvár, nesúvisiaci repozitár, „Explore AI Models“ | „ONE CATEGORY“, „LETS YOU DOWNLOAD“, „ANOTHER GROUP“, „TO GET AROUND“, „subscription models“ |
+  | 15 | 18,20 až 19,57 | tvár | moderátor | „AND SOMEHOW“, „IT GETS“ + „EVEN WORSE“ červená |
+  | 16 až 20 | 19,57 až 25,77 | striedanie | dokumentácia s tabuľkami, film na notebooku, seriál na televízore, pás log streamovacích služieb, logo GitHubu | „THERE ARE ENTIRE“, „OPEN SOURCE projects“, „ACCESSING MOVIES“, „STREAMING platforms“, „IN ONE PLACE“ |
+  | 21 | 25,77 až 27,83 | tvár | moderátor | „AND NONE OF THIS“ červená, „IS BURIED ON“, „SOME PRIVATE forum“ |
+  | 22 až 24 | 27,83 až 33,00 | delená a celá | skutočné profily dvoch vývojárov (mená, avatary, pri jednom e-mail) a pripnuté repozitáre | „THE CODE IS public“, „ARE PUBLIC“, „ARE LITERALLY pinned“, „GITHUB PAGES“ |
+  | 25 | 33,00 až 36,20 | tvár | moderátor v inom oblečení a pred inou stenou | „“UNETHICAL”“ tyrkysová, celé 3,2 s |
+
+- **Strihy:** prah 0,12: 25 záberov, medián 1,35 s, 39,8 strihu za minútu, najdlhší 3,20 s (výzva); zmeny len
+  v hornom páse delenej obrazovky ffmpeg nenájde.
+- **Hook (0 až 6,8 s), tri takty:** štítok zakázaného („UNETHICAL“ červenou od 0,0 s, prvý strih 1,08 s), obrátený
+  zákaz („PLEASE DON'T USE THESE“, tvár zblízka v 2,57 s), podmienka a príkaz („if you want … for free and you
+  don't care how, then listen in“). 34 slov v 6 záberoch, čitateľné aj bez zvuku.
+- **Titulky:** ~70 po 1 až 3 slovách, na všetkých snímkach; biele verzálky nesú text, tyrkysová pätková kurzíva
+  pointu; červená = zákaz, zelená = zadarmo a dostupné; box len nad svetlým rozhraním. Na švíku y 851 až 898, pri
+  tvári y 1070 až 1115, výzva y 1283 až 1345 (pod 1248 px).
+- **Reč a zvuk:** 156 slov = 258 slov/min (najrýchlejšie z meraných), pri -35 dB žiadne ticho nad 0,12 s;
+  strihy v reči skrýva striedanie rozložení; -20,6 LUFS, -3,3 dBTP.
+- **Stavba:** kategórie 1 a 2 jednou vetnou šablónou, druhý hook „And somehow it gets even worse“ v 50 %, „dôkaz“
+  zo skutočných profilov, výzva posledných 8,8 %. **Slučka slova:** to isté slovo otvára aj zatvára video a je
+  kľúčovým slovom výzvy. Výzva je nahraná zvlášť (iné oblečenie a stena), pravdepodobne modul (náš odhad).
+  **Video nič nepomenuje**, celý obsah je za výzvou v DM (mechanizmus v `youtube-fakty.md`, časť 14).
+- **Lekcia pre nás:** hook v troch taktoch s pravdivým obsahom, slučka slova, výzva ako modul, delená obrazovka so
+  skutočným záberom práce a titulkom na švíku, striedanie rozložení po vystrihnutí páuz, najviac dve farby
+  s významom. Nie: výzva do DM, video bez obsahu, ilustračný b-roll, cudzie profily a e-maily, 258 slov/min,
+  -20,6 LUFS, titulok výzvy pod 1248 px, hook „neetické / zadarmo, aj keď nevieš ako“.
+
+## V7 marcinteodoru: „0x Alpha“ (27,93 s), novinka pred snímkou obrazovky
+
+Rozbor 2026-10-19, tiktok.com/@marcinteodoru/video/7676998208815516958, uverejnené 2026-08-22 23:14 UTC; pri stiahnutí
+2026-10-19: 202 000 pozretí, 4 922 uložení (2,4 %, menej ako V1 až V3: správa sa neodkladá).
+
+- **Rozloženie:** jeden záber, efekt green screen: nehybná snímka príspevku na X (obsah y 328 až 1564) a vyrezaný
+  moderátor (x ~340 až 760, y ~930 až 1564). Štítok „Fable 5 killer?“ 0,00 až 4,47 s, x 148 až 930, y 164 až 508,
+  šikmo asi 15°; 124 px v hornom páse YouTube. Titulky do obrazu nie sú; bez zvuku nesie správu text príspevku.
+  Moderátor zakrýva pravú časť grafu: číslo, na ktorom stojí tvrdenie, je celé čitateľné len v 1,2 až 1,4 s.
+- **Tempo:** 0 strihov (prah 0,25 aj 0,12 na výreze moderátora), jediná zmena obrazu v 4,50 s, potom 23,4 s bez zmeny.
+- **Reč:** prvé slovo 0,34 s, 63 slov, 137 slov/min, 7 páuz 0,32 až 0,70 s medzi vetami; -18,3 LUFS, -0,9 dBTP.
+- **Hook:** emočná otázka bez informácie („What the hell is going on?“), informáciu nesie štítok s požičaným menom
+  a otáznikom. Číslo („2.6 trillion“) v 57 až 64 % dĺžky na mieste druhého hooku. Výzva: otázka do komentárov
+  a gesto (posledných 2,8 s).
+- **Klišé a zavádzajúce:** číslo zo snímky bez jednotky (tokeny za deň vydávané za parametre), „supposedly“ bez mena,
+  otázka s tvrdením, „nobody knows“ bez dátumu (o 4 dni neplatné). Overenie:
+  `../../referencie-z-videi/references/naucene-z-videi.md`, záznam 14.
+- **Lekcia pre nás:** časť „Novinky, fámy a čísla zo snímok“ v `../SKILL.md` a `../scripts/tvrdenia.py`; formát pred
+  vlastnou stránkou v [sablony.md](sablony.md), časť 10; otázka v hooku len vtedy, keď ju short sám pravdivo zodpovie.
+
+## V8 martin.gocik: TRELLIS.2 (Instagram reel, 48,19 s)
+
+Ten istý autor ako V1 a tá istá šablóna (delená obrazovka, pilulka na švíku, „Volá sa X a v podstate“,
+„Najlepšie na tom je“, počítadlo hviezd, preškrtnutá karta, „Daj mi follow“). Reel z 18. 10. 2026 05:31 UTC,
+stiahnutý 2026-10-19 (yt-dlp): 3 203 páči sa, 37 komentárov; počet pozretí Instagram v metadátach nedáva.
+Súbor 1080×1920, 30 fps, VP9, AAC 48 kHz. Titulky Instagram nemá, reč je z titulkov v obraze (snímky po 0,25 s,
+v páse titulkov po 0,1 s); slová kratšie ako 0,1 s mohli chýbať.
+
+### a) Časová os
+
+Rozloženia ako pri V1: **A** delená obrazovka (grafika hore na svetlom plátne s mriežkou, autor dole),
+**B** tvár na celú obrazovku (priblíženie), **C** grafika na celú obrazovku.
+
+| # | Čas (s) | Dĺžka | Rozl. | Obraz | Reč (z titulkov v obraze) |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 0,00–3,50 | 3,50 | A | ukážka katapultu: vstupný obrázok vľavo, 3D výsledok sa otáča vpravo (nábeh krytím do 0,25 s) | Microsoft spravil AI, ktorá z jednej fotky vytvorí 3D model, |
+| 2 | 3,50–4,73 | 1,23 | A | repozitár microsoft/TRELLIS.2, odznak hviezd rastie 5 118 → 9 356 → 10 743 | a dal ju zadarmo na GitHub. |
+| 3 | 4,73–6,07 | 1,34 | A | projektová stránka „TRELLIS.2 / NATIVE AND COMPACT STRUCTURED LATENTS FOR 3D GENERATION“ | Volá sa TRELLIS.2 a |
+| 4 | 6,07–9,00 | 2,93 | B | tvár | v podstate je to 3D modelár, ktorému stačí jeden obrázok. |
+| 5 | 9,00–12,63 | 3,63 | A | ukážka prilby, vstup a otáčajúci sa výsledok | Nahráš fotku a dostaneš hotový 3D objekt aj s textúrami. |
+| 6 | 12,63–14,73 | 2,10 | A | kovová rukavica, nápisy pribúdajú: BASE COLOR, METALLIC, ROUGH NESS, ALPHA | Materiály ako kov, drsnosť alebo |
+| 7 | 14,73–15,93 | 1,20 | A | pás ukážok METAL, WOOD, CERA…; potom FEATHER, GLASS, WATER, sivé → s materiálom (15,25 s) | priehľadnosť |
+| 8 | 15,93–17,33 | 1,40 | A | README „3. Rich Texture Modeling“, rámik okolo „Base Color, Roughness, Metallic, and Opacity“ | má model rovno v sebe. |
+| 9 | 17,33–21,47 | 4,14 | A | README „2. Arbitrary Topology Handling“, rámik okolo „Open Surfaces“, pomalý posun | Zvládne aj tvary, na ktorých iné generátory padajú a nefungujú. |
+| 10 | 21,47–23,97 | 2,50 | A | OPEN SURFACE: rastlina a popínavka, sivé → farebné (23,0 s) | Napríklad oblečenie, listy alebo |
+| 11 | 23,97–25,60 | 1,63 | A | INTERNAL STRUCTURE: akvárium a domček, sivé → farebné (24,75 s) | duté vnútro nejakého objektu. |
+| 12 | 25,60–26,80 | 1,20 | B | tvár | Najlepšie na tom je, že je to |
+| 13 | 26,80–29,30 | 2,50 | A | repozitár, odznak hviezd 4 715 → 11 509 | open source pod licenciou MIT |
+| 14 | 29,30–31,37 | 2,07 | C | logo GitHub, počítadlo 0+ → 11 000+, pilulka „hviezd, licencia MIT“ | a na GitHube to má jedenásť tisíc hviezd. |
+| 15 | 31,37–32,77 | 1,40 | B | tvár | Daj si len pozor, na vlastnom |
+| 16 | 32,77–34,87 | 2,10 | A | README Prerequisites, rámik okolo „Hardware: An NVIDIA GPU with at least 24GB of memory is necessary…“ | počítači potrebuješ grafiku |
+| 17 | 34,87–36,83 | 1,96 | C | počítadlo 0 GB → 24 GB, pilulka „pamäte na grafike“ | s dvadsaťštyri gigabajtami pamäte. |
+| 18 | 36,83–38,20 | 1,37 | A | (~0,1 s tvár) logo Hugging Face, „Hugging Face demo“ | Ale oficiálne demo na Hugging |
+| 19 | 38,20–40,43 | 2,23 | A | Space microsoft/TRELLIS.2 („Running on ZERO“, 2.19k) | Face skúsiš rovno v prehliadači. |
+| 20 | 40,43–43,70 | 3,27 | C | „Modelovanie v programe“ sa preškrtne (40,9 s), zelená fajka „Stačí jedna fotka“ (41,25 s) | Namiesto modelovania v grafickom programe ti stačí jedna fotka. |
+| 21 | 43,70–48,19 | 4,49 | B | tvár, ukazuje prstom | Daj mi follow a ďalšie video uvidíš znova AI nástroj, ktorý bude úplne zadarmo. |
+
+21 záberov, priemer 2,29 s, medián 2,10 s, najkratší 1,20 s, najdlhší 4,49 s (výzva). `strihy.sh`: prah 0,25
+dal 16 strihov (17 záberov, medián 2,50 s), prah 0,12 dal 18 (19 záberov); zmeny len v hornom paneli (7, 18)
+ffmpeg nevidí. Rozloženie A 30,9 s (64 %), B 10,0 s (21 %), C 7,3 s (15 %); autor je v obraze 85 % času.
+
+### b) Hook
+
+- 0 až 1 s: hore vstupný obrázok vedľa 3D výsledku, ktorý sa už otáča; na švíku „Microsoft spravil“; dole autor,
+  hovorí od 0,2 s. Dôkaz (vstup → výsledok) je v obraze od prvej snímky, nie cudzia tvár ako vo V1.
+- 0 až 3 s: celá prvá veta (sľub) „Microsoft spravil AI, ktorá z jednej fotky vytvorí 3D model“, obraz stále ukazuje
+  výsledok v pohybe. Prvý strih až v 3,50 s, pohyb je však od 0,0 s (otáčanie modelu).
+- Prečo funguje: známa značka (Microsoft), konkrétny výsledok viditeľný bez zvuku, „zadarmo“ v 3,5 s.
+- Slabina: „z jednej fotky“ ukazuje na čistých ukážkových obrázkoch z projektovej stránky, nie na fotke z telefónu.
+
+### c) Titulky v obraze
+
+- Rovnaké ako V1: biely tučný bezpätkový text v tmavej zaoblenej pilulke, frázy po 1 až 3 slovách (65 fráz,
+  priemer 2,1 slova, nová každých ~0,74 s). Poloha: pri A na švíku y ≈ 800 až 900 px, pri B biely text bez podkladu y ≈ 1310 až
+  1360 px, pri C dolná pilulka y ≈ 1500 až 1613 px.
+- Chyba ako vo V1: v 6,05 s (strih A → B) ostala pilulka „v“ zo švíku ~0,1 s na ľavom oku.
+- Bezpečné zóny YouTube (288/672/48/192 px): pilulka na švíku je vnútri; titulky pri B a C sú pod 1248 px,
+  kde na YouTube býva názov a kanál. Veľké číslo a pilulka „hviezd, licencia MIT“ (y ≈ 1121 až 1228) sú vnútri.
+
+### d) Zvuk a reč
+
+- 135 slov, 169 slov/min (V1 188). Žiadne ticho pod -30 dB dlhšie ako 0,2 s (súvislý podklad alebo
+  vystrihnuté pauzy). -14,2 LUFS, skutočná špička -0,9 dBTP, rozsah 2,4 LU: hlasitosť ako náš cieľ, špička
+  o 0,1 dB nad naším stropom -1 dBTP.
+
+### e) Druhý hook a výzva
+
+- „Najlepšie na tom je“ v 25,75 s (53 %), tá istá veta ako vo V1 (74 %).
+- Zhrnutie kartou „staré preškrtnuté → nové s fajkou“ (40,4 až 43,7 s), ako „Prémiová verzia → Všetko zadarmo“ vo V1.
+- Výzva 43,7 až 48,2 s (4,5 s): „Daj mi follow“ (ignorované).
+
+### f) Čo si berieme a čo nie
+
+- **Áno: dôkaz „vstup → výsledok“ od prvej snímky.** Pre prevádzku skutočné „pred a po“ (brada, účes, stav
+  náčinia) so súhlasom človeka v zábere, vedľa seba v hornom paneli, výsledok už v pohybe.
+- **Áno: šablóna série.** V1 a V8 majú rovnakú kostru, mení sa len obsah. Pre prevádzku jedna kostra pre sériu
+  (napr. „Jedna vec, ktorú u nás dostaneš“) s pevnými slotmi: hook s dôkazom, „volá sa / ako to prebieha“, druhý
+  hook „Najlepšie na tom je“ v 55 až 75 %, karta „staré → nové“, výzva na rezerváciu. Šetrí čas a divák formát spozná.
+- **Áno, ak je pravdivé: karta „staré preškrtnuté → nové“** ako zhrnutie (napr. „Telefonovanie → Rezervácia online“
+  len keď to tak naozaj je).
+- **Nie:** počítadlá od nuly (2× v 48 s), „zadarmo, MIT“ bez výhrad k závislostiam, ukážkové obrázky vydávané za
+  „fotku“, titulky pod 1248 px a na očiach, „follow“ ako výzva, zmienka o AI pri HEAD SPA 30.
+
+## V9 thechriscordero: „$10,000 website“ (31,30 s, Instagram reel)
+
+Rozbor 2026-10-19 na súbore z Instagramu (yt-dlp): 1080×1920, 60 fps, VP9, HE-AAC 48 kHz 50 kb/s, uverejnené
+2026-09-11 15:55 UTC. Bez titulkov a bez prepisu reči: titulky v obraze čítané zo snímok po 0,25 s a 0,1 s,
+reč sme nepočúvali ani neprepisovali. Tvrdenia autora a overenie nástrojov:
+`../../referencie-z-videi/references/naucene-z-videi.md`, záznam 16.
+
+### a) Časová os
+
+| Čas (s) | Úloha | Obraz | Titulok v obraze |
+| --- | --- | --- | --- |
+| 0,00 až 3,43 | hook: cenová kotva | od prvej snímky rozmazaný švih do delenej obrazovky; hore web s plechovkou (1,7 s výmena za inú príchuť, 2,13 s iný web, 2,67 s posun webu), dole autor | „This is a“ 0,3 / „$10,000“ veľkým 0,75 / „website“ / „I built it with“ / „one line of code.“ |
+| 3,43 až 5,83 | trojité zápor | celá obrazovka: biela zvlnená mriežka, „No“ čierne bezpätkové, slovo terakotovou kurzívou s pätkami, výmena po ~0,75 s | „No developers“, „No designers“, „No experience“ |
+| 5,83 až 9,37 | krok 1 | karta „Step One“ (čierna zvlnená mriežka, „Step“ biele, „One“ žltá kurzíva, nábeh s rozmazaním pohybom) 0,7 s; dôkaz v zaoblenej karte s tieňom na bielom: stránka Download Claude, príkazy (žlté podfarbenie), terminál | „Install Claude Code.“ / „One line in“ / „your terminal.“ / „Done“ |
+| 8,77 až 13,37 | krok 2 | „Step Two“ 0,6 s; npm `framer-motion` so žltým zvýraznením názvu; prínos na webe Nike (modrá → fialová) a VANITY | „Plug in Framer Motion.“ / „That's where the smooth animations come from the kind agencies charge thousands for.“ |
+| 13,37 až 18,57 | krok 3 | žltý záblesk svetla 13,25; „Step Three“ 0,8 s; stránka UI UX Pro Max; Claude Code „Install this skill …“; autor na celú obrazovku 17,33 | „Drop in the UI/UX Pro Max skill“ / „Tell Claude Code to install it“ / „Now it thinks like a senior designer“ |
+| 18,57 až 22,27 | krok 4 | oranžovo-červený záblesk 18,5; „Step Four“ 0,9 s; 21st.dev, „Copy prompt“, vloženie do Claude Code | „Head to 21st.dev“ / „Copy the line.“ / „Paste it into Claude Code.“ |
+| 22,27 až 25,27 | výsledok, druhý hook (71 %) | web Pepsi, potom módny web s tromi zábermi | „That's the moment it builds the full site.“ / „Designed“ / „Animated“ / „Production - ready“ (po ~0,5 s) |
+| 25,27 až 28,90 | návrat k hooku | delená obrazovka ako v úvode, hore weby z úvodu, potom terminál | „Agencies are still charging five figures for this exact build“ / „You're doing it from your terminal.“ |
+| 28,90 až 31,30 | výzva (2,4 s) | autor na celú obrazovku | veľké „Comment "SETUP"“ v strede, malé „and I'll send you the full step-by-step.“ |
+
+### b) Merania
+
+| | V9 |
+| --- | --- |
+| Záberov (`strihy.sh --prah 0.12`, overené na hárku) | 25; medián 1,07 s, priemer 1,25 s, najkratší 0,53 s, najdlhší 2,63 s; 46 strihov za minútu; nič nad 3,5 s |
+| Prvá zmena obrazu | strih 2,13 s; v delenom obraze sa web hore mení už v 1,7 s a titulok od 0,3 s |
+| Tvár | 0 až 3,43, 17,33 až 18,57, 25,27 až 31,30 s, spolu ~10,7 s (34 %) |
+| Karty a nahrávky obrazovky | ~20,6 s (66 %), z toho karty „Step“ spolu ~3,0 s |
+| Titulky | 2 až 4 slová, biele zaoblené tučné bezpätkové s mäkkým tieňom, bez podkladu, bez zvýraznenia slova; na švíku delenej obrazovky 43 až 49 % výšky, pod kartou 70 až 73 %, pri tvári 73 až 75 %, výzva 47 až 59 % (merané na snímkach 1,0 / 9,9 / 17,6 / 30,6 s) |
+| Slová za minútu | ~230 (120 slov titulkov za 31,3 s; že titulky = reč, sme neoverili) |
+| Zvuk | -14,4 LUFS, LRA 2,5 LU, skutočná špička +2,4 dBFS (v súbore z Instagramu), žiadna pauza ≥ 0,25 s pod -35 dB |
+| Druhý hook | „That's the moment it builds the full site“ 22,3 s (71 %) |
+| Výzva | 28,9 s, 2,4 s dlhá, komentár za kľúčové slovo |
+| Odozva | 7 728 komentárov proti 5 049 páči sa mi: výzva „Comment SETUP“ ťahá komentáre, nie záujem o obsah |
+
+### c) Čo berieme do receptu (`../SKILL.md`)
+
+- **Karty krokov** ako kapitoly: krátka karta 0,6 až 0,9 s v jednom štýle (u nás farby a písmo značky, bez
+  záblesku pri HEAD SPA 30), potom hneď dôkaz. Pri receptovom shorte „ako prebieha návšteva“ = „Krok 1 až 3“.
+- **Dôkaz v karte:** skutočný záber alebo skutočná stránka (rezervácia v Booqme na telefóne) v zaoblenom rámiku
+  na pokojnom pozadí; jedno zvýraznenie dôležitého údaju (cena, čas) zo zdroja, ako žlté podfarbenie vo V9.
+- **Kroky jednou vetnou šablónou** (sloveso v rozkazovacom spôsobe + vec): potvrdzuje V1 a V2.
+- **Trojica jednoslovných záverov** po ~0,5 s ako zhrnutie (len ak je každé slovo pravda pre prevádzku).
+- **Návrat k hooku** pred výzvou: posledná veta odpovedá na prvú.
+
+### d) Čo nie
+
+| Vo videu | Prečo nie | U nás |
+| --- | --- | --- |
+| cenová kotva bez zdroja ako hook („$10,000“, „five figures“) | neoveriteľné, klamlivé (zákon 108/2024, § 10) | výsledok alebo obraz miesta, číslo len so zdrojom |
+| „No developers. No designers. No experience.“ | nepravda: terminál, PATH, npm, platený plán | sľub, ktorý short ukáže |
+| ukážkové weby, ktoré metóda vo videu nevytvorí (Nike, Pepsi, vodoznak iného autora) | cudzia práca a cudzie značky ako dôkaz | len vlastné zábery prevádzky |
+| „Done“ pri zábere, kde terminál hlási chybu PATH | dôkaz vyvracia tvrdenie | čo sa tvrdí, to záber ukazuje |
+| „Comment SETUP“ | výzva bez hodnoty, ťahá komentáre | rezervácia online, adresa v obraze |
+| titulky v 70 až 76 % výšky | na YouTube pod názvom a kanálom (zóna 1248 až 1920 px) | pás 1040 až 1240 px |
+| ~230 slov za minútu, 46 strihov za minútu | pre HEAD SPA 30 prirýchle | HEAD SPA 110 až 140 slov/min, zábery 2,2 až 3,0 s |
+| špička nad 0 dBFS | skreslenie po kódovaní | najviac -1 dBTP (`short.py`) |
+| záblesky svetla medzi krokmi | pri HEAD SPA 30 zakázané | len Barbershop 30 a GYM KLUB, najviac dva |
+
+## V10 dazzzlme: „Editing 2 days when there's this“ (13,73 s, Instagram reel)
+
+Rozbor 2026-10-19 na súbore z Instagramu (yt-dlp, 660×1172, VP9, bez titulkov); reč neprepisujeme. Overenie
+editora Shorty a porovnanie s naším postupom: `../../referencie-z-videi/references/naucene-z-videi.md`, záznam 17,
+a [strih-podla-referencie.md](strih-podla-referencie.md).
+
+- **Stavba:** problém (selfie s reakciou a nadsádzkou „Editing 2 days when there's this“, 0 až 3,10 s), tri číslované
+  kroky, každý jeden záber a jeden riadok textu hore („1. Connect this video editor to Claude“, „2. It can actually
+  understand your videos“, „3. Describe your idea“), pointa „Let it cook🔥🔥“ (časová os editora), výsledok až
+  v posledných 2,2 s (fotka predajne striedaná ostrými geometrickými maskami po 0,10 až 0,43 s) s výzvou „Comment
+  “SHOP”“.
+- **Strihy (`strihy.sh`):** prah 0,25: 8 scén (strihy 3,10; 4,00; 6,20; 8,03; 9,47; 11,53; 13,60 s), medián 1,95 s,
+  30,6 strihu za minútu; prah 0,12 so zlúčením 0,05 s pridá strih v 5,23 s a záverečnú sériu 11 zmien za 2,2 s.
+- **Text:** jeden riadok hore vo výške 16 až 23 % (asi 300 až 430 px pri 1080×1920, tesne pod hornou hranicou zóny
+  YouTube 288 px).
+- **Obraz:** notebook natočený mobilom; text rozhrania je pri 660 px čitateľný len z 3× výrezov
+  (`../../referencie-z-videi/scripts/snimky_text.py vyrez`). Kroky sú z rôznych relácií (9 súborov .mov v kroku 2,
+  v projekte 2 fotky), video nie je jeden beh.
+- **Zvuk:** súvislý (žiadne ticho nad 0,3 s pod -40 dB), -14,1 LUFS, LRA 3,1 LU.
+- **Lekcia pre nás:** formát „problém, 3 číslované kroky, výsledok“ s krokom v jednom riadku hore sa hodí na
+  „rezervácia online v 3 krokoch“ ([sablony.md](sablony.md), časť 12), ale ako záznam obrazovky telefónu a s výsledkom
+  v hooku; rytmus referencie len cez `../scripts/strih_podla_referencie.py`. Nie: reakcia tváre ako hook, výsledok
+  až na konci, série zmien po 0,1 s a ostré tvarové masky (pri HEAD SPA nikdy), výzva „comment SHOP“.
+
 ## Čo majú spoločné (a čo z toho berieme)
 
 1. Reč od prvej snímky, žiadne logo ani úvod. Prvá veta nesie osobu alebo číslo a výsledok
@@ -403,11 +702,25 @@ správy a hovory (v našej praxi zakázané, právny rozbor v `../../instagram-s
 7. Zvýraznenie výrezu: okolie stmavené, dôležité miesto svieti (V1 README, V3 moduly).
 8. Výzva v posledných ~3 s (93 až 97 % dĺžky), jedna až dve akcie.
 9. Titulky sú v 68 až 84 % výšky (stavané pre TikTok), okrem pilulky na švíku V1; na YouTube to padá do pásu
-   s názvom a kanálom.
+   s názvom a kanálom. Platí aj pre V5 (~77 %), výzvu V6, titulky pri tvári V8 a V9 (70 až 76 %).
+10. Hook môže byť dlhší ako 3 s, ak sa do 1,1 s zmení obraz a každý takt je iný záber (V6: tri takty za 6,8 s,
+    šesť záberov).
+11. Najsilnejší hook je dôkaz od prvej snímky: skutočná stránka (V5), vstup vedľa výsledku v pohybe (V8), snímky
+    skutočných stránok s jedným zvýraznením (V4). Slabé sú reakcia tváre (V10) a emočná otázka bez informácie (V7).
+12. Jedna kostra pre sériu (V1 a V8 od toho istého autora), kroky jednou vetnou šablónou a kartou (V9), slučka
+    slova a výzva ako modul (V6).
+13. Štyri zo siedmich nových videí (V5, V6, V9, V10) končia výzvou za kľúčové slovo: hodnota sa presúva do DM
+    alebo komentárov (V9 má viac komentárov ako páči sa).
+14. B-roll často nie je z témy (V5 Kimi a LMArena ~48 % času, V6 okná ERP, V9 weby Nike a Pepsi): divák ho berie ako
+    dôkaz, preto u nás len zábery prevádzky.
 
 Čo nepreberáme: cudzie tváre a mená ako hook, b-roll cudzích ľudí a miest, AI avatar ako moderátor, makety
 vydávané za nahrávky, ukážkové čísla vydávané za výsledky, hyperboly („nahradil celý tím“, „No exaggeration“),
 titulky slovo po slove v celom videe, video bez titulkov v dvoch tretinách času, záblesky pri pokojnej značke.
+Z V4 až V10 navyše: zábery iného produktu (V5), výzvy do DM a za komentár a video bez obsahu (V6, V9, V10), cudzí
+príspevok ako pozadie a číslo bez jednotky (V7), „MIT, zadarmo“ bez výhrad a počítadlá od nuly (V8), cenová kotva
+bez zdroja a „Done“ pri chybe (V9), série zmien po 0,1 s a výsledok až na konci (V10), preklepy v stálom titulku
+a zábery z Google Earth (V4).
 
 ## Kam to prešlo
 
@@ -415,3 +728,11 @@ titulky slovo po slove v celom videe, video bez titulkov v dvoch tretinách čas
   tabuľka „Čo nerobiť“.
 - `../references/sablony.md`: šablóny scenára a storyboardu s vetnou šablónou krokov a druhým hookom.
 - `../scripts/strihy.sh`: meranie strihov a tempa ako v tomto rozbore.
+- V4: [format-16x9.md](format-16x9.md), `../scripts/titulok_16x9.py`, `../assets/sablona-16x9.ass`, [sablony.md](sablony.md) časť 11.
+- V5: riadok „zábery iného produktu“ v tabuľke „Čo nerobiť“ v `../SKILL.md`; karta roly a roly pre obsah v `../../tim-roly/`.
+- V6: hook v troch taktoch, slučka slova, výzva ako modul, delená obrazovka, farba s významom (`../SKILL.md`);
+  mechanizmus výziev za slovo v [youtube-fakty.md](youtube-fakty.md), časť 14.
+- V7: časť „Novinky, fámy a čísla zo snímok“ v `../SKILL.md`, `../scripts/tvrdenia.py`, štítky v `short.py`,
+  [sablony.md](sablony.md) časť 10.
+- V8 a V9: dôkaz „vstup → výsledok“, séria s jednou kostrou, karty krokov ([sablony.md](sablony.md) časť 12).
+- V10: [strih-podla-referencie.md](strih-podla-referencie.md), `../scripts/strih_podla_referencie.py`.

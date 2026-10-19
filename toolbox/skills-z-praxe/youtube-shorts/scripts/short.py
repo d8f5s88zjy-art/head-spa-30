@@ -292,17 +292,35 @@ def titulky(cfg, dlzka, prac):
         obrys, bs = ass_farba(pod, kryt), 3
     styl_riadok = (f'Style: Titulok,{meno},{velk},{prim},{sek},{obrys},{ass_farba(pod, kryt)},0,0,0,0,100,100,1,0,'
                    f'{bs},{box},0,2,{ml},{ml},{mv},1')
+    # štítky hore (napr. „NEPOTVRDENÉ · k 22. 8. 2026“, „Zdroj: …“): vlastný štýl, zarovnanie hore na stred,
+    # horný okraj podkladu v bezpečnej zóne (ZONA[1] = 288 px), jeden obdĺžnik ako pri titulkoch
+    st_cfg = cfg.get('stitok', {})
+    st_velk, st_box = st_cfg.get('velkost', 44), st_cfg.get('okraj_boxu', 14)
+    st_hore = st_cfg.get('hore', ZONA[1] + 24)
+    st_pod, st_farba = st_cfg.get('podklad', '#F2C14E'), st_cfg.get('farba', '#161616')
+    stitok_riadok = (f'Style: Stitok,{meno},{st_velk},{ass_farba(st_farba)},{ass_farba(st_farba)},{ass_farba(st_pod, 0.0)},'
+                     f'{ass_farba(st_pod, st_cfg.get("podklad_kryt", 0.95))},0,0,0,0,100,100,1,0,4,{st_box},0,8,'
+                     f'{ZONA[0]},{W - ZONA[2]},{st_hore + st_box},1')
     hl = [
         '[Script Info]', '; vygeneroval short.py', 'ScriptType: v4.00+', f'PlayResX: {W}', f'PlayResY: {H}',
         'WrapStyle: 0', 'ScaledBorderAndShadow: yes', '', '[V4+ Styles]',
         'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, '
         'Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, '
         'MarginR, MarginV, Encoding',
-        styl_riadok, '', '[Events]',
+        styl_riadok, stitok_riadok, '', '[Events]',
         'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text']
     srt, upoz, fad = [], [], int(cfg.get('fade_ms', 120))
     zv = ass_inline(zvyr)
-    for j, fr in enumerate(cfg['frazy'], 1):
+    for j, st in enumerate(cfg.get('stitky') or [], 1):
+        if st_hore < ZONA[1]:
+            upoz.append(f'štítok {j}: horný okraj {st_hore} px je nad bezpečnou zónou ({ZONA[1]} px), YouTube ho zakryje')
+        s = sirka_textu(dict(cfg, velkost=st_velk, okraj_boxu=st_box), st['text'])
+        if s and s > ZONA[2] - ZONA[0]:
+            upoz.append(f'štítok {j} „{st["text"]}“ má asi {s:.0f} px, viac ako {ZONA[2] - ZONA[0]} px zóny: skráť ho')
+        if st['do'] > dlzka + 0.01:
+            upoz.append(f'štítok {j} končí v {st["do"]} s, video má {dlzka:.2f} s')
+        hl.append(f'Dialogue: 1,{ass_cas(st["od"])},{ass_cas(st["do"])},Stitok,,0,0,0,,{{\\fad({fad},0)}}{ass_text(st["text"])}')
+    for j, fr in enumerate(cfg.get('frazy') or [], 1):
         if fr['do'] > dlzka + 0.01:
             upoz.append(f'fráza {j} končí v {fr["do"]} s, video má {dlzka:.2f} s')
         slova, zdroj_casov = casy_slov(fr)
@@ -649,12 +667,13 @@ def main():
     zac, dl = os_strihu(klipy, zab)
     print('    začiatky záberov vo výsledku: ' + ', '.join(f'{t:.2f}' for t in zac) + f' s; spolu {dl:.2f} s')
     print('2/5 titulky')
-    ma_tit = bool(tc and tc.get('frazy'))
+    ma_tit = bool(tc and (tc.get('frazy') or tc.get('stitky')))
     upoz = []
     if ma_tit:
         shutil.copy(tc['pismo'], os.path.join(prac, 'pisma', os.path.basename(tc['pismo'])))
         meno, upoz = titulky(tc, dl, prac)
-        print(f'    {len(tc["frazy"])} fráz, písmo „{meno}“, štýl {tc.get("styl", "aktualne")}')
+        print(f'    {len(tc.get("frazy") or [])} fráz, {len(tc.get("stitky") or [])} štítkov, písmo „{meno}“, '
+              f'štýl {tc.get("styl", "aktualne")}')
         for u in upoz:
             print('    !', u)
     print('3/5 zvuk a meranie hlasitosti')

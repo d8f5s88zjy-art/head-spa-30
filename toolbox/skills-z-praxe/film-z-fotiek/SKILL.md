@@ -20,6 +20,13 @@ Nič sa nemodeluje a fotky sa netónujú (len vinetácia a krátke šero pri str
 Nepoužívaj, keď nie sú vlastné fotky miesta (film z cudzích fotiek by klamal) alebo keď stačí statická fotka. Video
 pri skrolovaní rieši skill `video-a-sekvencie`, všeobecný výkon `rychly-web`, testy `testy-a-nasadenie`.
 
+**3D model namiesto fotky?** Film tu stojí na skutočných fotkách a hĺbkovej mape; nič sa nemodeluje. 3D model
+predmetu (náradie, produkt) alebo „3D z jednej fotky“ (TRELLIS.2 z videa V8) rieši skill `3d-modely-na-web`:
+HEAD SPA 30 nie (`CLAUDE.md`: nič vymodelované), Barbershop 30 a GYM KLUB najprv procedurálne v three.js r169,
+model z fotky nikdy nevydávať za skutočný sken a výstup TRELLIS.2 nie na komerčný web pred posúdením licencií
+závislostí (nvdiffrast, RMBG-2.0, DINOv3). „3D okolie“ prevádzky z Google 3D nie (v EEA pre nové projekty
+nedostupné, zábery z Google Earth sa nesmú použiť na propagáciu; rozbor V4).
+
 ## Architektúra (štyri vrstvy, každá ďalšia je len nadstavba)
 
 1. **HTML kotvy** `.film-shot` v poradí dokumentu. Každá nesie meno záberu, bod záujmu a pohyb kamery

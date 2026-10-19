@@ -17,6 +17,9 @@ použitím over, či sa znenie nezmenilo (slov-lex.sk má verzie podľa dátumu 
 | sťahovať cudzie reklamy botom a učiť sa z nich ako z predlohy | Meta povoľuje programový prístup len cez API; autorské práva a nekalá súťaž | Meta |
 | meranie návštev z reklamy cez cookies bez súhlasu | ukladanie a čítanie v zariadení len s preukázateľným súhlasom | 452/2021 § 109 ods. 8 |
 | vymyslené čísla („väčšina firiem volá až na druhý deň“) | klamlivé konanie | 108/2024 § 10 |
+| stiahnuť cudzie video a použiť ho v našom príspevku či shorte; sťahovať z YouTube | rozmnoženina bez súhlasu, súkromná kópia sa na firmu nevzťahuje; podmienky YouTube, TikToku a Mety | autorský zákon § 19, § 42, § 51c, § 60, TZ § 283; `../../referencie-z-videi/references/stahovanie-a-pravo.md` |
+| výzva „napíš slovo do DM“ s automatickou odpoveďou | naše pravidlo (žiadne automatické DM); okno 24 h, jedna súkromná odpoveď na komentár; na YouTube správy len po pozvánke, ktorú druhá strana povolí | Meta, nižšie |
+| pustiť v prevádzke film, seriál alebo hudbu z domáceho predplatného | verejné vykonanie potrebuje súhlas; domáce predplatné je len na osobné použitie | autorský zákon § 26 ods. 2, Netflix Terms of Use 1.4 a 1.8(i) |
 
 ## Telefonovanie, SMS, e-mail (zákon 452/2021 Z. z. o elektronických komunikáciách)
 
@@ -84,6 +87,12 @@ Znenie 27. 9. 2026: https://static.slov-lex.sk/static/SK/ZZ/2024/108/20260927.ht
   reklamách.
 - Sekundárne: fáza učenia asi 50 udalostí na sadu reklám za 7 dní; rozpočet kampane Advantage+ sám presúva
   peniaze na lepšie sady; limity výdavkov kampane a účtu existujú (presné správanie over v pomocníkovi Mety).
+- Výzva cez kľúčové slovo v DM (rozbor V6, 2026-10-19): nástroj (napr. ManyChat, „official Meta Business Partner“)
+  je napojený na profesionálny účet cez Instagram API. Keď človek napíše, Meta pošle webhook `messages` s ID
+  a textom; odpoveď smie ísť len v okne 24 h od správy človeka (oprávnenia `instagram_business_basic`,
+  `instagram_business_manage_messages`). Pri komentári: „Only one message can be sent to the commenter“, do 7 dní;
+  ďalšie správy len ak človek odpovie, do 24 h (developers.facebook.com/docs/instagram-platform/private-replies).
+  U nás nie: automatické DM sú proti pravidlu praxe; výnimku by musel výslovne rozhodnúť majiteľ (D1).
 
 ## Google, YouTube, TikTok
 
@@ -95,6 +104,14 @@ Znenie 27. 9. 2026: https://static.slov-lex.sk/static/SK/ZZ/2024/108/20260927.ht
   filtroch ani klone vlastného hlasu na komentár.
 - TikTok: Business Messaging API existuje (https://ads.tiktok.com/help/article/marketing-api); podľa tretej
   strany (Vista Social) nie je pre firemné účty v EHP. Realistický obsah z AI treba označiť (sekundárne, AP 2024).
+- YouTube súkromné správy zrušil 18. 9. 2019 (Engadget 2019-08-20); dnes ich má obmedzene ako „Video sharing & messaging“
+  vo vybraných krajinách vrátane Slovenska: od 18 rokov, prihlásený kanál, konverzácia až po pozvánke cez odkaz
+  (platí 7 dní), ktorú druhá strana povolí (support.google.com/youtube/answer/16650958, 2026-10-19). Výzva „napíš mi slovo do DM“
+  v shorte preto nefunguje ako na Instagrame.
+- YouTube, Harmful or dangerous content (https://support.google.com/youtube/answer/2801964): zakázaný je obsah
+  „that shows viewers how to get unauthorized access to content, software, or services that usually require payment“.
+- Google Earth a Earth Studio vo videách (Google geo-guidelines, čítané 2026-10-17): „may not be used for any
+  commercial or promotional purposes“; propagačný short so zábermi z Google Earth nie.
 
 ## ElevenLabs (ak by niekto navrhoval hlasového agenta)
 

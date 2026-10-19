@@ -1,6 +1,7 @@
-# Skripty: short.py, strihy.sh, schvalenie.py
+# Skripty: short.py, strihy.sh, schvalenie.py (a doplnky z 2026-10-19)
 
-Tri skripty skillu `youtube-shorts`. Všetky bežia bez siete, nič neuverejňujú a nikam sa neprihlasujú.
+Tri základné skripty skillu `youtube-shorts`; doplnky z rozborov V4 až V10 (`titulok_16x9.py`,
+`strih_podla_referencie.py`, `tvrdenia.py`, štítky v `short.py`) sú v časti „Doplnky 2026-10-19“ na konci. Všetky bežia bez siete, nič neuverejňujú a nikam sa neprihlasujú.
 Stavané a overené 2026-10-17 na ffmpeg 7.0.2 (statická zostava s libzimg, libass 0.17.3, libx264), Python 3,
 Pillow, fontTools, numpy. ffprobe netreba, skripty čítajú výpis `ffmpeg -i`.
 
@@ -62,6 +63,8 @@ Vzor: `../assets/strih-priklad.json`. Cesty sú relatívne k súboru EDL.
 | `titulky.podklad_tvar` | `jeden` (BorderStyle 4, libass 0.17 a novší) alebo `po_usekoch` (BorderStyle 3; vtedy krytie 1.0) |
 | `titulky.spodok`, `okraj` | spodný okraj podkladu (1240 px), ľavý a pravý okraj (195 px, text najviac 690 px) |
 | `titulky.frazy[]` | `{"od", "do", "text"}` v čase shortu; voliteľne `"slova": [[od, do, "slovo"], …]` pri hovorenom shorte |
+| `titulky.stitky[]` | štítky hore (od 2026-10-19): `{"od", "do", "text"}`, napr. „NEPOTVRDENÉ · stav k 22. 8. 2026“ alebo „Zdroj: …“; do `titulky.srt` nejdú |
+| `titulky.stitok` | vzhľad štítkov: `{"velkost": 44, "hore": 312, "podklad": "#F2C14E", "podklad_kryt": 0.95, "farba": "#161616", "okraj_boxu": 14}` (predvolené); `hore` = horný okraj podkladu v px, pod 288 px a pri šírke nad 840 px skript upozorní |
 | `zvuk.klipy_db`, `zvuk.hudba` | hlasitosť zvuku záberov; hudba `{"zdroj", "od", "db", "nabeh", "dobeh"}` |
 | `zvuk.lufs`, `true_peak`, `rezerva_aac_db`, `metoda` | -14, -1.0, 1.0, `ebur128` (alebo `loudnorm`) |
 | `export` | `crf`, `maxrate`, `bufsize`, `preset`, `audio_kbps`, `gop`, `bez_editlistu` (predvolene `true`) |
@@ -137,6 +140,29 @@ súbor bajt po bajte schválený. Overené 2026-10-17: kópia schváleného vide
 jedného znaku v popise dá NESCHVÁLENÉ a kód 1, chýbajúci súbor CHÝBA a kód 1, prázdne `--kto` kód 1, chýbajúce
 `--kto` kód 2. Kniha patrí do scratchpadu alebo k súborom shortu, nie do repozitára (obsahuje mená a čas).
 Myšlienka je z ECC, skill `operator-approval-loop` (github.com/affaan-m/ECC, MIT); kód je vlastný.
+
+## Doplnky 2026-10-19 (z rozborov V4 až V10)
+
+**Štítky hore v `short.py`** (V7, `titulky.stitky`): kreslia sa tým istým písmom ako titulky, vlastným štýlom
+`Stitok` (zarovnanie hore na stred, jeden obdĺžnik pod textom), do `titulky.ass`. Viac štítkov naraz sa poukladá
+pod seba. Farba podkladu: pri Barbershop 30 a GYM KLUB teplá žltá (#F2C14E) alebo akcent značky; pri HEAD SPA 30
+tlmený tón webu, bez blikania. Štítok neprekrýva tvár ani pás titulkov 1040 až 1240 px. Skúška 2026-10-19
+(syntetický záber testsrc2 6 s, 2 frázy a 2 štítky, výstupy v scratchpade `ref-nauka/zapis-test/stitky/`):
+kontrola 11 z 11, synchronizácia +2,7 ms, diakritika („NEPOTVRDENÉ“) bez náhrady písma, štítky hore v zóne;
+EDL bez štítkov dáva rovnaký `titulky.ass` ako pred zmenou (rozdiel len nepoužitý riadok `Style: Stitok`).
+
+**`tvrdenia.py`** (V7): kontrola tvrdení scenára pred natáčaním a pred schválením. JSON (`--vzor` dá šablónu)
+alebo voľný text (`--text`, rizikové riadky so značkou `[zdroj: …, RRRR-MM-DD]` alebo `[nepotvrdené: kto,
+RRRR-MM-DD]`). Kontroluje stav (overené, pripísané, nepotvrdené, nepravdivé, názor), druh zdroja, dátum a vek
+overenia (`max_vek_dni`, predvolene 7), číslo proti citátu a jednotke zo zdroja, štítok NEPOTVRDENÉ, superlatívy
+a porovnania z fámy, otázky s tvrdením, zdravotné sľuby. Kód 0 bez chýb, 1 chyba, 2 zlé argumenty. Príklady
+`../assets/tvrdenia/` (pri zápise znova: V7 ako ho povedal autor 12 chýb, správna verzia 0, test prevádzky 5,
+textový režim 3; pyflakes bez nálezov). Len štandardná knižnica; nič neoveruje na webe, overenie robí človek.
+
+**`titulok_16x9.py`** (V4): formát stály titulok + pás 16:9, recept a skúšky v [format-16x9.md](format-16x9.md).
+
+**`strih_podla_referencie.py`** (V10): kostra EDL podľa rytmu strihov referencie a `--porovnaj`; postup,
+nastavenia podľa značky a skúšky v [strih-podla-referencie.md](strih-podla-referencie.md).
 
 ## Čo skripty nerobia (zámerne)
 

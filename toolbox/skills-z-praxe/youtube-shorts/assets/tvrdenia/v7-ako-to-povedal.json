@@ -1,0 +1,21 @@
+{
+ "popis": "Tvrdenia videa V7 (marcinteodoru, 2026-08-22) preložené do slovenčiny tak, ako zazneli alebo stáli v obraze. Stav a zdroj je, ako ich autor podal; citáty sú doslovne zo snímok videa a z článku Decrypt. Očakávaný výsledok kontroly: kód 1 (chyby).",
+ "short": "V7 0x Alpha, ako to povedal autor",
+ "typ": "novinka",
+ "datum_vyroby": "2026-08-22",
+ "tvrdenia": [
+  {"id": "T1", "text": "Fable 5 killer?", "kde": ["obraz"], "stav": "nepotvrdené",
+   "kto_tvrdi": "Coin Bureau na X („reportedly BEATING“)", "zdroj": "snímka príspevku @coinbureau vo videu, 0,0 s",
+   "zdroj_typ": "sociálna sieť", "overené": "2026-08-22", "stitok": "", "nazvy": ["Fable 5"]},
+  {"id": "T2", "text": "Nový model, o ktorom nikto nevie, kto ho vytvoril, teraz úplne drví.", "kde": ["reč"],
+   "stav": "nepotvrdené", "kto_tvrdi": "Coin Bureau na X", "zdroj": "snímka príspevku @coinbureau vo videu",
+   "zdroj_typ": "sociálna sieť", "overené": "2026-08-22", "stitok": ""},
+  {"id": "T3", "text": "Je to model s 2,6 bilióna parametrov.", "kde": ["reč"], "stav": "overené",
+   "zdroj": "graf v príspevku @coinbureau vo videu, 0,0 až 4,5 s", "zdroj_typ": "sociálna sieť", "overené": "2026-08-22",
+   "citat": "AUG 21 9.2T total … ox-alpha 2.6T", "jednotka": "tokenov za deň na OpenRouteri (hlavička grafu 9.2T total, súčet riadkov 9,31 T)"},
+  {"id": "T4", "text": "údajne si vedie veľmi dobre proti Fable 5 a GPT 5.6 Sol", "kde": ["reč"], "stav": "nepotvrdené",
+   "kto_tvrdi": "Ben Davis (@davis7), 10 úloh DeepSWE", "zdroj": "https://decrypt.co/376396/mysterious-ai-model-ox-alpha",
+   "zdroj_typ": "sekundárny", "overené": "2026-08-22", "stitok": "", "nazvy": ["Fable 5", "GPT 5.6 Sol"]},
+  {"id": "T5", "text": "Skúsil to už niekto? Musím to mať čo najskôr.", "kde": ["reč"], "stav": "názor"}
+ ]
+}

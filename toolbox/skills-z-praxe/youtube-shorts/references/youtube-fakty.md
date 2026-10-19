@@ -195,6 +195,43 @@ rodiča. AI obraz alebo hlas len so súhlasom a s označením na platforme aj v 
 - Či titulky v obraze zvyšujú dosah (YouTube nič nezverejňuje; netvrdíme to).
 - Rozpor jazykových verzií answer/15424877 o Content ID pri shortoch nad 1 min (pozri časť 4).
 
+## 14. Výzvy za slovo, sťahovanie a zábery z máp (doplnené 2026-10-19 z rozboru V4 až V10)
+
+**Výzva „napíš slovo do komentára alebo DM“** (V6 „DM me ‘UNETHICAL’“, V9 „Comment SETUP“, V10 „Comment SHOP“,
+V5 „comment agent“). Ako funguje na Instagrame (overené 2026-10-19; akým nástrojom odpovedajú konkrétni autori,
+nevieme):
+
+1. Profesionálny účet (Business alebo Creator) je prepojený s nástrojom na automatizáciu cez Instagram API, napr.
+   ManyChat, ktorý sa opisuje ako „official Meta Business Partner“ s „keyword triggers“ v DM aj komentároch
+   (manychat.com/blog/key-instagram-automation-features, aktualizované 2026-07-31).
+2. Divák napíše slovo do správy; Meta pošle nástroju webhook `messages` s ID diváka a textom, nástroj pošle odkaz.
+   Aplikácia smie písať len v okne 24 h od správy človeka („For most user actions, it lasts 24 hours.“), oprávnenia
+   `instagram_business_basic` a `instagram_business_manage_messages` (developers.facebook.com, Instagram Messaging API).
+3. Variant komentár → DM: „Only one message can be sent to the commenter“, do 7 dní od komentára; ďalšie správy len
+   ak človek odpovie, do 24 h (developers.facebook.com/docs/instagram-platform/private-replies).
+4. Automatický chat má oznámiť, že ide o automatiku (Meta to odporúča; pri AI chate AI Act čl. 50 ods. 1).
+5. **YouTube súkromné správy zrušil** 18. 9. 2019 (Engadget 2019-08-20) a dnes ich má obmedzene ako „Video
+   sharing & messaging“ vo vybraných krajinách vrátane Slovenska: od 18 rokov, prihlásený kanál, konverzácia až po
+   pozvánke cez odkaz (platí 7 dní), ktorú druhá strana povolí; „Access is limited and subject to change“
+   (support.google.com/youtube/answer/16650958, 2026-10-19). Výzva „napíš mi slovo do DM“ v shorte preto
+   nefunguje ako na Instagrame.
+   Odpovedať automaticky na komentáre pod shortom je proti nášmu pravidlu 2 (`../SKILL.md`).
+6. Čo z toho má autor: kontakt v nástroji a otvorené okno na ďalšie správy; počet komentárov rastie nad páči sa
+   (V9: 7 728 komentárov proti 5 049 páči sa). Hodnota videa sa presúva do DM.
+
+**Obsah o obchádzaní platieb:** YouTube, Harmful or dangerous content (answer/2801964), zakazuje obsah „that shows
+viewers how to get unauthorized access to content, software, or services that usually require payment“ (V6).
+
+**Sťahovanie z YouTube:** Terms of Service (účinné 15. 12. 2023) dovoľujú sťahovať len „as expressly authorized by the
+Service“ alebo s písomným povolením; referencie z YouTube preto len pozeráme
+(`../../referencie-z-videi/references/stahovanie-a-pravo.md`).
+
+**Zábery z máp a Google Earth** (V4): obsah Google Earth a Earth Studio „may not be used for any commercial or
+promotional purposes“, zakázané sú aj „promotional films, advertisements or commercials“; Google Maps v propagačnom
+videu len štandardné snímky so schválením (Google geo-guidelines, čítané 2026-10-17). Google Photorealistic 3D Tiles
+nie sú pre nové projekty s fakturačnou adresou v EEA od 8. 7. 2025 (developers.google.com/maps/comms/eea/map-tiles).
+Short „zoom z vesmíru k salónu“ z Google záberov preto nerobíme; cesta k prevádzke len vlastným videom.
+
 ## Zoznam zdrojov (prečítané 2026-10-17)
 
 | Stránka | Adresa |
@@ -221,4 +258,10 @@ rodiča. AI obraz alebo hlas len so súhlasom a s označením na platforme aj v 
 | Občiansky zákonník § 12 | static.slov-lex.sk/static/SK/ZZ/1964/40/20260731.html |
 | AI Act, článok 50 | artificialintelligenceact.eu/article/50/ |
 | Google Ads, vertikálne video (bezpečná zóna) | support.google.com/google-ads/answer/9128498 |
+| Harmful or dangerous content (2026-10-19) | support.google.com/youtube/answer/2801964 |
+| YouTube Terms of Service (2026-10-19) | youtube.com/static?template=terms |
+| Instagram Messaging API, Private Replies (2026-10-19) | developers.facebook.com/docs/instagram-platform/ |
+| YouTube zrušil súkromné správy (Engadget, 2019-08-20; 2026-10-19) | engadget.com |
+| YouTube Video sharing & messaging, správy po pozvánke (2026-10-19) | support.google.com/youtube/answer/16650958 |
+| Google geo-guidelines (2026-10-17) | about.google/brand-resource-center/products-and-services/geo-guidelines/ |
 | Odkazy v Shorts (sekundárne) | techcrunch.com/2023/08/10/youtube-is-disabling-links-on-shorts-to-cut-down-on-spam, tubefilter.com/2023/08/10/youtube-shorts-comments-spam/ |

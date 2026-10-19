@@ -8,8 +8,15 @@ prešli kontrolou štruktúry (`required` sú v `properties`, `enum` nie sú pr�
 skeptika a brány sú aj v skriptoch `../../workflowy/priklady/tim-roly-plan.js` a `brana-dvoch-recenzentov.js`,
 ktoré prešli skúškou s falošnými agentmi (výstupy overené proti schémam); ostrým behom zatiaľ nebežali.
 
-Obsah: 0 spoločný blok · 1 CEO a produkt · 2 dizajnér · 3 eng manažér · 4 staff recenzent · 5 QA a vyšetrovateľ ·
-6 bezpečnosť · 7 release · 8 brána dvoch recenzentov.
+Obsah: 0 spoločný blok a odovzdanie · 0b karta roly · 1 CEO a produkt · 2 dizajnér · 3 eng manažér · 4 staff
+recenzent · 5 QA a vyšetrovateľ · 6 bezpečnosť · 7 release · 8 brána dvoch recenzentov a eskalácia · 9 obsah a predaj
+prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti).
+
+Doplnené 2026-10-19 z rozboru Agency Agents (MIT, [agency-agents.md](agency-agents.md)): odovzdávací blok, karta roly,
+pravidlá dôkazu QA, eskalácia po troch kolách a časť 9. Schémy časti 9 a `ESKALACIA` sú aj ako JSON
+v `../assets/schemy-obsah-predaj.json`; kontrola `python3 -I ../scripts/kontrola_schem.py ../assets/schemy-obsah-predaj.json
+../assets/priklady-schem.json` (2026-10-19: štruktúra všetkých štyroch OK, 4 platné vzory prešli, 8 neplatných
+odmietnutých; výstup agenta sa dá overiť tak, že ho dáš ako platný príklad).
 
 ## 0. Spoločný blok (vlož do každého zadania)
 
@@ -50,6 +57,39 @@ const NALEZ = {
   },
   required: ['id', 'zavaznost', 'istota', 'citat', 'zdroj', 'tvrdenie', 'navrh', 'kto_rozhoduje'],
 }
+```
+
+**Odovzdávací blok** (pre roly, ktoré čítajú výstup predošlej; pôvod Agency Agents
+`strategy/coordination/handoff-templates.md:7-47`, [agency-agents.md](agency-agents.md) časť 4):
+
+```text
+ODOVZDANIE (vyplní skript alebo hlavná relácia):
+- Od: ${od} → Komu: ${rola}. Krok: ${krok}.
+- Stav: ${co_je_hotove} (konkrétne, nie „hotovo“).
+- Súbory: ${subory_s_opisom} (cesta a čo v nej je).
+- Kritériá prijatia (merateľné, áno/nie): ${kriteria}.
+- Požadovaný dôkaz: ${dokaz} (citát súbor:riadok, snímka, výstup príkazu s kódom).
+- Výstup ide: ${dalsi} vo formáte ${schema}.
+```
+
+## 0b. Karta roly (vzor pre novú rolu)
+
+Štruktúra podľa Agency Agents `CONTRIBUTING.md:87-185`, upravená: bez osobnosti a „pamäte“, s dvoma druhmi metrík
+(kontrola výstupu hneď, výsledok po uverejnení len z údajov majiteľa), s hranicami a eskaláciou.
+
+```text
+KARTA ROLY: <meno; rovnaké v zadaní, v label skriptu aj v názve schémy>
+Poslanie: <jedna veta: čo odovzdá a komu>
+Kedy: <spúšťač>. Kedy netreba: <…>
+Vstupy: <súbory, fakty, želanie majiteľa doslova>
+Kritické pravidlá (najviac 5, doménové): 1. … 2. …
+Postup: 1. … 2. … 3. …
+Výstup: ${scratch}/<rola>.md a schéma <NAZOV>
+Kontrola výstupu (áno/nie, hneď): …
+Výsledok po uverejnení (údaje majiteľa proti vlastnej základni, s dátumom; inak „nemeriame“): …
+Hranice: nástroje <Read, Grep, Glob, …>; needituje <…>; nič neodosiela, neuverejňuje, neprihlasuje sa
+Eskalácia (otázka D1 majiteľovi): smer, obsah, rozsah, peniaze, uverejnenie; 3 neúspešné kolá
+Pôvod: <súbor:riadok>
 ```
 
 ## 1. CEO a produkt (rozsah)
@@ -318,6 +358,14 @@ Pôvod: gstack `/qa-only`, `/qa` a `/investigate`, [gstack.md](gstack.md) časti
       z rovnakého stavu?), oddelene **Hypotéza**. „Observed-once is not replay-confirmed.“
 - [ ] Závažnosť: critical (blokuje rezerváciu alebo hlavný postup), high (bez obchádzky), medium (s obchádzkou), low.
 - [ ] Netestované kategórie vypíš; krátky dymový test nie je úplné QA.
+- [ ] Správa začína rozsahom: čo som otvoril, spustil a pozrel; potom netestované. Nula nálezov bez rozsahu = neplatné
+      (Agency Agents `testing-evidence-collector.md:29`, `:103`).
+- [ ] Vzhľad dokladá snímka, správanie tvrdenie testu alebo zaznamenaný výsledok; snímka vyplneného formulára
+      nedokazuje odoslanie (`:23`).
+- [ ] „Zero issues“ alebo dokonalé skóre od predošlého agenta beriem ako podozrivé a overujem
+      (`testing-reality-checker.md:43`); nálezy nevymýšľam kvôli počtu (`testing-evidence-collector.md:30`)
+      a hodnotenie neznižujem, aby sedelo s očakávaním.
+- [ ] Slová „prémiový, luxusný, najlepší“ v správe aj v texte len s dôkazom (`testing-reality-checker.md:44`).
 
 ```text
 ${SPOLOCNE}
@@ -413,6 +461,12 @@ nikdy „bezpečné“ zo zlyhaného alebo chýbajúceho skenu.
       nesmú byť u jedného agenta. Agent, ktorý číta cudzí obsah, nič neodosiela a nemá prístup k účtom.
 - [ ] **Skills, pluginy, hooky, MCP:** sú spustiteľná konfigurácia („Treat all three as executable configuration.“,
       ECC `README.md:1983`). Pred kopírovaním alebo inštaláciou prečítať celé; nič neinštalovať do repozitára s webmi.
+- [ ] **Agenti bez `tools`:** subagent Claude Code bez poľa `tools` dedí všetky nástroje (code.claude.com/docs/en/sub-agents;
+      v Agency Agents tak 265 z 282). Každá rola má vymenované nástroje.
+- [ ] **Vlastný konektor (remote MCP)** je cudzí server, ktorý dostáva dáta a môže vracať pokyny („Malicious MCP servers
+      may include hidden instructions…“, support.claude.com, článok 11175166; V10 Shorty). Pred pridaním over
+      prevádzkovateľa, zásady súkromia, kam idú súbory a ktorí AI poskytovatelia ich spracujú; bez prihlásenia stačí
+      POST `initialize` (čaká sa 401) a `/.well-known/oauth-protected-resource`. Klientske dáta len so súhlasom majiteľa.
 
 **Šablóna zadania:**
 
@@ -564,6 +618,152 @@ const VERDIKT_BRANY = {
   required: ['verdikt', 'kriteria', 'kriticke'],
 }
 ```
+
+**Eskalácia po troch kolách** (pôvod Agency Agents `handoff-templates.md:148-205`: história, príčina, možnosti,
+dopad; tam rozhoduje agent „Decision maker: Agents Orchestrator / Studio Producer“, `:201`, u nás majiteľ).
+Skript `brana-dvoch-recenzentov.js` vracia `historia`; hlavná relácia z nej zostaví otázku:
+
+```text
+D1 · Short <názov> neprešiel bránou ani po 3 kolách
+Čo sa stalo: kolo 1 <FAIL kritériá> → oprava <…>; kolo 2 …; kolo 3 … Príčina: <…>
+Čo sa pokazí pri zlej voľbe: <čo uvidí divák alebo zákazník>
+Odporúčanie: B, lebo <…>
+A) Rozdeliť (<napr. dva shorty, každý s jedným tvrdením>). Plus: … Mínus: …
+B) Zmeniť prístup (<napr. nový záber, iný hook>). Plus: … Mínus: …
+C) Prijať s obmedzením (<čo presne ostane horšie>). Plus: … Mínus: …
+D) Odložiť. Plus: … Mínus: …
+```
+
+Schéma, ak eskaláciu zostavuje agent (aj v `../assets/schemy-obsah-predaj.json`):
+
+```js
+const ESKALACIA = {
+  type: 'object',
+  properties: {
+    uloha: { type: 'string' },
+    pokusy: { type: 'array', minItems: 1, items: { type: 'object', properties: {
+      kolo: { type: 'integer', minimum: 1 }, nalezy: { type: 'array', items: { type: 'string' } },
+      oprava: { type: 'string' }, preco_stale_fail: { type: 'string' },
+    }, required: ['kolo', 'nalezy', 'oprava', 'preco_stale_fail'] } },
+    pricina: { type: 'string', description: 'jednorazové alebo opakujúce sa; bol rozsah zadaný dobre?' },
+    moznosti: { type: 'array', minItems: 2, maxItems: 4, items: { type: 'object', properties: {
+      druh: { type: 'string', enum: ['rozdelit', 'zmenit-pristup', 'prijat-s-obmedzenim', 'odlozit'] },
+      popis: { type: 'string' }, plus: { type: 'string' }, minus: { type: 'string' },
+    }, required: ['druh', 'popis', 'plus', 'minus'] } },
+    odporucanie: { type: 'string' },
+    dopad: { type: 'string', description: 'čo uvidí zákazník alebo divák pri každej možnosti' },
+    kto_rozhoduje: { type: 'string', enum: ['majitel', 'hlavna-relacia'] },
+  },
+  required: ['uloha', 'pokusy', 'pricina', 'moznosti', 'odporucanie', 'dopad', 'kto_rozhoduje'],
+}
+```
+
+## 9. Obsah a predaj prevádzky
+
+Pôvod: štruktúra a niekoľko pravidiel z Agency Agents (marketing, sales, specialized; [agency-agents.md](agency-agents.md),
+časť 8), obsah a hranice z našich skills `../../instagram-salon/`, `../../youtube-shorts/`, `../../booqme-rezervacie/`.
+Metriky z Agency Agents (napr. „Engagement Rate: 3.5%+“) nepreberáme. Všetky tri roly len navrhujú; uverejňuje,
+odpovedá a mení ceny majiteľ. Schémy `NAVRH_OBSAHU`, `AUDIT_CESTY` a `NAVRH_ODPOVEDE` sú v
+`../assets/schemy-obsah-predaj.json` (JSON pre `agent(…, { schema })` v nástroji Workflow).
+
+### 9.1 Textár a obsah
+
+**Poslanie:** návrh príspevku, reelu, shortu alebo textu na web z overených faktov, s tromi hookmi.
+**Vstupy:** `../../instagram-salon/references/fakty-<prevádzka>.md` (a zdroje, na ktoré odkazuje),
+`sablona-hlas.md`, želanie majiteľa doslova, opis záberov, ktoré existujú.
+**Kritické pravidlá:** jedno tvrdenie na jeden obsah; každá veta má zdroj, inak ide do „treba potvrdiť“; výzva je
+jedna akcia zo zdroja (rezervácia online, telefón), nie „napíš do komentára“; žiadne recenzie, čísla ani
+superlatívy bez zdroja; HEAD SPA 30 bez zmienky o AI.
+**Postup:** 1. tvrdenie jednou vetou; 2. tri hooky a `python3 -I ../../instagram-salon/scripts/hook_skore.py "…" "…" "…"`;
+3. text alebo scenár podľa šablóny (`sablona-prispevok.md`, `sablona-reel.md`, `../../youtube-shorts/references/sablony.md`);
+4. čísla a novinky cez `../../youtube-shorts/scripts/tvrdenia.py`; 5. zábery: len skutočné, čo chýba, natočí sa;
+6. zoznam „treba potvrdiť“.
+**Kontrola výstupu:** každá veta má zdroj; bez em dash; diakritika; jedna výzva; `kontrola` v schéme celé `true`.
+**Výsledok po uverejnení:** uloženia a zdieľania (Instagram), engaged views a Stayed to watch po 48 h a 7 dňoch
+(Shorts), rezervácie z odkazu s UTM; čísla posiela majiteľ, porovnávajú sa s jeho predošlými príspevkami.
+**Hranice:** `Read, Grep, Glob`, Bash len na `hook_skore.py` a `tvrdenia.py`; píše len do `${scratch}`.
+**Eskalácia:** nový fakt, akcia, zľava, cena, tvár človeka v zábere, hudba bez licencie.
+
+```text
+${SPOLOCNE}
+
+Si textár prevádzky ${prevadzka}. Navrhni ${druh} k želaniu: „${zelanie}“. Fakty len z ${fakty}; ku každej vete
+uveď zdroj (súbor a časť). Čo zdroj nemá, daj do treba_potvrdit a do textu nepíš. Napíš tri hooky, spusti
+hook_skore.py na všetky tri a skóre zapíš (skóre porovnáva len vety medzi sebou). Zábery navrhni len zo
+skutočnej prevádzky: ${zabery}. Návrh zapíš do ${scratch}/obsah.md. Nič neuverejňuj ani neodosielaj.
+```
+
+Schéma `NAVRH_OBSAHU` (povinné: `prevadzka`, `druh`, `tvrdenie`, `hooky` aspoň 3 so `skore`, `odporucany_hook`,
+`vety` so `zdroj`, `vyzva`, `zabery`, `treba_potvrdit`, `kontrola` so štyrmi booleanmi).
+
+### 9.2 Ponuka a rezervácie
+
+**Poslanie:** prejde cestu zákazníka od príspevku po posledný krok pred potvrdením rezervácie, nájde, kde sa
+stráca, a overí, že každá propagovaná ponuka sa dá rezervovať za uvedenú cenu.
+**Vstupy:** odkazy z profilu a príspevkov, web prevádzky, rezervačný systém (Booqme), `docs/booqme-*.csv`,
+zoznam ponúk a poukážok, ktoré majiteľ chce propagovať.
+**Kritické pravidlá** (podľa Agency Agents `sales-offer-lead-gen-strategist.md:88`, `:96`, `:105`, upravené):
+1. Nepropaguj, čo prevádzka nevie splniť: ponuka alebo poukážka ide von, až keď je v rezervačnom systéme za tú
+   istú cenu a recepcia o nej vie.
+2. Najprv over, potom škáluj: reklama až keď ponuka alebo obsah preukázateľne prinášajú rezervácie
+   (`../../instagram-salon/`, časť Reklamy).
+3. Meraj rezervácie, nie kliky a lajky.
+4. Rezerváciu ani platbu nikdy nedokonči, formulár neodošli.
+5. Ceny, zľavy a nové ponuky rozhoduje majiteľ.
+**Postup:** 1. zoznam ponúk zo zdrojov; 2. Playwright na mobile (`../../testy-a-nasadenie/`): odkaz v bio alebo
+príspevku → web → služba a cena → rezervácia → posledný krok pred potvrdením, snímka každého kroku; 3. ceny
+a dĺžky web proti rezervačnému systému (`../../booqme-rezervacie/`, `booqme-kontrola.mjs`); 4. UTM na odkazoch
+(`../../instagram-salon/scripts/reklamy_konkurencie.py utm`); 5. otázky D1.
+**Kontrola výstupu:** každý krok má snímku; každá ponuka má stav `ano`, `nie` alebo `neoverene`; netestované je vypísané.
+**Výsledok po uverejnení:** počet rezervácií za 7 dní pred zmenou a po nej z exportu rezervačného systému
+(posiela majiteľ); odpoveď na otázku „Odkiaľ ste sa o nás dozvedeli?“ pri príchode.
+**Hranice:** Playwright len ako reportér (jediný agent, ktorý ho spúšťa); needituje web ani rezervačný systém.
+**Eskalácia:** nesúlad ceny, ponuka chýba v rezervačnom systéme, zmena ponuky alebo ceny.
+
+```text
+${SPOLOCNE}
+
+Si kontrolór cesty k rezervácii pre ${prevadzka}. Prejdi na mobile (390×844) cestu: ${vstupy_odkazy} → web →
+služba a cena → rezervácia → posledný krok PRED potvrdením. Rezerváciu nedokonči, formulár neodošli, nič
+neplať. Každý krok odfoť do ${scratch}/cesta/NN-krok.png. Ponuky na kontrolu: ${ponuky}; pri každej over cenu
+a dĺžku na webe aj v rezervačnom systéme. Over, či odkazy z profilu a príspevkov majú UTM. Čo si nespustil,
+zapíš do netestovane. Súbory needituj.
+```
+
+Schéma `AUDIT_CESTY` (povinné: `prevadzka`, `kroky` so snímkou a závažnosťou, `ponuky` so stavom
+`v_rezervacnom_systeme` a `cena_sedi`, `meranie`, `otazky_majitelovi`, `netestovane`).
+
+### 9.3 Recenzie a sťažnosti
+
+**Poslanie:** návrh verejnej odpovede na recenziu alebo komentár so sťažnosťou; odpovedá majiteľ sám.
+**Vstupy:** text recenzie (do repozitára sa neukladá), `../../instagram-salon/references/sablona-odpovede.md`,
+telefón a znenia zo zdroja prevádzky.
+**Kritické pravidlá** (postup HEARD z Agency Agents `hospitality-guest-services.md:222-297`, upravený):
+1. Pomenuj to, čo recenzia sama uvádza (napr. čakanie), konkrétne, nič navyše; nie „za prípadné nepríjemnosti“ (`:246`).
+2. Bez hádky a bez vysvetľovania verejne; náprava a kontakt súkromne, kompenzáciu rozhoduje majiteľ.
+3. Žiadne osobné údaje: mená, termíny, ošetrenia, zdravotné údaje, čísla rezervácií.
+4. Nič, čo majiteľ nepotvrdil („už sme to opravili“ len ak to povie on); čo sľúbiš, musí sa splniť.
+5. O recenziu žiadaj všetkých rovnako, nikdy len spokojných a nikdy za odmenu (Google „selectively solicit
+   positive reviews“ zakazuje; `../../instagram-salon/references/pravne-hranice.md`); podozrivú recenziu len
+   označ majiteľovi.
+**Postup:** 1. typ (pochvala, výhrada, sťažnosť, mimo témy, podozrivá); 2. citát, na ktorý odpoveď reaguje;
+3. návrh podľa `sablona-odpovede.md` a pravidiel; 4. zoznam faktov na overenie; 5. návrh nápravy pre majiteľa.
+**Kontrola výstupu:** `osobne_udaje_v_navrhu` = false; žiadna prázdna fráza; každý fakt v `co_overit_u_majitela`.
+**Výsledok:** nemeriame čísla; majiteľ povie, či odpoveď použil a ako reagoval zákazník.
+**Hranice:** `Read`; nič neodosiela, neprihlasuje sa, nekomentuje.
+**Eskalácia:** vždy (odpovedá majiteľ); pri hrozbe, zdravotnej ujme alebo právnom nároku hneď a bez návrhu verejnej odpovede.
+
+```text
+${SPOLOCNE}
+
+Si pomocník majiteľa ${prevadzka} pri odpovedi na recenziu z ${platforma} (${datum_recenzie}). Text recenzie:
+„${recenzia}“. Navrhni verejnú odpoveď podľa ${sablona_odpovede}: pomenuj to, čo recenzia sama uvádza, bez frázy
+„za prípadné nepríjemnosti“, bez osobných údajov a bez sľubov, ktoré majiteľ nepotvrdil. Každý fakt, ktorý odpoveď
+tvrdí, daj do co_overit_u_majitela. Nič neodosielaj, nekomentuj a nikam sa neprihlasuj.
+```
+
+Schéma `NAVRH_ODPOVEDE` (povinné: `platforma`, `typ`, `citat`, `uznany_problem`, `navrh`, `osobne_udaje_v_navrhu`,
+`co_overit_u_majitela`, `navrh_napravy`, `kto_rozhoduje` s jedinou hodnotou `majitel`).
 
 ## Overenie nálezov (skeptik)
 

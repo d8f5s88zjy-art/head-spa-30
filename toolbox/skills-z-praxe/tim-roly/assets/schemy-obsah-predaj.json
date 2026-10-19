@@ -1,0 +1,117 @@
+{
+  "NAVRH_OBSAHU": {
+    "type": "object",
+    "properties": {
+      "prevadzka": { "type": "string" },
+      "druh": { "type": "string", "enum": ["prispevok", "reel", "short", "story", "popis", "text-na-web"] },
+      "tvrdenie": { "type": "string", "description": "jedna myšlienka, ktorú obsah dokazuje" },
+      "hooky": {
+        "type": "array", "minItems": 3,
+        "items": { "type": "object", "properties": {
+          "text": { "type": "string" },
+          "skore": { "type": "integer", "minimum": 0, "maximum": 100, "description": "z hook_skore.py, len na porovnanie medzi sebou" }
+        }, "required": ["text", "skore"] }
+      },
+      "odporucany_hook": { "type": "integer", "minimum": 0, "description": "index v poli hooky" },
+      "vety": {
+        "type": "array",
+        "items": { "type": "object", "properties": {
+          "veta": { "type": "string" },
+          "zdroj": { "type": "string", "description": "súbor:riadok alebo časť fakty-*.md; bez zdroja veta nejde do návrhu, ale do treba_potvrdit" }
+        }, "required": ["veta", "zdroj"] }
+      },
+      "vyzva": { "type": "string", "description": "jedna akcia zo zdroja (rezervácia online, telefón); nie „napíš do komentára“" },
+      "zabery": { "type": "array", "items": { "type": "string" }, "description": "len skutočné zábery prevádzky; čo chýba, natočí sa" },
+      "treba_potvrdit": { "type": "array", "items": { "type": "string" } },
+      "kontrola": {
+        "type": "object", "properties": {
+          "kazda_veta_ma_zdroj": { "type": "boolean" },
+          "bez_em_dash": { "type": "boolean" },
+          "bez_zmienky_o_ai": { "type": "boolean" },
+          "bez_superlativov_bez_dokazu": { "type": "boolean" }
+        }, "required": ["kazda_veta_ma_zdroj", "bez_em_dash", "bez_zmienky_o_ai", "bez_superlativov_bez_dokazu"]
+      }
+    },
+    "required": ["prevadzka", "druh", "tvrdenie", "hooky", "odporucany_hook", "vety", "vyzva", "zabery", "treba_potvrdit", "kontrola"]
+  },
+  "AUDIT_CESTY": {
+    "type": "object",
+    "properties": {
+      "prevadzka": { "type": "string" },
+      "kroky": {
+        "type": "array",
+        "items": { "type": "object", "properties": {
+          "krok": { "type": "string", "description": "napr. profil, web, služba a cena, rezervácia, potvrdenie" },
+          "miesto": { "type": "string", "description": "URL alebo súbor" },
+          "co_vidi_zakaznik": { "type": "string" },
+          "problem": { "type": "string", "description": "prázdne = bez problému" },
+          "dokaz": { "type": "string", "description": "cesta k snímke alebo súbor:riadok" },
+          "zavaznost": { "type": "string", "enum": ["blocker", "high", "medium", "low", "none"] }
+        }, "required": ["krok", "miesto", "co_vidi_zakaznik", "problem", "dokaz", "zavaznost"] }
+      },
+      "ponuky": {
+        "type": "array",
+        "items": { "type": "object", "properties": {
+          "nazov": { "type": "string" },
+          "zdroj": { "type": "string" },
+          "v_rezervacnom_systeme": { "type": "string", "enum": ["ano", "nie", "neoverene"] },
+          "cena_sedi": { "type": "string", "enum": ["ano", "nie", "neoverene"] },
+          "poznamka": { "type": "string" }
+        }, "required": ["nazov", "zdroj", "v_rezervacnom_systeme", "cena_sedi"] }
+      },
+      "meranie": {
+        "type": "object", "properties": {
+          "utm_na_odkazoch": { "type": "string", "enum": ["ano", "nie", "neoverene"] },
+          "zdroj_rezervacii": { "type": "string", "description": "odkiaľ majiteľ vie počet rezervácií (export rezervačného systému, recepcia)" }
+        }, "required": ["utm_na_odkazoch", "zdroj_rezervacii"]
+      },
+      "otazky_majitelovi": { "type": "array", "items": { "type": "string" } },
+      "netestovane": { "type": "array", "items": { "type": "string" } }
+    },
+    "required": ["prevadzka", "kroky", "ponuky", "meranie", "otazky_majitelovi", "netestovane"]
+  },
+  "NAVRH_ODPOVEDE": {
+    "type": "object",
+    "properties": {
+      "platforma": { "type": "string", "description": "Google, Instagram, Facebook; dátum recenzie" },
+      "typ": { "type": "string", "enum": ["pochvala", "vyhrada", "staznost", "mimo-temy", "podozriva"] },
+      "citat": { "type": "string", "description": "doslovná časť recenzie, na ktorú odpoveď reaguje" },
+      "uznany_problem": { "type": "string", "description": "konkrétne, čo sa stalo; pri pochvale prázdne" },
+      "navrh": { "type": "string", "description": "verejná odpoveď; bez frázy „za prípadné nepríjemnosti“, bez hádky" },
+      "osobne_udaje_v_navrhu": { "type": "boolean", "description": "musí byť false: žiadne mená, termíny, ošetrenia, zdravotné údaje, čísla rezervácií" },
+      "co_overit_u_majitela": { "type": "array", "items": { "type": "string" }, "description": "každý fakt, ktorý návrh tvrdí" },
+      "navrh_napravy": { "type": "string", "description": "čo môže majiteľ ponúknuť súkromne; rozhoduje on" },
+      "kto_rozhoduje": { "type": "string", "enum": ["majitel"] }
+    },
+    "required": ["platforma", "typ", "citat", "uznany_problem", "navrh", "osobne_udaje_v_navrhu", "co_overit_u_majitela", "navrh_napravy", "kto_rozhoduje"]
+  },
+  "ESKALACIA": {
+    "type": "object",
+    "properties": {
+      "uloha": { "type": "string" },
+      "pokusy": {
+        "type": "array", "minItems": 1,
+        "items": { "type": "object", "properties": {
+          "kolo": { "type": "integer", "minimum": 1 },
+          "nalezy": { "type": "array", "items": { "type": "string" } },
+          "oprava": { "type": "string" },
+          "preco_stale_fail": { "type": "string" }
+        }, "required": ["kolo", "nalezy", "oprava", "preco_stale_fail"] }
+      },
+      "pricina": { "type": "string", "description": "jednorazové alebo opakujúce sa; bol rozsah zadaný dobre?" },
+      "moznosti": {
+        "type": "array", "minItems": 2, "maxItems": 4,
+        "items": { "type": "object", "properties": {
+          "druh": { "type": "string", "enum": ["rozdelit", "zmenit-pristup", "prijat-s-obmedzenim", "odlozit"] },
+          "popis": { "type": "string" },
+          "plus": { "type": "string" },
+          "minus": { "type": "string" }
+        }, "required": ["druh", "popis", "plus", "minus"] }
+      },
+      "odporucanie": { "type": "string" },
+      "dopad": { "type": "string", "description": "čo uvidí zákazník alebo divák pri každej možnosti" },
+      "kto_rozhoduje": { "type": "string", "enum": ["majitel", "hlavna-relacia"] }
+    },
+    "required": ["uloha", "pokusy", "pricina", "moznosti", "odporucanie", "dopad", "kto_rozhoduje"]
+  }
+}

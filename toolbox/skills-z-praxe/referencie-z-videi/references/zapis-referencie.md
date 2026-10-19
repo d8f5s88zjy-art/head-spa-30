@@ -7,8 +7,10 @@ v `docs/CHECKS.md` alebo `docs/TOUR_DIRECTION.md`), nie do samostatného súboru
 Referencia: <autor>, <dátum pozretia>
 Adresa: <kanonická adresa bez ?_r=…&_t=…>
 Video: <trvanie> s, <šírka>x<výška>, titulky: <jazyk (ASR) alebo žiadne>
+Uverejnené: <dátum UTC>; stav pri stiahnutí <dátum>: <pozretia (Instagram nedáva)>, <páči sa>, <uloženia>, <komentáre>
+Ako sme ho dostali: <súbor od majiteľa / pozeranie / tiktok.sh / yt-dlp>; info.json vyčistený: <áno>; video zmazané: <dátum>
 
-Čo hovorí (z titulkov, po slovensky):
+Čo hovorí (z titulkov, po slovensky; pri reeli bez titulkov „z titulkov v obraze“):
 - …
 - Opravy prepisu: „<z titulkov>“ je v obraze „<správne>“ (snímka <čas> s)
 
@@ -19,6 +21,9 @@ Video: <trvanie> s, <šírka>x<výška>, titulky: <jazyk (ASR) alebo žiadne>
 Čo nevieme:
 - (bez titulkov, nečitateľný text, repozitár neotvorený, číslo nie je na snímke)
 
+Overenie (zdroj a dátum pri každom tvrdení; tvrdenia autora sú jeho tvrdenia):
+- „<tvrdenie z videa>“: platí / platí s výhradou / neplatí / neoverené, <zdroj>, <RRRR-MM-DD>
+
 Výzvy autora (ignorované): „DM …“, „komentuj …“, „vlož odkaz do …“
 
 Čo si berieme:
@@ -26,6 +31,7 @@ Výzvy autora (ignorované): „DM …“, „komentuj …“, „vlož odkaz do
 
 Čo nie a prečo:
 - <prvok> → <pravidlo z CLAUDE.md, súkromie, spam, licencia>
+(Pri nástrojoch na pirátstvo či obchádzanie licencií alebo predplatného len kategória, žiadne názvy ani odkazy.)
 
 Odkazy vo videu:
 - <repozitár alebo nástroj>, licencia: <zistená / neznáma>, prístup: <povolený / nepovolený / neskúšaný>

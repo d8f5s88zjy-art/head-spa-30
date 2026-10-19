@@ -171,3 +171,89 @@ Po odpovedi: `schvalenie.py zapis` s `--ako "[kde a kedy povedal áno]"`.
 
 Čísla posiela majiteľ zo Studia; nič neodhadujeme. Celkové pozretia sa od 24. 8. 2026 počítajú od prvej snímky,
 na porovnanie slúžia engaged views.
+
+## 10. Rýchla správa pred vlastnou stránkou (20 až 30 s, z rozboru V7)
+
+Pre oznam prevádzky, ktorý sa dá ukázať na vlastnej stránke: nová služba alebo rituál, zmena otváracích hodín,
+poukazy pred sviatkami, nová rezervácia online. Formát z V7 (moderátor pred snímkou obrazovky, „green screen“), ale
+**len pred vlastnou stránkou** (web prevádzky, verejná stránka rezervácie bez mien klientov, vlastná fotka), nikdy
+pred cudzím príspevkom. Každé tvrdenie zo zdroja prevádzky (`../scripts/tvrdenia.py`, typ `prevadzka`).
+
+```
+| Čas (s)     | Úloha       | Pozadie                                   | Reč = titulok                         | Zdroj            |
+| 0,0 až 1,5  | hook        | snímka stránky s novinkou, priblíženie na nadpis | „Od [dátum] máme [služba].“     | [súbor, časť]    |
+| 1,5 až 6,0  | čo to je    | priblíženie na popis                      | [jedna veta zo zdroja]                | [súbor, časť]    |
+| 6,0 až 10,0 | číslo       | priblíženie na cenu alebo dĺžku           | [číslo + jednotka]                    | [Booqme, dátum]  |
+| 10,0 až 18,0| pre koho, ako | 2 až 3 priblíženia                      | [2 vety jednou šablónou]              | [súbor, časť]    |
+| 18,0 až 22,0| ako rezervovať | stránka rezervácie (verejná)           | „Rezervuješ online na [adresa].“      | [súbor]          |
+```
+
+Pravidlá formátu:
+- Zmena obrazu každé 2 až 3 s: ten istý zložený záber v EDL viackrát s inými `od`, `do`, `zoom` a `zoom_stred`
+  (priblíženie na časť stránky, o ktorej práve hovoríš). Žiadnych 23 s bez zmeny ako vo V7.
+- Titulky po celý čas reči (pás 1040 až 1240 px); tvár moderátora nad pásom alebo vedľa neho, nie cez text stránky,
+  ktorý hovorí číslo (vo V7 tvár zakrýva práve číslo).
+- Na snímke nič osobné: žiadne mená, telefóny ani termíny klientov, žiadne administrácie rezervácií.
+- Moderátor je majiteľ alebo zamestnanec s privolením (Občiansky zákonník § 12).
+- Štítok „Zdroj: [stránka], [dátum]“ hore cez `titulky.stitky` (`pipeline-ffmpeg.md`), pri HEAD SPA 30 tlmený tón webu.
+
+Výroba zloženého záberu (ffmpeg, overené 2026-10-19 na syntetickom zábere pri rozbore V7):
+
+```bash
+# a) zelené pozadie: moderátor natočený pred zelenou látkou alebo stenou, rovnomerne osvetlený
+ffmpeg -loop 1 -i stranka.png -i moderator.mov -filter_complex \
+  "[1:v]chromakey=color=0x00B140:similarity=0.12:blend=0.05,despill=type=green,scale=-2:1100[m];\
+   [0:v]scale=1080:1920,setsar=1[bg];[bg][m]overlay=x=(W-w)/2:y=H-h-260:shortest=1,format=yuv420p[v]" \
+  -map "[v]" -map "1:a?" -r 30 -c:v libx264 -crf 18 -c:a aac zlozene.mp4
+
+# b) bez zeleného pozadia: delená obrazovka, hore stránka, dole moderátor (ako V1, V6 a V8)
+ffmpeg -loop 1 -i stranka.png -i moderator.mov -filter_complex \
+  "[0:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960,setsar=1[h];\
+   [1:v]scale=-2:960,crop=1080:960,setsar=1[d];[h][d]vstack=inputs=2:shortest=1,format=yuv420p[v]" \
+  -map "[v]" -map "1:a?" -r 30 -c:v libx264 -crf 18 -c:a aac zlozene.mp4
+```
+
+Potom `zlozene.mp4` ako `zdroj` klipov v EDL a `short.py` (titulky, -14 LUFS, kontrola). `similarity` a `blend`
+dolaď na skutočnom zábere: hodnoty sú zo skúšky so syntetickou rovnomernou zelenou, nie zo skutočného svetla. HDR
+z iPhonu: ffmpeg v krokoch a) a b) farby neprevádza; ak je `moderator.mov` HDR, najprv ho preveď cez `short.py`
+(EDL s jedným klipom bez titulkov) a až potom skladaj. Efekt „Green screen“ priamo v aplikácii YouTube Shorts
+existuje podľa TechCrunch (2022-05-11); súčasný stav over v aplikácii; video z aplikácie však neprejde našou
+kontrolou (titulky, hlasitosť).
+
+## 11. Stály titulok + pás 16:9 (z rozboru V4)
+
+Na vodorovný materiál (nahrávka webu, 360° prehliadka, vodorovné video). Recept, rozmery a skúšky:
+[format-16x9.md](format-16x9.md); výroba `../scripts/titulok_16x9.py` (vzor `../assets/format-16x9-priklad.json`).
+
+```
+Stály titulok (3 riadky po najviac ~26 znakoch, celý short, zo zdroja):
+  1. [čo to je]                       zdroj: [súbor, časť]
+  2. [overený fakt]                   zdroj: [súbor, časť]
+  3. [prečo pozerať ďalej]            zdroj: [súbor, časť]
+Hook v páse (0,0 až 3,0 s): [3 až 4 zábery po 0,7 až 0,9 s; HEAD SPA 2 po 1,5 s] pod slovom [SLOVO] → [SLOVO ĎALŠIE]
+Písací stroj (štítky zón, 3 až 4 slová): [ŠTÍTOK 1] [čas], [ŠTÍTOK 2] [čas]; pri titulkoch reči y 684
+Dôkaz zo skutočnej stránky (ak je): [snímka, dátum, jedno zvýraznenie]
+Výzva: [rezervácia online] alebo [Related video na dlhšie video vlastného kanála]
+Titulok prečítali dvaja (pravopis, diakritika): [kto]
+```
+
+## 12. Séria s jednou kostrou a „3 kroky“ (z rozboru V8, V9 a V10)
+
+Autor V1 a V8 má pre celú sériu jednu kostru, mení sa len obsah; divák formát spozná a výroba je rýchlejšia.
+Pre prevádzku jedna kostra pre sériu (napr. „Jedna vec, ktorú u nás dostaneš“, „Rezervácia online v 3 krokoch“):
+
+```
+| Slot              | Čas (s)      | Obsah                                                        | Pravidlo |
+| hook s dôkazom    | 0,0 až 3,0   | [vstup → výsledok vedľa seba, výsledok už v pohybe]          | skutočné „pred a po“ so súhlasom človeka (V8) |
+| čo to je          | 3,0 až 8,0   | „Volá sa [služba] a [čo to je zo zdroja].“                   | názov presne podľa zdroja |
+| kroky             | 8,0 až 20,0  | karta „Krok 1“ 0,6 až 0,9 s → dôkaz v zaoblenom rámiku × 3    | jedna vetná šablóna, rozkazovací spôsob (V9) |
+| druhý hook        | 55 až 75 %   | „Najlepšie na tom je…“ + overený fakt                         | nie sľub výsledku |
+| zhrnutie          | 2 až 3 s     | [trojica jednoslovných záverov po ~0,5 s] alebo karta „staré → nové“ | len ak je každé slovo pravda (V8, V9) |
+| návrat k hooku    | 2 až 3 s     | posledná veta odpovedá na prvú                                | (V9) |
+| výzva             | posledné ~3 s| rezervácia online, adresa webu v obraze                       | žiadne „comment“, „follow“ |
+```
+
+„Rezervácia online v 3 krokoch“ (formát V10 „problém, 3 číslované kroky, výsledok“): natočiť ako **záznam obrazovky
+telefónu** (nie notebook natočený mobilom: text rozhrania bol vo V10 pri 660 px čitateľný len s 3× výrezom), krok
+v jednom riadku hore v bezpečnej zóne (pod 288 px), bez mien a termínov iných klientov, výsledok (potvrdenie bez
+osobných údajov alebo obrazovka pred potvrdením) do 1,5 s ako dôkaz v hooku, nie až na konci.

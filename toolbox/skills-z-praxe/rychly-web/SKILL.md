@@ -1,6 +1,6 @@
 ---
 name: rychly-web
-description: Rýchly a plynulý statický web, Lighthouse mobil 95+ a desktop 100 (LCP, FCP, CLS, TBT, Speed Index) a plynulý skrol 60 až 240 Hz bez sekania (jank). Použi pri meraní a ladení výkonu (Lighthouse, PageSpeed Insights, Core Web Vitals, simulate vs observed, Lantern), pri ťažkých obrázkoch na telefóne (AVIF, WebP, srcset, preload), pri posune rozloženia (layout shift), pri sekaní skrolu (style recalc, CSS premenné, requestAnimationFrame, IntersectionObserver, backdrop-filter) a pri overovaní nálezov auditu výkonu meraním.
+description: Rýchly a plynulý statický web, Lighthouse mobil 95+ a desktop 100 (LCP, FCP, CLS, TBT, Speed Index) a plynulý skrol 60 až 240 Hz bez sekania (jank). Pohyb bez knižnice (nástup pri skrole, svetlo cez transform, Motion a komponenty z 21st.dev prepísané do vanilla JS, vzor assets/pohyb s testom). Použi pri meraní a ladení výkonu (Lighthouse, PageSpeed Insights, Core Web Vitals, simulate vs observed, Lantern), pri ťažkých obrázkoch na telefóne (AVIF, WebP, srcset, preload), pri posune rozloženia (layout shift), pri sekaní skrolu (style recalc, CSS premenné, requestAnimationFrame, IntersectionObserver, backdrop-filter) a pri overovaní nálezov auditu výkonu meraním.
 ---
 
 # Rýchly a plynulý web
@@ -17,6 +17,9 @@ Zásada: **meraj, oprav jednu vec, meraj znova tou istou metódou.** Dojem ani t
 - Pomalý prvý obraz (LCP, FCP), posun rozloženia (CLS), dlhé úlohy (TBT).
 - Skrol, animácie alebo pohyblivé pozadie na telefóne sekajú, ventilátor či batéria trpia v pokoji.
 - Audit výkonu navrhol úpravy a treba rozhodnúť, ktoré naozaj pomôžu.
+- Nástup prvkov pri skrole, svetlo v pozadí, Motion (Framer Motion) alebo komponent z 21st.dev, Aceternity či
+  Magic UI na statickom webe: [references/pohyb-bez-kniznice.md](references/pohyb-bez-kniznice.md) a vzor
+  `assets/pohyb/` (vlastný kód bez knižnice, test v Chromiu 28 kontrol).
 
 Nepoužívaj na samotný WebGL film (renderer, adaptívne DPR, nahrávanie textúr): to je skill `film-z-fotiek`
 ([references/vykon.md](../film-z-fotiek/references/vykon.md)); video pri skrolovaní je `video-a-sekvencie`.
@@ -216,6 +219,10 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | `grid-row` len na prvom popise v stĺpci mriežky; ďalšie popisy auto-umiestnenie dalo do prvého voľného riadku (nad prvý) | explicitný `grid-row` pre každý prvok, ktorý má sedieť vedľa riadkov iného gridu |
 | Lighthouse telefón 96 prístupnosť: odkazy v pätke za `<br>` pod sebou majú ciele pod 24 px | `display:inline-block;padding:5px 0` (ciele 24 px a odstup) |
 | Skript v hlavičke pre jazyk (+106 B) posunul HTML cez prvé okno TCP (prenos 14 616 B), LCP na telefóne 2,6 → 3,1 s | dlhé komentáre z hlavičky presunúť do README, záložné odkrytie po 2,5 s do CSS animácie; HTML 14 160 B, LCP opäť 2,6 s (BARBERSHOP 30, jazyky, 10/2026) |
+| Svetlo („aurora“ z 21st.dev, video V9) cez `background-position`: 428 až 1 049 ms hlavného vlákna, 153 až 180 prepočtov štýlu a 308 až 360 prekreslení za 3 s (telefón, CPU 4×) | hýbať vrstvou cez `transform`: 9 až 28 ms, 0 prekreslení; mimo obrazovky `is-off` (`references/pohyb-bez-kniznice.md`, 10/2026) |
+| Knižnica pohybu z CDN s `@latest` (dokumentácia Motion ho ukazuje) | nič z CDN; ak treba, pripnutá verzia v repozitári s licenciou, načítaná po prvom obraze |
+| Odhalenie pri skrole skryje aj nadpis úvodu, kým nepríde skript | `data-pohyb` len pod prvou obrazovkou; skrývať len v `@media (scripting: enabled)` so zálohou 3 s v CSS, bez inline skriptu v `<head>` (vzor `assets/pohyb/`) |
+| „Copy prompt“ komponentu z 21st.dev vloží do Claude Code 710 riadkov React a Tailwind kódu (video V9) | komponent prečítať, zapísať čo sa hýbe, prepísať po svojom; licenciu komponentu over (MIT, „unknown“, „All Rights Reserved“) |
 
 ## V tomto repozitári
 
@@ -229,6 +236,11 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
   `cv-all`, `backdrop-filter: none` na telefóne), `assets/app.js` (`idle()` cez `requestIdleCallback`),
   `tools/build.mjs` (esbuild, výstup `*.min.*`; esbuild v `PATH` alebo `ESBUILD=`), README časti Rýchlosť a
   prístupnosť, Výkon na mobile.
+- Vzor pohybu bez knižnice: `assets/pohyb/pohyb.js` (IntersectionObserver a Web Animations API, 4,0 kB s
+  komentármi), `pohyb.css` (nástup, svetlo cez `transform`, záloha 3 s), `ukazka.html`, `test-pohyb.cjs`
+  (Playwright, telefón 390×844 aj počítač 1440×900: prvá obrazovka bez `data-pohyb`, postupný nástup, príchod cez
+  `#kotvu`, zníženie pohybu, bez JS, bez a s neskorým `pohyb.js`, CLS 0, pretečenie, pauza svetla); 2026-10-19
+  28 z 28 trikrát za sebou aj z umiestnenia v toolboxe. Návod: [references/pohyb-bez-kniznice.md](references/pohyb-bez-kniznice.md).
 - Rozdiel: brána HEAD SPA 30 v `index.html` ešte vytvára WebGL2 kontext v hlavičke (`getContext('webgl2')`), čo na
   BARBERSHOP 30 oneskorilo prvý obraz telefónu o 1 s. Pred zmenou zmeraj (časť 1).
 
@@ -244,3 +256,4 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 - [ ] `skrol-vlakno.mjs` pred a po: štýl ani úlohy na snímku nestúpli.
 - [ ] Naživo: Lighthouse telefón aspoň 5 behov (medián 95+), počítač 2 behy (100); čísla do kontrol.
 - [ ] `prefers-reduced-motion` a `saveData` dajú pokojnú verziu.
+- [ ] Ak stránka používa `data-pohyb` (vzor `assets/pohyb/`): `test-pohyb.cjs` proti stránke projektu vráti kód 0.

@@ -1,0 +1,28 @@
+{
+ "popis": "Vzor konfigurácie pre scripts/titulok_16x9.py (formát stály titulok + pás 16:9, references/format-16x9.md). Cesty sú relatívne k tomuto súboru: vedľa neho zabery/ (vodorovné videá prevádzky). Texty sú zástupné, skutočné len zo zdrojov prevádzky. Písma sa berú z assets/pisma skillu. Pole popis skript ignoruje.",
+ "vystup": "out/short-16x9.mp4",
+ "fps": 30,
+ "pas_y": 640,
+ "titulok": {
+  "riadky": ["[Veta 1: čo to je]", "[Veta 2: overený fakt]", "[Veta 3: prečo pozerať ďalej]"],
+  "pismo": "Manrope Titulky", "velkost": 68, "spodok": 590, "rozostup": 70
+ },
+ "kineticke_pismo": "Bebas Titulky",
+ "zabery": [
+  {"subor": "zabery/vodorovne-01.mp4", "od": 0.5, "dlzka": 0.8, "fy": 0.5},
+  {"subor": "zabery/vodorovne-02.mp4", "od": 0.5, "dlzka": 0.8, "fy": 0.5},
+  {"subor": "zabery/vodorovne-03.mp4", "od": 0.5, "dlzka": 0.9, "fy": 0.5},
+  {"subor": "zabery/vodorovne-04.mp4", "od": 1.0, "dlzka": 3.0, "fy": 0.5, "priblizenie": 0.05},
+  {"subor": "zabery/vodorovne-05.mp4", "od": 1.0, "dlzka": 3.0, "fy": 0.5}
+ ],
+ "kineticky": [
+  {"text": "[SLOVO]", "od": 0.2, "do": 0.9, "velkost": 230},
+  {"text": "[SLOVO ĎALŠIE]", "od": 0.9, "do": 2.5, "velkost": 230}
+ ],
+ "pisaci_stroj": [
+  {"text": "[ŠTÍTOK 1]", "od": 2.75, "do": 5.5, "x": 64, "y": 684, "cps": 22},
+  {"text": "[ŠTÍTOK 2]", "od": 5.75, "do": 8.5, "x": 64, "y": 684, "cps": 22}
+ ],
+ "kurzor_farba": "D4B062",
+ "oznacenie": ""
+}

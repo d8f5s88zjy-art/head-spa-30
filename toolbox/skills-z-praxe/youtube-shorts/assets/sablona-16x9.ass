@@ -1,0 +1,42 @@
+[Script Info]
+; Šablóna formátu „stály titulok + pás 16:9“ (rozbor V4, references/format-16x9.md) pre short 1080×1920:
+; stály titulok hore, pás 16:9 na y 640..1247, čierny spodok (1248..1919 = dolná zóna YouTube).
+; Napáliť jedno vodorovné video (priečinok pisma/ = kópia assets/pisma):
+;   ffmpeg -i vodorovne.mp4 -vf "fps=30,scale=1080:608:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:608,setsar=1,pad=1080:1920:0:640:black,ass=sablona-16x9.ass:fontsdir=pisma,format=yuv420p" -c:v libx264 -crf 18 -c:a aac -b:a 160k -movflags +faststart short-16x9.mp4
+; Hudbu, -14 LUFS, titulky reči a kontrolu 11 bodov dopĺňa potom scripts/short.py (EDL s jedným klipom).
+; Písmo „Manrope Titulky“ = assets/pisma/ManropeTitulky-700.ttf (Manrope 700, SIL OFL 1.1, OFL.txt).
+; Každý riadok titulku je samostatná udalosť s \pos, aby bol rozostup presne 70 px (libass ho inak berie z písma).
+; Namerané v skúške: veľkosť 68 → verzálka 36 px (V4 37 px), riadky 399..580 px, šírka do 602 px pri 26 znakoch.
+; Najviac 3 riadky po ~26 znakov, šírka do 690 px (x 195..885), aby ostal mimo pravého pásu tlačidiel YouTube.
+; Farby ASS sú &HAABBGGRR. Kurzor písacieho stroja: zúžené „|“ (\fscx30) vo farbe akcentu, plné „|“ v Manrope vyzerá ako I.
+; Ak short má titulky reči (pás 1040..1240 zo short.py), písací stroj daj hore do pásu: \pos(64,684).
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Titulok,Manrope Titulky,68,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,0,0,0,1
+Style: Pisaci,Manrope Titulky,60,&H00FFFFFF,&H00FFFFFF,&H50000000,&H00000000,0,0,0,0,100,100,3,0,1,6,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+; Príklad HEAD SPA 30: vety z index.html (nadpis sekcie rituálu „Nie umytie vlasov. Rituál pre hlavu.“ a podnadpis
+; „Začína teplou vodou a končí tichom.“), prečítané 2026-10-19; pred použitím znova over zo zdroja.
+; Koniec (0:00:35.00) nastav na dĺžku shortu.
+Dialogue: 2,0:00:00.00,0:00:35.00,Titulok,,0,0,0,,{\an2\pos(540,450)}Nie umytie vlasov.
+Dialogue: 2,0:00:00.00,0:00:35.00,Titulok,,0,0,0,,{\an2\pos(540,520)}Rituál pre hlavu.
+Dialogue: 2,0:00:00.00,0:00:35.00,Titulok,,0,0,0,,{\an2\pos(540,590)}Začína teplou vodou.
+; Písací stroj (dlhšie popisy generuje scripts/titulok_16x9.py): HEAD SPA pomalšie, ~12 znakov/s, kurzor zlatý (zástupná farba)
+Dialogue: 1,0:00:03.00,0:00:03.08,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}T{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.08,0:00:03.17,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TE{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.17,0:00:03.25,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEP{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.25,0:00:03.33,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPL{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.33,0:00:03.42,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.42,0:00:03.50,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ {\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.50,0:00:03.58,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ V{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.58,0:00:03.67,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ VO{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.67,0:00:03.75,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ VOD{\fscx30\fscy115\1c&H5CA4C9&}|
+Dialogue: 1,0:00:03.75,0:00:05.50,Pisaci,,0,0,0,,{\an7\pos(64,1100)\blur6}TEPLÁ VODA{\fscx30\fscy115\1c&H5CA4C9&}|

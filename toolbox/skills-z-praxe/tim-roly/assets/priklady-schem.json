@@ -1,0 +1,56 @@
+{
+  "NAVRH_OBSAHU": {
+    "platne": [{
+      "prevadzka": "PRÍKLAD", "druh": "short", "tvrdenie": "<jedna myšlienka>",
+      "hooky": [{ "text": "<hook 1>", "skore": 61 }, { "text": "<hook 2>", "skore": 48 }, { "text": "<hook 3>", "skore": 55 }],
+      "odporucany_hook": 0,
+      "vety": [{ "veta": "<veta>", "zdroj": "instagram-salon/references/fakty-<prevádzka>.md, časť <X>" }],
+      "vyzva": "<rezervácia online zo zdroja>", "zabery": ["<skutočný záber>"], "treba_potvrdit": [],
+      "kontrola": { "kazda_veta_ma_zdroj": true, "bez_em_dash": true, "bez_zmienky_o_ai": true, "bez_superlativov_bez_dokazu": true }
+    }],
+    "neplatne": [
+      { "prevadzka": "PRÍKLAD", "druh": "short", "tvrdenie": "x", "hooky": [{ "text": "a", "skore": 1 }], "odporucany_hook": 0, "vety": [], "vyzva": "x", "zabery": [], "treba_potvrdit": [], "kontrola": { "kazda_veta_ma_zdroj": true, "bez_em_dash": true, "bez_zmienky_o_ai": true, "bez_superlativov_bez_dokazu": true } },
+      { "prevadzka": "PRÍKLAD", "druh": "tiktok", "tvrdenie": "x", "hooky": [], "odporucany_hook": 0, "vety": [], "vyzva": "x", "zabery": [], "treba_potvrdit": [], "kontrola": {} }
+    ]
+  },
+  "AUDIT_CESTY": {
+    "platne": [{
+      "prevadzka": "PRÍKLAD",
+      "kroky": [{ "krok": "web", "miesto": "<URL>", "co_vidi_zakaznik": "<opis>", "problem": "", "dokaz": "<snímka.png>", "zavaznost": "none" }],
+      "ponuky": [{ "nazov": "<ponuka>", "zdroj": "<súbor:riadok>", "v_rezervacnom_systeme": "neoverene", "cena_sedi": "neoverene" }],
+      "meranie": { "utm_na_odkazoch": "nie", "zdroj_rezervacii": "<export alebo recepcia>" },
+      "otazky_majitelovi": ["<D1>"], "netestovane": ["platba"]
+    }],
+    "neplatne": [
+      { "prevadzka": "PRÍKLAD", "kroky": [{ "krok": "web", "miesto": "x", "co_vidi_zakaznik": "x", "problem": "", "dokaz": "x", "zavaznost": "kriticka" }], "ponuky": [], "meranie": { "utm_na_odkazoch": "ano", "zdroj_rezervacii": "x" }, "otazky_majitelovi": [], "netestovane": [] },
+      { "prevadzka": "PRÍKLAD", "kroky": [], "ponuky": [], "otazky_majitelovi": [], "netestovane": [] }
+    ]
+  },
+  "NAVRH_ODPOVEDE": {
+    "platne": [{
+      "platforma": "Google, <dátum>", "typ": "staznost", "citat": "<doslovná časť>", "uznany_problem": "<čo sa stalo>",
+      "navrh": "<návrh odpovede>", "osobne_udaje_v_navrhu": false, "co_overit_u_majitela": ["<fakt>"],
+      "navrh_napravy": "<súkromne, rozhodne majiteľ>", "kto_rozhoduje": "majitel"
+    }],
+    "neplatne": [
+      { "platforma": "x", "typ": "staznost", "citat": "x", "uznany_problem": "x", "navrh": "x", "osobne_udaje_v_navrhu": false, "co_overit_u_majitela": [], "navrh_napravy": "x", "kto_rozhoduje": "agent" },
+      { "platforma": "x", "typ": "staznost", "citat": "x", "uznany_problem": "x", "navrh": "x", "osobne_udaje_v_navrhu": "nie", "co_overit_u_majitela": [], "navrh_napravy": "x", "kto_rozhoduje": "majitel" }
+    ]
+  },
+  "ESKALACIA": {
+    "platne": [{
+      "uloha": "<short pre prevádzku>",
+      "pokusy": [{ "kolo": 1, "nalezy": ["<FAIL kritérium>"], "oprava": "<čo opravár zmenil>", "preco_stale_fail": "<dôvod>" }],
+      "pricina": "<príčina>",
+      "moznosti": [
+        { "druh": "zmenit-pristup", "popis": "<nový záber>", "plus": "<>", "minus": "<>" },
+        { "druh": "prijat-s-obmedzenim", "popis": "<bez záberu X>", "plus": "<>", "minus": "<>" }
+      ],
+      "odporucanie": "<A, lebo…>", "dopad": "<čo uvidí divák>", "kto_rozhoduje": "majitel"
+    }],
+    "neplatne": [
+      { "uloha": "x", "pokusy": [], "pricina": "x", "moznosti": [{ "druh": "odlozit", "popis": "x", "plus": "x", "minus": "x" }], "odporucanie": "x", "dopad": "x", "kto_rozhoduje": "majitel" },
+      { "uloha": "x", "pokusy": [{ "kolo": 0, "nalezy": [], "oprava": "x", "preco_stale_fail": "x" }], "pricina": "x", "moznosti": [{ "druh": "pokracovat-bez-cloveka", "popis": "x", "plus": "x", "minus": "x" }, { "druh": "odlozit", "popis": "x", "plus": "x", "minus": "x" }], "odporucanie": "x", "dopad": "x", "kto_rozhoduje": "studio-producer" }
+    ]
+  }
+}

@@ -312,7 +312,13 @@ Agent nevidí rozhovor ani ostatných agentov; vie len to, čo je v zadaní (a v
    a verdikt, pole pre ďalšiu fázu (`notes_for_integrator`, `open_issues`), cesty k súborom namiesto veľkého obsahu
    (`report_path`, `shots`, `diff`), pri textoch pole `facts` so zdrojom každého údaja.
 5. **Stav predchádzajúcej fázy** vložený orezaný: `${integ.summary.slice(0, 1500)}`, nálezy
-   `${JSON.stringify(todo, null, 1).slice(0, 24000)}`.
+   `${JSON.stringify(todo, null, 1).slice(0, 24000)}`; pri odovzdaní medzi rolami odovzdávací blok (stav, súbory,
+   merateľné kritériá prijatia, požadovaný dôkaz, komu výstup ide; `../tim-roly/references/sablony-rol.md`, časť 0).
+6. **Jedno meno roly všade**: v zadaní, v `label`, v názve schémy a v odkazoch iných rolí. Orchestrátor Agency
+   Agents volá „ArchitectUX“ a „EvidenceQA“, hoci agenti sa volajú „UX Architect“ a „Evidence Collector“;
+   odovzdanie potom stojí na tom, či model mená uhádne (rozbor 2026-10-19, `../tim-roly/references/agency-agents.md`).
+7. **Nástroje vymenovať.** Subagent Claude Code bez poľa `tools` dedí všetky nástroje (code.claude.com/docs/en/sub-agents);
+   v zadaní aj v definícii agenta napíš, čo smie (napr. `Read, Grep, Glob`) a čo nie (zápis, sieť, odosielanie).
 
 Citáty, katalóg rolí a všetky schémy z príkladov: [references/zadania-a-schemy.md](references/zadania-a-schemy.md).
 Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](references/priebeh-workflowov.md).

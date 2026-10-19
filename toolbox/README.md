@@ -22,7 +22,8 @@ licenciou Apache 2.0 (licencia je v každom priečinku):
 | `mcp-builder` | tvorba MCP serverov (prepojenie na iné služby) |
 
 `skills-animacie/` – skills na pohyb, 3D a vizuálnu identitu z verejných repozitárov
-(MIT), zoznam a pôvod v `skills-animacie/README.md`.
+(MIT), zoznam a pôvod v `skills-animacie/README.md`; ako spúšťať UI/UX Pro Max z Genjutsu
+v `skills-animacie/ui-ux-pro-max-u-nas.md`.
 
 `skills-z-praxe/` – naše vlastné postupy z prác na weboch HEAD SPA 30 a BARBERSHOP 30,
 spísané z kódu, ktorý na webe naozaj beží, a overené proti nemu. Prehľad je
@@ -31,16 +32,17 @@ v `skills-z-praxe/README.md`:
 | Skill | Na čo je |
 | --- | --- |
 | `instagram-salon` | návrhy príspevkov, reels, odpovedí, bio a týždenného plánu pre Instagram salónu, reklamy a dopyty bez automatiky (len návrhy, uverejňuje majiteľ) |
-| `referencie-z-videi` | ako sa poučiť z odkazu na TikTok: popis, titulky, video, prehľad snímok |
+| `referencie-z-videi` | ako sa poučiť z odkazu na TikTok alebo Instagram reel: popis, titulky, video, text zo snímok, zásada sťahovania, 17 rozobratých videí |
 | `film-z-fotiek` | film zo skutočných fotiek s hĺbkovou mapou na pozadí webu (WebGL2), strihy, kamera, zálohy |
 | `video-a-sekvencie` | plynulé video pri skrolovaní ako sekvencia snímok po 0,1 s, slučky videa bez švu |
-| `rychly-web` | Lighthouse mobil 95+ a desktop 100, plynulý skrol, pasce s CLS, LCP a prepočtom štýlu |
+| `rychly-web` | Lighthouse mobil 95+ a desktop 100, plynulý skrol, pasce s CLS, LCP a prepočtom štýlu, pohyb bez knižnice (nástup pri skrole, svetlo, Motion a 21st.dev do vanilla) |
 | `testy-a-nasadenie` | testy v prehliadači (Playwright), nasadenie na GitHub Pages, FTP balík |
 | `obsah-a-texty` | pravdivé texty po slovensky, zdroje faktov, šesť jazykov, štruktúrované dáta |
 | `booqme-rezervacie` | web napojený na Booqme (rezervácie, poukazy), zosúladenie po zmene v kalendári |
 | `workflowy` | práca s viacerými agentmi naraz: stavba, kontroly, porota návrhov, audit s overením |
-| `youtube-shorts` | YouTube Shorts zo skutočných záberov: recept, titulky, -14 LUFS, kontrola a balík na nahratie (nahráva majiteľ) |
-| `tim-roly` | tím rolí podľa gstack a ECC: otázky majiteľovi, revízie, recenzent, QA, bezpečnosť, release, brána dvoch recenzentov |
+| `youtube-shorts` | YouTube Shorts zo skutočných záberov: recept, titulky, -14 LUFS, kontrola a balík na nahratie (nahráva majiteľ); formát 16:9, fámy a štítok NEPOTVRDENÉ, strih podľa rytmu referencie |
+| `tim-roly` | tím rolí podľa gstack, ECC a Agency Agents: otázky majiteľovi, revízie, recenzent, QA, bezpečnosť, release, brána dvoch recenzentov, karta roly, roly pre obsah a predaj |
+| `3d-modely-na-web` | 3D modely na weby: rozhodnutie, licencie (TRELLIS.2 a závislosti), rozpočet GLB pre telefón, postup fotka → GLB → web, kontrola `glb_info.py` |
 
 `head-spa-30/` – prevádzka webu HEAD SPA 30: nahratie na Forpsi, kontrola nahratia, poukazy a ceny
 v Booqme, orez poukážok (skripty v `scripts/`, návody v `references/`, začína sa v `SKILL.md`).
