@@ -1,0 +1,364 @@
+{
+ "run": "ab-p-on-f4-cold-menu-cpu1-po",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "fast4g",
+  "cpu": 1,
+  "film": "on",
+  "cache": "cold",
+  "scen": "menu",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=on"
+ },
+ "snimok": 166,
+ "trvanie_s": 70.8,
+ "prvy_svetly_snimok_ms": 1361,
+ "fps_nahravky": 2.3,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 1,
+ "najdlhsie_ms": 449,
+ "spolu_ms": 449,
+ "tmave_zabery": [
+  {
+   "y": 2800,
+   "ms": 4152.752197265625,
+   "max": 0.265,
+   "file": "f00106.jpg"
+  },
+  {
+   "y": 3400,
+   "ms": 171.18505859375,
+   "max": 0.27,
+   "file": "f00101.jpg"
+  },
+  {
+   "y": 9800,
+   "ms": 116.959716796875,
+   "max": 0.279,
+   "file": "f00118.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 1361,
+   "do_ms": 1810,
+   "trvanie_ms": 449,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.906,
+   "tmava_celkom": 0.96,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "load",
+    "first-paint@1012",
+    "first-contentful-paint@1012",
+    "lcp:@1012"
+   ],
+   "cls": "karty world pro js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     1,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00002.jpg"
+   ]
+  },
+  {
+   "od_ms": 26592,
+   "do_ms": 26706,
+   "trvanie_ms": 114,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 5050.78125,
+   "scrollY_koniec": 5050.78125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "menu #tim"
+   ],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 6,
+    "T": 6,
+    "mix": 0,
+    "cur": "kreslo-stred-m",
+    "cut": null,
+    "frames": 74,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0000021220",
+    "seq": "51/51:|44/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00091.jpg",
+    "f00091.jpg",
+    "f00092.jpg"
+   ]
+  },
+  {
+   "od_ms": 62444,
+   "do_ms": 62556,
+   "trvanie_ms": 111,
+   "snimok": 1,
+   "max_tmavej_plochy": 0.864,
+   "tmava_celkom": 0.897,
+   "scrollY": 1097.1875,
+   "scrollY_koniec": 1097.1875,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 1.314,
+    "T": 1,
+    "mix": 0.004,
+    "cur": "rohozka-m",
+    "cut": "rohozka>sala pohyb",
+    "frames": 138,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0110000000",
+    "seq": "51/51:30,29,27,28,4|44/44:"
+   },
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00144.jpg",
+    "f00144.jpg",
+    "f00144.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

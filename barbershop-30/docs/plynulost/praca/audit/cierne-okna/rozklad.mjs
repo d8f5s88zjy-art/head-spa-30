@@ -106,6 +106,6 @@ for (let j = 0; j < jumps.length; j++) {
     // odhad na telefóne s grafikou: sieť + najdlhšie rozbalenie + snímky nahrávania po 16,7 ms + polovica nábehu (450 ms) zo šera
     odhad_realny_ms: tReady ? Math.round(Math.max(net, 0) + dec + frames.length * 16.7 + 225) : null });
 }
-fs.writeFileSync(path.join(here, `rozklad-${NAME}.json`), JSON.stringify({ ...out, raw: { st: P.st, bmp: P.bmp, res: P.res, jumps } }));
+fs.writeFileSync(path.join(here, `rozklad-${NAME}.json`), JSON.stringify({ ...out, raw: { st: P.st, bmp: P.bmp, res: P.res, raf: P.raf, jumps } }));
 console.log(JSON.stringify({ name: NAME, ready }, null, 0));
 for (const j of out.jumps) console.log(`${j.kotva.padEnd(11)} záber ${String(j.zaber).padEnd(18)} pripravený ${j.uz_pripraveny ? 'UŽ BOL' : (j.pripraveny_ms + ' ms')}  sieť ${j.siet_ms} ms  rozbalenie ${JSON.stringify(j.rozbalenie_ms.map((b) => b[1]))}  nahratie ${j.nahratie_snimok} snímok × ${j.snimka_ms} ms = ${j.nahratie_ms} ms  → odhad reálny telefón ${j.odhad_realny_ms} ms`);

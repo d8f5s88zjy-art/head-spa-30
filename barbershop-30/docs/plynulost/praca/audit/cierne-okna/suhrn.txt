@@ -1,0 +1,51 @@
+| nahrávka | zariadenie | sieť | CPU | film | cache | scenár | snímok/s | čierny prvý obraz ms | čiernych okien za behu >150 ms | najdlhšie ms | spolu ms | okná za behu (od ms+trvanie ms, plocha, scrollY) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ab-p-off-f4-warm-menu-po | phone DPR3 | fast4g | 4× | off | warm | menu | 24.8 | 258 | 1 | 210 | 210 | 45742+210 (0.69, y14124) |
+| ab-p-off-f4-warm-svih-po | phone DPR3 | fast4g | 4× | off | warm | svih | 15.5 | 0 | 0 | 0 | 0 |  |
+| ab-p-off-f4-warm-svih-po2 | phone DPR3 | fast4g | 4× | off | warm | svih | 19.8 | 0 | 1 | 190 | 190 | 15913+190 (0.31, y14121) |
+| ab-p-off-f4-warm-svih-pred | phone DPR3 | fast4g | 4× | off | warm | svih | 18.0 | 266 | 2 | 1048 | 1948 | 5547+900 (0.88, y2910); 6685+1048 (0.88, y3059) |
+| ab-p-off-f4-warm-svih-pred2 | phone DPR3 | fast4g | 4× | off | warm | svih | 16.6 | 0 | 5 | 1733 | 4070 | 4578+624 (0.88, y2348); 5592+1733 (0.88, y3003); 14201+203 (0.54, y10799); 15441+1331 (0.86, y13084); 16926+179 (0.62, y13816) |
+| ab-p-on-f4-cold-menu-cpu1-po | phone DPR1 | fast4g | 1× | on | cold | menu | 2.3 | 449 | 0 | 0 | 0 |  |
+| ab-p-on-f4-cold-menu-cpu1-pred | phone DPR1 | fast4g | 1× | on | cold | menu | 2.4 | 477 | 3 | 2885 | 3812 | 25885+2885 (0.88, y5051); 46590+264 (0.32, y9989); 58699+663 (0.92, y1097) |
+| d-def-f4-cold-svih | desk DPR1 | fast4g | 4× | default | cold | svih | 4.2 | 1227 | 0 | 0 | 0 |  |
+| d-def-s4-cold-uvod | desk DPR1 | slow4g | 4× | default | cold | uvod | 1.8 | 6391 | 0 | 0 | 0 |  |
+| d-off-s4-cold-menu | desk DPR1 | slow4g | 4× | off | cold | menu | 3.7 | 603 | 3 | 1125 | 2254 | 16776+1125 (0.79, y6196); 33490+585 (0.86, y13227); 48903+544 (0.81, y0) |
+| d-off-s4-cold-svih | desk DPR1 | slow4g | 4× | off | cold | svih | 5.9 | 3734 | 1 | 558 | 558 | 23387+558 (0.58, y2256) |
+| d-on-f4-cold-dvere | desk DPR1 | fast4g | 4× | on | cold | dvere | 1.9 | 1074 | 0 | 0 | 0 |  |
+| d-on-f4-cold-hore | desk DPR1 | fast4g | 4× | on | cold | hore | 1.0 | 1793 | 1 | 1177 | 1177 | 138468+1177 (0.43, y2972) |
+| d-on-f4-cold-jazyk | desk DPR1 | fast4g | 4× | on | cold | jazyk | 0.7 | 2376 | 1 | 1006 | 1006 | 197577+1006 (0.36, y2945) |
+| d-on-f4-cold-svih | desk DPR1 | fast4g | 4× | on | cold | svih | 1.3 | 992 | 2 | 1278 | 2432 | 75288+1278 (0.36, y2945); 257014+1154 (0.36, y2656) |
+| d-on-f4-cold-uvod | desk DPR1 | fast4g | 4× | on | cold | uvod | 3.7 | 1115 | 0 | 0 | 0 |  |
+| d-on-f4-warm-menu | desk DPR1 | fast4g | 4× | on | warm | menu | 1.8 | 393 | 3 | 7806 | 10547 | 31304+1191 (0.86, y3292); 39340+7806 (0.86, y1170); 53556+1550 (0.81, y5169) |
+| d-on-s4-cold-menu | desk DPR1 | slow4g | 4× | on | cold | menu | 2.4 | 3226 | 3 | 9850 | 13198 | 32862+1450 (0.81, y3060); 45789+1898 (0.85, y14186); 48331+9850 (0.86, y1170) |
+| p-def-f4-cold-uvod | phone DPR3 | fast4g | 4× | default | cold | uvod | 19.5 | 605 | 0 | 0 | 0 |  |
+| p-def-s4-cold-svih | phone DPR3 | slow4g | 4× | default | cold | svih | 19.5 | 2466 | 5 | 1922 | 6369 | 13700+686 (0.88, y2540); 14671+1588 (0.88, y3053); 16806+1922 (0.92, y9282); 19073+1785 (0.88, y12122); 31451+388 (0.88, y1441) |
+| p-off-f4-cold-jazyk | phone DPR3 | fast4g | 4× | off | cold | jazyk | 16.3 | 616 | 3 | 806 | 2003 | 13429+806 (0.88, y2798); 14489+499 (0.8, y3058); 15189+698 (0.8, y3058) |
+| p-off-f4-cold-menu | phone DPR3 | fast4g | 4× | off | cold | menu | 40.9 | 1170 | 4 | 359 | 1085 | 11253+322 (0.49, y3857); 11777+359 (0.83, y5051); 22014+152 (0.84, y9988); 27052+252 (0.84, y13145) |
+| p-off-f4-cold-pomaly | phone DPR3 | fast4g | 4× | off | cold | pomaly | 9.2 | 1100 | 0 | 0 | 0 |  |
+| p-off-f4-cold-svih | phone DPR3 | fast4g | 4× | off | cold | svih | 34.2 | 1072 | 6 | 989 | 3976 | 6032+507 (0.81, y970); 7439+151 (0.83, y1992); 8763+733 (0.33, y3910); 10125+761 (0.81, y5054); 18759+835 (0.76, y12604); 20090+989 (0.77, y13293) |
+| p-off-f4-warm-menu | phone DPR3 | fast4g | 4× | off | warm | menu | 24.6 | 0 | 2 | 1202 | 1456 | 11894+1202 (0.88, y2439); 23198+254 (0.88, y9988) |
+| p-off-f4-warm-svih | phone DPR3 | fast4g | 4× | off | warm | svih | 25.9 | 205 | 4 | 757 | 2646 | 4141+737 (0.77, y2061); 5226+634 (0.88, y3002); 6309+757 (0.81, y5348); 17177+518 (0.88, y11113) |
+| p-off-s4-cold-menu-b | phone DPR3 | slow4g | 4× | off | cold | menu | 12.8 | 3071 | 5 | 4134 | 5659 | 15856+4134 (0.88, y2291); 20978+507 (0.82, y5041); 27582+155 (0.84, y9988); 37552+171 (0.56, y12098); 51817+692 (0.25, y14124) |
+| p-off-s4-cold-menu | phone DPR3 | slow4g | 4× | off | cold | menu | 16.2 | 2932 | 4 | 3636 | 4713 | 16535+3636 (0.88, y3074); 21650+568 (0.82, y5049); 27316+293 (0.84, y9988); 51791+216 (0.25, y14124) |
+| p-off-s4-cold-svih | phone DPR3 | slow4g | 4× | off | cold | svih | 14.9 | 3032 | 5 | 4676 | 8157 | 9032+409 (0.88, y1517); 10816+1520 (0.88, y3056); 15231+186 (0.92, y9842); 15769+1366 (0.88, y13501); 20725+4676 (0.92, y13988) |
+| p-off-s4-cold-uvod | phone DPR3 | slow4g | 4× | off | cold | uvod | 32.3 | 3038 | 0 | 0 | 0 |  |
+| p-on-f4-cold-dvere | phone DPR1 | fast4g | 4× | on | cold | dvere | 9.5 | 169 | 0 | 0 | 0 |  |
+| p-on-f4-cold-hore | phone DPR1 | fast4g | 4× | on | cold | hore | 8.0 | 421 | 3 | 3893 | 7083 | 11723+745 (0.92, y3016); 13201+2445 (0.92, y9577); 25088+3893 (0.89, y0) |
+| p-on-f4-cold-jazyk | phone DPR1 | fast4g | 4× | on | cold | jazyk | 4.6 | 438 | 2 | 4909 | 5977 | 21173+1068 (0.88, y3052); 29756+4909 (0.88, y12757) |
+| p-on-f4-cold-menu-b | phone DPR1 | fast4g | 4× | on | cold | menu | 2.3 | 759 | 2 | 498 | 659 | 37565+161 (0.88, y5051); 70005+498 (0.86, y1097) |
+| p-on-f4-cold-menu-cpu1 | phone DPR1 | fast4g | 1× | on | cold | menu | 5.3 | 323 | 3 | 2494 | 3023 | 18004+205 (0.88, y4679); 47291+324 (0.92, y1097); 59493+2494 (0.92, y1152) |
+| p-on-f4-cold-menu | phone DPR1 | fast4g | 4× | on | cold | menu | 3.2 | 248 | 3 | 5072 | 5755 | 27437+5072 (0.88, y5051); 58335+294 (0.92, y1097); 70998+389 (0.89, y638) |
+| p-on-f4-cold-pomaly | phone DPR1 | fast4g | 4× | on | cold | pomaly | 1.7 | 684 | 0 | 0 | 0 |  |
+| p-on-f4-cold-svih | phone DPR1 | fast4g | 4× | on | cold | svih | 7.2 | 308 | 2 | 3497 | 6693 | 10404+3196 (0.88, y2975); 38088+3497 (0.88, y941) |
+| p-on-f4-cold-uvod | phone DPR3 | fast4g | 4× | on | cold | uvod | 7.3 | 494 | 0 | 0 | 0 |  |
+| p-on-f4-warm-menu | phone DPR1 | fast4g | 4× | on | warm | menu | 2.3 | 235 | 2 | 6188 | 6773 | 32437+6188 (0.27, y4226); 77329+585 (0.92, y1097) |
+| p-on-f4-warm-uvod | phone DPR1 | fast4g | 4× | on | warm | uvod | 10.2 | 160 | 0 | 0 | 0 |  |
+| p-on-n0-warm-menu-cpu1 | phone DPR1 | none | 1× | on | warm | menu | 2.5 | 216 | 2 | 240 | 416 | 23157+176 (0.88, y5051); 63209+240 (0.92, y1097) |
+| p-on-s4-cold-menu | phone DPR1 | slow4g | 4× | on | cold | menu | 4.3 | 492 | 4 | 1987 | 5547 | 37223+1283 (0.88, y5051); 44933+799 (0.82, y5051); 75751+1987 (0.92, y1097); 84191+1478 (0.88, y0) |
+| p-on-s4-cold-svih | phone DPR1 | slow4g | 4× | on | cold | svih | 6.1 | 882 | 4 | 2752 | 5135 | 23360+691 (0.92, y3012); 26556+694 (0.92, y9989); 37483+998 (0.92, y13944); 42145+2752 (0.92, y4912) |
+| p-on-s4-cold-uvod | phone DPR3 | slow4g | 4× | on | cold | uvod | 12.5 | 2009 | 0 | 0 | 0 |  |
+| p-on-s4-warm-svih | phone DPR1 | slow4g | 4× | on | warm | svih | 3.3 | 0 | 3 | 5890 | 13101 | 23503+3547 (0.55, y10569); 27489+3664 (0.79, y12034); 50871+5890 (0.92, y4802) |
+| p-rm-f4-cold-menu | phone DPR3 | fast4g | 4× | default+rm | cold | menu | 1.9 | 1752 | 4 | 1533 | 2902 | 10284+398 (0.79, y1097); 15003+1533 (0.92, y5051); 20552+294 (0.75, y2870); 25900+677 (0.92, y9989) |
+| p-rm-s4-cold-svih | phone DPR3 | slow4g | 4× | default+rm | cold | svih | 8.2 | 2485 | 6 | 1395 | 4505 | 13326+460 (0.78, y1548); 14015+1395 (0.88, y2416); 15799+511 (0.92, y9756); 19708+1087 (0.92, y14137); 20998+212 (0.76, y11142); 22269+840 (0.88, y4999) |
+| p-sd-s4-cold-menu | phone DPR3 | slow4g | 4× | default+saveData | cold | menu | 8.6 | 2489 | 2 | 3873 | 4163 | 19469+3873 (0.78, y2912); 35152+290 (0.76, y12925) |
