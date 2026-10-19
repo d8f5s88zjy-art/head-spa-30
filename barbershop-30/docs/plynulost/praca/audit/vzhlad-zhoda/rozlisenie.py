@@ -9,7 +9,7 @@ shots = []
 for m in re.finditer(r'<div class="film-shot[^"]*"([^>]*)>', html):
     a = dict(re.findall(r'data-([\w-]+)="([^"]*)"', m.group(1)))
     shots.append(a)
-DEV = {'p390': (390, 844, 3), 'p360': (360, 780, 3), 'd1440': (1440, 900, 1), 'd1920': (1920, 1080, 1)}
+DEV = {'p390': (390, 844, 3), 'p360': (360, 780, 3), 'd1440': (1440, 900, 1), 'd1920': (1920, 1080, 1), 'd1440x2': (1440, 900, 2)}
 def tiers(s):
     return sorted(int(x) for x in s.split(',')) if s else [1086, 1448, 2172]
 FJ = json.load(open(os.path.join(root, 'assets/img/film/film.json')))
