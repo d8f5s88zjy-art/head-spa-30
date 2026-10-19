@@ -186,11 +186,21 @@ pokračovať aj po strate prostredia. Veľké videá ostávajú mimo gitu; v rep
 
 ## 12. Rozhodnutia majiteľa (19. 10. 2026)
 
-- **Kredity:** AI ilustrácia obchodníka sa smie generovať bez obmedzenia (zostatok 68 kreditov v Higgsfielde;
-  cena: Soul 2.0 portrét ≈ 1 kredit, Kling 3.0 klip 4 s bez zvuku 6 kreditov).
 - **Hlas:** vo videu nemusí byť. Video je bez hlasu: vety voiceoveru sa stanú textom v obraze (titulky a karty)
   s dlhším časom na prečítanie; hudba a ruchy ostávajú.
 - **Zámer upresnený:** video má ukázať, že to, čo film Athena (2022, fikcia) zobrazuje, sa deje v skutočnosti.
-  Rieši sa textom, nie zábermi z filmu (práva): karta „VO FILME“ (jedna veta o deji, označené FIKCIA, 2022)
-  oproti karte „V SKUTOČNOSTI“ s overeným faktom, dátumom, miestom a zdrojom. Porovnanie len tam, kde to
-  fakty naozaj potvrdzujú; žiadne tvrdenie, že film „predpovedal“ udalosti alebo že príčiny sú rovnaké.
+  Porovnanie len tam, kde to fakty naozaj potvrdzujú; žiadne tvrdenie, že film „predpovedal“ udalosti alebo že
+  príčiny sú rovnaké. Karta „VO FILME“ (FIKCIA, 2022) oproti karte „V SKUTOČNOSTI“ s overeným faktom, dátumom,
+  miestom a zdrojom.
+- **Žiadna AI (rozhodnutie 19. 10. popoludní, ruší časť 6):** do videa sa negeneruje nič umelo. Vygenerované
+  skúšky (portrét, klipy K3, K4) sa nepoužijú. Obraz tvoria **len ukážky z filmu a skutočné zábery/fotky
+  z Francúzska** s doloženým pôvodom a licenciou + typografické karty.
+- **Ukážky z filmu:** len z oficiálnych trailerov a teaserov Netflixu (YouTube, kanály Netflix a Netflix France),
+  krátke úryvky (spolu najviac ~8 s, každý ≤ 3 s), použité ako citácia na účel komentára a porovnania
+  (Autorský zákon č. 185/2015 Z. z. § 37 citácia; smernica 2001/29/ES čl. 5 ods. 3 písm. d); film a tvorcovia
+  uvedení v obraze aj v popise („ATHENA (2022), réž. Romain Gavras, Netflix – ukážka z oficiálneho traileru“).
+  Riziko Content ID (nárok, nie štrajk) sa majiteľovi napíše do odovzdania; rozhoduje majiteľ.
+- **Skutočné zábery:** Wikimedia Commons (CC BY / BY-SA / CC0, overená stránka súboru, autor v obraze a v popise),
+  videá na YouTube s licenciou Creative Commons (overené pole licencie), oficiálne materiály s podmienkami,
+  neutrálny b-roll ulíc (Pexels/Pixabay s overenou licenciou). Nič bez licencie, nič z TikToku/X/agentúr.
+- **Kredity Higgsfield:** už nie sú potrebné (zostatok po skúškach ≈ 50).
