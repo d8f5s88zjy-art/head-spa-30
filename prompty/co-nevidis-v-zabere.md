@@ -181,3 +181,16 @@ K3 pohľad do ulice (21–24 s), K4 posledný záber pri rolete (24–30 s).
 
 Po každom kroku ulož výstupy (texty, tabuľky, EDL, prompty, SRT, kontroly) do repozitára a pushni, aby sa dalo
 pokračovať aj po strate prostredia. Veľké videá ostávajú mimo gitu; v repozitári je len postup, ako ich vyrobiť znova.
+
+---
+
+## 12. Rozhodnutia majiteľa (19. 10. 2026)
+
+- **Kredity:** AI ilustrácia obchodníka sa smie generovať bez obmedzenia (zostatok 68 kreditov v Higgsfielde;
+  cena: Soul 2.0 portrét ≈ 1 kredit, Kling 3.0 klip 4 s bez zvuku 6 kreditov).
+- **Hlas:** vo videu nemusí byť. Video je bez hlasu: vety voiceoveru sa stanú textom v obraze (titulky a karty)
+  s dlhším časom na prečítanie; hudba a ruchy ostávajú.
+- **Zámer upresnený:** video má ukázať, že to, čo film Athena (2022, fikcia) zobrazuje, sa deje v skutočnosti.
+  Rieši sa textom, nie zábermi z filmu (práva): karta „VO FILME“ (jedna veta o deji, označené FIKCIA, 2022)
+  oproti karte „V SKUTOČNOSTI“ s overeným faktom, dátumom, miestom a zdrojom. Porovnanie len tam, kde to
+  fakty naozaj potvrdzujú; žiadne tvrdenie, že film „predpovedal“ udalosti alebo že príčiny sú rovnaké.
