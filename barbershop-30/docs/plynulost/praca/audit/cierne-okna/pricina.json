@@ -1,80 +1,79 @@
 {
  "okna": [
   {
-   "run": "p-rm-f4-cold-menu",
-   "od_ms": 1553,
-   "ms": 1752,
-   "plocha": 0.922,
+   "run": "d-def-f4-cold-svih",
+   "od_ms": 3053,
+   "ms": 1227,
+   "plocha": 0.937,
    "y": 0,
    "kat": "PRVY",
    "detail": "",
    "znacky": [
-    "load",
+    "lcp:@1352",
+    "pohyb"
+   ]
+  },
+  {
+   "run": "d-on-f4-warm-menu",
+   "od_ms": 1347,
+   "ms": 393,
+   "plocha": 0.789,
+   "y": 0,
+   "kat": "PRVY",
+   "detail": "",
+   "znacky": [
+    "lcp:@316",
     "load"
    ]
   },
   {
-   "run": "p-rm-f4-cold-menu",
-   "od_ms": 10284,
-   "ms": 398,
-   "plocha": 0.786,
-   "y": 1097,
-   "kat": "Z-DEC",
-   "detail": "karta 1 near=1 so=1 stiahnutá=1 css=bv1.00",
+   "run": "d-on-f4-warm-menu",
+   "od_ms": 31304,
+   "ms": 1191,
+   "plocha": 0.857,
+   "y": 3292,
+   "kat": "F-RDY",
+   "detail": "záber kreslo-stred pripravený, S=6.139 T=7",
+   "znacky": [
+    "menu #galeria",
+    "menu #kontakt"
+   ]
+  },
+  {
+   "run": "d-on-f4-warm-menu",
+   "od_ms": 39340,
+   "ms": 7806,
+   "plocha": 0.857,
+   "y": 1170,
+   "kat": "F-TEX",
+   "detail": "záber sala (index 2) sa načítava",
    "znacky": [
     "menu #vstup-dnu"
    ]
   },
   {
-   "run": "p-rm-f4-cold-menu",
-   "od_ms": 15003,
-   "ms": 1533,
-   "plocha": 0.922,
-   "y": 5051,
-   "kat": "Z-NET",
-   "detail": "karta 5 near=1 so=1 stiahnutá=0 css=bv1.00",
+   "run": "d-on-f4-warm-menu",
+   "od_ms": 53556,
+   "ms": 1550,
+   "plocha": 0.813,
+   "y": 5169,
+   "kat": "F-TEX",
+   "detail": "záber rohozka (index 1) sa načítava",
    "znacky": [
-    "menu #vstup-dnu",
-    "menu #sluzby"
-   ]
-  },
-  {
-   "run": "p-rm-f4-cold-menu",
-   "od_ms": 20552,
-   "ms": 294,
-   "plocha": 0.752,
-   "y": 2870,
-   "kat": "Z-DEC",
-   "detail": "karta 4 near=1 so=1 stiahnutá=1 css=bv1.00",
-   "znacky": [
-    "menu #sluzby",
-    "menu #tim"
-   ]
-  },
-  {
-   "run": "p-rm-f4-cold-menu",
-   "od_ms": 25900,
-   "ms": 677,
-   "plocha": 0.922,
-   "y": 9989,
-   "kat": "Z-DEC",
-   "detail": "karta 6 near=1 so=1 stiahnutá=1 css=bv1.00",
-   "znacky": [
-    "menu #tim",
-    "menu #galeria"
+    "spat hore"
    ]
   }
  ],
  "suhrn": {
-  "Z-DEC": {
-   "n": 3,
-   "ms": 1369,
-   "max": 677
-  },
-  "Z-NET": {
+  "F-RDY": {
    "n": 1,
-   "ms": 1533,
-   "max": 1533
+   "ms": 1191,
+   "max": 1191
+  },
+  "F-TEX": {
+   "n": 2,
+   "ms": 9356,
+   "max": 7806
   }
  }
 }

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Celá matica meraní (telefón CPU 4× a 6×, počítač CPU 1× a 4×, film on/off/predvolene, Fast 4G) + čierne okná.
-# Spúšťať pred aj po opravách: OUT=<priečinok> URL=<adresa> ./matica.sh
+# Spúšťať pred aj po opravách: OUT=<priečinok> URL=<adresa> ./matica.sh [telefon|pocitac|synth|ab|cierne|vsetko]
+# Porovnanie: node suhrn.mjs <pred> <po>. Pri súbežných meraniach na stroji porovnávať hlavne stĺpce CPU (čas vlákna),
+# nie časy snímok (tie nafukuje záťaž stroja a softvérové kreslenie SwiftShader).
 set -u
 D="$(cd "$(dirname "$0")" && pwd)"
 OUT="${OUT:-$D/vysledky}"
@@ -25,6 +27,12 @@ run --zariadenie=pocitac --cpu=4 --film=off
 run --zariadenie=pocitac --cpu=4 --film=predvolene
 run --zariadenie=pocitac --cpu=4 --film=on --maxPass=150
 fi
+if [ "$CAST" = synth ] || [ "$CAST" = vsetko ]; then
+# gestá Input.synthesizeScrollGesture (rýchlosti 700 / 2200 / 6500 px/s), zdroj 'mouse' – dotykový v headless neposúva
+run --zariadenie=telefon --cpu=4 --film=off --fazy=skrol --gesto=synth --meno=synth-telefon-cpu4-film-off
+run --zariadenie=telefon --cpu=4 --film=on --fazy=skrol --gesto=synth --skrol=stredne,svih --maxPass=150 --meno=synth-telefon-cpu4-film-on
+fi
+if [ "$CAST" = ab ]; then OUT="$OUT" URL="$URL" "$D/fronta2.sh"; fi
 if [ "$CAST" = cierne ] || [ "$CAST" = vsetko ]; then
 cie --zariadenie=telefon --cpu=4 --film=off
 cie --zariadenie=telefon --cpu=4 --film=predvolene

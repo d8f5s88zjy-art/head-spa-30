@@ -1,0 +1,279 @@
+{
+ "run": "d-on-f4-cold-hore",
+ "nastavenie": {
+  "dev": "desk",
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "on",
+  "cache": "cold",
+  "scen": "hore",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=on"
+ },
+ "snimok": 423,
+ "trvanie_s": 433.2,
+ "prvy_svetly_snimok_ms": 2468,
+ "fps_nahravky": 1.0,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 2,
+ "najdlhsie_ms": 1793,
+ "spolu_ms": 2970,
+ "tmave_zabery": [
+  {
+   "y": 0,
+   "ms": 9730.988037109375,
+   "max": 0.219,
+   "file": "f00047.jpg"
+  },
+  {
+   "y": 800,
+   "ms": 3549.10107421875,
+   "max": 0.224,
+   "file": "f00071.jpg"
+  },
+  {
+   "y": 1600,
+   "ms": 2606.7099609375,
+   "max": 0.444,
+   "file": "f00090.jpg"
+  },
+  {
+   "y": 400,
+   "ms": 2583.208984375,
+   "max": 0.215,
+   "file": "f00058.jpg"
+  },
+  {
+   "y": 600,
+   "ms": 1224.624755859375,
+   "max": 0.209,
+   "file": "f00060.jpg"
+  },
+  {
+   "y": 2800,
+   "ms": 1203.870849609375,
+   "max": 0.239,
+   "file": "f00125.jpg"
+  },
+  {
+   "y": 200,
+   "ms": 157.158203125,
+   "max": 0.209,
+   "file": "f00054.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 1715,
+   "do_ms": 3507,
+   "trvanie_ms": 1793,
+   "snimok": 6,
+   "max_tmavej_plochy": 0.937,
+   "tmava_celkom": 0.961,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "first-paint@968",
+    "first-contentful-paint@968",
+    "lcp:@968",
+    "load"
+   ],
+   "cls": "karty world pro js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     1,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     0,
+     "bh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00006.jpg"
+   ]
+  },
+  {
+   "od_ms": 138468,
+   "do_ms": 139645,
+   "trvanie_ms": 1177,
+   "snimok": 1,
+   "max_tmavej_plochy": 0.431,
+   "tmava_celkom": 0.441,
+   "scrollY": 2972,
+   "scrollY_koniec": 2972,
+   "pred_prvym_obrazom": false,
+   "znacky": [],
+   "cls": "karty world js-kin js-steps world-in",
+   "film": {
+    "shown": true,
+    "S": 5.041,
+    "T": 5.072,
+    "mix": 0,
+    "cur": "sala-rano",
+    "cut": null,
+    "frames": 109,
+    "pro": false,
+    "leaving": false,
+    "outside": false,
+    "dpr": 1,
+    "ready": "0000111100",
+    "seq": ""
+   },
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     4,
+     1,
+     1,
+     1,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00124.jpg",
+    "f00124.jpg",
+    "f00124.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

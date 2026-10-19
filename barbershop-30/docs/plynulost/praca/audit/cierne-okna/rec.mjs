@@ -29,6 +29,7 @@ const PORT = arg('port', '8174');
 const UVOD = arg('uvod', '');
 const LANG = arg('lang', '');
 const DPR = arg('dpr', '');
+const INJECT = arg('inject', '');   // skúška opravy bez zmeny repozitára: skript sa vloží do stránky pred jej skriptami
 const OUT = path.join(here, 'runs', NAME);
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, 'frames'), { recursive: true });
@@ -106,6 +107,7 @@ const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle',
 const ctx = await browser.newContext({ ...VIEW, reducedMotion: RM ? 'reduce' : 'no-preference', locale: 'sk-SK' });
 await ctx.addInitScript(LOGGER);
 if (SAVE) await ctx.addInitScript(SAVEDATA);
+if (INJECT) await ctx.addInitScript({ path: path.resolve(here, INJECT) });
 
 const marks = [];
 const mark = (m) => { marks.push({ t: Date.now(), mark: m }); console.log(new Date().toISOString().slice(11, 23), m); };
@@ -284,7 +286,7 @@ await sleep(300);
 await cdp.send('Page.stopScreencast').catch(() => {});
 const log = await page.evaluate(() => window.__bwlog).catch(() => []);
 for (let k = 0; k < 50 && pending; k++) await sleep(100);
-fs.writeFileSync(path.join(OUT, 'meta.json'), JSON.stringify({ name: NAME, dpr: VIEW.deviceScaleFactor, dev: DEV, net: NET, cpu: CPU, film: FILM, cache: CACHE, scen: SCEN, rm: RM, savedata: SAVE, url: URL0, W, H, tNav, marks, errs, frames, reqs }, null, 0));
+fs.writeFileSync(path.join(OUT, 'meta.json'), JSON.stringify({ name: NAME, inject: INJECT, dpr: VIEW.deviceScaleFactor, dev: DEV, net: NET, cpu: CPU, film: FILM, cache: CACHE, scen: SCEN, rm: RM, savedata: SAVE, url: URL0, W, H, tNav, marks, errs, frames, reqs }, null, 0));
 fs.writeFileSync(path.join(OUT, 'log.json'), JSON.stringify(log));
 console.log(`snímok ${frames.length}, záznamov ${log.length}, chýb ${errs.length}`);
 if (errs.length) console.log(errs.slice(0, 5).join('\n'));
