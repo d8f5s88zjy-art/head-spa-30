@@ -39,11 +39,27 @@ export async function open(browser, { url, desk = false, cpu = 4, net = 'fast4g'
   return { ctx, page, cdp };
 }
 
-// dotykový ťah (skutočný skrol kompozitora, nie scrollTo): dy > 0 = nadol po stránke
-export async function swipe(cdp, { dy, speed = 1200, x = 195, y = 620, fling = false, dx = 0 } = {}) {
-  await cdp.send('Input.synthesizeScrollGesture', {
-    x, y, yDistance: -dy, xDistance: -dx, speed, gestureSourceType: 'touch', preventFling: !fling, repeatCount: 1,
-  });
+// dotykový ťah prstom cez Input.dispatchTouchEvent (synthesizeScrollGesture s dotykom v tomto Chromiu neskroluje,
+// rovnako zistil audit čiernych okien); dy > 0 = nadol po stránke; dlhší ťah sa rozdelí na viac ťahov po 60 % výšky;
+// fling = pustenie v pohybe (zotrvačnosť dorobí Chrome), inak prst zastane a až potom sa zdvihne
+export async function swipe(cdp, { dy, speed = 1200, x = 195, fling = false, dx = 0, H = 844, y0 } = {}) {
+  const s = Math.sign(dy) || 1;
+  let left = Math.abs(dy);
+  while (left > 0) {
+    const dist = Math.min(left, Math.round(H * 0.6));
+    left -= dist;
+    const ys = y0 ?? (s > 0 ? Math.round(H * 0.8) : Math.round(H * 0.2));
+    const steps = Math.max(2, Math.round(dist / (speed * 0.016)));
+    const sent = [cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y: ys }] })];
+    for (let k = 1; k <= steps; k++) {
+      await sleep(16);
+      sent.push(cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: Math.round(x - (dx ? Math.sign(dx) * Math.min(Math.abs(dx), 300) * k / steps : 0)), y: Math.round(ys - s * (dy ? dist : 0) * k / steps) }] }));
+    }
+    if (!fling) { await sleep(120); }
+    sent.push(cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }));
+    await Promise.all(sent);
+    if (left > 0) await sleep(fling ? 60 : 40);
+  }
 }
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
