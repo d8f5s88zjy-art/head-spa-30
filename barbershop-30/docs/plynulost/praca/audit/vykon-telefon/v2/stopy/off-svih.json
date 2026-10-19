@@ -1,0 +1,1511 @@
+{
+ "meta": {
+  "meno": "off-svih",
+  "url": "http://127.0.0.1:8433/barbershop-30/?film=off",
+  "css": null,
+  "js": null,
+  "gesto": null,
+  "zariadenie": "telefon",
+  "cpu": 4,
+  "siet": "fast4g",
+  "film": "off",
+  "cas": "2026-10-19T11:55:23.990Z",
+  "zataz": [
+   12.53,
+   11.26,
+   6.59
+  ],
+  "prehliadac": "141.0.7390.37",
+  "poznamka": "WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.",
+  "sekcie": [
+   {
+    "id": "uvod",
+    "top": 0,
+    "bottom": 844
+   },
+   {
+    "id": "vstup-dnu",
+    "top": 844,
+    "bottom": 1435
+   },
+   {
+    "id": "remeslo",
+    "top": 1435,
+    "bottom": 2026
+   },
+   {
+    "id": "cakaren",
+    "top": 2026,
+    "bottom": 2616
+   },
+   {
+    "id": "tim",
+    "top": 2616,
+    "bottom": 4798
+   },
+   {
+    "id": "sluzby",
+    "top": 4798,
+    "bottom": 9735
+   },
+   {
+    "id": "galeria",
+    "top": 9735,
+    "bottom": 13056
+   },
+   {
+    "id": "rezervacia",
+    "top": 13056,
+    "bottom": 15492
+   },
+   {
+    "id": "kontakt",
+    "top": 15492,
+    "bottom": 16355
+   }
+  ],
+  "vyskaStranky": 16435,
+  "zatazPo": [
+   15.25,
+   12.44,
+   7.33
+  ]
+ },
+ "nacitanie": {
+  "fcp": 1336,
+  "lcp": 1336,
+  "lcpPrvok": "SPAN.w Tvoje miesto.",
+  "load": 1738,
+  "trvanieMerania": 8487,
+  "cls": 0,
+  "posuny": [],
+  "tbt": 343,
+  "dlheUlohy": [
+   [
+    870,
+    154
+   ],
+   [
+    1043,
+    410
+   ],
+   [
+    1467,
+    115
+   ],
+   [
+    1639,
+    79
+   ],
+   [
+    1937,
+    187
+   ],
+   [
+    5690,
+    162
+   ]
+  ],
+  "blokujuceZdroje": [
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 433,
+    "d": 406,
+    "kb": 71
+   }
+  ],
+  "zdrojeDoLCP": [
+   {
+    "u": "assets/fonts/Fraunces-800.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 420,
+    "d": 282,
+    "kb": 21
+   },
+   {
+    "u": "assets/fonts/Manrope-400.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 424,
+    "d": 254,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Fraunces-500i.woff2",
+    "t": "link",
+    "b": "non-blocking",
+    "s": 427,
+    "d": 326,
+    "kb": 26
+   },
+   {
+    "u": "assets/style.css",
+    "t": "link",
+    "b": "blocking",
+    "s": 433,
+    "d": 406,
+    "kb": 71
+   },
+   {
+    "u": "assets/app.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 465,
+    "d": 335,
+    "kb": 36
+   },
+   {
+    "u": "assets/vernost.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 466,
+    "d": 440,
+    "kb": 24
+   },
+   {
+    "u": "assets/film.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 466,
+    "d": 460,
+    "kb": 102
+   },
+   {
+    "u": "assets/fonts/Manrope-700.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 914,
+    "d": 328,
+    "kb": 17
+   },
+   {
+    "u": "assets/fonts/Manrope-600.woff2",
+    "t": "css",
+    "b": "non-blocking",
+    "s": 914,
+    "d": 343,
+    "kb": 17
+   },
+   {
+    "u": "assets/img/film/rohozka-m-1448.avif",
+    "t": "img",
+    "b": "non-blocking",
+    "s": 1026,
+    "d": 699,
+    "kb": 428
+   },
+   {
+    "u": "assets/recenzie.js",
+    "t": "script",
+    "b": "non-blocking",
+    "s": 1273,
+    "d": 197,
+    "kb": 3
+   }
+  ],
+  "prenesenoKB": 1006,
+  "zdrojov": 18,
+  "triedy": [
+   [
+    412,
+    ""
+   ],
+   [
+    419,
+    "karty world-off"
+   ],
+   [
+    1394,
+    "karty world-off js-kin js-steps"
+   ]
+  ],
+  "webglKontext": [],
+  "loaf": [
+   {
+    "kde": "(bez skriptu: štýl/layout/paint)",
+    "ms": 1991,
+    "n": 9,
+    "max": 517.2,
+    "styl": 74.30000000000001
+   },
+   {
+    "kde": "assets/app.js:1  (module-script)",
+    "fn": "",
+    "typ": "module-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/assets/app.js",
+    "ms": 352,
+    "n": 1,
+    "max": 352,
+    "vynutenyStylLayout": 223
+   },
+   {
+    "kde": "?film=off:1  (classic-script)",
+    "fn": "",
+    "typ": "classic-script",
+    "inv": "http://127.0.0.1:8433/barbershop-30/?film=off",
+    "ms": 7,
+    "n": 1,
+    "max": 7,
+    "vynutenyStylLayout": 0
+   },
+   {
+    "kde": "assets/app.js:233 tick (user-callback)",
+    "fn": "tick",
+    "typ": "user-callback",
+    "inv": "FrameRequestCallback",
+    "ms": 7,
+    "n": 1,
+    "max": 7,
+    "vynutenyStylLayout": 5
+   }
+  ],
+  "film": []
+ },
+ "skrol": {
+  "prechody": {
+   "svih": {
+    "gest": 23,
+    "gesto": "dispatchTouchEvent",
+    "zataz": 15.43,
+    "koniecY": 15591,
+    "trvanieS": 39.4,
+    "snimky": {
+     "snimok": 554,
+     "fps": 14.1,
+     "p50": 16.7,
+     "p95": 300,
+     "p99": 1016.6,
+     "max": 2833.3,
+     "podiel33": 23.1,
+     "podiel50": 19.31,
+     "nad100": 75
+    },
+    "dlheUlohy": {
+     "pocet": 44,
+     "max": 496,
+     "spolu": 4890,
+     "blokovanie": 2690
+    },
+    "glMsNaSnimku": 0,
+    "texturyMB": 0,
+    "texturyMaxMBNaSnimku": 0,
+    "sekcie": {
+     "uvod": {
+      "snimky": {
+       "snimok": 14,
+       "fps": 30,
+       "p50": 16.7,
+       "p95": 116.6,
+       "p99": 116.6,
+       "max": 116.6,
+       "podiel33": 21.43,
+       "podiel50": 21.43,
+       "nad100": 2
+      },
+      "dlheUlohy": {
+       "pocet": 2,
+       "max": 114,
+       "spolu": 201,
+       "blokovanie": 101
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "vstup-dnu": {
+      "snimky": {
+       "snimok": 13,
+       "fps": 6.3,
+       "p50": 66.6,
+       "p95": 583.3,
+       "p99": 583.3,
+       "max": 583.3,
+       "podiel33": 61.54,
+       "podiel50": 61.54,
+       "nad100": 5
+      },
+      "dlheUlohy": {
+       "pocet": 6,
+       "max": 496,
+       "spolu": 1353,
+       "blokovanie": 1053
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "remeslo": {
+      "snimky": {
+       "snimok": 15,
+       "fps": 14.1,
+       "p50": 16.7,
+       "p95": 616.5,
+       "p99": 616.5,
+       "max": 616.5,
+       "podiel33": 20,
+       "podiel50": 13.33,
+       "nad100": 2
+      },
+      "dlheUlohy": {
+       "pocet": 0,
+       "max": 0,
+       "spolu": 0,
+       "blokovanie": 0
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "cakaren": {
+      "snimky": {
+       "snimok": 19,
+       "fps": 3.7,
+       "p50": 183.3,
+       "p95": 1316.6,
+       "p99": 1316.6,
+       "max": 1316.6,
+       "podiel33": 94.74,
+       "podiel50": 89.47,
+       "nad100": 12
+      },
+      "dlheUlohy": {
+       "pocet": 6,
+       "max": 96,
+       "spolu": 403,
+       "blokovanie": 103
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "tim": {
+      "snimky": {
+       "snimok": 114,
+       "fps": 24.3,
+       "p50": 16.7,
+       "p95": 100,
+       "p99": 383.3,
+       "max": 1199.9,
+       "podiel33": 12.28,
+       "podiel50": 8.77,
+       "nad100": 5
+      },
+      "dlheUlohy": {
+       "pocet": 6,
+       "max": 157,
+       "spolu": 461,
+       "blokovanie": 161
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "sluzby": {
+      "snimky": {
+       "snimok": 188,
+       "fps": 21.4,
+       "p50": 16.7,
+       "p95": 166.7,
+       "p99": 799.9,
+       "max": 1449.9,
+       "podiel33": 13.3,
+       "podiel50": 10.64,
+       "nad100": 15
+      },
+      "dlheUlohy": {
+       "pocet": 9,
+       "max": 351,
+       "spolu": 1164,
+       "blokovanie": 714
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "galeria": {
+      "snimky": {
+       "snimok": 49,
+       "fps": 9.2,
+       "p50": 16.7,
+       "p95": 283.3,
+       "p99": 2833.3,
+       "max": 2833.3,
+       "podiel33": 26.53,
+       "podiel50": 24.49,
+       "nad100": 8
+      },
+      "dlheUlohy": {
+       "pocet": 1,
+       "max": 70,
+       "spolu": 70,
+       "blokovanie": 20
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "rezervacia": {
+      "snimky": {
+       "snimok": 84,
+       "fps": 7.8,
+       "p50": 50,
+       "p95": 350,
+       "p99": 2166.7,
+       "max": 2166.7,
+       "podiel33": 51.19,
+       "podiel50": 41.67,
+       "nad100": 26
+      },
+      "dlheUlohy": {
+       "pocet": 14,
+       "max": 171,
+       "spolu": 1238,
+       "blokovanie": 538
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     },
+     "kontakt": {
+      "snimky": {
+       "snimok": 58,
+       "fps": 52.7,
+       "p50": 16.7,
+       "p95": 33.4,
+       "p99": 50,
+       "max": 50,
+       "podiel33": 1.72,
+       "podiel50": 0,
+       "nad100": 0
+      },
+      "dlheUlohy": {
+       "pocet": 0,
+       "max": 0,
+       "spolu": 0,
+       "blokovanie": 0
+      },
+      "glMsNaSnimku": 0,
+      "texturyMB": 0
+     }
+    },
+    "loaf": [
+     {
+      "kde": "(bez skriptu: štýl/layout/paint)",
+      "ms": 11143,
+      "n": 54,
+      "max": 1280.2,
+      "styl": 914.9
+     },
+     {
+      "kde": "assets/app.js:693 tick (user-callback)",
+      "fn": "tick",
+      "typ": "user-callback",
+      "inv": "TimerHandler:setTimeout",
+      "ms": 2062,
+      "n": 115,
+      "max": 168,
+      "vynutenyStylLayout": 1351
+     },
+     {
+      "kde": "assets/app.js:233 tick (user-callback)",
+      "fn": "tick",
+      "typ": "user-callback",
+      "inv": "FrameRequestCallback",
+      "ms": 502,
+      "n": 31,
+      "max": 91,
+      "vynutenyStylLayout": 297
+     },
+     {
+      "kde": "assets/atmosfera.js:195  (event-listener)",
+      "fn": "",
+      "typ": "event-listener",
+      "inv": "DOMWindow.ontouchend",
+      "ms": 295,
+      "n": 2,
+      "max": 286,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "PerformanceObserverCallback  (user-callback)",
+      "fn": "",
+      "typ": "user-callback",
+      "inv": "PerformanceObserverCallback",
+      "ms": 18,
+      "n": 3,
+      "max": 8,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "DOMWindow.onscroll  (event-listener)",
+      "fn": "",
+      "typ": "event-listener",
+      "inv": "DOMWindow.onscroll",
+      "ms": 16,
+      "n": 1,
+      "max": 16,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "FrameRequestCallback  (user-callback)",
+      "fn": "",
+      "typ": "user-callback",
+      "inv": "FrameRequestCallback",
+      "ms": 13,
+      "n": 2,
+      "max": 7,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "assets/atmosfera.js  (resolve-promise)",
+      "fn": "",
+      "typ": "resolve-promise",
+      "inv": "BaseAudioContext.decodeAudioData.then",
+      "ms": 13,
+      "n": 1,
+      "max": 13,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "TimerHandler:setInterval  (user-callback)",
+      "fn": "",
+      "typ": "user-callback",
+      "inv": "TimerHandler:setInterval",
+      "ms": 7,
+      "n": 1,
+      "max": 7,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "IntersectionObserverCallback  (user-callback)",
+      "fn": "",
+      "typ": "user-callback",
+      "inv": "IntersectionObserverCallback",
+      "ms": 6,
+      "n": 1,
+      "max": 6,
+      "vynutenyStylLayout": 0
+     },
+     {
+      "kde": "assets/app.js:618  (user-callback)",
+      "fn": "",
+      "typ": "user-callback",
+      "inv": "IntersectionObserverCallback",
+      "ms": 5,
+      "n": 1,
+      "max": 5,
+      "vynutenyStylLayout": 0
+     }
+    ]
+   }
+  },
+  "sekcie": {
+   "uvod": {
+    "snimok": 14,
+    "fps": 30,
+    "p50": 16.7,
+    "p95": 116.6,
+    "p99": 116.6,
+    "max": 116.6,
+    "podiel33": 21.43,
+    "podiel50": 21.43,
+    "nad100": 2
+   },
+   "vstup-dnu": {
+    "snimok": 13,
+    "fps": 6.3,
+    "p50": 66.6,
+    "p95": 583.3,
+    "p99": 583.3,
+    "max": 583.3,
+    "podiel33": 61.54,
+    "podiel50": 61.54,
+    "nad100": 5
+   },
+   "remeslo": {
+    "snimok": 15,
+    "fps": 14.1,
+    "p50": 16.7,
+    "p95": 616.5,
+    "p99": 616.5,
+    "max": 616.5,
+    "podiel33": 20,
+    "podiel50": 13.33,
+    "nad100": 2
+   },
+   "cakaren": {
+    "snimok": 19,
+    "fps": 3.7,
+    "p50": 183.3,
+    "p95": 1316.6,
+    "p99": 1316.6,
+    "max": 1316.6,
+    "podiel33": 94.74,
+    "podiel50": 89.47,
+    "nad100": 12
+   },
+   "tim": {
+    "snimok": 114,
+    "fps": 24.3,
+    "p50": 16.7,
+    "p95": 100,
+    "p99": 383.3,
+    "max": 1199.9,
+    "podiel33": 12.28,
+    "podiel50": 8.77,
+    "nad100": 5
+   },
+   "sluzby": {
+    "snimok": 188,
+    "fps": 21.4,
+    "p50": 16.7,
+    "p95": 166.7,
+    "p99": 799.9,
+    "max": 1449.9,
+    "podiel33": 13.3,
+    "podiel50": 10.64,
+    "nad100": 15
+   },
+   "galeria": {
+    "snimok": 49,
+    "fps": 9.2,
+    "p50": 16.7,
+    "p95": 283.3,
+    "p99": 2833.3,
+    "max": 2833.3,
+    "podiel33": 26.53,
+    "podiel50": 24.49,
+    "nad100": 8
+   },
+   "rezervacia": {
+    "snimok": 84,
+    "fps": 7.8,
+    "p50": 50,
+    "p95": 350,
+    "p99": 2166.7,
+    "max": 2166.7,
+    "podiel33": 51.19,
+    "podiel50": 41.67,
+    "nad100": 26
+   },
+   "kontakt": {
+    "snimok": 58,
+    "fps": 52.7,
+    "p50": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 50,
+    "podiel33": 1.72,
+    "podiel50": 0,
+    "nad100": 0
+   }
+  },
+  "webglVolania": {},
+  "createImageBitmap": {
+   "pocet": 0,
+   "priemerMs": 0,
+   "maxMs": 0
+  },
+  "film": [],
+  "cls": 0,
+  "stopaMB": [
+   69.9
+  ],
+  "vlakno": {
+   "svih": {
+    "kat": {
+     "styl": 3571.4,
+     "ine": 2530.6,
+     "paint": 1998.6,
+     "layout": 1960.8,
+     "skript": 1826.3,
+     "snimka-ostatne": 778.9,
+     "html-siet-ipc": 683.4,
+     "animacie-css": 328,
+     "gc": 279.5,
+     "cakanie-kompozitor": 278.8,
+     "gpu-cakanie": 173.4,
+     "dekodovanie": 3.8
+    },
+    "sekcie": {
+     "uvod": {
+      "styl": 139.2,
+      "layout": 86.2,
+      "paint": 41.2,
+      "ine": 35,
+      "snimka-ostatne": 34.8,
+      "skript": 17.1,
+      "gpu-cakanie": 6.6,
+      "animacie-css": 6.2,
+      "cakanie-kompozitor": 4.3,
+      "html-siet-ipc": 1.3,
+      "gc": 1
+     },
+     "vstup-dnu": {
+      "styl": 610.1,
+      "skript": 384,
+      "html-siet-ipc": 271.7,
+      "ine": 268.6,
+      "paint": 254.7,
+      "layout": 116.5,
+      "snimka-ostatne": 41.5,
+      "gpu-cakanie": 18.6,
+      "animacie-css": 16.7,
+      "cakanie-kompozitor": 8.5,
+      "dekodovanie": 0.2,
+      "gc": 0
+     },
+     "remeslo": {
+      "ine": 121,
+      "styl": 49.4,
+      "paint": 34,
+      "skript": 28.9,
+      "snimka-ostatne": 24.3,
+      "html-siet-ipc": 13,
+      "layout": 12.4,
+      "animacie-css": 7.2,
+      "cakanie-kompozitor": 4.3,
+      "gpu-cakanie": 0.5,
+      "dekodovanie": 0.1,
+      "gc": 0
+     },
+     "cakaren": {
+      "styl": 289.8,
+      "ine": 254.4,
+      "paint": 151.6,
+      "html-siet-ipc": 109.4,
+      "layout": 92,
+      "skript": 67.9,
+      "snimka-ostatne": 26.3,
+      "animacie-css": 14.4,
+      "cakanie-kompozitor": 10.4,
+      "gpu-cakanie": 3.2,
+      "gc": 1.7,
+      "dekodovanie": 0.2
+     },
+     "tim": {
+      "styl": 352.9,
+      "ine": 260.5,
+      "paint": 226.9,
+      "layout": 185.8,
+      "skript": 157,
+      "snimka-ostatne": 148.8,
+      "cakanie-kompozitor": 140.3,
+      "animacie-css": 74.2,
+      "html-siet-ipc": 46.3,
+      "gpu-cakanie": 9.7,
+      "gc": 0.5,
+      "dekodovanie": 0.2
+     },
+     "sluzby": {
+      "styl": 962.9,
+      "paint": 568.4,
+      "ine": 534.4,
+      "skript": 323.1,
+      "layout": 208.2,
+      "snimka-ostatne": 190.8,
+      "gc": 96,
+      "html-siet-ipc": 77.5,
+      "animacie-css": 69.5,
+      "gpu-cakanie": 31.7,
+      "cakanie-kompozitor": 21,
+      "dekodovanie": 0.7
+     },
+     "galeria": {
+      "ine": 193.8,
+      "skript": 154.7,
+      "paint": 144.3,
+      "styl": 135.3,
+      "html-siet-ipc": 116.9,
+      "layout": 59.5,
+      "snimka-ostatne": 52.5,
+      "cakanie-kompozitor": 36.8,
+      "animacie-css": 15.4,
+      "gpu-cakanie": 11.2,
+      "gc": 1.6,
+      "dekodovanie": 0.1
+     },
+     "rezervacia": {
+      "layout": 1160.7,
+      "styl": 965.6,
+      "ine": 753.2,
+      "skript": 609.2,
+      "paint": 534.1,
+      "snimka-ostatne": 205.5,
+      "gc": 178.5,
+      "animacie-css": 108.3,
+      "gpu-cakanie": 82.9,
+      "cakanie-kompozitor": 47,
+      "html-siet-ipc": 36.4,
+      "dekodovanie": 2.4
+     },
+     "kontakt": {
+      "ine": 109.7,
+      "skript": 84.4,
+      "styl": 66.3,
+      "snimka-ostatne": 54.6,
+      "paint": 43.4,
+      "layout": 39.4,
+      "animacie-css": 16.1,
+      "html-siet-ipc": 11,
+      "gpu-cakanie": 9.1,
+      "cakanie-kompozitor": 6.2,
+      "gc": 0.1
+     }
+    },
+    "mena": {
+     "Document::recalcStyle": 2830,
+     "FunctionCall": 1286.4,
+     "ThreadControllerImpl::RunTask": 1027.2,
+     "LocalFrameView::performLayout": 832.4,
+     "PaintArtifactCompositor::Update": 601.6,
+     "Document::updateStyle": 574.8,
+     "Blink.PrePaint.UpdateTime": 503.8,
+     "IntersectionObserverController::computeIntersections": 385.7,
+     "HitTest": 285.7,
+     "LayerTreeHost::WaitForCommitCompletion": 278.8,
+     "LocalFrameView::ScheduleAnimation": 252.6,
+     "ProxyMain::BeginMainFrame": 252,
+     "Layout": 250.2,
+     "AnimationTimeline::serviceAnimations": 234.3,
+     "MainFrameAborted": 233.8,
+     "Paint": 225.2,
+     "ResponseBodyLoader::OnStateChange": 202.7,
+     "Receive mojo message": 197,
+     "Blink.CompositingInputs.UpdateTime": 177,
+     "LocalFrameView::UpdateStyleAndLayout": 161.8,
+     "ResponseBodyLoader::DidFinishLoadingBody": 160.1,
+     "LocalFrameView::RunPaintLifecyclePhase": 151.9,
+     "Blink.Style.UpdateTime": 148.5,
+     "ProxyMain::BeginMainFrame::commit": 145.1,
+     "Blink.Paint.UpdateTime": 142.4
+    },
+    "vstupy": {
+     "assets/app.js:694 tick": 2004.2,
+     "assets/app.js:234 tick": 1159.9,
+     "assets/atmosfera.js:196 addEventListener.capture": 300.3,
+     "?:32 loop": 263.4,
+     "?:34 PerformanceObserver.observe.Object.assign.type.type": 92.3,
+     "assets/i18n.js:99 MutationObserver.observe.childList": 86.9,
+     "?:22 addEventListener.passive": 21.3,
+     "?:46": 15,
+     "assets/app.js:258 start": 13.7,
+     "assets/app.js:619": 9.3,
+     "?:26 IntersectionObserver.rootMargin": 7.9,
+     "assets/atmosfera.js:186 addEventListener.capture": 3.3,
+     "assets/app.js:407 IntersectionObserver.rootMargin": 2.1,
+     "assets/app.js:359 addEventListener.once": 0.6,
+     "assets/app.js:353 load": 0.1
+    },
+    "ulohy": {
+     "loader/anchor_element_interaction_tracker.cc:OnTimer": 107,
+     "url_loader/background_url_loader.cc:PostTaskToMainThread": 90.6,
+     "cppgc/sweeper.cc:static Handle cppgc::internal::Sweeper::SweeperImpl::IncrementalSweepTask::Post(SweeperImpl &, const std::shared_ptr<cppgc::TaskRunner> &, cppgc::TaskPriority, std::optional<v8::base::TimeDelta>)": 71.4,
+     "input/main_thread_event_queue.cc:PostTaskToMainThread": 68.1,
+     "webaudio/base_audio_context.cc:DecodeOnBackgroundThread": 50.9,
+     "ipc/ipc_mojo_bootstrap.cc:Accept": 49.8,
+     "trees/proxy_impl.cc:ScheduledActionSendBeginMainFrame": 28.2,
+     "frame/web_frame_widget_impl.cc:ReportSwapAndPresentationFailureOnTaskRunner": 27.2,
+     "trees/proxy_impl.cc:DidPresentCompositorFrameOnImplThread": 24.5,
+     "main_thread/main_thread_scheduler_impl.cc:UpdatePolicyLocked": 18.4,
+     "system/simple_watcher.cc:Notify": 18,
+     "main_thread/main_thread_scheduler_impl.cc:UpdateForInputEventOnCompositorThread": 11
+    },
+    "katCpu": {
+     "styl": 1748.3,
+     "ine": 1349.6,
+     "paint": 1199.2,
+     "layout": 1023.4,
+     "skript": 968.3,
+     "snimka-ostatne": 430.9,
+     "html-siet-ipc": 301.9,
+     "animacie-css": 186.6,
+     "cakanie-kompozitor": 157.6,
+     "gc": 111.3,
+     "gpu-cakanie": 102.6,
+     "dekodovanie": 2.9
+    },
+    "sekcieCpu": {
+     "uvod": {
+      "styl": 73.4,
+      "paint": 26.9,
+      "ine": 26.3,
+      "layout": 24.9,
+      "skript": 15.8,
+      "snimka-ostatne": 12.4,
+      "gpu-cakanie": 4.8,
+      "animacie-css": 3.2,
+      "cakanie-kompozitor": 2.5,
+      "gc": 1,
+      "html-siet-ipc": 0.9
+     },
+     "vstup-dnu": {
+      "skript": 157.3,
+      "styl": 131,
+      "ine": 82.1,
+      "html-siet-ipc": 73.8,
+      "paint": 64.8,
+      "layout": 40.9,
+      "snimka-ostatne": 16.4,
+      "gpu-cakanie": 7,
+      "cakanie-kompozitor": 6.8,
+      "animacie-css": 5.6,
+      "dekodovanie": 0.2,
+      "gc": 0
+     },
+     "remeslo": {
+      "ine": 44.3,
+      "styl": 38.7,
+      "paint": 29.4,
+      "skript": 22,
+      "snimka-ostatne": 16.3,
+      "layout": 12.1,
+      "html-siet-ipc": 7.3,
+      "animacie-css": 6.6,
+      "cakanie-kompozitor": 2.6,
+      "gpu-cakanie": 0.5,
+      "dekodovanie": 0.1,
+      "gc": 0
+     },
+     "cakaren": {
+      "ine": 149,
+      "styl": 111.8,
+      "paint": 98.4,
+      "layout": 53.5,
+      "html-siet-ipc": 51.9,
+      "skript": 45,
+      "snimka-ostatne": 17.1,
+      "animacie-css": 12.6,
+      "cakanie-kompozitor": 8.4,
+      "gpu-cakanie": 2.3,
+      "gc": 1.3,
+      "dekodovanie": 0.2
+     },
+     "tim": {
+      "styl": 281,
+      "paint": 181.3,
+      "ine": 160.1,
+      "skript": 110.3,
+      "layout": 100.1,
+      "snimka-ostatne": 82.1,
+      "cakanie-kompozitor": 79.9,
+      "animacie-css": 43.7,
+      "html-siet-ipc": 28.6,
+      "gpu-cakanie": 8,
+      "gc": 0.3,
+      "dekodovanie": 0.2
+     },
+     "sluzby": {
+      "paint": 346.8,
+      "ine": 329.1,
+      "styl": 325.3,
+      "skript": 178.4,
+      "layout": 140.7,
+      "snimka-ostatne": 104.6,
+      "gc": 62,
+      "animacie-css": 47.9,
+      "html-siet-ipc": 44.7,
+      "gpu-cakanie": 21.7,
+      "cakanie-kompozitor": 10.8,
+      "dekodovanie": 0.4
+     },
+     "galeria": {
+      "ine": 111.9,
+      "paint": 105,
+      "styl": 103.9,
+      "html-siet-ipc": 64.5,
+      "skript": 63.3,
+      "layout": 38.4,
+      "snimka-ostatne": 27.3,
+      "cakanie-kompozitor": 23.3,
+      "animacie-css": 13.1,
+      "gpu-cakanie": 7.5,
+      "gc": 0.4,
+      "dekodovanie": 0.1
+     },
+     "rezervacia": {
+      "styl": 628.1,
+      "layout": 577.2,
+      "ine": 367.4,
+      "paint": 307.7,
+      "skript": 304.5,
+      "snimka-ostatne": 112.6,
+      "gc": 46.3,
+      "gpu-cakanie": 44.2,
+      "animacie-css": 39.3,
+      "html-siet-ipc": 20.6,
+      "cakanie-kompozitor": 20.2,
+      "dekodovanie": 1.8
+     },
+     "kontakt": {
+      "ine": 79.4,
+      "skript": 71.9,
+      "styl": 55.1,
+      "snimka-ostatne": 42.1,
+      "paint": 39.1,
+      "layout": 35.6,
+      "animacie-css": 14.6,
+      "html-siet-ipc": 9.7,
+      "gpu-cakanie": 6.7,
+      "cakanie-kompozitor": 3.1,
+      "gc": 0
+     }
+    },
+    "prvkov": 8424,
+    "prvkySek": {
+     "uvod": 222,
+     "vstup-dnu": 584,
+     "remeslo": 414,
+     "cakaren": 764,
+     "tim": 1463,
+     "sluzby": 1742,
+     "galeria": 808,
+     "rezervacia": 2246,
+     "kontakt": 181
+    },
+    "pracaNaSnimku": {
+     "snimok": 553,
+     "p50": 9,
+     "p95": 85.2,
+     "max": 1660.6,
+     "nad16": 27.1,
+     "nad50": 52
+    },
+    "pracaNaSnimkuSekcie": {
+     "uvod": {
+      "snimok": 14,
+      "p50": 7.8,
+      "p95": 114.4,
+      "max": 114.4,
+      "nad16": 42.9,
+      "nad50": 2
+     },
+     "vstup-dnu": {
+      "snimok": 13,
+      "p50": 47.6,
+      "p95": 562.4,
+      "max": 562.4,
+      "nad16": 84.6,
+      "nad50": 6
+     },
+     "remeslo": {
+      "snimok": 15,
+      "p50": 13.8,
+      "p95": 117.3,
+      "max": 117.3,
+      "nad16": 26.7,
+      "nad50": 1
+     },
+     "cakaren": {
+      "snimok": 19,
+      "p50": 48,
+      "p95": 121.1,
+      "max": 121.1,
+      "nad16": 89.5,
+      "nad50": 9
+     },
+     "tim": {
+      "snimok": 114,
+      "p50": 8,
+      "p95": 58.6,
+      "max": 105.4,
+      "nad16": 21.1,
+      "nad50": 7
+     },
+     "sluzby": {
+      "snimok": 188,
+      "p50": 7.1,
+      "p95": 50.7,
+      "max": 470,
+      "nad16": 15.4,
+      "nad50": 11
+     },
+     "galeria": {
+      "snimok": 49,
+      "p50": 11.3,
+      "p95": 53,
+      "max": 224.3,
+      "nad16": 26.5,
+      "nad50": 3
+     },
+     "rezervacia": {
+      "snimok": 84,
+      "p50": 17.1,
+      "p95": 184.3,
+      "max": 1660.6,
+      "nad16": 51.2,
+      "nad50": 13
+     },
+     "kontakt": {
+      "snimok": 57,
+      "p50": 6,
+      "p95": 19.3,
+      "max": 29.5,
+      "nad16": 5.3,
+      "nad50": 0
+     }
+    },
+    "cpuNaSnimku": {
+     "snimok": 553,
+     "p50": 6.9,
+     "p95": 40.1,
+     "max": 821.9,
+     "nad16": 18.1,
+     "nad50": 17
+    },
+    "cpuNaSnimkuSekcie": {
+     "uvod": {
+      "snimok": 14,
+      "p50": 7.2,
+      "p95": 33.7,
+      "max": 33.7,
+      "nad16": 28.6,
+      "nad50": 0
+     },
+     "vstup-dnu": {
+      "snimok": 13,
+      "p50": 28.5,
+      "p95": 145.4,
+      "max": 145.4,
+      "nad16": 69.2,
+      "nad50": 4
+     },
+     "remeslo": {
+      "snimok": 15,
+      "p50": 10,
+      "p95": 37.7,
+      "max": 37.7,
+      "nad16": 20,
+      "nad50": 0
+     },
+     "cakaren": {
+      "snimok": 19,
+      "p50": 22.1,
+      "p95": 84.4,
+      "max": 84.4,
+      "nad16": 73.7,
+      "nad50": 2
+     },
+     "tim": {
+      "snimok": 114,
+      "p50": 5.3,
+      "p95": 27.5,
+      "max": 77.4,
+      "nad16": 13.2,
+      "nad50": 2
+     },
+     "sluzby": {
+      "snimok": 188,
+      "p50": 5.2,
+      "p95": 26.9,
+      "max": 85.2,
+      "nad16": 9.6,
+      "nad50": 2
+     },
+     "galeria": {
+      "snimok": 49,
+      "p50": 7.9,
+      "p95": 30.7,
+      "max": 114.3,
+      "nad16": 12.2,
+      "nad50": 1
+     },
+     "rezervacia": {
+      "snimok": 84,
+      "p50": 10.3,
+      "p95": 74.9,
+      "max": 821.9,
+      "nad16": 34.5,
+      "nad50": 6
+     },
+     "kontakt": {
+      "snimok": 57,
+      "p50": 5.1,
+      "p95": 12.9,
+      "max": 22.8,
+      "nad16": 3.5,
+      "nad50": 0
+     }
+    }
+   }
+  },
+  "vlakna": {
+   "svih": {
+    "Renderer/PerfettoTrace": 64.7,
+    "GPU/VizCompositorThread": 1711.8,
+    "Renderer/Compositor": 3322.6,
+    "Renderer/CrRendererMain": 14413.7,
+    "Renderer/Chrome_ChildIOThread": 376.1,
+    "Renderer/ThreadPoolForegroundWorker": 4245.1,
+    "GPU/CrGpuMain": 25545.7,
+    "Renderer/ThreadPoolServiceThread": 240.4
+   }
+  },
+  "kompozitor": {},
+  "prvkovStyluNaSnimku": {
+   "svih": 15
+  },
+  "hlavneVlaknoCpuMsNaSnimku": {
+   "uvod": {
+    "praca": 13.2,
+    "styl": 5.24,
+    "paint": 1.92,
+    "ine": 1.88,
+    "layout": 1.78,
+    "skript": 1.13,
+    "snimka-ostatne": 0.89,
+    "animacie-css": 0.23,
+    "cakanie": 0.52
+   },
+   "vstup-dnu": {
+    "praca": 44.01,
+    "skript": 12.1,
+    "styl": 10.08,
+    "ine": 6.32,
+    "html-siet-ipc": 5.68,
+    "paint": 4.98,
+    "layout": 3.15,
+    "snimka-ostatne": 1.26,
+    "cakanie": 1.06
+   },
+   "remeslo": {
+    "praca": 11.79,
+    "ine": 2.95,
+    "styl": 2.58,
+    "paint": 1.96,
+    "skript": 1.47,
+    "snimka-ostatne": 1.09,
+    "layout": 0.81,
+    "html-siet-ipc": 0.49,
+    "cakanie": 0.21
+   },
+   "cakaren": {
+    "praca": 28.46,
+    "ine": 7.84,
+    "styl": 5.88,
+    "paint": 5.18,
+    "layout": 2.82,
+    "html-siet-ipc": 2.73,
+    "skript": 2.37,
+    "snimka-ostatne": 0.9,
+    "cakanie": 0.56
+   },
+   "tim": {
+    "praca": 8.66,
+    "styl": 2.46,
+    "paint": 1.59,
+    "ine": 1.4,
+    "skript": 0.97,
+    "layout": 0.88,
+    "snimka-ostatne": 0.72,
+    "animacie-css": 0.38,
+    "cakanie": 0.77
+   },
+   "sluzby": {
+    "praca": 8.4,
+    "paint": 1.84,
+    "ine": 1.75,
+    "styl": 1.73,
+    "skript": 0.95,
+    "layout": 0.75,
+    "snimka-ostatne": 0.56,
+    "gc": 0.33,
+    "cakanie": 0.17
+   },
+   "galeria": {
+    "praca": 10.77,
+    "ine": 2.28,
+    "paint": 2.14,
+    "styl": 2.12,
+    "html-siet-ipc": 1.32,
+    "skript": 1.29,
+    "layout": 0.78,
+    "snimka-ostatne": 0.56,
+    "cakanie": 0.63
+   },
+   "rezervacia": {
+    "praca": 28.64,
+    "styl": 7.48,
+    "layout": 6.87,
+    "ine": 4.37,
+    "paint": 3.66,
+    "skript": 3.63,
+    "snimka-ostatne": 1.34,
+    "gc": 0.55,
+    "cakanie": 0.77
+   },
+   "kontakt": {
+    "praca": 5.99,
+    "ine": 1.37,
+    "skript": 1.24,
+    "styl": 0.95,
+    "snimka-ostatne": 0.73,
+    "paint": 0.67,
+    "layout": 0.61,
+    "animacie-css": 0.25,
+    "cakanie": 0.17
+   }
+  },
+  "hlavneVlaknoMsNaSnimku": {
+   "uvod": {
+    "spolu": 26.64,
+    "styl": 9.94,
+    "layout": 6.16,
+    "paint": 2.94,
+    "ine": 2.5,
+    "snimka-ostatne": 2.49,
+    "skript": 1.22,
+    "gpu-cakanie": 0.47,
+    "animacie-css": 0.44,
+    "cakanie-kompozitor": 0.31,
+    "html-siet-ipc": 0.09,
+    "gc": 0.07
+   },
+   "vstup-dnu": {
+    "spolu": 153.16,
+    "styl": 46.93,
+    "skript": 29.54,
+    "html-siet-ipc": 20.9,
+    "ine": 20.66,
+    "paint": 19.59,
+    "layout": 8.96,
+    "snimka-ostatne": 3.19,
+    "gpu-cakanie": 1.43,
+    "animacie-css": 1.28,
+    "cakanie-kompozitor": 0.65,
+    "dekodovanie": 0.02,
+    "gc": 0
+   },
+   "remeslo": {
+    "spolu": 19.67,
+    "ine": 8.07,
+    "styl": 3.29,
+    "paint": 2.27,
+    "skript": 1.93,
+    "snimka-ostatne": 1.62,
+    "html-siet-ipc": 0.87,
+    "layout": 0.83,
+    "animacie-css": 0.48,
+    "cakanie-kompozitor": 0.29,
+    "gpu-cakanie": 0.03,
+    "dekodovanie": 0.01,
+    "gc": 0
+   },
+   "cakaren": {
+    "spolu": 53.75,
+    "styl": 15.25,
+    "ine": 13.39,
+    "paint": 7.98,
+    "html-siet-ipc": 5.76,
+    "layout": 4.84,
+    "skript": 3.57,
+    "snimka-ostatne": 1.38,
+    "animacie-css": 0.76,
+    "cakanie-kompozitor": 0.55,
+    "gpu-cakanie": 0.17,
+    "gc": 0.09,
+    "dekodovanie": 0.01
+   },
+   "tim": {
+    "spolu": 14.06,
+    "styl": 3.1,
+    "ine": 2.29,
+    "paint": 1.99,
+    "layout": 1.63,
+    "skript": 1.38,
+    "snimka-ostatne": 1.31,
+    "cakanie-kompozitor": 1.23,
+    "animacie-css": 0.65,
+    "html-siet-ipc": 0.41,
+    "gpu-cakanie": 0.09,
+    "gc": 0,
+    "dekodovanie": 0
+   },
+   "sluzby": {
+    "spolu": 16.41,
+    "styl": 5.12,
+    "paint": 3.02,
+    "ine": 2.84,
+    "skript": 1.72,
+    "layout": 1.11,
+    "snimka-ostatne": 1.01,
+    "gc": 0.51,
+    "html-siet-ipc": 0.41,
+    "animacie-css": 0.37,
+    "gpu-cakanie": 0.17,
+    "cakanie-kompozitor": 0.11,
+    "dekodovanie": 0
+   },
+   "galeria": {
+    "spolu": 18.82,
+    "ine": 3.96,
+    "skript": 3.16,
+    "paint": 2.94,
+    "styl": 2.76,
+    "html-siet-ipc": 2.39,
+    "layout": 1.21,
+    "snimka-ostatne": 1.07,
+    "cakanie-kompozitor": 0.75,
+    "animacie-css": 0.31,
+    "gpu-cakanie": 0.23,
+    "gc": 0.03,
+    "dekodovanie": 0
+   },
+   "rezervacia": {
+    "spolu": 55.76,
+    "layout": 13.82,
+    "styl": 11.5,
+    "ine": 8.97,
+    "skript": 7.25,
+    "paint": 6.36,
+    "snimka-ostatne": 2.45,
+    "gc": 2.13,
+    "animacie-css": 1.29,
+    "gpu-cakanie": 0.99,
+    "cakanie-kompozitor": 0.56,
+    "html-siet-ipc": 0.43,
+    "dekodovanie": 0.03
+   },
+   "kontakt": {
+    "spolu": 7.59,
+    "ine": 1.89,
+    "skript": 1.46,
+    "styl": 1.14,
+    "snimka-ostatne": 0.94,
+    "paint": 0.75,
+    "layout": 0.68,
+    "animacie-css": 0.28,
+    "html-siet-ipc": 0.19,
+    "gpu-cakanie": 0.16,
+    "cakanie-kompozitor": 0.11,
+    "gc": 0
+   }
+  }
+ },
+ "film": {
+  "on": false,
+  "triedy": "karty world-off js-kin js-steps"
+ },
+ "stiahnute": {
+  "styly-pisma": {
+   "pocet": 8,
+   "kB": 179
+  },
+  "skripty": {
+   "pocet": 6,
+   "kB": 193
+  },
+  "fotky-filmu": {
+   "pocet": 8,
+   "kB": 2489
+  },
+  "sekvencie": {
+   "pocet": 1,
+   "kB": 40
+  },
+  "zvuk": {
+   "pocet": 2,
+   "kB": 686
+  },
+  "ine-obrazky": {
+   "pocet": 9,
+   "kB": 318
+  }
+ },
+ "chyby": []
+}

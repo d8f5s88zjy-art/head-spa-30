@@ -49,7 +49,8 @@ const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isM
   userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36' };
 const DESK = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 };
 const query = FILM === 'on' ? '?film=on' : FILM === 'off' ? '?film=off' : '';
-const URLX = BASE + query;
+// --param="hudba=off" pridá ďalšie parametre adresy (pokusy A/B bez zmeny repozitára)
+const URLX = BASE + query + (opt.param ? (query ? '&' : '?') + opt.param : '');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- inštrumentácia v stránke (pred všetkými skriptmi) ---------- */
@@ -375,6 +376,8 @@ const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle',
 const ctx = await browser.newContext(Object.assign({ colorScheme: 'dark', locale: 'sk-SK' }, DEV === 'telefon' ? PHONE : DESK));
 await ctx.addInitScript(INIT);
 // pokus A/B bez zmeny repozitára: --css="pravidlá" sa vloží do stránky (napr. vypnúť backdrop-filter a overiť príčinu)
+// --js="kód" sa vykoná pred skriptmi stránky (pokus A/B: napr. blokovať zápis jednej premennej)
+if (opt.js) await ctx.addInitScript({ content: opt.js });
 if (opt.css) await ctx.addInitScript((css) => { const put = () => { const st = document.createElement('style'); st.textContent = css; document.head.append(st); }; if (document.head) put(); else document.addEventListener('DOMContentLoaded', put); }, opt.css);
 if (opt.vernost === '1') {
   // prihláška k vernostnej karte ako po nasadení s adminom (data-zapnute): atribút sa doplní skriptu vernost.js pri
@@ -390,7 +393,7 @@ const cdp = await ctx.newCDPSession(page);
 await cdp.send('Network.enable');
 if (NETS[NET]) await cdp.send('Network.emulateNetworkConditions', NETS[NET]);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
-const out = { meta: { meno: MENO, url: URLX, css: opt.css || null, zariadenie: DEV, cpu: CPU, siet: NET, film: FILM, cas: new Date().toISOString(), zataz: load1.map((x) => +x.toFixed(2)), prehliadac: browser.version(), poznamka: 'WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.' } };
+const out = { meta: { meno: MENO, url: URLX, css: opt.css || null, js: opt.js || null, gesto: opt.gesto || null, zariadenie: DEV, cpu: CPU, siet: NET, film: FILM, cas: new Date().toISOString(), zataz: load1.map((x) => +x.toFixed(2)), prehliadac: browser.version(), poznamka: 'WebGL beží softvérovo (SwiftShader, proces GPU); hlavné vlákno je porovnateľné, kreslenie GPU nie.' } };
 const perfNow = () => page.evaluate(() => performance.now());
 const mark = async (name) => page.evaluate((n) => { performance.mark(n); return performance.getEntriesByName(n).pop().startTime; }, name);
 let sections = [];
@@ -552,8 +555,10 @@ try {
         for (const [s, kat] of Object.entries(H.sekcieCpu)) { const P = perSecC[s] || (perSecC[s] = { kat: {} }); for (const [k, v] of Object.entries(kat)) P.kat[k] = (P.kat[k] || 0) + v; }
       }
       out.skrol.hlavneVlaknoCpuMsNaSnimku = Object.fromEntries(Object.entries(perSecC).map(([s, P]) => {
-        const n = Math.max(1, (perSec[s] && perSec[s].snimok) || 1), spolu = Object.values(P.kat).reduce((x, y) => x + y, 0);
-        return [s, { spolu: +(spolu / n).toFixed(2), ...Object.fromEntries(Object.entries(P.kat).sort((x, y) => y[1] - x[1]).slice(0, 8).map(([k, v]) => [k, +(v / n).toFixed(2)])) }];
+        // spolu bez čakania na kompozítor a GPU (to je čakanie, nie práca; pri záťaži stroja ho nafukuje súbeh vlákien)
+        const n = Math.max(1, (perSec[s] && perSec[s].snimok) || 1), W = /^(cakanie-kompozitor|gpu-cakanie)$/;
+        const spolu = Object.entries(P.kat).filter(([k]) => !W.test(k)).reduce((x, [, y]) => x + y, 0);
+        return [s, { praca: +(spolu / n).toFixed(2), ...Object.fromEntries(Object.entries(P.kat).filter(([k]) => !W.test(k)).sort((x, y) => y[1] - x[1]).slice(0, 7).map(([k, v]) => [k, +(v / n).toFixed(2)])), cakanie: +(Object.entries(P.kat).filter(([k]) => W.test(k)).reduce((x, [, y]) => x + y, 0) / n).toFixed(2) }];
       }));
       out.skrol.hlavneVlaknoMsNaSnimku = Object.fromEntries(Object.entries(perSec).map(([s, P]) => {
         const spolu = Object.values(P.kat).reduce((a, b) => a + b, 0);

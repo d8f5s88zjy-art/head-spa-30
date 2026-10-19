@@ -11,7 +11,7 @@ const cier = (d) => Object.fromEntries(fs.readdirSync(d).filter((f) => f.startsW
 const A = load(dirs[0]), B = dirs[1] ? load(dirs[1]) : null;
 const CA = cier(dirs[0]), CB = dirs[1] ? cier(dirs[1]) : null;
 const v = (x, d = 0) => (x == null || Number.isNaN(x) ? '–' : typeof x === 'number' ? x.toFixed(d) : x);
-const pair = (a, b, d = 0) => (b === undefined ? v(a, d) : `${v(a, d)} → ${v(b, d)}`);
+const pair = (a, b, d = 0) => (!B || b === undefined ? v(a, d) : `${v(a, d)} → ${v(b, d)}`);
 const names = Object.keys(A).filter((k) => A[k].meta).sort();
 const g = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
 const row = (cells) => '| ' + cells.join(' | ') + ' |';
@@ -32,13 +32,13 @@ for (const n of names) {
   out.push(row([n, a.uvod.prolog ? 'áno' : 'nie', pair(g(a, 'uvod.snimky.p50'), b && g(b, 'uvod.snimky.p50'), 1), pair(g(a, 'uvod.snimky.p95'), b && g(b, 'uvod.snimky.p95'), 1), pair(g(a, 'uvod.snimky.max'), b && g(b, 'uvod.snimky.max'), 0), pair(g(a, 'uvod.snimky.podiel33'), b && g(b, 'uvod.snimky.podiel33'), 1), pair(g(a, 'uvod.dlheUlohy.pocet'), b && g(b, 'uvod.dlheUlohy.pocet')), pair(g(a, 'uvod.dlheUlohy.max'), b && g(b, 'uvod.dlheUlohy.max'))]));
 }
 out.push('\n## Skrol celou stránkou (snímky rAF; práca hlavného vlákna na snímku bez čakania na GPU)\n');
-out.push(row(['beh', 'prechod', 'snímok', 'p50', 'p95', 'max', '> 33 ms %', '> 100 ms', 'dlhé úlohy', 'najdlhšia', 'práca p50', 'práca p95', 'práca > 16,7 ms %', 'WebGL ms/sn.', 'textúry MB', 'koniec Y']));
-out.push(row(Array(16).fill('---')));
+out.push(row(['beh', 'prechod', 'snímok', 'p50', 'p95', 'max', '> 33 ms %', '> 100 ms', 'dlhé úlohy', 'najdlhšia', 'práca p50', 'práca p95', 'práca > 16,7 ms %', 'CPU p50', 'CPU p95', 'WebGL ms/sn.', 'textúry MB', 'koniec Y', 'záťaž']));
+out.push(row(Array(19).fill('---')));
 for (const n of names) {
   const a = A[n], b = B && B[n]; if (!a.skrol) continue;
   for (const p of Object.keys(a.skrol.prechody)) {
-    const P = (x, k) => g(x, `skrol.prechody.${p}.${k}`), W = (x, k) => g(x, `skrol.vlakno.${p}.pracaNaSnimku.${k}`);
-    out.push(row([n, p, v(P(a, 'snimky.snimok')), pair(P(a, 'snimky.p50'), b && P(b, 'snimky.p50'), 1), pair(P(a, 'snimky.p95'), b && P(b, 'snimky.p95'), 1), pair(P(a, 'snimky.max'), b && P(b, 'snimky.max')), pair(P(a, 'snimky.podiel33'), b && P(b, 'snimky.podiel33'), 1), pair(P(a, 'snimky.nad100'), b && P(b, 'snimky.nad100')), pair(P(a, 'dlheUlohy.pocet'), b && P(b, 'dlheUlohy.pocet')), pair(P(a, 'dlheUlohy.max'), b && P(b, 'dlheUlohy.max')), pair(W(a, 'p50'), b && W(b, 'p50'), 1), pair(W(a, 'p95'), b && W(b, 'p95'), 1), pair(W(a, 'nad16'), b && W(b, 'nad16'), 1), pair(P(a, 'glMsNaSnimku'), b && P(b, 'glMsNaSnimku'), 1), pair(P(a, 'texturyMB'), b && P(b, 'texturyMB'), 0), v(P(a, 'koniecY'))]));
+    const P = (x, k) => g(x, `skrol.prechody.${p}.${k}`), W = (x, k) => g(x, `skrol.vlakno.${p}.pracaNaSnimku.${k}`), C = (x, k) => g(x, `skrol.vlakno.${p}.cpuNaSnimku.${k}`);
+    out.push(row([n, p, v(P(a, 'snimky.snimok')), pair(P(a, 'snimky.p50'), b && P(b, 'snimky.p50'), 1), pair(P(a, 'snimky.p95'), b && P(b, 'snimky.p95'), 1), pair(P(a, 'snimky.max'), b && P(b, 'snimky.max')), pair(P(a, 'snimky.podiel33'), b && P(b, 'snimky.podiel33'), 1), pair(P(a, 'snimky.nad100'), b && P(b, 'snimky.nad100')), pair(P(a, 'dlheUlohy.pocet'), b && P(b, 'dlheUlohy.pocet')), pair(P(a, 'dlheUlohy.max'), b && P(b, 'dlheUlohy.max')), pair(W(a, 'p50'), b && W(b, 'p50'), 1), pair(W(a, 'p95'), b && W(b, 'p95'), 1), pair(W(a, 'nad16'), b && W(b, 'nad16'), 1), pair(C(a, 'p50'), b && C(b, 'p50'), 1), pair(C(a, 'p95'), b && C(b, 'p95'), 1), pair(P(a, 'glMsNaSnimku'), b && P(b, 'glMsNaSnimku'), 1), pair(P(a, 'texturyMB'), b && P(b, 'texturyMB'), 0), v(P(a, 'koniecY')), v(P(a, 'zataz') ?? g(a, 'meta.zataz.0'), 1)]));
   }
 }
 out.push('\n## Skrol po sekciách (všetky prechody spolu): p95 snímky / max / dlhé úlohy; práca hlavného vlákna ms na snímku\n');
@@ -46,14 +46,15 @@ for (const n of names) {
   const a = A[n]; if (!a.skrol) continue;
   const secs = Object.keys(a.skrol.sekcie || {});
   out.push(`\n**${n}**\n`);
-  out.push(row(['sekcia', 'p95', 'max', '> 33 ms %', 'dlhé úlohy (všetky prechody)', 'práca ms/sn.', 'štýl', 'layout', 'paint', 'skript', 'čakanie kompozítor', 'čakanie GPU']));
-  out.push(row(Array(12).fill('---')));
+  out.push(row(['sekcia', 'p95', 'max', '> 33 ms %', 'dlhé úlohy (všetky prechody)', 'práca ms/sn.', 'štýl', 'layout', 'paint', 'skript', 'čakanie kompozítor', 'čakanie GPU', 'CPU ms/sn.', 'CPU štýl', 'CPU skript']));
+  out.push(row(Array(15).fill('---')));
   for (const s of secs) {
     const st = a.skrol.sekcie[s], hv = (a.skrol.hlavneVlaknoMsNaSnimku || {})[s] || {};
     const lt = Object.values(a.skrol.prechody).reduce((x, p) => x + ((p.sekcie[s] && p.sekcie[s].dlheUlohy.pocet) || 0), 0);
     const ltm = Math.max(0, ...Object.values(a.skrol.prechody).map((p) => (p.sekcie[s] && p.sekcie[s].dlheUlohy.max) || 0));
     const work = (hv.spolu || 0) - (hv['cakanie-kompozitor'] || 0) - (hv['gpu-cakanie'] || 0);
-    out.push(row([s, v(st.p95, 1), v(st.max), v(st.podiel33, 1), `${lt} (max ${ltm})`, v(work, 1), v(hv.styl, 1), v(hv.layout, 1), v(hv.paint, 1), v(hv.skript, 1), v(hv['cakanie-kompozitor'], 1), v(hv['gpu-cakanie'], 1)]));
+    const hc = (a.skrol.hlavneVlaknoCpuMsNaSnimku || {})[s] || {};
+    out.push(row([s, v(st.p95, 1), v(st.max), v(st.podiel33, 1), `${lt} (max ${ltm})`, v(work, 1), v(hv.styl, 1), v(hv.layout, 1), v(hv.paint, 1), v(hv.skript, 1), v(hv['cakanie-kompozitor'], 1), v(hv['gpu-cakanie'], 1), v(hc.praca, 1), v(hc.styl, 1), v(hc.skript, 1)]));
   }
 }
 out.push('\n## Prechody (INP z Event Timing, snímky počas prechodu)\n');
