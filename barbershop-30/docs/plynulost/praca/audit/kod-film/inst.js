@@ -20,6 +20,10 @@
       try { return cb(ts); } finally {
         const d = now() - s;
         if (cur.film) f.film += d; else f.ine += d;
+        // šero: film v tejto snímke plátno len vyčistil – zapísať stav filmu (ktorý záber chýba)
+        if (cur.film && f.cistiDef > 0 && f.kresliDef === 0 && (M.darkLog || (M.darkLog = [])).length < 400) {
+          try { const s = window.BS30_FILM.state; M.darkLog.push([+ts.toFixed(0), +s.S.toFixed(3), +s.T.toFixed(3), s.current, s.ready.filter((r) => r.ready).map((r) => r.shot).join(' '), s.ready.filter((r) => r.loading).map((r) => r.shot).join(' ')]); } catch (e) { /* nič */ }
+        }
         cur = prev;
       }
     });

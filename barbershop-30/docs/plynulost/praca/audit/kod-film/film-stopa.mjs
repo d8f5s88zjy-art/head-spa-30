@@ -86,7 +86,8 @@ async function okno(od, po, meno) {
 }
 const vys = { nastavenie: { DEV, CPU, NET, Q, cas: new Date().toISOString() }, scenare: {} };
 const uloz = () => fs.writeFileSync(path.join(OUT, 'vysledok.json'), JSON.stringify(vys, (k, v) => (k === 'surove' && !opt.surove ? undefined : v), 1));
-const shot = async (n) => { await page.screenshot({ path: path.join(OUT, n + '.jpg'), type: 'jpeg', quality: 70 }); };
+const casySnimok = [];
+const shot = async (n) => { const a = await T(); await page.screenshot({ path: path.join(OUT, n + '.jpg'), type: 'jpeg', quality: 70 }); const b = await T(); casySnimok.push([n, +a.toFixed(0), +b.toFixed(0)]); vys.snimky = casySnimok; };
 
 await page.goto(`http://127.0.0.1:${PORT}/barbershop-30/?${Q}`, { waitUntil: 'load', timeout: 120000 });
 await sleep(3000);
@@ -127,6 +128,15 @@ if (SCEN.includes('skrol')) {
   vys.scenare.skrol = await okno(od, po, 'skrol celou stránkou (stredné švihy)');
   vys.scenare.skrol.stavy = stavy.map((s) => ({ S: s.S, cur: s.cur, dpr: s.dpr, ready: s.ready, loading: s.loading, seq: s.seq && s.seq.map((q) => `${q.shot} got ${q.got}/${q.n} tex ${q.tex} up ${q.up} dec ${q.dec}`).join('; ') }));
   uloz();
+}
+if (SCEN.includes('dole')) {
+  // rýchly presun na koniec stránky po kúskoch (ako dlhý skrol), aby film stál na poslednom zábere
+  const maxY = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+  for (let y = 0; y <= maxY; y += 700) { await page.evaluate((y) => scrollTo(0, y), y); await sleep(350); }
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  for (let i = 0; i < 40; i++) { const s = await st(); if (s.cur && /vstup/.test(s.cur) && s.ready.includes('vstup')) break; await sleep(500); }
+  await sleep(2000);
+  vys.dole = await st();
 }
 if (SCEN.includes('hore')) {
   await sleep(1500);
@@ -171,6 +181,8 @@ if (SCEN.includes('kontext')) {
   uloz();
 }
 vys.koniec = await st();
+vys.znacky = await page.evaluate(() => window.__KF.marks);
+vys.seroStav = await page.evaluate(() => window.__KF.darkLog || []);
 vys.volania = await page.evaluate(() => Object.fromEntries(Object.entries(window.__KF.calls).map(([k, v]) => [k, { ms: +v[0].toFixed(1), n: v[1], max: +v[2].toFixed(1) }])));
 vys.kontexty = await page.evaluate(() => window.__KF.ctxMs);
 vys.pametMaxMB = await page.evaluate(() => +(window.__KF.liveMax / 1e6).toFixed(1));

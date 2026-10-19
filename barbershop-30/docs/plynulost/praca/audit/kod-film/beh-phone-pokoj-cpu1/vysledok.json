@@ -1,0 +1,856 @@
+{
+ "nastavenie": {
+  "DEV": "phone",
+  "CPU": 1,
+  "NET": "none",
+  "Q": "film=on&uvod=off",
+  "cas": "2026-10-19T13:19:55.377Z"
+ },
+ "scenare": {
+  "prvy": {
+   "meno": "prvý dotyk -> film",
+   "trvanieMs": 6872,
+   "snimok": 98,
+   "snimokFilmu": 93,
+   "fps": 14.3,
+   "intervalSnimky": {
+    "n": 97,
+    "p50": 50,
+    "p95": 116.7,
+    "max": 1166.6,
+    "sum": 6649.7
+   },
+   "filmJsMs": {
+    "n": 93,
+    "p50": 0.5,
+    "p95": 12.2,
+    "max": 289.3,
+    "sum": 666.1
+   },
+   "filmGlMs": {
+    "n": 93,
+    "p50": 0,
+    "p95": 5.3,
+    "max": 286.8,
+    "sum": 355.5
+   },
+   "ineRafMs": {
+    "n": 15,
+    "p50": 0.4,
+    "p95": 4.6,
+    "max": 4.6,
+    "sum": 10.1
+   },
+   "pasy": {
+    "snimokSPasmi": 12,
+    "pasov": 33,
+    "msNaSnimku": {
+     "n": 12,
+     "p50": 5.1,
+     "p95": 286.6,
+     "max": 286.6,
+     "sum": 338.1
+    },
+    "maxNaSnimku": 9
+   },
+   "celeNahratia": {
+    "snimokSNimi": 0,
+    "pocet": 0,
+    "msNaSnimku": null,
+    "maxNaSnimku": 0
+   },
+   "nahrateMB": 26.5,
+   "kresliNaSnimku": {
+    "n": 93,
+    "p50": 1,
+    "p95": 1,
+    "max": 1,
+    "sum": 84
+   },
+   "sero": {
+    "okien": 0,
+    "nad150ms": 0,
+    "najdlhsieMs": 0,
+    "okna": []
+   },
+   "dlheUlohy": {
+    "pocet": 5,
+    "max": 291,
+    "zoznam": [
+     [
+      3286.3,
+      66
+     ],
+     [
+      3393.2,
+      59
+     ],
+     [
+      4325,
+      291
+     ],
+     [
+      7152.3,
+      137
+     ],
+     [
+      9425.2,
+      108
+     ]
+    ]
+   },
+   "loaf": [
+    {
+     "t": 3282.6,
+     "d": 71.6,
+     "blok": 16.2,
+     "render": 0.3,
+     "skripty": [
+      [
+       "http://127.0.0.1:8248/barbershop-30/assets/vendor/three.module.min.js",
+       "three.module.min.js",
+       "",
+       7
+      ],
+      [
+       "import.then",
+       "film.js",
+       "",
+       58
+      ]
+     ]
+    },
+    {
+     "t": 3386.7,
+     "d": 68.7,
+     "blok": 12,
+     "render": 2.5,
+     "skripty": [
+      [
+       "TimerHandler:setTimeout",
+       "three.module.min.js",
+       "n",
+       59
+      ]
+     ]
+    },
+    {
+     "t": 3521.2,
+     "d": 96.2,
+     "blok": 0,
+     "render": 9.8,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       6
+      ]
+     ]
+    },
+    {
+     "t": 3772.1,
+     "d": 55.4,
+     "blok": 0,
+     "render": 16.7,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       12
+      ]
+     ]
+    },
+    {
+     "t": 3851.8,
+     "d": 78.1,
+     "blok": 0,
+     "render": 8.7,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       6
+      ]
+     ]
+    },
+    {
+     "t": 3930.9,
+     "d": 90.5,
+     "blok": 0,
+     "render": 8.4,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       7
+      ]
+     ]
+    },
+    {
+     "t": 4052.4,
+     "d": 94,
+     "blok": 0,
+     "render": 10.1,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       9
+      ]
+     ]
+    },
+    {
+     "t": 4147.2,
+     "d": 67.4,
+     "blok": 0,
+     "render": 14.1,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       13
+      ]
+     ]
+    },
+    {
+     "t": 4242.8,
+     "d": 372.4,
+     "blok": 241.5,
+     "render": 290.2,
+     "skripty": [
+      [
+       "FrameRequestCallback",
+       "inst.js",
+       "",
+       289
+      ]
+     ]
+    },
+    {
+     "t": 4638.2,
+     "d": 1161.4,
+     "blok": 0,
+     "render": 1.6,
+     "skripty": []
+    },
+    {
+     "t": 5811.3,
+     "d": 248.5,
+     "blok": 0,
+     "render": 1.1,
+     "skripty": []
+    },
+    {
+     "t": 6109.6,
+     "d": 56.4,
+     "blok": 0,
+     "render": 1.1,
+     "skripty": []
+    }
+   ],
+   "mimoSnimky": [
+    [
+     3411.2,
+     "getProgramParameter",
+     14.6
+    ],
+    [
+     3451.8,
+     "getProgramParameter",
+     37.9
+    ]
+   ],
+   "velkeVolania": [
+    [
+     3411.1,
+     "getProgramParameter",
+     14.6,
+     ""
+    ],
+    [
+     3451.7,
+     "getProgramParameter",
+     37.9,
+     ""
+    ],
+    [
+     3927.1,
+     "clear",
+     5.3,
+     ""
+    ],
+    [
+     4144.5,
+     "texSubImage2D",
+     7.1,
+     ""
+    ],
+    [
+     4205.8,
+     "texSubImage2D",
+     4.5,
+     ""
+    ],
+    [
+     4613.3,
+     "texSubImage2D",
+     283,
+     ""
+    ]
+   ],
+   "pametMB": {
+    "max": 84.8,
+    "koniec": 74
+   },
+   "stav": {
+    "shown": true,
+    "dpr": 1.5,
+    "S": 1.127,
+    "T": 1.127,
+    "cur": "rohozka-m",
+    "mix": 0,
+    "frames": 85,
+    "first": 627,
+    "ready": "rohozka-m:1448 sala-video:1 stol-video:1",
+    "loading": "",
+    "seq": [
+     {
+      "shot": "sala-video",
+      "on": true,
+      "got": 51,
+      "n": 51,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     },
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "sala-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     },
+     {
+      "shot": "stol-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     },
+     {
+      "shot": "sala-rano-video",
+      "mode": "play",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": false,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     }
+    ],
+    "cls": "karty world js-kin js-steps world-in"
+   }
+  },
+  "pokoj": {
+   "meno": "10 s bez vstupu",
+   "trvanieMs": 10004,
+   "snimok": 274,
+   "snimokFilmu": 274,
+   "fps": 27.4,
+   "intervalSnimky": {
+    "n": 273,
+    "p50": 33.3,
+    "p95": 50.1,
+    "max": 100,
+    "sum": 9966.3
+   },
+   "filmJsMs": {
+    "n": 274,
+    "p50": 0.4,
+    "p95": 1.1,
+    "max": 5.2,
+    "sum": 148.9
+   },
+   "filmGlMs": {
+    "n": 274,
+    "p50": 0,
+    "p95": 0.2,
+    "max": 3.7,
+    "sum": 15
+   },
+   "ineRafMs": null,
+   "pasy": {
+    "snimokSPasmi": 0,
+    "pasov": 0,
+    "msNaSnimku": null,
+    "maxNaSnimku": 0
+   },
+   "celeNahratia": {
+    "snimokSNimi": 0,
+    "pocet": 0,
+    "msNaSnimku": null,
+    "maxNaSnimku": 0
+   },
+   "nahrateMB": 0,
+   "kresliNaSnimku": {
+    "n": 274,
+    "p50": 1,
+    "p95": 1,
+    "max": 1,
+    "sum": 274
+   },
+   "sero": {
+    "okien": 0,
+    "nad150ms": 0,
+    "najdlhsieMs": 0,
+    "okna": []
+   },
+   "dlheUlohy": {
+    "pocet": 0,
+    "max": 0,
+    "zoznam": []
+   },
+   "loaf": [
+    {
+     "t": 13964,
+     "d": 50.1,
+     "blok": 0,
+     "render": 1.3,
+     "skripty": []
+    },
+    {
+     "t": 14126.9,
+     "d": 109.9,
+     "blok": 0,
+     "render": 1.6,
+     "skripty": []
+    },
+    {
+     "t": 14402.6,
+     "d": 53.4,
+     "blok": 0,
+     "render": 1.4,
+     "skripty": []
+    },
+    {
+     "t": 14633,
+     "d": 69.2,
+     "blok": 0,
+     "render": 1.3,
+     "skripty": []
+    },
+    {
+     "t": 14845.8,
+     "d": 52,
+     "blok": 0,
+     "render": 1.1,
+     "skripty": []
+    },
+    {
+     "t": 15313.3,
+     "d": 53.8,
+     "blok": 0,
+     "render": 1.2,
+     "skripty": []
+    },
+    {
+     "t": 15580.8,
+     "d": 75.3,
+     "blok": 0,
+     "render": 1.1,
+     "skripty": []
+    },
+    {
+     "t": 16795.9,
+     "d": 58.5,
+     "blok": 0,
+     "render": 1.3,
+     "skripty": []
+    },
+    {
+     "t": 17521.2,
+     "d": 57.4,
+     "blok": 0,
+     "render": 0.9,
+     "skripty": []
+    },
+    {
+     "t": 17644.5,
+     "d": 54.1,
+     "blok": 0,
+     "render": 1.1,
+     "skripty": []
+    },
+    {
+     "t": 18325.9,
+     "d": 107.2,
+     "blok": 0,
+     "render": 4.1,
+     "skripty": []
+    },
+    {
+     "t": 19042.8,
+     "d": 51.4,
+     "blok": 0,
+     "render": 1,
+     "skripty": []
+    }
+   ],
+   "mimoSnimky": [],
+   "velkeVolania": [],
+   "pametMB": {
+    "max": 66.3,
+    "koniec": 66.3
+   },
+   "stav": {
+    "shown": true,
+    "dpr": 1,
+    "S": 1.127,
+    "T": 1.127,
+    "cur": "rohozka-m",
+    "mix": 0,
+    "frames": 424,
+    "first": 627,
+    "ready": "rohozka-m:1448 sala-video:1 stol-video:1",
+    "loading": "",
+    "seq": [
+     {
+      "shot": "sala-video",
+      "on": true,
+      "got": 51,
+      "n": 51,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     },
+     {
+      "shot": "stol-video",
+      "on": true,
+      "got": 44,
+      "n": 44,
+      "lo": 0,
+      "hi": 0,
+      "mix": 0,
+      "tex": "2,1,0",
+      "up": 0,
+      "dec": 0,
+      "t": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "sala-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     },
+     {
+      "shot": "stol-video",
+      "mode": "seq",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": true,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     },
+     {
+      "shot": "sala-rano-video",
+      "mode": "play",
+      "src": null,
+      "rs": null,
+      "t": null,
+      "want": 0,
+      "seeking": null,
+      "paused": null,
+      "live": false,
+      "poster": false,
+      "blocked": false,
+      "fail": false,
+      "netErr": false,
+      "onScreen": false
+     }
+    ],
+    "cls": "karty world js-kin js-steps world-in"
+   }
+  }
+ },
+ "poNacitani": {
+  "on": false,
+  "cls": "karty world js-kin js-steps"
+ },
+ "snimky": [
+  [
+   "prvy-po",
+   10104,
+   11863
+  ]
+ ],
+ "koniec": {
+  "shown": true,
+  "dpr": 1,
+  "S": 1.127,
+  "T": 1.127,
+  "cur": "rohozka-m",
+  "mix": 0,
+  "frames": 424,
+  "first": 627,
+  "ready": "rohozka-m:1448 sala-video:1 stol-video:1",
+  "loading": "",
+  "seq": [
+   {
+    "shot": "sala-video",
+    "on": true,
+    "got": 51,
+    "n": 51,
+    "lo": 0,
+    "hi": 0,
+    "mix": 0,
+    "tex": "2,1,0",
+    "up": 0,
+    "dec": 0,
+    "t": 0
+   },
+   {
+    "shot": "stol-video",
+    "on": true,
+    "got": 44,
+    "n": 44,
+    "lo": 0,
+    "hi": 0,
+    "mix": 0,
+    "tex": "2,1,0",
+    "up": 0,
+    "dec": 0,
+    "t": 0
+   }
+  ],
+  "video": [
+   {
+    "shot": "sala-video",
+    "mode": "seq",
+    "src": null,
+    "rs": null,
+    "t": null,
+    "want": 0,
+    "seeking": null,
+    "paused": null,
+    "live": false,
+    "poster": true,
+    "blocked": false,
+    "fail": false,
+    "netErr": false,
+    "onScreen": false
+   },
+   {
+    "shot": "stol-video",
+    "mode": "seq",
+    "src": null,
+    "rs": null,
+    "t": null,
+    "want": 0,
+    "seeking": null,
+    "paused": null,
+    "live": false,
+    "poster": true,
+    "blocked": false,
+    "fail": false,
+    "netErr": false,
+    "onScreen": false
+   },
+   {
+    "shot": "sala-rano-video",
+    "mode": "play",
+    "src": null,
+    "rs": null,
+    "t": null,
+    "want": 0,
+    "seeking": null,
+    "paused": null,
+    "live": false,
+    "poster": false,
+    "blocked": false,
+    "fail": false,
+    "netErr": false,
+    "onScreen": false
+   }
+  ],
+  "cls": "karty world js-kin js-steps world-in"
+ },
+ "znacky": [
+  [
+   3178.2,
+   "prvy-dotyk"
+  ]
+ ],
+ "seroStav": [],
+ "volania": {
+  "texImage2D": {
+   "ms": 0.2,
+   "n": 20,
+   "max": 0.1
+  },
+  "bindFramebuffer": {
+   "ms": 0.4,
+   "n": 68,
+   "max": 0.1
+  },
+  "generateMipmap": {
+   "ms": 0.1,
+   "n": 12,
+   "max": 0.1
+  },
+  "renderbufferStorage": {
+   "ms": 0,
+   "n": 10,
+   "max": 0
+  },
+  "clear": {
+   "ms": 30,
+   "n": 435,
+   "max": 5.3
+  },
+  "compileShader": {
+   "ms": 0,
+   "n": 8,
+   "max": 0
+  },
+  "linkProgram": {
+   "ms": 0,
+   "n": 4,
+   "max": 0
+  },
+  "getProgramParameter": {
+   "ms": 55.4,
+   "n": 6,
+   "max": 37.9
+  },
+  "getActiveUniform": {
+   "ms": 0,
+   "n": 24,
+   "max": 0
+  },
+  "getUniformLocation": {
+   "ms": 0,
+   "n": 24,
+   "max": 0
+  },
+  "drawElements": {
+   "ms": 3.8,
+   "n": 431,
+   "max": 0.9
+  },
+  "deleteTexture": {
+   "ms": 0,
+   "n": 11,
+   "max": 0
+  },
+  "texStorage2D": {
+   "ms": 0.1,
+   "n": 10,
+   "max": 0.1
+  },
+  "texSubImage2D": {
+   "ms": 338.1,
+   "n": 33,
+   "max": 283
+  },
+  "deleteRenderbuffer": {
+   "ms": 0,
+   "n": 8,
+   "max": 0
+  }
+ },
+ "kontexty": [
+  [
+   509.5,
+   "webgl2",
+   278.9,
+   "(test)"
+  ],
+  [
+   3296.3,
+   "webgl2",
+   14.7,
+   "film-canvas"
+  ]
+ ],
+ "pametMaxMB": 84.8,
+ "platno": {
+  "w": 390,
+  "h": 844,
+  "css": [
+   390,
+   844
+  ]
+ }
+}
