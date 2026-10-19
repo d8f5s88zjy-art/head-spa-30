@@ -181,12 +181,25 @@ for (const b of beats.beats) {
     fc = path.join(OUT, `${nm}-ciste.png`);
     await page.screenshot({ path: fc });
     await page.evaluate(() => document.querySelectorAll('style[data-ciste]').forEach((s) => s.remove()));
+    if (opt.kontrast) {
+      // pozadie textu karty (stmavenie karty ostáva, text a tiene preč) + obdĺžniky textu v css px
+      const rects = await page.evaluate(() => {
+        const card = [...document.querySelectorAll('.film-shot.is-title.is-on')].pop(); if (!card) return [];
+        return [...card.querySelectorAll('.title-card .kicker, .title-card .title, .title-card .title-sub')].map((el) => { const r = el.getBoundingClientRect(); const s = getComputedStyle(el); return { cls: el.className.split(' ')[0], x: r.left, y: r.top, w: r.width, h: r.height, fs: parseFloat(s.fontSize), fw: s.fontWeight, color: s.color }; });
+      });
+      await page.addStyleTag({ content: '.title-card .kicker,.title-card .title,.title-card .title-sub,.title-card .title *{color:transparent!important;text-shadow:none!important}.title-card .kicker::before,.title-card .kicker::after,.title-actions,.scroll-hint,.film-door{visibility:hidden!important}' }).then((h) => h.evaluate((n) => n.setAttribute('data-ciste', '')));
+      await page.waitForTimeout(MODE === 'on' ? 700 : 150);
+      const fp = path.join(OUT, `${nm}-pozadie.png`);
+      await page.screenshot({ path: fp });
+      await page.evaluate(() => document.querySelectorAll('style[data-ciste]').forEach((s) => s.remove()));
+      out.__kontrast = out.__kontrast || {}; out.__kontrast[nm] = { file: path.basename(fp), rects };
+    }
   }
   out.push({ ...b, file: path.basename(f), ciste: fc && path.basename(fc), ...m });
   console.log(nm, 'y', m.scrollY, 'img', m.imgs[0] ? `${m.imgs[0].src} ${m.imgs[0].zdroj_na_px}` : '-', 'písmo min', m.fonts[0], ((Date.now() - tb) / 1000).toFixed(1) + 's', m.film ? `film ${m.film.cur} S${m.film.S} mix${m.film.mix} dpr${m.film.dpr}` : '');
   k++;
 }
 const ls = await page.evaluate(() => window.__ls || []);
-fs.writeFileSync(path.join(OUT, 'beats.json'), JSON.stringify({ dev: opt.dev, mode: MODE, url: URL0, classes, vh: beats.vh, max: beats.max, screens: beats.screens, layoutShifts: ls, errs, beats: out }, null, 1));
+fs.writeFileSync(path.join(OUT, 'beats.json'), JSON.stringify({ kontrast: out.__kontrast || null, dev: opt.dev, mode: MODE, url: URL0, classes, vh: beats.vh, max: beats.max, screens: beats.screens, layoutShifts: ls, errs, beats: out }, null, 1));
 console.log('CLS spolu', ls.reduce((a, e) => a + e.v, 0).toFixed(4), ls.length, 'posunov; chyby', errs.length, errs.slice(0, 3));
 await browser.close();
