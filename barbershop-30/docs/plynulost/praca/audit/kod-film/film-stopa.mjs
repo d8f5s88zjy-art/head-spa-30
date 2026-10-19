@@ -90,9 +90,20 @@ const casySnimok = [];
 const shot = async (n) => { const a = await T(); await page.screenshot({ path: path.join(OUT, n + '.jpg'), type: 'jpeg', quality: 70 }); const b = await T(); casySnimok.push([n, +a.toFixed(0), +b.toFixed(0)]); vys.snimky = casySnimok; };
 
 await page.goto(`http://127.0.0.1:${PORT}/barbershop-30/?${Q}`, { waitUntil: 'load', timeout: 120000 });
-await sleep(3000);
+if (!SCEN.includes('prolog')) await sleep(3000);
 vys.poNacitani = await st();
 
+if (SCEN.includes('prolog')) {
+  // úvodný film bez vstupu (stránka otvorená s ?uvod=znova): od načítania po koniec prológu + 2 s
+  const od = 0;
+  let t = 0; while (t < 25000) { const s = await st(); if (s.shown && !/\bpro\b/.test(s.cls)) break; await sleep(250); t += 250; }
+  await sleep(2000);
+  const po = await T();
+  vys.scenare.prolog = await okno(od, po, 'prológ bez vstupu (od načítania)');
+  vys.scenare.prolog.stav = await st();
+  vys.scenare.prolog.prvySnimokMs = vys.scenare.prolog.stav.first;
+  uloz();
+}
 if (SCEN.includes('prvy')) {
   const od = await T(); await mark('prvy-dotyk');
   if (DEV === 'phone') await swipe({ dist: 160, ms: 300, hold: 60 }); else await wheel(120);
