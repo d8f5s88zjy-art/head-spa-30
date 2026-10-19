@@ -1,0 +1,605 @@
+{
+ "kontrast": null,
+ "dev": "p360",
+ "mode": "on",
+ "url": "http://127.0.0.1:8211/barbershop-30/?film=on&uvod=off",
+ "classes": "karty world js-kin js-steps world-in",
+ "vh": 780,
+ "max": 15165,
+ "screens": 20.442307692307693,
+ "layoutShifts": [],
+ "errs": [],
+ "beats": [
+  {
+   "name": "karta-00-rohozka",
+   "y": 0,
+   "kind": "karta",
+   "file": "00-karta-00-rohozka.jpg",
+   "ciste": "00-karta-00-rohozka-ciste.png",
+   "scrollY": 0,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 11,
+     "t": "Prejdi si podnik",
+     "cls": "scroll-hint"
+    },
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Barbershop 30 · Nitra",
+     "cls": "kicker"
+    }
+   ],
+   "fonts": [
+    11,
+    12,
+    12.48,
+    13,
+    16,
+    20,
+    54.72
+   ],
+   "film": {
+    "S": 1,
+    "T": 1,
+    "cur": "rohozka-m",
+    "mix": 0,
+    "cut": null,
+    "dpr": 2,
+    "ready": true,
+    "size": 1086,
+    "seq": [
+     {
+      "shot": "sala-video",
+      "got": 38,
+      "n": 51,
+      "mix": 0
+     },
+     {
+      "shot": "stol-video",
+      "got": 36,
+      "n": 44,
+      "mix": 0
+     }
+    ],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "rohozka",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-01-sala",
+   "y": 1026,
+   "kind": "karta",
+   "file": "01-karta-01-sala.jpg",
+   "ciste": "01-karta-01-sala-ciste.png",
+   "scrollY": 1026,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Prvý krok",
+     "cls": "kicker"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    16,
+    20,
+    46.8
+   ],
+   "film": {
+    "S": 1.974,
+    "T": 1.974,
+    "cur": "sala-video",
+    "mix": 0.999,
+    "cut": "rohozka>sala pohyb",
+    "dpr": 2,
+    "ready": true,
+    "size": 1,
+    "seq": [
+     {
+      "shot": "sala-video",
+      "got": 51,
+      "n": 51,
+      "mix": 0
+     },
+     {
+      "shot": "stol-video",
+      "got": 44,
+      "n": 44,
+      "mix": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "sala-video",
+      "rs": null,
+      "live": false,
+      "poster": true,
+      "fail": false
+     }
+    ]
+   },
+   "cards": [
+    {
+     "shot": "sala",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-02-stol",
+   "y": 1572,
+   "kind": "karta",
+   "file": "02-karta-02-stol.jpg",
+   "ciste": "02-karta-02-stol-ciste.png",
+   "scrollY": 1572,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Remeslo",
+     "cls": "kicker"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    16,
+    20
+   ],
+   "film": {
+    "S": 2.657,
+    "T": 2.951,
+    "cur": "stol-video",
+    "mix": 0.454,
+    "cut": "sala>stol prelinanie",
+    "dpr": 2,
+    "ready": true,
+    "size": 1,
+    "seq": [
+     {
+      "shot": "sala-video",
+      "got": 51,
+      "n": 51,
+      "mix": 0
+     },
+     {
+      "shot": "stol-video",
+      "got": 44,
+      "n": 44,
+      "mix": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "sala-video",
+      "rs": null,
+      "live": false,
+      "poster": true,
+      "fail": false
+     },
+     {
+      "shot": "stol-video",
+      "rs": null,
+      "live": false,
+      "poster": true,
+      "fail": false
+     }
+    ]
+   },
+   "cards": [
+    {
+     "shot": "stol",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-03-cakaren",
+   "y": 2118,
+   "kind": "karta",
+   "file": "03-karta-03-cakaren.jpg",
+   "ciste": "03-karta-03-cakaren-ciste.png",
+   "scrollY": 2118,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Čakáreň",
+     "cls": "kicker"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    16,
+    20,
+    46.8
+   ],
+   "film": {
+    "S": 3.95,
+    "T": 3.951,
+    "cur": "cakaren-m",
+    "mix": 0.999,
+    "cut": "stol>cakaren svih",
+    "dpr": 2,
+    "ready": true,
+    "size": 1086,
+    "seq": [
+     {
+      "shot": "stol-video",
+      "got": 44,
+      "n": 44,
+      "mix": 0
+     }
+    ],
+    "video": [
+     {
+      "shot": "stol-video",
+      "rs": null,
+      "live": false,
+      "poster": true,
+      "fail": false
+     }
+    ]
+   },
+   "cards": [
+    {
+     "shot": "cakaren",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-04-sala-rano",
+   "y": 2629,
+   "kind": "karta",
+   "file": "04-karta-04-sala-rano.jpg",
+   "ciste": "04-karta-04-sala-rano-ciste.png",
+   "scrollY": 2629,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Ľudia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    16,
+    20,
+    46.8
+   ],
+   "film": {
+    "S": 4.954,
+    "T": 4.955,
+    "cur": "sala-rano-video",
+    "mix": 0,
+    "cut": null,
+    "dpr": 2,
+    "ready": true,
+    "size": 1,
+    "seq": [],
+    "video": [
+     {
+      "shot": "sala-rano-video",
+      "rs": 4,
+      "live": true,
+      "poster": true,
+      "fail": false
+     }
+    ]
+   },
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-05-kreslo-stred",
+   "y": 4683,
+   "kind": "karta",
+   "file": "05-karta-05-kreslo-stred.jpg",
+   "ciste": "05-karta-05-kreslo-stred-ciste.png",
+   "scrollY": 4683,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    20
+   ],
+   "film": {
+    "S": 5.612,
+    "T": 5.988,
+    "cur": "kreslo-stred-m",
+    "mix": 0.967,
+    "cut": "sala-rano>kreslo-stred najazd",
+    "dpr": 2,
+    "ready": true,
+    "size": 1086,
+    "seq": [],
+    "video": [
+     {
+      "shot": "sala-rano-video",
+      "rs": 4,
+      "live": true,
+      "poster": true,
+      "fail": false
+     }
+    ]
+   },
+   "cards": [
+    {
+     "shot": "sala-rano",
+     "o": 0,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-06-kava",
+   "y": 9684,
+   "kind": "karta",
+   "file": "06-karta-06-kava.jpg",
+   "ciste": "06-karta-06-kava-ciste.png",
+   "scrollY": 9684,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Galéria",
+     "cls": "kicker"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    16,
+    20
+   ],
+   "film": {
+    "S": 6.772,
+    "T": 6.995,
+    "cur": "kava-m",
+    "mix": 0.355,
+    "cut": "kreslo-stred>kava svih",
+    "dpr": 2,
+    "ready": true,
+    "size": 1086,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kreslo-stred",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "kava",
+     "o": 0.5,
+     "so": 0.5
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-07-sud",
+   "y": 12369,
+   "kind": "karta",
+   "file": "07-karta-07-sud.jpg",
+   "ciste": "07-karta-07-sud-ciste.png",
+   "scrollY": 12369,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12.48,
+     "t": "Rezervovať termín",
+     "cls": "btn"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    12.48,
+    13,
+    20
+   ],
+   "film": {
+    "S": 7.665,
+    "T": 7.99,
+    "cur": "sud-m",
+    "mix": 0.529,
+    "cut": "kava>sud popredie",
+    "dpr": 2,
+    "ready": true,
+    "size": 1086,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "kava",
+     "o": 0,
+     "so": 1
+    },
+    {
+     "shot": "sud",
+     "o": 0.09,
+     "so": 0.09
+    }
+   ],
+   "cls": 0
+  },
+  {
+   "name": "karta-08-vstup",
+   "y": 12880,
+   "kind": "karta",
+   "file": "08-karta-08-vstup.jpg",
+   "ciste": "08-karta-08-vstup-ciste.png",
+   "scrollY": 12880,
+   "dpr": 3,
+   "imgs": [],
+   "minFont": [
+    {
+     "fs": 12,
+     "t": "Nitra",
+     "cls": "SMALL"
+    },
+    {
+     "fs": 12,
+     "t": "Rezervácia",
+     "cls": "kicker"
+    },
+    {
+     "fs": 13,
+     "t": "Hudba",
+     "cls": "hudba-text"
+    }
+   ],
+   "fonts": [
+    12,
+    13,
+    16,
+    20
+   ],
+   "film": {
+    "S": 8.511,
+    "T": 8.955,
+    "cur": "vstup-m",
+    "mix": 0.119,
+    "cut": "sud>vstup odjazd",
+    "dpr": 2,
+    "ready": false,
+    "size": 0,
+    "seq": [],
+    "video": []
+   },
+   "cards": [
+    {
+     "shot": "vstup",
+     "o": 1,
+     "so": 1
+    }
+   ],
+   "cls": 0
+  }
+ ]
+}
