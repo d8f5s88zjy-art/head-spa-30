@@ -204,3 +204,10 @@ pokračovať aj po strate prostredia. Veľké videá ostávajú mimo gitu; v rep
   videá na YouTube s licenciou Creative Commons (overené pole licencie), oficiálne materiály s podmienkami,
   neutrálny b-roll ulíc (Pexels/Pixabay s overenou licenciou). Nič bez licencie, nič z TikToku/X/agentúr.
 - **Kredity Higgsfield:** už nie sú potrebné (zostatok po skúškach ≈ 50).
+- **TikTok (pokyn 19. 10. večer: „aktuálnu situáciu s Francúzska využi obsah, čo koluje na TikToku“):** TikTok je
+  zdroj toho, čo ľudia naozaj videli (výzvu na 17. 10. spustil tvorca „V2“ na TikToku). Postup: videá sa
+  objavujú cez médiá a fact-checky (TikTok web je z kontajnera blokovaný), sťahujú sa len na rozbor, každé sa
+  overuje (dátum, miesto, pravosť, nie repost, nie AI), bez zvuku z TikToku (hudba = nárok Content ID). Použitie
+  2–4 s úryvku len ako citácia / informovanie o aktuálnej udalosti (§ 37 a § 39 Autorského zákona) s atribúciou
+  „@tvorca · TikTok · dátum“ v obraze a v popise; pripraví sa žiadosť o súhlas tvorcom (posiela majiteľ sám).
+  Riziko (nárok, žiadosť o stiahnutie) sa zapíše do odovzdania; **rozhoduje majiteľ**.

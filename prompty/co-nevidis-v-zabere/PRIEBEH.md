@@ -21,3 +21,12 @@ ukážky z oficiálnych trailerov filmu Athena a skutočné zábery/fotky z Fran
 - YouTube: oficiálne trailery Athena – Netflix `vRunUkdkK8s` (154 s), Netflix France VF `I4Fr6xokozw` (160 s),
   teaser `ahBOK08eosA`/`qvZfgErsiJU` (63 s). yt-dlp web klient hlási „Sign in to confirm you're not a bot“ –
   skúšajú sa iné klienty.
+
+## 19. 10. 18:40 UTC – TikTok ako zdroj (pokyn majiteľa)
+
+- Spustený tím `co-nevidis-tiktok`: scout cez médiá a fact-checky, tvorca „V2“ a vznik výzvy, overovateľ
+  pravosti, právnik (citácia/§ 39, žiadosť o súhlas). Výstupy `tiktok/TIKTOK.md`, `VYZVA.md`, `PRAVOST.md`,
+  `PRAVNE-TIKTOK.md`, `ZIADOST-O-SUHLAS.md`, stiahnuté na rozbor v `tiktok/stiahnute/` (mimo gitu).
+- Kontext (fr.wikipedia „Manifestations du 17 octobre 2026“, 19. 10.): mobilizácia proti drahote, 550–800 tis.
+  ľudí, 1 200 zadržaných, 1 500–3 000 poškodených obchodov, radnica Limoges vyhorela, 1 mŕtvy; Le Figaro údajne
+  o zákaze vychádzania 23–6 h (Paríž, Lyon, Lille, Nice) – overuje editor faktov.
