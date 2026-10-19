@@ -1,0 +1,459 @@
+{
+ "run": "p-off-f4-warm-menu",
+ "nastavenie": {
+  "dev": "phone",
+  "net": "fast4g",
+  "cpu": 4,
+  "film": "off",
+  "cache": "warm",
+  "scen": "menu",
+  "rm": false,
+  "savedata": false,
+  "url": "http://127.0.0.1:8174/barbershop-30/?film=off"
+ },
+ "snimok": 1266,
+ "trvanie_s": 51.6,
+ "prvy_svetly_snimok_ms": 532,
+ "fps_nahravky": 24.6,
+ "prah": {
+  "dark": 0.14,
+  "flat": 0.007,
+  "plocha": 0.2,
+  "min_ms": 150.0
+ },
+ "ciernych_okien": 3,
+ "najdlhsie_ms": 1202,
+ "spolu_ms": 2393,
+ "tmave_zabery": [
+  {
+   "y": 9800,
+   "ms": 299.69189453125,
+   "max": 0.22,
+   "file": "f00574.jpg"
+  },
+  {
+   "y": 5200,
+   "ms": 175.575927734375,
+   "max": 0.212,
+   "file": "f01200.jpg"
+  }
+ ],
+ "udalosti": [
+  {
+   "od_ms": 171,
+   "do_ms": 1108,
+   "trvanie_ms": 937,
+   "snimok": 4,
+   "max_tmavej_plochy": 0.922,
+   "tmava_celkom": 1.0,
+   "scrollY": 0,
+   "scrollY_koniec": 0,
+   "pred_prvym_obrazom": true,
+   "znacky": [
+    "cache zahriata",
+    "goto http://127.0.0.1:8174/barbershop-30/?film=off"
+   ],
+   "cls": "karty world-off",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     -1,
+     0,
+     "bv1.00"
+    ]
+   ],
+   "subory": [
+    "f00001.jpg",
+    "f00001.jpg",
+    "f00004.jpg"
+   ]
+  },
+  {
+   "od_ms": 6190,
+   "do_ms": 6270,
+   "trvanie_ms": 80,
+   "snimok": 1,
+   "max_tmavej_plochy": 0.825,
+   "tmava_celkom": 0.858,
+   "scrollY": 1077.970703125,
+   "scrollY_koniec": 1077.970703125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "lcp:@336",
+    "load",
+    "pohyb",
+    "menu #vstup-dnu"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     3,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     6,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     7,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00094.jpg",
+    "f00094.jpg",
+    "f00094.jpg"
+   ]
+  },
+  {
+   "od_ms": 11894,
+   "do_ms": 13096,
+   "trvanie_ms": 1202,
+   "snimok": 6,
+   "max_tmavej_plochy": 0.881,
+   "tmava_celkom": 0.914,
+   "scrollY": 2439.27197265625,
+   "scrollY_koniec": 5050.78125,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "menu #sluzby"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00207.jpg",
+    "f00208.jpg",
+    "f00212.jpg"
+   ]
+  },
+  {
+   "od_ms": 22451,
+   "do_ms": 22576,
+   "trvanie_ms": 125,
+   "snimok": 1,
+   "max_tmavej_plochy": 0.321,
+   "tmava_celkom": 0.8,
+   "scrollY": 3881.287841796875,
+   "scrollY_koniec": 3881.287841796875,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "menu #galeria"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     5,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     6,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     "nh0.00"
+    ]
+   ],
+   "subory": [
+    "f00453.jpg",
+    "f00453.jpg",
+    "f00453.jpg"
+   ]
+  },
+  {
+   "od_ms": 23198,
+   "do_ms": 23453,
+   "trvanie_ms": 254,
+   "snimok": 2,
+   "max_tmavej_plochy": 0.878,
+   "tmava_celkom": 0.911,
+   "scrollY": 9988.5,
+   "scrollY_koniec": 9988.5,
+   "pred_prvym_obrazom": false,
+   "znacky": [
+    "menu #galeria"
+   ],
+   "cls": "karty world-off js-kin js-steps",
+   "film": null,
+   "zalohy": [
+    [
+     0,
+     0,
+     0,
+     0,
+     1,
+     "bv0.00"
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     4,
+     0,
+     0,
+     0,
+     1,
+     "nh0.00"
+    ],
+    [
+     5,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     6,
+     1,
+     1,
+     1,
+     1,
+     "bv1.00"
+    ],
+    [
+     7,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ],
+    [
+     8,
+     1,
+     0,
+     0,
+     1,
+     "bh0.00"
+    ]
+   ],
+   "subory": [
+    "f00465.jpg",
+    "f00465.jpg",
+    "f00466.jpg"
+   ]
+  }
+ ],
+ "chyby": []
+}

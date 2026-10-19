@@ -196,9 +196,10 @@ function analyzeTrace(tr, syncName, syncPerf, spans) {
   const byThread = new Map();
   const open = new Map();
   for (const e of ev) {
-    if (e.ph === 'X' && e.dur != null) { const k = e.pid + ':' + e.tid; (byThread.get(k) || byThread.set(k, []).get(k)).push({ n: e.name, ts: e.ts / 1000, d: e.dur / 1000, a: e.args }); }
+    // td = čas vlákna (CPU, tdur): nezávisí od záťaže stroja (čakanie na jadro sa doň neráta), spomalenie CPU áno
+    if (e.ph === 'X' && e.dur != null) { const k = e.pid + ':' + e.tid; (byThread.get(k) || byThread.set(k, []).get(k)).push({ n: e.name, ts: e.ts / 1000, d: e.dur / 1000, td: e.tdur != null ? e.tdur / 1000 : null, a: e.args }); }
     else if (e.ph === 'B') { const k = e.pid + ':' + e.tid; (open.get(k) || open.set(k, []).get(k)).push(e); }
-    else if (e.ph === 'E') { const k = e.pid + ':' + e.tid, st = open.get(k); const b = st && st.pop(); if (b) (byThread.get(k) || byThread.set(k, []).get(k)).push({ n: b.name, ts: b.ts / 1000, d: (e.ts - b.ts) / 1000, a: b.args }); }
+    else if (e.ph === 'E') { const k = e.pid + ':' + e.tid, st = open.get(k); const b = st && st.pop(); if (b) (byThread.get(k) || byThread.set(k, []).get(k)).push({ n: b.name, ts: b.ts / 1000, d: (e.ts - b.ts) / 1000, td: e.tts != null && b.tts != null ? (e.tts - b.tts) / 1000 : null, a: b.args }); }
   }
   const res = { offsetOk: off != null, vlakna: {}, hlavne: {} };
   if (off == null) return res;
@@ -207,10 +208,10 @@ function analyzeTrace(tr, syncName, syncPerf, spans) {
     list.sort((a, b) => a.ts - b.ts || b.d - a.d);
     const st = [];
     for (const x of list) {
-      x.self = x.d; x.end = x.ts + x.d;
+      x.self = x.d; x.tself = x.td || 0; x.end = x.ts + x.d;
       while (st.length && st[st.length - 1].end <= x.ts + 1e-6) st.pop();
       x.depth = st.length;
-      if (st.length) { const p = st[st.length - 1]; p.self -= Math.min(x.d, Math.max(0, p.end - x.ts)); x.par = p; }
+      if (st.length) { const p = st[st.length - 1]; p.self -= Math.min(x.d, Math.max(0, p.end - x.ts)); p.tself -= x.td || 0; x.par = p; }
       st.push(x);
     }
     return list;
@@ -240,7 +241,9 @@ function analyzeTrace(tr, syncName, syncPerf, spans) {
       const kat = KAT(x.n);
       const H = res.hlavne[sp.meno] || (res.hlavne[sp.meno] = { kat: {}, sekcie: {}, mena: {}, vstupy: {}, ulohy: {} });
       H.kat[kat] = (H.kat[kat] || 0) + x.self;
+      H.katCpu = H.katCpu || {}; H.katCpu[kat] = (H.katCpu[kat] || 0) + Math.max(0, x.tself);
       const S = H.sekcie[sek] || (H.sekcie[sek] = {}); S[kat] = (S[kat] || 0) + x.self;
+      const SC = H.sekcieCpu || (H.sekcieCpu = {}); const S3 = SC[sek] || (SC[sek] = {}); S3[kat] = (S3[kat] || 0) + Math.max(0, x.tself);
       H.mena[x.n] = (H.mena[x.n] || 0) + x.self;
       if (x.n === 'UpdateLayoutTree' && x.a && x.a.elementCount) { H.prvkov = (H.prvkov || 0) + x.a.elementCount; const S2 = H.prvkySek || (H.prvkySek = {}); S2[sek] = (S2[sek] || 0) + x.a.elementCount; }
       // úlohy s veľkým vlastným časom: kto ich poslal (toplevel: src_file/src_func)
@@ -260,24 +263,29 @@ function analyzeTrace(tr, syncName, syncPerf, spans) {
     if (!(pid === rendererPid && names.get(k) === 'CrRendererMain')) continue;
     for (const sp of spans) {
       if (!sp.fr || sp.fr.length < 2) continue;
-      const st = sp.fr.map((t) => t + off), work = new Float64Array(st.length), sec = sp.frSek || [];
+      const st = sp.fr.map((t) => t + off), work = new Float64Array(st.length), cpu = new Float64Array(st.length), sec = sp.frSek || [];
       for (const x of list) {
         if (x.ts < st[0] || x.ts >= st[st.length - 1]) continue;
         const kat = KAT(x.n); if (kat === 'cakanie-kompozitor' || kat === 'gpu-cakanie') continue;
         let lo = 0, hi = st.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (st[m] <= x.ts) lo = m; else hi = m - 1; }
-        work[lo] += x.self;
+        work[lo] += x.self; cpu[lo] += Math.max(0, x.tself);
       }
       const H = res.hlavne[sp.meno] || (res.hlavne[sp.meno] = { kat: {}, sekcie: {}, mena: {}, vstupy: {}, ulohy: {} });
       const stat = (arr) => { const a = [...arr].sort((p, q) => p - q); if (!a.length) return null; const qq = (p) => a[Math.min(a.length - 1, Math.max(0, Math.ceil(p * a.length) - 1))]; return { snimok: a.length, p50: +qq(0.5).toFixed(1), p95: +qq(0.95).toFixed(1), max: +a[a.length - 1].toFixed(1), nad16: +(a.filter((v) => v > 16.7).length / a.length * 100).toFixed(1), nad50: a.filter((v) => v > 50).length }; };
       H.pracaNaSnimku = stat(work.slice(0, -1));
       const bs = {}; for (let i = 0; i < work.length - 1; i++) { const s2 = sec[i] || '-'; (bs[s2] || (bs[s2] = [])).push(work[i]); }
       H.pracaNaSnimkuSekcie = Object.fromEntries(Object.entries(bs).map(([s2, a]) => [s2, stat(a)]));
+      // to isté v čase CPU vlákna (robustné voči záťaži stroja pri súbežných meraniach)
+      H.cpuNaSnimku = stat(cpu.slice(0, -1));
+      const bc = {}; for (let i = 0; i < cpu.length - 1; i++) { const s2 = sec[i] || '-'; (bc[s2] || (bc[s2] = [])).push(cpu[i]); }
+      H.cpuNaSnimkuSekcie = Object.fromEntries(Object.entries(bc).map(([s2, a]) => [s2, stat(a)]));
     }
   }
   for (const H of Object.values(res.hlavne)) {
     const r1 = (o) => Object.fromEntries(Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, +v.toFixed(1)]));
-    H.kat = r1(H.kat);
+    H.kat = r1(H.kat); if (H.katCpu) H.katCpu = r1(H.katCpu);
     for (const s of Object.keys(H.sekcie)) H.sekcie[s] = r1(H.sekcie[s]);
+    if (H.sekcieCpu) for (const s of Object.keys(H.sekcieCpu)) H.sekcieCpu[s] = r1(H.sekcieCpu[s]);
     H.mena = Object.fromEntries(Object.entries(r1(H.mena)).slice(0, 25));
     H.vstupy = Object.fromEntries(Object.entries(r1(H.vstupy)).slice(0, 15));
     H.ulohy = Object.fromEntries(Object.entries(r1(H.ulohy)).slice(0, 12));
@@ -321,6 +329,11 @@ async function waitSettle(page, max = 4000) {
   while (Date.now() - t0 < max) { const q = await page.evaluate(() => performance.now() - (window.__vt.lsT || 0)); if (q > 300) break; await sleep(80); }
 }
 const MAXPASS = Number(opt.maxPass || 300) * 1000;   // najdlhší prechod (pri softvérovom kreslení filmu)
+// --gesto=synth: Input.synthesizeScrollGesture (gestá generuje prehliadač s danou rýchlosťou px/s). Dotykový zdroj
+// (gestureSourceType 'touch') v tomto headless Chromiu 141 stránku neposunie ani na prázdnej stránke (overené
+// v2/probe-synth.mjs a probe-synth2.mjs), preto ide zdroj 'mouse' (natívny skrol kolieskom bez zotrvačnosti; na telefóne
+// app.js plynulé koliesko nezapne, lebo pointer nie je fine). Rýchlosti: krátky ťah, stredný švih, rýchly švih.
+const SYNTH = { pomaly: { dist: 300, speed: 700, gap: 250 }, stredne: { dist: 700, speed: 2200, gap: 400 }, svih: { dist: 1800, speed: 6500, gap: 300 } };
 async function passPhone(page, cdp, prof, up = false) {
   const P = PROFIL[prof];
   const maxY = await page.evaluate(() => document.scrollingElement.scrollHeight - innerHeight);
@@ -329,6 +342,11 @@ async function passPhone(page, cdp, prof, up = false) {
     const y = await page.evaluate(() => scrollY);
     if (!up && y >= maxY - 4) break;
     if (up && y <= 8) break;
+    if (opt.gesto === 'synth') {
+      const S = SYNTH[prof];
+      await cdp.send('Input.synthesizeScrollGesture', { x: 195, y: up ? 300 : 600, yDistance: up ? S.dist : -S.dist, speed: S.speed, gestureSourceType: 'mouse', preventFling: false });
+      await sleep(S.gap); continue;
+    }
     await swipe(cdp, up ? { y0: 160, dist: -P.dist, ms: P.ms, hold: P.hold } : { y0: 700, dist: P.dist, ms: P.ms, hold: P.hold });
     if (P.settle) await waitSettle(page, 4000); else await sleep(P.gap);
   }
@@ -465,7 +483,7 @@ try {
       const sync = await mark('vt-sync-' + p);
       const od = await perfNow();
       const n = DEV === 'telefon' ? await passPhone(page, cdp, up ? 'svih' : p, up) : await passDesk(page, up ? 'svih' : p, up);
-      const sp = { meno: p, od, do: await perfNow(), gest: n, koniecY: await page.evaluate(() => scrollY) };
+      const sp = { meno: p, od, do: await perfNow(), gest: n, koniecY: await page.evaluate(() => scrollY), zataz: os.loadavg()[0] };
       spans.push(sp);
       const tr = await traceStop(cdp, p);
       if (tr) {
@@ -490,7 +508,7 @@ try {
       for (const f of fr) { const s = secOfY(f[2]); (bySec[s] || (bySec[s] = [])).push(f); (allBySec[s] || (allBySec[s] = [])).push(f); }
       const ltBy = {}; for (const x of lt) { const s = secOfY(yAt(m.frames, x[0])); (ltBy[s] || (ltBy[s] = [])).push(x); }
       out.skrol.prechody[sp.meno] = {
-        gest: sp.gest, koniecY: sp.koniecY, trvanieS: +((sp.do - sp.od) / 1000).toFixed(1), snimky: frameStats(fr.map((f) => f[1])), dlheUlohy: ltStats(lt),
+        gest: sp.gest, gesto: opt.gesto === 'synth' ? 'synthesizeScrollGesture' : (DEV === 'telefon' ? 'dispatchTouchEvent' : 'koliesko'), zataz: +sp.zataz.toFixed(2), koniecY: sp.koniecY, trvanieS: +((sp.do - sp.od) / 1000).toFixed(1), snimky: frameStats(fr.map((f) => f[1])), dlheUlohy: ltStats(lt),
         glMsNaSnimku: fr.length ? +((fr[fr.length - 1][3] - fr[0][3]) / fr.length).toFixed(2) : 0,
         texturyMB: fr.length ? +((fr[fr.length - 1][4] - fr[0][4]) / 1e6).toFixed(1) : 0,
         texturyMaxMBNaSnimku: fr.length ? +(Math.max(0, ...fr.slice(1).map((f, i) => f[4] - fr[i][4])) / 1e6).toFixed(2) : 0,
@@ -527,6 +545,16 @@ try {
         }
         for (const [s, c] of Object.entries(cnt)) (perSec[s] || (perSec[s] = { snimok: 0, kat: {} })).snimok += c;
       }
+      // CPU vlákna (tdur) na snímku po sekciách: robustné voči záťaži stroja
+      const perSecC = {};
+      for (const sp of spans) {
+        const H = a.hlavne[sp.meno]; if (!H || !H.sekcieCpu) continue;
+        for (const [s, kat] of Object.entries(H.sekcieCpu)) { const P = perSecC[s] || (perSecC[s] = { kat: {} }); for (const [k, v] of Object.entries(kat)) P.kat[k] = (P.kat[k] || 0) + v; }
+      }
+      out.skrol.hlavneVlaknoCpuMsNaSnimku = Object.fromEntries(Object.entries(perSecC).map(([s, P]) => {
+        const n = Math.max(1, (perSec[s] && perSec[s].snimok) || 1), spolu = Object.values(P.kat).reduce((x, y) => x + y, 0);
+        return [s, { spolu: +(spolu / n).toFixed(2), ...Object.fromEntries(Object.entries(P.kat).sort((x, y) => y[1] - x[1]).slice(0, 8).map(([k, v]) => [k, +(v / n).toFixed(2)])) }];
+      }));
       out.skrol.hlavneVlaknoMsNaSnimku = Object.fromEntries(Object.entries(perSec).map(([s, P]) => {
         const spolu = Object.values(P.kat).reduce((a, b) => a + b, 0);
         return [s, { spolu: +(spolu / Math.max(1, P.snimok)).toFixed(2), ...Object.fromEntries(Object.entries(P.kat).sort((x, y) => y[1] - x[1]).map(([k, v]) => [k, +(v / Math.max(1, P.snimok)).toFixed(2)])) }];
@@ -616,7 +644,8 @@ console.log(`\n${MENO}  (záťaž ${out.meta.zataz.join('/')})`);
 if (out.nacitanie) console.log(`načítanie: FCP ${Math.round(out.nacitanie.fcp)} LCP ${Math.round(out.nacitanie.lcp)} (${out.nacitanie.lcpPrvok}) TBT ${out.nacitanie.tbt} CLS ${out.nacitanie.cls} dlhé úlohy ${out.nacitanie.dlheUlohy.length}`);
 if (out.uvod) console.log(`úvod: prológ ${out.uvod.prolog} ${f1(out.uvod.snimky)} | dlhé ${out.uvod.dlheUlohy.pocet} max ${out.uvod.dlheUlohy.max}`);
 if (out.skrol) for (const [k, v] of Object.entries(out.skrol.prechody)) console.log(`skrol ${k}: ${f1(v.snimky)} | dlhé ${v.dlheUlohy.pocet} max ${v.dlheUlohy.max} | GL ${v.glMsNaSnimku} ms/sn.`);
-if (out.skrol && out.skrol.vlakno) for (const [k, v] of Object.entries(out.skrol.vlakno)) if (v.pracaNaSnimku) console.log(`práca hl. vlákna ${k}: ${JSON.stringify(v.pracaNaSnimku)}`);
+if (out.skrol && out.skrol.vlakno) for (const [k, v] of Object.entries(out.skrol.vlakno)) if (v.pracaNaSnimku) console.log(`práca hl. vlákna ${k}: ${JSON.stringify(v.pracaNaSnimku)} | CPU vlákna: ${JSON.stringify(v.cpuNaSnimku)}`);
 if (out.skrol && out.skrol.hlavneVlaknoMsNaSnimku) for (const [k, v] of Object.entries(out.skrol.hlavneVlaknoMsNaSnimku)) console.log(`  vlákno ${k}: ${JSON.stringify(v)}`);
+if (out.skrol && out.skrol.hlavneVlaknoCpuMsNaSnimku) for (const [k, v] of Object.entries(out.skrol.hlavneVlaknoCpuMsNaSnimku)) console.log(`  CPU ${k}: ${JSON.stringify(v)}`);
 if (out.prechody) for (const [k, v] of Object.entries(out.prechody)) if (v && v.snimky !== undefined) console.log(`prechod ${k}: ${f1(v.snimky)} | dlhé ${v.dlheUlohy.pocet} max ${v.dlheUlohy.max} | INP ${v.interakcie.inp}${v.chyba ? ' CHYBA ' + v.chyba : ''}`);
 if (out.chyby && out.chyby.length) console.log('chyby:', out.chyby.slice(0, 5));

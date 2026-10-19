@@ -1,0 +1,80 @@
+{
+ "okna": [
+  {
+   "run": "p-rm-f4-cold-menu",
+   "od_ms": 1553,
+   "ms": 1752,
+   "plocha": 0.922,
+   "y": 0,
+   "kat": "PRVY",
+   "detail": "",
+   "znacky": [
+    "load",
+    "load"
+   ]
+  },
+  {
+   "run": "p-rm-f4-cold-menu",
+   "od_ms": 10284,
+   "ms": 398,
+   "plocha": 0.786,
+   "y": 1097,
+   "kat": "Z-DEC",
+   "detail": "karta 1 near=1 so=1 stiahnutá=1 css=bv1.00",
+   "znacky": [
+    "menu #vstup-dnu"
+   ]
+  },
+  {
+   "run": "p-rm-f4-cold-menu",
+   "od_ms": 15003,
+   "ms": 1533,
+   "plocha": 0.922,
+   "y": 5051,
+   "kat": "Z-NET",
+   "detail": "karta 5 near=1 so=1 stiahnutá=0 css=bv1.00",
+   "znacky": [
+    "menu #vstup-dnu",
+    "menu #sluzby"
+   ]
+  },
+  {
+   "run": "p-rm-f4-cold-menu",
+   "od_ms": 20552,
+   "ms": 294,
+   "plocha": 0.752,
+   "y": 2870,
+   "kat": "Z-DEC",
+   "detail": "karta 4 near=1 so=1 stiahnutá=1 css=bv1.00",
+   "znacky": [
+    "menu #sluzby",
+    "menu #tim"
+   ]
+  },
+  {
+   "run": "p-rm-f4-cold-menu",
+   "od_ms": 25900,
+   "ms": 677,
+   "plocha": 0.922,
+   "y": 9989,
+   "kat": "Z-DEC",
+   "detail": "karta 6 near=1 so=1 stiahnutá=1 css=bv1.00",
+   "znacky": [
+    "menu #tim",
+    "menu #galeria"
+   ]
+  }
+ ],
+ "suhrn": {
+  "Z-DEC": {
+   "n": 3,
+   "ms": 1369,
+   "max": 677
+  },
+  "Z-NET": {
+   "n": 1,
+   "ms": 1533,
+   "max": 1533
+  }
+ }
+}
