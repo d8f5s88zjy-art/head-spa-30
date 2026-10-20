@@ -1,0 +1,20 @@
+mobile 0 rohozka {"S":0}
+mobile 1 sala {"S":1.92,"cur":"sala-video"}
+mobile 2 stol {"S":2.85,"cur":"stol-video"}
+mobile 3 cakaren {"S":3.85,"cur":"cakaren-m"}
+mobile 4 sala-rano {"S":4.86,"cur":"sala-rano-video"}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Timeout 30000ms exceeded.
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+    at /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs2/barbershop-30/source/tools/karty-shot.mjs:40:18 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.2

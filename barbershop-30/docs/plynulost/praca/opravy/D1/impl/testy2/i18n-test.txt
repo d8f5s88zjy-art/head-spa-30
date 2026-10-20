@@ -1,0 +1,30 @@
+OK   [en] Manrope s cyrilikou sa nesťahuje  {"fonty":[]}
+OK   [en] jazyk nasadený  {"lang":"en"}
+OK   [en] neostal slovenský text s prekladom  []
+OK   [en] tabuľa hodín v jazyku stránky  {"flap":"Open now","label":"Today","aria":"Today from 9:00 to 19:00. Open now."}
+OK   [en] Booqme v jazyku  ["https://booqme.app/en/reservation/barbershop30","https://booqme.app/en/reservation/barbershop30"]
+OK   [en] poznámka k rezervácii po slovensky  {"rez":"The booking page is in Slovak."}
+OK   [en] bez chýb  []
+OK   [uk] Manrope s cyrilikou sa stiahne a načíta  {"fonty":["Manrope-cyr-400.woff2","Manrope-cyr-700.woff2","Manrope-cyr-700.woff2"],"cyr":["loaded","loaded","loaded"]}
+OK   [uk] číslice tabule (latinka 700) aj tlačidlo (cyrilika 700) písmom Manrope, nie náhradným písmom systému  {"fl":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":1}],"bt":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":15}]}
+OK   [uk] jazyk nasadený  {"lang":"uk-UA"}
+OK   [uk] neostal slovenský text s prekladom  []
+OK   [uk] tabuľa hodín v jazyku stránky  {"flap":"Зараз відчинено","label":"Сьогодні","aria":"Сьогодні з 9:00 до 19:00. Зараз відчинено."}
+OK   [uk] Booqme v jazyku  ["https://booqme.app/uk/reservation/barbershop30","https://booqme.app/uk/reservation/barbershop30"]
+OK   [uk] poznámka k rezervácii po slovensky  {"rez":"Сторінка бронювання словацькою мовою."}
+OK   [uk] bez chýb  []
+OK   [hu] Manrope s cyrilikou sa nesťahuje  {"fonty":[]}
+OK   [hu] jazyk nasadený  {"lang":"hu-HU"}
+OK   [hu] neostal slovenský text s prekladom  []
+OK   [hu] tabuľa hodín v jazyku stránky  {"flap":"Most nyitva","label":"Ma","aria":"Ma 9:00-tól 19:00-ig. Most nyitva."}
+OK   [hu] Booqme v jazyku  ["https://booqme.app/hu/foglalas/barbershop30","https://booqme.app/hu/foglalas/barbershop30"]
+OK   [hu] poznámka k rezervácii po slovensky  {"rez":"A foglalási oldal szlovák nyelvű."}
+OK   [hu] bez chýb  []
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.waitForTimeout: Target page, context or browser has been closed
+    at /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs2/barbershop-30/source/tools/i18n-test.mjs:84:11
+
+Node.js v22.22.2

@@ -14,11 +14,12 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ciele = process.argv.slice(2).map((a) => { const i = a.indexOf('='); return { k: a.slice(0, i), url: a.slice(i + 1) }; });
 
-const PROXY = process.env.HTTPS_PROXY || 'http://127.0.0.1:35449';
+// Proxy prostredia: Chromium nečíta aktuálnu CA proxy z NSS, preto dôveruje len kľúču CA proxy (SPKI z /root/.ccr/agent-proxy-ca.crt).
+const PROXY = process.env.HTTPS_PROXY;
+const SPKI = process.env.SPKI;
 const browser = await chromium.launch({
-  executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', // plný Chromium číta NSS úložisko s CA proxy
-  proxy: { server: PROXY, bypass: 'localhost,127.0.0.1' },
-  args: ['--autoplay-policy=no-user-gesture-required'],
+  proxy: PROXY ? { server: PROXY, bypass: 'localhost,127.0.0.1' } : undefined,
+  args: ['--autoplay-policy=no-user-gesture-required', ...(SPKI ? ['--ignore-certificate-errors-spki-list=' + SPKI] : [])],
 });
 
 // Skúsi zavrieť lištu súhlasu (len kliknutie na zjavné tlačidlo prijatia), aby bolo vidno obsah.
@@ -102,20 +103,22 @@ async function jedenBeh(t, typ) {
     userAgent: mob ? 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' : undefined,
   });
   const page = await ctx.newPage();
+  page.on('dialog', (d) => d.dismiss().catch(() => {}));
+  page.setDefaultTimeout(15000);
   const r = { url: t.url, typ, chyba: null };
   const t0 = Date.now();
   try {
     await page.goto(t.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.waitForLoadState('load', { timeout: 20000 }).catch(() => {});
     await wait(3500);
-    r.suhlas = await suhlas(page);
+    r.suhlas = process.env.LITE ? null : await suhlas(page);
     await wait(1200);
     r.cas_nacitania_ms = Date.now() - t0;
     await page.screenshot({ path: path.join(SN, `${t.k}-${typ}-0.jpg`), type: 'jpeg', quality: 70 });
     // Prechod stránkou (spustí lenivé obrázky a animácie pri skrole), snímky v 1/3 a 2/3.
     const H = await page.evaluate(() => document.documentElement.scrollHeight);
     const vh = mob ? 844 : 900;
-    for (let y = 0; y < Math.min(H, 30000); y += Math.round(vh * 0.8)) { await page.mouse.wheel(0, Math.round(vh * 0.8)).catch(() => {}); await page.evaluate((y) => window.scrollTo(0, y), y); await wait(180); }
+    if (!process.env.LITE) for (let y = 0; y < Math.min(H, 30000); y += Math.round(vh * 0.8)) { await page.evaluate((y) => window.scrollTo(0, y), y); await wait(180); }
     for (const [i, f] of [[1, 0.33], [2, 0.66]]) {
       await page.evaluate((y) => window.scrollTo(0, y), Math.round((H - vh) * f)); await wait(1300);
       await page.screenshot({ path: path.join(SN, `${t.k}-${typ}-${i}.jpg`), type: 'jpeg', quality: 70 });
@@ -123,6 +126,7 @@ async function jedenBeh(t, typ) {
     await page.evaluate(() => window.scrollTo(0, 0)); await wait(1200);
     r.inv = await inventar(page);
     // Celá stránka, výška obmedzená (kvôli pamäti), zmenší sa neskôr na prehľad.
+    if (process.env.LITE) { await ctx.close(); return r; }
     const Hc = Math.min(await page.evaluate(() => document.documentElement.scrollHeight), mob ? 16000 : 14000);
     await page.screenshot({ path: path.join(SN, `${t.k}-${typ}-cela.jpg`), type: 'jpeg', quality: 55, fullPage: true, clip: { x: 0, y: 0, width: mob ? 390 : 1440, height: Hc }, timeout: 60000 }).catch(async () => {
       await page.screenshot({ path: path.join(SN, `${t.k}-${typ}-cela.jpg`), type: 'jpeg', quality: 55, fullPage: true, timeout: 60000 }).catch((e) => { r.cela_chyba = String(e).slice(0, 200); });

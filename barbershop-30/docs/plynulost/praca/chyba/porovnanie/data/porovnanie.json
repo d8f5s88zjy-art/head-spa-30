@@ -1,0 +1,333 @@
+{
+ "datum": "2026-10-20",
+ "b30": {
+  "lokalne": "http://127.0.0.1:8670/barbershop-30/",
+  "snimky": [
+   "snimky/_b30-d.jpg",
+   "snimky/_b30-m.jpg"
+  ],
+  "polohy": "data/b30-polohy.json"
+ },
+ "prehlad": [
+  "snimky/_prvy-obraz-telefon.jpg",
+  "snimky/_prvy-obraz-pocitac.jpg"
+ ],
+ "doplnkove": {
+  "lightbox": [
+   "snimky/_lightbox.jpg",
+   "data/lightbox-tma.json"
+  ],
+  "booqme_eshop": "snimky/booqme-eshop-barbershop30.jpg",
+  "stary_web": "data/b30stary.html"
+ },
+ "referencie": [
+  {
+   "k": "b585",
+   "web": "585 BARBER",
+   "url": "https://www.585barber.sk/",
+   "kde": "Nitra, Mostná 25 (tá istá ulica) + Pezinok",
+   "dokaz": "snímky + text stránky + WebFetch",
+   "ponuka": "cenník s trvaním (zdroj Bookio, „stav k 2. 10. 2026“), záložky Vlasy/Brada/Kombo, galéria práce s popiskami, poukážky „Darujte čas v kresle“, „Pred návštevou“ (aj bez objednania), predaj kozmetiky v prevádzke, karta prevádzky „Otvorené · do 20:00“, spodný dok MESTO + REZERVOVAŤ",
+   "lepsie": "poukážky, FAQ, walk-in jasne, dátum overenia cien, rýchle prepínanie skupín cenníka, výsledky práce",
+   "princip": "praktické otázky a dôkaz práce hneď pri rozhodnutí; zdroj a dátum pri cenách",
+   "nepreberat": "cookie lišta cez polovicu obrazovky",
+   "snimky": [
+    "snimky/_b585.jpg"
+   ]
+  },
+  {
+   "k": "studiobarber",
+   "web": "Studio Barber",
+   "url": "https://www.studiobarber.sk/",
+   "kde": "Nitra",
+   "dokaz": "snímky (lite) + WebFetch",
+   "ponuka": "služby s trvaním a cenou, „Naša práca“ (fotky strihov), barberi, školenie, značka produktov, 6 FAQ, Bookio",
+   "lepsie": "fotky výsledkov, FAQ",
+   "princip": "dôkaz remesla = výsledok na hlave",
+   "nepreberat": "tvrdenia o celebritách bez dôkazu",
+   "snimky": [
+    "snimky/_studiobarber.jpg"
+   ]
+  },
+  {
+   "k": "michaelvag",
+   "web": "Barbershop Michael Vag",
+   "url": "https://www.michaelvag.sk/",
+   "kde": "Nitra",
+   "dokaz": "snímky (lite) + WebFetch",
+   "ponuka": "galéria s filtrom (strihy, brada, detské, priestor), cenník, tím s IG, recenzie s odkazom na Google",
+   "lepsie": "filter výsledkov podľa služby",
+   "princip": "galéria podľa toho, čo zákazník chce",
+   "nepreberat": "počítadlo „10 000+“ bez zdroja, obsah skrytý animáciou (m-1)",
+   "snimky": [
+    "snimky/_michaelvag.jpg"
+   ]
+  },
+  {
+   "k": "mmg",
+   "web": "MMG Peschi Barbers",
+   "url": "https://mmgbarbers.sk/",
+   "kde": "Nitra + 7 miest",
+   "dokaz": "snímky + WebFetch",
+   "ponuka": "„ASAP termín“ a telefón v hlavičke, výber mesta, kariéra, akadémia, darčekové poukazy, recenzie s dátumom a pobočkou, Booqme rezervácie aj vernostný systém",
+   "lepsie": "najbližší voľný termín, kariéra/akadémia, vernosť",
+   "princip": "skratka pre toho, kto chce ísť hneď",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_mmg.jpg"
+   ]
+  },
+  {
+   "k": "beyond",
+   "web": "Beyond Barber Lounge (barbershopnitra.sk)",
+   "url": "https://www.barbershopnitra.sk/",
+   "kde": "Nitra-Chrenová",
+   "dokaz": "snímky + WebFetch",
+   "ponuka": "Booqme, EN verzia, bezplatné parkovanie, recenzie 2022",
+   "lepsie": "parkovanie uvedené",
+   "princip": "praktický údaj (parkovanie) pri kontakte",
+   "nepreberat": "čierna prázdna úvodná plocha (beyond-d-0, m-0)",
+   "snimky": [
+    "snimky/_beyond.jpg"
+   ]
+  },
+  {
+   "k": "farska",
+   "web": "Barber Shop Farská",
+   "url": "https://www.barbernitra.sk/",
+   "kde": "Nitra",
+   "dokaz": "snímky + WebFetch",
+   "ponuka": "hodiny po dňoch a Google recenzie hneď v prvom obraze telefónu, Bookio, barber kurzy",
+   "lepsie": "hodiny + dôkaz v prvom obraze",
+   "princip": "kedy a dôvera bez skrolu",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_farska.jpg"
+   ]
+  },
+  {
+   "k": "diamond",
+   "web": "Diamond Barbershop",
+   "url": "https://diamondbarber.sk/",
+   "kde": "Nitra",
+   "dokaz": "snímky",
+   "ponuka": "služby s cenou, 2 barberi, IG galéria, Bookio",
+   "lepsie": "-",
+   "princip": "-",
+   "nepreberat": "slabý vizuál",
+   "snimky": [
+    "snimky/_diamond.jpg"
+   ]
+  },
+  {
+   "k": "culture",
+   "web": "Culture Barbershop Brno",
+   "url": "https://www.cltrbarber.com/",
+   "kde": "Brno",
+   "dokaz": "snímky",
+   "ponuka": "adresa a hodiny v prvom obraze, cenník po barberoch (záložky), 9 FAQ (bez objednania, karta, zrušenie, meškanie, deti, reklamácia), stály spodný panel „Objednat“ + jazyk",
+   "lepsie": "FAQ, cena podľa barbera",
+   "princip": "odpovede na námietky pred rezerváciou",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_culture.jpg"
+   ]
+  },
+  {
+   "k": "cutegory",
+   "web": "Cutegory",
+   "url": "https://www.cutegory.cz/",
+   "kde": "Praha, Brno",
+   "dokaz": "snímky + inventár",
+   "ponuka": "hodnotenie 4,9 · 1285 recenzií pri tlačidle v úvode, blok štatistík, „Skutečné výsledky. Bez filtrů.“, značky, blog, e-shop, JSON-LD HairSalon + Service",
+   "lepsie": "dôkaz pri hlavnej akcii, výsledky",
+   "princip": "dôkaz pri rozhodnutí",
+   "nepreberat": "číslo bez súhlasu majiteľa (B30 pravidlo)",
+   "snimky": [
+    "snimky/_cutegory.jpg"
+   ]
+  },
+  {
+   "k": "sidepart",
+   "web": "Sidepart",
+   "url": "https://sidepart.sk/",
+   "kde": "Bratislava",
+   "dokaz": "snímky (počítač)",
+   "ponuka": "„cash only“ hneď v úvode, dvojjazyčné SK/EN nadpisy, galéria strihov",
+   "lepsie": "spôsob platby povedaný vopred",
+   "princip": "podmienka pri rozhodnutí",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_sidepart.jpg"
+   ]
+  },
+  {
+   "k": "pallmall",
+   "web": "Pall Mall Barbers",
+   "url": "https://www.pallmallbarbers.com/",
+   "kde": "Londýn",
+   "dokaz": "snímky + inventár",
+   "ponuka": "BOOK NOW + SHOP NOW stále dole na telefóne, pobočky, barberi, darčekové poukazy, tlač",
+   "lepsie": "poukazy, profily barberov",
+   "princip": "stála dvojica akcií",
+   "nepreberat": "steny SEO textu, prázdne rámy obrázkov na telefóne",
+   "snimky": [
+    "snimky/_pallmall.jpg"
+   ]
+  },
+  {
+   "k": "fellow",
+   "web": "Fellow Barber",
+   "url": "https://www.fellowbarber.com/",
+   "kde": "USA",
+   "dokaz": "snímky + inventár",
+   "ponuka": "Book v hlavičke, rezervácia Boulevard podľa pobočky, kariéra „We're hiring“, darčeková karta na služby",
+   "lepsie": "kariéra, poukaz na služby",
+   "princip": "nábor ako súčasť značky",
+   "nepreberat": "YouTube video nedostupné v úvode (čierna plocha)",
+   "snimky": [
+    "snimky/_fellow.jpg"
+   ]
+  },
+  {
+   "k": "birds",
+   "web": "Birds Barbershop",
+   "url": "https://birdsbarbershop.com/",
+   "kde": "Austin",
+   "dokaz": "snímky",
+   "ponuka": "Apply + Book now v úvode, recenzie ako farebné karty, mapa pobočiek, gift cards",
+   "lepsie": "recenzie medzi sekciami",
+   "princip": "krátka citácia pri každej časti",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_birds.jpg"
+   ]
+  },
+  {
+   "k": "ruffians",
+   "web": "Ruffians",
+   "url": "https://ruffians.co.uk/",
+   "kde": "Londýn, Edinburgh",
+   "dokaz": "snímky",
+   "ponuka": "Zenoti rezervácia, kreslené výklady pobočiek, Service Gift Cards",
+   "lepsie": "poukaz na službu",
+   "princip": "-",
+   "nepreberat": "vyskakovacie okno cez celý obsah",
+   "snimky": [
+    "snimky/_ruffians.jpg"
+   ]
+  },
+  {
+   "k": "murdock",
+   "web": "Murdock London",
+   "url": "https://www.murdocklondon.com/",
+   "kde": "Londýn",
+   "dokaz": "snímky",
+   "ponuka": "„Book Your Appointment Now“ hore, gift cards v rezervačnom systéme",
+   "lepsie": "poukaz cez rezervačný systém",
+   "princip": "poukaz kúpiteľný v tom istom systéme ako termín",
+   "nepreberat": "vyskakovacie okno so zľavou",
+   "snimky": [
+    "snimky/_murdock.jpg"
+   ]
+  },
+  {
+   "k": "blindbarber",
+   "web": "Blind Barber",
+   "url": "https://blindbarber.com/",
+   "kde": "USA",
+   "dokaz": "snímky",
+   "ponuka": "e-shop, Visit, FAQ, kariéra",
+   "lepsie": "FAQ",
+   "princip": "-",
+   "nepreberat": "vyskakovacie okno",
+   "snimky": [
+    "snimky/_blindbarber.jpg"
+   ]
+  },
+  {
+   "k": "truefitt",
+   "web": "Truefitt & Hill",
+   "url": "https://www.truefittandhill.co.uk/",
+   "kde": "Londýn",
+   "dokaz": "snímky",
+   "ponuka": "Book service, história a patróni",
+   "lepsie": "-",
+   "princip": "dôkaz tradície",
+   "nepreberat": "vyskakovacie okno",
+   "snimky": [
+    "snimky/_truefitt.jpg"
+   ]
+  },
+  {
+   "k": "siena",
+   "web": "Siena Film Foundation (W046, Z046)",
+   "url": "https://siena.film/",
+   "kde": "katalóg skillu",
+   "dokaz": "snímky + časový sled po ENTER",
+   "ponuka": "skutočné filmové zábery cez celé okno, titul + recenzia z tlače pri každom filme, index filmov vpravo hore",
+   "lepsie": "dôkaz pri titulku, index",
+   "princip": "citácia so zdrojom priamo pri titulnej karte",
+   "nepreberat": "brána ENTER na čiernej, telefón bez obrazu (siena-m-*)",
+   "snimky": [
+    "snimky/_siena.jpg"
+   ]
+  },
+  {
+   "k": "sondaven",
+   "web": "Son Daven (W032)",
+   "url": "https://sondaven.com/en",
+   "kde": "katalóg skillu",
+   "dokaz": "snímky",
+   "ponuka": "vlastná grafická technika z miesta (bodová textúra lesa), veľký názov",
+   "lepsie": "materiál z vlastného miesta",
+   "princip": "textúra odvodená zo skutočného materiálu prevádzky",
+   "nepreberat": "investičné čísla",
+   "snimky": [
+    "snimky/_sondaven.jpg"
+   ]
+  },
+  {
+   "k": "era",
+   "web": "ERA Residence (W030)",
+   "url": "https://www.era-residence.com/",
+   "kde": "katalóg skillu",
+   "dokaz": "snímky",
+   "ponuka": "architektúra hlavná, stála akcia vpravo hore, vlastná kompozícia telefónu",
+   "lepsie": "-",
+   "princip": "jedna stála akcia",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_era.jpg"
+   ]
+  },
+  {
+   "k": "koox",
+   "web": "koox (W025, Z025)",
+   "url": "https://koox.co.uk/",
+   "kde": "katalóg skillu (web je dnes obchod)",
+   "dokaz": "snímky",
+   "ponuka": "reálny materiál (obklad) pod ponukou, hodnotenie so zdrojom a obdobím (2022–2024)",
+   "lepsie": "zdroj + dátum pri čísle",
+   "princip": "číslo len so zdrojom a dátumom",
+   "nepreberat": "-",
+   "snimky": [
+    "snimky/_koox.jpg"
+   ]
+  },
+  {
+   "k": "pasqua",
+   "web": "Pasqua Wines (W065)",
+   "url": "https://pasqua.it/",
+   "kde": "katalóg skillu",
+   "dokaz": "snímky (lite)",
+   "ponuka": "maľovaná krajina s textúrou plátna",
+   "lepsie": "-",
+   "princip": "materiál nesie pôvod",
+   "nepreberat": "brána „Please wait“ + „Start the experience“",
+   "snimky": [
+    "snimky/_pasqua.jpg"
+   ]
+  }
+ ]
+}

@@ -1,5 +1,5 @@
 diff --git a/barbershop-30/README.md b/barbershop-30/README.md
-index 0067af9..4ede37a 100644
+index 0067af9..044c6ff 100644
 --- a/barbershop-30/README.md
 +++ b/barbershop-30/README.md
 @@ -21,7 +21,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
@@ -12,7 +12,7 @@ index 0067af9..4ede37a 100644
    `?hudba=off` a `?svetlo=off` ich vypnú.
  
  - **Brána filmu** (skript v hlavičke `index.html`, trieda `world` na `<html>`): film sa zapne pri WebGL2, bez
-@@ -32,11 +33,14 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
+@@ -32,11 +33,15 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
  - **Jazyky** (`assets/i18n.js`, `assets/i18n.css`, slovníky `assets/i18n/<jazyk>.json`): slovenčina, angličtina,
    ukrajinčina, maďarčina, srbčina (latinka), poľština, nemčina a čeština; výber a poradie podľa prieskumu menšín
    a cudzincov v Nitre (`docs/JAZYKY.md`). Kľúč slovníka je slovenský text zo stránky, `__tabula` sú slová tabule
@@ -28,7 +28,8 @@ index 0067af9..4ede37a 100644
 +  angličtina) a pri hlavnej rezervácii (len po slovensky) je poznámka v jazyku stránky. Manrope s cyrilikou pridá
 +  `i18n.js` (FontFace) až pri ukrajinčine, pri jej ponuke alebo pri otvorení ponuky jazykov na počítači (nie
 +  `@font-face` v `i18n.css`: nové písmo prepočíta rozloženie celej stránky; rezy s hrúbkou presne 400/600/700 ako latinka,
-+  rez s rozsahom 500–800 by tlačidlá a nadpisky v latinke prepol na písmo systému). `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
++  rez s rozsahom 500–800 by tlačidlá a nadpisky v latinke prepol na písmo systému). `hreflang` je v `sitemap.xml`,
++  nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
    potrebuje kľúč vo všetkých slovníkoch; kontrola: `node source/tools/i18n-test.mjs`.
  
  ## Nasadenie
