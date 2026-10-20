@@ -1,0 +1,139 @@
+{
+ "meno": "d1ab-inp6-po-1",
+ "film": "off",
+ "filmStav": {
+  "on": false
+ },
+ "cpu": 6,
+ "y": 2700,
+ "zataz": [
+  "0.82",
+  "2.14",
+  "2.95"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 128,
+   "udalosti": [
+    "pointerdown:24(spracovanie 10)",
+    "pointerup:24(spracovanie 0)",
+    "click:128(spracovanie 6)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 10.2,
+     "vynuteneStylLayout": 0
+    },
+    "mousemove": {
+     "spolu": 2,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 6.2,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     59,
+     57
+    ]
+   ]
+  },
+  "jazykEN": {
+   "inpMs": 56,
+   "udalosti": [
+    "pointerdown:16(spracovanie 1)",
+    "pointerup:16(spracovanie 0)",
+    "click:56(spracovanie 16)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 15.6,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     73,
+     71
+    ],
+    [
+     80,
+     81
+    ],
+    [
+     296,
+     290
+    ]
+   ]
+  },
+  "jazykSK": {
+   "inpMs": 200,
+   "udalosti": [
+    "pointerdown:16(spracovanie 0)",
+    "pointerup:16(spracovanie 0)",
+    "click:200(spracovanie 12)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 12.3,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 6,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     152,
+     152
+    ],
+    [
+     239,
+     235
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 96,
+   "udalosti": [
+    "pointerdown:16(spracovanie 1)",
+    "pointerup:16(spracovanie 0)",
+    "click:96(spracovanie 3)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 1.2,
+     "vynuteneStylLayout": 0
+    },
+    "gestureshowpress": {
+     "spolu": 1.7,
+     "vynuteneStylLayout": 0
+    },
+    "mousemove": {
+     "spolu": 1.5,
+     "vynuteneStylLayout": 0
+    },
+    "mouseup": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 1.6,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

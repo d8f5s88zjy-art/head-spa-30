@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="mPerrZahhyXZeSJoV4ikvl3t8yK5MvvpydG6u1aj">
+
+    <link rel="stylesheet" href="css/app.css?ver=1">
+
+    <!-- scripts -->
+    <script src="js/vendor/modernizr.js"></script>
+
+    <title>Barbershop30</title>
+
+    <!-- Google tag (gtag.js) --> 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9FMT63FQC"></script> 
+    <script> 
+        window.dataLayer = window.dataLayer || []; 
+        function gtag(){
+            dataLayer.push(arguments);
+        } 
+        gtag('js', new Date()); 
+        gtag('config', 'G-D9FMT63FQC'); 
+    </script> 
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K8PZD4KR');</script>
+    <!-- End Google Tag Manager -->
+
+    <!--Google translate JS script-->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
+  </head>
+  <body id="order">
+    <script type="module" src="js/plugins/cookieconsent-config.js"></script>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8PZD4KR" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id='google_translate_element'></div>
+    <div id="mask">
+      <div class="loader-minimal"></div>
+    </div>
+
+    <header id="jHeader" class="invert">
+  <nav class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Desplegar navegación</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.barbershop30.sk"><img src="images/demo/logo.png" alt="logo"></a>
+    </div>
+
+    <div id="navbar-murdock" class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav navbar-right invert">
+        <li><a href="https://www.barbershop30.sk#uvod">Barbershop</a></li>
+        <li><a href="https://www.barbershop30.sk#o-nas">O nás</a></li>
+        <li><a href="https://www.barbershop30.sk#sluzby">Služby</a></li>
+        <li><a href="https://www.barbershop30.sk#nas-team">Náš team</a></li>
+        <li><a href="https://www.barbershop30.sk#galeria">Galéria</a></li>
+        <li><a href="https://www.barbershop30.sk#kontakt">Kontakt</a></li>
+        <li><a href="https://www.barbershop30.sk/rezervacia" class="btn btn-invert">Online rezervácia</a></li>
+        <li>
+          <select id="languageOption" class="skiptranslate">                                    
+            <option value="sk" class="skiptranslate">SK</option>
+            <option value="en" class="skiptranslate">EN</option>
+          </select>    
+        </li>
+      </ul>
+
+      
+    </div>
+
+  </nav>
+</header>
+    
+    	<!-- intro -->
+        <section class="intro full-width jIntro">
+          <div class="container-full">
+            <div class="row row-no-gutter">
+              <div class="col-md-12">
+                
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <div id="order-component">
+            <v-order-component 
+                data="{&quot;services&quot;:[{&quot;id&quot;:1,&quot;name&quot;:&quot;P\u00e1nsky strih&quot;,&quot;description&quot;:&quot;Strihanie vlasov r\u00f4znymi technikami tzv.fade. Konzult\u00e1cia, strihanie stroj\u010dekom\/no\u017enicami, umytie vlasov, f\u00e9novanie, z\u00e1vere\u010dn\u00fd styling a aplik\u00e1cia kol\u00ednskej&quot;,&quot;price&quot;:18,&quot;time&quot;:40,&quot;icon&quot;:&quot;icon-barber-chair&quot;,&quot;main&quot;:1,&quot;position&quot;:0,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:49:12&quot;,&quot;updated_at&quot;:&quot;2024-12-01 11:08:40&quot;},{&quot;id&quot;:18,&quot;name&quot;:&quot;P\u00e1nsky strih a \u00daprava brady&quot;,&quot;description&quot;:&quot;Strihanie vlasov r\u00f4znymi technikami tzv.fade. Konzult\u00e1cia, strihanie stroj\u010dekom\/no\u017enicami, umytie vlasov, f\u00e9novanie, z\u00e1vere\u010dn\u00fd styling a aplik\u00e1cia kol\u00ednskej.\u00daprava brady, naparenie hor\u00facim ru\u010dn\u00edkom, britva, z\u00e1vere\u010dn\u00fd styling s pr\u00edpravkami.&quot;,&quot;price&quot;:28,&quot;time&quot;:60,&quot;icon&quot;:&quot;icon-barber-shop&quot;,&quot;main&quot;:1,&quot;position&quot;:1,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2020-07-25 18:39:53&quot;,&quot;updated_at&quot;:&quot;2024-12-01 11:08:49&quot;},{&quot;id&quot;:5,&quot;name&quot;:&quot;Strih pre mal\u00fdch gentlemenov&quot;,&quot;description&quot;:&quot;Klasick\u00fd strih, Fade, pr\u00edpadne kreat\u00edvne ornamenty vo vlasoch, umytie vlasov, z\u00e1vere\u010dn\u00fd styling - do 10 rokov&quot;,&quot;price&quot;:15,&quot;time&quot;:45,&quot;icon&quot;:&quot;icon-barber-chair&quot;,&quot;main&quot;:1,&quot;position&quot;:2,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:50:29&quot;,&quot;updated_at&quot;:&quot;2024-02-22 18:17:16&quot;},{&quot;id&quot;:3,&quot;name&quot;:&quot;\u00daprava brady&quot;,&quot;description&quot;:&quot;\u00daprava brady, naparenie hor\u00facim ru\u010dn\u00edkom, britva, z\u00e1vere\u010dn\u00fd styling s pr\u00edpravkami&quot;,&quot;price&quot;:15,&quot;time&quot;:20,&quot;icon&quot;:&quot;icon-manual-razor&quot;,&quot;main&quot;:1,&quot;position&quot;:3,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:49:47&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:34:57&quot;},{&quot;id&quot;:19,&quot;name&quot;:&quot;P\u00e1nsky strih - d\u013a\u017eka vlasov nad 10cm&quot;,&quot;description&quot;:&quot;Strihanie vlasov r\u00f4znymi technikami tzv.fade. Konzult\u00e1cia, strihanie stroj\u010dekom\/no\u017enicami, umytie vlasov, f\u00e9novanie, z\u00e1vere\u010dn\u00fd styling a aplik\u00e1cia kol\u00ednskej&quot;,&quot;price&quot;:22,&quot;time&quot;:60,&quot;icon&quot;:&quot;icon-barber-chair&quot;,&quot;main&quot;:1,&quot;position&quot;:4,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2024-02-22 18:18:55&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:34:57&quot;},{&quot;id&quot;:14,&quot;name&quot;:&quot;Bal\u00ed\u010dek 1&quot;,&quot;description&quot;:&quot;Konzult\u00e1cia, strihanie stroj\u010dekom\/no\u017enicami, \u00faprava brady, Hot Towel, \u00faprava obo\u010dia, depil\u00e1cia u\u0161\u00ed, umytie vlasov, vlasov\u00fd tonic, f\u00e9novanie, z\u00e1vere\u010dn\u00fd styling a aplik\u00e1cia kol\u00ednskej&quot;,&quot;price&quot;:30,&quot;time&quot;:65,&quot;icon&quot;:&quot;icon-barber-shop-light&quot;,&quot;main&quot;:0,&quot;position&quot;:5,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-17 09:49:00&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:22&quot;},{&quot;id&quot;:15,&quot;name&quot;:&quot;Ultra inclusive Barbershop30&quot;,&quot;description&quot;:&quot;Konzult\u00e1cia, strihanie stroj\u010dekom\/no\u017enicami, \u00faprava brady, Hot Towel, umytie vlasov, vlasov\u00fd tonic, depil\u00e1cia u\u0161\u00ed, \u00faprava obo\u010dia, naparenie tv\u00e1re, peeling, relaxa\u010dn\u00e1 maska pod\u013ea vlastn\u00e9ho v\u00fdberu, f\u00e9novanie, poh\u00e1rik whisky, z\u00e1vere\u010dn\u00fd styling a aplik\u00e1cia kol\u00ednskej&quot;,&quot;price&quot;:40,&quot;time&quot;:80,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:6,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-17 09:50:53&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:35&quot;},{&quot;id&quot;:6,&quot;name&quot;:&quot;Starostlivos\u0165 o ple\u0165 PREMIUM&quot;,&quot;description&quot;:&quot;Naparenie tv\u00e1re, peeling, relaxa\u010dn\u00e1 maska pod\u013ea vlastn\u00e9ho v\u00fdberu&quot;,&quot;price&quot;:21.5,&quot;time&quot;:30,&quot;icon&quot;:&quot;icon-barber-shop&quot;,&quot;main&quot;:0,&quot;position&quot;:7,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:50:51&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:35&quot;},{&quot;id&quot;:4,&quot;name&quot;:&quot;Holenie do hladka Hot Towel&quot;,&quot;description&quot;:&quot;Holenie britvou, naparenie hor\u00facim ru\u010dn\u00edkom, o\u0161etrenie pleti po holen\u00ed&quot;,&quot;price&quot;:15,&quot;time&quot;:30,&quot;icon&quot;:&quot;icon-brush&quot;,&quot;main&quot;:1,&quot;position&quot;:8,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:50:07&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:44&quot;},{&quot;id&quot;:2,&quot;name&quot;:&quot;Oholenie hlavy&quot;,&quot;description&quot;:&quot;Pr\u00edprava poko\u017eky hlavy na holenie britvou, um\u00fdvanie a su\u0161enie, z\u00e1vere\u010dn\u00fd styling&quot;,&quot;price&quot;:13,&quot;time&quot;:25,&quot;icon&quot;:&quot;icon-big-razor-blade&quot;,&quot;main&quot;:0,&quot;position&quot;:9,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-04 13:49:29&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:44&quot;},{&quot;id&quot;:7,&quot;name&quot;:&quot;\u00daprava obo\u010dia&quot;,&quot;description&quot;:&quot;Vytrhanie a \u00faprava obo\u010dia&quot;,&quot;price&quot;:3,&quot;time&quot;:5,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:11,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-10 09:48:52&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:29&quot;},{&quot;id&quot;:8,&quot;name&quot;:&quot;Depil\u00e1cia u\u0161i a nosa voskom&quot;,&quot;description&quot;:&quot;Depil\u00e1cia u\u0161\u00ed&quot;,&quot;price&quot;:5.5,&quot;time&quot;:10,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:12,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-10 09:50:49&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:29&quot;},{&quot;id&quot;:10,&quot;name&quot;:&quot;Kreat\u00edvny ornament na hlave&quot;,&quot;description&quot;:&quot;.&quot;,&quot;price&quot;:4,&quot;time&quot;:10,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:13,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-10 09:51:20&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:29&quot;},{&quot;id&quot;:11,&quot;name&quot;:&quot;Farbenie brady&quot;,&quot;description&quot;:&quot;Farbenie brady profesion\u00e1lnymi farbami - 20 ml farby&quot;,&quot;price&quot;:10,&quot;time&quot;:30,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:15,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-17 09:46:22&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:29&quot;},{&quot;id&quot;:12,&quot;name&quot;:&quot;Farbenie obo\u010dia&quot;,&quot;description&quot;:&quot;Farbenie obo\u010dia profesion\u00e1lnymi farbami&quot;,&quot;price&quot;:5,&quot;time&quot;:10,&quot;icon&quot;:null,&quot;main&quot;:0,&quot;position&quot;:16,&quot;active&quot;:1,&quot;created_at&quot;:&quot;2019-09-17 09:46:53&quot;,&quot;updated_at&quot;:&quot;2026-02-05 21:35:29&quot;}]}" 
+                ajax-url="https://www.barbershop30.sk/rezervacia/ajax"
+                lang="{&quot;nav.home&quot;:&quot;Barbershop&quot;,&quot;nav.about_us&quot;:&quot;O n\u00e1s&quot;,&quot;nav.services&quot;:&quot;Slu\u017eby&quot;,&quot;nav.team&quot;:&quot;N\u00e1\u0161 team&quot;,&quot;nav.gallery&quot;:&quot;Gal\u00e9ria&quot;,&quot;nav.contact&quot;:&quot;Kontakt&quot;,&quot;nav.rezervation&quot;:&quot;Online rezerv\u00e1cia&quot;,&quot;slider.rezervation_button&quot;:&quot;rezervova\u0165 term\u00edn&quot;,&quot;about_us.about_us&quot;:&quot;O n\u00e1s&quot;,&quot;about_us.heading&quot;:&quot;Barbershop30 Nitra \u2013 viac ne\u017e len strih&quot;,&quot;about_us.content&quot;:&quot;V Barbershope30 sp\u00e1jame poctiv\u00e9 remeslo s modern\u00fdm \u0161t\u00fdlom. N\u00e1jde\u0161 n\u00e1s v srdci Nitry, kde ti n\u00e1\u0161 profi t\u00edm pon\u00fakne top slu\u017eby pre mu\u017eov aj deti. \u010ci u\u017e ide\u0161 na klasiku alebo modern\u00fd fade, postar\u00e1me sa o to, aby si odch\u00e1dzal spokojn\u00fd.&lt;br&gt;Rezervuj si term\u00edn jednoducho online, vychutnaj si k\u00e1vu \u010di miner\u00e1lku zdarma a nechaj sa ostriha\u0165 v \u0161t\u00fdle, ktor\u00fd ti sadne.&quot;,&quot;about_us.link_1&quot;:&quot;na\u0161e slu\u017eby&quot;,&quot;about_us.link_2&quot;:&quot;rezerv\u00e1cia&quot;,&quot;why_us.heading&quot;:&quot;Pre\u010do pr\u00e1ve my?&quot;,&quot;why_us.content&quot;:&quot;V holi\u010dstve sa sn\u00fabia viacer\u00e9 slu\u017eby ako holenie tv\u00e1re, strihanie a \u00faprava \u00fa\u010desov, no nielen to.  Na v\u0161etky o\u0161etrenia a styling pou\u017e\u00edvame iba vysoko kvalitn\u00e9 produkty l\u00eddrov na trhu, ktor\u00e9 si samozrejme m\u00f4\u017eete u n\u00e1s aj zak\u00fapi\u0165 za bezkonkuren\u010dn\u00e9 ceny. &lt;br&gt;Objavte raj pre mu\u017eov a sta\u0148te sa prav\u00fdm gentlemanom v na\u0161om Gentlemantskom klube. Barbershop30 sme pre V\u00e1s budovali s l\u00e1skou a prec\u00edznos\u0165ou, preto ver\u00edme, \u017ee sa budete v na\u0161ich priestoroch c\u00edti\u0165 pr\u00edjemne a pohodlne. \u013dudskos\u0165 a rodinn\u00e1 atmosf\u00e9ra s\u00fa pre n\u00e1s samozrejmos\u0165ou.Te\u0161\u00edme sa na Va\u0161u n\u00e1v\u0161tevu.&lt;br&gt;&lt;br&gt;V\u00e1\u0161 Team Barbershop30&quot;,&quot;services.services&quot;:&quot;Slu\u017eby&quot;,&quot;services.heading&quot;:&quot;Na\u0161e slu\u017eby &amp; cenn\u00edk&quot;,&quot;services.content&quot;:&quot;V\u017edy s oh\u013eadom na najnov\u0161ie trendy. Navrhujeme vzh\u013ead, ktor\u00fd dokonale definuje V\u00e1\u0161 \u0161t\u00fdl a zv\u00fdrazn\u00ed Va\u0161u osobnos\u0165. Samozrejmos\u0165ou je u n\u00e1s aj chutn\u00e1 k\u00e1vi\u010dka alebo nealko.&quot;,&quot;services.rezervation&quot;:&quot;rezervova\u0165 term\u00edn&quot;,&quot;services.show_all_button&quot;:&quot;Zobrazi\u0165 cel\u00fd cenn\u00edk&quot;,&quot;opening_hours.heading&quot;:&quot;Otv\u00e1racie hodiny&quot;,&quot;team.about_us&quot;:&quot;O n\u00e1s&quot;,&quot;team.heading&quot;:&quot;Na\u0161i barberi&quot;,&quot;team.rezervation&quot;:&quot;Rezervova\u0165 term\u00edn&quot;,&quot;team.section_2_heading&quot;:&quot;E\u0161te nem\u00e1te svoj term\u00edn?&quot;,&quot;team.section_2_content&quot;:&quot;Objednajte sa online z pohodlia svojho domova a vyberte si term\u00edn, ktor\u00fd V\u00e1m najviac vyhovuje.&quot;,&quot;team.section_2_button&quot;:&quot;Rezervova\u0165 term\u00edn&quot;,&quot;gallery.gallery&quot;:&quot;Gal\u00e9ria&quot;,&quot;gallery.heading&quot;:&quot;Ako to u n\u00e1s vyzer\u00e1&quot;,&quot;gallery.filter&quot;:&quot;filter&quot;,&quot;gallery.enlarge&quot;:&quot;zv\u00e4\u010d\u0161i\u0165&quot;,&quot;contact.phone&quot;:&quot;telef\u00f3n&quot;,&quot;contact.email&quot;:&quot;email&quot;,&quot;contact.write_us&quot;:&quot;nap\u00ed\u0161te n\u00e1m&quot;,&quot;contact.name&quot;:&quot;meno&quot;,&quot;contact.message&quot;:&quot;spr\u00e1va&quot;,&quot;contact.button&quot;:&quot;Odosla\u0165 spr\u00e1vu&quot;,&quot;social_links.heading&quot;:&quot;Spojte sa s nami&quot;,&quot;footer.description&quot;:&quot;Profesion\u00e1lne a modern\u00e9 kadern\u00edctvo a holi\u010dstvo v centre Nitry s najkvalitnej\u0161\u00edmi produktami. V\u0161etko pre Va\u0161e pohodlie a spokojnos\u0165. To je Barbershop30.&quot;,&quot;footer.menu&quot;:&quot;Menu&quot;,&quot;footer.contact&quot;:&quot;Kontakt&quot;,&quot;footer.rezervation&quot;:&quot;Rezerv\u00e1cia&quot;,&quot;footer.rezervation_content&quot;:&quot;Pohodln\u00e1 online rezerv\u00e1cia z v\u00e1\u0161ho po\u010d\u00edta\u010da, mobilu alebo tabletu.&quot;,&quot;footer.rezervation_button&quot;:&quot;Rezervova\u0165 term\u00edn&quot;,&quot;rezervation.rezervation&quot;:&quot;&quot;,&quot;rezervation.step_1_heading&quot;:&quot;Online rezerv\u00e1cia&quot;,&quot;rezervation.step_1_content&quot;:&quot;Klikni na vybran\u00fa slu\u017ebu a pokra\u010duj pod\u013ea pokynov&quot;,&quot;rezervation.step_2_heading&quot;:&quot;2. Vyberte pracovn\u00edka&quot;,&quot;rezervation.step_2_content&quot;:&quot;Zvolte si V\u00e1\u0161ho ob\u013e\u00faben\u00e9ho barbera, ktor\u00fd sa postar\u00e1 o Va\u0161e pohodlie.&quot;,&quot;rezervation.step_3_heading&quot;:&quot;3. Vyberte term\u00edn&quot;,&quot;rezervation.step_3_content&quot;:&quot;Je len na V\u00e1s, ktor\u00fd de\u0148 a hodina V\u00e1m najviac vyhovuje. My sa postar\u00e1me, aby bolo v\u0161etko pripraven\u00e9.&quot;,&quot;rezervation.step_4_heading&quot;:&quot;4. Vypl\u0148te Va\u0161e osobn\u00e9 \u00fadaje&quot;,&quot;rezervation.step_4_content&quot;:&quot;Vypl\u0148te meno a priezvisko osoby, pre ktor\u00fa bude rezerv\u00e1cia ur\u010den\u00e1. Kontaktn\u00e9 \u00fadaje potrebujeme v pr\u00edpade, \u017ee sa s Vami budeme musie\u0165 spoji\u0165.&quot;,&quot;rezervation.first_name&quot;:&quot;meno&quot;,&quot;rezervation.last_name&quot;:&quot;priezvisko&quot;,&quot;rezervation.email&quot;:&quot;email&quot;,&quot;rezervation.phone&quot;:&quot;telef\u00f3n&quot;,&quot;rezervation.button&quot;:&quot;Rezervova\u0165 term\u00edn&quot;,&quot;confirmation.heading&quot;:&quot;Va\u0161a rezerv\u00e1cia bola \u00faspe\u0161n\u00e1!&quot;,&quot;confirmation.content&quot;:&quot;\u010eakujeme za Va\u0161u rezerv\u00e1ciu a u\u017e teraz sa te\u0161\u00edme na Va\u0161u n\u00e1v\u0161tevu. Na emailov\u00fa adresu, ktor\u00fa ste uviedli pri rezerv\u00e1cii sme V\u00e1m poslali v\u0161etky d\u00f4le\u017eit\u00e9 inform\u00e1cie o rezerv\u00e1cii. V pr\u00edpade ak\u00fdchko\u013evek ot\u00e1zok, alebo pre zmenu rezerv\u00e1cie n\u00e1s nev\u00e1hajte kontaktova\u0165 telefonicky alebo emailom.&quot;,&quot;confirmation.details&quot;:&quot;Detaily rezerv\u00e1cie&quot;,&quot;confirmation.date_time&quot;:&quot;Term\u00edn&quot;,&quot;confirmation.service&quot;:&quot;Slu\u017eba&quot;,&quot;confirmation.employee&quot;:&quot;Pracovn\u00edk&quot;,&quot;mail.confirmation_heading&quot;:&quot;Va\u0161a rezerv\u00e1cia bola \u00faspe\u0161n\u00e1!&quot;,&quot;mail.confirmation_content&quot;:&quot;\u010eakujeme za Va\u0161u rezerv\u00e1ciu a u\u017e teraz sa te\u0161\u00edme na Va\u0161u n\u00e1v\u0161tevu. Ni\u017e\u0161ie n\u00e1jdete v\u0161etky detaily Va\u0161ej rezerv\u00e1cie. V pr\u00edpade ak\u00fdchko\u013evek ot\u00e1zok, alebo pre zmenu rezerv\u00e1cie n\u00e1s nev\u00e1hajte kontaktova\u0165 telefonicky alebo emailom.&quot;,&quot;mail.confirmation_date_time&quot;:&quot;Term\u00edn&quot;,&quot;mail.confirmation_service&quot;:&quot;Slu\u017eba&quot;,&quot;mail.confirmation_employee&quot;:&quot;Pracovn\u00edk&quot;,&quot;mail.confirmation_thanks&quot;:&quot;\u010eakujeme a te\u0161\u00edme sa na Va\u0161u n\u00e1v\u0161tevu&quot;,&quot;mail.confirmation_heading_address&quot;:&quot;Kde n\u00e1s n\u00e1jdete?&quot;,&quot;mail.confirmation_content_address&quot;:&quot;N\u00e1\u0161 barbershop sa nach\u00e1dza v Nitre na adrese Mostn\u00e1 30. Ur\u010dite n\u00e1s neprehliadnete.&quot;,&quot;mail.confirmation_button_address&quot;:&quot;Pozrie\u0165 na mape&quot;,&quot;mail.contact_subject&quot;:&quot;Nov\u00e1 spr\u00e1va z kontaktn\u00e9ho formul\u00e1ru&quot;,&quot;mail.confirmation_subject&quot;:&quot;Rezerv\u00e1cia term\u00ednu v Barbershop30&quot;,&quot;mail.contact_heading&quot;:&quot;Nov\u00e1 spr\u00e1va z kontaktn\u00e9ho formul\u00e1ru&quot;,&quot;mail.contact_from&quot;:&quot;Od:&quot;,&quot;mail.contact_email&quot;:&quot;Email:&quot;,&quot;mail.contact_message&quot;:&quot;Spr\u00e1va:&quot;,&quot;mail.alert_subject&quot;:&quot;M\u00e1te nov\u00fa rezerv\u00e1ciu!&quot;,&quot;mail.alert_heading&quot;:&quot;Super, m\u00e1te nov\u00fa rezerv\u00e1ciu!&quot;,&quot;mail.alert_content&quot;:&quot;Ni\u017e\u0161ie s\u00fa vyp\u00edsan\u00e9 detaily rezerv\u00e1cie. Rezerv\u00e1ciu si taktie\u017e m\u00f4\u017eete pozrie\u0165 v administr\u00e1cii, pr\u00edpadne si vygenerova\u0165 a vytla\u010di\u0165 harmonogram.&quot;,&quot;mail.alert_customer&quot;:&quot;Z\u00e1kazn\u00edk&quot;,&quot;voucher.heading&quot;:&quot;H\u013ead\u00e1te dar\u010dek?&quot;,&quot;voucher.content&quot;:&quot;\u010ci u\u017e potrebujete dar\u010dek pre priate\u013ea alebo mu\u017ea k narodenin\u00e1m, dar\u010deky k jubileu, alebo obchodn\u00e9 dar\u010deky pre mu\u017eov, in\u0161pirujte sa na\u0161ou ponukou dar\u010dekov\u00fdch pouk\u00e1\u017eok.&quot;,&quot;mail.reminder_heading&quot;:&quot;Pripomenutie V\u00e1\u0161ho term\u00ednu&quot;,&quot;mail.reminder_content&quot;:&quot;Zajtra, d\u0148a :date o :time, m\u00e1te u n\u00e1s v Barbershop30 rezerv\u00e1ciu term\u00ednu na ni\u017e\u0161ie uveden\u00fa slu\u017ebu\/y. Priprav\u00edme v\u0161etko pre Va\u0161e pohodlie. Te\u0161\u00edme sa na Va\u0161u n\u00e1v\u0161tevu.&quot;,&quot;mail.reminder_subject&quot;:&quot;Pripomenutie term\u00ednu v Barbershop30&quot;,&quot;validation.phone&quot;:&quot;:attribute nie je spr\u00e1vne&quot;,&quot;sms.order_reminder&quot;:&quot;Dobry den. Len Vam chceme pripomenut Vas zajtrajsi rezervovany termin o :time. Tesime sa na Vasu navstevu. Barbershop30  Mostna 30 Nitra&quot;,&quot;contact.company&quot;:&quot;Kontakt&quot;,&quot;company.ico&quot;:&quot;I\u010cO&quot;,&quot;contact.dic&quot;:&quot;DI\u010c&quot;,&quot;contact.ico&quot;:&quot;I\u010cO&quot;,&quot;Farbenie online objedn\u00e1vka.Farbenie online rezerv\u00e1cia&quot;:&quot;Farbenie - Mel\u00edr - Trval\u00e1&quot;}"
+
+            ></v-order-component>
+        </div>
+
+
+        <div style="display: none">
+        <div id="map"></div>
+    </div>
+    <!-- contenct with us -->
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="voffset80"></div>
+            <p class="pretitle">Spojte sa s nami</p>
+            <ul class="social-links">
+              <li><a href="https://www.facebook.com/barbershop30nitra/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              
+              <li><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container-fluid">
+        <div class="voffset30"></div>
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="voffset30"></div>
+            <div style="text-align: center">
+              <img src="images/demo/logo.png" alt="logo">
+            </div>
+            <div class="voffset20"></div>
+            <p>Profesionálne a moderné kaderníctvo a holičstvo v centre Nitry s najkvalitnejšími produktami. Všetko pre Vaše pohodlie a spokojnosť. To je Barbershop30.</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="voffset30"></div>
+            <h5 class="title-small">Menu</h5>
+            <div class="voffset20"></div>
+            <ul class="list-menu">
+              <li><a href="#uvod">Barbershop</a></li>
+              <li><a href="#o-nas">O nás</a></li>
+              <li><a href="#sluzby">Služby</a></li>
+              <li><a href="#nas-team">Náš team</a></li>
+              <li><a href="#galeria">Galéria</a></li>
+              <li><a href="#kontakt">Kontakt</a></li>
+              <li><a href="https://www.barbershop30.sk/rezervacia">Online rezervácia</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="voffset30"></div>
+            <h5 class="title-small">Kontakt</h5>
+            <div class="voffset20"></div>
+            <p class="contact-link fa fa-envelope-o">info@barbershop30.sk</p>
+            <p class="contact-link fa fa-mobile">0951 267 203</p>
+            <p class="contact-link fa fa-map-marker">Mostná 30<br>94901 Nitra<br>Slovenská republika</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="voffset30"></div>
+            <h5 class="title-small">Rezervácia</h5>
+            <div class="voffset20"></div>
+            <p class="info-newsletter">Pohodlná online rezervácia z vášho počítača, mobilu alebo tabletu.</p>
+            <div class="voffset20"></div>
+            <p><a href="https://www.barbershop30.sk/rezervacia" class="btn btn-invert">Rezervovať termín</a></p>
+          </div>
+          
+        </div>
+        <div class="voffset30"></div>
+      </div>
+      
+    </footer>
+
+    <script src="js/plugins/jquery.min.js"></script>
+    <script src="js/plugins/flickity.pkgd.min.js"></script>
+    <script src="js/plugins/twitterFetcher_min.js"></script>
+    <script src="js/plugins/jquery.parallax.min.js"></script>
+    <script src="js/plugins/isotope.pkgd.min.js"></script>
+    <script src="js/plugins/jquery.superslides.min.js"></script>
+    <script src="js/plugins/owl.carousel.min.js"></script>
+    <script src="js/plugins/jquery.inview.min.js"></script>
+    <script src="js/plugins/jquery.numscroller-1.0.js"></script>
+    <script src="js/plugins/jquery.countdown/jquery.plugin.min.js"></script>
+    <script src="js/plugins/jquery.countdown/jquery.countdown.min.js"></script>
+
+    <!-- Google maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmvaiMnx64deZUQ_OpG5k_Vje73m5Iyew"></script>
+
+    <script src="js/app.js?ver=1"></script>
+
+    <script src="js/vendor/bootstrap.js?ver=1"></script>
+
+  </body>
+</html>
+
+

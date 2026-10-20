@@ -1,0 +1,137 @@
+{
+ "meno": "d1ab-inp6-pred-2",
+ "film": "off",
+ "filmStav": {
+  "on": false
+ },
+ "cpu": 6,
+ "y": 2700,
+ "zataz": [
+  "0.97",
+  "1.98",
+  "2.85"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 176,
+   "udalosti": [
+    "pointerdown:24(spracovanie 10)",
+    "pointerup:24(spracovanie 0)",
+    "click:176(spracovanie 96)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 9.7,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 90.3,
+     "vynuteneStylLayout": 83.4
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     107,
+     101
+    ],
+    [
+     167,
+     155
+    ]
+   ]
+  },
+  "jazykEN": {
+   "inpMs": 88,
+   "udalosti": [
+    "pointerdown:24(spracovanie 3)",
+    "pointerup:24(spracovanie 1)",
+    "click:88(spracovanie 20)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 2.8,
+     "vynuteneStylLayout": 0
+    },
+    "mousemove": {
+     "spolu": 1.6,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 20.4,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 9.3,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     150,
+     150
+    ],
+    [
+     298,
+     290
+    ]
+   ]
+  },
+  "jazykSK": {
+   "inpMs": 160,
+   "udalosti": [
+    "click:160(spracovanie 12)"
+   ],
+   "obsluhaVlaknoMs": {
+    "gotpointercapture": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "mousedown": {
+     "spolu": 1.7,
+     "vynuteneStylLayout": 0
+    },
+    "mouseup": {
+     "spolu": 5.3,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 11.6,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 8,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     119,
+     111
+    ],
+    [
+     262,
+     255
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 88,
+   "udalosti": [
+    "pointerdown:16(spracovanie 0)",
+    "pointerup:16(spracovanie 1)",
+    "click:88(spracovanie 7)"
+   ],
+   "obsluhaVlaknoMs": {
+    "mousemove": {
+     "spolu": 1.5,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 6.6,
+     "vynuteneStylLayout": 3.6
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

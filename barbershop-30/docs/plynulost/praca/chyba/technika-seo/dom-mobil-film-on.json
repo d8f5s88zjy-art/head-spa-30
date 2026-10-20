@@ -1,0 +1,842 @@
+{
+ "DEV": "mobil",
+ "QS": "?film=on",
+ "hosts": {
+  "127.0.0.1:8641": 148
+ },
+ "nReq": 148,
+ "cookies": [],
+ "errs": [
+  "console.warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.",
+  "console.warning: [.WebGL-0xf40013e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+  "console.warning: [.WebGL-0xf40013e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+ ],
+ "htmlClass": "karty world js-kin js-steps world-in",
+ "heads": [
+  {
+   "l": 1,
+   "t": "Your cut. Your place.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Poď ďalej.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Povedz, ako to chceš.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Vzadu ťa čaká káva.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Komu zveríš hlavu?",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Nikolas",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Kristián",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Damian",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Michal",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Andy",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Dominika",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Kevin",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Lajko",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Jojo",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Adrian",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Čo to bude dnes?",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Cut",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Men's haircut",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Men's haircut and beard trim",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Men's haircut – hair over 10 cm",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Little gentlemen's cut",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Head shave",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Beard and shave",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Beard trim",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Hot Towel clean shave",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Beard colouring",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Packages",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Package 1",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Ultra inclusive Barbershop30",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Extras",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Skin care PREMIUM",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Eyebrow shaping",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Ear and nose waxing",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Creative hair pattern",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 4,
+   "t": "Eyebrow tinting",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Pozri si to zblízka.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Haircut results",
+   "hid": 1,
+   "vis": 0
+  },
+  {
+   "l": 3,
+   "t": "Odchádzaš s hlavou hore.",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Kedy si sadneš?",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 3,
+   "t": "Mostná 30, Nitra",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Kontakt",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Otváracie hodiny",
+   "hid": 0,
+   "vis": 1
+  },
+  {
+   "l": 2,
+   "t": "Sleduj nás",
+   "hid": 0,
+   "vis": 1
+  }
+ ],
+ "imgs": [
+  {
+   "src": "vstup-m-1448.avif",
+   "alt": "Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "f025.avif",
+   "alt": "Hlavná sála s barberom pri práci, oranžovými lampami a drevenou podlahou",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "stol-m-1448.avif",
+   "alt": "Pracovné miesto barbera so zrkadlom, Edisonovými lampami a nástrojmi na stole",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "cakaren-m-1448.avif",
+   "alt": "Kútik s kreslami, farebnou soškou buldoga a retro benzínovou pumpou Route 66",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "sala-rano-m-1448.avif",
+   "alt": "Hlavná sála v rannom svetle s kreslami a svietiacim nápisom Barbershop",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-nikolas-820.avif",
+   "alt": "Nikolas, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-kristian-820.avif",
+   "alt": "Kristián, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-damian-820.avif",
+   "alt": "Damian, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-michal-820.avif",
+   "alt": "Michal, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-andy-820.avif",
+   "alt": "Andy, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-dominika-820.avif",
+   "alt": "Dominika, Barberka v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-kevin-820.avif",
+   "alt": "Kevin, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-lajko-820.avif",
+   "alt": "Lajko, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-jojo-820.png",
+   "alt": "Jojo, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "tim-adrian-820.png",
+   "alt": "Adrian, Barber v Barbershop 30",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "kreslo-stred-m-1448.avif",
+   "alt": "Barberské kreslo uprostred hlavnej sály medzi dvoma pracovnými stolmi so zrkadlami",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "kava-m-1448.avif",
+   "alt": "Káva a voda na drevenom podnose v rannom slnku",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "naradie-noznice-1600.avif",
+   "alt": "Nožnice a hrebeň na barberskej podložke s logom",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "detail-stol-640.avif",
+   "alt": "Karafa, pomády a štetka na holenie na pracovnom stole",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-barberpole-640.avif",
+   "alt": "Dva svietiace barber pole na stĺpe",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-neon-640.avif",
+   "alt": "Svietiaci nápis Barbershop 30 v machovom ráme na lamelovej stene",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-zrkadlo-640.avif",
+   "alt": "Pracovné miesto s dreveným rámom zrkadla a produktmi",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-buldog-640.avif",
+   "alt": "Kreslá, farebná soška buldoga a retro benzínová pumpa",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-kava-640.avif",
+   "alt": "Káva a voda na drevenom podnose v rannom slnku",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "galeria-sud-1080.jpg",
+   "alt": "Predná sála so sudom, uterákmi a kruhovými svietidlami",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "sud-m-1448.avif",
+   "alt": "Predná sála so sudom, uterákmi, kreslom a kruhovými svietidlami",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "vstup-m-1448.avif",
+   "alt": "Fasáda Barbershop 30 na Mostnej ulici v Nitre s dverami a barber pole",
+   "ah": 0,
+   "role": null
+  },
+  {
+   "src": "",
+   "alt": "",
+   "ah": 0,
+   "role": null
+  }
+ ],
+ "links": [
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#main",
+   "t": "Skip to content",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#uvod",
+   "t": "Barbershop 30 Nitra – na začiatok",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#vstup-dnu",
+   "t": "Tour",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#sluzby",
+   "t": "Services",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#tim",
+   "t": "Team",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#galeria",
+   "t": "Gallery",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#kontakt",
+   "t": "Contact",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#uvod",
+   "t": "Úvod",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#vstup-dnu",
+   "t": "Poď ďalej",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#remeslo",
+   "t": "Remeslo",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#cakaren",
+   "t": "Čakáreň",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#tim",
+   "t": "Tím",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#sluzby",
+   "t": "Služby a ceny",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#galeria",
+   "t": "Galéria",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#rezervacia",
+   "t": "Rezervácia",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "tel:+421951267203",
+   "t": "Call",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment→",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://booqme.app/sk/rezervacia/barbershop30",
+   "t": "You book them separately",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Men's haircut",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Men's haircut and beard trim",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Men's haircut, hair over 10 cm",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Little gentlemen's cut",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Head shave",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Beard trim",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Hot Towel clean shave",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Beard colouring",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Package 1",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Ultra inclusive Barbershop30",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Skin care PREMIUM",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Eyebrow shaping",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Ear and nose waxing",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Creative hair pattern",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book – Eyebrow tinting",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://booqme.app/sk/rezervacia/barbershop30",
+   "t": "Book on Booqme →",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.google.com/maps?cid=18132360254733427623",
+   "t": "Reviews on Google →",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.instagram.com/barbershop30_nitra/",
+   "t": "@barbershop30_nitra →",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "tel:+421951267203",
+   "t": "Call 0951 267 203",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "tel:+421951267203",
+   "t": "0951 267 203",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "mailto:info@barbershop30.sk",
+   "t": "info@barbershop30.sk",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra",
+   "t": "Get directions",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Book an appointment",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "tel:+421951267203",
+   "t": "0951 267 203",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "mailto:info@barbershop30.sk",
+   "t": "info@barbershop30.sk",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.instagram.com/barbershop30_nitra/",
+   "t": "Instagram",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.facebook.com/barbershop30nitra/",
+   "t": "Facebook",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra",
+   "t": "Navigovať",
+   "target": "_blank",
+   "rel": "noopener"
+  },
+  {
+   "href": "https://www.headspa30.sk/vernost/karta/",
+   "t": "Vernostná kartička",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "http://127.0.0.1:8641/head-spa-30/barbershop-30/?film=on&lang=en#uvod",
+   "t": "Späť hore ↑",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "tel:+421951267203",
+   "t": "Zavolať na recepciu 0951 267 203",
+   "target": "",
+   "rel": ""
+  },
+  {
+   "href": "https://www.barbershop30.sk/rezervacia",
+   "t": "Rezervovať termín",
+   "target": "_blank",
+   "rel": "noopener"
+  }
+ ],
+ "dupIds": [],
+ "noName": [],
+ "videos": [
+  {
+   "src": "tim-v-akcii-576.webm",
+   "aria": "true",
+   "tracks": 0,
+   "controls": false
+  }
+ ],
+ "landmarks": {
+  "main": 1,
+  "header": 1,
+  "footer": 1,
+  "nav": 2
+ },
+ "ls": {
+  "b30.lang": "en"
+ },
+ "ss": {
+  "bs30uvod": "1"
+ },
+ "lang": "sk"
+}

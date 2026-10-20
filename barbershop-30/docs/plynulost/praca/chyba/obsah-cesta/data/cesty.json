@@ -1,0 +1,28 @@
+{
+  "meranie": "2026-10-20, lokálny main (= naživo), telefón 390x844 DPR3 dotyk, počítač 1440x900, ?uvod=off&hudba=off, pokojná verzia (kontajner bez GPU); obrazovky = y / výška okna",
+  "telefon_polohy_obrazoviek": { "uvod": 0, "vstup-dnu": 1.0, "remeslo": 1.7, "cakaren": 2.4, "tim_karta": 3.1, "tim_pas": 4.7, "sluzby_karta": 5.7, "kroky_strihu": 7.5, "cennik": 7.9, "cennik_koniec": 11.2, "galeria": 11.5, "recenzie": 13.7, "dovera": 14.2, "rezervacia": 15.5, "kde_nas_najdes": 17.1, "tabula_dnes": 17.3, "fakty": 17.9, "paticka": 18.4, "celkom": 19.5 },
+  "pocitac_polohy_obrazoviek": { "tim_pas": 4.7, "sluzby_karta": 6.6, "cennik": 8.7, "kde_nas_najdes": 16.6, "paticka": 17.5, "celkom": 17.9 },
+  "spodne_tlacidlo_telefon": { "uvod": "skryté (v karte sú vlastné tlačidlá)", "prehliadka_tim_sluzby_karta_galeria": "viditeľné", "cennik": "skryté (pri riadkoch Objednať)", "rezervacia_kontakt_paticka": "skryté; v pätičke nie je žiadne tlačidlo Rezervovať" },
+  "cesty": [
+    { "otazka": "chcem sa objednať dnes", "telefon": "Rezervovať termín v prvom okne (0 skrolu, 1 ťuknutie) → externý systém barbershop30.sk: služba → Pokračovať → barber alebo Nezáleží → deň → čas → 4 polia (meno, priezvisko, e-mail, telefón) → súhrn → potvrdiť ≈ 8 ťuknutí + 4 polia; systém povoľuje termín od dnes do +1 mesiaca", "lame_sa": "web nehovorí, že online ide aj na dnes, ani že sa dá prísť bez objednania; stav Teraz otvorené je až na 17,3 obrazovky" },
+    { "otazka": "koľko stojí strih a brada", "telefon": "Menu → Služby = 2 ťuknutia, ~1,7 s, cena 18 € / 28 € hneď na karte; plný cenník +2,2 obrazovky", "lame_sa": "na DPR 1 (počítač) sa 13 € a 15 € takmer nedajú rozlíšiť" },
+    { "otazka": "kto ma bude strihať", "telefon": "Menu → Tím = 2 ťuknutia na kartu, pás portrétov +1,6 obrazovky, 10 kariet vodorovne (9 švihov), bez počítadla", "lame_sa": "Rezervovať na karte otvorí začiatok rezervácie, barbera treba znova vybrať v 3. kroku" },
+    { "otazka": "kde to je a kde zaparkujem", "telefon": "Menu → Kontakt = 2 ťuknutia, pristane v pätičke (adresa, Navigovať ako odkaz)", "lame_sa": "karta Kde nás nájdeš (tabuľa, tlačidlá) je o ~1 000 px vyššie a preskočí sa; parkovanie nikde" },
+    { "otazka": "kedy majú otvorené", "telefon": "Menu → Kontakt = 2 ťuknutia (hodiny v pätičke); tabuľa Dnes na 17,3 obrazovky", "lame_sa": "sviatky (zatvorené podľa rezervačného systému) web nepozná" },
+    { "otazka": "môžem darovať poukaz", "telefon": "nenájde sa (0 výskytov poukáž/darček)", "lame_sa": "koniec cesty" },
+    { "otazka": "platím kartou", "telefon": "nenájde sa (0 výskytov platb/kartou/hotovosť)", "lame_sa": "koniec cesty" },
+    { "otazka": "ako dlho to trvá", "telefon": "trvanie pri každej položke cenníka (Menu → Služby + ~2 obrazovky)", "lame_sa": "nie" },
+    { "otazka": "dieťa / otec so synom", "telefon": "riadok Strih pre malých gentlemanov (cenník) + fakt Strihanie detí (17,9 obrazovky)", "lame_sa": "nič o tom, či ísť naraz (dve rezervácie), fotka detského kresla COPS sa nepoužíva" },
+    { "otazka": "cudzinec (EN, HU, UK…)", "telefon": "Menu → jazyk = 2 ťuknutia, celá stránka preložená (7 jazykov)", "lame_sa": "rezervácia je len po slovensky, upozornenie je len v atribúte title (na dotyku neviditeľné); telefón bez +421" },
+    { "otazka": "vernostná karta", "telefon": "pätička (19 obrazoviek) → odkaz na www.headspa30.sk/vernost/karta/", "lame_sa": "404 stránka HEAD SPA 30 s telefónom HEAD SPA" },
+    { "otazka": "meškám / zruším / zmením", "telefon": "nenájde sa (0 výskytov storn/zruš/mešk)", "lame_sa": "koniec cesty" }
+  ],
+  "rezervacny_system": {
+    "adresa": "https://www.barbershop30.sk/rezervacia (vlastný systém, nie Booqme; Booqme len farbenie, melír a trvalá u Romany)",
+    "kroky": "služba (aj viac naraz) → pracovník (10 barberov + Nezáleží) → dátum (od dnes do +1 mesiaca, nedeľa a sviatky vypnuté) → čas → meno, priezvisko, e-mail, telefón → súhrn → potvrdenie",
+    "predvolba_sluzby_alebo_barbera_v_adrese": "nie (komponent číta len props data, ajaxUrl, lang)",
+    "texty_systemu": "potvrdenie e-mailom; zmena rezervácie telefonicky alebo e-mailom; pripomenutie deň vopred e-mailom a SMS (reťazce mail.reminder_*, sms.order_reminder)",
+    "sviatky_zatvorene": "1.1, 6.1, Veľký piatok, Veľkonočný pondelok, 1.5, 5.7, 29.8, 1.11, 24.–26.12",
+    "jazyk": "SK, prepínač EN = Google prekladač"
+  }
+}

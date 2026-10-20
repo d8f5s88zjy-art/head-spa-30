@@ -26,3 +26,16 @@ OK   návrat na kartu: hudba pokračuje
 OK   tlačidlo hudbu vypne a voľba sa uloží  {"pressed":"false","hidden":false,"ctx":["suspended"],"t":5.28,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":2,"snipFetched":1,"fetched":1,"pref":"vyp"}
 OK   kliknutie na tlačidlo Hudba nestrihá
 OK   pri vypnutom zvuku kliknutie nestrihá
+OK   vypnutá hudba sa po obnovení nepustí  {"pressed":"false","hidden":false,"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":0,"fetched":0,"pref":"vyp"}
+OK   tlačidlo ju znova zapne  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.04,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":0,"snipFetched":1,"fetched":1,"pref":"zap"}
+OK   bez chýb v konzole
+OK   žiadne zlyhané požiadavky
+OK   ?hudba=off: bez tlačidla, hudby aj strihania  {"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":0,"fetched":0,"pref":"zap"}
+OK   telefón: tlačidlo Hudba 44 × 44 px v lište  {"w":44,"h":44,"inHeader":true,"right":306,"vw":390,"svetlo":false,"text":"inset(50%)"}
+OK   telefón: bez svetla pod kurzorom
+OK   telefón: ťuknutie pustí hudbu  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.53,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   telefón: ťuknutie strihne raz  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.53,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   telefón: bez chýb
+OK   telefón: ťuknutie pred načítaním modulu pustí hudbu po načítaní  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.98,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":0,"snipFetched":1,"fetched":1,"pref":null}
+
+Všetky kontroly prešli
