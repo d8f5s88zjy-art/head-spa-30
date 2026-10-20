@@ -30,3 +30,14 @@ ukážky z oficiálnych trailerov filmu Athena a skutočné zábery/fotky z Fran
 - Kontext (fr.wikipedia „Manifestations du 17 octobre 2026“, 19. 10.): mobilizácia proti drahote, 550–800 tis.
   ľudí, 1 200 zadržaných, 1 500–3 000 poškodených obchodov, radnica Limoges vyhorela, 1 mŕtvy; Le Figaro údajne
   o zákaze vychádzania 23–6 h (Paríž, Lyon, Lille, Nice) – overuje editor faktov.
+
+## 20. 10. 07:20 UTC – stav (video pozastavené, majiteľ: „Pokračuj v barbershope“)
+
+- Hotové: fakty (editor faktov, `fakty/tabulka-faktov.md` – potvrdené: drahota + školy, 550–800 tis.,
+  ≥ 3 000 obchodov podľa ministra Papina, zákazy vychádzania PLATIA od noci 19./20. 10. v Paríži (République,
+  Les Halles 23–6 h), Lille/Nord, Lyon, Nice; Abdel vo filme je vojak, nie policajt), výzva z TikToku
+  (`tiktok/VYZVA.md` – @v2.95, video 8. 9. 2026, 5,8 mil. zobrazení), ukážky z filmu (`film/UKAZKY.md`, 16 klipov),
+  hudba (`hudba.py`, `HUDBA.md`).
+- Prerušené limitom relácie (treba spustiť znova): zábery z Commons (videá, fotky), skeptici faktov a práv,
+  TikTok scout, overenie pravosti, právnik. Potom scenár → porota → karty a kompozity → strih (short.py) → kontrola.
+  Skript ďalšieho kroku: `scratchpad/video/co-nevidis/workflowy/2-scenar-a-strih.js` (kópia nižšie v repozitári nie je).
