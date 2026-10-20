@@ -1,6 +1,6 @@
 ---
 name: referencie-z-videi
-description: Ako sa poučiť z odkazu na krátke video (TikTok vm.tiktok.com, Instagram reels, shorts) bez hádania obsahu. Presmerovanie na kanonickú adresu, oEmbed, JSON stránky __UNIVERSAL_DATA_FOR_REHYDRATION__, titulky WebVTT, stiahnutie videa s cookies a Referer, reel cez yt-dlp (bez titulkov, text v obraze zo snímok skriptom scripts/snimky_text.py), prehľad snímok cez ffmpeg a zápis toho, čo si z videa berieme (19 záznamov v references/naucene-z-videi.md: 18 videí a jeden karusel). Zásada sťahovania (references/stahovanie-a-pravo.md, scripts/vycisti_info.py) je len verejné video na interný rozbor, nič nezverejniť, cudzie video nikdy ako materiál, YouTube nesťahovať, po rozbore zmazať. Použi, keď niekto pošle TikTok, reel alebo video ako referenciu pre web, animácie, texty, hook, shorty či Instagram, alebo keď video odkazuje na GitHub repozitár, skill či konektor. Hotový skript scripts/tiktok.sh.
+description: Ako sa poučiť z odkazu na krátke video (TikTok vm.tiktok.com, Instagram reels, shorts) bez hádania obsahu. Presmerovanie na kanonickú adresu, oEmbed, JSON stránky __UNIVERSAL_DATA_FOR_REHYDRATION__, titulky WebVTT, stiahnutie videa s cookies a Referer, reel cez yt-dlp (bez titulkov, text v obraze zo snímok skriptom scripts/snimky_text.py), prehľad snímok cez ffmpeg a zápis toho, čo si z videa berieme (20 záznamov v references/naucene-z-videi.md: 19 videí a jeden karusel). Zásada sťahovania (references/stahovanie-a-pravo.md, scripts/vycisti_info.py) je len verejné video na interný rozbor, nič nezverejniť, cudzie video nikdy ako materiál, YouTube nesťahovať, po rozbore zmazať. Použi, keď niekto pošle TikTok, reel alebo video ako referenciu pre web, animácie, texty, hook, shorty či Instagram, alebo keď video odkazuje na GitHub repozitár, skill či konektor. Hotový skript scripts/tiktok.sh.
 ---
 
 # Referencie z videí (TikTok a Instagram reels)
@@ -312,6 +312,12 @@ Podrobne v `references/naucene-z-videi.md`. Stručne:
   (`../testy-a-nasadenie/`, časť 8a), pravidlá pre voľné polia správ (Caveman) a „signál → automatizácia“ (Claude Code
   Setup). Prvý nástroj z videa nie je plugin, ale brána k cudzím modelom proti podmienkam Anthropicu (len kategória
   v `toolbox/ZDROJE.md`); „Claude Security“ sú štyri rôzne nástroje a žiadny diery sám neopraví.
+- **nocode.joshua** („7 typov agentov v Claude“, 90 s, záznam 20, V11): do `../workflowy/` slovník vzorov Anthropicu
+  namapovaný na naše skripty, vzor 9 (stavba s hodnotiteľom v slučke, stavy `NEOVERENE`, `ESKALACIA`, `ZLYHALO`)
+  a pravidlá P1 až P10 pre paralelu; do `../tim-roly/` kontrolný zoznam schválení majiteľa; do `../../README.md`
+  smerovanie požiadaviek; do `../youtube-shorts/` formát „číslovaná vysvetľovačka“ (index, „n z N“, súhrnná karta)
+  a meranie zmien karty, keď `strihy.sh` vidí len prepínanie rozloženia. Sľub „less than 60 seconds“ pri 90 s
+  neplatí; päť zo siedmich typov sú vzory z článku Anthropicu, dva nie sú vzory a evaluator-optimizer chýba.
 - Spoločná lekcia pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš
   a ako rezervovať.
 
@@ -329,7 +335,8 @@ Podrobne v `references/naucene-z-videi.md`. Stručne:
 - `toolbox/skills-z-praxe/referencie-z-videi/references/stahovanie-a-pravo.md`: kedy a ako sťahovať, červené
   čiary, autorský zákon, Trestný zákon, podmienky YouTube, TikToku a Mety, hodnotenie nášho postupu, otázka D1.
 - Čo z videí prešlo inam: `../youtube-shorts/` (formáty, fámy, strih podľa referencie), `../tim-roly/` (Agency Agents,
-  Superpowers), `../testy-a-nasadenie/` (bezpečnostná revízia),
+  Superpowers, schválenia majiteľa), `../testy-a-nasadenie/` (bezpečnostná revízia), `../workflowy/` (slovník vzorov
+  Anthropicu, vzor 9, pravidlá pre paralelu), `../../README.md` (smerovanie požiadaviek),
   `../3d-modely-na-web/` (TRELLIS.2), `../rychly-web/` (pohyb bez knižnice), `../../skills-animacie/` (UI/UX Pro Max).
 
 ## Kontrolný zoznam

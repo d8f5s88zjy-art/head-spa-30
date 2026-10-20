@@ -1,6 +1,6 @@
 ---
 name: workflowy
-description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps), brána dvoch recenzentov pred odovzdaním majiteľovi a revízia plánu tímom rolí (podľa ECC a gstack). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a tri šablóny (smerovanie podľa náročnosti, brána, tím rolí) v priklady/.
+description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps), brána dvoch recenzentov pred odovzdaním majiteľovi, revízia plánu tímom rolí (podľa ECC a gstack), stavba s hodnotiteľom v slučke so stavmi NEOVERENE a ESKALACIA a slovník vzorov Anthropicu (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer); pravidlá pre paralelu (rozpočet agentov, porty, push a nasadenie len hlavná relácia). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a tri šablóny (smerovanie podľa náročnosti, brána, tím rolí) v priklady/.
 ---
 
 # Workflowy: viac agentov naraz pri tvorbe a kontrole webu
@@ -30,7 +30,12 @@ blokom `meta`: čo robí a kedy sa osvedčil.
   testy ani Playwright (bežia práve inde a súperili by o CPU)“). Kde meranie vo workflowe bolo (kontrolór výkonu
   v `integracia-a-kontrola.js`, audítori v `audit-fps.js`), zadanie uvádzalo podmienky merania; meranie pred
   a po úprave tou istou metódou je v CHECKS 13 (úpravy robila hlavná relácia, audit súbory nemenil).
-- **Commit, push a nasadenie**: robí hlavná relácia po kontrole („Nepushuj do gitu (commit robí orchestrátor).“).
+- **Push, merge do `main` a nasadenie**: robí hlavná relácia po kontrole („Nepushuj do gitu (commit robí orchestrátor).“).
+  Implementátor smie commitovať lokálne na svojej pracovnej vetve (obnova, diff pre kontrolóra); nepushuje a nespúšťa
+  ukladacie skripty s pushom (P7). Súhlas majiteľa pred každým pushom do `main` je zatiaľ návrh a čaká na rozhodnutie
+  majiteľa (otázka D1); `CLAUDE.md` ho dnes nežiada.
+- **Stačí jeden agent alebo priama práca**: pred workflowom napíš jednou vetou, prečo nestačí. Anthropic radí
+  začať najjednoduchším riešením a systém viacerých agentov stojí asi 15× viac tokenov ako chat (P10).
 - **Rozhodnutie patrí majiteľovi** (nová fotka: CHECKS 8, „Neriešené (vyžadujú majiteľa)“; súhlasy osôb vo videách
   a portrétoch: CHECKS 5).
 - **Zostáva málo z limitu relácie**: veľké workflowy nedobehli (CHECKS 8 a 10, pozri Pasce).
@@ -241,7 +246,7 @@ prevedené na nástroj Workflow bez inštalácie čohokoľvek. Šablóna zatiaľ
 | smerovanie: jednoduché Haiku, stredné Sonnet, zložité Opus | `agent(…, { model: 'haiku', effort: 'low' })` len na triedenie a jednoduché fázy; inak model relácie, `effort` podľa náročnosti | model meň len tam, kde si istý; skeptik vždy silný |
 | zdieľaná pamäť (vektorová databáza) | priečinok `<scratch>/pamat/`: každý agent si ho prečíta a zapíše najviac 10 riadkov zistení | vidno, čo si agenti odovzdali; prežije obnovenie |
 | roj s kráľovnou a hlasovaním | hlavná relácia riadi, porota hlasuje (vzor 5), skeptik vyvracia (vzor 4) | už overené na našich behoch |
-| 60 agentov naraz | nástroj púšťa naraz najviac asi 16 a relácia má týždenný limit agentov | menej, ale cielených agentov (pasca nižšie) |
+| 60 agentov naraz | nástroj púšťa naraz najviac asi 16 (naše pozorovanie; subagentov cez nástroj Agent pustí Claude Code predvolene 20, code.claude.com/docs/en/sub-agents) a relácia má týždenný limit agentov | menej, ale cielených agentov (pasca nižšie) |
 
 ## Vzor 7: brána dvoch recenzentov pred odovzdaním majiteľovi (`brana-dvoch-recenzentov.js`, šablóna)
 
@@ -289,6 +294,113 @@ všetkých rolách (vyvrátený nález vypadol), 6 pri zlyhanom dizajne a skepti
 všetkých rolí, 0 bez args; `brana-dvoch-recenzentov.js` 2 agenti pri dvoch PASS, 5 pri oprave a PASS v 2. kole,
 8 a eskalácia pri zlyhanom recenzentovi, 3 a eskalácia pri neopraviteľnom náleze, 0 bez args. Rovnaká skúška
 odhalila zámerne vložené chyby (syntax, chýbajúci argument v zadaní).
+
+## Vzor 9: stavba s hodnotiteľom v slučke (evaluator-optimizer, štandard pre stavbu)
+
+Je to náš najčastejší vzor stavby (rozbor denníkov 2026-10-20; originály mimo repozitára `gymklub-redesign-stavba-1`
+a `-2`, `2-opravy`, `gymklub-cms`, `gym3d-walkthrough`, `gymklub-zive-texty`, `barbershop30-preklady-lajko`,
+`gymklub-uvod-overenie` → `-reverify`). Implementátor urobí balík, nezávislí hodnotitelia (kód, meranie, vzhľad) ho
+skontrolujú, opravár opraví len overené nálezy a celé sa to opakuje najviac N kôl. Vzor 7 je jeho prípad pre text
+pre majiteľa. Anthropic ho opisuje ako „one LLM call generates a response while another provides evaluation and
+feedback in a loop“ a radí ho tam, kde sú jasné kritériá hodnotenia a ďalšie kolo prináša merateľné zlepšenie
+(anthropic.com/engineering/building-effective-agents). Podmienka zastavenia je povinná („such as a maximum number
+of iterations“).
+
+Výsledok každej dávky má pole `stav`:
+
+| Stav | Kedy | Čo urobí hlavná relácia |
+| --- | --- | --- |
+| `PASS` | všetci hodnotitelia vrátili výsledok a nie je vážny nález | pokračuje (ďalšia dávka, kontrola celku) |
+| `NEOVERENE` | aspoň jeden hodnotiteľ zlyhal (`null`) | spustí chýbajúcu kontrolu alebo overí sama; dávka nejde ďalej |
+| `ESKALACIA` | po poslednom kole ostali vážne nálezy | otázka D1 majiteľovi alebo rozhodnutie hlavnej relácie so zoznamom nálezov |
+| `ZLYHALO` | zlyhal implementátor alebo opravár | kontrola sa nespúšťa; hlavná relácia rozhodne, či beh zopakovať |
+
+Kostra (podľa `priklady/brana-dvoch-recenzentov.js:83, 100`; zadania a schémy doplň podľa vzoru 3):
+
+```js
+const MAX_KOL = 2   // najviac 3 kontroly a 2 opravy na dávku; podmienka zastavenia
+for (const d of DAVKY) {
+  let impl = await agent(zadanieImpl(d), { label: `impl ${d.id}`, phase: 'Stavba', schema: IMPL })
+  let stav = impl ? 'PASS' : 'ZLYHALO', kontroly = [], vazne = []
+  for (let kolo = 0; stav === 'PASS'; kolo++) {
+    kontroly = await parallel(LENSY.map((l) => () => agent(zadanieKontroly(l, d, kolo), { label: `${l.id} ${d.id} k${kolo + 1}`, phase: 'Kontrola', schema: KONTROLA })))
+    if (kontroly.some((k) => !k)) { stav = 'NEOVERENE'; break }      // zlyhaný hodnotiteľ nie je PASS
+    vazne = kontroly.flatMap((k, i) => k.nalezy.map((n) => ({ ...n, lens: LENSY[i].id }))).filter((n) => n.zavaznost !== 'nizka')
+    if (!vazne.length) break                                         // PASS
+    if (kolo >= MAX_KOL) { stav = 'ESKALACIA'; break }
+    impl = await agent(zadanieOpravy(vazne, d), { label: `oprava ${d.id} k${kolo + 1}`, phase: 'Oprava', schema: IMPL })
+    if (!impl) stav = 'ZLYHALO'
+  }
+  vysledky.push({ id: d.id, stav, impl, vazne, kontroly })
+  if (stav !== 'PASS') return { stav, vysledky }                    // ďalšia dávka nestavia na neskontrolovanom
+}
+```
+
+- Hodnotitelia needitujú: len čítajú alebo pracujú v kópii (`gymklub-cms:92, 112`), každý má vlastný port (P5).
+- Opravár opraví len nálezy poslednej kontroly a nové funkcie nepridáva.
+- Neoverený nález nesie `neoverene: true`. Chýbajúci verdikt skeptika neznamená „vyvrátené“, patrí do tretej
+  kôpky `neoverene` (ako v `tim-roly-plan.js`).
+- Záverečná kontrola celku needituje. Ak predsa niečo opraví, nasleduje nová nezávislá kontrola alebo kontrola
+  diffu hlavnou reláciou (`../tim-roly/`, zásada 7).
+- Cena: implementátor + pohľady × kolá + opravy. Pri troch pohľadoch a `MAX_KOL = 2` je to najviac 12 agentov na
+  dávku (1 + 3 × 3 + 2); počet zapíš do hlavičky (P1).
+
+Skutočné skripty, ktoré to dnes robia inak (opraviť pri najbližšom spustení; v toolboxe nie sú, odkazy `skript:riadok`
+sú do originálov mimo repozitára, stav 2026-10-20; `2-opravy` je `scratchpad/barber/workflowy/2-opravy.js`):
+
+| Skript | Čo sa stane | Oprava |
+| --- | --- | --- |
+| `gymklub-redesign-stavba-1:67`, `-2:68`: `if (!kontrola \|\| …) break` | zlyhaná kontrola ukončí slučku ako úspech | `NEOVERENE` |
+| `gymklub-redesign-stavba-1:59-67` | kontrola beží aj po zlyhanom implementátorovi | `ZLYHALO`, kontrolu nespúšťať |
+| `2-opravy:47` a `:50` (`kontroly.filter(Boolean)`, `if (!vazne.length \|\| kolo >= 2) break`) | keď zlyhajú všetky tri kontroly, dávka „prejde“; po treťom kole s vážnymi nálezmi nič neupozorní | `NEOVERENE`, `ESKALACIA` |
+| `barbershop-plynulost-audit:39` (`v.overenie ? v.overenie.nalezy : v.audit.nalezy`) | keď skeptik zlyhá, do plánu idú neoverené nálezy bez označenia | príznak `neoverene` |
+| `gymklub-uvod-overenie:39-41` | nález bez verdiktu skončí medzi zamietnutými s prázdnym dôvodom | tretia kôpka `neoverene` |
+| `co-nevidis-v-zabere-priprava:43` (`JSON.stringify(fakty.tvrdenia)`) | pri zlyhanom editorovi faktov skript spadne skôr, než sa spustí skeptik | `if (!fakty) return { stav: 'ZLYHALO', krok: 'fakty' }` |
+| `2-opravy:59` | záverečná kontrola má v zadaní „Nájdené chyby, ktoré sú jasné a malé, OPRAV a commitni“ | kontrolór needituje; opravy cez opravára a novú kontrolu |
+
+**Skúška kostry (2026-10-20, Node 22, skúšobní agenti bez nástroja Workflow)** na dvoch dávkach a troch pohľadoch,
+sedem prípadov: všetko PASS (8 agentov), len nízke nálezy (PASS, 8), zlyhaný hodnotiteľ (`NEOVERENE` po 4), stále
+vážne nálezy (`ESKALACIA` po 12), zlyhaný implementátor (`ZLYHALO` po 1), oprava v 2. kole (PASS po 16), zlyhaný
+opravár (`ZLYHALO` po 5). Šablónu `priklady/stavba-s-hodnotitelom.js` (so zadaniami a schémami) pridaj až po
+rovnakej skúške ako pri vzoroch 7 a 8.
+
+## Vzory v slovníku Anthropicu (mapa na naše vzory a skripty)
+
+Anthropic v článku „Building effective agents“ (anthropic.com/engineering/building-effective-agents, uverejnené
+2024-12-19, text neskôr doplnený) rozlišuje dve veci. **Workflow** vedie model a nástroje po ceste, ktorá je daná
+v kóde („through predefined code paths“). **Agent** si postup a nástroje riadi sám. Naše skripty pre nástroj
+Workflow sú v tomto zmysle workflowy: cesta je v kóde, uzly sú agenti. Ako autonómny agent pracuje hlavná relácia.
+Článok radí začať najjednoduchším riešením a zložitosť pridať, až keď ju výsledok zaplatí („finding the simplest
+solution possible“). Systém viacerých agentov spotrebuje asi 15× viac tokenov ako chat
+(anthropic.com/engineering/multi-agent-research-system, 2025-06-13). Odkazy `skript:riadok` v tabuľke ukazujú do
+originálov mimo repozitára (časť „V tomto repozitári“; `2-opravy` je `scratchpad/barber/workflowy/2-opravy.js`),
+stav 2026-10-20.
+
+| Vzor Anthropicu | Čo to je | U nás (vzor, šablóna) | Skutočné behy (`skript:riadok`) | Na čo si dať pozor |
+| --- | --- | --- | --- | --- |
+| augmented LLM (nástroje, MCP) | model s nástrojmi, stavebný blok všetkých ostatných | každý agent; akcie smerom von nerobíme | zákaz odoslania v zadaní: `booqme-prehlad-a-rezervacia:65`, `booqme-poukazy:50`, `recenzie-barbershop-headspa:30`, `toolbox-head-spa-30-kontrola:27`; žiadny z našich workflow skriptov nevolá `mcp__` | zákaz je len v texte zadania; agent, ktorý číta cudzí obsah, nedostane nič na odoslanie (`../tim-roly/`, zásada 8); viac nástrojov nie je lepšie (anthropic.com/engineering/writing-tools-for-agents) |
+| prompt chaining s bránou | kroky za sebou, medzi nimi programová kontrola | vzory 2, 3 a 6, `audit-fps.js` (pipeline) | `barbershop-plynulost-audit:34-49`, `2-opravy:41-56`, `gymklub-redesign-stavba-1:57-74` | brána po každom kroku (P3); keď fázy zdieľajú veľa kontextu (plán, stavba, testy), radšej hlavná relácia (code.claude.com/docs/en/sub-agents) |
+| routing | zatriedi vstup a pošle ho cestou podľa triedy | `smerovanie-podla-narocnosti.js` (zatiaľ nespustená) | `recenzie-barbershop-headspa:95-96` (trieda „neisté“ ide prísnejšou cestou) | len keď sa triedy dajú spoľahlivo rozlíšiť; pri pochybnosti prísnejšia cesta alebo človek |
+| parallelization: sectioning | nezávislé časti naraz | vzor 1, pohľady vo vzore 4 | `barbershop-plynulost-audit:25-36`, `gstack-nauka:39-41`, `barbershop30-preklady-lajko:29-44` | časti nesmú meniť tie isté súbory (jeden vlastník, vzor 2); rozpočet (P1) |
+| parallelization: voting | tá istá úloha viackrát, rozhodne hlasovanie | vzor 4A (dvaja skeptici), vzor 5 (porota), vzor 7 (dvaja recenzenti) | `visionary-living-navrh:61, 103, 118`, `gymklub-zive-texty:87, 97, 100`, `gymklub-uvod-overenie:32-36` | skeptik na každý nález bez stropu (37 agentov v jednom behu), P1 |
+| orchestrator-workers | hlavný model určí podúlohy až podľa vstupu | hlavná relácia + nástroj Workflow; plán auditu → dávky | `2-opravy:12` (dávky z `davky.json`), `gymklub-uvod-overenie:34` (počet skeptikov podľa nálezov) | pevné roly nie sú orchestrátor (článok: rozdiel oproti paralelizácii je, že podúlohy nie sú dané vopred); rozhodnutia, push a nasadenie drží hlavná relácia (P7, P8) |
+| evaluator-optimizer | jeden tvorí, druhý hodnotí a vracia spätnú väzbu, slučka s maximom kôl | vzor 7, vzor 9 | `gymklub-redesign-stavba-1:62-71`, `-2:63-72`, `2-opravy:44-53`, `gymklub-cms:88-118` | zlyhaný hodnotiteľ nie je PASS (vzor 9) |
+| autonómny agent | slučka so spätnou väzbou z prostredia a s podmienkou zastavenia | hlavná relácia | vo workflowoch nie je | podmienka zastavenia: najviac N kôl, stop po troch (`../tim-roly/`, zásada 3) |
+| človek v slučke (kontrolný bod, nie vzor) | agent sa zastaví a čaká na človeka | otázky D1 (`tim-roly-plan.js`), `ESKALACIA` vo vzore 7, `../youtube-shorts/scripts/schvalenie.py` | `co-nevidis-tiktok:38`, `barbershop-co-chyba:43`, `co-nevidis-v-zabere-priprava:39` | schválenie vynúti prostredie, nie veta v zadaní (P7; `../tim-roly/`, Schválenia majiteľa) |
+
+Typy z videa @nocode.joshua (záznam 20 v `../referencie-z-videi/references/naucene-z-videi.md`) v tomto slovníku:
+tool = augmented LLM, skills = doplnenie postupu (nie je to vzor riadenia), sequential = chaining, parallel =
+sectioning, router = routing, human in the loop = kontrolný bod, orchestrator = orchestrator-workers.
+Evaluator-optimizer, voting ani autonómny agent vo videu nie sú.
+
+**Ktorý vzor zvoliť**
+
+- Jedna línia zmien, ktorú hneď overí test alebo snímka: bez workflowu („Kedy workflow netreba“).
+- Kroky sú známe vopred a každý je ľahší ako celok: chaining s bránou.
+- Nezávislé časti: sectioning. Treba istotu úsudku: voting (skeptici, porota).
+- Výstup sa dá hodnotiť jasnou rubrikou a ďalšie kolo ho merateľne zlepší: evaluator-optimizer (vzor 9).
+- Podúlohy nevieš vopred: plán ako súbor od hlavnej relácie, potom ďalší workflow (ako audit → `davky.json` → opravy).
+- Úloha sa dotýka peňazí, klientov alebo zverejnenia: vždy kontrolný bod u majiteľa (`../tim-roly/`).
 
 ## Ako písať zadania agentom
 
@@ -340,6 +452,78 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 | Veľká stavba pred potvrdením smeru | 3D kreslo postavené, integrované a skontrolované, potom „NOVÝ SMER majiteľa … 3D kreslo sa odstraňuje“ | smer si nechaj potvrdiť skôr (návrhová fáza bez editácie repozitára) |
 | Domyslený podklad | chýbajúci súbor s analýzou videí | v zadaní napíš, čo chýba a že sa to nemá vymýšľať |
 | Týždenný limit agentov | 2026-10-11: dva workflowy (10 a 5 agentov, spolu okolo 2 miliónov tokenov) dobehli len čiastočne, porota, syntéza a 4 kontroly zlyhali s „You've hit your weekly limit“ | pred spustením spočítaj agentov a tokeny; triedenie a jednoduché fázy lacnejším modelom; medzivýsledky do súborov, aby sa dalo pokračovať ručne |
+| Zlyhaný hodnotiteľ ako úspech | `gymklub-redesign-stavba-1:67`: `if (!kontrola …) break`; `2-opravy:47`: `kontroly.filter(Boolean)`, pri troch zlyhaných kontrolách 0 nálezov | vzor 9, stav `NEOVERENE` |
+| Port s iným webom | 8765 a 8781 obsluhovali v rôznych behoch iný web | P5: vlastný rozsah, server spúšťa agent a overí titulok |
+| Strom zmenil účel | `scratchpad/hs2`: do 2026-10-19 strom toolboxu (vetva `claude/barbershop-hudba`, commity zlúčené do `main`), potom Barbershop; skills čítané odtiaľ sú staré | P4: skill z `main` |
+| Kontrola po nasadení | GYM KLUB: úvod bol naživo, kontrola potom potvrdila 25 nálezov | P9 |
+| Push z agenta do verejného repozitára | `uloz.sh:26` spúšťa agent (`2-opravy:43, 51, 59`), balí aj kópie pracovných stromov | P7, P8 |
+
+## Pravidlá pre paralelu a orchestrátora (P1 až P10)
+
+Z denníkov behov nástroja Workflow (rozbor 2026-10-20) a zo zdrojov Anthropicu. Systém viacerých agentov
+spotrebuje asi 15× viac tokenov ako chat (anthropic.com/engineering/multi-agent-research-system). Claude Code
+predvolene odmietne ďalšieho subagenta, keď ich v relácii beží 20, a vnára najviac tri vrstvy pod hlavnou reláciou
+(code.claude.com/docs/en/sub-agents, stav 2026-10-20). Pre nástroj Workflow uvádzame „asi 16 naraz“; to je naše
+pozorovanie, nemerali sme ho. Odkazy `skript:riadok` sú do originálov mimo repozitára (časť „V tomto repozitári“),
+stav 2026-10-20.
+
+- **P1 Rozpočet v hlavičke.** Za blok `meta` napíš komentár: agentov najmenej a najviac, najviac naraz, odhad
+  tokenov. Pri viac ako 20 agentoch, pri inom bežiacom workflowe alebo blízko týždenného limitu pusti beh po
+  častiach alebo s menej pohľadmi. Skeptik na nález má strop: pri viac ako 12 nálezoch jeden skeptik na oblasť
+  (vzor 4B). Dôvod: `gymklub-uvod-overenie` spustil 37 agentov (5 testerov, 32 skeptikov), `2-opravy` má podľa
+  kódu 21 až 61 agentov a 2026-10-11 dva súbežné behy narazili na týždenný limit.
+- **P2 Zlyhaný hodnotiteľ nie je PASS.** Stavy `NEOVERENE`, `ESKALACIA` a `ZLYHALO` podľa vzoru 9; neoverený nález
+  nesie príznak.
+- **P3 Brána za každým krokom.** Pred použitím výsledku `if (!x) return { stav: 'ZLYHALO', krok }`. Nikdy
+  `x.pole` bez kontroly. Nad zlyhanou implementáciou sa kontrola nespúšťa.
+- **P4 Jeden strom, jeden účel, jeden zapisovateľ.** Zoznam pracovných stromov (cesta, vetva, účel, kto zapisuje)
+  patrí do `PRIEBEH.md` projektu, nie do pamäti relácie. Iný beh strom len číta a v zadaní to stojí („súbežne iný
+  tím v …, NEMEŇ“, vzor `barbershop-co-chyba:16`). Skill sa číta z `main` (`git show origin/main:toolbox/…` alebo
+  strom na `main`), nie zo stromu iného projektu. Príklad: `scratchpad/hs2` bol do 2026-10-19 stromom toolboxu
+  (vetva `claude/barbershop-hudba`, jej commity sú zlúčené do `main`), potom sa stal vetvou Barbershopu a dnes
+  v ňom chýba `skills-senior/`.
+- **P5 Porty z tabuľky.** Každý beh dostane vlastný rozsah a každý agent konkrétny port v zadaní. Agent server
+  spustí sám a pred testom overí, čo obsluhuje (`curl -s http://127.0.0.1:<port>/ | grep -o '<title>[^<]*'`).
+  Nikdy „ak beží, použi ho“. Dôvod: port 8765 obsluhoval GYM KLUB aj kópiu HEAD SPA 30
+  (`salon-poukazky-kontrola:19`), port 8781 HEAD SPA 30 aj prototyp Visionary Living (`visionary-living-web2:65`).
+  Rozsahy pre nové behy (staré skripty pri opakovaní prečíslovať); 8750 až 8799 ostáva voľné, lebo 8765 a 8781
+  majú staré behy a mohli by stále bežať:
+
+  | Projekt | Porty |
+  | --- | --- |
+  | Barbershop 30 | 8100–8299 audit, 8300–8499 opravy, 8600–8699 prieskum (ako `barbershop-plynulost-audit:14`, `2-opravy:34-36`, `barbershop-co-chyba:30-32`) |
+  | GYM KLUB | 8500–8599 |
+  | HEAD SPA 30 a vernostná kartička | 8700–8749 |
+  | projekty klientov (Zentury, Visionary Living, Stavebniny Richtárik) | 8800–8899 |
+  | toolbox, videá, referencie | 8900–8999 |
+
+- **P6 Merania v tichu.** Lighthouse a snímkové časy merať len vtedy, keď nebeží iný beh s prehliadačom, alebo
+  súbežnosť zapísať k číslam. V kole kontrol ide meranie až po ostatných pohľadoch, nie súčasne s nimi. Dôvod:
+  `2-opravy:46` púšťa kontrolu kódu, meranie a vzhľad naraz a 2026-10-20 medzi 11:20 a 11:30 UTC bežali štyri
+  workflowy súčasne.
+- **P7 Commit, push, nasadenie.** Implementátor smie commitovať lokálne na svojej pracovnej vetve (kvôli obnove
+  a diffu pre kontrolóra). Push, merge do `main` a nasadenie robí len hlavná relácia, po kontrole. Ukladacie
+  skripty s pushom (`uloz.sh`) spúšťa hlavná relácia, nie agent (dnes `2-opravy:15, 43, 51, 59`). Súhlas majiteľa
+  pred každým pushom do `main` je návrh a čaká na rozhodnutie majiteľa (otázka D1): `CLAUDE.md` ho dnes nežiada,
+  `../../head-spa-30/SKILL.md` ho pri HEAD SPA 30 žiada. Ak sa majiteľ rozhodne pre súhlas, má ho vynútiť
+  prostredie: pravidlo `ask` na `Bash(git push *)` aj na spúšťanie ukladacích skriptov (napr. `Bash(*uloz.sh*)`)
+  v nastaveniach projektu (poradie „deny, then ask, then allow“, code.claude.com/docs/en/permissions). Pravidlo
+  pre Bash porovnáva len text príkazu a nie je bezpečnostná hranica: `git push` vnútri skriptu ani `sh -c '…'`
+  samo nezachytí (permissions, „What a Bash rule doesn't match“). Subagenti na pozadí posielajú otázky na
+  povolenie do hlavnej relácie (sub-agents); či to platí aj pre agentov nástroja Workflow, over krátkym behom.
+  Výhrada (permissions, stav 2026-10-20): bez spravovaných nastavení (managed settings) a bez prihlásenia Team
+  alebo Enterprise môže nainštalovaný mod s udalosťou `tool.check` schváliť aj volanie, na ktoré by sa pravidlo
+  `ask` pýtalo, ba aj volanie, ktoré pravidlo `deny` zamieta. Taký mod bez vedomia majiteľa neinštalovať.
+- **P8 Denník a rozhodnutia.** Každý projekt má `PRIEBEH.md` (kroky, stav, ako pokračovať, tabuľka stromov)
+  a `ROZHODNUTIA.md`. V ňom sú doslovné slová majiteľa s dátumom a zadania naň odkazujú cestou, namiesto odpisu
+  (dnes odpísané v `barbershop-co-chyba:16`, `co-nevidis-tiktok:14`, `gymklub-redesign-stavba-1:19-21`). Uloženie
+  pre obnovenie berie len texty a skripty, nie kópie pracovných stromov: `uloz.sh:9-10` dnes pribalí aj súbory
+  z kópií stromov `opravy/pred-D1` a `opravy/D1`. Repozitár je verejný.
+- **P9 Najprv kontrola, potom nasadenie.** Kontrola beží nad vetvou alebo lokálnym náhľadom. Veta „práve bol
+  nasadený“ (`gymklub-uvod-overenie:10`) sa v zadaní kontroly nemá objaviť. Kontrola GYM KLUB po nasadení
+  potvrdila 25 nálezov, ktoré už boli naživo.
+- **P10 Najjednoduchšie riešenie.** Pred workflowom napíš do hlavičky jednu vetu: prečo nestačí jeden agent alebo
+  priama práca (Building effective agents: „finding the simplest solution possible“).
 
 ## V tomto repozitári
 
@@ -379,10 +563,13 @@ Priebeh a výsledok každého workflowu: [references/priebeh-workflowov.md](refe
 - [ ] Každý agent má schému; dôkazové polia sú povinné; je pole pre ďalšiu fázu.
 - [ ] Kontrolóri a audítori needitujú a nespúšťajú súbežné testy; podmienky merania sú v zadaní.
 - [ ] Nálezy sa pred úpravou overujú (skeptik); pri neistote sa zamietajú.
-- [ ] `null` výsledky sú ošetrené; kontrola sa nespustí na nehotovom.
-- [ ] Počet agentov je spočítaný voči limitu relácie; medzivýsledky sú v súboroch.
+- [ ] `null` výsledky sú ošetrené: zlyhaný hodnotiteľ = `NEOVERENE`, posledné kolo s vážnymi nálezmi =
+      `ESKALACIA`, zlyhaný implementátor = `ZLYHALO` (vzor 9); kontrola sa nespustí na nehotovom.
+- [ ] Rozpočet je v hlavičke (agenti najmenej a najviac, naraz, tokeny), skeptici majú strop, beh má vlastný
+      rozsah portov; medzivýsledky sú v súboroch (P1, P5).
 - [ ] Opravy sú overené tou istou metódou a zapísané (aj zamietnuté a nezapracované, s dôvodom).
-- [ ] Commit a nasadenie robí hlavná relácia; osvedčený skript je v `priklady/`.
+- [ ] Push, merge do `main` a nasadenie robí hlavná relácia po kontrole (súhlas majiteľa: návrh, otázka D1);
+      rozhodnutia majiteľa sú v `ROZHODNUTIA.md`; osvedčený skript je v `priklady/` (P7 až P9).
 
 ## Lekcia: smer vizuálu potvrdiť u majiteľa skôr, než sa postaví celý web (VISIONARY LIVING, 10/2026)
 

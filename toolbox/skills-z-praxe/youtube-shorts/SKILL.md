@@ -1,6 +1,6 @@
 ---
 name: youtube-shorts
-description: YouTube Shorts (a reels na výšku) pre HEAD SPA 30, Barbershop 30 a GYM KLUB zo skutočných záberov z telefónu. Recept 30 až 45 s (hook do 1,5 s, kroky, druhý hook, výzva), titulky, strih, zvuk, bezpečné zóny YouTube, šablóny scenára a popisu, formáty z rozborov V1 až V10. scripts/short.py urobí z EDL hotový súbor (9:16, HDR na SDR, titulky a štítky NEPOTVRDENÉ v ASS, -14 LUFS, H.264 a AAC) a skontroluje ho v 11 bodoch; strihy.sh zmeria strihy videa; strih_podla_referencie.py zostaví strih v rytme referencie bez cudzej služby; titulok_16x9.py robí formát stály titulok + pás 16:9; tvrdenia.py kontroluje čísla a fámy v scenári; schvalenie.py zapíše schválenie presného súboru. Výzvy za slovo do komentára či DM nepoužívame. Použi pri „urob short“, „reel aj na YouTube“, „titulky do videa“, „vyrovnaj hlasitosť“, „HDR je vyblednuté“, „ako je strihnuté toto video“, „strihni to ako toto video“, „skontroluj video pred nahratím“. Nič neuverejňuje, nahráva majiteľ.
+description: YouTube Shorts (a reels na výšku) pre HEAD SPA 30, Barbershop 30 a GYM KLUB zo skutočných záberov z telefónu. Recept 30 až 45 s (hook do 1,5 s, kroky, druhý hook, výzva), titulky, strih, zvuk, bezpečné zóny YouTube, šablóny scenára a popisu, formáty z rozborov V1 až V11. scripts/short.py urobí z EDL hotový súbor (9:16, HDR na SDR, titulky a štítky NEPOTVRDENÉ v ASS, -14 LUFS, H.264 a AAC) a skontroluje ho v 11 bodoch; strihy.sh zmeria strihy videa; strih_podla_referencie.py zostaví strih v rytme referencie bez cudzej služby; titulok_16x9.py robí formát stály titulok + pás 16:9; tvrdenia.py kontroluje čísla a fámy v scenári; schvalenie.py zapíše schválenie presného súboru. Výzvy za slovo do komentára či DM nepoužívame. Použi pri „urob short“, „reel aj na YouTube“, „titulky do videa“, „vyrovnaj hlasitosť“, „HDR je vyblednuté“, „ako je strihnuté toto video“, „strihni to ako toto video“, „skontroluj video pred nahratím“. Nič neuverejňuje, nahráva majiteľ.
 ---
 
 # YouTube Shorts pre prevádzku
@@ -16,6 +16,8 @@ GYM KLUB (skript a výsledky v [references/pipeline-ffmpeg.md](references/pipeli
 o rozbory V4 až V10 (God's Eye View, Agency Agents, „Unethical GitHub projects“, „0x Alpha“, TRELLIS.2,
 „$10,000 website“, strih cez editor pripojený ku Claude; záznamy 11 až 17 v
 `../referencie-z-videi/references/naucene-z-videi.md`): formáty, fámy, výzvy a strih podľa referencie nižšie.
+Doplnený 2026-10-20 o V11 (nocode.joshua, číslovaná vysvetľovačka so schémami; záznam 20): index, počítadlo
+položiek a súhrnná karta.
 
 ## Kedy použiť
 
@@ -99,6 +101,8 @@ Vyplnené kostry pre fitko, barbershop a spa (len so zástupnými poľami a odka
   your entire team“, „No exaggeration“), číslo námahy bez dôkazu (V3 „200 hours“), cenová kotva bez zdroja (V9
   „$10,000“), reakcia tváre bez výsledku (V10), „neetické“ a „zadarmo, aj keď nevieš ako“ (V6: sľub, ktorý
   prevádzka nesplní, alebo propagácia porušovania podmienok, ktorú YouTube zakazuje).
+- **Časový sľub len zmeraný (V11).** „Explained in less than 60 seconds“ zaznelo pri videu dlhom 90 s (samotný
+  zoznam trvá 77,7 s). Ak hook sľubuje dĺžku („za 30 sekúnd“), zmeraj hotový súbor; inak sľub vynechaj.
 
 ### Zakázaný alebo šokujúci hook (V6, V7): kedy áno a čo nie
 
@@ -146,6 +150,19 @@ Kontrola: `python3 -I scripts/tvrdenia.py tvrdenia.json` (otázky s tvrdením, s
 - **Séria s jednou kostrou (V1, V8):** rovnaké sloty pre celú sériu (hook s dôkazom, „volá sa / ako to prebieha“,
   druhý hook, karta „staré → nové“ len keď je pravdivá, výzva); kostra v [references/sablony.md](references/sablony.md),
   časť 12.
+- **Index a súhrnná karta (V11):** do 4 s karta so všetkými N položkami (číslo a názov presne zo zdroja). Posledná
+  položka je zvýraznená akcentom značky, čím vznikne otvorená slučka. Na konci 3 až 4 s tá istá mriežka
+  a pri každej položke jeden údaj zo zdroja (trvanie, cena v deň výroby). Súhrnná karta je ťahák, ktorý si
+  divák uloží; výzvu „ulož si“ nepridávame. V11 má 6,8 % uložení z pozretí (1,25× viac ako páči sa), čo je
+  v rozpätí V1 až V3 bez súhrnnej karty (5,5 až 7,1 %); prínos karty sa z toho odčítať nedá.
+- **Počítadlo položiek (V11):** číslica 0,4 až 0,6 s (HEAD SPA 30: 0,8 s s prelínaním) presne na hovorené číslo
+  (±0,2 s), potom pilulka „[POLOŽKA] n Z N“ od y 312 px. Pred číslom 0,2 až 0,4 s bez titulku. Posledná položka
+  má dlhšiu číslicu (1,0 až 1,4 s) a je druhým hookom v 57 až 69 % dĺžky (V11 to má v 76 %). Hore je vždy
+  **skutočný záber** položky; karta nesie len číslo, názov a jeden údaj, žiadne schémy ani makety rozhraní.
+- **Karta mení obraz aj bez strihu:** pri kartách na svetlom pozadí vidí `strihy.sh` len prepínanie rozloženia
+  (V11: 16 „strihov“, medián 4,60 s, 14 zo 17 záberov nad 3,5 s, hoci sa karta mení v mediáne každých 0,9 s).
+  Pravidlo „nič nad 3,5 s bez zmeny“ vtedy kontroluj meraním zmien v časti obrazu (časť „Rozbor cudzieho
+  shortu“).
 - Karta s číslom 1,2 až 2,0 s. `short.py` karty nerobí: priprav obrázok 1080×1920 a sprav z neho klip
   `ffmpeg -loop 1 -i karta.png -t 1.8 -r 30 -pix_fmt yuv420p -c:v libx264 karta.mp4` (overené, pozri pipeline).
 - Natáčanie: na výšku, 4 až 6 s na záber (strihá sa 1,5 až 3 s), stabilne, svetlo prevádzky. HDR z iPhonu
@@ -203,6 +220,7 @@ odpovede schválený majiteľom, žiadny zber telefónov ani e-mailov bez súhla
 | komentár pred snímkou (green screen) | V7 | oznam prevádzky pred **vlastnou** stránkou (nová služba, hodiny, poukazy) | cudzí príspevok ako pozadie, 23 s bez zmeny obrazu, tvár cez číslo | [references/sablony.md](references/sablony.md), časť 10 (chromakey alebo vstack) |
 | problém, 3 kroky, výsledok | V9, V10 | „rezervácia online v 3 krokoch“ ako záznam obrazovky telefónu | výsledok až na konci, „jeden riadok“ pri štyroch krokoch, „Done“ pri chybe | `sablony.md` časť 12 |
 | séria s jednou kostrou | V1, V8 | séria shortov jednej prevádzky (raz za týždeň) | počítadlá od nuly, karta „staré → nové“ bez pravdy | `sablony.md` časť 12 |
+| číslovaná vysvetľovačka (index → položky „n z N“ → súhrnná karta) | V11 | ponuka na výber (rituály, strihy, tréningy, poukazy), 3 až 5 položiek, 30 až 45 s | abstraktné schémy a makety namiesto záberov, nepravdivý časový sľub („less than 60 seconds“ pri 90 s), titulky pod 1248 px, napodobnené tlačidlo „Follow“ | časť „Strih a obraz“ (index a súhrnná karta), [references/anatomia-referencii.md](references/anatomia-referencii.md) V11 |
 | rytmus podľa referencie | V10 | majiteľ chce „strihnúť ako toto video“ | cudzí obraz, zvuk, texty, ostré masky po 0,1 s | časť „Strih podľa referencie“ nižšie |
 
 ## Novinky, fámy a čísla zo snímok (poučenie z V7)
@@ -315,6 +333,13 @@ strihy celého obrazu, 0,12 aj zmeny v časti obrazu (V1: 13 strihov pri 0,25, 1
 ako pri ručnom rozbore). Prelínanie nenájde ani 0,12. Počet záberov over na hárku; rozdelená obrazovka
 mení len polovicu obrazu (V1 má ručne 23 záberov, ffmpeg pri 0,25 len 14).
 
+Keď je obraz z kariet na svetlom pozadí (V11), ffmpeg zmeny nevidí ani na výreze karty (prah 0,12: jediná
+udalosť za 90 s). Zmeny vtedy meraj podielom zmenených pixelov v časti obrazu: horná karta bez pásu titulkov,
+zmena jasu o viac ako 25 úrovní na viac ako 0,2 % pixelov, nový pohyb po aspoň 6 snímkach pokoja. Pri V11 to
+dalo 75 zmien s mediánom 0,90 s (podľa citlivosti 71 až 85 a 0,77 až 1,00 s). Postup a výsledky:
+`../referencie-z-videi/references/naucene-z-videi.md`, záznam 20, a [references/anatomia-referencii.md](references/anatomia-referencii.md),
+V11; skript na to zatiaľ v toolboxe nie je.
+
 ## Strih podľa referencie (rytmus, nie obsah)
 
 Majiteľ pošle video a povie „strihni to takto“: z referencie berieme len časy strihov, obraz, zvuk a texty nie.
@@ -357,6 +382,8 @@ Fakty a text
 Formát a zvuk
 - [ ] `short.py` skončil s kódom 0 (11 bodov kontroly, synchronizácia ±5 ms okolo +2,7 ms).
 - [ ] Reč od 0,0 s, prvý strih do 1,5 s, medián záberu podľa značky, nič nad 3,5 s bez zmeny (`strihy.sh`).
+- [ ] Časový sľub v hooku (ak je) sedí s dĺžkou hotového súboru; pri formáte s kartami sú zmeny obrazu zmerané
+      aj v časti obrazu, nielen `strihy.sh`.
 - [ ] Titulky po celý čas reči, v páse 1040 až 1240 px, najviac 690 px široko, nie cez oči a ústa.
 - [ ] Druhý hook medzi 55 a 75 % dĺžky; výzva v posledných ~3 s, jedna akcia, adresa webu v obraze;
       žiadne „comment“, „DM“ ani „follow“.
@@ -369,7 +396,7 @@ Odovzdanie
 - [ ] Balík: súbor, názov, popis, hashtagy, AI use, paid promotion, made for kids, miniatúra.
 - [ ] Žiadne automatické komentáre, odpovede ani DM; odpovede len ako návrhy.
 
-## Čo nerobiť (poučenie z V1 až V10)
+## Čo nerobiť (poučenie z V1 až V11)
 
 | Vo videu | Prečo nie | U nás |
 | --- | --- | --- |
@@ -406,8 +433,13 @@ Odovzdanie
 | „3 kroky“ zostrihané z rôznych relácií, výsledok až v posledných 2,2 s (V10) | nie je to jeden beh; divák čaká na dôkaz | jeden skutočný záznam, výsledok v hooku |
 | série zmien po 0,1 s a ostré tvarové masky (V10) | proti receptu, pri pokojnej značke rušivé | strih podľa receptu; pri HEAD SPA nikdy |
 | „comment SLOVO“, „DM SLOVO“ (V5, V6, V9, V10) | výzva bez hodnoty; na YouTube správy len po pozvánke; automatické odpovede sú proti pravidlu 2 | rezervácia online |
+| časový sľub, ktorý video nesplní (V11 „less than 60 seconds“ pri 90 s) | nepravdivé tvrdenie (zákon 108/2024, § 10) | dĺžku zmerať, inak nesľubovať |
+| abstraktné schémy a maketa kurzora, ktorý „klikne Approve“ (V11) | pri prevádzke by to divák bral ako ukážku | skutočný záber položky, karta len na číslo, názov a údaj |
+| titulky delené mechanicky po troch slovách („THEN A MARKETING / AGENT WOULD MARKET“, V11) | trhá frázy | 2 až 4 slová podľa zmyslu |
+| titulky pri karte na celú obrazovku v y 1424 až 1530 a pilulka v y 228 až 271 (V11) | na YouTube pod názvom, resp. v hornom páse s ovládaním | pás 1040 až 1240 px, štítky od 312 px |
+| -12,6 LUFS so skutočnou špičkou +0,2 dBFS (V11) | hlasné, riziko skreslenia | -14 LUFS, najviac -1 dBTP (`short.py`) |
 
-## Pasce a lekcie (zmerané 2026-10-17 a 2026-10-19)
+## Pasce a lekcie (zmerané 2026-10-17, 2026-10-19 a 2026-10-20)
 
 | Pasca | Čo sa stalo | Riešenie |
 | --- | --- | --- |
@@ -430,6 +462,7 @@ Odovzdanie
 | prechod posunie strihy | `xfade` skracuje časovú os o dĺžku prechodu | `strih_podla_referencie.py` predĺži predošlý záber; overené 412 snímok = 13,73 s |
 | tvarový prechod nie je ostrý | `circleopen` v `xfade` má mäkký okraj | ostré masky ako V10 nerobíme; pri HEAD SPA žiadne tvary |
 | štítok zakryje rozhranie YouTube | štítok nad 288 px (V7: 124 px v hornom páse) | `titulky.stitok.hore` od 312 px, `short.py` upozorní |
+| `strihy.sh` vidí len prepínanie rozloženia | V11: 16 strihov, medián 4,60 s, hoci sa karta mení každých ~0,9 s; ffmpeg na výreze karty pri prahu 0,12 našiel 1 udalosť | podiel zmenených pixelov v časti obrazu (časť „Rozbor cudzieho shortu“) |
 
 ## V tomto toolboxe
 
@@ -448,7 +481,7 @@ Odovzdanie
 - `assets/strih-priklad.json` (vzor EDL), `assets/pisma/` (písmo titulkov Manrope a licencia `OFL.txt`; písmo
   kinetického slova `BebasTitulky.ttf` a licencia `OFL-Bebas.txt`), `assets/bezpecne-zony-1080x1920.png` (šablóna
   zón), `assets/sablona-16x9.ass` a `assets/format-16x9-priklad.json` (formát V4), `assets/tvrdenia/` (vzory).
-- [references/anatomia-referencii.md](references/anatomia-referencii.md): V1 až V10 s časmi a lekciami.
+- [references/anatomia-referencii.md](references/anatomia-referencii.md): V1 až V11 s časmi a lekciami.
 - [references/format-16x9.md](references/format-16x9.md): formát stály titulok + pás 16:9 (V4), rozmery, ffmpeg, skúšky.
 - [references/strih-podla-referencie.md](references/strih-podla-referencie.md): strih podľa rytmu referencie (V10),
   nastavenia podľa značky, skúšky, porovnanie so Shorty a Descript MCP.
@@ -456,7 +489,7 @@ Odovzdanie
 - [references/sablony.md](references/sablony.md): scenár, storyboard, názov, popis, hashtagy (fitko, barbershop, spa).
 - [references/pipeline-ffmpeg.md](references/pipeline-ffmpeg.md): kroky skriptu, formát EDL, výsledky skúšok, riziká.
 - Súvisiace: `../instagram-salon/` (hook_skore.py, pauzy.py, fakty, hlas, odpovede), `../referencie-z-videi/`
-  (stiahnutie a rozbor cudzích videí, záznamy 8 až 17, zásada sťahovania), `../tim-roly/` (otázky, brána,
+  (stiahnutie a rozbor cudzích videí, záznamy 8 až 17 a 20, zásada sťahovania), `../tim-roly/` (otázky, brána,
   schválenie, roly textár a obsah, ponuka a rezervácie),
   `../video-a-sekvencie/` (stabilizácia, video na web), `../film-z-fotiek/` (pravidlá záberov).
 - Pracovné priečinky `<výstup>-prac/`, hotové videá, zábery a kniha schválení patria do scratchpadu, nie do repozitára.

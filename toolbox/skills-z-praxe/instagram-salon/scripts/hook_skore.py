@@ -17,12 +17,12 @@ python3 hook_skore.py --subor varianty.txt                           # jeden hoo
 import re, sys, json
 
 TY = r'\b(ty|ťa|ti|teba|tebe|tebou|tvoj\w*|tvoj|tvoja|tvoje|si|sa\s+ti)\b'
-VY = r'\b(vy|vás|vám|vami|váš|vaš\w*)\b'
+VY = r'\b(vy|vás|vám|vami|váš|v[aá]š\w*)\b'
 ROZKAZ = r'\b(vypni|príď|poď|poďte|príďte|rezervuj|rezervujte|zavolaj|zavolajte|daruj|darujte|povedz|vyskúšaj|vyskúšajte|objednaj|sadni|uvoľni|nečakaj|pozri|pozrite|zacvič|zastav|dopraj|doprajte|vstúp|vstúpte|vezmi|nechaj|nechajte)\b'
 SLOVESO_2 = r'\b\w{3,}(eš|íš|áš|aš|ieš|ete|íte|áte|ate|ujete)\b'
 STAVKA = r'\b(stres\w*|chaos\w*|únav\w*|bolest\w*|bolí|napät\w*|ponáhľ\w*|čakan\w*|čakať|bez\s+čakania|bez\s+objednávania|čas\w*|rýchl\w*|pokoj\w*|oddych\w*|relax\w*|zadarmo|zdarma|stačí|jednoducho|vypn\w*|uvoľn\w*|oddýchn\w*|konečne|prestaň\w*|nikdy|vždy|ľahk\w*|istot\w*|strach\w*|hanb\w*|chyb\w*|problém\w*|riešen\w*|uľav\w*|zbav\w*|prvý\w*|prvá|prvé)\b'
 ZVEDAV = r'(\?|…|\.\.\.|\bprečo\b|\bčo\s+sa\b|\btoto\b|\btakto\b|\btajomstv\w*|\bnikto\b|\bjediný\w*|\bnie\b[^.?!]*[.,]\s*\w|\bale\b)'
-KONKRET = r'(\d+|€|\bmin\b|\bhlav\w*|\bhod\w*\b|\bkresl\w*|\bkáv\w*|\bdver\w*|\buterák\w*|\bvod\w*|\bbrad\w*|\bstrih\w*|\bnožnic\w*|\blamp\w*|\brituál\w*|\bmasáž\w*|\bmisk\w*|\bšampón\w*|\bčinky|\bčink\w*|\brig\w*|\bdráh\w*|\btatami\b|\bpumpa\b|\bMostn\w*|\bNitr\w*|\bVýstavn\w*)'
+KONKRET = r'(\d+|€|\bmin\b|\bhlav\w*|\bhod\w*\b|\bkresl\w*|\bkáv\w*|\bdver\w*|\buterák\w*|\bvod\w*|\bbrad\w*|\bstrih\w*|\bnožnic\w*|\blamp\w*|\brituál\w*|\bmasáž\w*|\bmisk\w*|\bšampón\w*|\bčinky|\bčink\w*|\btréning\w*|\btréner\w*|\brig\w*|\bdráh\w*|\btatami\b|\bpumpa\b|\bMostn\w*|\bNitr\w*|\bVýstavn\w*)'
 
 
 def score(h):

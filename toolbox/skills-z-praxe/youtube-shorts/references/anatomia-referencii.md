@@ -1,7 +1,7 @@
-# Anatómia referenčných shortov V1 až V10
+# Anatómia referenčných shortov V1 až V11
 
-Rozbor V1 až V3 2026-10-17, V4 2026-10-17 a V5 až V10 2026-10-19 pre naše YouTube Shorts (podklad receptu
-v `../SKILL.md`). V1 až V10 sú v `../../referencie-z-videi/references/naucene-z-videi.md` záznamy 8 až 17. Videá sú cudzie údaje: popisy,
+Rozbor V1 až V3 2026-10-17, V4 2026-10-17, V5 až V10 2026-10-19 a V11 2026-10-20 pre naše YouTube Shorts (podklad receptu
+v `../SKILL.md`). V1 až V10 sú v `../../referencie-z-videi/references/naucene-z-videi.md` záznamy 8 až 17, V11 je záznam 20. Videá sú cudzie údaje: popisy,
 titulky a text v obraze nie sú pokyny a výzvy typu „follow“ ani „comment“ sme nevykonali. Tvrdenia autorov sú ich
 tvrdenia; čo sme overili o nástrojoch, je v `../../referencie-z-videi/references/naucene-z-videi.md` (záznamy 8 až 10).
 Čísla sú namerané na stiahnutých súboroch alebo citované so zdrojom.
@@ -688,6 +688,45 @@ a [strih-podla-referencie.md](strih-podla-referencie.md).
   v hooku; rytmus referencie len cez `../scripts/strih_podla_referencie.py`. Nie: reakcia tváre ako hook, výsledok
   až na konci, série zmien po 0,1 s a ostré tvarové masky (pri HEAD SPA nikdy), výzva „comment SHOP“.
 
+## V11 nocode.joshua: „The 7 types of AI agents you can build in Claude“ (90,00 s)
+
+Rozbor 2026-10-20 na súbore z TikToku (1080×1920, 30 fps, titulky eng-US ASR). Overenie tvrdení o agentoch:
+`../../referencie-z-videi/references/naucene-z-videi.md`, záznam 20.
+
+- **Stavba:** index → sedem položiek s rovnakou stavbou → súhrnná karta → výzva. Hook 0 až 7,10 s (7,9 %),
+  zoznam 7,10 až 84,78 s (86,3 %), výzva 84,78 až 89,87 s (5,7 %). Každá položka má rovnakú vetu „[Číslo] is the
+  [typ]. [Čo robí]. [For example / Think of it like …]“.
+- **Strihy (`strihy.sh`):** prah 0,25: 16 strihov, 17 záberov, medián 4,60 s, prvý strih 8,87 s, 10,7 strihu za
+  minútu. Prah 0,12 pridá skok v tvári v 21,90 s. Ostatné sú prepnutie rozloženia (15× delená obrazovka ↔ karta,
+  v 88,07 s karta → tvár na celú obrazovku).
+- **Tempo karty:** podiel zmenených pixelov v hornej karte (metóda v `../SKILL.md`, časť „Rozbor cudzieho
+  shortu“; skript zatiaľ nie je v toolboxe): 75 zmien, prvá v 0,03 s, medián 0,90 s. Ostatné citlivosti dali
+  71 až 85 zmien a medián 0,77 až 1,00 s. ffmpeg na výreze karty pri prahu 0,12: 1 udalosť.
+- **Čísla:** číslica na hovorené číslo ±0,2 s (7,30 / 13,40 / 21,90 / 36,17 / 46,80 / 58,40 / 68,58 s), čísla 1
+  až 6 svietia ~0,45 s, siedma 1,45 s so štítkom „THE BIG ONE“. Pred 6 zo 7 čísel (okrem čísla 2) zmizne
+  titulok na 0,17 až 0,40 s, pri číslach 1 až 5 rečník ukazuje aj prsty. Pilulka „AGENT n OF 7“ na y 228 až 271.
+  Prvé dve položky sú krátke (6,2 a 8,6 s), siedma najdlhšia (16,3 s). Siedma je druhý hook v 76 % a index ju
+  zvýraznil už v 3,6 s.
+- **Rozloženie:** delená obrazovka (švík presne y 960) 50,7 % času, karta na celú obrazovku 47,2 %, tvár sama
+  2,1 %. Schéma viditeľná 97,9 % času, tvár 52,8 %; plochou ~73 % schéma a ~27 % tvár.
+- **Titulky:** 106 boxov, 279 slov, celá fráza naraz (3 slová 77×, 2 slová 19×, 1 slovo 10×), neproporcionálne
+  verzálky, biele na čiernom #1A1C1C, medián 0,73 s, 96 % času reči, delenie mechanické. Poloha: delená obrazovka
+  y 906 až 1012, karta na celú obrazovku y 1424 až 1530 (pod hranicou 1248 px).
+- **Karty:** pozadie #EEEEE7, jediný akcent #CB6D55 (farba značky Claude), tri písma s jasnými úlohami (pätkové
+  nadpisy, bezpätkové uzly, neproporcionálne titulky; odhad podľa tvaru písmen). Jeden uzol na jednu pomenovanú
+  vec v reči (~0,7 až 1,0 s). Maketa „Send this email? Approve / Edit“ s kurzorom (63 s).
+- **Zvuk:** 278 slov, 186 slov/min, žiadna pauza ≥ 0,25 s pod -35 dB, -12,6 LUFS, LRA 2,6 LU, skutočná špička
+  +0,2 dBFS.
+- **Hook a výzva:** „If you don't know how to build an AI agent in Claude, these are the seven types … explained in
+  less than 60 seconds.“ Časový sľub neplatí. `hook_skore.py` dal originálu 22 a prekladu 39, oba „slabý“; silu
+  nesie index do 3,8 s a pohyb od druhej snímky. Výzva: súhrnná karta 3,1 s, potom tvár s napodobneným tlačidlom
+  „Follow“ 1,9 s. „Save this“ je len v popise. Pri stiahnutí 22 192 uložení (6,8 % pozretí, 1,25× viac ako páči
+  sa) a 76 komentárov.
+- **Lekcia pre nás:** index, počítadlo „n z N“ a súhrnná karta sa hodia na ponuku na výber (`../SKILL.md`,
+  tabuľka „Formáty z referencií“ a časť „Strih a obraz“; kostra do [sablony.md](sablony.md) je zatiaľ návrh). Hore
+  však skutočné zábery, 30 až 45 s, titulky v páse 1040 až 1240 px a časový sľub len zmeraný. Nie: schémy a makety
+  namiesto záberov, 90 s, mechanické delenie titulkov, napodobnené tlačidlo, výzvy follow a save, cudzia značka.
+
 ## Čo majú spoločné (a čo z toho berieme)
 
 1. Reč od prvej snímky, žiadne logo ani úvod. Prvá veta nesie osobu alebo číslo a výsledok
@@ -713,6 +752,9 @@ a [strih-podla-referencie.md](strih-podla-referencie.md).
     alebo komentárov (V9 má viac komentárov ako páči sa).
 14. B-roll často nie je z témy (V5 Kimi a LMArena ~48 % času, V6 okná ERP, V9 weby Nike a Pepsi): divák ho berie ako
     dôkaz, preto u nás len zábery prevádzky.
+15. Súhrnná karta zatiaľ nemá merateľný prínos k uloženiam: V11 (index, „n z N“, súhrnná karta) má 6,8 % pozretí
+    a 1,25× viac uložení ako páči sa, V1 až V3 bez súhrnnej karty 5,5 až 7,1 % a tiež viac uložení ako páči sa.
+    Kartu robíme ako ťahák pre diváka; či zvyšuje uloženia, ukáže až porovnanie našich vlastných shortov.
 
 Čo nepreberáme: cudzie tváre a mená ako hook, b-roll cudzích ľudí a miest, AI avatar ako moderátor, makety
 vydávané za nahrávky, ukážkové čísla vydávané za výsledky, hyperboly („nahradil celý tím“, „No exaggeration“),
@@ -736,3 +778,5 @@ a zábery z Google Earth (V4).
   [sablony.md](sablony.md) časť 10.
 - V8 a V9: dôkaz „vstup → výsledok“, séria s jednou kostrou, karty krokov ([sablony.md](sablony.md) časť 12).
 - V10: [strih-podla-referencie.md](strih-podla-referencie.md), `../scripts/strih_podla_referencie.py`.
+- V11: formát v tabuľke „Formáty z referencií“, index a počítadlo v „Strih a obraz“, časový sľub v „Hook“
+  a meranie zmien karty v „Rozbor cudzieho shortu“ (`../SKILL.md`).

@@ -1,9 +1,9 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Osemnásť videí a jeden karusel (záznam 18), z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu,
+Devätnásť videí a jeden karusel (záznam 18), z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu,
 titulkov alebo textu v obraze), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
-nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-roly` zodpovedá záznamom 8 až 17
-(V1 = 8, V2 = 9, V3 = 10, V4 = 11 … V10 = 17); záznamy 15 až 17 sú reels z Instagramu (bez titulkov, text zo snímok).
+nie overené fakty. Označenie V1 až V11 v skilloch `youtube-shorts` a `tim-roly` zodpovedá záznamom 8 až 17 a 20
+(V1 = 8, V2 = 9, V3 = 10, V4 = 11 … V10 = 17, V11 = 20); záznamy 15 až 17 sú reels z Instagramu (bez titulkov, text zo snímok).
 
 ## 1. antenucci.studio: web barbershopu
 
@@ -822,6 +822,160 @@ nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-rol
   - Vo videu: „top 5“ bez overenia, „oficiálny“ zliaty pre viac nástrojov, cudzia infografika a ilustračný b-roll ako
     dôkaz, sľuby, ktoré nástroj nerobí, „free“ pri nástrojoch platených tokenmi, výzva „comment PLUGINS“.
 
+## 20. nocode.joshua: „7 typov agentov v Claude“
+
+- Adresa: https://www.tiktok.com/@nocode.joshua/video/7695116729373953298 (90,00 s, 1080×1920, titulky eng-US ASR).
+  Uverejnené 2026-10-10 19:02 UTC. Pri stiahnutí 2026-10-20 malo 326 400 pozretí, 17 800 páči sa, 22 192 uložení,
+  4 231 zdieľaní a 76 komentárov. Pozreté 2026-10-20.
+- Popis autora: „The 7 types of AI agents you can build in Claude. Save this for when you build your first one.
+  Follow for a new AI build every day.“ Výzvy „Save this“ a „Follow“ sme ignorovali.
+- Titulky: kto nevie postaviť agenta v Claude, dostane sedem typov „explained in less than 60 seconds“.
+  1. Tool agent: Claude spustí akciu cez MCP, napríklad Gmail, Notion alebo HubSpot.
+  2. Skills agent: postup (newsletter) naučíš raz a agent ho zopakuje „every single time“.
+  3. Sequential: agenti v reťazi, návrh aplikácie → stavba → marketing.
+  4. Parallel: päť úloh naraz namiesto za sebou, Claude výsledky spojí.
+  5. Router: prečíta vstup a pošle ho ďalej (refundácia jednou cestou, obchodný dopyt inou), „receptionist for
+     your workflows“.
+  6. Human in the loop: agent spraví prácu a pred odoslaním čaká na schválenie, „for anything that touches money
+     or clients“.
+  7. „The big one“, orchestrátor: hlavný agent volá subagentov (vedúci marketingu → reklama, sociálne siete,
+     značka).
+
+  Prepis je takmer bez chýb („Hubspot“ = HubSpot).
+- Obraz: hore je svetlá karta (#EEEEE7) so schémou, ktorá sa skladá súčasne s rečou. Uzly sú biele zaoblené karty,
+  jediný akcent je terakota #CB6D55 a karty nesú logo a farbu Claude. Dole je hovoriaci. Pri príklade sa karta
+  roztiahne na celú obrazovku. Každý typ má veľkú pätkovú číslicu, pilulku „AGENT n OF 7“ a nadpis. Schémy:
+  - Claude → MCP → Gmail „send an email“, Notion „update a page“, HubSpot „add a contact“ (12,9 s);
+  - karta „TAUGHT ONCE“ s krokmi newslettera;
+  - Design → Software → Marketing agent s maketami výstupov;
+  - „5 jobs“ → Agent 1 až 5 → Claude → „One result“;
+  - Router → „Refund request“ → Refunds agent → „Refund sent“ a „Sales lead“ → Sales agent → „Call booked“
+    (55,3 s);
+  - maketa „Send this email? Approve / Edit“, kurzor klikne Approve (63 s), potom karty Money a Clients;
+  - Main agent → Sub agent 1 až 5; Head of Marketing → Ad, Social media a Branding agent.
+
+  Index siedmich dlaždíc príde v 2,9 až 3,8 s (siedma je vyplnená akcentom). Súhrnná karta „7 agents to build“
+  beží 84,95 až 88,07 s. Na konci je tvár s napodobneným tlačidlom „Follow“.
+- Formát (merané):
+  - **Hook** (0 až 7,10 s): reč aj titulok od 0,0 s, prvá zmena obrazu v 0,03 s (tvár odskočí z detailu a karta
+    sa začne skladať). „7 Agents“ a sedem dlaždíc sú čitateľné bez zvuku do 3,8 s. `hook_skore.py` dal originálu
+    22 (skript angličtinu nečíta) a slovenskému prekladu 39, oboje „slabý“. Silu hooku nesie index a pohyb, nie
+    veta.
+  - **Strihy:** `strihy.sh` našiel 16 strihov pri prahu 0,25 a 17 pri prahu 0,12, medián 4,60 s, prvý strih
+    v 8,87 s. Všetkých 16 pri prahu 0,25 je prepnutie rozloženia (15× delená obrazovka ↔ karta, v 88,07 s
+    karta → tvár na celú obrazovku), sedemnásty pri prahu 0,12 je skok v tvári v 21,90 s.
+  - **Tempo nesie karta.** Podiel zmenených pixelov dal 75 zmien s mediánom 0,90 s (podľa citlivosti 71 až 85
+    zmien a 0,77 až 1,00 s). ffmpeg na výreze hornej karty pri prahu 0,12 našiel jedinú udalosť.
+  - **Číslice** prichádzajú na hovorené číslo ±0,2 s (7,30 / 13,40 / 21,90 / 36,17 / 46,80 / 58,40 / 68,58 s).
+    Pred šiestimi zo siedmich (okrem čísla 2) zmizne titulok na 0,17 až 0,40 s. Pri číslach 1 až 5 rečník ukazuje
+    počet aj prstami.
+  - **Stupňovanie:** prvé dve položky sú krátke (6,2 a 8,6 s), stredné 10 až 14 s, siedma najdlhšia (16,3 s).
+    Siedma (číslica 1,45 s namiesto ~0,45 s, štítok „THE BIG ONE“) je druhý hook v 76 % dĺžky. Index ju zvýraznil
+    už v 3,6 s.
+  - **Rozloženie:** delená obrazovka (švík presne na y 960) zaberá 50,7 % času, karta na celú obrazovku 47,2 % a
+    tvár sama 2,1 %. Schéma je viditeľná 97,9 % času, tvár 52,8 %.
+  - **Titulky nie sú slovo po slove.** Je ich 106 boxov a fráza sa objaví celá naraz (3 slová 77×, 2 slová 19×,
+    1 slovo 10×). Písmo je neproporcionálne, verzálky, biele na čiernom boxe #1A1C1C, medián boxu 0,73 s, pokrývajú
+    96 % času reči. Delenie je mechanické („THEN A MARKETING / AGENT WOULD MARKET“). Pri karte na celú obrazovku sú
+    titulky na y 1424 až 1530, teda pod hranicou YouTube 1248 px. Pilulka je na y 228 až 271, v hornom páse 288 px.
+  - **Reč a zvuk:** 278 slov, 186 slov/min, -12,6 LUFS, skutočná špička +0,2 dBFS.
+
+  Podrobne v `../../youtube-shorts/references/anatomia-referencii.md` (V11).
+- Overené 2026-10-20 v primárnych zdrojoch Anthropicu. Citáty sú z textu stiahnutého v ten deň.
+  - **Dĺžka:** kontajner má 90,00 s a sedem typov trvá od 7,10 do 84,78 s, teda 77,7 s (o 29 % viac ako 60 s).
+    V 60. sekunde autor začína šiesty typ. Sľub „less than 60 seconds“ neplatí.
+  - **Workflow alebo agent:** „Building effective agents“ (anthropic.com/engineering/building-effective-agents) je
+    uverejnený 2024-12-19. Text bol neskôr doplnený o Claude Agent SDK a modely 4.5. Článok delí systémy na
+    workflowy, kde LLM a nástroje idú „through predefined code paths“, a na agentov, ktorí si postup riadia sami.
+    Radí „finding the simplest solution possible“. Typy 3, 4 a 5 sú tak, ako ich video kreslí (pevné šípky),
+    workflowy. Článok má tiež sedem položiek. Video z nich päť premenuje a namiesto evaluator-optimizera
+    a autonómneho agenta dá typy 2 a 6.
+  - **1 tool agent** = augmented LLM. Je to stavebný blok všetkých ostatných typov, nie samostatný typ. Chýba
+    dôvera k serveru: server, ktorý číta cudzí obsah, prináša riziko prompt injection (code.claude.com/docs/en/mcp).
+    Chýba aj rada, že viac nástrojov neznamená lepší výsledok (anthropic.com/engineering/writing-tools-for-agents,
+    2025-09-11).
+  - **2 skills agent:** v článku nie je. Agent Skills sú od 2025-10-16
+    (anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills). „Every single time“ preháňa:
+    model skill načíta, keď ho podľa popisu považuje za relevantný, a popis spolu s `when_to_use` sa v zozname
+    skracuje na 1 536 znakov (code.claude.com/docs/en/skills). Istotu dá len ručné `/meno-skillu` alebo hook.
+    Cudzie skills inštalovať len z dôveryhodného zdroja.
+  - **3 sequential** = prompt chaining. Princíp platí, príklad nie. Podľa článku je reťaz na pevné podúlohy,
+    z ktorých je každá ľahšia, a medzi krokmi má programovú bránu. Návrh, stavba a marketing aplikácie sú tri
+    otvorené projekty bez brány. Dokumentácia subagentov (code.claude.com/docs/en/sub-agents) radí ostať v hlavnej
+    relácii, keď fázy (plánovanie, implementácia, testovanie) zdieľajú veľa kontextu.
+  - **4 parallel** = parallelization, variant sectioning. Platí. Chýba variant voting (tá istá úloha viackrát).
+    Video zamlčí náklady: agenti spotrebujú asi 4× a systémy viacerých agentov asi 15× viac tokenov ako chat
+    (anthropic.com/engineering/multi-agent-research-system, 2025-06-13). Claude Code predvolene pri 20 bežiacich
+    subagentoch ďalšieho odmietne („Concurrent subagent limit reached“, sub-agents).
+  - **5 router** = routing. Príklad je takmer zhodný s článkom (žiadosti o refundáciu). Chýba podmienka, že sa
+    kategórie dajú spoľahlivo rozlíšiť. Chýba routing ako úspora (ľahké otázky menšiemu modelu) a cesta „neistý →
+    človek“.
+  - **6 human in the loop:** v článku to nie je vzor, ale kontrolný bod, kde agent čaká na človeka. Spoľahlivé je
+    len schválenie, ktoré vynúti prostredie. Možnosti: pravidlo `ask` (poradie „deny, then ask, then allow“,
+    code.claude.com/docs/en/permissions), hook `PreToolUse` alebo v Agent SDK `canUseTool`. V režime `dontAsk` sa
+    otázka zmení na zamietnutie. Bez spravovaných nastavení a bez prihlásenia Team alebo Enterprise môže
+    nainštalovaný mod s `tool.check` obísť pravidlo `ask` aj `deny` (permissions). Pravidlo pre Bash porovnáva len
+    text príkazu, `git push` vnútri skriptu nezachytí. Napísať vetu z videa do promptu nestačí.
+  - **7 orchestrator** = orchestrator-workers, ale len čiastočne. Podľa článku je rozdiel oproti paralelizácii
+    v tom, že podúlohy určí orchestrátor až podľa vstupu. Pevné roly z videa sú bližšie k paralelizácii. Subagenta
+    vyberá model podľa popisu. Vnáranie je predvolene najviac tri vrstvy pod hlavnou reláciou (sub-agents). Prví
+    agenti Anthropicu robili chyby typu „spawning 50 subagents for simple queries“ (multi-agent-research-system).
+  - **Chýba:** evaluator-optimizer (jeden model tvorí, druhý hodnotí a vracia spätnú väzbu v slučke), voting
+    a autonómny agent s podmienkou zastavenia („such as a maximum number of iterations“,
+    building-effective-agents).
+  - **Metriky:** `repost_count` a `save_count` sú v yt-dlp 2026.08.19 TikTok `shareCount` a `collectCount`
+    (`yt_dlp/extractor/tiktok.py:692-694`). Uloženia sú 6,8 % pozretí a 1,25× viac ako páči sa. Pomer nie je
+    výnimočný: V1 až V3 bez súhrnnej karty mali 5,5 až 7,1 % a tiež viac uložení ako páči sa. Či ich spravila
+    súhrnná karta, alebo „Save this“ v popise, z jedného videa nezistíme. Rozbor formátu a overenie sa v tom
+    líšia a ani jeden názor nie je meranie.
+- Čo nesedí:
+  - časový sľub (video má 90 s, zoznam 77,7 s);
+  - „agent“ pre všetko vrátane pevných workflowov;
+  - router v schéme sám odošle refundáciu („Refund sent“, 55,3 s), hoci o desať sekúnd neskôr autor žiada
+    schválenie pri peniazoch a klientoch;
+  - „every single time“;
+  - „can call any sub agent“ bez limitov a nákladov;
+  - orchestrátor s pevnými rolami;
+  - ani slovo o cene, o chybách, ktoré sa v reťazi hromadia, ani o zásade začať najjednoduchším riešením.
+
+  Kurzor, ktorý klikne „Approve“, je maketa. Tu je to zjavne schéma, nie nahrávka.
+- Čo prešlo:
+  - do `../../workflowy/`:
+    - slovník vzorov Anthropicu, namapovaný na naše vzory a skripty (chaining s bránou, routing, sectioning,
+      voting, orchestrator-workers, evaluator-optimizer, človek v slučke);
+    - evaluator-optimizer ako štandard stavby so stavmi `NEOVERENE`, `ESKALACIA` a `ZLYHALO` (zlyhaný hodnotiteľ
+      nie je PASS), vzor 9 s kostrou vyskúšanou so skúšobnými agentmi;
+    - pravidlá pre paralelu a orchestrátora (P1 až P10): rozpočet agentov, porty, merania v tichu, push a nasadenie
+      len hlavná relácia, `ROZHODNUTIA.md`; súhlas majiteľa pred pushom do `main` je zapísaný ako návrh, čaká na
+      rozhodnutie majiteľa (otázka D1);
+  - do `../../tim-roly/`: kontrolný zoznam schválení majiteľa (peniaze, klienti a ľudia, zverejnenie, účty
+    a dáta, smer) s vetou „schválenie vynucuje prostredie, nie prompt“;
+  - do `toolbox/README.md`: smerovacia tabuľka „požiadavka → projekt → kde → pravidlá → skills → postup → kto
+    schvaľuje“;
+  - do `../../youtube-shorts/`:
+    - formát V11 „číslovaná vysvetľovačka so schémami“ (index, položky s počítadlom „n z N“, súhrnná karta) so
+      skutočnými zábermi, 30 až 45 s a 3 až 5 položkami;
+    - meranie zmien karty podielom zmenených pixelov, keď `strihy.sh` vidí len prepínanie rozloženia;
+    - pravidlo zmerať dĺžku, ktorú hook sľubuje;
+  - do `../../instagram-salon/scripts/hook_skore.py`: regulárne výrazy teraz chytia „vášho“, „vášmu“ (oslovenie)
+    a „tréning“, „tréner“ (konkrétnosť). Skúška 2026-10-20: „Začínate vo fitku? 3 tréningy, jeden aj bez
+    objednávania.“ 50 → 55, „Tri typy tréningu. Ktorý sa zmestí do vášho týždňa?“ 27 → 42; hooky HEAD SPA 30
+    a Barbershopu 30 bez zmeny (63 a 62).
+
+  Zatiaľ nezapísané (ostali ako návrh v koncepte rozboru): kostra formátu do `../../youtube-shorts/references/sablony.md`,
+  skript na meranie zmien karty do `../../youtube-shorts/scripts/` a doplnky do `CLAUDE.md` (otázka D1 majiteľovi).
+- Čo nie:
+  - akcie smerom von cez MCP (odoslať e-mail, zapísať do CRM) bez človeka;
+  - router, ktorý sám vybaví refundáciu;
+  - orchestrátor bez rozpočtu agentov;
+  - „agent“ tam, kde stačí skript alebo jeden agent;
+  - skill ako záruka, že sa postup vykoná.
+
+  Z videa nepreberáme: nepravdivý časový sľub, abstraktné makety namiesto záberov, napodobnené tlačidlo „Follow“,
+  dĺžku 90 s, titulky a kartu pod 1248 px, pilulku v hornom páse, mechanické delenie titulkov, -12,6 LUFS so
+  špičkou nad 0 dBFS, výzvy „follow“ a „save“, farbu a logo Claude (nie je to naša značka; pri HEAD SPA 30 nijaká
+  zmienka o AI).
+
 ## Spoločné lekcie
 
 - Hook pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš a ako rezervovať.
@@ -863,3 +1017,12 @@ nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-rol
   aplikuje opravu; prázdny výsledok znamená „žiadne podložené nálezy v posúdenom rozsahu“, nie „bezpečné“.
 - Pôvod pravidla over prvým commitom: znenie, ktoré cituje jeden projekt, mohol prevziať z iného bez zmienky
   (záznam 19: Iron Law je v Superpowers od 2025-10-09, gstack vznikol 2026-03-11).
+- Formát môže byť dobrý, aj keď obsah zjednodušuje (záznam 20). Tempo, index a súhrnnú kartu preberáme. Pojmy
+  a rady overujeme v primárnom zdroji: pri agentoch je to článok Anthropicu, nie video.
+- Pri kartách na svetlom pozadí ffmpeg (skóre scény) zmeny na karte nevidí. V zázname 20 našiel len 16 prepnutí
+  rozloženia, hoci sa karta mení v mediáne každých 0,9 s. Tempo vtedy meraj podielom zmenených pixelov v časti
+  obrazu.
+- Časový sľub v hooku („less than 60 seconds“) zmeraj. Výzvu z popisu („Save this“) porovnaj s tým, čo naozaj
+  zaznie a je v obraze.
+- Číslo z `info.json` čítaj podľa významu poľa v kóde extraktora (záznam 20: `repost_count` = zdieľania na
+  TikToku).

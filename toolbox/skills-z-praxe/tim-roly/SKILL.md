@@ -1,6 +1,6 @@
 ---
 name: tim-roly
-description: Tím rolí podľa gstack, ECC, Agency Agents a Superpowers (všetky MIT), prenesený do našej praxe s nástrojom Workflow bez inštalácie. Roly CEO a produkt (otázky majiteľovi, režim rozsahu, kontrola staviteľom), dizajnér (0 až 10, AI slop), eng manažér, rozpis úloh, staff recenzent (súlad so zadaním), QA a vyšetrovateľ (Iron Law, stop po 3), bezpečnosť (lethal trifecta, vlastné konektory, /security-review), release (PRIPRAVENÉ alebo NEPRIPRAVENÉ), brána dvoch recenzentov s eskaláciou po troch kolách a roly pre obsah a predaj prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti). Karta roly, odovzdávací blok, zadanie agenta a JSON schéma pri každej role, kontrola schém scripts/kontrola_schem.py. Použi pred stavbou webu alebo natáčaním shortu, pri revízii plánu, novej role, písaní zadaní pre agentov, ladení, QA, bezpečnosti, pred commitom a nasadením, pri návrhu obsahu, kontrole cesty k rezervácii a odpovedi na recenziu, aj keď niekto chce gstack, ECC, Agency Agents alebo Superpowers nainštalovať.
+description: Tím rolí podľa gstack, ECC, Agency Agents a Superpowers (všetky MIT), prenesený do našej praxe s nástrojom Workflow bez inštalácie. Roly CEO a produkt (otázky majiteľovi, režim rozsahu, kontrola staviteľom), dizajnér (0 až 10, AI slop), eng manažér, rozpis úloh, staff recenzent (súlad so zadaním), QA a vyšetrovateľ (Iron Law, stop po 3), bezpečnosť (lethal trifecta, vlastné konektory, /security-review), release (PRIPRAVENÉ alebo NEPRIPRAVENÉ), brána dvoch recenzentov s eskaláciou po troch kolách, kontrolný zoznam schválení majiteľa (peniaze, klienti, zverejnenie, účty) a roly pre obsah a predaj prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti). Karta roly, odovzdávací blok, zadanie agenta a JSON schéma pri každej role, kontrola schém scripts/kontrola_schem.py. Použi pred stavbou webu alebo natáčaním shortu, pri revízii plánu, novej role, písaní zadaní pre agentov, ladení, QA, bezpečnosti, pred commitom a nasadením, pri návrhu obsahu, kontrole cesty k rezervácii a odpovedi na recenziu, aj keď niekto chce gstack, ECC, Agency Agents alebo Superpowers nainštalovať.
 ---
 
 # Tím rolí (gstack, ECC a Agency Agents v našej praxi)
@@ -74,6 +74,7 @@ Pôvod: `../referencie-z-videi/references/naucene-z-videi.md`, záznam 19.
    PASS (ECC `santa-method`); potom majiteľ schváli **presný súbor** (`../youtube-shorts/scripts/schvalenie.py`,
    sha256; zmena po schválení schválenie ruší) a uverejní ho sám. Brána nenahrádza majiteľa.
 5. **Rozhodnutia patria majiteľovi.** Smer, obsah, rozsah, peniaze, uverejnenie: otázka vo formáte D1 nižšie.
+   Čo presne treba schváliť, je v časti „Schválenia majiteľa“.
    Ani zjavná oprava nie je schválená, kým neodpovie; ani zhoda viacerých agentov ho nenahrádza.
 6. **Dôkaz pred tvrdením.** „NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.“ (`ship/SKILL.md.tmpl:376`;
    pôvodne Superpowers `verification-before-completion/SKILL.md:17`); správa agenta o úspechu nie je dôkaz; čo sa
@@ -168,6 +169,72 @@ B) <možnosť> (odporúčané). Plus: … Mínus: …
 Jedno rozhodnutie = jedna otázka, najviac 4 možnosti. Prvá otázka po revízii plánu je režim rozsahu.
 Po troch neúspešných kolách brány ide otázka v tomto formáte s možnosťami rozdeliť, zmeniť prístup, prijať
 s obmedzením, odložiť a s históriou kôl (`references/sablony-rol.md`, časť 8; rozhoduje majiteľ, nie agent).
+
+## Schválenia majiteľa: peniaze, klienti, zverejnenie
+
+Veta z videa „schválenie pri všetkom, čo sa týka peňazí alebo klientov“ (záznam 20
+v `../referencie-z-videi/references/naucene-z-videi.md`) u nás nestačí. Najslabšie miesto je zverejnenie (push na
+`main`, verejné vetvy) a pribudli osobné údaje klientov vo vernostnej kartičke (`vernost/README.md`).
+
+Agent pripraví, majiteľ rozhodne a sám klikne. Súhlas sa zapíše do `ROZHODNUTIA.md` projektu: dátum, doslovné
+slová majiteľa a čo presne schválil. Pri súbore sa súhlas viaže na sha256 cez
+`../youtube-shorts/scripts/schvalenie.py`; po zmene súboru neplatí. Zhoda agentov ani brána dvoch recenzentov
+súhlas nenahrádzajú (zásady 4 a 5).
+
+**Schválenie vynucuje prostredie, nie prompt.** Veta „počkaj na schválenie“ v zadaní nič nezaručí. Spoľahlivé je:
+- agent má len nástroj na prípravu (koncept e-mailu, súbor v scratchpade), odoslanie robí človek;
+- pravidlo `ask` v nastaveniach (napr. `Bash(git push *)`). Poradie je „deny, then ask, then allow“, preto na to,
+  čo agent nesmie nikdy, patrí `deny` (code.claude.com/docs/en/permissions). Pravidlo pre Bash porovnáva len text
+  príkazu: push vnútri skriptu (`uloz.sh`) treba pokryť zvlášť alebo ho spúšťa len hlavná relácia;
+- hook `PreToolUse` alebo v Agent SDK `canUseTool`.
+
+V režime `dontAsk` sa otázka zmení na zamietnutie. Bez spravovaných nastavení a bez prihlásenia Team alebo
+Enterprise môže nainštalovaný mod s udalosťou `tool.check` obísť pravidlá `ask` aj `deny` a `canUseTool`
+(permissions, stav 2026-10-20). Taký mod bez vedomia majiteľa neinštalovať.
+
+**Peniaze**
+- [ ] Ceny a dĺžky služieb sa menia len v Booqme a web sa podľa nich zosúladí (`node tools/booqme-kontrola.mjs`),
+      nikdy naopak. Pri Barbershope 30 a GYM KLUB rovnako: zdroj ceny je rezervačný systém alebo web prevádzky.
+- [ ] Poukazy v Booqme (obrázok, cena, platnosť): pripravíme súbory a zoznam zmien, zmenu urobí majiteľ.
+- [ ] Platby (Stripe Connect), predplatné nástrojov, kredity za generovanie, licencované zábery a hudba, rozpočet
+      reklamy: rozhoduje a platí len majiteľ.
+- [ ] Každá cena v texte webu, videa alebo kartičky („Vstup 6 €“) je zo zdroja prečítaného v deň zmeny. Zmena
+      ceny je otázka D1, nie úprava.
+- [ ] Odmeny vernostnej kartičky (názov, počet bodov) určuje majiteľ v admine (`vernost/README.md`).
+
+**Klienti a ľudia**
+- [ ] Odpoveď na komentár, správu alebo recenziu: majiteľ schváli presný text a odošle ho sám.
+- [ ] Recenzie zákazníkov s menom na webe: majiteľ schváli zoznam (meno, text, zdroj, dátum) pred commitom.
+- [ ] Hromadná správa klientom vernostnej kartičky (admin, Správy): text pripravíme, odošle majiteľ alebo
+      recepcia, len klientom so súhlasom.
+- [ ] Zmena textu súhlasu v prihláške kartičky alebo v `vernost/ochrana-udajov.html`: len so súhlasom majiteľa.
+      Export klientov (CSV) sa nikam neposiela a nejde do repozitára ani do chatu.
+- [ ] Ľudia na fotkách a vo videách (tréneri, zákazníci, deti): súhlas osoby (pri deťoch rodiča) alebo záber
+      vynechať.
+- [ ] Oslovenie tretích strán (žiadosť o súhlas, e-mail, DM): text pripravíme, pošle majiteľ.
+
+**Zverejnenie**
+- [ ] Push alebo merge do `main` je nasadenie: GitHub Pages, a keď sú v GitHube FTP tajomstvá, aj headspa30.sk
+      vrátane `vernost/` (`.github/workflows/ftp.yml`). Vždy až po kontrole. Súhlas majiteľa pred každým pushom do
+      `main` je návrh, čaká na rozhodnutie majiteľa (otázka D1): `CLAUDE.md` ho dnes nežiada,
+      `../../head-spa-30/SKILL.md` ho pri HEAD SPA 30 žiada.
+- [ ] Nahratie na Forpsi ručne cez webFTP robí majiteľ (`../../head-spa-30/references/nahratie-na-forpsi.md`).
+- [ ] Short, reel, príspevok: brána dvoch recenzentov, potom schválenie presného súboru; uverejní majiteľ.
+- [ ] Náhľad pre klienta (github.io) má `noindex`; odkaz klientovi pošle majiteľ.
+- [ ] Push inej vetvy (denník, záplaty): repozitár je verejný, preto len texty bez osobných údajov a bez kópií
+      pracovných stromov; push robí hlavná relácia, nie agent.
+
+**Účty a dáta**
+- [ ] Žiadne prihlásenie, formulár, rezervácia ani objednávka za majiteľa. Heslá len v premenných prostredia
+      alebo v GitHub tajomstvách, nikdy v chate ani v repozitári.
+- [ ] Nový konektor (MCP) alebo služba s údajmi klientov: až po overení prevádzkovateľa a so súhlasom majiteľa.
+      Agent, ktorý číta cudzí obsah, nemá nástroj na odoslanie (zásada 8).
+
+**Smer a rozsah**
+- [ ] Nový vizuálny smer: 2 až 3 snímky a veta „staviam toto“ pred stavbou (`../workflowy/`, lekcia VISIONARY
+      LIVING).
+- [ ] Oprava nad 5 súborov, zmena rozsahu alebo oslabenie brány (test, prah Lighthouse): najprv otázka (zásady 3
+      a 7).
 
 ## Karta roly (keď pridávaš novú rolu)
 
@@ -301,6 +368,8 @@ a súhrny relácií do `~/.claude/session-data/`; s údajmi zákazníkov to nepo
 - [ ] Každý agent má spoločný blok, rolu, hranice a schému; kontrolóri needitujú.
 - [ ] Nálezy majú citát a istotu; pred úpravou ich overil skeptik.
 - [ ] Rozhodnutia o smere, obsahu, rozsahu, peniazoch a uverejnení išli majiteľovi ako D1, D2.
+- [ ] Pri peniazoch, klientoch, zverejnení a účtoch prešiel zoznam „Schválenia majiteľa“; súhlas je
+      v `ROZHODNUTIA.md` a vynucuje ho prostredie (pravidlo `ask` alebo nástroj len na prípravu), nie veta v zadaní.
 - [ ] Chyba: príčina pred opravou, regresný test padá bez opravy a prejde s ňou, stop po troch.
 - [ ] Bezpečnosť: tajomstvá, vstupy, cookies, osobné údaje, agenti a skills; „kompletne / čiastočne / neposúdené“.
 - [ ] Release: čerstvé dôkazy, 0 spustených testov = zlyhanie, žiadna oslabená brána, push bez `--force`;
