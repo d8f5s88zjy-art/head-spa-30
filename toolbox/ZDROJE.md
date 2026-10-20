@@ -128,7 +128,8 @@ licencia, aby bolo jasné, čo sa dá použiť komerčne.
 - gstack, github.com/garrytan/gstack, MIT (Copyright (c) 2026 Garry Tan), verzia 1.91.101.0, commit 47d639a: skills pre
   Claude Code ako roly (CEO, dizajnér, eng manažér, review, QA, ship, cso). Neinštalované (Bun, binárky, Stop hook
   v `~/.claude/settings.json`, vlastný prehliadač, telemetria). Prevzaté postupy po slovensky s krátkymi citátmi
-  a odkazom na súbor: `skills-z-praxe/tim-roly`; rozbor videa: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 8)
+  a odkazom na súbor: `skills-z-praxe/tim-roly`; rozbor videa: `skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 8).
+  Znenie Iron Law a „dôkaz pred tvrdením“, ktoré cituje, sú pôvodne zo Superpowers (časť „Nástroje pre Claude Code“ nižšie)
 - ECC (Everything Claude Code), github.com/affaan-m/ECC, MIT (Copyright (c) 2026 Affaan Mustafa), verzia 2.2.3, commit 76aaa77;
   8 skills z oblasti supply chain má Apache-2.0 a `osint-investigation` CC-BY-SA-4.0 (tie nepreberáme). Neinštalované
   (27 hookov predvolene zapnutých, zápis práce mimo projektu). Prevzaté myšlienky ako vlastný text: brána dvoch recenzentov
@@ -200,3 +201,20 @@ zakladá majiteľ, do žiadnej služby nedávame údaje klientov, heslá ani int
 | [poe.com](https://poe.com/) (Quora) | jedna aplikácia na chat s mnohými modelmi | denné body zadarmo (presné číslo Poe neuvádza), plány 4,99 až 249,99 USD/mes. ([plány](https://poe.com/subscription_plans)) | [zásady](https://poe.com/pages/privacy) dovoľujú poslať obsah poskytovateľom modelov; „plný štít“ podľa Privacy Center bráni tréningu – zdroje si odporujú | voliteľne na porovnanie 2–3 variantov hooku; len roboty s plným štítom, bez pamäte, nič citlivé |
 | [turbo.ai](https://www.turbo.ai/) (TurboLearn LLC) | študijná aplikácia: z materiálu poznámky, kvízy a „podcast“ | Free, Pro, Unlimited (ceny len v aplikácii) | [podmienky](https://www.turbo.ai/terms-of-service) z 27. 5. 2026: výstup len „for your own personal noncommercial purposes“; [zásady](https://www.turbo.ai/privacy-policy) dovoľujú tréning AI na údajoch; zakazujú nahrávať cudzie chránené texty | **na shorty nie** (licencia); nanajvýš majiteľ osobne na vlastné texty |
 | [learn-anything.xyz](https://learn-anything.xyz/) | komunitný katalóg tém s odkazmi (nie AI generátor) | zadarmo | zásady súkromia ani podmienky nemá; kód dnes nie je verejný (repozitár presmeruje na linsa-io/linsa bez licencie) | nízka priorita, len rozcestník pri technických témach; na pravidlá YouTube a pod. primárne zdroje |
+
+## Nástroje pre Claude Code z videa sadie.ontech (overené 2026-10-20)
+
+Video https://www.tiktok.com/@sadie.ontech/video/7697561993997225249 (17. 10. 2026) ich predáva ako „päť pluginov,
+ktoré treba nainštalovať“. Všetko sme len čítali, nič nenainštalovali ani nepripojili; rozbor a dôkazy:
+`skills-z-praxe/referencie-z-videi/references/naucene-z-videi.md` (časť 19).
+
+| Nástroj | Čo je | Licencia a stav | U nás |
+| --- | --- | --- | --- |
+| Superpowers, github.com/obra/superpowers | metodika z 15 procesných skills a hooku SessionStart pre Claude Code a ďalšie kódovacie nástroje; v oficiálnom marketplace, ale bez štítku „Anthropic verified“ | MIT (Copyright (c) 2025 Jesse Vincent), v7.0.0, commit bb92a77 | neinštalované; postupy ako vlastný text v `skills-z-praxe/tim-roly` (časti 1, 3b, 4, 7 a skeptik); odtiaľ je aj znenie Iron Law |
+| Caveman, github.com/JuliusBrussee/caveman | skill na stručný štýl výstupu; od verzie 4.0 CLI s lokálnym proxy na celú prevádzku Claude Code, telemetria predvolene zapnutá, výber modelu cez Caveman Cloud (po prihlásení, aj bezplatný plán, ktorý si zadania môže ponechať) | Apache-2.0 od v3.0.0 (predtým MIT a BSL 1.1), „Caveman“ je ochranná známka; v4.0.1, commit bad48a0 | neinštalované; pravidlo pre voľné polia správ agentov v `tim-roly` (spoločný blok); meno nepoužívať pre vlastnú vec |
+| Claude Code Setup, github.com/anthropics/claude-plugins-official (`plugins/claude-code-setup`) | oficiálny plugin Anthropicu, skill `claude-automation-recommender`: 1 až 2 návrhy automatizácie na kategóriu | Apache-2.0, 1.0.0, klon a0b04d9 | neinštalované (v cloudovej relácii sa nenačíta, `CLAUDE.md` nečíta); postup „signál → automatizácia“ v `tim-roly`, časť 3 |
+| `/security-review`, príkaz vstavaný v Claude Code; analýza z github.com/anthropics/claude-code-security-review | bezpečnostná revízia diffu vetvy proti `origin/HEAD` | príkaz je súčasť Claude Code; súbor s analýzou v repozitári MIT (Copyright (c) 2025 Anthropic), commit 0c6a49f | **používame** ako bránu pred nasadením citlivých zmien: `skills-z-praxe/testy-a-nasadenie`, časť 8a |
+| Claude Code Security Review (GitHub Action), ten istý repozitár | revízia diffu pull requestu s komentármi, vlastný API kľúč | MIT; posledný commit 2026-02-11, predvolený model vyradený | nepoužívame: nemáme pull requesty, platený kľúč, podľa kódu zelená kontrola bez skenu |
+| plugin `claude-security` (oficiálny marketplace Anthropicu) | sken celého repa alebo časti, overovanie nálezov, patche len ako návrh | proprietárna licencia Anthropicu, v0.12.0, beta | neskopírované; voliteľne lokálne nad `vernost/` po súhlase majiteľa s nákladmi |
+| Claude Security (claude.ai/security) | hostované skeny repozitárov z GitHubu | len Claude Enterprise, verejná beta od 2026-04-30 | pre nás nedostupné |
+| brány k cudzím modelom a free tierom s maskovaním predplatného (nástroj č. 1 z videa) | samostatný server, ktorý drží API kľúče, prihlásenia predplatných a cookies webových rozhraní a smeruje Claude Code na iné modely | kód MIT, poskytovatelia za ním majú vlastné podmienky | **nepoužívame**: proti podmienkam Anthropicu (sprostredkovanie prihlásení, maskovanie klienta, obchádzanie ochrany), kód a texty klientov k neznámym poskytovateľom, kritická zraniteľnosť servera so všetkými kľúčmi; bez mena a odkazu (`skills-z-praxe/referencie-z-videi/references/zapis-referencie.md`). Pri limitoch `/model`, effort, Haiku na jednoduché subagenty, vlastný API kľúč z Claude Console |

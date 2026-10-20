@@ -1,6 +1,6 @@
 ---
 name: referencie-z-videi
-description: Ako sa poučiť z odkazu na krátke video (TikTok vm.tiktok.com, Instagram reels, shorts) bez hádania obsahu. Presmerovanie na kanonickú adresu, oEmbed, JSON stránky __UNIVERSAL_DATA_FOR_REHYDRATION__, titulky WebVTT, stiahnutie videa s cookies a Referer, reel cez yt-dlp (bez titulkov, text v obraze zo snímok skriptom scripts/snimky_text.py), prehľad snímok cez ffmpeg a zápis toho, čo si z videa berieme (17 rozobratých videí v references/naucene-z-videi.md). Zásada sťahovania (references/stahovanie-a-pravo.md, scripts/vycisti_info.py) je len verejné video na interný rozbor, nič nezverejniť, cudzie video nikdy ako materiál, YouTube nesťahovať, po rozbore zmazať. Použi, keď niekto pošle TikTok, reel alebo video ako referenciu pre web, animácie, texty, hook, shorty či Instagram, alebo keď video odkazuje na GitHub repozitár, skill či konektor. Hotový skript scripts/tiktok.sh.
+description: Ako sa poučiť z odkazu na krátke video (TikTok vm.tiktok.com, Instagram reels, shorts) bez hádania obsahu. Presmerovanie na kanonickú adresu, oEmbed, JSON stránky __UNIVERSAL_DATA_FOR_REHYDRATION__, titulky WebVTT, stiahnutie videa s cookies a Referer, reel cez yt-dlp (bez titulkov, text v obraze zo snímok skriptom scripts/snimky_text.py), prehľad snímok cez ffmpeg a zápis toho, čo si z videa berieme (19 záznamov v references/naucene-z-videi.md: 18 videí a jeden karusel). Zásada sťahovania (references/stahovanie-a-pravo.md, scripts/vycisti_info.py) je len verejné video na interný rozbor, nič nezverejniť, cudzie video nikdy ako materiál, YouTube nesťahovať, po rozbore zmazať. Použi, keď niekto pošle TikTok, reel alebo video ako referenciu pre web, animácie, texty, hook, shorty či Instagram, alebo keď video odkazuje na GitHub repozitár, skill či konektor. Hotový skript scripts/tiktok.sh.
 ---
 
 # Referencie z videí (TikTok a Instagram reels)
@@ -258,6 +258,8 @@ Titulky prečítaj celé a porovnaj s obrazom. Zapíš podľa `references/zapis-
 | video ukazuje staré verzie nástrojov | zábery sú staršie ako príspevok (V9: Claude Code 2.1.89 a framer-motion 12.38.0 z marca 2026, video zo septembra) | verzie zo snímky porovnaj s `time` v npm registry |
 | „jeden riadok“ alebo „jeden klik“ | v zábere je viac krokov (V9: `[Pasted text #1 +710 lines]`, PATH, npm, platený plán) | hľadaj snímku vloženia a výpis terminálu; pomenuj všetky kroky |
 | „3 kroky“ vyzerajú ako jeden beh | kroky sú z rôznych relácií (V10: 9 súborov .mov v kroku 2, v projekte 2 fotky) | porovnaj počty súborov, názvy projektov a obsah medzi krokmi, kým napíšeš „ukazuje postup“ |
+| pri nástroji je obrázok, ktorý vyzerá ako jeho materiál | cudzia infografika (záznam 19: „42 essential Claude skills“ s vodoznakom charliehills.substack.com pri Superpowers) | čítaj vodoznak a podpis; porovnaj s repozitárom a stránkou projektu |
+| video dáva pod jedno meno viac nástrojov („Claude Security“) | v obraze sú iné nástroje ako v reči (záznam 19: GitHub Action a aplikácia pre Enterprise, plugin s tým menom v obraze nie je) | rozpíš, čo je čo, a každé tvrdenie over pri konkrétnom nástroji |
 | video ukazuje vlastný konektor (remote MCP) | adresa servera v dialógu „Add custom connector“ (V10) | over bez prihlásenia: POST `initialize` (čaká sa 401) a `/.well-known/oauth-protected-resource`; účet nezakladaj, nástroje bez účtu nevidno |
 
 ## Čo sme sa naučili z doterajších videí
@@ -305,6 +307,11 @@ Podrobne v `references/naucene-z-videi.md`. Stručne:
   `../youtube-shorts/scripts/strih_podla_referencie.py` (z referencie len časy strihov) a porovnanie s editormi
   cez konektory (Shorty, Descript MCP) v `../youtube-shorts/references/strih-podla-referencie.md`.
 - Pre čítanie reelov bez titulkov vznikol `scripts/snimky_text.py`; tri reels (V8 až V10) sú prvé záznamy z Instagramu.
+- **sadie.ontech** („5 must-have Claude plugins“, 67 s, záznam 19): zo Superpowers rozpis úloh, kontrola staviteľom,
+  súlad so zadaním a tabuľka dôkazov do `../tim-roly/`, `/security-review` ako brána pred nasadením citlivých zmien
+  (`../testy-a-nasadenie/`, časť 8a), pravidlá pre voľné polia správ (Caveman) a „signál → automatizácia“ (Claude Code
+  Setup). Prvý nástroj z videa nie je plugin, ale brána k cudzím modelom proti podmienkam Anthropicu (len kategória
+  v `toolbox/ZDROJE.md`); „Claude Security“ sú štyri rôzne nástroje a žiadny diery sám neopraví.
 - Spoločná lekcia pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš
   a ako rezervovať.
 
@@ -321,7 +328,8 @@ Podrobne v `references/naucene-z-videi.md`. Stručne:
   z `video.info.json` (yt-dlp); len štandardná knižnica.
 - `toolbox/skills-z-praxe/referencie-z-videi/references/stahovanie-a-pravo.md`: kedy a ako sťahovať, červené
   čiary, autorský zákon, Trestný zákon, podmienky YouTube, TikToku a Mety, hodnotenie nášho postupu, otázka D1.
-- Čo z videí prešlo inam: `../youtube-shorts/` (formáty, fámy, strih podľa referencie), `../tim-roly/` (Agency Agents),
+- Čo z videí prešlo inam: `../youtube-shorts/` (formáty, fámy, strih podľa referencie), `../tim-roly/` (Agency Agents,
+  Superpowers), `../testy-a-nasadenie/` (bezpečnostná revízia),
   `../3d-modely-na-web/` (TRELLIS.2), `../rychly-web/` (pohyb bez knižnice), `../../skills-animacie/` (UI/UX Pro Max).
 
 ## Kontrolný zoznam

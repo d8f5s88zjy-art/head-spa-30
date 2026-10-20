@@ -7,7 +7,7 @@ bežia, a nezávisle overený proti nim. Keď sa kód neskôr zmení, platí kó
 | Skill | Kedy siahnuť |
 | --- | --- |
 | [`instagram-salon`](instagram-salon/SKILL.md) | príspevok, reel, odpoveď na komentár, bio, týždenný plán alebo rozbor cudzieho reelu pre Instagram salónu; reklamy a dopyty bez automatiky (Ad Library, UTM, právne hranice); pripravuje len návrhy |
-| [`referencie-z-videi`](referencie-z-videi/SKILL.md) | niekto pošle odkaz na TikTok alebo Instagram reel a chce, aby si sa z neho poučil; text z obrazu bez titulkov (`snimky_text.py`), zásada sťahovania a čistenie metadát (`vycisti_info.py`), 17 rozobratých videí |
+| [`referencie-z-videi`](referencie-z-videi/SKILL.md) | niekto pošle odkaz na TikTok alebo Instagram reel a chce, aby si sa z neho poučil; text z obrazu bez titulkov (`snimky_text.py`), zásada sťahovania a čistenie metadát (`vycisti_info.py`), 19 záznamov (18 videí a karusel) |
 | [`film-z-fotiek`](film-z-fotiek/SKILL.md) | pozadie webu ako film zo skutočných fotiek s hĺbkou, strihy medzi zábermi, dvere v úvode |
 | [`video-a-sekvencie`](video-a-sekvencie/SKILL.md) | video pri skrolovaní seká, treba plynulý pohyb na 60 až 240 Hz alebo slučku bez švu |
 | [`rychly-web`](rychly-web/SKILL.md) | Lighthouse, LCP, CLS, FCP, sekanie pri skrolovaní, audit výkonu; nástup pri skrole a svetlo bez knižnice (vzor `assets/pohyb/` s testom), Motion a komponenty z 21st.dev do vanilla |

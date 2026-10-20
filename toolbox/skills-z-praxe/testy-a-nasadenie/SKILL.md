@@ -1,6 +1,6 @@
 ---
 name: testy-a-nasadenie
-description: Testy statického webu v prehliadači (Playwright, Chromium, headless, SwiftShader) a nasadenie na GitHub Pages, do samostatného repozitára alebo cez FTP. Použi pri dymovom teste (smoke test) pred nasadením, pri snímkach obrazovky (screenshots) telefónu a počítača, pri teste WebGL filmu, šírky na telefóne, CLS a behu bez JavaScriptu, pri nestabilných testoch (flaky, čakania, timeout), pri nasadení cez git (vetva, fast-forward do main, GitHub Actions, admin) a pri overení naživo (deploy, cache, .htaccess).
+description: Testy statického webu v prehliadači (Playwright, Chromium, headless, SwiftShader) a nasadenie na GitHub Pages, do samostatného repozitára alebo cez FTP. Použi pri dymovom teste (smoke test) pred nasadením, pri snímkach obrazovky (screenshots) telefónu a počítača, pri teste WebGL filmu, šírky na telefóne, CLS a behu bez JavaScriptu, pri nestabilných testoch (flaky, čakania, timeout), pri nasadení cez git (vetva, fast-forward do main, GitHub Actions, admin), pri bezpečnostnej revízii citlivých zmien pred nasadením (/security-review, admin, vernost, formuláre, workflowy) a pri overení naživo (deploy, cache, .htaccess).
 ---
 
 # Testy v prehliadači a nasadenie
@@ -16,6 +16,8 @@ Zásada: **najprv rýchla cielená kontrola, celá sada až potom; nasadzuj po z
 - Treba snímky telefónu a počítača na posúdenie okom (úvod, titulné karty, strihy, prechody, ostrosť).
 - Test raz prejde a raz nie, alebo čaká naslepo (`waitForTimeout`) a zlyháva na pomalom kreslení.
 - Nasadenie na Pages z pracovnej vetvy, do samostatného repozitára alebo balík pre FTP hosting.
+- Pred nasadením zmien v `admin/`, `vernost/`, formulároch, workflowoch alebo rezervačných odkazoch: bezpečnostná
+  revízia (časť 8a).
 
 Lighthouse, plynulosť skrolu a váhu stránky rieši skill `rychly-web`; samotný WebGL film skill `film-z-fotiek`.
 
@@ -182,6 +184,48 @@ git checkout main && git merge --ff-only <vetva> && git push origin main
 
 Podrobne, vrátane overenia a commitov: [references/nasadenie.md](references/nasadenie.md).
 
+## 8a. Bezpečnostná revízia pred nasadením citlivých zmien
+
+Nástroj: vstavaný príkaz Claude Code `/security-review` (v relácii aj ako skill `security-review`). Podľa README
+repozitára github.com/anthropics/claude-code-security-review (`README.md:141`) robí tú istú analýzu ako súbor
+`.claude/commands/security-review.md` tamže (MIT, Copyright (c) 2025 Anthropic, commit 0c6a49f), prečítaný 2026-10-20
+(záznam 19 v `../referencie-z-videi/references/naucene-z-videi.md`); citáty nižšie sú z toho súboru, vstavaný text
+sme s ním riadok po riadku neporovnali. Príkaz nad naším repozitárom zatiaľ ostro nebežal; pri prvom behu zapíš
+priebeh a čas do kontrol.
+
+**Kedy:** pred `git merge --ff-only` do `main`, keď diff zasahuje do:
+- `admin/` (token GitHubu v prehliadači, zápis do `main` cez API, `innerHTML` v `admin/index.html`);
+- `vernost/` (PHP a SQLite na hostingu, meno, telefón a e-mail klientov, heslo adminu, verejná registrácia):
+  najväčšia plocha útoku v repozitári;
+- formulárov (`zentury/index.html`, `visionary-living/kontakt.html`) a nových externých skriptov;
+- `.github/workflows/*.yml` (tajomstvá `FTP_*`, `VERNOST_*`);
+- `innerHTML` s dátami zvonka a rezervačných odkazov (`data-booking-link`, `data-booqme`, doména `booqme.app`).
+
+Pri zmene textu, ceny, fotky alebo štýlu ho netreba.
+
+**Postup:**
+1. Raz v každom klone `git remote set-head origin main` (len lokálne nastavenie). Príkaz porovnáva vetvu
+   s `origin/HEAD`; bez neho skončí chybou „ambiguous argument 'origin/HEAD'“. Tak to 2026-10-20 bolo
+   v `/home/user/head-spa-30` aj v pracovnom strome toolboxu, hoci `origin/main` majú.
+2. Nové súbory aspoň `git add`: príkaz číta `git diff` proti `origin/HEAD` a nesledované súbory nevidí.
+3. `/security-review` na pracovnej vetve. Má povolené len čítanie a git na čítanie (`security-review.md:2`), nič
+   nemení; kandidátov hľadá jeden agent, každý nález preverí ďalší a nechá len istotu 8 z 10 a vyššie (`:183-189`).
+4. Nálezy prejdú skeptikom (vzor 4 v `../workflowy/SKILL.md`) a zapíšu sa do schémy `BEZPECNOST`
+   (`../tim-roly/references/sablony-rol.md`, časť 6) so stavom **čiastočne**: posúdený je len diff a výsledky sa
+   medzi behmi líšia. Prázdny výsledok znamená „žiadne podložené nálezy v posúdenom rozsahu“, nikdy „bezpečné“.
+5. Opravu robí hlavná relácia ako samostatnú zmenu na vetve, potom znova `/security-review` a dymový test.
+   Nič sa neaplikuje samo.
+6. Ručne prejdi, čo príkaz zámerne vylučuje (`security-review.md:138-170`): rate limiting a hádanie hesla vo
+   `vernost/`, DoS, chýbajúce hlavičky a CSP, open redirect, tajomstvá v `.md` a v histórii (vzory grepu
+   v `sablony-rol.md`, časť 6, aj nad `git log -p`), cookies a súhlas, osobné údaje v médiách.
+
+**Čo nepoužívame:** GitHub Action `anthropics/claude-code-security-review` (nemáme pull requesty, potrebuje platený
+API kľúč, podľa kódu dnes s predvolenými nastaveniami dá zelenú kontrolu bez skenu, „not hardened against prompt
+injection attacks“, `README.md:45`) a hostovaný Claude Security (len Enterprise). Plugin `claude-security`
+(Anthropic, beta, proprietárna licencia) prejde celé repo alebo jeho časť a patche len navrhuje; v cloudovej relácii
+sa nenačíta. Voliteľne raz nad `vernost/`, len v lokálnej relácii a po súhlase majiteľa s nákladmi; priečinok
+`CLAUDE-SECURITY-*` necommitovať.
+
 ## 9. Samostatný repozitár a FTP
 
 - **Samostatný repozitár:** `bash source/tools/nasad-barbershop30.sh "BARBERSHOP 30: čo sa zmenilo"` (z koreňa
@@ -219,6 +263,8 @@ Podrobne, vrátane overenia a commitov: [references/nasadenie.md](references/nas
 - [ ] Snímky telefónu aj počítača pozreté okom (karty, strihy, úvod), nie len čísla.
 - [ ] Nová stránka alebo priečinok v koreni pridaný do `cp` v `pages.yml` (pre FTP aj v `tools/ftp-balik.sh`).
 - [ ] Commit po slovensky s predponou projektu, bez podpisov a bez zmienky o AI; žiadne heslá ani tokeny.
+- [ ] Diff v `admin/`, `vernost/`, formulároch, `.github/workflows/` alebo rezervačných odkazoch: `/security-review`
+      (po `git remote set-head origin main`), nálezy cez skeptika, v správe stav „čiastočne“ (časť 8a).
 - [ ] `git merge --ff-only` do `main` a push; po minúte `curl` 200 a zhodný `md5sum` skriptov a štýlov.
 - [ ] Naživo `dymovy-test.mjs --url=`, snímky s `?v=`; Lighthouse naživo (skill `rychly-web`).
 - [ ] Výsledok s hashom commitu a dátumom zapísaný do kontrol (`docs/CHECKS.md`).

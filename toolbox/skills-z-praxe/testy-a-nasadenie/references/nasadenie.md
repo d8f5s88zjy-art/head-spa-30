@@ -39,6 +39,7 @@ Spúšťa sa pri pushi do `main` (a ručne `workflow_dispatch`), `concurrency: p
 git fetch origin main && git merge origin/main            # 0. admin (admin/) ukladá priamo do main
 node tools/build.mjs                                      # HEAD SPA 30: po zmene CSS/JS (*.min.* sú len výstup)
 git add <súbory> && git commit -m "HEAD SPA 30: ..."      # commit na pracovnej vetve
+# citlivá zmena (admin/, vernost/, formuláre, workflowy, odkazy): /security-review, SKILL.md časť 8a
 git push -u origin <vetva>                                # 1.
 git checkout main && git merge --ff-only <vetva> && git push origin main   # 2.
 # 3. overiť naživo (Pages beží zhruba minútu)

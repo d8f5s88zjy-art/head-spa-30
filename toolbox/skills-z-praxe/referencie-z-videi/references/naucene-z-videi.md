@@ -1,6 +1,6 @@
 # Čo sme sa naučili z referenčných videí (október 2026)
 
-Sedemnásť videí a jeden karusel (záznam 18), z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu,
+Osemnásť videí a jeden karusel (záznam 18), z ktorých niečo prešlo do projektu. Pri každom: čo video hovorí (z oEmbed popisu,
 titulkov alebo textu v obraze), čo sme si zobrali, kam to prešlo a čo nie. Tvrdenia autorov sú ich tvrdenia,
 nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-roly` zodpovedá záznamom 8 až 17
 (V1 = 8, V2 = 9, V3 = 10, V4 = 11 … V10 = 17); záznamy 15 až 17 sú reels z Instagramu (bez titulkov, text zo snímok).
@@ -661,6 +661,167 @@ nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-rol
   údaje klientov do ktorejkoľvek služby, zakladanie účtov za majiteľa.
 - Lekcia: pri karuseli obrázkov pýtať od majiteľa snímky obrazovky; popis príspevku nestačí na istotu, o ktorý web ide.
 
+## 19. sadie.ontech: „5 must-have Claude plugins“ (brána k cudzím modelom, Superpowers, Caveman, Claude Code Setup, Claude Security)
+
+- Adresa: https://www.tiktok.com/@sadie.ontech/video/7697561993997225249 (67,48 s, 1080×1920, HEVC, titulky eng-US ASR,
+  uverejnené 2026-10-17 09:11 UTC, 20 900 pozretí, 811 páči sa, 54 komentárov, 290 zdieľaní a 1 090 uložení pri
+  stiahnutí 2026-10-20 11:05 UTC, pozreté 2026-10-20). Ten istý účet ako záznam 9.
+- Popis autora: „Claude just got supercharged with five must-have plugins for unlimited AI coding power and security.
+  See how [brána k cudzím modelom – názov vynechaný], Superpowers, Caveman, Claude Code Setup, and Claude Security boost efficiency, cut token use, and
+  protect your projects.“ Výzvy „Comment PLUGINS to get the links“ a „Save this free tool and follow“ ignorované.
+- Titulky (po slovensky): päť pluginov, ktoré „treba nainštalovať do Claude“. (1) brána k cudzím modelom (názov vynechávame, pozri zapis-referencie.md) dá Claude Code „takmer
+  neobmedzené používanie“ pripojením k vyše 300 poskytovateľom API; keď dôjde limit, prepne na „ďalší najlepší model“,
+  „až 1,6 miliardy tokenov zadarmo každý mesiac“. (2) Superpowers spraví z jedného agenta „celý vývojový tím“:
+  brainstorming, plán, testy a revízia vlastného kódu skôr, ako ho uvidíš. (3) Caveman: Claude hovorí ako jaskynný
+  človek, bez výplňových slov a zdvorilostí, „presne ten istý kód“ pri „oveľa menej“ spálených tokenoch. (4) Claude Code
+  Setup, „oficiálny plugin Anthropicu“, preskenuje celý kód a odporučí hooky, skills, subagentov a MCP servery.
+  (5) Claude Security, „oficiálny bezpečnostný skener Anthropicu“, prehľadá kód, nájde zraniteľnosti a „opraví diery“
+  skôr, ako má hacker šancu. Chyby prepisu: „omniroot“ = názov brány (karta v 3,8 s), „300 A. I A. P. I. Providers“ =
+  „300 AI API providers“, „gets a chance to comment. Plugins to get the links“ = „… a chance. Comment PLUGINS to get the
+  links“ (titulok „comment“ v 62,1 s).
+- Obraz (hárok po 1 s, snímky v detaile): 0 až 1,80 s hore pixelová tabuľa „NOW SHOWING“, v ktorej sa vypíše „FABLE“,
+  dole moderátor, na švíku štítok „5 MUST-HAVE CLAUDE PLUGINS“; 1,80 až 3,83 s tmavý ilustračný záber človeka pri
+  monitore; karty „#1 (brána)“ až „#5 Claude Security“ na modrom pozadí v 3,83 / 19,33 / 31,53 / 41,70 / 52,17 s.
+  **Brána k cudzím modelom** (5,30 až 19,33 s): snímky rozhrania Claude („Analyzing your request“, zoznam úloh), web projektu
+  („90+ free“, „FREE Claude / GPT / Gemini“, „290 providers“, „15–95% tokens“), schéma „Your IDE / CLI → brána“
+  so „Smart Router“ a úrovňami Subscription, API key, Cheap, Free, panel „~1.53B FREE TOKENS / MONTH · STEADY“ a „up to
+  ~2.15B … signup credits“ pod titulkom „1.6 billion“, zoznam bezplatných modelov (Mistral Large 3, Llama 3.3 70B,
+  Llama 4 Scout …). **Superpowers** (21,53 až 31,53 s): infografika „Build Your Whole Team with 42 essential Claude
+  skills“ s vodoznakom charliehills.substack.com, potom terminál s promptom „use the superpowers skills for
+  structure…“ a plánom `docs/superpowers/plans/2026-07-14-rate-limiting.md` nad ilustračným záberom notebooku.
+  **Caveman** (32,87 až 41,70 s): ponuka `/caveman` lite / full / ultra, sekcia „Auto-Clarity“ s príkladom
+  `DROP TABLE users`, terminál Claude Code v2.1.150 s odpoveďou v plných vetách. **Claude Code Setup** (43,50 až
+  52,17 s): karta „Claude Automation Recommender · Anthropic“, README „Claude Code Setup Plugin“ so zvýraznenými riadkami.
+  **Claude Security** (53,73 až 65,93 s): README GitHub Action „Claude Code Security Review“ (záložka MIT license),
+  aplikácia „Get started with Claude Security … Start a scan“, výsledok `acme-corp/hookrelay` so štyrmi nálezmi a kurzor
+  na „Suggest fix“, dole ilustračný muž v kapucni pri monitoroch; 65,93 s moderátor („paid“).
+- Formát (merané `strihy.sh`, `ebur128`, `silencedetect`): 24 záberov pri prahu 0,12 (17 pri 0,25), medián 2,28 s,
+  prvá zmena 1,80 s, 20,5 strihu za minútu; najdlhšie zábery 5,97 s (panel tokenov) a 6,50 s (terminál Superpowers).
+  Reč od 0,02 s, 203 slov, 181 slov za minútu, žiadne ticho nad 0,25 s pod -35 dB; -18,1 LUFS, -4,9 dBTP. Moderátor
+  len ~5 % času (0 až 1,80 a 65,93 až 67,48 s), zvyšok snímky obrazovky, karty a ilustračné zábery. Titulky po jednom
+  slove v tmavej pilulke celý čas, na švíku delenej obrazovky (y ≈ 960), pri kartách nižšie. Hook je zoznam s číslom
+  („These are the top five plugins…“), nie výsledok; karty #1 až #5 (1,3 až 2,2 s) ukazujú postup, každá položka
+  10 až 16 s; druhý hook nie je, len „Finally“ v 52,1 s (77 %); výzva v 62,1 s.
+- Overené 2026-10-20 (klony len na čítanie, nič spustené, nainštalované ani pripojené; `gh api` vrátil 403, čísla
+  hviezd a inštalácií zo stránok):
+  - **Brána k cudzím modelom** (názov a odkaz vynechávame podľa pravidla zápisu; verejný repozitár, MIT len na kód, verzia 3.8.53): **nie je plugin**. Je to
+    samostatný server (npm, Docker, Electron), na ktorý sa Claude Code presmeruje zmenou adresy API; prekladá formáty
+    pre 239 chatových poskytovateľov („375 registered“ ráta aj médiá, vyhľadávanie a lokálne služby; video 290, web 352)
+    a pri chybe 429 alebo vyčerpanej kvóte prejde na ďalší **pripojený** cieľ. Predvolené `auto` drží posledný úspešný
+    model, nie „najlepší“; ďalší v poradí je spravidla slabší alebo bezplatný. Skutočný model je v poli `model` odpovede
+    a v hlavičke (voľba ho vie prepísať aj tam); či ho Claude Code ukáže, alebo ďalej ukazuje nastavené meno, sme
+    v rozhraní neoverili. Anthropic: „doesn't support routing Claude Code to non-Claude models through any gateway“
+    (code.claude.com/docs/en/llm-gateway). **Tokeny zadarmo nedáva projekt**: README „estimated aggregate across
+    separately eligible third-party free tiers, not a token grant from [the gateway]“, účet u každého poskytovateľa zvlášť;
+    z ~1,62 mld. je ~1,00 mld. (62 %) jediný pool Mistral Free mode, na ktorého vstupoch aj výstupoch môže Mistral
+    trénovať (s možnosťou odhlásenia) a jeho limit overil len správca v konzole (2026-09-02); jednorazové kredity
+    zdvihnú prvý mesiac na ~2,22 mld.; video ~1,53 mld., web 1,51 mld. Server drží všetky API kľúče, prihlasovacie
+    tokeny predplatných a cookies webových rozhraní; „stealth“ vrstva maskuje požiadavky iných klientov ako Claude Code
+    a rieši ochranu Cloudflare Turnstile na claude.ai. To ide proti podmienkam Anthropicu
+    (code.claude.com/docs/en/legal-and-compliance: „developers may not collect, store, or intermediate Claude.ai
+    credentials or session tokens“; Consumer Terms: zdieľanie účtu, automatizovaný prístup len cez API kľúč, obchádzanie
+    ochranných opatrení); projekt sám radí Claude Web medzi poskytovateľov „with real ban risk“ a 17 položiek katalógu
+    značí tos „avoid“ (aj Antigravity, cez ktorý ide „FREE Claude“ z obrazu). Bezpečnosť: kritické RCE (CVE-2026-88062,
+    CVSS 4.0 9,5, zverejnené 2026-09-10; bez prihlásenia pri vypnutom `requireLogin` alebo počas prvého nastavenia;
+    oprava #11028 je v changelogu 3.8.50, databáza GitHubu vedie ako zraniteľné verzie do 3.8.50 vrátane) na serveri,
+    ktorý drží všetky kľúče naraz. „RTK + Caveman, −89 % avg“ sú čísla projektu, nemerali sme ich.
+  - **Superpowers** (github.com/obra/superpowers, MIT, Copyright (c) 2025 Jesse Vincent, v7.0.0, commit bb92a77): plugin
+    pre Claude Code a ďalšie kódovacie nástroje (nie pre chat). Je v oficiálnom marketplace Anthropicu s pripnutým
+    commitom, ale bez štítku „Anthropic verified“; Anthropic obsah pluginov nekontroluje (README marketplace).
+    15 procesných skills a hook SessionStart, ktorý do každej relácie vloží `using-superpowers` („even a 1% chance
+    a skill might apply … you ABSOLUTELY MUST invoke the skill“). Role tímu nemá; viac agentov len pri
+    subagent-driven-development (nový implementátor na úlohu, recenzent s dvoma verdiktmi, záverečný recenzent).
+    Brainstorming po jednej otázke a nič sa nestavia pred schválením, plán do `docs/superpowers/plans/`, testy pred
+    kódom („NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST“), recenzia čerstvým recenzentom bez histórie relácie: sedí;
+    „before you even see it“ platí len pre kód, návrh a plán človek schvaľuje vopred. Ukážka je skutočná (dátum
+    13. 7. 2026 = v6.1.1), na obraze sú však aj cudzie nástroje (plugin claude-mem, Codex). **Infografika „42 essential
+    Claude skills“ k projektu nepatrí**: vodoznak charliehills.substack.com, organigram „like a real company“,
+    Superpowers je v nej jedna dlaždica „14-skill power pack“; autora infografiky sme neoverili (rovnaký koncept
+    uverejnil v júli 2026 Hamza Khalid). Tokeny: issues #2551 (implementátori v opravných kolách na 300k+ kontextu),
+    #1988 (úloha ~4 h, 120,7 mil. tokenov), #1152 (v Codexe jednoduchý plán minul celý 5-hodinový limit). Pôvod: znenie
+    Iron Law a „dôkaz pred tvrdením“, ktoré v `tim-roly` citujeme z gstacku, sú v Superpowers od prvého commitu dd013f6
+    (2025-10-09); gstack začína 2026-03-11 a Superpowers neuvádza.
+  - **Caveman** (github.com/JuliusBrussee/caveman, Apache-2.0 od v3.0.0, „Caveman“ je ochranná známka, v4.0.1, commit
+    bad48a0, jeden udržiavateľ): nie je v oficiálnom marketplace ani od Anthropicu. Skill je pokyn na štýl výstupu
+    (~1 160 vstupných tokenov, „Input reduction from the skill: 0%“); jaskynnú reč dnešný `SKILL.md` zakazuje („Never
+    add a word to sound caveman“), je to stručná technická angličtina podľa ASD-STE100. Ponuka lite / full / ultra je
+    zastaraná (od 2026-10-02 `/caveman`, `/ultracave`, `/megacave`), „Auto-Clarity“ je dnes „When to break the rules“
+    a je to veta v pokyne, nie poistka. Úspora výstupu na 10 otázkach (claude-opus-5-5): −41 % proti ničomu, ale −3 %
+    (medián) proti jednej vete „Answer concisely.“ (merané na pravidlách 3.1.0, zatiaľ nezopakované); účet agenta je
+    podľa projektu „mostly input and cache re-reads, which an output-style rule cannot touch“ (cudzie A/B testy: výstup
+    −44 %, cena +0,06 %; výstup 0,3 % všetkých tokenov). JetBrains (86 úloh): výstup −8,5 %, kvalita bez rozdielu
+    (p = 0,82); „exact same code“ je len pokyn a projekt tvrdenie o rovnakej kvalite nezverejňuje. Od 4.0 je hlavná
+    inštalácia CLI s lokálnym proxy na celú prevádzku Claude Code, telemetriou zapnutou predvolene a výberom modelu cez
+    Caveman Cloud (po prihlásení; na bezplatnom pláne si zadania vrátane `CLAUDE.md` môže ponechať). Terminál v 38 až
+    41 s nie je v štýle caveman (plné vety), k ukážke nepatrí.
+  - **Claude Code Setup** (anthropics/claude-plugins-official, `plugins/claude-code-setup`, Apache-2.0, 1.0.0, autor
+    Anthropic, štítok „Anthropic verified“, 195 067 inštalácií; klon a0b04d9): „oficiálny“ platí. Je to jeden skill
+    `claude-automation-recommender`, len text, nič nespúšťa. „Scans your entire code base“ je pár príkazov `ls`, `cat`
+    a `grep` nad manifestmi; `CLAUDE.md` ani `AGENTS.md` nečíta (issue #6029). Odporučí 1 až 2 položky na kategóriu
+    (MCP, skills, hooky, subagenti, pluginy) z pevných tabuliek pre npm, Python, Go a Rust a z webového hľadania, nič
+    nenastaví; „read-only“ drží len text pokynu, pole `tools:` skill nepozná (issue #6369). Karta v 44 s je výrez
+    z obrázka v repozitári so starším menom pluginu a príkazom na balík `@anthropic-ai/context7-mcp`, ktorý na npm
+    neexistuje (HTTP 404, 2026-10-20; správny je `@upstash/context7-mcp`); README stále uvádza „Slash Commands“, zlúčené
+    do skills 2026-01-20. V cloudovej relácii (claude.ai/code) sa pluginy nenačítajú. Suchý beh podľa jeho tabuliek nad
+    týmto repozitárom: takmer všetko, čo by navrhol, máme (GitHub MCP, Playwright a dymový test, roly, `/security-review`);
+    jediné nové nápady (hook, ktorý po úprave zdrojov spustí `node tools/build.mjs`, a hook, ktorý zastaví správu commitu
+    s podpisom) plynú z `CLAUDE.md`, ktorý skill nečíta.
+  - **Claude Security**: pod jedným menom **štyri nástroje Anthropicu**: GitHub Action
+    `anthropics/claude-code-security-review` (MIT, Copyright (c) 2025 Anthropic, commit 0c6a49f, len diff pull requestu,
+    vlastný API kľúč, posledný commit 2026-02-11), vstavaný `/security-review` (diff vetvy proti `origin/HEAD`), plugin
+    `claude-security` (oficiálny marketplace, v0.12.0, beta, proprietárna licencia; celé repo, časť alebo diff)
+    a hostovaný Claude Security na claude.ai (len Enterprise, verejná beta od 2026-04-30). V obraze sú Action
+    a hostovaná aplikácia, plugin nie; `acme-corp/hookrelay` je ukážkový príklad Anthropicu (tie isté štyri nálezy sú na
+    claude.com). „Fixes the holes“ neplatí pre žiadny z nich: navrhujú patch, aplikuje človek („Patches are never
+    applied automatically“, docs claude-security; „Nothing is applied without human approval“, anthropic.com). Bez
+    príplatku idú len `/security-review` a plugin, oba z používania plánu Claude Code (plugin „may use a significant
+    number of tokens“); Action platí tokeny API, hostovaný produkt Enterprise a Extra Usage. Action podľa kódu dnes
+    s predvolenými nastaveniami dá zelenú kontrolu bez skenu (predvolený model vyradený 2026-08-05, chyba skenu sa zmení
+    na varovanie a 0 nálezov; issues #152, #154) a „is not hardened against prompt injection attacks“. Action
+    a `/security-review` vylučujú celé triedy (DoS, rate limiting, nálezy v `.md`, open redirect len pri veľmi vysokej
+    istote); výsledky skenov sa medzi behmi líšia (README pluginu). U nás `/security-review` zlyhá, kým klon nemá
+    `origin/HEAD` (oprava lokálne `git remote set-head origin main`).
+- Čo nesedí: „plugins … in Claude“ (pre Claude Code, nie chat; brána nie je plugin vôbec, pri Claude Security
+  v obraze Action a aplikácia pre Enterprise), „almost unlimited“, „1.6 billion free tokens“ a „next best model“,
+  „entire dev team“, „talk like a caveman“ a „way fewer tokens“, „scans your entire code base“, „fixes the holes“,
+  „free tool“. Infografika 42 skills a terminál pri Caveman k nástrojom nepatria, ukážky Claude Security sú propagačný
+  materiál Anthropicu, ponuka Caveman je zo staršej verzie.
+- Čo prešlo:
+  - `../../tim-roly/` (vlastný text s citátmi `súbor:riadok`): zo Superpowers plán pre vykonávateľa (časť 3b: úloha
+    s vlastným testom, Súbory a Rozhrania, krok s príkazom a očakávaným výstupom, globálne obmedzenia z `CLAUDE.md`,
+    päť netestovaných vstupov, sebakontrola s proporciou, záznam drobných rozhodnutí a štyri stopky), doplnky otázok
+    majiteľovi (zhrnutia s označenými odhadmi, anti-ciele, predvolené hodnoty nahlas, veľkosť práce) a kontrola
+    staviteľom (schéma `KONTROLA_STAVITELOM`), prechod 0 staff recenzenta „súlad so zadaním“, tabuľka dôkazov
+    s overením `git diff`, nejasná pripomienka zastaví všetky, pôvod Iron Law; z Caveman pravidlá pre voľné textové polia
+    správ agentov (spoločný blok); z Claude Code Setup postup „signál v repozitári → automatizácia“ (časť 3);
+    z `/security-review` metóda „nájdi, potom vyvracaj“ s prahom 8 z 10 a triedy, ktoré nástroj vylučuje a my nie (časť 6).
+  - `../../testy-a-nasadenie/` (časť 8a): `/security-review` ako brána pred nasadením zmien v `admin/`, `vernost/`,
+    formulároch, workflowoch a rezervačných odkazoch; nálezy cez skeptika do schémy `BEZPECNOST` so stavom „čiastočne“.
+  - `toolbox/ZDROJE.md`: časť „Nástroje pre Claude Code z videa sadie.ontech“ s licenciami a rozhodnutím pri každom.
+  - Pre Shorts (zatiaľ len tu, do `../../youtube-shorts/` nezapísané): číslované karty ako ukazovateľ postupu pri
+    zozname; nič viac.
+- Čo nie:
+  - Brány k cudzím modelom a free tierom (podmienky Anthropicu, kľúče a predplatné na serveri tretej
+    strany, kód a texty klientov k neznámym poskytovateľom vrátane takých, čo trénujú na vstupoch, kritické RCE, Claude
+    Code na cudzom modeli bez upozornenia). Názov uvádzame len preto, že ho video menuje (popis, reč, karta v obraze);
+    odkaz, repozitár a postup inštalácie zámerne nie (`zapis-referencie.md`), v `ZDROJE.md` len kategória. Pri limitoch
+    legitímne: `/model` a effort, Haiku na jednoduché subagenty (`../../workflowy/`, smerovanie podľa náročnosti),
+    vlastný API kľúč z Claude Console alebo extra usage v pláne; pri limite zastaviť a nahlásiť, nie potichu pokračovať
+    slabším modelom.
+  - Inštalácia Superpowers (hook v každej relácii, „1 % → MUSÍŠ“ by spúšťal brainstorming aj pri malej oprave, réžia
+    tokenov), `docs/superpowers/` a anglické commity („feat: add specific feature“), nepretržité vykonávanie bez otázok,
+    „Delete means delete“ pri vizuálnej práci, 5 opravných kôl, visual companion s telemetriou.
+  - Caveman skill aj CLI: v slovenčine niet členov na vypustenie a majiteľ dostáva plné vety bez žargónu; proxy na celú
+    prevádzku, telemetria a cloud sú proti pravidlám toolboxu.
+  - Claude Code Setup tu nespúšťať (v cloude sa nenačíta, tabuľky sú pre npm a Python). Lokálne len v režime plán,
+    s pokynom najprv prečítať `CLAUDE.md`, každý inštalačný príkaz overiť v registri; dva hooky vyššie sú návrh pre
+    majiteľa (otázka D1), nič nezapísané.
+  - GitHub Action (nemáme pull requesty, platený kľúč, zelená kontrola bez skenu), hostovaný Claude Security (Enterprise),
+    kopírovanie promptov pluginu `claude-security` (proprietárna licencia); plugin voliteľne len lokálne nad `vernost/`
+    po súhlase majiteľa s nákladmi, výstup `CLAUDE-SECURITY-*` necommitovať.
+  - Vo videu: „top 5“ bez overenia, „oficiálny“ zliaty pre viac nástrojov, cudzia infografika a ilustračný b-roll ako
+    dôkaz, sľuby, ktoré nástroj nerobí, „free“ pri nástrojoch platených tokenmi, výzva „comment PLUGINS“.
+
 ## Spoločné lekcie
 
 - Hook pre texty: prvá veta je jasný sľub, potom obraz miesta, potom čo dostaneš a ako rezervovať.
@@ -672,13 +833,33 @@ nie overené fakty. Označenie V1 až V10 v skilloch `youtube-shorts` a `tim-rol
 - Video, ktoré nič nepomenuje a všetko schová za „napíš mi do DM“ alebo „comment SLOVO“, je upútavka na zbieranie
   kontaktov, nie zdroj (záznamy 13, 16, 17). Nepíšeme autorovi; rozoberieme formát a tvrdenia overíme sami.
 - Stiahnuté cudzie video je len na rozbor a po zápise ide preč (`stahovanie-a-pravo.md`); YouTube nesťahujeme.
-- B-roll nemusí byť z nástroja, o ktorom video hovorí (záznam 12: polovica videa sú iné produkty); čítaj značky
-  a nápisy v detaile, kým napíšeš „video ukazuje“.
+- B-roll nemusí byť z nástroja, o ktorom video hovorí (záznam 12: polovica videa sú iné produkty; záznam 19:
+  infografika „42 skills“ s vodoznakom cudzieho newslettera pri Superpowers, terminál v plných vetách pri Caveman);
+  čítaj značky, vodoznaky a nápisy v detaile, kým napíšeš „video ukazuje“.
 - Číslo zo snímky ber s jednotkou z hlavičky grafu (záznam 14: tokeny za deň vydávané za parametre) a novinku
   over k dátumu videa aj k dnešku.
 - „Licencia MIT“ platí pre repozitár, nie pre jeho závislosti a služby okolo (záznam 15: nvdiffrast, RMBG-2.0).
+  „Zadarmo“ je licencia, nie prevádzka: tokeny, API kľúč a plán platíš aj pri nástroji s MIT (záznam 19: GitHub
+  Action pod MIT platí každý beh tokenmi API z vlastného kľúča, Superpowers pod MIT minul v jednej úlohe 120,7 mil.
+  tokenov).
 - Dátum záberov obrazovky ber z verzií na snímke (npm `time`: `curl -s https://registry.npmjs.org/<balík>`), nie
   z dátumu uverejnenia (záznam 16: zábery z konca marca až mája, video zo septembra); „jeden riadok“ over na snímke
   vloženia (`[Pasted text #1 +710 lines]`).
 - „Tri kroky“ vo videu môžu byť z rôznych relácií (záznam 17: 9 súborov v kroku 2, 2 fotky v projekte); porovnaj
   súbory, názvy projektov a obsah medzi krokmi.
+- „Oficiálny“ v titulku over pri každom nástroji zvlášť: autor v manifeste, oficiálny marketplace
+  (`anthropics/claude-plugins-official`) a štítok „Anthropic verified“ na claude.com/plugins (záznam 19: oficiálne
+  dva z piatich, pod menom „Claude Security“ štyri rôzne nástroje). Ani oficiálny marketplace neznamená, že Anthropic
+  obsah pluginu skontroloval, a aj oficiálny obrázok môže mať zlý inštalačný príkaz: balík over cez
+  `curl -s -o /dev/null -w '%{http_code}' https://registry.npmjs.org/<balík>` (404 = neexistuje).
+- „Plugin“ môže byť samostatný server, ktorému odovzdáš kľúče a predplatné, a „ďalší najlepší model“ je spravidla
+  slabší model (záznam 19). Číslo typu „X tokenov zadarmo mesačne“ rozlož na zložky: čo je jednorazové, aký podiel
+  má jeden poskytovateľ, či trénuje na vstupoch, kto číslo overil a kedy (tam 62 % z jedného poolu, overené len
+  v konzole správcu).
+- Percento úspory sa pýta „voči čomu a z akej časti účtu“: kontrolou je jedna veta „odpovedaj stručne“, nie nič,
+  a meria sa celý účet relácie, nie len výstup (záznam 19: Caveman −41 % proti ničomu, −3 % proti kontrole,
+  cena relácie v cudzích testoch ±0).
+- Skener, ktorý „nájde a opraví“: zisti, čo naozaj číta (diff alebo celé repo), ktoré triedy zámerne vylučuje a kto
+  aplikuje opravu; prázdny výsledok znamená „žiadne podložené nálezy v posúdenom rozsahu“, nie „bezpečné“.
+- Pôvod pravidla over prvým commitom: znenie, ktoré cituje jeden projekt, mohol prevziať z iného bez zmienky
+  (záznam 19: Iron Law je v Superpowers od 2025-10-09, gstack vznikol 2026-03-11).

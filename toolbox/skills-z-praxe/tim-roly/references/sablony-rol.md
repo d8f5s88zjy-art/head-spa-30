@@ -8,7 +8,7 @@ prešli kontrolou štruktúry (`required` sú v `properties`, `enum` nie sú pr�
 skeptika a brány sú aj v skriptoch `../../workflowy/priklady/tim-roly-plan.js` a `brana-dvoch-recenzentov.js`,
 ktoré prešli skúškou s falošnými agentmi (výstupy overené proti schémam); ostrým behom zatiaľ nebežali.
 
-Obsah: 0 spoločný blok a odovzdanie · 0b karta roly · 1 CEO a produkt · 2 dizajnér · 3 eng manažér · 4 staff
+Obsah: 0 spoločný blok a odovzdanie · 0b karta roly · 1 CEO a produkt · 2 dizajnér · 3 eng manažér · 3b rozpis úloh · 4 staff
 recenzent · 5 QA a vyšetrovateľ · 6 bezpečnosť · 7 release · 8 brána dvoch recenzentov a eskalácia · 9 obsah a predaj
 prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti).
 
@@ -17,6 +17,14 @@ pravidlá dôkazu QA, eskalácia po troch kolách a časť 9. Schémy časti 9 a
 v `../assets/schemy-obsah-predaj.json`; kontrola `python3 -I ../scripts/kontrola_schem.py ../assets/schemy-obsah-predaj.json
 ../assets/priklady-schem.json` (2026-10-19: štruktúra všetkých štyroch OK, 4 platné vzory prešli, 8 neplatných
 odmietnutých; výstup agenta sa dá overiť tak, že ho dáš ako platný príklad).
+
+Doplnené 2026-10-20 z rozboru videa s nástrojmi Superpowers (MIT), Caveman (Apache-2.0), Claude Code Setup (Apache-2.0)
+a `/security-review` (súbor analýzy MIT), vlastný text s citátmi (záznam 19 v `../../referencie-z-videi/references/naucene-z-videi.md`):
+riadok o voľných poliach v spoločnom bloku, doplnky otázok a kontrola staviteľom (časť 1, schéma `KONTROLA_STAVITELOM`),
+čo nastaviť v Claude Code (časť 3), rozpis úloh pre vykonávateľa (časť 3b), prechod 0 staff recenzenta (časť 4,
+`NALEZ_REVIEW` má povinné `sulad_so_zadanim`), nájdi a vyvracaj (časť 6), tabuľka dôkazov a bezpečnostná revízia
+(časť 7), nejasná pripomienka (skeptik). Nová a zmenená schéma prešli `kontrola_schem.py` (2026-10-20: štruktúra OK,
+2 platné vzory prešli, 4 neplatné odmietnuté).
 
 ## 0. Spoločný blok (vlož do každého zadania)
 
@@ -34,7 +42,14 @@ KONTEXT (rozhovor s majiteľom nevidíš):
   s odporúčaním. Ani zjavná oprava nie je schválená, kým majiteľ neodpovie.
 - Hranice: ${hranice}
 - Nula nálezov je platný výsledok.
+- Voľné textové polia (zhrnutie, poznámka, dôvod): odpoveď najprv; bez úvodu, rekapitulácie a ponuky pomoci;
+  zápory, čísla, cesty a chybové hlášky doslovne; celé vety bez vymyslených skratiek.
 ```
+
+Riadok o voľných poliach je podľa Caveman (github.com/JuliusBrussee/caveman, Apache-2.0, commit bad48a0,
+`skills/caveman/SKILL.md:30-58`), ale bez fragmentov a vypúšťania slov: správu číta orchestrátor a prekladá ju
+majiteľovi, preto pre majiteľa platí vždy plná slovenčina bez žargónu. Skript `../../workflowy/priklady/tim-roly-plan.js`
+má vlastnú kópiu bloku, tento riadok v nej zatiaľ nie je.
 
 Typické `${hranice}`: „Nič needituj, necommituj, nespúšťaj Playwright ani Lighthouse (bežia inde). Správu zapíš
 len do ${scratch}/<rola>.md.“ Pre opravára: „Pracuj len v súboroch ${vlastnis}. Zakázané: rm -rf mimo dočasných
@@ -116,6 +131,20 @@ premisy na potvrdenie („Je toto správny problém? Čo sa stane, ak neurobíme
 (najmenší, ideálny, prípadne bočný) s odporúčaním a **čakať na voľbu majiteľa**. Na konci jedna konkrétna úloha
 („The Assignment“), nie „choď stavať“.
 
+**Pri väčšej práci** (nová sekcia, nový web, séria shortov) doplň podľa Superpowers (github.com/obra/superpowers,
+MIT, Copyright (c) 2025 Jesse Vincent, `skills/brainstorming/SKILL.md` vo v7.0.0, commit bb92a77):
+- **Zhrnutie po častiach:** keď rozumieš jednej časti (pre koho, čo má robiť), zhrň ju majiteľovi v 200 až 300 slovách
+  a pýtaj sa ďalej (`:112-117`). Čo hádaš, označ ako odhad; ako jeho ide len to, čo povedal; zhrnutie končí otázkou,
+  čo je zle alebo chýba (`:120-121`).
+- **Anti-ciele:** čo by bolo zlyhaním, aj keby to technicky fungovalo (`:72-73`), napr. „rezervácia o klik dlhšia“,
+  „pôsobí lacno“, „text o službe, ktorú salón neponúka“.
+- **Predvolené hodnoty nahlas:** čo dopĺňame sami (poradie sekcií, dĺžka shortu, text tlačidla), povieme; „A default
+  they never heard is one they couldn't reject“ (`:200`).
+- **Veľkosť práce nahlas** (`:129-140`): rýchla jasná úloha (urobiť), malá zmena (dohodnúť v chate, potom bežný
+  postup), projekt (písaný návrh, kontrola staviteľom, revízia plánu, rozpis úloh v časti 3b). Keď práca narastie,
+  zastaviť, povedať to a prejsť o veľkosť vyššie.
+- Nič sa nestavia pred schválením opisu (`:179-193`); u nás to isté hovorí zásada 5.
+
 **Kontrolný zoznam revízie rozsahu:**
 - [ ] Skutočný problém, cieľ a cena nečinnosti; rieši plán bolesť priamo, alebo len náhradu?
 - [ ] Čo už existuje (web, toolbox, staršie videá) a dá sa použiť.
@@ -156,6 +185,42 @@ const ROZSAH = {
     report_path: { type: 'string' },
   },
   required: ['premisy', 'rezim_odporucany', 'rezim_preco', 'co_uz_existuje', 'navrhy_rozsahu', 'nalezy', 'report_path'],
+}
+```
+
+**Kontrola staviteľom** (Superpowers `brainstorming/SKILL.md:160-177`, `builder-check-prompt.md`): keď je návrh
+projektu napísaný, pred revíziou plánu ho prečíta čerstvý agent ako ten, kto ho bude stavať, a vypíše, na čo by sa
+musel pýtať. Hlavná relácia otázky roztriedi do troch kôp: **už zodpovedané** (odpoveď z rozhovoru alebo zo súborov
+ide do návrhu), **drobné** (rozumný staviteľ by to rozhodol bez zmeny výsledku: rozhodneme my a v návrhu označíme
+ako naše rozhodnutie), **majiteľove** (vie to len on a mení to, čo sa postaví). Majiteľ dostane jedno kolo otázok
+v jednej správe, najdôležitejšia prvá (formát D1), a potom návrh so zoznamom našich rozhodnutí na kontrolu. Agent
+kopu len navrhuje, triedi hlavná relácia.
+
+```text
+${SPOLOCNE}
+
+ROLA: staviteľ. Prečítaj návrh ${navrh} tak, ako keby si ho mal postaviť bez ďalšieho rozhovoru s majiteľom.
+Nič nestavaj ani neupravuj. Vypíš každú otázku, bez ktorej by si musel hádať; pri každej navrhni kopu
+(uz-zodpovedane s citátom zdroja, drobne-rozhodneme-my s návrhom, majitelove s odporúčaním) a dopad na výsledok.
+Zapíš ${scratch}/stavitel.md.
+```
+
+```js
+const KONTROLA_STAVITELOM = {
+  type: 'object',
+  properties: {
+    otazky: { type: 'array', items: { type: 'object', properties: {
+      id: { type: 'string' },
+      otazka: { type: 'string' },
+      kopa_navrh: { type: 'string', enum: ['uz-zodpovedane', 'drobne-rozhodneme-my', 'majitelove'] },
+      odpoved_alebo_navrh: { type: 'string', description: 'odpoveď so zdrojom, naše rozhodnutie, alebo odporúčanie pre majiteľa' },
+      zdroj: { type: 'string', description: 'cesta:riadok alebo „rozhovor“; pri majitelove prázdne' },
+      dopad: { type: 'string', description: 'čo sa postaví inak podľa odpovede' },
+    }, required: ['id', 'otazka', 'kopa_navrh', 'odpoved_alebo_navrh', 'dopad'] } },
+    co_chyba_v_navrhu: { type: 'array', items: { type: 'string' }, description: 'časti, ktoré návrh nepokrýva (napr. beh bez JavaScriptu)' },
+    report_path: { type: 'string' },
+  },
+  required: ['otazky', 'co_chyba_v_navrhu', 'report_path'],
 }
 ```
 
@@ -295,11 +360,81 @@ const TECHNIKA = {
 }
 ```
 
+**Čo nastaviť v Claude Code** (hooky, skills, subagenti, MCP, pluginy), keď sa na to niekto pýta. Pôvod: plugin
+`claude-code-setup`, skill `claude-automation-recommender` (github.com/anthropics/claude-plugins-official,
+Apache-2.0, autor Anthropic, verzia 1.0.0, klon a0b04d9), vlastný text:
+- **Krok 0**, ktorý pôvodnému skillu chýba (issue #6029): prečítať `CLAUDE.md`, `toolbox/skills-z-praxe/README.md`
+  a to, čo už máme. Skutočné potreby projektu sú v jeho pravidlách, nie v `package.json`.
+- Signál v repozitári → automatizácia v piatich kategóriách (MCP server, skill, hook, subagent, plugin), **1 až 2 na
+  kategóriu** (`SKILL.md:15`, `:155`), každá s dôvodom viazaným na konkrétny súbor; nerelevantné kategórie vynechať.
+- Kedy čo (`SKILL.md:215-253`): MCP pri externej službe; skill pri opakovanom postupe so šablónou alebo skriptom;
+  hook pri kroku, ktorý sa musí stať vždy po úprave, alebo pri ochrannom pravidle; subagent pri samostatnej kontrole
+  s obmedzenými nástrojmi (recenzent len na čítanie); plugin pri balíku pre viac projektov.
+- Vyvolanie skillu (`SKILL.md:233-236`): `disable-model-invocation: true` pri vedľajšom účinku (nasadenie, commit,
+  odoslanie), `user-invocable: false` pri znalosti na pozadí.
+- Každý inštalačný príkaz over v registri alebo dokumentácii (aj obrázok v repozitári pluginu ukazuje balík, ktorý
+  na npm vracia 404). Pluginy sa v cloudovej relácii nenačítajú; z repozitára sa načíta `CLAUDE.md`,
+  `.claude/settings.json` (hooky, povolenia), `.mcp.json`, `.claude/rules/`, `.claude/skills/`, `.claude/agents/`
+  a `.claude/commands/` (dokumentácia Claude Code, cloudové prostredia, 2026-10-20).
+- Výstup je zoznam návrhov pre majiteľa (D1), nič sa nezapisuje ani neinštaluje. Príklad pre tento repozitár
+  (2026-10-20, nezapísané): hook, ktorý po úprave `assets/style.css`, `app.js`, `i18n.js` alebo `world.js` spustí
+  `node tools/build.mjs`, a hook, ktorý pred `git commit` zastaví správu s podpisom alebo odkazom na nástroj; obe
+  pravidlá sú v `CLAUDE.md`.
+
+## 3b. Rozpis úloh pre vykonávateľa (po revízii plánu)
+
+Pôvod: Superpowers `skills/writing-plans/SKILL.md` (v7.0.0, commit bb92a77, MIT, Copyright (c) 2025 Jesse Vincent),
+vlastný text. Pri projekte (časť 1, veľkosť práce) po schválenej revízii plánu napíše hlavná relácia rozpis, podľa
+ktorého stavia sama alebo agent v nástroji Workflow. Rozpis zachytí rozhodnutia, ktoré vykonávateľ sám urobiť nemôže:
+súbory, mená, hodnoty zo zadania a testy (`:10`). Ukladá sa do scratchpadu, nie do repozitára webu.
+
+```text
+ROZPIS: <čo sa stavia, jedna veta>
+Prístup: <2 až 3 vety>
+Návrh a plán: <cesty k schválenému návrhu a revízii; vykonávateľ číta oba>
+Globálne obmedzenia (doslova z CLAUDE.md, jedno pravidlo na riadok; platia pre každú úlohu):
+- …
+Na čo sa pozrieť (päť vstupov alebo stavov, ktoré zadanie predpokladá, ale žiadny test ich nepokrýva,
+najpravdepodobnejší prvý; ku každému test v úlohe, ktorá vlastní kód):
+- …
+
+Úloha N: <názov>
+Súbory: vytvor <cesta> / uprav <cesta:riadky> / test <cesta>
+Rozhrania: preberá <z ktorej úlohy: trieda, kľúč, funkcia> / odovzdáva <čo použijú ďalšie úlohy>
+- [ ] Krok 1: <jedna akcia>. Príkaz: <…>. Úspech: <presný výstup>.
+- [ ] Krok 2: …
+- [ ] Commit: <súbory po jednom>, správa po slovensky s predponou projektu.
+```
+
+- **Úloha** je najmenšia jednotka s vlastným testom, ktorú môže recenzent zamietnuť samostatne (`:34-41`); príprava
+  a dokumentácia patria do úlohy, ktorá ich potrebuje.
+- **Krok** je jedna akcia s overiteľným výsledkom (`:45`): napísať test, spustiť ho a vidieť zlyhanie, upraviť,
+  spustiť znova, commit. Pri CSS a obraze je testom snímka pred a po (zásada 2).
+- **Súbory a Rozhrania** (`:97-106`): vykonávateľ úlohy vidí len svoju úlohu, preto mená, ktoré používajú susedné
+  úlohy, sú v rozpise: triedy CSS, kľúče `assets/i18n/*.json`, atribúty `data-booqme`, háčiky `window.__renderDone`,
+  mená súborov v `assets/img/`.
+- **Globálne obmedzenia** (`:70-75`) doslova z `CLAUDE.md`, napr. dve písma, šesť jazykov, žiadna zmienka o AI,
+  texty na jeden až dva riadky, Lighthouse 100 a 95, `node tools/build.mjs` po zmene CSS a JS.
+- **Na čo sa pozrieť** (`:77-90`, `:173`), napr. šírka 320 px, beh bez JavaScriptu, dlhý nemecký text, pomalá sieť,
+  prázdny zoznam recenzií alebo chýbajúca fotka. Prázdny zoznam znamená „skontrolované, nič“, nie „vynechané“.
+- **Sebakontrola** (`:163-177`): každá časť zadania má úlohu; žiadny krok typu „TBD“, „ošetri okrajové prípady“,
+  „doplň testy“; rovnaké mená vo všetkých úlohách; **proporcia**: rozpis dlhší ako kód, ktorý opisuje, je prepis
+  kódu (`:157-158`), namiesto tiel funkcií patria do rozpisu mená, signatúry a tvrdenia testov.
+- **Záznam rozhodnutí počas stavby** (`subagent-driven-development/SKILL.md:19-25`): drobnú technickú voľbu, ktorú
+  rozpis nechal otvorenú, vykonávateľ rozhodne a zapíše „Rozhodnutie: čo, prečo, čo to stojí, ak je zlé“. Zastaví
+  sa pri štyroch veciach (`:27-31`): nevratná alebo deštruktívna akcia, bezpečnosť, vedľajší účinok mimo pracovného
+  priečinka (merge, push, uverejnenie), rozpis taký zlý, že každá cesta je hádanie. Smer, obsah, peniaze
+  a uverejnenie sú vždy otázka D1 majiteľovi (zásada 5); „Continuous execution: Do not pause to check in“ (`:17`)
+  nepreberáme.
+
 ## 4. Staff recenzent (kontrola diffu pred zlúčením)
 
 Pôvod: gstack `/review` (`review/checklist.md`, `review/gate-integrity.md`) a ECC `code-reviewer`, [gstack.md](gstack.md) časť 6.
 
-**Kontrolný zoznam (dva prechody):**
+**Kontrolný zoznam (prechod 0 a dva prechody):**
+- **Prechod 0, súlad so zadaním** (Superpowers `subagent-driven-development/task-reviewer-prompt.md:3-9`): robí diff
+  presne zadanú úlohu, nič viac, nič menej? Čo zo zadania chýba (bod zadania a súbor) a čo je navyše (`súbor:riadok`,
+  napr. zmenený rádius tlačidiel pri úlohe o cenníku). Zmena navyše je ASK, aj keď vyzerá ako zlepšenie. Až potom kvalita.
 - **CRITICAL** pre statický web: `innerHTML` alebo `insertAdjacentHTML` s dátami zvonka (i18n JSON, CMS);
   rozbitý rezervačný odkaz (Booqme, rezervačný systém); štruktúrované dáta v rozpore s textom; chýbajúca
   jazyková verzia pri pridanom texte (úplnosť: prejdi všetky súbory, ktoré hodnotu zobrazujú); fakt bez zdroja
@@ -319,7 +454,8 @@ Pôvod: gstack `/review` (`review/checklist.md`, `review/gate-integrity.md`) a E
 ${SPOLOCNE}
 
 ROLA: staff recenzent. Diff: git -C ${root} diff ${base}...HEAD. Si NEZÁVISLÝ: nič neupravuj.
-Prechod 1 CRITICAL, prechod 2 INFORMATIONAL (zoznam vyššie). Ku každému nálezu nájdi súrodencov.
+Prechod 0: zadanie je ${zadanie}; robí diff presne to? Vypíš, čo chýba a čo je navyše (súbor:riadok).
+Potom prechod 1 CRITICAL, prechod 2 INFORMATIONAL (zoznam vyššie). Ku každému nálezu nájdi súrodencov.
 Zatrieď AUTO-FIX alebo ASK. Každú oslabenú bránu zapíš do „brany“. Zapíš ${scratch}/review.md.
 ```
 
@@ -327,6 +463,11 @@ Zatrieď AUTO-FIX alebo ASK. Každú oslabenú bránu zapíš do „brany“. Za
 const NALEZ_REVIEW = {
   type: 'object',
   properties: {
+    sulad_so_zadanim: { type: 'object', properties: {
+      verdikt: { type: 'string', enum: ['presne', 'chyba-cast', 'navyse', 'chyba-aj-navyse'] },
+      chyba: { type: 'array', items: { type: 'string' }, description: 'body zadania, ktoré diff nerobí' },
+      navyse: { type: 'array', items: { type: 'string' }, description: 'zmeny mimo zadania (súbor:riadok)' },
+    }, required: ['verdikt', 'chyba', 'navyse'] },
     nalezy: { type: 'array', items: { type: 'object', properties: {
       prechod: { type: 'string', enum: ['CRITICAL', 'INFORMATIONAL'] },
       kategoria: { type: 'string', description: 'napr. bezpecnost, uplnost-jazykov, struktur-data, integrita-brany, pristupnost, vykon, fakty' },
@@ -344,7 +485,7 @@ const NALEZ_REVIEW = {
     }, required: ['subor', 'co_sa_zmenilo'] } },
     suhrn: { type: 'string', description: 'N nálezov (X critical, Y informational)' },
   },
-  required: ['nalezy', 'brany', 'suhrn'],
+  required: ['sulad_so_zadanim', 'nalezy', 'brany', 'suhrn'],
 }
 ```
 
@@ -444,6 +585,21 @@ of relevant protective controls“). Chýbajúce spevnenie je nález len s konkr
 **kompletné / čiastočné / neposúdené**; pri prázdnom výsledku „žiadne podložené nálezy v posúdenom rozsahu“,
 nikdy „bezpečné“ zo zlyhaného alebo chýbajúceho skenu.
 
+**Nájdi, potom vyvracaj** (podľa `.claude/commands/security-review.md:183-189` v github.com/anthropics/claude-code-security-review,
+MIT, Copyright (c) 2025 Anthropic, commit 0c6a49f): jeden agent hľadá kandidátov, každý kandidát dostane samostatného
+overovateľa (u nás skeptik), ktorý ho má vyvrátiť; nález s istotou pod 8 z 10 ide do `hypotezy`, nie do `nalezy`.
+Povinné polia nálezu tam (súbor a riadok, závažnosť, kategória, popis, scenár zneužitia, odporúčanie, `:109`; istota
+1 až 10 pri overovaní, `:178-181`) schéma `BEZPECNOST` pokrýva.
+
+**Čo `/security-review` vylučuje a my nie** (`security-review.md:138-157`, precedensy `:158-170`): DoS a rate limiting,
+tajomstvá „uložené na disku“, chýbajúce spevnenie, zastarané knižnice, nálezy v súboroch `.md`, open redirect
+a „subtle web vulnerabilities“. U nás ostávajú na kontrolnom zozname: hádanie hesla a spam registrácií vo `vernost/`
+(rate limiting), tajomstvá v dokumentácii a v histórii (vzory v kontrolnom zozname nižšie), chýbajúce hlavičky a CSP pri admine a formulároch,
+rezervačný odkaz na cudziu doménu. Precedens „kontrola oprávnení v klientskom JS nie je zraniteľnosť, rozhoduje
+server“ (`:166`) platí pri `admin/` len tak, že serverom je GitHub API a rozhoduje platnosť tokenu. `/security-review`
+posudzuje len diff vetvy, preto je stav posúdenia vždy **čiastočne**. Brána pred nasadením:
+`../../testy-a-nasadenie/SKILL.md`, časť 8a.
+
 **Kontrolný zoznam:**
 - [ ] **Tajomstvá:** v diffe aj v histórii žiadne heslá, tokeny, kľúče (`ghp_`, `github_pat_`, `sk-`, `AKIA`,
       `password=`, `token=`, súbory `.env`, cookies). Booqme a iné prístupy len z premenných prostredia (`CLAUDE.md`).
@@ -521,8 +677,23 @@ agent môže len overiť dôkazy.
 - [ ] Grep na tajomstvá v diffe; žiadne médiá a súbory iných webov navyše (`git add` po súboroch, nie `-A`).
 - [ ] Dokumentácia (`CHECKS.md`, `PRODUKCIA.md`, dotknuté skills) zodpovedá diffu.
 - [ ] „Žiadne tvrdenie o hotovom bez čerstvého dôkazu“: čo nebolo znovu spustené, je „hotové, neoverené“.
+- [ ] Hotovo od agenta overené `git status` a `git diff --stat`, nie jeho správou (tabuľka nižšie).
+- [ ] Zmena v `admin/`, `vernost/`, formulároch, `.github/workflows/` alebo rezervačných odkazoch prešla
+      `/security-review` a skeptikom (`../../testy-a-nasadenie/SKILL.md`, časť 8a); v správe stav „čiastočne“.
 - [ ] Push bez `--force`; pri odmietnutí fetch a merge, nie prepis histórie. Zlúčenie a nasadenie podľa `CLAUDE.md`
       projektu, overenie naživo.
+
+**Tvrdenie a dôkaz** (podľa Superpowers `verification-before-completion/SKILL.md:39-48`, naše položky):
+
+| Tvrdenie | Čo ho dokazuje | Čo nestačí |
+| --- | --- | --- |
+| testy prešli | výstup príkazu z tohto stromu: počet spustených, 0 FAIL | predošlý beh, „malo by prejsť“, kód 0 bez spustených testov |
+| build prešiel | `node tools/build.mjs` s výpisom veľkostí, `*.min.*` novšie ako zdroje | „zdroje sú v poriadku“ |
+| chyba je opravená | pôvodný príznak znova (sonda, snímka) prejde | zmenený kód, „malo by to opraviť“ |
+| regresný test platí | padá bez opravy, prejde s ňou | raz prešiel |
+| agent úlohu dokončil | `git status` a `git diff --stat` ukážu zmeny v pridelených súboroch | správa agenta „hotovo“ |
+| zadanie je splnené | bod po bode proti zadaniu (prechod 0 recenzenta) | zelené testy |
+| je naživo | `curl` 200 a zhodný `md5sum` po nasadení | push prešiel |
 
 **Správa na konci** (podľa ECC `verification-loop`, naše položky):
 
@@ -532,6 +703,7 @@ Build:            PASS/FAIL
 Testy:            PASS/FAIL (x/y, spustených z)
 Lighthouse:       mobil n, počítač n (cieľ podľa CLAUDE.md)
 Tajomstvá (grep): PASS/FAIL
+Bezpečnosť:       /security-review čiastočne, n nálezov po skeptikovi / netreba (zmena mimo citlivých častí)
 Brány:            nič neoslabené / zoznam s rozhodnutím majiteľa
 Diff:             n súborov, nič navyše
 Celkovo:          PRIPRAVENÉ / NEPRIPRAVENÉ
@@ -554,7 +726,7 @@ const RELEASE = {
   properties: {
     head: { type: 'string', description: 'commit, ku ktorému patria dôkazy' },
     body: { type: 'array', items: { type: 'object', properties: {
-      polozka: { type: 'string', enum: ['zlucenie-zakladnej-vetvy', 'build', 'testy', 'lighthouse', 'brany', 'kontrola-diffu', 'tajomstva', 'dokumentacia', 'diff-nic-navyse'] },
+      polozka: { type: 'string', enum: ['zlucenie-zakladnej-vetvy', 'build', 'testy', 'lighthouse', 'brany', 'kontrola-diffu', 'tajomstva', 'bezpecnostna-revizia', 'dokumentacia', 'diff-nic-navyse'] },
       vysledok: { type: 'string', enum: ['PASS', 'FAIL'] },
       dokaz: { type: 'string', description: 'log, čas, počet spustených testov' },
       cerstvy: { type: 'boolean', description: 'dôkaz je z tohto stromu' },
@@ -770,6 +942,10 @@ Schéma `NAVRH_ODPOVEDE` (povinné: `platforma`, `typ`, `citat`, `uznany_problem
 Platí pre roly 1 až 6: nález, ktorý mení kód alebo smer, pred úpravou overí skeptik (vzor 4 v
 `../../workflowy/SKILL.md`). Skeptik otvorí citovaný súbor, over, či citát existuje a či z neho tvrdenie vyplýva;
 pri neistote nález zamieta.
+
+**Nejasná pripomienka zastaví všetky** (Superpowers `receiving-code-review/SKILL.md:40-56`): keď je z nálezov alebo
+pripomienok majiteľa niektorá nejasná, neopravuj ani tie jasné, kým sa nevyjasní; body môžu súvisieť a čiastočné
+pochopenie dá zlú opravu. Odpoveď v tvare: „Rozumiem bodom 1, 2, 3 a 6; k 4 a 5 potrebujem vedieť …“.
 
 ```js
 const VERDIKT_SKEPTIKA = {

@@ -1,6 +1,6 @@
 ---
 name: tim-roly
-description: Tím rolí podľa gstack, ECC a Agency Agents (všetky MIT), prenesený do našej praxe s nástrojom Workflow bez inštalácie. Roly CEO a produkt (otázky majiteľovi, režim rozsahu), dizajnér (0 až 10, AI slop), eng manažér, staff recenzent, QA a vyšetrovateľ (Iron Law, stop po 3), bezpečnosť (lethal trifecta, vlastné konektory), release (PRIPRAVENÉ alebo NEPRIPRAVENÉ), brána dvoch recenzentov s eskaláciou po troch kolách a roly pre obsah a predaj prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti). Karta roly, odovzdávací blok, zadanie agenta a JSON schéma pri každej role, kontrola schém scripts/kontrola_schem.py. Použi pred stavbou webu alebo natáčaním shortu, pri revízii plánu, novej role, písaní zadaní pre agentov, ladení, QA, bezpečnosti, pred commitom a nasadením, pri návrhu obsahu, kontrole cesty k rezervácii a odpovedi na recenziu, aj keď niekto chce gstack, ECC alebo Agency Agents nainštalovať.
+description: Tím rolí podľa gstack, ECC, Agency Agents a Superpowers (všetky MIT), prenesený do našej praxe s nástrojom Workflow bez inštalácie. Roly CEO a produkt (otázky majiteľovi, režim rozsahu, kontrola staviteľom), dizajnér (0 až 10, AI slop), eng manažér, rozpis úloh, staff recenzent (súlad so zadaním), QA a vyšetrovateľ (Iron Law, stop po 3), bezpečnosť (lethal trifecta, vlastné konektory, /security-review), release (PRIPRAVENÉ alebo NEPRIPRAVENÉ), brána dvoch recenzentov s eskaláciou po troch kolách a roly pre obsah a predaj prevádzky (textár a obsah, ponuka a rezervácie, recenzie a sťažnosti). Karta roly, odovzdávací blok, zadanie agenta a JSON schéma pri každej role, kontrola schém scripts/kontrola_schem.py. Použi pred stavbou webu alebo natáčaním shortu, pri revízii plánu, novej role, písaní zadaní pre agentov, ladení, QA, bezpečnosti, pred commitom a nasadením, pri návrhu obsahu, kontrole cesty k rezervácii a odpovedi na recenziu, aj keď niekto chce gstack, ECC, Agency Agents alebo Superpowers nainštalovať.
 ---
 
 # Tím rolí (gstack, ECC a Agency Agents v našej praxi)
@@ -19,8 +19,20 @@ Contributors) je knižnica 282 promptov rolí v 18 divíziách (README píše �
 troch kolách, pravidlá dôkazu QA a tri roly pre obsah a predaj prevádzky, nie texty agentov ani ich metriky.
 Pôvod: video V5, `../referencie-z-videi/references/naucene-z-videi.md`, záznam 12.
 
+**Superpowers** (github.com/obra/superpowers, MIT, Copyright (c) 2025 Jesse Vincent) je metodika vývoja z 15 procesných
+skills (brainstorming, plán, testy pred kódom, recenzia, overenie pred „hotovo“), nie sada rolí. Prečítali sme ju
+2026-10-20 (v7.0.0, commit bb92a77), nič sme neinštalovali. Prevzali sme doplnky otázok majiteľovi a kontrolu návrhu
+staviteľom, rozpis úloh pre vykonávateľa, prechod „súlad so zadaním“ v recenzii, tabuľku dôkazov a pravidlo nejasnej
+pripomienky. **Znenie zásad 1, 3 a 6** (Iron Law, spochybniť architektúru po troch opravách, dôkaz pred
+tvrdením) je pôvodne zo Superpowers (v repozitári od prvého commitu dd013f6, 2025-10-09); gstack, ktorý vznikol
+2026-03-11, má tie isté vety bez uvedenia zdroja. Z toho istého videa pribudol postup „signál v repozitári →
+automatizácia“ (plugin Claude Code Setup, Apache-2.0, Anthropic), pravidlo pre voľné polia správ agentov (Caveman,
+Apache-2.0) a metóda „nájdi, potom vyvracaj“ (`/security-review`, súbor analýzy MIT, Anthropic).
+Pôvod: `../referencie-z-videi/references/naucene-z-videi.md`, záznam 19.
+
 - [references/sablony-rol.md](references/sablony-rol.md): pri každej role otázky alebo kontrolný zoznam, šablóna
-  zadania agenta a JSON schéma (12 schém, štruktúra overená).
+  zadania agenta a JSON schéma (štruktúra overená; 2026-10-20 pribudla `KONTROLA_STAVITELOM`, rozpis úloh v časti 3b
+  a povinné `sulad_so_zadanim` v `NALEZ_REVIEW`).
 - [references/gstack.md](references/gstack.md): rozbor 14 rolí gstacku so `súbor:riadok`, `/cso`, inštalácia.
 - [references/ecc.md](references/ecc.md): rozbor ECC, hooky, čo zapisuje, porovnanie ECC, gstack a nás.
 - [references/agency-agents.md](references/agency-agents.md): rozbor Agency Agents (formát agenta, orchestrátor,
@@ -50,18 +62,22 @@ Pôvod: video V5, `../referencie-z-videi/references/naucene-z-videi.md`, záznam
 ## Zásady (platia pre všetky roly)
 
 1. **Žiadna oprava bez príčiny.** „NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.“ (gstack
-   `investigate/SKILL.md.tmpl:75`). Najprv reprodukcia a hypotéza, potom oprava.
+   `investigate/SKILL.md.tmpl:75`; pôvodne Superpowers `systematic-debugging/SKILL.md:17`). Najprv reprodukcia
+   a hypotéza, potom oprava.
 2. **Regresný test padá bez opravy a prejde s ňou** (`investigate/SKILL.md.tmpl:246-248`). Spusti ho pred opravou
    a dokáž, že padá kvôli chybe, nie kvôli zlému testu. Pri čisto CSS chybe stačí snímka pred a po.
 3. **Stop po troch.** Tri neúspešné hypotézy = STOP a otázka (nová hypotéza, eskalovať, alebo pridať logovanie
-   a čakať); tri neúspešné opravy = spochybniť architektúru (`:221`, `:298`). QA oprava: STOP po dvoch revertoch.
+   a čakať); tri neúspešné opravy = spochybniť architektúru (`:221`, `:298`; Superpowers
+   `systematic-debugging/SKILL.md:195`). QA oprava: STOP po dvoch revertoch.
    Brána: najviac 3 kolá recenzie, potom človek. Oprava nad 5 súborov: najprv sa opýtaj.
 4. **Schvaľovacia brána.** Výstup pre majiteľa prejde, len keď dvaja nezávislí recenzenti s rovnakou rubrikou dajú
    PASS (ECC `santa-method`); potom majiteľ schváli **presný súbor** (`../youtube-shorts/scripts/schvalenie.py`,
    sha256; zmena po schválení schválenie ruší) a uverejní ho sám. Brána nenahrádza majiteľa.
 5. **Rozhodnutia patria majiteľovi.** Smer, obsah, rozsah, peniaze, uverejnenie: otázka vo formáte D1 nižšie.
    Ani zjavná oprava nie je schválená, kým neodpovie; ani zhoda viacerých agentov ho nenahrádza.
-6. **Dôkaz pred tvrdením.** „NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.“ (`ship/SKILL.md.tmpl:376`);
+6. **Dôkaz pred tvrdením.** „NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.“ (`ship/SKILL.md.tmpl:376`;
+   pôvodne Superpowers `verification-before-completion/SKILL.md:17`); správa agenta o úspechu nie je dôkaz; čo sa
+   naozaj zmenilo, ukáže `git status` a `git diff` (`:47`, tabuľka tvrdení a dôkazov v `references/sablony-rol.md`, časť 7);
    0 spustených testov je zlyhanie; „Exit code is not evidence“ (`review/gate-integrity.md:138`). Nález má citát
    `súbor:riadok`; bez citátu istota najviac 5. Nula nálezov je platný výsledok. „Zero issues“ alebo dokonalé
    skóre od predošlého agenta je podozrivé (Agency Agents `testing-reality-checker.md:43`); nula nálezov a PASS
@@ -79,8 +95,9 @@ Pôvod: video V5, `../referencie-z-videi/references/naucene-z-videi.md`, záznam
 
 ## Poradie (sprint podľa gstack)
 
-Otázky majiteľovi → plán → revízia plánu (rozsah a dizajn naraz, technika posledná, aby videla ich čakajúce
-návrhy) → stavba → staff recenzent a bezpečnosť nad diffom → QA → release → poučenia do `CHECKS.md` a skills.
+Otázky majiteľovi → plán (pri projekte písaný návrh a kontrola staviteľom) → revízia plánu (rozsah a dizajn naraz,
+technika posledná, aby videla ich čakajúce návrhy) → rozpis úloh pre vykonávateľa (pri projekte) → stavba → staff
+recenzent a bezpečnosť nad diffom → QA → release → poučenia do `CHECKS.md` a skills.
 Každý krok číta výstup predošlého; technika dá testovací plán pre QA, recenzent nálezy pre release.
 
 ## Roly
@@ -88,12 +105,14 @@ Každý krok číta výstup predošlého; technika dá testovací plán pre QA, 
 | Rola | Pôvod | Kto ju robí u nás | Edituje? | Výstup (schéma) | Šablóna |
 | --- | --- | --- | --- | --- | --- |
 | CEO a produkt | gstack `/office-hours`, `/plan-ceo-review` | otázky: hlavná relácia; revízia plánu: agent | nie | `ROZSAH` | časť 1 |
+| kontrola staviteľom | Superpowers `brainstorming` (builder check) | agent nad návrhom pred revíziou plánu; kopy triedi hlavná relácia | nie | `KONTROLA_STAVITELOM` | časť 1 |
 | dizajnér 0 až 10 | `/plan-design-review`, `/design-review` | agent nad plánom alebo nad snímkami | nie | `DIZAJN`, `DIZAJN_AUDIT` | časť 2 |
 | eng manažér | `/plan-eng-review` | agent, posledný v revízii plánu | nie | `TECHNIKA` | časť 3 |
-| staff recenzent | `/review`, ECC `code-reviewer` | agent nad diffom (vzor 3 a 4 v `workflowy`) | nie | `NALEZ_REVIEW` | časť 4 |
+| rozpis úloh | Superpowers `writing-plans` | hlavná relácia po revízii plánu | len rozpis v scratchpade | šablóna rozpisu | časť 3b |
+| staff recenzent | `/review`, ECC `code-reviewer`, Superpowers task reviewer | agent nad diffom (vzor 3 a 4 v `workflowy`) | nie | `NALEZ_REVIEW` | časť 4 |
 | QA reportér | `/qa-only` | jeden agent, jediný spúšťa Playwright | nie | `QA_NALEZ` | časť 5 |
 | QA opravár, vyšetrovateľ | `/qa`, `/investigate` | hlavná relácia alebo agent vo vlastnom priečinku | áno, len pridelené | `DEBUG_REPORT` | časť 5 |
-| bezpečnosť | `/cso`, ECC `security-reviewer`, bezpečnostný návod ECC | agent nad diffom alebo repozitárom | nie | `BEZPECNOST` | časť 6 |
+| bezpečnosť | `/cso`, ECC `security-reviewer`, bezpečnostný návod ECC, `/security-review` | agent nad diffom alebo repozitárom | nie | `BEZPECNOST` | časť 6 |
 | release | `/ship`, ECC `verification-loop` | vždy hlavná relácia; agent len overí dôkazy | áno (hlavná relácia) | `RELEASE` | časť 7 |
 | brána dvoch recenzentov | ECC `santa-method` | 2 agenti + opravár | opravár len v podkladoch | `VERDIKT_BRANY`, `ESKALACIA` | časť 8 |
 | textár a obsah | Agency Agents marketing (štruktúra), `instagram-salon`, `youtube-shorts` | agent, ktorý píše len do scratchpadu | nie | `NAVRH_OBSAHU` | časť 9.1 |
@@ -107,16 +126,24 @@ smer, pred úpravou overí skeptik (`VERDIKT_SKEPTIKA`, vzor 4 v `../workflowy/S
 
 - **CEO a produkt:** šesť otázok jedna za druhou (dopyt, ako to dnes, kto presne, najmenšia verzia, pozorovanie,
   budúcnosť), premisy, 2 až 3 prístupy s odporúčaním, čakať na voľbu. V revízii jeden zo štyroch režimov (SCOPE
-  EXPANSION, SELECTIVE EXPANSION, HOLD SCOPE, SCOPE REDUCTION), každé pridanie a škrtnutie zvlášť.
+  EXPANSION, SELECTIVE EXPANSION, HOLD SCOPE, SCOPE REDUCTION), každé pridanie a škrtnutie zvlášť. Pri väčšej
+  práci zhrnutia s označenými odhadmi, anti-ciele, predvolené hodnoty a veľkosť práce nahlas; napísaný návrh prečíta
+  čerstvý agent ako staviteľ a majiteľ dostane jedno kolo otázok.
 - **Dizajnér:** prechody 0 až 10 so „ako vyzerá 10“, celkové skóre = najnižšie; AI slop (tvrdé zamietnutia,
   čierna listina, litmus); pre short naše prechody (hook, titulky a zóny, príbeh, generickosť, značka, prístupnosť).
 - **Eng manažér:** čo už existuje, 8+ súborov alebo 2+ nové moduly = menšie usporiadanie, ku každej novej ceste
-  jedno reálne zlyhanie (bez testu + bez ošetrenia + ticho = blocker), testovací plán.
-- **Staff recenzent:** dva prechody, súrodenci nálezu na všetkých stránkach a jazykoch, AUTO-FIX len mechanické,
-  ASK všetko ostatné, každá oslabená brána zvlášť.
+  jedno reálne zlyhanie (bez testu + bez ošetrenia + ticho = blocker), testovací plán. Na otázku „čo nastaviť
+  v Claude Code“ najprv `CLAUDE.md`, potom 1 až 2 návrhy na kategóriu s dôvodom v konkrétnom súbore, nič neinštalovať.
+- **Rozpis úloh:** úloha s vlastným testom, Súbory a Rozhrania, krok s príkazom a očakávaným výstupom, globálne
+  obmedzenia doslova z `CLAUDE.md`, päť netestovaných vstupov s testom, proporcia (rozpis kratší ako kód), drobné
+  rozhodnutia zapísané, štyri stopky.
+- **Staff recenzent:** prechod 0 súlad so zadaním (nič viac, nič menej), potom dva prechody, súrodenci nálezu
+  na všetkých stránkach a jazykoch, AUTO-FIX len mechanické, ASK všetko ostatné, každá oslabená brána zvlášť.
 - **QA:** charter pred sondami; Pozorované, Očakávané, Dôkaz, Potvrdenie a oddelene Hypotéza; netestované vypísať.
 - **Bezpečnosť:** nález len s útočníkom, hranicou, dopadom a preverenou ochranou; tajomstvá, vstupy webu, cookies,
   zápis do `main`, osobné údaje v médiách, agenti a skills; správa začína „kompletne / čiastočne / neposúdené“.
+  Nájdi, potom vyvracaj (prah istoty 8 z 10); pred nasadením citlivých zmien `/security-review`
+  (`../testy-a-nasadenie/SKILL.md`, časť 8a) a triedy, ktoré vylučuje, prejsť ručne.
 - **Release:** zlúčenie základnej vetvy pred testami, čerstvé dôkazy, žiadne oslabené brány, `git add` po súboroch,
   push bez `--force`, správa PRIPRAVENÉ alebo NEPRIPRAVENÉ.
 - **Textár a obsah:** jedno tvrdenie, tri hooky cez `hook_skore.py`, každá veta so zdrojom, čísla cez
@@ -203,6 +230,10 @@ Bez nástroja Workflow: hlavná relácia prejde kontrolné zoznamy zo `sablony-r
 
 Podrobne: [references/ecc.md](references/ecc.md), časť 6, a [references/agency-agents.md](references/agency-agents.md), časť 7.
 
+Superpowers (v7.0.0) do tabuľky nepatrí: nemá roly, je to jeden tok práce (návrh, rozpis, vykonanie s recenziou po
+každej úlohe, overenie, dokončenie vetvy) s hookom SessionStart, ktorý ho vkladá do každej relácie. Najbližšie je
+našej revízii plánu a release; prevzaté časti sú v `references/sablony-rol.md` (časti 1, 3b, 4, 7 a skeptik).
+
 ## Čo nepreberáme a prečo
 
 | Čo | Prečo nie | Zdroj |
@@ -225,6 +256,10 @@ Podrobne: [references/ecc.md](references/ecc.md), časť 6, a [references/agency
 | osobnosť a „pamäť“ agenta, cieľové metriky bez zdroja („Engagement Rate: 3.5%+“, „200+ branded posts per month“, „industry average: 5.96%“) | rolu určuje postup, hranice a schéma; čísla len zo zdroja | `marketing-instagram-curator.md:83-91`, `marketing-tiktok-strategist.md:84` |
 | autonómny orchestrátor a agent ako schvaľovateľ (Brand Guardian pred uverejnením, „Decision maker: Agents Orchestrator / Studio Producer“) | stop a otázka majiteľovi; schvaľuje majiteľ presný súbor | `agents-orchestrator.md:36`, `:161-162`; `handoff-templates.md:201`; `scenario-marketing-campaign.md:184` |
 | Carousel Growth Engine („Zero Confirmation“, denné uverejňovanie, generované obrázky) | pravidlá praxe 1 a 3 | `marketing-carousel-growth-engine.md:25`, `:47` |
+| inštalácia Superpowers (plugin s hookom SessionStart: „even a 1% chance a skill might apply … you ABSOLUTELY MUST invoke the skill“) | brainstorming by sa spúšťal aj pri malej oprave od majiteľa; réžia tokenov (issues #1456, #1600, #2551) a týždenný limit agentov | Superpowers `hooks/hooks.json`, `skills/using-superpowers/SKILL.md:11` |
+| návrhy a plány v `docs/superpowers/` s commitom, vzorové commity „feat: add specific feature“ | `CLAUDE.md`: commity po slovensky bez odkazov na nástroje; rozpis ide do scratchpadu | `writing-plans/SKILL.md:16`, `:136` |
+| „Continuous execution: Do not pause to check in“, až 5 opravných kôl s drahším modelom | rozhoduje majiteľ (D1), najviac 3 kolá, potom človek | `subagent-driven-development/SKILL.md:17` |
+| „Delete means delete“ pri vizuálnej práci | CSS, film z fotiek a rozloženie overujeme snímkou pred a po, nie jednotkovým testom | `test-driven-development/SKILL.md:43` |
 | B2B predaj (MEDDPICC, outbound, studené e-maily), automatické rozosielanie; žiadosť o recenziu len od spokojných | náš predaj je rezervácia; automatické správy nie (zákon 452/2021 § 116); selektívne žiadosti o recenzie zakazuje Google | `sales/`, `specialized/report-distribution-agent.md`, `hospitality-guest-services.md:375` |
 
 ## Inštalácia na vlastnom počítači (len popis, nie v repozitári s webmi)
@@ -261,14 +296,17 @@ a súhrny relácií do `~/.claude/session-data/`; s údajmi zákazníkov to nepo
 ## Kontrolný zoznam
 
 - [ ] Otázky majiteľovi (rola CEO a produkt) pred stavbou alebo natáčaním; jeho odpovede doslova v zadaniach.
+- [ ] Pri projekte: návrh prečítal čerstvý agent ako staviteľ, majiteľ dostal jedno kolo otázok; rozpis úloh má
+      globálne obmedzenia z `CLAUDE.md` a päť netestovaných vstupov s testom.
 - [ ] Každý agent má spoločný blok, rolu, hranice a schému; kontrolóri needitujú.
 - [ ] Nálezy majú citát a istotu; pred úpravou ich overil skeptik.
 - [ ] Rozhodnutia o smere, obsahu, rozsahu, peniazoch a uverejnení išli majiteľovi ako D1, D2.
 - [ ] Chyba: príčina pred opravou, regresný test padá bez opravy a prejde s ňou, stop po troch.
 - [ ] Bezpečnosť: tajomstvá, vstupy, cookies, osobné údaje, agenti a skills; „kompletne / čiastočne / neposúdené“.
-- [ ] Release: čerstvé dôkazy, 0 spustených testov = zlyhanie, žiadna oslabená brána, push bez `--force`.
+- [ ] Release: čerstvé dôkazy, 0 spustených testov = zlyhanie, žiadna oslabená brána, push bez `--force`;
+      hotovo od agenta overené `git diff`, recenzia s prechodom 0 (súlad so zadaním).
 - [ ] Výstup pre majiteľa: brána (dva PASS), potom schválenie presného súboru; uverejňuje majiteľ.
-- [ ] Nič z gstack, ECC ani Agency Agents sa neinštalovalo do repozitára s webmi ani do `~/.claude/agents/`.
+- [ ] Nič z gstack, ECC, Agency Agents ani Superpowers sa neinštalovalo do repozitára s webmi ani do `~/.claude/`.
 - [ ] Nová rola má kartu (časť 0b): jedno meno všade, výstup so schémou, kontrola výstupu, hranice, eskalácia;
       schéma prešla `scripts/kontrola_schem.py`.
 - [ ] Metriky sú kontrola výstupu alebo údaje majiteľa proti vlastnej základni; žiadne cieľové čísla bez zdroja.
