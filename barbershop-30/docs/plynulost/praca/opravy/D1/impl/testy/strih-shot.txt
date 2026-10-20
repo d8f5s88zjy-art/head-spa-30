@@ -12,3 +12,21 @@ desktop rohozka 0.5 {"S":1.5,"mix":0.5,"cut":"rohozka>sala pohyb","cur":"sala"}
 desktop rohozka 0.65 {"S":1.53,"mix":0.65,"cut":"rohozka>sala pohyb","cur":"sala"}
 desktop rohozka 0.8 {"S":1.564,"mix":0.8,"cut":"rohozka>sala pohyb","cur":"sala"}
 desktop rohozka 1 {"S":1.65,"mix":0,"cut":null,"cur":"sala"}
+desktop sala 0 {"S":2.35,"mix":0,"cut":null,"cur":"sala"}
+desktop sala 0.2 {"S":2.436,"mix":0.2,"cut":"sala>stol popredie","cur":"sala"}
+desktop sala 0.35 {"S":2.47,"mix":0.35,"cut":"sala>stol popredie","cur":"sala"}
+desktop sala 0.5 {"S":2.5,"mix":0.5,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 0.65 {"S":2.53,"mix":0.65,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 0.8 {"S":2.564,"mix":0.8,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 1 {"S":2.65,"mix":0,"cut":null,"cur":"stol"}
+desktop stol 0 {"S":3.35,"mix":0,"cut":null,"cur":"stol"}
+desktop stol 0.2 {"S":3.436,"mix":0.2,"cut":"stol>cakaren svih","cur":"stol"}
+desktop stol 0.35 {"S":3.47,"mix":0.35,"cut":"stol>cakaren svih","cur":"stol"}
+desktop stol 0.5 {"S":3.5,"mix":0.5,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 0.65 {"S":3.53,"mix":0.65,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 0.8 {"S":3.564,"mix":0.8,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 1 {"S":3.65,"mix":0,"cut":null,"cur":"cakaren"}
+desktop cakaren 0 {"S":4.35,"mix":0,"cut":null,"cur":"cakaren"}
+desktop cakaren 0.2 {"S":4.436,"mix":0.2,"cut":"cakaren>sala-rano popredie","cur":"cakaren"}
+desktop cakaren 0.35 {"S":4.47,"mix":0.35,"cut":"cakaren>sala-rano popredie","cur":"cakaren"}
+desktop cakaren 0.5 {"S":4.5,"mix":0.5,"cut":"cakaren>sala-rano popredie","cur":"sala-rano"}
