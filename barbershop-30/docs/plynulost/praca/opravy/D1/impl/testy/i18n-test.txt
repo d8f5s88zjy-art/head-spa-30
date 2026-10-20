@@ -5,7 +5,8 @@ OK   [en] tabuľa hodín v jazyku stránky  {"flap":"Open now","label":"Today","
 OK   [en] Booqme v jazyku  ["https://booqme.app/en/reservation/barbershop30","https://booqme.app/en/reservation/barbershop30"]
 OK   [en] poznámka k rezervácii po slovensky  {"rez":"The booking page is in Slovak."}
 OK   [en] bez chýb  []
-OK   [uk] Manrope s cyrilikou sa stiahne a načíta  {"fonty":["Manrope-cyr-400.woff2","Manrope-cyr-700.woff2"],"cyr":["loaded","loaded"]}
+OK   [uk] Manrope s cyrilikou sa stiahne a načíta  {"fonty":["Manrope-cyr-400.woff2","Manrope-cyr-700.woff2","Manrope-cyr-700.woff2"],"cyr":["loaded","loaded","loaded"]}
+OK   [uk] číslice tabule (latinka 700) aj tlačidlo (cyrilika 700) písmom Manrope, nie náhradným písmom systému  {"fl":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":1}],"bt":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":15}]}
 OK   [uk] jazyk nasadený  {"lang":"uk-UA"}
 OK   [uk] neostal slovenský text s prekladom  []
 OK   [uk] tabuľa hodín v jazyku stránky  {"flap":"Зараз відчинено","label":"Сьогодні","aria":"Сьогодні з 9:00 до 19:00. Зараз відчинено."}
@@ -50,6 +51,7 @@ OK   [cs] bez chýb  []
 OK   počítač: prepínač v lište, nie v menu  {"x":676.25,"w":61.640625,"inHeader":true,"inNav":false}
 OK   počítač: angličtina sa nasadí
 OK   počítač: návrat do slovenčiny vráti text  []
+OK   počítač: po načítaní jazykov a otvorení ponuky sú tlačidlá a nadpisky (Manrope 700) stále v Manrope  {"pb":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":17}],"pk":[{"pismo":"Manrope ExtraLight","vlastne":true,"znakov":21}]}
 OK   počítač: bez chýb  []
 OK   [320 px] tlačidlo Menu má 44 px a je na obrazovke, jazyky sú v menu  {"tw":44,"tr":304,"vw":320,"inNav":true,"sw":320}
 OK   [320 px] ukrajinčina z menu, bez pretekania  {"lang":"uk-UA","sw":320,"vw":320}

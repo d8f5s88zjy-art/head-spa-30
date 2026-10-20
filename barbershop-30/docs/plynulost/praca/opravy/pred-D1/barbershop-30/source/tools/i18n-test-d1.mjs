@@ -30,6 +30,19 @@ async function page(opts, url) {
   return { p, errs };
 }
 
+// písmo, ktorým prehliadač naozaj kreslí text prvku (CDP); vlastné písmo stránky = isCustomFont
+async function pismo(p, sel) {
+  const cdp = await p.context().newCDPSession(p);
+  try {
+    await cdp.send('DOM.enable'); await cdp.send('CSS.enable');
+    const { root } = await cdp.send('DOM.getDocument', { depth: -1 });
+    const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: sel });
+    const { fonts } = await cdp.send('CSS.getPlatformFontsForNode', { nodeId });
+    return fonts.map((f) => ({ pismo: f.familyName, vlastne: f.isCustomFont, znakov: f.glyphCount }));
+  } finally { await cdp.detach().catch(() => {}); }
+}
+const vlastne = (f) => f.length > 0 && f.every((x) => x.vlastne);
+
 // texty na stránke, ktoré sú slovenským kľúčom s iným prekladom (= ostali nepreložené)
 const zvysky = (p, dict) => p.evaluate((d) => {
   const norm = (s) => String(s).replace(/\s+/g, ' ').trim();
@@ -75,6 +88,10 @@ for (const [code, locale] of Object.entries(LANGS)) {
   // Manrope s cyrilikou: pri ukrajinčine sa stiahne a použije (i18n.js, FontFace), pri ostatných jazykoch nie
   const cyr = await p.evaluate(() => [...document.fonts].filter((f) => f.family.replace(/"/g, '') === 'Manrope' && /2116/.test(f.unicodeRange)).map((f) => f.status));
   if (code === 'uk') ok('[uk] Manrope s cyrilikou sa stiahne a načíta', fonty.length >= 1 && cyr.includes('loaded'), { fonty, cyr });
+  if (code === 'uk') {
+    const fl = await pismo(p, '.flap-cells b'), bt = await pismo(p, '#uvod .title-actions .btn-primary');
+    ok('[uk] číslice tabule (latinka 700) aj tlačidlo (cyrilika 700) písmom Manrope, nie náhradným písmom systému', vlastne(fl) && vlastne(bt), { fl, bt });
+  }
   else ok(`[${code}] Manrope s cyrilikou sa nesťahuje`, fonty.length === 0, { fonty });
   const st = await p.evaluate(() => ({ lang: document.documentElement.lang, wait: document.documentElement.classList.contains('t-wait'),
     flap: (document.querySelector('.flap-state') || {}).textContent || '', flapLabel: (document.querySelector('.flap-label') || {}).textContent || '',
@@ -114,6 +131,8 @@ for (const [code, locale] of Object.entries(LANGS)) {
   const sk2 = await text();
   const diff = sk2.split('\n').filter((l, i) => l !== skText.split('\n')[i]);
   ok('počítač: návrat do slovenčiny vráti text', sk2 === skText, diff.slice(0, 6));
+  const pb = await pismo(p, '#uvod .title-actions .btn-primary'), pk = await pismo(p, '#uvod .kicker');
+  ok('počítač: po načítaní jazykov a otvorení ponuky sú tlačidlá a nadpisky (Manrope 700) stále v Manrope', vlastne(pb) && vlastne(pk), { pb, pk });
   ok('počítač: bez chýb', errs.length === 0, errs);
   await p.close();
 }

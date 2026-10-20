@@ -7,7 +7,9 @@ import fs from 'node:fs';
 import { createRequire } from 'module';
 const require = createRequire('/opt/node22/lib/node_modules/');
 const { chromium } = require('playwright');
-const OUT = new URL('./vzhlad/', import.meta.url).pathname;
+// --bez-i18n: modul jazykov sa nenačíta (v strome pred jeho i18n.css prepne Manrope 600/700 na písmo systému, čo nie je
+// zmena D1, ale chyba pred ňou); porovná sa tak len vplyv ostatných zmien D1
+const OUT = new URL(process.argv.includes('--bez-i18n') ? './vzhlad-bez-i18n/' : './vzhlad/', import.meta.url).pathname;
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...v] = a.slice(2).split('='); return [k, v.length ? v.join('=') : '1']; }));
 const DEVS = { p390: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: 'sk-SK' },
   d1440: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'sk-SK' } };
@@ -20,6 +22,7 @@ for (const dn of String(opt.dev || 'p390,d1440').split(',')) {
     const ctx = await browser.newContext(DEVS[dn]);
     const page = await ctx.newPage();
     const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    if (process.argv.includes('--bez-i18n')) await page.route('**/assets/i18n.js', (r) => r.abort());
     await page.goto(`http://127.0.0.1:${PORT[strom]}/barbershop-30/?film=off&uvod=off&hudba=off`, { waitUntil: 'load', timeout: 120000 });
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });

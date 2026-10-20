@@ -4,7 +4,8 @@
 import os, glob
 import numpy as np
 from PIL import Image
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'vzhlad')
+import sys
+D = os.path.join(os.path.dirname(os.path.abspath(__file__)), sys.argv[1] if len(sys.argv) > 1 else 'vzhlad')
 riadky = []
 for dev in ('p390', 'd1440'):
     trojice = []
