@@ -1,0 +1,15 @@
+# meno zariadenie sieť cpu film cache scenár [voľby]  (telefón 390×844 DPR 3, film zapnutý pri DPR 1 ako akceptačná sada auditu)
+p-def-f4-cold-uvod phone fast4g 4 default cold uvod
+p-def-s4-cold-uvod phone slow4g 4 default cold uvod
+p-off-f4-cold-svih phone fast4g 4 off cold svih
+p-off-f4-warm-svih phone fast4g 4 off warm svih
+p-off-s4-cold-svih phone slow4g 4 off cold svih
+p-off-f4-cold-menu phone fast4g 4 off cold menu
+p-off-s4-cold-menu phone slow4g 4 off cold menu
+p-off-f4-warm-hore phone fast4g 4 off warm hore
+p-on-f4-cold-svih phone fast4g 4 on cold svih --dpr=1
+p-on-f4-cold-hore phone fast4g 4 on cold hore --dpr=1
+d-def-f4-cold-uvod desk fast4g 4 default cold uvod
+d-def-s4-cold-uvod desk slow4g 4 default cold uvod
+d-off-s4-cold-svih desk slow4g 4 off cold svih
+d-on-f4-warm-menu desk fast4g 4 on warm menu

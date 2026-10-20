@@ -34,6 +34,7 @@ Pokyn majiteľa (20. 10. 2026): „Zlepši a zdokonaľ Barbershop, doplň tam ve
    - ako zaplatí.
 2. Dve chyby treba opraviť hneď, lebo posielajú vašich zákazníkov k inej prevádzke. Odkaz „Vernostná kartička“
    v pätičke aj každá neexistujúca stránka Barbershopu vedú na chybovú stránku HEAD SPA 30 s jej telefónom.
+   Odkaz na kartičku preto skryjeme, kým systém kartičiek nebude spustený; potom sa vráti (otázka 15).
 3. Doplnenie je rozdelené do troch krokov:
    - **D6a:** opravy dôvery a pravdivých údajov,
    - **D6b:** časť „Pred návštevou“ s odpoveďami,
@@ -49,7 +50,7 @@ Pokyn majiteľa (20. 10. 2026): „Zlepši a zdokonaľ Barbershop, doplň tam ve
    Čo nevieme (napríklad platba, storno, cena a platnosť poukážky), sa na webe neukáže, kým to nepotvrdíte.
 5. Grafika (D7): dlhé tmavé pásy cenníka a kontaktu dostanú úzke „okná“ so skutočnými fotkami z prevádzky:
    - nožnice,
-   - britva,
+   - štetka na holenie a pomády na pracovnom stole,
    - detské autíčko‑kreslo,
    - recepcia s poukážkami,
    - vchod.
@@ -77,10 +78,15 @@ Pokyn majiteľa (20. 10. 2026): „Zlepši a zdokonaľ Barbershop, doplň tam ve
 2. **Číslovanie.** V doplnku PLAN.md a v PRIEBEH 3b bola „D6 – art direction a VFX“. Podľa tohto pokynu je teraz
    **D6 = doplnenie** a **D7 = art direction a filmové efekty**.
 3. **Tie isté súbory.** D6 a D7 menia `index.html`, `app.js`, `style.css`, `i18n.js` a slovníky, teda to isté ako D1–D5
-   (`hs2`, vetva `barbershop-plynulost`, D1 je rozpracovaná). Preto idú až po zlúčení D5. Výnimkou je rýchla oprava
-   **D6a‑0**, ktorá mení len súbory mimo D1–D5 (`/404.html` a jeden riadok pätičky). Overené v `davky.json` a na zozname zmien v
-   `hs2`: pätičku ani `404.html` D1–D5 nemenia. D5 mení v `index.html` len hlavičku, prvé karty a galériu.
+   (`hs2`, vetva `barbershop-plynulost`; D1 je od 20. 10. 13:11 commit `7ea247c`). Preto idú až po zlúčení D5. Výnimkou je rýchla
+   oprava **D6a‑0**, ktorá mení len súbory mimo D1–D5: `/404.html`, jeden riadok pätičky `index.html`, `assets/vernost.js`,
+   `.github/workflows/pages.yml`, `tools/ftp-balik.sh`, nové kľúče 404 v 7 slovníkoch, nový `barbershop-30/404.html`
+   a `source/tools/over-404.mjs`. Overené v `davky.json` a v zozname zmien commitu `7ea247c`: D1 nemení ani jeden z nich.
+   D5 mení v `index.html` len hlavičku, prvé karty a galériu; do slovníkov môže pridať kľúče, preto sa kľúče 404 pridajú
+   ako samostatný blok a pri zlúčení sa slovníky overia `i18n-test.mjs`.
 4. **Rozpočet HTML.** `index.html` má dnes 14 380 B gzip (`gzip -9c`), strop je 14 600 B (prvé okno TCP, README, D2).
+   D5 mení `index.html` (`sizes` galérie, karta Poď ďalej, načítanie filmu) a má ten istý strop 14 600 B, preto sa
+   východisko pre D6a zmeria znova po zlúčení D5. Rozpočty nižšie (asi +100 až +150 B) platia voči tomuto číslu.
    Nový viditeľný text preto ide do modulu podľa vzoru `assets/recenzie.js`. Vložené uzly prekladá MutationObserver
    v `i18n.js:97–98`. Do HTML ide len nevyhnutné (JSON‑LD, jeden odkaz v pätičke, prázdny kontajner).
 5. **Slovníky.** Je ich 7 (`assets/i18n/{en,uk,hu,sr,pl,de,cs}.json`), kľúč je slovenský text. Každý nový viditeľný text
@@ -136,7 +142,7 @@ Zdrojové ID z prieskumov:
 | N34 | Jazykové verzie `?lang=` majú slovenský canonical a `og:url`, hreflang v sitemape s tým odporuje | T04, T10 | slovníky existujú | D6c |
 | N35 | Vyhlásenie o prístupnosti | T12 | merania; povinnosť podľa veľkosti firmy | D6c |
 | N36 | Súhlasy zamestnancov s portrétmi a videami | T07 | od majiteľa | otázka (pred spustením na doméne) |
-| N37 | Lightbox: popis sa vymení skôr než fotka, tvrdý strih okolo 250 ms, bez švihu | POR‑08 | meranie `lightbox-tma.json` | D7 |
+| N37 | Lightbox: popis sa vymení skôr než fotka, tvrdý strih okolo 250 ms, bez švihu | POR‑08 | snímky `porovnanie/snimky/lightbox-dalsia-100ms.jpg` (nový popis nad starou fotkou) a `-250ms.jpg` (nová fotka); `lightbox-tma.json` sám zmenu neukazuje (`currentSrc` sa prepne hneď) | D7 |
 | N38 | Dlhé jednofarebné tmavé pásy (#171412) cenníka a kontaktu | POR‑14 | snímky `_b30-m.jpg`, `_b30-d.jpg` | D7 |
 | N39 | FX029 (preostrenie) v trase D5 je v rozpore s „bez straty ostrosti“ | porovnanie (Z098) | TOUR_DIRECTION r. 18 a 26 | rozhodnutie R9 |
 | N40 | Hodnotenie číslom (Google 5,0 z 949, 20. 10. 2026) | POR‑05 | MASTER_BRIEF číslo dnes zakazuje | otázka |
@@ -164,9 +170,10 @@ Zdrojové ID z prieskumov:
 
 - **R1 Rýchla oprava D6a‑0 hneď na `main`.**
   - Dôvod: dve živé chyby posielajú zákazníka na inú značku, a to s cudzím telefónom a cudzou rezerváciou.
-  - Rozsah: mení sa `/404.html` a riadok pätičky `index.html:863` (D1–D5 ich nemenia).
+  - Rozsah: `/404.html`, riadok pätičky `index.html:863`, `vernost.js`, `pages.yml`, `tools/ftp-balik.sh`, kľúče 404
+    v slovníkoch (úplný zoznam v časti 1, bod 3; D1 ich nemení).
   - Po nasadení tím `hs2` zlúči `main`, konflikt sa nečaká.
-  - Rozhodnutie sa mení, ak `hs2` začne meniť pätičku.
+  - Rozhodnutie sa mení, ak `hs2` začne meniť pätičku, `vernost.js`, `pages.yml` alebo tie isté miesta slovníkov.
 - **R2 Nový text ide do modulu, nie do HTML** (vzor `recenzie.js`, `app.js:366–374`).
   - Dôvod: rezerva HTML je 220 B gzip a D6a z nej minie asi 100–150 B.
 - **R3 FAQPage JSON‑LD sa nepridáva.**
@@ -174,7 +181,9 @@ Zdrojové ID z prieskumov:
     Central, „Changes to HowTo and FAQ rich results“; pri implementácii overiť, či to stále platí).
   - Pridanie by stálo bajty HTML bez úžitku. Odpovede ostanú ako HTML `<details>`.
 - **R4 Súradnice `geo`.**
-  - Použijú sa tie isté ako pri HEAD SPA 30 v tej istej budove (OSM way 58223421: 48.315655, 18.090439).
+  - Použijú sa tie isté ako pri HEAD SPA 30 v tej istej budove (OSM way 58223421 = budova Mostná 226/30, ťažisko
+    48.3156549, 18.0904390; overené cez API OpenStreetMap 20. 10. 2026, dôkaz `recenzia-planu/osm-way-58223421.json`
+    a `osm-reverse-48.315655-18.090439.json`).
   - Booqme uvádza 48.3155884, 18.0905691, teda asi o 12 m inde.
   - Dôvod: jedna pravda pre obe prevádzky v jednej budove.
 - **R5 Stránka 404.**
@@ -222,14 +231,16 @@ Po každej dávke nasledujú tri nezávislé kontroly (kód, meranie, vzhľad) p
      `/vernost/api/?a=stav` aj `/vernost/ochrana-udajov.html`,
    - bez toho ostane položka skrytá aj pri vyplnenom hesle.
 2. **N02, stránka 404:**
-   - inline skript v `<head>` súboru `/404.html` pri ceste `/head-spa-30/barbershop-30/…` nastaví na `<html>` triedu
+   - inline skript v `<head>` súboru `/404.html` pri ceste so segmentom `/barbershop-30/` (github.io aj vlastná doména) nastaví na `<html>` triedu
      `bs30` ešte pred vykreslením,
    - CSS potom ukáže blok Barbershopu: „Táto stránka tu nie je.“, Rezervovať termín (barbershop30.sk/rezervacia),
      Zavolať 0951 267 203, Späť na úvod `/head-spa-30/barbershop-30/`,
    - blok HEAD SPA ostane pri tejto ceste skrytý, `noindex` zostáva,
    - texty sa preložia zo slovníka `barbershop-30/assets/i18n/<jazyk>.json`, keď je v `localStorage` uložené `b30.lang`;
      inak ostane slovenčina (kľúče do 7 slovníkov),
-   - kópia `barbershop-30/404.html` sa pripraví pre vlastnú doménu (ErrorDocument) a `pages.yml` ju skopíruje.
+   - kópia `barbershop-30/404.html` sa pripraví pre vlastnú doménu (ErrorDocument) a `pages.yml` ju skopíruje,
+   - `tools/ftp-balik.sh` kopíruje `/404.html` aj na headspa30.sk (HEAD SPA, bez priečinka Barbershopu). Blok Barbershopu
+     a jeho skript sú preto medzi značkami `<!-- B30 -->` a `<!-- /B30 -->` a `ftp-balik.sh` ich z `_ftp/404.html` vymaže.
 
 **Akceptácia D6a‑0**
 - **Vernostná kartička naživo:** v pätičke Barbershopu nie je položka viditeľná (Playwright 390 × 844 a 1440 × 900, sk
@@ -255,6 +266,8 @@ Po každej dávke nasledujú tri nezávislé kontroly (kód, meranie, vzhľad) p
 **Riziko D6a‑0**
 - Zmena `404.html` zasahuje HEAD SPA, preto sa porovnávajú snímky.
 - Bez JavaScriptu ostane variant HEAD SPA (prijateľné, zriedkavé).
+- FTP balík HEAD SPA: `sh tools/ftp-balik.sh headspa30.sk` a potom `_ftp/404.html` nesmie obsahovať „0951 267 203“,
+  „barbershop30.sk“ ani „Barbershop“ (grep v overení D6a‑0).
 - Tím `hs2` musí zlúčiť `main`; konflikt sa nečaká, lebo pätičku ani 404 nemení.
 
 **Kapitoly skillu:** C001, C059, C081, C083.
@@ -305,15 +318,22 @@ Položky (každá s faktom zo zdroja alebo bez nového faktu):
    - Pristátie zabezpečí skok z D2 (okamžite, fokus, história).
    - Pätička dostane `id="pata"`.
 5. **N07 Čitateľnosť cenníka.**
-   - `.price-name` a `.price-amount` dostanú `font-variation-settings` s optickou veľkosťou podľa veľkosti písma
-     (`opsz` automaticky alebo okolo 24–36) a `font-variant-numeric: tabular-nums`.
+   - Pozor: `assets/fonts/Fraunces-*.woff2` sú statické rezy s `opsz 144` (`fonts.css:2–3`, fonttools: bez tabuľky
+     `fvar`, GSUB len `case`, `liga`, `rvrn`, `ss01`, bez `tnum`). `font-variation-settings` ani
+     `font-variant-numeric: tabular-nums` preto vzhľad nezmenia; samotné zmazanie `opsz 144` v CSS nič neopraví.
+   - Najprv príčina (Iron Law): či medzery „Páns ky s trih“ spôsobuje rez pre 144 pt pri 18–26 px, alebo strata
+     vyrovnania párov pri orezaní písma (porovnať s pôvodným Fraunces v rovnakej veľkosti).
+   - Až potom oprava podľa rozhodnutia (pozri nálezy recenzie): nový statický rez tej istej rodiny pre menšiu optickú
+     veľkosť len pre cenník, alebo úprava veľkosti a medzier bez nového súboru.
    - Vzhľad (Fraunces 800, farba, rozloženie) sa nemení. Kontroluje sa výrez „13 €“ a „15 €“ pri DPR 1 a zalomenie názvov
      na 390 px.
 6. **N08 Cudzinec.**
    - V jazykoch iných než sk sa pod hlavnými tlačidlami úvodu a karty Rezervácia ukáže viditeľná poznámka. Použijú sa
      existujúce texty L.rez z `i18n.js:163–165`; vloží ich `i18n.js`, takže HTML sa nemení.
-   - V angličtine doplniť: „Its EN switch translates it automatically, or call +421 951 267 203.“ (prepínač je Google
-     prekladač, `zdroje/bs30-rez.html`).
+   - V angličtine doplniť: „Need help? Call +421 951 267 203.“ Vetu o prepínači EN nepridávať: prepínač je Google
+     prekladač (`zdroje/bs30-rez.html`), ale pri skúške 20. 10. 2026 po výbere EN ostala stránka po 8 s po slovensky
+     (1440 × 900) a na telefóne je prepínač skrytý v menu (dôkaz `recenzia-planu/rez-en-d.jpg`, `skripty/rez-en.mjs`).
+     Vetu možno vrátiť len po úspešnej skúške na telefóne aj počítači.
    - Telefón sa v cudzích jazykoch zobrazí ako +421 951 267 203 (kľúč „0951 267 203“ do 7 slovníkov).
 7. **N09 Zdroj faktu „8 kresiel“.**
    - Ak majiteľ do implementácie nepotvrdí „v troch miestnostiach“, podriadok sa zmení na doslovné „minimálne čakanie“
@@ -358,6 +378,8 @@ Spolu asi 14 480–14 520 B. Strop je 14 600 B.
   | 31. 12. 2026 10:00 | otvorené (systém ho neblokuje) |
   | sobota 13:59 / 14:00 | otvorené / zatvorené |
   | 29. 3. 2026 a 25. 10. 2026 | správna hodina pri zmene času |
+  | pondelok 30. 3. 2026 a 26. 10. 2026, 8:59 / 9:00 | zatvorené / otvorené (prvý pracovný deň po zmene času) |
+  | všetky riadky znova s `timezoneId` America/New_York a Asia/Tokyo | rovnaký stav ako v Europe/Bratislava (výpočet nezávisí od zóny zariadenia) |
 
   Všetkých 8 jazykov je bez nepreloženého textu.
 - **`rezervacia-kontrola.mjs`** hlási naživo zhodu: sviatky, 15 cien a trvaní (HTML aj JSON‑LD) a 10 mien tímu.
@@ -379,7 +401,7 @@ Spolu asi 14 480–14 520 B. Strop je 14 600 B.
 - **Cenník:**
   - výrezy pri 1440 × 900 (DPR 1) a 390 × 844 (DPR 3): dvaja kontrolóri jednoznačne prečítajú „13 €“ a „15 €“,
   - žiadny názov služby nie je zalomený vnútri slova (skript na `getClientRects` slov),
-  - `.price-name` ani `.price-amount` nemajú `opsz 144`.
+  - výrezy „13 €“, „15 €“ a „Pánsky strih“ pred a po sa v pixeloch líšia (zmena je viditeľná, nie len v CSS).
 - **Cudzinec:**
   - v 7 jazykoch je poznámka o slovenskej rezervácii viditeľná pod hlavnými tlačidlami (nie len `title`),
   - telefón je +421 951 267 203,
@@ -442,14 +464,18 @@ Obsah, ktorý sa zobrazí hneď (fakty overené 20. 10. 2026; presné znenie v �
 1. **Ako sa objednám:** 4 kroky (služba → barber alebo „Nezáleží“ → termín → tvoje údaje), potvrdenie e‑mailom, alebo
    recepcia v pracovné dni 9–19.
 2. **Ako ďaleko dopredu:** online až mesiac dopredu, aj na dnes, ak je voľný termín (getCalendar: od dnes do +1 mesiac).
-3. **Zmena alebo zrušenie:** telefonicky 0951 267 203 alebo e‑mailom info@barbershop30.sk (text potvrdenia v systéme).
-   Lehota, poplatok a meškanie sa nezobrazia, kým ich majiteľ neurčí.
+3. **Zmena termínu:** telefonicky 0951 267 203 alebo e‑mailom info@barbershop30.sk (text potvrdenia v systéme hovorí
+   len o zmene: „pre zmenu rezervácie nás neváhajte kontaktovať telefonicky alebo emailom“). Zrušenie, lehota, poplatok
+   a meškanie sa nezobrazia, kým ich majiteľ neurčí (otázka 3).
 4. **Výber barbera netreba:** voľba „Nezáleží“ (getEmployees).
 5. **Deti:** strih pre malých gentlemanov do 10 rokov, 45 min, 15 €. Rezervácia je vždy pre jednu osobu, pre dvoch si
    treba spraviť dve (krok 4 systému).
 6. **Parkovanie:** zóna SM‑A, zadarmo v pracovné dni po 16:00 a v sobotu po 12:00, inak 1 € prvá hodina a 2 € každá
    ďalšia, platba cez datamesta.nitra.sk, automat alebo SMS 2200.
-   - Bezplatné záchytné parkovisko je na Nábreží mládeže.
+   - Pozor: Parkové nábrežie a Na Predmostí (blízko Mostnej) sú v SM‑A spoplatnené nonstop; veta to musí povedať.
+   - Konkrétne záchytné parkovisko sa nemenuje: „parkovisko Nábrežie mládeže (pri Chrenovskom moste)“ je v platenej
+     zóne CH‑A (pracovné dni 0–18 h), hoci mesto uvádza „Nábrežie mládeže“ aj medzi bezplatnými záchytnými.
+     Odkaz na zoznam záchytných parkovísk mesta stačí, presné miesto doplní majiteľ.
    - Pri texte je „podľa mesta Nitra, stav k <dátum>“ a odkaz na nitra.sk/parkovanie.
    - Vlastné miesta a zastávku MHD doplní majiteľ.
 7. **Bez objednania:** starý oficiálny web dnes uvádza „8 kresiel – minimálne čakanie – rýchly servis, aj keď prídeš
@@ -461,7 +487,8 @@ Obsah, ktorý sa zobrazí hneď (fakty overené 20. 10. 2026; presné znenie v �
 9. **Produkty:** „Prípravky, ktoré používame, si môžeš kúpiť aj u nás.“ (starý web). Značky až od majiteľa.
 10. **Rezervácia v cudzom jazyku** (len v jazykoch iných než sk): poznámka z N08 ako odpoveď.
 11. **Romana** (rozšírenie riadku pod cenníkom): farbenie, melír, trvalá, tónovanie, prekrytie šedín a polióza v Booqme,
-    platba na mieste alebo kartou online. Ceny sa zobrazia len so súhlasom majiteľa (pravidlo jedného cenníka), dni
+    bez platby vopred (všetkých 14 služieb má `payment-required="0"`, sekcia platby kartou sa ukáže len pri hodnote 2,
+    `booqme2/rez.html:1207` a `:1782`; platba kartou online teda dnes nie je). Ceny sa zobrazia len so súhlasom majiteľa (pravidlo jedného cenníka), dni
     Po–St len po potvrdení (dnes je to len dostupnosť v Booqme).
 
 Ďalšie doplnky:
@@ -502,8 +529,9 @@ Obsah, ktorý sa zobrazí hneď (fakty overené 20. 10. 2026; presné znenie v �
 **Akceptácia D6b**
 - **Cesty zákazníka** (zopakovať skripty `chyba/obsah-cesta/skripty` → `cesty.json`):
   - z 12 ciest končia bez odpovede len tie, ktoré čakajú na majiteľa (platba, lehota storna), a sú zapísané v CHECKS,
-  - poukaz, parkovanie, zmena a zrušenie, „dnes alebo bez objednania“, dieťa a cudzinec majú odpoveď najviac
-    na 2 ťuknutia z menu.
+  - poukaz, parkovanie, zmena termínu, „dnes alebo bez objednania“, dieťa a cudzinec majú odpoveď z otvoreného menu
+    najviac na 2 ťuknutia (položka menu, otvorenie odpovede) a najviac 1 obrazovku skrolu medzi nimi (390 × 844,
+    Playwright, zapísané v `cesty.json`).
 - **Pravdivosť:**
   - každá vykreslená položka má v dátach zdroj a dátum (kontrolný skript modulu),
   - položky so `zobrazit: false` nie sú v DOM,
@@ -649,8 +677,8 @@ Potom nastupuje smer B bez okien.
 
 | ID | Efekt | Kde | Účel | Priebeh (vstup / držanie / výstup / prerušenie / návrat / upratanie) | Statická verzia | Obmedzený pohyb | Rozpočet výkonu | Vlastník |
 |---|---|---|---|---|---|---|---|---|
-| E1 | **FX046** Skladanie vrstiev: „okná miestnosti“ | Hlavičky skupín cenníka (kandidáti: Strih – `naradie-noznice`; Brada a holenie – `detail-stol`; Doplnky – foto‑45 pracovné miesto; Balíčky – vyberie štúdia), riadok detského strihu (foto‑29 COPS), blok poukážok a produktov (foto‑40 recepcia, ľudia nie), karta „Kde nás nájdeš“ (foto‑37 vchod s rohožkou). Výber potvrdiť pohľadom na fotky (C016, súpis záberov). | Návštevník vie, kde v prevádzke je a o čom je skupina. Tmavý pás má obraz. | Okno je statické: pseudoprvok s `background-image: image-set(avif, webp)`. Obrázok sa nastaví až pri triede `is-near` na páse (IO z `app.js`, vzor D2), po stiahnutí a `decode()` cez `new Image()`; dovtedy ukazuje náhľad z `nahlady.css` (D2). Pri prerušení a návrate sa nič neanimuje. | Tá istá. | Tá istá. | Spolu ≤ 6 okien, každé ≤ 40 kB AVIF na telefóne. Len lenivo, nikdy v prvom obraze. Pomer strán rezervovaný (CLS 0). Šírka súboru ≥ šírka × DPR (do 2×; fotky 1200 px len do šírky okna 600 css px). 0 B v HTML, 0 ms JS na snímku. | `style.css`; obrázky `build_images.py` |
-| E2 | **FX007** Paralaxa (jedna vrstva, ≤ 6 %) | Obrázok v okne E1 | Jemný pohyb kamery aj v pásoch, filmový jazyk bez filmu | `@supports (animation-timeline: view())` a `prefers-reduced-motion: no-preference`: `translateY` −3 % → +3 % na pseudoprvku, len `transform` (kompozitor). Bez podpory statické. | Statické okno. | Statické okno. | 0 zápisov z JS. Štýl na snímku počas skrolu ≤ výsledok D5 + 0,2 ms. Ak brána neprejde, E2 sa vypne a E1 ostane. | CSS animácia; `app.js` na okná nesiaha |
+| E1 | **FX046** Skladanie vrstiev: „okná miestnosti“ | Hlavičky skupín cenníka (kandidáti: Strih – `naradie-noznice`; Brada a holenie – `detail-stol`; Doplnky – foto‑45 pracovné miesto; Balíčky – vyberie štúdia), riadok detského strihu (foto‑29 COPS), blok poukážok a produktov (foto‑40 recepcia, ľudia nie), karta „Kde nás nájdeš“ (foto‑37 vchod s rohožkou). Kandidátov je 7, štúdia vyberie najviac 6. Foto‑40 len výrez pultu s boxom „DARČEKOVÁ POUKÁŽKA“: bez figúrky Mickey Mouse, vizitiek so Salónom 30 a tvárou a bez TV (ten istý dôvod ako vylúčenie foto‑17 v MEDIA_SELECTION). Výber potvrdiť pohľadom na fotky (C016, súpis záberov). | Návštevník vie, kde v prevádzke je a o čom je skupina. Tmavý pás má obraz. | Okno je statické: pseudoprvok s `background-image: image-set(avif, webp)`. Obrázok sa nastaví až pri triede `is-near` na páse (IO z `app.js`, vzor D2), po stiahnutí a `decode()` cez `new Image()`; dovtedy ukazuje náhľad z `nahlady.css` (D2). Pri prerušení a návrate sa nič neanimuje. | Tá istá. | Tá istá. | Spolu ≤ 6 okien, každé ≤ 40 kB AVIF na telefóne. Len lenivo, nikdy v prvom obraze. Pomer strán rezervovaný (CLS 0). Šírka súboru ≥ šírka × DPR (do 2×; fotky 1200 px len do šírky okna 600 css px). 0 B v HTML, 0 ms JS na snímku. | `style.css`; obrázky `build_images.py` |
+| E2 | **FX007** Paralaxa (jedna vrstva, ≤ 6 %) | Obrázok v okne E1 | Jemný pohyb kamery aj v pásoch, filmový jazyk bez filmu | `@supports (animation-timeline: view())` a `prefers-reduced-motion: no-preference`: `translateY` −3 % → +3 % na pseudoprvku, len `transform` (kompozitor). Pseudoprvok je o 6 % vyšší než okno (presah 3 % hore aj dole), aby sa pri posune nikdy neodkryl tmavý okraj. Bez podpory statické. | Statické okno. | Statické okno. | 0 zápisov z JS. Štýl na snímku počas skrolu ≤ výsledok D5 + 0,2 ms. Ak brána neprejde, E2 sa vypne a E1 ostane. | CSS animácia; `app.js` na okná nesiaha |
 | E3 | **FX012** Prelínanie v lightboxe (Z046) | Lightbox galérie (`app.js:481–529`) | Odstrániť nesúlad popisu a fotky a tvrdý strih (N37) | Klik, šípka alebo švih spustí stiahnutie a `img.decode()` novej fotky; popis stojí. Potom sa v jednej snímke vymení popis a začne 300 ms lineárne prelínanie dvoch vrstiev `<img>`. Stará vrstva sa po konci odpojí. Nová požiadavka počas čakania zruší predošlú (len posledná, C055). Počas prelínania sa aktuálne prelínanie dokončí hneď a začne ďalšie. Po zobrazení sa predčítajú susedia ± 1. | Okamžitá výmena po dekódovaní. | Okamžitá výmena po dekódovaní, rovnaká rezervovaná plocha. | ≤ 3 dekódované fotky v pamäti. Žiadna úloha > 50 ms pri CPU 4×. INP ≤ 200 ms. | Modul lightboxu v `app.js` |
 | E4 | **FX053** Švih a počítadlo pásov | Lightbox (švih). Pásy tímu, galérie a recenzií (počítadlo „3 / 10“ + tlačidlá ← → na počítači a klávesnici). | Kto hľadá svojho barbera, vie, koľko kariet ostáva (N25). V galérii sa listuje prstom. | Švih cez pointer events: prah 40 px a \|dx\| > 1,5 × \|dy\|, inak natívny skrol, klik a ťah sa rozlišujú. Počítadlo sa mení podľa IntersectionObserver na kartách (nie podľa scroll). Text počítadla je `aria-hidden`, tlačidlá majú `aria-label`. | Zoznam so scroll‑snap. | Bez plynulého posunu (`scroll-behavior: auto`). | Len IO, 0 práce na snímku. Ciele dotyku ≥ 44 px. | `app.js` (pásy) |
 | E5 | **FX006/FX002** Otváranie odpovedí | `<details>` v „Pred návštevou“ | Plynulé otvorenie bez skoku | `::details-content` + `interpolate-size: allow-keywords` (0 → auto za 200 ms). Bez podpory sa otvorí hneď. Žiadny JS. | Okamžité otvorenie. | Okamžité otvorenie. | Animuje sa layout len jednej položky pri ťuknutí, nie počas skrolu. LoAF pri otvorení ≤ 50 ms pri CPU 4×. | CSS |
@@ -678,7 +706,9 @@ Vylúčené efekty (R9, R10, MASTER_BRIEF, ART_DIRECTION):
   - štýl na snímku ≤ výsledok D5 + 0,2 ms a ≤ 2,0 ms,
   - dlhé úlohy ≤ 6,
   - snímky > 16,7 ms ≤ 8 %.
-- `skrol2.mjs --film=off --cpu=1`: p95 vlákna ≤ 5,5 ms.
+- `skrol2.mjs --film=off --cpu=1`: p95 vlákna ≤ 5,5 ms a žiadna úloha vlákna > 50 ms (ZADANIE 2.1, meranie b).
+- Absolútne hranice ZADANIA 2.1 platia vždy, aj keď je výsledok D5 horší: snímka p95 ≤ 20 ms, snímky > 33 ms ≤ 2 %,
+  žiadna snímka > 100 ms, LCP ≤ 2,5 s, INP < 200 ms, CLS < 0,05.
 - Film: `git diff` na `film.js` je prázdny, pamäť grafiky (sonda `over-film.mjs`) ≤ 140 MB.
 - Čierne okná:
   - sady D2 (`co2-*`, `co3-*`, `co4-*`) a D3 (`co1-*`, `co5-*`) bez nového okna,
@@ -703,11 +733,13 @@ Vylúčené efekty (R9, R10, MASTER_BRIEF, ART_DIRECTION):
   - najviac 6 okien, každé ≤ 40 kB AVIF,
   - pod každým náhľad, takže nikde jednofarebná tmavá plocha > 150 ms,
   - pomer strán rezervovaný (CLS 0), šírka súboru ≥ šírka × DPR (do 2×),
-  - fotky len zo zoznamu a len s `people_visible: nie`.
+  - fotky len zo súpisu `source/audit.json` s `people_visible: nie`; foto‑29 a foto‑40 sa pred použitím zapíšu
+    do MEDIA_SELECTION s výrezom a stĺpcom „ľudia“; výrez foto‑40 bez figúrky, vizitiek a TV (kontrola pohľadom).
 - **E2:** beží len pri podpore `animation-timeline` a bez obmedzenia pohybu. Do okien sa nezapisuje z JS (sonda zápisov
   štýlu) a štýl na snímku stúpne najviac o 0,2 ms.
 - **E3:**
-  - popis sa vymení najviac 16 ms od začiatku prelínania (rozšírený `lightbox-tma.mjs`),
+  - popis sa vymení najviac 16 ms od začiatku prelínania (rozšírený `lightbox-tma.mjs`; meria sa z obrazu, `Page.startScreencast`
+    alebo snímky po 16 ms, nie z `currentSrc`, ktorý sa prepne hneď a dnešnú chybu neukáže),
   - žiadna snímka nemá nový popis nad starou fotkou,
   - prelínanie trvá 300 ms ± 1 snímka,
   - po 5 rýchlych ťuknutiach sa ukáže posledná požadovaná fotka,
@@ -716,7 +748,8 @@ Vylúčené efekty (R9, R10, MASTER_BRIEF, ART_DIRECTION):
 - **E4:**
   - na 390 × 844 švih prstom (CDP dotyk) prejde na ďalšiu fotku, zvislý ťah skroluje stránku,
   - počítadlo pásu tímu ukazuje „n / 10“ správne v troch polohách,
-  - tlačidlá ← → idú klávesnicou, ciele dotyku ≥ 44 px.
+  - tlačidlá ← → idú klávesnicou, ciele dotyku ≥ 44 px,
+  - `aria-label` tlačidiel ← → má kľúč vo všetkých 7 slovníkoch (`i18n-test.mjs`).
 - **E5:** otvorenie odpovede bez LoAF > 50 ms pri CPU 4×, pri obmedzení pohybu okamžite.
 - **Rozpočet a vzhľad:**
   - rozpočet 7.4 je splnený a `film.js` sa nezmenil,
@@ -755,15 +788,15 @@ Vylúčené efekty (R9, R10, MASTER_BRIEF, ART_DIRECTION):
 |---|---|---|---|
 | Pred návštevou: objednanie | Online rezervácia má štyri kroky: služba, barber alebo „Nezáleží“, termín a tvoje údaje. Potvrdenie ti príde e‑mailom. | rezervačný systém, texty krokov a potvrdenia (oficiálne, 20. 10.) | hneď |
 | … dopredu | Online sa objednáš až mesiac dopredu, aj na dnes, keď je voľný termín. | getCalendar (oficiálne, 20. 10.) | hneď |
-| … zmena | Termín zmeníš alebo zrušíš na 0951 267 203 alebo na info@barbershop30.sk. | text potvrdenia v systéme (oficiálne) | hneď |
+| … zmena | Termín zmeníš telefonicky na 0951 267 203 alebo e‑mailom na info@barbershop30.sk. | text potvrdenia v systéme (oficiálne; hovorí len o zmene) | hneď; zrušenie až po otázke 3 |
 | … barber | Barbera vyberať nemusíš. V rezervácii zvoľ „Nezáleží“. | getEmployees (oficiálne) | hneď |
 | … deti | Strih pre malých gentlemanov do 10 rokov trvá 45 minút a stojí 15 €. Rezervácia je vždy pre jednu osobu, pre dvoch si sprav dve. | systém (oficiálne) | hneď |
-| … parkovanie | Mostná je v zóne SM‑A. V pracovné dni po 16:00 a v sobotu po 12:00 parkuješ zadarmo, inak prvá hodina 1 €, každá ďalšia 2 €. Bezplatné parkovisko je na Nábreží mládeže. Podľa mesta Nitra, stav k 20. 10. 2026. | nitra.sk/parkovanie (úrad, upravené 13. 8. 2026) | hneď |
+| … parkovanie | Mostná je v zóne SM‑A. V pracovné dni po 16:00 a v sobotu po 12:00 parkuješ zadarmo, inak prvá hodina 1 €, každá ďalšia 2 €. Pozor, na Parkovom nábreží a Na Predmostí sa platí stále. Bezplatné záchytné parkoviská nájdeš na nitra.sk/parkovanie. Podľa mesta Nitra, stav k 20. 10. 2026. | nitra.sk/parkovanie (úrad, upravené 13. 8. 2026) | hneď |
 | … bez objednania | Prísť môžeš aj bez objednania. S rezerváciou máš svoj čas istý. | starý oficiálny web (živý 20. 10.), recenzia Jana U. | hneď, potvrdenie neblokuje |
 | … poukážky | Darčekové poukážky máme. Ako ich kúpiť, ti povie recepcia na 0951 267 203. | starý web, foto‑40 (poukážky na pulte) | hneď |
 | … produkty | Prípravky, ktoré používame, si môžeš kúpiť aj u nás. | starý oficiálny web | hneď |
-| … cudzí jazyk (en) | The booking page is in Slovak. Its EN switch translates it automatically, or call +421 951 267 203. | rezervácia (Google prekladač), CONTENT_SOURCES | hneď (len iné jazyky) |
-| Romana | Farbenie, melír, trvalú, tónovanie, prekrytie šedín a poliózu robí Romana. Rezervuješ ich v Booqme a platíš na mieste alebo kartou online. | Booqme (oficiálne, 20. 10.) | hneď |
+| … cudzí jazyk (en) | The booking page is in Slovak. Need help? Call +421 951 267 203. | rezervácia po slovensky (prepínač EN pri skúške 20. 10. nepreložil), CONTENT_SOURCES | hneď (len iné jazyky) |
+| Romana | Farbenie, melír, trvalú, tónovanie, prekrytie šedín a poliózu robí Romana. Rezervuješ ich v Booqme, bez platby vopred. | Booqme (oficiálne, 20. 10.; `payment-required=0`) | hneď |
 | Nad cenníkom | Objednať otvorí rezervačný systém, službu v ňom vyberieš v 1. kroku. | systém | hneď |
 | Tím | Barbera si vyberieš v 2. kroku, alebo zvolíš „Nezáleží“. | systém | hneď |
 | Cenník | Ceny a trvanie podľa rezervačného systému, overené 20. 10. 2026. | `rezervacia-kontrola.mjs` | po prvom behu nástroja |
@@ -778,6 +811,9 @@ Texty sú krátke, v druhej osobe, bez dlhej pomlčky a bez superlatívov (CLAUD
 ---
 
 ## 7. Otázky pre majiteľa (len to, čo sa nedá zistiť; v zátvorke, čo odpoveď odomkne)
+
+Najprv odpovedať na 1, 2, 3, 5, 6, 15 a 21 (platba, poukážky, storno, bez objednania, sviatky, vernostná kartička,
+doména). Ostatné odomknú len doplnky a môžu počkať.
 
 1. Platba v barbershope: karta, hotovosť, iné? (D6b platba)
 2. Darčekové poukážky: ako sa kupujú (recepcia, telefonicky, na diaľku)? Sú na sumu, alebo na službu? Aká je platnosť
@@ -796,9 +832,9 @@ Texty sú krátke, v druhej osobe, bez dlhej pomlčky a bez superlatívov (CLAUD
 11. Školenia: názov, odkaz alebo kontakt? Hľadáte barberov (kariéra)? (D6b školenia, kariéra)
 12. WhatsApp: používa ho recepcia, na akom čísle? (D6b)
 13. Ktoré značky prípravkov predávate na recepcii? (D6b produkty)
-14. Romana: smieme uviesť jej ceny z Booqme (od 35 €) a dni pondelok až streda? (D6b Romana)
-15. Vernostná kartička: kedy nasadiť `vernost/` na headspa30.sk, nastaviť heslo `VERNOST_HESLO_BARBERSHOP` a aké budú
-    odmeny a body? (odkaz v pätičke, veta pri rezervácii)
+14. Romana: smieme uviesť jej ceny z Booqme (35 až 80 €) a dni pondelok až streda? (D6b Romana)
+15. Vernostná kartička: odkedy ju chcete ponúkať zákazníkom (treba spustiť systém kartičiek na serveri headspa30.sk
+    a nastaviť heslo pre recepciu) a aké budú odmeny a body? (odkaz v pätičke, veta pri rezervácii)
 16. Výsledky strihov: môžete dodať 8 až 12 fotiek so súhlasom klientov (najlepšie zozadu alebo z profilu)? (blok výsledkov)
 17. Barberi: v akých jazykoch sa dohovoria a majú Instagram (so súhlasom)? (karty tímu)
 18. Smieme na webe uviesť hodnotenie číslom („5,0 z 949 recenzií na Google, 20. 10. 2026“) s odkazom? (dôkaz pri
@@ -819,7 +855,8 @@ Texty sú krátke, v druhej osobe, bez dlhej pomlčky a bez superlatívov (CLAUD
     - Ako dlho sa uchovávajú?
     - Kto je kontakt pre otázky?
     - Je FACEPALM, s.r.o. platiteľ DPH (IČ DPH)?
-    - Koľko má zamestnancov a aký obrat (len kvôli povinnosti vyhlásenia o prístupnosti)?
+    - Má firma menej ako 10 zamestnancov a ročný obrat do 2 mil. €? Stačí áno alebo nie (len kvôli povinnosti
+      vyhlásenia o prístupnosti).
 
     (pravne.html, D6c)
 23. Facebook a Instagram: pošlete snímku profilu a posledných noviniek? Bez prihlásenia sa nedajú prečítať. (texty
@@ -904,3 +941,24 @@ Rozsah sa zmení, keď:
 - Fakty: `$SP/barber/chyba/fakty/FAKTY.md` a `zdroje/` (booqme, booqme2, web, google, firma, parkovanie, ine, fb, ig).
 - D1–D5: `$SP/barber/PLAN.md`, `$SP/barber/workflowy/davky.json`.
 - Strojová podoba dávok D6a–D7 pre workflow opráv: `$SP/barber/chyba/navrh/davky-d6-d7.json`.
+
+---
+
+## 11. Recenzia faktov a plánu (20. 10. 2026)
+
+Skeptický recenzent (product owner a editor faktov) otvoril zdroje a priamo v tomto pláne opravil jasné chyby. Pôvodná
+verzia a dôkazy sú v `$SP/barber/chyba/recenzia-planu/` (`PLAN-D6-D7.pred-recenziou.md`, `skripty/oprav_plan.py`, OSM,
+skúška prepínača EN, výrezy foto‑40). Opravené:
+- Romana: v Booqme nie je platba kartou online (`payment-required=0` pri všetkých 14 službách, sekcia platby skrytá).
+- Parkovanie: bez mena „Nábrežie mládeže“ (časť je v platenej zóne CH‑A), doplnené nonstop spoplatnené Parkové nábrežie
+  a Na Predmostí.
+- Zmena termínu: systém hovorí len o zmene, „zrušíš“ čaká na otázku 3.
+- Angličtina: veta o automatickom preklade rezervácie vypustená (skúška nepreložila, na telefóne je prepínač v menu).
+- N07: písmo Fraunces je statický rez `opsz 144` bez `tnum`, CSS oprava by nič nezmenila; najprv príčina, potom rozhodnutie.
+- D6a‑0: úplný zoznam súborov, cesta 404 aj pre vlastnú doménu, blok Barbershopu sa nesmie dostať do FTP balíka HEAD SPA.
+- D7: 7 kandidátov na najviac 6 okien, výrez foto‑40 bez figúrky Mickey Mouse a vizitiek, presah obrázka pri paralaxe,
+  absolútne hranice ZADANIA v rozpočte, merateľné kritériá (ťuknutia, zmena času, lightbox z obrazu, kľúče `aria-label`).
+- Otázky: poradie dôležitosti, zrozumiteľná otázka 15, otázka 22 na áno/nie, rozsah cien Romany bez „od“.
+
+Sporné body (rozhodnutie pred implementáciou) sú vo výstupe recenzie, nie v tomto pláne. Strojová podoba
+`chyba/navrh/davky-d6-d7.json` a `chyba/fakty/FAKTY.md` (platba kartou u Romany) sa musia zosúladiť s týmto textom.

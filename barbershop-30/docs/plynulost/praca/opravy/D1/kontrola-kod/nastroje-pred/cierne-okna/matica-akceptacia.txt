@@ -1,0 +1,12 @@
+# Akceptačná sada „žiadne čierne okno“ (pred/po oprave): spustiť FORCE=1 bash batch.sh matica-akceptacia.txt, potom
+# python3 suhrn.py > suhrn.txt && python3 pricina.py runs/akc-*  -> po oprave 0 okien za behu a prvý obraz bez tmy > 150 ms
+akc-p-on-f4-cold-menu-cpu1 phone fast4g 1 on cold menu --dpr=1
+akc-p-on-f4-cold-svih phone fast4g 4 on cold svih --dpr=1
+akc-p-on-f4-cold-hore phone fast4g 4 on cold hore --dpr=1
+akc-p-off-f4-warm-svih phone fast4g 4 off warm svih
+akc-p-off-f4-cold-svih phone fast4g 4 off cold svih
+akc-p-off-s4-cold-menu phone slow4g 4 off cold menu
+akc-p-rm-f4-cold-menu phone fast4g 4 default cold menu --rm
+akc-p-sd-s4-cold-menu phone slow4g 4 default cold menu --savedata
+akc-d-on-f4-warm-menu desk fast4g 4 on warm menu
+akc-d-off-s4-cold-svih desk slow4g 4 off cold svih
