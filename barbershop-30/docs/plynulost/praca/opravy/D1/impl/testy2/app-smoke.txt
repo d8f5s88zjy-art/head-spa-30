@@ -35,8 +35,8 @@ OK   [desktop] lightbox sa otvorí  assets/img/naradie-noznice-1600.jpg
 OK   [desktop] lightbox: šípka vpravo mení fotografiu
 OK   [desktop] lightbox: Esc zatvorí a vráti fokus na tlačidlo
 OK   [desktop] galéria má 8 fotiek (8)
-OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":7.644366}]
-OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":2.198322}]
+OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":5.819985}]
+OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":6.858361}]
 OK   [desktop] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách  {"flap":"Dnes 9:00 až 19:00. Teraz otvorené.","marquee":14,"steps":5,"kin":28}
 OK   [mobil] načítanie bez chýb a 4xx
 OK   [mobil] všetky cesty v HTML sú relatívne
@@ -107,12 +107,8 @@ OK   [softvér mobil] bez posunu rozloženia (CLS 0)
 OK   [softvér mobil] záloha úvodu má rámovanie filmu (presah), šírka 547
 OK   [softvér mobil] bez chýb
 OK   [375 px] žiadne vodorovné pretekanie
-node:internal/modules/run_main:123
-    triggerUncaughtException(
-    ^
+OK   [390 px] žiadne vodorovné pretekanie
+OK   [430 px] žiadne vodorovné pretekanie
+OK   [412 px bez app.js] žiadne vodorovné pretekanie, telefón stránku neoddiali  {"sw":412,"iw":412}
 
-browser.newContext: Target page, context or browser has been closed
-    at async openPage (/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs2/barbershop-30/source/tools/app-smoke.mjs:43:15)
-    at async file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs2/barbershop-30/source/tools/app-smoke.mjs:330:29
-
-Node.js v22.22.2
+Všetky kontroly prešli
