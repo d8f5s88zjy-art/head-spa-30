@@ -1,87 +1,102 @@
 {
+ "vygenerovane": {
+  "datum": "2026-10-20",
+  "z": "PLAN-D6-D7.md po 2. kole skeptika (rozhodnutia hlavného agenta 1–6, časť 11.1)",
+  "skript": "chyba/navrh/skripty/generuj-davky.py",
+  "kontrola_zhody": "chyba/navrh/zhoda.py → chyba/navrh/zhoda.txt"
+ },
  "davky": [
   {
    "id": "D6a-0",
    "nazov": "Rýchla oprava dvoch živých chýb (vernostná kartička a 404 posielajú na HEAD SPA 30)",
-   "ciel": "Zákazník Barbershopu nikdy neskončí na stránke HEAD SPA 30 s jej telefónom a rezerváciou. Ide hneď na main; súbory 404.html a riadok pätičky D1–D5 nemenia.",
+   "ciel": "Zákazník Barbershopu nikdy neskončí na stránke HEAD SPA 30 s jej telefónom a rezerváciou. Ide hneď na main; mení len súbory mimo D1–D5 (/404.html, riadok pätičky index.html:863, assets/vernost.js, pages.yml, tools/ftp-balik.sh, kľúče 404 v 7 slovníkoch, nový barbershop-30/404.html, source/tools/over-404.mjs).",
    "polozky": [
-    "N01: celé <li> s odkazom „Vernostná kartička“ (index.html:863) dostane hidden. vernost.js ho odkryje len pri data-zapnute alebo uloženej kartičke (kartaUlozena()). pages.yml pridá data-zapnute len pri curl 200 na /vernost/karta/, /vernost/api/?a=stav a /vernost/ochrana-udajov.html.",
-    "N02: /404.html dostane v <head> inline skript, ktorý pri ceste /head-spa-30/barbershop-30/… nastaví triedu bs30 pred vykreslením. Zobrazí sa blok Barbershopu: „Táto stránka tu nie je.“, Rezervovať termín (barbershop30.sk/rezervacia), Zavolať 0951 267 203, Späť na úvod. noindex ostáva, texty sú z assets/i18n/<b30.lang>.json, kľúče v 7 slovníkoch. barbershop-30/404.html je pre vlastnú doménu, kopíruje ho pages.yml."
+    "N01 Vernostná kartička (R15, možnosť A hneď; možnosť B vyberie majiteľ v otázke 15): celé <li> s odkazom (index.html:863) dostane hidden (asi +7 B gzip). vernost.js ho odkryje len pri data-zapnute alebo uloženej kartičke (kartaUlozena()). pages.yml pridá data-zapnute len pri curl 200 na /vernost/karta/, /vernost/api/?a=stav a /vernost/ochrana-udajov.html; bez toho ostane položka skrytá aj pri vyplnenom hesle. Možnosť B (odkaz vedie na prihlášku v Barbershope cez otvor('') z vernost.js:171–177) platí len so spusteným serverom, lebo odoslanie volá /vernost/api/?a=registracia (vernost.js:123); kód je pre A aj B spoločný, líši sa len nasadenie.",
+    "N02 Stránka 404: /404.html dostane v <head> inline skript, ktorý pri ceste so segmentom /barbershop-30/ (github.io aj vlastná doména) nastaví na <html> triedu bs30 pred vykreslením. CSS ukáže blok Barbershopu: „Táto stránka tu nie je.“, Rezervovať termín (barbershop30.sk/rezervacia), Zavolať 0951 267 203, Späť na úvod /head-spa-30/barbershop-30/; blok HEAD SPA ostane skrytý, noindex zostáva. Texty zo slovníka barbershop-30/assets/i18n/<jazyk>.json podľa localStorage b30.lang, inak slovenčina (kľúče v 7 slovníkoch). Kópia barbershop-30/404.html pre vlastnú doménu (ErrorDocument), pages.yml ju skopíruje. Blok Barbershopu je medzi <!-- B30 --> a <!-- /B30 --> a tools/ftp-balik.sh ho z _ftp/404.html pre headspa30.sk vymaže."
    ],
-   "zdroje_faktov": "docs/CONTENT_SOURCES.md (telefón, rezervácia); chyba/technika-seo/live/404-live.html a odkazy-vysledok.txt; chyba/obsah-cesta/zdroje/hs-vernost-karta.html; vernost/README.md. Nové fakty netreba.",
+   "zdroje_faktov": "docs/CONTENT_SOURCES.md (telefón, rezervácia); chyba/technika-seo/live/404-live.html a odkazy-vysledok.txt; chyba/obsah-cesta/zdroje/hs-vernost-karta.html; vernost/README.md a assets/vernost.js (kartaUlozena, otvor, API registrácie). Nové fakty netreba.",
    "akceptacia": [
-    "Naživo v pätičke Barbershopu nie je „Vernostná kartička“ viditeľná (Playwright 390×844 a 1440×900, sk aj en). Lokálne s data-zapnute sa ukáže a otvorí prihlášku z vernost.js, nie headspa30.sk.",
-    "Krok v pages.yml pri hesle a curl ≠ 200 nepridá data-zapnute (test kópie skriptu).",
-    "/head-spa-30/barbershop-30/neexistuje vráti 404 s titulkom „Stránka sa nenašla | Barbershop 30 Nitra“ a odkazmi tel:+421951267203, barbershop30.sk/rezervacia a /head-spa-30/barbershop-30/. V žiadnej snímke, ani pri Slow 4G, nie je 0911 153 136 ani Booqme HEAD SPA.",
-    "/head-spa-30/neexistuje (HEAD SPA): snímky 390 a 1440 majú rozdiel > 30 úrovní najviac na 0,5 % pixelov oproti stavu pred.",
-    "noindex v oboch variantoch; index.html ≤ 14 600 B gzip; app-smoke.mjs a i18n-test.mjs prejdú."
+    "Vernostná kartička naživo (možnosť A): v pätičke Barbershopu nie je položka viditeľná (Playwright 390×844 a 1440×900, sk aj en). Lokálne s ručne pridaným data-zapnute sa položka ukáže a klik otvorí prihlášku z vernost.js, nie headspa30.sk (zároveň skúška možnosti B; naživo sa B overí až so serverom, API 200).",
+    "Krok v pages.yml: pri vyplnenom hesle a odpovedi curl iné ako 200 sa data-zapnute nepridá (test kroku na kópii skriptu).",
+    "404 Barbershopu: https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/neexistuje vráti 404; viditeľný titulok „Stránka sa nenašla | Barbershop 30 Nitra“ a odkazy tel:+421951267203, barbershop30.sk/rezervacia a /head-spa-30/barbershop-30/. V žiadnej snímke, ani v prvej pri Slow 4G, nie je „0911 153 136“ ani Booqme HEAD SPA.",
+    "404 HEAD SPA: /head-spa-30/neexistuje má na snímkach 390 a 1440 rozdiel > 30 úrovní najviac na 0,5 % pixelov oproti stavu pred zmenou.",
+    "FTP balík HEAD SPA: po sh tools/ftp-balik.sh headspa30.sk neobsahuje _ftp/404.html „0951 267 203“, „barbershop30.sk“ ani „Barbershop“ (grep).",
+    "noindex v oboch variantoch, kľúče 404 v 7 slovníkoch, index.html ≤ 14 600 B gzip; prejdú app-smoke.mjs a i18n-test.mjs."
    ],
-   "overenie": "Nový source/tools/over-404.mjs (Playwright) proti lokálnemu serveru s mapou 404 → 404.html (vzor chyba/technika-seo/gzip-server.py). Snímky HEAD SPA pred a po si pozrieť. Po nasadení curl -sI a Playwright naživo s ?v=.",
-   "riziko": "404.html je zdieľaný s HEAD SPA, preto sa porovnávajú snímky. Bez JS ostane variant HEAD SPA (zriedkavé). Tím hs2 musí zlúčiť main; konflikt sa nečaká.",
+   "overenie": "Nový source/tools/over-404.mjs (Playwright) proti lokálnemu serveru, ktorý vracia 404.html (vzor chyba/technika-seo/gzip-server.py). Snímky HEAD SPA pred a po si pozrieť. Po nasadení curl -sI a Playwright naživo s ?v= proti cache.",
+   "riziko": "Zmena 404.html zasahuje HEAD SPA, preto sa porovnávajú snímky. Bez JavaScriptu ostane variant HEAD SPA (prijateľné, zriedkavé). Tím hs2 musí zlúčiť main; konflikt sa nečaká, lebo pätičku, vernost.js, pages.yml ani 404 nemení.",
    "kapitoly_skillu": "C001, C059, C081, C083"
   },
   {
    "id": "D6a",
-   "nazov": "Dôvera a pravdivé opravy bez čakania na majiteľa",
-   "ciel": "Opraviť všetko, čo dnes klame alebo mätie, a doplniť overené právne a štruktúrované údaje. Všetko z overených zdrojov, do HTML len nevyhnutné (rozpočet 14 600 B gzip). Ide po zlúčení D5.",
+   "nazov": "Dôvera a pravdivé opravy bez čakania na majiteľa (po zlúčení D5)",
+   "ciel": "Opraviť všetko, čo dnes klame alebo mätie, a doplniť overené právne a štruktúrované údaje. Všetko z overených zdrojov, do HTML len nevyhnutné (strop 14 600 B gzip; dnes 14 409 B, gzip -c index.html | wc -c; rozpocet.txt meria zo štandardného vstupu, preto uvádza základ 14 398 B – hlavička gzip bez názvu súboru je o 11 B kratšia, rozdiely vložení sú rovnaké). Cenník čitateľný bez nového písma a bez variabilných osí.",
    "polozky": [
-    "N03 Sviatky: tabuľa „Dnes“ (verzia po D1) a výpočet ďalšieho otvoreného dňa poznajú sviatky zo systému: 1. 1., 6. 1., Veľký piatok, Veľkonočný pondelok (Meeus), 1. 5., 5. 7., 29. 8., 1. 11. a 24.–26. 12. Stav je „Sviatok · Online sa na dnes objednať nedá.“, nikdy „Teraz otvorené“. Zdieľaný modul assets/hodiny.js je bez Intl, letný čas podľa pravidla EÚ. Rozšíriť __tabula v 7 slovníkoch.",
-    "N04 JSON-LD (index.html:54): @type HairSalon, geo 48.315655/18.090439 (ako HEAD SPA v tej istej budove), hasMap https://www.google.com/maps?cid=18132360254733427623, priceRange „3 € – 40 €“. Bez aggregateRating a review, 15 ponúk bez zmeny.",
-    "N05 Nová stránka barbershop-30/pravne.html a odkaz „Právne informácie“ v pätičke. Obsah podľa § 4 zák. 22/2004: FACEPALM, s.r.o.; sídlo Šalgovská ulica 1039/43, 951 15 Mojmírovce; IČO 52 231 381; DIČ 2120952218; OR OS Nitra, odd. Sro, vl. 52616/N; e-mail a telefón; SOI Inšpektorát pre Nitriansky kraj (adresu overiť). Ďalej čo ukladá web (0 cookies, b30.lang, v30.*, bs30uvod) a hosting. Rezervácia na barbershop30.sk/rezervacia, otázky na info@barbershop30.sk, ÚOOÚ SR. pages.yml kopíruje pravne.html. Opraviť adresu prevádzkovateľa vo vernost/ochrana-udajov.html.",
-    "N06: id=\"kontakt\" presunúť z <footer> na .band-contact (pätička dostane id=\"pata\"). Menu „Kontakt“ potom pristane na karte „Kde nás nájdeš“ s tlačidlom Rezervovať, skok zabezpečí D2.",
-    "N07 Cenník: .price-name a .price-amount s optickou veľkosťou podľa veľkosti písma (nie opsz 144) a tabular-nums. Vzhľad sa nemení.",
-    "N08 Cudzinec: v jazykoch iných než sk viditeľná poznámka pod hlavnými tlačidlami (texty L.rez z i18n.js). V en aj „Its EN switch translates it automatically, or call +421 951 267 203.“ Telefón +421 951 267 203 v cudzích jazykoch (kľúč v 7 slovníkoch).",
-    "N09: ak majiteľ nepotvrdí „v troch miestnostiach“, podriadok faktu „8 kresiel“ bude „minimálne čakanie“ (starý oficiálny web).",
-    "N10 Drobnosti: apple-touch-icon 180 a icon-512 z favicon.svg, „30“ prevedené na krivky z Fraunces. Jeden rel=icon (zmazať index.html:36). og:type website. Meta popisy ≤ 155 znakov v 8 jazykoch. lastmod v sitemap.xml pri každej zmene obsahu. aria-describedby „otvorí sa v novom okne“ pre 38 odkazov s target=_blank, pridá ho app.js v nečinnosti.",
-    "N11 CONTENT_SOURCES.md: trvania zo systému namiesto „None min“, Google 949 (20. 10.). Nové zdroje: texty systému, getEmployees, getCalendar, Booqme 14 služieb a platba, ORSR sídlo a zápis, nitra.sk parkovanie; každý s dátumom a stupňom.",
-    "N12 Nový source/tools/rezervacia-kontrola.mjs porovná 15 názvov, cien a trvaní (HTML aj JSON-LD), 10 mien tímu a sviatky s rezervačným systémom (vzor tools/booqme-kontrola.mjs). Zapísať do README a CHECKS."
+    "N03 Sviatky: tabuľa „Dnes“ (verzia po D1) a výpočet ďalšieho otvoreného dňa poznajú sviatky zo systému: 1. 1., 6. 1., Veľký piatok, Veľkonočný pondelok (Meeus), 1. 5., 5. 7., 29. 8., 1. 11. a 24.–26. 12. Stav „Sviatok · Online sa na dnes objednať nedá.“, nikdy „Teraz otvorené“; po potvrdení majiteľa „Dnes zatvorené“. Zdieľaný modul assets/hodiny.js bez Intl, letný čas podľa pravidla EÚ. __tabula rozšíriť v 7 slovníkoch.",
+    "N04 JSON-LD (index.html:54): @type HairSalon, geo 48.315655/18.090439 (R4, ako HEAD SPA v tej istej budove), hasMap https://www.google.com/maps?cid=18132360254733427623, priceRange „3 € – 40 €“. Bez aggregateRating a review, 15 ponúk bez zmeny. Zmerané +109 B gzip.",
+    "N05 Nová stránka barbershop-30/pravne.html (vzor pravne.html HEAD SPA, vlastná značka) a odkaz „Právne informácie“ v pätičke. § 4 zák. 22/2004: FACEPALM, s.r.o.; sídlo Šalgovská ulica 1039/43, 951 15 Mojmírovce; IČO 52 231 381; DIČ 2120952218; OR OS Nitra, odd. Sro, vl. 52616/N; info@barbershop30.sk, +421 951 267 203; SOI Inšpektorát pre Nitriansky kraj (adresu overiť). Čo robí web (0 cookies, b30.lang, b30.lang.no, hudba, v30.*, bs30uvod; hosting GitHub Pages). Rezervácia na barbershop30.sk/rezervacia, otázky na info@barbershop30.sk, ÚOOÚ SR. Slovenské znenie, v ostatných jazykoch úvodná veta „Právne informácie sú po slovensky.“ (kľúč). pages.yml kopíruje pravne.html. Opraviť adresu prevádzkovateľa vo vernost/ochrana-udajov.html (sídlo Mojmírovce). GDPR časť od majiteľa až v D6b.",
+    "N06 „Kontakt“ v menu: id=\"kontakt\" presunúť z <footer> na .band-contact (pätička dostane id=\"pata\"); na odkaz nič iné nezávisí (app.js, film.js, i18n.js, testy). Pristátie zabezpečí skok z D2.",
+    "N07 Čitateľnosť cenníka (R12): bez nového písma a bez variabilných osí; fonts.css a assets/fonts/ sa nemenia. Overené: Fraunces 500/800/500i sú statické rezy opsz 144, bez fvar, GSUB case/liga/rvrn/ss01 (bez tnum), šírky číslic 1 = 800 až 0 = 1296; font-variation-settings (style.css:727, 736) a tabular-nums (710, 739) na Fraunces nič nemenia. Najprv príčina medzi CSS príčinami (vlasové ťahy pri DPR 1; medzery vnútri slova pri 18 px: porovnať letter-spacing 0 a −0.01em, 18 a 20 px, rez 800 a 500). Oprava v style.css: sumy 1.625rem → 1.875rem (počítač) a 1.75rem (telefón), názvy na telefóne 1.125rem → 1.25rem; hrúbka 800 ostáva, existujúci rez 500 len pre sumy, ak 800 pri DPR 1 neprejde; letter-spacing súm 0 → 0.01em, názvov −0.01em → 0; line-height súm 1 → 1.1, názvov na telefóne 1.2 → 1.25; zarovnanie bez tnum pevnou šírkou stĺpca (počítač 6.5rem, telefón min-width 4.5ch) a text-align right; kontrast na doske ≥ 4,5 : 1, inak doska 0.9; font-variation-settings v .price-name a .price-amount zmazať. Vzhľad (Fraunces 800, farba, rozloženie) sa nemení.",
+    "N08 Cudzinec: v jazykoch iných než sk viditeľná poznámka pod hlavnými tlačidlami úvodu a karty Rezervácia (texty L.rez z i18n.js:163–165, vkladá i18n.js, HTML sa nemení). V angličtine doplniť „Need help? Call +421 951 267 203.“; vetu o prepínači EN nepridávať (skúška 20. 10. nepreložila, na telefóne je prepínač v menu). Telefón v cudzích jazykoch ako +421 951 267 203 (kľúč „0951 267 203“ v 7 slovníkoch).",
+    "N09 Fakt „8 kresiel“: ak majiteľ do implementácie nepotvrdí „v troch miestnostiach“ (otázka 10), podriadok bude doslovné „minimálne čakanie“ zo starého oficiálneho webu (kľúč v 7 slovníkoch).",
+    "N10 Drobnosti: apple-touch-icon.png 180 a icon-512.png rastrom priamo z existujúceho favicon.svg (R14: snímka SVG v Chromiu cez Playwright so sprístupneným rezom Fraunces 800; bez prevodu „30“ na krivky, bez dokresľovania, favicon.svg sa nemení; ak rasterizér písmo nenačíta, záložný serif ako v prehliadači, zapísať do CHECKS, otázka 24). Jeden rel=icon (zmazať dátovú kópiu index.html:36, −189 B gzip). og:type website (−6 B). Meta popisy ≤ 155 znakov v 8 jazykoch bez zmeny faktov. lastmod v sitemap.xml pri každej zmene obsahu. aria-describedby „otvorí sa v novom okne“ pre 38 odkazov s target=_blank, pridá app.js v nečinnosti (0 B v HTML).",
+    "N11 CONTENT_SOURCES.md: trvania zo systému (20. 10. 2026) namiesto „None min“, Google 949 (932/11/1/1/4). Nové zdroje: texty rezervačného systému (lang, kroky, potvrdenie, pripomienky), getEmployees, getCalendar (horizont, sviatky), Booqme 14 služieb, platba a dni, ORSR sídlo a zápis, nitra.sk parkovanie (pre D6b); každý riadok s dátumom a stupňom.",
+    "N12 Nový source/tools/rezervacia-kontrola.mjs: načíta v-order-component a /rezervacia/ajax (getEmployees, getCalendar) a porovná 15 názvov, cien a trvaní (HTML aj JSON-LD), 10 mien tímu a zoznam sviatkov s hodiny.js. Výsledok OK alebo rozdiely a dátum (vzor tools/booqme-kontrola.mjs). Zapísať do README a CHECKS.",
+    "Rozpočet HTML D6a (zmerané na kópii, chyba/navrh/rozpocet/rozpocet.txt, gzip -c): JSON-LD +109 B, odkaz „Právne informácie“ a hidden na <li> spolu +28 B, zmazaný dátový favicon −189 B, og:type −6 B; spolu −58 B, teda asi 14 351 B pred D6b."
    ],
-   "zdroje_faktov": "chyba/fakty/FAKTY.md (20. 10. 2026): getCalendar (sviatky), ORSR výpis (sídlo, zápis), starý web (DIČ, „8 kresiel – minimálne čakanie“), Booqme JSON-LD a OSM way 58223421 (geo), Google cid. chyba/technika-seo/dom-*.json (úložisko, 0 cookies). chyba/obsah-cesta/zdroje/bs30-rez.html (Google prekladač EN). i18n.js:163–165 (L.rez). Adresy SOI a ÚOOÚ overiť v deň implementácie.",
+   "zdroje_faktov": "chyba/fakty/FAKTY.md (20. 10. 2026): getCalendar (sviatky), ORSR výpis (sídlo, zápis), starý web (DIČ, „8 kresiel – minimálne čakanie“), Booqme JSON-LD a OSM way 58223421 (geo; recenzia-planu/osm-*.json), Google cid. chyba/technika-seo/dom-*.json (úložisko, 0 cookies). chyba/obsah-cesta/zdroje/bs30-rez.html a recenzia-planu/rez-en*.jpg (prepínač EN). i18n.js:163–165 (L.rez). Písmo: assets/fonts.css, assets/fonts/*.woff2 cez fonttools (chyba/navrh/rozpocet/pismo.txt). Adresy SOI a ÚOOÚ overiť v deň implementácie.",
    "akceptacia": [
-    "hodiny-test.mjs s pevným časom: 24. 12. 2026 10:00, 3. 4. 2026, 6. 4. 2026, 26. 3. 2027 a 29. 3. 2027 → „Sviatok“, nikdy „Teraz otvorené“. 23. 12. 2026 20:00 → „v pondelok od 9:00“. 31. 12. 2026 10:00 otvorené. Sobota 13:59 otvorené, 14:00 zatvorené. Správna hodina 29. 3. a 25. 10. 2026. 8 jazykov bez nepreloženého textu.",
-    "rezervacia-kontrola.mjs naživo: zhoda sviatkov, 15 cien a trvaní (HTML aj JSON-LD) a 10 mien.",
-    "JSON-LD: JSON.parse OK, @type HairSalon, geo, hasMap a priceRange prítomné, 15 ponúk zhodných, bez aggregateRating. validator.schema.org bez chýb (záznam so snímkou).",
-    "pravne.html obsahuje všetkých 8 údajov § 4, odkaz z pätičky je v 8 jazykoch, Lighthouse mobil ≥ 95 a prístupnosť 100, curl 200 naživo. vernost/ochrana-udajov.html má sídlo Mojmírovce.",
-    "Menu → Kontakt na 390×844: karta „Kde nás nájdeš“ hore v okne ± 8 px, Rezervovať viditeľné bez skrolu. over-menu.mjs a interakcie.mjs (D2) prejdú, kotvy app.js aj filmu ± 1 px.",
-    "Cenník: výrezy 1440×900 DPR 1 a 390×844 DPR 3 – dvaja kontrolóri jednoznačne prečítajú 13 € a 15 €. Žiadny názov sa nezalomí vnútri slova (getClientRects), bez opsz 144.",
-    "V 7 jazykoch je poznámka o slovenskej rezervácii viditeľná pod hlavnými tlačidlami a telefón je +421 951 267 203. sk bez zmeny.",
-    "Ikony 180 a 512 vracajú 200, jeden rel=icon, og:type website. Meta popisy ≤ 155 znakov v 8 jazykoch. 38 odkazov s target=_blank má prístupný popis. lastmod = dátum nasadenia.",
-    "index.html ≤ 14 600 B gzip. Lighthouse mobil ≥ 95 (gzip, záťaž < 2), počítač ≥ 98 lokálne a 100 naživo, SEO a prístupnosť 100. CLS < 0,05.",
-    "Prejdú app-smoke, i18n-test, koliesko-test, uvod-shot a atmosfera-test. skrol.mjs stredne nie horší ako po D5 nad šum (p95 +≤ 1 ms, štýl +≤ 0,2 ms). Sady čiernych okien co2 (skok na Kontakt) a co1 (menu) bez nového okna."
+    "Sviatky (hodiny-test.mjs, Playwright page.clock): 24. 12. 2026 10:00, 3. 4. 2026, 6. 4. 2026, 26. 3. 2027 a 29. 3. 2027 → „Sviatok“, nikdy „Teraz otvorené“; 23. 12. 2026 20:00 → „v pondelok od 9:00“ (28. 12.); 31. 12. 2026 10:00 otvorené; sobota 13:59 otvorené / 14:00 zatvorené; správna hodina 29. 3. a 25. 10. 2026; pondelok 30. 3. a 26. 10. 2026 8:59 / 9:00 zatvorené / otvorené; všetko znova s timezoneId America/New_York a Asia/Tokyo s rovnakým stavom. 8 jazykov bez nepreloženého textu.",
+    "rezervacia-kontrola.mjs naživo hlási zhodu: sviatky, 15 cien a trvaní (HTML aj JSON-LD) a 10 mien tímu.",
+    "JSON-LD: JSON.parse prejde, @type HairSalon, geo, hasMap a priceRange prítomné, 15 ponúk zhodných (skript), aggregateRating chýba, validator.schema.org bez chýb (záznam so snímkou).",
+    "pravne.html: všetkých 8 údajov § 4 (kontrola skriptom), odkaz z pätičky v 8 jazykoch, Lighthouse mobil ≥ 95 a prístupnosť 100, naživo curl 200; vernost/ochrana-udajov.html má sídlo Mojmírovce.",
+    "Menu → Kontakt na 390×844: karta „Kde nás nájdeš“ hore v okne (scroll-margin ± 8 px), Rezervovať viditeľné bez skrolu, over-menu.mjs a interakcie.mjs z D2 prejdú, kotvy app.js aj filmu ± 1 px.",
+    "Cenník: výrezy 1440×900 (DPR 1) a 390×844 (DPR 3): dvaja kontrolóri jednoznačne prečítajú „13 €“ a „15 €“; žiadny názov zalomený vnútri slova (getClientRects) a na 390 px žiadne slovo s medzerou vnútri (2 kontrolóri); výrezy „13 €“, „15 €“ a „Pánsky strih“ pred a po sa v pixeloch líšia; git diff --stat assets/fonts assets/fonts.css prázdny a v style.css nepribudol font-variation-settings, @font-face ani nová rodina; pravý okraj „€“ v skupine ± 1 px (getBoundingClientRect); kontrast súm a názvov na doske ≥ 4,5 : 1 zo snímky nad najsvetlejším miestom záberu.",
+    "Cudzinec: v 7 jazykoch je poznámka o slovenskej rezervácii viditeľná pod hlavnými tlačidlami (nie len title), telefón +421 951 267 203; v slovenčine sa nič nemení.",
+    "Drobnosti: apple-touch-icon.png 180 a icon-512.png vracajú 200 a sú rastrom favicon.svg (favicon.svg bez zmeny v git diff), jeden rel=icon, og:type website, meta popisy ≤ 155 znakov v 8 jazykoch (jazyky.json), 38 odkazov s target=_blank má prístupný popis nového okna (strom prístupnosti), lastmod = dátum nasadenia.",
+    "CONTENT_SOURCES má nové riadky s dátumom a stupňom, „None min“ zmizne.",
+    "Spoločné: index.html ≤ 14 600 B gzip (odhad 14 351 B); Lighthouse mobil ≥ 95 (gzip, záťaž < 2), počítač ≥ 98 lokálne a 100 naživo, SEO 100, prístupnosť 100; CLS < 0,05; prejdú app-smoke, i18n-test, koliesko-test, uvod-shot a atmosfera-test; skrol.mjs --scen=stredne nie horší ako po D5 nad šum (p95 +≤ 1 ms, štýl +≤ 0,2 ms); sady čiernych okien co2 (skok na Kontakt) a co1 (menu) bez nového okna."
    ],
-   "overenie": "Kópia nástrojov: bash $SP/barber/audit/plan/nastroje.sh <kópia> <port> <strom>. Pred = commit pred D6a, po = HEAD. Skripty: node source/tools/app-smoke.mjs, i18n-test.mjs, hodiny-test.mjs (nový) a rezervacia-kontrola.mjs (nový). V overenie-kod-stranka: node over-menu.mjs --n=3, node interakcie.mjs, bash ab3.sh d6a stredne 3 uvod=off zaklad. Výrezy cenníka (Playwright, pozrieť). Lighthouse cez gzip-server.py, gzip -9c index.html | wc -c. Po nasadení curl na pravne.html, ikony a sitemap a snímky naživo.",
-   "riziko": "Tabuľa je ten istý blok ako v D1, preto sa dopĺňa až do zlúčenej verzie a over-intl.mjs musí prejsť. Chyba vo výpočte Veľkej noci alebo času zachytia pevné dátumy 2026–2030. Presun id kontakt je žiaduci. Právne znenie skontroluje majiteľ, adresy úradov overiť. Rozpočet HTML merať po každej zmene. Fraunces je OFL.",
-   "kapitoly_skillu": "C001, C015, C019, C059, C061, C069, C075, C078, C081, C083, C091, C100"
+   "overenie": "Kópia nástrojov: bash $SP/barber/audit/plan/nastroje.sh <kópia> <port> <strom>; pred = commit pred D6a, po = HEAD. Skripty: node source/tools/app-smoke.mjs, i18n-test.mjs, hodiny-test.mjs (nový, pevné časy, 8 jazykov), rezervacia-kontrola.mjs (nový). Z D2 a D1: node over-menu.mjs --n=3, node interakcie.mjs, bash ab3.sh d6a stredne 3 uvod=off zaklad. Výrezy cenníka (Playwright, snímky si pozrieť; porovnanie rezu 800 a 500 pri DPR 1), Lighthouse cez gzip-server.py, gzip -c index.html | wc -c. Po nasadení curl (pravne.html, ikony, sitemap) a snímky naživo.",
+   "riziko": "Tabuľa po D1 je ten istý blok kódu: sviatky sa dopĺňajú až do zlúčenej verzie a pred tým prejde over-intl.mjs. Chybný výpočet Veľkej noci alebo času: testy s pevnými dátumami 2026–2030. Presun id kontakt je žiaduci. Právne znenie skontroluje majiteľ alebo právnik; adresy SOI a ÚOOÚ overiť v deň implementácie. Rozpočet HTML merať po každej zmene. Cenník: ak CSS úprava pri DPR 1 nestačí, skúša sa existujúci rez 500 pre sumy; nový rez ani osi sa nepridávajú. Ikony rastrom z favicon.svg: bez Fraunces v rasterizéri bude „30“ v záložnom serife; zapísať do CHECKS a vyriešiť logom (otázka 24).",
+   "kapitoly_skillu": "C001, C015, C019, C023, C059, C061, C069, C075, C078, C081, C083, C091, C100"
   },
   {
    "id": "D6b",
-   "nazov": "„Pred návštevou“: praktické odpovede tam, kde sa zákazník rozhoduje",
-   "ciel": "Zákazník nájde do dvoch ťuknutí odpovede na všetko, na čo dnes musí volať: rezervácia, zmena termínu, dnes alebo bez objednania, poukážky, parkovanie, deti, cudzí jazyk, produkty, Romana. Zobrazí sa len položka s overeným zdrojom; čo chýba, ostane skryté do odpovede majiteľa.",
+   "nazov": "„Pred návštevou“: praktické odpovede tam, kde sa zákazník rozhoduje (po D6a)",
+   "ciel": "Zákazník nájde do dvoch ťuknutí odpovede na to, na čo dnes musí volať: rezervácia, zmena termínu, dnes, poukážky, parkovanie, deti, cudzí jazyk, produkty, Romana. Zobrazí sa len položka s overeným zdrojom; nepotvrdené údaje (vrátane „bez objednania“) sú pripravené skryté do odpovede majiteľa (R11). Texty prvého okna sú priamo v HTML, modul rieši len „Pred návštevou“ (R2).",
    "polozky": [
-    "Modul assets/navsteva.js (≤ 6 kB gzip, vzor recenzie.js; v HTML len prázdny kontajner). Načíta sa pri priblížení pásu kontaktu (IO 150 %) alebo v nečinnosti po load. Odpovede sú natívne <details>, dáta majú zdroj, overené a zobrazit; blok sa vkladá pod kartu „Kde nás nájdeš“ (pod kotvou #rezervacia).",
-    "Hneď zobrazené: 4 kroky rezervácie a potvrdenie e-mailom; online až mesiac dopredu aj na dnes; zmena alebo zrušenie na 0951 267 203 alebo info@barbershop30.sk; „Nezáleží“; deti do 10 rokov, 45 min, 15 €, pre dvoch dve rezervácie.",
-    "Hneď zobrazené: parkovanie SM-A (zadarmo Po–Pi po 16:00 a So po 12:00, inak 1 € a 2 €, Nábrežie mládeže) s „podľa mesta Nitra, stav k <dátum>“ a odkazom; príchod bez objednania (starý oficiálny web); poukážky existujú a povie recepcia na 0951 267 203; produkty si možno kúpiť; cudzí jazyk (len iné jazyky).",
-    "Romana: farbenie, melír, trvalá, tónovanie, prekrytie šedín a polióza v Booqme, platba na mieste alebo kartou online. Ceny a dni Po–St len so súhlasom.",
-    "Riadok „Dnes 9:00–19:00 · Teraz otvorené“ pod tlačidlami úvodu a karty Rezervácia z assets/hodiny.js. Bez Intl, po prvom obraze, miesto rezervované v CSS; kompozíciu schvaľuje D7, inak len v karte Rezervácia.",
-    "Vety „Objednať otvorí rezervačný systém, službu v ňom vyberieš v 1. kroku.“ (nad cenníkom) a „Barbera si vyberieš v 2. kroku, alebo zvolíš „Nezáleží“.“ (tím). Do HTML pri rezerve ≥ 80 B, inak modul pri štarte s prepočtom kotiev.",
-    "Recenzia pri rezervácii: jedna doslovná citácia z recenzie.js a odkaz „Hodnotenie na Google“ v páse kontaktu. Číslo hodnotenia len so súhlasom.",
-    "Skoky v cenníku Strih · Brada a holenie · Balíčky · Doplnky na #g-strih, #g-brada, #g-balicky, #g-doplnky (skok z D2). Riadok „Ceny a trvanie podľa rezervačného systému, overené <dátum>“ z rezervacia-kontrola.mjs.",
-    "Pripravené a skryté do odpovede majiteľa: platba, storno a meškanie, pripomienka deň vopred, detaily poukážok, vlastné parkovanie a MHD, bezbariérový vchod, WhatsApp, školenia a kariéra, výsledky strihov (data-required=\"results\"), jazyky a IG barberov, vernostná kartička, hodnotenie číslom, GDPR časť pravne.html.",
-    "CONTENT_SOURCES: tabuľka „Texty D6 (Pred návštevou)“ so zdrojom, dátumom a stupňom pri každej vete."
+    "N13 Umiestnenie (C022): blok „Pred návštevou“ v páse kontaktu pod kartou „Kde nás nájdeš“ (pod kotvou filmu #rezervacia, vloženie posunie len pätičku); jedna veta nad cenníkom a jedna v hlavičke tímu; riadok „Dnes“ pod tlačidlami úvodu a karty Rezervácia; odkaz z cenníka „Ako prebieha rezervácia →“ (#pred-navstevou); skoky v cenníku nad zoznamom.",
+    "Technika, priamo v HTML (R2; nikdy nevkladané skriptom): riadok „Dnes“ v úvode (+14 B gzip) a v karte Rezervácia (+10 B) ako prázdny <p class=\"dnes\"> s výškou rezervovanou v CSS, dve vety (+31 B), skoky v cenníku <nav class=\"price-nav\"> so 4 kotvami (+52 B), odkaz „Ako prebieha rezervácia →“ (+29 B) a prázdny kontajner <div id=\"pred-navstevou\" data-navsteva hidden> (+16 B). Spolu +152 B (chyba/navrh/rozpocet/rozpocet.txt); po D6a asi 14 503 B, rezerva asi 97 B. Ak po zlúčení D5 rezerva nestačí, vypúšťa sa (nie presúva do modulu) v poradí: odkaz „Ako prebieha rezervácia →“ (−29 B), riadok „Dnes“ v karte Rezervácia (−10 B), skoky v cenníku (−52 B).",
+    "Technika, modul assets/navsteva.js (≤ 6 kB gzip, vzor recenzie.js): rieši len blok „Pred návštevou“. Načíta sa lenivo pri priblížení pásu kontaktu (IO rootMargin 150% 0px) alebo hneď, keď adresa či skok mieri na #pred-navstevou; nič nevkladá pri štarte. Každá položka je nadpis a 1–2 vety viditeľné bez ťuknutia; natívne <details> len pri „Ako sa objednám“ (4 kroky) a „Parkovanie“ (sadzby, výnimky, odkaz). Dáta položiek majú zdroj, overene (dátum) a zobrazit; položka bez zdroja alebo so zobrazit:false nie je v DOM, jej kľúče sú v 7 slovníkoch pripravené.",
+    "N14 Hneď: ako sa objednám (4 kroky: služba → barber alebo „Nezáleží“ → termín → údaje; potvrdenie e-mailom; alebo recepcia Po–Pi 9–19); ako ďaleko dopredu (online až mesiac dopredu, aj na dnes pri voľnom termíne; getCalendar); zmena termínu telefonicky 0951 267 203 alebo info@barbershop30.sk (text potvrdenia hovorí len o zmene; zrušenie, lehota, poplatok a meškanie skryté do otázky 3); výber barbera netreba („Nezáleží“, getEmployees).",
+    "N18 Hneď: deti – strih pre malých gentlemanov do 10 rokov, 45 min, 15 €; rezervácia je vždy pre jednu osobu, pre dvoch dve (krok 4 systému). Fotku detského kresla COPS (foto-29) rieši D7 ako okno pri tejto položke.",
+    "N17 Hneď: parkovanie – zóna SM-A, zadarmo v pracovné dni po 16:00 a v sobotu po 12:00, inak 1 € prvá hodina a 2 € každá ďalšia, platba datamesta.nitra.sk, automat alebo SMS 2200; Parkové nábrežie a Na Predmostí spoplatnené nonstop; konkrétne záchytné parkovisko sa nemenuje (Nábrežie mládeže je v zóne CH-A), len odkaz na zoznam mesta; „podľa mesta Nitra, stav k <dátum>“ a odkaz nitra.sk/parkovanie. Vlastné miesta a MHD doplní majiteľ (otázka 7).",
+    "N15 Hneď len „online aj na dnes“. Príchod bez objednania je SKRYTÝ do odpovede na otázku 5 (R11): veta „Prísť môžeš aj bez objednania. S rezerváciou máš svoj čas istý.“ je pripravená (kľúče v 7 slovníkoch, zobrazit:false), v DOM nie je; po „áno“ sa zapne jedným príznakom, po „nie“ sa kľúče zmažú. Dovtedy cesta „chcem ísť dnes“ končí odpoveďou „online aj na dnes“ a tlačidlom Zavolať.",
+    "N16 Hneď: darčekové poukážky existujú (starý web; foto-40 s „DARČEKOVÁ POUKÁŽKA“ na recepcii), ako ich kúpiť povie recepcia (tlačidlo Zavolať). Hodnota, platnosť a predaj na diaľku pripravené skryté do otázky 2 (R11).",
+    "N19 Hneď: „Prípravky, ktoré používame, si môžeš kúpiť aj u nás.“ (starý web). Značky až od majiteľa (otázka 13).",
+    "N08 Rezervácia v cudzom jazyku (len v jazykoch iných než sk): poznámka z N08 ako odpoveď.",
+    "N20 Romana (rozšírenie riadku pod cenníkom): farbenie, melír, trvalá, tónovanie, prekrytie šedín a polióza v Booqme, bez platby vopred (všetkých 14 služieb payment-required=\"0\", sekcia platby kartou len pri hodnote 2, booqme2/rez.html:1207 a :1782; platba kartou online dnes nie je). Ceny a dni Po–St skryté do otázky 14 (R11).",
+    "N15 Riadok „Dnes“ v úvode a v karte Rezervácia: „Dnes 9:00–19:00 · Teraz otvorené“ alebo „Zatvorené, otvárame v pondelok o 9:00“ cez assets/hodiny.js zo sviatkov D6a (N03). Prvok <p class=\"dnes\"> je v HTML, text dopĺňa hodiny.js bez Intl po prvom obraze (requestIdleCallback), pri zlyhaní ostane prázdny s rezervovanou výškou (CLS 0); slová z __tabula; stav nesie text, nie len farba. Kompozíciu schvaľuje D7 (C017), inak riadok ostane len v karte Rezervácia.",
+    "N14 Vety o rezervácii priamo v HTML (+31 B): nad cenníkom „Objednať otvorí rezervačný systém, službu v ňom vyberieš v 1. kroku.“; v hlavičke tímu „Barbera si vyberieš v 2. kroku, alebo zvolíš „Nezáleží“.“ Sú nad kotvami filmu, preto statické; kotvy sa neprepočítavajú.",
+    "N21 Recenzia pri rezervácii: jedna doslovná citácia z recenzie.js (meno, „Google“) a odkaz „Hodnotenie na Google“ v páse kontaktu pri tlačidle (vkladá modul, pod kotvou). Číslo hodnotenia skryté do otázky 18 (R11), so zdrojom a dátumom.",
+    "N22 Skoky v cenníku priamo v HTML (+52 B): <nav class=\"price-nav\" aria-label=\"Skupiny cenníka\"> so 4 kotvami Strih · Brada a holenie · Balíčky · Doplnky na existujúce #g-strih, #g-brada, #g-balicky, #g-doplnky; skok z D2. Názvy skupín sú už kľúčmi, nový kľúč len „Skupiny cenníka“.",
+    "N12 Dátum overenia cenníka: „Ceny a trvanie podľa rezervačného systému, overené <dátum>.“ z behu rezervacia-kontrola.mjs; ak beh zlyhá, riadok sa nezobrazí.",
+    "Pripravené, ale skryté do odpovede majiteľa (R11; kľúče v 7 slovníkoch, zobrazit:false, nie sú v DOM): N15 príchod bez objednania (otázka 5); N23 platba (1); N24 storno lehota, poplatok, meškanie (3) a pripomienka deň vopred (4); N16 poukážky – hodnota, platnosť, predaj (2); N17 vlastné parkovanie a MHD (7); N31 bezbariérový vchod (8); N29 WhatsApp (12); N28 odkaz na školenia a kariéru (11); N27 výsledky strihov (existujúci blok data-required=\"results\", 16); N26 jazyky a Instagram barberov (17); N32 vernostná kartička – veta pri rezervácii po spustení servera (15); N20 dni a ceny Romany (14); N40 hodnotenie číslom (18); N05 GDPR časť pravne.html (22).",
+    "N11 CONTENT_SOURCES: nová tabuľka „Texty D6 (Pred návštevou)“ so zdrojom, dátumom a stupňom pri každej vete (znenie v PLAN-D6-D7.md, časť 6)."
    ],
-   "zdroje_faktov": "Rezervačný systém barbershop30.sk (texty krokov, confirmation.content, getEmployees, getCalendar 20. 10. 2026; chyba/obsah-cesta/zdroje/bs30-rez.html, cal.json, emp.json). Starý oficiálny web (bez objednania, poukážky, produkty; chyba/fakty/zdroje/web/home.html). foto-40 (poukážky na pulte, audit.json). nitra.sk/parkovanie (upravené 13. 8. 2026; chyba/fakty/zdroje/parkovanie/). Booqme (Romana, platba; chyba/fakty/zdroje/booqme2/). recenzie.js (13. 10. 2026). Platba, storno, pripomienky, detaily poukážok, vlastné parkovanie, bezbariérovosť: doplniť – od majiteľa.",
+   "zdroje_faktov": "Rezervačný systém barbershop30.sk (texty krokov, confirmation.content, getEmployees, getCalendar 20. 10. 2026; chyba/obsah-cesta/zdroje/bs30-rez.html, cal.json, emp.json). Starý oficiálny web (poukážky, produkty; „bez objednania“ len ako pripravený skrytý text; chyba/fakty/zdroje/web/home.html). foto-40 (poukážky na pulte, audit.json). nitra.sk/parkovanie (upravené 13. 8. 2026; chyba/fakty/zdroje/parkovanie/). Booqme (Romana, payment-required=0; chyba/fakty/zdroje/booqme2/). recenzie.js (13. 10. 2026). Rozpočet HTML: chyba/navrh/rozpocet/rozpocet.txt. Od majiteľa (skryté): bez objednania, platba, storno, pripomienky, detaily poukážok, vlastné parkovanie, bezbariérovosť, dni a ceny Romany, hodnotenie číslom.",
    "akceptacia": [
-    "Opakované cesty (chyba/obsah-cesta/skripty → cesty.json): bez odpovede ostanú len cesty čakajúce na majiteľa (platba, lehota storna), zapísané v CHECKS. Poukaz, parkovanie, zmena a zrušenie, dnes a bez objednania, dieťa a cudzinec majú odpoveď do 2 ťuknutí z menu.",
-    "Každá vykreslená položka má v dátach zdroj a dátum (navsteva-test.mjs). Položky so zobrazit:false nie sú v DOM. Druhý kontrolór otvorí každý zdroj a potvrdí vetu.",
-    "Riadok „Dnes“ sa zhoduje s tabuľou pre 12 pevných časov (sviatky, sobota 13:59/14:00, nedeľa, zmena času). over-intl.mjs: žiadny Intl s časovou zónou pri štarte. LCP úvodu nie horší o > 0,1 s, CLS úvodu ≤ 0,001.",
-    "Nové texty sú v 7 slovníkoch. i18n-test.mjs rozšírený o obsah modulu prejde. de a hu pri 360 px bez pretečenia.",
-    "<details> ide klávesnicou, nadpisy bez preskoku, ciele ≥ 44 px, Lighthouse prístupnosť 100.",
-    "Modul ≤ 6 kB gzip, vloženie bez LoAF > 50 ms pri CPU 4×. skrol.mjs (stredne, švih) nie horší ako po D6a nad šum.",
-    "Kotvy app.js aj filmu ± 1 px po vložení (aj skok na #kontakt hneď po load). CLS < 0,05 pri „Späť hore z pätičky“ a „skok na Kontakt“. Sady čiernych okien D2/D3 bez nového okna.",
-    "index.html ≤ 14 600 B gzip; Lighthouse mobil ≥ 95, počítač 100 naživo."
+    "Cesty zákazníka (chyba/obsah-cesta/skripty → cesty.json): z 12 ciest končia bez odpovede len tie, ktoré čakajú na majiteľa (platba, lehota storna, príchod bez objednania), zapísané v CHECKS. Poukaz (existencia a telefón), parkovanie, zmena termínu, „chcem ísť dnes“ (online aj na dnes), dieťa a cudzinec majú odpoveď z otvoreného menu najviac na 2 ťuknutia (položka menu, prípadne otvorenie <details>) a najviac 1 obrazovku skrolu (390×844).",
+    "Pravdivosť: každá vykreslená položka má v dátach zdroj a dátum (navsteva-test.mjs); položky so zobrazit:false nie sú v DOM; index.html ani DOM po vložení modulu neobsahujú „bez objednania“, „kartou“, „hotovos“, „storno“ ani „pripomien“, kým príznak nie je zapnutý (grep); kľúče skrytých položiek sú v 7 slovníkoch; odpovede mimo „Ako sa objednám“ a „Parkovanie“ sú viditeľné bez ťuknutia a majú najviac 2 vety; druhý kontrolór otvorí každý zdroj a potvrdí vetu.",
+    "Riadok „Dnes“: zhoda s tabuľou pre 12 pevných časov (sviatky, sobota 13:59/14:00, nedeľa, zmena času); over-intl.mjs: pri štarte žiadny Intl.DateTimeFormat s časovou zónou; LCP úvodu nie horší o > 0,1 s, CLS úvodu ≤ 0,001.",
+    "Jazyky: všetky nové texty v 7 slovníkoch; i18n-test.mjs rozšírený o obsah modulu (počká na vloženie) prejde; de a hu pri 360 px nepretekajú (app-smoke šírka).",
+    "Prístupnosť: <details> sa ovláda klávesnicou, nadpisy bez preskoku, ciele dotyku ≥ 44 px, Lighthouse prístupnosť 100.",
+    "Výkon: modul ≤ 6 kB gzip, vloženie bez LoAF > 50 ms pri CPU 4×; skrol.mjs (stredne, švih) nie horší ako po D6a nad šum (p95 +≤ 1 ms, štýl +≤ 0,2 ms); kotvy app.js aj filmu ± 1 px po vložení (aj skok na #kontakt hneď po load); CLS < 0,05 v scenároch „Späť hore z pätičky“ a „skok na Kontakt“; sady čiernych okien D2 a D3 bez nového okna.",
+    "Ďalej: index.html ≤ 14 600 B gzip (odhad 14 503 B, gzip -c; pri prekročení poradie vypúšťania), modul nič nevkladá pred priblížením (sonda: žiadna mutácia DOM z navsteva.js pred IO alebo skokom na #pred-navstevou), Lighthouse mobil ≥ 95, počítač 100 naživo."
    ],
-   "overenie": "Ako D6a. Navyše node source/tools/navsteva-test.mjs (dáta modulu, príznaky, 8 jazykov), zopakovanie skriptov chyba/obsah-cesta/skripty, over-intl.mjs, ab3.sh d6b stredne/svih, pata2.mjs, over.mjs co2-* a co1-* s over2.py. Snímky 390×844, 360×780 a 1440×900 v sk, en, uk a de (pozrieť), Lighthouse cez gzip server. Kontrolór pravdy prejde tabuľku textov (PLAN-D6-D7.md časť 6) proti zdrojom.",
-   "riziko": "Posun kotiev pri vložení nad oknom: vkladať len pod kotvu #rezervacia alebo pri štarte s prepočtom (ResizeObserver app.js:283, film.js:1427). Fakty starnú: parkovanie sa menilo 1. 7. 2026, preto dátum, odkaz a ročná kontrola; cenník a sviatky stráži nástroj. Preklady s overením. Riadok v úvode môže preplniť kartu, schvaľuje ho D7. Tvrdenie o príchode bez objednania vypína jeden príznak.",
+   "overenie": "Rovnaké nástroje ako D6a. Navyše node source/tools/navsteva-test.mjs (dáta modulu: zdroj, dátum, príznaky, dĺžka odpovedí, grep skrytých textov; 8 jazykov), zopakovanie ciest chyba/obsah-cesta/skripty, over-intl.mjs, skrol.mjs/ab3.sh d6b stredne a svih, pata2.mjs, over.mjs (co2-*, co1-*) s over2.py, snímky 390×844, 360×780 a 1440×900 v sk, en, uk a de (pozrieť), Lighthouse cez gzip server, gzip -c index.html | wc -c. Kontrolór pravdy prejde tabuľku textov (PLAN-D6-D7.md, časť 6) proti zdrojom.",
+   "riziko": "Posun kotiev: modul vkladá len pod kotvu #rezervacia; texty nad kotvami sú statické v HTML a riadok „Dnes“ má rezervovanú výšku. Rozpočet HTML: po zlúčení D5 znova zmerať, poradie vypúšťania je dané. Starnutie faktov: parkovanie sa menilo 1. 7. 2026 (dátum, odkaz, ročná kontrola v CHECKS), cenník a sviatky stráži nástroj. Kvalita prekladov: rovnaký postup ako pri jazykových verziách. Preplnenie úvodu: riadok „Dnes“ schvaľuje D7, inak len v karte Rezervácia. Tvrdenie o príchode bez objednania je skryté; zapne ho jeden príznak po odpovedi „áno“ (otázka 5).",
    "kapitoly_skillu": "C019, C021, C022, C027, C066, C069, C074, C075, C081, C083"
   },
   {
@@ -89,53 +104,54 @@
    "nazov": "Doména, jazykové adresy a vyhľadávače (po súhlase a prístupoch majiteľa)",
    "ciel": "Nový web na www.barbershop30.sk s funkčnou rezerváciou /rezervacia, jasnými signálmi pre vyhľadávače (canonical, hreflang, sitemap) a jazykovými verziami, ktoré sa dajú nájsť. Bez výpadku a s cestou späť.",
    "polozky": [
-    "Plán migrácie: zoznam adries starého webu; rezervačná aplikácia ostane na doméne; nový web do koreňa (sed základnej adresy, DEPLOY STEP); 301 z http na https a z barbershop30.sk na www; záloha starého webu.",
-    "Statické jazykové stránky /en/, /uk/, /hu/, /sr/, /pl/, /de/, /cs/ generované krokom v pages.yml zo slovníkov. Každá má vlastné lang, title, description, canonical, hreflang (9 vrátane x-default), og:locale, og:locale:alternate a og:url. Prepínač jazyka cez <a href>, HTML ≤ 14 600 B gzip.",
-    "Kópia na github.io dostane canonical na doménu alebo noindex. robots.txt v koreni domény, sitemap v Search Console, web v profile Google.",
-    "Bez analytiky a cookies (ak majiteľ nerozhodne inak, potom so súhlasovou lištou). Hlavičky CSP, Referrer-Policy a X-Content-Type-Options v .htaccess.",
-    "Vyhlásenie o prístupnosti ako sekcia pravne.html, len z overených meraní."
+    "N33 Plán migrácie (C091, C088): zoznam adries starého webu (/, /rezervacia, /rezervacia/ajax, /images/…; /gdpr dnes 404); rezervačná aplikácia ostane na tej istej doméne (podpriečinok, koordinácia s dodávateľom); nový web do koreňa www.barbershop30.sk (sed základnej adresy, README, DEPLOY STEP); 301 z http na https a z barbershop30.sk na www (dnes 302 a dve živé verzie); záloha starého webu. robots.txt v koreni domény, sitemap v Search Console (účet majiteľa), web v profile Google na novú adresu.",
+    "N34 Statické jazykové stránky /en/, /uk/, /hu/, /sr/, /pl/, /de/, /cs/ generované krokom v pages.yml (CI) zo slovníkov (web ostane lokálne bez build kroku). Každá má vlastné lang, title, description, canonical na seba, hreflang (9 vrátane x-default), og:locale, og:locale:alternate a og:url; prepínač jazyka cez <a href> s prepnutím cez JS; ?lang= ostane funkčné a canonical povedie na jazykovú stránku; HTML každej ≤ 14 600 B gzip. Canonical sa nemení JavaScriptom (R7).",
+    "Kópia na github.io dostane canonical na doménu alebo noindex. Analytika žiadna (nový web bez cookies); GTM a GA4 starého webu skončia s ním, ak majiteľ nerozhodne inak (potom súhlasová lišta). Hlavičky CSP, Referrer-Policy a X-Content-Type-Options v .htaccess (T14).",
+    "N35 Vyhlásenie o prístupnosti (T12) ako sekcia pravne.html, len z overených meraní; povinnosť závisí od veľkosti firmy (otázka 22)."
    ],
-   "zdroje_faktov": "chyba/technika-seo (T03, T04, T08, T10, T12, T14; live/bs30sk.html, jazyky.json, lh/). README (DEPLOY STEP). Od majiteľa: súhlas so spustením, prístup k hostingu a DNS, prevádzkovateľ rezervačnej aplikácie, Search Console a profil Google, počet zamestnancov a obrat.",
+   "zdroje_faktov": "chyba/technika-seo (T03, T04, T08, T10, T12, T14; live/bs30sk.html, jazyky.json, lh/). README (DEPLOY STEP). Od majiteľa: súhlas so spustením, prístup k hostingu a DNS, prevádzkovateľ rezervačnej aplikácie, Search Console a profil Google, počet zamestnancov a obrat (otázky 21, 22).",
    "akceptacia": [
-    "curl -sI: http://barbershop30.sk, http://www.barbershop30.sk a https://barbershop30.sk → 301 jedným skokom na https://www.barbershop30.sk/. /rezervacia 200 a načíta služby a termíny; rezervácia sa neodosiela.",
-    "8 jazykových stránok má vlastný canonical, recipročné hreflang (validačný skript), lang, title, description, og:url a og:locale. HTML každej ≤ 14 600 B gzip. Lighthouse SEO 100 a mobil ≥ 95 pre sk a en.",
-    "robots.txt v koreni vracia 200 so Sitemap. Search Console prijala sitemapu (snímka od majiteľa). Kópia na github.io má canonical na doménu alebo noindex.",
-    "Nový web nemá analytiku ani cookies (výpis DOM a siete). Bezpečnostné hlavičky sú prítomné.",
-    "Záloha starého webu existuje a postup návratu je vyskúšaný na kópii."
+    "Presmerovania: curl -sI na http://barbershop30.sk, http://www.barbershop30.sk a https://barbershop30.sk vráti 301 jedným skokom na https://www.barbershop30.sk/.",
+    "Rezervácia: /rezervacia vracia 200 a načíta služby aj termíny; rezervácia sa neodosiela, žiadne skúšobné termíny.",
+    "Jazykové stránky (8): vlastný canonical, recipročné hreflang (validačný skript), lang, title, description, og:url a og:locale, HTML každej ≤ 14 600 B gzip, Lighthouse SEO 100 a mobil ≥ 95 pre sk a en.",
+    "Vyhľadávače: robots.txt v koreni vracia 200 a obsahuje Sitemap; Search Console prijala sitemapu (snímka od majiteľa); kópia na github.io má canonical na doménu alebo noindex.",
+    "Súkromie a hlavičky: nový web je bez analytiky a cookies (výpis DOM a siete), bezpečnostné hlavičky prítomné (curl -I).",
+    "Návrat: záloha starého webu existuje a postup obnovy je vyskúšaný na kópii."
    ],
-   "overenie": "curl matica presmerovaní, validačný skript hreflang a canonical, Lighthouse proti doméne, Playwright na /rezervacia bez odoslania, výpis DOM a siete (vzor chyba/technika-seo/skripty). Záznam do CHECKS a README.",
-   "riziko": "Rozbitie rezervačnej aplikácie: koordinácia s dodávateľom, test na kópii. E-mail pri zmene DNS: meniť len záznamy webu, nie MX. Duplicita obsahu počas prechodu. Koniec starej analytiky rozhodne majiteľ. Generované stránky treba udržiavať (krok v CI a test).",
+   "overenie": "curl matica presmerovaní, skript validácie hreflang a canonical, Lighthouse naživo (PageSpeed alebo lokálny Lighthouse proti doméne), Playwright na /rezervacia bez odoslania, výpis DOM a siete (vzor chyba/technika-seo/skripty). Záznam do CHECKS a README (nasadenie na doménu).",
+   "riziko": "Rozbitie rezervačnej aplikácie: koordinácia s dodávateľom, test na kópii. E-mail pri zmene DNS: menia sa len záznamy webu, nie MX. Duplicita obsahu počas prechodu. Koniec starej analytiky rozhodne majiteľ. Údržba generovaných jazykových stránok: krok v CI a test.",
    "kapitoly_skillu": "C056, C069, C078, C088, C089, C091, C100"
   },
   {
    "id": "D7",
-   "nazov": "Seniorský art direction a filmové efekty (smer A „Okno do miestnosti“)",
-   "ciel": "Pásy obsahu (cenník, kontakt, pred návštevou) pôsobia rovnako filmovo ako prehliadka. Skutočné fotky prevádzky v úzkych oknách, plynulý lightbox so švihom a počítadlá pásov. Bez zmeny filmu, palety a písma, bez zhoršenia výsledkov D1–D5.",
+   "nazov": "Seniorský art direction a filmové efekty (smer A „Okno do miestnosti“; po D6b, na skutočnom obsahu)",
+   "ciel": "Pásy obsahu (cenník, kontakt, pred návštevou) pôsobia rovnako filmovo ako prehliadka: skutočné fotky prevádzky v úzkych oknách ako <img> v <picture> (R13), plynulý lightbox so švihom, počítadlo len pri páse tímu. Bez zmeny filmu, palety a písma, bez zhoršenia výsledkov D1–D5, HTML bez zmeny.",
    "polozky": [
-    "Statické štúdie troch smerov (A Okno do miestnosti, B Tichý editoriál, C Materiál a znak) pásu cenníka a karty „Kde nás nájdeš“ pri 390×844 a 1440×900 zo skutočných podkladov. Rubrika C017 pred a po. Odporúčaný je smer A: rieši pozorovanú prerušenú súvislosť film → pásy, nemení vzhľad a nepridáva JS na snímku.",
-    "E1 FX046 „okná miestnosti“: najviac 6 statických výrezov skutočných fotiek. Kandidáti: Strih – naradie-noznice, Brada a holenie – detail-stol, Doplnky – foto-45, detský strih – foto-29 COPS, poukážky a produkty – foto-40, kontakt – foto-37; výber potvrdia štúdie. Pseudoprvok s image-set(avif, webp) až pri is-near, po decode(), dovtedy náhľad z D2. 0 B v HTML, ≤ 40 kB na okno.",
-    "E2 FX007 paralaxa jednej vrstvy ≤ 6 % cez @supports (animation-timeline: view()) a prefers-reduced-motion: no-preference, len transform. Bez podpory a pri obmedzení pohybu statické.",
-    "E3 FX012 lightbox (Z046): decode() → v jednej snímke výmena popisu a 300 ms lineárne prelínanie dvoch vrstiev. Platí len posledná požiadavka (C055), predčítanie ± 1. Pri obmedzení pohybu okamžitá výmena po dekódovaní.",
-    "E4 FX053: švih v lightboxe (pointer events, prah 40 px, |dx| > 1,5×|dy|). Počítadlo „n / 10“ a tlačidlá ← → pri pásoch tímu, galérie a recenzií (IntersectionObserver, ciele ≥ 44 px).",
-    "E5 FX006/FX002 plynulé otvorenie odpovedí (::details-content + interpolate-size, 200 ms), bez podpory a pri obmedzení pohybu okamžite.",
-    "E6 sadzba citácie pri rezervácii (Fraunces 500 italic, ≤ 62 znakov na riadok).",
-    "Vylúčené: FX029 preostrenie, FX055, FX032 zrno, FX045 LUT, FX034, FX035, FX031, FX038, Z025 textúra pod textom, nekonečné animácie, brány, zmeny film.js, CUTS, sekvencií, prológu a titulných kariet."
+    "Východiskový posudok (C017, pozorované 20. 10. 2026 na _b30-m.jpg a _b30-d.jpg): hierarchia 2, typografia 1 (N07: statický rez Fraunces 800 pre opsz 144 pri 18–26 px), kompozícia 2 (N38 dlhé jednofarebné pásy #171412, cenník 3,26 obrazovky), obraz 2 (N18 foto-29 a N16 foto-40 nevyužité), interakcia 1 (N37 lightbox, N25 pás tímu bez počítadla), mobil 2. Film nebol pozorovaný (unobserved).",
+    "Tri smery (A Okno do miestnosti, B Tichý editoriál, C Materiál a znak) najprv ako statické štúdie pásu cenníka a karty „Kde nás nájdeš“ pri 390×844 a 1440×900 zo skutočných podkladov (chyba/navrh/studie/). Odporúčaný smer A: rieši prerušenú súvislosť film → pásy skutočnými fotkami, nemení paletu, písma ani karty, nepridáva JS na snímku, napĺňa ZADANIE bod 2. Zo smeru B len sadzba citácie (E6) a čitateľnejší cenník, ktorý rieši D6a bez nového písma (R12); zo smeru C nič. Ak štúdie A pri 390 px ukážu opakovanie galérie alebo horšie čítanie cenníka, nastupuje B bez okien.",
+    "E1 FX046 „okná miestnosti“ (N38, N18, N16): najviac 6 okien zo 7 kandidátov (Strih – naradie-noznice; Brada a holenie – detail-stol; Doplnky – foto-45; Balíčky – vyberie štúdia; položka „Deti“ v Pred návštevou – foto-29 COPS; položka poukážok a produktov – foto-40 len výrez pultu bez figúrky, vizitiek a TV; karta „Kde nás nájdeš“ – foto-37 vchod). Okno je <figure class=\"okno\"> s <picture>: <source type=image/avif srcset 480w/800w/1200w>, <source type=image/webp …>, <img src srcset sizes=\"(max-width: 800px) calc(100vw - 32px), 600px\" width height loading=\"lazy\" decoding=\"async\" alt=\"\"> (R13). Prvky vytvorí app.js jednorazovo v nečinnosti po load (requestIdleCallback, záloha setTimeout 1 s) alebo pri is-near pásu, ak nastane skôr; dve okná v Pred návštevou vytvorí modul. Miesto rezervuje CSS vopred (padding-top hostiteľa v pomere strán, okno absolútne v ňom), vloženie nič neposunie (CLS 0). Stiahnutie riadi natívne loading=lazy; po load (alebo complete) img.decode() na tom istom prvku a až potom is-ready (jednorazová opacity 0 → 1 za 200 ms na kompozitore; pri obmedzení pohybu bez prechodu). Dovtedy náhľad z nahlady.css (D2) ako pozadie figure. 0 B v HTML (šesť <picture> v HTML by stálo +324 B gzip), každý súbor ≤ 40 kB AVIF, nikdy v prvom obraze.",
+    "E2 FX007 paralaxa jednej vrstvy ≤ 6 %: @supports (animation-timeline: view()) a prefers-reduced-motion: no-preference, translateY −3 % → +3 % na <img> v okne (R13), len transform; <img> je o 6 % vyšší než okno (height 106 %, object-fit cover, figure overflow hidden), aby sa neodkryl tmavý okraj. Bez podpory a pri obmedzení pohybu statické; 0 zápisov z JS; ak brána štýlu (+0,2 ms) neprejde, E2 sa vypne a E1 ostane.",
+    "E3 FX012 prelínanie v lightboxe (N37, Z046; app.js:481–529): klik, šípka alebo švih spustí stiahnutie a img.decode() novej fotky, popis stojí; potom v jednej snímke výmena popisu a 300 ms lineárne prelínanie dvoch vrstiev <img>, stará vrstva sa odpojí. Platí len posledná požiadavka (C055), predčítanie ± 1, ≤ 3 dekódované fotky, INP ≤ 200 ms. Pri obmedzení pohybu okamžitá výmena po dekódovaní.",
+    "E4 FX053 švih a počítadlo (N25): švih v lightboxe cez pointer events (prah 40 px, |dx| > 1,5×|dy|, inak natívny skrol). Počítadlo „n / 10“ a tlačidlá ← → LEN pri páse tímu (IntersectionObserver na 10 kartách, text aria-hidden, aria-label s kľúčom v 7 slovníkoch, ciele ≥ 44 px); galéria a recenzie počítadlo nedostanú (galéria má lightbox s ← → a švihom, pás recenzií je krátky).",
+    "E5 FX006/FX002 plynulé otvorenie <details> v Pred návštevou (::details-content + interpolate-size: allow-keywords, 0 → auto za 200 ms, bez JS); bez podpory a pri obmedzení pohybu okamžite.",
+    "E6 sadzba citácie pri rezervácii (N21, zo smeru B): Fraunces 500 italic, ≤ 62 znakov na riadok, meno a „Google“ v Manrope. 0 nákladov.",
+    "Vylúčené (R8, R9, R10, MASTER_BRIEF, ART_DIRECTION): N39 FX029 preostrenie (v rozpore s „bez straty ostrosti“), FX055 odhalenie podľa hĺbky, FX032 zrno, FX045 LUT, FX034 chromatická aberácia, FX035 rozmazanie pohybom, FX031 bloom, FX038 častice, ďalšie efekty pod kurzorom, Z025 textúra pod textom, nekonečné animácie, brány „ENTER“, čierne úvodné plochy; zmeny film.js, CUTS, sekvencií, prológu a titulných kariet (vlastníci D3–D5)."
    ],
-   "zdroje_faktov": "Snímky chyba/porovnanie/snimky/_b30-m.jpg a _b30-d.jpg (20. 10. 2026), data/b30-polohy.json (cenník 3,26 obrazovky), data/lightbox-tma.json. source/audit.json (foto-29, 37, 40, 45: people_visible nie). ART_DIRECTION (paleta, Fraunces 500 italic, paralaxa ≤ 6 %). TOUR_DIRECTION r. 18 a 26 (bez straty ostrosti, nikdy rozmazanie). Katalóg skillu FX006, FX007, FX012, FX046, FX053; zadania Z025 a Z046. Žiadne nové obchodné fakty.",
+   "zdroje_faktov": "Snímky chyba/porovnanie/snimky/_b30-m.jpg a _b30-d.jpg (20. 10. 2026), data/b30-polohy.json (cenník 3,26 obrazovky), snímky lightbox-dalsia-100ms.jpg a -250ms.jpg (N37), data/lightbox-tma.json. source/audit.json (foto-29, 37, 40, 45: people_visible nie); výrezy foto-40 v chyba/recenzia-planu/. ART_DIRECTION (paleta, Fraunces 500 italic, paralaxa ≤ 6 %). TOUR_DIRECTION r. 18 a 26 (bez straty ostrosti, nikdy rozmazanie). Rozpočet HTML: chyba/navrh/rozpocet/rozpocet.txt (<picture> v HTML +110 B/okno). Katalóg skillu FX006, FX007, FX012, FX046, FX053; zadania Z025 a Z046. Žiadne nové obchodné fakty.",
    "akceptacia": [
-    "Tri štúdie uložené v chyba/navrh/studie/ a zdôvodnený výber. Rubrika C017 po D7: typografia ≥ 2, kompozícia pásov ≥ 2, interakcia ≥ 2, žiadny rozmer neklesne; každá známka so snímkou.",
-    "E1: ≤ 6 okien po ≤ 40 kB AVIF, pod každým náhľad (nikdy jednofarebná tmavá plocha > 150 ms), CLS 0, šírka súboru ≥ šírka × DPR (do 2×), len fotky s people_visible nie.",
-    "E2 len pri podpore animation-timeline a bez obmedzenia pohybu. 0 zápisov z JS do okien, štýl na snímku +≤ 0,2 ms.",
-    "E3: popis sa vymení najviac 16 ms od začiatku prelínania, žiadna snímka s novým popisom nad starou fotkou. Prelínanie 300 ms ± 1 snímka, po 5 rýchlych ťuknutiach posledná fotka, ≤ 3 dekódované fotky.",
-    "E4: švih prstom na 390×844 prejde na ďalšiu fotku, zvislý ťah skroluje. Počítadlo tímu je správne v 3 polohách, klávesnica funguje.",
-    "E5: otvorenie bez LoAF > 50 ms pri CPU 4×.",
-    "Výkon proti stavu po D5: skrol.mjs stredne a švih p95 +≤ 1 ms (≤ 20 ms), štýl +≤ 0,2 ms (≤ 2,0 ms), dlhé úlohy ≤ 6. skrol2 film=off CPU 1× p95 ≤ 5,5 ms. film.js bez zmeny, pamäť grafiky ≤ 140 MB.",
-    "Sady čiernych okien co1–co5 bez nového okna. Lighthouse mobil ≥ 95, počítač 100 naživo. LCP nie horší o > 0,1 s, CLS < 0,05, INP ≤ 200 ms pri CPU 4×. index.html ≤ 14 600 B gzip. Obrázky D7 ≤ 260 kB na telefóne, prvý obraz +0 B.",
-    "karty-shot.mjs: titulné karty majú rozdiel > 30 úrovní najviac na 0,5 % pixelov. Žiadne nové písmo, žiadny nový blur ani backdrop-filter na mobile."
+    "Štúdie: tri statické štúdie (A, B, C) pásu cenníka a karty „Kde nás nájdeš“ pri 390×844 a 1440×900 zo skutočných podkladov v chyba/navrh/studie/, rubrika C017 pred a po so snímkou pri každej známke, zdôvodnený výber. Rubrika po D7: typografia ≥ 2, kompozícia pásov ≥ 2, interakcia ≥ 2, žiadny rozmer neklesne.",
+    "E1: najviac 6 okien, každý súbor ≤ 40 kB AVIF; každé okno je <figure> s <picture> (AVIF aj WebP srcset) a <img> s width, height, loading=lazy, decoding=async; v index.html žiadne okno (grep -c 'class=\"okno\"' index.html = 0); is-ready až po splnení img.decode() toho istého prvku (sonda poradia udalostí), pri obmedzení pohybu bez prechodu; pod každým náhľad, nikde jednofarebná tmavá plocha > 150 ms; miesto rezervované CSS: pri vložení okien a pri skoku na #sluzby alebo #kontakt hneď po load je CLS 0 a kotvy app.js aj filmu ± 1 px; prehliadač vyberie zo srcset kandidáta ≥ šírka × DPR (currentSrc pri DPR 1, 2 a 3, strop 1200w); fotky len zo súpisu source/audit.json s people_visible nie; foto-29 a foto-40 zapísané do MEDIA_SELECTION s výrezom a stĺpcom „ľudia“; výrez foto-40 bez figúrky, vizitiek a TV (kontrola pohľadom).",
+    "E2: beží len pri podpore animation-timeline a bez obmedzenia pohybu; do okien sa nezapisuje z JS (sonda zápisov štýlu), štýl na snímku stúpne najviac o 0,2 ms.",
+    "E3: popis sa vymení najviac 16 ms od začiatku prelínania (rozšírený lightbox-tma.mjs, meranie z obrazu cez Page.startScreencast alebo snímky po 16 ms, nie z currentSrc); žiadna snímka s novým popisom nad starou fotkou; prelínanie 300 ms ± 1 snímka; po 5 rýchlych ťuknutiach posledná požadovaná fotka; pri obmedzení pohybu okamžitá výmena; najviac 3 dekódované fotky.",
+    "E4: na 390×844 švih prstom (CDP dotyk) v lightboxe prejde na ďalšiu fotku, zvislý ťah skroluje stránku; počítadlo pásu tímu ukazuje „n / 10“ správne v troch polohách; galéria a recenzie počítadlo nemajú (v DOM je práve jedno počítadlo); tlačidlá ← → idú klávesnicou, ciele dotyku ≥ 44 px; aria-label tlačidiel má kľúč vo všetkých 7 slovníkoch (i18n-test.mjs).",
+    "E5: otvorenie odpovede bez LoAF > 50 ms pri CPU 4×, pri obmedzení pohybu okamžite.",
+    "Rozpočet výkonu (proti meraniu po D5, tá istá metóda): skrol.mjs stredne a svih (CPU 4×, Fast 4G, ?uvod=off, 3 behy, medián) p95 ≤ D5 + 1 ms a ≤ 20 ms, štýl ≤ D5 + 0,2 ms a ≤ 2,0 ms, dlhé úlohy ≤ 6, snímky > 16,7 ms ≤ 8 %; skrol2.mjs --film=off --cpu=1 p95 vlákna ≤ 5,5 ms a žiadna úloha > 50 ms; absolútne hranice ZADANIA 2.1 vždy (snímka p95 ≤ 20 ms, > 33 ms ≤ 2 %, žiadna > 100 ms, LCP ≤ 2,5 s, INP < 200 ms, CLS < 0,05); film.js bez zmeny (git diff prázdny), pamäť grafiky ≤ 140 MB; okná E1 vytvorené v jednej nečinnej úlohe bez úlohy > 50 ms pri CPU 4×, pri skrole 0 ms JS.",
+    "Čierne okná: sady D2 (co2-*, co3-*, co4-*) a D3 (co1-*, co5-*) bez nového okna; nové okná E1 nikdy jednofarebne tmavé > 150 ms. Lighthouse mobil ≥ 95 (gzip server, záťaž < 2), počítač 100 naživo (lokálne ≥ 98); LCP nie horší o > 0,1 s; CLS < 0,05; INP ≤ 200 ms (menu, jazyk, lightbox) pri CPU 4×. index.html ≤ 14 600 B gzip (D7 HTML nemení; ak štúdia vyžiada statický hák, najviac +30 B). Obrázky D7 ≤ 260 kB na telefóne, všetko lenivo, prvý obraz +0 B (vaha.mjs).",
+    "Vzhľad: karty-shot.mjs (titulné karty) rozdiel > 30 úrovní najviac na 0,5 % pixelov; žiadne nové písmo, farby len z tokenov (--lamp jediný akcent); v kóde nepribudol filter: blur ani backdrop-filter na mobile."
    ],
-   "overenie": "Kópia nástrojov cez nastroje.sh (pred = commit pred D7, po = HEAD). overenie-kod-stranka: bash ab3.sh d7 stredne 3 uvod=off zaklad a ab3.sh d7s svih 3 uvod=off zaklad. overenie-vykon-telefon: node skrol2.mjs --film=off --cpu=1, node inp.mjs --film=off --cpu=4. overenie-cierne-okna: over.mjs (co1–co5) s over2.py. Ďalej vaha.mjs, karty-shot.mjs --wait=5000, rozšírený chyba/porovnanie/skripty/lightbox-tma.mjs a Lighthouse cez gzip server. Snímky 390×844, 360×780 a 1440×900 si pozrie art director aj druhý kontrolór (C084: ten istý viewport, obsah a stav).",
-   "riziko": "Vrstvy pri paralaxe: strop 6 okien a brána, inak sa E2 vypne a E1 ostane. Opakovanie fotiek z galérie rieši výber a výrezy v štúdiách. Safari pred verziou 26 a Firefox ostanú statické. Bajty na pomalej sieti: lenivo s náhľadom. Subjektivitu rieši rubrika s pozorovaním a dvaja kontrolóri. Súbeh s content-visibility z D5 overiť na kotvách ± 1 px.",
-   "kapitoly_skillu": "C016, C017, C024, C032, C042, C043, C055, C057, C076, C084, C087, C100"
+   "overenie": "Kópia nástrojov cez nastroje.sh (pred = commit pred D7, po = HEAD). overenie-kod-stranka: bash ab3.sh d7 stredne 3 uvod=off zaklad a ab3.sh d7s svih 3 uvod=off zaklad. overenie-vykon-telefon: node skrol2.mjs --film=off --cpu=1, node inp.mjs --film=off --cpu=4. overenie-cierne-okna: over.mjs (co1–co5) s over2.py. Ďalej vaha.mjs, karty-shot.mjs --wait=5000, rozšírený chyba/porovnanie/skripty/lightbox-tma.mjs, sonda poradia decode → is-ready, grep okien v index.html, Lighthouse cez gzip server. Snímky 390×844, 360×780 a 1440×900 si pozrie art director aj druhý kontrolór (C084: ten istý viewport, obsah a stav pred a po).",
+   "riziko": "Vrstvy pri paralaxe: strop 6 okien a brána, inak sa E2 vypne a E1 ostane. Opakovanie fotiek z galérie: iné výrezy a výber v štúdiách. Safari pred verziou 26 a Firefox bez animation-timeline ostanú statické; staršie Safari bez loading=lazy stiahnu okná pri vložení po load (6 × ≤ 40 kB), stále mimo prvého obrazu. Bajty na pomalej sieti: lenivo s náhľadom. Subjektívny posudok: rubrika s pozorovaním a dvaja kontrolóri. Súbeh s content-visibility z D5: kotvy ± 1 px.",
+   "kapitoly_skillu": "C016, C017, C023, C024, C032, C042, C043, C050, C055, C057, C076, C084, C087, C100"
   }
  ],
  "plan": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/PLAN-D6-D7.md",
@@ -147,5 +163,242 @@
   "D7",
   "D6c po prístupoch majiteľa"
  ],
- "skill_senior_kontrola": "Kontrolóri: C081 quality-gates, C083 evidence-and-acceptance, C084 visual-regression-and-art-review, C100 senior-final-review (skill v toolbox/skills-senior/build-premium-websites). Revíziu kódu, meranie a vizuálny posudok nezamieňať."
+ "skill_senior_kontrola": "Kontrolóri: C081 quality-gates, C083 evidence-and-acceptance, C084 visual-regression-and-art-review, C100 senior-final-review (skill v toolbox/skills-senior/build-premium-websites). Revíziu kódu, meranie a vizuálny posudok nezamieňať.",
+ "rozhodnutia": {
+  "R2": "Do HTML ide len text prvého okna a nad kotvami filmu (+152 B gzip, zmerané); zvyšok do lenivého modulu navsteva.js.",
+  "R11": "Nepotvrdený údaj sa neukáže: pripravený skrytý (kľúče v 7 slovníkoch, zobrazit:false), zapne sa po odpovedi majiteľa.",
+  "R12": "Cenník bez nového písma a bez variabilných osí (Fraunces sú statické rezy opsz 144 bez tnum); fonts.css a assets/fonts/ sa nemenia.",
+  "R13": "Okná E1 sú <img> v <picture> (avif, webp, lazy, async, width/height, img.decode()); vytvára ich JS, miesto rezervuje CSS.",
+  "R14": "Ikony 180 a 512 rastrom priamo z favicon.svg, bez kriviek a bez dokresľovania.",
+  "R15": "Vernostná kartička: A skryť do spustenia servera, alebo B viesť na prihlášku v Barbershope (len so serverom); vyberie majiteľ (otázka 15)."
+ },
+ "otazky_pre_majitela": [
+  {
+   "cislo": 1,
+   "otazka": "Platba v barbershope: karta, hotovosť, iné?",
+   "odomkne": "D6b platba (skrytá položka)",
+   "n_body": [
+    "N23"
+   ]
+  },
+  {
+   "cislo": 2,
+   "otazka": "Darčekové poukážky: ako sa kupujú (recepcia, telefonicky, na diaľku)? Sú na sumu, alebo na službu? Aká je platnosť a ceny? Chcete ich predávať online (Booqme e-shop je prázdny)?",
+   "odomkne": "D6b poukážky (hodnota, platnosť, predaj – skryté)",
+   "n_body": [
+    "N16"
+   ]
+  },
+  {
+   "cislo": 3,
+   "otazka": "Storno: dokedy sa dá termín zmeniť alebo zrušiť, je poplatok, čo pri meškaní (koľko minút)?",
+   "odomkne": "D6b storno (skrytá položka)",
+   "n_body": [
+    "N24",
+    "N14"
+   ]
+  },
+  {
+   "cislo": 4,
+   "otazka": "Chodí zákazníkom naozaj SMS alebo e-mailová pripomienka deň vopred?",
+   "odomkne": "D6b pripomienka (skrytá položka)",
+   "n_body": [
+    "N24"
+   ]
+  },
+  {
+   "cislo": 5,
+   "otazka": "Platí stále „aj keď prídeš bez objednania“ zo starého webu?",
+   "odomkne": "zapne pripravenú skrytú vetu „Prísť môžeš aj bez objednania“ v „Pred návštevou“; dovtedy sa na webe neukáže (R11)",
+   "n_body": [
+    "N15"
+   ]
+  },
+  {
+   "cislo": 6,
+   "otazka": "Ste zatvorení vo dni, ktoré blokuje rezervácia (1. 1., 6. 1., Veľký piatok, Veľkonočný pondelok, 1. 5., 5. 7., 29. 8., 1. 11., 24.–26. 12.)? Ste otvorení 8. 5., 1. 9., 15. 9. a 17. 11.? Máte skrátené hodiny 31. 12.?",
+   "odomkne": "tabuľa „Dnes zatvorené“ namiesto „Sviatok“",
+   "n_body": [
+    "N03"
+   ]
+  },
+  {
+   "cislo": 7,
+   "otazka": "Parkovanie: máte vlastné miesta alebo dohodu s parkoviskom? Ktorá zastávka MHD je najbližšie?",
+   "odomkne": "D6b parkovanie (vlastné miesta a MHD)",
+   "n_body": [
+    "N17"
+   ]
+  },
+  {
+   "cislo": 8,
+   "otazka": "Bezbariérový vchod (atribút na Google): platí? Je tam schod alebo prah?",
+   "odomkne": "D6b bezbariérovosť (skrytá položka)",
+   "n_body": [
+    "N31"
+   ]
+  },
+  {
+   "cislo": 9,
+   "otazka": "„Recepcia už 8 rokov, ako jediný barbershop v Nitre“: od ktorého roku a podľa čoho „jediný“? Register a starý web uvádzajú rok 2019. Inak navrhujeme „Pri dverách ťa privíta recepčná.“",
+   "odomkne": "oprava rozporu",
+   "n_body": [
+    "N30"
+   ]
+  },
+  {
+   "cislo": 10,
+   "otazka": "„8 kresiel v troch miestnostiach“: v koľkých miestnostiach sú kreslá?",
+   "odomkne": "fakt N09 (inak „minimálne čakanie“)",
+   "n_body": [
+    "N09"
+   ]
+  },
+  {
+   "cislo": 11,
+   "otazka": "Školenia: názov, odkaz alebo kontakt? Hľadáte barberov (kariéra)?",
+   "odomkne": "D6b školenia a kariéra (skrytá položka)",
+   "n_body": [
+    "N28"
+   ]
+  },
+  {
+   "cislo": 12,
+   "otazka": "WhatsApp: používa ho recepcia, na akom čísle?",
+   "odomkne": "D6b WhatsApp (skrytá položka)",
+   "n_body": [
+    "N29"
+   ]
+  },
+  {
+   "cislo": 13,
+   "otazka": "Ktoré značky prípravkov predávate na recepcii?",
+   "odomkne": "D6b produkty (značky)",
+   "n_body": [
+    "N19"
+   ]
+  },
+  {
+   "cislo": 14,
+   "otazka": "Romana: smieme uviesť jej ceny z Booqme (35 až 80 €) a dni pondelok až streda?",
+   "odomkne": "D6b Romana (ceny a dni – skryté)",
+   "n_body": [
+    "N20"
+   ]
+  },
+  {
+   "cislo": 15,
+   "otazka": "Vernostná kartička: odkedy ju chcete ponúkať zákazníkom (treba spustiť systém kartičiek na serveri headspa30.sk a nastaviť heslo pre recepciu) a aké budú odmeny a body? Vyberte jednu z dvoch možností (R15): A – odkaz v pätičke ostane skrytý, kým systém nebeží; B – systém spustíme a odkaz povedie na prihlášku priamo v Barbershope (bez servera sa prihláška nedá odoslať, preto B len so spusteným systémom).",
+   "odomkne": "odkaz v pätičke (D6a-0), veta pri rezervácii (D6b, skrytá)",
+   "n_body": [
+    "N01",
+    "N32"
+   ]
+  },
+  {
+   "cislo": 16,
+   "otazka": "Výsledky strihov: môžete dodať 8 až 12 fotiek so súhlasom klientov (najlepšie zozadu alebo z profilu)?",
+   "odomkne": "blok výsledkov (data-required=\"results\")",
+   "n_body": [
+    "N27"
+   ]
+  },
+  {
+   "cislo": 17,
+   "otazka": "Barberi: v akých jazykoch sa dohovoria a majú Instagram (so súhlasom)?",
+   "odomkne": "karty tímu",
+   "n_body": [
+    "N26"
+   ]
+  },
+  {
+   "cislo": 18,
+   "otazka": "Smieme na webe uviesť hodnotenie číslom („5,0 z 949 recenzií na Google, 20. 10. 2026“) s odkazom?",
+   "odomkne": "dôkaz pri rezervácii (skrytá položka)",
+   "n_body": [
+    "N40",
+    "N21"
+   ]
+  },
+  {
+   "cislo": 19,
+   "otazka": "Recenzie so slovom „Tony“ (v tíme taký barber nie je): ponechať doslovne, alebo vymeniť za inú?",
+   "odomkne": "recenzie",
+   "n_body": [
+    "N25"
+   ]
+  },
+  {
+   "cislo": 20,
+   "otazka": "Máte písomné súhlasy zamestnancov s portrétmi a videami na webe? Sú klienti vo videách nerozpoznateľní?",
+   "odomkne": "pred spustením na doméne",
+   "n_body": [
+    "N36"
+   ]
+  },
+  {
+   "cislo": 21,
+   "otazka": "Doména a rezervácia: smieme spustiť nový web na www.barbershop30.sk? Kto spravuje hosting a DNS? Kto prevádzkuje rezervačnú aplikáciu, aby /rezervacia ostala funkčná? Vie systém otvoriť konkrétnu službu alebo barbera cez adresu? Dáte prístup do Google Search Console a profilu Google?",
+   "odomkne": "D6c, predvoľba služby",
+   "n_body": [
+    "N33",
+    "N34"
+   ]
+  },
+  {
+   "cislo": 22,
+   "otazka": "Ochrana údajov: kto spracúva údaje z rezervácie (dodávateľ systému)? Ako dlho sa uchovávajú? Kto je kontakt pre otázky? Je FACEPALM, s.r.o. platiteľ DPH (IČ DPH)? Má firma menej ako 10 zamestnancov a ročný obrat do 2 mil. € (áno/nie, len kvôli povinnosti vyhlásenia o prístupnosti)?",
+   "odomkne": "pravne.html (GDPR časť), D6c (vyhlásenie o prístupnosti)",
+   "n_body": [
+    "N05",
+    "N35"
+   ]
+  },
+  {
+   "cislo": 23,
+   "otazka": "Facebook a Instagram: pošlete snímku profilu a posledných noviniek? Bez prihlásenia sa nedajú prečítať.",
+   "odomkne": "texty noviniek",
+   "n_body": [
+    "N41"
+   ]
+  },
+  {
+   "cislo": 24,
+   "otazka": "Vektorové logo „30 Barbershop Holičstvo“ (SVG alebo PDF)? Ikony na plochu sa dovtedy vyrobia rastrom z existujúceho favicon.svg, bez dokresľovania (R14).",
+   "odomkne": "ikony, prípadný znak",
+   "n_body": [
+    "N10"
+   ]
+  }
+ ],
+ "otazky_najprv": [
+  1,
+  2,
+  3,
+  5,
+  6,
+  15,
+  21
+ ],
+ "nerobit": [
+  "Nevymýšľať recenzie, hviezdičky ani počty („10 000+ strihov“, „stovky spokojných“). Nepridávať superlatívy („najlepší v Nitre“) ani nové tvrdenia typu „jediný v Nitre“ (N30).",
+  "Nedávať aggregateRating ani review do JSON-LD. Nedávať FAQPage do HTML (R3).",
+  "Nepoužívať cudzie fotky: 98 fotiek verejnosti na Google profile, konkurencia, fotobanky, generované obrázky, fotky výsledkov bez súhlasu klientov (N27), fotky vylúčené pre súkromie (foto-43, 03, 17, 28, 07, 19, 25, 39; MEDIA_SELECTION).",
+  "Neuvádzať ceny, služby ani trvania mimo rezervačného systému barbershop30.sk a Booqme (Romana). Žiadne ceny „od“, zľavy ani akcie. Romanine ceny len so súhlasom (pravidlo jedného cenníka).",
+  "Nepresmerovať rezerváciu barberov na Booqme. Nevkladať rezervačný formulár ani vlastný formulár. Nepredstierať predvoľbu služby či barbera, ktorú systém nevie.",
+  "Nevkladať mapu Google cez iframe (cookies a výkon), odkaz Navigovať stačí. Nepridávať analytiku, GTM ani cookie lištu bez rozhodnutia majiteľa.",
+  "Nepoužívať vyskakovacie okná (zľava, newsletter), odpočítavanie ani falošnú naliehavosť.",
+  "Nespomínať AI, nástroje ani 3D model. Prehliadka je „prehliadka podniku“.",
+  "Z efektov nepoužívať: FX029 preostrenie a žiadne iné rozmazanie (N39), zrno, LUT ani tónovanie, chromatickú aberáciu, bloom ani častice, ďalšie efekty pod kurzorom, FX055 odhalenie podľa hĺbky, textúru pod textom (Z025), nekonečné animácie, brány „ENTER“, čierne úvodné plochy.",
+  "Nemeniť film.js, strihy CUTS, sekvencie, prológ ani titulné karty v D6 a D7 (vlastníci D3–D5).",
+  "Neprekročiť 14 600 B gzip v index.html. Nepridávať viditeľný text bez kľúčov v 7 slovníkoch.",
+  "Nepoužívať backdrop-filter na mobile a nepridávať nové písma. Nedokresľovať logo „30“ (vektor nemáme) ani ho neprevádzať na krivky; ikony sú raster z favicon.svg (R14).",
+  "Neukazovať „Prísť môžeš aj bez objednania“ ani iný nepotvrdený údaj (platba, storno, pripomienky, hodnota a platnosť poukážok, dni a ceny Romany, hodnotenie číslom) pred odpoveďou majiteľa; sú pripravené skryté (R11).",
+  "Nemeniť fonts.css ani assets/fonts/: žiadny nový rez, žiadne variabilné osi (R12). Nedávať okná E1 ako <picture> do HTML (rozpočet) ani ako pseudoprvok s background-image (R13).",
+  "Nevkladať skriptom „pri štarte“ text nad kotvy filmu; čo musí byť v prvom okne, je v HTML (R2).",
+  "Neukazovať odkaz vernostnej kartičky, kým na headspa30.sk nebeží vernost/ (curl 200), ak majiteľ nezvolí možnosť B (R15, N01, N32).",
+  "Nespomínať Salón 30 ani HEAD SPA 30 ako súčasť značky a nedávať ich telefón na stránky Barbershopu (N01, N02).",
+  "Neuvádzať atribút LGBTQ+ z Google profilu bez výslovného súhlasu majiteľa. Bezbariérovosť (N31) len po potvrdení.",
+  "Nemeniť canonical JavaScriptom (R7, N34). Nepreberať texty konkurencie, len princípy."
+ ]
 }

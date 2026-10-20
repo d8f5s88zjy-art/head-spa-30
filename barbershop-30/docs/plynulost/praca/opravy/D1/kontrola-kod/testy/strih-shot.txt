@@ -1,0 +1,63 @@
+desktop pro 0 {"S":0.35,"mix":0,"cut":null,"cur":"vstup"}
+desktop pro 0.2 {"S":0.436,"mix":0.2,"cut":"vstup>rohozka najazd","cur":"vstup"}
+desktop pro 0.35 {"S":0.47,"mix":0.35,"cut":"vstup>rohozka najazd","cur":"vstup"}
+desktop pro 0.5 {"S":0.5,"mix":0.5,"cut":"vstup>rohozka najazd","cur":"rohozka"}
+desktop pro 0.65 {"S":0.53,"mix":0.65,"cut":"vstup>rohozka najazd","cur":"rohozka"}
+desktop pro 0.8 {"S":0.564,"mix":0.8,"cut":"vstup>rohozka najazd","cur":"rohozka"}
+desktop pro 1 {"S":0.65,"mix":0,"cut":null,"cur":"rohozka"}
+desktop rohozka 0 {"S":1.35,"mix":0,"cut":null,"cur":"rohozka"}
+desktop rohozka 0.2 {"S":1.436,"mix":0.2,"cut":"rohozka>sala pohyb","cur":"rohozka"}
+desktop rohozka 0.35 {"S":1.47,"mix":0.35,"cut":"rohozka>sala pohyb","cur":"rohozka"}
+desktop rohozka 0.5 {"S":1.5,"mix":0.5,"cut":"rohozka>sala pohyb","cur":"sala"}
+desktop rohozka 0.65 {"S":1.53,"mix":0.65,"cut":"rohozka>sala pohyb","cur":"sala"}
+desktop rohozka 0.8 {"S":1.564,"mix":0.8,"cut":"rohozka>sala pohyb","cur":"sala"}
+desktop rohozka 1 {"S":1.65,"mix":0,"cut":null,"cur":"sala"}
+desktop sala 0 {"S":2.35,"mix":0,"cut":null,"cur":"sala"}
+desktop sala 0.2 {"S":2.436,"mix":0.2,"cut":"sala>stol popredie","cur":"sala"}
+desktop sala 0.35 {"S":2.47,"mix":0.35,"cut":"sala>stol popredie","cur":"sala"}
+desktop sala 0.5 {"S":2.5,"mix":0.5,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 0.65 {"S":2.53,"mix":0.65,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 0.8 {"S":2.564,"mix":0.8,"cut":"sala>stol popredie","cur":"stol"}
+desktop sala 1 {"S":2.65,"mix":0,"cut":null,"cur":"stol"}
+desktop stol 0 {"S":3.35,"mix":0,"cut":null,"cur":"stol"}
+desktop stol 0.2 {"S":3.436,"mix":0.2,"cut":"stol>cakaren svih","cur":"stol"}
+desktop stol 0.35 {"S":3.47,"mix":0.35,"cut":"stol>cakaren svih","cur":"stol"}
+desktop stol 0.5 {"S":3.5,"mix":0.5,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 0.65 {"S":3.53,"mix":0.65,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 0.8 {"S":3.564,"mix":0.8,"cut":"stol>cakaren svih","cur":"cakaren"}
+desktop stol 1 {"S":3.65,"mix":0,"cut":null,"cur":"cakaren"}
+desktop cakaren 0 {"S":4.35,"mix":0,"cut":null,"cur":"cakaren"}
+desktop cakaren 0.2 {"S":4.436,"mix":0.2,"cut":"cakaren>sala-rano popredie","cur":"cakaren"}
+desktop cakaren 0.35 {"S":4.47,"mix":0.35,"cut":"cakaren>sala-rano popredie","cur":"cakaren"}
+desktop cakaren 0.5 {"S":4.5,"mix":0.5,"cut":"cakaren>sala-rano popredie","cur":"sala-rano"}
+desktop cakaren 0.65 {"S":4.53,"mix":0.65,"cut":"cakaren>sala-rano popredie","cur":"sala-rano"}
+konzola: desktop warning THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+desktop warning THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-pNNbVw --remote-debugging-pipe --no-startup-window
+<launched> pid=26313
+[pid=26313][err] [1020/134052.521603:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26313][err] [1020/134052.522674:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26313][err] [1020/134052.522732:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26313][err] [1020/134052.538675:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=26313][err] [1020/134052.560158:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=26313][err] [1020/134053.362133:INFO:CONSOLE:6] "THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.", source: http://127.0.0.1:34643/assets/vendor/three.module.min.js (6)
+[pid=26313][err] [1020/134152.005507:INFO:CONSOLE:6] "THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.", source: http://127.0.0.1:34643/assets/vendor/three.module.min.js (6)
+[pid=26313] <gracefully close start>
+[pid=26313] <forcefully close>
+[pid=26313] <kill>
+[pid=26313] <will force kill>
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+    at /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs2/barbershop-30/source/tools/strih-shot.mjs:68:20
+
+Node.js v22.22.2

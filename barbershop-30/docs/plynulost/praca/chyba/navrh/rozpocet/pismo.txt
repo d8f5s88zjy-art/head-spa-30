@@ -1,0 +1,21 @@
+Písmo Barbershop 30 – overenie 20. 10. 2026 (fonttools 4.66, kópia hs-tool/barbershop-30/assets)
+
+assets/fonts.css: @font-face len pre statické rezy Fraunces 500, 800, 500 italic a Manrope 400/600/700;
+hlavička fonts.css: "static instances cut from the variable font (opsz=144, SOFT=0, WONK=0)". Variabilný zdroj v repozitári nie je.
+
+Fraunces-500.woff2: fvar=nie; GSUB=['case', 'liga', 'rvrn', 'ss01']; GPOS=['kern']; tnum=NIE; upm=2000; glyfov=464
+   šírky číslic: {'0': 1203, '1': 726, '2': 1085, '3': 1005, '4': 1108, '5': 1041, '6': 1115, '7': 939, '8': 1059, '9': 1124, '€': 1244}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+Fraunces-800.woff2: fvar=nie; GSUB=['case', 'liga', 'rvrn', 'ss01']; GPOS=['kern']; tnum=NIE; upm=2000; glyfov=464
+   šírky číslic: {'0': 1296, '1': 800, '2': 1190, '3': 1099, '4': 1214, '5': 1123, '6': 1206, '7': 1034, '8': 1149, '9': 1221, '€': 1322}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+Fraunces-500i.woff2: fvar=nie; GSUB=['case', 'liga', 'rvrn', 'ss01']; GPOS=['kern']; tnum=NIE; upm=2000; glyfov=463
+   šírky číslic: {'0': 1252, '1': 788, '2': 1085, '3': 1022, '4': 1050, '5': 1039, '6': 1120, '7': 876, '8': 1028, '9': 1113, '€': 1214}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+Manrope-400.woff2: fvar=nie; GSUB=['aalt', 'calt', 'case', 'dnom', 'frac', 'liga', 'locl', 'numr', 'ordn', 'pnum', 'sinf', 'subs', 'sups', 'tnum']; GPOS=['kern']; tnum=áno; upm=2000; glyfov=411
+   šírky číslic: {'0': 1220, '1': 780, '2': 1140, '3': 1106, '4': 1179, '5': 1155, '6': 1241, '7': 1004, '8': 1161, '9': 1241, '€': 1297}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+Manrope-600.woff2: fvar=nie; GSUB=['aalt', 'calt', 'case', 'dnom', 'frac', 'liga', 'locl', 'numr', 'ordn', 'pnum', 'sinf', 'subs', 'sups', 'tnum']; GPOS=['kern']; tnum=áno; upm=2000; glyfov=411
+   šírky číslic: {'0': 1284, '1': 844, '2': 1174, '3': 1144, '4': 1205, '5': 1167, '6': 1243, '7': 1046, '8': 1203, '9': 1243, '€': 1343}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+Manrope-700.woff2: fvar=nie; GSUB=['aalt', 'calt', 'case', 'dnom', 'frac', 'liga', 'locl', 'numr', 'ordn', 'pnum', 'sinf', 'subs', 'sups', 'tnum']; GPOS=['kern']; tnum=áno; upm=2000; glyfov=411
+   šírky číslic: {'0': 1316, '1': 876, '2': 1191, '3': 1163, '4': 1217, '5': 1172, '6': 1243, '7': 1067, '8': 1225, '9': 1243, '€': 1365}  (rôzne šírky = proporcionálne číslice; tabular-nums bez tnum nič nemení)
+
+style.css: font-variation-settings "opsz" 144 na riadkoch 135, 171, 179, 306, 513, 656, 727, 736 – bez účinku na statický rez;
+font-variant-numeric: tabular-nums na 710, 733, 739, 848, 926, 1233 – účinkuje len na Manrope (má tnum), nie na Fraunces.
+.price-row stĺpce (719): minmax(0,1fr) 5.5rem 6.5rem auto; telefón (753): minmax(0,1fr) auto. .price-amount 1.625rem/1, .price-name 1.25rem (telefón 1.125rem, r. 761), letter-spacing -0.01em.

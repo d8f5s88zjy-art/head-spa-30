@@ -45,6 +45,19 @@ export async function patch(page, which) {
       if (!s.includes(a)) throw new Error('zaplata flap nesedi');
       s = s.replace(a, "const tick = () => { b.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.2)' }, { transform: 'scaleY(1)' }], { duration: 90 });");
     }
+    // kontrola kódu D1: tabuľa hodín úplne vypnutá (porovnanie vynútených rozložení v readTarget s tabuľou a bez nej)
+    if (which.includes('vypflap')) {
+      const a = "d.querySelectorAll('[data-flap]').forEach((box) => {";
+      if (!s.includes(a)) throw new Error('zaplata vypflap nesedi');
+      s = s.replace(a, "d.querySelectorAll('[data-flap-vyp]').forEach((box) => {");
+    }
+    // kontrola kódu D1: krok tabule bez vlastnej slučky rAF pred tick – kroky sa spúšťajú z hlavnej slučky po apply()
+    // (náhrada: scrollY sa číta v udalosti scroll, ktorá v snímke beží pred rAF; readTarget berie kešovanú hodnotu)
+    if (which.includes('scrollcache2')) {
+      const a = "function readTarget() {\n  curY = window.scrollY || 0;";
+      if (!s.includes(a)) throw new Error('zaplata scrollcache2 nesedi');
+      s = s.replace(a, "let __sy = window.scrollY || 0;\naddEventListener('scroll', () => { __sy = window.scrollY || 0; }, { passive: true, capture: true });\naddEventListener('resize', () => { __sy = window.scrollY || 0; });\nfunction readTarget() {\n  curY = __sy;");
+    }
     route.fulfill({ status: 200, contentType: 'text/javascript', body: s });
   });
   await page.route('**/assets/style.css', (route) => {

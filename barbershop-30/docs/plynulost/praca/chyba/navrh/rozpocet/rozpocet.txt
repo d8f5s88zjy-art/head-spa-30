@@ -1,0 +1,12 @@
+index.html dnes (20. 10. 2026, kópia hs-tool/barbershop-30): gzip -c 14398 B, gzip -9c 14369 B; strop 14 600 B
+riadok „Dnes“ v úvode: gzip -c 14412 B (+14), gzip -9c 14384 B (+15); rezerva 188 / 216 B
+riadok „Dnes“ v karte Rezervácia: gzip -c 14422 B (+10), gzip -9c 14397 B (+13); rezerva 178 / 203 B
+dve vety (nad cenníkom, tím): gzip -c 14453 B (+31), gzip -9c 14426 B (+29); rezerva 147 / 174 B
+skoky v cenníku (4 kotvy): gzip -c 14505 B (+52), gzip -9c 14433 B (+7); rezerva 95 / 167 B
+odkaz „Ako prebieha rezervácia →“: gzip -c 14534 B (+29), gzip -9c 14464 B (+31); rezerva 66 / 136 B
+prázdny kontajner „Pred návštevou“: gzip -c 14550 B (+16), gzip -9c 14481 B (+17); rezerva 50 / 119 B
+D6a‑0 hidden na <li> + D6a odkaz „Právne informácie“: gzip -c 14578 B (+28), gzip -9c 14508 B (+27); rezerva 22 / 92 B
+D6a zmazaný dátový favicon: gzip -c 14389 B (-189), gzip -9c 14318 B (-190); rezerva 211 / 282 B
+D6a JSON‑LD HairSalon + geo + hasMap + priceRange: gzip -c 14498 B (+109), gzip -9c 14428 B (+110); rezerva 102 / 172 B
+D6a og:type website: gzip -c 14492 B (-6), gzip -9c 14421 B (-7); rezerva 108 / 179 B
+SPOLU: gzip -c 14492 B (+94), gzip -9c 14421 B (+52); rezerva do 14 600 B: 108 (gzip -c) / 179 (gzip -9c)

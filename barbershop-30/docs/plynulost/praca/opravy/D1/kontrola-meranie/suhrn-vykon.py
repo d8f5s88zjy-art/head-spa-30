@@ -4,7 +4,8 @@
 #   python3 -I suhrn-vykon.py [predpona...]
 import json, glob, os, re, sys, statistics as st
 K = os.path.dirname(os.path.abspath(__file__))
-def runs(p, s): return sorted(glob.glob(f'{K}/nastroje-{s}/overenie-kod-stranka/ab-{p}-{s}-*/vysledok.json'))
+ZDROJ = os.environ.get('ZDROJ')
+def runs(p, s): return sorted(glob.glob(f'{ZDROJ}/ab-{p}-{s}-*/vysledok.json' if ZDROJ else f'{K}/nastroje-{s}/overenie-kod-stranka/ab-{p}-{s}-*/vysledok.json'))
 def med(xs): return round(st.median(xs), 2) if xs else None
 NASE = r'(app|i18n|atmosfera)\.js'
 def zle(v):
