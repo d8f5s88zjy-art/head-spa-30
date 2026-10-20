@@ -1,0 +1,33 @@
+{
+ "popis": "Ten istý príbeh povedaný podľa našich pravidiel k 2026-10-19. Každý citát je doslovne zo zdroja prečítaného 2026-10-19 (overenie-v7.md). Očakávaný výsledok kontroly: kód 0.",
+ "short": "Ox Alpha: čo sa ukázalo",
+ "typ": "novinka",
+ "datum_vyroby": "2026-10-19",
+ "tvrdenia": [
+  {"id": "T1", "text": "Podľa Bloombergu firma Z.ai potvrdila, že anonymný model Ox Alpha patrí do jej série GLM.",
+   "kde": ["reč", "obraz"], "stav": "pripísané",
+   "zdroj": "https://thenextweb.com/news/ox-alpha-zhipu-glm-open-weights-censorship-fingerprint (cituje Bloomberg, 26. 8. 2026)",
+   "zdroj_typ": "sekundárny", "overené": "2026-10-19"},
+  {"id": "T2", "text": "Dnes je na OpenRouteri ako GLM 5.3 Flash a váhy sú na Hugging Face pod licenciou MIT.",
+   "kde": ["reč"], "stav": "overené",
+   "zdroj": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3-flash, created 2026-08-26); https://huggingface.co/zai-org/GLM-5.3-Flash (License: mit)",
+   "zdroj_typ": "primárny", "overené": "2026-10-19", "nazvy": ["GLM 5.3 Flash"]},
+  {"id": "T3", "text": "Má 320 miliárd parametrov, aktívnych 18 miliárd.", "kde": ["reč", "obraz"], "stav": "overené",
+   "zdroj": "https://huggingface.co/zai-org/GLM-5.3-Flash", "zdroj_typ": "primárny", "overené": "2026-10-19",
+   "citat": "With 320B total parameters and just 18B active parameters", "jednotka": "parametrov"},
+  {"id": "T4", "text": "Číslo 2,6 T z grafu v pôvodnom videu sú tokeny za deň, nie parametre.", "kde": ["reč", "obraz"],
+   "stav": "overené", "zdroj": "snímka grafu vo videu V7 v 1,2 s: hlavička a súčet riadkov (anatomia-v7.md)",
+   "zdroj_typ": "vlastné meranie", "overené": "2026-10-19",
+   "citat": "AUG 21 9.2T total … ox-alpha 2.6T", "jednotka": "tokeny za deň"},
+  {"id": "T5", "text": "Prvé „80 %“ bolo podľa článku Decrypt z 10 úloh jedného vývojára.", "kde": ["reč"],
+   "stav": "pripísané", "zdroj": "https://decrypt.co/376396/mysterious-ai-model-ox-alpha",
+   "zdroj_typ": "sekundárny", "overené": "2026-10-19",
+   "citat": "Ox Alpha: 80% … 10-task DeepSWE sample", "jednotka": "% úloh", "jednotka_v_texte": "%"},
+  {"id": "T6", "text": "Na celom teste DeepSWE má 63 %, Fable 5 70 % a GPT-5.6 Sol 73 %.", "kde": ["reč", "obraz"],
+   "stav": "overené", "zdroj": "https://deepswe.datacurve.ai/ (aktualizované 2026-09-22, 113 úloh)",
+   "zdroj_typ": "primárny", "overené": "2026-10-19",
+   "citat": "glm-5.3-flash max 63% ±4% … claude-fable-5 xhigh 70% ±3% … gpt-5.6-sol max 73% ±3%",
+   "jednotka": "% vyriešených úloh", "jednotka_v_texte": "%", "nazvy": ["Fable 5", "GPT-5.6 Sol"]},
+  {"id": "T7", "text": "Podľa mňa: lacný a dobrý, nie lepší.", "kde": ["reč"], "stav": "názor"}
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "popis": "Test pravidiel pre short prevádzky. Vety sú vymyslené na skúšku pravidiel, nie fakty o žiadnej prevádzke; zdroj [súbor] je zástupný. Očakávaný výsledok: kód 1 (chyby pri T1 až T4, T5 prejde).",
+ "short": "test prevádzka",
+ "typ": "prevadzka",
+ "datum_vyroby": "2026-10-19",
+ "tvrdenia": [
+  {"id": "T1", "text": "Najlepšie head spa v meste.", "kde": ["reč"], "stav": "názor"},
+  {"id": "T2", "text": "Vraj sa otvára nová pobočka.", "kde": ["reč"], "stav": "nepotvrdené",
+   "kto_tvrdi": "známa", "zdroj": "rozhovor", "zdroj_typ": "sociálna sieť", "overené": "2026-10-19",
+   "stitok": "NEPOTVRDENÉ · k 19. 10."},
+  {"id": "T3", "text": "Rituál zastaví vypadávanie vlasov.", "kde": ["reč"], "stav": "overené",
+   "zdroj": "[súbor]", "zdroj_typ": "prevádzka", "overené": "2026-10-19"},
+  {"id": "T4", "text": "Rituál trvá 60 minút.", "kde": ["obraz"], "stav": "overené",
+   "zdroj": "[súbor]", "zdroj_typ": "prevádzka", "overené": "2026-09-01",
+   "citat": "[riadok zo zdroja bez čísla]", "jednotka": "minút"},
+  {"id": "T5", "text": "Rezervuješ online.", "kde": ["reč"], "stav": "overené",
+   "zdroj": "[súbor]", "zdroj_typ": "prevádzka", "overené": "2026-10-19"}
+ ]
+}

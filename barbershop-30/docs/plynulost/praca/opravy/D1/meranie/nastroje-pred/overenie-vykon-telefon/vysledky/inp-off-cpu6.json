@@ -1,0 +1,147 @@
+{
+ "meno": "inp-off-cpu6",
+ "film": "off",
+ "filmStav": {
+  "on": false
+ },
+ "cpu": 6,
+ "y": 2700,
+ "zataz": [
+  "1.65",
+  "1.69",
+  "1.27"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 208,
+   "udalosti": [
+    "pointerdown:56(spracovanie 15)",
+    "pointerup:56(spracovanie 0)",
+    "click:208(spracovanie 96)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 14.5,
+     "vynuteneStylLayout": 0
+    },
+    "touchstart": {
+     "spolu": 2.9,
+     "vynuteneStylLayout": 0
+    },
+    "gesturetapdown": {
+     "spolu": 1.3,
+     "vynuteneStylLayout": 0
+    },
+    "mousemove": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "focusin": {
+     "spolu": 1.6,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 88.9,
+     "vynuteneStylLayout": 79
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     118,
+     109
+    ],
+    [
+     158,
+     148
+    ]
+   ]
+  },
+  "jazykEN": {
+   "inpMs": 64,
+   "udalosti": [
+    "pointerdown:16(spracovanie 2)",
+    "pointerup:16(spracovanie 0)",
+    "click:64(spracovanie 7)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 1.9,
+     "vynuteneStylLayout": 0
+    },
+    "mouseover": {
+     "spolu": 1.5,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 6.8,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 11.2,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     106,
+     105
+    ],
+    [
+     299,
+     294
+    ]
+   ]
+  },
+  "jazykSK": {
+   "inpMs": 192,
+   "udalosti": [
+    "pointerdown:16(spracovanie 0)",
+    "pointerup:16(spracovanie 0)",
+    "click:192(spracovanie 12)"
+   ],
+   "obsluhaVlaknoMs": {
+    "mousemove": {
+     "spolu": 1.5,
+     "vynuteneStylLayout": 0
+    },
+    "focus": {
+     "spolu": 1.8,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 12.2,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 12.9,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     137,
+     133
+    ],
+    [
+     408,
+     401
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 72,
+   "udalosti": [
+    "pointerdown:16(spracovanie 0)",
+    "pointerup:16(spracovanie 0)",
+    "click:72(spracovanie 9)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 8.5,
+     "vynuteneStylLayout": 5.2
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

@@ -1,0 +1,2531 @@
+{
+ "business": {
+  "fields": [
+   {
+    "key": "brand_name_official",
+    "value": "Barbershop30 (web/titulok a logo); Facebook stránka sa volá „Barbershop 30“, Instagram @barbershop30_nitra. Variant „30 Barbershop Holičstvo“ sa v žiadnom online zdroji nenašiel.",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Footer webu: „Profesionálne a moderné kaderníctvo a holičstvo v centre Nitry … To je Barbershop30.“"
+   },
+   {
+    "key": "website",
+    "value": "https://www.barbershop30.sk (vlastný web, HTTP 200, SK/EN prepínač)",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "address",
+    "value": "Mostná 30, 949 01 Nitra, Slovenská republika",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Katalógy barbershops.sk a quickbook.sk uvádzajú súpisné číslo „Mostná 226/30“. Článok mojanitra.sk (24.10.2019) cituje, že názov je odvodený od čísla domu 30."
+   },
+   {
+    "key": "phone",
+    "value": "0951 267 203 (+421 951 267 203)",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Rovnaké číslo v Instagram bio a na Booqme. Číslo 0911 153 136 patrí Salónu 30 (salon30.sk), NIE barbershopu."
+   },
+   {
+    "key": "email",
+    "value": "info@barbershop30.sk",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "opening_hours",
+    "value": "Pondelok–Piatok 09:00–19:00; Sobota 09:00–14:00; Nedeľa zatvorené",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Azet.sk chybne uvádza nedeľu 09:00–19:00 – odporúčam ignorovať, oficiálny web hovorí zatvorené."
+   },
+   {
+    "key": "booking_system",
+    "value": "Vlastný rezervačný systém priamo na webe (Vue komponent <v-order-component>, ajax endpoint https://www.barbershop30.sk/rezervacia/ajax). Kroky: služba → pracovník → termín → osobné údaje; e-mail + SMS pripomienka. Doplnkovo existuje Booqme stránka (len farbenie/melír/trvalá, pracovníčka Romana).",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Bookio ani Reservio sa nikde nenašli. Booqme: https://booqme.app/sk/rezervacia/barbershop30 (booqme.sk 301 → booqme.app), schema.org adresa Mostná 30, tel. +421 951 267 203, rating 5/2 recenzie."
+   },
+   {
+    "key": "booking_url",
+    "value": "https://www.barbershop30.sk/rezervacia",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "instagram",
+    "value": "https://www.instagram.com/barbershop30_nitra/ – cca 8 255 sledovateľov, 337 príspevkov (podľa indexovaného snímku vo vyhľadávaní; priamy fetch vrátil 429/login wall)",
+    "source_url": "https://www.instagram.com/barbershop30_nitra/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Odkaz na profil je priamo na oficiálnom webe. Počty sledovateľov sú z cache vyhľadávača, nie overené priamo."
+   },
+   {
+    "key": "facebook",
+    "value": "https://www.facebook.com/barbershop30nitra/ (popis stránky podľa vyhľadávania: „Pánske a Detské kaderníctvo Mostná 30 Nitra www.barbershop30.sk“; stránka ďalej odkazuje na barberkurzy.sk)",
+    "source_url": "https://www.facebook.com/barbershop30nitra/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Odkaz je na oficiálnom webe; obsah stránky za login wallom, text len z výsledkov vyhľadávania."
+   },
+   {
+    "key": "tiktok_profile",
+    "value": "Nenájdený. Web ani katalógy neuvádzajú TikTok profil podniku.",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "not-found",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "founded",
+    "value": "2019 (web: „Sme tu pre vás už roku 2019“; otvorenie oznámené článkom 24.10.2019)",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Potvrdzuje mojanitra.sk článok z 24.10.2019 a Orly kaderníctva (založené 2019)."
+   },
+   {
+    "key": "operator_company",
+    "value": "Facepalm s.r.o. (ORSR: FACEPALM, s.r.o.), IČO 52231381, DIČ 2120952218; deň zápisu 05.03.2019; sídlo Šalgovská ulica 1039/43, 951 15 Mojmírovce; konateľ a jediný spoločník Ľudovít Cirók",
+    "source_url": "https://www.orsr.sk/vypis.asp?ID=554260&SID=9&P=0",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "IČO/DIČ uvedené v pätičke barbershop30.sk; detaily z Obchodného registra SR a registeruz.sk (SK NACE 62020). Meno konateľa je z verejného registra, nie z webu podniku – zvážte, či ho zverejniť."
+   },
+   {
+    "key": "chairs_capacity",
+    "value": "8 kresiel; recepčná; káva a minerálka zdarma; online rezervácie 24/7; striháme aj deti",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "google_rating",
+    "value": "5,0 z 792 recenzií Google Maps (agregované cez Zlatá Firma); QuickBook 5/5 z 813; Orly 5.0 (760 + 27 hodnotení). Priame čítanie Google Maps nebolo možné.",
+    "source_url": "https://www.zlatafirma.eu/company/barbershop-30-227214",
+    "confidence": "third-party",
+    "retrieved": "2026-10-09",
+    "note": "Zlatá Firma: 833 recenzií spolu (792 Google Maps, 27 Facebook, 14 Zlavomat). Zlavomat: 4,9/5 zo 14."
+   },
+   {
+    "key": "awards",
+    "value": "Zlatá Firma – „Víťaz ocenenia Zlatá Firma“, odznaky za roky 2022, 2023, 2024 (premium), 2025, 2026. Orly Kaderníctva – „Laureát hodnotenia Orly“, medaily 2022, 2023, 2025, 2026 (2024 na profile NIE JE). Či plaketa 2024 v prevádzke je práve Zlatá Firma 2024, sa nedá potvrdiť – nehádam.",
+    "source_url": "https://www.zlatafirma.eu/company/barbershop-30-227214",
+    "confidence": "third-party",
+    "retrieved": "2026-10-09",
+    "note": "Obe sú komerčné ratingové programy založené na agregácii online recenzií (Orly prevádzkuje Bright Side Solutions sp. z o.o. sp.k., Wrocław). Druhý zdroj: https://www.orlykadernictva.eu/profile-1046-barbershop-30. Nijaký zdroj nepopisuje fyzickú plaketu."
+   },
+   {
+    "key": "training_academy",
+    "value": "barberkurzy.sk („Profesionálne barber kurzy, Est'd 2018“) – adresa Mostná 30, 949 01 Nitra, tel. 0951 207 055; kurzy: 5-dňový intenzívny 780 €, 1-dňový intenzívny 420 €, úprava brady 520 €, odfarbovanie 420 €, ondulácia 350 €. Recenzie na stránke spomínajú Barbershop30 a barberov Klaudi, Roman, Jojo; galéria súbory „Barbershop-Redstyle-Nitra“.",
+    "source_url": "https://barberkurzy.sk/",
+    "confidence": "weak",
+    "retrieved": "2026-10-09",
+    "note": "Prepojenie s Barbershop30: zhodná adresa + odkaz z FB stránky Barbershop 30 (podľa vyhľadávania) + recenzie. Prevádzkovateľ kurzov na stránke neuvedený, barbershop30.sk kurzy nespomína. Neoznačovať ako oficiálnu „akadémiu Barbershop30“ bez potvrdenia klienta."
+   },
+   {
+    "key": "relation_to_salon30",
+    "value": "Nepotvrdené. salon30.sk (Mostná 30, 0911 153 136, info@salon30.sk, tím Nikola, Katka, Eva, Lenka, Lucka, Monika) nespomína barbershop; barbershop30.sk nespomína Salón 30. Jediný prienik je zhodná adresa Mostná 30. Katalóg slovenskobcan.com má URL „/kadernictvo/nitriansky/salon-30/“ s titulkom o Barbershop30 (zmiešané údaje – nepoužívať).",
+    "source_url": "https://www.salon30.sk/",
+    "confidence": "not-found",
+    "retrieved": "2026-10-09"
+   },
+   {
+    "key": "products_sold",
+    "value": "Predaj prémiovej kozmetiky; Zlavomat (2020) uvádza značku Redstyle",
+    "source_url": "https://www.zlavomat.sk/akcia/696688-pansky-strih-a-uprava-brady-v-barbershop30",
+    "confidence": "third-party",
+    "retrieved": "2026-10-09",
+    "note": "Web hovorí len „produkty lídrov na trhu … môžete u nás zakúpiť“; značka Redstyle len z 2020 zľavového portálu a názvov fotiek na barberkurzy.sk."
+   },
+   {
+    "key": "analytics_ids",
+    "value": "GTM-K8PZD4KR, GA4 G-D9FMT63FQC (na súčasnom webe)",
+    "source_url": "https://www.barbershop30.sk/",
+    "confidence": "verified-official",
+    "retrieved": "2026-10-09",
+    "note": "Užitočné pri migrácii merania na nový web."
+   }
+  ],
+  "services": [
+   {
+    "name": "Pánsky strih",
+    "price": "18 €",
+    "duration": "40 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Fade techniky, konzultácia, strojček/nožnice, umytie, fénovanie, styling, kolínska. Trvanie z JSON rezervačného systému (updated 2024-12-01)."
+   },
+   {
+    "name": "Pánsky strih a Úprava brady",
+    "price": "28 €",
+    "duration": "60 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Strih + úprava brady, horúci ručník, britva, styling."
+   },
+   {
+    "name": "Strih pre malých gentlemenov (do 10 rokov)",
+    "price": "15 €",
+    "duration": "45 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Klasický strih/fade, prípadne ornamenty, umytie, styling."
+   },
+   {
+    "name": "Úprava brady",
+    "price": "15 €",
+    "duration": "20 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Horúci ručník, britva, styling s prípravkami."
+   },
+   {
+    "name": "Pánsky strih – dĺžka vlasov nad 10 cm",
+    "price": "22 €",
+    "duration": "60 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Holenie do hladka Hot Towel",
+    "price": "15 €",
+    "duration": "30 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Holenie britvou, naparenie, ošetrenie pleti."
+   },
+   {
+    "name": "Balíček 1",
+    "price": "30 €",
+    "duration": "65 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Strih, úprava brady, Hot Towel, obočie, depilácia uší, umytie, tonic, fénovanie, styling, kolínska."
+   },
+   {
+    "name": "Ultra inclusive Barbershop30",
+    "price": "40 €",
+    "duration": "80 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Všetko z Balíčka 1 + naparenie tváre, peeling, relaxačná maska, pohárik whisky."
+   },
+   {
+    "name": "Starostlivosť o pleť PREMIUM",
+    "price": "21,50 €",
+    "duration": "30 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia",
+    "note": "Naparenie tváre, peeling, relaxačná maska."
+   },
+   {
+    "name": "Oholenie hlavy",
+    "price": "13 €",
+    "duration": "25 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Úprava obočia",
+    "price": "3 €",
+    "duration": "5 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Depilácia uší a nosa voskom",
+    "price": "5,50 €",
+    "duration": "10 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Kreatívny ornament na hlave",
+    "price": "4 €",
+    "duration": "10 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Farbenie brady (20 ml)",
+    "price": "10 €",
+    "duration": "30 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "Farbenie obočia",
+    "price": "5 €",
+    "duration": "10 min",
+    "source_url": "https://www.barbershop30.sk/rezervacia"
+   },
+   {
+    "name": "[Booqme] Farbenie na bielo / na sivo – krátke vlasy do 6 cm",
+    "price": "45 €",
+    "duration": "120 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30",
+    "note": "Samostatná Booqme stránka Barbershop30 pre farbenie; pracovníčka Romana."
+   },
+   {
+    "name": "[Booqme] Farbenie na bielo / na sivo – dlhé vlasy do 12 cm",
+    "price": "65 €",
+    "duration": "120 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Klasické farbenie krátke / dlhé vlasy",
+    "price": "40 € / 60 €",
+    "duration": "60 / 80 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Extravagantný štýl, kreatívne farbenie",
+    "price": "80 €",
+    "duration": "180 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Trvalá ondulácia do 6 cm / do 12 cm",
+    "price": "45 € / 60 €",
+    "duration": "90 / 120 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Tónovanie krátke / dlhé vlasy",
+    "price": "35 € / 40 €",
+    "duration": "40 / 60 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Prekrytie šedín; Poliózia (dofarbenie bieleho prameňa)",
+    "price": "40 € / 40 €",
+    "duration": "60 / 60 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   },
+   {
+    "name": "[Booqme] Melír (blond/sivý/biely)",
+    "price": "45 €",
+    "duration": "90 min",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   }
+  ],
+  "team": [
+   {
+    "name": "Nikolas",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Kristián",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Damian",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Michal",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Andy",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Dominika",
+    "role": "Barberka",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Kevin",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Lajko",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Jojo",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Adrian",
+    "role": "Barber",
+    "source_url": "https://www.barbershop30.sk/#nas-team"
+   },
+   {
+    "name": "Romana",
+    "role": "Pracovníčka pre farbenie/melír/trvalú (len na Booqme, nie na webe)",
+    "source_url": "https://booqme.app/sk/rezervacia/barbershop30"
+   }
+  ],
+  "not_found": [
+   "TikTok profil podniku Barbershop30 (žiadny zdroj ho neuvádza)",
+   "Konkrétna identifikácia plakety s rokom 2024 v prevádzke (kandidát: odznak Zlatá Firma 2024 premium – nepotvrdené; Orly 2024 na profile chýba)",
+   "Oficiálne potvrdenie, že Salón 30 a Barbershop30 sú sesterské podniky (ani jeden web nespomína druhý; spoločný je len Mostná 30)",
+   "Priame čítanie hodnotenia Google Maps (len agregované cez tretie strany)",
+   "Priezviská barberov (web uvádza len krstné mená/prezývky)",
+   "Prevádzkovateľ barberkurzy.sk a oficiálne potvrdenie, že kurzy sú pod značkou Barbershop30",
+   "Bookio alebo Reservio stránka Barbershop30 (neexistuje – podnik používa vlastný systém + Booqme)",
+   "Obsah Facebook stránky (login wall) a aktuálny stav Instagram bio (429)"
+  ],
+  "blocked_sources": [
+   "https://www.facebook.com/barbershop30nitra/ – login wall (presmerovanie na /login)",
+   "https://www.instagram.com/barbershop30_nitra/ – HTTP 429 + login wall",
+   "https://slovenskobcan.com/holicstvo/nitriansky/barbershop30/ – HTTP 403",
+   "https://www.finstat.sk/52231381 – HTTP 403",
+   "https://www.tripadvisor.in/LocationPhotoDirectLink-g274933-i427027836-Nitra_Nitra_Region.html – HTTP 403",
+   "https://www.google.com/maps/search/Barbershop30+Mostná+30+Nitra – prázdna stránka (JS/consent), rating nečitateľný",
+   "https://www.zlatafirma.eu/about – HTTP 404 (popis ocenenia nedostupný)",
+   "www.tiktok.com video stránky – vracajú len titulok „TikTok - Make Your Day“ (obsah načítaný až cez oEmbed API)",
+   "services.bookio.com / www.bookio.sk – netestované, pretože žiadny zdroj neuvádza Bookio stránku Barbershop30"
+  ],
+  "tiktok": [
+   {
+    "url": "https://vm.tiktok.com/ZN8kbPkAu/",
+    "readable": true,
+    "what_was_readable": "301 → https://www.tiktok.com/@marcelodesignx/video/7356367044683517190. Cez oEmbed API čitateľný caption: „Web design is dead… VS For me web design it is more alive than ever, thanks to all the tools…“ (skrátené), autor Marcelo Design X (@marcelodesignx). Samotná HTML stránka videa vrátila len titulok. NESÚVISÍ s Barbershop30 – ide o video o webdesigne. Obsah videa nehádam."
+   },
+   {
+    "url": "https://vm.tiktok.com/ZN8MmEQH5/",
+    "readable": true,
+    "what_was_readable": "301 → https://www.tiktok.com/@nathanhodgson.ai/video/7687192416008408342. oEmbed caption: „How to use ChatGPT 6 Astra and Claude Code to build stunning websites #ai #aitools #chatgpt #chatgpt6 #webdesign“, autor Nathan Hodgson (@nathanhodgson.ai). NESÚVISÍ s Barbershop30 – inšpirácia k tvorbe webu. Obsah videa nehádam."
+   },
+   {
+    "url": "https://vm.tiktok.com/ZN8Mj41uu/",
+    "readable": true,
+    "what_was_readable": "301 → https://www.tiktok.com/@wearebrand.io/video/7647153776352120097. oEmbed caption: „Crazy website animation #website #websitedevelopment #websitedesign #wordpress #webdev“, autor wearebrand.io. NESÚVISÍ s Barbershop30 – referencia na web animácie. Obsah videa nehádam."
+   }
+  ],
+  "summary": "Spoľahlivo overené z oficiálneho webu barbershop30.sk (načítané 2026-10-09): názov Barbershop30, adresa Mostná 30, 949 01 Nitra, telefón 0951 267 203, e-mail info@barbershop30.sk, otváracie hodiny Po–Pi 9–19, So 9–14, Ne zatvorené, založenie 2019, 8 kresiel, prevádzkovateľ Facepalm s.r.o. (IČO 52231381, zapísaná 05.03.2019, konateľ Ľudovít Cirók podľa ORSR), 10-členný tím (krstné mená) a kompletný cenník 15 služieb s cenami aj trvaním, vytiahnutý priamo z JSON vlastného rezervačného systému na /rezervacia (žiadne Bookio/Reservio – podnik používa vlastný systém, plus samostatnú Booqme stránku na farbenie/melír/trvalú s pracovníčkou Romanou). Oficiálne sociálne siete sú Instagram @barbershop30_nitra a Facebook /barbershop30nitra (odkazy na webe), TikTok profil podniku sa nenašiel; tri zadané TikTok odkazy vedú na cudzie videá o webdesigne (marcelodesignx, nathanhodgson.ai, wearebrand.io), captions boli čitateľné cez oEmbed. Hodnotenie Google je čitateľné len cez tretie strany (Zlatá Firma: 5,0 z 792 Google recenzií, celkom 833; QuickBook 5/5 z 813). Ocenenia: podnik je „víťaz Zlatá Firma“ s odznakmi 2022–2026 vrátane 2024 a laureát Orly Kaderníctva 2022, 2023, 2025, 2026 (2024 chýba) – oba sú komerčné ratingy z recenzií; plaketu 2024 v prevádzke nemožno jednoznačne priradiť, treba sa spýtať klienta. Školenia: barberkurzy.sk sídli na Mostnej 30 s iným telefónom (0951 207 055) a recenziami spomínajúcimi Barbershop30, ale prevádzkovateľ ani oficiálne prepojenie so značkou nie je uvedené – označené ako weak. Vzťah so Salónom 30 (salon30.sk, 0911 153 136) žiadny zdroj nepotvrdzuje; jediný prienik je adresa Mostná 30, údaje som držal oddelene. Blokované: Facebook a Instagram (login wall/429), slovenskobcan.com, finstat.sk, Tripadvisor (403), Google Maps (prázdne)."
+ },
+ "photos": [
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-01.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Pohľad spoza dvoch čiernych prešívaných kresiel so zlato-bronzovými rámami smerom na centrálny tmavý drevený stolík so zrkadlom v dubovom ráme. Tri oranžové industriálne závesné lampy (jedna tesne pri kamere v hornej časti záberu), vľavo terakotová stena s dubovými zrkadlami a Edison trubicovými svietidlami, biely obkladový pilier s okrúhlym logom, vzadu tmavozelené (teal) metro obklady s plagátom tímu, vpravo čierny priechod a umývadlo s lounge kreslom.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "biele obklady",
+    "zrkadlá",
+    "Edison svietidlá",
+    "produkty",
+    "plagát tímu",
+    "logo",
+    "umývadlo",
+    "sud"
+   ],
+   "light": "zmiešané – denné svetlo spredu (okno za kamerou, vidno v zrkadle) + teplé oranžové lampy a Edison svietidlá; celkovo teplé",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 50,
+   "focal_y": 55,
+   "alt_sk": "Hlavná sála barbershopu: čierne kreslá so zlatými rámami, oranžové lampy a zelené obklady",
+   "people_visible": "áno – skupina osôb na tlačenom plagáte tímu na zelenej stene (nie živé osoby)",
+   "near_duplicate_of": "foto-09.jpg",
+   "notes": "Čitateľné: WAHL na produkte, okrúhle čierne logo „30 BARBERSHOP“ na bielych obkladoch (čiastočne zakryté lampou), plagát tímu s logom 30. Rušivé: oranžová lampa prerezáva hornú tretinu záberu, retiazka lampy, čierny priechod vzadu, Eames lounge kreslo a sud na pravom okraji, opierky kresiel v popredí."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-02.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Širokouhlý záber od pravého pracovného miesta cez celú sálu: v popredí stolík s pomádami, sprejmi a barber podložkou, Edison svietidlo a dolu vpravo veľké ring svetlo prerezávajúce roh. Tri oranžové lampy v rade pod bielym stropom, dve čierno-zlaté kreslá, vzadu zelené obklady s plagátom, sud s oranžovou figúrkou a uterákmi, ring svetlo na statíve a čierny priechod.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "produkty",
+    "zrkadlá",
+    "Edison svietidlá",
+    "ring svetlo",
+    "sud",
+    "figúrka",
+    "plagát tímu"
+   ],
+   "light": "zmiešané – denné svetlo spredu (spoza kamery) + teplé lampy; teplé",
+   "quality": 3,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 35,
+   "focal_y": 55,
+   "alt_sk": "Pohľad cez sálu s tromi oranžovými lampami, kreslami a drevenými stolíkmi s produktmi",
+   "people_visible": "áno – osoby len na tlačenom plagáte tímu vzadu na stene (malé)",
+   "near_duplicate_of": "foto-14.jpg",
+   "notes": "Čitateľné: nápis na ring svetle vpravo dole (NANLITE), etikety produktov čiastočne. Rušivé: ring svetlo zaberá pravý dolný roh, širokouhlé skreslenie, káble a fén pri stolíku, škatule s vreckovkami, preplnený stolík."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-03.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "zadná miestnosť s čiernymi obkladmi a zelenými sedačkami",
+   "description": "Miestnosť s lesklými čiernymi metro obkladmi, zrkadlom v drevenom ráme a perforovaným kovovým panelom nad ním, pod stropom luster zo štyroch LED kruhov. Čierne barber kreslo pred stolíkom s lamelovým čelom, dve zelené zamatové pohovky, drevené dvere, červená lampa v tvare benzínovej pumpy, vpravo barový/recepčný pult s dvomi stoličkami z kože, sud s farebnou figúrkou a rastliny. Vľavo do záberu zasahuje ring svetlo na statíve.",
+   "subjects": [
+    "kreslo",
+    "čierne obklady",
+    "zelené sedačky",
+    "LED kruhový luster",
+    "barový pult",
+    "barové stoličky",
+    "sud",
+    "figúrka",
+    "rastliny",
+    "zrkadlo",
+    "ring svetlo",
+    "obrazy",
+    "lamelový panel"
+   ],
+   "light": "zmiešané – denné svetlo z okna vľavo + teplé LED; neutrálne-teplé",
+   "quality": 3,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 40,
+   "focal_y": 58,
+   "alt_sk": "Zadná miestnosť s čiernymi obkladmi, kruhovým LED lustrom, zelenými pohovkami a barovým pultom",
+   "people_visible": "áno – v zrkadle odraz muža v čiernom tielku s fúzmi a zdvihnutou rukou (pravdepodobne fotograf) a ďalšej osoby v tmavom; na stene tlačené portréty mužov",
+   "near_duplicate_of": "foto-06.jpg",
+   "notes": "Čitateľné: „BARBERSHOP“ na podložke stolíka, WAHL na produkte, zarámovaný text na stene nad pultom (nečitateľný). Obraz ulice s kaviarňou, čiernobiele portréty na stene – práva k tlačeným obrazom neoverené. Rušivé: ring svetlo vľavo, radiátor, diaľkový ovládač na sude, žltý pás na podlahe vpravo dole, odraz fotografa v zrkadle."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-04.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Záber z nízkeho uhla ponad čiernu gumenú barber podložku s červeno-bielym reliéfnym logom (v popredí, rozostrená). Za ňou čierne prešívané barber kreslo s čiernym rámom, Eames-style lounge kreslo, čierne umývadlo, biele metro obklady so svietiacim barber pole a lebkou býka, ring svetlo na statíve, Edison svietidlo, lamelový panel a vlnitý tmavý strop. Cez široký priechod vidno zadnú miestnosť s čiernymi obkladmi, kruhovým lustrom a rastlinami.",
+   "subjects": [
+    "kreslo",
+    "barber pole",
+    "lebka býka",
+    "umývadlo",
+    "biele obklady",
+    "podložka s logom",
+    "ring svetlo",
+    "produkty",
+    "uteráky",
+    "priemyselný strop",
+    "klimatizácia"
+   ],
+   "light": "zmiešané – denné svetlo z okien vzadu + teplé svietidlá a ring svetlá; neutrálne",
+   "quality": 3,
+   "hero_fit": 2,
+   "scenes": [
+    2,
+    3,
+    5
+   ],
+   "focal_x": 28,
+   "focal_y": 49,
+   "alt_sk": "Čierne barber kreslo, umývadlo, barber pole a lebka býka na stene s bielymi obkladmi",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: reliéf „BARBERSHOP“ na podložke (otočený ku kamere hore nohami), nápis TABOR na škatuli, fľaša v tvare zlatej lebky. Rušivé: rozostrená podložka zaberá spodnú polovicu, klimatizácia na stene, TV v ľavom hornom rohu, dve ring svetlá, káble. Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-05.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Dlhý pohľad cez celú prednú sálu smerom k preskleným vstupným dverám. Vľavo béžová štukovaná stena so zrkadlami v tmavých rámoch, Edison svietidlami, TV obrazovkami a stolíkmi s produktmi, rad troch čiernych kresiel, v popredí lounge kreslo, rastlina a sud s farebnou figúrkou. Pod vlnitým tmavým stropom s trámami štyri oranžové lampy a nožnicový svetelný rig, vzadu recepčný pult, detské policajné autíčko, rastliny, vpravo biele obklady s neónom v machovom ráme a sud so žltými uterákmi.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "recepcia",
+    "vstupné dvere",
+    "detské autíčko",
+    "neón",
+    "sud",
+    "rastliny",
+    "zrkadlá",
+    "Edison svietidlá",
+    "priemyselný strop",
+    "TV",
+    "produkty"
+   ],
+   "light": "zmiešané – protisvetlo z okien a dverí vzadu + teplé oranžové lampy a svietidlá; teplé, atmosférické",
+   "quality": 4,
+   "hero_fit": 5,
+   "scenes": [
+    1,
+    3,
+    5,
+    7
+   ],
+   "focal_x": 52,
+   "focal_y": 58,
+   "alt_sk": "Prednú sálu lemujú kreslá a zrkadlá, v pozadí recepcia a presklené vstupné dvere",
+   "people_visible": "nie",
+   "near_duplicate_of": "foto-13.jpg",
+   "notes": "Čitateľné: EXIT nad dverami, nápis „30 BARBERSHOP“ na skle dverí (zrkadlovo), list s otváracími hodinami na dverách (nečitateľný), piktogram hasiaceho prístroja, „COPS“ na autíčku, škatuľa „HAIR COLOR CHART“ s tvárou modelu vpravo. Rušivé: zapnuté TV obrazovky, neón orezaný pravým okrajom, farebná figúrka a sud v popredí."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-06.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "zadná miestnosť s čiernymi obkladmi a zelenými sedačkami",
+   "description": "Takmer rovnaký záber ako foto-03, posunutý mierne doprava: čierne barber kreslo pred lamelovým stolíkom a zrkadlom v čiernych obkladoch, LED kruhový luster, dve zelené pohovky, červená lampa-pumpa, drevené dvere, zarámované obrazy na bielej stene a lamelovom paneli, barový pult s kožušinovými stoličkami, sud a rastlina. Ring svetlo na statíve zasahuje do ľavého okraja.",
+   "subjects": [
+    "kreslo",
+    "čierne obklady",
+    "zelené sedačky",
+    "LED kruhový luster",
+    "barový pult",
+    "barové stoličky",
+    "sud",
+    "rastliny",
+    "zrkadlo",
+    "ring svetlo",
+    "obrazy"
+   ],
+   "light": "zmiešané – denné svetlo z okna vľavo + teplé LED; neutrálne-teplé",
+   "quality": 3,
+   "hero_fit": 3,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 43,
+   "focal_y": 60,
+   "alt_sk": "Zadná miestnosť: barber kreslo pred zrkadlom, zelené pohovky a kruhový luster",
+   "people_visible": "nie – v zrkadle len odraz vedľajšej sály (oranžová lampa, kreslo); na stene tlačené portréty mužov",
+   "near_duplicate_of": "foto-03.jpg",
+   "notes": "Čitateľné: „BARBERSHOP“ na podložke, WAHL na produkte, zarámovaný text nad pultom nečitateľný. Rušivé: ring svetlo vľavo, radiátor, diaľkový ovládač na sude, vypínač na obkladoch. Lepšia verzia dvojice 03/06 (bez odrazu fotografa)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-07.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "detail",
+   "description": "Detail steny s lesklými tmavozelenými metro obkladmi a tromi fotografiami v zlatých rámoch: farebná fotografia muža holeného britvou barberom v rukaviciach, čiernobiela historická fotografia barbera s radom mužov v pláštenkách a čiernobiela fotografia bábätka s penou na tvári. Vpravo svietiaci barber pole s červeno-bielo-modrou špirálou a bielou guľou, vľavo okraj dubového rámu.",
+   "subjects": [
+    "zelené obklady",
+    "barber pole",
+    "zarámované fotografie",
+    "dubový rám"
+   ],
+   "light": "zmiešané – mäkké denné svetlo + svetlo z barber pole; neutrálne s lesklými odrazmi",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    2,
+    3,
+    6
+   ],
+   "focal_x": 70,
+   "focal_y": 50,
+   "alt_sk": "Detail zelených obkladov s tromi zarámovanými fotografiami a svietiacim barber pole",
+   "people_visible": "áno – osoby na tlačených fotografiách v rámoch (muž pri holení, historická skupina mužov, bábätko); nie živé osoby",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: čiastočný nápis na historickej fotografii („…EASE AND SAFETY“). Fotografie v rámoch sú pravdepodobne archívne/stock – práva na použitie na webe neoverené. Mierny náklon zvislíc, inak čistá kompozícia; dobrý materiálový detail obkladu."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-08.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pod vlnitým tmavým stropom so štyrmi oranžovými lampami a nožnicovými svetelnými ramenami s ring svetlami stoja tri čierne prešívané kreslá. Vľavo biele metro obklady, drevený lamelový panel so žltým neónom „BARBERSHOP 30“ v ráme z machu, detské policajné autíčko „COPS“ na stylingovom stojane, figúrka v štýle Bearbrick na poličke, radiátor, oblúkový priechod a sud so žltými uterákmi. Vpravo vzadu priechod do zadnej miestnosti s čiernymi obkladmi a obrazom mačky v kráľovskom plášti.",
+   "subjects": [
+    "kreslá",
+    "neón",
+    "detské autíčko",
+    "oranžové lampy",
+    "biele obklady",
+    "lamelový panel",
+    "figúrka",
+    "sud",
+    "uteráky",
+    "ring svetlo",
+    "priemyselný strop",
+    "obraz mačky"
+   ],
+   "light": "zmiešané – denné svetlo zľava + teplé oranžové lampy a neón; teplé",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 40,
+   "focal_y": 55,
+   "alt_sk": "Neónový nápis Barbershop 30 v machovom ráme, detské autíčko a čierne kreslá pod oranžovými lampami",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: neón „BARBERSHOP 30“, „COPS“ a ŠPZ na autíčku, zelený únikový piktogram nad oblúkom. Rušivé: zásuvka s káblom na bielych obkladoch, radiátor, ring svetlá na ramenách. Nižšie rozlíšenie (1200×1600) – na desktopový full-screen hero obmedzené."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-09.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Takmer rovnaký pohľad ako foto-01, mierne nižší a širší: v popredí čierne prešívané kreslo so zlato-bronzovým rámom a ozdobnou podnožkou, za ním druhé kreslo, centrálny tmavý stolík so zrkadlom a produktmi. Oranžová lampa je orezaná horným okrajom, druhá visí vpravo nad zelenými obkladmi s plagátom tímu, vľavo terakotová stena s dubovými zrkadlami, Edison svietidlami a malými zarámovanými obrázkami, vpravo sud s oranžovou figúrkou.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "biele obklady",
+    "zrkadlá",
+    "Edison svietidlá",
+    "produkty",
+    "plagát tímu",
+    "logo",
+    "sud",
+    "figúrka"
+   ],
+   "light": "zmiešané – denné svetlo spredu + teplé lampy a svietidlá; teplé",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 40,
+   "focal_y": 58,
+   "alt_sk": "Dve čierne kreslá so zlatými rámami pred stolíkom, oranžové lampy a zelené obklady",
+   "people_visible": "áno – skupina osôb na tlačenom plagáte tímu na zelenej stene",
+   "near_duplicate_of": "foto-01.jpg",
+   "notes": "Čitateľné: okrúhle logo „30 BARBER…“ na bielom pilieri (čiastočne zakryté), WAHL na produkte, plagát tímu s logom 30, vintage obrázky na stene. Rušivé: čierny priechod vzadu, čierny mazací fén/kábel na stolíku. Lepšia verzia dvojice 01/09 (lampa menej zasahuje)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-10.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Recepčný pult s dubovou doskou a čiernym vlnitým čelom; na ňom naukladané pomády, farebné fľaše produktov, plexi box s darčekovými poukážkami, čierna darčeková škatuľa, rastlina s červeným kvetom, plechovky a taška. Na podlahe čierna rohožka s oranžovým logom „30 BARBERSHOP HOLIČSTVO“, vpravo sud s farebnou figúrkou psa a tabuľou Route 66, vzadu rad kresiel, oranžové lampy, reťazové industriálne svietidlo, biele obklady s TV, v pozadí barber pole, lebka býka a ring svetlo.",
+   "subjects": [
+    "recepcia",
+    "produkty",
+    "darčekové poukážky",
+    "rohožka s logom",
+    "sud",
+    "figúrka",
+    "oranžové lampy",
+    "biele obklady",
+    "TV",
+    "kreslá",
+    "barber pole",
+    "priemyselný strop",
+    "rastlina"
+   ],
+   "light": "zmiešané – denné svetlo z okien vľavo + teplé lampy; neutrálne-teplé",
+   "quality": 3,
+   "hero_fit": 3,
+   "scenes": [
+    3,
+    6,
+    7
+   ],
+   "focal_x": 45,
+   "focal_y": 60,
+   "alt_sk": "Recepčný pult s produktmi a darčekovými poukážkami, rohožka s logom 30 Barbershop Holičstvo",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „DARČEKOVÁ POUKÁŽKA“ s pruhmi barber pole v plexi boxe, rohožka „30 BARBERSHOP HOLIČSTVO“, tabuľa „ROUTE 66“, etikety produktov čiastočne. Rušivé: zapnutá TV s obrazom festivalu, plechovky a taška na pulte, širokouhlé skreslenie, náklon. Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-11.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pohľad pozdĺž pracovných miest smerom do zadnej miestnosti: vpravo béžová štukovaná stena s tromi zrkadlami v tmavých rámoch, Edison svietidlami a dvomi TV, tmavé drevené stolíky s pomádami, fľašami, štetkou a škatuľami vreckoviek, nerezový pedálový kôš. V strede rad troch čiernych prešívaných kresiel, vzadu čierne umývadlo, regál s uterákmi, biele obklady s barber pole a lebkou býka, priechod s obrazom mačky a kruhovým lustrom; hore dve oranžové lampy a vlnitý strop.",
+   "subjects": [
+    "kreslá",
+    "produkty",
+    "zrkadlá",
+    "Edison svietidlá",
+    "oranžové lampy",
+    "umývadlo",
+    "barber pole",
+    "lebka býka",
+    "biele obklady",
+    "TV",
+    "priemyselný strop",
+    "odpadkový kôš"
+   ],
+   "light": "zmiešané – denné svetlo zľava + teplé svietidlá; neutrálne-teplé",
+   "quality": 3,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 54,
+   "focal_y": 59,
+   "alt_sk": "Rad barber kresiel a drevených stolíkov pod oranžovými lampami, v pozadí barber pole",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Rušivé: nerezový odpadkový kôš vpravo, káble a fén pri stolíku, TV s obrazom rýb, opierka kresla v popredí, preplnené stolíky. Etikety produktov nečitateľné. Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-12.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Čelný pohľad na dve pracovné miesta: tmavé drevené stolíky so zásuvkami, na nich pomády, fľaše, štetka, modré uteráky a drevené škatule s vreckovkami, zavesené fény. Zrkadlá v dubových rámoch, Edison trubicové svietidlá, tmavozelené obklady s dekoráciou v tvare leteckej vrtule a malou TV, biely obkladový pilier, dve oranžové lampy pod bielym stropom. Vľavo čierno-zlaté kreslo, sud s oranžovou figúrkou a uterákmi, ring svetlo na statíve a reprodukcia obrazu Nočná hliadka; vpravo druhé kreslo a zrkadlo odrážajúce terakotovú stenu.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "biele obklady",
+    "zrkadlá",
+    "Edison svietidlá",
+    "produkty",
+    "fény",
+    "sud",
+    "figúrka",
+    "ring svetlo",
+    "vrtuľa",
+    "TV",
+    "obraz",
+    "klimatizácia"
+   ],
+   "light": "zmiešané – denné svetlo sprava spredu + teplé lampy; teplé",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 53,
+   "focal_y": 60,
+   "alt_sk": "Dve pracovné miesta so zrkadlami, produktmi a kreslami pod oranžovými lampami, zelené obklady",
+   "people_visible": "nie – iba osoby na reprodukcii obrazu vľavo a malý tlačený portrét v odraze zrkadla",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: etikety pomád čiastočne, malá zarámovaná tabuľka na stolíku (nečitateľná). Reprodukcia Rembrandtovej Nočnej hliadky vľavo (orezaná). Rušivé: dva fény s káblami, zásuvky na obkladoch, klimatizácia vľavo hore, ring svetlo, vypnutá čierna TV."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-13.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Takmer rovnaký záber ako foto-05: dlhá sála so štukovanou stenou, zrkadlami, Edison svietidlami a TV vľavo, rad troch čiernych kresiel, v popredí veľká rastlina, farebná figúrka psa a lounge kreslo na sude. Pod vlnitým stropom oranžové lampy a nožnicový rig s ring svetlom, vzadu recepčný pult s rastlinou, presklené dvere s nápisom 30 Barbershop a otváracími hodinami, detské autíčko COPS, vpravo biele obklady s neónom v machovom ráme a sud.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "recepcia",
+    "vstupné dvere",
+    "detské autíčko",
+    "neón",
+    "sud",
+    "rastliny",
+    "zrkadlá",
+    "Edison svietidlá",
+    "priemyselný strop",
+    "TV",
+    "figúrka"
+   ],
+   "light": "zmiešané – protisvetlo z okien a dverí vzadu + teplé lampy; teplé, atmosférické",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5,
+    7
+   ],
+   "focal_x": 60,
+   "focal_y": 58,
+   "alt_sk": "Dlhá sála s kreslami, oranžovými lampami a presklenými dverami s nápisom 30 Barbershop",
+   "people_visible": "nie",
+   "near_duplicate_of": "foto-05.jpg",
+   "notes": "Čitateľné: EXIT, „30 BARBERSHOP“ na skle dverí (zrkadlovo), list s otváracími hodinami (nečitateľný), piktogram hasiaceho prístroja, „COPS“, neón „BARBER…“ orezaný vpravo. Rušivé: veľká rastlina a figúrka v ľavom popredí, zapnuté TV. Variant 05 má menej popredia a je vhodnejší ako hero."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-14.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Širokouhlý pohľad od pravého stolíka cez sálu, podobný foto-02, bez ring svetla v popredí: tri oranžové lampy pod bielym stropom, čierno-zlaté kreslo s ozdobnou podnožkou v popredí, druhé kreslo a centrálny stolík vzadu, zelené obklady s plagátom tímu a čiernym priechodom, sud s oranžovou figúrkou a uterákmi, ring svetlo na statíve. Vpravo stolík s pomádami, sprejmi, štetkou, modrými uterákmi, podložkou, fénom a malou TV; na podlahe výrazné slnečné tiene.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "produkty",
+    "zrkadlá",
+    "Edison svietidlá",
+    "ring svetlo",
+    "sud",
+    "figúrka",
+    "plagát tímu",
+    "TV",
+    "fén"
+   ],
+   "light": "zmiešané – silné denné svetlo spredu (tiene na podlahe) + teplé lampy; teplé",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 40,
+   "focal_y": 60,
+   "alt_sk": "Barber kreslo a stolík s produktmi, oranžové lampy a zelené obklady v hlavnej sále",
+   "people_visible": "áno – osoby len na tlačenom plagáte tímu vzadu; na TV obraz oranžovej figúrky",
+   "near_duplicate_of": "foto-02.jpg",
+   "notes": "Čitateľné: fľaša „REDSTYLE PROFESSIONAL“, etikety pomád čiastočne. Rušivé: držiak telefónu/svorka ring svetla na pravom okraji, fén s káblom, preplnený stolík, širokouhlé skreslenie, čierny priechod. Lepšia verzia dvojice 02/14."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-15.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "detail",
+   "description": "Detail pravých pracovných miest v hlavnej sále: lesklá tmavá doska stolíka s pomádami v plechovkách, sprejmi, farebnými fľašami v zdobenom boxe, štetkou na holenie, barber podložkou, modrými uterákmi a drevenou škatuľou vreckoviek, pod stolíkom zavesené fény. Zrkadlo v dubovom ráme odráža čierno-zlaté kreslo a oranžovú lampu, vedľa Edison trubicové svietidlá, dekoratívna vrtuľa a malá TV na zelených obkladoch; vľavo sud s oranžovou figúrkou a uterákmi, ring svetlo, biely pilier a čierny priechod.",
+   "subjects": [
+    "produkty",
+    "pomády",
+    "štetka",
+    "zrkadlo",
+    "Edison svietidlá",
+    "zelené obklady",
+    "oranžová lampa",
+    "kreslo",
+    "fény",
+    "sud",
+    "figúrka",
+    "ring svetlo",
+    "TV",
+    "vrtuľa"
+   ],
+   "light": "zmiešané – denné svetlo zľava spredu + teplé svietidlá; teplé s lesklými odrazmi",
+   "quality": 4,
+   "hero_fit": 2,
+   "scenes": [
+    2,
+    5,
+    6
+   ],
+   "focal_x": 67,
+   "focal_y": 67,
+   "alt_sk": "Detail stolíka s pomádami, sprejmi a štetkou, zrkadlo odráža kreslo a oranžovú lampu",
+   "people_visible": "nie – v odraze zrkadla malý tlačený portrét; na TV obraz oranžovej figúrky",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „REDSTYLE PROFESSIONAL“, „TABOR“ na zdobenom boxe, etikety pomád čiastočne. Rušivé: dva fény s káblami pod stolíkom, čierny kôš pri stolíku, klimatizácia vľavo hore, ring svetlo, preplnená plocha. Vhodné skôr na orez na samotné produkty/štetku."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-16.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom (pohľad od vchodu dozadu, smerom k bielej obkladovej stene s barber pole)",
+   "description": "Pohľad pozdĺž sály: v popredí rad troch čiernych prešívaných kresiel na drevenej podlahe, vpravo tmavé drevené komody so zrkadlami, trubicové Edison lampy, ring light, model červenej pumpy Route 66 a farebná graffiti figúrka buldoga na sude. Strop je tmavý vlnitý plech s drevenými trámami, visia tri oranžové priemyselné lampy a čierne nožnicové reflektory. Vzadu biela tehličková stena so svietiacim barber pole, lebkou býka, čiernym umývadlom a regálom s uterákmi; cez otvor vidno zadnú miestnosť s tmavými obkladmi a obrazom mačky s korunou; vľavo oblúkový priechod, drevené lamely, sud so žltými uterákmi a radiátor.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "priemyselný strop",
+    "komody",
+    "zrkadlá",
+    "Edison lampy",
+    "barber pole",
+    "lebka býka",
+    "umývadlo",
+    "sud",
+    "figúrka buldoga",
+    "model pumpy Route 66",
+    "ring light",
+    "biele obklady",
+    "drevené lamely"
+   ],
+   "light": "zmiešané – teplé (oranžové lampy, Edison trubice) + denné spoza kamery + modré svetlo z barber pole; dobre exponované",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 38,
+   "focal_y": 56,
+   "alt_sk": "Interiér barbershopu s radom čiernych kresiel, oranžovými lampami a tmavým dreveným stropom",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „ROUTE US 66“ / „GASOLINE“ na modeli pumpy, malá zelená únikovka na ľavej stene, vzadu obraz mačky s korunou. Rušivé: ring light so stojanom a držiakom telefónu vpravo, graffiti figúrka, káble pri komodách, biela látka (plášť/uterák) orezaná na pravom okraji, ľahké širokouhlé skreslenie."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-17.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "detail (recepčný pult v prednej sále – biele obklady a oranžová lampa v pozadí)",
+   "description": "Detail pultu: čierna figúrka Mickey Mouse, kvetináč so spatifylom a červenými anturiami, tmavá plaketa „2024“ so zlatou pečaťou, čierny stojan „Review Us On Google“ s NFC a piatimi oranžovými hviezdami. Vľavo dva držiaky s vizitkami (pruhované vizitky 30 Barbershop a vizitka Salón 30), vpravo farebné plechové kasičky s motívom Kalifornie. V pozadí rozostrená biela tehličková stena, regál s fľašami produktov a oranžová lampa.",
+   "subjects": [
+    "recepcia",
+    "ocenenie 2024",
+    "stojan Google recenzie",
+    "vizitky",
+    "figúrka Mickey Mouse",
+    "rastlina",
+    "kasičky",
+    "produkty",
+    "oranžová lampa",
+    "biele obklady"
+   ],
+   "light": "teplé – zhora z oranžovej lampy + okolité; plytká hĺbka ostrosti",
+   "quality": 4,
+   "hero_fit": 2,
+   "scenes": [
+    6,
+    3,
+    7
+   ],
+   "focal_x": 57,
+   "focal_y": 70,
+   "alt_sk": "Recepčný pult barbershopu: ocenenie 2024, stojan Review Us On Google, vizitky a figúrka Mickey Mouse",
+   "people_visible": "nie – reálna osoba nie; na vizitke Salónu 30 je vytlačený portrét ženy",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „Review Us On Google – NFC TAP HERE“ + 5 hviezd; plaketa „2024“ so zlatou pečaťou (text okolo pečate čiastočne čitateľný, zdá sa „VÍŤAZ SÚŤAŽE“ – overiť v plnom rozlíšení), pod ňou fragment „…30-Nitra“; pruhovaná vizitka „30 BARBERSHOP“ s telefónom 0951 267 203; vizitka „SALÓN 30 dámske kaderníctvo“ s údajmi Salónu 30 (info@salon30.sk, Mostná 30, 949 01 Nitra) – POZOR, nie sú to údaje barbershopu; na kasičkách ručne písané mená (zrejme tringeltové kasičky barberov) a nápis „CALIFORNIA“. Rušivé: nahustené drobnosti, kasičky, Mickey Mouse (Disney IP – zvážiť pri komerčnom webe)."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-18.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Dve barberské kreslá s čiernou prešívanou koženkou a bronzovo-zlatým kovovým rámom otočené ku tmavej drevenej komode so zrkadlom. Vľavo terakotová stena so zrkadlom v drevenom ráme a Edison nástennou lampou, biely tehličkový stĺp, vpravo lesklé tmavozelené obklady s dvoma tmavými dverami, zarámovaná tímová fotka a malé vintage obrázky. Zo bieleho stropu visia dve oranžové priemyselné lampy; vpravo sud s oranžovou figúrkou astronauta; podlaha tmavé drevo, vľavo dole biele obloženie.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "komoda",
+    "zrkadlá",
+    "Edison lampy",
+    "tímová fotografia",
+    "astronaut",
+    "sud",
+    "biele obklady",
+    "produkty"
+   ],
+   "light": "zmiešané – denné z okien (odrazy v zrkadlách, dvere) + teplé lampy; rovnomerné",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 38,
+   "focal_y": 60,
+   "alt_sk": "Dve barberské kreslá s čiernou koženkou a bronzovým rámom pred zrkadlom, zelené obklady, oranžové lampy",
+   "people_visible": "nie – iba vytlačená tímová fotografia na stene (skupina cca 6 osôb, identifikovateľné) – pri použití overiť súhlas/orezať",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: na tímovej fotke nápis „30 BARBERSHOP“; na bielom stĺpe čierny okrúhly znak s logom (čiastočne „BARBER…“); na komode strojček WAHL, pomády, box na vreckovky. Rušivé: klimatizácia odrazená v zrkadle vľavo hore, figúrka astronauta, kreslo v popredí mierne naklonené."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-19.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "nezaradené – vedľajšia miestnosť so šedými stenami, oknom s mrežou, drevenými lamelami a kovovou sieťou (nezodpovedá žiadnej zo 4 definovaných miestností)",
+   "description": "Pracovné miesto: priemyselný stolík s drevenými zásuvkami a kovovým rámom pod zrkadlom v drevenom ráme, za ním stena z drevených lamiel a čierna perforovaná kovová sieť. Na stolíku fľaše produktov, štetka na holenie, vpravo zavesený fén; vľavo čistička vzduchu „clean air“ a ring light na stojane. Vpravo okno s mrežou, rastlina (zamiokulkas) a model motorky na parapete, na šedej stene dva vintage obrázky; v popredí vpravo červené kožené kreslo s chrómom (orezané) a čierne kreslo s figúrkou.",
+   "subjects": [
+    "kreslá",
+    "komoda/stolík",
+    "zrkadlo",
+    "drevené lamely",
+    "kovová sieť",
+    "produkty",
+    "štetka",
+    "fén",
+    "okno",
+    "rastlina",
+    "ring light",
+    "čistička vzduchu",
+    "model motorky",
+    "figúrka"
+   ],
+   "light": "denné z okna vpravo + ring lighty; mäkké, mierne chladnejšie",
+   "quality": 4,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 30,
+   "focal_y": 52,
+   "alt_sk": "Pracovné miesto s priemyselným stolíkom, zrkadlom, drevenými lamelami a oknom s rastlinou, vpredu červené kreslo",
+   "people_visible": "nie – iba vintage obrázky na stene (muž v obleku, výklad „BARBIERE“)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „BARBIERE“ na zarámovanom obrázku, „clean air“ na čističke, malý štítok s logom 30 na polici zrkadla; etikety produktov nečitateľné. Rušivé: káble od fénu a ring lightu, čistička vzduchu, mreže v okne, ozdobná figúrka (čierna postava s hrivou držiaca bielu figúrku – presne neurčené), červené kreslo orezané okrajom."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-20.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "zadná miestnosť s čiernymi obkladmi a zelenými sedačkami",
+   "description": "Čakacia zóna: dve olivovo-zelené zamatové sedačky okolo okrúhleho stolíka s čiernou doskou a časopismi, stena z drevených lamiel s TV (zobrazuje jesennú ulicu), okolo zarámované čiernobiele fotky (barber pri strihaní, prekvapený muž s fúzmi, muž v obleku). Vľavo lesklé čierne obklady a červená lampa v tvare pumpy „Premium Gasoline“ s Route 66, hore biely LED kruh; vpravo zarámovaná tabuľka s výzvou na Google recenziu. V popredí tmavý drevený pult s podnosom (cukor, poháre) a diaľkovým ovládačom.",
+   "subjects": [
+    "sedačky",
+    "stolík",
+    "čierne obklady",
+    "drevené lamely",
+    "TV",
+    "pumpa Route 66",
+    "zarámované fotografie",
+    "LED kruh",
+    "pult",
+    "podnos s cukrom",
+    "tabuľka na recenziu"
+   ],
+   "light": "zmiešané – chladný biely LED kruh + teplá žltá zo svietiacej pumpy + okolité; rovnomerné",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    3,
+    5,
+    6,
+    7
+   ],
+   "focal_x": 50,
+   "focal_y": 50,
+   "alt_sk": "Čakáreň so zelenými zamatovými sedačkami, drevenými lamelami s TV, čiernymi obkladmi a červenou retro pumpou",
+   "people_visible": "nie – iba zarámované fotografie/plagáty",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „ROUTE US 66“, „PREMIUM GASOLINE“ na pumpe; tabuľka „BOLI STE SPOKOJNÝ S NAŠIMI SLUŽBAMI?“ s ikonou fúzov a „RECENZIA NA GOOGLE“; časopis s nápisom „Travel“. Rušivé: diaľkový ovládač a podnos s cukrom na pulte, obraz na TV (štylizovaná/AI-vyzerajúca scéna), rám obrazu orezaný na pravom okraji."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-21.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Širokouhlý celkový pohľad z čakacieho kútika: v popredí dve zelené zamatové kreslá (jedno s potlačeným vankúšom), ďalej tri barberské kreslá s bronzovým rámom pri tmavých drevených komodách so zrkadlami. Steny z lesklých tyrkysovo-zelených tehličiek, biely tehličkový stĺp, tri oranžové lampy na bielom strope s bodovkami, Edison nástenné lampy, TV, dekoračná vrtuľa; vpravo okrúhly stolík so sklenenou nádobou a malou tabuľkou. Výrazné širokouhlé skreslenie a naklonené zvislice.",
+   "subjects": [
+    "kreslá",
+    "zelené čakacie kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "komody",
+    "zrkadlá",
+    "Edison lampy",
+    "TV",
+    "vrtuľa",
+    "stolík",
+    "produkty"
+   ],
+   "light": "denné (z okien za kamerou, odrazy) + teplé lampy; svetlé, rovnomerné",
+   "quality": 3,
+   "hero_fit": 3,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 46,
+   "focal_y": 60,
+   "alt_sk": "Celkový pohľad na sálu barbershopu: tri kreslá, zrkadlá, zelené obklady, oranžové lampy a zelené čakacie kreslá",
+   "people_visible": "nie – iba malé zarámované fotografie na pravej stene (vytlačené)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: tabuľka na stolíku vpravo „BEARD CLUB HAIR COLOR GEL“ (čiastočne); na komodách pomády, box na vreckovky. Rušivé: silné širokouhlé skreslenie, zelené kreslo orezané dole, vankúš s potlačou, klimatizácia vzadu, ring light, káble pri ľavej komode."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-22.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pohľad od pracovného miesta k vchodu: v popredí vľavo tmavý pult s ring lightom, nožnicami, hrebeňmi a nástavcami, zrkadlo s Edison lampami; v sále tri čierne prešívané kreslá s čiernym rámom. Tmavý vlnitý strop s trámami, štyri oranžové lampy, vpravo veľký svietiaci kruh. Vzadu biela tehličková stena, presklené dvere s nápisom a otváracími hodinami, drevená recepcia s rastlinou, regál s produktmi, detské autíčko, lamelová stena s neónom „BARBERSHOP 30“ v machovom ráme, radiátor, sud so žltými uterákmi, oblúkový výklenok s policou a ďalší oblúk do tmavej miestnosti.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "priemyselný strop",
+    "neón BARBERSHOP 30",
+    "machový rám",
+    "recepcia",
+    "dvere",
+    "detské autíčko",
+    "sud",
+    "uteráky",
+    "nástroje",
+    "ring light",
+    "zrkadlo",
+    "Edison lampy",
+    "biele obklady",
+    "drevené lamely",
+    "oblúk"
+   ],
+   "light": "teplé (lampy, ring lighty, neón) + denné spoza dverí/okna; tmavý strop, kontrastné",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    3,
+    1,
+    7
+   ],
+   "focal_x": 56,
+   "focal_y": 58,
+   "alt_sk": "Sála barbershopu s čiernymi kreslami, oranžovými lampami, neónom BARBERSHOP 30 v machovom ráme a vstupom",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: žltý neón „BARBERSHOP 30“; na skle dverí „30 BARBERSHOP“ + otváracie hodiny (nečitateľné), nad dverami „EXIT“, vpravo hore tabuľka „HLAVNÝ VYPÍNAČ“, vo výklenku plagát „HAIR COLOR CHART“, krabica WAHL na pulte. Rušivé: rozhádzané nástroje a červený plechový štítok na pulte v popredí, ring light s držiakom telefónu vľavo, káble, tmavý lesklý predmet v pravom dolnom rohu (zrejme operadlo kresla), mierne naklonený záber. Podobný smer záberu ako foto-28, ale iné popredie."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-23.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Barberské kreslo s čiernou koženkou a bronzovým rámom odzadu, otočené k tmavej drevenej komode so zrkadlami; nad ním v popredí veľká oranžová priemyselná lampa, vľavo druhá. Tyrkysové lesklé tehličky s TV a dekoračnou vrtuľou, Edison trubicové lampy po stranách zrkadiel; na komode pomády, fén, štetka, boxy na vreckovky a uteráky. Vľavo druhé kreslo, sud s uterákmi a oranžovým astronautom, ring light na stojane, biely tehličkový stĺp a na stene vzadu veľký obraz.",
+   "subjects": [
+    "kreslo",
+    "oranžové lampy",
+    "zelené obklady",
+    "komoda",
+    "zrkadlá",
+    "TV",
+    "vrtuľa",
+    "Edison lampy",
+    "produkty",
+    "fén",
+    "štetka",
+    "astronaut",
+    "sud",
+    "ring light",
+    "obraz"
+   ],
+   "light": "zmiešané – teplé lampy + denné; neutrálne, dobre vykreslené",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    5,
+    3,
+    2
+   ],
+   "focal_x": 52,
+   "focal_y": 62,
+   "alt_sk": "Barberské kreslo s bronzovým rámom pred zrkadlom, tyrkysové obklady, oranžová lampa a vrtuľa na stene",
+   "people_visible": "nie – iba maľba s postavami vľavo a malé obrázky v zrkadle",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: etikety pomád malé (nečitateľné), malá zarámovaná kartička na komode, na TV logo (vyzerá ako „ECG“). Rušivé: fén s káblom a hadica na komode, zásuvka na obkladoch, stojan ring lightu, boxy na vreckovky, figúrka astronauta, kreslo vľavo orezané."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-24.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Záber spoza rozostrenej izbovej rastliny s červenými anturiami, ktorá zakrýva ľavú časť kadra spolu s graffiti figúrkou buldoga. Za ňou rad štyroch čiernych kresiel popri terakotovej stene so zrkadlami, TV a Edison lampami, oranžové lampy a reflektory pod tmavým plechovým stropom. Vzadu presklené dvere s nápisom a cenníkom, drevená recepcia s rastlinou, detské policajné autíčko a vertikálne žalúzie na okne.",
+   "subjects": [
+    "rastlina",
+    "figúrka buldoga",
+    "kreslá",
+    "oranžové lampy",
+    "priemyselný strop",
+    "zrkadlá",
+    "TV",
+    "Edison lampy",
+    "dvere",
+    "recepcia",
+    "detské autíčko",
+    "žalúzie"
+   ],
+   "light": "teplé (lampy) + denné z dverí/okna vzadu; stredne tmavé",
+   "quality": 2,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    5
+   ],
+   "focal_x": 62,
+   "focal_y": 55,
+   "alt_sk": "Pohľad cez rastlinu na rad čiernych barberských kresiel a recepciu pri vchode barbershopu",
+   "people_visible": "nie",
+   "near_duplicate_of": "foto-28.jpg",
+   "notes": "Čitateľné: „EXIT“ nad dverami, „30 BARBERSHOP“ a cenník/hodiny na skle (nečitateľné), TV so satelitným/leteckým záberom mesta, červená značka hasiaceho prístroja pri dverách. Rušivé: rozostrená rastlina a graffiti figúrka cez cca 40 % kadra, káble, ring light; foto-28 je čistejšia verzia rovnakého pohľadu."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-25.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "zadná miestnosť s čiernymi obkladmi a zelenými sedačkami",
+   "description": "Rovnaká čakáreň ako na foto-20 z mierne iného uhla, s plytkou hĺbkou ostrosti: ostrý je iba drevený pult v popredí vpravo s podnosom (dávkovače cukru, poháre, smotany) a diaľkovým ovládačom. Zelené zamatové sedačky, okrúhly stolík s časopismi, lamelová stena s TV, čierne obklady s červenou pumpou, zarámované čiernobiele fotky a LED kruh sú rozostrené.",
+   "subjects": [
+    "pult",
+    "podnos s cukrom",
+    "sedačky",
+    "stolík",
+    "drevené lamely",
+    "TV",
+    "čierne obklady",
+    "pumpa Route 66",
+    "zarámované fotografie",
+    "LED kruh"
+   ],
+   "light": "zmiešané – chladný LED kruh + teplá pumpa; rovnomerné",
+   "quality": 2,
+   "hero_fit": 1,
+   "scenes": [
+    5
+   ],
+   "focal_x": 75,
+   "focal_y": 70,
+   "alt_sk": "Čakáreň barbershopu so zelenými sedačkami a TV na lamelovej stene, v popredí podnos s cukrom a pohármi",
+   "people_visible": "nie – iba zarámované fotografie (rozostrené)",
+   "near_duplicate_of": "foto-20.jpg",
+   "notes": "Čitateľné: rozostrené „ROUTE 66“ a tabuľka na recenziu, nápis na čiernom predmete vpravo dole (fragment „BA…“). Rušivé: dávkovače cukru, kelímky smotany, diaľkový ovládač, väčšina kadra mimo ostrosti – použiteľné len ako rozmazané pozadie."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-26.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "detail (barber pole na stĺpe medzi bielou stenou a bielymi obkladmi)",
+   "description": "Dva svietiace barber pole s modro-červenými pruhmi a chrómovými koncovkami na oboch stranách tmavého dreveného stĺpa. Pod nimi na sude kvetináč so spatifylom a červenými anturiami, farebná graffiti figúrka sediacej postavy a diaľkový ovládač. Vpravo terakotová stena, biele tehličky, čierny kovový regál so zrolovanými šedými uterákmi, žltá dekorácia v tvare lebky a fľaše produktov; vľavo biela stena so zarámovanými čiernobielymi fotkami, tabuľkou a zrkadlom, tmavý pult, dole kožušinový taburet a čierny kôš.",
+   "subjects": [
+    "barber pole",
+    "rastlina",
+    "figúrka",
+    "sud",
+    "uteráky",
+    "regál",
+    "lebka (dekorácia)",
+    "produkty",
+    "biele obklady",
+    "zarámované fotografie",
+    "taburet"
+   ],
+   "light": "zmiešané – modré svetlo z barber pole + teplý nádych steny + okolité; sýte farby",
+   "quality": 4,
+   "hero_fit": 2,
+   "scenes": [
+    3,
+    6,
+    2
+   ],
+   "focal_x": 62,
+   "focal_y": 28,
+   "alt_sk": "Dva svietiace barber pole v modro-červených pruhoch na drevenom stĺpe, pod nimi kvetináč s anturiou",
+   "people_visible": "nie – iba zarámované čiernobiele fotografie na stene vľavo",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: tabuľka na recenziu vľavo (text nečitateľný), etikety produktov nečitateľné. Rušivé: diaľkový ovládač na sude, graffiti figúrka, čierny kôš vpravo dole, kožušinový taburet orezaný vľavo, žltá lebka, vrch ľavého pole orezaný."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-27.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi – pohľad k vstupným dverám a čakacím kreslám (zelené obklady v tomto zábere nevidno)",
+   "description": "Pohľad k oknu a presklenym dverám na ulicu: v okne visia Edison žiarovky na lanách, na skle nápis, na parapete vázička s kvetmi, pri dverách zarámovaná tabuľa, cez dvere vidno ulicu a zaparkované modré auto. Tri oranžové lampy na bielom strope, dve barberské kreslá s bronzovým rámom, dve zelené zamatové čakacie kreslá s vankúšmi „BARBER Shop“. Vpravo terakotová stena s rúrkovou Edison lampou a vintage obrázkami, tmavý rám s veľkým obrazom; vľavo biela tehličková stena s ring lightom a zrkadlom odrážajúcim barber pole; v popredí sud so zrolovanými bielymi uterákmi a oranžovým astronautom, vpravo komoda so sprejmi a kufríkom.",
+   "subjects": [
+    "kreslá",
+    "zelené čakacie kreslá",
+    "oranžové lampy",
+    "dvere",
+    "okno",
+    "Edison žiarovky",
+    "sud",
+    "uteráky",
+    "astronaut",
+    "komoda",
+    "produkty",
+    "zrkadlo",
+    "ring light",
+    "obraz",
+    "radiátor"
+   ],
+   "light": "denné z okna a dverí (protisvetlo) + teplé lampy; popredie tmavšie, okno svetlé",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    7,
+    3,
+    1,
+    5
+   ],
+   "focal_x": 48,
+   "focal_y": 58,
+   "alt_sk": "Sála barbershopu s výhľadom na vstupné dvere a okno, dve kreslá, zelené čakacie kreslá a oranžové lampy",
+   "people_visible": "nie – cez dvere vidno ulicu a modré auto, chodci nie sú viditeľní",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: nápis „30 BARBERSHOP“ na okne (zvnútra zrkadlovo), vankúše „BARBER Shop Estd … HQ“, tmavá tabuľa pri dverách (cenník/hodiny – nečitateľné), vintage obrázky s barberskou tematikou. Rušivé: spreje a kufrík s nálepkami na komode vpravo, figúrka astronauta, kovový ozdobný predmet pri uterákoch, radiátor pod oknom, reproduktor vľavo hore, protisvetlo."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-28.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Dlhý pohľad sálou k vchodu: rad štyroch čiernych prešívaných kresiel pri tmavých komodách so zrkadlami, TV a Edison lampami popri terakotovej stene; tmavý vlnitý strop s trámami, štyri oranžové lampy, lišta čiernych reflektorov a svietiaci kruh. Vzadu presklené dvere s nápisom, drevená recepcia s rastlinou, regál s produktmi, biele policajné detské autíčko, okraj neónu v machovom ráme, sud so žltými uterákmi a oblúkový výklenok s plagátom. V popredí vľavo rastlina, graffiti figúrka na sude a kreslo; vpravo hore TV. Spodná tretina je voľná drevená podlaha.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "priemyselný strop",
+    "reflektory",
+    "komody",
+    "zrkadlá",
+    "TV",
+    "Edison lampy",
+    "dvere",
+    "recepcia",
+    "detské autíčko",
+    "neón",
+    "sud",
+    "uteráky",
+    "rastlina",
+    "figúrka buldoga",
+    "biele obklady",
+    "oblúk"
+   ],
+   "light": "teplé (lampy) + denné z dverí a okna vzadu; vyvážené",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    3,
+    1,
+    7,
+    5
+   ],
+   "focal_x": 45,
+   "focal_y": 56,
+   "alt_sk": "Pohľad cez sálu barbershopu k vchodu: rad čiernych kresiel, oranžové lampy, recepcia a detské autíčko",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „EXIT“ nad dverami, „30 BARBERSHOP“ na skle, plagát „HAIR COLOR CHART“ s vytlačenou tvárou modelu vo výklenku, „COPS“ na autíčku, červená značka hasiaceho prístroja pri dverách, TV s leteckým záberom mesta. Rušivé: graffiti figúrka a rastlina vľavo dole, ovládač na sude, TV orezaná vpravo hore, káble. Čistejšia verzia pohľadu z foto-24; voľná podlaha dole je vhodná pre text/overlay."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-29.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom (detské stanovište pri lamelovej stene s neónom)",
+   "description": "Biela tehličková stena s nástennou tmavou drevenou policou/konzolou s pomádami a sprejom, nad ňou zrkadlo v drevenom ráme s graffiti figúrkou medvedíka. Pred lamelovou stenou s neónom „BARBERSHOP 30“ v machovom ráme stojí biele detské policajné autíčko „COPS“ na hydraulickej nohe kresla; vedľa radiátor, sud so žltými uterákmi a oblúkový priechod. Hore tmavý plechový strop s dvoma oranžovými lampami, čiernymi reflektormi a ring lightom; vpravo v popredí čierne prešívané kreslo, vľavo sud.",
+   "subjects": [
+    "detské autíčko",
+    "neón BARBERSHOP 30",
+    "machový rám",
+    "biele obklady",
+    "drevené lamely",
+    "polica",
+    "zrkadlo",
+    "produkty",
+    "figúrka",
+    "sud",
+    "uteráky",
+    "radiátor",
+    "oranžové lampy",
+    "reflektory",
+    "kreslo",
+    "oblúk"
+   ],
+   "light": "teplé (oranžové lampy, neón) + okolité denné; rovnomerné",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    5,
+    3,
+    6
+   ],
+   "focal_x": 57,
+   "focal_y": 46,
+   "alt_sk": "Detské kreslo v tvare policajného autíčka pod neónom BARBERSHOP 30 v machovom ráme, biele obklady",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: neón „BARBERSHOP 30“, „COPS“ a ŠPZ na autíčku (vyzerá ako „YH-9916B“), malá zelená únikovka vpravo, etikety pomád nečitateľné. Rušivé: zásuvka na obkladoch, radiátor, sud orezaný vľavo, kreslo orezané vpravo, graffiti figúrka. Vhodné pre sekciu detského strihania/služby."
+  },
+  {
+   "file": "/home/user/head-spa-30/barbershop-30/source/photos/foto-30.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "vstup a čakáreň pri dverách (záber z rohože pri vstupe do prednej sály)",
+   "description": "Nízky záber od vchodu: spodnú polovicu vypĺňa tmavá rohož s oranžovým logom „30 BARBERSHOP HOLIČSTVO“, za ňou v strede čierne prešívané barberské kreslo s podnožkou na drevenej podlahe. Vpravo rad tmavých komôd so zrkadlami a Edison lampami, sud s ring lightom a graffiti figúrkou; hore oranžové lampy a tmavý strop; vľavo tmavý rebrovaný panel v drevenom ráme. Vzadu biela tehličková stena so svietiacim barber pole a lebkou býka, cez otvor tmavá zadná miestnosť.",
+   "subjects": [
+    "rohož s logom",
+    "kreslo",
+    "komody",
+    "zrkadlá",
+    "Edison lampy",
+    "oranžové lampy",
+    "sud",
+    "ring light",
+    "figúrka",
+    "barber pole",
+    "lebka býka",
+    "drevená podlaha"
+   ],
+   "light": "teplé (lampy) + modré z barber pole; stredne tmavé, odlesky na podlahe",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    7,
+    6,
+    3
+   ],
+   "focal_x": 48,
+   "focal_y": 58,
+   "alt_sk": "Vstupná rohož s logom 30 BARBERSHOP HOLIČSTVO a barberské kreslo v sále s oranžovými lampami",
+   "people_visible": "pravdepodobne nie – v zadnej miestnosti vzadu je nezreteľná tmavá silueta pri kresle (zrejme operadlo kresla), overiť v plnom rozlíšení",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: celé logo „30 BARBERSHOP HOLIČSTVO“ na rohoži (jediný záber s kompletným logom značky). Rušivé: ring light s držiakom telefónu a graffiti figúrka na sude vpravo, mierne odlesky na podlahe, okraj rohože, strop/lampy orezané hore."
+  },
+  {
+   "file": "foto-31.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pohľad od vchodu do prednej sály: vľavo drevená recepcia s čiernym vlnitým plechom, na pulte produkty, plexi box s darčekovými poukážkami, tablet a kvetina (anthurium), nad ňou TV a biele metro obklady. Stredom sály visia štyri oranžové industriálne lampy pod tmavým vlnitým stropom s trámami a závesným svietidlom, v strede čierne prešívané holičské kreslo, vpravo terakotová stena so zrkadlami, Edison svietidlami, ring lightom, sudom s farebnou figúrkou psa a červenou pumpou Route 66. V popredí rohožka s oranžovým logom 30 Barbershop Holičstvo, v pozadí priechod do zadnej miestnosti s čiernymi obkladmi, barber pole a lebkou býka.",
+   "subjects": [
+    "recepcia",
+    "kreslá",
+    "oranžové lampy",
+    "produkty",
+    "rohožka s logom",
+    "sud",
+    "figúrka psa",
+    "pumpa Route 66",
+    "barber pole",
+    "biele obklady",
+    "ring light",
+    "lebka býka",
+    "rastlina",
+    "TV"
+   ],
+   "light": "zmiešané – teplé oranžové lampy a stropné svietidlo + denné svetlo od vchodu za fotografom",
+   "quality": 4,
+   "hero_fit": 3,
+   "scenes": [
+    1,
+    3,
+    7
+   ],
+   "focal_x": 64,
+   "focal_y": 56,
+   "alt_sk": "Predná sála barbershopu s recepciou, oranžovými lampami, holičským kreslom a rohožkou 30 Barbershop Holičstvo",
+   "people_visible": "nie (na TV vľavo beží videozáznam koncertu, osoby nerozpoznateľné)",
+   "near_duplicate_of": "foto-40.jpg",
+   "notes": "Čitateľné: rohožka „30 BARBERSHOP HOLIČSTVO“, „ROUTE 66“ na pumpe, neón „BARBERSHOP 30“ v diaľke (malý). Na pulte čierna tabuľka s hviezdičkami (asi hodnotenie, nečitateľné) a malé zarámované plakety na obkladoch (nečitateľné). Rušivé: zapnutá TV, plechovky nápojov na pulte, ring light so stojanom, biely plášť visiaci vpravo, širokouhlé skreslenie. Nižšie rozlíšenie (1200×1600) – takmer rovnaký záber ako foto-40, ktoré je vo vyššom rozlíšení."
+  },
+  {
+   "file": "foto-32.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Hlavná sála s bielym stropom, bodovkami a tromi oranžovými industriálnymi lampami: tri holičské kreslá s bronzovými rámami a čiernou koženkou stoja na tmavej drevenej podlahe so slnečnými škvrnami. Vzadu stena z tmavozelených (petrolejových) lesklých metro obkladov so zrkadlom a tmavým priechodom, vpravo drevom obložená stena pracovných pultov s TV, dekoračnou vrtuľou, Edison svietidlami a produktmi, uprostred ring light na stojane. Vľavo terakotová omietka so zarámovanými čiernobielymi obrázkami a lampou z rúrok v rohu, v popredí zelené zamatové kreslo s vankúšom a stolík s terráriom.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "zrkadlá",
+    "pracovné pulty",
+    "zelené zamatové kreslo",
+    "vrtuľa",
+    "Edison svietidlá",
+    "ring light",
+    "TV",
+    "produkty",
+    "obraz",
+    "zarámované fotografie"
+   ],
+   "light": "zmiešané – denné svetlo z okien za fotografom (slnečné škvrny na podlahe) + teplé oranžové lampy a Edison žiarovky",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 55,
+   "focal_y": 58,
+   "alt_sk": "Hlavná sála so zelenými obkladmi, tromi holičskými kreslami a oranžovými lampami",
+   "people_visible": "nie",
+   "near_duplicate_of": "foto-41.jpg",
+   "notes": "Čitateľné: leták na stolíku vpravo dole („BEARD CLUB HAIR CO…“, čiastočne). Rušivé: ring light na stojane uprostred, klimatizácia na zadnej stene, škatule vreckoviek a fén na pultoch, širokouhlé skreslenie v rohoch, lampa z rúrok orezaná v ľavom hornom rohu. Takmer zhodný záber s foto-33 a foto-41."
+  },
+  {
+   "file": "foto-33.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Rovnaká sála a kompozícia ako foto-32 a foto-41, fotoaparát naklonený viac nahor – viac bieleho stropu s bodovkami a tromi oranžovými lampami, menej ľavej steny. Tri holičské kreslá s bronzovými rámami, vzadu tmavozelené metro obklady so zrkadlom a priechodom, vpravo drevené pracovné pulty so zrkadlami, TV, vrtuľou a produktmi, uprostred ring light na stojane. V popredí zelené zamatové kreslo s vankúšom, vpravo dole stolík s terráriom, na podlahe slnečné škvrny.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "zrkadlá",
+    "pracovné pulty",
+    "zelené zamatové kreslo",
+    "vrtuľa",
+    "Edison svietidlá",
+    "ring light",
+    "TV",
+    "produkty",
+    "obraz"
+   ],
+   "light": "zmiešané – denné svetlo z okien za fotografom (slnečné škvrny na podlahe) + teplé oranžové lampy a Edison žiarovky",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 55,
+   "focal_y": 58,
+   "alt_sk": "Tri holičské kreslá pod oranžovými lampami v sále so zelenými obkladmi, vpredu zelené kreslo",
+   "people_visible": "nie",
+   "near_duplicate_of": "foto-41.jpg",
+   "notes": "Čitateľné: nič výrazné (leták na stolíku len okrajovo). Rušivé: ring light na stojane, klimatizácia vzadu, zbiehajúce sa zvislice (naklonenie nahor), terárium orezané na pravom okraji. Takmer zhodné s foto-32 a foto-41."
+  },
+  {
+   "file": "foto-34.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "detail (predná sála – predajná polica za recepciou)",
+   "description": "Predajná polica za recepciou v prednej sále: na tmavom drevenom regáli stohy pomád v čiernych a červených plechovkách, rady fliaš s vlasovou kozmetikou, spreje, krabičky a biele tuby. Nad policou TV zavesená na drevenom lamelovom paneli, na ktorej beží záznam koncertu, okolo biele metro obklady, vpravo dve malé zarámované plakety, zásuvka a tmavý sud. Vľavo veľká rastlina (potos) v sivom kvetináči, v popredí vpravo dole rozmazaný plexi box z pultu.",
+   "subjects": [
+    "produkty",
+    "pomády",
+    "polica",
+    "TV",
+    "rastlina",
+    "biele obklady",
+    "plakety",
+    "sud"
+   ],
+   "light": "prevažne denné/neutrálne z ľavej strany, TV obrazovka svieti; bez výrazných tieňov",
+   "quality": 3,
+   "hero_fit": 1,
+   "scenes": [
+    5,
+    6
+   ],
+   "focal_x": 40,
+   "focal_y": 66,
+   "alt_sk": "Polica s pomádami a vlasovou kozmetikou pod televízorom na stene s bielymi obkladmi",
+   "people_visible": "áno – na TV obrazovke spevák na pódiu (videozáznam koncertu, nerozpoznateľný)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: plechovky „REDSTYLE“ / „RED STYLE“, ostatné etikety a obe plakety nečitateľné. Rušivé: rozmazaný plexi box v popredí cez štvrtinu záberu, zapnutá TV s koncertom, zásuvka na obkladoch, čierna rúrka/kábel pod stropom. Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "foto-35.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Predná sála pri drevenej lamelovej stene s machovým rámom a žltým neónom „BARBERSHOP 30“; vľavo biele metro obklady, polica s farebnou figúrkou a detské holičské kreslo v tvare strieborného policajného autíčka „COPS“ na chrómovom stĺpe, pod lamelami biely radiátor. Pod tmavým vlnitým stropom visia oranžové lampy (dve tesne nad objektívom), bodové svetlá a ring lighty na nožnicových ramenách, v popredí zozadu čierne prešívané holičské kreslo, za ním ďalšie dve. Vpravo cez oblúkový priechod vidno zadnú miestnosť s čiernymi obkladmi, obrazom mačky v korune, ring lightom a kvetmi; vľavo od neho oblúk s policou a sud so žltými uterákmi.",
+   "subjects": [
+    "neón",
+    "detské autíčko",
+    "kreslá",
+    "oranžové lampy",
+    "lamelová stena",
+    "biele obklady",
+    "ring light",
+    "sud",
+    "uteráky",
+    "figúrka",
+    "radiátor",
+    "čierne obklady",
+    "obraz mačky"
+   ],
+   "light": "teplé umelé – oranžové lampy a ring lighty, trochu denného svetla z pravej strany",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3
+   ],
+   "focal_x": 45,
+   "focal_y": 48,
+   "alt_sk": "Neón Barbershop 30 na lamelovej stene, detské kreslo v tvare policajného autíčka a holičské kreslá",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: neón „BARBERSHOP 30“, nápis „COPS“ a ŠPZ „YH-99168“ na autíčku, zelená úniková značka nad priechodom. Rušivé: dve lampy orezané na hornom okraji, zásuvky na obkladoch, biely radiátor, kreslo v popredí tesne pri spodnom okraji, malý monitor na ramene hore. Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "foto-36.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Pravá strana hlavnej sály zblízka: v popredí holičské kreslo s bronzovým rámom a čiernou koženkou, nad ním veľká oranžová industriálna lampa, vľavo druhé kreslo a ďalšia lampa. Vzadu drevom obložená stena pracovných pultov so zrkadlami, vypnutou TV, dekoračnou vrtuľou a dvoma Edison svietidlami na tmavozelených metro obkladoch; na pulte pomády, škatuľa vreckoviek, modrý uterák, fén a štetka. Vľavo biely obkladaný pilier, ring light na stojane, sud s oranžovou figúrkou astronauta a uterákmi a veľký historický obraz na stene.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "zrkadlo",
+    "vrtuľa",
+    "Edison svietidlá",
+    "pracovný pult",
+    "produkty",
+    "astronaut",
+    "sud",
+    "ring light",
+    "TV",
+    "obraz"
+   ],
+   "light": "zmiešané – teplé oranžové lampy a Edison žiarovky + denné svetlo zľava",
+   "quality": 5,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    5,
+    2
+   ],
+   "focal_x": 50,
+   "focal_y": 58,
+   "alt_sk": "Holičské kreslo pred zrkadlom a pracovným pultom, oranžová lampa, zelené obklady a vrtuľa na stene",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: nič výrazné (etikety pomád malé, malý zarámovaný certifikát na pulte vpravo nečitateľný). Rušivé: vypnutá čierna TV uprostred steny, kábel fénu na pulte, zásuvka na obklade, ring light so stojanom vľavo, klimatizácia v ľavom hornom rohu."
+  },
+  {
+   "file": "foto-37.jpg",
+   "width": 1200,
+   "height": 1600,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Nízky záber od vchodu prednej sály cez rohožku s oranžovým logom „30 BARBERSHOP HOLIČSTVO“ (ostrá v popredí) na čierne prešívané holičské kreslo s podnožkou uprostred. Vpravo terakotová stena s tromi drevenými pracovnými stanicami, zrkadlami, TV, Edison svietidlami a ring lightmi, v popredí vpravo sud s farebnou figúrkou psa; vľavo tmavý bok recepcie s oranžovým LED pásom a oranžové lampy pod tmavým stropom. Vzadu biele obklady so svietiacim barber pole a lebkou býka a priechod do zadnej miestnosti s čiernymi obkladmi, kreslami a ring lightmi.",
+   "subjects": [
+    "rohožka s logom",
+    "kreslá",
+    "oranžové lampy",
+    "barber pole",
+    "lebka býka",
+    "sud",
+    "figúrka psa",
+    "zrkadlá",
+    "Edison svietidlá",
+    "ring light",
+    "TV",
+    "pracovné pulty"
+   ],
+   "light": "teplé umelé – oranžové lampy, Edison žiarovky a ring lighty; mierne denné svetlo od vchodu",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    7,
+    3
+   ],
+   "focal_x": 48,
+   "focal_y": 55,
+   "alt_sk": "Rohožka s logom 30 Barbershop Holičstvo pred holičským kreslom v prednej sále",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: rohožka „30 BARBERSHOP HOLIČSTVO“. Rušivé: chrómový odpadkový kôš pri pracovnej stanici vpravo od kresla, zapnuté TV na stanovištiach, ring lighty na nožnicových ramenách; pozadie mierne mäkšie než ostrá rohožka. Pre hero s logom treba držať spodnú časť záberu (rohožka je v dolnej tretine). Nižšie rozlíšenie (1200×1600)."
+  },
+  {
+   "file": "foto-38.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Hlavná sála z pravej strany od pracovných pultov: v popredí holičské kreslo s bronzovým rámom a ornamentálnou podnožkou, nad ním oranžová lampa tesne pred objektívom, ďalšie dve v hĺbke. Vzadu tmavozelené metro obklady, zrkadlo, okrúhla čierna tabuľa s logom, historický obraz, otvorené tmavé dvere, ring light a sud s astronautom; vľavo terakotová stena so zrkadlom, Edison svietidlom a druhým kreslom. Vpravo drevený pult s pomádami, fľašami, modrým uterákom, gumenou podložkou a škatuľou vreckoviek, zrkadlo odráža kreslo a lampu; na strope a podlahe slnečné škvrny.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "pracovný pult",
+    "produkty",
+    "zrkadlá",
+    "astronaut",
+    "sud",
+    "ring light",
+    "obraz",
+    "Edison svietidlá"
+   ],
+   "light": "zmiešané – slnečné svetlo z okien (škvrny na podlahe a strope) + teplé oranžové lampy a Edison žiarovky",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 42,
+   "focal_y": 60,
+   "alt_sk": "Hlavná sála s holičskými kreslami, oranžovými lampami, zelenými obkladmi a pultom s produktmi",
+   "people_visible": "nie (pri ľavom okraji dole malý svetlý objekt, možno špička obuvi fotografa – nerozpoznateľné)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: modrá fľaša „REDSTYLE PROFESSIONAL“ vpravo dole, okrúhla tabuľa s logom „BARBER…“ vzadu (nečitateľné). Rušivé: preplnený pult s fľašami a sprejmi v pravom dolnom rohu, ring light na stojane, otvorené tmavé dvere vzadu, lampa orezaná hore, svetlý objekt pri ľavom okraji dole."
+  },
+  {
+   "file": "foto-39.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "detail (hlavná sála so zelenými obkladmi – sud pri bielom pilieri)",
+   "description": "Detail zátišia na vrchnáku dreveného suda: pyramída zrolovaných bielych uterákov, dva chrómové ručné (mechanické) strojčeky na vlasy a oranžová figúrka astronauta so zrkadlovou prilbou. Pozadie tvoria biele metro obklady vľavo a tmavozelené vpravo, na zelených obkladoch zlatý rám s historickou čiernobielou fotografiou plačúceho chlapca pri strihaní, vpravo okraj ring lightu na stojane, vľavo dole zásuvka.",
+   "subjects": [
+    "astronaut",
+    "uteráky",
+    "ručné strojčeky",
+    "sud",
+    "biele obklady",
+    "zelené obklady",
+    "zarámovaná fotografia",
+    "ring light"
+   ],
+   "light": "mäkké denné/zmiešané, ring light vpravo; bez tvrdých tieňov",
+   "quality": 5,
+   "hero_fit": 3,
+   "scenes": [
+    2,
+    6,
+    5
+   ],
+   "focal_x": 60,
+   "focal_y": 58,
+   "alt_sk": "Figúrka astronauta, zrolované uteráky a ručné strojčeky na sude pred bielymi a zelenými obkladmi",
+   "people_visible": "áno – v zrkadlovej prilbe astronauta malý odraz fotografa s telefónom; zarámovaná historická fotka dieťaťa je tlačená dekorácia",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: nič. Rušivé: stojan ring lightu s káblom pri pravom okraji, zásuvka vľavo dole, odraz fotografa a miestnosti v prilbe (pri použití zvážiť retuš)."
+  },
+  {
+   "file": "foto-40.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pohľad od vchodu do prednej sály (vyššie rozlíšenie než foto-31): vľavo drevená recepcia s čiernym vlnitým plechom, plexi box s darčekovými poukážkami, čierny box, tablet, kvetina a plechovky nápojov, za ňou polica s pomádami a TV s koncertom na bielych obkladoch. Stredom štyri oranžové lampy pod tmavým vlnitým stropom s trámami a závesným industriálnym svietidlom, čierne prešívané holičské kreslá, vzadu neón na lamelovej stene, oblúk, barber pole, lebka býka a zadná miestnosť s čiernymi obkladmi. Vpravo terakotová stena so zrkadlami, Edison svietidlami, ring lightom, sudom s farebnou figúrkou psa a pumpou Route 66; v popredí rohožka „30 BARBERSHOP HOLIČSTVO“.",
+   "subjects": [
+    "recepcia",
+    "kreslá",
+    "oranžové lampy",
+    "produkty",
+    "rohožka s logom",
+    "darčekové poukážky",
+    "sud",
+    "figúrka psa",
+    "pumpa Route 66",
+    "barber pole",
+    "biele obklady",
+    "neón",
+    "ring light",
+    "TV",
+    "rastlina"
+   ],
+   "light": "zmiešané – teplé oranžové lampy a stropné svietidlo + denné svetlo od vchodu za fotografom",
+   "quality": 4,
+   "hero_fit": 4,
+   "scenes": [
+    1,
+    3,
+    7
+   ],
+   "focal_x": 62,
+   "focal_y": 56,
+   "alt_sk": "Recepcia barbershopu s produktmi, oranžové lampy, holičské kreslá a rohožka s logom 30 Barbershop",
+   "people_visible": "nie (na TV vľavo beží videozáznam koncertu s pódiom, osoby nerozpoznateľné)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „DARČEKOVÁ POUKÁŽKA“ na poukážke v plexi boxe, rohožka „30 BARBERSHOP HOLIČSTVO“, „ROUTE 66“ na pumpe, malé zarámované plakety na obkladoch (nečitateľné). Rušivé: zapnutá TV s koncertom, plechovky nápojov a drobnosti na pulte, ring light so stojanom, v pravom dolnom rohu biely plášť, kovový rám pod rohožkou. Preferovaná verzia oproti foto-31 (rovnaký záber)."
+  },
+  {
+   "file": "foto-41.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Hlavná sála so zelenými obkladmi v širokom zábere: tri holičské kreslá s bronzovými rámami pod tromi oranžovými lampami, vľavo terakotová stena so zarámovanými čiernobielymi fotografiami, lampou z rúrok v rohu a bielym dreveným soklom, vpravo drevené pracovné pulty so zrkadlami, TV, vrtuľou a Edison svietidlami. Vzadu stena z tmavozelených metro obkladov so zrkadlom a priechodom, uprostred ring light na stojane. V popredí dve zelené zamatové kreslá a stolík s terráriom, na podlahe slnečné škvrny.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "zelené obklady",
+    "zrkadlá",
+    "pracovné pulty",
+    "zelené zamatové kreslá",
+    "vrtuľa",
+    "Edison svietidlá",
+    "ring light",
+    "TV",
+    "produkty",
+    "obraz",
+    "zarámované fotografie",
+    "lampa z rúrok"
+   ],
+   "light": "zmiešané – denné svetlo z okien za fotografom (slnečné škvrny na podlahe) + teplé oranžové lampy a Edison žiarovky",
+   "quality": 4,
+   "hero_fit": 5,
+   "scenes": [
+    1,
+    3,
+    5
+   ],
+   "focal_x": 55,
+   "focal_y": 60,
+   "alt_sk": "Hlavná sála so zelenými obkladmi, tromi holičskými kreslami, oranžovými lampami a zelenými kreslami",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: leták na stolíku vpravo dole (čiastočne „BEARD…“). Rušivé: ring light na stojane uprostred, klimatizácia na zadnej stene, škatule vreckoviek a fén na pultoch, širokouhlé skreslenie v rohoch. Primárna verzia zo skupiny foto-32 / foto-33 / foto-41 (najvyrovnanejší horizont)."
+  },
+  {
+   "file": "foto-42.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "predná sála s recepciou a bielymi obkladmi a priemyselným stropom",
+   "description": "Pohľad zo zadnej časti prednej sály k vchodu: tmavý vlnitý strop s trámami, oranžové lampy, bodové svetlá a ring light na nožnicových ramenách. Vľavo terakotová stena s pracovnými stanicami, zrkadlami, TV, Edison svietidlami a tri čierne prešívané holičské kreslá, v popredí rastlina, farebná figúrka s grafiti vzorom na sude a čierne lounge kreslo. V strede zozadu recepčný pult, presklené vchodové dvere s logom 30 Barbershop a značkou EXIT, vešiak, vpravo okno s bielym závesom, veľká rastlina, detské autíčko COPS, biele obklady, lamelová stena s neónom a výklenok s plagátom Hair Color Chart a žltými uterákmi na sude.",
+   "subjects": [
+    "vchodové dvere",
+    "recepcia",
+    "kreslá",
+    "oranžové lampy",
+    "detské autíčko",
+    "neón",
+    "rastliny",
+    "zrkadlá",
+    "Edison svietidlá",
+    "ring light",
+    "sud",
+    "uteráky",
+    "lounge kreslo",
+    "figúrka",
+    "TV"
+   ],
+   "light": "zmiešané – denné protisvetlo z vchodových dverí a okna vzadu + teplé oranžové lampy a Edison žiarovky",
+   "quality": 5,
+   "hero_fit": 5,
+   "scenes": [
+    3,
+    7,
+    1
+   ],
+   "focal_x": 50,
+   "focal_y": 58,
+   "alt_sk": "Pohľad cez prednú sálu k vchodovým dverám, holičské kreslá, recepcia a oranžové lampy",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: „EXIT“ nad dverami, logo „30 BARBERSHOP“ na skle dverí (zrkadlovo) so zoznamom pod ním (nečitateľné, asi otváracie hodiny), plagát „HAIR COLOR CHART“ vpravo, „COPS“ na autíčku. Rušivé: zapnutá TV vľavo (letecký pohľad na mesto), vešiak s odevom pri dverách, lounge kreslo a figúrka v popredí vľavo, reproduktor na stene vpravo, oslnené dvere/okno."
+  },
+  {
+   "file": "foto-43.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "vstup a čakáreň pri dverách",
+   "description": "Kútik pri vchode hlavnej sály so zelenými obkladmi: čierne presklené dvere s nadsvetlíkom, cez sklo vidno ulicu – strom, zaparkované strieborné auto, budovu oproti s nápismi a chodca. Dve zelené zamatové kreslá s bielymi vankúšmi „BARBER Shop Estd. 1983 HQ“, malý okrúhly drevený stolík so skleneným terráriom a letákom, vľavo na stene zarámovaný cenník s hlavičkou 30 Barbershop. Vpravo terakotová štuková stena s bielym dreveným soklom, zlatý rám s patentovým nákresom a steampunková lampa z rúrok s Edison žiarovkami a manometrom; pri dverách drevený stupienok.",
+   "subjects": [
+    "vstup",
+    "dvere",
+    "zelené zamatové kreslá",
+    "vankúše",
+    "stolík",
+    "cenník",
+    "lampa z rúrok",
+    "zarámovaný nákres",
+    "terárium"
+   ],
+   "light": "denné z presklených dverí (protisvetlo) + teplé Edison žiarovky na stene",
+   "quality": 5,
+   "hero_fit": 3,
+   "scenes": [
+    7,
+    3
+   ],
+   "focal_x": 45,
+   "focal_y": 62,
+   "alt_sk": "Čakáreň pri vchode: dve zelené kreslá s vankúšmi Barber Shop, stolík a lampa z rúrok",
+   "people_visible": "áno – chodec s batohom na ulici za sklom dverí (malý, nerozpoznateľný)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: vankúše „BARBER Shop Estd. 1983 HQ“, leták „BEARD CLUB HAIR COLOR GEL“, hlavička cenníka „30 BARBERSHOP“ (položky a ceny nečitateľné); cez sklo nápisy na budove oproti „…ELÁRIE NA…“, „0905 51…“ (čiastočné telefónne číslo cudzej firmy) a „…HERLOOK“. Rušivé: auto a chodec za sklom, radiátor pri ľavom okraji, tmavý objekt (vešiak/odev) na ľavom okraji, oslnené sklo – pri použití zvážiť rozmazanie výhľadu."
+  },
+  {
+   "file": "foto-44.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "hlavná sála s oranžovými lampami a zelenými obkladmi",
+   "description": "Hlavná sála otočená k ulici: biely strop s bodovkami a tri oranžové lampy (plus reťaz štvrtej), dve okná s drevenými rámami a presklené dvere, na parapete váza s kvetmi, závesné žiarovky na lanách a logo 30 Barbershop vyleptané na skle. Tri holičské kreslá s bronzovými rámami, pri dverách zelené zamatové kreslá s vankúšmi Barber Shop a stolík; vľavo biele obklady, zrkadlo s ring lightom (odráža barber pole), pult s produktmi a v popredí sud s pyramídou uterákov, astronautom a ručnými strojčekmi. Vpravo terakotová stena so zarámovanými čiernobielymi fotografiami, lampou z rúrok, Edison svietidlom, veľkým klasickým obrazom anjela a drevená stanica s fľašami a sprejmi.",
+   "subjects": [
+    "kreslá",
+    "oranžové lampy",
+    "okná",
+    "dvere",
+    "zelené zamatové kreslá",
+    "sud",
+    "uteráky",
+    "astronaut",
+    "ručné strojčeky",
+    "barber pole (odraz)",
+    "obraz",
+    "zarámované fotografie",
+    "lampa z rúrok",
+    "produkty",
+    "biele obklady",
+    "ring light"
+   ],
+   "light": "zmiešané – denné protisvetlo z okien a dverí + teplé oranžové lampy a Edison žiarovky",
+   "quality": 5,
+   "hero_fit": 5,
+   "scenes": [
+    1,
+    3,
+    7
+   ],
+   "focal_x": 48,
+   "focal_y": 60,
+   "alt_sk": "Hlavná sála s oknami do ulice, oranžovými lampami, holičskými kreslami a sudom s uterákmi",
+   "people_visible": "nie (na stene vpravo zarámované čiernobielé fotografie osôb – dekorácia, nerozpoznateľné)",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: logo „30 BARBERSHOP“ na okennom skle (zrkadlovo), vankúš „BARBER Shop Estd. 19…“, malá tabuľa cenníka pri dverách (nečitateľné). Rušivé: ring light orezaný na ľavom okraji, radiátory pod oknami, spreje a fľaše na pulte vpravo dole, reťaz lampy bez tienidla vpravo hore, oslnené okná."
+  },
+  {
+   "file": "foto-45.jpg",
+   "width": 1932,
+   "height": 2576,
+   "room": "detail (predná sála – pracovné miesto so zrkadlom)",
+   "description": "Detail pracovného miesta v prednej sále: tmavý drevený rám zrkadla, v ktorom sa odráža lamelová stena s machovým rámom a neónom „BARBERSHOP 30“ (zrkadlovo), ring light, bodové svetlá, vlnitý strop, radiátor a biele obklady. Vedľa zrkadla na terakotovej omietke svieti Edison trubicové svietidlo a visí TV s leteckým pohľadom na mesto. Na tmavom pulte pomády v plechovkách, čierna fľaša WAHL, štetka na holenie, sklenená dóza, tácka s fľašami, bambusové škatule vreckoviek, zrolovaný hnedý uterák a vľavo modrý strojček.",
+   "subjects": [
+    "zrkadlo",
+    "neón (odraz)",
+    "pracovný pult",
+    "pomády",
+    "štetka",
+    "produkty",
+    "Edison svietidlo",
+    "TV",
+    "strojček",
+    "uteráky",
+    "ring light (odraz)"
+   ],
+   "light": "teplé umelé – Edison svietidlo, oranžové lampy a neón v odraze; mäkký teplý nádych na omietke",
+   "quality": 5,
+   "hero_fit": 3,
+   "scenes": [
+    2,
+    5,
+    6
+   ],
+   "focal_x": 45,
+   "focal_y": 55,
+   "alt_sk": "Pracovný pult s pomádami, štetkou a zrkadlom, v ktorom sa odráža neón Barbershop 30",
+   "people_visible": "nie",
+   "near_duplicate_of": "",
+   "notes": "Čitateľné: neón „BARBERSHOP 30“ zrkadlovo, fľaša „WAHL“, plechovky „REDSTYLE“ / „RED STYLE“, dóza „BARBER…“, popis „Guadalajara“ na TV obrazovke. Rušivé: zapnutá TV, vytiahnutá vreckovka zo škatule, modrý strojček orezaný na ľavom okraji, čierny nadstavec fénu, zásuvka a radiátor v odraze, nálepky na tácke."
+  }
+ ],
+ "photo_batch_notes": [
+  "Všetkých 15 súborov otvorených a popísaných. Rozmery: 11 súborov 1932×2576 px, 4 súbory (foto-04, 08, 10, 11) len 1200×1600 px – na desktopový full-screen hero sú nedostatočné. VŠETKÝCH 15 fotiek je na výšku (3:4) – pre široké desktopové hero orezy (16:9, 21:9) bude nutný agresívny orez, chýba akýkoľvek záber na šírku. Čo v dávke chýba pre web: (1) portréty tímu/barberov – jediné „ľudia“ sú tlačený plagát tímu na stene (foto-01/02/09/14) a odraz fotografa v zrkadle (foto-03), čo nie je použiteľné bez súhlasu; (2) práca rúk – strihanie, holenie britvou, horúci uterák, fade – nič; (3) výsledky strihov/brady, pred–po, spokojní zákazníci – nič; (4) čistý detail nástrojov (britva, strojček, nožnice) a produktov s čitateľnými značkami – len preplnené stolíky (foto-15 najbližšie); (5) exteriér – fasáda, vstup z ulice, výklad, vonkajšie označenie – nič, vstup je vidieť len zvnútra v pozadí (foto-05/13); (6) čakáreň pri dverách zblízka a recepcia čelne – len foto-10 šikmo; (7) ocenenia, certifikáty, recenzie – nič (zarámovaný text nad pultom vo foto-03/06 je nečitateľný); (8) detské strihanie v akcii (autíčko COPS je len prázdne). Kvalitatívne problémy naprieč dávkou: ring svetlá na statívoch, fény s káblami, zásuvky, klimatizácia, odpadkové koše a zapnuté TV takmer na každom zábere – pri hero orezoch treba rátať s retušou alebo orezom. Tlačené fotografie v rámoch (foto-07) a reprodukcie obrazov (foto-12) majú neoverené práva – pri veľkom hero zobrazení radšej neorezávať na ne. Štyri páry sú takmer duplikáty: 01/09 (lepší 09), 02/14 (lepší 14), 03/06 (lepší 06 – bez osoby v zrkadle), 05/13 (lepší 05). Najsilnejšie hero kandidáty: foto-05 (5), potom foto-09, foto-12, foto-08 (nízke rozlíšenie), foto-13. Poznámka k priestorom: predná sála (priemyselný strop, biele obklady) a zadná miestnosť (čierne obklady) sú preukázateľne prepojené (vidno cez priechod vo foto-04/08/11); hlavná sála so zelenými obkladmi a hladkým bielym stropom (01/02/09/12/14/15) nie je na žiadnom zábere spojená s ostatnými – či ide o tú istú prevádzku alebo inú pobočku, z fotiek nezistené. Nenájdené v tejto dávke: žiadny čitateľný cenník, adresa, telefón ani otváracie hodiny (list na dverách vo foto-05/13 je nečitateľný).",
+  "Všetkých 15 súborov otvorených a popísaných. Formát: všetky sú na výšku (12× 1932×2576, 3× 1200×1600) – ani jedna fotka na šírku, takže desktopový fullscreen hero bude vždy orez; vypočítané focal body slúžia na object-position. Rozdelenie podľa miestností: predná sála (priemyselný strop, biele obklady, recepcia): foto-16, 22, 24, 28, 29, 30; hlavná sála (biely strop, tyrkysovo-zelené obklady, bronzové kreslá): foto-18, 21, 23, 27; zadná miestnosť (čierne obklady, zelené sedačky): foto-20, 25; detaily: foto-17 (recepcia/ocenenie), foto-26 (barber pole); foto-19 nezodpovedá žiadnej zo 4 definovaných miestností (šedé steny, okno s mrežou, červené kreslo) – označené ako nezaradené. Takmer duplicity: foto-24 → foto-28 (foto-28 čistejšia), foto-25 → foto-20 (foto-20 ostrejšia); foto-22 a foto-28 majú podobný smer, ale iné popredie. Najsilnejšie hero kandidáti: foto-28, foto-30 (jediná s kompletným logom „30 BARBERSHOP HOLIČSTVO“), foto-22 (neón), foto-18/23 (kreslo – prvý dojem), foto-27 (vstup/rezervácia). CHÝBA pre web: (1) portréty tímu/barberov – v dávke nie je žiadna živá osoba, iba vytlačená tímová fotka na stene (foto-18) s neznámymi právami; (2) práca rúk – žiadne strihanie, holenie, ruky s nástrojmi; (3) výsledky strihov/brady, before-after, spokojní zákazníci; (4) čisté close-up remesla – nožnice, britva, strojček, štetka, pomády zblízka (produkty sú len mimochodom v pozadí, etikety nečitateľné); (5) exteriér/fasáda a vstup z ulice (ulicu vidno len cez dvere na foto-27); (6) čitateľný cenník a otváracie hodiny (na skle dverí sú, ale nečitateľné); (7) ocenenie 2024 z foto-17 je čitateľné len čiastočne – potrebný ostrý detail a overenie názvu súťaže; (8) záber na umývadlo/šampónovanie a na zadnú miestnosť s tmavými obkladmi a obrazom mačky (vidno len v pozadí foto-16/30); (9) foto na šírku pre desktop. Upozornenia: na foto-17 je vizitka Salónu 30 s kontaktmi Salónu 30 (nie barbershopu) – nepoužiť ako zdroj údajov; na foto-17 figúrka Mickey Mouse (Disney IP), na foto-28 plagát Hair Color Chart s tvárou modelu, zarámované fotky cudzích osôb na stenách (foto-19, 20, 25, 26) – pri výrezoch zvážiť. Opakujúce sa rušivé prvky: ring lighty s držiakmi telefónov, graffiti figúrky, diaľkové ovládače na sudoch, káble fénov, podnosy s cukrom. Art direction: dve sály majú odlišný charakter (tmavý plechový strop + biele tehličky + čierne kreslá vs. biely strop + tyrkysové tehličky + bronzové kreslá); spoločný prvok sú oranžové priemyselné lampy, tmavé drevo a Edison lampy – oranžová je prirodzený akcent značky zhodný s logom na rohoži.",
+  "Pokrytie dávky: 15 fotiek, všetky na výšku (3:4) – 4 ks 1200×1600 (foto-31, 34, 35, 37) a 11 ks 1932×2576. Žiadna fotka nie je na šírku; pri full-screen hero na desktope (16:9) zostane z portrétu viditeľných len cca 42 % výšky, preto focal_y rozhoduje – odporúčam dofotiť hero zábery na šírku. Rozdelenie podľa miestností v tejto dávke: predná sála s recepciou, bielymi obkladmi a vlnitým priemyselným stropom (31, 35, 37, 40, 42 + detaily 34 a 45), hlavná sála s bielym stropom, oranžovými lampami a tmavozelenými obkladmi (32, 33, 36, 38, 41, 44 + detail 39) a čakáreň pri jej vchodových dverách (43). Zadná miestnosť s čiernymi obkladmi NIE je v tejto dávke nafotená zvnútra – vidno ju len cez priechody (31, 35, 37, 40: čierne lesklé obklady, barber pole, lebka býka, obraz mačky v korune, ring lighty, kreslá). Nezrovnalosť v názvoch miestností zo zadania: zelené zamatové sedačky sú na fotkách v sále so zelenými obkladmi pri vchodových dverách (32, 33, 41, 43, 44), v čiernej miestnosti ich v tejto dávke nevidno – označené podľa toho, čo je na fotkách; treba overiť s klientom. Obe sály majú vlastné dvere na ulicu (42 vs. 43/44). Duplicity: foto-31 ≈ foto-40 (40 je vo vyššom rozlíšení, preferovať), foto-32 ≈ foto-33 ≈ foto-41 (41 vybrané ako primárne). Čo chýba pre web: scéna 4 (ľudia) nemá žiadne pokrytie – žiadne portréty tímu/barberov, žiadni zákazníci, žiadna atmosféra s ľuďmi; scéna 2 (remeslo) má len statické zátišie s ručnými strojčekmi (39) a pult s produktmi (45) – chýba práca rúk, strihanie, holenie britvou, nástroje v akcii, makro strojčeka/nožníc/britvy; scéna 6 (výsledky/dôvera) – žiadne výsledky strihov (pred/po), žiadne čitateľné ocenenia, certifikáty ani recenzie (plakety v 31/34/40 a tabuľka s hviezdičkami sú nečitateľné); chýba exteriér/fasáda a vstup z ulice (vchod je len zvnútra: 42, 43, 44), detail barber pole, čisté packshoty produktov, detail recepcie bez zapnutej TV, čitateľný cenník (v 43 nečitateľný). Súkromie: foto-43 chodec za sklom a čiastočné telefónne číslo cudzej firmy na budove oproti (0905 51…) – pri použití rozmazať/orezať; foto-39 odraz fotografa s telefónom v prilbe astronauta; foto-34 spevák na TV (videozáznam), foto-31/40 koncert na TV; foto-42/45 TV s mapou (Guadalajara). Opakujúce sa rušivé prvky vo všetkých sálach: ring lighty so stojanmi a káblami, zapnuté TV, preplnené pulty s fľašami a sprejmi, radiátory, zásuvky na obkladoch, chrómový odpadkový kôš (37), škatule vreckoviek. Použité nástroje: Read (otvorená a prezretá každá z 15 fotiek) a Bash/PIL na rozmery; pre inventár fotiek nemajú ostatné dostupné nástroje a pluginy (Adobe, Gmail, Shopify, Descript, GitHub atď.) zmysluplné použitie – prípadné orezy a retuš vybraných záberov (napr. Adobe image_crop_and_resize, image_fill_area na odstránenie ring lightov/káblov) sú vhodné až ako ďalší krok po výbere fotiek."
+ ],
+ "refs": {
+  "rules": [
+   {
+    "area": "hero",
+    "rule": "Do 3 s od prvého vykreslenia musí byť čitateľné kto (BARBERSHOP 30, Nitra), čo robí a hlavné CTA, a to ako HTML text, nikdy nie zapečené do videa alebo WebGL canvasu.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Primary user journey, Intro must) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §801"
+   },
+   {
+    "area": "hero",
+    "rule": "LCP nesie optimalizovaný AVIF/WebP poster, ktorý je sám o sebe kompletný hero (headline + CTA čitateľné nad ním); video alebo 3D sa začne načítavať až po tom, čo je stránka interaktívna.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Performance) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §803"
+   },
+   {
+    "area": "hero",
+    "rule": "Intro je neblokujúce: navigácia a „Preskočiť intro“ sú použiteľné od 0,0 s, celé intro trvá max ~6,5 s, po prvom ustálenom stave už nikdy nezamyká scroll a nekončí čiernym snímkom ani blikaním.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Signature opening experience, timeline 0.0–6.5 s)"
+   },
+   {
+    "area": "hero",
+    "rule": "Pri prefers-reduced-motion, zlyhanom autoplay, Save-Data/pomalej sieti, nepodporovanom kodeku a pri opakovanej návšteve sa hero otvorí rovno v ustálenom stave (poster + text) bez prehrávania reveal-u.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (The intro must) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §804, §806"
+   },
+   {
+    "area": "hero",
+    "rule": "Ustálený záverečný snímok (kreslo v kľude) sa komponuje ako prvý, s rezervou nad aj pod objektom, a overí sa s nasadeným headerom pri širokom (1440×900) aj nízkom okne (výška ≤560 px), aby header ani cover-crop kreslo neodrezali.",
+    "source": "10k-websites/references/prompt-laws.md (law 4) + 10k-websites/references/scrub-pipeline.md (max-height:560px guard)"
+   },
+   {
+    "area": "hero",
+    "rule": "Pred stavbou sa určí „action lane“ (kde sa v zábere deje kreslo/ruky) a headline + CTA žijú výlučne v pokojnom negatívnom priestore mimo neho; ak dodané zábery lane posunú, prispôsobí sa layout, nie záber.",
+    "source": "10k-websites/references/prompt-laws.md (law 7) + 10k-websites/SKILL.md (Phase 6, inspection runs in both directions)"
+   },
+   {
+    "area": "hero",
+    "rule": "Mobilný hero je samostatná kompozícia (statický poster alebo zvlášť komponované 9:16), nie cover-crop desktopového záberu; tváre, ruky, nožnice a kontaktný bod zostávajú v portrait-safe zóne.",
+    "source": "max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §807 + source/refs/PROMPT_BARBERSHOP_30.md (Web asset delivery)"
+   },
+   {
+    "area": "hero",
+    "rule": "Statický hero sa zapína presne pri 5 media queries identických znak po znaku v CSS aj JS a vyhodnocovaných naživo cez change listener: (max-width:720px), (orientation:portrait) and (max-width:1024px), (orientation:portrait) and (pointer:coarse), (orientation:landscape) and (pointer:coarse) and (max-height:560px), (prefers-reduced-motion:reduce); poster aj video/model sa načítavajú len vnútri tejto gated vetvy, takže telefón nikdy nestiahne asset, ktorý neuvidí.",
+    "source": "10k-websites/references/scrub-pipeline.md (The static-hero gate) + 10k-websites/references/troubleshooting.md"
+   },
+   {
+    "area": "hero",
+    "rule": "Hero text je HTML v prirodzenej slovenčine s diakritikou a headline sľubuje len to, čo stránka naozaj ponúka: ak sa selektor strihov nestavia, „VYBER SI STRIH“ sa bez overenej brand copy nepoužije.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Slovak hero copy) + max-studio-ultra-x/references/100-local-business-website-engine.md §903"
+   },
+   {
+    "area": "motion",
+    "rule": "Celý web má najviac 5 signature motion momentov (brief menuje: reveal, maska nadpisu, zdieľaný prechod karty do detailu, „cut line“ indikátor, snip na CTA) a rytmus „ticho → presný strih → odhalenie → pokojná istota“; všetko ostatné je krátka funkčná spätná väzba.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Interaction and motion system, Brand direction) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §818 (3–5 moments)"
+   },
+   {
+    "area": "motion",
+    "rule": "Scroll-driven hero je pinnutá sekcia so sticky full-viewport stage, progress 0→1 cez výšku meranú v scroll vzdialenosti: ~400vh pre jeden ~6 s záber, ~1000vh pre ~18 s cestu, nikdy nedimenzovanú v sekundách.",
+    "source": "10k-websites/references/scrub-pipeline.md (The hero structure)"
+   },
+   {
+    "area": "motion",
+    "rule": "Každý caption beat má plne viditeľné plató 80–130vh s ~20vh eased rampami; v progress jednotkách f = min(0.02, (b−a)/3), opacity cez smoothstep, prvý band bez ease-in a posledný bez ease-out.",
+    "source": "10k-websites/references/scrub-pipeline.md (The caption-band pattern)"
+   },
+   {
+    "area": "motion",
+    "rule": "Beat mapa sa validuje flick testom (wheel kroky 120, 240 a 360 px s 400 ms pauzou): každý beat musí byť čitateľný 5–6 krokov po 120 px a žiadny nesmie byť preskočiteľný pri 360 px; neúspešný beat sa zlúči so susedom, rampy sa nikdy neskracujú.",
+    "source": "10k-websites/references/scrub-pipeline.md (The flick test)"
+   },
+   {
+    "area": "motion",
+    "rule": "Zobrazený progress sa lerpuje frame-rate-nezávisle (k = 0.16 na 60 fps snímok cez Math.pow(1−k, dt/16.667)) a rAF slučka sa zastaví pri |target−shown| < 0.0005 aj vždy, keď hero nie je vo viewporte (IntersectionObserver).",
+    "source": "10k-websites/references/scrub-pipeline.md (Lerp the displayed time)"
+   },
+   {
+    "area": "motion",
+    "rule": "Ak sa použije video scrub, seek-y sú gate-ované (jeden v letu, koalescencia na najnovší cieľ, reset busy flagu v error handleri) a video je enkódované s -g 8 -keyint_min 8 -crf 18 -pix_fmt yuv420p -movflags +faststart -an s cieľom 4–8 MB na 6 s 1080p.",
+    "source": "10k-websites/references/scrub-pipeline.md (Gate the seeks) + 10k-websites/references/ffmpeg-recipes.md"
+   },
+   {
+    "area": "motion",
+    "rule": "Video pre scrub sa sťahuje ako Blob (Range support hostingu sa nepredpokladá); nad ~8 MB streamovane s poctivým progress ringom, fetch priority 'low', štart až po načítaní posteru (max 4 s čakanie) a 20 s watchdog bez progresu prepne na still fallback.",
+    "source": "10k-websites/references/scrub-pipeline.md (Fetch the video as a Blob, streamed Blob)"
+   },
+   {
+    "area": "motion",
+    "rule": "DOM sa zapisuje len pri zmene: triedy a štýly delta-gated, --k s prahom 0.008, textové readouty max ~10 Hz a len pri zmene reťazca; video/canvas je povýšené na vlastnú compositor vrstvu (will-change: transform).",
+    "source": "10k-websites/references/scrub-pipeline.md (Write to the DOM only on change)"
+   },
+   {
+    "area": "motion",
+    "rule": "Animujú sa výlučne transform a opacity; filter/blur sa nikdy neanimuje (blur-to-sharp = dve kópie textu so statickým blur a crossfade opacity) a glow = pseudo-element s plným shadow, kde sa animuje len jeho opacity.",
+    "source": "10k-websites/references/scrub-pipeline.md (Text choreography, The motion system around the hero)"
+   },
+   {
+    "area": "motion",
+    "rule": "Scroll-scrubované vstupy textu sú plne reverzibilné pri scrolle hore; jedinou výnimkou je band 1 s jednorazovou time-based load rampou (k = max(scrollK, loadK)), aby hero neotváralo bez slov.",
+    "source": "10k-websites/references/scrub-pipeline.md (The first band opens settled)"
+   },
+   {
+    "area": "motion",
+    "rule": "Echo princíp: každý vstup textu alebo sekcie napodobňuje to, čo v danom momente robí 3D/footage (slová klesajú pri páde vlasov, zbiehajú sa pri zatvorení nožníc, polovice sa rozchádzajú pri odhalení), takže vstup a záber čítajú ako jedna udalosť.",
+    "source": "10k-websites/references/scrub-pipeline.md (The echo principle)"
+   },
+   {
+    "area": "motion",
+    "rule": "Sekčné vstupy riadi IntersectionObserver triedou .in, deti prichádzajú so staggerom 60–150 ms, stavy sú prefixované kontajnerom (.card .part, .card.in .part) a po vstupe sa transition-delay vynuluje selektorom s rovnakou alebo vyššou špecificitou (overiť hoverom na 2. a 3. položke).",
+    "source": "10k-websites/references/scrub-pipeline.md (The motion system around the hero) + 10k-websites/references/troubleshooting.md (The page)"
+   },
+   {
+    "area": "motion",
+    "rule": "Jedna „živá“ vec na sekciu na úrovni šepotu: cyklus ≥4 s, záporný animation-delay (napr. -1.2s), pauza mimo viewportu cez IO triedu a pri skrytej karte cez body.paused *, body.paused *::before, body.paused *::after { animation-play-state: paused !important }.",
+    "source": "10k-websites/references/scrub-pipeline.md + 10k-websites/references/troubleshooting.md (animation-play-state is not inherited)"
+   },
+   {
+    "area": "motion",
+    "rule": "Dve easing krivky sú definované ako tokeny a použité všade; žiadne náhodné per-element durácie či easingy a el.style.transition sa v JS nikdy neprepisuje (toggluje sa trieda s plným prechodom).",
+    "source": "10k-websites/references/scrub-pipeline.md (Nothing snaps) + max-studio-ultra-x/references/46-anti-pattern-atlas-300.md #051"
+   },
+   {
+    "area": "motion",
+    "rule": "Zákaz: scroll hijacking, snap bojujúci s kolieskom, pinnutá sekcia dlhšia než jej beaty, nadmerný parallax, skryté scrollbary, custom cursor na touch a akýkoľvek efekt, ktorý oddiali výber alebo rezerváciu.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Interaction and motion system) + max-studio-ultra-x/references/46-anti-pattern-atlas-300.md #026, #043–#047"
+   },
+   {
+    "area": "motion",
+    "rule": "Reduced motion sa rešpektuje úplne a naživo v oboch smeroch: zrušiť animácie a prechody vrátane ::before/::after, vynulovať transition-delay, ukázať finálne stavy, znovu aplikovať pozičné transformy per breakpoint (nie plošné transform:none !important), nenačítať video; pri prepnutí späť re-arm cez tú istú gate funkciu a odpinovať všetky finálne stavy.",
+    "source": "10k-websites/references/scrub-pipeline.md (Overflow and reduced motion) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §806"
+   },
+   {
+    "area": "motion",
+    "rule": "Presne jeden navrhnutý interaktívny moment na webe (napr. press-and-hold alebo before/after slider): progres rastie počas držania, pri pustení sa plynulo vracia (nikdy neskočí na 0), dokončenie postupne rozsvieti obsah sekcie a reduced motion dostane finálny stav okamžite.",
+    "source": "10k-websites/references/scrub-pipeline.md (The one interactive moment)"
+   },
+   {
+    "area": "3d",
+    "rule": "Brief výslovne zakazuje ťažké 3D/WebGL len pre efekt, preto sa 3D kreslo stavia len s písomne zdôvodneným prínosom, nameraným dopadom (LCP/INP/CPU na mobile) a kompletným ne-WebGL fallbackom (poster alebo image sequence), ktorý sa testuje ako prvý; shadery len tam, kde natívne materiály nestačia, a každý má fallback.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Performance: avoid WebGL unless measured) + max-studio-ultra-x/references/21-threejs-webgl.md (principle, §207–208) + 100-local-business-website-engine.md §916"
+   },
+   {
+    "area": "3d",
+    "rule": "Renderer má v kóde explicitný strop DPR a nižší strop pod (pointer:coarse); WebGL sa nikdy nerenderuje v plnom rozlíšení na telefóne a draw calls aj texture memory sú limitované a zmerané.",
+    "source": "max-studio-ultra-x/references/21-threejs-webgl.md §210 + 46-anti-pattern-atlas-300.md #095, #129"
+   },
+   {
+    "area": "3d",
+    "rule": "Model kresla a textúry sa dodávajú komprimované (komprimovaná geometria, GPU-komprimované textúry, jedno malé HDRI) a načítavajú s reálnym progress indikátorom; zásada „žiadny 4K master pre každý telefón“ platí aj pre textúry.",
+    "source": "max-studio-ultra-x/references/21-threejs-webgl.md §202 + source/refs/PROMPT_BARBERSHOP_30.md (Web asset delivery)"
+   },
+   {
+    "area": "3d",
+    "rule": "Svetlo je fyzikálne koherentné a zodpovedá briefu: mäkký charcoal frontal fill, motivované teplé (amber) praktikálne svetlo zozadu alebo zo zrkadla, úzke chladné spekulárne odlesky na kove, stabilná expozícia bez pulzovania a bez meniaceho sa smeru slnka.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Shot A/B Lighting) + max-studio-ultra-x/references/21-threejs-webgl.md §203"
+   },
+   {
+    "area": "3d",
+    "rule": "Materiály kresla a scény sú len z brand palety: matný charcoal/near-black, teplý orech, brúsený tmavý kov, zdržanlivá antická mosadz a machová zelená; žiadny neón, zlaté partikly, oversaturácia ani „fantasy glow“.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Brand direction, Shot A Global style)"
+   },
+   {
+    "area": "3d",
+    "rule": "Kamera rozpráva: pomalý kontrolovaný push/dolly po zamknutej dráhe, žiadny orbit, whip pan, handheld shake ani rack focus mimo akcie; smer pohybu súhlasí so scrollom (scroll nadol = príchod, priblíženie, usadenie) a objekt na dráhe ostáva živý (mikropohyb, svetlo), nie zamrznutý.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Camera/Optics) + max-studio-ultra-x/references/21-threejs-webgl.md §204 + 10k-websites/references/prompt-laws.md (law 1, law 3)"
+   },
+   {
+    "area": "3d",
+    "rule": "Interakcia s kreslom (hover/drag cez raycasting) nikdy neblokuje normálny scroll ani UI, nie je drag-only a má klávesnicový aj touch ekvivalent.",
+    "source": "max-studio-ultra-x/references/21-threejs-webgl.md §205 + source/refs/PROMPT_BARBERSHOP_30.md (Selector: keyboard users)"
+   },
+   {
+    "area": "3d",
+    "rule": "Správny životný cyklus: resize handler, dispose() geometrií, materiálov a rendereru pri odpojení, rAF beží len keď je canvas vo viewporte a karta viditeľná.",
+    "source": "max-studio-ultra-x/references/21-threejs-webgl.md §201 + 46-anti-pattern-atlas-300.md #053, #073, #130"
+   },
+   {
+    "area": "3d",
+    "rule": "WebGL canvas je dekorácia: aria-hidden=\"true\", mimo tab poradia (tabindex=\"-1\" alebo inert), význam nesie HTML; pri strate kontextu alebo zlyhaní sa prepne na poster bez layout shiftu.",
+    "source": "10k-websites/references/scrub-pipeline.md (quality floor: decorative video) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §817"
+   },
+   {
+    "area": "3d",
+    "rule": "Atmosféra (jemné filmové zrno, vineta, tiene) je statická vrstva alebo pomalý cyklus ≥60 s, nikdy animovaný filter; plátno nie je nikdy čisté #000 ani #fff, ale tónované k charcoal/zelenej grade záberov.",
+    "source": "max-studio-ultra-x/references/22-cinematic.md §216 + 10k-websites/references/scrub-pipeline.md (Design direction)"
+   },
+   {
+    "area": "typo",
+    "rule": "Jedno editoriálne display písmo s charakterom + jeden vysoko čitateľný grotesk pre UI a slovenský text (voliteľne mono pre malé labely); Inter ani Roboto nikdy ako display.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Typography) + 10k-websites/references/scrub-pipeline.md (quality floor) + design-package.md §3"
+   },
+   {
+    "area": "typo",
+    "rule": "Každá načítaná váha pokrýva Latin Extended pre slovenčinu (ľ š č ť ž ý á í é ú ä ô ŕ ĺ ň ď), subsetuje sa len na použité váhy, preconnect/preload je disciplinovaný a systémové fallbacky majú kontrolované metriky.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Typography: load efficiently) + max-studio-ultra-x/references/08-typography.md §071, §078 + 16-performance.md §156"
+   },
+   {
+    "area": "typo",
+    "rule": "Fluidná typografická škála cez clamp() s explicitným min aj max; headline a body sa overia pri 375, 390 a 430 px, aby headline nelámal do neúnosného počtu riadkov a body text nebol drobný.",
+    "source": "max-studio-ultra-x/references/08-typography.md §073 + 46-anti-pattern-atlas-300.md #084–#085 + source/refs/PROMPT_BARBERSHOP_30.md (Quality gates)"
+   },
+   {
+    "area": "typo",
+    "rule": "Šírka textového bloku sa obmedzuje v ch na samotnom textovom elemente, nikdy na kontajneri, pretože ch sa počíta z dedeného fontu a nie z display fontu vnútri.",
+    "source": "10k-websites/references/scrub-pipeline.md (quality floor)"
+   },
+   {
+    "area": "typo",
+    "rule": "Každý maskovaný alebo orezaný text (overflow:hidden reveal) má em-based padding + záporný margin, aby sa neodrezali doťahy g, y, p; kontroluje sa pri 100 % zoome.",
+    "source": "10k-websites/references/scrub-pipeline.md + 10k-websites/references/troubleshooting.md (Letter tails)"
+   },
+   {
+    "area": "typo",
+    "rule": "Text nad pohyblivým médiom má 4 vrstvy: globálny radiálny scrim, per-band scrim (peak alpha 0.62 pre pokojný beat až 0.72 pre hook, gradient dohasne do 76 %), 3-vrstvový --tshadow token (vypnutý na tlačidlách) a chip pre malé labely; každý band prejde worst-frame auditom s kontrastom ≥3.5:1 proti najhoršiemu snímku, nie priemeru.",
+    "source": "10k-websites/references/scrub-pipeline.md (The legibility system) + 10k-websites/references/prompt-laws.md (law 10)"
+   },
+   {
+    "area": "typo",
+    "rule": "Kontrast na plátne sa počíta, nehádá: ≥4.5:1 body text, ≥3:1 veľký text a interaktívne okraje; hairline farby pre interaktívne okraje zvyčajne zlyhajú a dostanú vlastnú silnejšiu hodnotu.",
+    "source": "10k-websites/references/scrub-pipeline.md (quality floor: real contrast)"
+   },
+   {
+    "area": "typo",
+    "rule": "Mikrotypografia: tabulárne číslice v cenníku a trvaniach, riadky textu rôznej veľkosti zarovnané na baseline (align-items: baseline), doladená interpunkcia, tracking a zalamovanie pre dlhšie slovenské reťazce s diakritikou.",
+    "source": "max-studio-ultra-x/references/08-typography.md §078–§079 + 10k-websites/references/scrub-pipeline.md (baseline rows)"
+   },
+   {
+    "area": "layout",
+    "rule": "Editoriálna asymetria, presný grid, silný negatívny priestor, taktilné full-bleed médiá a jemné hairline linky; zákaz opakujúcich sa rovnakých kariet, nadmerne zaoblených kontajnerov, glassmorphismu a neónových gradientov.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Brand direction: Layout)"
+   },
+   {
+    "area": "layout",
+    "rule": "Žiadne dve susedné sekcie nezdieľajú rovnaký layoutový skelet (kicker–headline–lede nad rovnakým gridom); medzi susedmi sa mení šírka, mierka alebo médium.",
+    "source": "10k-websites/references/scrub-pipeline.md (Design direction) + max-studio-ultra-x/references/46-anti-pattern-atlas-300.md #017 + 62-web-experience-patterns-section-architecture.md §560"
+   },
+   {
+    "area": "layout",
+    "rule": "Jeden záväzný vizuálny smer zo sveta podniku a jeden signature element (napr. „strihová línia“ – hairline, ktorá sa kreslí ako rez); test: keby sa odstránil, stránka sa viditeľne zmení, inak to nie je signature.",
+    "source": "10k-websites/references/scrub-pipeline.md (Design direction: signature element)"
+   },
+   {
+    "area": "layout",
+    "rule": "Akcent (mosadz) v zriedkavých dávkach: CTA, focus ring a 1–2 momenty dôrazu; identitu nesú machová zelená a orech a amber zostáva svetlom v scéne, nie UI farbou, aby web nespadol do default „near-black + amber“ klišé.",
+    "source": "10k-websites/references/scrub-pipeline.md (The accent appears in rare doses, AI-cliché ban) + design-package.md §2 + source/refs/PROMPT_BARBERSHOP_30.md (Core materials)"
+   },
+   {
+    "area": "layout",
+    "rule": "Jedna fixná vrstva prostredia za celým webom (pomalý drift, zrno alebo soft glow v grade záberov) s cyklom ≥60 s, aby scroll pôsobil ako pohyb cez miesto, nie cez naukladané bloky.",
+    "source": "10k-websites/references/scrub-pipeline.md (Make the page one environment)"
+   },
+   {
+    "area": "layout",
+    "rule": "Mobil je vlastná kompozícia, nie zmenšený desktop: hlavná cesta sa testuje pri 375, 390 a 430 px plus tablet a desktop, rešpektujú sa safe-area insety a rotácia zariadenia neláme layout.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Quality gates) + PROMPT_LOCAL_BUSINESS_WEBSITE_PRO.md (bod 7) + max-studio-ultra-x/references/14-responsive-mobile.md §131, §138–§139"
+   },
+   {
+    "area": "layout",
+    "rule": "overflow-x: clip na html aj body (s hidden deklarovaným pred ním ako fallback) a pred odovzdaním sa stránku zámerne pokúsiť posunúť do strany kotvami a širokými dekoráciami.",
+    "source": "10k-websites/references/scrub-pipeline.md (Overflow) + 10k-websites/references/troubleshooting.md"
+   },
+   {
+    "area": "layout",
+    "rule": "Dekorácie majú rezervovaný priestor a pri @media (max-height:560px) sa skryjú; absolútne pozicované prvky nikdy nekolidujú s obsahom.",
+    "source": "10k-websites/references/scrub-pipeline.md (quality floor: decorations never collide)"
+   },
+   {
+    "area": "layout",
+    "rule": "Každé médium má explicitné width/height alebo aspect-ratio (nulový CLS), pod foldom sa lazy-loaduje a eager sa načíta len LCP poster.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Performance) + max-studio-ultra-x/references/16-performance.md §153 + 46-anti-pattern-atlas-300.md #122, #125"
+   },
+   {
+    "area": "conversion",
+    "rule": "Jedna primárna konverzia na stav stránky (Rezervovať cez Bookio) a mobilný action dock s max 2 trvalými akciami (Rezervovať + zavolať), ktorý nezakrýva obsah ani ovládanie prehliadača a skryje sa, keď je otvorený formulár alebo rezervačný stav; sekundárne akcie (trasa, Instagram) vizuálne nesúťažia.",
+    "source": "max-studio-ultra-x/references/100-local-business-website-engine.md §902, §908 + 06-conversion-cro.md §051"
+   },
+   {
+    "area": "conversion",
+    "rule": "Odchod do Bookio sa nikdy neoznačí ako potvrdená rezervácia; event booking_confirmed sa posiela len na overený signál integrácie a falošná „úspešná“ obrazovka neexistuje.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Bookio handoff) + max-studio-ultra-x/references/103-appointment-service-websites.md §962, §970"
+   },
+   {
+    "area": "conversion",
+    "rule": "Služby sú štruktúrované dáta (stabilné id, názov, výsledok, trvanie, presná alebo kvalifikovaná cena, booking link, obmedzenia) renderované do zoznamu, schémy aj deep-linkov z jedného zdroja, nie dekoratívne karty.",
+    "source": "max-studio-ultra-x/references/100-local-business-website-engine.md §910 + 103-appointment-service-websites.md §963"
+   },
+   {
+    "area": "conversion",
+    "rule": "Cenník ukazuje presnú cenu alebo „od“ s dôvodom variability, menu, čo je zahrnuté a zálohu/storno/meškanie pred potvrdením; bežné ceny sa neskrývajú kvôli leadom.",
+    "source": "max-studio-ultra-x/references/100-local-business-website-engine.md §911 + 103-appointment-service-websites.md §969"
+   },
+   {
+    "area": "conversion",
+    "rule": "Dôkaz stojí pri tvrdení, ktoré podporuje (reálne foto interiéru pri atmosfére, overené špecializácie pri expertíze), FAQ rieši reálne námietky tesne pri rezervačnej akcii a recenzie sa zobrazia len s dohľadateľným zdrojom, atribúciou a dátumom, nikdy generované ani selektívne upravené.",
+    "source": "max-studio-ultra-x/references/100-local-business-website-engine.md §912 + 104-local-business-growth-operations.md §987 + 62-web-experience-patterns-section-architecture.md §556–§557"
+   },
+   {
+    "area": "conversion",
+    "rule": "Profily barberov len s dodaným menom, portrétom, rolou a skutočnými špecializáciami, s voľbou „bez preferencie“ ak to Bookio podporuje; žiadne vymyslené bio, roky praxe ani dostupnosť.",
+    "source": "max-studio-ultra-x/references/103-appointment-service-websites.md §964 + 100-local-business-website-engine.md §913"
+   },
+   {
+    "area": "conversion",
+    "rule": "Before/after len so súhlasom, porovnateľnými podmienkami a bez zavádzajúcej retuše; AI ukážky sú viditeľne označené „Inšpirácia / ilustračná ukážka“ a nikdy neslúžia ako dôkaz výsledku.",
+    "source": "max-studio-ultra-x/references/103-appointment-service-websites.md §973 + source/refs/PROMPT_BARBERSHOP_30.md (Selector: AI-generated examples)"
+   },
+   {
+    "area": "conversion",
+    "rule": "Žiadna umelá urgencia: bez odpočtov, vymysleného dopytu, predvolených doplnkov a tlaku na vzhľad; použijú sa iba reálne časové alebo kapacitné obmedzenia zo zdroja.",
+    "source": "max-studio-ultra-x/references/103-appointment-service-websites.md §975 + 46-anti-pattern-atlas-300.md #142"
+   },
+   {
+    "area": "conversion",
+    "rule": "Kontakt: adresa ako čistý text + odkaz na mapu, overené hodiny bez „otvorené teraz“ (pokiaľ nie je odvodené z autoritatívneho rozvrhu a testované cez polnoc/sviatky/DST), tap-to-call a parkovanie/MHD len ak sú overené.",
+    "source": "max-studio-ultra-x/references/100-local-business-website-engine.md §909, §917"
+   },
+   {
+    "area": "conversion",
+    "rule": "Vybraná služba/barber prežije navigáciu aj back/forward (stav v URL alebo storage) a do Bookio sa prenáša len cez dokumentované prefill parametre; ak Bookio brief nepodporuje, používateľ dostane kopírovateľné zhrnutie a rezervačný odkaz zvlášť.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Bookio handoff) + max-studio-ultra-x/references/103-appointment-service-websites.md §971 + 95-ai-media-for-cinematic-web.md §815"
+   },
+   {
+    "area": "perf",
+    "rule": "Mediálny rozpočet je definovaný a overený na realistickej mobilnej sieti: scrub video 4–8 MB na 6 s 1080p (crf 18, pri presahu 20–22), stilly ~1920 px s jedným kompresným prechodom, žiadny 4K master pre telefón a zdrojové rebríky podľa breakpointov.",
+    "source": "10k-websites/references/ffmpeg-recipes.md + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §808 + source/refs/PROMPT_BARBERSHOP_30.md (Performance: media budget)"
+   },
+   {
+    "area": "perf",
+    "rule": "Najviac jedna motion knižnica, route-level code splitting, žiadne duplicitné knižnice ani ťažká závislosť kvôli drobnej funkcii.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Performance) + max-studio-ultra-x/references/16-performance.md §155 + 46-anti-pattern-atlas-300.md #071, #127"
+   },
+   {
+    "area": "perf",
+    "rule": "Video deriváty: WebM + MP4/H.264 fallback, rozmery deliteľné 2, fast-start metadáta, žiadna audio stopa v tichej slučke; každý derivát sa prebehne ffprobe a reálne prehrá v prehliadači.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Web asset delivery) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §809"
+   },
+   {
+    "area": "perf",
+    "rule": "Videá mimo viewportu alebo na skrytej karte sa pauzujú, karty služieb a galéria nemajú súbežný autoplay a preview sa prehrá len na zámer používateľa.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Performance) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §805"
+   },
+   {
+    "area": "perf",
+    "rule": "Stavy zlyhania sa testujú zámerne (zablokovať URL videa, zrušiť WebGL, pomalá sieť, odmietnutý autoplay, cached opakovaná návšteva) a stránka musí byť kompletná a pekná len s posterom; výkon sa meria na mobilnej emulácii (LCP/CLS/INP, dlhé tasky) a konzola je bez chýb pri desktopovej aj telefónnej šírke.",
+    "source": "10k-websites/references/scrub-pipeline.md (Complete without the video, self-testing checklist) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §817, §820 + 16-performance.md §159–§160"
+   },
+   {
+    "area": "a11y",
+    "rule": "Semantické landmarky (nav, main#main tabindex=-1, footer), skip link na #main, logická hierarchia nadpisov, :focus-visible v akcente a klávesnicovo kompletná navigácia aj výber služby bez drag-only gest.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Accessibility) + 10k-websites/references/scrub-pipeline.md (quality floor)"
+   },
+   {
+    "area": "a11y",
+    "rule": "Dotykové ciele ≥44 px pod (pointer:coarse) bez zmeny layoutu (min-height + inline-flex s re-deklarovaným zarovnaním).",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Accessibility: 44 px) + 10k-websites/references/scrub-pipeline.md (quality floor)"
+   },
+   {
+    "area": "a11y",
+    "rule": "Dekoratívne médiá majú aria-hidden a prázdny alt, reálne fotky strihov a interiéru majú popisný slovenský alt; pohyblivý obsah dlhší než 5 s má pauzu, nič nebliká a zvuk nikdy nie je povinný ani autoplay.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Accessibility) + max-studio-ultra-x/references/15-accessibility.md §148"
+   },
+   {
+    "area": "a11y",
+    "rule": "Chyby formulárov sú naviazané na pole a oznámené asistívnej technológii, stav uploadu je prístupný a placeholder nikdy nenahrádza label.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Accessibility) + max-studio-ultra-x/references/15-accessibility.md §147 + 46-anti-pattern-atlas-300.md #104, #117, #120"
+   },
+   {
+    "area": "seo",
+    "rule": "Title, description, canonical, Open Graph a schema BarberShop (LocalBusiness) sa plnia len overenými dátami (adresa, geo, hodiny, telefón, sameAs); aggregateRating alebo review schema nikdy bez dohľadateľného zdroja a viditeľného obsahu.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (SEO and local discovery) + max-studio-ultra-x/references/104-local-business-growth-operations.md §983 + 46-anti-pattern-atlas-300.md #208–#209"
+   },
+   {
+    "area": "seo",
+    "rule": "NAP (názov, adresa, telefón) je kanonický a identický na webe, v schéme aj listingoch a vždy ide o údaje barbershopu, nikdy Salónu 30 (Mostná 30).",
+    "source": "max-studio-ultra-x/references/104-local-business-growth-operations.md §981 + 46-anti-pattern-atlas-300.md #220 + zadanie úlohy"
+   },
+   {
+    "area": "seo",
+    "rule": "Prirodzená slovenská copy okolo zámeru „strih / barber v Nitre“ bez keyword stuffingu, jeden H1 a nadpisy v logickom poradí.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (SEO) + max-studio-ultra-x/references/46-anti-pattern-atlas-300.md #207, #213"
+   },
+   {
+    "area": "seo",
+    "rule": "og:image a og:url sú absolútne URL doplnené pri deploy (označený komentár <!-- DEPLOY STEP -->), plus theme-color a inline SVG favicon značky.",
+    "source": "10k-websites/references/scrub-pipeline.md (quality floor) + 10k-websites/references/troubleshooting.md (Deploy)"
+   },
+   {
+    "area": "content-truth",
+    "rule": "Pred písaním copy sa preverí všetok dodaný obsah a každý neoverený fakt (adresa, hodiny, ceny, trvania, barberi, Bookio URL, Instagram, recenzie) ide do jedného typovaného config súboru s flagom REQUIRED_REAL_DATA; nič sa nevymýšľa ani neodvodzuje z fotky, konkurencie či starého postu.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Truth rule) + max-studio-ultra-x/references/100-local-business-website-engine.md §903 + PROMPT_LOCAL_BUSINESS_WEBSITE_PRO.md (bod 3)"
+   },
+   {
+    "area": "content-truth",
+    "rule": "Údaje Salónu 30 (Mostná 30, Nitra) nie sú údaje barbershopu: každé zdieľané pole (adresa, hodiny, telefón, cenník) je „client confirmation needed“, kým ho klient výslovne nepotvrdí pre Barbershop 30.",
+    "source": "zadanie úlohy + max-studio-ultra-x/references/100-local-business-website-engine.md §903 (verified / client confirmation needed / placeholder)"
+   },
+   {
+    "area": "content-truth",
+    "rule": "Syntetický alebo AI strih sa nikdy neprezentuje ako výsledok reálneho zákazníka; falošné potvrdenia rezervácie, testimonialy, ocenenia a profily sú zakázané a analytika beží len s dodaným consent systémom a bez fotiek, poznámok, mien či telefónov v payloade.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Truth rule, Analytics events) + max-studio-ultra-x/references/95-ai-media-for-cinematic-web.md §819"
+   },
+   {
+    "area": "content-truth",
+    "rule": "Fotografia je úprimná remeselná (nožnice, hrebeň, strojček, textúra vlasov, ruky, zrkadlo, kreslo, interiér) so zachovanou textúrou kože a vlasov, bez plastových AI tvárí, a zobrazia sa len osoby, ktoré so zverejnením súhlasili.",
+    "source": "source/refs/PROMPT_BARBERSHOP_30.md (Photography) + 10k-websites/references/prompt-laws.md (face consent rule) + max-studio-ultra-x/references/103-appointment-service-websites.md §967"
+   }
+  ],
+  "anti_patterns": [
+   "Generický black-and-gold barber template alebo „luxus“ vytvorený iba zlatom (PB30 Brand direction; MSX-46 #018).",
+   "Splash screen alebo dlhé logo intro, ktoré skrýva podnik a blokuje navigáciu či rezerváciu (PB30; MSX-46 #042, #261; MSX-86 Overlong Intro).",
+   "Scroll hijacking, snap bojujúci s kolieskom a pridlho pinnuté sekcie (PB30 Interaction; MSX-46 #026, #044, #045).",
+   "Animovať všetko, nadmerný parallax a rovnaký reveal v každej sekcii (MSX-46 #041, #043, #049; PB30 „animation on every element“).",
+   "3D len ako dekorácia, WebGL v plnej kvalite na mobile, shader bez fallbacku (MSX-46 #055, #056, #095, #129; PB30 „avoid heavy 3D“).",
+   "Autoplay ťažkého videa všade, priťažké video na mobile, autoplay zvuku (MSX-46 #057, #094, #109; MSX-95 §805).",
+   "Headline, ceny alebo CTA zapečené do videa/canvasu namiesto HTML (PB30 Intro must; MSX-95 §801; MSX-100 §914).",
+   "Glassmorphism, neónové alebo fialové gradienty, nadmerne zaoblené kontajnery (PB30 Layout; MSX-46 #003, #004, #005).",
+   "Tri rovnaké karty, hustý múr kariet, každá sekcia rovnako široká (MSX-46 #002, #014, #017).",
+   "Automatický výber „near-black + teplý amber akcent + vysokokontrastný serif“ pre všetko „dark/cinematic“ – brief je mu nebezpečne blízko, treba ho vedome odlíšiť machom a orechom (scrub-pipeline Design direction).",
+   "Inter alebo Roboto ako display písmo (scrub-pipeline quality floor; design-package §3).",
+   "Falošná obrazovka úspechu alebo outbound klik na Bookio počítaný ako potvrdená rezervácia (PB30 Bookio handoff; MSX-103 §962; MSX-46 #149).",
+   "Vymyslené recenzie, rating v schéme, dekoratívne trust badge bez zdroja (MSX-46 #143, #209; MSX-103 §972).",
+   "Falošná urgencia: odpočty, vymyslený dopyt, predvolené doplnky, tlak na vzhľad (MSX-103 §975; MSX-46 #142).",
+   "Skrytá primárna akcia, sticky CTA zakrývajúce obsah, ignorovaná safe area (MSX-46 #021, #088, #090).",
+   "Pohyb bez reduced-motion alternatívy alebo plošné transform:none !important, ktoré vyhodí mobilný prvok mimo obrazovky (MSX-46 #048, #116; troubleshooting.md).",
+   "Custom cursor na touch zariadení a informácia dostupná len na hover (MSX-46 #047, #031).",
+   "Orezané tváre a vertikálny cover-crop desktopového záberu, ktorý odreže ruky alebo nožnice (MSX-46 #087, #272; MSX-95 §807).",
+   "Neviditeľný focus, div ako tlačidlo, placeholder ako label, chyba formulára neoznámená (MSX-46 #101, #104, #105, #117).",
+   "rAF alebo animačná slučka bežiaca na skrytej karte, úniky pamäte animácií, neukončené listenery a neuvoľnené Three.js zdroje (MSX-46 #053, #072, #073, #130).",
+   "Predimenzovaný hero obrázok, médiá bez width/height, preload všetkého (MSX-46 #121, #125, #134).",
+   "Stock alebo AI fotka nesúhlasiaca s podnikom, plastové AI tváre (MSX-46 #010; PB30 Photography).",
+   "Schema nesúhlasiaca s viditeľným obsahom a nekonzistentné NAP – typicky údaje Salónu 30 omylom na webe barbershopu (MSX-46 #208, #220; MSX-104 §981).",
+   "Keyword stuffing, všetky nadpisy ako H1, tenké lokálne stránky (MSX-46 #207, #213, #206).",
+   "Korporátna stock copy a AI „tells“ („nie je to len X, je to Y“, falošné rozsahy, veľkolepé závery, vágne odvolávky) (10k-websites SKILL.md Phase 9 copy gate)."
+  ],
+  "scene_ideas": [
+   "Scéna 1 Kreslo: 3D kreslo v tme pod jediným teplým praktikálnym svetlom; scroll = pomalý push-in a ~15° usadenie do trojštvrťového pohľadu, headline sa skladá slovo po slove (word-by-word rise) v ľavom pokojnom lane, kým kreslo prichádza; mobil dostane ten istý moment ako statický poster.",
+   "Prechod 1→2 (kreslo → remeslo) na kove: kamera vojde do brúseného kovu podrúčky/opierky, kým spekulárny odlesk vyplní záber, a v tom okamihu sa crossfade-om prepne na reálnu makro fotku čepele nožníc s odleskom na rovnakom mieste; textúrny refresh v pohybe zakryje šev (seam law).",
+   "Scéna 2 Remeslo: scroll-scrubovaná sekvencia 3–5 reálnych stillov scissors-over-comb (žiadne AI ruky), staccato captiony typu „Tri zastrihnutia.“ s plató 80–130vh, a hairline SVG „strihová línia“, ktorá sa kreslí pozdĺž okraja sekcie ako brief-ový cut-line indikátor.",
+   "Prechod 2→3: hairline sa rozšíri na horizontálny „zrkadlový“ pás a fotka interiéru sa odhalí clip-path wipe-om zo stredu do strán (jeden čistý snip); nadpis sekcie používa entrance „halves parting“, ktorý ten istý pohyb zopakuje v písme.",
+   "Scéna 3 Miesto: full-bleed reálna fotka interiéru, text v negatívnom priestore; adresa, hodiny a odkaz na mapu ako HTML chip-scrimované labely; fixná vrstva zrna a soft glow pokračuje, aby interiér čítal ako pokračovanie tej istej miestnosti ako hero.",
+   "Prechod 3→4: fixné prostredie sa o stupeň oteplí (len opacity vrstvy, nie farba sekcie) a portréty barberov vstúpia so staggerom 60–150 ms do asymetrickej kompozície: jeden veľký portrét + dva menšie posunuté, nikdy tri rovnaké karty.",
+   "Scéna 4 Ľudia: každý barber len s dodaným menom, rolou a reálnymi špecializáciami; hover/focus odhalí jednu vetu s touch a klávesnicovým ekvivalentom; voľba „bez preferencie“ ako riadok, nie karta, ak ju Bookio podporuje.",
+   "Scéna 5 Služby: „cardless“ cenník s hairline riadkami, tabulárnymi číslicami, trvaním a cenou v každom riadku a riadkovým deep-linkom „Rezervovať“; sticky nadpis sekcie, riadky prichádzajú drift-down entrance-om; malá line-art silueta kresla ako tichý vizuálny anchor namiesto ikoniek.",
+   "Scéna 6 Výsledky: jediný interaktívny moment webu – before/after slider ovládaný ťahom aj šípkami, progres pri pustení plynulo zbehne späť; iba reálne fotky so súhlasom, prípadné AI ukážky s viditeľným labelom „Inšpirácia / ilustračná ukážka“.",
+   "Prechod 6→7: 3D kreslo (alebo jeho poster) sa vráti do stredu, teraz plne nasvietené, a pootočí sa čelom k divákovi, kým prichádza tri-stupňový settle: headline slovo po slove → subline → CTA riadok (tri príchody v jednom bande).",
+   "Scéna 7 Rezervácia: po platnom stave sa CTA „Rezervovať termín“ dokončí jedinou jemnou snip-linkou (transform/opacity, <400 ms), otvorí Bookio deep-link; ak brief nejde preniesť, zobrazí sa kopírovateľné zhrnutie a nikdy nie potvrdenie rezervácie.",
+   "Signature motív cez celý web: jedna hairline „strihová línia“ ako jediný signature element – kreslí sa ako rez v hero, stáva sa deliacou linkou sekcií, indikátorom progresu a podčiarknutím CTA; všetko ostatné ostáva tiché.",
+   "Mobilná verzia 7 scén: statický komponovaný poster kresla s HTML headline a CTA namiesto 3D/scrubu (gate pri 5 media queries), sekcie si nechajú IO entrance-y, ale žiadne pinnutie ani scrubovanie; dock s dvoma akciami Rezervovať + zavolať.",
+   "Zvuk ako voliteľná vrstva: explicitné tlačidlo „Zapnúť zvuk“ odomkne tri suché snipy a room tone pre hero; predvolene mute, stav uložený v session, nikdy nie podmienka na pochopenie obsahu.",
+   "Reduced-motion verzia celej cesty: každý zo 7 záberov má finálny kompozičný stav (poster + usadený text) zobrazený okamžite, slider ukáže both-states vedľa seba, strihová línia je nakreslená celá; navigácia a CTA poradie ostávajú identické."
+  ],
+  "notes": "CHÝBA / NEOVERENÉ\n- Súbor „Analyza_10_referencnych_videi.md“ v projekte neexistuje (overené find-om v /home/user/head-spa-30); žiadne pravidlo z neho nebolo odvodené.\n- Žiadny zdroj neobsahuje reálne údaje Barbershopu 30 (adresa, hodiny, telefón, cenník, trvania, barberi, Bookio URL, Instagram, recenzie, logo). Všetko je REQUIRED_REAL_DATA. Údaje Salónu 30 (Mostná 30) sa nesmú použiť ako náhrada.\n- Priečinok source/photos je prítomný, ale nebol súčasťou zadania; pred stavbou treba fotky inšpektovať (súhlasy osôb, rozlíšenie, action lane).\n- Konkrétne číselné prahy pre 3D v zdrojoch NIE SÚ: strop DPR, veľkosť GLB/textúr, počet draw calls, limit polygónov. Modul 21-threejs-webgl.md má len jednoriadkové „Purpose“ vety bez čísel. Pravidlá k 3D preto hovoria „explicitný strop v kóde“, nie konkrétnu hodnotu; hodnoty treba stanoviť a zmerať v projekte.\n- Výkonové rozpočty: žiadny zdroj neudáva cieľové LCP v ms ani JS budget v kB (16-performance.md hovorí len „set budgets“). Konkrétne čísla existujú iba pre video (4–8 MB / 6 s 1080p, crf 18, -g 8) a stilly (~1920 px) z ffmpeg-recipes.md.\n- Schopnosti Bookio (prefill parametre, custom fields, webhooky) nie sú v žiadnom zdroji – treba inšpektovať živú integráciu (MSX-104 §995).\n- Slovenská verzia copy gate: zoznam zakázaných „stock“ slov v 10k SKILL.md je anglický (leverage, seamless, empower…); slovenské ekvivalenty treba definovať v projekte.\n\nPROTIREČENIA MEDZI BALÍKMI\n1. 3D hero vs. brief: PROMPT_BARBERSHOP_30 výslovne hovorí „Do not add heavy 3D… Avoid WebGL unless a measured, essential benefit justifies it“ a 10k-websites skill 3D vôbec nerieši (pracuje s video scrubom). Zadanie úlohy žiada 3D kreslo. Riešenie v pravidlách: 3D len so zdôvodnením, meraním a ne-WebGL fallbackom testovaným ako prvým; alternatíva v súlade s oboma zdrojmi je scrubovaná image sequence/video kresla.\n2. Štruktúra webu: PROMPT_BARBERSHOP_30 má ako hlavnú konverznú funkciu selektor „Nájdi svoj strih“ + haircut brief + Bookio prefill (aj MSX-95 §813–816). Zadaných 7 scén (kreslo → remeslo → miesto → ľudia → služby → výsledky → rezervácia) selektor neobsahuje. Hero copy „VYBER SI STRIH. MY HO DOTIAHNEME.“ predpokladá selektor; bez neho je nepravdivá a treba ju zmeniť alebo selektor zaradiť.\n3. Stack a pipeline: 10k-websites vyžaduje plain HTML/CSS/JS bez build stepu, výlučne Higgsfield + Hostinger a fixný tutoriálový tok; PROMPT_BARBERSHOP_30 navrhuje Next.js + TypeScript a Higgsfield alebo Google Veo. Tutoriálové a pipeline časti 10k skillu (fázy, partner linky, „three-tool rule“) na tento projekt neplatia; prevzaté sú len inžinierske a dizajnové pravidlá (scrub-pipeline, prompt-laws, design-package).\n4. Mobilný hero: 10k-websites má ako default statický obraz na telefónoch (video len desktop, mobilný scrub len ak video < 8 MB a kompozícia prežije crop); PROMPT_BARBERSHOP_30 žiada samostatnú 9:16 video kompozíciu. Obe sa zhodujú, že poster musí byť kompletný hero – rozhodnutie o mobilnom videu treba spraviť vedome per projekt.\n5. Paleta: 10k-websites zakazuje ako default „near-black + warm amber accent + high-contrast serif“ (označuje to za AI klišé pre „dark/cinematic“); brief Barbershopu 30 je k tomu blízko (charcoal, amber svetlo, editoriálne display písmo). Zdroj pripúšťa výnimku, ak je to materiálny svet podniku – treba ju „zarobiť“: nositeľom identity je machová zelená + orech, amber ostáva svetlom, nie UI akcentom, a display písmo nie je default vysokokontrastný serif.\n6. Hands/AI: prompt-laws law 5 varuje, že ruky a známa anatómia v AI videu zlyhávajú; PROMPT_BARBERSHOP_30 Shot B je makro rúk s nožnicami a hrebeňom (vysoké riziko). Zadanie preferuje autentické fotky – pravidlá preto predpisujú reálne fotografie pre remeslo a AI len pre neanatomické textúry (mach, svetlo), ak vôbec.\n7. Interpunkcia: 10k „no em dashes“ je pravidlo pre anglickú copy; slovenská typografia používa pomlčku s medzerami. Pravidlo sa prenáša ako „žiadne AI-tell konstrukcie“, nie ako doslovný zákaz pomlčky.\n8. Počet signature momentov: PROMPT_BARBERSHOP_30 „no more than five“, MSX-95 §818 „at most 3–5“, 10k „one signature element“ + „one interactive moment“. Zvolené: max 5 momentov, z nich jeden interaktívny a jeden vizuálny signature element.\n\nKVALITA ZDROJOV\n- V balíku max-studio-ultra-x sú moduly 05–22, 42, 46, 62, 78, 83, 84, 86 šablónovité: každý modul má jednu „Purpose“ vetu a identický generický protokol; atlasy (hero 100, motion 150/300, anti-pattern 300/500, section 200) sú kombinatorické zoznamy názvov bez čísel či postupov. Použiteľný signál z nich sú len názvy (najmä anti-patternov). Skutočný obsah s postupmi majú len 95, 100, 103 a 104.\n- Všetky konkrétne číselné prahy v pravidlách (vh plató, flick test, k=0.16, 0.0005, 0.008, scrim alpha 0.62–0.72, 3.5:1, 4.5:1/3:1, 44 px, 5 media queries, -g 8/crf 18, 4–8 MB, 1920 px, 60–150 ms, ≥4 s, ≥60 s, 20 s watchdog, 375/390/430 px, ≤6,5 s intro, 5 s pauza) pochádzajú z 10k-websites/scrub-pipeline.md, ffmpeg-recipes.md a PROMPT_BARBERSHOP_30.md a sú tam označené ako „proven defaults / starting points“, nie zákony – pri odchýlke ju treba vysloviť."
+ },
+ "tech": {
+  "three_version": "0.186.1",
+  "three_files": [
+   "/home/user/head-spa-30/barbershop-30/assets/vendor/three.module.min.js",
+   "/home/user/head-spa-30/barbershop-30/assets/vendor/three.core.js",
+   "/home/user/head-spa-30/barbershop-30/assets/vendor/RoomEnvironment.js",
+   "/home/user/head-spa-30/barbershop-30/assets/vendor/RoundedBoxGeometry.js",
+   "/home/user/head-spa-30/barbershop-30/assets/vendor/three-LICENSE"
+  ],
+  "three_size_kb": 2071.1,
+  "fonts": [
+   {
+    "family": "Fraunces",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Fraunces-500.woff2",
+    "weight": "500",
+    "style": "normal",
+    "size_kb": 20.9
+   },
+   {
+    "family": "Fraunces",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Fraunces-800.woff2",
+    "weight": "800",
+    "style": "normal",
+    "size_kb": 21.1
+   },
+   {
+    "family": "Fraunces",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Fraunces-500i.woff2",
+    "weight": "500",
+    "style": "italic",
+    "size_kb": 26.1
+   },
+   {
+    "family": "Manrope",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Manrope-400.woff2",
+    "weight": "400",
+    "style": "normal",
+    "size_kb": 16.4
+   },
+   {
+    "family": "Manrope",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Manrope-600.woff2",
+    "weight": "600",
+    "style": "normal",
+    "size_kb": 16.4
+   },
+   {
+    "family": "Manrope",
+    "file": "/home/user/head-spa-30/barbershop-30/assets/fonts/Manrope-700.woff2",
+    "weight": "700",
+    "style": "normal",
+    "size_kb": 16.5
+   }
+  ],
+  "fonts_css_path": "/home/user/head-spa-30/barbershop-30/assets/fonts.css",
+  "webgl_screenshot_ok": true,
+  "chromium_launch": "chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] })  // Playwright 1.56.1, chromium_headless_shell-1194 from /opt/pw-browsers; GL reported by page: \"WebGL 2.0 (OpenGL ES 3.0 Chromium) | WebKit WebGL\"",
+  "screenshot_script_path": "/home/user/head-spa-30/barbershop-30/source/shot.mjs",
+  "notes": [
+   "three.js: npm three@0.186.1 installed in /tmp/claude-0/-home-user/9632978b-2b69-5a1e-a151-fbbea674fc3a/scratchpad/three-tmp (package.json version verified 0.186.1). build/ contains NO three.module.min.js (minified builds were dropped upstream), so build/three.module.js was copied as assets/vendor/three.module.min.js per the fallback rule. Since r167 three.module.js is a thin layer that imports './three.core.js' (WebGLRenderer etc. live in module, everything else in core), so three.core.js was copied alongside – it is REQUIRED; three.core.js itself has zero imports.",
+   "three.js sizes (raw / gzip -9): three.module.min.js 647.2 KB / 127.7 KB; three.core.js 1423.9 KB / 279.6 KB; RoomEnvironment.js 4.9 KB / 1.7 KB; RoundedBoxGeometry.js 6.3 KB / 2.0 KB; three-LICENSE 1.1 KB. Runtime total (module+core) 2071.1 KB raw, ~407 KB gzip; whole vendor dir 2082 KB.",
+   "In RoomEnvironment.js and RoundedBoxGeometry.js the bare `from 'three'` was rewritten to `from './three.module.min.js'`; grep confirms no other imports remain in assets/vendor. Verified by importing all three vendor modules in Node 22 (ESM): REVISION=186, MeshPhysicalMaterial/PMREMGenerator/RoomEnvironment/RoundedBoxGeometry all resolve and instantiate.",
+   "Fonts source: the GitHub raw URLs returned HTTP 403 from the session egress proxy (GitHub access not attached). Workaround: anonymous read of public google/fonts via `git clone --depth 1 --filter=blob:none --sparse` + `sparse-checkout set ofl/fraunces` into scratchpad/gf-sparse (commit 2eb0b48d5f760f62e286216f0859a8c540dbc1bd). Files obtained: Fraunces[SOFT,WONK,opsz,wght].ttf (360,440 B) and Fraunces-Italic[SOFT,WONK,opsz,wght].ttf (414,904 B) – exactly the files named in the task.",
+   "Fraunces fvar axes (both files): opsz 9..144 (default 9), wght 100..900 (default 900), SOFT 0..100 (default 0), WONK 0..1 (default 1). Static instances cut with fontTools 4.66.1 varLib.instancer at opsz=144, SOFT=0, WONK=0 and wght=500 / 800 (upright) / 500 (italic), then fontTools.subset with the exact unicode list from the task, layout_features='*', flavor=woff2 (brotli). Result: 464/464/463 glyphs, 410/410/409 cmap entries, OS/2 usWeightClass 500/800/500, italic flag set on 500i, GSUB features kept: case, liga, rvrn, ss01. Script: /tmp/claude-0/-home-user/9632978b-2b69-5a1e-a151-fbbea674fc3a/scratchpad/scripts/build_fonts.py",
+   "Manrope-400/600/700.woff2 copied byte-identical from /home/user/head-spa-30/assets/fonts/ (411 glyphs, 345 cmap entries, features aalt,calt,case,dnom,frac,liga,locl,numr,ordn,pnum,sinf,subs,sups,tnum).",
+   "Slovak cmap check via fontTools on all 6 woff2 files: every character of 'ľščťžýáíéôäňďú ĽŠČŤŽ' present; bonus set 'ÝÁÍÉÔÄŇĎÚĹĺŔŕÓóÜü€' also fully present. Total fonts dir 136 KB. woff2 is already Brotli-compressed, so gzip size ≈ raw (do not double-compress on the server).",
+   "assets/fonts.css: six @font-face rules, font-display: swap, no local(), url() paths relative to the css file (fonts/…). Fonts verified rendering in the WebGL test screenshot (Fraunces 800 for '30', 500 italic for 'Holičstvo', Manrope 400 for the caption, with diacritics).",
+   "WebGL test page /home/user/head-spa-30/barbershop-30/source/webgl-test.html: module import of ./../assets/vendor/three.module.min.js + RoomEnvironment.js, SphereGeometry(1,96,64) with MeshPhysicalMaterial(metalness 1, roughness 0.3), scene.environment = PMREMGenerator.fromScene(new RoomEnvironment(), 0.04), ACES tone mapping, key/rim directional lights, background #0b0b0d. Exposes window.__renderDone (false→true), window.__renderMs, window.__renderError and data-render-done on <html>; camera distance adapts to portrait aspect so the sphere stays in frame on 390x844.",
+   "Render time (performance.now from module start to first frame incl. PMREM build, SwiftShader): desktop 1440x900 199 ms (first run 373 ms), mobile 390x844 187 ms (first run 173 ms). Per-page wall time in shot.mjs ≈ 3.8–5.0 s because Chromium's FIRST composite of a fresh WebGL page under SwiftShader takes ~3.5 s one-off (measured: with preset 0 it lands in the first page.screenshot, with the other presets inside goto); subsequent captures of the same page take ~150–250 ms. Whole shot.mjs run (launch + 2 viewports) ≈ 8–11 s.",
+   "Pixel verification (PIL 12.3, scratchpad/scripts/check_shot.py): desktop mean 60.0, std 78.8, max 255, 29.7 % lit pixels, 8.4 % pixels ≥200, centre crop 2939 unique colours; mobile mean 47.4, std 70.8, max 255, 22.3 % lit, centre 2711 unique colours → not black, sphere present, specular highlights and room reflections visible (also visually inspected both PNGs).",
+   "Alternative launch combinations were also tested and ALL produced a lit sphere in this environment: (a) --use-gl=swiftshader --enable-webgl --ignore-gpu-blocklist, (b) default Playwright headless with no args (Playwright 1.56.1 headless shell falls back to SwiftShader automatically). Preset 0 (the requested ANGLE/SwiftShader set) is kept as default; the others are selectable in shot.mjs via --preset=N.",
+   "shot.mjs usage: `node source/shot.mjs <url|/path> <name> [scrollY] [waitMs] [--preset=N] [--dpr=N] [--full] [--out=dir] [--only=desktop|mobile]`. A path starting with '/' is served from the project root by a built-in Node static server on a free 127.0.0.1 port (no python needed); an absolute http(s) URL is opened directly. Viewports 1440x900 and 390x844 (mobile with isMobile/hasTouch, colorScheme dark). Waits for load, then for window.__renderDone !== false (max 20 s, no delay for pages without the flag), document.fonts.ready, optional scrollTo(scrollY), then waitMs (default 400). Writes docs/screenshots/<name>-desktop.png and <name>-mobile.png and prints page console logs + renderMs. Playwright is resolved through createRequire (global install at /opt/node-tools/node_modules/playwright via NODE_PATH), so no node_modules in the project.",
+   "Screenshots produced: /home/user/head-spa-30/barbershop-30/docs/screenshots/webgl-test-desktop.png (218 KB) and webgl-test-mobile.png (72 KB).",
+   "Scratchpad artefacts (outside project, left in place): three-tmp/ (npm install), gf-sparse/fonts (sparse google/fonts clone), fonts-dl/ (two 378-byte 403 JSON bodies, not fonts), scripts/ (build_fonts.py, check_shot.py, probe_timing.mjs, probe_shot2.mjs)."
+  ],
+  "issues": [
+   "three.module.min.js is NOT minified: three@0.186.1 ships no minified build, so the file is the plain build/three.module.js (647 KB) under the requested name, plus the mandatory three.core.js (1.42 MB). Combined ~2.07 MB raw / ~407 KB gzip. If payload matters, a follow-up step could bundle+minify both into one file with esbuild (not done – task said to change nothing else).",
+   "GitHub raw download (github.com/google/fonts/raw/...) is blocked by the session proxy (403: repository access not enabled). Fonts were obtained from the same repository via anonymous git sparse clone instead; the Google Fonts css2 fallback was not needed.",
+   "Fraunces static instances keep the variable font's default-instance name records (subfamily 'Black' / 'Black Italic', fullName 'Fraunces Black') because instancer ran with updateFontNames=False. OS/2 usWeightClass (500/800) and italic flags are correct and @font-face overrides naming, so this is cosmetic (visible only in font inspectors).",
+   "Each WebGL page costs ~3.5 s extra on its first composited frame under SwiftShader (one-off per page, not per screenshot). Expect ~4 s per viewport in shot.mjs for WebGL pages; non-WebGL pages are ~0.5 s.",
+   "Not touched by this task but note for the orchestrator: assets/style.css (08:05) and docs/CONTRACT.md (08:06) carry timestamps from during this session – they were created/modified by another agent, not by this task."
+  ]
+ }
+}

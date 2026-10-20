@@ -637,3 +637,13 @@ port 8581) je v `$SP/barber/audit/plan/zaklad-20-10/` (skrol stredne, čas vlák
 Zápis výsledkov: `$SP/barber/opravy/<dávka>/<rola>/` (tabuľka pred/po, príkazy, záťaž, kľúčové snímky). Po
 poslednej dávke nová časť `barbershop-30/docs/CHECKS.md` (Plynulosť na telefóne a čierne okná, 2026-10: metodika,
 čísla pred/po, čo sa zmenilo, ako zopakovať meranie).
+
+## Doplnok 20. 10.: skill senior grafika (Premium & Cinematic Web Studio)
+
+Majiteľ dodal skill a 100 zadaní pre senior grafika/VFX s pokynom „využi ako senior pre zlepšenie Barbershopu“.
+Skill je rozbalený a overený (273 súborov, SHA-256, `validate_bundle.py` passed) v
+`scratchpad/skill-premium/build-premium-websites/` a v toolboxe (`toolbox/build-premium-websites/`). Každá dávka
+má v `davky.json` pole `skill_senior` s presnou trasou kapitol (C…) a techník (FX…); kontrolóri pole
+`skill_senior_kontrola`. Po D1–D5 nasleduje **D6 – seniorský art direction a VFX prechod** podľa skillu (C016/C017
+tri smery a odporúčanie, C032/C033 filmové prechody, C042 compositing, C084 vizuálna kontrola, C100 záverečná
+seniorská kontrola), s rovnakými pravidlami (len skutočné fotky, obsah sa nemení, rozpočet výkonu z D1–D4 sa nesmie zhoršiť).

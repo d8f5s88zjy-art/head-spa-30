@@ -1,0 +1,39 @@
+{
+ "popis": "Vzor EDL pre scripts/short.py. Cesty sú relatívne k tomuto súboru: vedľa neho priečinok zabery/ (videá z telefónu), pisma/ (skopíruj assets/pisma zo skillu youtube-shorts) a hudba/. Texty sú zástupné, skutočné len zo zdrojov prevádzky. Pole popis skript ignoruje.",
+ "vystup": "out/short.mp4",
+ "fps": 30,
+ "klipy": [
+  {"zdroj": "zabery/IMG_0001.mov", "od": 0.1, "do": 2.75, "rychlost": 0.8},
+  {"zdroj": "zabery/IMG_0002.mov", "od": 0.0, "do": 2.0, "stred": [0.5, 0.5], "zvuk": false},
+  {"zdroj": "zabery/IMG_0003.mov", "od": 0.5, "do": 3.4, "zoom": [1.0, 1.06], "zoom_stred": [0.5, 0.45],
+   "prechod": {"typ": "prelinanie", "dlzka": 0.25}}
+ ],
+ "titulky": {
+  "pismo": "pisma/ManropeTitulky-700.ttf",
+  "styl": "aktualne",
+  "velkost": 76,
+  "farba": "#FFFFFF",
+  "zvyraznenie": "#D4B062",
+  "podklad": "#161616",
+  "podklad_kryt": 0.85,
+  "podklad_tvar": "jeden",
+  "spodok": 1240,
+  "okraj": 195,
+  "fade_ms": 120,
+  "frazy": [
+   {"od": 0.10, "do": 1.50, "text": "[Hook, prvé slová]"},
+   {"od": 1.55, "do": 3.20, "text": "[Dokončenie hooku]",
+    "slova": [[1.55, 2.30, "[Dokončenie"], [2.30, 3.20, "hooku]"]]}
+  ]
+ },
+ "zvuk": {
+  "klipy_db": -6,
+  "hudba": {"zdroj": "hudba/podklad.wav", "od": 0, "db": 0, "nabeh": 0.05, "dobeh": 0.8},
+  "lufs": -14,
+  "true_peak": -1.0,
+  "rezerva_aac_db": 1.0,
+  "metoda": "ebur128"
+ },
+ "export": {"crf": 18, "maxrate": "16M", "bufsize": "32M", "preset": "slow", "audio_kbps": 384, "bez_editlistu": true},
+ "nahlad_casy": [0.8, 2.4, 4.6]
+}
