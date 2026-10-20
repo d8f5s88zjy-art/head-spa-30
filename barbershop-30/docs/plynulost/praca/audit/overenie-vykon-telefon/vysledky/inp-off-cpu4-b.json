@@ -1,0 +1,123 @@
+{
+ "meno": "inp-off-cpu4-b",
+ "film": "off",
+ "filmStav": {
+  "on": false
+ },
+ "cpu": 4,
+ "y": 2700,
+ "zataz": [
+  "4.67",
+  "5.70",
+  "5.61"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 136,
+   "udalosti": [
+    "pointerdown:136(spracovanie 7)",
+    "pointerup:136(spracovanie 0)",
+    "click:136(spracovanie 59)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 6.9,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 50.4,
+     "vynuteneStylLayout": 43.3
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     73,
+     64
+    ],
+    [
+     57,
+     51
+    ]
+   ]
+  },
+  "jazykEN": {
+   "inpMs": 88,
+   "udalosti": [
+    "pointerdown:16(spracovanie 1)",
+    "pointerup:16(spracovanie 0)",
+    "click:88(spracovanie 12)"
+   ],
+   "obsluhaVlaknoMs": {
+    "touchstart": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 10.5,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 14,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     66,
+     58
+    ],
+    [
+     223,
+     211
+    ]
+   ]
+  },
+  "jazykSK": {
+   "inpMs": 128,
+   "udalosti": [
+    "pointerdown:24(spracovanie 0)",
+    "pointerup:24(spracovanie 0)",
+    "click:128(spracovanie 3)"
+   ],
+   "obsluhaVlaknoMs": {
+    "blur": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 2.7,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 4.2,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     70,
+     68
+    ],
+    [
+     209,
+     178
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 104,
+   "udalosti": [
+    "pointerdown:24(spracovanie 0)",
+    "pointerup:24(spracovanie 0)",
+    "click:104(spracovanie 9)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 9.1,
+     "vynuteneStylLayout": 4.9
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

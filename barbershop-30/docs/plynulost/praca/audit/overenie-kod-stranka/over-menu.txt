@@ -1,0 +1,20 @@
+┌─────────┬───────────┬──────┬─────┬─────┬───────────────┬─────────┬─────────────┬─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ (index) │ v         │ y    │ beh │ INP │ udalost       │ cakanie │ spracovanie │ vykreslenie │ loaf                                                                                                              │
+├─────────┼───────────┼──────┼─────┼─────┼───────────────┼─────────┼─────────────┼─────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 0       │ 'zaklad'  │ 0    │ 1   │ 176 │ 'click'       │ 74      │ 66          │ 36          │ '113 [] ; 83 [BUTTON.onclick 59/56] ; 159 []'                                                                     │
+│ 1       │ 'zaklad'  │ 3000 │ 1   │ 160 │ 'pointerdown' │ 7       │ 9           │ 144         │ '67 [] ; 129 [DOMWindow.ontouchend 11/0, BUTTON.onclick 67/65] ; 143 [] ; 87 [BaseAudioContext.decodeAudio 11/0]' │
+│ 2       │ 'menufix' │ 0    │ 1   │ 136 │ 'pointerdown' │ 20      │ 6           │ 110         │ '87 [] ; 97 [DOMWindow.ontouchend 10/0] ; 159 []'                                                                 │
+│ 3       │ 'menufix' │ 3000 │ 1   │ 112 │ 'pointerdown' │ 5       │ 1           │ 106         │ '54 [] ; 89 [DOMWindow.ontouchend 10/0] ; 128 [] ; 98 [BaseAudioContext.decodeAudio 20/0]'                        │
+│ 4       │ 'zaklad'  │ 0    │ 2   │ 152 │ 'pointerdown' │ 19      │ 8           │ 124         │ '68 [] ; 110 [DOMWindow.ontouchend 13/0, BUTTON.onclick 60/58] ; 120 []'                                          │
+│ 5       │ 'zaklad'  │ 3000 │ 2   │ 120 │ 'pointerdown' │ 5       │ 5           │ 110         │ '64 [] ; 98 [DOMWindow.ontouchend 12/0, BUTTON.onclick 49/44] ; 139 [] ; 81 [BaseAudioContext.decodeAudio 16/0]'  │
+│ 6       │ 'menufix' │ 0    │ 2   │ 280 │ 'pointerdown' │ 19      │ 12          │ 249         │ '86 [] ; 224 [DOMWindow.ontouchend 25/0] ; 252 []'                                                                │
+│ 7       │ 'menufix' │ 3000 │ 2   │ 240 │ 'pointerdown' │ 9       │ 6           │ 226         │ '60 [] ; 212 [DOMWindow.ontouchend 13/0] ; 214 [] ; 82 [BaseAudioContext.decodeAudio 17/0]'                       │
+│ 8       │ 'zaklad'  │ 0    │ 3   │ 176 │ 'pointerdown' │ 16      │ 13          │ 146         │ '60 [] ; 142 [DOMWindow.ontouchend 17/0, BUTTON.onclick 54/52] ; 113 []'                                          │
+│ 9       │ 'zaklad'  │ 3000 │ 3   │ 136 │ 'pointerdown' │ 19      │ 6           │ 111         │ '86 [DOMWindow.ontouchend 11/0, BUTTON.onclick 39/37] ; 123 []'                                                   │
+│ 10      │ 'menufix' │ 0    │ 3   │ 144 │ 'pointerdown' │ 19      │ 5           │ 120         │ '53 [] ; 104 [DOMWindow.ontouchend 9/0] ; 139 []'                                                                 │
+│ 11      │ 'menufix' │ 3000 │ 3   │ 144 │ 'pointerup'   │ 14      │ 0           │ 130         │ '60 [] ; 96 [DOMWindow.ontouchend 16/0, BUTTON.onclick 5/0] ; 82 [] ; 52 []'                                      │
+└─────────┴───────────┴──────┴─────┴─────┴───────────────┴─────────┴─────────────┴─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+zaklad y=0: INP medián 176 (152, 176, 176), spracovanie medián 13 (8, 13, 66)
+zaklad y=3000: INP medián 136 (120, 136, 160), spracovanie medián 6 (5, 6, 9)
+menufix y=0: INP medián 144 (136, 144, 280), spracovanie medián 6 (5, 6, 12)
+menufix y=3000: INP medián 144 (112, 144, 240), spracovanie medián 1 (0, 1, 6)

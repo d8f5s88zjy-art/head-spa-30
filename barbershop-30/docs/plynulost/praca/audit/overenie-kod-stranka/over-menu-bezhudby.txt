@@ -1,0 +1,28 @@
+┌─────────┬──────────────────┬──────┬─────┬─────┬───────────────┬─────────┬─────────────┬─────────────┬───────────────────────────────────────────────┐
+│ (index) │ v                │ y    │ beh │ INP │ udalost       │ cakanie │ spracovanie │ vykreslenie │ loaf                                          │
+├─────────┼──────────────────┼──────┼─────┼─────┼───────────────┼─────────┼─────────────┼─────────────┼───────────────────────────────────────────────┤
+│ 0       │ 'zaklad'         │ 0    │ 1   │ 112 │ 'pointerdown' │ 15      │ 9           │ 89          │ '93 [] ; 78 [BUTTON.onclick 49/48] ; 164 []'  │
+│ 1       │ 'zaklad'         │ 3000 │ 1   │ 112 │ 'pointerdown' │ 6       │ 7           │ 99          │ '74 [] ; 84 [BUTTON.onclick 57/54] ; 118 []'  │
+│ 2       │ 'menufix'        │ 0    │ 1   │ 136 │ 'pointerdown' │ 19      │ 8           │ 110         │ '101 [] ; 100 [] ; 131 []'                    │
+│ 3       │ 'menufix'        │ 3000 │ 1   │ 120 │ 'click'       │ 31      │ 4           │ 85          │ '59 [] ; 76 [] ; 124 []'                      │
+│ 4       │ 'menufix,nolock' │ 0    │ 1   │ 136 │ 'pointerdown' │ 22      │ 9           │ 105         │ '73 [] ; 107 [] ; 126 []'                     │
+│ 5       │ 'menufix,nolock' │ 3000 │ 1   │ 112 │ 'pointerdown' │ 6       │ 9           │ 97          │ '55 [] ; 94 [] ; 157 []'                      │
+│ 6       │ 'zaklad'         │ 0    │ 2   │ 144 │ 'pointerup'   │ 22      │ 1           │ 121         │ '59 [] ; 96 [BUTTON.onclick 77/74] ; 143 []'  │
+│ 7       │ 'zaklad'         │ 3000 │ 2   │ 168 │ 'pointerdown' │ 9       │ 8           │ 151         │ '138 [BUTTON.onclick 97/94] ; 167 []'         │
+│ 8       │ 'menufix'        │ 0    │ 2   │ 112 │ 'pointerdown' │ 10      │ 6           │ 97          │ '96 [] ; 88 [] ; 135 []'                      │
+│ 9       │ 'menufix'        │ 3000 │ 2   │ 128 │ 'pointerdown' │ 5       │ 8           │ 116         │ '87 [] ; 101 [] ; 176 []'                     │
+│ 10      │ 'menufix,nolock' │ 0    │ 2   │ 112 │ 'pointerdown' │ 14      │ 7           │ 91          │ '81 [] ; 83 [] ; 165 []'                      │
+│ 11      │ 'menufix,nolock' │ 3000 │ 2   │ 104 │ 'pointerdown' │ 8       │ 1           │ 94          │ '90 [] ; 79 [] ; 143 []'                      │
+│ 12      │ 'zaklad'         │ 0    │ 3   │ 152 │ 'pointerdown' │ 20      │ 9           │ 123         │ '91 [] ; 108 [BUTTON.onclick 66/62] ; 140 []' │
+│ 13      │ 'zaklad'         │ 3000 │ 3   │ 144 │ 'click'       │ 57      │ 62          │ 24          │ '64 [] ; 81 [BUTTON.onclick 59/55] ; 186 []'  │
+│ 14      │ 'menufix'        │ 0    │ 3   │ 120 │ 'pointerdown' │ 22      │ 7           │ 91          │ '86 [] ; 76 [] ; 150 []'                      │
+│ 15      │ 'menufix'        │ 3000 │ 3   │ 104 │ 'pointerup'   │ 24      │ 1           │ 79          │ '53 [] ; 65 [] ; 115 []'                      │
+│ 16      │ 'menufix,nolock' │ 0    │ 3   │ 136 │ 'pointerdown' │ 25      │ 9           │ 102         │ '119 [] ; 99 [] ; 132 []'                     │
+│ 17      │ 'menufix,nolock' │ 3000 │ 3   │ 112 │ 'pointerup'   │ 22      │ 1           │ 89          │ '59 [] ; 70 [] ; 152 []'                      │
+└─────────┴──────────────────┴──────┴─────┴─────┴───────────────┴─────────┴─────────────┴─────────────┴───────────────────────────────────────────────┘
+zaklad y=0: INP medián 144 (112, 144, 152), spracovanie medián 9 (1, 9, 9)
+zaklad y=3000: INP medián 144 (112, 144, 168), spracovanie medián 8 (7, 8, 62)
+menufix y=0: INP medián 120 (112, 120, 136), spracovanie medián 7 (6, 7, 8)
+menufix y=3000: INP medián 120 (104, 120, 128), spracovanie medián 4 (1, 4, 8)
+menufix,nolock y=0: INP medián 136 (112, 136, 136), spracovanie medián 9 (7, 9, 9)
+menufix,nolock y=3000: INP medián 112 (104, 112, 112), spracovanie medián 1 (1, 1, 9)

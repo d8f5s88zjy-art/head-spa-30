@@ -1,0 +1,225 @@
+{
+ "meno": "d2-on-cpu1-seq1",
+ "url": "http://127.0.0.1:8544/barbershop-30/?film=on&uvod=off&hudba=off",
+ "cpu": 1,
+ "gesto": "stredne",
+ "js": "ab/gl-pocitadlo.js",
+ "css": null,
+ "sub": "zamena-seq1.json",
+ "zatazPred": [
+  7.37,
+  8.3,
+  7.58
+ ],
+ "zatazPo": [
+  7.09,
+  7.98,
+  7.53
+ ],
+ "trvanieS": 59.6,
+ "y": [
+  0,
+  2958
+ ],
+ "cls": "karty world js-kin js-steps world-in",
+ "film": {
+  "on": true,
+  "dpr": 1.25,
+  "frames": 317
+ },
+ "gl": {
+  "volani": 212,
+  "mpx": 99.4,
+  "mb": 398,
+  "msSpolu": 801,
+  "msMax": 237.9,
+  "snimokSNahratim": 116,
+  "nahratiNaSnimkuMax": 10,
+  "mbNaSnimkuMax": 10.9,
+  "msNaSnimkuP50": 4.2,
+  "msNaSnimkuP95": 12.2
+ },
+ "animacieBezia": [
+  "btn btn-primary::after:lesk"
+ ],
+ "snimkyRaf": {
+  "n": 240,
+  "p50": 66.7,
+  "p95": 950,
+  "max": 4033.2,
+  "priem": 246.66,
+  "nad33": 62.9,
+  "nad100": 82
+ },
+ "vlaknoNaSnimku": {
+  "snimok": 243,
+  "cpu": {
+   "n": 243,
+   "p50": 5,
+   "p95": 23.6,
+   "max": 39.3,
+   "priem": 7.64
+  },
+  "nad16": 9.9,
+  "nad33": 1.2,
+  "stylPriem": 1.4,
+  "layoutPriem": 0.05,
+  "paintPriem": 0.8,
+  "skriptPriem": 3.12,
+  "gcPriem": 0.19,
+  "prvkovStylPriem": 29.7
+ },
+ "dlheUlohy": {
+  "stena50": 13,
+  "vlakno50": 0,
+  "maxVlaknoMs": 23,
+  "maxStenaMs": 1557.9
+ },
+ "sekcie": {
+  "uvod": {
+   "snimok": 55,
+   "cpuPriem": 3.7,
+   "cpuP95": 7.9,
+   "styl": 1.42,
+   "layout": 0,
+   "paint": 0.59,
+   "skript": 1.08
+  },
+  "vstup-dnu": {
+   "snimok": 43,
+   "cpuPriem": 8.4,
+   "cpuP95": 18,
+   "styl": 1.56,
+   "layout": 0.04,
+   "paint": 0.81,
+   "skript": 3.37
+  },
+  "remeslo": {
+   "snimok": 37,
+   "cpuPriem": 13.8,
+   "cpuP95": 36.8,
+   "styl": 1.62,
+   "layout": 0.08,
+   "paint": 0.88,
+   "skript": 6.82
+  },
+  "cakaren": {
+   "snimok": 57,
+   "cpuPriem": 9.4,
+   "cpuP95": 27.3,
+   "styl": 1.12,
+   "layout": 0.07,
+   "paint": 0.77,
+   "skript": 4.1
+  },
+  "tim": {
+   "snimok": 51,
+   "cpuPriem": 4.8,
+   "cpuP95": 9.8,
+   "styl": 1.41,
+   "layout": 0.05,
+   "paint": 0.99,
+   "skript": 1.32
+  }
+ },
+ "funkcie": [
+  [
+   "film.js:1210 frame",
+   618,
+   244,
+   2.53,
+   15
+  ],
+  [
+   ":2 f",
+   37,
+   244,
+   0.15,
+   4.7
+  ],
+  [
+   "app.js:234 tick",
+   22,
+   181,
+   0.12,
+   0.4
+  ],
+  [
+   "film.js:1349 on.capture",
+   16,
+   84,
+   0.19,
+   0.8
+  ],
+  [
+   ":7 frame",
+   13,
+   244,
+   0.05,
+   0.2
+  ],
+  [
+   "film.js:1074 ",
+   13,
+   119,
+   0.11,
+   1.3
+  ],
+  [
+   "film.js:1407 ",
+   5,
+   63,
+   0.07,
+   0.3
+  ],
+  [
+   "app.js:258 start",
+   1,
+   84,
+   0.02,
+   0.1
+  ],
+  [
+   "film.js:1362 gesture",
+   1,
+   7,
+   0.13,
+   0.5
+  ],
+  [
+   "film.js:605 onFrame",
+   1,
+   10,
+   0.06,
+   0.2
+  ],
+  [
+   "three.module.min.js:7 e",
+   1,
+   20,
+   0.06,
+   0.1
+  ],
+  [
+   "film.js:613 f",
+   1,
+   20,
+   0.03,
+   0.1
+  ],
+  [
+   "film.js:1358 moved",
+   0,
+   14,
+   0.02,
+   0.1
+  ],
+  [
+   "film.js:1282 poke",
+   0,
+   7,
+   0.02,
+   0
+  ]
+ ]
+}

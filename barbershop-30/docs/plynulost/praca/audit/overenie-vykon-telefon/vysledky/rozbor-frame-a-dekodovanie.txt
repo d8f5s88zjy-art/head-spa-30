@@ -1,0 +1,34 @@
+== t1-on-zaklad-a
+film frame volaní 374 vlákno p50 3.3 p90 23.0 p95 31.9 max 203.5 spolu 3447 ms; nad 16 ms: 56 nad 50 ms: 10
+frame stena 295.4 vlákno 203.5 | 
+frame stena 249.7 vlákno 169.2 | 
+frame stena 267.5 vlákno 149.2 | 
+frame stena 139.1 vlákno 122.0 | 
+== t1-on-bez-seq-a
+film frame volaní 588 vlákno p50 2.8 p90 6.3 p95 9.7 max 536.8 spolu 2438 ms; nad 16 ms: 8 nad 50 ms: 1
+frame stena 760.4 vlákno 536.8 | Layout 1.0
+frame stena 45.5 vlákno 27.7 | 
+frame stena 37.3 vlákno 24.2 | 
+frame stena 34.7 vlákno 22.3 | 
+== d2-on-cpu1-zaklad
+film frame volaní 1252 vlákno p50 0.4 p90 0.7 p95 4.5 max 20.6 spolu 1025 ms; nad 16 ms: 2 nad 50 ms: 0
+frame stena 31.8 vlákno 20.6 | 
+frame stena 144.9 vlákno 19.4 | 
+frame stena 190.2 vlákno 16.6 | 
+frame stena 19.4 vlákno 16.2 | 
+== d2-on-cpu1-bez-seq
+film frame volaní 732 vlákno p50 0.5 p90 0.7 p95 0.8 max 6.0 spolu 407 ms; nad 16 ms: 0 nad 50 ms: 0
+frame stena 6.6 vlákno 6.0 | 
+frame stena 9.5 vlákno 5.6 | 
+frame stena 5.9 vlákno 5.3 | 
+frame stena 8.9 vlákno 5.2 | 
+== d2-on-cpu1-seq1
+film frame volaní 244 vlákno p50 0.7 p90 6.2 p95 8.8 max 15.0 spolu 618 ms; nad 16 ms: 0 nad 50 ms: 0
+frame stena 252.8 vlákno 15.0 | 
+frame stena 26.6 vlákno 14.7 | 
+frame stena 17.9 vlákno 14.5 | 
+frame stena 17.1 vlákno 13.7 | 
+== dekódovanie d2-off-cpu4-svih
+ImageDecodeTask @ThreadPoolForegroundWorker                  n 18 stena p50 27.1 max 77.8 priem 32.4 vlákno priem 2.9 {"":18}
+Decode LazyPixelRef @ThreadPoolForegroundWorker              n 18 stena p50 25.5 max 77.7 priem 31.2 vlákno priem 2.4 {"":18}
+Decode Image @ThreadPoolForegroundWorker                     n 10 stena p50 13.9 max 43.5 priem 15.0 vlákno priem 1.3 {"avif":9,"png":1}

@@ -1,0 +1,15 @@
+r13-p1-f4-cpu1-cold-film-oprava: snímok 174 (2.3/s), FCP 912, tmavý prvý obraz po FCP 907 ms
+  film prázdne plátno (WebGL): 6 okien, spolu 28099 ms, najdlhšie 9521 ms
+      10929 ms   1368 ms y=4575 film={'S': 5.78, 'T': 5.78, 'r': '0111200000', 'n': 28, 'cur': 'kreslo-stred-m'} ['menu #sluzby']
+      27493 ms   1224 ms y=1768 film={'S': 3.06, 'T': 3.06, 'r': '0000211100', 'n': 62, 'cur': 'stol-video'} []
+      35171 ms   6679 ms y=5178 film={'S': 6.03, 'T': 6.03, 'r': '0111000000', 'n': 79, 'cur': 'kreslo-stred-m'} ['menu #galeria']
+      53314 ms   5769 ms y=1468 film={'S': 2.56, 'T': 2.56, 'r': '0000002211', 'n': 108, 'cur': 'stol-video'} []
+      65198 ms   3538 ms y=2708 film={'S': 4.71, 'T': 4.71, 'r': '0111200000', 'n': 133, 'cur': 'sala-rano-video'} ['menu #tim']
+      71150 ms   9521 ms y=1201 film={'S': 2.1, 'T': 2.1, 'r': '0011110000', 'n': 142, 'cur': 'sala-video'} ['klik logo']
+  pixely (>= 20% tmavej prázdnej plochy): 6 okien, spolu 12024 ms, najdlhšie 4867 ms
+       1198 ms    623 ms plocha 0.93 y=0->0 gl= wi=0 hid=None karty=[[0, 1, 1, 1, 1, 'rohozka-m-1086.avif']] ['goto http://127.0.0.1:8359/barbershop-30/?film=on&uvod=off', 'load']
+      12703 ms   4858 ms plocha 0.88 y=4960.529296875->5050.78125 gl=draw wi=1 hid=None karty=[[5, 1, 1, 1, 1, 'kreslo-stred-m-1086.avif']] ['menu #sluzby']
+      27119 ms   1195 ms plocha 0.22 y=5050.78125->5050.78125 gl=draw wi=1 hid=None karty=[[5, 1, 1, 1, 1, 'kreslo-stred-m-1086.avif']] []
+      28921 ms   4867 ms plocha 0.88 y=5051->1097.1875 gl=draw wi=1 hid=None karty=[[1, 1, 1, 1, 1, 'f025.avif']] []
+      42018 ms    189 ms plocha 0.25 y=9988.5->9988.5 gl=draw wi=1 hid=None karty=[] ['skok PATA']
+      70753 ms    292 ms plocha 0.93 y=2869.578125->2869.578125 gl=draw wi=1 hid=None karty=[[4, 1, 1, 1, 1, 'sala-rano-m-1086.avif']] ['klik logo']

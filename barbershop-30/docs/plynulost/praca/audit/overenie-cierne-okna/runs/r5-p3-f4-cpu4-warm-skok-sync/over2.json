@@ -1,0 +1,229 @@
+{
+ "run": "r5-p3-f4-cpu4-warm-skok-sync",
+ "nastavenie": {
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "q": "film=off",
+  "cache": "warm",
+  "scen": "skok",
+  "rm": false,
+  "savedata": false,
+  "inject": "ab-sync.js"
+ },
+ "snimok": 367,
+ "fps": 13.2,
+ "fcp_ms": 668,
+ "lcp": [
+  [
+   "largest-contentful-paint",
+   "",
+   "",
+   668
+  ]
+ ],
+ "tmavy_prvy_obraz_po_fcp_ms": 1144,
+ "film_prazdne_platno": {
+  "pocet": 0,
+  "spolu_ms": 0,
+  "najdlhsie_ms": 0,
+  "okna": []
+ },
+ "pixely": {
+  "pocet": 2,
+  "spolu_ms": 3948,
+  "najdlhsie_ms": 3154,
+  "okna": [
+   {
+    "od_ms": 1019,
+    "trvanie_ms": 794,
+    "plocha": 0.81,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "",
+    "wi": 0,
+    "film": null,
+    "karty_so>0": [
+     [
+      0,
+      1,
+      1,
+      1,
+      1,
+      "rohozka-m-1448.avif"
+     ]
+    ],
+    "hid_px": 0,
+    "znacky": [
+     "cache zahriata",
+     "goto http://127.0.0.1:8359/barbershop-30/?film=off",
+     "load"
+    ],
+    "snimky": [
+     "f00001.jpg",
+     "f00001.jpg",
+     "f00006.jpg"
+    ]
+   },
+   {
+    "od_ms": 18589,
+    "trvanie_ms": 3154,
+    "plocha": 0.28,
+    "y": 9988.5,
+    "y_koniec": 9988.5,
+    "gl": "",
+    "wi": 0,
+    "film": null,
+    "karty_so>0": [
+     [
+      6,
+      1,
+      1,
+      1,
+      1,
+      "kava-m-1448.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #galeria"
+    ],
+    "snimky": [
+     "f00212.jpg",
+     "f00212.jpg",
+     "f00264.jpg"
+    ]
+   }
+  ]
+ },
+ "obrazky": [
+  {
+   "url": "assets/img/film/rohozka-m-1448.avif",
+   "od": 136,
+   "do": 139,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 799,
+   "do": 821,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/stol-m-1448.avif",
+   "od": 805,
+   "do": 825,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-1448.avif",
+   "od": 4669,
+   "do": 4671,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sala-rano-m-1448.avif",
+   "od": 4825,
+   "do": 4835,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-1448.avif",
+   "od": 4825,
+   "do": 4835,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-nikolas-820.avif",
+   "od": 4909,
+   "do": 4910,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-kristian-820.avif",
+   "od": 4909,
+   "do": 4925,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-damian-820.avif",
+   "od": 4909,
+   "do": 4928,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-michal-820.avif",
+   "od": 4909,
+   "do": 4928,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-andy-820.avif",
+   "od": 4909,
+   "do": 4928,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-1448.avif",
+   "od": 4909,
+   "do": 4928,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-1448.avif",
+   "od": 5525,
+   "do": 5529,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/naradie-noznice-1600.avif",
+   "od": 17510,
+   "do": 17523,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/detail-stol-640.avif",
+   "od": 17511,
+   "do": 17525,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-barberpole-640.avif",
+   "od": 17511,
+   "do": 17525,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-neon-640.avif",
+   "od": 17511,
+   "do": 17525,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/vstup-m-1448.avif",
+   "od": 17511,
+   "do": 17526,
+   "kB": null,
+   "cache": true
+  }
+ ],
+ "chyby": []
+}

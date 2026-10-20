@@ -1,0 +1,128 @@
+== menu #sluzby (t=9508) cieľ kreslo-stred-m: prázdne plátno od 1438 ms do 1870 ms (trvanie 432 ms)
+   bitmap f050.avif                       od    904  do    980  = 76 ms  720x1280
+   bitmap f049.avif                       od    904  do    988  = 84 ms  720x1280
+   bitmap f043.avif                       od    905  do    989  = 84 ms  720x1280
+   bitmap f042.avif                       od    905  do    989  = 84 ms  720x1280
+   fetch cakaren-m-1448.avif              od    937  hlavičky 1114  telo None  AbortError: The user aborted a request.
+   fetch cakaren-m-hlbka.webp             od    937  hlavičky 1471  telo 1530  
+   fetch tim-slucka-poster-864.avif       od   1319  hlavičky 1502  telo 1648  
+   bitmap cakaren-m-hlbka.webp            od   1530  do   1540  = 10 ms  768x1366
+   fetch kreslo-stred-m-1448.avif         od   1616  hlavičky 1619  telo 2772  
+   fetch kreslo-stred-m-hlbka.webp        od   1617  hlavičky 1799  telo 1851  
+   bitmap tim-slucka-poster-864.avif      od   1648  do   1670  = 22 ms  864x1536
+   bitmap kreslo-stred-m-hlbka.webp       od   1851  do   1859  = 8 ms  768x1366
+   bitmap kreslo-stred-m-1448.avif        od   2772  do   2857  = 85 ms  1448x2575
+   fetch kava-m-1086.avif                 od   3042  hlavičky 3214  telo 3628  
+   fetch kava-m-hlbka.webp                od   3042  hlavičky 3217  telo 3279  
+   fetch sud-m-1086.avif                  od   3043  hlavičky 3220  telo 3806  
+   fetch sud-m-hlbka.webp                 od   3043  hlavičky 3220  telo 3282  
+   bitmap kava-m-hlbka.webp               od   3279  do   3288  = 9 ms  768x1365
+   bitmap sud-m-hlbka.webp                od   3282  do   3290  = 8 ms  768x1366
+   bitmap kava-m-1086.avif                od   3628  do   3670  = 42 ms  1086x1931
+   bitmap sud-m-1086.avif                 od   3806  do   3843  = 37 ms  1086x1931
+   pásy do grafiky: 54 volaní, 45 ms v hlavnom vlákne, od 919 do 6565 ms
+== menu #vstup-dnu (t=17625) cieľ sala-video: prázdne plátno od 6885 ms do None ms (trvanie None ms)
+   fetch cakaren-m-1086.avif              od   6148  hlavičky 6323  telo 6506  
+   fetch cakaren-m-hlbka.webp             od   6148  hlavičky 6151  telo 6154  
+   bitmap cakaren-m-hlbka.webp            od   6154  do   6169  = 15 ms  768x1366
+   bitmap cakaren-m-1086.avif             od   6506  do   6543  = 37 ms  1086x1931
+   fetch f025.avif                        od   6905  hlavičky 6910  telo 6912  
+   bitmap f025.avif                       od   6912  do   6926  = 14 ms  720x1280
+   fetch f022.avif                        od   9365  hlavičky 9371  telo 9381  
+   fetch rohozka-m-1448.avif              od   9367  hlavičky 9373  telo 9384  
+   fetch rohozka-m-hlbka.webp             od   9367  hlavičky 9381  telo 9391  
+   bitmap f022.avif                       od   9382  do   9406  = 24 ms  720x1280
+   bitmap rohozka-m-1448.avif             od   9384  do   9495  = 111 ms  1448x2574
+   bitmap rohozka-m-hlbka.webp            od   9391  do   9411  = 20 ms  768x1365
+   pásy do grafiky: 19 volaní, 13 ms v hlavnom vlákne, od 6880 do 9302 ms
+== menu #galeria (t=27741) cieľ kava-m: prázdne plátno od 37 ms do 1491 ms (trvanie 1454 ms)
+   bitmap f023.avif                       od   1489  do   1532  = 43 ms  720x1280
+   bitmap f024.avif                       od   1490  do   1537  = 47 ms  720x1280
+   bitmap f025.avif                       od   1490  do   1537  = 47 ms  720x1280
+   bitmap f022.avif                       od   1490  do   1547  = 57 ms  720x1280
+   bitmap f026.avif                       od   1490  do   1550  = 60 ms  720x1280
+   bitmap f000.avif                       od   1699  do   1893  = 194 ms  720x1280
+   bitmap f001.avif                       od   1699  do   1894  = 195 ms  720x1280
+   bitmap f002.avif                       od   1699  do   1893  = 194 ms  720x1280
+   bitmap f026.avif                       od   1859  do   1904  = 45 ms  720x1280
+   bitmap f002.avif                       od   2106  do   4461  = 2355 ms  720x1280
+   bitmap f027.avif                       od   4422  do   4509  = 87 ms  720x1280
+   bitmap f028.avif                       od   4423  do   4509  = 86 ms  720x1280
+   bitmap f029.avif                       od   4423  do   4535  = 112 ms  720x1280
+   bitmap f030.avif                       od   4424  do   4510  = 86 ms  720x1280
+   bitmap f050.avif                       od   4482  do   4560  = 78 ms  720x1280
+   bitmap f043.avif                       od   4484  do   4568  = 84 ms  720x1280
+   bitmap f042.avif                       od   4484  do   4569  = 85 ms  720x1280
+   fetch kava-m-1086.avif                 od   4509  hlavičky 4537  telo 4541  
+   fetch kava-m-hlbka.webp                od   4509  hlavičky 4539  telo 4541  
+   bitmap f049.avif                       od   4514  do   4588  = 74 ms  720x1280
+   bitmap kava-m-1086.avif                od   4541  do   4638  = 97 ms  1086x1931
+   bitmap kava-m-hlbka.webp               od   4541  do   4599  = 58 ms  768x1365
+   fetch sud-m-1086.avif                  od   4796  hlavičky 4806  telo 4817  
+   fetch sud-m-hlbka.webp                 od   4797  hlavičky 4808  telo 4813  
+   fetch kreslo-stred-m-1448.avif         od   4797  hlavičky 4811  telo 4817  
+   fetch kreslo-stred-m-hlbka.webp        od   4797  hlavičky 4812  telo 4817  
+   fetch vstup-m-1086.avif                od   4798  hlavičky 4979  telo 5211  
+   fetch vstup-m-hlbka.webp               od   4798  hlavičky 4980  telo 4998  
+   bitmap sud-m-hlbka.webp                od   4813  do   4826  = 13 ms  768x1366
+   bitmap kreslo-stred-m-hlbka.webp       od   4817  do   4830  = 13 ms  768x1366
+   bitmap sud-m-1086.avif                 od   4817  do   4907  = 90 ms  1086x1931
+   bitmap kreslo-stred-m-1448.avif        od   4817  do   4887  = 70 ms  1448x2575
+   bitmap vstup-m-hlbka.webp              od   4998  do   5007  = 9 ms  768x1366
+   bitmap vstup-m-1086.avif               od   5211  do   5277  = 66 ms  1086x1931
+   pásy do grafiky: 78 volaní, 2563 ms v hlavnom vlákne, od 1481 do 5753 ms
+== skok PATA (t=35471) cieľ vstup-m: prázdne plátno od None ms do None ms (trvanie None ms)
+   pásy do grafiky: 9 volaní, 4 ms v hlavnom vlákne, od 859 do 915 ms
+== klik Späť hore (t=41472) cieľ rohozka-m: prázdne plátno od 4698 ms do None ms (trvanie None ms)
+   fetch rohozka-m-1448.avif              od   4726  hlavičky 4732  telo 4736  
+   fetch rohozka-m-hlbka.webp             od   4727  hlavičky 4733  telo 4738  
+   bitmap rohozka-m-1448.avif             od   4736  do   4810  = 74 ms  1448x2574
+   bitmap rohozka-m-hlbka.webp            od   4738  do   4754  = 16 ms  768x1365
+   pásy do grafiky: 11 volaní, 28 ms v hlavnom vlákne, od 4811 do 9885 ms
+== menu #tim (t=52182) cieľ sala-rano-video: prázdne plátno od 196 ms do 2309 ms (trvanie 2113 ms)
+   fetch f025.avif                        od   2223  hlavičky 2228  telo 2230  
+   fetch f022.avif                        od   2224  hlavičky 2230  telo 2232  
+   bitmap f025.avif                       od   2230  do   2248  = 18 ms  720x1280
+   bitmap f022.avif                       od   2232  do   2297  = 65 ms  720x1280
+   bitmap f000.avif                       od   2387  do   2427  = 40 ms  720x1280
+   bitmap f001.avif                       od   2389  do   2441  = 52 ms  720x1280
+   bitmap f002.avif                       od   2389  do   2443  = 54 ms  720x1280
+   bitmap f000.avif                       od   2389  do   2451  = 62 ms  720x1280
+   bitmap f001.avif                       od   2389  do   2461  = 72 ms  720x1280
+   bitmap f002.avif                       od   2389  do   2462  = 73 ms  720x1280
+   bitmap f002.avif                       od   2529  do   2731  = 202 ms  720x1280
+   bitmap f002.avif                       od   2648  do   2731  = 83 ms  720x1280
+   bitmap f050.avif                       od   6887  do   6936  = 49 ms  720x1280
+   bitmap f049.avif                       od   6888  do   6936  = 48 ms  720x1280
+   bitmap f043.avif                       od   6888  do   6954  = 66 ms  720x1280
+   bitmap f042.avif                       od   6888  do   6953  = 65 ms  720x1280
+   fetch tim-slucka-poster-864.avif       od   6910  hlavičky 6930  telo 6932  
+   bitmap tim-slucka-poster-864.avif      od   6932  do   6997  = 65 ms  864x1536
+   fetch kreslo-stred-m-1448.avif         od   7079  hlavičky 7100  telo 7116  
+   fetch kreslo-stred-m-hlbka.webp        od   7079  hlavičky 7106  telo 7122  
+   fetch cakaren-m-1086.avif              od   7079  hlavičky 7107  telo 7129  
+   fetch cakaren-m-hlbka.webp             od   7080  hlavičky 7107  telo 7137  
+   fetch kava-m-1086.avif                 od   7080  hlavičky 7107  telo 7140  
+   fetch kava-m-hlbka.webp                od   7080  hlavičky 7107  telo 7138  
+   bitmap kreslo-stred-m-1448.avif        od   7116  do   7356  = 240 ms  1448x2575
+   bitmap kreslo-stred-m-hlbka.webp       od   7122  do   7162  = 40 ms  768x1366
+   bitmap cakaren-m-1086.avif             od   7129  do   7237  = 108 ms  1086x1931
+   bitmap cakaren-m-hlbka.webp            od   7137  do   7162  = 25 ms  768x1366
+   bitmap kava-m-hlbka.webp               od   7138  do   7174  = 36 ms  768x1365
+   bitmap kava-m-1086.avif                od   7140  do   7235  = 95 ms  1086x1931
+   pásy do grafiky: 45 volaní, 193 ms v hlavnom vlákne, od 783 do 8128 ms
+== klik logo (t=60509) cieľ rohozka-m: prázdne plátno od 1234 ms do None ms (trvanie None ms)
+   fetch f022.avif                        od    761  hlavičky 768  telo 769  
+   bitmap f022.avif                       od    769  do    817  = 48 ms  720x1280
+   fetch f025.avif                        od    890  hlavičky 898  telo 899  
+   bitmap f025.avif                       od    899  do    960  = 61 ms  720x1280
+   bitmap f000.avif                       od   1233  do   1295  = 62 ms  720x1280
+   bitmap f001.avif                       od   1233  do   1297  = 64 ms  720x1280
+   bitmap f002.avif                       od   1233  do   1371  = 138 ms  720x1280
+   fetch rohozka-m-1448.avif              od   1251  hlavičky 1263  telo 1264  
+   fetch rohozka-m-hlbka.webp             od   1252  hlavičky 1297  telo 1298  
+   bitmap rohozka-m-1448.avif             od   1264  do   1377  = 113 ms  1448x2574
+   bitmap rohozka-m-hlbka.webp            od   1298  do   1343  = 45 ms  768x1365
+   bitmap f000.avif                       od   1485  do   1581  = 96 ms  720x1280
+   bitmap f001.avif                       od   1485  do   1591  = 106 ms  720x1280
+   pásy do grafiky: 46 volaní, 88 ms v hlavnom vlákne, od 61 do 5506 ms

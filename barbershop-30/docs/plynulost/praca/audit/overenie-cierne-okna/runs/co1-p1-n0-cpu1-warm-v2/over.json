@@ -1,0 +1,1488 @@
+{
+ "run": "co1-p1-n0-cpu1-warm-v2",
+ "nastavenie": {
+  "dev": "phone",
+  "dpr": 1,
+  "net": "none",
+  "cpu": 1,
+  "q": "film=on&uvod=off",
+  "cache": "warm",
+  "scen": "skok",
+  "rm": false,
+  "savedata": false,
+  "inject": ""
+ },
+ "snimok": 183,
+ "fps": 4.2,
+ "fcp_ms": 188,
+ "lcp": [
+  [
+   "largest-contentful-paint",
+   "",
+   "",
+   188
+  ]
+ ],
+ "tmavy_prvy_obraz_po_fcp_ms": 306,
+ "film_prazdne_platno": {
+  "pocet": 4,
+  "spolu_ms": 6558,
+  "najdlhsie_ms": 3044,
+  "okna": [
+   {
+    "od_ms": 8128,
+    "trvanie_ms": 606,
+    "y": 3139,
+    "film": {
+     "S": 5.12,
+     "T": 5.12,
+     "r": "0111200000",
+     "n": 60,
+     "cur": "sala-rano-video"
+    },
+    "znacky": [
+     "film: true",
+     "menu #sluzby"
+    ]
+   },
+   {
+    "od_ms": 20854,
+    "trvanie_ms": 686,
+    "y": 1659,
+    "film": {
+     "S": 2.88,
+     "T": 2.88,
+     "r": "0000211100",
+     "n": 91,
+     "cur": "stol-video"
+    },
+    "znacky": [
+     "menu #vstup-dnu"
+    ]
+   },
+   {
+    "od_ms": 26922,
+    "trvanie_ms": 3044,
+    "y": 4116,
+    "film": {
+     "S": 5.57,
+     "T": 5.57,
+     "r": "0111100000",
+     "n": 136,
+     "cur": "kreslo-stred-m"
+    },
+    "znacky": [
+     "menu #galeria"
+    ]
+   },
+   {
+    "od_ms": 41672,
+    "trvanie_ms": 2222,
+    "y": 1822,
+    "film": {
+     "S": 3.16,
+     "T": 3.16,
+     "r": "0000000011",
+     "n": 169,
+     "cur": "stol-video"
+    },
+    "znacky": [
+     "klik Späť hore"
+    ]
+   }
+  ]
+ },
+ "pixely": {
+  "pocet": 9,
+  "spolu_ms": 20063,
+  "najdlhsie_ms": 11718,
+  "okna": [
+   {
+    "od_ms": 285,
+    "trvanie_ms": 210,
+    "plocha": 0.81,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "",
+    "wi": 0,
+    "film": null,
+    "karty_so>0": [
+     [
+      0,
+      1,
+      1,
+      1,
+      1,
+      "rohozka-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "cache zahriata",
+     "goto http://127.0.0.1:8359/barbershop-30/?film=on&uvod=off",
+     "load"
+    ],
+    "snimky": [
+     "f00001.jpg",
+     "f00001.jpg",
+     "f00003.jpg"
+    ]
+   },
+   {
+    "od_ms": 5769,
+    "trvanie_ms": 369,
+    "plocha": 0.31,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 1,
+     "T": 1,
+     "r": "0111000000",
+     "n": 24,
+     "cur": "rohozka-m"
+    },
+    "karty_so>0": [
+     [
+      0,
+      1,
+      1,
+      1,
+      1,
+      "rohozka-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "goto http://127.0.0.1:8359/barbershop-30/?film=on&uvod=off",
+     "load",
+     "film: true"
+    ],
+    "snimky": [
+     "f00053.jpg",
+     "f00054.jpg",
+     "f00056.jpg"
+    ]
+   },
+   {
+    "od_ms": 8050,
+    "trvanie_ms": 407,
+    "plocha": 0.75,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 1.17,
+     "T": 3.65,
+     "r": "0111000000",
+     "n": 59,
+     "cur": "rohozka-m"
+    },
+    "karty_so>0": [
+     [
+      1,
+      1,
+      1,
+      1,
+      1,
+      "f025.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "film: true",
+     "menu #sluzby"
+    ],
+    "snimky": [
+     "f00078.jpg",
+     "f00080.jpg",
+     "f00082.jpg"
+    ]
+   },
+   {
+    "od_ms": 9099,
+    "trvanie_ms": 3775,
+    "plocha": 0.88,
+    "y": 5028.64208984375,
+    "y_koniec": 5050.78125,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 5.95,
+     "T": 6,
+     "r": "0000011220",
+     "n": 65,
+     "cur": "kreslo-stred-m"
+    },
+    "karty_so>0": [
+     [
+      5,
+      1,
+      1,
+      1,
+      1,
+      "kreslo-stred-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #sluzby"
+    ],
+    "snimky": [
+     "f00091.jpg",
+     "f00091.jpg",
+     "f00099.jpg"
+    ]
+   },
+   {
+    "od_ms": 15993,
+    "trvanie_ms": 348,
+    "plocha": 0.23,
+    "y": 5050.78125,
+    "y_koniec": 5050.78125,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 6,
+     "T": 6,
+     "r": "0000011110",
+     "n": 80,
+     "cur": "kreslo-stred-m"
+    },
+    "karty_so>0": [
+     [
+      5,
+      1,
+      1,
+      1,
+      1,
+      "kreslo-stred-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [],
+    "snimky": [
+     "f00101.jpg",
+     "f00101.jpg",
+     "f00101.jpg"
+    ]
+   },
+   {
+    "od_ms": 20344,
+    "trvanie_ms": 1733,
+    "plocha": 0.75,
+    "y": 5050.78125,
+    "y_koniec": 5050.78125,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 6,
+     "T": 6,
+     "r": "0000011110",
+     "n": 90,
+     "cur": "kreslo-stred-m"
+    },
+    "karty_so>0": [
+     [
+      5,
+      1,
+      1,
+      1,
+      1,
+      "kreslo-stred-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #vstup-dnu"
+    ],
+    "snimky": [
+     "f00109.jpg",
+     "f00118.jpg",
+     "f00118.jpg"
+    ]
+   },
+   {
+    "od_ms": 22209,
+    "trvanie_ms": 844,
+    "plocha": 0.88,
+    "y": 1659.060546875,
+    "y_koniec": 1097.1875,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 2.08,
+     "T": 1.96,
+     "r": "0211000000",
+     "n": 96,
+     "cur": "sala-video"
+    },
+    "karty_so>0": [
+     [
+      1,
+      1,
+      1,
+      1,
+      1,
+      "f025.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #vstup-dnu"
+    ],
+    "snimky": [
+     "f00120.jpg",
+     "f00122.jpg",
+     "f00128.jpg"
+    ]
+   },
+   {
+    "od_ms": 26960,
+    "trvanie_ms": 659,
+    "plocha": 0.75,
+    "y": 1097.1875,
+    "y_koniec": 1097.1875,
+    "gl": "clear",
+    "wi": 1,
+    "film": {
+     "S": 5.59,
+     "T": 5.89,
+     "r": "0010002000",
+     "n": 136,
+     "cur": "kreslo-stred-m"
+    },
+    "karty_so>0": [
+     [
+      4,
+      1,
+      1,
+      1,
+      1,
+      "sala-rano-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #galeria"
+    ],
+    "snimky": [
+     "f00145.jpg",
+     "f00145.jpg",
+     "f00152.jpg"
+    ]
+   },
+   {
+    "od_ms": 30092,
+    "trvanie_ms": 11718,
+    "plocha": 0.88,
+    "y": 9899.9677734375,
+    "y_koniec": 9988.5,
+    "gl": "draw",
+    "wi": 1,
+    "film": {
+     "S": 6.87,
+     "T": 7,
+     "r": "0000001100",
+     "n": 139,
+     "cur": "kava-m"
+    },
+    "karty_so>0": [
+     [
+      6,
+      1,
+      1,
+      1,
+      1,
+      "kava-m-1086.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "menu #galeria"
+    ],
+    "snimky": [
+     "f00158.jpg",
+     "f00158.jpg",
+     "f00172.jpg"
+    ]
+   }
+  ]
+ },
+ "obrazky": [
+  {
+   "url": "assets/img/film/rohozka-m-1086.avif",
+   "od": 33,
+   "do": 38,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 167,
+   "do": 169,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/stol-m-1086.avif",
+   "od": 168,
+   "do": 170,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-1086.avif",
+   "od": 2219,
+   "do": 2224,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-hlbka.webp",
+   "od": 2219,
+   "do": 2225,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 2465,
+   "do": 2470,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f022.avif",
+   "od": 2466,
+   "do": 2474,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f000.avif",
+   "od": 2531,
+   "do": 2540,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f008.avif",
+   "od": 2531,
+   "do": 2541,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f016.avif",
+   "od": 2531,
+   "do": 2541,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f024.avif",
+   "od": 2531,
+   "do": 2541,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f000.avif",
+   "od": 2532,
+   "do": 2541,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f008.avif",
+   "od": 2532,
+   "do": 2541,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f016.avif",
+   "od": 2532,
+   "do": 2543,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f024.avif",
+   "od": 2532,
+   "do": 2543,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f032.avif",
+   "od": 2550,
+   "do": 2556,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f040.avif",
+   "od": 2551,
+   "do": 2557,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f048.avif",
+   "od": 2551,
+   "do": 2558,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f004.avif",
+   "od": 2552,
+   "do": 2559,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f032.avif",
+   "od": 2553,
+   "do": 2559,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f040.avif",
+   "od": 2553,
+   "do": 2559,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f004.avif",
+   "od": 2553,
+   "do": 2560,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f012.avif",
+   "od": 2553,
+   "do": 2561,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f012.avif",
+   "od": 2557,
+   "do": 2561,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f020.avif",
+   "od": 2558,
+   "do": 2561,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f028.avif",
+   "od": 2560,
+   "do": 2564,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f036.avif",
+   "od": 2560,
+   "do": 2565,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f020.avif",
+   "od": 2560,
+   "do": 2565,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f028.avif",
+   "od": 2561,
+   "do": 2565,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f036.avif",
+   "od": 2563,
+   "do": 2565,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f002.avif",
+   "od": 2563,
+   "do": 2565,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f044.avif",
+   "od": 2564,
+   "do": 2566,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f002.avif",
+   "od": 2566,
+   "do": 2567,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f006.avif",
+   "od": 2568,
+   "do": 2568,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f010.avif",
+   "od": 2570,
+   "do": 2571,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f006.avif",
+   "od": 2571,
+   "do": 2573,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f010.avif",
+   "od": 2571,
+   "do": 2574,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f014.avif",
+   "od": 2572,
+   "do": 2574,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f018.avif",
+   "od": 2572,
+   "do": 2574,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f014.avif",
+   "od": 2573,
+   "do": 2582,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f018.avif",
+   "od": 2574,
+   "do": 2582,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f022.avif",
+   "od": 2576,
+   "do": 2582,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f026.avif",
+   "od": 2576,
+   "do": 2582,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f022.avif",
+   "od": 2577,
+   "do": 2582,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f026.avif",
+   "od": 2587,
+   "do": 2593,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f030.avif",
+   "od": 2589,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f034.avif",
+   "od": 2589,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f030.avif",
+   "od": 2590,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f034.avif",
+   "od": 2590,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f038.avif",
+   "od": 2591,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f042.avif",
+   "od": 2591,
+   "do": 2595,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f038.avif",
+   "od": 2591,
+   "do": 2596,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f046.avif",
+   "od": 2600,
+   "do": 2600,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f042.avif",
+   "od": 2601,
+   "do": 2614,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f001.avif",
+   "od": 2604,
+   "do": 2615,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f003.avif",
+   "od": 2605,
+   "do": 2615,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f050.avif",
+   "od": 2605,
+   "do": 2615,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f001.avif",
+   "od": 2605,
+   "do": 2616,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f003.avif",
+   "od": 2608,
+   "do": 2616,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f005.avif",
+   "od": 2608,
+   "do": 2617,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f005.avif",
+   "od": 2610,
+   "do": 2617,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f007.avif",
+   "od": 2621,
+   "do": 2629,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f009.avif",
+   "od": 2623,
+   "do": 2654,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f011.avif",
+   "od": 2623,
+   "do": 2654,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f007.avif",
+   "od": 2623,
+   "do": 2655,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f009.avif",
+   "od": 2629,
+   "do": 2661,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f011.avif",
+   "od": 2629,
+   "do": 2668,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f013.avif",
+   "od": 2629,
+   "do": 2668,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f013.avif",
+   "od": 2629,
+   "do": 2671,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f015.avif",
+   "od": 2660,
+   "do": 2671,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f017.avif",
+   "od": 2663,
+   "do": 2671,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f019.avif",
+   "od": 2667,
+   "do": 2672,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f015.avif",
+   "od": 2671,
+   "do": 2676,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f017.avif",
+   "od": 2704,
+   "do": 2705,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f021.avif",
+   "od": 2712,
+   "do": 2715,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f019.avif",
+   "od": 2715,
+   "do": 2752,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f021.avif",
+   "od": 2716,
+   "do": 2762,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f023.avif",
+   "od": 2716,
+   "do": 2762,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f025.avif",
+   "od": 2720,
+   "do": 2763,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f027.avif",
+   "od": 2720,
+   "do": 2763,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f023.avif",
+   "od": 2720,
+   "do": 2763,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 2721,
+   "do": 2764,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f029.avif",
+   "od": 2724,
+   "do": 2764,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f027.avif",
+   "od": 2754,
+   "do": 2764,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f029.avif",
+   "od": 2815,
+   "do": 2823,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f031.avif",
+   "od": 2815,
+   "do": 2826,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f033.avif",
+   "od": 2815,
+   "do": 2829,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f035.avif",
+   "od": 2815,
+   "do": 2829,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f031.avif",
+   "od": 2815,
+   "do": 2829,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f033.avif",
+   "od": 2816,
+   "do": 2830,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f037.avif",
+   "od": 2817,
+   "do": 2832,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f035.avif",
+   "od": 2817,
+   "do": 2833,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f037.avif",
+   "od": 2825,
+   "do": 2833,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f039.avif",
+   "od": 2830,
+   "do": 2833,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f041.avif",
+   "od": 2835,
+   "do": 2844,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f043.avif",
+   "od": 2835,
+   "do": 2844,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f039.avif",
+   "od": 2836,
+   "do": 2844,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f041.avif",
+   "od": 2837,
+   "do": 2846,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f043.avif",
+   "od": 2837,
+   "do": 2846,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f045.avif",
+   "od": 2843,
+   "do": 2846,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f047.avif",
+   "od": 2847,
+   "do": 2848,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f049.avif",
+   "od": 2848,
+   "do": 2849,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-nikolas-480.avif",
+   "od": 7857,
+   "do": 7860,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-kristian-480.avif",
+   "od": 7857,
+   "do": 7862,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-damian-480.avif",
+   "od": 7857,
+   "do": 7863,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-michal-480.avif",
+   "od": 7857,
+   "do": 7863,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-andy-480.avif",
+   "od": 7857,
+   "do": 7864,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-dominika-480.avif",
+   "od": 7857,
+   "do": 7864,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-kevin-480.avif",
+   "od": 7858,
+   "do": 7866,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/tim-lajko-480.avif",
+   "od": 7858,
+   "do": 7866,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-1086.avif",
+   "od": 7874,
+   "do": 7876,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sala-rano-m-1086.avif",
+   "od": 8125,
+   "do": 8136,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-1086.avif",
+   "od": 8125,
+   "do": 8136,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-1086.avif",
+   "od": 8125,
+   "do": 8136,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-hlbka.webp",
+   "od": 8126,
+   "do": 8135,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-1086.avif",
+   "od": 8137,
+   "do": 8139,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/video/tim-slucka-poster-864.avif",
+   "od": 8150,
+   "do": 8172,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-1086.avif",
+   "od": 8353,
+   "do": 8359,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-1086.avif",
+   "od": 8381,
+   "do": 8384,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-hlbka.webp",
+   "od": 8381,
+   "do": 8389,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/video/tim-slucka-864.webm",
+   "od": 8596,
+   "do": 8602,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-1086.avif",
+   "od": 8871,
+   "do": 8885,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-hlbka.webp",
+   "od": 8871,
+   "do": 8886,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-1086.avif",
+   "od": 8871,
+   "do": 8886,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-hlbka.webp",
+   "od": 8871,
+   "do": 8886,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-1086.avif",
+   "od": 20393,
+   "do": 20394,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-hlbka.webp",
+   "od": 20395,
+   "do": 20404,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f022.avif",
+   "od": 20871,
+   "do": 20873,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 21372,
+   "do": 21379,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-1086.avif",
+   "od": 21722,
+   "do": 21727,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-hlbka.webp",
+   "od": 21722,
+   "do": 21728,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-1086.avif",
+   "od": 26565,
+   "do": 26570,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/cakaren-m-hlbka.webp",
+   "od": 26565,
+   "do": 26568,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-1086.avif",
+   "od": 26940,
+   "do": 26944,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kreslo-stred-m-hlbka.webp",
+   "od": 26940,
+   "do": 26944,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/naradie-noznice-640.avif",
+   "od": 27113,
+   "do": 27115,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/detail-stol-640.avif",
+   "od": 27113,
+   "do": 27115,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-barberpole-640.avif",
+   "od": 27113,
+   "do": 27115,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-neon-640.avif",
+   "od": 27113,
+   "do": 27115,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-zrkadlo-640.avif",
+   "od": 27113,
+   "do": 27121,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-buldog-640.avif",
+   "od": 27113,
+   "do": 27121,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/galeria-kava-640.avif",
+   "od": 27113,
+   "do": 27122,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/vstup-m-1086.avif",
+   "od": 27294,
+   "do": 27297,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-1086.avif",
+   "od": 27621,
+   "do": 27623,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/kava-m-hlbka.webp",
+   "od": 27621,
+   "do": 27622,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-1086.avif",
+   "od": 30101,
+   "do": 30119,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/sud-m-hlbka.webp",
+   "od": 30103,
+   "do": 30108,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/vstup-m-1086.avif",
+   "od": 30103,
+   "do": 30114,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/vstup-m-hlbka.webp",
+   "od": 30103,
+   "do": 30108,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/okolo-kresla/f022.avif",
+   "od": 41700,
+   "do": 41704,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-1086.avif",
+   "od": 41808,
+   "do": 41819,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/img/film/rohozka-m-hlbka.webp",
+   "od": 41809,
+   "do": 41819,
+   "kB": null,
+   "cache": true
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 43897,
+   "do": 43899,
+   "kB": null,
+   "cache": true
+  }
+ ],
+ "chyby": []
+}

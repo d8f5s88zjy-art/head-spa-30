@@ -23,7 +23,9 @@ await page.waitForTimeout(10000);                                // načítanie 
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
 await page.touchscreen.tap(200, 300);                            // jedno ťuknutie (bez posunu)
 await page.waitForTimeout(500);
-const gpuPid = () => { try { return execSync("pgrep -f 'type=gpu-process' -n").toString().trim(); } catch (e) { return null; } };
+// GPU proces práve tohto prehliadača (na stroji môžu bežať aj iné): potomok procesu prehliadača
+const bpid = (() => { try { return execSync(`pgrep -P ${process.pid}`).toString().trim().split('\n').find((p) => /headless_shell|chrome/.test(fs.readFileSync(`/proc/${p}/cmdline`, 'utf8'))); } catch (e) { return null; } })();
+const gpuPid = () => { try { return execSync(`pgrep -P ${bpid} -f 'type=gpu-process'`).toString().trim().split('\n')[0]; } catch (e) { return null; } };
 const cpuOf = (pid) => { try { const f = fs.readFileSync(`/proc/${pid}/stat`, 'utf8').split(') ')[1].split(' '); return (Number(f[11]) + Number(f[12])) / 100; } catch (e) { return 0; } };
 const gp = gpuPid();
 const s0 = await page.evaluate(() => ({ fr: BS30_FILM.state.frames, d: window.__glDraw.snimky.length }));
@@ -44,7 +46,7 @@ const filmF = M.filter((e) => e.name === 'FunctionCall' && e.args && e.args.data
 const td = (a) => a.reduce((s, e) => s + (e.tdur ?? e.dur), 0) / 1000;
 const fr = s1.fr - s0.fr;
 const pas = s1.snimky.map((x) => x.f);
-const out = { cpu: CPU, sekund: SEK, y: Y, nakreslenychSnimok: fr, snimokZaSekundu: +(fr / SEK).toFixed(1), dpr: s1.dpr, mixNaKonci: s1.mix,
+const out = { gpuPid: gp, cpu: CPU, sekund: SEK, y: Y, nakreslenychSnimok: fr, snimokZaSekundu: +(fr / SEK).toFixed(1), dpr: s1.dpr, mixNaKonci: s1.mix,
   kresleniNaSnimku: s1.snimky.length ? +(s1.snimky.reduce((a, x) => a + x.d, 0) / s1.snimky.length).toFixed(2) : 0,
   snimokSRenderTargetom: pas.filter((x) => x > 0).length, snimokBezRenderTargetu: pas.filter((x) => x === 0).length,
   hlavneVlaknoMsSpolu: +td(top).toFixed(0), hlavneVlaknoPodiel: +(100 * td(top) / (SEK * 1000)).toFixed(1),

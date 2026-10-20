@@ -1,0 +1,163 @@
+{
+ "meno": "test2-off",
+ "url": "http://127.0.0.1:8544/barbershop-30/?film=off&uvod=off&hudba=off",
+ "cpu": 4,
+ "gesto": "stredne",
+ "js": null,
+ "css": null,
+ "sub": null,
+ "zatazPred": [
+  4.93,
+  2.74,
+  1.2
+ ],
+ "zatazPo": [
+  6.73,
+  3.29,
+  1.42
+ ],
+ "trvanieS": 13.8,
+ "y": [
+  0,
+  3638
+ ],
+ "cls": "karty world-off js-kin js-steps",
+ "film": {
+  "on": false
+ },
+ "gl": null,
+ "animacieBezia": [
+  "btn btn-primary::after:lesk"
+ ],
+ "snimkyRaf": {
+  "n": 325,
+  "p50": 16.7,
+  "p95": 83.3,
+  "max": 1616.5,
+  "priem": 42.25,
+  "nad33": 13.8,
+  "nad100": 13
+ },
+ "vlaknoNaSnimku": {
+  "snimok": 332,
+  "cpu": {
+   "n": 332,
+   "p50": 5.4,
+   "p95": 33.1,
+   "max": 826.4,
+   "priem": 13.73
+  },
+  "nad16": 22.3,
+  "nad33": 4.8,
+  "stylPriem": 3.41,
+  "layoutPriem": 0.12,
+  "paintPriem": 2.46,
+  "skriptPriem": 1.43,
+  "gcPriem": 0,
+  "prvkovStylPriem": 17.1
+ },
+ "dlheUlohy": {
+  "stena50": 13,
+  "vlakno50": 4,
+  "maxVlaknoMs": 826.4,
+  "maxStenaMs": 1180.4
+ },
+ "sekcie": {
+  "uvod": {
+   "snimok": 58,
+   "cpuPriem": 10.2,
+   "cpuP95": 34.1,
+   "styl": 3.97,
+   "layout": 0,
+   "paint": 2.12,
+   "skript": 1.71
+  },
+  "vstup-dnu": {
+   "snimok": 48,
+   "cpuPriem": 30.2,
+   "cpuP95": 37.5,
+   "styl": 4.66,
+   "layout": 0.32,
+   "paint": 3.5,
+   "skript": 1.57
+  },
+  "remeslo": {
+   "snimok": 54,
+   "cpuPriem": 10.1,
+   "cpuP95": 23.4,
+   "styl": 3.74,
+   "layout": 0.12,
+   "paint": 2.18,
+   "skript": 1.02
+  },
+  "cakaren": {
+   "snimok": 45,
+   "cpuPriem": 12,
+   "cpuP95": 30,
+   "styl": 3.99,
+   "layout": 0.09,
+   "paint": 2.75,
+   "skript": 1.33
+  },
+  "tim": {
+   "snimok": 127,
+   "cpuPriem": 11.3,
+   "cpuP95": 33.4,
+   "styl": 2.33,
+   "layout": 0.12,
+   "paint": 2.24,
+   "skript": 1.47
+  }
+ },
+ "funkcie": [
+  [
+   ":2 f",
+   279,
+   333,
+   0.84,
+   4.9
+  ],
+  [
+   "app.js:234 tick",
+   82,
+   168,
+   0.49,
+   6.2
+  ],
+  [
+   "app.js:258 start",
+   10,
+   72,
+   0.14,
+   3.5
+  ],
+  [
+   "app.js:619 ",
+   3,
+   2,
+   1.45,
+   2
+  ],
+  [
+   "app.js:407 IntersectionObserver.rootMargin",
+   1,
+   1,
+   1.31,
+   1.3
+  ],
+  [
+   "app.js:353 load",
+   0,
+   1,
+   0.02,
+   0
+  ],
+  [
+   "app.js:386 load",
+   0,
+   1,
+   0,
+   0
+  ]
+ ]
+}

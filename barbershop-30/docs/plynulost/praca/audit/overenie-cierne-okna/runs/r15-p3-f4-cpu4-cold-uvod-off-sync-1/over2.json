@@ -1,0 +1,94 @@
+{
+ "run": "r15-p3-f4-cpu4-cold-uvod-off-sync-1",
+ "nastavenie": {
+  "dev": "phone",
+  "dpr": 3,
+  "net": "fast4g",
+  "cpu": 4,
+  "q": "film=off",
+  "cache": "cold",
+  "scen": "uvod",
+  "rm": false,
+  "savedata": false,
+  "inject": "ab-sync.js"
+ },
+ "snimok": 27,
+ "fps": 4.7,
+ "fcp_ms": 836,
+ "lcp": [
+  [
+   "largest-contentful-paint",
+   "",
+   "",
+   836
+  ]
+ ],
+ "tmavy_prvy_obraz_po_fcp_ms": 2581,
+ "film_prazdne_platno": {
+  "pocet": 0,
+  "spolu_ms": 0,
+  "najdlhsie_ms": 0,
+  "okna": []
+ },
+ "pixely": {
+  "pocet": 1,
+  "spolu_ms": 1985,
+  "najdlhsie_ms": 1985,
+  "okna": [
+   {
+    "od_ms": 1435,
+    "trvanie_ms": 1985,
+    "plocha": 0.93,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "",
+    "wi": 0,
+    "film": null,
+    "karty_so>0": [
+     [
+      0,
+      1,
+      1,
+      1,
+      0,
+      "rohozka-m-1448.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "goto http://127.0.0.1:8359/barbershop-30/?film=off",
+     "load"
+    ],
+    "snimky": [
+     "f00001.jpg",
+     "f00001.jpg",
+     "f00011.jpg"
+    ]
+   }
+  ]
+ },
+ "obrazky": [
+  {
+   "url": "assets/img/film/rohozka-m-1448.avif",
+   "od": 726,
+   "do": 1395,
+   "kB": 428,
+   "cache": false
+  },
+  {
+   "url": "assets/seq/vstup-dnu/f025.avif",
+   "od": 1545,
+   "do": 1799,
+   "kB": 40,
+   "cache": false
+  },
+  {
+   "url": "assets/img/film/stol-m-1448.avif",
+   "od": 1545,
+   "do": 1916,
+   "kB": 151,
+   "cache": false
+  }
+ ],
+ "chyby": []
+}

@@ -1,0 +1,108 @@
+{
+ "run": "r10-d-f4-cpu4-cold-uvod-def-sync",
+ "nastavenie": {
+  "dev": "desk",
+  "dpr": 1,
+  "net": "fast4g",
+  "cpu": 4,
+  "q": "",
+  "cache": "cold",
+  "scen": "uvod",
+  "rm": false,
+  "savedata": false,
+  "inject": "ab-sync.js"
+ },
+ "snimok": 29,
+ "fps": 3.1,
+ "fcp_ms": 912,
+ "lcp": [
+  [
+   "largest-contentful-paint",
+   "",
+   "",
+   912
+  ]
+ ],
+ "tmavy_prvy_obraz_po_fcp_ms": 6267,
+ "film_prazdne_platno": {
+  "pocet": 0,
+  "spolu_ms": 0,
+  "najdlhsie_ms": 0,
+  "okna": []
+ },
+ "pixely": {
+  "pocet": 1,
+  "spolu_ms": 5293,
+  "najdlhsie_ms": 5293,
+  "okna": [
+   {
+    "od_ms": 1891,
+    "trvanie_ms": 5293,
+    "plocha": 0.93,
+    "y": 0,
+    "y_koniec": 0,
+    "gl": "",
+    "wi": 0,
+    "film": null,
+    "karty_so>0": [
+     [
+      0,
+      1,
+      1,
+      1,
+      1,
+      "vstup-2172.avif"
+     ]
+    ],
+    "hid_px": null,
+    "znacky": [
+     "goto http://127.0.0.1:8359/barbershop-30/",
+     "load"
+    ],
+    "snimky": [
+     "f00001.jpg",
+     "f00001.jpg",
+     "f00017.jpg"
+    ]
+   }
+  ]
+ },
+ "obrazky": [
+  {
+   "url": "assets/img/film/vstup-2172.avif",
+   "od": 284,
+   "do": 1054,
+   "kB": 289,
+   "cache": false
+  },
+  {
+   "url": "assets/img/film/sala-2172.avif",
+   "od": 1303,
+   "do": 1771,
+   "kB": 130,
+   "cache": false
+  },
+  {
+   "url": "assets/img/film/stol-2172.avif",
+   "od": 1304,
+   "do": 1811,
+   "kB": 173,
+   "cache": false
+  },
+  {
+   "url": "assets/img/kurzor/noznice-32.png",
+   "od": 5151,
+   "do": 5323,
+   "kB": 2,
+   "cache": false
+  },
+  {
+   "url": "assets/img/kurzor/noznice-otvorene-32.png",
+   "od": 5151,
+   "do": 5329,
+   "kB": 2,
+   "cache": false
+  }
+ ],
+ "chyby": []
+}

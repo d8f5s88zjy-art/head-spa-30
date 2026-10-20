@@ -1,0 +1,99 @@
+{
+ "meno": "nac-on-cpu4",
+ "film": "on",
+ "cpu": 4,
+ "zataz": [
+  "6.49",
+  "6.59",
+  "5.86"
+ ],
+ "fcpMs": 856,
+ "lcp": [
+  {
+   "t": 856,
+   "el": "SPAN.w"
+  }
+ ],
+ "filmStav": {
+  "on": true,
+  "firstFrameMs": 2333,
+  "pro": false
+ },
+ "cls": "karty world js-kin js-steps world-in",
+ "dlhychUloh": 11,
+ "tbtPoFcpStenaMs": 1319,
+ "tbtPoFcpVlaknoMs": 1017,
+ "najdlhsie": [
+  {
+   "odNavMs": 1491,
+   "stenaMs": 544,
+   "vlaknoMs": 352,
+   "stylLayoutMs": 2,
+   "povodca": "TimerFire (542 ms)"
+  },
+  {
+   "odNavMs": 8063,
+   "stenaMs": 330,
+   "vlaknoMs": 283,
+   "stylLayoutMs": 213,
+   "povodca": "FireAnimationFrame (12 ms)"
+  },
+  {
+   "odNavMs": 2943,
+   "stenaMs": 288,
+   "vlaknoMs": 253,
+   "stylLayoutMs": 17,
+   "povodca": "v8.evaluateModule (34 ms)"
+  },
+  {
+   "odNavMs": 743,
+   "stenaMs": 158,
+   "vlaknoMs": 148,
+   "stylLayoutMs": 119,
+   "povodca": "EventDispatch (0 ms)"
+  },
+  {
+   "odNavMs": 1071,
+   "stenaMs": 138,
+   "vlaknoMs": 136,
+   "stylLayoutMs": 5,
+   "povodca": "v8.evaluateModule (134 ms)"
+  },
+  {
+   "odNavMs": 1218,
+   "stenaMs": 125,
+   "vlaknoMs": 123,
+   "stylLayoutMs": 79,
+   "povodca": "FireAnimationFrame (4 ms)"
+  },
+  {
+   "odNavMs": 3319,
+   "stenaMs": 115,
+   "vlaknoMs": 98,
+   "stylLayoutMs": 0,
+   "povodca": "TimerFire (115 ms)"
+  },
+  {
+   "odNavMs": 922,
+   "stenaMs": 96,
+   "vlaknoMs": 96,
+   "stylLayoutMs": 78,
+   "povodca": "EventDispatch (0 ms)"
+  },
+  {
+   "odNavMs": 1408,
+   "stenaMs": 83,
+   "vlaknoMs": 76,
+   "stylLayoutMs": 54,
+   "povodca": "FunctionCall app.js:275 scheduleMeasure (0 ms)"
+  },
+  {
+   "odNavMs": 648,
+   "stenaMs": 63,
+   "vlaknoMs": 60,
+   "stylLayoutMs": 47,
+   "povodca": "EventDispatch (0 ms)"
+  }
+ ],
+ "appJsModul": []
+}

@@ -1,0 +1,57 @@
+{
+ "meno": "nac-on-cpu1",
+ "film": "on",
+ "cpu": 1,
+ "zataz": [
+  "7.55",
+  "6.78",
+  "5.89"
+ ],
+ "fcpMs": 992,
+ "lcp": [
+  {
+   "t": 992,
+   "el": "SPAN.w"
+  }
+ ],
+ "filmStav": {
+  "on": true,
+  "firstFrameMs": 1854,
+  "pro": false
+ },
+ "cls": "karty world js-kin js-steps world-in",
+ "dlhychUloh": 4,
+ "tbtPoFcpStenaMs": 1147,
+ "tbtPoFcpVlaknoMs": 0,
+ "najdlhsie": [
+  {
+   "odNavMs": 1142,
+   "stenaMs": 1115,
+   "vlaknoMs": 11,
+   "stylLayoutMs": 1,
+   "povodca": "TimerFire (1115 ms)"
+  },
+  {
+   "odNavMs": 676,
+   "stenaMs": 111,
+   "vlaknoMs": 47,
+   "stylLayoutMs": 39,
+   "povodca": "EventDispatch (0 ms)"
+  },
+  {
+   "odNavMs": 3154,
+   "stenaMs": 104,
+   "vlaknoMs": 34,
+   "stylLayoutMs": 4,
+   "povodca": "v8.evaluateModule (15 ms)"
+  },
+  {
+   "odNavMs": 3322,
+   "stenaMs": 78,
+   "vlaknoMs": 7,
+   "stylLayoutMs": 0,
+   "povodca": "TimerFire (78 ms)"
+  }
+ ],
+ "appJsModul": []
+}

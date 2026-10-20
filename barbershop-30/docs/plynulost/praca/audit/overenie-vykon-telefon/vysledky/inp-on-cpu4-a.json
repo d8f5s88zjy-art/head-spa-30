@@ -1,0 +1,107 @@
+{
+ "meno": "inp-on-cpu4-a",
+ "film": "on",
+ "filmStav": {
+  "on": true,
+  "frames": 86,
+  "dpr": 2
+ },
+ "cpu": 4,
+ "y": 2700,
+ "zataz": [
+  "6.84",
+  "6.67",
+  "5.00"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 1592,
+   "udalosti": [
+    "pointerdown:1592(spracovanie 9)",
+    "pointerup:1592(spracovanie 0)",
+    "click:1592(spracovanie 57)"
+   ],
+   "obsluhaVlaknoMs": {
+    "playing": {
+     "spolu": 1.6,
+     "vynuteneStylLayout": 0
+    },
+    "pointerdown": {
+     "spolu": 8.1,
+     "vynuteneStylLayout": 0
+    },
+    "touchstart": {
+     "spolu": 1.8,
+     "vynuteneStylLayout": 0
+    },
+    "gotpointercapture": {
+     "spolu": 2.6,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 47.5,
+     "vynuteneStylLayout": 41
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     75,
+     63
+    ]
+   ]
+  },
+  "jazykEN": {
+   "inpMs": 14664,
+   "udalosti": [
+    "pointerdown:14664(spracovanie 4)",
+    "pointerup:14664(spracovanie 0)",
+    "click:14664(spracovanie 11)"
+   ],
+   "obsluhaVlaknoMs": {},
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  },
+  "jazykSK": {
+   "inpMs": 680,
+   "udalosti": [
+    "pointerdown:192(spracovanie 0)",
+    "pointerup:192(spracovanie 0)",
+    "click:680(spracovanie 1)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 1.1,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 8.1,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     212,
+     174
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 1776,
+   "udalosti": [
+    "pointerdown:1776(spracovanie 0)",
+    "pointerup:1776(spracovanie 3)",
+    "click:1776(spracovanie 12)"
+   ],
+   "obsluhaVlaknoMs": {
+    "touchend": {
+     "spolu": 3.3,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 4.8,
+     "vynuteneStylLayout": 1.6
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

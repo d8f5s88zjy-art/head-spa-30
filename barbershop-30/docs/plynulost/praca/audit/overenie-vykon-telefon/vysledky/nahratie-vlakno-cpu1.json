@@ -1,193 +1,193 @@
 {
  "cpu": 1,
  "zataz": [
-  "0.82",
-  "4.06",
-  "4.63"
+  "4.19",
+  "5.92",
+  "5.66"
  ],
  "ulohy": {
   "pas256@0": {
-   "wallMs": 2.77,
-   "vlaknoMs": 2.76
+   "wallMs": 4.04,
+   "vlaknoMs": 2.72
   },
   "pas256@256": {
-   "wallMs": 1.97,
-   "vlaknoMs": 1.96
+   "wallMs": 1.8,
+   "vlaknoMs": 1.69
   },
   "pas256@512": {
-   "wallMs": 2.04,
-   "vlaknoMs": 2.02
+   "wallMs": 1.9,
+   "vlaknoMs": 1.9
   },
   "pas256@768": {
-   "wallMs": 2.48,
-   "vlaknoMs": 2.27
+   "wallMs": 1.84,
+   "vlaknoMs": 1.83
   },
   "pas256@1024": {
-   "wallMs": 2.03,
-   "vlaknoMs": 2.02
+   "wallMs": 2.23,
+   "vlaknoMs": 1.91
   },
   "pas256@1280": {
-   "wallMs": 2.43,
-   "vlaknoMs": 2.43
+   "wallMs": 1.68,
+   "vlaknoMs": 1.68
   },
   "pas256@1536": {
-   "wallMs": 1.97,
-   "vlaknoMs": 1.97
+   "wallMs": 1.46,
+   "vlaknoMs": 1.46
   },
   "pas256@1792": {
-   "wallMs": 2.19,
-   "vlaknoMs": 2.18
+   "wallMs": 1.62,
+   "vlaknoMs": 1.62
   },
   "pas256@2048": {
-   "wallMs": 2.13,
-   "vlaknoMs": 2.12
+   "wallMs": 1.64,
+   "vlaknoMs": 1.53
   },
   "pas256@2304": {
-   "wallMs": 4.21,
-   "vlaknoMs": 4.2
+   "wallMs": 2,
+   "vlaknoMs": 2
   },
   "pas256@2560": {
-   "wallMs": 0.39,
-   "vlaknoMs": 0.38
+   "wallMs": 0.29,
+   "vlaknoMs": 0.29
   },
   "mipmap": {
-   "wallMs": 0.28,
-   "vlaknoMs": 0.28
+   "wallMs": 0.38,
+   "vlaknoMs": 0.37
   },
   "seq720x1280#0": {
-   "wallMs": 5.97,
-   "vlaknoMs": 5.72
+   "wallMs": 6.88,
+   "vlaknoMs": 6.87
   },
   "seq720x1280#1": {
-   "wallMs": 4.72,
-   "vlaknoMs": 4.71
+   "wallMs": 4.12,
+   "vlaknoMs": 4.12
   },
   "seq720x1280#2": {
-   "wallMs": 4.82,
-   "vlaknoMs": 4.81
+   "wallMs": 4.05,
+   "vlaknoMs": 4.05
   },
   "seq720x1280#3": {
-   "wallMs": 3.88,
-   "vlaknoMs": 3.88
+   "wallMs": 3.95,
+   "vlaknoMs": 3.94
   },
   "seq720x1280#4": {
-   "wallMs": 4.31,
-   "vlaknoMs": 4.27
+   "wallMs": 4.58,
+   "vlaknoMs": 3.95
   },
   "seq720x1280#5": {
-   "wallMs": 4.43,
-   "vlaknoMs": 4.42
+   "wallMs": 4.12,
+   "vlaknoMs": 4.04
   },
   "seq720x1280#6": {
-   "wallMs": 5.32,
-   "vlaknoMs": 4.37
+   "wallMs": 4.92,
+   "vlaknoMs": 4.91
   },
   "seq720x1280#7": {
-   "wallMs": 4.39,
-   "vlaknoMs": 4.29
+   "wallMs": 4.42,
+   "vlaknoMs": 4.42
   },
   "seq2x": {
-   "wallMs": 7.93,
-   "vlaknoMs": 7.92
+   "wallMs": 9.25,
+   "vlaknoMs": 9.24
   },
   "decode#0": {
-   "wallMs": 0.81,
-   "vlaknoMs": 0.81
+   "wallMs": 0.85,
+   "vlaknoMs": 0.84
   },
   "decode#1": {
-   "wallMs": 0.69,
-   "vlaknoMs": 0.69
+   "wallMs": 0.56,
+   "vlaknoMs": 0.56
   },
   "decode#2": {
-   "wallMs": 0.87,
-   "vlaknoMs": 0.87
+   "wallMs": 0.62,
+   "vlaknoMs": 0.61
   },
   "decode#3": {
-   "wallMs": 0.66,
-   "vlaknoMs": 0.66
+   "wallMs": 0.75,
+   "vlaknoMs": 0.74
   }
  },
  "jsCas": {
-  "pas256@0": 2.3,
-  "finish:pas256@0": 0,
-  "pas256@256": 1.8,
-  "finish:pas256@256": 0.1,
+  "pas256@0": 3.6,
+  "finish:pas256@0": 0.4,
+  "pas256@256": 1.7,
+  "finish:pas256@256": 1.3,
   "pas256@512": 1.7,
-  "finish:pas256@512": 0.1,
-  "pas256@768": 2.2,
-  "finish:pas256@768": 0.1,
-  "pas256@1024": 1.8,
-  "finish:pas256@1024": 0.1,
-  "pas256@1280": 2.3,
-  "finish:pas256@1280": 0.1,
-  "pas256@1536": 1.8,
-  "finish:pas256@1536": 0.1,
-  "pas256@1792": 1.9,
-  "finish:pas256@1792": 0.2,
-  "pas256@2048": 1.9,
+  "finish:pas256@512": 1.6,
+  "pas256@768": 1.6,
+  "finish:pas256@768": 1.4,
+  "pas256@1024": 2.1,
+  "finish:pas256@1024": 0,
+  "pas256@1280": 1.4,
+  "finish:pas256@1280": 0.3,
+  "pas256@1536": 1.4,
+  "finish:pas256@1536": 0.2,
+  "pas256@1792": 1.4,
+  "finish:pas256@1792": 0,
+  "pas256@2048": 1.5,
   "finish:pas256@2048": 0.1,
-  "pas256@2304": 4,
-  "finish:pas256@2304": 0.1,
-  "pas256@2560": 0.2,
-  "finish:pas256@2560": 0,
-  "mipmap": 0,
+  "pas256@2304": 1.8,
+  "finish:pas256@2304": 0,
+  "pas256@2560": 0.1,
+  "finish:pas256@2560": 0.1,
+  "mipmap": 0.1,
   "finish:mipmap": 0.1,
-  "seq720x1280#0": 5.7,
-  "finish:seq720x1280#0": 0.6,
-  "seq720x1280#1": 4.4,
-  "finish:seq720x1280#1": 0.1,
-  "seq720x1280#2": 4.5,
+  "seq720x1280#0": 6.7,
+  "finish:seq720x1280#0": 0.2,
+  "seq720x1280#1": 3.9,
+  "finish:seq720x1280#1": 0,
+  "seq720x1280#2": 3.9,
   "finish:seq720x1280#2": 0.1,
-  "seq720x1280#3": 3.7,
-  "finish:seq720x1280#3": 0.2,
-  "seq720x1280#4": 4,
+  "seq720x1280#3": 3.8,
+  "finish:seq720x1280#3": 0.1,
+  "seq720x1280#4": 4.4,
   "finish:seq720x1280#4": 0.1,
-  "seq720x1280#5": 4.2,
-  "finish:seq720x1280#5": 0,
-  "seq720x1280#6": 5,
+  "seq720x1280#5": 3.9,
+  "finish:seq720x1280#5": 0.1,
+  "seq720x1280#6": 4.7,
   "finish:seq720x1280#6": 0,
-  "seq720x1280#7": 4.1,
-  "finish:seq720x1280#7": 0.2,
-  "seq2x": 7.7,
+  "seq720x1280#7": 4.2,
+  "finish:seq720x1280#7": 0.1,
+  "seq2x": 9,
   "finish:seq2x": 0.1,
   "decode-call#0": 0.5,
-  "decode-wall#0": 11.5,
+  "decode-wall#0": 12.4,
   "decode-call#1": 0.4,
-  "decode-wall#1": 12.7,
-  "decode-call#2": 0.7,
-  "decode-wall#2": 12.3,
+  "decode-wall#1": 12.3,
+  "decode-call#2": 0.4,
+  "decode-wall#2": 11.7,
   "decode-call#3": 0.5,
-  "decode-wall#3": 11.3
+  "decode-wall#3": 12.3
  },
  "suhrn": {
   "pasy": {
    "n": 11,
-   "vlaknoSpolu": 24.3,
-   "wallSpolu": 24.6,
-   "vlaknoMax": 4.2,
-   "vlaknoP50": 2.12
+   "vlaknoSpolu": 18.6,
+   "wallSpolu": 20.5,
+   "vlaknoMax": 2.72,
+   "vlaknoP50": 1.69
   },
   "seq": {
    "n": 8,
-   "vlaknoSpolu": 36.5,
-   "wallSpolu": 37.8,
-   "vlaknoMax": 5.72,
-   "vlaknoP50": 4.42
+   "vlaknoSpolu": 36.3,
+   "wallSpolu": 37,
+   "vlaknoMax": 6.87,
+   "vlaknoP50": 4.12
   },
   "seq2x": {
-   "wallMs": 7.93,
-   "vlaknoMs": 7.92
+   "wallMs": 9.25,
+   "vlaknoMs": 9.24
   },
   "mipmap": {
-   "wallMs": 0.28,
-   "vlaknoMs": 0.28
+   "wallMs": 0.38,
+   "vlaknoMs": 0.37
   },
   "dekodovanie": {
    "n": 4,
-   "vlaknoSpolu": 3,
-   "wallSpolu": 3,
-   "vlaknoMax": 0.87,
-   "vlaknoP50": 0.81
+   "vlaknoSpolu": 2.8,
+   "wallSpolu": 2.8,
+   "vlaknoMax": 0.84,
+   "vlaknoP50": 0.74
   }
  }
 }

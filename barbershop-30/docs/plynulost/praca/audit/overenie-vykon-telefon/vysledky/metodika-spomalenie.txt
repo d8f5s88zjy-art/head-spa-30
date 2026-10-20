@@ -1,0 +1,14 @@
+Metodika: či CDP Emulation.setCPUThrottlingRate započíta čakanie hlavného vlákna do času vlákna (tdur)
+(2026-10-20, kontajner, headless_shell 1194)
+
+tdur-cakanie.mjs – synchrónne XHR 500 ms (vlákno len čaká na sieť):
+  rate 1  TimerFire [stena, vlákno] ms [510, 2]   [507, 2]
+  rate 4  TimerFire [stena, vlákno] ms [523, 342] [516, 348]
+
+tdur-gpu.mjs – 3× ťažké kreslenie + readPixels (vlákno čaká na GPU proces / SwiftShader):
+  rate 1  [47825, 1]   [30479, 2]
+  rate 4  [43445, 22713]   [50976, 25298]
+
+Záver: pri spomalení 4× sa 50–68 % času čakania (sieť, GPU proces, Commit na kompozítor) objaví ako „čas vlákna“.
+Čas vlákna pri CPU 4× teda NIE JE „bez čakania“; v kontajneri so SwiftShader zahŕňa čakanie na softvérové kreslenie.
+Čistú CPU prácu meriame pri CPU 1× (tdur) a násobíme ~4.
