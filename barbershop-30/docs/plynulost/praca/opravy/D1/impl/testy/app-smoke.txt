@@ -35,17 +35,17 @@ OK   [desktop] lightbox sa otvorí  assets/img/naradie-noznice-1600.jpg
 OK   [desktop] lightbox: šípka vpravo mení fotografiu
 OK   [desktop] lightbox: Esc zatvorí a vráti fokus na tlačidlo
 OK   [desktop] galéria má 8 fotiek (8)
-OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":5.923818}]
-OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":6.220748}]
+OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":6.500536}]
+OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":6.738538}]
 OK   [desktop] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách  {"flap":"Dnes 9:00 až 19:00. Teraz otvorené.","marquee":14,"steps":5,"kin":28}
 OK   [mobil] načítanie bez chýb a 4xx
 OK   [mobil] všetky cesty v HTML sú relatívne
 OK   [mobil] žiadne externé požiadavky za behu
-OK   [mobil] data-motion=on  {"motion":"on","cls":"karty world pro js-kin js-steps world-in"}
+OK   [mobil] data-motion=on  {"motion":"on","cls":"karty world pro js-kin js-steps"}
 OK   [mobil] 9 kotiev .film-shot s data-shot/f/mv a zálohou  {"count":9,"still":true,"meta":true}
 OK   [mobil] výšky kotiev: úvod 1, karta 0,7, karta pred pásom 1,6 okna
 OK   [mobil] prvá záloha fetchpriority=high, ostatné lazy
-OK   [mobil] prvá záloha je viditeľná a načítaná (alebo beží film)  {"count":9,"allTall":true,"allHaveStill":true,"allHaveMeta":true,"firstHigh":true,"lazyRest":true,"firstVisible":true,"worldIn":true}
+OK   [mobil] prvá záloha je viditeľná a načítaná (alebo beží film)  {"count":9,"allTall":true,"allHaveStill":true,"allHaveMeta":true,"firstHigh":true,"lazyRest":true,"firstVisible":true,"worldIn":false}
 OK   [mobil] kotva rohozka: aktívna kapitola 1 (čakané 1)
 OK   [mobil] kotva sala: aktívna kapitola 2 (čakané 2)
 OK   [mobil] kotva sala: --p rastie (0.000 → 0.066)
@@ -98,8 +98,8 @@ OK   [bez WebGL] premenné skrolu nie sú na kotvách; pri rámovaní filmu (wor
 OK   [bez WebGL] bez chýb okrem správy o WebGL
 OK   [?film=off] --sp na img zálohy (prejazd 1 → 1,06), žiadna premenná na kotve  {"kotvy":0,"o":9,"so":9,"sp":9,"rozsah":true,"tr":"matrix(1.06, 0, 0, 1.06, 0, 0)"}
 OK   [?film=off] bez chýb
-OK   [softvér desktop] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0.0001,"w":1701}
-OK   [softvér desktop] bez posunu rozloženia (CLS 0.0001)
+OK   [softvér desktop] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0,"w":1701}
+OK   [softvér desktop] bez posunu rozloženia (CLS 0)
 OK   [softvér desktop] záloha úvodu má rámovanie filmu (presah), šírka 1701
 OK   [softvér desktop] bez chýb
 OK   [softvér mobil] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0,"w":547}
