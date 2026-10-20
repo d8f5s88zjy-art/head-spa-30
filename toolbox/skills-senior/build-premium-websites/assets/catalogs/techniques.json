@@ -1,0 +1,1096 @@
+[
+  {
+    "id": "FX001",
+    "name": "Opacity reveal",
+    "name_sk": "Odhalenie prelínaním",
+    "family": "motion",
+    "purpose": "Zmeniť obraz bez posunu orientácie.",
+    "implementation": "CSS alebo WAAPI opacity na vyhradenej vrstve.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Okamžite zobraziť cieľ.",
+    "fallback": "Okamžite zobraziť cieľ.",
+    "failure": "Neviditeľný obsah pri zlyhaní JS.",
+    "checks": "Over no-JS, cancel a čitateľnosť medzi stavmi.",
+    "source_ids": [
+      "S008",
+      "S021"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX002",
+    "name": "Translate reveal",
+    "name_sk": "Odhalenie presunom",
+    "family": "motion",
+    "purpose": "Naznačiť hierarchiu a príchod obsahu.",
+    "implementation": "Krátky transform malej vrstvy s dostupným základným obsahom.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Zobrazenie bez translácie.",
+    "fallback": "Zobrazenie bez translácie.",
+    "failure": "Veľké vzdialenosti a dlhé oneskorenie.",
+    "checks": "Over rýchly scroll a zmenu preference počas pohybu.",
+    "source_ids": [
+      "S008",
+      "S024"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX003",
+    "name": "Scale emphasis",
+    "name_sk": "Zvýraznenie mierkou",
+    "family": "motion",
+    "purpose": "Zdôrazniť vybraný predmet.",
+    "implementation": "Malá zmena scale okolo zámerného transform origin.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická hierarchia.",
+    "fallback": "Statická hierarchia.",
+    "failure": "Rozmazanie zdroja alebo meniaci sa hit target.",
+    "checks": "Over ostrosť, okolie a fokus.",
+    "source_ids": [
+      "S021"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX004",
+    "name": "Stagger",
+    "name_sk": "Postupný nábeh",
+    "family": "motion",
+    "purpose": "Viesť zrak cez malú skupinu.",
+    "implementation": "Oneskorenia s obmedzeným súčtom; obsah dostupný ihneď.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Zobraziť skupinu spolu.",
+    "fallback": "Zobraziť skupinu spolu.",
+    "failure": "Dlhý zoznam čaká mnoho sekúnd.",
+    "checks": "Over poslednú položku a preskočenie scény.",
+    "source_ids": [
+      "S001",
+      "S008"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX005",
+    "name": "Spring response",
+    "name_sk": "Pružná odozva",
+    "family": "motion",
+    "purpose": "Vyjadriť hmotnosť a kontinuitu ovládania.",
+    "implementation": "Zvoliť damping, stiffness a limit prekmitu podľa knižnice.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Okamžitý stav alebo krátky fade.",
+    "fallback": "Okamžitý stav alebo krátky fade.",
+    "failure": "Odskakovanie kritických ovládačov.",
+    "checks": "Over opakovaný vstup pred ustálením.",
+    "source_ids": [
+      "S004",
+      "S005"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX006",
+    "name": "FLIP layout",
+    "name_sk": "Plynulá zmena rozloženia",
+    "family": "motion",
+    "purpose": "Udržať prehľad po preusporiadaní.",
+    "implementation": "Zmerať prvý/posledný rect a animovať inverzný transform.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Nový layout bez presunu.",
+    "fallback": "Nový layout bez presunu.",
+    "failure": "Layout thrashing, nulový rozmer a deformácia textu.",
+    "checks": "Over reorder, resize a rýchle opakovanie.",
+    "source_ids": [
+      "S003",
+      "S004"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX007",
+    "name": "Parallax layers",
+    "name_sk": "Paralaxa vrstiev",
+    "family": "motion",
+    "purpose": "Naznačiť hĺbku v kompozícii.",
+    "implementation": "Odvodiť malé odlišné presuny z jedného progresu.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statické vrstvy s dobrou kompozíciou.",
+    "fallback": "Statické vrstvy s dobrou kompozíciou.",
+    "failure": "Veľká amplitúda a konfliktné transformy.",
+    "checks": "Over opačný scroll a úzky orez.",
+    "source_ids": [
+      "S007",
+      "S024"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX008",
+    "name": "Sticky chapter",
+    "name_sk": "Prichytená kapitola",
+    "family": "motion",
+    "purpose": "Vysvetliť jeden predmet viacerými dôkazmi.",
+    "implementation": "Sticky obraz a normálny DOM text; pin iba pri vhodnej výške.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Bežný tok sekcií.",
+    "fallback": "Bežný tok sekcií.",
+    "failure": "Scroll pasca pri veľkom zoome.",
+    "checks": "Over obsah vyšší než viewport, anchors a klávesnicu.",
+    "source_ids": [
+      "S001"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX009",
+    "name": "Scroll scrubbing",
+    "name_sk": "Pohyb riadený skrolovaním",
+    "family": "motion",
+    "purpose": "Dať kontrolu nad postupom vysvetlenia.",
+    "implementation": "Deterministická funkcia progresu a pomenované intervaly.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Stabilné kapitoly.",
+    "fallback": "Stabilné kapitoly.",
+    "failure": "Stav závisí len od onEnter udalostí.",
+    "checks": "Over reload v polovici, reverse a skok cez kapitoly.",
+    "source_ids": [
+      "S001",
+      "S007"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX010",
+    "name": "Magnetic hover",
+    "name_sk": "Magnetická odozva",
+    "family": "motion",
+    "purpose": "Malá značková reakcia na pointer.",
+    "implementation": "Obmedzený transform dekorácie pri stabilnom klikateľnom prvku.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Bežný hover/focus stav.",
+    "fallback": "Bežný hover/focus stav.",
+    "failure": "Utekajúce tlačidlo a chýbajúca touch alternatíva.",
+    "checks": "Over pointer leave, blur a klávesnicu.",
+    "source_ids": [
+      "S008",
+      "S024"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX011",
+    "name": "Hard cut",
+    "name_sk": "Priamy strih",
+    "family": "transition",
+    "purpose": "Rýchla zmena bez čakania.",
+    "implementation": "Vykonať cieľový stav a rezervovať layout.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Rovnaký priamy strih.",
+    "fallback": "Rovnaký priamy strih.",
+    "failure": "Biela medzisnímka z nenačítaného média.",
+    "checks": "Over pripravený cieľ a fokus.",
+    "source_ids": [
+      "S030"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX012",
+    "name": "Crossfade",
+    "name_sk": "Plynulé prelínanie",
+    "family": "transition",
+    "purpose": "Zjemniť zmenu atmosféry obrazov.",
+    "implementation": "Dve pripravené vrstvy s riadenou opacity, samostatný text.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Okamžitý obrazový prechod.",
+    "fallback": "Okamžitý obrazový prechod.",
+    "failure": "Dvojitý text a zdvojené dekódovanie.",
+    "checks": "Over kontrast v polovici a odpojenie starej vrstvy.",
+    "source_ids": [
+      "S008"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX013",
+    "name": "Match cut",
+    "name_sk": "Nadväzujúci strih",
+    "family": "transition",
+    "purpose": "Spojiť podobný tvar, akciu alebo význam.",
+    "implementation": "Zladiť siluetu, kotvu, mierku a smer pred zmenou obrazu.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Obyčajný strih so zrozumiteľným poradím.",
+    "fallback": "Obyčajný strih so zrozumiteľným poradím.",
+    "failure": "Nesúvisiace obrazy predstierané ako kontinuita.",
+    "checks": "Porovnať koncové zábery a oba orezy.",
+    "source_ids": [
+      "S030"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX014",
+    "name": "Cut on action",
+    "name_sk": "Strih v pohybe",
+    "family": "transition",
+    "purpose": "Zachovať kontinuitu činnosti.",
+    "implementation": "Vybrať kompatibilnú fázu a rýchlosť v skutočných záberoch.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statické kroky procesu.",
+    "fallback": "Statické kroky procesu.",
+    "failure": "Nezodpovedajúce ruky, smer alebo predmet.",
+    "checks": "Prehrať spoj v normálnej aj pomalej rýchlosti.",
+    "source_ids": [
+      "S030"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX015",
+    "name": "Occlusion wipe",
+    "name_sk": "Prechod cez zakrytie",
+    "family": "transition",
+    "purpose": "Skryť zmenu pod logickým popredím.",
+    "implementation": "Zakryť región, vymeniť podklad, pokračovať rovnakým smerom.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Priama výmena.",
+    "fallback": "Priama výmena.",
+    "failure": "Na širokom viewporte podklad presvitá.",
+    "checks": "Over pokrytie, reverse a pointer-events po konci.",
+    "source_ids": [
+      "S008"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX016",
+    "name": "Whip pan",
+    "name_sk": "Rýchly švih",
+    "family": "transition",
+    "purpose": "Krátka smerová energia v médiu.",
+    "implementation": "Zladený smer kamery a strih; UI ostáva stabilné.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Jednoduchý strih.",
+    "fallback": "Jednoduchý strih.",
+    "failure": "Závrat alebo rozmazané texty.",
+    "checks": "Over mieru pohybu a reduced motion.",
+    "source_ids": [
+      "S024",
+      "S030"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX017",
+    "name": "Iris reveal",
+    "name_sk": "Kruhové odhalenie",
+    "family": "transition",
+    "purpose": "Zamerať pozornosť na bod alebo predmet.",
+    "implementation": "CSS/SVG maska s vypočítaným pokrytím oblasti.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Zobraziť plný cieľ.",
+    "fallback": "Zobraziť plný cieľ.",
+    "failure": "Rohy ostanú zakryté pri inom pomere strán.",
+    "checks": "Over start/end, extrémne rozmery a klikanie.",
+    "source_ids": [
+      "S008"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX018",
+    "name": "SVG path morph",
+    "name_sk": "Premena vektorového tvaru",
+    "family": "transition",
+    "purpose": "Prepojiť dve súvisiace ikony alebo tvary.",
+    "implementation": "Zladiť path topológiu a poradie bodov; zachovať textový názov.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Výmena ikon bez morphu.",
+    "fallback": "Výmena ikon bez morphu.",
+    "failure": "Samopretínanie a nesúvisiaci význam.",
+    "checks": "Over medzistavy a accessible name.",
+    "source_ids": [
+      "S008"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX019",
+    "name": "Displacement dissolve",
+    "name_sk": "Tekutý prechod",
+    "family": "transition",
+    "purpose": "Materiálovo prepojiť dva obrazy.",
+    "implementation": "UV pole s nulovou obálkou na koncoch a správnym aspect ratio.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Crossfade alebo cut.",
+    "fallback": "Crossfade alebo cut.",
+    "failure": "Deformovaný brand/text a prázdne UV okraje.",
+    "checks": "Over presné koncové obrazy a shader cost.",
+    "source_ids": [
+      "S011",
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX020",
+    "name": "Shared element",
+    "name_sk": "Zdieľaný vizuálny objekt",
+    "family": "transition",
+    "purpose": "Udržať identitu pri prechode karta/detail.",
+    "implementation": "Stabilný kľúč a layout alebo view-transition mechanizmus.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Okamžitý detail so správnym fokusom.",
+    "fallback": "Okamžitý detail so správnym fokusom.",
+    "failure": "Dvojité identity a deformované rozmery.",
+    "checks": "Over späť, rýchle prepínanie a long content.",
+    "source_ids": [
+      "S004",
+      "S006"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX021",
+    "name": "Route transition",
+    "name_sk": "Prechod medzi stránkami",
+    "family": "transition",
+    "purpose": "Udržať súvislosť navigácie.",
+    "implementation": "Router riadi dáta/history; animácia iba vizuálny obal.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Normálna navigácia.",
+    "fallback": "Normálna navigácia.",
+    "failure": "Dvojitý update alebo čakajúca neprístupná stránka.",
+    "checks": "Over titulok, fokus, späť a zamietnutú animáciu.",
+    "source_ids": [
+      "S006"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX022",
+    "name": "Seamless loop",
+    "name_sk": "Bezšvová slučka",
+    "family": "transition",
+    "purpose": "Udržať atmosféru bez viditeľného reštartu.",
+    "implementation": "Zladiť polohu, rýchlosť, svetlo a seed na hranici.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Poster alebo zastavený stav.",
+    "fallback": "Poster alebo zastavený stav.",
+    "failure": "Preskok častíc a svetla na poslednej snímke.",
+    "checks": "Over hranicu slučky a pause kontrolu.",
+    "source_ids": [
+      "S023",
+      "S027"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX023",
+    "name": "Dolly",
+    "name_sk": "Nájazd kamery",
+    "family": "camera",
+    "purpose": "Ukázať detail cez reálnu zmenu stanoviska.",
+    "implementation": "Interpolovať polohu a cieľ kamery s limitom vzdialenosti.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statický detail.",
+    "fallback": "Statický detail.",
+    "failure": "Prechod kamerou cez geometriu.",
+    "checks": "Over near plane a framing oboch formátov.",
+    "source_ids": [
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX024",
+    "name": "Truck and pedestal",
+    "name_sk": "Bočný a zvislý posun",
+    "family": "camera",
+    "purpose": "Odhaliť vzťah v priestore.",
+    "implementation": "Presúvať kameru pri premyslenom cieli a up vector.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Séria pripravených pohľadov.",
+    "fallback": "Séria pripravených pohľadov.",
+    "failure": "Predmet opustí obraz.",
+    "checks": "Over celý path a okrajové aspekty.",
+    "source_ids": [
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX025",
+    "name": "Pan and tilt",
+    "name_sk": "Otočenie kamery",
+    "family": "camera",
+    "purpose": "Sledovať predmet bez zmeny stanoviska.",
+    "implementation": "Riadiť orientáciu bez Euler wrap.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Pevný pohľad.",
+    "fallback": "Pevný pohľad.",
+    "failure": "Nečakaný roll a veľká uhlová rýchlosť.",
+    "checks": "Over smer, hranice a reverse.",
+    "source_ids": [
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX026",
+    "name": "Orbit",
+    "name_sk": "Oblet predmetu",
+    "family": "camera",
+    "purpose": "Ukázať reálne strany produktu.",
+    "implementation": "Obmedzený orbit okolo známeho pivotu s dostupnými ovládačmi.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Galéria pohľadov.",
+    "fallback": "Galéria pohľadov.",
+    "failure": "Touch ovládanie blokuje stránku.",
+    "checks": "Over limity, reset a klávesnicovú alternatívu.",
+    "source_ids": [
+      "S014",
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX027",
+    "name": "Optical zoom",
+    "name_sk": "Zmena zorného poľa",
+    "family": "camera",
+    "purpose": "Zmeniť rámovanie z pevného stanoviska.",
+    "implementation": "Upraviť FOV/ohnisko a aktualizovať projekciu.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Alternatívny orez.",
+    "fallback": "Alternatívny orez.",
+    "failure": "Extrémne skreslenie a dezorientácia.",
+    "checks": "Porovnať produktové proporcie.",
+    "source_ids": [
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX028",
+    "name": "Dolly zoom",
+    "name_sk": "Vertigo efekt",
+    "family": "camera",
+    "purpose": "Výrazná zámerná zmena priestorového vnímania.",
+    "implementation": "Koordinovať vzdialenosť a FOV pri stabilnej mierke subjektu.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická kompozícia.",
+    "fallback": "Statická kompozícia.",
+    "failure": "Silný vestibulárny účinok.",
+    "checks": "Použiť iba odôvodnene a overiť úplné vypnutie.",
+    "source_ids": [
+      "S024",
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX029",
+    "name": "Rack focus",
+    "name_sk": "Preostrenie",
+    "family": "camera",
+    "purpose": "Preniesť pozornosť medzi hĺbkami.",
+    "implementation": "Meniť focus distance pri stabilnej čitateľnej DOM vrstve.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Výmena dvoch ostro komponovaných záberov.",
+    "fallback": "Výmena dvoch ostro komponovaných záberov.",
+    "failure": "Haló, rozmazanie hlavnej informácie.",
+    "checks": "Over prechod a fallback bez DOF.",
+    "source_ids": [
+      "S012",
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX030",
+    "name": "Spline journey",
+    "name_sk": "Kamerová cesta",
+    "family": "camera",
+    "purpose": "Prepojiť niekoľko priestorových kapitol.",
+    "implementation": "Pomenované kľúče; premyslené tangenty, rýchlosť a orientácia.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statické kapitoly.",
+    "fallback": "Statické kapitoly.",
+    "failure": "Nepravidelná rýchlosť a prevrátenie kamery.",
+    "checks": "Over všetky intervaly aj pri náhlom skoku.",
+    "source_ids": [
+      "S014",
+      "S032"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX031",
+    "name": "Bloom",
+    "name_sk": "Žiara jasných miest",
+    "family": "vfx",
+    "purpose": "Dodať jemný svetelný akcent.",
+    "implementation": "Prahovaný efekt v správnom color pipeline.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Emissive akcent alebo pripravené médium.",
+    "fallback": "Emissive akcent alebo pripravené médium.",
+    "failure": "Prepaly a strata čitateľnosti.",
+    "checks": "Over s efektom/vypnutým efektom a DOM text.",
+    "source_ids": [
+      "S011",
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX032",
+    "name": "Film grain",
+    "name_sk": "Filmové zrno",
+    "family": "vfx",
+    "purpose": "Zjednotiť materiálový charakter obrazu.",
+    "implementation": "Slabý lokálny noise, bez prekrývania textu.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická jemná textúra.",
+    "fallback": "Statická jemná textúra.",
+    "failure": "Blikanie a zlá video kompresia.",
+    "checks": "Over reálnu veľkosť a export.",
+    "source_ids": [
+      "S011"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX033",
+    "name": "Vignette",
+    "name_sk": "Vinetácia",
+    "family": "vfx",
+    "purpose": "Jemne usmerniť pozornosť.",
+    "implementation": "Mierne stmavenie okrajov obrazu.",
+    "cost": "low",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Vyriešená kompozícia bez filtra.",
+    "fallback": "Vyriešená kompozícia bez filtra.",
+    "failure": "Tmavé CTA a strata detailov.",
+    "checks": "Over okraje aj mobilný orez.",
+    "source_ids": [
+      "S011"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX034",
+    "name": "Chromatic aberration",
+    "name_sk": "Farebný rozchod",
+    "family": "vfx",
+    "purpose": "Lokálny optický alebo digitálny charakter.",
+    "implementation": "Malý posun kanálov iba v dekoratívnom obraze.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Odstrániť efekt.",
+    "fallback": "Odstrániť efekt.",
+    "failure": "Neostrosť textu a celého produktu.",
+    "checks": "Over vypnutie a brand farby.",
+    "source_ids": [
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX035",
+    "name": "Motion blur",
+    "name_sk": "Pohybová neostrosť",
+    "family": "vfx",
+    "purpose": "Simulovať časové rozmazanie pohybu.",
+    "implementation": "Vhodné velocity dáta alebo vopred vyrenderované médium.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Krátka plynulá transformácia.",
+    "fallback": "Krátka plynulá transformácia.",
+    "failure": "Ghosting a rozmazané čítanie.",
+    "checks": "Over rýchly/skokový vstup a históriu bufferu.",
+    "source_ids": [
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX036",
+    "name": "Depth fog",
+    "name_sk": "Hĺbková hmla",
+    "family": "vfx",
+    "purpose": "Oddeliť hĺbkové plány.",
+    "implementation": "Jednoduchá vzdialenostná funkcia vo scéne.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická tónová gradácia.",
+    "fallback": "Statická tónová gradácia.",
+    "failure": "Zakrytý predmet alebo nevhodné farby.",
+    "checks": "Over near/far a contrast.",
+    "source_ids": [
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX037",
+    "name": "Volumetric light",
+    "name_sk": "Objemové svetlo",
+    "family": "vfx",
+    "purpose": "Atmosféra svetla v priestore.",
+    "implementation": "Obmedzené sampling/raymarch alebo baked vrstva.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Baked svetelný kužeľ.",
+    "fallback": "Baked svetelný kužeľ.",
+    "failure": "Veľa full-screen vzoriek.",
+    "checks": "Profilovať pri zníženom rozlíšení a bez efektu.",
+    "source_ids": [
+      "S012",
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX038",
+    "name": "Particles",
+    "name_sk": "Častice",
+    "family": "vfx",
+    "purpose": "Prach, iskry alebo materiálový pohyb.",
+    "implementation": "Instancing/points, stabilný seed a bounded count.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Menej malých bodov alebo statika.",
+    "fallback": "Menej malých bodov alebo statika.",
+    "failure": "Transparentný overdraw a alokácie.",
+    "checks": "Over fill rate a offscreen stop.",
+    "source_ids": [
+      "S014",
+      "S015"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX039",
+    "name": "Transmission and refraction",
+    "name_sk": "Priehľadnosť a lom",
+    "family": "vfx",
+    "purpose": "Vyjadriť sklo alebo tekutinu.",
+    "implementation": "Kompatibilný materiál a riadené render targets.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Jednoduchý materiál alebo fotografia.",
+    "fallback": "Jednoduchý materiál alebo fotografia.",
+    "failure": "Poradie transparentnosti a chýbajúce pozadie.",
+    "checks": "Over viac priesvitných vrstiev a mobile fallback.",
+    "source_ids": [
+      "S010",
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX040",
+    "name": "Ambient occlusion",
+    "name_sk": "Kontaktné zatienenie",
+    "family": "vfx",
+    "purpose": "Ukotviť predmet v priestore.",
+    "implementation": "Baked AO alebo primeraný screen-space efekt.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Baked kontakt a dobré svetlo.",
+    "fallback": "Baked kontakt a dobré svetlo.",
+    "failure": "Tmavé halo a šum.",
+    "checks": "Over pohyb kamery a farby.",
+    "source_ids": [
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX041",
+    "name": "Screen-space reflections",
+    "name_sk": "Odrazy z obrazu",
+    "family": "vfx",
+    "purpose": "Zjemniť kontakt s lesklým povrchom.",
+    "implementation": "SSR podľa podporovanej pipeline.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Environment map.",
+    "fallback": "Environment map.",
+    "failure": "Chýbajúce odrazy mimo frustum.",
+    "checks": "Over okraje obrazu a fallback.",
+    "source_ids": [
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX042",
+    "name": "SDF raymarching",
+    "name_sk": "Procedurálne objemy",
+    "family": "vfx",
+    "purpose": "Vytvoriť špecifický procedurálny tvar.",
+    "implementation": "Bounded kroky, hit epsilon a maximálna vzdialenosť.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Mesh alebo pripravený render.",
+    "fallback": "Mesh alebo pripravený render.",
+    "failure": "Neobmedzené slučky a aliasing.",
+    "checks": "Over worst-case lúče a slabú vetvu.",
+    "source_ids": [
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX043",
+    "name": "Vertex deformation",
+    "name_sk": "Deformácia geometrie",
+    "family": "vfx",
+    "purpose": "Vlnenie, látka alebo značková forma.",
+    "implementation": "Posun vertexov s riadeným rozsahom a normálami.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statický mesh.",
+    "fallback": "Statický mesh.",
+    "failure": "Pokazené tiene, normály a bounds.",
+    "checks": "Over vrcholy, silhouette a culling.",
+    "source_ids": [
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX044",
+    "name": "Flowmap distortion",
+    "name_sk": "Prúdenie obrazu",
+    "family": "vfx",
+    "purpose": "Jemná materiálová reakcia.",
+    "implementation": "UV flow pole s obmedzenou amplitúdou a decay.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Mierny parallax alebo statický obraz.",
+    "fallback": "Mierny parallax alebo statický obraz.",
+    "failure": "Rozťahané pixely a nepredvídateľný touch.",
+    "checks": "Over okraje, reset a nulový vstup.",
+    "source_ids": [
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX045",
+    "name": "Color grading and LUT",
+    "name_sk": "Farebné ladenie",
+    "family": "vfx",
+    "purpose": "Zjednotiť náladu a médiá.",
+    "implementation": "Korekcia vstupov, správny tone/output transform, potom zámerný look.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Korigované originálne médium.",
+    "fallback": "Korigované originálne médium.",
+    "failure": "Dvojitá konverzia a nepravdivá farba produktu.",
+    "checks": "Over neutrálne a brand vzorky.",
+    "source_ids": [
+      "S010",
+      "S012"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX046",
+    "name": "Layer compositing",
+    "name_sk": "Skladanie vrstiev",
+    "family": "vfx",
+    "purpose": "Spojiť médiá a efekty do jedného obrazu.",
+    "implementation": "Určiť z-order, masky, alpha a color space každého vstupu.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Jedna pripravená kompozícia.",
+    "fallback": "Jedna pripravená kompozícia.",
+    "failure": "Tmavé okraje a zlé premultiplied alpha.",
+    "checks": "Over priehľadné hrany na rôznych pozadiach.",
+    "source_ids": [
+      "S010",
+      "S033"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX047",
+    "name": "Rive state machine",
+    "name_sk": "Interaktívna vektorová scéna",
+    "family": "interaction",
+    "purpose": "Reagovať na zmysluplné UI stavy.",
+    "implementation": "Dohodnuté inputs/events, samostatná DOM semantika a cleanup.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická ilustrácia a normálne ovládanie.",
+    "fallback": "Statická ilustrácia a normálne ovládanie.",
+    "failure": "Canvas bez prístupného významu.",
+    "checks": "Over stavové prechody, resize a destroy.",
+    "source_ids": [
+      "S018"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX048",
+    "name": "Lottie playback",
+    "name_sk": "Vektorová animácia",
+    "family": "interaction",
+    "purpose": "Použiť kompatibilný pripravený motion asset.",
+    "implementation": "Overiť export, renderer, assety a riadenie prehrávania.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Poster/SVG.",
+    "fallback": "Poster/SVG.",
+    "failure": "Nepodporované efekty a externé fonty.",
+    "checks": "Over export v cieľovom runtime a stop/destroy.",
+    "source_ids": [
+      "S019"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX049",
+    "name": "Kinetic typography",
+    "name_sk": "Pohyblivá typografia",
+    "family": "interaction",
+    "purpose": "Krátko zdôrazniť hierarchiu slov.",
+    "implementation": "Animované vizuálne kusy s jednou zmysluplnou textovou verziou.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Čitateľný statický text.",
+    "fallback": "Čitateľný statický text.",
+    "failure": "Rozbité čítanie, kopírovanie a dlhé čakanie.",
+    "checks": "Over diakritiku, reflow a accessible text.",
+    "source_ids": [
+      "S008",
+      "S022"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX050",
+    "name": "Scroll image sequence",
+    "name_sk": "Obrazová sekvencia",
+    "family": "interaction",
+    "purpose": "Riadiť pripravenú filmovú cestu.",
+    "implementation": "Bounded cache a mapovanie progresu na dekódované frame.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Poster alebo niekoľko statických kapitol.",
+    "fallback": "Poster alebo niekoľko statických kapitol.",
+    "failure": "Stovky súčasne načítaných veľkých snímok.",
+    "checks": "Over chýbajúci frame, pamäť a reverse.",
+    "source_ids": [
+      "S020",
+      "S027"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX051",
+    "name": "Cinematic video hero",
+    "name_sk": "Filmový úvod",
+    "family": "interaction",
+    "purpose": "Ukázať autentickú atmosféru.",
+    "implementation": "Poster, primeraný orez, muted playback a zodpovedajúce controls.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Poster s čitateľnou ponukou.",
+    "fallback": "Poster s čitateľnou ponukou.",
+    "failure": "Odmietnutý autoplay a skrytá akcia.",
+    "checks": "Over play reject, pause a reduced motion.",
+    "source_ids": [
+      "S023",
+      "S027"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX052",
+    "name": "Pointer spotlight",
+    "name_sk": "Svetlo podľa kurzora",
+    "family": "interaction",
+    "purpose": "Jemne reagovať na záujem.",
+    "implementation": "Bounded cieľ svetla alebo CSS masky, stabilný DOM.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Pevná osvetlená kompozícia.",
+    "fallback": "Pevná osvetlená kompozícia.",
+    "failure": "Príliš tmavý text mimo kurzora.",
+    "checks": "Over pointer leave, touch a klávesnicu.",
+    "source_ids": [
+      "S008",
+      "S017"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX053",
+    "name": "Drag gallery",
+    "name_sk": "Galéria ovládaná ťahom",
+    "family": "interaction",
+    "purpose": "Prirodzený prieskum médií.",
+    "implementation": "Gestá s buttons/keyboard alternatívou a hranicami.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Normálny zoznam alebo scroll-snap.",
+    "fallback": "Normálny zoznam alebo scroll-snap.",
+    "failure": "Konflikt horizontálneho drag a zvislého scroll.",
+    "checks": "Over klik vs drag, fokus a oba smery.",
+    "source_ids": [
+      "S004",
+      "S022"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX054",
+    "name": "Animated data change",
+    "name_sk": "Animovaná zmena dát",
+    "family": "interaction",
+    "purpose": "Ukázať vzťah medzi dvoma známymi stavmi.",
+    "implementation": "Stabilné identifikátory a správne konečné hodnoty.",
+    "cost": "medium",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Okamžité aktuálne hodnoty.",
+    "fallback": "Okamžité aktuálne hodnoty.",
+    "failure": "Efekt zavádza o mierke alebo trvaní.",
+    "checks": "Over presnosť, textovú alternatívu a interrupt.",
+    "source_ids": [
+      "S004",
+      "S022"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX055",
+    "name": "Depth mask reveal",
+    "name_sk": "Odhalenie podľa hĺbky",
+    "family": "interaction",
+    "purpose": "Prepojiť objekt s textom cez popredie.",
+    "implementation": "Skutočná maska hĺbky alebo pripravené vrstvy so stabilnou hierarchiou.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Kompozícia bez pretínania textu.",
+    "fallback": "Kompozícia bez pretínania textu.",
+    "failure": "Nečitateľné písmená a chybné okraje.",
+    "checks": "Over hranice a každý mobilný orez.",
+    "source_ids": [
+      "S012",
+      "S033"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  },
+  {
+    "id": "FX056",
+    "name": "Exploded view",
+    "name_sk": "Rozloženie produktu",
+    "family": "interaction",
+    "purpose": "Vysvetliť skutočné časti a zostavenie.",
+    "implementation": "Pomenované časti, deterministické pozície a DOM popisy.",
+    "cost": "high",
+    "mobile": "Recompose and measure; use the fallback if the effect obstructs touch, reading or the device budget.",
+    "reduced_motion": "Statická označená schéma.",
+    "fallback": "Statická označená schéma.",
+    "failure": "Vymyslené súčiastky alebo zmätočné poradie.",
+    "checks": "Over technické fakty, reverse a reset.",
+    "source_ids": [
+      "S014",
+      "S016"
+    ],
+    "origin": "original_recipe",
+    "validation_status": "guidance_not_individually_runtime_tested"
+  }
+]

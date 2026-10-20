@@ -1,0 +1,15 @@
+{
+  "scenario": "Original fictional product-camera study; not a recovered reference implementation",
+  "units": "arbitrary scene units; fov in degrees; progress normalized",
+  "keyframes": [
+    {"progress": 0, "position": [0, 0.5, 6], "target": [0, 0, 0], "fov": 40},
+    {"progress": 0.35, "position": [1.5, 0.7, 4.5], "target": [0, 0.2, 0], "fov": 40},
+    {"progress": 0.7, "position": [0.7, 0.2, 3.5], "target": [0, 0.1, 0], "fov": 36},
+    {"progress": 1, "position": [0, 0.5, 6], "target": [0, 0, 0], "fov": 40}
+  ],
+  "chapters": [
+    {"name": "orientation", "range": [0, 0.35], "content": "purpose and action"},
+    {"name": "detail", "range": [0.35, 0.7], "content": "real feature evidence"},
+    {"name": "decision", "range": [0.7, 1], "content": "choice and action"}
+  ]
+}

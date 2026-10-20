@@ -25,6 +25,10 @@ licenciou Apache 2.0 (licencia je v každom priečinku):
 (MIT), zoznam a pôvod v `skills-animacie/README.md`; ako spúšťať UI/UX Pro Max z Genjutsu
 v `skills-animacie/ui-ux-pro-max-u-nas.md`.
 
+`skills-senior/` – Premium & Cinematic Web Studio (`build-premium-websites`): 100 kapitol seniorskej práce na
+filmovom webe (art direction, prechody, kontinuita scén, VFX, výkon, prístupnosť, dodanie) a 100 zadaní pre senior
+grafika s vizuálnymi efektmi Z001–Z100. Pôvod, overenie a použitie v `skills-senior/README.md`.
+
 `skills-z-praxe/` – naše vlastné postupy z prác na weboch HEAD SPA 30 a BARBERSHOP 30,
 spísané z kódu, ktorý na webe naozaj beží, a overené proti nemu. Prehľad je
 v `skills-z-praxe/README.md`:

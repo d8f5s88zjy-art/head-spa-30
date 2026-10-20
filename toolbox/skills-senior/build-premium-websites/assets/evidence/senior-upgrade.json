@@ -1,0 +1,103 @@
+{
+  "updated_at": "2026-10-20",
+  "status": "validated_local_and_task_applications",
+  "baseline_commit": "73588a2ad621392f3ba90c45273219e912cd574a",
+  "scope": {
+    "operational_chapters": 100,
+    "domains": 10,
+    "chapters_per_domain": 10,
+    "new_chapters": 75,
+    "retained_chapters": 25,
+    "historical_evidence_logs_excluded": 2,
+    "designer_master_prompts": 1,
+    "designer_task_prompts": 24,
+    "task_templates_origin": "Original authored prompts; not independent external client projects.",
+    "sources_total": 59,
+    "primary_pages_added": 18
+  },
+  "checks": [
+    {
+      "command": "python scripts/validate_bundle.py",
+      "result": "passed",
+      "scope": "100 distinct linked chapter paths, ten domains, source IDs, prompt/task relationships, ten catalog commands and preserved templates"
+    },
+    {
+      "command": "node --test scripts/test_motion.mjs scripts/test_scene.mjs",
+      "result": "26 passed",
+      "scope": "Existing deterministic, async and ownership utility tests using local mocks; no browser/GPU execution"
+    },
+    {
+      "command": "python scripts/test_studio.py -v",
+      "result": "15 passed",
+      "scope": "Existing planning, nominal memory and declared evidence-record consistency checks"
+    },
+    {
+      "command": "python scripts/test_senior.py -v",
+      "result": "11 passed",
+      "scope": "Bounded routing, Slovak lookup, prompt composition, invalid input and literal data preservation"
+    },
+    {
+      "command": "designer CLI on duplicate-key and NaN input",
+      "result": "two malformed JSON cases rejected",
+      "scope": "Additional manual CLI integration checks; not counted as extra unit tests"
+    },
+    {
+      "command": "skill-creator quick_validate.py",
+      "result": "passed",
+      "scope": "Skill metadata only"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed",
+      "scope": "Whitespace consistency"
+    }
+  ],
+  "unit_tests_total": 52,
+  "task_applications": [
+    {
+      "id": "designer_prompt_application",
+      "method": "fresh-context task using supplied brief and installed skill",
+      "scenario": "1500 EUR barber hero/mobile designer prompt with real-media constraints and unconfirmed prices/reviews",
+      "observed": "Returned a detailed ready-to-handoff prompt using master, D007, D013, D022 and selected chapters; executed composer; kept illustrative booking URL explicit and no external design/build action.",
+      "boundary": "Prompt quality/application evidence, not an executed graphic design or production website.",
+      "improvement": "Explicitly require proposed revision count, output formats and budget split to be labeled as proposed unless confirmed; application output had introduced a one-round planning assumption without sufficiently explicit qualification."
+    },
+    {
+      "id": "senior_platform_application",
+      "method": "fresh-context decision package",
+      "scenario": "Existing React/PostgreSQL multitenant booking platform, ambiguous confirmation timeout, webhook and draft price preview",
+      "observed": "Preserved stack; kept unknown timeout distinct from failure; separated motion from business authority; covered tenant/cache/CMS boundaries, compatibility migration, reconciliation and risk-based acceptance.",
+      "boundary": "Planning application only; no code, database, provider, browser or production checks executed."
+    }
+  ],
+  "observed_lookup_correction": "The Slovak query grafika initially returned no chapter; added explicit relevant aliases and included lookup regression in the existing search test.",
+  "legacy_catalogs": {
+    "websites.json": {
+      "unchanged": true,
+      "sha256": "4ed965f42c1b532f87184a5afcd9a2eed8efea15728c92dae998cdcf83cecdb8"
+    },
+    "tools.json": {
+      "unchanged": true,
+      "sha256": "82ef0745cc5b6808fe0b10e363ab0d6cbd505fdc3c4828aef1ad6740839c2042"
+    },
+    "prompts.jsonl": {
+      "unchanged": true,
+      "sha256": "ee533dfa858a672da931880b19a0bbfc4d59491da55a642da0dc5facf0465611"
+    },
+    "prompt_index.json": {
+      "unchanged": true,
+      "sha256": "f244552422761323f92d878b1ed47ee2ebeccd45b2f31db1eae9c0916e26a99b"
+    },
+    "techniques.json": {
+      "unchanged": true,
+      "sha256": "8941fea1f14c2f37c8775813622a833f0b315ceae03c6ed615a8e910f6362a5a"
+    }
+  },
+  "browser_checks_this_upgrade": "not_run; no runtime visuals were needed to verify the newly authored prompt and chapter tooling",
+  "prior_browser_limit": "Previous local motion lab remained unverified in the cloud browser; retained historical logs record connection restrictions.",
+  "limits": [
+    "No measured quality multiplier, guaranteed commercial value, universal senior competence or certification.",
+    "New guidance and prompt templates do not prove all techniques or providers were implemented.",
+    "52 tests refer to local utility behavior; visual, physical-device and real-provider evidence remains task-specific."
+  ]
+}

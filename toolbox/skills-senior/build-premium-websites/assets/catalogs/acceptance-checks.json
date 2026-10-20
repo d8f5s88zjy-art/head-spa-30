@@ -1,0 +1,114 @@
+[
+  {
+    "id": "truth",
+    "evidence_methods": [
+      "source_review"
+    ],
+    "observe": "Verify claims, prices, identity, source dates and actual scope; unknown facts remain unknown."
+  },
+  {
+    "id": "visual",
+    "evidence_methods": [
+      "visual_review"
+    ],
+    "observe": "Inspect hero, proof, choice and action at reading scale and page overview; record hierarchy, crop and typography defects."
+  },
+  {
+    "id": "media",
+    "evidence_methods": [
+      "source_review"
+    ],
+    "observe": "Verify actual originals, rights, derivatives, crop and fallback; do not substitute generated proof."
+  },
+  {
+    "id": "journey",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Complete the primary navigation/selection path in an authorized test context and observe its real outcome."
+  },
+  {
+    "id": "responsive",
+    "evidence_methods": [
+      "visual_review"
+    ],
+    "observe": "Inspect actual rendered narrow and wide compositions, long copy, overlap and important controls; identify emulation limits."
+  },
+  {
+    "id": "keyboard",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Use keyboard through the main path; observe focus, order, controls and no focus trap or obstruction."
+  },
+  {
+    "id": "loading",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Observe usable information and actions during relevant loading, failed media and failed API states."
+  },
+  {
+    "id": "performance",
+    "evidence_methods": [
+      "runtime_measurement"
+    ],
+    "observe": "Measure relevant load or interaction workload under a recorded build/device/network/cache scenario; do not substitute a code review."
+  },
+  {
+    "id": "motion",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Observe reversal, interruption, rapid re-entry, direct anchor/reload and relevant teardown/history behavior."
+  },
+  {
+    "id": "reduced_motion",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Observe readable stable content and usable actions with preference enabled and changed during motion."
+  },
+  {
+    "id": "cms",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Change representative content in an authorized test path; exercise long text, reorder, missing media and unpublished data."
+  },
+  {
+    "id": "form",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Observe invalid, pending, server-error and actual confirmation states without unauthorized external messages."
+  },
+  {
+    "id": "commerce",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Use provider-authorized test flow; verify actual variant, amount, error and no duplicate submission."
+  },
+  {
+    "id": "three_d",
+    "evidence_methods": [
+      "browser_behavior"
+    ],
+    "observe": "Verify real model/selection mapping, loading/failure fallback and usable controls without the renderer."
+  },
+  {
+    "id": "build",
+    "evidence_methods": [
+      "build_or_targeted_test"
+    ],
+    "observe": "Run the applicable build and risk-targeted checks; identify mocked and real dependencies separately."
+  },
+  {
+    "id": "handoff",
+    "evidence_methods": [
+      "handoff_review"
+    ],
+    "observe": "Verify editable sources, actual status, relevant asset credits, content ownership and release/rollback route."
+  }
+]

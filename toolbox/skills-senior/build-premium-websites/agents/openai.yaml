@@ -1,0 +1,15 @@
+interface:
+  display_name: Premium & Cinematic Web Studio
+  short_description: 100 kapitol, seniorský postup a detailné prompty
+  default_prompt: 'Použi $build-premium-websites: zvoľ relevantné kapitoly zo 100,
+    priprav presné zadanie pre grafika alebo dokonči profesionálny filmový web so
+    zodpovedným rozhodovaním a overením.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

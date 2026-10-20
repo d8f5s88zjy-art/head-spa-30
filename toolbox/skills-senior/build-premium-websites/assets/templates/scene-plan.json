@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "note": "Fictional example; normalized ranges are design input, not measured reading time.",
+  "chapters": [
+    {
+      "id": "orientation",
+      "anchor": "#orientation",
+      "start": 0,
+      "end": 0.3,
+      "enterUntil": 0.18,
+      "exitFrom": 0.82
+    },
+    {
+      "id": "proof",
+      "anchor": "#proof",
+      "start": 0.3,
+      "end": 0.75,
+      "enterUntil": 0.2,
+      "exitFrom": 0.8
+    },
+    {
+      "id": "decision",
+      "anchor": "#decision",
+      "start": 0.75,
+      "end": 1,
+      "enterUntil": 0.15,
+      "exitFrom": 0.9
+    }
+  ]
+}

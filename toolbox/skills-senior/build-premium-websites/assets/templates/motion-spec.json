@@ -1,0 +1,20 @@
+{
+  "id": "example-product-reveal",
+  "status": "fictional_proposal_replace_before_production",
+  "purpose": "Show the product and then its real detail while preserving access to the main action.",
+  "technique_ids": ["FX009", "FX023"],
+  "trigger": "normalized chapter scroll progress",
+  "owner": "one scene progress controller",
+  "properties": ["camera.position", "camera.target"],
+  "input_range": [0, 1],
+  "states": {"entry": "wide composition", "hold": "readable detail", "exit": "stable offer"},
+  "timing": {"mode": "scroll", "mapping": "linear input; explicit interpolation between keys", "duration_ms": null},
+  "interruption": "re-evaluate from current progress; no queued navigation side effects",
+  "reverse": "same deterministic mapping in both directions",
+  "cleanup": "remove owned observers, listeners, animation callbacks and resources",
+  "mobile": "separate framing; ordinary document flow where pinning is unsuitable",
+  "reduced_motion": "static image and readable chapters",
+  "fallback": "poster with semantic content and working action",
+  "performance": {"status": "budget_to_be_measured", "target_device": null, "frame_time_p95_ms": null, "media_bytes": null},
+  "checks": ["mid-page reload", "reverse scroll", "rapid jump", "resize", "keyboard", "live preference change", "asset failure"]
+}

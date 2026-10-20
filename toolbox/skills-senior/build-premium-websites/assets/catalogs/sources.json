@@ -1,0 +1,533 @@
+[
+  {
+    "id": "S001",
+    "name": "GSAP ScrollTrigger",
+    "url": "https://gsap.com/docs/v3/Plugins/ScrollTrigger/",
+    "use": "scroll timelines, pinning, scrub semantics",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S002",
+    "name": "GSAP matchMedia",
+    "url": "https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/",
+    "use": "responsive animation lifecycle and reversion",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S003",
+    "name": "GSAP Flip",
+    "url": "https://gsap.com/docs/v3/Plugins/Flip/",
+    "use": "layout transition mechanism",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S004",
+    "name": "Motion layout animation",
+    "url": "https://motion.dev/docs/react-layout-animations",
+    "use": "layout and shared identity",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S005",
+    "name": "Motion useReducedMotion",
+    "url": "https://motion.dev/docs/react-use-reduced-motion",
+    "use": "runtime preference handling",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S006",
+    "name": "MDN View Transition API",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API",
+    "use": "same-document enhancement and transition lifecycle",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S007",
+    "name": "MDN scroll-driven animations",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations",
+    "use": "native scroll timelines and feature-specific support",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S008",
+    "name": "MDN Web Animations API",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API",
+    "use": "native animation controls and cancellation",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S009",
+    "name": "Lenis official repository",
+    "url": "https://github.com/darkroomengineering/lenis",
+    "use": "optional smooth scrolling and GSAP integration",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S010",
+    "name": "Three.js color management",
+    "url": "https://threejs.org/manual/pages/color-management.html",
+    "use": "linear working space and color versus data textures",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S011",
+    "name": "Three.js WebGL post-processing",
+    "url": "https://threejs.org/manual/pages/post-processing.html",
+    "use": "EffectComposer and output handling",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S012",
+    "name": "Three.js WebGPU post-processing",
+    "url": "https://threejs.org/manual/pages/webgpu-postprocessing.html",
+    "use": "RenderPipeline and TSL effect chain",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S013",
+    "name": "Three.js cleanup",
+    "url": "https://threejs.org/manual/pages/cleanup.html",
+    "use": "explicit disposal and resource ownership",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S014",
+    "name": "R3F performance pitfalls",
+    "url": "https://r3f.docs.pmnd.rs/advanced/pitfalls",
+    "use": "frame updates, allocation and delta time",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S015",
+    "name": "R3F scaling performance",
+    "url": "https://r3f.docs.pmnd.rs/advanced/scaling-performance",
+    "use": "on-demand rendering and invalidation",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S016",
+    "name": "glTF Transform CLI",
+    "url": "https://gltf-transform.dev/cli",
+    "use": "asset inspection and transformation tooling",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S017",
+    "name": "Three.js TSL guide",
+    "url": "https://threejs.org/tsl/",
+    "use": "node-based shading entry point; recheck exact API",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S018",
+    "name": "Rive web runtime",
+    "url": "https://rive.app/docs/runtimes/web/web-js",
+    "use": "runtime initialization and cleanup",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S019",
+    "name": "Lottie official web runtime",
+    "url": "https://github.com/airbnb/lottie-web",
+    "use": "supported runtime, export and lifecycle checks",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S020",
+    "name": "Web Vitals",
+    "url": "https://web.dev/articles/vitals",
+    "use": "LCP, INP, CLS thresholds and field measurement",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S021",
+    "name": "High-performance CSS animations",
+    "url": "https://web.dev/articles/animations-guide",
+    "use": "rendering costs and careful will-change use",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S022",
+    "name": "WCAG 2.2 normative standard",
+    "url": "https://www.w3.org/TR/WCAG22/",
+    "use": "accessibility scope and criterion levels",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S023",
+    "name": "WCAG Pause Stop Hide",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html",
+    "use": "conditions for controlling automatic motion",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S024",
+    "name": "WCAG Animation from Interactions",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html",
+    "use": "Level AAA interaction-motion criterion",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S025",
+    "name": "WCAG Three Flashes or Below Threshold",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html",
+    "use": "flash assessment; avoid stroboscopic designs",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S026",
+    "name": "WAI ARIA modal dialog pattern",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+    "use": "focus and dialog interaction",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S027",
+    "name": "MDN HTMLMediaElement play",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play",
+    "use": "promise rejection and truthful media UI",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S028",
+    "name": "Google SEO starter guide",
+    "url": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+    "use": "search fundamentals and content discoverability",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S029",
+    "name": "OWASP ASVS",
+    "url": "https://owasp.org/projects/asvs",
+    "use": "risk-appropriate security verification framework",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S030",
+    "name": "Adobe match cut",
+    "url": "https://www.adobe.com/creativecloud/video/discover/match-cut.html",
+    "use": "film continuity terminology; web recipes are adaptations",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S031",
+    "name": "Adobe J and L cuts",
+    "url": "https://helpx.adobe.com/premiere/desktop/edit-projects/trim-clips/perform-j-cuts-and-l-cuts.html",
+    "use": "audio overlap terminology",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S032",
+    "name": "Blender cameras, versioned manual",
+    "url": "https://docs.blender.org/manual/en/5.4/render/cameras.html",
+    "use": "camera terminology; direct fetch failed, search excerpt only",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S033",
+    "name": "Blender compositing, versioned manual",
+    "url": "https://docs.blender.org/manual/en/5.0/compositing/introduction.html",
+    "use": "compositing concept; direct fetch failed, search excerpt only",
+    "evidence_level": "primary_search_excerpt",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S034",
+    "name": "Three.js RenderPipeline",
+    "url": "https://threejs.org/docs/pages/RenderPipeline.html",
+    "use": "current pipeline name; older PostProcessing examples require checking",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant documentation or search excerpt, not full practical mastery or universal compatibility."
+  },
+  {
+    "id": "S035",
+    "name": "W3C Target Size Minimum",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+    "use": "24 CSS pixel minimum and stated exceptions",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S036",
+    "name": "W3C Focus Not Obscured Minimum",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html",
+    "use": "focused component not entirely obscured; distinguish separate focus visibility checks",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S037",
+    "name": "React Three Fiber Scaling Performance",
+    "url": "https://r3f.docs.pmnd.rs/advanced/scaling-performance",
+    "use": "on-demand rendering and explicit invalidation for imperative changes",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S038",
+    "name": "web.dev Optimize INP",
+    "url": "https://web.dev/articles/optimize-inp",
+    "use": "input delay, processing and presentation delay",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S039",
+    "name": "web.dev Optimize LCP",
+    "url": "https://web.dev/articles/optimize-lcp",
+    "use": "resource discovery and load/render delay diagnosis",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S040",
+    "name": "GSAP Flip",
+    "url": "https://gsap.com/docs/v3/Plugins/Flip/",
+    "use": "nested/transformed layouts and interruption; integration still requires testing",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Relevant retrieved documentation and targeted section; not a runtime test or complete manual review."
+  },
+  {
+    "id": "S041",
+    "name": "Three.js object disposal",
+    "url": "https://threejs.org/manual/pages/how-to-dispose-of-objects.html",
+    "use": "separate object/material/texture ownership, ImageBitmap lifecycle and renderer cache interpretation",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Retrieved manual page; no real GPU disposal measurement."
+  },
+  {
+    "id": "S042",
+    "name": "React useEffect",
+    "url": "https://react.dev/reference/react/useEffect",
+    "use": "External synchronization and setup/cleanup lifecycle",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S043",
+    "name": "MDN HTTP caching",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+    "use": "Cache controls, revalidation and shared/private response distinctions",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S044",
+    "name": "web.dev back/forward cache",
+    "url": "https://web.dev/articles/bfcache",
+    "use": "Page restoration and persisted page lifecycle",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S045",
+    "name": "Stripe webhooks",
+    "url": "https://docs.stripe.com/webhooks",
+    "use": "Signature verification, duplicate and unordered event delivery",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S046",
+    "name": "Stripe idempotent requests",
+    "url": "https://docs.stripe.com/api/idempotent_requests",
+    "use": "Provider-specific request retry identity",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S047",
+    "name": "PostgreSQL transaction isolation",
+    "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "use": "Isolation guarantees and transaction retry requirements",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S048",
+    "name": "OWASP Authorization",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+    "use": "Server permission boundaries and default denial",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S049",
+    "name": "OWASP XSS prevention",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+    "use": "Context-aware output handling and rich HTML sanitization",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S050",
+    "name": "OWASP CSRF prevention",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+    "use": "CSRF controls and SameSite limitations",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S051",
+    "name": "W3C Forms tutorial",
+    "url": "https://www.w3.org/WAI/tutorials/forms/",
+    "use": "Accessible form structure, labeling and feedback",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S052",
+    "name": "W3C Page structure tutorial",
+    "url": "https://www.w3.org/WAI/tutorials/page-structure/",
+    "use": "Semantic headings, regions and structure",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S053",
+    "name": "MDN Intl.DateTimeFormat",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+    "use": "Locale-aware formatting with explicit timezone",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S054",
+    "name": "OpenTelemetry signals",
+    "url": "https://opentelemetry.io/docs/concepts/signals/",
+    "use": "Distinguishing telemetry signal purposes",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S055",
+    "name": "Google SRE implementing SLOs",
+    "url": "https://sre.google/workbook/implementing-slos/",
+    "use": "Service objectives, ownership and error-budget policy",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S056",
+    "name": "Google site moves",
+    "url": "https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes",
+    "use": "URL migration planning and monitoring",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S057",
+    "name": "Chrome DevTools performance",
+    "url": "https://developer.chrome.com/docs/devtools/performance",
+    "use": "Runtime trace-based diagnosis",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S058",
+    "name": "MDN CSS supports",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@supports",
+    "use": "Feature-specific CSS enhancement conditions",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  },
+  {
+    "id": "S059",
+    "name": "MDN lazy loading",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading",
+    "use": "Deferring noncritical resources",
+    "evidence_level": "primary_page",
+    "checked_at": "2026-10-20",
+    "scope": "Page retrieved; relevant concepts/sections inspected. Not an exhaustive manual read, runtime integration test or professional certification."
+  }
+]

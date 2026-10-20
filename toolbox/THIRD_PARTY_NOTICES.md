@@ -403,3 +403,9 @@ This license becomes null and void if any of the above conditions are not met.
 DISCLAIMER
 
 THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.  
+## skills-senior/build-premium-websites
+
+Prompty prevzaté z verejných repozitárov wundercorp/awesome-prompts, TencentEdgeOne/awesome-website-prompts-and-skills
+a P-r-e-m-i-u-m/ui-prompt-library sú pod licenciou MIT; plné znenia sú v
+`skills-senior/build-premium-websites/assets/catalogs/licenses.json` a v každom zázname katalógu. Ostatné texty skillu
+dodal majiteľ (20. 10. 2026).

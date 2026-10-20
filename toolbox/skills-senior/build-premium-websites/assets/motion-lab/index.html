@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Lab — štúdia mechanizmov</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#f1f3f5;background:#11171c;color-scheme:dark;line-height:1.55}
+*{box-sizing:border-box}body{margin:0}main{max-width:1000px;padding:40px 24px;margin:auto}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;letter-spacing:-.04em;margin:12px 0 20px}h2{font-size:1.4rem;margin:0 0 12px}
+p{max-width:70ch;color:#c1cbd2}.eyebrow{color:#e6b77a;letter-spacing:.12em;font-size:.78rem}
+button{font:inherit;background:#26313b;color:#fff;border:1px solid #657582;border-radius:6px;padding:10px 16px;cursor:pointer}
+button:hover{background:#34424e}button:focus-visible,input:focus-visible{outline:3px solid #f0bf7c;outline-offset:4px}
+.toolbar{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:24px 0}.toolbar label{display:flex;gap:9px;align-items:center}
+section{border-top:1px solid #38444e;padding:30px 0}.stage{background:#1a232b;border:1px solid #34424d;border-radius:10px;min-height:210px;padding:24px;overflow:hidden;display:grid;place-items:center;margin:20px 0}
+.specimen{width:min(100%,390px);height:150px;border-radius:12px;background:linear-gradient(125deg,#66513b,#d5ad7c);display:grid;place-items:center;color:#141b21;font-size:2.2rem;font-weight:700}
+.cards{display:flex;gap:12px;flex-wrap:wrap;min-height:110px;margin:20px 0}.card{padding:24px;min-width:90px;flex:1;background:#25313b;border:1px solid #5a6a77;border-radius:8px;font-size:1.4rem;text-align:center}
+.orb{width:120px;height:120px;border-radius:50%;background:#d4a66f;view-transition-name:study-orb}.orb[data-state="b"]{background:#95bfb3;border-radius:24px}
+.scroll-region{height:75vh;min-height:420px;display:grid;place-items:center;background:#1a232b;border-radius:12px;overflow:hidden}.scroll-art{width:140px;height:180px;border:2px solid #e6b77a;background:#33434d;border-radius:70px 70px 12px 12px}
+.status{min-height:1.6em;color:#a6c5b9}small{color:#aebac3}::view-transition-group(*){animation-duration:.35s}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+@media(max-width:500px){main{padding:24px 18px}.stage{padding:16px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+<header><span class="eyebrow">PRACOVNÁ ŠTÚDIA · NATÍVNY WEB</span><h1>Pohyb s jasným účelom.</h1>
+<p>Malé samostatné mechanizmy na kontrolu prerušenia, rozloženia a zníženého pohybu. Nie je to klientsky web ani ukážka všetkých 56 techník.</p></header>
+<div class="toolbar"><label><input id="reduce" type="checkbox"> Obmedziť animácie</label><span id="mode" role="status">Základný obsah je pripravený.</span></div>
+<noscript><p>JavaScript je vypnutý. Všetky ukážkové prvky ostávajú viditeľné.</p></noscript>
+<section aria-labelledby="reveal-title"><h2 id="reveal-title">01 · Odhalenie a maska</h2><p>Krátka dekorácia nad už dostupným výsledkom. Opakované stlačenie zruší starý priebeh.</p>
+<div class="stage"><div id="specimen" class="specimen">DETAIL</div></div>
+<div class="toolbar"><button id="fade">Prelínanie</button><button id="mask">Odhalenie maskou</button></div></section>
+<section aria-labelledby="layout-title"><h2 id="layout-title">02 · Zmena rozloženia</h2><p>Prvky si zachovajú identitu pri presune. Text sa neškáluje.</p>
+<div id="cards" class="cards"><div class="card">A</div><div class="card">B</div><div class="card">C</div></div><button id="reorder">Preusporiadať</button></section>
+<section aria-labelledby="view-title"><h2 id="view-title">03 · Zdieľaná reprezentácia</h2><p>Podporovaný prehliadač pridá vizuálny prechod. Zmena stavu funguje aj bez neho.</p>
+<div class="stage"><div id="orb" class="orb" data-state="a" aria-hidden="true"></div></div><button id="switch">Zmeniť stav</button><p class="status" id="view-status" role="status">Stav A</p></section>
+<section aria-labelledby="scroll-title"><h2 id="scroll-title">04 · Deterministický scroll</h2><p>Malý presun obrazu vychádza zo súčasnej polohy. Skús opačný smer alebo obmedzenie animácie.</p>
+<div id="scroll-region" class="scroll-region"><div id="scroll-art" class="scroll-art" aria-hidden="true"></div></div></section>
+<footer><p>Skontroluj aj klávesnicu, úzky viewport a prepnutie obmedzenia pohybu počas animácie.</p><small>Originálna štúdia · bez externých médií a knižníc.</small></footer>
+</main>
+<script type="module" src="./lab.mjs"></script>
+</body></html>
