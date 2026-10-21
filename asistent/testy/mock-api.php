@@ -3,7 +3,9 @@
  * Telo požiadavky a hlavičky uloží do $MOCK_LOG (testy ich kontrolujú). Spúšťa testy/spusti.sh.
  * Otázka s „TERMIN <barber> <YYYY-MM-DD>“: prvé kolo vráti premýšľanie s podpisom a volanie nástroja over_volne_terminy,
  * druhé kolo (po výsledku nástroja) skontroluje, že server vrátil premýšľanie aj volanie nezmenené, a odpovie
- * textom s výsledkom nástroja („VYSLEDOK <stav> <časy>“). */
+ * textom s výsledkom nástroja („VYSLEDOK <stav> <časy>“).
+ * MOCK_DEMO=1 (len na ukážkové video, source/tools/video-nahlad.mjs): otázka s „Adrián“ a „zajtra“ zavolá nástroj na zajtra
+ * a odpoveď je bežná slovenská veta z výsledku nástroja. Stále je to skúšobný server, nie skutočný model. */
 $telo = file_get_contents('php://input');
 file_put_contents((string) getenv('MOCK_LOG'), json_encode(['uri' => $_SERVER['REQUEST_URI'], 'beta' => $_SERVER['HTTP_ANTHROPIC_BETA'] ?? '', 'kluc' => $_SERVER['HTTP_X_API_KEY'] ?? '', 'telo' => json_decode($telo, true)], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND);
 $req = json_decode($telo, true);
@@ -31,8 +33,17 @@ if (is_array($posledna['content']) && ($posledna['content'][0]['type'] ?? '') ==
   $podpis = ($asist['content'][0]['signature'] ?? '') === 'podpis-123' && ($asist['content'][0]['thinking'] ?? null) === 'Pozriem kalendár.';
   $volanie = ($asist['content'][1]['id'] ?? '') === 'toolu_1' && $posledna['content'][0]['tool_use_id'] === 'toolu_1';
   $r = json_decode((string) $posledna['content'][0]['content'], true);
+  if (getenv('MOCK_DEMO') && ($r['stav'] ?? '') === 'overene') {
+    $c = array_map(fn ($x) => ltrim($x, '0'), $r['casy']); $posl = array_pop($c);
+    textovo(['Podľa aktuálneho kalendára má Adrián zajtra ', 'voľné o ' . implode(', ', $c) . ' a ' . $posl . '. ', 'Termín je predbežný, kým ho nepotvrdíš. ', 'Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.']);
+    exit;
+  }
   textovo([($podpis && $volanie ? 'CELE ' : 'ZMENENE ' . implode(',', $typy) . ' '), 'VYSLEDOK ' . ($r['stav'] ?? '?') . ' ' . implode(',', $r['casy'] ?? []) . '.']);
   exit;
+}
+if (getenv('MOCK_DEMO') && preg_match('/adri[aá]n/iu', $text) && preg_match('/zajtra/iu', $text)) {
+  $z = new DateTimeImmutable('tomorrow', new DateTimeZone('Europe/Bratislava')); if ($z->format('N') == 7) $z = $z->modify('+1 day');
+  $text = 'TERMIN Adrián ' . $z->format('Y-m-d');
 }
 if (preg_match('/TERMIN (\S+) (\d{4}-\d{2}-\d{2})/u', $text, $m)) {
   ev('content_block_start', ['index' => 0, 'content_block' => ['type' => 'thinking', 'thinking' => '', 'signature' => '']]);
