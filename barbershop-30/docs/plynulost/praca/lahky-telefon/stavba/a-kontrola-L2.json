@@ -1,0 +1,111 @@
+{
+ "telefon": {
+  "prvySnimok": {
+   "cls": "karty lite world-off js-kin js-steps",
+   "h1": 1,
+   "act": 1,
+   "still": 1
+  },
+  "poNacitani": {
+   "cls": "karty lite world-off js-kin js-steps",
+   "gl": 0,
+   "film": false,
+   "near": [
+    "rohozka",
+    "sala",
+    "stol"
+   ],
+   "shown": 3,
+   "uvod": "rohozka-m-1448.avif"
+  },
+  "zakazanePoziadavky": [],
+  "pocetPoziadaviek": 25,
+  "chyby": [],
+  "koniec": {
+   "rezerva": 0,
+   "lista": "rgb(14, 13, 12)",
+   "scrolled": true,
+   "pad": "128px",
+   "tien": "rgb(14, 13, 12) 0px 422px 0px 422px",
+   "bodyPad": "0px"
+  }
+ },
+ "pc": {
+  "prvySnimok": "karty world pro js-kin js-steps",
+  "poNacitani": {
+   "cls": "karty world js-kin js-steps world-frame world-off",
+   "gl": 1,
+   "film": true,
+   "near": [
+    "rohozka",
+    "sala",
+    "stol"
+   ],
+   "shown": 3,
+   "uvod": "vstup-2172.avif"
+  },
+  "worldIn": null,
+  "gl": 1,
+  "threeJs": false,
+  "filmJs": true,
+  "lista": {
+   "bg": "rgba(14, 13, 12, 0.72)",
+   "bf": "blur(12px)",
+   "tien": "none",
+   "bodyPad": "0px"
+  },
+  "chyby": []
+ },
+ "pc-film": {
+  "prvySnimok": "karty world pro js-kin js-steps",
+  "poNacitani": {
+   "cls": "karty world pro js-kin js-steps",
+   "gl": 1,
+   "film": true,
+   "near": [
+    "rohozka",
+    "sala",
+    "stol"
+   ],
+   "shown": 3,
+   "uvod": "vstup-2172.avif"
+  },
+  "worldIn": true,
+  "gl": 2,
+  "threeJs": true,
+  "filmJs": true,
+  "lista": {
+   "bg": "rgba(0, 0, 0, 0)",
+   "bf": "none",
+   "tien": "none",
+   "bodyPad": "0px"
+  },
+  "chyby": []
+ },
+ "uzke": {
+  "prvySnimok": "karty world pro js-kin js-steps",
+  "poNacitani": {
+   "cls": "karty world js-kin js-steps world-frame world-off",
+   "gl": 1,
+   "film": true,
+   "near": [
+    "rohozka",
+    "sala",
+    "stol"
+   ],
+   "shown": 3,
+   "uvod": "vstup-m-1086.avif"
+  },
+  "worldIn": null,
+  "gl": 1,
+  "threeJs": false,
+  "filmJs": true,
+  "lista": {
+   "bg": "rgb(14, 13, 12)",
+   "bf": "none",
+   "tien": "rgb(14, 13, 12) 0px 450px 0px 450px",
+   "bodyPad": "0px"
+  },
+  "chyby": []
+ }
+}

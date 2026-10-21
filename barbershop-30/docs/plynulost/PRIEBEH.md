@@ -90,3 +90,11 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - Ďalej: po preverení balíka rozhodnúť základ, zmerať telefón pred (CPU 4×/6×), implementovať ľahký režim v dávkach, zmerať po, aktualizovať ten istý náhľad.
 - 07:12 UTC majiteľ: „Na začiatku je čierna obrazovka.“ Zapísané do barber/lahky-telefon/POZIADAVKY-MAJITELA.md ako kritérium prvej dávky (prvý obraz = fotka z HTML, nikdy čierna; filmový pás prvých 3 s pred a po).
 - 07:29 UTC check-in: limit neplatí; bežia wf_ca750fba-5a6 (preverenie: prehliadač, meranie) a wf_3dba6aa7-877 (rozbor hotový 3/3, beží špecifikácia); nič na obnovu; osirelý test D1 už nebeží.
+
+## 21. 10. 07:45 UTC – rozbor ľahkého telefónu hotový, disk, pracovný strom
+
+- wf_3dba6aa7-877: SPEC-LAHKY-TELEFON.md (L1–L7), skeptik DOPLNIT (8 vážnych: V1 príčina čierneho štartu – aktuálna karta vždy is-near, testovať obnovenú polohu/kotvy/jazyk; V2 okolie ±1 aj pred load; V3 brána lite len pre dotyk (hover:none, pointer:coarse, kratšia strana ≤720), nie úzke okno s myšou; V4 L2+L3+(L4a)+L5.1 len spolu; V5 pasívna sonda bez vlastného decode(); V6 bez WebP preloadu; V7 L4a znižuje ostrosť o 25 % – nerobiť bez súhlasu majiteľa; V8 film na telefóne preč = najväčšia zmena vzhľadu, ukázať majiteľovi porovnanie lite vs ?film=on).
+- Disk plný (332 MB): zmazané medzivýsledky hotových úloh – reel/kontrola-ludia/{a,f,src89,src93} (1 048 PNG snímok) a referencie/v19/repo (klony cudzích repozitárov) → 4,1 GB voľných.
+- Pracovný strom: scratchpad/hs-lahky, vetva barbershop-lahky-telefon z 7ea247c (D1), len lokálne.
+- 07:50 UTC: spustená stavba ľahkého telefónu wf_07e3c3f8-c74 (A: L1+L2+L3, B: L5+L6; kontrola, meranie, opravy, skeptik). L4 (menšie fotky) a L7 (film na počítači) mimo – L4 len so súhlasom majiteľa.
+- 08:21 UTC check-in: limit neplatí, disk 3,6 GB voľných; bežia wf_ca750fba-5a6 (preverenie: prehliadač, meranie) a wf_07e3c3f8-c74 (stavba A); commity v hs-lahky: 1; nič na obnovu.
