@@ -39,6 +39,11 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   cyrilike. `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
   potrebuje kľúč vo všetkých slovníkoch; kontrola: `node source/tools/i18n-test.mjs`.
 
+- **Asistent** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): okno „Opýtaj sa nás“ vľavo dole, odpovede
+  na otázky o službách, cenách, rezervácii a ceste len z `../asistent/znalosti/barbershop.md`, v jazyku otázky,
+  po kúskoch. Zapne ho nasadenie atribútom `data-asistent` na `<html>` (len s kľúčom API a FTP), modul sa načíta
+  až po prvom geste. `?asistent=off` ho vypne. Podrobne `../asistent/README.md`; test `source/tools/asistent-test.mjs`.
+
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
@@ -55,6 +60,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 - `stills.py` – z `assets/img/film/film.json` prepíše zálohy a kotvy záberov v `index.html`.
 - `build_images.py` – fotky galérie, tímu a videopostery (`assets/img/manifest.json`).
 - `i18n-test.mjs` – jazykové verzie: každý jazyk bez nepreložených textov, tabuľa hodín, Booqme, prepínač na počítači aj v menu telefónu, návrat do slovenčiny.
+- `tma-test.mjs` – film nikdy neukáže čierne plátno (pomalá sieť, rýchly skrol a skoky cez menu);
+  `asistent-test.mjs` – okno asistenta so serverom a falošným API.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený

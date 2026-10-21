@@ -375,6 +375,27 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
+   7b3. Asistent (assets/asistent.js): okno s otázkami a odpoveďami. Zapne ho nasadenie (pages.yml) atribútom
+   data-asistent na <html> s adresou servera, len keď je v GitHube kľúč API; bez neho sa nič nesťahuje ani neposiela.
+   Na vlastnom počítači ide skúšobný server cez ?asistent=<adresa>. ?asistent=off ho vypne.
+   ---------------------------------------------------------------------------- */
+(function asistent() {
+  const q = new URLSearchParams(location.search).get('asistent');
+  const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const api = q === 'off' ? '' : (lokal && q) || html.dataset.asistent || '';
+  if (!/^https?:\/\//.test(api)) return;
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    import('./asistent.js').then((m) => m.spusti(api)).catch(() => {});
+  };
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+  const later = () => setTimeout(load, 3500);
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+})();
+
+/* ----------------------------------------------------------------------------
    7c. Jazyky (assets/i18n.js, slovníky assets/i18n/*.json). Pri ?lang= alebo uloženej voľbe sa modul načíta hneď
    (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak pri prvom geste alebo 3,5 s po načítaní (prepínač, ponuka).
    ---------------------------------------------------------------------------- */

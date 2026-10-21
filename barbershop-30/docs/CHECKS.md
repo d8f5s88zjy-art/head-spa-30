@@ -300,3 +300,15 @@ lišty a dosiek na počítači (rozhoduje majiteľ).
   rohozka-*), snímka z verejnej adresy (desktop + mobil, s `?v=` proti cache CDN).
 - Na skutočnom telefóne: plynulosť prológu a filmu (30 snímok/s v pokoji), presah 1,24 na výšku.
 - Súhlasy osôb vo videách a portrétoch (CONTENT_SOURCES.md) – potvrdiť u majiteľa.
+
+## 14. Bez čiernych obrazoviek a asistent (2026‑10‑21)
+
+- Film: pri rýchlom skrole a skoku cez menu (cieľ sa ešte načítava) sa plátno vymazalo na čierno a po skoku
+  rozsvecovalo zo šera. Teraz ostane posledný ukázaný záber a cieľ sa doň prelnie (650 ms, plynulý rozbeh aj dobeh),
+  šero v strede strihu 2 až 3 % namiesto 10 až 18 %. `tma-test.mjs` (pomalá sieť 250 kB/s, 8 krokov skrolu
+  a 5 skokov, počítač aj telefón): pred opravou 10 úplne čiernych snímok, po oprave žiadna.
+- Testy po zmene: app-smoke všetky kontroly OK, koliesko-test OK (dvakrát po sebe), tma-test OK.
+- Asistent: `../asistent/testy/spusti.sh` 17 OK (prúd po kúskoch, model, úsilie, záložný model, cache, kľúč len
+  na serveri, kontrola vstupu, pôvod, limit, chyba, odmietnutie); `asistent-test.mjs` všetko OK (bez zapnutia
+  žiadna požiadavka, tlačidlo neprekrýva Zavolať a Rezervovať, odpoveď po kúskoch, odkazy, Esc, rozhovor po
+  obnovení, chyba servera, angličtina, telefón bez pretekania). Naživo čaká na kľúč API a FTP v tajomstvách.

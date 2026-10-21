@@ -75,7 +75,7 @@ jobs.push(() => {                                     // vráti true, keď je fo
 - `generateMipmap` až keď je fotka celá (jeden krok na grafike).
 - Dekódovanie `createImageBitmap(blob)` bez volieb (Safari ich nepozná). Po nahratí `bitmap.close()`;
   rozmery si ulož predtým (`t.userData.w/h`), zavretý obrázok hlási 0 × 0.
-- Novo nahraná fotka nabieha 450 ms (`fin()`), nikdy sa neobjaví skokom.
+- Novo nahraná fotka nabieha 650 ms (`fin()`, plynulý rozbeh aj dobeh), nikdy sa neobjaví skokom; po skoku cez menu sa cieľ prelína z posledného ukázaného záberu (`lastShot`), plátno nie je nikdy čierne.
 
 ## Pamäť a sieť (`keepAround`, `load`, `drop`)
 

@@ -1,0 +1,48 @@
+# Asistent na otázky (Barbershop 30)
+
+Okno „Opýtaj sa nás“ na webe Barbershop 30: návštevník napíše otázku a odpoveď sa píše hneď, po kúskoch.
+Odpovedá model Claude Opus 5.5 (oficiálna PHP knižnica Anthropic) len z overených údajov webu.
+
+| Časť | Kde |
+| --- | --- |
+| Okno na webe (8 jazykov, odkazy v odpovedi, rozhovor v karte prehliadača) | `barbershop-30/assets/asistent.js`, `asistent.css` |
+| Zapnutie na webe (atribút `data-asistent` na `<html>`) | `barbershop-30/assets/app.js` časť 7b3, `.github/workflows/pages.yml` |
+| Server: prúd odpovede, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
+| Čo asistent vie (jediný zdroj faktov) | `znalosti/barbershop.md` |
+| Ochrana údajov (odkaz z okna) | `ochrana-udajov.html` |
+| Nasadenie na hosting (knižnica, `config.php` z tajomstva) | `.github/workflows/ftp.yml`, `tools/ftp-balik.sh`, `tools/asistent-config.php` |
+| Testy | `testy/spusti.sh` (server proti falošnému API), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači) |
+
+## Zapnutie
+
+V GitHube (Settings → Secrets and variables → Actions) musia byť:
+- `ANTHROPIC_API_KEY`: kľúč API z https://platform.claude.com (účet majiteľa, platí sa za použitie),
+- `FTP_SERVER`, `FTP_USER`, `FTP_PASSWORD` (a voliteľne `FTP_DIR`, `FTP_DOMENA`): hosting www.headspa30.sk.
+
+Po ďalšom nahratí do `main` nasadenie nahrá asistenta na `https://www.headspa30.sk/asistent/` a web Barbershop 30
+dostane `data-asistent`. Bez kľúča alebo FTP web nič nesťahuje ani neposiela a okno sa neukáže.
+Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"zapnute":true`.
+
+## Ako to funguje
+
+- Prehliadač pošle celý rozhovor (najviac 16 správ, otázka najviac 800 znakov) na `api.php?a=otazka`. Server pridá
+  pokyny a znalosti (v cache API, ďalšie otázky sú lacnejšie a rýchlejšie), zavolá model s prúdom a posiela text
+  ďalej ako `text/event-stream`. Kľúč API je len v `config.php` na serveri.
+- Úsilie modelu `low` (rýchle krátke odpovede); v `config.php` sa dá dať `medium` alebo `high`. Pri odmietnutí
+  modelom pomôže záložný model (`fallbacks: "default"`).
+- Limity: 15 otázok za 10 minút a 60 za deň od jedného návštevníka (IP len ako odtlačok so soľou, po 24 h preč),
+  1 500 otázok za deň spolu (strop nákladov). Rozhovory sa na serveri neukladajú.
+- Asistent nerezervuje a nevidí voľné termíny; posiela odkaz na rezervačný systém a telefón recepcie.
+- Na otázku, či je človek, odpovie pravdivo, že je automatický virtuálny asistent.
+
+## Keď sa zmení cenník, hodiny alebo tím
+
+Zmeň `znalosti/barbershop.md` spolu s webom. Nič iné asistent nevie; čo v znalostiach nie je, odkáže na recepciu.
+
+## Skúška na vlastnom počítači
+
+```sh
+cd asistent && composer install && sh testy/spusti.sh          # server, 17 kontrol
+cd ../barbershop-30 && node source/tools/asistent-test.mjs      # okno v prehliadači so serverom a falošným API
+```
+Okno so skúšobným serverom: `index.html?asistent=http://127.0.0.1:8912/api.php` (len na localhost).

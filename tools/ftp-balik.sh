@@ -15,6 +15,10 @@ cp tools/ftp.htaccess _ftp/.htaccess
 mkdir -p _ftp/vernost
 cp -r vernost/.htaccess vernost/index.html vernost/api vernost/lib vernost/data vernost/karta vernost/admin vernost/web vernost/pisma vernost/ochrana-udajov.html _ftp/vernost/
 rm -f _ftp/vernost/data/meno.php _ftp/vernost/data/*.sqlite*
+# asistent na otázky (PHP); knižnicu (vendor/) doinštaluje a config.php dopíše nasadenie (ftp.yml)
+mkdir -p _ftp/asistent/data
+cp -r asistent/.htaccess asistent/api.php asistent/lib asistent/znalosti asistent/composer.json asistent/ochrana-udajov.html _ftp/asistent/
+cp asistent/data/.htaccess _ftp/asistent/data/
 # zdrojové a nepoužívané súbory na hosting netreba
 rm -f _ftp/assets/premium-v9.* _ftp/assets/i18n/README.txt
 # adresy webu na vlastnú doménu (kanonická adresa, zdieľanie, údaje pre Google, mapa stránok)

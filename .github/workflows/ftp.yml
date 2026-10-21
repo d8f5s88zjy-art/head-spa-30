@@ -47,6 +47,15 @@ jobs:
           HESLO_H: ${{ secrets.VERNOST_HESLO_HEADSPA }}
         run: |
           if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _ftp/index.html; echo "prihláška zapnutá"; else echo "prihláška vypnutá (chýba VERNOST_HESLO_HEADSPA)"; fi
+      - name: Asistent na otázky – knižnica a konfigurácia z tajomstva (kľúč API len na serveri)
+        if: env.FTP_SERVER != ''
+        env:
+          KLUC: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          composer install -d _ftp/asistent --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+          # na hosting len kód knižnice (bez testov, príkladov a histórie gitu)
+          rm -rf _ftp/asistent/vendor/*/*/.git _ftp/asistent/vendor/anthropic-ai/sdk/tests _ftp/asistent/vendor/anthropic-ai/sdk/fixtures _ftp/asistent/vendor/anthropic-ai/sdk/examples _ftp/asistent/vendor/anthropic-ai/sdk/scripts
+          php tools/asistent-config.php > _ftp/asistent/config.php
       # Najprv šifrovane (FTPS), aby heslo, konfigurácia vernostnej kartičky a súbory nešli sieťou čitateľne.
       # Ak hosting FTPS nepodporuje, nahrá sa po starom cez FTP (stav synchronizácie je spoločný).
       - name: Nahrať na FTP šifrovane (len zmenené súbory)

@@ -158,15 +158,22 @@ lineárne dopočíta `T` (index záberu s desatinami). Kamera ide za `T` kritick
 const w0 = 6.5;                                          // kamera dobehne skrol asi za 0,7 s (predtým 4,2 = 1,1 s, pôsobilo pomaly); zárezy kolieska sa stále zlejú
 V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
 if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
-if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
+if (Math.abs(T - S) > 1.5) {
+  S = T; V = 0; dark = !(held && held.ready);
+  // cieľ už je v pamäti: aj tak sa doň z posledného obrazu prelína (nábeh od teraz), nie tvrdý skok
+  for (const j of [0, 1]) { const s = path[clamp(Math.floor(T) + j, 0, N)]; if (s && s.ready && s !== held) s.t0 = now; }
+}
 ```
 
-Skok cez menu (rozdiel nad 1,5 záberu) nejde cez cudzie zábery: film je hneď na cieli a rozsvieti sa zo šera.
+Skok cez menu (rozdiel nad 1,5 záberu) nejde cez cudzie zábery: na obrazovke ostane posledný záber a cieľ sa doň
+prelnie, len čo je načítaný. Posledný ukázaný záber (`lastShot`) `keepAround()` neuvoľní, kým ho nový nevystrieda,
+takže plátno nikdy nie je čierne (šero len vtedy, keď ešte nebol ukázaný žiadny záber).
 
 **Prechod**: okno prechodu je najviac 30 % cesty medzi kotvami (pri väčších medzerách asi 55 % výšky
 okna, najmenej 16 %), okolo stredu medzi kotvami, pri titulnej karte okolo miesta, kde sa mení text (horný
 okraj jej kotvy). Keď skrol stojí dlhšie než 0,6 s, prechod sa dokončí na bližší
-záber (nikdy neostane napoly). Novo načítaná fotka nabieha 450 ms.
+záber (nikdy neostane napoly). Novo načítaná (alebo po skoku ukázaná) fotka nabieha 650 ms s plynulým
+rozbehom aj dobehom (`smooth`). Šero v strede strihu je len 2 až 3 % (`CK.dip`), aby strih nepôsobil ako čierny záber.
 
 **Dýchanie**: kamera sa hýbe aj bez skrolovania (dva pomalé oblúky v každej osi, na telefóne 0,6 ×),
 nabieha 1,5 s od prvého snímku. Po 3 minútach bez vstupu (`BREATH_MS`) sa za 3 s zastaví a film nekreslí.
@@ -261,6 +268,10 @@ v [references/strihy.md](references/strihy.md) a [references/uvod-a-dvere.md](re
     má záložný skok, záporný `scrollY` (odraz) sa berie ako 0.
 13. **Test čakajúci 300 ms zlyhával**: film berie koliesko nahor na vrchu až po 350 ms pokoja, test čaká 500 ms.
 14. **Strih „popredie“ potrebuje hĺbku**: záber bez nej (video) dostane automaticky `pohyb`.
+15. **Čierne plátno pri skoku cez menu a rýchlom skrole** (pomalá sieť, cieľ sa ešte načítava): film plátno vymazal
+    na farbu stránky a po skoku sa rozsvecoval zo šera. Na pomalej sieti 10 úplne čiernych snímok z 26.
+    Riešenie: drž posledný ukázaný záber (aj z iného miesta stránky) a z neho prelínaj; meria
+    `barbershop-30/source/tools/tma-test.mjs` (pomalá sieť, skrol a skoky, čierna = viac ako 85 % bodov s jasom pod 22).
 
 ## V tomto repozitári
 

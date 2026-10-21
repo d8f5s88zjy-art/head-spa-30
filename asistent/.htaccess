@@ -1,0 +1,14 @@
+# ASISTENT 30 – Apache. Zvonku je dostupné len api.php; knižnice, dáta, znalosti a konfigurácia nie.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(lib|data|znalosti|vendor|testy)(/|$) - [F,L]
+  RewriteRule ^(config\.php|config\.example\.php|composer\.(json|lock)|README\.md)$ - [F,L]
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+# odpoveď ide po kúskoch, kompresia by ju zadržala do konca
+<IfModule mod_env.c>
+  SetEnv no-gzip 1
+</IfModule>

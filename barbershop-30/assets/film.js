@@ -752,10 +752,12 @@
     return vis && !v.paused;
   }
   let onScreen = new Set();
+  let lastShot = null;                                        // záber, ktorý je práve na obrazovke (held vo frame)
   function keepAround(ci) {
     // v pamäti je aktuálny záber, susedia a ďalší v smere skrolovania (najviac štyri);
     // prológ, ktorý už prebehol (done), sa uvoľní, len čo zíde z obrazovky
-    const dir = V < 0 ? -1 : 1, keep = (s) => !s.done && s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
+    // posledný ukázaný záber (lastShot) ostáva, kým ho nevystrieda nový: pri rýchlom skrole či skoku sa z neho prelína, plátno nikdy nie je čierne
+    const dir = V < 0 ? -1 : 1, keep = (s) => s === lastShot || (!s.done && s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir));
     SHOTS.forEach((s) => { if (!keep(s) && !onScreen.has(s)) drop(s); });
     const cur = path[ci];
     if (!cur) return;
@@ -797,9 +799,9 @@
      nt/sx,sy/bx,by švih (vzorky, posun a rozmazanie vodorovne a zvislo), za/kz najazd (zoom, rozmazanie),
      pe/pw/pd/pf/bow popredie (presah, šírka neostrej hrany, tieň, neostrosť a vypuklosť predmetu), lat/yaw/nz/walk pohyb kamery */
   const CK = phone
-    ? { dip: 0.1, vs: 0.1, mbx: 0.07, mby: 0.035, mz: 0.08, nt: 6, sx: 0.24, sy: 0.12, bx: 0.24, by: 0.12, za: 0.3, kz: 0.13, pe: 0.3, pw: 0.085, pd: 0.35, pf: 3.5, bow: 0.1,
+    ? { dip: 0.02, vs: 0.1, mbx: 0.07, mby: 0.035, mz: 0.08, nt: 6, sx: 0.24, sy: 0.12, bx: 0.24, by: 0.12, za: 0.3, kz: 0.13, pe: 0.3, pw: 0.085, pd: 0.35, pf: 3.5, bow: 0.1,
       lat: [0, 0.07, 0.07, 0, 0.08], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.34, walk: 0.2, walkB: 0.1, amp: 0.12 }
-    : { dip: 0.18, vs: 0.16, mbx: 0.05, mby: 0.06, mz: 0.08, nt: 8, sx: 0.16, sy: 0.2, bx: 0.11, by: 0.15, za: 0.35, kz: 0.15, pe: 0.25, pw: 0.05, pd: 0.35, pf: 4.0, bow: 0.08,
+    : { dip: 0.03, vs: 0.16, mbx: 0.05, mby: 0.06, mz: 0.08, nt: 8, sx: 0.16, sy: 0.2, bx: 0.11, by: 0.15, za: 0.35, kz: 0.15, pe: 0.25, pw: 0.05, pd: 0.35, pf: 4.0, bow: 0.08,
       lat: [0, 0.1, 0.08, 0, 0.1], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.4, walk: 0.24, walkB: 0.12, amp: 0.16 };
   const F = (v) => v.toFixed(4);
   const post = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
@@ -1060,8 +1062,9 @@
   const screenOf = (w) => { fv.set(w[0], w[1], 0).project(camera); return [fv.x * 0.5 + 0.5, fv.y * 0.5 + 0.5]; };
 
   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
-  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: po skoku sa ide zo šera
-  const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
+  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: zo šera len vtedy, keď nie je čo ukázať
+  // nábeh práve načítanej (alebo po skoku ukázanej) fotky: 650 ms, pokojné prelínanie ako vo filme
+  const fin = (s, now) => (s.t0 ? smooth(0, 1, (now - s.t0) / 650) : 1);
   let mixNow = 0, cutNow = null, sFreeze = null, keepT = 0, keptCi = -1, keptDir = 0, keptAt = 0;
   function draw(now, dt) {
     if (!path.length || !compiled) return false;
@@ -1100,9 +1103,9 @@
     // prológ začína vždy svojím záberom (fasáda), nikdy záberom úvodu, keby sa náhodou načítal skôr
     if ((pro || outside) && !A.ready) return false;
     if (!A.ready) {
-      // záber sa ešte načítava: ostane posledný obraz, ak je to susedný záber, a cieľ sa doň prelnie.
-      // Záber z iného miesta stránky (po skoku) sa neukáže, namiesto neho je šero farby stránky.
-      const H = held && held.ready && held.pi != null && Math.abs(held.pi - k) <= 1 ? held : B.ready && !dark ? B : null;
+      // záber sa ešte načítava: ostane posledný obraz (aj po skoku z iného miesta stránky) a cieľ sa doň
+      // prelnie ako strih vo filme; šero farby stránky len keď ešte nebol ukázaný žiadny záber
+      const H = held && held.ready ? held : B.ready ? B : null;
       if (!H) { if (shown) { renderer.setRenderTarget(null); renderer.clear(); held = null; } return false; }
       A = H; mix = B.ready && B !== A ? fin(B, now) : 0;
     } else if (held && held !== A && held !== B && held.ready && fin(A, now) < 1) { B = A; A = held; mix = fin(B, now); }
@@ -1152,7 +1155,7 @@
       A.mesh.visible = true; place(A, now, 0); renderer.render(scene, camera); A.mesh.visible = false;
     }
     mixNow = mix; frameDrawn = true; frames++;
-    held = mix > 0.5 ? B : A;
+    held = mix > 0.5 ? B : A; lastShot = held;
     showPlace(held);
     onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean));
     drawn = true;
@@ -1240,7 +1243,12 @@
       if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
       // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
       // a jeho záber sa rozsvieti zo šera, len čo je načítaný (posledný záber zďaleka sa už neukáže)
-      if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
+      if (Math.abs(T - S) > 1.5) {
+        S = T; V = 0; dark = !(held && held.ready);
+        // cieľ už je v pamäti: aj tak sa doň z posledného obrazu prelína (nábeh od teraz), nie tvrdý skok
+        const t = performance.now();
+        for (const j of [0, 1]) { const s = path[clamp(Math.floor(T) + j, 0, N)]; if (s && s.ready && s !== held) s.t0 = t; }
+      }
     }
     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
     const idle = now - lastInput;

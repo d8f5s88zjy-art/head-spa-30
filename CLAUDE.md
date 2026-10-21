@@ -65,3 +65,5 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - `toolbox/skills-z-praxe/` sú naše overené postupy z prác na weboch (film z fotiek, plynulé video, výkon,
   testy a nasadenie, texty, Booqme, Instagram, učenie z videí, workflowy). Pred podobnou prácou si prečítaj príslušný SKILL.md.
 - Prevádzka webu (nahratie na headspa30.sk, Booqme, poukážky): `toolbox/head-spa-30/SKILL.md`.
+- Asistent na otázky na webe Barbershop 30 (`asistent/`, server na headspa30.sk): `asistent/README.md`. Po zmene
+  cenníka, hodín alebo tímu Barbershopu zmeň aj `asistent/znalosti/barbershop.md`.

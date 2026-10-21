@@ -1,0 +1,13 @@
+{
+  "name": "headspa30/asistent",
+  "description": "Asistent na otázky návštevníkov webu Barbershop 30",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.1",
+    "anthropic-ai/sdk": "^0.61",
+    "symfony/http-client": "^7.1",
+    "nyholm/psr7": "^1.8"
+  },
+  "config": { "optimize-autoloader": true, "preferred-install": "dist", "allow-plugins": { "php-http/discovery": false } }
+}
