@@ -1,0 +1,23 @@
+✔ vlastníctvo rozlišuje súbory, celé priečinky a podobné názvy (3.183702ms)
+✔ závislosť je splnená až nezávislým prijatím presného výstupu (3.548901ms)
+✔ podvrhnuté dokončenie bez kontroly a cyklus sa odmietnu (0.424059ms)
+✔ opakované opravy sú obmedzené a každá potrebuje novú hypotézu (1.80722ms)
+✔ kvóta zastaví nové prideľovanie a obnova nespustí prácu automaticky (1.459567ms)
+✔ rozsah sa nedá rozšíriť cez vlastníctvo druhej úlohy (0.502627ms)
+✔ revízia zneplatní predchádzajúce prijatie (0.437208ms)
+✔ denník sa prehrá presne, zmena udalosti alebo základu sa odmietne (20.173749ms)
+✔ súbežný zápis neobíde výhradný zámok (2.233612ms)
+✔ kontrola odmietne súbor zmenený od odovzdania (12.71321ms)
+✔ artefakty neuniknú cez relatívnu cestu ani symbolický odkaz (3.247804ms)
+✔ export vyžaduje úplné páry, jednoznačné ID a známe zdroje (2.058449ms)
+✔ vložený obsah nemôže ukončiť skript exportu (0.349877ms)
+✔ hotové HTML má 20 párov a nevyžaduje externý skript či štýl (7.152575ms)
+✔ šírky cieľov sa neprekrývajú pri zlomoch ani na 320 px (5.259076ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.387299

@@ -1,0 +1,943 @@
+--- /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-pred-d1/barbershop-30/assets/film.js	2026-10-21 06:46:01.250708501 +0000
++++ /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-chatgpt/barbershop-30/assets/film.js	2026-10-21 06:45:05.207650277 +0000
+@@ -53,7 +53,7 @@
+   };
+   window.BS30_FILM = api;
+   // film nejde (grafika, sieť, zariadenie): zálohy .film-still ostávajú, rozloženie stránky sa nemení
+-  const quit = () => { root.classList.add('world-off'); root.classList.remove('pro', 'outside'); readyDone(false); };
++  const quit = () => { root.classList.add('world-off'); root.classList.remove('pro', 'outside', 'world-in', 'film-strata'); readyDone(false); };
+ 
+   /* ---------- či sa film vôbec použije ----------
+      lacné podmienky rozhodne už skript v hlavičke stránky (trieda world), aby stránka mohla štýly
+@@ -79,6 +79,10 @@
+   // adresa tohto skriptu (aj keď je načítaný ako modul, kde currentScript chýba): od nej sa odvíja vendor/ a img/film/
+   const me = d.currentScript || d.querySelector('script[src$="film.js"],script[src*="film.js?"]');
+   const here = (me && me.src) || location.href;
++  // Overenie aj film používajú ten istý kontext; druhý by znovu štartoval grafiku.
++  const canvas = d.createElement('canvas');
++  const contextOptions = { alpha: false, antialias: false, depth: true, stencil: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: !filmOn && !force };
++  let context;
+   if (d.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
+   /* grafická karta: WebGL kontext vznikne až po prvom vykreslení stránky (pred ním by prehliadač štartoval
+      grafiku a prvý obraz by prišiel o sekundu neskôr). Softvérové kreslenie (SwiftShader, llvmpipe) dá pokojnú
+@@ -97,11 +101,9 @@
+     });
+     let gpu = false;
+     try {
+-      const c = d.createElement('canvas');
+-      const g = c.getContext('webgl2', { failIfMajorPerformanceCaveat: !filmOn }) || (filmOn ? c.getContext('webgl2') : null);
++      const g = context = canvas.getContext('webgl2', contextOptions);
+       const ri = g && !filmOn && g.getExtension('WEBGL_debug_renderer_info');
+       gpu = !!g && !(ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL) || ''));
+-      const x = g && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
+     } catch (e) { gpu = false; }
+     if (!gpu) { root.classList.add('world-frame'); quit(); return; }
+   }
+@@ -136,7 +138,7 @@
+   const phone = matchMedia('(max-width: 720px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(innerWidth, innerHeight) <= 720);
+   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+   // okamžitý skok bez plynulého skrolu z CSS (scroll-behavior: smooth); staré Safari nepozná 'instant'
+-  const jumpTo = (y) => { try { scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { const s = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; scrollTo(0, y); root.style.scrollBehavior = s; } };
++  function jumpTo(y) { try { scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { const s = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; scrollTo(0, y); root.style.scrollBehavior = s; } }
+   const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+ 
+   /* ---------- zábery z kotiev v stránke ----------
+@@ -277,7 +279,6 @@
+   api.shots = SHOTS.map((s) => s.photo);
+ 
+   /* ---------- renderer ---------- */
+-  const canvas = d.createElement('canvas');
+   canvas.className = 'film-canvas';
+   canvas.setAttribute('aria-hidden', 'true');
+   d.body.prepend(canvas);
+@@ -289,7 +290,7 @@
+   placeBox.innerHTML = '<b>Prehliadka podniku</b>' + [...places].map(([k, v]) => `<span data-p="${esc(k)}">${esc(v)}</span>`).join('');
+   canvas.after(placeBox);
+   // popis je vidieť, len kým ho celý odkrýva okno do filmu; doska s textom ho nikdy neprereže
+-  let placeNow = null, placeBand = [0, 0], bands = [];
++  let placeNow = null, placeBand = [0, 0], bands = [], opaqueBands = [];
+   const measurePlace = () => { const r = placeBox.getBoundingClientRect(); placeBand = [r.top - 24, r.bottom + 24]; placeNow = -1; };
+   const showPlace = (s) => {
+     const y0 = sy + placeBand[0], y1 = sy + placeBand[1];
+@@ -302,7 +303,12 @@
+   };
+   let renderer;
+   // bez prelínania sa záber kreslí rovno na obrazovku, preto aj ona má hĺbku (mriežka sa môže prekryť sama so sebou)
+-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, depth: true, stencil: false, powerPreference: 'high-performance' }); }
++  try {
++    context = context || canvas.getContext('webgl2', contextOptions);
++    if (!context) throw new Error('Grafika nie je dostupná');
++    await new Promise((resolve) => setTimeout(resolve, 0));
++    renderer = new THREE.WebGLRenderer({ canvas, context, ...contextOptions });
++  }
+   catch (e) { canvas.remove(); placeBox.remove(); quit(); return; }
+   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); canvas.remove(); placeBox.remove(); quit(); return; }
+   // farby fotiek idú na obrazovku bez prepočtov, presne ako na fotke
+@@ -354,48 +360,7 @@
+   // sekvencia snímok (data-video-mode="seq"): dve susedné snímky a ich prelínanie podľa presnej polohy
+   const FRAG_SEQ = FRAG.replace('uniform sampler2D uMap;', 'uniform sampler2D uMap; uniform sampler2D uMap2; uniform float uMix;')
+     .replace('vec3 c = texture2D(uMap, vUv).rgb;', 'vec3 c = mix(texture2D(uMap, vUv).rgb, texture2D(uMap2, vUv).rgb, uMix);');
+-  /* hĺbková mapa sa po načítaní raz zjemní na grafike: popredie sa najprv mierne rozšíri (max filter),
+-     potom sa hrana rozmaže na šírku asi dvoch buniek mriežky. Predmet sa tak hýbe ako celok a pri
+-     pohybe sa naťahuje len úzky pás steny tesne za ním, hrana nesleduje bunky mriežky (žiadne zúbky) */
+-  const soft = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
+-    depthTest: false, depthWrite: false,
+-    uniforms: { tSrc: { value: null }, uTexel: { value: new THREE.Vector2() }, uDir: { value: new THREE.Vector2() }, uR: { value: 1 }, uMode: { value: 0 } },
+-    vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
+-    fragmentShader: `
+-      uniform sampler2D tSrc; uniform vec2 uTexel, uDir; uniform float uR, uMode;
+-      void main() {
+-        vec2 uv = gl_FragCoord.xy * uTexel;
+-        float acc = 0.0, ws = 0.0, s2 = uR * uR / 9.0;
+-        for (int i = -40; i <= 40; i++) {
+-          float f = float(i);
+-          if (abs(f) > uR) continue;
+-          float z = texture2D(tSrc, uv + uDir * uTexel * f).r;
+-          if (uMode < 0.5) acc = max(acc, z);
+-          else { float w = exp(-0.5 * f * f / s2); acc += z * w; ws += w; }
+-        }
+-        if (uMode > 0.5) acc /= ws;
+-        gl_FragColor = vec4(acc, acc, acc, 1.0);
+-      }`,
+-  }));
+-  soft.frustumCulled = false;
+-  const softScene = new THREE.Scene(); softScene.add(soft);
+-  function soften(t) {
+-    // rozmery z nahratia: samotný obrázok je po nahratí zavretý (bitmap.close) a hlási 0 × 0
+-    const w = t.userData.w, h = t.userData.h, u = soft.material.uniforms;
+-    const opt = { depthBuffer: false, stencilBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, generateMipmaps: false };
+-    const a = new THREE.WebGLRenderTarget(w, h, opt), b = new THREE.WebGLRenderTarget(w, h, opt);
+-    // polomer v texeloch hĺbkovej mapy podľa bunky mriežky: rozmazanie asi 1,2 bunky, rozšírenie dvojnásobok
+-    const sig = Math.max(1.5, 1.2 * w / SEG[0]);
+-    const pass = (src, dst, dx, dy, mode, r) => {
+-      u.tSrc.value = src; u.uTexel.value.set(1 / w, 1 / h); u.uDir.value.set(dx, dy); u.uMode.value = mode; u.uR.value = r;
+-      renderer.setRenderTarget(dst); renderer.render(softScene, postCam);
+-    };
+-    pass(t, a, 1, 0, 0, Math.round(2 * sig)); pass(a.texture, b, 0, 1, 0, Math.round(2 * sig));
+-    pass(b.texture, a, 1, 0, 1, Math.min(40, Math.round(3 * sig))); pass(a.texture, b, 0, 1, 1, Math.min(40, Math.round(3 * sig)));
+-    renderer.setRenderTarget(null); u.tSrc.value = null;
+-    a.dispose(); t.dispose();
+-    return b;
+-  }
++  // Hĺbka je zjemnená vopred (source/tools/hlbka-zjemni.py), bez štyroch drahých GPU priechodov.
+   const vig = { value: new THREE.Vector4(1, 1, 1, 0) };      // spoločná pre všetky zábery
+   // sila hĺbky: na telefóne menšia, lebo výrez na výšku má blízke popredie (kreslo, pult) a väčší posun by ho krútil
+   const AMT = phone ? 0.3 : 0.42;
+@@ -414,6 +379,13 @@
+     scene.add(s.mesh);
+     s.eye = new THREE.Vector3();
+     s.ready = false; s.loading = null; s.size = 0; s.pi = null;
++    // Malý náhľad je samostatný obraz: nikdy neoznačí ostrú fotografiu za načítanú.
++    const preview = { ...s, previewOf: s };
++    preview.mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG,
++      uniforms: { uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: 0 }, uEye: { value: s.eye }, uVig: vig } });
++    preview.mesh = new THREE.Mesh(grid, preview.mat);
++    preview.mesh.visible = false; preview.mesh.frustumCulled = false; scene.add(preview.mesh);
++    s.preview = preview;
+   });
+ 
+   /* ---------- načítanie fotiek: najprv aktuálny záber, potom susedia; ostatné sa uvoľnia ---------- */
+@@ -430,26 +402,53 @@
+     const need = s.pw / s.vw * canvas.width;
+     return fit.find((w) => w >= need * 0.95) || fit[fit.length - 1];
+   }
+-  async function bitmap(url, signal) {
+-    const r = await fetch(url, { signal }); if (!r.ok) throw new Error(url);
+-    const blob = await r.blob();
+-    if (signal.aborted) throw new Error('zrušené');
+-    // bez volieb (Safari ich nepozná); prvý riadok obrázka je hore, shader to otočí sám
+-    return createImageBitmap(blob);
+-  }
+-  // hĺbková mapa: mriežka má 256 buniek na šírku, mapa širšia než 768 px by len zabrala pamäť grafiky
+-  // (4096 px = 45 MB na záber) a predĺžila zjemnenie; väčšia sa preto po rozbalení zmenší
+-  const DEPTH_W = 768;
+-  async function depthBitmap(url, signal) {
+-    const b = await bitmap(url, signal);
+-    if (b.width <= DEPTH_W) return b;
+-    const w = DEPTH_W, h = Math.round(b.height * w / b.width);
+-    const c = typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(w, h) : Object.assign(d.createElement('canvas'), { width: w, height: h });
+-    const x = c.getContext('2d'); x.drawImage(b, 0, 0, w, h); b.close();
+-    return createImageBitmap(c);
++  const decodeTasks = new Map();
++  let worker = null, decodeId = 0;
++  const abortError = () => new DOMException('Zrušené načítanie', 'AbortError');
++  function closeWorker() {
++    if (worker) worker.terminate(); worker = null;
++    for (const task of decodeTasks.values()) task.reject(abortError());
++    decodeTasks.clear();
++  }
++  if (typeof Worker === 'function' && typeof OffscreenCanvas === 'function') {
++    try {
++      worker = new Worker(new URL('film-worker.js', here));
++      worker.onmessage = ({ data: result }) => {
++        if (result.supported === false) { closeWorker(); return; }
++        const task = decodeTasks.get(result.id); if (!task) return;
++        decodeTasks.delete(result.id);
++        if (result.error) { task.reject(new Error(result.error)); return; }
++        task.resolve({ width: result.width, height: result.height, data: new Uint8Array(result.buffer), close() { this.data = null; } });
++      };
++      worker.onerror = () => closeWorker();
++    } catch (e) { worker = null; }
++  }
++  async function bitmap(source, signal) {
++    if (signal?.aborted) throw abortError();
++    if (worker) {
++      try {
++        return await new Promise((resolve, reject) => {
++          const id = ++decodeId;
++          const cancel = () => { worker?.postMessage({ id, cancel: true }); decodeTasks.delete(id); done(reject, abortError()); };
++          const done = (fn, value) => { signal?.removeEventListener('abort', cancel); fn(value); };
++          decodeTasks.set(id, { resolve: (value) => done(resolve, value), reject: (error) => done(reject, error) });
++          signal?.addEventListener('abort', cancel, { once: true });
++          worker.postMessage(typeof source === 'string' ? { id, url: source } : { id, blob: source });
++        });
++      } catch (error) { if (worker || signal?.aborted) throw error; }
++    }
++    // Staršie Safari bez 2D OffscreenCanvas: pôvodný dekodér, menšie pásy do grafiky.
++    let blob = source;
++    if (typeof source === 'string') {
++      const response = await fetch(source, { signal }); if (!response.ok) throw new Error(response.status);
++      blob = await response.blob();
++    }
++    const result = await createImageBitmap(blob);
++    if (signal?.aborted) { result.close(); throw abortError(); }
++    return result;
+   }
+   function tex(bmp) {
+-    const t = new THREE.Texture(bmp);
++    const t = bmp.data ? new THREE.DataTexture(bmp.data, bmp.width, bmp.height) : new THREE.Texture(bmp);
+     t.flipY = false; t.generateMipmaps = false;
+     t.minFilter = t.magFilter = THREE.LinearFilter;
+     t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+@@ -457,45 +456,62 @@
+     t.needsUpdate = true;
+     return t;
+   }
+-  /* nahratie do grafiky po pásoch: jedno veľké nahratie by zastavilo stránku (na telefóne 40 až 250 ms),
+-     pásy po 256 riadkoch idú po jednom v ďalších snímkach, každý pár milisekúnd */
+-  const gl = renderer.getContext(), BAND = 256;
+-  // fotky záberov: mipmapy + trilineárne filtrovanie + anizotropia, aby bola fotka ostrá aj tam, kde ju
+-  // perspektíva naklonená hĺbkou vzorkuje šikmo, a bez moaré, keď je väčšia než obrazovka
++  // Najviac jeden pás za snímku. Jeho výška sa prispôsobí nameranému času na tomto zariadení.
++  const gl = renderer.getContext();
+   const ANISO = Math.min(8, renderer.capabilities.getMaxAnisotropy() || 1);
+-  let jobs = [];
+-  function upload(bmp, live, photo) {
++  let jobs = [], uploadRows = 64, uploaded = false, uploadedBefore = false, stillUploaded = false, stillUploadedBefore = false;
++  const uploadStats = { strips: 0, maxMs: 0, lastMs: 0, sequenceFrames: 0 };
++  function upload(bmp, live, photo, reuse = null, sequence = false) {
+     return new Promise((res) => {
+-      const t = tex(bmp);
+-      // generateMipmaps = true: three vyhradí všetky úrovne (texStorage2D), obsah doplní ručný generateMipmap po pásoch
+-      if (photo) { t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = ANISO; }
+-      t.userData.w = bmp.width; t.userData.h = bmp.height;  // rozmery ostanú známe aj po zavretí obrázka
+-      t.source.dataReady = false;                           // three len vyhradí miesto, obsah príde po pásoch
+-      renderer.initTexture(t);
+-      const glt = renderer.properties.get(t).__webglTexture;
+-      let y = 0;
+-      jobs.push(() => {                                     // vráti true, keď je fotka celá (alebo zrušená)
+-        if (!live()) { bmp.close(); t.dispose(); res(null); return true; }
+-        const h = Math.min(BAND, bmp.height - y);
+-        renderer.state.bindTexture(gl.TEXTURE_2D, glt);
+-        gl.pixelStorei(gl.UNPACK_SKIP_ROWS, y);
+-        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, y, bmp.width, h, gl.RGBA, gl.UNSIGNED_BYTE, bmp);
+-        gl.pixelStorei(gl.UNPACK_SKIP_ROWS, 0);
+-        y += h;
+-        if (y < bmp.height) return false;
+-        // mipmapy až keď je fotka celá (jeden krok na grafike, nie po pásoch)
+-        if (photo) gl.generateMipmap(gl.TEXTURE_2D);
+-        bmp.close(); res(t); return true;
+-      });
++      let t = reuse, y = 0, finished = false;
++      const finish = (value) => {
++        if (finished) return; finished = true;
++        if (t && bmp.data) t.source.data = { width: bmp.width, height: bmp.height, data: null };
++        bmp.close(); res(value);
++      };
++      const cancel = () => { if (finished) return; if (t && !reuse) t.dispose(); finish(null); };
++      jobs.push({ sequence, cancel, step() {
++        if (!live()) { cancel(); return true; }
++        const begin = performance.now();
++        try {
++          if (!t) {
++            t = tex(bmp);
++            // Three vyhradí úrovne, mipmapy sa doplnia až po poslednom páse.
++            if (photo) { t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = ANISO; }
++            t.userData.w = bmp.width; t.userData.h = bmp.height;
++            t.source.dataReady = false; renderer.initTexture(t);
++          }
++          const h = Math.min(sequence && bmp.data ? bmp.height : bmp.data ? uploadRows : 32, bmp.height - y);
++          renderer.state.bindTexture(gl.TEXTURE_2D, renderer.properties.get(t).__webglTexture);
++          gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
++          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
++          gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
++          if (bmp.data) gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, y, bmp.width, h, gl.RGBA, gl.UNSIGNED_BYTE, bmp.data.subarray(y * bmp.width * 4, (y + h) * bmp.width * 4));
++          else {
++            gl.pixelStorei(gl.UNPACK_SKIP_ROWS, y);
++            gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, y, bmp.width, h, gl.RGBA, gl.UNSIGNED_BYTE, bmp);
++          }
++          y += h; uploaded = true;
++          if (!sequence) stillUploaded = true;
++          if (y >= bmp.height && photo) gl.generateMipmap(gl.TEXTURE_2D);
++          const elapsed = performance.now() - begin;
++          uploadStats.strips++; uploadStats.lastMs = elapsed; uploadStats.maxMs = Math.max(uploadStats.maxMs, elapsed);
++          if (!sequence && bmp.data && elapsed > 0.1) uploadRows = clamp(Math.floor(h * 2.5 / elapsed), 16, phone ? 128 : 256);
++          if (y < bmp.height) return false;
++          if (sequence) uploadStats.sequenceFrames++;
++          finish(t); return true;
++        } catch (e) { cancel(); return true; }
++        finally { gl.pixelStorei(gl.UNPACK_SKIP_ROWS, 0); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4); }
++      } });
+       wake();
+     });
+   }
+-  function pump(ms) {
+-    // aspoň jeden pás za snímku, ďalšie len kým neminie rozpočet
+-    const t0 = performance.now();
+-    while (jobs.length && performance.now() - t0 < ms) if (jobs[0]()) jobs.shift();
++  function pump() {
++    // Počas strihu majú oba kreslené zábery prednosť; skok smie doťahovať chýbajúci cieľ.
++    if (!jobs.length || (mixNow > 0.01 && mixNow < 0.99 && !jumpPending)) return;
++    const index = Math.max(0, jobs.findIndex((job) => job.sequence));
++    if (jobs[index].step()) jobs.splice(index, 1);
+   }
+-  // fotky sú v AVIF (o tretinu menšie) aj WebP; keď prehliadač AVIF nedekóduje, ďalej sa berie WebP
+   let avif = true;
+   async function photo(s, w, signal) {
+     if (avif) {
+@@ -512,16 +528,23 @@
+     if (s.done || s.loading || (s.ready && s.size >= w) || !retryOk(s)) return;   // done: prológ, ktorý už prebehol
+     // hotový záber v menšej veľkosti (napr. po otočení telefónu) sa vymení až keď je väčší načítaný
+     const ctl = new AbortController(), upgrade = s.ready;
+-    const live = () => !ctl.signal.aborted && !lost && !(upgrade && !s.ready);
++    const live = () => !ctl.signal.aborted && !lost && !stopped && !(upgrade && !s.ready);
+     s.ctl = ctl;
+-    s.loading = Promise.all([photo(s, w, ctl.signal), upgrade ? null : depthBitmap(`${base}${s.photo}-hlbka.webp`, ctl.signal)])
+-      .then(([img, dep]) => Promise.all([upload(img, live, true), dep && upload(dep, live, false)]))
++    s.loading = Promise.allSettled([photo(s, w, ctl.signal), upgrade ? null : bitmap(`${base}${s.photo}-hlbka-z.webp`, ctl.signal)])
++      .then((results) => {
++        if (results.some((result) => result.status === 'rejected')) {
++          results.forEach((result) => { if (result.status === 'fulfilled') result.value?.close(); });
++          throw new Error('Záber sa nenačítal');
++        }
++        const [img, dep] = results.map((result) => result.value);
++        return Promise.all([upload(img, live, true), dep && upload(dep, live, false)]);
++      })
+       .then(([map, depth]) => {
+         if (s.ctl === ctl) s.loading = null;
+         if (!map || (!upgrade && !depth) || !live()) { if (map) map.dispose(); if (depth) depth.dispose(); return; }
+         const u = s.mat.uniforms, old = upgrade ? u.uMap.value : null;
+         u.uMap.value = map;                                   // obraz je už celý v grafickej karte
+-        if (depth) { s.drt = soften(depth); u.uDepth.value = s.drt.texture; }
++        if (depth) { s.depth = depth; u.uDepth.value = depth; }
+         if (old) old.dispose();
+         if (!upgrade) s.t0 = performance.now();
+         s.ready = true; s.size = s.w = w; s.failedAt = 0; wake();
+@@ -533,10 +556,33 @@
+     if (s.video) detach(s, false);
+     if (!s.ready) return;
+     const u = s.mat.uniforms;
+-    u.uMap.value.dispose(); if (s.drt) { s.drt.dispose(); s.drt = null; }
++    u.uMap.value.dispose(); if (s.depth) { s.depth.dispose(); s.depth = null; }
+     u.uMap.value = blank; u.uDepth.value = flat; s.ready = false; s.size = 0; s.pmap = null;
+   }
+ 
++  let previewData = null, previewCtl = null;
++  async function loadPreviews() {
++    previewCtl?.abort();
++    const ctl = previewCtl = new AbortController();
++    try {
++      if (!previewData) {
++        const response = await fetch(base + 'nahlady.json', { signal: ctl.signal });
++        if (!response.ok) return;
++        previewData = await response.json();
++      }
++      const ordered = SHOTS.slice().sort((a, b) => Math.abs(a.pi - S) - Math.abs(b.pi - S));
++      await Promise.all(ordered.map(async (s) => {
++        const data = previewData[s.photo] || previewData[s.name];
++        if (!data?.src || s.preview.ready) return;
++        const img = await bitmap(data.src, ctl.signal);
++        const texture = await upload(img, () => !ctl.signal.aborted && !lost && !stopped, false);
++        if (!texture) return;
++        if (ctl.signal.aborted || lost || stopped) { texture.dispose(); return; }
++        s.preview.mat.uniforms.uMap.value = texture; s.preview.ready = true; wake();
++      }));
++    } catch (e) { /* Statické fotografie aj posledný platný snímok ostávajú viditeľné. */ }
++  }
++
+   /* ---------- video ako záber (data-video) ----------
+      Plagát sa nahrá ako fotka (bez hĺbky), záber je tým hotový a prelína sa ako každý iný. Video sa pripojí
+      až po prvom pohybe návštevníka a plagát nahradí, keď má snímku na správnom mieste:
+@@ -560,8 +606,8 @@
+   function loadClip(s) {
+     if (s.loading || !retryOk(s)) return;
+     if (s.ready) { if (userMoved && !s.vel && !s.sq && !s.vfail) attach(s); return; }
+-    if (!s.video.poster) { s.ready = true; s.t0 = performance.now(); if (userMoved) attach(s); return; }
+-    const ctl = new AbortController(), live = () => !ctl.signal.aborted && !lost;
++    if (!s.video.poster) { if (userMoved) attach(s); return; }
++    const ctl = new AbortController(), live = () => !ctl.signal.aborted && !lost && !stopped;
+     s.ctl = ctl;
+     s.loading = posterBitmap(s, ctl.signal).then((img) => upload(img, live, false)).then((map) => {
+       if (s.ctl === ctl) s.loading = null;
+@@ -603,7 +649,7 @@
+     // nová snímka videa: prekresliť (v pokoji film sám nekreslí); prvá snímka na správnom mieste nahradí plagát
+     const onFrame = () => {
+       if (s.vel !== v) return;
+-      if (v.readyState >= 2) vt.needsUpdate = true;
++      if (v.readyState >= 2) { vt.needsUpdate = true; s.videoUpload = true; }
+       if (!s.vlive && v.readyState >= 2 && (c.mode === 'play' ? !v.paused : !v.seeking && s.vwant >= 0)) {
+         s.vlive = true; s.mat.uniforms.uMap.value = vt;
+       }
+@@ -636,7 +682,7 @@
+      k jemným (každá 8., 4., 2., potom všetky) a kým jemnejšia chýba, prelína sa medzi najbližšími stiahnutými.
+      Stiahnuté súbory ostávajú v pamäti (asi 40 kB na snímku), rozbalené sú len okolo aktuálnej polohy:
+      dekódovanie mimo hlavného vlákna (createImageBitmap), v grafike najviac SEQ_TEX snímok. */
+-  const SEQ_TEX = 6, SEQ_NET = 4;
++  const SEQ_TEX = phone ? 4 : 6, SEQ_NET = 4;
+   const pad3 = (i) => String(i).padStart(3, '0');
+   function seqStart(s) {
+     const n = s.video.n;
+@@ -646,7 +692,7 @@
+     const order = [], seen = new Set();
+     for (const st of [8, 4, 2, 1]) for (let i = 0; i < n; i += st) if (!seen.has(i)) { seen.add(i); order.push(i); }
+     if (!seen.has(n - 1)) order.splice(1, 0, n - 1);
+-    s.sq = { n, order, next: 0, net: 0, tex: new Map(), dec: new Set(), up: [], dead: false, lo: -1, hi: -1, m: 0, at: 0, ext: avif ? '.avif' : '.webp' };
++    s.sq = { n, order, next: 0, net: 0, tex: new Map(), pool: [], dec: new Set(), up: [], uploading: null, ctl: new AbortController(), dead: false, lo: -1, hi: -1, m: 0, at: 0, ext: avif ? '.avif' : '.webp' };
+     seqFetch(s);
+   }
+   function seqFetch(s) {
+@@ -656,16 +702,16 @@
+       const i = q.order[q.next++];
+       if (s.sqBlobs[i]) continue;
+       q.net++;
+-      fetch(new URL(`${s.video.src}/f${pad3(i)}${q.ext}`, d.baseURI).href, { priority: 'low' })
++      fetch(new URL(`${s.video.src}/f${pad3(i)}${q.ext}`, d.baseURI).href, { priority: 'low', signal: q.ctl.signal })
+         .then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+-        .then((b) => { s.sqBlobs[i] = b; wake(); }, () => { if (q.ext === '.avif') { q.ext = '.webp'; q.order.push(i); } })
++        .then((b) => { if (!q.dead) { s.sqBlobs[i] = b; wake(); } }, () => { if (!q.dead && q.ext === '.avif') { q.ext = '.webp'; q.order.push(i); } })
+         .finally(() => { q.net--; seqFetch(s); });
+     }
+   }
+   function seqStop(s) {
+     const q = s.sq; s.sq = null;
+-    q.dead = true;
+-    for (const t of q.tex.values()) t.dispose();
++    q.dead = true; q.ctl.abort();
++    for (const t of q.pool) t.dispose();
+     for (const [, b] of q.up) b.close();
+     const u = s.mat.uniforms; u.uMap.value = s.pmap || blank; u.uMap2.value = blank; u.uMix.value = 0;
+   }
+@@ -673,9 +719,9 @@
+   function seqTex(s, i) {
+     const q = s.sq, t = q.tex.get(i);
+     if (t) { q.tex.delete(i); q.tex.set(i, t); return t; }  // naposledy použitá ide na koniec (LRU)
+-    if (!q.dec.has(i) && s.sqBlobs[i]) {
++    if (!q.dec.has(i) && !q.up.some(([index]) => index === i) && q.uploading !== i && s.sqBlobs[i]) {
+       q.dec.add(i);
+-      createImageBitmap(s.sqBlobs[i]).then((b) => { if (q.dead) b.close(); else { q.up.push([i, b]); wake(); } }, () => {}).finally(() => q.dec.delete(i));
++      bitmap(s.sqBlobs[i], q.ctl.signal).then((b) => { if (q.dead) b.close(); else { q.up.push([i, b]); wake(); } }, () => {}).finally(() => q.dec.delete(i));
+     }
+     return undefined;
+   }
+@@ -684,13 +730,28 @@
+     const ft = clamp(shotT(s), 0, 1) * (n - 1), has = (i) => !!s.sqBlobs[i];
+     // rozbalené snímky ďaleko od polohy (rýchly skrol ich prebehol) sa zahodia, nenahrávajú sa
+     for (let k = q.up.length - 1; k >= 0; k--) if (Math.abs(q.up[k][0] - ft) > 4) { q.up[k][1].close(); q.up.splice(k, 1); }
+-    // najviac dve nahratia do grafiky za snímku displeja (720 × 1280, po 1 až 3 ms), najbližšie k polohe prvé
++    // Pevný kruh textúr: nahradí sa iba snímka, ktorá sa práve nekreslí. Jedno nahratie za snímku.
+     q.up.sort((a, b) => Math.abs(a[0] - ft) - Math.abs(b[0] - ft));
+-    for (let k = 0; k < 2 && q.up.length; k++) {
++    if (q.uploading == null && q.up.length) {
+       const [i, b] = q.up.shift();
+-      if (q.tex.has(i)) { b.close(); continue; }
+-      const t = tex(b); renderer.initTexture(t); b.close();
+-      q.tex.set(i, t);
++      let reuse = null;
++      if (q.pool.length >= SEQ_TEX) {
++        for (const [index, texture] of q.tex) if (texture !== u.uMap.value && texture !== u.uMap2.value) {
++          reuse = texture; q.tex.delete(index); break;
++        }
++      }
++      if (q.tex.has(i)) b.close();
++      else if (q.pool.length >= SEQ_TEX && !reuse) q.up.unshift([i, b]);
++      else {
++        q.uploading = i;
++        upload(b, () => !q.dead && !lost && !stopped, false, reuse, true).then((texture) => {
++          q.uploading = null;
++          if (!texture) return;
++          if (q.dead) { if (!reuse) texture.dispose(); return; }
++          if (!reuse) q.pool.push(texture);
++          q.tex.set(i, texture); wake();
++        });
++      }
+     }
+     let lo = Math.floor(ft), hi = Math.ceil(ft);
+     while (lo > 0 && !has(lo)) lo--;
+@@ -722,9 +783,7 @@
+       if (a < 0) a = z; if (z < 0) z = a;
+       if (a >= 0) show(a, z, q.tex.get(a), q.tex.get(z));
+     }
+-    // v grafike najviac SEQ_TEX snímok; práve kreslené sa neuvoľnia
+-    for (const [k, t] of q.tex) { if (q.tex.size <= SEQ_TEX) break; if (t !== u.uMap.value && t !== u.uMap2.value) { t.dispose(); q.tex.delete(k); } }
+-    return q.up.length > 0 || q.dec.size > 0 || q.net > 0;
++    return q.up.length > 0 || q.dec.size > 0 || q.net > 0 || q.uploading != null;
+   }
+   const shotT = (s) => (s.pi == null ? 0.5 : s.pi === 0 ? clamp(S / 0.66, 0, 1) : clamp((S - s.pi + 0.66) / 1.32, 0, 1));
+   function drive(s, now) {
+@@ -755,12 +814,11 @@
+   function keepAround(ci) {
+     // v pamäti je aktuálny záber, susedia a ďalší v smere skrolovania (najviac štyri);
+     // prológ, ktorý už prebehol (done), sa uvoľní, len čo zíde z obrazovky
+-    const dir = V < 0 ? -1 : 1, keep = (s) => !s.done && s.pi != null && (Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
++    const dir = V < 0 ? -1 : 1, keep = (s) => !s.done && s.pi != null && (s.name === 'rohozka' || Math.abs(s.pi - ci) <= 1 || s.pi === ci + 2 * dir);
+     SHOTS.forEach((s) => { if (!keep(s) && !onScreen.has(s)) drop(s); });
+     const cur = path[ci];
+     if (!cur) return;
+     load(cur);
+-    if (!cur.ready) return;                                   // pri skoku najprv cieľ, susedia až potom
+     for (const k of [ci + dir, ci - dir, ci + 2 * dir]) if (path[k] && !(pro && k === ci + 2 * dir)) load(path[k]);
+   }
+ 
+@@ -782,6 +840,8 @@
+       const mx = Math.max(0, (pw - vw) / 2 - vw * ovr * 0.5), my = Math.max(0, (ph - vh) / 2 - vh * ovr * 0.5);
+       s.eye.set(clamp((f[0] - 0.5) * pw, -mx, mx), clamp((0.5 - f[1]) * ph, -my, my), DIST);
+       s.mat.uniforms.uEye.value.copy(s.eye);
++      Object.assign(s.preview, { pw, ph, vw, vh, pi: s.pi });
++      s.preview.mesh.scale.copy(s.mesh.scale);
+     });
+   }
+ 
+@@ -790,8 +850,13 @@
+   /* textúry záberov majú mipmapy (počítajú sa len počas prechodu, keď sa do nich kreslí): veľké rozmazanie
+      strihu sa tak skladá z mála vzoriek, každá z úrovne podľa ich rozostupu, takže je hladké, bez pásov,
+      kópií a šumu. Mimo okraja sa berie zrkadlový obraz, pod rozmazaním splynie (nikdy tvrdá hrana). */
+-  const rtOpt = { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.MirroredRepeatWrapping, wrapT: THREE.MirroredRepeatWrapping };
++  const rtOpt = { generateMipmaps: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.MirroredRepeatWrapping, wrapT: THREE.MirroredRepeatWrapping };
+   const rtA = new THREE.WebGLRenderTarget(1, 1, rtOpt), rtB = new THREE.WebGLRenderTarget(1, 1, rtOpt);
++  function finishTarget(target, needsLod) {
++    renderer.state.bindTexture(gl.TEXTURE_2D, renderer.properties.get(target.texture).__webglTexture);
++    if (needsLod) gl.generateMipmap(gl.TEXTURE_2D);
++    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, needsLod ? gl.LINEAR_MIPMAP_LINEAR : gl.LINEAR);
++  }
+   /* parametre strihov; telefón má menej vzoriek a slabšie efekty (rozmery v podieloch obrazu):
+      dip/vs šero a vinetácia v strede, mbx,mby/mz pohyb (rozmazanie vodorovne, zvislo, zoomom),
+      nt/sx,sy/bx,by švih (vzorky, posun a rozmazanie vodorovne a zvislo), za/kz najazd (zoom, rozmazanie),
+@@ -959,11 +1024,15 @@
+       const prev = s.at.previousElementSibling || (s.at.parentElement.previousElementSibling || {}).lastElementChild;
+       s.cut = card ? top - (prev && prev.classList && prev.classList.contains('band') ? 1.5 * vh : 0) : null;
+       if (An.length && a <= An[An.length - 1] + 1) return;
+-      s.pi = P.length; P.push(s); An.push(a);
++      s.pi = s.preview.pi = P.length; P.push(s); An.push(a);
+     });
+     path = P; anchors = An; N = Math.max(0, P.length - 1);
+     // dosky s textom (aj ich mäkké prechody do filmu) v súradniciach stránky, pre popis miesta
+     bands = [...d.querySelectorAll('.board,footer')].map((el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY - vh * 0.16, r.bottom + scrollY + vh * 0.1]; });
++    opaqueBands = [...d.querySelectorAll('.band')].filter((el) => {
++      const style = getComputedStyle(el), color = style.backgroundColor;
++      return style.opacity === '1' && color !== 'transparent' && !/rgba\([^)]*,\s*(?:0(?:\.\d+)?)\s*\)/.test(color);
++    }).map((el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY, r.bottom + scrollY]; });
+     if (root.classList.contains('world-in')) measurePlace();
+     // iné poradie záberov (zmena stránky): film sa nastaví na nové miesto bez jazdy cez cudzie zábery
+     if (P.map((s) => s.photo).join() !== was) { S = targetS(); V = 0; fadeK = -1; }
+@@ -974,10 +1043,15 @@
+     for (let k = 1; k < anchors.length; k++) if (y < anchors[k]) return k - 1 + (y - anchors[k - 1]) / (anchors[k] - anchors[k - 1]);
+     return N;
+   }
++  function anchorY(position) {
++    const k = clamp(Math.floor(position), 0, N);
++    return (anchors[k] || 0) + (k < N ? (anchors[k + 1] - anchors[k]) * clamp(position - k, 0, 1) : 0);
++  }
++  const easedY = () => anchorY(S) + sy - anchorY(targetS());
+ 
+   /* ---------- kamera: tlmená pružina, jemné dýchanie ako zo steadicamu ---------- */
+   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
+-  let raf = 0, last = 0, running = true, lost = false, shown = false, shownAt = 0, lastInput = performance.now();
++  let raf = 0, last = 0, running = true, lost = false, stopped = false, recovering = false, lossTimer = 0, jumpPending = false, shown = false, activated = false, shownAt = 0, lastInput = performance.now();
+   const started = performance.now();
+   // kamera sa hýbe stále (ako video): plnou frekvenciou displeja (60 až 240 snímok/s, majiteľ 2026‑10‑11),
+   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
+@@ -1060,7 +1134,7 @@
+   const screenOf = (w) => { fv.set(w[0], w[1], 0).project(camera); return [fv.x * 0.5 + 0.5, fv.y * 0.5 + 0.5]; };
+ 
+   // prelínanie: v pohybe sleduje skrolovanie, v pokoji sa dokončí na bližší záber (nikdy neostane napoly)
+-  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, dark = false, fadeFreeze = null;   // dark: po skoku sa ide zo šera
++  let fade = 0, fadeK = -1, fadeGoal = 0, still = 0, held = null, fadeFreeze = null;
+   const fin = (s, now) => (s.t0 ? Math.min(1, (now - s.t0) / 450) : 1);   // nábeh práve načítanej fotky
+   let mixNow = 0, cutNow = null, sFreeze = null, keepT = 0, keptCi = -1, keptDir = 0, keptAt = 0;
+   function draw(now, dt) {
+@@ -1076,7 +1150,7 @@
+     // videá: posun podľa polohy vo filme (scroll) alebo prehrávanie, kým je záber na obrazovke (play);
+     // ešte pred kreslením, aby sa slučka zastavila aj vtedy, keď sa po skoku nový záber ešte načítava
+     let vbusy = false;
+-    for (const s of path) if (s.vel) vbusy = drive(s, now) || vbusy; else if (s.sq) vbusy = seqDrive(s) || vbusy;
++    for (const s of path) if (s.vel) { vbusy = drive(s, now) || vbusy; if (s.videoUpload && onScreen.has(s)) { uploaded = true; s.videoUpload = false; } } else if (s.sq) vbusy = seqDrive(s) || vbusy;
+     const k = clamp(Math.floor(S), 0, N);
+     let A = path[k], B = path[clamp(k + 1, 0, N)];
+     // prechod zaberá najviac 30 % cesty medzi kotvami (pri bežnej medzere 1 obrazovka = 0,3 obrazovky skrolu),
+@@ -1093,28 +1167,33 @@
+     fadeGoal = tl ? want : still > 0.6 ? Math.round(want) : want;
+     fade = tl ? want : fade + (fadeGoal - fade) * (1 - Math.pow(0.02, dt));
+     if (fadeFreeze != null) { fade = fadeFreeze; fadeGoal = fadeFreeze; }   // ladenie: prechod stojí
+-    let mix = A === B || !B.ready ? 0 : fade * fin(B, now);
+-    // prechod je celý na prichádzajúcom zábere (titulná karta po skoku, pol obrazovky pred kotvou):
+-    // nečaká sa na odchádzajúci záber, ktorý už nie je vidieť
+-    if (A !== B && !A.ready && B.ready && fade > 0.999) { A = B; mix = 0; }
+-    // prológ začína vždy svojím záberom (fasáda), nikdy záberom úvodu, keby sa náhodou načítal skôr
+-    if ((pro || outside) && !A.ready) return false;
+-    if (!A.ready) {
+-      // záber sa ešte načítava: ostane posledný obraz, ak je to susedný záber, a cieľ sa doň prelnie.
+-      // Záber z iného miesta stránky (po skoku) sa neukáže, namiesto neho je šero farby stránky.
+-      const H = held && held.ready && held.pi != null && Math.abs(held.pi - k) <= 1 ? held : B.ready && !dark ? B : null;
+-      if (!H) { if (shown) { renderer.setRenderTarget(null); renderer.clear(); held = null; } return false; }
+-      A = H; mix = B.ready && B !== A ? fin(B, now) : 0;
+-    } else if (held && held !== A && held !== B && held.ready && fin(A, now) < 1) { B = A; A = held; mix = fin(B, now); }
+-    else if (dark && fin(A, now) < 1) { B = A; A = null; mix = fin(B, now); }   // zo šera po skoku
+-    if (dark && A && A.ready && fin(A, now) >= 1) dark = false;
+-    if (mix >= 0.999) { A = B; mix = 0; }
+-    if (!A && mix <= 0.001) { renderer.setRenderTarget(null); renderer.clear(); return true; }
++    const target = fade > 0.5 ? B : A;
++    const picture = (shot) => shot?.ready ? shot : shot?.preview?.ready ? shot.preview : null;
++    let first = picture(A), second = picture(B);
++    let mix = A === B || !second ? 0 : fade;
++    if ((pro || outside) && !first) return false;
++    if (!first) {
++      // Počas čakania sa obraz nikdy nemaže. Najprv blízky hotový záber, potom posledný platný.
++      first = held?.ready && Math.abs(held.pi - k) <= 1 ? held
++        : second || picture(path[k - 1]) || (held?.ready ? held : null);
++      if (!first) return false;
++      mix = second && second !== first ? fade : 0;
++    }
++    A = first; B = second;
++    if (A === B) mix = 0;
++    if (mix >= 0.999 && B) { A = B; mix = 0; }
++    // Ostrá fotografia sa objaví cez vlastný náhľad alebo posledný pripravený obraz.
++    if (mix <= 0.001 && !A.previewOf && fin(A, now) < 1) {
++      const previous = A.preview.ready ? A.preview : held?.ready && held !== A ? held : null;
++      if (previous) { B = A; A = previous; mix = fin(B, now); }
++    }
++    recoveryReady = target.ready || target.preview.ready;
++    if (recoveryReady) jumpPending = false;
+     if (mix > 0.001) {
+-      // prelínanie: oba zábery do textúr a spolu na obrazovku (bez prvého záberu len šero)
++      // Prelínanie vždy skladá dva platné obrazy.
+       vig.value.w = 0;
+       // strih medzi susednými zábermi (po skoku či pri čakaní na fotku len pôvodné prelínanie)
+-      let cut = A && B.pi === A.pi + 1 ? cutOf(A, B) : null;
++      let cut = !A.previewOf && !B.previewOf && B.pi === A.pi + 1 ? cutOf(A, B) : null;
+       const pu = post.material.uniforms;
+       // popredie potrebuje hĺbku záberu, ktorému predmet patrí; záber bez nej (video) dostane pokračovanie pohybu
+       if (cut && cut.k === 4 && (cut.own === 'b' ? B : A).mat.uniforms.uDepth.value === flat) cut = cut.alt || (cut.alt = Object.assign({}, cut, { k: 1, name: 'pohyb', rev: false }));
+@@ -1122,19 +1201,21 @@
+       // hĺbka sa pri prechode otvorí: blízke veci odchádzajúceho záberu sa posúvajú viac (prechádzajú popri
+       // tebe), prichádzajúci záber sa z otvorenej hĺbky usadí na bežnú; popri predmete výraznejšie
+       const amp = cut && cut.k === 4 ? CK.amp : 0.1;
+-      if (A) A.mat.uniforms.uAmt.value = AMT + amp * mix;
+-      B.mat.uniforms.uAmt.value = AMT + amp - amp * mix;
++      if (!A.previewOf) A.mat.uniforms.uAmt.value = AMT + amp * mix;
++      if (!B.previewOf) B.mat.uniforms.uAmt.value = AMT + amp - amp * mix;
+       let fA = [0.5, 0.5], fB = [0.5, 0.5];
+       renderer.setRenderTarget(rtA); renderer.clear();
+       if (A) {
+         A.mesh.visible = true; place(A, now, mix, cut); renderer.render(scene, camera); A.mesh.visible = false;
+         if (cut) fA = screenOf(cut.a ? ptOf(A, cut.a) : [A.eye.x, A.eye.y]);   // bod strihu tak, ako ho vidí kamera
+       }
++      finishTarget(rtA, !!cut && (cut.k >= 1 && cut.k <= 3 || cut.k === 4 && cut.own !== 'b'));
+       renderer.setRenderTarget(rtB); renderer.clear();
+       B.mesh.visible = true; place(B, now, -(1 - mix), cut); renderer.render(scene, camera); B.mesh.visible = false;
++      finishTarget(rtB, !!cut && (cut.k >= 1 && cut.k <= 3 || cut.k === 4 && cut.own === 'b'));
+       if (cut) fB = screenOf(cut.b ? ptOf(B, cut.b) : [B.eye.x, B.eye.y]);
+-      if (A) A.mat.uniforms.uAmt.value = AMT;
+-      B.mat.uniforms.uAmt.value = AMT;
++      A.mat.uniforms.uAmt.value = A.previewOf ? 0 : AMT;
++      B.mat.uniforms.uAmt.value = B.previewOf ? 0 : AMT;
+       // strih odzadu (odjazd, predmet prichádzajúceho záberu): shader kreslí opačný strih, zábery vymenené, čas naspäť
+       const rev = !!(cut && cut.rev), dS = cut ? (rev ? [-cut.dir[0], -cut.dir[1]] : cut.dir) : [0, 0];
+       const f1 = rev ? fB : fA, f2 = rev ? fA : fB;
+@@ -1154,7 +1235,7 @@
+     mixNow = mix; frameDrawn = true; frames++;
+     held = mix > 0.5 ? B : A;
+     showPlace(held);
+-    onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean));
++    onScreen = new Set((mix > 0.001 ? [A, B] : [A]).filter(Boolean).map((shot) => shot.previewOf || shot));
+     drawn = true;
+     // ešte beží prelínanie alebo nábeh novej fotky: kresliť ďalej
+     return vbusy || Math.abs(fadeGoal - fade) > 0.002 || (mix > 0.001 && mix < 0.999) || !A || fin(A, now) < 1;
+@@ -1166,27 +1247,32 @@
+      frekvenciu displeja, ak je nižšia), rozlíšenie klesne o 0,25 (najnižšie 1x); keď beží plnou frekvenciou
+      displeja s rezervou, po 8 s bez poklesu sa o 0,25 vráti k ostrosti. Strop 30 snímok už nie je.
+      Najkratšia snímka zariadenia = frekvencia displeja (60, 90, 120, 144, 240 Hz; 30 Hz pri šetrení energie nie je „pomalé“). */
+-  let fastest = 0, lowAt = 0;
++  let fastest = 0, lowAt = 0, slowSince = 0, nextDpr = null;
+   const ft = [];
+   function quality(dt, now) {
+-    // pri nahrávaní fotiek do grafiky a počas prológu či odchodu sa nemeria: dlhé snímky z nahrávania by
+-    // zmenili rozlíšenie uprostred úvodu (viditeľný skok), meria sa až bežné skrolovanie
+-    if (jobs.length || pro || leaving) { ft.length = 0; return; }
+-    if (dt <= 0 || dt >= 0.1) return;
++    // Jednorazové nahratie fotky, hĺbky či náhľadu sa vynechá aj so susednou snímkou.
++    // Video a sekvencie sú trvalá záťaž filmu: ich pravidelné uploady nesmú vypnúť adaptáciu.
++    if (stillUploaded || stillUploadedBefore || jobs.some((job) => !job.sequence) || pro || leaving) { ft.length = 0; slowSince = 0; return; }
++    if (dt <= 0) return;
+     fastest = fastest ? Math.min(fastest, dt) : dt;
+     ft.push(dt); if (ft.length < 30) return;
+     ft.sort((a, b) => a - b);
+     const med = ft[15], p90 = ft[27]; ft.length = 0;
+     const hz = Math.max(fastest, 1 / 250);                   // interval displeja (60 až 240 Hz)
+-    if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
+-      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
++    if (!filmOn && dpr <= DPR_MIN && p90 > 0.033) {
++      if (!slowSince) slowSince = now;
++      else if (now - slowSince >= 3000) { stop(); return; }
++    } else slowSince = 0;
++    // Ak bol film pomalý už od prvého videa, najrýchlejšia nameraná snímka nie je frekvencia displeja.
++    if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40) || med > 1 / 29) {
++      if (dpr > DPR_MIN) { nextDpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; }
+     } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
+-      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize();
++      nextDpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4);
+     }
+   }
+ 
+   let cw = 0, ch = 0, cd = 0, compiled = false, firstMs = 0;
+-  function resize() {
++  function resize(remeasure = true) {
+     // plátno má výšku veľkého výrezu (100lvh), takže lišta prehliadača na mobile ho pri skrolovaní nemení
+     const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
+     if (w !== cw || h !== ch || dpr !== cd) {
+@@ -1204,12 +1290,15 @@
+       vig.value.set(1 / canvas.width, 1 / canvas.height, w / h, vig.value.w);
+       layout();
+     }
+-    measure(); wake();
++    if (remeasure) measure();
++    wake();
+   }
+   function frame(now) {
+     raf = 0;
+-    if (!running || lost) return;
+-    if (jobs.length) pump(4);
++    if (!running || lost || stopped) return;
++    uploadedBefore = uploaded; uploaded = false;
++    stillUploadedBefore = stillUploaded; stillUploaded = false;
++    if (jobs.length) pump();
+     const dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+     const T = targetS();
+     frameDrawn = false;
+@@ -1239,18 +1328,36 @@
+       V += ((T - S) * w0 * w0 - 2 * w0 * V) * dt; S += V * dt;
+       if (Math.abs(T - S) < 0.0004 && Math.abs(V) < 0.0004) { S = T; V = 0; }
+       // skok cez menu alebo tlačidlo: žiadna jazda cez celý podnik ani cudzie zábery; film je hneď na cieli
+-      // a jeho záber sa rozsvieti zo šera, len čo je načítaný (posledný záber zďaleka sa už neukáže)
+-      if (Math.abs(T - S) > 1.5) { S = T; V = 0; held = null; dark = shown; }
++      // posledný obraz ostáva, kým nie je pripravený cieľ alebo jeho náhľad
++      if (Math.abs(T - S) > 1.5 && Math.abs(sy - easedY()) > 2.5 * vhNow) { S = T; V = 0; fadeK = -1; jumpPending = true; }
+     }
+     pmx += (mx - pmx) * (1 - Math.pow(0.02, dt)); pmy += (my - pmy) * (1 - Math.pow(0.02, dt));
+     const idle = now - lastInput;
+     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
+     const active = idle < FULL_MS;                             // nedávny pohyb: kresliť každú snímku
++    if (shown && !pro && !leaving && !outside && opaqueBands.some(([top, bottom]) => top <= sy && bottom >= sy + ch)) {
++      // Skrytý strih sa skončil; jeho starý mix nesmie blokovať pump() a držať prázdny RAF cyklus.
++      S = T; V = 0; mixNow = 0; cutNow = null; last = 0; showPlace(null);
++      SHOTS.forEach((s) => { if (s.vel && !s.vel.paused) s.vel.pause(); });
++      keepAround(clamp(Math.round(S), 0, N));
++      if (jobs.length) wake();
++      return;
++    }
++    if (nextDpr != null && Math.abs(V) < 0.03 && (mixNow < 0.01 || mixNow > 0.99) && !jobs.length) {
++      dpr = nextDpr; nextDpr = null; resize(false);
++    }
+     const busy = draw(now, dt);
+-    if (drawn && !shown) {
++    if (recovering && frameDrawn && recoveryReady) {
++      recovering = false; clearTimeout(lossTimer); root.classList.remove('film-strata');
++    }
++    if (frameDrawn && !shown) {
+       shown = true; shownAt = now; firstMs = Math.round(performance.now() - tStart);
+-      requestAnimationFrame(() => { root.classList.add('world-in'); measurePlace(); wake(); readyDone(true); });
+     }
++    // Strata kontextu medzi kreslením a týmto RAF nesmie navždy zablokovať prvé zobrazenie.
++    if (frameDrawn && !activated && !recovering) requestAnimationFrame(() => {
++      if (stopped || lost || recovering || activated) return;
++      activated = true; root.classList.add('world-in'); measurePlace(); wake(); readyDone(true);
++    });
+     // prológ a odchod bežia od prvého snímku, v ktorom je záber fasády nakreslený; chôdza začne až keď je
+     // načítaný aj záber úvodu (inak by kamera pri dverách čakala a úvod by nebol jeden plynulý pohyb);
+     // pred podnikom sa stojí najviac 1,5 s (úvod nemá zdržiavať), potom sa ide aj tak a proS počká pri dverách
+@@ -1274,10 +1381,10 @@
+       if (now - started > 15000) { stop(); return; }
+       if (jobs.length) wake(); else setTimeout(wake, 120);   // fotka ide do grafiky: ďalší pás hneď v ďalšej snímke
+       last = 0;
+-    } else if (moving || breath > 0) { quality(dt, now); if (!raf) raf = requestAnimationFrame(frame); }   // plnou frekvenciou displeja
++    } else if (moving || breath > 0) { quality(dt, now); if (!raf && !stopped) raf = requestAnimationFrame(frame); }   // plnou frekvenciou displeja
+     else last = 0;
+   }
+-  function wake() { if (!raf && running && !lost) raf = requestAnimationFrame(frame); }
++  function wake() { if (!raf && running && !lost && !stopped) raf = requestAnimationFrame(frame); }
+   const poke = () => { lastInput = performance.now(); wake(); };
+ 
+   /* ---------- prológ: úvod ako film ----------
+@@ -1292,14 +1399,14 @@
+      cez dvere von (leaving, časová os 1 -> 0) a ostane stáť pred podnikom (outside, S = 0, pásy ostávajú).
+      Z ulice sa vojde dnu tlačidlom „Vojdi dnu“, potiahnutím nahor, kolieskom nadol alebo skrolovaním:
+      prológ sa pustí znova (startPro). Bežné skrolovanie z ulice preruší prológ až pri väčšom posune. */
+-  let outside = false, leaving = null, frameDrawn = false;
++  let outside = false, leaving = null, frameDrawn = false, recoveryReady = false;
+   const easeIO = (x) => x * x * (3 - 2 * x);
+   function startPro(fast) {
+     if (!PRO || pro) return false;
+     leaving = null; outside = false; root.classList.remove('outside');
+     PRO.done = false; load(PRO);
+     pro = proMs(); pro.since = performance.now(); if (fast) { pro.walk *= 0.65; pro.into *= 0.75; pro.fast = true; }
+-    S = 0; V = 0; held = null; fadeK = -1; dark = false;
++    S = 0; V = 0; fadeK = -1; jumpPending = true;
+     root.classList.add('pro');
+     if (scrollY > 0) jumpTo(0);
+     sy = Math.max(0, scrollY); lastInput = performance.now(); wake(); return true;
+@@ -1346,6 +1453,12 @@
+   // záporný scrollY je odraz (Safari), nie poloha v stránke; topSince = odkedy stránka stojí na vrchu
+   let topSince = scrollY <= 4 ? performance.now() : 0;
+   on(window, 'scroll', () => { sy = Math.max(0, scrollY); if (sy > 4) topSince = 0; else if (!topSince) topSince = performance.now(); poke(); }, { capture: true });
++  on(window, 'bs30:skok', (event) => {
++    if (pro) endPro(false); if (leaving || outside) cancelLeave();
++    sy = Math.max(0, Number.isFinite(event.detail?.y) ? event.detail.y : scrollY);
++    S = targetS(); V = 0; still = 1; fadeK = -1; jumpPending = true;
++    keptCi = -1; poke();
++  });
+   const atTopSettled = () => scrollY <= 4 && topSince && performance.now() - topSince > 350;
+   // lišta prehliadača na telefóne pri skrolovaní posiela resize, plátno (100lvh) sa pritom nemení: kotvy sa
+   // prepočítajú až o 150 ms, nie synchrónne uprostred skrolu; skutočná zmena rozmeru ide hneď
+@@ -1416,21 +1529,36 @@
+   }, { passive: false });
+   // strata grafického kontextu (málo pamäte): rozrobené pásy sa hneď zrušia (uvoľnia rozbalené fotky),
+   // po obnove sa fotky načítajú znova
+-  on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); }, { passive: false });
++  on(canvas, 'webglcontextlost', (e) => {
++    e.preventDefault(); lost = true; recovering = true; recoveryReady = false;
++    if (raf) cancelAnimationFrame(raf); raf = 0; last = 0;
++    root.classList.add('film-strata');
++    window.dispatchEvent(new CustomEvent('bs30:film-strata'));
++    previewCtl?.abort(); SHOTS.forEach(drop);
++    while (jobs.length) jobs.shift().cancel();
++    SHOTS.forEach((s) => { if (s.preview.ready) s.preview.mat.uniforms.uMap.value.dispose(); s.preview.ready = false; s.preview.mat.uniforms.uMap.value = blank; });
++    held = null; onScreen.clear();
++    clearTimeout(lossTimer); lossTimer = setTimeout(stop, 3000);
++  }, { passive: false });
+   on(canvas, 'webglcontextrestored', () => {
+-    lost = false;
+-    SHOTS.forEach((s) => { if (s.video) { detach(s, false); s.pmap = null; } if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
+-    cw = 0; resize();
++    if (stopped) return;
++    lost = false; compiled = false; cw = 0; resize();
++    prewarm().then(() => { if (stopped || lost) return; compiled = true; loadPreviews(); keptCi = -1; wake(); });
+   });
+   // obsah stránky mení výšku (fotky, rozbalené karty, menu), kotvy sa preto prepočítajú
+   let mt;
+   const ro = new ResizeObserver(() => { clearTimeout(mt); mt = setTimeout(() => { measure(); wake(); }, 150); });
+   ro.observe(d.body);
+   function stop() {
+-    running = false; ac.abort(); ro.disconnect(); clearTimeout(mt); jobs = [];
++    if (stopped) return;
++    stopped = true; running = false; ac.abort(); ro.disconnect(); clearTimeout(mt); clearTimeout(keepT); clearTimeout(lossTimer);
++    previewCtl?.abort(); closeWorker();
+     if (raf) cancelAnimationFrame(raf);
+     SHOTS.forEach(drop);
++    while (jobs.length) jobs.shift().cancel();
+     SHOTS.forEach((s) => { if (s.vblob) s.vblob.then((u) => URL.revokeObjectURL(u), () => {}); s.vblob = null; });
++    SHOTS.forEach((s) => { if (s.preview.ready) s.preview.mat.uniforms.uMap.value.dispose(); s.preview.ready = false; s.preview.mat.dispose(); s.mat.dispose(); s.sqBlobs = null; });
++    grid.dispose(); blank.dispose(); flat.dispose(); rtA.dispose(); rtB.dispose(); post.geometry.dispose(); post.material.dispose();
+     renderer.dispose(); try { renderer.forceContextLoss(); } catch (e) { /* nič */ }
+     canvas.remove(); placeBox.remove(); quit();
+   }
+@@ -1439,12 +1567,13 @@
+   // goTo(meno, t): skočí na záber bez jazdy; t 0..1 je poloha v jeho pohybe kamery (0,5 = kotva),
+   // drží sa mimo prelínania, aby bol záber celý. Vráti false, keď taký záber v stránke nie je.
+   api.goTo = (name, t = 0.5) => {
++    if (stopped) return false;
+     const s = path.find((x) => x.photo === name || x.photo === name + '-m');   // na telefóne je záber výrez -m
+     if (!s) return false;
+     const k = s.pi, a = anchors[k], gap = k < N ? anchors[k + 1] - a : (k > 0 ? a - anchors[k - 1] : innerHeight);
+     const y = Math.max(0, Math.round(a + (clamp(t, 0, 1) - 0.5) * 0.7 * gap));
+     jumpTo(y);
+-    sy = Math.max(0, scrollY); S = targetS(); V = 0; still = 1; held = null; fadeK = -1; lastInput = performance.now(); wake();
++    sy = Math.max(0, scrollY); S = targetS(); V = 0; still = 1; jumpPending = true; fadeK = -1; lastInput = performance.now(); wake();
+     return true;
+   };
+   // proFreeze(s): prológ zastaví na polohe s (0 fasáda, 1 úvod) pre snímky; proFreeze(null) ho pustí ďalej
+@@ -1461,7 +1590,7 @@
+      na tom mieste cesty, kde sa pri skrolovaní tento mix kreslí; cutFreeze(null) pustí ďalej. dbg(1|2): hĺbka A|B */
+   api.dbg = (v) => { post.material.uniforms.uDbg.value = v; wake(); };
+   // pause(true): film prestane kresliť (posledný snímok ostane), pause(false) pokračuje; pre snímky pri pomalej grafike
+-  api.pause = (v) => { running = !v && !d.hidden; if (running) { last = 0; wake(); } return true; };
++  api.pause = (v) => { if (stopped) return false; running = !v && !d.hidden; if (running) { last = 0; wake(); } return true; };
+   api.cutFreeze = (name, v) => {
+     if (name == null) { sFreeze = null; fadeFreeze = null; still = 0; wake(); return true; }
+     const s = name === 'pro' ? path[0] : path.find((x) => !x.pro && (x.photo === name || x.photo === name + '-m'));
+@@ -1474,18 +1603,19 @@
+     if (m <= 0) u = 0; if (m >= 1) u = 1;
+     sFreeze = k + 0.5 - span / 2 + u * span; fadeFreeze = m; still = 0;
+     if (!s.pro) jumpTo(Math.max(0, Math.round(anchors[k] + (sFreeze - k) * gap)));
+-    sy = Math.max(0, scrollY); held = null; fadeK = -1; lastInput = performance.now(); wake();
++    sy = Math.max(0, scrollY); jumpPending = true; fadeK = -1; lastInput = performance.now(); wake();
+     return true;
+   };
+   Object.defineProperty(api, 'cuts', { get: () => path.slice(0, -1).map((s, i) => { const c = cutOf(s, path[i + 1]); return { from: s.name, to: path[i + 1].name, cut: c ? c.name : 'prelinanie', dir: c && c.dir, rev: !!(c && c.rev) }; }) });
+   // uvod.von(): kamera vyjde na ulicu a ostane tam; uvod.znova(): prológ (vojdenie dnu) znova
+   api.uvod = { von: leave, znova: () => startPro(outside) };
++  Object.defineProperty(api, 'position', { get: () => ({ on: !stopped, shown, y: easedY(), moving: Math.abs(targetS() - S) > 0.0004 || Math.abs(V) > 0.0004 }) });
+   Object.defineProperty(api, 'state', {
+     get: () => ({
+-      on: true, shown, phone, dpr, S, T: targetS(), mix: mixNow, cut: cutNow && mixNow > 0 ? cutNow.key + ' ' + cutNow.name : null, frames, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!leaving, outside,
++      on: !stopped, shown, lost, recovering, phone, dpr, S, T: targetS(), y: easedY(), scrollY: sy, moving: Math.abs(targetS() - S) > 0.0004 || Math.abs(V) > 0.0004, mix: mixNow, cut: cutNow && mixNow > 0 ? cutNow.key + ' ' + cutNow.name : null, frames, anchors: anchors.slice(), firstFrameMs: firstMs, pro: !!pro, leaving: !!lea
+       current: path[clamp(Math.round(S), 0, N)] && path[clamp(Math.round(S), 0, N)].photo,
+-      ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, depth: s.drt ? [s.drt.width, s.drt.height] : null })),
+-      userMoved,
++      ready: path.map((s) => ({ shot: s.photo, ready: s.ready, size: s.size, loading: !!s.loading, preview: s.preview.ready, depth: s.depth ? [s.depth.userData.w, s.depth.userData.h] : null })),
++      userMoved, worker: !!worker, uploads: { ...uploadStats }, pendingUploads: jobs.length, textures: renderer.info.memory.textures,
+       seq: path.filter((s) => s.video && s.video.mode === 'seq').map((s) => ({ shot: s.photo, on: !!s.sq, got: s.sqBlobs ? s.sqBlobs.filter(Boolean).length : 0, n: s.video.n, lo: s.sq ? s.sq.lo : -1, hi: s.sq ? s.sq.hi : -1, mix: +s.mat.uniforms.uMix.value.toFixed(3), tex: s.sq ? [...s.sq.tex.keys()].join(',') : '', up: s.sq ? 
+       video: path.filter((s) => s.video).map((s) => ({ shot: s.photo, mode: s.video.mode, src: s.vel ? s.vel.currentSrc.split('/').pop() : null, rs: s.vel ? s.vel.readyState : null, t: s.vel ? +s.vel.currentTime.toFixed(3) : null, want: +(s.vwant || 0).toFixed(3), seeking: s.vel ? s.vel.seeking : null, paused: s.vel ? s.vel.pau
+     }),
+@@ -1496,17 +1626,32 @@
+   resize();
+   S = targetS();
+   if (pro) { S = 0; V = 0; }                                   // prológ začína záberom fasády
+-  // prvé použitie shaderu čaká na grafiku: shadery sa preložia vopred a bez čakania
+-  // (KHR_parallel_shader_compile), nie až pri prvom zábere či prelínaní počas skrolu
+-  try { await Promise.all([renderer.compileAsync(scene, camera), renderer.compileAsync(postScene, postCam), renderer.compileAsync(softScene, postCam)]); } catch (e) { /* preloží sa pri prvom kreslení */ }
+-  // prvé použitie programu číta zoznam uniformov synchrónne z grafiky: urobí sa teraz do cieľa 1 × 1 px,
+-  // nie pri prvom strihu uprostred skrolu
+-  try {
+-    const w1 = new THREE.WebGLRenderTarget(1, 1, { depthBuffer: false });
+-    renderer.setRenderTarget(w1); renderer.render(postScene, postCam); renderer.render(softScene, postCam);
+-    renderer.setRenderTarget(null); w1.dispose();
+-  } catch (e) { /* nič */ }
++  // Oba fotografické programy aj skladanie dostanú prvé použitie ešte pred skrolovaním.
++  async function prewarm() {
++    const materials = new Set();
++    const samples = SHOTS.filter((shot) => { const key = shot.mat.fragmentShader; if (materials.has(key)) return false; materials.add(key); return true; });
++    samples.forEach((shot) => { shot.mesh.visible = true; });
++    try { await Promise.all([renderer.compileAsync(scene, camera), renderer.compileAsync(postScene, postCam)]); }
++    catch (e) { /* Preloží sa pri prvom kreslení. */ }
++    samples.forEach((shot) => { shot.mesh.visible = false; });
++    if (stopped || lost) return;
++    await new Promise((resolve) => setTimeout(resolve, 0));
++    const warm = new THREE.WebGLRenderTarget(1, 1, { depthBuffer: true });
++    try {
++      renderer.setRenderTarget(warm);
++      for (const shot of samples) {
++        renderer.clear(); shot.mesh.visible = true; place(shot, performance.now()); renderer.render(scene, camera); shot.mesh.visible = false;
++        await new Promise((resolve) => setTimeout(resolve, 0));
++        if (stopped || lost) return;
++      }
++      renderer.render(postScene, postCam);
++    } finally { renderer.setRenderTarget(null); warm.dispose(); samples.forEach((shot) => { shot.mesh.visible = false; }); }
++  }
++  // Záťažová poistka má samostatný skúšobný vstup; nepredstiera namerané časy zariadenia.
++  api.brzdaTest = () => { stop(); return true; };
++  await prewarm();
++  if (stopped || lost) return;
+   compiled = true;
+-  // prvý obraz až keď je načítaný záber na mieste, kde návštevník je; potom sa statická fotka prelnie do filmu
++  loadPreviews();
+   wake();
+ })();

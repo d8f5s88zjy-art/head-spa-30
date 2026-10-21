@@ -1,0 +1,36 @@
+{
+  "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+  "artifacts": [
+    "tools/pracovna-siet/README.md",
+    "tools/pracovna-siet/engine.mjs",
+    "tools/pracovna-siet/cli.mjs",
+    "tools/pracovna-siet/engine.test.mjs",
+    "tools/pracovna-siet/state.schema.json",
+    "tools/pracovna-siet/state.json",
+    "tools/pracovna-siet/dashboard.html",
+    "tools/pracovna-siet/render-brain.mjs",
+    "tools/pracovna-siet/render-brain.test.mjs",
+    "tools/pracovna-siet/brain-template.html",
+    "tools/pracovna-siet/brain.html",
+    "tools/pracovna-siet/verification.txt",
+    "tools/pracovna-siet/network-handoff.json"
+  ],
+  "checks": [
+    {
+      "name": "Izolované regresné kontroly",
+      "status": "pass",
+      "evidence": "node --test tools/pracovna-siet/engine.test.mjs tools/pracovna-siet/render-brain.test.mjs: 15 testov prešlo, 0 zlyhalo. Výstup tools/pracovna-siet/verification.txt."
+    },
+    {
+      "name": "Export skutočného katalógu",
+      "status": "pass",
+      "evidence": "render-brain.mjs validoval 20 párov N01–N20/R01–R20 a 18 zdrojov. Odtlačok katalógu 3bdb668db9f8e59a222622cfba0b5d74eaa8384517d138e10f510af0625cd107. HTML je samostatné, nevykonáva automatické sieťové načítanie."
+    },
+    {
+      "name": "Geometria cieľov mapy",
+      "status": "pass",
+      "evidence": "Matematický test odstupov pri 14 šírkach vrátane 320 a hraníc breakpointov prešiel. Browser pixel kontrola nebola vykonaná."
+    }
+  ],
+  "summary": "Odovzdaný lokálny koordinátor, uložený projektový prehľad a prenosná mapa odborných dvojíc. Nezávislé prijatie a vizuálna kontrola prehliadača ešte čakajú."
+}

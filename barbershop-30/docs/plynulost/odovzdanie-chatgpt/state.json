@@ -1,0 +1,247 @@
+{
+  "version": 1,
+  "project": "BARBERSHOP 30 · pokračovanie",
+  "revision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+  "createdAt": "2026-10-20T19:29:44.500256Z",
+  "updatedAt": "2026-10-20T19:40:07.965086Z",
+  "mode": "snapshot",
+  "maxActive": 4,
+  "maxRetries": 2,
+  "paused": false,
+  "pauseReason": "",
+  "eventIds": [],
+  "scopeNote": "Vlastníctvo zahŕňa dodávkové súbory. Nové testové súbory sa pred pridelením doplnia explicitne. Mapa je uložený stav, nie živé spojenie s pracovníkmi.",
+  "roles": [
+    {
+      "id": "root",
+      "label": "Riadenie",
+      "purpose": "Koordinácia a integrácia",
+      "kind": "coordinator",
+      "status": "active",
+      "runtimeId": "/root"
+    },
+    {
+      "id": "frontend",
+      "label": "Rozhranie",
+      "purpose": "Mobil, navigácia a obsah",
+      "kind": "implementation",
+      "status": "active",
+      "runtimeId": "/root/frontend"
+    },
+    {
+      "id": "film",
+      "label": "Film",
+      "purpose": "Obraz, prechody a výkon",
+      "kind": "implementation",
+      "status": "active",
+      "runtimeId": "/root/film"
+    },
+    {
+      "id": "admin",
+      "label": "Admin",
+      "purpose": "Jednoduchá správa webu",
+      "kind": "implementation",
+      "status": "active",
+      "runtimeId": "/root/admin"
+    },
+    {
+      "id": "network",
+      "label": "Sieť",
+      "purpose": "Zadania, vlastníctvo a odovzdanie",
+      "kind": "implementation",
+      "status": "active",
+      "runtimeId": "/root/network"
+    },
+    {
+      "id": "reviewer",
+      "label": "Kontrola",
+      "purpose": "Nezávislé overenie výsledku",
+      "kind": "review",
+      "status": "pending",
+      "runtimeId": null
+    },
+    {
+      "id": "memory",
+      "label": "Pamäť",
+      "purpose": "Overené rozhodnutia a denník",
+      "kind": "memory",
+      "status": "idle",
+      "runtimeId": null
+    }
+  ],
+  "tasks": [
+    {
+      "id": "frontend",
+      "title": "D2 + D5 · náhľady, skoky a mobilné rozhranie",
+      "owner": "frontend",
+      "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "paths": [
+        "barbershop-30/assets/app.js",
+        "barbershop-30/assets/style.css",
+        "barbershop-30/assets/i18n.js",
+        "barbershop-30/assets/i18n.css",
+        "barbershop-30/index.html",
+        "barbershop-30/source/tools/nahlady.py",
+        "barbershop-30/assets/img/film/nahlady.css",
+        "barbershop-30/assets/img/film/nahlady.json",
+        "barbershop-30/source/tools/frontend-regression.mjs"
+      ],
+      "dependsOn": [],
+      "state": "active",
+      "retries": 0,
+      "acceptance": [
+        "Fotografie majú viditeľnú zálohu počas načítania.",
+        "Skok z menu zachová históriu a fokus.",
+        "Mobilné rozhranie a hodiny fungujú aj pri zatvorení celý týždeň."
+      ],
+      "hypothesis": "",
+      "submission": null
+    },
+    {
+      "id": "film",
+      "title": "D3 + D4 · plynulé prechody a pripravené textúry",
+      "owner": "film",
+      "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "paths": [
+        "barbershop-30/assets/film.js",
+        "barbershop-30/assets/film-worker.js",
+        "barbershop-30/source/tools/hlbka-zjemni.py",
+        "barbershop-30/assets/img/film/cakaren-hlbka-z.webp",
+        "barbershop-30/assets/img/film/cakaren-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kava-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kava-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kreslo-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kreslo-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kreslo-stred-hlbka-z.webp",
+        "barbershop-30/assets/img/film/kreslo-stred-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/naradie-hlbka-z.webp",
+        "barbershop-30/assets/img/film/naradie-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/recepcia-hlbka-z.webp",
+        "barbershop-30/assets/img/film/recepcia-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/rohozka-hlbka-z.webp",
+        "barbershop-30/assets/img/film/rohozka-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sala-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sala-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sala-rano-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sala-rano-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/stol-hlbka-z.webp",
+        "barbershop-30/assets/img/film/stol-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sud-hlbka-z.webp",
+        "barbershop-30/assets/img/film/sud-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/vstup-hlbka-z.webp",
+        "barbershop-30/assets/img/film/vstup-m-hlbka-z.webp",
+        "barbershop-30/assets/img/film/zadna-hlbka-z.webp",
+        "barbershop-30/assets/img/film/zadna-m-hlbka-z.webp",
+        "barbershop-30/source/tools/film-regression.mjs",
+        "barbershop-30/source/tools/film-continuity.mjs"
+      ],
+      "dependsOn": [],
+      "state": "active",
+      "retries": 0,
+      "acceptance": [
+        "Nepripravený záber nevymaže posledný použiteľný obraz.",
+        "Strata kontextu bezpečne odovzdá zobrazenie zálohám.",
+        "Merania sú oddelené od vizuálneho posúdenia."
+      ],
+      "hypothesis": "",
+      "submission": null
+    },
+    {
+      "id": "admin",
+      "title": "Prehľadný admin na telefóne aj počítači",
+      "owner": "admin",
+      "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "paths": [
+        "barbershop-30/admin/"
+      ],
+      "dependsOn": [],
+      "state": "active",
+      "retries": 0,
+      "acceptance": [
+        "Zmeny sú viditeľné v návrhu pred uložením.",
+        "Uloženie kontroluje súbežnú revíziu, prístupový kľúč zostáva v pamäti.",
+        "Ceny a hodiny sa dajú upraviť na telefóne."
+      ],
+      "hypothesis": "",
+      "submission": null
+    },
+    {
+      "id": "network",
+      "title": "Spoločná pracovná sieť a mapa v tvare mozgu",
+      "owner": "network",
+      "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "paths": [
+        "tools/pracovna-siet/"
+      ],
+      "dependsOn": [],
+      "state": "active",
+      "retries": 0,
+      "acceptance": [
+        "Prekrývajúce sa súbory nemajú dvoch vlastníkov.",
+        "Hotové znamená nezávisle prijatú presnú revíziu s dôkazom.",
+        "Limity a chyby zastavia ďalšie prideľovanie."
+      ],
+      "hypothesis": "",
+      "submission": null
+    },
+    {
+      "id": "integration",
+      "title": "Integrovaná kontrola, balenie a odovzdanie",
+      "owner": "root",
+      "inputRevision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "paths": [
+        ".github/workflows/pages.yml",
+        "barbershop-30/docs/CHECKS.md",
+        "barbershop-30/README.md",
+        "barbershop-30/404.html"
+      ],
+      "dependsOn": [
+        "frontend",
+        "film",
+        "admin",
+        "network"
+      ],
+      "state": "pending",
+      "retries": 0,
+      "acceptance": [
+        "Skontrolovaný celý integrovaný výsledok.",
+        "Zachované obchodné údaje a funkčné odkazy.",
+        "Záznam uvádza vykonané aj blokované kontroly."
+      ],
+      "hypothesis": "",
+      "submission": null
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D-BASE",
+      "status": "verified",
+      "finding": "Pracovný základ je hlavná vetva c129f58, prvá dávka bola obnovená uloženou záplatou.",
+      "source": "barbershop-30/docs/plynulost/zaplaty/0001-BARBERSHOP-30-str-nka-bez-z-sekov-pri-skrole-a-prvom.patch",
+      "revision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "at": "2026-10-20T19:29:44.500256Z"
+    },
+    {
+      "id": "D-SCOPE",
+      "status": "verified",
+      "finding": "Rozhranie, film, admin a sieť majú oddelených vlastníkov. Integráciu preberá koordinátor.",
+      "source": "Zadania koordinátora v tejto pracovnej relácii",
+      "revision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "at": "2026-10-20T19:29:44.500256Z"
+    },
+    {
+      "id": "D-REVIEW",
+      "status": "verified",
+      "finding": "Prijatie vyžaduje kontrolu konkrétneho výstupu. Výsledky testov zatiaľ nie sú potvrdené.",
+      "source": "tools/pracovna-siet/README.md",
+      "revision": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+      "at": "2026-10-20T19:29:44.500256Z"
+    }
+  ],
+  "limitations": [
+    "Systém sám nespúšťa pracovníkov ani proces na pozadí.",
+    "Tvar mozgu je mapa rolí; zrýchlenie nebolo zmerané.",
+    "Vlastníctvo súborov je pravidlo koordinácie, nie zámok editora.",
+    "Náklady a úspora času sú neznáme."
+  ]
+}

@@ -65,3 +65,28 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
   prečítaný: z hesiel číta len dĺžku, nič neposiela, len verejné GET na headspa30.sk/vernost.
 - Nič nie je nasadené; odovzdanie nie je súhlas na nasadenie.
 
+
+## 21. 10. 06:55 UTC – sieť agentov hotová, toolbox na main
+
+- Sieť `wf_ef682687-713` dobehla (dispečer 0,15 s, nástenka, briefy 7 rolí, uloz-rychle.sh 1–4 s, šablóna siet-tim.js: 39 skúšok, 266 falošných agentov bez výhrady).
+- Kontrola siete našla a opravila: nefunkčnú stráž tajomstiev v uloz-rychle.sh a kopírovanie `video/.../cookies.txt` do kópie pre verejný repozitár. Overené: v histórii vetvy denníka ani na GitHube nie je žiadny súbor s cookies.
+- Moje úpravy: kopírovanie priečinka video len pri `SIET_S_VIDEOM=1`; šablóna bez cesty k session (`stav_subor` povinný pre zápis stavu, inak vypnutý).
+- Toolbox: commit da24b32 (Sieť agentov v workflowy/SKILL.md, priklady/siet-tim.js, references/siet-agentov.md), push na toolbox-premium-studio a ff na main.
+- behy.json: wf_20f36633-067 a wf_45213a73-46b = pozastavené (neobnovovať, kým nerozhodne preverenie balíka). Osirelý test kontroly D1 (pid 22513, timeout 1500 s na test) a servery 8430/8432 bežia ďalej; ich ukončenie zamietol systém povolení – pri meraní preverenia ide o súbežnú záťaž (P6), zapísať k číslam.
+- Integračný základ bude aktuálny main (da24b32): od c129f58 pribudol len toolbox, balík sa ho nedotýka.
+
+## 21. 10. 07:15 UTC – súkromný náhľad pre majiteľa
+
+- Majiteľ chcel odkaz a prehľad zmien. Živý web (https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/) D1 ešte nemá.
+- Náhľad D1 (7ea247c, git archive, bez source/docs): https://claude.ai/artifact/EkWkJCgMVeh6xrAUY1UoNb (súkromný, 366 súborov, 53 MB). Kvôli limitu 511 súborov vynechané webp/jpg tam, kde je avif (317 súborov); m4a poslané ako video/mp4.
+- Lokálna skúška kópie (port 8600, telefón 390×844 DPR3 a počítač 1440×900 DPR2, celý skrol): 0 chýbajúcich súborov, 0 chýb JS. Skripty a snímky: scratchpad/nahlad-skripty/.
+- Po integrácii overeného balíka aktualizovať ten istý náhľad (rovnaká cesta nahlad-barber/barbershop-30/index.html).
+
+## 21. 10. 07:08 UTC – spätná väzba majiteľa z iPhonu: „ľahký ako pierko, plynulý ako potôčik“
+
+- Majiteľ otvoril náhľad D1 na iPhone: fotky a videá strašne zasekané, fotky neúplné, nie je to pekné. Snímky: barber/lahky-telefon/majitel-iphone-film.png, majitel-iphone-paticka.png.
+- Viditeľné chyby zo snímok: (1) lišta na telefóne bez pozadia prekrýva obsah (D1 vypla backdrop-filter bez náhrady), (2) pod pätičkou prosvitá fotka ulice.
+- Spustený rozbor wf_3dba6aa7-877 (film, stránka, váha; bez prehliadača kvôli meraniu preverenia) → SPEC-LAHKY-TELEFON.md → skeptik.
+- Ďalej: po preverení balíka rozhodnúť základ, zmerať telefón pred (CPU 4×/6×), implementovať ľahký režim v dávkach, zmerať po, aktualizovať ten istý náhľad.
+- 07:12 UTC majiteľ: „Na začiatku je čierna obrazovka.“ Zapísané do barber/lahky-telefon/POZIADAVKY-MAJITELA.md ako kritérium prvej dávky (prvý obraz = fotka z HTML, nikdy čierna; filmový pás prvých 3 s pred a po).
+- 07:29 UTC check-in: limit neplatí; bežia wf_ca750fba-5a6 (preverenie: prehliadač, meranie) a wf_3dba6aa7-877 (rozbor hotový 3/3, beží špecifikácia); nič na obnovu; osirelý test D1 už nebeží.

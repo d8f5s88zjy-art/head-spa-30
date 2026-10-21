@@ -1,0 +1,578 @@
+{
+ "poznamka": "GitHub API podvrhnuté v prehliadači (page.route); Chromium headless, bez skutočného telefónu",
+ "scenare": {
+  "snimky-telefon": {
+   "msDoObsahu": 546,
+   "overview": {
+    "vyska": 1451,
+    "sirka": 390,
+    "polia": 1,
+    "h1": "Všetko na svojom mieste."
+   },
+   "prices": {
+    "vyska": 3204,
+    "sirka": 390,
+    "polia": 30,
+    "h1": "Cena, ktorá sedí."
+   },
+   "hours": {
+    "vyska": 1586,
+    "sirka": 390,
+    "polia": 21,
+    "h1": "Kedy máš otvorené."
+   },
+   "notice": {
+    "vyska": 899,
+    "sirka": 390,
+    "polia": 9,
+    "h1": "Niečo, čo majú vedieť."
+   },
+   "team": {
+    "vyska": 2064,
+    "sirka": 390,
+    "polia": 190,
+    "h1": "Ľudia za dobrým strihom."
+   },
+   "texts": {
+    "vyska": 7778,
+    "sirka": 390,
+    "polia": 226,
+    "h1": "Slová, ktoré znejú ako ty."
+   },
+   "nav": {
+    "vyska": 74,
+    "sirka": 354,
+    "scrollW": 684,
+    "polozky": [
+     "◫Prehľad 18..113 h42",
+     "€Služby a ceny 120..245 h42",
+     "◷Otváracie hodiny 252..394 h42",
+     "◉Oznam 401..491 h42",
+     "♧Tím 498..571 h42",
+     "AaTexty a jazyky 578..702 h42"
+    ]
+   },
+   "savebar": {
+    "top": 744,
+    "h": 100,
+    "pos": "fixed"
+   },
+   "bajty": {
+    "admin/": 4845,
+    "assets/fonts.css": 1314,
+    "admin/admin.css": 15487,
+    "admin/app.mjs": 21074,
+    "assets/fonts/Manrope-400.woff2": 16756,
+    "assets/fonts/Fraunces-800.woff2": 21612,
+    "assets/fonts/Fraunces-500.woff2": 21384,
+    "assets/fonts/Manrope-600.woff2": 16772,
+    "assets/fonts/Manrope-700.woff2": 16852,
+    "admin/model.mjs": 13469,
+    "admin/github.mjs": 4170,
+    "assets/i18n/en.json": 21349,
+    "index.html": 84639,
+    "assets/i18n/hu.json": 22591,
+    "assets/i18n/uk.json": 29008,
+    "assets/i18n/sr.json": 21471,
+    "assets/i18n/pl.json": 22348,
+    "assets/i18n/de.json": 22324,
+    "assets/i18n/cs.json": 21650,
+    "assets/img/film/sala-1086.webp": 64666,
+    "assets/img/tim-nikolas-820.png": 729305,
+    "assets/img/tim-kristian-820.png": 790285,
+    "assets/img/tim-michal-820.png": 790734,
+    "assets/img/tim-damian-820.png": 761332,
+    "assets/img/tim-andy-820.png": 733749,
+    "assets/img/tim-kevin-820.png": 734761,
+    "assets/img/tim-dominika-820.png": 710864,
+    "assets/img/tim-lajko-820.png": 898334,
+    "assets/img/tim-jojo-820.png": 818240,
+    "assets/img/tim-adrian-820.png": 769471
+   },
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   },
+   "apiVolania": 0
+  },
+  "snimky-pocitac": {
+   "msDoObsahu": 984,
+   "overview": {
+    "vyska": 1027,
+    "sirka": 1440,
+    "polia": 1,
+    "h1": "Všetko na svojom mieste."
+   },
+   "prices": {
+    "vyska": 1833,
+    "sirka": 1440,
+    "polia": 30,
+    "h1": "Cena, ktorá sedí."
+   },
+   "hours": {
+    "vyska": 1169,
+    "sirka": 1440,
+    "polia": 21,
+    "h1": "Kedy máš otvorené."
+   },
+   "notice": {
+    "vyska": 900,
+    "sirka": 1440,
+    "polia": 9,
+    "h1": "Niečo, čo majú vedieť."
+   },
+   "team": {
+    "vyska": 2676,
+    "sirka": 1440,
+    "polia": 190,
+    "h1": "Ľudia za dobrým strihom."
+   },
+   "texts": {
+    "vyska": 7901,
+    "sirka": 1440,
+    "polia": 226,
+    "h1": "Slová, ktoré znejú ako ty."
+   },
+   "bajty": {
+    "admin/": 4845,
+    "assets/fonts.css": 1314,
+    "admin/admin.css": 15487,
+    "admin/app.mjs": 21074,
+    "assets/fonts/Manrope-400.woff2": 16756,
+    "assets/fonts/Fraunces-800.woff2": 21612,
+    "assets/fonts/Manrope-600.woff2": 16772,
+    "assets/fonts/Fraunces-500.woff2": 21384,
+    "assets/fonts/Manrope-700.woff2": 16852,
+    "admin/github.mjs": 4170,
+    "admin/model.mjs": 13469,
+    "assets/i18n/en.json": 21349,
+    "assets/i18n/uk.json": 29008,
+    "assets/i18n/hu.json": 22591,
+    "assets/i18n/pl.json": 22348,
+    "assets/i18n/cs.json": 21650,
+    "assets/i18n/sr.json": 21471,
+    "assets/i18n/de.json": 22324,
+    "index.html": 84639,
+    "assets/img/film/sala-1086.webp": 64666,
+    "assets/img/tim-damian-820.png": 761332,
+    "assets/img/tim-andy-820.png": 733749,
+    "assets/img/tim-dominika-820.png": 710864,
+    "assets/img/tim-nikolas-820.png": 729305,
+    "assets/img/tim-kristian-820.png": 790285,
+    "assets/img/tim-michal-820.png": 790734,
+    "assets/img/tim-kevin-820.png": 734761,
+    "assets/img/tim-adrian-820.png": 769471,
+    "assets/img/tim-jojo-820.png": 818240,
+    "assets/img/tim-lajko-820.png": 898334
+   },
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   },
+   "apiVolania": 0
+  },
+  "ulozenie": {
+   "pred": {
+    "cenaPred": "18",
+    "sobotaPred": "14:00"
+   },
+   "kontrolaPredPripojenim": {
+    "intro": "3 zmien · po uložení sa pripraví zverejnenie webu.",
+    "rows": [
+     "Pánsky strih TERAZ 18 € · 40 min PO ULOŽENÍ 19 € · 40 min",
+     "Otváracie hodiny TERAZ Pondelok: 09:00–19:00 Utorok: 09:00–19:00 Streda: 09:00–19:00 Štvrtok: 09:00–19:00 Piatok: 09:00–19:00 Sobota: 09:00–14:00 Nedeľa: zatvorené PO ULOŽENÍ Pondelok: 09:00–19:00 Utorok: 09:00–19:00 Str",
+     "Viditeľnosť oznamu TERAZ Vypnutý PO ULOŽENÍ Zapnutý",
+     "Oznam · Slovenčina TERAZ — PO ULOŽENÍ 24. 12. máme zatvorené. Pekné sviatky!"
+    ],
+    "error": "",
+    "publish": "Pripojiť ukladanie",
+    "priceConfirm": true
+   },
+   "poKlikuUlozitBezKluca": {
+    "connectOpen": true
+   },
+   "kontrolaPoPripojeni": {
+    "reviewOpen": true,
+    "intro": "3 zmien · po uložení sa pripraví zverejnenie webu.",
+    "rows": 4,
+    "publish": "Uložiť na web",
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole."
+   },
+   "bezPotvrdeniaCien": {
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole.",
+    "publishError": "Potvrď zosúladenie cien a trvania s rezervačným systémom.",
+    "count": "3 pripravené zmeny",
+    "conn": "Pripojené · main",
+    "reviewOpen": true
+   },
+   "vysledok": {
+    "message": "Zmeny sú uložené. Web sa aktualizuje po dokončení nasadenia. Skontroluj ho cez „Otvoriť web“.",
+    "publishError": "",
+    "count": "Všetko je bez zmien",
+    "conn": "Pripojené · main",
+    "reviewOpen": false
+   },
+   "volania": [
+    "GET /git/ref/heads/main v=2026-03-10 auth",
+    "GET /contents/barbershop-30/index.html?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/en.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/uk.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/hu.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/sr.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/pl.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/de.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /contents/barbershop-30/assets/i18n/cs.json?ref=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "GET /git/ref/heads/main v=2026-03-10 auth",
+    "GET /git/commits/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa v=2026-03-10 auth",
+    "POST /git/trees v=2026-03-10 auth",
+    "POST /git/commits v=2026-03-10 auth",
+    "GET /git/ref/heads/main v=2026-03-10 auth",
+    "PATCH /git/refs/heads/main v=2026-03-10 auth"
+   ],
+   "blobs": 0,
+   "tree": {
+    "base_tree": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "subory": [
+     "barbershop-30/index.html"
+    ]
+   },
+   "commit": {
+    "message": "Barbershop 30: úprava obsahu cez administráciu",
+    "tree": "dddddddddddddddddddddddddddddddddddddddd",
+    "parents": [
+     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ]
+   },
+   "patch": {
+    "sha": "cccccccccccccccccccccccccccccccccccccccc",
+    "force": false
+   },
+   "diffs": {
+    "barbershop-30/index.html": {
+     "riadkyPlus": 252,
+     "riadkyMinus": 59,
+     "obsahujeRawURL": true,
+     "obsahujePubURL": false,
+     "mode": "100644",
+     "type": "blob"
+    }
+   },
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   }
+  },
+  "web-po-ulozeni-telefon": {
+   "oznam": {
+    "text": "24. 12. máme zatvorené. Pekné sviatky!",
+    "hidden": false,
+    "sel": "shop-notice"
+   },
+   "cena": "19 €",
+   "hodinyKontakt": [
+    "Mostná 30, 949 01 Nitra",
+    "0951 267 203",
+    "info@barbershop30.sk",
+    "Po–Pi 9:00–19:00So 9:00–13:00Ne zatvorené",
+    "9:00–19:00",
+    "9:00–13:00",
+    "zatvorené"
+   ],
+   "flap": "DnesPo–Pi 9:00–19:00, So 9:00–13:00, Ne zatvorené",
+   "pageerror": []
+  },
+  "web-po-ulozeni-pocitac": {
+   "oznam": {
+    "text": "24. 12. máme zatvorené. Pekné sviatky!",
+    "hidden": false,
+    "sel": "shop-notice"
+   },
+   "cena": "19 €",
+   "hodinyKontakt": [
+    "Mostná 30, 949 01 Nitra",
+    "0951 267 203",
+    "info@barbershop30.sk",
+    "Po–Pi 9:00–19:00So 9:00–13:00Ne zatvorené",
+    "9:00–19:00",
+    "9:00–13:00",
+    "zatvorené"
+   ],
+   "flap": "DnesPo–Pi 9:00–19:00, So 9:00–13:00, Ne zatvorené",
+   "pageerror": []
+  },
+  "konflikt-pred": {
+   "stav": {
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole.",
+    "publishError": "Web sa medzičasom zmenil. Stiahni koncept a načítaj aktuálnu verziu. Nič sme neprepísali.",
+    "count": "3 pripravené zmeny",
+    "conn": "Náhľad",
+    "reviewOpen": true
+   },
+   "patch": false,
+   "zapisy": [],
+   "poZmeneZostalKoncept": "3 pripravené zmeny",
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   }
+  },
+  "konflikt-pocas": {
+   "stav": {
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole.",
+    "publishError": "Web sa medzičasom zmenil. Stiahni koncept a načítaj aktuálnu verziu. Nič sme neprepísali.",
+    "count": "3 pripravené zmeny",
+    "conn": "Náhľad",
+    "reviewOpen": true
+   },
+   "patch": false,
+   "zapisy": [
+    "POST /git/trees",
+    "POST /git/commits"
+   ],
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   }
+  },
+  "chyba-siete-trees": {
+   "stav": {
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole.",
+    "publishError": "Spojenie sa prerušilo. Koncept zostal v tomto okne.",
+    "count": "3 pripravené zmeny",
+    "conn": "Pripojené · main",
+    "reviewOpen": true
+   },
+   "druhyPokus": {
+    "message": "Zmeny sú uložené. Web sa aktualizuje po dokončení nasadenia. Skontroluj ho cez „Otvoriť web“.",
+    "publishError": "",
+    "count": "Všetko je bez zmien",
+    "conn": "Pripojené · main",
+    "reviewOpen": false
+   },
+   "patch": 1,
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Failed to load resource: net::ERR_FAILED",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   }
+  },
+  "patch-stratena-odpoved": {
+   "stav": {
+    "message": "Ukladanie je pripojené. Zmeny uložíš až po kontrole.",
+    "publishError": "GitHub mohol zmenu uložiť, ale odpoveď sa stratila. Stiahni koncept a znovu načítaj web, aby si overil výsledok.",
+    "count": "3 pripravené zmeny",
+    "conn": "Náhľad",
+    "reviewOpen": true
+   },
+   "patchPokusov": 1,
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Failed to load resource: net::ERR_FAILED"
+    ]
+   }
+  },
+  "pripojenie-chyby": {
+   "e401": {
+    "err": "Kľúč neplatí alebo vypršal. Pripoj ukladanie novým kľúčom.",
+    "open": true,
+    "token": ""
+   },
+   "siet": {
+    "err": "Spojenie sa prerušilo. Koncept zostal v tomto okne."
+   },
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+     "error: Failed to load resource: net::ERR_FAILED"
+    ]
+   }
+  },
+  "telefon-kontrola": {
+   "r": {
+    "intro": "3 zmien · po uložení sa pripraví zverejnenie webu.",
+    "rows": [
+     "Pánsky strih TERAZ 18 € · 40 min PO ULOŽENÍ 19 € · 40 min",
+     "Otváracie hodiny TERAZ Pondelok: 09:00–19:00 Utorok: 09:00–19:00 Streda: 09:00–19:00 Štvrtok: 09:00–19:00 Piatok: 09:00–19:00 Sobota: 09:00–14:00 Nedeľa: zatvorené PO ULOŽENÍ Pondelok: 09:00–19:00 Utorok: 09:00–19:00 Str",
+     "Viditeľnosť oznamu TERAZ Vypnutý PO ULOŽENÍ Zapnutý",
+     "Oznam · Slovenčina TERAZ — PO ULOŽENÍ 24. 12. máme zatvorené. Pekné sviatky!"
+    ],
+    "error": "",
+    "publish": "Pripojiť ukladanie",
+    "priceConfirm": true
+   },
+   "log": {
+    "pageerror": [],
+    "console": [
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP",
+     "error: Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self'\". Either the 'unsafe-inline' keyword, a hash ('sha256-2WZ93LMpuuMc7jw8/P5hzEXoSGUiP"
+    ]
+   }
+  }
+ }
+}
