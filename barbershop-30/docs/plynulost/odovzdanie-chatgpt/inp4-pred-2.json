@@ -1,0 +1,93 @@
+{
+ "meno": "inp4-pred-2",
+ "film": "off",
+ "filmStav": {
+  "on": false
+ },
+ "cpu": 4,
+ "y": 2700,
+ "zataz": [
+  "1.42",
+  "2.60",
+  "5.06"
+ ],
+ "kroky": {
+  "menuOtvor": {
+   "inpMs": 96,
+   "udalosti": [
+    "pointerdown:32(spracovanie 7)",
+    "pointerup:32(spracovanie 0)",
+    "click:96(spracovanie 4)"
+   ],
+   "obsluhaVlaknoMs": {
+    "pointerdown": {
+     "spolu": 6.5,
+     "vynuteneStylLayout": 0
+    },
+    "click": {
+     "spolu": 4.2,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  },
+  "jazykEN": {
+   "inpMs": 32,
+   "udalosti": [
+    "click:32(spracovanie 7)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 6.8,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 4.6,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     141,
+     141
+    ]
+   ]
+  },
+  "jazykSK": {
+   "inpMs": 96,
+   "udalosti": [
+    "click:96(spracovanie 6)"
+   ],
+   "obsluhaVlaknoMs": {
+    "click": {
+     "spolu": 5.7,
+     "vynuteneStylLayout": 0
+    },
+    "langchange": {
+     "spolu": 4.3,
+     "vynuteneStylLayout": 0
+    }
+   },
+   "dlheUlohyDo1_5s_stenaVlakno": [
+    [
+     70,
+     70
+    ],
+    [
+     141,
+     140
+    ]
+   ]
+  },
+  "menuZavri": {
+   "inpMs": 72,
+   "udalosti": [
+    "pointerdown:16(spracovanie 0)",
+    "pointerup:16(spracovanie 0)",
+    "click:72(spracovanie 1)"
+   ],
+   "obsluhaVlaknoMs": {},
+   "dlheUlohyDo1_5s_stenaVlakno": []
+  }
+ }
+}

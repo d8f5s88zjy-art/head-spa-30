@@ -1,0 +1,10 @@
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto(`http://127.0.0.1:${process.argv[2]}/barbershop-30/?film=off`, { waitUntil: 'load' });
+await p.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, 1200); });
+await p.waitForFunction(() => document.querySelector('.site-header').classList.contains('is-scrolled'));
+await p.waitForTimeout(800);
+console.log(JSON.stringify(await p.evaluate(() => { const h = document.querySelector('.site-header'), f = document.querySelector('.site-footer');
+  return { bg: getComputedStyle(h).backgroundColor, bf: getComputedStyle(h).backdropFilter, pred: getComputedStyle(h, '::before').opacity, tienPaticky: getComputedStyle(f).boxShadow, padPaticky: getComputedStyle(f).paddingBottom, body: getComputedStyle(document.body).paddingBottom }; })));
+await b.close();

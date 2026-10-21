@@ -1,0 +1,62 @@
+{
+ "meno": "nac-po-1",
+ "film": "off",
+ "cpu": 4,
+ "zataz": [
+  "1.40",
+  "2.47",
+  "4.94"
+ ],
+ "fcpMs": 708,
+ "lcp": [
+  {
+   "t": 708,
+   "el": "SPAN.w"
+  }
+ ],
+ "filmStav": {
+  "on": false
+ },
+ "cls": "karty world-off js-kin js-steps",
+ "dlhychUloh": 5,
+ "tbtPoFcpStenaMs": 130,
+ "tbtPoFcpVlaknoMs": 112,
+ "najdlhsie": [
+  {
+   "odNavMs": 724,
+   "stenaMs": 140,
+   "vlaknoMs": 129,
+   "stylLayoutMs": 94,
+   "povodca": "v8.evaluateModule (133 ms)"
+  },
+  {
+   "odNavMs": 870,
+   "stenaMs": 74,
+   "vlaknoMs": 72,
+   "stylLayoutMs": 40,
+   "povodca": "FireAnimationFrame (2 ms)"
+  },
+  {
+   "odNavMs": 1441,
+   "stenaMs": 65,
+   "vlaknoMs": 61,
+   "stylLayoutMs": 0,
+   "povodca": "FunctionCall app.js:437 (65 ms)"
+  },
+  {
+   "odNavMs": 657,
+   "stenaMs": 64,
+   "vlaknoMs": 60,
+   "stylLayoutMs": 50,
+   "povodca": "EventDispatch (0 ms)"
+  },
+  {
+   "odNavMs": 1033,
+   "stenaMs": 51,
+   "vlaknoMs": 47,
+   "stylLayoutMs": 36,
+   "povodca": "FunctionCall app.js:443 scheduleMeasure (0 ms)"
+  }
+ ],
+ "appJsModul": []
+}

@@ -98,3 +98,12 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - Pracovný strom: scratchpad/hs-lahky, vetva barbershop-lahky-telefon z 7ea247c (D1), len lokálne.
 - 07:50 UTC: spustená stavba ľahkého telefónu wf_07e3c3f8-c74 (A: L1+L2+L3, B: L5+L6; kontrola, meranie, opravy, skeptik). L4 (menšie fotky) a L7 (film na počítači) mimo – L4 len so súhlasom majiteľa.
 - 08:21 UTC check-in: limit neplatí, disk 3,6 GB voľných; bežia wf_ca750fba-5a6 (preverenie: prehliadač, meranie) a wf_07e3c3f8-c74 (stavba A); commity v hs-lahky: 1; nič na obnovu.
+
+## 21. 10. 08:45 UTC – majiteľ: „každú zmenu mi pošli, ako reálne vyzerá na webe“
+
+- Nástroj ukazky/skripty/ukaz.sh <commit> "<názov>": git archive commitu → server 8671, PRED = hs-pred-d1 (D1) na 8670; simulovaný iPhone 390×844 DPR3 dotyk, WebGL cez SwiftShader s hlásením „Apple GPU“ (film beží ako na skutočnom iPhone); pohľady úvod 0,8/3/6 s, karta, lišta nad textom, koniec stránky; porovnania PRED|PO v ukazky/<commit>/porovnanie/*.jpg.
+- Zmena 1 (0f6ffa3, lišta a koniec stránky) poslaná majiteľovi: 5-koniec-stranky.jpg (PRED: text pod lištou a fotka ulice pod pätičkou, PO: plná lišta, koniec pätičkou; pod_patickou 80 → 0 px).
+- Pohľady karty a lišty pri filme sa líšia podľa načasovania filmu (PRED: rozmazaný prechod) – pri zmenách filmu posielať len pohľady, ktoré zmena mení; od L2 (lite) sú stabilné.
+- Monitor b17vyvwhk sleduje nové commity v hs-lahky (30 min, obnovovať); pri každom commite: ukaz.sh a poslať majiteľovi. Náhľad (artefakt) aktualizovať až po prejdení kontrol celej dávky (medzistav L2 bez L3 by bol horší – V4).
+- 08:55 UTC: zmeny 2+3 (5902aa5 lite, f1f9c4d dekódovanie) nasnímané a poslané majiteľovi (úvod, karta, lišta). Pozor: v lite je prvá fotka rohožka (ako bez prológu), nie fasáda – opýtané majiteľa. Ďalej čakám L5 a L6 (stavba B).
+- 09:14 UTC záložná kontrola 3 (trig_01PgXxwfjCHx1jVQ6deEaFTF): cron 23e67415 beží; wf_20f36633-067 a wf_45213a73-46b zámerne NEOBNOVENÉ (pozastavené, nahradené balíkom a ľahkým telefónom), wf_ef682687-713 hotový.
