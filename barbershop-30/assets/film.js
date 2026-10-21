@@ -799,9 +799,9 @@
      nt/sx,sy/bx,by švih (vzorky, posun a rozmazanie vodorovne a zvislo), za/kz najazd (zoom, rozmazanie),
      pe/pw/pd/pf/bow popredie (presah, šírka neostrej hrany, tieň, neostrosť a vypuklosť predmetu), lat/yaw/nz/walk pohyb kamery */
   const CK = phone
-    ? { dip: 0.02, vs: 0.1, mbx: 0.07, mby: 0.035, mz: 0.08, nt: 6, sx: 0.24, sy: 0.12, bx: 0.24, by: 0.12, za: 0.3, kz: 0.13, pe: 0.3, pw: 0.085, pd: 0.35, pf: 3.5, bow: 0.1,
+    ? { dip: 0.02, vs: 0.1, mbx: 0.07, mby: 0.035, mz: 0.08, nt: 6, sx: 0.24, sy: 0.12, bx: 0.24, by: 0.12, za: 0.3, kz: 0.13, pe: 0.3, pw: 0.085, pd: 0.15, pf: 3.5, bow: 0.1,
       lat: [0, 0.07, 0.07, 0, 0.08], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.34, walk: 0.2, walkB: 0.1, amp: 0.12 }
-    : { dip: 0.03, vs: 0.16, mbx: 0.05, mby: 0.06, mz: 0.08, nt: 8, sx: 0.16, sy: 0.2, bx: 0.11, by: 0.15, za: 0.35, kz: 0.15, pe: 0.25, pw: 0.05, pd: 0.35, pf: 4.0, bow: 0.08,
+    : { dip: 0.03, vs: 0.16, mbx: 0.05, mby: 0.06, mz: 0.08, nt: 8, sx: 0.16, sy: 0.2, bx: 0.11, by: 0.15, za: 0.35, kz: 0.15, pe: 0.25, pw: 0.05, pd: 0.15, pf: 4.0, bow: 0.08,
       lat: [0, 0.1, 0.08, 0, 0.1], yaw: [0, 0.3, 0.6, 0, 0.3], nz: 0.4, walk: 0.24, walkB: 0.12, amp: 0.16 };
   const F = (v) => v.toFixed(4);
   const post = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({

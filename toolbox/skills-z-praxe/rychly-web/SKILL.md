@@ -222,6 +222,7 @@ Zoznam overených a ešte nenasadených nápadov, zamietnuté návrhy s dôvodmi
 | Svetlo („aurora“ z 21st.dev, video V9) cez `background-position`: 428 až 1 049 ms hlavného vlákna, 153 až 180 prepočtov štýlu a 308 až 360 prekreslení za 3 s (telefón, CPU 4×) | hýbať vrstvou cez `transform`: 9 až 28 ms, 0 prekreslení; mimo obrazovky `is-off` (`references/pohyb-bez-kniznice.md`, 10/2026) |
 | Knižnica pohybu z CDN s `@latest` (dokumentácia Motion ho ukazuje) | nič z CDN; ak treba, pripnutá verzia v repozitári s licenciou, načítaná po prvom obraze |
 | Odhalenie pri skrole skryje aj nadpis úvodu, kým nepríde skript | `data-pohyb` len pod prvou obrazovkou; skrývať len v `@media (scripting: enabled)` so zálohou 3 s v CSS, bez inline skriptu v `<head>` (vzor `assets/pohyb/`) |
+| Odhalenie fotky maskou (`clip-path: inset(100% 0 0 0)`): IntersectionObserver v Chrome prvok s plne orezanou maskou nehlási ako viditeľný, efekt sa nikdy nespustil a portréty ostali prázdne | sledovať rodiča a triedu `is-in` dať prvku s maskou; maska končí `inset(-6px)`, aby neorezala rámik fokusu (BARBERSHOP 30, `app.js` časť 8b, 10/2026) |
 | „Copy prompt“ komponentu z 21st.dev vloží do Claude Code 710 riadkov React a Tailwind kódu (video V9) | komponent prečítať, zapísať čo sa hýbe, prepísať po svojom; licenciu komponentu over (MIT, „unknown“, „All Rights Reserved“) |
 
 ## V tomto repozitári

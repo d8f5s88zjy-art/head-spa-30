@@ -151,3 +151,12 @@ Mená sú skrátené na meno a iniciálu priezviska. Na webe sú v `assets/recen
 
 Nepoužité zámerne: recenzie, ktoré zhadzujú iné podniky, a texty s menom tretej osoby celým priezviskom.
 Hodnotenie na Google ostáva aj ako odkaz (teraz priamo na profil, nie na vyhľadávanie).
+
+## Úvod: hodnotenie a cena (2026‑10‑21)
+
+- „5,0 na Google · 945 recenzií“ v úvode: profil Barbershop30 Nitra na Google Maps, overené priamo na zdroji 13. 10. 2026
+  (časť Recenzie vyššie); odkaz vedie na profil. Počet recenzií rastie, pri ďalšej kontrole ho aktualizuj
+  (index.html, `.hero-proof`, a kľúč v `assets/i18n/*.json`). Do štruktúrovaných údajov (JSON‑LD) sa nepíše.
+- „Pánsky strih 18 €“: cenník rezervačného systému (časť Služby a ceny).
+- „…v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme“: hodiny recepcie z webu, veta je ubezpečenie zadávateľa
+  (2026‑10‑21); nesľubuje telefón mimo týchto hodín.

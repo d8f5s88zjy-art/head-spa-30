@@ -433,6 +433,30 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
+   8b. Filmové strihy (P14 v style.css): pás nastúpi linkou ako nový záber, fotky tímu a galérie sa odhalia
+   maskou zdola. Len pri povolenom pohybe; trieda js-odhal skryje prvky až tu, takže bez skriptu alebo pri
+   chybe ostáva všetko vidieť. Fotky v jednom rade nastupujú po sebe (--i).
+   ---------------------------------------------------------------------------- */
+(function strihy() {
+  const nodes = $$('.odhal, .band');
+  if (!nodes.length || motionOff || !('IntersectionObserver' in window)) return;
+  $$('.odhal').forEach((el) => {
+    const row = el.closest('ul');
+    const i = row ? $$('.odhal', row).indexOf(el) : 0;
+    el.style.setProperty('--i', String(i % 4));
+  });
+  html.classList.add('js-odhal');
+  // prvok zakrytý maskou (clip-path) prehliadač neráta ako viditeľný, preto sa sleduje jeho rodič
+  const ciel = new Map(nodes.map((el) => [el.classList.contains('odhal') ? el.parentElement : el, el]));
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (en.isIntersecting) { ciel.get(en.target).classList.add('is-in'); io.unobserve(en.target); }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  ciel.forEach((_, sledovany) => io.observe(sledovany));
+})();
+
+/* ----------------------------------------------------------------------------
    9. Menu (mobil)
    ---------------------------------------------------------------------------- */
 let bodyOverflowBefore = '';

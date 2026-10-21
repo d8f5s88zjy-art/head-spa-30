@@ -8,4 +8,6 @@ return [
   'za_10_min' => 15,               // otázok od jedného návštevníka za 10 minút
   'za_den' => 60,                  // otázok od jedného návštevníka za deň
   'spolu_za_den' => 1500,          // otázok za deň na celom webe (strop nákladov)
+  // voľné termíny z rezervačného systému (lib/kalendar.php); len so súhlasom prevádzky, inak asistent povie, že overiť nevie
+  'kalendar' => ['url' => 'https://www.barbershop30.sk/rezervacia'],
 ];

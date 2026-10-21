@@ -44,6 +44,13 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   po kúskoch. Zapne ho nasadenie atribútom `data-asistent` na `<html>` (len s kľúčom API a FTP), modul sa načíta
   až po prvom geste. `?asistent=off` ho vypne. Podrobne `../asistent/README.md`; test `source/tools/asistent-test.mjs`.
 
+- **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
+  s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí
+  čo (strih, brada, holenie), prečo (5,0 na Google, 945 recenzií; pánsky strih 18 €) a ako (Objednať sa, Zavolať
+  a potvrdiť termín). Pásy vychádzajú spod záberu mäkko (stmievačka namiesto ostrej hrany, menšie odsadenia na telefóne).
+  Filmový pohyb (P14 v `style.css`, `app.js` časť 8b): linka strihu pri nástupe pásu, odhalenie fotiek tímu a galérie
+  maskou, odozva tlačidiel; pri obmedzení pohybu a bez skriptu nič neskrýva.
+
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
@@ -60,6 +67,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 - `stills.py` – z `assets/img/film/film.json` prepíše zálohy a kotvy záberov v `index.html`.
 - `build_images.py` – fotky galérie, tímu a videopostery (`assets/img/manifest.json`).
 - `i18n-test.mjs` – jazykové verzie: každý jazyk bez nepreložených textov, tabuľa hodín, Booqme, prepínač na počítači aj v menu telefónu, návrat do slovenčiny.
+- `nahlad.mjs` – náhľad na kontrolu (úvod, pás tímu, cenník, galéria, rezervácia na 360/390/430 px, tablete a počítači), odkazy tel: a Objednať sa, obmedzený pohyb, bez skriptu;
+  `mobil-audit.mjs` – snímky celej stránky po krokoch skrolu s pretekaním, pevnými prvkami a podielom tmy;
 - `tma-test.mjs` – film nikdy neukáže čierne plátno (pomalá sieť, rýchly skrol a skoky cez menu);
   `asistent-test.mjs` – okno asistenta so serverom a falošným API.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;

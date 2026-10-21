@@ -51,6 +51,7 @@ jobs:
         if: env.FTP_SERVER != ''
         env:
           KLUC: ${{ secrets.ANTHROPIC_API_KEY }}
+          KALENDAR_URL: ${{ vars.ASISTENT_KALENDAR_URL }}
         run: |
           composer install -d _ftp/asistent --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
           # na hosting len kód knižnice (bez testov, príkladov a histórie gitu)

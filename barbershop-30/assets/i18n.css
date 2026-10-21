@@ -48,6 +48,13 @@ html[data-motion="off"] .lang-offer { transition: none; }
 @media (max-width: 900px) {
   .lang-offer { bottom: calc(var(--cta-h) + 28px + env(safe-area-inset-bottom)); }
 }
+/* úzky telefón: ponuka cez celú šírku nad spodnou lištou, text na dva riadky (nie štyri cez obsah) */
+@media (max-width: 560px) {
+  .lang-offer { left: var(--gutter); right: var(--gutter); max-width: none; border-radius: 14px; padding: 8px 6px 8px 14px; font-size: 0.875rem; line-height: 1.3; transform: translateY(140%); }
+  .lang-offer.in { transform: none; }
+  .lang-offer span { flex: 1; min-width: 0; }
+  .lang-offer [data-yes] { flex: none; }
+}
 /* telefón: jazyky ako rad skratiek na začiatku rozbaľovacieho menu */
 .lang.lang-v-menu { margin: 0 0 var(--s2); width: 100%; }
 .lang-v-menu .lang-menu {

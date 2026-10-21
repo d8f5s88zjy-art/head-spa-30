@@ -312,3 +312,29 @@ lišty a dosiek na počítači (rozhoduje majiteľ).
   na serveri, kontrola vstupu, pôvod, limit, chyba, odmietnutie); `asistent-test.mjs` všetko OK (bez zapnutia
   žiadna požiadavka, tlačidlo neprekrýva Zavolať a Rezervovať, odpoveď po kúskoch, odkazy, Esc, rozhovor po
   obnovení, chyba servera, angličtina, telefón bez pretekania). Naživo čaká na kľúč API a FTP v tajomstvách.
+
+## 15. Telefón, objednávka, filmový pohyb a AI asistent s voľnými termínmi (2026‑10‑21)
+
+Všetko v emulácii prehliadača (Playwright, Chromium bez grafickej karty), nie na fyzickom telefóne.
+
+- Príčiny tmavých plôch na telefóne (`mobil-audit.mjs`, 360/390/430 px, pokojná verzia aj film): ostré rozhranie
+  záber/pás s plochým tmavým odsadením (64 px + nadpisy), jazyková ponuka zalomená do 4 riadkov cez obsah, videá zo
+  zdroja 576 px (rozmazané po zväčšení, 60 fps slučka tímu dopočítaná interpoláciou z 30 fps). Opravené: stmievačka
+  namiesto hrany, menšie odsadenia, ponuka na dva riadky nad spodnou lištou, na telefóne ostré výrezy fotiek bez videa.
+- Úvod: čo, prečo, ako na prvej obrazovke (360 až 1440 px), Objednať sa a Zavolať a potvrdiť termín celé a aspoň 44 px.
+  Spodná lišta Zavolať + Objednať sa, asistent vľavo, bez prekryvu.
+- Filmový pohyb: linka strihu pri nástupe pásu, odhalenie fotiek maskou (IntersectionObserver sleduje rodiča, maska
+  sama prvok skryje pred pozorovateľom), odozva tlačidiel; obmedzený pohyb a bez skriptu nič neskryté (`nahlad.mjs`).
+- HTML gzip 14 369 → 14 251 B (prvé okno TCP), style.css gzip 18 051 → 19 102 B.
+- AI asistent: `asistent/testy/spusti.sh` 28 + 17 OK (nástroj na voľné termíny: overené, žiadny voľný, zatvorené,
+  mimo rozsahu, minulosť, neznámy barber, bez napojenia, výpadok 500, časový limit, súkromie, vyrovnávacia pamäť,
+  podpis premýšľania späť nezmenený, udalosť tel); `asistent-test.mjs` v prehliadači (karta časov, Zavolať a potvrdiť
+  termín pri každej odpovedi o termíne a pri chybe, označenie AI). Skutočné API Anthropic ani živý rezervačný systém
+  netestované (kľúč a súhlas chýbajú).
+- Lighthouse 12.8.2, server s gzipom, stará (HEAD) a nová verzia striedavo, telefón 5 behov, počítač 1 (pokojná verzia,
+  laboratórny prehliadač bez grafickej karty): telefón stará 69/94/95/93/95 (medián 94, LCP 2,86 s), nová 96/97/86/93/95
+  (medián 95, LCP 2,72 s); počítač 99 → 99; prístupnosť, postupy, SEO 100; CLS 0.
+- `nahlad.mjs`: 360/390/430/768/1440 px bez pretekania, 5 odkazov tel: na +421951267203, všetky Objednať sa do
+  rezervačného systému, obe tlačidlá úvodu celé na prvej obrazovke; obmedzený pohyb a bez skriptu nič skryté.
+- app-smoke, i18n-test, tma-test, asistent-test: všetko OK. koliesko-test pri súbežnom teste zlyhal (časovanie pod
+  záťažou), samostatne OK.

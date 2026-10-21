@@ -1,17 +1,19 @@
-# Asistent na otázky (Barbershop 30)
+# AI asistent (Barbershop 30)
 
-Okno „Opýtaj sa nás“ na webe Barbershop 30: návštevník napíše otázku a odpoveď sa píše hneď, po kúskoch.
-Odpovedá model Claude Opus 5.5 (oficiálna PHP knižnica Anthropic) len z overených údajov webu.
+Okno „AI asistent“ na webe Barbershop 30 (zreteľne označené ako AI): návštevník napíše otázku a odpoveď sa píše hneď,
+po kúskoch. Odpovedá model Claude Opus 5.5 (oficiálna PHP knižnica Anthropic) len z overených údajov webu, voľné termíny
+overuje v rezervačnom kalendári (keď je napojenie povolené) a pri každej odpovedi o termíne ukáže Zavolať a potvrdiť termín.
 
 | Časť | Kde |
 | --- | --- |
 | Okno na webe (8 jazykov, odkazy v odpovedi, rozhovor v karte prehliadača) | `barbershop-30/assets/asistent.js`, `asistent.css` |
 | Zapnutie na webe (atribút `data-asistent` na `<html>`) | `barbershop-30/assets/app.js` časť 7b3, `.github/workflows/pages.yml` |
-| Server: prúd odpovede, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
+| Server: prúd odpovede, nástroj na termíny, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
+| Voľné termíny z rezervačného systému (len čítanie voľných časov) | `lib/kalendar.php` |
 | Čo asistent vie (jediný zdroj faktov) | `znalosti/barbershop.md` |
 | Ochrana údajov (odkaz z okna) | `ochrana-udajov.html` |
 | Nasadenie na hosting (knižnica, `config.php` z tajomstva) | `.github/workflows/ftp.yml`, `tools/ftp-balik.sh`, `tools/asistent-config.php` |
-| Testy | `testy/spusti.sh` (server proti falošnému API), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači) |
+| Testy | `testy/spusti.sh` (server proti falošnému API a falošnému rezervačnému systému, 28 + 17 kontrol), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači) |
 
 ## Zapnutie
 
@@ -32,8 +34,24 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
   modelom pomôže záložný model (`fallbacks: "default"`).
 - Limity: 15 otázok za 10 minút a 60 za deň od jedného návštevníka (IP len ako odtlačok so soľou, po 24 h preč),
   1 500 otázok za deň spolu (strop nákladov). Rozhovory sa na serveri neukladajú.
-- Asistent nerezervuje a nevidí voľné termíny; posiela odkaz na rezervačný systém a telefón recepcie.
-- Na otázku, či je človek, odpovie pravdivo, že je automatický virtuálny asistent.
+- Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
+- Na otázku, kto odpovedá, povie pravdivo, že je AI asistent, nie človek.
+
+## Voľné termíny (rezervačný kalendár)
+
+- Model má nástroj `over_volne_terminy` (barber, deň YYYY-MM-DD, služba). Server ho vykoná v `lib/kalendar.php`: to isté,
+  čo vidí návštevník vo formulári na https://www.barbershop30.sk/rezervacia (zoznam barberov, pravidlá kalendára, voľné
+  začiatky pre službu a barbera). Objednávku nikdy neodosiela; z odpovede berie len časy HH:MM.
+- Stavy: `overene` (časy, čas overenia), `ziadny_volny`, `zatvorene` (nedeľa, sviatok), `mimo_rozsahu` (rezervácia
+  ide mesiac dopredu), `minulost`, `neznamy_barber`, `nepripojene` (napojenie nie je zapnuté), `chyba` (výpadok, časový
+  limit 6 s, zastarané údaje). Časy platia 2 minúty, potom sa overia znova. Časové pásmo Europe/Bratislava.
+- Okno ukáže overené časy na karte priamo z výsledku kalendára (nie z textu modelu) s poznámkou „Predbežné, kým termín
+  nepotvrdíš“ a pod ňou Zavolať a potvrdiť termín. Pri každej otázke alebo odpovedi o termíne pošle server udalosť
+  `tel` a okno ukáže tlačidlá aj bez karty.
+- **Zapnutie len so súhlasom prevádzky** (rezervačný systém spravuje Barbershop 30): v GitHube premenná repozitára
+  `ASISTENT_KALENDAR_URL` = `https://www.barbershop30.sk/rezervacia` (Settings → Secrets and variables → Actions →
+  Variables). Bez nej asistent na otázku o termíne povie, že dostupnosť teraz overiť nevie, a ponúkne telefón.
+  Napojenie je overené len proti falošnému systému v testoch, nie proti živému (pozri CHECKS).
 
 ## Keď sa zmení cenník, hodiny alebo tím
 

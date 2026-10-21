@@ -46,9 +46,9 @@ Doplnky
 
 ## Tím
 Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si zákazník vyberie v rezervácii.
-Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrian. Barberka: Dominika.
+Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián (v rezervačnom systéme Adrian). Barberka: Dominika.
 O jednotlivých barberoch (roky praxe, špecializácie) web nič neuvádza.
 
 ## Čo asistent nevie (odkáž na recepciu)
-Voľné termíny, platobné možnosti, parkovanie, darčekové poukazy, zľavy a akcie, predaj produktov, presná
+Voľné termíny (len cez nástroj over_volne_terminy, keď je kalendár pripojený), platobné možnosti, parkovanie, darčekové poukazy, zľavy a akcie, predaj produktov, presná
 dostupnosť konkrétneho barbera, ceny farbenia, melíru a trvalej, či vezmú bez rezervácie.

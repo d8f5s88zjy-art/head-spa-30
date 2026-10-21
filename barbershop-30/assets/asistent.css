@@ -60,6 +60,8 @@ html.pro:not(.world-off) .asi-btn:not(:focus-visible), html.outside .asi-btn, bo
 @media (max-width: 640px) {
   .asi-btn { padding: 0; width: 46px; justify-content: center; }
   .asi-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .asi-btn svg { display: none; }
+  .asi-btn::after { content: attr(data-kratko); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--lamp-2); }
   .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(78vh, calc(100dvh - var(--nav-h) - 8px)); border-radius: 16px 16px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
   .asi-hlava, .asi-zoz, .asi-form, .asi-pata { padding-left: var(--s4); }
 }
@@ -67,3 +69,21 @@ html.pro:not(.world-off) .asi-btn:not(:focus-visible), html.outside .asi-btn, bo
   .asi-btn, .asi-panel { transition: none; animation: none; }
   .asi-pise::after { animation: none; }
 }
+
+/* hlavička: zavolať a zavrieť; karta overených časov a tlačidlá pod odpoveďou o termíne */
+.asi-hlava-akcie { display: flex; gap: var(--s2); }
+.asi-volaj { color: var(--lamp-2); text-decoration: none; }
+.asi-kal { align-self: flex-start; max-width: 88%; margin-top: calc(-1 * var(--s1)); padding: 10px 14px; border: 1px solid var(--line-strong); border-left: 2px solid var(--lamp); border-radius: 10px; background: rgba(14, 13, 12, 0.5); }
+.asi-kal-h { margin: 0 0 8px; font-weight: 700; font-size: 0.88rem; }
+.asi-casy { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.asi-casy li { padding: 4px 10px; border: 1px solid var(--line-strong); border-radius: 999px; font-variant-numeric: tabular-nums; font-weight: 700; font-size: 0.88rem; }
+.asi-kal-p { margin: 0; color: var(--paper-2); font-size: 0.78rem; }
+.asi-akcie { align-self: flex-start; display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: calc(-1 * var(--s1)); }
+.asi-tel, .asi-obj { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 999px; font-weight: 700; font-size: 0.88rem; text-decoration: none; }
+.asi-tel { background: var(--lamp); color: var(--ink); }
+.asi-tel svg { width: 18px; height: 18px; }
+.asi-obj { border: 1px solid var(--line-strong); color: var(--paper); }
+.asi-tel:active, .asi-obj:active { transform: scale(0.98); }
+
+/* otvorené okno asistenta: jazyková ponuka by zakryla pole otázky */
+html.asi-open .lang-offer { display: none; }

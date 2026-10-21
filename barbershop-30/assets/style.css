@@ -1299,3 +1299,70 @@ html[data-motion="off"] .btn-primary::after, html[data-motion="off"] .beam > .be
   .gallery-grid { grid-auto-columns: 78%; grid-auto-rows: auto; }
   .gallery-item, .gallery-item.is-portrait, .gallery-item.is-wide { grid-row: auto; grid-column: auto; aspect-ratio: 4 / 5; }
 }
+
+/* ==========================================================================
+   P13. Telefón a objednávka (2026‑10‑21): pás vychádza spod záberu mäkko (žiadna ostrá hrana ani
+   prázdna čierna plocha), menšie odsadenia na telefóne, úvod s ponukou a dôvodom (hodnotenie, cena),
+   tlačidlá Objednať sa a Zavolať a potvrdiť termín, spodná lišta Zavolať + Objednať sa.
+   ========================================================================== */
+.band { border-block: 0; }
+.band::before, .band::after {
+  content: ""; position: absolute; left: 0; right: 0; height: clamp(56px, 12vh, 140px); pointer-events: none;
+}
+.band::before { bottom: 100%; background: linear-gradient(to bottom, rgba(23, 20, 18, 0), var(--ink-2)); }
+.band::after { top: 100%; background: linear-gradient(to top, rgba(23, 20, 18, 0), var(--ink-2)); }
+@media (max-width: 640px) {
+  .band { padding-block: var(--s7); }
+  .band-head { margin-bottom: var(--s6); }
+  .band-prices .marquee, .steps-wrap { margin-bottom: var(--s6); }
+}
+
+/* úvod: čo ponúkame (riadok), prečo my (hodnotenie a cena), ako sa objednať (tlačidlá) */
+.hero-proof {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2) var(--s4);
+  margin: var(--s4) 0 0; padding: 0; list-style: none;
+  font-size: 0.9375rem; font-weight: 600; color: var(--paper); text-shadow: var(--halo);
+}
+.hero-proof li { display: inline-flex; align-items: center; gap: var(--s4); }
+.hero-proof li + li::before { content: ""; width: 5px; height: 5px; transform: rotate(45deg); background: var(--lamp); }
+.hero-rating { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line-strong); padding-block: 4px 2px; }
+.hero-rating::before { content: "★"; content: "★" / ""; color: var(--lamp-2); margin-right: 0.35em; }
+.hero-rating:hover { border-color: var(--lamp-2); }
+.title-hero .hero-proof { animation: text-in 600ms var(--ease-out) 830ms both; }
+@media (max-width: 720px) {
+  .title-hero .title-sub { max-width: 34ch; }
+  .hero-proof { font-size: 0.875rem; }
+  /* dlhé „Zavolať a potvrdiť termín“ ide na vlastný riadok, obe tlačidlá cez celú šírku na palec */
+  .title-actions:has(.btn-tel) { flex-wrap: wrap; }
+  .title-actions .btn-tel, .title-actions:has(.btn-tel) .btn { flex: 1 1 100%; }
+}
+
+/* spodná lišta na telefóne: Zavolať aj s textom, vedľa Objednať sa; asistent je vľavo, nič sa neprekrýva */
+@media (max-width: 900px) {
+  .mobile-cta .btn-call { width: auto; padding: 0 var(--s4) 0 14px; gap: var(--s2); }
+}
+
+/* ==========================================================================
+   P14. Filmový pohyb (2026‑10‑21): strih linkou (pás nastúpi ako nový záber), odhalenie fotiek maskou
+   (opona zdola, fotka sa usadí z blízkeho záberu) a odozva tlačidiel. Triedu js-odhal dá app.js len
+   pri povolenom pohybe; bez skriptu, pri obmedzení pohybu alebo slabom zariadení je všetko hneď vidieť.
+   ========================================================================== */
+.band-cut {
+  position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, var(--lamp), rgba(224, 96, 28, 0.3) 55%, rgba(224, 96, 28, 0));
+  transform-origin: 0 50%;
+}
+html.js-odhal .band-cut { transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.1s; }
+html.js-odhal .band.is-in .band-cut { transform: none; }
+
+html.js-odhal .odhal { clip-path: inset(100% 0 0 0); transition: clip-path 0.85s cubic-bezier(0.7, 0, 0.2, 1); transition-delay: calc(var(--i, 0) * 90ms); }
+html.js-odhal .odhal picture { display: block; transform: scale(1.12); transition: transform 1.3s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: calc(var(--i, 0) * 90ms); }
+/* koniec opony je o kúsok za okrajom, aby rámik fokusu nebol orezaný */
+html.js-odhal .odhal.is-in { clip-path: inset(-6px); }
+html.js-odhal .odhal.is-in picture { transform: none; }
+
+.btn:active { transform: translateY(1px) scale(0.98); transition-duration: 80ms; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); }
+}
+@media (max-width: 380px) { .hero-proof { flex-direction: column; align-items: center; gap: 2px; } .hero-proof li + li::before { display: none; } }
