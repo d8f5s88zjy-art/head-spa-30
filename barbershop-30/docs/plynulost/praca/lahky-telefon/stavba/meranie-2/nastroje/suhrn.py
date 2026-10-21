@@ -1,4 +1,4 @@
-# Súhrn merania 1: mediány pred/po z data/*.json → tabuľky v Markdowne (stdout).
+# Súhrn merania 2: mediány pred/po z data/*.json → tabuľky v Markdowne (stdout).
 # python3 -I suhrn.py <data_dir>
 import json, glob, os, sys, statistics as S
 D = sys.argv[1]
@@ -28,7 +28,7 @@ P = ['c4f', 'c6f', 'c4s', 'c6s']
 PN = {'c4f': 'CPU 4×, Fast 4G', 'c6f': 'CPU 6×, Fast 4G', 'c4s': 'CPU 4×, Slow 4G', 'c6s': 'CPU 6×, Slow 4G'}
 out = []
 out.append('### Štart (prvá návšteva bez parametrov), medián (jednotlivé behy)\n')
-M = [('FCP (ms)', 'fcp', 0, False, False), ('prvá fotka (ms)', 'fotkaMs', 0, False, False), ('prvá fotka s nadpisom (ms)', 'fotkaH1Ms', 0, False, False),
+M = [('FCP (ms)', 'fcp', 0, False, False), ('prvá fotka (ms)', 'fotkaMs', 0, False, False), ('prvá fotka s nadpisom (ms; aj rozmazaný náhľad)', 'fotkaH1Ms', 0, False, False), ('prvá OSTRÁ fotka s nadpisom (ms, pixely)', 'ostraH1Ms', 0, False, False), ('fotka úvodu stiahnutá a viditeľná (ms, DOM)', 'ostraDom', 0, False, False),
      ('tma v 3 s po FCP (podiel času)', 'tma3', 0, True, False), ('čierna v 3 s po FCP', 'cierna3', 0, True, False),
      ('bajty prvej obrazovky (kB)', 'prvaObrazovka.bajty', 0, False, False), ('požiadavky prvej obrazovky', 'prvaObrazovka.poziadaviek', 0, False, False),
      ('WebGL kontexty (max)', 'gl', 0, False, True), ('hrajúce videá naraz (max)', 'maxPlay', 0, False, True), ('neúplné fotky – vzorky (max)', 'incN', 0, False, True)]
@@ -42,12 +42,12 @@ for p in P:
             out.append(f'| {lab} | **{fmt(med(a))}** ({" / ".join(fmt(x) for x in a)}) | **{fmt(med(b))}** ({" / ".join(fmt(x) for x in b)}) |')
         else:
             out.append(f'| {lab} | {cell("start", p, "pred", path, nd, pct, mx=mx)} | {cell("start", p, "po", path, nd, pct, mx=mx)} |')
-if vals('start', 'c4f', 'pred0', 'fcp'):
-    out.append('\n**D1 bez podvrhu GPU (pred0, pokojná verzia kontajnera), CPU 4×, Fast 4G**\n\n| meranie | pred0 |\n|---|---|')
+if vals('start', 'c4f', 'predoff', 'fcp'):
+    out.append('\n**D1 `?film=off` (predoff), CPU 4×, Fast 4G**\n\n| meranie | predoff |\n|---|---|')
     for lab, path, nd, pct, mx in M:
         if 'bajty' in path:
-            a = [None if x is None else x / 1000 for x in vals('start', 'c4f', 'pred0', path)]; out.append(f'| {lab} | **{fmt(med(a))}** |')
-        else: out.append(f'| {lab} | {cell("start", "c4f", "pred0", path, nd, pct, mx=mx)} |')
+            a = [None if x is None else x / 1000 for x in vals('start', 'c4f', 'predoff', path)]; out.append(f'| {lab} | **{fmt(med(a))}** |')
+        else: out.append(f'| {lab} | {cell("start", "c4f", "predoff", path, nd, pct, mx=mx)} |')
 # scenáre
 scs = sorted({r['sc'] for r in rows if r['name'].startswith('scen-')})
 if scs:
@@ -59,14 +59,14 @@ if scs:
 # skrol
 SK = [('úloha snímky p95 (ms, stena)', 'stopa.ulohaSnimkyP95', 1), ('úloha snímky p50 (ms)', 'stopa.ulohaSnimkyP50', 1), ('úloha snímky p95, čas vlákna (ms)', 'stopa.vlaknoP95', 1),
       ('snímky > 16,7 ms (%)', 'stopa.nad16', 1), ('dlhé úlohy > 50 ms (počet)', 'stopa.dlheUlohy50', 0), ('dlhé úlohy spolu (ms)', 'stopa.dlheUlohyMs', 0), ('najdlhšia úloha (ms)', 'stopa.najdlhsiaMs', 0),
-      ('LoAF > 50 ms (počet)', 'loaf50.n', 0), ('LoAF > 50 ms spolu (ms)', 'loaf50.sucet', 0), ('LoAF najdlhší (ms)', 'loaf50.max', 0),
+      ('LoAF > 50 ms (počet)', 'loaf50.n', 0), ('LoAF > 50 ms spolu (ms)', 'loaf50.sucet', 0), ('LoAF najdlhší (ms)', 'loaf50.max', 0), ('LoAF s prácou > 50 ms (bez čakania pred renderStart)', 'loafPraca50', 0), ('LoAF s blokovaním > 50 ms', 'loafBlok50', 0),
       ('rAF interval p50 / p95 (ms)', None, 0), ('okno 12 švihov + ťah (s)', 'okno', 1), ('posun v okne (px)', None, 0),
       ('bajty celej stránky (MB)', 'celaStranka.bajty', 2), ('WebGL kontexty (max)', 'gl', 0), ('hrajúce videá naraz (max)', 'maxPlay', 0), ('neúplné fotky – vzorky (max)', 'incN', 0)]
 for p in P:
-    st = [s for s in ('pred', 'po', 'pred0') if vals('skrol', p, s, 'okno')]
+    st = [s for s in ('pred', 'po', 'predoff') if vals('skrol', p, s, 'okno')]
     if not st: continue
     out.append(f'\n### Skrol prstom – {PN[p]} (medián z {len(vals("skrol", p, "po", "okno"))} behov)\n')
-    out.append('| meranie | ' + ' | '.join({'pred': 'PRED (D1)', 'po': 'PO (lite)', 'pred0': 'D1 pokojná (pred0)'}[s] for s in st) + ' |\n|---|' + '---|' * len(st))
+    out.append('| meranie | ' + ' | '.join({'pred': 'PRED (D1)', 'po': 'PO (lite)', 'predoff': 'D1 ?film=off'}[s] for s in st) + ' |\n|---|' + '---|' * len(st))
     for lab, path, nd in SK:
         cs = []
         for s in st:

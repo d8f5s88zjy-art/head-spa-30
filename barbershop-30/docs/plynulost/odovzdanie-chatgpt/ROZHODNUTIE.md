@@ -29,12 +29,13 @@ nasadenie, právne znenie a zverejnenie administrácie schvaľuje majiteľ.
 | Doklad | Výsledok |
 |---|---|
 | Kontrolné súčty, strom | patch SHA-256 sedí, `write-tree` z indexu PO = `4cc286ac15a26e62d2373e174ef168e2f83d59cd` |
-| D1 v balíku | 8 súborov bajtovo zhodných s 7ea247c (README, atmosfera.css/js, CONTRACT.md, app-smoke, i18n-test, scenes-shot, strih-shot); `i18n.js` a `style.css` obsahujú D1 ako podmnožinu (3-way bez konfliktu); `app.js` a `i18n.css` balík v tých istých miestach prepísal (12 a 1 konflikt pri 3-way, `$O/rozhodnutie/3way/`) – D1 sa preto berie z našej vetvy, nie z balíka |
+| D1 v balíku | 8 súborov bajtovo zhodných s 7ea247c (README, atmosfera.css/js, CONTRACT.md, app-smoke, i18n-test, scenes-shot, strih-shot); `i18n.js` a `style.css` obsahujú D1 ako podmnožinu (3-way bez konfliktu); `app.js` balík v tých istých miestach prepísal (12 konfliktov pri 3-way, `$O/rozhodnutie/3way/`) – D1 sa preto berie z našej vetvy, nie z balíka; `i18n.css` má 1 len textový konflikt (`.booking-note` vložený vedľa komentára D1), obsah D1 (bez `@font-face` cyriliky, komentár D1) v balíku je – recenzia overila, preto sa v kroku 3 smie vziať celý |
 | Bezpečnosť (`$O/bezpecnost`) | bez úniku tajomstiev, bez CDN, kľúč adminu len v pamäti, escapovanie v poriadku; nálezy: zmienka cudzieho nástroja v `admin/README.md:36` a `navsteva-browser.mjs:3`, admin 20 689–20 710 B gzip > 20 000, API verzia `2026-03-10` neoverená, dva `<main>` v 404, FTP sed necháva 2 prázdne riadky |
 | Prehliadač (`$O/qa-prehliadac`, SwiftShader, bez GPU) | 0 chýb konzoly, CLS ≤ 0,004, 404 HEAD SPA pixelovo zhodná (0,0 %), pravne.html 200, D7 lightbox a tím fungujú, admin funkčne správny; regresie: prológ PO rozmazaný (PRED ostrý), strih-shot 14–26 nedobehnutých záberov (PRED 0), karta „sud“ na telefóne bez nadpisu, app-smoke padá na asynchrónnom lightboxe |
 | Meranie telefónu (`$O/meranie-pred-po`) | pri skrole zhodné; prvý dotyk p95 20,97 ms (PRED 14,06), INP jazyk SK 192 ms (PRED 100) = horšie; film: nahrávanie textúr 0,5 ms/snímku (PRED 5,85), pamäť 94 MB (PRED 173) = lepšie. Pre telefón už neplatí (lite bez filmu), pre počítač sa zmeria v L7 |
+| Lighthouse (`$O/meranie-pred-po/lighthouse`, SwiftShader, stromy PRED/PO, nie integrovaný strom; doplnila recenzia) | mobil PRED 94 a 96, PO 96 a 97 (LCP 2,6 s, CLS 0); počítač PRED 98 a 99, PO 100 a 100 – balík skóre nezhoršuje |
 | Vetva lite (`hs-lahky`, f624ee8) | kontrola kolo 2 práve beží (`$SP/barber/lahky-telefon/stavba/k2`, `vzhlad-2`); integrácia ide **nad jej HEAD po skončení kolo 2** |
-| Skúšobná integrácia (odhoditeľný klon) | zlúčenie lite do c129f58 bez konfliktu (strom = lite v `barbershop-30/`, = c129f58 inde); 7 commitov podľa časti 4; Node testy: test-404 OK, vernost-priprav 4/4, vernost-footer 1/1, hodiny 17/17, d7 14/14, admin 20/21 (padá len brána 20 000 B gzip, zámerne), navsteva-test padá len na rozpočte HTML (pozri 5.1), statická kontrola i18n 0 chýbajúcich kľúčov, JSON-LD aj blok nastavení sa parsujú, brána `lite` a dynamický import filmu zachované |
+| Skúšobná integrácia (odhoditeľný klon) | zlúčenie lite do c129f58 bez konfliktu (strom = lite v `barbershop-30/`, = c129f58 inde); 7 commitov podľa časti 4; Node testy: test-404 OK, vernost-priprav 4/4, vernost-footer 1/1, hodiny 17/17, d7 14/14, admin 20/21 (padá len brána 20 000 B gzip, zámerne), navsteva-test padá len na rozpočte HTML (pozri 5.1), statická kontrola i18n 0 chýbajúcich kľúčov (21 riadkov „CHÝBA“ v `$O/bezpecnost/i18n-staticky.txt` sú texty tabule hodín z `hodiny.js`; prekladá ich kľúč `__tabula`, ktorý je vo všetkých 7 slovníkoch – recenzia overila, statický nástroj ho nevidí), JSON-LD aj blok nastavení sa parsujú, brána `lite` a dynamický import filmu zachované |
 
 ## 2. Rozhodnutia po častiach
 
@@ -108,14 +109,17 @@ Predpoklady: kontrola kolo 2 vetvy lite skončila a jej HEAD je schválený; `pg
 3. **D6a:** `git checkout $T -- $(cat $Z/subory-D6a.txt)`; `patch -p1 --no-backup-if-mismatch` so
    `$Z/index.html.d6-hooky.diff` (hunky 2,3,4,5,11,13,17,18,19,20 z D1→PO; riadky D6b – `nav-visit`,
    `booking-explainer` ×2, `price-nav`, `<p class="dnes">`, kontajner `#pred-navstevou`, odkaz „Pred návštevou“ v pätičke
-   – nechať až na krok 4), `$Z/style.css.d6-cennik-menu-twait.diff`, `$Z/app.js.D6a-hodiny-nastavenia.diff`;
+   – **diff ich obsahuje a `patch` ich priloží**; po priložení ich v tomto kroku ručne odstrániť, vzor je skúšobný
+   commit `$O/rozhodnutie/commity/0002*` (tie riadky nemá) a `0003*` (pridáva ich) – vrátia sa v kroku 4),
+   `$Z/style.css.d6-cennik-menu-twait.diff`, `$Z/app.js.D6a-hodiny-nastavenia.diff`;
    `python3 -I $Z/uprav.py <strom> d6 $SP/hs-chatgpt` (popis stránky, predčítanie i18n, blok nastavení, `.shop-notice`,
    `pages.yml` + pravne.html; blok „Pred návštevou“ v style.css patrí do kroku 4). Commit „BARBERSHOP 30: hodiny z
    jedného zdroja so sviatkami a letným časom, právne informácie, HairSalon v JSON-LD, cenník čitateľnejší, cudzinec
    vie zavolať“. Testy: `node --check assets/app.js`, `node --test source/tools/hodiny-test.mjs` (17/17),
    `python3 -I $O/bezpecnost/i18n_staticky.py <lite strom> <strom>` (0 nových chýbajúcich), JSON-LD a
    `#barbershop-settings` sa parsujú, `gzip -9c index.html | wc -c` (zapísať, pozri 5.1),
-   `node source/tools/rezervacia-kontrola.mjs` (len čítanie, 0 rozdielov). Prehliadač (krok 9): `app-smoke.mjs`
+   `node source/tools/rezervacia-kontrola.mjs` (len čítanie, ale cez živé POST volania ajax `getEmployees`/`getCalendar`
+   rezervačného systému, nič nezapisuje; 0 rozdielov). Prehliadač (krok 9): `app-smoke.mjs`
    (lite), `i18n-test.mjs`, `$O/qa-prehliadac/skripty/nastavenia.mjs`, výrezy „13 €“/„15 €“ pri DPR 1 (dvaja
    kontrolóri, plán N07), snímky `pravne.html` 320/390/1440.
 4. **D6b:** `git checkout $T -- $(cat $Z/subory-D6b.txt)`; riadky D6b do `index.html`, blok „Pred návštevou“ do
@@ -144,9 +148,11 @@ Predpoklady: kontrola kolo 2 vetvy lite skončila a jej HEAD je schválený; `pg
    prevzalo, čo nie, dôkazy). Commit „BARBERSHOP 30: dokumentácia prevzatých častí“.
 9. **Prehliadačová dávka** (jeden beh po kroku 8, bez súbežnej záťaže, `python3 -m http.server <port>` v koreni,
    Playwright cez `createRequire('/opt/node22/lib/node_modules/')`): `app-smoke.mjs` (lite, `B30_PORT`), `i18n-test.mjs`,
-   `uvod-shot.mjs`, `karty-shot.mjs --lite`, `atmosfera-test.mjs`, `koliesko-test.mjs`, `navsteva-browser.mjs`,
+   `uvod-shot.mjs` (verzia lite; variant D1/PO v QA padol na oboch stromoch na limite snímky 30 s v SwiftShaderi,
+   `$O/qa-prehliadac/testy/{pred,po}/uvod-shot.log` – nie je to regresia balíka), `karty-shot.mjs --lite`,
+   `atmosfera-test.mjs`, `koliesko-test.mjs`, `navsteva-browser.mjs`,
    `admin-browser.mjs`, QA skripty `nastavenia.mjs`, `skoky.mjs`, `csp.mjs`, snímky 404 HEAD SPA pred/po,
-   `bash $SP/barber/audit/plan/nastroje.sh` + `skrol.mjs --scen=stredne` 3×, Lighthouse cez `gzip-server.py`
+   `bash $SP/barber/audit/plan/nastroje.sh` + `overenie-kod-stranka/skrol.mjs --scen=stredne` 3×, Lighthouse cez `gzip-server.py`
    (mobil ≥ 95, počítač 100). Každý pád = oprava v samostatnom commite alebo `git revert` daného kroku.
 10. **L7 (neskôr, len počítač):** z balíka `film.js`, `film-worker.js`, `nahlady.css/json`, `nahlady.py`,
     `hlbka-zjemni.py`, 26 máp `-hlbka-z.webp`, `film-continuity.mjs` (+ pngjs alebo PIL náhrada), `film-regression.mjs`,
@@ -156,8 +162,8 @@ Predpoklady: kontrola kolo 2 vetvy lite skončila a jej HEAD je schválený; `pg
 
 ## 5. Riziká a čo ostáva neoverené
 
-5.1 **Rozpočet `index.html` ≤ 14 600 B gzip (README, prvé okno TCP) prekračuje už vetva lite:** D1 14 358 B,
-lite 16 477 B (+1 218 B hlavičkový skript lite, +639 B `--nahlad` data URI), po D6a 16 574 B, po D6b 16 781 B
+5.1 **Rozpočet `index.html` ≤ 14 600 B gzip (README, prvé okno TCP) prekračuje už vetva lite:** D1 14 380 B
+(`gzip -9c`, zhodne s MODEL.md; pôvodne uvedených 14 358 B nesedelo – opravila recenzia), lite 16 477 B (+1 218 B hlavičkový skript lite, +639 B `--nahlad` data URI), po D6a 16 574 B, po D6b 16 781 B
 (balík pridáva +304 B, sám o sebe bol 14 406 B). `navsteva-test.mjs` túto bránu kontroluje a padá. Rozhodnúť musí
 tím lite (zmenšiť skript alebo rozpočet zdôvodnene zmeniť v README a testoch) – nie je to chyba balíka.
 
@@ -180,3 +186,40 @@ použiť `--no-backup-if-mismatch`).
   `index.html.d2-d5-odlozene.diff`, zoznamy `subory-*.txt`, `filtruj.py`, `uprav.py`.
 - `$O/rozhodnutie/commity/` – 7 commitov zo skúšobnej integrácie (`ZOZNAM.txt`).
 - `$O/bezpecnost/`, `$O/qa-prehliadac/`, `$O/meranie-pred-po/` – podklady troch kontrol.
+
+## 7. Recenzia (skeptik, 21. 10. 2026, bez prehliadača – len zo súborov, snímok a logov)
+
+Overené s dokladom: kontrolné súčty a strom `4cc286ac` (`write-tree` indexu PO sedí, oba stromy nezmenené);
+D1 8 súborov bajtovo zhodných s 7ea247c; 3-way konflikty (app.js 12, i18n.css 1, lite/PO: index.html 4, style.css 2,
+app.js 1, film.js 1); zlúčenie lite do c129f58 bez konfliktu (merge-base bcd487e, lite mimo `barbershop-30/` nič nemení,
+c129f58 vnútri nič nemení); `main` = da24b32 = c129f58 + len `toolbox/`; prológ PO rozmazaný pri t = 2,5 s (snímka
+`prolog-pocitac-porovnanie.jpg`), strih-shot PO 26 (mobil + počítač) a 14 (počítač, opakovanie) nedobehnutých záberov,
+PRED 0; skok z menu PO pristane hneď s fokusom (`skoky.json`); swipe v lightboxe mení fotku; tlačidlá tímu 48×48;
+404 HEAD SPA 0,0 % rozdiel, 404 Barbershopu na doméne aj Pages; `pravne.html` 200 s ÚOOÚ Galvaniho 7/B (zdroj
+`CONTENT_SOURCES.md:179`), sídlo FACEPALM podľa ORSR (`:177`); „8 kresiel – minimálne čakanie“ (`:173`); JSON-LD
+HairSalon/hasMap/priceRange bez `geo`; blok `#barbershop-settings` sa parsuje; admin 20 689 B (`gzip -9c`) / 20 710 B
+(Node zlib) gzip, na telefóne pás záložiek 684 px v 354 px a zlatý rám fokusu (snímka `admin/telefon-overview.jpg`),
+10 chýb CSP, zápis +252/−59 riadkov, tím 10 PNG ≈ 7,7 MB, API verzia `2026-03-10` (HEAD SPA admin má `2022-11-28`),
+`force:false`, „3 zmien“ (`app.mjs:41`), `robots.txt` bez `/admin/`; `pages.yml` tajomstvá len v kroku vernosti,
+`vernost-priprav.py` meria len dĺžku; `vernost.js` kontroluje https/origin/cestu; FTP sed po `uprav.py d6a0` vráti
+pôvodný 404 bajt po bajte; cudzí nástroj len v `admin/README.md:36` a `navsteva-browser.mjs:3` (`source/audit.json`
+s podobnou zmienkou je z c129f58, balík ho nemení); `pracovna-siet` má `runtimeId` `/root/frontend`…;
+`docs/plynulost` nesie cesty `/tmp/claude-0/…`; `POKRACOVANIE` spomína `.openai/hosting.json`; hĺbkové mapy 26 ×,
+285 600 B, odchýlka 0; Node testy hodiny 17/17, d7 14/14, admin 21/21 pri bráne 21 504 B (po znížení na 20 000 B
+zámerne 20/21), vernost-priprav 4/4, test-404 OK, rezervácia `matches: true`, `differences: []`; čísla v §5.1
+(16 477 → 16 574 → 16 781 B) sedia pri replike záplat 0001–0003 na súboroch lite; všetky cesty a prepínače v časti 4
+existujú (`B30_PORT` v `source/shot.mjs`, `karty-shot --lite`, `uprav.py` kroky `d6a0|d6|d6b|d7|admin`, `filtruj.py`,
+`i18n_staticky.py <pred> <po>`).
+
+Opravené recenziou: D1 gzip 14 358 → 14 380 B (§5.1); krok 3 – diff `index.html.d6-hooky.diff` obsahuje riadky D6b,
+treba ich po priložení odstrániť (§4); vysvetlenie 21 riadkov „CHÝBA“ (`__tabula`, §1); `i18n.css` konflikt je len
+textový, D1 v PO je (§1); `uvod-shot.mjs` padá v QA aj na PRED, do kroku 9 ide verzia lite (§4); `rezervacia-kontrola`
+číta cez POST ajax, nie GET (§4); `skrol.mjs --scen` je v `overenie-kod-stranka/` (§4); doplnený riadok Lighthouse (§1).
+
+Ostáva sporné (nemení rozhodnutie, ale chýba doklad alebo potvrdenie): regresia „karta „sud“ na telefóne bez nadpisu“
+nemá uložený doklad – `titulky.mjs` píše opacity len na stdout (nie je v `$O`), snímky
+`qa-prehliadac/titulky/titulky-{pred,po}-filmoff-7-sud.jpg` nadpis ukazujú v oboch stromoch (film=off); ak išlo o
+film=on, treba záznam doplniť, inak vetu v §1 a v riadku D5 vypustiť. Stav kola 2 vetvy lite: `stavba/k2/` má výsledky
+(`brana.txt` 15:19, `slucka.txt` 15:20, bez chýb okrem známeho varovania THREE), súhrnný verdikt v `stavba/` nie je –
+pred krokom 0 potvrdiť. Skúšobné záplaty `commity/*.patch` majú autora „Claude <noreply@anthropic.com>“ ako všetky
+doterajšie commity repozitára; `git am` ho prenesie.

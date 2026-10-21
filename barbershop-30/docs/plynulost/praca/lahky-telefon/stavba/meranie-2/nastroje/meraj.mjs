@@ -90,7 +90,7 @@ function rozbor(dir, meta, pas) {
 }
 const save = (name, o) => { fs.writeFileSync(path.join(DATA, name + '.json'), JSON.stringify(o, null, 1)); };
 const STR = (opt.stromy || 'pred,po').split(',');
-const poradie = (n) => { const a = []; for (let i = 1; i <= n; i++) for (const s of STR) a.push([s, i]); return a; };
+const poradie = (n) => { const a = []; const r0 = Number(process.env.REP0 || 0); for (let i = 1; i <= n; i++) for (const s of STR) a.push([s, i + r0]); return a; };
 
 // ---------------- START: prvá návšteva bez parametrov ----------------
 async function start(strom, pk, rep) {
