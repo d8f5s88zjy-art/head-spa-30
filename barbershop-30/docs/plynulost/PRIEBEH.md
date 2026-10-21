@@ -107,3 +107,4 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - Monitor b17vyvwhk sleduje nové commity v hs-lahky (30 min, obnovovať); pri každom commite: ukaz.sh a poslať majiteľovi. Náhľad (artefakt) aktualizovať až po prejdení kontrol celej dávky (medzistav L2 bez L3 by bol horší – V4).
 - 08:55 UTC: zmeny 2+3 (5902aa5 lite, f1f9c4d dekódovanie) nasnímané a poslané majiteľovi (úvod, karta, lišta). Pozor: v lite je prvá fotka rohožka (ako bez prológu), nie fasáda – opýtané majiteľa. Ďalej čakám L5 a L6 (stavba B).
 - 09:14 UTC záložná kontrola 3 (trig_01PgXxwfjCHx1jVQ6deEaFTF): cron 23e67415 beží; wf_20f36633-067 a wf_45213a73-46b zámerne NEOBNOVENÉ (pozastavené, nahradené balíkom a ľahkým telefónom), wf_ef682687-713 hotový.
+- 09:21 UTC check-in: limit neplatí, disk 3,1 GB; stavba A hotová (3 commity), beží stavba B (L5+L6); preverenie balíka: prehliadač hotový, beží meranie; nič na obnovu.
