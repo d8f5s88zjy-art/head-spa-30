@@ -1,7 +1,7 @@
 #!/bin/sh
 # Testy asistenta proti falošnému API (testy/mock-api.php) a falošnému rezervačnému systému (testy/mock-rezervacie.php):
 # stav, prúd odpovede po kúskoch, čo ide do API, nástroj na voľné termíny (overené, chyba, bez napojenia),
-# tlačidlo Zavolať pri termínoch, kontrola vstupu, pôvod, limit otázok, chyba a odmietnutie; potom testy/kalendar-test.php.
+# tlačidlo Zavolať pri termínoch, objednávkové okno (barberi, dni, voľné časy), kontrola vstupu, pôvod, limit otázok, chyba a odmietnutie; potom testy/kalendar-test.php.
 # Potrebuje php a curl, vendor/ (composer install).
 #   sh asistent/testy/spusti.sh
 set -u
@@ -61,6 +61,14 @@ skus "výpadok rezervačného systému: stav chyba, žiadne časy, tlačidlo Zav
 curl -s -N -H "$O" -H 'Content-Type: application/json' --data "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"TERMIN Adrián $D1\"}]}" "http://127.0.0.1:8904/api.php?a=otazka" > "$T/t2.txt"
 skus "bez napojenia na kalendár: stav nepripojene, tlačidlo Zavolať" 'grep -A1 "event: termin" "$T/t2.txt" | grep -q "\"stav\":\"nepripojene\"" && grep -q "event: tel" "$T/t2.txt"'
 skus "otázka na termín bez nástroja: tlačidlo Zavolať" 'otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"Máte zajtra voľný termín?\"}]}" | grep -q "event: tel"'
+# objednávkové okno na webe: barberi, dni a voľné časy (len čítanie, vlastný limit)
+skus "objednávka: barberi pre službu (len mená, bez Nezáleží)" '[ "$(curl -s -H "$O" "$U?a=barberi&sluzba=1")" = "{\"ok\":true,\"stav\":\"ok\",\"barberi\":[\"Nikolas\",\"Adrian\"]}" ]'
+skus "objednávka: dni kalendára (rozsah, nedeľa zatvorená, sviatky)" 'curl -s -H "$O" "$U?a=dni&sluzba=1&barber=Adri%C3%A1n" | grep -q "\"stav\":\"ok\",\"barber\":\"Adrian\".*\"zatvorene\":\[\"Ne\"\],\"sviatky\":\[\"2026-12-24\""'
+skus "objednávka: voľné časy bez mien iných zákazníkov" 'curl -s -H "$O" "$U?a=terminy&sluzba=1&barber=Adrian&datum=$D1" > "$T/o1.txt"; grep -q "\"stav\":\"overene\".*\"casy\":\[\"09:00\",\"10:20\",\"14:00\",\"17:40\"\]" "$T/o1.txt" && ! grep -q Jana "$T/o1.txt"'
+skus "objednávka: výpadok systému = chyba, žiadne časy" 'curl -s "$U?a=terminy&sluzba=1&barber=Adrian&datum=$D3" | grep -v casy | grep -q "\"stav\":\"chyba\""'
+skus "objednávka: neznáma služba a barber" 'curl -s "$U?a=barberi&sluzba=999" | grep -q neznama_sluzba && curl -s "$U?a=dni&sluzba=1&barber=Peter" | grep -q neznamy_barber'
+skus "objednávka bez napojenia kalendára: 503" '[ "$(curl -s -o /dev/null -w %{http_code} "http://127.0.0.1:8904/api.php?a=barberi&sluzba=1")" = 503 ]'
+skus "objednávka: cudzí pôvod odmietnutý" '[ "$(curl -s -o /dev/null -w %{http_code} -H "Origin: https://zly.example" "$U?a=barberi&sluzba=1")" = 403 ]'
 skus "objednávka sa nikdy neodoslala" '! grep -q makeOrder "$T/rez.log"'
 
 skus "rozhovor musí končiť otázkou" 'otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"a\"},{\"r\":\"a\",\"t\":\"b\"}]}" | grep -q "Neplatný rozhovor"'

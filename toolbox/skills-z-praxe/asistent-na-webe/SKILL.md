@@ -14,7 +14,8 @@ prehliadaču po kúskoch. Kľúč API je len na serveri. Hotové riešenie: `asi
 - Návštevníci sa pýtajú stále to isté (cena, hodiny, deti, ako sa objednať) a podnik chce okamžitú odpoveď.
 - Podnik má overené údaje na webe a kľúč API na vlastnom účte (platí sa za použitie).
 
-Nepoužívaj na rezervácie (asistent nevidí voľné termíny, posiela odkaz) ani ako náhradu recepcie pri reklamáciách.
+Nepoužívaj na samotnú rezerváciu (asistent aj objednávkové okno len čítajú voľné časy a posielajú do rezervačného
+systému alebo na telefón) ani ako náhradu recepcie pri reklamáciách.
 
 ## Postup
 
@@ -48,6 +49,19 @@ Nepoužívaj na rezervácie (asistent nevidí voľné termíny, posiela odkaz) a
   z vývojového prostredia môže zablokovať bezpečnostná kontrola, preto sa testuje proti falošnému systému
   (`asistent/testy/mock-rezervacie.php`).
 
+## Objednávkové okno v štýle webu
+
+- Ten istý adaptér kalendára slúži aj oknu na webe (`barbershop-30/assets/objednavka.js`): služba z cenníka na stránke
+  (`data-sluzba` = id v rezervačnom systéme) → barber (mená zo systému, portrét z tímu na stránke) → deň a voľný čas →
+  výber. Koncové body `api.php?a=barberi|dni|terminy` bez kľúča API, s vlastným limitom.
+- Výber je vždy predbežný: okno ukáže „termín ešte nie je rezervovaný“ a vedie do rezervačného systému alebo na telefón.
+  Odoslanie objednávky len so súhlasom prevádzky a podľa jej dokumentácie, nikdy podľa odhadu rozhrania.
+- Okno zachytí odkazy Objednať sa až po stave servera s pripojeným kalendárom a po stiahnutí štýlu; inak odkazy idú
+  rovno do systému. Poslucháč na `window` vo fáze capture beží pred prihláškou vernostnej kartičky (`document`),
+  odkaz v okne ide ďalej k nej.
+- Automaticky vybraný deň bez voľného času (dnes večer) → okno skúsi najviac 5 ďalších otvorených dní.
+- Späť v telefóne zatvorí okno (`history.pushState` pri otvorení, `popstate` zavrie).
+
 ## Lekcie
 
 1. **PSR-18 klient musí prúdiť**: knižnica Anthropic pre PHP hľadá HTTP klienta cez `php-http/discovery`.
@@ -68,11 +82,17 @@ Nepoužívaj na rezervácie (asistent nevidí voľné termíny, posiela odkaz) a
    `tool_choice` vráti 400, preto `auto` a pokyn v systéme.
 9. **Náklady a zneužitie**: limity na odtlačok IP (15 za 10 min, 60 za deň) a strop za deň pre celý web; vstup
    najviac 16 správ a 800 znakov na otázku. Rozhovory sa neukladajú.
+10. **Test s podstrčenou stránkou**: Chrome 141 považuje dokument vrátený cez `page.route` za verejný a zablokuje
+    požiadavku na lokálny server (ochrana lokálnej siete, `net::ERR_FAILED` bez odpovede). Príznaky na stránke meň cez
+    `page.addInitScript` (napr. `MutationObserver` doplní atribút skriptu pred spustením), nie prepisom HTML.
+11. **Jednotky kontajnera**: prvok s `container-type` nemôže mať okraje v `cqw` voči sebe (počítajú sa z predka, bez neho
+    z okna). Kontajner je obal, karta vnútri berie `cqw` z neho.
 
 ## Kontrolný zoznam
 
 - [ ] Znalosti sedia s webom (ceny, hodiny, tím, odkazy) a obsahujú, čo asistent nevie.
-- [ ] `sh asistent/testy/spusti.sh` 28 + 17 OK, `node barbershop-30/source/tools/asistent-test.mjs` všetko OK.
+- [ ] `sh asistent/testy/spusti.sh` 35 + 17 OK, `node barbershop-30/source/tools/asistent-test.mjs` a
+      `node barbershop-30/source/tools/objednavka-test.mjs` všetko OK.
 - [ ] Bez `data-asistent` žiadna požiadavka na server (test 1 v `asistent-test.mjs`), dymový test bez zmeny.
 - [ ] Naživo `api.php?a=stav` → `"zapnute":true`; tri otázky v slovenčine a jedna v angličtine; Esc, telefón.
 - [ ] Ochrana údajov (`asistent/ochrana-udajov.html`) schválená majiteľom.

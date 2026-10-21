@@ -36,7 +36,8 @@ const zvysky = (p, dict) => p.evaluate((d) => {
   const out = [], preklady = new Set(Object.values(d).filter((v) => typeof v === 'string').map(norm));
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   for (let n = w.nextNode(); n; n = w.nextNode()) {
-    const par = n.parentNode; if (!par || /SCRIPT|STYLE|NOSCRIPT/.test(par.nodeName) || par.closest('svg, [data-lang-switch], .lang-offer')) continue;
+    // obsah výslovne označený ako slovenský (vizitka ako vytlačená, assets/karty.js) sa neprekladá
+    const par = n.parentNode; if (!par || /SCRIPT|STYLE|NOSCRIPT/.test(par.nodeName) || par.closest('svg, [data-lang-switch], .lang-offer, body [lang="sk"]')) continue;
     const k = norm(n.nodeValue);
     if (k.length > 1 && typeof d[k] === 'string' && norm(d[k]) !== k && !preklady.has(k)) out.push(k);
   }

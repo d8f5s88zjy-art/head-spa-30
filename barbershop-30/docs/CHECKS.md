@@ -338,3 +338,28 @@ Všetko v emulácii prehliadača (Playwright, Chromium bez grafickej karty), nie
   rezervačného systému, obe tlačidlá úvodu celé na prvej obrazovke; obmedzený pohyb a bez skriptu nič skryté.
 - app-smoke, i18n-test, tma-test, asistent-test: všetko OK. koliesko-test pri súbežnom teste zlyhal (časovanie pod
   záťažou), samostatne OK.
+
+## 16. Objednávka v štýle webu, vizitka a vernostná kartička (2026‑10‑21)
+
+Všetko v emulácii prehliadača (Playwright, Chromium bez grafickej karty) proti falošnému rezervačnému systému
+(`asistent/testy/mock-rezervacie.php`); živý rezervačný systém ani fyzický telefón netestované.
+
+- `objednavka-test.mjs` 57 OK: okno sa zapne len so serverom s pripojeným kalendárom; 15 služieb z cenníka s časom a
+  cenou; barberi z rezervačného systému s portrétmi z tímu; prvý deň s voľným časom (dnes večer už nič → ďalší deň),
+  nedeľa zatvorená, časy predbežné s časom overenia; výber bez „rezervované“, Dokončiť v rezervačnom systéme a Zavolať
+  a potvrdiť termín; cenník a tím predvyberú službu a barbera; Späť v telefóne a Esc zatvoria okno; výpadok kalendára =
+  poctivá správa a telefón; 360/390/430/768/1440 px bez pretekania; zmena jazyka; bez príznaku ani bez kalendára sa nič
+  nesťahuje a Objednať sa ide rovno do rezervačného systému; so zapnutou prihláškou ju tlačidlo kartičky aj Dokončiť
+  otvoria; meno iného zákazníka nikde; makeOrder sa nikdy neodoslal; žiadna požiadavka na skutočné systémy.
+- Server `asistent/testy/spusti.sh` 35 + 17 OK (nové: barberi, dni, voľné časy pre okno, výpadok, neznáma služba a
+  barber, bez napojenia 503, cudzí pôvod 403; vlastný limit pre čítanie kalendára).
+- Vizitka: na želanie zadávateľa tá, ktorú prevádzka už má (nie nový návrh). Predloha fotka recepcie (foto-17):
+  pruhy barber pole, biely kruh s logom „30 Barbershop Holičstvo“, kontakt pod ním; logo z vektora starého webu (vrstvy
+  odtieňov → priehľadné WebP 480 px, 45 kB). Na prednej strane len riadky čitateľné na fotke (telefón, e‑mail, adresa,
+  web); jeden riadok (asi sociálna sieť) sa z fotky prečítať nedá, nie je tam. Číslice v klasickom pätkovom písme
+  (vo Fraunces vyzerá malá „3“ ako „5“). vCard 3.0 (meno, telefón, e‑mail, adresa, web, Instagram, hodiny).
+- HTML gzip 14 251 → 14 355 B (id služieb pri tlačidlách cenníka), nové súbory sa sťahujú až po načítaní stránky.
+- Lighthouse (rovnaký postup ako v časti 15), nová verzia: telefón 90/96/95/95/96 (medián 95, LCP 2,71 s), počítač 99;
+  prístupnosť, postupy, SEO 100; CLS 0.
+- app-smoke, i18n-test (vizitka s `lang="sk"` sa neprekladá), tma-test, asistent-test, nahlad: všetko OK.
+

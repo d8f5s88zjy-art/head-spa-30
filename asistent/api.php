@@ -5,6 +5,8 @@
  *        -> text/event-stream: udalosti "text" {"t":"…"}, "termin" {výsledok overenia kalendára, lib/kalendar.php},
  *           "tel" {} (odpoveď o termíne: okno ukáže Zavolať a potvrdiť termín), na konci "koniec" {},
  *           pri chybe "chyba" {"chyba":"…"}
+ *   GET  api.php?a=barberi&sluzba=1 | a=dni&sluzba=1&barber=… | a=terminy&sluzba=1&barber=…&datum=YYYY-MM-DD
+ *        -> objednávkové okno na webe (lib/kalendar.php), len so zapnutým kalendárom
  * Kľúč API je len v config.php (vytvorí ho nasadenie z tajomstva ANTHROPIC_API_KEY), nikdy v prehliadači. */
 declare(strict_types=1);
 const ASISTENT = true;
@@ -22,6 +24,20 @@ $post = ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
 // zapnutý = kľúč, knižnica aj PHP aspoň 8.1 (knižnica Anthropic staršie PHP nespustí)
 // kalendar: napojenie na voľné termíny je zapnuté (okno potom ponúkne otázku na voľný termín)
 if ($a === 'stav') odpoved(['ok' => true, 'zapnute' => kluc_api() !== '' && is_file(__DIR__ . '/vendor/autoload.php') && PHP_VERSION_ID >= 80100, 'kalendar' => kal_konfig() !== null]);
+/* objednávkové okno na webe (len čítanie, bez kľúča API): barberi pre službu, dni kalendára, voľné časy.
+ * Odpoveď je výsledok lib/kalendar.php (stav ok/overene/… alebo poctivá chyba); objednávku server neodosiela. */
+if (in_array($a, ['barberi', 'dni', 'terminy'], true)) {
+  if (!kal_konfig() || !is_file(__DIR__ . '/vendor/autoload.php')) chyba('Rezervačný kalendár nie je pripojený.', 503);
+  require __DIR__ . '/vendor/autoload.php';   // HTTP klient pre rezervačný systém
+  if (!limit_ok('kalendar')) chyba('Veľa požiadaviek naraz. Skús to o chvíľu alebo zavolaj na recepciu.', 429);
+  $sluzba = (int) ($_GET['sluzba'] ?? 0);
+  $barber = mb_substr((string) ($_GET['barber'] ?? ''), 0, 60);
+  odpoved(['ok' => true] + match ($a) {
+    'barberi' => objednavka_barberi($sluzba),
+    'dni' => objednavka_dni($barber, $sluzba),
+    'terminy' => volne_terminy($barber, substr((string) ($_GET['datum'] ?? ''), 0, 10), $sluzba),
+  });
+}
 if ($a !== 'otazka') chyba('Neznáma akcia.', 404);
 if (!$post) chyba('POST', 405);
 if (!str_starts_with((string) ($_SERVER['CONTENT_TYPE'] ?? ''), 'application/json')) chyba('Očakávam JSON.', 415);

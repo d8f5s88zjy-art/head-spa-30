@@ -57,6 +57,13 @@ jobs:
         run: |
           # okno sa zapne len s kľúčom API a nasadením na hosting (bez nich web nič nesťahuje ani neposiela)
           if [ -n "$KLUC" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on">#<html lang="sk" data-motion="on" data-asistent="https://www.headspa30.sk/asistent/api.php">#' _site/barbershop-30/index.html; echo "asistent zapnutý"; else echo "asistent vypnutý (chýba ANTHROPIC_API_KEY alebo FTP_SERVER)"; fi
+      - name: Objednávka na webe BARBERSHOP 30 (voľné časy z rezervačného kalendára cez server na www.headspa30.sk)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          KALENDAR: ${{ vars.ASISTENT_KALENDAR_URL }}
+        run: |
+          # okno sa zapne len so súhlasom prevádzky rezervačného systému (premenná ASISTENT_KALENDAR_URL) a so serverom na hostingu
+          if [ -n "$KALENDAR" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on"#<html lang="sk" data-motion="on" data-objednavka="https://www.headspa30.sk/asistent/api.php"#' _site/barbershop-30/index.html; echo "objednávka zapnutá"; else echo "objednávka vypnutá (chýba ASISTENT_KALENDAR_URL alebo FTP_SERVER)"; fi
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)

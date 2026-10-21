@@ -65,11 +65,15 @@ function ip(): string {
   return $r;
 }
 /* jedna otázka sa započíta do všetkých okien naraz; vráti false, keď je niektoré plné */
-function limit_ok(): bool {
+function limit_ok(string $druh = 'otazka'): bool {
   $k = konfig();
   $sol = (string) ($k['sol'] ?? kluc_api());
   $ja = 'ip:' . hash_hmac('sha256', ip(), $sol);
-  $okna = [
+  $okna = $druh === 'kalendar' ? [
+    // objednávkové okno: čítanie voľných časov, šetrne k rezervačnému systému (časy sú aj tak 2 minúty v pamäti)
+    ["kal:$ja", 600, (int) ($k['kal_za_10_min'] ?? 90)],
+    ['kal:spolu', 86400, (int) ($k['kal_spolu_za_den'] ?? 6000)],
+  ] : [
     [$ja, 600, (int) ($k['za_10_min'] ?? 15)],          // jeden návštevník: 15 otázok za 10 minút
     [$ja, 86400, (int) ($k['za_den'] ?? 60)],           // a 60 za deň
     ['spolu', 86400, (int) ($k['spolu_za_den'] ?? 1500)], // celý web: strop nákladov za deň
@@ -84,7 +88,7 @@ function limit_ok(): bool {
     if ($n >= $max) { $pdo->rollBack(); return false; }
   }
   $zapis = $pdo->prepare('INSERT INTO limity (kluc, cas) VALUES (?, ?)');
-  foreach ([$ja, 'spolu'] as $kluc) $zapis->execute([$kluc, $t]);
+  foreach (array_unique(array_column($okna, 0)) as $kluc) $zapis->execute([$kluc, $t]);
   $pdo->commit();
   return true;
 }

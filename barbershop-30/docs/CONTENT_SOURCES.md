@@ -160,3 +160,18 @@ Hodnotenie na Google ostáva aj ako odkaz (teraz priamo na profil, nie na vyhľa
 - „Pánsky strih 18 €“: cenník rezervačného systému (časť Služby a ceny).
 - „…v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme“: hodiny recepcie z webu, veta je ubezpečenie zadávateľa
   (2026‑10‑21); nesľubuje telefón mimo týchto hodín.
+
+## Vizitka, kontakt na uloženie a objednávkové okno (2026‑10‑21)
+
+- Vizitka (`assets/karty.js`): tá, ktorú prevádzka rozdáva na recepcii (fotka `source/photos/foto-17.jpg`), nie nový
+  návrh. Logo z vektora starého webu (`source/web-povodny/logo-vector-black.svg`). Text len z riadkov čitateľných na
+  fotke a zhodných s časťou Identita a kontakt: 0951 267 203, info@barbershop30.sk, Mostná 30, 949 01 Nitra,
+  www.barbershop30.sk. Riadok pod adresou (asi sociálna sieť) sa z fotky prečítať nedá, preto chýba; s fotkou alebo
+  tlačovým súborom vizitky od prevádzky sa doplní presne. `assets/barbershop30.vcf` z overených údajov.
+- Vernostná kartička na webe: texty z prihlášky (`assets/vernost.js`); odmeny ani počty bodov sa neuvádzajú, určuje ich
+  majiteľ v administrácii.
+- Objednávkové okno: služby, časy a ceny z cenníka na stránke, id služieb z rezervačného systému (rovnaké ako
+  `SLUZBY` v `asistent/lib/kalendar.php`), barberi a voľné časy priamo z rezervačného systému pri otvorení okna.
+  Predvoľba služby a barbera v rezervačnom systéme cez adresu nie je zdokumentovaná, preto Dokončiť otvorí jeho formulár
+  bez nej.
+

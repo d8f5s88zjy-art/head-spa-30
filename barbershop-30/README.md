@@ -51,6 +51,25 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   Filmový pohyb (P14 v `style.css`, `app.js` časť 8b): linka strihu pri nástupe pásu, odhalenie fotiek tímu a galérie
   maskou, odozva tlačidiel; pri obmedzení pohybu a bez skriptu nič neskrýva.
 
+- **Objednávka v štýle webu** (`assets/objednavka.js` a `objednavka.css`, server `../asistent/api.php`): Objednať sa
+  otvorí okno služba → barber → deň a voľný čas z rezervačného kalendára (len čítanie, z odpovede len časy HH:MM).
+  Služby, časy a ceny berie z cenníka (`a.price-cta[data-sluzba]` = id služby v rezervačnom systéme), portréty z tímu.
+  Objednať pri službe v cenníku ju vyberie, Objednať sa pri barberovi ho vyberie. Na konci ukáže výber s poznámkou, že
+  termín ešte nie je rezervovaný, a vedie do rezervačného systému (cestou sa ozve prihláška vernostnej kartičky) alebo
+  na telefón; úspech neukazuje, lebo objednávku nič nepotvrdilo (odoslanie z webu by potrebovalo písomný súhlas
+  prevádzky a jej dokumentáciu rozhrania). Zapne ho nasadenie atribútom `data-objednavka` na `<html>` len s premennou
+  `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP; okno sa zapne až po `api.php?a=stav` s pripojeným kalendárom, inak
+  a pri každej chybe vedú odkazy rovno do rezervačného systému. `?objednavka=<adresa>` na localhost, `?objednavka=off`.
+  Test: `source/tools/objednavka-test.mjs` (falošný rezervačný systém, 57 kontrol, snímky).
+- **Vizitka a vernostná kartička** (`assets/karty.js` a `karty.css`, pás pod kontaktom, načíta sa po načítaní stránky):
+  vizitka, ktorú prevádzka už rozdáva (predloha: fotka recepcie `source/photos/foto-17.jpg`), nie nový návrh: na výšku,
+  pruhy barber pole, biely kruh s pôvodným logom zo starého webu (`source/web-povodny/logo-vector-black.svg` →
+  `assets/img/logo-30-barbershop.webp`), vpredu telefón, e‑mail, adresa a web (len riadky čitateľné na fotke), vzadu
+  pruhy s logom. Uložiť kontakt otvorí `assets/barbershop30.vcf`. Vizitka je slovenská ako vytlačená (`lang="sk"`).
+  Vernostná kartička (ukážka v rovnakom vzhľade ako `vernost/karta` a ako funguje) sa ukáže len so zapnutou
+  prihláškou (`data-zapnute` na `assets/vernost.js`) alebo s uloženou kartičkou; tlačidlo otvorí prihlášku alebo
+  kartičku. `?vernost=ukazka` ju ukáže na kontrolu s vypnutým tlačidlom.
+
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
@@ -70,7 +89,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 - `nahlad.mjs` – náhľad na kontrolu (úvod, pás tímu, cenník, galéria, rezervácia na 360/390/430 px, tablete a počítači), odkazy tel: a Objednať sa, obmedzený pohyb, bez skriptu;
   `mobil-audit.mjs` – snímky celej stránky po krokoch skrolu s pretekaním, pevnými prvkami a podielom tmy;
 - `tma-test.mjs` – film nikdy neukáže čierne plátno (pomalá sieť, rýchly skrol a skoky cez menu);
-  `asistent-test.mjs` – okno asistenta so serverom a falošným API.
+  `asistent-test.mjs` – okno asistenta so serverom a falošným API; `objednavka-test.mjs` – objednávkové okno, vizitka
+  a vernostná kartička proti falošnému rezervačnému systému.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený

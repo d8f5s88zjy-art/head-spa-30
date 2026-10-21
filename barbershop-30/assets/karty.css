@@ -1,0 +1,63 @@
+/* BARBERSHOP 30 – vizitka a vernostná kartička (assets/karty.js) v pásme pod kontaktom.
+   Vizitka je tá, ktorú prevádzka rozdáva (fotka z recepcie source/photos/foto-17.jpg): na výšku 55 × 85 mm, pruhy
+   barber pole, biely kruh s pôvodným logom, kontakt pod ním. Písmo v jednotkách šírky karty (cqw), aby sedela
+   na každej šírke. Vernostná kartička má vzhľad kartičky z vernostného systému (vernost/karta/karta.css). */
+.band-karty { border-top: 0; }
+.karty-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s8, 64px); align-items: start; }
+.bez-vernosti .karty-grid { grid-template-columns: minmax(0, 1fr); }
+.karty-grid .h3 { margin: 0 0 var(--s5, 24px); }
+.karty-akcie { margin-top: var(--s5, 24px); }
+.karty-text { margin: var(--s5, 24px) 0 0; color: var(--paper-2, #c9beae); max-width: 34rem; }
+
+/* ---------- vizitka (predná a zadná strana vedľa seba ako v stojane na recepcii) ---------- */
+.viz-par { display: grid; grid-template-columns: repeat(2, minmax(0, 15rem)); gap: var(--s5, 24px); align-items: end; }
+.viz { margin: 0; container-type: inline-size; }
+.viz-strana { position: relative; aspect-ratio: 55 / 85; overflow: hidden; border-radius: 2.5cqw; background: #fff; color: #3b3b3b;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); }
+.viz-strana p { margin: 0; }
+/* diagonálne pruhy barber pole stúpajú doprava: červená, biela, modrá, biela */
+.viz-pruhy { position: absolute; inset: 0; background: repeating-linear-gradient(135deg, #d42a2f 0 7cqw, #fff 7cqw 14cqw, #22508f 14cqw 21cqw, #fff 21cqw 28cqw); }
+.viz-pred .viz-pruhy { bottom: 50%; }
+.viz-kruh { position: absolute; left: 50%; width: 66cqw; aspect-ratio: 1; border-radius: 50%; background: #fff; border: 0.7cqw solid #c9c9c9;
+  transform: translate(-50%, -50%); display: grid; place-items: center; }
+.viz-pred .viz-kruh { top: 45%; }
+.viz-zad .viz-kruh { top: 50%; width: 70cqw; }
+.viz-kruh img { width: 74%; height: auto; display: block; }
+.viz-kontakt { position: absolute; left: 6cqw; right: 6cqw; top: 70%; display: grid; gap: 1.2cqw; text-align: center;
+  /* klasické pätkové písmo ako na vytlačenej vizitke (systémové, bez ďalšieho súboru); Fraunces má „3“ podobnú „5“ */
+  font-family: Georgia, "Times New Roman", "Noto Serif", "DejaVu Serif", serif; font-weight: 400; font-size: 5.3cqw; line-height: 1.25; font-variant-numeric: lining-nums; }
+.viz-tel { font-size: 9.6cqw; line-height: 1.1; margin-bottom: 1cqw !important; }
+
+/* ---------- vernostná kartička ---------- */
+/* obal je kontajner, aby sa okraje aj písmo kartičky počítali z jej šírky */
+.vk-obal { container-type: inline-size; max-width: 26rem; }
+.vk { position: relative; overflow: hidden; aspect-ratio: 85 / 54; padding: 6cqw 6cqw 5.5cqw; display: grid; align-content: space-between;
+  border-radius: 22px; border: 1px solid var(--line, rgba(241, 233, 221, 0.14));
+  background: radial-gradient(120% 90% at 100% 0%, rgba(224, 96, 28, 0.34), transparent 60%), linear-gradient(150deg, #2a2522, #121110 70%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+.vk::after { content: ""; position: absolute; left: 6cqw; right: 6cqw; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--lamp, #e0601c); }
+.vk p { margin: 0; }
+.vk-hore { display: flex; justify-content: space-between; align-items: flex-start; gap: 4cqw; }
+.vk-hore strong { font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-size: 5cqw; letter-spacing: 0.04em; }
+.vk-typ { font-size: 3.1cqw; letter-spacing: 0.14em; text-transform: uppercase; color: #b9ae9f; }
+.vk-body { display: flex; align-items: baseline; gap: 3cqw; }
+.vk-body b { font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-size: 19cqw; line-height: 0.9; font-variant-numeric: tabular-nums; }
+.vk-body span { font-size: 4.3cqw; color: #b9ae9f; }
+.vk-dole { display: flex; justify-content: space-between; align-items: flex-end; gap: 4cqw; }
+.vk-meno { font-weight: 700; font-size: 4.6cqw; }
+.vk-kroky { margin: var(--s5, 24px) 0 0; padding: 0; list-style: none; counter-reset: k; display: grid; gap: var(--s3, 12px); }
+.vk-kroky li { counter-increment: k; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--s3, 12px); align-items: baseline; padding-top: var(--s3, 12px); border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.vk-kroky li::before { content: counter(k); font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-size: 1.35rem; line-height: 1; color: var(--lamp-2, #f07e3c); }
+.je-ukazka { opacity: 0.55; cursor: default; pointer-events: none; }
+.karty-ukazka { margin: var(--s3, 12px) 0 0; font-size: 0.8125rem; color: var(--paper-3, #8e8578); }
+
+@media (max-width: 1100px) {
+  .karty-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s8, 64px); }
+  .karty-vernost { max-width: 40rem; }
+}
+@media (max-width: 640px) {
+  /* telefón: predná strana väčšia (kontakt čitateľný), zadná menšia vedľa nej */
+  .viz-par { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--s4, 16px); }
+  .karty-akcie .btn { width: 100%; }
+  .karty-akcie.cluster { display: grid; gap: var(--s3, 12px); }
+}

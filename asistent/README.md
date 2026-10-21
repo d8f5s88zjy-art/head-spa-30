@@ -13,7 +13,8 @@ overuje v rezervačnom kalendári (keď je napojenie povolené) a pri každej od
 | Čo asistent vie (jediný zdroj faktov) | `znalosti/barbershop.md` |
 | Ochrana údajov (odkaz z okna) | `ochrana-udajov.html` |
 | Nasadenie na hosting (knižnica, `config.php` z tajomstva) | `.github/workflows/ftp.yml`, `tools/ftp-balik.sh`, `tools/asistent-config.php` |
-| Testy | `testy/spusti.sh` (server proti falošnému API a falošnému rezervačnému systému, 28 + 17 kontrol), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači) |
+| Objednávkové okno na webe (barberi, dni, voľné časy; len čítanie) | `api.php` (`a=barberi`, `a=dni`, `a=terminy`), `lib/kalendar.php`, `barbershop-30/assets/objednavka.js` |
+| Testy | `testy/spusti.sh` (server proti falošnému API a falošnému rezervačnému systému, 35 + 17 kontrol), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači), `barbershop-30/source/tools/objednavka-test.mjs` (objednávkové okno) |
 
 ## Zapnutie
 
@@ -52,6 +53,19 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
   `ASISTENT_KALENDAR_URL` = `https://www.barbershop30.sk/rezervacia` (Settings → Secrets and variables → Actions →
   Variables). Bez nej asistent na otázku o termíne povie, že dostupnosť teraz overiť nevie, a ponúkne telefón.
   Napojenie je overené len proti falošnému systému v testoch, nie proti živému (pozri CHECKS).
+
+## Objednávkové okno na webe (služba → barber → deň → čas)
+
+- Web Barbershop 30 (`barbershop-30/assets/objednavka.js`) sa pýta servera bez kľúča API, len čítaním:
+  `api.php?a=barberi&sluzba=1` (mená barberov), `a=dni&sluzba=1&barber=…` (rozsah, zatvorené dni, sviatky),
+  `a=terminy&sluzba=1&barber=…&datum=YYYY-MM-DD` (to isté ako nástroj asistenta, `volne_terminy`). Odpoveď nikdy
+  neobsahuje mená ani poznámky iných zákazníkov.
+- Vlastný limit (`limit_ok('kalendar')`): 90 požiadaviek za 10 minút od návštevníka a 6 000 za deň spolu (`kal_za_10_min`,
+  `kal_spolu_za_den` v `config.php`), časy aj tak 2 minúty z vyrovnávacej pamäte.
+- Okno termín nerezervuje: na konci vedie do rezervačného systému alebo na telefón. Odoslanie objednávky z webu
+  (`makeOrder`) tu nie je; potrebovalo by písomný súhlas prevádzky rezervačného systému a jej dokumentáciu rozhrania.
+- Zapína sa spolu s kalendárom: premenná `ASISTENT_KALENDAR_URL` a FTP → nasadenie (pages.yml) pridá na web
+  `data-objednavka`. Bez kalendára vráti server 503 a web ostane pri odkazoch do rezervačného systému.
 
 ## Keď sa zmení cenník, hodiny alebo tím
 

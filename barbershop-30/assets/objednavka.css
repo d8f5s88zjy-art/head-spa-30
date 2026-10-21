@@ -1,0 +1,117 @@
+/* BARBERSHOP 30 – objednávkové okno (assets/objednavka.js). Rovnaký jazyk ako web: atrament, papier, lampa,
+   Fraunces na nadpis, Manrope na text, vlasové linky namiesto kariet. V telefóne cez celú obrazovku, na počítači
+   okno v strede. Bez rozmazania pozadia (telefóny), pohyb len krátky príchod obsahu a v pokojnom režime žiadny. */
+.obj {
+  position: fixed; inset: 0; margin: auto; padding: 0;
+  width: min(42rem, calc(100% - 48px)); height: min(50rem, calc(100% - 48px)); max-width: none; max-height: none;
+  display: none; flex-direction: column; overflow: hidden;
+  background: var(--ink-2, #171412); color: var(--paper, #f1e9dd);
+  border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); border-radius: var(--radius, 8px);
+  font: 400 1rem/1.5 var(--font-text, "Manrope", system-ui, sans-serif);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  z-index: 2147482000;
+}
+.obj[open] { display: flex; }
+.obj-css .obj[open] { animation: obj-in 320ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both; }
+.obj::backdrop { background: rgba(14, 13, 12, 0.8); }
+@keyframes obj-in { from { opacity: 0; transform: translateY(14px); } }
+
+.obj *, .obj *::before, .obj *::after { box-sizing: border-box; }
+.obj button { font: inherit; color: inherit; background: none; border: 0; margin: 0; padding: 0; cursor: pointer; }
+.obj :focus-visible { outline: 2px solid var(--lamp-2, #f07e3c); outline-offset: 2px; }
+
+/* hlavička: späť, krok, zavrieť */
+.obj-hlava { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 12px 12px 10px 20px; }
+.obj-spat { grid-column: 1; justify-self: start; min-height: 44px; padding: 0 10px 0 0; font-weight: 600; font-size: 0.9375rem; color: var(--paper-2, #c9beae); }
+.obj-spat:hover { color: var(--paper, #f1e9dd); }
+.obj-spat[hidden] + .obj-kicker { grid-column: 1; }
+.obj-kicker { grid-column: 2; margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-2, #c9beae); white-space: nowrap; }
+.obj-x { grid-column: 3; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; border: 1px solid var(--line, rgba(241, 233, 221, 0.14)) !important; }
+.obj-x:hover { border-color: var(--paper, #f1e9dd) !important; }
+
+/* priebeh: štyri vlasové linky, hotové kroky lampou */
+.obj-pruh { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 0 20px; }
+.obj-pruh i { height: 2px; background: var(--line, rgba(241, 233, 221, 0.14)); transition: background-color 400ms var(--ease-out, ease); }
+.obj-pruh i.je { background: var(--lamp, #e0601c); }
+
+.obj-obsah { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 22px 20px 24px; }
+.obj-h { margin: 0 0 14px; font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-variation-settings: "opsz" 144;
+  font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1; letter-spacing: -0.015em; outline: none; }
+
+/* doterajší výber: ťuknutím späť na krok */
+.obj-vyber { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.obj-vyber[hidden] { display: none; }
+.obj-vyber button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); border-radius: var(--radius-btn, 6px); font-size: 0.875rem; font-weight: 600; text-align: left; }
+.obj-vyber button:hover { border-color: var(--lamp-2, #f07e3c); }
+
+.obj-telo.obj-prichod { animation: obj-krok 280ms var(--ease-out, ease) both; }
+@keyframes obj-krok { from { opacity: 0; transform: translateY(8px); } }
+
+.obj ul { list-style: none; margin: 0; padding: 0; }
+.obj-pozn { margin: 14px 0 0; font-size: 0.875rem; color: var(--paper-2, #c9beae); }
+.obj-silne { font-size: 1rem; color: var(--paper, #f1e9dd); }
+.obj-zivy { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* 1. služby: riadky oddelené linkou, ako cenník */
+.obj-sluzby li + li { border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.obj-sluzby button { width: 100%; min-height: 60px; padding: 12px 4px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: baseline; text-align: left;
+  transition: color var(--t-micro, 200ms) var(--ease-out, ease), padding var(--t-micro, 200ms) var(--ease-out, ease); }
+.obj-sluzby button:hover, .obj-sluzby button.je { color: var(--lamp-2, #f07e3c); padding-left: 10px; box-shadow: inset 2px 0 0 var(--lamp, #e0601c); }
+.obj-n { font-weight: 700; font-size: 1rem; min-width: 0; overflow-wrap: anywhere; }
+.obj-m { font-size: 0.875rem; color: var(--paper-2, #c9beae); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* 2. tím */
+.obj-tim { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 12px; }
+.obj-tim button { width: 100%; height: 100%; min-height: 64px; padding: 10px; display: grid; grid-template-columns: 48px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 12px; align-items: center; text-align: left;
+  border: 1px solid var(--line, rgba(241, 233, 221, 0.14)) !important; border-radius: var(--radius, 8px); transition: border-color var(--t-micro, 200ms) var(--ease-out, ease); }
+.obj-tim button:hover, .obj-tim button.je { border-color: var(--lamp, #e0601c) !important; }
+.obj-tim img, .obj-mono { grid-row: 1 / span 2; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; background: var(--ink-3, #221d19); }
+.obj-mono { display: grid; place-items: center; font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; color: var(--lamp-2, #f07e3c); }
+.obj-tim .obj-n { align-self: end; }
+.obj-tim .obj-n:only-of-type { grid-row: 1 / span 2; align-self: center; }
+.obj-tim .obj-m { align-self: start; white-space: normal; font-size: 0.8125rem; }
+
+/* 3. dni (pás na posúvanie) a voľné časy */
+.obj-dni { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; padding: 2px 2px 10px; margin: 0 -2px; scrollbar-width: thin; }
+.obj-dni button { flex: none; width: 4.25rem; min-height: 84px; padding: 8px 4px; display: grid; justify-items: center; gap: 2px; scroll-snap-align: start;
+  border: 1px solid var(--line, rgba(241, 233, 221, 0.14)) !important; border-radius: var(--radius, 8px); }
+.obj-dni button b { font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-size: 1.5rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.obj-dt, .obj-mes { font-size: 0.75rem; color: var(--paper-2, #c9beae); }
+.obj-dt { text-transform: capitalize; }
+.obj-dni button:hover:not(:disabled) { border-color: var(--paper, #f1e9dd) !important; }
+.obj-dni button.je { background: var(--lamp, #e0601c); border-color: var(--lamp, #e0601c) !important; color: var(--ink, #0e0d0c); }
+.obj-dni button.je .obj-dt, .obj-dni button.je .obj-mes { color: var(--ink, #0e0d0c); }
+.obj-dni button.zav { opacity: 0.4; cursor: default; }
+.obj-dni button.zav .obj-mes { font-size: 0.6875rem; }
+.obj-casy { margin-top: 18px; min-height: 6rem; }
+.obj-mriezka { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.25rem, 1fr)); gap: 8px; }
+.obj-mriezka button { width: 100%; min-height: 48px; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)) !important; border-radius: var(--radius-btn, 6px);
+  font-weight: 700; font-size: 1rem; font-variant-numeric: tabular-nums; transition: background-color var(--t-micro, 200ms) var(--ease-out, ease), color var(--t-micro, 200ms) var(--ease-out, ease); }
+.obj-mriezka button:hover { background: var(--lamp, #e0601c); border-color: var(--lamp, #e0601c) !important; color: var(--ink, #0e0d0c); }
+.obj-mriezka button:active, .obj-tim button:active, .obj-sluzby button:active, .obj-dni button:active:not(:disabled) { transform: translateY(1px); }
+
+/* 4. výber a ďalší krok */
+.obj-suhrn { margin: 0; border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.obj-suhrn div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.obj-suhrn dt { font-weight: 700; text-transform: none; }
+.obj-suhrn dt::first-letter { text-transform: uppercase; }
+.obj-suhrn dd { margin: 0; color: var(--paper-2, #c9beae); font-variant-numeric: tabular-nums; }
+.obj-akcie { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.obj-akcie .btn { flex: 1 1 15rem; white-space: normal; text-align: center; line-height: 1.25; }
+
+.obj-pata { padding: 10px 20px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.obj-tel { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper, #f1e9dd); font-weight: 600; font-size: 0.9375rem; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp, #e0601c); }
+
+@media (max-width: 640px) {
+  .obj { width: 100%; height: 100%; height: 100dvh; border: 0; border-radius: 0; }
+  .obj-hlava { padding: max(10px, env(safe-area-inset-top)) 10px 8px 16px; }
+  .obj-pruh, .obj-obsah, .obj-pata { padding-inline: 16px; }
+  .obj-tim { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .obj-akcie .btn { flex-basis: 100%; }
+}
+@media (max-width: 380px) { .obj-tim { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .obj-css .obj[open], .obj-telo.obj-prichod { animation: none; }
+  .obj * { transition: none !important; }
+}
+html.obj-otvorene { overflow: hidden; }

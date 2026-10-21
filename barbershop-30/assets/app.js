@@ -396,6 +396,41 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
+   7b4. Objednávka (assets/objednavka.js): služba → barber → deň a voľný čas z rezervačného kalendára v štýle webu.
+   Zapne ju nasadenie (pages.yml) atribútom data-objednavka na <html> s adresou servera, len so súhlasom prevádzky
+   rezervačného systému; bez neho odkazy Objednať sa vedú rovno do rezervačného systému. Na vlastnom počítači ide
+   skúšobný server cez ?objednavka=<adresa>, ?objednavka=off ju vypne.
+   ---------------------------------------------------------------------------- */
+(function objednavka() {
+  const q = new URLSearchParams(location.search).get('objednavka');
+  const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const api = q === 'off' ? '' : (lokal && q) || html.dataset.objednavka || '';
+  if (!/^https?:\/\//.test(api)) return;
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    import('./objednavka.js').then((m) => m.spusti(api)).catch(() => {});
+  };
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+  const later = () => setTimeout(load, 2500);
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+})();
+
+/* ----------------------------------------------------------------------------
+   7b5. Vizitka a vernostná kartička (assets/karty.js) v pásme pod kontaktom. Sú v samostatnom module, aby HTML ostalo
+   v prvom okne TCP; kontakt bez skriptu je v pásme nad nimi a v pätičke.
+   ---------------------------------------------------------------------------- */
+(function karty() {
+  const kontakt = document.querySelector('.band-contact');
+  if (!kontakt) return;
+  const load = () => import('./karty.js').then((m) => m.spusti(kontakt)).catch(() => {});
+  // ďaleko pod prvou obrazovkou: po načítaní stránky, keď prehliadač nemá čo robiť
+  const later = () => (window.requestIdleCallback ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 600));
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+})();
+
+/* ----------------------------------------------------------------------------
    7c. Jazyky (assets/i18n.js, slovníky assets/i18n/*.json). Pri ?lang= alebo uloženej voľbe sa modul načíta hneď
    (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak pri prvom geste alebo 3,5 s po načítaní (prepínač, ponuka).
    ---------------------------------------------------------------------------- */
