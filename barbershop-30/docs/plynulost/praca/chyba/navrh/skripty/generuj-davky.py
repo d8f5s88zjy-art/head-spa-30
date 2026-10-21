@@ -1,4 +1,4 @@
-# Strojová podoba dávok D6a-0, D6a, D6b, D6c a D7 z PLAN-D6-D7.md (po 2. kole skeptika, 20. 10. 2026).
+# Strojová podoba dávok D6a-0, D6a, D6b, D6c a D7 z PLAN-D6-D7.md (po 3. kole skeptika, 20. 10. 2026).
 # Použitie: python3 -I generuj-davky.py <PLAN-D6-D7.md> <davky-d6-d7.json>
 # Obsah je prepis plánu; zhodu N-bodov, E-efektov, otázok a zoznamu „nerobiť“ overuje zhoda.py.
 import sys, json, pathlib, datetime
@@ -135,7 +135,7 @@ D7 = {
   "Tri smery (A Okno do miestnosti, B Tichý editoriál, C Materiál a znak) najprv ako statické štúdie pásu cenníka a karty „Kde nás nájdeš“ pri 390×844 a 1440×900 zo skutočných podkladov (chyba/navrh/studie/). Odporúčaný smer A: rieši prerušenú súvislosť film → pásy skutočnými fotkami, nemení paletu, písma ani karty, nepridáva JS na snímku, napĺňa ZADANIE bod 2. Zo smeru B len sadzba citácie (E6) a čitateľnejší cenník, ktorý rieši D6a bez nového písma (R12); zo smeru C nič. Ak štúdie A pri 390 px ukážu opakovanie galérie alebo horšie čítanie cenníka, nastupuje B bez okien.",
   "E1 FX046 „okná miestnosti“ (N38, N18, N16): najviac 6 okien zo 7 kandidátov (Strih – naradie-noznice; Brada a holenie – detail-stol; Doplnky – foto-45; Balíčky – vyberie štúdia; položka „Deti“ v Pred návštevou – foto-29 COPS; položka poukážok a produktov – foto-40 len výrez pultu bez figúrky, vizitiek a TV; karta „Kde nás nájdeš“ – foto-37 vchod). Okno je <figure class=\"okno\"> s <picture>: <source type=image/avif srcset 480w/800w/1200w>, <source type=image/webp …>, <img src srcset sizes=\"(max-width: 800px) calc(100vw - 32px), 600px\" width height loading=\"lazy\" decoding=\"async\" alt=\"\"> (R13). Prvky vytvorí app.js jednorazovo v nečinnosti po load (requestIdleCallback, záloha setTimeout 1 s) alebo pri is-near pásu, ak nastane skôr; dve okná v Pred návštevou vytvorí modul. Miesto rezervuje CSS vopred (padding-top hostiteľa v pomere strán, okno absolútne v ňom), vloženie nič neposunie (CLS 0). Stiahnutie riadi natívne loading=lazy; po load (alebo complete) img.decode() na tom istom prvku a až potom is-ready (jednorazová opacity 0 → 1 za 200 ms na kompozitore; pri obmedzení pohybu bez prechodu). Dovtedy náhľad z nahlady.css (D2) ako pozadie figure. 0 B v HTML (šesť <picture> v HTML by stálo +324 B gzip), každý súbor ≤ 40 kB AVIF, nikdy v prvom obraze.",
   "E2 FX007 paralaxa jednej vrstvy ≤ 6 %: @supports (animation-timeline: view()) a prefers-reduced-motion: no-preference, translateY −3 % → +3 % na <img> v okne (R13), len transform; <img> je o 6 % vyšší než okno (height 106 %, object-fit cover, figure overflow hidden), aby sa neodkryl tmavý okraj. Bez podpory a pri obmedzení pohybu statické; 0 zápisov z JS; ak brána štýlu (+0,2 ms) neprejde, E2 sa vypne a E1 ostane.",
-  "E3 FX012 prelínanie v lightboxe (N37, Z046; app.js:481–529): klik, šípka alebo švih spustí stiahnutie a img.decode() novej fotky, popis stojí; potom v jednej snímke výmena popisu a 300 ms lineárne prelínanie dvoch vrstiev <img>, stará vrstva sa odpojí. Platí len posledná požiadavka (C055), predčítanie ± 1, ≤ 3 dekódované fotky, INP ≤ 200 ms. Pri obmedzení pohybu okamžitá výmena po dekódovaní.",
+  "E3 FX012 prelínanie v lightboxe (N37, Z046; app.js:457–543): klik, šípka alebo švih spustí stiahnutie a img.decode() novej fotky, popis stojí; potom v jednej snímke výmena popisu a 300 ms lineárne prelínanie dvoch vrstiev <img>, stará vrstva sa odpojí. Platí len posledná požiadavka (C055), predčítanie ± 1, ≤ 3 dekódované fotky, INP ≤ 200 ms. Pri obmedzení pohybu okamžitá výmena po dekódovaní.",
   "E4 FX053 švih a počítadlo (N25): švih v lightboxe cez pointer events (prah 40 px, |dx| > 1,5×|dy|, inak natívny skrol). Počítadlo „n / 10“ a tlačidlá ← → LEN pri páse tímu (IntersectionObserver na 10 kartách, text aria-hidden, aria-label s kľúčom v 7 slovníkoch, ciele ≥ 44 px); galéria a recenzie počítadlo nedostanú (galéria má lightbox s ← → a švihom, pás recenzií je krátky).",
   "E5 FX006/FX002 plynulé otvorenie <details> v Pred návštevou (::details-content + interpolate-size: allow-keywords, 0 → auto za 200 ms, bez JS); bez podpory a pri obmedzení pohybu okamžite.",
   "E6 sadzba citácie pri rezervácii (N21, zo smeru B): Fraunces 500 italic, ≤ 62 znakov na riadok, meno a „Google“ v Manrope. 0 nákladov.",
@@ -210,7 +210,7 @@ NEROBIT = [
 data = {
  "vygenerovane": {
   "datum": datetime.date(2026, 10, 20).isoformat(),
-  "z": "PLAN-D6-D7.md po 2. kole skeptika (rozhodnutia hlavného agenta 1–6, časť 11.1)",
+  "z": "PLAN-D6-D7.md po 3. kole skeptika (rozhodnutia hlavného agenta 1–6, časť 11.1; opravy citácií, časť 11.2)",
   "skript": "chyba/navrh/skripty/generuj-davky.py",
   "kontrola_zhody": "chyba/navrh/zhoda.py → chyba/navrh/zhoda.txt",
  },

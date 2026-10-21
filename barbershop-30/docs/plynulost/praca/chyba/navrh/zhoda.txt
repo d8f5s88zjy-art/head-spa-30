@@ -1,0 +1,76 @@
+Kontrola zhody plánu a JSON, PLAN-D6-D7.md ↔ davky-d6-d7.json: ZHODA: 0 chýb
+OK   N-body: plán 41 == JSON 41 (N01, N02, N03, N04, N05, N06, N07, N08, N09, N10, N11, N12, N13, N14, N15, N16, N17, N18, N19, N20, N21, N22, N23, N24, N25, N26, N27, N28, N29, N30, N31, N32, N33, N34, N35, N36, N37, N38, N39, N40, N41)
+OK   N01 → D6a-0
+OK   N02 → D6a-0
+OK   N03 → D6a
+OK   N04 → D6a
+OK   N05 → D6a
+OK   N05 → D6b
+OK   N06 → D6a
+OK   N07 → D6a
+OK   N08 → D6a
+OK   N09 → D6a
+OK   N10 → D6a
+OK   N11 → D6a
+OK   N12 → D6a
+OK   N12 → D6b
+OK   N13 → D6b
+OK   N14 → D6b
+OK   N15 → D6b
+OK   N16 → D6b
+OK   N17 → D6b
+OK   N18 → D6b
+OK   N18 → D7
+OK   N19 → D6b
+OK   N20 → D6b
+OK   N21 → D6b
+OK   N21 → D7
+OK   N22 → D6b
+OK   N23 → D6b
+OK   N24 → D6b
+OK   N25 → D7
+OK   N26 (bez dávky: „čaká“) → JSON: otázky, dávky
+OK   N27 (bez dávky: „čaká“) → JSON: otázky, nerobiť, dávky
+OK   N28 (bez dávky: „čaká“) → JSON: otázky, dávky
+OK   N29 (bez dávky: „čaká“) → JSON: otázky, dávky
+OK   N30 (bez dávky: „otázka“) → JSON: otázky, nerobiť
+OK   N31 (bez dávky: „čaká na potvrdenie“) → JSON: otázky, nerobiť, dávky
+OK   N32 (bez dávky: „po spustení servera“) → JSON: otázky, nerobiť, dávky
+OK   N33 → D6c
+OK   N34 → D6c
+OK   N35 → D6c
+OK   N36 (bez dávky: „otázka (pred spustením na doméne)“) → JSON: otázky
+OK   N37 → D7
+OK   N38 → D7
+OK   N39 (bez dávky: „rozhodnutie R9“) → JSON: nerobiť, dávky
+OK   N40 (bez dávky: „otázka“) → JSON: otázky, dávky
+OK   N41 (bez dávky: „otázka“) → JSON: otázky
+OK   efekty E1–E6: plán == JSON D7
+OK   otázky 1–24: plán == JSON
+OK   dávky a poradie: ['D6a-0', 'D6a', 'D6b', 'D6c', 'D7']
+OK   D6a-0: všetkých 9 polí
+OK   D6a-0: kapitoly skillu ['C001', 'C059', 'C081', 'C083']
+OK   D6a: všetkých 9 polí
+OK   D6a: kapitoly skillu ['C001', 'C015', 'C019', 'C023', 'C059', 'C061', 'C069', 'C075', 'C078', 'C081', 'C083', 'C091', 'C100']
+OK   D6b: všetkých 9 polí
+OK   D6b: kapitoly skillu ['C019', 'C021', 'C022', 'C027', 'C066', 'C069', 'C074', 'C075', 'C081', 'C083']
+OK   D6c: všetkých 9 polí
+OK   D6c: kapitoly skillu ['C056', 'C069', 'C078', 'C088', 'C089', 'C091', 'C100']
+OK   D7: všetkých 9 polí
+OK   D7: kapitoly skillu ['C016', 'C017', 'C023', 'C024', 'C032', 'C042', 'C043', 'C050', 'C055', 'C057', 'C076', 'C084', 'C087', 'C100']
+OK   pole otazky_pre_majitela: 24 položiek
+OK   pole nerobit: 19 položiek
+OK   nerobiť: 19 bodov v pláne == JSON
+OK   R2 v pláne aj v JSON
+OK   R11 v pláne aj v JSON
+OK   R12 v pláne aj v JSON
+OK   R13 v pláne aj v JSON
+OK   R14 v pláne aj v JSON
+OK   R15 v pláne aj v JSON
+OK   N07 bez nového písma / tnum: v JSON
+OK   nepotvrdené skryté: v JSON
+OK   D6b technika v HTML + lenivo: v JSON
+OK   E1 picture/decode: v JSON
+OK   E4 len pás tímu: v JSON
+OK   ikony raster favicon.svg: v JSON
+OK   vernostná A/B: v JSON

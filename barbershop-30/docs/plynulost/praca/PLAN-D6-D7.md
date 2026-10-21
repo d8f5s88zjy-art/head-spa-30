@@ -87,8 +87,9 @@ Pokyn majiteľa (20. 10. 2026): „Zlepši a zdokonaľ Barbershop, doplň tam ve
    oprava **D6a‑0**, ktorá mení len súbory mimo D1–D5: `/404.html`, jeden riadok pätičky `index.html`, `assets/vernost.js`,
    `.github/workflows/pages.yml`, `tools/ftp-balik.sh`, nové kľúče 404 v 7 slovníkoch, nový `barbershop-30/404.html`
    a `source/tools/over-404.mjs`. Overené v `davky.json` a v zozname zmien commitu `7ea247c`: D1 nemení ani jeden z nich.
-   D5 mení v `index.html` len hlavičku, prvé karty a galériu; do slovníkov môže pridať kľúče, preto sa kľúče 404 pridajú
-   ako samostatný blok a pri zlúčení sa slovníky overia `i18n-test.mjs`.
+   D5 mení v `index.html` len hlavičku (K15), kartu Poď ďalej (VZ‑01, riadky 212–213), galériu (K13, 681–735)
+   a značku skriptu filmu (T8, riadok 902), nie riadok pätičky 863; do slovníkov môže pridať kľúče, preto sa kľúče
+   404 pridajú ako samostatný blok a pri zlúčení sa slovníky overia `i18n-test.mjs`.
 4. **Rozpočet HTML.** `index.html` má dnes 14 409 B gzip (`gzip -c index.html | wc -c`; `gzip -9c` dáva 14 380 B),
    strop je 14 600 B (prvé okno TCP, README, D2); rezerva je teda 191 B.
    D5 mení `index.html` (`sizes` galérie, karta Poď ďalej, načítanie filmu) a má ten istý strop 14 600 B, preto sa
@@ -801,7 +802,7 @@ Potom nastupuje smer B bez okien.
 |---|---|---|---|---|---|---|---|---|
 | E1 | **FX046** Skladanie vrstiev: „okná miestnosti“ | Hlavičky skupín cenníka (kandidáti: Strih – `naradie-noznice`; Brada a holenie – `detail-stol`; Doplnky – foto‑45 pracovné miesto; Balíčky – vyberie štúdia), položka „Deti“ v „Pred návštevou“ (foto‑29 COPS), položka poukážok a produktov tamtiež (foto‑40 recepcia, ľudia nie), karta „Kde nás nájdeš“ (foto‑37 vchod s rohožkou). Kandidátov je 7, štúdia vyberie najviac 6. Foto‑40 len výrez pultu s boxom „DARČEKOVÁ POUKÁŽKA“: bez figúrky Mickey Mouse, vizitiek so Salónom 30 a tvárou a bez TV (ten istý dôvod ako vylúčenie foto‑17 v MEDIA_SELECTION). Výber potvrdiť pohľadom na fotky (C016, súpis záberov). | Návštevník vie, kde v prevádzke je a o čom je skupina. Tmavý pás má obraz. | Okno je statický `<figure class="okno">` s `<picture>`: `<source type="image/avif" srcset="480w, 800w, 1200w">`, `<source type="image/webp" …>` a `<img src srcset sizes width height loading="lazy" decoding="async" alt="">` (R13). Prvky vytvorí `app.js` jednorazovo v nečinnosti po `load` (`requestIdleCallback`, záloha `setTimeout` 1 s) alebo pri `is-near` pásu (IO z `app.js`, vzor D2), ak nastane skôr; dve okná v „Pred návštevou“ vytvorí modul. Miesto rezervuje CSS vopred (`padding-top` hostiteľa v pomere strán okna, okno absolútne v ňom), takže vloženie nič neposunie. Stiahnutie riadi natívne `loading="lazy"`; po udalosti `load` (alebo pri `complete`) sa zavolá `img.decode()` na tom istom prvku a až po splnení dostane okno `is-ready` (jednorazový prechod `opacity` 0 → 1 za 200 ms na kompozitore). Dovtedy ukazuje náhľad z `nahlady.css` (D2) ako pozadie `figure`. Pri prerušení a návrate sa nič neanimuje. | Tá istá. | Tá istá, odhalenie bez prechodu. | Spolu ≤ 6 okien, každý súbor ≤ 40 kB AVIF (aj kandidát 1200w). Len lenivo, nikdy v prvom obraze (`vaha.mjs`: prvý obraz +0 B). Pomer strán rezervovaný CSS (CLS 0). Kandidáti 480w, 800w, 1200w so `sizes="(max-width: 800px) calc(100vw - 32px), 600px"`; prehliadač vyberie podľa DPR, 1200w je strop. 0 B v HTML (šesť `<picture>` v HTML by stálo +324 B gzip, zmerané). Vytvorenie všetkých okien naraz bez úlohy > 50 ms pri CPU 4×, 0 ms JS na snímku pri skrole. | `app.js` (vytvorenie, dekódovanie, 5 okien), modul `navsteva.js` (2 okná), `style.css` (rezervácia, odhalenie); obrázky `build_images.py` |
 | E2 | **FX007** Paralaxa (jedna vrstva, ≤ 6 %) | Obrázok v okne E1 | Jemný pohyb kamery aj v pásoch, filmový jazyk bez filmu | `@supports (animation-timeline: view())` a `prefers-reduced-motion: no-preference`: `translateY` −3 % → +3 % na `<img>` v okne (R13), len `transform` (kompozitor). `<img>` je o 6 % vyšší než okno (`height: 106%`, `object-fit: cover`, `figure` s `overflow: hidden`; presah 3 % hore aj dole), aby sa pri posune nikdy neodkryl tmavý okraj. Bez podpory statické. | Statické okno. | Statické okno. | 0 zápisov z JS. Štýl na snímku počas skrolu ≤ výsledok D5 + 0,2 ms. Ak brána neprejde, E2 sa vypne a E1 ostane. | CSS animácia; `app.js` na okná nesiaha |
-| E3 | **FX012** Prelínanie v lightboxe (Z046) | Lightbox galérie (`app.js:481–529`) | Odstrániť nesúlad popisu a fotky a tvrdý strih (N37) | Klik, šípka alebo švih spustí stiahnutie a `img.decode()` novej fotky; popis stojí. Potom sa v jednej snímke vymení popis a začne 300 ms lineárne prelínanie dvoch vrstiev `<img>`. Stará vrstva sa po konci odpojí. Nová požiadavka počas čakania zruší predošlú (len posledná, C055). Počas prelínania sa aktuálne prelínanie dokončí hneď a začne ďalšie. Po zobrazení sa predčítajú susedia ± 1. | Okamžitá výmena po dekódovaní. | Okamžitá výmena po dekódovaní, rovnaká rezervovaná plocha. | ≤ 3 dekódované fotky v pamäti. Žiadna úloha > 50 ms pri CPU 4×. INP ≤ 200 ms. | Modul lightboxu v `app.js` |
+| E3 | **FX012** Prelínanie v lightboxe (Z046) | Lightbox galérie (`setupLightbox`, `app.js:457–543`) | Odstrániť nesúlad popisu a fotky a tvrdý strih (N37) | Klik, šípka alebo švih spustí stiahnutie a `img.decode()` novej fotky; popis stojí. Potom sa v jednej snímke vymení popis a začne 300 ms lineárne prelínanie dvoch vrstiev `<img>`. Stará vrstva sa po konci odpojí. Nová požiadavka počas čakania zruší predošlú (len posledná, C055). Počas prelínania sa aktuálne prelínanie dokončí hneď a začne ďalšie. Po zobrazení sa predčítajú susedia ± 1. | Okamžitá výmena po dekódovaní. | Okamžitá výmena po dekódovaní, rovnaká rezervovaná plocha. | ≤ 3 dekódované fotky v pamäti. Žiadna úloha > 50 ms pri CPU 4×. INP ≤ 200 ms. | Modul lightboxu v `app.js` |
 | E4 | **FX053** Švih a počítadlo | Lightbox (švih). Len pás tímu (počítadlo „3 / 10“ + tlačidlá ← → na počítači a klávesnici). Galéria a recenzie počítadlo nedostanú: galéria má lightbox s vlastným ← → a švihom, pás recenzií je krátky. | Kto hľadá svojho barbera, vie, koľko kariet ostáva (N25). V lightboxe sa listuje prstom. | Švih cez pointer events: prah 40 px a \|dx\| > 1,5 × \|dy\|, inak natívny skrol, klik a ťah sa rozlišujú. Počítadlo sa mení podľa IntersectionObserver na 10 kartách tímu (nie podľa scroll). Text počítadla je `aria-hidden`, tlačidlá majú `aria-label` (kľúč v 7 slovníkoch). | Zoznam so scroll‑snap. | Bez plynulého posunu (`scroll-behavior: auto`). | Len IO na 10 kartách, 0 práce na snímku. Ciele dotyku ≥ 44 px. | `app.js` (pás tímu, lightbox) |
 | E5 | **FX006/FX002** Otváranie odpovedí | `<details>` v „Pred návštevou“ | Plynulé otvorenie bez skoku | `::details-content` + `interpolate-size: allow-keywords` (0 → auto za 200 ms). Bez podpory sa otvorí hneď. Žiadny JS. | Okamžité otvorenie. | Okamžité otvorenie. | Animuje sa layout len jednej položky pri ťuknutí, nie počas skrolu. LoAF pri otvorení ≤ 50 ms pri CPU 4×. | CSS |
 | E6 | Sadzba citácie (zo smeru B) | Recenzia pri rezervácii (D6b, bod 14) | Dôkaz pri rozhodnutí bez ďalšieho prvku | Statická sadzba Fraunces 500 italic, ≤ 62 znakov na riadok, meno a „Google“ v Manrope. | Tá istá. | Tá istá. | 0. | CSS |
@@ -1062,7 +1063,7 @@ skutočné zariadenia) platia ďalej a tu sa neopakujú.
 | Dávka | Kedy | Závisí od | Optimisticky / očakávane / ťažko | Čo spôsobuje rozptyl |
 |---|---|---|---|---|
 | D6a‑0 | hneď na `main` | nič | 1 / 2 / 3 h | emulácia 404 servera, porovnanie variantu HEAD SPA |
-| D6a | po zlúčení D5 | D1 (tabuľa), D2 (skok z menu) | 6 / 9 / 14 h | tabuľa po D1, ikony z kriviek, pravne.html a jej kontrola, rozpočet HTML |
+| D6a | po zlúčení D5 | D1 (tabuľa), D2 (skok z menu) | 6 / 9 / 14 h | tabuľa po D1, ikony rastrom z `favicon.svg` (písmo v rasterizéri, R14), `pravne.html` a jej kontrola, rozpočet HTML |
 | D6b | po D6a | D6a (hodiny.js, nástroj), odpovede majiteľa len pre skryté položky | 8 / 12 / 18 h | vloženie bez posunu kotiev, preklad do 8 jazykov, druhé overenie zdrojov |
 | D7 | po D6b | D2 (náhľady), D5 (pásy, content‑visibility) | 10 / 16 / 24 h | štúdie troch smerov, výber fotiek, brány výkonu, lightbox, okná ako `<picture>` z JS s rezerváciou v CSS |
 | D6c | keď majiteľ dá súhlas a prístupy | D6a, D6b, D7 | 6 / 12 / 24 h + čakanie | hosting, rezervačná aplikácia na tej istej doméne, DNS |
@@ -1131,3 +1132,20 @@ Sporné body (rozhodnutie pred implementáciou) sú vo výstupe recenzie, nie v 
    rastrom z `favicon.svg` bez kriviek (R14); vernostná kartička s dvoma možnosťami, vyberie majiteľ (R15, otázka 15).
 
 Verzia pred týmto kolom: `chyba/navrh/PLAN-D6-D7.pred-skeptikom-2.md`; úpravy: `chyba/navrh/skripty/zapracuj-skeptika.py`.
+
+### 11.2 Tretie kolo (skeptik, 20. 10. 2026): overenie zapracovania a tri opravy citácií
+
+Overené proti kódu (kópia `hs-tool/barbershop-30`) a proti `PLAN.md`: body 1–6 z 2. kola sú v texte (R11–R15, D6a bod 5,
+D6b technika s rozpočtom a poradím vypúšťania, E1 ako `<picture>`/`<img>` s `img.decode()`, E4 len pás tímu, ikony
+rastrom, kartička A/B s otázkou 15); `zhoda.py` dáva ZHODA, 0 chýb; v pláne nie je žiadny predpoklad variabilného písma,
+`image-set` ani `new Image`; nepotvrdené údaje sú označené ako skryté v časti 0 (bod 4), tabuľke časti 2, R11, D6b
+(body 3, 7, 8, 11, 14, 17), časti 6 a časti 8. Citované riadky kódu (`fonts.css`, `style.css`, `i18n.js`, `app.js`,
+`vernost.js`, `index.html`), veľkosti gzip, 7 × 262 kľúčov, commit `7ea247c` v `hs2` a súbory dôkazov existujú a sedia.
+Opravené priamo:
+- časť 9, riadok D6a: „ikony z kriviek“ → ikony rastrom z `favicon.svg` (zvyšok z verzie pred R14),
+- E3: lightbox je `setupLightbox` v `app.js:457–543` (nie 481–529); rovnako v `generuj-davky.py` a v JSON,
+- časť 1, bod 3: D5 mení v `index.html` aj značku skriptu filmu (T8, riadok 902), nielen hlavičku, kartu Poď ďalej
+  a galériu; riadok pätičky 863 D5 nemení (D6a‑0 ostáva bez konfliktu).
+
+Záloha: `chyba/navrh/PLAN-D6-D7.pred-skeptikom-3.md`; skript: `chyba/navrh/skripty/skeptik-3-kolo.py`; JSON vygenerovaný
+nanovo a `zhoda.txt` obnovený.

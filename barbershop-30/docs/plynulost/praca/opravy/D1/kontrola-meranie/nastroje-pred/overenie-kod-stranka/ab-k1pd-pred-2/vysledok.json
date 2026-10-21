@@ -1,0 +1,626 @@
+{
+ "okno_s": 6177.2,
+ "ulohy": 3713,
+ "dlhe_ulohy": [
+  {
+   "ts": 536,
+   "ms": 297.9,
+   "parts": [
+    "FireAnimationFrame 221.6",
+    "FunctionCall app.js:tick:233 219.3",
+    "Layout 183.3",
+    "UpdateLayoutTree 51.9",
+    "Paint 31.4",
+    "PrePaint 18.7",
+    "Commit 3.3",
+    "Layerize 3.3"
+   ]
+  },
+  {
+   "ts": 3534.6,
+   "ms": 70.1,
+   "parts": [
+    "UpdateLayoutTree 37",
+    "Paint 5.6",
+    "FireAnimationFrame 5.5",
+    "FunctionCall app.js:tick:233 4.5",
+    "Layerize 4",
+    "Layout 3.1",
+    "HitTest 3",
+    "PrePaint 2.7"
+   ]
+  },
+  {
+   "ts": 3642.5,
+   "ms": 50.9,
+   "parts": [
+    "UpdateLayoutTree 28.6",
+    "FireAnimationFrame 5.7",
+    "FunctionCall app.js:tick:233 5.6",
+    "Paint 5.3",
+    "Layerize 3.5",
+    "PrePaint 3.2",
+    "Commit 2.5",
+    "IntersectionObserverController::computeIntersections 1"
+   ]
+  }
+ ],
+ "hlavne_vlakno_ms": {
+  "spolu": 4079.1,
+  "skript": 688.3,
+  "styl": 1403.7,
+  "layout": 247,
+  "prepaint": 199.8,
+  "paint": 165.7,
+  "layerize": 264.9,
+  "commit": 282.4,
+  "dekodovanie": 0
+ },
+ "styl_prepocty": {
+  "n": 337,
+  "prvkov_p50": 12,
+  "prvkov_p95": 56,
+  "prvkov_max": 122,
+  "velke": []
+ },
+ "vynutene": [
+  {
+   "k": "Layout <- app.js:readTarget:147",
+   "n": 10,
+   "ms": 205
+  },
+  {
+   "k": "UpdateLayoutTree <- app.js:readTarget:147",
+   "n": 113,
+   "ms": 200.5
+  }
+ ],
+ "paint": {
+  "n": 285,
+  "ms": 209.7,
+  "podla_uzla": [
+   {
+    "nodeId": 2,
+    "n": 65,
+    "ms": 165.7,
+    "plocha_kpx": 370112,
+    "prvok": "#document"
+   },
+   {
+    "nodeId": 37,
+    "n": 43,
+    "ms": 9.6,
+    "plocha_kpx": 34786,
+    "prvok": "ul.gallery-grid"
+   },
+   {
+    "nodeId": 38,
+    "n": 11,
+    "ms": 3.1,
+    "plocha_kpx": 3521575,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 36,
+    "n": 43,
+    "ms": 2.8,
+    "plocha_kpx": 51579,
+    "prvok": "ul.team-grid"
+   },
+   {
+    "nodeId": 81,
+    "n": 1,
+    "ms": 2.2,
+    "plocha_kpx": 281474943156,
+    "prvok": "div.mobile-cta"
+   },
+   {
+    "nodeId": 51,
+    "n": 2,
+    "ms": 2.2,
+    "plocha_kpx": 562949886312,
+    "prvok": "p.kicker"
+   },
+   {
+    "nodeId": 45,
+    "n": 13,
+    "ms": 1.7,
+    "plocha_kpx": 4270445,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 88,
+    "n": 1,
+    "ms": 1.4,
+    "plocha_kpx": 605945,
+    "prvok": "img"
+   },
+   {
+    "nodeId": 61,
+    "n": 2,
+    "ms": 1.4,
+    "plocha_kpx": 703383,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 96,
+    "n": 5,
+    "ms": 1.2,
+    "plocha_kpx": 1407374715781,
+    "prvok": "span.kw"
+   },
+   {
+    "nodeId": 75,
+    "n": 1,
+    "ms": 1.2,
+    "plocha_kpx": 325338,
+    "prvok": "div.title-pin"
+   },
+   {
+    "nodeId": 128,
+    "n": 3,
+    "ms": 1.2,
+    "plocha_kpx": 1157037,
+    "prvok": "div.title-card"
+   }
+  ]
+ },
+ "skripty": [
+  {
+   "k": "FunctionCall app.js:tick:233",
+   "n": 120,
+   "ms": 523.7,
+   "max": 219.3
+  },
+  {
+   "k": "FunctionCall :f:1",
+   "n": 224,
+   "ms": 88.3,
+   "max": 1.8
+  },
+  {
+   "k": "FunctionCall i18n.js:?:267",
+   "n": 1,
+   "ms": 25.5,
+   "max": 25.5
+  },
+  {
+   "k": "FunctionCall app.js:start:257",
+   "n": 72,
+   "ms": 14.9,
+   "max": 2.3
+  },
+  {
+   "k": "FunctionCall :?:7",
+   "n": 13,
+   "ms": 5.8,
+   "max": 1
+  },
+  {
+   "k": "FunctionCall atmosfera.js:ready:227",
+   "n": 1,
+   "ms": 5.4,
+   "max": 5.4
+  },
+  {
+   "k": "FunctionCall i18n.js:build:190",
+   "n": 1,
+   "ms": 5.4,
+   "max": 5.4
+  },
+  {
+   "k": "FunctionCall :PerformanceObserver.observe.type:4",
+   "n": 7,
+   "ms": 4.9,
+   "max": 1.4
+  },
+  {
+   "k": "FunctionCall app.js:load:352",
+   "n": 4,
+   "ms": 4.9,
+   "max": 4.8
+  },
+  {
+   "k": "FunctionCall app.js:load:385",
+   "n": 4,
+   "ms": 2.8,
+   "max": 2.8
+  },
+  {
+   "k": "FunctionCall app.js:?:618",
+   "n": 2,
+   "ms": 2.1,
+   "max": 1.3
+  },
+  {
+   "k": "FunctionCall i18n.js:offer:237",
+   "n": 1,
+   "ms": 1.6,
+   "max": 1.6
+  },
+  {
+   "k": "FunctionCall vernost.js:overUlozenu:180",
+   "n": 1,
+   "ms": 1.2,
+   "max": 1.2
+  },
+  {
+   "k": "FunctionCall film.js:markMove:76",
+   "n": 1,
+   "ms": 1,
+   "max": 1
+  },
+  {
+   "k": "FunctionCall app.js:addEventListener.once:358",
+   "n": 2,
+   "ms": 0.9,
+   "max": 0.9
+  }
+ ],
+ "raster": {
+  "ThreadPoolForegroundWorker": {
+   "n": 288,
+   "ms": 134.2,
+   "max": 5.7
+  }
+ },
+ "dekod_vlakna": {
+  "ThreadPoolForegroundWorker": {
+   "n": 14,
+   "ms": 488.4,
+   "max": 77.7
+  }
+ },
+ "dekod_hlavne": null,
+ "snimky_hlavne": {
+  "n": 289,
+  "nad16_pct": 28.7,
+  "nad50": 3,
+  "spolu": {
+   "p50": 5.83,
+   "p95": 33.17,
+   "avg": 12.45
+  },
+  "FireAnimationFrame": {
+   "p50": 0.9,
+   "p95": 5.21,
+   "avg": 2.27
+  },
+  "UpdateLayoutTree": {
+   "p50": 1.11,
+   "p95": 15.97,
+   "avg": 4.82
+  },
+  "Layout": {
+   "p50": 0,
+   "p95": 1.97,
+   "avg": 0.83
+  },
+  "PrePaint": {
+   "p50": 0.18,
+   "p95": 2.33,
+   "avg": 0.69
+  },
+  "Paint": {
+   "p50": 0,
+   "p95": 4.72,
+   "avg": 0.73
+  },
+  "Layerize": {
+   "p50": 0.01,
+   "p95": 3.49,
+   "avg": 0.92
+  },
+  "Commit": {
+   "p50": 0.67,
+   "p95": 2.96,
+   "avg": 0.98
+  },
+  "HitTest": {
+   "p50": 0,
+   "p95": 2.68,
+   "avg": 0.49
+  },
+  "IO": {
+   "p50": 0.1,
+   "p95": 1.36,
+   "avg": 0.33
+  }
+ },
+ "invalidacie": {
+  "naplanovane": [],
+  "prepocet": [],
+  "n": 0
+ },
+ "snimky": {
+  "n": 222,
+  "p50": 16.7,
+  "p95": 50,
+  "max": 316.6,
+  "nad33_pct": 13.1,
+  "nad100": 1
+ },
+ "loaf": [
+  {
+   "t": 508,
+   "d": 279,
+   "blk": 216,
+   "rs": 18,
+   "sl": 242,
+   "scripts": [
+    {
+     "inv": "LINK.onload",
+     "src": "i18n.js",
+     "fn": "build",
+     "pos": 10705,
+     "d": 5,
+     "forced": 0
+    },
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 220,
+     "forced": 217
+    }
+   ]
+  },
+  {
+   "t": 1054,
+   "d": 51,
+   "blk": 0,
+   "rs": 16,
+   "sl": 21,
+   "scripts": []
+  },
+  {
+   "t": 3513,
+   "d": 66,
+   "blk": 4,
+   "rs": 18,
+   "sl": 26,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 3595,
+   "d": 74,
+   "blk": 0,
+   "rs": 38,
+   "sl": 47,
+   "scripts": [
+    {
+     "inv": "FrameRequestCallback",
+     "src": "app.js",
+     "fn": "tick",
+     "pos": 11350,
+     "d": 5,
+     "forced": 3
+    }
+   ]
+  },
+  {
+   "t": 3684,
+   "d": 67,
+   "blk": 0,
+   "rs": 46,
+   "sl": 52,
+   "scripts": []
+  },
+  {
+   "t": 3795,
+   "d": 55,
+   "blk": 0,
+   "rs": 34,
+   "sl": 41,
+   "scripts": []
+  },
+  {
+   "t": 4238,
+   "d": 52,
+   "blk": 0,
+   "rs": 28,
+   "sl": 32,
+   "scripts": []
+  }
+ ],
+ "loaf_nad50": 7,
+ "layout_shift": [],
+ "zmeny_kotiev": 23,
+ "near_zmeny": [
+  {
+   "t": 3118,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 3801,
+   "shot": "rohozka",
+   "c": "is-title is-shown is-near"
+  },
+  {
+   "t": 3802,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 3802,
+   "shot": "sala",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 3868,
+   "shot": "rohozka",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 4239,
+   "shot": "rohozka",
+   "c": "is-title"
+  },
+  {
+   "t": 4239,
+   "shot": "sala-rano",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 4655,
+   "shot": "sala",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 4655,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 4655,
+   "shot": "stol",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 4986,
+   "shot": "sala",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5074,
+   "shot": "sala",
+   "c": "is-title"
+  },
+  {
+   "t": 5074,
+   "shot": "kreslo-stred",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5697,
+   "shot": "stol",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 5697,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 5754,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown is-on"
+  },
+  {
+   "t": 5805,
+   "shot": "stol",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 5908,
+   "shot": "stol",
+   "c": "is-title"
+  },
+  {
+   "t": 5908,
+   "shot": "kava",
+   "c": "is-title is-near"
+  },
+  {
+   "t": 6573,
+   "shot": "cakaren",
+   "c": "is-title is-near is-shown"
+  },
+  {
+   "t": 6573,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6573,
+   "shot": "sala-rano",
+   "c": "is-title is-near is-on is-shown"
+  },
+  {
+   "t": 6639,
+   "shot": "cakaren",
+   "c": "is-title is-near"
+  }
+ ],
+ "poziadavky": [
+  {
+   "t": 40,
+   "u": "assets/atmosfera.js"
+  },
+  {
+   "t": 40,
+   "u": "assets/i18n.js"
+  },
+  {
+   "t": 271,
+   "u": "assets/atmosfera.css"
+  },
+  {
+   "t": 320,
+   "u": "assets/i18n.css"
+  },
+  {
+   "t": 824,
+   "u": "assets/img/film/cakaren-m-1448.avif"
+  },
+  {
+   "t": 1884,
+   "u": "assets/img/film/sala-rano-m-1448.avif"
+  },
+  {
+   "t": 2726,
+   "u": "assets/img/film/kreslo-stred-m-1448.avif"
+  },
+  {
+   "t": 3404,
+   "u": "assets/img/tim-nikolas-820.avif"
+  },
+  {
+   "t": 3404,
+   "u": "assets/img/tim-kristian-820.avif"
+  },
+  {
+   "t": 3404,
+   "u": "assets/img/tim-damian-820.avif"
+  },
+  {
+   "t": 3404,
+   "u": "assets/img/tim-michal-820.avif"
+  },
+  {
+   "t": 3404,
+   "u": "assets/img/tim-andy-820.avif"
+  },
+  {
+   "t": 3594,
+   "u": "assets/img/film/kava-m-1448.avif"
+  }
+ ],
+ "parametre": {
+  "url": "http://127.0.0.1:8430/barbershop-30/?uvod=off&hudba=off",
+  "scen": "prvy-dotyk",
+  "cpu": 4,
+  "patch": "",
+  "net": "fast4g",
+  "desk": false,
+  "H": 15591
+ },
+ "dom": {
+  "prvkov": 826,
+  "kw": 28,
+  "flap_b": 12,
+  "hlbka": 13,
+  "html_class": "karty world js-kin js-steps world-frame world-off"
+ }
+}

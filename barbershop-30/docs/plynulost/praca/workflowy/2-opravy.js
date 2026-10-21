@@ -36,19 +36,25 @@ const LENSY = [
   { id: 'vzhlad', port: 8460, rola: 'Si art director a dizajnér (tim-roly, bodovanie 0–10). Porovnaj vzhľad pred/po a telefón vs. počítač v sekciách, ktorých sa dávka týka (snímky pri postupnom skrole, 390×844 a 360×780 DPR 3, 1440×900): ostrosť, orezy na výšku, prelínanie bez preblikávania, žiadne tmavé prázdne plochy, tempo pohybu, nič sa nezhoršilo. Nahraj krátke videá prechodov a pozri si snímky z nich.' },
 ]
 
+// Smerovanie modelov (šetrí limit relácie): kontroly dávok so stredným rizikom robí menší model,
+// film (D3, D4) a implementácia ostávajú na najsilnejšom modeli relácie.
+const MODEL_KONTROLY = (id) => (['D3', 'D4'].includes(id) ? undefined : 'sonnet')
 const vysledky = []
 let predchadzajuce = ''
 for (const d of DAVKY) {
   phase('Dávky')
   let impl = await agent(`${KONTEXT}\n${predchadzajuce}\nÚLOHA – DÁVKA ${d.id}: ${d.nazov}\nÚplné zadanie dávky (cieľ, nálezy, zmeny, akceptačné kritériá, overenie, riziko) je v ${SP}/barber/workflowy/davky.json (pole davky, id „${d.id}“) a v ${SP}/barber/PLAN.md – prečítaj ho celé, aj súvisiace správy auditu v ${SP}/barber/audit/. Si senior frontend/WebGL inžinier. ÚPLNE NAJPRV zapíš východiskový commit, ak ešte nie je zapísaný: mkdir -p ${OUT}/${d.id} && [ -s ${OUT}/${d.id}/ZACIATOK.txt ] || git -C ${REPO} rev-parse HEAD > ${OUT}/${d.id}/ZACIATOK.txt. Potom zmeraj „pred“ (port 8310), potom implementuj, zmeraj „po“ tou istou metódou, spusti testy, pozri snímky pri 390 a 1440 px, commitni (po slovensky, bez podpisov) a nakoniec spusti bash ${SP}/barber/uloz.sh (uloží priebeh a záplaty do úložiska). Výstupy do ${OUT}/${d.id}/impl/.`, { label: `impl:${d.id}`, phase: 'Dávky', schema: IMPL })
+  if (!impl) { log(`${d.id}: implementácia nevrátila výsledok (limit relácie?) – zastavujem, nič ďalšie sa nespúšťa`); vysledky.push({ davka: d.id, impl, kontroly: [], zastavene: true }); return { vysledky, zastavene: d.id } }
   let kolo = 0, kontroly = []
   while (true) {
-    kontroly = (await parallel(LENSY.map(l => () => agent(`${KONTEXT}\nÚLOHA: ${l.rola}\nKontroluješ DÁVKU ${d.id} „${d.nazov}“ nezávisle (repozitár NEMEŇ, žiadne commity; tvoje porty ${l.port + kolo * 5}–${l.port + kolo * 5 + 4}). Zadanie dávky a akceptačné kritériá: ${SP}/barber/workflowy/davky.json (id „${d.id}“) a PLAN.md; commit pred dávkou je v ${OUT}/${d.id}/ZACIATOK.txt (diff ZACIATOK..HEAD). Správa implementátora: ${JSON.stringify(impl).slice(0, 5000)}\nKaždý nález s dôkazom (príkaz, číslo, snímka, súbor:riadok). ok=true len bez kritických/vysokých/stredných nálezov a so splnenými kritériami. Výstupy do ${OUT}/${d.id}/kontrola-${l.id}${kolo ? '-' + (kolo + 1) : ''}/.`, { label: `kontrola:${d.id}:${l.id}${kolo ? '#' + (kolo + 1) : ''}`, phase: 'Dávky', schema: KONTROLA })))).map((k, i) => k && { ...k, lens: LENSY[i].id })
+    kontroly = (await parallel(LENSY.map(l => () => agent(`${KONTEXT}\nÚLOHA: ${l.rola}\nKontroluješ DÁVKU ${d.id} „${d.nazov}“ nezávisle (repozitár NEMEŇ, žiadne commity; tvoje porty ${l.port + kolo * 5}–${l.port + kolo * 5 + 4}). Zadanie dávky a akceptačné kritériá: ${SP}/barber/workflowy/davky.json (id „${d.id}“) a PLAN.md; commit pred dávkou je v ${OUT}/${d.id}/ZACIATOK.txt (diff ZACIATOK..HEAD). Správa implementátora: ${JSON.stringify(impl).slice(0, 5000)}\nKaždý nález s dôkazom (príkaz, číslo, snímka, súbor:riadok). ok=true len bez kritických/vysokých/stredných nálezov a so splnenými kritériami. Výstupy do ${OUT}/${d.id}/kontrola-${l.id}${kolo ? '-' + (kolo + 1) : ''}/.`, { label: `kontrola:${d.id}:${l.id}${kolo ? '#' + (kolo + 1) : ''}`, phase: 'Dávky', schema: KONTROLA, model: MODEL_KONTROLY(d.id) })))).map((k, i) => k && { ...k, lens: LENSY[i].id })
+    if (!kontroly.some(Boolean)) { log(`${d.id}: žiadna kontrola nevrátila výsledok (limit relácie?) – zastavujem`); vysledky.push({ davka: d.id, impl, kontroly, zastavene: true }); return { vysledky, zastavene: d.id } }
     const nalezy = kontroly.filter(Boolean).flatMap(k => k.nalezy.map(n => ({ ...n, lens: k.lens })))
     const vazne = nalezy.filter(n => n.zavaznost !== 'nizka')
     log(`${d.id}: kontrola ${kolo + 1} – nálezov ${nalezy.length}, vážnych ${vazne.length}`)
     if (!vazne.length || kolo >= 2) break
     impl = await agent(`${KONTEXT}\nÚLOHA: Oprav nálezy nezávislých kontrol DÁVKY ${d.id} „${d.nazov}“ (aj nízke, ak sú jasne správne). Nálezy: ${JSON.stringify(nalezy)}\nKaždý nález si najprv over (reprodukcia); nesprávny nevykonaj a zdôvodni v otvorene. Potom zmeraj, otestuj, pozri snímky, commitni a spusti bash ${SP}/barber/uloz.sh. Porty ${8320 + kolo * 5}–${8324 + kolo * 5}.`, { label: `oprava:${d.id}${kolo ? '#' + (kolo + 1) : ''}`, phase: 'Dávky', schema: IMPL })
+    if (!impl) { log(`${d.id}: oprava nevrátila výsledok (limit relácie?) – zastavujem`); vysledky.push({ davka: d.id, impl, kontroly, zastavene: true }); return { vysledky, zastavene: d.id } }
     kolo++
   }
   vysledky.push({ davka: d.id, impl, kontroly })
