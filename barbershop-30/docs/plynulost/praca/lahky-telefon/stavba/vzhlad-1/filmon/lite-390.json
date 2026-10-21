@@ -1,0 +1,50 @@
+{
+ "url": "http://127.0.0.1:8630/barbershop-30/?film=on&uvod=off",
+ "W": 390,
+ "H": 844,
+ "cls": "karty world js-kin js-steps world-in",
+ "worldIn": false,
+ "gl": 2,
+ "filmReq": [
+  "assets/film.js",
+  "assets/vendor/three.module.min.js",
+  "assets/vendor/three.module.min.js",
+  "assets/img/film/cakaren-m-hlbka.webp",
+  "assets/seq/okolo-kresla/f022.avif",
+  "assets/img/film/kreslo-stred-m-hlbka.webp",
+  "assets/seq/okolo-kresla/f000.avif",
+  "assets/seq/okolo-kresla/f008.avif",
+  "assets/seq/okolo-kresla/f016.avif",
+  "assets/seq/okolo-kresla/f024.avif"
+ ],
+ "filmReqN": 10,
+ "errs": [],
+ "out": [
+  {
+   "i": 0,
+   "shot": "rohozka",
+   "y": 0,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/filmon/lite-390-00-rohozka.jpg",
+   "shown": [
+    [
+     "rohozka",
+     "rohozka-m-1448.avif"
+    ]
+   ],
+   "film": {
+    "S": 0
+   }
+  },
+  {
+   "i": 3,
+   "shot": "cakaren",
+   "y": 2232,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/filmon/lite-390-03-cakaren.jpg",
+   "shown": [],
+   "film": {
+    "S": 3.85,
+    "cur": "cakaren-m"
+   }
+  }
+ ]
+}

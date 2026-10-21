@@ -38,3 +38,115 @@ OK   [desktop] galéria má 8 fotiek (8)
 OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":2.595682}]
 OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":3.536597}]
 OK   [desktop] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách  {"flap":"Dnes 9:00 až 19:00. Teraz otvorené.","marquee":14,"steps":5,"kin":28}
+OK   [mobil] načítanie bez chýb a 4xx
+OK   [mobil] všetky cesty v HTML sú relatívne
+OK   [mobil] žiadne externé požiadavky za behu
+OK   [mobil] data-motion=on  {"motion":"on","cls":"karty world pro js-kin js-steps world-in"}
+OK   [mobil] 9 kotiev .film-shot s data-shot/f/mv a zálohou  {"count":9,"still":true,"meta":true}
+OK   [mobil] výšky kotiev: úvod 1, karta 0,7, karta pred pásom 1,6 okna
+OK   [mobil] prvá záloha fetchpriority=high, ostatné lazy
+OK   [mobil] prvá záloha je viditeľná a načítaná (alebo beží film)  {"count":9,"allTall":true,"allHaveStill":true,"allHaveMeta":true,"firstHigh":true,"lazyRest":true,"firstVisible":false,"worldIn":true}
+OK   [mobil] kotva rohozka: aktívna kapitola 1 (čakané 1)
+OK   [mobil] kotva sala: aktívna kapitola 2 (čakané 2)
+OK   [mobil] kotva sala: --p rastie (0.000 → 0.066)
+OK   [mobil] kotva stol: aktívna kapitola 3 (čakané 3)
+OK   [mobil] kotva stol: --p rastie (0.066 → 0.104)
+OK   [mobil] kotva cakaren: aktívna kapitola 4 (čakané 4)
+OK   [mobil] kotva cakaren: --p rastie (0.104 → 0.142)
+OK   [mobil] kotva sala-rano: aktívna kapitola 5 (čakané 5)
+OK   [mobil] kotva sala-rano: --p rastie (0.142 → 0.194)
+OK   [mobil] kotva kreslo-stred: aktívna kapitola 6 (čakané 6)
+OK   [mobil] kotva kreslo-stred: --p rastie (0.194 → 0.334)
+OK   [mobil] kotva kava: aktívna kapitola 7 (čakané 7)
+OK   [mobil] kotva kava: --p rastie (0.334 → 0.652)
+OK   [mobil] kotva vstup: aktívna kapitola 8 (čakané 8)
+OK   [mobil] kotva vstup: --p rastie (0.652 → 0.863)
+OK   [mobil] kapitoly sa prepínajú (1→2→3→4→5→6→7→8)
+OK   [mobil] titulná karta svieti v každej kapitole (8/8)
+OK   [mobil] data-scene-active je na <html> a pri prechode kapitolami sa nemení  {"zmeny":0,"je":true}
+OK   [mobil] premenné skrolu na prvkoch, ktoré ich čítajú (--o na .title-frame, --so na .film-still), žiadna na kotve  {"kotvy":0,"o":9,"so":9,"sp":0,"rozsah":true}
+OK   [mobil] s filmom (world) sa --sp nepíše (záloha má transform: none)  {"kotvy":0,"o":9,"so":9,"sp":0,"rozsah":true}
+OK   [mobil] karta sud zhasnutá pred kotvou, svieti v pripnutí
+OK   [mobil] návrat hore: --p=0, scéna 1
+OK   [mobil] .site-header.is-scrolled po scrolle
+OK   [mobil] #mobile-cta.is-hidden v poslednej sekcii (rezervácia)
+OK   [mobil] #mobile-cta viditeľné v službách
+OK   [mobil] menu: aria-expanded=true po kliku, CTA skryté
+OK   [mobil] menu: Esc zatvára
+OK   [mobil] lightbox sa otvorí  assets/img/naradie-noznice-1600.jpg
+OK   [mobil] lightbox: šípka vpravo mení fotografiu
+OK   [mobil] lightbox: Esc zatvorí a vráti fokus na tlačidlo
+OK   [mobil] galéria má 8 fotiek (8)
+OK   [mobil] okno s videom tímu je na telefóne skryté a nehrá (tím je vo filme)  [{"shown":false,"paused":true,"t":0}]
+OK   [mobil] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách  {"flap":"Dnes 9:00 až 19:00. Teraz otvorené.","marquee":14,"steps":5,"kin":28}
+OK   [?motion=off] data-motion=off, bez triedy world, __renderDone  {"motion":"off","world":false,"done":true,"stillOpacity":"1","stillTransform":"none","canvas":false}
+OK   [?motion=off] záloha stojí (bez prejazdu), žiadny canvas
+OK   [?motion=off] titulná karta čakárne je v pripnutí celá viditeľná (1)
+OK   [?motion=off] bez chýb
+OK   [?motion=off] nesťahuje three.js ani video
+OK   [?motion=off] žiadne video nehrá
+OK   [prefers-reduced-motion] data-motion=off, bez triedy world, __renderDone  {"motion":"off","world":false,"done":true,"stillOpacity":"1","stillTransform":"none","canvas":false}
+OK   [prefers-reduced-motion] záloha stojí (bez prejazdu), žiadny canvas
+OK   [prefers-reduced-motion] titulná karta čakárne je v pripnutí celá viditeľná (1)
+OK   [prefers-reduced-motion] bez chýb
+OK   [prefers-reduced-motion] nesťahuje three.js ani video
+OK   [prefers-reduced-motion] žiadne video nehrá
+OK   [bez WebGL] film nejde (bez world alebo world-off), __renderDone  {"world":true,"done":true,"off":true,"in":false,"stillVisible":"1","imgW":1785}
+OK   [bez WebGL] záloha úvodu je viditeľná a načítaná
+OK   [bez WebGL] tlačidlo Rezervovať termín v rezervácii je viditeľné
+OK   [bez WebGL] premenné skrolu nie sú na kotvách; pri rámovaní filmu (world-frame) sa --sp nepíše  {"kotvy":0,"o":9,"so":9,"sp":0,"rozsah":true,"t":"none","frame":true}
+OK   [bez WebGL] bez chýb okrem správy o WebGL
+OK   [?film=off] --sp na img záloh v okolí (prejazd 1 → 1,06), žiadna premenná na kotve  {"kotvy":0,"o":9,"so":9,"sp":3,"rozsah":true,"near":3,"tr":"matrix(1.06, 0, 0, 1.06, 0, 0)"}
+OK   [?film=off] --sp sa počas skrolu zapisuje len na zálohy v okolí (is-near)  {"all":8,"far":0}
+OK   [?film=off] bez chýb
+OK   [softvér desktop] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0.0001,"w":1701}
+OK   [softvér desktop] bez posunu rozloženia (CLS 0.0001)
+OK   [softvér desktop] záloha úvodu má rámovanie filmu (presah), šírka 1701
+OK   [softvér desktop] bez chýb
+OK   [softvér úzke okno bez dotyku] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0,"w":547}
+OK   [softvér úzke okno bez dotyku] bez posunu rozloženia (CLS 0)
+OK   [softvér úzke okno bez dotyku] záloha úvodu má rámovanie filmu (presah), šírka 547
+OK   [softvér úzke okno bez dotyku] bez chýb
+OK   [lite 390] triedy lite + world-off, bez world/pro, film.js nespustený  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"rohozka","curNear":true,"hotova":["rohozka"],"zobrazene":2,"kryte":false}
+OK   [lite 390] 0 WebGL kontextov, žiadne požiadavky filmu (three.js, film.js, seq, hĺbka, tim-slucka)  {"gl":0,"bad":[]}
+OK   [lite 390] prvý obraz: rohožka -m, nadpis a tlačidlá viditeľné  {"src":"rohozka-m-1448.avif","h1":1,"act":1,"filter":"none","near":true}
+OK   [lite 390] pri každej karte je aktuálna karta is-near a na obrazovke hotová fotka
+OK   [lite 390] stránka končí pätičkou (0 px pod ňou), lišta ink  {"rezerva":0,"lista":"rgb(14, 13, 12)"}
+OK   [lite 390] bez chýb a 4xx
+OK   [lite 390] znovunačítanie uprostred: na obrazovke je záber čakárne  ["cakaren"]
+OK   [lite 390] znovunačítanie uprostred: aktuálna karta sala-rano is-near, fotka na obrazovke cakaren  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"sala-rano","curNear":true,"hotova":["cakaren"],"zobrazene":3,"kryte":false}
+OK   [lite 390] späť: aktuálna karta sala-rano is-near, fotka cakaren  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"sala-rano","curNear":true,"hotova":["cakaren"],"zobrazene":3,"kryte":false,"y":2203}
+OK   [lite 430] triedy lite + world-off, bez world/pro, film.js nespustený  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"rohozka","curNear":true,"hotova":["rohozka"],"zobrazene":2,"kryte":false}
+OK   [lite 430] 0 WebGL kontextov, žiadne požiadavky filmu (three.js, film.js, seq, hĺbka, tim-slucka)  {"gl":0,"bad":[]}
+OK   [lite 430] prvý obraz: rohožka -m, nadpis a tlačidlá viditeľné  {"src":"rohozka-m-1448.avif","h1":1,"act":1,"filter":"none","near":true}
+OK   [lite 430] pri každej karte je aktuálna karta is-near a na obrazovke hotová fotka
+OK   [lite 430] stránka končí pätičkou (0 px pod ňou), lišta ink  {"rezerva":0,"lista":"rgb(14, 13, 12)"}
+OK   [lite 430] bez chýb a 4xx
+OK   [lite 430] znovunačítanie uprostred: na obrazovke je záber čakárne  ["cakaren"]
+OK   [lite 430] znovunačítanie uprostred: aktuálna karta sala-rano is-near, fotka na obrazovke cakaren  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"sala-rano","curNear":true,"hotova":["cakaren"],"zobrazene":3,"kryte":false}
+OK   [lite 430] späť: aktuálna karta sala-rano is-near, fotka cakaren  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"sala-rano","curNear":true,"hotova":["cakaren"],"zobrazene":3,"kryte":false,"y":2432}
+OK   [lite #tim] aktuálna karta sala-rano is-near, fotka sala-rano, bez filmu  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"sala-rano","curNear":true,"hotova":["sala-rano"],"zobrazene":3,"kryte":false}
+OK   [lite #tim] bez chýb
+OK   [lite #kontakt] aktuálna karta vstup is-near, fotka (okno kryje pás/pätička), bez filmu  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"vstup","curNear":true,"hotova":[],"zobrazene":2,"kryte":true}
+OK   [lite #kontakt] bez chýb
+OK   [lite b30.lang=en] aktuálna karta rohozka is-near, fotka rohozka, bez filmu  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"rohozka","curNear":true,"hotova":["rohozka"],"zobrazene":2,"kryte":false}
+OK   [lite b30.lang=en] bez chýb
+OK   [lite ?film=off] aktuálna karta rohozka is-near, fotka rohozka, bez filmu  {"cls":"karty lite world-off js-kin js-steps","lite":true,"off":true,"world":false,"pro":false,"worldIn":false,"film":false,"gl":0,"cur":"rohozka","curNear":true,"hotova":["rohozka"],"zobrazene":2,"kryte":false}
+OK   [lite ?film=off] bez chýb
+OK   [telefón ?film=on] lite vypnutý, film sa načíta (world)  {"cls":"karty world pro js-kin js-steps world-in","lite":false,"off":false,"world":true,"pro":true,"worldIn":true,"film":true,"gl":2,"cur":"rohozka","curNear":true,"hotova":[],"zobrazene":2,"kryte":false}
+OK   [lite slučka] jedna slučka v zábere Tím (muted, playsinline, loop, preload none), pri štarte sa nič nesťahuje  {"s0":{"shot":"sala-rano","near":false,"shown":false,"poster":"","paused":true,"t":0,"preload":"none","muted":true,"loop":true,"inline":true,"playing":0,"box":[0,0],"still":[0,0]},"r0":[]}
+OK   [lite slučka] karta pred Tímom: plagát áno, video sa ešte nesťahuje  {"s1":{"shot":"sala-rano","near":true,"shown":false,"poster":"tim-slucka-poster-864.webp","paused":true,"t":0,"preload":"none","muted":true,"loop":true,"inline":true,"playing":0,"box":[390,844],"still":[390,844]},"r1":["tim-slucka-poster-864.webp","tim-slucka-poster-864.webp"]}
+OK   [lite slučka] záber Tím cez okno: video hrá, leží presne na zálohe  {"s2":0.85,"s3":{"shot":"sala-rano","near":true,"shown":true,"poster":"tim-slucka-poster-864.webp","paused":false,"t":2.05,"preload":"none","muted":true,"loop":true,"inline":true,"playing":1,"box":[390,844],"still":[390,844]},"r":["tim-slucka-poster-864.webp","tim-slucka-poster-864.webp","tim-slucka-864.webm"]}
+OK   [lite slučka] mimo záberu (pás tímu, ďalšia karta) video stojí  {"s4":[true,true],"s5":[true,false]}
+OK   [lite slučka] najviac jedno hrajúce video, žiadny posun rozloženia od videa či zálohy, bez chýb  {"maxPlay":1,"cls":0,"problems":[]}
+OK   [lite slučka] úsporný režim (play odmietnuté): ostáva plagát, bez chýb  {"u":{"paused":true,"poster":"tim-slucka-poster-864.webp","ready":true,"op":"1"},"problems":[]}
+OK   [lite slučka] prefers-reduced-motion: žiadna slučka v zálohe  {"n":0,"vr":[]}
+OK   [lite slučka] ?film=on: žiadna slučka v zálohe  {"n":0,"vr":[]}
+OK   [600×900 s myšou] úzke okno počítača ostáva na filme (world, bez lite)  karty world pro js-kin js-steps
+OK   [375 px] žiadne vodorovné pretekanie
+OK   [390 px] žiadne vodorovné pretekanie
+OK   [430 px] žiadne vodorovné pretekanie
+OK   [412 px bez app.js] žiadne vodorovné pretekanie, telefón stránku neoddiali  {"sw":412,"iw":412}
+
+Všetky kontroly prešli
+done

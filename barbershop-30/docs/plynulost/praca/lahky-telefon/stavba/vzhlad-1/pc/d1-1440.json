@@ -1,0 +1,73 @@
+{
+ "url": "http://127.0.0.1:8631/barbershop-30/?film=on&uvod=off",
+ "W": 1440,
+ "H": 900,
+ "cls": "karty world js-kin js-steps world-in",
+ "worldIn": false,
+ "gl": 2,
+ "filmReq": [
+  "assets/film.js",
+  "assets/vendor/three.module.min.js",
+  "assets/vendor/three.module.min.js",
+  "assets/img/film/stol-hlbka.webp",
+  "assets/img/film/cakaren-hlbka.webp",
+  "assets/img/film/sala-hlbka.webp",
+  "assets/img/film/sala-rano-hlbka.webp",
+  "assets/img/film/kreslo-stred-hlbka.webp",
+  "assets/img/film/kava-hlbka.webp",
+  "assets/img/film/sud-hlbka.webp",
+  "assets/img/film/vstup-hlbka.webp"
+ ],
+ "filmReqN": 11,
+ "errs": [],
+ "out": [
+  {
+   "i": 0,
+   "shot": "rohozka",
+   "y": 0,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/pc/d1-1440-00-rohozka.jpg",
+   "shown": [
+    [
+     "rohozka",
+     "rohozka-2172.avif"
+    ]
+   ],
+   "film": {
+    "S": 0
+   }
+  },
+  {
+   "i": 2,
+   "shot": "stol",
+   "y": 1751,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/pc/d1-1440-02-stol.jpg",
+   "shown": [],
+   "film": {
+    "S": 2.85,
+    "cur": "stol"
+   }
+  },
+  {
+   "i": 4,
+   "shot": "sala-rano",
+   "y": 2979,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/pc/d1-1440-04-sala-rano.jpg",
+   "shown": [],
+   "film": {
+    "S": 4.86,
+    "cur": "sala-rano"
+   }
+  },
+  {
+   "i": 6,
+   "shot": "kava",
+   "y": 9944,
+   "f": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-1/pc/d1-1440-06-kava.jpg",
+   "shown": [],
+   "film": {
+    "S": 6.97,
+    "cur": "kava"
+   }
+  }
+ ]
+}
