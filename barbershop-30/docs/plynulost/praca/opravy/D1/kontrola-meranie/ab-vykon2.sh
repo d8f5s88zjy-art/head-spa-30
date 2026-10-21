@@ -4,9 +4,18 @@
 . /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/opravy/D1/kontrola-meranie/spolocne.sh
 beh() { local meno=$1 dir=$2 out=$3; shift 3
   grep -qxF "$meno" $K/hotove.txt && { echo "== $meno hotové"; return; }
-  brana; log "$meno"; local a=$(date +%s)
-  ( cd $dir && timeout 1500 "$@" < /dev/null > $out 2>&1 ) && echo "$meno" >> $K/hotove.txt || echo "   chyba $meno"
-  echo -e "$meno\t$a\t$(date +%s)" >> $K/behy.tsv; }
+  local pokus
+  for pokus in 1 2 3 4; do
+    brana; log "$meno (pokus $pokus)"; local a=$(date +%s)
+    ( cd $dir && timeout 1500 "$@" < /dev/null > $out 2>&1 ) && local ok=1 || { ok=0; echo "   chyba $meno"; }
+    local b=$(date +%s)
+    echo -e "$meno\t$a\t$b" >> $K/behy.tsv
+    # čistota: viac ako 2 vzorky (4 s) s cudzím prehliadačom počas behu = beh prekryl iný agent, zopakovať
+    local cud=$(awk -v a=$a -v b=$b '$1>=a && $1<=b && $3>0 {n++} END{print n+0}' $K/vzorky.txt)
+    if [ "$ok" = 1 ] && [ "$cud" -le 2 ]; then echo "$meno" >> $K/hotove.txt; return; fi
+    echo "   beh $meno prekrytý cudzím prehliadačom ($cud vzoriek) alebo zlyhal, opakujem"; sleep 15
+  done
+  echo "$meno" >> $K/hotove.txt; echo "   POZOR: $meno ostal prekrytý ani po 4 pokusoch" >> $K/hotove-pozor.txt; }
 skrol() { local pre=$1 scen=$2 n=$3 q=$4; for i in $(seq 1 $n); do for s in pred po; do
   beh "skrol $pre-$s-$i" $K/nastroje-$s/$KS /dev/null node skrol.mjs --q="$q" --scen=$scen --out=ab-$pre-$s-$i; done; done; }
 iny() { local dir=$1 name=$2 n=$3; shift 3; for i in $(seq 1 $n); do for s in pred po; do

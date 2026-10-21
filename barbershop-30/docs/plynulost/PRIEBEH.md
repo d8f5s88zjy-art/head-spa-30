@@ -52,3 +52,16 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 06:15 UTC obnovené: opravy wf_20f36633-067 (D1 kontroly → D2…D5), sieť wf_ef682687-713 (dispečer, skeptik);
   návrh adminu wf_45213a73-46b sa spustí po sieti.
 
+## 21. 10. 06:50 UTC – odovzdanie od ChatGPT/Codex (cez majiteľa)
+
+- Prijaté 3 prílohy: `ODOVZDANIE-CLAUDE.md`, `barbershop-pokracovanie-pre-claude.zip` (SHA-256 efd4b002… sedí),
+  `odborna-siet-overenie-2026-10-21.json` (záznam dôkazov N06–N10, N14, N16, bez nových pravidiel; korekcia: film.js používa
+  lokálny assets/vendor/three.module.min.js, three r169 – súhlasí s naším auditom).
+- Patch (SHA-256 f95047d8… sedí) aplikovaný izolovane na c129f58 → strom 4cc286ac presne ako ohlásené (`scratchpad/hs-chatgpt`).
+  Obsahuje našu D1 (8 súborov zhodných) + D2–D5, D6a-0/D6a/D6b, interakcie D7, admin, tools/pracovna-siet, zmeny CI a HEAD SPA 404.
+- Brána cudzích návrhov: náš tím opráv (wf_20f36633-067) ZASTAVENÝ, aby nerobil D2–D5 duplicitne; návrh adminu pozastavený.
+  Preverenie balíka beží (`chatgpt-patch-overenie`, wf_ca750fba-5a6): bezpečnosť a hranice ‖ prehliadač a testy ‖ meranie
+  pred (naša D1, `scratchpad/hs-pred-d1`) / po → rozhodnutie po častiach → skeptik. CI skript tools/vernost-priprav.py
+  prečítaný: z hesiel číta len dĺžku, nič neposiela, len verejné GET na headspa30.sk/vernost.
+- Nič nie je nasadené; odovzdanie nie je súhlas na nasadenie.
+

@@ -1,0 +1,17 @@
+
+== os: rýchla sieť ==
+  prvý snímok 1466 ms, chôdza od 2275 ms, koniec prológu 5645 ms, dpr 2, strop 30 fps false
+  zastavenia počas chôdze: [{"S":0.107,"od":2325,"ms":1157},{"S":0.848,"od":3582,"ms":252},{"S":0.975,"od":3934,"ms":1711}]
+  OK   bez čakania pri dverách; OK   rozlíšenie stále
+
+== os: pomalá sieť 1,6 Mb/s ==
+  prvý snímok 9735 ms, chôdza od 11391 ms, koniec prológu 15288 ms, dpr 2, strop 30 fps false
+  zastavenia počas chôdze: [{"S":0.33,"od":12246,"ms":277},{"S":0.988,"od":13730,"ms":1558}]
+  OK   pri dverách najviac 1 s; OK   rozlíšenie stále
+
+zhoda mobile: S=0 prológ=true záber=vstup-m záloha=vstup-m-1086.avif
+zhoda mobile-2: S=1 prológ=false záber=rohozka-m záloha=rohozka-m-1086.avif
+zhoda desktop: S=0 prológ=true záber=vstup záloha=vstup-2172.avif
+zhoda desktop-2: S=1 prológ=false záber=rohozka záloha=rohozka-2172.avif
+
+OS prológu v poriadku; zhodu vyhodnotí uvod-zhoda.py

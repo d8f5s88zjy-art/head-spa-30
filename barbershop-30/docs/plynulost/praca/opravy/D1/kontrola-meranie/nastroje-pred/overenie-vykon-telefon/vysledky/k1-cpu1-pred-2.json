@@ -1,0 +1,211 @@
+{
+ "meno": "k1-cpu1-pred-2",
+ "url": "http://127.0.0.1:8430/barbershop-30/?film=off&uvod=off&hudba=off",
+ "cpu": 1,
+ "gesto": "stredne",
+ "js": null,
+ "css": null,
+ "sub": null,
+ "zatazPred": [
+  2.47,
+  2.99,
+  1.91
+ ],
+ "zatazPo": [
+  2.7,
+  2.99,
+  1.94
+ ],
+ "trvanieS": 17,
+ "y": [
+  0,
+  15591
+ ],
+ "cls": "karty world-off js-kin js-steps",
+ "film": {
+  "on": false
+ },
+ "gl": null,
+ "animacieBezia": [],
+ "snimkyRaf": {
+  "n": 765,
+  "p50": 16.7,
+  "p95": 33.4,
+  "max": 566.7,
+  "priem": 22.24,
+  "nad33": 4.4,
+  "nad100": 11
+ },
+ "vlaknoNaSnimku": {
+  "snimok": 772,
+  "cpu": {
+   "n": 772,
+   "p50": 1.8,
+   "p95": 4.3,
+   "max": 15.3,
+   "priem": 1.87
+  },
+  "nad16": 0,
+  "nad33": 0,
+  "stylPriem": 0.52,
+  "layoutPriem": 0.1,
+  "paintPriem": 0.57,
+  "skriptPriem": 0.33,
+  "gcPriem": 0.01,
+  "prvkovStylPriem": 18.6
+ },
+ "dlheUlohy": {
+  "stena50": 4,
+  "vlakno50": 0,
+  "maxVlaknoMs": 7.8,
+  "maxStenaMs": 304.9
+ },
+ "sekcie": {
+  "uvod": {
+   "snimok": 29,
+   "cpuPriem": 1.9,
+   "cpuP95": 3.4,
+   "styl": 0.79,
+   "layout": 0,
+   "paint": 0.51,
+   "skript": 0.24
+  },
+  "vstup-dnu": {
+   "snimok": 41,
+   "cpuPriem": 2.6,
+   "cpuP95": 4.4,
+   "styl": 0.97,
+   "layout": 0.02,
+   "paint": 0.67,
+   "skript": 0.24
+  },
+  "remeslo": {
+   "snimok": 53,
+   "cpuPriem": 2.4,
+   "cpuP95": 4.9,
+   "styl": 0.67,
+   "layout": 0.04,
+   "paint": 0.51,
+   "skript": 0.24
+  },
+  "cakaren": {
+   "snimok": 24,
+   "cpuPriem": 3.4,
+   "cpuP95": 7.7,
+   "styl": 1.09,
+   "layout": 0.1,
+   "paint": 0.91,
+   "skript": 0.38
+  },
+  "tim": {
+   "snimok": 127,
+   "cpuPriem": 1.7,
+   "cpuP95": 4.9,
+   "styl": 0.5,
+   "layout": 0.02,
+   "paint": 0.5,
+   "skript": 0.25
+  },
+  "sluzby": {
+   "snimok": 201,
+   "cpuPriem": 1.5,
+   "cpuP95": 3.6,
+   "styl": 0.45,
+   "layout": 0.02,
+   "paint": 0.52,
+   "skript": 0.24
+  },
+  "galeria": {
+   "snimok": 22,
+   "cpuPriem": 2.6,
+   "cpuP95": 5.3,
+   "styl": 0.62,
+   "layout": 0.07,
+   "paint": 0.61,
+   "skript": 0.2
+  },
+  "rezervacia": {
+   "snimok": 158,
+   "cpuPriem": 2.6,
+   "cpuP95": 4.3,
+   "styl": 0.67,
+   "layout": 0.34,
+   "paint": 0.88,
+   "skript": 0.7
+  },
+  "kontakt": {
+   "snimok": 117,
+   "cpuPriem": 0.7,
+   "cpuP95": 2.9,
+   "styl": 0.07,
+   "layout": 0.09,
+   "paint": 0.24,
+   "skript": 0.21
+  }
+ },
+ "funkcie": [
+  [
+   ":2 f",
+   111,
+   773,
+   0.14,
+   1
+  ],
+  [
+   "app.js:694 tick",
+   71,
+   152,
+   0.47,
+   0.8
+  ],
+  [
+   "app.js:234 tick",
+   37,
+   616,
+   0.06,
+   0.3
+  ],
+  [
+   "app.js:258 start",
+   6,
+   455,
+   0.01,
+   0.1
+  ],
+  [
+   "i18n.js:99 MutationObserver.observe.childList",
+   4,
+   152,
+   0.03,
+   0.1
+  ],
+  [
+   "app.js:619 ",
+   1,
+   15,
+   0.07,
+   0.3
+  ],
+  [
+   "app.js:353 load",
+   0,
+   1,
+   0.01,
+   0
+  ],
+  [
+   "app.js:386 load",
+   0,
+   1,
+   0,
+   0
+  ],
+  [
+   "app.js:407 IntersectionObserver.rootMargin",
+   0,
+   1,
+   0.11,
+   0.1
+  ]
+ ]
+}

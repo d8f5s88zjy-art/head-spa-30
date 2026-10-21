@@ -1,0 +1,970 @@
+{
+  "base": "c129f58124cc5d078499566e2a04ea02d6aa1eeb",
+  "head": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+  "tree": "4cc286ac15a26e62d2373e174ef168e2f83d59cd",
+  "patch_format": "git diff --binary --full-index",
+  "patch_sha256": "f95047d8a471bf26c8aa8e5c93b3ef72ecaf5954de7eef49b9c3b45da05b3974",
+  "patch_tree_verified": true,
+  "files": [
+    {
+      "path": ".github/workflows/pages.yml",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b5ddb154630cf7d0ca26efdf4a4f7f957cfd0a0a",
+      "bytes": 2679,
+      "sha256": "012ded4bb5f43d0643566759d88db7f675cee5aa57f3067e3e4656bccc08ffcb"
+    },
+    {
+      "path": "404.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "025aea78086c63d0cb2e60ce1139e31f764ef4f5",
+      "bytes": 6413,
+      "sha256": "c43de1ab5e164f337769296942a68b7e1d368c6b62a90f292ffa4094726539cd"
+    },
+    {
+      "path": "barbershop-30/404.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "ffec4f7553ebf3091e6f335f1a04bd1b0dd97701",
+      "bytes": 5078,
+      "sha256": "80552ba5861e614daeacdb49bc1ede82c2820dc7ab9eba27002c361bb8e3b811"
+    },
+    {
+      "path": "barbershop-30/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "044c6ff135c7f6638b4993e9ea7f3bbfe191a4d7",
+      "bytes": 6447,
+      "sha256": "b276aaa291d0d5785562bcbcb2eb76e9101a11e633f0d05c80949089ee0fefe6"
+    },
+    {
+      "path": "barbershop-30/admin/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b70ec8902d8f3ab2b8fa1f29d528e573a22c5888",
+      "bytes": 3157,
+      "sha256": "795434c5532b767e16641d639db580e4b9fea1f26ef61e24c24658ff5c3bf4bc"
+    },
+    {
+      "path": "barbershop-30/admin/admin.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "0e1542f5cb6dd4a7d54a8209907517b83ee877f7",
+      "bytes": 15487,
+      "sha256": "e3c3bb8ad03197a8865946d70d931382fa9b1d6bf63abc778fbe8e2f6bfae7e0"
+    },
+    {
+      "path": "barbershop-30/admin/app.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f1b2e55c9ff3bb5e7069dfb280dd9789df4dbf3f",
+      "bytes": 21074,
+      "sha256": "1d6ecedd5a725e911080a62e7539914e1f50e1ae1c7f3da4d0c7a7b44ef7316c"
+    },
+    {
+      "path": "barbershop-30/admin/github.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "3f3467ad307dada9e62c70bed91157b925d784ef",
+      "bytes": 4170,
+      "sha256": "0d9d3e9f316439a486aef56562efceab8f39a9ef9d155ae48738d652bdc5b886"
+    },
+    {
+      "path": "barbershop-30/admin/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "2e79319a34f2de08abc03662dbd1097ca40215d0",
+      "bytes": 4845,
+      "sha256": "19d3d47d740caa2f07b26d15847f537dcb8d2a487f742ed35ac9a54f44eb17fe"
+    },
+    {
+      "path": "barbershop-30/admin/model.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "724a8e598daef680cf416bb3f8bfaab9e7e09aa6",
+      "bytes": 13469,
+      "sha256": "6d4d0628edb872c4d92969fafecf2452f4ccb213222ae35ee398a6b24571f846"
+    },
+    {
+      "path": "barbershop-30/assets/404.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "71b0d705353aadf0ce8376737ae16b3d12a43f18",
+      "bytes": 1276,
+      "sha256": "1921e2a5587e299f0515bd694fd452b7bc4549bdfbbe030a35ef5518e7ed5e1e"
+    },
+    {
+      "path": "barbershop-30/assets/app.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "9725d9f376242cd83edf9ed213a7f4a0b891e6d7",
+      "bytes": 51202,
+      "sha256": "e8ed3ed086c401dcd9c6bef10ccdda9ab4d2017f12c55658b30b96f8d9817380"
+    },
+    {
+      "path": "barbershop-30/assets/atmosfera.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b160ae7c444e1ea1d485204adfa7d9c19edd2f6e",
+      "bytes": 5013,
+      "sha256": "ffdb89324fbf384ff2a4865fb2b05e6e0e198c42e61d53b576e0840be8af5dcc"
+    },
+    {
+      "path": "barbershop-30/assets/atmosfera.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "7f064e89ec5b125d29d67b30981d4b64b45224f5",
+      "bytes": 13910,
+      "sha256": "e676c3d7ee97ce41fd2d0c7034801c9696c9b603a52573115a858fb4c086638c"
+    },
+    {
+      "path": "barbershop-30/assets/d7.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "803cf42536354ba33909ad174128c96a81fb28e5",
+      "bytes": 1719,
+      "sha256": "577cf1bd805774da35d5e193e7c8359a62388c182b76fa72a5479d0a0c38e72c"
+    },
+    {
+      "path": "barbershop-30/assets/film-worker.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "e8404c41b11c49ace04fd2b0ed4cc63bf6173a8b",
+      "bytes": 1536,
+      "sha256": "d7f23ca23df9aaa0cbdb0998075fe3db6402ee3d32c894de4b46bd3ddd02db98"
+    },
+    {
+      "path": "barbershop-30/assets/film.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d5de28652352e3ed72848e72ad17a6b6edc583b2",
+      "bytes": 111325,
+      "sha256": "40086e37e49a2f6e38103a58246a19b0068e033c2057f2a429ee441c5c12ff80"
+    },
+    {
+      "path": "barbershop-30/assets/galeria.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "ea66e1b45569e0674be70baede194b2c11b6e3a0",
+      "bytes": 14785,
+      "sha256": "5ddeb869ab200e39ba90e57c5cc66cddad87b93de36d2352316ca6866d7789c2"
+    },
+    {
+      "path": "barbershop-30/assets/hodiny.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "5fb40634c6275d2fa5252d3d1ced65276dd713cc",
+      "bytes": 5129,
+      "sha256": "8057654018bbe4491c06e776dbb52abdcab461e61ac8f28bba4d2e8ef32900fa"
+    },
+    {
+      "path": "barbershop-30/assets/i18n.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "3cd88a185e11353d6144d7f0c331f363ebb4c684",
+      "bytes": 4428,
+      "sha256": "4855405893a35c2b3270bb15a70bffaac99ebc58280307921db909640f0addc9"
+    },
+    {
+      "path": "barbershop-30/assets/i18n.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "a158d79dc1e1a1619fd861f6c5494eae5a428281",
+      "bytes": 18689,
+      "sha256": "e3483125ac752aa09b331d2adebdb73827d3c94861e267c2f3384a4f75c31c59"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/cs.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d25fac73e028f89641e40595a230beb1ce93fb74",
+      "bytes": 21650,
+      "sha256": "c260cccd2d0c8bdf519a2bbe62f27211cd24ba94800d4ef7c835393cf28fbf52"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/de.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "cb1839259af311b4c0d605f396c8186cd059ae46",
+      "bytes": 22324,
+      "sha256": "d687f129e45be119b1c5878bac9f2b35a93c5a9dbe885add645b22937e4e038a"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/en.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "24cff3db01b590ba54628f5db0728a77910a0239",
+      "bytes": 21349,
+      "sha256": "ddb997fd80ba4d8791790bd4a0eacf6c5f52edae0b1098ff970ac2d268bbb9f7"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/hu.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f825d3c8edaa7d16ed9e2c1040e69ec7ae31a1a1",
+      "bytes": 22591,
+      "sha256": "690414dc838872614e78d5172a607e425210d030f9be37b11a6cdf4649adf552"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/pl.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "84139edd9548b81e7665c21003a9f5d845eee87b",
+      "bytes": 22348,
+      "sha256": "fc2e1f59dc168b784cbd66db4d43dd98819425e68ed5ebfcbcfa63aa5920382b"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/sr.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "3caa43760dc9f31bc5aa5bd14b6fec0fa9568933",
+      "bytes": 21471,
+      "sha256": "e4a93b756377bc564760e82853f4bc26498b4c3d0a13a48b9c9039c9776218b6"
+    },
+    {
+      "path": "barbershop-30/assets/i18n/uk.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d04dc98e06b90539cf4770737703be0ed538131b",
+      "bytes": 29008,
+      "sha256": "d5c29b7ccf0ffa760c04b3ef69e4fa26586a561b98f7c4dfeb4f5d14e36ca9be"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/cakaren-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "7b0196ef5f74835d7faef359eb05430cd7f2d23a",
+      "bytes": 15422,
+      "sha256": "bd15c26c18cd88240afa69d9a57a7717db640db8401948dba6e2fe424a5dd73e"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/cakaren-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "c1afd4e7421585fe68b958815092511fc92dfbd0",
+      "bytes": 9616,
+      "sha256": "27eb701e24132d3458b21ae704b5828e3f9d51d279a409e49f583b238515afb1"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kava-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "a4c136a95e943b197d06af0a45d33b9edb22dbab",
+      "bytes": 14716,
+      "sha256": "9dc0935fa98b1c0b5f84a75d30c0815aa0953269618d5b926569ff335550d0f8"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kava-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "9616a1f5fee03376a76849e0aca91213bf89ee4b",
+      "bytes": 9710,
+      "sha256": "1604ef81028fbd3c9db2c1a5c5d0361b5f0900fa88a3c76cb761f9745ca8f576"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kreslo-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "56d19dce37142bb3afe1c5651bc9cef6b8bde213",
+      "bytes": 17558,
+      "sha256": "98bd489cdb363f42531467888a24f8783349a9cc38d67bb1797bcfe917edfee3"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kreslo-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "cdad03475b1ff02b0653ace313aea59a2f0cf9eb",
+      "bytes": 12188,
+      "sha256": "0583efd69220e56038885722f67868b7ca33e9e0ca82e8262b106c422b19b6d4"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kreslo-stred-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d3d77511efd9766dedcd59b995f5f7c3208484a6",
+      "bytes": 13262,
+      "sha256": "7ee19fb362b18330fb32c6327ca47e69c2a8c291acae2eb919a19d383afa5ba7"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/kreslo-stred-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "8d43b5d86a5a0dab8d288c17537c4ad133537e5f",
+      "bytes": 7172,
+      "sha256": "ba38e24ffee621d0c7e75759709c9fa46356385d2da1a3bbf854989dc5181bf4"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/nahlady.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "46827fc75e22d677de9c6894c98c7686e3eb7ef3",
+      "bytes": 6655,
+      "sha256": "0bf0dd7a74e8477370f0d0eb0b202ab9fd648ecebcad0a046c569e83546bd5cb"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/nahlady.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "10505aa1277bc3b618d54d9d9fd9cd415f13f16d",
+      "bytes": 8739,
+      "sha256": "06ba5276230d7300f8b15b3ad378d14b6ab220aeec28d31610e3329019aada3f"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/naradie-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "594ac6d85fa939434093510d0ce0c30353b725b7",
+      "bytes": 10148,
+      "sha256": "6895a099c8d4abbcd9251f5c664d31c3c68005e19852e7387f3edf8a72f6932f"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/naradie-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "31b0e4b7ef6d8e5cda450a3a7b853f02bffcc4c5",
+      "bytes": 6516,
+      "sha256": "2e36ef790954f1f9d55f3aebefde931afa400120b44d8c8f3823bff4f01bbe36"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/recepcia-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "7b9108beb762daba1f988b16f2af299b7fbd3b73",
+      "bytes": 13780,
+      "sha256": "b912e15054fa0543a4d78edd60d0364539bcbec1911db2e2db42a4afa2286a4d"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/recepcia-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "e1f7616c5c4feeff959d571e25dbe5a9752ab511",
+      "bytes": 7452,
+      "sha256": "7e207a584b9640330f50d4576fba08e384320649f409aa6abbef0487f9f397b7"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/rohozka-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f040349d19261195f2cc403a166c2dc5879896e1",
+      "bytes": 12412,
+      "sha256": "066caa595704cc1a4747d7762539378e31d452cdfc0715a676361e8fad175083"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/rohozka-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "c2dad311e51a26abc4c61ba53ce2ee4375392921",
+      "bytes": 11316,
+      "sha256": "1c87f2b82123bb30693b3275f871ec157ba61b3557e1900b8fbbe77ad9393fb8"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sala-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "ab38a432ed826d812fc4ae05075556986157f76e",
+      "bytes": 14654,
+      "sha256": "33b7e0a0eac415bcd1b0329d4a132de48baaea01dab81db0fecf5e537897fdb1"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sala-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "48eb25e7dff66651b4b76a2504e74bc5a3122b60",
+      "bytes": 9714,
+      "sha256": "723a713dee1f1d4b759bce4653c3f5ceb13d62e182c48d30af14ff77e2c18fb7"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sala-rano-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "76140455dd2175613c81db154a324ab6ff6e5eaa",
+      "bytes": 14428,
+      "sha256": "1e9ebd475c0c6c0d706da298a705dd947783edfc431d94d80330e89ec301003b"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sala-rano-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "a35a77f69982184faa00dafcae58a324ddecd2d9",
+      "bytes": 8134,
+      "sha256": "37d95c1d87f7792c4bf845d4ee0024081072c46fdabb722fb655a1bc921378f2"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/stol-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "72c4b84596e2c56a141d8b575502d9014f99e568",
+      "bytes": 12688,
+      "sha256": "d75c0627667fad11c71806af57e9a80c55cb38a28d1ecaac25087e7f1562ab01"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/stol-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b3f226d7314f975cf87aa32a5b041735780bdb73",
+      "bytes": 6582,
+      "sha256": "f7634a602419438df2e9801078c961d591eb5102cadee5e4ce11a8c9da8512f3"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sud-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "086e6c7fe97fa46db54b9ab7d05feba064e1e391",
+      "bytes": 14910,
+      "sha256": "2acc86d51d64394c7247c94ea76393d3c8ffabca4fb3386be2df3045f6a3b161"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/sud-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "2c0c1121404d48c062ed7d5c6ea41094f4e75480",
+      "bytes": 8870,
+      "sha256": "e7bdc8db8b36c670b0014c42a70ad4057340f65230f729fa454cffa28e929298"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/vstup-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "ae487c520c318b085d02c8fd7ae1cb27ad47e612",
+      "bytes": 12410,
+      "sha256": "0b81f25c89f3bff35a669ba2af6b43f9462234c0b0f61df1e0609b012136c8ab"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/vstup-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "fb8297f90bac9bb65c90c23a7de84b8fdf6d871f",
+      "bytes": 5268,
+      "sha256": "bc439e75b59597ffe9e9d8b20dab30f5ad4a07aa2cdc08015e50cf609caa3a0e"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/zadna-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "0b54904386a896d1bc69acba64a3fd95a975cf4b",
+      "bytes": 10728,
+      "sha256": "faaa577cd20edaca497c5c1b0dcf033622ac70914260a749481353b6d248022b"
+    },
+    {
+      "path": "barbershop-30/assets/img/film/zadna-m-hlbka-z.webp",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "cf142b94d80f8b25b1aa36d2ab6c513be9d6d6db",
+      "bytes": 5946,
+      "sha256": "5a525f5aa3d978524f40530ac4f65e56c0f8778fe9fd985032a8cf313745c160"
+    },
+    {
+      "path": "barbershop-30/assets/navsteva.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "343c3475e45e7228f98becc0182cad33f74b56ab",
+      "bytes": 5283,
+      "sha256": "ceeef51fe7df09adf1ee4ed32eea09425838cadd1908500fae54e093bdc10cdd"
+    },
+    {
+      "path": "barbershop-30/assets/pravne.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "7448b2a0cf78dd3e85c74be3914440b0c78159a6",
+      "bytes": 1065,
+      "sha256": "64bdeb79c626ba7ae16ac9aa81a223c8d040fe3a41a9f6c481b72d88923bb29b"
+    },
+    {
+      "path": "barbershop-30/assets/style.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "1a6f5370dc679107ca7a6b66a6703e856a0401ea",
+      "bytes": 79495,
+      "sha256": "8bb1577aec89bd05b9ff637d556b44d7791c3fcd5efbdda8686373b6947f4c31"
+    },
+    {
+      "path": "barbershop-30/assets/vernost.js",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "0e2f3ff7da262c4a5f320032f89ce826bd915d85",
+      "bytes": 25614,
+      "sha256": "e26f7377f9e13bc65dfb8cc7d09fcd38864e9cd130dd59d766ee0bfb1f3db84f"
+    },
+    {
+      "path": "barbershop-30/docs/CONTENT_SOURCES.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "bb18b4019577e03ca66fdbe17ba868cfa0c00107",
+      "bytes": 18538,
+      "sha256": "81028b5980b88cceafda2067f301076f06133d651e5aea2ca02c1c6acb0d4d1f"
+    },
+    {
+      "path": "barbershop-30/docs/CONTRACT.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "91be10c5d41ba8e72f67d66bc75aea1f7f1b0c42",
+      "bytes": 8583,
+      "sha256": "e6fd91f923520684db2375f25c77329bc9f7f38bdaf50b095704349a7a7d18a3"
+    },
+    {
+      "path": "barbershop-30/docs/POKRACOVANIE-2026-10-20.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "854d48d33d9dbfe43f3137ccabdd2be9dd452c5e",
+      "bytes": 8859,
+      "sha256": "170868e9c86375c636dbdb8008d40e65b47f08d818ffa6a5b9fe9f7148852d9c"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/A.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "827df97696ca40e83595b3e8d0aef99d307b7fb5",
+      "bytes": 11096,
+      "sha256": "afdf9e03ca6bba77e9d812902e61316ff2e3a498a5ce469791acb76aa7a0cbc5"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/B.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "6f1b4e0b086ef330e6d800992a7dcf11b54ace5b",
+      "bytes": 11094,
+      "sha256": "a89b9fc848648865bc942c20dfab84afb0e59ebda9f3385d1b8e8a1820ed9716"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/C.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "2729d571b63da1366b9750c16278516299754c3c",
+      "bytes": 11112,
+      "sha256": "91f85e894165ac9dc5535476ceb9a785cc86e82410e77dca71b21feebf10d25e"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b71567f509c1da78261c900742fd9f0279d03ff9",
+      "bytes": 8286,
+      "sha256": "fe820a7d00c827eebb876934e77775baaab90da4d97485a57aee6a76e44887f3"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "80dc5db71aaf22a94ca753a06faeb1e601c1bd7e",
+      "bytes": 4731,
+      "sha256": "ccd7cbb74161a028fc0c41d148a9ae50e5886d1c878f92460c1ec8b9b30d6730"
+    },
+    {
+      "path": "barbershop-30/docs/d7-studies/study.css",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "34535eb31b646806d45b7ff44bf974abdfd496a1",
+      "bytes": 10139,
+      "sha256": "9b1ee6eb3ad4d323eb81153638a335bb9c5505ff7eca010009a0cef88aff2ef2"
+    },
+    {
+      "path": "barbershop-30/docs/overenie-d6/rezervacia-live.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "39ba1665240f73e5a919758201222351f7d4f7f0",
+      "bytes": 917,
+      "sha256": "66112df86d657bd6e998d79b884aa48d82edb1bc29b5d29b332e822dbf276b65"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/OTAZKY-PRE-MAJITELA.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "df649960f4193c0f3038ba38a2c8c5601b307a65",
+      "bytes": 18109,
+      "sha256": "bb8f8f01ae2586189c462aa42973aa9fceb533206db66bd92d0b2f77928d737a"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/PLAN-D6-D7.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d492fb67b546bd1cc5b1979c2cb455144d5b6c6c",
+      "bytes": 90066,
+      "sha256": "ddb20481cf6459c5e4727bc915348ec4bc68a2e6a0b2139c6d694d76137cb792"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/PLAN.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "dd047daa91f5ec22b3c7ca132e0202bd372886b3",
+      "bytes": 60307,
+      "sha256": "40fd11de2b05756c9ac01c3b68101692b17b6eb7ac84a411f00d71fec716744e"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/PRIEBEH.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "e74143c32bf2e21bf6fb1b167878b68f5d1c4100",
+      "bytes": 7103,
+      "sha256": "5b9c2943ce5e671197ec4daabe4a62944836233b2cb216573dc3698bc1e50e6c"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/ZADANIE.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b645af640804331f5b0c8521f00b083f5949d89d",
+      "bytes": 6086,
+      "sha256": "d800090a1a2bebac3276a8409c76be99478d882366362530b1e0c03f3c910823"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/zaplaty/0001-BARBERSHOP-30-str-nka-bez-z-sekov-pri-skrole-a-prvom.patch",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "4fb76af7e96059242a7ad98d1cd1211bb0e5413b",
+      "bytes": 70469,
+      "sha256": "64fcede3b525d0b48dacc72c82fe8d45b93c1b3ff06cb0060cfe0684bf30451d"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/zaplaty/NECOMMITNUTE.txt",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/zaplaty/ZOZNAM.txt",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "3886782c9e8dcab48d9835012fdbc4fa11b571c9",
+      "bytes": 71,
+      "sha256": "6ae1c1335c73d96371ee8c0d612b2a9affaea3aa75ad5320e29be2c019774944"
+    },
+    {
+      "path": "barbershop-30/docs/plynulost/zaplaty/necommitnute.patch",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "barbershop-30/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "cd43fa07b7b98cf4daba88eaf684484852db774b",
+      "bytes": 84561,
+      "sha256": "745985f06faa07854c94d49f899ed5a52f4b3123705d327e15ee44fd2ad7cde4"
+    },
+    {
+      "path": "barbershop-30/pravne.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "dd3ed496ca81dcd09d39e272de5476e1bea13bb0",
+      "bytes": 5858,
+      "sha256": "4479d6a86fcd0ee82ce643ab7fa39b12bc266b720436a4f849b2135ab1c3c05d"
+    },
+    {
+      "path": "barbershop-30/sitemap.xml",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "1aab8b685d669453730ccc05a627dab9b7104bf6",
+      "bytes": 10201,
+      "sha256": "79ddbe10a615186ea6b9d310be7089629c66b18d9117c2b4c25df06e3842f738"
+    },
+    {
+      "path": "barbershop-30/source/tools/admin-browser.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "c4e2aa8acc3f878a6b171b0731653f2427bf3e30",
+      "bytes": 5780,
+      "sha256": "fd9db3efbe0dcbcab82d660d392f5b5f9ac56a3d6e7806032641a28cad0202b9"
+    },
+    {
+      "path": "barbershop-30/source/tools/admin-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "61e2e7b600dda92f2191f3152bcd6fb5af983718",
+      "bytes": 12383,
+      "sha256": "030eed184fc68b1d11b7f78266646bec146ca192f948a56c244d0376f78b7b82"
+    },
+    {
+      "path": "barbershop-30/source/tools/app-smoke.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "06971e2f40e2e43b3fe58474292d3e7db8571ba9",
+      "bytes": 27859,
+      "sha256": "cb34b627df360776fbd189f7386d6ee7c01603387bcd8e4d3a3652f801e1c7c4"
+    },
+    {
+      "path": "barbershop-30/source/tools/d7-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "beba18d860e55b5017b523035b9fa7c4257be1b0",
+      "bytes": 9969,
+      "sha256": "d647a632247d3e4ab2dc17af398aebfdec0cd88facbe8c902302cdbc693eabca"
+    },
+    {
+      "path": "barbershop-30/source/tools/film-continuity.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "9c18372cab15107dac09d0b3cb00bbaa9a3d6390",
+      "bytes": 4543,
+      "sha256": "0c07c8e6d8f11b800191272a6613c34700571483bb9209721d18c445d68f7a07"
+    },
+    {
+      "path": "barbershop-30/source/tools/film-regression.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "b769c06cf0166f67b73a829c5f8af514b2a00b2b",
+      "bytes": 14478,
+      "sha256": "a230801ea8982ccf33536ffba1d18f507d6f7d9b52323d77874250c56ca5ab09"
+    },
+    {
+      "path": "barbershop-30/source/tools/frontend-regression.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "929943b69d9ec636a6d58406bd479f4a21b9f82b",
+      "bytes": 7423,
+      "sha256": "07a599645b8066b5dff2afce1d9e774fe760b5061e3a077fc2cb44fe20220994"
+    },
+    {
+      "path": "barbershop-30/source/tools/hlbka-zjemni.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "6de863f330bcd4252bfceca1a7d645db7fe6f3b2",
+      "bytes": 1858,
+      "sha256": "d0bb5cf66e6f18c1cd965a1f39e29e8cfc63268453269947f0a989a42cb853e0"
+    },
+    {
+      "path": "barbershop-30/source/tools/hodiny-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "888047bc2e42ead8d45be85d8b46a3930cc8a99d",
+      "bytes": 14336,
+      "sha256": "60f93eebc2eb99f7dd2985b2e7fd1493f15d8e7da92d3e5cb03616ed62c9634b"
+    },
+    {
+      "path": "barbershop-30/source/tools/i18n-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "1690717475a928a0a8bba9dfab59ebca4184b372",
+      "bytes": 11505,
+      "sha256": "8c2527f1cafea07001adc7aa538d988b3cd2871728879ef692f6228d43f2954c"
+    },
+    {
+      "path": "barbershop-30/source/tools/nahlady.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "c34e4c362de360e49b2ffde410e4e0048f3ab1bc",
+      "bytes": 3159,
+      "sha256": "e20477c202263f095e43040560502612f3f70fb50824e240bd80a78ed5fee24d"
+    },
+    {
+      "path": "barbershop-30/source/tools/navsteva-browser.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f25d3948b5a67e3356403287384ed01260bf94f6",
+      "bytes": 3870,
+      "sha256": "f53e15ee71742cf6edb28b581465a2ba426ee39b235577f2b9edb3b824dc0af9"
+    },
+    {
+      "path": "barbershop-30/source/tools/navsteva-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "748c5fbe289203779caf35b8042421cc1d80f755",
+      "bytes": 7633,
+      "sha256": "4b7555c3da68eaa075336273b8f23c59076379d615b197e1fbf9d367499b301e"
+    },
+    {
+      "path": "barbershop-30/source/tools/rezervacia-kontrola.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "616633dc31a21ffb1d2121bde02cb8f846985b0f",
+      "bytes": 12991,
+      "sha256": "f7831798f543d14f7b3e1f1e4c0afcf0be039c34f3972e43c07518af83cb472f"
+    },
+    {
+      "path": "barbershop-30/source/tools/scenes-shot.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "edf0c467b058ec26628a7b41ca4bba23eaa196fd",
+      "bytes": 7879,
+      "sha256": "5c14f6ae5edd7a0fc559f964c7709abc4af659d30e17e8d821f749de27e7e8ed"
+    },
+    {
+      "path": "barbershop-30/source/tools/strih-shot.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f4bf3477e5f093790785d3c4e64dd20162b9e843",
+      "bytes": 6553,
+      "sha256": "0f408be6c6675b3f8d1aa2a237af25bfb2b45c5d4ad412fb4ed3de66eecbfa29"
+    },
+    {
+      "path": "barbershop-30/source/tools/vernost-footer-test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "7fd99e06de08ce84e02bab22777362200fcda035",
+      "bytes": 2237,
+      "sha256": "e11885b220f33bb7f560b6a0dab873af8b6d52f7db57ba37ddde6cbe92040da9"
+    },
+    {
+      "path": "tools/ftp-balik.sh",
+      "mode": "100755",
+      "type": "blob",
+      "blob": "f57766262f11bd5edc0e4dbd8d6309d28ea208dd",
+      "bytes": 1877,
+      "sha256": "f527c9476ad6490469c357e9ae02632aaaf653a2b4a630cd31cd70c5f9743cba"
+    },
+    {
+      "path": "tools/pracovna-siet/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "73615d478fa73a2d3c41b31082f5abd2d8d9411e",
+      "bytes": 7640,
+      "sha256": "5b0ded6411fdb9c6c1601bb483d16af814daa4af2813730591b7dff3610a04ce"
+    },
+    {
+      "path": "tools/pracovna-siet/brain-template.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "200015345874a21662c6d1c92671956cdf9e6d07",
+      "bytes": 19664,
+      "sha256": "62f8766818ad6f4ac3d09a0d0964c3dd75279e945af07448dd5e97a214ca927f"
+    },
+    {
+      "path": "tools/pracovna-siet/brain.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "41496f45a69209c31275508b0648fe49271d6630",
+      "bytes": 53200,
+      "sha256": "8fd661177afcb812d21e8dd5b81b01f862716acf657df2114fc25c47954ee165"
+    },
+    {
+      "path": "tools/pracovna-siet/cli.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "a8f09cf05304d7a2147f65b6301ba2015539d5b3",
+      "bytes": 6396,
+      "sha256": "d357e088168c73de2cc90af0022e8935ae83aa7d4abe65baebf8b01b50cdd34f"
+    },
+    {
+      "path": "tools/pracovna-siet/dashboard.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "bf090cda936cd696ccd74b0ee09f2c877c407446",
+      "bytes": 11998,
+      "sha256": "f7efff29fbae12ecc1cc9eea6d5ecb062dc416a621c12e4bf6fa489c69b1d57e"
+    },
+    {
+      "path": "tools/pracovna-siet/engine.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "f2dfbc7907c46bd8fef59d04b9326f080564ccba",
+      "bytes": 15644,
+      "sha256": "0b42bc81764b5527d928e5aa3d1accabe740651c693b8fb9102dde35a3b050ea"
+    },
+    {
+      "path": "tools/pracovna-siet/engine.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "5f943484409e7d98b7b937d0e699f8e26adfd354",
+      "bytes": 9332,
+      "sha256": "ddad40ebd7208ea6af8c272c090694b42876a776fa6395ed5431e40bafb4b02c"
+    },
+    {
+      "path": "tools/pracovna-siet/events.jsonl",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "054b3e009716dd5423c85a63164a1c52d47953f9",
+      "bytes": 2976,
+      "sha256": "456e22f39a63b6bfb1e68002016e7041e40599ad60f04c019e6abda5fd210a5e"
+    },
+    {
+      "path": "tools/pracovna-siet/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "d37de3d1df9530dd07bb9c981cbf6f92d78efb45",
+      "bytes": 21581,
+      "sha256": "9cd7bedb7a81b940a5d6739c67d7edc41807ed3870e12bb9989271610302c63e"
+    },
+    {
+      "path": "tools/pracovna-siet/network-handoff.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "5c797cc121169abdf5998086951a146ade10f203",
+      "bytes": 1671,
+      "sha256": "cc4b4600a9888076a13dcaa5f001b8d9f15be7394e2856b940470d5d25fd5d3e"
+    },
+    {
+      "path": "tools/pracovna-siet/render-brain.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "8539373de7953d75f5e6656da6c05c0aa73c6b3b",
+      "bytes": 2682,
+      "sha256": "9f51dddfc340d5c5135a646243ab6f751653d50f7ea139c3a4d2b3191975da46"
+    },
+    {
+      "path": "tools/pracovna-siet/render-brain.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "c35b60a879f2ff2f33e7beee2c37c8dd214b1268",
+      "bytes": 3093,
+      "sha256": "672a93dc9c1209c37ad0563d3edd2a967fbe6d41f314ec25efe72bfb62951ade"
+    },
+    {
+      "path": "tools/pracovna-siet/snapshot.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "67fce22caa6caaebf8ec8273c9a5cf97b26f8db2",
+      "bytes": 12360,
+      "sha256": "ffe02b972f2f3b2fe51e2a1745f34714194f55e7ccadb2ce8334d495e8eba8bb"
+    },
+    {
+      "path": "tools/pracovna-siet/state.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "6c5bc735e836a4d421d08da8ac06ab0e868b3253",
+      "bytes": 8693,
+      "sha256": "572303dfda2b26c1699c35244e04fe53c67b45af7787f0a421bd8fc854070454"
+    },
+    {
+      "path": "tools/pracovna-siet/state.schema.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "9ac8220c4807d6a7f00e590051ddb9181bdb2e42",
+      "bytes": 2877,
+      "sha256": "23dae1571cad8519deb3a0c5152e439ab806cade77cb59c882138547001d3a6e"
+    },
+    {
+      "path": "tools/pracovna-siet/verification.txt",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "966ae5ff71d2daa7f5815612f3041023a76f8fd6",
+      "bytes": 1284,
+      "sha256": "0dec0cf0b09271e5600eeda58241bfcff304ae03066515ef06e6860f38a71b7e"
+    },
+    {
+      "path": "tools/test-404.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "a0dcc22421be240be241a56226625de0dbad13c8",
+      "bytes": 1600,
+      "sha256": "1d197734263c2667c7c1c8a8d111110517fd454ffee315e9b2253aa83fccf366"
+    },
+    {
+      "path": "tools/test-vernost-priprav.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "cdbd43443944bdb7c953c52650e5a7b929fcbc20",
+      "bytes": 2735,
+      "sha256": "12164f888ab6a7af26bc8f772700f59c290b43ea4dee33136ca1cb50d6ffe902"
+    },
+    {
+      "path": "tools/vernost-priprav.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "89eccc677107e5a9c9d0fbdb91e97e91a0d72045",
+      "bytes": 1972,
+      "sha256": "1b37b12623be7adc94822aceab6c8e126e6142786897ee4e5e8412f57b5c6516"
+    },
+    {
+      "path": "vernost/ochrana-udajov.html",
+      "mode": "100644",
+      "type": "blob",
+      "blob": "904a4468800e956659485a0c745a23eb5f62d45e",
+      "bytes": 4962,
+      "sha256": "431670f7a69674b2519b46f79049f606c5d9e9dc37cba46b7634f64ee5c2556b"
+    }
+  ]
+}

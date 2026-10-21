@@ -1,0 +1,1603 @@
+{
+  "schema": "daily_research_observation_bundle_v1",
+  "title": "Odborná sieť — overenie 2026-10-21",
+  "as_of": "2026-10-21",
+  "skill": "build-premium-websites",
+  "skill_revision": "c51ad3ea889942cf893502960255b8322b8b25d4",
+  "project_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+  "coverage": {
+    "rotation_group": 2,
+    "rotation_nodes": [
+      "N06",
+      "N07",
+      "N08",
+      "N09",
+      "N10"
+    ],
+    "daily_priority_nodes": [
+      "N14",
+      "N16"
+    ],
+    "next_rotation_group": 3,
+    "next_rotation_nodes": [
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "max_concurrency": "3 specialist/researcher pairs plus coordinator",
+    "waves": [
+      [
+        "N14",
+        "N16",
+        "N06"
+      ],
+      [
+        "N07",
+        "N08",
+        "N09"
+      ],
+      [
+        "N10"
+      ]
+    ]
+  },
+  "outcomes": {
+    "N06": "no-change",
+    "N07": "no-change",
+    "N08": "no-change",
+    "N09": "no-change",
+    "N10": "no-change",
+    "N14": "no-change",
+    "N16": "no-change"
+  },
+  "records": [
+    {
+      "node_id": "N06",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n06",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n06/r06",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N06",
+        "researcher_id": "R06",
+        "specialist_agent_id": "/root/daily_n06",
+        "researcher_agent_id": "/root/daily_n06/r06",
+        "model": {
+          "specialist": "inherited parent model",
+          "researcher": "gpt-6-luna"
+        },
+        "reasoning_effort": {
+          "specialist": "inherited",
+          "researcher": "medium"
+        },
+        "routing_reason": "Denná rotácia N06–N10; ohraničené primárne čítanie R06 na gpt-6-luna medium, následné posúdenie špecialistom N06 pre existujúci lightbox a manuálny pás tímu.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Voči katalógu z 20.10.2026 (SR05: relevantné APG vzory + keyboard/AT overenie; žiadne adopted_lessons) sa nemení zdokumentovaný kontrakt. Dnes bol spresnený dôkaz konkrétnymi otvorenými APG dialog/carousel a MDN inert stránkami. Bez úplnej starej snímky netvrdíme zmenu ani byte-for-byte zhodu dokumentov. Inert a správa fokusu už sú súčasťou projektového kontraktu README:66–71 a implementácie.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Dialog (Modal) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view0. Lines 23-24 describe inert background and contained tab sequence; lines 35-42 describe initial focus, Tab/Shift+Tab containment, and Escape; lines 50-56 cover focus return and visible close control; lines 58-70 cover role, aria-modal, labeling, and requirement that modal behavior is real.",
+            "applicability": "Direct pattern guidance for the project's modal photo lightbox.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view0"
+          },
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view1. Lines 23-33 explain carousel rotation and required user controls for automatic rotation; lines 51-56 cover keyboard/focus behavior. The current team scroller has manual previous/next controls and no auto-rotation per galeria.js lines 198-233.",
+            "applicability": "Relevant for distinguishing the team's manually controlled horizontal scroller from auto-rotating carousel guidance; applies directly if auto-rotation is added.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view1"
+          },
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert",
+            "publisher": "MDN Web Docs contributors",
+            "title": "inert HTML global attribute - HTML | MDN",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view2. Lines 180-188 state broad browser availability since April 2023 and inert's effects on focus, clicking, tab order and accessibility tree, with showModal() dialog exception; lines 211-212 warn inert has no default visual cue. Page identifies last modification at line 245.",
+            "applicability": "Direct HTML attribute documentation for the lightbox's JS use of HTMLElement.inert on background body children; not evidence of compatibility in the project's unspecified browser matrix.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view2"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "N06 posúdil záznam reálneho dieťaťa R06 a porovnal jeho pozorovania so SR05 v assets/catalogs/research-sources.json z 2026-10-20.",
+            "result": "no-change: APG konkretizuje už existujúcu požiadavku primeraných widget semantics/behavior a keyboard/AT testu; zdrojový dôkaz nepredstavuje runtime PASS.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "R06.json; skill assets/catalogs/research-sources.json SR05, limits.production_rule_verified=false, adopted_lessons=[]",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "static_inspection",
+            "method": "Čítanie presných riadkov bez vykonania browsera.",
+            "result": "Lightbox má pomenovaný role=dialog/aria-modal, po otvorení fokus na close, ukladanie a obnovu pôvodného inert, Escape a Tab/Shift+Tab slučku. Statická zhoda zámeru nepreukazuje správanie ani AT interoperabilitu.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "barbershop-30/index.html:861–873; barbershop-30/assets/galeria.js:147–168,179–188; barbershop-30/docs/d7-studies/README.md:66–68",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "applicability_review",
+            "method": "Porovnanie carousel guidance s konkrétnym manuálnym zoznamom tímu.",
+            "result": "Pás tímu má natívny zoznam, manuálne previous/next tlačidlá a nemá automatickú rotáciu. Nepridáva sa plošný carousel role kontrakt ani požiadavka stop/start pre neexistujúcu rotáciu. APG odporúčanie ponechať fokus na prev/next sa neposudzuje ako potvrdená chyba pri desktopovej mriežke, kde projektový kontrakt výslovne riadi presun fokusu do karty.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "barbershop-30/index.html:300; barbershop-30/assets/galeria.js:198–233; barbershop-30/docs/d7-studies/README.md:70–71",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Žiadne nové pravidlo nebolo prijaté ani zapnuté; skill a produkčný projekt zostali read-only.",
+          "Nespúšťal sa runtime ani AT test; chýbajúci Chromium a zákaz jeho inštalácie ostávajú blocked brány.",
+          "MDN Baseline broadly available since April 2023 je dokumentačný údaj, nie dôkaz podpory vo všetkých projektových prehliadačoch; konkrétna browser matrix je unknown.",
+          "Úplná historická snímka APG/MDN z 20.10. nie je dostupná. Dátumy vydania a verzie neboli uvedené; zostávajú null/unknown.",
+          "Journey-layout a visual-direction: reused len existujúci revízny projektový kontrakt; ich nová tvorba je not_applicable pre ohraničený výskum."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "N06",
+        "researcher_id": "R06",
+        "specialist_agent_id": "/root/daily_n06",
+        "researcher_agent_id": "/root/daily_n06/r06",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "R06 research on current official APG modal-dialog/carousel patterns and MDN inert behavior for the static JavaScript lightbox and team scroller.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Relevant 2026-10-21 official pages were opened and reviewed. The allowed task context did not include the 2026-10-20 full source snapshot, so no page-byte or documentation-change claim is made. Current documentation supports the established dialog and inert model; no newly applicable behavior requiring a rule change was observed.",
+        "findings": [
+          {
+            "id": "N06-R06-20261021-dialog",
+            "claim": "APG modal-dialog guidance calls for moving focus into the dialog on open, containing Tab and Shift+Tab within it, closing on Escape, and returning focus to the invoking control when the dialog closes (unless workflow conditions justify another destination). aria-modal=true is appropriate only when outside content is actually unavailable to all users and visually obscured.",
+            "proposed_rule": "For a lightbox implemented as a modal dialog, verify its runtime behavior against APG focus containment, Escape dismissal, focus restoration, accessible naming, and actual modality; do not infer conformance from role/aria-modal markup alone.",
+            "scope": "Static JavaScript photo lightbox at the cited project revision.",
+            "non_goals": "This source review does not certify implementation behavior, assistive-technology interoperability, or browser-specific reliability.",
+            "applicability": {
+              "environment": "Static HTML/CSS/ES modules in a browser",
+              "version": "Project revision 556bd1c0da0c8ccf329db737e17918b9dbdf5757; browser versions unspecified"
+            },
+            "confidence": {
+              "level": "high",
+              "reason": "Directly opened the W3C APG pattern and inspected relevant project source lines; no runtime browser test was performed."
+            },
+            "generalization": "project_only",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+                "publisher": "W3C Web Accessibility Initiative (WAI)",
+                "title": "Dialog (Modal) Pattern | APG | WAI | W3C",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-11-20",
+                "version": "unknown",
+                "evidence": "Opened as turn45view0. Lines 23-24 describe inert background and contained tab sequence; lines 35-42 describe initial focus, Tab/Shift+Tab containment, and Escape; lines 50-56 cover focus return and visible close control; lines 58-70 cover role, aria-modal, labeling, and requirement that modal behavior is real.",
+                "applicability": "Direct pattern guidance for the project's modal photo lightbox.",
+                "primary_source": true,
+                "retrieval_ref": "turn45view0"
+              }
+            ]
+          },
+          {
+            "id": "N06-R06-20261021-carousel-inert",
+            "claim": "APG carousel guidance requires user control for automatically rotating carousels, including stopping/restarting rotation; rotation stops when focus enters and does not restart without explicit request. MDN documents inert as removing an element subtree from focus/click interaction, tab order, and accessibility tree; modal dialog elements opened with showModal() are a special exception to inherited inertness. The current team scroller is user-controlled and does not automatically rotate, so automatic-rotation requirements do not apply to that behavior.",
+            "proposed_rule": "Keep non-visible/background content genuinely non-interactive while the lightbox is open and restore each element's prior inert state on close; assess carousel auto-rotation requirements only if automatic rotation is introduced.",
+            "scope": "Static JavaScript lightbox background handling and team horizontal scroller at the cited project revision.",
+            "non_goals": "MDN's broad availability statement is documentation evidence, not a test of the project's supported browser matrix. The team scroller is not claimed to implement the APG carousel pattern fully.",
+            "applicability": {
+              "environment": "Static HTML/CSS/ES modules in a browser",
+              "version": "Project revision 556bd1c0da0c8ccf329db737e17918b9dbdf5757; browser versions unspecified"
+            },
+            "confidence": {
+              "level": "medium",
+              "reason": "Direct documentation review and source inspection support the applicability distinction; no runtime or browser-compatibility test was performed."
+            },
+            "generalization": "project_only",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+                "publisher": "W3C Web Accessibility Initiative (WAI)",
+                "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-11-20",
+                "version": "unknown",
+                "evidence": "Opened as turn45view1. Lines 23-33 explain carousel rotation and required user controls for automatic rotation; lines 51-56 cover keyboard/focus behavior. The current team scroller has manual previous/next controls and no auto-rotation per galeria.js lines 198-233.",
+                "applicability": "Relevant for distinguishing the team's manually controlled horizontal scroller from auto-rotating carousel guidance; applies directly if auto-rotation is added.",
+                "primary_source": true,
+                "retrieval_ref": "turn45view1"
+              },
+              {
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert",
+                "publisher": "MDN Web Docs contributors",
+                "title": "inert HTML global attribute - HTML | MDN",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-11-20",
+                "version": "unknown",
+                "evidence": "Opened as turn45view2. Lines 180-188 state broad browser availability since April 2023 and inert's effects on focus, clicking, tab order and accessibility tree, with showModal() dialog exception; lines 211-212 warn inert has no default visual cue. Page identifies last modification at line 245.",
+                "applicability": "Direct HTML attribute documentation for the lightbox's JS use of HTMLElement.inert on background body children; not evidence of compatibility in the project's unspecified browser matrix.",
+                "primary_source": true,
+                "retrieval_ref": "turn45view2"
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Opened the three requested official pages and read the modal-dialog, carousel, and inert sections; inspected the lightbox and team scroller source at the specified revision.",
+            "result": "Documentation facts recorded. Source inspection found existing inert background handling, focus placement/restoration, Escape handling and Tab containment in the lightbox; team controls are manual and do not auto-rotate. This is not a runtime test.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "barbershop-30/assets/galeria.js:147-189, 198-233; barbershop-30/index.html:861-873",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "No browser runtime test was run; browser automation availability is explicitly blocked in the brief.",
+          "No full 2026-10-20 page snapshot is available. N06 supplied the SR05 baseline summary; no byte-level or document-change claim is made.",
+          "MDN reports last modification on 2026-04-17, recorded in evidence; W3C APG pages expose no publication date or version in the opened content."
+        ],
+        "sources": [
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Dialog (Modal) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view0. Lines 23-24 describe inert background and contained tab sequence; lines 35-42 describe initial focus, Tab/Shift+Tab containment, and Escape; lines 50-56 cover focus return and visible close control; lines 58-70 cover role, aria-modal, labeling, and requirement that modal behavior is real.",
+            "applicability": "Direct pattern guidance for the project's modal photo lightbox.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view0"
+          },
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view1. Lines 23-33 explain carousel rotation and required user controls for automatic rotation; lines 51-56 cover keyboard/focus behavior. The current team scroller has manual previous/next controls and no auto-rotation per galeria.js lines 198-233.",
+            "applicability": "Relevant for distinguishing the team's manually controlled horizontal scroller from auto-rotating carousel guidance; applies directly if auto-rotation is added.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view1"
+          },
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert",
+            "publisher": "MDN Web Docs contributors",
+            "title": "inert HTML global attribute - HTML | MDN",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "unknown",
+            "evidence": "Opened as turn45view2. Lines 180-188 state broad browser availability since April 2023 and inert's effects on focus, clicking, tab order and accessibility tree, with showModal() dialog exception; lines 211-212 warn inert has no default visual cue. Page identifies last modification at line 245.",
+            "applicability": "Direct HTML attribute documentation for the lightbox's JS use of HTMLElement.inert on background body children; not evidence of compatibility in the project's unspecified browser matrix.",
+            "primary_source": true,
+            "retrieval_ref": "turn45view2"
+          }
+        ]
+      },
+      "record_sha256": {
+        "N06.json": "37f0465846eaf499e52c80b6b1ae7631799ea49202f86d87d45422c5a9991a14",
+        "R06.json": "a1b2948ca8d0ab73d25d29fadd7d4c54d02e7de71e09c0c752085dcaa222a4ea"
+      }
+    },
+    {
+      "node_id": "N07",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n07",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n07/r07",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N07",
+        "researcher_id": "R07",
+        "specialist_agent_id": "/root/daily_n07",
+        "researcher_agent_id": "/root/daily_n07/r07",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "routing_reason": "N07 vyžiadal skutočného R07 (fork none, gpt-6-luna medium) na ohraničený denný výskum; odborné posúdenie N07 zachováva webový rozsah projektu.",
+        "delta_from_baseline": "Voči katalógovému záznamu SR06 z 2026-10-20 nebola doložená relevantná časovo priraditeľná zmena. Tréningový katalóg naďalej dokladá dostupnosť materiálov o strihu; dnešný obsah bez dátumov nie je novinka. Baseline je iba stručný opis, preto sa netvrdí byte-for-byte zhoda ani nezmena dokumentu.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve – Training",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "DaVinci Resolve 21 (stránka označuje DAVINCI RESOLVE 21; jednotlivé lekcie nemajú uvedenú verziu)",
+            "evidence": "Oficiálny katalóg uvádza Introduction to Editing, časť 2 (trim edit, match frame, replace shots, zvuk, prechody a titulky) a Multicam Editing (synchronizáciu uhlov v timeline pred strihom). Tieto témy môžu podporiť kontinuitu strihu a plánovanie záberov, no stránka neuvádza dátum pridania ani vydania lekcií.",
+            "applicability": "Možná referenčná pomôcka, ak tím vytvára video storyboard a používa Resolve; projektová revízia je webová aplikácia a používanie Resolve nie je doložené.",
+            "primary_source": true,
+            "retrieval_ref": "turn48view0"
+          },
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/whatsnew",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve – What’s New",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "DaVinci Resolve 21; stránka tiež odkazuje na obsah 21.1",
+            "evidence": "Stránka prezentuje DaVinci Resolve 21 a opisuje vývojové zmeny vrátane vylepšeného keyframingu v Edit/Cut. Uvádza odkaz 'Watch What's New in 21.1', ale bez dátumu vydania stránky alebo videa.",
+            "applicability": "Produktový kontext pre používateľov Resolve; nepreukazuje zmenu tréningového materiálu po 2026-10-20 ani zmenu v tomto webovom projekte.",
+            "primary_source": true,
+            "retrieval_ref": "turn52view0"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "N07 prečítal profil N07/R07, kontrakt a baseline SR06; samostatne otvoril oficiálny Resolve Training a posúdil dôkazy R07.",
+            "result": "no-change: aktuálny katalóg má Introduction to Editing part 2 (trim edit, match frame, replace shots) a tréningové súbory. Chýbajúci dátum lekcií a neúplný snapshot z 20.10. neumožňujú vyhlásiť dennú zmenu.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "SR06 observed_at 2026-10-20; turn46view0 lines 318-363; R07.json",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "scope_review",
+            "method": "Použiteľnosť zdrojov porovnaná s prostredím uvedeným v BRIEF.md.",
+            "result": "Resolve nie je doložený ako používaný nástroj. Žiadny kandidát na pravidlo alebo zásah do webového storyboardu nevznikol. Žiadny runtime test nebol vykonaný ani deklarovaný.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "BRIEF.md; R07.json",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Stránka fóra Blackmagic s oznámením Resolve Studio 21.1.1 (2.10.2026) vrátila 403 pri otvorení; vyhľadávací úryvok sa nepoužil ako dôkaz.",
+          "Tréningové videá ani cvičné súbory neboli spustené; záznam dokladá iba obsah oficiálneho katalógu.",
+          "Projekt je statický HTML/CSS/ES modules/WebGL a nie je doložené, že používa DaVinci Resolve alebo tvorí video storyboard. Zistenia o Resolve preto nie sú priamo použiteľné na runtime projektu.",
+          "Bez úplného snapshotu SR06 z 20.10. nemožno tvrdiť presnú zmenu/nezmenu stránky.",
+          "Kontrola nezmenila stav blokovaných browserových brán; skill ani produkčný projekt neboli upravené."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "N07",
+        "researcher_id": "R07",
+        "specialist_agent_id": "/root/daily_n07",
+        "researcher_agent_id": "/root/daily_n07/r07",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Ohraničené overenie oficiálnych tréningových a produktových zdrojov pre kontinuitu/timing storyboardu.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Nenašiel som oficiálny dôkaz relevantnej zmeny publikovanej po 2026-10-20. SR06 z 2026-10-20 je iba stručný katalógový opis a neúplná baseline; preto to nedokazuje, že obsah stránky alebo produktu zostal nezmenený. Aktuálna stránka ponúka Resolve 21 a video 'What's New in 21.1', ale dátum jeho zverejnenia na stránke nie je uvedený a nemožno ho priradiť k zmene od 20.10.",
+        "findings": [],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Otvorené oficiálne tréningové stránky a porovnané s katalógovým záznamom SR06 z 2026-10-20; skontrolovaný oficiálny produktový prehľad What's New.",
+            "result": "Na tréningovej stránke sú dostupné lekcie Introduction to Editing, časť 2 (trim edit, match frame, replace shots, audio, transitions/titles) a Multicam Editing (synchronizácia uhlov v timeline). Žiadna z týchto položiek nemá viditeľný dátum vydania. Oficiálny What’s New uvádza Resolve 21 a obsah 21.1, ale bez dátumu publikovania; dôkaz nedokladá zmenu po 20.10.2026.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "turn48view0, lines 318-363; turn52view0, lines 306-318",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Stránka fóra Blackmagic s oznámením Resolve Studio 21.1.1 (2.10.2026) vrátila 403 pri otvorení; vyhľadávací úryvok sa nepoužil ako dôkaz.",
+          "Tréningové videá ani cvičné súbory neboli spustené; záznam dokladá iba obsah oficiálneho katalógu.",
+          "Projekt je statický HTML/CSS/ES modules/WebGL a nie je doložené, že používa DaVinci Resolve alebo tvorí video storyboard. Zistenia o Resolve preto nie sú priamo použiteľné na runtime projektu.",
+          "Bez úplného snapshotu SR06 z 20.10. nemožno tvrdiť presnú zmenu/nezmenu stránky."
+        ],
+        "sources": [
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve – Training",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "DaVinci Resolve 21 (stránka označuje DAVINCI RESOLVE 21; jednotlivé lekcie nemajú uvedenú verziu)",
+            "evidence": "Oficiálny katalóg uvádza Introduction to Editing, časť 2 (trim edit, match frame, replace shots, zvuk, prechody a titulky) a Multicam Editing (synchronizáciu uhlov v timeline pred strihom). Tieto témy môžu podporiť kontinuitu strihu a plánovanie záberov, no stránka neuvádza dátum pridania ani vydania lekcií.",
+            "applicability": "Možná referenčná pomôcka, ak tím vytvára video storyboard a používa Resolve; projektová revízia je webová aplikácia a používanie Resolve nie je doložené.",
+            "primary_source": true,
+            "retrieval_ref": "turn48view0"
+          },
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/whatsnew",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve – What’s New",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-11-20",
+            "version": "DaVinci Resolve 21; stránka tiež odkazuje na obsah 21.1",
+            "evidence": "Stránka prezentuje DaVinci Resolve 21 a opisuje vývojové zmeny vrátane vylepšeného keyframingu v Edit/Cut. Uvádza odkaz 'Watch What's New in 21.1', ale bez dátumu vydania stránky alebo videa.",
+            "applicability": "Produktový kontext pre používateľov Resolve; nepreukazuje zmenu tréningového materiálu po 2026-10-20 ani zmenu v tomto webovom projekte.",
+            "primary_source": true,
+            "retrieval_ref": "turn52view0"
+          }
+        ]
+      },
+      "record_sha256": {
+        "N07.json": "ba5c5466393df6362b6a0f29fefb9fe173152a378c55c153a965e58ed73473f4",
+        "R07.json": "60b7b52cecdc26af0a6ce738fc4748482f730c960724e53966d144b55b6f1a4a"
+      }
+    },
+    {
+      "node_id": "N08",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n08",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n08/r08",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N08",
+        "researcher_id": "R08",
+        "specialist_agent_id": "/root/daily_n08",
+        "researcher_agent_id": "/root/daily_n08/r08",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "routing_reason": "N08 odborné posúdenie interakčného pohybu a zvuku; skutočný podagent R08 spustený fork none s gpt-6-luna/medium pre ohraničené čítanie dvoch primárnych stránok.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Neidentifikovaná relevantná zmena kontraktu oproti 20.10.2026. Katalóg SR14 už evidoval WCAG22 vrátane interakciou spustenej animácie a SR05 sémantiku/správanie widgetov. Dnešné konkrétne kritériá a APG carousel sú spresnením čítania existujúceho kontraktu; nie dôkazom novej normy alebo zmeny posledného dňa. Úplná snímka z 20.10 neexistuje v tomto rozsahu; byte-for-byte zhodu ani zmenu dokumentov netvrdíme.",
+        "baseline": {
+          "path": "/root/.codex/skills/remote-skills/skill-6ad69fe1ef288191b4f0a8a5e092dec0/assets/catalogs/research-sources.json",
+          "observed_at": "2026-10-20",
+          "source_ids": [
+            "SR05",
+            "SR14"
+          ],
+          "comparison_basis": "retrieval_evidence a claim_boundary katalógu, nie úplná historická snímka stránok"
+        },
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://www.w3.org/TR/WCAG22/",
+            "publisher": "World Wide Web Consortium (W3C)",
+            "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+            "published_at": "2024-12-12",
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "WCAG 2.2 Recommendation, 12 December 2024",
+            "evidence": "SC 2.2.2 lines 793–806; SC 1.4.2 lines 474–481; SC 2.3.3 lines 881–888.",
+            "applicability": "Normatívny štandard prístupnosti pre časové správanie pohybu a zvuku; framework-agnostic.",
+            "primary_source": true,
+            "retrieval_ref": "turn49view0; turn51view0; turn51view1; turn51view2"
+          },
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Unversioned APG page; current content observed 2026-10-21",
+            "evidence": "Lines 23–33 and 51–55 specify controls and stop behavior for automatic rotation, keyboard focus and hover.",
+            "applicability": "Conditional on an actual carousel; APG is widget guidance and does not certify WCAG conformance.",
+            "primary_source": true,
+            "retrieval_ref": "turn49view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "R08 otvoril dve konkrétne oficiálne stránky W3C; N08 posúdil zdrojový záznam a porovnal relevantné katalógové východiská 20.10.",
+            "result": "Existujúci kontrakt potvrdený; nová relevantná datovaná zmena nepreukázaná. WCAG kritériá treba používať s úrovňami a výnimkami, APG carousel iba pri skutočnom carousel komponente.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "R08.json; research-sources.json SR05 a SR14",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "scope_review",
+            "method": "Posúdenie použiteľnosti voči BRIEF.md: static HTML/CSS/ES modules/WebGL.",
+            "result": "SR07 GSAP a SR06 Resolve sa neotvárali, lebo nejde o aktívny stack/úlohu. APG carousel ostáva podmieneným zdrojom. Žiadne implementačné pravidlo sa neprijíma.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "BRIEF.md; R08.json",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "artifact_check",
+            "method": "JSON parse a kontrola požadovaných zdrojových polí.",
+            "result": "pass; dva zdroje, dátum pozorovania 21.10, expirácie 28.10 v limite 7 dní.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "N08.json a R08.json",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Samotný source review nie je runtime test; správanie, cleanup a reakcia na zmenu reduced-motion preferencie neboli otestované.",
+          "Chýbajúci Chromium a zákaz jeho inštalácie zostávajú blocked; tento výskum nemení žiadnu browserovú bránu na PASS.",
+          "Bez úplnej snímky 20.10 nie je možný denný textový diff; dátum publikácie APG zostáva null.",
+          "Z prítomnosti APG zdroja nevyplýva, že projekt obsahuje carousel.",
+          "Žiadna úprava skillu ani produkčného projektu; iba dva pridelené výstupné záznamy."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "N08",
+        "researcher_id": "R08",
+        "specialist_agent_id": "/root/daily_n08",
+        "researcher_agent_id": "/root/daily_n08/r08",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Assigned R08 researcher child of N08; scoped to two official W3C sources and no further delegation.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Neidentifikovaná relevantná zmena kontraktu pohybu, reduced-motion alebo zvuku oproti 2026-10-20. Porovnanie sa opiera o východiská poskytnuté N08; bez úplnej snímky zdrojov z 20.10. nemožno tvrdiť byte-for-byte zhodu ani zmenu dokumentov. Zdroje potvrdzujú platné všeobecné požiadavky, nie novinku z posledného dňa.",
+        "findings": [
+          {
+            "id": "R08-F01",
+            "claim": "WCAG 2.2 SC 2.2.2 vyžaduje ovládanie pause/stop/hide pre automaticky spustený pohyb, blikanie alebo rolovanie, ktoré trvá viac než päť sekúnd a je súbežné s iným obsahom, pokiaľ pohyb nie je súčasťou činnosti, kde je nevyhnutný. SC 1.4.2 vyžaduje pri automatickom zvuku dlhšom než tri sekundy buď mechanizmus na jeho pozastavenie/zastavenie, alebo nezávislé ovládanie hlasitosti oproti celkovej hlasitosti systému. SC 2.3.3 pre interakciou spustenú animáciu je úroveň AAA a umožňuje výnimku, ak je animácia nevyhnutná pre funkčnosť alebo informáciu; nejde o všeobecnú AA požiadavku. Špecifikácia tu nepredpisuje framework ani prefers-reduced-motion API.",
+            "confidence": {
+              "level": "high",
+              "reason": "Normatívne W3C WCAG 2.2 Recommendation otvorená priamo; príslušné kritériá a ich úrovne sú explicitne uvedené."
+            },
+            "applicability": {
+              "environment": "Barbershop: static HTML/CSS/ES modules and WebGL; no React, GSAP, or three.js.",
+              "version": "Project revision 556bd1c0da0c8ccf329db737e17918b9dbdf5757; WCAG 2.2 Recommendation."
+            },
+            "proposed_rule": "Pri automatickom pohybe nad 5 sekúnd súbežnom s obsahom poskytnúť ovládanie pause/stop/hide, okrem pohybu nevyhnutného pre danú činnosť. Pri automatickom zvuku nad 3 sekundy ponúknuť pause/stop alebo ovládanie hlasitosti nezávislé od celkovej systémovej hlasitosti. Pri interakciou spustenej animácii zachovať správnu úroveň WCAG a výnimku pre animáciu nevyhnutnú pre funkčnosť alebo informáciu; prefers-reduced-motion možno podporiť ako doplnkovú systémovú preferenciu, ale táto stránka ju výslovne nešpecifikuje.",
+            "scope": "Požiadavky na prístupnosť relevantné pre pohyb a zvuk v statickom webe.",
+            "non_goals": "Nedokazuje implementačný stav projektu, WCAG zhodu, ani novú zmenu dokumentu od 20.10.; neurčuje API pre konkrétnu WebGL knižnicu.",
+            "generalization": "reusable",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://www.w3.org/TR/WCAG22/",
+                "publisher": "World Wide Web Consortium (W3C)",
+                "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+                "published_at": "2024-12-12",
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-28",
+                "version": "WCAG 2.2 Recommendation, 12 December 2024",
+                "evidence": "Stránka označuje Recommendation 12 December 2024; SC 2.2.2 (lines 793–806) uvádza prah >5 sekúnd a pauza/zastavenie/skrytie pre automatický paralelný pohyb; SC 1.4.2 (lines 474–481) rieši automatický zvuk >3 sekundy; SC 2.3.3 (lines 881–888) je Level AAA.",
+                "applicability": "Priamo pokrýva prístupnostné správanie pre automatický pohyb/zvuk bez viazanosti na JS framework; primárny štandard, nie dokumentácia WebGL API.",
+                "primary_source": true,
+                "retrieval_ref": "turn49view0; detail criteria in turn51view0, turn51view1, turn51view2"
+              }
+            ],
+            "checks": [
+              {
+                "type": "source_review",
+                "method": "Otvorená oficiálna stránka W3C a skontrolované texty SC 2.2.2, SC 1.4.2 a SC 2.3.3.",
+                "result": "Potvrdzuje uvedené prahy, ovládanie a úroveň AAA pre SC 2.3.3; nenašiel sa podklad, že ide o zmenu účinnú medzi 20. a 21.10.2026.",
+                "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+                "evidence": "turn49view0; turn51view0–turn51view2",
+                "date": "2026-10-21"
+              }
+            ]
+          },
+          {
+            "id": "R08-F02",
+            "claim": "Ak sa komponent správa ako automaticky rotujúci carousel, APG odporúča ovládanie zastavenia/spustenia, zastavenie pri vstupe klávesnicového fokusu bez automatického obnovenia, kým ho používateľ výslovne nevyžiada, a zastavenie pri hoveri. APG vysvetľuje vzor widgetu; samo osebe nie je certifikát WCAG zhody.",
+            "confidence": {
+              "level": "high",
+              "reason": "Konkrétna oficiálna WAI APG Carousel Pattern stránka otvorená; rotáciu a fokusové správanie uvádza priamo."
+            },
+            "applicability": {
+              "environment": "Len ak má barbershopový vizuál alebo obsah carousel/automatickú rotáciu; nepovažovať všeobecnú WebGL scénu za carousel bez takejto funkcie.",
+              "version": "APG stránka bez zverejneného čísla verzie; aktuálny obsah pozorovaný 2026-10-21."
+            },
+            "proposed_rule": "Ak existuje automaticky rotujúci carousel, ponúknuť natívne tlačidlá na rotáciu/ovládanie slidov, zastaviť ho pri focus-in a hoveri, a neobnovovať ho po focus-in bez výslovnej akcie používateľa. Zachovať prístupný stav a ovládanie pri zmene prefers-reduced-motion; APG túto mediálnu preferenciu samo výslovne nekonkretizuje.",
+            "scope": "Semantika a správanie carousel widgetu, ak je v rozhraní použitý.",
+            "non_goals": "Nedokazuje, že projekt obsahuje carousel; nie je všeobecným predpisom pre každý pohyb v WebGL ani dokladom WCAG zhody.",
+            "generalization": "reusable",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+                "publisher": "W3C Web Accessibility Initiative (WAI)",
+                "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-28",
+                "version": "Unversioned APG page; current content observed 2026-10-21",
+                "evidence": "Opis patternu lines 23–33 vyžaduje používateľské ovládanie rotácie a zastavenie na keyboard focus/hover; keyboard interaction lines 51–55 potvrdzuje focus-in a neobnovenie bez aktivácie rotation control. Stránka uvádza WAI APG, nie certifikáciu zhody.",
+                "applicability": "Relevantné iba vtedy, ak rozhranie má automaticky rotujúci carousel; poskytuje doplnkové správanie fokusu k WCAG kritériám.",
+                "primary_source": true,
+                "retrieval_ref": "turn49view1"
+              }
+            ],
+            "checks": [
+              {
+                "type": "source_review",
+                "method": "Otvorená presná oficiálna WAI APG Carousel Pattern stránka; skontrolovaný opis patternu a keyboard interaction.",
+                "result": "Potvrdzuje carousel-specific stop/restart, focus a hover správanie; bez dostupného dátumu vydania a bez dôkazu dennej zmeny oproti 2026-10-20.",
+                "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+                "evidence": "turn49view1",
+                "date": "2026-10-21"
+              }
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "url": "https://www.w3.org/TR/WCAG22/",
+            "publisher": "World Wide Web Consortium (W3C)",
+            "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+            "published_at": "2024-12-12",
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "WCAG 2.2 Recommendation, 12 December 2024",
+            "evidence": "SC 2.2.2 lines 793–806; SC 1.4.2 lines 474–481; SC 2.3.3 lines 881–888.",
+            "applicability": "Normatívny štandard prístupnosti pre časové správanie pohybu a zvuku; framework-agnostic.",
+            "primary_source": true,
+            "retrieval_ref": "turn49view0; turn51view0; turn51view1; turn51view2"
+          },
+          {
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/carousel/",
+            "publisher": "W3C Web Accessibility Initiative (WAI)",
+            "title": "Carousel (Slide Show or Image Rotator) Pattern | APG | WAI | W3C",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Unversioned APG page; current content observed 2026-10-21",
+            "evidence": "Lines 23–33 and 51–55 specify controls and stop behavior for automatic rotation, keyboard focus and hover.",
+            "applicability": "Conditional on an actual carousel; APG is widget guidance and does not certify WCAG conformance.",
+            "primary_source": true,
+            "retrieval_ref": "turn49view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Reviewed two directly opened official W3C primary pages; no runtime test or implementation inspection was performed.",
+            "result": "Current guidance verified. No relevant 20-to-21 October change identified. A one-day document diff cannot be established without a complete 2026-10-20 snapshot.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "turn49view0; turn49view1; baseline summary supplied by N08.",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "No complete 2026-10-20 source snapshot was available; do not infer documents were byte-for-byte unchanged.",
+          "No browser/runtime test was performed; this research does not establish implementation behavior or conformance.",
+          "APG page has no visible publication date/version; published_at is null.",
+          "WCAG 2.2 does not itself specify prefers-reduced-motion API behavior; no claim about that media feature is made from these sources."
+        ]
+      },
+      "record_sha256": {
+        "N08.json": "31e6a311cf83581a4129dd20da47949a6cd12712c235b0656bc3f37dfad3a7bb",
+        "R08.json": "d32642fe5f1a3f9ccc0f946d110ed36850d89807c20dab823560b4933d3777d0"
+      }
+    },
+    {
+      "node_id": "N09",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n09",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n09/r09",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N09",
+        "researcher_id": "R09",
+        "specialist_agent_id": "/root/daily_n09",
+        "researcher_agent_id": "/root/daily_n09/r09",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "routing_reason": "N09 daily source review for camera/light/VFX; R09 actually delegated on gpt-6-luna medium. Follow-up corrected erroneous BRIEF runtime premise using read-only project evidence: three.js r169 with custom shaders.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Voči SR06/SR08 z 2026-10-20 sa nepreukázala relevantná nová datovaná zmena. Oprava správy: BRIEF mylne vylúčil three.js; projekt importuje three.js (index.html deklaruje r169) a používa vlastnú shader pipeline. Koncepty SR08 sú preto relevantné, ale súčasnú dokumentáciu API treba porovnať s pinom r169 a vlastnými shadermi. Táto oprava rozsahu správy nie je novinka od včera ani dôkaz zmeny dokumentácie. Resolve ostáva katalógom školení bez dôkazu relevantnej novej zmeny.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://threejs.org/manual/pages/color-management.html",
+            "publisher": "three.js project",
+            "title": "Color Management",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Not specified on page; documentation is three.js-specific.",
+            "evidence": "Opened official page. It describes sRGB/Linear-sRGB roles, color vs non-color texture annotations, linear-space rendering, output conversion and OutputPass for post-processing. No publication/update date is stated in the retrieved page.",
+            "applicability": "Relevantné koncepty farebných priestorov a explicitnej správy konverzií pre three.js r169. Projekt má vlastné ShaderMaterial, renderer.outputColorSpace LinearSRGBColorSpace, NoToneMapping a textúry NoColorSpace; aktuálne API príručky nie je automaticky návodom pre túto pipeline. Bez porovnania s pinom a vizuálneho overenia neodporúčame plošné SRGBColorSpace anotácie ani OutputPass.",
+            "primary_source": true,
+            "retrieval_ref": "turn55view0"
+          },
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve Training",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Page links to DaVinci Resolve 21; training page does not state a release date for relevant course content.",
+            "evidence": "Opened official training catalog. It lists Advanced Color, Color Management and Delivering Content lessons with project files. The page does not establish a dated renderer/camera/compositing change, and the lessons were not watched or run.",
+            "applicability": "Relevant only if Resolve is used for the project's media production. It is not part of the project's custom WebGL site runtime and establishes no relevant new camera/color/compositing change since the prior-day baseline.",
+            "primary_source": true,
+            "retrieval_ref": "turn55view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Porovnanie R09 dôkazov so SR06/SR08 baseline observed_at 2026-10-20; následná read-only korekcia runtime predpokladu podľa konkrétneho kódu.",
+            "result": "no-change: žiadna nová relevantná datovaná zmena. three.js koncepty sú relevantné pre r169; zmena farebnej pipeline sa nenavrhuje bez jej auditu.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "R09.json; assets/catalogs/research-sources.json SR06/SR08; barbershop-30/index.html:881; barbershop-30/assets/film.js:122,135,310,315-316,350-358,372,455,646,870-987",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "source_review",
+            "method": "Kontrola skutočného delegovania a platnosti odovzdaného JSON.",
+            "result": "R09 spustený ako vlastné dieťa /root/daily_n09/r09 s gpt-6-luna medium; dva otvorené primárne zdroje, platnosť do 28.10.2026; oba JSON sú syntakticky platné.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "host spawn_agent result /root/daily_n09/r09; R09.json",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "source_review",
+            "method": "Read-only rg a sed konkrétnych riadkov implementácie; bez behu rendereru.",
+            "result": "Potvrdený three.js import, WebGLRenderer a custom ShaderMaterial. Farby sú explicitne vedené bez prepočtov podľa komentára pri renderer nastaveniach. Ide o statické pozorovanie zámeru a kódu, nie dôkaz správnosti výstupných farieb.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "barbershop-30/assets/film.js:122,135,310,314-316,350-358,372,455,646; barbershop-30/index.html:881",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Oficiálne stránky bez dátumu vydania nepreukazujú byte-for-byte zhodu ani čas zmeny.",
+          "Nebolo vykonané vizuálne/runtime overenie farieb, shaderov, mobilného fallbacku ani Resolve cvičenia; statická kontrola kódu nepotvrdzuje správnosť obrazového výstupu.",
+          "Aktuálnu three.js API príručku treba pred zásahom porovnať s pinom r169 a vlastnou shader/postprocess pipeline; zdroj neodôvodňuje plošnú zmenu texture colorSpace ani pridanie OutputPass.",
+          "Výsledok je ohraničený na dva watchlist zdroje; nejde o vyčerpávajúci dôkaz absencie všetkých zmien.",
+          "Skill ani produkčný projekt neboli zmenené; browser/Chromium brány zostávajú v pôvodnom stave.",
+          "Pôvodná verzia správy vychádzala z mylného BRIEF predpokladu bez three.js; tento predpoklad bol opravený po konkrétnom projektovom dôkaze."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "R09",
+        "researcher_id": "R09",
+        "specialist_agent_id": "/root/daily_n09",
+        "researcher_agent_id": "/root/daily_n09/r09",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Read-only current source check for camera, colors, compositing and VFX; verify relevance against custom WebGL project runtime.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "No relevant new official change established compared with the 2026-10-20 baseline. Read-only project inspection confirms the runtime uses pinned three.js r169 (assets/film.js imports vendor/three.module.min.js; index.html:881 labels it r169). The opened Color Management guidance is relevant conceptually to this three.js renderer and its color/shader pipeline, but the page does not state a version or publication date, so it does not establish a change since yesterday. Any modern API guidance must be checked against r169 and the custom ShaderMaterial pipeline before use. The Blackmagic page remains a training catalog, not evidence of a dated runtime change.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://threejs.org/manual/pages/color-management.html",
+            "publisher": "three.js project",
+            "title": "Color Management",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Page does not specify a version; project pin observed separately as three.js r169.",
+            "evidence": "Opened official page. It describes sRGB/Linear-sRGB roles, color vs non-color texture annotations, linear-space rendering, output conversion and OutputPass for post-processing. No publication/update date is stated in the retrieved page.",
+            "applicability": "Relevant color-management concepts apply to the project’s three.js r169 renderer, including its custom ShaderMaterial and texture handling. Page API details are not tied to r169; compare against the pinned version and audit the actual shader pipeline before applying them. In particular, do not blanket-change textures to SRGBColorSpace or add OutputPass without that audit. No dated evidence of a change since 2026-10-20.",
+            "primary_source": true,
+            "retrieval_ref": "turn55view0"
+          },
+          {
+            "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+            "publisher": "Blackmagic Design",
+            "title": "DaVinci Resolve Training",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": "Page links to DaVinci Resolve 21; training page does not state a release date for relevant course content.",
+            "evidence": "Opened official training catalog. It lists Advanced Color, Color Management and Delivering Content lessons with project files. The page does not establish a dated renderer/camera/compositing change, and the lessons were not watched or run.",
+            "applicability": "Relevant only if Resolve is used for media production; it is not the site runtime and the page does not establish a dated camera/color/compositing change since the prior-day baseline.",
+            "primary_source": true,
+            "retrieval_ref": "turn55view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Opened the two assigned official source pages; read-only inspected project runtime/version declarations in assets/film.js and index.html; compared observable claims with the 2026-10-20 SR06/SR08 baseline.",
+            "result": "Project uses three.js r169 with a custom ShaderMaterial pipeline. No relevant dated official change since 2026-10-20 established; no runtime/render test performed.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "turn55view0; turn55view1; assets/film.js:122,135,315-316,372,455,646,870; index.html:881",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "The opened three.js page has no publication date or stated version, so it cannot establish when a change occurred; modern documentation details must be checked against the pinned r169 runtime.",
+          "The project uses custom ShaderMaterial shaders and NoColorSpace texture handling. Do not broadly adopt sRGB texture annotations or OutputPass without auditing this shader/output pipeline.",
+          "No project render or browser/device runtime test was performed; documentation review does not verify visual output or performance."
+        ]
+      },
+      "record_sha256": {
+        "N09.json": "8f7eccb1d08f7af6f476eb5ca64ccb8e251143ba452080afe25a50159b098dc9",
+        "R09.json": "ad983c90dff8e75dd185e403dc5286edcb91d771d106b1b8df726d12232ef05d"
+      }
+    },
+    {
+      "node_id": "N10",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n10",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n10/r10",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N10",
+        "researcher_id": "R10",
+        "specialist_agent_id": "/root/daily_n10",
+        "researcher_agent_id": "/root/daily_n10/r10",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "routing_reason": "N10 vykonal ohraničenú odbornú kontrolu médií a adaptívnej kvality; vlastný R10 bol skutočne spustený modelom gpt-6-luna medium. Overenie rieši reálne canPlayType a capability gates aktívneho projektu, bez rozšírenia scope.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "No-change voči záznamu SR10 z 2026-10-20: aktuálne otvorená dokumentácia potvrdzuje feature detection a fallbacky. Doplnková referenčná kontrola canPlayType potvrdzuje hranicu odhadu MIME/kodeku; nepreukazuje dennú zmenu ani úspešné dekódovanie reálnych súborov. Baseline nie je úplná snímka dokumentov, preto netvrdíme ich byte-for-byte zhodu.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Testing/Feature_detection",
+            "publisher": "MDN Web Docs / Mozilla",
+            "title": "Implementing feature detection",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": null,
+            "evidence": "Otvorená stránka uvádza, že feature detection podmieňuje správanie podporou a umožňuje fallback; CSS @supports je natívny spôsob CSS detekcie a článok ho preferuje pre CSS vlastnosti. Stránka uvádza poslednú úpravu 2025-12-19.",
+            "applicability": "SR10 browser support guidance. Statický HTML/CSS/ES modules projekt používa browser capability gates, no stránka sama nepreveruje zariadenia ani kvalitu adaptívnych médií.",
+            "primary_source": true,
+            "retrieval_ref": "turn58view0"
+          },
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canPlayType",
+            "publisher": "MDN Web Docs / Mozilla",
+            "title": "HTMLMediaElement: canPlayType() method",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": null,
+            "evidence": "Otvorená referenčná stránka hovorí, že canPlayType(type) vracia prázdny reťazec, maybe alebo probably; MIME typ môže obsahovať codecs parameter. Stránka uvádza poslednú úpravu 2025-03-13.",
+            "applicability": "Projektový film.js (riadky 593–596) testuje MP4 AVC avc1.640028 a WebM VP9 cez canPlayType(); index.html (riadky 294–295) ponúka oba video zdroje. API hranica je priamo relevantná, ale návratové hodnoty neurčujú reálny úspech dekódovania, plynulosť či kvalitu na cieľových zariadeniach.",
+            "primary_source": true,
+            "retrieval_ref": "turn58view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Web search followed by opening both exact official MDN pages; read-only inspection of project markup and git revision.",
+            "result": "SR10 principle remains applicable; no new actionable rule evidenced. Project film.js selects between MP4 AVC and WebM VP9 by canPlayType(), with both formats present in index.html. No browser/device runtime test was run.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "MDN turn57view0 lines 177-199, 229-267, 351; turn57view1 lines 183-222, 249. Project barbershop-30/assets/film.js lines 593–596 and index.html lines 294–295 (read-only inspection).",
+            "observed_at": "2026-10-21"
+          },
+          {
+            "type": "source_review",
+            "method": "N10 znovu otvoril tie isté dve oficiálne MDN stránky a posúdil použiteľnosť oproti SR10; read-only kontrola presnej projektovej revízie.",
+            "result": "no-change; nevzniká nové prijaté pravidlo. canPlayType je odhad, existujúci poster fallback zodpovedá tejto hranici.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "turn58view0:177–187; turn58view1:183–222; assets/catalogs/research-sources.json SR10 observed_at 2026-10-20.",
+            "observed_at": "2026-10-21"
+          },
+          {
+            "type": "static_code_review",
+            "method": "rg/sed presného produkčného film.js a index.html; bez spustenia browsera.",
+            "result": "Existujúci kód má capability gates, výber MP4/WebM a poster fallback. Nie je to dôkaz runtime podpory, výkonu či autentickosti zdrojových médií.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "barbershop-30/assets/film.js:65–69 (brána), 104–108 (getContext), 593–596 (canPlayType), 633–635 (nepodporovaný formát), 664–679 (error a poster restore); barbershop-30/index.html:294–295 (oba source).",
+            "observed_at": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Dokumentačné čítanie nie je runtime test. Nepreveroval som cieľové browser/device matrix, kodeky súborov, dekódovanie, výkon ani vizuálnu kvalitu.",
+          "SR10 baseline z 2026-10-20 je záznam pozorovania, nie úplná archivovaná snímka stránky; zmena dokumentu sa netvrdí.",
+          "Bez Chromium a jeho inštalácia je pre projekt zakázaná; výskum nemôže zmeniť túto testovaciu bránu na PASS.",
+          "Pôvodný opis stacku v BRIEF bol v rozpore s revíziou: film.js:122 a 135 dynamicky načítava lokálny vendor/three.module.min.js. Koordinátor rozpor nezávisle potvrdil a opravil BRIEF počas behu. Je to korekcia kontextu, nie nová implementačná zmena od 20.10; výskum API three.js nebol súčasťou tejto kontroly.",
+          "Autenticita, vizuálna kvalita a reálna browser/device podpora médií sa pri tomto dokumentačnom behu nemerali."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "N10",
+        "researcher_id": "R10",
+        "specialist_agent_id": "/root/daily_n10",
+        "researcher_agent_id": "/root/daily_n10/r10",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "R10 skutočne spustený ako výskumné dieťa N10 podľa zadania; obmedzený výskum browser feature detection a HTML video podpory.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Bez preukázanej relevantnej zmeny oproti SR10 pozorovanému 2026-10-20. Otvorené stránky potvrdzujú existujúce východisko: feature detection a fallbacky, CSS @supports; canPlayType() poskytuje iba odhad pre MIME typ a voliteľné kodeky. Nejde o dôkaz podpory na konkrétnych zariadeniach ani o novú dokumentačnú zmenu, ktorú by bolo možné spoľahlivo určiť z baseline.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Testing/Feature_detection",
+            "publisher": "MDN Web Docs / Mozilla",
+            "title": "Implementing feature detection",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": null,
+            "evidence": "Otvorená stránka uvádza, že feature detection podmieňuje správanie podporou a umožňuje fallback; CSS @supports je natívny spôsob CSS detekcie a článok ho preferuje pre CSS vlastnosti. Stránka uvádza poslednú úpravu 2025-12-19.",
+            "applicability": "SR10 browser support guidance. Statický HTML/CSS/ES modules projekt používa browser capability gates, no stránka sama nepreveruje zariadenia ani kvalitu adaptívnych médií.",
+            "primary_source": true,
+            "retrieval_ref": "turn57view0"
+          },
+          {
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canPlayType",
+            "publisher": "MDN Web Docs / Mozilla",
+            "title": "HTMLMediaElement: canPlayType() method",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-28",
+            "version": null,
+            "evidence": "Otvorená referenčná stránka hovorí, že canPlayType(type) vracia prázdny reťazec, maybe alebo probably; MIME typ môže obsahovať codecs parameter. Stránka uvádza poslednú úpravu 2025-03-13.",
+            "applicability": "Projektový film.js (riadky 593–596) testuje MP4 AVC avc1.640028 a WebM VP9 cez canPlayType(); index.html (riadky 294–295) ponúka oba video zdroje. API hranica je priamo relevantná, ale návratové hodnoty neurčujú reálny úspech dekódovania, plynulosť či kvalitu na cieľových zariadeniach.",
+            "primary_source": true,
+            "retrieval_ref": "turn57view1"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Web search followed by opening both exact official MDN pages; read-only inspection of project markup and git revision.",
+            "result": "SR10 principle remains applicable; no new actionable rule evidenced. Project film.js selects between MP4 AVC and WebM VP9 by canPlayType(), with both formats present in index.html. No browser/device runtime test was run.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "MDN turn57view0 lines 177-199, 229-267, 351; turn57view1 lines 183-222, 249. Project barbershop-30/assets/film.js lines 593–596 and index.html lines 294–295 (read-only inspection).",
+            "observed_at": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Dokumentačné čítanie nie je runtime test. Nepreveroval som cieľové browser/device matrix, kodeky súborov, dekódovanie, výkon ani vizuálnu kvalitu.",
+          "SR10 baseline z 2026-10-20 je záznam pozorovania, nie úplná archivovaná snímka stránky; zmena dokumentu sa netvrdí.",
+          "Bez Chromium a jeho inštalácia je pre projekt zakázaná; výskum nemôže zmeniť túto testovaciu bránu na PASS."
+        ]
+      },
+      "record_sha256": {
+        "N10.json": "90e28057704161033c9b206627c73ed2917f99e12640c591aec85226e6416e36",
+        "R10.json": "d23c2f9379c3bf20e8fd3afadb4b91b88fe219498971106865c54860f07066de"
+      }
+    },
+    {
+      "node_id": "N14",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n14",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n14/r14",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N14",
+        "researcher_id": "R14",
+        "specialist_agent_id": "/root/daily_n14",
+        "researcher_agent_id": "/root/daily_n14/r14",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Daily-priority refresh of the actual Barbershop reservation provider; Stripe watchlist SR12 is not applicable to the active barber reservation flow.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": {
+          "baseline": "head-spa-30/barbershop-30/docs/overenie-d6/rezervacia-live.json, checkedAt 2026-10-20T20:17:17.579Z",
+          "observed": "Current read-only check matches the project for 15 services, 10 barbers and 34 blocked dates with no differences. Calendar limits naturally advanced from 20.10.2026–20.11.2026 to 21.10.2026–21.11.2026.",
+          "contract_delta": "No relevant change demonstrated in the exercised GET/getEmployees/getCalendar contract. No claim of byte-for-byte document equality or full API history."
+        },
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://www.barbershop30.sk/rezervacia",
+            "publisher": "Barbershop 30",
+            "title": "Official reservation page and public read operations",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": null,
+            "evidence": "GET parsed v-order-component services and ajax-url; getEmployees returned the expected Nezáleží id 0 and ten named barbers; getCalendar for service id 1/id0 returned a valid general calendar. Summary: services 15, barbers 10, blockedDates 34, matches true, differences [], limits min21.10.2026 max21.11.2026. No cookies or CSRF values persisted.",
+            "applicability": "Actual barber reservation provider used by static Barbershop website. Supports continuing the external link flow and validating local service prices/durations, team names, and general blocked days only.",
+            "primary_source": true,
+            "retrieval_ref": "N14 runtime exec session 37486; checkedAt 2026-10-21T06:10:25.932Z; source/tools/rezervacia-kontrola.mjs"
+          },
+          {
+            "url": "https://barbershop30.sk/rezervacia",
+            "publisher": "Barbershop30",
+            "title": "Online rezervácia (page heading)",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": null,
+            "evidence": "Public page shows 15 service choices with prices and durations plus a continuation link.",
+            "applicability": "Current visible booking choices and pricing; not evidence for available slots, successful booking, confirmation, or payment processing.",
+            "primary_source": true,
+            "retrieval_ref": "CUA direct navigation, tab 1 AX tree; 2026-10-21. Web retrieval refs turn39view0 and turn41view0 returned 403."
+          }
+        ],
+        "checks": [
+          {
+            "type": "retest",
+            "method": "NODE_USE_ENV_PROXY=1 node source/tools/rezervacia-kontrola.mjs --json",
+            "cwd": "head-spa-30/barbershop-30",
+            "hypothesis": "Prices/durations, team and general blocked dates may have diverged since the 20 October baseline.",
+            "result": "pass: exit 0, matches true, differences []; 15 services, 10 barbers, 34 blocked dates.",
+            "observed_at": "2026-10-21",
+            "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "Runtime at 2026-10-21T06:10:25.932Z; source/tools/rezervacia-kontrola.mjs lines48–73 restrict requests to GET plus getEmployees/getCalendar and clear in-memory session; comparisons at lines87–101."
+          },
+          {
+            "type": "source_review",
+            "method": "Read relevant N14/R14/research-contract, SR12 boundary and baseline CONTENT_SOURCES plus previous live summary.",
+            "result": "Actual provider is barbershop30.sk/rezervacia, not Stripe or Bookio. No integration change is warranted from this evidence.",
+            "observed_at": "2026-10-21",
+            "evidence": "docs/CONTENT_SOURCES.md:18,166–170; docs/overenie-d6/rezervacia-live.json"
+          },
+          {
+            "type": "source_review",
+            "method": "N14 reviewed R14.json and its direct official page observation.",
+            "result": "Usable only for visible service chooser count/prices/durations. No new rule adopted; no confirmed appointment or payment behavior inferred.",
+            "observed_at": "2026-10-21",
+            "evidence": "R14.json, source https://barbershop30.sk/rezervacia, CUA tab1 AX tree; web-open returned 403."
+          },
+          {
+            "type": "source_review",
+            "method": "python scripts/network.py validate-research N14.json --as-of 2026-10-21",
+            "result": "not_applicable schema: exit2 Invalid research ledger. This daily BRIEF requires a pair-level N14 summary, whereas the skill validator accepts a research ledger. JSON syntax was independently loaded successfully; no claim of ledger validation PASS.",
+            "observed_at": "2026-10-21",
+            "evidence": "network.py validator output: Invalid research ledger."
+          }
+        ],
+        "limitations": [
+          "No reservation was created, submitted or cancelled; available individual appointment times and customer records were not fetched.",
+          "No evidence establishing booking completion behavior, email delivery, payments, webhook rules or idempotency was collected. These remain outside this read-only refresh.",
+          "No complete old provider document snapshot exists here; only the specified baseline comparison and documented contract were rechecked.",
+          "No production or skill files changed; browser gate status is not promoted by this source/runtime check.",
+          "Published date and provider version are unknown.",
+          "Research web-open attempts returned 403; R14 observed the official service chooser through direct browser navigation, not through a search snippet. R14.json preserves the retrieval limitation."
+        ],
+        "dependencies": {
+          "data-contract": "reused: project docs/CONTENT_SOURCES.md and live-check comparison at stated source revision",
+          "ui-contract": "reused: existing external link flow, no embedding or undocumented URL preselection",
+          "authorized_provider_environment": "reused: public anonymous read operations only",
+          "N13": "not_applicable: no auth/account integration change requested",
+          "N06": "not_applicable: no user flow implementation requested"
+        },
+        "integration_build_status": "skipped: bounded daily research only; no integration-build implementation or rule adoption requested"
+      },
+      "researcher_record": {
+        "node_id": "N14",
+        "researcher_id": "R14",
+        "specialist_agent_id": "/root/daily_n14",
+        "researcher_agent_id": "/root/daily_n14/r14",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Read-only current-source check of the actual Barbershop30 booking page; provider documentation and booking-side effects were out of scope.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "The official booking page was directly inspected on 2026-10-21. Its visible chooser presents 15 service entries with prices and durations, consistent in count and visible examples with the 2026-10-20 project baseline (15 services). N14's separate read-only endpoint check succeeded at 2026-10-21T06:10:25.932Z: 15 services, 10 barbers, 34 blocked dates, matches=true, differences=[], and calendar limits 21.10–21.11.2026. Relative to the prior baseline (20.10–20.11.2026), the observable calendar window moved forward one day; counts and website consistency did not change. This is a daily calendar-window shift, not evidence of an API change. No older full page snapshot was available to establish byte-for-byte document sameness. Booking confirmation semantics, payment capture, idempotency, webhooks, and API version remain unestablished.",
+        "findings": [
+          {
+            "id": "R14-F01",
+            "claim": "The public booking page currently exposes a service-selection UI with 15 services, each shown with a price and duration, and a continuation link labelled ‘Pokračovať v rezervácii’. The page itself does not establish a confirmed appointment, slot availability, payment, or post-submission confirmation behavior.",
+            "proposed_rule": "Treat the live provider page and its read-only availability responses as the authority for current booking choices; do not infer appointment confirmation or payment behavior from the service chooser.",
+            "scope": "Public Barbershop30 booking page at the observed URL, as of 2026-10-21.",
+            "non_goals": [
+              "No booking was created or submitted.",
+              "No reservation/session flow was advanced.",
+              "No payment provider or webhook behavior was investigated."
+            ],
+            "confidence": {
+              "level": "medium",
+              "reason": "The official page was directly rendered and inspected; only the initial service-selection state was observed, and no complete historical page capture or provider documentation was available."
+            },
+            "generalization": "project_only",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://barbershop30.sk/rezervacia",
+                "publisher": "Barbershop30",
+                "title": "Online rezervácia (page heading)",
+                "primary_source": true,
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-22",
+                "version": null,
+                "evidence": "Direct page render and accessibility tree showed the service selector, 15 service names with EUR prices and durations, and the ‘Pokračovať v rezervácii’ link. Examples: Pánsky strih €18/40 min; Pánsky strih a Úprava brady €28/60 min; Starostlivosť o pleť PREMIUM €21.50/30 min.",
+                "applicability": "This is the public live booking interface used by the project, so it evidences the currently displayed service choices and prices. It does not evidence calendar availability or booking confirmation/payment mechanics.",
+                "retrieval_ref": "CUA direct navigation, tab 1, AX tree observed 2026-10-21. Search lookup returned no results; web-open attempts returned 403 (turn39view0, turn41view0)."
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "Directly opened the official booking page in the browser and inspected the rendered initial state; compared service count and visible example price/duration values with the prior project baseline summary.",
+            "result": "Page retrieved and inspected; 15 services displayed with prices and durations. No booking controls were activated. This is a source review, not a runtime test of reservation submission.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "CUA tab 1 accessibility tree; baseline file head-spa-30/barbershop-30/docs/overenie-d6/rezervacia-live.json dated 2026-10-20T20:17:17.579Z.",
+            "performed_at": "2026-10-21"
+          },
+          {
+            "type": "retest",
+            "method": "N14's separately executed authorized read-only live endpoint check; GET booking page and public employee/calendar lookups only; no booking submission.",
+            "result": "Passed (exit 0): 15 services, 10 barbers, 34 blocked dates, matches=true, differences=[], calendar limits 21.10.2026–21.11.2026.",
+            "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+            "evidence": "N14-reported execution timestamp 2026-10-21T06:10:25.932Z. Prior baseline head-spa-30/barbershop-30/docs/overenie-d6/rezervacia-live.json: 15 services, 10 barbers, 34 blocked dates, matches=true, limits 20.10.2026–20.11.2026.",
+            "performed_at": "2026-10-21"
+          }
+        ],
+        "sources": [
+          {
+            "url": "https://barbershop30.sk/rezervacia",
+            "publisher": "Barbershop30",
+            "title": "Online rezervácia (page heading)",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": null,
+            "evidence": "Public page shows 15 service choices with prices and durations plus a continuation link.",
+            "applicability": "Current visible booking choices and pricing; not evidence for available slots, successful booking, confirmation, or payment processing.",
+            "primary_source": true,
+            "retrieval_ref": "CUA direct navigation, tab 1 AX tree; 2026-10-21. Web retrieval refs turn39view0 and turn41view0 returned 403."
+          }
+        ],
+        "limitations": [
+          "No API documentation, provider identity/version, service terms, or confirmation/payment specification was exposed in the inspected page.",
+          "Availability evidence is limited to the public blocked-date calendar summary returned by N14's read-only check; actual selectable slots and booking success were not tested.",
+          "No booking was submitted and no confirmation flow, idempotency behavior, webhook, or payment integration was tested.",
+          "The prior baseline is a 2026-10-20 summary, not a full archived page snapshot; no byte-for-byte no-change claim is made.",
+          "No Stripe documentation was consulted because this check did not establish that Stripe is used."
+        ]
+      },
+      "record_sha256": {
+        "N14.json": "81abdd40f5af0d8534480c89edaac9318439a9a0476e33f3e7e130521ce47fb3",
+        "R14.json": "b5642012d5dab4ee21bc975ceea7cf479c1ccb48efbb1539fb81fccfa73a44fc"
+      }
+    },
+    {
+      "node_id": "N16",
+      "actual_routing": {
+        "specialist": {
+          "agent_id": "/root/daily_n16",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        "researcher": {
+          "agent_id": "/root/daily_n16/r16",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        "authority": "Actual delegation calls; raw reports retained unchanged, including any inaccurate self-reported model labels."
+      },
+      "specialist_record": {
+        "node_id": "N16",
+        "researcher_id": "R16",
+        "specialist_agent_id": "/root/daily_n16",
+        "researcher_agent_id": "/root/daily_n16/r16",
+        "model": {
+          "specialist": "inherited parent model",
+          "researcher": "gpt-6-luna"
+        },
+        "reasoning_effort": {
+          "specialist": "inherited",
+          "researcher": "medium"
+        },
+        "routing_reason": "Denná prioritná ohraničená kontrola bezpečnostného/API kontraktu skutočného statického Barbershop admina; skutočné R16 dieťa spracovalo 3 relevantné primárne stránky.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "SR11 katalóg z 20.10.2026 už obsahoval least privilege, default denial a autorizáciu každej požiadavky. Aktuálne otvorený OWASP zdroj tieto zásady potvrdzuje; bez starej úplnej snímky netvrdíme zmenu ani byte-for-byte zhodu dokumentu. Novo pre tento denný záznam sa dopĺňa doklad GitHub endpointu a podporovanej API verzie k existujúcemu kódu: pin 2026-03-10, Contents write a force:false. Ide o potvrdenie zdokumentovaného kontraktu, nie o novú implementačnú požiadavku či dokázané zabezpečenie repozitára.",
+        "findings": [],
+        "sources": [
+          {
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "publisher": "OWASP Foundation",
+            "title": "Authorization Cheat Sheet",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "No version stated on retrieved page",
+            "evidence": "Recommendations include least privilege (lines 206-212), default denial (around line 218), per-object/request checks (lines 272-275), and server-side/gateway/serverless authorization rather than decisive client-side checks (lines 283-284).",
+            "applicability": "Applies to authorization boundaries for an admin UI that invokes remote repository writes. It is guidance only and does not demonstrate the project's credential handling or security.",
+            "primary_source": true,
+            "retrieval_ref": "turn42view0"
+          },
+          {
+            "url": "https://docs.github.com/en/rest/git/refs?apiVersion=2026-03-10",
+            "publisher": "GitHub",
+            "title": "REST API endpoints for Git references — Update a reference",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "API version 2026-03-10",
+            "evidence": "Update reference requires fine-grained Contents repository permissions (write) (lines 202-216); `force` omitted or false ensures a fast-forward and avoids overwriting work, default false (lines 224-226); documented response statuses include 409 and 422 (lines 227-233).",
+            "applicability": "Directly concerns the reported PATCH of a Git ref with force:false. N16's supplied static observation says the code compares head and uses force:false; this research did not independently inspect or execute that code.",
+            "primary_source": true,
+            "retrieval_ref": "turn43view0"
+          },
+          {
+            "url": "https://docs.github.com/en/rest/about-the-rest-api/api-versions",
+            "publisher": "GitHub",
+            "title": "API Versions",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "Supported API versions listed: 2026-03-10 and 2022-11-28",
+            "evidence": "The page says version 2026-03-10 was released 10 March 2026 (line 39), recommends X-GitHub-Api-Version and states the unversioned default is 2022-11-28 (lines 60-69), and lists 2026-03-10 and 2022-11-28 as supported (lines 99-108).",
+            "applicability": "The reported client pins the current listed 2026-03-10 version. Pinning avoids relying on the documented unversioned default; confirm the actual request header at runtime separately.",
+            "primary_source": true,
+            "retrieval_ref": "turn42view2"
+          }
+        ],
+        "checks": [
+          {
+            "type": "source_review",
+            "method": "N16 posúdil tri primárne zdroje a dôkazy skutočného R16; porovnal s katalógovým SR11 z 20.10.2026.",
+            "result": "no-change; žiadne nové pravidlo prijaté",
+            "evidence": "R16.json; assets/catalogs/research-sources.json SR11",
+            "date": "2026-10-21"
+          },
+          {
+            "type": "static_inspection",
+            "method": "Read-only nl -ba barbershop-30/admin/github.mjs a git rev-parse HEAD; bez vykonania admina.",
+            "result": "HEAD súhlasí s revíziou zadania. :14 explicitný pin X-GitHub-Api-Version 2026-03-10; :22 lokálny zoznam povolených súborov; :23 a :29 porovnanie head; :27 parents=[baseSHA]; :30 PATCH force:false; :31 zachováva konflikt a rieši neistú sieťovú odpoveď. Lokálny whitelist nie je serverová bezpečnostná hranica.",
+            "evidence": "/workspace/scratch/ecb9e4858781/head-spa-30/barbershop-30/admin/github.mjs:14,22-31",
+            "reproduction": "Na uvedenej revízii čítať nl -ba barbershop-30/admin/github.mjs; bez volania GitHub.",
+            "date": "2026-10-21"
+          }
+        ],
+        "limitations": [
+          "Žiadny nový kompletný bezpečnostný audit, API request, vzdialený zápis ani runtime test sa nevykonal.",
+          "GitHub-side oprávnenia tokenu, branch protections, serverové odmietnutie a race/conflict správanie neboli testované. Statické porovnanie a dokumentácia nie sú dôkazom reálnej konfigurácie ani bezpečnosti.",
+          "Časová platnosť zdrojov je najviac jeden deň, do 2026-10-22; relevantná závažná udalosť vyžaduje skoršiu kontrolu.",
+          "Browserové/Chromium blocked brány zostávajú blocked; čítanie zdrojov ich nemení na PASS.",
+          "SR18 ASVS a Stripe webhooky neboli znovu otvorené: rozsah prioritizoval aktuálny admin Git Data API a autorizáciu; nevykonáva sa ASVS posúdenie ani sa nepredpokladá Stripe integrácia."
+        ]
+      },
+      "researcher_record": {
+        "node_id": "N16",
+        "researcher_id": "R16",
+        "specialist_agent_id": "/root/daily_n16",
+        "researcher_agent_id": "/root/daily_n16/r16",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "routing_reason": "Authorized bounded primary-source research for security and recovery; one OWASP page and two GitHub REST documentation pages, matched to the reported Git Data API use.",
+        "as_of": "2026-10-21",
+        "source_revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+        "outcome": "no-change",
+        "delta_from_baseline": "Current source review is consistent with the 2026-10-20 OWASP baseline (least privilege, default denial, per-request checks). GitHub documents confirm the reported X-GitHub-Api-Version 2026-03-10 pin as currently supported, and confirm force:false as the non-overwriting fast-forward mode. No new source-backed rule or deprecation affecting the reported implementation was identified. This is a documentation comparison, not a code or security assessment.",
+        "findings": [
+          {
+            "id": "N16-R16-2026-10-21-01",
+            "claim": "OWASP recommends least privilege and default denial, authorization checks for each request, and says client-side checks must not be the decisive authorization control. A client-side static admin should therefore not be treated as the security boundary; authorization for Git writes must be enforced by GitHub and the credential must be appropriately scoped.",
+            "proposed_rule": "Candidate check: establish whether the GitHub credential is ever exposed to browser code and confirm that GitHub-side repository permissions, rather than UI checks, gate writes. Apply least privilege and default denial to any server-side or GitHub App authorization layer in scope.",
+            "scope": "Static HTML/CSS/ES modules/WebGL admin reported to use GitHub Git Data API; applicability of an authorization service or GitHub App is unknown.",
+            "non_goals": "Does not establish whether the project exposes a credential, which credential type is configured, or whether its authorization is secure. No privacy, cache, or recovery implementation claim is made.",
+            "confidence": {
+              "level": "high",
+              "reason": "Directly read official OWASP guidance; project-specific exposure and configuration were not independently inspected."
+            },
+            "generalization": "reusable",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+                "publisher": "OWASP Foundation",
+                "title": "Authorization Cheat Sheet",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-22",
+                "version": "No version stated on retrieved page",
+                "evidence": "Recommendations include least privilege (lines 206-212), default denial (around line 218), per-object/request checks (lines 272-275), and server-side/gateway/serverless authorization rather than decisive client-side checks (lines 283-284).",
+                "applicability": "Applies to authorization boundaries for an admin UI that invokes remote repository writes. It is guidance only and does not demonstrate the project's credential handling or security.",
+                "primary_source": true,
+                "retrieval_ref": "turn42view0"
+              }
+            ],
+            "checks": [
+              {
+                "type": "source_review",
+                "method": "Opened the OWASP Authorization Cheat Sheet and inspected its recommendations on least privilege, default denial, per-request authorization, client-side checks, and testing.",
+                "result": "Documentation confirms the recommendations; no project runtime or credential test was performed.",
+                "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+                "evidence": "turn42view0 lines 206-218, 272-284, 300-304",
+                "date": "2026-10-21"
+              }
+            ]
+          },
+          {
+            "id": "N16-R16-2026-10-21-02",
+            "claim": "GitHub's Update a reference endpoint requires Contents repository write permission for fine-grained tokens. The `force` parameter defaults to false; omitted or false ensures the update is fast-forward and does not overwrite work. The endpoint documents HTTP 409 conflict and 422 validation/spam responses.",
+            "proposed_rule": "Candidate check: retain `force:false`, handle conflict/validation failures without retrying as a force update, and verify the configured token has only the necessary repository scope. Exercise denied and stale/non-fast-forward cases only in an authorized test repository.",
+            "scope": "Reported admin code uses GitHub Git Data API, compares the current head and requests PATCH with force:false; research did not inspect the file itself or make a remote request.",
+            "non_goals": "Does not prove the head comparison is race-free, that the token is minimally scoped, or that branch protection/other repository policy is configured.",
+            "confidence": {
+              "level": "high",
+              "reason": "Directly read the official endpoint reference, including the update permission, force default and response codes; project details are supplied as static observations by N16."
+            },
+            "generalization": "reusable",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://docs.github.com/en/rest/git/refs?apiVersion=2026-03-10",
+                "publisher": "GitHub",
+                "title": "REST API endpoints for Git references — Update a reference",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-22",
+                "version": "API version 2026-03-10",
+                "evidence": "Update reference requires fine-grained Contents repository permissions (write) (lines 202-216); `force` omitted or false ensures a fast-forward and avoids overwriting work, default false (lines 224-226); documented response statuses include 409 and 422 (lines 227-233).",
+                "applicability": "Directly concerns the reported PATCH of a Git ref with force:false. N16's supplied static observation says the code compares head and uses force:false; this research did not independently inspect or execute that code.",
+                "primary_source": true,
+                "retrieval_ref": "turn43view0"
+              }
+            ],
+            "checks": [
+              {
+                "type": "source_review",
+                "method": "Opened the official GitHub Git references REST endpoint page with API version 2026-03-10 and inspected the Update a reference permission, parameters, and response codes.",
+                "result": "Documentation contract matches the supplied force:false observation; no remote write or implementation test performed.",
+                "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+                "evidence": "turn43view0 lines 202-233",
+                "date": "2026-10-21"
+              }
+            ]
+          },
+          {
+            "id": "N16-R16-2026-10-21-03",
+            "claim": "GitHub's API Versions documentation lists 2026-03-10 and 2022-11-28 as currently supported as observed on 2026-10-21. It recommends the X-GitHub-Api-Version header; requests omitting the header default to 2022-11-28. The docs identify 2026-03-10 as released 2026-03-10.",
+            "proposed_rule": "Candidate check: keep the explicit version header and periodically compare the pinned version with GitHub's supported-version list and breaking-change notes before changing it.",
+            "scope": "Reported admin GitHub API client pins X-GitHub-Api-Version 2026-03-10.",
+            "non_goals": "The supported-version list is time-sensitive and not a guarantee of future support. Research did not send an API request or verify the runtime header.",
+            "confidence": {
+              "level": "high",
+              "reason": "The official API-version page explicitly lists supported versions and header behavior; applies to the version reported by N16."
+            },
+            "generalization": "reusable",
+            "status": "observed",
+            "sources": [
+              {
+                "url": "https://docs.github.com/en/rest/about-the-rest-api/api-versions",
+                "publisher": "GitHub",
+                "title": "API Versions",
+                "published_at": null,
+                "observed_at": "2026-10-21",
+                "expires_at": "2026-10-22",
+                "version": "Supported API versions listed: 2026-03-10 and 2022-11-28",
+                "evidence": "The page says version 2026-03-10 was released 10 March 2026 (line 39), recommends X-GitHub-Api-Version and states the unversioned default is 2022-11-28 (lines 60-69), and lists 2026-03-10 and 2022-11-28 as supported (lines 99-108).",
+                "applicability": "The reported client pins the current listed 2026-03-10 version. Pinning avoids relying on the documented unversioned default; confirm the actual request header at runtime separately.",
+                "primary_source": true,
+                "retrieval_ref": "turn42view2"
+              }
+            ],
+            "checks": [
+              {
+                "type": "source_review",
+                "method": "Opened the official GitHub API Versions page and inspected the release date, request header/default behavior, and supported-version table.",
+                "result": "The reported pinned version is listed as supported on observation date; no request was made.",
+                "revision": "556bd1c0da0c8ccf329db737e17918b9dbdf5757",
+                "evidence": "turn42view2 lines 37-69, 99-108",
+                "date": "2026-10-21"
+              }
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "publisher": "OWASP Foundation",
+            "title": "Authorization Cheat Sheet",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "No version stated on retrieved page",
+            "evidence": "Recommendations include least privilege (lines 206-212), default denial (around line 218), per-object/request checks (lines 272-275), and server-side/gateway/serverless authorization rather than decisive client-side checks (lines 283-284).",
+            "applicability": "Applies to authorization boundaries for an admin UI that invokes remote repository writes. It is guidance only and does not demonstrate the project's credential handling or security.",
+            "primary_source": true,
+            "retrieval_ref": "turn42view0"
+          },
+          {
+            "url": "https://docs.github.com/en/rest/git/refs?apiVersion=2026-03-10",
+            "publisher": "GitHub",
+            "title": "REST API endpoints for Git references — Update a reference",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "API version 2026-03-10",
+            "evidence": "Update reference requires fine-grained Contents repository permissions (write) (lines 202-216); `force` omitted or false ensures a fast-forward and avoids overwriting work, default false (lines 224-226); documented response statuses include 409 and 422 (lines 227-233).",
+            "applicability": "Directly concerns the reported PATCH of a Git ref with force:false. N16's supplied static observation says the code compares head and uses force:false; this research did not independently inspect or execute that code.",
+            "primary_source": true,
+            "retrieval_ref": "turn43view0"
+          },
+          {
+            "url": "https://docs.github.com/en/rest/about-the-rest-api/api-versions",
+            "publisher": "GitHub",
+            "title": "API Versions",
+            "published_at": null,
+            "observed_at": "2026-10-21",
+            "expires_at": "2026-10-22",
+            "version": "Supported API versions listed: 2026-03-10 and 2022-11-28",
+            "evidence": "The page says version 2026-03-10 was released 10 March 2026 (line 39), recommends X-GitHub-Api-Version and states the unversioned default is 2022-11-28 (lines 60-69), and lists 2026-03-10 and 2022-11-28 as supported (lines 99-108).",
+            "applicability": "The reported client pins the current listed 2026-03-10 version. Pinning avoids relying on the documented unversioned default; confirm the actual request header at runtime separately.",
+            "primary_source": true,
+            "retrieval_ref": "turn42view2"
+          }
+        ],
+        "limitations": [
+          "No project files were inspected by this researcher; file-level details are from the N16 static observation message.",
+          "No API requests, runtime tests, permission-denial tests, cache/privacy review, or recovery tests were performed.",
+          "OWASP ASVS was not opened because the bounded task prioritized the directly relevant OWASP Authorization Cheat Sheet and two GitHub API contract pages; no ASVS assessment is claimed.",
+          "Published dates are null where the retrieved pages did not state a publication date; page retrieval date is 2026-10-21."
+        ]
+      },
+      "record_sha256": {
+        "N16.json": "7ca5cd5dc59359be98ddbdc457ad2c8de73b72388cc88cdb46ed0667455629d4",
+        "R16.json": "d463fd26d7f99ed14a17e3cafe0f4618ce044311e56765e8149af29033dc24d7"
+      }
+    }
+  ],
+  "context_correction": {
+    "claim": "The initial brief incorrectly excluded three.js. The film runtime imports a local vendored three module; index.html identifies r169. N09/R09 were returned for corrected applicability review.",
+    "evidence": "barbershop-30/assets/film.js:122,135,310-316; barbershop-30/index.html:881",
+    "scope": "Correction of this research brief, not a new project dependency or implementation change.",
+    "boundary": "Custom shaders and color pipeline require version-specific review before applying generic color-management examples."
+  },
+  "preservation": {
+    "skill_files_compared": 327,
+    "skill_content_unchanged": true,
+    "catalogs": {
+      "acceptance-checks.json": {
+        "sha256": "88f7d09604159c18d55b18582febfc00cac342b48057a43d16ad3347439963c0",
+        "counts": 16
+      },
+      "application-cases.json": {
+        "sha256": "9e3cf8e800761faab0600ab4695862715ebc3145c35aaecec0a096bcb816de41",
+        "counts": 8
+      },
+      "chapter-routes.json": {
+        "sha256": "ca139241a7ec66e125614b9c8c305488edfd17654087fa03d811cdad286248d5",
+        "counts": 12
+      },
+      "chapters.json": {
+        "sha256": "e526a99d46a6218e5e11cb74188bc98ccf465082ca2f0b5e98970d86370aef77",
+        "counts": 100
+      },
+      "designer-briefs.json": {
+        "sha256": "10423dcd4558e65b0ac9b682a8d090e43f962745251f43755707cc50d028d784",
+        "counts": 100
+      },
+      "designer-prompts.json": {
+        "sha256": "0aa482926a5fcb308e8a4d889ef470eeedeea39959fedcb8d48ceafd87f7787b",
+        "counts": 24
+      },
+      "excluded_social.json": {
+        "sha256": "dd0366061496379cb94103b894b364ce45374360f6d7ded3f8a6003583fe956f",
+        "counts": 66
+      },
+      "licenses.json": {
+        "sha256": "a597c91114a15d3e67f2bc0d2816bb752b26442f7261b9b1f5c25634729cc29d",
+        "counts": 3
+      },
+      "manifest.json": {
+        "sha256": "edf8e432d8338ca65c7f33568496b7c3958ece0db6db329bb4a9673676b9a7c7",
+        "counts": {}
+      },
+      "prompt_index.json": {
+        "sha256": "f244552422761323f92d878b1ed47ee2ebeccd45b2f31db1eae9c0916e26a99b",
+        "counts": 1000
+      },
+      "research-sources.json": {
+        "sha256": "3d78083426ab7bf993f1dc2cb2a5ea5297f55d086d6b6f41b382050a78425f6b",
+        "counts": {
+          "sources": 18,
+          "documentation_checks": 4,
+          "excluded_retrievals": 3,
+          "runtime_tests_run": 0,
+          "adopted_lessons": 0
+        }
+      },
+      "skill-network.json": {
+        "sha256": "3bdb668db9f8e59a222622cfba0b5d74eaa8384517d138e10f510af0625cd107",
+        "counts": {
+          "nodes": 20,
+          "input_resolution_states": 4,
+          "researchers": 20
+        }
+      },
+      "social.json": {
+        "sha256": "188614ae02e84f741a3592571bade4d3a90953caaf6a4fc8504ac6b1557a0b31",
+        "counts": 35
+      },
+      "sources.json": {
+        "sha256": "7ba7a317095a6e10f9c9ca1b4b1c5c455036ba01ae54196b236a8350e9bc73e6",
+        "counts": 59
+      },
+      "techniques.json": {
+        "sha256": "8941fea1f14c2f37c8775813622a833f0b315ceae03c6ed615a8e910f6362a5a",
+        "counts": 56
+      },
+      "tools.json": {
+        "sha256": "82ef0745cc5b6808fe0b10e363ab0d6cbd505fdc3c4828aef1ad6740839c2042",
+        "counts": 100
+      },
+      "websites.json": {
+        "sha256": "4ed965f42c1b532f87184a5afcd9a2eed8efea15728c92dae998cdcf83cecdb8",
+        "counts": 100
+      }
+    },
+    "project_clean": true
+  },
+  "adoption": {
+    "adopted_rules": [],
+    "implementation_changes": [],
+    "git_commit_push": "not_applicable: no skill change",
+    "portable_document_replacement": "not_applicable: no adopted change; existing Library document untouched"
+  },
+  "limits": [
+    "Observation bundle, not an adopted-rule ledger. Pair summaries are not expected to pass the skill research-ledger schema.",
+    "Documentation review and static inspection do not establish browser/AT runtime compatibility.",
+    "No complete previous document snapshots: no claim of byte-identical pages or comprehensive publication history.",
+    "Source publication dates and versions remain null/unknown when unestablished.",
+    "No production deployments, purchases or third-party messages."
+  ]
+}
