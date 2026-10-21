@@ -3,6 +3,8 @@
 Senior inžinier (web + jednoduché API) a produktový manažér, 21. 10. 2026. Len čítanie: strom `hs-lahky/barbershop-30`
 (HEAD **f624ee8**, vetva `barbershop-lahky-telefon`), serverová časť `hs-chatgpt/vernost/` a dokumenty v `barber/`.
 Žiadny prehliadač, žiadny server, žiadne meranie. Zápis len sem.
+Druhý prechod 21. 10. 2026 (~16:30 UTC): každý citovaný riadok znova overený (`grep -n`/`awk`) v stromoch
+`hs-lahky` (f624ee8) a `hs-chatgpt` (c129f58 + staged); opravené tri nepresnosti a doplnená časť 4.1.
 
 Cesty: `$SP` = `/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad`;
 `index.html`, `assets/vernost.js`, `assets/i18n/*.json` sú v `$SP/hs-lahky/barbershop-30/`; `vernost/…`, `tools/…`,
@@ -41,7 +43,7 @@ vyžaduje účet, prístup, právny text alebo súhlas – bez majiteľa sa nero
 | Pätička, stĺpec „Sleduj nás“ | Odkaz **„Vernostná kartička“** je viditeľný, `href="https://www.headspa30.sk/vernost/karta/"`. | `index.html:879` [kód] |
 | Klik na ten odkaz | Skript ho zachytí len pri `data-zapnute` alebo uloženej kartičke; inak `return` a prehliadač ide na `headspa30.sk`. Skript nemá `data-zapnute`. | `vernost.js:171–177` (brána riadok 173), `index.html:914` [kód] |
 | Cieľ odkazu | Ak server beží: stránka „Kartičku otvoríš z odkazu … povedz na recepcii“ pod značkou „Vernostná kartička 30“, bez mena prevádzky. Ak nebeží: 404 HEAD SPA 30 s telefónom 0911 153 136. | `karta/karta.js:43–56` [kód]; 404 podľa `PLAN-D6-D7.md:138` [dokument]; či server beží, nevieme [predpoklad: nebeží – otázka 15 je otvorená] |
-| Tlačidlá „Rezervovať“ (5× `btn-primary`, 10× tím, 15× cenník) | Prihláška pred rezerváciou sa **neukáže** (`aktivne()` je `false`), rezervácia sa otvorí rovno. | `vernost.js:159–168` (riadok 164), `index.html:139, 208, 812, 833, 893` [kód] |
+| Odkazy na rezerváciu (31× `barbershop30.sk/rezervacia`, z toho 5 tlačidiel `btn-primary`; 2× Booqme) | Prihláška pred rezerváciou sa **neukáže** (`aktivne()` je `false`), rezervácia sa otvorí rovno. | `vernost.js:159–168` (riadok 164), `index.html:139, 208, 812, 833, 893` (`btn-primary`); počty `grep -o` [kód] |
 | Preklad pätičky | Kľúč „Vernostná kartička“ je v 7 slovníkoch (cs, de, en, hu, pl, sr, uk). | `assets/i18n/*.json` [kód] |
 | Pri vypnutom JS alebo starom prehliadači | Skript sa ukončí (`!window.fetch || !window.HTMLDialogElement`), odkaz v pätičke ostáva živý. | `vernost.js:11` [kód] |
 
@@ -92,8 +94,9 @@ prevádzke. To je horšie než nič – preto je prvý krok skrytie odkazu (čas
 - Databáza vzniká sama; ak sa dá, mimo verejného priečinka `../vernost-data/`, inak v `vernost/data/` s náhodným názvom
   a zákazom prístupu (`jadro.php:73–77`, `vernost/.htaccess:6–8`, `README.md:44–46`).
 - Zásady ochrany údajov pre **obe** prevádzky vrátane Barbershopu a FACEPALM, s.r.o. (`vernost/ochrana-udajov.html:23,
-  26, 28`); staged oprava dopĺňa sídlo Šalgovská ulica 1039/43, Mojmírovce (staged diff `vernost/ochrana-udajov.html`;
-  zdroj ORSR v `barbershop-30/docs/CONTENT_SOURCES.md:26`).
+  26, 28`); staged oprava dopĺňa sídlo Šalgovská ulica 1039/43, 951 15 Mojmírovce (jediný rozdiel `vernost/` medzi
+  stromami: `diff -rq`, riadok 28). `CONTENT_SOURCES.md:26` uvádza len odkaz na výpis ORSR, samotnú adresu sídla sme
+  bez siete neoverili → [predpoklad], pred zverejnením skontrolovať vo výpise ORSR.
 - Testy: `sh vernost/testy/spusti.sh` – lokálny PHP server, Playwright (API, bezpečnosť, prihláška na oboch weboch,
   kartička, admin; `README.md:76–78`); test stráži, že `barbershop-30/assets/vernost.js` je presná kópia
   `vernost/web/prihlaska.js` (`vernost/testy/e2e.mjs:25`).
@@ -176,8 +179,8 @@ Všetko nižšie mení len verejný statický web a CI; nič neodosiela údaje a
 kartičke. Zákazník už nikdy neskončí na HEAD SPA. Odhad: +7 B gzip HTML (`PLAN-D6-D7.md:293`), +~0,6 kB JS.
 
 **B. Sekcia „Vernostná kartička“ s tlačidlom „Vytvoriť kartičku“** – v páse kontaktu pod kartou „Kde nás nájdeš“
-(`index.html:819–849`, kotva `#rezervacia`), kde D6b plánuje „Pred návštevou“ (`OTAZKY-PRE-MAJITELA.md`, D6b), nie nová
-scéna (rozpočet HTML 14 600 B gzip, `OTAZKY-PRE-MAJITELA.md:40`). Obsah: nadpis, 3 vety, tlačidlo
+(`index.html:819–849`, kotva `#rezervacia`), kde D6b plánuje „Pred návštevou“ (`OTAZKY-PRE-MAJITELA.md:58`, D6b), nie nová
+scéna (rozpočet HTML 14 600 B gzip, `OTAZKY-PRE-MAJITELA.md:45`). Obsah: nadpis, 3 vety, tlačidlo
 `<a class="btn btn-ghost" data-vernost-karta>Vytvoriť kartičku</a>` (skript ho už obsluhuje, `vernost.js:171–177`), odkaz
 „Ochrana údajov“ na `vernost/ochrana-udajov.html`. Blok má `hidden data-vernost-sekcia` a odkrýva ho `obnovPaticku()`
 spolu s pätičkou (rozšíriť selektor z `[data-vernost-footer]` na oba). Text len z toho, čo systém naozaj robí
@@ -202,6 +205,15 @@ návrh; **schvaľuje majiteľ** (najmä všetko právne).
 
 **H. Oprava sídla v `ochrana-udajov.html`** je staged; fakt je z ORSR (`CONTENT_SOURCES.md:26`), ale ide o právny text →
 preniesť ako návrh, zverejniť až po schválení [rozhodnutie majiteľa].
+
+### 4.1 Prečo nejde „kartička hneď, bez servera“ (dočasné riešenie len v prehliadači)
+
+Majiteľ chce, aby si zákazník kartu vytvoril. Lákavá skratka je kartička uložená len v telefóne (bez servera).
+Neodporúčame ju, lebo by to bola kartička bez obsahu: body zapisuje recepcia v admine (`README.md:24–27`), kartička
+ich číta zo servera (`karta.js:244–247`), a bez servera niet ani kódu pre recepciu, ani odmien, ani zrušenia s vymazaním.
+Zákazník by dostal sľub („zbieraj body“, `vernost.js:20`), ktorý nikto neplní – presne typ chyby, ktorú D6a odstraňuje.
+Jediná poctivá cesta k živej kartičke je M1 (nasadenie servera), a to závisí od majiteľa (časť 3, body 1–3).
+Čo však ide hneď, je úplný **skúšobný tok v náhľade** (časť 6), na ktorom majiteľ uvidí, čo zákazník dostane, a rozhodne.
 
 Čo **nerobíme** bez majiteľa: nasadenie servera, tajomstvá, odmeny/body, zmena právnych textov na živom webe, svetlý
 vzhľad okna, Apple/Google Wallet (`docs/VERNOSTNA-KARTA.md:35` – poplatky), čokoľvek s rezervačným systémom tretej strany.

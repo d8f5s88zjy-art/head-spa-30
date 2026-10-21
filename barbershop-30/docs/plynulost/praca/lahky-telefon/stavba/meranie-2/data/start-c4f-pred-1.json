@@ -3,39 +3,54 @@
  "strom": "pred",
  "prof": "c4f",
  "rep": 1,
- "loadavg": "1.17 1.44 2.90 15/188 1075",
- "snimok": 67,
- "fcp": 924,
- "h1At": 865,
- "tma3": 0.227,
- "cierna3": 0.091,
- "tmavychSnimok3s": 5,
- "fotkaMs": 1605,
- "fotkaH1Ms": 2070,
- "ostraMs": 1605,
- "ostraH1Ms": 2070,
- "tmaKoniec": 0.321,
+ "loadavg": "2.22 1.57 0.72 4/191 7540",
+ "snimok": 44,
+ "fcp": 2936,
+ "h1At": 2855,
+ "tma3": 0.35,
+ "cierna3": 0.183,
+ "tmavychSnimok3s": 7,
+ "fotkaMs": 3992,
+ "fotkaH1Ms": 4168,
+ "ostraMs": 3992,
+ "ostraH1Ms": 4168,
+ "tmaKoniec": 0.356,
  "fotkaKoniec": true,
- "ostraDom": 1231,
- "btnAt": 2122,
+ "ostraDom": 2855,
+ "btnAt": 4771,
  "gl": 2,
  "maxPlay": 0,
  "vidov": 1,
  "inc": {},
  "incN": 0,
  "decWait": {},
- "cls": "karty world js-kin js-steps world-in",
+ "cls": "karty world pro js-kin js-steps world-in",
  "hero": "vstup-m-1448.avif",
- "load": 1137,
+ "load": 3281,
  "bajty8s": {
+  "bajty": 1644720,
+  "poziadaviek": 17,
+  "podlaTypu": {
+   "ine": 84403,
+   "pisma": 99714,
+   "css": 74428,
+   "skripty": 863373,
+   "obrazky": 482211,
+   "sekvencie": 40591
+  },
+  "hero": [
+   "vstup-m-1448.avif"
+  ]
+ },
+ "prvaObrazovka": {
   "bajty": 2161218,
   "poziadaviek": 25,
   "podlaTypu": {
    "ine": 84403,
    "pisma": 99714,
    "css": 83935,
-   "obrazky": 941850,
    "skripty": 895614,
+   "obrazky": 941850,
    "sekvencie": 40591,
    "video": 15111
   },
@@ -43,27 +58,9 @@
    "vstup-m-1448.avif",
    "vstup-m-1448.avif",
    "rohozka-m-1448.avif"
-  ]
- },
- "prvaObrazovka": {
-  "bajty": 2196305,
-  "poziadaviek": 27,
-  "podlaTypu": {
-   "ine": 84403,
-   "pisma": 99714,
-   "css": 83935,
-   "obrazky": 941850,
-   "skripty": 895614,
-   "sekvencie": 75678,
-   "video": 15111
-  },
-  "hero": [
-   "vstup-m-1448.avif",
-   "vstup-m-1448.avif",
-   "rohozka-m-1448.avif"
   ],
-  "idleMs": 4255
+  "idleMs": 4754
  },
- "loaf": 41,
+ "loaf": 19,
  "err": null
 }

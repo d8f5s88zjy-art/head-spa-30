@@ -159,3 +159,5 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - Diagnóza iPhone (v2/diagnoza.md) potvrdila smer: P1 nedekódovaná/zahodená bitmapa = ink (LQIP len úvod), P2 3,73 MP AVIF softvérovo, P3 náhľad mal len AVIF (chýbali plagáty .webp, JPG lightboxu – čierne polia priamo!), P5 6 pevných vrstiev + transform z JS každú snímku, P9 videá rozmazané zo 576 px a 60 fps dopočítané. Náhľad v5 už má WebP a bez videí; P1/P5 rieši V1.
 - 20:02 obnovené wf_07e3c3f8-c74 (meranie 2 → skeptik) a wf_0f528734-37e (asistent, plán, skeptik); cron znova (hodinový o :17), monitor b8380hg06, send_later záložná kontrola 7 o 22:35 UTC.
 - Hodinový cron: text ako 15:05 + porty 8670/8671 pre snímky (nikdy 8600–8619), wf_ca750fba-5a6 je hotový.
+- 20:03 UTC: pripravené LQIP náhľady (v2/lqip/lqip.json, 48 fotiek, ~400 B/ks) pre V1 – zatiaľ bez zásahu do stromu (meranie 2 beží).
+- 20:25 UTC check-in: limit neplatí, disk 2,9 GB; stavba v meraní 2; plán V2 napísaný (PLAN-TELEFON-V2.md), beží skeptik; bez nového commitu; majiteľ zatiaľ neposlal snímku diagnostiky.
