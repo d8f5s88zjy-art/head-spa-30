@@ -1,0 +1,230 @@
+{
+ "typ": {
+  "mp4": "",
+  "webm": "probably"
+ },
+ "start": {
+  "cls": "karty lite world-off js-kin js-steps",
+  "loops": 1,
+  "stav": {
+   "near": false,
+   "shown": false,
+   "ready": false,
+   "poster": "",
+   "src": "",
+   "paused": true,
+   "t": 0,
+   "op": "0",
+   "disp": "none",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "y": 0
+  },
+  "req": []
+ },
+ "pred": {
+  "stav": {
+   "near": true,
+   "shown": false,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": true,
+   "t": 0,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2279
+  },
+  "req": [
+   "assets/video/tim-slucka-poster-864.webp"
+  ]
+ },
+ "tim": {
+  "s1": {
+   "near": true,
+   "shown": true,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": false,
+   "t": 0.48,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2912
+  },
+  "s2": {
+   "near": true,
+   "shown": true,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": false,
+   "t": 1.68,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2912
+  },
+  "ide": true,
+  "req": [
+   "assets/video/tim-slucka-poster-864.webp",
+   "assets/video/tim-slucka-864.webm"
+  ]
+ },
+ "pas": {
+  "stav": {
+   "near": true,
+   "shown": true,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": true,
+   "t": 3.21,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 4051
+  }
+ },
+ "kreslo": {
+  "stav": {
+   "near": true,
+   "shown": false,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": true,
+   "t": 3.21,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 5135
+  }
+ },
+ "spat": {
+  "stav": {
+   "near": true,
+   "shown": false,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": true,
+   "t": 3.21,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2279
+  }
+ },
+ "znova": {
+  "stav": {
+   "near": true,
+   "shown": true,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": false,
+   "t": 4.71,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2912
+  }
+ },
+ "cls": [
+  0.0099
+ ],
+ "maxPlay": 1,
+ "errs": [],
+ "usporny": {
+  "stav": {
+   "near": true,
+   "shown": true,
+   "ready": true,
+   "poster": "tim-slucka-poster-864.webp",
+   "src": "tim-slucka-864.webm",
+   "paused": true,
+   "t": 0,
+   "op": "1",
+   "disp": "block",
+   "preload": "none",
+   "box": [
+    0,
+    0,
+    390,
+    844
+   ],
+   "y": 2912
+  },
+  "errs": []
+ },
+ "reduced": {
+  "cls": "karty lite world-off",
+  "loops": 0,
+  "req": []
+ },
+ "filmOn": {
+  "cls": "karty world pro js-kin js-steps world-in",
+  "loops": 0,
+  "req": []
+ },
+ "pc": {
+  "cls": "karty world js-kin js-steps world-frame world-off",
+  "loops": 0,
+  "req": []
+ },
+ "pc600": {
+  "cls": "karty world js-kin js-steps world-frame world-off",
+  "loops": 0,
+  "req": []
+ }
+}

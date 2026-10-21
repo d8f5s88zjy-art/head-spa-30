@@ -108,3 +108,13 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 08:55 UTC: zmeny 2+3 (5902aa5 lite, f1f9c4d dekódovanie) nasnímané a poslané majiteľovi (úvod, karta, lišta). Pozor: v lite je prvá fotka rohožka (ako bez prológu), nie fasáda – opýtané majiteľa. Ďalej čakám L5 a L6 (stavba B).
 - 09:14 UTC záložná kontrola 3 (trig_01PgXxwfjCHx1jVQ6deEaFTF): cron 23e67415 beží; wf_20f36633-067 a wf_45213a73-46b zámerne NEOBNOVENÉ (pozastavené, nahradené balíkom a ľahkým telefónom), wf_ef682687-713 hotový.
 - 09:21 UTC check-in: limit neplatí, disk 3,1 GB; stavba A hotová (3 commity), beží stavba B (L5+L6); preverenie balíka: prehliadač hotový, beží meranie; nič na obnovu.
+- 09:46 UTC: zmena 4 (790c05c, L5 plynulý skrol) – na statickej snímke nevidno; pri skúške skoku na Služby čierna snímka po 250 ms (aj lišta), po 1 s v poriadku; zapísané do POZIADAVKY-MAJITELA.md bod 3 na overenie kontrolórom vzhľadu bez záťaže.
+- 09:50 UTC: majiteľ chce fotky na telefóne vidno tak dobre ako na PC → spustený wf_ef28985d-af9 (fakty výrez/ostrosť, prototypy A dnes / B celá fotka s rozmazaným pozadím / C pomalý prejazd po celej fotke, porota, skeptik); L4 (menšie fotky) definitívne nie.
+- 09:45 UTC: staviteľ upravil commit L5 (790c05c → 6fb8811, app.js +4/−2, bez zmeny vzhľadu) – nové snímky netreba.
+
+## 21. 10. 11:05 UTC – po limite (reset 11:00) a reštarte kontajnera
+
+- Okolo 10:00 UTC limit relácie: stavba B (L5 hotová ako 3346f80, L6 rozpracovaná v style.css – záloha stavba/zaloha/B-necommitnute-1102.patch), preverenie balíka (meranie, rozhodnutie, kontrola) a fotky-ako-PC (oba agenti) nedobehli. Kontajner sa reštartoval (cron a monitor zanikli, osirelé servery a testy už nebežia).
+- Obnovené: wf_07e3c3f8-c74 (B s poznámkou o pokračovaní; A z cache), wf_ef28985d-af9. Preverenie wf_ca750fba-5a6 odložené do dobehnutia stavby (šetrenie limitu, meranie bez súbežnej záťaže).
+- Z preverenia hotové verdikty bezpečnosti: pages.yml prevziať; 404 koreň upraviť (dva main, hidden); ftp-balik prevziať; vernost prevziať (právny text odsúhlasí majiteľ); admin upraviť (gzip 20 689 > 20 000, README s $CODEX_…, API verzia 2026-03-10 neoverená, chýba kontrola práva zápisu, robots Disallow /admin/); pracovna-siet odmietnuť; D6a-0 upraviť; D6a upraviť.
+- 11:06 UTC: cron 133d4a7c (hodinový check-in, nový text), monitor bn89xwdkc (commity hs-lahky od 3346f80), send_later trig_01LdqonELmkjX2pJMa7njvYw (13:04 UTC záložná kontrola 4).

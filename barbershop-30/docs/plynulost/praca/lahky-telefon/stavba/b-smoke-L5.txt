@@ -5,7 +5,7 @@ OK   [desktop] data-motion=on  {"motion":"on","cls":"karty world pro js-kin js-s
 OK   [desktop] 9 kotiev .film-shot s data-shot/f/mv a zálohou  {"count":9,"still":true,"meta":true}
 OK   [desktop] výšky kotiev: úvod 1, karta 0,7, karta pred pásom 1,6 okna
 OK   [desktop] prvá záloha fetchpriority=high, ostatné lazy
-OK   [desktop] prvá záloha je viditeľná a načítaná (alebo beží film)  {"count":9,"allTall":true,"allHaveStill":true,"allHaveMeta":true,"firstHigh":true,"lazyRest":true,"firstVisible":false,"worldIn":true}
+OK   [desktop] prvá záloha je viditeľná a načítaná (alebo beží film)  {"count":9,"allTall":true,"allHaveStill":true,"allHaveMeta":true,"firstHigh":true,"lazyRest":true,"firstVisible":true,"worldIn":true}
 OK   [desktop] kotva rohozka: aktívna kapitola 1 (čakané 1)
 OK   [desktop] kotva sala: aktívna kapitola 2 (čakané 2)
 OK   [desktop] kotva sala: --p rastie (0.000 → 0.072)
@@ -35,8 +35,8 @@ OK   [desktop] lightbox sa otvorí  assets/img/naradie-noznice-1600.jpg
 OK   [desktop] lightbox: šípka vpravo mení fotografiu
 OK   [desktop] lightbox: Esc zatvorí a vráti fokus na tlačidlo
 OK   [desktop] galéria má 8 fotiek (8)
-OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":2.268228}]
-OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":3.376018}]
+OK   [desktop] tím: hrá video Tím  [{"shown":true,"paused":false,"t":4.777391}]
+OK   [desktop] mimo viewportu sa video pozastaví  [{"shown":true,"paused":true,"t":5.0306}]
 OK   [desktop] detaily: tabuľa dnešných hodín, pás služieb, kroky strihu, nadpisy po slovách  {"flap":"Dnes 9:00 až 19:00. Teraz otvorené.","marquee":14,"steps":5,"kin":28}
 OK   [mobil] načítanie bez chýb a 4xx
 OK   [mobil] všetky cesty v HTML sú relatívne
@@ -96,7 +96,8 @@ OK   [bez WebGL] záloha úvodu je viditeľná a načítaná
 OK   [bez WebGL] tlačidlo Rezervovať termín v rezervácii je viditeľné
 OK   [bez WebGL] premenné skrolu nie sú na kotvách; pri rámovaní filmu (world-frame) sa --sp nepíše  {"kotvy":0,"o":9,"so":9,"sp":0,"rozsah":true,"t":"none","frame":true}
 OK   [bez WebGL] bez chýb okrem správy o WebGL
-FAIL [?film=off] --sp na img zálohy (prejazd 1 → 1,06), žiadna premenná na kotve  {"kotvy":0,"o":9,"so":9,"sp":4,"rozsah":true,"tr":"matrix(1.06, 0, 0, 1.06, 0, 0)"}
+OK   [?film=off] --sp na img záloh v okolí (prejazd 1 → 1,06), žiadna premenná na kotve  {"kotvy":0,"o":9,"so":9,"sp":3,"rozsah":true,"near":3,"tr":"matrix(1.06, 0, 0, 1.06, 0, 0)"}
+OK   [?film=off] --sp sa počas skrolu zapisuje len na zálohy v okolí (is-near)  {"all":5,"far":0}
 OK   [?film=off] bez chýb
 OK   [softvér desktop] film sa po prvom vykreslení vypne (world-frame, world-off)  {"world":true,"frame":true,"off":true,"in":false,"cls":0.0001,"w":1701}
 OK   [softvér desktop] bez posunu rozloženia (CLS 0.0001)
@@ -139,4 +140,4 @@ OK   [390 px] žiadne vodorovné pretekanie
 OK   [430 px] žiadne vodorovné pretekanie
 OK   [412 px bez app.js] žiadne vodorovné pretekanie, telefón stránku neoddiali  {"sw":412,"iw":412}
 
-1 kontrol zlyhalo
+Všetky kontroly prešli

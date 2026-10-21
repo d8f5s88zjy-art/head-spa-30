@@ -3,7 +3,7 @@
 // atmosfera.js nie pri prvom švihu; počítač 1440×900 myš: lerp pri koliesku ostáva, atmosfera pri pohybe myši.
 import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import fs from 'node:fs';
-const [port, out] = process.argv.slice(2);
+const [port, out, q = ''] = process.argv.slice(2);
 const base = `http://127.0.0.1:${port}/barbershop-30/`;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // počítadlo getBoundingClientRect (measure() ho volá na všetkých sekciách a kartách) a zápisov --sp
@@ -19,7 +19,7 @@ try {
   const reqs = [], errs = [];
   page.on('request', (r) => reqs.push({ u: r.url().replace(base, ''), t: Date.now() }));
   page.on('pageerror', (e) => errs.push(e.message));
-  await page.goto(base, { waitUntil: 'load' });
+  await page.goto(base + q, { waitUntil: 'load' });
   await sleep(300);
   res.cls = await page.evaluate(() => document.documentElement.className);
   // 1) prvý švih hneď po načítaní (dotyk, CDP synthesizeScrollGesture): atmosfera.js sa počas neho nestiahne

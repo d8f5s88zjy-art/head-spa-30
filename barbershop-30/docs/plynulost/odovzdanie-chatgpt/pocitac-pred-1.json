@@ -1,0 +1,68 @@
+{
+ "skore": 98,
+ "url": "http://127.0.0.1:8541/barbershop-30/",
+ "formFactor": "desktop",
+ "benchmarkIndex": 2123.5,
+ "runWarnings": [],
+ "metriky": {
+  "first-contentful-paint": {
+   "ms": 400.782,
+   "zobrazene": "0.4 s"
+  },
+  "largest-contentful-paint": {
+   "ms": 1045.673,
+   "zobrazene": "1.0 s"
+  },
+  "total-blocking-time": {
+   "ms": 0,
+   "zobrazene": "0 ms"
+  },
+  "cumulative-layout-shift": {
+   "ms": 0.0001352149014067104,
+   "zobrazene": "0"
+  },
+  "speed-index": {
+   "ms": 471.55070061898095,
+   "zobrazene": "0.5 s"
+  },
+  "interactive": {
+   "ms": 1045.6730000000002,
+   "zobrazene": "1.0 s"
+  },
+  "max-potential-fid": {
+   "ms": 26,
+   "zobrazene": "30 ms"
+  }
+ },
+ "lcp_prvok": {
+  "type": "table",
+  "headings": [
+   {
+    "key": "node",
+    "valueType": "node",
+    "label": "Element"
+   }
+  ],
+  "items": [
+   {
+    "node": {
+     "type": "node",
+     "lhId": "page-1-SPAN",
+     "path": "1,HTML,1,BODY,7,DIV,0,MAIN,3,SECTION,1,DIV,6,DIV,0,DIV,0,DIV,1,H1,1,SPAN",
+     "selector": "div.title-frame > div.title-card > h1#h-uvod > span.w",
+     "boundingRect": {
+      "top": 428,
+      "bottom": 525,
+      "left": 435,
+      "right": 900,
+      "width": 465,
+      "height": 97
+     },
+     "snippet": "<span class=\"w\">",
+     "nodeLabel": "Tvoje miesto."
+    }
+   }
+  ]
+ },
+ "bajty_spolu": 805377
+}

@@ -1,0 +1,91 @@
+{
+ "cls": "karty world-off js-kin js-steps",
+ "atmosferaPocasSvihu": [
+  "assets/atmosfera.js",
+  "assets/atmosfera.css"
+ ],
+ "lerpDotyk": {
+  "settled": false,
+  "o": "0.0000"
+ },
+ "measure": {
+  "lista60": 19,
+  "lista60spat": 19,
+  "lista115": 19,
+  "vyska150": 19,
+  "spat150": 19
+ },
+ "filter": {
+  "kw": [
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)",
+   "blur(5px)"
+  ],
+  "steps": [
+   "blur(6px)",
+   "blur(6px)",
+   "blur(6px)",
+   "blur(6px)",
+   "blur(6px)"
+  ],
+  "hero": [
+   "blur(0px)",
+   "blur(0px)"
+  ]
+ },
+ "kwPosun": "matrix(1, 0, 0, 1, 0, 15.21)",
+ "lesk": {
+  "leskPred": {
+   "hidden": false,
+   "name": "lesk",
+   "iter": "infinite"
+  },
+  "leskPo": {
+   "raz": false,
+   "name": "lesk",
+   "anim": 1
+  }
+ },
+ "atmosferaPotom": {
+  "req": [
+   "assets/atmosfera.js",
+   "assets/atmosfera.css"
+  ],
+  "hudba": true
+ },
+ "errs": [],
+ "pcAtmosfera": [
+  "assets/atmosfera.js",
+  "assets/atmosfera.css"
+ ],
+ "pcLerp": {
+  "settledPo4": false,
+  "seen": [
+   false,
+   false,
+   false,
+   false
+  ]
+ }
+}

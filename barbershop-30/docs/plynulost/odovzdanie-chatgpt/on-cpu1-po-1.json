@@ -1,0 +1,225 @@
+{
+ "meno": "on-cpu1-po-1",
+ "url": "http://127.0.0.1:8542/barbershop-30/?film=on&uvod=off&hudba=off",
+ "cpu": 1,
+ "gesto": "stredne",
+ "js": "ab/gl-pocitadlo.js",
+ "css": null,
+ "sub": null,
+ "zatazPred": [
+  9.28,
+  9.54,
+  7.67
+ ],
+ "zatazPo": [
+  6.41,
+  8.42,
+  7.75
+ ],
+ "trvanieS": 241.4,
+ "y": [
+  0,
+  2885
+ ],
+ "cls": "karty world js-kin js-steps world-in",
+ "film": {
+  "on": true,
+  "dpr": 1,
+  "frames": 1693
+ },
+ "gl": {
+  "volani": 1584,
+  "mpx": 62.4,
+  "mb": 250,
+  "msSpolu": 1637,
+  "msMax": 19.6,
+  "snimokSNahratim": 1530,
+  "nahratiNaSnimkuMax": 7,
+  "mbNaSnimkuMax": 3.7,
+  "msNaSnimkuP50": 0.4,
+  "msNaSnimkuP95": 4.1
+ },
+ "animacieBezia": [
+  "btn btn-primary::after:lesk"
+ ],
+ "snimkyRaf": {
+  "n": 1537,
+  "p50": 100,
+  "p95": 366.6,
+  "max": 3233.2,
+  "priem": 156.89,
+  "nad33": 94.7,
+  "nad100": 748
+ },
+ "vlaknoNaSnimku": {
+  "snimok": 1538,
+  "cpu": {
+   "n": 1538,
+   "p50": 2.2,
+   "p95": 7.8,
+   "max": 33.4,
+   "priem": 2.97
+  },
+  "nad16": 1,
+  "nad33": 0,
+  "stylPriem": 0.2,
+  "layoutPriem": 0.01,
+  "paintPriem": 0.52,
+  "skriptPriem": 0.86,
+  "gcPriem": 0.07,
+  "prvkovStylPriem": 3.4
+ },
+ "dlheUlohy": {
+  "stena50": 10,
+  "vlakno50": 0,
+  "maxVlaknoMs": 12.2,
+  "maxStenaMs": 703.6
+ },
+ "sekcie": {
+  "uvod": {
+   "snimok": 43,
+   "cpuPriem": 6.7,
+   "cpuP95": 15.7,
+   "styl": 1.23,
+   "layout": 0,
+   "paint": 0.69,
+   "skript": 1.48
+  },
+  "vstup-dnu": {
+   "snimok": 45,
+   "cpuPriem": 6.4,
+   "cpuP95": 18.8,
+   "styl": 0.78,
+   "layout": 0.07,
+   "paint": 0.95,
+   "skript": 1.46
+  },
+  "remeslo": {
+   "snimok": 43,
+   "cpuPriem": 6.4,
+   "cpuP95": 15.9,
+   "styl": 0.7,
+   "layout": 0.03,
+   "paint": 0.87,
+   "skript": 1.63
+  },
+  "cakaren": {
+   "snimok": 55,
+   "cpuPriem": 6.6,
+   "cpuP95": 19.5,
+   "styl": 0.54,
+   "layout": 0.05,
+   "paint": 0.79,
+   "skript": 1.56
+  },
+  "tim": {
+   "snimok": 1352,
+   "cpuPriem": 2.5,
+   "cpuP95": 4.2,
+   "styl": 0.12,
+   "layout": 0,
+   "paint": 0.48,
+   "skript": 0.77
+  }
+ },
+ "funkcie": [
+  [
+   "film.js:1297 frame",
+   777,
+   1539,
+   0.5,
+   6.2
+  ],
+  [
+   ":2 f",
+   180,
+   1539,
+   0.12,
+   1.2
+  ],
+  [
+   "three.module.min.js:7 e",
+   61,
+   1268,
+   0.05,
+   0.4
+  ],
+  [
+   "film.js:1148 ",
+   49,
+   1025,
+   0.05,
+   1.1
+  ],
+  [
+   ":7 frame",
+   46,
+   1539,
+   0.03,
+   0.2
+  ],
+  [
+   "app.js:356 tick",
+   45,
+   259,
+   0.17,
+   0.7
+  ],
+  [
+   "film.js:659 f",
+   21,
+   1268,
+   0.02,
+   0.2
+  ],
+  [
+   "film.js:417 worker.onmessage",
+   17,
+   104,
+   0.16,
+   0.9
+  ],
+  [
+   "film.js:1456 on.capture",
+   16,
+   79,
+   0.2,
+   1
+  ],
+  [
+   "film.js:651 onFrame",
+   10,
+   324,
+   0.03,
+   0.3
+  ],
+  [
+   "app.js:406 skrolKoniec",
+   9,
+   79,
+   0.12,
+   4.8
+  ],
+  [
+   "app.js:915 aktualizujCas",
+   6,
+   5,
+   1.11,
+   1.4
+  ],
+  [
+   "film.js:1520 ",
+   4,
+   74,
+   0.06,
+   0.2
+  ],
+  [
+   "app.js:420 onScroll",
+   3,
+   79,
+   0.04,
+   0.1
+  ]
+ ]
+}

@@ -1,0 +1,11 @@
+beh 1: [{"co":"new DateTimeFormat {\"timeZone\":\"Europe/Bratislava\",\"weekday","ms":94.2,"zasobnik":"at nowNitra (http://127.0.0.1:8430/barbershop-30/assets/app.js:661:34)"},{"co":"formatToParts","ms":0.1}]
+   LoAF 180 ms o 1098 ms: app.js http://127.0.0.1:8430/barbersh 144
+   LoAF 56 ms o 1508 ms:  TimerHandler:setTimeout 19 | app.js TimerHandler:setTimeout 8
+beh 2: [{"co":"new DateTimeFormat {\"timeZone\":\"Europe/Bratislava\",\"weekday","ms":48.9,"zasobnik":"at nowNitra (http://127.0.0.1:8430/barbershop-30/assets/app.js:661:34)"},{"co":"formatToParts","ms":0.1}]
+   LoAF 149 ms o 929 ms: app.js http://127.0.0.1:8430/barbersh 100
+   LoAF 78 ms o 1468 ms:  TimerHandler:setTimeout 17 | app.js TimerHandler:setTimeout 14
+beh 3: [{"co":"new DateTimeFormat {\"timeZone\":\"Europe/Bratislava\",\"weekday","ms":49.6,"zasobnik":"at nowNitra (http://127.0.0.1:8430/barbershop-30/assets/app.js:661:34)"},{"co":"formatToParts","ms":0.1}]
+   LoAF 153 ms o 886 ms: app.js http://127.0.0.1:8430/barbersh 70
+prázdna stránka beh 1: {"prvy_konstruktor":70.1,"prvy_format":0,"druhy_spolu":3.8}
+prázdna stránka beh 2: {"prvy_konstruktor":70,"prvy_format":1.1,"druhy_spolu":1.2}
+prázdna stránka beh 3: {"prvy_konstruktor":66.7,"prvy_format":0.1,"druhy_spolu":0.1}

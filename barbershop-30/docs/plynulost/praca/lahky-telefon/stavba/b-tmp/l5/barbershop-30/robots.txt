@@ -1,0 +1,8 @@
+# Barbershop 30 – statický web (koreň repozitára)
+User-agent: *
+Allow: /
+Disallow: /source/
+Disallow: /docs/
+
+# DEPLOY STEP: pri inej doméne nahraď URL jedným príkazom sed (README.md, „Nasadenie“).
+Sitemap: https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml

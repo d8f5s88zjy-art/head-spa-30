@@ -1,0 +1,151 @@
+#!/usr/bin/env node
+// Úvod ako film: snímky prológu v čase (desktop + mobil) a kontrola stavov.
+//
+//   node source/tools/uvod-shot.mjs [--out=dir] [--only=desktop|mobile] [--url=http://...]
+//
+// Pre každé zariadenie otvorí stránku v čistom kontexte (bez sessionStorage, takže prológ je povolený),
+// počká na prvý snímok filmu a odfotí prológ na daných polohách (BS30_FILM.proFreeze, lebo softvérové
+// kreslenie v headless prehliadači je pomalé a čas by nesedel). Potom:
+//  1. skroluje o 700 px a odfotí (film ide ďalej skrolovaním),
+//  2. znova načíta stránku v tom istom kontexte (sessionStorage je nastavený) a overí, že prológ sa
+//     nepustil a záloha úvodu je rohožka,
+//  3. otvorí stránku s ?film=off a overí pokojnú verziu (záloha rohožka, bez plátna).
+//  4. telefón bez ?film=on (ľahký režim lite): film.js sa nenačíta (BS30_FILM neexistuje, nečaká sa naň), prvý obraz
+//     je rohožka -m s nadpisom a tlačidlami od prvého snímku; snímky uvod-mobile-lite-<ms>.png.
+// Výstup: <out>/uvod-<zariadenie>-<ms>.png a súhrn do konzoly (stavy BS30_FILM.state, chyby konzoly).
+
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import { startStaticServer, PRESETS } from '../shot.mjs';
+
+const require = createRequire(import.meta.url);
+const { chromium } = require('playwright');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..', '..');
+
+const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
+const OUT = opt.out ? path.resolve(opt.out) : path.join(ROOT, 'docs', 'screenshots');
+fs.mkdirSync(OUT, { recursive: true });
+const VIEW = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
+const STOPS = [0, 0.18, 0.35, 0.5, 0.62, 0.8, 1];
+
+const srv = opt.url ? null : await startStaticServer(ROOT);
+// prehliadač v teste kreslí softvérovo: ?film=on povolí film aj tak (brána v hlavičke inak dá pokojnú verziu)
+const raw = opt.url || `${srv.origin}/index.html`;
+const base = raw + (raw.includes('?') ? '&' : '?') + 'film=on';
+const browser = await chromium.launch(PRESETS[0]);
+const summary = [];
+try {
+  for (const [kind, vp] of Object.entries(VIEW)) {
+    if (opt.only && opt.only !== kind) continue;
+    const ctx = await browser.newContext({ viewport: vp, deviceScaleFactor: 1, isMobile: kind === 'mobile', hasTouch: kind === 'mobile', colorScheme: 'dark', reducedMotion: 'no-preference' });
+    const page = await ctx.newPage();
+    const logs = [];
+    page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') logs.push(`[${m.type()}] ${m.text()}`); });
+    page.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}`));
+    const t0 = Date.now();
+    await page.goto(base, { waitUntil: 'load', timeout: 60000 });
+    const pro0 = await page.evaluate(() => ({ pro: document.documentElement.classList.contains('pro'), still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
+    // prológ hneď zastaviť na začiatku (ešte pred prvým snímkom), aby pomalé kreslenie nič nepreskočilo
+    await page.evaluate(() => { const w = () => { const f = window.BS30_FILM; if (!(f && typeof f.proFreeze === 'function' && f.proFreeze(0))) setTimeout(w, 20); }; w(); });
+    let shownAt = null;
+    try {
+      await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 20000 });
+      shownAt = Date.now();
+    } catch { logs.push('[uvod] film sa nerozbehol do 20 s'); }
+    const states = [];
+    for (const s of STOPS) {
+      if (shownAt == null) break;
+      const ok = await page.evaluate((v) => window.BS30_FILM.proFreeze(v), s);
+      await page.waitForTimeout(900);
+      const st = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(3), mix: +s.mix.toFixed(3), cur: s.current, pro: s.pro, first: s.firstFrameMs, htmlPro: document.documentElement.classList.contains('pro') }; });
+      await page.screenshot({ path: path.join(OUT, `uvod-${kind}-s${String(Math.round(s * 100)).padStart(3, '0')}.png`) });
+      states.push({ stop: s, frozen: ok, ...st });
+    }
+    await page.evaluate(() => window.BS30_FILM.proFreeze(null));
+    await page.waitForTimeout(1200);
+    const done = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(3), pro: s.pro, htmlPro: document.documentElement.classList.contains('pro') }; });
+    states.push({ stop: 'koniec', ...done });
+    // návrat na otváraciu scénu: von na ulicu (tlačidlo), snímka, dnu kolieskom / potiahnutím, snímka
+    const von = await page.evaluate(() => window.BS30_FILM.uvod.von());
+    try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 15000 }); } catch { logs.push('[uvod] von: nedošlo do stavu vonku'); }
+    await page.waitForTimeout(600);
+    const outside = await page.evaluate(() => { const s = window.BS30_FILM.state; return { von: true, S: +s.S.toFixed(2), outside: s.outside, cur: s.current, htmlOutside: document.documentElement.classList.contains('outside'), door: (document.querySelector('.film-door') || {}).innerText, bar: getComputedStyle(document.querySelector('.film-bars i')).transform }; });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-vonku.png`) });
+    // dnu: koliesko (počítač) alebo tlačidlo (telefón; potiahnutie prstom headless nevie)
+    if (kind === 'desktop') await page.mouse.wheel(0, 120); else await page.click('.film-door');
+    try { await page.waitForFunction(() => !window.BS30_FILM.state.pro && !window.BS30_FILM.state.outside && Math.abs(window.BS30_FILM.state.S - 1) < 0.01, null, { timeout: 15000 }); } catch { logs.push('[uvod] znova: prológ nedobehol'); }
+    const back = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(2), pro: s.pro, outside: s.outside, cur: s.current, htmlPro: document.documentElement.classList.contains('pro') }; });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-znova.png`) });
+    states.push({ stop: 'von', ...outside }, { stop: 'znova', ...back });
+    // skrolovanie po prológu
+    await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
+    await page.evaluate(() => window.scrollTo({ top: 700, behavior: 'instant' }));
+    await page.waitForTimeout(1500);
+    const afterScroll = await page.evaluate(() => { const s = window.BS30_FILM.state; return { S: +s.S.toFixed(3), cur: s.current, pro: s.pro, T: +s.T.toFixed(3) }; });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-scroll700.png`) });
+    // druhé načítanie: bez prológu, záloha rohožka
+    await page.goto(base, { waitUntil: 'load', timeout: 60000 });
+    await page.waitForTimeout(800);
+    const second = await page.evaluate(() => ({ pro: document.documentElement.classList.contains('pro'), worldIn: document.documentElement.classList.contains('world-in'), still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
+    // druhá návšteva: film sa spustí pohybom a aj bez prológu sa dá vyjsť von a vojsť dnu
+    await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
+    await page.evaluate(() => { window.scrollTo(0, 10); window.scrollTo(0, 0); });
+    try { await page.waitForFunction(() => document.documentElement.classList.contains('world-in'), null, { timeout: 30000 }); } catch { logs.push('[uvod] druhá návšteva: film sa nerozbehol'); }
+    await page.evaluate(() => window.BS30_FILM.uvod.von());
+    try { await page.waitForFunction(() => window.BS30_FILM.state.outside, null, { timeout: 15000 }); } catch { logs.push('[uvod] druhá návšteva: von nedošlo'); }
+    second.vonDruhyKrat = await page.evaluate(() => window.BS30_FILM.state.outside);
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat-vonku.png`) });
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-druhykrat.png`) });
+    // pokojná verzia
+    await page.goto(raw + (raw.includes('?') ? '&' : '?') + 'film=off', { waitUntil: 'load', timeout: 60000 });
+    await page.waitForTimeout(800);
+    const off = await page.evaluate(() => ({ pro: document.documentElement.classList.contains('pro'), canvas: !!document.querySelector('.film-canvas'), still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
+    await page.screenshot({ path: path.join(OUT, `uvod-${kind}-pokojna.png`) });
+    summary.push({ kind, loadMs: shownAt == null ? null : shownAt - t0, pro0, states, afterScroll, second, off, logs });
+    await ctx.close();
+  }
+  // 4. ľahký telefón: bez ?film=on, film.js sa nenačíta, takže sa na BS30_FILM nečaká (inak by test zamrzol)
+  if (!opt.only || opt.only === 'mobile') {
+    const ctx = await browser.newContext({ viewport: VIEW.mobile, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: 'dark', reducedMotion: 'no-preference' });
+    const page = await ctx.newPage();
+    const logs = [], reqs = [];
+    page.on('console', (m) => { if (m.type() === 'error') logs.push(`[${m.type()}] ${m.text()}`); });
+    page.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}`));
+    page.on('request', (r) => reqs.push(r.url()));
+    await page.goto(raw, { waitUntil: 'commit' });
+    await page.waitForSelector('.title-hero .title-actions', { timeout: 30000 });
+    const prvy = await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r({ cls: document.documentElement.className,
+      nadpis: +getComputedStyle(document.querySelector('.title-hero h1 .w')).opacity, tlacidla: +getComputedStyle(document.querySelector('.title-hero .title-actions')).opacity,
+      zaloha: +getComputedStyle(document.querySelector('#uvod .film-still')).opacity }))));
+    for (const ms of [0, 300, 1000]) { if (ms) await page.waitForTimeout(ms === 300 ? 300 : 700); await page.screenshot({ path: path.join(OUT, `uvod-mobile-lite-${ms}.png`) }); }
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(800);
+    const po = await page.evaluate(() => ({ cls: document.documentElement.className, film: !!window.BS30_FILM, canvas: !!document.querySelector('.film-canvas'),
+      still: (document.querySelector('#uvod .film-still img') || {}).currentSrc || '' }));
+    const film = reqs.filter((u) => /three\.module|film\.js|film-worker|\/seq\/|hlbka|tim-slucka/.test(u)).map((u) => u.split('/').pop());
+    summary.push({ kind: 'mobile-lite', lite: { prvy, po, film }, logs });
+    await ctx.close();
+  }
+} finally {
+  await browser.close();
+  if (srv) srv.server.close();
+}
+for (const s of summary) {
+  if (s.lite) {
+    const { prvy, po, film } = s.lite;
+    const ok = /\blite\b/.test(po.cls) && !/(^|\s)world(\s|$)/.test(po.cls) && !po.film && !po.canvas && !film.length && prvy.nadpis === 1 && prvy.tlacidla === 1 && prvy.zaloha === 1 && /rohozka-m-/.test(po.still);
+    console.log(`\n== ${s.kind}: ${ok ? 'OK' : 'CHYBA'} prvý snímok triedy=„${prvy.cls}“ nadpis=${prvy.nadpis} tlačidlá=${prvy.tlacidla} záloha=${prvy.zaloha}`);
+    console.log(`  po načítaní: triedy=„${po.cls}“ BS30_FILM=${po.film} plátno=${po.canvas} záloha=${path.basename(po.still)} požiadavky filmu=${film.join(',') || 'žiadne'}`);
+    for (const l of s.logs) console.log('  ', l);
+    continue;
+  }
+  console.log(`\n== ${s.kind}: prvý snímok ${s.loadMs} ms po načítaní; pred filmom pro=${s.pro0.pro} záloha=${path.basename(s.pro0.still)}`);
+  for (const st of s.states) console.log(`  stop=${String(st.stop).padStart(6)} S=${st.S} mix=${st.mix ?? '-'} záber=${st.cur ?? '-'} prológ=${st.pro} html.pro=${st.htmlPro}${st.outside != null ? ` vonku=${st.outside}` : ''}${st.door ? ` tlačidlo=„${st.door}“` : ''}`);
+  console.log(`  po skrole 700 px: S=${s.afterScroll.S} T=${s.afterScroll.T} záber=${s.afterScroll.cur} prológ=${s.afterScroll.pro}`);
+  console.log(`  druhé načítanie: pro=${s.second.pro} world-in=${s.second.worldIn} záloha=${path.basename(s.second.still)} von aj pri druhej návšteve=${s.second.vonDruhyKrat}`);
+  console.log(`  film=off: pro=${s.off.pro} plátno=${s.off.canvas} záloha=${path.basename(s.off.still)}`);
+  for (const l of s.logs) console.log('  ', l);
+}
