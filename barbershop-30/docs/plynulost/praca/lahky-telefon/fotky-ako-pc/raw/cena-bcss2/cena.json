@@ -1,0 +1,203 @@
+{
+ "start": "2026-10-21T11:13:50.192Z",
+ "loadStart": "2.55 2.92 1.87",
+ "modes": {
+  "Bcss": {
+   "q": "?foto=B&rozmaz=css",
+   "cls": "karty lite foto-b world-off foto-b-css js-kin js-steps",
+   "page": {
+    "scrollHeight": 16357,
+    "filmFiles": 9,
+    "filmBytes": 991129,
+    "allImgBytes": 1315609,
+    "allBytes": 1725115,
+    "filmMP": 12.5,
+    "files": [
+     [
+      "cakaren-1448.avif",
+      101708,
+      "1448×965"
+     ],
+     [
+      "kava-1448.avif",
+      98266,
+      "1448×965"
+     ],
+     [
+      "kreslo-stred-1448.avif",
+      110190,
+      "1448×965"
+     ],
+     [
+      "rohozka-1448.avif",
+      97455,
+      "1448×905"
+     ],
+     [
+      "sala-1448.avif",
+      74922,
+      "1448×965"
+     ],
+     [
+      "sala-rano-1448.avif",
+      109859,
+      "1448×965"
+     ],
+     [
+      "stol-1448.avif",
+      97106,
+      "1448×965"
+     ],
+     [
+      "sud-1448.avif",
+      147399,
+      "1448×965"
+     ],
+     [
+      "vstup-1448.avif",
+      154224,
+      "1448×965"
+     ]
+    ]
+   },
+   "willChange": [],
+   "anims": [],
+   "pokoj": {
+    "rafN": 478,
+    "rafP50": 16.7,
+    "rafP95": 16.8,
+    "rafMax": 33.3,
+    "rafOver33": 0,
+    "rafOver50": 0,
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "sum": 0
+    },
+    "agg": {
+     "FireAnimationFrame": {
+      "n": 480,
+      "ms": 191
+     },
+     "UpdateLayoutTree": {
+      "n": 354,
+      "ms": 90.8
+     },
+     "PrePaint": {
+      "n": 480,
+      "ms": 51
+     },
+     "Layerize": {
+      "n": 480,
+      "ms": 18.3
+     },
+     "Commit": {
+      "n": 480,
+      "ms": 272.4
+     },
+     "ProxyMain::BeginMainFrame::commit": {
+      "n": 1,
+      "ms": 6.8
+     },
+     "RasterTask": {
+      "n": 1,
+      "ms": 0.6
+     }
+    },
+    "frames": {
+     "DroppedFrame": 41,
+     "DrawFrame": 40,
+     "STATE_DROPPED": 42,
+     "sAnimSkladaca": 359,
+     "STATE_NO_UPDATE_DESIRED": 441,
+     "STATE_PRESENTED_ALL": 2,
+     "sAnimHlavne": 126
+    },
+    "compositeFailed": [],
+    "maxPaintMs": 0,
+    "loadavg": [
+     "3.64 3.16 1.97",
+     "3.85 3.22 2.01"
+    ]
+   },
+   "skrol": {
+    "rafN": 184,
+    "rafP50": 16.7,
+    "rafP95": 16.8,
+    "rafMax": 83.4,
+    "rafOver33": 3,
+    "rafOver50": 3,
+    "loaf": {
+     "n": 2,
+     "max": 81,
+     "sum": 158
+    },
+    "agg": {
+     "FireAnimationFrame": {
+      "n": 517,
+      "ms": 376.2
+     },
+     "PrePaint": {
+      "n": 185,
+      "ms": 61.1
+     },
+     "Layerize": {
+      "n": 185,
+      "ms": 97
+     },
+     "Commit": {
+      "n": 185,
+      "ms": 278
+     },
+     "ProxyMain::BeginMainFrame::commit": {
+      "n": 166,
+      "ms": 127
+     },
+     "UpdateLayoutTree": {
+      "n": 177,
+      "ms": 124.6
+     },
+     "Layout": {
+      "n": 6,
+      "ms": 13.6
+     },
+     "Paint": {
+      "n": 64,
+      "ms": 32
+     },
+     "RasterTask": {
+      "n": 112,
+      "ms": 598.4
+     },
+     "PaintImage": {
+      "n": 5,
+      "ms": 0.1
+     },
+     "ImageDecodeTask": {
+      "n": 20,
+      "ms": 3.2
+     }
+    },
+    "frames": {
+     "DrawFrame": 173,
+     "DroppedFrame": 16,
+     "STATE_NO_UPDATE_DESIRED": 20,
+     "sAnimHlavne": 279,
+     "STATE_PRESENTED_ALL": 167,
+     "STATE_DROPPED": 9,
+     "STATE_PRESENTED_PARTIAL": 83,
+     "sAnimSkladaca": 97
+    },
+    "compositeFailed": [
+     0
+    ],
+    "maxPaintMs": 4.4,
+    "loadavg": [
+     "3.85 3.22 2.01",
+     "4.42 3.35 2.05"
+    ]
+   }
+  }
+ },
+ "loadEnd": "4.42 3.35 2.05"
+}

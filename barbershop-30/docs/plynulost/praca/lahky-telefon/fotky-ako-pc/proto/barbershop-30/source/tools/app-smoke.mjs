@@ -410,10 +410,13 @@ try {
       ok(re.curNear && (re.hotova.length > 0 || re.kryte) && re.lite, `[${label}] znovunačítanie uprostred: aktuálna karta ${re.cur} is-near, fotka na obrazovke ${re.hotova.join(',')}`, JSON.stringify(re));
       await page.goto(`${base}/index.html#kontakt`, { waitUntil: 'load' }); await sleep(800);
       await page.goBack({ waitUntil: 'load' }).catch(() => {});
-      // obnovená poloha prejde plynulým skrolom cez celú stránku: stav sa číta až po ustálení slučky
-      await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 30000 }).catch(() => {}); await sleep(1500);
+      // obnovená poloha prejde plynulým skrolom cez celú stránku, ktorý môže začať až chvíľu po goBack (pri záťaži
+      // stroja): bez dobiehania na dotyku (L5) je slučka usadená hneď, preto sa čaká aj na ustálenú polohu
+      let yb = -1;
+      for (let i = 0; i < 40; i++) { await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 30000 }).catch(() => {}); await sleep(500); const y = await page.evaluate(() => scrollY); if (y === yb) break; yb = y; }
+      await sleep(1000);
       const bk = await liteState(page);
-      ok(bk.curNear && (bk.hotova.length > 0 || bk.kryte), `[${label}] späť: aktuálna karta ${bk.cur} is-near, fotka ${bk.hotova.join(',')}`, JSON.stringify(bk));
+      ok(bk.curNear && (bk.hotova.length > 0 || bk.kryte), `[${label}] späť: aktuálna karta ${bk.cur} is-near, fotka ${bk.hotova.join(',')}`, JSON.stringify({ ...bk, y: yb }));
       await ctx.close();
     }
     // kotvy, angličtina (t-wait), ?film=off (lite ostáva), ?film=on (film na telefóne)

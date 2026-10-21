@@ -25,7 +25,7 @@ def save(img, path):
 def sheet(title, sub, cols, rows, cells, path, cw=TW, ch=None):
     # cells[r][c] = (Image, popis)
     ch = ch or max(c[0].height for row in cells for c in row)
-    G, HEAD, CAP = 18, 104, 58
+    G, HEAD, CAP = 18, 54 + 24 * len(sub) + 10, 58
     W = G + cols * (cw + G)
     H = HEAD + rows * (ch + CAP + G) + G
     img = Image.new('RGB', (W, H), BG); dr = ImageDraw.Draw(img)
@@ -45,34 +45,34 @@ def sheet(title, sub, cols, rows, cells, path, cw=TW, ch=None):
 
 def cap(m, c):
     i = d[m]['cards'][c]
-    return f"{i['src']}  {i['nat'][0]}×{i['nat'][1]} = {i['mp']} MP\n{i['pxPerCss']} px fotky na CSS px, fit {i['fit']}"
+    return f"{i['src']}\n{i['nat'][0]}×{i['nat'][1]} = {i['mp']} MP, {i['pxPerCss']} px/CSS px"
 
 if 'A' in d:
     sheet('A – dnešný stav (výrez -m na výšku, pomalé priblíženie 1 → 1,06)',
           [f'Telefón {suf} DPR 3, ?foto=A. Fotka cez celé okno, zo scény vidno len stredný pás.'],
-          3, 1, [[(shot(f'A-{c}.png'), f'{n}: ' + cap('A', c)) for c, n in CARDS]], os.path.join(out, f'A-{suf}.jpg'))
+          3, 1, [[(shot(f'A-{c}.png'), f'{n} · ' + cap('A', c)) for c, n in CARDS]], os.path.join(out, f'A-{suf}.jpg'))
 if 'B' in d:
     sheet('B – celá fotka na šírku displeja, okolo nej tá istá fotka rozmazaná',
           [f'Telefón {suf} DPR 3, ?foto=B (rozmazanie predpočítané raz do plátna 36 px, bez filtra pri kreslení).'],
-          3, 1, [[(shot(f'B-{c}.png'), f'{n}: ' + cap('B', c)) for c, n in CARDS]], os.path.join(out, f'B-{suf}.jpg'))
+          3, 1, [[(shot(f'B-{c}.png'), f'{n} · ' + cap('B', c)) for c, n in CARDS]], os.path.join(out, f'B-{suf}.jpg'))
 if 'Bcss' in d:
     sheet('B (variant rozmaz=css) – ten istý súbor, CSS filter: blur(22px) na statickej vrstve',
           [f'Telefón {suf} DPR 3, ?foto=B&rozmaz=css. Vzhľad takmer rovnaký ako B s plátnom, cena kreslenia vyššia.'],
-          3, 1, [[(shot(f'Bcss-{c}.png'), f'{n}: ' + cap('Bcss', c)) for c, n in CARDS]], os.path.join(out, f'B-css-{suf}.jpg'))
+          3, 1, [[(shot(f'Bcss-{c}.png'), f'{n} · ' + cap('Bcss', c)) for c, n in CARDS]], os.path.join(out, f'B-css-{suf}.jpg'))
 if 'C' in d:
     cells = []
     for c, n in CARDS:
         i = d['C']['cards'][c]
-        cells.append([(shot(f'C-{c}-{lab}.png'), f'{n} – {lab_sk}: posun {round(i["tx_" + lab])} px\n{i["src"]} {i["mp"]} MP, {i["pxPerCss"]} px na CSS px')
+        cells.append([(shot(f'C-{c}-{lab}.png'), f'{n} · {lab_sk}: {round(i["tx_" + lab])} px\n{i["src"]} {i["mp"]} MP, {i["pxPerCss"]} px na CSS px')
                       for lab, lab_sk in (('zaciatok', 'začiatok'), ('stred', 'stred 9 s'), ('koniec', 'koniec 18 s'))])
-    sheet('C – pomalý prejazd kamery po celej fotke (fotka na výšku displeja, 18 s zľava doprava)',
-          [f'Telefón {suf} DPR 3, ?foto=C. Časová CSS animácia transform: translate3d, vlastná vrstva len na zobrazenej karte.'],
+    sheet('C – prejazd kamery po celej fotke (18 s zľava doprava)',
+          [f'Telefón {suf} DPR 3, ?foto=C. Fotka na výšku okna, CSS animácia transform: translate3d,', 'vlastná vrstva (will-change) len na zobrazenej karte; snímky v čase 0 s, 9 s a 18 s.'],
           3, 3, cells, os.path.join(out, f'C-{suf}.jpg'))
 if 'PC' in d:
     pw = 600
     sheet('Referencia: počítač 1440 × 900, ?film=off (rovnaké rámovanie ako film, bez WebGL)',
           ['Toto je „ako na PC“: fotka na šírku cez celé okno, vidno asi 94 % šírky a 88 % výšky scény.'],
-          3, 1, [[(shot(f'PC-{c}.png', pw), f'{n}: ' + cap('PC', c)) for c, n in CARDS]], os.path.join(out, 'PC-1440x900.jpg'), cw=pw)
+          3, 1, [[(shot(f'PC-{c}.png', pw), f'{n} · ' + cap('PC', c)) for c, n in CARDS]], os.path.join(out, 'PC-1440x900.jpg'), cw=pw)
 # prehľad: riadky = karty, stĺpce A | B | C (stred) | PC
 if all(k in d for k in ('A', 'B', 'C', 'PC')):
     cw = 300

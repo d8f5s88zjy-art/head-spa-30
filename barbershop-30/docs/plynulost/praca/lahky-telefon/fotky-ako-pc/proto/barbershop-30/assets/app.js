@@ -362,7 +362,9 @@ function tick(now) {
     apply(shownP);
     skrolTrieda();
     lastFrame = 0; // slučka sa zastaví; ďalší štart začne čistým dt
-    window.__scrollSettled = true;
+    // bez dobiehania (dotyk) slučka dobehne v každej snímke, aj keď prehliadač ešte plynulo skroluje (kotva, návrat
+    // späť): hotovo až 150 ms po poslednom posune (časovač triedy skrol), inak by testy čítali stav uprostred skrolu
+    window.__scrollSettled = !skrolTimer;
     return;
   }
   apply(shownP);
@@ -396,7 +398,7 @@ function skrolKoniec() {
   const zostava = SKROL_MS - (performance.now() - skrolT);
   if (zostava > 1) { skrolTimer = setTimeout(skrolKoniec, zostava); return; }
   skrolTimer = 0;
-  if (rafId) skrolKonci = true; else html.classList.remove('skrol');   // slučka beží: zruší sa v jej snímke
+  if (rafId) skrolKonci = true; else { html.classList.remove('skrol'); window.__scrollSettled = true; }   // slučka beží: zruší sa v jej snímke
 }
 function skrolTrieda() {
   if (skrolCaka) {
