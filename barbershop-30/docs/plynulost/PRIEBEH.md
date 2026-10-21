@@ -152,3 +152,10 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 16:20 UTC: preverenie balíka wf_ca750fba-5a6 HOTOVÉ (odovzdanie-chatgpt/overenie/ROZHODNUTIE.md, skeptik ok, 9 opráv, 2 stredné nálezy). Rozhodnutia: prevziať upravené D2 skok z menu, D5 časť, D6a-0, D6a, D6b, D7, admin (do vetvy, nezverejniť kým neprejde bránami: gzip > 20 kB, menu na telefóne, prepis riadkov, 7,7 MB fotiek), pages.yml, 404 koreň, testy; prevziať ftp-balik, vernosť; odložiť D2 zvyšok, D3, D4, hĺbkové mapy (film na počítači = L7, GPU); odmietnuť D1 (máme), pracovna-siet, dokumenty balíka. Integrácia NAD HEAD vetvy lite až po jej kontrole; pozor rozpočet index.html 14 600 B gzip prekračuje už lite (16 477 B) – rieši tím lite. Skúšobná integrácia v odhoditeľnom klone prešla (testy bez prehliadača).
 - 16:20 UTC: náhľad v5 = diagnostická verzia (WebP, bez videí, „i“); majiteľ požiadaný o snímku diagnostiky.
 - 15:47 UTC záložná kontrola 5: cron a monitor bežia; bežia stavba (meranie 2) a plán V2; nič na obnovu. (Pozn.: časy 16:10/16:20 v predchádzajúcich riadkoch sú odhad, skutočný čas bol ~15:35–15:45 UTC.)
+
+## 21. 10. 20:05 UTC – po limite (reset 20:00) a reštarte kontajnera
+
+- Limit okolo 17:00 UTC zastavil: stavbu (meranie 2 nedobehlo; kolo 2 kód a vzhľad hotové, bez vážnych nálezov), plán V2 (hotové diagnoza.md, pohyb.md, vernost.md; nedobehol asistent a plán). Kontajner sa reštartoval (cron zanikol).
+- Diagnóza iPhone (v2/diagnoza.md) potvrdila smer: P1 nedekódovaná/zahodená bitmapa = ink (LQIP len úvod), P2 3,73 MP AVIF softvérovo, P3 náhľad mal len AVIF (chýbali plagáty .webp, JPG lightboxu – čierne polia priamo!), P5 6 pevných vrstiev + transform z JS každú snímku, P9 videá rozmazané zo 576 px a 60 fps dopočítané. Náhľad v5 už má WebP a bez videí; P1/P5 rieši V1.
+- 20:02 obnovené wf_07e3c3f8-c74 (meranie 2 → skeptik) a wf_0f528734-37e (asistent, plán, skeptik); cron znova (hodinový o :17), monitor b8380hg06, send_later záložná kontrola 7 o 22:35 UTC.
+- Hodinový cron: text ako 15:05 + porty 8670/8671 pre snímky (nikdy 8600–8619), wf_ca750fba-5a6 je hotový.

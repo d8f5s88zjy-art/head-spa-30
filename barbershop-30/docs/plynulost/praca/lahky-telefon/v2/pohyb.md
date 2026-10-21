@@ -112,7 +112,7 @@ diagnostiky – preto časť 8.
 - **Text:** pod fotkou, odsadený 24 px (16 px pri výške okna ≤ 700 px), zarovnanie `left|right|center` podľa
   `data-card` ostáva (`style.css:1046–1047`), `align-content: start` namiesto `end` (`:1202`) a namiesto stredu pri
   `center` (`:1213`). Znenie textov sa nemení (porota K5).
-- **Spodok:** spodné tlačidlo (46 px + odsadenie, `style.css:1229–1233`) a pri úvode „Prejdi si podnik“
+- **Spodok:** spodné tlačidlo (46 px + odsadenie, `style.css:1225–1230`) a pri úvode „Prejdi si podnik“
   (`:1214`) ostávajú.
 
 ### 3.2 Čísla pre štyri okná (výpočet z `--nav-h`, pomeru 3 : 2 a výšok textov z `$L/fotky-ako-pc/POROTA.md`, `porota/vysky.mjs`)
@@ -271,7 +271,7 @@ Zoznam je zoradený od „vždy“ po „voliteľné po diagnostike“. Spúšť
 
 - **Mechanizmus:** okolie je náhľad (3.4) a pod pásom fotky je od začiatku tiež (ten istý náhľad, cover). Ostrý
   `img` pásu má `opacity: 0` a po `load` + `decode()` (dnes `nacitana`, `style.css:1149–1150`; `prepStill`,
-  `app.js:245–265`) prejde na 1 za 500 ms. Na rýchlej sieti sa to deje pred strihom (fotka sa sťahuje v okolí ±1,
+  `app.js:251–268`) prejde na 1 za 500 ms. Na rýchlej sieti sa to deje pred strihom (fotka sa sťahuje v okolí ±1,
   `app.js` 5b), takže majiteľ zaostrenie vôbec neuvidí; na pomalej sieti vidí scénu rozmazanú a potom ostrú – ako
   zaostrenie objektívu, nie čiernu plochu ani polovičnú fotku.
 - **Pravidlo „fotka sa nikdy neukáže neúplná“** (SPEC L3): pás fotky ukazuje buď ostrú celú fotku, alebo svoj náhľad
