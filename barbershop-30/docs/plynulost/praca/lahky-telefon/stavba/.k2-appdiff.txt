@@ -1,0 +1,472 @@
+diff --git a/barbershop-30/assets/app.js b/barbershop-30/assets/app.js
+index a2d2562..69cc985 100644
+--- a/barbershop-30/assets/app.js
++++ b/barbershop-30/assets/app.js
+@@ -191,7 +191,9 @@ function apply(p) {
+   const sp = spNeeded();
+   for (const s of shots) {
+     const t = clamp01((y + vh * 0.5 - s.top) / s.height);
+-    if (sp && s.img) setVar('--sp', t, s.img);
++    // --sp titulných kariet zapisuje zabery() len na zálohy v okolí (is-near); ostatné majú display: none
++    s.t = t;
++    if (sp && s.img && !s.title) setVar('--sp', t, s.img);
+     for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
+     // titulná karta: u = 0 keď horný okraj kotvy dosiahne horný okraj okna (karta sa pripne), 1 keď spodný.
+     // Krytie: nábeh 0 až 0,12 (úvod bez nábehu), odchod 0,92 až 1; nikdy sa nehýbe, mení sa len krytie.
+@@ -202,25 +204,7 @@ function apply(p) {
+       setClass(s.el, 'is-on', o > 0.01);
+     }
+   }
+-  // zábery bez filmu (pokojná verzia, záloha kým film nebeží): stoja cez celé okno; ďalší sa prelína navrch
+-  // počas nábehu svojej karty a predchádzajúci zmizne, až keď je nový celý (nikdy nevyjde zdola cez text)
+-  const footerIn = !!footerBox && y + vh > footerBox.top;
+-  // aktuálna karta podľa poradia (posledná, ktorej horný okraj je nad stredom okna); okolie sa ráta v kartách,
+-  // nie v pixeloch, aby ho neobišlo rozloženie, ktoré sa pri načítaní ešte dopočítava (inak by sa naraz
+-  // začali sťahovať zálohy celej stránky)
+-  let cur = 0;
+-  for (let i = 0; i < titles.length; i++) if (titles[i].top <= y + vh * 0.5) cur = i;
+-  for (let i = 0; i < titles.length; i++) {
+-    const s = titles[i], n = titles[i + 1];
+-    const fin = s.first ? 1 : ease01((y - s.top) / s.free / CARD_IN);
+-    const nextIn = n ? ease01((y - n.top) / n.free / CARD_IN) : 0;
+-    const so = footerIn || nextIn >= 1 ? 0 : fin;
+-    setVar('--so', so, s.st || s.el);
+-    setClass(s.el, 'is-shown', so > 0.001);
+-    // okolie: záloha sa načíta (display) len pri aktuálnej karte, dvoch ďalších a jednej predchádzajúcej;
+-    // kým sa stránka nenačíta celá, len úvod (prvý obraz má sieť sám pre seba)
+-    setClass(s.el, 'is-near', document.readyState === 'complete' ? i >= cur - 1 && i <= cur + 2 : i === 0);
+-  }
++  zabery(y, sp);
+ 
+   // aktívna kapitola: len v aria-current (linka kapitol, navigácia). Atribút data-scene-active na <html> sa
+   // nastaví raz pri štarte (CSS testuje len jeho prítomnosť); zmena hodnoty by prepočítala štýl celej stránky.
+@@ -242,6 +226,125 @@ function apply(p) {
+   setClass(mobileCta, 'is-hidden', ctaHidden(y));
+ }
+ 
++/* ----------------------------------------------------------------------------
++   5b. Zábery bez filmu (ľahký telefón, pokojná verzia, záloha kým film nebeží) – jeden model na jednom mieste:
++   - fotky stoja cez celé okno (pevná vrstva), pohyb je len pomalé priblíženie 1 → 1,06 okolo bodu záujmu
++     (--sp na img, transform) a prelínanie kariet (--so na .film-still, opacity); oboje riadi skrol, v pokoji sa
++     nekreslí nič. Ďalší záber sa prelína navrch počas nábehu svojej karty, predchádzajúci zmizne, až keď je nový celý.
++   - fotka sa nikdy neukáže neúplná: záber sa začne prelínať len keď je jeho fotka stiahnutá a dekódovaná
++     (img.decode(), pri chybe dekódovania stačí stiahnutá); dovtedy ostáva na obrazovke posledná hotová fotka.
++     Keď fotka dobehne neskôr, než ju skrol chcel, dobehne prelínaním 400 ms (trieda is-catch, jediný
++     transition) a starú zakryje až potom.
++   - poistka len pre úplne prvý obraz: kým nie je dekódovaná žiadna fotka (load to neukončí), úvod (fotka z HTML,
++     predčítaná v hlavičke) sa ukazuje bez čakania, aj ako záloha pod kartou pri obnovenej polohe či kotve.
++   - okolie (display, sťahovanie): to, čo je na obrazovke, aktuálna karta a po dekódovaní prvého obrazu aj
++     ďalšia a predchádzajúca (nie až po load, V2), ďalšie s fetchpriority low; najviac 3 zálohy bez display: none.
++     Aktuálna karta je vždy v okolí (aj obnovená poloha, kotvy, späť, t-wait – V1).
++   ---------------------------------------------------------------------------- */
++let anyDec = false;      // aspoň jedna fotka záberu je dekódovaná: končí poistka prvého obrazu
++let firstDone = false;   // prvý obraz je dekódovaný (alebo stránka načítaná): od vtedy sa sťahuje aj okolie ±1
++let baseIdx = -1;        // posledný celý a ustálený záber (v poradí titles): drží obrazovku, kým nie je hotový nový
++const CATCH_MS = 420;
++addEventListener('load', () => { if (!firstDone) { firstDone = true; snapNow(0); } }, { once: true });
++// fotka záberu: po stiahnutí dekódovať; príznak __dec platí len pre aktuálny pobyt v okolí (mimo okolia má
++// záloha display: none a prehliadač smie dekódovaný obraz zahodiť, preto sa po návrate dekóduje znova)
++function prepStill(s) {
++  const img = s.img;
++  if (!img || img.__dec || img.__busy) return;
++  if (!img.__go) {
++    img.__go = () => {
++      if (!img.__near || img.__dec || img.__busy) return;
++      img.__busy = true;
++      const done = (ok) => {
++        img.__busy = false;
++        if (ok && img.__near && !img.__dec) { img.__dec = true; anyDec = true; firstDone = true; snapNow(0); }
++      };
++      if (img.decode) img.decode().then(() => done(true), () => done(img.complete && img.naturalWidth > 0));
++      else done(true);
++    };
++    // nová fotka (aj iný kandidát srcset po otočení): dekódovať; hotová fotka na obrazovke sa medzitým neskryje
++    img.addEventListener('load', () => prepStill(s));
++  }
++  if (img.complete && img.naturalWidth > 0) img.__go();
++}
++function zabery(y, sp) {
++  const now = performance.now();
++  const footerIn = !!footerBox && y + vh > footerBox.top;
++  // aktuálna karta podľa poradia (posledná, ktorej horný okraj je nad stredom okna); okolie sa ráta v kartách,
++  // nie v pixeloch, aby ho neobišlo rozloženie, ktoré sa pri načítaní ešte dopočítava
++  let cur = 0;
++  for (let i = 0; i < titles.length; i++) if (titles[i].top <= y + vh * 0.5) cur = i;
++  // krytie od posledného záberu: záber zakryje všetky pod sebou, keď je celý, hotový a už nedobieha
++  // vis = najvyšší záber, ktorý chce skrol ukázať (want > 0), base = najvyšší, ktorý má byť celý (want = 1, pod vis);
++  // oba aj keď ešte nie sú hotové
++  let covered = false, vis = 0, base = 0;
++  const so = new Array(titles.length), shown = [];
++  for (let i = titles.length - 1; i >= 0; i--) {
++    const s = titles[i], img = s.img;
++    const want = s.first ? 1 : ease01((y - s.top) / s.free / CARD_IN);
++    if (want > 0.001 && i > vis) vis = i;
++    if (want >= 1 && i > base) base = i;
++    const ok = !!img && ((img.__near && img.__dec) || (s.first && !anyDec));
++    // fotka práve dobehla, kým ju skrol už chcel: dobehne prelínaním (inak riadi krytie len skrol)
++    if (ok && !s.ok && want > 0.001 && !s.first) { s.catchUntil = now + CATCH_MS; setTimeout(() => snapNow(0), CATCH_MS + 10); }
++    s.ok = ok;
++    const catching = s.catchUntil > now;
++    so[i] = footerIn || covered || !ok ? 0 : want;
++    if (so[i] > 0.001) shown.push(i);
++    if (ok && want >= 1 && !catching) covered = true;
++  }
++  // pod najnižším zobrazeným záberom nie je nič hotové (rýchly švih, skok, záber pod ním sa ešte sťahuje): ten
++  // záber je posledná hotová fotka, ukáže sa celý (dobehne prelínaním), nikdy čiastočne priehľadný nad inkom
++  const low = shown.length ? shown[shown.length - 1] : -1;
++  if (low >= 0 && so[low] < 1) {
++    so[low] = 1;
++    const s = titles[low];
++    if (!(s.catchUntil > now)) { s.catchUntil = now + CATCH_MS; setTimeout(() => snapNow(0), CATCH_MS + 10); }
++  }
++  // posledná hotová fotka drží obrazovku (skok alebo rýchly pohyb nahor, logo na úvod): pri pohybe nahor má vyššia
++  // karta want 0 a cieľová karta pod ňou ešte nie je hotová, takže by nebolo zobrazené nič (čisté ink). Záber, ktorý
++  // bol naposledy celý a ustálený (baseIdx), sa preto nechá celý pod všetkým obsahom (is-hold: z-index -1 v .site,
++  // nad ním text cieľovej karty aj pásy) a v okolí, kým ho nezakryje ustálený záber; cieľová karta sa nad neho
++  // prelinie (is-catch), takže sa nikdy neprelína z inku.
++  let steady = -1, hold = -1;
++  for (const i of shown) if (so[i] >= 1 && !(titles[i].catchUntil > now) && i > steady) steady = i;
++  if (steady >= 0) baseIdx = steady;
++  else if (!footerIn && baseIdx >= 0 && baseIdx < titles.length && !shown.includes(baseIdx)) {
++    const h = titles[baseIdx], img = h.img;
++    if (img && ((img.__near && img.__dec) || (h.first && !anyDec))) { hold = baseIdx; so[hold] = 1; } else baseIdx = -1;
++  }
++  // okolie v poradí dôležitosti: čo je na obrazovke (vždy), zábery, ktoré chce skrol (vis a pod ním base, aby sa
++  // vôbec stiahli: pri obnovenej polohe ich inak vytlačila aktuálna karta so susedom a ostala by záloha úvodu,
++  // pri rýchlom švihu by pod nastupujúcim záberom chýbal celý), aktuálna karta (vždy), po prvom obraze ďalšia
++  // a predchádzajúca; susedia len do 3 záloh (vis, base a aktuálna sú obvykle dve susedné karty)
++  const near = new Set(shown);
++  if (hold >= 0) near.add(hold);
++  near.add(base); near.add(vis); near.add(cur);
++  const add = (i) => { if (i >= 0 && i < titles.length && near.size < 3) near.add(i); };
++  if (firstDone) { add(cur + 1); add(cur - 1); }
++  for (let i = 0; i < titles.length; i++) {
++    const s = titles[i], img = s.img, on = near.has(i);
++    if (img && on !== !!img.__near) {
++      img.__near = on;
++      img.__dec = false;
++      // okolie mimo aktuálnej karty sa sťahuje s nízkou prioritou (účinné, kým požiadavka ešte nezačala)
++      if (on && i !== cur && !img.complete) img.fetchPriority = 'low';
++    }
++    setClass(s.el, 'is-near', on);
++    setClass(s.el, 'is-catch', s.catchUntil > now);
++    setClass(s.el, 'is-hold', i === hold);
++    // pomalé priblíženie len na zálohách v okolí (najviac 3), nie na všetkých 9 v každej snímke; záloha, ktorá sa
++    // do okolia vráti, dostane aktuálnu hodnotu hneď v tej istej snímke, keď sa jej zruší display: none
++    if (on && sp && img) setVar('--sp', s.t, img);
++    if (on) prepStill(s);
++    setVar('--so', so[i], s.st || s.el);
++    setClass(s.el, 'is-shown', so[i] > 0.001);
++  }
++}
++
++// lesk spodného tlačidla prejde len raz (style.css, lesk-raz): po prvom celom prechode sa už nespúšťa
++mobileCta?.addEventListener('animationend', (e) => { if (e.animationName === 'lesk') mobileCta.classList.add('lesk-raz'); });
++
+ // spodné tlačidlo: nie v úvode (titulná karta má vlastné tlačidlá), nie v rezervácii, nie pri menu
+ function ctaHidden(y = window.scrollY || 0) {
+   const hero = shots[0] && shots[0].first && y < shots[0].height * 0.6;
+@@ -249,13 +352,20 @@ function ctaHidden(y = window.scrollY || 0) {
+   return activeScene === lastScene || menuOpen || !!hero || prices;
+ }
+ 
++// Dobiehanie (lerp) len pre koliesko a klávesy na počítači; na dotyku stav ide presne s prstom (prehliadač skrol
++// sám vyhladzuje a zotrvačnosť po švihu je už plynulá – lerp navyše oneskoroval karty a pri dlhom skoku zaostával).
++// Zariadenie s myšou aj dotykom: posledný vstup rozhoduje (dotyk lerp vypne, koliesko zapne).
++let lerpOn = !matchMedia('(hover: none) and (pointer: coarse)').matches;
++addEventListener('touchstart', () => { lerpOn = false; }, { passive: true, capture: true });
++addEventListener('wheel', () => { lerpOn = true; }, { passive: true, capture: true });
++
+ function tick(now) {
+   rafId = 0;
+   const dt = lastFrame ? Math.min(100, now - lastFrame) : 16.667;
+   lastFrame = now;
+   readTarget();
+ 
+-  if (motionOff || now < snapUntil) {
++  if (motionOff || !lerpOn || now < snapUntil) {
+     shownP = targetP;
+   } else {
+     // frame-rate-nezávislý lerp: k = 0.16 pri 60 fps
+@@ -267,7 +377,9 @@ function tick(now) {
+     apply(shownP);
+     skrolTrieda();
+     lastFrame = 0; // slučka sa zastaví; ďalší štart začne čistým dt
+-    window.__scrollSettled = true;
++    // bez dobiehania (dotyk) slučka dobehne v každej snímke, aj keď prehliadač ešte plynulo skroluje (kotva, návrat
++    // späť): hotovo až 150 ms po poslednom posune (časovač triedy skrol), inak by testy čítali stav uprostred skrolu
++    window.__scrollSettled = !skrolTimer;
+     return;
+   }
+   apply(shownP);
+@@ -301,7 +413,7 @@ function skrolKoniec() {
+   const zostava = SKROL_MS - (performance.now() - skrolT);
+   if (zostava > 1) { skrolTimer = setTimeout(skrolKoniec, zostava); return; }
+   skrolTimer = 0;
+-  if (rafId) skrolKonci = true; else html.classList.remove('skrol');   // slučka beží: zruší sa v jej snímke
++  if (rafId) skrolKonci = true; else { html.classList.remove('skrol'); window.__scrollSettled = true; }   // slučka beží: zruší sa v jej snímke
+ }
+ function skrolTrieda() {
+   if (skrolCaka) {
+@@ -330,11 +442,29 @@ function vPokoji(f, ticho = 1000) {
+   skus();
+ }
+ 
+-let resizeTimer = 0;
+-function scheduleMeasure() {
++// Lišta Safari na telefóne sa pri skrole skrýva a ukazuje: okno zmení len výšku o asi 50 až 115 px (resize). Dĺžky
++// kariet sú zo stabilných svh a pevné zábery z lvh (style.css), takže sa nič nepremeriava: len výška okna a koniec
++// skrolu (2 čítania), nie celé measure() s getBoundingClientRect všetkých sekcií a kariet uprostred švihu.
++// Plné meranie ide pri zmene šírky (otočenie), výšky o 120 px a viac a pri zmene výšky dokumentu (fotky, písma).
++let resizeTimer = 0, measW = 0, measH = 0, measDoc = 0, measForce = false;
++const docH = () => Math.max(html.scrollHeight, document.body?.scrollHeight || 0);
++function measureFull() {
++  measure();
++  measW = window.innerWidth; measH = window.innerHeight; measDoc = docH();
++}
++// force === true: načítanie stránky a písma merajú vždy celé (ResizeObserver odovzdá pole záznamov, nie true)
++function scheduleMeasure(force) {
++  if (force === true) measForce = true;
+   clearTimeout(resizeTimer);
+   resizeTimer = setTimeout(() => {
+-    measure();
++    const w = window.innerWidth, h = window.innerHeight, d = docH();
++    if (!measForce && measW && w === measW && d === measDoc && Math.abs(h - measH) < 120) {
++      vh = h || 1;
++      maxScroll = Math.max(1, d - vh);
++    } else {
++      measForce = false;
++      measureFull();
++    }
+     snapNow(0); // po zmene rozmerov bez dobiehania
+   }, 120);
+ }
+@@ -344,8 +474,8 @@ if ('ResizeObserver' in window && document.body) {
+   // obrázky, fonty, neskorší obsah – mení sa výška dokumentu
+   new ResizeObserver(scheduleMeasure).observe(document.body);
+ }
+-document.fonts?.ready?.then(scheduleMeasure);
+-window.addEventListener('load', () => { scheduleMeasure(); snapNow(400); });
++document.fonts?.ready?.then(() => scheduleMeasure(true));
++window.addEventListener('load', () => { scheduleMeasure(true); snapNow(400); });
+ window.addEventListener('pageshow', () => snapNow(300));
+ 
+ document.addEventListener('visibilitychange', () => {
+@@ -415,7 +545,6 @@ if (motionOn && mqFinePointer.matches) {
+     loaded = true;
+     import('./atmosfera.js').then((m) => m.spusti(gesture)).catch(() => {});
+   };
+-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+   // myš: ľavé tlačidlo; dotyk a pero: kliknutie po ťuknutí (detail 0 = kliknutie klávesom, to hudbu nepustí)
+   const onGesture = (e) => {
+     if (e.type === 'pointerdown' ? e.pointerType === 'mouse' && e.button === 0 : e.detail > 0) {
+@@ -425,7 +554,21 @@ if (motionOn && mqFinePointer.matches) {
+   };
+   addEventListener('pointerdown', onGesture, { capture: true, passive: true });
+   addEventListener('click', onGesture, { capture: true, passive: true });
+-  const later = () => setTimeout(load, 3500);
++  if (mqFinePointer.matches) {
++    ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
++    const later = () => setTimeout(load, 3500);
++    if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
++    return;
++  }
++  // Dotyk (L5): modul (štýly, tlačidlo Hudba v lište, poslucháče) sa nenačíta pri prvom ťahu prstom, kde by
++  // jeho spracovanie a nové štýly zasekli prvý švih. Načíta sa vo voľnej chvíli (3,5 s po načítaní, potom aspoň 1 s
++  // bez posunu, ako jazyky), pri ťuknutí (kliknutie po ťuknutí, nie ťah; gesto sa odovzdá a hudba sa pustí ako
++  // doteraz pri ťuknutí pred načítaním modulu), pri klávese alebo pohybe myši (tablet s myšou).
++  // Poslucháč kliknutia ide po onGesture (oba vo fáze capture na window), takže gesto je už zapísané.
++  addEventListener('click', (e) => { if (e.detail > 0) load(); }, { capture: true, passive: true });
++  addEventListener('keydown', load, { once: true, passive: true });
++  addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') load(); }, { passive: true });
++  const later = () => setTimeout(() => vPokoji(load), 3500);
+   if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+ })();
+ 
+@@ -489,6 +632,22 @@ if (motionOn && mqFinePointer.matches) {
+   nodes.forEach((el) => io.observe(el));
+ })();
+ 
++/* ----------------------------------------------------------------------------
++   8b. Fotky v pásoch (tím, galéria) na ľahkom telefóne: ukážu sa až celé stiahnuté (prelínanie 250 ms, style.css),
++   nikdy ako prázdna plocha či napoly stiahnutá fotka pri rýchlom skrole na pomalej sieti. Trieda cakaj ide len na
++   <picture>, ktorej fotka ešte nie je stiahnutá (bez app.js sa nič neskrýva); pri chybe sa ukáže ako doteraz.
++   ---------------------------------------------------------------------------- */
++if (html.classList.contains('lite')) {
++  for (const pic of $$('.band picture')) {
++    const img = pic.querySelector('img[loading="lazy"]');
++    if (!img || (img.complete && img.naturalWidth > 0)) continue;
++    pic.classList.add('cakaj');
++    const hotovo = () => pic.classList.remove('cakaj');
++    img.addEventListener('load', hotovo, { once: true });
++    img.addEventListener('error', hotovo, { once: true });
++  }
++}
++
+ /* ----------------------------------------------------------------------------
+    9. Menu (mobil)
+    ---------------------------------------------------------------------------- */
+@@ -623,10 +782,19 @@ if (navToggle && nav && header) {
+ })();
+ 
+ /* ----------------------------------------------------------------------------
+-   11. Tiché videoslučky (Remeslo, Tím)
++   11. Tiché videoslučky (Remeslo, Tím; na ľahkom telefóne aj slučka záberu Tím)
+    Pravidlá: play pri viditeľnosti >= 35 %, pause mimo viewportu a pri skrytej karte; súčasne hrá
+    najviac jedno video; video v prvku s data-at alebo .reveal hrá, len kým je prvok zobrazený (.is-in);
+    pri data-motion=off a prefers-reduced-motion sa nič nesťahuje ani neprehráva (ostáva poster).
++   Ľahký telefón (html.lite, L6): záber s data-video-mode="play" (Tím, tá istá slučka tim-slucka ako vo filme na
++   telefóne) dostane bežné <video muted playsinline loop preload="none"> cez celú zálohu (absolútne v pevnej
++   .film-still, rozmer je rezervovaný, nič sa neposunie). Plagát je presne prvá snímka videa (PSNR 40,3 dB proti
++   23,8 dB pri snímke 15), takže štart nič nezmení. Plagát a adresa videa sa nastavia, až keď je záber v okolí
++   (is-near, karta pred ním); preload="none", takže súbor sa sťahuje až pri prvom play(). Hrá, keď kotva záberu
++   zaberá aspoň 60 % výšky okna a záloha je zobrazená (is-shown, nie zakrytá ďalšou), inak stojí; prvýkrát až po
++   zastavení skrolu (POKOJ_MS), takže pri prelete cez kartu sa video nestiahne. Nič nie je
++   viazané na skrol (len IntersectionObserver a triedy). Úsporný režim (play() odmietnuté) nechá plagát;
++   ťuknutie skúsi play() znova.
+    ---------------------------------------------------------------------------- */
+ (function setupVideos() {
+   const vids = $$('video[data-video]');
+@@ -640,32 +808,87 @@ if (navToggle && nav && header) {
+       posters.forEach((v) => pio.observe(v));
+     } else posters.forEach(setPoster);
+   }
+-  if (!vids.length || motionOff || !('IntersectionObserver' in window)) return;
++  if (motionOff || !('IntersectionObserver' in window)) return;
++  const loops = slucky();
++  if (!vids.length && !loops.length) return;
+   const ratio = new Map(vids.map((v) => [v, 0]));
++  const frac = new Map(loops.map((v) => [v, 0]));   // slučka záberu: podiel výšky okna, ktorý zaberá kotva
+ 
+   const pause = (v) => { if (!v.paused) v.pause(); };
+-  const play = (v) => { if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => { /* autoplay zamietnutý – ostáva poster */ }); } };
++  const play = (v) => { if (v.paused) { v.__started = true; const p = v.play(); if (p && p.catch) p.catch(() => { /* autoplay zamietnutý – ostáva poster */ }); } };
+   const gateOf = (v) => v.closest('[data-at], .reveal');
++  // slučka záberu (ľahký telefón) sa prvýkrát spustí, a teda aj stiahne (2,9 až 3,4 MB), až keď sa návštevník pri zábere
++  // zastaví: skrol stojí aspoň POKOJ_MS. Pri prelete cez kartu ostane plagát (presne prvá snímka) a nič sa nesťahuje.
++  const POKOJ_MS = 800;
++  let pokojTimer = 0;
++  const pokoj = () => {
++    const zostava = POKOJ_MS - (performance.now() - skrolT);
++    if (zostava <= 0) return true;
++    if (!pokojTimer) pokojTimer = setTimeout(() => { pokojTimer = 0; sync(); }, zostava + 20);
++    return false;
++  };
+   const wanted = (v) => {
++    if (v.__shot) {
++      const c = v.__shot.classList;
++      return !v.__fail && !!v.__armed && frac.get(v) >= 0.6 && c.contains('is-near') && c.contains('is-shown') && (v.__started || pokoj());
++    }
+     if ((ratio.get(v) || 0) < 0.35) return false;
+     const gate = gateOf(v);
+     return !gate || gate.classList.contains('is-in');
+   };
++  const all = [...vids, ...loops];
+   function sync() {
+-    if (document.visibilityState !== 'visible') { vids.forEach(pause); return; }
++    if (document.visibilityState !== 'visible') { all.forEach(pause); return; }
+     let best = null, bestRatio = 0;
+-    for (const v of vids) {
+-      if (wanted(v) && ratio.get(v) > bestRatio) { best = v; bestRatio = ratio.get(v); }
++    for (const v of all) {
++      const r = v.__shot ? frac.get(v) : ratio.get(v);
++      if (wanted(v) && r > bestRatio) { best = v; bestRatio = r; }
+     }
+-    for (const v of vids) if (v !== best) pause(v);
++    for (const v of all) if (v !== best) pause(v);
+     if (best) play(best);
+   }
+ 
+-  const io = new IntersectionObserver((entries) => {
+-    for (const en of entries) ratio.set(en.target, en.isIntersecting ? en.intersectionRatio : 0);
+-    sync();
+-  }, { threshold: [0, 0.2, 0.35, 0.5, 0.75, 1] });
+-  vids.forEach((v) => io.observe(v));
++  if (vids.length) {
++    const io = new IntersectionObserver((entries) => {
++      for (const en of entries) ratio.set(en.target, en.isIntersecting ? en.intersectionRatio : 0);
++      sync();
++    }, { threshold: [0, 0.2, 0.35, 0.5, 0.75, 1] });
++    vids.forEach((v) => io.observe(v));
++  }
++
++  if (loops.length) {
++    // pevná záloha je pri zobrazení vždy celá v okne, preto sa sleduje kotva záberu (jej dĺžka je 160 až 200 svh,
++    // podiel z vlastnej plochy by 60 % okna nevyjadril); rootBounds chýba v cudzom rámci (náhľad), vtedy innerHeight
++    const steps = Array.from({ length: 41 }, (_, i) => i / 40);
++    const byShot = new Map(loops.map((v) => [v.__shot, v]));
++    const lio = new IntersectionObserver((entries) => {
++      for (const en of entries) {
++        const h = (en.rootBounds && en.rootBounds.height) || window.innerHeight || 1;
++        frac.set(byShot.get(en.target), en.isIntersecting ? en.intersectionRect.height / h : 0);
++      }
++      sync();
++    }, { threshold: steps });
++    loops.forEach((v) => {
++      lio.observe(v.__shot);
++      // plagát a adresa až v okolí záberu (is-near z app.js 5b); triedy is-near/is-shown sa menia v slučke skrolu
++      const arm = () => {
++        if (v.__armed || !v.__shot.classList.contains('is-near')) return;
++        v.__armed = true;
++        if (v.__poster) {
++          const im = new Image();
++          // plagát sa ukáže až načítaný (inak by cez zálohu na chvíľu presvitalo prázdne video); prelínanie 400 ms
++          im.onload = () => { v.poster = v.__poster; v.classList.add('is-ready'); };
++          im.src = v.__poster;
++        } else v.classList.add('is-ready');
++        v.src = v.__src;
++      };
++      v.addEventListener('error', () => { v.__fail = true; sync(); });   // ostáva plagát (alebo fotka zálohy)
++      new MutationObserver(() => { arm(); sync(); }).observe(v.__shot, { attributes: true, attributeFilter: ['class'] });
++      arm();
++    });
++    // úsporný režim: ťuknutie je gesto, v ňom play() prejde
++    addEventListener('touchend', sync, { passive: true });
++  }
+ 
+   // brány menia triedu is-in (slučka alebo IntersectionObserver) – sleduj zmenu a prehodnoť
+   const mo = 'MutationObserver' in window ? new MutationObserver(sync) : null;
+@@ -673,6 +896,34 @@ if (navToggle && nav && header) {
+   document.addEventListener('visibilitychange', sync);
+ })();
+ 
++// slučky záberov pre ľahký telefón (L6): existujúce súbory assets/video/*, typ ako vo film.js (H.264 mp4 má prednosť:
++// na iPhone ho dekóduje hardvér), plagát .webp (Safari od iOS 14)
++function slucky() {
++  if (!html.classList.contains('lite') || !('MutationObserver' in window)) return [];
++  const t = document.createElement('video');
++  const mp4 = t.canPlayType('video/mp4; codecs="avc1.640028"'), webm = t.canPlayType('video/webm; codecs="vp9"');
++  const ext = mp4 === 'probably' || (mp4 && !webm) ? '.mp4' : webm ? '.webm' : '';
++  if (!ext) return [];
++  return $$('.film-shot.is-title[data-video][data-video-mode="play"]').map((shot) => {
++    const still = shot.querySelector('.film-still');
++    if (!still) return null;
++    const v = document.createElement('video');
++    v.muted = v.defaultMuted = true; v.playsInline = true; v.loop = true; v.preload = 'none';
++    ['muted', 'playsinline', 'webkit-playsinline', 'loop', 'disablepictureinpicture', 'disableremoteplayback'].forEach((a) => v.setAttribute(a, ''));
++    v.setAttribute('preload', 'none'); v.setAttribute('aria-hidden', 'true'); v.tabIndex = -1;
++    v.className = 'film-loop';
++    const [w, h] = (shot.dataset.videoSize || '').split('x').map(Number);
++    if (w && h) { v.width = w; v.height = h; }
++    const [fx, fy] = (shot.dataset.videoF || '0.5,0.5').split(',').map(parseFloat);
++    v.style.objectPosition = `${((fx || 0.5) * 100).toFixed(1)}% ${((fy || 0.5) * 100).toFixed(1)}%`;
++    v.__shot = shot;
++    v.__src = new URL(shot.dataset.video + ext, document.baseURI).href;
++    v.__poster = shot.dataset.videoPoster ? new URL(shot.dataset.videoPoster + '.webp', document.baseURI).href : '';
++    still.append(v);
++    return v;
++  }).filter(Boolean);
++}
++
+ /* ----------------------------------------------------------------------------
+    12. Rok v pätičke
+    ---------------------------------------------------------------------------- */
+@@ -681,7 +932,7 @@ $$('.year').forEach((el) => { el.textContent = String(new Date().getFullYear());
+ /* ----------------------------------------------------------------------------
+    13. Štart – stav okamžite (aj po obnovení stránky uprostred príbehu)
+    ---------------------------------------------------------------------------- */
+-measure();
++measureFull();
+ readTarget();
+ shownP = targetP;
+ // app.js prevzal riadenie (CSS skryje .reveal a pripraví nástupy); atribút sa už nemení (aktívna kapitola je v aria-current)

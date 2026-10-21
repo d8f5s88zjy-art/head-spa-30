@@ -131,3 +131,13 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 13:49 UTC: oprava 1 (de67eec, skok nahor drží poslednú hotovú fotku) – snímanie skoku v headless Chromiu nespoľahlivé (prvá snímka po skoku je buď čistý ink bez lišty, alebo ešte starý pohľad), majiteľovi bez obrázka; overí kontrola kolo 2 snímkovou sondou.
 - 14:06 UTC: zmeny 6+7 (b2fd4f0 bez blokujúceho skriptu, 5015ac6 prvý obraz s nadpisom aj na pomalej sieti) nasnímané Slow 4G 1/2/3,5 s a poslané. Pozorovanie: PO ostrá fotka úvodu (rohozka-m-1448, 438 kB) prichádza na pomalej sieti až ~3,5 s (DNES fasáda ~2 s), dovtedy rozmazaný náhľad – zmienené majiteľovi; prípadné zrýchlenie len so súhlasom (menšia prvá fotka = L4).
 - 14:19 UTC check-in: limit neplatí; disk 1,7 GB → zmazané ukazky/*/strom (kópie commitov pre snímky, dajú sa znova vytvoriť git archive); stavba v oprave kola 1; bez nového commitu od 5015ac6.
+- 14:20 UTC: zmena 8 (3582235, kotva #kontakt bez úvodu a preletu) nasnímaná 0,4/1/2 s (Fast 4G) a poslaná: PRED čierna a doskakovanie, PO kontakt hneď.
+- 14:28 UTC: zmena 9 (83e21bd, fotky tímu a galérie až celé) – v Chromiu bez viditeľného rozdielu (AVIF sa v Chromiu nekreslí po kúskoch; rozdiel sa prejaví v Safari), majiteľovi bez obrázka; pozorovanie prázdnej galérie pri Slow 4G zapísané do POZIADAVKY bod 5.
+- 14:48 UTC: zmena 10 (f624ee8, slučka Tím sa stiahne až po zastavení pri zábere) – šetrí dáta pri prelete, vizuálne rovnaké po zastavení; majiteľovi bez obrázka.
+- 15:05 UTC: majiteľ „Pracuj more“ → preverenie balíka wf_ca750fba-5a6 obnovené bez prehliadača (skript upravený: meranie odložené na L7, rozhodnutie integruje NAD vetvu lite, skeptik len zo súborov); záloha pôvodného skriptu odovzdanie-chatgpt/overenie/skript-zaloha-pred-upravou.js.
+
+## 21. 10. 15:20 UTC – náhľad pre majiteľa aktualizovaný na ľahký telefón + prepínač fotiek
+
+- Náhľad (artefakt EkWkJCgMVeh6xrAUY1UoNb) prestavaný z hs-lahky f624ee8 (ukazky/skripty/nahlad-build.sh): len avif, bez source/docs; pridaný prototyp fotiek (foto-proto.css/js z fotky-ako-pc/proto) s prepínačom „Fotky 1 2 3“ vľavo dole (1 = dnes, 2 = celá fotka B, 3 = veľký štvorec; localStorage b30.foto, len v lite). Úpravy prototypu: karta s videom (Tím) sa nemení (S1 skeptika), stredové karty majú text pod fotkou (S5), variant S = cover okolo --fx. Prepínač je len v náhľade, nie vo vetve.
+- Test (430×932 DPR3, všetky 3 varianty): 0 chýbajúcich súborov, 0 chýb JS, prepínač viditeľný. Kontrola kolo 2 ešte beží – náhľad je pracovný, nie finálny.
+- 15:27 UTC check-in: limit neplatí, disk 3,0 GB; stavba: kontrola kolo 2 (kód, vzhľad) hotová, beží meranie 2; preverenie balíka: ROZHODNUTIE.md zapísané, beží skeptik; bez nového commitu od f624ee8; náhľad majiteľa aktualizovaný 15:20.

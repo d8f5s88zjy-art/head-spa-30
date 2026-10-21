@@ -1,0 +1,244 @@
+{
+ "name": "skrol-c4f-po-1",
+ "strom": "po",
+ "prof": "c4f",
+ "rep": 1,
+ "loadavg": "2.19 3.27 3.25 15/191 31549",
+ "loadavgPo": "3.16 3.39 3.29 11/207 31663",
+ "proCakanie": 0,
+ "y": [
+  0,
+  8516,
+  15545
+ ],
+ "sh": 16389,
+ "svihovDoPaty": 10,
+ "okno": 18.1,
+ "stopa": {
+  "velkostMB": 41.7,
+  "snimok": 830,
+  "ulohaSnimkyP50": 3.5,
+  "ulohaSnimkyP95": 16.2,
+  "ulohaSnimkyMax": 178.2,
+  "vlaknoP95": 14.4,
+  "nad16": 4.5,
+  "nad50": 5,
+  "tazkeSnimky": 83,
+  "rozpadTazkych": [
+   [
+    "UpdateLayoutTree",
+    282
+   ],
+   [
+    "FunctionCall",
+    226
+   ],
+   [
+    "FireAnimationFrame",
+    147
+   ],
+   [
+    "SimpleWatcher::OnHandleReady",
+    146
+   ],
+   [
+    "Layerize",
+    117
+   ],
+   [
+    "Paint",
+    95
+   ],
+   [
+    "IntersectionObserverController::computeIntersections",
+    84
+   ],
+   [
+    "TimerFire",
+    79
+   ],
+   [
+    "PrePaint",
+    76
+   ],
+   [
+    "EventDispatch",
+    41
+   ],
+   [
+    "Layout",
+    34
+   ],
+   [
+    "HitTest",
+    34
+   ],
+   [
+    "ScrollLayer",
+    8
+   ],
+   [
+    "Receive mojo message",
+    1
+   ]
+  ],
+  "rozpadVsetkych": [
+   [
+    "FunctionCall",
+    734
+   ],
+   [
+    "UpdateLayoutTree",
+    569
+   ],
+   [
+    "FireAnimationFrame",
+    466
+   ],
+   [
+    "Layerize",
+    342
+   ],
+   [
+    "IntersectionObserverController::computeIntersections",
+    311
+   ],
+   [
+    "PrePaint",
+    274
+   ],
+   [
+    "SimpleWatcher::OnHandleReady",
+    267
+   ],
+   [
+    "TimerFire",
+    246
+   ],
+   [
+    "HitTest",
+    186
+   ],
+   [
+    "Paint",
+    181
+   ],
+   [
+    "EventDispatch",
+    147
+   ],
+   [
+    "Layout",
+    62
+   ],
+   [
+    "ScrollLayer",
+    49
+   ],
+   [
+    "MinorGC",
+    8
+   ]
+  ],
+  "dlheUlohy50": 2,
+  "dlheUlohyMs": 282,
+  "najdlhsiaMs": 178
+ },
+ "raf": {
+  "n": 830,
+  "p50": 16.7,
+  "p95": 50,
+  "nad50": 33
+ },
+ "loaf50": {
+  "n": 37,
+  "sucet": 3575,
+  "max": 369.5,
+  "blok": 178
+ },
+ "loafRozpad": {
+  "predRender": 3392,
+  "renderDoStylu": 102,
+  "stylAzKoniec": 81,
+  "skripty": 28,
+  "naj": [
+   [
+    11020.3,
+    369.5,
+    0,
+    366.4,
+    2.4,
+    0.7,
+    6
+   ],
+   [
+    13585.4,
+    258.7,
+    0,
+    252.7,
+    0.9,
+    5.1,
+    0
+   ],
+   [
+    8806.3,
+    197.4,
+    0,
+    181.6,
+    11.5,
+    4.3,
+    9
+   ],
+   [
+    8400.2,
+    193.6,
+    0,
+    179,
+    4.5,
+    10.1,
+    0
+   ],
+   [
+    15250.4,
+    186.2,
+    123.9,
+    184.4,
+    1.1,
+    0.7,
+    0
+   ]
+  ]
+ },
+ "longtask50": 2,
+ "loafErr": null,
+ "gl": 0,
+ "maxPlay": 1,
+ "playAt": [
+  [
+   11199,
+   1
+  ]
+ ],
+ "vidov": 2,
+ "incN": 0,
+ "inc": {},
+ "decWait": {},
+ "cls": "karty lite world-off js-kin js-steps",
+ "celaStranka": {
+  "bajty": 4896217,
+  "poziadaviek": 36,
+  "podlaTypu": {
+   "ine": 88540,
+   "pisma": 99714,
+   "css": 89214,
+   "obrazky": 1620698,
+   "skripty": 119711,
+   "video": 2878340
+  },
+  "hero": [
+   "rohozka-m-1086.avif",
+   "vstup-m-1086.avif"
+  ],
+  "idleMs": 0
+ }
+}

@@ -16,7 +16,7 @@
   hook(W.HTMLCanvasElement && HTMLCanvasElement.prototype); hook(W.OffscreenCanvas && OffscreenCanvas.prototype);
   const pl = HTMLMediaElement.prototype.play;
   HTMLMediaElement.prototype.play = function () { if (this instanceof HTMLVideoElement) M.vids.add(this); return pl.apply(this, arguments); };
-  try { new PerformanceObserver((l) => { for (const e of l.getEntries()) M.loaf.push([+e.startTime.toFixed(1), +e.duration.toFixed(1), +(e.blockingDuration || 0).toFixed(1)]); }).observe({ type: 'long-animation-frame', buffered: true }); } catch (e) { M.loafErr = String(e); }
+  try { new PerformanceObserver((l) => { for (const e of l.getEntries()) M.loaf.push([+e.startTime.toFixed(1), +e.duration.toFixed(1), +(e.blockingDuration || 0).toFixed(1), +((e.renderStart || 0) - e.startTime).toFixed(1), +((e.styleAndLayoutStart || 0) - (e.renderStart || 0)).toFixed(1), +(e.startTime + e.duration - (e.styleAndLayoutStart || 0)).toFixed(1), +(e.scripts || []).reduce((a, x) => a + x.duration, 0).toFixed(1)]); }).observe({ type: 'long-animation-frame', buffered: true }); } catch (e) { M.loafErr = String(e); }
   try { new PerformanceObserver((l) => { for (const e of l.getEntries()) M.lt.push([+e.startTime.toFixed(1), +e.duration.toFixed(1)]); }).observe({ type: 'longtask', buffered: true }); } catch (e) {}
   const vis = (el) => {
     let o = 1;

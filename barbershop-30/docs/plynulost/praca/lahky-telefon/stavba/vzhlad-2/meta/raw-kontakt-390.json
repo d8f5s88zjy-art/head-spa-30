@@ -1,0 +1,279 @@
+{
+ "sc": "kontakt",
+ "W": 390,
+ "H": 844,
+ "t0": 1792594887237,
+ "frames": [
+  {
+   "file": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-2/raw/kontakt-390/f0000.jpg",
+   "ts": 1792594887250.622
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-2/raw/kontakt-390/f0001.jpg",
+   "ts": 1792594888179.143
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-2/raw/kontakt-390/f0002.jpg",
+   "ts": 1792594888304.044
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-2/raw/kontakt-390/f0003.jpg",
+   "ts": 1792594888453.9321
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/stavba/vzhlad-2/raw/kontakt-390/f0004.jpg",
+   "ts": 1792594888527.375
+  }
+ ],
+ "fcp": 940,
+ "origin": 1792594887239.6,
+ "vzorky": [
+  {
+   "t": 0,
+   "err": "TypeError: Cannot read properties of null (reading 'className')"
+  },
+  {
+   "t": 300,
+   "y": 0,
+   "cls": "karty lite world-off",
+   "h1": 1,
+   "btn": 1,
+   "lista": 1,
+   "cta": 0,
+   "near": [],
+   "st": [
+    [
+     "rohozka",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "sala",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "stol",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "cakaren",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "sala-rano",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "kreslo-stred",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "kava",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "sud",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "vstup",
+     "1.00",
+     false,
+     "-",
+     "",
+     ""
+    ]
+   ],
+   "cur": "sala",
+   "gl": 0
+  },
+  {
+   "t": 800,
+   "y": 14885,
+   "cls": "karty lite world-off js-kin js-steps skrol",
+   "h1": 0,
+   "btn": 0,
+   "lista": 1,
+   "cta": 0,
+   "near": [
+    "vstup"
+   ],
+   "st": [
+    [
+     "vstup",
+     "0.00",
+     false,
+     "-",
+     "",
+     ""
+    ]
+   ],
+   "cur": null,
+   "gl": 0
+  },
+  {
+   "t": 1500,
+   "y": 15370,
+   "cls": "karty lite world-off js-kin js-steps",
+   "h1": 0,
+   "btn": 0,
+   "lista": 1,
+   "cta": 0,
+   "near": [
+    "sud",
+    "vstup"
+   ],
+   "st": [
+    [
+     "sud",
+     "0.00",
+     false,
+     "-",
+     "",
+     ""
+    ],
+    [
+     "vstup",
+     "0.00",
+     false,
+     "-",
+     "",
+     ""
+    ]
+   ],
+   "cur": null,
+   "gl": 0
+  },
+  {
+   "t": 2200,
+   "y": 15370,
+   "cls": "karty lite world-off js-kin js-steps",
+   "h1": 0,
+   "btn": 0,
+   "lista": 1,
+   "cta": 0,
+   "near": [
+    "sud",
+    "vstup"
+   ],
+   "st": [
+    [
+     "sud",
+     "0.00",
+     true,
+     "dec",
+     "",
+     ""
+    ],
+    [
+     "vstup",
+     "0.00",
+     true,
+     "dec",
+     "",
+     ""
+    ]
+   ],
+   "cur": null,
+   "gl": 0
+  },
+  {
+   "t": 3000,
+   "y": 15370,
+   "cls": "karty lite world-off js-kin js-steps",
+   "h1": 0,
+   "btn": 0,
+   "lista": 1,
+   "cta": 0,
+   "near": [
+    "sud",
+    "vstup"
+   ],
+   "st": [
+    [
+     "sud",
+     "0.00",
+     true,
+     "dec",
+     "",
+     ""
+    ],
+    [
+     "vstup",
+     "0.00",
+     true,
+     "dec",
+     "",
+     ""
+    ]
+   ],
+   "cur": null,
+   "gl": 0
+  }
+ ],
+ "koniec": {
+  "t": "koniec",
+  "y": 15370,
+  "cls": "karty lite world-off js-kin js-steps",
+  "h1": 0,
+  "btn": 0,
+  "lista": 1,
+  "cta": 0,
+  "near": [
+   "sud",
+   "vstup"
+  ],
+  "st": [
+   [
+    "sud",
+    "0.00",
+    true,
+    "dec",
+    "",
+    ""
+   ],
+   [
+    "vstup",
+    "0.00",
+    true,
+    "dec",
+    "",
+    ""
+   ]
+  ],
+  "cur": null,
+  "gl": 0
+ },
+ "poBF": null
+}

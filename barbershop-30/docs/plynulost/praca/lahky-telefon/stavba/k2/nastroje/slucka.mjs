@@ -1,0 +1,24 @@
+// Kontrola L6 (len čítanie): slučka Tím na ľahkom telefóne pri CPU 4×: droppedVideoFrames, dlhé úlohy počas prehrávania, zdroj.
+import { createRequire } from 'node:module';
+const require = createRequire('/opt/node22/lib/node_modules/');
+const { chromium } = require('playwright');
+const ROOT = process.argv[2];
+const { startStaticServer } = await import(ROOT + '/source/shot.mjs');
+const srv = await startStaticServer(ROOT);
+const browser = await chromium.launch({ headless: true });
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, colorScheme: 'dark' });
+await ctx.addInitScript(() => { window.__lt = []; new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__lt.push([Math.round(e.startTime), Math.round(e.duration)]); }).observe({ type: 'longtask', buffered: true }); });
+const page = await ctx.newPage();
+const errs = []; page.on('pageerror', (e) => errs.push(e.message)); page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
+await page.goto(srv.origin + '/index.html', { waitUntil: 'load' });
+await page.waitForTimeout(1500);
+const cdp = await ctx.newCDPSession(page);
+await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+const y = await page.evaluate(() => { const v = document.querySelector('video.film-loop'); const a = v.closest('.film-shot'); const r = a.getBoundingClientRect(); return Math.round(r.top + scrollY + Math.min(r.height * 0.3, 600)); });
+await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), y);
+await page.waitForTimeout(2500);
+const t0 = await page.evaluate(() => { window.__lt = []; return performance.now(); });
+await page.waitForTimeout(8000);
+const r = await page.evaluate(() => { const v = document.querySelector('video.film-loop'); const q = v.getVideoPlaybackQuality ? v.getVideoPlaybackQuality() : {}; return { src: v.currentSrc.split('/').pop(), paused: v.paused, t: +v.currentTime.toFixed(2), total: q.totalVideoFrames, dropped: q.droppedVideoFrames, lt: window.__lt, w: v.videoWidth, h: v.videoHeight }; });
+console.log(JSON.stringify({ ...r, podiel: r.total ? +(100 * r.dropped / r.total).toFixed(2) : null, chyby: errs }));
+await browser.close(); srv.server.close();

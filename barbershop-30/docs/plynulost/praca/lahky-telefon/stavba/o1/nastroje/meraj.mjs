@@ -29,8 +29,8 @@ const NET = {
   f: { offline: false, latency: 165, downloadThroughput: 9e6 / 8 * 0.9, uploadThroughput: 1.5e6 / 8 * 0.9 },
   s: { offline: false, latency: 562.5, downloadThroughput: 1.6e6 / 8 * 0.9, uploadThroughput: 750e3 / 8 * 0.9 },
 };
-const PROF = { c4f: { cpu: 4, net: 'f' }, c6f: { cpu: 6, net: 'f' }, c4s: { cpu: 4, net: 's' }, c6s: { cpu: 6, net: 's' } };
-const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: 'sk-SK', colorScheme: 'dark' };
+const PROF = { c1f: { cpu: 1, net: 'f' }, c4f: { cpu: 4, net: 'f' }, c6f: { cpu: 6, net: 'f' }, c4s: { cpu: 4, net: 's' }, c6s: { cpu: 6, net: 's' } };
+const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: Number(process.env.DPR || 3), isMobile: true, hasTouch: true, locale: 'sk-SK', colorScheme: 'dark' };
 const DESK = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'sk-SK', colorScheme: 'dark' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const load = () => fs.readFileSync('/proc/loadavg', 'utf8').trim();
@@ -172,9 +172,19 @@ function rozborStopy(raw, kotvaPerf, w0, w1) {
   for (const t of top) { const i = idx(t.ts); if (i >= 0) { wall[i] += t.dur / 1000; thr[i] += (t.tdur != null ? t.tdur : t.dur) / 1000; } }
   const q = (arr, p) => { const s = [...arr].sort((x, y) => x - y); return s.length ? +s[Math.min(s.length - 1, Math.floor(p * s.length))].toFixed(1) : null; };
   const long = top.filter((t) => t.dur > 50000);
+  // rozpad práce v najťažších snímkach (nad p90): súčet trvaní udalostí podľa mena (vnorené sa môžu prekrývať)
+  const p90 = [...wall].sort((x, y) => x - y)[Math.floor(0.9 * nF)] || 0;
+  const tazke = new Set(); wall.forEach((w, i) => { if (w >= p90) tazke.add(i); });
+  const rozpad = {}; const vsetky = {};
+  const XS = X.filter((e) => !/RunTask/.test(e.name)).sort((x, y) => x.ts - y.ts);
+  const lb = (ts) => { let lo = 0, hi = XS.length; while (lo < hi) { const m = (lo + hi) >> 1; if (XS[m].ts < ts) lo = m + 1; else hi = m; } return lo; };
+  for (const t of top) { const i = idx(t.ts); if (i < 0) continue;
+    for (let j = lb(t.ts); j < XS.length && XS[j].ts < t.ts + t.dur; j++) { const e = XS[j]; if (e.ts + e.dur <= t.ts + t.dur) {
+      vsetky[e.name] = (vsetky[e.name] || 0) + e.dur / 1000; if (tazke.has(i)) rozpad[e.name] = (rozpad[e.name] || 0) + e.dur / 1000; } } }
+  const topN = (o) => Object.entries(o).sort((a, b) => b[1] - a[1]).slice(0, 14).map(([k, v]) => [k, +v.toFixed(0)]);
   return { velkostMB: +(velkost / 1e6).toFixed(1), snimok: nF, ulohaSnimkyP50: q(wall, 0.5), ulohaSnimkyP95: q(wall, 0.95), ulohaSnimkyMax: q(wall, 1), vlaknoP95: q(thr, 0.95),
     nad16: +(100 * [...wall].filter((x) => x > 16.7).length / Math.max(1, nF)).toFixed(1), nad50: [...wall].filter((x) => x > 50).length,
-    dlheUlohy50: long.length, dlheUlohyMs: +(long.reduce((s, t) => s + t.dur, 0) / 1000).toFixed(0), najdlhsiaMs: +(Math.max(0, ...top.map((t) => t.dur)) / 1000).toFixed(0) };
+    tazkeSnimky: tazke.size, rozpadTazkych: topN(rozpad), rozpadVsetkych: topN(vsetky), dlheUlohy50: long.length, dlheUlohyMs: +(long.reduce((s, t) => s + t.dur, 0) / 1000).toFixed(0), najdlhsiaMs: +(Math.max(0, ...top.map((t) => t.dur)) / 1000).toFixed(0) };
 }
 const statsRaf = (f, w0, w1) => { const F = f.filter((x) => x >= w0 && x <= w1); const d = []; for (let i = 1; i < F.length; i++) d.push(F[i] - F[i - 1]); d.sort((x, y) => x - y);
   return { n: d.length, p50: d.length ? +d[d.length >> 1].toFixed(1) : null, p95: d.length ? +d[Math.floor(0.95 * d.length)].toFixed(1) : null, nad50: d.filter((x) => x > 50).length }; };
@@ -190,7 +200,7 @@ async function tah(cdp, { x = 195, y0 = 720, dy = 480, speed = 1500, fling = tru
 async function skrol(strom, pk, rep) {
   const prof = PROF[pk]; const name = `skrol-${pk}-${strom}-${rep}`; const la = load();
   const { ctx, page, cdp, net } = await nova(strom, prof);
-  await page.goto(base(strom), { waitUntil: 'load', timeout: 180000 });
+  await page.goto(base(strom) + (strom === 'predoff' ? '?film=off' : ''), { waitUntil: 'load', timeout: 180000 });
   let pro = 0; for (let i = 0; i < 60 && /\bpro\b/.test(await page.evaluate(() => document.documentElement.className)); i++) { await sleep(500); pro++; }
   await sleep(3000);
   await page.evaluate(() => { window.__f = []; const f = (t) => { window.__f.push(t); requestAnimationFrame(f); }; requestAnimationFrame(f); });
@@ -215,6 +225,8 @@ async function skrol(strom, pk, rep) {
   const lt = s.lt.filter((x) => x[0] >= w0 && x[0] <= w1 && x[1] > 50);
   const o = { name, strom, prof: pk, rep, loadavg: la, loadavgPo: load(), proCakanie: pro * 0.5, y: [y0, yTrace, s.y], sh: s.sh, svihovDoPaty: g, okno: +((w1 - w0) / 1000).toFixed(1),
     stopa: st, raf: statsRaf(s.f, w0, w1), loaf50: { n: loaf.length, sucet: +loaf.reduce((a, x) => a + x[1], 0).toFixed(0), max: Math.max(0, ...loaf.map((x) => x[1])), blok: +loaf.reduce((a, x) => a + x[2], 0).toFixed(0) },
+    loafPraca50: loaf.filter((x) => x[1] - (x[3] || 0) > 50).length, loafBlok50: loaf.filter((x) => x[2] > 50).length,
+    loafRozpad: { predRender: +loaf.reduce((a, x) => a + (x[3] || 0), 0).toFixed(0), renderDoStylu: +loaf.reduce((a, x) => a + (x[4] || 0), 0).toFixed(0), stylAzKoniec: +loaf.reduce((a, x) => a + (x[5] || 0), 0).toFixed(0), skripty: +loaf.reduce((a, x) => a + (x[6] || 0), 0).toFixed(0), naj: loaf.sort((a, b) => b[1] - a[1]).slice(0, 5) },
     longtask50: lt.length, loafErr: s.loafErr, gl: s.gl, maxPlay: s.maxPlay, playAt: s.playAt, vidov: s.vidov, incN: s.incN, inc: s.inc, decWait: s.decWait, cls: s.cls,
     celaStranka: { ...b, idleMs: idle } };
   save(name, o);
