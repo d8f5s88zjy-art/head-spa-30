@@ -127,3 +127,4 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - Vyrobil som ukážku 3 možností na Čakárni (430×932): 1 dnes, 2 celá fotka (B), 3 veľký štvorec (B 1:1, cover okolo --fx, 2,24 px/CSS) – MOZNOSTI-PRE-MAJITELA.jpg + porota/pre-majitela-porovnanie-430.jpg poslané majiteľovi s otázkou. Odporúčam 3. Implementácia až po odpovedi; pri nej vyriešiť S1, S4, S5, S7 a K1 merať zo skutočného súboru.
 - 12:19 UTC check-in: limit neplatí, disk 2,1 GB; stavba: kontrola kódu a vzhľadu kolo 1 hotové, beží meranie 1; žiadny nový commit; čaká sa na voľbu majiteľa 1/2/3 pri fotkách.
 - 13:10 UTC záložná kontrola 4: cron a monitor bežia, stavba (meranie 1) beží, nič na obnovu.
+- 13:19 UTC check-in: limit neplatí, disk 2,1 GB; stavba stále v meraní 1 (posledný zápis pred 4 min); bez nového commitu; čaká sa na voľbu majiteľa 1/2/3.
