@@ -128,3 +128,6 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 12:19 UTC check-in: limit neplatí, disk 2,1 GB; stavba: kontrola kódu a vzhľadu kolo 1 hotové, beží meranie 1; žiadny nový commit; čaká sa na voľbu majiteľa 1/2/3 pri fotkách.
 - 13:10 UTC záložná kontrola 4: cron a monitor bežia, stavba (meranie 1) beží, nič na obnovu.
 - 13:19 UTC check-in: limit neplatí, disk 2,1 GB; stavba stále v meraní 1 (posledný zápis pred 4 min); bez nového commitu; čaká sa na voľbu majiteľa 1/2/3.
+- 13:49 UTC: oprava 1 (de67eec, skok nahor drží poslednú hotovú fotku) – snímanie skoku v headless Chromiu nespoľahlivé (prvá snímka po skoku je buď čistý ink bez lišty, alebo ešte starý pohľad), majiteľovi bez obrázka; overí kontrola kolo 2 snímkovou sondou.
+- 14:06 UTC: zmeny 6+7 (b2fd4f0 bez blokujúceho skriptu, 5015ac6 prvý obraz s nadpisom aj na pomalej sieti) nasnímané Slow 4G 1/2/3,5 s a poslané. Pozorovanie: PO ostrá fotka úvodu (rohozka-m-1448, 438 kB) prichádza na pomalej sieti až ~3,5 s (DNES fasáda ~2 s), dovtedy rozmazaný náhľad – zmienené majiteľovi; prípadné zrýchlenie len so súhlasom (menšia prvá fotka = L4).
+- 14:19 UTC check-in: limit neplatí; disk 1,7 GB → zmazané ukazky/*/strom (kópie commitov pre snímky, dajú sa znova vytvoriť git archive); stavba v oprave kola 1; bez nového commitu od 5015ac6.

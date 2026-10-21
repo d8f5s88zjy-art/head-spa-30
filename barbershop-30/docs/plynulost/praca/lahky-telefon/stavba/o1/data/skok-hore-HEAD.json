@@ -1,0 +1,110 @@
+{
+ "hore 6→2": {
+  "z": "galeria",
+  "na": "remeslo",
+  "nearPred": [
+   5,
+   6,
+   7
+  ],
+  "snimok": 241,
+  "inkSnimok": 160,
+  "inkOd": 35,
+  "inkDo": 2683,
+  "maxNear": 3,
+  "prve": [
+   {
+    "t": 18,
+    "vis": "6",
+    "near": "5,6,7"
+   },
+   {
+    "t": 35,
+    "vis": "",
+    "near": "2,3,4"
+   },
+   {
+    "t": 50,
+    "vis": "",
+    "near": "2,3,4"
+   }
+  ],
+  "posledne": {
+   "t": 4016,
+   "vis": "2",
+   "near": "2,3,4"
+  },
+  "chyby": []
+ },
+ "hore 8→3": {
+  "z": "rezervacia",
+  "na": "cakaren",
+  "nearPred": [
+   7,
+   8
+  ],
+  "snimok": 241,
+  "inkSnimok": 159,
+  "inkOd": 33,
+  "inkDo": 2664,
+  "maxNear": 3,
+  "prve": [
+   {
+    "t": 15,
+    "vis": "8",
+    "near": "7,8"
+   },
+   {
+    "t": 33,
+    "vis": "",
+    "near": "3,4,5"
+   },
+   {
+    "t": 47,
+    "vis": "",
+    "near": "3,4,5"
+   }
+  ],
+  "posledne": {
+   "t": 4014,
+   "vis": "3",
+   "near": "3,4,5"
+  },
+  "chyby": []
+ },
+ "dole 1→6": {
+  "z": "vstup-dnu",
+  "na": "galeria",
+  "nearPred": [
+   1,
+   2,
+   3
+  ],
+  "snimok": 241,
+  "inkSnimok": 0,
+  "maxNear": 3,
+  "prve": [
+   {
+    "t": 7,
+    "vis": "1",
+    "near": "1,2,3"
+   },
+   {
+    "t": 30,
+    "vis": "3",
+    "near": "3,6,7"
+   },
+   {
+    "t": 39,
+    "vis": "3",
+    "near": "3,6,7"
+   }
+  ],
+  "posledne": {
+   "t": 4006,
+   "vis": "6",
+   "near": "5,6,7"
+  },
+  "chyby": []
+ }
+}
