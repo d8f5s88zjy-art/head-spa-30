@@ -1,6 +1,6 @@
 ---
 name: workflowy
-description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps), brána dvoch recenzentov pred odovzdaním majiteľovi, revízia plánu tímom rolí (podľa ECC a gstack), stavba s hodnotiteľom v slučke so stavmi NEOVERENE a ESKALACIA a slovník vzorov Anthropicu (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer); pravidlá pre paralelu (rozpočet agentov, porty, push a nasadenie len hlavná relácia). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a tri šablóny (smerovanie podľa náročnosti, brána, tím rolí) v priklady/.
+description: Práca s viacerými agentmi naraz (nástroj Workflow v Claude Code, multi-agent orchestration) pri tvorbe a kontrole webu. Stavba po moduloch paralelne s pevným rozhraním, integrácia, nezávislá kontrola z viacerých pohľadov (prístupnosť, pravdivosť, výkon, kreatíva), porota návrhov (textári, strihači), audit s overením každého nálezu skeptikom (code review, Lighthouse, fps), brána dvoch recenzentov pred odovzdaním majiteľovi, revízia plánu tímom rolí (podľa ECC a gstack), stavba s hodnotiteľom v slučke so stavmi NEOVERENE a ESKALACIA a slovník vzorov Anthropicu (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer); pravidlá pre paralelu (rozpočet agentov, porty, push a nasadenie len hlavná relácia), sieť spolupracujúcich agentov (fronta úloh s obmedzenou súbežnosťou, brief namiesto dokumentu, kontrola podľa rizika, odovzdávka na konci, fail closed pri limite relácie, dispečer a hodinový check-in orchestrátora). Použi pri väčšej úlohe pre viac agentov, pri písaní zadaní agentom a schém výstupu (JSON schema) aj keď zvažuješ, či workflow vôbec treba. 11 spustených skriptov a štyri šablóny (smerovanie podľa náročnosti, brána, tím rolí, sieť agentov) v priklady/.
 ---
 
 # Workflowy: viac agentov naraz pri tvorbe a kontrole webu
@@ -19,6 +19,8 @@ blokom `meta`: čo robí a kedy sa osvedčil.
 - Treba **viac návrhov na výber**: textári s rôznym uhlom, strihači s rôznym slovníkom, potom porota.
 - Treba **pokryť veľa naraz**: prieskum podkladov v štyroch prúdoch, spísanie siedmich položiek toolboxu
   s overením každej.
+- Treba **viac úloh so stavbou a kontrolou**, naraz s obmedzenou súbežnosťou, a beh musí prežiť limit relácie:
+  sieť agentov (`priklady/siet-tim.js`, časť „Sieť agentov“).
 
 ## Kedy workflow netreba
 
@@ -364,6 +366,89 @@ vážne nálezy (`ESKALACIA` po 12), zlyhaný implementátor (`ZLYHALO` po 1), o
 opravár (`ZLYHALO` po 5). Šablónu `priklady/stavba-s-hodnotitelom.js` (so zadaniami a schémami) pridaj až po
 rovnakej skúške ako pri vzoroch 7 a 8.
 
+## Sieť agentov (`siet-tim.js`, šablóna)
+
+Zadanie majiteľa 2026-10-20: „Urob si sieť agentov, ktorí budú spolupracovať pre lepšiu efektivitu.“ Rozbor 53 behov
+(407 spustených agentov, 270 výsledkov, 105 zlyhaní, takmer všetky limit relácie; `scratchpad/siet-statistika.txt`)
+ukázal straty: po limite skript spúšťal ďalšie agenty, ktoré hneď padali (`wf_20f36633-067`: 44 spustených, 1 výsledok);
+každý agent čítal celé dokumenty (ZADANIE 7 kB, PLAN 59 kB); tri kontroly na každú dávku aj pri malom riziku; čakanie
+na „pokračuj“ od majiteľa; ukladanie denníka vyše 2 minúty; porty a súbory sa bili pri súbežných tímoch; viac ako 3 ťažké
+agenty naraz sa na 4 jadrách spomaľovali. Sieť je vzor 9 pre viac úloh naraz s týmito pravidlami (P1 až P10 platia ďalej,
+tu sú len odkazy). Diagram toku, formáty briefu, odovzdávky a stavu, kontrolný zoznam dispečera a postup obnovy:
+[references/siet-agentov.md](references/siet-agentov.md).
+
+- **Dispečer pred každým spustením.** Hlavná relácia pred každým spustením workflowu (aj pri obnove) spustí
+  `python3 -I scratchpad/siet/dispecer.py --md` (len číta denníky `subagents/workflows/*/journal.jsonl` a `behy.json`:
+  limit relácie a čas resetu, čo beží, čo treba obnoviť s presným príkazom, porty, na ktorých niekto počúva) a ručne
+  doplní, čo dispečer nevidí: ťažké procesy, strom a zapisovateľ (P4), rozpočet (P1), briefy. Pri limite sa nespúšťa
+  nič a prebudenie sa naplánuje na čas resetu. Bez dispečera sa workflow nespúšťa.
+- **Najviac 3 ťažké agenty v celom kontajneri** (4 jadrá, 15 GB): ťažký = staviteľ, kontrolór, opravár (prehliadač,
+  Lighthouse, ffmpeg, build). Šablóna má `sucasne` (úloh naraz, najviac 3) a `agentov_naraz` (ťažkých agentov naraz
+  v tomto workflowe, 1 až 3; nástroj sám púšťa najviac min(16, CPU−2) = 2); hlavná relácia nastaví
+  `agentov_naraz = 3 − ťažkých inde` podľa dispečera a `pgrep`. Merania podľa P6; kontrolór merania zapíše súbežnosť.
+  Jeden strom, jeden zapisovateľ (P4): úlohy s rovnakým `repo` bežia po jednej; naraz bežia len úlohy s vlastným
+  pracovným stromom (`git worktree` na vlastnej vetve, pole `repo` úlohy), `spolocny_strom: true` to vypne.
+- **Kontrola podľa rizika.** Riziko určí hlavná relácia v briefe (nízke = jeden súbor, jasný postup, ľahko vratné;
+  stredné = viac súborov alebo meranie; vysoké = film a WebGL, výkon na telefóne, bezpečnosť, obsah pre zákazníka, pred
+  nasadením; pri pochybnosti vyššie): nízke = jeden kontrolór s tromi pohľadmi (kód, vzhľad, meranie) v jednej správe;
+  stredné = dvaja (vzhľad; kód + meranie); vysoké = traja nezávislí. Meranie ide vždy v druhej vlne. Opravy najviac 2 kolá,
+  stavy ako vo vzore 9. PASS len keď každý kontrolór spravil pridelené pohľady (pole `pohlady`), opísal rozsah (`preslo`)
+  a nie je `ok=false`; zlyhaný kontrolór, nespravený pohľad alebo nula nálezov bez rozsahu = `NEOVERENE` (P2), `ok=false`
+  bez vážneho nálezu = vážny nález pre opravára. Výstup určený majiteľovi na schválenie (short, reel, text) ide vždy aj
+  cez bránu dvoch recenzentov (`../tim-roly/SKILL.md`, zásada 4), nech je riziko úlohy akékoľvek.
+- **Brief namiesto dokumentu.** Agent dostane len krátky brief (najviac 2 kB v `scratchpad/siet/brief/<id>.md`: cieľ,
+  kritériá prijatia s číslami, súbory, metóda merania, čo nečítať) a cesty k odovzdávkam predchodcov (odovzdávka práce
+  úloh z `po`, teda staviteľa alebo posledného opravára, prípadne odovzdávka hlavnej relácie); `args.kontext` najviac 1 500 znakov (skript ho oreže a zapíše to do logu).
+  Veľké dokumenty číta hlavná relácia a do briefu dá len to, čo úloha potrebuje.
+- **Odovzdávka na konci.** Každý agent (staviteľ, kontrolór, opravár) končí súborom `ODOVZDAVKA.md` (najviac 60 riadkov:
+  stav, zmeny, dôkaz, otvorené, pre ďalšieho, porty) a vráti jej cestu; ďalší agent číta len ju, nie správy ostatných.
+  Stav behu je v `stav-behu.json` (lacný zapisovateľ, `effort: 'low'`, spustí jeden príkaz po štarte a po každej
+  skončenej úlohe).
+- **Fail closed pri limite.** Prvý `null` (limit relácie, prerušenie) nastaví STOP: žiadny ďalší agent sa nespustí ani
+  v súbežnej úlohe ani zapisovateľ; úlohy dostanú `NEOVERENE` (postavené, ale kontrola sa nedokončila alebo je neúplná), `PRERUSENE` (rozpracovaná
+  stavba alebo oprava) alebo `NESPUSTENE` a ich id sú v poli `neobnovene`. Výnimka ťažkého agenta zastaví sieť tiež
+  (`rozpocet` alebo `vynimka`). Obnova až po resete limitu: `resumeFromRunId` s tými istými args. Kľúč agenta
+  v denníku je hash zadania, preto zadania závisia len od args a výsledkov vlastných predchodcov (nie od času, náhody
+  ani poradia dobehnutia súbežných úloh); inak by sa hotové agenty spustili znova. Stav po STOP zapíše hlavná relácia
+  sama z poľa `stav_behu` výsledku.
+- **Hodinový check-in.** Hlavná relácia si pred spustením siete naplánuje prebudenie (`send_later`, prípadne hodinový
+  cron): spustí dispečera a `nastenka.py` (STAV.md), prečíta `stav-behu.json`, zapíše riadok do `PRIEBEH.md`, uloží
+  denník raz za check-in (`uloz-rychle.sh` namiesto `uloz.sh`, nie po každom agentovi), pri limite naplánuje ďalšie
+  prebudenie na čas resetu a nečaká na „pokračuj“ od majiteľa.
+- **Čo robí orchestrátor sám, nie agent:** rozhodnutia (`ESKALACIA`, `ZLYHALO`, `BLOKOVANE`: otázka D1 majiteľovi alebo
+  nový brief), nástenka (`stav-behu.json`, `STAV.md`, riadok v `PRIEBEH.md`, tabuľka stromov a portov, `ROZHODNUTIA.md`,
+  P8; nový beh hneď do `behy.json`), commity do `main`, push, nasadenie a ukladacie skripty (P7, P9), otázky majiteľovi
+  (formát D1 v `../tim-roly/`), čítanie veľkých dokumentov a písanie briefov, určenie rizika, pridelenie rozsahu portov
+  (P5, obsadené porty z dispečera do `porty.vynechat`), dispečer a check-in.
+
+Nástroje mimo repozitára v `scratchpad/siet/` (podrobne v references/siet-agentov.md, „Nástroje“): `dispecer.py`
+(len číta: limit, čo beží, príkazy na obnovu, porty), `nastenka.py` (STAV.md z `ulohy.json` a dispečera), `behy.json`
+(scriptPath a args behov pre obnovu), `ulohy.json`, `brief/`, `stav-behu.json`, `stav-behu.priklad.json`,
+`skuska-siet-tim.mjs` (skúška šablóny s falošnými agentmi), `uloz-rychle.sh` (uloženie denníka, spúšťa len hlavná
+relácia). Šablóna `priklady/siet-tim.js` má v hlavičke args (`ulohy[{ id, nazov, riziko, brief, subory, repo?, priorita?, po?,
+odovzdavka?, effort?, model? }]`, `sucasne`, `agentov_naraz`, `spolocny_strom`, `rozpocet_na_ulohu`, `rezerva`, `repo`, `out`,
+`porty { od, do, vynechat }`, `odovzdavka`, `kontext`, `datum`, `model_zapisu`) a počty agentov: nízke 2 až 6,
+stredné 3 až 9, vysoké 4 až 12 na úlohu, plus 1 + počet úloh zápisov stavu (P1).
+
+Kontrola parsovania po každej zmene skriptu (to isté, čo urobí nástroj: telo ako asynchrónna funkcia s globálmi):
+
+```bash
+node -e "const s=require('fs').readFileSync(process.argv[1],'utf8').replace(/^export const meta/m,'const meta');
+new (Object.getPrototypeOf(async function(){}).constructor)('agent','parallel','pipeline','phase','log','args','budget',s);
+console.log('parsovanie OK')" priklady/siet-tim.js
+```
+
+**Skúška šablóny (Node 22, falošní agenti, `siet/skuska-siet-tim.mjs`):** 2026-10-20 14 behov (PASS, limit, ESKALACIA,
+oprava v 2. kole, ZLYHALO a BLOKOVANE, rozpočet, zlyhaný kontrolór, chybné vstupy). 2026-10-21 39 behov, 266
+falošných agentov, žiadna výhrada, navyše: rovnaké zadania pri opačnom časovaní, obnova s cache bez opakovania hotových
+agentov, príkazy zapisovateľa naozaj spustené (bash, python3; súbor sa zhoduje s výsledkom aj pri apostrofoch
+v názvoch), `porty.vynechat`, cyklus v `po`, `agentov_naraz`, výnimky zapisovateľa a staviteľa, odovzdávky predchodcov
+(nasledovník dostane odovzdávku práce, nie kontrolóra), `ok=false` bez nálezu, nespravený pohľad a nula nálezov bez
+rozsahu a úlohy v jednom strome po jednej (nezávislá kontrola šablóny 2026-10-21 zistila, že PASS tri z týchto prípadov
+dovtedy nezachytil a že súbežné úlohy v jednom strome porušovali P4). Štyri zámerne vložené
+chyby skúška zachytila. Ostrý beh nástrojom Workflow zatiaľ nebol; pri prvom doplň tabuľku nižšie
+a `references/priebeh-workflowov.md` a over `model: 'haiku'` zapisovateľa (inak `model_zapisu: ''`).
+
 ## Vzory v slovníku Anthropicu (mapa na naše vzory a skripty)
 
 Anthropic v článku „Building effective agents“ (anthropic.com/engineering/building-effective-agents, uverejnené
@@ -553,6 +638,7 @@ stav 2026-10-20.
 | `smerovanie-podla-narocnosti.js` | (šablóna) | smerovanie | Triedenie, Práca, Overenie (1 + úlohy + zložité) | zatiaľ nespustená, z rozboru RuFlo 2026-10-12 |
 | `brana-dvoch-recenzentov.js` | (šablóna) | 7 | Recenzia, Oprava (2 na kolo + opravár, najviac 8) | skúška s falošnými agentmi, z rozboru ECC 2026-10-17 |
 | `tim-roly-plan.js` | (šablóna) | 8 | Revízia, Overenie, Otázky (3 + 3 + 1) | skúška s falošnými agentmi, z rozboru gstack 2026-10-17 |
+| `siet-tim.js` | (šablóna) | sieť agentov (vzor 9 na viac úloh) | Stav, Stavba, Kontrola, Oprava (2 až 12 na úlohu + 1 + úlohy) | skúška s falošnými agentmi (39 behov), z rozboru denníkov 2026-10-20 |
 
 ## Kontrolný zoznam
 
@@ -570,6 +656,8 @@ stav 2026-10-20.
 - [ ] Opravy sú overené tou istou metódou a zapísané (aj zamietnuté a nezapracované, s dôvodom).
 - [ ] Push, merge do `main` a nasadenie robí hlavná relácia po kontrole (súhlas majiteľa: návrh, otázka D1);
       rozhodnutia majiteľa sú v `ROZHODNUTIA.md`; osvedčený skript je v `priklady/` (P7 až P9).
+- [ ] Pri sieti úloh: dispečer prešiel pred spustením, najviac 3 ťažké agenty v kontajneri, brief do 2 kB namiesto
+      dokumentu, kontrola podľa rizika, odovzdávka na konci, fail closed pri limite, check-in naplánovaný (časť „Sieť agentov“).
 
 ## Lekcia: smer vizuálu potvrdiť u majiteľa skôr, než sa postaví celý web (VISIONARY LIVING, 10/2026)
 
