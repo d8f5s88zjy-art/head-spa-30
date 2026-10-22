@@ -5,7 +5,8 @@
 // odpoveď po kúskoch, odkazy v odpovedi, karta overených termínov a Zavolať a potvrdiť termín (overené, výpadok kalendára,
 // bez napojenia), Esc a návrat fokusu, rozhovor po obnovení stránky, angličtina, telefón bez pretekania a prekryvu, chyba servera;
 // Barber: ikona je logo so štítkom AI, bublina pri ikone (Spýtať sa, Zavolať, zavrieť na 14 dní), Zavolať v hlavičke okna,
-// Skryť Barbera do konca návštevy; ukážka ?asistent=ukazka označená, s odpoveďami z cenníka stránky, nič neposiela.
+// Skryť Barbera do konca návštevy; časté otázky (témy, ťuknutie bez servera, súvisiace, clona a klávesnica na telefóne);
+// ukážka ?asistent=ukazka označená, s overenými odpoveďami z častých otázok, nič neposiela.
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -79,11 +80,11 @@ try {
     await sleep(100);
     ok(await page.evaluate((m) => { const a = document.activeElement; return m ? a && a.id === 'asi-panel' : a && a.tagName === 'TEXTAREA'; }, kind === 'mobile'),
       kind === 'mobile' ? 'mobile: fokus v okne, klávesnica sa nevysunie sama' : 'desktop: po otvorení je kurzor v poli otázky');
-    ok(await page.locator('.asi-chips button').count() === 4, `${kind}: štyri návrhy otázok`);
+    ok(await page.locator('.asi-navrhy button').count() === 4, `${kind}: štyri návrhy otázok`);
     await page.screenshot({ path: path.join(OUT, `${kind}-otvorene.png`) });
     // časy zmien textu odpovede priamo v stránke (falošné API posiela kúsok každých 300 ms)
     await page.evaluate(() => { window.__asiT = []; new MutationObserver(() => { const b = [...document.querySelectorAll('.asi-a')].pop(); const n = b ? b.textContent.length : 0; const t = window.__asiT; if (n && (!t.length || t[t.length - 1][1] !== n)) t.push([performance.now(), n]); }).observe(document.querySelector('.asi-zoz'), { childList: true, subtree: true, characterData: true }); });
-    await page.locator('.asi-chips button').first().click();
+    await page.locator('.asi-navrhy button').first().click();
     await page.locator('.asi-send:not([disabled])').waitFor({ timeout: 8000 });
     const casy = await page.evaluate(() => window.__asiT);
     ok(casy.length >= 4 && casy[casy.length - 1][0] - casy[0][0] >= 900, `${kind}: odpoveď sa píše po kúskoch`, `${casy.length} zmien za ${Math.round(casy[casy.length - 1][0] - casy[0][0])} ms`);
@@ -120,7 +121,7 @@ try {
     await page.mouse.move(310, 310).catch(() => {});
     await btn.waitFor({ state: 'visible', timeout: 8000 });
     await btn.click();
-    ok(await page.locator('.asi-u').count() === 3 && await page.locator('.asi-chips').count() === 0 && await page.locator('.asi-kal').count() === 1, `${kind}: rozhovor aj karta termínu ostali po obnovení`);
+    ok(await page.locator('.asi-u').count() === 3 && await page.locator('.asi-navrhy').count() === 0 && await page.locator('.asi-kal').count() === 1, `${kind}: rozhovor aj karta termínu ostali po obnovení`);
     // chyba servera: zdvorilá správa a otázka sa vráti do poľa
     await page.locator('.asi-form textarea').fill('CHYBA500');
     await page.keyboard.press('Enter');
@@ -129,7 +130,7 @@ try {
     ok(await page.locator('.asi-chyba + .asi-akcie a[href="tel:+421951267203"]').count() === 1, `${kind}: pri chybe Zavolať a potvrdiť termín`);
     // nový rozhovor
     await page.locator('.asi-novy').click();
-    ok(await page.locator('.asi-u').count() === 0 && await page.locator('.asi-chips button').count() === 4, `${kind}: nový rozhovor`);
+    ok(await page.locator('.asi-u').count() === 0 && await page.locator('.asi-navrhy button').count() === 4, `${kind}: nový rozhovor`);
     ok(errs.length === 0, `${kind}: bez chýb v konzole`, errs.join(' | '));
     await ctx.close();
   }
@@ -144,7 +145,7 @@ try {
     await page.waitForFunction(() => document.documentElement.lang === 'en', null, { timeout: 8000 }).catch(() => {});
     await btn.click();
     ok(/^Barber\s+AI$/.test(await page.locator('#asi-h').innerText()) && await page.locator('.asi-sub').innerText() === 'Barbershop 30 AI assistant, the front desk confirms your time', 'en: Barber, AI a podnadpis po anglicky');
-    await page.locator('.asi-chips button').first().click();
+    await page.locator('.asi-navrhy button').first().click();
     await page.locator('.asi-a').nth(1).filter({ hasText: '40 min' }).waitFor({ timeout: 8000 });
     const log = fs.readFileSync(path.join(T, 'api.log'), 'utf8').trim().split('\n').pop();
     ok(log.includes('Jazyk stránky návštevníka: en'), 'en: server dostal jazyk stránky');
@@ -214,6 +215,53 @@ try {
     ok(await page.locator('.asi-btn').count() === 0, 'Barber: skrytý ostane do konca návštevy');
     await ctx.close();
   }
+  // časté otázky v okne (telefón 390 px): témy, otázka ťuknutím bez servera, súvisiace otázky, clona, klávesnica
+  {
+    const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    // náhrada visualViewport: test zmenší viditeľnú plochu ako otvorená klávesnica
+    await ctx.addInitScript(() => {
+      const t = new EventTarget(); t.height = innerHeight; t.offsetTop = 0; t.width = innerWidth; t.scale = 1;
+      Object.defineProperty(window, 'visualViewport', { value: t, configurable: true });
+      window.__klav = (h, top) => { t.height = h; t.offsetTop = top; t.dispatchEvent(new Event('resize')); };
+    });
+    const page = await ctx.newPage();
+    const posty = [], errs = [];
+    page.on('request', (r) => { if (/a=otazka/.test(r.url())) posty.push(r.url()); });
+    page.on('pageerror', (e) => errs.push(e.message));
+    await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent(API)}`, { waitUntil: 'load' });
+    await page.evaluate(() => window.scrollTo(0, 30));
+    const btn = page.locator('.asi-btn');
+    await btn.waitFor({ state: 'visible', timeout: 8000 });
+    await btn.click();
+    await page.locator('.asi-temy').waitFor({ timeout: 8000 });
+    ok(await page.locator('.asi-temy button').count() === 11, 'časté otázky: 11 tém na úvodnej obrazovke');
+    ok(await page.locator('.asi-clona').isVisible() && await page.evaluate(() => getComputedStyle(document.body).overflow === 'hidden'), 'telefón: clona za oknom, stránka sa neposúva');
+    await page.locator('.asi-temy button', { hasText: 'Otváracie hodiny' }).click();
+    ok(await page.locator('.asi-temy button').count() >= 8 && await page.locator('.asi-temy .asi-chip-dalej', { hasText: 'Späť na témy' }).count() === 1, 'časté otázky: otázky témy a Späť na témy');
+    await page.locator('.asi-temy button', { hasText: 'Kedy máte otvorené?' }).click();
+    const odp = await page.locator('.asi-a').last().innerText();
+    ok(/9:00 až 19:00/.test(odp) && /14:00/.test(odp) && await page.locator('.asi-zdroj').isVisible() && posty.length === 0, 'časté otázky: odpoveď hneď, označená, bez servera', odp);
+    ok(await page.locator('.asi-suvis button').count() >= 2, 'časté otázky: súvisiace otázky pod odpoveďou');
+    await page.locator('.asi-suvis button').first().click();
+    ok(await page.locator('.asi-u').count() === 2 && await page.locator('.asi-zdroj').count() === 2, 'časté otázky: súvisiaca otázka ťuknutím');
+    // otázka pre AI: odpoveď zo servera bez popisu pripravenej odpovede, pod ňou súvisiace otázky
+    await page.locator('.asi-form textarea').fill('Koľko stojí strih?');
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => !document.querySelector('.asi-send').disabled && !document.querySelector('.asi-pise'), null, { timeout: 15000 });
+    ok(posty.length === 1 && await page.locator('.asi-zdroj').count() === 2 && await page.locator('.asi-suvis').count() === 1, 'časté otázky: písaná otázka ide na server, pod odpoveďou súvisiace');
+    // klávesnica: okno vyplní viditeľnú plochu, pole otázky ostane nad klávesnicou
+    await page.evaluate(() => window.__klav(430, 120));
+    const r = await page.evaluate(() => { const p = document.querySelector('#asi-panel').getBoundingClientRect(), f = document.querySelector('.asi-form').getBoundingClientRect(); return { top: p.top, h: p.height, fb: f.bottom, klav: document.documentElement.classList.contains('asi-klav') }; });
+    ok(r.klav && Math.abs(r.top - 120) < 2 && Math.abs(r.h - 430) < 2 && r.fb <= 550 + 1, 'telefón: s klávesnicou okno presne na viditeľnej ploche', JSON.stringify(r));
+    await page.screenshot({ path: path.join(OUT, 'mobile-klavesnica.png') });
+    await page.evaluate(() => window.__klav(844, 0));
+    ok(!(await page.evaluate(() => document.documentElement.classList.contains('asi-klav'))), 'telefón: bez klávesnice späť na spodné okno');
+    await page.screenshot({ path: path.join(OUT, 'mobile-caste-otazky.png') });
+    await page.locator('.asi-clona').click({ position: { x: 200, y: 40 } });
+    ok(await page.locator('#asi-panel').isHidden(), 'telefón: ťuk na clonu okno zavrie');
+    ok(errs.length === 0, 'časté otázky: bez chýb', errs.join(' | '));
+    await ctx.close();
+  }
   // ukážka bez servera: výrazne označená, odpovede z cenníka stránky, termíny nevymýšľa, nič neposiela
   {
     const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 1440, height: 900 } });
@@ -234,9 +282,11 @@ try {
       return page.locator('.asi-a').last().innerText();
     };
     const cena = await opytaj('Koľko stojí strih?');
-    ok(/Pánsky strih:\s40\smin,\s18\s€/.test(cena) && /Strih pre malých gentlemanov:\s45\smin,\s15\s€/.test(cena), 'ukážka: ceny z cenníka stránky', cena.split('\n').slice(0, 3).join(' | '));
+    ok(/Pánsky strih stojí 18\s€/.test(cena) && /15\s€/.test(cena) && await page.locator('.asi-zdroj').count() === 1, 'ukážka: overená odpoveď z častých otázok, označená', cena);
     const term = await opytaj('Má Adrián zajtra voľný termín?');
-    ok(/neoverujem/.test(term) && !/\d{1,2}:\d{2}/.test(term.replace(/od 9:00 do 19:00/g, '')) && await page.locator('.asi-kal').count() === 0 && await page.locator('.asi-akcie a[href="tel:+421951267203"]').count() >= 1, 'ukážka: voľné termíny nevymýšľa, ponúkne Zavolať', term.replace(/\n/g, ' | '));
+    ok(!/\d{1,2}:\d{2}/.test(term.replace(/od 9:00 do 19:00/g, '')) && /rezerv/.test(term) && await page.locator('.asi-kal').count() === 0 && await page.locator('.asi-akcie a[href="tel:+421951267203"]').count() >= 1, 'ukážka: voľné termíny nevymýšľa, ponúkne Zavolať', term.replace(/\n/g, ' | '));
+    const nic = await opytaj('Robíte aj tetovanie obočia henou?');
+    ok(/pripravených odpovediach nič nemám/.test(nic) && /0951 267 203/.test(nic), 'ukážka: neistá zhoda, poctivo telefón', nic);
     const nevie = await opytaj('Dá sa u vás parkovať?');
     ok(/0951 267 203/.test(nevie) && /zdvihneme/.test(nevie), 'ukážka: čo nevie, pošle na telefón');
     await page.screenshot({ path: path.join(OUT, 'desktop-ukazka.png') });

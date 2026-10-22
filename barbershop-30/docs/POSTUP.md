@@ -20,7 +20,7 @@ Hotové na vetve:
 - Miesto na fotky práce barberov (`assets/praca.json`, `source/tools/praca.py`), fotky treba od barberov.
 
 Rozpracované (požiadavky z 2026‑10‑22):
-1. Barber má mať aspoň 250 odpovedí na časté otázky, pohodlne na telefóne.
+1. HOTOVÉ (pozri Denník): Barber má mať aspoň 250 odpovedí na časté otázky, pohodlne na telefóne.
    Rozhodnutie: všetky odpovede sú v `../asistent/znalosti/barbershop-otazky.json` (len overené fakty z
    `barbershop.md` a webu). Server ku každej otázke pridá modelu najviac 6 najpodobnejších (lacnejšie ako celý
    zoznam pri každej otázke, pri nízkej návštevnosti by cache často vypršala). V okne: témy a otázky ťuknutím
@@ -42,6 +42,9 @@ Rozpracované (požiadavky z 2026‑10‑22):
 
 ## Denník
 
+- 2026‑10‑22: časté otázky hotové: 251 odpovedí, hľadanie v prehliadači aj na serveri, témy a otázky ťuknutím,
+  súvisiace otázky, clona a klávesnica na telefóne, testy (prehliadač 71 OK, server 37 + 17 OK). Zdroj otázok je
+  JSON, upravuje sa priamo v ňom (`node barbershop-30/source/tools/otazky.mjs` po úprave).
 - 2026‑10‑22: 251 overených odpovedí na časté otázky (`barbershop-otazky.json`); zadané: podpis, kartička
   Barbershopu namiesto HEAD SPA 30, účet po zaplatení, admin pre Lajka, tento záznam.
 - 2026‑10‑22: asistent Barber (logo, bublina, skrytie, ukážka), commit 496a5dc; snímky testov d5ddfea.

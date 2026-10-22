@@ -12,6 +12,7 @@ declare(strict_types=1);
 const ASISTENT = true;
 require __DIR__ . '/lib/jadro.php';
 require __DIR__ . '/lib/kalendar.php';
+require __DIR__ . '/lib/otazky.php';
 
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: no-referrer');
@@ -78,6 +79,8 @@ $k = konfig();
 $zly = 'Teraz neviem odpovedať. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.';
 $otazka = (string) end($spravy)['content'];
 $telefon = o_termine($otazka);
+// overené odpovede na podobné časté otázky (lib/otazky.php), mimo časti v cache
+$caste = otazky_pre_model($prevadzka, $otazka);
 try {
   $client = new Client(apiKey: kluc_api(), requestOptions: ['maxRetries' => 1, 'timeout' => 60.0]);
   $odmietnute = false; $text = '';
@@ -90,7 +93,7 @@ try {
       system: [
         // pokyny a znalosti sa nemenia: vyrovnávacia pamäť na strane API (lacnejšie a rýchlejšie ďalšie otázky)
         ['type' => 'text', 'text' => pokyny($prevadzka), 'cacheControl' => ['type' => 'ephemeral']],
-        ['type' => 'text', 'text' => dnes_text() . " Jazyk stránky návštevníka: $jazyk."],
+        ['type' => 'text', 'text' => dnes_text() . " Jazyk stránky návštevníka: $jazyk." . ($caste !== '' ? "\n\n$caste" : '')],
       ],
       messages: $spravy,
       tools: nastroje(),

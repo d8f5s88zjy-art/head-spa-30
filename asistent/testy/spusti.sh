@@ -46,6 +46,7 @@ skus "pokyny so znalosťami v cache, jazyk stránky zvlášť" 'echo "$J" | grep
 skus "kľúč ide len do API" 'echo "$J" | grep -q "\"kluc\":\"sk-ant-test\"" && ! grep -q "sk-ant-test" "$T/prud.txt"'
 skus "nástroj over_volne_terminy (strict) a dnešný deň v Bratislave" 'echo "$J" | grep -q "\"name\":\"over_volne_terminy\"" && echo "$J" | grep -q "\"strict\":true" && echo "$J" | grep -q "Europe/Bratislava"'
 skus "pokyny: Barber, AI asistent, slovenčina, telefón pri termínoch" 'echo "$J" | grep -q "Si Barber, AI asistent" && echo "$J" | grep -q "telefón vždy zdvihneme"'
+skus "časté otázky: model dostal overené odpovede na podobné otázky mimo časti v cache" 'printf "%s" "$J" | grep -q "cache_control.*návštevníka: en.\{1,6\}ČASTÉ OTÁZKY podobné" && printf "%s" "$J" | grep -q "Pánsky strih stojí 18"'
 
 # voľné termíny: model zavolá nástroj, server overí kalendár a vráti výsledok; premýšľanie s podpisom ide späť nezmenené
 D1=$(php -r '$d=new DateTimeImmutable("tomorrow", new DateTimeZone("Europe/Bratislava")); while($d->format("N")==7)$d=$d->modify("+1 day"); echo $d->format("Y-m-d");')
@@ -80,7 +81,7 @@ skus "limit: ďalšia otázka za 10 minút odmietnutá (limit 6 v teste)" 'for i
 rm -f "$T/a.sqlite"*
 # (až po teste limitu otázok, ten počíta s jednou databázou) súbežné prvé požiadavky na novú databázu limitov (okno pýta barberov a dni naraz): žiadna chyba 500;
 # wait len na tieto curl (bez zoznamu by čakal aj na servery spustené vyššie)
-skus "súbežné požiadavky na novú databázu bez chyby (database is locked)" 'zle=0; for i in 1 2 3 4 5 6 7 8; do rm -f "$T"/a.sqlite*; p=""; for j in 1 2 3; do curl -s -o "$T/sub$j.txt" -w "%{http_code}" "$U?a=barberi&sluzba=1" > "$T/kod$j.txt" & p="$p $!"; done; curl -s -o "$T/sub4.txt" -w "%{http_code}" "$U?a=dni&sluzba=1&barber=ktokolvek" > "$T/kod4.txt" & p="$p $!"; wait $p; for j in 1 2 3 4; do [ "$(cat "$T/kod$j.txt")" = 200 ] || zle=$((zle+1)); done; done; [ $zle = 0 ]'
+skus "súbežné požiadavky na novú databázu bez chyby (database is locked)" 'chyb=0; for i in 1 2 3 4 5 6 7 8; do rm -f "$T"/a.sqlite*; p=""; for j in 1 2 3; do curl -s -o "$T/sub$j.txt" -w "%{http_code}" "$U?a=barberi&sluzba=1" > "$T/kod$j.txt" & p="$p $!"; done; curl -s -o "$T/sub4.txt" -w "%{http_code}" "$U?a=dni&sluzba=1&barber=ktokolvek" > "$T/kod4.txt" & p="$p $!"; wait $p; for j in 1 2 3 4; do [ "$(cat "$T/kod$j.txt")" = 200 ] || chyb=$((chyb+1)); done; done; [ $chyb = 0 ]'
 skus "odmietnutie modelu: správa namiesto konca" 'otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"ODMIETNI\"}]}" | grep -q "Na toto neodpoviem"'
 skus "bez varovaní PHP" '! grep -qi "warning\|fatal\|deprecated" "$T/server.log" "$T/server2.log"'
 echo "$ok OK, $zle FAIL"

@@ -431,3 +431,17 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - `asistent-test.mjs` všetko OK (nové: logo a štítok, bublina nad ikonou bez pretekania na 360 px, Spýtať sa,
   Zavolať v hlavičke, fokus, krížik na 14 dní, Skryť Barbera, ukážka); server 36 + 17 OK; objednavka-test, i18n-test,
   app-smoke všetko OK. Snímky 360, 390, 430, 768 a 1440 px bez vodorovného pretekania. Skutočný telefón neoverený.
+
+## 21. Barber: 251 overených odpovedí a telefón (2026‑10‑22)
+
+- Zadávateľ: Barber má mať aspoň 250 odpovedí na najčastejšie otázky a byť pohodlný na telefóne.
+- `../asistent/znalosti/barbershop-otazky.json`: 251 otázok v 11 témach, len fakty z `barbershop.md` a webu.
+  `otazky.mjs`: ceny a dĺžky len z cenníka index.html, len overený telefón, odkazy a hodiny, žiadne 24/7, odpoveď
+  o termíne s telefónom a istotou; každá otázka aj iné znenie nájde samu seba; server a prehliadač zoradia rovnako
+  (826 otázok).
+- Cena: celý zoznam v pokynoch by mal asi 25 000 tokenov; pri malej návštevnosti by cache často vypršala a každý
+  nový rozhovor by ho platil znova. Preto server pridá len 6 najpodobnejších (rádovo stovky tokenov).
+- `asistent-test.mjs` 71 OK (nové: 11 tém, otázka ťuknutím bez servera a označená, súvisiace otázky, písaná otázka
+  ide na server, clona, klávesnica simulovaná náhradou visualViewport, ťuk na clonu zavrie); server 37 + 17 OK.
+- Opravený test servera: súbežný test prepisoval počítadlo chýb (`zle`), súhrn mohol ukázať 0 FAIL aj pri chybe.
+- Neoverené: skutočná klávesnica na iPhone a Androide (emulácia), odpovede skutočného modelu (chýba kľúč API).

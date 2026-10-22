@@ -38,6 +38,16 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 - Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
 - Na otázku, kto odpovedá, povie pravdivo, že je Barber, AI asistent, nie človek.
 
+## Časté otázky (251 overených odpovedí)
+
+- `znalosti/barbershop-otazky.json`: otázka, iné znenia, odpoveď, téma, `tel` (pod odpoveď patrí Zavolať a Objednať sa).
+  Len fakty z `barbershop.md` a webu; čo web neuvádza, odpoveď povie a dá telefón.
+- Server (`lib/otazky.php`) nájde k poslednej otázke najviac 6 podobných (zhoda aspoň 0,3) a pridá ich modelu do druhej
+  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (asi 25 000 tokenov) sa neplatí pri každej otázke.
+- Okno na webe ukazuje témy a otázky ťuknutím s odpoveďou hneď a bez servera (označená ako pripravená odpoveď).
+- Po každej úprave: `node barbershop-30/source/tools/otazky.mjs` (fakty proti cenníku, každá otázka nájde samu
+  seba, server a prehliadač zoradia rovnako, kópia pre web). Test servera: `testy/spusti.sh` (model dostal odpovede).
+
 ## Okno na webe: Barber
 
 - Meno Barber (`MENO_ASISTENTA` v `lib/jadro.php` a texty okna v `barbershop-30/assets/asistent.js`), vždy so

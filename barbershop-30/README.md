@@ -48,6 +48,11 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   ho vypne, `?asistent=ukazka` ukáže okno bez servera s vopred pripravenými odpoveďami z údajov webu
   (`assets/asistent-ukazka.js`, na kontrolu, výrazne označené, že nepíše AI). Podrobne `../asistent/README.md`;
   test `source/tools/asistent-test.mjs`.
+- **Časté otázky Barbera** (`../asistent/znalosti/barbershop-otazky.json`, 251 overených odpovedí v 11 témach): v okne
+  témy a otázky ťuknutím (overená odpoveď hneď, bez servera, s popisom „Pripravená odpoveď“), pod odpoveďou súvisiace
+  otázky; server ku každej písanej otázke pridá modelu 6 najpodobnejších. Hľadanie je v `assets/asistent-otazky.js`
+  a rovnaké v `../asistent/lib/otazky.php`. Po úprave otázok `node source/tools/otazky.mjs` (kontrola faktov proti
+  cenníku, zhoda prehliadač a server, kópia `assets/asistent-otazky.json`).
 
 - **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
   s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí

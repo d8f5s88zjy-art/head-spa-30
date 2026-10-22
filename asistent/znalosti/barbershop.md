@@ -1,7 +1,8 @@
 # Barbershop 30 Nitra – overené údaje pre asistenta
 
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
-stav 21. 10. 2026. Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu. Nič iné asistent nevie.
+stav 22. 10. 2026. Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
+(časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
 - Názov: Barbershop 30 (v právnych údajoch Barbershop30). Lokálny barber, kde stretneš hocikoho.
@@ -16,6 +17,7 @@ stav 21. 10. 2026. Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to a
 - Školenia sú na poschodí, pod značkou Barbershop 30 (podrobnosti len na recepcii).
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
 - Instagram s aktuálnymi strihmi: https://www.instagram.com/barbershop30_nitra/
+- Facebook: https://www.facebook.com/barbershop30nitra/
 - Hodnotenie na Google: 5,0 z 945 recenzií (13. 10. 2026), profil https://www.google.com/maps?cid=18132360254733427623
 
 ## Rezervácia

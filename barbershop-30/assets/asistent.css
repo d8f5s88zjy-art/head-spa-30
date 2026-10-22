@@ -93,6 +93,12 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
 .asi-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .asi-chips button { min-height: 40px; padding: 6px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: none; color: var(--paper); font: inherit; font-size: 0.88rem; cursor: pointer; text-align: left; }
 .asi-chips button:hover { border-color: var(--lamp); }
+/* časté otázky: témy, otázky témy a súvisiace otázky pod odpoveďou */
+.asi-chips-h { flex-basis: 100%; margin: 0; color: var(--paper-2); font-size: 0.8rem; font-weight: 600; }
+.asi-temy, .asi-suvis { padding-top: var(--s1); }
+.asi-chips .asi-chip-dalej { border-style: dashed; color: var(--paper-2); }
+.asi-zdroj { align-self: flex-start; margin: calc(-1 * var(--s2)) 0 0 4px; color: var(--paper-3); font-size: 0.72rem; }
+@media (pointer: coarse) { .asi-chips button { min-height: 44px; } }
 .asi-form { display: flex; align-items: flex-end; gap: var(--s2); padding: var(--s3) var(--s3) var(--s2) var(--s4); border-top: 1px solid var(--line); }
 .asi-form textarea { flex: 1; min-height: 46px; max-height: 140px; resize: none; padding: 11px 14px; border: 1px solid var(--line-strong); border-radius: 12px; background: rgba(255, 255, 255, 0.05); color: var(--paper); font: inherit; font-size: 16px; line-height: 1.4; }
 .asi-form textarea::placeholder { color: var(--paper-3); }
@@ -113,7 +119,15 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
   .asi-btn { width: 54px; height: 54px; }
   html.asi-open .asi-btn { opacity: 0; pointer-events: none; }
   .asi-oznam { bottom: calc(var(--s4) + 66px + env(safe-area-inset-bottom, 0px)); }
-  .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(80vh, calc(100dvh - var(--nav-h) - 8px)); border-radius: 18px 18px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(86vh, calc(100dvh - var(--nav-h) - 8px)); border-radius: 18px 18px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
+/* telefón: clona za oknom, stránka pod ním sa neposúva; s klávesnicou okno vyplní viditeľnú plochu (asistent.js) */
+.asi-clona { display: none; }
+@media (max-width: 640px) {
+  .asi-clona:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 57; background: rgba(0, 0, 0, 0.55); }
+  html.asi-open, html.asi-open body { overflow: hidden; }
+  html.asi-klav .asi-panel { top: var(--asi-vt, 0px); bottom: auto; height: var(--asi-vh, 100dvh); border-radius: 0; padding-bottom: 0; animation: none; }
+  html.asi-klav .asi-pata { display: none; }
 }
 @media (max-width: 420px) {
   .asi-volaj { width: 40px; padding: 0; justify-content: center; }

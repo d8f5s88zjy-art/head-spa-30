@@ -37,6 +37,9 @@ const T = {
   de: { ai: 'KI', btn: 'Chat mit Barber öffnen, dem KI-Assistenten von Barbershop 30', meno: 'Barber, KI-Assistent', sub: 'KI-Assistent von Barbershop 30, den Termin bestätigt die Rezeption', hello: 'Hallo, ich bin Barber, der KI-Assistent von Barbershop 30. Ich helfe dir bei Leistungen, Preisen und Buchung. Was möchtest du wissen?', oznam: 'Hallo, ich bin Barber. Frag mich nach Preisen, Leistungen oder Buchung.', spytat: 'Fragen', volat: 'Anrufen', skryt: 'Barber ausblenden', ukazka: 'Vorschau zur Prüfung: Die Antworten sind vorab aus den Angaben der Website vorbereitet, keine KI schreibt sie. Live antwortet die KI.', deti: 'Schneidet ihr auch Kindern die Haare?', chips: ['Was kostet ein Haarschnitt?', 'Hat Adrián morgen frei?', 'Wann habt ihr geöffnet?', 'Wie buche ich?'], ph: 'Schreib deine Frage…', send: 'Senden', close: 'Schließen', novy: 'Neues Gespräch', note: 'Es antwortet eine KI anhand der Angaben auf dieser Website. Ein Termin gilt erst nach Bestätigung. Bitte keine persönlichen Daten eingeben.', err: 'Ich kann gerade nicht antworten. Ruf uns an: +421 951 267 203, werktags von 9:00 bis 19:00 gehen wir immer ran.', ochrana: 'Datenschutz', dlhy: 'Das Gespräch ist schon lang. Starte ein neues und frag noch einmal.', tel: 'Anrufen und Termin bestätigen', obj: 'Termin buchen', kal: 'Laut Kalender um', pred: 'Vorläufig, bis du ihn bestätigst.', ziadny: 'An diesem Tag ist kein Termin frei.' },
   cs: { ai: 'AI', btn: 'Otevřít chat s Barberem, AI asistentem Barbershopu 30', meno: 'Barber, AI asistent', sub: 'AI asistent Barbershopu 30, termín potvrdí recepce', hello: 'Ahoj, jsem Barber, AI asistent Barbershopu 30. Poradím ti se službami, cenami i objednáním. Na co se chceš zeptat?', oznam: 'Ahoj, jsem Barber. Zeptej se mě na ceny, služby nebo objednání.', spytat: 'Zeptat se', volat: 'Zavolat', skryt: 'Skrýt Barbera', ukazka: 'Ukázka ke kontrole: odpovědi jsou připravené předem z údajů webu, nepíše je AI. Naostro odpovídá AI.', deti: 'Stříháte i děti?', chips: ['Kolik stojí střih?', 'Má Adrián zítra volný termín?', 'Kdy máte otevřeno?', 'Jak se objednám?'], ph: 'Napiš otázku…', send: 'Odeslat', close: 'Zavřít', novy: 'Nový rozhovor', note: 'Odpovídá AI podle údajů z webu. Termín platí až po potvrzení. Nepiš sem osobní údaje.', err: 'Teď nedokážu odpovědět. Zavolej nám na +421 951 267 203, ve všední dny od 9:00 do 19:00 telefon vždy zvedneme.', ochrana: 'Ochrana údajů', dlhy: 'Rozhovor je už dlouhý. Začni nový a zeptej se znovu.', tel: 'Zavolat a potvrdit termín', obj: 'Objednat se', kal: 'Podle kalendáře v', pred: 'Předběžné, dokud termín nepotvrdíš.', ziadny: 'V tento den volný termín není.' },
 };
+// časté otázky (asistent-otazky.js) sú po slovensky, preto témy a súvisiace otázky len na slovenskej stránke
+const TS = { temy: 'Časté otázky podľa témy:', vsetky: 'Všetky otázky ({n})', spat: 'Späť na témy', suvis: 'Môže ťa zaujímať:',
+  caste: 'Časté otázky', pripravena: 'Pripravená odpoveď z overených údajov webu' };
 const jazyk = () => { const l = (html.lang || 'sk').slice(0, 2).toLowerCase(); return T[l] ? l : 'sk'; };
 const tx = () => T[jazyk()];
 
@@ -72,7 +75,8 @@ function riadok(text, kam) {
 function vykresli(text, kam) {
   kam.replaceChildren();
   let zoznam = null;
-  for (const r of text.replace(/\*\*/g, '').split('\n')) {
+  // číslo s jednotkou sa nezalomí (18 €, 40 min)
+  for (const r of text.replace(/\*\*/g, '').replace(/(\d) (?=€|min\b|minút)/g, '$1\u00a0').split('\n')) {
     const odrazka = /^\s*[-•*]\s+/.test(r);
     if (!r.trim()) { zoznam = null; continue; }
     if (odrazka) { if (!zoznam) kam.append(zoznam = el('ul')); const li = el('li'); riadok(r.replace(/^\s*[-•*]\s+/, ''), li); zoznam.append(li); }
@@ -160,6 +164,13 @@ export async function spusti(api) {
   await new Promise((ok) => { css.onload = css.onerror = ok; document.head.append(css); });
 
   let rozhovor = nacitaj(kluc), bezi = false;
+  // časté otázky: načítajú sa pri prvom otvorení okna (asistent-otazky.js a asistent-otazky.json, 14 kB)
+  let otazky = null, modOt = null;
+  const faq = () => (jazyk() === 'sk' && otazky ? otazky : null);
+  async function nacitajOtazky() {
+    try { modOt = modOt || await import('./asistent-otazky.js'); otazky = otazky || await modOt.nacitaj(); } catch (e) { /* okno ide aj bez nich */ }
+    return otazky;
+  }
   // ikona: logo, štítok AI; pri otvorenom okne na počítači krížik na zavretie
   const btnAi = el('span', { class: 'asi-ai' });
   const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'data-no-i18n': true }, [logo('asi-logo-btn'), btnAi, ikona(I_X)]);
@@ -182,14 +193,67 @@ export async function spusti(api) {
   const h = el('h2', { id: 'asi-h' }), sub = el('p', { class: 'asi-sub' }), note = el('p', { class: 'asi-note', hidden: ukazka });
   const ochrana = el('a', { href: api.replace(/[^/]*$/, 'ochrana-udajov.html'), target: '_blank', rel: 'noopener', hidden: ukazka });
   const pas = ukazka ? el('p', { class: 'asi-ukazka-pas' }) : null;
+  // telefón: clona za oknom (ťuk do nej okno zavrie)
+  const clona = el('div', { class: 'asi-clona', hidden: true });
   const panel = el('section', { class: 'asi-panel', id: 'asi-panel', role: 'dialog', 'aria-labelledby': 'asi-h', tabindex: '-1', hidden: true, 'data-no-i18n': true },
     [el('header', { class: 'asi-hlava' }, [logo('asi-logo-m'), el('div', { class: 'asi-hlava-t' }, [h, sub]), el('div', { class: 'asi-hlava-akcie' }, [volaj, zavri])]),
       pas, zoz, form, el('div', { class: 'asi-pata' }, [el('div', {}, [note, ochrana]), el('div', { class: 'asi-pata-akcie' }, [novy, skry])])]);
-  document.body.append(oznam, btn, panel);
+  document.body.append(oznam, btn, clona, panel);
 
   const bublina = (rola, text) => { const b = el('div', { class: 'asi-msg asi-' + rola }); if (text) vykresli(text, b); zoz.append(b); return b; };
   // karta termínu a tlačidlá idú pod bublinu odpovede (aj po obnovení stránky z uloženého rozhovoru)
   const doplnky = (b, k, tel) => { const c = karta(k); if (c) b.after(c); if (tel) (c || b).after(akcie()); };
+  // pripravená odpoveď z častých otázok má pod sebou zreteľný popis (nepísala ju AI)
+  const pripravenaZnacka = (b) => b.after(el('p', { class: 'asi-zdroj' }, [TS.pripravena]));
+  function chipy(trieda, nadpis, polozky) {
+    const box = el('div', { class: 'asi-chips ' + trieda });
+    if (nadpis) box.append(el('p', { class: 'asi-chips-h' }, [nadpis]));
+    for (const p of polozky) { const b = el('button', { type: 'button', class: p.trieda || null }); b.textContent = p.text; b.addEventListener('click', p.akcia); box.append(b); }
+    return box;
+  }
+  // nahradí skupinu inou a fokus dá na jej prvé tlačidlo (klávesnica, čítačka)
+  const vymen = (stara, nova) => { stara.replaceWith(nova); const b = nova.querySelector('button'); if (b && !dotyk) b.focus({ preventScroll: true }); nova.scrollIntoView({ block: 'nearest' }); };
+  function temy() {
+    const db = faq();
+    if (!db) return null;
+    const box = chipy('asi-temy', TS.temy, Object.entries(db.temy).map(([k, n]) => ({ text: n, akcia: () => vymen(box, tema(k)) })));
+    return box;
+  }
+  // otázky jednej témy: najprv všeobecné, potom podrobnosti k jednotlivým službám a barberom
+  const poradie = (o) => (/^(obsah|trvanie|objednat|volno|tim)-/.test(o.id) ? 1 : 0);
+  function tema(k, vsetky) {
+    const db = faq();
+    const zoz2 = db.ot.filter((o) => o.t === k).sort((a, b) => poradie(a) - poradie(b));
+    const ukaz = vsetky ? zoz2 : zoz2.slice(0, 8);
+    const box = chipy('asi-temy', db.temy[k], [...ukaz.map((o) => ({ text: o.q, akcia: () => pripravena(o) })),
+      ...(ukaz.length < zoz2.length ? [{ text: TS.vsetky.replace('{n}', zoz2.length), trieda: 'asi-chip-dalej', akcia: () => vymen(box, tema(k, true)) }] : []),
+      { text: TS.spat, trieda: 'asi-chip-dalej', akcia: () => vymen(box, temy()) }]);
+    return box;
+  }
+  // pod odpoveďou: najviac 3 podobné časté otázky (nie tá istá, nie už položená) a cesta k témam
+  function suvisiace(text, bezId) {
+    const db = faq();
+    if (!db) return;
+    const uz = new Set(rozhovor.filter((s) => s.r === 'u').map((s) => s.t));
+    const h = modOt.hladaj(db, text, 8).filter((x) => x.skore >= 0.3 && x.skore < 0.95 && x.o.id !== bezId && !uz.has(x.o.q)).slice(0, 3);
+    const box = chipy('asi-suvis', h.length ? TS.suvis : '', [...h.map((x) => ({ text: x.o.q, akcia: () => pripravena(x.o) })),
+      { text: TS.caste, trieda: 'asi-chip-dalej', akcia: () => vymen(box, temy()) }]);
+    zoz.append(box);
+  }
+  // ťuk na častú otázku: overená odpoveď hneď, bez čakania a bez servera
+  function pripravena(o) {
+    if (bezi) return;
+    if (rozhovor.length >= MAX_SPRAV) { bublina('a', tx().dlhy).classList.add('asi-chyba'); return; }
+    zoz.querySelectorAll('.asi-chips').forEach((c) => c.remove());
+    pole();
+    rozhovor.push({ r: 'u', t: o.q }, { r: 'a', t: o.a, tel: o.tel ? true : undefined, z: 'o' }); uloz(kluc, rozhovor);
+    bublina('u', o.q);
+    const b = bublina('a', o.a);
+    doplnky(b, null, !!o.tel); pripravenaZnacka(b);
+    suvisiace(o.q, o.id);
+    novy.hidden = false;
+    b.scrollIntoView({ block: 'start' });
+  }
   function popisy() {
     const t = tx();
     btn.setAttribute('aria-label', t.btn); btn.title = t.meno;
@@ -207,12 +271,17 @@ export async function spusti(api) {
     zoz.replaceChildren();
     bublina('a', t.hello);
     if (!rozhovor.length) {
-      const chips = el('div', { class: 'asi-chips' });
+      const chips = el('div', { class: 'asi-chips asi-navrhy' });
       // otázka na voľný termín len s napojeným kalendárom (stav.kalendar), inak otázka, na ktorú vie odpovedať
       for (const c of (kalendar ? t.chips : [t.chips[0], t.deti, ...t.chips.slice(2)])) { const b = el('button', { type: 'button' }); b.textContent = c; b.addEventListener('click', () => posli(c)); chips.append(b); }
       zoz.append(chips);
+      const tm = temy();
+      if (tm) zoz.append(tm);
     }
-    for (const s of rozhovor) { const b = bublina(s.r, s.t); if (s.r === 'a') doplnky(b, s.k, s.tel); }
+    for (const s of rozhovor) { const b = bublina(s.r, s.t); if (s.r === 'a') { doplnky(b, s.k, s.tel); if (s.z === 'o') pripravenaZnacka(b); } }
+    // po obnovení: súvisiace otázky pod poslednou odpoveďou
+    const posl = rozhovor[rozhovor.length - 1], otazka = rozhovor[rozhovor.length - 2];
+    if (posl && posl.r === 'a' && otazka) suvisiace(otazka.t);
     novy.hidden = !rozhovor.length;
     zoz.scrollTop = zoz.scrollHeight;
   }
@@ -224,14 +293,14 @@ export async function spusti(api) {
     const t = tx();
     if (rozhovor.length >= MAX_SPRAV) { bublina('a', t.dlhy).classList.add('asi-chyba'); return; }
     rozhovor.push({ r: 'u', t: otazka }); uloz(kluc, rozhovor);
-    const chipy = zoz.querySelector('.asi-chips');
-    if (chipy) { chipy.remove(); pole(); }                      // fokus nesmie ostať na zmazanom návrhu
+    const navrhy = zoz.querySelectorAll('.asi-chips');
+    if (navrhy.length) { navrhy.forEach((c) => c.remove()); pole(); }   // fokus nesmie ostať na zmazanom návrhu
     bublina('u', otazka); novy.hidden = false;
     area.value = ''; vyska();
     const b = bublina('a', ''); b.classList.add('asi-pise');
     zoz.scrollTop = zoz.scrollHeight;
     bezi = true; odosli.disabled = true;
-    let text = '', kal = null, tel = false;
+    let text = '', kal = null, tel = false, zOtazok = null;
     const naText = (kus) => {
       const dole = zoz.scrollHeight - zoz.scrollTop - zoz.clientHeight < 40;
       text += kus; b.classList.remove('asi-pise'); vykresli(text, b);
@@ -239,10 +308,13 @@ export async function spusti(api) {
     };
     try {
       // ukážka: vopred pripravené odpovede z údajov webu, nič sa neposiela
-      if (ukazka) await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
+      if (ukazka) zOtazok = await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
       else await opytaj(api, rozhovor, naText, (k) => { kal = k; }, () => { tel = true; });
       doplnky(b, kal, tel);
-      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined }); uloz(kluc, rozhovor);
+      if (ukazka) pripravenaZnacka(b);
+      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined, z: ukazka ? 'o' : undefined }); uloz(kluc, rozhovor);
+      await nacitajOtazky();
+      suvisiace(otazka, zOtazok && zOtazok.id);
     } catch (e) {
       // otázka bez odpovede sa vráti do poľa, aby ju návštevník mohol poslať znova
       rozhovor.pop(); uloz(kluc, rozhovor);
@@ -261,8 +333,15 @@ export async function spusti(api) {
   const pole = () => (dotyk ? panel : area).focus({ preventScroll: true });
   let navrat = null;
   function otvor(on) {
-    panel.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
+    panel.hidden = !on; clona.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
+    prisposob();
     if (on) {
+      // časté otázky: témy sa doplnia na úvodnú obrazovku, keď sa načítajú
+      if (!otazky) nacitajOtazky().then(() => {
+        if (panel.hidden || bezi) return;
+        if (!rozhovor.length) { if (!zoz.querySelector('.asi-temy')) { const tm = temy(); if (tm) zoz.append(tm); } }
+        else if (!zoz.querySelector('.asi-suvis') && rozhovor[rozhovor.length - 1].r === 'a') suvisiace(rozhovor[rozhovor.length - 2].t);
+      });
       // z bubliny sa fokus po zavretí vráti na ikonu (bublina už nebude)
       navrat = oznam.contains(document.activeElement) ? btn : document.activeElement;
       schovajOznam(); popisy(); obsah(); setTimeout(pole, 30);
@@ -297,9 +376,19 @@ export async function spusti(api) {
     zapis('sessionStorage', K_SKRYTY, '1');
     clearInterval(hodiny); clearTimeout(oznamCas);
     html.classList.remove('asi-open');
-    btn.remove(); oznam.remove(); panel.remove();
+    btn.remove(); oznam.remove(); clona.remove(); panel.remove();
   }
 
+  // telefón s klávesnicou: okno sa natiahne presne na viditeľnú plochu (pole otázky nad klávesnicou, hlavička hore)
+  const vv = window.visualViewport, uzky = matchMedia('(max-width: 640px)');
+  function prisposob() {
+    const klav = !!vv && !panel.hidden && uzky.matches && innerHeight - vv.height > 120;
+    html.classList.toggle('asi-klav', klav);
+    if (klav) { panel.style.setProperty('--asi-vh', vv.height + 'px'); panel.style.setProperty('--asi-vt', vv.offsetTop + 'px'); }
+    else { panel.style.removeProperty('--asi-vh'); panel.style.removeProperty('--asi-vt'); }
+  }
+  if (vv) { vv.addEventListener('resize', prisposob); vv.addEventListener('scroll', prisposob); }
+  clona.addEventListener('click', () => otvor(false));
   btn.addEventListener('click', () => otvor(panel.hidden));
   zavri.addEventListener('click', () => otvor(false));
   spytaj.addEventListener('click', () => otvor(true));
