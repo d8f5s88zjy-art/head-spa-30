@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="sk" data-p="barbershop" data-prevadzka="barbershop" data-api="https://www.headspa30.sk/vernost/api/" data-api-lokal="/vernost/api/" data-manifest="manifest.webmanifest">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Vernostná kartička Barbershop 30 na webe Barbershopu. Kód kartičky je kópia vernost/karta/ (test ju stráži),
+     údaje idú zo servera kartičiek (data-api). ?nova = založenie kartičky (QR kód na recepcii po zaplatení). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://www.headspa30.sk; manifest-src 'self'; worker-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0e0d0c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Barbershop 30">
+<title>Vernostná kartička Barbershop 30</title>
+<link rel="icon" href="ikony/barbershop-192.png">
+<link rel="apple-touch-icon" href="ikony/barbershop-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="pisma.css">
+<link rel="stylesheet" href="karta.css">
+<script type="module" src="karta.js"></script>
+</head>
+<body>
+<main id="obsah" aria-busy="true">
+  <p class="nacitavam">Načítavam kartičku…</p>
+  <noscript><p class="nacitavam">Kartička potrebuje zapnutý JavaScript. Zavolaj nám na <a href="tel:+421951267203">0951 267 203</a>.</p></noscript>
+</main>
+</body>
+</html>

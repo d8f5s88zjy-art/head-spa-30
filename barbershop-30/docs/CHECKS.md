@@ -463,3 +463,18 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   Prehliadky odteraz skrolujú okamžite.
 - Testy: i18n-test, app-smoke, asistent-test, objednavka-test OK; mobil-audit 360/390/430 nižšie.
 - Neoverené: skutočný telefón (len emulácia), film na skutočnej grafike telefónu.
+
+## 23. Vernostná kartička Barbershopu na jeho webe (2026‑10‑22)
+
+- Zadávateľ: odkaz na kartičku v pätičke viedol na HEAD SPA 30; po zaplatení má zákazník dostať ponuku založiť si
+  účet (body, odmeny), odmeny nastavuje Lajko v admine.
+- Príčina: pätička viedla na https://www.headspa30.sk/vernost/karta/, server kartičiek tam ešte nie je nahratý, ukázala
+  sa 404 stránka HEAD SPA 30 (overené požiadavkou).
+- Kartička Barbershopu je teraz na webe Barbershopu (`barbershop-30/karta/`), server vracia odkaz podľa prevádzky
+  (registrácia, e‑mail, upozornenie, admin). Formulár na založenie (`?nova`) pre QR kód na recepcii po zaplatení;
+  admin → Klienti → QR pre nového klienta. Bez servera stránka povie „Kartičky práve spúšťame“ a dá telefón.
+- `vernost/testy/spusti.sh` 117 OK (nové: kópie súborov kartičky, odkaz na web Barbershopu, založenie cez `?nova`
+  bez HEAD SPA, uloženie pre pätičku, QR v admine). Opravené: text „null“ na stránke bez kartičky, test pätičky
+  hľadal dva odkazy na kartičku.
+- Ostáva: nahrať server kartičiek na headspa30.sk (FTP) a heslo `VERNOST_HESLO_BARBERSHOP`; zásady ochrany údajov
+  kartičky sú zatiaľ na headspa30.sk/vernost/ochrana-udajov.html.

@@ -65,10 +65,10 @@ function stav(): never {
     'databaza' => (bool) hodnota(db()->query('SELECT 1')), 'ip_cez_proxy' => ip_cez_proxy()]);
 }
 
-function karta_url(string $token): string { return zaklad() . 'karta/?k=' . $token; }
+function karta_url(string $token, string $p): string { return karta_zaklad($p) . '?k=' . $token; }
 function email_karta(string $komu, string $p, string $token): void {
   $n = PREVADZKY[$p]['nazov'];
-  posli_email($komu, "$n – tvoja vernostná kartička", "Ahoj,\n\ntvoja vernostná kartička $n je tu:\n" . karta_url($token)
+  posli_email($komu, "$n – tvoja vernostná kartička", "Ahoj,\n\ntvoja vernostná kartička $n je tu:\n" . karta_url($token, $p)
     . "\n\nPri návšteve ukáž na recepcii QR kód z kartičky a body ti pripíšeme. Kartičku si môžeš pridať na plochu telefónu.\n"
     . "Ak si o kartičku nežiadal(a), tento e‑mail ignoruj alebo nám zavolaj.\n\n$n\n" . PREVADZKY[$p]['tel_text'] . "\n");
 }
@@ -98,7 +98,7 @@ function registracia(): never {
       ->execute([$p, $meno, $tel, $email, $token, kod_recepcie(), teraz(), $spravy ? 1 : 0, $spravy ? teraz() : null, 'web', teraz()]);
   zapis_pohyb((int) $pdo->lastInsertId(), 0, 'zalozenie', 'Karta založená pri rezervácii');
   if ($email !== '') email_karta($email, $p, $token);
-  odpoved(['ok' => true, 'existuje' => false, 'karta' => karta_url($token)]);
+  odpoved(['ok' => true, 'existuje' => false, 'karta' => karta_url($token, $p)]);
 }
 
 function klient_z_tokenu(string $k): array {
@@ -139,7 +139,7 @@ function manifest(string $k): never {
   header('Content-Type: application/manifest+json; charset=utf-8');
   header('Cache-Control: no-store');
   echo json_encode(['id' => 'karta-' . $p, 'name' => PREVADZKY[$p]['nazov'] . ' – vernostná kartička', 'short_name' => PREVADZKY[$p]['nazov'], 'lang' => 'sk',
-    'start_url' => karta_url($r['token']), 'scope' => zaklad() . 'karta/', 'display' => 'standalone', 'background_color' => $farba, 'theme_color' => $farba,
+    'start_url' => karta_url($r['token'], $p), 'scope' => karta_zaklad($p), 'display' => 'standalone', 'background_color' => $farba, 'theme_color' => $farba,
     'icons' => [$ikona(192), $ikona(512)]], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
   exit;
 }
@@ -182,7 +182,7 @@ function novinka(): never {
   $s->execute([$e, gmdate('Y-m-d\TH:i:s\Z', time() - 3 * 86400)]);
   $r = riadok($s);
   if (!$r) odpoved(['ok' => true, 'sprava' => null]);
-  odpoved(['ok' => true, 'sprava' => ['nadpis' => PREVADZKY[$r['prevadzka']]['nazov'] . ': ' . $r['nadpis'], 'text' => $r['text'], 'url' => zaklad() . 'karta/', 'prevadzka' => $r['prevadzka']]]);
+  odpoved(['ok' => true, 'sprava' => ['nadpis' => PREVADZKY[$r['prevadzka']]['nazov'] . ': ' . $r['nadpis'], 'text' => $r['text'], 'url' => karta_zaklad($r['prevadzka']), 'prevadzka' => $r['prevadzka']]]);
 }
 
 function karta_zrus(): never {
@@ -214,8 +214,9 @@ function ja(): never {
   relacia();
   $p = (string) ($_SESSION['prevadzka'] ?? '');
   $ok = $p !== '' && ($_SESSION['do'] ?? 0) >= time();
+  // nova: adresa, kde si klient sám založí kartičku (QR kód na recepcii po zaplatení, admin ho ukáže)
   odpoved(['ok' => true, 'prihlaseny' => $ok, 'prevadzka' => $ok ? $p : '', 'nazov' => $ok ? PREVADZKY[$p]['nazov'] : '',
-    'prevadzky' => array_map(fn ($x) => $x['nazov'], PREVADZKY)]);
+    'nova' => $ok ? karta_zaklad($p) . '?nova' : '', 'prevadzky' => array_map(fn ($x) => $x['nazov'], PREVADZKY)]);
 }
 
 /* ================= admin ================= */
@@ -255,7 +256,7 @@ function a_klienti(string $p): never {
 function a_klient(string $p, int $id): never {
   $r = klient_admin($p, $id);
   $h = db()->prepare('SELECT body, typ, popis, cas FROM pohyb WHERE klient_id = ? ORDER BY id DESC LIMIT 50'); $h->execute([$id]);
-  odpoved(['ok' => true, 'klient' => verejny_klient($r) + ['karta' => karta_url($r['token'])], 'historia' => $h->fetchAll()]);
+  odpoved(['ok' => true, 'klient' => verejny_klient($r) + ['karta' => karta_url($r['token'], $p)], 'historia' => $h->fetchAll()]);
 }
 
 function a_klient_novy(string $p): never {
@@ -273,7 +274,7 @@ function a_klient_novy(string $p): never {
   $id = (int) db()->lastInsertId();
   zapis_pohyb($id, 0, 'zalozenie', 'Karta založená na recepcii');
   if ($email !== '') email_karta($email, $p, $token);
-  odpoved(['ok' => true, 'id' => $id, 'karta' => karta_url($token)]);
+  odpoved(['ok' => true, 'id' => $id, 'karta' => karta_url($token, $p)]);
 }
 
 function a_klient_uprav(string $p): never {
@@ -385,7 +386,7 @@ function a_sprava_posli(string $p): never {
     @set_time_limit(180);
     $e = $pdo->prepare("SELECT meno, email, token FROM klient WHERE prevadzka = ? AND suhlas_spravy = 1 AND email <> '' LIMIT 500"); $e->execute([$p]);
     foreach ($e->fetchAll() as $k) {
-      if (posli_email($k['email'], PREVADZKY[$p]['nazov'] . ': ' . $nadpis, "$text\n\nVaša karta: " . karta_url($k['token']) . "\nSprávy si vypnete na karte (Správy o akciách: vypnúť).\n")) $email++;
+      if (posli_email($k['email'], PREVADZKY[$p]['nazov'] . ': ' . $nadpis, "$text\n\nVaša karta: " . karta_url($k['token'], $p) . "\nSprávy si vypnete na karte (Správy o akciách: vypnúť).\n")) $email++;
     }
   }
   $pdo->prepare('UPDATE sprava SET push = ?, email = ? WHERE id = ?')->execute([$push, $email, $id]);

@@ -14,6 +14,15 @@ Vlastný jednoduchý systém: PHP 8.1+ a SQLite na hostingu HEAD SPA 30 (Forpsi)
 3. Kartička (`karta/?k=…`, odkaz je zároveň prístup) ukazuje body, QR kód s krátkym kódom pre recepciu (nie odkaz), odmeny, akcie a správy. Dá sa pridať na plochu telefónu,
    funguje aj bez signálu (posledná verzia), zapnúť upozornenia, vypnúť správy a zrušiť (vymaže všetky údaje).
 4. V pätičke oboch webov je odkaz **Vernostná kartička** (otvorí uloženú kartičku alebo prihlášku bez rezervácie).
+5. **Po zaplatení na recepcii** ukáže recepcia QR kód (admin → Klienti → QR pre nového klienta). Klient ho naskenuje,
+   otvorí sa stránka kartičky s formulárom (`?nova`) a kartičku si založí sám v telefóne.
+
+**Kartička Barbershopu je na webe Barbershopu** (`barbershop-30/karta/`, nie na headspa30.sk): server vracia odkaz podľa
+prevádzky (`PREVADZKY['barbershop']['karta']` v `lib/jadro.php`, v `config.php` sa dá prepísať kľúčom `karty`), aj v e‑maile,
+v upozornení a v admine. Súbory `karta.js`, `karta.css`, `qr.js` a `sw.js` sú kópie `vernost/karta/` (test ich stráži:
+`cp vernost/karta/{karta.js,karta.css,qr.js,sw.js} barbershop-30/karta/`); `<html>` stránky Barbershopu nesie `data-api`,
+`data-api-lokal`, `data-manifest` a `data-prevadzka`. Písma sú v `pisma.css` (každá stránka vlastné cesty). Kým server
+kartičiek na headspa30.sk nebeží, stránka Barbershopu povie „Kartičky práve spúšťame“ a dá telefón.
 
 Rezervačné systémy (barbershop30.sk, Booqme) nie sú naše, preto prihláška beží v okne pred rezerváciou. Ak by ich
 vývojár chcel zaškrtávacie políčko priamo vo formulári rezervácie, stačí mu volať `POST api/?a=registracia` (nižšie).

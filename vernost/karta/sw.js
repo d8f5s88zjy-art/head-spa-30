@@ -1,10 +1,13 @@
 /* Vernostná kartička 30 – service worker (rozsah karta/).
    1) Upozornenia: push prichádza bez obsahu, text najnovšej správy si worker vypýta z API podľa svojho odberu.
    2) Kartička bez signálu: stránka a jej súbory sa držia v cache (sieť má prednosť, cache je záloha). */
-const CACHE = 'v30-karta-1';
-const SUBORY = ['./', 'karta.css', 'karta.js', 'qr.js', '../pisma/Manrope-400.woff2', '../pisma/Manrope-700.woff2'];
+const CACHE = 'v30-karta-2';
+// adresa API: vedľa kartičky (vernost/), na webe Barbershopu z parametra pri registrácii workera (karta.js)
+const API = new URL(self.location.href).searchParams.get('api') || '../api/';
+const SUBORY = ['./', 'pisma.css', 'karta.css', 'karta.js', 'qr.js'];
 
-self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SUBORY)).catch(() => {})); self.skipWaiting(); });
+// každý súbor zvlášť: jeden chýbajúci nesmie zrušiť pamäť ostatných (písma sa uložia pri prvom načítaní)
+self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => Promise.all(SUBORY.map((u) => c.add(u).catch(() => {}))))); self.skipWaiting(); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((k) => Promise.all(k.filter((x) => x !== CACHE).map((x) => caches.delete(x)))).then(() => self.clients.claim())); });
 
 self.addEventListener('fetch', (e) => {
@@ -21,7 +24,7 @@ self.addEventListener('push', (e) => {
     let s = null;
     try {
       const sub = await self.registration.pushManager.getSubscription();
-      const r = await fetch('../api/?a=novinka', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ endpoint: sub ? sub.endpoint : '' }), cache: 'no-store' });
+      const r = await fetch(new URL('?a=novinka', new URL(API, self.location.href)).href, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ endpoint: sub ? sub.endpoint : '' }), cache: 'no-store' });
       s = (await r.json()).sprava;
     } catch (err) { /* bez siete ukážeme všeobecné upozornenie */ }
     const p = s && s.prevadzka === 'headspa' ? 'headspa' : 'barbershop';

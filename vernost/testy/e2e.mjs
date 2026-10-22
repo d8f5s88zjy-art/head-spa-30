@@ -23,6 +23,8 @@ async function api(akcia, telo, { admin = false, origin, params = '' } = {}) {
 
 const KOREN = new URL('../../', import.meta.url).pathname;
 over(fs.readFileSync(`${KOREN}vernost/web/prihlaska.js`, 'utf8') === fs.readFileSync(`${KOREN}barbershop-30/assets/vernost.js`, 'utf8'), 'kópia prihlášky v barbershop-30/assets/vernost.js je aktuálna (cp vernost/web/prihlaska.js barbershop-30/assets/vernost.js)');
+// kartička na webe Barbershopu je kópia vernost/karta/ (karta.js, karta.css, qr.js, sw.js)
+for (const f of ['karta.js', 'karta.css', 'qr.js', 'sw.js']) over(fs.readFileSync(`${KOREN}vernost/karta/${f}`, 'utf8') === fs.readFileSync(`${KOREN}barbershop-30/karta/${f}`, 'utf8'), `kópia barbershop-30/karta/${f} je aktuálna (cp vernost/karta/${f} barbershop-30/karta/)`);
 console.log('API');
 let r = await api('stav');
 over(r.j?.ok && r.j.sqlite && r.j.openssl && r.j.admin.barbershop && r.j.admin.headspa, 'stav', r.t);
@@ -35,7 +37,7 @@ over(r.s === 400, 'zlé číslo');
 r = await api('registracia', { prevadzka: 'barbershop', meno: 'Ján Test', telefon: '0951 123 456', suhlas_karta: true }, { origin: 'https://zly.example' });
 over(r.s === 403, 'cudzí pôvod sa odmietne');
 r = await api('registracia', { prevadzka: 'barbershop', meno: 'Ján Test', telefon: '0951 123 456', email: 'jan@example.sk', suhlas_karta: true, suhlas_spravy: false }, { origin: 'https://d8f5s88zjy-art.github.io' });
-over(r.j?.ok && !r.j.existuje && /\/vernost\/karta\/\?k=[A-Za-z0-9_-]{22}$/.test(r.j.karta), 'registrácia z GitHub Pages', r.t);
+over(r.j?.ok && !r.j.existuje && /\/barbershop-30\/karta\/\?k=[A-Za-z0-9_-]{22}$/.test(r.j.karta), 'registrácia z GitHub Pages, odkaz na kartičku na webe Barbershopu', r.t);
 over(r.h.get('access-control-allow-origin') === 'https://d8f5s88zjy-art.github.io', 'CORS hlavička pre povolený pôvod');
 const karta = r.j.karta, token = karta.split('k=')[1];
 r = await api('registracia', { prevadzka: 'barbershop', meno: 'Iný', telefon: '+421 951 123 456', suhlas_karta: true });
@@ -116,7 +118,7 @@ over(r.j?.push === 1, 'správa: 1 doručené upozornenie (zaniknutý odber sa ne
 const prijate = await (await fetch(`${PUSH}/prijate`)).json();
 over(prijate.length === 2 && prijate.every((p) => p.ok && p.ttl), 'VAPID podpis platný', JSON.stringify(prijate));
 r = await api('novinka', { endpoint: `${PUSH}/push/ok-1` });
-over(r.j?.sprava?.nadpis === 'Barbershop 30: Mesiac študentov' && r.j.sprava.url === `${Z}/vernost/karta/` && !r.t.includes(token), 'novinka bez prístupu ku kartičke', r.t);
+over(r.j?.sprava?.nadpis === 'Barbershop 30: Mesiac študentov' && r.j.sprava.url === `${Z}/barbershop-30/karta/` && !r.t.includes(token), 'novinka bez prístupu ku kartičke', r.t);
 over((await api('odber_stav', { k: token, endpoint: `${PUSH}/push/ok-1` })).j?.aktivny === true, 'stav odberu pre kartičku');
 r = await api('odber', { k: token, endpoint: `${PUSH}/push/410/zaniknuty` });
 r = await api('sprava_posli', { nadpis: 'Druhá', text: 'Test zaniknutého odberu.' }, { admin: true });
@@ -201,7 +203,7 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   // syntetický klik nemá aktiváciu používateľa (prehliadač by okno zablokoval), preto len overíme, že prihláška klik nechá tak
   const zastavene = await p.evaluate((s) => new Promise((hotovo) => { addEventListener('click', (e) => { const bolo = e.defaultPrevented; e.preventDefault(); hotovo(bolo); }, { once: true }); document.querySelector(s).click(); }), sel);
   over(!zastavene && !(await p.isVisible('#v30p[open]')), `${nazov}: s kartičkou ide rezervácia rovno`);
-  const [popup3] = await Promise.all([p.waitForEvent('popup'), p.locator('[data-vernost-karta]').click()]);
+  const [popup3] = await Promise.all([p.waitForEvent('popup'), p.locator('footer [data-vernost-karta]').click()]);
   over(popup3.url() === ulozena, `${nazov}: pätička otvorí uloženú kartičku`);
   over(chyby.length === 0, `${nazov}: bez chýb JS`, chyby.join(' | '));
   await ctx.close();
@@ -244,6 +246,28 @@ for (const [nazov, url, sirka] of [['barbershop', karta, 390], ['headspa', hs.ka
   await ctx.close();
 }
 
+/* založenie kartičky na webe Barbershopu (QR kód na recepcii po zaplatení, ?nova) */
+{
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  await vonku(ctx);
+  const p = await ctx.newPage(); const chyby = []; p.on('pageerror', (e) => chyby.push(e.message)); p.on('console', (m) => { if (m.type() === 'error') chyby.push(m.text()); });
+  await p.goto(`${Z}/barbershop-30/karta/?nova`); await p.waitForSelector('.zaloz form');
+  over(/Barbershop 30/.test(await p.textContent('.hlava')) && !/HEAD SPA/i.test(await p.textContent('main')), 'web Barbershopu: kartička Barbershopu, nie HEAD SPA');
+  await p.click('.zaloz button[type=submit]');
+  over(/meno/i.test(await p.textContent('.zaloz [role=status]')), 'založenie: chýbajúce meno');
+  await p.fill('input[name=meno]', 'Marek Pult'); await p.fill('input[name=telefon]', '0908 777 888');
+  await p.click('.zaloz button[type=submit]');
+  over(/súhlas/i.test(await p.textContent('.zaloz [role=status]')), 'založenie: bez súhlasu nič neodošle');
+  await p.check('.zaloz .prepinac input >> nth=0');
+  await p.screenshot({ path: `${SNIMKY}/karta-nova-barbershop.png`, fullPage: true });
+  await p.click('.zaloz button[type=submit]');
+  await p.waitForSelector('.karta', { timeout: 8000 });
+  over(/\/barbershop-30\/karta\/\?k=[A-Za-z0-9_-]{22}$/.test(p.url()) && /Marek/.test(await p.textContent('main')), 'založenie: kartička hneď otvorená na webe Barbershopu', p.url());
+  over((await p.evaluate(() => localStorage.getItem('v30.karta.barbershop')) || '').includes('/barbershop-30/karta/?k='), 'založenie: kartička uložená pre pätičku webu');
+  over(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth) && chyby.length === 0, 'založenie: bez posunu a chýb', chyby.join(' | '));
+  await ctx.close();
+}
+
 /* admin */
 {
   const ctx = await b.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
@@ -254,6 +278,10 @@ for (const [nazov, url, sirka] of [['barbershop', karta, 390], ['headspa', hs.ka
   await p.selectOption('#p', 'barbershop'); await p.fill('#h', 'test-heslo-barber'); await p.click('button[type=submit]');
   await p.waitForSelector('nav'); await p.waitForSelector('.zoznam .riadok');
   over((await p.locator('.zoznam .riadok').count()) >= 3, 'admin: zoznam klientov');
+  await p.click('text=QR pre nového klienta'); await p.waitForSelector('.qr-velky svg');
+  over(/\/barbershop-30\/karta\/\?nova$/.test(await p.getAttribute('.panel.stred a', 'href')), 'admin: QR na založenie kartičky po zaplatení');
+  await p.screenshot({ path: `${SNIMKY}/admin-qr-novy.png` });
+  await p.click('text=← Klienti'); await p.waitForSelector('.zoznam .riadok');
   await p.screenshot({ path: `${SNIMKY}/admin-klienti.png` });
   await p.fill('input[type=search]', 'Peter'); await p.waitForTimeout(600);
   await p.click('.zoznam .riadok'); await p.waitForSelector('text=Zapísať návštevu');

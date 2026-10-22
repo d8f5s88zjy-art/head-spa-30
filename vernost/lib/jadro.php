@@ -7,7 +7,9 @@ if (!defined('VERNOST')) { http_response_code(404); exit; }
 
 const PREVADZKY = [
   'barbershop' => ['nazov' => 'Barbershop 30', 'mesto' => 'Mostná 30, Nitra', 'tel' => '+421951267203', 'tel_text' => '0951 267 203',
-                   'web' => 'https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/', 'prevadzkovatel' => 'FACEPALM, s.r.o., IČO 52231381'],
+                   'web' => 'https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/', 'prevadzkovatel' => 'FACEPALM, s.r.o., IČO 52231381',
+                   // kartička Barbershopu je na jeho webe (barbershop-30/karta/), nie na headspa30.sk
+                   'karta' => 'https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/karta/'],
   'headspa'    => ['nazov' => 'HEAD SPA 30', 'mesto' => 'Mostná 226/30, Nitra', 'tel' => '+421911153136', 'tel_text' => '0911 153 136',
                    'web' => 'https://www.headspa30.sk/', 'prevadzkovatel' => 'HEAD SPA 30'],
 ];
@@ -19,8 +21,14 @@ function konfig(): array {
   if ($k !== null) return $k;
   $subor = __DIR__ . '/../config.php';
   $k = is_file($subor) ? (array) require $subor : [];
-  $k += ['hesla' => [], 'email_od' => '', 'zaklad' => '', 'povody' => [], 'kontakt_push' => 'mailto:info@salon30.sk'];
+  $k += ['hesla' => [], 'email_od' => '', 'zaklad' => '', 'povody' => [], 'kontakt_push' => 'mailto:info@salon30.sk', 'karty' => []];
   return $k;
+}
+
+/* stránka kartičky prevádzky: konfigurácia (karty, napr. pre testy), inak PREVADZKY[...]['karta'], inak vernost/karta/ */
+function karta_zaklad(string $p): string {
+  $k = (string) (konfig()['karty'][$p] ?? PREVADZKY[$p]['karta'] ?? '');
+  return $k !== '' ? rtrim($k, '/') . '/' : zaklad() . 'karta/';
 }
 
 /* adresa priečinka vernost/ (napr. https://www.headspa30.sk/vernost/) – z konfigurácie, inak z požiadavky */

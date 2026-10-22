@@ -72,7 +72,7 @@ export function spusti(kontakt) {
   const kEy = el('p', { class: 'eyebrow' }), kH = el('h3', { class: 'h3', id: 'h-vernost' }), kU = el('p', { class: 'karty-text' });
   const kMeno = el('span', { class: 'vk-meno' }), kBody = el('span');
   const kroky = el('ol', { class: 'vk-kroky' }, [el('li'), el('li'), el('li')]);
-  const tl = el('a', { class: 'btn btn-primary', href: 'https://www.headspa30.sk/vernost/karta/', 'data-vernost-karta': ukazka && !zapnuta && !kartaUlozena() ? null : true });
+  const tl = el('a', { class: 'btn btn-primary', href: new URL('../karta/', import.meta.url).href, 'data-vernost-karta': ukazka && !zapnuta && !kartaUlozena() ? null : true });
   if (ukazka && !zapnuta && !kartaUlozena()) { tl.setAttribute('aria-disabled', 'true'); tl.removeAttribute('href'); tl.classList.add('je-ukazka'); }
   const castK = vernost ? el('section', { class: 'karty-vernost', 'aria-labelledby': 'h-vernost' }, [
     kEy, kH,

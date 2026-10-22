@@ -1,9 +1,15 @@
 /* Vernostná kartička 30 – stránka klienta (karta/?k=<token>).
    Údaje: ../api/?a=karta. Posledná verzia karty sa pamätá v prehliadači, aby QR kód išiel ukázať aj bez signálu.
-   Všetky texty z databázy idú do stránky len cez textContent. */
+   Všetky texty z databázy idú do stránky len cez textContent.
+   Ten istý súbor beží aj na webe Barbershopu (barbershop-30/karta/, kópia, test ju stráži): <html> tam nesie
+   data-api (adresa API), data-api-lokal (API na vlastnom počítači), data-manifest (vlastný manifest na plochu)
+   a data-prevadzka; s ňou stránka bez kartičky ukáže formulár na založenie (?nova = QR kód na recepcii). */
 import { qrSvg } from './qr.js';
 
-const API = '../api/';
+const D = document.documentElement.dataset;
+const API = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && D.apiLokal) || D.api || '../api/';
+const P = D.prevadzka || '';                       // prevádzka stránky (web Barbershopu); bez nej len kartička z odkazu
+const NAZOV = { barbershop: 'Barbershop 30', headspa: 'HEAD SPA 30' }[P] || '';
 const $obsah = document.getElementById('obsah');
 const k = new URLSearchParams(location.search).get('k') || '';
 const pamat = {
@@ -42,16 +48,74 @@ async function api(akcia, telo) {
 /* ---------- bez odkazu: uložené kartičky v tomto prehliadači ---------- */
 function bezKarty(sprava) {
   const ulozene = (pamat.daj('v30.karty') || []).filter((x) => x && /^[A-Za-z0-9_-]{22}$/.test(x.k));
-  if (!sprava && ulozene.length === 1) { location.replace(`./?k=${ulozene[0].k}`); return; }
-  document.title = 'Vernostná kartička';
-  $obsah.replaceChildren(
-    el('div', { class: 'hlava' }, el('span', { class: 'znacka' }, 'Vernostná kartička'), el('small', {}, '30')),
-    el('h1', {}, sprava || 'Kartičku otvoríš z odkazu'),
-    el('p', { class: 'ako' }, 'Odkaz na kartičku ti príde e‑mailom po prihlásení. Ak ho nemáš, povedz na recepcii, ukážeme ti ju.'),
+  const nova = new URLSearchParams(location.search).has('nova');
+  if (!sprava && !nova && ulozene.length === 1) { location.replace(`./?k=${ulozene[0].k}`); return; }
+  document.title = NAZOV ? `Vernostná kartička ${NAZOV}` : 'Vernostná kartička';
+  if (P) document.documentElement.dataset.p = P;
+  const form = P ? zalozenie() : null;
+  // replaceChildren by z null urobil text „null“, preto len skutočné prvky
+  $obsah.replaceChildren(...[
+    el('div', { class: 'hlava' }, el('span', { class: 'znacka' }, NAZOV ? `${NAZOV} · vernostná kartička` : 'Vernostná kartička'), el('small', {}, '30')),
+    el('h1', {}, sprava || (P ? 'Zbieraj body za každú návštevu' : 'Kartičku otvoríš z odkazu')),
+    el('p', { class: 'ako' }, P ? 'Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.'
+      : 'Odkaz na kartičku ti príde e‑mailom po prihlásení. Ak ho nemáš, povedz na recepcii, ukážeme ti ju.'),
     ulozene.length ? el('section', {}, el('h2', {}, 'Kartičky v tomto telefóne'),
       el('ul', { class: 'ulozene' }, ulozene.map((x) => el('li', {}, el('a', { class: 'tl', href: `./?k=${x.k}` }, x.nazov || 'Kartička'))))) : null,
-  );
+    form,
+  ].filter(Boolean));
   $obsah.setAttribute('aria-busy', 'false');
+}
+
+/* založenie kartičky priamo na stránke (web prevádzky, QR kód na recepcii po zaplatení): nič nie je predvolené,
+   súhlas s kartičkou je povinný, so správami samostatný; kým server kartičiek nebeží, stránka to povie a dá telefón */
+const TELEFON = { barbershop: ['0951 267 203', '+421951267203'], headspa: ['0911 153 136', '+421911153136'] };
+function zalozenie() {
+  const box = el('section', { class: 'zaloz', 'aria-labelledby': 'zaloz-h' }, el('h2', { id: 'zaloz-h' }, 'Založ si kartičku'));
+  const sprava = el('p', { class: 'pozn', role: 'status' });
+  const pole = (meno, typ, popis, attrs = {}) => {
+    const i = el('input', { type: typ, name: meno, ...attrs });
+    return [i, el('label', { class: 'pole' }, el('span', {}, popis), i)];
+  };
+  const [meno, lMeno] = pole('meno', 'text', 'Meno a priezvisko', { autocomplete: 'name', required: true, maxlength: '80' });
+  const [tel, lTel] = pole('telefon', 'tel', 'Telefón', { autocomplete: 'tel', inputmode: 'tel', required: true, maxlength: '30' });
+  const [mail, lMail] = pole('email', 'email', 'E‑mail (nepovinné, pošleme naň odkaz)', { autocomplete: 'email', maxlength: '120' });
+  const chcem = el('input', { type: 'checkbox', required: true }), spravy = el('input', { type: 'checkbox' });
+  const pasca = el('input', { type: 'text', name: 'web', tabindex: '-1', autocomplete: 'off', class: 'pasca', 'aria-hidden': 'true' });
+  const tl = el('button', { class: 'tl hlavne', type: 'submit' }, 'Založiť kartičku');
+  const f = el('form', { class: 'formular', novalidate: true }, lMeno, lTel, lMail,
+    el('label', { class: 'prepinac' }, chcem, el('span', {}, 'Áno, chcem vernostnú kartičku. Údaje použijete len na ňu.')),
+    el('label', { class: 'prepinac' }, spravy, el('span', {}, 'Chcem dostávať správy o akciách. Môžem to kedykoľvek vypnúť.')),
+    pasca, el('div', { class: 'tlacidla' }, tl), sprava,
+    el('p', { class: 'pozn' }, el('a', { href: new URL('../ochrana-udajov.html', new URL(API, location.href)).href, target: '_blank', rel: 'noopener' }, 'Ochrana údajov')));
+  const [telText, telHref] = TELEFON[P] || ['', ''];
+  const mimo = () => box.replaceChildren(el('h2', { id: 'zaloz-h' }, 'Kartičky práve spúšťame'),
+    el('p', { class: 'pozn' }, 'Kartičku ti zatiaľ založíme na recepcii.' + (telText ? ` Zavolaj nám na ${telText}.` : '')),
+    telHref ? el('div', { class: 'tlacidla' }, el('a', { class: 'tl hlavne', href: 'tel:' + telHref }, 'Zavolať')) : null);
+  fetch(`${API}?a=stav`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject())).then((j) => { if (!j.ok) mimo(); }).catch(mimo);
+  f.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    sprava.textContent = ''; sprava.classList.add('chyba');
+    if (meno.value.trim().length < 2) { sprava.textContent = 'Napíš meno a priezvisko.'; meno.focus(); return; }
+    if (!/^\+?[\d\s/-]{9,20}$/.test(tel.value.trim())) { sprava.textContent = 'Napíš platné telefónne číslo.'; tel.focus(); return; }
+    if (mail.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value.trim())) { sprava.textContent = 'E‑mail nie je v správnom tvare.'; mail.focus(); return; }
+    if (!chcem.checked) { sprava.textContent = 'Kartičku založíme len so súhlasom.'; chcem.focus(); return; }
+    tl.disabled = true; sprava.classList.remove('chyba'); sprava.textContent = 'Zakladám kartičku…';
+    try {
+      const r = await fetch(`${API}?a=registracia`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prevadzka: P, meno: meno.value.trim(), telefon: tel.value.trim(), email: mail.value.trim(), suhlas_karta: true, suhlas_spravy: spravy.checked, web: pasca.value }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.chyba || 'Kartičku sa nepodarilo založiť.');
+      if (j.karta) {
+        try { localStorage.setItem('v30.karta.' + P, j.karta); } catch (x) { /* súkromné okno */ }
+        location.replace(j.karta.replace(/^.*\?/, './?'));
+        return;
+      }
+      box.replaceChildren(el('h2', { id: 'zaloz-h' }, 'Kartičku už máš'),
+        el('p', { class: 'pozn' }, 'Ak je pri nej e‑mail, poslali sme naň odkaz. Inak ti ju ukážeme na recepcii.'));
+    } catch (err) { sprava.classList.add('chyba'); sprava.textContent = err.message || 'Kartičku sa nepodarilo založiť.'; tl.disabled = false; }
+  });
+  box.append(f);
+  return box;
 }
 
 /* ---------- kartička ---------- */
@@ -228,7 +292,7 @@ function nastavTlacidloPlocha(b) {
 }
 function nastavPlochu(d) {
   const link = (rel, href) => { let l = document.querySelector(`link[rel="${rel}"]`); if (!l) { l = el('link', { rel }); document.head.append(l); } l.href = href; };
-  link('manifest', `${API}?a=manifest&k=${encodeURIComponent(k)}`);
+  link('manifest', D.manifest || `${API}?a=manifest&k=${encodeURIComponent(k)}`);
   link('apple-touch-icon', `ikony/${d.prevadzka}-180.png`);
   let m = document.querySelector('meta[name="apple-mobile-web-app-title"]');
   if (!m) { m = el('meta', { name: 'apple-mobile-web-app-title' }); document.head.append(m); }
@@ -249,6 +313,8 @@ async function start() {
     if (e.kod === 404) { zabudni(ulozena && ulozena.prevadzka); bezKarty('Táto kartička neexistuje'); return; }
     if (ulozena) vykresli(ulozena, true); else bezKarty('Kartičku sa nepodarilo načítať. Skús to o chvíľu.');
   }
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js', { scope: './' }).catch(() => {});
+  // worker potrebuje adresu API (upozornenia), keď nie je vedľa kartičky
+  const sw = API === '../api/' ? 'sw.js' : 'sw.js?api=' + encodeURIComponent(new URL(API, location.href).href);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register(sw, { scope: './' }).catch(() => {});
 }
 start();

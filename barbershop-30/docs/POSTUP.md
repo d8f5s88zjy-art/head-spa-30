@@ -27,7 +27,7 @@ Rozpracované (požiadavky z 2026‑10‑22):
    (okamžitá pripravená odpoveď, označená), súvisiace otázky pod odpoveďou, ukážka odpovedá z tých istých odpovedí.
    Telefón: okno sa pri klávesnici prispôsobí viditeľnej ploche, clona za oknom, ťukacie plochy 44 px.
 2. HOTOVÉ na vetve: podpis v pätičke „Grafický dizajn a web: Samuel Pavelka“ (index aj rezervacia.html); znenie potvrdiť.
-3. Vernostná kartička: odkaz v pätičke Barbershopu vedie na stránku na headspa30.sk (HEAD SPA 30), opraviť na
+3. HOTOVÉ (CHECKS 23): Vernostná kartička: odkaz v pätičke Barbershopu vedie na stránku na headspa30.sk (HEAD SPA 30), opraviť na
    kartičku Barbershopu. Po zaplatení má zákazník dostať ponuku založiť si účet (body, odmeny). Odmeny a akcie
    nastavuje Lajko sám v admine kartičky (`../vernost/`, admin `https://www.headspa30.sk/vernost/admin/`).
 4. Admin pre Lajka: aby mohol meniť texty, fotky (a odmeny kartičky) sám, ako administrátor.
@@ -52,6 +52,9 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑22: kartička Barbershopu na jeho webe (`barbershop-30/karta/`), pätička už nevedie na headspa30.sk,
+  založenie kartičky cez QR na recepcii po zaplatení (`?nova`, admin kartičky → QR pre nového klienta), odmeny
+  a akcie nastavuje Lajko v admine kartičky (`https://www.headspa30.sk/vernost/admin/`). Test 117 OK.
 - 2026‑10‑22: živý telefón (P15): pohyb kamery aj bez filmu, hĺbka kariet, 7 háčikov s výzvou na objednanie,
   živý stav otváracích hodín v úvode, cenník so záložkami a kratšími riadkami, posunutie pásov tímu a galérie,
   menšie ikony (asistent 48/44 px, spodná lišta). Podpis v pätičke „Grafický dizajn a web: Samuel Pavelka“

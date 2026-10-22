@@ -87,8 +87,10 @@ async function klienti(telo) {
   const vysledky = el('div', { class: 'panel' }, el('p', { class: 'pozn' }, 'Načítavam…'));
   const stat = el('p', { class: 'statistika' });
   const novy = el('button', { class: 'tl hlavne', type: 'button', onclick: () => novyKlient(telo) }, '+ Nový klient');
+  // po zaplatení: recepcia ukáže QR kód, klient si kartičku založí sám v telefóne (stránka kartičky ?nova)
+  const qrNovy = ja.nova ? el('button', { class: 'tl', type: 'button', onclick: () => qrPreNoveho(telo) }, 'QR pre nového klienta') : null;
   const sken = 'BarcodeDetector' in window ? el('button', { class: 'tl', type: 'button', onclick: () => skenuj((t) => { hladaj.value = t; hladane = t; nacitaj(); }) }, 'Skenovať QR') : null;
-  telo.replaceChildren(el('div', { class: 'panel' }, el('div', { class: 'rad' }, hladaj, sken, novy), stat), vysledky);
+  telo.replaceChildren(el('div', { class: 'panel' }, el('div', { class: 'rad' }, hladaj, sken, novy, qrNovy), stat), vysledky);
   let casovac = 0, poradie = 0;
   async function nacitaj() {
     const moje = ++poradie;
@@ -107,6 +109,17 @@ async function klienti(telo) {
   hladaj.addEventListener('input', () => { hladane = hladaj.value.trim(); clearTimeout(casovac); casovac = setTimeout(nacitaj, 250); });
   nacitaj();
   if (matchMedia('(pointer: fine)').matches) hladaj.focus();
+}
+
+/* QR kód na založenie kartičky: ukáže sa klientovi pri pulte po zaplatení, naskenuje ho fotoaparátom */
+function qrPreNoveho(telo) {
+  const qr = el('div', { class: 'qr qr-velky', role: 'img', 'aria-label': 'QR kód na založenie vernostnej kartičky' });
+  qr.innerHTML = qrSvg(ja.nova);
+  telo.replaceChildren(
+    el('div', { class: 'rad' }, el('button', { class: 'tl', type: 'button', onclick: () => kresli() }, '← Klienti')), el('br'),
+    el('div', { class: 'panel stred' }, el('h2', {}, 'Zbieraj body za každú návštevu'),
+      el('p', {}, 'Naskenuj kód fotoaparátom v telefóne a založ si vernostnú kartičku ' + ja.nazov + '.'), qr,
+      el('p', { class: 'pozn' }, 'Odkaz: ', el('a', { href: ja.nova, target: '_blank', rel: 'noopener noreferrer' }, ja.nova))));
 }
 
 function novyKlient(telo) {
@@ -346,6 +359,7 @@ async function nastavenia(telo) {
     el('div', { class: 'panel' }, el('h2', {}, 'Údaje klientov'), el('p', { class: 'pozn' }, 'Súbor obsahuje osobné údaje. Ulož ho len na bezpečné miesto a po použití zmaž.'), exp),
     el('div', { class: 'panel' }, el('h2', {}, 'Ako to funguje'), el('ol', {},
       el('li', {}, 'Klient si pri rezervácii na webe zaškrtne „Áno, chcem vernostnú kartičku“, alebo ju založíš tu (Klienti → Nový klient).'),
+      el('li', {}, 'Po zaplatení mu ukáž QR kód (Klienti → QR pre nového klienta): kartičku si založí sám v telefóne.'),
       el('li', {}, 'Po návšteve ho nájdeš (meno, telefón alebo QR kód z jeho kartičky) a klikneš Zapísať návštevu.'),
       el('li', {}, 'Keď má dosť bodov, vyberieš odmenu a klikneš Uplatniť. Za kúpu produktu môžeš body pripísať ručne.'),
       el('li', {}, 'Akcie a odmeny vidí klient na kartičke. Správu o akcii pošleš v časti Správy.'))));
