@@ -58,7 +58,7 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
-- 2026‑10‑22: admin pre Lajka (`admin/`, `source/tools/admin-test.mjs` 62 OK s falošným GitHubom): texty, cenník,
+- 2026‑10‑22: admin pre Lajka (`admin/`, `source/tools/admin-test.mjs` 63 OK s falošným GitHubom): texty, cenník,
   tím, galéria, odpovede asistenta, odkazy na admin kartičky. Pages kopíruje `admin/`, robots ho vylučuje.
   Funguje až po zverejnení do `main`, lebo číta a ukladá `main`. Ďalej: súhlas so zverejnením a kľúč pre Lajka.
 

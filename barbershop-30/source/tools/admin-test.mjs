@@ -108,6 +108,14 @@ await page.click('#prihlasit');
 await page.waitForFunction(() => /len právo čítať/.test(document.querySelector('#loginMsg').textContent));
 ok(true, 'kľúč len na čítanie: správa o práve zapisovať');
 rezim.pravo = true;
+// web ešte nie je v main: chýba rezervacia.html
+const rezSubor = stromy.get('t0').get('barbershop-30/rezervacia.html');
+stromy.get('t0').delete('barbershop-30/rezervacia.html');
+await page.fill('#token', 'github_pat_dobry');
+await page.click('#prihlasit');
+await page.waitForFunction(() => /nie je zverejnený/.test(document.querySelector('#loginMsg').textContent));
+ok(await page.evaluate(() => localStorage.getItem('b30.admin')) === 'github_pat_dobry', 'web ešte nie je v main: správa, kľúč ostal');
+stromy.get('t0').set('barbershop-30/rezervacia.html', rezSubor);
 await page.fill('#token', 'github_pat_dobry');
 await page.click('#prihlasit');
 await page.waitForSelector('#app:not([hidden]) .tab[data-tab="texty"] .blk');

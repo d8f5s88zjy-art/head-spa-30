@@ -485,8 +485,8 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - `admin/` (vzor: admin HEAD SPA 30): záložky Texty (167 polí po častiach webu, hľadanie, hlavička a pätička
   rezervačnej stránky sa menia spolu s hlavnou), Cenník (15 služieb), Tím (10 ľudí, nový člen, odstránenie, fotka),
   Galéria (8 fotiek), Odpovede asistenta (251), Kartička (odkazy na admin kartičky a stránku založenia).
-- `node source/tools/admin-test.mjs`: 62 OK. Falošný GitHub drží súbory v pamäti a commit ich naozaj zmení.
-  Overené: zlý kľúč a kľúč len na čítanie; text na mieste a preklad na novom kľúči; cena v oboch súboroch,
+- `node source/tools/admin-test.mjs`: 63 OK. Falošný GitHub drží súbory v pamäti a commit ich naozaj zmení.
+  Overené: zlý kľúč a kľúč len na čítanie; web ešte nie je v `main` (jasná správa, kľúč ostane); text na mieste a preklad na novom kľúči; cena v oboch súboroch,
   v znalostiach aj v odpovediach (10 odpovedí na kontrolu, jedinečná cena prepísaná); zlá cena zastaví uloženie;
   popis a fotka barbera (WebP aj JPEG, stará fotka nahradená celá, ohnisko zachované); nový člen bez fotky
   zastavený, s fotkou v oboch súboroch, v prekladoch, znalostiach a odpovediach; popis fotky galérie aj zväčšenia;

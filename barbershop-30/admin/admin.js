@@ -80,7 +80,8 @@ const b64dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\
 function b64enc(str) { const bytes = new TextEncoder().encode(str); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
 async function b64blob(blob) { const b = new Uint8Array(await blob.arrayBuffer()); let bin = ''; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(bin); }
 async function readFile(path, ref) {
-  const j = await gh(`/contents/${path}?ref=${ref}`);
+  // kľúč prístup má (overené pri prihlásení), takže 404 znamená, že súbor v main ešte nie je (web nezverejnený)
+  const j = await gh(`/contents/${path}?ref=${ref}`).catch((e) => { throw e.status === 404 ? Object.assign(new Error(`Na webe chýba súbor ${path}. Web Barbershopu ešte asi nie je zverejnený, admin sa dá použiť až potom.`), { user: true, chyba: true }) : e; });
   if (j.content) return b64dec(j.content);
   const blob = await gh(`/git/blobs/${j.sha}`); return b64dec(blob.content);
 }
@@ -716,7 +717,7 @@ async function prihlas() {
     obnov();
   } catch (e) {
     $('#loading').hidden = true; $('#login').hidden = false;
-    if (e.status === 401 || e.status === 404 || e.user) { token = ''; try { localStorage.removeItem(K_KLUC); sessionStorage.removeItem(K_KLUC); } catch (x) { /* nič */ } }
+    if (e.status === 401 || e.status === 404 || (e.user && !e.chyba)) { token = ''; try { localStorage.removeItem(K_KLUC); sessionStorage.removeItem(K_KLUC); } catch (x) { /* nič */ } }
     msg($('#loginMsg'), human(e), 'bad');
   }
 }
