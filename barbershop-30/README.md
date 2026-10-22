@@ -81,6 +81,10 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   prihláškou (`data-zapnute` na `assets/vernost.js`) alebo s uloženou kartičkou; tlačidlo otvorí prihlášku alebo
   kartičku. `?vernost=ukazka` ju ukáže na kontrolu s vypnutým tlačidlom.
 
+- **Vzhľad webu na ich rezervácii** (`assets/tema-rezervacia.css`, návod `docs/TEMA_REZERVACIA.md`): štýl pre
+  existujúcu stránku www.barbershop30.sk/rezervacia, ktorý vloží jedným riadkom správca ich webu; funkcia ostáva
+  ich. Náhľad pred a po: `node source/tools/tema-nahlad.mjs` (ich stránka lokálne so skúšobným kalendárom).
+
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,

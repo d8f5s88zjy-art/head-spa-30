@@ -1,0 +1,113 @@
+/* BARBERSHOP 30 – vzhľad nového webu pre existujúcu rezerváciu na www.barbershop30.sk/rezervacia.
+   Len štýl: rezervácia ostáva ich systém (rovnaký formulár, kalendár, odoslanie aj potvrdenie), mení sa farba,
+   písmo a tvar. Vkladá sa jedným riadkom do hlavičky ich stránky ZA ich css/app.css (docs/TEMA_REZERVACIA.md).
+   Cieľ: šablóna Murdock (Bootstrap 3) a komponent v-order-component s kalendárom vue-functional-calendar (vfc-*),
+   ktorý si štýly vkladá sám, preto pri kalendári !important. Farby a písma ako web (assets/style.css). */
+/* Fraunces bez číslic (unicode-range): jeho malá „3“ vyzerá ako „5“ (3. krok, 23. október), číslice berie Manrope */
+@font-face { font-family: "B30 Fraunces"; font-weight: 800; font-display: swap; src: url("fonts/Fraunces-800.woff2") format("woff2"); unicode-range: U+0000-002F, U+003A-10FFFF; }
+@font-face { font-family: "B30 Fraunces"; font-weight: 500; font-display: swap; src: url("fonts/Fraunces-500.woff2") format("woff2"); unicode-range: U+0000-002F, U+003A-10FFFF; }
+@font-face { font-family: "B30 Fraunces"; font-weight: 500; font-style: italic; font-display: swap; src: url("fonts/Fraunces-500i.woff2") format("woff2"); unicode-range: U+0000-002F, U+003A-10FFFF; }
+@font-face { font-family: "B30 Manrope"; font-weight: 400; font-display: swap; src: url("fonts/Manrope-400.woff2") format("woff2"); }
+@font-face { font-family: "B30 Manrope"; font-weight: 600; font-display: swap; src: url("fonts/Manrope-600.woff2") format("woff2"); }
+@font-face { font-family: "B30 Manrope"; font-weight: 700; font-display: swap; src: url("fonts/Manrope-700.woff2") format("woff2"); }
+
+:root {
+  --b30-ink: #0e0d0c; --b30-ink-2: #171412; --b30-ink-3: #221d19;
+  --b30-line: rgba(241, 233, 221, 0.14); --b30-line-strong: rgba(241, 233, 221, 0.3);
+  --b30-paper: #f1e9dd; --b30-paper-2: #c9beae; --b30-paper-3: #8e8578;
+  --b30-lamp: #e0601c; --b30-lamp-2: #f07e3c;
+  --b30-display: "B30 Fraunces", "B30 Manrope", Georgia, "Times New Roman", serif;
+  --b30-text: "B30 Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- celá stránka ---------- */
+html body { background: var(--b30-ink); color: var(--b30-paper); font-family: var(--b30-text); -webkit-font-smoothing: antialiased; }
+body #order, body .intro, body .section, body #order-component, body .container-full { background: var(--b30-ink) !important; color: var(--b30-paper); }
+body a { color: var(--b30-paper); }
+body a:hover, body a:focus { color: var(--b30-lamp-2); }
+body ::selection { background: var(--b30-lamp); color: var(--b30-ink); }
+body #mask, body .loader-minimal { background: var(--b30-ink) !important; }
+
+/* ---------- hlavička ---------- */
+body #jHeader, body #jHeader .navbar, body #jHeader.invert { background: rgba(14, 13, 12, 0.94) !important; border: 0; box-shadow: 0 1px 0 var(--b30-line); }
+body #jHeader .navbar-nav > li > a { font-family: var(--b30-text); font-weight: 600; font-size: 0.9375rem; letter-spacing: 0; text-transform: none; color: var(--b30-paper-2) !important; }
+body #jHeader .navbar-nav > li > a:hover { color: var(--b30-paper) !important; }
+body #jHeader .navbar-nav > li > a.btn { background: var(--b30-lamp) !important; color: var(--b30-ink) !important; border: 0 !important; border-radius: 6px; padding: 12px 18px; margin-top: 4px;
+  font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; }
+body #jHeader .navbar-toggle .icon-bar { background: var(--b30-paper); }
+body #jHeader .navbar-collapse { border-color: var(--b30-line); background: rgba(14, 13, 12, 0.98); }
+body #languageOption { background: var(--b30-ink-2); color: var(--b30-paper); border: 1px solid var(--b30-line-strong); border-radius: 6px; padding: 4px 6px; }
+
+/* ---------- nadpisy krokov ---------- */
+body #order-component .title { font-family: var(--b30-display); font-weight: 800; font-size: clamp(2rem, 5.2vw, 3.5rem); line-height: 1; letter-spacing: -0.015em;
+  color: var(--b30-paper); text-transform: none; }
+body #order-component .pretitle::before, body #order-component .pretitle::after { background: var(--b30-lamp) !important; border-color: var(--b30-lamp) !important; }
+body #order-component .subtitle.colored, body #order-component p.subtitle { font-family: var(--b30-text); font-weight: 400; font-size: 1.0625rem; line-height: 1.55;
+  letter-spacing: 0; text-transform: none; color: var(--b30-paper-2) !important; }
+
+/* ---------- karty: služby, pracovníci, časy ---------- */
+body #order-component .features .border { background: var(--b30-ink-2); border: 1px solid var(--b30-line) !important; border-radius: 8px; color: var(--b30-paper);
+  transition: border-color 200ms, background-color 200ms; }
+body #order-component .features .border:hover { border-color: var(--b30-line-strong) !important; }
+body #order-component .features .active .border { border-color: var(--b30-lamp) !important; box-shadow: inset 0 0 0 1px var(--b30-lamp); background: #1e1916; }
+body #order-component .titlefeat { font-family: var(--b30-text); font-weight: 700; font-size: 1.125rem; letter-spacing: 0; text-transform: none; color: var(--b30-paper); }
+body #order-component .textfeat { font-family: var(--b30-text); font-size: 0.9375rem; line-height: 1.55; letter-spacing: 0; color: var(--b30-paper-3); }
+body #order-component .list-horizontal-links, body #order-component .list-horizontal-links li { color: var(--b30-paper-2); font-family: var(--b30-text); letter-spacing: 0; }
+body #order-component .list-horizontal-links strong.subtitle.colored { font-family: var(--b30-display); font-weight: 800; font-size: 1.375rem; letter-spacing: 0; color: var(--b30-paper) !important; }
+body #order-component .time .titlefeat { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--b30-paper-2); }
+body #order-component .time .border { font-family: var(--b30-text); font-weight: 700; font-size: 1rem; color: var(--b30-paper); border-color: var(--b30-line-strong) !important; border-radius: 6px; cursor: pointer; }
+body #order-component .time .border:hover, body #order-component .time .active .border { background: var(--b30-lamp); border-color: var(--b30-lamp) !important; color: var(--b30-ink); }
+
+/* ---------- tlačidlá ---------- */
+body #order-component .btn, body #order-component .btn-default, body footer .btn, body .btn-invert {
+  background: var(--b30-lamp) !important; color: var(--b30-ink) !important; border: 0 !important; border-radius: 6px;
+  font-family: var(--b30-text); font-weight: 700; font-size: 0.875rem; letter-spacing: 0.08em; text-transform: uppercase; min-height: 48px; padding: 14px 22px;
+  box-shadow: none; transition: background-color 200ms; }
+body #order-component .btn:hover, body footer .btn:hover, body .btn-invert:hover { background: var(--b30-lamp-2) !important; color: var(--b30-ink) !important; }
+/* Vybrať v kartách na telefóne: tichšie, karta sa dá ťuknúť celá */
+body #order-component .features .btn.hidden-lg { background: transparent !important; color: var(--b30-paper) !important; border: 1px solid var(--b30-line-strong) !important; }
+body #order-component .features .active .btn.hidden-lg { background: var(--b30-lamp) !important; color: var(--b30-ink) !important; border-color: var(--b30-lamp) !important; }
+body #order-component .btn-link, body #order-component .link-edit, body #order-component .link-delete, body #order-component .link-add {
+  background: transparent !important; color: var(--b30-lamp-2) !important; min-height: 0; padding: 4px 0; letter-spacing: 0; text-transform: none; font-weight: 600; }
+body #order-component .btn:focus-visible, body #order-component input:focus-visible { outline: 2px solid var(--b30-lamp); outline-offset: 2px; }
+
+/* ---------- kalendár (vue-functional-calendar) ---------- */
+body #order-component .vfc-main-container { background: var(--b30-ink-2) !important; border: 1px solid var(--b30-line) !important; border-radius: 8px !important; box-shadow: none !important; font-family: var(--b30-text) !important; }
+body #order-component .vfc-top-date, body #order-component .vfc-top-date span { color: var(--b30-paper) !important; font-family: var(--b30-display) !important; font-weight: 800 !important; font-size: 1.25rem !important; }
+body #order-component .vfc-dayNames span, body #order-component .vfc-dayNames .vfc-day { color: var(--b30-paper-3) !important; font-weight: 600 !important; }
+body #order-component .vfc-span-day { color: var(--b30-paper) !important; font-weight: 600 !important; font-variant-numeric: tabular-nums; }
+body #order-component .vfc-span-day.vfc-disabled, body #order-component .vfc-span-day.vfc-cursor-not-allowed { color: var(--b30-paper-3) !important; opacity: 0.45; }
+body #order-component .vfc-span-day.vfc-today { background: transparent !important; color: var(--b30-lamp-2) !important; box-shadow: inset 0 0 0 1px var(--b30-lamp); border-radius: 50%; }
+body #order-component .vfc-span-day.vfc-marked, body #order-component .vfc-span-day.vfc-marked.vfc-borderd { background: var(--b30-lamp) !important; color: var(--b30-ink) !important; border-radius: 50%; }
+body #order-component .vfc-span-day.vfc-hover:hover:not(.vfc-disabled):not(.vfc-marked) { background: rgba(241, 233, 221, 0.12) !important; color: var(--b30-paper) !important; }
+body #order-component .vfc-arrow-left, body #order-component .vfc-arrow-right { border-color: var(--b30-paper) !important; }
+body #order-component .vfc-arrow-left.vfc-disabled, body #order-component .vfc-arrow-right.vfc-disabled { border-color: var(--b30-paper-3) !important; opacity: 0.4; }
+
+/* ---------- údaje zákazníka: zreteľné polia ---------- */
+body #order-component .form-control, body #customer-form .form-control {
+  background: rgba(241, 233, 221, 0.06) !important; color: var(--b30-paper) !important; border: 1px solid var(--b30-line-strong) !important; border-radius: 6px !important;
+  min-height: 50px; padding: 12px 14px; font-family: var(--b30-text); font-size: 16px; letter-spacing: 0; box-shadow: none !important; }
+body #order-component .form-control::placeholder { color: var(--b30-paper-3); opacity: 1; letter-spacing: 0; text-transform: none; }
+body #order-component .form-control:focus { border-color: var(--b30-lamp) !important; background: rgba(241, 233, 221, 0.09) !important; }
+
+/* ---------- súhrn, potvrdenie a hlásenia (z ich systému, len farby) ---------- */
+body #order-component .summary, body #order-component .confirmation { color: var(--b30-paper); }
+body #order-component .summary .subtitle, body #order-component .confirmation .subtitle { color: var(--b30-paper-2) !important; }
+body #order-component .alert { background: var(--b30-ink-3); border: 1px solid var(--b30-line-strong); border-left: 2px solid var(--b30-lamp); color: var(--b30-paper); border-radius: 8px; }
+body #order-component .alert-danger { border-left-color: #ff8b6b; }
+
+/* ---------- pätička ---------- */
+body footer { background: var(--b30-ink-2) !important; color: var(--b30-paper-2); border-top: 1px solid var(--b30-line); }
+body footer .title-small { font-family: var(--b30-display); font-weight: 800; font-size: 1.25rem; letter-spacing: 0; text-transform: none; color: var(--b30-paper); }
+body footer p, body footer li, body footer .contact-link { color: var(--b30-paper-2); font-family: var(--b30-text); letter-spacing: 0; }
+body footer a { color: var(--b30-paper); }
+body #map { filter: grayscale(0.6) brightness(0.8); }
+
+@media (max-width: 767px) {
+  body #order-component .title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  body #order-component .features .border { margin-bottom: 12px; }
+  body #order-component .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body #order-component * { transition: none !important; }
+}

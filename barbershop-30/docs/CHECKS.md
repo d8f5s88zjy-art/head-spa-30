@@ -401,3 +401,14 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - Lighthouse rezervacia.html s fotkami: telefón 98/98/98 (úvodná fotka pre telefón 760 px, 48 kB, s preload; fotky
   v cenníku a tíme s nízkou prioritou), počítač 100; prístupnosť a postupy 100; SEO len zámerné noindex.
 
+## 19. Vzhľad webu na rezervácii barbershop30.sk (2026‑10‑22)
+
+- Zadávateľ: www.barbershop30.sk/rezervacia má vyzerať ako nový web a fungovať rovnako. Ich systém nie je náš, preto
+  štýl `assets/tema-rezervacia.css` na vloženie jedným riadkom (`docs/TEMA_REZERVACIA.md`).
+- Verejná stránka a jej súbory prečítané raz (HTML, css/app.css, js/app.js, jQuery, Bootstrap, logo, ikony); formulár
+  je komponent Vue so službami v stránke a metódami getEmployees, getCalendar, getTime, makeOrder.
+- `tema-nahlad.mjs`: ich stránka lokálne so skúšobným kalendárom, kroky služba → pracovník → deň a čas → údaje na
+  390 a 1440 px pred a po, šírka bez pretekania, makeOrder nikdy, žiadna požiadavka na ich server okrem čítania súborov.
+- Číslice nadpisov v Manrope (unicode-range), inak „3. Vyberte termín“ vyzeralo ako „5.“.
+- Neoverené: ich živá stránka so štýlom (vloženie urobí ich správca), skutočný telefón.
+
