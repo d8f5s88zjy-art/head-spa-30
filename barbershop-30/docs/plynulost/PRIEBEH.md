@@ -176,3 +176,4 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 22:20 UTC: Richtárik úvod skončil ESKALÁCIOU (len nález „príjazd nepôsobí ako jazda“). Majiteľovi poslaný hárok pred-po-3.jpg + snímka telefónu; súkromný náhľad úvodnej stránky https://claude.ai/artifact/RD8gcHb7qm8ceinrVAW8vA (146 súborov, podstránky vedú na starý náhľad na Pages).
 - 22:30 UTC: disk 0,9 GB → vyčistená vyrovnávacia pamäť pip (430 MB) a npm (~570 MB), teraz 1,9 GB. Spustený prototyp 2,5D príjazdu wf_ccecb1be-01a (výrez auta rembg/GrabCut na prázdnej ceste dvora, končí v zábere skutočnej fotky), vetva richtarik-prijazd. V5 recepcia čaká, kým dobehne prototyp (nech sa nevyčerpá limit).
 - 22:30 UTC check-in: prototyp príjazdu (wf_ccecb1be-01a) v stavbe; V5 (wf_d2da7410-ac8) zámerne čaká na koniec prototypu; disk 1,5 GB.
+- 23:30 UTC check-in: prototyp príjazdu postavený (02b124b), kontrola kola 1 hotová, beží oprava; V5 čaká.
