@@ -411,4 +411,7 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   390 a 1440 px pred a po, šírka bez pretekania, makeOrder nikdy, žiadna požiadavka na ich server okrem čítania súborov.
 - Číslice nadpisov v Manrope (unicode-range), inak „3. Vyberte termín“ vyzeralo ako „5.“.
 - Neoverené: ich živá stránka so štýlom (vloženie urobí ich správca), skutočný telefón.
+- Ukážka na kontrolu (2026‑10‑22, zadávateľa náhľad stále vracal na pôvodnú rezerváciu, lebo kalendár nie je
+  pripojený): `?objednavka=ukazka` na webe aj rezervačnej stránke, bez servera, ukážkové časy výrazne označené, výber
+  bez úspechu. `objednavka-test.mjs` 113 OK.
 

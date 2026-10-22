@@ -10,6 +10,8 @@
  * pridá až so súhlasom prevádzky rezervačného systému, pages.yml). Až keď server povie, že kalendár je pripojený,
  * odkazy Objednať sa otvoria okno, resp. stránka ukáže kroky; dovtedy a pri každej chybe vedú odkazy rovno do
  * rezervačného systému.
+ * Ukážka na kontrolu (?objednavka=ukazka, aj mimo localhost): bez servera, s barbermi z tímu na stránke a ukážkovými
+ * časmi, výrazne označená; nič sa nerezervuje a ostrý web ju nikdy nezapne sám.
  * Služby, časy a ceny berie z cenníka na stránke (a.price-cta[data-sluzba]), takže sú vždy rovnaké ako na webe
  * a v jazyku stránky. Texty okna sú v 8 jazykoch tu (T).
  */
@@ -92,7 +94,27 @@ const nacitajPracu = () => praca || (praca = fetch(new URL('praca.json', import.
   .then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
 const pracaBarbera = (j, meno) => ((j && j.barberi) || {})[bez(meno).replace(/[^a-z0-9]+/g, '-')] || [];
 
+/* ukážka na kontrolu: barberi z tímu na stránke, ukážkové časy (dnes len budúce, sobota do 14:00, nedeľa zatvorené) */
+const UKAZKA = 'ukazka';
+const hhmm = (d) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+function ukazka(a, par) {
+  const tim = [...new Set([...document.querySelectorAll('.team-card .team-name')].map((n) => n.textContent.trim()))];
+  const dnes = new Date(), teraz = hhmm(dnes);
+  if (a === 'barberi') return { ok: true, stav: 'ok', barberi: tim.length ? tim : ['Nikolas', 'Adrian'] };
+  if (a === 'dni') return { ok: true, stav: 'ok', barber: par.barber, dnes: iso(dnes), od: iso(dnes), do: iso(new Date(+dnes + 30 * 864e5)), zatvorene: ['Ne'], sviatky: [] };
+  if (a === 'terminy') {
+    const d = zIso(par.datum), k = (d.getDate() * 7 + String(par.barber).length) % 3;
+    let casy = ['09:00', '09:40', '10:20', '11:40', '13:20', '14:00', '15:20', '16:40', '17:40'].filter((_, i) => (i + k) % 3 !== 0);
+    if (d.getDay() === 6) casy = casy.filter((c) => c < '14:00');
+    if (par.datum === iso(dnes)) casy = casy.filter((c) => c > teraz);
+    return casy.length ? { ok: true, stav: 'overene', datum: par.datum, overene_o: teraz, casy } : { ok: true, stav: 'ziadny_volny', overene_o: teraz };
+  }
+  return { ok: true };
+}
+const overText = (L, t) => (API === UKAZKA ? 'Ukážkové časy, nie skutočné. Naostro tu budú voľné časy z kalendára.' : fill(L.overene, { t }));
+
 async function daj(a, par, ttl = 36e5) {
+  if (API === UKAZKA) { await new Promise((r) => setTimeout(r, 180)); return ukazka(a, par); }
   const q = new URLSearchParams({ a, ...par }).toString();
   const c = pamat.get(q);
   if (c && Date.now() - c.t < ttl) return c.v;
@@ -126,7 +148,8 @@ function postav(prvok) {
     zavri.addEventListener('click', () => zatvor());
     hlava.append(zavri);
   }
-  koren.append(hlava, pruh, el('div', { class: 'obj-obsah' }, [nadpis, vyber, telo, zivy]), el('div', { class: 'obj-pata' }, [tel]));
+  const ukazkaPas = API === UKAZKA ? el('p', { class: 'obj-ukazka-pas', role: 'note' }, ['Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.']) : null;
+  koren.append(hlava, pruh, el('div', { class: 'obj-obsah' }, [ukazkaPas, nadpis, vyber, telo, zivy]), el('div', { class: 'obj-pata' }, [tel]));
   if (!naStranke) {
     dlg = koren;
     dlg.addEventListener('close', () => { html.classList.remove('obj-otvorene'); if (history.state && history.state.obj) history.back(); });
@@ -267,7 +290,7 @@ async function najblizsie(L, blok, id) {
           b.addEventListener('click', () => { Object.assign(s, { barber: KTOKOLVEK, datum: x, cas: c, dni: j, krok: 4 }); vykresli(true); });
           return el('li', {}, [b]);
         })),
-        el('p', { class: 'obj-pozn' }, [L.rychloP + ' ' + fill(L.overene, { t: t.overene_o })]));
+        el('p', { class: 'obj-pozn' }, [L.rychloP + ' ' + overText(L, t.overene_o)]));
       blok.hidden = false;
       return;
     }
@@ -363,7 +386,7 @@ function nacitajCasy(L, box, skus) {
         const b = el('button', { type: 'button' }, [c]);
         b.addEventListener('click', () => { s.cas = c; s.krok = 4; vykresli(true); });
         return el('li', {}, [b]);
-      })), el('p', { class: 'obj-pozn' }, [fill(L.overene, { t: j.overene_o })]));
+      })), el('p', { class: 'obj-pozn' }, [overText(L, j.overene_o)]));
       zivy.textContent = den(par.datum, true) + ': ' + j.casy.length + ' ' + L.casy.toLowerCase();
       return;
     }
@@ -411,7 +434,8 @@ function predvolby(a) {
 export async function spusti(api) {
   API = api;
   // okno sa zapne až s pripojeným kalendárom; inak odkazy ostanú, ako sú (rovno do rezervačného systému)
-  try {
+  if (API === UKAZKA) pripojene = true;
+  else try {
     const r = await fetch(`${API}?a=stav`, { credentials: 'omit', cache: 'no-store' });
     const j = await r.json();
     pripojene = !!(j && j.ok && j.kalendar);
@@ -436,7 +460,8 @@ export async function spusti(api) {
    pripojeného kalendára vedie do rezervačného systému) ostane v stránke skrytý, kroky z neho berú služby. */
 export async function stranka(api, prvok) {
   API = api;
-  try {
+  if (API === UKAZKA) pripojene = true;
+  else try {
     const r = await fetch(`${API}?a=stav`, { credentials: 'omit', cache: 'no-store' });
     const j = await r.json();
     pripojene = !!(j && j.ok && j.kalendar);

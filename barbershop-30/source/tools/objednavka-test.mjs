@@ -373,6 +373,32 @@ for (const [w, h] of [[360, 780], [390, 844], [430, 932], [768, 1024], [1440, 90
   await ctx.close();
 }
 
+/* ---------- 6. ukážka na kontrolu (?objednavka=ukazka): bez servera, výrazne označená ---------- */
+for (const [subor, q] of [['rezervacia.html', 'objednavka=ukazka'], ['index.html', 'uvod=off&film=off&hudba=off&objednavka=ukazka']]) {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK' });
+  const page = await ctx.newPage();
+  const api = [], chyby = [];
+  page.on('request', (r) => { if (/api\.php|barbershop30\.sk/.test(r.url())) api.push(r.url()); });
+  page.on('pageerror', (e) => chyby.push(e.message));
+  await page.route(/barbershop30\.sk|headspa30\.sk|booqme|instagram/, (r) => r.abort());
+  await page.goto(`${srv.origin}/${subor}?${q}`, { waitUntil: 'load' });
+  if (subor === 'index.html') {
+    await page.mouse.move(10, 10);
+    await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+    await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+  }
+  await page.waitForSelector('.obj-sluzby button', { timeout: 10000 }).catch(() => {});
+  ok(await page.locator('.obj-ukazka-pas').isVisible() && (await page.locator('.obj-ukazka-pas').textContent()).includes('nič sa nerezervuje'), `ukážka ${subor}: výrazne označená, nič sa nerezervuje`);
+  await page.locator('.obj-sluzby button', { hasText: 'Pánsky strih' }).first().click();
+  await page.waitForSelector('.obj-rychlo:not([hidden]) .obj-mriezka button', { timeout: 10000 }).catch(() => {});
+  ok((await page.locator('.obj-rychlo').textContent()).includes('Ukážkové časy, nie skutočné') && await page.locator('.obj-tim button').count() >= 3, `ukážka ${subor}: časy označené ako ukážkové, tím zo stránky`);
+  if (subor === 'rezervacia.html') await snimka(page, 'ukazka-2-390.png');
+  await page.locator('.obj-rychlo .obj-mriezka button').first().click();
+  ok((await page.locator('.obj-h').textContent()) === 'Tvoj výber' && (await page.locator('.obj').first().textContent()).includes('Termín ešte nie je rezervovaný'), `ukážka ${subor}: dve kliknutia po výber, žiadny úspech`);
+  ok(!api.length && !chyby.length, `ukážka ${subor}: bez servera a bez chýb`, api.concat(chyby).join(' | '));
+  await ctx.close();
+}
+
 ok(!fs.readFileSync(LOG, 'utf8').includes('makeOrder'), 'objednávka (makeOrder) sa nikdy neodoslala');
 await browser.close();
 zastav();

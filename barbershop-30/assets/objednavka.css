@@ -35,6 +35,7 @@
 .obj-pruh i.je { background: var(--lamp, #e0601c); }
 
 .obj-obsah { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 22px 20px 24px; }
+.obj-ukazka-pas { margin: 0 0 16px; padding: 8px 12px; border: 1px dashed var(--lamp, #e0601c); border-radius: 6px; font-size: 0.8125rem; font-weight: 600; color: var(--lamp-2, #f07e3c); }
 .obj-h { margin: 0 0 14px; font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-variation-settings: "opsz" 144;
   font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1; letter-spacing: -0.015em; outline: none; }
 

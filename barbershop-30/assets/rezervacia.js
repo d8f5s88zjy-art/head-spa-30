@@ -6,12 +6,14 @@
  *
  * Zapínanie ako na webe: data-objednavka na <html> (nasadenie len so súhlasom prevádzky rezervačného systému) a
  * data-asistent (len s kľúčom API na serveri); na vlastnom počítači ?objednavka=<adresa> a ?asistent=<adresa>,
- * ?objednavka=off a ?asistent=off ich vypnú.
+ * ?objednavka=off a ?asistent=off ich vypnú, ?objednavka=ukazka ukáže kroky s ukážkovými časmi (na kontrolu).
  */
 const html = document.documentElement;
 const q = new URLSearchParams(location.search);
 const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const adresa = (meno) => { const v = q.get(meno); const a = v === 'off' ? '' : (lokal && v) || html.dataset[meno] || ''; return /^https?:\/\//.test(a) ? a : ''; };
+// ?objednavka=ukazka: kroky s ukážkovými časmi bez servera, na kontrolu (výrazne označené, nič nerezervuje)
+const ukazka = q.get('objednavka') === 'ukazka';
 
 /* menu na telefóne (ako app.js časť 9, bez filmu) */
 (function menu() {
@@ -29,7 +31,7 @@ document.querySelectorAll('.year').forEach((e) => { e.textContent = String(new D
 
 /* kroky objednávky: hneď, stránka je na to; bez pripojeného kalendára ostane cenník */
 (function objednavka() {
-  const api = adresa('objednavka'), koren = document.querySelector('[data-objednavka-koren]');
+  const api = ukazka ? 'ukazka' : adresa('objednavka'), koren = document.querySelector('[data-objednavka-koren]');
   if (!api || !koren) return;
   import('./objednavka.js').then((m) => m.stranka(api, koren)).catch(() => {});
 })();

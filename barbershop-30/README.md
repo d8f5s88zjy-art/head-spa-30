@@ -60,7 +60,9 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   na telefón; úspech neukazuje, lebo objednávku nič nepotvrdilo (odoslanie z webu by potrebovalo písomný súhlas
   prevádzky a jej dokumentáciu rozhrania). Zapne ho nasadenie atribútom `data-objednavka` na `<html>` len s premennou
   `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP; okno sa zapne až po `api.php?a=stav` s pripojeným kalendárom, inak
-  a pri každej chybe vedú odkazy rovno do rezervačného systému. `?objednavka=<adresa>` na localhost, `?objednavka=off`.
+  a pri každej chybe vedú odkazy rovno do rezervačného systému. `?objednavka=<adresa>` na localhost, `?objednavka=off`;
+  `?objednavka=ukazka` (aj na náhľade) ukáže kroky s ukážkovými časmi bez servera, s pruhom „Ukážka na kontrolu… nič sa
+  nerezervuje“, aby sa dala cesta preklikať pred zapnutím kalendára.
   Test: `source/tools/objednavka-test.mjs` (okno aj rezervačná stránka, falošný rezervačný systém, snímky).
 - **Rezervačná stránka** (`rezervacia.html`, `assets/rezervacia.js` a `rezervacia.css`): samostatná stránka v dizajne
   webu na odkaz z Instagramu, Google alebo webu. Úvod s fotkou kresla, kroky objednávky priamo na stránke (ten istý kód

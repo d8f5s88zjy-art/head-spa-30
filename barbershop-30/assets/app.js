@@ -399,13 +399,15 @@ if (motionOn && mqFinePointer.matches) {
    7b4. Objednávka (assets/objednavka.js): služba → barber → deň a voľný čas z rezervačného kalendára v štýle webu.
    Zapne ju nasadenie (pages.yml) atribútom data-objednavka na <html> s adresou servera, len so súhlasom prevádzky
    rezervačného systému; bez neho odkazy Objednať sa vedú rovno do rezervačného systému. Na vlastnom počítači ide
-   skúšobný server cez ?objednavka=<adresa>, ?objednavka=off ju vypne.
+   skúšobný server cez ?objednavka=<adresa>, ?objednavka=off ju vypne, ?objednavka=ukazka ukáže kroky s ukážkovými
+   časmi bez servera (na kontrolu, výrazne označené).
    ---------------------------------------------------------------------------- */
 (function objednavka() {
   const q = new URLSearchParams(location.search).get('objednavka');
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  const api = q === 'off' ? '' : (lokal && q) || html.dataset.objednavka || '';
-  if (!/^https?:\/\//.test(api)) return;
+  // ?objednavka=ukazka: ukážka na kontrolu bez servera (aj na náhľade), výrazne označená, nič nerezervuje
+  const api = q === 'off' ? '' : q === 'ukazka' ? 'ukazka' : (lokal && q) || html.dataset.objednavka || '';
+  if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
   let loaded = false;
   const load = () => {
     if (loaded) return;
