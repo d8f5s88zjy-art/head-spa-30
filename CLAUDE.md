@@ -88,4 +88,6 @@ Nasadzuj (kroky 2 a 3) až so súhlasom zadávateľa; dovtedy práca ostáva na 
   testy a nasadenie, texty, Booqme, Instagram, učenie z videí, workflowy). Pred podobnou prácou si prečítaj príslušný SKILL.md.
 - Prevádzka webu (nahratie na headspa30.sk, Booqme, poukážky): `toolbox/head-spa-30/SKILL.md`.
 - Asistent na otázky na webe Barbershop 30 (`asistent/`, server na headspa30.sk): `asistent/README.md`. Po zmene
-  cenníka, hodín alebo tímu Barbershopu zmeň aj `asistent/znalosti/barbershop.md`.
+  cenníka, hodín alebo tímu Barbershopu zmeň aj `asistent/znalosti/barbershop.md` a `barbershop-otazky.json`.
+- Záznam postupu na Barbershop 30 (hotové, rozpracované, čo čaká na zadávateľa): `barbershop-30/docs/POSTUP.md`.
+  Prečítaj ho pred prácou na Barbershope a po každom kroku ho doplň.
