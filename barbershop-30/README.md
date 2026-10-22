@@ -60,7 +60,14 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   prevádzky a jej dokumentáciu rozhrania). Zapne ho nasadenie atribútom `data-objednavka` na `<html>` len s premennou
   `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP; okno sa zapne až po `api.php?a=stav` s pripojeným kalendárom, inak
   a pri každej chybe vedú odkazy rovno do rezervačného systému. `?objednavka=<adresa>` na localhost, `?objednavka=off`.
-  Test: `source/tools/objednavka-test.mjs` (falošný rezervačný systém, 57 kontrol, snímky).
+  Test: `source/tools/objednavka-test.mjs` (okno aj rezervačná stránka, falošný rezervačný systém, snímky).
+- **Rezervačná stránka** (`rezervacia.html`, `assets/rezervacia.js` a `rezervacia.css`): samostatná stránka v dizajne
+  webu na odkaz z Instagramu, Google alebo webu. Úvod s fotkou kresla, kroky objednávky priamo na stránke (ten istý kód
+  ako okno, `objednavka.js` → `stranka`), vedľa kontakt, jazyky ako na webe a AI asistent na otázky (`asistent.js`,
+  zreteľne označený ako AI). Bez skriptu a bez pripojeného kalendára je to cenník webu s odkazmi do rezervačného
+  systému a telefón. Odkaz s predvoľbou: `rezervacia.html?sluzba=1&barber=Adrian` (rovno na deň). Zapína sa rovnakými
+  príznakmi ako web (`data-objednavka`, `data-asistent`, nasadenie v pages.yml); kým nie je pripojený kalendár, má
+  `noindex` (nasadenie s kalendárom ho odstráni). Záväzné odoslanie rezervácie z webu nie je (pozri Objednávka).
 - **Vizitka a vernostná kartička** (`assets/karty.js` a `karty.css`, pás pod kontaktom, načíta sa po načítaní stránky):
   vizitka, ktorú prevádzka už rozdáva (predloha: fotka recepcie `source/photos/foto-17.jpg`), nie nový návrh: na výšku,
   pruhy barber pole, biely kruh s pôvodným logom zo starého webu (`source/web-povodny/logo-vector-black.svg` →

@@ -31,8 +31,8 @@ jobs:
       - name: Pripraviť web BARBERSHOP 30 (podpriečinok /barbershop-30/)
         run: |
           mkdir -p _site/barbershop-30
-          cp -r barbershop-30/index.html barbershop-30/robots.txt barbershop-30/sitemap.xml barbershop-30/assets _site/barbershop-30/
-          sed -i 's#https://d8f5s88zjy-art.github.io/barbershop30/#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#g' _site/barbershop-30/index.html _site/barbershop-30/robots.txt _site/barbershop-30/sitemap.xml
+          cp -r barbershop-30/index.html barbershop-30/rezervacia.html barbershop-30/robots.txt barbershop-30/sitemap.xml barbershop-30/assets _site/barbershop-30/
+          sed -i 's#https://d8f5s88zjy-art.github.io/barbershop30/#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#g' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html _site/barbershop-30/robots.txt _site/barbershop-30/sitemap.xml
       - name: Pripraviť návrh webu ZENTURY (podpriečinok /zentury/)
         run: |
           mkdir -p _site/zentury
@@ -48,7 +48,7 @@ jobs:
         run: |
           mkdir -p _site/vernost/web && cp vernost/web/prihlaska.js _site/vernost/web/
           # prihláška sa zapne len pre prevádzku, ktorá má heslo do adminu (recepcia vie kartičky obsluhovať)
-          if [ ${#HESLO_B} -ge 10 ]; then sed -i 's#data-prevadzka="barbershop"#data-prevadzka="barbershop" data-zapnute#' _site/barbershop-30/index.html; fi
+          if [ ${#HESLO_B} -ge 10 ]; then sed -i 's#data-prevadzka="barbershop"#data-prevadzka="barbershop" data-zapnute#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; fi
           if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _site/index.html; fi
       - name: Asistent na otázky na webe BARBERSHOP 30 (server beží na www.headspa30.sk/asistent/)
         env:
@@ -56,14 +56,14 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
         run: |
           # okno sa zapne len s kľúčom API a nasadením na hosting (bez nich web nič nesťahuje ani neposiela)
-          if [ -n "$KLUC" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on">#<html lang="sk" data-motion="on" data-asistent="https://www.headspa30.sk/asistent/api.php">#' _site/barbershop-30/index.html; echo "asistent zapnutý"; else echo "asistent vypnutý (chýba ANTHROPIC_API_KEY alebo FTP_SERVER)"; fi
+          if [ -n "$KLUC" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on">#<html lang="sk" data-motion="on" data-asistent="https://www.headspa30.sk/asistent/api.php">#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; echo "asistent zapnutý"; else echo "asistent vypnutý (chýba ANTHROPIC_API_KEY alebo FTP_SERVER)"; fi
       - name: Objednávka na webe BARBERSHOP 30 (voľné časy z rezervačného kalendára cez server na www.headspa30.sk)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           KALENDAR: ${{ vars.ASISTENT_KALENDAR_URL }}
         run: |
           # okno sa zapne len so súhlasom prevádzky rezervačného systému (premenná ASISTENT_KALENDAR_URL) a so serverom na hostingu
-          if [ -n "$KALENDAR" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on"#<html lang="sk" data-motion="on" data-objednavka="https://www.headspa30.sk/asistent/api.php"#' _site/barbershop-30/index.html; echo "objednávka zapnutá"; else echo "objednávka vypnutá (chýba ASISTENT_KALENDAR_URL alebo FTP_SERVER)"; fi
+          if [ -n "$KALENDAR" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on"#<html lang="sk" data-motion="on" data-objednavka="https://www.headspa30.sk/asistent/api.php"#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; sed -i '/<meta name="robots" content="noindex">/d' _site/barbershop-30/rezervacia.html; echo "objednávka zapnutá"; else echo "objednávka vypnutá (chýba ASISTENT_KALENDAR_URL alebo FTP_SERVER)"; fi
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)

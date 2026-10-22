@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="sk" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rezervácia | Barbershop 30 Nitra</title>
+  <meta name="description" content="Online rezervácia v Barbershop 30 na Mostnej 30 v Nitre: vyber si službu, barbera a voľný čas. Alebo zavolaj na 0951 267 203.">
+  <meta name="theme-color" content="#0E0D0C">
+  <meta name="color-scheme" content="dark">
+  <!-- Rezervačná stránka (README, časť Rezervačná stránka). Kým nie je pripojený rezervačný kalendár (data-objednavka
+       z nasadenia), ukazuje cenník s odkazmi do rezervačného systému, preto sa zatiaľ neindexuje; nasadenie
+       s pripojeným kalendárom riadok robots odstráni. -->
+  <meta name="robots" content="noindex">
+  <!-- DEPLOY STEP: základná URL ako v index.html (nasadenie ju nahradí sed). -->
+  <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/rezervacia.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sk_SK">
+  <meta property="og:site_name" content="Barbershop 30">
+  <meta property="og:title" content="Rezervácia | Barbershop 30 Nitra">
+  <meta property="og:description" content="Vyber si službu, barbera a voľný čas. Mostná 30, Nitra.">
+  <meta property="og:url" content="https://d8f5s88zjy-art.github.io/barbershop30/rezervacia.html">
+  <meta property="og:image" content="https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230E0D0C'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Fraunces,Georgia,serif' font-weight='800' font-size='34' fill='%23F1E9DD'%3E30%3C/text%3E%3Crect x='20' y='49' width='24' height='3' rx='1.5' fill='%23E0601C'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="preload" href="assets/fonts/Fraunces-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Manrope-400.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- kurzíva je v nadpise úvodu (Tvoje miesto), bez prednačítania by sa nadpis prekreslil až po nej -->
+  <link rel="preload" href="assets/fonts/Fraunces-500i.woff2" as="font" type="font/woff2" crossorigin>
+  <style>/* písma priamo v stránke (to isté ako assets/fonts.css), aby prvé vykreslenie nečakalo na ďalší súbor */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/Fraunces-500.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:800;font-display:swap;src:url("assets/fonts/Fraunces-800.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:500;font-display:swap;src:url("assets/fonts/Fraunces-500i.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/Manrope-400.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/Manrope-600.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/Manrope-700.woff2") format("woff2")}
+  </style>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/objednavka.css">
+  <link rel="stylesheet" href="assets/rezervacia.css">
+</head>
+<body class="rez">
+  <a class="skip-link" href="#main">Preskočiť na obsah</a>
+
+  <!-- Lišta ako na webe; odkazy vedú na časti webu -->
+  <header class="site-header is-scrolled" data-menu="closed">
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="Barbershop 30 Nitra – na web">Barbershop 30 <small>Nitra</small></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path class="nav-toggle-open" d="M4 7h16M4 12h16M4 17h16"/>
+          <path class="nav-toggle-close" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Hlavná navigácia">
+        <a href="index.html#vstup-dnu">Prehliadka</a>
+        <a href="index.html#sluzby">Služby</a>
+        <a href="index.html#tim">Tím</a>
+        <a href="index.html#galeria">Galéria</a>
+        <a href="#kontakt">Kontakt</a>
+        <a class="btn btn-secondary btn-tel" href="tel:+421951267203">Zavolať</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- úvod: prázdne kreslo uprostred sály čaká -->
+    <section class="rez-uvod" aria-labelledby="h-rez">
+      <picture class="rez-foto" aria-hidden="true">
+        <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="100vw">
+        <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-stred-m-1086.webp 1086w, assets/img/film/kreslo-stred-m-1448.webp 1448w" sizes="100vw">
+        <source type="image/avif" srcset="assets/img/film/kreslo-stred-1448.avif 1448w, assets/img/film/kreslo-stred-2172.avif 2172w, assets/img/film/kreslo-stred-2896.avif 2896w" sizes="100vw">
+        <source type="image/webp" srcset="assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="100vw">
+        <img src="assets/img/film/kreslo-stred-1448.webp" width="4096" height="2731" alt="" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="container rez-uvod-text">
+        <p class="kicker">Rezervácia</p>
+        <h1 class="title" id="h-rez">Kedy <em>si sadneš?</em></h1>
+        <p class="title-sub">Vyber si službu, barbera a voľný čas. Alebo zavolaj na recepciu: v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.</p>
+        <div class="title-actions">
+          <a class="btn btn-primary" href="#objednavka">Vybrať službu</a>
+          <a class="btn btn-secondary btn-tel" href="tel:+421951267203">Zavolať a potvrdiť termín</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band rez-pas" aria-label="Rezervácia termínu">
+      <div class="container rez-grid">
+        <!-- kroky objednávky (assets/objednavka.js, stranka); bez skriptu a bez pripojeného kalendára ostane cenník
+             s odkazmi do rezervačného systému, kroky z neho berú služby, časy a ceny -->
+        <div class="rez-app" id="objednavka" data-objednavka-koren>
+          <div class="rez-cennik">
+            <p class="eyebrow">Služby a ceny</p>
+            <h2 class="h3">Vyber si službu</h2>
+            <p class="rez-pozn">Termín dokončíš v rezervačnom systéme Barbershopu 30 alebo telefonicky.</p>
+            <div class="price-list">
+              <section class="price-group" aria-labelledby="g-strih">
+                <h3 class="price-group-title" id="g-strih">Strih</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Pánsky strih</h4><p class="price-desc">Konzultácia, strih strojčekom aj nožnicami vrátane fade, umytie vlasov, fénovanie, styling a kolínska.</p></div>
+                    <p class="price-time">40 min</p>
+                    <p class="price-amount">18 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="1" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Pánsky strih a úprava brady</h4><p class="price-desc">Kompletný strih a k nemu úprava brady s horúcim uterákom, britvou a stylingom.</p></div>
+                    <p class="price-time">60 min</p>
+                    <p class="price-amount">28 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="18" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih a úprava brady</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Pánsky strih – dĺžka vlasov nad 10 cm</h4><p class="price-desc">Rovnaký postup ako pánsky strih, s viac času na dlhšie vlasy.</p></div>
+                    <p class="price-time">60 min</p>
+                    <p class="price-amount">22 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="19" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Pánsky strih, dĺžka vlasov nad 10 cm</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Strih pre malých gentlemanov</h4><p class="price-desc">Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.</p></div>
+                    <p class="price-time">45 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="5" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Strih pre malých gentlemanov</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Oholenie hlavy</h4><p class="price-desc">Príprava pokožky, holenie britvou, umytie, sušenie a styling.</p></div>
+                    <p class="price-time">25 min</p>
+                    <p class="price-amount">13 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="2" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Oholenie hlavy</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-brada">
+                <h3 class="price-group-title" id="g-brada">Brada a holenie</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Úprava brady</h4><p class="price-desc">Tvarovanie brady, naparenie horúcim uterákom, britva a styling s prípravkami.</p></div>
+                    <p class="price-time">20 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="3" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Úprava brady</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Holenie do hladka Hot Towel</h4><p class="price-desc">Holenie britvou s naparením horúcim uterákom a ošetrením pleti po holení.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="4" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Holenie do hladka Hot Towel</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Farbenie brady</h4><p class="price-desc">Farbenie profesionálnymi farbami, 20 ml farby.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">10 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="11" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Farbenie brady</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-balicky">
+                <h3 class="price-group-title" id="g-balicky">Balíčky</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Balíček 1</h4><p class="price-desc">Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska.</p></div>
+                    <p class="price-time">65 min</p>
+                    <p class="price-amount">30 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="14" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Balíček 1</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Ultra inclusive Barbershop30</h4><p class="price-desc">Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.</p></div>
+                    <p class="price-time">80 min</p>
+                    <p class="price-amount">40 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="15" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Ultra inclusive Barbershop30</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-doplnky">
+                <h3 class="price-group-title" id="g-doplnky">Doplnky</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Starostlivosť o pleť PREMIUM</h4><p class="price-desc">Naparenie tváre, peeling a relaxačná maska podľa vlastného výberu.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">21,50 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="6" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Starostlivosť o pleť PREMIUM</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Úprava obočia</h4><p class="price-desc">Vytrhanie a úprava obočia.</p></div>
+                    <p class="price-time">5 min</p>
+                    <p class="price-amount">3 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="7" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Úprava obočia</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Depilácia uší a nosa voskom</h4><p class="price-desc">Odstránenie chĺpkov z uší a nosa voskom.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">5,50 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="8" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Depilácia uší a nosa voskom</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Kreatívny ornament na hlave</h4><p class="price-desc">Vzor vystrihnutý do vlasov.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">4 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="10" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Kreatívny ornament na hlave</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Farbenie obočia</h4><p class="price-desc">Farbenie obočia profesionálnymi farbami.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">5 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="12" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať<span class="visually-hidden"> – Farbenie obočia</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <div class="price-extra">
+                <div class="price-main">
+                  <p class="price-name">Farbenie, melír a trvalá</p>
+                  <p class="price-desc">Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.</p>
+                </div>
+                <a class="link-arrow" href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">Rezervovať na Booqme <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="rez-bok" id="kontakt" aria-labelledby="h-kontakt">
+          <p class="eyebrow">Kde nás nájdeš</p>
+          <h2 class="h3" id="h-kontakt">Mostná 30, Nitra</h2>
+          <dl class="contact-list">
+            <div class="contact-row"><dt>Adresa</dt><dd><address>Mostná 30, 949 01 Nitra</address></dd></div>
+            <div class="contact-row"><dt>Telefón</dt><dd><a href="tel:+421951267203">0951 267 203</a></dd></div>
+            <div class="contact-row"><dt>E‑mail</dt><dd><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></dd></div>
+            <div class="contact-row"><dt>Otvorené</dt><dd>Po–Pi 9:00–19:00<br>So 9:00–14:00<br>Ne zatvorené</dd></div>
+          </dl>
+          <div class="rez-bok-akcie">
+            <a class="btn btn-primary btn-tel" href="tel:+421951267203">Zavolať a potvrdiť termín</a>
+            <a class="btn btn-secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Navigovať</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer rez-pata">
+    <div class="container footer-bottom">
+      <p class="small">© <span class="year">2026</span> Barbershop 30 · Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381</p>
+      <a class="link-arrow" href="index.html">Späť na web <span aria-hidden="true">→</span></a>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/rezervacia.js"></script>
+  <script src="assets/vernost.js" data-prevadzka="barbershop" defer></script>
+</body>
+</html>

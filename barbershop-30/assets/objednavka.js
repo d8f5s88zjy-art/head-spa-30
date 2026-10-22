@@ -5,9 +5,11 @@
  * Okno termín nerezervuje: na konci ukáže výber s poznámkou, že je predbežný, a vedie do rezervačného systému
  * (www.barbershop30.sk/rezervacia) alebo na telefón recepcie. Úspech sa tu nikdy neukazuje, lebo ho nič nepotvrdilo.
  *
- * Modul načíta app.js (časť 7b4) len s atribútom data-objednavka na <html> (nasadenie ho pridá až so súhlasom
- * prevádzky rezervačného systému, pages.yml) a zavolá spusti(api). Až keď server povie, že kalendár je pripojený,
- * odkazy Objednať sa otvoria toto okno; dovtedy a pri každej chybe vedú rovno do rezervačného systému.
+ * Dva režimy, rovnaké kroky: okno na webe (spusti, načíta ho app.js časť 7b4) a vložené na rezervačnej stránke
+ * (stranka, rezervacia.html cez assets/rezervacia.js). Oba len s atribútom data-objednavka na <html> (nasadenie ho
+ * pridá až so súhlasom prevádzky rezervačného systému, pages.yml). Až keď server povie, že kalendár je pripojený,
+ * odkazy Objednať sa otvoria okno, resp. stránka ukáže kroky; dovtedy a pri každej chybe vedú odkazy rovno do
+ * rezervačného systému.
  * Služby, časy a ceny berie z cenníka na stránke (a.price-cta[data-sluzba]), takže sú vždy rovnaké ako na webe
  * a v jazyku stránky. Texty okna sú v 8 jazykoch tu (T).
  */
@@ -43,7 +45,7 @@ function el(tag, attrs = {}, deti = []) {
   return e;
 }
 
-let API = '', dlg = null, pripojene = false;
+let API = '', dlg = null, koren = null, naStranke = false, pripojene = false;
 const s = { krok: 1, sluzba: null, barber: null, chce: null, datum: null, cas: null, dni: null, kresliDni: null };
 const pamat = new Map();                               // odpovede servera (barberi a dni dlhšie, časy 110 s)
 
@@ -66,9 +68,10 @@ function zTimu(meno) {
       return { meno: n.textContent.trim(), foto: foto && new URL(foto, document.baseURI).href };
     }
   }
-  return null;
+  // rezervačná stránka nemá tím: portrét podľa mena (assets/img/tim-<meno>-480.webp), keď chýba, ostane iniciála
+  return { meno, foto: new URL(`img/tim-${bez(meno).replace(/[^a-z0-9]+/g, '-')}-480.webp`, import.meta.url).href, odhad: true };
 }
-const menoBarbera = (m) => (m === KTOKOLVEK ? tx().nezalezi : (zTimu(m) || { meno: m }).meno);
+const menoBarbera = (m) => (m === KTOKOLVEK ? tx().nezalezi : zTimu(m).meno);
 
 async function daj(a, par, ttl = 36e5) {
   const q = new URLSearchParams({ a, ...par }).toString();
@@ -84,14 +87,13 @@ async function daj(a, par, ttl = 36e5) {
   } finally { clearTimeout(stop); }
 }
 
-/* ---------- okno ---------- */
+/* ---------- okno alebo blok na stránke ---------- */
 let telo, nadpis, krokEl, spat, vyber, zivy, pruh;
-function postav() {
-  dlg = el('dialog', { class: 'obj', 'aria-labelledby': 'obj-h', 'data-no-i18n': true, translate: 'no' });
+function postav(prvok) {
+  koren = prvok || el('dialog', { class: 'obj', 'aria-labelledby': 'obj-h' });
+  koren.setAttribute('data-no-i18n', ''); koren.setAttribute('translate', 'no');
   spat = el('button', { class: 'obj-spat', type: 'button' });
   spat.addEventListener('click', () => chod(s.krok - 1));
-  const zavri = el('button', { class: 'obj-x', type: 'button' }, [el('span', { 'aria-hidden': 'true' }, ['×'])]);
-  zavri.addEventListener('click', () => zatvor());
   krokEl = el('p', { class: 'obj-kicker' });
   pruh = el('div', { class: 'obj-pruh', 'aria-hidden': 'true' }, [1, 2, 3, 4].map(() => el('i')));
   nadpis = el('h2', { class: 'obj-h', id: 'obj-h', tabindex: '-1' });
@@ -99,13 +101,22 @@ function postav() {
   zivy = el('p', { class: 'obj-zivy', role: 'status', 'aria-live': 'polite' });
   telo = el('div', { class: 'obj-telo' });
   const tel = el('a', { class: 'obj-tel', href: TEL });
-  dlg.append(el('div', { class: 'obj-hlava' }, [spat, krokEl, zavri]), pruh, el('div', { class: 'obj-obsah' }, [nadpis, vyber, telo, zivy]), el('div', { class: 'obj-pata' }, [tel]));
-  dlg.addEventListener('close', () => { html.classList.remove('obj-otvorene'); if (history.state && history.state.obj) history.back(); });
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) zatvor(); });
-  addEventListener('popstate', () => { if (dlg.open) dlg.close(); });
-  document.body.append(dlg);
-  // jazyk sa zmenil: texty okna aj názvy služieb z cenníka (preložené na stránke) nanovo
-  new MutationObserver(() => { if (dlg.open) vykresli(false); }).observe(html, { attributes: true, attributeFilter: ['lang'] });
+  const hlava = el('div', { class: 'obj-hlava' }, [spat, krokEl]);
+  if (!naStranke) {
+    const zavri = el('button', { class: 'obj-x', type: 'button' }, [el('span', { 'aria-hidden': 'true' }, ['×'])]);
+    zavri.addEventListener('click', () => zatvor());
+    hlava.append(zavri);
+  }
+  koren.append(hlava, pruh, el('div', { class: 'obj-obsah' }, [nadpis, vyber, telo, zivy]), el('div', { class: 'obj-pata' }, [tel]));
+  if (!naStranke) {
+    dlg = koren;
+    dlg.addEventListener('close', () => { html.classList.remove('obj-otvorene'); if (history.state && history.state.obj) history.back(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) zatvor(); });
+    addEventListener('popstate', () => { if (dlg.open) dlg.close(); });
+    document.body.append(dlg);
+  }
+  // jazyk sa zmenil: texty aj názvy služieb z cenníka (preložené na stránke) nanovo
+  new MutationObserver(() => { if (naStranke || dlg.open) vykresli(false); }).observe(html, { attributes: true, attributeFilter: ['lang'] });
 }
 
 function otvor(pred = {}) {
@@ -128,14 +139,14 @@ function chod(n) {
 
 function vykresli(zameraj) {
   const L = tx();
-  dlg.lang = html.lang || 'sk';
+  koren.lang = html.lang || 'sk';
   spat.textContent = '← ' + L.spat;
   spat.hidden = s.krok === 1;
-  dlg.querySelector('.obj-x').setAttribute('aria-label', L.zavriet);
+  if (!naStranke) koren.querySelector('.obj-x').setAttribute('aria-label', L.zavriet);
   krokEl.textContent = L.kicker + ' · ' + fill(L.krok, { n: s.krok });
   [...pruh.children].forEach((i, k) => i.classList.toggle('je', k < s.krok));
   nadpis.textContent = [L.h1, L.h2, L.h3, L.h4][s.krok - 1];
-  dlg.querySelector('.obj-tel').textContent = L.tel;
+  koren.querySelector('.obj-tel').textContent = L.tel;
   zivy.textContent = '';
   // doterajší výber: ťuknutím sa vrátiš na krok
   const sl = sluzby().find((x) => x.id === s.sluzba);
@@ -152,7 +163,9 @@ function vykresli(zameraj) {
   telo.replaceChildren(...[krok1, krok2, krok3, krok4][s.krok - 1](L, sl));
   telo.classList.remove('obj-prichod'); void telo.offsetWidth; telo.classList.add('obj-prichod');
   if (zameraj) nadpis.focus({ preventScroll: true });
-  telo.scrollTop = 0; dlg.querySelector('.obj-obsah').scrollTop = 0;
+  if (!naStranke) { telo.scrollTop = 0; koren.querySelector('.obj-obsah').scrollTop = 0; }
+  // na stránke: nový krok začína hore, ak je začiatok bloku nad oknom (bez únosu skrolu, len jeden posun)
+  else if (zameraj && koren.getBoundingClientRect().top < 0) koren.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
 /* 1. služba (z cenníka) */
@@ -181,9 +194,15 @@ function krok2(L) {
     if (!mena.length) return box.replaceChildren(...problem(L.nikto));
     box.replaceChildren(el('ul', { class: 'obj-tim', role: 'list' }, [KTOKOLVEK, ...mena].map((m) => {
       const t = m === KTOKOLVEK ? null : zTimu(m);
+      const mono = () => el('span', { class: 'obj-mono', 'aria-hidden': 'true' }, [m === KTOKOLVEK ? '30' : t.meno.slice(0, 1)]);
+      let foto = null;
+      if (t && t.foto) {
+        foto = el('img', { src: t.foto, alt: '', width: '96', height: '96', loading: 'lazy', decoding: 'async' });
+        foto.addEventListener('error', () => foto.replaceWith(mono()), { once: true });
+      }
       const b = el('button', { type: 'button', class: s.barber === m ? 'je' : null }, [
-        t && t.foto ? el('img', { src: t.foto, alt: '', width: '96', height: '96', loading: 'lazy', decoding: 'async' }) : el('span', { class: 'obj-mono', 'aria-hidden': 'true' }, [m === KTOKOLVEK ? '30' : (t ? t.meno : m).slice(0, 1)]),
-        el('span', { class: 'obj-n' }, [m === KTOKOLVEK ? L.nezalezi : t ? t.meno : m]),
+        foto || mono(),
+        el('span', { class: 'obj-n' }, [m === KTOKOLVEK ? L.nezalezi : t.meno]),
         m === KTOKOLVEK ? el('span', { class: 'obj-m' }, [L.nezaleziP]) : null]);
       b.addEventListener('click', () => vyberBarbera(m));
       return el('li', {}, [b]);
@@ -323,4 +342,28 @@ export async function spusti(api) {
     e.preventDefault();
     otvor(predvolby(a));
   }, true);
+}
+
+/* Rezervačná stránka (rezervacia.html): kroky priamo v bloku prvok. Statický cenník v ňom (bez skriptu a bez
+   pripojeného kalendára vedie do rezervačného systému) ostane v stránke skrytý, kroky z neho berú služby. */
+export async function stranka(api, prvok) {
+  API = api;
+  try {
+    const r = await fetch(`${API}?a=stav`, { credentials: 'omit', cache: 'no-store' });
+    const j = await r.json();
+    pripojene = !!(j && j.ok && j.kalendar);
+  } catch (e) { pripojene = false; }
+  if (!pripojene || !sluzby().length) return false;
+  naStranke = true;
+  const kroky = el('div', { class: 'obj obj-stranka', 'aria-labelledby': 'obj-h' });
+  postav(kroky);
+  [...prvok.children].forEach((d) => { d.hidden = true; });
+  prvok.append(kroky);
+  html.classList.add('obj-zapnute', 'obj-css');
+  // odkaz s predvolenou službou (?sluzba=1) alebo barberom (?barber=Adrian), napr. z webu alebo Instagramu
+  const q = new URLSearchParams(location.search);
+  const sl = Number(q.get('sluzba')), ba = q.get('barber');
+  Object.assign(s, { krok: 1, sluzba: null, barber: null, chce: ba ? ba.slice(0, 40) : null, datum: null, cas: null, dni: null });
+  if (sluzby().some((x) => x.id === sl)) vyberSluzbu(sl); else vykresli(false);
+  return true;
 }

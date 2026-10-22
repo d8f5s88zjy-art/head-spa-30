@@ -6,7 +6,7 @@ overuje v rezervačnom kalendári (keď je napojenie povolené) a pri každej od
 
 | Časť | Kde |
 | --- | --- |
-| Okno na webe (8 jazykov, odkazy v odpovedi, rozhovor v karte prehliadača) | `barbershop-30/assets/asistent.js`, `asistent.css` |
+| Okno na webe a na rezervačnej stránke (8 jazykov, odkazy v odpovedi, rozhovor v karte prehliadača) | `barbershop-30/assets/asistent.js`, `asistent.css`; načíta ho `app.js` (web) a `rezervacia.js` (rezervacia.html) |
 | Zapnutie na webe (atribút `data-asistent` na `<html>`) | `barbershop-30/assets/app.js` časť 7b3, `.github/workflows/pages.yml` |
 | Server: prúd odpovede, nástroj na termíny, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
 | Voľné termíny z rezervačného systému (len čítanie voľných časov) | `lib/kalendar.php` |
@@ -56,7 +56,8 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 
 ## Objednávkové okno na webe (služba → barber → deň → čas)
 
-- Web Barbershop 30 (`barbershop-30/assets/objednavka.js`) sa pýta servera bez kľúča API, len čítaním:
+- Web Barbershop 30 (`barbershop-30/assets/objednavka.js`: okno na webe aj kroky na rezervačnej stránke
+  `barbershop-30/rezervacia.html`) sa pýta servera bez kľúča API, len čítaním:
   `api.php?a=barberi&sluzba=1` (mená barberov), `a=dni&sluzba=1&barber=…` (rozsah, zatvorené dni, sviatky),
   `a=terminy&sluzba=1&barber=…&datum=YYYY-MM-DD` (to isté ako nástroj asistenta, `volne_terminy`). Odpoveď nikdy
   neobsahuje mená ani poznámky iných zákazníkov.

@@ -363,3 +363,20 @@ Všetko v emulácii prehliadača (Playwright, Chromium bez grafickej karty) prot
   prístupnosť, postupy, SEO 100; CLS 0.
 - app-smoke, i18n-test (vizitka s `lang="sk"` sa neprekladá), tma-test, asistent-test, nahlad: všetko OK.
 
+## 17. Rezervačná stránka a AI asistent na nej (2026‑10‑22)
+
+Emulácia prehliadača proti falošnému rezervačnému systému; živý systém ani fyzický telefón netestované.
+
+- `objednavka-test.mjs` (spolu s oknom na webe všetko OK, 3 behy po sebe): stránka bez skriptu (úvod, 15 služieb
+  s odkazom do rezervačného systému, telefón, text viditeľný, bez pretekania); bez príznaku sa nič nesťahuje ani
+  neposiela; s kalendárom kroky priamo na stránke na 360/390/430/768/1440 px bez pretekania, výber predbežný
+  s dokončením v rezervačnom systéme; odkaz `?sluzba=1&barber=Adrian` rovno na deň; po anglicky úvod, názov aj kroky;
+  tlačidlo AI asistenta označené ako AI; žiadna požiadavka na skutočné systémy, makeOrder nikdy.
+- Časy v teste nezávisia od hodiny: dnes sa ukážu len časy, ktoré ešte neprešli (okno vtedy prejde na ďalší deň).
+- Preklady stránky v 7 jazykoch bez zvyškov slovenčiny (rovnaká kontrola ako i18n-test).
+- Lighthouse rezervacia.html (server s gzipom): telefón 96/96/97, počítač 100; prístupnosť a postupy 100; SEO 66 len
+  pre zámerné `noindex` (zatiaľ duplikát cenníka, nasadenie s kalendárom ho odstráni); CLS 0.
+- Čísla dní v Manrope (vo Fraunces vyzerala malá „3“ ako „5“). Bez plávajúcej spodnej lišty, aby nič neprekrývalo
+  tlačidlá cenníka; Zavolať je v úvode, v krokoch aj pri kontakte.
+- Hlavný web: i18n-test, app-smoke, asistent-test všetko OK; server asistenta 35 + 17 OK.
+

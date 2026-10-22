@@ -1,0 +1,55 @@
+/* BARBERSHOP 30 – rezervačná stránka (rezervacia.html). Stavia na style.css webu (farby, písma, tlačidlá, lišta,
+   cenník, kontakt) a objednavka.css (kroky). Tu je len rozloženie stránky: úvod s fotkou kresla, kroky objednávky
+   (bez skriptu cenník) a vedľa kontakt. Bez filmu a bez únosu skrolu; jediný pohyb je krátky príchod úvodu. */
+body.rez { background: var(--ink); }
+
+/* úvod: prázdne kreslo uprostred sály, text vľavo dole */
+.rez-uvod { position: relative; min-height: min(78vh, 46rem); display: flex; align-items: flex-end; overflow: hidden; isolation: isolate;
+  padding: calc(var(--nav-h) + var(--s8)) 0 var(--s8); }
+.rez-foto { position: absolute; inset: 0; z-index: -1; }
+.rez-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+/* šero len pod textom a pri spodnom okraji (fotka sa netónuje), plynulý prechod do pásu */
+.rez-uvod::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to top, var(--ink-2) 0, rgba(23, 20, 18, 0.72) 26%, rgba(14, 13, 12, 0.18) 62%, rgba(14, 13, 12, 0.45) 100%),
+    linear-gradient(to right, rgba(14, 13, 12, 0.62), rgba(14, 13, 12, 0) 62%); }
+.rez-uvod .title { font-size: clamp(2.75rem, 7vw, 5.5rem); max-width: 12ch; }
+.rez-uvod .title-sub { max-width: 40ch; }
+.rez-uvod .kicker, .rez-uvod .title, .rez-uvod .title-sub, .rez-uvod .title-actions { animation: text-in 600ms var(--ease-out) both; }
+.rez-uvod .title { animation-delay: 80ms; }
+.rez-uvod .title-sub { animation-delay: 200ms; }
+.rez-uvod .title-actions { animation-delay: 300ms; }
+
+/* pás: kroky (alebo cenník) a kontakt vedľa */
+.rez-pas { border-top: 0; padding-block: var(--s8) var(--s9); }
+.rez-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem); gap: var(--s8); align-items: start; }
+.rez-app { min-width: 0; scroll-margin-top: calc(var(--nav-h) + var(--s4)); }
+.rez-cennik .h3 { margin: 0; }
+.rez-pozn { margin: var(--s3) 0 var(--s6); color: var(--paper-2); max-width: 46ch; }
+.rez-bok { position: sticky; top: calc(var(--nav-h) + var(--s5)); }
+.rez-bok .h3 { margin: 0; }
+.rez-bok .contact-list { margin-top: var(--s5); }
+.rez-bok .contact-row { grid-template-columns: 6rem 1fr; font-size: 1rem; }
+.rez-bok-akcie { display: grid; gap: var(--s3); margin-top: var(--s5); }
+.rez-bok-akcie .btn { width: 100%; white-space: normal; text-align: center; line-height: 1.25; }
+
+.rez-pata { padding-block: var(--s6); border-top: 1px solid var(--line); }
+.rez-pata .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s3) var(--s5); }
+.rez-pata .small { margin: 0; }
+
+@media (max-width: 1100px) {
+  .rez-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s7); }
+  .rez-bok { position: static; max-width: 40rem; }
+}
+/* stránka nemá plávajúcu spodnú lištu (Zavolať je v úvode, v krokoch aj pri kontakte), nič neprekrýva tlačidlá */
+@media (max-width: 900px) { body.rez { padding-bottom: 0; } }
+@media (max-width: 640px) {
+  .rez-uvod { min-height: 0; padding: calc(var(--nav-h) + 30svh) 0 var(--s6); }
+  .rez-uvod::after { background: linear-gradient(to top, var(--ink-2) 0, rgba(23, 20, 18, 0.86) 34%, rgba(14, 13, 12, 0.2) 70%, rgba(14, 13, 12, 0.45) 100%); }
+  .rez-uvod .title-actions .btn { width: 100%; }
+  .rez-pas { padding-block: var(--s6) var(--s8); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rez-uvod * { animation: none !important; }
+}
+/* tlačidlo AI asistenta vľavo dole: koniec stránky sa dá odskrolovať nad neho, nič pod ním neostane schované */
+@media (max-width: 900px) { body.rez:has(.asi-btn.is-on) { padding-bottom: 76px; } }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Nasadenie na samostatnú adresu https://d8f5s88zjy-art.github.io/barbershop30/ (repozitár d8f5s88zjy-art/barbershop30,
-# GitHub Pages z vetvy main, koreň). Do repozitára ide len web: index.html, assets/, robots.txt, sitemap.xml a .nojekyll,
+# GitHub Pages z vetvy main, koreň). Do repozitára ide len web: index.html, rezervacia.html, assets/, robots.txt, sitemap.xml a .nojekyll,
 # bez source/ a docs/ (pracovné podklady ostávajú v head-spa-30).
 # Spustenie z koreňa barbershop-30 po nasadení do main v head-spa-30:
 #   bash source/tools/nasad-barbershop30.sh "BARBERSHOP 30: čo sa zmenilo"
@@ -17,7 +17,7 @@ else
 fi
 # obsah webu nanovo (zmazané súbory zmiznú aj v repozitári webu)
 find "$W" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-cp -a "$SITE/index.html" "$SITE/robots.txt" "$SITE/sitemap.xml" "$W/"
+cp -a "$SITE/index.html" "$SITE/rezervacia.html" "$SITE/robots.txt" "$SITE/sitemap.xml" "$W/"
 cp -a "$SITE/assets" "$W/assets"
 touch "$W/.nojekyll"                                   # súbory sa servírujú tak, ako sú (bez Jekyllu)
 cd "$W"
