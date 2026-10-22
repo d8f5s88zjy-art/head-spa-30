@@ -203,7 +203,7 @@ try {
     await page.reload({ waitUntil: 'load' });
     await page.evaluate(() => window.scrollTo(0, 30));
     await btn.waitFor({ state: 'visible', timeout: 8000 });
-    await sleep(7000);
+    await sleep(10500);
     ok(await page.locator('.asi-oznam').isHidden(), 'Barber: zavretá bublina sa znova neukáže');
     // Skryť Barbera: ikona aj okno zmiznú do konca návštevy
     await btn.click();

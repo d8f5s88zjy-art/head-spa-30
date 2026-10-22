@@ -54,6 +54,14 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   a rovnaké v `../asistent/lib/otazky.php`. Po úprave otázok `node source/tools/otazky.mjs` (kontrola faktov proti
   cenníku, zhoda prehliadač a server, kópia `assets/asistent-otazky.json`).
 
+- **Živý telefón (2026‑10‑22, style.css P15, app.js časť 12)**: zadávateľ: „na telefóne to pôsobí ako PowerPoint“.
+  Fotka scény sa aj bez filmu hýbe pri skrolovaní ako kamera podľa `data-mv` (in a near priblíženie, rise a down
+  zvislý posun, left a right vodorovný; presah 1,14, okraj fotky nevidno), karta s textom ide o kúsok pomalšie
+  (hĺbka 44 px), každá scéna má háčik `.hook` (krátka výzva s odkazom na objednanie alebo na cenník, nastúpi po
+  nadpise, šípka raz ukáže smer), úvod ukazuje živý stav otváracích hodín (`[data-zive]`, slová tabule `__tabula`),
+  cenník má na telefóne pripnuté záložky skupín, popis na dva riadky (ťuk rozbalí) a riadky nastúpia zdola, pásy
+  tímu a galérie sa raz jemne posunú. Ikona asistenta 48 px (telefón 44 px), spodná lišta menšia. Pri obmedzení
+  pohybu a bez skriptu všetko stojí a je viditeľné.
 - **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
   s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí
   čo (strih, brada, holenie), prečo (5,0 na Google, 945 recenzií; pánsky strih 18 €) a ako (Objednať sa, Zavolať

@@ -348,7 +348,7 @@ export async function spusti(api) {
     } else if (navrat && navrat.focus) navrat.focus({ preventScroll: true });
   }
 
-  // bublina: raz za návštevu, keď návštevník ikonu chvíľu vidí (nie v úvode, pri menu ani pri ponuke jazyka);
+  // bublina: raz za návštevu, keď návštevník ikonu 8 s vidí (nie v úvode, pri menu ani pri ponuke jazyka);
   // sama zmizne po 25 s, zavretá krížikom sa 14 dní neukáže
   let oznamCas = 0;
   function ukazOznam() {
@@ -368,7 +368,7 @@ export async function spusti(api) {
   const hodiny = setInterval(() => {
     const vidno = btn.isConnected && panel.hidden && parseFloat(getComputedStyle(btn).opacity) > 0.9 && !document.querySelector('.lang-offer.in');
     videl = vidno ? videl + 1 : 0;
-    if (videl >= 5 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 5) ukazOznam(); }
+    if (videl >= 8 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 8) ukazOznam(); }
   }, 1000);
 
   // Skryť Barbera: ikona, bublina aj okno zmiznú do konca návštevy

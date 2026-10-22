@@ -445,3 +445,21 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   ide na server, clona, klávesnica simulovaná náhradou visualViewport, ťuk na clonu zavrie); server 37 + 17 OK.
 - Opravený test servera: súbežný test prepisoval počítadlo chýb (`zle`), súhrn mohol ukázať 0 FAIL aj pri chybe.
 - Neoverené: skutočná klávesnica na iPhone a Androide (emulácia), odpovede skutočného modelu (chýba kľúč API).
+
+## 22. Živý telefón, háčiky a menšie ikony (2026‑10‑22)
+
+- Zadávateľ: na telefóne web pôsobí ako PowerPoint; chce živý web, každá animácia so silným háčikom, aby zákazník
+  ostal a objednal sa; ikony menšie, aby nebili do očí.
+- Príčina dojmu prezentácie: v pokojnej verzii (bez WebGL a kým film nenabehne) stála pri titulnej karte fotka
+  pevne (len 6 % priblíženie za celú scénu) a karta sa len rozsvietila a zhasla; cenník mal na 390 px vyše
+  15 obrazoviek.
+- Zmeny (style.css P15, app.js časť 12): pohyb kamery bez filmu podľa `data-mv` (overené výpočtom: čakáreň
+  1,04 → 1,16 počas scény), hĺbka karty 44 px, 7 háčikov v kartách scén (8 jazykov), živý stav otváracích hodín
+  v úvode (o 22:04 „Teraz zatvorené, zajtra od 9:00“, správne), záložky cenníka pripnuté pod lištou so zvýraznením
+  skupiny na obrazovke, popis služby na dva riadky (ťuk rozbalí), nástup riadkov, jednorazové posunutie pásov
+  tímu a galérie. Ikona asistenta 48 px (telefón 44 px), bublina menšia a až po 8 s, spodná lišta 42 px.
+- Pri snímaní počas plynulého skrolu (scroll-behavior: smooth) robil Playwright snímky s posunutou stránkou
+  a čiernou plochou; meranie polohy lišty v každom snímku ukázalo, že stránka sa neposúva (chyba snímania).
+  Prehliadky odteraz skrolujú okamžite.
+- Testy: i18n-test, app-smoke, asistent-test, objednavka-test OK; mobil-audit 360/390/430 nižšie.
+- Neoverené: skutočný telefón (len emulácia), film na skutočnej grafike telefónu.

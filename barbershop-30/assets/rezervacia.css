@@ -67,4 +67,4 @@ body.rez { background: var(--ink); }
   .rez-uvod * { animation: none !important; }
 }
 /* tlačidlo AI asistenta vľavo dole: koniec stránky sa dá odskrolovať nad neho, nič pod ním neostane schované */
-@media (max-width: 900px) { body.rez:has(.asi-btn.is-on) { padding-bottom: 76px; } }
+@media (max-width: 900px) { body.rez:has(.asi-btn.is-on) { padding-bottom: 64px; } }

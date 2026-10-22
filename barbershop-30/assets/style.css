@@ -933,6 +933,9 @@ html[data-motion="off"] .board-hero { animation: none; }
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s4);
 }
 .footer-top { color: var(--paper); font-size: 0.9375rem; }
+/* autor webu (zadávateľ, 2026‑10‑22): tichý riadok pod údajmi prevádzkovateľa */
+.footer-autor { color: var(--paper-3); }
+.footer-bottom .footer-autor { flex-basis: 100%; order: 3; margin-top: calc(-1 * var(--s2)); }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px)  { .footer-grid { grid-template-columns: 1fr; gap: var(--s5); } }
 
@@ -1366,3 +1369,89 @@ html.js-odhal .odhal.is-in picture { transform: none; }
   .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); }
 }
 @media (max-width: 380px) { .hero-proof { flex-direction: column; align-items: center; gap: 2px; } .hero-proof li + li::before { display: none; } }
+
+/* ==========================================================================
+   P15. Živý telefón (2026‑10‑22): zadávateľ: „na telefóne to pôsobí ako PowerPoint“. Fotka scény sa aj bez
+   filmu (pokojná verzia, kým film nenabehne, slabší telefón) hýbe ako kamera podľa smeru záberu (data-mv),
+   karta s textom má jemnú hĺbku, každá scéna končí háčikom (krátka výzva s odkazom na objednanie), úvod ukazuje
+   živý stav otváracích hodín, cenník má na telefóne záložky a kompaktné riadky. Menšie ikony spodnej lišty.
+   Všetko len pri povolenom pohybe; bez skriptu a pri obmedzení pohybu stojí a obsah je celý viditeľný.
+   ========================================================================== */
+/* pohyb kamery bez filmu: --sp (0 až 1) z app.js, presah 1,14 kryje posun, okraj fotky nikdy nevidno */
+html[data-motion="on"]:not(.world) .film-shot[data-mv] .film-still img,
+html[data-motion="on"].world-off:not(.world-frame) .film-shot[data-mv] .film-still img {
+  transform: translate(calc(var(--kx, 0) * (var(--sp, 0) - 0.5) * 1%), calc(var(--ky, 0) * (var(--sp, 0) - 0.5) * 1%)) scale(calc(var(--k0, 1.1) + (var(--k1, 1.1) - var(--k0, 1.1)) * var(--sp, 0)));
+}
+html[data-motion="on"] .film-shot[data-mv="in"] .film-still img { --k0: 1.04; --k1: 1.16; }
+html[data-motion="on"] .film-shot[data-mv="near"] .film-still img { --k0: 1.02; --k1: 1.1; }
+html[data-motion="on"] .film-shot[data-mv="rise"] .film-still img { --k0: 1.14; --k1: 1.14; --ky: -9; }
+html[data-motion="on"] .film-shot[data-mv="down"] .film-still img { --k0: 1.14; --k1: 1.14; --ky: 9; }
+html[data-motion="on"] .film-shot[data-mv="left"] .film-still img { --k0: 1.14; --k1: 1.14; --kx: -9; }
+html[data-motion="on"] .film-shot[data-mv="right"] .film-still img { --k0: 1.14; --k1: 1.14; --kx: 9; }
+
+/* karta s textom: pri skrolovaní ide o kúsok pomalšie než fotka (hĺbka), nikdy nezakryje tlačidlá */
+html[data-motion="on"] .film-shot.is-title:not([data-pro]) .title-card { transform: translateY(calc((0.5 - var(--sp, 0.5)) * 44px)); }
+
+/* háčik scény: krátka výzva s odkazom na objednanie; nastúpi po nadpise a šípka raz ukáže smer */
+.hook {
+  display: inline-flex; align-items: center; gap: 0.5em; margin-top: var(--s4); min-height: 44px; padding: 0 var(--s4);
+  border: 1px solid var(--lamp); border-radius: 999px; background: rgba(var(--ink-rgb), 0.55);
+  color: var(--paper); font: 700 0.9375rem/1.2 var(--font-text); text-decoration: none; pointer-events: auto;
+}
+.hook:hover, .hook:focus-visible { background: var(--lamp); color: var(--ink); }
+.hook:active { transform: scale(0.97); }
+.hook-sipka { color: var(--lamp-2); font-weight: 800; }
+.hook:hover .hook-sipka, .hook:focus-visible .hook-sipka { color: var(--ink); }
+html.js-kin .film-shot.is-title .hook { opacity: 0; transform: translateX(-14px); transition: opacity 0.45s var(--ease-out) 0.55s, transform 0.6s cubic-bezier(0.2, 0.75, 0.15, 1) 0.55s, background-color var(--t-micro), color var(--t-micro); }
+html.js-kin .film-shot.is-title.is-on .hook { opacity: 1; transform: none; }
+html.js-kin .film-shot.is-title.is-on .hook-sipka { animation: hook-sipka 1.1s ease-in-out 1.2s 2; }
+@keyframes hook-sipka { 0%, 100% { transform: none; } 45% { transform: translateX(6px); } }
+
+/* úvod: živý stav podľa otváracích hodín (app.js, texty tabule __tabula v slovníkoch) */
+.hero-live { display: inline-flex; align-items: center; gap: 0.55em; margin: 0 0 var(--s3); padding: 6px 14px 6px 12px; border-radius: 999px; background: rgba(var(--ink-rgb), 0.6); border: 1px solid var(--line-strong); font-size: 0.875rem; font-weight: 700; color: var(--paper); }
+.hero-live[hidden] { display: none; }
+.hero-live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--paper-3); flex: none; }
+.hero-live.is-otvorene::before { background: var(--lamp-2); box-shadow: 0 0 0 0 rgba(240, 126, 60, 0.55); animation: hero-live 2.4s ease-out 1s 3; }
+@keyframes hero-live { 70% { box-shadow: 0 0 0 9px rgba(240, 126, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 126, 60, 0); } }
+.title-hero .hero-live { animation: text-in 600ms var(--ease-out) 700ms both; }
+.film-shot[data-card="center"] .hero-live { align-self: center; }
+
+/* cenník na telefóne: záložky skupín (pripnuté pod lištou, ťuk skočí na skupinu), kompaktné riadky,
+   popis na dva riadky (ťuk ho rozbalí), riadky nastúpia zdola pri prvom zobrazení */
+.price-tabs { display: none; }
+@media (max-width: 800px) {
+  .price-tabs {
+    display: flex; gap: var(--s2); position: sticky; top: var(--nav-h); z-index: 5;
+    margin: 0 calc(-1 * var(--s4)) var(--s4); padding: var(--s2) var(--s4); overflow-x: auto; scrollbar-width: none;
+    background: rgba(var(--ink-rgb), 0.94); border-bottom: 1px solid var(--line);
+  }
+  .price-tabs::-webkit-scrollbar { display: none; }
+  .price-tabs a { flex: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--s4); border: 1px solid var(--line-strong); border-radius: 999px; color: var(--paper-2); font-size: 0.875rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .price-tabs a[aria-current="true"] { background: var(--lamp); border-color: var(--lamp); color: var(--ink); }
+  .price-group { scroll-margin-top: calc(var(--nav-h) + 64px); }
+  .price-row { padding: var(--s3) 0; row-gap: var(--s2); }
+  html.js-cennik .price-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; cursor: pointer; }
+  html.js-cennik .price-row.is-otvorene .price-desc { -webkit-line-clamp: unset; }
+  .price-amount { font-size: 1.375rem; }
+  .price-cta.btn { min-height: 40px; }
+  html.js-cennik[data-motion="on"] .price-row { opacity: 0; transform: translateY(18px); transition: opacity 0.45s var(--ease-out), transform 0.55s cubic-bezier(0.2, 0.75, 0.15, 1); }
+  html.js-cennik[data-motion="on"] .price-row.is-in { opacity: 1; transform: none; }
+}
+
+/* tím a galéria na telefóne: jednorazové posunutie pásu ako náznak, že sa dá potiahnuť (app.js, is-nudge) */
+@keyframes pas-nudge { 0%, 100% { transform: none; } 45% { transform: translateX(-52px); } }
+@media (max-width: 640px) {
+  html[data-motion="on"] .team-grid.is-nudge > *, html[data-motion="on"] .gallery-grid.is-nudge > * { animation: pas-nudge 1.1s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s both; }
+}
+
+/* spodná lišta na telefóne: menšia a tichšia (zadávateľ: ikony nemajú biť do očí) */
+@media (max-width: 900px) {
+  .mobile-cta .btn { min-height: 42px; padding-inline: var(--s3); font-size: 0.72rem; letter-spacing: 0.06em; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+  .mobile-cta .btn-call { padding: 0 var(--s3) 0 10px; }
+  .mobile-cta .btn-call svg { width: 17px; height: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-shot.is-title .title-card, .hook, .hook-sipka, .hero-live::before, .price-row, .team-grid > *, .gallery-grid > * { transition: none !important; animation: none !important; transform: none !important; opacity: 1 !important; }
+}
+html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"] .hook { transform: none; opacity: 1; }

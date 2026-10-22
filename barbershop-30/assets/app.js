@@ -783,4 +783,58 @@ start();
     if (!run) return;
     io([box], (el, on, o) => { if (on) { run(); o && o.unobserve(el); } }, { threshold: 0.6 });
   });
+
+  // úvod (P15): živý stav otváracích hodín, ten istý výpočet a slová ako tabuľa (__tabula), každú minútu znova
+  const zive = d.querySelector('[data-zive]');
+  const stavTeraz = () => {
+    const W = (window.B30_LANG && window.B30_LANG.data('__tabula')) || SK;
+    const { dow, h } = nowNitra(), t = HOURS[dow];
+    let n = (dow + 1) % 7; while (!HOURS[n]) n = (n + 1) % 7;
+    const dalsi = vypln(W.dalsi, { kedy: n === (dow + 1) % 7 ? W.zajtra : W.dni[n], cas: `${HOURS[n][0]}:00` });
+    const otv = !!(t && h >= t[0] && h < t[1]);
+    zive.textContent = otv ? `${W.terazOtvorene} · ${t[0]}:00 – ${t[1]}:00` : t && h < t[0] ? vypln(W.otvarameO, { cas: `${t[0]}:00` }) : vypln(W.terazZatvorene, { dalsi });
+    zive.classList.toggle('is-otvorene', otv);
+    zive.hidden = false;
+  };
+  if (zive) { zive.setAttribute('data-no-i18n', ''); stavTeraz(); d.addEventListener('langchange', stavTeraz); setInterval(stavTeraz, 60000); }
+
+  // cenník na telefóne (P15): záložky skupín s vyznačením tej, ktorá je na obrazovke, popis služby na dva riadky
+  // (ťuk ho rozbalí), riadky nastúpia pri prvom zobrazení; záložky sú odkazy na skupiny, bez skriptu nie sú
+  const cennik = d.getElementById('cennik');
+  const skupiny = cennik ? [...cennik.querySelectorAll('.price-group[aria-labelledby]')] : [];
+  if (skupiny.length > 1) {
+    root.classList.add('js-cennik');
+    const lista = d.createElement('nav');
+    lista.className = 'price-tabs';
+    lista.setAttribute('aria-label', (d.querySelector('#sluzby .kicker') || {}).textContent || 'Služby a ceny');
+    const zalozky = skupiny.map((g) => {
+      const id = g.getAttribute('aria-labelledby'), a = d.createElement('a');
+      a.href = '#' + id; a.textContent = (d.getElementById(id) || {}).textContent || '';
+      a.addEventListener('click', (e) => { e.preventDefault(); g.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' }); });
+      lista.append(a);
+      return a;
+    });
+    cennik.before(lista);
+    // nadpisy skupín sa prekladajú, záložky preberú ich text
+    d.addEventListener('langchange', () => skupiny.forEach((g, i) => { zalozky[i].textContent = (d.getElementById(g.getAttribute('aria-labelledby')) || {}).textContent || ''; }));
+    io(skupiny, (g, on) => {
+      if (!on) return;
+      const i = skupiny.indexOf(g);
+      zalozky.forEach((a, j) => a.setAttribute('aria-current', String(i === j)));
+      const a = zalozky[i];
+      lista.scrollTo({ left: a.offsetLeft - (lista.clientWidth - a.offsetWidth) / 2, behavior: still ? 'auto' : 'smooth' });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    cennik.addEventListener('click', (e) => { const p = e.target.closest('.price-desc'); if (p) p.closest('.price-row').classList.toggle('is-otvorene'); });
+    io([...cennik.querySelectorAll('.price-row')], (el, on, o) => { if (on) { el.classList.add('is-in'); o && o.unobserve(el); } }, { threshold: 0.12 });
+  }
+
+  // tím a galéria na telefóne (P15): pás sa pri prvom zobrazení raz jemne posunie a vráti, aby bolo vidieť,
+  // že pokračuje; len kým ho návštevník sám neposunul
+  if (!still && matchMedia('(max-width: 640px)').matches) {
+    io([...d.querySelectorAll('.team-grid, .gallery-grid')], (el, on, o) => {
+      if (!on) return;
+      o && o.unobserve(el);
+      if (el.scrollLeft < 4) el.classList.add('is-nudge');
+    }, { threshold: 0.6 });
+  }
 })();

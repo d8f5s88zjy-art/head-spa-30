@@ -1,5 +1,6 @@
 /* BARBERSHOP 30 – Barber, okno asistenta (asistent.js). Načíta sa až s modulom, prvý obraz stránky ho nepotrebuje.
-   Ikona (logo v bielom kruhu so štítkom AI) je vľavo dole (vpravo dole je na telefóne Zavolať a Rezervovať).
+   Ikona (logo v bielom kruhu so štítkom AI, 48 px, na telefóne 44 px, aby nebila do očí) je vľavo dole
+   (vpravo dole je na telefóne Zavolať a Rezervovať).
    Bublina vyskočí nad ikonou, okno na počítači tiež nad ňou ako bublina, na telefóne sa vysunie zdola. */
 .asi-logo { display: grid; place-items: center; border-radius: 50%; background: #fff; overflow: hidden; }
 .asi-logo img { display: block; width: 76%; height: auto; }
@@ -11,16 +12,16 @@
 /* ikona */
 .asi-btn {
   position: fixed; left: var(--gutter); bottom: calc(var(--s4) + env(safe-area-inset-bottom, 0px)); z-index: 36;
-  width: 60px; height: 60px; padding: 0; display: grid; place-items: center;
+  width: 48px; height: 48px; padding: 0; display: grid; place-items: center;
   border: 0; border-radius: 50%; background: #fff; cursor: pointer;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0; transform: translateY(12px); transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 }
 .asi-btn.is-on { opacity: 1; transform: none; }
 .asi-btn:active { transform: scale(0.96); }
 .asi-btn .asi-logo-btn { width: 100%; height: 100%; transition: opacity var(--t-micro); }
-.asi-btn .asi-ai { position: absolute; top: -3px; right: -7px; box-shadow: 0 0 0 2px var(--ink); }
-.asi-btn > svg { position: absolute; width: 24px; height: 24px; color: var(--ink); opacity: 0; transition: opacity var(--t-micro); }
+.asi-btn .asi-ai { position: absolute; top: -4px; right: -6px; padding: 1px 4px; font-size: 0.6rem; box-shadow: 0 0 0 2px var(--ink); }
+.asi-btn > svg { position: absolute; width: 20px; height: 20px; color: var(--ink); opacity: 0; transition: opacity var(--t-micro); }
 html.asi-open .asi-btn .asi-logo-btn { opacity: 0; }
 html.asi-open .asi-btn > svg { opacity: 1; }
 .asi-btn:focus-visible, .asi-oznam :focus-visible, .asi-panel :focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
@@ -30,25 +31,25 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
 
 /* bublina pri ikone, ako upozornenie: Spýtať sa, Zavolať, zavrieť */
 .asi-oznam {
-  position: fixed; left: var(--gutter); bottom: calc(var(--s4) + 72px + env(safe-area-inset-bottom, 0px)); z-index: 37;
-  width: min(320px, calc(100vw - 2 * var(--gutter))); padding: 12px 12px 14px 14px;
+  position: fixed; left: var(--gutter); bottom: calc(var(--s4) + 58px + env(safe-area-inset-bottom, 0px)); z-index: 37;
+  width: min(296px, calc(100vw - 2 * var(--gutter))); padding: 10px 10px 12px 12px;
   border: 1px solid var(--line-strong); border-radius: 16px 16px 16px 4px; background: var(--ink-2); color: var(--paper);
-  font: 400 0.95rem/1.45 var(--font-text); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  font: 400 0.9rem/1.45 var(--font-text); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
   opacity: 0; transform: translateY(10px) scale(0.98); transform-origin: 0 100%;
   transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }
 .asi-oznam[hidden] { display: none; }
 .asi-oznam.is-on { opacity: 1; transform: none; }
 .asi-oznam-hlava { display: flex; align-items: center; gap: 10px; }
-.asi-logo-s { flex: none; width: 34px; height: 34px; }
-.asi-oznam-h { flex: 1; margin: 0; font: 700 1.05rem/1.2 var(--font-display); }
+.asi-logo-s { flex: none; width: 28px; height: 28px; }
+.asi-oznam-h { flex: 1; margin: 0; font: 700 0.98rem/1.2 var(--font-display); }
 .asi-oznam-h .asi-ai, .asi-hlava h2 .asi-ai { margin-left: 4px; position: relative; top: -2px; }
 .asi-oznam-x { flex: none; width: 40px; height: 40px; margin: -6px -4px -6px 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--paper-2); cursor: pointer; }
 .asi-oznam-x svg { width: 18px; height: 18px; }
 .asi-oznam-x:hover { color: var(--paper); }
-.asi-oznam-t { margin: 8px 0 12px; }
+.asi-oznam-t { margin: 6px 0 10px; }
 .asi-oznam-akcie { display: flex; gap: var(--s2); }
-.asi-oznam-spytaj, .asi-oznam-tel { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 12px; border-radius: 999px; font: 700 0.9rem/1 var(--font-text); text-decoration: none; cursor: pointer; }
+.asi-oznam-spytaj, .asi-oznam-tel { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 12px; border-radius: 999px; font: 700 0.85rem/1 var(--font-text); text-decoration: none; cursor: pointer; }
 .asi-oznam-spytaj { border: 0; background: var(--lamp); color: var(--ink); }
 .asi-oznam-tel { border: 1px solid var(--line-strong); color: var(--paper); }
 .asi-oznam-tel svg { width: 18px; height: 18px; color: var(--lamp-2); }
@@ -56,7 +57,7 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
 
 /* okno: na počítači bublina nad ikonou (roh pri ikone je ostrejší), ikona zatiaľ ukazuje krížik */
 .asi-panel {
-  position: fixed; left: var(--gutter); bottom: calc(var(--s4) + 72px + env(safe-area-inset-bottom, 0px)); z-index: 58;
+  position: fixed; left: var(--gutter); bottom: calc(var(--s4) + 60px + env(safe-area-inset-bottom, 0px)); z-index: 58;
   display: flex; flex-direction: column; width: min(400px, calc(100vw - 2 * var(--gutter))); height: min(600px, calc(100vh - var(--nav-h) - 112px));
   border: 1px solid var(--line-strong); border-radius: 18px 18px 18px 4px; background: var(--ink-2); color: var(--paper);
   font: 400 0.95rem/1.5 var(--font-text); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); overflow: hidden;
@@ -116,9 +117,9 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
 
 /* telefón: menšia ikona, okno sa vysunie zdola cez celú šírku, ikona sa pri ňom schová; v hlavičke len slúchadlo */
 @media (max-width: 640px) {
-  .asi-btn { width: 54px; height: 54px; }
+  .asi-btn { width: 44px; height: 44px; }
   html.asi-open .asi-btn { opacity: 0; pointer-events: none; }
-  .asi-oznam { bottom: calc(var(--s4) + 66px + env(safe-area-inset-bottom, 0px)); }
+  .asi-oznam { bottom: calc(var(--s4) + 54px + env(safe-area-inset-bottom, 0px)); }
   .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(86vh, calc(100dvh - var(--nav-h) - 8px)); border-radius: 18px 18px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
 }
 /* telefón: clona za oknom, stránka pod ním sa neposúva; s klávesnicou okno vyplní viditeľnú plochu (asistent.js) */

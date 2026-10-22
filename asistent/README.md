@@ -52,8 +52,9 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 
 - Meno Barber (`MENO_ASISTENTA` v `lib/jadro.php` a texty okna v `barbershop-30/assets/asistent.js`), vždy so
   štítkom AI pri logu aj pri mene, podnadpisom „AI asistent Barbershopu 30“ a poznámkou pod oknom.
-- Ikona vľavo dole je logo Barbershopu 30 (`barbershop-30/assets/img/logo-30-barbershop-160.webp`) v bielom kruhu.
-  Keď ju návštevník 5 s vidí (nie v úvode, pri menu ani pri ponuke jazyka), vyskočí nad ňou bublina so Spýtať sa
+- Ikona vľavo dole je logo Barbershopu 30 (`barbershop-30/assets/img/logo-30-barbershop-160.webp`) v bielom kruhu,
+  48 px (telefón 44 px), aby nebila do očí.
+  Keď ju návštevník 8 s vidí (nie v úvode, pri menu ani pri ponuke jazyka), vyskočí nad ňou bublina so Spýtať sa
   a Zavolať; raz za návštevu, sama zmizne po 25 s, zavretá krížikom sa 14 dní neukáže (`localStorage`).
 - Zavolať je stále v hlavičke okna (na úzkom telefóne ako slúchadlo), pod odpoveďami o termíne aj pri chybe.
   Skryť Barbera schová ikonu aj okno do konca návštevy (`sessionStorage`).

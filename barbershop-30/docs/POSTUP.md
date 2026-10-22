@@ -26,11 +26,21 @@ Rozpracované (požiadavky z 2026‑10‑22):
    zoznam pri každej otázke, pri nízkej návštevnosti by cache často vypršala). V okne: témy a otázky ťuknutím
    (okamžitá pripravená odpoveď, označená), súvisiace otázky pod odpoveďou, ukážka odpovedá z tých istých odpovedí.
    Telefón: okno sa pri klávesnici prispôsobí viditeľnej ploche, clona za oknom, ťukacie plochy 44 px.
-2. Podpísať zadávateľa v pätičke ako grafického dizajnéra a tvorcu webu (presné znenie a meno potvrdiť).
+2. HOTOVÉ na vetve: podpis v pätičke „Grafický dizajn a web: Samuel Pavelka“ (index aj rezervacia.html); znenie potvrdiť.
 3. Vernostná kartička: odkaz v pätičke Barbershopu vedie na stránku na headspa30.sk (HEAD SPA 30), opraviť na
    kartičku Barbershopu. Po zaplatení má zákazník dostať ponuku založiť si účet (body, odmeny). Odmeny a akcie
    nastavuje Lajko sám v admine kartičky (`../vernost/`, admin `https://www.headspa30.sk/vernost/admin/`).
 4. Admin pre Lajka: aby mohol meniť texty, fotky (a odmeny kartičky) sám, ako administrátor.
+5. HOTOVÉ (pozri Denník a CHECKS 22): web na telefóne pôsobí ako PowerPoint prezentácia. Chce živý web na telefóne, každá
+   animácia so silným háčikom, aby zákazník ostal a objednal sa. Ikony zmenšiť, aby tak nebili do očí.
+
+Analýza kartičky (bod 3, rozpracované): odkaz v pätičke vedie na https://www.headspa30.sk/vernost/karta/, server
+kartičky tam ešte nie je nahratý, preto 404 stránka HEAD SPA 30. Plán: kartička Barbershopu priamo na webe
+Barbershopu (`barbershop-30/karta/`, kópie `vernost/karta/*` ako pri `vernost.js`, API cez `data-api`, lokálne
+`/vernost/api/`), server vráti odkaz na kartičku podľa prevádzky (`PREVADZKY['barbershop']['karta']`, e‑mail,
+novinka), statický manifest pre Barbershop, formulár na založenie kartičky na stránke (`?nova`), v admine kartičky
+QR kód „nový klient“ pre recepciu po zaplatení; kým server nebeží, stránka to poctivo povie a dá telefón.
+Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (riadky 38, 119), treba upraviť.
 
 Čaká sa na zadávateľa:
 - súhlas so zverejnením do `main`;
@@ -42,6 +52,10 @@ Rozpracované (požiadavky z 2026‑10‑22):
 
 ## Denník
 
+- 2026‑10‑22: živý telefón (P15): pohyb kamery aj bez filmu, hĺbka kariet, 7 háčikov s výzvou na objednanie,
+  živý stav otváracích hodín v úvode, cenník so záložkami a kratšími riadkami, posunutie pásov tímu a galérie,
+  menšie ikony (asistent 48/44 px, spodná lišta). Podpis v pätičke „Grafický dizajn a web: Samuel Pavelka“
+  (meno z účtu zadávateľa, potvrdiť pred zverejnením). Ďalej: kartička Barbershopu (bod 3), admin pre Lajka (bod 4).
 - 2026‑10‑22: časté otázky hotové: 251 odpovedí, hľadanie v prehliadači aj na serveri, témy a otázky ťuknutím,
   súvisiace otázky, clona a klávesnica na telefóne, testy (prehliadač 71 OK, server 37 + 17 OK). Zdroj otázok je
   JSON, upravuje sa priamo v ňom (`node barbershop-30/source/tools/otazky.mjs` po úprave).
