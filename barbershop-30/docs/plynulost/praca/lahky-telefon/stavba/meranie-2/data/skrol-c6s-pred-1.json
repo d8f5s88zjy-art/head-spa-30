@@ -1,0 +1,124 @@
+{
+ "name": "skrol-c6s-pred-1",
+ "strom": "pred",
+ "prof": "c6s",
+ "rep": 1,
+ "loadavg": "4.76 5.60 5.25 6/224 18563",
+ "loadavgPo": "5.60 5.57 5.29 8/230 19346",
+ "proCakanie": 13,
+ "y": [
+  0,
+  5500,
+  15545
+ ],
+ "sh": 16389,
+ "svihovDoPaty": 22,
+ "okno": 75.2,
+ "stopa": {
+  "velkostMB": 76,
+  "snimok": 818,
+  "ulohaSnimkyP50": 12.1,
+  "ulohaSnimkyP95": 66.9,
+  "ulohaSnimkyMax": 855.7,
+  "vlaknoP95": 63,
+  "nad16": 36.4,
+  "nad50": 64,
+  "dlheUlohy50": 34,
+  "dlheUlohyMs": 3644,
+  "najdlhsiaMs": 854
+ },
+ "raf": {
+  "n": 819,
+  "p50": 50,
+  "p95": 283.2,
+  "nad50": 321
+ },
+ "loaf50": {
+  "n": 342,
+  "sucet": 57403,
+  "max": 2223.9,
+  "blok": 1878
+ },
+ "longtask50": 31,
+ "loafPraca50": 21,
+ "loafBlok50": 5,
+ "loafRozpad": {
+  "predRender": 50681,
+  "stylAzKoniec": 1443,
+  "skripty": 4698,
+  "naj": [
+   [
+    35153.4,
+    2223.9,
+    24.8,
+    2162.1,
+    60.9,
+    0.9,
+    82
+   ],
+   [
+    61776.3,
+    1940.2,
+    0,
+    1939.6,
+    0.5,
+    0.1,
+    18
+   ],
+   [
+    55113.1,
+    1883.2,
+    0,
+    1868.3,
+    6.2,
+    8.7,
+    17
+   ],
+   [
+    83309.8,
+    1741.8,
+    0,
+    1734,
+    4.8,
+    3,
+    9
+   ]
+  ]
+ },
+ "loafErr": null,
+ "gl": 2,
+ "maxPlay": 1,
+ "playAt": [
+  [
+   70704,
+   1
+  ]
+ ],
+ "vidov": 2,
+ "incN": 12,
+ "inc": {
+  "rohozka:vstup-m-1448.avif": 12
+ },
+ "decWait": {},
+ "cls": "karty world js-kin js-steps world-in",
+ "celaStranka": {
+  "bajty": 11593131,
+  "poziadaviek": 153,
+  "podlaTypu": {
+   "ine": 84403,
+   "pisma": 99714,
+   "css": 83935,
+   "obrazky": 3889808,
+   "skripty": 895614,
+   "sekvencie": 3661317,
+   "video": 2878340
+  },
+  "hero": [
+   "vstup-m-1448.avif",
+   "vstup-m-1448.avif",
+   "rohozka-m-1448.avif",
+   "vstup-m-1086.avif"
+  ],
+  "idleMs": 0
+ }
+}
