@@ -377,13 +377,14 @@ if (motionOn && mqFinePointer.matches) {
 /* ----------------------------------------------------------------------------
    7b3. Asistent (assets/asistent.js): okno s otázkami a odpoveďami. Zapne ho nasadenie (pages.yml) atribútom
    data-asistent na <html> s adresou servera, len keď je v GitHube kľúč API; bez neho sa nič nesťahuje ani neposiela.
-   Na vlastnom počítači ide skúšobný server cez ?asistent=<adresa>. ?asistent=off ho vypne.
+   Na vlastnom počítači ide skúšobný server cez ?asistent=<adresa>. ?asistent=off ho vypne, ?asistent=ukazka ukáže
+   okno bez servera s vopred pripravenými odpoveďami z údajov webu (na kontrolu, výrazne označené, nie AI).
    ---------------------------------------------------------------------------- */
 (function asistent() {
   const q = new URLSearchParams(location.search).get('asistent');
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  const api = q === 'off' ? '' : (lokal && q) || html.dataset.asistent || '';
-  if (!/^https?:\/\//.test(api)) return;
+  const api = q === 'off' ? '' : q === 'ukazka' ? q : (lokal && q) || html.dataset.asistent || '';
+  if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
   let loaded = false;
   const load = () => {
     if (loaded) return;

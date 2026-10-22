@@ -22,7 +22,7 @@ Tento súbor číta Claude Code na začiatku každej práce v repozitári. Drž 
 - Dizajn vedie k objednávke: hlavná akcia „Objednať sa“ (skutočný rezervačný systém), „Zavolať a potvrdiť termín“
   s fungujúcim tel: na overené číslo. Každé tlačidlo vedie k skutočnej akcii; úspešnú rezerváciu nikdy neukazuj bez
   skutočného potvrdenia.
-- AI asistent (okno na webe Barbershop 30) je zreteľne označený ako AI; je to výslovná výnimka zadávateľa z pravidla
+- AI asistent Barber (okno na webe Barbershop 30, ikona je ich logo) je zreteľne označený ako AI; je to výslovná výnimka zadávateľa z pravidla
   „žiadna zmienka o AI“, len pre okno asistenta a jeho stránku o ochrane údajov. Odpovedá poctivo len z overených
   údajov; voľné termíny len z overeného, aktuálneho kalendára, vždy ako predbežné a s telefónom („Zavolaj nám,
   v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.“). Nikdy nevymýšľaj termíny, otváracie hodiny ani 24/7.

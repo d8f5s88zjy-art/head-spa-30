@@ -415,3 +415,19 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   pripojený): `?objednavka=ukazka` na webe aj rezervačnej stránke, bez servera, ukážkové časy výrazne označené, výber
   bez úspechu. `objednavka-test.mjs` 113 OK.
 
+
+## 20. Asistent Barber: logo, bublina pri ikone, Zavolať, skrytie (2026‑10‑22)
+
+- Zadávateľ: asistent sa volá Barber, ikonou je ich logo, vyskakuje v rohu ako upozornenie, návštevník ho vie dať preč,
+  otázky v chatovej bubline, stále s možnosťou zavolať.
+- Ikona vľavo dole: logo Barbershopu 30 (`assets/img/logo-30-barbershop-160.webp`, 10 kB, z `logo-30-barbershop.webp`)
+  v bielom kruhu so štítkom AI. Bublina nad ikonou po 5 s viditeľnosti (nie v úvode, pri menu ani pri ponuke jazyka),
+  raz za návštevu, Spýtať sa a Zavolať, krížik ju zavrie na 14 dní. Okno na počítači ako bublina nad ikonou, na
+  telefóne zdola; Zavolať v hlavičke (do 420 px ako slúchadlo), Skryť Barbera do konca návštevy.
+- Označenie AI: štítok pri logu, v bubline aj pri mene, podnadpis „AI asistent Barbershopu 30“, prvá správa a poznámka.
+  Model vie, že sa volá Barber (`MENO_ASISTENTA` v `asistent/lib/jadro.php`).
+- Ukážka bez servera `?asistent=ukazka` (web aj rezervacia.html): vopred pripravené odpovede z údajov webu
+  (`assets/asistent-ukazka.js`, cenník priamo zo stránky), pás „nepíše ich AI“, voľné termíny nevymýšľa, nič neposiela.
+- `asistent-test.mjs` všetko OK (nové: logo a štítok, bublina nad ikonou bez pretekania na 360 px, Spýtať sa,
+  Zavolať v hlavičke, fokus, krížik na 14 dní, Skryť Barbera, ukážka); server 36 + 17 OK; objednavka-test, i18n-test,
+  app-smoke všetko OK. Snímky 360, 390, 430, 768 a 1440 px bez vodorovného pretekania. Skutočný telefón neoverený.

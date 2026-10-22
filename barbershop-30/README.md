@@ -39,10 +39,15 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   cyrilike. `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
   potrebuje kľúč vo všetkých slovníkoch; kontrola: `node source/tools/i18n-test.mjs`.
 
-- **Asistent** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): okno „Opýtaj sa nás“ vľavo dole, odpovede
-  na otázky o službách, cenách, rezervácii a ceste len z `../asistent/znalosti/barbershop.md`, v jazyku otázky,
-  po kúskoch. Zapne ho nasadenie atribútom `data-asistent` na `<html>` (len s kľúčom API a FTP), modul sa načíta
-  až po prvom geste. `?asistent=off` ho vypne. Podrobne `../asistent/README.md`; test `source/tools/asistent-test.mjs`.
+- **Asistent Barber** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): ikona vľavo dole je logo
+  Barbershopu 30 v bielom kruhu so štítkom AI; keď ju návštevník chvíľu vidí, vyskočí pri nej bublina (Spýtať sa,
+  Zavolať, zavrieť; raz za návštevu, zavretá sa 14 dní neukáže). Chat odpovedá na otázky o službách, cenách,
+  rezervácii a ceste len z `../asistent/znalosti/barbershop.md`, v jazyku otázky, po kúskoch; Zavolať je stále
+  v hlavičke okna, Skryť Barbera ho schová do konca návštevy. Všade je zreteľne označený ako AI. Zapne ho nasadenie
+  atribútom `data-asistent` na `<html>` (len s kľúčom API a FTP), modul sa načíta až po prvom geste. `?asistent=off`
+  ho vypne, `?asistent=ukazka` ukáže okno bez servera s vopred pripravenými odpoveďami z údajov webu
+  (`assets/asistent-ukazka.js`, na kontrolu, výrazne označené, že nepíše AI). Podrobne `../asistent/README.md`;
+  test `source/tools/asistent-test.mjs`.
 
 - **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
   s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí

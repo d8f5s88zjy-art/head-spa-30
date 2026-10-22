@@ -45,7 +45,7 @@ skus "prúd, úsilie low, záložný model" 'echo "$J" | grep -q "\"stream\":tru
 skus "pokyny so znalosťami v cache, jazyk stránky zvlášť" 'echo "$J" | grep -q "cache_control" && echo "$J" | grep -q "Mostná 30" && echo "$J" | grep -q "Jazyk stránky návštevníka: en"'
 skus "kľúč ide len do API" 'echo "$J" | grep -q "\"kluc\":\"sk-ant-test\"" && ! grep -q "sk-ant-test" "$T/prud.txt"'
 skus "nástroj over_volne_terminy (strict) a dnešný deň v Bratislave" 'echo "$J" | grep -q "\"name\":\"over_volne_terminy\"" && echo "$J" | grep -q "\"strict\":true" && echo "$J" | grep -q "Europe/Bratislava"'
-skus "pokyny: AI asistent, slovenčina, telefón pri termínoch" 'echo "$J" | grep -q "Si AI asistent" && echo "$J" | grep -q "telefón vždy zdvihneme"'
+skus "pokyny: Barber, AI asistent, slovenčina, telefón pri termínoch" 'echo "$J" | grep -q "Si Barber, AI asistent" && echo "$J" | grep -q "telefón vždy zdvihneme"'
 
 # voľné termíny: model zavolá nástroj, server overí kalendár a vráti výsledok; premýšľanie s podpisom ide späť nezmenené
 D1=$(php -r '$d=new DateTimeImmutable("tomorrow", new DateTimeZone("Europe/Bratislava")); while($d->format("N")==7)$d=$d->modify("+1 day"); echo $d->format("Y-m-d");')

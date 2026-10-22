@@ -6,13 +6,15 @@
  *
  * Zapínanie ako na webe: data-objednavka na <html> (nasadenie len so súhlasom prevádzky rezervačného systému) a
  * data-asistent (len s kľúčom API na serveri); na vlastnom počítači ?objednavka=<adresa> a ?asistent=<adresa>,
- * ?objednavka=off a ?asistent=off ich vypnú, ?objednavka=ukazka ukáže kroky s ukážkovými časmi (na kontrolu).
+ * ?objednavka=off a ?asistent=off ich vypnú, ?objednavka=ukazka ukáže kroky s ukážkovými časmi a ?asistent=ukazka
+ * okno asistenta s vopred pripravenými odpoveďami (obe na kontrolu, výrazne označené).
  */
 const html = document.documentElement;
 const q = new URLSearchParams(location.search);
 const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const adresa = (meno) => { const v = q.get(meno); const a = v === 'off' ? '' : (lokal && v) || html.dataset[meno] || ''; return /^https?:\/\//.test(a) ? a : ''; };
-// ?objednavka=ukazka: kroky s ukážkovými časmi bez servera, na kontrolu (výrazne označené, nič nerezervuje)
+// ?objednavka=ukazka: kroky s ukážkovými časmi bez servera, na kontrolu (výrazne označené, nič nerezervuje);
+// ?asistent=ukazka: okno Barbera s vopred pripravenými odpoveďami z údajov webu (výrazne označené, nie AI)
 const ukazka = q.get('objednavka') === 'ukazka';
 
 /* menu na telefóne (ako app.js časť 9, bez filmu) */
@@ -48,9 +50,9 @@ document.querySelectorAll('.year').forEach((e) => { e.textContent = String(new D
   if (document.readyState === 'complete') neskor(); else addEventListener('load', neskor, { once: true });
 })();
 
-/* AI asistent na otázky zákazníkov (zreteľne označený ako AI); tlačidlo sa ukáže, až keď je server zapnutý */
+/* Barber, AI asistent na otázky zákazníkov (zreteľne označený ako AI); ikona sa ukáže, až keď je server zapnutý */
 (function asistent() {
-  const api = adresa('asistent');
+  const api = q.get('asistent') === 'ukazka' ? 'ukazka' : adresa('asistent');
   if (!api) return;
   let raz = false;
   const nacitaj = () => { if (raz) return; raz = true; import('./asistent.js').then((m) => m.spusti(api)).catch(() => {}); };

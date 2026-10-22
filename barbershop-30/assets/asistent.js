@@ -1,36 +1,47 @@
 /*
- * BARBERSHOP 30 – AI asistent: okno, v ktorom návštevník napíše otázku a hneď dostane odpoveď (služby, ceny,
+ * BARBERSHOP 30 – Barber, AI asistent: okno, v ktorom návštevník napíše otázku a hneď dostane odpoveď (služby, ceny,
  * objednanie, tím, hodiny, cesta, voľné termíny). Odpovedá server asistenta na www.headspa30.sk (asistent/api.php,
  * model Claude Opus 5.5) len z overených údajov webu (asistent/znalosti/barbershop.md) a z rezervačného kalendára
- * (asistent/lib/kalendar.php, keď je pripojený); kľúč API je len na serveri. Okno je zreteľne označené ako AI.
+ * (asistent/lib/kalendar.php, keď je pripojený); kľúč API je len na serveri. Barber je všade zreteľne označený ako AI
+ * (štítok AI pri logu aj pri mene, podnadpis, prvá správa a poznámka pod oknom).
  * Overené voľné časy ukáže karta priamo z výsledku kalendára (nie z textu modelu) s poznámkou, že sú predbežné;
  * pri každej odpovedi o termíne alebo objednaní (udalosť tel zo servera) a pri chybe sú pod ňou tlačidlá
- * Zavolať a potvrdiť termín a Objednať sa.
+ * Zavolať a potvrdiť termín a Objednať sa. Zavolať je navyše stále v hlavičke okna.
  *
- * Modul načíta app.js (časť 7b3) pri prvom geste, inak 3,5 s po načítaní, a zavolá spusti(api). Tlačidlo sa ukáže,
- * až keď server odpovie, že je zapnutý (api.php?a=stav), inak sa nestane nič. Rozhovor ostáva v tejto karte
- * prehliadača (sessionStorage); server ho neukladá. Texty okna sú v 8 jazykoch tu (T), odpoveď píše asistent
- * v jazyku otázky. Odkazy, telefón a e-mail v odpovedi sa dajú kliknúť (vytvárajú sa ako prvky, nikdy cez innerHTML).
+ * Ikona vľavo dole je logo Barbershopu 30 v bielom kruhu. Keď ju návštevník chvíľu vidí, vyskočí pri nej bublina
+ * (Spýtať sa, Zavolať, zavrieť), raz za návštevu; zavretá sa 14 dní neukáže. Odkaz Skryť Barbera v okne schová
+ * ikonu do konca návštevy.
+ *
+ * Modul načíta app.js (časť 7b3) alebo rezervacia.js pri prvom geste, inak o pár sekúnd po načítaní, a zavolá
+ * spusti(api). Ikona sa ukáže, až keď server odpovie, že je zapnutý (api.php?a=stav), inak sa nestane nič.
+ * spusti('ukazka') ukáže okno bez servera s vopred pripravenými odpoveďami z údajov webu (asistent-ukazka.js), na
+ * kontrolu vzhľadu; je výrazne označené, že neodpovedá AI. Rozhovor ostáva v tejto karte prehliadača
+ * (sessionStorage); server ho neukladá. Texty okna sú v 8 jazykoch tu (T), odpoveď píše asistent v jazyku otázky.
+ * Odkazy, telefón a e-mail v odpovedi sa dajú kliknúť (vytvárajú sa ako prvky, nikdy cez innerHTML).
  */
 const html = document.documentElement;
 const K_ROZHOVOR = 'b30.asistent';
+const K_SKRYTY = 'b30.barber.skryty';                // sessionStorage: návštevník Barbera skryl (do konca návštevy)
+const K_OZNAM = 'b30.barber.oznam';                  // localStorage: kedy zavrel bublinu (14 dní sa neukáže)
+const K_OZNAM_RAZ = 'b30.barber.oznam.raz';          // sessionStorage: bublina už v tejto návšteve bola
+const UKAZKA = 'ukazka';
 const MAX_SPRAV = 15;                                   // server berie najviac 16 správ (otázka, odpoveď, …, otázka)
 
 const T = {
-  sk: { btn: 'AI asistent', title: 'AI asistent Barbershopu 30', sub: 'Odpovedá umelá inteligencia, termín potvrdí recepcia', hello: 'Ahoj! Som AI asistent Barbershopu 30. Poradím ti so službami, cenami aj objednaním. Na čo sa chceš opýtať?', deti: 'Strihate aj deti?', chips: ['Koľko stojí strih?', 'Má Adrián zajtra voľný termín?', 'Kedy máte otvorené?', 'Ako sa objednám?'], ph: 'Napíš otázku…', send: 'Odoslať', close: 'Zavrieť', novy: 'Nový rozhovor', note: 'Odpovedá AI podľa údajov z webu. Termín platí až po potvrdení. Nepíš sem osobné údaje.', err: 'Teraz neviem odpovedať. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.', ochrana: 'Ochrana údajov', dlhy: 'Rozhovor je už dlhý. Začni nový a opýtaj sa znova.', tel: 'Zavolať a potvrdiť termín', obj: 'Objednať sa', kal: 'Podľa kalendára o', pred: 'Predbežné, kým termín nepotvrdíš.', ziadny: 'V tento deň voľný termín nie je.' },
-  en: { btn: 'AI assistant', title: 'Barbershop 30 AI assistant', sub: 'Answers by AI, the front desk confirms your time', hello: 'Hi! I’m the Barbershop 30 AI assistant. I can help with services, prices and booking. What would you like to know?', deti: 'Do you cut kids’ hair?', chips: ['How much is a haircut?', 'Is Adrián free tomorrow?', 'When are you open?', 'How do I book?'], ph: 'Type your question…', send: 'Send', close: 'Close', novy: 'New chat', note: 'Answers are written by AI from the information on this website. A time is only booked once confirmed. Please don’t share personal details.', err: 'I can’t answer right now. Call us on +421 951 267 203, on weekdays from 9:00 to 19:00 we always pick up.', ochrana: 'Privacy', dlhy: 'This chat is getting long. Start a new one and ask again.', tel: 'Call to confirm a time', obj: 'Book now', kal: 'Calendar checked at', pred: 'Provisional until you confirm it.', ziadny: 'No free time on this day.' },
-  uk: { btn: 'AI-помічник', title: 'AI-помічник Barbershop 30', sub: 'Відповідає штучний інтелект, час підтверджує рецепція', hello: 'Привіт! Я AI-помічник Barbershop 30. Підкажу щодо послуг, цін і запису. Що хочеш дізнатися?', deti: 'Ви стрижете дітей?', chips: ['Скільки коштує стрижка?', 'Чи вільний Адріан завтра?', 'Коли ви працюєте?', 'Як записатися?'], ph: 'Напиши питання…', send: 'Надіслати', close: 'Закрити', novy: 'Нова розмова', note: 'Відповідає штучний інтелект за даними з цього сайту. Запис дійсний лише після підтвердження. Не пиши сюди особисті дані.', err: 'Зараз не можу відповісти. Зателефонуй нам: +421 951 267 203, у будні з 9:00 до 19:00 ми завжди беремо слухавку.', ochrana: 'Захист даних', dlhy: 'Розмова вже довга. Почни нову й запитай ще раз.', tel: 'Зателефонувати й підтвердити час', obj: 'Записатися', kal: 'За календарем о', pred: 'Попередньо, поки не підтвердиш.', ziadny: 'Цього дня вільного часу немає.' },
-  hu: { btn: 'AI-asszisztens', title: 'A Barbershop 30 AI-asszisztense', sub: 'Mesterséges intelligencia válaszol, az időpontot a recepció erősíti meg', hello: 'Szia! A Barbershop 30 AI-asszisztense vagyok. Segítek a szolgáltatásokkal, árakkal és a foglalással. Mit szeretnél tudni?', deti: 'Gyerekeket is nyírtok?', chips: ['Mennyibe kerül egy hajvágás?', 'Ráér holnap Adrián?', 'Mikor vagytok nyitva?', 'Hogyan foglalhatok?'], ph: 'Írd ide a kérdésed…', send: 'Küldés', close: 'Bezárás', novy: 'Új beszélgetés', note: 'Mesterséges intelligencia válaszol a weboldal adatai alapján. Az időpont csak megerősítés után érvényes. Ne írj ide személyes adatokat.', err: 'Most nem tudok válaszolni. Hívj minket: +421 951 267 203, hétköznap 9:00 és 19:00 között mindig felvesszük.', ochrana: 'Adatvédelem', dlhy: 'A beszélgetés már hosszú. Kezdj újat, és kérdezz újra.', tel: 'Hívj, és egyeztetünk időpontot', obj: 'Időpontfoglalás', kal: 'A naptár szerint', pred: 'Előzetes, amíg meg nem erősíted.', ziadny: 'Ezen a napon nincs szabad időpont.' },
-  sr: { btn: 'AI asistent', title: 'AI asistent Barbershopa 30', sub: 'Odgovara veštačka inteligencija, termin potvrđuje recepcija', hello: 'Zdravo! Ja sam AI asistent Barbershopa 30. Pomoći ću ti oko usluga, cena i zakazivanja. Šta želiš da pitaš?', deti: 'Šišate li decu?', chips: ['Koliko košta šišanje?', 'Da li je Adrián sutra slobodan?', 'Kada radite?', 'Kako da zakažem?'], ph: 'Napiši pitanje…', send: 'Pošalji', close: 'Zatvori', novy: 'Novi razgovor', note: 'Odgovara veštačka inteligencija na osnovu podataka sa sajta. Termin važi tek posle potvrde. Ne piši ovde lične podatke.', err: 'Trenutno ne mogu da odgovorim. Pozovi nas na +421 951 267 203, radnim danima od 9:00 do 19:00 uvek se javljamo.', ochrana: 'Zaštita podataka', dlhy: 'Razgovor je već dug. Započni novi i pitaj ponovo.', tel: 'Pozovi i potvrdi termin', obj: 'Zakaži termin', kal: 'Po kalendaru u', pred: 'Okvirno, dok ga ne potvrdiš.', ziadny: 'Tog dana nema slobodnog termina.' },
-  pl: { btn: 'Asystent AI', title: 'Asystent AI Barbershop 30', sub: 'Odpowiada sztuczna inteligencja, termin potwierdza recepcja', hello: 'Cześć! Jestem asystentem AI Barbershop 30. Pomogę z usługami, cenami i rezerwacją. O co chcesz zapytać?', deti: 'Strzyżecie dzieci?', chips: ['Ile kosztuje strzyżenie?', 'Czy Adrián ma jutro wolny termin?', 'Kiedy jesteście otwarci?', 'Jak się umówić?'], ph: 'Napisz pytanie…', send: 'Wyślij', close: 'Zamknij', novy: 'Nowa rozmowa', note: 'Odpowiada sztuczna inteligencja na podstawie danych ze strony. Termin obowiązuje dopiero po potwierdzeniu. Nie podawaj tu danych osobowych.', err: 'Nie mogę teraz odpowiedzieć. Zadzwoń do nas: +421 951 267 203, w dni robocze od 9:00 do 19:00 zawsze odbieramy.', ochrana: 'Ochrona danych', dlhy: 'Rozmowa jest już długa. Zacznij nową i zapytaj ponownie.', tel: 'Zadzwoń i potwierdź termin', obj: 'Umów się', kal: 'Według kalendarza o', pred: 'Wstępnie, dopóki go nie potwierdzisz.', ziadny: 'Tego dnia nie ma wolnego terminu.' },
-  de: { btn: 'KI-Assistent', title: 'KI-Assistent von Barbershop 30', sub: 'Es antwortet eine KI, den Termin bestätigt die Rezeption', hello: 'Hallo! Ich bin der KI-Assistent von Barbershop 30. Ich helfe dir bei Leistungen, Preisen und Buchung. Was möchtest du wissen?', deti: 'Schneidet ihr auch Kindern die Haare?', chips: ['Was kostet ein Haarschnitt?', 'Hat Adrián morgen frei?', 'Wann habt ihr geöffnet?', 'Wie buche ich?'], ph: 'Schreib deine Frage…', send: 'Senden', close: 'Schließen', novy: 'Neues Gespräch', note: 'Es antwortet eine KI anhand der Angaben auf dieser Website. Ein Termin gilt erst nach Bestätigung. Bitte keine persönlichen Daten eingeben.', err: 'Ich kann gerade nicht antworten. Ruf uns an: +421 951 267 203, werktags von 9:00 bis 19:00 gehen wir immer ran.', ochrana: 'Datenschutz', dlhy: 'Das Gespräch ist schon lang. Starte ein neues und frag noch einmal.', tel: 'Anrufen und Termin bestätigen', obj: 'Termin buchen', kal: 'Laut Kalender um', pred: 'Vorläufig, bis du ihn bestätigst.', ziadny: 'An diesem Tag ist kein Termin frei.' },
-  cs: { btn: 'AI asistent', title: 'AI asistent Barbershopu 30', sub: 'Odpovídá umělá inteligence, termín potvrdí recepce', hello: 'Ahoj! Jsem AI asistent Barbershopu 30. Poradím ti se službami, cenami i objednáním. Na co se chceš zeptat?', deti: 'Stříháte i děti?', chips: ['Kolik stojí střih?', 'Má Adrián zítra volný termín?', 'Kdy máte otevřeno?', 'Jak se objednám?'], ph: 'Napiš otázku…', send: 'Odeslat', close: 'Zavřít', novy: 'Nový rozhovor', note: 'Odpovídá AI podle údajů z webu. Termín platí až po potvrzení. Nepiš sem osobní údaje.', err: 'Teď nedokážu odpovědět. Zavolej nám na +421 951 267 203, ve všední dny od 9:00 do 19:00 telefon vždy zvedneme.', ochrana: 'Ochrana údajů', dlhy: 'Rozhovor je už dlouhý. Začni nový a zeptej se znovu.', tel: 'Zavolat a potvrdit termín', obj: 'Objednat se', kal: 'Podle kalendáře v', pred: 'Předběžné, dokud termín nepotvrdíš.', ziadny: 'V tento den volný termín není.' },
+  sk: { ai: 'AI', btn: 'Otvoriť chat s Barberom, AI asistentom Barbershopu 30', meno: 'Barber, AI asistent', sub: 'AI asistent Barbershopu 30, termín potvrdí recepcia', hello: 'Ahoj, som Barber, AI asistent Barbershopu 30. Poradím ti so službami, cenami aj objednaním. Na čo sa chceš opýtať?', oznam: 'Ahoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.', spytat: 'Spýtať sa', volat: 'Zavolať', skryt: 'Skryť Barbera', ukazka: 'Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.', deti: 'Strihate aj deti?', chips: ['Koľko stojí strih?', 'Má Adrián zajtra voľný termín?', 'Kedy máte otvorené?', 'Ako sa objednám?'], ph: 'Napíš otázku…', send: 'Odoslať', close: 'Zavrieť', novy: 'Nový rozhovor', note: 'Odpovedá AI podľa údajov z webu. Termín platí až po potvrdení. Nepíš sem osobné údaje.', err: 'Teraz neviem odpovedať. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.', ochrana: 'Ochrana údajov', dlhy: 'Rozhovor je už dlhý. Začni nový a opýtaj sa znova.', tel: 'Zavolať a potvrdiť termín', obj: 'Objednať sa', kal: 'Podľa kalendára o', pred: 'Predbežné, kým termín nepotvrdíš.', ziadny: 'V tento deň voľný termín nie je.' },
+  en: { ai: 'AI', btn: 'Open chat with Barber, the Barbershop 30 AI assistant', meno: 'Barber, AI assistant', sub: 'Barbershop 30 AI assistant, the front desk confirms your time', hello: 'Hi, I’m Barber, the Barbershop 30 AI assistant. I can help with services, prices and booking. What would you like to know?', oznam: 'Hi, I’m Barber. Ask me about prices, services or booking.', spytat: 'Ask', volat: 'Call', skryt: 'Hide Barber', ukazka: 'Preview for review: the answers are prepared in advance from the website, not written by AI. Live, the AI answers.', deti: 'Do you cut kids’ hair?', chips: ['How much is a haircut?', 'Is Adrián free tomorrow?', 'When are you open?', 'How do I book?'], ph: 'Type your question…', send: 'Send', close: 'Close', novy: 'New chat', note: 'Answers are written by AI from the information on this website. A time is only booked once confirmed. Please don’t share personal details.', err: 'I can’t answer right now. Call us on +421 951 267 203, on weekdays from 9:00 to 19:00 we always pick up.', ochrana: 'Privacy', dlhy: 'This chat is getting long. Start a new one and ask again.', tel: 'Call to confirm a time', obj: 'Book now', kal: 'Calendar checked at', pred: 'Provisional until you confirm it.', ziadny: 'No free time on this day.' },
+  uk: { ai: 'AI', btn: 'Відкрити чат з Barber, AI-помічником Barbershop 30', meno: 'Barber, AI-помічник', sub: 'AI-помічник Barbershop 30, час підтверджує рецепція', hello: 'Привіт, я Barber, AI-помічник Barbershop 30. Підкажу щодо послуг, цін і запису. Що хочеш дізнатися?', oznam: 'Привіт, я Barber. Запитай мене про ціни, послуги чи запис.', spytat: 'Запитати', volat: 'Зателефонувати', skryt: 'Сховати Barber', ukazka: 'Демо для перевірки: відповіді підготовлені заздалегідь з даних сайту, їх не пише AI. Наживо відповідає AI.', deti: 'Ви стрижете дітей?', chips: ['Скільки коштує стрижка?', 'Чи вільний Адріан завтра?', 'Коли ви працюєте?', 'Як записатися?'], ph: 'Напиши питання…', send: 'Надіслати', close: 'Закрити', novy: 'Нова розмова', note: 'Відповідає штучний інтелект за даними з цього сайту. Запис дійсний лише після підтвердження. Не пиши сюди особисті дані.', err: 'Зараз не можу відповісти. Зателефонуй нам: +421 951 267 203, у будні з 9:00 до 19:00 ми завжди беремо слухавку.', ochrana: 'Захист даних', dlhy: 'Розмова вже довга. Почни нову й запитай ще раз.', tel: 'Зателефонувати й підтвердити час', obj: 'Записатися', kal: 'За календарем о', pred: 'Попередньо, поки не підтвердиш.', ziadny: 'Цього дня вільного часу немає.' },
+  hu: { ai: 'AI', btn: 'Csevegés Barberrel, a Barbershop 30 AI-asszisztensével', meno: 'Barber, AI-asszisztens', sub: 'A Barbershop 30 AI-asszisztense, az időpontot a recepció erősíti meg', hello: 'Szia, Barber vagyok, a Barbershop 30 AI-asszisztense. Segítek a szolgáltatásokkal, árakkal és a foglalással. Mit szeretnél tudni?', oznam: 'Szia, Barber vagyok. Kérdezz az árakról, a szolgáltatásokról vagy a foglalásról.', spytat: 'Kérdezek', volat: 'Hívás', skryt: 'Barber elrejtése', ukazka: 'Bemutató ellenőrzésre: a válaszok előre elkészültek a weboldal adataiból, nem AI írja őket. Élesben az AI válaszol.', deti: 'Gyerekeket is nyírtok?', chips: ['Mennyibe kerül egy hajvágás?', 'Ráér holnap Adrián?', 'Mikor vagytok nyitva?', 'Hogyan foglalhatok?'], ph: 'Írd ide a kérdésed…', send: 'Küldés', close: 'Bezárás', novy: 'Új beszélgetés', note: 'Mesterséges intelligencia válaszol a weboldal adatai alapján. Az időpont csak megerősítés után érvényes. Ne írj ide személyes adatokat.', err: 'Most nem tudok válaszolni. Hívj minket: +421 951 267 203, hétköznap 9:00 és 19:00 között mindig felvesszük.', ochrana: 'Adatvédelem', dlhy: 'A beszélgetés már hosszú. Kezdj újat, és kérdezz újra.', tel: 'Hívj, és egyeztetünk időpontot', obj: 'Időpontfoglalás', kal: 'A naptár szerint', pred: 'Előzetes, amíg meg nem erősíted.', ziadny: 'Ezen a napon nincs szabad időpont.' },
+  sr: { ai: 'AI', btn: 'Otvori čet sa Barberom, AI asistentom Barbershopa 30', meno: 'Barber, AI asistent', sub: 'AI asistent Barbershopa 30, termin potvrđuje recepcija', hello: 'Zdravo, ja sam Barber, AI asistent Barbershopa 30. Pomoći ću ti oko usluga, cena i zakazivanja. Šta želiš da pitaš?', oznam: 'Zdravo, ja sam Barber. Pitaj me za cene, usluge ili zakazivanje.', spytat: 'Pitaj', volat: 'Pozovi', skryt: 'Sakrij Barbera', ukazka: 'Prikaz za proveru: odgovori su unapred pripremljeni iz podataka sa sajta, ne piše ih AI. Uživo odgovara AI.', deti: 'Šišate li decu?', chips: ['Koliko košta šišanje?', 'Da li je Adrián sutra slobodan?', 'Kada radite?', 'Kako da zakažem?'], ph: 'Napiši pitanje…', send: 'Pošalji', close: 'Zatvori', novy: 'Novi razgovor', note: 'Odgovara veštačka inteligencija na osnovu podataka sa sajta. Termin važi tek posle potvrde. Ne piši ovde lične podatke.', err: 'Trenutno ne mogu da odgovorim. Pozovi nas na +421 951 267 203, radnim danima od 9:00 do 19:00 uvek se javljamo.', ochrana: 'Zaštita podataka', dlhy: 'Razgovor je već dug. Započni novi i pitaj ponovo.', tel: 'Pozovi i potvrdi termin', obj: 'Zakaži termin', kal: 'Po kalendaru u', pred: 'Okvirno, dok ga ne potvrdiš.', ziadny: 'Tog dana nema slobodnog termina.' },
+  pl: { ai: 'AI', btn: 'Otwórz czat z Barberem, asystentem AI Barbershop 30', meno: 'Barber, asystent AI', sub: 'Asystent AI Barbershop 30, termin potwierdza recepcja', hello: 'Cześć, jestem Barber, asystent AI Barbershop 30. Pomogę z usługami, cenami i rezerwacją. O co chcesz zapytać?', oznam: 'Cześć, jestem Barber. Zapytaj mnie o ceny, usługi lub rezerwację.', spytat: 'Zapytaj', volat: 'Zadzwoń', skryt: 'Ukryj Barbera', ukazka: 'Podgląd do sprawdzenia: odpowiedzi są przygotowane wcześniej z danych strony, nie pisze ich AI. Na żywo odpowiada AI.', deti: 'Strzyżecie dzieci?', chips: ['Ile kosztuje strzyżenie?', 'Czy Adrián ma jutro wolny termin?', 'Kiedy jesteście otwarci?', 'Jak się umówić?'], ph: 'Napisz pytanie…', send: 'Wyślij', close: 'Zamknij', novy: 'Nowa rozmowa', note: 'Odpowiada sztuczna inteligencja na podstawie danych ze strony. Termin obowiązuje dopiero po potwierdzeniu. Nie podawaj tu danych osobowych.', err: 'Nie mogę teraz odpowiedzieć. Zadzwoń do nas: +421 951 267 203, w dni robocze od 9:00 do 19:00 zawsze odbieramy.', ochrana: 'Ochrona danych', dlhy: 'Rozmowa jest już długa. Zacznij nową i zapytaj ponownie.', tel: 'Zadzwoń i potwierdź termin', obj: 'Umów się', kal: 'Według kalendarza o', pred: 'Wstępnie, dopóki go nie potwierdzisz.', ziadny: 'Tego dnia nie ma wolnego terminu.' },
+  de: { ai: 'KI', btn: 'Chat mit Barber öffnen, dem KI-Assistenten von Barbershop 30', meno: 'Barber, KI-Assistent', sub: 'KI-Assistent von Barbershop 30, den Termin bestätigt die Rezeption', hello: 'Hallo, ich bin Barber, der KI-Assistent von Barbershop 30. Ich helfe dir bei Leistungen, Preisen und Buchung. Was möchtest du wissen?', oznam: 'Hallo, ich bin Barber. Frag mich nach Preisen, Leistungen oder Buchung.', spytat: 'Fragen', volat: 'Anrufen', skryt: 'Barber ausblenden', ukazka: 'Vorschau zur Prüfung: Die Antworten sind vorab aus den Angaben der Website vorbereitet, keine KI schreibt sie. Live antwortet die KI.', deti: 'Schneidet ihr auch Kindern die Haare?', chips: ['Was kostet ein Haarschnitt?', 'Hat Adrián morgen frei?', 'Wann habt ihr geöffnet?', 'Wie buche ich?'], ph: 'Schreib deine Frage…', send: 'Senden', close: 'Schließen', novy: 'Neues Gespräch', note: 'Es antwortet eine KI anhand der Angaben auf dieser Website. Ein Termin gilt erst nach Bestätigung. Bitte keine persönlichen Daten eingeben.', err: 'Ich kann gerade nicht antworten. Ruf uns an: +421 951 267 203, werktags von 9:00 bis 19:00 gehen wir immer ran.', ochrana: 'Datenschutz', dlhy: 'Das Gespräch ist schon lang. Starte ein neues und frag noch einmal.', tel: 'Anrufen und Termin bestätigen', obj: 'Termin buchen', kal: 'Laut Kalender um', pred: 'Vorläufig, bis du ihn bestätigst.', ziadny: 'An diesem Tag ist kein Termin frei.' },
+  cs: { ai: 'AI', btn: 'Otevřít chat s Barberem, AI asistentem Barbershopu 30', meno: 'Barber, AI asistent', sub: 'AI asistent Barbershopu 30, termín potvrdí recepce', hello: 'Ahoj, jsem Barber, AI asistent Barbershopu 30. Poradím ti se službami, cenami i objednáním. Na co se chceš zeptat?', oznam: 'Ahoj, jsem Barber. Zeptej se mě na ceny, služby nebo objednání.', spytat: 'Zeptat se', volat: 'Zavolat', skryt: 'Skrýt Barbera', ukazka: 'Ukázka ke kontrole: odpovědi jsou připravené předem z údajů webu, nepíše je AI. Naostro odpovídá AI.', deti: 'Stříháte i děti?', chips: ['Kolik stojí střih?', 'Má Adrián zítra volný termín?', 'Kdy máte otevřeno?', 'Jak se objednám?'], ph: 'Napiš otázku…', send: 'Odeslat', close: 'Zavřít', novy: 'Nový rozhovor', note: 'Odpovídá AI podle údajů z webu. Termín platí až po potvrzení. Nepiš sem osobní údaje.', err: 'Teď nedokážu odpovědět. Zavolej nám na +421 951 267 203, ve všední dny od 9:00 do 19:00 telefon vždy zvedneme.', ochrana: 'Ochrana údajů', dlhy: 'Rozhovor je už dlouhý. Začni nový a zeptej se znovu.', tel: 'Zavolat a potvrdit termín', obj: 'Objednat se', kal: 'Podle kalendáře v', pred: 'Předběžné, dokud termín nepotvrdíš.', ziadny: 'V tento den volný termín není.' },
 };
 const jazyk = () => { const l = (html.lang || 'sk').slice(0, 2).toLowerCase(); return T[l] ? l : 'sk'; };
 const tx = () => T[jazyk()];
 
-function nacitaj() { try { const r = JSON.parse(sessionStorage.getItem(K_ROZHOVOR) || '[]'); return Array.isArray(r) ? r.filter((s) => s && (s.r === 'u' || s.r === 'a') && typeof s.t === 'string') : []; } catch (e) { return []; } }
-function uloz(r) { try { sessionStorage.setItem(K_ROZHOVOR, JSON.stringify(r)); } catch (e) { /* súkromné okno */ } }
+function nacitaj(k) { try { const r = JSON.parse(sessionStorage.getItem(k) || '[]'); return Array.isArray(r) ? r.filter((s) => s && (s.r === 'u' || s.r === 'a') && typeof s.t === 'string') : []; } catch (e) { return []; } }
+function uloz(k, r) { try { sessionStorage.setItem(k, JSON.stringify(r)); } catch (e) { /* súkromné okno */ } }
 
 function el(tag, attrs = {}, deti = []) {
   const e = document.createElement(tag);
@@ -39,7 +50,6 @@ function el(tag, attrs = {}, deti = []) {
   return e;
 }
 const ikona = (d) => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); s.innerHTML = d; return s; };
-const I_CHAT = '<path d="M4 5h16v11H9l-4 4v-4H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
 const I_X = '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
 const I_TEL = '<path d="M6.6 3.5h2.6l1.4 4-2 1.3a12 12 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
 const TEL = 'tel:+421951267203', REZ = 'https://www.barbershop30.sk/rezervacia';
@@ -124,42 +134,73 @@ async function opytaj(api, spravy, onText, onTermin, onTel) {
   if (!koniec) throw new Error('');
 }
 
+/* úložisko prehliadača môže chýbať alebo hádzať chybu (súkromné okno, zablokované údaje stránky) */
+function citaj(druh, k) { try { return window[druh].getItem(k); } catch (e) { return null; } }
+function zapis(druh, k, v) { try { window[druh].setItem(k, v); } catch (e) { /* súkromné okno */ } }
+/* logo Barbershopu 30 v bielom kruhu (ikona, hlavička okna, bublina) */
+const LOGO = new URL('img/logo-30-barbershop-160.webp', import.meta.url).href;
+const logo = (trieda) => el('span', { class: 'asi-logo ' + trieda, 'aria-hidden': 'true' }, [el('img', { src: LOGO, alt: '', width: '160', height: '160', decoding: 'async' })]);
+
 export async function spusti(api) {
+  const ukazka = api === UKAZKA;
+  if (citaj('sessionStorage', K_SKRYTY)) return;
   let stav = {};
-  try {
-    const r = await fetch(api + '?a=stav', { cache: 'no-store' });
-    stav = await r.json();
-    if (!stav.zapnute) return;
-  } catch (e) { return; }
+  if (!ukazka) {
+    try {
+      const r = await fetch(api + '?a=stav', { cache: 'no-store' });
+      stav = await r.json();
+      if (!stav.zapnute) return;
+    } catch (e) { return; }
+  }
   const kalendar = !!stav.kalendar;
+  // ukážka má vlastný rozhovor, aby sa nemiešal so skutočným
+  const kluc = ukazka ? K_ROZHOVOR + '.ukazka' : K_ROZHOVOR;
 
   const css = el('link', { rel: 'stylesheet', href: new URL('asistent.css', import.meta.url).href });
   await new Promise((ok) => { css.onload = css.onerror = ok; document.head.append(css); });
 
-  let rozhovor = nacitaj(), bezi = false;
-  // na úzkom telefóne tlačidlo ukáže len „AI“ (data-kratko), aby nezavadzalo spodnej lište; celý názov je v aria-label
-  const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'data-no-i18n': true, 'data-kratko': 'AI' }, [ikona(I_CHAT), el('span')]);
+  let rozhovor = nacitaj(kluc), bezi = false;
+  // ikona: logo, štítok AI; pri otvorenom okne na počítači krížik na zavretie
+  const btnAi = el('span', { class: 'asi-ai' });
+  const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'data-no-i18n': true }, [logo('asi-logo-btn'), btnAi, ikona(I_X)]);
+  // bublina pri ikone: Spýtať sa, Zavolať, zavrieť
+  const oznamH = el('p', { class: 'asi-oznam-h' }), oznamT = el('p', { class: 'asi-oznam-t' });
+  const spytaj = el('button', { class: 'asi-oznam-spytaj', type: 'button' });
+  const oznamTel = el('a', { class: 'asi-oznam-tel', href: TEL }, [ikona(I_TEL), el('span')]);
+  const oznamX = el('button', { class: 'asi-oznam-x', type: 'button' }, [ikona(I_X)]);
+  const oznam = el('div', { class: 'asi-oznam', role: 'region', hidden: true, 'data-no-i18n': true },
+    [el('div', { class: 'asi-oznam-hlava' }, [logo('asi-logo-s'), oznamH, oznamX]), oznamT, el('div', { class: 'asi-oznam-akcie' }, [spytaj, oznamTel])]);
+  // okno
   const zoz = el('div', { class: 'asi-zoz', role: 'log', 'aria-live': 'polite' });
   const area = el('textarea', { rows: '1', maxlength: '800', enterkeyhint: 'send' });
   const odosli = el('button', { class: 'asi-send', type: 'submit' }, [ikona(I_SEND)]);
   const form = el('form', { class: 'asi-form' }, [area, odosli]);
   const zavri = el('button', { class: 'asi-x', type: 'button' }, [ikona(I_X)]);
-  const volaj = el('a', { class: 'asi-x asi-volaj', href: TEL }, [ikona(I_TEL)]);
-  const novy = el('button', { class: 'asi-novy', type: 'button' });
-  const h = el('h2', { id: 'asi-h' }), sub = el('p', { class: 'asi-sub' }), note = el('p', { class: 'asi-note' });
-  const ochrana = el('a', { href: api.replace(/[^/]*$/, 'ochrana-udajov.html'), target: '_blank', rel: 'noopener' });
+  const volaj = el('a', { class: 'asi-volaj', href: TEL }, [ikona(I_TEL), el('span')]);
+  const novy = el('button', { class: 'asi-novy', type: 'button' }), skry = el('button', { class: 'asi-skry', type: 'button' });
+  // v ukážke poznámku o odpovediach AI nahrádza pás ukážky (odpovede sú vopred pripravené)
+  const h = el('h2', { id: 'asi-h' }), sub = el('p', { class: 'asi-sub' }), note = el('p', { class: 'asi-note', hidden: ukazka });
+  const ochrana = el('a', { href: api.replace(/[^/]*$/, 'ochrana-udajov.html'), target: '_blank', rel: 'noopener', hidden: ukazka });
+  const pas = ukazka ? el('p', { class: 'asi-ukazka-pas' }) : null;
   const panel = el('section', { class: 'asi-panel', id: 'asi-panel', role: 'dialog', 'aria-labelledby': 'asi-h', tabindex: '-1', hidden: true, 'data-no-i18n': true },
-    [el('header', { class: 'asi-hlava' }, [el('div', {}, [h, sub]), el('div', { class: 'asi-hlava-akcie' }, [volaj, zavri])]), zoz, form, el('div', { class: 'asi-pata' }, [el('div', {}, [note, ochrana]), novy])]);
-  document.body.append(btn, panel);
+    [el('header', { class: 'asi-hlava' }, [logo('asi-logo-m'), el('div', { class: 'asi-hlava-t' }, [h, sub]), el('div', { class: 'asi-hlava-akcie' }, [volaj, zavri])]),
+      pas, zoz, form, el('div', { class: 'asi-pata' }, [el('div', {}, [note, ochrana]), el('div', { class: 'asi-pata-akcie' }, [novy, skry])])]);
+  document.body.append(oznam, btn, panel);
 
   const bublina = (rola, text) => { const b = el('div', { class: 'asi-msg asi-' + rola }); if (text) vykresli(text, b); zoz.append(b); return b; };
   // karta termínu a tlačidlá idú pod bublinu odpovede (aj po obnovení stránky z uloženého rozhovoru)
   const doplnky = (b, k, tel) => { const c = karta(k); if (c) b.after(c); if (tel) (c || b).after(akcie()); };
   function popisy() {
     const t = tx();
-    btn.lastChild.textContent = t.btn; btn.setAttribute('aria-label', t.title);
-    h.textContent = t.title; sub.textContent = t.sub; note.textContent = t.note; ochrana.textContent = t.ochrana; novy.textContent = t.novy;
-    area.placeholder = t.ph; area.setAttribute('aria-label', t.ph); odosli.setAttribute('aria-label', t.send); zavri.setAttribute('aria-label', t.close); volaj.setAttribute('aria-label', t.tel + ': 0951 267 203');
+    btn.setAttribute('aria-label', t.btn); btn.title = t.meno;
+    btnAi.textContent = t.ai;
+    h.replaceChildren('Barber', ' ', el('span', { class: 'asi-ai' }, [t.ai]));
+    sub.textContent = t.sub; note.textContent = t.note; ochrana.textContent = t.ochrana; novy.textContent = t.novy; skry.textContent = t.skryt;
+    if (pas) pas.textContent = t.ukazka;
+    area.placeholder = t.ph; area.setAttribute('aria-label', t.ph); odosli.setAttribute('aria-label', t.send); zavri.setAttribute('aria-label', t.close);
+    volaj.lastChild.textContent = t.volat; volaj.setAttribute('aria-label', t.tel + ': 0951 267 203');
+    oznam.setAttribute('aria-label', t.meno); oznamH.replaceChildren('Barber', ' ', el('span', { class: 'asi-ai' }, [t.ai])); oznamT.textContent = t.oznam;
+    spytaj.textContent = t.spytat; oznamTel.lastChild.textContent = t.volat; oznamTel.setAttribute('aria-label', t.tel + ': 0951 267 203'); oznamX.setAttribute('aria-label', t.close);
   }
   function obsah() {
     const t = tx();
@@ -182,7 +223,7 @@ export async function spusti(api) {
     if (!otazka || bezi) return;
     const t = tx();
     if (rozhovor.length >= MAX_SPRAV) { bublina('a', t.dlhy).classList.add('asi-chyba'); return; }
-    rozhovor.push({ r: 'u', t: otazka }); uloz(rozhovor);
+    rozhovor.push({ r: 'u', t: otazka }); uloz(kluc, rozhovor);
     const chipy = zoz.querySelector('.asi-chips');
     if (chipy) { chipy.remove(); pole(); }                      // fokus nesmie ostať na zmazanom návrhu
     bublina('u', otazka); novy.hidden = false;
@@ -191,17 +232,20 @@ export async function spusti(api) {
     zoz.scrollTop = zoz.scrollHeight;
     bezi = true; odosli.disabled = true;
     let text = '', kal = null, tel = false;
+    const naText = (kus) => {
+      const dole = zoz.scrollHeight - zoz.scrollTop - zoz.clientHeight < 40;
+      text += kus; b.classList.remove('asi-pise'); vykresli(text, b);
+      if (dole) zoz.scrollTop = zoz.scrollHeight;
+    };
     try {
-      await opytaj(api, rozhovor, (kus) => {
-        const dole = zoz.scrollHeight - zoz.scrollTop - zoz.clientHeight < 40;
-        text += kus; b.classList.remove('asi-pise'); vykresli(text, b);
-        if (dole) zoz.scrollTop = zoz.scrollHeight;
-      }, (k) => { kal = k; }, () => { tel = true; });
+      // ukážka: vopred pripravené odpovede z údajov webu, nič sa neposiela
+      if (ukazka) await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
+      else await opytaj(api, rozhovor, naText, (k) => { kal = k; }, () => { tel = true; });
       doplnky(b, kal, tel);
-      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined }); uloz(rozhovor);
+      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined }); uloz(kluc, rozhovor);
     } catch (e) {
       // otázka bez odpovede sa vráti do poľa, aby ju návštevník mohol poslať znova
-      rozhovor.pop(); uloz(rozhovor);
+      rozhovor.pop(); uloz(kluc, rozhovor);
       // správy servera sú po slovensky; v inom jazyku stránky všeobecná správa v jej jazyku
       b.classList.remove('asi-pise'); b.classList.add('asi-chyba'); vykresli((jazyk() === 'sk' && e.message) || t.err, b);
       b.after(akcie());
@@ -218,13 +262,54 @@ export async function spusti(api) {
   let navrat = null;
   function otvor(on) {
     panel.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
-    if (on) { navrat = document.activeElement; popisy(); obsah(); setTimeout(pole, 30); }
-    else if (navrat && navrat.focus) navrat.focus({ preventScroll: true });
+    if (on) {
+      // z bubliny sa fokus po zavretí vráti na ikonu (bublina už nebude)
+      navrat = oznam.contains(document.activeElement) ? btn : document.activeElement;
+      schovajOznam(); popisy(); obsah(); setTimeout(pole, 30);
+    } else if (navrat && navrat.focus) navrat.focus({ preventScroll: true });
   }
+
+  // bublina: raz za návštevu, keď návštevník ikonu chvíľu vidí (nie v úvode, pri menu ani pri ponuke jazyka);
+  // sama zmizne po 25 s, zavretá krížikom sa 14 dní neukáže
+  let oznamCas = 0;
+  function ukazOznam() {
+    if (!panel.hidden || rozhovor.length || citaj('sessionStorage', K_OZNAM_RAZ)) return;
+    if (Date.now() - (Number(citaj('localStorage', K_OZNAM)) || 0) < 14 * 864e5) return;
+    zapis('sessionStorage', K_OZNAM_RAZ, '1');
+    oznam.hidden = false; requestAnimationFrame(() => oznam.classList.add('is-on'));
+    oznamCas = setTimeout(() => schovajOznam(), 25000);
+  }
+  function schovajOznam(navzdy) {
+    clearTimeout(oznamCas);
+    if (navzdy) zapis('localStorage', K_OZNAM, String(Date.now()));
+    if (oznam.contains(document.activeElement)) btn.focus({ preventScroll: true });
+    oznam.classList.remove('is-on'); oznam.hidden = true;
+  }
+  let videl = 0;
+  const hodiny = setInterval(() => {
+    const vidno = btn.isConnected && panel.hidden && parseFloat(getComputedStyle(btn).opacity) > 0.9 && !document.querySelector('.lang-offer.in');
+    videl = vidno ? videl + 1 : 0;
+    if (videl >= 5 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 5) ukazOznam(); }
+  }, 1000);
+
+  // Skryť Barbera: ikona, bublina aj okno zmiznú do konca návštevy
+  function skryBarbera() {
+    zapis('sessionStorage', K_SKRYTY, '1');
+    clearInterval(hodiny); clearTimeout(oznamCas);
+    html.classList.remove('asi-open');
+    btn.remove(); oznam.remove(); panel.remove();
+  }
+
   btn.addEventListener('click', () => otvor(panel.hidden));
   zavri.addEventListener('click', () => otvor(false));
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) { e.stopPropagation(); otvor(false); } }, true);
-  novy.addEventListener('click', () => { if (bezi) return; rozhovor = []; uloz(rozhovor); obsah(); area.focus(); });
+  spytaj.addEventListener('click', () => otvor(true));
+  oznamX.addEventListener('click', () => schovajOznam(true));
+  skry.addEventListener('click', skryBarbera);
+  addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (!panel.hidden) { e.stopPropagation(); otvor(false); } else if (!oznam.hidden && oznam.contains(document.activeElement)) { e.stopPropagation(); schovajOznam(); }
+  }, true);
+  novy.addEventListener('click', () => { if (bezi) return; rozhovor = []; uloz(kluc, rozhovor); obsah(); area.focus(); });
   form.addEventListener('submit', (e) => { e.preventDefault(); posli(area.value); });
   area.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); posli(area.value); } });
   area.addEventListener('input', vyska);

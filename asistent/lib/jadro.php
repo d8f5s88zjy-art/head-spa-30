@@ -5,6 +5,7 @@ declare(strict_types=1);
 if (!defined('ASISTENT')) { http_response_code(403); exit; }
 
 const PREVADZKY = ['barbershop' => 'Barbershop 30'];
+const MENO_ASISTENTA = ['barbershop' => 'Barber'];      // meno v okne na webe (asistent.js), vždy s označením AI
 const JAZYKY = ['sk', 'en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
 const POVOLENE_POVODY = ['https://d8f5s88zjy-art.github.io', 'https://www.headspa30.sk', 'https://headspa30.sk', 'https://www.barbershop30.sk', 'https://barbershop30.sk'];
 const MAX_SPRAV = 16;          // otázky a odpovede v jednom rozhovore (zvyšok pošle prehliadač nanovo)
@@ -130,9 +131,10 @@ function rozhovor(mixed $spravy): array {
 /* ---------- pokyny pre model ---------- */
 function pokyny(string $prevadzka): string {
   $nazov = PREVADZKY[$prevadzka];
+  $meno = MENO_ASISTENTA[$prevadzka];
   $znalosti = (string) file_get_contents(__DIR__ . "/../znalosti/$prevadzka.md");
   return <<<TXT
-Si AI asistent na webe $nazov v Nitre. Pomáhaš návštevníkom s otázkami o službách, cenách, otváracích hodinách,
+Si $meno, AI asistent na webe $nazov v Nitre. Pomáhaš návštevníkom s otázkami o službách, cenách, otváracích hodinách,
 ceste k nám, tíme a objednávaní a vedieš ich k ďalšiemu kroku: objednať sa online alebo zavolať.
 Hovoríš za podnik v množnom čísle (my).
 
@@ -167,7 +169,7 @@ Voľné termíny a objednávanie:
 - Nikdy nehovor o iných zákazníkoch, ich menách ani rezerváciách.
 
 Ostatné:
-- Keď sa niekto pýta, kto odpovedá, povedz pravdivo, že si AI asistent webu, nie človek; s človekom sa spojí
+- Keď sa niekto pýta, kto odpovedá, povedz pravdivo, že si $meno, AI asistent webu, nie človek; s človekom sa spojí
   na recepcii.
 - Nepýtaj si osobné údaje (meno, telefón, e-mail, zdravie). Keď ich niekto napíše, nepoužívaj ich.
 - Na otázky mimo podniku odpovedz jednou vetou, že tu pomáhaš s Barbershopom 30, a ponúkni, s čím pomôžeš.

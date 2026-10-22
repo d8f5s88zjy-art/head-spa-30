@@ -3,7 +3,9 @@
 //   node source/tools/asistent-test.mjs [--out=dir]
 // Kontroly: bez data-asistent sa nič nenačíta; tlačidlo až po stave „zapnuté“, zreteľne „AI“; otvorenie, návrh otázky,
 // odpoveď po kúskoch, odkazy v odpovedi, karta overených termínov a Zavolať a potvrdiť termín (overené, výpadok kalendára,
-// bez napojenia), Esc a návrat fokusu, rozhovor po obnovení stránky, angličtina, telefón bez pretekania a prekryvu, chyba servera.
+// bez napojenia), Esc a návrat fokusu, rozhovor po obnovení stránky, angličtina, telefón bez pretekania a prekryvu, chyba servera;
+// Barber: ikona je logo so štítkom AI, bublina pri ikone (Spýtať sa, Zavolať, zavrieť na 14 dní), Zavolať v hlavičke okna,
+// Skryť Barbera do konca návštevy; ukážka ?asistent=ukazka označená, s odpoveďami z cenníka stránky, nič neposiela.
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -141,7 +143,7 @@ try {
     await btn.waitFor({ state: 'visible', timeout: 8000 });
     await page.waitForFunction(() => document.documentElement.lang === 'en', null, { timeout: 8000 }).catch(() => {});
     await btn.click();
-    ok(await page.locator('#asi-h').innerText() === 'Barbershop 30 AI assistant', 'en: nadpis okna po anglicky');
+    ok(/^Barber\s+AI$/.test(await page.locator('#asi-h').innerText()) && await page.locator('.asi-sub').innerText() === 'Barbershop 30 AI assistant, the front desk confirms your time', 'en: Barber, AI a podnadpis po anglicky');
     await page.locator('.asi-chips button').first().click();
     await page.locator('.asi-a').nth(1).filter({ hasText: '40 min' }).waitFor({ timeout: 8000 });
     const log = fs.readFileSync(path.join(T, 'api.log'), 'utf8').trim().split('\n').pop();
@@ -163,6 +165,82 @@ try {
     await page.waitForFunction(() => !document.querySelector('.asi-send').disabled && !document.querySelector('.asi-pise'), null, { timeout: 15000 });
     const txt = await page.locator('.asi-a').last().innerText();
     ok(/nepripojene/.test(txt) && await page.locator('.asi-kal').count() === 0 && await page.locator('.asi-akcie a[href="tel:+421951267203"]').count() === 1, 'bez kalendára: žiadne časy, Zavolať a potvrdiť termín', txt);
+    await ctx.close();
+  }
+  // Barber: logo, bublina pri ikone, Zavolať v hlavičke, skrytie (telefón 360 px)
+  {
+    const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 360, height: 780 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    const url = `${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent(API)}`;
+    await page.goto(url, { waitUntil: 'load' });
+    await page.evaluate(() => window.scrollTo(0, 30));
+    const btn = page.locator('.asi-btn');
+    await btn.waitFor({ state: 'visible', timeout: 8000 });
+    ok(await btn.locator('img[src*="logo-30-barbershop"]').count() === 1 && (await btn.locator('.asi-ai').innerText()).trim() === 'AI' && /Barber/.test(await btn.getAttribute('aria-label')), 'Barber: ikona je logo so štítkom AI');
+    const oznam = page.locator('.asi-oznam.is-on');
+    await oznam.waitFor({ state: 'visible', timeout: 12000 });
+    await sleep(500);
+    const ot = await oznam.innerText();
+    ok(/Barber/.test(ot) && /AI/.test(ot) && await oznam.locator('a[href="tel:+421951267203"]').count() === 1 && await oznam.locator('.asi-oznam-spytaj').isVisible(), 'Barber: bublina s menom, AI, Spýtať sa a Zavolať', ot.replace(/\n/g, ' | '));
+    const [o, b] = await page.evaluate(() => ['.asi-oznam', '.asi-btn'].map((s) => document.querySelector(s).getBoundingClientRect().toJSON()));
+    ok(o.bottom <= b.top && o.left >= 0 && o.right <= 360 && await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Barber: bublina nad ikonou, bez pretekania', `${Math.round(o.left)}–${Math.round(o.right)}, ${Math.round(o.bottom)} ≤ ${Math.round(b.top)}`);
+    await page.screenshot({ path: path.join(OUT, 'mobile-bublina.png') });
+    await page.locator('.asi-oznam-spytaj').click();
+    await page.locator('#asi-panel').waitFor({ state: 'visible' });
+    ok(await page.locator('.asi-oznam').isHidden() && await page.locator('.asi-hlava .asi-volaj[href="tel:+421951267203"]').isVisible(), 'Barber: Spýtať sa otvorí okno, Zavolať je v hlavičke');
+    ok(/Barber/.test(await page.locator('#asi-h').innerText()) && /AI asistent/.test(await page.locator('.asi-sub').innerText()), 'Barber: v okne meno a AI asistent');
+    await page.locator('.asi-hlava .asi-x').click();
+    ok(await page.evaluate(() => document.activeElement && document.activeElement.classList.contains('asi-btn')), 'Barber: po zavretí fokus na ikone');
+    // zavretie bubliny krížikom: ďalšia návšteva ju 14 dní neukáže
+    await page.evaluate(() => sessionStorage.removeItem('b30.barber.oznam.raz'));
+    await page.reload({ waitUntil: 'load' });
+    await page.evaluate(() => window.scrollTo(0, 30));
+    await oznam.waitFor({ state: 'visible', timeout: 15000 });
+    await page.locator('.asi-oznam-x').click();
+    ok(await page.locator('.asi-oznam').isHidden() && await page.evaluate(() => Number(localStorage.getItem('b30.barber.oznam')) > 0), 'Barber: krížik bublinu zavrie a zapamätá');
+    await page.evaluate(() => sessionStorage.removeItem('b30.barber.oznam.raz'));
+    await page.reload({ waitUntil: 'load' });
+    await page.evaluate(() => window.scrollTo(0, 30));
+    await btn.waitFor({ state: 'visible', timeout: 8000 });
+    await sleep(7000);
+    ok(await page.locator('.asi-oznam').isHidden(), 'Barber: zavretá bublina sa znova neukáže');
+    // Skryť Barbera: ikona aj okno zmiznú do konca návštevy
+    await btn.click();
+    await page.locator('.asi-skry').click();
+    ok(await page.locator('.asi-btn, #asi-panel, .asi-oznam').count() === 0 && !(await page.evaluate(() => document.documentElement.classList.contains('asi-open'))), 'Barber: Skryť Barbera ho schová');
+    await page.reload({ waitUntil: 'load' });
+    await page.mouse.move(100, 100).catch(() => {});
+    await sleep(4500);
+    ok(await page.locator('.asi-btn').count() === 0, 'Barber: skrytý ostane do konca návštevy');
+    await ctx.close();
+  }
+  // ukážka bez servera: výrazne označená, odpovede z cenníka stránky, termíny nevymýšľa, nič neposiela
+  {
+    const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    const req = [], errs = [];
+    page.on('request', (r) => { if (/api\.php|:891\d/.test(r.url())) req.push(r.url()); });
+    page.on('pageerror', (e) => errs.push(e.message));
+    await page.goto(`${srv.origin}/rezervacia.html?objednavka=ukazka&asistent=ukazka`, { waitUntil: 'load' });
+    await page.mouse.move(300, 300);
+    const btn = page.locator('.asi-btn');
+    await btn.waitFor({ state: 'visible', timeout: 8000 });
+    await btn.click();
+    ok(/nepíše ich AI/.test(await page.locator('.asi-ukazka-pas').innerText()) && await page.locator('.asi-note').isHidden(), 'ukážka: výrazne označené, že odpovede nepíše AI');
+    const opytaj = async (q) => {
+      await page.locator('.asi-form textarea').fill(q);
+      await page.keyboard.press('Enter');
+      await page.waitForFunction(() => !document.querySelector('.asi-send').disabled && !document.querySelector('.asi-pise'), null, { timeout: 15000 });
+      return page.locator('.asi-a').last().innerText();
+    };
+    const cena = await opytaj('Koľko stojí strih?');
+    ok(/Pánsky strih:\s40\smin,\s18\s€/.test(cena) && /Strih pre malých gentlemanov:\s45\smin,\s15\s€/.test(cena), 'ukážka: ceny z cenníka stránky', cena.split('\n').slice(0, 3).join(' | '));
+    const term = await opytaj('Má Adrián zajtra voľný termín?');
+    ok(/neoverujem/.test(term) && !/\d{1,2}:\d{2}/.test(term.replace(/od 9:00 do 19:00/g, '')) && await page.locator('.asi-kal').count() === 0 && await page.locator('.asi-akcie a[href="tel:+421951267203"]').count() >= 1, 'ukážka: voľné termíny nevymýšľa, ponúkne Zavolať', term.replace(/\n/g, ' | '));
+    const nevie = await opytaj('Dá sa u vás parkovať?');
+    ok(/0951 267 203/.test(nevie) && /zdvihneme/.test(nevie), 'ukážka: čo nevie, pošle na telefón');
+    await page.screenshot({ path: path.join(OUT, 'desktop-ukazka.png') });
+    ok(req.length === 0 && errs.length === 0, 'ukážka: nič sa neposiela na server, bez chýb', req.concat(errs).join(' '));
     await ctx.close();
   }
 } finally {
