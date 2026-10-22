@@ -69,6 +69,9 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   systému a telefón. Odkaz s predvoľbou: `rezervacia.html?sluzba=1&barber=Adrian` (rovno na deň). Zapína sa rovnakými
   príznakmi ako web (`data-objednavka`, `data-asistent`, nasadenie v pages.yml); kým nie je pripojený kalendár, má
   `noindex` (nasadenie s kalendárom ho odstráni). Záväzné odoslanie rezervácie z webu nie je (pozri Objednávka).
+  Služby sú po skupinách so skutočnou fotkou prevádzky (strih, brada, balíčky, doplnky; nie výsledky strihov),
+  barberi ako karty s portrétom, pod tým tím ako na webe a „Naša práca“ s odkazom na Instagram. Fotky práce
+  barberov: `docs/FOTKY_PRACE.md`, `source/tools/praca.py` → `assets/praca.json` (okno aj stránka ich ukážu samy).
 - **Vizitka a vernostná kartička** (`assets/karty.js` a `karty.css`, pás pod kontaktom, načíta sa po načítaní stránky):
   vizitka, ktorú prevádzka už rozdáva (predloha: fotka recepcie `source/photos/foto-17.jpg`), nie nový návrh: na výšku,
   pruhy barber pole, biely kruh s pôvodným logom zo starého webu (`source/web-povodny/logo-vector-black.svg` →

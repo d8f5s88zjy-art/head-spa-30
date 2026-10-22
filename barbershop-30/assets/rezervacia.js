@@ -1,8 +1,8 @@
 /*
  * BARBERSHOP 30 – rezervačná stránka (rezervacia.html). Malý modul namiesto app.js webu (bez filmu a hudby):
- * menu na telefóne, jazyky (assets/i18n.js), kroky objednávky priamo v stránke (assets/objednavka.js, stranka)
- * a AI asistent na otázky (assets/asistent.js). Bez skriptu stránka ostáva cenníkom s odkazmi do rezervačného
- * systému a s telefónom.
+ * menu na telefóne, jazyky (assets/i18n.js), kroky objednávky priamo v stránke (assets/objednavka.js, stranka),
+ * fotky práce barberov (assets/praca.json, ak ich prevádzka dodala) a AI asistent na otázky (assets/asistent.js).
+ * Bez skriptu stránka ostáva cenníkom s odkazmi do rezervačného systému a s telefónom.
  *
  * Zapínanie ako na webe: data-objednavka na <html> (nasadenie len so súhlasom prevádzky rezervačného systému) a
  * data-asistent (len s kľúčom API na serveri); na vlastnom počítači ?objednavka=<adresa> a ?asistent=<adresa>,
@@ -56,3 +56,27 @@ document.querySelectorAll('.year').forEach((e) => { e.textContent = String(new D
   const neskor = () => setTimeout(nacitaj, 2500);
   if (document.readyState === 'complete') neskor(); else addEventListener('load', neskor, { once: true });
 })();
+
+/* naša práca: fotky od barberov (assets/praca.json z source/tools/praca.py); bez súboru ostane len odkaz na Instagram */
+(function praca() {
+  const zoznam = document.querySelector('[data-praca]');
+  if (!zoznam) return;
+  const zdroj = new URL('praca.json', import.meta.url);
+  fetch(zdroj.href, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((j) => {
+    const barberi = (j && j.barberi) || {}, mena = (j && j.mena) || {};
+    const polozky = [];
+    // striedavo od každého barbera, aby bolo vidieť celý tím
+    for (let i = 0; i < 4; i++) for (const k of Object.keys(barberi)) if (barberi[k][i]) polozky.push([k, barberi[k][i]]);
+    if (!polozky.length) return;
+    zoznam.replaceChildren(...polozky.slice(0, 16).map(([k, f]) => {
+      const fig = document.createElement('figure'), im = document.createElement('img'), cap = document.createElement('figcaption');
+      im.src = new URL(f.maly, zdroj).href; im.alt = f.alt || ''; im.width = 480; im.height = 600; im.loading = 'lazy'; im.decoding = 'async';
+      cap.textContent = mena[k] || k;
+      fig.append(im, cap);
+      const li = document.createElement('li'); li.append(fig);
+      return li;
+    }));
+    zoznam.hidden = false;
+  }).catch(() => {});
+})();
+

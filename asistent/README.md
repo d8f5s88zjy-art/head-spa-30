@@ -14,7 +14,7 @@ overuje v rezervačnom kalendári (keď je napojenie povolené) a pri každej od
 | Ochrana údajov (odkaz z okna) | `ochrana-udajov.html` |
 | Nasadenie na hosting (knižnica, `config.php` z tajomstva) | `.github/workflows/ftp.yml`, `tools/ftp-balik.sh`, `tools/asistent-config.php` |
 | Objednávkové okno na webe (barberi, dni, voľné časy; len čítanie) | `api.php` (`a=barberi`, `a=dni`, `a=terminy`), `lib/kalendar.php`, `barbershop-30/assets/objednavka.js` |
-| Testy | `testy/spusti.sh` (server proti falošnému API a falošnému rezervačnému systému, 35 + 17 kontrol), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači), `barbershop-30/source/tools/objednavka-test.mjs` (objednávkové okno) |
+| Testy | `testy/spusti.sh` (server proti falošnému API a falošnému rezervačnému systému, 36 + 17 kontrol), `barbershop-30/source/tools/asistent-test.mjs` (okno v prehliadači), `barbershop-30/source/tools/objednavka-test.mjs` (objednávkové okno) |
 
 ## Zapnutie
 

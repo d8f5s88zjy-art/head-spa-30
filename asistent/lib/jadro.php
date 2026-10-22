@@ -49,9 +49,14 @@ function db(): PDO {
   static $pdo = null;
   if ($pdo) return $pdo;
   $cesta = (string) (konfig()['db'] ?? __DIR__ . '/../data/asistent.sqlite');
-  $pdo = new PDO('sqlite:' . $cesta, null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-  $pdo->exec('PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 4000;
-    CREATE TABLE IF NOT EXISTS limity (kluc TEXT NOT NULL, cas INTEGER NOT NULL);
+  // čakanie na zámok sa nastaví ako prvé (ATTR_TIMEOUT aj PRAGMA): súbežné požiadavky (okno objednávky pýta barberov
+  // a dni naraz) inak pri zakladaní databázy alebo prepnutí na WAL padli na „database is locked“
+  $pdo = new PDO('sqlite:' . $cesta, null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_TIMEOUT => 5]);
+  $pdo->exec('PRAGMA busy_timeout = 5000');
+  if (strtolower((string) $pdo->query('PRAGMA journal_mode')->fetchColumn()) !== 'wal') {
+    try { $pdo->exec('PRAGMA journal_mode = WAL'); } catch (PDOException $e) { /* prepne ďalšia požiadavka, limity fungujú aj bez WAL */ }
+  }
+  $pdo->exec('CREATE TABLE IF NOT EXISTS limity (kluc TEXT NOT NULL, cas INTEGER NOT NULL);
     CREATE INDEX IF NOT EXISTS limity_kluc ON limity (kluc, cas);');
   return $pdo;
 }

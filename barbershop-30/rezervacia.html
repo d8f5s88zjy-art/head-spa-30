@@ -34,6 +34,10 @@
 @font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/Manrope-600.woff2") format("woff2")}
 @font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/Manrope-700.woff2") format("woff2")}
   </style>
+  <!-- fotka úvodu (LCP) sa začne sťahovať hneď s hlavičkou, rovnaký srcset ako <picture> v úvode; 760 px pre bežné
+       telefóny (assets/img/rez/, z výrezu kreslo-stred-m-1448), ostré 1086 a 1448 px pre telefóny s hustejším displejom -->
+  <link rel="preload" as="image" type="image/avif" media="(max-width: 720px)" imagesrcset="assets/img/rez/kreslo-stred-m-760.avif 760w, assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" type="image/avif" media="(min-width: 721px)" imagesrcset="assets/img/film/kreslo-stred-1448.avif 1448w, assets/img/film/kreslo-stred-2172.avif 2172w, assets/img/film/kreslo-stred-2896.avif 2896w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/objednavka.css">
   <link rel="stylesheet" href="assets/rezervacia.css">
@@ -66,8 +70,8 @@
     <!-- úvod: prázdne kreslo uprostred sály čaká -->
     <section class="rez-uvod" aria-labelledby="h-rez">
       <picture class="rez-foto" aria-hidden="true">
-        <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="100vw">
-        <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/film/kreslo-stred-m-1086.webp 1086w, assets/img/film/kreslo-stred-m-1448.webp 1448w" sizes="100vw">
+        <source media="(max-width: 720px)" type="image/avif" srcset="assets/img/rez/kreslo-stred-m-760.avif 760w, assets/img/film/kreslo-stred-m-1086.avif 1086w, assets/img/film/kreslo-stred-m-1448.avif 1448w" sizes="100vw">
+        <source media="(max-width: 720px)" type="image/webp" srcset="assets/img/rez/kreslo-stred-m-760.webp 760w, assets/img/film/kreslo-stred-m-1086.webp 1086w, assets/img/film/kreslo-stred-m-1448.webp 1448w" sizes="100vw">
         <source type="image/avif" srcset="assets/img/film/kreslo-stred-1448.avif 1448w, assets/img/film/kreslo-stred-2172.avif 2172w, assets/img/film/kreslo-stred-2896.avif 2896w" sizes="100vw">
         <source type="image/webp" srcset="assets/img/film/kreslo-stred-1448.webp 1448w, assets/img/film/kreslo-stred-2172.webp 2172w, assets/img/film/kreslo-stred-2896.webp 2896w" sizes="100vw">
         <img src="assets/img/film/kreslo-stred-1448.webp" width="4096" height="2731" alt="" decoding="async" fetchpriority="high">
@@ -94,6 +98,7 @@
             <p class="rez-pozn">Termín dokončíš v rezervačnom systéme Barbershopu 30 alebo telefonicky.</p>
             <div class="price-list">
               <section class="price-group" aria-labelledby="g-strih">
+                <picture class="rez-skup-foto"><source type="image/avif" srcset="assets/img/galeria-zrkadlo-640.avif 640w, assets/img/galeria-zrkadlo-1080.avif 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><source type="image/webp" srcset="assets/img/galeria-zrkadlo-640.webp 640w, assets/img/galeria-zrkadlo-1080.webp 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><img src="assets/img/galeria-zrkadlo-1080.jpg" srcset="assets/img/galeria-zrkadlo-640.jpg 640w, assets/img/galeria-zrkadlo-1080.jpg 1080w" sizes="(max-width: 1100px) 100vw, 60vw" width="1080" height="720" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 45% 55%" alt="Pracovné miesto s dreveným rámom zrkadla a produktmi"></picture>
                 <h3 class="price-group-title" id="g-strih">Strih</h3>
                 <ul role="list">
                   <li class="price-row">
@@ -130,6 +135,7 @@
               </section>
 
               <section class="price-group" aria-labelledby="g-brada">
+                <picture class="rez-skup-foto"><source type="image/avif" srcset="assets/img/galeria-sud-640.avif 640w, assets/img/galeria-sud-1080.avif 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><source type="image/webp" srcset="assets/img/galeria-sud-640.webp 640w, assets/img/galeria-sud-1080.webp 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><img src="assets/img/galeria-sud-1080.jpg" srcset="assets/img/galeria-sud-640.jpg 640w, assets/img/galeria-sud-1080.jpg 1080w" sizes="(max-width: 1100px) 100vw, 60vw" width="1080" height="720" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 55%" alt="Predná sála so sudom, uterákmi a kruhovými svietidlami"></picture>
                 <h3 class="price-group-title" id="g-brada">Brada a holenie</h3>
                 <ul role="list">
                   <li class="price-row">
@@ -154,6 +160,7 @@
               </section>
 
               <section class="price-group" aria-labelledby="g-balicky">
+                <picture class="rez-skup-foto"><source type="image/avif" srcset="assets/img/detail-stol-640.avif 640w, assets/img/detail-stol-1080.avif 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><source type="image/webp" srcset="assets/img/detail-stol-640.webp 640w, assets/img/detail-stol-1080.webp 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><img src="assets/img/detail-stol-1080.jpg" srcset="assets/img/detail-stol-640.jpg 640w, assets/img/detail-stol-1080.jpg 1080w" sizes="(max-width: 1100px) 100vw, 60vw" width="1080" height="720" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 45% 55%" alt="Karafa, pomády a štetka na holenie na pracovnom stole"></picture>
                 <h3 class="price-group-title" id="g-balicky">Balíčky</h3>
                 <ul role="list">
                   <li class="price-row">
@@ -172,6 +179,7 @@
               </section>
 
               <section class="price-group" aria-labelledby="g-doplnky">
+                <picture class="rez-skup-foto"><source type="image/avif" srcset="assets/img/galeria-neon-640.avif 640w, assets/img/galeria-neon-1080.avif 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><source type="image/webp" srcset="assets/img/galeria-neon-640.webp 640w, assets/img/galeria-neon-1080.webp 1080w" sizes="(max-width: 1100px) 100vw, 60vw"><img src="assets/img/galeria-neon-1080.jpg" srcset="assets/img/galeria-neon-640.jpg 640w, assets/img/galeria-neon-1080.jpg 1080w" sizes="(max-width: 1100px) 100vw, 60vw" width="1080" height="720" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 45% 48%" alt="Svietiaci nápis Barbershop 30 v machovom ráme na lamelovej stene"></picture>
                 <h3 class="price-group-title" id="g-doplnky">Doplnky</h3>
                 <ul role="list">
                   <li class="price-row">
@@ -232,6 +240,176 @@
             <a class="btn btn-secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Navigovať</a>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- tím: portréty a jedna veta ako na webe; pri pripojenom kalendári Objednať sa začne objednávku u barbera -->
+    <section class="band rez-tim" id="tim" aria-labelledby="h-tim">
+      <div class="container">
+        <p class="eyebrow">Kto ťa ostrihá</p>
+        <h2 class="h2" id="h-tim">Komu zveríš hlavu?</h2>
+        <ul class="team-grid" role="list">
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-nikolas-480.avif 480w, assets/img/tim-nikolas-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-nikolas-480.webp 480w, assets/img/tim-nikolas-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-nikolas-820.png" srcset="assets/img/tim-nikolas-480.png 480w, assets/img/tim-nikolas-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Nikolas, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Nikolas</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Strih ti pristane, akoby si ho nosil odjakživa.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-kristian-480.avif 480w, assets/img/tim-kristian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-kristian-480.webp 480w, assets/img/tim-kristian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-kristian-820.png" srcset="assets/img/tim-kristian-480.png 480w, assets/img/tim-kristian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Kristián, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Kristián</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Elegancia bez námahy. Taký je jeho rukopis.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-damian-480.avif 480w, assets/img/tim-damian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-damian-480.webp 480w, assets/img/tim-damian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-damian-820.png" srcset="assets/img/tim-damian-480.png 480w, assets/img/tim-damian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Damian, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Damian</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Pozorne ťa vypočuje. Potom už hovoria len nožnice.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-michal-480.avif 480w, assets/img/tim-michal-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-michal-480.webp 480w, assets/img/tim-michal-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-michal-820.png" srcset="assets/img/tim-michal-480.png 480w, assets/img/tim-michal-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Michal, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Michal</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Zavrieš oči pri horúcom uteráku a otvoríš ich spokojný.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-andy-480.avif 480w, assets/img/tim-andy-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-andy-480.webp 480w, assets/img/tim-andy-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-andy-820.png" srcset="assets/img/tim-andy-480.png 480w, assets/img/tim-andy-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Andy, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Andy</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Každý detail na svojom mieste, aj ten, ktorý vidíš len z profilu.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-dominika-480.avif 480w, assets/img/tim-dominika-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-dominika-480.webp 480w, assets/img/tim-dominika-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-dominika-820.png" srcset="assets/img/tim-dominika-480.png 480w, assets/img/tim-dominika-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Dominika, Barberka v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dominika</h3>
+              <p class="team-role">Barberka</p>
+              <p class="team-bio">Jemná ruka, prísne oko. U nej je hotovo, až keď sedí každý vlas.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-kevin-480.avif 480w, assets/img/tim-kevin-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-kevin-480.webp 480w, assets/img/tim-kevin-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-kevin-820.png" srcset="assets/img/tim-kevin-480.png 480w, assets/img/tim-kevin-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Kevin, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Kevin</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Pracuje pokojne a čisto. Výsledok ťa poteší aj o týždeň.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-lajko-480.avif 480w, assets/img/tim-lajko-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-lajko-480.webp 480w, assets/img/tim-lajko-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-lajko-820.png" srcset="assets/img/tim-lajko-480.png 480w, assets/img/tim-lajko-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Lajko, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Lajko</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Ostrá línia na krku, mäkký prechod na bokoch. Remeslo vidno zblízka.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-jojo-480.avif 480w, assets/img/tim-jojo-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-jojo-480.webp 480w, assets/img/tim-jojo-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-jojo-820.png" srcset="assets/img/tim-jojo-480.png 480w, assets/img/tim-jojo-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Jojo, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Jojo</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Rozhovor alebo ticho, ako ti je milšie. Strih dotiahne tak či tak.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="team-card">
+            <div class="team-portrait">
+              <picture>
+                <source type="image/avif" srcset="assets/img/tim-adrian-480.avif 480w, assets/img/tim-adrian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <source type="image/webp" srcset="assets/img/tim-adrian-480.webp 480w, assets/img/tim-adrian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                <img src="assets/img/tim-adrian-820.png" srcset="assets/img/tim-adrian-480.png 480w, assets/img/tim-adrian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" fetchpriority="low" style="--focal: 50% 35%" alt="Adrian, Barber v Barbershop 30">
+              </picture>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Adrian</h3>
+              <p class="team-role">Barber</p>
+              <p class="team-bio">Dôveru získa skôr, než si sadneš do kresla. Rád sa k nemu vrátiš.</p>
+              <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Objednať sa <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- naša práca: fotky od barberov (assets/praca.json, source/tools/praca.py); kým nie sú, len odkaz na Instagram -->
+    <section class="band rez-praca" id="praca" aria-labelledby="h-praca">
+      <div class="container">
+        <p class="eyebrow">Naša práca</p>
+        <h2 class="h2" id="h-praca">Pozri, ako strihá náš tím</h2>
+        <ul class="rez-praca-mriezka" role="list" data-praca hidden></ul>
+        <a class="btn btn-secondary rez-ig" href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Viac na Instagrame @barbershop30_nitra</a>
       </div>
     </section>
   </main>

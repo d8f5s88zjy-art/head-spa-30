@@ -20,14 +20,14 @@ const ODKAZY = 'a[href*="barbershop30.sk/rezervacia"]';
 const TTL = 110e3;                                     // voľné časy server drží 2 minúty, okno o chvíľu menej
 
 const T = {
-  sk: { kicker: 'Objednávka', krok: 'Krok {n} zo 4', h1: 'Čo si dáš?', h2: 'Kedy a u koho?', h3: 'Kedy?', h4: 'Tvoj výber', spat: 'Späť', zavriet: 'Zavrieť', zmenit: 'Zmeniť', nezalezi: 'Nezáleží', nezaleziP: 'Prvý voľný z tímu', nacitavam: 'Pozerám do kalendára…', zatvorene: 'zatvorené', dni: 'Dni', casy: 'Voľné časy', overene: 'Overené v kalendári o {t}. Termín je predbežný, kým ho nepotvrdíš.', ziadny: 'V tento deň už nie je voľný termín. Skús iný deň.', zatvorenyDen: 'V tento deň je zatvorené.', mimo: 'Na tento deň sa online objednať nedá.', chyba: 'Voľné časy teraz neviem overiť. Zavolaj nám, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.', nikto: 'Túto službu teraz online nik neponúka. Zavolaj nám a nájdeme termín.', predbezne: 'Termín ešte nie je rezervovaný. Dokonči ho v rezervačnom systéme alebo nám zavolaj a potvrdíme ho.', dokoncit: 'Dokončiť v rezervačnom systéme', zavolat: 'Zavolať a potvrdiť termín', o: 'o {t}', rychlo: 'Najbližšie voľné', rychloP: 'U ktoréhokoľvek barbera z tímu. Ťukni na čas.', alebo: 'Alebo si vyber svojho barbera', tel: 'Radšej zavoláš? 0951 267 203' },
-  en: { kicker: 'Booking', krok: 'Step {n} of 4', h1: 'What will it be?', h2: 'When and with whom?', h3: 'When?', h4: 'Your choice', spat: 'Back', zavriet: 'Close', zmenit: 'Change', nezalezi: 'Anyone', nezaleziP: 'First free barber', nacitavam: 'Checking the calendar…', zatvorene: 'closed', dni: 'Days', casy: 'Free times', overene: 'Checked in the calendar at {t}. The time is provisional until you confirm it.', ziadny: 'No free time left on this day. Try another day.', zatvorenyDen: 'We are closed on this day.', mimo: 'This day cannot be booked online.', chyba: 'I can’t check free times right now. Call us, on weekdays from 9:00 to 19:00 we always pick up.', nikto: 'Nobody offers this service online right now. Call us and we will find a time.', predbezne: 'The time is not booked yet. Finish it in the booking system or call us and we will confirm it.', dokoncit: 'Finish in the booking system', zavolat: 'Call to confirm your time', o: 'at {t}', rychlo: 'Next free times', rychloP: 'With any barber from the team. Tap a time.', alebo: 'Or choose your barber', tel: 'Rather call? 0951 267 203' },
-  uk: { kicker: 'Бронювання', krok: 'Крок {n} з 4', h1: 'Що обираєш?', h2: 'Коли й у кого?', h3: 'Коли?', h4: 'Твій вибір', spat: 'Назад', zavriet: 'Закрити', zmenit: 'Змінити', nezalezi: 'Будь-хто', nezaleziP: 'Перший вільний з команди', nacitavam: 'Дивлюся в календар…', zatvorene: 'зачинено', dni: 'Дні', casy: 'Вільний час', overene: 'Перевірено в календарі о {t}. Час попередній, доки ти його не підтвердиш.', ziadny: 'Цього дня вільного часу вже немає. Спробуй інший день.', zatvorenyDen: 'Цього дня зачинено.', mimo: 'На цей день онлайн записатися не можна.', chyba: 'Зараз не можу перевірити вільний час. Зателефонуй нам, у будні з 9:00 до 19:00 ми завжди відповімо.', nikto: 'Зараз цю послугу онлайн ніхто не пропонує. Зателефонуй, і ми знайдемо час.', predbezne: 'Час ще не заброньовано. Заверши бронювання в системі або зателефонуй, і ми його підтвердимо.', dokoncit: 'Завершити в системі бронювання', zavolat: 'Зателефонувати й підтвердити час', o: 'о {t}', rychlo: 'Найближчий вільний час', rychloP: 'У будь-якого барбера з команди. Торкнися часу.', alebo: 'Або обери свого барбера', tel: 'Краще зателефонувати? 0951 267 203' },
-  hu: { kicker: 'Foglalás', krok: '{n}. lépés a 4-ből', h1: 'Mit kérsz?', h2: 'Mikor és kinél?', h3: 'Mikor?', h4: 'A választásod', spat: 'Vissza', zavriet: 'Bezárás', zmenit: 'Módosítás', nezalezi: 'Mindegy', nezaleziP: 'Az első szabad a csapatból', nacitavam: 'Nézem a naptárat…', zatvorene: 'zárva', dni: 'Napok', casy: 'Szabad időpontok', overene: 'A naptárban ellenőrizve: {t}. Az időpont előzetes, amíg meg nem erősíted.', ziadny: 'Ezen a napon már nincs szabad időpont. Próbálj másik napot.', zatvorenyDen: 'Ezen a napon zárva vagyunk.', mimo: 'Erre a napra online nem lehet foglalni.', chyba: 'A szabad időpontokat most nem tudom ellenőrizni. Hívj minket, hétköznap 9:00 és 19:00 között mindig felvesszük.', nikto: 'Ezt a szolgáltatást most senki sem kínálja online. Hívj minket, és találunk időpontot.', predbezne: 'Az időpont még nincs lefoglalva. Fejezd be a foglalási rendszerben, vagy hívj minket, és megerősítjük.', dokoncit: 'Befejezés a foglalási rendszerben', zavolat: 'Hívás és időpont megerősítése', o: '{t}-kor', rychlo: 'Legközelebbi szabad időpontok', rychloP: 'Bármelyik barbernél a csapatból. Koppints egy időpontra.', alebo: 'Vagy válaszd ki a barberedet', tel: 'Inkább telefonálnál? 0951 267 203' },
-  sr: { kicker: 'Zakazivanje', krok: 'Korak {n} od 4', h1: 'Šta želiš?', h2: 'Kada i kod koga?', h3: 'Kada?', h4: 'Tvoj izbor', spat: 'Nazad', zavriet: 'Zatvori', zmenit: 'Promeni', nezalezi: 'Svejedno', nezaleziP: 'Prvi slobodan iz tima', nacitavam: 'Gledam u kalendar…', zatvorene: 'zatvoreno', dni: 'Dani', casy: 'Slobodni termini', overene: 'Provereno u kalendaru u {t}. Termin je privremen dok ga ne potvrdiš.', ziadny: 'Tog dana više nema slobodnog termina. Probaj drugi dan.', zatvorenyDen: 'Tog dana je zatvoreno.', mimo: 'Za taj dan ne može se zakazati onlajn.', chyba: 'Slobodne termine sada ne mogu da proverim. Pozovi nas, radnim danima od 9:00 do 19:00 uvek se javljamo.', nikto: 'Ovu uslugu sada niko ne nudi onlajn. Pozovi nas i naći ćemo termin.', predbezne: 'Termin još nije rezervisan. Završi ga u sistemu za rezervacije ili nas pozovi i potvrdićemo ga.', dokoncit: 'Završi u sistemu za rezervacije', zavolat: 'Pozovi i potvrdi termin', o: 'u {t}', rychlo: 'Najbliži slobodni termini', rychloP: 'Kod bilo kog berberina iz tima. Dodirni vreme.', alebo: 'Ili izaberi svog berberina', tel: 'Radije zoveš? 0951 267 203' },
-  pl: { kicker: 'Rezerwacja', krok: 'Krok {n} z 4', h1: 'Co wybierasz?', h2: 'Kiedy i u kogo?', h3: 'Kiedy?', h4: 'Twój wybór', spat: 'Wstecz', zavriet: 'Zamknij', zmenit: 'Zmień', nezalezi: 'Obojętnie', nezaleziP: 'Pierwszy wolny z zespołu', nacitavam: 'Sprawdzam kalendarz…', zatvorene: 'zamknięte', dni: 'Dni', casy: 'Wolne godziny', overene: 'Sprawdzono w kalendarzu o {t}. Termin jest wstępny, dopóki go nie potwierdzisz.', ziadny: 'Tego dnia nie ma już wolnego terminu. Spróbuj inny dzień.', zatvorenyDen: 'Tego dnia jest zamknięte.', mimo: 'Na ten dzień nie można zarezerwować online.', chyba: 'Nie mogę teraz sprawdzić wolnych godzin. Zadzwoń, w dni robocze od 9:00 do 19:00 zawsze odbieramy.', nikto: 'Tej usługi nikt teraz nie oferuje online. Zadzwoń, a znajdziemy termin.', predbezne: 'Termin nie jest jeszcze zarezerwowany. Dokończ w systemie rezerwacji albo zadzwoń, a go potwierdzimy.', dokoncit: 'Dokończ w systemie rezerwacji', zavolat: 'Zadzwoń i potwierdź termin', o: 'o {t}', rychlo: 'Najbliższe wolne terminy', rychloP: 'U dowolnego barbera z zespołu. Stuknij godzinę.', alebo: 'Albo wybierz swojego barbera', tel: 'Wolisz zadzwonić? 0951 267 203' },
-  de: { kicker: 'Buchung', krok: 'Schritt {n} von 4', h1: 'Was darf es sein?', h2: 'Wann und bei wem?', h3: 'Wann?', h4: 'Deine Auswahl', spat: 'Zurück', zavriet: 'Schließen', zmenit: 'Ändern', nezalezi: 'Egal', nezaleziP: 'Der Erste, der frei ist', nacitavam: 'Ich schaue in den Kalender…', zatvorene: 'geschlossen', dni: 'Tage', casy: 'Freie Zeiten', overene: 'Im Kalender geprüft um {t}. Der Termin ist vorläufig, bis du ihn bestätigst.', ziadny: 'An diesem Tag ist nichts mehr frei. Versuch einen anderen Tag.', zatvorenyDen: 'An diesem Tag ist geschlossen.', mimo: 'Dieser Tag ist online nicht buchbar.', chyba: 'Freie Zeiten kann ich gerade nicht prüfen. Ruf uns an, werktags von 9:00 bis 19:00 gehen wir immer ran.', nikto: 'Diese Leistung bietet gerade niemand online an. Ruf uns an, wir finden einen Termin.', predbezne: 'Der Termin ist noch nicht gebucht. Schließe ihn im Buchungssystem ab oder ruf uns an, wir bestätigen ihn.', dokoncit: 'Im Buchungssystem abschließen', zavolat: 'Anrufen und Termin bestätigen', o: 'um {t}', rychlo: 'Nächste freie Zeiten', rychloP: 'Bei einem Barber aus dem Team. Tipp auf eine Zeit.', alebo: 'Oder wähl deinen Barber', tel: 'Lieber anrufen? 0951 267 203' },
-  cs: { kicker: 'Objednávka', krok: 'Krok {n} ze 4', h1: 'Co si dáš?', h2: 'Kdy a u koho?', h3: 'Kdy?', h4: 'Tvůj výběr', spat: 'Zpět', zavriet: 'Zavřít', zmenit: 'Změnit', nezalezi: 'Nezáleží', nezaleziP: 'První volný z týmu', nacitavam: 'Dívám se do kalendáře…', zatvorene: 'zavřeno', dni: 'Dny', casy: 'Volné časy', overene: 'Ověřeno v kalendáři v {t}. Termín je předběžný, dokud ho nepotvrdíš.', ziadny: 'V tento den už není volný termín. Zkus jiný den.', zatvorenyDen: 'V tento den je zavřeno.', mimo: 'Na tento den se online objednat nedá.', chyba: 'Volné časy teď neumím ověřit. Zavolej nám, ve všední dny od 9:00 do 19:00 telefon vždy zvedneme.', nikto: 'Tuto službu teď online nikdo nenabízí. Zavolej nám a najdeme termín.', predbezne: 'Termín ještě není rezervovaný. Dokonči ho v rezervačním systému nebo nám zavolej a potvrdíme ho.', dokoncit: 'Dokončit v rezervačním systému', zavolat: 'Zavolat a potvrdit termín', o: 'v {t}', rychlo: 'Nejbližší volné časy', rychloP: 'U kteréhokoli barbera z týmu. Ťukni na čas.', alebo: 'Nebo si vyber svého barbera', tel: 'Raději zavoláš? 0951 267 203' },
+  sk: { kicker: 'Objednávka', krok: 'Krok {n} zo 4', h1: 'Čo si dáš?', h2: 'Kedy a u koho?', h3: 'Kedy?', h4: 'Tvoj výber', spat: 'Späť', zavriet: 'Zavrieť', zmenit: 'Zmeniť', nezalezi: 'Nezáleží', nezaleziP: 'Prvý voľný z tímu', nacitavam: 'Pozerám do kalendára…', zatvorene: 'zatvorené', dni: 'Dni', casy: 'Voľné časy', overene: 'Overené v kalendári o {t}. Termín je predbežný, kým ho nepotvrdíš.', ziadny: 'V tento deň už nie je voľný termín. Skús iný deň.', zatvorenyDen: 'V tento deň je zatvorené.', mimo: 'Na tento deň sa online objednať nedá.', chyba: 'Voľné časy teraz neviem overiť. Zavolaj nám, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.', nikto: 'Túto službu teraz online nik neponúka. Zavolaj nám a nájdeme termín.', predbezne: 'Termín ešte nie je rezervovaný. Dokonči ho v rezervačnom systéme alebo nám zavolaj a potvrdíme ho.', dokoncit: 'Dokončiť v rezervačnom systéme', zavolat: 'Zavolať a potvrdiť termín', o: 'o {t}', rychlo: 'Najbližšie voľné', rychloP: 'U ktoréhokoľvek barbera z tímu. Ťukni na čas.', alebo: 'Alebo si vyber svojho barbera', praca: 'Ukážky práce', tel: 'Radšej zavoláš? 0951 267 203' },
+  en: { kicker: 'Booking', krok: 'Step {n} of 4', h1: 'What will it be?', h2: 'When and with whom?', h3: 'When?', h4: 'Your choice', spat: 'Back', zavriet: 'Close', zmenit: 'Change', nezalezi: 'Anyone', nezaleziP: 'First free barber', nacitavam: 'Checking the calendar…', zatvorene: 'closed', dni: 'Days', casy: 'Free times', overene: 'Checked in the calendar at {t}. The time is provisional until you confirm it.', ziadny: 'No free time left on this day. Try another day.', zatvorenyDen: 'We are closed on this day.', mimo: 'This day cannot be booked online.', chyba: 'I can’t check free times right now. Call us, on weekdays from 9:00 to 19:00 we always pick up.', nikto: 'Nobody offers this service online right now. Call us and we will find a time.', predbezne: 'The time is not booked yet. Finish it in the booking system or call us and we will confirm it.', dokoncit: 'Finish in the booking system', zavolat: 'Call to confirm your time', o: 'at {t}', rychlo: 'Next free times', rychloP: 'With any barber from the team. Tap a time.', alebo: 'Or choose your barber', praca: 'Examples of work', tel: 'Rather call? 0951 267 203' },
+  uk: { kicker: 'Бронювання', krok: 'Крок {n} з 4', h1: 'Що обираєш?', h2: 'Коли й у кого?', h3: 'Коли?', h4: 'Твій вибір', spat: 'Назад', zavriet: 'Закрити', zmenit: 'Змінити', nezalezi: 'Будь-хто', nezaleziP: 'Перший вільний з команди', nacitavam: 'Дивлюся в календар…', zatvorene: 'зачинено', dni: 'Дні', casy: 'Вільний час', overene: 'Перевірено в календарі о {t}. Час попередній, доки ти його не підтвердиш.', ziadny: 'Цього дня вільного часу вже немає. Спробуй інший день.', zatvorenyDen: 'Цього дня зачинено.', mimo: 'На цей день онлайн записатися не можна.', chyba: 'Зараз не можу перевірити вільний час. Зателефонуй нам, у будні з 9:00 до 19:00 ми завжди відповімо.', nikto: 'Зараз цю послугу онлайн ніхто не пропонує. Зателефонуй, і ми знайдемо час.', predbezne: 'Час ще не заброньовано. Заверши бронювання в системі або зателефонуй, і ми його підтвердимо.', dokoncit: 'Завершити в системі бронювання', zavolat: 'Зателефонувати й підтвердити час', o: 'о {t}', rychlo: 'Найближчий вільний час', rychloP: 'У будь-якого барбера з команди. Торкнися часу.', alebo: 'Або обери свого барбера', praca: 'Приклади робіт', tel: 'Краще зателефонувати? 0951 267 203' },
+  hu: { kicker: 'Foglalás', krok: '{n}. lépés a 4-ből', h1: 'Mit kérsz?', h2: 'Mikor és kinél?', h3: 'Mikor?', h4: 'A választásod', spat: 'Vissza', zavriet: 'Bezárás', zmenit: 'Módosítás', nezalezi: 'Mindegy', nezaleziP: 'Az első szabad a csapatból', nacitavam: 'Nézem a naptárat…', zatvorene: 'zárva', dni: 'Napok', casy: 'Szabad időpontok', overene: 'A naptárban ellenőrizve: {t}. Az időpont előzetes, amíg meg nem erősíted.', ziadny: 'Ezen a napon már nincs szabad időpont. Próbálj másik napot.', zatvorenyDen: 'Ezen a napon zárva vagyunk.', mimo: 'Erre a napra online nem lehet foglalni.', chyba: 'A szabad időpontokat most nem tudom ellenőrizni. Hívj minket, hétköznap 9:00 és 19:00 között mindig felvesszük.', nikto: 'Ezt a szolgáltatást most senki sem kínálja online. Hívj minket, és találunk időpontot.', predbezne: 'Az időpont még nincs lefoglalva. Fejezd be a foglalási rendszerben, vagy hívj minket, és megerősítjük.', dokoncit: 'Befejezés a foglalási rendszerben', zavolat: 'Hívás és időpont megerősítése', o: '{t}-kor', rychlo: 'Legközelebbi szabad időpontok', rychloP: 'Bármelyik barbernél a csapatból. Koppints egy időpontra.', alebo: 'Vagy válaszd ki a barberedet', praca: 'Munkáink', tel: 'Inkább telefonálnál? 0951 267 203' },
+  sr: { kicker: 'Zakazivanje', krok: 'Korak {n} od 4', h1: 'Šta želiš?', h2: 'Kada i kod koga?', h3: 'Kada?', h4: 'Tvoj izbor', spat: 'Nazad', zavriet: 'Zatvori', zmenit: 'Promeni', nezalezi: 'Svejedno', nezaleziP: 'Prvi slobodan iz tima', nacitavam: 'Gledam u kalendar…', zatvorene: 'zatvoreno', dni: 'Dani', casy: 'Slobodni termini', overene: 'Provereno u kalendaru u {t}. Termin je privremen dok ga ne potvrdiš.', ziadny: 'Tog dana više nema slobodnog termina. Probaj drugi dan.', zatvorenyDen: 'Tog dana je zatvoreno.', mimo: 'Za taj dan ne može se zakazati onlajn.', chyba: 'Slobodne termine sada ne mogu da proverim. Pozovi nas, radnim danima od 9:00 do 19:00 uvek se javljamo.', nikto: 'Ovu uslugu sada niko ne nudi onlajn. Pozovi nas i naći ćemo termin.', predbezne: 'Termin još nije rezervisan. Završi ga u sistemu za rezervacije ili nas pozovi i potvrdićemo ga.', dokoncit: 'Završi u sistemu za rezervacije', zavolat: 'Pozovi i potvrdi termin', o: 'u {t}', rychlo: 'Najbliži slobodni termini', rychloP: 'Kod bilo kog berberina iz tima. Dodirni vreme.', alebo: 'Ili izaberi svog berberina', praca: 'Primeri rada', tel: 'Radije zoveš? 0951 267 203' },
+  pl: { kicker: 'Rezerwacja', krok: 'Krok {n} z 4', h1: 'Co wybierasz?', h2: 'Kiedy i u kogo?', h3: 'Kiedy?', h4: 'Twój wybór', spat: 'Wstecz', zavriet: 'Zamknij', zmenit: 'Zmień', nezalezi: 'Obojętnie', nezaleziP: 'Pierwszy wolny z zespołu', nacitavam: 'Sprawdzam kalendarz…', zatvorene: 'zamknięte', dni: 'Dni', casy: 'Wolne godziny', overene: 'Sprawdzono w kalendarzu o {t}. Termin jest wstępny, dopóki go nie potwierdzisz.', ziadny: 'Tego dnia nie ma już wolnego terminu. Spróbuj inny dzień.', zatvorenyDen: 'Tego dnia jest zamknięte.', mimo: 'Na ten dzień nie można zarezerwować online.', chyba: 'Nie mogę teraz sprawdzić wolnych godzin. Zadzwoń, w dni robocze od 9:00 do 19:00 zawsze odbieramy.', nikto: 'Tej usługi nikt teraz nie oferuje online. Zadzwoń, a znajdziemy termin.', predbezne: 'Termin nie jest jeszcze zarezerwowany. Dokończ w systemie rezerwacji albo zadzwoń, a go potwierdzimy.', dokoncit: 'Dokończ w systemie rezerwacji', zavolat: 'Zadzwoń i potwierdź termin', o: 'o {t}', rychlo: 'Najbliższe wolne terminy', rychloP: 'U dowolnego barbera z zespołu. Stuknij godzinę.', alebo: 'Albo wybierz swojego barbera', praca: 'Przykłady pracy', tel: 'Wolisz zadzwonić? 0951 267 203' },
+  de: { kicker: 'Buchung', krok: 'Schritt {n} von 4', h1: 'Was darf es sein?', h2: 'Wann und bei wem?', h3: 'Wann?', h4: 'Deine Auswahl', spat: 'Zurück', zavriet: 'Schließen', zmenit: 'Ändern', nezalezi: 'Egal', nezaleziP: 'Der Erste, der frei ist', nacitavam: 'Ich schaue in den Kalender…', zatvorene: 'geschlossen', dni: 'Tage', casy: 'Freie Zeiten', overene: 'Im Kalender geprüft um {t}. Der Termin ist vorläufig, bis du ihn bestätigst.', ziadny: 'An diesem Tag ist nichts mehr frei. Versuch einen anderen Tag.', zatvorenyDen: 'An diesem Tag ist geschlossen.', mimo: 'Dieser Tag ist online nicht buchbar.', chyba: 'Freie Zeiten kann ich gerade nicht prüfen. Ruf uns an, werktags von 9:00 bis 19:00 gehen wir immer ran.', nikto: 'Diese Leistung bietet gerade niemand online an. Ruf uns an, wir finden einen Termin.', predbezne: 'Der Termin ist noch nicht gebucht. Schließe ihn im Buchungssystem ab oder ruf uns an, wir bestätigen ihn.', dokoncit: 'Im Buchungssystem abschließen', zavolat: 'Anrufen und Termin bestätigen', o: 'um {t}', rychlo: 'Nächste freie Zeiten', rychloP: 'Bei einem Barber aus dem Team. Tipp auf eine Zeit.', alebo: 'Oder wähl deinen Barber', praca: 'Arbeitsbeispiele', tel: 'Lieber anrufen? 0951 267 203' },
+  cs: { kicker: 'Objednávka', krok: 'Krok {n} ze 4', h1: 'Co si dáš?', h2: 'Kdy a u koho?', h3: 'Kdy?', h4: 'Tvůj výběr', spat: 'Zpět', zavriet: 'Zavřít', zmenit: 'Změnit', nezalezi: 'Nezáleží', nezaleziP: 'První volný z týmu', nacitavam: 'Dívám se do kalendáře…', zatvorene: 'zavřeno', dni: 'Dny', casy: 'Volné časy', overene: 'Ověřeno v kalendáři v {t}. Termín je předběžný, dokud ho nepotvrdíš.', ziadny: 'V tento den už není volný termín. Zkus jiný den.', zatvorenyDen: 'V tento den je zavřeno.', mimo: 'Na tento den se online objednat nedá.', chyba: 'Volné časy teď neumím ověřit. Zavolej nám, ve všední dny od 9:00 do 19:00 telefon vždy zvedneme.', nikto: 'Tuto službu teď online nikdo nenabízí. Zavolej nám a najdeme termín.', predbezne: 'Termín ještě není rezervovaný. Dokonči ho v rezervačním systému nebo nám zavolej a potvrdíme ho.', dokoncit: 'Dokončit v rezervačním systému', zavolat: 'Zavolat a potvrdit termín', o: 'v {t}', rychlo: 'Nejbližší volné časy', rychloP: 'U kteréhokoli barbera z týmu. Ťukni na čas.', alebo: 'Nebo si vyber svého barbera', praca: 'Ukázky práce', tel: 'Raději zavoláš? 0951 267 203' },
 };
 const LOKALY = { sk: 'sk-SK', en: 'en-GB', uk: 'uk-UA', hu: 'hu-HU', sr: 'sr-Latn-RS', pl: 'pl-PL', de: 'de-DE', cs: 'cs-CZ' };
 const jazyk = () => { const l = (html.lang || 'sk').slice(0, 2).toLowerCase(); return T[l] ? l : 'sk'; };
@@ -54,7 +54,9 @@ function sluzby() {
   return [...document.querySelectorAll('a.price-cta[data-sluzba]')].map((a) => {
     const r = a.closest('.price-row');
     const t = (q) => (r && r.querySelector(q) ? r.querySelector(q).textContent.trim() : '');
-    return { id: Number(a.dataset.sluzba), nazov: t('.price-name'), cas: t('.price-time'), cena: t('.price-amount') };
+    const g = a.closest('.price-group'), h = g && g.querySelector('.price-group-title');
+    return { id: Number(a.dataset.sluzba), nazov: t('.price-name'), cas: t('.price-time'), cena: t('.price-amount'),
+      skup: g ? g.getAttribute('aria-labelledby') : '', skupNazov: h ? h.textContent.trim() : '' };
   }).filter((x) => x.id && x.nazov);
 }
 /* barber z tímu na stránke (portrét a meno tak, ako ich píše web) */
@@ -72,6 +74,23 @@ function zTimu(meno) {
   return { meno, foto: new URL(`img/tim-${bez(meno).replace(/[^a-z0-9]+/g, '-')}-480.webp`, import.meta.url).href, odhad: true };
 }
 const menoBarbera = (m) => (m === KTOKOLVEK ? tx().nezalezi : zTimu(m).meno);
+
+/* skupiny služieb: skutočná fotka prevádzky (nie výsledok strihu), rovnaká ako v galérii webu */
+const FOTO_SKUP = { 'g-strih': ['galeria-zrkadlo', '45% 55%'], 'g-brada': ['galeria-sud', '50% 55%'], 'g-balicky': ['detail-stol', '45% 55%'], 'g-doplnky': ['galeria-neon', '45% 48%'] };
+const img = (cesta) => new URL(`img/${cesta}`, import.meta.url).href;
+function fotoSkup(skup) {
+  const f = FOTO_SKUP[skup];
+  if (!f) return null;
+  return el('picture', { class: 'obj-skup-foto', 'aria-hidden': 'true' }, [
+    el('source', { type: 'image/avif', srcset: `${img(f[0] + '-640.avif')} 640w, ${img(f[0] + '-1080.avif')} 1080w`, sizes: '(max-width: 640px) 100vw, 40rem' }),
+    el('img', { src: img(f[0] + '-640.webp'), srcset: `${img(f[0] + '-640.webp')} 640w, ${img(f[0] + '-1080.webp')} 1080w`, sizes: '(max-width: 640px) 100vw, 40rem', alt: '', width: '640', height: '427', loading: 'lazy', decoding: 'async', style: `object-position: ${f[1]}` }),
+  ]);
+}
+/* fotky práce barberov (assets/praca.json, vyrobí source/tools/praca.py z fotiek od barberov); bez súboru nič */
+let praca = null;
+const nacitajPracu = () => praca || (praca = fetch(new URL('praca.json', import.meta.url).href, { cache: 'no-cache' })
+  .then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+const pracaBarbera = (j, meno) => ((j && j.barberi) || {})[bez(meno).replace(/[^a-z0-9]+/g, '-')] || [];
 
 async function daj(a, par, ttl = 36e5) {
   const q = new URLSearchParams({ a, ...par }).toString();
@@ -170,12 +189,22 @@ function vykresli(zameraj) {
 
 /* 1. služba (z cenníka) */
 function krok1() {
-  return [el('ul', { class: 'obj-sluzby', role: 'list' }, sluzby().map((x) => {
-    const b = el('button', { type: 'button', class: s.sluzba === x.id ? 'je' : null }, [
-      el('span', { class: 'obj-n' }, [x.nazov]), el('span', { class: 'obj-m' }, [[x.cas, x.cena].filter(Boolean).join(' · ')])]);
-    b.addEventListener('click', () => vyberSluzbu(x.id));
-    return el('li', {}, [b]);
-  }))];
+  const skupiny = [];
+  for (const x of sluzby()) {
+    let g = skupiny.find((k) => k.id === x.skup);
+    if (!g) skupiny.push(g = { id: x.skup, nazov: x.skupNazov, sluzby: [] });
+    g.sluzby.push(x);
+  }
+  return skupiny.map((g) => el('section', { class: 'obj-skup' }, [
+    fotoSkup(g.id),
+    g.nazov ? el('h3', { class: 'obj-skup-h' }, [g.nazov]) : null,
+    el('ul', { class: 'obj-sluzby', role: 'list' }, g.sluzby.map((x) => {
+      const b = el('button', { type: 'button', class: s.sluzba === x.id ? 'je' : null }, [
+        el('span', { class: 'obj-n' }, [x.nazov]), el('span', { class: 'obj-m' }, [[x.cas, x.cena].filter(Boolean).join(' · ')])]);
+      b.addEventListener('click', () => vyberSluzbu(x.id));
+      return el('li', {}, [b]);
+    })),
+  ]));
 }
 function vyberSluzbu(id) { s.sluzba = id; chod(2); }
 
@@ -204,11 +233,20 @@ function krok2(L) {
         foto.addEventListener('error', () => foto.replaceWith(mono()), { once: true });
       }
       const b = el('button', { type: 'button', class: s.barber === m ? 'je' : null }, [
-        foto || mono(),
+        el('span', { class: 'obj-portret' }, [foto || mono()]),
         el('span', { class: 'obj-n' }, [m === KTOKOLVEK ? L.nezalezi : t.meno]),
         m === KTOKOLVEK ? el('span', { class: 'obj-m' }, [L.nezaleziP]) : null]);
       b.addEventListener('click', () => vyberBarbera(m));
-      return el('li', {}, [b]);
+      const li = el('li', {}, [b]);
+      // ukážky práce barbera (ak ich prevádzka dodala): tri náhľady, ťuk otvorí väčšie
+      if (m !== KTOKOLVEK) nacitajPracu().then((j) => {
+        const f = pracaBarbera(j, m);
+        if (!f.length || !li.isConnected) return;
+        const r = el('button', { type: 'button', class: 'obj-praca', 'aria-label': L.praca + ': ' + t.meno }, f.slice(0, 3).map((x) => el('img', { src: new URL(x.maly, new URL('praca.json', import.meta.url)).href, alt: '', width: '160', height: '200', loading: 'lazy', decoding: 'async' })));
+        r.addEventListener('click', () => ukazPracu(t.meno, f, L));
+        li.append(r);
+      });
+      return li;
     })));
   }).catch(() => { if (s.krok === 2 && s.sluzba === id) { rychlo.hidden = true; box.replaceChildren(...problem(L.chyba)); } });
   return [rychlo, box];
@@ -236,6 +274,31 @@ async function najblizsie(L, blok, id) {
   } catch (e) { /* bez rýchlej voľby ostane výber barbera */ }
 }
 function vyberBarbera(m) { s.barber = m; s.krok = 3; s.datum = null; s.cas = null; s.dni = null; vykresli(true); }
+
+/* ukážky práce barbera vo väčšom (ľahký prehliadač: fotka, popis, ďalšia, zavrieť) */
+let prehliadac = null;
+function ukazPracu(meno, fotky, L) {
+  if (!prehliadac) {
+    prehliadac = el('dialog', { class: 'obj-foto', 'aria-label': L.praca, 'data-no-i18n': true });
+    prehliadac.addEventListener('click', (e) => { if (e.target === prehliadac) prehliadac.close(); });
+    document.body.append(prehliadac);
+  }
+  let i = 0;
+  const obr = el('img', { alt: '', width: '960', height: '1200', decoding: 'async' });
+  const popis = el('p', { class: 'obj-foto-popis' });
+  const zobraz = () => {
+    const f = fotky[i], zak = new URL('praca.json', import.meta.url);
+    obr.src = new URL(f.velky || f.maly, zak).href; obr.alt = f.alt || '';
+    popis.textContent = `${meno} · ${i + 1} / ${fotky.length}`;
+  };
+  const tl = (t, a, f) => { const b = el('button', { type: 'button', class: 'obj-foto-tl', 'aria-label': a }, [t]); b.addEventListener('click', f); return b; };
+  prehliadac.replaceChildren(obr, el('div', { class: 'obj-foto-lista' }, [
+    tl('←', L.spat, () => { i = (i + fotky.length - 1) % fotky.length; zobraz(); }), popis,
+    tl('→', L.praca, () => { i = (i + 1) % fotky.length; zobraz(); }),
+    tl('×', L.zavriet, () => prehliadac.close())]));
+  zobraz();
+  prehliadac.showModal();
+}
 
 /* 3. deň a voľný čas */
 const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -390,5 +453,15 @@ export async function stranka(api, prvok) {
   const sl = Number(q.get('sluzba')), ba = q.get('barber');
   Object.assign(s, { krok: 1, sluzba: null, barber: null, chce: ba ? ba.slice(0, 40) : null, datum: null, cas: null, dni: null });
   if (sluzby().some((x) => x.id === sl)) vyberSluzbu(sl); else vykresli(false);
+  // tím na stránke: Objednať sa pri barberovi začne objednávku u neho (najprv služba, potom rovno deň)
+  addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest && e.target.closest('.team-card .team-cta');
+    if (!a) return;
+    e.preventDefault();
+    const n = a.closest('.team-card').querySelector('.team-name');
+    Object.assign(s, { krok: 1, sluzba: null, barber: null, chce: n ? n.textContent.trim() : null, datum: null, cas: null, dni: null });
+    vykresli(true);
+  }, true);
   return true;
 }

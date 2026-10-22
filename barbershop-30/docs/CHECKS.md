@@ -383,3 +383,21 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   u ktoréhokoľvek barbera, ťuk = výber; Objednať pri službe v cenníku → čas → výber sú dve kliknutia (360 až 1440 px
   bez pretekania). S barberom vybraným v tíme sa rýchla voľba neukáže. `objednavka-test.mjs` 98 OK.
 
+## 18. Rezervácia s fotkami (2026‑10‑22)
+
+- Zadávateľ: rezervácia pôsobila ako dokument; chce fotky toho, čo zákazník dostane, a prácu barberov z Instagramu.
+- Instagram bez prihlásenia presmeruje na prihlásenie (overené jednou požiadavkou na profil); do účtu sa
+  neprihlasujeme. Fotky práce dodá prevádzka (`docs/FOTKY_PRACE.md`), web ich ukáže pri barberovi a v galérii.
+- V podkladoch nie je ani jedna fotka hotového strihu (starý web aj fotky od majiteľa sú priestory), preto pri
+  službách skutočné fotky prevádzky z galérie webu, nie vymyslené výsledky.
+- Celá cesta fotiek práce overená na skúšobných sivých obrázkoch (nástroj, náhľady pri barberovi, prehliadač,
+  galéria), potom zmazané; v repozitári je prázdny `assets/praca.json`.
+- `objednavka-test.mjs` 105 OK (skupiny s fotkou, tím na stránke, Objednať sa pri barberovi, galéria skrytá bez fotiek,
+  bez chýb v konzole); testovacie servery sa zastavujú celou skupinou procesov (php -S s workermi).
+- Preklady stránky v 7 jazykoch bez zvyškov slovenčiny.
+- Opravená chyba servera: prvé súbežné požiadavky (okno pýta barberov a dni naraz) občas padli na „database is locked“
+  (`asistent/lib/jadro.php`, WAL sa zapínal pred nastavením čakania na zámok); pred opravou 1 z 20 pokusov s chybou 500,
+  po oprave 0 zo 40. Nový test v `asistent/testy/spusti.sh` (36 + 17 OK). Postihlo by to aj AI asistenta.
+- Lighthouse rezervacia.html s fotkami: telefón 98/98/98 (úvodná fotka pre telefón 760 px, 48 kB, s preload; fotky
+  v cenníku a tíme s nízkou prioritou), počítač 100; prístupnosť a postupy 100; SEO len zámerné noindex.
+

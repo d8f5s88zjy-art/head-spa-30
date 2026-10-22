@@ -32,6 +32,21 @@ body.rez { background: var(--ink); }
 .rez-bok-akcie { display: grid; gap: var(--s3); margin-top: var(--s5); }
 .rez-bok-akcie .btn { width: 100%; white-space: normal; text-align: center; line-height: 1.25; }
 
+/* cenník s fotkou miesta nad každou skupinou (skutočné fotky prevádzky, nie výsledky strihov) */
+.rez-skup-foto { display: block; aspect-ratio: 16 / 6; margin: 0 0 var(--s4); overflow: hidden; border-radius: var(--radius); border: 1px solid var(--line); }
+.rez-skup-foto img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
+
+/* tím a naša práca */
+.rez-tim, .rez-praca { padding-block: var(--s8); }
+.rez-tim .h2, .rez-praca .h2 { margin: 0 0 var(--s6); max-width: 18ch; }
+.rez-praca-mriezka { list-style: none; margin: 0 0 var(--s6); padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); }
+.rez-praca-mriezka[hidden] { display: none; }
+.rez-praca-mriezka figure { margin: 0; }
+.rez-praca-mriezka img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: var(--ink-3); }
+.rez-praca-mriezka figcaption { margin-top: var(--s2); font-size: 0.875rem; color: var(--paper-2); }
+.rez-ig { white-space: normal; text-align: center; line-height: 1.25; }
+@media (max-width: 900px) { .rez-praca-mriezka { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .rez-pata { padding-block: var(--s6); border-top: 1px solid var(--line); }
 .rez-pata .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s3) var(--s5); }
 .rez-pata .small { margin: 0; }

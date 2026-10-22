@@ -78,6 +78,9 @@ skus "otázka sa skráti na 800 znakov" 'otazka "{\"prevadzka\":\"barbershop\",\
 skus "chyba API: zdvorilá správa" 'otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"CHYBA500\"}]}" | grep -q "event: chyba"'
 skus "limit: ďalšia otázka za 10 minút odmietnutá (limit 6 v teste)" 'for i in 1 2 3; do otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"ahoj\"}]}" >/dev/null; done; otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"ahoj\"}]}" | grep -q "Veľa otázok"'
 rm -f "$T/a.sqlite"*
+# (až po teste limitu otázok, ten počíta s jednou databázou) súbežné prvé požiadavky na novú databázu limitov (okno pýta barberov a dni naraz): žiadna chyba 500;
+# wait len na tieto curl (bez zoznamu by čakal aj na servery spustené vyššie)
+skus "súbežné požiadavky na novú databázu bez chyby (database is locked)" 'zle=0; for i in 1 2 3 4 5 6 7 8; do rm -f "$T"/a.sqlite*; p=""; for j in 1 2 3; do curl -s -o "$T/sub$j.txt" -w "%{http_code}" "$U?a=barberi&sluzba=1" > "$T/kod$j.txt" & p="$p $!"; done; curl -s -o "$T/sub4.txt" -w "%{http_code}" "$U?a=dni&sluzba=1&barber=ktokolvek" > "$T/kod4.txt" & p="$p $!"; wait $p; for j in 1 2 3 4; do [ "$(cat "$T/kod$j.txt")" = 200 ] || zle=$((zle+1)); done; done; [ $zle = 0 ]'
 skus "odmietnutie modelu: správa namiesto konca" 'otazka "{\"prevadzka\":\"barbershop\",\"spravy\":[{\"r\":\"u\",\"t\":\"ODMIETNI\"}]}" | grep -q "Na toto neodpoviem"'
 skus "bez varovaní PHP" '! grep -qi "warning\|fatal\|deprecated" "$T/server.log" "$T/server2.log"'
 echo "$ok OK, $zle FAIL"

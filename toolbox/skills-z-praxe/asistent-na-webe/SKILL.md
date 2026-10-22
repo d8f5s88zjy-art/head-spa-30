@@ -87,11 +87,14 @@ systému alebo na telefón) ani ako náhradu recepcie pri reklamáciách.
     `page.addInitScript` (napr. `MutationObserver` doplní atribút skriptu pred spustením), nie prepisom HTML.
 11. **Jednotky kontajnera**: prvok s `container-type` nemôže mať okraje v `cqw` voči sebe (počítajú sa z predka, bez neho
     z okna). Kontajner je obal, karta vnútri berie `cqw` z neho.
+12. **SQLite pri súbežných požiadavkách**: `busy_timeout` (aj `PDO::ATTR_TIMEOUT`) nastav pred `journal_mode = WAL`,
+    inak dve prvé požiadavky naraz padnú na „database is locked“ (chyba 500 bez textu). Test: viac curl naraz na
+    novú databázu; `wait` len na ich PID, nie na servery spustené v teste.
 
 ## Kontrolný zoznam
 
 - [ ] Znalosti sedia s webom (ceny, hodiny, tím, odkazy) a obsahujú, čo asistent nevie.
-- [ ] `sh asistent/testy/spusti.sh` 35 + 17 OK, `node barbershop-30/source/tools/asistent-test.mjs` a
+- [ ] `sh asistent/testy/spusti.sh` 36 + 17 OK, `node barbershop-30/source/tools/asistent-test.mjs` a
       `node barbershop-30/source/tools/objednavka-test.mjs` všetko OK.
 - [ ] Bez `data-asistent` žiadna požiadavka na server (test 1 v `asistent-test.mjs`), dymový test bez zmeny.
 - [ ] Naživo `api.php?a=stav` → `"zapnute":true`; tri otázky v slovenčine a jedna v angličtine; Esc, telefón.
