@@ -54,7 +54,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 - **Objednávka v štýle webu** (`assets/objednavka.js` a `objednavka.css`, server `../asistent/api.php`): Objednať sa
   otvorí okno služba → barber → deň a voľný čas z rezervačného kalendára (len čítanie, z odpovede len časy HH:MM).
   Služby, časy a ceny berie z cenníka (`a.price-cta[data-sluzba]` = id služby v rezervačnom systéme), portréty z tímu.
-  Objednať pri službe v cenníku ju vyberie, Objednať sa pri barberovi ho vyberie. Na konci ukáže výber s poznámkou, že
+  Po výbere služby ukáže hneď najbližšie voľné časy u ktoréhokoľvek barbera (služba → čas = dve kliknutia), pod nimi
+  tím pre toho, kto chce svojho barbera. Objednať pri službe v cenníku ju vyberie, Objednať sa pri barberovi ho vyberie. Na konci ukáže výber s poznámkou, že
   termín ešte nie je rezervovaný, a vedie do rezervačného systému (cestou sa ozve prihláška vernostnej kartičky) alebo
   na telefón; úspech neukazuje, lebo objednávku nič nepotvrdilo (odoslanie z webu by potrebovalo písomný súhlas
   prevádzky a jej dokumentáciu rozhrania). Zapne ho nasadenie atribútom `data-objednavka` na `<html>` len s premennou

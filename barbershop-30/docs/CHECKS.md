@@ -379,4 +379,7 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - Čísla dní v Manrope (vo Fraunces vyzerala malá „3“ ako „5“). Bez plávajúcej spodnej lišty, aby nič neprekrývalo
   tlačidlá cenníka; Zavolať je v úvode, v krokoch aj pri kontakte.
 - Hlavný web: i18n-test, app-smoke, asistent-test všetko OK; server asistenta 35 + 17 OK.
+- Najkratšia cesta (2026‑10‑22, na želanie zadávateľa „čo najmenej kliknutí“): po službe hneď najbližšie voľné časy
+  u ktoréhokoľvek barbera, ťuk = výber; Objednať pri službe v cenníku → čas → výber sú dve kliknutia (360 až 1440 px
+  bez pretekania). S barberom vybraným v tíme sa rýchla voľba neukáže. `objednavka-test.mjs` 98 OK.
 

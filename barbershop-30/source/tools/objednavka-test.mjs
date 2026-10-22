@@ -114,6 +114,10 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
   ok(tim.length === 3 && tim[0].includes('Nezáleží') && tim.some((t) => t.includes('Adrian')), 'krok 2: Nezáleží a barberi z rezervačného systému', JSON.stringify(tim));
   ok(await page.locator('.obj-tim img').count() >= 2, 'krok 2: portréty z tímu na webe');
   ok(!(await preteka(page)), 'krok 2: nič nepreteká');
+  // najkratšia cesta: najbližšie voľné časy u kohokoľvek hneď nad tímom
+  await page.waitForSelector('.obj-rychlo:not([hidden]) .obj-mriezka button', { timeout: 10000 }).catch(() => {});
+  const rychle = await page.locator('.obj-rychlo .obj-mriezka button').allTextContents();
+  ok(casyOk(rychle) && (await page.locator('.obj-rychlo-h').textContent()).startsWith('Najbližšie voľné'), 'krok 2: najbližšie voľné časy u kohokoľvek nad tímom', JSON.stringify(rychle));
   await snimka(page, '2-barber-390.png');
   await page.locator('.obj-tim button', { hasText: 'Adrian' }).click();
   await page.waitForSelector('.obj-mriezka button', { timeout: 10000 }).catch(() => {});
@@ -150,7 +154,7 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
   await page.locator('a.price-cta[data-sluzba="3"]').scrollIntoViewIfNeeded();
   await page.locator('a.price-cta[data-sluzba="3"]').click();
   await page.waitForSelector('.obj[open] .obj-tim button', { timeout: 10000 }).catch(() => {});
-  ok((await page.locator('.obj-h').textContent()) === 'U koho?' && (await page.locator('.obj-vyber').textContent()).includes('Úprava brady'), 'cenník: služba vybraná, rovno krok barber');
+  ok((await page.locator('.obj-h').textContent()) === 'Kedy a u koho?' && (await page.locator('.obj-vyber').textContent()).includes('Úprava brady'), 'cenník: služba vybraná, rovno krok barber');
   await page.keyboard.press('Escape');
   await sleep(300);
   ok(!(await page.locator('.obj[open]').count()), 'Esc zatvorí okno');
@@ -162,9 +166,9 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
   await page.waitForSelector('.obj[open] .obj-sluzby button');
   await page.locator('.obj-sluzby button', { hasText: 'Oholenie hlavy' }).click();
   await page.waitForSelector('.obj-dni button', { timeout: 10000 }).catch(() => {});
-  ok((await page.locator('.obj-h').textContent()) === 'Kedy?' && (await page.locator('.obj-vyber').textContent()).includes('Adrian'), 'tím: barber vybraný, po službe rovno deň');
+  ok((await page.locator('.obj-h').textContent()) === 'Kedy?' && (await page.locator('.obj-vyber').textContent()).includes('Adrian') && !(await page.locator('.obj-rychlo:not([hidden])').count()), 'tím: barber vybraný, po službe rovno deň (bez rýchlej voľby u kohokoľvek)');
   await page.locator('.obj-spat').click();
-  ok((await page.locator('.obj-h').textContent()) === 'U koho?', 'Späť ukáže celý tím (výber z tímu sa nepoužije znova)');
+  ok((await page.locator('.obj-h').textContent()) === 'Kedy a u koho?', 'Späť ukáže celý tím (výber z tímu sa nepoužije znova)');
   await page.keyboard.press('Escape');
   await sleep(400);                                     // zatvorenie vráti históriu (Späť v telefóne) a s ňou aj skrol
 
@@ -198,9 +202,17 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   await page.evaluate(() => scrollTo(0, 0));
   await page.locator('a.price-cta[data-sluzba="1"]').scrollIntoViewIfNeeded();
   await page.locator('a.price-cta[data-sluzba="1"]').click();
+  // Objednať pri službe → ťuk na najbližší čas = výber (dve kliknutia)
+  await page.waitForSelector('.obj-rychlo:not([hidden]) .obj-mriezka button', { timeout: 10000 }).catch(() => {});
+  ok(!(await preteka(page)), `${w} px: rýchla voľba bez pretekania`);
+  await snimka(page, `2-rychlo-${w}.png`);
+  const prvy = (await page.locator('.obj-rychlo .obj-mriezka button').first().textContent()).trim();
+  await page.locator('.obj-rychlo .obj-mriezka button').first().click();
+  ok((await page.locator('.obj-h').textContent()) === 'Tvoj výber' && (await page.locator('.obj-suhrn').textContent()).includes('o ' + prvy), `${w} px: dve kliknutia od služby po výber času`);
+  await page.locator('.obj-vyber button').nth(1).click();
   await page.locator('.obj-tim button', { hasText: 'Nezáleží' }).click();
-  await page.waitForSelector('.obj-mriezka button', { timeout: 10000 }).catch(() => {});
-  ok(!(await preteka(page)) && casyOk(await page.locator('.obj-mriezka button').allTextContents()), `${w} px: deň a časy bez pretekania`);
+  await page.waitForSelector('.obj-dni + .obj-casy .obj-mriezka button, .obj-casy .obj-mriezka button', { timeout: 10000 }).catch(() => {});
+  ok(!(await preteka(page)) && casyOk(await page.locator('.obj-casy .obj-mriezka button').allTextContents()), `${w} px: deň a časy bez pretekania`);
   await snimka(page, `3-den-cas-${w}.png`);
   await page.keyboard.press('Escape');
   await page.locator('.band-karty').scrollIntoViewIfNeeded();
