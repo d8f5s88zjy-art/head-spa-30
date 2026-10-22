@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<!-- kľúč je v tomto prehliadači: stránka smie hovoriť len s GitHubom, skripty a štýly len vlastné -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://raw.githubusercontent.com blob: data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0e0d0c">
+<title>Admin · Barbershop 30</title>
+<link rel="icon" href="../karta/ikony/barbershop-192.png">
+<style>
+@font-face{font-family:'Fraunces';font-weight:800;font-display:swap;src:url(../assets/fonts/Fraunces-800.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;font-display:swap;src:url(../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:700;font-display:swap;src:url(../assets/fonts/Manrope-700.woff2) format('woff2')}
+/* Admin Barbershopu 30 (Lajko): farby webu, veľké polia a dotykové plochy, jedna záložka naraz, dole lišta s uložením */
+:root{--bg:#0e0d0c;--panel:#171412;--field:#1d1916;--line:rgba(241,233,221,.12);--line-2:rgba(241,233,221,.3);--text:#f1e9dd;--muted:rgba(241,233,221,.68);--lamp:#e0601c;--lamp-2:#f07e3c;--bad:#ffb4a0;--bar:96px;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body.in{padding-bottom:calc(var(--bar) + 28px)}
+a{color:var(--lamp-2);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.top{border-bottom:1px solid var(--line)}
+.top .in{max-width:900px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:12px;min-height:60px}
+.brand{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:20px;white-space:nowrap}
+.brand em{font-style:normal;font-family:'Manrope',sans-serif;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--lamp-2);margin-left:10px}
+.top .sp{flex:1}
+.top .lnk{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font-size:15px;color:var(--muted);text-decoration:none;background:none;border:0;cursor:pointer}
+.tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .in{max-width:900px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 4px}
+.tabs .in::-webkit-scrollbar{display:none}
+.tabs button{flex:none;display:flex;align-items:center;min-height:50px;padding:0 14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--lamp)}
+.tabs .n{display:inline-block;min-width:20px;height:20px;margin-left:7px;padding:0 5px;border-radius:999px;background:var(--lamp);color:var(--bg);font-size:12px;line-height:20px;text-align:center}
+main{max-width:900px;margin:0 auto;padding:0 16px}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:30px 0 8px;letter-spacing:-.01em}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:22px;line-height:1.2;margin:34px 0 8px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:64ch}
+.f{margin:0 0 14px}
+.f>label{display:block;font-weight:700;font-size:14.5px;margin:0 0 6px}
+.f>label small{font-weight:400;color:var(--muted);margin-left:6px}
+input[type=text],input[type=number],input[type=password],input[type=search],textarea{width:100%;min-height:48px;background:var(--field);color:var(--text);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;font:16px/1.5 'Manrope',sans-serif}
+textarea{resize:vertical;display:block;min-height:48px;field-sizing:content;max-height:60vh}
+input:focus,textarea:focus{outline:none;border-color:var(--lamp)}
+.changed{border-color:var(--lamp)!important;background-color:#26180f!important}
+.row{display:grid;gap:0 12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border:1px solid var(--lamp);background:var(--lamp);color:var(--bg);font-weight:700;font-size:15px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.quiet{background:transparent;border-color:var(--line-2);color:var(--text)}
+.btn.small{min-height:40px;padding:0 14px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+details.tr>summary{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer;color:var(--lamp-2);font-weight:700;font-size:14px;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details.tr>summary::before{content:"+";width:14px;text-align:center}
+details.tr[open]>summary::before{content:"−"}
+.tr-box{border-left:1px solid rgba(224,96,28,.5);padding:4px 0 2px 12px;margin:2px 0 8px}
+.tr-box .f>label{font-weight:400;color:var(--muted);font-size:13.5px}
+.msg{margin:12px 0 0;padding:12px 14px;border-left:3px solid var(--lamp);background:var(--panel);font-size:15px}
+.msg.bad{border-color:var(--bad)}
+.note{padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:14.5px;margin:0 0 18px}
+.note b{color:var(--text)}
+.tools{position:sticky;top:51px;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-top:10px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:38px;padding:0 13px;border:1px solid var(--line-2);background:transparent;border-radius:999px;font-size:14px;color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--lamp);color:var(--text)}
+.blk{padding:12px 0 4px;border-top:1px solid var(--line)}
+.blk .kind{font-size:13px;color:var(--muted);margin:0 0 4px}
+.card{border:1px solid var(--line);border-radius:14px;margin:0 0 10px;background:var(--panel)}
+.card>summary{display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 16px;cursor:pointer;list-style:none}
+.card>summary .nm{flex:1;font-weight:700;font-size:16.5px}
+.card>summary .mt{color:var(--muted);font-size:14.5px;white-space:nowrap}
+.card>summary::after{content:"+";color:var(--lamp-2);font-size:20px;width:18px;text-align:center}
+.card[open]>summary::after{content:"−"}
+.card .body{padding:8px 16px 14px;border-top:1px solid var(--line)}
+.card.changed{border-color:var(--lamp)!important;background:var(--panel)!important}
+.photo{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin:6px 0 14px}
+.photo img{width:120px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line-2);border-radius:10px;background:var(--field)}
+.photo.wide img{width:200px;aspect-ratio:3/2}
+.file{position:relative;overflow:hidden}
+.file input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.warn{color:var(--bad);font-size:14px;margin:6px 0}
+.links{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.links a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--text);background:var(--panel)}
+.links a b{display:block;font-family:'Fraunces',Georgia,serif;font-size:18px;color:var(--lamp-2)}
+.links a span{font-size:14px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid rgba(224,96,28,.6);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .in{max-width:880px;margin:0 auto}
+.bar .r{display:flex;align-items:center;gap:10px}
+.bar .count{flex:1;min-width:0;min-height:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0;background:none;border:0;text-align:left;font-size:15px;color:var(--text);cursor:pointer;text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:4px}
+.bar .count:disabled{text-decoration:none;cursor:default}
+.bar ul{list-style:none;margin:0 0 8px;padding:4px 0 8px;max-height:30vh;overflow:auto;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.login{max-width:580px;padding-bottom:60px}
+.login ol{padding-left:22px;color:var(--muted)}
+.login ol b{color:var(--text)}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;margin:10px 0 14px;cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--lamp)}
+.loading{color:var(--muted);padding:40px 0}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <span class="brand">Barbershop 30<em>admin</em></span>
+  <span class="sp"></span>
+  <a class="lnk" id="webLink" href="../" target="_blank" rel="noopener" hidden>Web</a>
+  <button class="lnk" id="odhlasit" type="button" hidden>Odhlásiť</button>
+</div></header>
+<nav class="tabs" id="tabs" aria-label="Časti adminu" hidden><div class="in" role="tablist"></div></nav>
+<main>
+  <section id="login" class="login">
+    <h1>Admin webu</h1>
+    <p class="lead">Tu zmeníš texty, cenník, tím a fotky webu Barbershop 30. Zmeny sa uložia priamo na web a o minútu ich uvidia zákazníci.</p>
+    <div class="f"><label for="token">Kľúč k webu</label>
+      <input type="password" id="token" autocomplete="off" spellcheck="false" placeholder="github_pat_...">
+      <p class="kind" style="margin:6px 0 0;color:var(--muted);font-size:14px">Kľúč je heslo pre úpravy webu. Zadáš ho raz na tomto zariadení.</p>
+    </div>
+    <label class="chk"><input type="checkbox" id="zapamatat" checked> Zapamätať v tomto prehliadači</label>
+    <div class="btns"><button class="btn" id="prihlasit" type="button">Prihlásiť</button></div>
+    <div class="msg" id="loginMsg" hidden></div>
+    <h2>Ako získam kľúč</h2>
+    <p class="lead" style="margin-bottom:8px">Kľúč vytvorí raz správca webu na účte, ktorému web patrí, a odovzdá ti ho osobne.</p>
+    <ol>
+      <li>Otvor <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> a prihlás sa účtom webu.</li>
+      <li>Názov napr. <b>Admin Barbershop</b>, platnosť podľa seba (napr. 1 rok).</li>
+      <li>Repository access: <b>Only select repositories</b> a vyber repozitár webu.</li>
+      <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
+      <li>Klikni <b>Generate token</b>, kľúč skopíruj a vlož sem. Nikomu inému ho neposielaj.</li>
+    </ol>
+    <p class="lead">Keď kľúč stratíš alebo ho niekto videl, správca ho na GitHube zmaže a vytvorí nový.</p>
+  </section>
+  <p class="loading" id="loading" hidden>Načítavam web…</p>
+  <div id="app" hidden></div>
+</main>
+<div class="bar" id="bar" hidden><div class="in">
+  <ul id="zoznam" hidden></ul>
+  <div class="msg" id="saveMsg" hidden></div>
+  <div class="r">
+    <button class="count" id="pocet" type="button" title="Zobraziť zoznam zmien">Žiadne zmeny</button>
+    <button class="btn quiet" id="zrusit" type="button" disabled>Zrušiť</button>
+    <button class="btn" id="ulozit" type="button" disabled>Uložiť na web</button>
+  </div>
+</div></div>
+<script type="module" src="admin.js"></script>
+</body>
+</html>

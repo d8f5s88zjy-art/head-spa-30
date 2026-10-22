@@ -30,11 +30,16 @@ Rozpracované (požiadavky z 2026‑10‑22):
 3. HOTOVÉ (CHECKS 23): Vernostná kartička: odkaz v pätičke Barbershopu vedie na stránku na headspa30.sk (HEAD SPA 30), opraviť na
    kartičku Barbershopu. Po zaplatení má zákazník dostať ponuku založiť si účet (body, odmeny). Odmeny a akcie
    nastavuje Lajko sám v admine kartičky (`../vernost/`, admin `https://www.headspa30.sk/vernost/admin/`).
-4. Admin pre Lajka: aby mohol meniť texty, fotky (a odmeny kartičky) sám, ako administrátor.
+4. HOTOVÉ (CHECKS 24): Admin pre Lajka: aby mohol meniť texty, fotky (a odmeny kartičky) sám, ako administrátor.
+   `admin/` (naostro `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/admin/` po zverejnení), prihlásenie
+   kľúčom GitHub, uloženie jedným commitom do `main`. Texty, cenník, tím (aj nový člen a fotka), galéria, odpovede
+   asistenta; jedna zmena upraví obe stránky, preklady, znalosti asistenta a odpovede. Telefón, hodiny a adresu
+   admin zámerne nemení (sú aj v odkazoch tel:, živom stave a asistentovi). Odmeny kartičky: admin kartičky.
+   Kľúč pre Lajka vytvorí zadávateľ na účte webu (postup na prihlasovacej stránke adminu).
 5. HOTOVÉ (pozri Denník a CHECKS 22): web na telefóne pôsobí ako PowerPoint prezentácia. Chce živý web na telefóne, každá
    animácia so silným háčikom, aby zákazník ostal a objednal sa. Ikony zmenšiť, aby tak nebili do očí.
 
-Analýza kartičky (bod 3, rozpracované): odkaz v pätičke vedie na https://www.headspa30.sk/vernost/karta/, server
+Analýza kartičky (bod 3, hotové): odkaz v pätičke vedie na https://www.headspa30.sk/vernost/karta/, server
 kartičky tam ešte nie je nahratý, preto 404 stránka HEAD SPA 30. Plán: kartička Barbershopu priamo na webe
 Barbershopu (`barbershop-30/karta/`, kópie `vernost/karta/*` ako pri `vernost.js`, API cez `data-api`, lokálne
 `/vernost/api/`), server vráti odkaz na kartičku podľa prevádzky (`PREVADZKY['barbershop']['karta']`, e‑mail,
@@ -48,9 +53,14 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 - áno alebo nie: posielať rezervácie priamo do ich systému na barbershop30.sk;
 - kto spravuje barbershop30.sk (vloženie témy jedným riadkom);
 - fotky práce barberov, čitateľná fotka vizitky;
-- presné znenie podpisu v pätičke; heslo do adminu kartičky Barbershopu (GitHub tajomstvo `VERNOST_HESLO_BARBERSHOP`).
+- presné znenie podpisu v pätičke; heslo do adminu kartičky Barbershopu (GitHub tajomstvo `VERNOST_HESLO_BARBERSHOP`);
+- kľúč GitHub pre Lajka do adminu webu (vytvára sa na účte webu, až po zverejnení do `main`).
 
 ## Denník
+
+- 2026‑10‑22: admin pre Lajka (`admin/`, `source/tools/admin-test.mjs` 62 OK s falošným GitHubom): texty, cenník,
+  tím, galéria, odpovede asistenta, odkazy na admin kartičky. Pages kopíruje `admin/`, robots ho vylučuje.
+  Funguje až po zverejnení do `main`, lebo číta a ukladá `main`. Ďalej: súhlas so zverejnením a kľúč pre Lajka.
 
 - 2026‑10‑22: kartička Barbershopu na jeho webe (`barbershop-30/karta/`), pätička už nevedie na headspa30.sk,
   založenie kartičky cez QR na recepcii po zaplatení (`?nova`, admin kartičky → QR pre nového klienta), odmeny

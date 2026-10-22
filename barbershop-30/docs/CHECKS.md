@@ -478,3 +478,23 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   hľadal dva odkazy na kartičku.
 - Ostáva: nahrať server kartičiek na headspa30.sk (FTP) a heslo `VERNOST_HESLO_BARBERSHOP`; zásady ochrany údajov
   kartičky sú zatiaľ na headspa30.sk/vernost/ochrana-udajov.html.
+
+## 24. Admin pre Lajka (2026‑10‑22)
+
+- Zadávateľ: admin, v ktorom Lajko zmení všetko sám (texty, fotky), ako administrátor; odmeny kartičky v admine kartičky.
+- `admin/` (vzor: admin HEAD SPA 30): záložky Texty (167 polí po častiach webu, hľadanie, hlavička a pätička
+  rezervačnej stránky sa menia spolu s hlavnou), Cenník (15 služieb), Tím (10 ľudí, nový člen, odstránenie, fotka),
+  Galéria (8 fotiek), Odpovede asistenta (251), Kartička (odkazy na admin kartičky a stránku založenia).
+- `node source/tools/admin-test.mjs`: 62 OK. Falošný GitHub drží súbory v pamäti a commit ich naozaj zmení.
+  Overené: zlý kľúč a kľúč len na čítanie; text na mieste a preklad na novom kľúči; cena v oboch súboroch,
+  v znalostiach aj v odpovediach (10 odpovedí na kontrolu, jedinečná cena prepísaná); zlá cena zastaví uloženie;
+  popis a fotka barbera (WebP aj JPEG, stará fotka nahradená celá, ohnisko zachované); nový člen bez fotky
+  zastavený, s fotkou v oboch súboroch, v prekladoch, znalostiach a odpovediach; popis fotky galérie aj zväčšenia;
+  súbeh (web zmenený inde) nič neprepíše; web po zmenách bez chýb, 11 kariet, fotka sa načíta, angličtina
+  preložená; admin na 390 px bez pretekania a bez chýb (aj s Content-Security-Policy: spojenie len na GitHub).
+- Opravené počas testu: úseky bez písmen (bodka, rok, telefón) a údaje (hodiny, adresa, e‑mail) sa v admine
+  nedajú meniť, lebo sú aj v odkazoch a v asistentovi; dvojité polia hlavičky a pätičky rezervačnej stránky;
+  odsadenie a fetchpriority novej fotky; menovky zmien v tíme s menom.
+- Neoverené: skutočný GitHub (kľúč nemám a do `main` sa bez súhlasu neukladá), skutočný telefón.
+- Pozor: admin číta a ukladá `main`. Kým web Barbershopu nie je zverejnený v `main`, admin nemá čo upravovať.
+

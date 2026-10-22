@@ -105,10 +105,24 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   existujúcu stránku www.barbershop30.sk/rezervacia, ktorý vloží jedným riadkom správca ich webu; funkcia ostáva
   ich. Náhľad pred a po: `node source/tools/tema-nahlad.mjs` (ich stránka lokálne so skúšobným kalendárom).
 
+- **Admin pre Lajka** (`admin/`, naostro `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/admin/`):
+  texty webu po častiach, cenník, tím (aj nový člen a fotka), galéria (fotka a popis), odpovede asistenta Barber
+  a odkazy na admin vernostnej kartičky. Prihlásenie kľúčom GitHub (fine-grained, len tento repozitár, Contents:
+  Read and write), kľúč ostáva v prehliadači. Uloženie je jeden commit priamo do `main` (bloby, strom, commit,
+  posun vetvy bez prepísania; keď sa web medzitým zmenil, neuloží nič a povie to). Jedna zmena upraví všetko, čo
+  s ňou súvisí: `index.html` aj `rezervacia.html` (len text, značky ostanú), preklady `assets/i18n/*.json` (kľúč
+  sa presunie, starý ostane, kým ho niečo používa), znalosti asistenta `../asistent/znalosti/barbershop.md`,
+  časté otázky `barbershop-otazky.json` a ich kópiu pre web. Odpovede so starou cenou dá na kontrolu (jedinečnú
+  cenu prepíše sám) a uloženie zastaví, kým niektorá odpoveď hovorí cenu, ktorá v cenníku nie je. Fotky zmenší
+  v prehliadači (WebP a JPEG, tím 480/820, galéria 640/1080/1600). Telefón, hodiny a adresu admin nemení (sú aj
+  v odkazoch tel:, živom stave a asistentovi), tie mení tvorca webu. Test: `node source/tools/admin-test.mjs`
+  (falošný GitHub v pamäti, nič nejde von). Funguje až po zverejnení webu v `main` (číta súbory odtiaľ).
+
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
-`.github/workflows/pages.yml` kopíruje `index.html`, `robots.txt`, `sitemap.xml` a `assets/` a
+`.github/workflows/pages.yml` kopíruje `index.html`, `rezervacia.html`, `robots.txt`, `sitemap.xml`, `assets/`,
+`karta/` a `admin/` a
 nahradí základnú adresu). Pri vlastnej doméne nahraď základnú adresu
 `https://d8f5s88zjy-art.github.io/barbershop30/` v `index.html`, `robots.txt` a `sitemap.xml`
 jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
@@ -124,7 +138,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 - `nahlad.mjs` – náhľad na kontrolu (úvod, pás tímu, cenník, galéria, rezervácia na 360/390/430 px, tablete a počítači), odkazy tel: a Objednať sa, obmedzený pohyb, bez skriptu;
   `mobil-audit.mjs` – snímky celej stránky po krokoch skrolu s pretekaním, pevnými prvkami a podielom tmy;
 - `tma-test.mjs` – film nikdy neukáže čierne plátno (pomalá sieť, rýchly skrol a skoky cez menu);
-  `asistent-test.mjs` – okno asistenta so serverom a falošným API; `objednavka-test.mjs` – objednávkové okno, vizitka
+  `asistent-test.mjs` – okno asistenta so serverom a falošným API; `admin-test.mjs` – admin s falošným GitHubom
+  (prihlásenie, texty, cenník, tím, galéria, súbeh, web po zmenách); `objednavka-test.mjs` – objednávkové okno, vizitka
   a vernostná kartička proti falošnému rezervačnému systému.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
