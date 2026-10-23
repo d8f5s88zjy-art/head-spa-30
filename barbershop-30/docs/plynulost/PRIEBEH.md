@@ -194,3 +194,4 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - wf_c2305f74-c95 dobehol: PASS „poslať majiteľovi“ (doplnok tovaru zámerne nenápadný – kópie vlastných paliet, žlté rámiky v porovnaní). Náhľad v2 zverejnený na rovnakú adresu https://claude.ai/artifact/Hwc2pBqaSNwS5pMCsmdcfg; majiteľ dostal pred-po-tovar.jpg a nové video príjazdu z telefónu.
 - Spustený wf_fcb3e6da-505 (richtarik-film-uvod.js): film z ulice do dvora ako prvá vrstva úvodu (telefón ≤ 4 MB, raz za návštevu, Preskočiť, prechod do fotiek). strih.sh: zrno nastaviteľné premennou ZRNO.
 - Obnovený V5 recepcia wf_d2da7410-ac8 (resume z cache).
+- 08:33 UTC check-in: bežia wf_fcb3e6da-505 (film v úvode Richtárik) a wf_d2da7410-ac8 (V5 recepcia); uvoľnené ~0,9 GB (pracovné priečinky testovacích strihov v ref-nauka a shorts-nauka, výstupy ostali).
