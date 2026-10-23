@@ -1,0 +1,445 @@
+sk | Kedy máte otvorené? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | otvaracie hodiny → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | do kolkej mate otvorene → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Máte v sobotu otvorené? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | v nedelu otvorene? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Dokedy ste otvorení v piatok? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | kedy otvarate rano → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | otvorne hodiny → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Kedy zatvárate? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | cez vikend otvorene → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Je teraz otvorené? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | mate dnes otvorene → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | je momentalne otvorene? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Stihnem to ešte dnes? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | ste prave otvoreni → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Kde vás nájdem? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | adresa → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | kde ste → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | Na akej ulici ste? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | kde sa nachadzate v nitre → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | ako sa k vam dostanem → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | Mostna → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | Aké máte číslo? → odpoved telefon | ["0951 267 203"]
+sk | telefon → odpoved telefon | ["0951 267 203"]
+sk | kam mam zavolat → odpoved telefon | ["0951 267 203"]
+sk | telefonne cislo na recepciu → odpoved telefon | ["0951 267 203"]
+sk | kontakt → odpoved telefon | ["0951 267 203"]
+sk | mozem vam zavolat? → odpoved telefon | ["0951 267 203"]
+sk | Máte e-mail? → odpoved email | ["info@barbershop30.sk"]
+sk | mail → odpoved email | ["info@barbershop30.sk"]
+sk | kam mam napisat email → odpoved email | ["info@barbershop30.sk"]
+sk | emailova adresa → odpoved email | ["info@barbershop30.sk"]
+sk | Ako si rezervujem termín? → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | chcem sa objednat → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | rezervacia → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | ako sa objednam → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | booking → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | Kde si rezervujem termín? → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | ako si dohodnut termin → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | chcem si zarezervovat termín → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | Dá sa objednať online aj večer? → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | rezervacia online v noci → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | objednat online → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | da sa objednat cez vikend online → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | funguje rezervacia nonstop → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | online rezervácia → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | Koľko stojí pánsky strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | kolko stoji strih → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | cena strihu → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | strih cena → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Kolko stoji ostrihanie? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | co stoji fade → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | pansky strih → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | kolko je strih → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih s bradou? → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | strih a brada spolu → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | strih s upravou brady cena → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | kolko stoji strih aj brada → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | Koľko stojí úprava brady? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | brada → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | upravit bradu → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | kolko stoji brada → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | zastrihnut bradu → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | fuzy → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Mám dlhé vlasy, je to drahšie? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | dlhe vlasy → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | strih dlhych vlasov cena → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | vlasy nad 10 cm → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | je priplatok za dlhsie vlasy → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Strihate aj deti? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | detsky strih → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | strih pre chlapca → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | kolko stoji detsky strih → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | strihate aj male deti → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | do kolkych rokov strihate deti → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | syn 8 rokov strih → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | Robíte holenie britvou? → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | holenie → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | hot towel → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | holenie do hladka → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | robite klasicke holenie → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | oholit bradu → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | Oholíte mi hlavu? → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | oholenie hlavy → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | dohola → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | strih na nulu → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | holenie hlavy cena → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | Máte balíčky? → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | balicek → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | balik sluzieb → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | co je v balicku 1 → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | kompletny balik cena → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | Čo je Ultra inclusive? → odpoved ultra | [["Ultra inclusive Barbershop30","40 €"],"Všetko z Balíčka 1 a navyše 
+sk | ultra inclusive → odpoved ultra | [["Ultra inclusive Barbershop30","40 €"],"Všetko z Balíčka 1 a navyše 
+sk | balicek s whisky → odpoved ultra | [["Ultra inclusive Barbershop30","40 €"],"Všetko z Balíčka 1 a navyše 
+sk | najdrahsi balicek → odpoved ultra | [["Ultra inclusive Barbershop30","40 €"],"Všetko z Balíčka 1 a navyše 
+sk | co obsahuje ultra → vyber ultra | ultra,co-je-v-strihu
+sk | Robíte starostlivosť o pleť? → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+sk | peeling → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+sk | maska na tvar → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+sk | osetrenie pleti → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+sk | plet premium cena → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+sk | Upravujete obočie? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | obocie → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | farbenie obocia → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | farbite obocie → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | uprava obocia cena → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | Robíte depiláciu uší? → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | depilacia usi → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | chlpky v nose → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | vosk usi a nos → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | depilacia nosa → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | Farbíte bradu? → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | farbenie brady → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | zafarbit bradu → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | kolko stoji farbenie brady → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | sediva brada farba → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | Robíte vzory do vlasov? → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | ornament → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | tribal → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | hair tattoo → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | ciary vo vlasoch → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | vystrihnut vzor → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+sk | Sú to konečné ceny? → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | cennik → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | ake mate ceny → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | ceny → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | plati sa nieco navyse → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | skryte poplatky → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | kde najdem cennik → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."]
+sk | Farbíte vlasy? → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | melir → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | robite trvalu → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | farbenie vlasov → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | chcem zafarbit vlasy → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | blond → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | robite melir → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | odfarbenie vlasov → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | Kto u vás strihá? → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | barberi → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | tim → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | mena barberov → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | kolko mate barberov → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | kto tu pracuje → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | aky mate tim → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | Môžem si vybrať barbera? → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | ku komu sa mozem objednat → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | konkretny barber → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | chcem ist ku konkretnemu barberovi → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | oblubeny barber → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | mozem si zvolit kto ma ostriha → odpoved vyber-barbera | ["Svojho človeka si vyberieš v rezervácii."]
+sk | Čo všetko je v pánskom strihu? → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | co je v strihu → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | ako prebieha strih → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | umyjete mi aj vlasy → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | umytie hlavy → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | kolko stoji umytie hlavy → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | je v cene aj styling → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | co strih obsahuje → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | postup strihu → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | Máte kde počkať? → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | kava → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | cakaren → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | je kava zadarmo → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | obcerstvenie → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | mozem pockat na kamarata → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | Koľko máte kresiel? → odpoved kresla | ["8 kresiel"]
+sk | kolko kresiel → odpoved kresla | ["8 kresiel"]
+sk | kapacita → odpoved kresla | ["8 kresiel"]
+sk | ako velky je podnik → odpoved kresla | ["8 kresiel"]
+sk | Odkedy fungujete? → odpoved odkedy | [["Od roku 2019","na Mostnej 30 v Nitre"]]
+sk | ako dlho fungujete → odpoved odkedy | [["Od roku 2019","na Mostnej 30 v Nitre"]]
+sk | od ktoreho roku → odpoved odkedy | [["Od roku 2019","na Mostnej 30 v Nitre"]]
+sk | kedy ste vznikli → odpoved odkedy | [["Od roku 2019","na Mostnej 30 v Nitre"]]
+sk | historia podniku → odpoved odkedy | [["Od roku 2019","na Mostnej 30 v Nitre"]]
+sk | Máte Instagram? → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | instagram → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | facebook → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | socialne siete → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | ig → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | fb → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | kde vas sledovat → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | Máte recepciu? → odpoved recepcia | ["Pri dverách ťa privíta recepčná."]
+sk | recepcia → odpoved recepcia | ["Pri dverách ťa privíta recepčná."]
+sk | kto ma privita → odpoved recepcia | ["Pri dverách ťa privíta recepčná."]
+sk | je tam recepcna → odpoved recepcia | ["Pri dverách ťa privíta recepčná."]
+sk | kedy mate otovrene → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | rezrvacia terminu → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | kolko stoji panksy strih → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | uprava bardy → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | kolko stoji strich → vyber cena-strih | cena-strih,cena-strih-brada
+sk | holenei britvou → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | intsagram → odpoved socialne | ["Aktuálne strihy a dianie v shope sledujeme na Instagrame.","@barbers
+sk | adrsa → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | telefonne cislo → odpoved telefon | ["0951 267 203"]
+sk | balicky → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, obočie, dep
+sk | kde vas najdme → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sk | Dá sa platiť kartou? → nevieme platba | spôsob platby
+sk | platba kartou → nevieme platba | spôsob platby
+sk | beriete karty → nevieme platba | spôsob platby
+sk | mate terminal → nevieme platba | spôsob platby
+sk | da sa platit hotovostou → nevieme platba | spôsob platby
+sk | apple pay → nevieme platba | spôsob platby
+sk | ako sa u vas plati → nevieme platba | spôsob platby
+sk | Máte darčekové poukážky? → nevieme poukazky | poukážky
+sk | voucher → nevieme poukazky | poukážky
+sk | chcem kupit poukaz → nevieme poukazky | poukážky
+sk | darcek pre priatela → nevieme poukazky | poukážky
+sk | kolko stoji poukazka → nevieme poukazky | poukážky
+sk | Ako zruším termín? → nevieme storno | zmenu alebo zrušenie termínu
+sk | chcem zmenit termin → nevieme storno | zmenu alebo zrušenie termínu
+sk | meskam 10 minut → nevieme storno | zmenu alebo zrušenie termínu
+sk | storno poplatok → nevieme storno | zmenu alebo zrušenie termínu
+sk | mozem termin presunut → nevieme storno | zmenu alebo zrušenie termínu
+sk | chodi sms pripomienka → nevieme pripomienka | pripomienku termínu
+sk | poslete upozornenie den vopred → nevieme pripomienka | pripomienku termínu
+sk | Môžem prísť bez objednania? → nevieme bez-objednania | príchod bez objednania
+sk | bez rezervacie → nevieme bez-objednania | príchod bez objednania
+sk | pridem hned → nevieme bez-objednania | príchod bez objednania
+sk | walk in → nevieme bez-objednania | príchod bez objednania
+sk | Máte otvorené cez sviatky? → nevieme sviatky | hodiny vo sviatky
+sk | vianoce → nevieme sviatky | hodiny vo sviatky
+sk | otvorene na silvestra → nevieme sviatky | hodiny vo sviatky
+sk | velka noc otvorene → nevieme sviatky | hodiny vo sviatky
+sk | Kde zaparkujem? → nevieme parkovanie | parkovanie
+sk | parkovanie → nevieme parkovanie | parkovanie
+sk | mate parkovisko → nevieme parkovanie | parkovanie
+sk | ktory autobus → nevieme parkovanie | parkovanie
+sk | mhd zastavka → nevieme parkovanie | parkovanie
+sk | bezbarierovy vchod → nevieme bezbarierovy | bezbariérový vstup
+sk | dostanem sa dnu na voziku → nevieme bezbarierovy | bezbariérový vstup
+sk | je tam schod → nevieme bezbarierovy | bezbariérový vstup
+sk | mate whatsapp → nevieme whatsapp | WhatsApp a podobné aplikácie
+sk | viber → nevieme whatsapp | WhatsApp a podobné aplikácie
+sk | messenger → nevieme whatsapp | WhatsApp a podobné aplikácie
+sk | predavate produkty → nevieme produkty | značky produktov
+sk | kupim u vas pomadu → nevieme produkty | značky produktov
+sk | ake znacky predavate → nevieme produkty | značky produktov
+sk | olej na bradu → nevieme produkty | značky produktov
+sk | kolko stoji vosk na vlasy → nevieme produkty | značky produktov
+sk | cena vosku na vlasy → nevieme produkty | značky produktov
+sk | kolko stoji depilacia usi voskom → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | depilacia voskom → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | kolko stoji farbenie vlasov → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | cena meliru → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | kedy robi romana → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | kolko stoji trvala → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | vernostna karticka → nevieme vernost | vernostnú kartičku
+sk | mate vernostny program → nevieme vernost | vernostnú kartičku
+sk | zbieram body → nevieme vernost | vernostnú kartičku
+sk | mate zlavy → nevieme vernost | vernostnú kartičku
+sk | mate fotky strihov → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+sk | ukazky prace → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+sk | fotky pred a po → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+sk | portfolio → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+sk | hovorite anglicky → nevieme jazyky-tim | jazyky barberov
+sk | do you speak english → nevieme jazyky-tim | jazyky barberov
+sk | dohovorim sa po madarsky → nevieme jazyky-tim | jazyky barberov
+sk | kolko mate hviezdiciek → nevieme hodnotenie | Hodnotenie číslom na webe neuvádzame; je priamo na Google.
+sk | recenzie → nevieme hodnotenie | Hodnotenie číslom na webe neuvádzame; je priamo na Google.
+sk | ake mate hodnotenie → nevieme hodnotenie | Hodnotenie číslom na webe neuvádzame; je priamo na Google.
+sk | robite skolenia → nevieme skolenia | školenia a voľné miesta
+sk | barber kurz → nevieme skolenia | školenia a voľné miesta
+sk | hladate barberov → nevieme skolenia | školenia a voľné miesta
+sk | ponukate pracu → nevieme skolenia | školenia a voľné miesta
+sk | ako dlho trva strih → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | kolko minut trva uprava brady → vyber trvanie | trvanie,cena-brada
+sk | kolko trva strih → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | trvanie strihu → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | strihate aj zeny → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | damsky strih → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | damsky strih cena → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | strihate aj dievcata → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | moze prist aj manzelka → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | strihate aj damy? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | kolko stoji strih pre damy → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | ostrihate aj babu? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | ostrihate aj moju frajerku → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | strihate aj slecny → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | dam si ostrihat bradu → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | kolko stoji masaz → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | cena manikury → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | kolko stoji masaz hlavy → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | masaz hlavy → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | kolko stoji pedikura → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | kolko stoji botox → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | mam alergiu na farbu → nevieme zdravie | K pleti a zdraviu na webe nevieme poradiť.
+sk | mam citlivu pokozku a vyrazky po holeni → nevieme zdravie | K pleti a zdraviu na webe nevieme poradiť.
+sk | mam ekzem → nevieme zdravie | K pleti a zdraviu na webe nevieme poradiť.
+sk | aké bude zajtra počasie → fallback  | 
+sk | predávate pizzu → nevieme produkty | značky produktov
+sk | asdf qwer → fallback  | 
+sk | kedy hrá slovan → fallback  | 
+sk | oprava mobilov → fallback  | 
+en | When are you open? → odpoved hodiny | ["Mon–Fri 9:00–19:00","Sat 9:00–14:00","Sun closed"]
+en | How much is a haircut? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | Where are you? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+en | Can I pay by card? → nevieme platba | payment methods
+en | Do you have parking? → nevieme parkovanie | parking
+en | How do I book? → odpoved rezervacia | ["Call the front desk on weekdays from 9:00 to 19:00. Or simply book y
+en | Do you cut kids hair? → odpoved deti | [["Little gentlemen's cut","15 €"],"Classic cut or fade, optionally a 
+en | womens haircut → nevieme damske | We don't list women's haircuts on the website.
+en | how much is hair wax → nevieme produkty | product brands
+en | nose wax price → odpoved depilacia | [["Ear and nose waxing","5,50 €"]]
+en | how much is a head massage → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | how much is a haircit → vyber cena-strih | cena-strih,cena-strih-brada
+en | how much is a manicure → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | opening hours → odpoved hodiny | ["Mon–Fri 9:00–19:00","Sat 9:00–14:00","Sun closed"]
+en | phone number → odpoved telefon | ["+421 951 267 203"]
+en | beard trim price → odpoved cena-brada | [["Beard trim","15 €"]]
+en | loyalty card → nevieme vernost | a loyalty card
+en | gift voucher → nevieme poukazky | gift vouchers
+en | do you speak english → nevieme jazyky-tim | languages the barbers speak
+en | how long does a haircut take → odpoved trvanie | [["Men's haircut","40 min"],["Beard trim","20 min"]]
+en | is there coffee → odpoved kava | [["In the back,","coffee's waiting."],"Armchairs, a retro petrol pump 
+en | book online at night → odpoved online | [["Online 24/7","book an appointment any time"]]
+en | what is the weather tomorrow → fallback  | 
+de | Wann habt ihr geöffnet? → odpoved hodiny | ["Mo–Fr 9:00–19:00","Sa 9:00–14:00","So geschlossen"]
+de | Was kostet ein Haarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Wo seid ihr? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+de | Kann ich mit Karte zahlen? → nevieme platba | Zahlungsarten
+de | Gibt es Parkplätze? → nevieme parkovanie | Parken
+de | Wie buche ich einen Termin? → odpoved rezervacia | ["Ruf am Empfang an, Mo–Fr von 9:00 bis 19:00. Oder buch deinen Termin
+de | Schneidet ihr auch Kinder? → odpoved deti | [["Schnitt für kleine Gentlemen","15 €"],"Klassischer Schnitt oder Fad
+de | Damenhaarschnitt → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+de | was kostet Haarwachs → nevieme produkty | Produktmarken
+de | was kostet Wachs für die Haare → nevieme produkty | Produktmarken
+de | was kostet Ohrenwachs → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | was kostet eine Kopfmassage → nevieme cena-ina-sluzba | Diese Leistung finde ich in der Preisliste nicht; schau dir die ganze Preisliste an.
+de | was kostet ein Haarschnit → vyber cena-strih | cena-strih,cena-strih-brada
+de | Öffnungszeiten → odpoved hodiny | ["Mo–Fr 9:00–19:00","Sa 9:00–14:00","So geschlossen"]
+de | Telefonnummer → odpoved telefon | ["+421 951 267 203"]
+de | Was kostet Bart trimmen? → odpoved cena-brada | [["Bartpflege","15 €"]]
+de | Treuekarte → nevieme vernost | Treuekarte
+de | Gutschein → nevieme poukazky | Gutscheine
+de | Wie lange dauert ein Haarschnitt? → odpoved trvanie | [["Herrenhaarschnitt","40 Min."],["Bartpflege","20 Min."]]
+de | Macht ihr Dauerwelle? → odpoved farbenie-vlasov | ["Färben, Strähnchen und Dauerwelle macht Romana.","Die macht Romana, 
+de | online buchen → odpoved online | [["Online 24/7","Termin jederzeit buchen"]]
+de | Gibt es Kaffee? → odpoved kava | [["Hinten wartet","Kaffee auf dich."],"Sessel, eine Retro-Zapfsäule un
+de | wie wird das Wetter morgen → fallback  | 
+cs | Kdy máte otevřeno? → odpoved hodiny | ["Po–Pá 9:00–19:00","So 9:00–14:00","Ne zavřeno"]
+cs | Kolik stojí střih? → odpoved cena-strih | [["Pánský střih","18 €"]]
+cs | Kde vás najdu? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+cs | Dá se platit kartou? → nevieme platba | způsob platby
+cs | Kde zaparkuju? → nevieme parkovanie | parkování
+cs | Jak si rezervuju termín? → odpoved rezervacia | ["Zavolej na recepci, v pracovní dny od 9:00 do 19:00. Nebo si termín 
+cs | Stříháte i děti? → odpoved deti | [["Střih pro malé gentlemany","15 €"],"Klasický střih nebo fade, přípa
+cs | dámský střih → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | stříháte i dámy? → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | kolik stojí střih pro dámy → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | kolik stojí vosk na vlasy → nevieme produkty | značky produktů
+cs | kolik stojí depilace uší voskem → odpoved depilacia | [["Depilace uší a nosu voskem","5,50 €"]]
+cs | kolik stojí masáž hlavy → nevieme cena-ina-sluzba | Tuto službu v ceníku nemůžu najít; podívej se na celý ceník.
+cs | kolik stoji strich → vyber cena-strih | cena-strih,cena-strih-brada
+cs | otevírací doba → odpoved hodiny | ["Po–Pá 9:00–19:00","So 9:00–14:00","Ne zavřeno"]
+cs | telefonní číslo → odpoved telefon | ["+421 951 267 203"]
+cs | kolik stojí úprava vousů → odpoved cena-brada | [["Úprava vousů","15 €"]]
+cs | věrnostní kartička → nevieme vernost | věrnostní kartičku
+cs | dárkový poukaz → nevieme poukazky | dárkové poukazy
+cs | jak dlouho trvá střih → odpoved trvanie | [["Pánský střih","40 min"],["Úprava vousů","20 min"]]
+cs | máte kávu → odpoved kava | [["Vzadu tě","čeká káva."],"Křesla, retro pumpa a barevný buldok. Káva
+cs | rezervace online → odpoved online | [["Online 24/7","rezervace termínu kdykoli"]]
+cs | jaké bude zítra počasí → fallback  | 
+pl | Kiedy jesteście otwarci? → odpoved hodiny | ["Pn–Pt 9:00–19:00","Sob 9:00–14:00","Nd zamknięte"]
+pl | Ile kosztuje strzyżenie? → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+pl | Gdzie jesteście? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+pl | Czy można płacić kartą? → nevieme platba | sposób płatności
+pl | Gdzie zaparkować? → nevieme parkovanie | parkowanie
+pl | Jak zarezerwować termin? → odpoved rezervacia | ["Zadzwoń na recepcję, w dni robocze od 9:00 do 19:00. Albo po prostu 
+pl | Czy strzyżecie dzieci? → odpoved deti | [["Strzyżenie dla małych dżentelmenów","15 €"],"Klasyczne strzyżenie l
+pl | strzyżenie damskie → nevieme damske | Strzyżeń damskich nie podajemy na stronie.
+pl | czy strzyżecie panie → nevieme damske | Strzyżeń damskich nie podajemy na stronie.
+pl | ile kosztuje strzyżenie dla pań → nevieme damske | Strzyżeń damskich nie podajemy na stronie.
+pl | strzyżenie dla panów → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+pl | ile kosztuje wosk do włosów → nevieme produkty | marki produktów
+pl | ile kosztuje depilacja uszu woskiem → odpoved depilacia | [["Depilacja uszu i nosa woskiem","5,50 €"]]
+pl | ile kosztuje masaż głowy → nevieme cena-ina-sluzba | Nie mogę znaleźć tej usługi w cenniku; zobacz cały cennik.
+pl | godziny otwarcia → odpoved hodiny | ["Pn–Pt 9:00–19:00","Sob 9:00–14:00","Nd zamknięte"]
+pl | numer telefonu → odpoved telefon | ["+421 951 267 203"]
+pl | ile kosztuje broda → odpoved cena-brada | [["Trymowanie brody","15 €"]]
+pl | karta lojalnościowa → nevieme vernost | karta lojalnościowa
+pl | bon podarunkowy → nevieme poukazky | bony podarunkowe
+pl | jak długo trwa strzyżenie → odpoved trvanie | [["Strzyżenie męskie","40 min"],["Trymowanie brody","20 min"]]
+pl | robicie trwałą → odpoved farbenie-vlasov | ["Farbowanie, pasemka i trwałą robi Romana.","Wykonuje je Romana, a re
+pl | jest kawa → odpoved kava | [["Z tyłu czeka","na ciebie kawa."],"Fotele, retro dystrybutor paliwa 
+pl | jaka będzie jutro pogoda → fallback  | 
+hu | Mikor vagytok nyitva? → odpoved hodiny | ["H–P 9:00–19:00","Szo 9:00–14:00","V zárva"]
+hu | Mennyibe kerül a hajvágás? → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+hu | Hol vagytok? → odpoved adresa | ["Mostná 30, 949 01 Nyitra"]
+hu | Lehet kártyával fizetni? → nevieme platba | fizetési mód
+hu | Van parkoló? → nevieme parkovanie | parkolás
+hu | Hogyan foglalok időpontot? → odpoved rezervacia | ["Hívd a recepciót hétköznap 9:00 és 19:00 között. Vagy foglalj időpon
+hu | Gyerekeket is vágtok? → odpoved deti | [["Hajvágás kis úriembereknek","15 €"],"Klasszikus vágás vagy fade, ig
+hu | női hajvágás → nevieme damske | Női hajvágást az oldalon nem tüntetünk fel.
+hu | mennyibe kerül a hajwax → nevieme produkty | termékmárkák
+hu | mennyibe kerül a fejmasszázs → nevieme cena-ina-sluzba | Ezt a szolgáltatást nem találom az árlistában; nézd meg a teljes árlistát.
+hu | nyitvatartás → odpoved hodiny | ["H–P 9:00–19:00","Szo 9:00–14:00","V zárva"]
+hu | telefonszám → odpoved telefon | ["+421 951 267 203"]
+hu | mennyibe kerül a szakáll → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+hu | hűségkártya → nevieme vernost | hűségkártya
+hu | ajándékutalvány → nevieme poukazky | ajándékutalvány
+hu | meddig tart a hajvágás → odpoved trvanie | [["Férfi hajvágás","40 perc"],["Szakálligazítás","20 perc"]]
+hu | van kávé → odpoved kava | [["Hátul kávé","vár rád."],"Fotelek, retró benzinkút és színes bulldog
+hu | online foglalás → odpoved online | [["Online 24/7","időpontfoglalás bármikor"]]
+hu | milyen idő lesz holnap → fallback  | 
+sr | Kada ste otvoreni? → odpoved hodiny | ["Pon–Pet 9:00–19:00","Sub 9:00–14:00","Ned zatvoreno"]
+sr | Koliko košta šišanje? → odpoved cena-strih | [["Muško šišanje","18 €"]]
+sr | Gde se nalazite? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sr | Može li karticom? → nevieme platba | način plaćanja
+sr | Ima li parking? → nevieme parkovanie | parking
+sr | Kako da zakažem termin? → odpoved rezervacia | ["Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin o
+sr | Šišate li decu? → odpoved deti | [["Šišanje za male džentlmene","15 €"],"Klasično šišanje ili fade, po 
+sr | žensko šišanje → nevieme damske | Žensko šišanje ne navodimo na sajtu.
+sr | koliko košta vosak za kosu → nevieme produkty | brendovi proizvoda
+sr | koliko košta depilacija ušiju voskom → odpoved depilacia | [["Depilacija ušiju i nosa voskom","5,50 €"]]
+sr | koliko košta masaža glave → nevieme cena-ina-sluzba | Ne mogu da nađem ovu uslugu u cenovniku; pogledaj ceo cenovnik.
+sr | radno vreme → odpoved hodiny | ["Pon–Pet 9:00–19:00","Sub 9:00–14:00","Ned zatvoreno"]
+sr | broj telefona → odpoved telefon | ["+421 951 267 203"]
+sr | koliko košta brada → odpoved cena-brada | [["Uređivanje brade","15 €"]]
+sr | kartica lojalnosti → nevieme vernost | kartica lojalnosti
+sr | poklon vaučer → nevieme poukazky | poklon vaučeri
+sr | koliko traje šišanje → odpoved trvanie | [["Muško šišanje","40 min"],["Uređivanje brade","20 min"]]
+sr | radite li trajnu → odpoved farbenie-vlasov | ["Farbanje, pramenove i trajnu radi Romana.","Radi ih Romana, a zakazu
+sr | ima li kafe → odpoved kava | [["Pozadi te","čeka kafa."],"Fotelje, retro pumpa i šareni buldog. Kaf
+sr | kakvo će biti vreme sutra → fallback  | 
+uk | Коли ви відчинені? → odpoved hodiny | ["Пн–Пт 9:00–19:00","Сб 9:00–14:00","Нд зачинено"]
+uk | Скільки коштує стрижка? → odpoved cena-strih | [["Чоловіча стрижка","18 €"]]
+uk | Де ви знаходитесь? → odpoved adresa | ["Mostná 30, 949 01 Нітра"]
+uk | Можна платити карткою? → nevieme platba | спосіб оплати
+uk | Є парковка? → nevieme parkovanie | паркування
+uk | Як записатися? → odpoved rezervacia | ["Зателефонуй на рецепцію в будні з 9:00 до 19:00. Або забронюй час он
+uk | Стрижете дітей? → odpoved deti | [["Стрижка для маленьких джентльменів","15 €"],"Класична стрижка або f
+uk | жіноча стрижка → nevieme damske | Жіночі стрижки на сайті не вказуємо.
+uk | скільки коштує віск для волосся → nevieme produkty | бренди продуктів
+uk | скільки коштує депіляція вух воском → odpoved depilacia | [["Воскова депіляція вух і носа","5,50 €"]]
+uk | скільки коштує масаж голови → nevieme cena-ina-sluzba | Не можу знайти цю послугу в прайсі; переглянь весь прайс.
+uk | години роботи → odpoved hodiny | ["Пн–Пт 9:00–19:00","Сб 9:00–14:00","Нд зачинено"]
+uk | номер телефону → odpoved telefon | ["+421 951 267 203"]
+uk | скільки коштує борода → odpoved cena-brada | [["Оформлення бороди","15 €"]]
+uk | картка лояльності → nevieme vernost | картка лояльності
+uk | подарунковий сертифікат → nevieme poukazky | подарункові сертифікати
+uk | скільки триває стрижка → odpoved trvanie | [["Чоловіча стрижка","40 хв"],["Оформлення бороди","20 хв"]]
+uk | є кава → odpoved kava | [["У глибині тебе","чекає кава."],"Крісла, ретро-бензоколонка і кольор
+uk | запис онлайн → odpoved online | [["Онлайн 24/7","бронювання будь-коли"]]
+uk | яка завтра погода → fallback  | 

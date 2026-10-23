@@ -1,0 +1,368 @@
+# Sada A „bežný zákazník“ – zdroj pre sada-A.jsonl
+# riadok: jazyk|očakávané|prijateľné náhradné (čiarkou)|otázka
+# O = odovzdanie (stránka to nehovorí), B = bez-ceny (ľubovoľná odpoveď bez ceny a trvania)
+# --- sk: hodiny
+sk|hodiny||dobry den, kedy mate otvorene?
+sk|hodiny||do kolkej robite dnes
+sk|hodiny||mate otvorene v sobotu?
+sk|hodiny||v nedelu ste otvoreny?
+sk|hodiny||otvaracie hodiny prosim
+sk|hodiny||Kedy zaviérate v piatok?
+sk|hodiny|rezervacia|da sa prist uz o 8 rano?
+sk|hodiny||otvarate aj cez vikend?
+sk|hodiny||ste otvorený zajtra poobede?
+sk|hodiny||dakujem, a v sobotu do kolkej ste?
+# --- sk: adresa, kontakt
+sk|adresa||kde ste?
+sk|adresa||adresa salonu
+sk|adresa||kde presne na mostnej to je
+sk|adresa||ako sa k vam dostanem
+sk|adresa||ste v nitre? kde?
+sk|adresa||diky. a kde vas najdem?
+sk|telefon||cislo na vas?
+sk|telefon||telefonne cislo prosim
+sk|telefon||mozem vam zavolat? ake mate cislo
+sk|telefon||tel. kontakt
+sk|email||mail
+sk|email||na aky email vam mozem napisat
+sk|email||emailova adresa?
+# --- sk: rezervácia
+sk|rezervacia|online,telefon|ako sa objednam?
+sk|rezervacia|online,telefon|chcem sa objednat na strih
+sk|rezervacia|online,telefon|dobry den, potreboval by som termin na zajtra
+sk|online|rezervacia|da sa rezervovat cez internet?
+sk|online|rezervacia|mozem sa objednat aj v noci online?
+sk|rezervacia|online,telefon,odovzdanie|mate volne dnes o 15tej?
+sk|rezervacia|online,telefon|objednavanie
+sk|rezervacia|online,telefon|chcel by som si zarezervovat termin u vas
+# --- sk: ceny služieb zo stránky
+sk|cena-strih|ceny-konecne|kolko stoji strih
+sk|cena-strih|ceny-konecne|Koľko stojí pánsky strih?
+sk|cena-strih|ceny-konecne|kolko je strihanie
+sk|cena-strih|ceny-konecne|cena za fade?
+sk|cena-strih|ceny-konecne|kolko zaplatim za ostrihanie
+sk|cena-strih|ceny-konecne|kolko stoi strih
+sk|cena-strih|ceny-konecne|ahoj, za kolko strihate?
+sk|cena-strih|ceny-konecne,hodiny|Dobry den, chcel by som sa spytat kolko stoji strih. Dakujem
+sk|cena-strih-brada|ceny-konecne|strih aj brada spolu kolko
+sk|cena-strih-brada|ceny-konecne|kolko stoji strih s bradou
+sk|cena-brada||kolko stoji uprava brady
+sk|cena-brada||cena brada
+sk|cena-brada||zastrihnut fuzy kolko
+sk|cena-brada||ahoj, sorry ze otravujem, kolko stoji len brada?
+sk|cena-dlhe||mam dlhe vlasy po plecia, kolko to bude?
+sk|cena-dlhe||strih dlhych vlasov cena
+sk|deti||kolko stoji strih pre syna, ma 6 rokov
+sk|deti||strihate aj deti?
+sk|deti||detsky strih cena
+sk|deti||synovi su 4 roky, ostrihate ho?
+sk|deti||dobry den, mam syna 5 rokov a chcela by som vediet ci strihate aj deti a kolko to stoji
+sk|holenie||holenie britvou kolko stoji
+sk|holenie||hot towel cena
+sk|holenie||oholit tvar do hladka kolko
+sk|hlava||kolko stoji oholit hlavu
+sk|hlava||holenie hlavy britvou
+sk|hlava||chcem si dat oholit hlavu na hladko, cena?
+sk|balicky|ultra|ake mate balicky
+sk|balicky||co je v balicku 1
+sk|ultra|balicky|ultra inclusive co obsahuje
+sk|ultra|balicky|to s tou whisky kolko stoji
+sk|plet||starostlivost o plet cena
+sk|plet|ultra|robite peeling a masku na tvar?
+sk|obocie||uprava obocia
+sk|obocie||farbenie obocia kolko
+sk|depilacia||depilacia nosa
+sk|depilacia||chlpky z usi voskom robite?
+sk|farbenie-brady||farbenie brady cena
+sk|farbenie-brady||zafarbit bradu kolko stoji
+sk|ornament||vystrihnut ciaru do vlasov
+sk|ornament||ornament na hlave cena
+sk|ceny-konecne|cena-strih|su to konecne ceny alebo nieco doplatim?
+sk|ceny-konecne|cena-strih|su v cene nejake priplatky?
+# --- sk: Romana (ceny len v samostatnom systéme)
+sk|farbenie-vlasov|odovzdanie|robite melir?
+sk|farbenie-vlasov|odovzdanie|kolko stoji farbenie vlasov
+sk|farbenie-vlasov|odovzdanie|trvala ondulacia
+sk|farbenie-vlasov|odovzdanie|chcem si zosvetlit vlasy
+# --- sk: tím, priestor
+sk|tim|vyber-barbera|kto u vas striha?
+sk|tim|vyber-barbera|kolko mate barberov
+sk|vyber-barbera|tim|mozem si vybrat barbera?
+sk|vyber-barbera|tim,rezervacia|chcem ist k Dominike
+sk|tim|vyber-barbera|mate aj barberku zenu?
+sk|co-je-v-strihu|cena-strih|co vsetko je v strihu?
+sk|co-je-v-strihu|cena-strih|je v strihu aj umytie vlasov?
+sk|kava||mate kavu?
+sk|kava||je kava zadarmo
+sk|kresla||kolko mate kresiel
+sk|odkedy||odkedy fungujete
+sk|odkedy||ako dlho uz existujete
+sk|socialne||mate instagram
+sk|socialne|odovzdanie|kde najdem vase prace, insta?
+sk|recepcia||mate recepciu?
+sk|recepcia||kto ma privita pri dverach
+# --- sk: trvanie (stránka: strih 40 min, brada 20 min)
+sk|trvanie||ako dlho trva strih
+sk|trvanie||kolko trva uprava brady
+sk|trvanie||kolko casu mam pocitat na strih?
+sk|trvanie|odovzdanie|kolko trva strih aj s bradou
+# --- sk: trvanie INEJ služby – recepcia nemá dáta, nesmie dať 40/20 min
+sk|O|holenie|ako dlho trva holenie
+sk|O|hlava|kolko trva oholenie hlavy
+sk|O|balicky|ako dlho trva balicek 1
+sk|O|ultra|kolko minut je ultra inclusive
+sk|O|farbenie-brady|ako dlho trva farbenie brady
+sk|O|deti|ako dlho trva detsky strih
+sk|O|farbenie-vlasov|kolko trva melir
+sk|O|plet|ako dlho trva starostlivost o plet
+# --- sk: ženy, dievčatá, starší chlapci – stránka neponúka
+sk|O||strihate aj zeny?
+sk|O||kolko stoji damsky strih
+sk|O||chcem objednat mamu na strih
+sk|O||strihate aj babky? moja babka by chcela kratky strih
+sk|O||moja kamaratka by sa chcela ostrihat, da sa?
+sk|O||sestra chce zastrihnut koncky
+sk|O||manzelka by chcela ist so mnou, ostrihate aj ju?
+sk|O||dcera 8 rokov, ostrihate ju?
+sk|O|deti|syn ma 13, kolko zaplati?
+# --- sk: produkty na bradu a vlasy
+sk|O||predavate balzam na bradu?
+sk|O||olej na bradu mate?
+sk|O||kolko stoji vosk na vlasy
+sk|O||vosk na bradu predavate?
+sk|O||da sa u vas kupit pomada
+# --- sk: strihanie mimo podniku
+sk|O||chodite strihat aj domov?
+sk|O||dedko je v nemocnici, prisli by ste ho ostrihat?
+sk|O||strihate v domove dochodcov?
+# --- sk: témy „nevieme“
+sk|O||da sa platit kartou?
+sk|O||dakujem, este sa chcem spytat ci sa da platit kartou
+sk|O||mate darcekove poukazky?
+sk|O||ako zrusit termin
+sk|O||mozem prist bez objednania?
+sk|O||kde sa da zaparkovat
+sk|O||je tam bezbarierovy pristup? som na voziku
+sk|O||mate whatsapp?
+sk|O||mate vernostnu kartu? kolko strihov a jeden zdarma?
+sk|O||mate otvorene aj na sviatky, 24.12.?
+sk|O||hovori niekto po anglicky?
+sk|O||mam alergiu na niektore pripravky, je to problem?
+sk|O||mate fotky strihov pred a po?
+sk|O||robite skolenia pre barberov? kolko stoji kurz
+sk|O||je studentska zlava?
+sk|O||posielate sms pripomienku pred terminom?
+sk|O||robite tetovanie?
+sk|O||robite masaz hlavy?
+sk|O||predlzovanie vlasov
+sk|O||manikura
+sk|O||mate wifi?
+sk|O||mozem si zobrat psa?
+sk|O||kolko stoji keratin
+sk|O||mate head spa?
+sk|O||zlava pre dochodcov?
+# --- sk: zdvorilosti, smalltalk, nesúvisiace
+sk|B||dakujem
+sk|B||dekujem pekne
+sk|B||ďakujem, dovidenia
+sk|B||sorry
+sk|B||prepacte
+sk|B||ok
+sk|B||super, vdaka!
+sk|B||ahoj
+sk|B||dobry den
+sk|B||cau
+sk|B||jj
+sk|B||hmm
+sk|B||detox
+sk|B||sedacka
+sk|B||ake bude zajtra pocasie
+sk|B||kto vyhral vcera zapas
+sk|B||si robot?
+sk|B||asdfgh
+sk|B||nerozumiem
+sk|B||mate radi psov?
+sk|B||pizza
+sk|B||mas sa dobre?
+sk|B||test
+sk|B||thanks
+sk|B||danke
+sk|B||strih pre psa
+# --- cs
+cs|hodiny||kdy mate otevreno?
+cs|hodiny||mate otevreno v sobotu?
+cs|adresa||kde vas najdu
+cs|telefon||jaky mate telefon
+cs|rezervacia|online,telefon|jak se objednam
+cs|cena-strih|ceny-konecne|kolik stoji pansky strih
+cs|cena-strih-brada|ceny-konecne|kolik stoji strih a vousy dohromady
+cs|cena-brada||uprava vousu cena
+cs|deti||strihate i deti? synovi je 6
+cs|hlava||oholeni hlavy britvou kolik
+cs|holenie||holeni dohladka kolik stoji
+cs|trvanie||jak dlouho trva strih
+cs|farbenie-vlasov|odovzdanie|delate melir?
+cs|vyber-barbera|tim|muzu si vybrat holice?
+cs|kava||mate kafe?
+cs|B||děkuji
+cs|B||dekuju moc
+cs|B||promiňte
+cs|B||jak se mas
+cs|B||detox
+cs|O|holenie|jak dlouho trva holeni
+cs|O|balicky|jak dlouho trva balicek
+cs|O||strihate i zeny? mamka by chtela
+cs|O||prodavate balzam na vousy?
+cs|O||jde platit kartou?
+cs|O||kde se da zaparkovat
+cs|O||prijedete strihat domu?
+# --- en
+en|hodiny||what are your opening hours
+en|hodiny||r u open on sunday?
+en|adresa||where are you located
+en|telefon||phone number pls
+en|email||whats ur email
+en|rezervacia|online,telefon|how do i book
+en|cena-strih|ceny-konecne|how much for a haircut
+en|cena-strih|ceny-konecne|price for a skin fade?
+en|cena-strih-brada|ceny-konecne|haircut + beard trim price
+en|cena-brada||how much is a beard trim
+en|deti||do you cut kids hair? my son is 7
+en|hlava||how much to shave my head with a razor
+en|holenie||hot towel shave price
+en|trvanie||how long does a haircut take
+en|farbenie-vlasov|odovzdanie|do you do highlights
+en|B||thanks
+en|B||sorry
+en|B||thank you so much!
+en|B||are you a bot?
+en|B||whats the weather like
+en|O|holenie|how long does a shave take
+en|O|hlava|how long is a head shave
+en|O||do you cut womens hair?
+en|O||my mum wants a haircut, can she come?
+en|O||do you sell beard oil?
+en|O||can i pay by card
+en|O||do you have gift vouchers
+en|O||is there parking nearby
+# --- de
+de|hodiny||wann habt ihr geöffnet
+de|hodiny||samstag offen?
+de|adresa||wo seid ihr genau
+de|telefon||telefonnummer bitte
+de|rezervacia|online,telefon|wie kann ich einen termin buchen
+de|cena-strih|ceny-konecne|was kostet ein herrenhaarschnitt
+de|cena-strih-brada|ceny-konecne|haarschnitt mit bart preis
+de|cena-brada||was kostet bartpflege
+de|deti||schneidet ihr auch kinder? mein sohn ist 5
+de|hlava||was kostet eine kopfrasur
+de|hlava||Glatze rasieren mit Rasiermesser
+de|holenie||nassrasur mit heißem tuch preis
+de|farbenie-brady||Bart färben was kostet das
+de|trvanie||wie lange dauert ein haarschnitt
+de|B||danke schön
+de|B||Entschuldigung
+de|B||alles klar, tschüss
+de|B||wie geht's?
+de|O|farbenie-brady|wie lange dauert Bartfärben
+de|O|holenie|wie lange dauert die rasur
+de|O||schneidet ihr auch damen
+de|O||verkauft ihr bartöl
+de|O||kann man mit karte zahlen
+de|O||gibt es parkplätze
+# --- hu
+hu|hodiny||mikor vagytok nyitva
+hu|hodiny||szombaton nyitva vagytok?
+hu|adresa||hol vagytok pontosan
+hu|telefon||telefonszam?
+hu|rezervacia|online,telefon|hogyan tudok idopontot foglalni
+hu|cena-strih|ceny-konecne|mennyibe kerul a ferfi hajvagas
+hu|cena-strih-brada|ceny-konecne|hajvagas es szakall egyutt mennyi
+hu|cena-brada||szakalligazitas ara
+hu|deti||gyereket is nyirtok? a fiam 6 eves
+hu|hlava||fejborotvalas mennyi
+hu|holenie||borotvalas hot towel ar
+hu|trvanie||mennyi ideig tart a hajvagas
+hu|farbenie-vlasov|odovzdanie|csinaltok melirt?
+hu|B||köszönöm
+hu|B||köszi szepen
+hu|B||bocsi
+hu|B||szia
+hu|B||milyen ido lesz holnap
+hu|O|holenie|meddig tart a borotvalas
+hu|O||noi hajvagas van?
+hu|O||lehet kartyaval fizetni?
+hu|O||hol lehet parkolni
+hu|O||szakallbalzsamot arultok?
+# --- pl
+pl|hodiny||w jakich godzinach jestescie otwarci
+pl|hodiny||czy w niedziele otwarte?
+pl|adresa||gdzie jestescie
+pl|telefon||numer telefonu
+pl|rezervacia|online,telefon|jak sie umowic na wizyte
+pl|cena-strih|ceny-konecne|ile kosztuje strzyzenie meskie
+pl|cena-strih-brada|ceny-konecne|strzyzenie z broda ile
+pl|cena-brada||ile za trymowanie brody
+pl|deti||czy strzyzecie dzieci? syn ma 6 lat
+pl|hlava||golenie glowy brzytwa cena
+pl|holenie||golenie na gladko ile kosztuje
+pl|trvanie||ile trwa strzyzenie
+pl|farbenie-vlasov|odovzdanie|robicie trwala?
+pl|B||dziękuję
+pl|B||przepraszam
+pl|B||dzieki, pa
+pl|B||co slychac
+pl|O|holenie|ile trwa golenie
+pl|O|balicky|ile trwa pakiet
+pl|O||strzyzecie kobiety?
+pl|O||czy mozna placic karta
+pl|O||macie bony podarunkowe?
+pl|O||czy dojezdzacie do domu strzyc?
+# --- uk
+uk|hodiny||коли ви працюєте
+uk|hodiny||у суботу відкрито?
+uk|adresa||де ви знаходитесь
+uk|telefon||номер телефону
+uk|rezervacia|online,telefon|як записатися
+uk|cena-strih|ceny-konecne|скільки коштує чоловіча стрижка
+uk|cena-strih|ceny-konecne|скільки коштуе стрижка
+uk|cena-strih-brada|ceny-konecne|стрижка з бородою скільки
+uk|cena-brada||оформлення бороди ціна
+uk|deti||стрижете дітей? синові 5 років
+uk|hlava||скільки коштує гоління голови
+uk|holenie||гоління hot towel ціна
+uk|trvanie||скільки триває стрижка
+uk|farbenie-vlasov|odovzdanie|робите мелірування?
+uk|B||дякую
+uk|B||вибачте
+uk|B||дуже дякую, до побачення
+uk|B||привіт
+uk|O|holenie|скільки триває гоління
+uk|O||жіночі стрижки робите?
+uk|O||можна оплатити карткою?
+uk|O||де можна припаркуватися
+uk|O||продаєте олію для бороди?
+# --- sr
+sr|hodiny||kada radite
+sr|hodiny||da li radite subotom?
+sr|adresa||gde se nalazite
+sr|telefon||broj telefona
+sr|rezervacia|online,telefon|kako da zakazem termin
+sr|cena-strih|ceny-konecne|koliko kosta musko sisanje
+sr|cena-strih|ceny-konecne|колико кошта шишање
+sr|cena-strih-brada|ceny-konecne|sisanje i brada koliko
+sr|cena-brada||uredjivanje brade cena
+sr|deti||da li sisate decu? sin ima 6 godina
+sr|hlava||brijanje glave koliko
+sr|holenie||glatko brijanje cena
+sr|trvanie||koliko traje sisanje
+sr|farbenie-vlasov|odovzdanie|radite li pramenove?
+sr|B||hvala
+sr|B||izvinite
+sr|B||хвала
+sr|B||cao
+sr|O|holenie|koliko traje brijanje
+sr|O||sisate li zene?
+sr|O||moze li karticom
+sr|O||gde da parkiram
+sr|O||prodajete li ulje za bradu
