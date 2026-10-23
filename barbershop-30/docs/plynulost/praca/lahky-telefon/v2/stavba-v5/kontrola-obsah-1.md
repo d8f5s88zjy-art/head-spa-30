@@ -4,12 +4,18 @@ Kontrolór: nezávislý (redaktor + právne minimum). V strome som nič nemenil.
 `git status --short` prázdny. `$SP` = `/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad`.
 Riadky `index.html:N` sú v `$SP/hs-recepcia/barbershop-30/index.html`.
 
-**Verdikt: NEPRIJATÉ v tomto kole.** Našiel som 3 vážne, 8 stredných a 7 drobných nálezov. Zdroje 30 odpovedí sú v poriadku.
+**Verdikt: NEPRIJATÉ v tomto kole.** Našiel som 3 vážne, 8 stredných a 10 drobných nálezov. Zdroje 30 odpovedí sú v poriadku.
 Problém nie je v textoch odpovedí, ale v tom, **ktorá odpoveď sa ukáže na ktorú otázku**, a v troch vetách, ktoré tvrdia
 o webe niečo nepravdivé. Testovacia sada má 100 %, no je šitá na kmene. Na 102 nezávislých slovenských otázkach som
 našiel 12 jasných chýb a v každom z 8 jazykov rovnakú chybu s cenou.
 
 Prehliadač som nepoužil. Na kontrolu obsahu ho netreba a nič vizuálne netvrdím.
+
+**Dokončenie kontroly (druhý prechod, 23. 10. 2026).** Prvý zápis tohto súboru sa neuzavrel, preto som všetky tvrdenia
+overil znova nad HEAD `be841ed` (`git status --short` prázdny) a doplnil chýbajúce časti: náhodnú vzorku prekladov
+(10 položiek na jazyk), opravené čísla riadkov v S7 a drobné nálezy D8–D10. Otázky som púšťal pomocnou skúškou mimo stromu
+`$SP/barber/lahky-telefon/v2/stavba-v5/k1-skusaj.mjs` (volá `odpovedz` z `assets/recepcia.js` nad `assets/recepcia/<jazyk>.json`,
+vstup riadky `jazyk|otázka`). Všetky výsledky citované vo V1–S5 vyšli pri opakovanom behu rovnako.
 
 ---
 
@@ -30,10 +36,10 @@ Prehliadač som nepoužil. Na kontrolu obsahu ho netreba a nič vizuálne netvrd
    len v `source/tools/recepcia-test.mjs` (pozri S7) a falošné zhody („Sobot“, „Modelowanie“). Správy commitov sú čisté.
 5. **Úvodná veta je pravdivá.** `sk.json:19`: „Odpovedám z pripravených odpovedí k podniku. Na ostatné vám rada odpovie
    recepcia.“ Nepredstiera model ani človeka. Štýl a oslovenie rozoberám v D4 a S6.
-6. **V slovníkoch pribudol jediný kľúč.** Python porovnanie s `f624ee8` ukázalo pre en, uk, hu, sr, pl, de aj cs 262 → 263
+6. **V slovníkoch pribudol jediný kľúč.** (overené znova: `zmenené 0` pre každý jazyk) Python porovnanie s `f624ee8` ukázalo pre en, uk, hu, sr, pl, de aj cs 262 → 263
    kľúčov, nový je len „Spýtaj sa recepcie“ a zmenený nie je žiadny.
-7. **Preklady sú verné a nepridávajú fakty.** Prešiel som **všetky** položky (30 + 20) v 7 jazykoch, teda viac než
-   10 náhodných. Ceny sú ako na stránke („18 €“, „21,50 €“), telefón je +421 951 267 203. uk je v cyrilike, sr v latinke
+7. **Preklady sú verné a nepridávajú fakty.** Náhodná vzorka 10 položiek na jazyk (Python `random.seed('k1'+jazyk)`,
+   zoznam nižšie v časti „Vzorka prekladov“) plus úvodné texty panelu, fallback a odovzdanie v každom jazyku. Ceny sú ako na stránke („18 €“, „21,50 €“), telefón je +421 951 267 203. uk je v cyrilike, sr v latinke
    rovnako ako `assets/i18n/sr.json`. Diakritiku som v hu, pl a cs skontroloval bez nálezu.
 8. **Veta o súkromí je pravdivá.** „Odpovede sú zo stránky, nič sa neodosiela.“ (`sk.json:23`). Sieť používa len
    `fetch(recepcia/<jazyk>.json)` (`recepcia.js:68`) a otázka ide do stránky cez `textContent` (`recepcia.js:67`, `:93`).
@@ -153,8 +159,9 @@ Prehliadač som nepoužil. Na kontrolu obsahu ho netreba a nič vizuálne netvrd
   Ak má byť vykanie, rozhodne o ňom majiteľ pre celý web, nie len pre jednu vetu.
 
 **S7 – Testovací súbor v strome spomína AI.**
-- Dôkaz: `source/tools/recepcia-test.mjs:922` komentár „bez slova AI v textoch“, `:1139` názov testu „… bez slova AI“,
-  `:1146` regex `/\bAI\b|umel[áa] inteligenc|chatbot|asistent/` a hláška „zmienka o AI“.
+- Dôkaz: `source/tools/recepcia-test.mjs:17` komentár „bez slova AI v textoch“, `:234` názov testu „… bez slova AI“,
+  `:241` regex `/\bAI\b|umel[áa] inteligenc|chatbot|asistent/` a hláška „zmienka o AI“ (riadky overené `grep -n`;
+  prvý zápis uvádzal nesprávne `:922`, `:1139`, `:1146`).
 - Porušuje to pravidlo „bez zmienky o AI v kóde, komentároch…“ zo zadania aj z OTAZKY:105.
 - Návrh: test nazvať „bez zakázaných označení“ a zoznam slov načítať zo súboru mimo stromu (napr. `stavba-v5/zakazane.txt`).
   Ak súbor chýba, kontrola sa preskočí s upozornením.
@@ -194,6 +201,31 @@ Prehliadač som nepoužil. Na kontrolu obsahu ho netreba a nič vizuálne netvrd
   napr. podľa slovníka.
 - **D7 de slovník.** Veta odpovede `rezervacia` „Ruf am Empfang an, Mo–Fr …“ nie je idiomatická („Ruf beim Empfang an“). Ide o
   vetu zo slovníka `assets/i18n/de.json`, takže oprava patrí do samostatnej zmeny stránky, nie do recepcie.
+- **D8 Správa commitu.** Telo `c7ffb2f` (riadok 3 správy) cituje cestu „návrh barber/lahky-telefon/v2/asistent.md“.
+  Nejde o označenie pre návštevníka, no slovo „asistent“ je v správe, ktorú pravidlá chcú bez takých zmienok. Návrh: pri
+  ďalšom commite cesty návrhu necitovať (správu existujúceho lokálneho commitu nemeniť bez súhlasu vedúceho).
+- **D9 „kolko cakam“.** Otázka na čakanie na termín → `odpoved kava` („Vzadu ťa čaká káva.“). Nie je to nepravda, ale
+  odpovedá na inú otázku. Návrh: kmeň `Cak` ponechať pre čakáreň len so slovom `kde`, inak fallback.
+- **D10 Deti nad 10 rokov.** `kolko stoji strih pre syna 12 rokov` → `deti` 15 €. Odpoveď sama obsahuje „pre chlapcov do 10 rokov“
+  (`index.html:549`), takže neklame. Bez opravy, len na vedomie majiteľovi (OTAZKY bod pre vek nie je).
+
+---
+
+## Vzorka prekladov (10 náhodných položiek na jazyk)
+
+Výber: `random.seed('k1'+jazyk); random.sample(sorted(id), 10)` nad 50 id (30 položiek + 20 tém). Pri každej položke som
+porovnal text so `sk.json` a so slovníkom `assets/i18n/<jazyk>.json`. Ceny, čísla a telefón sú zhodné; nová skutočnosť nie je
+v žiadnej.
+
+| jazyk | vzorka | výsledok |
+|---|---|---|
+| en | farbenie-vlasov, socialne, kresla, obocie, holenie, trvanie, email, co-je-v-strihu, damske, storno | verné; „trvanie“ nesie nepravdu z V2 |
+| uk (cyrilika) | whatsapp, holenie, cena-strih-brada, telefon, odkedy, balicky, romana-ceny, kava, depilacia, bezbarierovy | verné; D6 (Romana vs Романи); úvod „вам“ → S6 |
+| hu | depilacia, romana-ceny, platba, whatsapp, tim, cena-dlhe, cena-ina-sluzba, bez-objednania, cena-strih, zdravie | verné, diakritika (ő, ű) správna; úvod bez oslovenia |
+| sr (latinka ako `i18n/sr.json`) | zdravie, romana-ceny, skolenia, tim, co-je-v-strihu, damske, parkovanie, platba, deti, pripomienka | verné; „skolenia“ nesie S1, úvod „vam“ → S6 |
+| pl | produkty, storno, kresla, deti, vernost, recepcia, cena-ina-sluzba, plet, tim, platba | verné; úvod „wam“ (množné číslo) → S6 |
+| de | tim, storno, poukazky, produkty, parkovanie, co-je-v-strihu, cena-dlhe, plet, telefon, balicky | verné; úvod „Ich antworte mit vorbereiteten Antworten“ opakuje slovo (ako D4) |
+| cs | co-je-v-strihu, obocie, telefon, rezervacia, jazyky-tim, holenie, vernost, vysledky, bez-objednania, storno | verné; voľba „Kde nás najdete“ hoci slovník má „Kde nás najdeš“ → S6 |
 
 ---
 
