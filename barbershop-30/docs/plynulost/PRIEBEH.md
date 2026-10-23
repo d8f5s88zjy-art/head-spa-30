@@ -177,3 +177,8 @@ Nástroje na meranie pred/po: `praca/audit/cierne-okna/` (rec.mjs, ana.py, batch
 - 22:30 UTC: disk 0,9 GB → vyčistená vyrovnávacia pamäť pip (430 MB) a npm (~570 MB), teraz 1,9 GB. Spustený prototyp 2,5D príjazdu wf_ccecb1be-01a (výrez auta rembg/GrabCut na prázdnej ceste dvora, končí v zábere skutočnej fotky), vetva richtarik-prijazd. V5 recepcia čaká, kým dobehne prototyp (nech sa nevyčerpá limit).
 - 22:30 UTC check-in: prototyp príjazdu (wf_ccecb1be-01a) v stavbe; V5 (wf_d2da7410-ac8) zámerne čaká na koniec prototypu; disk 1,5 GB.
 - 23:30 UTC check-in: prototyp príjazdu postavený (02b124b), kontrola kola 1 hotová, beží oprava; V5 čaká.
+
+## 23. 10. 2026, 00:30 UTC
+- Prototyp príjazdu (wf_ccecb1be-01a): skeptik UKÁZAŤ – na telefóne auto prichádza po ceste dvora a zastaví čelom (výrez 3bd2f79b cez rembg + GrabCut na podklade 3a5b1dd2, vyretušované vzdialené IVECO). Poslané majiteľovi video telefónu + pás; druhý náhľad https://claude.ai/artifact/Hwc2pBqaSNwS5pMCsmdcfg (vetva richtarik-prijazd, 311ff2a).
+- POZOR: 2 z 3 PNG v dávke majiteľa (6884937f, 7ef6f685) sú snímky e-mailov s prístupmi k doméne a hostingu starého webu (Allweb, mrhosting) vrátane hesla a AuthInfo kódu. Nepoužité nikde; moje kópie v podkladoch zmazané; v poznámkach (inventar-3.md, vyber.md) sú len opisy bez hesiel. Tretie PNG (ed765121) je e-mail „nová zákaznícka karta“ Stavebnín Richtárik – podnet na otázku, či chce majiteľ zákaznícku kartu aj na webe Richtárika.
+- Spustené: doladenie príjazdu wf_5278bda4-e4a a V5 recepcia (tretí pokus) wf_d2da7410-ac8.
