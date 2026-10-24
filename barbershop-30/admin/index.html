@@ -42,9 +42,11 @@ h2{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:22px;line-heig
 .f{margin:0 0 14px}
 .f>label{display:block;font-weight:700;font-size:14.5px;margin:0 0 6px}
 .f>label small{font-weight:400;color:var(--muted);margin-left:6px}
-input[type=text],input[type=number],input[type=password],input[type=search],textarea{width:100%;min-height:48px;background:var(--field);color:var(--text);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;font:16px/1.5 'Manrope',sans-serif}
+.f>label.mini{font-weight:400;color:var(--muted);font-size:13.5px;margin-bottom:4px}
+input[type=text],input[type=number],input[type=password],input[type=search],input[type=tel],input[type=email],select,textarea{width:100%;min-height:48px;background:var(--field);color:var(--text);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;font:16px/1.5 'Manrope',sans-serif}
 textarea{resize:vertical;display:block;min-height:48px;field-sizing:content;max-height:60vh}
-input:focus,textarea:focus{outline:none;border-color:var(--lamp)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lamp)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--lamp-2) 50%),linear-gradient(135deg,var(--lamp-2) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
 .changed{border-color:var(--lamp)!important;background-color:#26180f!important}
 .row{display:grid;gap:0 12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border:1px solid var(--lamp);background:var(--lamp);color:var(--bg);font-weight:700;font-size:15px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}

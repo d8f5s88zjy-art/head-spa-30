@@ -264,6 +264,9 @@ for (const [nazov, url, sirka] of [['barbershop', karta, 390], ['headspa', hs.ka
   await p.waitForSelector('.karta', { timeout: 8000 });
   over(/\/barbershop-30\/karta\/\?k=[A-Za-z0-9_-]{22}$/.test(p.url()) && /Marek/.test(await p.textContent('main')), 'založenie: kartička hneď otvorená na webe Barbershopu', p.url());
   over((await p.evaluate(() => localStorage.getItem('v30.karta.barbershop')) || '').includes('/barbershop-30/karta/?k='), 'založenie: kartička uložená pre pätičku webu');
+  const ochrana = await p.$$eval('a', (a) => a.filter((x) => /Ochrana/.test(x.textContent)).map((x) => x.href));
+  const stav = await Promise.all(ochrana.map((u) => p.request.get(u).then((r) => r.status())));
+  over(ochrana.length > 0 && ochrana.every((u) => u === `${Z}/vernost/ochrana-udajov.html`) && stav.every((x) => x === 200), 'kartička na webe Barbershopu: odkaz Ochrana údajov existuje', ochrana.join(', '));
   over(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth) && chyby.length === 0, 'založenie: bez posunu a chýb', chyby.join(' | '));
   await ctx.close();
 }

@@ -498,3 +498,25 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - Neoverené: skutočný GitHub (kľúč nemám a do `main` sa bez súhlasu neukladá), skutočný telefón.
 - Pozor: admin číta a ukladá `main`. Kým web Barbershopu nie je zverejnený v `main`, admin nemá čo upravovať.
 
+## 25. Admin: Kontakt a hodiny, odkaz na ochranu údajov kartičky (2026‑10‑24)
+
+- Zadávateľ: dokončiť, čo predtým nebolo hotové. V admine chýbala zmena telefónu, e‑mailu a hodín (bola len poznámka
+  „pošli tvorcovi webu“), lebo sú na mnohých miestach.
+- Súpis: telefón vo vyše 20 súboroch v troch tvaroch, hodiny 341 dvojíc „od–do“ v 8 jazykoch, JSON‑LD, app.js HOURS,
+  server asistenta, kartička, vizitka, CLAUDE.md. Osamotené časy v odpovediach asistenta: 3 vety s časom otvorenia
+  bez dňa („otvárame o 9:00“), 2 s „19:00“, 1 so „14:00“; ďalej termíny v ukážke objednávky a príklad v pokynoch
+  asistenta (tie sa menia, len ak sa zhodujú s otváracími hodinami).
+- Záložka Kontakt a hodiny: telefón (mobil 09xx xxx xxx), e‑mail, Po–Pi a sobota od–do (celé hodiny). Náhľad
+  „Zmení sa N miest v M súboroch“ a vety s časom otvorenia bez dňa na kontrolu, keď sa otvorenie Po–Pi a v sobotu
+  rozíde. Zmena sa robí v hotových textoch až po ostatných úpravách, v jednom commite.
+- `node source/tools/admin-test.mjs`: 100 OK. Skúška: telefón 0905 123 456, e‑mail, Po–Pi 9–20, So 10–14.
+  Starý telefón a e‑mail nikde; tel: odkazy, JSON‑LD, vizitka, kartička (HEAD SPA nezmenená, kópie karta.js
+  rovnaké), app.js HOURS, preklady (kľúč aj preklad, maďarčina, nemčina), odpovede a znalosti asistenta, pokyny
+  asistenta (príklad termínov nezmenený), CLAUDE.md, ukážka objednávky nezmenená; PHP (`php -l`) a JS (`node
+  --check`) bez chyby syntaxe; web po zmene: všetky Zavolať na nové číslo, angličtina, tabuľa hodín v sobotu 10–14.
+- `source/tools/otazky.mjs` berie povolené časy z app.js (inak by po zmene hodín hlásil chybu).
+- Kartička na webe Barbershopu: odkaz „Ochrana osobných údajov“ pod kartičkou viedol na `barbershop-30/ochrana-udajov.html`
+  (neexistuje). Oba odkazy teraz vedú na spoločnú stránku pri API kartičiek. `vernost/testy/spusti.sh` 118 OK
+  (nová kontrola: odkaz existuje, odpoveď 200).
+- Neoverené: skutočný GitHub a skutočný telefón.
+

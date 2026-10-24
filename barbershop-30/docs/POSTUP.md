@@ -33,8 +33,9 @@ Rozpracované (požiadavky z 2026‑10‑22):
 4. HOTOVÉ (CHECKS 24): Admin pre Lajka: aby mohol meniť texty, fotky (a odmeny kartičky) sám, ako administrátor.
    `admin/` (naostro `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/admin/` po zverejnení), prihlásenie
    kľúčom GitHub, uloženie jedným commitom do `main`. Texty, cenník, tím (aj nový člen a fotka), galéria, odpovede
-   asistenta; jedna zmena upraví obe stránky, preklady, znalosti asistenta a odpovede. Telefón, hodiny a adresu
-   admin zámerne nemení (sú aj v odkazoch tel:, živom stave a asistentovi). Odmeny kartičky: admin kartičky.
+   asistenta; jedna zmena upraví obe stránky, preklady, znalosti asistenta a odpovede. Kontakt a hodiny (telefón,
+   e‑mail, Po–Pi a sobota) naraz vo všetkých súboroch (2026‑10‑24, CHECKS 25); adresu a nedeľu mení tvorca webu.
+   Odmeny kartičky: admin kartičky.
    Kľúč pre Lajka vytvorí zadávateľ na účte webu (postup na prihlasovacej stránke adminu).
 5. HOTOVÉ (pozri Denník a CHECKS 22): web na telefóne pôsobí ako PowerPoint prezentácia. Chce živý web na telefóne, každá
    animácia so silným háčikom, aby zákazník ostal a objednal sa. Ikony zmenšiť, aby tak nebili do očí.
@@ -57,6 +58,12 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 - kľúč GitHub pre Lajka do adminu webu (vytvára sa na účte webu, až po zverejnení do `main`).
 
 ## Denník
+
+- 2026‑10‑24: dokončené nedokončené veci: admin Kontakt a hodiny (telefón, e‑mail, hodiny naraz v 27 súboroch vrátane
+  servera asistenta, kartičky a CLAUDE.md; test 100 OK), odkaz Ochrana osobných údajov na kartičke Barbershopu viedol
+  na neexistujúcu stránku (opravené, vernost 118 OK), validátor otázok berie hodiny z app.js.
+  Zadávateľovi ukradli iPhone, na ktorom je prihlásený do Claude: kým nepotvrdí z bezpečného zariadenia, že sa
+  odhlásil zo všetkých zariadení, nič sa nezverejňuje ani neposiela von.
 
 - 2026‑10‑22: admin pre Lajka (`admin/`, `source/tools/admin-test.mjs` 63 OK s falošným GitHubom): texty, cenník,
   tím, galéria, odpovede asistenta, odkazy na admin kartičky. Pages kopíruje `admin/`, robots ho vylučuje.

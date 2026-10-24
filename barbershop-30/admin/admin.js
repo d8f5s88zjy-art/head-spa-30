@@ -10,7 +10,8 @@
  *    (asistent/znalosti/barbershop.md) a odpovede asistenta s cenou dá na kontrolu (záložka Odpovede asistenta);
  *  - tím: oba súbory (karta podľa mena), fotky ako WebP a JPEG v dvoch šírkach, zoznam tímu v znalostiach a odpovediach;
  *  - galéria: fotka a popis;
- *  - odpovede asistenta: barbershop-otazky.json a jeho kópia pre web (assets/asistent-otazky.json).
+ *  - odpovede asistenta: barbershop-otazky.json a jeho kópia pre web (assets/asistent-otazky.json);
+ *  - kontakt a hodiny: telefón, e‑mail a otváracie hodiny naraz vo všetkých súboroch, kde sú (KONTAKT nižšie).
  * Odmeny a akcie vernostnej kartičky sú v admine kartičky (odkaz v záložke Kartička).
  */
 const OWNER = 'd8f5s88zjy-art', REPO = 'head-spa-30', BRANCH = 'main';
@@ -21,6 +22,13 @@ const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
 const LN = { en: 'Angličtina', uk: 'Ukrajinčina', hu: 'Maďarčina', sr: 'Srbčina', pl: 'Poľština', de: 'Nemčina', cs: 'Čeština' };
 const F = { index: P + 'index.html', rez: P + 'rezervacia.html', md: 'asistent/znalosti/barbershop.md', faq: 'asistent/znalosti/barbershop-otazky.json', faqWeb: P + 'assets/asistent-otazky.json' };
 const NB = ' ';
+/* súbory s telefónom, e‑mailom a otváracími hodinami Barbershopu: web, preklady, asistent (aj server), kartička,
+   vizitka, ukážky; app.js len riadok HOURS (živý stav „otvorené“), CLAUDE.md len hodiny (pravidlo pre asistenta) */
+const APP = P + 'assets/app.js';
+const KONTAKT = [F.index, F.rez, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), F.md, F.faq, F.faqWeb, APP,
+  P + 'assets/asistent.js', P + 'assets/objednavka.js', P + 'assets/asistent-ukazka.js', P + 'assets/karty.js', P + 'assets/barbershop30.vcf',
+  P + 'karta/index.html', P + 'karta/karta.js', 'vernost/karta/karta.js', 'vernost/lib/jadro.php', 'vernost/ochrana-udajov.html',
+  'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md'];
 const K_KLUC = 'b30.admin';
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -170,11 +178,12 @@ function vstup(p, label, o = {}) {
 async function nacitaj() {
   const ref = await gh(`/git/ref/heads/${BRANCH}`);
   const sha = ref.object.sha;
-  const cesty = [F.index, F.rez, F.md, F.faq, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`)];
+  const cesty = [...new Set([F.index, F.rez, F.md, F.faq, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), ...KONTAKT])];
   const obsah = await Promise.all(cesty.map((c) => readFile(c, sha)));
   const raw = {}; cesty.forEach((c, i) => { raw[c] = obsah[i]; });
   const i18n = {}; LANGS.forEach((l) => { i18n[l] = JSON.parse(raw[`${P}assets/i18n/${l}.json`]); });
   base = { sha, raw, i18n, faq: JSON.parse(raw[F.faq]) };
+  base.kontakt = kontaktZoSuborov(raw);
   priprav();
 }
 
@@ -207,13 +216,13 @@ function priprav() {
 }
 
 /* ---------------- záložky ---------------- */
-const TABY = { texty: 'Texty', cennik: 'Cenník', tim: 'Tím', galeria: 'Galéria', odpovede: 'Odpovede asistenta', karta: 'Kartička' };
+const TABY = { texty: 'Texty', cennik: 'Cenník', tim: 'Tím', galeria: 'Galéria', kontakt: 'Kontakt a hodiny', odpovede: 'Odpovede asistenta', karta: 'Kartička' };
 function kresli() {
   const nav = $('#tabs .in');
   nav.replaceChildren(...Object.entries(TABY).map(([k, n]) => h('button', { type: 'button', role: 'tab', 'aria-selected': String(k === tab), 'data-tab': k, onclick: () => { tab = k; ukaz(); } }, n)));
   const app = $('#app');
   app.replaceChildren(...Object.keys(TABY).map((k) => h('section', { class: 'tab', 'data-tab': k, hidden: k !== tab })));
-  textyTab(); cennikTab(); timTab(); galeriaTab(); odpovedeTab(); kartaTab();
+  textyTab(); cennikTab(); timTab(); galeriaTab(); kontaktTab(); odpovedeTab(); kartaTab();
   ukaz(); obnov();
 }
 function ukaz() {
@@ -238,7 +247,7 @@ function textyTab() {
   const chips = h('div', { class: 'chips' });
   const zoz = h('div');
   s.append(h('h1', {}, 'Texty webu'), h('p', { class: 'lead' }, 'Každý text na webe po častiach. Zmeň len slová, vzhľad ostane. Preklady sa presunú samé; ak sa zmysel zmenil, uprav ich pod textom.'),
-    h('p', { class: 'note' }, h('b', {}, 'Telefón, otváracie hodiny a adresu '), 'tu nemeníš: sú aj v tlačidlách Zavolať, v stave „otvorené“ a v asistentovi. Zmenu pošli tvorcovi webu, upraví ich naraz všade.'),
+    h('p', { class: 'note' }, h('b', {}, 'Telefón, e‑mail a otváracie hodiny '), 'zmeníš v záložke Kontakt a hodiny, naraz na celom webe aj v asistentovi. Adresu mení tvorca webu.'),
     h('div', { class: 'tools' }, hladaj, chips), zoz);
   const skup = new Map(), ramec = new Map();
   for (const x of base.ix.seg) {
@@ -414,6 +423,141 @@ function kartaTab() {
       h('li', {}, 'Odmeny (koľko bodov za čo) a akcie si nastavíš sám v admine kartičky.')));
 }
 
+/* ---------------- kontakt a hodiny ----------------
+   Telefón (mobil 09xx xxx xxx v tvaroch 0951 267 203, +421 951 267 203, +421951267203), e‑mail a otváracie hodiny
+   (Po–Pi a sobota, celé hodiny, nedeľa zatvorené) sa zmenia vo všetkých súboroch KONTAKT naraz. Hodiny: čas sa
+   mení podľa úlohy. Dvojica „od–do“ (9:00–19:00, od 9:00 do 19:00, 9:00 és 19:00 …) je pracovný deň alebo sobota;
+   osamotený čas zatvárania patrí svojmu dňu; osamotený čas otvárania, ktorý je pre oba dni rovnaký, sa pri
+   rozdielnych nových hodinách nedá určiť, dostane čas pracovných dní a ide na kontrolu. Iné časy (termíny v ukážke,
+   príklad v pokynoch asistenta) ostanú, ak sa nezhodujú s otváracími hodinami. */
+const telTvary = (intl) => { const d = intl.slice(4); return { intl, medz: `+421 ${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`, lok: `0${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`, holy: `0${d}` }; };
+function kontaktZoSuborov(raw) {
+  const ix = raw[F.index] || '';
+  const intl = (ix.match(/href="tel:(\+421\d{9})"/) || [])[1];
+  const email = (ix.match(/href="mailto:([^"?]+)"/) || [])[1] || '';
+  // hodiny z app.js (živý stav „otvorené“): Po–Pi rovnaké, sobota, nedeľa zatvorené; iné rozloženie admin nemení
+  const hm = (raw[APP] || '').match(/const HOURS = \{([^}]*)\};/);
+  let hod = null;
+  if (hm) {
+    const d = {};
+    for (const m of hm[1].matchAll(/(\d): (null|\[(\d+), (\d+)\])/g)) d[m[1]] = m[2] === 'null' ? null : [+m[3], +m[4]];
+    const w = d[1];
+    if (w && [2, 3, 4, 5].every((i) => d[i] && d[i][0] === w[0] && d[i][1] === w[1]) && d[6] && d[0] === null) hod = { w, s: d[6] };
+  }
+  return { tel: intl ? telTvary(intl) : null, email, hod };
+}
+function nahradHodiny(text, st, nv) {
+  const T = /(?<![\d.:])(0?)(\d{1,2}):00(?!\d|:\d)/g;
+  const tok = [...text.matchAll(T)].map((m) => ({ at: m.index, end: m.index + m[0].length, h: Number(m[2]), pad: m[1] === '0' }));
+  const role = new Array(tok.length).fill(null), nejasne = [];
+  const par = (a, b) => (a === st.w[0] && b === st.w[1] ? 'w' : a === st.s[0] && b === st.s[1] ? 's' : null);
+  for (let i = 0; i < tok.length - 1; i++) {
+    const medzi = text.slice(tok[i].end, tok[i + 1].at);
+    if (!/^[^\d<>{}\n]{1,16}$/.test(medzi)) continue;
+    const d = par(tok[i].h, tok[i + 1].h);
+    if (d) { role[i] = [d, 0]; role[i + 1] = [d, 1]; i++; }
+  }
+  tok.forEach((t, i) => {
+    if (role[i]) return;
+    const kand = [['w', 0], ['w', 1], ['s', 0], ['s', 1]].filter(([d, k]) => st[d][k] === t.h);
+    if (!kand.length) return;
+    if (new Set(kand.map(([d, k]) => nv[d][k])).size > 1) nejasne.push({ okolie: norm(text.slice(Math.max(0, t.at - 50), t.end + 25)) });
+    role[i] = kand[0];
+  });
+  let n = 0;
+  for (let i = tok.length - 1; i >= 0; i--) {
+    if (!role[i]) continue;
+    const [d, k] = role[i], v = nv[d][k];
+    if (v === tok[i].h) continue;
+    text = text.slice(0, tok[i].at) + (tok[i].pad ? String(v).padStart(2, '0') : String(v)) + ':00' + text.slice(tok[i].end);
+    n++;
+  }
+  return { text, n, nejasne };
+}
+function kontaktNahrad(cesta, text, k) {
+  const st = k.st, nejasne = [];
+  let n = 0;
+  if (text == null) return { text, n, nejasne };
+  const vsade = (a, b) => { const c = text.split(a).length - 1; if (c) { n += c; text = text.split(a).join(b); } };
+  if (k.tel) {
+    // medzery v čísle ostanú, aké boli (obyčajná alebo pevná)
+    const re = (x) => new RegExp(x.split(' ').map(reEsc).join('([ \\u00a0])'), 'g');
+    for (const t of ['medz', 'lok']) text = text.replace(re(st.tel[t]), (...m) => { n++; let i = 1; return k.tel[t].replace(/ /g, () => m[i++]); });
+    vsade(st.tel.intl, k.tel.intl); vsade(st.tel.holy, k.tel.holy);
+  }
+  if (k.email) vsade(st.email, k.email);
+  if (k.hod) {
+    if (cesta === APP) {
+      const w = `[${k.hod.w.join(', ')}]`;
+      text = text.replace(/const HOURS = \{[^}]*\};/, () => { n++; return `const HOURS = { 1: ${w}, 2: ${w}, 3: ${w}, 4: ${w}, 5: ${w}, 6: [${k.hod.s.join(', ')}], 0: null };`; })
+        .replace(/\(Po–Pi \d+–\d+, So \d+–\d+,/, `(Po–Pi ${k.hod.w[0]}–${k.hod.w[1]}, So ${k.hod.s[0]}–${k.hod.s[1]},`);
+    } else {
+      const r = nahradHodiny(text, st.hod, k.hod);
+      text = r.text; n += r.n; r.nejasne.forEach((x) => nejasne.push({ cesta, ...x }));
+    }
+  }
+  return { text, n, nejasne };
+}
+let kp = null;   // polia záložky Kontakt a hodiny
+function kontaktNove() {
+  if (!kp || !base || !base.kontakt) return null;
+  const st = base.kontakt, z = { popis: [], st };
+  const tel = norm(kp.tel.value), email = norm(kp.email.value);
+  if (st.tel && tel !== st.tel.lok) {
+    const d = tel.replace(/\D/g, '');
+    if (!/^09\d{8}$/.test(d)) z.chyba = 'Telefón napíš ako mobil v tvare 0951 267 203. Iné číslo (pevnú linku) zmení tvorca webu.';
+    else if (`0${d.slice(1)}` !== st.tel.holy) { z.tel = telTvary(`+421${d.slice(1)}`); z.popis.push(`Kontakt: telefón ${z.tel.lok}`); }
+  }
+  if (st.email && email !== st.email) {
+    if (!/^[^\s@"<>]+@[^\s@"<>]+\.[a-z]{2,}$/i.test(email)) z.chyba = 'E‑mail nevyzerá správne (napr. info@barbershop30.sk).';
+    else { z.email = email; z.popis.push(`Kontakt: e‑mail ${email}`); }
+  }
+  if (st.hod && kp.wOd) {
+    const hod = { w: [+kp.wOd.value, +kp.wDo.value], s: [+kp.sOd.value, +kp.sDo.value] };
+    if (hod.w[0] >= hod.w[1] || hod.s[0] >= hod.s[1]) z.chyba = 'Čas „od“ musí byť skôr ako čas „do“.';
+    else if (String(hod.w) !== String(st.hod.w) || String(hod.s) !== String(st.hod.s)) { z.hod = hod; z.popis.push(`Kontakt: hodiny Po–Pi ${hod.w[0]}:00–${hod.w[1]}:00, So ${hod.s[0]}:00–${hod.s[1]}:00`); }
+  }
+  if (z.chyba) z.popis = ['Kontakt: oprav údaje'];
+  return z.popis.length ? z : null;
+}
+let nahladCas = 0;
+function kontaktNahlad() {
+  clearTimeout(nahladCas);
+  nahladCas = setTimeout(() => {
+    const k = kontaktNove();
+    kp.warn.hidden = !(k && k.chyba); kp.warn.textContent = (k && k.chyba) || '';
+    kp.nahlad.replaceChildren();
+    if (k && !k.chyba) {
+      let spolu = 0; const sub = [], nej = [];
+      for (const c of KONTAKT) { const r = kontaktNahrad(c, base.raw[c], k); if (r.n) { spolu += r.n; sub.push(`${c.replace(P, '')} (${r.n})`); } nej.push(...r.nejasne.filter((x) => x.cesta !== F.faqWeb)); }
+      kp.nahlad.append(h('div', { class: 'note' }, h('b', {}, `Zmení sa ${spolu} ${spolu === 1 ? 'miesto' : spolu < 5 ? 'miesta' : 'miest'} v ${sub.length} súboroch.`),
+        h('details', { class: 'tr' }, h('summary', {}, 'Ktoré súbory'), h('p', {}, sub.join(', ')))));
+      if (nej.length) kp.nahlad.append(h('div', { class: 'note' }, h('b', {}, 'Na kontrolu: '), `tieto vety spomínajú čas otvorenia bez dňa, dostanú čas pracovných dní (${k.hod.w[0]}:00). Ulož zmenu a potom ich oprav v záložke Odpovede asistenta alebo daj vedieť tvorcovi webu.`,
+        h('ul', {}, nej.slice(0, 12).map((x) => h('li', {}, `…${x.okolie}…`)))));
+    }
+    obnov();
+  }, 150);
+}
+function kontaktTab() {
+  const s = sec('kontakt'), st = base.kontakt;
+  s.append(h('h1', {}, 'Kontakt a hodiny'), h('p', { class: 'lead' }, 'Telefón, e‑mail a otváracie hodiny sú na webe na mnohých miestach: tlačidlá Zavolať, pätička, živý stav „otvorené“, vizitka, kartička aj odpovede asistenta Barber vo všetkých jazykoch. Tu ich zmeníš naraz všade.'));
+  const pole2 = (el, popis, pozn, orig) => { el.addEventListener('input', () => { el.classList.toggle('changed', norm(el.value) !== orig); kontaktNahlad(); }); return h('div', { class: 'f' }, h('label', {}, popis, pozn ? h('small', {}, pozn) : null), el); };
+  kp = { tel: h('input', { type: 'tel', inputmode: 'tel', autocomplete: 'off' }), email: h('input', { type: 'email', autocomplete: 'off', spellcheck: 'false' }), warn: h('p', { class: 'warn', hidden: true, role: 'status' }), nahlad: h('div') };
+  kp.tel.value = st.tel ? st.tel.lok : ''; kp.email.value = st.email;
+  s.append(st.tel ? pole2(kp.tel, 'Telefón', 'mobil, napr. 0951 267 203', st.tel.lok) : h('p', { class: 'warn' }, 'Telefón sa na webe nenašiel v očakávanom tvare, zmení ho tvorca webu.'),
+    st.email ? pole2(kp.email, 'E‑mail', null, st.email) : null);
+  if (st.hod) {
+    const vyber = (v, od) => { const el = h('select', { 'aria-label': od }); for (let i = 5; i <= 23; i++) el.append(h('option', { value: i }, `${i}:00`)); el.value = String(v); el.addEventListener('change', () => { el.classList.toggle('changed', +el.value !== v); kontaktNahlad(); }); return el; };
+    kp.wOd = vyber(st.hod.w[0], 'Pondelok až piatok od'); kp.wDo = vyber(st.hod.w[1], 'Pondelok až piatok do');
+    kp.sOd = vyber(st.hod.s[0], 'Sobota od'); kp.sDo = vyber(st.hod.s[1], 'Sobota do');
+    s.append(h('h2', {}, 'Otváracie hodiny'),
+      h('div', { class: 'f' }, h('label', {}, 'Pondelok až piatok'), h('div', { class: 'row' }, h('div', { class: 'f' }, h('label', { class: 'mini' }, 'od'), kp.wOd), h('div', { class: 'f' }, h('label', { class: 'mini' }, 'do'), kp.wDo))),
+      h('div', { class: 'f' }, h('label', {}, 'Sobota'), h('div', { class: 'row' }, h('div', { class: 'f' }, h('label', { class: 'mini' }, 'od'), kp.sOd), h('div', { class: 'f' }, h('label', { class: 'mini' }, 'do'), kp.sDo))),
+      h('p', { class: 'kind' }, 'Nedeľa zatvorené. Len celé hodiny. Inú zmenu (nedeľa, prestávka, sviatky) a novú adresu pošli tvorcovi webu.'));
+  } else s.append(h('p', { class: 'warn' }, 'Otváracie hodiny na webe nemajú jednoduché rozloženie (Po–Pi rovnako, sobota, nedeľa zatvorené), zmení ich tvorca webu.'));
+  s.append(kp.warn, kp.nahlad, h('p', { class: 'note' }, h('b', {}, 'Nezabudni: '), 'telefón a hodiny zmeň aj v rezervačnom systéme na barbershop30.sk a na Google (profil firmy).'));
+}
+
 /* ---------------- fotky: zmenšenie v prehliadači na WebP a JPEG ---------------- */
 async function priprauFoto(subor, sirky) {
   const url = URL.createObjectURL(subor);
@@ -437,6 +581,8 @@ function zoznamZmien() {
   for (const p of polia) if (zmenene(p)) z.push(p.label);
   tim.forEach((m) => { if (m.nove && m.p && norm(m.p.meno.el && m.p.meno.el.value)) z.push(`Tím: nový člen ${norm(m.p.meno.el.value)}`); if (m.zmaz) z.push(`Tím: odstrániť ${m.meno}`); if (m.foto && !m.nove) z.push(`Tím: nová fotka ${m.meno}`); });
   gal.forEach((g) => { if (g.foto) z.push(`Galéria: nová fotka ${short(g.alt, 30)}`); });
+  const k = kontaktNove();
+  if (k) z.push(...k.popis);
   return z;
 }
 function obnov() {
@@ -620,11 +766,18 @@ function zostav() {
   for (const f of [F.index, F.rez]) if (zm[f].length) html[f] = nahrad(html[f], zm[f]);
   zostavaTexty = new Set([...rozober(html[F.index]).seg, ...rozober(html[F.rez]).seg].map((x) => norm(x.text)));
   for (const [stary, novy, tr] of presuny) prekladyPresun(i18n, stary, novy, tr);
-  for (const f of [F.index, F.rez]) if (html[f] !== base.raw[f]) subory[f] = { text: html[f] };
-  for (const l of LANGS) { const s = JSON.stringify(i18n[l]); if (s !== JSON.stringify(base.i18n[l])) subory[`${P}assets/i18n/${l}.json`] = { text: s }; }
-  if (md !== base.raw[F.md]) subory[F.md] = { text: md };
-  if (faqZmena) { subory[F.faq] = { text: JSON.stringify(faq, null, 1) + '\n' }; subory[F.faqWeb] = { text: JSON.stringify(faq) + '\n' }; }
-  return { subory, nove, faq };
+  const out = { [F.index]: html[F.index], [F.rez]: html[F.rez], [F.md]: md };
+  for (const l of LANGS) { const s = JSON.stringify(i18n[l]); out[`${P}assets/i18n/${l}.json`] = s !== JSON.stringify(base.i18n[l]) ? s : base.raw[`${P}assets/i18n/${l}.json`]; }
+  if (faqZmena) { out[F.faq] = JSON.stringify(faq, null, 1) + '\n'; out[F.faqWeb] = JSON.stringify(faq) + '\n'; }
+  // kontakt a hodiny: až nakoniec, v hotových textoch všetkých súborov (aj v práve zmenených)
+  const k = kontaktNove();
+  if (k && k.chyba) throw Object.assign(new Error(k.chyba), { user: true });
+  if (k) {
+    for (const c of KONTAKT) if (!(c in out)) out[c] = base.raw[c];
+    for (const c of KONTAKT) out[c] = kontaktNahrad(c, out[c], k).text;
+  }
+  for (const [c, t] of Object.entries(out)) if (t !== base.raw[c]) subory[c] = { text: t };
+  return { subory, nove, faq: k ? JSON.parse(out[F.faq]) : faq };
 }
 
 /* tím v znalostiach asistenta a v odpovediach: zoznam mien, počet a odpovede o jednotlivých členoch */
@@ -637,7 +790,7 @@ function timDoZnalosti(faq, zmenMd) {
   const adrian = (m) => (m === 'Adrián' ? ' (v rezervačnom systéme Adrian)' : '');
   zmenMd((md) => md.replace(/^Barberi: .*$/m, `Barberi: ${barberi.map((m) => m + adrian(m)).join(', ')}.${barberky.length ? ` ${barberky.length > 1 ? 'Barberky' : 'Barberka'}: ${barberky.join(', ')}.` : ''}`));
   const REZ = 'https://www.barbershop30.sk/rezervacia';
-  const TEL = 'Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.';
+  const TEL = (faq.otazky.map((o) => (o.a.match(/Zavolaj nám na [^.]*?telefón vždy zdvihneme\./) || [])[0]).find(Boolean)) || `Zavolaj nám na ${base.kontakt.tel ? base.kontakt.tel.lok : ''}.`;
   const nastav = (id, a) => { const o = faq.otazky.find((x) => x.id === id); if (o) o.a = a; };
   nastav('tim', `V tíme sú barberi ${zoznam(barberi)}${barberky.length ? ` a ${barberky.length > 1 ? 'barberky' : 'barberka'} ${zoznam(barberky)}` : ''}. Svojho človeka si vyberieš v rezervácii.`);
   nastav('kolko-barberov', `Na webe je predstavených ${clenovia.length} ľudí: ${barberi.length} ${barberi.length === 1 ? 'barber' : barberi.length < 5 ? 'barberi' : 'barberov'}${barberky.length ? ` a ${barberky.length === 1 ? 'barberka ' + barberky[0] : barberky.length + ' barberky'}` : ''}. Strihá sa v 8 kreslách v troch miestnostiach.`);

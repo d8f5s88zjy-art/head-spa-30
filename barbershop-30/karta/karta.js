@@ -8,6 +8,8 @@ import { qrSvg } from './qr.js';
 
 const D = document.documentElement.dataset;
 const API = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && D.apiLokal) || D.api || '../api/';
+// ochrana údajov je pri API (spoločná pre obe prevádzky), aj keď je kartička na webe Barbershopu
+const OCHRANA = new URL('../ochrana-udajov.html', new URL(API, location.href)).href;
 const P = D.prevadzka || '';                       // prevádzka stránky (web Barbershopu); bez nej len kartička z odkazu
 const NAZOV = { barbershop: 'Barbershop 30', headspa: 'HEAD SPA 30' }[P] || '';
 const $obsah = document.getElementById('obsah');
@@ -86,7 +88,7 @@ function zalozenie() {
     el('label', { class: 'prepinac' }, chcem, el('span', {}, 'Áno, chcem vernostnú kartičku. Údaje použijete len na ňu.')),
     el('label', { class: 'prepinac' }, spravy, el('span', {}, 'Chcem dostávať správy o akciách. Môžem to kedykoľvek vypnúť.')),
     pasca, el('div', { class: 'tlacidla' }, tl), sprava,
-    el('p', { class: 'pozn' }, el('a', { href: new URL('../ochrana-udajov.html', new URL(API, location.href)).href, target: '_blank', rel: 'noopener' }, 'Ochrana údajov')));
+    el('p', { class: 'pozn' }, el('a', { href: OCHRANA, target: '_blank', rel: 'noopener' }, 'Ochrana údajov')));
   const [telText, telHref] = TELEFON[P] || ['', ''];
   const mimo = () => box.replaceChildren(el('h2', { id: 'zaloz-h' }, 'Kartičky práve spúšťame'),
     el('p', { class: 'pozn' }, 'Kartičku ti zatiaľ založíme na recepcii.' + (telText ? ` Zavolaj nám na ${telText}.` : '')),
@@ -186,7 +188,7 @@ function vykresli(d, zPamate) {
       zPamate ? null : zrusenie(d)),
     el('div', { class: 'pata' },
       el('span', {}, d.nazov, ' · ', el('a', { href: `tel:${d.tel}` }, d.tel_text)),
-      el('span', {}, el('a', { href: d.web, rel: 'noopener' }, 'Webová stránka'), ' · ', el('a', { href: '../ochrana-udajov.html' }, 'Ochrana osobných údajov'))),
+      el('span', {}, el('a', { href: d.web, rel: 'noopener' }, 'Webová stránka'), ' · ', el('a', { href: OCHRANA }, 'Ochrana osobných údajov'))),
   ];
   $obsah.replaceChildren(...casti.filter(Boolean));
   $obsah.setAttribute('aria-busy', 'false');

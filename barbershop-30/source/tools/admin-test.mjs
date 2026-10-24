@@ -32,7 +32,10 @@ let head = 'c0', blobN = 0, treeN = 0, commitN = 0;
 const log = [];
 const precitaj = (c) => fs.readFileSync(path.join(ROOT, c));
 const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
-const CESTY = ['barbershop-30/index.html', 'barbershop-30/rezervacia.html', 'asistent/znalosti/barbershop.md', 'asistent/znalosti/barbershop-otazky.json', 'barbershop-30/assets/asistent-otazky.json', ...LANGS.map((l) => `barbershop-30/assets/i18n/${l}.json`)];
+const KONTAKT = ['barbershop-30/assets/app.js', 'barbershop-30/assets/asistent.js', 'barbershop-30/assets/objednavka.js', 'barbershop-30/assets/asistent-ukazka.js', 'barbershop-30/assets/karty.js',
+  'barbershop-30/assets/barbershop30.vcf', 'barbershop-30/karta/index.html', 'barbershop-30/karta/karta.js', 'vernost/karta/karta.js', 'vernost/lib/jadro.php', 'vernost/ochrana-udajov.html',
+  'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md'];
+const CESTY = ['barbershop-30/index.html', 'barbershop-30/rezervacia.html', 'asistent/znalosti/barbershop.md', 'asistent/znalosti/barbershop-otazky.json', 'barbershop-30/assets/asistent-otazky.json', ...LANGS.map((l) => `barbershop-30/assets/i18n/${l}.json`), ...KONTAKT];
 const stromy = new Map();
 stromy.set('t0', new Map(CESTY.map((c) => [c, precitaj(c)])));
 commits.set('c0', { tree: 't0', parents: [], message: 'začiatok' });
@@ -122,7 +125,7 @@ await page.waitForSelector('#app:not([hidden]) .tab[data-tab="texty"] .blk');
 ok(await page.isHidden('#login'), 'správny kľúč: prihlásený, texty načítané');
 ok(await page.evaluate(() => localStorage.getItem('b30.admin')) === 'github_pat_dobry', 'kľúč zapamätaný v prehliadači');
 const taby = await page.$$eval('#tabs button', (b) => b.map((x) => x.textContent));
-ok(taby.join('|') === 'Texty|Cenník|Tím|Galéria|Odpovede asistenta|Kartička', 'záložky', taby.join(', '));
+ok(taby.join('|') === 'Texty|Cenník|Tím|Galéria|Kontakt a hodiny|Odpovede asistenta|Kartička', 'záložky', taby.join(', '));
 await page.screenshot({ path: path.join(OUT, 'admin-texty-390.png') });
 
 const info = await page.evaluate(() => ({
@@ -308,6 +311,69 @@ ok(faq3.otazky.some((o) => o.id === 'tim-testovaci') && /Testovací/.test(faq3.o
 ok(/Testovací/.test(subor('asistent/znalosti/barbershop.md').toString().match(/^Barberi: .*$/m)[0]), 'znalosti: zoznam barberov');
 ok(JSON.parse(subor('barbershop-30/assets/i18n/en.json'))['Testovací'] === 'Testovací', 'meno v prekladoch');
 
+/* ---------- kontakt a hodiny ---------- */
+console.log('\nkontakt a hodiny');
+await page.click('#tabs button[data-tab="kontakt"]');
+const kon = page.locator('.tab[data-tab="kontakt"]');
+ok(await kon.locator('input[type=tel]').inputValue() === '0951 267 203' && await kon.locator('input[type=email]').inputValue() === 'info@barbershop30.sk', 'kontakt načítaný z webu');
+const selecty = kon.locator('select');
+ok((await selecty.evaluateAll((s) => s.map((x) => x.value))).join(',') === '9,19,9,14', 'hodiny načítané z app.js (Po–Pi 9–19, So 9–14)');
+await kon.locator('input[type=tel]').fill('0905 12 34 5');
+await page.waitForFunction(() => /mobil v tvare/.test(document.querySelector('.tab[data-tab="kontakt"] .warn[role=status]').textContent));
+ok(true, 'zlý telefón: upozornenie, nič sa nemení');
+await kon.locator('input[type=tel]').fill('0905 123 456');
+await kon.locator('input[type=email]').fill('rezervacie@barbershop30.sk');
+await selecty.nth(1).selectOption('20');
+await selecty.nth(2).selectOption('10');
+await page.waitForFunction(() => /Zmení sa \d+/.test(document.querySelector('.tab[data-tab="kontakt"]').textContent));
+const nahlad = await kon.textContent();
+ok(/Zmení sa \d+ miest v \d+ súboroch/.test(nahlad), 'náhľad: počet miest a súborov', (nahlad.match(/Zmení sa [^.]+\./) || [''])[0]);
+ok(/Na kontrolu/.test(nahlad) && /otvárame o 9:00/.test(nahlad), 'náhľad: vety s časom otvorenia bez dňa na kontrolu');
+await page.screenshot({ path: path.join(OUT, 'admin-kontakt-390.png') });
+ok((await page.textContent('#zoznam')).includes('Kontakt: telefón 0905 123 456'), 'zoznam zmien: telefón');
+await page.evaluate(() => { document.querySelector('#saveMsg').textContent = ''; });
+await page.click('#ulozit');
+await page.waitForFunction(() => /^(Uložené|Neuložené)/.test(document.querySelector('#saveMsg').textContent), null, { timeout: 30000 });
+ok(/^Uložené/.test(await page.textContent('#saveMsg')), 'kontakt a hodiny uložené', await page.textContent('#saveMsg'));
+const kc = commits.get(head);
+console.log('     zmenené: ' + kc.zmenene.map((c) => c.replace('barbershop-30/', '')).join(', '));
+const vsetky = [...CESTY];
+const obsahy = Object.fromEntries(vsetky.map((c) => [c, subor(c).toString()]));
+const stare = vsetky.filter((c) => /0951[ \u00a0]267[ \u00a0]203|\+421 ?951 ?267 ?203|0951267203|info@barbershop30\.sk/.test(obsahy[c]));
+ok(stare.length === 0, 'starý telefón a e‑mail nikde', stare.join(', '));
+ok(obsahy['barbershop-30/index.html'].includes('href="tel:+421905123456"') && obsahy['barbershop-30/index.html'].includes('"telephone": "+421905123456"'), 'index.html: odkazy tel: a údaje pre Google');
+ok(obsahy['barbershop-30/assets/barbershop30.vcf'].includes('TEL;TYPE=WORK,VOICE:+421 905 123 456'), 'vizitka: telefón');
+ok(obsahy['vernost/lib/jadro.php'].includes("'tel' => '+421905123456', 'tel_text' => '0905 123 456'") && obsahy['vernost/lib/jadro.php'].includes('0911 153 136'), 'kartička na serveri: telefón Barbershopu nový, HEAD SPA nezmenený');
+ok(obsahy['vernost/karta/karta.js'] === obsahy['barbershop-30/karta/karta.js'], 'kópie karta.js ostali rovnaké');
+ok(/const HOURS = \{ 1: \[9, 20\], 2: \[9, 20\], 3: \[9, 20\], 4: \[9, 20\], 5: \[9, 20\], 6: \[10, 14\], 0: null \};/.test(obsahy['barbershop-30/assets/app.js']), 'app.js: hodiny pre živý stav');
+const ix = obsahy['barbershop-30/index.html'];
+ok(ix.includes('Po–Pi 9:00–20:00, So 10:00–14:00') && ix.includes('<dd>9:00–20:00</dd>') && ix.includes('<dd>10:00–14:00</dd>') && ix.includes('od 9:00 do 20:00'), 'index.html: hodiny v texte');
+ok(ix.includes('"opens": "09:00", "closes": "20:00"') && ix.includes('"opens": "10:00", "closes": "14:00"'), 'index.html: hodiny pre Google');
+const en2 = JSON.parse(obsahy['barbershop-30/assets/i18n/en.json']);
+ok(en2['Po–Pi 9:00–20:00'] === 'Mon–Fri 9:00–20:00' && en2['So 10:00–14:00'] === 'Sat 10:00–14:00' && !('Po–Pi 9:00–19:00' in en2), 'preklady: kľúč aj preklad s novými hodinami');
+ok(/9:00 és 20:00/.test(obsahy['barbershop-30/assets/i18n/hu.json']) && /von 9:00 bis 20:00/.test(obsahy['barbershop-30/assets/i18n/de.json']), 'preklady: maďarčina a nemčina');
+const faqK = JSON.parse(obsahy['asistent/znalosti/barbershop-otazky.json']);
+const faqT = JSON.stringify(faqK.otazky);
+ok(!/\b19:00/.test(faqT) && /od 9:00 do 20:00/.test(faqT) && /sobota 10:00 až 14:00|sobotu (od )?10:00/.test(faqT + obsahy['asistent/znalosti/barbershop.md']), 'odpovede asistenta: nové hodiny');
+ok(JSON.stringify(JSON.parse(obsahy['barbershop-30/assets/asistent-otazky.json']).otazky) === faqT, 'kópia odpovedí pre web zhodná');
+ok(/pondelok až piatok 9:00 až 20:00, sobota 10:00 až 14:00/.test(obsahy['asistent/znalosti/barbershop.md']), 'znalosti asistenta: hodiny');
+ok(obsahy['asistent/lib/jadro.php'].includes('od 9:00 do 20:00') && obsahy['asistent/lib/jadro.php'].includes('o 10:00 a 14:00'), 'pokyny asistenta: hodiny nové, príklad termínov nezmenený');
+ok(obsahy['CLAUDE.md'].includes('v pracovné dni od 9:00 do 20:00') && obsahy['CLAUDE.md'].includes('0911 153 136'), 'CLAUDE.md: pravidlo s novými hodinami');
+ok(/sobota do 14:00/.test(obsahy['barbershop-30/assets/objednavka.js']) && /'09:00', '09:40'/.test(obsahy['barbershop-30/assets/objednavka.js']), 'ukážka objednávky: termíny nezmenené');
+const { execFileSync } = await import('node:child_process');
+for (const c of ['vernost/lib/jadro.php', 'asistent/lib/jadro.php', 'asistent/api.php']) {
+  const f = path.join(OUT, '..', `.php-${path.basename(c)}`); fs.writeFileSync(f, obsahy[c]);
+  let okPhp = true; try { execFileSync('php', ['-l', f], { stdio: 'pipe' }); } catch (e) { okPhp = false; } fs.rmSync(f);
+  ok(okPhp, `PHP bez chyby syntaxe: ${c}`);
+}
+for (const c of KONTAKT.filter((x) => x.endsWith('.js'))) {
+  const f = path.join(OUT, '..', `.js-${path.basename(c)}.mjs`); fs.writeFileSync(f, obsahy[c]);
+  let okJs = true; try { execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' }); } catch (e) { okJs = !/SyntaxError/.test(String(e.stderr)); } fs.rmSync(f);
+  ok(okJs, `JS bez chyby syntaxe: ${c}`);
+}
+await page.click('#tabs button[data-tab="kontakt"]');
+ok(await page.locator('.tab[data-tab="kontakt"] input[type=tel]').inputValue() === '0905 123 456', 'po uložení načítaný nový telefón');
+
 /* ---------- web po zmenách ---------- */
 console.log('\nweb po zmenách');
 const TMP = fs.mkdtempSync(path.join(SITE, '.admin-test-'));
@@ -330,6 +396,13 @@ try {
   await web.waitForTimeout(800);
   const en = await web.evaluate(() => document.body.innerText);
   ok(!en.includes(novyText), 'angličtina: zmenený text je preložený (nie slovensky)');
+  ok(en.includes('Mon–Fri 9:00–20:00') && !/9:00–19:00/.test(en), 'angličtina: nové hodiny preložené');
+  ok(await web.evaluate(() => [...document.querySelectorAll('a[href^="tel:"]')].every((a) => a.getAttribute('href') === 'tel:+421905123456')), 'web: všetky tlačidlá Zavolať na nové číslo');
+  const tab = await web.evaluate(() => { const f = document.querySelector('[data-flap] .flap-cells'); return f ? f.textContent : ''; });
+  // dnešný deň v Nitre: Po–Pi 9–20, So 10–14, Ne zatvorené
+  const dnes = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short' }).format(new Date());
+  const cakam = dnes === 'Sat' ? /10:00\s*–\s*14:00/ : dnes === 'Sun' ? /CLOSED|zatvoren/i : /9:00\s*–\s*20:00/;
+  ok(cakam.test(tab), `tabuľa hodín: dnes (${dnes}) podľa nových hodín`, tab);
   await web.close(); s2.server.close();
 } finally { fs.rmSync(TMP, { recursive: true, force: true }); }
 

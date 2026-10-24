@@ -31,7 +31,9 @@ const TEL = new Set(['0951 267 203', '+421 951 267 203']);
 const ODKAZY = new Set(['https://www.barbershop30.sk/rezervacia', 'https://booqme.app/sk/rezervacia/barbershop30',
   'https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra', 'https://www.google.com/maps?cid=18132360254733427623',
   'https://www.instagram.com/barbershop30_nitra/', 'https://www.facebook.com/barbershop30nitra/']);
-const HODINY = new Set(['9:00', '14:00', '19:00']);
+// otváracie hodiny z app.js (rovnaké ako živý stav „otvorené“; admin ich mení v záložke Kontakt a hodiny)
+const HOURS = fs.readFileSync(path.join(SITE, 'assets', 'app.js'), 'utf8').match(/const HOURS = \{([^}]*)\};/)[1];
+const HODINY = new Set([...HOURS.matchAll(/\[(\d+), (\d+)\]/g)].flatMap((m) => [`${m[1]}:00`, `${m[2]}:00`]));
 
 if (ot.length < 250) chyba(`otázok je ${ot.length}, treba aspoň 250`);
 const ids = new Set();

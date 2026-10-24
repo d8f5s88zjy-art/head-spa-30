@@ -114,8 +114,11 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   sa presunie, starý ostane, kým ho niečo používa), znalosti asistenta `../asistent/znalosti/barbershop.md`,
   časté otázky `barbershop-otazky.json` a ich kópiu pre web. Odpovede so starou cenou dá na kontrolu (jedinečnú
   cenu prepíše sám) a uloženie zastaví, kým niektorá odpoveď hovorí cenu, ktorá v cenníku nie je. Fotky zmenší
-  v prehliadači (WebP a JPEG, tím 480/820, galéria 640/1080/1600). Telefón, hodiny a adresu admin nemení (sú aj
-  v odkazoch tel:, živom stave a asistentovi), tie mení tvorca webu. Test: `node source/tools/admin-test.mjs`
+  v prehliadači (WebP a JPEG, tím 480/820, galéria 640/1080/1600). Záložka Kontakt a hodiny zmení telefón (mobil),
+  e‑mail a otváracie hodiny (Po–Pi a sobota, celé hodiny) naraz vo všetkých súboroch zoznamu `KONTAKT` v `admin.js`
+  (web, preklady, app.js HOURS, asistent aj jeho server, kartička, vizitka, ukážky, pravidlo v CLAUDE.md); pred
+  uložením ukáže počet miest a vety s časom otvorenia bez dňa na kontrolu. Adresu a nedeľu mení tvorca webu.
+  `source/tools/otazky.mjs` berie povolené časy z app.js. Test: `node source/tools/admin-test.mjs`
   (falošný GitHub v pamäti, nič nejde von). Funguje až po zverejnení webu v `main` (číta súbory odtiaľ).
 
 ## Nasadenie
