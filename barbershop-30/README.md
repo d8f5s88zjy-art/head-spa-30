@@ -80,6 +80,11 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   snímkou filmu). Galéria ukáže celé fotky v ich pomere strán (na šírku cez celú šírku, tri na výšku vedľa seba),
   tím celé portréty 820 × 694. Menu je panel podľa obsahu so stmavenou stránkou (ťuk mimo zavrie), objednávka panel
   zdola 82 %, asistent 72 %. `stills.py` dáva výrezy `-m` len prológu, ostatným `sizes` 170vw.
+- **Vychytávky (2026‑10‑25, `assets/karty.js` a `karty.css`, `assets/manifest.webmanifest`)**: pri vizitke Pošli
+  kamarátovi (zdieľanie telefónu, inak kópia kanonickej adresy) a Pripomeň si ďalší strih (o 3, 4 alebo 6 týždňov
+  o 10:00, nedeľa sa posunie na pondelok; súbor .ics podľa RFC 5545 alebo Google Kalendár; udalosť hovorí, že je to
+  pripomienka, nie rezervácia, s odkazom na rezerváciu a telefónom). Ikona na plochu telefónu: manifest, ikony
+  `assets/img/ikona/` (`source/tools/ikony.mjs`, motív favicon) a apple-touch-icon. Test `source/tools/vychytavky-test.mjs`.
 - **Telefón: opravy z kontroly (2026‑10‑25, style.css P18, app.js `mqPas`, film.js strih za pásom)**: scéna za
   pásom (služby, galéria, predná sála) začína na telefóne na výšku o pás fotky skôr, jej karta je vidieť už pri
   nábehu (ide hneď za pásom) a karta pred pásom zhasne až pod pásom; pod fotkou tak neostáva prázdny atrament.
@@ -162,6 +167,7 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
   v gite – stiahni ho do `source/tools/depth/model.onnx` alebo daj cestu v `DEPTH_MODEL`).
 - `stills.py` – z `assets/img/film/film.json` prepíše zálohy a kotvy záberov v `index.html`.
 - `build_images.py` – fotky galérie, tímu a videopostery (`assets/img/manifest.json`).
+- `vychytavky-test.mjs` – pripomienka strihu (.ics, Google Kalendár), Pošli kamarátovi, manifest a ikony; `ikony.mjs` – ikony na plochu.
 - `en-stranka.mjs` – anglická stránka `en/index.html` zo slovenskej (pri nasadení; `--check` overí kópiu v repozitári);
   `en-test.mjs` – anglická stránka a SEO úvodu (titulok, popis, H1, časté otázky, cesty, prepínač jazyka).
 - `i18n-test.mjs` – jazykové verzie: každý jazyk bez nepreložených textov, tabuľa hodín, Booqme, prepínač na počítači aj v menu telefónu, návrat do slovenčiny.

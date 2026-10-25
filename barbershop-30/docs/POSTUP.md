@@ -59,6 +59,9 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25 (hotové, CHECKS 30): vychytávky pri vizitke: Pripomeň si ďalší strih (.ics alebo Google Kalendár) a Pošli
+  kamarátovi; ikona na plochu telefónu (manifest, ikony). Čaká sa na skúšku na skutočnom iPhone a Androide.
+
 - 2026‑10‑25 (hotové, CHECKS 29): overenie rezervácie bez odoslania. Odkazy, 15 služieb (ceny a trvania), tím a ich
   formulár až po osobné údaje sedia. Opravená chyba servera asistenta pri čítaní kalendára (tvar barbera a dátumu),
   ktorá by po zapnutí kalendára ukazovala chybné voľné časy; testy ju strážia. Skúšobnú objednávku naostro len so

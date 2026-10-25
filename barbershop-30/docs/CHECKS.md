@@ -615,3 +615,22 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   rezervovaný“, makeOrder sa nikdy neodošle), app-smoke všetko OK.
 - Neoverené: samotné odoslanie objednávky (urobí sa len so súhlasom prevádzky, napr. skúšobný termín, ktorý
   recepcia hneď zruší).
+
+## 30. Vychytávky: pripomienka strihu, Pošli kamarátovi, ikona na plochu (2026‑10‑25)
+
+- Zadávateľ: „pridaj na stránku vychytávky, aby bola efektívna“. Vybrané len to, čo vedie k objednávke a nepotrebuje
+  nové údaje: návrat stálych zákazníkov (pripomienka), odporúčanie (zdieľanie), rýchly návrat na web (ikona).
+  Poukážky, „bez objednania“, produkty a detská stolička čakajú na potvrdenie prevádzky. Oznam „online aj teraz“
+  v úvode vynechaný (pod ním je tlačidlo Objednať sa a na 360 px by sa riadok zalomil).
+- Pripomienka: voľba 3, 4 (predvolené) alebo 6 týždňov, dátum vypísaný („Pripomienka pondelok 23. novembra
+  o 10:00“), nedeľa sa posunie na pondelok. Súbor .ics: CRLF, riadky do 75 bajtov, UID, DTSTAMP, upozornenie
+  v začiatku, text „Objednaj sa na strih · Barbershop 30“ a „Pripomienka, nie rezervácia“, odkaz na rezerváciu,
+  telefón (súbor je v zozname KONTAKT adminu) a adresa. Google Kalendár: šablóna s časom a pásmom Europe/Bratislava.
+  Texty v 8 jazykoch, udalosť v jazyku stránky.
+- Pošli kamarátovi: zdieľanie telefónu s kanonickou adresou (bez parametrov), inak kópia odkazu a správa
+  „Odkaz je skopírovaný“; bez oboch sa tlačidlo neukáže.
+- Ikona na plochu: `assets/manifest.webmanifest` (Barbershop 30, začiatok na webe, minimal-ui), ikony 192, 512
+  a maskovateľná 512, apple-touch-icon 180 (motív favicon, písmo Fraunces) na index, rezervácii aj en/.
+- Overené (Playwright 360/390/430/1440): `vychytavky-test.mjs` všetko OK (stiahnutie súboru, zmena voľby, angličtina,
+  schránka, bez pretekania, ťukacie plochy aspoň 40 px), snímky `docs/screenshots/vychytavky/`.
+- Neoverené: ako .ics otvorí skutočný iPhone (Safari) a Android, a pridanie ikony na plochu na skutočnom telefóne.
