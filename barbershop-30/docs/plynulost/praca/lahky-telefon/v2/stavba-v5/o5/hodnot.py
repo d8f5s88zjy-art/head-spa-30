@@ -23,7 +23,7 @@ def zarad(r):
         if i in ok or not cena(r): return 'OK' if (i in ok or e == 'bez-ceny') else 'ODCHYLKA'
         return 'CHYBA'
     if t == 'odpoved': return 'OK' if i in ok else ('CHYBA' if cena(r) else 'ODCHYLKA')
-    if t == 'vyber': return 'OK-VOLBA' if set(r['kand'][:2]) & ok else 'VOLBA-MIMO'
+    if t == 'vyber': return 'OK-VOLBA' if set(r['kand'][:2]) & ok or (i == 'trvanie' and 'trvanie' in ok) else 'VOLBA-MIMO'  # voľby trvania (id trvanie): ťuknutie dá trvanie služby
     return 'OK' if 'odovzdanie' in ok else 'ODOVZDANIE'
 tot = collections.Counter(); leg = collections.Counter()
 for f in sys.argv[1:]:

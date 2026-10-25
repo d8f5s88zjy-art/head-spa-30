@@ -93,7 +93,9 @@ def jazyk(l, D):
         nevieme.append(q)
     vz = {k: stop(D[k]) for k in ('vypln', 'zdvor', 'spoj') if k in D}  # výplňové a zdvorilé slová (oprava 3, pravidlá 2 a 5)
     return {'jazyk': l, 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), **vz, 'kontakt': kontakt,
-            'panel': panel, 'fallback': D['fallback'], 'odovzdanie': D['odovzdanie'], 'polozky': polozky, 'nevieme': nevieme}
+            'panel': panel, 'fallback': D['fallback'], 'odovzdanie': D['odovzdanie'],
+            # výrez cenníka (oprava 5, P3): nadpis skupiny zo slovníka stránky, riadky sú odkazy na položky (id alebo id:úryvok)
+            'cennik': [[tr(g[0])] + g[1:] for g in SK['cennik']], 'polozky': polozky, 'nevieme': nevieme}
 
 
 def zapis(path, d):
