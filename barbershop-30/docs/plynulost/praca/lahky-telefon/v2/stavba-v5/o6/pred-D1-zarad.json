@@ -1,0 +1,3747 @@
+[
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, do koľkej máte dnes otvorené?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 11.692,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "mate otvorene aj v nedelu?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 2.069,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "V sobotu ráno o deviatej už ste tam?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.244,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Prepáčte, som dôchodca a na internet veľmi nechodím, vnuk mi to tu otvoril. Kedy máte otvorené cez týždeň? Chcel by som prísť skoro ráno.",
+"ocakavane": "hodiny",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 3.92,
+"text": "Služby mimo podniku na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "otvaracie hodiny pls",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.957,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "do kolkej ste v sobotu",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.781,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ahojte, v sobotu mám promócie na UKF a potrebujem byť fresh. Ste v sobotu otvorení a do koľkej? Vďaka!",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 3.085,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte otvorené aj na sviatok 1. novembra?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "sviatky",
+"ms": 0.897,
+"text": "hodiny vo sviatky",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Kde presne sídlite? Ideme z Bratislavy.",
+"ocakavane": "adresa",
+"typ": "fallback",
+"id": null,
+"ms": 1.816,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "aka je adresa",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.324,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Na ktorej ulici ste? Mostná, ale aké číslo?",
+"ocakavane": "adresa",
+"typ": "vyber",
+"id": "adresa",
+"ms": 1.102,
+"kand": [
+"adresa",
+"telefon"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako sa k vám dostanem? Dá sa to zadať do navigácie?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 1.091,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Dajte mi prosím vaše telefónne číslo, radšej zavolám.",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 1.918,
+"text": "0951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "cislo na vas?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.612,
+"text": "0951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Na aké číslo môžem volať? Nemám smartfón, píše za mňa dcéra.",
+"ocakavane": "telefon",
+"typ": "nevieme",
+"id": "damske",
+"ms": 6.181,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte e-mail? Chcem sa niečo opýtať písomne.",
+"ocakavane": "email",
+"typ": "odpoved",
+"id": "email",
+"ms": 1.607,
+"text": "info@barbershop30.sk",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "mailova adresa",
+"ocakavane": "email",
+"typ": "vyber",
+"id": "adresa",
+"ms": 0.693,
+"kand": [
+"adresa",
+"email"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako sa u vás objednám na termín?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 1.135,
+"text": "Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termín sprav online, jednoducho cez náš rezervačný systém.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobry den, chcel by som sa objednat na strih, ako na to?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 0.987,
+"text": "Svojho človeka si vyberieš v rezervácii.",
+"trieda": "CHYBA-KANDIDAT",
+"podtrieda": "hola-sluzba-ina"
+},
+{
+"jazyk": "sk",
+"otazka": "Nemám internet, dá sa objednať aj telefonicky?",
+"ocakavane": "rezervacia",
+"typ": "vyber",
+"id": "online",
+"ms": 1.354,
+"kand": [
+"online"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Dá sa objednať aj o polnoci cez net? Cez deň nestíham, som v robote.",
+"ocakavane": "online",
+"typ": "nevieme",
+"id": "storno",
+"ms": 1.479,
+"text": "zmenu alebo zrušenie termínu",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "funguje online rezervacia aj cez vikend?",
+"ocakavane": "online",
+"typ": "vyber",
+"id": "online",
+"ms": 1.651,
+"kand": [
+"online"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "mozem si termin spravit online kedykolvek?",
+"ocakavane": "online",
+"typ": "vyber",
+"id": "online",
+"ms": 1.951,
+"kand": [
+"online"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí pánsky strih?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.073,
+"text": "Pánsky strih 18 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"*Pánsky strih 40 min 18 €",
+"Pánsky strih a úprava brady 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko za strih",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.767,
+"text": "Pánsky strih 18 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"*Pánsky strih 40 min 18 €",
+"Pánsky strih a úprava brady 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ahoj, som študent na UKF, aká je cena za obyčajný strih s fadeom?",
+"ocakavane": "cena-strih",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 2.228,
+"kand": [
+"cena-strih",
+"deti",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Čau, koľko dám za fade?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.582,
+"text": "Pánsky strih 18 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"*Pánsky strih 40 min 18 €",
+"Pánsky strih a úprava brady 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji pansky strij",
+"ocakavane": "cena-strih",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 1.784,
+"kand": [
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, volám sa Jozef, mám 68 rokov a bývam na Klokočine. Doteraz ma strihala manželka, ale už jej trasú ruky. Chcel by som vedieť, koľko u vás stojí obyčajný pánsky strih, nič moderné. Ďakujem pekne.",
+"ocakavane": "cena-strih",
+"typ": "fallback",
+"id": null,
+"ms": 0.429,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí strih aj s bradou spolu?",
+"ocakavane": "cena-strih-brada",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 1.362,
+"text": "Pánsky strih a úprava brady 28 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Pánsky strih 40 min 18 €",
+"*Pánsky strih a úprava brady 60 min 28 €",
+"Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "strih + brada cena?",
+"ocakavane": "cena-strih-brada",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 0.798,
+"text": "Pánsky strih a úprava brady 28 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Pánsky strih 40 min 18 €",
+"*Pánsky strih a úprava brady 60 min 28 €",
+"Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Idem v sobotu na svadbu kamaráta, chcem sa dať ostrihať a upraviť bradu naraz. Koľko to vyjde?",
+"ocakavane": "cena-strih-brada",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 5.86,
+"text": "Služby mimo podniku na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí len úprava brady?",
+"ocakavane": "cena-brada",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 2.361,
+"text": "Úprava brady 15 €",
+"vyrez": {
+"skupina": "Brada a holenie",
+"riadky": [
+"*Úprava brady 20 min 15 €",
+"Holenie do hladka Hot Towel 30 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji zastrihnutie brady bez strihu",
+"ocakavane": "cena-brada",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 11.315,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Mám dlhšie vlasy, asi 15 cm. Platí sa za to viac?",
+"ocakavane": "cena-dlhe",
+"typ": "vyber",
+"id": "cena-dlhe",
+"ms": 2.786,
+"kand": [
+"cena-dlhe"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Kolko stoji strih ked mam vlasy nad 10 cm?",
+"ocakavane": "cena-dlhe",
+"typ": "odpoved",
+"id": "cena-dlhe",
+"ms": 1.362,
+"text": "Pánsky strih – dĺžka vlasov nad 10 cm 22 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Pánsky strih a úprava brady 60 min 28 €",
+"*Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €",
+"Strih pre malých gentlemanov 45 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Nosím vlasy po plecia a chcem ich len zastrihnúť, koľko to bude?",
+"ocakavane": "cena-dlhe",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 4.502,
+"kand": [
+"cena-brada",
+"farbenie-vlasov"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Strihate aj deti?",
+"ocakavane": "deti",
+"typ": "odpoved",
+"id": "deti",
+"ms": 0.046,
+"text": "Strih pre malých gentlemanov 15 € / Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €",
+"*Strih pre malých gentlemanov 45 min 15 €",
+"Oholenie hlavy 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí strih pre 6-ročného chlapca?",
+"ocakavane": "deti",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.424,
+"text": "Strih pre malých gentlemanov 15 € / Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €",
+"*Strih pre malých gentlemanov 45 min 15 €",
+"Oholenie hlavy 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, mám syna, má 8 rokov a chce fade ako futbalisti. Robíte aj deti?",
+"ocakavane": "deti",
+"typ": "vyber",
+"id": "deti",
+"ms": 1.786,
+"kand": [
+"deti"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, synovi bude 9, chce na narodeniny fade s bleskom. Koľko stojí detský strih?",
+"ocakavane": "deti",
+"typ": "vyber",
+"id": "deti",
+"ms": 2.869,
+"kand": [
+"deti",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Môj syn má 12 rokov. Platí preňho ešte detský strih?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "vek",
+"ms": 1.363,
+"text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Ja by som chcel strih a môj 12-ročný syn tiež. Koľko zaplatíme spolu?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "vek",
+"ms": 1.684,
+"text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí strih pre 12-ročného?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "vek",
+"ms": 1.124,
+"text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Strihate aj dievčatá? Dcéra má 7.",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.856,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte holenie britvou do hladka?",
+"ocakavane": "holenie",
+"typ": "odpoved",
+"id": "holenie",
+"ms": 0.908,
+"text": "Holenie do hladka Hot Towel 15 €",
+"vyrez": {
+"skupina": "Brada a holenie",
+"riadky": [
+"Úprava brady 20 min 15 €",
+"*Holenie do hladka Hot Towel 30 min 15 €",
+"Farbenie brady 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji hot towel holenie",
+"ocakavane": "holenie",
+"typ": "odpoved",
+"id": "holenie",
+"ms": 1.109,
+"text": "Holenie do hladka Hot Towel 15 €",
+"vyrez": {
+"skupina": "Brada a holenie",
+"riadky": [
+"Úprava brady 20 min 15 €",
+"*Holenie do hladka Hot Towel 30 min 15 €",
+"Farbenie brady 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Chcel by som sa dať oholiť ako za starých čias, s horúcim uterákom. Robíte to?",
+"ocakavane": "holenie",
+"typ": "fallback",
+"id": null,
+"ms": 1.664,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí oholenie hlavy?",
+"ocakavane": "hlava",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 1.654,
+"text": "Oholenie hlavy 13 €",
+"vyrez": {
+"skupina": "Strih",
+"riadky": [
+"Strih pre malých gentlemanov 45 min 15 €",
+"*Oholenie hlavy 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Holim si hlavu doplesiva, robite aj to? za kolko",
+"ocakavane": "hlava",
+"typ": "vyber",
+"id": "hlava",
+"ms": 1.369,
+"kand": [
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Aké máte balíčky?",
+"ocakavane": "balicky",
+"typ": "odpoved",
+"id": "balicky",
+"ms": 0.285,
+"text": "Balíček 1 30 € / Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. / Ultra inclusive Barbershop30 40 €",
+"vyrez": {
+"skupina": "Balíčky",
+"riadky": [
+"*Balíček 1 65 min 30 €",
+"*Ultra inclusive Barbershop30 80 min 40 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Čo všetko je v Balíčku 1?",
+"ocakavane": "balicky",
+"typ": "odpoved",
+"id": "balicky",
+"ms": 0.678,
+"text": "Balíček 1 30 € / Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. / Ultra inclusive Barbershop30 40 €",
+"vyrez": {
+"skupina": "Balíčky",
+"riadky": [
+"*Balíček 1 65 min 30 €",
+"*Ultra inclusive Barbershop30 80 min 40 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Čo je to Ultra inclusive?",
+"ocakavane": "ultra",
+"typ": "odpoved",
+"id": "ultra",
+"ms": 0.622,
+"text": "Ultra inclusive Barbershop30 40 € / Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.",
+"vyrez": {
+"skupina": "Balíčky",
+"riadky": [
+"Balíček 1 65 min 30 €",
+"*Ultra inclusive Barbershop30 80 min 40 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Je pravda, že k niektorému balíčku dostanem whisky?",
+"ocakavane": "ultra",
+"typ": "fallback",
+"id": null,
+"ms": 2.313,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji ultra inclusive",
+"ocakavane": "ultra",
+"typ": "odpoved",
+"id": "ultra",
+"ms": 1.064,
+"text": "Ultra inclusive Barbershop30 40 € / Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.",
+"vyrez": {
+"skupina": "Balíčky",
+"riadky": [
+"Balíček 1 65 min 30 €",
+"*Ultra inclusive Barbershop30 80 min 40 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Dá sa u vás k strihu dať aj pohárik whisky?",
+"ocakavane": "ultra",
+"typ": "fallback",
+"id": null,
+"ms": 1.442,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte aj starostlivosť o pleť?",
+"ocakavane": "plet",
+"typ": "odpoved",
+"id": "plet",
+"ms": 0.763,
+"text": "Starostlivosť o pleť PREMIUM 21,50 €",
+"vyrez": {
+"skupina": "Doplnky",
+"riadky": [
+"*Starostlivosť o pleť PREMIUM 30 min 21,50 €",
+"Úprava obočia 5 min 3 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Mate nejaku masku na tvar a peeling samostatne?",
+"ocakavane": "plet",
+"typ": "vyber",
+"id": "plet",
+"ms": 1.472,
+"kand": [
+"plet"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Upravíte aj obočie?",
+"ocakavane": "obocie",
+"typ": "odpoved",
+"id": "obocie",
+"ms": 0.907,
+"text": "Úprava obočia 3 € / Farbenie obočia 5 €",
+"vyrez": {
+"skupina": "Doplnky",
+"riadky": [
+"Starostlivosť o pleť PREMIUM 30 min 21,50 €",
+"*Úprava obočia 5 min 3 €",
+"Depilácia uší a nosa voskom 10 min 5,50 €",
+"Kreatívny ornament na hlave 10 min 4 €",
+"*Farbenie obočia 10 min 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji farbenie obocia",
+"ocakavane": "obocie",
+"typ": "odpoved",
+"id": "obocie",
+"ms": 0.905,
+"text": "Úprava obočia 3 € / Farbenie obočia 5 €",
+"vyrez": {
+"skupina": "Doplnky",
+"riadky": [
+"Starostlivosť o pleť PREMIUM 30 min 21,50 €",
+"*Úprava obočia 5 min 3 €",
+"Depilácia uší a nosa voskom 10 min 5,50 €",
+"Kreatívny ornament na hlave 10 min 4 €",
+"*Farbenie obočia 10 min 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Rastú mi chlpy z uší, robíte to voskom?",
+"ocakavane": "depilacia",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 1.059,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí depilácia nosa?",
+"ocakavane": "depilacia",
+"typ": "odpoved",
+"id": "depilacia",
+"ms": 0.978,
+"text": "Depilácia uší a nosa voskom 5,50 €",
+"vyrez": {
+"skupina": "Doplnky",
+"riadky": [
+"Úprava obočia 5 min 3 €",
+"*Depilácia uší a nosa voskom 10 min 5,50 €",
+"Kreatívny ornament na hlave 10 min 4 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Brada mi šedivie, dá sa u vás zafarbiť?",
+"ocakavane": "farbenie-brady",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 1.569,
+"text": "Farbenie brady 10 €",
+"vyrez": {
+"skupina": "Brada a holenie",
+"riadky": [
+"Holenie do hladka Hot Towel 30 min 15 €",
+"*Farbenie brady 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji farbenie brady",
+"ocakavane": "farbenie-brady",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 1.191,
+"text": "Farbenie brady 10 €",
+"vyrez": {
+"skupina": "Brada a holenie",
+"riadky": [
+"Holenie do hladka Hot Towel 30 min 15 €",
+"*Farbenie brady 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte aj vzory vystrihnuté do vlasov?",
+"ocakavane": "ornament",
+"typ": "vyber",
+"id": "ornament",
+"ms": 6.985,
+"kand": [
+"ornament",
+"farbenie-vlasov",
+"cena-dlhe",
+"cena-strih"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Kamarát chce na boku hlavy vystrihnutý blesk, koľko stojí taký ornament?",
+"ocakavane": "ornament",
+"typ": "vyber",
+"id": "ornament",
+"ms": 12.955,
+"kand": [
+"ornament"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Sú ceny na webe konečné, alebo sa ešte niečo pripláca?",
+"ocakavane": "ceny-konecne",
+"typ": "vyber",
+"id": "ceny-konecne",
+"ms": 1.553,
+"kand": [
+"ceny-konecne"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Nebudú tam potom nejaké skryté poplatky?",
+"ocakavane": "ceny-konecne",
+"typ": "vyber",
+"id": "ceny-konecne",
+"ms": 1.44,
+"kand": [
+"ceny-konecne"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte aj farbenie vlasov?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.593,
+"text": "Farbenie, melír a trvalú robí Romana. / Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí melír?",
+"ocakavane": "farbenie-vlasov",
+"typ": "nevieme",
+"id": "romana-ceny",
+"ms": 6.308,
+"text": "Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "Kto u vás robí trvalú?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.747,
+"text": "Farbenie, melír a trvalú robí Romana. / Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Chcem si dať zesvetliť vlasy na blond, robíte to?",
+"ocakavane": "farbenie-vlasov",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 1.189,
+"kand": [
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Kto všetko u vás strihá?",
+"ocakavane": "tim",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 0.856,
+"kand": [
+"cena-strih",
+"co-je-v-strihu",
+"cena-strih-brada"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Strihá u vás aj nejaká žena?",
+"ocakavane": "tim",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.416,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "Môžem si vybrať, kto ma ostrihá?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 0.735,
+"text": "Svojho človeka si vyberieš v rezervácii.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Chcem ísť k Nikolasovi, dá sa to?",
+"ocakavane": "vyber-barbera",
+"typ": "fallback",
+"id": null,
+"ms": 0.403,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Minule ma strihal Lajko a bol super, ako sa dostanem znova k nemu?",
+"ocakavane": "vyber-barbera",
+"typ": "fallback",
+"id": null,
+"ms": 1.909,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Čo všetko je v cene strihu? Aj umytie?",
+"ocakavane": "co-je-v-strihu",
+"typ": "odpoved",
+"id": "co-je-v-strihu",
+"ms": 1.208,
+"text": "Pánsky strih krok za krokom",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako prebieha pánsky strih?",
+"ocakavane": "co-je-v-strihu",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 1.086,
+"kand": [
+"cena-strih",
+"co-je-v-strihu",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Dá sa u vás počkať a dať si kávu?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.808,
+"text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Platí sa za kávu?",
+"ocakavane": "kava",
+"typ": "vyber",
+"id": "kava",
+"ms": 0.7,
+"kand": [
+"kava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte kde sedieť, kým čakám na kamaráta?",
+"ocakavane": "kava",
+"typ": "fallback",
+"id": null,
+"ms": 1.404,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko máte kresiel?",
+"ocakavane": "kresla",
+"typ": "odpoved",
+"id": "kresla",
+"ms": 0.045,
+"text": "8 kresiel",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako veľký je ten barbershop?",
+"ocakavane": "kresla",
+"typ": "vyber",
+"id": "tim",
+"ms": 1.349,
+"kand": [
+"tim"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Odkedy fungujete?",
+"ocakavane": "odkedy",
+"typ": "odpoved",
+"id": "odkedy",
+"ms": 0.035,
+"text": "Od roku 2019 na Mostnej 30 v Nitre",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako dlho už ste na Mostnej?",
+"ocakavane": "odkedy",
+"typ": "vyber",
+"id": "adresa",
+"ms": 1.851,
+"kand": [
+"adresa"
+],
+"o": 1,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte Instagram?",
+"ocakavane": "socialne",
+"typ": "odpoved",
+"id": "socialne",
+"ms": 0.044,
+"text": "Aktuálne strihy a dianie v shope sledujeme na Instagrame. / @barbershop30_nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Kde uvidím vaše aktuálne strihy?",
+"ocakavane": "socialne",
+"typ": "fallback",
+"id": null,
+"ms": 4.123,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "Je u vás recepčná, alebo len barberi?",
+"ocakavane": "recepcia",
+"typ": "vyber",
+"id": "tim",
+"ms": 1.735,
+"kand": [
+"tim",
+"recepcia"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Kto ma privíta pri vstupe?",
+"ocakavane": "recepcia",
+"typ": "odpoved",
+"id": "recepcia",
+"ms": 1.005,
+"text": "Pri dverách ťa privíta recepčná.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "Ako dlho trvá pánsky strih?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.563,
+"text": "Pánsky strih 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko trva uprava brady",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.486,
+"text": "Úprava brady 20 min",
+"sluzba": "cena-brada",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Mám obednú pauzu hodinu. Ako dlho trvá strih, stihnem to?",
+"ocakavane": "trvanie",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 2.055,
+"kand": [
+"cena-strih",
+"cena-strih-brada",
+"hodiny"
+],
+"o": 1,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sk",
+"otazka": "Dá sa u vás platiť kartou?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.426,
+"text": "spôsob platby",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Je pri vás parkovanie?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.356,
+"text": "parkovanie",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Kde zaparkujem auto, keď prídem na strih?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 1.338,
+"text": "parkovanie",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Predávate darčekové poukážky?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.922,
+"text": "poukážky",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Strihate aj dámske vlasy?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.959,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Som alergický na niektoré kozmetické prípravky, aké používate?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.313,
+"text": "značky produktov",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Môžem prísť bez objednania hneď teraz?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "bez-objednania",
+"ms": 1.051,
+"text": "príchod bez objednania",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte bezbariérový vstup? Som na vozíku.",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "bezbarierovy",
+"ms": 0.742,
+"text": "bezbariérový vstup",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Môžem si so sebou zobrať psa?",
+"ocakavane": "odovzdanie",
+"typ": "fallback",
+"id": null,
+"ms": 0.736,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Hľadáte barbera do tímu? Rád by som poslal životopis.",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "skolenia",
+"ms": 4.466,
+"text": "školenia a voľné miesta",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Potrebujem zrušiť termín na zajtra, ako to urobím?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "storno",
+"ms": 1.13,
+"text": "zmenu alebo zrušenie termínu",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Meškám 15 minút, počkáte na mňa?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "storno",
+"ms": 0.913,
+"text": "zmenu alebo zrušenie termínu",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Predávate aj pomády a vosky na vlasy?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.043,
+"text": "značky produktov",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte vernostnú kartičku?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "vernost",
+"ms": 0.047,
+"text": "vernostnú kartičku",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte aj predlžovanie vlasov?",
+"ocakavane": "odovzdanie",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 0.562,
+"kand": [
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "Je dnes o 16:00 voľný termín?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "skolenia",
+"ms": 4.96,
+"text": "školenia a voľné miesta",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte wifi v čakárni?",
+"ocakavane": "odovzdanie",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.473,
+"text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
+"trieda": "CHYBA-KANDIDAT",
+"podtrieda": "hola-sluzba-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "Rozprávate po anglicky? Prídem s kamarátom z Írska.",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 5.387,
+"text": "jazyky barberov",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, chcela by som manželovi kúpiť Ultra inclusive ako darček k výročiu. Dá sa to nejako zabaliť ako poukážka?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 2.214,
+"text": "poukážky",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Robite aj ucesy na svadbu pre nevestu?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 0.867,
+"text": "Služby mimo podniku na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí dámsky strih?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.88,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Máte študentskú zľavu? Koľko percent?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "vernost",
+"ms": 1.018,
+"text": "vernostnú kartičku",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Dôchodcovia majú nejakú zľavu? Koľko by som zaplatil?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "vernost",
+"ms": 1.157,
+"text": "vernostnú kartičku",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Za koľko je darčeková poukážka?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.803,
+"text": "poukážky",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí umytie vlasov samostatne, bez strihu?",
+"ocakavane": "bez-ceny",
+"typ": "vyber",
+"id": "co-je-v-strihu",
+"ms": 2.162,
+"kand": [
+"co-je-v-strihu",
+"cena-strih",
+"cena-dlhe",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "Koľko stojí strih a koľko úprava obočia?",
+"ocakavane": "volba:cena-strih,obocie",
+"typ": "vyber",
+"id": "obocie",
+"ms": 1.35,
+"kand": [
+"obocie",
+"cena-strih-brada",
+"cena-strih",
+"cena-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "Kedy máte otvorené a kde vás nájdem?",
+"ocakavane": "volba:hodiny,adresa",
+"typ": "vyber",
+"id": "hodiny",
+"ms": 1.032,
+"kand": [
+"hodiny"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "volba-ciastocne"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, prídem z Levíc s otcom. On chce oholiť hlavu a ja chcem zafarbiť bradu. Koľko to stojí?",
+"ocakavane": "volba:hlava,farbenie-brady",
+"typ": "vyber",
+"id": "farbenie-brady",
+"ms": 3.125,
+"kand": [
+"farbenie-brady",
+"hlava",
+"cena-brada",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "Ahoj, som študent, chcem fade a k tomu nejaký vzor do vlasov. Koľko to bude a dá sa objednať online aj večer?",
+"ocakavane": "volba:cena-strih,ornament,online",
+"typ": "vyber",
+"id": "online",
+"ms": 2.377,
+"kand": [
+"online",
+"ornament",
+"cena-strih",
+"rezervacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "Aké máte telefónne číslo a e-mail?",
+"ocakavane": "volba:telefon,email",
+"typ": "vyber",
+"id": "telefon",
+"ms": 0.778,
+"kand": [
+"telefon",
+"email"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "Zaujíma ma depilácia uší a starostlivosť o pleť, koľko stoja?",
+"ocakavane": "volba:depilacia,plet",
+"typ": "vyber",
+"id": "plet",
+"ms": 1.584,
+"kand": [
+"plet",
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "Dobrý deň, otec má 70 rokov a chcel by holenie s horúcim uterákom, ja chcem strih s bradou. Koľko stojí jedno a koľko druhé?",
+"ocakavane": "volba:holenie,cena-strih-brada",
+"typ": "nevieme",
+"id": "vek",
+"ms": 2.742,
+"text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "Robíte farbenie vlasov? A máte Instagram, kde vidno vaše práce?",
+"ocakavane": "volba:farbenie-vlasov,socialne",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 1.849,
+"kand": [
+"farbenie-vlasov"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "volba-ciastocne"
+},
+{
+"jazyk": "sk",
+"otazka": "nazdar, kolko stoji brada a kolko strih dlhych vlasov nad 10cm",
+"ocakavane": "volba:cena-brada,cena-dlhe",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 2.356,
+"kand": [
+"cena-strih-brada",
+"cena-dlhe",
+"cena-brada",
+"cena-strih"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji uprava obocia a vosk na nos",
+"ocakavane": "volba:obocie,depilacia",
+"typ": "vyber",
+"id": "obocie",
+"ms": 1.35,
+"kand": [
+"obocie",
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "en",
+"otazka": "What are your opening hours?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.549,
+"text": "Mon–Fri 9:00–19:00 / Sat 9:00–14:00 / Sun closed",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "Are you open on Sunday?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.302,
+"text": "Mon–Fri 9:00–19:00 / Sat 9:00–14:00 / Sun closed",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "Where are you located?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 1.163,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "How much is a men's haircut?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.068,
+"text": "Men's haircut 18 €",
+"vyrez": {
+"skupina": "Cut",
+"riadky": [
+"*Men's haircut 40 min 18 €",
+"Men's haircut and beard trim 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "How much for a haircut and beard trim together?",
+"ocakavane": "cena-strih-brada",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 2.679,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "Do you do hot towel shaves?",
+"ocakavane": "holenie",
+"typ": "odpoved",
+"id": "holenie",
+"ms": 1.591,
+"text": "Hot Towel clean shave 15 €",
+"vyrez": {
+"skupina": "Beard and shave",
+"riadky": [
+"Beard trim 20 min 15 €",
+"*Hot Towel clean shave 30 min 15 €",
+"Beard colouring 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "Can I book online at any time, even at night?",
+"ocakavane": "online",
+"typ": "vyber",
+"id": "online",
+"ms": 2.133,
+"kand": [
+"online"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "How do I make an appointment?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.956,
+"text": "Call the front desk on weekdays from 9:00 to 19:00. Or simply book your appointment online through our booking system.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "What's your phone number?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.946,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "What's your email address?",
+"ocakavane": "email",
+"typ": "vyber",
+"id": "adresa",
+"ms": 0.602,
+"kand": [
+"adresa",
+"email"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "Do you take credit cards?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.558,
+"text": "payment methods",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "Is there parking nearby?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.562,
+"text": "parking",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "Do you cut women's hair?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.061,
+"text": "We don't list women's haircuts on the website.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "How much does a women's cut cost?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.88,
+"text": "We don't list women's haircuts on the website.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "Do you speak English?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.047,
+"text": "languages the barbers speak",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "Can I choose my barber?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 0.054,
+"text": "You pick your person when you book.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "How long does a haircut take?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.324,
+"text": "Men's haircut 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "en",
+"otazka": "Is the coffee free?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.414,
+"text": "In the back, coffee's waiting. / Armchairs, a retro petrol pump and a colourful bulldog. Coffee and mineral water are on the house.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "Do you do hair colouring or highlights?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.664,
+"text": "Colouring, highlights and perms are done by Romana. / Romana does these, and they're booked in a separate system, where you'll also find their prices.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "Hi! I'm in Nitra for a conference until Friday. I'd like a quick beard trim. How much is it and how long does it take?",
+"ocakavane": "volba:cena-brada,trvanie",
+"typ": "fallback",
+"id": null,
+"ms": 1.565,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "en",
+"otazka": "Do you cut kids' hair? My son is 7.",
+"ocakavane": "deti",
+"typ": "odpoved",
+"id": "deti",
+"ms": 0.569,
+"text": "Little gentlemen's cut 15 € / Classic cut or fade, optionally a creative pattern, wash and styling – for boys up to 10 years old.",
+"vyrez": {
+"skupina": "Cut",
+"riadky": [
+"Men's haircut – hair over 10 cm 60 min 22 €",
+"*Little gentlemen's cut 45 min 15 €",
+"Head shave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "My hair is quite long, over 10 cm. Is it more expensive?",
+"ocakavane": "cena-dlhe",
+"typ": "vyber",
+"id": "trvanie",
+"ms": 3.111,
+"kand": [
+"cena-dlhe"
+],
+"cas": 1,
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "What's included in the Ultra inclusive package?",
+"ocakavane": "ultra",
+"typ": "vyber",
+"id": "ultra",
+"ms": 1.32,
+"kand": [
+"ultra"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "Do you sell gift vouchers?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.98,
+"text": "gift vouchers",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "Are the prices final, or are there extra charges?",
+"ocakavane": "ceny-konecne",
+"typ": "odpoved",
+"id": "ceny-konecne",
+"ms": 1.214,
+"text": "Men's haircut €18, with a beard trim €28. Prices are final.",
+"vyrez": null,
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Jó napot! Mikor vagytok nyitva szombaton?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.875,
+"text": "H–P 9:00–19:00 / Szo 9:00–14:00 / V zárva",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Vasárnap nyitva vagytok?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.931,
+"text": "H–P 9:00–19:00 / Szo 9:00–14:00 / V zárva",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mi a pontos cím?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.256,
+"text": "Mostná 30, 949 01 Nyitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyibe kerül egy férfi hajvágás?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 1.268,
+"text": "Férfi hajvágás 18 €",
+"vyrez": {
+"skupina": "Hajvágás",
+"riadky": [
+"*Férfi hajvágás 40 perc 18 €",
+"Férfi hajvágás és szakálligazítás 60 perc 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyi a hajvágás szakállal együtt?",
+"ocakavane": "cena-strih-brada",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 1.379,
+"kand": [
+"cena-strih-brada",
+"cena-strih",
+"cena-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyibe kerül a szakálligazítás?",
+"ocakavane": "cena-brada",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 0.102,
+"text": "Szakálligazítás 15 €",
+"vyrez": {
+"skupina": "Szakáll és borotválás",
+"riadky": [
+"*Szakálligazítás 20 perc 15 €",
+"Simára borotválás Hot Towel 30 perc 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Beszéltek magyarul?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.516,
+"text": "a borbélyok nyelvei",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Lehet kártyával fizetni?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.049,
+"text": "fizetési mód",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Hol tudok parkolni?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.049,
+"text": "parkolás",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Hogyan tudok időpontot foglalni?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.597,
+"text": "Hívd a recepciót hétköznap 9:00 és 19:00 között. Vagy foglalj időpontot online, egyszerűen a foglalási rendszerünkben.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Lehet online foglalni éjjel is?",
+"ocakavane": "online",
+"typ": "odpoved",
+"id": "online",
+"ms": 0.958,
+"text": "Online 24/7 időpontfoglalás bármikor",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mi a telefonszámotok?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.044,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Van forró törölközős borotválás?",
+"ocakavane": "holenie",
+"typ": "vyber",
+"id": "holenie",
+"ms": 0.985,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyibe kerül a fejborotválás?",
+"ocakavane": "hlava",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 0.875,
+"text": "Fejborotválás 13 €",
+"vyrez": {
+"skupina": "Hajvágás",
+"riadky": [
+"Hajvágás kis úriembereknek 45 perc 15 €",
+"*Fejborotválás 25 perc 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "A fiam 9 éves, őt is levágjátok?",
+"ocakavane": "deti",
+"typ": "vyber",
+"id": "deti",
+"ms": 0.759,
+"kand": [
+"deti"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "Csináltok hajfestést vagy melírt?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.695,
+"text": "A festést, a melírt és a dauert Romana végzi. / Ezeket Romana végzi, és külön rendszerben foglalhatók, ahol az áraikat is megtalálod.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Kiválaszthatom, ki vágja a hajam?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 1.202,
+"text": "A saját emberedet a foglalásnál választod ki.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Ingyenes a kávé?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.548,
+"text": "Hátul kávé vár rád. / Fotelek, retró benzinkút és színes bulldog. A kávé és az ásványvíz ingyenes.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyi ideig tart egy hajvágás?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.422,
+"text": "Férfi hajvágás 40 perc",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Szia! A hétvégén Nyitrán leszünk a haverokkal, legénybúcsú lesz. Mi van a Csomag 1-ben?",
+"ocakavane": "balicky",
+"typ": "fallback",
+"id": null,
+"ms": 2.52,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyibe kerül a női hajvágás?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.855,
+"text": "Női hajvágást az oldalon nem tüntetünk fel.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Van ajándékutalványotok?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.103,
+"text": "ajándékutalvány",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Mennyibe kerül a szemöldökigazítás és a fülgyantázás?",
+"ocakavane": "volba:obocie,depilacia",
+"typ": "vyber",
+"id": "obocie",
+"ms": 1.219,
+"kand": [
+"obocie",
+"cena-brada",
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "hu",
+"otazka": "Euróban vagy forintban kell fizetni?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.693,
+"text": "fizetési mód",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Mióta működtök?",
+"ocakavane": "odkedy",
+"typ": "odpoved",
+"id": "odkedy",
+"ms": 0.034,
+"text": "2019 óta a nyitrai Mostná 30 alatt",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Добрий день! Скільки коштує стрижка для хлопчика 6 років?",
+"ocakavane": "deti",
+"typ": "vyber",
+"id": "deti",
+"ms": 3.904,
+"kand": [
+"deti",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "Ви стрижете жінок?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.132,
+"text": "Жіночі стрижки на сайті не вказуємо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Скільки коштує жіноча стрижка?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 2.502,
+"text": "Жіночі стрижки на сайті не вказуємо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи робите фарбування волосся?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 1.496,
+"text": "Фарбування, мелірування і хімічну завивку робить Romana. / Їх робить Romana, а бронюються вони в окремій системі, де знайдеш і їхні ціни.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Хто у вас робить мелірування?",
+"ocakavane": "farbenie-vlasov",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 2.148,
+"kand": [
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "Можна оплатити карткою?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.912,
+"text": "спосіб оплати",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Який у вас графік роботи?",
+"ocakavane": "hodiny",
+"typ": "fallback",
+"id": null,
+"ms": 0.845,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "uk",
+"otazka": "Ви працюєте в неділю?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.204,
+"text": "Пн–Пт 9:00–19:00 / Сб 9:00–14:00 / Нд зачинено",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Яка у вас адреса?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.453,
+"text": "Mostná 30, 949 01 Нітра",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Як записатися на стрижку?",
+"ocakavane": "rezervacia",
+"typ": "vyber",
+"id": "rezervacia",
+"ms": 1.917,
+"kand": [
+"rezervacia",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "Можна записатися онлайн вночі?",
+"ocakavane": "online",
+"typ": "odpoved",
+"id": "online",
+"ms": 1.424,
+"text": "Онлайн 24/7 бронювання будь-коли",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Ваш номер телефону?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.852,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Скільки коштує чоловіча стрижка для мого чоловіка?",
+"ocakavane": "cena-strih",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 2.239,
+"kand": [
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "Скільки коштує стрижка і борода разом?",
+"ocakavane": "cena-strih-brada",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 1.82,
+"text": "Чоловіча стрижка й оформлення бороди 28 €",
+"vyrez": {
+"skupina": "Стрижка",
+"riadky": [
+"Чоловіча стрижка 40 хв 18 €",
+"*Чоловіча стрижка й оформлення бороди 60 хв 28 €",
+"Чоловіча стрижка – волосся довше 10 см 60 хв 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи говорите ви українською або російською?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.333,
+"text": "мови барберів",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Синові 12 років, яка для нього ціна стрижки?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "vek",
+"ms": 2.213,
+"text": "Стрижки для хлопців старше 10 років на сайті не вказуємо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи є у вас електронна пошта?",
+"ocakavane": "email",
+"typ": "odpoved",
+"id": "email",
+"ms": 0.783,
+"text": "info@barbershop30.sk",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Скільки триває чоловіча стрижка?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.94,
+"text": "Чоловіча стрижка 40 хв",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Мій чоловік хоче пофарбувати бороду, скільки це коштує?",
+"ocakavane": "farbenie-brady",
+"typ": "vyber",
+"id": "farbenie-brady",
+"ms": 3.929,
+"kand": [
+"farbenie-brady",
+"cena-strih-brada",
+"cena-strih",
+"cena-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "Добрий день, я з Харкова, пів року живу в Нітрі. Хочу зробити чоловікові приємне на день народження. Що входить в Ultra inclusive?",
+"ocakavane": "ultra",
+"typ": "fallback",
+"id": null,
+"ms": 5.437,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи можна випити кави, поки чекаю?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.342,
+"text": "У глибині тебе чекає кава. / Крісла, ретро-бензоколонка і кольоровий бульдог. Кава й мінералка безкоштовні.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "Я алергік, які засоби ви використовуєте?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "zdravie",
+"ms": 1.316,
+"text": "Щодо шкіри та здоров’я на сайті порадити не можемо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи можна прийти з дитиною у візочку і почекати всередині?",
+"ocakavane": "odovzdanie",
+"typ": "fallback",
+"id": null,
+"ms": 2.279,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Скільки коштує стрижка для сина (7 років) і для чоловіка?",
+"ocakavane": "volba:deti,cena-strih",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 2.217,
+"kand": [
+"cena-strih",
+"deti",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "uk",
+"otazka": "Чи є у вас Instagram?",
+"ocakavane": "socialne",
+"typ": "odpoved",
+"id": "socialne",
+"ms": 0.428,
+"text": "Свіжі стрижки й життя барбершопу показуємо в Instagram. / @barbershop30_nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Dzień dobry, w jakich godzinach jesteście otwarci?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.137,
+"text": "Pn–Pt 9:00–19:00 / Sob 9:00–14:00 / Nd zamknięte",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Jestem w Nitrze służbowo do soboty. Czy w sobotę jesteście otwarci?",
+"ocakavane": "hodiny",
+"typ": "vyber",
+"id": "hodiny",
+"ms": 1.767,
+"kand": [
+"hodiny"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "Jaki jest adres?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.326,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje strzyżenie męskie?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.067,
+"text": "Strzyżenie męskie 18 €",
+"vyrez": {
+"skupina": "Strzyżenie",
+"riadky": [
+"*Strzyżenie męskie 40 min 18 €",
+"Strzyżenie męskie i trymowanie brody 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje strzyżenie razem z brodą?",
+"ocakavane": "cena-strih-brada",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 6.409,
+"text": "Strzyżenie męskie i trymowanie brody 28 €",
+"vyrez": {
+"skupina": "Strzyżenie",
+"riadky": [
+"Strzyżenie męskie 40 min 18 €",
+"*Strzyżenie męskie i trymowanie brody 60 min 28 €",
+"Strzyżenie męskie – włosy dłuższe niż 10 cm 60 min 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje golenie brzytwą z gorącym ręcznikiem?",
+"ocakavane": "holenie",
+"typ": "vyber",
+"id": "holenie",
+"ms": 1.86,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy mogę zarezerwować online w nocy po pracy?",
+"ocakavane": "online",
+"typ": "nevieme",
+"id": "skolenia",
+"ms": 1.106,
+"text": "szkolenia i wolne miejsca pracy",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "pl",
+"otazka": "Jak się umówić na wizytę?",
+"ocakavane": "rezervacia",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.599,
+"text": "języki barberów",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "pl",
+"otazka": "Numer telefonu?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.604,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Adres e-mail?",
+"ocakavane": "email",
+"typ": "odpoved",
+"id": "email",
+"ms": 0.037,
+"text": "info@barbershop30.sk",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy wystawiacie fakturę na firmę?",
+"ocakavane": "odovzdanie",
+"typ": "fallback",
+"id": null,
+"ms": 1.016,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy jest parking przy salonie?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 4.429,
+"text": "parkowanie",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy można płacić kartą?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.061,
+"text": "sposób płatności",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy mówicie po polsku albo po angielsku?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.099,
+"text": "języki barberów",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile trwa strzyżenie? Mam tylko godzinę przerwy.",
+"ocakavane": "trvanie",
+"typ": "vyber",
+"id": "hodiny",
+"ms": 1.547,
+"kand": [
+"hodiny",
+"cena-strih",
+"cena-strih-brada"
+],
+"o": 1,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje samo trymowanie brody?",
+"ocakavane": "cena-brada",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 1.793,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "Mam długie włosy, ponad 10 cm. Ile to kosztuje?",
+"ocakavane": "cena-dlhe",
+"typ": "vyber",
+"id": "cena-dlhe",
+"ms": 2.496,
+"kand": [
+"cena-dlhe",
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy mogę wybrać barbera?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 0.06,
+"text": "Swojego człowieka wybierzesz przy rezerwacji.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy ceny są ostateczne?",
+"ocakavane": "ceny-konecne",
+"typ": "nevieme",
+"id": "cena-ina-sluzba",
+"ms": 0.711,
+"text": "Nie mogę znaleźć tej usługi w cenniku; zobacz cały cennik.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "pl",
+"otazka": "Co zawiera pakiet Ultra inclusive?",
+"ocakavane": "ultra",
+"typ": "vyber",
+"id": "ultra",
+"ms": 1.707,
+"kand": [
+"ultra"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje regulacja brwi i depilacja nosa woskiem?",
+"ocakavane": "volba:obocie,depilacia",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 2.158,
+"kand": [
+"depilacia",
+"obocie"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "pl",
+"otazka": "Czy kawa jest darmowa?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.538,
+"text": "Z tyłu czeka na ciebie kawa. / Fotele, retro dystrybutor paliwa i kolorowy buldog. Kawa i woda mineralna są za darmo.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Dzień dobry, jestem na delegacji, jutro mam ważne spotkanie z klientem. Chciałbym się ogolić na gładko i ogarnąć brwi. Ile to kosztuje?",
+"ocakavane": "volba:holenie,obocie",
+"typ": "vyber",
+"id": "hlava",
+"ms": 3.806,
+"kand": [
+"hlava",
+"holenie",
+"obocie"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "pl",
+"otazka": "Ile kosztuje bon podarunkowy?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.312,
+"text": "bony podarunkowe",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Wann haben Sie geöffnet?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.61,
+"text": "Mo–Fr 9:00–19:00 / Sa 9:00–14:00 / So geschlossen",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Haben Sie am Sonntag offen?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 8.959,
+"text": "Mo–Fr 9:00–19:00 / Sa 9:00–14:00 / So geschlossen",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Wo genau sind Sie?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.213,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet ein Herrenhaarschnitt?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.058,
+"text": "Herrenhaarschnitt 18 €",
+"vyrez": {
+"skupina": "Schnitt",
+"riadky": [
+"*Herrenhaarschnitt 40 Min. 18 €",
+"Herrenhaarschnitt und Bartpflege 60 Min. 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet Haarschnitt mit Bartpflege zusammen?",
+"ocakavane": "cena-strih-brada",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 1.574,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet eine Kopfrasur?",
+"ocakavane": "hlava",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 1.489,
+"text": "Kopfrasur 13 €",
+"vyrez": {
+"skupina": "Schnitt",
+"riadky": [
+"Schnitt für kleine Gentlemen 45 Min. 15 €",
+"*Kopfrasur 25 Min. 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Kann ich auch nachts online buchen?",
+"ocakavane": "online",
+"typ": "odpoved",
+"id": "online",
+"ms": 2.536,
+"text": "Online 24/7 Termin jederzeit buchen",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Wie kann ich einen Termin machen?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.78,
+"text": "Ruf am Empfang an, Mo–Fr von 9:00 bis 19:00. Oder buch deinen Termin ganz einfach online über unser Buchungssystem.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Telefonnummer bitte",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.84,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Kann man mit Karte zahlen?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 3.134,
+"text": "Zahlungsarten",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Gibt es Parkplätze in der Nähe?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 1.276,
+"text": "Parken",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Schneiden Sie auch Damenhaare?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 2.11,
+"text": "Damenhaarschnitte nennen wir auf der Website nicht.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Sprechen Sie Deutsch?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.268,
+"text": "Sprachen der Barber",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Wie lange dauert ein Haarschnitt?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 3.351,
+"text": "Herrenhaarschnitt 40 Min.",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "de",
+"otazka": "Färben Sie auch Haare?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 1.251,
+"text": "Färben, Strähnchen und Dauerwelle macht Romana. / Die macht Romana, gebucht werden sie in einem eigenen System, in dem du auch die Preise findest.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Kann ich meinen Barber auswählen?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 5.955,
+"text": "Deinen Favoriten wählst du bei der Buchung.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Was ist im Paket 1 enthalten?",
+"ocakavane": "balicky",
+"typ": "vyber",
+"id": "balicky",
+"ms": 1.622,
+"kand": [
+"balicky",
+"co-je-v-strihu"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Bieten Sie Gesichtspflege an?",
+"ocakavane": "plet",
+"typ": "vyber",
+"id": "plet",
+"ms": 1.611,
+"kand": [
+"plet"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Schneiden Sie auch Kinder? Mein Sohn ist 5.",
+"ocakavane": "deti",
+"typ": "odpoved",
+"id": "deti",
+"ms": 3.67,
+"text": "Schnitt für kleine Gentlemen 15 € / Klassischer Schnitt oder Fade, auf Wunsch ein kreatives Ornament, Waschen und Styling – für Jungs bis 10 Jahre.",
+"vyrez": {
+"skupina": "Schnitt",
+"riadky": [
+"Herrenhaarschnitt – Haarlänge über 10 cm 60 Min. 22 €",
+"*Schnitt für kleine Gentlemen 45 Min. 15 €",
+"Kopfrasur 25 Min. 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet ein Damenhaarschnitt?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.482,
+"text": "Damenhaarschnitte nennen wir auf der Website nicht.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Was kosten Bartfärben und Augenbrauenfärben?",
+"ocakavane": "volba:farbenie-brady,obocie",
+"typ": "vyber",
+"id": "obocie",
+"ms": 5.87,
+"kand": [
+"obocie",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "de",
+"otazka": "Seit wann gibt es Sie?",
+"ocakavane": "odkedy",
+"typ": "odpoved",
+"id": "odkedy",
+"ms": 0.419,
+"text": "Seit 2019 in der Mostná 30 in Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Dobrý den, kdy máte otevřeno?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.337,
+"text": "Po–Pá 9:00–19:00 / So 9:00–14:00 / Ne zavřeno",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Máte otevřeno v neděli?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.693,
+"text": "Po–Pá 9:00–19:00 / So 9:00–14:00 / Ne zavřeno",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Jaká je adresa?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.303,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Kolik stojí pánský střih?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.058,
+"text": "Pánský střih 18 €",
+"vyrez": {
+"skupina": "Střih",
+"riadky": [
+"*Pánský střih 40 min 18 €",
+"Pánský střih a úprava vousů 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Kolik stojí střih a úprava vousů dohromady?",
+"ocakavane": "cena-strih-brada",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 2.223,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "Kolik stojí jen úprava vousů?",
+"ocakavane": "cena-brada",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 1.22,
+"text": "Úprava vousů 15 €",
+"vyrez": {
+"skupina": "Vousy a holení",
+"riadky": [
+"*Úprava vousů 20 min 15 €",
+"Holení dohladka Hot Towel 30 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Jak se k vám objednám?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.345,
+"text": "Zavolej na recepci, v pracovní dny od 9:00 do 19:00. Nebo si termín zarezervuj online, jednoduše přes náš rezervační systém.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Dá se objednat online kdykoli?",
+"ocakavane": "online",
+"typ": "odpoved",
+"id": "online",
+"ms": 1.013,
+"text": "Online 24/7 rezervace termínu kdykoli",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Telefonní číslo?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 1.332,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Lze platit kartou?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.786,
+"text": "způsob platby",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "Kde se dá zaparkovat?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 1.372,
+"text": "parkování",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "Stříháte i ženy?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.045,
+"text": "Dámské střihy na webu neuvádíme.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "Kolik stojí dámský střih?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.887,
+"text": "Dámské střihy na webu neuvádíme.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "Jak dlouho trvá střih?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.622,
+"text": "Pánský střih 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "cs",
+"otazka": "Děláte barvení vlasů?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.547,
+"text": "Barvení, melír a trvalou dělá Romana. / Dělá je Romana a rezervují se v samostatném systému, kde najdeš i jejich ceny.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Můžu si vybrat, kdo mě ostříhá?",
+"ocakavane": "vyber-barbera",
+"typ": "odpoved",
+"id": "vyber-barbera",
+"ms": 1.153,
+"text": "Svého člověka si vybereš v rezervaci.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Stříháte i děti? Synovi jsou 4.",
+"ocakavane": "deti",
+"typ": "vyber",
+"id": "deti",
+"ms": 1.793,
+"kand": [
+"deti",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "Je káva zdarma?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.486,
+"text": "Vzadu tě čeká káva. / Křesla, retro pumpa a barevný buldok. Káva i minerálka jsou zdarma.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Kolik máte křesel?",
+"ocakavane": "kresla",
+"typ": "odpoved",
+"id": "kresla",
+"ms": 0.044,
+"text": "8 křesel",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Ahoj, jsem z Brna na víkend u kamaráda. Chtěl bych holení břitvou s horkým ručníkem a pak vyholit hlavu. Kolik to stojí?",
+"ocakavane": "volba:holenie,hlava",
+"typ": "fallback",
+"id": null,
+"ms": 0.461,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "cs",
+"otazka": "Jste na Instagramu?",
+"ocakavane": "socialne",
+"typ": "odpoved",
+"id": "socialne",
+"ms": 0.338,
+"text": "Aktuální střihy a dění v barbershopu ukazujeme na Instagramu. / @barbershop30_nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "Prodáváte dárkové poukazy?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.816,
+"text": "dárkové poukazy",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Dobar dan, kada radite?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.741,
+"text": "Pon–Pet 9:00–19:00 / Sub 9:00–14:00 / Ned zatvoreno",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Da li radite nedeljom?",
+"ocakavane": "hodiny",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.624,
+"text": "Pon–Pet 9:00–19:00 / Sub 9:00–14:00 / Ned zatvoreno",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Koja je adresa?",
+"ocakavane": "adresa",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 1.084,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko košta muško šišanje?",
+"ocakavane": "cena-strih",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 0.103,
+"text": "Muško šišanje 18 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"*Muško šišanje 40 min 18 €",
+"Muško šišanje i uređivanje brade 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko košta šišanje i brada zajedno?",
+"ocakavane": "cena-strih-brada",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 1.692,
+"text": "Muško šišanje i uređivanje brade 28 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Muško šišanje 40 min 18 €",
+"*Muško šišanje i uređivanje brade 60 min 28 €",
+"Muško šišanje – kosa duža od 10 cm 60 min 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko košta brijanje glave?",
+"ocakavane": "hlava",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 1.016,
+"text": "Brijanje glave 13 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Šišanje za male džentlmene 45 min 15 €",
+"*Brijanje glave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Kako da zakažem termin?",
+"ocakavane": "rezervacia",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.047,
+"text": "Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin online, jednostavno preko našeg sistema za rezervacije.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Mogu li da zakažem online noću?",
+"ocakavane": "online",
+"typ": "odpoved",
+"id": "online",
+"ms": 0.745,
+"text": "Online 24/7 zakazivanje termina bilo kad",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Broj telefona?",
+"ocakavane": "telefon",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 2.244,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Da li imate email?",
+"ocakavane": "email",
+"typ": "odpoved",
+"id": "email",
+"ms": 0.304,
+"text": "info@barbershop30.sk",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Može li plaćanje karticom?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.608,
+"text": "način plaćanja",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Ima li parking u blizini?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.942,
+"text": "parking",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Šišate li žene?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.045,
+"text": "Žensko šišanje ne navodimo na sajtu.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko traje šišanje?",
+"ocakavane": "trvanie",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.419,
+"text": "Muško šišanje 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Da li farbate kosu?",
+"ocakavane": "farbenie-vlasov",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 3.539,
+"text": "Farbanje, pramenove i trajnu radi Romana. / Radi ih Romana, a zakazuju se u posebnom sistemu, gde ćeš naći i njihove cene.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Mogu li da izaberem berberina?",
+"ocakavane": "vyber-barbera",
+"typ": "vyber",
+"id": "tim",
+"ms": 0.823,
+"kand": [
+"tim"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "sr",
+"otazka": "Šišate li decu? Sin ima 9 godina.",
+"ocakavane": "deti",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.411,
+"text": "Šišanje za male džentlmene 15 € / Klasično šišanje ili fade, po želji kreativni ornament, pranje i stajling – za dečake do 10 godina.",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Muško šišanje – kosa duža od 10 cm 60 min 22 €",
+"*Šišanje za male džentlmene 45 min 15 €",
+"Brijanje glave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Da li je kafa besplatna?",
+"ocakavane": "kava",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.55,
+"text": "Pozadi te čeka kafa. / Fotelje, retro pumpa i šareni buldog. Kafa i mineralna voda su besplatne.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Govorite li srpski?",
+"ocakavane": "odovzdanie",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.997,
+"text": "jezici barbera",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko košta ženska frizura?",
+"ocakavane": "bez-ceny",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.113,
+"text": "Žensko šišanje ne navodimo na sajtu.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Pozdrav, radim u Nitri na gradilištu i slobodan sam samo subotom. Koliko košta glatko brijanje sa vrućim peškirom i do kad radite subotom?",
+"ocakavane": "volba:holenie,hodiny",
+"typ": "vyber",
+"id": "holenie",
+"ms": 3.972,
+"kand": [
+"holenie",
+"hlava",
+"hodiny"
+],
+"trieda": "OK",
+"podtrieda": "volba-vsetky"
+},
+{
+"jazyk": "sr",
+"otazka": "Koliko košta kreativni ornament na glavi?",
+"ocakavane": "ornament",
+"typ": "odpoved",
+"id": "ornament",
+"ms": 1.344,
+"text": "Kreativni ornament na glavi 4 €",
+"vyrez": {
+"skupina": "Dodatne usluge",
+"riadky": [
+"Depilacija ušiju i nosa voskom 10 min 5,50 €",
+"*Kreativni ornament na glavi 10 min 4 €",
+"Farbanje obrva 10 min 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+}
+]

@@ -269,7 +269,7 @@ PL = {
   'depilacia': (['Robicie depilację uszu?', 'depilacja uszu', 'włoski w nosie'], 'Depil wosk =Uszu =Ucho =Uszy =Nos =Nosa =Nosie włosk wlosk'),
   'farbenie-brady': (['Farbujecie brody?', 'farbowanie brody', 'siwa broda'], 'Farb Farbow Koloryz Odsiwi siw | Brod Zarost'),
   'ornament': (['Robicie wzory na włosach?', 'ornament', 'hair tattoo'], 'Ornament Kreatywn Wzór Wzor Wzory Tribal Linie włos wlos'),
-  'ceny-konecne': (['Czy to ceny końcowe?', 'cennik', 'cena', 'ceny', 'jakie macie ceny', 'czy są dodatkowe opłaty'], 'Cennik Końcow Dodatk Ukryt Opłat Oplat =Vat znajd dopłat doplat'),
+  'ceny-konecne': (['Czy to ceny końcowe?', 'cennik', 'cena', 'ceny', 'jakie macie ceny', 'czy są dodatkowe opłaty'], 'Cennik Końcow Dodatk Ukryt opłat oplat =Vat znajd dopłat doplat'),
   'farbenie-vlasov': (['Farbujecie włosy?', 'farbowanie włosów', 'pasemka'], 'Farb Farbow Koloryz Rozjaś Pasemk Balejaż Trwał Blond Ombre | Włos Wlos Pasemk Trwał Blond roman siw'),
   'tim': (['Kto u was strzyże?', 'barberzy', 'zespół'], 'Zespół Zespol Barber Fryzjer Ludzie =Imiona =Kto pracuj strzyż'),
   'vyber-barbera': (['Czy mogę wybrać barbera?', 'wybrać barbera', 'do kogo się zapisać'], 'Wybr Wybier Konkretn =Kogo Ulubion Prefer =Kto barber zapis umów'),
@@ -459,10 +459,10 @@ SR = {
 }
 
 UK = {
- 'stop': "я ти ви ми є це чи у в на до від за з із о об по при як який яка яке які якого що а і та але або так ні ще вже тільки вам вас мені мене тобі можна можу хочу будь ласка ваш ваша там тут маєте маю е мені для мою мій моя нас над під він пере роз",
+ 'stop': "ти ви ми це чи на до від за із об по при як який яка яке які якого що та але або так ні ще вже тільки вам вас мені мене тобі можна можу хочу будь ласка ваш ваша там тут маєте маю мені для мою мій моя нас над під він пере роз",
  'cenove': "цін скільки коштує коштуют євро eur",
- 'vypln': 'робите робити хотів хотіла потрібн цікав запитат питання знати звичайн класичн простий якийсь один одна мале малий великий добр завтра ранок понеділ вівтор середа четвер послуг взагалі також потім де коли хто кому чому',
- 'zdvor': 'дякую дяку спасибі вибач вибачте sorry привіт добрий доброго день вечір окей ок супер зрозум побачен',
+ 'vypln': 'робите робити хотів хотіла потрібн цікав запитат питання знати звичайн класичн простий якийсь один одна мале малий великий добр завтра ранок понеділ вівтор середа четвер послуг взагалі також потім коли хто кому чому',
+ 'zdvor': 'дяку спасибі вибач sorry привіт добрий доброго день вечір окей ок супер зрозум побачен',
  'spoj': 'і й та з плюс',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Під брендом Barbershop 30 тут працює команда барберів і барберок.',
@@ -486,7 +486,7 @@ UK = {
   'cena-strih': (['Скільки коштує чоловіча стрижка?', 'ціна стрижки', 'стрижка'], 'Стрижк Підстриг Фейд Fade Haircut Чолові'),
   'cena-strih-brada': (['Скільки коштує стрижка з бородою?', 'стрижка і борода', 'стрижка з корекцією бороди'], 'Стрижк Підстриг разом чолові | Бород оформ'),
   'cena-brada': (['Скільки коштує корекція бороди?', 'борода', 'корекція бороди'], 'Бород Корекц Тримінг Оформл'),
-  'cena-dlhe': (['Чи дорожче довге волосся?', 'довге волосся', 'волосся довше 10 см'], 'Довгі Довге Довга Довгу Довги Довжин Довш =10! =См доплат дорож волос стриж'),
+  'cena-dlhe': (['Чи дорожче довге волосся?', 'довге волосся', 'волосся довше 10 см'], 'Довгі Довге Довги Довжин Довш =10! =См доплат дорож волос стриж'),
   'deti': (['Чи стрижете дітей?', 'дитяча стрижка'], 'Діт Дітей Дитяч Дитин Хлопч Син Junior Маленьк джентльмен мал рок =10 fade стриж'),
   'holenie': (['Чи голите небезпечною бритвою?', 'гоління', 'гоління hot towel'], 'Голін Голит Голи Гладк Начисто Towel бритв =hot'),
   'hlava': (['Чи голите голову?', 'гоління голови'], 'Голін Голит Голи Поголит Гладк Лис бритв | голов лис'),

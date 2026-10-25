@@ -1,0 +1,4338 @@
+[
+{
+"jazyk": "sk",
+"otazka": "dobry den, kolko u vas da clovek za obycajny chlapsky strih? som student",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "študent",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "vyber",
+"id": "deti",
+"ms": 8.04,
+"kand": [
+"deti",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "Prosím Vás, do koľkej máte v sobotu? Ja chodím len predpoludním.",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "dôchodca",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 3.558,
+"text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "ste na tej mostnej, ale ktore cislo? hladam vas z auta",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "turista",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "nevieme",
+"id": "skolenia",
+"ms": 3.811,
+"text": "školenia a voľné miesta",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "da sa termin naklikat aj o polnoci cez net?",
+"ocakavane": "online",
+"prijatelne": [
+"rezervacia"
+],
+"druh": "bezna",
+"kto": "študent",
+"zdroj": "barbershop-30/index.html:839",
+"typ": "fallback",
+"id": null,
+"ms": 3.113,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "vlasy mam po plecia (som chlap), za strih platim viac?",
+"ocakavane": "cena-dlhe",
+"druh": "bezna",
+"kto": "metalista",
+"zdroj": "barbershop-30/index.html:541",
+"typ": "fallback",
+"id": null,
+"ms": 5.484,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "malemu je 7 a bojí sa strojceka, strihate aj takych drobcov?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "mama s dieťaťom",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "fallback",
+"id": null,
+"ms": 9.456,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "sk",
+"otazka": "vlasy aj bradu naraz, kolko to vyjde dokopy",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "podnikateľ",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 2.095,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady",
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "len by som si dal zarovnat bradu, nic viac. cena?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "brodáč",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 1.689,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "britva a horuci uterak, take to stare poctive holenie, kolko?",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "dôchodca",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 2.451,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "chcem mat hlavu ako biliardova gula, kolko za oholenie?",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "tínedžer",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 1.639,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "ktora z vas robi melir? ja nie, to pre syna",
+"ocakavane": "farbenie-vlasov",
+"druh": "bezna",
+"kto": "mama",
+"zdroj": "barbershop-30/index.html:484",
+"typ": "vyber",
+"id": "deti",
+"ms": 0.779,
+"kand": [
+"deti",
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "strihá u vás aj nejaká žena barberka?",
+"ocakavane": "tim",
+"prijatelne": [
+"vyber-barbera"
+],
+"druh": "bezna",
+"kto": "zákazník",
+"zdroj": "barbershop-30/index.html:312",
+"pozn": "pasca pre systém: slovo žena nesmie spustiť dámske strihy",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.931,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "budem sa nudit pri cakani? date mi kavu?",
+"ocakavane": "kava",
+"druh": "bezna",
+"kto": "študent",
+"zdroj": "barbershop-30/index.html:287",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.185,
+"text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "obocie mi zrasta do jedneho, upravite mi ho?",
+"ocakavane": "obocie",
+"druh": "bezna",
+"kto": "robotník",
+"zdroj": "barbershop-30/index.html:613",
+"typ": "vyber",
+"id": "obocie",
+"ms": 1.377,
+"kand": [
+"obocie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "su tie ceny finalne alebo sa na konci este nieco priplaca?",
+"ocakavane": "ceny-konecne",
+"prijatelne": [
+"cena-strih"
+],
+"druh": "bezna",
+"kto": "dôchodca",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "nevieme",
+"id": "cena-ina-sluzba",
+"ms": 1.289,
+"text": "Túto službu v cenníku neviem nájsť; pozri si celý cenník.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "co vsetko dostanem v tom ultra inclusive",
+"ocakavane": "ultra",
+"druh": "bezna",
+"kto": "ženích",
+"zdroj": "barbershop-30/index.html:595",
+"typ": "vyber",
+"id": "ultra",
+"ms": 1.469,
+"kand": [
+"ultra"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "vystrihnete mi do boku ciaru alebo blesk? kolko",
+"ocakavane": "ornament",
+"druh": "bezna",
+"kto": "tínedžer",
+"zdroj": "barbershop-30/index.html:625",
+"typ": "vyber",
+"id": "ornament",
+"ms": 1.718,
+"kand": [
+"ornament"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko by stal strih pre moju mamu, ma kratke vlasy po usi",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "syn",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.508,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "dcerka ma 8, ostrihate aj dievca?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "mama s dieťaťom",
+"pozn": "damske – detský strih je pre chlapcov",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.667,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "vnukovi je 12, kolko zaplati, uz je to pansky?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "babka",
+"pozn": "vek",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 1.428,
+"kand": [
+"cena-strih"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "dedko leží v nemocnici, prišiel by ho niekto ostrihať?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "vnučka",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 1.525,
+"text": "Služby mimo podniku na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "predavate aj olej na bradu, alebo len robite?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "brodáč",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.945,
+"text": "značky produktov",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "kolko stoji ten balzam na bradu co pouzivate",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "brodáč",
+"pozn": "produkty – nie úprava brady 15 €",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.374,
+"text": "značky produktov",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "ako dlho trva oholenie hlavy?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"hlava"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "tínedžer",
+"pozn": "nesmie prísť 40 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.73,
+"text": "Oholenie hlavy 25 min",
+"sluzba": "hlava",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sk",
+"otazka": "ako dlho sa striha dlhsie vlasy nad 10 cm",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"cena-dlhe"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "metalista",
+"pozn": "stránka 60 min; 40 min strihu je chyba",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 2.54,
+"text": "Pánsky strih – dĺžka vlasov nad 10 cm 60 min",
+"sluzba": "cena-dlhe",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sk",
+"otazka": "dakujem pekne, dovidenia",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "dôchodca",
+"typ": "fallback",
+"id": null,
+"ms": 0.485,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "prepacte, to som stlacil omylom",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "dôchodca",
+"typ": "fallback",
+"id": null,
+"ms": 0.736,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "je ta sedacka v cakarni kozena?",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie",
+"kava"
+],
+"druh": "pasca",
+"kategoria": "nesuvisiace",
+"kto": "zvedavec",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.29,
+"text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sk",
+"otazka": "robite aj detoxikaciu pokozky hlavy?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"bez-ceny"
+],
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "influencer",
+"pozn": "nesmie prísť oholenie hlavy ani detský strih",
+"typ": "vyber",
+"id": "plet",
+"ms": 1.02,
+"kand": [
+"plet"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "darcekovu poukazku na strih pre otca na 60tku mate?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "dcéra",
+"pozn": "poukazky – nie 18 €",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.384,
+"text": "poukážky",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "nechcem strihat, iba bradu",
+"ocakavane": "cena-brada",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "brodáč",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 1.03,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sk",
+"otazka": "bradu nechajte tak, len vlasy",
+"ocakavane": "cena-strih",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "podnikateľ",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.826,
+"text": "značky produktov",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sk",
+"otazka": "pes je chlpaty ako ja, ostrihate aj jeho?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "majiteľ psa",
+"pozn": "mimo ponuky",
+"typ": "fallback",
+"id": null,
+"ms": 1.576,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "depilacia chrbta voskom kolko",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "kulturista",
+"pozn": "nie depilácia uší a nosa 5,50 €",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 0.935,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sk",
+"otazka": "upravite obocie mojej manzelke? sedi vedla mna",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "manžel",
+"pozn": "damske – nie 3 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 2.704,
+"text": "Dámske strihy na webe neuvádzame.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sk",
+"otazka": "strih plus farbenie vlasov dokopy kolko",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"farbenie-vlasov",
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "dve-sluzby",
+"kto": "študent",
+"pozn": "farbenie robí Romana v samostatnom systéme",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 3.312,
+"kand": [
+"farbenie-vlasov",
+"cena-strih",
+"cena-dlhe",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "Dobrý den, kolik u vás stojí normální pánský střih?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "turista z Brna",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 4.092,
+"text": "Pánský střih 18 €",
+"vyrez": {
+"skupina": "Střih",
+"riadky": [
+"*Pánský střih 40 min 18 €",
+"Pánský střih a úprava vousů 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "máte v neděli otevřeno? jedem přes nitru",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "turista",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "vyber",
+"id": "hodiny",
+"ms": 3.245,
+"kand": [
+"hodiny"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "kde vás najdu, napište mi adresu pro navigaci",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "řidič",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "vyber",
+"id": "adresa",
+"ms": 3.571,
+"kand": [
+"adresa",
+"ceny-konecne"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "jak se k vám objednám, telefonem nebo online?",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "vyber",
+"id": "online",
+"ms": 1.96,
+"kand": [
+"online",
+"telefon",
+"rezervacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "střih + vousy dohromady kolik dělá",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "podnikatel",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 2.402,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "jen zastřihnout plnovous, za kolik?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "vousáč",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 2.017,
+"text": "Úprava vousů 15 €",
+"vyrez": {
+"skupina": "Vousy a holení",
+"riadky": [
+"*Úprava vousů 20 min 15 €",
+"Holení dohladka Hot Towel 30 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "vlasy mám delší než 10 cm, je to dražší?",
+"ocakavane": "cena-dlhe",
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:541",
+"typ": "vyber",
+"id": "cena-dlhe",
+"ms": 2.495,
+"kand": [
+"cena-dlhe"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "stříháte malé kluky? synovi je 5",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "máma",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "vyber",
+"id": "deti",
+"ms": 2.085,
+"kand": [
+"deti",
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "holení do hladka s horkým ručníkem, cena",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "důchodce",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 1.74,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "chci se nechat oholit dohola, kolik to stojí",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "voják",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 1.511,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "barvení šedivých vousů děláte?",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "důchodce",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 1.07,
+"text": "Barvení vousů 10 €",
+"vyrez": {
+"skupina": "Vousy a holení",
+"riadky": [
+"Holení dohladka Hot Towel 30 min 15 €",
+"*Barvení vousů 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "jak dlouho trvá pánský střih",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "manažer",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.816,
+"text": "Pánský střih 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "cs",
+"otazka": "dejte mi na vás číslo",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "důchodce",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.774,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "kdo u vás dělá melír a trvalou",
+"ocakavane": "farbenie-vlasov",
+"druh": "bezna",
+"kto": "babička",
+"zdroj": "barbershop-30/index.html:484",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 0.845,
+"text": "Barvení, melír a trvalou dělá Romana. / Dělá je Romana a rezervují se v samostatném systému, kde najdeš i jejich ceny.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "máte instáč?",
+"ocakavane": "socialne",
+"druh": "bezna",
+"kto": "teenager",
+"zdroj": "barbershop-30/index.html:768",
+"typ": "odpoved",
+"id": "socialne",
+"ms": 0.266,
+"text": "Aktuální střihy a dění v barbershopu ukazujeme na Instagramu. / @barbershop30_nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "kolik máte křesel? abych nečekal",
+"ocakavane": "kresla",
+"druh": "bezna",
+"kto": "manažer",
+"zdroj": "barbershop-30/index.html:838",
+"typ": "odpoved",
+"id": "kresla",
+"ms": 1.211,
+"text": "8 křesel",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "cs",
+"otazka": "děkuji moc, nashledanou",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "důchodce",
+"typ": "fallback",
+"id": null,
+"ms": 0.6,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "pardon, omyl",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "student",
+"typ": "fallback",
+"id": null,
+"ms": 0.406,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "kolik stojí střih pro manželku, má mikádo",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "manžel",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.42,
+"text": "Dámské střihy na webu neuvádíme.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "dcera chce zastřihnout ofinu, jde to?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "máma",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.265,
+"text": "Dámské střihy na webu neuvádíme.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "jak dlouho trvá holení hlavy?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"hlava"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "voják",
+"pozn": "nesmí přijít 40/20 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.633,
+"text": "Oholení hlavy 25 min",
+"sluzba": "hlava",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "cs",
+"otazka": "jak dlouho trvá balíček 1",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"balicky"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "ženich",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.35,
+"text": "Balíček 1 65 min / Ultra inclusive Barbershop30 80 min",
+"sluzba": "balicky",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "cs",
+"otazka": "prodáváte vosk na vlasy?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "teenager",
+"pozn": "produkty – ne depilace voskem",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.844,
+"text": "značky produktů",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "olej na vousy kolik stojí",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "vousáč",
+"pozn": "produkty – ne úprava brady",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.705,
+"text": "značky produktů",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "můžu platit kartou nebo jen hotově?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "turista",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.798,
+"text": "způsob platby",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "dárkový poukaz na holení pro tátu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "dcera",
+"pozn": "poukazky – ne 15 €",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.549,
+"text": "dárkové poukazy",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "přijedete stříhat do domova důchodců?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "sestřička",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 2.68,
+"text": "Služby mimo provozovnu na webu neuvádíme.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "střih nechci, jen vousy",
+"ocakavane": "cena-brada",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "vousáč",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 1.78,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"cena-strih",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "cs",
+"otazka": "kde se u vás dá zaparkovat",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "řidič",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 1.146,
+"text": "parkování",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "vnukovi je 11, kolik zaplatí?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "babička",
+"pozn": "vek",
+"typ": "nevieme",
+"id": "cena-ina-sluzba",
+"ms": 1.848,
+"text": "Tuto službu v ceníku nemůžu najít; podívej se na celý ceník.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "dekuji, jste zlatí",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "babička",
+"pozn": "bez diakritiky",
+"typ": "fallback",
+"id": null,
+"ms": 0.486,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "cs",
+"otazka": "jak dlouho trvá střih pro kluka",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"deti"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "máma",
+"pozn": "stránka 45 min; 40 min je chyba",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.658,
+"text": "Střih pro malé gentlemany 45 min",
+"sluzba": "deti",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet bei Ihnen ein ganz normaler Herrenhaarschnitt?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "Tourist aus Wien",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 3.443,
+"kand": [
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Bis wann haben Sie samstags auf?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "Rentner",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.246,
+"text": "Mo–Fr 9:00–19:00 / Sa 9:00–14:00 / So geschlossen",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Wo genau ist der Laden? Straße und Hausnummer bitte",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "Tourist",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 2.683,
+"text": "Leistungen außerhalb des Barbershops nennen wir auf der Website nicht.",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "de",
+"otazka": "Kann man den Termin auch online buchen, auch nachts?",
+"ocakavane": "online",
+"prijatelne": [
+"rezervacia"
+],
+"druh": "bezna",
+"kto": "Student",
+"zdroj": "barbershop-30/index.html:839",
+"typ": "vyber",
+"id": "rezervacia",
+"ms": 2.428,
+"kand": [
+"rezervacia",
+"online"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Haare und Bart zusammen – was kostet das?",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "Geschäftsmann",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 2.708,
+"kand": [
+"cena-strih-brada",
+"cena-brada",
+"farbenie-brady",
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Nur den Bart in Form bringen, Preis?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "Bartträger",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 2.058,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Nassrasur mit heißem Handtuch, wie teuer?",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "Rentner",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 2.769,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Ich will eine Glatze, was kostet Kopf rasieren?",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "Fußballfan",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 2.835,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Mein Sohn ist 6 – schneiden Sie auch Kinder?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "Mutter",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.721,
+"text": "Schnitt für kleine Gentlemen 15 € / Klassischer Schnitt oder Fade, auf Wunsch ein kreatives Ornament, Waschen und Styling – für Jungs bis 10 Jahre.",
+"vyrez": {
+"skupina": "Schnitt",
+"riadky": [
+"Herrenhaarschnitt – Haarlänge über 10 cm 60 Min. 22 €",
+"*Schnitt für kleine Gentlemen 45 Min. 15 €",
+"Kopfrasur 25 Min. 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Bart färben, was verlangen Sie dafür?",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "Rentner",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "vyber",
+"id": "farbenie-brady",
+"ms": 2.926,
+"kand": [
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Wie lange dauert ein Herrenhaarschnitt ungefähr?",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "Geschäftsmann",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.873,
+"text": "Herrenhaarschnitt 40 Min.",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "de",
+"otazka": "Ihre Telefonnummer bitte",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "Rentner",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.736,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Haben Sie eine E-Mail-Adresse?",
+"ocakavane": "email",
+"druh": "bezna",
+"kto": "Geschäftsmann",
+"zdroj": "barbershop-30/index.html:828",
+"typ": "vyber",
+"id": "adresa",
+"ms": 0.526,
+"kand": [
+"adresa",
+"email"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Augenbrauen zupfen machen Sie auch?",
+"ocakavane": "obocie",
+"druh": "bezna",
+"kto": "Student",
+"zdroj": "barbershop-30/index.html:613",
+"typ": "odpoved",
+"id": "obocie",
+"ms": 0.831,
+"text": "Augenbrauenkorrektur 3 € / Augenbrauenfärbung 5 €",
+"vyrez": {
+"skupina": "Extras",
+"riadky": [
+"Hautpflege PREMIUM 30 Min. 21,50 €",
+"*Augenbrauenkorrektur 5 Min. 3 €",
+"Ohren- und Nasenwaxing 10 Min. 5,50 €",
+"Kreatives Haar-Ornament 10 Min. 4 €",
+"*Augenbrauenfärbung 10 Min. 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Nasenhaare und Ohrhaare entfernen?",
+"ocakavane": "depilacia",
+"druh": "bezna",
+"kto": "Rentner",
+"zdroj": "barbershop-30/index.html:619",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 1.346,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "de",
+"otazka": "Gibt es Kaffee beim Warten?",
+"ocakavane": "kava",
+"druh": "bezna",
+"kto": "Tourist",
+"zdroj": "barbershop-30/index.html:287",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.087,
+"text": "Hinten wartet Kaffee auf dich. / Sessel, eine Retro-Zapfsäule und eine bunte Bulldogge. Kaffee und Mineralwasser sind gratis.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "de",
+"otazka": "Danke schön, tschüss!",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "Tourist",
+"typ": "zdvorilost",
+"id": null,
+"ms": 0.073,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Entschuldigung, falsch getippt",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "Rentner",
+"typ": "fallback",
+"id": null,
+"ms": 1.482,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Wie lange dauert das Bartfärben?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"farbenie-brady"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "Rentner",
+"pozn": "nicht 20 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 1.054,
+"text": "Bartfärbung 30 Min.",
+"sluzba": "farbenie-brady",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "de",
+"otazka": "Wie lange dauert eine Nassrasur?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"holenie"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "Geschäftsmann",
+"pozn": "nicht 40/20 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.767,
+"text": "Hot Towel Glattrasur 30 Min.",
+"sluzba": "holenie",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "de",
+"otazka": "Was kostet ein Haarschnitt für meine Frau?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "Ehemann",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.296,
+"text": "Damenhaarschnitte nennen wir auf der Website nicht.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Verkaufen Sie Bartöl?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "Bartträger",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.376,
+"text": "Produktmarken",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Bartbalsam Preis?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "Bartträger",
+"pozn": "produkty – nicht 15 €",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.21,
+"text": "Produktmarken",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Kann ich mit Karte zahlen?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "Tourist",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.108,
+"text": "Zahlungsarten",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Haarschnittgutschein für meinen Vater",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "Tochter",
+"pozn": "poukazky – nicht 18 €",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.792,
+"text": "Gutscheine",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Gibt es Parkplätze in der Nähe?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "Autofahrer",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.934,
+"text": "Parken",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Kommen Sie zum Haareschneiden auch ins Hotel?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "Tourist",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 1.967,
+"text": "Leistungen außerhalb des Barbershops nennen wir auf der Website nicht.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Nicht den Bart, nur die Haare bitte",
+"ocakavane": "cena-strih",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "Geschäftsmann",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.359,
+"text": "Produktmarken",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "de",
+"otazka": "Ist der Salon rollstuhlgerecht?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "Rollstuhlfahrer",
+"pozn": "bezbarierovy",
+"typ": "nevieme",
+"id": "bezbarierovy",
+"ms": 1.539,
+"text": "barrierefreier Zugang",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Spricht dort jemand Deutsch?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "Tourist",
+"pozn": "jazyky-tim",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 2.314,
+"text": "Sprachen der Barber",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Haarschnitt für meine Tochter, 7 Jahre",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "Mutter",
+"pozn": "damske – nicht 15 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.369,
+"text": "Damenhaarschnitte nennen wir auf der Website nicht.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "de",
+"otazka": "Kopfrasur mit Rasiermesser, Preis?",
+"ocakavane": "hlava",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "Fußballfan",
+"zdroj": "barbershop-30/index.html:553",
+"pozn": "nicht Hot Towel 15 €",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 1.201,
+"text": "Kopfrasur 13 €",
+"vyrez": {
+"skupina": "Schnitt",
+"riadky": [
+"Schnitt für kleine Gentlemen 45 Min. 15 €",
+"*Kopfrasur 25 Min. 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "hey how much is a regular mens haircut",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "Erasmus student",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 1.854,
+"text": "Men's haircut 18 €",
+"vyrez": {
+"skupina": "Cut",
+"riadky": [
+"*Men's haircut 40 min 18 €",
+"Men's haircut and beard trim 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "what time u close on saturdays?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "tourist",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.274,
+"text": "Mon–Fri 9:00–19:00 / Sat 9:00–14:00 / Sun closed",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "whats ur address, need it for google maps",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "tourist",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "vyber",
+"id": "adresa",
+"ms": 0.9,
+"kand": [
+"adresa"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "how do i book an appointment",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "expat",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.061,
+"text": "Call the front desk on weekdays from 9:00 to 19:00. Or simply book your appointment online through our booking system.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "haircut + beard trim combo price?",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "business traveler",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 2.163,
+"text": "product brands",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "en",
+"otazka": "just a beard tidy up, how much",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "bearded guy",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 1.633,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "hot towel shave, how much is it",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "tourist",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "odpoved",
+"id": "holenie",
+"ms": 0.743,
+"text": "Hot Towel clean shave 15 €",
+"vyrez": {
+"skupina": "Beard and shave",
+"riadky": [
+"Beard trim 20 min 15 €",
+"*Hot Towel clean shave 30 min 15 €",
+"Beard colouring 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "how much to shave my head completely bald",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 2.63,
+"kand": [
+"hlava",
+"holenie",
+"balicky"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "my boy is 4, do you do kids cuts?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "mum with toddler",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.698,
+"text": "Little gentlemen's cut 15 € / Classic cut or fade, optionally a creative pattern, wash and styling – for boys up to 10 years old.",
+"vyrez": {
+"skupina": "Cut",
+"riadky": [
+"Men's haircut – hair over 10 cm 60 min 22 €",
+"*Little gentlemen's cut 45 min 15 €",
+"Head shave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "guy with hair past shoulders, is it more expensive",
+"ocakavane": "cena-dlhe",
+"druh": "bezna",
+"kto": "metalhead",
+"zdroj": "barbershop-30/index.html:541",
+"typ": "fallback",
+"id": null,
+"ms": 1.892,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "en",
+"otazka": "how long does a haircut take roughly",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "business traveler",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "vyber",
+"id": "trvanie",
+"ms": 2.564,
+"kand": [
+"cena-strih",
+"cena-strih-brada"
+],
+"cas": 1,
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "phone number pls",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "tourist",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.976,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "is the coffee free?",
+"ocakavane": "kava",
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:287",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.36,
+"text": "In the back, coffee's waiting. / Armchairs, a retro petrol pump and a colourful bulldog. Coffee and mineral water are on the house.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "can I choose which barber cuts me",
+"ocakavane": "vyber-barbera",
+"prijatelne": [
+"tim"
+],
+"druh": "bezna",
+"kto": "expat",
+"zdroj": "barbershop-30/index.html:312",
+"typ": "vyber",
+"id": "tim",
+"ms": 1.281,
+"kand": [
+"tim",
+"vyber-barbera"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "are the prices final or extra charges at the end",
+"ocakavane": "ceny-konecne",
+"prijatelne": [
+"cena-strih"
+],
+"druh": "bezna",
+"kto": "tourist",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "vyber",
+"id": "ceny-konecne",
+"ms": 0.999,
+"kand": [
+"ceny-konecne"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "what do I get in the ultra inclusive package",
+"ocakavane": "ultra",
+"druh": "bezna",
+"kto": "groom",
+"zdroj": "barbershop-30/index.html:595",
+"typ": "odpoved",
+"id": "ultra",
+"ms": 1.316,
+"text": "Ultra inclusive Barbershop30 40 € / Everything in Package 1, plus a facial steam, a scrub, a relaxing mask of your choice and a glass of whisky.",
+"vyrez": {
+"skupina": "Packages",
+"riadky": [
+"Package 1 65 min 30 €",
+"*Ultra inclusive Barbershop30 80 min 40 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "en",
+"otazka": "sorry wrong chat",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "student",
+"typ": "nevieme",
+"id": "whatsapp",
+"ms": 0.42,
+"text": "WhatsApp and similar apps",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "thanks a lot!!",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "tourist",
+"typ": "fallback",
+"id": null,
+"ms": 0.236,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "cheers mate",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "British tourist",
+"typ": "fallback",
+"id": null,
+"ms": 0.702,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "how much for my girlfriend's haircut",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "boyfriend",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.227,
+"text": "We don't list women's haircuts on the website.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "do you cut girls hair? my daughter is 6",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "mum",
+"pozn": "damske – not 15 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.102,
+"text": "We don't list women's haircuts on the website.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "how long is a head shave",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"hlava"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "student",
+"pozn": "not 40 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.505,
+"text": "Head shave 25 min",
+"sluzba": "hlava",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "en",
+"otazka": "how long does the package take",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"balicky"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "groom",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.646,
+"text": "Package 1 65 min / Ultra inclusive Barbershop30 80 min",
+"sluzba": "balicky",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "en",
+"otazka": "do you sell beard oil",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "bearded guy",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.079,
+"text": "product brands",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "beard wax price",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "bearded guy",
+"pozn": "produkty – not waxing 5,50 €",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.538,
+"text": "product brands",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "can i pay with card",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "tourist",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.674,
+"text": "payment methods",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "could a barber come to my flat?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "expat with broken leg",
+"pozn": "mimo",
+"typ": "vyber",
+"id": "tim",
+"ms": 1.457,
+"kand": [
+"tim"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "en",
+"otazka": "can I just walk in without booking",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "tourist",
+"pozn": "bez-objednania",
+"typ": "nevieme",
+"id": "bez-objednania",
+"ms": 1.172,
+"text": "coming without an appointment",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "not the beard, just eyebrows",
+"ocakavane": "obocie",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:613",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 0.524,
+"kand": [
+"cena-brada",
+"obocie",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "en",
+"otazka": "back waxing how much",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "gym guy",
+"pozn": "not ear/nose waxing",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 0.751,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "en",
+"otazka": "gift voucher for my dad",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "daughter",
+"pozn": "poukazky",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.55,
+"text": "gift vouchers",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "en",
+"otazka": "is it wheelchair accessible",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "wheelchair user",
+"pozn": "bezbarierovy",
+"typ": "nevieme",
+"id": "bezbarierovy",
+"ms": 1.23,
+"text": "barrier-free access",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "Jó napot, mennyibe kerül egy sima férfi hajvágás?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "egyetemista",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 2.121,
+"text": "Férfi hajvágás 18 €",
+"vyrez": {
+"skupina": "Hajvágás",
+"riadky": [
+"*Férfi hajvágás 40 perc 18 €",
+"Férfi hajvágás és szakálligazítás 60 perc 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Szombaton meddig vannak nyitva?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 0.816,
+"text": "H–P 9:00–19:00 / Szo 9:00–14:00 / V zárva",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "Mi a pontos cím? Autóval jövök Komáromból",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "autós",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "fallback",
+"id": null,
+"ms": 1.063,
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "fallback"
+},
+{
+"jazyk": "hu",
+"otazka": "Hogyan tudok időpontot foglalni?",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.764,
+"text": "Hívd a recepciót hétköznap 9:00 és 19:00 között. Vagy foglalj időpontot online, egyszerűen a foglalási rendszerünkben.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "haj és szakáll egyszerre mennyi",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "vállalkozó",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.474,
+"text": "termékmárkák",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "hu",
+"otazka": "csak a szakállamat igazítanák meg, mennyi?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "szakállas",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 1.536,
+"text": "Szakálligazítás 15 €",
+"vyrez": {
+"skupina": "Szakáll és borotválás",
+"riadky": [
+"*Szakálligazítás 20 perc 15 €",
+"Simára borotválás Hot Towel 30 perc 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "borotválás forró törölközővel ára",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 1.571,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "kopaszra borotválnák a fejem, mennyibe kerül?",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "egyetemista",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 1.933,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "a fiam 8 éves, őt is levágják?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "anyuka",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "vyber",
+"id": "deti",
+"ms": 1.123,
+"kand": [
+"deti"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "szakállfestés mennyi",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 0.674,
+"text": "Szakállfestés 10 €",
+"vyrez": {
+"skupina": "Szakáll és borotválás",
+"riadky": [
+"Simára borotválás Hot Towel 30 perc 15 €",
+"*Szakállfestés 30 perc 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "mennyi ideig tart egy hajvágás?",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "vállalkozó",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.793,
+"text": "Férfi hajvágás 40 perc",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "hu",
+"otazka": "telefonszámot kérek",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.709,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "ki csinál melírt és dauert?",
+"ocakavane": "farbenie-vlasov",
+"druh": "bezna",
+"kto": "nagymama",
+"zdroj": "barbershop-30/index.html:484",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 1.209,
+"kand": [
+"farbenie-vlasov",
+"tim",
+"vyber-barbera"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "szemöldököt is igazítanak?",
+"ocakavane": "obocie",
+"druh": "bezna",
+"kto": "egyetemista",
+"zdroj": "barbershop-30/index.html:613",
+"typ": "odpoved",
+"id": "obocie",
+"ms": 0.779,
+"text": "Szemöldökigazítás 3 € / Szemöldökfestés 5 €",
+"vyrez": {
+"skupina": "Extrák",
+"riadky": [
+"PREMIUM bőrápolás 30 perc 21,50 €",
+"*Szemöldökigazítás 5 perc 3 €",
+"Fül- és orrgyantázás 10 perc 5,50 €",
+"Kreatív hajminta 10 perc 4 €",
+"*Szemöldökfestés 10 perc 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "orrszőr és fülszőr eltávolítás viasszal",
+"ocakavane": "depilacia",
+"druh": "bezna",
+"kto": "nyugdíjas",
+"zdroj": "barbershop-30/index.html:619",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 1.213,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "hu",
+"otazka": "mióta működik az üzlet?",
+"ocakavane": "odkedy",
+"druh": "bezna",
+"kto": "helyi lakos",
+"zdroj": "barbershop-30/index.html:762",
+"typ": "odpoved",
+"id": "odkedy",
+"ms": 0.725,
+"text": "2019 óta a nyitrai Mostná 30 alatt",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "hu",
+"otazka": "köszönöm szépen!",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "nyugdíjas",
+"typ": "fallback",
+"id": null,
+"ms": 0.315,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "bocsánat, elnyomtam",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "egyetemista",
+"typ": "fallback",
+"id": null,
+"ms": 1.895,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "mennyibe kerül a feleségem hajvágása?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "férj",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.459,
+"text": "Női hajvágást az oldalon nem tüntetünk fel.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "a lányom haját is levágják? 9 éves",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "anyuka",
+"pozn": "damske – nem 15 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 0.906,
+"text": "Női hajvágást az oldalon nem tüntetünk fel.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "mennyi ideig tart a borotválás?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"holenie"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "vállalkozó",
+"pozn": "nem 40/20 perc",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.463,
+"text": "Simára borotválás Hot Towel 30 perc",
+"sluzba": "holenie",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "hu",
+"otazka": "mennyi ideig tart a fejborotválás?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"hlava"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "egyetemista",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.513,
+"text": "Fejborotválás 25 perc",
+"sluzba": "hlava",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "hu",
+"otazka": "árulnak szakállolajat?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "szakállas",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.826,
+"text": "termékmárkák",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "fizethetek kártyával?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "turista",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.587,
+"text": "fizetési mód",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "ajándékutalványt lehet venni hajvágásra?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "feleség",
+"pozn": "poukazky – nem 18 €",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.883,
+"text": "ajándékutalvány",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "beszél valaki magyarul?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "nyugdíjas",
+"pozn": "jazyky-tim",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.031,
+"text": "a borbélyok nyelvei",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "van parkoló a közelben?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "autós",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.577,
+"text": "parkolás",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "nem kell hajvágás, csak szakáll",
+"ocakavane": "cena-brada",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "szakállas",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 0.907,
+"kand": [
+"cena-strih-brada",
+"cena-strih",
+"cena-brada",
+"farbenie-brady"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "volba-nizko"
+},
+{
+"jazyk": "hu",
+"otazka": "házhoz is jönnek? apám nem tud járni",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "fia",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 1.604,
+"text": "Az üzleten kívüli szolgáltatásokat az oldalon nem tüntetjük fel.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "az unokám 13 éves, mennyit fizet?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "nagymama",
+"pozn": "vek",
+"typ": "nevieme",
+"id": "vek",
+"ms": 1.486,
+"text": "10 év feletti fiúk hajvágását az oldalon nem tüntetjük fel.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "szakállbalzsam ára",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "szakállas",
+"pozn": "produkty – nem szakálligazítás",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.607,
+"text": "termékmárkák",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "hu",
+"otazka": "köszi, szia",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "tinédzser",
+"typ": "zdvorilost",
+"id": null,
+"ms": 0.024,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "Dzień dobry, ile kosztuje zwykłe strzyżenie męskie?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "turysta z Krakowa",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 4.497,
+"text": "Strzyżenie męskie 18 €",
+"vyrez": {
+"skupina": "Strzyżenie",
+"riadky": [
+"*Strzyżenie męskie 40 min 18 €",
+"Strzyżenie męskie i trymowanie brody 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "Do której jesteście otwarci w sobotę?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "emeryt",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.934,
+"text": "Pn–Pt 9:00–19:00 / Sob 9:00–14:00 / Nd zamknięte",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "jaki macie adres? jestem w centrum nitry",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "turysta",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 2.826,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "jak się umówić na wizytę",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.373,
+"text": "języki barberów",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "pl",
+"otazka": "strzyżenie plus broda razem ile",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "biznesmen",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "vyber",
+"id": "cena-strih-brada",
+"ms": 4.041,
+"kand": [
+"cena-strih-brada",
+"cena-strih",
+"cena-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "tylko trymowanie brody, cena?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "brodacz",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 2.255,
+"text": "Trymowanie brody 15 €",
+"vyrez": {
+"skupina": "Broda i golenie",
+"riadky": [
+"*Trymowanie brody 20 min 15 €",
+"Golenie na gładko Hot Towel 30 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "golenie brzytwą z gorącym ręcznikiem ile kosztuje",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "emeryt",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 2.384,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "ile za łeb na zero, golenie głowy",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "kibic",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 2.537,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "syn ma 9 lat, strzyżecie dzieci?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "mama",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.783,
+"text": "Strzyżenie dla małych dżentelmenów 15 € / Klasyczne strzyżenie lub fade, ewentualnie kreatywny wzór, mycie i stylizacja – dla chłopców do 10 lat.",
+"vyrez": {
+"skupina": "Strzyżenie",
+"riadky": [
+"Strzyżenie męskie – włosy dłuższe niż 10 cm 60 min 22 €",
+"*Strzyżenie dla małych dżentelmenów 45 min 15 €",
+"Golenie głowy 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "farbowanie brody cena",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "emeryt",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 1.128,
+"text": "Farbowanie brody 10 €",
+"vyrez": {
+"skupina": "Broda i golenie",
+"riadky": [
+"Golenie na gładko Hot Towel 30 min 15 €",
+"*Farbowanie brody 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "ile trwa strzyżenie męskie",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "biznesmen",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.8,
+"text": "Strzyżenie męskie 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "pl",
+"otazka": "poproszę numer telefonu",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "emeryt",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 1.103,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "co zawiera pakiet 1?",
+"ocakavane": "balicky",
+"druh": "bezna",
+"kto": "pan młody",
+"zdroj": "barbershop-30/index.html:589",
+"typ": "vyber",
+"id": "balicky",
+"ms": 1.293,
+"kand": [
+"balicky",
+"co-je-v-strihu"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "czy kawa jest za darmo",
+"ocakavane": "kava",
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:287",
+"typ": "odpoved",
+"id": "kava",
+"ms": 0.523,
+"text": "Z tyłu czeka na ciebie kawa. / Fotele, retro dystrybutor paliwa i kolorowy buldog. Kawa i woda mineralna są za darmo.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "od kiedy działacie na mostnej?",
+"ocakavane": "odkedy",
+"druh": "bezna",
+"kto": "turysta",
+"zdroj": "barbershop-30/index.html:762",
+"typ": "vyber",
+"id": "odkedy",
+"ms": 1.367,
+"kand": [
+"odkedy",
+"adresa"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "pielęgnacja twarzy, maseczka i peeling, macie?",
+"ocakavane": "plet",
+"druh": "bezna",
+"kto": "biznesmen",
+"zdroj": "barbershop-30/index.html:607",
+"typ": "odpoved",
+"id": "plet",
+"ms": 1.517,
+"text": "Pielęgnacja skóry PREMIUM 21,50 €",
+"vyrez": {
+"skupina": "Dodatki",
+"riadky": [
+"*Pielęgnacja skóry PREMIUM 30 min 21,50 €",
+"Regulacja brwi 5 min 3 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "pl",
+"otazka": "dziękuję bardzo",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "emeryt",
+"typ": "fallback",
+"id": null,
+"ms": 1.588,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "przepraszam, pomyłka",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "student",
+"typ": "fallback",
+"id": null,
+"ms": 0.598,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "ile kosztuje strzyżenie dla mojej żony",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "mąż",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.948,
+"text": "Strzyżeń damskich nie podajemy na stronie.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "córka ma 5 lat, obetniecie jej grzywkę?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "mama",
+"pozn": "damske – nie 15 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.855,
+"text": "Strzyżeń damskich nie podajemy na stronie.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "ile trwa golenie na mokro",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"holenie"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "biznesmen",
+"pozn": "nie 40/20 min",
+"typ": "vyber",
+"id": "trvanie",
+"ms": 0.696,
+"kand": [
+"holenie",
+"hlava"
+],
+"cas": 1,
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "pl",
+"otazka": "ile trwa farbowanie brody",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"farbenie-brady"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "emeryt",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.765,
+"text": "Farbowanie brody 30 min",
+"sluzba": "farbenie-brady",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "pl",
+"otazka": "sprzedajecie olejek do brody?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "brodacz",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.372,
+"text": "marki produktów",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "można płacić kartą?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "turysta",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.602,
+"text": "sposób płatności",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "bon podarunkowy na strzyżenie dla taty",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "córka",
+"pozn": "poukazky",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.224,
+"text": "bony podarunkowe",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "dojeżdżacie do klienta do domu?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "emeryt",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 1.086,
+"text": "Usług poza salonem nie podajemy na stronie.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "jest gdzie zaparkować?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "kierowca",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 1.509,
+"text": "parkowanie",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "nie brodę, tylko włosy",
+"ocakavane": "cena-strih",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.615,
+"text": "marki produktów",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "pl",
+"otazka": "ktoś mówi po polsku?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "turysta",
+"pozn": "jazyky-tim",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.55,
+"text": "języki barberów",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "wosk do włosów ile kosztuje",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "nastolatek",
+"pozn": "produkty – nie depilacja",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.342,
+"text": "marki produktów",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "pl",
+"otazka": "depilacja pleców woskiem",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "kulturysta",
+"pozn": "nie uszy i nos",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 1.063,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "pl",
+"otazka": "ile trwa strzyżenie długich włosów",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"cena-dlhe"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "metalowiec",
+"pozn": "strona 60 min; 40 min to błąd",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 1.259,
+"text": "Strzyżenie męskie – włosy dłuższe niż 10 cm 60 min",
+"sluzba": "cena-dlhe",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sr",
+"otazka": "Dobar dan, koliko košta obično muško šišanje?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "student iz Novog Sada",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 2.142,
+"text": "Muško šišanje 18 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"*Muško šišanje 40 min 18 €",
+"Muško šišanje i uređivanje brade 60 min 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "Do kada radite subotom?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "penzioner",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 1.299,
+"text": "Pon–Pet 9:00–19:00 / Sub 9:00–14:00 / Ned zatvoreno",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "koja vam je tačna adresa",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "turista",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.681,
+"text": "Mostná 30, 949 01 Nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "kako da zakažem termin",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "radnik u Nitri",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 0.065,
+"text": "Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin online, jednostavno preko našeg sistema za rezervacije.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "šišanje i brada zajedno koliko",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "radnik u Nitri",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 1.618,
+"text": "Muško šišanje i uređivanje brade 28 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Muško šišanje 40 min 18 €",
+"*Muško šišanje i uređivanje brade 60 min 28 €",
+"Muško šišanje – kosa duža od 10 cm 60 min 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "samo sređivanje brade, cena?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "bradonja",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "odpoved",
+"id": "cena-brada",
+"ms": 2.129,
+"text": "Uređivanje brade 15 €",
+"vyrez": {
+"skupina": "Brada i brijanje",
+"riadky": [
+"*Uređivanje brade 20 min 15 €",
+"Glatko brijanje Hot Towel 30 min 15 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "brijanje britvom sa toplim peškirom koliko",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "penzioner",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 1.824,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "sr",
+"otazka": "obrijati glavu na ćelavo, koliko košta",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "odpoved",
+"id": "hlava",
+"ms": 1.548,
+"text": "Brijanje glave 13 €",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Šišanje za male džentlmene 45 min 15 €",
+"*Brijanje glave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "sin ima 6 godina, šišate li decu?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "mama",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "odpoved",
+"id": "deti",
+"ms": 1.377,
+"text": "Šišanje za male džentlmene 15 € / Klasično šišanje ili fade, po želji kreativni ornament, pranje i stajling – za dečake do 10 godina.",
+"vyrez": {
+"skupina": "Šišanje",
+"riadky": [
+"Muško šišanje – kosa duža od 10 cm 60 min 22 €",
+"*Šišanje za male džentlmene 45 min 15 €",
+"Brijanje glave 25 min 13 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "farbanje brade cena",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "penzioner",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 0.892,
+"text": "Farbanje brade 10 €",
+"vyrez": {
+"skupina": "Brada i brijanje",
+"riadky": [
+"Glatko brijanje Hot Towel 30 min 15 €",
+"*Farbanje brade 30 min 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "koliko traje muško šišanje",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "radnik u Nitri",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 1.723,
+"text": "Muško šišanje 40 min",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sr",
+"otazka": "broj telefona molim",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "penzioner",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 0.944,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "imate li instagram",
+"ocakavane": "socialne",
+"druh": "bezna",
+"kto": "tinejdžer",
+"zdroj": "barbershop-30/index.html:768",
+"typ": "odpoved",
+"id": "socialne",
+"ms": 0.576,
+"text": "Aktuelne frizure i dešavanja u lokalu delimo na Instagramu. / @barbershop30_nitra",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "ko radi pramenove i trajnu?",
+"ocakavane": "farbenie-vlasov",
+"druh": "bezna",
+"kto": "baka",
+"zdroj": "barbershop-30/index.html:484",
+"typ": "odpoved",
+"id": "farbenie-vlasov",
+"ms": 1.195,
+"text": "Farbanje, pramenove i trajnu radi Romana. / Radi ih Romana, a zakazuju se u posebnom sistemu, gde ćeš naći i njihove cene.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "mogu li da biram frizera?",
+"ocakavane": "vyber-barbera",
+"prijatelne": [
+"tim"
+],
+"druh": "bezna",
+"kto": "student",
+"zdroj": "barbershop-30/index.html:312",
+"typ": "odpoved",
+"id": "tim",
+"ms": 1.756,
+"text": "Pod brendom Barbershop 30 ovde radi tim barbera i barberki. / Svog čoveka biraš pri rezervaciji.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "da li su cene konačne?",
+"ocakavane": "ceny-konecne",
+"prijatelne": [
+"cena-strih"
+],
+"druh": "bezna",
+"kto": "penzioner",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "ceny-konecne",
+"ms": 0.618,
+"text": "Muško šišanje 18 €, sa uređivanjem brade 28 €. Cene su konačne.",
+"vyrez": null,
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "sr",
+"otazka": "hvala puno",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "penzioner",
+"typ": "fallback",
+"id": null,
+"ms": 0.34,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "izvinite, pogrešio sam",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "student",
+"typ": "fallback",
+"id": null,
+"ms": 0.463,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "koliko košta šišanje za moju ženu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "muž",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.412,
+"text": "Žensko šišanje ne navodimo na sajtu.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "da li šišate devojčice? ćerka ima 7",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "mama",
+"pozn": "damske – ne 15 €",
+"typ": "nevieme",
+"id": "damske",
+"ms": 1.4,
+"text": "Žensko šišanje ne navodimo na sajtu.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "koliko traje brijanje glave",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"hlava"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "student",
+"pozn": "ne 40 min",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.814,
+"text": "Brijanje glave 25 min",
+"sluzba": "hlava",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sr",
+"otazka": "koliko traje paket 1",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"balicky"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "mladoženja",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.619,
+"text": "Paket 1 65 min / Ultra inclusive Barbershop30 80 min",
+"sluzba": "balicky",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "sr",
+"otazka": "prodajete li ulje za bradu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "bradonja",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.254,
+"text": "brendovi proizvoda",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "mogu li da platim karticom",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "turista",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 1.008,
+"text": "način plaćanja",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "poklon vaučer za tatu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "ćerka",
+"pozn": "poukazky",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 0.725,
+"text": "poklon vaučeri",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "dolazite li na kućnu adresu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "penzioner",
+"pozn": "mimo",
+"typ": "vyber",
+"id": "adresa",
+"ms": 1.018,
+"kand": [
+"adresa"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sr",
+"otazka": "ima li parking blizu",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "vozač",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.49,
+"text": "parking",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "ne treba brada, samo kosa",
+"ocakavane": "cena-strih",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "radnik u Nitri",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 0.648,
+"text": "brendovi proizvoda",
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "nevieme"
+},
+{
+"jazyk": "sr",
+"otazka": "govori li neko srpski",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "radnik u Nitri",
+"pozn": "jazyky-tim",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 0.703,
+"text": "jezici barbera",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "radite li za praznike, za Božić?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "radnik u Nitri",
+"pozn": "sviatky",
+"typ": "nevieme",
+"id": "sviatky",
+"ms": 1.329,
+"text": "radno vreme za praznike",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "sr",
+"otazka": "depilacija leđa voskom",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "zlozene",
+"kto": "bodibilder",
+"pozn": "ne uši i nos",
+"typ": "vyber",
+"id": "depilacia",
+"ms": 1.907,
+"kand": [
+"depilacia"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "sr",
+"otazka": "balzam za bradu koliko košta",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "bradonja",
+"pozn": "produkty – ne 15 €",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.682,
+"text": "brendovi proizvoda",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "Добрий день, скільки коштує звичайна чоловіча стрижка?",
+"ocakavane": "cena-strih",
+"druh": "bezna",
+"kto": "біженець, працює в Нітрі",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "odpoved",
+"id": "cena-strih",
+"ms": 3.764,
+"text": "Чоловіча стрижка 18 €",
+"vyrez": {
+"skupina": "Стрижка",
+"riadky": [
+"*Чоловіча стрижка 40 хв 18 €",
+"Чоловіча стрижка й оформлення бороди 60 хв 28 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "До котрої ви працюєте в суботу?",
+"ocakavane": "hodiny",
+"druh": "bezna",
+"kto": "пенсіонер",
+"zdroj": "barbershop-30/index.html:829",
+"typ": "odpoved",
+"id": "hodiny",
+"ms": 2.94,
+"text": "Пн–Пт 9:00–19:00 / Сб 9:00–14:00 / Нд зачинено",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "яка у вас адреса?",
+"ocakavane": "adresa",
+"druh": "bezna",
+"kto": "турист",
+"zdroj": "barbershop-30/index.html:826",
+"typ": "odpoved",
+"id": "adresa",
+"ms": 0.503,
+"text": "Mostná 30, 949 01 Нітра",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "як до вас записатися?",
+"ocakavane": "rezervacia",
+"prijatelne": [
+"online"
+],
+"druh": "bezna",
+"kto": "студент",
+"zdroj": "barbershop-30/index.html:810",
+"typ": "odpoved",
+"id": "rezervacia",
+"ms": 1.209,
+"text": "Зателефонуй на рецепцію в будні з 9:00 до 19:00. Або забронюй час онлайн – просто через нашу систему бронювання.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "стрижка і борода разом скільки",
+"ocakavane": "cena-strih-brada",
+"druh": "bezna",
+"kto": "водій",
+"zdroj": "barbershop-30/index.html:537",
+"typ": "odpoved",
+"id": "cena-strih-brada",
+"ms": 3.597,
+"text": "Чоловіча стрижка й оформлення бороди 28 €",
+"vyrez": {
+"skupina": "Стрижка",
+"riadky": [
+"Чоловіча стрижка 40 хв 18 €",
+"*Чоловіча стрижка й оформлення бороди 60 хв 28 €",
+"Чоловіча стрижка – волосся довше 10 см 60 хв 22 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "тільки підрівняти бороду, ціна?",
+"ocakavane": "cena-brada",
+"druh": "bezna",
+"kto": "бородань",
+"zdroj": "barbershop-30/index.html:565",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 1.845,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "гоління небезпечною бритвою з гарячим рушником",
+"ocakavane": "holenie",
+"druh": "bezna",
+"kto": "пенсіонер",
+"zdroj": "barbershop-30/index.html:571",
+"typ": "vyber",
+"id": "holenie",
+"ms": 2.551,
+"kand": [
+"holenie",
+"hlava"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "поголити голову наголо скільки коштує",
+"ocakavane": "hlava",
+"druh": "bezna",
+"kto": "студент",
+"zdroj": "barbershop-30/index.html:553",
+"typ": "vyber",
+"id": "hlava",
+"ms": 3.715,
+"kand": [
+"hlava",
+"holenie"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "синові 7 років, стрижете дітей?",
+"ocakavane": "deti",
+"druh": "bezna",
+"kto": "мама",
+"zdroj": "barbershop-30/index.html:547",
+"typ": "vyber",
+"id": "deti",
+"ms": 3.607,
+"kand": [
+"deti"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "фарбування бороди ціна",
+"ocakavane": "farbenie-brady",
+"druh": "bezna",
+"kto": "пенсіонер",
+"zdroj": "barbershop-30/index.html:577",
+"typ": "odpoved",
+"id": "farbenie-brady",
+"ms": 2.269,
+"text": "Фарбування бороди 10 €",
+"vyrez": {
+"skupina": "Борода і гоління",
+"riadky": [
+"Гоління начисто Hot Towel 30 хв 15 €",
+"*Фарбування бороди 30 хв 10 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки триває чоловіча стрижка",
+"ocakavane": "trvanie",
+"druh": "bezna",
+"kto": "водій",
+"zdroj": "barbershop-30/index.html:530",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 1.379,
+"text": "Чоловіча стрижка 40 хв",
+"sluzba": "cena-strih",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "uk",
+"otazka": "дайте номер телефону",
+"ocakavane": "telefon",
+"druh": "bezna",
+"kto": "пенсіонер",
+"zdroj": "barbershop-30/index.html:827",
+"typ": "odpoved",
+"id": "telefon",
+"ms": 1.721,
+"text": "+421 951 267 203",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "хто робить мелірування?",
+"ocakavane": "farbenie-vlasov",
+"druh": "bezna",
+"kto": "бабуся",
+"zdroj": "barbershop-30/index.html:484",
+"typ": "vyber",
+"id": "farbenie-vlasov",
+"ms": 1.832,
+"kand": [
+"farbenie-vlasov"
+],
+"trieda": "OK",
+"podtrieda": "volba-top2"
+},
+{
+"jazyk": "uk",
+"otazka": "корекція брів у вас є?",
+"ocakavane": "obocie",
+"druh": "bezna",
+"kto": "студент",
+"zdroj": "barbershop-30/index.html:613",
+"typ": "odpoved",
+"id": "obocie",
+"ms": 1.201,
+"text": "Корекція брів 3 € / Фарбування брів 5 €",
+"vyrez": {
+"skupina": "Додаткові послуги",
+"riadky": [
+"Догляд за шкірою PREMIUM 30 хв 21,50 €",
+"*Корекція брів 5 хв 3 €",
+"Воскова депіляція вух і носа 10 хв 5,50 €",
+"Креативний орнамент на голові 10 хв 4 €",
+"*Фарбування брів 10 хв 5 €"
+]
+},
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "чи є кава поки чекаю?",
+"ocakavane": "kava",
+"druh": "bezna",
+"kto": "турист",
+"zdroj": "barbershop-30/index.html:287",
+"typ": "odpoved",
+"id": "kava",
+"ms": 1.568,
+"text": "У глибині тебе чекає кава. / Крісла, ретро-бензоколонка і кольоровий бульдог. Кава й мінералка безкоштовні.",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки у вас крісел?",
+"ocakavane": "kresla",
+"druh": "bezna",
+"kto": "водій",
+"zdroj": "barbershop-30/index.html:838",
+"typ": "odpoved",
+"id": "kresla",
+"ms": 0.094,
+"text": "8 крісел",
+"trieda": "OK",
+"podtrieda": "priama"
+},
+{
+"jazyk": "uk",
+"otazka": "дякую!",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "пенсіонер",
+"typ": "zdvorilost",
+"id": null,
+"ms": 0.026,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "вибачте, помилився",
+"ocakavane": "bez-ceny",
+"prijatelne": [
+"odovzdanie"
+],
+"druh": "pasca",
+"kategoria": "zdvorilost",
+"kto": "студент",
+"typ": "fallback",
+"id": null,
+"ms": 1.504,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки коштує стрижка для дружини",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "чоловік",
+"pozn": "damske",
+"typ": "nevieme",
+"id": "damske",
+"ms": 2.887,
+"text": "Жіночі стрижки на сайті не вказуємо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "доньці 6 років, підстрижете?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "мама",
+"pozn": "damske – не 15 €",
+"typ": "fallback",
+"id": null,
+"ms": 1.74,
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки триває гоління?",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"holenie"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "водій",
+"pozn": "не 40/20 хв",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.513,
+"text": "Гоління начисто Hot Towel 30 хв",
+"sluzba": "holenie",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки триває фарбування бороди",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"farbenie-brady"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "пенсіонер",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 0.967,
+"text": "Фарбування бороди 30 хв",
+"sluzba": "farbenie-brady",
+"trieda": "OK",
+"podtrieda": "trvanie"
+},
+{
+"jazyk": "uk",
+"otazka": "продаєте олію для бороди?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "бородань",
+"pozn": "produkty",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.176,
+"text": "бренди продуктів",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "можна оплатити карткою?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "турист",
+"pozn": "platba",
+"typ": "nevieme",
+"id": "platba",
+"ms": 0.78,
+"text": "спосіб оплати",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "подарунковий сертифікат для тата",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "донька",
+"pozn": "poukazky",
+"typ": "nevieme",
+"id": "poukazky",
+"ms": 1.164,
+"text": "подарункові сертифікати",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "виїжджаєте додому?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "miesto",
+"kto": "пенсіонер",
+"pozn": "mimo",
+"typ": "nevieme",
+"id": "mimo",
+"ms": 0.938,
+"text": "Послуги поза барбершопом на сайті не вказуємо.",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "де можна припаркуватися?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "водій",
+"pozn": "parkovanie",
+"typ": "nevieme",
+"id": "parkovanie",
+"ms": 0.062,
+"text": "паркування",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "не бороду, лише волосся",
+"ocakavane": "cena-strih",
+"druh": "pasca",
+"kategoria": "zapor",
+"kto": "студент",
+"zdroj": "barbershop-30/index.html:506",
+"typ": "vyber",
+"id": "cena-brada",
+"ms": 1.433,
+"kand": [
+"cena-brada",
+"cena-strih-brada",
+"farbenie-brady",
+"farbenie-vlasov"
+],
+"trieda": "ODOVZDANIE-NAVYSE",
+"podtrieda": "vyber-mimo"
+},
+{
+"jazyk": "uk",
+"otazka": "хтось говорить українською?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "nevieme",
+"kto": "біженець",
+"pozn": "jazyky-tim",
+"typ": "nevieme",
+"id": "jazyky-tim",
+"ms": 1.034,
+"text": "мови барберів",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "стрижка для мами, скільки?",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "osoba",
+"kto": "син",
+"pozn": "damske – не 18 €",
+"typ": "vyber",
+"id": "cena-strih",
+"ms": 1.586,
+"kand": [
+"cena-strih",
+"cena-strih-brada"
+],
+"trieda": "OK",
+"podtrieda": "vyber-neleg"
+},
+{
+"jazyk": "uk",
+"otazka": "бальзам для бороди ціна",
+"ocakavane": "odovzdanie",
+"druh": "pasca",
+"kategoria": "produkt",
+"kto": "бородань",
+"pozn": "produkty – не 15 €",
+"typ": "nevieme",
+"id": "produkty",
+"ms": 1.028,
+"text": "бренди продуктів",
+"trieda": "OK",
+"podtrieda": "odovzdanie"
+},
+{
+"jazyk": "uk",
+"otazka": "скільки триває стрижка для дитини",
+"ocakavane": "odovzdanie",
+"prijatelne": [
+"deti"
+],
+"druh": "pasca",
+"kategoria": "trvanie",
+"kto": "мама",
+"pozn": "сторінка 45 хв; 40 хв – помилка",
+"typ": "odpoved",
+"id": "trvanie",
+"ms": 1.031,
+"text": "Стрижка для маленьких джентльменів 45 хв",
+"sluzba": "deti",
+"trieda": "OK",
+"podtrieda": "trvanie"
+}
+]

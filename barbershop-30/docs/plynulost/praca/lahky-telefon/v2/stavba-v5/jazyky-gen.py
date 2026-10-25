@@ -99,26 +99,26 @@ def jazyk(l, D):
 
 
 def zapis(path, d):
-    c = lambda x: json.dumps(x, ensure_ascii=False, separators=(',', ': '))
+    c = lambda x: json.dumps(x, ensure_ascii=False, separators=(',', ':'))  # bez medzier za dvojbodkou (váha, oprava 5)
     r = ['{']
     keys = list(d)
     for i, k in enumerate(keys):
         end = ',' if i < len(keys) - 1 else ''
         v = d[k]
         if k in ('polozky', 'nevieme'):
-            r.append(f'  "{k}": [')
+            r.append(f'  "{k}":[')
             r.append(',\n'.join('    ' + c(x) for x in v))
             r.append('  ]' + end)
         elif k == 'kontakt':
-            r.append('  "kontakt": {')
-            r.append(',\n'.join(f'    {c(a)}: {c(b)}' for a, b in v.items()))
+            r.append('  "kontakt":{')
+            r.append(',\n'.join(f'    {c(a)}:{c(b)}' for a, b in v.items()))
             r.append('  }' + end)
         elif k == 'panel':
-            r.append('  "panel": {')
-            r.append(',\n'.join(f'    {c(a)}: {c(b)}' for a, b in v.items()))
+            r.append('  "panel":{')
+            r.append(',\n'.join(f'    {c(a)}:{c(b)}' for a, b in v.items()))
             r.append('  }' + end)
         else:
-            r.append(f'  {c(k)}: {c(v)}{end}')
+            r.append(f'  {c(k)}:{c(v)}{end}')
     r.append('}')
     path.write_text('\n'.join(r) + '\n', 'utf8')
 

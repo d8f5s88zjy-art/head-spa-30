@@ -1,210 +1,138 @@
-# Recepcia – zásady zhody otázky s odpoveďou (pravidlá 1–10)
+# Recepcia – zásady zhody otázky s odpoveďou, verzia 2 (P1–P6)
 
-Stav: strom `hs-recepcia`, vetva `barbershop-recepcia`, commit `6f8c47c` (25. 10. 2026, oprava 4).
-Kód: `barbershop-30/assets/recepcia.js`, dáta: `barbershop-30/assets/recepcia/<jazyk>.json`
-(sk ručne, ostatné z generátora `stavba-v5/jazyky-gen.py` + `stavba-v5/jazyky_data.py`),
-test: `barbershop-30/source/tools/recepcia-test.mjs` (23 testov, triedy 6–17).
-Modul nemá od opravy 4 komentáre (váha); pravidlá opisuje tento súbor a hlavička testu. Čísla riadkov nižšie
-sú podľa `6f8c47c`.
+Stav: strom `hs-recepcia`, vetva `barbershop-recepcia`, HEAD `aeaafb7` (25. 10. 2026, oprava 5).
+Kód: `barbershop-30/assets/recepcia.js` (196 riadkov, bez komentárov kvôli váhe), dáta: `barbershop-30/assets/recepcia/<jazyk>.json`
+(sk ručne, ostatné z generátora `stavba-v5/jazyky-gen.py` + `stavba-v5/jazyky_data.py`).
+Testy: `barbershop-30/source/tools/recepcia-test.mjs` (23 testov, pravidlá verzie 1 a obsah) a
+`barbershop-30/source/tools/recepcia-kombinacie-test.mjs` (7 testov, P3, P5, P6).
+Čísla riadkov nižšie sú podľa `aeaafb7`. Verzia 1 (pravidlá 1–10, oprava 4) je v `git show 6f8c47c` a v časti „Čo
+platí z verzie 1“.
 
-**Zásada majiteľa:** radšej nevedieť ako odpovedať zle. Nesprávna cena, trvanie alebo „áno“ na službu, ktorú
-stránka neponúka, je vážna chyba. Prijateľné je poctivé odovzdanie (téma „nevieme“, fallback s telefónom
-a e-mailom) alebo „Myslíš toto?“ (kandidáti + Celý cenník + Zavolať + Napísať e-mail).
+**Zásada majiteľa:** radšej nevedieť ako odpovedať zle. Nesprávna cena, trvanie alebo „áno“ na službu, ktorú stránka
+neponúka, je vážna chyba. Prijateľné je poctivé odovzdanie (téma „nevieme“, fallback s telefónom a e‑mailom) alebo
+„Myslíš toto?“ s voľbami (odpoveď sa ukáže až po ťuknutí).
 
-Každé pravidlo je **všeobecné**: platí pre všetky položky a všetky jazyky a nikde sa nepridávajú kmene preto,
-aby prešla konkrétna otázka z kontroly. Slovníky tried (osoby, miesta, vek, produkty, spojky, výplňové
-a zdvorilé slová) sú dáta jazyka, nie výnimky pre otázky.
+**Prečo verzia 2:** verzia 1 pridávala pravidlo za každou triedou chýb („iná služba s cenou“, „neznáme slovo“, „dve
+skupiny kmeňov“ …). Každé kolo kontroly našlo novú triedu, ktorú pravidlá nepokryli: slovo položky **bez ceny**
+(melír, rezervácia, sobota), trvanie pri položke bez trvania, časová príslovka ako kmeň dlhých vlasov. Kontrola 4
+a skeptik ich našli 571 + 195 (+ 18 z 77 otázok skeptika). Verzia 2 obracia princíp: priama odpoveď nie je predvolená
+a nezakazuje sa výnimkami – musí sa **zaslúžiť** tým, že vysvetlí celú otázku.
 
 ---
 
 ## Pojmy
 
-| pojem | význam | kde |
+| pojem | význam | kód |
 |---|---|---|
 | kmeň | slovo v `kluc` položky alebo témy; skupiny oddeľuje `\|` | JSON |
 | silný kmeň | veľké začiatočné písmeno alebo `!` (cyrilika) | `recepcia.js:42` (priprav) |
-| `=slovo` | len celé slovo | `recepcia.js:15` |
-| `>10` | každé číslo väčšie ako 10 (trieda veku) | `recepcia.js:16` |
-| istá zhoda | `zhoda ≥ 0,9` (začiatok slova alebo kmeň vnútri slova) | `recepcia.js:21` (`ista`) |
-| presná zhoda | `zhoda = 1` (kmeň je začiatok slova) | `recepcia.js:21` (`pred`) |
-| zložené slovo | predná časť + hlava (de, hu; aj spojené písanie inde) | `recepcia.js:73–76` |
-| skupina kmeňov | časť `kluc` medzi `\|` (napr. farbenie \| brada) | `p._g` |
-| položka s cenou | odpoveď obsahuje „€“ alebo pole `cena` | `p._c` |
-| celý názov služby | prvý úryvok riadku cenníka v odpovedi (napr. „Oholenie hlavy“) | `p._n` |
-| spojka | pole `spoj` v JSON (sk: a aj s so i plus; en: and with plus …) | JSON |
-| výplňové / zdvorilé slová | polia `vypln` a `zdvor` (malé zoznamy) | JSON |
+| `=slovo`, `>10` | len celé slovo; každé číslo nad 10 | `recepcia.js:15–16` |
+| `Slovo_slovo` | dvojslovný spúšťač trvania (en How_long, de Wie_lange) | `recepcia.js:83` |
+| istá zhoda | kmeň od začiatku slova; dlhý kmeň (od 5 znakov) aj vnútri slova | `recepcia.js:21` (`ista`, `pred`) |
+| položka **vysvetlí** slovo | kmeň od začiatku slova, alebo dlhý kmeň vnútri slova, ak začiatok slova nepatrí inému kmeňu, ktorý končí uprostred tohto kmeňa; alebo slovo celého názvu služby z cenníka, ktorý je v otázke | `recepcia.js:23` (`vysvetli`), `:62` |
+| voľné slovo | cenové (`cenove`), výplňové (`vypln`, od opravy 5 aj opytovacie slová a zámená), zdvorilé (`zdvor`), spojka; krátke slovo a číslo, ak nie sú kmeňom; pri otázke na trvanie aj časové slovo | `recepcia.js:82` (`vol`) |
+| obsahové slovo | slovo otázky po vynechaní stop-slov, ktoré nie je voľné | `recepcia.js:58` (`nv`) |
+| prísna položka | položka s cenou (`€` alebo `cena`) alebo služba (akcia sluzby, booqme) | `recepcia.js:62` (`t`) |
 
-## Pravidlo 1 – krátke kmene len presne
+## P1 – priama odpoveď len pri úplnom vysvetlení otázky
 
-- Kmeň do 4 znakov (po normalizácii NFD bez diakritiky, malé písmená) sa zhoduje len ako začiatok slova,
-  ktoré je najviac o 3 znaky dlhšie. Kmeň do 3 znakov s koncovkou dlhšou ako 1 znak je len neistá zhoda (0,6).
-- Preklep (Damerau-Levenshtein ≤ 1 na začiatku slova) sa hľadá len pri kmeni od 5 znakov a slove aspoň
-  takom dlhom ako kmeň.
-- Kód: `recepcia.js:14–20`. Test 6 overuje pravidlo na každom kmeni všetkých 8 jazykov (3 399 kmeňov).
-- Príklad: „detox“ ani „detail“ už nie sú istou zhodou kmeňa „det“; „sedačka“ nie je „sed(ivý)“.
+Položka dá priamu odpoveď (cenu, trvanie, službu) len vtedy, keď je **plná** (`recepcia.js:60–64`):
 
-## Pravidlo 2 – neznáme slovo nedostane cenu
+1. vysvetlí aspoň jedno slovo otázky (dôkaz);
+2. prísna položka vysvetlí **každé** obsahové slovo; ostatná (hodiny, adresa, káva …) smie nechať len slová, ktoré
+   nie sú kmeňom žiadnej položky, a priemerná zhoda obsahových slov je aspoň 0,55 (silná zhoda váži 2);
+3. slovo, ktoré patrí **inej** položke (s cenou aj bez ceny, aj téme „nevieme“) a táto ho nevysvetlí, priamu odpoveď
+   zakazuje; rovnako celý názov inej služby z cenníka v otázke, ak nie je časťou názvu tejto položky;
+4. prísna položka má istú zhodu so silným kmeňom alebo celý názov služby (pravidlo 7 verzie 1);
+5. pri viacerých skupinách kmeňov zásah všetkých skupín (pravidlo 9); spojená služba len so spojkou (pravidlo 3).
 
-- Obsahové slovo otázky **od 3 znakov**, ktoré nie je číslo, cenové slovo, výplňové ani zdvorilé slovo
-  a nemá istú zhodu so žiadnym kmeňom žiadnej položky ani témy, znamená, že otázka môže byť o niečom inom.
-- Ak by taká otázka viedla na službu s cenou, panel dá „Myslíš toto?“ s kandidátom (ak je v otázke aspoň jedno
-  známe slovo), inak odovzdanie. Trvanie s neznámym slovom = odovzdanie.
-- „Myslíš toto?“, ktoré nemá v otázke ani jedno známe ani cenové slovo, je odovzdanie (fallback).
-- Kód: `recepcia.js:80`, `:84–85`, `:90`. Test 7 skladá otázky z názvu každej služby a nezmyselného slova
-  (7 aj 3 znaky) v 8 jazykoch.
-- Od 3 znakov (zadanie hovorilo 4): slová pes, psa, dog, leg, nôh menia službu rovnako ako dlhšie slová
-  („strih pre psa“ bol 18 €, „holenie nôh“ 15 €). Trojpísmenové výplňové slová (cez, pri, nad, dám, ísť,
-  how, why, для, niż …) sú preto v stop slovách každého jazyka.
+Viac plných položiek: vyhrá špecifickejšia (pravidlo 3), pri rozdiele skóre pod 0,1 „Myslíš toto?“ s oboma.
+Pripravená otázka (aj zobrazovaná, `otazky`) je priama odpoveď vždy (`recepcia.js:78–79`).
 
-## Pravidlo 3 – špecifickejšia služba vyhrá, inak „Myslíš toto?“
+Príklady: „Koľko stojí strih a melír?“ → melír vysvetlí len farbenie vlasov → žiadna plná položka → „Myslíš toto?“.
+„Koľko stojí odfarbenie fúzov?“ → „odfarbenie“ začína kmeňom `odfarb` (farbenie vlasov), takže kmeň `farben` vnútri
+slova farbenie brady nevysvetlí → „Myslíš toto?“. „Kde nájdem cenník?“ → „kde“ je opytovacie (voľné) slovo.
 
-1. Z položiek nad prahom 0,55 vyhrá tá, ktorá má viac rôznych slov otázky s presnou zhodou svojich kmeňov
-   (kmene spoločné viac ako 2,5 položkám sa nerátajú) a pri dvoch skupinách kmeňov aj zhodu v oboch.
-   Pri rovnakej špecifickosti a skóre bližšom ako 0,1 → „Myslíš toto?“ s oboma (`recepcia.js:57–62`).
-2. **Iná služba v otázke:** ak otázka obsahuje
-   - slovo so silným kmeňom inej služby s cenou, ktoré víťaz nevysvetlí žiadnym svojím kmeňom aspoň takým
-     dlhým (ani slovom svojho celého názvu v otázke), alebo
-   - celý názov inej služby z cenníka, ktorý nie je časťou celého názvu víťaza v otázke,
+## P2 – inak „Myslíš toto?“ alebo odovzdanie
 
-   panel dá „Myslíš toto?“ s víťazom aj touto službou, nie holú cenu jednej z nich (`recepcia.js:59–60`).
-   „Strih a holenie“, „holenie hlavy a brady“, „úprava brady a obočia“, „pánsky a detský strih“ → obe.
-3. **Spojená služba** (pravidlo `"spolu"`, Pánsky strih a úprava brady) je odpoveď len vtedy, keď otázka má
-   spojku (pole `spoj` alebo znak + či &). Bez spojky („strih brady“, „ostrihať fúzy“, „beard cut“) → „Myslíš
-   toto?“ so spojenou službou a najbližšou samostatnou službou. So spojkou spojená služba vysvetľuje celé
-   názvy svojich častí (preto má v dátach aj slová ich názvov: sk „uprav“, en „men trim“, uk „чолові оформ“ …).
-4. Testy 8, 12 (1 456 dvojíc služieb v 8 jazykoch: nikdy holá cena len jednej), 13 (spojka áno/nie).
+- Voľby sú položky, ktorých slová otázka obsahuje: priemerná zhoda obsahových slov aspoň 0,55, pri cenovej otázke
+  stačí silné slovo (súčet zhody aspoň 2). Poradie: zhoda (silná 2, preklep silného kmeňa 1,2, slabá 1), potom zásah
+  všetkých skupín, potom skóre. Najviac 4 voľby + Celý cenník + Zavolať (`recepcia.js:66–67`, `:142`).
+- Odpoveď sa ukáže až po ťuknutí na voľbu. Ráta sa ako OK, ak je správna voľba medzi prvými dvomi.
+- Bez volieb: cenová otázka → téma „cena inej služby“ (Túto službu v cenníku neviem nájsť), inak fallback
+  s telefónom, e‑mailom a rezerváciou (`recepcia.js:68`).
+- Otázka s viac ako 12 obsahovými slovami alebo 30 slovami → fallback (`recepcia.js:76`, `:81`); slová sa neopakujú.
+  Najdlhšia otázka slepých sád má 9 obsahových slov. Čas zhody tak ostáva pod 5 ms aj pri 200 znakoch.
 
-## Pravidlo 4 – osoba, miesto, vek a produkt mimo ponuky sú triedy
+## P3 – cena vždy vo výreze cenníka
 
-- Témy „nevieme“ podľa tried v 8 jazykoch: `damske` (ženská osoba z rodiny a okolia), `mimo` (domov, nemocnica,
-  domov dôchodcov, hotel, svadba, výjazd), `vek`, `produkty` (slovník produktov a zložené slová).
-- **Veto:** téma so silnou istou zhodou, ktorej sedia všetky skupiny kmeňov, vetuje cenovú odpoveď
-  (`recepcia.js:35`).
-- **Vek je trieda:** kmeň `>10` zodpovedá každému číslu nad 10; druhá skupina témy `vek` má slová veku
-  aj dieťaťa (rok, ročný, syn, chlapec, son, Sohn, fiam, син …). „Syn má 25 rokov“, „my son is 35“ → téma vek.
-  Číslo 10 a menej ostáva detským strihom (stránka: „pre chlapcov do 10 rokov“, `index.html:547`, `:840`).
-- **Doplnok (oprava 4) – slová dieťaťa sú tá istá trieda ako v detskom strihu:** druhá skupina témy `vek`
-  obsahuje každé silné slovo dieťaťa z položky `deti` toho jazyka (sk synov, detsk, junior; cs děti, dětsk;
-  en little, junior; hu kisfiú; sr dec, decu, dečij; uk діт, дітей, дитяч, дитин, маленьк …). Inak by veto
-  nevidelo tvar, ktorý detský strih vidí: „Synovi je 12, platí ešte detský strih?“ dostávalo 15 €, lebo
-  „synovi“ a „detský“ sú pri trojznakových kmeňoch syn/det len neistá zhoda (pravidlo 1). Test 17 to overuje
-  zo silných kmeňov `deti` všetkých 8 jazykov (slovo + vek 11, 12, 15).
-- Téma „nevieme“ s viacerými skupinami vyhrá skóre len so zhodou vo všetkých skupinách (`recepcia.js:31`),
-  takže dátum a čas (24.12, 19:30, 31.12) nie sú vek.
-- Test 9: osoba 180, miesto 88, vek 170, produkt 174 otázok zo šablón a slovníka tried; žiadna nedostane cenu.
+- Odpoveď s cenou ukáže výrez: nadpis skupiny cenníka, riadok služby zvýraznený (`rc-hl`, `aria-current`), susedné
+  riadky tej istej skupiny; názov, trvanie a cena doslovne zo stránky. Pod ním Celý cenník (`recepcia.js:94–101`,
+  `:118–133`). Nikdy osamotené číslo.
+- Dáta: `cennik` v JSON – skupiny ako odkazy na položky (`id` alebo `id:úryvok`), nadpisy v jazykoch zo slovníka
+  stránky (generátor). Test P3 porovná sk skupiny a riadky s cenníkom v `index.html:524–638`.
 
-## Pravidlo 5 – zdvorilosť nikdy nedostane cenu
+## P4 – trvanie len pri službe s trvaním
 
-- Správa len zo zdvorilých a výplňových slov dostane úvodnú vetu panelu a ponuku volieb (`recepcia.js:77`).
-- Test 10: 91 zdvorilostí v 8 jazykoch, rozpoznaných 88, žiadna nedostane cenu ani ponuku služby.
+- Časové slovo (`recepcia.js:82–92`): silné (trvá, minút, dauert, take, tart …) alebo dvojslovné (How_long,
+  Wie_lange) spustí otázku na trvanie. Slabé časové slovo (časová príslovka dlho, dlouho, długo, dugo, довго, long,
+  lange, meddig) ju spustí, len keď otázku nevysvetlí položka, ktorá ho má ako vlastný kmeň (Odkedy fungujete → od
+  roku 2019; „long hair“ → dlhé vlasy).
+- Trvanie je price-time menovanej služby (`cas` v JSON, `trvP`). Položka bez trvania (rezervácia, čakanie, káva,
+  hodiny, melír …) → odovzdanie na recepciu s voľbou tej položky, nikdy trvanie inej služby.
+- Trvanie strihu a brady len vtedy, keď otázka nemenuje nič iné (`recepcia.js:88`).
+- Viac služieb s trvaním → „Myslíš toto?“ s názvami služieb; ťuknutie ukáže trvanie zvolenej služby.
 
-## Pravidlo 6 – trvanie menovanej služby
+## P5 – čisté kmene
 
-- Silné slovo času (trvá, minút, dauert, take …) → trvanie tej služby, ktorú otázka menuje (price-time
-  z cenníka, `cas` v JSON, zdroj `index.html:riadok` v `zdroje.json`). Bez menovanej služby trvanie strihu
-  a brady; neznáma služba, služba bez trvania alebo „Myslíš toto?“ → odovzdanie (`recepcia.js:81–91`).
-- Test 11: „Ako dlho trvá <názov>?“ pre každú službu s trvaním v 8 jazykoch (112 otázok), bez ceny.
+Kmeň nesmie zahŕňať slovo iného významu. Opravené v oprave 5 (všetkých 8 jazykov):
 
-## Pravidlo 7 – cena len pri istej zhode so službou (nové v oprave 3)
+| slovo iného významu | predtým | teraz |
+|---|---|---|
+| časová príslovka (dlho, dugo, dlouho, długo, довго) | silný kmeň dlhých vlasov (Dlh, Dug, Dlouh, Dług, Довг) | tvary prídavného mena (Dlhe Dlhy Dlha, Duga Duge, Dlouhé, Długi, Довгі …); en, de dve skupiny (long/lang + vlasy) |
+| príplatok, doplatok, Aufpreis, surcharge, felár, доплата; drahší | silný kmeň dlhých vlasov | slabý kmeň dlhých vlasov aj konečných cien |
+| šediny (sediv, sedin, siw, sed, ősz, grau, grey, сив) | 2. skupina „brada“ farbenia brady | slabý kmeň farbenia (1. skupina) a 2. skupina farbenia vlasov |
+| odfarbenie | kmeň `farben` vnútri slova | pravidlo vlastníka začiatku slova (`vysvetli`) |
+| sr vreme (aj počasie), pl opłat | silné | slabé |
 
-- Cenu alebo trvanie panel povie, len keď má víťazná služba v otázke aspoň jedno z:
-  - istú zhodu so **silným kmeňom** (slovo z názvu alebo opisu služby na stránke),
-  - **celý názov služby** z cenníka (aj ako variant otázky; pridá skóre 0,5),
-  - presne pripravenú otázku (`otazky`, skóre +9).
-- Inak (len slabé kmene) → „Myslíš toto?“ (`recepcia.js:23–32`, `:62`).
-- **Dátová zásada pre silné kmene:** silný kmeň služby s cenou je slovo jej názvu alebo opisu na stránke
-  (tvar, preklad, blízke synonymum: fúzy = brada). Slabý kmeň je:
-  - súčasť balíka (whisky v Ultra inclusive),
-  - nástroj (britva, razor, Messer, brzytwa, бритва),
-  - prenesené slovo (gentleman – stránka hovorí o „malých gentlemanoch“),
-  - opisné slovo (fade, 10, strih pri detskom strihu).
-- Slovo inej služby, ktorú stránka neuvádza, nie je kmeň vôbec (tetovanie, Tattoo, Tatuaż – ornament je „vzor
-  vystrihnutý do vlasov“, `index.html:625`).
-- Kmeň nesmie zahŕňať slovo iného významu (sk a cs „chlap“ = muž → kmene Chlapec/Chlapc; pl Chłopiec/Chłopc).
-- Slovo „pánsky“ (men, Męsk, Férfi, Mušk, Чолові) z názvu Pánsky strih je silný kmeň strihu. Je kmeňom
-  najviac dvoch položiek, aby sa počítalo do špecifickosti.
-- Test 14: otázka len zo slabých kmeňov služby (89 otázok v 8 jazykoch) nedostane jej cenu.
+Lint v teste (P5): zdieľaný kmeň len medzi 120 výslovne povolenými dvojicami položiek (zoznam `POVOLENE`); kmeň
+služby s cenou nezachytí časové slovo (výnimka: en long, de lange v jednej z dvoch skupín) ani silne príplatok.
 
-## Pravidlo 8 – zložené slovo sa posudzuje po častiach (nové v oprave 4)
+## P6 – kombinatorické testy z dát
 
-- **Trieda:** zložené slovo spája prednú časť a hlavu (de Rücken+waxing, hu hát+gyantázás, de Augenbrauen+piercing).
-  Kmeň dlhší ako 4 znaky sa hľadá aj vnútri slova (istá zhoda 0,9), takže bez tohto pravidla cudzia predná
-  časť nič nemenila: „Was kostet Rückenwaxing?“ → depilácia uší a nosa 5,50 €, „Hátgyantázás ára?“ → 5,50 €,
-  „Szempillafestés mennyi?“ → farbenie brady 10 € (slepé hodnotenie 1, chyby 3–5).
-- **Kedy sa slovo rozdelí** (`recepcia.js:73–76`):
-  1. dlhý kmeň (od 5 znakov) je vnútri slova a predná časť má aspoň 3 znaky – po odrátaní zápornej predpony
-     „ne“ to nie je slovesná predpona ani stop-slovo (o-, vy-, za-, do-, pre-, pri-, pod-, під-, при- …) a žiadny
-     kmeň na začiatku slova nesiaha za miesto delenia; **alebo**
-  2. za najdlhším dlhým kmeňom na začiatku slova ostáva viac ako 7 znakov (dlhšia koncovka v 8 jazykoch nie je;
-     najdlhšie v sadách: pl lojaln+ościowa a de Öffnung+szeiten po 7 znakov – tie sa nedelia);
-  3. a zároveň obe časti **nevysvetľuje tá istá položka** – jej kmeň (istá zhoda, alebo kmeň od 4 znakov
-     obsiahnutý v časti, aby prešla spojovacia hláska de -en-) ani jej názov z cenníka.
-- **Čo sa stane potom:** slovo sa nahradí dvomi slovami. Cudzia časť je neznáme slovo (pravidlo 2: nikdy holá
-  cena, nanajvýš „Myslíš toto?“ alebo odovzdanie), časť inej služby je druhá služba (pravidlo 3: „Myslíš toto?“
-  s oboma). Zložené slovo sa teda správa rovnako ako tá istá fráza v dvoch slovách: „Rückenwaxing“ ako „How much
-  is back waxing?“ či „depilácia chrbta voskom“ (obe už v kole 1 dávali „Myslíš toto?“).
-- **Nedelí sa:** zložené slovo jednej služby (Ohrenwaxing, Fülgyantázás, Szemöldökfestés, Kopfrasur,
-  Augenbrauenfärbung, Augenbrauenkorrektur – časť názvu z cenníka, Herrenhaarschnitt, Kinderhaarschnitt, Glattrasur)
-  a slovesá s predponou (ostrihať, vystrihnúť, neostriháte, zarezervovať, підстрижете, przystrzyc).
-- **Dátové zásady k pravidlu 8:**
-  - zložené slovo, ktoré je bežným názvom služby zo stránky, je kmeň služby (už predtým Kopfrasur, Bartfarb,
-    Fejborotv, Szakallfest; teraz de Nassrasur = holenie britvou, „Messerrasur“ je v nemeckom opise na stránke);
-  - slovo z opisu služby na stránke v danom jazyku je kmeň (de depilácia „Entfernung“ – „Entfernung von Ohren-
-    und Nasenhaaren mit Wachs“, preklad vety z `index.html:619`);
-  - položka `deti` má v každom jazyku všeobecné slovo strihu ako slabý kmeň (sk strih, en cut, hu vág …; doplnené
-    de „schnitt“), aby „Kinderschnitt“ ostal detským strihom;
-  - slovesné predpony, ktoré nie sú predložkami, sú v stop-slovách (sk roz; cs pře, roz; pl prze, roz; uk пере, роз;
-    sr pre, raz) – ako samostatné slová sa nevyskytujú.
-- Test 15: z každého silného kmeňa (od 5 znakov) každej služby s cenou v 8 jazykoch zložené slovo s neznámou
-  časťou pred kmeňom aj za ním (782 otázok) – žiadna cena. Na stave `f715141` zlyhalo 690 z 780.
+`recepcia-kombinacie-test.mjs`, otázky skladané z JSON v 8 jazykoch; podmienka: 0 holých odpovedí (cena alebo
+trvanie), ktoré nevysvetlia všetky menované slová.
 
-## Pravidlo 9 – služba s viacerými skupinami kmeňov je istá len pri zásahu všetkých (nové v oprave 4)
+| test | otázok | na `6f8c47c` | na `aeaafb7` |
+|---|---|---|---|
+| P6a dvojice služba s cenou × každá iná položka (s cenou, bez ceny, nevieme), oboje poradie | 11 198 | 3 082 chýb | 0 |
+| P6b trvanie × každá položka × každé časové slovo | 3 058 (2 899 na 6f8c47c) | 654 | 0 |
+| P6c cenové a časové slovo × služba, príplatok, dni, šediny, odfarbenie | 2 182 | 1 152 | 0 |
+| P6d triedy kontroly 4 (k4/trieda-k4.mjs) | 1 189 | 766 | 0 |
+| P6e otázky skeptika a sondy kontroly 4 | 150 | 48 | 0 |
+| P5 lint dát | 8 jazykov | 18 | 0 |
+| P3 výrez cenníka (112 služieb) | 112 | modul nemal výrez | 0 |
 
-- **Trieda:** služba s cenou, ktorej `kluc` má skupiny (farbenie brady = farbenie | brada, oholenie hlavy =
-  holenie | hlava), sa doteraz dala vyhrať jednou skupinou – skóre sa len znížilo, nevynulovalo
-  (`recepcia.js:31`). „How much is dyeing?“ → Beard colouring 10 €, „Ile kosztuje koloryzacja?“ → 10 €.
-- **Pravidlo:** taká služba je istá (holá cena alebo trvanie) len pri zásahu všetkých skupín alebo pri celom
-  názve služby či pripravenej otázke; inak „Myslíš toto?“ (`recepcia.js:25`, `:32`, `:62`). Pre „iná služba
-  v otázke“ (pravidlo 3) sa naďalej berie aj služba zasiahnutá jednou skupinou, aby „strih a farbenie“ nedostalo
-  holú cenu strihu.
-- Spojená služba (pravidlo `spolu`) má vlastné pravidlo spojky (pravidlo 3) a test ju vynecháva.
-- Test 16: každé slovo jednej skupiny takej služby v 8 jazykoch (106 otázok) – žiadna holá cena tej služby.
-  Na stave `f715141` zlyhalo 21 zo 106 (zafarb, ofarb, dye, tint …).
+## Čo platí z verzie 1
 
-## Pravidlo 10 – čísla: čas, dĺžka v cm (nové v oprave 4)
-
-- **Čas hh:mm sa nepočíta ako číslo** (`recepcia.js:72`): „14:00“, „19:30“ sa pred normalizáciou vynechajú, takže
-  „Koľko stojí detský strih o 14:00?“ ostáva detským strihom a nie je téma vek (dôležité po doplnku pravidla 4).
-- **Jednociferná dĺžka v cm nie je „nad 10 cm“** (`recepcia.js:72`): „3 cm“, „3cm“, „3,5 cm“ (aj „см“) sa vynechajú
-  spolu s číslom. Kmeň `=Cm` je silný kmeň položky „Pánsky strih – dĺžka vlasov nad 10 cm“ (22 €, `index.html:541`,
-  `:543`), takže „Mám vlasy 3 cm, koľko stojí strih?“ dostávalo 22 €; teraz „Myslíš toto?“ s pánskym strihom (18 €,
-  `index.html:531`) a dlhými vlasmi. „Mám vlasy 15 cm“ a „vlasy nad 10 cm“ ostávajú 22 €.
-- Test 17: dĺžka 1, 3, 5, 9 a 3,5 cm (s medzerou aj bez) pri názve pánskeho strihu a čas 14:00, 12:30, 16:15 pri názve
-  detského strihu v 8 jazykoch, spolu s vekom (doplnok pravidla 4) 281 otázok. Na stave `f715141` zlyhalo 66.
-
----
-
-## Ďalšie dátové zásady
-
-- **Výplňové slová** (`vypln`, `stop`): malé zoznamy na jazyk. Radšej menej rozpoznaných ako chybná cena.
-- **Zdvorilosti** (`zdvor`): pozdravy a poďakovania; v sk aj „večer“ (dobrý večer).
-- **„Zaplatiť“** (sk, cs) je slabý kmeň témy platba: „koľko zaplatím“ je cenová otázka. Platiť, karta
-  a hotovosť ostávajú silné.
-- **Zložené slová** (de, hu): ak by krátky kmeň zložené slovo nezachytil, zložené slovo je vlastný kmeň
-  (Hajwax, Bartbalsam, szakállolaj).
-- **Varianty otázok** (sk): len tam, kde menia odpoveď. Celý názov služby z cenníka je variant sám osebe.
-  Témy „nevieme“ majú len zobrazovanú otázku.
-- **JSON musí ostať zhodný s generátorom:** `python3 -I stavba-v5/jazyky-gen.py <kópia barbershop-30>` dáva
-  rovnaké `en … cs.json` ako strom (overené v oprave 3, `cmp` 7× zhodné).
+| pravidlo v1 | stav vo v2 |
+|---|---|
+| 1 krátke kmene len presne, preklep od 5 znakov | platí (`zhoda`, test 6) |
+| 2 neznáme slovo nedostane cenu | súčasť P1 (prísna položka musí vysvetliť každé obsahové slovo) |
+| 3 špecifickejšia služba, iná služba v otázke, spojka | špecifickosť a spojka platia; „iná služba“ je súčasť P1 a platí aj pre položky bez ceny a témy nevieme |
+| 4 osoba, miesto, vek, produkt – veto tém | platí (veto a skóre tém „nevieme“ pred P1, `recepcia.js:55–57`) |
+| 5 zdvorilosť | platí; opytovacie slovo, ktoré je kmeňom (kde, kedy), zdvorilosť nie je (`recepcia.js:77`) |
+| 6 trvanie menovanej služby | nahradené P4 |
+| 7 cena len pri istej zhode so silným kmeňom | súčasť P1 (bod 4) |
+| 8 zložené slovo po častiach | platí (`recepcia.js:73–76`) |
+| 9 viac skupín kmeňov len pri zásahu všetkých | súčasť P1 (bod 5) |
+| 10 čísla: čas, cm | platí (`recepcia.js:72`) |
 
 ## Čo pravidlá zámerne nerobia
 
-- Nehádajú význam vety (zápor, podmienka, viac osôb): pri pochybnosti radšej „Myslíš toto?“.
-- Nerozlišujú produkt a službu podľa predložky („britva na holenie“ ostáva holením; pozri `oprava-3.md`, otvorené).
-- Neodpovedajú na čakaciu dobu ani voľné termíny (stránka ich neuvádza → odovzdanie alebo rezervácia).
-- Nerozlišujú „10 cm“, „do 10 cm“ a „nad 10 cm“: číslo 10 je kmeň dlhých vlasov (`=10`), takže „vlasy do 10 cm“ dá
-  22 € s textom „dĺžka vlasov nad 10 cm“ (podmienka je v odpovedi viditeľná). Rozlíšenie by potrebovalo predložky
-  v 8 jazykoch.
-- Čas bez minút („o 12“) so slovom dieťaťa sa ráta ako vek → téma vek (bezpečné odovzdanie, nie cena).
-- Zložené slovo dvoch služieb, ktoré stránka uvádza zvlášť (de Bartrasur, hu szakállborotválás), dá „Myslíš toto?“
-  s oboma, nie jednu cenu.
+- Nehádajú zápor („nechcem bradu, len strih“) ani podmienku: dajú „Myslíš toto?“, kde správna voľba nemusí byť prvá.
+- Nerozlišujú „10 cm“, „do 10 cm“ a „nad 10 cm“ (číslo 10 je kmeň dlhých vlasov).
+- Neodpovedajú na čakaciu dobu ani voľné termíny (stránka ich neuvádza) – odovzdanie.
+- Tónovanie brady (de Bart tönen, uk тонування бороди, cs tónování vousů) je farbenie brady (kmeň v 1. skupine);
+  hraničné, cena je cena farbenia brady, nie inej služby.
+- Mená barberov nepoznajú (téma tím alebo fallback).

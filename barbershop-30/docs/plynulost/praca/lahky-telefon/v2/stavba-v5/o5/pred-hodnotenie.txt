@@ -1,0 +1,46 @@
+  ODOVZDANIE | sk | Kedy zaviérate v piatok? | oc= hodiny  | -> fallback None   | 
+  ODOVZDANIE | sk | da sa prist uz o 8 rano? | oc= hodiny ['rezervacia'] | -> nevieme bez-objednania   | príchod bez objednania
+  VOLBA-MIMO | sk | su v cene nejake priplatky? | oc= ceny-konecne ['cena-strih'] | -> vyber cena-dlhe  ['cena-dlhe'] | 
+  ODOVZDANIE | sk | chcem ist k Dominike | oc= vyber-barbera ['tim', 'rezervacia'] | -> fallback None   | 
+  ODOVZDANIE | sk | mate aj barberku zenu? | oc= tim ['vyber-barbera'] | -> nevieme damske   | Dámske strihy na webe neuvádzame.
+  ODOVZDANIE | sk | kolko casu mam pocitat na strih? | oc= trvanie  | -> fallback None   | 
+  ODOVZDANIE | cs | mate kafe? | oc= kava  | -> fallback None   | 
+  ODOVZDANIE | pl | jak sie umowic na wizyte | oc= rezervacia ['online', 'telefon'] | -> nevieme jazyky-tim   | języki barberów
+  ODOVZDANIE | sr | колико кошта шишање | oc= cena-strih ['ceny-konecne'] | -> fallback None   | 
+pred-A.jsonl: 349 otázok {'OK': 320, 'ODOVZDANIE': 8, 'OK-VOLBA': 20, 'VOLBA-MIMO': 1} | legitímne 196: {'OK': 167, 'ODOVZDANIE': 8, 'OK-VOLBA': 20, 'VOLBA-MIMO': 1} | odovzdanie bez správnej voľby 9 (4.6 %)
+  ODCHYLKA | sk | Len fénovanie bez strihu, koľko? | oc= odovzdanie  | -> odpoved co-je-v-strihu   | Pánsky strih krok za krokom
+  VOLBA-MIMO | sk | Strihate o polnoci? | oc= hodiny  | -> vyber cena-strih  ['cena-strih'] | 
+  VOLBA-MIMO | sk | Nechcem bradu, len strih, koľko? | oc= cena-strih  | -> vyber cena-strih-brada  ['cena-strih-brada', 'cena-brada'] | 
+  ODCHYLKA | sk | Koľko je plat barbera? | oc= odovzdanie  | -> odpoved tim   | Pod značkou Barbershop 30 tu pracuje tím barberov a barberie
+  ODCHYLKA | sk | Máte TikTok? | oc= odovzdanie  | -> odpoved socialne   | Aktuálne strihy a dianie v shope sledujeme na Instagrame. / 
+  ODOVZDANIE | sk | Koľko stojí beard trim? | oc= cena-brada  | -> nevieme cena-ina-sluzba   | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+  ODCHYLKA | de | Hundefriseur? | oc= odovzdanie  | -> odpoved tim   | Unter der Marke Barbershop 30 arbeitet hier ein Team aus Bar
+  VOLBA-MIMO | cs | Jen střih, bez vousů, kolik? | oc= cena-strih  | -> vyber cena-strih-brada  ['cena-strih-brada', 'cena-brada'] | 
+  ODOVZDANIE | uk | Скільки коштує strih? | oc= cena-strih  | -> nevieme cena-ina-sluzba   | Не можу знайти цю послугу в прайсі; переглянь весь прайс.
+pred-B.jsonl: 315 otázok {'OK': 285, 'OK-VOLBA': 21, 'ODCHYLKA': 4, 'VOLBA-MIMO': 3, 'ODOVZDANIE': 2} | legitímne 78: {'OK-VOLBA': 21, 'OK': 52, 'VOLBA-MIMO': 3, 'ODOVZDANIE': 2} | odovzdanie bez správnej voľby 5 (6.4 %)
+  ODOVZDANIE | sk | ste na tej mostnej, ale ktore cislo? hladam vas z auta | oc= adresa  | -> nevieme skolenia   | školenia a voľné miesta
+  ODOVZDANIE | sk | da sa termin naklikat aj o polnoci cez net? | oc= online ['rezervacia'] | -> fallback None   | 
+  ODOVZDANIE | sk | vlasy mam po plecia (som chlap), za strih platim viac? | oc= cena-dlhe  | -> fallback None   | 
+  ODOVZDANIE | sk | malemu je 7 a bojí sa strojceka, strihate aj takych drobcov? | oc= deti  | -> fallback None   | 
+  ODOVZDANIE | sk | vlasy aj bradu naraz, kolko to vyjde dokopy | oc= cena-strih-brada  | -> nevieme cena-ina-sluzba   | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+  ODOVZDANIE | sk | len by som si dal zarovnat bradu, nic viac. cena? | oc= cena-brada  | -> nevieme cena-ina-sluzba   | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+  ODOVZDANIE | sk | strihá u vás aj nejaká žena barberka? | oc= tim ['vyber-barbera'] | -> nevieme damske   | Dámske strihy na webe neuvádzame.
+  VOLBA-MIMO | sk | su tie ceny finalne alebo sa na konci este nieco priplaca? | oc= ceny-konecne ['cena-strih'] | -> vyber cena-dlhe  ['cena-dlhe'] | 
+  ODOVZDANIE | sk | bradu nechajte tak, len vlasy | oc= cena-strih  | -> nevieme produkty   | značky produktov
+  ODOVZDANIE | de | Wo genau ist der Laden? Straße und Hausnummer bitte | oc= adresa  | -> nevieme mimo   | Leistungen außerhalb des Barbershops nennen wir auf der Webs
+  ODOVZDANIE | de | Nassrasur mit heißem Handtuch, wie teuer? | oc= holenie  | -> fallback None   | 
+  ODOVZDANIE | de | Nicht den Bart, nur die Haare bitte | oc= cena-strih  | -> nevieme produkty   | Produktmarken
+  ODOVZDANIE | en | haircut + beard trim combo price? | oc= cena-strih-brada  | -> nevieme produkty   | product brands
+  ODOVZDANIE | en | guy with hair past shoulders, is it more expensive | oc= cena-dlhe  | -> fallback None   | 
+  ODOVZDANIE | en | how long does a haircut take roughly | oc= trvanie  | -> fallback None   | 
+  ODCHYLKA | en | could a barber come to my flat? | oc= odovzdanie  | -> odpoved tim   | A team of barbers, both men and women, works here under the 
+  ODOVZDANIE | hu | Mi a pontos cím? Autóval jövök Komáromból | oc= adresa  | -> fallback None   | 
+  ODOVZDANIE | hu | haj és szakáll egyszerre mennyi | oc= cena-strih-brada  | -> nevieme produkty   | termékmárkák
+  VOLBA-MIMO | hu | nem kell hajvágás, csak szakáll | oc= cena-brada  | -> vyber cena-strih-brada  ['cena-strih-brada', 'cena-strih'] | 
+  ODOVZDANIE | pl | jak się umówić na wizytę | oc= rezervacia ['online'] | -> nevieme jazyky-tim   | języki barberów
+  ODOVZDANIE | pl | nie brodę, tylko włosy | oc= cena-strih  | -> nevieme produkty   | marki produktów
+  ODCHYLKA | sr | dolazite li na kućnu adresu | oc= odovzdanie  | -> odpoved adresa   | Mostná 30, 949 01 Nitra
+  ODOVZDANIE | sr | ne treba brada, samo kosa | oc= cena-strih  | -> nevieme produkty   | brendovi proizvoda
+  ODOVZDANIE | uk | не бороду, лише волосся | oc= cena-strih  | -> fallback None   | 
+pred-C2.jsonl: 260 otázok {'OK-VOLBA': 35, 'OK': 201, 'ODOVZDANIE': 20, 'VOLBA-MIMO': 2, 'ODCHYLKA': 2} | legitímne 139: {'OK-VOLBA': 35, 'OK': 82, 'ODOVZDANIE': 20, 'VOLBA-MIMO': 2} | odovzdanie bez správnej voľby 22 (15.8 %)
+SPOLU 924 otázok, CHYBA 0, ODCHYLKA 6 | legitímne 413: OK 301, OK-VOLBA 76, ODOVZDANIE 30, VOLBA-MIMO 6 | odovzdanie bez správnej voľby 36 (8.7 %)
