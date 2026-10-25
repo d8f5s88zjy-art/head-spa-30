@@ -1,11 +1,13 @@
-# Recepcia – zásady zhody otázky s odpoveďou, verzia 2 (P1–P6)
+# Recepcia – zásady zhody otázky s odpoveďou, verzia 2 (P1–P6, doplnená v oprave 6)
 
-Stav: strom `hs-recepcia`, vetva `barbershop-recepcia`, HEAD `aeaafb7` (25. 10. 2026, oprava 5).
+Stav: strom `hs-recepcia`, vetva `barbershop-recepcia`, oprava 5 (`aeaafb7`) + oprava 6 (25. 10. 2026; commity v
+`stavba-v5/oprava-6.md`). Doplnky opravy 6 sú v časti **„Oprava 6 – triedy W, D, M, Z“** na konci; P1–P6 platia bez
+zmeny, oprava 6 len spresňuje, čo sú výplňové slová (P1), ako vznikajú voľby (P2) a čo testuje P6.
 Kód: `barbershop-30/assets/recepcia.js` (196 riadkov, bez komentárov kvôli váhe), dáta: `barbershop-30/assets/recepcia/<jazyk>.json`
 (sk ručne, ostatné z generátora `stavba-v5/jazyky-gen.py` + `stavba-v5/jazyky_data.py`).
 Testy: `barbershop-30/source/tools/recepcia-test.mjs` (23 testov, pravidlá verzie 1 a obsah) a
-`barbershop-30/source/tools/recepcia-kombinacie-test.mjs` (7 testov, P3, P5, P6).
-Čísla riadkov nižšie sú podľa `aeaafb7`. Verzia 1 (pravidlá 1–10, oprava 4) je v `git show 6f8c47c` a v časti „Čo
+`barbershop-30/source/tools/recepcia-kombinacie-test.mjs` (10 testov, P1 lint, P3, P5, P6a–P6g).
+Čísla riadkov nižšie sú podľa stavu po oprave 6 (modul má 196 riadkov ako `aeaafb7`, zmeny sú vnútri riadkov). Verzia 1 (pravidlá 1–10, oprava 4) je v `git show 6f8c47c` a v časti „Čo
 platí z verzie 1“.
 
 **Zásada majiteľa:** radšej nevedieť ako odpovedať zle. Nesprávna cena, trvanie alebo „áno“ na službu, ktorú stránka
@@ -136,3 +138,89 @@ trvanie), ktoré nevysvetlia všetky menované slová.
 - Tónovanie brady (de Bart tönen, uk тонування бороди, cs tónování vousů) je farbenie brady (kmeň v 1. skupine);
   hraničné, cena je cena farbenia brady, nie inej služby.
 - Mená barberov nepoznajú (téma tím alebo fallback).
+
+
+---
+
+## Oprava 6 – triedy W, D, M, Z (spresnenie P1, P2, P5, P6)
+
+Hodnotenie `slepe/hodnotenie-v2-1.md` našlo 3 holé odpovede v dvoch triedach (W, D). Pri oprave sa našla ešte trieda M
+a slabina Z. Nič z toho nie je výnimka pre vetu: každé pravidlo je trieda slov alebo vlastnosť zhody a testuje ho
+kombinatorika z dát (P6f, P6g, P1 lint).
+
+### W – deň, „zajtra“, časť dňa a čas sú slová hodín (P1)
+
+P1 vymenúva výplň: opytovacie, cenové, časové (otázka na trvanie), zdvorilosti, zámená, spojky. **Dni, „zajtra“,
+časti dňa ani čas medzi nimi nie sú** – sú to obsahové slová a patria položke `hodiny`.
+
+- Dáta (8 jazykov): pracovné dni a „zajtra“ vyradené z `vypln`, pridané ako **slabé** kmene položky hodiny (sobota,
+  nedeľa, víkend ostali silné). Slabé preto, že deň sám nie je otázka na hodiny: „aké bude zajtra počasie“ → odovzdanie,
+  nie hodiny. Časti dňa (ráno, dopoludnia, poobede, večer; morning, evening; Morgen, Abend; reggel, este; jutro, veče;
+  ранок, вечір …) sú tiež slabé kmene hodín. Kmeň dňa nesmie zachytiť iné slovo (P5): sk/cs `=streda =stredu =stredy`
+  (nie „stredne“), pl `=środa`, sr `=sreda`, uk `середа середу`, uk piatok ako `ятниц` (apostrof delí slovo).
+  pl odkedy `Dział` → `Działa` (inak „poniedziałek“ = „odkedy“).
+- Modul (`recepcia.js:72`): čas `9:00`, `21:00`, `9 pm`, `9am` sa nemaže, ale nahradí slovom `0h`; `=0h!` je silný
+  kmeň položky hodiny vo všetkých jazykoch. Predtým sa čas mazal → „strih o 21:00?“ = 18 €.
+- Výsledok: „V pondelok o 9:00 na bradu?“ → „Myslíš toto?“ [hodiny, úprava brady, …]; „strih o 21:00?“ →
+  [hodiny, pánsky strih]; „Kedy máte otvorené v pondelok?“ ostáva priama odpoveď hodiny.
+
+### Z – zdvorilé slovo, ktoré je kmeňom, je pozdrav len po inom zdvorilom slove
+
+Časť dňa je aj pozdrav („Dobré ráno“, „Good evening“, „Guten Abend“, „Jó estét“, „Dobro jutro“, „Добрий вечір“).
+Pravidlo (`recepcia.js:76`, `:80`, `:82`): zdvorilé slovo, ktoré je zároveň kmeňom položky, je zdvorilosť (výplň) len
+**hneď po inom zdvorilom slove**; inde je obsahové slovo. „Dobré ráno, koľko stojí strih?“ → 18 €; „Koľko stojí strih
+ráno?“, „Ráno strih?“ → „Myslíš toto?“. Zdvorilé slová, ktoré kmeňom nie sú (ďakujem, ahoj, привіт …), ostávajú výplň
+kdekoľvek. Hygiena dát (P5): kmeň témy jazyky barberov zachytil „rozumiem/rozumím“ (sk, cs, pl `Rozum`) a kmeň
+recepcie uk „привіт“ (ahoj) → teraz presné tvary `=Rozumiete =Rozumie`, `=Rozumíte =Rozumí`, `=Rozumiecie =Rozumie`
+a uk `привіта` („привітає“). Predtým „Rozumiem, koľko stojí strih?“ = téma jazyky barberov.
+
+### D – druhá osoba so spojkou (P1)
+
+Zámeno prvej osoby je výplň (P1), kým otázka nemenuje inú osobu. „Strih pre syna (8) a pre mňa“ menuje dve osoby.
+Pravidlo (`recepcia.js:62`): položka pre inú osobu (`deti`) má v dátach zoznam `ine` (zámená prvej osoby ako príjemcu:
+sk `mna mne`, cs `me mne`, pl `mnie`, en `me myself`, de `mich mir`, hu `nekem engem en`, sr `mene meni`, uk `мене
+мені`); keď ich otázka obsahuje **spolu so spojkou**, položka deti nie je plná → „Myslíš toto?“ [deti, pánsky strih].
+Bez spojky („Strih nie pre mňa, pre syna“) sa nič nemení. Zámená sú pritom výplň (sk `mna`, hu `nekem engem`,
+sr `mene` doplnené do `stop`), takže „Koľko stojí strih a brada pre mňa?“ dostane 28 € priamo.
+
+### M – dieťa opísané veľkosťou nie je výplň (P1, P5)
+
+`vypln` obsahoval prídavné mená „malý/malé, mały, malo/mali, kicsi, small, klein, мале“. Nie sú v žiadnej triede P1
+a „strih pre malého“ znamená dieťa → na `aeaafb7` dostal 18 € (sk, cs, pl, sr, de, hu, en). Teraz sú tieto slová
+slabé kmene položky deti (sk `maly male malych maleho malemu`, cs `malý malé malých malého`, hu `kicsi`, en `small`;
+pl `mał`, sr `mal`, uk `мал Маленьк` už boli), z výplne vyradené → „Koľko stojí strih pre malého?“ → „Myslíš toto?“
+[pánsky strih, deti]. Rovnaký lint našiel hu `sima` ⊃ `simára` (holenie) a sr `ko` ⊃ `koz` (pleť) → `=sima`, `=ko`
+(len celé slovo).
+
+### P2 – voľby (spresnenie)
+
+- Kandidát voľby: priemerná zhoda obsahových slov aspoň 0,55, alebo **istá zhoda so silným kmeňom** a súčet zhody
+  aspoň 2 (predtým len pri cenovej otázke) (`recepcia.js:66`). Viacvecná otázka „Môžem sa objednať na strih na zajtra
+  ráno?“ tak ukáže [rezervácia, pánsky strih, …], nie len hodiny.
+- Preklep sa hádá len pri slove, ktoré nie je istým slovom inej položky (`recepcia.js:59`): „stihnem“ nie je preklep
+  „strih“ (je to kmeň hodín). Zhoda podľa bigramov (Dice, 0,5) váži ako slabý kmeň a platí len pri rovnakom prvom
+  písmene (`recepcia.js:19`): predtým „będzie“ ≈ „niedziel“, „úprava“ ≈ „práve“, „hair“ ≈ „chair“ (375 takých zásahov
+  v slepých sadách, z toho 285 s iným prvým písmenom – nezmyselné, alebo nadbytočné: „strih“ ≈ „ostrih“ má tá istá
+  položka aj presne). Zhoda je tým aj ~2,5× rýchlejšia.
+
+### P6 – nezávislé orákulum a nové kombinácie
+
+- Orákulum už nepreberá `stop`/`vypln`/`zdvor` z JSON: menované veci sú **vložené časti** otázky (názov, kmeň inej
+  položky, deň, čas, osoba). Cenové slovo (trieda P1) je výplň podľa vlastného zoznamu testu `CENA`.
+- P6f: 7 dní a „zajtra“ z `Intl` (ICU v Node), časť dňa, `9:00 21:00 7:30 8 pm 9am` × každá služba s cenou (cena aj
+  trvanie) → nikdy holá odpoveď; pozdrav pred otázkou nemení priamu odpoveď; „Kedy máte otvorené {deň}?“ ostáva hodiny.
+- P6g: dieťa (silný kmeň položky deti) + spojka + zámeno prvej osoby → nie holá cena, deti medzi prvými dvomi voľbami;
+  dieťa opísané veľkosťou (malého, Kleine, małego …) → nikdy cena dospelého.
+- P1 lint: dni a „zajtra“ (Intl) nie sú výplň a vysvetlí ich položka hodiny; `=0h` je kmeň hodín; výplňové ani zdvorilé
+  slovo nepohltí kmeň služby s cenou; zámeno prvej osoby je v `ine` položky deti.
+- P6e: + 3 chyby hodnotenia v2-1, sondy tried W, D a pozdravy (29 nových riadkov, spolu 179); „Koľko stojí strih vo
+  štvrtok večer?“ už nesmie dostať holú cenu.
+- Na `aeaafb7` hlási ten istý testový súbor 5 z 10 testov s chybou (P6f 2 577, P6g 118, P6e 17, P6a 26, lint);
+  po oprave 10/10.
+
+### Čo pravidlá zámerne nerobia (doplnok)
+
+- Holé číslo bez minút („o 9“, „um 9“) nie je čas – môže to byť vek alebo cm; čas je `hh:mm` a `9 pm`/`9am`.
+  Neznáme slová času („hod“, „Uhr“) priamu odpoveď aj tak zakážu (P1, neznáme slovo).
+- Časť dňa na úplnom začiatku bez pozdravu („Ráno strih?“) je obsahové slovo → „Myslíš toto?“, nie cena.
+- Zápor („nechcem bradu, len strih“) ostáva nehádaný; poradie volieb medzi strihom a bradou rozhoduje poradie dát.

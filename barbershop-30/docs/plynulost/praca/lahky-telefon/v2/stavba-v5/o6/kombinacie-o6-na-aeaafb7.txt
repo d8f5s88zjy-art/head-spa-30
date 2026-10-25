@@ -1,0 +1,415 @@
+TAP version 13
+# sr „Koliko košta Muško šišanje i koz?“ → odpoved cena-strih: nevysvetlí koz
+# sr „Koliko košta koz Muško šišanje?“ → odpoved cena-strih: nevysvetlí koz
+# sr „Koliko košta Muško šišanje i uređivanje brade i koz?“ → odpoved cena-strih-brada: nevysvetlí koz
+# sr „Koliko košta koz Muško šišanje i uređivanje brade?“ → odpoved cena-strih-brada: nevysvetlí koz
+# sr „Koliko košta Uređivanje brade i koz?“ → odpoved cena-brada: nevysvetlí koz
+# sr „Koliko košta koz Uređivanje brade?“ → odpoved cena-brada: nevysvetlí koz
+# sr „Koliko košta Muško šišanje – kosa duža od 10 cm i koz?“ → odpoved cena-dlhe: nevysvetlí koz
+# sr „Koliko košta koz Muško šišanje – kosa duža od 10 cm?“ → odpoved cena-dlhe: nevysvetlí koz
+# sr „Koliko košta Šišanje za male džentlmene i koz?“ → odpoved deti: nevysvetlí koz
+# sr „Koliko košta koz Šišanje za male džentlmene?“ → odpoved deti: nevysvetlí koz
+# sr „Koliko košta Glatko brijanje Hot Towel i koz?“ → odpoved holenie: nevysvetlí koz
+# sr „Koliko košta koz Glatko brijanje Hot Towel?“ → odpoved holenie: nevysvetlí koz
+# sr „Koliko košta Brijanje glave i koz?“ → odpoved hlava: nevysvetlí koz
+# sr „Koliko košta koz Brijanje glave?“ → odpoved hlava: nevysvetlí koz
+# sr „Koliko košta Paket 1 i koz?“ → odpoved balicky: nevysvetlí koz
+# sr „Koliko košta koz Paket 1?“ → odpoved balicky: nevysvetlí koz
+# sr „Koliko košta Ultra inclusive Barbershop30 i koz?“ → odpoved ultra: nevysvetlí koz
+# sr „Koliko košta koz Ultra inclusive Barbershop30?“ → odpoved ultra: nevysvetlí koz
+# sr „Koliko košta Uređivanje obrva i koz?“ → odpoved obocie: nevysvetlí koz
+# sr „Koliko košta koz Uređivanje obrva?“ → odpoved obocie: nevysvetlí koz
+# sr „Koliko košta Depilacija ušiju i nosa voskom i koz?“ → odpoved depilacia: nevysvetlí koz
+# sr „Koliko košta koz Depilacija ušiju i nosa voskom?“ → odpoved depilacia: nevysvetlí koz
+# sr „Koliko košta Farbanje brade i koz?“ → odpoved farbenie-brady: nevysvetlí koz
+# sr „Koliko košta koz Farbanje brade?“ → odpoved farbenie-brady: nevysvetlí koz
+# sr „Koliko košta Kreativni ornament na glavi i koz?“ → odpoved ornament: nevysvetlí koz
+# otázok 11198, chýb 26
+# otázok 3058, chýb 0
+# otázok 2182, chýb 0
+# otázok 1189, chýb 0
+# sk „Koľko stojí strih vo štvrtok večer?“ → odpoved cena-strih, smie: nič
+# sk „V pondelok o 9:00 na bradu?“ → odpoved cena-brada, smie: nič
+# cs „Střih pro syna (8) a pro mě, kolik?“ → odpoved deti, smie: nič
+# pl „Strzyżenie dla syna (8 lat) i dla mnie?“ → odpoved deti, smie: nič
+# sk „strih o 21:00?“ → odpoved cena-strih, smie: nič
+# sk „strih v piatok o 20:00?“ → odpoved cena-strih, smie: nič
+# sk „Koľko stojí strih zajtra ráno?“ → odpoved cena-strih, smie: nič
+# en „haircut Monday 20:00?“ → odpoved cena-strih, smie: nič
+# en „Haircut on Monday?“ → odpoved cena-strih, smie: nič
+# en „haircut at 9 pm?“ → odpoved cena-strih, smie: nič
+# de „Haarschnitt am Montag?“ → odpoved cena-strih, smie: nič
+# hu „Hajvágás hétfőn?“ → odpoved cena-strih, smie: nič
+# sr „Šišanje u ponedeljak?“ → odpoved cena-strih, smie: nič
+# uk „Стрижка в понеділок?“ → odpoved cena-strih, smie: nič
+# cs „V pondělí střih?“ → odpoved cena-strih, smie: nič
+# en „Cut for my son (6) and me, price?“ → odpoved deti, smie: nič
+# uk „Стрижка для сина і для мене?“ → odpoved deti, smie: nič
+# otázok 179, chýb 17
+# sk „Koľko stojí Pánsky strih pondelok?“ → odpoved cena-strih: nevysvetlí pondelok
+# sk „pondelok Pánsky strih?“ → odpoved cena-strih: nevysvetlí pondelok
+# sk „Ako dlho trvá Pánsky strih pondelok?“ → odpoved trvanie:cena-strih: nevysvetlí pondelok
+# sk „Koľko stojí Pánsky strih utorok?“ → odpoved cena-strih: nevysvetlí utorok
+# sk „utorok Pánsky strih?“ → odpoved cena-strih: nevysvetlí utorok
+# sk „Ako dlho trvá Pánsky strih utorok?“ → odpoved trvanie:cena-strih: nevysvetlí utorok
+# sk „Koľko stojí Pánsky strih streda?“ → odpoved cena-strih: nevysvetlí streda
+# sk „streda Pánsky strih?“ → odpoved cena-strih: nevysvetlí streda
+# sk „Ako dlho trvá Pánsky strih streda?“ → odpoved trvanie:cena-strih: nevysvetlí streda
+# sk „Koľko stojí Pánsky strih štvrtok?“ → odpoved cena-strih: nevysvetlí štvrtok
+# sk „štvrtok Pánsky strih?“ → odpoved cena-strih: nevysvetlí štvrtok
+# sk „Ako dlho trvá Pánsky strih štvrtok?“ → odpoved trvanie:cena-strih: nevysvetlí štvrtok
+# sk „Koľko stojí Pánsky strih piatok?“ → odpoved cena-strih: nevysvetlí piatok
+# sk „piatok Pánsky strih?“ → odpoved cena-strih: nevysvetlí piatok
+# sk „Ako dlho trvá Pánsky strih piatok?“ → odpoved trvanie:cena-strih: nevysvetlí piatok
+# sk „Koľko stojí Pánsky strih zajtra?“ → odpoved cena-strih: nevysvetlí zajtra
+# sk „zajtra Pánsky strih?“ → odpoved cena-strih: nevysvetlí zajtra
+# sk „Ako dlho trvá Pánsky strih zajtra?“ → odpoved trvanie:cena-strih: nevysvetlí zajtra
+# sk „Koľko stojí Pánsky strih ráno?“ → odpoved cena-strih: nevysvetlí ráno
+# sk „ráno Pánsky strih?“ → odpoved cena-strih: nevysvetlí ráno
+# sk „Ako dlho trvá Pánsky strih ráno?“ → odpoved trvanie:cena-strih: nevysvetlí ráno
+# sk „Pánsky strih 9:00?“ → odpoved cena-strih: nevysvetlí čas 9:00
+# sk „Koľko stojí Pánsky strih 9:00?“ → odpoved cena-strih: nevysvetlí čas 9:00
+# sk „Pánsky strih 21:00?“ → odpoved cena-strih: nevysvetlí čas 21:00
+# sk „Koľko stojí Pánsky strih 21:00?“ → odpoved cena-strih: nevysvetlí čas 21:00
+# otázok 4432, chýb 2577
+# sk „Koľko stojí strih pre malého?“ → odpoved cena-strih: dieťa (malého) nevysvetlí
+# en „How much is haircut for kid and for me?“ → odpoved deti: dve osoby, holá cena
+# en „kid and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for child and for me?“ → odpoved deti: dve osoby, holá cena
+# en „child and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for children and for me?“ → odpoved deti: dve osoby, holá cena
+# en „children and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for boy and for me?“ → odpoved deti: dve osoby, holá cena
+# en „boy and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for son and for me?“ → odpoved deti: dve osoby, holá cena
+# en „son and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for junior and for me?“ → odpoved deti: dve osoby, holá cena
+# en „junior and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for little and for me?“ → odpoved deti: dve osoby, holá cena
+# en „little and me, How much is?“ → odpoved deti: dve osoby, holá cena
+# en „How much is haircut for small one?“ → odpoved cena-strih: dieťa (small one) nevysvetlí
+# uk „Скільки коштує стрижка для діт і для мене?“ → odpoved deti: dve osoby, holá cena
+# uk „діт і мене, Скільки коштує?“ → odpoved deti: dve osoby, holá cena
+# uk „Скільки коштує стрижка для дітеи і для мене?“ → odpoved deti: dve osoby, holá cena
+# uk „дітеи і мене, Скільки коштує?“ → odpoved deti: dve osoby, holá cena
+# uk „Скільки коштує стрижка для дитяч і для мене?“ → odpoved deti: dve osoby, holá cena
+# uk „дитяч і мене, Скільки коштує?“ → odpoved deti: dve osoby, holá cena
+# uk „Скільки коштує стрижка для дитин і для мене?“ → odpoved deti: dve osoby, holá cena
+# uk „дитин і мене, Скільки коштує?“ → odpoved deti: dve osoby, holá cena
+# uk „Скільки коштує стрижка для хлопч і для мене?“ → odpoved deti: dve osoby, holá cena
+# otázok 288, chýb 118
+# sk: „pondelok“ je výplň alebo stop-slovo
+# sk: „pondelok“ nevysvetlí položka hodiny
+# sk: „utorok“ je výplň alebo stop-slovo
+# sk: „utorok“ nevysvetlí položka hodiny
+# sk: „streda“ je výplň alebo stop-slovo
+# sk: „streda“ nevysvetlí položka hodiny
+# sk: „štvrtok“ je výplň alebo stop-slovo
+# sk: „štvrtok“ nevysvetlí položka hodiny
+# sk: „piatok“ je výplň alebo stop-slovo
+# sk: „piatok“ nevysvetlí položka hodiny
+# sk: „zajtra“ je výplň alebo stop-slovo
+# sk: „zajtra“ nevysvetlí položka hodiny
+# sk: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# sk: zámeno „mňa“ chýba v ine položky deti
+# en: „Monday“ je výplň alebo stop-slovo
+# en: „Monday“ nevysvetlí položka hodiny
+# en: „Tuesday“ je výplň alebo stop-slovo
+# en: „Tuesday“ nevysvetlí položka hodiny
+# en: „Wednesday“ je výplň alebo stop-slovo
+# en: „Wednesday“ nevysvetlí položka hodiny
+# en: „Thursday“ je výplň alebo stop-slovo
+# en: „Thursday“ nevysvetlí položka hodiny
+# en: „Friday“ je výplň alebo stop-slovo
+# en: „Friday“ nevysvetlí položka hodiny
+# en: „tomorrow“ je výplň alebo stop-slovo
+# en: „tomorrow“ nevysvetlí položka hodiny
+# en: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# en: zámeno „me“ chýba v ine položky deti
+# uk: „понеділок“ je výplň alebo stop-slovo
+# uk: „вівторок“ je výplň alebo stop-slovo
+# uk: „вівторок“ nevysvetlí položka hodiny
+# uk: „середа“ je výplň alebo stop-slovo
+# uk: „середа“ nevysvetlí položka hodiny
+# uk: „четвер“ je výplň alebo stop-slovo
+# uk: „четвер“ nevysvetlí položka hodiny
+# uk: „пʼятниця“ nevysvetlí položka hodiny
+# uk: „завтра“ je výplň alebo stop-slovo
+# uk: „завтра“ nevysvetlí položka hodiny
+# uk: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# uk: výplň „мале“ pohltí kmeň „маленьк“ služby deti
+# uk: zámeno „мене“ chýba v ine položky deti
+# hu: „hétfő“ je výplň alebo stop-slovo
+# hu: „hétfő“ nevysvetlí položka hodiny
+# hu: „kedd“ je výplň alebo stop-slovo
+# hu: „kedd“ nevysvetlí položka hodiny
+# hu: „szerda“ je výplň alebo stop-slovo
+# hu: „szerda“ nevysvetlí položka hodiny
+# hu: „csütörtök“ je výplň alebo stop-slovo
+# hu: „csütörtök“ nevysvetlí položka hodiny
+# hu: „péntek“ je výplň alebo stop-slovo
+# hu: „péntek“ nevysvetlí položka hodiny
+# hu: „holnap“ je výplň alebo stop-slovo
+# hu: „holnap“ nevysvetlí položka hodiny
+# hu: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# hu: výplň „sima“ pohltí kmeň „simara“ služby holenie
+# hu: výplň „sima“ pohltí kmeň „simara“ služby hlava
+# hu: zámeno „nekem“ chýba v ine položky deti
+# sr: „ponedeljak“ je výplň alebo stop-slovo
+# sr: „utorak“ je výplň alebo stop-slovo
+# sr: „utorak“ nevysvetlí položka hodiny
+# sr: „sreda“ je výplň alebo stop-slovo
+# sr: „sreda“ nevysvetlí položka hodiny
+# sr: „četvrtak“ je výplň alebo stop-slovo
+# sr: „četvrtak“ nevysvetlí položka hodiny
+# sr: „petak“ je výplň alebo stop-slovo
+# sr: „petak“ nevysvetlí položka hodiny
+# sr: „sutra“ je výplň alebo stop-slovo
+# sr: „sutra“ nevysvetlí položka hodiny
+# sr: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# sr: výplň „ko“ pohltí kmeň „koz“ služby plet
+# sr: zámeno „mene“ chýba v ine položky deti
+# pl: „poniedziałek“ je výplň alebo stop-slovo
+# pl: „poniedziałek“ nevysvetlí položka hodiny
+# pl: „wtorek“ je výplň alebo stop-slovo
+# pl: „wtorek“ nevysvetlí položka hodiny
+# pl: „środa“ je výplň alebo stop-slovo
+# pl: „środa“ nevysvetlí položka hodiny
+# pl: „czwartek“ je výplň alebo stop-slovo
+# pl: „czwartek“ nevysvetlí položka hodiny
+# pl: „piątek“ je výplň alebo stop-slovo
+# pl: „piątek“ nevysvetlí položka hodiny
+# pl: „jutro“ je výplň alebo stop-slovo
+# pl: „jutro“ nevysvetlí položka hodiny
+# pl: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# pl: zámeno „mnie“ chýba v ine položky deti
+# de: „Montag“ je výplň alebo stop-slovo
+# de: „Montag“ nevysvetlí položka hodiny
+# de: „Dienstag“ je výplň alebo stop-slovo
+# de: „Dienstag“ nevysvetlí položka hodiny
+# de: „Mittwoch“ je výplň alebo stop-slovo
+# de: „Mittwoch“ nevysvetlí položka hodiny
+# de: „Donnerstag“ je výplň alebo stop-slovo
+# de: „Donnerstag“ nevysvetlí položka hodiny
+# de: „Freitag“ je výplň alebo stop-slovo
+# de: „Freitag“ nevysvetlí položka hodiny
+# de: „morgen“ je výplň alebo stop-slovo
+# de: „morgen“ nevysvetlí položka hodiny
+# de: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# de: výplň „klein“ pohltí kmeň „klein“ služby deti
+# de: zámeno „mich“ chýba v ine položky deti
+# cs: „pondělí“ je výplň alebo stop-slovo
+# cs: „pondělí“ nevysvetlí položka hodiny
+# cs: „úterý“ je výplň alebo stop-slovo
+# cs: „úterý“ nevysvetlí položka hodiny
+# cs: „středa“ je výplň alebo stop-slovo
+# cs: „středa“ nevysvetlí položka hodiny
+# cs: „čtvrtek“ je výplň alebo stop-slovo
+# cs: „čtvrtek“ nevysvetlí položka hodiny
+# cs: „pátek“ je výplň alebo stop-slovo
+# cs: „pátek“ nevysvetlí položka hodiny
+# cs: „zítra“ je výplň alebo stop-slovo
+# cs: „zítra“ nevysvetlí položka hodiny
+# cs: čas hh:mm (slovo 0h) nie je kmeň položky hodiny
+# cs: zámeno „mě“ chýba v ine položky deti
+# povolených dvojíc 120, chýb 0
+# výrezov cenníka: 112
+# Subtest: P6a: dvojice položiek – služba s cenou × každá iná položka (s cenou, bez ceny, téma nevieme)
+not ok 1 - P6a: dvojice položiek – služba s cenou × každá iná položka (s cenou, bez ceny, téma nevieme)
+  ---
+  duration_ms: 23717.99429
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    sr „Koliko košta Muško šišanje i koz?“ → odpoved cena-strih: nevysvetlí koz
+    sr „Koliko košta koz Muško šišanje?“ → odpoved cena-strih: nevysvetlí koz
+    sr „Koliko košta Muško šišanje i uređivanje brade i koz?“ → odpoved cena-strih-brada: nevysvetlí koz
+    sr „Koliko košta koz Muško šišanje i uređivanje brade?“ → odpoved cena-strih-brada: nevysvetlí koz
+    sr „Koliko košta Uređivanje brade i koz?“ → odpoved cena-brada: nevysvetlí koz
+    
+    26 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 26
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:97:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: P6b: trvanie × každá položka – trvanie len služby s price-time, nikdy strih a brada pri inej veci (P4)
+ok 2 - P6b: trvanie × každá položka – trvanie len služby s price-time, nikdy strih a brada pri inej veci (P4)
+  ---
+  duration_ms: 1877.65347
+  type: 'test'
+  ...
+# Subtest: P6c: cenové a časové slovo × každá položka s cenou, príplatok, dni, šediny, odfarbenie (P1, P5)
+ok 3 - P6c: cenové a časové slovo × každá položka s cenou, príplatok, dni, šediny, odfarbenie (P1, P5)
+  ---
+  duration_ms: 3531.821876
+  type: 'test'
+  ...
+# Subtest: P6d: triedy kontroly 4 – trvanie × položka bez trvania (A), farbenie vlasov × služba s cenou (B)
+ok 4 - P6d: triedy kontroly 4 – trvanie × položka bez trvania (A), farbenie vlasov × služba s cenou (B)
+  ---
+  duration_ms: 1093.329009
+  type: 'test'
+  ...
+# Subtest: P6e: otázky skeptika a sondy kontroly 4 – holá cena alebo trvanie len pri správnej službe
+not ok 5 - P6e: otázky skeptika a sondy kontroly 4 – holá cena alebo trvanie len pri správnej službe
+  ---
+  duration_ms: 201.492661
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:355:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    sk „Koľko stojí strih vo štvrtok večer?“ → odpoved cena-strih, smie: nič
+    sk „V pondelok o 9:00 na bradu?“ → odpoved cena-brada, smie: nič
+    cs „Střih pro syna (8) a pro mě, kolik?“ → odpoved deti, smie: nič
+    pl „Strzyżenie dla syna (8 lat) i dla mnie?“ → odpoved deti, smie: nič
+    sk „strih o 21:00?“ → odpoved cena-strih, smie: nič
+    sk „strih v piatok o 20:00?“ → odpoved cena-strih, smie: nič
+    sk „Koľko stojí strih zajtra ráno?“ → odpoved cena-strih, smie: nič
+    en „haircut Monday 20:00?“ → odpoved cena-strih, smie: nič
+    en „Haircut on Monday?“ → odpoved cena-strih, smie: nič
+    en „haircut at 9 pm?“ → odpoved cena-strih, smie: nič
+    de „Haarschnitt am Montag?“ → odpoved cena-strih, smie: nič
+    hu „Hajvágás hétfőn?“ → odpoved cena-strih, smie: nič
+    sr „Šišanje u ponedeljak?“ → odpoved cena-strih, smie: nič
+    uk „Стрижка в понеділок?“ → odpoved cena-strih, smie: nič
+    cs „V pondělí střih?“ → odpoved cena-strih, smie: nič
+    en „Cut for my son (6) and me, price?“ → odpoved deti, smie: nič
+    uk „Стрижка для сина і для мене?“ → odpoved deti, smie: nič
+    
+    17 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 17
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:364:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: P6f: dni, „zajtra“ (Intl), časť dňa, čas hh:mm a 9 pm × každá služba – nikdy holá cena ani trvanie; pozdrav odpoveď nemení
+not ok 6 - P6f: dni, „zajtra“ (Intl), časť dňa, čas hh:mm a 9 pm × každá služba – nikdy holá cena ani trvanie; pozdrav odpoveď nemení
+  ---
+  duration_ms: 6074.085759
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:383:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    sk „Koľko stojí Pánsky strih pondelok?“ → odpoved cena-strih: nevysvetlí pondelok
+    sk „pondelok Pánsky strih?“ → odpoved cena-strih: nevysvetlí pondelok
+    sk „Ako dlho trvá Pánsky strih pondelok?“ → odpoved trvanie:cena-strih: nevysvetlí pondelok
+    sk „Koľko stojí Pánsky strih utorok?“ → odpoved cena-strih: nevysvetlí utorok
+    sk „utorok Pánsky strih?“ → odpoved cena-strih: nevysvetlí utorok
+    
+    2577 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2577
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:410:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: P6g: druhá osoba – dieťa + spojka + zámeno prvej osoby nedostane cenu detí; deti sú medzi prvými dvomi voľbami
+not ok 7 - P6g: druhá osoba – dieťa + spojka + zámeno prvej osoby nedostane cenu detí; deti sú medzi prvými dvomi voľbami
+  ---
+  duration_ms: 330.26
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:413:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    sk „Koľko stojí strih pre malého?“ → odpoved cena-strih: dieťa (malého) nevysvetlí
+    en „How much is haircut for kid and for me?“ → odpoved deti: dve osoby, holá cena
+    en „kid and me, How much is?“ → odpoved deti: dve osoby, holá cena
+    en „How much is haircut for child and for me?“ → odpoved deti: dve osoby, holá cena
+    en „child and me, How much is?“ → odpoved deti: dve osoby, holá cena
+    
+    118 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 118
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:436:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: P1 lint: dni a „zajtra“ (Intl) nie sú výplň a vysvetlí ich položka hodiny; výplň nepohltí kmeň služby; zámeno prvej osoby je v „ine“ položky deti
+not ok 8 - P1 lint: dni a „zajtra“ (Intl) nie sú výplň a vysvetlí ich položka hodiny; výplň nepohltí kmeň služby; zámeno prvej osoby je v „ine“ položky deti
+  ---
+  duration_ms: 17.540957
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:439:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    sk: „pondelok“ je výplň alebo stop-slovo
+    sk: „pondelok“ nevysvetlí položka hodiny
+    sk: „utorok“ je výplň alebo stop-slovo
+    sk: „utorok“ nevysvetlí položka hodiny
+    sk: „streda“ je výplň alebo stop-slovo
+    
+    114 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 114
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/lahky-telefon/v2/stavba-v5/o6/strom-pred/barbershop-30/source/tools/recepcia-kombinacie-test-o6.mjs:460:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: P5: lint dát – zdieľaný kmeň len medzi povolenými dvojicami; služba s cenou nezachytí časové slovo ani príplatok
+ok 9 - P5: lint dát – zdieľaný kmeň len medzi povolenými dvojicami; služba s cenou nezachytí časové slovo ani príplatok
+  ---
+  duration_ms: 13.159347
+  type: 'test'
+  ...
+# Subtest: P3: výrez cenníka – zvýraznený riadok služby, susedné riadky tej istej skupiny, doslovne zo stránky
+ok 10 - P3: výrez cenníka – zvýraznený riadok služby, susedné riadky tej istej skupiny, doslovne zo stránky
+  ---
+  duration_ms: 9.511901
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 5
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37054.478288

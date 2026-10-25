@@ -1,0 +1,1267 @@
+{
+ "tag": "v2-po",
+ "url": "http://127.0.0.1:8721/",
+ "len": "pocitac",
+ "snimkyChyby": [],
+ "chyby": [],
+ "ziadosti": [
+  "recepcia.js",
+  "recepcia.css",
+  "recepcia/sk.json",
+  "recepcia/en.json",
+  "recepcia/uk.json",
+  "recepcia/sk.json"
+ ],
+ "tlacidloPoLoadMs": 1971,
+ "clsPokoj": {
+  "cls": 0.0001,
+  "shifts": [
+   {
+    "t": 221,
+    "v": 0.0001
+   }
+  ]
+ },
+ "btn": {
+  "x": 1344,
+  "y": 820,
+  "w": 56,
+  "h": 56,
+  "r": 1400,
+  "b": 876,
+  "z": "39",
+  "anim": "rc-btn",
+  "label": "Spýtaj sa recepcie"
+ },
+ "predOtvorenim": {
+  "iw": 1440,
+  "cw": 1440,
+  "sw": 1440,
+  "sy": 6466,
+  "lx": 40,
+  "bodyOv": "",
+  "gutter": ""
+ },
+ "poOtvoreni": {
+  "iw": 1440,
+  "cw": 1440,
+  "sw": 1440,
+  "sy": 6466,
+  "lx": 40,
+  "bodyOv": "hidden",
+  "gutter": ""
+ },
+ "panel": {
+  "panel": {
+   "x": 1040,
+   "y": 449,
+   "w": 360,
+   "h": 359,
+   "r": 1400,
+   "b": 808
+  },
+  "btn": {
+   "x": 1344,
+   "y": 820,
+   "w": 56,
+   "h": 56,
+   "r": 1400,
+   "b": 876
+  },
+  "log": {
+   "x": 1057,
+   "y": 570,
+   "w": 326,
+   "h": 93,
+   "r": 1383,
+   "b": 663
+  },
+  "form": {
+   "x": 1057,
+   "y": 671,
+   "w": 326,
+   "h": 92,
+   "r": 1383,
+   "b": 763
+  },
+  "chipsBox": {
+   "x": 1051,
+   "y": 510,
+   "w": 338,
+   "h": 60,
+   "r": 1389,
+   "b": 570
+  },
+  "fokus": "rc-chip Rezervovať",
+  "fokusVis": false,
+  "ob": [
+   "contain",
+   "contain"
+  ],
+  "chips": [
+   {
+    "t": "Rezervovať",
+    "x": 1057,
+    "y": 518,
+    "w": 104,
+    "h": 44,
+    "r": 1161,
+    "b": 562
+   },
+   {
+    "t": "Hodiny",
+    "x": 1169,
+    "y": 518,
+    "w": 78,
+    "h": 44,
+    "r": 1247,
+    "b": 562
+   },
+   {
+    "t": "Cenník",
+    "x": 1255,
+    "y": 518,
+    "w": 78,
+    "h": 44,
+    "r": 1333,
+    "b": 562
+   },
+   {
+    "t": "Kde nás nájdete",
+    "x": 1341,
+    "y": 518,
+    "w": 134,
+    "h": 44,
+    "r": 1475,
+    "b": 562
+   },
+   {
+    "t": "Zavolať",
+    "x": 1483,
+    "y": 518,
+    "w": 81,
+    "h": 44,
+    "r": 1564,
+    "b": 562
+   }
+  ],
+  "lang": "sk",
+  "noI18n": true
+ },
+ "clsPoOtvoreni": 0.0001,
+ "odpovede": {
+  "cena": {
+   "text": "Strih\n\nPánsky strih\n40 min\n18 €\n\nPánsky strih a úprava brady\n60 min\n28 €\n\nzo stránky\nREZERVOVAŤ TERMÍN\nCELÝ CENNÍK",
+   "lang": "sk",
+   "li": {
+    "x": 1057,
+    "y": 418,
+    "w": 287,
+    "h": 247,
+    "r": 1344,
+    "b": 665
+   },
+   "log": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366,
+    "r": 1383,
+    "b": 665
+   },
+   "logScroll": {
+    "top": 31,
+    "max": 31,
+    "sw": 326,
+    "cw": 326
+   },
+   "formTop": 673,
+   "liCeleViditelne": true,
+   "logNadFormularom": true,
+   "sw": 1440,
+   "iw": 1440,
+   "sy": 6466,
+   "odkazy": [
+    {
+     "t": "Rezervovať termín",
+     "href": "https://www.barbershop30.sk/rezervacia",
+     "tag": "A",
+     "x": 1069,
+     "y": 569,
+     "w": 163,
+     "h": 40,
+     "r": 1232,
+     "b": 609
+    },
+    {
+     "t": "Celý cenník",
+     "href": "#sluzby",
+     "tag": "A",
+     "x": 1069,
+     "y": 617,
+     "w": 112,
+     "h": 40,
+     "r": 1181,
+     "b": 657
+    }
+   ],
+   "cen": {
+    "box": {
+     "x": 1069,
+     "y": 426,
+     "w": 263,
+     "h": 105,
+     "r": 1332,
+     "b": 532
+    },
+    "viditelny": true,
+    "nadpis": "Strih",
+    "riadky": [
+     {
+      "hl": true,
+      "aria": "true",
+      "fs": "16px",
+      "color": "rgb(241, 233, 221)",
+      "border": "rgb(224, 96, 28)",
+      "x": 1069,
+      "y": 451,
+      "w": 263,
+      "h": 26,
+      "r": 1332,
+      "b": 476,
+      "pretek": false,
+      "parts": [
+       {
+        "t": "Pánsky strih",
+        "x": 1079,
+        "y": 451,
+        "w": 165,
+        "h": 26,
+        "r": 1244,
+        "b": 476,
+        "ov": false
+       },
+       {
+        "t": "40 min",
+        "x": 1252,
+        "y": 451,
+        "w": 41,
+        "h": 26,
+        "r": 1293,
+        "b": 476,
+        "ov": false
+       },
+       {
+        "t": "18 €",
+        "x": 1301,
+        "y": 451,
+        "w": 31,
+        "h": 26,
+        "r": 1332,
+        "b": 476,
+        "ov": false
+       }
+      ]
+     },
+     {
+      "hl": false,
+      "aria": null,
+      "fs": "16px",
+      "color": "rgb(142, 133, 120)",
+      "border": "rgba(0, 0, 0, 0)",
+      "x": 1069,
+      "y": 480,
+      "w": 263,
+      "h": 51,
+      "r": 1332,
+      "b": 532,
+      "pretek": false,
+      "parts": [
+       {
+        "t": "Pánsky strih a úprava brady",
+        "x": 1079,
+        "y": 480,
+        "w": 162,
+        "h": 51,
+        "r": 1241,
+        "b": 532,
+        "ov": false
+       },
+       {
+        "t": "60 min",
+        "x": 1249,
+        "y": 480,
+        "w": 41,
+        "h": 51,
+        "r": 1290,
+        "b": 532,
+        "ov": false
+       },
+       {
+        "t": "28 €",
+        "x": 1298,
+        "y": 480,
+        "w": 34,
+        "h": 51,
+        "r": 1332,
+        "b": 532,
+        "ov": false
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "volby": {
+   "text": "Myslíš toto?\n\nKOĽKO STOJÍ PÁNSKY STRIH?\nFARBÍTE VLASY?\nKOĽKO STOJÍ STRIH S BRADOU?\nCELÝ CENNÍK\nZAVOLAŤ",
+   "lang": "sk",
+   "li": {
+    "x": 1057,
+    "y": 432,
+    "w": 287,
+    "h": 234,
+    "r": 1344,
+    "b": 665
+   },
+   "log": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366,
+    "r": 1383,
+    "b": 665
+   },
+   "logScroll": {
+    "top": 322,
+    "max": 322,
+    "sw": 326,
+    "cw": 326
+   },
+   "formTop": 673,
+   "liCeleViditelne": true,
+   "logNadFormularom": true,
+   "sw": 1440,
+   "iw": 1440,
+   "sy": 6466,
+   "odkazy": [
+    {
+     "t": "Koľko stojí pánsky strih?",
+     "href": null,
+     "tag": "BUTTON",
+     "x": 1069,
+     "y": 473,
+     "w": 214,
+     "h": 40,
+     "r": 1283,
+     "b": 513
+    },
+    {
+     "t": "Farbíte vlasy?",
+     "href": null,
+     "tag": "BUTTON",
+     "x": 1069,
+     "y": 521,
+     "w": 135,
+     "h": 40,
+     "r": 1204,
+     "b": 561
+    },
+    {
+     "t": "Koľko stojí strih s bradou?",
+     "href": null,
+     "tag": "BUTTON",
+     "x": 1069,
+     "y": 569,
+     "w": 230,
+     "h": 40,
+     "r": 1299,
+     "b": 609
+    },
+    {
+     "t": "Celý cenník",
+     "href": "#sluzby",
+     "tag": "A",
+     "x": 1069,
+     "y": 617,
+     "w": 112,
+     "h": 40,
+     "r": 1181,
+     "b": 657
+    },
+    {
+     "t": "Zavolať",
+     "href": "tel:+421951267203",
+     "tag": "A",
+     "x": 1189,
+     "y": 617,
+     "w": 91,
+     "h": 40,
+     "r": 1280,
+     "b": 657
+    }
+   ]
+  },
+  "damy": {
+   "text": "Dámske strihy na webe neuvádzame. Spýtaj sa recepcie: 0951 267 203 alebo info@barbershop30.sk.\n\nZAVOLAŤ\nNAPÍSAŤ E‑MAIL",
+   "lang": "sk",
+   "li": {
+    "x": 1057,
+    "y": 498,
+    "w": 287,
+    "h": 166,
+    "r": 1344,
+    "b": 665
+   },
+   "log": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366,
+    "r": 1383,
+    "b": 665
+   },
+   "logScroll": {
+    "top": 851,
+    "max": 851,
+    "sw": 326,
+    "cw": 326
+   },
+   "formTop": 673,
+   "liCeleViditelne": true,
+   "logNadFormularom": true,
+   "sw": 1440,
+   "iw": 1440,
+   "sy": 6466,
+   "odkazy": [
+    {
+     "t": "Zavolať",
+     "href": "tel:+421951267203",
+     "tag": "A",
+     "x": 1069,
+     "y": 617,
+     "w": 91,
+     "h": 40,
+     "r": 1160,
+     "b": 657
+    },
+    {
+     "t": "Napísať e‑mail",
+     "href": "mailto:info@barbershop30.sk",
+     "tag": "A",
+     "x": 1168,
+     "y": 617,
+     "w": 134,
+     "h": 40,
+     "r": 1302,
+     "b": 657
+    }
+   ]
+  }
+ },
+ "volbyShiftTab": [
+  {
+   "t": "Zavolať",
+   "tag": "A",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 617
+  },
+  {
+   "t": "Celý cenník",
+   "tag": "A",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 617
+  },
+  {
+   "t": "Koľko stojí strih s bradou?",
+   "tag": "BUTTON",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 569
+  },
+  {
+   "t": "Farbíte vlasy?",
+   "tag": "BUTTON",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 521
+  },
+  {
+   "t": "Koľko stojí pánsky strih?",
+   "tag": "BUTTON",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 473
+  },
+  {
+   "t": "Celý cenník",
+   "tag": "A",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 326
+  },
+  {
+   "t": "Rezervovať termín",
+   "tag": "A",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 299
+  },
+  {
+   "t": "Zavolať",
+   "tag": "A",
+   "vPaneli": true,
+   "vis": true,
+   "outline": "solid 2px off 3px",
+   "vidno": true,
+   "y": 247
+  }
+ ],
+ "volbaFokus": {
+  "t": "Koľko stojí pánsky strih?",
+  "vis": true,
+  "outline": "solid 2px rgb(224, 96, 28)"
+ },
+ "poVolbe": {
+  "text": "Strih\n\nPánsky strih\n40 min\n18 €\n\nPánsky strih a úprava brady\n60 min\n28 €\n\nzo stránky\nREZERVOVAŤ TERMÍN\nCELÝ CENNÍK",
+  "lang": "sk",
+  "li": {
+   "x": 1057,
+   "y": 418,
+   "w": 287,
+   "h": 247,
+   "r": 1344,
+   "b": 665
+  },
+  "log": {
+   "x": 1057,
+   "y": 299,
+   "w": 326,
+   "h": 366,
+   "r": 1383,
+   "b": 665
+  },
+  "logScroll": {
+   "top": 627,
+   "max": 627,
+   "sw": 326,
+   "cw": 326
+  },
+  "formTop": 673,
+  "liCeleViditelne": true,
+  "logNadFormularom": true,
+  "sw": 1440,
+  "iw": 1440,
+  "sy": 6466,
+  "odkazy": [
+   {
+    "t": "Rezervovať termín",
+    "href": "https://www.barbershop30.sk/rezervacia",
+    "tag": "A",
+    "x": 1069,
+    "y": 569,
+    "w": 163,
+    "h": 40,
+    "r": 1232,
+    "b": 609
+   },
+   {
+    "t": "Celý cenník",
+    "href": "#sluzby",
+    "tag": "A",
+    "x": 1069,
+    "y": 617,
+    "w": 112,
+    "h": 40,
+    "r": 1181,
+    "b": 657
+   }
+  ],
+  "cen": {
+   "box": {
+    "x": 1069,
+    "y": 426,
+    "w": 263,
+    "h": 105,
+    "r": 1332,
+    "b": 531
+   },
+   "viditelny": true,
+   "nadpis": "Strih",
+   "riadky": [
+    {
+     "hl": true,
+     "aria": "true",
+     "fs": "16px",
+     "color": "rgb(241, 233, 221)",
+     "border": "rgb(224, 96, 28)",
+     "x": 1069,
+     "y": 450,
+     "w": 263,
+     "h": 26,
+     "r": 1332,
+     "b": 476,
+     "pretek": false,
+     "parts": [
+      {
+       "t": "Pánsky strih",
+       "x": 1079,
+       "y": 450,
+       "w": 165,
+       "h": 26,
+       "r": 1244,
+       "b": 476,
+       "ov": false
+      },
+      {
+       "t": "40 min",
+       "x": 1252,
+       "y": 450,
+       "w": 41,
+       "h": 26,
+       "r": 1293,
+       "b": 476,
+       "ov": false
+      },
+      {
+       "t": "18 €",
+       "x": 1301,
+       "y": 450,
+       "w": 31,
+       "h": 26,
+       "r": 1332,
+       "b": 476,
+       "ov": false
+      }
+     ]
+    },
+    {
+     "hl": false,
+     "aria": null,
+     "fs": "16px",
+     "color": "rgb(142, 133, 120)",
+     "border": "rgba(0, 0, 0, 0)",
+     "x": 1069,
+     "y": 480,
+     "w": 263,
+     "h": 51,
+     "r": 1332,
+     "b": 531,
+     "pretek": false,
+     "parts": [
+      {
+       "t": "Pánsky strih a úprava brady",
+       "x": 1079,
+       "y": 480,
+       "w": 162,
+       "h": 51,
+       "r": 1241,
+       "b": 531,
+       "ov": false
+      },
+      {
+       "t": "60 min",
+       "x": 1249,
+       "y": 480,
+       "w": 41,
+       "h": 51,
+       "r": 1290,
+       "b": 531,
+       "ov": false
+      },
+      {
+       "t": "28 €",
+       "x": 1298,
+       "y": 480,
+       "w": 34,
+       "h": 51,
+       "r": 1332,
+       "b": 531,
+       "ov": false
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "poVolbeOtazka": "Koľko stojí pánsky strih?",
+ "S7": {
+  "pred": {
+   "sy": 6466,
+   "lt": 1712,
+   "lmax": 1712,
+   "r": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366
+   },
+   "bodyOv": "hidden"
+  },
+  "kolieskoLogKoniec": {
+   "sy": 6466,
+   "lt": 1712,
+   "lmax": 1712,
+   "r": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366
+   },
+   "bodyOv": "hidden"
+  },
+  "kolieskoLogZaciatok": {
+   "sy": 6466,
+   "lt": 0,
+   "lmax": 1712,
+   "r": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366
+   },
+   "bodyOv": "hidden"
+  },
+  "kolieskoPozadie": {
+   "sy": 6466,
+   "lt": 0,
+   "lmax": 1712,
+   "r": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366
+   },
+   "bodyOv": "hidden"
+  },
+  "kolieskoPozadieNahor": {
+   "sy": 6466,
+   "lt": 0,
+   "lmax": 1712,
+   "r": {
+    "x": 1057,
+    "y": 299,
+    "w": 326,
+    "h": 366
+   },
+   "bodyOv": "hidden"
+  },
+  "chipsPoKolesku": 181,
+  "poZatvoreni": {
+   "iw": 1440,
+   "cw": 1440,
+   "sw": 1440,
+   "sy": 6466,
+   "lx": 40,
+   "bodyOv": "",
+   "gutter": "",
+   "open": false,
+   "fokus": "recepcia-btn"
+  }
+ },
+ "V1": {
+  "poPosuneZnova": {
+   "scrollLeft": 0,
+   "fokus": "Rezervovať",
+   "fx": 1057,
+   "fr": 1161,
+   "iw": 1440
+  },
+  "po4Tab": {
+   "scrollLeft": 181,
+   "fokus": "Zavolať"
+  },
+  "poEsc": {
+   "iw": 1440,
+   "cw": 1440,
+   "sw": 1440,
+   "sy": 6466,
+   "lx": 40,
+   "bodyOv": "",
+   "gutter": "",
+   "fokus": "recepcia-btn"
+  },
+  "znova": {
+   "scrollLeft": 0,
+   "fokus": "Rezervovať",
+   "fx": 1057,
+   "fr": 1161,
+   "iw": 1440
+  }
+ },
+ "D8": {
+  "el": "Rezervovať",
+  "vis": true,
+  "outline": "solid 2px off 3px",
+  "obrysPx": 5,
+  "odLava": 6,
+  "odHora": 8,
+  "odDola": 8,
+  "padding": "8px 6px",
+  "margin": "0px -6px",
+  "chipsX": 1051,
+  "chipX": 1057,
+  "nadpisX": 1057,
+  "celyObrys": true,
+  "tabVPaneli": "14/14",
+  "poEsc": {
+   "fokus": "recepcia-btn",
+   "vis": true,
+   "expanded": "false"
+  }
+ },
+ "jazyky": {
+  "en": {
+   "lang": "en",
+   "label": "Ask the front desk",
+   "panel": {
+    "lang": "en",
+    "nadpis": "Front desk",
+    "chips": [
+     "Book",
+     "Hours",
+     "Prices",
+     "Find us",
+     "Call"
+    ],
+    "zavriet": "Close",
+    "vstup": "Type a question…",
+    "sukromie": "Answers come from this page; nothing is sent.",
+    "bublinyInyJazyk": 16,
+    "bublin": 17
+   },
+   "odpoved": {
+    "text": "Cut\n\nMen's haircut\n40 min\n18 €\n\nMen's haircut and beard trim\n60 min\n28 €\n\nfrom this page\n\nThe booking page is in Slovak.\n\nBOOK AN APPOINTMENT\nFULL PRICE LIST",
+    "lang": "en",
+    "li": {
+     "x": 1057,
+     "y": 446,
+     "w": 287,
+     "h": 267,
+     "r": 1344,
+     "b": 713
+    },
+    "log": {
+     "x": 1057,
+     "y": 299,
+     "w": 326,
+     "h": 414,
+     "r": 1383,
+     "b": 713
+    },
+    "logScroll": {
+     "top": 2014,
+     "max": 2014,
+     "sw": 326,
+     "cw": 326
+    },
+    "formTop": 721,
+    "liCeleViditelne": true,
+    "logNadFormularom": true,
+    "sw": 1440,
+    "iw": 1440,
+    "sy": 6466,
+    "odkazy": [
+     {
+      "t": "Book an appointment",
+      "href": "https://www.barbershop30.sk/rezervacia",
+      "tag": "A",
+      "x": 1069,
+      "y": 617,
+      "w": 185,
+      "h": 40,
+      "r": 1254,
+      "b": 657
+     },
+     {
+      "t": "Full price list",
+      "href": "#sluzby",
+      "tag": "A",
+      "x": 1069,
+      "y": 665,
+      "w": 132,
+      "h": 40,
+      "r": 1201,
+      "b": 705
+     }
+    ],
+    "cen": {
+     "box": {
+      "x": 1069,
+      "y": 454,
+      "w": 263,
+      "h": 105,
+      "r": 1332,
+      "b": 559
+     },
+     "viditelny": true,
+     "nadpis": "Cut",
+     "riadky": [
+      {
+       "hl": true,
+       "aria": "true",
+       "fs": "16px",
+       "color": "rgb(241, 233, 221)",
+       "border": "rgb(224, 96, 28)",
+       "x": 1069,
+       "y": 478,
+       "w": 263,
+       "h": 26,
+       "r": 1332,
+       "b": 504,
+       "pretek": false,
+       "parts": [
+        {
+         "t": "Men's haircut",
+         "x": 1079,
+         "y": 478,
+         "w": 165,
+         "h": 26,
+         "r": 1244,
+         "b": 504,
+         "ov": false
+        },
+        {
+         "t": "40 min",
+         "x": 1252,
+         "y": 478,
+         "w": 41,
+         "h": 26,
+         "r": 1293,
+         "b": 504,
+         "ov": false
+        },
+        {
+         "t": "18 €",
+         "x": 1301,
+         "y": 478,
+         "w": 31,
+         "h": 26,
+         "r": 1332,
+         "b": 504,
+         "ov": false
+        }
+       ]
+      },
+      {
+       "hl": false,
+       "aria": null,
+       "fs": "16px",
+       "color": "rgb(142, 133, 120)",
+       "border": "rgba(0, 0, 0, 0)",
+       "x": 1069,
+       "y": 508,
+       "w": 263,
+       "h": 51,
+       "r": 1332,
+       "b": 559,
+       "pretek": false,
+       "parts": [
+        {
+         "t": "Men's haircut and beard trim",
+         "x": 1079,
+         "y": 508,
+         "w": 162,
+         "h": 51,
+         "r": 1241,
+         "b": 559,
+         "ov": false
+        },
+        {
+         "t": "60 min",
+         "x": 1249,
+         "y": 508,
+         "w": 41,
+         "h": 51,
+         "r": 1290,
+         "b": 559,
+         "ov": false
+        },
+        {
+         "t": "28 €",
+         "x": 1298,
+         "y": 508,
+         "w": 34,
+         "h": 51,
+         "r": 1332,
+         "b": 559,
+         "ov": false
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "sirka": {
+    "iw": 1440,
+    "cw": 1440,
+    "sw": 1440,
+    "sy": 6466,
+    "lx": 40,
+    "bodyOv": "hidden",
+    "gutter": ""
+   }
+  },
+  "uk": {
+   "lang": "uk-UA",
+   "label": "Запитай рецепцію",
+   "panel": {
+    "lang": "uk",
+    "nadpis": "Рецепція",
+    "chips": [
+     "Забронювати",
+     "Години роботи",
+     "Ціни",
+     "Де нас знайти",
+     "Зателефонувати"
+    ],
+    "zavriet": "Закрити",
+    "vstup": "Напиши питання…",
+    "sukromie": "Відповіді зі сторінки, нічого не надсилається.",
+    "bublinyInyJazyk": 18,
+    "bublin": 19
+   },
+   "odpoved": {
+    "text": "Стрижка\n\nЧоловіча стрижка\n40 хв\n18 €\n\nЧоловіча стрижка й оформлення бороди\n60 хв\n28 €\n\nзі сторінки\n\nСторінка бронювання словацькою мовою.\n\nЗАБРОНЮВАТИ ЧАС\nВЕСЬ ПРАЙС",
+    "lang": "uk",
+    "li": {
+     "x": 1057,
+     "y": 352,
+     "w": 287,
+     "h": 313,
+     "r": 1344,
+     "b": 665
+    },
+    "log": {
+     "x": 1057,
+     "y": 299,
+     "w": 326,
+     "h": 366,
+     "r": 1383,
+     "b": 665
+    },
+    "logScroll": {
+     "top": 2433,
+     "max": 2433,
+     "sw": 326,
+     "cw": 326
+    },
+    "formTop": 673,
+    "liCeleViditelne": true,
+    "logNadFormularom": true,
+    "sw": 1440,
+    "iw": 1440,
+    "sy": 6513,
+    "odkazy": [
+     {
+      "t": "Забронювати час",
+      "href": "https://www.barbershop30.sk/rezervacia",
+      "tag": "A",
+      "x": 1069,
+      "y": 569,
+      "w": 172,
+      "h": 40,
+      "r": 1241,
+      "b": 609
+     },
+     {
+      "t": "Весь прайс",
+      "href": "#sluzby",
+      "tag": "A",
+      "x": 1069,
+      "y": 617,
+      "w": 120,
+      "h": 40,
+      "r": 1189,
+      "b": 657
+     }
+    ],
+    "cen": {
+     "box": {
+      "x": 1069,
+      "y": 360,
+      "w": 263,
+      "h": 131,
+      "r": 1332,
+      "b": 490
+     },
+     "viditelny": true,
+     "nadpis": "Стрижка",
+     "riadky": [
+      {
+       "hl": true,
+       "aria": "true",
+       "fs": "16px",
+       "color": "rgb(241, 233, 221)",
+       "border": "rgb(224, 96, 28)",
+       "x": 1069,
+       "y": 384,
+       "w": 263,
+       "h": 26,
+       "r": 1332,
+       "b": 410,
+       "pretek": false,
+       "parts": [
+        {
+         "t": "Чоловіча стрижка",
+         "x": 1079,
+         "y": 384,
+         "w": 173,
+         "h": 26,
+         "r": 1252,
+         "b": 410,
+         "ov": false
+        },
+        {
+         "t": "40 хв",
+         "x": 1260,
+         "y": 384,
+         "w": 33,
+         "h": 26,
+         "r": 1293,
+         "b": 410,
+         "ov": false
+        },
+        {
+         "t": "18 €",
+         "x": 1301,
+         "y": 384,
+         "w": 31,
+         "h": 26,
+         "r": 1332,
+         "b": 410,
+         "ov": false
+        }
+       ]
+      },
+      {
+       "hl": false,
+       "aria": null,
+       "fs": "16px",
+       "color": "rgb(142, 133, 120)",
+       "border": "rgba(0, 0, 0, 0)",
+       "x": 1069,
+       "y": 414,
+       "w": 263,
+       "h": 77,
+       "r": 1332,
+       "b": 490,
+       "pretek": false,
+       "parts": [
+        {
+         "t": "Чоловіча стрижка й оформлення бороди",
+         "x": 1079,
+         "y": 414,
+         "w": 170,
+         "h": 77,
+         "r": 1249,
+         "b": 490,
+         "ov": false
+        },
+        {
+         "t": "60 хв",
+         "x": 1257,
+         "y": 414,
+         "w": 33,
+         "h": 77,
+         "r": 1290,
+         "b": 490,
+         "ov": false
+        },
+        {
+         "t": "28 €",
+         "x": 1298,
+         "y": 414,
+         "w": 34,
+         "h": 77,
+         "r": 1332,
+         "b": 490,
+         "ov": false
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "sirka": {
+    "iw": 1440,
+    "cw": 1440,
+    "sw": 1440,
+    "sy": 6513,
+    "lx": 40,
+    "bodyOv": "hidden",
+    "gutter": ""
+   }
+  },
+  "sk": {
+   "lang": "sk-SK",
+   "label": "Spýtaj sa recepcie",
+   "panel": {
+    "lang": "sk",
+    "nadpis": "Recepcia",
+    "chips": [
+     "Rezervovať",
+     "Hodiny",
+     "Cenník",
+     "Kde nás nájdete",
+     "Zavolať"
+    ],
+    "zavriet": "Zavrieť",
+    "vstup": "Napíš otázku…",
+    "sukromie": "Odpovede sú zo stránky, nič sa neodosiela.",
+    "bublinyInyJazyk": 4,
+    "bublin": 21
+   },
+   "sirka": {
+    "iw": 1440,
+    "cw": 1440,
+    "sw": 1440,
+    "sy": 6466,
+    "lx": 40,
+    "bodyOv": "hidden",
+    "gutter": ""
+   }
+  }
+ },
+ "clsKoniec": {
+  "cls": 0.0001,
+  "shifts": [
+   {
+    "t": 221,
+    "v": 0.0001
+   }
+  ]
+ },
+ "pohyb": {
+  "reduce": {
+   "dm": "off",
+   "btnAnim": "none",
+   "panelAnim": "none"
+  },
+  "motionOff": {
+   "dm": "off",
+   "btnAnim": "none",
+   "panelAnim": "none"
+  },
+  "bezne": {
+   "dm": "on",
+   "btnAnim": "rc-btn",
+   "panelAnim": "rc-in"
+  }
+ }
+}

@@ -1,0 +1,11 @@
+po-A.jsonl 349 {'OK': 341, 'ODOVZDANIE-NAVYSE': 7, 'CHYBA-KANDIDAT': 1} leg 215 fb 7 3.3%
+    {'CHYBA-KANDIDAT/hola-sluzba-ina': 1, 'ODOVZDANIE-NAVYSE/fallback': 5, 'ODOVZDANIE-NAVYSE/nevieme': 2, 'OK/odovzdanie': 133, 'OK/priama': 143, 'OK/trvanie': 28, 'OK/volba-top2': 33, 'OK/vyber-neleg': 4}
+po-B.jsonl 315 {'OK': 309, 'ODOVZDANIE-NAVYSE': 4, 'CHYBA-KANDIDAT': 2} leg 78 fb 4 5.1%
+    {'CHYBA-KANDIDAT/hola-sluzba-neleg': 2, 'ODOVZDANIE-NAVYSE/nevieme': 2, 'ODOVZDANIE-NAVYSE/volba-nizko': 1, 'ODOVZDANIE-NAVYSE/vyber-mimo': 1, 'OK/bez-ceny-odpoved': 1, 'OK/odovzdanie': 186, 'OK/priama': 21, 'OK/trvanie': 29, 'OK/volba-top2': 24, 'OK/vyber-neleg': 48}
+po-C2.jsonl 260 {'OK': 242, 'ODOVZDANIE-NAVYSE': 18} leg 160 fb 18 11.2%
+    {'ODOVZDANIE-NAVYSE/nevieme': 11, 'ODOVZDANIE-NAVYSE/volba-nizko': 3, 'ODOVZDANIE-NAVYSE/vyber-mimo': 4, 'OK/odovzdanie': 90, 'OK/priama': 65, 'OK/trvanie': 24, 'OK/volba-top2': 53, 'OK/vyber-neleg': 10}
+po-D1.jsonl 293 {'OK': 263, 'ODOVZDANIE-NAVYSE': 28, 'CHYBA-KANDIDAT': 2} leg 224 fb 28 12.5%
+    {'CHYBA-KANDIDAT/hola-sluzba-ina': 1, 'CHYBA-KANDIDAT/hola-sluzba-neleg': 1, 'ODOVZDANIE-NAVYSE/fallback': 4, 'ODOVZDANIE-NAVYSE/nevieme': 10, 'ODOVZDANIE-NAVYSE/volba-ciastocne': 2, 'ODOVZDANIE-NAVYSE/volba-nizko': 1, 'ODOVZDANIE-NAVYSE/vyber-mimo': 11, 'OK/odovzdanie': 65, 'OK/priama': 123, 'OK/trvanie': 8, 'OK/volba-top2': 50, 'OK/volba-vsetky': 14, 'OK/vyber-neleg': 3}
+po-D2.jsonl 311 {'OK': 290, 'ODOVZDANIE-NAVYSE': 21} leg 267 fb 21 7.9%
+    {'ODOVZDANIE-NAVYSE/fallback': 3, 'ODOVZDANIE-NAVYSE/nevieme': 7, 'ODOVZDANIE-NAVYSE/volba-ciastocne': 2, 'ODOVZDANIE-NAVYSE/volba-nizko': 3, 'ODOVZDANIE-NAVYSE/vyber-mimo': 6, 'OK/odovzdanie': 48, 'OK/priama': 45, 'OK/trvanie': 12, 'OK/volba-top2': 103, 'OK/volba-vsetky': 60, 'OK/vyber-neleg': 12, 'OK/vyber-pri-odovzdani': 10}
+SPOLU {'OK': 1445, 'ODOVZDANIE-NAVYSE': 78, 'CHYBA-KANDIDAT': 5} leg 944 fb 78 8.26%

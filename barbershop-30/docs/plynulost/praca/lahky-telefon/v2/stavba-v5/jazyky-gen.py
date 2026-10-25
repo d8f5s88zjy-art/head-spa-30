@@ -79,6 +79,8 @@ def jazyk(l, D):
             q['cas'] = [tr(x) for x in p['cas']]
         if 'zoznam' in p:
             q['zoznam'] = [tr(z) for z in p['zoznam']]
+        if 'ine' in p:  # zámená prvej osoby, ktoré položka pre inú osobu nevysvetlí, keď ich otázka spája spojkou (oprava 6)
+            q['ine'] = stop(D['ine'][p['id']])
         q['akcie'] = p['akcie']  # zdroj a overene sú len v zdroje.json (rovnaké pre všetky jazyky)
         polozky.append(q)
     nevieme = []

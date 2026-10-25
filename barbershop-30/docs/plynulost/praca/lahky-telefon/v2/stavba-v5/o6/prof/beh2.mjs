@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+const root = process.argv[2];
+const { odpovedz } = await import(root + '/assets/recepcia.js');
+const Q = [];
+for (const s of ['A', 'B', 'C2', 'D1', 'D2']) for (const l of readFileSync(`../../slepe/sada-${s}.jsonl`, 'utf8').split('\n').filter(Boolean)) Q.push(JSON.parse(l));
+const kb = {};
+for (const o of Q) kb[o.jazyk] ??= JSON.parse(readFileSync(`${root}/assets/recepcia/${o.jazyk}.json`, 'utf8'));
+for (const o of Q) odpovedz(o.otazka, kb[o.jazyk]);
+const t = Q.map((o) => { let b = 1e9; for (let i = 0; i < 9; i++) { const a = performance.now(); odpovedz(o.otazka, kb[o.jazyk]); b = Math.min(b, performance.now() - a); } return [b, o]; }).sort((a, b) => b[0] - a[0]).slice(0, 8);
+for (const [b, o] of t) console.log(b.toFixed(2), o.jazyk, o.otazka.slice(0, 80));
+for (let i = 0; i < 300; i++) for (const [, o] of t) odpovedz(o.otazka, kb[o.jazyk]);

@@ -1,0 +1,65 @@
+sk | V pondelok o 9:00 na bradu? → vyber hodiny | hodiny,cena-brada,cena-strih-brada,farbenie-brady
+sk | strih o 21:00? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+sk | strih v piatok o 20:00? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+sk | Koľko stojí strih zajtra ráno? → vyber cena-strih | cena-strih,hodiny,cena-strih-brada
+sk | Dobré ráno, koľko stojí strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Dobrý večer, koľko stojí strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Dobrý deň, koľko stojí strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Kedy máte otvorené v pondelok? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Máte otvorené v piatok do 19? → vyber hodiny | hodiny
+sk | Máte otvorené zajtra? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Máte zajtra ráno otvorené? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Kedy otvárate ráno? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí strih o 9? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | strih o 9 hod? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí strih pre syna a pre mňa? → vyber deti | deti,cena-strih,cena-strih-brada
+sk | Strih pre syna (8) a pre mňa, koľko? → vyber deti | deti,cena-strih,cena-strih-brada
+sk | Koľko stojí strih pre mňa? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí strih a brada pre mňa? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,farbenie-brady
+sk | Koľko stojí strih pre syna? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+en | haircut Monday 20:00? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+en | Haircut on Monday? → vyber cena-strih | cena-strih,cena-strih-brada
+en | haircut at 9pm? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+en | haircut at 9 pm? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+en | Good morning, how much is a haircut? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | Cut for my son (6) and me, price? → odpoved deti | [["Little gentlemen's cut","15 €"],"Classic cut or fade, optionally a 
+en | How much is a haircut for my son? → odpoved deti | [["Little gentlemen's cut","15 €"],"Classic cut or fade, optionally a 
+en | Can you tell me how much a kids haircut is? → odpoved deti | [["Little gentlemen's cut","15 €"],"Classic cut or fade, optionally a 
+en | How much is a haircut and beard for me? → odpoved cena-strih-brada | [["Men's haircut and beard trim","28 €"]]
+de | Haarschnitt am Montag? → vyber cena-strih | cena-strih,cena-strih-brada
+de | Haarschnitt um 20 Uhr? → vyber cena-strih | cena-strih,cena-strih-brada
+de | Guten Morgen, was kostet ein Haarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Haarschnitt für meinen Sohn und mich? → vyber deti | deti,cena-strih,cena-strih-brada
+hu | Hajvágás hétfőn? → vyber cena-strih | cena-strih,cena-strih-brada
+hu | Hajvágás a fiamnak és nekem? → vyber deti | deti,cena-strih,cena-strih-brada
+sr | Šišanje u ponedeljak? → vyber cena-strih | cena-strih,cena-strih-brada,hodiny
+sr | Šišanje za sina i za mene? → vyber deti | deti,cena-strih,cena-strih-brada
+uk | Стрижка в понеділок? → vyber cena-strih | cena-strih,cena-strih-brada,hodiny
+uk | Стрижка для сина і для мене? → odpoved deti | [["Стрижка для маленьких джентльменів","15 €"],"Класична стрижка або f
+cs | V pondělí střih? → vyber cena-strih | cena-strih,cena-strih-brada
+cs | Střih pro syna (8) a pro mě, kolik? → odpoved deti | [["Střih pro malé gentlemany","15 €"],"Klasický střih nebo fade, přípa
+cs | Kolik stojí střih pro syna? → odpoved deti | [["Střih pro malé gentlemany","15 €"],"Klasický střih nebo fade, přípa
+cs | Dobré ráno, kolik stojí střih? → odpoved cena-strih | [["Pánský střih","18 €"]]
+pl | Strzyżenie dla syna (8 lat) i dla mnie? → odpoved deti | [["Strzyżenie dla małych dżentelmenów","15 €"],"Klasyczne strzyżenie l
+pl | Ile za strzyżenie syna (7) i moje? → vyber deti | deti,cena-strih,cena-strih-brada
+pl | Strzyżenie w poniedziałek? → vyber cena-strih | cena-strih,cena-strih-brada
+pl | Ile kosztuje strzyżenie dla syna? → odpoved deti | [["Strzyżenie dla małych dżentelmenów","15 €"],"Klasyczne strzyżenie l
+sk | Rozumiem, koľko stojí strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+uk | Привіт, скільки коштує стрижка? → odpoved cena-strih | [["Чоловіча стрижка","18 €"]]
+hu | Jó estét, mennyibe kerül a hajvágás? → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+de | Guten Abend, was kostet ein Haarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+sr | Dobar dan, koliko košta šišanje? → odpoved cena-strih | [["Muško šišanje","18 €"]]
+cs | Rozumím, kolik stojí střih? → odpoved cena-strih | [["Pánský střih","18 €"]]
+pl | Rozumiem, ile kosztuje strzyżenie? → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+sk | Ráno strih? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí strih večer? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Dá sa objednať online aj večer? → odpoved online | [["Online 24/7","rezervácia termínu kedykoľvek"]]
+sk | Môžem sa objednať na strih na zajtra ráno? → vyber rezervacia | rezervacia,cena-strih,cena-strih-brada
+en | Can I book a haircut for tomorrow morning? → vyber rezervacia | rezervacia,cena-strih,cena-strih-brada
+sk | aké bude zajtra počasie → fallback  | 
+de | Haarschnitt für Kleine? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+uk | Скільки коштує стрижка для маленького? → odpoved deti | [["Стрижка для маленьких джентльменів","15 €"],"Класична стрижка або f
+sk | Koľko stojí strih pre malého? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | nerozumiem → fallback  | 
+sk | Hovoríte po anglicky? Rozumiete? → nevieme jazyky-tim | jazyky barberov
+pl | Czy ktoś rozumie po angielsku? → nevieme jazyky-tim | języki barberów

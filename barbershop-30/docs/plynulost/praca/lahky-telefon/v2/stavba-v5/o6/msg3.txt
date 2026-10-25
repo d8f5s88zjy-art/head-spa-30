@@ -1,0 +1,23 @@
+BARBERSHOP 30: recepcia – deň, zajtra, časť dňa a čas sú slová hodín
+
+Trieda W z hodnotenia v2-1: „V pondelok o 9:00 na bradu?“ dostalo holú cenu úpravy
+brady, „strih o 21:00?“ 18 €. Pracovné dni, „zajtra“ a „ráno“ boli výplňové slová
+a čas hh:mm sa pred zhodou mazal; P1 ich medzi výplň nepočíta.
+
+- Dáta 8 jazykov: pracovné dni, „zajtra“ a časti dňa vyradené z výplne, sú to slabé
+  kmene položky hodiny (deň sám nie je otázka na hodiny: „aké bude zajtra počasie“
+  ostáva odovzdanie). Kmene bez iného významu: sk/cs =streda =stredu =stredy (nie
+  „stredne“), pl =środa, sr =sreda, uk „ятниц“ (apostrof delí slovo); pl odkedy
+  Dział → Działa (inak „poniedziałek“ = odkedy), uk online „вноч“.
+- Čas 9:00, 21:00, 9 pm, 9am sa nemaže, ale je slovo 0h – silný kmeň hodín (=0h!).
+- Trieda Z: zdvorilé slovo, ktoré je zároveň kmeňom (ráno, večer, evening, Abend,
+  estét, jutro, вечір …), je pozdrav len hneď po inom zdvorilom slove („Dobré ráno,
+  koľko stojí strih?“ = 18 €); inde je obsahové slovo („strih ráno?“ = „Myslíš toto?“).
+  Kmene, ktoré zachytili pozdrav: jazyky barberov sk/cs/pl „Rozum“ → presné tvary
+  (=Rozumiete =Rozumie …), uk recepcia „привіт“ → „привіта“. Predtým „Rozumiem,
+  koľko stojí strih?“ = téma jazyky barberov.
+
+„V pondelok o 9:00 na bradu?“ → „Myslíš toto?“ [hodiny, úprava brady, …]; „Kedy máte
+otvorené v pondelok?“ ostáva priama odpoveď hodiny. Slepé sady: holé chyby z hodnotenia
+v2-1 3 → 2 (ostáva trieda D). recepcia-test.mjs 23/23, recepcia-kombinacie-test.mjs 7/7.
+Váha (gzip 6): sk 12 169 B, uk 13 232 B.

@@ -5,7 +5,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 11.692,
+"ms": 4.989,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -16,7 +16,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 2.069,
+"ms": 3.011,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -27,7 +27,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.244,
+"ms": 2.01,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -38,7 +38,7 @@
 "ocakavane": "hodiny",
 "typ": "nevieme",
 "id": "mimo",
-"ms": 3.92,
+"ms": 6.452,
 "text": "Služby mimo podniku na webe neuvádzame.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -49,7 +49,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.957,
+"ms": 2.185,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -60,7 +60,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.781,
+"ms": 1.541,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -71,7 +71,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 3.085,
+"ms": 2.987,
 "text": "Po–Pi 9:00–19:00 / So 9:00–14:00 / Ne zatvorené",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -82,7 +82,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "sviatky",
-"ms": 0.897,
+"ms": 1.867,
 "text": "hodiny vo sviatky",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -93,7 +93,7 @@
 "ocakavane": "adresa",
 "typ": "fallback",
 "id": null,
-"ms": 1.816,
+"ms": 2.152,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -103,7 +103,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.324,
+"ms": 0.474,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -114,7 +114,7 @@
 "ocakavane": "adresa",
 "typ": "vyber",
 "id": "adresa",
-"ms": 1.102,
+"ms": 1.438,
 "kand": [
 "adresa",
 "telefon"
@@ -128,7 +128,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 1.091,
+"ms": 1.175,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -139,7 +139,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 1.918,
+"ms": 2.031,
 "text": "0951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -150,7 +150,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.612,
+"ms": 0.318,
 "text": "0951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -161,7 +161,7 @@
 "ocakavane": "telefon",
 "typ": "nevieme",
 "id": "damske",
-"ms": 6.181,
+"ms": 1.878,
 "text": "Dámske strihy na webe neuvádzame.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -172,7 +172,7 @@
 "ocakavane": "email",
 "typ": "odpoved",
 "id": "email",
-"ms": 1.607,
+"ms": 0.791,
 "text": "info@barbershop30.sk",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -183,7 +183,7 @@
 "ocakavane": "email",
 "typ": "vyber",
 "id": "adresa",
-"ms": 0.693,
+"ms": 0.546,
 "kand": [
 "adresa",
 "email"
@@ -197,7 +197,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 1.135,
+"ms": 0.652,
 "text": "Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termín sprav online, jednoducho cez náš rezervačný systém.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -208,7 +208,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 0.987,
+"ms": 1.074,
 "text": "Svojho človeka si vyberieš v rezervácii.",
 "trieda": "CHYBA-KANDIDAT",
 "podtrieda": "hola-sluzba-ina"
@@ -219,7 +219,7 @@
 "ocakavane": "rezervacia",
 "typ": "vyber",
 "id": "online",
-"ms": 1.354,
+"ms": 4.651,
 "kand": [
 "online"
 ],
@@ -232,7 +232,7 @@
 "ocakavane": "online",
 "typ": "nevieme",
 "id": "storno",
-"ms": 1.479,
+"ms": 1.114,
 "text": "zmenu alebo zrušenie termínu",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -243,7 +243,7 @@
 "ocakavane": "online",
 "typ": "vyber",
 "id": "online",
-"ms": 1.651,
+"ms": 2.014,
 "kand": [
 "online"
 ],
@@ -256,7 +256,7 @@
 "ocakavane": "online",
 "typ": "vyber",
 "id": "online",
-"ms": 1.951,
+"ms": 1.496,
 "kand": [
 "online"
 ],
@@ -269,7 +269,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.073,
+"ms": 0.068,
 "text": "Pánsky strih 18 €",
 "vyrez": {
 "skupina": "Strih",
@@ -287,7 +287,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.767,
+"ms": 0.781,
 "text": "Pánsky strih 18 €",
 "vyrez": {
 "skupina": "Strih",
@@ -305,7 +305,7 @@
 "ocakavane": "cena-strih",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 2.228,
+"ms": 1.919,
 "kand": [
 "cena-strih",
 "deti",
@@ -320,7 +320,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.582,
+"ms": 0.839,
 "text": "Pánsky strih 18 €",
 "vyrez": {
 "skupina": "Strih",
@@ -338,7 +338,7 @@
 "ocakavane": "cena-strih",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 1.784,
+"ms": 0.987,
 "kand": [
 "cena-strih",
 "cena-strih-brada"
@@ -352,7 +352,7 @@
 "ocakavane": "cena-strih",
 "typ": "fallback",
 "id": null,
-"ms": 0.429,
+"ms": 0.456,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -362,7 +362,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "odpoved",
 "id": "cena-strih-brada",
-"ms": 1.362,
+"ms": 1.359,
 "text": "Pánsky strih a úprava brady 28 €",
 "vyrez": {
 "skupina": "Strih",
@@ -381,7 +381,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "odpoved",
 "id": "cena-strih-brada",
-"ms": 0.798,
+"ms": 0.749,
 "text": "Pánsky strih a úprava brady 28 €",
 "vyrez": {
 "skupina": "Strih",
@@ -400,7 +400,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "nevieme",
 "id": "mimo",
-"ms": 5.86,
+"ms": 2.804,
 "text": "Služby mimo podniku na webe neuvádzame.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -411,7 +411,7 @@
 "ocakavane": "cena-brada",
 "typ": "odpoved",
 "id": "cena-brada",
-"ms": 2.361,
+"ms": 0.849,
 "text": "Úprava brady 15 €",
 "vyrez": {
 "skupina": "Brada a holenie",
@@ -429,7 +429,7 @@
 "ocakavane": "cena-brada",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 11.315,
+"ms": 2.842,
 "kand": [
 "cena-strih-brada",
 "cena-brada",
@@ -445,7 +445,7 @@
 "ocakavane": "cena-dlhe",
 "typ": "vyber",
 "id": "cena-dlhe",
-"ms": 2.786,
+"ms": 1.292,
 "kand": [
 "cena-dlhe"
 ],
@@ -458,7 +458,7 @@
 "ocakavane": "cena-dlhe",
 "typ": "odpoved",
 "id": "cena-dlhe",
-"ms": 1.362,
+"ms": 1.528,
 "text": "Pánsky strih – dĺžka vlasov nad 10 cm 22 €",
 "vyrez": {
 "skupina": "Strih",
@@ -477,7 +477,7 @@
 "ocakavane": "cena-dlhe",
 "typ": "vyber",
 "id": "cena-brada",
-"ms": 4.502,
+"ms": 1.887,
 "kand": [
 "cena-brada",
 "farbenie-vlasov"
@@ -491,7 +491,7 @@
 "ocakavane": "deti",
 "typ": "odpoved",
 "id": "deti",
-"ms": 0.046,
+"ms": 0.049,
 "text": "Strih pre malých gentlemanov 15 € / Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.",
 "vyrez": {
 "skupina": "Strih",
@@ -510,7 +510,7 @@
 "ocakavane": "deti",
 "typ": "odpoved",
 "id": "deti",
-"ms": 1.424,
+"ms": 1.396,
 "text": "Strih pre malých gentlemanov 15 € / Klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling – pre chlapcov do 10 rokov.",
 "vyrez": {
 "skupina": "Strih",
@@ -529,7 +529,7 @@
 "ocakavane": "deti",
 "typ": "vyber",
 "id": "deti",
-"ms": 1.786,
+"ms": 1.52,
 "kand": [
 "deti"
 ],
@@ -542,7 +542,7 @@
 "ocakavane": "deti",
 "typ": "vyber",
 "id": "deti",
-"ms": 2.869,
+"ms": 2.819,
 "kand": [
 "deti",
 "cena-strih",
@@ -557,7 +557,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "vek",
-"ms": 1.363,
+"ms": 1.446,
 "text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -568,7 +568,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "vek",
-"ms": 1.684,
+"ms": 1.521,
 "text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -579,7 +579,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "vek",
-"ms": 1.124,
+"ms": 1.345,
 "text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -590,7 +590,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.856,
+"ms": 1.094,
 "text": "Dámske strihy na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -601,7 +601,7 @@
 "ocakavane": "holenie",
 "typ": "odpoved",
 "id": "holenie",
-"ms": 0.908,
+"ms": 0.702,
 "text": "Holenie do hladka Hot Towel 15 €",
 "vyrez": {
 "skupina": "Brada a holenie",
@@ -620,7 +620,7 @@
 "ocakavane": "holenie",
 "typ": "odpoved",
 "id": "holenie",
-"ms": 1.109,
+"ms": 1.205,
 "text": "Holenie do hladka Hot Towel 15 €",
 "vyrez": {
 "skupina": "Brada a holenie",
@@ -639,7 +639,7 @@
 "ocakavane": "holenie",
 "typ": "fallback",
 "id": null,
-"ms": 1.664,
+"ms": 1.723,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -649,7 +649,7 @@
 "ocakavane": "hlava",
 "typ": "odpoved",
 "id": "hlava",
-"ms": 1.654,
+"ms": 1.014,
 "text": "Oholenie hlavy 13 €",
 "vyrez": {
 "skupina": "Strih",
@@ -667,7 +667,7 @@
 "ocakavane": "hlava",
 "typ": "vyber",
 "id": "hlava",
-"ms": 1.369,
+"ms": 1.29,
 "kand": [
 "hlava"
 ],
@@ -680,7 +680,7 @@
 "ocakavane": "balicky",
 "typ": "odpoved",
 "id": "balicky",
-"ms": 0.285,
+"ms": 0.434,
 "text": "Balíček 1 30 € / Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. / Ultra inclusive Barbershop30 40 €",
 "vyrez": {
 "skupina": "Balíčky",
@@ -698,7 +698,7 @@
 "ocakavane": "balicky",
 "typ": "odpoved",
 "id": "balicky",
-"ms": 0.678,
+"ms": 0.837,
 "text": "Balíček 1 30 € / Strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. / Ultra inclusive Barbershop30 40 €",
 "vyrez": {
 "skupina": "Balíčky",
@@ -716,7 +716,7 @@
 "ocakavane": "ultra",
 "typ": "odpoved",
 "id": "ultra",
-"ms": 0.622,
+"ms": 0.838,
 "text": "Ultra inclusive Barbershop30 40 € / Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.",
 "vyrez": {
 "skupina": "Balíčky",
@@ -734,7 +734,7 @@
 "ocakavane": "ultra",
 "typ": "fallback",
 "id": null,
-"ms": 2.313,
+"ms": 1.615,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -744,7 +744,7 @@
 "ocakavane": "ultra",
 "typ": "odpoved",
 "id": "ultra",
-"ms": 1.064,
+"ms": 0.962,
 "text": "Ultra inclusive Barbershop30 40 € / Všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky.",
 "vyrez": {
 "skupina": "Balíčky",
@@ -762,7 +762,7 @@
 "ocakavane": "ultra",
 "typ": "fallback",
 "id": null,
-"ms": 1.442,
+"ms": 1.459,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -772,7 +772,7 @@
 "ocakavane": "plet",
 "typ": "odpoved",
 "id": "plet",
-"ms": 0.763,
+"ms": 0.834,
 "text": "Starostlivosť o pleť PREMIUM 21,50 €",
 "vyrez": {
 "skupina": "Doplnky",
@@ -790,7 +790,7 @@
 "ocakavane": "plet",
 "typ": "vyber",
 "id": "plet",
-"ms": 1.472,
+"ms": 1.057,
 "kand": [
 "plet"
 ],
@@ -803,7 +803,7 @@
 "ocakavane": "obocie",
 "typ": "odpoved",
 "id": "obocie",
-"ms": 0.907,
+"ms": 0.506,
 "text": "Úprava obočia 3 € / Farbenie obočia 5 €",
 "vyrez": {
 "skupina": "Doplnky",
@@ -824,7 +824,7 @@
 "ocakavane": "obocie",
 "typ": "odpoved",
 "id": "obocie",
-"ms": 0.905,
+"ms": 1.13,
 "text": "Úprava obočia 3 € / Farbenie obočia 5 €",
 "vyrez": {
 "skupina": "Doplnky",
@@ -845,7 +845,7 @@
 "ocakavane": "depilacia",
 "typ": "vyber",
 "id": "depilacia",
-"ms": 1.059,
+"ms": 1.027,
 "kand": [
 "depilacia"
 ],
@@ -858,7 +858,7 @@
 "ocakavane": "depilacia",
 "typ": "odpoved",
 "id": "depilacia",
-"ms": 0.978,
+"ms": 0.802,
 "text": "Depilácia uší a nosa voskom 5,50 €",
 "vyrez": {
 "skupina": "Doplnky",
@@ -877,7 +877,7 @@
 "ocakavane": "farbenie-brady",
 "typ": "odpoved",
 "id": "farbenie-brady",
-"ms": 1.569,
+"ms": 0.843,
 "text": "Farbenie brady 10 €",
 "vyrez": {
 "skupina": "Brada a holenie",
@@ -895,7 +895,7 @@
 "ocakavane": "farbenie-brady",
 "typ": "odpoved",
 "id": "farbenie-brady",
-"ms": 1.191,
+"ms": 1.362,
 "text": "Farbenie brady 10 €",
 "vyrez": {
 "skupina": "Brada a holenie",
@@ -913,7 +913,7 @@
 "ocakavane": "ornament",
 "typ": "vyber",
 "id": "ornament",
-"ms": 6.985,
+"ms": 1.148,
 "kand": [
 "ornament",
 "farbenie-vlasov",
@@ -929,7 +929,7 @@
 "ocakavane": "ornament",
 "typ": "vyber",
 "id": "ornament",
-"ms": 12.955,
+"ms": 5.073,
 "kand": [
 "ornament"
 ],
@@ -942,7 +942,7 @@
 "ocakavane": "ceny-konecne",
 "typ": "vyber",
 "id": "ceny-konecne",
-"ms": 1.553,
+"ms": 1.951,
 "kand": [
 "ceny-konecne"
 ],
@@ -955,7 +955,7 @@
 "ocakavane": "ceny-konecne",
 "typ": "vyber",
 "id": "ceny-konecne",
-"ms": 1.44,
+"ms": 1.985,
 "kand": [
 "ceny-konecne"
 ],
@@ -968,7 +968,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 0.593,
+"ms": 0.995,
 "text": "Farbenie, melír a trvalú robí Romana. / Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -979,7 +979,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "nevieme",
 "id": "romana-ceny",
-"ms": 6.308,
+"ms": 0.876,
 "text": "Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -990,7 +990,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 0.747,
+"ms": 0.856,
 "text": "Farbenie, melír a trvalú robí Romana. / Robí ich Romana a rezervujú sa v samostatnom systéme, kde nájdeš aj ich ceny.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1001,7 +1001,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "vyber",
 "id": "farbenie-vlasov",
-"ms": 1.189,
+"ms": 1.993,
 "kand": [
 "farbenie-vlasov"
 ],
@@ -1014,7 +1014,7 @@
 "ocakavane": "tim",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 0.856,
+"ms": 1.559,
 "kand": [
 "cena-strih",
 "co-je-v-strihu",
@@ -1029,7 +1029,7 @@
 "ocakavane": "tim",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.416,
+"ms": 1.334,
 "text": "Dámske strihy na webe neuvádzame.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -1040,7 +1040,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 0.735,
+"ms": 1.698,
 "text": "Svojho človeka si vyberieš v rezervácii.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1051,7 +1051,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "fallback",
 "id": null,
-"ms": 0.403,
+"ms": 0.706,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -1061,7 +1061,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "fallback",
 "id": null,
-"ms": 1.909,
+"ms": 3.95,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -1071,7 +1071,7 @@
 "ocakavane": "co-je-v-strihu",
 "typ": "odpoved",
 "id": "co-je-v-strihu",
-"ms": 1.208,
+"ms": 1.603,
 "text": "Pánsky strih krok za krokom",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1082,7 +1082,7 @@
 "ocakavane": "co-je-v-strihu",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 1.086,
+"ms": 1.213,
 "kand": [
 "cena-strih",
 "co-je-v-strihu",
@@ -1097,7 +1097,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.808,
+"ms": 0.813,
 "text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1108,7 +1108,7 @@
 "ocakavane": "kava",
 "typ": "vyber",
 "id": "kava",
-"ms": 0.7,
+"ms": 0.661,
 "kand": [
 "kava"
 ],
@@ -1121,7 +1121,7 @@
 "ocakavane": "kava",
 "typ": "fallback",
 "id": null,
-"ms": 1.404,
+"ms": 1.041,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -1131,7 +1131,7 @@
 "ocakavane": "kresla",
 "typ": "odpoved",
 "id": "kresla",
-"ms": 0.045,
+"ms": 0.333,
 "text": "8 kresiel",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1142,7 +1142,7 @@
 "ocakavane": "kresla",
 "typ": "vyber",
 "id": "tim",
-"ms": 1.349,
+"ms": 0.72,
 "kand": [
 "tim"
 ],
@@ -1155,7 +1155,7 @@
 "ocakavane": "odkedy",
 "typ": "odpoved",
 "id": "odkedy",
-"ms": 0.035,
+"ms": 0.036,
 "text": "Od roku 2019 na Mostnej 30 v Nitre",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1166,7 +1166,7 @@
 "ocakavane": "odkedy",
 "typ": "vyber",
 "id": "adresa",
-"ms": 1.851,
+"ms": 1.114,
 "kand": [
 "adresa"
 ],
@@ -1180,7 +1180,7 @@
 "ocakavane": "socialne",
 "typ": "odpoved",
 "id": "socialne",
-"ms": 0.044,
+"ms": 0.033,
 "text": "Aktuálne strihy a dianie v shope sledujeme na Instagrame. / @barbershop30_nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1191,7 +1191,7 @@
 "ocakavane": "socialne",
 "typ": "fallback",
 "id": null,
-"ms": 4.123,
+"ms": 1.377,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -1201,7 +1201,7 @@
 "ocakavane": "recepcia",
 "typ": "vyber",
 "id": "tim",
-"ms": 1.735,
+"ms": 0.816,
 "kand": [
 "tim",
 "recepcia"
@@ -1215,7 +1215,7 @@
 "ocakavane": "recepcia",
 "typ": "odpoved",
 "id": "recepcia",
-"ms": 1.005,
+"ms": 0.805,
 "text": "Pri dverách ťa privíta recepčná.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1226,7 +1226,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.563,
+"ms": 1.275,
 "text": "Pánsky strih 40 min",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -1238,7 +1238,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.486,
+"ms": 0.607,
 "text": "Úprava brady 20 min",
 "sluzba": "cena-brada",
 "trieda": "OK",
@@ -1250,7 +1250,7 @@
 "ocakavane": "trvanie",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 2.055,
+"ms": 1.972,
 "kand": [
 "cena-strih",
 "cena-strih-brada",
@@ -1266,7 +1266,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.426,
+"ms": 0.511,
 "text": "spôsob platby",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1277,7 +1277,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 0.356,
+"ms": 0.333,
 "text": "parkovanie",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1288,7 +1288,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 1.338,
+"ms": 1.151,
 "text": "parkovanie",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1299,7 +1299,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 0.922,
+"ms": 0.953,
 "text": "poukážky",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1310,7 +1310,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.959,
+"ms": 1.075,
 "text": "Dámske strihy na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1321,7 +1321,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "produkty",
-"ms": 1.313,
+"ms": 1.441,
 "text": "značky produktov",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1332,7 +1332,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "bez-objednania",
-"ms": 1.051,
+"ms": 0.915,
 "text": "príchod bez objednania",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1343,7 +1343,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "bezbarierovy",
-"ms": 0.742,
+"ms": 1.312,
 "text": "bezbariérový vstup",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1354,7 +1354,7 @@
 "ocakavane": "odovzdanie",
 "typ": "fallback",
 "id": null,
-"ms": 0.736,
+"ms": 0.947,
 "trieda": "OK",
 "podtrieda": "odovzdanie"
 },
@@ -1364,7 +1364,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "skolenia",
-"ms": 4.466,
+"ms": 2.187,
 "text": "školenia a voľné miesta",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1375,7 +1375,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "storno",
-"ms": 1.13,
+"ms": 0.826,
 "text": "zmenu alebo zrušenie termínu",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1386,7 +1386,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "storno",
-"ms": 0.913,
+"ms": 0.892,
 "text": "zmenu alebo zrušenie termínu",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1397,7 +1397,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "produkty",
-"ms": 1.043,
+"ms": 1.023,
 "text": "značky produktov",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1408,7 +1408,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "vernost",
-"ms": 0.047,
+"ms": 0.049,
 "text": "vernostnú kartičku",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1419,7 +1419,7 @@
 "ocakavane": "odovzdanie",
 "typ": "vyber",
 "id": "farbenie-vlasov",
-"ms": 0.562,
+"ms": 0.769,
 "kand": [
 "farbenie-vlasov"
 ],
@@ -1432,7 +1432,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "skolenia",
-"ms": 4.96,
+"ms": 0.696,
 "text": "školenia a voľné miesta",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1443,7 +1443,7 @@
 "ocakavane": "odovzdanie",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.473,
+"ms": 0.6,
 "text": "Vzadu ťa čaká káva. / Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.",
 "trieda": "CHYBA-KANDIDAT",
 "podtrieda": "hola-sluzba-neleg"
@@ -1454,7 +1454,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 5.387,
+"ms": 1.406,
 "text": "jazyky barberov",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1465,7 +1465,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 2.214,
+"ms": 2.454,
 "text": "poukážky",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1476,7 +1476,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "mimo",
-"ms": 0.867,
+"ms": 1.615,
 "text": "Služby mimo podniku na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1487,7 +1487,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.88,
+"ms": 0.886,
 "text": "Dámske strihy na webe neuvádzame.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1498,7 +1498,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "vernost",
-"ms": 1.018,
+"ms": 1.087,
 "text": "vernostnú kartičku",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1509,7 +1509,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "vernost",
-"ms": 1.157,
+"ms": 1.225,
 "text": "vernostnú kartičku",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1520,7 +1520,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 0.803,
+"ms": 0.667,
 "text": "poukážky",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1531,7 +1531,7 @@
 "ocakavane": "bez-ceny",
 "typ": "vyber",
 "id": "co-je-v-strihu",
-"ms": 2.162,
+"ms": 2.156,
 "kand": [
 "co-je-v-strihu",
 "cena-strih",
@@ -1547,7 +1547,7 @@
 "ocakavane": "volba:cena-strih,obocie",
 "typ": "vyber",
 "id": "obocie",
-"ms": 1.35,
+"ms": 1.608,
 "kand": [
 "obocie",
 "cena-strih-brada",
@@ -1563,7 +1563,7 @@
 "ocakavane": "volba:hodiny,adresa",
 "typ": "vyber",
 "id": "hodiny",
-"ms": 1.032,
+"ms": 1.154,
 "kand": [
 "hodiny"
 ],
@@ -1576,7 +1576,7 @@
 "ocakavane": "volba:hlava,farbenie-brady",
 "typ": "vyber",
 "id": "farbenie-brady",
-"ms": 3.125,
+"ms": 6.378,
 "kand": [
 "farbenie-brady",
 "hlava",
@@ -1592,7 +1592,7 @@
 "ocakavane": "volba:cena-strih,ornament,online",
 "typ": "vyber",
 "id": "online",
-"ms": 2.377,
+"ms": 4.735,
 "kand": [
 "online",
 "ornament",
@@ -1608,7 +1608,7 @@
 "ocakavane": "volba:telefon,email",
 "typ": "vyber",
 "id": "telefon",
-"ms": 0.778,
+"ms": 1.541,
 "kand": [
 "telefon",
 "email"
@@ -1622,7 +1622,7 @@
 "ocakavane": "volba:depilacia,plet",
 "typ": "vyber",
 "id": "plet",
-"ms": 1.584,
+"ms": 3.042,
 "kand": [
 "plet",
 "depilacia"
@@ -1636,7 +1636,7 @@
 "ocakavane": "volba:holenie,cena-strih-brada",
 "typ": "nevieme",
 "id": "vek",
-"ms": 2.742,
+"ms": 5.125,
 "text": "Strih pre chlapcov nad 10 rokov na webe neuvádzame.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -1647,7 +1647,7 @@
 "ocakavane": "volba:farbenie-vlasov,socialne",
 "typ": "vyber",
 "id": "farbenie-vlasov",
-"ms": 1.849,
+"ms": 4.151,
 "kand": [
 "farbenie-vlasov"
 ],
@@ -1660,7 +1660,7 @@
 "ocakavane": "volba:cena-brada,cena-dlhe",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 2.356,
+"ms": 4.404,
 "kand": [
 "cena-strih-brada",
 "cena-dlhe",
@@ -1676,7 +1676,7 @@
 "ocakavane": "volba:obocie,depilacia",
 "typ": "vyber",
 "id": "obocie",
-"ms": 1.35,
+"ms": 2.874,
 "kand": [
 "obocie",
 "depilacia"
@@ -1690,7 +1690,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.549,
+"ms": 1.123,
 "text": "Mon–Fri 9:00–19:00 / Sat 9:00–14:00 / Sun closed",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1701,7 +1701,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.302,
+"ms": 1.128,
 "text": "Mon–Fri 9:00–19:00 / Sat 9:00–14:00 / Sun closed",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1712,7 +1712,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 1.163,
+"ms": 0.915,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1723,7 +1723,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.068,
+"ms": 0.072,
 "text": "Men's haircut 18 €",
 "vyrez": {
 "skupina": "Cut",
@@ -1741,7 +1741,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 2.679,
+"ms": 2.187,
 "kand": [
 "cena-strih-brada",
 "cena-brada",
@@ -1757,7 +1757,7 @@
 "ocakavane": "holenie",
 "typ": "odpoved",
 "id": "holenie",
-"ms": 1.591,
+"ms": 0.995,
 "text": "Hot Towel clean shave 15 €",
 "vyrez": {
 "skupina": "Beard and shave",
@@ -1776,7 +1776,7 @@
 "ocakavane": "online",
 "typ": "vyber",
 "id": "online",
-"ms": 2.133,
+"ms": 1.621,
 "kand": [
 "online"
 ],
@@ -1789,7 +1789,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 0.956,
+"ms": 1.002,
 "text": "Call the front desk on weekdays from 9:00 to 19:00. Or simply book your appointment online through our booking system.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1800,7 +1800,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.946,
+"ms": 0.597,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1811,7 +1811,7 @@
 "ocakavane": "email",
 "typ": "vyber",
 "id": "adresa",
-"ms": 0.602,
+"ms": 1.066,
 "kand": [
 "adresa",
 "email"
@@ -1825,7 +1825,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.558,
+"ms": 0.467,
 "text": "payment methods",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1836,7 +1836,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 0.562,
+"ms": 0.446,
 "text": "parking",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1847,7 +1847,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.061,
+"ms": 0.058,
 "text": "We don't list women's haircuts on the website.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1858,7 +1858,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 1.88,
+"ms": 0.611,
 "text": "We don't list women's haircuts on the website.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1869,7 +1869,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 0.047,
+"ms": 0.049,
 "text": "languages the barbers speak",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1880,7 +1880,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 0.054,
+"ms": 0.057,
 "text": "You pick your person when you book.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1891,7 +1891,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.324,
+"ms": 0.361,
 "text": "Men's haircut 40 min",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -1903,7 +1903,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.414,
+"ms": 0.597,
 "text": "In the back, coffee's waiting. / Armchairs, a retro petrol pump and a colourful bulldog. Coffee and mineral water are on the house.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1914,7 +1914,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 0.664,
+"ms": 0.874,
 "text": "Colouring, highlights and perms are done by Romana. / Romana does these, and they're booked in a separate system, where you'll also find their prices.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -1925,7 +1925,7 @@
 "ocakavane": "volba:cena-brada,trvanie",
 "typ": "fallback",
 "id": null,
-"ms": 1.565,
+"ms": 1.775,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -1935,7 +1935,7 @@
 "ocakavane": "deti",
 "typ": "odpoved",
 "id": "deti",
-"ms": 0.569,
+"ms": 0.606,
 "text": "Little gentlemen's cut 15 € / Classic cut or fade, optionally a creative pattern, wash and styling – for boys up to 10 years old.",
 "vyrez": {
 "skupina": "Cut",
@@ -1954,7 +1954,7 @@
 "ocakavane": "cena-dlhe",
 "typ": "vyber",
 "id": "trvanie",
-"ms": 3.111,
+"ms": 3.339,
 "kand": [
 "cena-dlhe"
 ],
@@ -1968,7 +1968,7 @@
 "ocakavane": "ultra",
 "typ": "vyber",
 "id": "ultra",
-"ms": 1.32,
+"ms": 1.141,
 "kand": [
 "ultra"
 ],
@@ -1981,7 +1981,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 0.98,
+"ms": 0.653,
 "text": "gift vouchers",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -1992,7 +1992,7 @@
 "ocakavane": "ceny-konecne",
 "typ": "odpoved",
 "id": "ceny-konecne",
-"ms": 1.214,
+"ms": 0.89,
 "text": "Men's haircut €18, with a beard trim €28. Prices are final.",
 "vyrez": null,
 "trieda": "OK",
@@ -2004,7 +2004,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.875,
+"ms": 4.155,
 "text": "H–P 9:00–19:00 / Szo 9:00–14:00 / V zárva",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2015,7 +2015,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.931,
+"ms": 1.347,
 "text": "H–P 9:00–19:00 / Szo 9:00–14:00 / V zárva",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2026,7 +2026,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.256,
+"ms": 0.74,
 "text": "Mostná 30, 949 01 Nyitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2037,7 +2037,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 1.268,
+"ms": 2.521,
 "text": "Férfi hajvágás 18 €",
 "vyrez": {
 "skupina": "Hajvágás",
@@ -2055,7 +2055,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 1.379,
+"ms": 1.934,
 "kand": [
 "cena-strih-brada",
 "cena-strih",
@@ -2071,7 +2071,7 @@
 "ocakavane": "cena-brada",
 "typ": "odpoved",
 "id": "cena-brada",
-"ms": 0.102,
+"ms": 0.175,
 "text": "Szakálligazítás 15 €",
 "vyrez": {
 "skupina": "Szakáll és borotválás",
@@ -2089,7 +2089,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 0.516,
+"ms": 1.072,
 "text": "a borbélyok nyelvei",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2100,7 +2100,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.049,
+"ms": 0.085,
 "text": "fizetési mód",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2111,7 +2111,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 0.049,
+"ms": 0.087,
 "text": "parkolás",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2122,7 +2122,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 0.597,
+"ms": 1.184,
 "text": "Hívd a recepciót hétköznap 9:00 és 19:00 között. Vagy foglalj időpontot online, egyszerűen a foglalási rendszerünkben.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2133,7 +2133,7 @@
 "ocakavane": "online",
 "typ": "odpoved",
 "id": "online",
-"ms": 0.958,
+"ms": 1.002,
 "text": "Online 24/7 időpontfoglalás bármikor",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2144,7 +2144,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.044,
+"ms": 0.087,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2155,7 +2155,7 @@
 "ocakavane": "holenie",
 "typ": "vyber",
 "id": "holenie",
-"ms": 0.985,
+"ms": 0.936,
 "kand": [
 "holenie",
 "hlava"
@@ -2169,7 +2169,7 @@
 "ocakavane": "hlava",
 "typ": "odpoved",
 "id": "hlava",
-"ms": 0.875,
+"ms": 4.825,
 "text": "Fejborotválás 13 €",
 "vyrez": {
 "skupina": "Hajvágás",
@@ -2187,7 +2187,7 @@
 "ocakavane": "deti",
 "typ": "vyber",
 "id": "deti",
-"ms": 0.759,
+"ms": 1.353,
 "kand": [
 "deti"
 ],
@@ -2200,7 +2200,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 0.695,
+"ms": 0.713,
 "text": "A festést, a melírt és a dauert Romana végzi. / Ezeket Romana végzi, és külön rendszerben foglalhatók, ahol az áraikat is megtalálod.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2211,7 +2211,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 1.202,
+"ms": 1.172,
 "text": "A saját emberedet a foglalásnál választod ki.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2222,7 +2222,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.548,
+"ms": 0.815,
 "text": "Hátul kávé vár rád. / Fotelek, retró benzinkút és színes bulldog. A kávé és az ásványvíz ingyenes.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2233,7 +2233,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.422,
+"ms": 0.429,
 "text": "Férfi hajvágás 40 perc",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -2245,7 +2245,7 @@
 "ocakavane": "balicky",
 "typ": "fallback",
 "id": null,
-"ms": 2.52,
+"ms": 2.602,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -2255,7 +2255,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.855,
+"ms": 1.226,
 "text": "Női hajvágást az oldalon nem tüntetünk fel.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2266,7 +2266,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 0.103,
+"ms": 0.107,
 "text": "ajándékutalvány",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2277,7 +2277,7 @@
 "ocakavane": "volba:obocie,depilacia",
 "typ": "vyber",
 "id": "obocie",
-"ms": 1.219,
+"ms": 1.541,
 "kand": [
 "obocie",
 "cena-brada",
@@ -2292,7 +2292,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.693,
+"ms": 0.989,
 "text": "fizetési mód",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2303,7 +2303,7 @@
 "ocakavane": "odkedy",
 "typ": "odpoved",
 "id": "odkedy",
-"ms": 0.034,
+"ms": 0.035,
 "text": "2019 óta a nyitrai Mostná 30 alatt",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2314,7 +2314,7 @@
 "ocakavane": "deti",
 "typ": "vyber",
 "id": "deti",
-"ms": 3.904,
+"ms": 6.635,
 "kand": [
 "deti",
 "cena-strih",
@@ -2329,7 +2329,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 1.132,
+"ms": 2.179,
 "text": "Жіночі стрижки на сайті не вказуємо.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2340,7 +2340,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 2.502,
+"ms": 4.364,
 "text": "Жіночі стрижки на сайті не вказуємо.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2351,7 +2351,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 1.496,
+"ms": 1.871,
 "text": "Фарбування, мелірування і хімічну завивку робить Romana. / Їх робить Romana, а бронюються вони в окремій системі, де знайдеш і їхні ціни.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2362,7 +2362,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "vyber",
 "id": "farbenie-vlasov",
-"ms": 2.148,
+"ms": 3.534,
 "kand": [
 "farbenie-vlasov"
 ],
@@ -2375,7 +2375,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.912,
+"ms": 1.443,
 "text": "спосіб оплати",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2386,7 +2386,7 @@
 "ocakavane": "hodiny",
 "typ": "fallback",
 "id": null,
-"ms": 0.845,
+"ms": 0.992,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -2396,7 +2396,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.204,
+"ms": 1.869,
 "text": "Пн–Пт 9:00–19:00 / Сб 9:00–14:00 / Нд зачинено",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2407,7 +2407,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.453,
+"ms": 0.651,
 "text": "Mostná 30, 949 01 Нітра",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2418,7 +2418,7 @@
 "ocakavane": "rezervacia",
 "typ": "vyber",
 "id": "rezervacia",
-"ms": 1.917,
+"ms": 1.57,
 "kand": [
 "rezervacia",
 "cena-strih",
@@ -2433,7 +2433,7 @@
 "ocakavane": "online",
 "typ": "odpoved",
 "id": "online",
-"ms": 1.424,
+"ms": 1.322,
 "text": "Онлайн 24/7 бронювання будь-коли",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2444,7 +2444,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.852,
+"ms": 1.209,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2455,7 +2455,7 @@
 "ocakavane": "cena-strih",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 2.239,
+"ms": 2.52,
 "kand": [
 "cena-strih",
 "cena-strih-brada"
@@ -2469,7 +2469,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "odpoved",
 "id": "cena-strih-brada",
-"ms": 1.82,
+"ms": 3.21,
 "text": "Чоловіча стрижка й оформлення бороди 28 €",
 "vyrez": {
 "skupina": "Стрижка",
@@ -2488,7 +2488,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 1.333,
+"ms": 2.278,
 "text": "мови барберів",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2499,7 +2499,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "vek",
-"ms": 2.213,
+"ms": 2.732,
 "text": "Стрижки для хлопців старше 10 років на сайті не вказуємо.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2510,7 +2510,7 @@
 "ocakavane": "email",
 "typ": "odpoved",
 "id": "email",
-"ms": 0.783,
+"ms": 1.335,
 "text": "info@barbershop30.sk",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2521,7 +2521,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.94,
+"ms": 1.224,
 "text": "Чоловіча стрижка 40 хв",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -2533,7 +2533,7 @@
 "ocakavane": "farbenie-brady",
 "typ": "vyber",
 "id": "farbenie-brady",
-"ms": 3.929,
+"ms": 4.136,
 "kand": [
 "farbenie-brady",
 "cena-strih-brada",
@@ -2549,7 +2549,7 @@
 "ocakavane": "ultra",
 "typ": "fallback",
 "id": null,
-"ms": 5.437,
+"ms": 8.632,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -2559,7 +2559,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 1.342,
+"ms": 2.441,
 "text": "У глибині тебе чекає кава. / Крісла, ретро-бензоколонка і кольоровий бульдог. Кава й мінералка безкоштовні.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2570,7 +2570,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "zdravie",
-"ms": 1.316,
+"ms": 2.216,
 "text": "Щодо шкіри та здоров’я на сайті порадити не можемо.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2581,7 +2581,7 @@
 "ocakavane": "odovzdanie",
 "typ": "fallback",
 "id": null,
-"ms": 2.279,
+"ms": 2.874,
 "trieda": "OK",
 "podtrieda": "odovzdanie"
 },
@@ -2591,7 +2591,7 @@
 "ocakavane": "volba:deti,cena-strih",
 "typ": "vyber",
 "id": "cena-strih",
-"ms": 2.217,
+"ms": 2.819,
 "kand": [
 "cena-strih",
 "deti",
@@ -2606,7 +2606,7 @@
 "ocakavane": "socialne",
 "typ": "odpoved",
 "id": "socialne",
-"ms": 0.428,
+"ms": 0.501,
 "text": "Свіжі стрижки й життя барбершопу показуємо в Instagram. / @barbershop30_nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2617,7 +2617,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.137,
+"ms": 1.783,
 "text": "Pn–Pt 9:00–19:00 / Sob 9:00–14:00 / Nd zamknięte",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2628,7 +2628,7 @@
 "ocakavane": "hodiny",
 "typ": "vyber",
 "id": "hodiny",
-"ms": 1.767,
+"ms": 3.191,
 "kand": [
 "hodiny"
 ],
@@ -2641,7 +2641,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.326,
+"ms": 0.567,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2652,7 +2652,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.067,
+"ms": 0.073,
 "text": "Strzyżenie męskie 18 €",
 "vyrez": {
 "skupina": "Strzyżenie",
@@ -2670,7 +2670,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "odpoved",
 "id": "cena-strih-brada",
-"ms": 6.409,
+"ms": 2.688,
 "text": "Strzyżenie męskie i trymowanie brody 28 €",
 "vyrez": {
 "skupina": "Strzyżenie",
@@ -2689,7 +2689,7 @@
 "ocakavane": "holenie",
 "typ": "vyber",
 "id": "holenie",
-"ms": 1.86,
+"ms": 2.191,
 "kand": [
 "holenie",
 "hlava"
@@ -2703,7 +2703,7 @@
 "ocakavane": "online",
 "typ": "nevieme",
 "id": "skolenia",
-"ms": 1.106,
+"ms": 1.906,
 "text": "szkolenia i wolne miejsca pracy",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -2714,7 +2714,7 @@
 "ocakavane": "rezervacia",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 0.599,
+"ms": 0.812,
 "text": "języki barberów",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -2725,7 +2725,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.604,
+"ms": 0.947,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2736,7 +2736,7 @@
 "ocakavane": "email",
 "typ": "odpoved",
 "id": "email",
-"ms": 0.037,
+"ms": 0.045,
 "text": "info@barbershop30.sk",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2747,7 +2747,7 @@
 "ocakavane": "odovzdanie",
 "typ": "fallback",
 "id": null,
-"ms": 1.016,
+"ms": 1.36,
 "trieda": "OK",
 "podtrieda": "odovzdanie"
 },
@@ -2757,7 +2757,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 4.429,
+"ms": 0.983,
 "text": "parkowanie",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2768,7 +2768,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.061,
+"ms": 0.08,
 "text": "sposób płatności",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2779,7 +2779,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 1.099,
+"ms": 1.826,
 "text": "języki barberów",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2790,7 +2790,7 @@
 "ocakavane": "trvanie",
 "typ": "vyber",
 "id": "hodiny",
-"ms": 1.547,
+"ms": 1.782,
 "kand": [
 "hodiny",
 "cena-strih",
@@ -2806,7 +2806,7 @@
 "ocakavane": "cena-brada",
 "typ": "vyber",
 "id": "cena-brada",
-"ms": 1.793,
+"ms": 1.762,
 "kand": [
 "cena-brada",
 "cena-strih-brada",
@@ -2821,7 +2821,7 @@
 "ocakavane": "cena-dlhe",
 "typ": "vyber",
 "id": "cena-dlhe",
-"ms": 2.496,
+"ms": 2.052,
 "kand": [
 "cena-dlhe",
 "farbenie-vlasov"
@@ -2846,7 +2846,7 @@
 "ocakavane": "ceny-konecne",
 "typ": "nevieme",
 "id": "cena-ina-sluzba",
-"ms": 0.711,
+"ms": 0.792,
 "text": "Nie mogę znaleźć tej usługi w cenniku; zobacz cały cennik.",
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "nevieme"
@@ -2857,7 +2857,7 @@
 "ocakavane": "ultra",
 "typ": "vyber",
 "id": "ultra",
-"ms": 1.707,
+"ms": 1.353,
 "kand": [
 "ultra"
 ],
@@ -2870,7 +2870,7 @@
 "ocakavane": "volba:obocie,depilacia",
 "typ": "vyber",
 "id": "depilacia",
-"ms": 2.158,
+"ms": 2.39,
 "kand": [
 "depilacia",
 "obocie"
@@ -2884,7 +2884,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.538,
+"ms": 0.88,
 "text": "Z tyłu czeka na ciebie kawa. / Fotele, retro dystrybutor paliwa i kolorowy buldog. Kawa i woda mineralna są za darmo.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2895,7 +2895,7 @@
 "ocakavane": "volba:holenie,obocie",
 "typ": "vyber",
 "id": "hlava",
-"ms": 3.806,
+"ms": 3.652,
 "kand": [
 "hlava",
 "holenie",
@@ -2910,7 +2910,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 1.312,
+"ms": 1.414,
 "text": "bony podarunkowe",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -2921,7 +2921,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.61,
+"ms": 0.614,
 "text": "Mo–Fr 9:00–19:00 / Sa 9:00–14:00 / So geschlossen",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2932,7 +2932,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 8.959,
+"ms": 0.608,
 "text": "Mo–Fr 9:00–19:00 / Sa 9:00–14:00 / So geschlossen",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2943,7 +2943,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.213,
+"ms": 0.203,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -2954,7 +2954,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.058,
+"ms": 0.059,
 "text": "Herrenhaarschnitt 18 €",
 "vyrez": {
 "skupina": "Schnitt",
@@ -2972,7 +2972,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 1.574,
+"ms": 1.523,
 "kand": [
 "cena-strih-brada",
 "cena-brada",
@@ -2987,7 +2987,7 @@
 "ocakavane": "hlava",
 "typ": "odpoved",
 "id": "hlava",
-"ms": 1.489,
+"ms": 0.686,
 "text": "Kopfrasur 13 €",
 "vyrez": {
 "skupina": "Schnitt",
@@ -3005,7 +3005,7 @@
 "ocakavane": "online",
 "typ": "odpoved",
 "id": "online",
-"ms": 2.536,
+"ms": 1.178,
 "text": "Online 24/7 Termin jederzeit buchen",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3016,7 +3016,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 0.78,
+"ms": 0.341,
 "text": "Ruf am Empfang an, Mo–Fr von 9:00 bis 19:00. Oder buch deinen Termin ganz einfach online über unser Buchungssystem.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3027,7 +3027,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 0.84,
+"ms": 0.479,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3038,7 +3038,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 3.134,
+"ms": 0.896,
 "text": "Zahlungsarten",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3049,7 +3049,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 1.276,
+"ms": 0.602,
 "text": "Parken",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3060,7 +3060,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 2.11,
+"ms": 0.649,
 "text": "Damenhaarschnitte nennen wir auf der Website nicht.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3071,7 +3071,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 1.268,
+"ms": 0.639,
 "text": "Sprachen der Barber",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3082,7 +3082,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 3.351,
+"ms": 0.463,
 "text": "Herrenhaarschnitt 40 Min.",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -3094,7 +3094,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 1.251,
+"ms": 0.519,
 "text": "Färben, Strähnchen und Dauerwelle macht Romana. / Die macht Romana, gebucht werden sie in einem eigenen System, in dem du auch die Preise findest.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3105,7 +3105,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 5.955,
+"ms": 1.279,
 "text": "Deinen Favoriten wählst du bei der Buchung.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3116,7 +3116,7 @@
 "ocakavane": "balicky",
 "typ": "vyber",
 "id": "balicky",
-"ms": 1.622,
+"ms": 1.095,
 "kand": [
 "balicky",
 "co-je-v-strihu"
@@ -3130,7 +3130,7 @@
 "ocakavane": "plet",
 "typ": "vyber",
 "id": "plet",
-"ms": 1.611,
+"ms": 0.732,
 "kand": [
 "plet"
 ],
@@ -3143,7 +3143,7 @@
 "ocakavane": "deti",
 "typ": "odpoved",
 "id": "deti",
-"ms": 3.67,
+"ms": 1.028,
 "text": "Schnitt für kleine Gentlemen 15 € / Klassischer Schnitt oder Fade, auf Wunsch ein kreatives Ornament, Waschen und Styling – für Jungs bis 10 Jahre.",
 "vyrez": {
 "skupina": "Schnitt",
@@ -3162,7 +3162,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 1.482,
+"ms": 1.693,
 "text": "Damenhaarschnitte nennen wir auf der Website nicht.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3173,7 +3173,7 @@
 "ocakavane": "volba:farbenie-brady,obocie",
 "typ": "vyber",
 "id": "obocie",
-"ms": 5.87,
+"ms": 1.414,
 "kand": [
 "obocie",
 "farbenie-brady"
@@ -3187,7 +3187,7 @@
 "ocakavane": "odkedy",
 "typ": "odpoved",
 "id": "odkedy",
-"ms": 0.419,
+"ms": 0.523,
 "text": "Seit 2019 in der Mostná 30 in Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3198,7 +3198,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 1.337,
+"ms": 1.49,
 "text": "Po–Pá 9:00–19:00 / So 9:00–14:00 / Ne zavřeno",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3209,7 +3209,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.693,
+"ms": 0.628,
 "text": "Po–Pá 9:00–19:00 / So 9:00–14:00 / Ne zavřeno",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3220,7 +3220,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 0.303,
+"ms": 0.331,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3231,7 +3231,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.058,
+"ms": 0.068,
 "text": "Pánský střih 18 €",
 "vyrez": {
 "skupina": "Střih",
@@ -3249,7 +3249,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "vyber",
 "id": "cena-strih-brada",
-"ms": 2.223,
+"ms": 2.131,
 "kand": [
 "cena-strih-brada",
 "cena-brada",
@@ -3265,7 +3265,7 @@
 "ocakavane": "cena-brada",
 "typ": "odpoved",
 "id": "cena-brada",
-"ms": 1.22,
+"ms": 1.495,
 "text": "Úprava vousů 15 €",
 "vyrez": {
 "skupina": "Vousy a holení",
@@ -3283,7 +3283,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 0.345,
+"ms": 0.469,
 "text": "Zavolej na recepci, v pracovní dny od 9:00 do 19:00. Nebo si termín zarezervuj online, jednoduše přes náš rezervační systém.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3294,7 +3294,7 @@
 "ocakavane": "online",
 "typ": "odpoved",
 "id": "online",
-"ms": 1.013,
+"ms": 1.2,
 "text": "Online 24/7 rezervace termínu kdykoli",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3305,7 +3305,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 1.332,
+"ms": 1.036,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3316,7 +3316,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.786,
+"ms": 0.719,
 "text": "způsob platby",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3327,7 +3327,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 1.372,
+"ms": 0.754,
 "text": "parkování",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3338,7 +3338,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.045,
+"ms": 0.042,
 "text": "Dámské střihy na webu neuvádíme.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3349,7 +3349,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.887,
+"ms": 1.095,
 "text": "Dámské střihy na webu neuvádíme.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3360,7 +3360,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.622,
+"ms": 0.346,
 "text": "Pánský střih 40 min",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -3372,7 +3372,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 0.547,
+"ms": 0.541,
 "text": "Barvení, melír a trvalou dělá Romana. / Dělá je Romana a rezervují se v samostatném systému, kde najdeš i jejich ceny.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3383,7 +3383,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "odpoved",
 "id": "vyber-barbera",
-"ms": 1.153,
+"ms": 0.884,
 "text": "Svého člověka si vybereš v rezervaci.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3394,7 +3394,7 @@
 "ocakavane": "deti",
 "typ": "vyber",
 "id": "deti",
-"ms": 1.793,
+"ms": 1.968,
 "kand": [
 "deti",
 "cena-strih",
@@ -3409,7 +3409,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.486,
+"ms": 1.032,
 "text": "Vzadu tě čeká káva. / Křesla, retro pumpa a barevný buldok. Káva i minerálka jsou zdarma.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3420,7 +3420,7 @@
 "ocakavane": "kresla",
 "typ": "odpoved",
 "id": "kresla",
-"ms": 0.044,
+"ms": 0.07,
 "text": "8 křesel",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3431,7 +3431,7 @@
 "ocakavane": "volba:holenie,hlava",
 "typ": "fallback",
 "id": null,
-"ms": 0.461,
+"ms": 0.448,
 "trieda": "ODOVZDANIE-NAVYSE",
 "podtrieda": "fallback"
 },
@@ -3441,7 +3441,7 @@
 "ocakavane": "socialne",
 "typ": "odpoved",
 "id": "socialne",
-"ms": 0.338,
+"ms": 0.939,
 "text": "Aktuální střihy a dění v barbershopu ukazujeme na Instagramu. / @barbershop30_nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3452,7 +3452,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "poukazky",
-"ms": 0.816,
+"ms": 1.132,
 "text": "dárkové poukazy",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3463,7 +3463,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.741,
+"ms": 0.69,
 "text": "Pon–Pet 9:00–19:00 / Sub 9:00–14:00 / Ned zatvoreno",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3474,7 +3474,7 @@
 "ocakavane": "hodiny",
 "typ": "odpoved",
 "id": "hodiny",
-"ms": 0.624,
+"ms": 0.675,
 "text": "Pon–Pet 9:00–19:00 / Sub 9:00–14:00 / Ned zatvoreno",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3485,7 +3485,7 @@
 "ocakavane": "adresa",
 "typ": "odpoved",
 "id": "adresa",
-"ms": 1.084,
+"ms": 0.29,
 "text": "Mostná 30, 949 01 Nitra",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3496,7 +3496,7 @@
 "ocakavane": "cena-strih",
 "typ": "odpoved",
 "id": "cena-strih",
-"ms": 0.103,
+"ms": 0.061,
 "text": "Muško šišanje 18 €",
 "vyrez": {
 "skupina": "Šišanje",
@@ -3514,7 +3514,7 @@
 "ocakavane": "cena-strih-brada",
 "typ": "odpoved",
 "id": "cena-strih-brada",
-"ms": 1.692,
+"ms": 1.786,
 "text": "Muško šišanje i uređivanje brade 28 €",
 "vyrez": {
 "skupina": "Šišanje",
@@ -3533,7 +3533,7 @@
 "ocakavane": "hlava",
 "typ": "odpoved",
 "id": "hlava",
-"ms": 1.016,
+"ms": 1.397,
 "text": "Brijanje glave 13 €",
 "vyrez": {
 "skupina": "Šišanje",
@@ -3551,7 +3551,7 @@
 "ocakavane": "rezervacia",
 "typ": "odpoved",
 "id": "rezervacia",
-"ms": 0.047,
+"ms": 0.122,
 "text": "Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin online, jednostavno preko našeg sistema za rezervacije.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3562,7 +3562,7 @@
 "ocakavane": "online",
 "typ": "odpoved",
 "id": "online",
-"ms": 0.745,
+"ms": 0.893,
 "text": "Online 24/7 zakazivanje termina bilo kad",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3573,7 +3573,7 @@
 "ocakavane": "telefon",
 "typ": "odpoved",
 "id": "telefon",
-"ms": 2.244,
+"ms": 0.957,
 "text": "+421 951 267 203",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3584,7 +3584,7 @@
 "ocakavane": "email",
 "typ": "odpoved",
 "id": "email",
-"ms": 0.304,
+"ms": 0.481,
 "text": "info@barbershop30.sk",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3595,7 +3595,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "platba",
-"ms": 0.608,
+"ms": 0.922,
 "text": "način plaćanja",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3606,7 +3606,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "parkovanie",
-"ms": 0.942,
+"ms": 0.78,
 "text": "parking",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3617,7 +3617,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "damske",
-"ms": 0.045,
+"ms": 0.05,
 "text": "Žensko šišanje ne navodimo na sajtu.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3628,7 +3628,7 @@
 "ocakavane": "trvanie",
 "typ": "odpoved",
 "id": "trvanie",
-"ms": 0.419,
+"ms": 0.544,
 "text": "Muško šišanje 40 min",
 "sluzba": "cena-strih",
 "trieda": "OK",
@@ -3640,7 +3640,7 @@
 "ocakavane": "farbenie-vlasov",
 "typ": "odpoved",
 "id": "farbenie-vlasov",
-"ms": 3.539,
+"ms": 0.96,
 "text": "Farbanje, pramenove i trajnu radi Romana. / Radi ih Romana, a zakazuju se u posebnom sistemu, gde ćeš naći i njihove cene.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3651,7 +3651,7 @@
 "ocakavane": "vyber-barbera",
 "typ": "vyber",
 "id": "tim",
-"ms": 0.823,
+"ms": 0.704,
 "kand": [
 "tim"
 ],
@@ -3664,7 +3664,7 @@
 "ocakavane": "deti",
 "typ": "odpoved",
 "id": "deti",
-"ms": 1.411,
+"ms": 1.141,
 "text": "Šišanje za male džentlmene 15 € / Klasično šišanje ili fade, po želji kreativni ornament, pranje i stajling – za dečake do 10 godina.",
 "vyrez": {
 "skupina": "Šišanje",
@@ -3683,7 +3683,7 @@
 "ocakavane": "kava",
 "typ": "odpoved",
 "id": "kava",
-"ms": 0.55,
+"ms": 0.542,
 "text": "Pozadi te čeka kafa. / Fotelje, retro pumpa i šareni buldog. Kafa i mineralna voda su besplatne.",
 "trieda": "OK",
 "podtrieda": "priama"
@@ -3694,7 +3694,7 @@
 "ocakavane": "odovzdanie",
 "typ": "nevieme",
 "id": "jazyky-tim",
-"ms": 0.997,
+"ms": 1.056,
 "text": "jezici barbera",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3705,7 +3705,7 @@
 "ocakavane": "bez-ceny",
 "typ": "nevieme",
 "id": "damske",
-"ms": 1.113,
+"ms": 1.111,
 "text": "Žensko šišanje ne navodimo na sajtu.",
 "trieda": "OK",
 "podtrieda": "odovzdanie"
@@ -3716,7 +3716,7 @@
 "ocakavane": "volba:holenie,hodiny",
 "typ": "vyber",
 "id": "holenie",
-"ms": 3.972,
+"ms": 3.894,
 "kand": [
 "holenie",
 "hlava",
@@ -3731,7 +3731,7 @@
 "ocakavane": "ornament",
 "typ": "odpoved",
 "id": "ornament",
-"ms": 1.344,
+"ms": 1.286,
 "text": "Kreativni ornament na glavi 4 €",
 "vyrez": {
 "skupina": "Dodatne usluge",
