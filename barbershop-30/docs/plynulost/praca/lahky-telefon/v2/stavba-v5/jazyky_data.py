@@ -3,12 +3,11 @@
 TEL = '+421 951 267 203'
 
 EN = {
- 'stop': "is are am the a an do does did you your we our us i me my can could would will to of for in on at it this that there with and or please any have has get be some just also still by what what's whats which there's its how why way got yes not all one out too off see may her she",
+ 'stop': "is are am the a an do does did you your we our us i me my can could would will to of for in on at it this that there with and or please any have has get be some just also still by what what's whats which there's its how why way got yes not all one out too off see may",
  'cenove': "price cost much eur",
- 'vypln': 'would like know need want tell question much many really kind sort normal regular classic simple basic service usual mean guys charge where when who whom',
+ 'vypln': 'would like know need want tell question much many really kind sort normal regular classic simple basic service usual mean guys charge when who whom',
  'zdvor': 'thank thanks thx sorry hello hi hey ok okay good great bye goodbye cheers morning afternoon evening nice perfect understood alright fine cool',
- 'spoj': 'and with plus',
- 'ine': {'deti': 'me myself'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'not all us no',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'A team of barbers, both men and women, works here under the Barbershop 30 name.',
           'Svojho človeka si vyberieš v rezervácii.': 'You pick your person when you book.',
@@ -23,7 +22,7 @@ EN = {
  'odovzdanie': f'Ask the front desk: {TEL} or info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['When are you open?', 'opening hours'], 'Open Hour Close Closing Saturday Sunday Weekend Today =Now =0h! when time late early tomorrow monday tuesday wednesday thursday friday morning afternoon evening tonight night'),
-  'adresa': (['Where can I find you?', 'address'], 'Address Located Location Street Map Directions =where find get nitra'),
+  'adresa': (['Where can I find you?', 'address'], 'Address Located Location Street Map Directions =Where find get nitra barbersho shop salon premis place Get_to Get_there'),
   'telefon': (['What is your phone number?', 'phone'], 'Phone Number Call Telephone Mobile contact reception'),
   'email': (['Do you have an email?', 'email address'], 'Email Mail write'),
   'rezervacia': (['How do I book an appointment?', 'make a booking'], 'Book Booking Appointment Reserv Schedul slot'),
@@ -71,7 +70,7 @@ EN = {
   'jazyky-tim': (['Do you speak English?', 'what languages do the barbers speak'], 'English Speak Ukrainian Hungarian German Polish Czech Serbian Language Languages Russian', 'languages the barbers speak'),
   'hodnotenie': (['What is your rating?', 'how many stars'], 'Star Stars Rating Review Reviews Score google', "We don't list a rating number on the website; it's right on Google."),
   'skolenia': (['Do you run courses?', 'barber course'], 'Course Training Learn Career =Job =Jobs Hiring Vacanc Apprentic barber', 'training and job openings'),
-  'damske': (["Do you cut women's hair?", "women's haircut"], 'Women Woman Ladies Lady Girl Girls Female Daughter Wife Girlfriend Mom Mommy Mum Mummy Mother Mama Grandma Granny Grandmother Sister Aunt Niece Bride Fiancee', "We don't list women's haircuts on the website."),
+  'damske': (["Do you cut women's hair?", "women's haircut"], 'Women Woman Ladies Lady Girl Girls Female Daughter Wife Girlfriend Mom Mommy Mum Mummy Mother Mama Grandma Granny Grandmother Sister Aunt Niece Bride Fiancee =Her =She', "We don't list women's haircuts on the website."),
   'mimo': (['Do you do home visits?', 'haircut at home'], 'Home House Hospital Hotel Wedding Nursing Outcall Onsite', "We don't list services outside the shop on the website."),
   'vek': (['Do you cut teenagers?', 'my son is 12 years old'], '>10! Teen Teenag Adolesc | year =old Teen Teenag Adolesc son boy kid child little junior', "We don't list haircuts for boys over 10 on the website."),
   'cena-ina-sluzba': (['How much is a massage?', 'manicure price'], 'Massag Manicur Pedicur', "I can't find this service in the price list; see the full price list."),
@@ -82,10 +81,9 @@ EN = {
 DE = {
  'stop': "ich du ihr sie er es wir man mein meine dein deine euer eure ist sind bin bist habt hat habe haben kann könnt kannst können ein eine einen einem einer der die das den dem des und oder auch noch mir mich dir dich euch uns bitte gibt mit bei zu zum zur im in am an auf für von vom aus wie was welche welcher da so schon mal denn ja nein nicht hier hab nur bis ihn ihm seid",
  'cenove': "preis kost viel eur teuer",
- 'vypln': 'möchte möchten hätte gern gerne würde frage fragen wissen brauche mal normal klassisch einfach leistung eigentlich genau etwa ungefähr macht machen wo wann wer wem warum',
+ 'vypln': 'möchte möchten hätte gern gerne würde frage fragen wissen brauche mal normal klassisch einfach leistung eigentlich genau etwa ungefähr macht machen wann wer wem warum',
  'zdvor': 'danke dank vielen hallo servus tschüss gut super okay ok entschuldigung guten morgen tag abend prima klasse verstanden',
- 'spoj': 'und mit plus',
- 'ine': {'deti': 'mich mir'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'nicht ohne bis sie ihr ihn ihm uns',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Unter der Marke Barbershop 30 arbeitet hier ein Team aus Barbern und Barberinnen.',
           'Svojho človeka si vyberieš v rezervácii.': 'Deinen Favoriten wählst du bei der Buchung.',
@@ -100,7 +98,7 @@ DE = {
  'odovzdanie': f'Frag den Empfang: {TEL} oder info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Wann habt ihr geöffnet?', 'Öffnungszeiten'], 'Öffn Öffnung Offen Geöffn Zeit Schließ Schliess Samstag Sonntag Wochenend Heute Jetzt =0h! wann spät montag dienstag mittwoch donnerstag freitag morgen vormittag nachmittag abend nacht'),
-  'adresa': (['Wo finde ich euch?', 'Adresse'], 'Adress Mostn Straße Strasse Navig Lage Anfahrt =wo find nitra'),
+  'adresa': (['Wo finde ich euch?', 'Adresse'], 'Adress Mostn Straße Strasse Navig Lage Anfahrt =Wo find nitra barbersho laden salon Zu_euch Zu_ihnen Dorthin =komme'),
   'telefon': (['Wie ist eure Telefonnummer?', 'Telefon'], 'Telefon Nummer Anruf Anrufen Handy kontakt rezept'),
   'email': (['Habt ihr eine E‑Mail?', 'E‑Mail-Adresse'], 'Mail Email schreib'),
   'rezervacia': (['Wie buche ich einen Termin?', 'Termin buchen'], 'Buch Buchen Termin Reserv Anmeld vereinbar'),
@@ -148,7 +146,7 @@ DE = {
   'jazyky-tim': (['Sprecht ihr Englisch?', 'welche Sprachen sprechen die Barber'], 'Englisch English Sprech Sprach Deutsch Ukrain Ungar Polnisch Tschech Serbisch Russisch', 'Sprachen der Barber'),
   'hodnotenie': (['Wie ist eure Bewertung?', 'wie viele Sterne'], 'Stern Sterne Bewert Rezens Review Rating google', 'Eine Bewertung als Zahl nennen wir auf der Website nicht; sie steht direkt bei Google.'),
   'skolenia': (['Macht ihr Schulungen?', 'Barber Kurs'], 'Schulung Kurs Lern Karriere Job Jobs Stelle Ausbild Bewerb barber', 'Schulungen und offene Stellen'),
-  'damske': (['Schneidet ihr auch Frauen?', 'Damenhaarschnitt'], 'Damen Dame Frau Frauen Mädchen Tochter Ehefrau Freundin Mutter Mama =Mami Mutti =Oma Schwester Tante Nichte Enkelin Kollegin Nachbarin Schwiegermutter Braut', 'Damenhaarschnitte nennen wir auf der Website nicht.'),
+  'damske': (['Schneidet ihr auch Frauen?', 'Damenhaarschnitt'], 'Damen Dame Frau Frauen Mädchen Tochter Ehefrau Freundin Mutter Mama =Mami Mutti =Oma Schwester Tante Nichte Enkelin Kollegin Nachbarin Schwiegermutter Braut Fur_sie Ihr_haarschnitt Ihre_haare', 'Damenhaarschnitte nennen wir auf der Website nicht.'),
   'mimo': (['Kommt ihr auch nach Hause?', 'Hausbesuch'], 'Hause =Haus Hausbesuch Krankenhaus Klinik Hotel Hochzeit Altenheim Pflegeheim Seniorenheim', 'Leistungen außerhalb des Barbershops nennen wir auf der Website nicht.'),
   'vek': (['Schneidet ihr auch Teenager?', 'mein Sohn ist 12 Jahre alt'], '>10! Teenager Jugendlich Pubert | jahr jährig =alt Teenager Jugendlich Pubert sohn junge kind junior', 'Haarschnitte für Jungen über 10 Jahre nennen wir auf der Website nicht.'),
   'cena-ina-sluzba': (['Was kostet eine Massage?', 'Preis Maniküre'], 'Massag Kopfmassag Manikür Pediküre', 'Diese Leistung finde ich in der Preisliste nicht; schau dir die ganze Preisliste an.'),
@@ -159,10 +157,9 @@ DE = {
 CS = {
  'stop': "je jsou jsem jsi se si na ve do od za pro při po že to by máte mám chci prosím jak jaký jaká jaké či tam tu ještě jen už vás vám ti mi když bude můžu může dá něco ke až ja já vy ale nebo tak ano ne také mě mně jste dám jít den kam náš můj byl ten raz asi aby nad pod pře roz",
  'cenove': "cen stoj kolik eur",
- 'vypln': 'děla chtěl chtěla potřeb zajím zeptat ptát otázk mohl můžete víte věděl třeba běžn normáln klasick obyčejn nějak jeden jedna jednu velk dobr pane ráda oběd týden služb vlastně teda taky vůbec potom stál stála stálo celk kde kdy kdo komu proč',
+ 'vypln': 'děla chtěl chtěla potřeb zajím zeptat ptát otázk mohl můžete víte věděl třeba běžn normáln klasick obyčejn nějak jeden jedna jednu velk dobr pane ráda oběd týden služb vlastně teda taky vůbec potom stál stála stálo celk kdy kdo komu proč',
  'zdvor': 'děkuj dík díky promiň promiňte sorry ahoj čau dobrý dobře dobrá ráno večer odpoledne super fajn okej ok nashle zdravím pěkný jasně rozumím aha',
- 'spoj': 'a i s se plus',
- 'ine': {'deti': 'mě mne'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'ne bez do pod nad nas nam jich',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Pod značkou Barbershop 30 tady pracuje tým barberů a barberek.',
           'Svojho človeka si vyberieš v rezervácii.': 'Svého člověka si vybereš v rezervaci.',
@@ -177,7 +174,7 @@ CS = {
  'odovzdanie': f'Zeptej se recepce: {TEL} nebo info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Kdy máte otevřeno?', 'otevírací doba'], 'Otevř Otevír Otvír Zavír Zavř Sobot Neděl Víkend Teď Dnes Právě =0h! =kdy kolika stihn doba zítra pondělí úter =středa =středu =středy čtvrtek čtvrtk pátek pátk ráno dopoledn odpoledn večer'),
-  'adresa': (['Kde vás najdu?', 'adresa'], 'Adres Mostn Ulic Mapa Navig Nacház Poloh =kde najd nitr dostan'),
+  'adresa': (['Kde vás najdu?', 'adresa'], 'Adres Mostn Ulic Mapa Navig Nacház Poloh =Kde najd nitr dostan barbersho provoz salon'),
   'telefon': (['Jaké máte telefonní číslo?', 'telefon'], 'Telef Číslo Zavol Volat kontakt mobil recepc'),
   'email': (['Máte e‑mail?', 'e‑mailová adresa'], 'Mail Email napiš psát'),
   'rezervacia': (['Jak si rezervuju termín?', 'objednat se'], 'Rezerv Objedn Termín Book Zarezerv domluv'),
@@ -225,7 +222,7 @@ CS = {
   'jazyky-tim': (['Mluvíte anglicky?', 'domluvím se německy'], 'Anglick English Ukrajinsk Maďar Madar Německ Polsk Jazyk Domluv =Rozumíte =Rozumí Mluv Speak Deutsch', 'jazyky barberů'),
   'hodnotenie': (['Jaké máte hodnocení?', 'kolik máte hvězdiček'], 'Hvězd Hodnoc Recenz Review Rating Ohlas google', 'Hodnocení číslem na webu neuvádíme; je přímo na Googlu.'),
   'skolenia': (['Děláte školení?', 'barber kurz'], 'Školen Kurz Nauč Kariér =Práce =Práci Brigád Zaměstn Hledat Hledám Hledáte Voln barber', 'školení a volná místa'),
-  'damske': (['Stříháte i ženy?', 'dámský střih'], 'Dámsk =Dámy Žensk =Žena =Ženy =Ženu =Ženě Dívk Holk Holčič Dcer Manželk Přítelk =Máma =Mámu =Mámy Mamk Mamin Maminc Babičk =Babi Sestr =Teta =Tetu =Tety Tetk Tchyn Kamarádk Kolegyn Sousedk Neteř Vnučk Partnerk Nevěst', 'Dámské střihy na webu neuvádíme.'),
+  'damske': (['Stříháte i ženy?', 'dámský střih'], 'Dámsk =Dámy Žensk =Žena =Ženy =Ženu =Ženě Dívk Holk Holčič Dcer Manželk Přítelk =Máma =Mámu =Mámy Mamk Mamin Maminc Babičk =Babi Sestr =Teta =Tetu =Tety Tetk Tchyn Kamarádk Kolegyn Sousedk Neteř Vnučk Partnerk Nevěst =Ji =Ní =Její', 'Dámské střihy na webu neuvádíme.'),
   'mimo': (['Chodíte stříhat i domů?', 'stříhání mimo provozovnu'], 'Domů =Doma Domov Nemocnic Důchodc Hospic Hotel Svatb Výjezd', 'Služby mimo provozovnu na webu neuvádíme.'),
   'vek': (['Stříháte i teenagery?', 'syn má 12 let'], '>10! Teenager Puberť Dospív | rok roků =let letý Teenager Puberť Dospív syn kluk chlapec chlapc dět děti dětsk junior', 'Střih pro kluky nad 10 let na webu neuvádíme.'),
   'cena-ina-sluzba': (['Kolik stojí masáž?', 'cena manikúry'], 'Masáž Manikúr Pedikúr', 'Tuto službu v ceníku nemůžu najít; podívej se na celý ceník.'),
@@ -234,12 +231,11 @@ CS = {
 }
 
 PL = {
- 'stop': "jest są czy mam macie masz chcę chciałbym proszę jak jaki jaka jakie i a w we na do od za z ze o u to by się mi mnie ci wam was nas ty wy ale albo tak nie jeszcze już tylko może można mogę tu tam co po przy dla jestem jesteś jesteście jakiś wie mój nam ich jej ten raz nad pod był niż prze roz",
+ 'stop': "jest są czy mam macie masz chcę chciałbym proszę jak jaki jaka jakie i a w we na do od za z ze o u to by się mi mnie ci wam was nas ty wy ale albo tak nie jeszcze już tylko może można mogę tu tam co po przy dla jestem jesteś jesteście jakiś wie mój nam ich ten raz nad pod był niż prze roz",
  'cenove': "cen kosztu ile eur",
- 'vypln': 'robi robić chciał chciała potrzeb interes zapytać pytanie wiecie trzeba normaln klasyczn zwykł jakiś jeden jedna duży dobr tydzień usług właściwie też potem bierze biorą gdzie kiedy kto komu dlaczego',
+ 'vypln': 'robi robić chciał chciała potrzeb interes zapytać pytanie wiecie trzeba normaln klasyczn zwykł jakiś jeden jedna duży dobr tydzień usług właściwie też potem bierze biorą kiedy kto komu dlaczego',
  'zdvor': 'dziękuj dzięki przeprasz sorry cześć hej dzień dobry dobrze wieczór ok okej super pozdraw widzenia rozumiem jasne',
- 'spoj': 'i z oraz plus',
- 'ine': {'deti': 'mnie'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'nie bez do pod nad ich nas nam',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Pod szyldem Barbershop 30 pracuje tu zespół barberów i barberek.',
           'Svojho človeka si vyberieš v rezervácii.': 'Swojego człowieka wybierzesz przy rezerwacji.',
@@ -254,7 +250,7 @@ PL = {
  'odovzdanie': f'Zapytaj recepcję: {TEL} albo info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Kiedy jesteście otwarci?', 'godziny otwarcia'], 'Otwar Otwier Godzin Zamyk Zamkn Sobot Niedziel Weekend Teraz Dziś Dzisiaj =0h! kiedy której jutro poniedział wtor =środa =środę =środy czwart piątek piątk rano przedpołudn popołudn wieczor noc'),
-  'adresa': (['Gdzie was znajdę?', 'adres'], 'Adres Mostn Ulic Mapa Nawig Położen Polozen Lokaliz =gdzie znajd nitr dojad'),
+  'adresa': (['Gdzie was znajdę?', 'adres'], 'Adres Mostn Ulic Mapa Nawig Położen Polozen Lokaliz =Gdzie znajd nitr dojad Dojech Dojść Dotrzeć Trafi barbersho salon lokal zakład'),
   'telefon': (['Jaki macie numer telefonu?', 'telefon'], 'Telef Numer Zadzwoń Dzwoni kontakt komórk recepc'),
   'email': (['Macie e‑mail?', 'adres e‑mail'], 'Mail Email napisz pisać'),
   'rezervacia': (['Jak zarezerwować termin?', 'umówić się'], 'Rezerw Zarezerw Termin Umów Umow Zapis Book'),
@@ -302,7 +298,7 @@ PL = {
   'jazyky-tim': (['Mówicie po angielsku?', 'czy dogadam się po węgiersku'], 'Angiel English Ukraiń Węgier Niemieck Polsk Czesk Język Mówic Mówi =Rozumiecie =Rozumie Speak Deutsch', 'języki barberów'),
   'hodnotenie': (['Jaką macie ocenę?', 'ile macie gwiazdek'], 'Gwiazd Ocen Opini Recenz Review Rating google', 'Oceny liczbowej nie podajemy na stronie; jest bezpośrednio w Google.'),
   'skolenia': (['Robicie szkolenia?', 'kurs barberski'], 'Szkolen Kurs Nauk Karier =Praca =Pracy =Pracę Zatrudn Rekrut Szukacie barber', 'szkolenia i wolne miejsca pracy'),
-  'damske': (['Czy strzyżecie kobiety?', 'strzyżenie damskie'], 'Damsk =Panie =Pan Kobiet Kobieta Dziewcz Córk Żona Żonę Żony Dziewczyn =Mama =Mamę =Mamy =Mamie Mamus Babc Siostr Ciot Cioc Teściow Koleżank Przyjaciółk Sąsiadk Siostrzenic Wnuczk Partnerk', 'Strzyżeń damskich nie podajemy na stronie.'),
+  'damske': (['Czy strzyżecie kobiety?', 'strzyżenie damskie'], 'Damsk =Panie =Pan Kobiet Kobieta Dziewcz Córk Żona Żonę Żony Dziewczyn =Mama =Mamę =Mamy =Mamie Mamus Babc Siostr Ciot Cioc Teściow Koleżank Przyjaciółk Sąsiadk Siostrzenic Wnuczk Partnerk =Jej =Niej =Nią', 'Strzyżeń damskich nie podajemy na stronie.'),
   'mimo': (['Czy dojeżdżacie do domu?', 'strzyżenie w domu'], 'Domu =Dom =Domem Szpital Hotel Wesel Dojazd Dojeżdż Wyjazd Hospic', 'Usług poza salonem nie podajemy na stronie.'),
   'vek': (['Czy strzyżecie nastolatków?', 'syn ma 12 lat'], '>10! Nastolat Dojrzew | =lat =lata letni roku Nastolat Dojrzew syn synk chłopiec chłopc chlopiec chlopc dziec junior', 'Strzyżenia dla chłopców powyżej 10 lat nie podajemy na stronie.'),
   'cena-ina-sluzba': (['Ile kosztuje masaż?', 'cena manicure'], 'Masaż Manicure Manikiur Pedicure', 'Nie mogę znaleźć tej usługi w cenniku; zobacz cały cennik.'),
@@ -313,10 +309,9 @@ PL = {
 HU = {
  'stop': "a az és is van vannak vagy vagytok vagyok lehet kell nekem engem nálatok nektek nálad tudok tudtok tudsz szeretnék szeretnem kérem hogy hogyan mi mit milyen melyik egy ez ott itt meg már csak de nem igen ha akkor ti te én on kit kér ide oda fel ezt azt két sok",
  'cenove': "ára mennyi kerül eur",
- 'vypln': 'csinál szeretn kérdez kérdés tudni kellene normál klasszikus =sima egyszerű nagy szolgáltat tulajdonk hol mikor kinek miért pontos',
+ 'vypln': 'csinál szeretn kérdez kérdés tudni kellene normál klasszikus =sima egyszerű nagy szolgáltat tulajdonk mikor kinek miért pontos',
  'zdvor': 'köszön köszi bocsánat elnézést szia helló hello hallo jó napot estét reggelt rendben oké ok szuper viszlát értem',
- 'spoj': 'és meg plusz',
- 'ine': {'deti': 'nekem engem én'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'nem ket',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'A Barbershop 30 márkanév alatt férfi és női barberek csapata dolgozik itt.',
           'Svojho človeka si vyberieš v rezervácii.': 'A saját emberedet a foglalásnál választod ki.',
@@ -331,7 +326,7 @@ HU = {
  'odovzdanie': f'Kérdezd a recepciót: {TEL} vagy info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Mikor vagytok nyitva?', 'nyitvatartás'], 'Nyitva Nyitvatart Nyit Zár Zárva Szombat Vasárnap Hétvég Most =Ma =0h! mikor meddig hány holnap hétfő kedd szerda csütörtök péntek reggel délelőtt délután este éjjel'),
-  'adresa': (['Hol találok meg titeket?', 'cím'], 'Cím Címet Mostn Utca Térkép Navig Elhelyezk =hol talál nitr odajut'),
+  'adresa': (['Hol találok meg titeket?', 'cím'], 'Cím Címet Mostn Utca Térkép Navig Elhelyezk =Hol talál nitr odajut Jutok Jutni hozzátok barbersho szalon üzlet'),
   'telefon': (['Mi a telefonszámotok?', 'telefon'], 'Telefon Szám Hív Hívni Felhív kapcsolat mobil recepc'),
   'email': (['Van e‑mail címetek?', 'e‑mail cím'], 'Mail Email ír írni'),
   'rezervacia': (['Hogyan foglalok időpontot?', 'bejelentkezés'], 'Foglal Időpont Bejelentk Book Lefoglal Előjegyz'),
@@ -390,10 +385,9 @@ HU = {
 SR = {
  'stop': "je su sam si se da li na u do od za sa s o po pri iz mene šta kako koji koja koje i a ili ali to taj ta ovo ovde tu još već samo vam vas mi meni ti vi mogu može možete hoću želim molim imate imaš ima nešto ste kod nas moj ide nad pod pre raz",
  'cenove': "cen košt koliko eur",
- 'vypln': 'radi raditi hteo htela treba zanima pitati pitanje znati normaln klasičn običn neki jedan jedna velik dobr usluga zapravo takođe onda gde gdje kad kada =ko kome zašto',
+ 'vypln': 'radi raditi hteo htela treba zanima pitati pitanje znati normaln klasičn običn neki jedan jedna velik dobr usluga zapravo takođe onda kad kada =ko kome zašto',
  'zdvor': 'hvala izvini izvinite sorry zdravo ćao dobar dobro dan veče jutro pozdrav ok okej super razumem prijatno',
- 'spoj': 'i sa plus',
- 'ine': {'deti': 'mene meni'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'ne bez do pod nad nas nama',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Pod brendom Barbershop 30 ovde radi tim barbera i barberki.',
           'Svojho človeka si vyberieš v rezervácii.': 'Svog čoveka biraš pri rezervaciji.',
@@ -408,7 +402,7 @@ SR = {
  'odovzdanie': f'Pitaj recepciju: {TEL} ili info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Kada ste otvoreni?', 'radno vreme', 'do koliko radite'], 'Otvor Radno vreme Zatvar Zatvor Subot Nedelj Vikend Sada Danas =0h! kad kada radite sutra ponedelj utor =sreda =sredu =srede četvrt petak petk jutro jutru prepodne popodne veče večer noć'),
-  'adresa': (['Gde vas mogu naći?', 'adresa'], 'Adres Mostn Ulic Mapa Navig Nalaz Lokacij =gde nađ nadj nać nitr stign'),
+  'adresa': (['Gde vas mogu naći?', 'adresa'], 'Adres Mostn Ulic Mapa Navig Nalaz Lokacij =Gde =Gdje nađ nadj nać nitr stign barbersho salon radnj lokal'),
   'telefon': (['Koji je vaš broj telefona?', 'telefon'], 'Telef Broj Pozov Zvati Nazvat kontakt mobil recepc'),
   'email': (['Imate li e‑mail?', 'e‑mail adresa'], 'Mail Email piši pisati'),
   'rezervacia': (['Kako da zakažem termin?', 'zakazivanje'], 'Rezerv Zakaz Zakazat Termin Book'),
@@ -456,7 +450,7 @@ SR = {
   'jazyky-tim': (['Da li govorite engleski?', 'govorite li srpski'], 'Englesk English Ukrajinsk Mađarsk Madjarsk Nemačk Poljsk Češk Srpsk Jezik Govor Speak Deutsch', 'jezici barbera'),
   'hodnotenie': (['Kakva vam je ocena?', 'koliko imate zvezdica'], 'Zvezd Ocen Recenz Review Rating Utis google', 'Ocenu brojem ne navodimo na sajtu; nalazi se direktno na Google-u.'),
   'skolenia': (['Da li držite obuke?', 'barber kurs'], 'Obuk Kurs Učen Nauč Karijer =Posao =Posla Zaposl Tražite barber', 'obuke i slobodna radna mesta'),
-  'damske': (['Šišate li žene?', 'žensko šišanje'], 'Žensk Žene Žena Ženu Devojč Devojk Ćerk Supruga =Suprugu =Mama =Mamu =Mami =Mame Majk =Baka =Baku =Baki Bakic Sestr Tetk =Tetu =Teta Svekrv Tašt Drugaric Prijateljic Komšinic Koleginic Nećakinj =Unuka =Unuku Verenic', 'Žensko šišanje ne navodimo na sajtu.'),
+  'damske': (['Šišate li žene?', 'žensko šišanje'], 'Žensk Žene Žena Ženu Devojč Devojk Ćerk Supruga =Suprugu =Mama =Mamu =Mami =Mame Majk =Baka =Baku =Baki Bakic Sestr Tetk =Tetu =Teta Svekrv Tašt Drugaric Prijateljic Komšinic Koleginic Nećakinj =Unuka =Unuku Verenic =Nju =Njoj =Nje', 'Žensko šišanje ne navodimo na sajtu.'),
   'mimo': (['Da li dolazite kući?', 'šišanje kod kuće'], '=Kući =Kuću =Kuća =Kuće Bolnic Hotel Venčanj Svadb Staračk', 'Usluge van salona ne navodimo na sajtu.'),
   'vek': (['Šišate li tinejdžere?', 'sin ima 12 godina'], '>10! Tinejdžer Pubert | godin Tinejdžer Pubert sin dečak dete deca dec decu dečij junior', 'Šišanje za dečake starije od 10 godina ne navodimo na sajtu.'),
   'cena-ina-sluzba': (['Koliko košta masaža?', 'cena manikira'], 'Masaž Manikir Pedikir', 'Ne mogu da nađem ovu uslugu u cenovniku; pogledaj ceo cenovnik.'),
@@ -469,8 +463,7 @@ UK = {
  'cenove': "цін скільки коштує коштуют євро eur",
  'vypln': 'робите робити хотів хотіла потрібн цікав запитат питання знати звичайн класичн простий якийсь один одна великий добр послуг взагалі також потім коли хто кому чому',
  'zdvor': 'дяку спасибі вибач sorry привіт добрий доброго день вечір ранку окей ок супер зрозум побачен',
- 'spoj': 'і й та з плюс',
- 'ine': {'deti': 'мене мені'},  # zámeno prvej osoby: so spojkou je to druhá osoba, položka deti ju nevysvetlí (oprava 6, trieda D)
+ 'mod': 'не без до під над нас нам ні',
  'frag': {'0951 267 203': TEL,
           'Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.': 'Під брендом Barbershop 30 тут працює команда барберів і барберок.',
           'Svojho človeka si vyberieš v rezervácii.': 'Свою людину обереш під час бронювання.',
@@ -485,7 +478,7 @@ UK = {
  'odovzdanie': f'Запитай рецепцію: {TEL} або info@barbershop30.sk.',
  'polozky': {
   'hodiny': (['Коли ви відчинені?', 'години роботи'], 'Відчин Відкри Годин Зачин Субот Неділ Вихідн Зараз Сьогодні =0h! коли котрої працює завтра понеділ вівтор середа середу четвер ятниц ранок ранку вранці вечір вечер вечор'),
-  'adresa': (['Де вас знайти?', 'адреса'], 'Адрес Мостн Вулиц Мап Навіг Знаходит Розташ =де знайт нітр дістат'),
+  'adresa': (['Де вас знайти?', 'адреса'], 'Адрес Мостн Вулиц Мап Навіг Знаходит Розташ =Де знайт нітр дістат барбершоп салон заклад'),
   'telefon': (['Який у вас номер телефону?', 'телефон'], 'Телефон Номер Зателефон Подзвон Дзвонит контакт мобіл рецепц'),
   'email': (['У вас є e‑mail?', 'e‑mail адреса'], 'Mail Email Пошт напис'),
   'rezervacia': (['Як записатися?', 'записатися'], 'Запис Записат Бронюв Заброн Резерв Book Термін'),
@@ -533,7 +526,7 @@ UK = {
   'jazyky-tim': (['Ви говорите англійською?', 'розмовляєте українською'], 'Англійськ English Українськ Угорськ Німецьк Польськ Чеськ Сербськ Мов Говорит Розмовля Speak Deutsch', 'мови барберів'),
   'hodnotenie': (['Який у вас рейтинг?', 'скільки у вас зірок'], 'Зір Зірк Рейтинг Оцінк Відгук Review Rating google', 'Рейтинг числом на сайті не вказуємо; він є безпосередньо в Google.'),
   'skolenia': (['Чи проводите навчання?', 'курс барбера'], 'Навчан Курс Навчит =Робота =Роботу Ваканс Шукаєт барбер', 'навчання та вакансії'),
-  'damske': (['Чи стрижете жінок?', 'жіноча стрижка'], 'Жіноч Жінк Жінок Дівчат Доньк Дочк Дружин Дівчин Мама Маму Мамі Мамо Матір Бабус Бабц Сестр Тітк Тещ Свекр Подруг Сусідк Племінниц Онучк', 'Жіночі стрижки на сайті не вказуємо.'),
+  'damske': (['Чи стрижете жінок?', 'жіноча стрижка'], 'Жіноч Жінк Жінок Дівчат Доньк Дочк Дружин Дівчин Мама Маму Мамі Мамо Матір Бабус Бабц Сестр Тітк Тещ Свекр Подруг Сусідк Племінниц Онучк =Неї =Її =Їй =Нею', 'Жіночі стрижки на сайті не вказуємо.'),
   'mimo': (['Чи приїжджаєте додому?', 'стрижка вдома'], 'Додому Вдома =Дома Лікарн Госпітал Готел Весілл Виїзд Приїждж', 'Послуги поза барбершопом на сайті не вказуємо.'),
   'vek': (['Чи стрижете підлітків?', 'синові 12 років'], '>10! Підліт | рок років річн Підліт син сина синові хлопч дит діт дітей дитяч дитин маленьк junior', 'Стрижки для хлопців старше 10 років на сайті не вказуємо.'),
   'cena-ina-sluzba': (['Скільки коштує масаж?', 'ціна манікюру'], 'Масаж Манікюр Педикюр', 'Не можу знайти цю послугу в прайсі; переглянь весь прайс.'),

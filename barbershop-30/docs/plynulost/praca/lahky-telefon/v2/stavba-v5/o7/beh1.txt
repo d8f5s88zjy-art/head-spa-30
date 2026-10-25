@@ -1,0 +1,141 @@
+# sudca (c) nad /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-recepcia/barbershop-30, 2026-10-25T12:33:06.970Z
+
+## Slepé sady (označené)
+sada-A: otázok 349, CHYBY (c) 5 {"E3":5} | typy {"odpoved":77,"fallback":37,"cennik":120,"vyber":13,"nevieme":76,"zdvorilost":26} | použiteľnosť {"OK-PRIAMO":191,"ODOVZDANIE-NAVYSE":11,"ODCHYLKA":1,"OK-VOLBA":12,"OK":129,"CENNIK-PRI-ODOVZDANI":5}
+    sk „detox“ → skupiny Strih | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „detox“ → skupiny Strih | očakávané bez-ceny
+    sk „strih pre psa“ → skupiny Strih | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „strih pre psa“ → skupiny Strih | očakávané bez-ceny
+    cs „detox“ → skupiny Střih | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) cs „detox“ → skupiny Střih | očakávané bez-ceny
+    en „thank you so much!“ → skupiny Cut + Beard and shave + Packages + Extras | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) en „thank you so much!“ → skupiny Cut + Beard and shave + Packages + Extras | očakávané bez-ceny
+    de „alles klar, tschüss“ → skupiny Pakete | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) de „alles klar, tschüss“ → skupiny Pakete | očakávané bez-ceny
+sada-B: otázok 315, CHYBY (c) 40 {"E3":39,"E1":1} | typy {"nevieme":126,"cennik":110,"fallback":33,"vyber":14,"odpoved":7,"zdvorilost":25} | použiteľnosť {"OK":198,"CENNIK-PRI-ODOVZDANI":39,"OK-PRIAMO":73,"ODCHYLKA":1,"OK-VOLBA":2,"ODOVZDANIE-NAVYSE":2}
+    sk „Neter má 5 rokov, ostriháte ju?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Neter má 5 rokov, ostriháte ju?“ → skupiny Strih | očakávané odovzdanie
+    sk „Pani by chcela úpravu obočia, dá sa?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Pani by chcela úpravu obočia, dá sa?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Strihate aj psov?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Strihate aj psov?“ → skupiny Strih | očakávané odovzdanie
+    sk „Koľko stojí ostrihať psa?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Koľko stojí ostrihať psa?“ → skupiny Strih | očakávané odovzdanie
+    sk „Strih pre mňa a pre syna (6), koľko spolu?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Strih pre mňa a pre syna (6), koľko spolu?“ → skupiny Strih | očakávané bez-ceny
+    sk „Koľko stojí piercing nosa?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Koľko stojí piercing nosa?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Koľko stojí depilácia chrbta voskom?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Koľko stojí depilácia chrbta voskom?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Depilácia nôh voskom, cena?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Depilácia nôh voskom, cena?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Holíte aj nohy?“ → skupiny Brada a holenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Holíte aj nohy?“ → skupiny Brada a holenie | očakávané odovzdanie
+    sk „Koľko stojí holenie chrbta?“ → skupiny Brada a holenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Koľko stojí holenie chrbta?“ → skupiny Brada a holenie | očakávané odovzdanie
+    sk „Len fénovanie bez strihu, koľko?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Len fénovanie bez strihu, koľko?“ → skupiny Strih | očakávané odovzdanie
+    sk „Koľko stojí whisky?“ → skupiny Balíčky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Koľko stojí whisky?“ → skupiny Balíčky | očakávané odovzdanie
+    sk „Čistenie uší robíte?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Čistenie uší robíte?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Farbenie šedín na hlave pre muža, cena?“ → skupiny Doplnky | E1 „sedin“ (farbenie-brady) nie je v skupinách Doplnky; E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Farbenie šedín na hlave pre muža, cena?“ → skupiny Doplnky | očakávané bez-ceny
+    sk „Máte permanentku na 10 strihov?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Máte permanentku na 10 strihov?“ → skupiny Strih | očakávané odovzdanie
+    sk „Mesačné predplatné na strih a bradu?“ → skupiny Strih + Brada a holenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Mesačné predplatné na strih a bradu?“ → skupiny Strih + Brada a holenie | očakávané odovzdanie
+    sk „Bez umývania je strih lacnejší?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Bez umývania je strih lacnejší?“ → skupiny Strih | očakávané odovzdanie
+    sk „Prídete do firmy ostrihať kolegov?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Prídete do firmy ostrihať kolegov?“ → skupiny Strih | očakávané odovzdanie
+    sk „Ako dlho trvá farbenie vlasov?“ → skupiny Strih + Doplnky | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Ako dlho trvá farbenie vlasov?“ → skupiny Strih + Doplnky | očakávané bez-ceny
+    sk „Strih a holenie hlavy naraz, koľko?“ → skupiny Strih + Brada a holenie + Balíčky | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Strih a holenie hlavy naraz, koľko?“ → skupiny Strih + Brada a holenie + Balíčky | očakávané bez-ceny
+sada-C2: otázok 260, CHYBY (c) 11 {"E3":10,"E1":1} | typy {"cennik":102,"odpoved":33,"nevieme":80,"vyber":27,"fallback":15,"zdvorilost":3} | použiteľnosť {"OK-PRIAMO":124,"ODOVZDANIE-NAVYSE":10,"OK-VOLBA":24,"OK":91,"CENNIK-PRI-ODOVZDANI":9,"ODCHYLKA":2}
+    sk „vnukovi je 12, kolko zaplati, uz je to pansky?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „vnukovi je 12, kolko zaplati, uz je to pansky?“ → skupiny Strih | očakávané odovzdanie
+    sk „robite aj detoxikaciu pokozky hlavy?“ → skupiny Doplnky | E1 „hlavy“ (hlava) nie je v skupinách Doplnky; E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „robite aj detoxikaciu pokozky hlavy?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „pes je chlpaty ako ja, ostrihate aj jeho?“ → skupiny Strih + Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „pes je chlpaty ako ja, ostrihate aj jeho?“ → skupiny Strih + Doplnky | očakávané odovzdanie
+    sk „depilacia chrbta voskom kolko“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „depilacia chrbta voskom kolko“ → skupiny Doplnky | očakávané odovzdanie
+    sk „strih plus farbenie vlasov dokopy kolko“ → skupiny Strih + Doplnky | E3 skupina cenníka pri otázke označenej bez-ceny
+    en „back waxing how much“ → skupiny Extras | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) en „back waxing how much“ → skupiny Extras | očakávané odovzdanie
+    pl „depilacja pleców woskiem“ → skupiny Dodatki | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) pl „depilacja pleców woskiem“ → skupiny Dodatki | očakávané odovzdanie
+    sr „depilacija leđa voskom“ → skupiny Dodatne usluge | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sr „depilacija leđa voskom“ → skupiny Dodatne usluge | očakávané odovzdanie
+    uk „доньці 6 років, підстрижете?“ → skupiny Стрижка | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) uk „доньці 6 років, підстрижете?“ → skupiny Стрижка | očakávané odovzdanie
+    uk „стрижка для мами, скільки?“ → skupiny Стрижка | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) uk „стрижка для мами, скільки?“ → skupiny Стрижка | očakávané odovzdanie
+sada-D1: otázok 293, CHYBY (c) 2 {"E3":1,"E1":1} | typy {"odpoved":82,"nevieme":73,"vyber":37,"cennik":95,"fallback":6} | použiteľnosť {"OK-PRIAMO":172,"ODOVZDANIE-NAVYSE":20,"OK":68,"OK-VOLBA":29,"ODCHYLKA":3,"CENNIK-PRI-ODOVZDANI":1}
+    sk „Koľko stojí umytie vlasov samostatne, bez strihu?“ → skupiny Strih + Doplnky | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Koľko stojí umytie vlasov samostatne, bez strihu?“ → skupiny Strih + Doplnky | očakávané bez-ceny
+    pl „Dzień dobry, jestem na delegacji, jutro mam ważne spotkanie z klientem. Chciałbym się ogolić na gładko i ogarnąć brwi. Ile to kosztuje?“ → skupiny Broda i golenie + Dodatki | E1 „ogolic“ (hlava) nie je v skupinách Broda i golenie,Dodatki
+sada-D2: otázok 311, CHYBY (c) 26 {"E3":26} | typy {"cennik":158,"vyber":71,"nevieme":55,"odpoved":25,"fallback":2} | použiteľnosť {"OK-PRIAMO":150,"OK-VOLBA":61,"ODCHYLKA":28,"ODOVZDANIE-NAVYSE":28,"OK":39,"CENNIK-PRI-ODOVZDANI":5}
+    sk „Koľko stojí strih a melír?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej bez-ceny
+    sk „Koľko zaplatím za samotné umytie vlasov?“ → skupiny Strih + Doplnky | E3 skupina cenníka pri otázke označenej bez-ceny
+    sk „Strihá Dominika aj brady?“ → skupiny Strih + Brada a holenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    sk „Holí Michal aj hlavy?“ → skupiny Strih + Brada a holenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    sk „Depiláciu nôh robíte?“ → skupiny Doplnky | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Depiláciu nôh robíte?“ → skupiny Doplnky | očakávané odovzdanie
+    sk „Strihanie nechtov máte?“ → skupiny Strih | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sk „Strihanie nechtov máte?“ → skupiny Strih | očakávané odovzdanie
+    sk „Viac ľudí naraz, traja kamaráti na strih, ide to?“ → skupiny Strih + Balíčky | E3 skupina cenníka pri otázke označenej odovzdanie
+    sk „melir a strih kolko“ → skupiny Strih | E3 skupina cenníka pri otázke označenej bez-ceny
+    en „How much are a haircut and highlights?“ → skupiny Cut | E3 skupina cenníka pri otázke označenej bez-ceny
+    en „Does Romana also do men's haircuts?“ → skupiny Cut | E3 skupina cenníka pri otázke označenej odovzdanie
+    en „How long is the wait for a haircut?“ → skupiny Cut | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) en „How long is the wait for a haircut?“ → skupiny Cut | očakávané odovzdanie
+    cs „Kolik stojí střih a melír?“ → skupiny Střih | E3 skupina cenníka pri otázke označenej bez-ceny
+    cs „Stříhá Romana i pány?“ → skupiny Střih | E3 skupina cenníka pri otázke označenej odovzdanie
+    cs „Jak dlouho trvá trvalá?“ → skupiny Střih | E3 skupina cenníka pri otázke označenej odovzdanie
+    de „Was kosten Haarschnitt und Strähnchen?“ → skupiny Schnitt | E3 skupina cenníka pri otázke označenej bez-ceny
+    de „Schneidet Romana auch Herren?“ → skupiny Schnitt | E3 skupina cenníka pri otázke označenej odovzdanie
+    pl „Ile kosztuje strzyżenie i pasemka?“ → skupiny Strzyżenie | E3 skupina cenníka pri otázke označenej bez-ceny
+    pl „Czy Romana strzyże też mężczyzn?“ → skupiny Strzyżenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    pl „Jak długo trwa trwała?“ → skupiny Strzyżenie | E3 skupina cenníka pri otázke označenej odovzdanie
+    hu „Mennyi a hajvágás és a melír?“ → skupiny Hajvágás | E3 skupina cenníka pri otázke označenej bez-ceny
+    hu „Mennyit kell várni nálatok hajvágásra?“ → skupiny Hajvágás | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) hu „Mennyit kell várni nálatok hajvágásra?“ → skupiny Hajvágás | očakávané odovzdanie
+    sr „Koliko koštaju šišanje i pramenovi?“ → skupiny Šišanje | E3 skupina cenníka pri otázke označenej bez-ceny
+    sr „Da li Romana šiša i muškarce?“ → skupiny Šišanje | E3 skupina cenníka pri otázke označenej odovzdanie
+    sr „Koliko se kod vas čeka na šišanje?“ → skupiny Šišanje | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) sr „Koliko se kod vas čeka na šišanje?“ → skupiny Šišanje | očakávané odovzdanie
+    uk „Скільки коштують стрижка і мелірування?“ → skupiny Стрижка | E3 skupina cenníka pri otázke označenej bez-ceny
+    uk „Романа стриже і чоловіків?“ → skupiny Стрижка | E3 skupina cenníka pri otázke označenej odovzdanie
+sada-E2: otázok 208, CHYBY (c) 3 {"E1":2,"E3":1} | typy {"odpoved":55,"cennik":71,"vyber":25,"nevieme":50,"fallback":7} | použiteľnosť {"OK-PRIAMO":119,"ODCHYLKA":5,"OK-VOLBA":22,"OK":54,"ODOVZDANIE-NAVYSE":6,"INA-SKUPINA":1,"CENNIK-PRI-ODOVZDANI":1}
+    pl „siema, ile za golenie łba na gładko?“ → skupiny Broda i golenie | E1 očakávané hlava nie je v skupinách
+    pl „Mam łuszczycę skóry głowy, czy to problem?“ → skupiny Dodatki | E1 „głowy“ (hlava) nie je v skupinách Dodatki; E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) pl „Mam łuszczycę skóry głowy, czy to problem?“ → skupiny Dodatki | očakávané odovzdanie
+  legitímnych otázok 1097, odovzdanie navyše 77 (7.02 %)
+
+## Skeptik 2 (označené otázky)
+skeptik2/otazky-v5-2.txt: otázok 137, CHYBY (c) 0 {} | typy {"cennik":66,"odpoved":23,"nevieme":31,"vyber":17}
+skeptik2/otazky-v5-2b.txt: otázok 30, CHYBY (c) 0 {} | typy {"cennik":17,"nevieme":9,"odpoved":4}
+
+## Zoznamy otázok kontrol a skeptika (bez označenia)
+k4/sondy-k4.txt: otázok 261, CHYBY (c) 2 {"E1":2} | typy {"vyber":17,"cennik":140,"nevieme":92,"fallback":6,"odpoved":6}
+    sk „Ako dlho trvá zafarbenie šedín?“ → skupiny Doplnky | E1 „zafarbenie“ (farbenie-brady) nie je v skupinách Doplnky; E1 „sedin“ (farbenie-brady) nie je v skupinách Doplnky
+k4/sondy-k4b.txt: otázok 66, CHYBY (c) 3 {"E1":3} | typy {"vyber":24,"fallback":1,"cennik":35,"nevieme":5,"odpoved":1}
+    sk „Koľko stojí zafarbenie šedín?“ → skupiny Doplnky | E1 „zafarbenie“ (farbenie-brady) nie je v skupinách Doplnky; E1 „sedin“ (farbenie-brady) nie je v skupinách Doplnky
+    sk „Koľko stojí farbenie šedivých vlasov?“ → skupiny Strih + Doplnky | E1 „sedivych“ (farbenie-brady) nie je v skupinách Strih,Doplnky
+k4/sondy-k4c.txt: otázok 23, CHYBY (c) 1 {"E1":1} | typy {"cennik":20,"nevieme":3}
+    en „How much is a men's haircut and colouring?“ → skupiny Cut | E1 „colouring“ (farbenie-brady) nie je v skupinách Cut
+k5/sonda.txt: otázok 76, CHYBY (c) 0 {} | typy {"cennik":61,"nevieme":12,"odpoved":3}
+k5/sondy-k5.txt: otázok 63, CHYBY (c) 2 {"E1":2} | typy {"nevieme":11,"cennik":52}
+    de „Was kostet Bartpflege und Hautpflege?“ → skupiny Bart und Rasur | E1 „hautpflege“ (plet) nie je v skupinách Bart und Rasur
+    de „Was kostet Hautpflege und Bartpflege?“ → skupiny Bart und Rasur | E1 „hautpflege“ (plet) nie je v skupinách Bart und Rasur
+k5/sondy-k5b.txt: otázok 11, CHYBY (c) 0 {} | typy {"cennik":11}
+skeptik/otazky.txt: otázok 54, CHYBY (c) 0 {} | typy {"cennik":26,"nevieme":21,"odpoved":1,"vyber":5,"fallback":1}
+skeptik/otazky2.txt: otázok 24, CHYBY (c) 1 {"E1":1} | typy {"cennik":14,"nevieme":3,"vyber":7}
+    pl „Ile kosztuje farbowanie siwych włosów?“ → skupiny Strzyżenie + Dodatki | E1 „siwych“ (farbenie-brady) nie je v skupinách Strzyżenie,Dodatki
+o7/sondy-p7.txt: otázok 53, CHYBY (c) 1 {"E1":1} | typy {"nevieme":11,"cennik":24,"odpoved":18}
+    de „Was kostet Bartpflege und Hautpflege?“ → skupiny Bart und Rasur | E1 „hautpflege“ (plet) nie je v skupinách Bart und Rasur
+
+SPOLU: otázok 2534, chýb podľa (c) 97

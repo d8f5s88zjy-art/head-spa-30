@@ -57,6 +57,10 @@ def jazyk(l, D):
             return v
         if re.fullmatch(r'[\d,]+ €', x):
             return x
+        for k, v in i18n.items():  # veta z väčšieho uzla stránky: tá istá veta jeho prekladu (oprava 7, „Ceny sú konečné.“)
+            ks, vs = re.split(r'(?<=\.)\s+', n(k)), re.split(r'(?<=\.)\s+', str(v).strip())
+            if isinstance(v, str) and x in ks and len(ks) == len(vs) > 1:
+                return vs[ks.index(x)]
         raise SystemExit(f'{l}: chýba preklad úryvku „{x}“')
 
     kontakt = dict(SK['kontakt'])
@@ -79,8 +83,6 @@ def jazyk(l, D):
             q['cas'] = [tr(x) for x in p['cas']]
         if 'zoznam' in p:
             q['zoznam'] = [tr(z) for z in p['zoznam']]
-        if 'ine' in p:  # zámená prvej osoby, ktoré položka pre inú osobu nevysvetlí, keď ich otázka spája spojkou (oprava 6)
-            q['ine'] = stop(D['ine'][p['id']])
         q['akcie'] = p['akcie']  # zdroj a overene sú len v zdroje.json (rovnaké pre všetky jazyky)
         polozky.append(q)
     nevieme = []
@@ -93,10 +95,10 @@ def jazyk(l, D):
         if 'cena' in p:
             q['cena'] = p['cena']
         nevieme.append(q)
-    vz = {k: stop(D[k]) for k in ('vypln', 'zdvor', 'spoj') if k in D}  # výplňové a zdvorilé slová (oprava 3, pravidlá 2 a 5)
+    vz = {k: stop(D[k]) for k in ('vypln', 'zdvor', 'mod') if k in D}  # výplňové a zdvorilé slová (oprava 3); mod = slová, ktoré menia službu (oprava 7)
     return {'jazyk': l, 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), **vz, 'kontakt': kontakt,
             'panel': panel, 'fallback': D['fallback'], 'odovzdanie': D['odovzdanie'],
-            # výrez cenníka (oprava 5, P3): nadpis skupiny zo slovníka stránky, riadky sú odkazy na položky (id alebo id:úryvok)
+            # skupiny cenníka (oprava 7, P7): nadpis skupiny zo slovníka stránky, riadky sú odkazy na položky (id alebo id:úryvok)
             'cennik': [[tr(g[0])] + g[1:] for g in SK['cennik']], 'polozky': polozky, 'nevieme': nevieme}
 
 
