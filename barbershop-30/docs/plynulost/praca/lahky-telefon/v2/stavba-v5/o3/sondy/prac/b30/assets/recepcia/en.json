@@ -38,8 +38,8 @@
     {"id": "email","otazky": ["Do you have an email?","email address"],"kluc": "Email Mail write","odpoved": ["info@barbershop30.sk"],"akcie": ["email"]},
     {"id": "rezervacia","otazky": ["How do I book an appointment?","make a booking","reservation"],"kluc": "Book Booking Appointment Reserv Schedul slot","odpoved": ["Call the front desk on weekdays from 9:00 to 19:00. Or simply book your appointment online through our booking system."],"akcie": ["rezervacia","tel"]},
     {"id": "online","otazky": ["Can I book online in the evening?","book online","online booking at night"],"kluc": "Online Nonstop Anytime =24! Internet night evening weekend book reserv","odpoved": [["Online 24/7","book an appointment any time"]],"akcie": ["rezervacia"]},
-    {"id": "cena-strih","otazky": ["How much is a men's haircut?","haircut price","haircut"],"kluc": "Haircut Fade =cut mens men","odpoved": [["Men's haircut","18 €"]],"cas": ["40 min"],"akcie": ["rezervacia","sluzby"]},
-    {"id": "cena-strih-brada","pravidlo": "spolu","otazky": ["How much is a haircut with beard?","haircut and beard","haircut with beard trim"],"kluc": "Haircut =cut together combo | Beard","odpoved": [["Men's haircut and beard trim","28 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
+    {"id": "cena-strih","otazky": ["How much is a men's haircut?","haircut price","haircut"],"kluc": "Haircut Fade =cut Mens Men","odpoved": [["Men's haircut","18 €"]],"cas": ["40 min"],"akcie": ["rezervacia","sluzby"]},
+    {"id": "cena-strih-brada","pravidlo": "spolu","otazky": ["How much is a haircut with beard?","haircut and beard","haircut with beard trim"],"kluc": "Haircut =cut together combo men | Beard trim","odpoved": [["Men's haircut and beard trim","28 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "cena-brada","otazky": ["How much is a beard trim?","beard","beard trim"],"kluc": "Beard trim shape groom","odpoved": [["Beard trim","15 €"]],"cas": ["20 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "cena-dlhe","otazky": ["Is long hair more expensive?","long hair","hair over 10 cm"],"kluc": "Long =10! =Cm Extra Surcharg expensiv over =hair haircut","odpoved": [["Men's haircut – hair over 10 cm","22 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "deti","otazky": ["Do you cut kids' hair?","kids haircut"],"kluc": "Kid Child Children Boy Son Junior gentlem Little year =10 fade cut haircut =hair","odpoved": [["Little gentlemen's cut","15 €"],"Classic cut or fade, optionally a creative pattern, wash and styling – for boys up to 10 years old."],"cas": ["45 min"],"akcie": ["rezervacia","sluzby"]},
@@ -65,7 +65,7 @@
     {"id": "trvanie","pravidlo": "cas","otazky": ["How long does a haircut take?","how long is a haircut"],"kluc": "Duration Minute Minutes =Take =Takes =long | haircut beard","odpoved": [["Men's haircut","40 min"],["Beard trim","20 min"]],"akcie": ["sluzby","rezervacia"]}
   ],
   "nevieme": [
-    {"id": "platba","otazky": ["Can I pay by card?"],"kluc": "Payment Card Cards Cash Terminal Contactless =Atm =Qr apple pay paying","odovzdanie": "payment methods","akcie": ["tel","email"]},
+    {"id": "platba","otazky": ["Can I pay by card?"],"kluc": "Pay Payment Paying Card Cards Cash Terminal Contactless =Atm =Qr apple","odovzdanie": "payment methods","akcie": ["tel","email"]},
     {"id": "poukazky","otazky": ["Do you have gift vouchers?"],"kluc": "Voucher Gift Giftcard Certificat present buy","odovzdanie": "gift vouchers","akcie": ["tel","email"]},
     {"id": "storno","otazky": ["How do I cancel an appointment?"],"kluc": "Cancel Cancell Reschedul =Late Delay Change Move appointment fee","odovzdanie": "changing or cancelling an appointment","akcie": ["tel","email"]},
     {"id": "pripomienka","otazky": ["Do you send appointment reminders?"],"kluc": "Remind Reminder =Sms Notif Alert =text advance","odovzdanie": "appointment reminders","akcie": ["tel","email"]},

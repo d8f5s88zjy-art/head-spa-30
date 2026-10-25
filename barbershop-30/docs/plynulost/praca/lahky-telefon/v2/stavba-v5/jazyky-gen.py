@@ -87,12 +87,12 @@ def jazyk(l, D):
         q = {'id': p['id']}
         if 'pravidlo' in p:
             q['pravidlo'] = p['pravidlo']
-        q.update({'otazky': o, 'kluc': kluc(k), 'odovzdanie': od, 'akcie': p['akcie']})
+        q.update({'otazky': o[:1], 'kluc': kluc(k), 'odovzdanie': od, 'akcie': p['akcie']})  # téma: len zobrazovaná otázka (váha)
         if 'cena' in p:
             q['cena'] = p['cena']
         nevieme.append(q)
-    vz = {k: stop(D[k]) for k in ('vypln', 'zdvor') if k in D}  # výplňové a zdvorilé slová (oprava 3, pravidlá 2 a 5)
-    return {'jazyk': l, 'prah': SK['prah'], 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), **vz, 'kontakt': kontakt,
+    vz = {k: stop(D[k]) for k in ('vypln', 'zdvor', 'spoj') if k in D}  # výplňové a zdvorilé slová (oprava 3, pravidlá 2 a 5)
+    return {'jazyk': l, 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), **vz, 'kontakt': kontakt,
             'panel': panel, 'fallback': D['fallback'], 'odovzdanie': D['odovzdanie'], 'polozky': polozky, 'nevieme': nevieme}
 
 

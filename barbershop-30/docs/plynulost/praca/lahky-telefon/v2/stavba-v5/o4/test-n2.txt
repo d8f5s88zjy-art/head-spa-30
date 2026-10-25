@@ -1,0 +1,166 @@
+TAP version 13
+# otázok: 294 (z toho nevieme 85), správne 100.0 %, falošné na nevieme 0, fallback 0 (0.0 %), ponuka „Myslíš toto?“ 6
+# čas: priemer 0.618 ms, najpomalšia 1.896 ms
+# položiek s variantom bez diakritiky: 6
+# položiek 31, tém nevieme 21, zdrojov 40
+# en: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# uk: viet so slovníkovým prekladom 64, otázok 20, správne 20
+# hu: viet so slovníkovým prekladom 64, otázok 19, správne 19
+# sr: viet so slovníkovým prekladom 64, otázok 20, správne 20
+# pl: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# de: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# cs: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# gzip: recepcia.js 5000 B, recepcia.css 998 B, sk.json 5457 B, spolu 11455 B
+# kmeňov skontrolovaných: 3393
+# otázok s neznámym slovom: 397
+# názvov služieb: 224
+# triedy (otázok / z toho téma nevieme): osoba 180/172, miesto 88/80, vek 170/170, produkt 174/174
+# zdvorilostí 91, z toho rozpoznaných 88
+# otázok na trvanie služby: 112
+# dvojíc služieb: 1456, z toho „Myslíš toto?“ 1396 (s oboma 1312)
+# otázok len so slabými kmeňmi: 89
+# Subtest: 1. porozumenie: ≥ 90 % správnych id, 0 falošných na nevieme, fallback ≤ 15 %
+ok 1 - 1. porozumenie: ≥ 90 % správnych id, 0 falošných na nevieme, fallback ≤ 15 %
+  ---
+  duration_ms: 3.801174
+  type: 'test'
+  ...
+# Subtest: 2. rýchlosť: zhoda < 5 ms na otázku
+ok 2 - 2. rýchlosť: zhoda < 5 ms na otázku
+  ---
+  duration_ms: 1358.865096
+  type: 'test'
+  ...
+# Subtest: 3. obsah: zdroje existujú, riadky obsahujú vety odpovedí, štruktúra
+ok 3 - 3. obsah: zdroje existujú, riadky obsahujú vety odpovedí, štruktúra
+  ---
+  duration_ms: 4.06926
+  type: 'test'
+  ...
+# Subtest: 4. jazyk en: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 4 - 4. jazyk en: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 17.81323
+  type: 'test'
+  ...
+# Subtest: 4. jazyk uk: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 5 - 4. jazyk uk: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 37.944002
+  type: 'test'
+  ...
+# Subtest: 4. jazyk hu: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 6 - 4. jazyk hu: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 30.521441
+  type: 'test'
+  ...
+# Subtest: 4. jazyk sr: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 7 - 4. jazyk sr: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 21.808957
+  type: 'test'
+  ...
+# Subtest: 4. jazyk pl: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 8 - 4. jazyk pl: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 27.36587
+  type: 'test'
+  ...
+# Subtest: 4. jazyk de: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 9 - 4. jazyk de: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 24.804697
+  type: 'test'
+  ...
+# Subtest: 4. jazyk cs: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 10 - 4. jazyk cs: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 25.123731
+  type: 'test'
+  ...
+# Subtest: 5. váha: ≤ 11 264 B gzip (sk), ≤ 12 800 B s iným jazykom; bez zakázaných označení
+not ok 11 - 5. váha: ≤ 11 264 B gzip (sk), ≤ 12 800 B s iným jazykom; bez zakázaných označení
+  ---
+  duration_ms: 2.878449
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-recepcia/barbershop-30/source/tools/recepcia-test.mjs:262:1'
+  failureType: 'testCodeFailure'
+  error: 'spolu 11455 B > 11 264 B'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-recepcia/barbershop-30/source/tools/recepcia-test.mjs:266:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: 6. pravidlo 1: kmeň do 4 znakov len presne alebo s koncovkou najviac +3; preklep len pri kmeni od 5 znakov
+ok 12 - 6. pravidlo 1: kmeň do 4 znakov len presne alebo s koncovkou najviac +3; preklep len pri kmeni od 5 znakov
+  ---
+  duration_ms: 6.58286
+  type: 'test'
+  ...
+# Subtest: 7. pravidlo 2: neznáme slovo pri službe nedostane holú cenu ani trvanie
+ok 13 - 7. pravidlo 2: neznáme slovo pri službe nedostane holú cenu ani trvanie
+  ---
+  duration_ms: 712.383837
+  type: 'test'
+  ...
+# Subtest: 8. pravidlo 3: názov služby z cenníka vedie na tú službu (špecifickejšia vyhrá)
+ok 14 - 8. pravidlo 3: názov služby z cenníka vedie na tú službu (špecifickejšia vyhrá)
+  ---
+  duration_ms: 256.81906
+  type: 'test'
+  ...
+# Subtest: 9. pravidlo 4: osoba, miesto, vek a produkt mimo ponuky nedostanú cenu ani trvanie
+ok 15 - 9. pravidlo 4: osoba, miesto, vek a produkt mimo ponuky nedostanú cenu ani trvanie
+  ---
+  duration_ms: 701.245498
+  type: 'test'
+  ...
+# Subtest: 10. pravidlo 5: zdvorilosť a krátka správa nikdy nedostane cenu ani ponuku služby
+ok 16 - 10. pravidlo 5: zdvorilosť a krátka správa nikdy nedostane cenu ani ponuku služby
+  ---
+  duration_ms: 6.2126
+  type: 'test'
+  ...
+# Subtest: 11. pravidlo 6: trvanie je trvanie menovanej služby; bez služby strih a brada; neznáma služba = odovzdanie
+ok 17 - 11. pravidlo 6: trvanie je trvanie menovanej služby; bez služby strih a brada; neznáma služba = odovzdanie
+  ---
+  duration_ms: 115.684772
+  type: 'test'
+  ...
+# Subtest: 12. pravidlo 3: dve služby v otázke = Myslíš toto? alebo spojená služba, nikdy holá cena jednej
+ok 18 - 12. pravidlo 3: dve služby v otázke = Myslíš toto? alebo spojená služba, nikdy holá cena jednej
+  ---
+  duration_ms: 3416.439526
+  type: 'test'
+  ...
+# Subtest: 13. pravidlo 3: strih a brada so spojkou = spojená služba, bez spojky nie
+ok 19 - 13. pravidlo 3: strih a brada so spojkou = spojená služba, bez spojky nie
+  ---
+  duration_ms: 35.561385
+  type: 'test'
+  ...
+# Subtest: 14. pravidlo 7: cena len pri istej zhode so silným kmeňom služby
+ok 20 - 14. pravidlo 7: cena len pri istej zhode so silným kmeňom služby
+  ---
+  duration_ms: 169.523108
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 19
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7498.845099

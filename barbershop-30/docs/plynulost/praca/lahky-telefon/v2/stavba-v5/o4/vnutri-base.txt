@@ -1,0 +1,245 @@
+cs	dohladka	hladk	hlava	pred=do	zaciatok=	holeni dohladka kolik stoji
+cs	dohladka	hladk	holenie	pred=do	zaciatok=	holeni dohladka kolik stoji
+cs	oholeni	holen	hlava	pred=o	zaciatok=holenie,hlava	oholeni hlavy britvou kolik
+cs	oholeni	holen	holenie	pred=o	zaciatok=holenie,hlava	oholeni hlavy britvou kolik
+cs	oholit	holit	hlava	pred=o	zaciatok=holenie,hlava	oholit hlavu
+cs	oholit	holit	holenie	pred=o	zaciatok=holenie,hlava	oholit hlavu
+cs	ostrihate	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	ostrihate	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	ostříháte i holky?
+cs	zaparkovat	parkov	parkovanie	pred=za	zaciatok=parkovanie	kde se da zaparkovat
+de	augenbrauen	braue	obocie	pred=augen	zaciatok=obocie	was kostet Augenbrauen wachsen
+de	augenbrauen	brauen	obocie	pred=augen	zaciatok=obocie	was kostet Augenbrauen wachsen
+de	augenbrauenfarbung	braue	obocie	pred=augen	zaciatok=obocie	Augenbrauenfärbung, was kostet das?
+de	augenbrauenfarbung	brauen	obocie	pred=augen	zaciatok=obocie	Augenbrauenfärbung, was kostet das?
+de	bartbalsam	balsam	produkty	pred=bart	zaciatok=produkty	was kostet Bartbalsam
+de	bartpflege	pfleg	cena-brada	pred=bart	zaciatok=cena-strih-brada,cena-brada	was kostet Bartpflege
+de	bartpflege	pfleg	plet	pred=bart	zaciatok=cena-strih-brada,cena-brada	was kostet Bartpflege
+de	bartwachs	wachs	depilacia	pred=bart	zaciatok=produkty	was kostet Bartwachs
+de	bartwachs	wachs	produkty	pred=bart	zaciatok=produkty	was kostet Bartwachs
+de	damenhaarschnitt	haarschnitt	cena-strih	pred=damen	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	haarschnitt	cena-strih-brada	pred=damen	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	haarschnitt	co-je-v-strihu	pred=damen	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	haarschnitt	deti	pred=damen	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	haarschnitt	trvanie	pred=damen	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	schnitt	cena-dlhe	pred=damenhaar	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	schnitt	cena-strih	pred=damenhaar	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	schnitt	cena-strih-brada	pred=damenhaar	zaciatok=damske	Damenhaarschnitt
+de	damenhaarschnitt	schnitt	vysledky	pred=damenhaar	zaciatok=damske	Damenhaarschnitt
+de	glattrasur	rasur	hlava	pred=glatt	zaciatok=holenie,hlava	Wie lange dauert die Glattrasur?
+de	glattrasur	rasur	holenie	pred=glatt	zaciatok=holenie,hlava	Wie lange dauert die Glattrasur?
+de	haarschnitt	schnitt	cena-dlhe	pred=haar	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	was kostet ein Haarschnitt mit Bart
+de	haarschnitt	schnitt	cena-strih	pred=haar	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	was kostet ein Haarschnitt mit Bart
+de	haarschnitt	schnitt	cena-strih-brada	pred=haar	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	was kostet ein Haarschnitt mit Bart
+de	haarschnitt	schnitt	vysledky	pred=haar	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	was kostet ein Haarschnitt mit Bart
+de	haarwachs	wachs	depilacia	pred=haar	zaciatok=produkty	was kostet Haarwachs
+de	haarwachs	wachs	produkty	pred=haar	zaciatok=produkty	was kostet Haarwachs
+de	heiligabend	abend	online	pred=heilig	zaciatok=sviatky	Haben Sie an Heiligabend geöffnet?
+de	herrenhaarschnitt	haarschnitt	cena-strih	pred=herren	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	haarschnitt	cena-strih-brada	pred=herren	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	haarschnitt	co-je-v-strihu	pred=herren	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	haarschnitt	deti	pred=herren	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	haarschnitt	trvanie	pred=herren	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	schnitt	cena-dlhe	pred=herrenhaar	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	schnitt	cena-strih	pred=herrenhaar	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	schnitt	cena-strih-brada	pred=herrenhaar	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenhaarschnitt	schnitt	vysledky	pred=herrenhaar	zaciatok=cena-strih,cena-strih-brada	was kostet ein Herrenhaarschnitt
+de	herrenschnitt	schnitt	cena-dlhe	pred=herren	zaciatok=cena-strih	was kostet ein Herrenschnitt
+de	herrenschnitt	schnitt	cena-strih	pred=herren	zaciatok=cena-strih	was kostet ein Herrenschnitt
+de	herrenschnitt	schnitt	cena-strih-brada	pred=herren	zaciatok=cena-strih	was kostet ein Herrenschnitt
+de	herrenschnitt	schnitt	vysledky	pred=herren	zaciatok=cena-strih	was kostet ein Herrenschnitt
+de	hundefriseur	friseur	tim	pred=hunde	zaciatok=	Hundefriseur?
+de	hundeschnitt	schnitt	cena-dlhe	pred=hunde	zaciatok=	Hundeschnitt
+de	hundeschnitt	schnitt	cena-strih	pred=hunde	zaciatok=	Hundeschnitt
+de	hundeschnitt	schnitt	cena-strih-brada	pred=hunde	zaciatok=	Hundeschnitt
+de	hundeschnitt	schnitt	vysledky	pred=hunde	zaciatok=	Hundeschnitt
+de	kinderhaarschnitt	haarschnitt	cena-strih	pred=kinder	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	haarschnitt	cena-strih-brada	pred=kinder	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	haarschnitt	co-je-v-strihu	pred=kinder	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	haarschnitt	deti	pred=kinder	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	haarschnitt	trvanie	pred=kinder	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	schnitt	cena-dlhe	pred=kinderhaar	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	schnitt	cena-strih	pred=kinderhaar	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	schnitt	cena-strih-brada	pred=kinderhaar	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderhaarschnitt	schnitt	vysledky	pred=kinderhaar	zaciatok=deti	Kinderhaarschnitt für meine Tochter?
+de	kinderpreis	preis	ceny-konecne	pred=kinder	zaciatok=deti	Mein Sohn ist 14, Kinderpreis?
+de	kinderpreis	preis	co-je-v-strihu	pred=kinder	zaciatok=deti	Mein Sohn ist 14, Kinderpreis?
+de	kopfmassage	massag	cena-ina-sluzba	pred=kopf	zaciatok=cena-ina-sluzba	was kostet eine Kopfmassage
+de	kopfrasur	rasur	hlava	pred=kopf	zaciatok=hlava	Kopfrasur
+de	kopfrasur	rasur	holenie	pred=kopf	zaciatok=hlava	Kopfrasur
+de	nassrasur	rasur	hlava	pred=nass	zaciatok=	nassrasur mit heißem tuch preis
+de	nassrasur	rasur	holenie	pred=nass	zaciatok=	nassrasur mit heißem tuch preis
+de	ohrenwachs	wachs	depilacia	pred=ohren	zaciatok=depilacia	was kostet Ohrenwachs
+de	ohrenwachs	wachs	produkty	pred=ohren	zaciatok=depilacia	was kostet Ohrenwachs
+de	parkplatze	platz	kresla	pred=park	zaciatok=parkovanie	gibt es Parkplätze
+de	parkplatze	platze	kresla	pred=park	zaciatok=parkovanie	gibt es Parkplätze
+de	rasiermesser	messer	hlava	pred=rasier	zaciatok=holenie,hlava	Kopf rasieren mit Rasiermesser Preis
+de	rasiermesser	messer	holenie	pred=rasier	zaciatok=holenie,hlava	Kopf rasieren mit Rasiermesser Preis
+de	ruckenwaxing	waxing	depilacia	pred=rucken	zaciatok=	Was kostet Rückenwaxing?
+de	studentenrabatt	rabatt	vernost	pred=studenten	zaciatok=	Studentenrabatt
+de	telefonnummer	nummer	telefon	pred=telefon	zaciatok=telefon	Telefonnummer
+de	treuekarte	karte	platba	pred=treue	zaciatok=vernost	Treuekarte
+de	treuekarte	karte	vernost	pred=treue	zaciatok=vernost	Treuekarte
+de	verkaufen	kaufen	produkty	pred=ver	zaciatok=produkty	Verkaufen Sie Bartbalsam?
+de	weihnachten	nacht	online	pred=weih	zaciatok=sviatky	habt ihr an Weihnachten offen
+hu	ajandekutalvany	utalvany	poukazky	pred=ajandek	zaciatok=poukazky	ajándékutalvány
+hu	fejborotvalas	borotv	hlava	pred=fej	zaciatok=hlava	fejborotválás borotvával
+hu	fejborotvalas	borotv	holenie	pred=fej	zaciatok=hlava	fejborotválás borotvával
+hu	fejborotvalas	borotval	hlava	pred=fej	zaciatok=hlava	fejborotválás borotvával
+hu	fejborotvalas	borotval	holenie	pred=fej	zaciatok=hlava	fejborotválás borotvával
+hu	fejmasszazs	masszazs	cena-ina-sluzba	pred=fej	zaciatok=cena-ina-sluzba	mennyibe kerül a fejmasszázs
+hu	fulgyantazas	gyant	depilacia	pred=ful	zaciatok=	mennyibe kerül a fülgyantázás
+hu	hajfestes	festes	farbenie-brady	pred=haj	zaciatok=farbenie-vlasov,romana-ceny	mennyibe kerül a hajfestés
+hu	hajfestes	festes	farbenie-vlasov	pred=haj	zaciatok=farbenie-vlasov,romana-ceny	mennyibe kerül a hajfestés
+hu	hajvagas	vagas	cena-dlhe	pred=haj	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	mennyibe kerül egy hajvágás
+hu	hajvagas	vagas	cena-strih	pred=haj	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	mennyibe kerül egy hajvágás
+hu	hajvagas	vagas	cena-strih-brada	pred=haj	zaciatok=cena-strih,cena-strih-brada,deti,co-je-v-strihu,trvanie	mennyibe kerül egy hajvágás
+hu	hatgyantazas	gyant	depilacia	pred=hat	zaciatok=	Hátgyantázás ára?
+hu	husegkartya	kartya	platba	pred=huseg	zaciatok=vernost	hűségkártya
+hu	husegkartya	kartya	vernost	pred=huseg	zaciatok=vernost	hűségkártya
+hu	kiszallas	allas	skolenia	pred=kisz	zaciatok=mimo	kiszállás
+hu	koromfestest	festes	farbenie-brady	pred=korom	zaciatok=	Körömfestést csinálnak?
+hu	koromfestest	festes	farbenie-vlasov	pred=korom	zaciatok=	Körömfestést csinálnak?
+hu	kutyakozmetika	kozmetik	produkty	pred=kutya	zaciatok=	Kutyakozmetika?
+hu	parkolni	kolni	co-je-v-strihu	pred=par	zaciatok=parkovanie	hol lehet parkolni
+hu	szakallbalzsam	balzsam	produkty	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	mennyibe kerül a szakállbalzsam
+hu	szakallbalzsamot	balzsam	produkty	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	szakallbalzsamot arultok?
+hu	szakallfestes	festes	farbenie-brady	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	meddig tart a szakállfestés
+hu	szakallfestes	festes	farbenie-vlasov	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	meddig tart a szakállfestés
+hu	szakalligazitas	igazit	cena-brada	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	mennyibe kerül a szakálligazítás
+hu	szakalligazitas	igazit	obocie	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	mennyibe kerül a szakálligazítás
+hu	szakallvagas	vagas	cena-dlhe	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	szakállvágás ára
+hu	szakallvagas	vagas	cena-strih	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	szakállvágás ára
+hu	szakallvagas	vagas	cena-strih-brada	pred=szakall	zaciatok=cena-strih-brada,cena-brada,farbenie-brady,trvanie,produkty	szakállvágás ára
+hu	szemoldokfestes	festes	farbenie-brady	pred=szemoldok	zaciatok=obocie	Szemöldökfestés ára?
+hu	szemoldokfestes	festes	farbenie-vlasov	pred=szemoldok	zaciatok=obocie	Szemöldökfestés ára?
+hu	szempillafestes	festes	farbenie-brady	pred=szempilla	zaciatok=	Szempillafestés mennyi?
+hu	szempillafestes	festes	farbenie-vlasov	pred=szempilla	zaciatok=	Szempillafestés mennyi?
+pl	ostrzyzecie	strzyz	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	ostrzyzecie	strzyz	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	czy ostrzyżecie moją mamę
+pl	umowic	mowic	jazyky-tim	pred=u	zaciatok=rezervacia,online,vyber-barbera	jak sie umowic na wizyte
+pl	zaparkowac	parkow	parkovanie	pred=za	zaciatok=parkovanie	gdzie zaparkować
+pl	zarezerwowac	rezerw	bez-objednania	pred=za	zaciatok=rezervacia	Jak zarezerwować termin?
+pl	zarezerwowac	rezerw	online	pred=za	zaciatok=rezervacia	Jak zarezerwować termin?
+pl	zarezerwowac	rezerw	rezervacia	pred=za	zaciatok=rezervacia	Jak zarezerwować termin?
+sk	dohovorim	hovor	jazyky-tim	pred=do	zaciatok=jazyky-tim	dohovorim sa po madarsky
+sk	napisat	pisat	email	pred=na	zaciatok=email	mozem vam napisat sms
+sk	nefunguje	funguj	odkedy	pred=ne	zaciatok=	nefunguje mi rezervacia
+sk	nepridem	pridem	bez-objednania	pred=ne	zaciatok=	co ked nepridem
+sk	nerozumiem	rozum	jazyky-tim	pred=ne	zaciatok=	nerozumiem
+sk	odfarbenie	farben	farbenie-brady	pred=od	zaciatok=farbenie-vlasov	kolko stoji odfarbenie
+sk	odfarbenie	farben	farbenie-vlasov	pred=od	zaciatok=farbenie-vlasov	kolko stoji odfarbenie
+sk	odfarbenie	farben	obocie	pred=od	zaciatok=farbenie-vlasov	kolko stoji odfarbenie
+sk	odfarbenie	farben	romana-ceny	pred=od	zaciatok=farbenie-vlasov	kolko stoji odfarbenie
+sk	oholenie	holen	hlava	pred=o	zaciatok=holenie,hlava	ako dlho trva oholenie hlavy
+sk	oholenie	holen	holenie	pred=o	zaciatok=holenie,hlava	ako dlho trva oholenie hlavy
+sk	oholit	holit	hlava	pred=o	zaciatok=holenie,hlava	kolko stoji oholit hlavu
+sk	oholit	holit	holenie	pred=o	zaciatok=holenie,hlava	kolko stoji oholit hlavu
+sk	oholite	holit	hlava	pred=o	zaciatok=holenie,hlava	Oholíte mi hlavu?
+sk	oholite	holit	holenie	pred=o	zaciatok=holenie,hlava	Oholíte mi hlavu?
+sk	ostriha	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostriha	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	mozem si zvolit kto ma ostriha
+sk	ostrihali	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihali	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	ďakujem, pekne ste ma ostrihali
+sk	ostrihanie	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihanie	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	Kolko stoji ostrihanie?
+sk	ostrihat	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihat	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	chcem sa ostrihat zajtra o 10
+sk	ostrihate	strih	cena-dlhe	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	cena-strih	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	cena-strih-brada	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	co-je-v-strihu	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	deti	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	tim	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	trvanie	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	vyber-barbera	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	ostrihate	strih	vysledky	pred=o	zaciatok=cena-strih,cena-strih-brada	ostrihate moju zenu?
+sk	poschodi	schod	bezbarierovy	pred=po	zaciatok=	na akom poschodi ste
+sk	poukazka	ukazk	vysledky	pred=po	zaciatok=poukazky	da sa kupit poukazka na strih?
+sk	poukazky	ukazk	vysledky	pred=po	zaciatok=poukazky	Máte darčekové poukážky?
+sk	vystrihnut	strih	cena-dlhe	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	cena-strih	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	cena-strih-brada	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	co-je-v-strihu	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	deti	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	tim	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	trvanie	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	vyber-barbera	pred=vy	zaciatok=	vystrihnut vzor
+sk	vystrihnut	strih	vysledky	pred=vy	zaciatok=	vystrihnut vzor
+sk	zafarbenie	farben	farbenie-brady	pred=za	zaciatok=farbenie-brady,farbenie-vlasov	koľko stojí zafarbenie brady
+sk	zafarbenie	farben	farbenie-vlasov	pred=za	zaciatok=farbenie-brady,farbenie-vlasov	koľko stojí zafarbenie brady
+sk	zafarbenie	farben	obocie	pred=za	zaciatok=farbenie-brady,farbenie-vlasov	koľko stojí zafarbenie brady
+sk	zafarbenie	farben	romana-ceny	pred=za	zaciatok=farbenie-brady,farbenie-vlasov	koľko stojí zafarbenie brady
+sk	zaparkovat	parkov	parkovanie	pred=za	zaciatok=parkovanie	kde sa da zaparkovat v blizkosti
+sk	zaplatit	platit	platba	pred=za	zaciatok=platba	mozem zaplatit cez apple pay
+sk	zarezervovat	rezerv	bez-objednania	pred=za	zaciatok=rezervacia	chcem si zarezervovat termín
+sk	zarezervovat	rezerv	online	pred=za	zaciatok=rezervacia	chcem si zarezervovat termín
+sk	zarezervovat	rezerv	rezervacia	pred=za	zaciatok=rezervacia	chcem si zarezervovat termín
+sk	zastrihnut	strih	cena-dlhe	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	cena-strih	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	cena-strih-brada	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	co-je-v-strihu	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	deti	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	tim	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	trvanie	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	vyber-barbera	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnut	strih	vysledky	pred=za	zaciatok=cena-brada	zastrihnut bradu
+sk	zastrihnutie	strih	cena-dlhe	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	cena-strih	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	cena-strih-brada	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	co-je-v-strihu	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	deti	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	tim	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	trvanie	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	vyber-barbera	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zastrihnutie	strih	vysledky	pred=za	zaciatok=cena-brada	kolko stoji zastrihnutie brady
+sk	zavolat	volat	telefon	pred=za	zaciatok=telefon	kam mam zavolat
+uk	поголити	голит	hlava	pred=по	zaciatok=hlava	поголити голову
+uk	поголити	голит	holenie	pred=по	zaciatok=hlava	поголити голову
+uk	припаркуватися	паркув	parkovanie	pred=при	zaciatok=	де припаркуватися
+uk	підстрижете	стриж	cena-dlhe	pred=під	zaciatok=	чи підстрижете мою маму
+uk	підстрижете	стриж	co-je-v-strihu	pred=під	zaciatok=	чи підстрижете мою маму
+uk	підстрижете	стриж	deti	pred=під	zaciatok=	чи підстрижете мою маму
+uk	підстрижете	стриж	tim	pred=під	zaciatok=	чи підстрижете мою маму
+uk	підстрижете	стриж	trvanie	pred=під	zaciatok=	чи підстрижете мою маму
+uk	підстрижете	стриж	vysledky	pred=під	zaciatok=	чи підстрижете мою маму

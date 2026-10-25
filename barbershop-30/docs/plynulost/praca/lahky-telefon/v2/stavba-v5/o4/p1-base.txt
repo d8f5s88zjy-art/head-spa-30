@@ -1,0 +1,64 @@
+sk | koľko stojí farbenie? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | farbenie koľko? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | koľko stojí farbenie mihalníc → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | cena farbenia → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | zafarbíte ma? → vyber farbenie-brady | farbenie-brady,farbenie-vlasov
+sk | oholenie koľko → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | koľko stojí oholenie? → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+en | how much is dyeing? → odpoved farbenie-brady | [["Beard colouring","10 €"]]
+en | tint price → vyber obocie | obocie,farbenie-brady
+en | eyelash tint price → vyber obocie | obocie,farbenie-brady
+en | how much is colouring → nevieme romana-ceny | We don't list Romana's prices and days on the website; you'll find the prices in her booking system.
+de | Was kostet Färben? → nevieme romana-ceny | Romanas Preise und Tage stehen nicht auf der Website; die Preise findest du in ihrem Buchungssystem.
+de | Wimpern färben Preis? → nevieme romana-ceny | Romanas Preise und Tage stehen nicht auf der Website; die Preise findest du in ihrem Buchungssystem.
+de | Wimpernfärben? → fallback  | 
+hu | festés ára? → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az árakat a foglalási rendszerében találod.
+hu | mennyibe kerül a festés? → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az árakat a foglalási rendszerében találod.
+hu | szempilla festés ára? → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az árakat a foglalási rendszerében találod.
+cs | kolik stojí barvení? → nevieme romana-ceny | Ceny a dny Romany na webu neuvádíme; ceny najdeš v jejím rezervačním systému.
+pl | ile kosztuje farbowanie? → nevieme romana-ceny | Cen i dni Romany nie podajemy na stronie; ceny znajdziesz w jej systemie rezerwacji.
+pl | ile kosztuje koloryzacja → odpoved farbenie-brady | [["Farbowanie brody","10 €"]]
+sr | koliko kosta farbanje? → nevieme romana-ceny | Cene i dane Romane ne navodimo na sajtu; cene ćeš naći u njenom sistemu za rezervacije.
+uk | скільки коштує фарбування? → nevieme romana-ceny | Ціни та дні Романи на сайті не вказуємо; ціни знайдеш у її системі бронювання.
+uk | фарбування вій ціна → nevieme romana-ceny | Ціни та дні Романи на сайті не вказуємо; ціни знайдеш у її системі бронювання.
+de | Beinwaxing Preis? → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Brustwaxing? → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Armwaxing kosten? → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Achselwaxing → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Was kostet eine Nassrasur? → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Bauchrasur Preis → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Intimrasur? → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Nagelpflege? → vyber cena-brada | cena-brada,plet
+de | Gesichtsbehandlung Preis? → odpoved plet | [["Hautpflege PREMIUM","21,50 €"]]
+de | Ohrenwaxing Preis → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Nasenwaxing → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Hundehaarschnitt → nevieme vysledky | Fotos von Haarschnitten haben wir auf der Website noch nicht; aktuelle gibt es auf Instagram.
+hu | Lábgyantázás ára? → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Mellkasgyantázás → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Fülgyantázás ára? → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Orrgyantázás mennyi? → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Hónaljgyantázás → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Lábborotválás ára? → odpoved holenie | [["Simára borotválás Hot Towel","15 €"]]
+hu | Körömfestés ára? → odpoved farbenie-brady | [["Szakállfestés","10 €"]]
+hu | Arcgyantázás → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+sk | neostriháte ma dnes? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | nezastrihnete mi bradu? → vyber cena-strih-brada | cena-strih-brada,cena-brada
+sk | rozstrihate? → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+pl | przystrzyżecie brodę? → vyber cena-strih-brada | cena-strih-brada,cena-brada
+pl | ile kosztuje przestrzyżenie? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Synovi je 12, platí ešte detský strih? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | Synovi je 11, je to ešte detský strih? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | chlapcovi je 14, koľko stojí detský strih? → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+sk | detský strih pre 13-ročného → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+cs | Synovi je 12, platí ještě dětský střih? → vyber deti | deti
+sk | Synovi je 8, koľko stojí detský strih? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | koľko stojí detský strih o 14:00? → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | detský strih v sobotu o 12 → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih alebo fade, p
+sk | Mám vlasy 3 cm, koľko stojí strih? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | vlasy 8 cm koľko → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | mám 5cm vlasy, koľko stojí strih → vyber cena-strih | cena-strih,cena-dlhe
+sk | Mám vlasy 15 cm, koľko zaplatím za pánsky strih? → vyber cena-strih | cena-strih,cena-dlhe
+sk | vlasy nad 10 cm → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+en | my hair is 3 cm, how much for a haircut? → odpoved cena-dlhe | [["Men's haircut – hair over 10 cm","22 €"]]
+en | my hair is 20 cm, price? → odpoved cena-dlhe | [["Men's haircut – hair over 10 cm","22 €"]]
+de | Haare 3 cm, was kostet der Schnitt? → odpoved cena-dlhe | [["Herrenhaarschnitt – Haarlänge über 10 cm","22 €"]]

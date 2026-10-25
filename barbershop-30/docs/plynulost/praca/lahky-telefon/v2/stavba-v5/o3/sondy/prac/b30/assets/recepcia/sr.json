@@ -38,8 +38,8 @@
     {"id": "email","otazky": ["Imate li e‑mail?","e‑mail adresa"],"kluc": "Mail Email pisi pisati","odpoved": ["info@barbershop30.sk"],"akcie": ["email"]},
     {"id": "rezervacia","otazky": ["Kako da zakažem termin?","zakazivanje","rezervacija"],"kluc": "Rezerv Zakaz Zakazat Termin Book","odpoved": ["Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin online, jednostavno preko našeg sistema za rezervacije."],"akcie": ["rezervacia","tel"]},
     {"id": "online","otazky": ["Mogu li zakazati online uveče?","zakazivanje online","rezervacija online noću"],"kluc": "Online Nonstop Bilokad =24! Internet noc uvece vikend zakaz rezerv","odpoved": [["Online 24/7","zakazivanje termina bilo kad"]],"akcie": ["rezervacia"]},
-    {"id": "cena-strih","otazky": ["Koliko košta muško šišanje?","cena šišanja","šišanje"],"kluc": "Sisa Fade Haircut musk","odpoved": [["Muško šišanje","18 €"]],"cas": ["40 min"],"akcie": ["rezervacia","sluzby"]},
-    {"id": "cena-strih-brada","pravidlo": "spolu","otazky": ["Koliko košta šišanje sa bradom?","šišanje i brada","šišanje sa sređivanjem brade"],"kluc": "Sisa zajedno | Brad Uređiv Uredjiv","odpoved": [["Muško šišanje i uređivanje brade","28 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
+    {"id": "cena-strih","otazky": ["Koliko košta muško šišanje?","cena šišanja","šišanje"],"kluc": "Sisa Fade Haircut Musk","odpoved": [["Muško šišanje","18 €"]],"cas": ["40 min"],"akcie": ["rezervacia","sluzby"]},
+    {"id": "cena-strih-brada","pravidlo": "spolu","otazky": ["Koliko košta šišanje sa bradom?","šišanje i brada","šišanje sa sređivanjem brade"],"kluc": "Sisa zajedno musk | Brad Uređiv Uredjiv","odpoved": [["Muško šišanje i uređivanje brade","28 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "cena-brada","otazky": ["Koliko košta sređivanje brade?","brada","sređivanje brade"],"kluc": "Brad Trimov Sređiv Sredjiv Uređiv Uredjiv Oblikov","odpoved": [["Uređivanje brade","15 €"]],"cas": ["20 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "cena-dlhe","otazky": ["Da li je duga kosa skuplja?","duga kosa","kosa duža od 10 cm"],"kluc": "Dug Duz =10! =Cm Doplat Skuplj kosa kosu kose kosi kosom sisa","odpoved": [["Muško šišanje – kosa duža od 10 cm","22 €"]],"cas": ["60 min"],"akcie": ["rezervacia","sluzby"]},
     {"id": "deti","otazky": ["Šišate li decu?","dečije šišanje"],"kluc": "Dec Deca Decu Decij Dete Decak Sin Junior gentlem dzentlmen mal godin =10 fade sisa","odpoved": [["Šišanje za male džentlmene","15 €"],"Klasično šišanje ili fade, po želji kreativni ornament, pranje i stajling – za dečake do 10 godina."],"cas": ["45 min"],"akcie": ["rezervacia","sluzby"]},
@@ -65,7 +65,7 @@
     {"id": "trvanie","pravidlo": "cas","otazky": ["Koliko traje šišanje?","koliko dugo traje šišanje"],"kluc": "=Traje =Trajanje Minut =Vremena dugo | sisa brad","odpoved": [["Muško šišanje","40 min"],["Uređivanje brade","20 min"]],"akcie": ["sluzby","rezervacia"]}
   ],
   "nevieme": [
-    {"id": "platba","otazky": ["Može li se platiti karticom?"],"kluc": "Kartic Gotovin Kes Terminal Bankomat =Pay =Qr plat placan plac","odovzdanie": "način plaćanja","akcie": ["tel","email"]},
+    {"id": "platba","otazky": ["Može li se platiti karticom?"],"kluc": "Plat Placan Plac Kartic Gotovin Kes Terminal Bankomat =Pay =Qr","odovzdanie": "način plaćanja","akcie": ["tel","email"]},
     {"id": "poukazky","otazky": ["Imate li poklon vaučere?"],"kluc": "Vaucer Voucher Poklon Kupon kupi","odovzdanie": "poklon vaučeri","akcie": ["tel","email"]},
     {"id": "storno","otazky": ["Kako da otkažem termin?"],"kluc": "Otkaz Otkaz Storn Pomer Promen Kasn Zakasn termin naknad","odovzdanie": "promena ili otkazivanje termina","akcie": ["tel","email"]},
     {"id": "pripomienka","otazky": ["Da li šaljete podsetnik?"],"kluc": "Podset Podsec =Sms Obavest unapred","odovzdanie": "podsetnik za termin","akcie": ["tel","email"]},

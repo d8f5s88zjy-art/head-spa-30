@@ -1,0 +1,62 @@
+de | Was kostet eine Bartrasur? → vyber holenie | holenie,cena-brada
+de | Bartschnitt Preis? → odpoved co-je-v-strihu | ["Herrenhaarschnitt Schritt für Schritt"]
+de | Was kostet Bartpflege? → odpoved cena-brada | [["Bartpflege","15 €"]]
+de | Bartstyling Preis? → odpoved co-je-v-strihu | ["Herrenhaarschnitt Schritt für Schritt"]
+de | Bartfärbung, was kostet das? → odpoved farbenie-brady | [["Bartfärbung","10 €"]]
+de | Haarfärbung Preis? → vyber ceny-konecne | ceny-konecne
+de | Gesichtspflege Preis? → odpoved plet | [["Hautpflege PREMIUM","21,50 €"]]
+de | Gesichtsmaske, was kostet das? → odpoved plet | [["Hautpflege PREMIUM","21,50 €"]]
+de | Augenbrauenkorrektur Preis? → vyber obocie | obocie
+de | Augenbrauenzupfen? → odpoved obocie | [["Augenbrauenkorrektur","3 €"],["Augenbrauenfärbung","5 €"]]
+de | Nasenhaarentfernung Preis? → vyber depilacia | depilacia
+de | Ohrenhaarentfernung? → vyber depilacia | depilacia
+de | Kinderschnitt Preis? → vyber deti | deti,cena-strih
+de | Jungenhaarschnitt? → odpoved deti | [["Schnitt für kleine Gentlemen","15 €"],"Klassischer Schnitt oder Fad
+de | Männerhaarschnitt Preis? → vyber co-je-v-strihu | co-je-v-strihu
+de | Maschinenschnitt? → vyber cena-strih | cena-strih
+de | Langhaarschnitt Preis? → odpoved co-je-v-strihu | ["Herrenhaarschnitt Schritt für Schritt"]
+de | Kurzhaarschnitt Preis? → vyber co-je-v-strihu | co-je-v-strihu
+de | Glatzenrasur? → odpoved hlava | [["Kopfrasur","13 €"]]
+de | Rasiermesserrasur Preis? → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Heißtuchrasur? → vyber holenie | holenie
+de | Haarschnitt mit Bartpflege, Preis? → odpoved cena-strih-brada | [["Herrenhaarschnitt und Bartpflege","28 €"]]
+de | Hot-Towel-Rasur Preis? → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Gesichtsbehandlung? → vyber plet | plet
+de | Terminvereinbarung? → odpoved rezervacia | ["Ruf am Empfang an, Mo–Fr von 9:00 bis 19:00. Oder buch deinen Termin
+de | Öffnungszeiten? → odpoved hodiny | ["Mo–Fr 9:00–19:00","Sa 9:00–14:00","So geschlossen"]
+de | Telefonnummer? → odpoved telefon | ["+421 951 267 203"]
+de | Parkmöglichkeiten? → fallback  | 
+de | Kartenzahlung möglich? → nevieme platba | Zahlungsarten
+de | Geschenkgutschein? → nevieme poukazky | Gutscheine
+de | Treuekarte? → nevieme vernost | Treuekarte
+hu | Szakállvágás ára? → vyber cena-strih-brada | cena-strih-brada,cena-brada
+hu | Szakállformázás mennyi? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+hu | Szakállápolás ára? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+hu | Szakálligazítás ára? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+hu | Szakállborotválás ára? → vyber holenie | holenie,cena-brada
+hu | Hajmosás benne van? → odpoved co-je-v-strihu | ["Férfi hajvágás lépésről lépésre"]
+hu | Arcápolás ára? → odpoved plet | [["PREMIUM bőrápolás","21,50 €"]]
+hu | Gyerekhajvágás ára? → odpoved deti | [["Hajvágás kis úriembereknek","15 €"],"Klasszikus vágás vagy fade, ig
+hu | Férfihajvágás ára? → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+hu | Fejborotválás mennyi? → odpoved hlava | [["Fejborotválás","13 €"]]
+hu | Fülszőrtelenítés? → vyber depilacia | depilacia
+hu | Orrszőrgyantázás? → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+hu | Ajándékutalvány? → nevieme poukazky | ajándékutalvány
+hu | Kártyás fizetés? → nevieme platba | fizetési mód
+hu | Hűségkártya? → nevieme vernost | hűségkártya
+hu | Nyitvatartás? → odpoved hodiny | ["H–P 9:00–19:00","Szo 9:00–14:00","V zárva"]
+hu | Telefonszám? → odpoved telefon | ["+421 951 267 203"]
+hu | Szakállfestés mennyibe kerül? → odpoved farbenie-brady | [["Szakállfestés","10 €"]]
+hu | Hajfestés? → odpoved farbenie-vlasov | ["A festést, a melírt és a dauert Romana végzi.","Ezeket Romana végzi,
+pl | Ile kosztuje strzyżenie brody? → vyber cena-strih-brada | cena-strih-brada,cena-strih
+cs | Kolik stojí stříhání vousů? → vyber cena-strih-brada | cena-strih-brada,cena-brada
+sk | Koľko stojí zastrihnutie brady? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí prestrihnutie? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Neostriháte ma? → nevieme vysledky | Fotky strihov na webe zatiaľ nemáme; aktuálne sú na Instagrame.
+sk | Koľko stojí vyholenie? → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | Preobjednám sa? → nevieme bez-objednania | príchod bez objednania
+uk | Скільки коштує перефарбування бороди? → vyber farbenie-brady | farbenie-brady
+uk | Скільки коштує підстригання бороди? → vyber cena-strih-brada | cena-strih-brada,cena-strih
+en | How much is a headshave? → odpoved holenie | [["Hot Towel clean shave","15 €"]]
+en | Beardtrim price? → odpoved cena-brada | [["Beard trim","15 €"]]
+en | haircut+beard price? → odpoved cena-strih-brada | [["Men's haircut and beard trim","28 €"]]

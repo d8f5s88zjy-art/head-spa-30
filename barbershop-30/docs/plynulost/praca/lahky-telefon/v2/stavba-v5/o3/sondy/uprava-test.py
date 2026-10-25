@@ -104,3 +104,10 @@ r("//     Schéma JSON: otazky[0] je zobrazovaná otázka, kluc", "//     Schém
 r("„!“ = silný kmeň, „=“ = len celé slovo, „|“ = skupiny)", "„!“ = silný kmeň, „=“ = len celé slovo, „>10“ = číslo nad 10, „|“ = skupiny), spoj = spojky")
 open(p, 'w', encoding='utf8').write(s)
 print('ok 2')
+s = open(p, encoding='utf8').read()
+r("assert.ok(p.otazky.length >= 2 && p.kluc.length && p.odpoved.length && (z.zdroj || []).length && z.overene, `neúplná položka ${p.id}`);",
+  "assert.ok(p.otazky.length >= 1 && p.kluc.length && p.odpoved.length && (z.zdroj || []).length && z.overene, `neúplná položka ${p.id}`);")
+r("//     Schéma JSON: otazky[0] je zobrazovaná otázka (téma nevieme má len ju), kluc", "//     Schéma JSON: otazky[0] je zobrazovaná otázka, ďalšie sú varianty (v sk len tam, kde menia odpoveď; celý názov\n//     služby z cenníka je variant sám osebe), kluc")
+open(p, 'w', encoding='utf8').write(s)
+print('ok 3')
+

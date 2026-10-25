@@ -1,0 +1,137 @@
+TAP version 13
+# otázok: 294 (z toho nevieme 85), správne 100.0 %, falošné na nevieme 0, fallback 0 (0.0 %), ponuka „Myslíš toto?“ 4
+# čas: priemer 0.382 ms, najpomalšia 1.216 ms
+# položiek s variantom bez diakritiky: 29
+# položiek 31, tém nevieme 21, zdrojov 40
+# en: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# uk: viet so slovníkovým prekladom 64, otázok 20, správne 20
+# hu: viet so slovníkovým prekladom 64, otázok 19, správne 19
+# sr: viet so slovníkovým prekladom 64, otázok 20, správne 20
+# pl: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# de: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# cs: viet so slovníkovým prekladom 64, otázok 23, správne 23
+# gzip: recepcia.js 4459 B, recepcia.css 998 B, sk.json 5506 B, spolu 10963 B
+# gzip: en.json 5437 B, spolu s modulom 10894 B
+# gzip: uk.json 6647 B, spolu s modulom 12104 B
+# gzip: hu.json 5843 B, spolu s modulom 11300 B
+# gzip: sr.json 5540 B, spolu s modulom 10997 B
+# gzip: pl.json 5966 B, spolu s modulom 11423 B
+# gzip: de.json 5620 B, spolu s modulom 11077 B
+# gzip: cs.json 5842 B, spolu s modulom 11299 B
+# kmeňov skontrolovaných: 3328
+# otázok s neznámym slovom: 284
+# názvov služieb: 224
+# triedy (otázok / z toho téma nevieme): osoba 180/172, miesto 88/80, vek 63/63, produkt 174/174
+# zdvorilostí 91, z toho rozpoznaných 86
+# otázok na trvanie služby: 112
+# Subtest: 1. porozumenie: ≥ 90 % správnych id, 0 falošných na nevieme, fallback ≤ 15 %
+ok 1 - 1. porozumenie: ≥ 90 % správnych id, 0 falošných na nevieme, fallback ≤ 15 %
+  ---
+  duration_ms: 3.644011
+  type: 'test'
+  ...
+# Subtest: 2. rýchlosť: zhoda < 5 ms na otázku
+ok 2 - 2. rýchlosť: zhoda < 5 ms na otázku
+  ---
+  duration_ms: 873.745261
+  type: 'test'
+  ...
+# Subtest: 3. obsah: zdroje existujú, riadky obsahujú vety odpovedí, štruktúra
+ok 3 - 3. obsah: zdroje existujú, riadky obsahujú vety odpovedí, štruktúra
+  ---
+  duration_ms: 3.990452
+  type: 'test'
+  ...
+# Subtest: 4. jazyk en: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 4 - 4. jazyk en: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 14.78255
+  type: 'test'
+  ...
+# Subtest: 4. jazyk uk: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 5 - 4. jazyk uk: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 31.542007
+  type: 'test'
+  ...
+# Subtest: 4. jazyk hu: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 6 - 4. jazyk hu: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 16.687806
+  type: 'test'
+  ...
+# Subtest: 4. jazyk sr: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 7 - 4. jazyk sr: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 20.227981
+  type: 'test'
+  ...
+# Subtest: 4. jazyk pl: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 8 - 4. jazyk pl: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 27.454756
+  type: 'test'
+  ...
+# Subtest: 4. jazyk de: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 9 - 4. jazyk de: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 22.093071
+  type: 'test'
+  ...
+# Subtest: 4. jazyk cs: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+ok 10 - 4. jazyk cs: rovnaké id, preklady viet ako na stránke, otázky v jazyku
+  ---
+  duration_ms: 21.858448
+  type: 'test'
+  ...
+# Subtest: 5. váha: ≤ 11 264 B gzip (sk), ≤ 12 800 B s iným jazykom; bez zakázaných označení
+ok 11 - 5. váha: ≤ 11 264 B gzip (sk), ≤ 12 800 B s iným jazykom; bez zakázaných označení
+  ---
+  duration_ms: 10.518409
+  type: 'test'
+  ...
+# Subtest: 6. pravidlo 1: kmeň do 4 znakov len presne alebo s koncovkou najviac +3; preklep len pri kmeni od 5 znakov
+ok 12 - 6. pravidlo 1: kmeň do 4 znakov len presne alebo s koncovkou najviac +3; preklep len pri kmeni od 5 znakov
+  ---
+  duration_ms: 6.085822
+  type: 'test'
+  ...
+# Subtest: 7. pravidlo 2: neznáme slovo pri službe nedostane holú cenu ani trvanie
+ok 13 - 7. pravidlo 2: neznáme slovo pri službe nedostane holú cenu ani trvanie
+  ---
+  duration_ms: 383.092682
+  type: 'test'
+  ...
+# Subtest: 8. pravidlo 3: názov služby z cenníka vedie na tú službu (špecifickejšia vyhrá)
+ok 14 - 8. pravidlo 3: názov služby z cenníka vedie na tú službu (špecifickejšia vyhrá)
+  ---
+  duration_ms: 215.213836
+  type: 'test'
+  ...
+# Subtest: 9. pravidlo 4: osoba, miesto, vek a produkt mimo ponuky nedostanú cenu ani trvanie
+ok 15 - 9. pravidlo 4: osoba, miesto, vek a produkt mimo ponuky nedostanú cenu ani trvanie
+  ---
+  duration_ms: 444.006818
+  type: 'test'
+  ...
+# Subtest: 10. pravidlo 5: zdvorilosť a krátka správa nikdy nedostane cenu ani ponuku služby
+ok 16 - 10. pravidlo 5: zdvorilosť a krátka správa nikdy nedostane cenu ani ponuku služby
+  ---
+  duration_ms: 3.719111
+  type: 'test'
+  ...
+# Subtest: 11. pravidlo 6: trvanie je trvanie menovanej služby; bez služby strih a brada; neznáma služba = odovzdanie
+ok 17 - 11. pravidlo 6: trvanie je trvanie menovanej služby; bez služby strih a brada; neznáma služba = odovzdanie
+  ---
+  duration_ms: 89.846941
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2600.483847

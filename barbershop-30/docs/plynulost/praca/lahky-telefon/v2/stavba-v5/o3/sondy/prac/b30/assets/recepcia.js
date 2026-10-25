@@ -8,6 +8,7 @@ function dl(a, b) {
 function dice(a, b) {
   const g = (s) => [...s].slice(1).map((c, i) => s[i] + c), A = g(a), B = g(b), l = A.length + B.length;
   let n = 0;
+  if (10 * Math.min(A.length, B.length) < 3 * l) return 0;
   for (const x of A) { const i = B.indexOf(x); if (i >= 0) { n++; B.splice(i, 1); } }
   return a.length < 2 || b.length < 2 ? 0 : (2 * n) / l;
 }
@@ -19,17 +20,18 @@ export function zhoda(w, k) {
   if (k.length < 5) return e < 0 || e > 3 || !w.startsWith(k) ? 0 : e < (k.length > 3 ? 4 : 2) ? 1 : 0.6;
   return w.startsWith(k) ? 1 : w.includes(k) ? 0.9 : (w.length > 3 && k.startsWith(w)) || (e >= 0 && w[0] === k[0] && [-1, 0, 1].some((n) => dl(w.slice(0, k.length + n), k))) ? 0.6 : dice(w, k) >= 0.6 ? 0.5 : 0;
 }
-const cen = (kb, w) => kb._cen.some((c) => w.startsWith(c)), ista = (w, k) => zhoda(w, k) > 0.89, zo = (l, f = ista) => (w) => l.some((k) => f(w, k)), pred = (w, k) => zhoda(w, k) === 1;
+const dlhy = (k) => k.length > 4 && !'=>'.includes(k[0]), ista = (w, k) => (dlhy(k) ? w.includes(k) : zhoda(w, k) > 0.89), pred = (w, k) => (dlhy(k) ? w.startsWith(k) : zhoda(w, k) === 1);
+const cen = (kb, w) => kb._cen.some((c) => w.startsWith(c)), zo = (l, f = ista) => (w) => l.some((k) => f(w, k));
 /* [skóre, špecifickosť (p. 3), položka, silný kmeň (p. 7)] */
 function skore(ws, q, p, kb) {
   const hit = new Set(), h1 = new Set(), kr = new Set(), n = p._g.length;
   const nm = p._n.some((x) => q.includes(x));
-  let sh = nm;
+  let sh = nm || p._v.includes(q);
   const m = ws.map((w, i) => { let b = 0; p._g.forEach((g, gi) => { for (const [k, st] of g) { const z = zhoda(w, k); if (z > 0.89) { hit.add(gi); sh |= st; } if (z === 1) { h1.add(gi); if (!kb._bez.has(k)) kr.add(i); } if (z) b = Math.max(b, st && z === 1 ? 2 : z); } }); return b; });
   let s = m.reduce((a, b) => a + b, 0);
   if (hit.size && p._c) ws.forEach((w, i) => { if (m[i] < 1 && cen(kb, w)) s += 1 - m[i]; });
-  s += p._v.includes(q) ? 2 : nm || p._v.some((v) => v.includes(' ') && q.includes(v)) ? 0.5 : 0;
-  if (n > 1) s *= (1 + hit.size) / (1 + n);
+  s += p._v.includes(q) ? 9 : nm || p._v.some((v) => v.includes(' ') && q.includes(v)) ? 0.5 : 0;
+  if (n > 1) s *= p.odpoved || hit.size === n ? (1 + hit.size) / (1 + n) : 0;
   return [s / ws.length, kr.size + (n > 1 && h1.size === n), p, sh];
 }
 const silny = (p, f) => p._g.some((g) => g.some(([k, st]) => st && f(k)));
@@ -59,9 +61,8 @@ function rozhodni(ws, q, kb, pol, sp) {
   const a = p.filter((x) => x[0] >= 0.55), b = a.filter((x) => x[1] === Math.max(...a.map((y) => y[1])));
   if (b[0]) {
     /* p. 3 a 7 */
-    const X = b[0][2], kn = (y) => y._n.filter((n) => q.includes(n)), xn = kn(X).join(' ');
-    const Y = X._c && p.find(([, , y, sh]) => y !== X && y._c && sh && ((X.pravidlo === 'spolu' ? !sp : kn(y).some((n) => !xn.includes(n)))
-      || ws.some((w) => silny(y, (k) => pred(w, k)) && !X._g.flat().some(([k]) => pred(w, k)) && !xn.split(' ').includes(w))));
+    const X = b[0][2], S = X.pravidlo === 'spolu', kn = (y) => y._n.filter((n) => q.includes(n)), xs = kn(X).join(' '), ex = (w, L = 0) => w.length < 2 || xs.split(' ').includes(w) || X._g.flat().some(([k]) => k.length >= L && pred(w, k));
+    const Y = X._c && p.find(([, , y, sh]) => y !== X && y._c && sh && ((S && !sp) || ws.some((w) => y._g.flat().some(([k, st]) => st && pred(w, k) && !ex(w, k.length))) || kn(y).some((n) => !xs.includes(n) && !(S && n.split(' ').every((w) => ex(w))))));
     const Z = b[1] && b[0][0] - b[1][0] < 0.1 ? b[1] : Y;
     return Z || (X._c && !b[0][3]) ? vyber([b[0], Z].filter(Boolean)) : R('odpoved', b[0]);
   }
@@ -84,6 +85,7 @@ export function odpovedz(otazka, kb) {
   const T = kb.polozky.find((p) => p.pravidlo === 'cas'), tr = T && T._g[0].some(([k, st]) => st && ws.some((w) => pred(w, k)));
   if (!tr) {
     const r = rozhodni(ws, q, kb, kb.polozky, sp);
+    if (r.typ === 'vyber' && !ws.some((w) => zn(w) || ce(w))) return F(r.skore);
     return r.typ === 'odpoved' && r.p._s && nez.length && !r.p._v.includes(q) ? (ws.some(zn) ? vyber([[r.skore, 0, r.p]]) : F(r.skore)) : r;
   }
   const wt = ws.filter((w) => !ce(w) && !zo(T._g[0].map(([k]) => k))(w)), r = wt.length ? rozhodni(wt, q, kb, kb.polozky.filter((p) => p !== T), sp) : R('odpoved', [1, 0, T]);

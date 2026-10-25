@@ -1,0 +1,20 @@
+== bez zmeny: 2019
+== odpoved → vyber: 4
+   sk | Mám vlasy 3 cm, koľko stojí strih? :: odpoved cena-dlhe → vyber cena-strih | cena-strih,cena-dlhe
+   de | Was kostet Rückenwaxing? :: odpoved depilacia → vyber depilacia | depilacia
+   hu | Hátgyantázás ára? :: odpoved depilacia → vyber depilacia | depilacia
+   hu | Szemöldökfestés ára? :: odpoved obocie → vyber obocie | obocie,farbenie-brady
+== vyber → vyber: 2
+   hu | szakállvágás ára :: vyber cena-strih-brada → vyber cena-strih-brada | cena-strih-brada,cena-strih
+   de | nassrasur mit heißem tuch preis :: vyber holenie → vyber holenie | holenie
+== odpoved → nevieme: 2
+   sk | Synovi je 12, platí ešte detský strih? :: odpoved deti → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+   hu | Szempillafestés mennyi? :: odpoved farbenie-brady → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az ára
+== fallback → nevieme: 1
+   sk | mozem prist o 19:30 :: fallback  → nevieme bez-objednania | príchod bez objednania
+== nevieme → vyber: 1
+   de | Hundeschnitt :: nevieme vysledky → vyber cena-strih | cena-strih
+== fallback → odpoved: 1
+   sk | Môžem prísť v sobotu o 15:00? :: fallback  → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+== vyber → nevieme: 1
+   cs | Synovi je 13, platí dětská cena? :: vyber deti → nevieme vek | Střih pro kluky nad 10 let na webu neuvádíme.

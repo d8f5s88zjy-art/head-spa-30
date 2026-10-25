@@ -65,7 +65,7 @@
     {"id": "trvanie","pravidlo": "cas","otazky": ["Wie lange dauert ein Haarschnitt?","Dauer Haarschnitt"],"kluc": "=Dauer =Dauert Minut =lange | haarschnitt bart","odpoved": [["Herrenhaarschnitt","40 Min."],["Bartpflege","20 Min."]],"akcie": ["sluzby","rezervacia"]}
   ],
   "nevieme": [
-    {"id": "platba","otazky": ["Kann ich mit Karte zahlen?"],"kluc": "Karte =Bar Bargeld Terminal Kontaktlos =Pay =Qr =Ec zahl zahlen bezahl","odovzdanie": "Zahlungsarten","akcie": ["tel","email"]},
+    {"id": "platba","otazky": ["Kann ich mit Karte zahlen?"],"kluc": "Zahl Zahlen Bezahl Karte =Bar Bargeld Terminal Kontaktlos =Pay =Qr =Ec","odovzdanie": "Zahlungsarten","akcie": ["tel","email"]},
     {"id": "poukazky","otazky": ["Habt ihr Gutscheine?"],"kluc": "Gutschein Geschenk Voucher kauf","odovzdanie": "Gutscheine","akcie": ["tel","email"]},
     {"id": "storno","otazky": ["Wie storniere ich einen Termin?"],"kluc": "Storn Absag Verschieb Versp Andern Umbuch termin gebuhr","odovzdanie": "Termin ändern oder absagen","akcie": ["tel","email"]},
     {"id": "pripomienka","otazky": ["Gibt es eine Terminerinnerung?"],"kluc": "Erinner =Sms Benachricht vorher","odovzdanie": "Terminerinnerung","akcie": ["tel","email"]},

@@ -1,0 +1,154 @@
+ok         sk | vďačka [X] → fallback  | 
+ok         sk | ďakujem veľmi pekne za info [X] → fallback  | 
+ok         sk | ok tak dík [X] → zdvorilost  | 
+ok         sk | prepáčte za otázku [X] → zdvorilost  | 
+ok         sk | dobrý večer [X] → zdvorilost  | 
+ok         sk | zbohom [X] → fallback  | 
+ok         sk | meh [X] → fallback  | 
+ok         sk | lol [X] → fallback  | 
+ok         sk | xd [X] → fallback  | 
+ok         sk | hej [X] → fallback  | 
+ok         sk | neviem [X] → fallback  | 
+ok         sk | teslu [X] → fallback  | 
+ok         sk | detektor [X] → fallback  | 
+ok         sk | synagóga [X] → fallback  | 
+ok         sk | kaviareň [X] → fallback  | 
+ok         sk | ohňostroj [X] → fallback  | 
+ok         sk | holub [X] → fallback  | 
+ok         sk | brada na fotke [X] → nevieme vysledky | 
+ok         sk | strih filmu [X] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko stojí strih filmu [X] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko stojí strih videa [X] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko stojí strih trávnika [X] → vyber cena-strih [cena-strih] | 
+ok         sk | ostriháte mi kríky [X] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko stojí holenie psa [X] → vyber holenie [holenie] | 
+ok         sk | ostriháte mi mačku [X] → vyber cena-strih [cena-strih] | 
+ok         sk | strih pre koňa [X] → vyber cena-strih [cena-strih] | 
+ok         sk | holenie hrudníka [X] → vyber holenie [holenie] | 
+ok         sk | holenie rúk [X] → vyber holenie [holenie] | 
+ok         sk | holenie intímnych partií [X] → vyber holenie [holenie] | 
+ok         sk | depilácia nôh [X] → vyber depilacia [depilacia] | 
+ok         sk | depilácia obočia voskom [X] → vyber depilacia [depilacia,obocie] | 
+ok         sk | koľko stojí strih pre moju ženu [X] → nevieme damske | 
+ok         sk | strih pre manželku a dcéru [X] → nevieme damske | 
+ok         sk | moja dcérka má 4 roky, koľko stojí strih [X] → nevieme damske | 
+ok         sk | strih pre slečnu 12 rokov [X] → nevieme vek | 
+ok         sk | syn má 30 rokov, koľko zaplatí [X] → nevieme vek | 
+ok         sk | vnuk má 15, koľko to bude [X] → nevieme cena-ina-sluzba | 
+ok         sk | strihate aj 18 ročných [X] → nevieme vek | 
+ok         sk | prídete ostrihať otca do nemocnice [X] → nevieme mimo | 
+ok         sk | strih v domácnosti [X] → vyber cena-strih [cena-strih] | 
+ok         sk | strih na chalupe [X] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko stojí vosk na fúzy [X] → vyber depilacia [depilacia,cena-brada] | 
+ok         sk | predávate olej na bradu [X] → nevieme produkty | 
+ok         sk | cena pomády [X] → nevieme produkty | 
+ok         sk | koľko stojí šampón [X] → nevieme produkty | 
+ok         sk | kúpim si hrebeň [X] → nevieme produkty | 
+VÁŽNE      sk | koľko stojí britva na holenie [X] → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+ok         sk | predávate strojčeky [X] → nevieme produkty | 
+ok         sk | koľko stojí masáž tváre [X] → nevieme cena-ina-sluzba | 
+ok         sk | koľko stojí manikúra pre mužov [X] → nevieme cena-ina-sluzba | 
+ok         sk | koľko stojí relaxačná maska [X] → vyber plet [plet] | 
+ok         sk | koľko stojí peeling tela [X] → vyber plet [plet] | 
+VÁŽNE      sk | koľko stojí whisky navyše [X] → odpoved ceny-konecne | ["Pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."
+ok         sk | ako dlho trvá masáž hlavy [X] → nevieme cena-ina-sluzba | 
+ok         sk | ako dlho trvá farbenie vlasov u Romany [X] → nevieme romana-ceny | 
+ok         sk | ako dlho trvá tetovanie [X] → fallback  | 
+ok         sk | ako dlho trvá strih psa [X] → fallback  | 
+ok         sk | ako dlho trvá cesta [X] → fallback  | 
+ok         sk | koľko stojí strih a holenie hlavy [V] → vyber hlava [hlava,cena-strih] | 
+ok         sk | koľko stojí úprava brady a farbenie brady [V] → vyber farbenie-brady [farbenie-brady,cena-brada] | 
+ok         sk | koľko stojí detský strih a pánsky strih [V] → vyber cena-strih [cena-strih,deti] | 
+ok         sk | ja a syn, pánsky a detský strih [V] → vyber deti [deti,cena-strih] | 
+ok         sk | koľko za oholenie hlavy a brady [V] → vyber hlava [hlava,cena-brada] | 
+ok         sk | strih brady strojčekom cena [V] → vyber cena-strih-brada [cena-strih-brada,cena-brada] | 
+ok         sk | ostrihanie brady [V] → vyber cena-strih-brada [cena-strih-brada,cena-strih] | 
+ok         sk | koľko stojí balíček 1 a ultra [V] → vyber ultra [ultra,balicky] | 
+vyber      sk | aký je cenník za pánsky strih [cena-strih] → vyber cena-strih [cena-strih,ceny-konecne] | 
+ok         sk | koľko stojí ostrihanie [cena-strih] → odpoved cena-strih | [["Pánsky strih","18 €"]]
+ok         sk | cena za fade [cena-strih] → odpoved cena-strih | [["Pánsky strih","18 €"]]
+vyber      sk | koľko stojí strih strojčekom [cena-strih] → vyber cena-strih [cena-strih] | 
+ok         sk | koľko za strih a fúzy [cena-strih-brada] → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+ok         sk | strih s bradou koľko [cena-strih-brada] → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+odovzdanie sk | vlasy aj brada, koľko to vyjde [cena-strih-brada] → nevieme produkty | 
+ok         sk | koľko stojí úprava fúzov [cena-brada] → odpoved cena-brada | [["Úprava brady","15 €"]]
+ok         sk | cena za úpravu brady [cena-brada] → odpoved cena-brada | [["Úprava brady","15 €"]]
+ok         sk | koľko stojí strih pre 6 ročného chlapca [deti] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+ok         sk | cena detského strihu [deti] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+ok         sk | syn má 9 rokov, koľko stojí strih [deti] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+vyber      sk | koľko stojí holenie s horúcim uterákom [holenie] → vyber holenie [holenie] | 
+ok         sk | holenie tváre do hladka cena [holenie] → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+ok         sk | koľko stojí oholenie hlavy dohola [hlava] → odpoved hlava | [["Oholenie hlavy","13 €"]]
+vyber      sk | holá hlava cena [hlava] → vyber hlava [hlava] | 
+ok         sk | koľko stojí farbenie fúzov [farbenie-brady] → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+ok         sk | koľko stojí farbenie obočia [obocie] → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+ok         sk | úprava obočia cena [obocie] → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+ok         sk | depilácia nosa koľko [depilacia] → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+ok         sk | koľko stojí kreatívny vzor na hlave [ornament] → odpoved ornament | [["Kreatívny ornament na hlave","4 €"]]
+ok         sk | koľko stojí pleťová maska premium [plet] → odpoved plet | [["Starostlivosť o pleť PREMIUM","21,50 €"]]
+ok         sk | koľko stojí ultra inclusive [ultra] → odpoved ultra | [["Ultra inclusive Barbershop30","40 €"],"Všetko z Balíčka 1
+ok         sk | koľko stojí balíček 1 [balicky] → odpoved balicky | [["Balíček 1","30 €"],"Strih, úprava brady, horúci uterák, o
+ok         sk | strih pre dlhé vlasy cena [cena-dlhe] → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+ok         sk | ako dlho trvá holenie do hladka [trvanie:holenie] → odpoved trvanie:holenie | [["Holenie do hladka Hot Towel","30 min"]]
+ok         sk | ako dlho trvá farbenie brady [trvanie:farbenie-brady] → odpoved trvanie:farbenie-brady | [["Farbenie brady","30 min"]]
+ok         sk | koľko minút trvá úprava obočia [trvanie:obocie] → odpoved trvanie:obocie | [["Úprava obočia","5 min"],["Farbenie obočia","10 min"]]
+odovzdanie sk | koľko času zaberie návšteva [trvanie] → fallback  | 
+ok         sk | ste otvorení v nedeľu [hodiny] → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+ok         sk | kde sa nachádzate [adresa] → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+ok         sk | ako si môžem rezervovať termín [rezervacia] → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Aleb
+ok         en | thank you so much [X] → nevieme cena-ina-sluzba | 
+ok         en | sorry to bother [X] → fallback  | 
+ok         en | good evening [X] → zdvorilost  | 
+ok         en | how much for a dog [X] → nevieme cena-ina-sluzba | 
+ok         en | leg wax price [X] → nevieme produkty | 
+ok         en | how much is a haircut for my wife [X] → nevieme damske | 
+ok         en | my daughter needs a haircut [X] → nevieme damske | 
+ok         en | my son is 35, how much [X] → nevieme vek | 
+ok         en | do you come to hospitals [X] → nevieme mimo | 
+ok         en | how much is beard oil [X] → nevieme produkty | 
+ok         en | how much is a massage [X] → nevieme cena-ina-sluzba | 
+ok         en | how long does a massage take [X] → nevieme cena-ina-sluzba | 
+ok         en | haircut and head shave price [V] → vyber hlava [hlava,cena-strih] | 
+ok         en | beard cut [V] → vyber cena-strih-brada [cena-strih-brada,cena-brada] | 
+ok         en | price of a men's haircut [cena-strih] → odpoved cena-strih | [["Men's haircut","18 €"]]
+ok         en | how much is a beard trim [cena-brada] → odpoved cena-brada | [["Beard trim","15 €"]]
+ok         en | how much for my 6 year old son [deti] → odpoved deti | [["Little gentlemen's cut","15 €"],"Classic cut or fade, opt
+ok         en | head shave price [hlava] → odpoved hlava | [["Head shave","13 €"]]
+ok         en | how long does a hot towel shave take [trvanie:holenie] → odpoved trvanie:holenie | [["Hot Towel clean shave","30 min"]]
+ok         de | vielen dank [X] → zdvorilost  | 
+ok         de | Haarschnitt für meine Mutter [X] → nevieme damske | 
+ok         de | was kostet Bartöl [X] → nevieme produkty | 
+ok         de | Hundeschnitt [X] → nevieme vysledky | 
+ok         de | mein Sohn ist 30, Preis? [X] → nevieme vek | 
+ok         de | Haarschnitt und Kopfrasur Preis [V] → vyber hlava [hlava,cena-strih] | 
+ok         de | was kostet ein Herrenschnitt [cena-strih] → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+ok         de | Bartpflege Preis [cena-brada] → odpoved cena-brada | [["Bartpflege","15 €"]]
+ok         cs | děkuju moc [X] → fallback  | 
+ok         cs | stříhání pro manželku [X] → nevieme damske | 
+ok         cs | kolik stojí olej na vousy [X] → nevieme produkty | 
+ok         cs | stříháte psy [X] → vyber cena-strih [cena-strih] | 
+ok         cs | střih a holení hlavy cena [V] → vyber hlava [hlava,cena-strih] | 
+ok         cs | kolik stojí pánský střih [cena-strih] → odpoved cena-strih | [["Pánský střih","18 €"]]
+ok         cs | kolik stojí střih pro syna 7 let [deti] → odpoved deti | [["Střih pro malé gentlemany","15 €"],"Klasický střih nebo f
+ok         pl | dzięki bardzo [X] → fallback  | 
+ok         pl | strzyżenie dla żony [X] → nevieme damske | 
+ok         pl | ile kosztuje olejek do brody [X] → nevieme produkty | 
+ok         pl | strzyżenie psa cena [X] → vyber co-je-v-strihu [co-je-v-strihu] | 
+ok         pl | strzyżenie i golenie głowy cena [V] → vyber hlava [hlava,cena-strih] | 
+ok         pl | ile kosztuje strzyżenie [cena-strih] → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+ok         hu | nagyon köszönöm [X] → zdvorilost  | 
+ok         hu | hajvágás a feleségemnek [X] → nevieme damske | 
+ok         hu | mennyibe kerül a szakállolaj [X] → nevieme produkty | 
+ok         hu | hajvágás és fejborotválás ára [V] → vyber hlava [hlava,cena-strih] | 
+ok         hu | mennyibe kerül egy hajvágás [cena-strih] → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+ok         sr | hvala lepo [X] → fallback  | 
+ok         sr | šišanje za suprugu [X] → nevieme damske | 
+ok         sr | koliko košta ulje za bradu [X] → nevieme produkty | 
+ok         sr | šišanje i brijanje glave cena [V] → vyber hlava [hlava,cena-strih] | 
+ok         sr | koliko košta šišanje [cena-strih] → odpoved cena-strih | [["Muško šišanje","18 €"]]
+ok         uk | дуже дякую [X] → fallback  | 
+ok         uk | стрижка для дружини [X] → nevieme damske | 
+ok         uk | скільки коштує олія для бороди [X] → nevieme produkty | 
+ok         uk | стрижка і гоління голови ціна [V] → vyber hlava [hlava,cena-strih] | 
+ok         uk | скільки коштує стрижка [cena-strih] → odpoved cena-strih | [["Чоловіча стрижка","18 €"]]
+spolu 153: VÁŽNE 2, mierne 0; legitímnych 45: priamo 39, „Myslíš toto?“ 4, odovzdanie/iné 2 (nie priamo 13.3 %)

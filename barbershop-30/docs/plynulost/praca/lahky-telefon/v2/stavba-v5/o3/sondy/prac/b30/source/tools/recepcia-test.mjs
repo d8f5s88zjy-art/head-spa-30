@@ -10,7 +10,8 @@
 //  3. obsah: každý zdroj index.html:riadok existuje a riadok (po odstránení značiek) obsahuje každú vetu odpovede
 //     aj trvanie (cas); zdroj a overene sú v assets/recepcia/zdroje.json (rovnaké pre všetky jazyky, modul ich nečíta);
 //     položky ≥ 30, témy nevieme ≥ 19, akcie len z kontakt + panel.akcie, dátum overene nie starší než 90 dní.
-//     Schéma JSON: otazky[0] je zobrazovaná otázka (téma nevieme má len ju), kluc = kmene oddelené medzerou (veľké začiatočné písmeno alebo
+//     Schéma JSON: otazky[0] je zobrazovaná otázka, ďalšie sú varianty (v sk len tam, kde menia odpoveď; celý názov
+//     služby z cenníka je variant sám osebe), kluc = kmene oddelené medzerou (veľké začiatočné písmeno alebo
 //     „!“ = silný kmeň, „=“ = len celé slovo, „>10“ = číslo nad 10, „|“ = skupiny), spoj = spojky, odovzdanie = predmet (modul doplní panel.nepotvrdene)
 //     alebo celá veta s bodkou
 //  4. jazyky: každý assets/recepcia/<jazyk>.json má rovnaké id v rovnakom poradí; veta, ktorá má kľúč v
@@ -179,7 +180,7 @@ test('3. obsah: zdroje existujú, riadky obsahujú vety odpovedí, štruktúra',
   for (const p of sk.polozky) {
     assert.ok(!ids.has(p.id), `duplicitné id ${p.id}`); ids.add(p.id);
     const z = zdroje[p.id] || {};
-    assert.ok(p.otazky.length >= 2 && p.kluc.length && p.odpoved.length && (z.zdroj || []).length && z.overene, `neúplná položka ${p.id}`);
+    assert.ok(p.otazky.length >= 1 && p.kluc.length && p.odpoved.length && (z.zdroj || []).length && z.overene, `neúplná položka ${p.id}`);
     assert.ok(!('zdroj' in p) && !('overene' in p), `${p.id}: zdroj a overene patria do zdroje.json`);
     assert.ok(dnes - new Date(z.overene) <= limit, `položka ${p.id} overená pred viac než 90 dňami (${z.overene})`);
     assert.ok(!p.cas || p.cas.length === p.odpoved.filter(Array.isArray).length, `${p.id}: cas nezodpovedá riadkom cenníka`);
