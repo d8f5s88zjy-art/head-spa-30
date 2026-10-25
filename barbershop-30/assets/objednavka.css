@@ -40,11 +40,16 @@
 .obj-h { margin: 0 0 14px; font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-variation-settings: "opsz" 144;
   font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1; letter-spacing: -0.015em; outline: none; }
 
-/* doterajší výber: ťuknutím späť na krok */
-.obj-vyber { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+/* doterajší výber: tichý riadok (služba · barber · termín) bez krabičiek, ťuk na časť vráti na jej krok */
+.obj-vyber { display: flex; flex-wrap: wrap; align-items: center; margin: -6px 0 18px; font-size: 0.9375rem; line-height: 1.35; }
 .obj-vyber[hidden] { display: none; }
-.obj-vyber button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); border-radius: var(--radius-btn, 6px); font-size: 0.875rem; font-weight: 600; text-align: left; }
-.obj-vyber button:hover { border-color: var(--lamp-2, #f07e3c); }
+.obj-vyber button { min-height: 40px; padding: 0; font-weight: 600; text-align: left; color: var(--paper-2, #c9beae);
+  text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 5px; text-decoration-thickness: 1px;
+  transition: color var(--t-micro, 200ms) var(--ease-out, ease), text-decoration-color var(--t-micro, 200ms) var(--ease-out, ease); }
+.obj-vyber button:hover { color: var(--paper, #f1e9dd); text-decoration-color: var(--lamp, #e0601c); }
+.obj-vyber button:not(:last-child)::after { content: "·"; display: inline-block; margin: 0 10px; color: var(--lamp, #e0601c); font-weight: 700; }
+/* čas overenia v kalendári: samostatný tichý riadok pod časmi */
+.obj-overene { margin: 10px 0 0; font-size: 0.8125rem; line-height: 1.45; color: var(--paper-3, #8e8578); }
 
 .obj-telo.obj-prichod { animation: obj-krok 280ms var(--ease-out, ease) both; }
 @keyframes obj-krok { from { opacity: 0; transform: translateY(8px); } }
@@ -116,12 +121,22 @@
 .obj-mriezka button:hover { background: var(--lamp, #e0601c); border-color: var(--lamp, #e0601c) !important; color: var(--ink, #0e0d0c); }
 .obj-mriezka button:active, .obj-tim button:active, .obj-sluzby button:active, .obj-dni button:active:not(:disabled) { transform: translateY(1px); }
 
-/* 4. výber a ďalší krok */
-.obj-suhrn { margin: 0; border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
-.obj-suhrn div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
-.obj-suhrn dt { font-weight: 700; text-transform: none; }
-.obj-suhrn dt::first-letter { text-transform: uppercase; }
-.obj-suhrn dd { margin: 0; color: var(--paper-2, #c9beae); font-variant-numeric: tabular-nums; }
+/* 4. výber ako lístok: tenký rámik, nadpisok nad každou položkou, údaj, vpravo dĺžka a cena alebo čas */
+.obj-suhrn { margin: 0; padding: 2px 20px; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); border-radius: 4px; background: rgba(241, 233, 221, 0.025); }
+.obj-suhrn div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 4px 16px; padding: 14px 0; }
+.obj-suhrn div + div { border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
+.obj-suhrn dt { grid-column: 1 / -1; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-3, #8e8578); }
+.obj-suhrn dd { margin: 0; font-weight: 700; font-size: 1.0625rem; line-height: 1.35; color: var(--paper, #f1e9dd); min-width: 0; overflow-wrap: anywhere; }
+.obj-suhrn dd::first-letter { text-transform: uppercase; }
+.obj-suhrn .obj-suhrn-m { font-weight: 600; font-size: 0.9375rem; color: var(--paper-2, #c9beae); white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+.obj-suhrn .obj-suhrn-m::first-letter { text-transform: none; }
+
+/* poznámka (termín ešte nie je rezervovaný, časy neviem overiť, deň je plný): tichý rámček s linkou lampy */
+.obj-poznamka { margin: 16px 0 0; padding: 14px 16px 14px 18px; border: 1px solid var(--line, rgba(241, 233, 221, 0.14)); border-left: 2px solid var(--lamp, #e0601c);
+  border-radius: 0 4px 4px 0; background: rgba(241, 233, 221, 0.03); }
+.obj-poznamka p { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--paper-2, #c9beae); }
+.obj-poznamka .obj-poznamka-h { font-weight: 700; font-size: 1rem; color: var(--paper, #f1e9dd); }
+.obj-poznamka .obj-poznamka-h + p { margin-top: 4px; }
 .obj-akcie { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .obj-akcie .btn { flex: 1 1 15rem; white-space: normal; text-align: center; line-height: 1.25; }
 

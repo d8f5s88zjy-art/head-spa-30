@@ -96,6 +96,43 @@ body #order-component .summary .subtitle, body #order-component .confirmation .s
 body #order-component .alert { background: var(--b30-ink-3); border: 1px solid var(--b30-line-strong); border-left: 2px solid var(--b30-lamp); color: var(--b30-paper); border-radius: 8px; }
 body #order-component .alert-danger { border-left-color: #ff8b6b; }
 
+/* ---------- súhrn pred odoslaním a potvrdenie: lístok (2026‑10‑25) ----------
+   Tenký rámik, popis (Služby, Pracovník, Termín) ako malý nadpisok nad údajom, údaj výrazne. Pri potvrdení systém za
+   názov služby vypisuje celý jej popis v zátvorke: text mimo <strong> sa skryje (len pri odsekoch so službou). */
+body #order-component #summary > .row.visible > [class*="col-md-8"]:has(> p.subtitle.colored),
+body #order-component #confirmation > .row.visible:last-child > [class*="col-md-8"] {
+  border: 1px solid var(--b30-line-strong); border-radius: 4px; background: rgba(241, 233, 221, 0.025); padding: 8px 24px 20px; }
+body #order-component #summary p.subtitle.colored, body #order-component #confirmation > .row.visible:last-child p.subtitle.colored {
+  margin: 18px 0 4px; font-family: var(--b30-text); font-size: 0.6875rem !important; font-weight: 700; letter-spacing: 0.16em !important;
+  text-transform: uppercase; color: var(--b30-paper-3) !important; }
+body #order-component #summary p.subtitle:not(.colored), body #order-component #summary p.subtite,
+body #order-component #confirmation > .row.visible:last-child p.subtitle:not(.colored) {
+  margin: 0; font-family: var(--b30-text); font-size: 1.0625rem; line-height: 1.4; letter-spacing: 0; color: var(--b30-paper); text-align: left !important; }
+body #order-component #summary strong, body #order-component #confirmation strong { font-weight: 700; color: var(--b30-paper); }
+body #order-component #confirmation > .row.visible:last-child p.subtitle:not(.colored):has(> strong) { font-size: 0 !important; }
+body #order-component #confirmation > .row.visible:last-child p.subtitle:not(.colored):has(> strong) > strong { font-size: 1.0625rem; }
+body #order-component #confirmation > .row.visible:last-child .title { font-size: clamp(1.375rem, 3vw, 1.75rem); margin-bottom: 4px; }
+body #order-component #confirmation > .row.visible:first-child .title { font-size: clamp(2rem, 5.2vw, 3.25rem); }
+body #order-component #confirmation > .row.visible:first-child .subtitle { max-width: 36rem; margin-inline: auto; }
+body #order-component #summary .btn-link { font-size: 0.875rem; }
+/* lístok zarovnaný vľavo (popis aj údaj pod sebou), oddeľovače ako vlasová linka namiesto prerušovanej */
+body #order-component #summary > .row.visible > [class*="col-md-8"]:has(> p.subtitle.colored),
+body #order-component #summary > .row.visible > [class*="col-md-8"]:has(> p.subtitle.colored) *,
+body #order-component #confirmation > .row.visible:last-child > [class*="col-md-8"],
+body #order-component #confirmation > .row.visible:last-child > [class*="col-md-8"] * { text-align: left !important; }
+body #order-component #summary p.subtitle.colored { border-top: 1px solid var(--b30-line) !important; border-bottom: 0 !important; padding-top: 16px; }
+body #order-component #summary p.subtitle.colored:first-child { border-top: 0 !important; padding-top: 0; }
+body #order-component #summary .col-md-6 { width: auto; float: none; padding-left: 0; padding-right: 0; }
+body #order-component #summary [class*="col-md-8"] .row { margin-left: 0; margin-right: 0; }
+body #order-component #summary [class*="col-md-8"] .row > .col-md-12 { padding-left: 0; padding-right: 0; }
+body #order-component #confirmation > .row.visible:last-child p.subtitle:not(.colored) { font-weight: 700; }
+body #order-component #summary .btn-link { padding: 6px 0 !important; margin: 2px 0 0; }
+body #order-component #summary h2.text-center { font-family: var(--b30-text); font-size: 1.0625rem; line-height: 1.55; color: var(--b30-paper-2); }
+
+/* polia údajov: zreteľné okienka s medzerou, pri písaní rámik lampy */
+body #order-component #customer-form .form-group { margin-bottom: 14px; }
+body #order-component #customer-form .form-control { border-radius: 4px !important; }
+
 /* ---------- pätička ---------- */
 body footer { background: var(--b30-ink-2) !important; color: var(--b30-paper-2); border-top: 1px solid var(--b30-line); }
 body footer .title-small { font-family: var(--b30-display); font-weight: 800; font-size: 1.25rem; letter-spacing: 0; text-transform: none; color: var(--b30-paper); }

@@ -2,9 +2,12 @@
 // Náhľad vzhľadu webu na existujúcej rezervácii www.barbershop30.sk/rezervacia (assets/tema-rezervacia.css).
 // Stiahne verejnú stránku, jej css/app.css, js/app.js a pár súborov, ktoré formulár potrebuje, do dočasného
 // priečinka a spustí ju lokálne: namiesto ich servera odpovedá skúšobný kalendár (getEmployees, getCalendar,
-// getTime), makeOrder vždy odmietne (403), iné adresy okrem písiem Google prehliadač nedostane. Prejde kroky
-// služba → pracovník → deň a čas → údaje bez a so štýlom a uloží snímky (docs/screenshots/tema-rezervacia/).
-//   node source/tools/tema-nahlad.mjs [--out=dir] [--sirky=390,1440]
+// getTime), iné adresy okrem písiem Google prehliadač nedostane. Prejde kroky služba → pracovník → deň a čas →
+// údaje → súhrn → potvrdenie bez a so štýlom a uloží snímky (docs/screenshots/tema-rezervacia/). Odoslanie
+// (makeOrder) prijme len tento lokálny server, aby bolo vidieť ich potvrdenie; k nim nejde nič (iné adresy sú
+// zablokované a adresa formulára je prepísaná na lokálnu). --texty: so štýlom aj navrhnuté texty
+// (docs/texty-rezervacia.sk.json, docs/TEXTY_REZERVACIA.md).
+//   node source/tools/tema-nahlad.mjs [--out=dir] [--sirky=390,1440] [--texty]
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -34,6 +37,7 @@ for (const f of SUBORY) {
 }
 
 // 2. lokálny server: ich stránka so skúšobným kalendárom, ?tema=1 pridá náš štýl za ich css/app.css
+const TEXTY = JSON.parse(fs.readFileSync(path.join(SITE, 'docs', 'texty-rezervacia.sk.json'), 'utf8'));
 const MENA = ['Nikolas', 'Kristián', 'Damian', 'Michal', 'Andy', 'Dominika', 'Kevin', 'Lajko', 'Jojo', 'Adrian'];
 const den = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
 const TYP = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.woff': 'font/woff', '.woff2': 'font/woff2' };
@@ -45,7 +49,7 @@ const srv = http.createServer((req, res) => {
       let m = ''; try { m = JSON.parse(b).ajax_method; } catch (e) { m = new URLSearchParams(b).get('ajax_method'); }
       metody.push(m);
       res.setHeader('Content-Type', 'application/json');
-      if (m === 'makeOrder') { res.writeHead(403); return res.end('{"message":"v náhľade sa nič neodosiela"}'); }
+      if (m === 'makeOrder') return res.end(JSON.stringify({ result: true }));   // len lokálne, na náhľad potvrdenia
       const dnes = new Date();
       const r = m === 'getEmployees' ? { employees: [{ id: 0, name: 'Nezáleží', title: 'Barber' }, ...MENA.map((n, i) => ({ id: 40 + i, name: n, title: n === 'Dominika' ? 'Barberka' : 'Barber' }))] }
         : m === 'getCalendar' ? { calendar: { limits: { min: den(dnes), max: den(new Date(+dnes + 30 * 864e5)) }, disabled_days: ['Ne'], disabled_dates: [] } }
@@ -56,6 +60,12 @@ const srv = http.createServer((req, res) => {
   if (u.pathname === '/rezervacia') {
     let h = fs.readFileSync(path.join(D, 'rezervacia.html'), 'utf8').replace(ZDROJ + 'rezervacia/ajax', '/rezervacia/ajax');
     if (u.searchParams.get('tema')) h = h.replace('</head>', '<link rel="stylesheet" href="/_web/tema-rezervacia.css">\n</head>');
+    // navrhnuté texty: hodnoty v jazykovom súbore formulára (atribút lang komponentu) sa prepíšu
+    if (u.searchParams.get('texty')) h = h.replace(/(<v-order-component[^>]*?\slang=")([^"]*)(")/, (m0, a, v, z) => {
+      const ent = (t) => t.replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+      const lang = { ...JSON.parse(ent(v)), ...TEXTY };
+      return a + JSON.stringify(lang).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + z;
+    });
     res.writeHead(200, { 'Content-Type': TYP['.html'] }); return res.end(h);
   }
   const f = u.pathname.startsWith('/_web/') ? path.join(SITE, 'assets', u.pathname.slice(6)) : path.join(D, decodeURIComponent(u.pathname));
@@ -67,7 +77,7 @@ const origin = `http://127.0.0.1:${srv.address().port}`;
 
 // 3. kroky bez a so štýlom
 const browser = await chromium.launch(PRESETS[0]);
-for (const w of SIRKY) for (const [druh, q] of [['pred', ''], ['po', '?tema=1']]) {
+for (const w of SIRKY) for (const [druh, q] of [['pred', ''], ['po', opt.texty ? '?tema=1&texty=1' : '?tema=1']]) {
   const p = await browser.newPage({ viewport: { width: w, height: w < 800 ? 844 : 900 }, deviceScaleFactor: w < 800 ? 2 : 1, isMobile: w < 800, hasTouch: w < 800 });
   await p.route('**/*', (r) => (/^http:\/\/127\.0\.0\.1|fonts\.(googleapis|gstatic)\.com/.test(r.request().url()) ? r.continue() : r.abort()));
   await p.goto(origin + '/rezervacia' + q, { waitUntil: 'load' });
@@ -82,12 +92,22 @@ for (const w of SIRKY) for (const [druh, q] of [['pred', ''], ['po', '?tema=1']]
   await snim('3-den-cas', '.vfc-calendars');
   await p.locator('.time .border', { hasText: '14:00' }).click(); await p.waitForTimeout(1200);
   await snim('4-udaje', '#order-component input');
+  // súhrn a potvrdenie (skúšobné údaje, odoslanie prijme len lokálny server)
+  await p.fill('#inputFirstName', 'Ukážka'); await p.fill('#inputLastName', 'Náhľad');
+  await p.fill('#customer-form input[name="email"]', 'nahlad@example.invalid'); await p.fill('#customer-form input[name="phone"]', '0900 000 000');
+  await p.locator('#customer-form button[type="submit"], #customer-form .btn').first().click(); await p.waitForTimeout(1200);
+  await snim('5-suhrn', '#summary');
+  await p.evaluate(() => document.querySelector('#summary').scrollIntoView({ block: 'start' })); await p.waitForTimeout(400);
+  await p.screenshot({ path: path.join(OUT, `${druh}-${w}-5-suhrn.png`) });
+  await p.locator('#summary .btn:not(.btn-link)').last().click(); await p.waitForTimeout(1500);
+  await p.evaluate(() => { const c = document.querySelector('#confirmation'); if (c) c.scrollIntoView({ block: 'start' }); }); await p.waitForTimeout(500);
+  await p.screenshot({ path: path.join(OUT, `${druh}-${w}-6-potvrdenie.png`) });
   console.log(`${druh} ${w} px: šírka stránky ${await p.evaluate(() => document.documentElement.scrollWidth)}`);
   await p.close();
 }
 await browser.close();
 srv.close();
 fs.rmSync(D, { recursive: true, force: true });
-console.log('metódy rezervačného systému:', [...new Set(metody)].join(', '), metody.includes('makeOrder') ? '(makeOrder odmietnutý)' : '(makeOrder nikdy)');
+console.log('metódy (len lokálny skúšobný server):', [...new Set(metody)].join(', '));
 console.log('snímky:', OUT);
 process.exit(0);

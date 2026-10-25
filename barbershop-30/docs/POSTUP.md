@@ -59,6 +59,10 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25 (hotové, CHECKS 31): krajšie texty a rámčeky pri rezervácii. Naše okno: tichý riadok výberu, lístok
+  súhrnu, poznámky v rámčeku. Ich systém: návrh textov (docs/TEXTY_REZERVACIA.md, JSON na vloženie) a štýl súhrnu
+  a potvrdenia v tema-rezervacia.css s náhľadom pred a po. Čaká sa, kto vloží texty a štýl do ich systému.
+
 - 2026‑10‑25 (hotové, CHECKS 30): vychytávky pri vizitke: Pripomeň si ďalší strih (.ics alebo Google Kalendár) a Pošli
   kamarátovi; ikona na plochu telefónu (manifest, ikony). Čaká sa na skúšku na skutočnom iPhone a Androide.
 

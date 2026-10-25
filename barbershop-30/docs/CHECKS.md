@@ -634,3 +634,24 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - Overené (Playwright 360/390/430/1440): `vychytavky-test.mjs` všetko OK (stiahnutie súboru, zmena voľby, angličtina,
   schránka, bez pretekania, ťukacie plochy aspoň 40 px), snímky `docs/screenshots/vychytavky/`.
 - Neoverené: ako .ics otvorí skutočný iPhone (Safari) a Android, a pridanie ikony na plochu na skutočnom telefóne.
+
+## 31. Krajšie texty a elegantnejšie rámčeky pri rezervácii (2026‑10‑25)
+
+- Zadávateľ: „texty, čo majú zákazníci, keď sa rezervujú, krajšie, aj rámčeky textov, nech je to elegantnejšie“.
+- Naše okno objednávky (`assets/objednavka.js`, `objednavka.css`, 8 jazykov): doterajší výber ako tichý riadok
+  (služba · barber · termín, ťuk vráti na krok) namiesto krabičiek; súhrn ako lístok s tenkým rámikom
+  (nadpisky Služba, Barber, Termín, vpravo dĺžka a cena alebo čas); poznámky (termín ešte nie je rezervovaný,
+  časy neviem overiť, deň je plný) v rámčeku s linkou lampy, prvá veta nadpisom; čas overenia samostatne tichšie.
+  Texty: „V tento deň je už plno“, „U prvého voľného barbera z tímu. Ťukni na čas, ktorý ti sedí.“; poctivé vety
+  ostali („Termín ešte nie je rezervovaný“, „predbežný“, telefón v pracovné dni). objednavka-test 113 OK.
+- Ich rezervácia (www.barbershop30.sk/rezervacia): texty sú v ich systéme, nový web ich nemení. Návrh pre ich
+  správcu `docs/TEXTY_REZERVACIA.md` a `docs/texty-rezervacia.sk.json` (29 kľúčov: kroky, polia, potvrdenie,
+  e‑mail s potvrdením, pripomienka, SMS, chyba telefónu): tykanie ako na webe (dnes sa mieša s vykaním, preklepy
+  „Zvolte si Vášho“), „Barbershop 30“ s medzerou, SMS bez diakritiky 112 znakov (jedna správa).
+- Štýl ich rezervácie (`assets/tema-rezervacia.css`): súhrn pred odoslaním a potvrdenie ako lístok zarovnaný vľavo,
+  malé nadpisky nad údajmi, vlasové linky namiesto prerušovaných, skrytý dlhý popis služby v potvrdení, polia
+  s medzerou a zaoblením 4 px. Náhľad `node source/tools/tema-nahlad.mjs --texty` (ich stránka lokálne so
+  skúšobným kalendárom, odoslanie prijme len lokálny server, k nim nejde nič): snímky pred a po
+  `docs/screenshots/tema-rezervacia/` (390 a 1440 px, kroky 1 až 6 vrátane súhrnu a potvrdenia).
+- Nedá sa cez jazykový súbor: „Posledný krok“, „Skontrolujte si Vašu rezerváciu…“, „Služby:“, „Odstrániť“,
+  „Pridať službu“, „Zmeniť“ a dvojbodky za popismi (sú v kóde ich systému). Vzhľad e‑mailov je v ich šablóne.

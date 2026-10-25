@@ -23,9 +23,11 @@ Odobrať sa dá zmazaním toho riadku, nič iné sa nemení.
 
 ## Kontrola
 
-- `node source/tools/tema-nahlad.mjs`: stiahne verejnú stránku a jej skripty, spustí ju lokálne so skúšobným
-  kalendárom (do ich systému nejde nič, makeOrder odmietne) a uloží snímky pred a po do
-  `docs/screenshots/tema-rezervacia/` (telefón 390 px a počítač 1440 px, kroky služba, pracovník, deň a čas, údaje).
+- `node source/tools/tema-nahlad.mjs [--texty]`: stiahne verejnú stránku a jej skripty, spustí ju lokálne so skúšobným
+  kalendárom (do ich systému nejde nič; odoslanie prijme len lokálny server, aby bolo vidieť potvrdenie) a uloží
+  snímky pred a po do `docs/screenshots/tema-rezervacia/` (telefón 390 px a počítač 1440 px, kroky služba,
+  pracovník, deň a čas, údaje, súhrn, potvrdenie). `--texty` ukáže „po“ aj s navrhnutými textami
+  (`docs/TEXTY_REZERVACIA.md`).
 - Po vložení na ich web: prejsť rezerváciu naostro až po formulár (bez odoslania), na telefóne aj počítači; skúšobnú
   rezerváciu odoslať len s ich súhlasom a hneď ju zrušiť.
 
@@ -33,8 +35,9 @@ Odobrať sa dá zmazaním toho riadku, nič iné sa nemení.
 
 - Mení: pozadie a farby (atrament, papier, oranžová lampa), písma, tlačidlá (verzálky, polomer 6 px), karty služieb
   a barberov s rámikom a zvýraznením výberu, kalendár (vybraný deň oranžový, dnešný s obrysom), časy ako tlačidlá,
-  polia formulára ako zreteľné okienka, hlavičku a pätičku.
-- Nemení: texty, poradie krokov, služby a ceny (ich systém), správanie formulára a overenie údajov.
+  polia formulára ako zreteľné okienka, súhrn pred odoslaním a potvrdenie ako lístok (malé nadpisky nad údajmi,
+  vlasové linky, bez dlhého popisu služby v potvrdení), hlavičku a pätičku.
+- Nemení: texty (návrh na vloženie do ich systému je v `docs/TEXTY_REZERVACIA.md`), poradie krokov, služby a ceny (ich systém), správanie formulára a overenie údajov.
 - Číslice v nadpisoch sú v Manrope (vo Fraunces vyzerá malá „3“ ako „5“, napr. „3. Vyberte termín“).
 - Keď ich systém zmení šablónu alebo triedy, štýl sa môže čiastočne neuplatniť; preto po každej ich zmene
   `tema-nahlad.mjs`.
