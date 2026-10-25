@@ -126,6 +126,10 @@ to je voľná príležitosť.
 
 ## Plán
 
+Stav 2026‑10‑25 (na vetve, nezverejnené): hotové rýchly krok 2 a väčšie kroky 1 a 3 (titulok, popis, H1, 8 častých
+otázok, anglická stránka `en/`, `hasMap` v údajoch pre Google; `docs/CHECKS.md` 27). Bez objednania, poukážky,
+produkty a detská stolička čakajú na potvrdenie prevádzky.
+
 **Rýchle kroky (tento týždeň):**
 1. Nasadiť nový web na barbershop30.sk (alebo presmerovať doménu na nový web) a nahradiť adresy v údajoch pre Google,
    sitemap a kanonickej adrese. Dopad vysoký, práca malá, závisí od toho, kto spravuje doménu.

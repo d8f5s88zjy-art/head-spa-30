@@ -38,6 +38,15 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   rezervácii (len po slovensky) je poznámka v jazyku stránky. Ukrajinčina sťahuje Manrope s cyrilikou len pri
   cyrilike. `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
   potrebuje kľúč vo všetkých slovníkoch; kontrola: `node source/tools/i18n-test.mjs`.
+  Anglická stránka `en/index.html` (pre Google: vlastná adresa, texty priamo v HTML) sa vytvorí pri nasadení zo
+  slovenskej `index.html` a `assets/i18n/en.json` (`source/tools/en-stranka.mjs`, rovnaké pravidlá ako `i18n.js`);
+  `data-zdroj="en"` povie `i18n.js`, že stránka už je po anglicky, a prepínač vedie na slovenskú stránku s `?lang=`.
+  V repozitári je jej kópia na náhľad, `--check` overí, že je aktuálna; test `node source/tools/en-test.mjs`.
+- **SEO úvod a časté otázky (2026‑10‑25, `docs/SEO-ANALYZA.md`)**: titulok „Barbershop 30 Nitra | Pánske holičstvo,
+  Mostná 30“, popis so službami, H1 so značkou a mestom (nadpisok „Barbershop 30 · Nitra“ nad „Tvoj strih. Tvoje
+  miesto.“), podnadpis „Pánske holičstvo na Mostnej 30“. Časté otázky (`#caste-otazky`, pás v rezervácii pod
+  kontaktom, 8 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
+  s `hasMap` (profil v Mapách; súradnice nie sú, lebo nie sú overené).
 
 - **Asistent Barber** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): ikona vľavo dole je logo
   Barbershopu 30 v bielom kruhu so štítkom AI; keď ju návštevník chvíľu vidí, vyskočí pri nej bublina (Spýtať sa,
@@ -122,7 +131,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   s ňou súvisí: `index.html` aj `rezervacia.html` (len text, značky ostanú), preklady `assets/i18n/*.json` (kľúč
   sa presunie, starý ostane, kým ho niečo používa), znalosti asistenta `../asistent/znalosti/barbershop.md`,
   časté otázky `barbershop-otazky.json` a ich kópiu pre web. Odpovede so starou cenou dá na kontrolu (jedinečnú
-  cenu prepíše sám) a uloženie zastaví, kým niektorá odpoveď hovorí cenu, ktorá v cenníku nie je. Fotky zmenší
+  cenu prepíše sám) a uloženie zastaví, kým niektorá odpoveď hovorí cenu, ktorá v cenníku nie je. Zmena názvu alebo
+  ceny služby sa prepíše aj v údajoch pre Google (`application/ld+json` v `index.html`). Fotky zmenší
   v prehliadači (WebP a JPEG, tím 480/820, galéria 640/1080/1600). Záložka Kontakt a hodiny zmení telefón (mobil),
   e‑mail a otváracie hodiny (Po–Pi a sobota, celé hodiny) naraz vo všetkých súboroch zoznamu `KONTAKT` v `admin.js`
   (web, preklady, app.js HOURS, asistent aj jeho server, kartička, vizitka, ukážky, pravidlo v CLAUDE.md); pred
@@ -134,8 +144,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
 `.github/workflows/pages.yml` kopíruje `index.html`, `rezervacia.html`, `robots.txt`, `sitemap.xml`, `assets/`,
-`karta/` a `admin/` a
-nahradí základnú adresu). Pri vlastnej doméne nahraď základnú adresu
+`karta/` a `admin/`,
+nahradí základnú adresu a nakoniec vytvorí anglickú stránku `en/` zo slovenskej po všetkých úpravách). Pri vlastnej doméne nahraď základnú adresu
 `https://d8f5s88zjy-art.github.io/barbershop30/` v `index.html`, `robots.txt` a `sitemap.xml`
 jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
 
@@ -146,6 +156,8 @@ jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
   v gite – stiahni ho do `source/tools/depth/model.onnx` alebo daj cestu v `DEPTH_MODEL`).
 - `stills.py` – z `assets/img/film/film.json` prepíše zálohy a kotvy záberov v `index.html`.
 - `build_images.py` – fotky galérie, tímu a videopostery (`assets/img/manifest.json`).
+- `en-stranka.mjs` – anglická stránka `en/index.html` zo slovenskej (pri nasadení; `--check` overí kópiu v repozitári);
+  `en-test.mjs` – anglická stránka a SEO úvodu (titulok, popis, H1, časté otázky, cesty, prepínač jazyka).
 - `i18n-test.mjs` – jazykové verzie: každý jazyk bez nepreložených textov, tabuľa hodín, Booqme, prepínač na počítači aj v menu telefónu, návrat do slovenčiny.
 - `nahlad.mjs` – náhľad na kontrolu (úvod, pás tímu, cenník, galéria, rezervácia na 360/390/430 px, tablete a počítači), odkazy tel: a Objednať sa, obmedzený pohyb, bez skriptu;
   `mobil-audit.mjs` – snímky celej stránky po krokoch skrolu s pretekaním, pevnými prvkami a podielom tmy;

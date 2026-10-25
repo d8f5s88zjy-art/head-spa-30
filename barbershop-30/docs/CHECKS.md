@@ -540,3 +540,21 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - `stills.py --check` zhodné (výrezy -m len prológu, ostatné `sizes` 170vw).
 - Neoverené: skutočný telefón (iPhone, Android), plynulosť filmu na skutočnej grafike s väčšími textúrami.
 
+## 27. SEO: titulok, popis, H1, časté otázky, anglická stránka (2026‑10‑25)
+
+- Zadávateľ schválil body 1 až 4 z `docs/SEO-ANALYZA.md` („100 krát urob“).
+- Titulok `Barbershop 30 Nitra | Pánske holičstvo, Mostná 30` (49 znakov), popis so službami a výzvou, H1 obsahuje
+  „Barbershop 30 · Nitra“ (nadpisok verzálkami ako predtým), podnadpis „Pánske holičstvo na Mostnej 30“.
+- Časté otázky: 8 otázok (`<details>`, bez skriptu fungujú) v páse pod kontaktom; odpovede len z overených údajov
+  webu (cenník, hodiny, tím, Romana farbí). „Bez objednania“, poukážky, produkty a detská stolička nie sú, čakajú
+  na potvrdenie prevádzky.
+- Údaje pre Google: `hasMap` na profil v Mapách (cid z odkazu na webe); `geo` nie, súradnice nie sú overené.
+- Anglická stránka `en/` (`en-stranka.mjs`): 352 prekladov, 0 chýbajúcich; vlastná kanonická adresa, `og:locale`
+  en_GB, cesty `../assets`; v `sitemap.xml` hreflang en vedie na `en/` (9 miest). Vytvára sa pri nasadení v pages.yml
+  aj v `nasad-barbershop30.sh` až po všetkých úpravách index.html (aj po admine).
+- Admin: zmena názvu alebo ceny služby prepíše aj cenu v údajoch pre Google (admin-test kontroluje).
+- Overené (Playwright, emulácia telefónu 390): `en-test.mjs` všetko OK (jazyk, titulok, popis, kanonická adresa, H1,
+  8 otázok po anglicky, žiadny slovenský text zo slovníka, žiadny chýbajúci súbor, bez chýb skriptu, pretekanie 0,
+  ťuk otvorí odpoveď, prepínač na nemčinu otvorí slovenskú stránku s `?lang=de` a preloží ju); admin-test 101 OK,
+  i18n-test, app-smoke, objednavka-test OK, `otazky.mjs` OK, `stills.py --check` zhodné. Snímky `docs/screenshots/seo/`.
+- Neoverené: ako Google stránky naozaj zaindexuje (až po nasadení na doménu a odoslaní sitemap v Search Console).

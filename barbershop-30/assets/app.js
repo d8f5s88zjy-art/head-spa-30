@@ -446,7 +446,8 @@ if (motionOn && mqFinePointer.matches) {
     loaded = true;
     import('./i18n.js').then((m) => m.spusti()).catch(() => html.classList.remove('t-wait'));
   };
-  if (lang && lang !== 'sk') { load(); return; }
+  // anglická stránka (en/): slovník hneď, aby aj texty skladané skriptmi boli po anglicky
+  if ((lang && lang !== 'sk') || html.dataset.zdroj) { load(); return; }
   ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
   const later = () => setTimeout(load, 3500);
   if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });

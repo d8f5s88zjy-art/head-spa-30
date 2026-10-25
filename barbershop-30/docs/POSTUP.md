@@ -59,6 +59,12 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25 (hotové, CHECKS 27): zadávateľ schválil SEO body 1 až 4. Titulok, popis a H1 s „Barbershop 30 Nitra,
+  pánske holičstvo, Mostná 30“, 8 častých otázok na stránke (overené odpovede), `hasMap` v údajoch pre Google,
+  anglická stránka `en/` (vytvára sa pri nasadení, hreflang v sitemap). Admin mení aj ceny v údajoch pre Google.
+  Testy OK. Čaká na zadávateľa: body 5 až 8 (bez objednania, poukážky, produkty, detská stolička), súhlas so
+  zverejnením (až keď potvrdí odhlásenie Claude na všetkých zariadeniach po krádeži telefónu) a doména barbershop30.sk.
+
 - 2026‑10‑25: SEO analýza trhu v Nitre (`docs/SEO-ANALYZA.md`): 8 konkurentov, našepkávač Google, porovnanie webov
   a rýchlosti na telefóne. Najväčšia sila: 945 recenzií 5,0 na Google. Najväčší problém: nový web nie je na doméne
   barbershop30.sk (dnešný web: titulok „Barbershop30“, bez popisu, lang en, 13,9 MB). Návrhy čakajú na súhlas:

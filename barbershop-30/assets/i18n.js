@@ -30,6 +30,9 @@ const ALIAS = { hr: 'sr', bs: 'sr', sh: 'sr', me: 'sr' };
 const BQ_BOOK = { sk: 'rezervacia', cs: 'rezervace', hu: 'foglalas', en: 'reservation', de: 'reservation', pl: 'reservation', uk: 'reservation' };
 const BQ_RE = /^https:\/\/booqme\.app\/[a-z]{2}\/(rezervacia|rezervace|foglalas|reservation)\//;
 const STORE = 'b30.lang';
+/* jazyk, v ktorom je stránka napísaná: slovenčina, alebo angličtina na vygenerovanej stránke en/ (data-zdroj="en",
+   source/tools/en-stranka.mjs). Na nej je text už preložený; iný jazyk otvorí slovenskú stránku s ?lang=. */
+const ZDROJ = html.dataset.zdroj || 'sk';
 const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
 const SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, svg: 1 };
 const LETTER = /\p{L}/u;               // písmeno v ľubovoľnom písme (latinka, cyrilika, …)
@@ -42,6 +45,7 @@ const byCode = (c) => LANGS.find((l) => l.code === c) || null;
 export function pick() {
   const q = new URLSearchParams(location.search).get('lang');
   if (q && byCode(q)) return q;
+  if (ZDROJ !== 'sk') return ZDROJ;   // anglická stránka z Google ostane anglická, aj keď si niekto pamätá iný jazyk
   try { const s = localStorage.getItem(STORE); if (s && byCode(s)) return s; } catch (e) { /* súkromné okno */ }
   return 'sk';
 }
@@ -177,11 +181,15 @@ function load(code, cb) {
 export function set(code, remember) {
   if (busy || code === applied) return;
   const L = byCode(code); if (!L) return;
-  busy = true; current = code;
   if (remember !== false) { try { localStorage.setItem(STORE, code); } catch (e) { /* súkromné okno */ } }
-  const u = new URL(location.href);
-  if (code === 'sk') u.searchParams.delete('lang'); else u.searchParams.set('lang', code);
-  history.replaceState(history.state, '', u);
+  // na anglickej stránke vedie iný jazyk na slovenskú stránku (tam sa preloží), angličtina ostáva bez ?lang=
+  if (code !== ZDROJ && ZDROJ !== 'sk') { location.href = new URL(code === 'sk' ? '../' : `../?lang=${code}`, location.href).href; return; }
+  busy = true; current = code;
+  if (ZDROJ === 'sk') {
+    const u = new URL(location.href);
+    if (code === 'sk') u.searchParams.delete('lang'); else u.searchParams.set('lang', code);
+    history.replaceState(history.state, '', u);
+  }
   load(code, (map) => { apply(map || code === 'sk' ? code : 'sk', map); busy = false; });
 }
 
@@ -263,6 +271,6 @@ export function spusti() {
   document.head.append(link);
   current = pick();
   link.addEventListener('load', build, { once: true });
-  if (current !== 'sk') { html.lang = byCode(current).locale; waiting(true); setTimeout(() => waiting(false), 1500); set(current, false); }
+  if (current !== 'sk') { html.lang = byCode(current).locale; if (current !== ZDROJ) { waiting(true); setTimeout(() => waiting(false), 1500); } set(current, false); }
   else { later(offer); later(() => { if (!nodes) collect(); }); }
 }

@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<!-- Vygenerované zo slovenskej index.html a assets/i18n/en.json (source/tools/en-stranka.mjs). Needitovať, pri nasadení sa vytvorí nanovo. -->
+<html lang="en" data-zdroj="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Barbershop 30 Nitra | Men's barbershop, Mostná 30</title>
+  <meta name="description" content="Men's barbershop at Mostná 30 in Nitra: haircuts, fades, beard trims and straight razor shaves, free coffee. Book online or call us.">
+  <meta name="theme-color" content="#0E0D0C">
+  <meta name="color-scheme" content="dark">
+  <!-- Brána filmu (trieda world): podmienky a prepínače ?film=off|on, ?motion=off sú v README, časť Film zo skutočných fotiek. -->
+  <!-- karty: titulné karty a zábery stoja cez celé okno (P11 v style.css); bez skriptu ide záloha bežne so stránkou -->
+  <script>(function(h){h.classList.add('karty');try{var g=(/[?&]lang=(\w+)/.exec(location.search)||0)[1]||localStorage.getItem('b30.lang');g&&g!='sk'&&h.classList.add('t-wait')}catch(e){}try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');}catch(e){}
+  /* úvod ako film (prológ, ../assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte;
+     ?uvod=znova ho pustí aj opakovane, ?uvod=off ho vynechá (ladenie, merania). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda. */
+  try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&!/[?&]uvod=off\b/.test(location.search)&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}
+  /* záloha úvodu (fasáda pri prológu, inak rohožka) sa začne sťahovať hneď s hlavičkou, nie až keď ju
+     prehliadač nájde v tele stránky; rovnaký srcset/sizes ako <picture> v kotve, takže ide z cache */
+  try{var p=h.classList.contains('pro'),m=matchMedia('(max-width: 720px)').matches,n=p?'vstup'+(m?'-m':''):'rohozka',l=document.createElement('link');
+  /* DEPLOY STEP: tie isté srcset ako v kotve úvodu (stills.py); telefón: prológ výrez na výšku -m, rohožka fotka na šírku v páse (P16) */
+  var S={"vstup":"1086w,1448w,2172w,2896w,4096w","vstup-m":"1086w,1448w","rohozka":"1086w,1448w,1920w","rohozka-m":"1086w,1448w"},W={"vstup":[1086,1448,2172,2896,4096],"vstup-m":[1086,1448],"rohozka":[1086,1448,2172],"rohozka-m":[1086,1448]};
+  l.rel='preload';l.as='image';l.type='image/avif';l.setAttribute('imagesrcset',W[n].map(function(w,i){return '../assets/img/film/'+n+'-'+w+'.avif '+S[n].split(',')[i];}).join(', '));l.setAttribute('imagesizes',p?'(max-width: 720px) 93vw, 124vw':'(max-width: 720px) 170vw, 124vw');l.fetchPriority='high';document.head.appendChild(l);}catch(e){}})(document.documentElement);</script>
+  <!-- DEPLOY STEP: základná URL (https://d8f5s88zjy-art.github.io/barbershop30/) je v canonical, og:url, og:image a JSON-LD.
+       Pri inej doméne ju nahraď jedným príkazom sed (viď README.md, „Nasadenie“). -->
+  <link rel="canonical" href="https://d8f5s88zjy-art.github.io/barbershop30/en/">
+  <meta property="og:type" content="business.business">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="Barbershop 30">
+  <meta property="og:title" content="Barbershop 30 Nitra – Your cut. Your place.">
+  <meta property="og:description" content="Men's haircuts, beards and shaves at Mostná 30 in Nitra. Book your appointment online.">
+  <meta property="og:url" content="https://d8f5s88zjy-art.github.io/barbershop30/en/">
+  <meta property="og:image" content="https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Barber chair in black quilted leather with a gold frame, in morning light">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230E0D0C'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Fraunces,Georgia,serif' font-weight='800' font-size='34' fill='%23F1E9DD'%3E30%3C/text%3E%3Crect x='20' y='49' width='24' height='3' rx='1.5' fill='%23E0601C'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="preload" href="../assets/fonts/Fraunces-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/Manrope-400.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- kurzíva je v nadpise úvodu (Tvoje miesto), bez prednačítania by sa nadpis prekreslil až po nej -->
+  <link rel="preload" href="../assets/fonts/Fraunces-500i.woff2" as="font" type="font/woff2" crossorigin>
+  <style>/* písma priamo v stránke (to isté ako ../assets/fonts.css), aby prvé vykreslenie nečakalo na ďalší súbor */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:500;font-display:swap;src:url("../assets/fonts/Fraunces-500.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:800;font-display:swap;src:url("../assets/fonts/Fraunces-800.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:500;font-display:swap;src:url("../assets/fonts/Fraunces-500i.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;src:url("../assets/fonts/Manrope-400.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;src:url("../assets/fonts/Manrope-600.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("../assets/fonts/Manrope-700.woff2") format("woff2")}
+  </style>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "name": "Barbershop 30",
+    "alternateName": "Barbershop30",
+    "url": "https://d8f5s88zjy-art.github.io/barbershop30/",
+    "image": "https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg",
+    "telephone": "+421951267203",
+    "email": "info@barbershop30.sk",
+    "foundingDate": "2019",
+    "hasMap": "https://www.google.com/maps?cid=18132360254733427623",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mostná 30",
+      "postalCode": "949 01",
+      "addressLocality": "Nitra",
+      "addressCountry": "SK"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "19:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/barbershop30_nitra/",
+      "https://www.facebook.com/barbershop30nitra/"
+    ],
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": "https://www.barbershop30.sk/rezervacia"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services and prices",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Men's haircut" }, "price": "18", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Men's haircut and beard trim" }, "price": "28", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Men's haircut – hair over 10 cm" }, "price": "22", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Little gentlemen's cut" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Head shave" }, "price": "13", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Beard trim" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hot Towel clean shave" }, "price": "15", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Beard colouring" }, "price": "10", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Package 1" }, "price": "30", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ultra inclusive Barbershop30" }, "price": "40", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skin care PREMIUM" }, "price": "21.50", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Eyebrow shaping" }, "price": "3", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ear and nose waxing" }, "price": "5.50", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Creative hair pattern" }, "price": "4", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Eyebrow tinting" }, "price": "5", "priceCurrency": "EUR" }
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Lišta -->
+  <header class="site-header" data-menu="closed">
+    <div class="container">
+      <a class="brand" href="#uvod" aria-label="Barbershop 30 Nitra – back to the start">Barbershop 30 <small>Nitra</small></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path class="nav-toggle-open" d="M4 7h16M4 12h16M4 17h16"/>
+          <path class="nav-toggle-close" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="#vstup-dnu">Tour</a>
+        <a href="#sluzby">Services</a>
+        <a href="#tim">Team</a>
+        <a href="#galeria">Gallery</a>
+        <a href="#kontakt">Contact</a>
+        <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="story-line" aria-label="Tour chapters">
+    <a href="#uvod" data-chapter="1" aria-label="Start"></a>
+    <a href="#vstup-dnu" data-chapter="2" aria-label="Come on in"></a>
+    <a href="#remeslo" data-chapter="3" aria-label="Craft"></a>
+    <a href="#cakaren" data-chapter="4" aria-label="Waiting area"></a>
+    <a href="#tim" data-chapter="5" aria-label="Team"></a>
+    <a href="#sluzby" data-chapter="6" aria-label="Services and prices"></a>
+    <a href="#galeria" data-chapter="7" aria-label="Gallery"></a>
+    <a href="#rezervacia" data-chapter="8" aria-label="Booking"></a>
+  </nav>
+
+  <!-- Filmový canvas (position fixed, z-index 0) vytvára ../assets/film.js sám; .site je nad ním. -->
+  <!-- filmové pásy (letterbox) počas úvodu ako filmu: po príchode dnu sa odsunú (film.js dá pro-end) -->
+  <div class="film-bars" aria-hidden="true"><i></i><i></i></div>
+  <div class="site">
+  <main id="main">
+
+    <!-- =================================================================== -->
+    <!-- 1 ÚVOD – hneď za dverami, na rohožke; úvod ako film začína z ulice     -->
+    <!-- =================================================================== -->
+    <section class="scene" id="uvod" data-scene="1" aria-labelledby="h-uvod">
+      <!-- Záber úvodu je rohožka (slider/3). Prológ (data-pro, len s triedou pro na <html>): film začne
+           fasádou s dverami (vstup), kamera dôjde k dverám a cez šero prejde dnu na rohožku. Statická
+           záloha sa vyberie podľa triedy pro, aby prvý obraz stránky bol ten, ktorým film začne:
+           obe sú v <template> (prehliadač ich nesťahuje), skript vloží tú správnu hneď pri čítaní. -->
+      <div class="film-shot is-title" data-card="center" data-shot="rohozka" data-size="1920x1200" data-f="0.5,0.55" data-fm="0.50,0.5" data-mv="rise" data-place="Na rohožke, hneď za dverami"
+           data-pro="vstup" data-pro-size="4096x2731" data-pro-f="0.76,0.53" data-pro-fm="0.50,0.53" data-pro-mv="door" data-pro-place="Vstup z Mostnej ulice" data-tiers="1086,1448,2172" data-m="rohozka-m" data-m-size="1449x2576" data-m-tiers="1086,1448" data-pro-tiers="1086,1448,2172,2896,4096" data-pro-m="vstup-m" data-pro-m-size="1536x2731" data-pro-m-tiers="1086,1448">
+        <template id="still-uvod">
+          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
+            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, 124vw">
+            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw">
+            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
+          </picture>
+        </template>
+        <template id="still-vstup">
+          <picture class="film-still film-still-pro" style="--fx: 76%; --fy: 53%; --fmx: 50.0%; --fmy: 53%; --fxn: 0.76; --fyn: 0.53; --fmxn: 0.5; --fmyn: 0.53; --pa: 1.4998; --pam: 0.5624">
+            <source media="(max-width: 720px)" type="image/avif" srcset="../assets/img/film/vstup-m-1086.avif 1086w, ../assets/img/film/vstup-m-1448.avif 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source media="(max-width: 720px)" type="image/webp" srcset="../assets/img/film/vstup-m-1086.webp 1086w, ../assets/img/film/vstup-m-1448.webp 1448w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w, ../assets/img/film/vstup-2896.avif 2896w, ../assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+            <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw">
+            <img src="../assets/img/film/vstup-1448.webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 93vw, 124vw" width="4096" height="2731" fetchpriority="high" decoding="async" alt="The Barbershop 30 façade on Mostná Street in Nitra, with the door and a barber pole">
+          </picture>
+        </template>
+        <script>(function(d){var t=d.getElementById(d.documentElement.classList.contains('pro')?'still-vstup':'still-uvod');t.after(t.content.cloneNode(true));})(document);</script>
+        <noscript>
+          <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
+            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, 124vw">
+            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw">
+            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw" width="1920" height="1200" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
+          </picture>
+        </noscript>
+        <!-- titulná karta (P11 v style.css): pripnutá, kým kotva prechádza oknom, mení sa len krytím (--o z app.js) -->
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card title-hero">
+              <!-- nadpisok je súčasťou H1: Google aj čítačka čítajú „Barbershop 30 · Nitra, Tvoj strih. Tvoje miesto.“ -->
+              <h1 class="title" id="h-uvod"><span class="kicker">Barbershop 30 · Nitra</span> <span class="w">Your cut.</span> <span class="w"><em>Your place.</em></span></h1>
+              <p class="title-sub">Men's barbershop at Mostná 30. Haircuts, beard trims and razor shaves, coffee on the house.</p>
+              <p class="hero-live" data-zive hidden></p>
+              <ul class="hero-proof" role="list">
+                <li><a class="hero-rating" href="https://www.google.com/maps?cid=18132360254733427623" target="_blank" rel="noopener">5.0 on Google · 945 reviews</a></li>
+                <li>Men's haircut €18</li>
+              </ul>
+              <div class="title-actions">
+                <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+                <a class="btn btn-secondary btn-tel" href="tel:+421951267203">Call to confirm a time</a>
+              </div>
+            </div>
+            <p class="scroll-hint" aria-hidden="true">Walk through the shop</p>
+            <!-- návrat na otváraciu scénu (film.js): von na ulicu a späť dnu -->
+            <button class="film-door" type="button"><span class="film-door-von">Back to the street</span><span class="film-door-dnu">Step inside</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 2 POĎ ĎALEJ – ako „STEP INSIDE“: fotka hlavnej sály (na telefóne ostrý výrez na výšku, bez videa) -->
+    <!-- =================================================================== -->
+    <section class="scene" id="vstup-dnu" data-scene="2" aria-labelledby="h-vstup-dnu">
+      <div class="film-shot is-title" data-card="left" data-shot="sala" data-f="0.5,0.55" data-mv="in" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/sala-1086.avif 1086w, ../assets/img/film/sala-1448.avif 1448w, ../assets/img/film/sala-2172.avif 2172w, ../assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/sala-1448.webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room with a barber at work, orange lamps and a wooden floor">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">First step</p>
+              <h2 class="title kin" id="h-vstup-dnu">Come on in.</h2>
+              <p class="title-sub">A receptionist welcomes you at the door. We're the only barbershop in Nitra to have one – for 8 years now.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book your seat<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 3 REMESLO – pracovné miesto (na telefóne ostrý výrez fotky, bez videa) -->
+    <!-- =================================================================== -->
+    <section class="scene" id="remeslo" data-scene="3" aria-labelledby="h-remeslo">
+      <div class="film-shot is-title" data-card="left" data-shot="stol" data-f="0.5,0.5" data-mv="rise" data-place="Pracovné miesto" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="stol-m" data-m-size="1152x2048" data-m-tiers="1086,1448" data-fm="0.50,0.52">
+        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 52%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.52; --pa: 1.4998; --pam: 0.5625">
+          <source type="image/avif" srcset="../assets/img/film/stol-1086.avif 1086w, ../assets/img/film/stol-1448.avif 1448w, ../assets/img/film/stol-2172.avif 2172w, ../assets/img/film/stol-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/stol-1448.webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber's workstation with a mirror, Edison bulbs and tools on the counter">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">Craft</p>
+              <h2 class="title kin" id="h-remeslo">Tell us how<br> you want it.</h2>
+              <p class="title-sub">Consultation, clippers, scissors, fade. For the beard, a hot towel and a razor.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Men's haircut €18, book now<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 4 ČAKÁREŇ – vzadu, kde sa čaká; tam sa podáva káva (majiteľ 2026‑10‑11) -->
+    <!-- =================================================================== -->
+    <section class="scene" id="cakaren" data-scene="4" aria-labelledby="h-cakaren">
+      <div class="film-shot is-title" data-card="right" data-shot="cakaren" data-f="0.5,0.55" data-mv="in" data-place="Kútik s pumpou Route 66" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="cakaren-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/cakaren-1086.avif 1086w, ../assets/img/film/cakaren-1448.avif 1448w, ../assets/img/film/cakaren-2172.avif 2172w, ../assets/img/film/cakaren-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/cakaren-1448.webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A corner with armchairs, a colourful bulldog figure and a retro Route 66 petrol pump">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">Waiting area</p>
+              <h2 class="title kin" id="h-cakaren">In the back,<br> coffee's waiting.</h2>
+              <p class="title-sub">Armchairs, a retro petrol pump and a colourful bulldog. Coffee and mineral water are on the house.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Coffee's waiting, pick a time<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 5 TÍM – sála v rannom svetle, portréty, video                         -->
+    <!-- =================================================================== -->
+    <section class="scene" id="tim" data-scene="5" aria-labelledby="h-tim">
+      <div class="film-shot is-title title-long" data-card="left" data-shot="sala-rano" data-f="0.5,0.55" data-mv="left" data-place="Sála v rannom svetle" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-rano-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/sala-rano-1086.avif 1086w, ../assets/img/film/sala-rano-1448.avif 1448w, ../assets/img/film/sala-rano-2172.avif 2172w, ../assets/img/film/sala-rano-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/sala-rano-1448.webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room in morning light, with chairs and an illuminated Barbershop sign">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">People</p>
+              <h2 class="title kin" id="h-tim">Who do you trust<br> with your head?</h2>
+              <p class="title-sub">A team of barbers, both men and women, works here under the Barbershop 30 name. You pick your person when you book.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Choose your barber<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="band band-team"><i class="band-cut" aria-hidden="true"></i>
+        <div class="container">
+          <div class="band-head grid">
+            <div class="band-head-text">
+              <p class="eyebrow">Who'll cut your hair</p>
+              <p class="lead measure">Honest craft, modern style and a human touch. That's what the whole team shares.</p>
+            </div>
+            <figure class="video-window team-video">
+              <video muted playsinline loop preload="none" data-poster="../assets/video/tim-v-akcii-poster-576.webp" width="576" height="1024" aria-hidden="true" tabindex="-1" data-video>
+                <source src="../assets/video/tim-v-akcii-576.webm" type="video/webm">
+                <source src="../assets/video/tim-v-akcii-576.mp4" type="video/mp4">
+              </video>
+              <figcaption class="chip">Team in action</figcaption>
+            </figure>
+          </div>
+          <ul class="team-grid" role="list">
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-nikolas-480.avif 480w, ../assets/img/tim-nikolas-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-nikolas-480.webp 480w, ../assets/img/tim-nikolas-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-nikolas-820.png" srcset="../assets/img/tim-nikolas-480.png 480w, ../assets/img/tim-nikolas-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Nikolas, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Nikolas</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">The cut suits you as if you'd always worn it.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-kristian-480.avif 480w, ../assets/img/tim-kristian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-kristian-480.webp 480w, ../assets/img/tim-kristian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-kristian-820.png" srcset="../assets/img/tim-kristian-480.png 480w, ../assets/img/tim-kristian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Kristián, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Kristián</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">Effortless elegance. That's his signature.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-damian-480.avif 480w, ../assets/img/tim-damian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-damian-480.webp 480w, ../assets/img/tim-damian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-damian-820.png" srcset="../assets/img/tim-damian-480.png 480w, ../assets/img/tim-damian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Damian, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Damian</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">He listens carefully. Then only the scissors do the talking.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-michal-480.avif 480w, ../assets/img/tim-michal-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-michal-480.webp 480w, ../assets/img/tim-michal-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-michal-820.png" srcset="../assets/img/tim-michal-480.png 480w, ../assets/img/tim-michal-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Michal, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Michal</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">You close your eyes under the hot towel and open them content.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-andy-480.avif 480w, ../assets/img/tim-andy-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-andy-480.webp 480w, ../assets/img/tim-andy-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-andy-820.png" srcset="../assets/img/tim-andy-480.png 480w, ../assets/img/tim-andy-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Andy, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Andy</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">Every detail in its place, even the one you only see in profile.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-dominika-480.avif 480w, ../assets/img/tim-dominika-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-dominika-480.webp 480w, ../assets/img/tim-dominika-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-dominika-820.png" srcset="../assets/img/tim-dominika-480.png 480w, ../assets/img/tim-dominika-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Dominika, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Dominika</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">A gentle hand, a strict eye. With her, it's only done when every hair sits right.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-kevin-480.avif 480w, ../assets/img/tim-kevin-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-kevin-480.webp 480w, ../assets/img/tim-kevin-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-kevin-820.png" srcset="../assets/img/tim-kevin-480.png 480w, ../assets/img/tim-kevin-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Kevin, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Kevin</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">He works calmly and cleanly. You'll still like the result a week later.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-lajko-480.avif 480w, ../assets/img/tim-lajko-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-lajko-480.webp 480w, ../assets/img/tim-lajko-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-lajko-820.png" srcset="../assets/img/tim-lajko-480.png 480w, ../assets/img/tim-lajko-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Lajko, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Lajko</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">A sharp line at the neck, a soft blend on the sides. You can see the craft up close.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-jojo-480.avif 480w, ../assets/img/tim-jojo-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-jojo-480.webp 480w, ../assets/img/tim-jojo-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-jojo-820.png" srcset="../assets/img/tim-jojo-480.png 480w, ../assets/img/tim-jojo-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Jojo, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Jojo</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">Chat or silence, whatever you prefer. Either way, he'll get the cut just right.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+            <li class="team-card reveal">
+              <div class="team-portrait odhal">
+                <picture>
+                  <source type="image/avif" srcset="../assets/img/tim-adrian-480.avif 480w, ../assets/img/tim-adrian-820.avif 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <source type="image/webp" srcset="../assets/img/tim-adrian-480.webp 480w, ../assets/img/tim-adrian-820.webp 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw">
+                  <img src="../assets/img/tim-adrian-820.png" srcset="../assets/img/tim-adrian-480.png 480w, ../assets/img/tim-adrian-820.png 820w" sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw" width="821" height="695" loading="lazy" decoding="async" style="--focal: 50% 35%" alt="Adrian, barber at Barbershop 30">
+                </picture>
+              </div>
+              <div class="team-body">
+                <h3 class="team-name">Adrian</h3>
+                <p class="team-role">Barber</p>
+                <p class="team-bio">He wins your trust before you even sit down in the chair. You'll be glad to come back to him.</p>
+                <a class="link-arrow team-cta" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now <span aria-hidden="true">→</span></a>
+              </div>
+            </li>
+          </ul>
+          <p class="small team-note">Colouring, highlights and perms are done by Romana. <a href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">You book them separately</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 6 SLUŽBY A CENY – kreslo uprostred sály, doska s cenníkom             -->
+    <!-- =================================================================== -->
+    <section class="scene" id="sluzby" data-scene="6" aria-labelledby="h-sluzby">
+      <div class="film-shot is-title title-long" data-card="center" data-shot="kreslo-stred" data-f="0.5,0.55" data-mv="near" data-place="Kreslo uprostred sály" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-stred-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/kreslo-stred-1086.avif 1086w, ../assets/img/film/kreslo-stred-1448.avif 1448w, ../assets/img/film/kreslo-stred-2172.avif 2172w, ../assets/img/film/kreslo-stred-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/kreslo-stred-1448.webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber chair in the middle of the main room, between two workstations with mirrors">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">Services and prices</p>
+              <h2 class="title kin" id="h-sluzby">What'll it<br> be today?</h2>
+              <p class="title-sub">Men's haircut €18, with a beard trim €28. Prices are final.</p>
+              <a class="hook" href="#cennik">See the full price list<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="band band-prices"><i class="band-cut" aria-hidden="true"></i>
+      <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Men's haircut</span><i></i><span>Fade</span><i></i><span>Beard trim</span><i></i><span>Hot Towel</span><i></i><span>Straight razor shave</span><i></i><span>Little gentlemen's cut</span><i></i><span>Ultra inclusive</span><i></i><span>Men's haircut</span><i></i><span>Fade</span><i></i><span>Beard trim</span><i></i><span>Hot Towel</span><i></i><span>Straight razor shave</span><i></i><span>Little gentlemen's cut</span><i></i><span>Ultra inclusive</span><i></i></div></div>
+        <div class="container">
+          <div class="steps-wrap">
+            <p class="eyebrow">Men's haircut, step by step</p>
+            <ol class="steps">
+              <li>Consultation</li>
+              <li>Clippers and scissors, fade</li>
+              <li>Hair wash and blow-dry</li>
+              <li>Hot towel and razor for the beard</li>
+              <li>Styling and cologne</li>
+            </ol>
+          </div>
+          <div class="price-list" id="cennik">
+              <section class="price-group" aria-labelledby="g-strih">
+                <h3 class="price-group-title" id="g-strih">Cut</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Men's haircut</h4><p class="price-desc">Consultation, clipper and scissor cut including fade, hair wash, blow-dry, styling and cologne.</p></div>
+                    <p class="price-time">40 min</p>
+                    <p class="price-amount">18 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="1" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Men's haircut</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Men's haircut and beard trim</h4><p class="price-desc">A complete haircut plus a beard trim with hot towel, razor and styling.</p></div>
+                    <p class="price-time">60 min</p>
+                    <p class="price-amount">28 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="18" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Men's haircut and beard trim</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Men's haircut – hair over 10 cm</h4><p class="price-desc">Same steps as the men's haircut, with more time for longer hair.</p></div>
+                    <p class="price-time">60 min</p>
+                    <p class="price-amount">22 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="19" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Men's haircut, hair over 10 cm</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Little gentlemen's cut</h4><p class="price-desc">Classic cut or fade, optionally a creative pattern, wash and styling – for boys up to 10 years old.</p></div>
+                    <p class="price-time">45 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="5" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Little gentlemen's cut</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Head shave</h4><p class="price-desc">Skin prep, straight razor shave, wash, drying and styling.</p></div>
+                    <p class="price-time">25 min</p>
+                    <p class="price-amount">13 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="2" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Head shave</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-brada">
+                <h3 class="price-group-title" id="g-brada">Beard and shave</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Beard trim</h4><p class="price-desc">Beard shaping, hot towel steam, razor and styling with products.</p></div>
+                    <p class="price-time">20 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="3" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Beard trim</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Hot Towel clean shave</h4><p class="price-desc">Straight razor shave with hot towel steam and post-shave skin care.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">15 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="4" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Hot Towel clean shave</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Beard colouring</h4><p class="price-desc">Colouring with professional dyes, 20 ml of dye.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">10 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="11" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Beard colouring</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-balicky">
+                <h3 class="price-group-title" id="g-balicky">Packages</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Package 1</h4><p class="price-desc">Haircut, beard trim, hot towel, eyebrows, ear waxing, wash, hair tonic, blow-dry, styling and cologne.</p></div>
+                    <p class="price-time">65 min</p>
+                    <p class="price-amount">30 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="14" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Package 1</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Ultra inclusive Barbershop30</h4><p class="price-desc">Everything in Package 1, plus a facial steam, a scrub, a relaxing mask of your choice and a glass of whisky.</p></div>
+                    <p class="price-time">80 min</p>
+                    <p class="price-amount">40 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="15" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Ultra inclusive Barbershop30</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="price-group" aria-labelledby="g-doplnky">
+                <h3 class="price-group-title" id="g-doplnky">Extras</h3>
+                <ul role="list">
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Skin care PREMIUM</h4><p class="price-desc">Facial steam, a scrub and a relaxing mask of your own choice.</p></div>
+                    <p class="price-time">30 min</p>
+                    <p class="price-amount">21,50 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="6" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Skin care PREMIUM</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Eyebrow shaping</h4><p class="price-desc">Plucking and shaping the eyebrows.</p></div>
+                    <p class="price-time">5 min</p>
+                    <p class="price-amount">3 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="7" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Eyebrow shaping</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Ear and nose waxing</h4><p class="price-desc">Removing ear and nose hair with wax.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">5,50 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="8" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Ear and nose waxing</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Creative hair pattern</h4><p class="price-desc">A pattern cut into the hair.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">4 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="10" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Creative hair pattern</span></a>
+                  </li>
+                  <li class="price-row">
+                    <div class="price-main"><h4 class="price-name">Eyebrow tinting</h4><p class="price-desc">Eyebrow tinting with professional dyes.</p></div>
+                    <p class="price-time">10 min</p>
+                    <p class="price-amount">5 €</p>
+                    <a class="btn btn-ghost price-cta" data-sluzba="12" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book<span class="visually-hidden"> – Eyebrow tinting</span></a>
+                  </li>
+                </ul>
+              </section>
+
+              <div class="price-extra">
+                <div class="price-main">
+                  <p class="price-name">Colouring, highlights and perms</p>
+                  <p class="price-desc">Romana does these, and they're booked in a separate system, where you'll also find their prices.</p>
+                </div>
+                <a class="link-arrow" href="https://booqme.app/sk/rezervacia/barbershop30" target="_blank" rel="noopener">Book on Booqme <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 7 GALÉRIA – káva pre hostí, detaily, sud                               -->
+    <!-- =================================================================== -->
+    <section class="scene" id="galeria" data-scene="7" aria-labelledby="h-galeria">
+      <div class="film-shot is-title title-long" data-card="left" data-shot="kava" data-f="0.5,0.5" data-mv="down" data-place="Káva pre hostí" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kava-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
+        <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
+          <source type="image/avif" srcset="../assets/img/film/kava-1086.avif 1086w, ../assets/img/film/kava-1448.avif 1448w, ../assets/img/film/kava-2172.avif 2172w, ../assets/img/film/kava-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/kava-1448.webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Coffee and water on a wooden tray in the morning sun">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">Gallery</p>
+              <h2 class="title kin" id="h-galeria">See it<br> up close.</h2>
+              <p class="title-sub">Coffee in the morning sun, scissors and comb, neon in moss.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Come and see it, book now<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="band band-gallery"><i class="band-cut" aria-hidden="true"></i>
+        <div class="container">
+          <!-- Fotky výsledkov strihov (pred/po) zatiaľ nie sú k dispozícii – blok ostáva skrytý. -->
+          <div class="results-placeholder" hidden data-required="results">
+            <h3>Haircut results</h3>
+            <p class="body">The haircut gallery will be added once the photos are taken.</p>
+          </div>
+
+          <div class="gallery">
+            <ul class="gallery-grid" role="list">
+              <li class="gallery-item is-wide">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 50% 50%" data-lightbox-src="../assets/img/naradie-noznice-1600.jpg" data-lightbox-srcset="../assets/img/naradie-noznice-1080.jpg 1080w, ../assets/img/naradie-noznice-1600.jpg 1600w, ../assets/img/naradie-noznice-1920.jpg 1920w" data-lightbox-alt="Scissors and comb on a barber mat with the logo" data-lightbox-w="1920" data-lightbox-h="1200" aria-label="Enlarge: Scissors and comb on a barber mat with the logo">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/naradie-noznice-640.avif 640w, ../assets/img/naradie-noznice-1080.avif 1080w, ../assets/img/naradie-noznice-1600.avif 1600w" sizes="(max-width: 900px) 100vw, 50vw">
+                    <source type="image/webp" srcset="../assets/img/naradie-noznice-640.webp 640w, ../assets/img/naradie-noznice-1080.webp 1080w, ../assets/img/naradie-noznice-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw">
+                    <img src="../assets/img/naradie-noznice-1080.jpg" srcset="../assets/img/naradie-noznice-640.jpg 640w, ../assets/img/naradie-noznice-1080.jpg 1080w, ../assets/img/naradie-noznice-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1920" height="1200" loading="lazy" decoding="async" alt="Scissors and comb on a barber mat with the logo">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 45% 55%" data-lightbox-src="../assets/img/detail-stol-1600.jpg" data-lightbox-srcset="../assets/img/detail-stol-1080.jpg 1080w, ../assets/img/detail-stol-1600.jpg 1600w, ../assets/img/detail-stol-2200.jpg 2200w" data-lightbox-alt="Decanter, pomades and a shaving brush on the workstation" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Enlarge: Decanter, pomades and a shaving brush on the workstation">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/detail-stol-640.avif 640w, ../assets/img/detail-stol-1080.avif 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/detail-stol-640.webp 640w, ../assets/img/detail-stol-1080.webp 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/detail-stol-1080.jpg" srcset="../assets/img/detail-stol-640.jpg 640w, ../assets/img/detail-stol-1080.jpg 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Decanter, pomades and a shaving brush on the workstation">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item is-portrait">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 62% 28%" data-lightbox-src="../assets/img/galeria-barberpole-1600.jpg" data-lightbox-srcset="../assets/img/galeria-barberpole-1080.jpg 1080w, ../assets/img/galeria-barberpole-1600.jpg 1600w" data-lightbox-alt="Two illuminated barber poles on a pillar" data-lightbox-w="1932" data-lightbox-h="2576" aria-label="Enlarge: Two illuminated barber poles on a pillar">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-barberpole-640.avif 640w, ../assets/img/galeria-barberpole-1080.avif 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-barberpole-640.webp 640w, ../assets/img/galeria-barberpole-1080.webp 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-barberpole-1080.jpg" srcset="../assets/img/galeria-barberpole-640.jpg 640w, ../assets/img/galeria-barberpole-1080.jpg 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw" width="1932" height="2576" loading="lazy" decoding="async" alt="Two illuminated barber poles on a pillar">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item is-portrait">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 45% 48%" data-lightbox-src="../assets/img/galeria-neon-1080.jpg" data-lightbox-srcset="../assets/img/galeria-neon-640.jpg 640w, ../assets/img/galeria-neon-1080.jpg 1080w" data-lightbox-alt="Illuminated Barbershop 30 sign in a moss frame on a slatted wall" data-lightbox-w="1200" data-lightbox-h="1600" aria-label="Enlarge: Illuminated Barbershop 30 sign in a moss frame on a slatted wall">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-neon-640.avif 640w, ../assets/img/galeria-neon-1080.avif 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-neon-640.webp 640w, ../assets/img/galeria-neon-1080.webp 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-neon-1080.jpg" srcset="../assets/img/galeria-neon-640.jpg 640w, ../assets/img/galeria-neon-1080.jpg 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Illuminated Barbershop 30 sign in a moss frame on a slatted wall">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item is-portrait">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 45% 55%" data-lightbox-src="../assets/img/galeria-zrkadlo-1600.jpg" data-lightbox-srcset="../assets/img/galeria-zrkadlo-1080.jpg 1080w, ../assets/img/galeria-zrkadlo-1600.jpg 1600w" data-lightbox-alt="Workstation with a wooden mirror frame and products" data-lightbox-w="1932" data-lightbox-h="2576" aria-label="Enlarge: Workstation with a wooden mirror frame and products">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-zrkadlo-640.avif 640w, ../assets/img/galeria-zrkadlo-1080.avif 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-zrkadlo-640.webp 640w, ../assets/img/galeria-zrkadlo-1080.webp 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-zrkadlo-1080.jpg" srcset="../assets/img/galeria-zrkadlo-640.jpg 640w, ../assets/img/galeria-zrkadlo-1080.jpg 1080w" sizes="(max-width: 640px) 31vw, (max-width: 900px) 50vw, 25vw" width="1932" height="2576" loading="lazy" decoding="async" alt="Workstation with a wooden mirror frame and products">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 50% 55%" data-lightbox-src="../assets/img/galeria-buldog-1600.jpg" data-lightbox-srcset="../assets/img/galeria-buldog-1080.jpg 1080w, ../assets/img/galeria-buldog-1600.jpg 1600w, ../assets/img/galeria-buldog-2200.jpg 2200w" data-lightbox-alt="Armchairs, a colourful bulldog figure and a retro petrol pump" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Enlarge: Armchairs, a colourful bulldog figure and a retro petrol pump">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-buldog-640.avif 640w, ../assets/img/galeria-buldog-1080.avif 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-buldog-640.webp 640w, ../assets/img/galeria-buldog-1080.webp 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-buldog-1080.jpg" srcset="../assets/img/galeria-buldog-640.jpg 640w, ../assets/img/galeria-buldog-1080.jpg 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Armchairs, a colourful bulldog figure and a retro petrol pump">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 50% 50%" data-lightbox-src="../assets/img/galeria-kava-1600.jpg" data-lightbox-srcset="../assets/img/galeria-kava-1080.jpg 1080w, ../assets/img/galeria-kava-1600.jpg 1600w, ../assets/img/galeria-kava-2200.jpg 2200w" data-lightbox-alt="Coffee and water on a wooden tray in the morning sun" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Enlarge: Coffee and water on a wooden tray in the morning sun">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-kava-640.avif 640w, ../assets/img/galeria-kava-1080.avif 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-kava-640.webp 640w, ../assets/img/galeria-kava-1080.webp 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-kava-1080.jpg" srcset="../assets/img/galeria-kava-640.jpg 640w, ../assets/img/galeria-kava-1080.jpg 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Coffee and water on a wooden tray in the morning sun">
+                  </picture>
+                </button>
+              </li>
+              <li class="gallery-item">
+                <button class="gallery-btn media odhal" type="button" style="--focal: 50% 55%" data-lightbox-src="../assets/img/galeria-sud-1600.jpg" data-lightbox-srcset="../assets/img/galeria-sud-1080.jpg 1080w, ../assets/img/galeria-sud-1600.jpg 1600w, ../assets/img/galeria-sud-2200.jpg 2200w" data-lightbox-alt="The front room with a barrel, towels and ring lights" data-lightbox-w="4096" data-lightbox-h="2731" aria-label="Enlarge: The front room with a barrel, towels and ring lights">
+                  <picture>
+                    <source type="image/avif" srcset="../assets/img/galeria-sud-640.avif 640w, ../assets/img/galeria-sud-1080.avif 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <source type="image/webp" srcset="../assets/img/galeria-sud-640.webp 640w, ../assets/img/galeria-sud-1080.webp 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw">
+                    <img src="../assets/img/galeria-sud-1080.jpg" srcset="../assets/img/galeria-sud-640.jpg 640w, ../assets/img/galeria-sud-1080.jpg 1080w" sizes="(max-width: 640px) 92vw, (max-width: 900px) 50vw, 25vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The front room with a barrel, towels and ring lights">
+                  </picture>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="recenzie" hidden><p class="eyebrow">What customers say</p><ul class="rec-list" data-recenzie data-no-i18n></ul></div>
+          <div class="trust">
+            <div class="trust-item">
+              <p class="eyebrow">Trust</p>
+              <p class="trust-text">We've been cutting hair at Mostná 30 since 2019. Read what customers say about us right on Google.</p>
+              <a class="link-arrow" href="https://www.google.com/maps?cid=18132360254733427623" target="_blank" rel="noopener">Reviews on Google <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="trust-item">
+              <p class="eyebrow">Instagram</p>
+              <p class="trust-text">We post our latest cuts and life in the shop on Instagram.</p>
+              <a class="link-arrow" href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">@barbershop30_nitra <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="film-shot is-title" data-card="right" data-shot="sud" data-f="0.5,0.55" data-mv="down" data-place="Predná sála so sudom" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sud-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
+        <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/sud-1086.avif 1086w, ../assets/img/film/sud-1448.avif 1448w, ../assets/img/film/sud-2172.avif 2172w, ../assets/img/film/sud-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/sud-1448.webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The front room with a barrel, towels, a chair and ring lights">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">On the way out</p>
+              <h3 class="title kin">You walk out<br> head held high.</h3>
+              <p class="title-sub">Styling and cologne to finish. The rest of the day is yours.</p>
+              <a class="hook" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book online<span class="hook-sipka" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 8 REZERVÁCIA – kruh sa uzavrie pri dverách                            -->
+    <!-- =================================================================== -->
+    <section class="scene" id="rezervacia" data-scene="8" aria-labelledby="h-rezervacia">
+      <div class="film-shot is-title title-long" data-card="center" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice" data-size="4096x2731" data-tiers="1086,1448,2172,2896,4096" data-m="vstup-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
+        <picture class="film-still" style="--fx: 55%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.55; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
+          <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w, ../assets/img/film/vstup-2896.avif 2896w, ../assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 170vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, 124vw">
+          <img src="../assets/img/film/vstup-1448.webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The Barbershop 30 façade on Mostná Street in Nitra, with the door and a barber pole">
+        </picture>
+        <div class="title-pin">
+          <div class="title-frame">
+            <div class="title-card">
+              <p class="kicker">Booking</p>
+              <h2 class="title kin" id="h-rezervacia">When <em>will you take a seat?</em></h2>
+              <p class="title-sub">Book online any time. Or call the front desk: on weekdays from 9:00 to 19:00 we always pick up.</p>
+              <div class="title-actions">
+                <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+                <a class="btn btn-secondary btn-tel" href="tel:+421951267203">Call to confirm a time</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="band band-contact"><i class="band-cut" aria-hidden="true"></i>
+        <div class="container contact-grid">
+          <div class="contact-main beam"><span class="beam-line" aria-hidden="true"></span>
+            <p class="eyebrow">How to find us</p>
+            <h3 class="h2">Mostná 30, Nitra</h3>
+            <div class="flap" data-flap><span class="flap-label">Today</span><span class="flap-cells">Mon–Fri 9:00–19:00, Sat 9:00–14:00</span><span class="flap-state"></span></div>
+            <dl class="contact-list">
+              <div class="contact-row"><dt>Address</dt><dd><address>Mostná 30, 949 01 Nitra</address></dd></div>
+              <div class="contact-row"><dt>Phone</dt><dd><a href="tel:+421951267203">0951 267 203</a></dd></div>
+              <div class="contact-row"><dt>Email</dt><dd><a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a></dd></div>
+              <div class="contact-row"><dt>Open</dt><dd>Mon–Fri 9:00–19:00<br>Sat 9:00–14:00<br>Sun closed</dd></div>
+            </dl>
+            <div class="cluster contact-actions">
+              <a class="btn btn-secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Get directions</a>
+              <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+            </div>
+          </div>
+          <ul class="facts" role="list">
+            <li><strong>Since 2019</strong><span>at Mostná 30 in Nitra</span></li>
+            <li><strong>8 chairs</strong><span>in three rooms</span></li>
+            <li><strong>Online 24/7</strong><span>book an appointment any time</span></li>
+            <li><strong>Kids' haircuts</strong><span>little gentlemen's cuts up to age 10</span></li>
+            <li><strong>Front desk</strong><span>the only barbershop in Nitra with one, for 8 years now</span></li>
+            <li><strong>Training</strong><span>upstairs, under the Barbershop 30 name</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- časté otázky: len overené odpovede (asistent/znalosti/barbershop-otazky.json), bez cien a dĺžok, aby
+           nezostarli pri zmene cenníka; telefón a hodiny mení admin naraz s celým webom -->
+      <div class="band band-faq" id="caste-otazky">
+        <div class="container faq">
+          <p class="eyebrow">Before you come</p>
+          <h3 class="h2" id="h-faq">Frequently asked questions</h3>
+          <div class="faq-list">
+            <details class="faq-item"><summary>How do I book?</summary><p>Online any time: pick a service, a barber and a free time. Or call 0951 267 203, on weekdays from 9:00 to 19:00 we always pick up.</p></details>
+            <details class="faq-item"><summary>Can I choose my barber?</summary><p>Yes, you choose your barber when you book.</p></details>
+            <details class="faq-item"><summary>Do you cut kids' hair?</summary><p>Yes, the little gentlemen's cut is for boys up to 10: a classic cut or fade, a wash and styling.</p></details>
+            <details class="faq-item"><summary>Do you do beards and razor shaves?</summary><p>Yes: beard trims with a hot towel and razor, the Hot Towel clean shave and beard colouring.</p></details>
+            <details class="faq-item"><summary>Are the prices in the price list final?</summary><p>Yes, the prices in the price list are final.</p></details>
+            <details class="faq-item"><summary>Do you colour hair too?</summary><p>Colouring, highlights and perms are done by Romana. You book them separately on Booqme, where you'll also find their prices.</p></details>
+            <details class="faq-item"><summary>What if I can't make it?</summary><p>Let us know as soon as you can on 0951 267 203, on weekdays from 9:00 to 19:00 we always pick up.</p></details>
+            <details class="faq-item"><summary>When are you open?</summary><p>Monday to Friday 9:00–19:00, Saturday 9:00–14:00, closed on Sunday.</p></details>
+          </div>
+          <div class="cluster faq-actions">
+            <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+            <a class="btn btn-secondary btn-tel" href="tel:+421951267203">Call to confirm a time</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pätička -->
+  <footer class="site-footer" id="kontakt">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <p class="brand" aria-hidden="true">Barbershop 30 <small>Nitra</small></p>
+          <p class="small">Men's haircuts, beards and shaves at Mostná 30. Since 2019.</p>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Contact</h2>
+          <address class="body">
+            Mostná 30<br>949 01 Nitra<br>
+            <a href="tel:+421951267203">0951 267 203</a><br>
+            <a href="mailto:info@barbershop30.sk">info@barbershop30.sk</a>
+          </address>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Opening hours</h2>
+          <dl class="hours">
+            <div><dt>Mon⁠–⁠Fri</dt><dd>9:00–19:00</dd></div>
+            <div><dt>Sat</dt><dd>9:00–14:00</dd></div>
+            <div><dt>Sun</dt><dd>closed</dd></div>
+          </dl>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Follow us</h2>
+          <ul class="footer-links" role="list">
+            <li><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.facebook.com/barbershop30nitra/" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Get directions</a></li>
+            <li><a href="../karta/" data-vernost-karta>Loyalty card</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="small">© <span class="year">2026</span> Barbershop 30 · Operator: FACEPALM, s.r.o., Company ID (IČO) 52231381</p>
+        <p class="small footer-autor">Graphic design and website: <span data-no-i18n>Samuel Pavelka</span></p>
+        <a class="link-arrow footer-top" href="#uvod">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+  <div class="mobile-cta is-hidden" id="mobile-cta">
+    <a class="btn btn-call" href="tel:+421951267203" aria-label="Call to confirm a time: 0951 267 203"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a12 12 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg><span>Call</span></a>
+    <a class="btn btn-primary" href="https://www.barbershop30.sk/rezervacia" target="_blank" rel="noopener">Book now</a>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged photograph">
+    <div class="lightbox-backdrop" data-lightbox="close"></div>
+    <figure class="lightbox-figure">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="" width="1600" height="1067" decoding="async">
+      <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox-btn lightbox-close" type="button" data-lightbox="close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-prev" type="button" data-lightbox="prev" aria-label="Previous photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-next" type="button" data-lightbox="next" aria-label="Next photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <script type="module" src="../assets/app.js"></script>
+  <script src="../assets/vernost.js" data-prevadzka="barbershop" defer></script>
+  <!-- Film zo skutočných fotiek (three r169, hĺbkové mapy). Modul si sám overí triedu world na <html>,
+       načíta knižnicu až po pohybe návštevníka a vytvorí canvas .film-canvas; kým neexistuje alebo zlyhá,
+       stránka ostáva v pokojnej verzii so statickými zábermi. -->
+  <script type="module" src="../assets/film.js"></script>
+</body>
+</html>

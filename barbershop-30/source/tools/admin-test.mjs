@@ -216,6 +216,8 @@ ok(en1[n(novyText)] === en0[n(hook)] && !(n(hook) in en1), 'preklad presunutý n
 const cenaRe = (c) => new RegExp(`<p class="price-amount">${c}[\\s${NB}]€</p>`);
 const riadok = (h, id) => { const i = h.indexOf(`data-sluzba="${id}"`); return h.slice(h.lastIndexOf('<li class="price-row"', i), i); };
 ok(cenaRe(novaCena).test(riadok(idx1, 1)) && cenaRe(novaCena).test(riadok(rez1, 1)), 'cena v index.html aj rezervacia.html', novaCena);
+const ldCena = (h) => { const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/); const o = JSON.parse(m[1]).hasOfferCatalog.itemListElement.find((x) => x.itemOffered.name === 'Pánsky strih'); return o && o.price; };
+ok(ldCena(idx1) === novaCena.replace(',', '.') && ldCena(idx0) === staraCena.replace(',', '.'), 'údaje pre Google (JSON-LD): nová cena, platný JSON', `${ldCena(idx0)} → ${ldCena(idx1)}`);
 ok(md1.includes(`– ${novaCena} €`) && md1.split('\n').some((r) => r.startsWith('- Pánsky strih –') && r.includes(`${novaCena} €`)), 'znalosti asistenta: nová cena');
 const staraVOdp = faq1.otazky.filter((o) => new RegExp(`(^|[^\\d,])${staraCena}[\\s${NB}]€`).test(o.a));
 ok(staraVOdp.length === 0 || staraVOdp.every((o) => /Pánsky strih/.test(o.a) === false), 'odpovede asistenta bez starej ceny Pánskeho strihu', staraVOdp.map((o) => o.id).join(','));

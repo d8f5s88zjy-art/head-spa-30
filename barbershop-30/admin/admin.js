@@ -656,6 +656,16 @@ function zostav() {
     }
     if (d && zmenene(d)) presuny.push([d.orig, sk(d), preklady(d)]);
     if (zmenene(cas)) for (const l of LANGS) { const vzor = i18n[l]['40 min']; if (vzor && !(`${sk(cas)} min` in i18n[l])) i18n[l][`${sk(cas)} min`] = vzor.replace(/\d+/, sk(cas)); }
+    // údaje pre Google (JSON-LD v hlavičke index.html): názov a cena služby ako v cenníku, nech Google nevidí starú cenu
+    if (zmenene(n) || zmenene(cena)) {
+      const src = base.raw[F.index], ld = src.indexOf('application/ld+json');
+      const re = new RegExp(`("name": )${reEsc(JSON.stringify(norm(n.orig)))}( \\}, "price": ")([\\d.]+)(")`);
+      const m = ld < 0 ? null : re.exec(src.slice(ld));
+      if (m) {
+        const at = ld + m.index;
+        zm[F.index].push({ start: at, end: at + m[0].length, text: `${m[1]}${JSON.stringify(sk(n))}${m[2]}${sk(cena).replace(',', '.')}${m[4]}` });
+      }
+    }
     // znalosti asistenta: riadok služby (názov – dĺžka – cena: popis)
     const kluc = (s) => plain(s).replace(/[–,]/g, ' ').replace(/\s+/g, ' ').trim();
     md = md.replace(/^- (.+?) – (\d+) min – ([\d,]+ €)(:.*)?$/gm, (cely, meno, min, cen, zvysok) => {
