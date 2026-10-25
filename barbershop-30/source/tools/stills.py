@@ -2,7 +2,8 @@
 """Zálohy filmu v index.html z assets/img/film/film.json.
 
 Každú <picture class="film-still"> (aj v <template> a <noscript>) prepíše podľa film.json: zdroje
-pre telefón (výrez na výšku <meno>-m-*, media (max-width: 720px) ako prah telefónu vo film.js),
+pre telefón len pri prológu (výrez na výšku <meno>-m-*, media (max-width: 720px) ako prah telefónu vo film.js;
+ostatné zábery sú na telefóne fotkou na šírku v páse, P16),
 zdroje na šírku so všetkými stupňami (AVIF, WebP) a <img> so zálohou WebP; šírky v srcset sú
 skutočné šírky súborov (rohozka-2172 = 1920w). Zachová alt, loading/fetchpriority/decoding a
 --fx/--fy; doplní --fmx/--fmy (bod záujmu výrezu). Na kotvách .film-shot doplní data-size,
@@ -17,6 +18,9 @@ PHONE = '(max-width: 720px)'
 # šírka pre výber stupňa: rovnaký stupeň, aký si vyberie film (rovina záberu 1,24 × okno; telefón kreslí 2×,
 # preto 93vw dá pri 3× aj 2× displeji 1086 px), takže fotku zálohy film už má v cache
 SIZES = '(max-width: 720px) 93vw, 124vw'
+# telefón na výšku (P16 v style.css): zábery okrem prológu sú fotkou na šírku v páse 56 % výšky, rovina záberu
+# je asi 2,2× širšia než displej (pri 390 × 844 asi 880 px), preto 170vw a žiadne výrezy -m
+SIZES_PAS = '(max-width: 720px) 170vw, 124vw'
 P = 'assets/img/film/'
 
 def srcset(name, tiers, ext):
@@ -37,12 +41,16 @@ def picture(name, style, img_attrs, indent, cls='film-still'):
     st = (f'{st}; --fmx: {fmx}; --fmy: {fmy}; --fxn: {fxn:g}; --fyn: {fyn:g}; --fmxn: {m["fx"]:g}; --fmyn: {fmyn:g}; '
           f'--pa: {r["width"] / r["height"]:.4f}; --pam: {m["width"] / m["height"]:.4f}')
     i = indent
+    # výrez na výšku len pre prológ (ide cez celé okno), ostatné zábery sú na telefóne v páse fotkou na šírku
+    pro = 'film-still-pro' in cls
+    sz = SIZES if pro else SIZES_PAS
+    tel = (f'{i}  <source media="{PHONE}" type="image/avif" srcset="{srcset(name + "-m", m["tiers"], "avif")}" sizes="{sz}">\n'
+           f'{i}  <source media="{PHONE}" type="image/webp" srcset="{srcset(name + "-m", m["tiers"], "webp")}" sizes="{sz}">\n') if pro else ''
     return (f'{i}<picture class="{cls}" style="{st}">\n'
-            f'{i}  <source media="{PHONE}" type="image/avif" srcset="{srcset(name + "-m", m["tiers"], "avif")}" sizes="{SIZES}">\n'
-            f'{i}  <source media="{PHONE}" type="image/webp" srcset="{srcset(name + "-m", m["tiers"], "webp")}" sizes="{SIZES}">\n'
-            f'{i}  <source type="image/avif" srcset="{srcset(name, r["tiers"], "avif")}" sizes="{SIZES}">\n'
-            f'{i}  <source type="image/webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{SIZES}">\n'
-            f'{i}  <img src="{P}{name}-{mid(r["tiers"])}.webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{SIZES}" width="{r["width"]}" height="{r["height"]}"{img_attrs}>\n'
+            f'{tel}'
+            f'{i}  <source type="image/avif" srcset="{srcset(name, r["tiers"], "avif")}" sizes="{sz}">\n'
+            f'{i}  <source type="image/webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{sz}">\n'
+            f'{i}  <img src="{P}{name}-{mid(r["tiers"])}.webp" srcset="{srcset(name, r["tiers"], "webp")}" sizes="{sz}" width="{r["width"]}" height="{r["height"]}"{img_attrs}>\n'
             f'{i}</picture>')
 
 PIC = re.compile(r'^([ \t]*)<picture class="(film-still[^"]*)" style="([^"]*)">\s*\n(.*?)^[ \t]*</picture>', re.S | re.M)

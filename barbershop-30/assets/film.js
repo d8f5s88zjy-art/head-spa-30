@@ -134,6 +134,11 @@
 
   // telefón podľa zariadenia (aj naležato), nie len podľa aktuálnej šírky okna
   const phone = matchMedia('(max-width: 720px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(innerWidth, innerHeight) <= 720);
+  /* telefón na výšku (P16 v style.css): fotka scény je v hornom páse (PAS_B výšky plátna), pod ním je text na
+     atramente, takže fotku nič neprekrýva a vidno jej asi dvakrát viac na šírku ako cez celú výšku displeja.
+     Zábery sú fotky na šírku (výrezy -m len pre prológ, ten ide cez celé plátno); optická os kamery je v strede
+     pásu (setViewOffset v aim()), pás sa správa ako celé okno a plátno pod ním zakryje atrament. */
+  const PAS_B = 0.56;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   // okamžitý skok bez plynulého skrolu z CSS (scroll-behavior: smooth); staré Safari nepozná 'instant'
   const jumpTo = (y) => { try { scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { const s = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; scrollTo(0, y); root.style.scrollBehavior = s; } };
@@ -227,9 +232,10 @@
   const shotOf = (el, p) => {
     // p = '' pre záber kotvy, 'pro' pre záber prológu (atribúty data-pro-*)
     const g = (k) => el.dataset[p ? 'pro' + k[0].toUpperCase() + k.slice(1) : k];
-    const f = pair(g('f'), [0.5, 0.5]), fm = pair(g('fm'), null), m = phone && g('m');
+    // telefón: výrez na výšku len pre prológ, ostatné zábery sú v páse fotkou na šírku s bodom záujmu f
+    const f = pair(g('f'), [0.5, 0.5]), fm = pair(g('fm'), null), m = phone && p === 'pro' && g('m');
     return {
-      at: el, photo: '', place: g('place') || '', f: m && fm ? fm : f, fm: m ? null : fm,   // photo doplní volajúci
+      at: el, photo: '', place: g('place') || '', f: m && fm ? fm : f, fm: m || (phone && !p) ? null : fm,   // photo doplní volajúci
       mv: MOVES[g('mv')] ? g('mv') : 'in',
       pa: m ? ratio(g('mSize'), null) : ratio(g('size'), el.querySelector('img')),
       tiers: tiersOf(m ? g('mTiers') : g('tiers')),
@@ -247,7 +253,7 @@
   // preskočí a plynulo pokračuje zo susedného záberu, text karty sa vymení nad súvislým záberom
   const SHOTS = [...d.querySelectorAll('.film-shot[data-shot]')].filter((el) => phone || el.dataset.desk !== 'skip').map((el) => {
     const s = shotOf(el, '');
-    s.photo = (phone && el.dataset.m) || el.dataset.shot;
+    s.photo = el.dataset.shot;                               // aj na telefóne fotka na šírku (pás, P16)
     s.name = el.dataset.shot;                                // meno záberu bez výrezu (tabuľka strihov)
     const v = videoOf(el);
     if (v) {
@@ -419,10 +425,10 @@
   /* ---------- načítanie fotiek: najprv aktuálny záber, potom susedia; ostatné sa uvoľnia ---------- */
   const base = new URL('img/film/', here).href;
   let maxTex = 4096;
-  // telefón: najviac 1448 px (výrez na výšku je pri tom takmer bod na bod aj na displeji 3x);
+  // telefón: najviac 2172 px (fotka na šírku v páse je asi 2,2× širšia než displej);
   // počítač: do 2896 px (displej 2x pri 1440 px), záber prológu aj 4096 px, lebo kamera doň
   // nabieha 1,5× a po prológu sa uvoľní
-  const CAP = phone ? 1448 : 2896;
+  const CAP = phone ? 2172 : 2896;
   function pickSize(s) {
     // najmenšia fotka, ktorá na obrazovke nebude zväčšená (ostrosť ako na fotke)
     const fit = s.tiers.filter((w) => w <= maxTex && w <= (s.pro ? 4096 : CAP));
@@ -771,9 +777,12 @@
   const OVER = 0.12;                                          // presah fotky za okraj (1,24), aby pohyb nikdy neodhalil hranu
   const OVER_V = 0.06;                                        // video: presah 1,12 (zdroj 576 px zväčšený na 864, každý presah ho zväčšuje); stačí na dýchanie a prechod
   function layout() {
-    const aspect = canvas.width / canvas.height;
-    const vh = 2 * DIST * tanH, vw = vh * aspect;
+    const aspect = canvas.width / canvas.height, pas = phone && aspect < 1;
+    const vh = 2 * DIST * tanH;
     SHOTS.forEach((s) => {
+      // okno záberu: celé plátno, na telefóne na výšku horný pás (okrem prológu); vh je výška okna vo svete
+      s.band = pas && !s.pro ? PAS_B : 1;
+      const vw = vh * aspect / s.band;
       // fotka pokryje okno s presahom na oboch stranách; na telefóne na výšku vidno jej stred okolo bodu záujmu
       const ovr = s.video ? OVER_V : OVER, ov = 1 + 2 * ovr;
       let pw = vw * ov, ph = pw / s.pa;
@@ -988,7 +997,18 @@
   const DRIFT = phone ? 0.6 : 1;                              // stály pohyb kamery: na telefóne jemnejší
   // bod fotky záberu (0 až 1 zľava a zhora) vo svete: rovina záberu stojí v strede sveta
   const ptOf = (s, p) => [(p[0] - 0.5) * s.pw, (0.5 - p[1]) * s.ph];
+  // projekcia pre okno záberu: v páse má kamera optickú os v strede pásu a pod ním kreslí ďalej (zakryje atrament)
+  let aimB = 0;
+  function aim(s) {
+    const b = s.band || 1;
+    if (b === aimB) return;
+    aimB = b;
+    camera.aspect = cw / (ch * b);
+    if (b === 1) camera.clearViewOffset(); else camera.setViewOffset(cw, ch * b, 0, 0, cw, ch);
+    camera.updateProjectionMatrix();
+  }
   function place(s, now, push = 0, cut = null) {
+    aim(s);
     // pohyb záberu trvá celý čas, keď je záber vidieť (od prelínania dnu po prelínanie von)
     const t = shotT(s);
     // video nejde (úsporný režim, sieť, formát): plagát dostane bežný nájazd ako fotka, nech záber nestojí
@@ -1196,7 +1216,7 @@
       cw = w; ch = h; cd = dpr;
       renderer.setPixelRatio(dpr);
       renderer.setSize(w, h, false);
-      camera.aspect = w / h; camera.updateProjectionMatrix();
+      camera.aspect = w / h; camera.clearViewOffset(); camera.updateProjectionMatrix(); aimB = 0;
       rtA.setSize(canvas.width, canvas.height); rtB.setSize(canvas.width, canvas.height);
       // nový render target pri prvom použití čaká na grafiku: overí sa hneď, v tej istej snímke ako zmena
       // rozlíšenia, a nie o chvíľu neskôr uprostred skrolu pri najbližšom prelínaní

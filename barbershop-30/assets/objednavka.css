@@ -1,6 +1,6 @@
 /* BARBERSHOP 30 – objednávkové okno (assets/objednavka.js). Rovnaký jazyk ako web: atrament, papier, lampa,
-   Fraunces na nadpis, Manrope na text, vlasové linky namiesto kariet. V telefóne cez celú obrazovku, na počítači
-   okno v strede. Bez rozmazania pozadia (telefóny), pohyb len krátky príchod obsahu a v pokojnom režime žiadny. */
+   Fraunces na nadpis, Manrope na text, vlasové linky namiesto kariet. V telefóne panel zdola (stránka nad ním
+   ostane vidieť), na počítači okno v strede. Bez rozmazania pozadia (telefóny), pohyb len krátky príchod obsahu a v pokojnom režime žiadny. */
 .obj {
   position: fixed; inset: 0; margin: auto; padding: 0;
   width: min(42rem, calc(100% - 48px)); height: min(50rem, calc(100% - 48px)); max-width: none; max-height: none;
@@ -15,6 +15,7 @@
 .obj-css .obj[open] { animation: obj-in 320ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both; }
 .obj::backdrop { background: rgba(14, 13, 12, 0.8); }
 @keyframes obj-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes obj-zdola { from { transform: translateY(40px); opacity: 0.4; } }
 
 .obj *, .obj *::before, .obj *::after { box-sizing: border-box; }
 .obj button { font: inherit; color: inherit; background: none; border: 0; margin: 0; padding: 0; cursor: pointer; }
@@ -127,9 +128,12 @@
 .obj-pata { padding: 10px 20px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
 .obj-tel { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper, #f1e9dd); font-weight: 600; font-size: 0.9375rem; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp, #e0601c); }
 
+/* telefón: panel zdola (82 % výšky), nad ním ostane vidieť stmavenú stránku; ťuk na ňu okno zavrie */
 @media (max-width: 640px) {
-  .obj { width: 100%; height: 100%; height: 100dvh; border: 0; border-radius: 0; }
-  .obj-hlava { padding: max(10px, env(safe-area-inset-top)) 10px 8px 16px; }
+  .obj { inset: auto 0 0 0; margin: 0; width: 100%; height: 82vh; height: 82dvh; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); border-bottom: 0; border-radius: 16px 16px 0 0; }
+  .obj::backdrop { background: rgba(14, 13, 12, 0.6); }
+  .obj-css .obj[open] { animation-name: obj-zdola; }
+  .obj-hlava { padding: 10px 10px 8px 16px; }
   .obj-pruh, .obj-obsah, .obj-pata { padding-inline: 16px; }
   .obj-tim { grid-template-columns: 1fr 1fr; gap: 8px; }
   .obj-akcie .btn { flex-basis: 100%; }

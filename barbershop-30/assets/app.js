@@ -527,6 +527,8 @@ if (navToggle && nav && header) {
   nav.addEventListener('click', (e) => {
     if (e.target instanceof Element && e.target.closest('a')) setMenu(false, { restoreFocus: false });
   });
+  // ťuk na stmavenú stránku pod panelom menu (pseudo-prvok lišty, P16 v style.css) menu zavrie
+  header.addEventListener('click', (e) => { if (menuOpen && e.target === header) setMenu(false, { restoreFocus: false }); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menuOpen) { e.preventDefault(); setMenu(false); }
   });
