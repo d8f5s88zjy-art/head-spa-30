@@ -1510,7 +1510,9 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
   /* karta pod fotkou: menšie písmo, tesnejšie medzery, bez stmavenia (pod ňou je atrament) */
   :root { --title-size: clamp(2.1rem, 9.6vw, 2.75rem); --hero-size: clamp(2.45rem, 11.4vw, 3.15rem); }
   html.karty .title-frame { padding-top: calc(var(--pas) - var(--s5)); padding-bottom: calc(var(--cta-h) + 3svh + env(safe-area-inset-bottom, 0px)); }
-  html.karty .film-shot.is-title[data-card="center"] .title-frame { align-content: end; padding-bottom: calc(var(--s7) + env(safe-area-inset-bottom, 0px)); }
+  html.karty .film-shot.is-title[data-card="center"] .title-frame { align-content: end; padding-bottom: calc(var(--cta-h) + 3svh + env(safe-area-inset-bottom, 0px)); }
+  /* úvod: spodné tlačidlá tu nie sú, pod kartou je len výzva na prehliadku */
+  html.karty #uvod .film-shot.is-title .title-frame { padding-bottom: calc(var(--s7) + 28px + env(safe-area-inset-bottom, 0px)); }
   html.karty .title-card::before { inset: -14% calc(-1 * var(--gutter)) -8%; background: linear-gradient(to bottom, rgba(var(--ink-rgb), 0), rgba(var(--ink-rgb), 0.6) 22%, rgba(var(--ink-rgb), 0.6)); }
   .kicker { margin-bottom: var(--s3); }
   .title-sub { margin-top: var(--s3); font-size: 0.9375rem; line-height: 1.45; }
@@ -1535,7 +1537,8 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
   .gallery-item.is-portrait { grid-column: span 2; grid-row: auto; aspect-ratio: auto; }
   .gallery-btn { height: auto; }
   .gallery-btn picture { display: block; height: auto; }
-  .gallery-btn img { height: auto; aspect-ratio: auto; object-fit: contain; }
+  /* pomer strán dáva width/height obrázka ešte pred načítaním (žiadny posun stránky) */
+  .gallery-btn img { height: auto; object-fit: contain; }
   html[data-motion="on"] .gallery-grid.is-nudge > * { animation: none; }
   /* tím: celá fotka (pomer 820 × 694), karta o kúsok širšia, ďalšia vykukuje */
   .team-grid { grid-auto-columns: 76%; }

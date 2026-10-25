@@ -62,6 +62,15 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   cenník má na telefóne pripnuté záložky skupín, popis na dva riadky (ťuk rozbalí) a riadky nastúpia zdola, pásy
   tímu a galérie sa raz jemne posunú. Ikona asistenta 48 px (telefón 44 px), spodná lišta menšia. Pri obmedzení
   pohybu a bez skriptu všetko stojí a je viditeľné.
+- **Telefón: fotka v páse, celé fotky, menšie okná (2026‑10‑25, style.css P16, film.js `PAS_B` a `aim()`)**:
+  zadávateľ: „fotky nie je vidno úplne, okná zakrývajú celú obrazovku“. Na telefóne na výšku je fotka scény v hornom
+  páse (56 % výšky, `--pas`), text karty pod ňou na atramente; fotka na šírku v páse ukáže asi 2× viac šírky ako cez
+  celý displej. Film kreslí zábery na šírku (výrezy `-m` len pre prológ, ten ide cez celé okno) s optickou osou
+  v strede pásu (`camera.setViewOffset`), plátno pod pásom zakryje vrstva `body::after` (počas prológu a na ulici
+  bežná vinetácia, prechod cez `--pas-o`). Záloha má rovnaké rámovanie v páse (overené: zhodná poloha fotky so
+  snímkou filmu). Galéria ukáže celé fotky v ich pomere strán (na šírku cez celú šírku, tri na výšku vedľa seba),
+  tím celé portréty 820 × 694. Menu je panel podľa obsahu so stmavenou stránkou (ťuk mimo zavrie), objednávka panel
+  zdola 82 %, asistent 72 %. `stills.py` dáva výrezy `-m` len prológu, ostatným `sizes` 170vw.
 - **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
   s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí
   čo (strih, brada, holenie), prečo (5,0 na Google, 945 recenzií; pánsky strih 18 €) a ako (Objednať sa, Zavolať

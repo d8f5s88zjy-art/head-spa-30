@@ -520,3 +520,23 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   (nová kontrola: odkaz existuje, odpoveď 200).
 - Neoverené: skutočný GitHub a skutočný telefón.
 
+## 26. Telefón: fotka v páse nad textom, celé fotky, menšie okná (2026‑10‑25)
+
+- Zadávateľ: „na telefóne nie je fotky vidno úplne, okná zakrývajú celú obrazovku“.
+- Príčina: fotka na šírku cez celú výšku displeja 390 × 844 ukáže najviac 31 % svojej šírky, s presahom 1,24 filmu asi
+  25 %; spodnú polovicu prekrývala karta so stmavením. Galéria na telefóne orezávala fotky na 4 : 5, tím na 4 : 5
+  z fotiek 820 × 694. Menu 93 % výšky, objednávka 100 %, asistent 86 %.
+- P16: fotka scény v páse 56 % výšky (asi 50 % šírky fotky, dvojnásobok), text pod ňou; prológ cez celé okno.
+  Film: zábery na šírku, `setViewOffset` s osou v strede pásu, `CAP` na telefóne 2172 px. Záloha s rovnakým rámovaním.
+- Overené (Playwright, emulácia telefónu):
+  - karty s filmom (`karty-shot.mjs`) aj bez filmu (`mobil-audit.mjs` 360/390/430): fotka celá v páse, text pod ňou,
+    pretekanie 0 px, žiadna snímka nad 70 % tmy; opravené počas kontroly: výzva „Prejdi si podnik“ cez tlačidlo
+    v úvode a háčik cenníka cez spodnú lištu;
+  - záloha a prvý snímok filmu v páse: rovnaká poloha fotky (rozdiel len text úvodu, ktorý práve nabiehal);
+  - galéria: všetkých 8 fotiek v pôvodnom pomere strán (358 × 224, 358 × 239, na výšku 114 × 152), tím celé portréty;
+  - menu 68 % výšky, ťuk mimo zavrie; objednávka 82 %, ťuk nad ňu zavrie; asistent 72 %;
+  - testy: app-smoke všetko OK (najprv 2 chyby: `aspect-ratio: auto` na fotke galérie zrušil pomer strán pred
+    načítaním a stránka sa posúvala, opravené), i18n-test, objednavka-test, asistent-test, tma-test OK.
+- `stills.py --check` zhodné (výrezy -m len prológu, ostatné `sizes` 170vw).
+- Neoverené: skutočný telefón (iPhone, Android), plynulosť filmu na skutočnej grafike s väčšími textúrami.
+

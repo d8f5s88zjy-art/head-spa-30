@@ -59,14 +59,15 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
-- 2026‑10‑25 (rozpracované): zadávateľ: „na telefóne nie je fotky vidno úplne, okná zakrývajú celú obrazovku“.
+- 2026‑10‑25 (hotové, CHECKS 26, snímky a testy OK): zadávateľ: „na telefóne nie je fotky vidno úplne, okná zakrývajú celú obrazovku“.
   Príčina: fotka na šírku cez celú výšku displeja ukáže najviac tretinu šírky (film ešte priblíži, spolu asi štvrtina),
   karta s textom a stmavenie prekrývali spodnú polovicu. Riešenie (P16 v style.css, film.js PAS_B a aim()): na telefóne
   na výšku je fotka scény v hornom páse 56 % výšky (fotka na šírku, asi 2× viac šírky), text pod ňou na atramente;
   prológ ostáva cez celé okno. Galéria: celé fotky v pomere strán (na šírku cez celú šírku, tri na výšku vedľa seba),
   tím: celá fotka 820 × 694. Menu panel podľa obsahu so stmavenou stránkou (ťuk zavrie), objednávka panel zdola 82 %,
-  asistent 72 %. Zálohy bez výrezov -m (okrem prológu), sizes 170vw, stills.py upravený. Treba ešte: snímky 360/390/430
-  s filmom aj bez neho, zhoda zálohy s filmom (uvod-zhoda), testy (app-smoke, tma-test, objednavka-test, asistent-test).
+  asistent 72 %. Zálohy bez výrezov -m (okrem prológu), sizes 170vw, stills.py upravený. Overené snímky 360/390/430
+  s filmom aj bez neho, zhoda zálohy s filmom, testy app-smoke, i18n, objednávka, asistent, tma OK. Čaká sa na
+  pohľad zadávateľa na skutočnom telefóne.
 
 - 2026‑10‑24: dokončené nedokončené veci: admin Kontakt a hodiny (telefón, e‑mail, hodiny naraz v 27 súboroch vrátane
   servera asistenta, kartičky a CLAUDE.md; test 100 OK), odkaz Ochrana osobných údajov na kartičke Barbershopu viedol
