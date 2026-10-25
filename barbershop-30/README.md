@@ -80,6 +80,12 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   snímkou filmu). Galéria ukáže celé fotky v ich pomere strán (na šírku cez celú šírku, tri na výšku vedľa seba),
   tím celé portréty 820 × 694. Menu je panel podľa obsahu so stmavenou stránkou (ťuk mimo zavrie), objednávka panel
   zdola 82 %, asistent 72 %. `stills.py` dáva výrezy `-m` len prológu, ostatným `sizes` 170vw.
+- **Telefón: opravy z kontroly (2026‑10‑25, style.css P18, app.js `mqPas`, film.js strih za pásom)**: scéna za
+  pásom (služby, galéria, predná sála) začína na telefóne na výšku o pás fotky skôr, jej karta je vidieť už pri
+  nábehu (ide hneď za pásom) a karta pred pásom zhasne až pod pásom; pod fotkou tak neostáva prázdny atrament.
+  Záber sa za pásom vymení v strede úseku, keď pás kryje celý pás fotky (film aj záloha, pás leží nad zálohami).
+  Plná lišta (bez presvitania textu), plné tlačidlo Zavolať v spodnej lište a písmo 12 px, ponuka jazyka zmizne
+  po odskrolovaní o obrazovku, ťukacie plochy odkazov aspoň 44 px (neviditeľný presah). Kontrola: `docs/CHECKS.md` 28.
 - **Telefón a objednávka (2026‑10‑21)**: na telefóne bez videí (zábery sály, stola a rannej sály sú ostré výrezy fotiek
   s hĺbkou namiesto videí z 576 px zdroja; predošlé 60 fps slučky boli dopočítané interpoláciou z 30 fps). Úvod hovorí
   čo (strih, brada, holenie), prečo (5,0 na Google, 945 recenzií; pánsky strih 18 €) a ako (Objednať sa, Zavolať

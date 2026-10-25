@@ -249,12 +249,18 @@ function offer() {
   box.className = 'lang-offer'; box.setAttribute('data-no-i18n', ''); box.setAttribute('lang', L.locale);
   box.innerHTML = `<span>${L.offer}</span><button type="button" data-yes>${L.label}</button><button type="button" data-no aria-label="${L.close}">&times;</button>`;
   box.addEventListener('click', (e) => {
-    if (e.target.closest('[data-yes]')) { set(L.code); box.remove(); return; }
-    if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) { /* */ } box.remove(); }
+    if (e.target.closest('[data-yes]')) { set(L.code); zavri(); return; }
+    if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) { /* */ } zavri(); }
   });
   document.body.appendChild(box);
   requestAnimationFrame(() => box.classList.add('in'));
-  setTimeout(() => { box.classList.remove('in'); setTimeout(() => box.remove(), 400); }, 12000);
+  // zmizne po 12 s alebo keď návštevník odskroluje o obrazovku (na telefóne by zakrýval text, ponuku nechal tak;
+  // ukáže sa pri ďalšej návšteve)
+  const y0 = scrollY;
+  const zavri = () => { removeEventListener('scroll', skrol); clearTimeout(cas); box.classList.remove('in'); setTimeout(() => box.remove(), 400); };
+  const skrol = () => { if (Math.abs(scrollY - y0) > innerHeight) zavri(); };
+  const cas = setTimeout(zavri, 12000);
+  addEventListener('scroll', skrol, { passive: true });
 }
 
 /* t(kľúč) vráti preklad slovenského textu v nasadenom jazyku, pre texty skladané v skriptoch */

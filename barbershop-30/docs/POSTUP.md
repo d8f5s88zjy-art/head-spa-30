@@ -59,6 +59,13 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25 (hotové, CHECKS 28): zadávateľ: „nájdi chyby na mobilnej verzii a uprav“. Nájdené a opravené:
+  prázdny atrament pod fotkou pri prechodoch pás → scéna (až 76 % okna na 640 px skrolu) a scéna → pás, karta
+  tímu vytŕčala pod pásom, film menil fotku nad pásom (pás tímu je na telefóne kratší), text presvital cez lištu
+  a cez tlačidlo Zavolať, písmo spodnej lišty 11,5 px, prúžok ponuky jazyka zakrýval text, malé ťukacie plochy.
+  Testy: app-smoke (nové kontroly prechodov), i18n, en, tma, objednávka, asistent. Čaká sa na skúšku na
+  skutočnom telefóne a na súhlas so zverejnením.
+
 - 2026‑10‑25 (hotové, CHECKS 27): zadávateľ schválil SEO body 1 až 4. Titulok, popis a H1 s „Barbershop 30 Nitra,
   pánske holičstvo, Mostná 30“, 8 častých otázok na stránke (overené odpovede), `hasMap` v údajoch pre Google,
   anglická stránka `en/` (vytvára sa pri nasadení, hreflang v sitemap). Admin mení aj ceny v údajoch pre Google.

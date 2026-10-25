@@ -28,6 +28,8 @@ window.__scrollSettled = false; // true, keď slučka dobehla cieľ (scrollY) �
 const params = new URLSearchParams(location.search);
 const mqReduced = matchMedia('(prefers-reduced-motion: reduce)');
 const mqMobile = matchMedia('(max-width: 900px)');
+// telefón na výšku: fotka scény v hornom páse, text pod ňou (P16 v style.css, rovnaký prah)
+const mqPas = matchMedia('(max-width: 720px) and (orientation: portrait)');
 const mqFinePointer = matchMedia('(hover: hover) and (pointer: fine)');
 const deviceMemory = typeof navigator.deviceMemory === 'number' ? navigator.deviceMemory : undefined;
 
@@ -63,6 +65,8 @@ let lastScene = 0;  // číslo poslednej kapitoly (rezervácia) – tam sa skryj
 let footerBox = null;
 let titles = [];    // kotvy s titulnou kartou v poradí dokumentu (zábery bez filmu sa prelínajú medzi nimi)
 let pricesBox = null; // pás cenníka: tam sa plávajúce tlačidlo skryje (každá služba má vlastné Objednať)
+let pas = false;     // telefón na výšku s pásom fotky (mqPas), zisťuje sa v measure()
+let pasK = 1;        // výška pásu fotky ako podiel okna (--pas-k zo style.css)
 
 function parseAt(value) {
   const parts = String(value || '').split(',').map((s) => parseFloat(s));
@@ -73,6 +77,8 @@ function parseAt(value) {
 
 function measure() {
   vh = window.innerHeight || 1;
+  pas = mqPas.matches;
+  pasK = pas ? parseFloat(getComputedStyle(html).getPropertyValue('--pas-k')) || 1 : 1;
   const scrollH = Math.max(html.scrollHeight, document.body?.scrollHeight || 0);
   maxScroll = Math.max(1, scrollH - vh);
   const y = window.scrollY || 0;
@@ -89,8 +95,15 @@ function measure() {
     // titulná karta (P11): first = úvod, ten je viditeľný hneď od vrchu stránky (bez nábehu)
     const top = r.top + y, title = el.classList.contains('is-title');
     // voľná dĺžka karty: celá kotva, pri .title-long (za kartou je pás) bez poslednej výšky okna
-    const free = Math.max(1, r.height - (el.classList.contains('title-long') ? vh : 0));
-    return { el, top, height: Math.max(1, r.height), items, title, free, first: title && top < 1 };
+    const long = el.classList.contains('title-long');
+    const free = Math.max(1, r.height - (long ? vh : 0));
+    // pred kartou je pás (tím, cenník, galéria): ako film.js, záber sa vymení ešte pod pásom
+    // (v strede úseku, keď pás kryje celé okno fotky; na telefóne na výšku len pás fotky hore)
+    const prev = el.previousElementSibling || (el.parentElement.previousElementSibling || {}).lastElementChild;
+    const afterBand = !!(title && prev && prev.classList && prev.classList.contains('band'));
+    let swap = 0;
+    if (afterBand) { const b = prev.getBoundingClientRect(); swap = y + (b.top + b.bottom - (pas ? pasK : 1) * vh) / 2; }
+    return { el, top, height: Math.max(1, r.height), items, title, free, long, afterBand, swap, first: title && top < 1 };
   });
 
   const pr = $('.band-prices');
@@ -176,9 +189,15 @@ function apply(p) {
     for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
     // titulná karta: u = 0 keď horný okraj kotvy dosiahne horný okraj okna (karta sa pripne), 1 keď spodný.
     // Krytie: nábeh 0 až 0,12 (úvod bez nábehu), odchod 0,92 až 1; nikdy sa nehýbe, mení sa len krytie.
+    // Telefón na výšku (pás fotky hore): karta za pásom ide hneď za ním a je vidieť, už keď vychádza zdola
+    // (scéna začína o pás skôr, P18), a karta pred pásom nezmizne skôr, ako ju pás prekryje (zhasne až pod ním,
+    // keď jeho horný okraj prejde pás fotky; kotva oreže len do strán, kratší pás by ju inak ukázal pod sebou),
+    // takže pod fotkou nikdy neostane prázdny atrament.
     if (s.title) {
       const u = (y - s.top) / s.free;
-      const o = Math.min(s.first ? 1 : ease01(u / CARD_IN), 1 - ease01((u - 1 + CARD_OUT) / CARD_OUT));
+      const inO = s.first || (pas && s.afterBand) ? 1 : ease01(u / CARD_IN);
+      const outO = pas && s.long ? ease01(((s.top + s.height - y) / vh - pasK) / 0.08) : 1 - ease01((u - 1 + CARD_OUT) / CARD_OUT);
+      const o = Math.min(inO, outO);
       setVar('--o', o, s.el);
       setClass(s.el, 'is-on', o > 0.01);
     }
@@ -191,10 +210,13 @@ function apply(p) {
   // začali sťahovať zálohy celej stránky)
   let cur = 0;
   for (let i = 0; i < titles.length; i++) if (titles[i].top <= y + vh * 0.5) cur = i;
+  // telefón na výšku: za pásom sa záber vymení ešte pod ním (pás kryje celý pás fotky, P18), aby spod neho vyšla
+  // hotová fotka ako vo filme; inde sa prelína počas nábehu karty
+  const prelinanie = (s) => (pas && s.afterBand ? ease01((y - s.swap) / (0.2 * vh) + 0.5) : ease01((y - s.top) / s.free / CARD_IN));
   for (let i = 0; i < titles.length; i++) {
     const s = titles[i], n = titles[i + 1];
-    const fin = s.first ? 1 : ease01((y - s.top) / s.free / CARD_IN);
-    const nextIn = n ? ease01((y - n.top) / n.free / CARD_IN) : 0;
+    const fin = s.first ? 1 : prelinanie(s);
+    const nextIn = n ? prelinanie(n) : 0;
     const so = footerIn || nextIn >= 1 ? 0 : fin;
     setVar('--so', so, s.el);
     setClass(s.el, 'is-shown', so > 0.001);

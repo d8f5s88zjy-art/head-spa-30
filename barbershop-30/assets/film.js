@@ -966,9 +966,14 @@
       // voľná dĺžka karty (pri .title-long za ňou ide pás, ten ju po jednej obrazovke zakryje)
       const free = s.at.offsetHeight - (s.at.classList.contains('title-long') ? vh : 0);
       const a = card ? top + free / 2 : top;
-      // pred kartou je pás (tím, cenník, galéria): záber sa vymení ešte pod pásom, aby spod neho vyšiel hotový
+      // pred kartou je pás (tím, cenník, galéria): záber sa vymení ešte pod pásom, aby spod neho vyšiel hotový,
+      // v strede úseku, keď pás kryje celé okno fotky (na telefóne na výšku len pás fotky hore; pás tímu je
+      // na telefóne kratší ako 1,5 okna, pevný odstup by strih ukázal nad pásom)
       const prev = s.at.previousElementSibling || (s.at.parentElement.previousElementSibling || {}).lastElementChild;
-      s.cut = card ? top - (prev && prev.classList && prev.classList.contains('band') ? 1.5 * vh : 0) : null;
+      if (card && prev && prev.classList && prev.classList.contains('band')) {
+        const r = prev.getBoundingClientRect(), kryt = (phone && innerWidth < innerHeight ? PAS_B : 1) * vh;
+        s.cut = scrollY + (r.top + r.bottom - kryt) / 2;
+      } else s.cut = card ? top : null;
       if (An.length && a <= An[An.length - 1] + 1) return;
       s.pi = P.length; P.push(s); An.push(a);
     });

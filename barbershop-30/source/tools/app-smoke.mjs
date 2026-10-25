@@ -144,12 +144,37 @@ try {
     ok(sp.length === stills.count && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na všetkých kotvách v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
 
     // titulná karta druhého záberu v kapitole (galéria: sud, Cestou von): zhasnutá pred kotvou, svieti v pripnutí
+    // telefón na výšku (P18): karta za pásom ide hneď za ním a je vidieť už pri nábehu, nikdy nie cez pás
     const sud = L.shots.find((x) => x.name === 'sud');
-    await scrollTo(page, sud.top - L.vh * 0.9);
-    const early = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
-    await scrollTo(page, sud.top + sud.height * 0.4);
-    const late = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
-    ok(!early && late, `[${label}] karta sud zhasnutá pred kotvou, svieti v pripnutí`);
+    const pasMode = await page.evaluate(() => matchMedia('(max-width: 720px) and (orientation: portrait)').matches);
+    if (pasMode) {
+      const kon = await page.evaluate(() => document.querySelector('.band-gallery').getBoundingClientRect().bottom + scrollY);
+      await scrollTo(page, kon - L.vh * 0.6);
+      const r = await page.evaluate(() => ({
+        on: document.querySelector('[data-shot="sud"]').classList.contains('is-on'),
+        pas: document.querySelector('.band-gallery').getBoundingClientRect().bottom,
+        text: document.querySelector('[data-shot="sud"] .kicker').getBoundingClientRect().top, vh: innerHeight,
+      }));
+      ok(r.on && r.text >= r.pas && r.text < r.vh, `[${label}] karta sud ide hneď za pásom galérie (vidieť pri nábehu, pod pásom)`, JSON.stringify(r));
+      // žiadny prázdny atrament pod fotkou: keď pás odkryje pás fotky, text ďalšej karty je už na obrazovke,
+      // a karta pred pásom svieti, kým ju pás neprekryje
+      for (const [pas, shot] of [['.band-team', 'kreslo-stred'], ['.band-prices', 'kava'], ['.band-gallery', 'sud']]) {
+        const kon = await page.evaluate((s) => document.querySelector(s).getBoundingClientRect().bottom + scrollY, pas);
+        await scrollTo(page, kon - L.vh * 0.5);
+        const t = await page.evaluate((s) => { const c = document.querySelector(`[data-shot="${s}"]`); return { on: c.classList.contains('is-on'), text: Math.round(c.querySelector('.kicker').getBoundingClientRect().top), vh: innerHeight }; }, shot);
+        ok(t.on && t.text < t.vh * 0.8, `[${label}] za pásom ${pas} je text karty ${shot} hneď na obrazovke`, JSON.stringify(t));
+      }
+      const zac = await page.evaluate(() => document.querySelector('.band-team').getBoundingClientRect().top + scrollY);
+      await scrollTo(page, zac - L.vh * 0.75);
+      const o = await page.evaluate(() => parseFloat(document.querySelector('[data-shot="sala-rano"]').style.getPropertyValue('--o')));
+      ok(o > 0.95, `[${label}] karta tímu svieti, kým ju pás nezakryje (--o ${o})`);
+    } else {
+      await scrollTo(page, sud.top - L.vh * 0.9);
+      const early = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
+      await scrollTo(page, sud.top + sud.height * 0.4);
+      const late = await page.evaluate(() => document.querySelector('[data-shot="sud"]').classList.contains('is-on'));
+      ok(!early && late, `[${label}] karta sud zhasnutá pred kotvou, svieti v pripnutí`);
+    }
 
     // späť hore
     await scrollTo(page, 0);

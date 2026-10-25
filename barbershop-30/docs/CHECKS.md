@@ -558,3 +558,34 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   ťuk otvorí odpoveď, prepínač na nemčinu otvorí slovenskú stránku s `?lang=de` a preloží ju); admin-test 101 OK,
   i18n-test, app-smoke, objednavka-test OK, `otazky.mjs` OK, `stills.py --check` zhodné. Snímky `docs/screenshots/seo/`.
 - Neoverené: ako Google stránky naozaj zaindexuje (až po nasadení na doménu a odoslaní sitemap v Search Console).
+
+## 28. Telefón: kontrola a opravy chýb (2026‑10‑25)
+
+- Zadávateľ: „nájdi chyby na mobilnej verzii a uprav“. Kontrola 360/390/430 px (emulácia v Playwright): snímky po
+  krokoch skrolu s filmom aj bez neho, meranie prázdnej plochy pod pásom fotky (podiel okna bez textu a obrázkov
+  s krytím rodičov), ťukacie plochy, písmo pod 12 px, orezaný text, prvky mimo okna, otvorené okná.
+- Nájdené a opravené:
+  - prázdny atrament pod fotkou pri prechode pás → scéna (tím → služby, cenník → galéria, galéria → predná sála):
+    560 až 640 px skrolu (66 až 76 % okna) bez textu; a scéna → pás 160 až 320 px. Príčina: karta za pásom sa
+    ukazovala až po pripnutí kotvy 87 px pod pásom fotky a karta pred pásom zhasla skôr, ako pás prišiel.
+    Oprava (P18, app.js): scéna za pásom začína o pás fotky skôr (karta ide hneď za pásom a je vidieť pri nábehu),
+    karta pred pásom zhasne až pod pásom. Po oprave: 390 px tri a 360 px dva krátke úseky po 80 px pri výmene
+    kariet (prelínanie), inak nikde;
+  - kotva oreže len do strán (`overflow: clip visible`): pripnutá karta by bez zhasnutia vytŕčala pod kratším pásom
+    tímu („Vyber si svojho barbera“ pod pásom), preto zhasne, keď ju pás prekryje;
+  - film na telefóne menil fotku nad pásom: pás tímu má na telefóne 0,83 výšky okna, pevný strih 1,5 okna pred
+    kartou bol mimo pásu. Strih je teraz v strede úseku, keď pás kryje celý pás fotky (film.js), záloha bez filmu
+    rovnako (app.js) a pás leží nad zálohami ďalších scén (inak by ich prekryla fotka galérie, overené snímkou);
+  - lišta po odskrolovaní mala 90 % krytie, cez logo presvital text stránky: teraz plná (aj bez app.js, bez
+    rozmazania pozadia na telefóne);
+  - spodná lišta: Zavolať bol priesvitný (text pod ním presvital), písmo 11,5 px: teraz plný podklad a 12 px;
+  - ponuka jazyka (prúžok „This page is also in English“) zakrývala 12 s dva riadky textu nad spodnou lištou:
+    zmizne aj po odskrolovaní o obrazovku (ukáže sa pri ďalšej návšteve);
+  - ťukacie plochy 23 až 29 px (odkazy so šípkou, hodnotenie v úvode, telefón a e‑mail v pätičke, Späť hore):
+    neviditeľný presah, teraz 47 až 49 px, rozloženie bez zmeny (overené ťukom 7 px nad a pod odkazom).
+- Bez chyby: vodorovné pretekanie 0 px na všetkých šírkach a stránkach (index, rezervácia, en), žiadna chyba
+  skriptu ani chýbajúci súbor, menu, objednávka, asistent, zväčšená fotka a časté otázky na telefóne v poriadku.
+  Písmo pod 12 px je len na vizitke (napodobenina tlačenej vizitky, údaje sú aj vedľa).
+- Testy: app-smoke OK okrem známeho nestáleho posunu na počítači (softvérové kreslenie, CLS 0,028, nesúvisí),
+  i18n-test, en-test, tma-test, objednavka-test, asistent-test (výsledky v zázname POSTUP).
+- Neoverené: skutočný telefón (iPhone Safari, Android Chrome), plynulosť na skutočnej grafike.

@@ -1584,3 +1584,39 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
   .faq-item > summary { font-size: 1rem; min-height: 52px; }
   .faq-actions .btn { flex: 1 1 100%; }
 }
+
+/* ==========================================================================
+   P18. Telefón: opravy z kontroly (2026‑10‑25). Zadávateľ: „nájdi chyby na mobilnej verzii a uprav“.
+   ========================================================================== */
+@media (max-width: 720px) and (orientation: portrait) {
+  /* scéna za pásom (služby, galéria, predná sála) začne o pás fotky skôr: jej text ide hneď za pásom a fotka
+     sa odkryje spod pásu, pod fotkou nikdy neostane prázdny atrament (karta je vidieť už pri nábehu, app.js).
+     Prázdny vrch kotvy leží na konci pásu, preto ťuky prepúšťa (odkazy karty ich chytajú ďalej). */
+  html.karty .band + .film-shot.is-title,
+  html.karty .scene:has(> .band:last-child) + .scene > .film-shot.is-title:first-child { margin-top: calc(-1 * var(--pas)); pointer-events: none; }
+  /* záber za pásom sa vymení ešte pod pásom (app.js), pás preto leží nad pevnými zálohami ďalších scén */
+  html.karty .band { z-index: 2; }
+}
+@media (max-width: 900px) {
+  /* lišta po odskrolovaní nepriehľadná: text stránky cez ňu nepresvitá do loga */
+  .site-header.is-scrolled { background: var(--ink); }
+  /* spodná lišta: Zavolať na plnom podklade (text pod ňou nepresvitá), písmo aspoň 12 px */
+  .mobile-cta .btn { font-size: 0.75rem; }
+  .mobile-cta .btn-call { background: var(--ink); }
+}
+@media (max-width: 720px) {
+  /* ťukacia plocha odkazov aspoň 44 px na výšku bez zmeny rozloženia (neviditeľný presah nad a pod textom) */
+  .link-arrow, .hero-rating { position: relative; }
+  .link-arrow::after, .hero-rating::after { content: ""; position: absolute; inset: -10px -4px; }
+  .site-footer address a { display: inline-block; padding-block: 10px; margin-block: -10px; }
+}
+/* bez app.js (podklad lišty podľa skrolu): na telefóne bez rozmazania pozadia a na plnom podklade */
+@supports (animation-timeline: scroll()) {
+  @keyframes header-bg-m {
+    from { background-color: rgba(14, 13, 12, 0); box-shadow: none; }
+    to   { background-color: var(--ink); box-shadow: 0 1px 0 var(--line); }
+  }
+  @media (max-width: 900px) {
+    html:not([data-scene-active]) .site-header:not(.is-scrolled) { -webkit-backdrop-filter: none; backdrop-filter: none; animation-name: header-bg-m; }
+  }
+}
