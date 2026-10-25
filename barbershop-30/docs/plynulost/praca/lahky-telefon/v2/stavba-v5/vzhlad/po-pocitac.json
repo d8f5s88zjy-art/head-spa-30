@@ -1,0 +1,421 @@
+{
+ "tag": "po",
+ "url": "http://127.0.0.1:8721/index.html",
+ "zariadenia": {
+  "pocitac": {
+   "chyby": [],
+   "ziadosti": [
+    "recepcia.js",
+    "recepcia.css",
+    "recepcia/sk.json",
+    "recepcia/en.json",
+    "recepcia/uk.json",
+    "recepcia/sk.json"
+   ],
+   "loadMs": 175,
+   "html": "karty world pro js-kin js-steps",
+   "tlacidloPoLoadMs": 1863,
+   "pokoj": {
+    "scrollY": 0,
+    "btn": {
+     "x": 1344,
+     "y": 820,
+     "w": 56,
+     "h": 56
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".scroll-hint",
+      "r": {
+       "x": 655,
+       "y": 810,
+       "w": 131,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "2"
+     }
+    ]
+   },
+   "clsPokoj": {
+    "cls": 0.0001,
+    "shifts": [
+     {
+      "t": 171,
+      "v": 0.00010943474579903978,
+      "src": "nav"
+     }
+    ]
+   },
+   "tlacidlo": {
+    "scrollY": 6466,
+    "btn": {
+     "x": 1344,
+     "y": 820,
+     "w": 56,
+     "h": 56
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": []
+   },
+   "btnAttr": {
+    "label": "Spýtaj sa recepcie",
+    "haspopup": "dialog",
+    "expanded": "false",
+    "w": 56,
+    "h": 56,
+    "right": 40,
+    "bottom": 24,
+    "left": 1344,
+    "z": "36",
+    "anim": "rc-btn"
+   },
+   "showModal": {
+    "pred": {
+     "iw": 1440,
+     "cw": 1440,
+     "sw": 1440,
+     "sy": 6466,
+     "hx": 1440,
+     "lx": 40,
+     "bodyOv": "hidden auto",
+     "htmlOv": "visible"
+    },
+    "po": {
+     "iw": 1440,
+     "cw": 1440,
+     "sw": 1440,
+     "sy": 6466,
+     "hx": 1440,
+     "lx": 40,
+     "bodyOv": "hidden auto",
+     "htmlOv": "visible",
+     "panel": {
+      "x": 1056,
+      "y": 449,
+      "w": 360,
+      "h": 359
+     },
+     "fokus": "rc-chip Rezervovať",
+     "fokusVis": false,
+     "expanded": "true",
+     "cssOk": "fixed",
+     "nadpis": "Recepcia",
+     "chips": [
+      "Rezervovať",
+      "Hodiny",
+      "Cenník",
+      "Kde nás nájdete",
+      "Zavolať"
+     ],
+     "noI18n": true,
+     "lang": "sk",
+     "chipsOv": {
+      "sw": 507,
+      "cw": 326
+     }
+    }
+   },
+   "odpovede": {
+    "koľko stojí strih": {
+     "text": "Pánsky strih 18 €\n\nzo stránky\nREZERVOVAŤ TERMÍN\nCELÝ CENNÍK",
+     "odkazy": [
+      "Rezervovať termín → https://www.barbershop30.sk/rezervacia",
+      "Celý cenník → #sluzby"
+     ]
+    },
+    "strihate aj damy": {
+     "text": "Dámske strihy na webe neuvádzame. Spýtaj sa recepcie: 0951 267 203 alebo info@barbershop30.sk.\n\nZAVOLAŤ\nNAPÍSAŤ E‑MAIL",
+     "odkazy": [
+      "Zavolať → tel:+421951267203",
+      "Napísať e‑mail → mailto:info@barbershop30.sk"
+     ]
+    }
+   },
+   "klavesnicaPoOdoslani": {
+    "fokus": "rc-q",
+    "iw": 1440,
+    "vvh": 900
+   },
+   "S7": {
+    "pred": {
+     "sy": 6466,
+     "lt": 1260,
+     "lmax": 1260,
+     "r": {
+      "x": 1073,
+      "y": 299,
+      "w": 326,
+      "h": 366
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poKoleskuLogKoniec": {
+     "sy": 6466,
+     "lt": 1260,
+     "lmax": 1260,
+     "r": {
+      "x": 1073,
+      "y": 297,
+      "w": 326,
+      "h": 366
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poKoleskuLogZaciatok": {
+     "sy": 6466,
+     "lt": 0,
+     "lmax": 1260,
+     "r": {
+      "x": 1073,
+      "y": 297,
+      "w": 326,
+      "h": 366
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poKoleskuPozadie": {
+     "sy": 6966,
+     "lt": 0,
+     "lmax": 1260,
+     "r": {
+      "x": 1073,
+      "y": 297,
+      "w": 326,
+      "h": 366
+     },
+     "ob": "auto",
+     "obD": "auto"
+    }
+   },
+   "esc": {
+    "open": false,
+    "fokus": "recepcia-btn",
+    "expanded": "false",
+    "syPredEsc": 6966,
+    "sy": 6966,
+    "syPredOtvorenim": 6466
+   },
+   "fokus": {
+    "prvy": {
+     "el": "rc-chip Rezervovať",
+     "vis": true,
+     "outline": "solid 2px rgb(224, 96, 28) off 3px",
+     "chipX": 1073,
+     "chipsX": 1073,
+     "chipY": 245,
+     "chipsY": 237,
+     "chipB": 289,
+     "chipsB": 297,
+     "chipsOverflowX": "auto"
+    },
+    "tab": [
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn"
+    ],
+    "poEsc": {
+     "fokus": "recepcia-btn",
+     "vis": true
+    }
+   },
+   "jazyky": {
+    "en": {
+     "lang": "en",
+     "label": "Ask the front desk",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "en",
+      "nadpis": "Front desk",
+      "chips": [
+       "Book",
+       "Hours",
+       "Prices",
+       "Find us",
+       "Call"
+      ],
+      "uvod": "I answer from prepared answers about the shop. For anything else, our front desk",
+      "zavriet": "Close",
+      "vstup": "Type a question…",
+      "sukromie": "Answers come from this page; nothing is sent.",
+      "sw": 1440,
+      "iw": 1440
+     },
+     "odpoved": {
+      "text": "Men's haircut 18 €\n\nfrom this page\n\nThe booking page is in Slovak.\n\nBOOK AN APPOINTMENT\nFULL PRICE LIST",
+      "odkazy": [
+       "Book an appointment → https://www.barbershop30.sk/rezervacia",
+       "Full price list → #sluzby"
+      ]
+     }
+    },
+    "uk": {
+     "lang": "uk-UA",
+     "label": "Запитай рецепцію",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "uk",
+      "nadpis": "Рецепція",
+      "chips": [
+       "Забронювати",
+       "Години роботи",
+       "Ціни",
+       "Де нас знайти",
+       "Зателефонувати"
+      ],
+      "uvod": "Відповідаю з підготовлених відповідей про барбершоп. На решту вам охоче відповіс",
+      "zavriet": "Закрити",
+      "vstup": "Напиши питання…",
+      "sukromie": "Відповіді зі сторінки, нічого не надсилається.",
+      "sw": 1440,
+      "iw": 1440
+     },
+     "odpoved": {
+      "text": "Чоловіча стрижка 18 €\n\nзі сторінки\n\nСторінка бронювання словацькою мовою.\n\nЗАБРОНЮВАТИ ЧАС\nВЕСЬ ПРАЙС",
+      "odkazy": [
+       "Забронювати час → https://www.barbershop30.sk/rezervacia",
+       "Весь прайс → #sluzby"
+      ]
+     }
+    },
+    "sk": {
+     "lang": "sk-SK",
+     "label": "Spýtaj sa recepcie",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "sk",
+      "nadpis": "Recepcia",
+      "chips": [
+       "Rezervovať",
+       "Hodiny",
+       "Cenník",
+       "Kde nás nájdete",
+       "Zavolať"
+      ],
+      "uvod": "Odpovedám z pripravených odpovedí k podniku. Na ostatné vám rada odpovie recepci",
+      "zavriet": "Zavrieť",
+      "vstup": "Napíš otázku…",
+      "sukromie": "Odpovede sú zo stránky, nič sa neodosiela.",
+      "sw": 1440,
+      "iw": 1440
+     },
+     "odpoved": {
+      "text": "Toto neviem presne. Zavolaj na recepciu 0951 267 203 alebo napíš na info@barbershop30.sk.\n\nZAVOLAŤ\nNAPÍSAŤ E‑MAIL\nREZERVOVAŤ TERMÍN",
+      "odkazy": [
+       "Zavolať → tel:+421951267203",
+       "Napísať e‑mail → mailto:info@barbershop30.sk",
+       "Rezervovať termín → https://www.barbershop30.sk/rezervacia"
+      ]
+     }
+    }
+   },
+   "sirkaKoniec": {
+    "sw": 1440,
+    "iw": 1440
+   },
+   "clsKoniec": 0.0001,
+   "vyskaStranky": 16117,
+   "kolizie": [],
+   "krokov": 37,
+   "spodneVidene": [
+    ".scroll-hint"
+   ],
+   "ponukaJazyka": {
+    "scrollY": 0,
+    "btn": {
+     "x": 1344,
+     "y": 820,
+     "w": 56,
+     "h": 56
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".lang-offer",
+      "r": {
+       "x": 538,
+       "y": 826,
+       "w": 364,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "58"
+     },
+     {
+      "sel": ".scroll-hint",
+      "r": {
+       "x": 655,
+       "y": 810,
+       "w": 131,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "2"
+     }
+    ],
+    "offerIn": true,
+    "offerPoTlacidleMs": 1838
+   },
+   "ponukaJazykaStredOfferIn": true,
+   "ponukaJazykaStred": {
+    "scrollY": 6402,
+    "btn": {
+     "x": 1344,
+     "y": 820,
+     "w": 56,
+     "h": 56
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".lang-offer",
+      "r": {
+       "x": 538,
+       "y": 826,
+       "w": 364,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "58"
+     }
+    ]
+   },
+   "pohyb": {
+    "btnAnim": "none",
+    "panelAnim": "none",
+    "motionOff": {
+     "dm": "off",
+     "btnAnim": "rc-btn"
+    }
+   }
+  }
+ },
+ "snimkyChyby": []
+}

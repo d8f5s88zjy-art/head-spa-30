@@ -1,0 +1,23 @@
+sk | sorry → zdvorilost  | 
+hu | köszönöm → zdvorilost  | 
+cs | děkuji → zdvorilost  | 
+sk | dekujem → zdvorilost  | 
+sk | detox → fallback  | 
+sk | sedacka → fallback  | 
+sk | kolko stoji detox → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Ako dlho trvá holenie? → odpoved trvanie | [["Holenie do hladka Hot Towel","30 min"]]
+de | Wie lange dauert Bartfärben? → odpoved trvanie | [["Bartfärbung","30 Min."]]
+sk | Ako dlho trvá balíček? → odpoved trvanie | [["Balíček 1","65 min"],["Ultra inclusive Barbershop30","80 min"]]
+en | How long does a head shave take? → odpoved trvanie | [["Head shave","25 min"]]
+sk | Koľko stojí strih pre mamu? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | Koľko stojí strih pre babku? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | Koľko stojí strih pre kamarátku? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | Koľko stojí strih pre sestru? → nevieme damske | Dámske strihy na webe neuvádzame.
+en | How much is a haircut for my mum? → nevieme damske | We don't list women's haircuts on the website.
+sk | Koľko stojí balzam na bradu? → nevieme produkty | značky produktov
+sk | Koľko stojí vosk na bradu? → nevieme produkty | značky produktov
+sk | Koľko stojí olej na bradu? → nevieme produkty | značky produktov
+sk | Koľko stojí holenie hlavy britvou? → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | Koľko stojí strihanie doma? → nevieme mimo | Služby mimo podniku na webe neuvádzame.
+sk | Strihate v nemocnici? → nevieme mimo | Služby mimo podniku na webe neuvádzame.
+sk | Koľko stojí strih v domove dôchodcov? → nevieme mimo | Služby mimo podniku na webe neuvádzame.

@@ -1,0 +1,261 @@
+sk | Ako dlho budem čakať? → vyber cena-dlhe | cena-dlhe,kava
+sk | Ako dlho sa čaká na termín? → vyber rezervacia | rezervacia,cena-dlhe
+sk | Ako dlho trvá umytie hlavy? → fallback  | 
+sk | Ako dlho trvá farbenie vlasov? → fallback  | 
+sk | Koľko trvá melír? → fallback  | 
+sk | Ako dlho trvá fénovanie? → fallback  | 
+sk | Ako dlho trvá konzultácia? → fallback  | 
+sk | Koľko minút trvá styling? → fallback  | 
+sk | Ako dlho trvá cesta z Bratislavy? → fallback  | 
+sk | Ako dlho máte otvorené? → vyber hodiny | hodiny,cena-dlhe
+sk | Ako dlho trvá peeling? → odpoved trvanie | [["Starostlivosť o pleť PREMIUM","30 min"]]
+sk | Ako dlho trvá maska? → odpoved trvanie | [["Starostlivosť o pleť PREMIUM","30 min"]]
+sk | Ako dlho trvá úprava obočia a farbenie obočia? → odpoved trvanie | [["Úprava obočia","5 min"],["Farbenie obočia","10 min"]]
+sk | Ako dlho trvá strih brady? → fallback  | 
+sk | Ako dlho trvá vytrhanie obočia? → fallback  | 
+sk | Koľko trvá holenie nôh? → fallback  | 
+sk | Ako dlho trvá zafarbenie šedín? → odpoved trvanie | [["Farbenie brady","30 min"]]
+sk | Ako dlho trvá strih pre syna, má 7? → odpoved trvanie | [["Strih pre malých gentlemanov","45 min"]]
+sk | Ako dlho trvá strih pre syna, má 13? → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+sk | Ako dlho trvá oholenie hlavy strojčekom? → fallback  | 
+sk | Koľko stojí horúci uterák? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí naparenie tváre? → vyber plet | plet
+sk | Koľko stojí relaxačná maska? → vyber plet | plet
+sk | Koľko stojí vlasový tonik? → nevieme produkty | značky produktov
+sk | Koľko stojí kolínska? → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | Koľko stojí fénovanie? → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | Koľko stojí len umytie? → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | Koľko stojí strih strojčekom? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih nožnicami? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih bez umytia? → odpoved co-je-v-strihu | ["Pánsky strih krok za krokom"]
+sk | Koľko stojí strih na ježka? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih na plešinu? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih s ornamentom? → vyber ornament | ornament,cena-strih
+sk | Koľko stojí vytrhanie obočia? → vyber obocie | obocie
+sk | Koľko stojí vytrhanie chĺpkov z nosa? → vyber depilacia | depilacia
+sk | Koľko stojí depilácia obočia voskom? → vyber depilacia | depilacia,obocie
+sk | Koľko stojí voskovanie chrbta? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí holenie chrbta? → vyber holenie | holenie
+sk | Koľko stojí holenie hrudníka? → vyber holenie | holenie
+sk | Koľko stojí holenie podpazušia? → vyber holenie | holenie
+sk | Koľko stojí holenie krku? → vyber holenie | holenie
+sk | Koľko stojí holenie tváre strojčekom? → vyber holenie | holenie
+sk | Koľko stojí strih fúzov pod nosom? → vyber cena-strih-brada | cena-strih-brada,cena-brada
+sk | Koľko stojí farbenie mihalníc? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí farbenie rias? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí laminácia obočia? → vyber obocie | obocie
+sk | Koľko stojí permanentný make-up obočia? → vyber obocie | obocie
+sk | Koľko stojí predlžovanie vlasov? → nevieme produkty | značky produktov
+sk | Koľko stojí keratín? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí rovnanie vlasov? → nevieme produkty | značky produktov
+sk | Koľko stojí kučeravá trvalá pre pánov? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí sivý melír pre chlapov? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí strih pre suseda? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre susedku? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre neter? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre vnučku? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre dcérku? → nevieme damske | Dámske strihy na webe neuvádzame.
+sk | Koľko stojí strih pre kolegyňu? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre partnerku? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre snúbenicu? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre švagrinú? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre ženícha? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre dedka? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre otca? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre vnuka, má 6? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre vnuka, má 16? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre študenta? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih pre dôchodcu? → nevieme mimo | Služby mimo podniku na webe neuvádzame.
+sk | Máte zľavu pre dôchodcov? → nevieme vernost | vernostnú kartičku
+sk | Máte študentskú zľavu? → nevieme vernost | vernostnú kartičku
+sk | Koľko stojí strih pre psa? → vyber cena-strih | cena-strih
+sk | Koľko stojí strihanie psíka? → vyber cena-strih | cena-strih
+sk | Strihate aj mačky? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih na chate? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih v kancelárii? → vyber cena-strih | cena-strih
+sk | Prídete ostrihať do firmy? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih na rozlúčku so slobodou? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih v nedeľu? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí strih po zatváracích hodinách? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí expresný strih? → vyber cena-strih | cena-strih
+sk | Koľko stojí rýchly strih za 15 minút? → fallback  | 
+sk | Koľko stojí strih s príplatkom za sobotu? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko stojí strih s whisky? → vyber ultra | ultra,cena-strih
+sk | Koľko stojí pivo? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí káva? → odpoved kava | [["Vzadu ťa","čaká káva."],"Kreslá, retro pumpa a farebný buldog. Káva
+sk | Koľko stojí parkovanie? → nevieme parkovanie | parkovanie
+sk | Koľko stojí strih vlasov a obočia? → vyber obocie | obocie,cena-strih
+sk | Koľko stojí strih a depilácia? → vyber depilacia | depilacia,cena-strih
+sk | Koľko stojí brada a obočie? → vyber obocie | obocie,cena-brada
+sk | Koľko stojí holenie a farbenie brady? → vyber farbenie-brady | farbenie-brady,holenie
+sk | Koľko stojí oholenie brady? → vyber holenie | holenie,cena-brada
+sk | Koľko stojí oholenie fúzov? → vyber holenie | holenie,cena-brada
+sk | Koľko stojí oholenie celej tváre aj hlavy? → vyber hlava | hlava
+sk | Koľko stojí strih hlavy dohola strojčekom? → vyber hlava | hlava,cena-strih
+sk | Koľko stojí strojček na nulu? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí farbenie obočia na čierno? → vyber obocie | obocie
+sk | Koľko stojí farbenie vlasov na čierno pre chlapa? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí odfarbenie brady? → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | Koľko stojí tónovanie brady? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí zastrihnutie obočia? → vyber cena-brada | cena-brada,obocie
+sk | Koľko stojí zastrihnutie vlasov v ušiach? → vyber cena-brada | cena-brada
+sk | Koľko stojí strih chĺpkov v ušiach? → vyber depilacia | depilacia,cena-strih
+sk | Koľko stojí úprava bokombrád? → vyber cena-brada | cena-brada,obocie
+sk | Koľko stojí úprava kotlety? → vyber cena-brada | cena-brada,obocie
+sk | Koľko stojí dizajn brady? → vyber cena-brada | cena-brada
+sk | Koľko stojí zarovnanie brady? → vyber cena-brada | cena-brada
+sk | Koľko stojí kontúra brady? → vyber cena-brada | cena-brada
+sk | Koľko stojí olejová masáž brady? → nevieme produkty | značky produktov
+sk | Koľko stojí ošetrenie brady? → vyber plet | plet,cena-brada
+sk | Robíte aj tetovanie? → fallback  | 
+sk | Robíte piercing? → fallback  | 
+sk | Robíte manikúru pre mužov? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Strihate aj vlasy s rastami? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Robíte afro copánky? → fallback  | 
+sk | Robíte dredy? → fallback  | 
+sk | Koľko stojí strih afro vlasov? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Koľko stojí strih kučeravých vlasov? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Koľko stojí strih hustých vlasov? → vyber cena-strih | cena-strih,cena-dlhe
+sk | Koľko stojí strih po chemoterapii? → vyber cena-strih | cena-strih
+sk | Koľko stojí parochňa? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí transplantácia vlasov? → nevieme produkty | značky produktov
+sk | Je strih pre chlapca od 10 rokov drahší? → vyber deti | deti,cena-dlhe
+sk | Synovi je 10 a pol, koľko zaplatím? → vyber deti | deti
+sk | Dvojičky majú 9, koľko za oboch? → vyber obocie | obocie
+sk | Koľko zaplatím za dvoch synov? → vyber deti | deti
+sk | Koľko stojí strih a brada pre dvoch? → vyber cena-strih-brada | cena-strih-brada
+sk | Koľko stojí darček strih pre otca? → nevieme poukazky | poukážky
+sk | Koľko stojí strih o 18:30? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih na 14. narodeniny? → vyber cena-strih | cena-strih
+sk | Môj 12 ročný chce fade, koľko? → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+sk | kolko stoji fejd → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | kolko stoji strich a brada → vyber cena-brada | cena-brada
+sk | kolko stoji holeni hlavi → odpoved hlava | [["Oholenie hlavy","13 €"]]
+sk | kolko stoji farbeni bradi → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | kolko stoji depilac usi → odpoved depilacia | [["Depilácia uší a nosa voskom","5,50 €"]]
+sk | cena oboci → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | kolko stoi strh → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+en | How long will I have to wait? → vyber cena-dlhe | cena-dlhe,kava
+en | How long does hair washing take? → fallback  | 
+en | How long does a back wax take? → fallback  | 
+en | How long does eyebrow tinting take? → odpoved trvanie | [["Eyebrow shaping","5 min"],["Eyebrow tinting","10 min"]]
+en | How much is a scissor cut? → vyber cena-strih | cena-strih,deti
+en | How much is a buzz cut with clippers? → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | How much for a head massage? → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | How much is a hot towel? → odpoved holenie | [["Hot Towel clean shave","15 €"]]
+en | How much is a face mask? → odpoved plet | [["Skin care PREMIUM","21,50 €"]]
+en | How much is nose hair trimming? → vyber depilacia | depilacia
+en | How much is ear hair waxing? → odpoved depilacia | [["Ear and nose waxing","5,50 €"]]
+en | How much is eyelash tinting? → vyber obocie | obocie,farbenie-brady
+en | How much is a beard wash? → odpoved co-je-v-strihu | ["Men's haircut, step by step"]
+en | How much is beard oil? → nevieme produkty | product brands
+en | How much is a haircut for my wife? → nevieme damske | We don't list women's haircuts on the website.
+en | How much is a haircut for my daughter? → nevieme damske | We don't list women's haircuts on the website.
+en | How much is a haircut for my grandma? → nevieme damske | We don't list women's haircuts on the website.
+en | How much is a haircut for my girlfriend? → nevieme damske | We don't list women's haircuts on the website.
+en | How much is a haircut for my niece? → nevieme damske | We don't list women's haircuts on the website.
+en | How much is a haircut for my nephew who is 14? → vyber cena-strih | cena-strih
+en | How much is a haircut for my dog? → vyber cena-strih | cena-strih
+en | How much is a haircut at home? → nevieme mimo | We don't list services outside the shop on the website.
+en | How much is a haircut at a hotel? → nevieme mimo | We don't list services outside the shop on the website.
+en | How much is a wedding haircut? → nevieme mimo | We don't list services outside the shop on the website.
+en | How much is a student haircut? → vyber cena-strih | cena-strih
+en | Do you give senior discounts? → nevieme vernost | a loyalty card
+en | How much is chest shaving? → vyber holenie | holenie
+en | How much is a neck shave? → vyber holenie | holenie
+en | How much is head and beard shave? → vyber hlava | hlava,cena-brada
+en | How much is a shave and haircut? → vyber holenie | holenie,cena-strih
+en | How much is a fade for a 12 year old? → nevieme vek | We don't list haircuts for boys over 10 on the website.
+en | How much is a hair transplant? → nevieme produkty | product brands
+en | How much is a perm? → nevieme romana-ceny | We don't list Romana's prices and days on the website; you'll find the prices in her booking system.
+en | How much is highlights for men? → odpoved farbenie-vlasov | ["Colouring, highlights and perms are done by Romana.","Romana does th
+en | How much does a dreadlock cost? → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | How much is a hair tattoo? → vyber ornament | ornament
+en | How much is a real tattoo? → nevieme cena-ina-sluzba | I can't find this service in the price list; see the full price list.
+en | Do you do piercings? → fallback  | 
+en | How much is the whisky? → vyber ultra | ultra
+en | How long does the Ultra take? → odpoved trvanie | [["Ultra inclusive Barbershop30","80 min"]]
+en | How long does a kids haircut take for a 13 year old? → nevieme vek | We don't list haircuts for boys over 10 on the website.
+de | Wie lange muss ich warten? → odpoved kava | [["Hinten wartet","Kaffee auf dich."],"Sessel, eine Retro-Zapfsäule un
+de | Wie lange dauert Haarewaschen? → fallback  | 
+de | Was kostet eine Kopfmassage? → nevieme cena-ina-sluzba | Diese Leistung finde ich in der Preisliste nicht; schau dir die ganze Preisliste an.
+de | Was kostet Wimpernfärben? → nevieme cena-ina-sluzba | Diese Leistung finde ich in der Preisliste nicht; schau dir die ganze Preisliste an.
+de | Was kostet Brustrasur? → vyber holenie | holenie
+de | Was kostet Nackenrasur? → vyber holenie | holenie
+de | Was kostet ein Haarschnitt für meine Frau? → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+de | Was kostet ein Haarschnitt für meine Tochter? → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+de | Was kostet ein Haarschnitt für meine Oma? → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+de | Was kostet ein Haarschnitt für meinen Hund? → vyber cena-strih | cena-strih
+de | Was kostet ein Haarschnitt zu Hause? → nevieme mimo | Leistungen außerhalb des Barbershops nennen wir auf der Website nicht.
+de | Was kostet ein Haarschnitt für meinen Sohn, 14 Jahre? → nevieme vek | Haarschnitte für Jungen über 10 Jahre nennen wir auf der Website nicht.
+de | Was kostet Bartöl? → nevieme produkty | Produktmarken
+de | Was kostet Bartwäsche? → odpoved co-je-v-strihu | ["Herrenhaarschnitt Schritt für Schritt"]
+de | Was kostet Augenbrauenlaminierung? → vyber obocie | obocie
+de | Was kostet Nasenhaarschneiden? → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+de | Was kostet eine Dauerwelle? → nevieme romana-ceny | Romanas Preise und Tage stehen nicht auf der Website; die Preise findest du in ihrem Buchungssystem.
+de | Was kostet Strähnchen? → nevieme romana-ceny | Romanas Preise und Tage stehen nicht auf der Website; die Preise findest du in ihrem Buchungssystem.
+de | Was kostet Rasur und Haarschnitt? → vyber holenie | holenie,cena-strih
+de | Was kostet ein Studentenhaarschnitt? → vyber cena-strih | cena-strih
+de | Wie lange dauert die Bartfärbung? → odpoved trvanie | [["Bartfärbung","30 Min."]]
+de | Wie lange dauert Augenbrauenzupfen? → odpoved trvanie | [["Augenbrauenkorrektur","5 Min."],["Augenbrauenfärbung","10 Min."]]
+hu | Mennyi ideig kell várni? → odpoved trvanie | [["Férfi hajvágás","40 perc"],["Szakálligazítás","20 perc"]]
+hu | Mennyibe kerül a fejmasszázs? → nevieme cena-ina-sluzba | Ezt a szolgáltatást nem találom az árlistában; nézd meg a teljes árlistát.
+hu | Mennyibe kerül a szempillafestés? → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az árakat a foglalási rendszerében találod.
+hu | Mennyibe kerül a hajvágás a feleségemnek? → nevieme damske | Női hajvágást az oldalon nem tüntetünk fel.
+hu | Mennyibe kerül a hajvágás a lányomnak? → nevieme damske | Női hajvágást az oldalon nem tüntetünk fel.
+hu | Mennyibe kerül a hajvágás a kutyámnak? → vyber cena-strih | cena-strih
+hu | Mennyibe kerül a hajvágás otthon? → nevieme mimo | Az üzleten kívüli szolgáltatásokat az oldalon nem tüntetjük fel.
+hu | Mennyibe kerül a mellkas borotválás? → vyber holenie | holenie
+hu | Mennyibe kerül a szakállolaj? → nevieme produkty | termékmárkák
+hu | Mennyibe kerül a dauer? → nevieme romana-ceny | Romana árait és napjait az oldalon nem tüntetjük fel; az árakat a foglalási rendszerében találod.
+hu | Mennyibe kerül a hajvágás a 14 éves fiamnak? → nevieme vek | 10 év feletti fiúk hajvágását az oldalon nem tüntetjük fel.
+hu | Meddig tart a hajmosás? → fallback  | 
+hu | Meddig tart a szemöldökfestés? → odpoved trvanie | [["Szemöldökigazítás","5 perc"],["Szemöldökfestés","10 perc"]]
+cs | Jak dlouho budu čekat? → vyber cena-dlhe | cena-dlhe,kava
+cs | Kolik stojí masáž hlavy? → nevieme cena-ina-sluzba | Tuto službu v ceníku nemůžu najít; podívej se na celý ceník.
+cs | Kolik stojí barvení řas? → nevieme romana-ceny | Ceny a dny Romany na webu neuvádíme; ceny najdeš v jejím rezervačním systému.
+cs | Kolik stojí střih pro manželku? → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | Kolik stojí střih pro dceru? → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | Kolik stojí střih pro psa? → vyber cena-strih | cena-strih
+cs | Kolik stojí střih doma? → nevieme mimo | Služby mimo provozovnu na webu neuvádíme.
+cs | Kolik stojí holení hrudníku? → vyber holenie | holenie
+cs | Kolik stojí olej na vousy? → nevieme produkty | značky produktů
+cs | Kolik stojí střih pro syna, je mu 14? → nevieme vek | Střih pro kluky nad 10 let na webu neuvádíme.
+cs | Jak dlouho trvá mytí vlasů? → fallback  | 
+cs | Jak dlouho trvá barvení obočí? → odpoved trvanie | [["Úprava obočí","5 min"],["Barvení obočí","10 min"]]
+pl | Jak długo trzeba czekać? → vyber cena-dlhe | cena-dlhe,kava
+pl | Ile kosztuje masaż głowy? → nevieme cena-ina-sluzba | Nie mogę znaleźć tej usługi w cenniku; zobacz cały cennik.
+pl | Ile kosztuje henna rzęs? → vyber obocie | obocie
+pl | Ile kosztuje strzyżenie dla żony? → nevieme damske | Strzyżeń damskich nie podajemy na stronie.
+pl | Ile kosztuje strzyżenie dla córki? → nevieme damske | Strzyżeń damskich nie podajemy na stronie.
+pl | Ile kosztuje strzyżenie psa? → vyber cena-strih | cena-strih
+pl | Ile kosztuje strzyżenie w domu? → nevieme mimo | Usług poza salonem nie podajemy na stronie.
+pl | Ile kosztuje golenie klatki piersiowej? → vyber holenie | holenie
+pl | Ile kosztuje olejek do brody? → nevieme produkty | marki produktów
+pl | Ile kosztuje strzyżenie dla syna, ma 14 lat? → nevieme vek | Strzyżenia dla chłopców powyżej 10 lat nie podajemy na stronie.
+pl | Jak długo trwa mycie włosów? → fallback  | 
+pl | Jak długo trwa henna brwi? → odpoved trvanie | [["Regulacja brwi","5 min"],["Farbowanie brwi","10 min"]]
+uk | Скільки чекати? → odpoved kava | [["У глибині тебе","чекає кава."],"Крісла, ретро-бензоколонка і кольор
+uk | Скільки коштує масаж голови? → nevieme cena-ina-sluzba | Не можу знайти цю послугу в прайсі; переглянь весь прайс.
+uk | Скільки коштує фарбування вій? → nevieme romana-ceny | Ціни та дні Романи на сайті не вказуємо; ціни знайдеш у її системі бронювання.
+uk | Скільки коштує стрижка для дружини? → nevieme damske | Жіночі стрижки на сайті не вказуємо.
+uk | Скільки коштує стрижка для доньки? → nevieme damske | Жіночі стрижки на сайті не вказуємо.
+uk | Скільки коштує стрижка собаки? → vyber cena-strih | cena-strih
+uk | Скільки коштує стрижка вдома? → nevieme mimo | Послуги поза барбершопом на сайті не вказуємо.
+uk | Скільки коштує гоління грудей? → vyber holenie | holenie
+uk | Скільки коштує олія для бороди? → nevieme produkty | бренди продуктів
+uk | Скільки коштує стрижка для сина, йому 14? → nevieme vek | Стрижки для хлопців старше 10 років на сайті не вказуємо.
+uk | Скільки триває миття голови? → fallback  | 
+uk | Скільки триває фарбування брів? → odpoved trvanie | [["Корекція брів","5 хв"],["Фарбування брів","10 хв"]]
+sr | Koliko dugo se čeka? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+sr | Koliko košta masaža glave? → nevieme cena-ina-sluzba | Ne mogu da nađem ovu uslugu u cenovniku; pogledaj ceo cenovnik.
+sr | Koliko košta farbanje trepavica? → nevieme romana-ceny | Cene i dane Romane ne navodimo na sajtu; cene ćeš naći u njenom sistemu za rezervacije.
+sr | Koliko košta šišanje za ženu? → nevieme damske | Žensko šišanje ne navodimo na sajtu.
+sr | Koliko košta šišanje za ćerku? → nevieme damske | Žensko šišanje ne navodimo na sajtu.
+sr | Koliko košta šišanje psa? → vyber cena-strih | cena-strih
+sr | Koliko košta šišanje kod kuće? → nevieme mimo | Usluge van salona ne navodimo na sajtu.
+sr | Koliko košta brijanje grudi? → vyber holenie | holenie
+sr | Koliko košta ulje za bradu? → nevieme produkty | brendovi proizvoda
+sr | Koliko košta šišanje za sina, ima 14 godina? → nevieme vek | Šišanje za dečake starije od 10 godina ne navodimo na sajtu.
+sr | Koliko traje pranje kose? → fallback  | 
+sr | Koliko traje farbanje obrva? → odpoved trvanie | [["Uređivanje obrva","5 min"],["Farbanje obrva","10 min"]]

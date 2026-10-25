@@ -1,0 +1,153 @@
+{
+ "tag": "pred",
+ "url": "http://127.0.0.1:8722/index.html",
+ "zariadenia": {
+  "telefon": {
+   "chyby": [],
+   "ziadosti": [],
+   "loadMs": 161,
+   "html": "karty lite world-off js-kin js-steps",
+   "tlacidloPoLoadMs": null,
+   "pokoj": {
+    "scrollY": 0,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": false,
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 869,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 869,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".scroll-hint",
+      "r": {
+       "x": 130,
+       "y": 762,
+       "w": 131,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "2"
+     }
+    ]
+   },
+   "clsPokoj": {
+    "cls": 0,
+    "shifts": []
+   },
+   "tlacidlo": {
+    "scrollY": 5304,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": false,
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 782,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 782,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     }
+    ]
+   },
+   "vyskaStranky": 16403,
+   "kolizie": [
+    {
+     "scrollY": 10644,
+     "btn": {
+      "x": 16,
+      "y": 782,
+      "w": 46,
+      "h": 46
+     },
+     "btnJe": false,
+     "podTlacidlom": [
+      {
+       "el": "button.gallery-btn.media",
+       "text": "Zväčšiť: Nožnice a hrebeň na barberskej ",
+       "r": {
+        "x": 16,
+        "y": 507,
+        "w": 279,
+        "h": 349
+       }
+      }
+     ],
+     "spodne": [
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 146,
+        "y": 782,
+        "w": 46,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      },
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 200,
+        "y": 782,
+        "w": 174,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      }
+     ]
+    }
+   ],
+   "krokov": 40,
+   "spodneVidene": [
+    ".mobile-cta .btn",
+    ".scroll-hint"
+   ]
+  }
+ },
+ "snimkyChyby": []
+}

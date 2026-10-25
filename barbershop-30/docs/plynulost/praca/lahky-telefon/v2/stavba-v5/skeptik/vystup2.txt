@@ -1,0 +1,24 @@
+sk | Koľko stojí ostrihanie a tónovanie vlasov? → odpoved farbenie-vlasov | ["Farbenie, melír a trvalú robí Romana.","Robí ich Romana a rezervujú 
+sk | Koľko stojí strih a blond prameene? → vyber cena-strih | cena-strih
+sk | Koľko stojí farbenie vlasov na hlave? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Ako dlho trvá melír? → fallback  | 
+sk | Koľko minút trvá rezervácia cez telefón? → fallback  | 
+sk | Ako dlho máte otvorené v sobotu? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí holenie a melír? → odpoved holenie | [["Holenie do hladka Hot Towel","15 €"]]
+sk | Koľko stojí úprava obočia a trvalá? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | Koľko stojí strih pre psa? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih vo štvrtok večer? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih pre vnuka, má 16? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih a čierna farba? → vyber cena-strih | cena-strih,farbenie-brady
+cs | Kolik stojí střih a barvení vlasů? → nevieme romana-ceny | Ceny a dny Romany na webu neuvádíme; ceny najdeš v jejím rezervačním systému.
+cs | Jak dlouho trvá rezervace? → odpoved trvanie | [["Pánský střih","40 min"],["Úprava vousů","20 min"]]
+en | How long is the wait? → vyber cena-dlhe | cena-dlhe,kava
+en | How much is a haircut and a perm? → odpoved farbenie-vlasov | ["Colouring, highlights and perms are done by Romana.","Romana does th
+en | How much is bleaching my beard? → odpoved farbenie-vlasov | ["Colouring, highlights and perms are done by Romana.","Romana does th
+en | How long does a perm take? → fallback  | 
+de | Wie lange dauert eine Dauerwelle? → fallback  | 
+de | Was kostet Bart und Dauerwelle? → odpoved farbenie-vlasov | ["Färben, Strähnchen und Dauerwelle macht Romana.","Die macht Romana, 
+hu | Mennyibe kerül a szakáll és dauer? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+pl | Ile kosztuje farbowanie siwych włosów? → nevieme romana-ceny | Cen i dni Romany nie podajemy na stronie; ceny znajdziesz w jej systemie rezerwacji.
+uk | Скільки коштує фарбування сивини? → nevieme romana-ceny | Ціни та дні Романи на сайті не вказуємо; ціни знайдеш у її системі бронювання.
+sr | Koliko traje rezervacija? → odpoved trvanie | [["Muško šišanje","40 min"],["Uređivanje brade","20 min"]]

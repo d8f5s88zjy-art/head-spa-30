@@ -1,0 +1,625 @@
+{
+ "tag": "po",
+ "url": "http://127.0.0.1:8721/index.html",
+ "zariadenia": {
+  "telefon": {
+   "chyby": [],
+   "ziadosti": [
+    "recepcia.js",
+    "recepcia.css",
+    "recepcia/sk.json",
+    "recepcia/en.json",
+    "recepcia/uk.json",
+    "recepcia/sk.json"
+   ],
+   "loadMs": 156,
+   "html": "karty lite world-off js-kin js-steps",
+   "tlacidloPoLoadMs": 1873,
+   "pokoj": {
+    "scrollY": 0,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 869,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 869,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".scroll-hint",
+      "r": {
+       "x": 130,
+       "y": 762,
+       "w": 131,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "2"
+     }
+    ]
+   },
+   "clsPokoj": {
+    "cls": 0,
+    "shifts": []
+   },
+   "tlacidlo": {
+    "scrollY": 5304,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 782,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 782,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     }
+    ]
+   },
+   "btnAttr": {
+    "label": "Spýtaj sa recepcie",
+    "haspopup": "dialog",
+    "expanded": "false",
+    "w": 46,
+    "h": 46,
+    "right": 328,
+    "bottom": 16,
+    "left": 16,
+    "z": "36",
+    "anim": "rc-btn"
+   },
+   "showModal": {
+    "pred": {
+     "iw": 390,
+     "cw": 390,
+     "sw": 390,
+     "sy": 5304,
+     "hx": 390,
+     "lx": 16,
+     "bodyOv": "hidden auto",
+     "htmlOv": "visible"
+    },
+    "po": {
+     "iw": 390,
+     "cw": 390,
+     "sw": 390,
+     "sy": 5304,
+     "hx": 390,
+     "lx": 16,
+     "bodyOv": "hidden auto",
+     "htmlOv": "visible",
+     "panel": {
+      "x": 0,
+      "y": 543,
+      "w": 390,
+      "h": 301
+     },
+     "fokus": "rc-chip Rezervovať",
+     "fokusVis": false,
+     "expanded": "true",
+     "cssOk": "fixed",
+     "nadpis": "Recepcia",
+     "chips": [
+      "Rezervovať",
+      "Hodiny",
+      "Cenník",
+      "Kde nás nájdete",
+      "Zavolať"
+     ],
+     "noI18n": true,
+     "lang": "sk",
+     "chipsOv": {
+      "sw": 507,
+      "cw": 358
+     }
+    }
+   },
+   "clsPoOtvoreni": 0.0099,
+   "odpovede": {
+    "koľko stojí strih": {
+     "text": "Pánsky strih 18 €\n\nzo stránky\nREZERVOVAŤ TERMÍN\nCELÝ CENNÍK",
+     "odkazy": [
+      "Rezervovať termín → https://www.barbershop30.sk/rezervacia",
+      "Celý cenník → #sluzby"
+     ]
+    },
+    "strihate aj damy": {
+     "text": "Dámske strihy na webe neuvádzame. Spýtaj sa recepcie: 0951 267 203 alebo info@barbershop30.sk.\n\nZAVOLAŤ\nNAPÍSAŤ E‑MAIL",
+     "odkazy": [
+      "Zavolať → tel:+421951267203",
+      "Napísať e‑mail → mailto:info@barbershop30.sk"
+     ]
+    }
+   },
+   "klavesnicaPoOdoslani": {
+    "fokus": "rc-q",
+    "iw": 390,
+    "vvh": 844
+   },
+   "S7": {
+    "pred": {
+     "sy": 5304,
+     "lt": 1077,
+     "lmax": 1077,
+     "r": {
+      "x": 16,
+      "y": 352,
+      "w": 358,
+      "h": 399
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poTahuLogKoniec": {
+     "sy": 5304,
+     "lt": 1076,
+     "lmax": 1077,
+     "r": {
+      "x": 16,
+      "y": 352,
+      "w": 358,
+      "h": 399
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poTahochLogZaciatok": {
+     "sy": 4242,
+     "lt": 0,
+     "lmax": 1077,
+     "r": {
+      "x": 16,
+      "y": 352,
+      "w": 358,
+      "h": 399
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "poTahuPozadie": {
+     "sy": 4314,
+     "lt": 0,
+     "lmax": 1077,
+     "r": {
+      "x": 16,
+      "y": 352,
+      "w": 358,
+      "h": 399
+     },
+     "ob": "auto",
+     "obD": "auto"
+    },
+    "pozadieY": 118
+   },
+   "esc": {
+    "open": false,
+    "fokus": "recepcia-btn",
+    "expanded": "false",
+    "syPredEsc": 4314,
+    "sy": 4314,
+    "syPredOtvorenim": 5304
+   },
+   "fokus": {
+    "prvy": {
+     "el": "rc-chip Rezervovať",
+     "vis": true,
+     "outline": "solid 2px rgb(224, 96, 28) off 3px",
+     "chipX": 16,
+     "chipsX": 16,
+     "chipY": 300,
+     "chipsY": 292,
+     "chipB": 344,
+     "chipsB": 352,
+     "chipsOverflowX": "auto"
+    },
+    "tab": [
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-chip",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn",
+     "panel:rc-btn"
+    ],
+    "poEsc": {
+     "fokus": "recepcia-btn",
+     "vis": true
+    }
+   },
+   "jazyky": {
+    "menuOtvorene_en": {
+     "menu": "open",
+     "btnVis": "hidden"
+    },
+    "en": {
+     "lang": "en",
+     "label": "Ask the front desk",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "en",
+      "nadpis": "Front desk",
+      "chips": [
+       "Book",
+       "Hours",
+       "Prices",
+       "Find us",
+       "Call"
+      ],
+      "uvod": "I answer from prepared answers about the shop. For anything else, our front desk",
+      "zavriet": "Close",
+      "vstup": "Type a question…",
+      "sukromie": "Answers come from this page; nothing is sent.",
+      "sw": 390,
+      "iw": 390
+     },
+     "odpoved": {
+      "text": "Men's haircut 18 €\n\nfrom this page\n\nThe booking page is in Slovak.\n\nBOOK AN APPOINTMENT\nFULL PRICE LIST",
+      "odkazy": [
+       "Book an appointment → https://www.barbershop30.sk/rezervacia",
+       "Full price list → #sluzby"
+      ]
+     }
+    },
+    "menuOtvorene_uk": {
+     "menu": "open",
+     "btnVis": "hidden"
+    },
+    "uk": {
+     "lang": "uk-UA",
+     "label": "Запитай рецепцію",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "uk",
+      "nadpis": "Рецепція",
+      "chips": [
+       "Забронювати",
+       "Години роботи",
+       "Ціни",
+       "Де нас знайти",
+       "Зателефонувати"
+      ],
+      "uvod": "Відповідаю з підготовлених відповідей про барбершоп. На решту вам охоче відповіс",
+      "zavriet": "Закрити",
+      "vstup": "Напиши питання…",
+      "sukromie": "Відповіді зі сторінки, нічого не надсилається.",
+      "sw": 390,
+      "iw": 390
+     },
+     "odpoved": {
+      "text": "Чоловіча стрижка 18 €\n\nзі сторінки\n\nСторінка бронювання словацькою мовою.\n\nЗАБРОНЮВАТИ ЧАС\nВЕСЬ ПРАЙС",
+      "odkazy": [
+       "Забронювати час → https://www.barbershop30.sk/rezervacia",
+       "Весь прайс → #sluzby"
+      ]
+     }
+    },
+    "menuOtvorene_sk": {
+     "menu": "open",
+     "btnVis": "hidden"
+    },
+    "sk": {
+     "lang": "sk-SK",
+     "label": "Spýtaj sa recepcie",
+     "btnVis": "visible",
+     "panel": {
+      "lang": "sk",
+      "nadpis": "Recepcia",
+      "chips": [
+       "Rezervovať",
+       "Hodiny",
+       "Cenník",
+       "Kde nás nájdete",
+       "Zavolať"
+      ],
+      "uvod": "Odpovedám z pripravených odpovedí k podniku. Na ostatné vám rada odpovie recepci",
+      "zavriet": "Zavrieť",
+      "vstup": "Napíš otázku…",
+      "sukromie": "Odpovede sú zo stránky, nič sa neodosiela.",
+      "sw": 390,
+      "iw": 390
+     },
+     "odpoved": {
+      "text": "Toto neviem presne. Zavolaj na recepciu 0951 267 203 alebo napíš na info@barbershop30.sk.\n\nZAVOLAŤ\nNAPÍSAŤ E‑MAIL\nREZERVOVAŤ TERMÍN",
+      "odkazy": [
+       "Zavolať → tel:+421951267203",
+       "Napísať e‑mail → mailto:info@barbershop30.sk",
+       "Rezervovať termín → https://www.barbershop30.sk/rezervacia"
+      ]
+     }
+    }
+   },
+   "sirkaKoniec": {
+    "sw": 390,
+    "iw": 390
+   },
+   "clsKoniec": {
+    "cls": 0.0099,
+    "shifts": [
+     {
+      "t": 8617,
+      "v": 0.009933514521237169,
+      "src": "::before"
+     }
+    ]
+   },
+   "vyskaStranky": 16403,
+   "kolizie": [
+    {
+     "scrollY": 10440,
+     "btn": {
+      "x": 16,
+      "y": 782,
+      "w": 46,
+      "h": 46
+     },
+     "btnJe": true,
+     "navrchuStred": "tlačidlo",
+     "btnVis": "visible",
+     "podTlacidlom": [
+      {
+       "el": "button.gallery-btn.media",
+       "text": "Zväčšiť: Nožnice a hrebeň na barberskej ",
+       "r": {
+        "x": 16,
+        "y": 711,
+        "w": 279,
+        "h": 349
+       }
+      }
+     ],
+     "spodne": [
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 146,
+        "y": 782,
+        "w": 46,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      },
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 200,
+        "y": 782,
+        "w": 174,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      }
+     ]
+    },
+    {
+     "scrollY": 15481,
+     "btn": {
+      "x": 16,
+      "y": 782,
+      "w": 46,
+      "h": 46
+     },
+     "btnJe": true,
+     "navrchuStred": "tlačidlo",
+     "btnVis": "visible",
+     "podTlacidlom": [
+      {
+       "el": "a.link-arrow.footer-top",
+       "text": "Späť hore ↑",
+       "r": {
+        "x": 16,
+        "y": 799,
+        "w": 89,
+        "h": 27
+       }
+      }
+     ],
+     "spodne": [
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 146,
+        "y": 869,
+        "w": 46,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      },
+      {
+       "sel": ".mobile-cta .btn",
+       "r": {
+        "x": 200,
+        "y": 869,
+        "w": 174,
+        "h": 46
+       },
+       "kolizia": false,
+       "z": "35"
+      }
+     ]
+    }
+   ],
+   "krokov": 40,
+   "spodneVidene": [
+    ".mobile-cta .btn",
+    ".scroll-hint"
+   ],
+   "ponukaJazyka": {
+    "scrollY": 0,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 869,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 869,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".lang-offer",
+      "r": {
+       "x": 80,
+       "y": 646,
+       "w": 230,
+       "h": 114
+      },
+      "kolizia": false,
+      "z": "58"
+     },
+     {
+      "sel": ".scroll-hint",
+      "r": {
+       "x": 130,
+       "y": 762,
+       "w": 131,
+       "h": 58
+      },
+      "kolizia": false,
+      "z": "2"
+     }
+    ],
+    "offerIn": true,
+    "offerPoTlacidleMs": 1812
+   },
+   "ponukaJazykaStredOfferIn": true,
+   "ponukaJazykaStred": {
+    "scrollY": 5304,
+    "btn": {
+     "x": 16,
+     "y": 782,
+     "w": 46,
+     "h": 46
+    },
+    "btnJe": true,
+    "navrchuStred": "tlačidlo",
+    "btnVis": "visible",
+    "podTlacidlom": [],
+    "spodne": [
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 146,
+       "y": 782,
+       "w": 46,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".mobile-cta .btn",
+      "r": {
+       "x": 200,
+       "y": 782,
+       "w": 174,
+       "h": 46
+      },
+      "kolizia": false,
+      "z": "35"
+     },
+     {
+      "sel": ".lang-offer",
+      "r": {
+       "x": 80,
+       "y": 646,
+       "w": 230,
+       "h": 114
+      },
+      "kolizia": false,
+      "z": "58"
+     }
+    ]
+   },
+   "pohyb": {
+    "btnAnim": "none",
+    "panelAnim": "none",
+    "motionOff": {
+     "dm": "off",
+     "btnAnim": "rc-btn"
+    }
+   }
+  }
+ },
+ "snimkyChyby": []
+}

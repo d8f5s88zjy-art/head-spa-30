@@ -1,0 +1,66 @@
+sk | Koľko minút sa čaká v čakárni? → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | Ako dlho trvá rezervácia? → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | Koľko minút trvá online rezervácia? → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | Ako dlho trvá káva? → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | Ako dlho trvá kým zdvihnete telefón? → fallback  | 
+sk | Koľko minút trvá cesta od vás na stanicu? → fallback  | 
+sk | Ako dlho trvá kým odpíšete na e-mail? → fallback  | 
+sk | Koľko minút pred zatvorením môžem prísť? → odpoved trvanie | [["Pánsky strih","40 min"],["Úprava brady","20 min"]]
+sk | Koľko dlho sa čaká? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko dlho budem čakať na strih? → vyber cena-dlhe | cena-dlhe
+sk | Koľko stojí melír brady? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí blond brada? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí trvalá na bradu? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí odfarbenie fúzov? → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | Koľko stojí tónovanie obočia? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | Koľko stojí melír obočia? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | Koľko stojí blond obočie? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+sk | Koľko stojí zafarbenie šedín? → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | Koľko stojí prekrytie šedín? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí farbenie šedivých vlasov? → odpoved farbenie-brady | [["Farbenie brady","10 €"]]
+sk | Koľko stojí šedivá brada? → vyber farbenie-brady | farbenie-brady
+sk | Koľko stojí masáž brady? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Koľko stojí manikúra a strih? → nevieme cena-ina-sluzba | Túto službu v cenníku neviem nájsť; pozri si celý cenník.
+sk | Je príplatok za sobotu? → vyber hodiny | hodiny,cena-dlhe
+sk | Koľko je príplatok za víkend? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko je príplatok za večer? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Je príplatok za strih v sobotu? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko stojí strih online? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih cez Booqme? → vyber cena-strih | cena-strih
+sk | Koľko stojí strih cez víkend? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí strih v sobotu? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Koľko stojí brada s kávou? → vyber cena-brada | cena-brada
+sk | Koľko stojí úprava obočia pri recepcii? → odpoved obocie | [["Úprava obočia","3 €"],["Farbenie obočia","5 €"]]
+en | How long does the coffee take? → odpoved trvanie | [["Men's haircut","40 min"],["Beard trim","20 min"]]
+en | How many minutes do I wait in the waiting room? → fallback  | 
+en | How long does booking take? → odpoved trvanie | [["Men's haircut","40 min"],["Beard trim","20 min"]]
+en | How much is beard toning? → vyber cena-brada | cena-brada
+en | How much is beard bleaching? → odpoved farbenie-vlasov | ["Colouring, highlights and perms are done by Romana.","Romana does th
+en | How much is grey coverage? → vyber farbenie-brady | farbenie-brady
+en | How much is a perm for the beard? → odpoved farbenie-vlasov | ["Colouring, highlights and perms are done by Romana.","Romana does th
+en | Is there a Saturday surcharge? → vyber hodiny | hodiny,cena-dlhe
+en | How much extra on weekends? → vyber cena-dlhe | cena-dlhe,ceny-konecne
+hu | Mennyi ideig tart a foglalás? → odpoved trvanie | [["Férfi hajvágás","40 perc"],["Szakálligazítás","20 perc"]]
+hu | Hány percet kell várni a kávéra? → odpoved trvanie | [["Férfi hajvágás","40 perc"],["Szakálligazítás","20 perc"]]
+hu | Mennyibe kerül a szakáll melír? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+sr | Koliko dugo traje čekanje? → fallback  | 
+sr | Koliko dugo radite? → odpoved odkedy | [["Od 2019. godine","u ulici Mostná 30 u Nitri"]]
+sr | Koliko dugo ste otvoreni subotom? → odpoved hodiny | ["Pon–Pet 9:00–19:00","Sub 9:00–14:00","Ned zatvoreno"]
+sr | Koliko dugo se čeka na šišanje? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+sr | Koliko je doplata za subotu? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+cs | Kolik minut se čeká? → odpoved trvanie | [["Pánský střih","40 min"],["Úprava vousů","20 min"]]
+cs | Jak dlouho trvá rezervace? → odpoved trvanie | [["Pánský střih","40 min"],["Úprava vousů","20 min"]]
+cs | Kolik stojí tónování vousů? → vyber cena-brada | cena-brada
+cs | Je příplatek za sobotu? → vyber hodiny | hodiny,cena-dlhe
+pl | Ile minut się czeka? → odpoved trvanie | [["Strzyżenie męskie","40 min"],["Trymowanie brody","20 min"]]
+pl | Jak długo trwa rezerwacja? → odpoved trvanie | [["Strzyżenie męskie","40 min"],["Trymowanie brody","20 min"]]
+pl | Ile kosztuje tonowanie brody? → vyber cena-brada | cena-brada
+pl | Czy jest dopłata za sobotę? → vyber hodiny | hodiny,cena-dlhe
+de | Wie lange dauert die Reservierung? → odpoved trvanie | [["Herrenhaarschnitt","40 Min."],["Bartpflege","20 Min."]]
+de | Wie viele Minuten wartet man? → odpoved trvanie | [["Herrenhaarschnitt","40 Min."],["Bartpflege","20 Min."]]
+de | Was kostet Bart tönen? → odpoved farbenie-brady | [["Bartfärbung","10 €"]]
+de | Gibt es einen Samstagszuschlag? → odpoved hodiny | ["Mo–Fr 9:00–19:00","Sa 9:00–14:00","So geschlossen"]
+uk | Скільки хвилин чекати? → odpoved trvanie | [["Чоловіча стрижка","40 хв"],["Оформлення бороди","20 хв"]]
+uk | Скільки триває бронювання? → odpoved trvanie | [["Чоловіча стрижка","40 хв"],["Оформлення бороди","20 хв"]]
+uk | Скільки коштує тонування бороди? → odpoved farbenie-brady | [["Фарбування бороди","10 €"]]
+uk | Чи є доплата за суботу? → nevieme platba | спосіб оплати

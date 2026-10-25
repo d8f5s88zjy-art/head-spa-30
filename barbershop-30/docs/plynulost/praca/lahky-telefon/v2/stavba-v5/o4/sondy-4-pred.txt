@@ -1,0 +1,41 @@
+VÁŽNE      de | Was kostet Rückenwaxing? [X] → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+VÁŽNE      de | Beinwaxing, Preis? [X] → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+VÁŽNE      de | Was kostet Brustwaxing? [X] → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+VÁŽNE      de | Bauchrasur, was kostet das? [X] → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+VÁŽNE      de | Beinrasur Preis [X] → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+VÁŽNE      de | Rückenrasur? [X] → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+VÁŽNE      de | Gesichtswaxing Preis? [X] → odpoved plet | [["Hautpflege PREMIUM","21,50 €"]]
+VÁŽNE      de | Augenbrauenpiercing? [X] → odpoved obocie | [["Augenbrauenkorrektur","3 €"],["Augenbrauenfärbung","5 €"]
+VÁŽNE      de | Ohrenpiercing Preis? [X] → odpoved depilacia | [["Ohren- und Nasenwaxing","5,50 €"]]
+VÁŽNE      hu | Hátgyantázás ára? [X] → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+VÁŽNE      hu | Lábgyantázás mennyibe kerül? [X] → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+VÁŽNE      hu | Mellkasgyantázás ára? [X] → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+VÁŽNE      hu | Hónaljgyantázás? [X] → odpoved depilacia | [["Fül- és orrgyantázás","5,50 €"]]
+VÁŽNE      hu | Szempillafestés mennyi? [X] → odpoved farbenie-brady | [["Szakállfestés","10 €"]]
+VÁŽNE      hu | Körömfestés ára? [X] → odpoved farbenie-brady | [["Szakállfestés","10 €"]]
+VÁŽNE      hu | Lábborotválás ára? [X] → odpoved holenie | [["Simára borotválás Hot Towel","15 €"]]
+VÁŽNE      hu | Hátborotválás mennyi? [X] → odpoved holenie | [["Simára borotválás Hot Towel","15 €"]]
+VÁŽNE      hu | Szemöldökpiercing? [X] → odpoved obocie | [["Szemöldökigazítás","3 €"],["Szemöldökfestés","5 €"]]
+odovzdanie hu | Hajvágás ára? [cena-strih] → odpoved co-je-v-strihu | ["Férfi hajvágás lépésről lépésre"]
+VÁŽNE      sk | Synovi je 12, platí ešte detský strih? [X] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+VÁŽNE      sk | Synovi je 11, je to ešte detský strih? [X] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+VÁŽNE      sk | Synovi je 14, koľko stojí strih? [X] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+VÁŽNE      sk | Pre synovca, má 12, koľko stojí detský strih? [X] → odpoved deti | [["Strih pre malých gentlemanov","15 €"],"Klasický strih ale
+VÁŽNE      sk | Mám vlasy 3 cm, koľko stojí strih? [cena-strih] → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+vyber      sk | Mám krátke vlasy, 5 cm, koľko stojí strih? [cena-strih] → vyber cena-dlhe [cena-dlhe] | 
+vyber      sk | Vlasy mám 2cm, cena strihu? [cena-strih] → vyber cena-strih [cena-strih,cena-dlhe] | 
+vyber      cs | Synovi je 7, kolik stojí dětský střih? [deti] → vyber deti [deti] | 
+VÁŽNE      cs | Mám vlasy 4 cm, kolik stojí střih? [cena-strih] → odpoved cena-dlhe | [["Pánský střih – délka vlasů nad 10 cm","22 €"]]
+VÁŽNE      en | My hair is 3 cm, how much for a haircut? [cena-strih] → odpoved cena-dlhe | [["Men's haircut – hair over 10 cm","22 €"]]
+VÁŽNE      en | How much is dyeing? [X] → odpoved farbenie-brady | [["Beard colouring","10 €"]]
+vyber      de | Kinderhaarschnitt für meinen 6-jährigen Sohn? [deti] → vyber deti [deti] | 
+VÁŽNE      de | Meine Haare sind 3 cm, was kostet der Schnitt? [cena-strih] → odpoved cena-dlhe | [["Herrenhaarschnitt – Haarlänge über 10 cm","22 €"]]
+vyber      hu | 3 cm a hajam, mennyi a hajvágás? [cena-strih] → vyber cena-dlhe [cena-dlhe,cena-strih] | 
+vyber      hu | 20 cm a hajam, mennyi a hajvágás? [cena-dlhe] → vyber cena-dlhe [cena-dlhe,cena-strih] | 
+VÁŽNE      pl | Mam włosy 3 cm, ile kosztuje strzyżenie? [cena-strih] → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+VÁŽNE      pl | Ile kosztuje koloryzacja? [X] → odpoved farbenie-brady | [["Farbowanie brody","10 €"]]
+VÁŽNE      sr | Kosa mi je 3 cm, koliko košta šišanje? [cena-strih] → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+vyber      uk | Синові 6 років, скільки коштує дитяча стрижка? [deti] → vyber deti [deti,cena-strih] | 
+vyber      uk | Волосся 3 см, скільки коштує стрижка? [cena-strih] → vyber cena-dlhe [cena-dlhe,cena-strih] | 
+vyber      uk | Волосся 20 см, скільки коштує стрижка? [cena-dlhe] → vyber cena-dlhe [cena-dlhe,cena-strih] | 
+spolu 116: VÁŽNE 30, mierne 0; legitímnych 48: priamo 32, „Myslíš toto?“ 9, odovzdanie/iné 7 (nie priamo 33.3 %)
