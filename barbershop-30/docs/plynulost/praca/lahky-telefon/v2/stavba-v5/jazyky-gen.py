@@ -4,7 +4,7 @@
 Vety odpovedí sa NEPREKLADAJÚ ručne: každý úryvok slovenskej odpovede, ktorý má kľúč v assets/i18n/<jazyk>.json,
 sa vezme doslovne zo slovníka (preklad, ktorý je na stránke). Ručne sú len úryvky bez kľúča (FRAG – časť väčšieho
 uzla stránky, prevzatá z jeho prekladu v slovníku), otázky, kmene, texty panelu a odovzdania.
-Kmene a stop-slová sa normalizujú rovnako ako v recepcia.js (NFD bez diakritiky, malé písmená); silný kmeň =
+Kmene, stop-slová, výplňové a zdvorilé slová sa normalizujú rovnako ako v recepcia.js (NFD bez diakritiky, malé písmená); silný kmeň =
 veľké začiatočné písmeno, v cyrilike sa zapíše príponou „!“.
   python3 jazyky-gen.py <koreň barbershop-30>
 """
@@ -70,12 +70,16 @@ def jazyk(l, D):
     polozky = []
     for p in SK['polozky']:
         o, k = D['polozky'][p['id']]
-        q = {'id': p['id'], 'otazky': o, 'kluc': kluc(k)}
+        q = {'id': p['id']}
+        if 'pravidlo' in p:
+            q['pravidlo'] = p['pravidlo']
+        q.update({'otazky': o, 'kluc': kluc(k)})
         q['odpoved'] = [[tr(x) for x in f] if isinstance(f, list) else tr(f) for f in p['odpoved']]
+        if 'cas' in p:  # price-time z cenníka, preklad zo slovníka stránky
+            q['cas'] = [tr(x) for x in p['cas']]
         if 'zoznam' in p:
             q['zoznam'] = [tr(z) for z in p['zoznam']]
-        for f in ['akcie', 'zdroj', 'overene']:
-            q[f] = p[f]
+        q['akcie'] = p['akcie']  # zdroj a overene sú len v zdroje.json (rovnaké pre všetky jazyky)
         polozky.append(q)
     nevieme = []
     for p in SK['nevieme']:
@@ -87,7 +91,8 @@ def jazyk(l, D):
         if 'cena' in p:
             q['cena'] = p['cena']
         nevieme.append(q)
-    return {'jazyk': l, 'prah': SK['prah'], 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), 'kontakt': kontakt,
+    vz = {k: stop(D[k]) for k in ('vypln', 'zdvor') if k in D}  # výplňové a zdvorilé slová (oprava 3, pravidlá 2 a 5)
+    return {'jazyk': l, 'prah': SK['prah'], 'stop': stop(D['stop']), 'cenove': stop(D['cenove']), **vz, 'kontakt': kontakt,
             'panel': panel, 'fallback': D['fallback'], 'odovzdanie': D['odovzdanie'], 'polozky': polozky, 'nevieme': nevieme}
 
 

@@ -1,0 +1,45 @@
+// Skúška panela recepcie v Chromiu (telefón 390×844 a počítač 1440×900). node prehliadac.mjs <url> <výstupný priečinok>
+import { createRequire } from 'node:module';
+const require = createRequire('/opt/node22/lib/node_modules/');
+const { chromium } = require('playwright');
+const [url, out] = process.argv.slice(2);
+const b = await chromium.launch();
+const vysl = [];
+for (const [meno, vp, mobil] of [['telefon', { width: 390, height: 844 }, true], ['pocitac', { width: 1440, height: 900 }, false]]) {
+  const ctx = await b.newContext({ viewport: vp, isMobile: mobil, hasTouch: mobil, deviceScaleFactor: 1, locale: 'sk-SK' });
+  const p = await ctx.newPage();
+  const chyby = [];
+  p.on('console', (m) => { if (m.type() === 'error') chyby.push(m.text()); });
+  p.on('pageerror', (e) => chyby.push(String(e)));
+  const ziadosti = [];
+  p.on('request', (r) => { if (/recepcia/.test(r.url())) ziadosti.push(r.url().replace(url, '')); });
+  await p.goto(url, { waitUntil: 'load' });
+  const btn = p.locator('.recepcia-btn');
+  await btn.waitFor({ state: 'attached', timeout: 15000 });
+  const pred = await p.evaluate(() => ({ sx: scrollX, sy: scrollY, w: document.documentElement.scrollWidth, iw: innerWidth }));
+  await btn.click();
+  await p.locator('#rc-panel[open]').waitFor({ timeout: 5000 });
+  const opytaj = async (q) => {
+    await p.fill('#rc-q', q); await p.press('#rc-q', 'Enter');
+    return p.locator('.rc-log > li').last().innerText();
+  };
+  const r = {};
+  r.zdvorilost = await opytaj('ďakujem');
+  r.preklep = await opytaj('kolko stoji panksy strih');
+  await p.locator('.rc-log > li').last().locator('button').first().click();
+  r.preklepPoTuknuti = await p.locator('.rc-log > li').last().innerText();
+  r.trvanie = await opytaj('ako dlho trvá holenie');
+  r.mama = await opytaj('ostriháte aj mamu?');
+  r.hlava = await opytaj('kolko stoji holenie hlavy britvou');
+  r.balzam = await opytaj('kolko stoji balzam na bradu');
+  r.domov = await opytaj('chodíte strihať domov?');
+  await p.screenshot({ path: `${out}/panel-${meno}.png` });
+  const panel = await p.evaluate(() => { const d = document.querySelector('#rc-panel'); const r = d.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height, sw: document.documentElement.scrollWidth, iw: innerWidth }; });
+  await p.keyboard.press('Escape');
+  await p.waitForTimeout(300);
+  const po = await p.evaluate(() => ({ open: !!document.querySelector('#rc-panel[open]'), fokus: document.activeElement && document.activeElement.className, sx: scrollX, sy: scrollY }));
+  vysl.push({ meno, chyby, ziadosti, pred, panel, po, r });
+  await ctx.close();
+}
+await b.close();
+console.log(JSON.stringify(vysl, null, 1));
