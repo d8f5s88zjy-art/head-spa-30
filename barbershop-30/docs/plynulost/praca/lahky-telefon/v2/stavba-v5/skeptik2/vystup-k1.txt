@@ -1,0 +1,137 @@
+sk | Koľko ma bude stáť pánsky strih? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Aká je cena úpravy brady? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko trvá oholenie hlavy? → odpoved trvanie | [["Oholenie hlavy","25 min"]]
+sk | Kde je váš barbershop? → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+sk | Dokedy máte otvorené v piatok? → odpoved hodiny | ["Po–Pi 9:00–19:00","So 9:00–14:00","Ne zatvorené"]
+sk | Ako sa môžem objednať? → odpoved rezervacia | ["Zavolaj na recepciu, v pracovné dni od 9:00 do 19:00. Alebo si termí
+sk | Koľko stojí strih vlasov dlhých 25 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,cena-strih-brada,farbenie-vlasov
+sk | Je brada drahšia ako strih? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,cena-dlhe
+sk | Koľko stojí strih s bradou a obočím? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+sk | Koľko stojí strih a dá sa platiť kartou? → nevieme platba | spôsob platby
+sk | Koľko stojí strih alebo brada? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,farbenie-brady
+sk | Čo je lacnejšie, holenie alebo úprava brady? → vyber cena-brada | cena-brada,cena-strih-brada,holenie,hlava
+sk | Koľko stojí oholenie hlavy a farbenie brady? → vyber farbenie-brady | farbenie-brady,hlava,cena-brada,holenie
+sk | Ako dlho trvá strih a farbenie brady? → vyber trvanie | farbenie-brady,cena-strih-brada,cena-strih,cena-brada
+sk | Koľko stojí balíček 1 bez whisky? → vyber balicky | balicky,ultra
+sk | Ako dlho mi vydrží zafarbená brada? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+sk | Ako dlho budem čakať na strih? → vyber cena-strih | cena-strih,kava,cena-strih-brada
+sk | Koľko stojí strih, vlasy mám dlhé 7 cm? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko stojí strih pre moju susedu? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí darčeková poukážka na strih? → nevieme poukazky | poukážky
+sk | Koľko minút pred termínom mám prísť? → vyber rezervacia | rezervacia
+sk | Koľko stojí strih pre syna, má 13 rokov? → nevieme vek | Strih pre chlapcov nad 10 rokov na webe neuvádzame.
+sk | Koľko stoja tri strihy? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí strih pre ženícha na svadbu? → nevieme mimo | Služby mimo podniku na webe neuvádzame.
+sk | Koľko stojí ornament do brady? → vyber cena-brada | cena-brada,ornament,cena-strih-brada,farbenie-brady
+sk | Koľko stojí voskovanie obočia? → vyber obocie | obocie
+en | What's the price of a men's haircut? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | How much does a head shave cost? → odpoved hlava | [["Head shave","13 €"]]
+en | How long does a hot towel shave take? → odpoved trvanie | [["Hot Towel clean shave","30 min"]]
+en | Which number can I call you on? → odpoved telefon | ["+421 951 267 203"]
+en | When are you open on Saturday? → odpoved hodiny | ["Mon–Fri 9:00–19:00","Sat 9:00–14:00","Sun closed"]
+en | Can I book online? → odpoved online | [["Online 24/7","book an appointment any time"]]
+en | How much is a haircut with a hot towel shave? → vyber holenie | holenie,cena-strih,cena-strih-brada,hlava
+en | Price for haircut plus beard plus eyebrows? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+en | How much is a haircut and can I pay by card? → nevieme platba | payment methods
+en | Which is cheaper, a beard trim or a hot towel shave? → vyber holenie | holenie,cena-brada,cena-strih-brada,hlava
+en | How long do a haircut and beard colouring take? → vyber trvanie | farbenie-brady,cena-strih-brada,cena-strih,cena-brada
+en | How long does the beard dye last? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+en | How long is the wait for a walk-in haircut? → nevieme bez-objednania | coming without an appointment
+en | How much is a haircut under 10cm? → vyber cena-strih | cena-strih,cena-strih-brada
+en | What would my wife pay for a cut? → nevieme platba | payment methods
+en | How much is a gift voucher for a haircut? → nevieme poukazky | gift vouchers
+en | How much is a haircut for a 14 year old? → nevieme vek | We don't list haircuts for boys over 10 on the website.
+en | How much is a beard trim for her? → odpoved cena-brada | [["Beard trim","15 €"]]
+en | How much is the haircut if I bring my own clippers? → vyber cena-strih | cena-strih,cena-strih-brada
+de | Wie teuer ist ein Herrenhaarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Wie viel kostet bei euch die Bartpflege? → odpoved cena-brada | [["Bartpflege","15 €"]]
+de | Wie lange dauert eine Kopfrasur? → odpoved trvanie | [["Kopfrasur","25 Min."]]
+de | Wie ist eure Adresse? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+de | Habt ihr sonntags offen? → odpoved hodiny | ["Mo–Fr 9:00–19:00","Sa 9:00–14:00","So geschlossen"]
+de | Wie kann ich einen Termin buchen? → odpoved rezervacia | ["Ruf am Empfang an, Mo–Fr von 9:00 bis 19:00. Oder buch deinen Termin
+de | Was kostet Haarschnitt mit Bart und Augenbrauen? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+de | Was kostet ein Haarschnitt und kann ich mit Karte zahlen? → nevieme platba | Zahlungsarten
+de | Was kostet Bartfärben und Haarefärben? → vyber farbenie-brady | farbenie-brady
+de | Wie lange dauern Haarschnitt und Bartfärben zusammen? → vyber trvanie | cena-strih-brada,cena-strih,farbenie-brady
+de | Wie lange hält die Bartfarbe? → vyber trvanie | farbenie-brady
+de | Wie lange muss ich ohne Termin warten? → vyber rezervacia | rezervacia,kava
+de | Was kostet ein Haarschnitt unter 10 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+de | Was kostet ein Haarschnitt für meine Freundin? → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+de | Was kostet ein Gutschein für einen Haarschnitt? → nevieme poukazky | Gutscheine
+de | Kostet der Haarschnitt am Wochenende mehr? → vyber cena-strih | cena-strih,hodiny,cena-strih-brada
+de | Was kostet eine Bartpflege für sie? → odpoved cena-brada | [["Bartpflege","15 €"]]
+hu | Mi a férfi hajvágás ára? → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+hu | Mennyi a szakálligazítás ára? → odpoved cena-brada | [["Szakálligazítás","15 €"]]
+hu | Hány perc a fejborotválás? → vyber trvanie | hlava,holenie
+hu | Hol található a szalon? → fallback  | 
+hu | Szombat délután is nyitva vagytok? → odpoved hodiny | ["H–P 9:00–19:00","Szo 9:00–14:00","V zárva"]
+hu | Időpontot szeretnék kérni, hogyan lehet? → odpoved rezervacia | ["Hívd a recepciót hétköznap 9:00 és 19:00 között. Vagy foglalj időpon
+hu | Mennyibe kerül a hajvágás szakállal és szemöldökkel? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+hu | Mennyibe kerül a hajvágás, és lehet kártyával fizetni? → nevieme platba | fizetési mód
+hu | Mennyibe kerül a szakállfestés és a hajfestés? → vyber farbenie-brady | farbenie-brady,farbenie-vlasov,cena-brada,cena-strih-brada
+hu | Meddig marad meg a szakállfesték? → vyber trvanie | cena-brada,farbenie-brady,cena-strih-brada
+hu | Mennyit kell várni időpont nélkül? → vyber rezervacia | rezervacia,kava
+hu | Mennyibe kerül a hajvágás 10 cm alatt? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+hu | Mennyibe kerül a hajvágás a barátnőmnek? → nevieme damske | Női hajvágást az oldalon nem tüntetünk fel.
+hu | Mennyibe kerül egy ajándékutalvány hajvágásra? → nevieme poukazky | ajándékutalvány
+hu | Drágább a hajvágás hétvégén? → vyber hodiny | hodiny,cena-strih,cena-strih-brada,cena-dlhe
+pl | Ile u was kosztuje strzyżenie męskie? → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+pl | Jaka jest cena golenia głowy? → odpoved hlava | [["Golenie głowy","13 €"]]
+pl | Jak długo trwa strzyżenie brody? → vyber trvanie | cena-strih-brada,cena-strih,cena-brada,farbenie-brady
+pl | Pod jakim adresem jest salon? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+pl | W jakich godzinach pracujecie w sobotę? → vyber hodiny | hodiny
+pl | Jak mogę zarezerwować wizytę? → odpoved rezervacia | ["Zadzwoń na recepcję, w dni robocze od 9:00 do 19:00. Albo po prostu 
+pl | Ile kosztuje strzyżenie, broda i brwi? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+pl | Ile kosztuje strzyżenie i czy można płacić kartą? → nevieme platba | sposób płatności
+pl | Ile kosztuje farbowanie brody i farbowanie włosów? → vyber farbenie-brady | farbenie-brady,farbenie-vlasov,cena-brada,cena-strih-brada
+pl | Jak długo utrzymuje się farba na brodzie? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+pl | Jak długo czeka się bez rezerwacji? → nevieme bez-objednania | przyjście bez rezerwacji
+pl | Ile kosztuje strzyżenie krótsze niż 10 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+pl | Ile kosztuje strzyżenie dla niej? → vyber cena-strih | cena-strih,cena-strih-brada
+pl | Ile kosztuje bon podarunkowy na strzyżenie? → nevieme poukazky | bony podarunkowe
+pl | Czy strzyżenie w sobotę jest droższe? → vyber hodiny | hodiny,cena-strih,cena-dlhe,cena-strih-brada
+sr | Koja je cena muškog šišanja? → odpoved cena-strih | [["Muško šišanje","18 €"]]
+sr | Kolika je cena brijanja glave? → vyber hlava | hlava,holenie
+sr | Koliko traje sređivanje brade? → odpoved trvanie | [["Uređivanje brade","20 min"]]
+sr | Koja je vaša adresa? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+sr | Kada radite subotom? → odpoved hodiny | ["Pon–Pet 9:00–19:00","Sub 9:00–14:00","Ned zatvoreno"]
+sr | Kako mogu da zakažem termin? → odpoved rezervacia | ["Pozovi recepciju radnim danima od 9:00 do 19:00. Ili zakaži termin o
+sr | Koliko košta šišanje, brada i obrve? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+sr | Koliko košta šišanje i da li mogu da platim karticom? → nevieme platba | način plaćanja
+sr | Koliko košta šišanje i masaža? → nevieme cena-ina-sluzba | Ne mogu da nađem ovu uslugu u cenovniku; pogledaj ceo cenovnik.
+sr | Koliko dugo drži farba na bradi? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+sr | Koliko se čeka bez zakazivanja? → vyber rezervacia | rezervacia,kava
+sr | Koliko košta šišanje kraće od 10 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+sr | Koliko košta šišanje za nju? → vyber cena-strih | cena-strih,cena-strih-brada
+sr | Koliko košta poklon vaučer za šišanje? → nevieme poukazky | poklon vaučeri
+sr | Da li je šišanje vikendom skuplje? → vyber hodiny | hodiny,cena-strih,cena-dlhe,cena-strih-brada
+uk | Яка ціна чоловічої стрижки? → odpoved cena-strih | [["Чоловіча стрижка","18 €"]]
+uk | Яка ціна гоління голови? → odpoved hlava | [["Гоління голови","13 €"]]
+uk | Скільки триває корекція бороди? → odpoved trvanie | [["Оформлення бороди","20 хв"]]
+uk | За якою адресою ваш барбершоп? → vyber adresa | adresa,tim
+uk | Коли ви працюєте в суботу? → odpoved hodiny | ["Пн–Пт 9:00–19:00","Сб 9:00–14:00","Нд зачинено"]
+uk | Як можна записатися до вас? → odpoved rezervacia | ["Зателефонуй на рецепцію в будні з 9:00 до 19:00. Або забронюй час он
+uk | Скільки коштує стрижка, борода і брови? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+uk | Скільки коштує стрижка і чи можна платити карткою? → nevieme platba | спосіб оплати
+uk | Скільки коштує стрижка і манікюр? → nevieme cena-ina-sluzba | Не можу знайти цю послугу в прайсі; переглянь весь прайс.
+uk | Скільки тримається фарба на бороді? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+uk | Скільки чекати без запису? → vyber rezervacia | rezervacia,kava
+uk | Скільки коштує стрижка коротше 10 см? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+uk | Скільки коштує стрижка для неї? → vyber cena-strih | cena-strih,cena-strih-brada
+uk | Скільки коштує подарунковий сертифікат на стрижку? → nevieme poukazky | подарункові сертифікати
+uk | Чи дорожча стрижка у вихідні? → vyber hodiny | hodiny,cena-strih,cena-dlhe,cena-strih-brada
+cs | Za kolik je pánský střih? → odpoved cena-strih | [["Pánský střih","18 €"]]
+cs | Jaká je cena úpravy vousů? → odpoved cena-brada | [["Úprava vousů","15 €"]]
+cs | Jak dlouho trvá oholení hlavy? → odpoved trvanie | [["Oholení hlavy","25 min"]]
+cs | Na jaké adrese sídlíte? → odpoved adresa | ["Mostná 30, 949 01 Nitra"]
+cs | Do kolika máte otevřeno v pátek? → odpoved hodiny | ["Po–Pá 9:00–19:00","So 9:00–14:00","Ne zavřeno"]
+cs | Jak se můžu objednat? → odpoved rezervacia | ["Zavolej na recepci, v pracovní dny od 9:00 do 19:00. Nebo si termín 
+cs | Kolik stojí střih s vousy a obočím? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,obocie
+cs | Kolik stojí střih a dá se platit kartou? → nevieme platba | způsob platby
+cs | Kolik stojí barvení vousů a barvení vlasů? → vyber farbenie-brady | farbenie-brady,farbenie-vlasov,cena-brada,cena-strih-brada
+cs | Jak dlouho vydrží barva na vousech? → vyber farbenie-brady | farbenie-brady,cena-brada,cena-strih-brada,farbenie-vlasov
+cs | Jak dlouho se čeká bez objednání? → nevieme bez-objednania | příchod bez objednání
+cs | Kolik stojí střih kratší než 10 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,cena-strih-brada
+cs | Kolik stojí střih pro přítelkyni? → nevieme damske | Dámské střihy na webu neuvádíme.
+cs | Kolik stojí dárkový poukaz na střih? → nevieme poukazky | dárkové poukazy
+cs | Je střih o víkendu dražší? → vyber hodiny | hodiny,cena-strih,cena-dlhe,cena-strih-brada

@@ -1,0 +1,30 @@
+sk | Mám dlhé vlasy, asi 8 cm. Koľko stojí strih? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko stojí strih dlhých vlasov, majú 6 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,cena-strih-brada,farbenie-vlasov
+sk | Koľko stojí strih, mám dlhšie vlasy, 9 cm? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+cs | Kolik stojí střih, mám dlouhé vlasy 7 cm? → odpoved cena-dlhe | [["Pánský střih – délka vlasů nad 10 cm","22 €"]]
+en | How much for long hair, about 8 cm? → vyber farbenie-vlasov | farbenie-vlasov
+de | Was kostet ein Schnitt für lange Haare, ca. 8 cm? → odpoved cena-dlhe | [["Herrenhaarschnitt – Haarlänge über 10 cm","22 €"]]
+pl | Ile kosztuje strzyżenie długich włosów 7 cm? → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+sr | Koliko košta šišanje duge kose od 8 cm? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+uk | Скільки коштує стрижка довгого волосся 7 см? → vyber cena-strih | cena-strih,cena-dlhe,cena-strih-brada,farbenie-vlasov
+hu | Mennyibe kerül a hosszú haj vágása, 8 cm? → odpoved cena-dlhe | [["Férfi hajvágás – 10 cm feletti hajhossz","22 €"]]
+en | How much is a head shave for her? → odpoved hlava | [["Head shave","13 €"]]
+en | How much is a hot towel shave for her? → odpoved holenie | [["Hot Towel clean shave","15 €"]]
+de | Was kostet eine Kopfrasur für sie? → odpoved hlava | [["Kopfrasur","13 €"]]
+de | Was kostet eine Nassrasur für meine Frau? → nevieme damske | Damenhaarschnitte nennen wir auf der Website nicht.
+sk | Koľko stojí úprava brady pre ňu? → odpoved cena-brada | [["Úprava brady","15 €"]]
+sk | Koľko stojí oholenie hlavy pre ňu? → odpoved hlava | [["Oholenie hlavy","13 €"]]
+cs | Kolik stojí oholení hlavy pro ni? → odpoved hlava | [["Oholení hlavy","13 €"]]
+pl | Ile kosztuje golenie głowy dla niej? → vyber hlava | hlava,holenie
+sk | Kde je vaša prevádzka? → fallback  | 
+sk | Kde máte barbershop? → odpoved tim | ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.","Svo
+en | Where is your barbershop? → odpoved tim | ["A team of barbers, both men and women, works here under the Barbersh
+de | Wo ist euer Barbershop? → odpoved tim | ["Unter der Marke Barbershop 30 arbeitet hier ein Team aus Barbern und
+sk | Kedy robí Romana? → nevieme romana-ceny | Ceny a dni Romany na webe neuvádzame; ceny nájdeš v jej rezervačnom systéme.
+sk | Koľko stojí strih s umytím vlasov a fénovaním? → vyber co-je-v-strihu | co-je-v-strihu,cena-strih,cena-dlhe,cena-strih-brada
+en | How much is a kids haircut and a men's haircut? → vyber cena-strih | cena-strih,deti,cena-strih-brada
+de | Was kostet ein Kinderschnitt und ein Herrenschnitt? → odpoved deti | [["Schnitt für kleine Gentlemen","15 €"],"Klassischer Schnitt oder Fad
+hu | Mennyibe kerül a gyerek és a férfi hajvágás? → vyber cena-strih | cena-strih,deti,cena-strih-brada
+sk | Ako dlho trvá strih pre syna a pre mňa? → vyber trvanie | deti,cena-strih,cena-strih-brada
+en | How long does a haircut take on Saturday? → vyber hodiny | hodiny,cena-strih,cena-strih-brada
+sk | Koľko stojí strih a koľko úprava brady? → vyber cena-strih-brada | cena-strih-brada,cena-brada,cena-strih,farbenie-brady

@@ -1,0 +1,39 @@
+spolu 167 {'OK-VOLBA': 7, 'OK-HNED': 40, 'ODCHYLKA': 4, 'OK': 96, 'CHYBA': 17, 'ODOVZDANIE-NAVYSE': 3}
+B {'OK-VOLBA': 6, 'OK-HNED': 40, 'ODCHYLKA': 4, 'ODOVZDANIE-NAVYSE': 3}
+V {'OK': 37, 'OK-VOLBA': 1, 'CHYBA': 1}
+P {'OK': 59, 'CHYBA': 16}
+podla jazyka:
+  sk {'OK-VOLBA': 3, 'OK-HNED': 4, 'ODCHYLKA': 2, 'OK': 22, 'CHYBA': 5, 'ODOVZDANIE-NAVYSE': 1}
+  en {'OK-HNED': 6, 'OK': 15, 'CHYBA': 3, 'ODCHYLKA': 1}
+  de {'OK-HNED': 6, 'OK': 11, 'CHYBA': 4, 'ODCHYLKA': 1}
+  hu {'OK-HNED': 4, 'OK-VOLBA': 1, 'ODOVZDANIE-NAVYSE': 1, 'OK': 10, 'CHYBA': 1}
+  pl {'OK-HNED': 4, 'ODOVZDANIE-NAVYSE': 1, 'OK-VOLBA': 1, 'OK': 10, 'CHYBA': 1}
+  sr {'OK-HNED': 5, 'OK-VOLBA': 1, 'OK': 9, 'CHYBA': 1}
+  uk {'OK-HNED': 5, 'OK-VOLBA': 1, 'OK': 10}
+  cs {'OK-HNED': 6, 'OK': 9, 'CHYBA': 2}
+ODCHYLKA | sk | Kde je váš barbershop? → odpoved tim ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.", "Sv | holá info inej položky (tím) namiesto adresy
+CHYBA | sk | Koľko stojí strih, vlasy mám dlhé 7 cm? → odpoved cena-dlhe [["Pánsky strih – dĺžka vlasov nad 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | en | How much is a beard trim for her? → odpoved cena-brada [["Beard trim", "15 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | de | Was kostet eine Bartpflege für sie? → odpoved cena-brada [["Bartpflege", "15 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+ODOVZDANIE-NAVYSE | hu | Hol található a szalon? → fallback   | 
+ODOVZDANIE-NAVYSE | pl | Jak długo trwa strzyżenie brody? → vyber trvanie ['cena-strih-brada', 'cena-strih', 'cena-brada', 'farbenie-brady'] | 
+CHYBA | sk | Mám dlhé vlasy, asi 8 cm. Koľko stojí strih? → odpoved cena-dlhe [["Pánsky strih – dĺžka vlasov nad 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | sk | Koľko stojí strih, mám dlhšie vlasy, 9 cm? → odpoved cena-dlhe [["Pánsky strih – dĺžka vlasov nad 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | cs | Kolik stojí střih, mám dlouhé vlasy 7 cm? → odpoved cena-dlhe [["Pánský střih – délka vlasů nad 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | de | Was kostet ein Schnitt für lange Haare, ca. 8 cm? → odpoved cena-dlhe [["Herrenhaarschnitt – Haarlänge über 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | pl | Ile kosztuje strzyżenie długich włosów 7 cm? → odpoved cena-dlhe [["Strzyżenie męskie – włosy dłuższe niż 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | sr | Koliko košta šišanje duge kose od 8 cm? → odpoved cena-dlhe [["Muško šišanje – kosa duža od 10 cm", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | hu | Mennyibe kerül a hosszú haj vágása, 8 cm? → odpoved cena-dlhe [["Férfi hajvágás – 10 cm feletti hajhossz", "22 €"]] | 22 € pri dĺžke pod 10 cm
+CHYBA | en | How much is a head shave for her? → odpoved hlava [["Head shave", "13 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | en | How much is a hot towel shave for her? → odpoved holenie [["Hot Towel clean shave", "15 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | de | Was kostet eine Kopfrasur für sie? → odpoved hlava [["Kopfrasur", "13 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | sk | Koľko stojí úprava brady pre ňu? → odpoved cena-brada [["Úprava brady", "15 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | sk | Koľko stojí oholenie hlavy pre ňu? → odpoved hlava [["Oholenie hlavy", "13 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+CHYBA | cs | Kolik stojí oholení hlavy pro ni? → odpoved hlava [["Oholení hlavy", "13 €"]] | holá cena/trvanie, otázka menuje aj ďalšiu vec
+ODOVZDANIE-NAVYSE | sk | Kde je vaša prevádzka? → fallback   | 
+ODCHYLKA | sk | Kde máte barbershop? → odpoved tim ["Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.", "Sv | holá info inej položky (tím) namiesto adresy
+ODCHYLKA | en | Where is your barbershop? → odpoved tim ["A team of barbers, both men and women, works here under the Barbersh | holá info inej položky (tím) namiesto adresy
+ODCHYLKA | de | Wo ist euer Barbershop? → odpoved tim ["Unter der Marke Barbershop 30 arbeitet hier ein Team aus Barbern und | holá info inej položky (tím) namiesto adresy
+CHYBA | de | Was kostet ein Kinderschnitt und ein Herrenschnitt? → odpoved deti [["Schnitt für kleine Gentlemen", "15 €"], "Klassischer Schnitt oder F | holá cena/trvanie, otázka menuje aj ďalšiu vec
+bezne: priamo 40 / 53 ; volba 6
+cas max ms 17.81

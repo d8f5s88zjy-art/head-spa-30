@@ -1,0 +1,387 @@
+{
+ "url": "http://127.0.0.1:8733/",
+ "cas": "2026-10-25T12:01:19.031Z",
+ "telefon": {
+  "tlacidloPoLoadMs": 1889,
+  "btn": {
+   "x": 16,
+   "y": 782,
+   "w": 46,
+   "h": 46,
+   "z": "39",
+   "aria": "Spýtaj sa recepcie"
+  },
+  "clsPredTuknutim": 0,
+  "predOtvorenim": {
+   "sy": 2486,
+   "open": false,
+   "bodyOv": "",
+   "sw": 390
+  },
+  "poOtvoreni": {
+   "sy": 4000,
+   "open": true,
+   "bodyOv": "hidden",
+   "sw": 390,
+   "fokus": "rc-chip Rezervovať",
+   "chipsScroll": 0,
+   "panel": {
+    "x": 0,
+    "y": 542.75,
+    "w": 390,
+    "h": 301.25,
+    "lang": "sk",
+    "noI18n": true
+   }
+  },
+  "panelOdpovede": {
+   "odpovede": [
+    [
+     "Koľko stojí strih, vlasy mám dlhé 7 cm?",
+     {
+      "text": "Strih Pánsky strih a úprava brady 60 min 28 € Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 € Strih pre malých gentlemanov 45 min 15 € zo stránky REZERVOVAŤ TERMÍN CELÝ",
+      "cennik": [
+       "  Pánsky strih a úprava brady 60 min 28 €",
+       "▶ Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €",
+       "  Strih pre malých gentlemanov 45 min 15 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí oholenie hlavy pre ňu?",
+     {
+      "text": "Strih Strih pre malých gentlemanov 45 min 15 € Oholenie hlavy 25 min 13 € zo stránky REZERVOVAŤ TERMÍN CELÝ CENNÍK",
+      "cennik": [
+       "  Strih pre malých gentlemanov 45 min 15 €",
+       "▶ Oholenie hlavy 25 min 13 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí strih a melír?",
+     {
+      "text": "Myslíš toto? KOĽKO STOJÍ PÁNSKY STRIH? FARBÍTE VLASY? KOĽKO STOJÍ STRIH S BRADOU? CELÝ CENNÍK ZAVOLAŤ",
+      "cennik": null,
+      "volby": [
+       "Koľko stojí pánsky strih? [214×40]",
+       "Farbíte vlasy? [135×40]",
+       "Koľko stojí strih s bradou? [230×40]",
+       "Celý cenník [112×40]",
+       "Zavolať [91×40]"
+      ]
+     }
+    ],
+    [
+     "Kde máte barbershop?",
+     {
+      "text": "Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek. Svojho človeka si vyberieš v rezervácii. zo stránky POZRIEŤ TÍM REZERVOVAŤ TERMÍN",
+      "cennik": null,
+      "volby": [
+       "Pozrieť tím [113×40]",
+       "Rezervovať termín [163×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí úprava brady?",
+     {
+      "text": "Brada a holenie Úprava brady 20 min 15 € Holenie do hladka Hot Towel 30 min 15 € zo stránky REZERVOVAŤ TERMÍN CELÝ CENNÍK",
+      "cennik": [
+       "▶ Úprava brady 20 min 15 €",
+       "  Holenie do hladka Hot Towel 30 min 15 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "<img src=x onerror=alert(1)>",
+     {
+      "text": "Toto neviem presne. Zavolaj na recepciu 0951 267 203 alebo napíš na info@barbershop30.sk. ZAVOLAŤ NAPÍSAŤ E‑MAIL REZERVOVAŤ TERMÍN",
+      "cennik": null,
+      "volby": [
+       "Zavolať [91×40]",
+       "Napísať e‑mail [134×40]",
+       "Rezervovať termín [163×40]"
+      ]
+     }
+    ]
+   ],
+   "imgVPaneli": 0,
+   "poOtazkach": {
+    "sy": 4000,
+    "c": "karty lite world-off js-kin js-steps",
+    "open": true,
+    "bodyOv": "hidden"
+   }
+  },
+  "tahy": [
+   [
+    "log nahor",
+    4000
+   ],
+   [
+    "log nadol",
+    4000
+   ],
+   [
+    "log nadol 2",
+    4000
+   ],
+   [
+    "pozadie",
+    4000
+   ]
+  ],
+  "chipsPoTahu": 149,
+  "poZavreti": {
+   "sy": 4000,
+   "open": false,
+   "bodyOv": "",
+   "sw": 390
+  },
+  "znovaOtvorene": {
+   "chipsScroll": 0,
+   "fokusX": 16,
+   "logPoloziek": 13
+  },
+  "poEsc": {
+   "sy": 4000,
+   "open": false,
+   "bodyOv": "",
+   "sw": 390,
+   "fokus": "recepcia-btn",
+   "expanded": "false",
+   "clsPoTuknuti": 0,
+   "st": 0,
+   "ck": 0
+  },
+  "chyby": [],
+  "recepciaPredTuknutim": [],
+  "ziadostiPoTuknuti": [
+   "/assets/img/film/kreslo-stred-m-1448.avif",
+   "/assets/atmosfera.js",
+   "/assets/recepcia.js",
+   "/assets/atmosfera.css",
+   "/assets/recepcia.css",
+   "/assets/recepcia/sk.json",
+   "/assets/audio/hudba.webm",
+   "/assets/audio/strih.webm",
+   "/assets/i18n.js",
+   "/assets/i18n.css"
+  ],
+  "cudzie": []
+ },
+ "pocitac": {
+  "pred": {
+   "c": "karty world js-kin js-steps world-in skrol",
+   "sy": 946,
+   "open": false
+  },
+  "btn": {
+   "x": 1344,
+   "y": 820,
+   "w": 56,
+   "h": 56,
+   "odPravej": 40,
+   "odSpodu": 24
+  },
+  "clsPredTuknutim": 0.0001,
+  "poOtvoreni": {
+   "c": "karty world js-kin js-steps world-in",
+   "sy": 2500,
+   "open": true
+  },
+  "panelOdpovede": {
+   "odpovede": [
+    [
+     "Koľko stojí strih, vlasy mám dlhé 7 cm?",
+     {
+      "text": "Strih Pánsky strih a úprava brady 60 min 28 € Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 € Strih pre malých gentlemanov 45 min 15 € zo stránky REZERVOVAŤ TERMÍN CELÝ",
+      "cennik": [
+       "  Pánsky strih a úprava brady 60 min 28 €",
+       "▶ Pánsky strih – dĺžka vlasov nad 10 cm 60 min 22 €",
+       "  Strih pre malých gentlemanov 45 min 15 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí oholenie hlavy pre ňu?",
+     {
+      "text": "Strih Strih pre malých gentlemanov 45 min 15 € Oholenie hlavy 25 min 13 € zo stránky REZERVOVAŤ TERMÍN CELÝ CENNÍK",
+      "cennik": [
+       "  Strih pre malých gentlemanov 45 min 15 €",
+       "▶ Oholenie hlavy 25 min 13 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí strih a melír?",
+     {
+      "text": "Myslíš toto? KOĽKO STOJÍ PÁNSKY STRIH? FARBÍTE VLASY? KOĽKO STOJÍ STRIH S BRADOU? CELÝ CENNÍK ZAVOLAŤ",
+      "cennik": null,
+      "volby": [
+       "Koľko stojí pánsky strih? [214×40]",
+       "Farbíte vlasy? [135×40]",
+       "Koľko stojí strih s bradou? [230×40]",
+       "Celý cenník [112×40]",
+       "Zavolať [91×40]"
+      ]
+     }
+    ],
+    [
+     "Kde máte barbershop?",
+     {
+      "text": "Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek. Svojho človeka si vyberieš v rezervácii. zo stránky POZRIEŤ TÍM REZERVOVAŤ TERMÍN",
+      "cennik": null,
+      "volby": [
+       "Pozrieť tím [113×40]",
+       "Rezervovať termín [163×40]"
+      ]
+     }
+    ],
+    [
+     "Koľko stojí úprava brady?",
+     {
+      "text": "Brada a holenie Úprava brady 20 min 15 € Holenie do hladka Hot Towel 30 min 15 € zo stránky REZERVOVAŤ TERMÍN CELÝ CENNÍK",
+      "cennik": [
+       "▶ Úprava brady 20 min 15 €",
+       "  Holenie do hladka Hot Towel 30 min 15 €"
+      ],
+      "volby": [
+       "Rezervovať termín [163×40]",
+       "Celý cenník [112×40]"
+      ]
+     }
+    ],
+    [
+     "<img src=x onerror=alert(1)>",
+     {
+      "text": "Toto neviem presne. Zavolaj na recepciu 0951 267 203 alebo napíš na info@barbershop30.sk. ZAVOLAŤ NAPÍSAŤ E‑MAIL REZERVOVAŤ TERMÍN",
+      "cennik": null,
+      "volby": [
+       "Zavolať [91×40]",
+       "Napísať e‑mail [134×40]",
+       "Rezervovať termín [163×40]"
+      ]
+     }
+    ]
+   ],
+   "imgVPaneli": 0,
+   "poOtazkach": {
+    "sy": 2500,
+    "c": "karty world js-kin js-steps world-in",
+    "open": true,
+    "bodyOv": "hidden"
+   }
+  },
+  "vstupy": [
+   [
+    "koliesko nadol nad logom",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "koliesko nahor nad logom",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "koliesko nadol nad pozadím",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "koliesko nahor nad pozadím",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves ArrowDown",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves PageDown",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves ArrowUp",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves End",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves Home",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ],
+   [
+    "kláves Space",
+    {
+     "c": "karty world js-kin js-steps world-in",
+     "sy": 2500,
+     "open": true
+    }
+   ]
+  ],
+  "poEsc": {
+   "c": "karty world js-kin js-steps world-in",
+   "sy": 2500,
+   "open": false,
+   "fokus": "recepcia-btn",
+   "clsPoTuknuti": 0
+  },
+  "chyby": []
+ }
+}

@@ -1,0 +1,63 @@
+sk | Koľko stojí strih pre ňu? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí jej strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | A koľko by stál strih pre ňu? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih pre ňu a pre mňa? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+sk | Koľko stojí strih pre nás dvoch? → vyber cena-strih | cena-strih,cena-strih-brada
+sk | Koľko stojí strih pre nás a pre mňa? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+cs | Kolik stojí střih pro ni? → odpoved cena-strih | [["Pánský střih","18 €"]]
+cs | Kolik by stál střih pro ni a pro mě? → odpoved cena-strih | [["Pánský střih","18 €"]]
+de | Was kostet ein Haarschnitt für sie? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Was kostet ihr Haarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Was kostet ein Haarschnitt für uns beide? → vyber cena-strih | cena-strih,cena-strih-brada
+de | Was kostet ein Haarschnitt für ihn und mich? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+en | How much is a haircut for her? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | How much is her haircut? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | How much is a haircut for him and me? → odpoved cena-strih | [["Men's haircut","18 €"]]
+en | How much is a haircut for all of us? → odpoved cena-strih | [["Men's haircut","18 €"]]
+pl | Ile kosztuje jej strzyżenie? → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+pl | Ile kosztuje strzyżenie dla nas? → odpoved cena-strih | [["Strzyżenie męskie","18 €"]]
+sk | Koľko stojí strih do 10 cm? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+sk | Koľko stojí strih pod 10 cm? → odpoved cena-dlhe | [["Pánsky strih – dĺžka vlasov nad 10 cm","22 €"]]
+cs | Kolik stojí střih do 10 cm? → odpoved cena-dlhe | [["Pánský střih – délka vlasů nad 10 cm","22 €"]]
+cs | Kolik stojí střih pod 10 cm? → odpoved cena-dlhe | [["Pánský střih – délka vlasů nad 10 cm","22 €"]]
+en | How much is a haircut up to 10 cm? → odpoved cena-dlhe | [["Men's haircut – hair over 10 cm","22 €"]]
+de | Was kostet ein Haarschnitt bis 10 cm? → odpoved cena-dlhe | [["Herrenhaarschnitt – Haarlänge über 10 cm","22 €"]]
+pl | Ile kosztuje strzyżenie do 10 cm? → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+pl | Ile kosztuje strzyżenie pod 10 cm? → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+sr | Koliko košta šišanje do 10 cm? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+sr | Koliko košta šišanje pod 10 cm? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+uk | Скільки коштує стрижка до 10 см? → odpoved cena-dlhe | [["Чоловіча стрижка – волосся довше 10 см","22 €"]]
+uk | Скільки коштує стрижка під 10 см? → odpoved cena-dlhe | [["Чоловіча стрижка – волосся довше 10 см","22 €"]]
+hu | Mennyibe kerül a hajvágás 10 cm-ig? → vyber cena-dlhe | cena-dlhe,cena-strih,deti,socialne
+de | Was kostet ein Herrenhaarschnitt und ein Kinderhaarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Was kostet Herrenhaarschnitt und Kinderhaarschnitt? → odpoved cena-strih | [["Herrenhaarschnitt","18 €"]]
+de | Was kostet ein Kinderhaarschnitt? → odpoved deti | [["Schnitt für kleine Gentlemen","15 €"],"Klassischer Schnitt oder Fad
+de | Was kostet Bartpflege und Hautpflege? → odpoved cena-brada | [["Bartpflege","15 €"]]
+de | Was kostet Hautpflege und Bartpflege? → odpoved cena-brada | [["Bartpflege","15 €"]]
+de | Was kostet Kopfrasur und Nassrasur? → odpoved hlava | [["Kopfrasur","13 €"]]
+de | Was kostet eine Nassrasur? → odpoved holenie | [["Hot Towel Glattrasur","15 €"]]
+de | Was kostet Haarschnitt und Kopfrasur? → vyber hlava | hlava,cena-strih,cena-strih-brada,holenie
+de | Was kostet Bartpflege und Bartfärbung? → vyber cena-brada | cena-brada,farbenie-brady,cena-strih-brada
+de | Was kostet Bartfärbung und Augenbrauenfärbung? → vyber obocie | obocie,farbenie-brady
+hu | Mennyibe kerül a borotválás és a fejborotválás? → odpoved hlava | [["Fejborotválás","13 €"]]
+hu | Mennyibe kerül a szemöldökigazítás és a szakálligazítás? → vyber cena-brada | cena-brada,obocie,cena-strih-brada,farbenie-brady
+hu | Mennyibe kerül a hajvágás és a fejborotválás? → vyber hlava | hlava,cena-strih,cena-strih-brada,holenie
+hu | Mennyibe kerül a szakállfestés és a szemöldökfestés? → vyber farbenie-brady | farbenie-brady,farbenie-vlasov,obocie,cena-brada
+sk | Koľko stojí strih a zastrihnutie brady? → odpoved cena-strih-brada | [["Pánsky strih a úprava brady","28 €"]]
+sk | Koľko stojí strih a zastrihnutie? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+cs | Kolik stojí střih a zastřižení? → vyber cena-strih | cena-strih,cena-strih-brada,cena-brada
+pl | Ile kosztuje strzyżenie, jeśli długość włosów to 15 cm? → vyber cena-dlhe | cena-dlhe,cena-strih,cena-strih-brada,farbenie-vlasov
+pl | Ile kosztuje strzyżenie i jaka długość? → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+pl | Ile kosztuje długość? → odpoved cena-dlhe | [["Strzyżenie męskie – włosy dłuższe niż 10 cm","22 €"]]
+sr | Koliko košta šišanje sa dugom kosom? → odpoved cena-dlhe | [["Muško šišanje – kosa duža od 10 cm","22 €"]]
+sk | Koľko stojí 2x pánsky strih? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+hu | Mennyibe kerül két hajvágás? → odpoved cena-strih | [["Férfi hajvágás","18 €"]]
+sk | Koľko stojí úprava brady, nie strih? → vyber cena-strih-brada | cena-strih-brada,cena-brada,cena-strih,farbenie-brady
+sk | Koľko stojí brada bez strihu? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,farbenie-brady
+en | How much is a beard trim without the haircut? → vyber cena-strih-brada | cena-strih-brada,cena-brada,cena-strih,farbenie-brady
+de | Was kostet nur Bart ohne Haarschnitt? → vyber cena-strih-brada | cena-strih-brada,cena-strih,cena-brada,farbenie-brady
+sk | Koľko stojí strih o 9? → odpoved cena-strih | [["Pánsky strih","18 €"]]
+en | How much is a haircut at 9? → odpoved cena-strih | [["Men's haircut","18 €"]]
+sk | Koľko stojí tónovanie brady? → vyber cena-brada | cena-brada,cena-strih-brada,farbenie-brady,farbenie-vlasov
+en | How much is beard toning? → vyber cena-brada | cena-brada,cena-strih-brada,farbenie-brady
+de | Was kostet Bart tönen? → odpoved farbenie-brady | [["Bartfärbung","10 €"]]
