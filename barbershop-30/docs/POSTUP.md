@@ -59,6 +59,11 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25 (hotové, CHECKS 29): overenie rezervácie bez odoslania. Odkazy, 15 služieb (ceny a trvania), tím a ich
+  formulár až po osobné údaje sedia. Opravená chyba servera asistenta pri čítaní kalendára (tvar barbera a dátumu),
+  ktorá by po zapnutí kalendára ukazovala chybné voľné časy; testy ju strážia. Skúšobnú objednávku naostro len so
+  súhlasom prevádzky.
+
 - 2026‑10‑25 (hotové, CHECKS 28): zadávateľ: „nájdi chyby na mobilnej verzii a uprav“. Nájdené a opravené:
   prázdny atrament pod fotkou pri prechodoch pás → scéna (až 76 % okna na 640 px skrolu) a scéna → pás, karta
   tímu vytŕčala pod pásom, film menil fotku nad pásom (pás tímu je na telefóne kratší), text presvital cez lištu

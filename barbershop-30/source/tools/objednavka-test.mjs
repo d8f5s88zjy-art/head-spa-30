@@ -21,8 +21,9 @@ const OUT = path.resolve(opt.out || path.join(SITE, 'docs', 'screenshots', 'obje
 fs.mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // časy skúšobného rezervačného systému; dnes okno ukáže len tie, ktoré ešte neprešli (test nezávisí od hodiny)
-const CASY = ['09:00', '10:20', '14:00', '17:40'];
-const casyOk = (c) => c.length > 0 && c.every((x) => CASY.includes(x)) && c.join() === CASY.filter((x) => c.includes(x)).join();
+// voľné časy falošného systému: u konkrétneho barbera a u kohokoľvek (vtedy aj 12:00, asistent/testy/mock-rezervacie.php)
+const CASY = ['09:00', '10:20', '14:00', '17:40'], CASY_KTOKOLVEK = ['09:00', '10:20', '12:00', '14:00', '17:40'];
+const casyOk = (c, vzor = CASY) => c.length > 0 && c.every((x) => vzor.includes(x)) && c.join() === vzor.filter((x) => c.includes(x)).join();
 let zle = 0;
 const ok = (c, m, x = '') => { console.log(`${c ? 'OK  ' : 'FAIL'} ${m}${c || !x ? '' : '  ' + x}`); if (!c) zle++; };
 
@@ -67,6 +68,8 @@ async function stranka(w, h, q, extra = {}) {
   await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&${q}`, { waitUntil: 'load' });
   return { ctx, page, von, chyby };
 }
+// na vrch stránky hneď (stránka má plynulé skrolovanie, klik počas jazdy by trafil inú scénu)
+const hore = async (page) => { await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' })); await page.waitForFunction(() => scrollY === 0); await sleep(300); };
 // snímka až po príchode okna a kroku (320 a 280 ms)
 const snimka = async (page, f) => { await sleep(450); await page.screenshot({ path: path.join(OUT, f) }); };
 async function stranka0(w, h, q) {
@@ -108,7 +111,7 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
   await page.locator('.karty-vernost').screenshot({ path: path.join(OUT, 'karticka-390.png') });
 
   // Objednať sa v úvode
-  await page.evaluate(() => scrollTo(0, 0));
+  await hore(page);
   await page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first().click();
   await page.waitForSelector('.obj[open]');
   ok(await page.locator('.obj-sluzby button').count() === 15, 'krok 1: 15 služieb z cenníka');
@@ -130,7 +133,7 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
     const r = await fetch(api + '?a=dni&sluzba=18&barber=ktoko%C4%BEvek'); return [r.status, (await r.text()).slice(0, 200)];
   }, API))));
   const rychle = await page.locator('.obj-rychlo .obj-mriezka button').allTextContents();
-  ok(casyOk(rychle) && (await page.locator('.obj-rychlo-h').textContent()).startsWith('Najbližšie voľné'), 'krok 2: najbližšie voľné časy u kohokoľvek nad tímom', JSON.stringify(rychle));
+  ok(casyOk(rychle, CASY_KTOKOLVEK) && (await page.locator('.obj-rychlo-h').textContent()).startsWith('Najbližšie voľné'), 'krok 2: najbližšie voľné časy u kohokoľvek nad tímom', JSON.stringify(rychle));
   await snimka(page, '2-barber-390.png');
   await page.locator('.obj-tim button', { hasText: 'Adrian' }).click();
   await page.waitForSelector('.obj-mriezka button', { timeout: 10000 }).catch(() => {});
@@ -188,7 +191,7 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
   // výpadok rezervačného systému v prvý deň: poctivá chyba a telefón
   const d = new Date(Date.now() + 864e5 * 2); while (d.getDay() === 0) d.setDate(d.getDate() + 1);
   fs.writeFileSync(SCEN, JSON.stringify({ [iso(d)]: 'chyba500' }));
-  await page.evaluate(() => scrollTo(0, 0));
+  await hore(page);
   await page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first().click();
   await page.locator('.obj-sluzby button', { hasText: 'Úprava obočia' }).click();
   await page.locator('.obj-tim button', { hasText: 'Nikolas' }).click();
@@ -212,7 +215,7 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   await page.mouse.move(10, 10);
   await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
   await page.waitForSelector('.band-karty', { timeout: 10000 }).catch(() => {});
-  await page.evaluate(() => scrollTo(0, 0));
+  await hore(page);
   await page.locator('a.price-cta[data-sluzba="1"]').scrollIntoViewIfNeeded();
   await page.locator('a.price-cta[data-sluzba="1"]').click();
   // Objednať pri službe → ťuk na najbližší čas = výber (dve kliknutia)
@@ -225,7 +228,7 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   await page.locator('.obj-vyber button').nth(1).click();
   await page.locator('.obj-tim button', { hasText: 'Nezáleží' }).click();
   await page.waitForSelector('.obj-dni + .obj-casy .obj-mriezka button, .obj-casy .obj-mriezka button', { timeout: 10000 }).catch(() => {});
-  ok(!(await preteka(page)) && casyOk(await page.locator('.obj-casy .obj-mriezka button').allTextContents()), `${w} px: deň a časy bez pretekania`);
+  ok(!(await preteka(page)) && casyOk(await page.locator('.obj-casy .obj-mriezka button').allTextContents(), CASY_KTOKOLVEK), `${w} px: deň a časy bez pretekania`);
   await snimka(page, `3-den-cas-${w}.png`);
   await page.keyboard.press('Escape');
   await page.locator('.band-karty').scrollIntoViewIfNeeded();

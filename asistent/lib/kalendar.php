@@ -101,29 +101,43 @@ function kal_spojenie(?callable $volaj): ?callable {
   return fn (string $m, array $d) => $api->volaj($m, $d);
 }
 
-/* barberi, ktorí robia službu (id 0 = „Nezáleží“ vo formulári) */
+/* barberi, ktorí robia službu (id 0 = „Nezáleží“ vo formulári); z každého len id, meno a rozvrh (pole
+   opening_hours a time_multiple), ktoré rezervačný systém potrebuje späť, nikdy e‑mail ani telefón */
 function kal_barberi(int $sluzba, callable $volaj): array {
-  return kal_cache("barberi:$sluzba", KAL_TTL_PRAVIDLA, function () use ($volaj, $sluzba) {
+  return kal_cache("barberi2:$sluzba", KAL_TTL_PRAVIDLA, function () use ($volaj, $sluzba) {
     $r = $volaj('getEmployees', ['services' => [$sluzba]]);
     $out = [];
-    foreach ((array) ($r['employees'] ?? []) as $e) if (isset($e['id'], $e['name'])) $out[] = ['id' => (int) $e['id'], 'meno' => (string) $e['name']];
+    foreach ((array) ($r['employees'] ?? []) as $e) if (isset($e['id'], $e['name'])) $out[] = ['id' => (int) $e['id'], 'meno' => (string) $e['name'],
+      'rozvrh' => ['opening_hours' => $e['opening_hours'] ?? null, 'time_multiple' => $e['time_multiple'] ?? null]];
     return $out;
   })[0];
+}
+
+/* barber tak, ako ho posiela formulár systému (overené na www.barbershop30.sk/rezervacia 2026‑10‑25): objekt,
+   nie číslo. Číslo 0 systém odmietne („Nie je vybratá služba alebo pracovník“) a iné číslo ticho ignoruje
+   (vráti kalendár a časy u kohokoľvek, teda aj časy, keď vybraný barber nemá voľno). Objekt bez opening_hours
+   skončí chybou 500, preto ide s rozvrhom, ale bez kontaktov. */
+function kal_objekt(array $kto): array {
+  if ($kto['id'] === 0) return ['name' => $kto['system'] ?? 'Nezáleží', 'id' => 0];
+  return ['id' => $kto['id'], 'name' => $kto['meno']] + ($kto['rozvrh'] ?? ['opening_hours' => null, 'time_multiple' => null]);
 }
 
 /* barber podľa mena (bez diakritiky); „ktokoľvek“ = 0 */
 function kal_najdi(string $barber, array $barberi): ?array {
   $hladaj = bez_diakritiky($barber);
-  if (in_array($hladaj, ['', 'ktokolvek', 'nezalezi', 'hocikto', 'akykolvek'], true)) return ['id' => 0, 'meno' => 'ktokoľvek'];
+  if (in_array($hladaj, ['', 'ktokolvek', 'nezalezi', 'hocikto', 'akykolvek'], true)) {
+    foreach ($barberi as $b) if ($b['id'] === 0) return ['id' => 0, 'meno' => 'ktokoľvek', 'system' => $b['meno']];
+    return ['id' => 0, 'meno' => 'ktokoľvek'];
+  }
   foreach ($barberi as $b) if ($b['id'] !== 0 && bez_diakritiky($b['meno']) === $hladaj) return $b;
   return null;
 }
 function kal_mena(array $barberi): array { return array_values(array_filter(array_map(fn ($b) => $b['id'] ? $b['meno'] : null, $barberi))); }
 
 /* pravidlá kalendára: rozsah dní, zatvorené dni v týždni, sviatky */
-function kal_pravidla(int $sluzba, int $id, callable $volaj): array {
-  return kal_cache("kalendar:$sluzba:$id", KAL_TTL_PRAVIDLA, function () use ($volaj, $sluzba, $id) {
-    $c = (array) (($volaj('getCalendar', ['services' => [$sluzba], 'employee' => $id]))['calendar'] ?? []);
+function kal_pravidla(int $sluzba, array $kto, callable $volaj): array {
+  return kal_cache("kalendar:$sluzba:{$kto['id']}", KAL_TTL_PRAVIDLA, function () use ($volaj, $sluzba, $kto) {
+    $c = (array) (($volaj('getCalendar', ['services' => [$sluzba], 'employee' => kal_objekt($kto)]))['calendar'] ?? []);
     return ['od' => kal_datum((string) ($c['limits']['min'] ?? '')), 'do' => kal_datum((string) ($c['limits']['max'] ?? '')),
       'dni' => array_values(array_map('strval', (array) ($c['disabled_days'] ?? []))),
       'sviatky' => array_values(array_filter(array_map(fn ($d) => kal_datum((string) $d), (array) ($c['disabled_dates'] ?? []))))];
@@ -147,7 +161,7 @@ function objednavka_dni(string $barber, int $sluzba, ?callable $volaj = null): a
   try {
     $kto = kal_najdi($barber, kal_barberi($sluzba, $volaj));
     if (!$kto) return ['stav' => 'neznamy_barber'];
-    $p = kal_pravidla($sluzba, $kto['id'], $volaj);
+    $p = kal_pravidla($sluzba, $kto, $volaj);
     if (!$p['od'] || !$p['do']) return ['stav' => 'chyba'];
     $dnes = teraz()->format('Y-m-d');
     return ['stav' => 'ok', 'barber' => $kto['meno'], 'dnes' => $dnes, 'od' => max($p['od'], $dnes), 'do' => $p['do'], 'zatvorene' => $p['dni'], 'sviatky' => $p['sviatky']];
@@ -172,7 +186,7 @@ function volne_terminy(string $barber, string $datum, int $sluzba, ?callable $vo
     if (!$kto) return $zaklad + ['stav' => 'neznamy_barber', 'barber' => $barber, 'barberi' => kal_mena($barberi)];
     $zaklad['barber'] = $kto['meno'];
 
-    $pravidla = kal_pravidla($sluzba, $kto['id'], $volaj);
+    $pravidla = kal_pravidla($sluzba, $kto, $volaj);
     if (!$pravidla['od'] || !$pravidla['do']) return $zaklad + ['stav' => 'chyba', 'dovod' => 'kalendár bez rozsahu'];
     if ($datum < $pravidla['od'] || $datum > $pravidla['do']) return $zaklad + ['stav' => 'mimo_rozsahu', 'od' => $pravidla['od'], 'do' => $pravidla['do']];
     $skratka = ['Po', 'Ut', 'St', 'Št', 'Pi', 'So', 'Ne'][(int) $den->format('N') - 1];
@@ -181,7 +195,8 @@ function volne_terminy(string $barber, string $datum, int $sluzba, ?callable $vo
 
     // voľné začiatky: z odpovede len reťazce HH:MM, nič iné
     [$casy, $kedy] = kal_cache("casy:$sluzba:{$kto['id']}:$datum", KAL_TTL, function () use ($volaj, $sluzba, $kto, $den) {
-      $r = $volaj('getTime', ['services' => [$sluzba], 'employee' => $kto['id'], 'date' => $den->format('d.m.Y')]);
+      // dátum ako objekt kalendára formulára (selectedDate); samotný reťazec systém nevie spracovať (chyba 500)
+      $r = $volaj('getTime', ['services' => [$sluzba], 'employee' => kal_objekt($kto), 'date' => ['selectedDate' => $den->format('d.m.Y')]]);
       if (!array_key_exists('times', $r)) throw new RuntimeException('odpoveď bez časov');
       $out = [];
       if (is_array($r['times'])) array_walk_recursive($r['times'], function ($v) use (&$out) { if (is_string($v) && preg_match('/^([01]?\d|2[0-3]):[0-5]\d$/', trim($v))) $out[] = sprintf('%05s', trim($v)); });

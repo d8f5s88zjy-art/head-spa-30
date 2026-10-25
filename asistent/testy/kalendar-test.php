@@ -34,7 +34,14 @@ skus('mimo rozsahu rezervácie (o 40 dní)', volne_terminy('Adrián', $d->modify
 skus('minulosť', volne_terminy('Adrián', $d->modify('-3 days')->format('Y-m-d'), 1)['stav'] === 'minulost');
 $x = volne_terminy('Peter', $d1->format('Y-m-d'), 1);
 skus('neznámy barber: zoznam skutočných barberov', $x['stav'] === 'neznamy_barber' && in_array('Adrian', $x['barberi'], true));
-skus('ktokoľvek', volne_terminy('ktokoľvek', $d1->format('Y-m-d'), 1)['stav'] === 'overene');
+skus('ktokoľvek', ($x = volne_terminy('ktokoľvek', $d1->format('Y-m-d'), 1))['stav'] === 'overene' && in_array('12:00', $x['casy'], true), json_encode($x, JSON_UNESCAPED_UNICODE));
+// tvar ako formulár (skutočný systém číslo barbera ignoruje alebo odmietne a reťazec dátumu nevie spracovať)
+$poz = array_map(fn ($r) => json_decode($r, true), array_filter(explode("\n", (string) file_get_contents(getenv('MOCK_LOG')))));
+$cas = array_values(array_filter($poz, fn ($r) => in_array($r['metoda'], ['getCalendar', 'getTime'], true)));
+skus('barber ide ako objekt zo zoznamu (konkrétny aj Nezáleží), nie číslo', $cas && !array_filter($cas, fn ($r) => !is_array($r['data']['employee'] ?? null)));
+skus('dátum ide ako objekt kalendára (selectedDate)', !array_filter($cas, fn ($r) => $r['metoda'] === 'getTime' && !isset($r['data']['date']['selectedDate'])));
+skus('e‑mail a telefón barbera sa späť neposielajú', !str_contains(json_encode($cas), 'example.invalid') && !str_contains(json_encode($cas), '0900'));
+skus('konkrétny barber nemá časy kohokoľvek (12:00 u Adriana nie je)', !in_array('12:00', volne_terminy('Adrián', $d1->format('Y-m-d'), 1)['casy'] ?? ['12:00'], true));
 skus('neznáma služba', volne_terminy('Adrián', $d1->format('Y-m-d'), 999)['stav'] === 'neznama_sluzba');
 skus('neplatný dátum', volne_terminy('Adrián', '2026-02-30', 1)['stav'] === 'chyba');
 $log = (string) file_get_contents(getenv('MOCK_LOG'));

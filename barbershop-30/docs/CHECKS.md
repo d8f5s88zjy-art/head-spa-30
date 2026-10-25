@@ -589,3 +589,29 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
 - Testy: app-smoke OK okrem známeho nestáleho posunu na počítači (softvérové kreslenie, CLS 0,028, nesúvisí),
   i18n-test, en-test, tma-test, objednavka-test, asistent-test (výsledky v zázname POSTUP).
 - Neoverené: skutočný telefón (iPhone Safari, Android Chrome), plynulosť na skutočnej grafike.
+
+## 29. Rezervácia: overenie bez odoslania (2026‑10‑25)
+
+- Zadávateľ: „skontroluj, či rezervácia by prešla úspešne a či funguje, ako má“. Skutočná objednávka sa
+  neodoslala (vznikol by termín v kalendári prevádzky); všetko len čítaním ako návštevník, makeOrder zablokované.
+- Odkazy: všetkých 37 tlačidiel Objednať sa na webe a 25 na rezervačnej stránke vedie na
+  https://www.barbershop30.sk/rezervacia (200), farbenie u Romany na Booqme (200), telefón tel:+421951267203.
+- Cenník proti rezervačnému systému (dáta formulára): všetkých 15 služieb existuje pod rovnakým číslom
+  (data-sluzba) s rovnakou cenou aj trvaním; názvy sa líšia len opravami (Úprava → úprava, gentlemenov →
+  gentlemanov, uši → uší, pomlčka a medzera pri 10 cm). Tím na webe = barberi v systéme (10 mien).
+- Ich formulár v prehliadači (390 px): služba → Pokračovať → barber (Nezáleží + 10) → kalendár 25. 10. až
+  25. 11. 2026, nedele zatvorené → pondelok 26. 10.: 38 voľných začiatkov → krok 4 osobné údaje (meno, priezvisko,
+  e‑mail, telefón, Pokračovať). Ďalej sa nešlo.
+- Nájdená chyba v našom serveri (`asistent/lib/kalendar.php`, prejavila by sa až po zapnutí kalendára): barber
+  išiel ako číslo a dátum ako reťazec. Skutočný systém číslo 0 („Nezáleží“) odmietne, iné číslo ticho ignoruje
+  (vráti kalendár aj časy u kohokoľvek: Kristián 41 namiesto svojich 28 časov a všeobecné voľno namiesto jeho
+  107 dní) a dátum ako reťazec skončí chybou 500. Rýchla voľba by teda vždy hlásila „neviem overiť“ a výber
+  barbera by ukázal časy, keď barber nemá voľno. Oprava: barber ako objekt zo zoznamu (id, meno, rozvrh, bez
+  e‑mailu a telefónu), dátum ako objekt kalendára (selectedDate), overené proti skutočnému systému.
+- Falošný systém v testoch (`asistent/testy/mock-rezervacie.php`) sa správa ako skutočný (číslo barbera
+  odmietne alebo ignoruje, reťazec dátumu = 500, konkrétny barber má iné časy ako Nezáleží); kalendar-test
+  kontroluje tvar požiadaviek a že sa kontakty barberov neposielajú. Pôvodný kód s ním zlyhá (overené).
+- Testy: asistent 37 OK + kalendár 21 OK, objednavka-test 113 OK (okno nikdy neukáže úspech, „termín ešte nie je
+  rezervovaný“, makeOrder sa nikdy neodošle), app-smoke všetko OK.
+- Neoverené: samotné odoslanie objednávky (urobí sa len so súhlasom prevádzky, napr. skúšobný termín, ktorý
+  recepcia hneď zruší).
