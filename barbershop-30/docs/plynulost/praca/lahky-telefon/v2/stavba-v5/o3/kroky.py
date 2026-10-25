@@ -194,6 +194,8 @@ JK = {  # jazyk: [(krok, sekcia, id, kluc)]; sekcia 'nove' = nová téma (otázk
   (2, 'polozky', 'deti', 'Gyerek Fiú Fiam Kisfiú Junior Gentlem kis év vág vágt vágn haj'),
   (2, 'polozky', 'tim', 'Csapat Barber Borbély Fodrász Emberek =Ki =Nevek dolgoz vág vágt vágn'),
   (2, 'nevieme', 'romana-ceny', 'roman fest hajfest melír dauer haj mikor napok'),
+  # pravidlo 1: krátky kmeň haj už nezachytí zložené slovo, zložené slovo je vlastný kmeň
+  (2, 'nevieme', 'produkty', 'Termék Pomádé Árul Árusít Vásárol Vehet Márka Kozmetik Sampon =Zselé Olaj Hajwax viasz haj szakáll'),
   (4, 'polozky', 'hlava', 'Fejborotv Borotv Borotval Simára Penge Kopasz | fej Fejborotv kopasz'),
   (4, 'polozky', 'deti', 'Gyerek Fiú Fiam Kisfiú Úriember Junior Gentlem kis év vág vágt vágn haj'),
   (4, 'polozky', 'ornament', 'Ornament Kreatív Mint Minta Tribal Tattoo Tetovál Csík Vonal haj'),
