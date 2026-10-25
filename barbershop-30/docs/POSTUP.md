@@ -59,6 +59,12 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑25: SEO analýza trhu v Nitre (`docs/SEO-ANALYZA.md`): 8 konkurentov, našepkávač Google, porovnanie webov
+  a rýchlosti na telefóne. Najväčšia sila: 945 recenzií 5,0 na Google. Najväčší problém: nový web nie je na doméne
+  barbershop30.sk (dnešný web: titulok „Barbershop30“, bez popisu, lang en, 13,9 MB). Návrhy čakajú na súhlas:
+  titulok, popis a H1 s „pánske holičstvo, Nitra, Mostná 30“, časté otázky na stránke, poukážky a „bez objednania“
+  (súčasný web to tvrdí, overiť s prevádzkou), anglická verzia, profil Google a zoznamy firiem.
+
 - 2026‑10‑25 (hotové, CHECKS 26, snímky a testy OK): zadávateľ: „na telefóne nie je fotky vidno úplne, okná zakrývajú celú obrazovku“.
   Príčina: fotka na šírku cez celú výšku displeja ukáže najviac tretinu šírky (film ešte priblíži, spolu asi štvrtina),
   karta s textom a stmavenie prekrývali spodnú polovicu. Riešenie (P16 v style.css, film.js PAS_B a aim()): na telefóne
