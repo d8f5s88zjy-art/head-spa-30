@@ -1,7 +1,7 @@
 {
  "site": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny/barbershop-30",
  "base": "https://d8f5s88zjy-art.github.io/barbershop30/",
- "datum": "2026-10-26T08:51:48.765Z",
+ "datum": "2026-10-26T09:15:47.092Z",
  "nalezy": [
   {
    "lvl": "INFO",
@@ -836,6 +836,36 @@
    "kod": "hreflang-kanonicka",
    "text": "6 hreflang vedie na adresy s inou canonical (uk, hu, sr-Latn, pl, de, cs → https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk má canonical https://d8f5s88zjy-art.github.io/barbershop30/); Google také hreflang ignoruje a ?lang= stránky má za duplikát slovenskej",
    "kde": "sitemap.xml"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "nazivo",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "nazivo",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/en/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "nazivo",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "nazivo",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/robots.txt → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "nazivo",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)",
+   "kde": "index.html:24"
   }
  ],
  "summary": {

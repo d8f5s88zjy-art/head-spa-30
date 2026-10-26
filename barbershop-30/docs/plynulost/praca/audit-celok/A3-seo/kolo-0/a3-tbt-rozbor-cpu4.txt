@@ -1,0 +1,15 @@
+predvolené (WebGL)             CPU 4× TBT 2466 ms, FCP 936 ms, dlhé úlohy [štart ms, trvanie ms]: 553/114 1083/2307 3391/68 3769/65 3983/133 4165/67 5300/118 5854/53 9004/55
+   html.class: karty world js-odhal js-kin js-steps js-cennik world-frame world-off
+   skripty: film.js, app.js, vernost.js, recenzie.js, karty.js, atmosfera.js, i18n.js
+?uvod=off                      CPU 4× TBT 2066 ms, FCP 1472 ms, dlhé úlohy [štart ms, trvanie ms]: 353/220 576/90 709/56 900/60 1666/1749 4535/216 5953/70 8216/155 8390/65 8873/72 9228/89
+   html.class: karty world js-odhal js-kin js-steps js-cennik world-frame world-off
+   skripty: app.js, film.js, vernost.js, recenzie.js, karty.js, i18n.js, atmosfera.js
+?film=off                      CPU 4× TBT 398 ms, FCP 2120 ms, dlhé úlohy [štart ms, trvanie ms]: 416/238 665/94 918/56 4383/179 5297/106 8104/169 8921/141 9238/53
+   html.class: karty world-off js-odhal js-kin js-steps js-cennik
+   skripty: film.js, vernost.js, app.js, recenzie.js, karty.js, i18n.js, atmosfera.js
+?motion=off                    CPU 4× TBT 444 ms, FCP 1480 ms, dlhé úlohy [štart ms, trvanie ms]: 87/340 441/146 630/59 2964/56 3139/122 3304/180 4345/286
+   html.class: karty world-off js-cennik
+   skripty: app.js, film.js, vernost.js, recenzie.js, karty.js, i18n.js, atmosfera.js
+bez WebGL (--disable-3d-apis)  CPU 4× TBT 352 ms, FCP 576 ms, dlhé úlohy [štart ms, trvanie ms]: 199/321 527/72 611/175 789/99 900/100 1010/74 1439/58 4459/53 4522/94 5289/64 6942/63
+   html.class: karty world js-odhal js-kin js-steps js-cennik world-frame world-off
+   skripty: app.js, film.js, vernost.js, recenzie.js, karty.js, atmosfera.js, i18n.js

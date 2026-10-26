@@ -1,0 +1,312 @@
+{
+ "datum": "2026-10-26T09:01:19.295Z",
+ "chromium": "141.0.7390.37",
+ "gl": "predvolené",
+ "base": "http://127.0.0.1:8880/barbershop-30/",
+ "rychlost": {
+  "index.html telefon": {
+   "median": {
+    "fcp": 3312,
+    "lcp": 3312,
+    "cls": 0,
+    "tbt": 677,
+    "kBLoad": 538,
+    "kB8s": 808
+   },
+   "behy": [
+    {
+     "fcp": 3312,
+     "lcp": 3312,
+     "lcpEl": "span.w  73953px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 953,
+     "dlheUlohy": 11,
+     "load": 4325,
+     "kBLoad": 555,
+     "pozLoad": 11,
+     "kB8s": 808,
+     "poz8s": 21,
+     "chyby": []
+    },
+    {
+     "fcp": 3264,
+     "lcp": 3264,
+     "lcpEl": "span.w  73953px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 550,
+     "dlheUlohy": 9,
+     "load": 4154,
+     "kBLoad": 538,
+     "pozLoad": 10,
+     "kB8s": 808,
+     "poz8s": 21,
+     "chyby": []
+    },
+    {
+     "fcp": 3844,
+     "lcp": 3844,
+     "lcpEl": "span.w  73953px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 677,
+     "dlheUlohy": 11,
+     "load": 4204,
+     "kBLoad": 538,
+     "pozLoad": 10,
+     "kB8s": 808,
+     "poz8s": 21,
+     "chyby": []
+    }
+   ]
+  },
+  "index.html pocitac": {
+   "median": {
+    "fcp": 548,
+    "lcp": 548,
+    "cls": 0,
+    "tbt": 95,
+    "kBLoad": 737,
+    "kB8s": 1130
+   },
+   "behy": [
+    {
+     "fcp": 1104,
+     "lcp": 1104,
+     "lcpEl": "span.w  160071px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 95,
+     "dlheUlohy": 6,
+     "load": 940,
+     "kBLoad": 741,
+     "pozLoad": 12,
+     "kB8s": 1130,
+     "poz8s": 23,
+     "chyby": []
+    },
+    {
+     "fcp": 548,
+     "lcp": 548,
+     "lcpEl": "span.w  160071px²",
+     "cls": 0.0317,
+     "posuny": [
+      "1142ms 0.0317 nav#nav.nav,::before"
+     ],
+     "tbt": 842,
+     "dlheUlohy": 4,
+     "load": 1157,
+     "kBLoad": 737,
+     "pozLoad": 11,
+     "kB8s": 1130,
+     "poz8s": 23,
+     "chyby": []
+    }
+   ]
+  },
+  "en/index.html telefon": {
+   "median": {
+    "fcp": 3452,
+    "lcp": 3452,
+    "cls": 0.0003,
+    "tbt": 771,
+    "kBLoad": 542,
+    "kB8s": 831
+   },
+   "behy": [
+    {
+     "fcp": 3452,
+     "lcp": 3452,
+     "lcpEl": "span.w  56542px²",
+     "cls": 0.0003,
+     "posuny": [],
+     "tbt": 1758,
+     "dlheUlohy": 12,
+     "load": 5022,
+     "kBLoad": 556,
+     "pozLoad": 11,
+     "kB8s": 831,
+     "poz8s": 22,
+     "chyby": []
+    },
+    {
+     "fcp": 3304,
+     "lcp": 3304,
+     "lcpEl": "span.w  56542px²",
+     "cls": 0.0003,
+     "posuny": [],
+     "tbt": 771,
+     "dlheUlohy": 7,
+     "load": 4511,
+     "kBLoad": 542,
+     "pozLoad": 11,
+     "kB8s": 831,
+     "poz8s": 22,
+     "chyby": []
+    },
+    {
+     "fcp": 4160,
+     "lcp": 4160,
+     "lcpEl": "span.w  56542px²",
+     "cls": 0.0003,
+     "posuny": [],
+     "tbt": 508,
+     "dlheUlohy": 18,
+     "load": 4172,
+     "kBLoad": 539,
+     "pozLoad": 10,
+     "kB8s": 831,
+     "poz8s": 22,
+     "chyby": []
+    }
+   ]
+  },
+  "en/index.html pocitac": {
+   "median": {
+    "fcp": 504,
+    "lcp": 504,
+    "cls": 0.0004,
+    "tbt": 1049,
+    "kBLoad": 759,
+    "kB8s": 1153
+   },
+   "behy": [
+    {
+     "fcp": 504,
+     "lcp": 504,
+     "lcpEl": "span.w  140974px²",
+     "cls": 0.0004,
+     "posuny": [],
+     "tbt": 1151,
+     "dlheUlohy": 6,
+     "load": 700,
+     "kBLoad": 759,
+     "pozLoad": 13,
+     "kB8s": 1153,
+     "poz8s": 24,
+     "chyby": []
+    },
+    {
+     "fcp": 620,
+     "lcp": 620,
+     "lcpEl": "span.w  140974px²",
+     "cls": 0.0321,
+     "posuny": [
+      "723ms 0.0321 a,a,a.btn.btn-primary,::before"
+     ],
+     "tbt": 1049,
+     "dlheUlohy": 8,
+     "load": 814,
+     "kBLoad": 759,
+     "pozLoad": 13,
+     "kB8s": 1153,
+     "poz8s": 24,
+     "chyby": []
+    }
+   ]
+  },
+  "rezervacia.html telefon": {
+   "median": {
+    "fcp": 2824,
+    "lcp": 2868,
+    "cls": 0,
+    "tbt": 7,
+    "kBLoad": 309,
+    "kB8s": 629
+   },
+   "behy": [
+    {
+     "fcp": 2792,
+     "lcp": 2792,
+     "lcpEl": "img kreslo-stred-m-760.avif 244702px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 0,
+     "dlheUlohy": 1,
+     "load": 3382,
+     "kBLoad": 309,
+     "pozLoad": 11,
+     "kB8s": 629,
+     "poz8s": 19,
+     "chyby": []
+    },
+    {
+     "fcp": 2824,
+     "lcp": 2868,
+     "lcpEl": "img kreslo-stred-m-760.avif 244702px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 7,
+     "dlheUlohy": 2,
+     "load": 3363,
+     "kBLoad": 309,
+     "pozLoad": 11,
+     "kB8s": 629,
+     "poz8s": 19,
+     "chyby": []
+    },
+    {
+     "fcp": 3032,
+     "lcp": 3032,
+     "lcpEl": "img kreslo-stred-m-760.avif 244702px²",
+     "cls": 0,
+     "posuny": [],
+     "tbt": 390,
+     "dlheUlohy": 2,
+     "load": 5260,
+     "kBLoad": 607,
+     "pozLoad": 17,
+     "kB8s": 629,
+     "poz8s": 19,
+     "chyby": []
+    }
+   ]
+  },
+  "rezervacia.html pocitac": {
+   "median": {
+    "fcp": 612,
+    "lcp": 812,
+    "cls": 0.0001,
+    "tbt": 106,
+    "kBLoad": 368,
+    "kB8s": 540
+   },
+   "behy": [
+    {
+     "fcp": 876,
+     "lcp": 1304,
+     "lcpEl": "img kreslo-stred-1448.avif 989550px²",
+     "cls": 0.0001,
+     "posuny": [],
+     "tbt": 501,
+     "dlheUlohy": 5,
+     "load": 809,
+     "kBLoad": 518,
+     "pozLoad": 15,
+     "kB8s": 540,
+     "poz8s": 17,
+     "chyby": []
+    },
+    {
+     "fcp": 612,
+     "lcp": 812,
+     "lcpEl": "img kreslo-stred-1448.avif 989550px²",
+     "cls": 0.0001,
+     "posuny": [],
+     "tbt": 106,
+     "dlheUlohy": 1,
+     "load": 578,
+     "kBLoad": 368,
+     "pozLoad": 11,
+     "kB8s": 540,
+     "poz8s": 17,
+     "chyby": []
+    }
+   ]
+  }
+ },
+ "skrol": {},
+ "bezJS": {},
+ "mobil": {}
+}

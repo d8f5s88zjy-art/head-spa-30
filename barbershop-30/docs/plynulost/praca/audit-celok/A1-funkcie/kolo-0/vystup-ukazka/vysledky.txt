@@ -1,0 +1,130 @@
+OK   [ukazka/pocitac] Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)  {"dlg":true,"pas":"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.","sluzby":15}
+OK   [ukazka/pocitac] objednávka: po službe ukážkové časy  5
+OK   [ukazka/pocitac] objednávka: Späť vráti na služby
+OK   [ukazka/pocitac] objednávka: výber s poznámkou, odkaz do rezervácie a telefón  ["https://www.barbershop30.sk/rezervacia","tel:+421951267203","tel:+421951267203"]
+OK   [ukazka/pocitac] objednávka: okno sa zavrie
+OK   [ukazka/pocitac] cenník: Objednať pri službe otvorí okno s vybranou službou  ← Späť
+
+OBJEDNÁVKA · KROK 2 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Kedy a u koho?
+Pánsky strih a úprava brady
+
+FAIL [ukazka/pocitac] tím: Objednať sa u Nikolas otvorí okno s barberom  OBJEDNÁVKA · KROK 1 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Čo si dáš?
+Strih
+Pánsky strih
+40 min · 18 €
+Pánsky 
+OK   [ukazka/pocitac] asistent: ikona Barbera viditeľná
+INFO [ukazka/pocitac] asistent: bublina pri ikone {"vis":false,"text":"Barber AIAhoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.Spýtať saZavolať"}
+OK   [ukazka/pocitac] asistent: okno sa otvorí, ukážka označená, témy otázok  {"panel":true,"pas":"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.","chips":15}
+OK   [ukazka/pocitac] asistent: ťuk na otázku ukáže pripravenú odpoveď  {"n0":1,"n1":2,"posledna":"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s"}
+OK   [ukazka/pocitac] asistent: napísaná otázka o cene dostane odpoveď z cenníka  Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné.
+OK   [ukazka/pocitac] asistent: Esc okno zavrie
+OK   [ukazka/pocitac] asistent: Skryť Barbera skryje ikonu
+OK   [ukazka/pocitac] index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [ukazka/pocitac] ukážka nič neposiela na server  []
+INFO [ukazka/pocitac] trvanie 64 s
+OK   [ukazka/telefon] Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)  {"dlg":true,"pas":"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.","sluzby":15}
+OK   [ukazka/telefon] objednávka: po službe ukážkové časy  5
+OK   [ukazka/telefon] objednávka: Späť vráti na služby
+OK   [ukazka/telefon] objednávka: výber s poznámkou, odkaz do rezervácie a telefón  ["https://www.barbershop30.sk/rezervacia","tel:+421951267203","tel:+421951267203"]
+OK   [ukazka/telefon] objednávka: okno sa zavrie
+OK   [ukazka/telefon] cenník: Objednať pri službe otvorí okno s vybranou službou  ← Späť
+
+OBJEDNÁVKA · KROK 2 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Kedy a u koho?
+Pánsky strih a úprava brady
+
+FAIL [ukazka/telefon] tím: Objednať sa u Nikolas otvorí okno s barberom  OBJEDNÁVKA · KROK 1 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Čo si dáš?
+Strih
+Pánsky strih
+40 min · 18 €
+Pánsky 
+OK   [ukazka/telefon] asistent: ikona Barbera viditeľná
+INFO [ukazka/telefon] asistent: bublina pri ikone {"vis":false,"text":"Barber AIAhoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.Spýtať saZavolať"}
+OK   [ukazka/telefon] asistent: okno sa otvorí, ukážka označená, témy otázok  {"panel":true,"pas":"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.","chips":15}
+OK   [ukazka/telefon] asistent: ťuk na otázku ukáže pripravenú odpoveď  {"n0":1,"n1":2,"posledna":"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €."}
+OK   [ukazka/telefon] asistent: napísaná otázka o cene dostane odpoveď z cenníka  Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné.
+OK   [ukazka/telefon] asistent: Zavrieť okno zavrie
+OK   [ukazka/telefon] asistent: Skryť Barbera skryje ikonu
+OK   [ukazka/telefon] index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [ukazka/telefon] ukážka nič neposiela na server  []
+INFO [ukazka/telefon] trvanie 69 s
+OK   [rezervacia/pocitac] bez kalendára: cenník s 15 odkazmi do rezervácie, bez krokov  {"h1":"Kedy si sadneš?","ceny":15,"lang":true,"obj":false}
+OK   [rezervacia/pocitac] úvod: Objednať sa posunie na cenník/kroky
+OK   [rezervacia/pocitac] odkaz Služby vedie na index.html#sluzby a ukáže služby  {"url":"/barbershop-30/index.html#sluzby","ok":true,"top":-270,"bottom":3557,"y":6194}
+OK   [rezervacia/pocitac] rezervacia.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [rezervacia/pocitac] ukážka: kroky v stránke, označené
+OK   [rezervacia/pocitac] ukážka: časy po službe  5
+OK   [rezervacia/pocitac] ukážka: výber barbera ukáže dni  31
+OK   [rezervacia/pocitac] ukážka: deň → čas → súhrn bez potvrdenia
+OK   [rezervacia/pocitac] asistent na rezervačnej stránke viditeľný
+OK   [rezervacia/pocitac] rezervacia.html?objednavka=ukazka&asistent=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [rezervacia/pocitac] predvoľba ?sluzba=1&barber=Adrian otvorí rovno deň u Adriána  ← Späť |  | OBJEDNÁVKA · KROK 3 ZO 4 |  | Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. |  | Kedy? | Pánsky strih | Adrian | Po | 26 | okt | Ut | 27 | okt | St | 28 | 
+OK   [rezervacia/pocitac] rezervacia.html?sluzba=1&barber=Adrian: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+INFO [rezervacia/pocitac] trvanie 33 s
+OK   [rezervacia/telefon] bez kalendára: cenník s 15 odkazmi do rezervácie, bez krokov  {"h1":"Kedy si sadneš?","ceny":15,"lang":true,"obj":false}
+OK   [rezervacia/telefon] úvod: Objednať sa posunie na cenník/kroky
+OK   [rezervacia/telefon] menu sa otvorí
+OK   [rezervacia/telefon] menu: Kontakt zavrie menu a posunie na kontakt
+OK   [rezervacia/telefon] odkaz Služby vedie na index.html#sluzby a ukáže služby  {"url":"/barbershop-30/index.html#sluzby","ok":true,"top":-253,"bottom":4254,"y":4450}
+OK   [rezervacia/telefon] rezervacia.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [rezervacia/telefon] ukážka: kroky v stránke, označené
+OK   [rezervacia/telefon] ukážka: časy po službe  5
+OK   [rezervacia/telefon] ukážka: výber barbera ukáže dni  31
+OK   [rezervacia/telefon] ukážka: deň → čas → súhrn bez potvrdenia
+OK   [rezervacia/telefon] asistent na rezervačnej stránke viditeľný
+OK   [rezervacia/telefon] rezervacia.html?objednavka=ukazka&asistent=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [rezervacia/telefon] predvoľba ?sluzba=1&barber=Adrian otvorí rovno deň u Adriána  ← Späť |  | OBJEDNÁVKA · KROK 3 ZO 4 |  | Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. |  | Kedy? | Pánsky strih | Adrian | Po | 26 | okt | Ut | 27 | okt | St | 28 | 
+OK   [rezervacia/telefon] rezervacia.html?sluzba=1&barber=Adrian: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+INFO [rezervacia/telefon] trvanie 27 s
+OK   [karta/pocitac] karta/: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n","tel":["tel:+421951267203"]}
+FAIL [karta/pocitac] karta/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+OK   [karta/pocitac] karta/?nova: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n","tel":["tel:+421951267203"]}
+FAIL [karta/pocitac] karta/?nova: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+OK   [karta/pocitac] karta/?k=AAAAAAAAAAAAAAAAAAAAAA: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Táto kartička neexistuje |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj nám na ","tel":["tel:+421951267203"]}
+FAIL [karta/pocitac] karta/?k=AAAAAAAAAAAAAAAAAAAAAA: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA:0 | error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA | http: 404 /vernost/api/?a=stav
+INFO [karta/pocitac] trvanie 11 s
+OK   [karta/telefon] karta/: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n","tel":["tel:+421951267203"]}
+FAIL [karta/telefon] karta/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+OK   [karta/telefon] karta/?nova: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n","tel":["tel:+421951267203"]}
+FAIL [karta/telefon] karta/?nova: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+OK   [karta/telefon] karta/?k=AAAAAAAAAAAAAAAAAAAAAA: stránka ukáže obsah (nie večné načítavanie)  {"title":"Vernostná kartička Barbershop 30","busy":"false","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Táto kartička neexistuje |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj nám na ","tel":["tel:+421951267203"]}
+FAIL [karta/telefon] karta/?k=AAAAAAAAAAAAAAAAAAAAAA: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA:0 | error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA | http: 404 /vernost/api/?a=stav
+INFO [karta/telefon] trvanie 11 s
+OK   [admin/pocitac] admin: prihlasovacie pole viditeľné
+OK   [admin/pocitac] admin: Prihlásiť bez kľúča povie, čo chýba  Vlož kľúč.
+OK   [admin/pocitac] admin: zlý kľúč – zrozumiteľná chyba  Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom.
+FAIL [admin/pocitac] admin/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api.github.com/repos/d8f5s88zjy-art/head-spa-30:0 | http: 401 https://api.github.com/repos/d8f5s88zjy-art/head-spa-30
+INFO [admin/pocitac] admin volal: https://api.github.com/repos/d8f5s88zjy-art/head-spa-30
+INFO [admin/pocitac] trvanie 6 s
+OK   [admin/telefon] admin: prihlasovacie pole viditeľné
+OK   [admin/telefon] admin: Prihlásiť bez kľúča povie, čo chýba  Vlož kľúč.
+OK   [admin/telefon] admin: zlý kľúč – zrozumiteľná chyba  Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom.
+FAIL [admin/telefon] admin/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api.github.com/repos/d8f5s88zjy-art/head-spa-30:0 | http: 401 https://api.github.com/repos/d8f5s88zjy-art/head-spa-30
+INFO [admin/telefon] admin volal: https://api.github.com/repos/d8f5s88zjy-art/head-spa-30
+INFO [admin/telefon] trvanie 6 s
+
+SÚHRN: 76 kontrol, zlyhalo 10

@@ -2,13 +2,14 @@
 // A3 SEO – statická kontrola webu BARBERSHOP 30 (HTML, JSON-LD, robots.txt, sitemap.xml, manifest, obrázky OG a ikon).
 // Nič nemení, číta len súbory webu; prehliadač ani server nepotrebuje (rýchlosť a vykreslenie: a3-rychlost.mjs).
 //
-//   node a3-seo.mjs [priečinok webu] [--schema=schemaorg-current-https.jsonld] [--json=vystup.json] [--git]
+//   node a3-seo.mjs [priečinok webu] [--schema=schemaorg-current-https.jsonld] [--json=vystup.json] [--git] [--online] [--base=URL]
 //
 //   priečinok webu  predvolene .../hs-skvrny/barbershop-30
-//   --schema        slovník schema.org (https://schema.org/version/latest/schemaorg-current-https.jsonld); s ním sa
+//   --schema        slovník schema.org (predvolene schemaorg-current-https.jsonld vedľa skriptu); s ním sa
 //                   overí, že každý @type a každá vlastnosť v JSON-LD existuje a že typ podniku je LocalBusiness
 //   --json          celý výsledok aj ako JSON
 //   --git           lastmod v sitemap.xml porovná s dátumom posledného commitu stránky (git log)
+//   --online        curl na základnú adresu (canonical), en/, sitemap.xml, robots.txt a og:image: musia vrátiť HTTP 200
 //
 // Výstup: riadky „VAZNA / STREDNA / DROBNA / OK / INFO  [kód] text  (súbor:riadok)“, na konci súhrn.
 // Kód ukončenia 1, ak je aspoň jeden nález VAZNA.
@@ -385,6 +386,8 @@ for (const p of pages) {
 
 // ---------------------------------------------------------------- JSON-LD: slovník schema.org, pravidlá Google, súlad s textom
 let vocab = null;
+// predvolene slovník vedľa skriptu (stiahnutý 26. 10. 2026 z https://schema.org/version/latest/schemaorg-current-https.jsonld)
+if (!opt.schema) { const f = path.join(path.dirname(new URL(import.meta.url).pathname), 'schemaorg-current-https.jsonld'); if (fs.existsSync(f)) opt.schema = f; }
 if (opt.schema && fs.existsSync(opt.schema)) {
   const g = JSON.parse(fs.readFileSync(opt.schema, 'utf8'))['@graph'];
   vocab = new Map(g.map((x) => [x['@id'], x]));
@@ -586,6 +589,17 @@ else {
   for (const p of pages.filter((x) => x.root && x.index === true)) if (!urls.some((u) => u.loc === BASE + p.url)) STREDNA('sitemap-chyba-stranka', `${BASE + p.url} (${p.file}) nie je v sitemap`, 'sitemap.xml');
   // obrázky v sitemap
   for (const im of xml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) { const lf = urlToFile(im[1], path.join(SITE, 'x')); if (lf && !fs.existsSync(lf.file)) VAZNA('sitemap-image', `${im[1]} neexistuje`, 'sitemap.xml'); }
+}
+
+// ---------------------------------------------------------------- --online: existuje základná adresa naozaj? (curl, cez proxy prostredia)
+if (opt.online && BASE) {
+  console.log('\n=== Naživo (curl)');
+  const ogImg = meta(home.root, 'og:image')[0]?.attrs.content;
+  for (const u of [BASE, BASE + 'en/', BASE + 'sitemap.xml', BASE + 'robots.txt', ogImg].filter(Boolean)) {
+    let kod = '?';
+    try { kod = execFileSync('curl', ['-s', '-o', '/dev/null', '-w', '%{http_code}', '--max-time', '20', u], { encoding: 'utf8' }).trim(); } catch (e) { kod = 'chyba'; }
+    (kod === '200' ? OK : VAZNA)('nazivo', `${u} → HTTP ${kod}${kod === '200' ? '' : ' (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)'}`, 'index.html:' + (links(home.root, 'canonical')[0]?.line || '?'));
+  }
 }
 
 // ---------------------------------------------------------------- súhrn

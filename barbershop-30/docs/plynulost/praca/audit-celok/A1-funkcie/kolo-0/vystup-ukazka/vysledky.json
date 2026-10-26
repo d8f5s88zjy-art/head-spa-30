@@ -1,0 +1,541 @@
+{
+ "cas": "2026-10-26T09:06:20.721Z",
+ "strom": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny",
+ "base": "http://127.0.0.1:8860/barbershop-30/",
+ "spolu": 76,
+ "zle": 10,
+ "vysledky": [
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)",
+   "ok": true,
+   "detail": "{\"dlg\":true,\"pas\":\"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\",\"sluzby\":15}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "objednávka: po službe ukážkové časy",
+   "ok": true,
+   "detail": "5"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "objednávka: Späť vráti na služby",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "objednávka: výber s poznámkou, odkaz do rezervácie a telefón",
+   "ok": true,
+   "detail": "[\"https://www.barbershop30.sk/rezervacia\",\"tel:+421951267203\",\"tel:+421951267203\"]"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "objednávka: okno sa zavrie",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "cenník: Objednať pri službe otvorí okno s vybranou službou",
+   "ok": true,
+   "detail": "← Späť\n\nOBJEDNÁVKA · KROK 2 ZO 4\n\n×\n\nUkážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\n\nKedy a u koho?\nPánsky strih a úprava brady\n"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "tím: Objednať sa u Nikolas otvorí okno s barberom",
+   "ok": false,
+   "detail": "OBJEDNÁVKA · KROK 1 ZO 4\n\n×\n\nUkážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\n\nČo si dáš?\nStrih\nPánsky strih\n40 min · 18 €\nPánsky "
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: ikona Barbera viditeľná",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: okno sa otvorí, ukážka označená, témy otázok",
+   "ok": true,
+   "detail": "{\"panel\":true,\"pas\":\"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.\",\"chips\":15}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: ťuk na otázku ukáže pripravenú odpoveď",
+   "ok": true,
+   "detail": "{\"n0\":1,\"n1\":2,\"posledna\":\"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s\"}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: napísaná otázka o cene dostane odpoveď z cenníka",
+   "ok": true,
+   "detail": "Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné."
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: Esc okno zavrie",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "asistent: Skryť Barbera skryje ikonu",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "pocitac",
+   "nazov": "ukážka nič neposiela na server",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)",
+   "ok": true,
+   "detail": "{\"dlg\":true,\"pas\":\"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\",\"sluzby\":15}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "objednávka: po službe ukážkové časy",
+   "ok": true,
+   "detail": "5"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "objednávka: Späť vráti na služby",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "objednávka: výber s poznámkou, odkaz do rezervácie a telefón",
+   "ok": true,
+   "detail": "[\"https://www.barbershop30.sk/rezervacia\",\"tel:+421951267203\",\"tel:+421951267203\"]"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "objednávka: okno sa zavrie",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "cenník: Objednať pri službe otvorí okno s vybranou službou",
+   "ok": true,
+   "detail": "← Späť\n\nOBJEDNÁVKA · KROK 2 ZO 4\n\n×\n\nUkážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\n\nKedy a u koho?\nPánsky strih a úprava brady\n"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "tím: Objednať sa u Nikolas otvorí okno s barberom",
+   "ok": false,
+   "detail": "OBJEDNÁVKA · KROK 1 ZO 4\n\n×\n\nUkážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.\n\nČo si dáš?\nStrih\nPánsky strih\n40 min · 18 €\nPánsky "
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: ikona Barbera viditeľná",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: okno sa otvorí, ukážka označená, témy otázok",
+   "ok": true,
+   "detail": "{\"panel\":true,\"pas\":\"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.\",\"chips\":15}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: ťuk na otázku ukáže pripravenú odpoveď",
+   "ok": true,
+   "detail": "{\"n0\":1,\"n1\":2,\"posledna\":\"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €.\"}"
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: napísaná otázka o cene dostane odpoveď z cenníka",
+   "ok": true,
+   "detail": "Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné."
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: Zavrieť okno zavrie",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "asistent: Skryť Barbera skryje ikonu",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "ukazka",
+   "zar": "telefon",
+   "nazov": "ukážka nič neposiela na server",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "bez kalendára: cenník s 15 odkazmi do rezervácie, bez krokov",
+   "ok": true,
+   "detail": "{\"h1\":\"Kedy si sadneš?\",\"ceny\":15,\"lang\":true,\"obj\":false}"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "úvod: Objednať sa posunie na cenník/kroky",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "odkaz Služby vedie na index.html#sluzby a ukáže služby",
+   "ok": true,
+   "detail": "{\"url\":\"/barbershop-30/index.html#sluzby\",\"ok\":true,\"top\":-270,\"bottom\":3557,\"y\":6194}"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "rezervacia.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "ukážka: kroky v stránke, označené",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "ukážka: časy po službe",
+   "ok": true,
+   "detail": "5"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "ukážka: výber barbera ukáže dni",
+   "ok": true,
+   "detail": "31"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "ukážka: deň → čas → súhrn bez potvrdenia",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "asistent na rezervačnej stránke viditeľný",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "rezervacia.html?objednavka=ukazka&asistent=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "predvoľba ?sluzba=1&barber=Adrian otvorí rovno deň u Adriána",
+   "ok": true,
+   "detail": "← Späť |  | OBJEDNÁVKA · KROK 3 ZO 4 |  | Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. |  | Kedy? | Pánsky strih | Adrian | Po | 26 | okt | Ut | 27 | okt | St | 28 | "
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "pocitac",
+   "nazov": "rezervacia.html?sluzba=1&barber=Adrian: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "bez kalendára: cenník s 15 odkazmi do rezervácie, bez krokov",
+   "ok": true,
+   "detail": "{\"h1\":\"Kedy si sadneš?\",\"ceny\":15,\"lang\":true,\"obj\":false}"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "úvod: Objednať sa posunie na cenník/kroky",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "menu: Kontakt zavrie menu a posunie na kontakt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "odkaz Služby vedie na index.html#sluzby a ukáže služby",
+   "ok": true,
+   "detail": "{\"url\":\"/barbershop-30/index.html#sluzby\",\"ok\":true,\"top\":-253,\"bottom\":4254,\"y\":4450}"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "rezervacia.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "ukážka: kroky v stránke, označené",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "ukážka: časy po službe",
+   "ok": true,
+   "detail": "5"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "ukážka: výber barbera ukáže dni",
+   "ok": true,
+   "detail": "31"
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "ukážka: deň → čas → súhrn bez potvrdenia",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "asistent na rezervačnej stránke viditeľný",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "rezervacia.html?objednavka=ukazka&asistent=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "predvoľba ?sluzba=1&barber=Adrian otvorí rovno deň u Adriána",
+   "ok": true,
+   "detail": "← Späť |  | OBJEDNÁVKA · KROK 3 ZO 4 |  | Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. |  | Kedy? | Pánsky strih | Adrian | Po | 26 | okt | Ut | 27 | okt | St | 28 | "
+  },
+  {
+   "sc": "rezervacia",
+   "zar": "telefon",
+   "nazov": "rezervacia.html?sluzba=1&barber=Adrian: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n\",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/?nova: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n\",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/?nova: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/?k=AAAAAAAAAAAAAAAAAAAAAA: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Táto kartička neexistuje |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj nám na \",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "pocitac",
+   "nazov": "karta/?k=AAAAAAAAAAAAAAAAAAAAAA: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA:0 | error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n\",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/?nova: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Zbieraj body za každú návštevu |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj n\",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/?nova: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/?k=AAAAAAAAAAAAAAAAAAAAAA: stránka ukáže obsah (nie večné načítavanie)",
+   "ok": true,
+   "detail": "{\"title\":\"Vernostná kartička Barbershop 30\",\"busy\":\"false\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA | 30 | Táto kartička neexistuje |  | Za návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno. |  | Kartičky práve spúšťame |  | Kartičku ti zatiaľ založíme na recepcii. Zavolaj nám na \",\"tel\":[\"tel:+421951267203\"]}"
+  },
+  {
+   "sc": "karta",
+   "zar": "telefon",
+   "nazov": "karta/?k=AAAAAAAAAAAAAAAAAAAAAA: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA:0 | error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=karta&k=AAAAAAAAAAAAAAAAAAAAAA | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "admin",
+   "zar": "pocitac",
+   "nazov": "admin: prihlasovacie pole viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "admin",
+   "zar": "pocitac",
+   "nazov": "admin: Prihlásiť bez kľúča povie, čo chýba",
+   "ok": true,
+   "detail": "Vlož kľúč."
+  },
+  {
+   "sc": "admin",
+   "zar": "pocitac",
+   "nazov": "admin: zlý kľúč – zrozumiteľná chyba",
+   "ok": true,
+   "detail": "Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom."
+  },
+  {
+   "sc": "admin",
+   "zar": "pocitac",
+   "nazov": "admin/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api.github.com/repos/d8f5s88zjy-art/head-spa-30:0 | http: 401 https://api.github.com/repos/d8f5s88zjy-art/head-spa-30"
+  },
+  {
+   "sc": "admin",
+   "zar": "telefon",
+   "nazov": "admin: prihlasovacie pole viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "admin",
+   "zar": "telefon",
+   "nazov": "admin: Prihlásiť bez kľúča povie, čo chýba",
+   "ok": true,
+   "detail": "Vlož kľúč."
+  },
+  {
+   "sc": "admin",
+   "zar": "telefon",
+   "nazov": "admin: zlý kľúč – zrozumiteľná chyba",
+   "ok": true,
+   "detail": "Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom."
+  },
+  {
+   "sc": "admin",
+   "zar": "telefon",
+   "nazov": "admin/: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api.github.com/repos/d8f5s88zjy-art/head-spa-30:0 | http: 401 https://api.github.com/repos/d8f5s88zjy-art/head-spa-30"
+  }
+ ]
+}

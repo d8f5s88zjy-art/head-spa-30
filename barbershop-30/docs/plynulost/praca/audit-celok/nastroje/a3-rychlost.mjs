@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // A3 SEO – rýchlosť a vykreslenie BARBERSHOP 30 v Chromiu cez Playwright a CDP (Lighthouse tu nie je).
-//   node a3-rychlost.mjs [--port=8880] [--out=priečinok] [--behy=3] [--stranky=index.html,en/index.html,rezervacia.html]
+//   node a3-rychlost.mjs [--port=8880] [--out=priečinok] [--behy=3] [--stranky=index.html,en/index.html,rezervacia.html] [--gl=swiftshader] [--len-rychlost]
 //
 // Server: python3 -I -m http.server <port> --bind 127.0.0.1 --directory <hs-skvrny> (web je pod /barbershop-30/ ako pri
 // nasadení na GitHub Pages head-spa-30). Jeden prehliadač, po skončení sa zavrie aj server.
@@ -36,8 +36,10 @@ const srv = spawn('python3', ['-I', '-m', 'http.server', String(PORT), '--bind',
 let up = false;
 for (let i = 0; i < 50 && !up; i++) { try { const r = await fetch(BASE + 'index.html'); up = r.ok; } catch (e) { await sleep(200); } }
 if (!up) { console.error('server nebeží'); srv.kill(); process.exit(2); }
-const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-const vysledok = { datum: new Date().toISOString(), chromium: browser.version(), base: BASE, rychlost: {}, skrol: {}, bezJS: {}, mobil: {} };
+// --gl=swiftshader: WebGL softvérovo (ako zariadenie bez grafickej karty); predvolené: Chromium bez prepínačov (ako PageSpeed/Googlebot)
+const GLARGS = opt.gl === 'swiftshader' ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] : [];
+const browser = await chromium.launch({ headless: true, args: GLARGS });
+const vysledok = { datum: new Date().toISOString(), chromium: browser.version(), gl: opt.gl || 'predvolené', base: BASE, rychlost: {}, skrol: {}, bezJS: {}, mobil: {} };
 const koniec = async () => { await browser.close().catch(() => {}); srv.kill(); };
 process.on('uncaughtException', async (e) => { console.error(e); await koniec(); process.exit(3); });
 
@@ -85,7 +87,7 @@ async function beh(stranka, profil) {
   return r;
 }
 
-console.log(`Chromium ${vysledok.chromium}, ${BASE}`);
+console.log(`Chromium ${vysledok.chromium}, WebGL ${vysledok.gl}, ${BASE}`);
 for (const s of STRANKY) {
   for (const profil of ['telefon', 'pocitac']) {
     const n = profil === 'telefon' ? BEHY : Math.max(1, BEHY - 1);
@@ -98,7 +100,7 @@ for (const s of STRANKY) {
 }
 
 // ---------------------------------------------------------------- 2. CLS pri skrolovaní (telefón 390×844)
-for (const s of ['index.html', 'en/index.html']) {
+for (const s of opt['len-rychlost'] ? [] : ['index.html', 'en/index.html']) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: 'dark' });
   const page = await ctx.newPage();
   await page.addInitScript(MERANIE);
@@ -115,7 +117,7 @@ for (const s of ['index.html', 'en/index.html']) {
 }
 
 // ---------------------------------------------------------------- 3. bez JavaScriptu
-for (const s of ['index.html', 'en/index.html', 'rezervacia.html']) {
+for (const s of opt['len-rychlost'] ? [] : ['index.html', 'en/index.html', 'rezervacia.html']) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, javaScriptEnabled: false, colorScheme: 'dark' });
   const page = await ctx.newPage();
   await page.goto(BASE + s, { waitUntil: 'load', timeout: 60000 });
@@ -137,7 +139,7 @@ for (const s of ['index.html', 'en/index.html', 'rezervacia.html']) {
 }
 
 // ---------------------------------------------------------------- 4. použiteľnosť na telefóne
-for (const w of [360, 390]) {
+for (const w of opt['len-rychlost'] ? [] : [360, 390]) {
   for (const s of ['index.html', 'en/index.html', 'rezervacia.html']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: w === 360 ? 780 : 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: 'dark' });
     const page = await ctx.newPage();
@@ -174,6 +176,6 @@ for (const w of [360, 390]) {
   }
 }
 
-fs.writeFileSync(path.join(OUT, 'a3-rychlost.json'), JSON.stringify(vysledok, null, 1));
+fs.writeFileSync(path.join(OUT, `a3-rychlost${opt.gl ? '-' + opt.gl : ''}.json`), JSON.stringify(vysledok, null, 1));
 await koniec();
-console.log('hotovo', path.join(OUT, 'a3-rychlost.json'));
+console.log('hotovo', path.join(OUT, `a3-rychlost${opt.gl ? '-' + opt.gl : ''}.json`));

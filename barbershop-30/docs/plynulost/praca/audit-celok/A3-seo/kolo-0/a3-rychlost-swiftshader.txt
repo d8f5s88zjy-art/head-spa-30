@@ -1,0 +1,96 @@
+(beh so softvérovým WebGL: --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist)
+Chromium 141.0.7390.37, http://127.0.0.1:8880/barbershop-30/
+index.html         telefon  FCP 3348 ms, LCP 3348 ms, CLS 0, TBT 1352 ms, do load 538 kB, po 8 s 808 kB | LCP prvok: span.w  73953px² | posuny: -
+index.html         pocitac  FCP 616 ms, LCP 616 ms, CLS 0.0318, TBT 1729 ms, do load 741 kB, po 8 s 1130 kB | LCP prvok: span.w  160071px² | posuny: 553ms 0.0316 ::before
+en/index.html      telefon  FCP 4032 ms, LCP 4032 ms, CLS 0.0003, TBT 1445 ms, do load 539 kB, po 8 s 831 kB | LCP prvok: span.w  56542px² | posuny: -
+en/index.html      pocitac  FCP 656 ms, LCP 656 ms, CLS 0.032, TBT 1674 ms, do load 738 kB, po 8 s 1153 kB | LCP prvok: span.w  140974px² | posuny: 754ms 0.0320 ::before
+rezervacia.html    telefon  FCP 2956 ms, LCP 2956 ms, CLS 0, TBT 3 ms, do load 607 kB, po 8 s 629 kB | LCP prvok: img kreslo-stred-m-760.avif 244702px² | posuny: -
+rezervacia.html    pocitac  FCP 512 ms, LCP 512 ms, CLS 0.0001, TBT 0 ms, do load 368 kB, po 8 s 540 kB | LCP prvok: img kreslo-stred-1448.avif 989550px² | posuny: -
+skrol index.html: výška 17255px, CLS 0
+skrol en/index.html: výška 17205px, CLS 0
+bez JS index.html: 892 slov, H1 „BARBERSHOP 30 · NITRA Tvoj strih. Tvoje miesto.“ viditeľný true, cien 19, telefón true, šírka 390/390, obrázky v okne: rohozka-1086.avif načítaný; /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/A3-seo/kolo-0/snimky/bezjs-index-html-390.jpg
+bez JS en/index.html: 1017 slov, H1 „BARBERSHOP 30 · NITRA Your cut. Your place.“ viditeľný true, cien 15, telefón true, šírka 390/390, obrázky v okne: rohozka-1086.avif načítaný; /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/A3-seo/kolo-0/snimky/bezjs-en-index-html-390.jpg
+bez JS rezervacia.html: 541 slov, H1 „Kedy si sadneš?“ viditeľný true, cien 15, telefón true, šírka 390/390, obrázky v okne: kreslo-stred-m-760.avif načítaný, galeria-zrkadlo-640.avif načítaný; /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/A3-seo/kolo-0/snimky/bezjs-rezervacia-html-390.jpg
+mobil 360 index.html: pretekanie nie; písmo < 12 px: 10.051px p. ×3; ciele < 44 px (46): a.brand „Barbershop 30
+NITRA“ 184×32 | a.hero-rating „5,0 na Google · 945 recenzií“ 187×28 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a „Strih“ 66×40 | a „Brada a holenie“ 138×40
+mobil 360 en/index.html: pretekanie nie; písmo < 12 px: 10.051px p. ×3; ciele < 44 px (47): a.brand „Barbershop 30
+NITRA“ 184×32 | a.hero-rating „5.0 on Google · 945 reviews“ 187×28 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.hook „See the full price list
+→“ 191×40 | a „Cut“ 57×40
+mobil 360 rezervacia.html: pretekanie nie; písmo < 12 px: -; ciele < 44 px (30): a.brand „Barbershop 30
+NITRA“ 184×32 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH“ 101×40 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH A ÚPRA“ 101×40 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH, DĹŽKA“ 101×40 | a.btn „OBJEDNAŤ
+– STRIH PRE MALÝCH GE“ 101×40 | a.btn „OBJEDNAŤ
+– OHOLENIE HLAVY“ 101×40 | a.btn „OBJEDNAŤ
+– ÚPRAVA BRADY“ 101×40 | a.btn „OBJEDNAŤ
+– HOLENIE DO HLADKA H“ 101×40 | a.btn „OBJEDNAŤ
+– FARBENIE BRADY“ 101×40 | a.btn „OBJEDNAŤ
+– BALÍČEK 1“ 101×40 | a.btn „OBJEDNAŤ
+– ULTRA INCLUSIVE BAR“ 101×40 | a.btn „OBJEDNAŤ
+– STAROSTLIVOSŤ O PLE“ 101×40 | a.btn „OBJEDNAŤ
+– ÚPRAVA OBOČIA“ 101×40 | a.btn „OBJEDNAŤ
+– DEPILÁCIA UŠÍ A NOS“ 101×40
+mobil 390 index.html: pretekanie nie; písmo < 12 px: 11.0174px p. ×3; ciele < 44 px (48): a.brand „Barbershop 30
+NITRA“ 184×32 | a.hero-rating „5,0 na Google · 945 recenzií“ 187×28 | a.hook „Vyber si svojho barbera
+→“ 213×40 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.link-arrow „Objednať sa
+→“ 104×37 | a.hook „Pozri celý cenník
+→“ 169×40
+mobil 390 en/index.html: pretekanie nie; písmo < 12 px: 11.0174px p. ×3; ciele < 44 px (47): a.brand „Barbershop 30
+NITRA“ 184×32 | a.hero-rating „5.0 on Google · 945 reviews“ 187×28 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.link-arrow „Book now
+→“ 88×37 | a.hook „See the full price list
+→“ 191×40 | a „Cut“ 57×40
+mobil 390 rezervacia.html: pretekanie nie; písmo < 12 px: -; ciele < 44 px (32): a.brand „Barbershop 30
+NITRA“ 184×32 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH“ 106×40 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH A ÚPRA“ 106×40 | a.btn „OBJEDNAŤ
+– PÁNSKY STRIH, DĹŽKA“ 106×40 | a.btn „OBJEDNAŤ
+– STRIH PRE MALÝCH GE“ 106×40 | a.btn „OBJEDNAŤ
+– OHOLENIE HLAVY“ 106×40 | a.btn „OBJEDNAŤ
+– ÚPRAVA BRADY“ 106×40 | a.btn „OBJEDNAŤ
+– HOLENIE DO HLADKA H“ 106×40 | a.btn „OBJEDNAŤ
+– FARBENIE BRADY“ 106×40 | a.btn „OBJEDNAŤ
+– BALÍČEK 1“ 106×40 | a.btn „OBJEDNAŤ
+– ULTRA INCLUSIVE BAR“ 106×40 | a.btn „OBJEDNAŤ
+– STAROSTLIVOSŤ O PLE“ 106×40 | a.btn „OBJEDNAŤ
+– ÚPRAVA OBOČIA“ 106×40 | a.btn „OBJEDNAŤ
+– DEPILÁCIA UŠÍ A NOS“ 106×40
+hotovo /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/A3-seo/kolo-0/snimky/a3-rychlost.json

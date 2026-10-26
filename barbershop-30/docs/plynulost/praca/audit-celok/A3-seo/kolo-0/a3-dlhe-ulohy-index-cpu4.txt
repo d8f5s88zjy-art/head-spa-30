@@ -1,0 +1,35 @@
+
+beh 1 index.html CPU 4× FCP 864 ms, dlhých úloh 14
+  139 ms +53 ms: CommitLoad 0ms; EventDispatch 0ms
+  318 ms +310 ms: Layout 219ms; UpdateLayoutTree 43ms; Paint 27ms; PrePaint 12ms; IntersectionObserverController::computeIntersections 1ms
+  659 ms +335 ms: v8.evaluateModule 333ms; Layout 10ms; UpdateLayoutTree 7ms; EvaluateScript vernost.js 1ms; v8.compile vernost.js 0ms
+  995 ms +621 ms: Layout 376ms; UpdateLayoutTree 150ms; Paint 76ms; IntersectionObserverController::computeIntersections 18ms; PrePaint 16ms
+  1704 ms +53 ms: 
+  2000 ms +94 ms: ParseAuthorStyleSheet karty.css 13ms
+  2134 ms +74 ms: Paint 38ms; FireAnimationFrame 21ms; FunctionCall app.js tick 21ms; UpdateLayoutTree 16ms; Layerize 14ms
+  2231 ms +333 ms: Layerize 324ms; UpdateLayoutTree 3ms; PrePaint 0ms; IntersectionObserverController::computeIntersections 0ms; Paint 0ms
+  2818 ms +69 ms: UpdateLayoutTree 52ms; PrePaint 4ms; Paint 2ms; Layerize 2ms; IntersectionObserverController::computeIntersections 0ms
+  4740 ms +71 ms: HitTest 4ms; UpdateLayoutTree 1ms; IntersectionObserverController::computeIntersections 1ms; Paint 0ms; PrePaint 0ms
+  5418 ms +195 ms: Layout 129ms; UpdateLayoutTree 51ms; PrePaint 3ms; Paint 3ms; IntersectionObserverController::computeIntersections 1ms
+  5736 ms +109 ms: UpdateLayoutTree 15ms; Layerize 5ms; Layout 2ms; PrePaint 2ms; Paint 1ms
+  5844 ms +170 ms: Paint 9ms; UpdateLayoutTree 1ms; PrePaint 1ms; IntersectionObserverController::computeIntersections 0ms; Layerize 0ms
+  6393 ms +90 ms: UpdateLayoutTree 1ms; Paint 0ms; IntersectionObserverController::computeIntersections 0ms; PrePaint 0ms; Layerize 0ms
+  TBT 1459 ms
+
+beh 2 index.html CPU 4× FCP 506 ms, dlhých úloh 15
+  252 ms +169 ms: Layout 88ms; UpdateLayoutTree 51ms; Paint 16ms; PrePaint 13ms; Layerize 1ms
+  427 ms +70 ms: v8.evaluateModule 60ms; UpdateLayoutTree 18ms; Layout 1ms; EvaluateScript vernost.js 1ms; v8.compile vernost.js 0ms
+  551 ms +191 ms: Layout 120ms; UpdateLayoutTree 22ms; Paint 9ms; Layerize 5ms; IntersectionObserverController::computeIntersections 4ms
+  863 ms +67 ms: Paint 11ms; PrePaint 11ms; Layerize 7ms; UpdateLayoutTree 1ms; IntersectionObserverController::computeIntersections 0ms
+  937 ms +230 ms: TimerFire 230ms; RunMicrotasks 230ms; EventDispatch 0ms; FunctionCall 0ms
+  1276 ms +184 ms: UpdateLayoutTree 1ms; PrePaint 1ms; Layerize 0ms; IntersectionObserverController::computeIntersections 0ms
+  2568 ms +101 ms: Layerize 7ms; PrePaint 6ms; Paint 2ms; UpdateLayoutTree 2ms; IntersectionObserverController::computeIntersections 1ms
+  3574 ms +58 ms: Paint 16ms; PrePaint 12ms; UpdateLayoutTree 1ms; IntersectionObserverController::computeIntersections 0ms; Layerize 0ms
+  4342 ms +318 ms: Layout 227ms; PrePaint 33ms; UpdateLayoutTree 32ms; Paint 27ms; IntersectionObserverController::computeIntersections 1ms
+  4701 ms +95 ms: UpdateLayoutTree 6ms; Paint 0ms; IntersectionObserverController::computeIntersections 0ms; PrePaint 0ms; Layerize 0ms
+  4803 ms +82 ms: FunctionCall i18n.js offer 81ms; Layout 74ms; UpdateLayoutTree 4ms; ParseHTML 0ms
+  5763 ms +58 ms: IntersectionObserverController::computeIntersections 0ms; Paint 0ms; UpdateLayoutTree 0ms; PrePaint 0ms; Layerize 0ms
+  5972 ms +63 ms: HitTest 6ms; IntersectionObserverController::computeIntersections 1ms; Paint 0ms; UpdateLayoutTree 0ms; Layerize 0ms
+  7000 ms +72 ms: Paint 12ms; UpdateLayoutTree 11ms; HitTest 6ms; IntersectionObserverController::computeIntersections 1ms; PrePaint 1ms
+  8083 ms +50 ms: PrePaint 21ms; Paint 2ms; UpdateLayoutTree 1ms; IntersectionObserverController::computeIntersections 0ms; Layerize 0ms
+  TBT 918 ms

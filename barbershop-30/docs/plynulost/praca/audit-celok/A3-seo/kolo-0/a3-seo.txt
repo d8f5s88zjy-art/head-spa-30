@@ -186,4 +186,11 @@ OK      [sitemap-lastmod] /?lang=cs: lastmod 2026-10-25, posledný commit súbor
 OK      [hreflang-vzajomnost] všetkých 8 adries má rovnakú sadu 9 hreflang (sk, en, uk, hu, sr-Latn, pl, de, cs, x-default) – vzájomné  (sitemap.xml)
 STREDNA [hreflang-kanonicka] 6 hreflang vedie na adresy s inou canonical (uk, hu, sr-Latn, pl, de, cs → https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk má canonical https://d8f5s88zjy-art.github.io/barbershop30/); Google také hreflang ignoruje a ?lang= stránky má za duplikát slovenskej  (sitemap.xml)
 
-SÚHRN: VAZNA 5, STREDNA 7, DROBNA 20, OK 98, INFO 9
+=== Naživo (curl)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/en/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/robots.txt → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+
+SÚHRN: VAZNA 10, STREDNA 7, DROBNA 20, OK 98, INFO 9

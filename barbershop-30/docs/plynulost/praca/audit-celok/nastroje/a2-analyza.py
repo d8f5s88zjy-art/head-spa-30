@@ -79,7 +79,7 @@ def tma_polia(img, cell=16):
 
 def kontrast(bez, t, op_min=0.9):
     """Kontrast textu voči pozadiu pod ním (snímka bez textu): najhorší prípad = 90. (10.) percentil jasu pozadia."""
-    if t['op'] < op_min:
+    if t['op'] < op_min or not t.get('navrchu', True):
         return None
     c = parse_rgba(t['color'])
     if not c:
@@ -97,10 +97,12 @@ def kontrast(bez, t, op_min=0.9):
     lt = float(lum_arr(col.reshape(1, 1, 3))[0, 0])
     lmed = float(np.median(L))
     worst = float(np.percentile(L, 90 if lt > lmed else 10))
-    r_worst, r_med = ratio(lt, worst), ratio(lt, lmed)
+    p75 = float(np.percentile(L, 75 if lt > lmed else 25))
+    r_worst, r_med, r_75 = ratio(lt, worst), ratio(lt, lmed), ratio(lt, p75)
     big = t['fs'] >= 24 or (t['fs'] >= 18.66 and t['fw'] >= 700)
     need = 3.0 if big else 4.5
-    return {'r_med': round(r_med, 2), 'r_worst': round(r_worst, 2), 'need': need, 'ok': r_med >= need and r_worst >= need * 0.8}
+    # chyba: medián pozadia pod textom nedáva potrebný kontrast, alebo štvrtina pozadia (svetlé miesta fotky) výrazne pod
+    return {'r_med': round(r_med, 2), 'r_75': round(r_75, 2), 'r_worst': round(r_worst, 2), 'need': need, 'ok': r_med >= need and r_75 >= need * 0.75}
 
 
 def draw_boxes(img, boxes):
@@ -177,8 +179,8 @@ def jeden(dirp):
             boxes.append(('text', o['r'], o['how'][:18] + ' ' + o['t'][:24]))
             add('text-odrezany', o['n'] + ' | ' + o['how'], {'krok': i, 'r': o['r'], 't': o['t']})
         for o in k['textOverlap']:
-            boxes.append(('text', o['r'], 'prekryv: ' + o['ta'][:16] + ' / ' + o['tb'][:16]))
-            add('text-prekryv', o['a'] + ' / ' + o['b'], {'krok': i, 'r': o['r'], 'ta': o['ta'], 'tb': o['tb'], 'op': [o['opA'], o['opB']]})
+            boxes.append(('text', o['r'], o.get('druh', 'prekryv') + ': ' + o['ta'][:16] + ' / ' + o['tb'][:16]))
+            add('text-' + o.get('druh', 'prekryv'), o['a'] + ' / ' + o['b'], {'krok': i, 'r': o['r'], 'ta': o['ta'], 'tb': o['tb'], 'op': [o['opA'], o['opB']], 'hore': o.get('hore')})
         for o in k['covered']:
             boxes.append(('zakryte', o['r'], 'zakryté: ' + o['t'][:24]))
             add('zakryte', o['float'] + ' → ' + o['n'], {'krok': i, 'r': o['r'], 't': o['t'], 'pin': o['pin'], 'koniec': o['atEnd']})
@@ -225,6 +227,12 @@ def jeden(dirp):
            'nalezy': [dict(v, kroky=sorted(set(v['kroky']))) for v in nalezy.values()],
            'tma': [(i, k['tma_pole'], k['tma_podiel']) for i, k in enumerate(rep['kroky'])]}
     json.dump(out, open(os.path.join(dirp, 'analyza.json'), 'w'), ensure_ascii=False, indent=1)
+    # pomocné snímky bez textu (len na kontrast) – miesto na disku
+    for k in rep['kroky']:
+        try:
+            os.remove(os.path.join(dirp, k['bez']))
+        except OSError:
+            pass
     typy = {}
     for v in nalezy.values():
         typy[v['typ']] = typy.get(v['typ'], 0) + 1

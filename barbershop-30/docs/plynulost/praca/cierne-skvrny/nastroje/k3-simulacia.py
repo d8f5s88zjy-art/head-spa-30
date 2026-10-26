@@ -20,6 +20,7 @@ dajú sa prepísať: --param AMT=0.3 --param 'SEG=[128,96]' (JSON hodnota, plat�
 Použitie:
   python3 -I k3-simulacia.py --web <barbershop-30> --out <priečinok> [--zariadenie pc,telefon]
           [--pc 1440x900] [--telefon 390x844] [--zabery cakaren,sala-rano] [--param K=V ...]
+  python3 -I k3-simulacia.py prechody --web <barbershop-30> --out <priečinok>   (diery po skladaní strihu v post shaderi)
   python3 -I k3-simulacia.py porovnaj --web <barbershop-30> --snimky <priečinok so z###.jpg> --out <priečinok>
 """
 import argparse, json, math, os, re, subprocess, sys, glob
@@ -313,7 +314,7 @@ def place(s, P, t, amt, drift=(0, 0, 0), mouse=(0, 0), push=0.0, cut=None):
 
 
 # ---------------------------------------------------------------- vyhodnotenie jednej polohy
-def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=True):
+def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=True, full=False, want_vz=False):
     V = look_at_view(cam, target); Pm = projection(P, cw, ch, s.band)
     W = s.eye[None, :] + (s.Pw - s.eye[None, :]) * (1 - amt * s.z)[:, None]   # vertex shader
     Wh = np.concatenate([W, np.ones((len(W), 1))], 1)
@@ -338,10 +339,10 @@ def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=T
     flipped = in_front & (area <= 0)
     stretch = np.where(in_front & (area > 0), area / np.maximum(area0, 1e-12), 0)
     # okno: celé plátno, na telefóne na výšku horný pás (ndc y od 1 - 2*band po 1)
-    RW, RH = int(round(cw * scale)), int(round(ch * s.band * scale))
+    RW, RH = int(round(cw * scale)), int(round(ch * (1 if full else s.band) * scale))
     def to_px(nd):
         x = (nd[..., 0] + 1) / 2 * RW
-        y = (1 - nd[..., 1]) / 2 * (RH / s.band)     # y od horného okraja plátna; pás = horných RH pixelov
+        y = (1 - nd[..., 1]) / 2 * (ch * scale)      # y od horného okraja plátna; pás = horných ch*band*scale pixelov
         return np.stack([x, y], -1)
     front = in_front & (area > 0)
     # trojuholníky čiastočne pred blízkou rovinou: orež v priestore kamery (Sutherland–Hodgman), ostatné rovno
@@ -354,6 +355,8 @@ def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=T
     order = idx[np.argsort(-dep_t[idx].mean(1))]
     alpha0_tri = (np.floor(s.z[T] * 255 + 0.5) == 0).all(1)          # vZ v celom trojuholníku < 0,5/255 -> alfa 0
     amap = np.zeros((RH, RW), np.uint8)
+    vz = np.ones((RH, RW), np.float32) if want_vz else None   # diera = farba plátna s alfou 1
+    zt = s.z[T].mean(1)
     img = np.zeros((RH, RW, 3), np.uint8) if want_img else None
     if want_img and s.img is not None:
         ih, iw = s.img.shape[:2]
@@ -364,6 +367,8 @@ def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=T
         cv2.fillConvexPoly(cover, tp[i], 1, cv2.LINE_8, 4)
         if want_alpha:
             cv2.fillConvexPoly(amap, tp[i], 2 if alpha0_tri[i] else 1, cv2.LINE_8, 4)
+        if want_vz:
+            cv2.fillConvexPoly(vz, tp[i], float(zt[i]), cv2.LINE_8, 4)
         if want_img:
             cv2.fillConvexPoly(img, tp[i], tuple(int(c) for c in cols[i]) if s.img is not None else (128, 128, 128), cv2.LINE_8, 4)
     # orezané trojuholníky (časť za blízkou rovinou): orezaná časť sa nakreslí, zvyšok chýba
@@ -381,6 +386,8 @@ def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=T
         pp = np.round(to_px(nd) * 16).astype(np.int64)
         pp = np.clip(pp, -2**30, 2**30).astype(np.int32)
         cv2.fillConvexPoly(cover, pp, 1, cv2.LINE_8, 4); cv2.fillConvexPoly(amap, pp, 1, cv2.LINE_8, 4)
+        if want_vz:
+            cv2.fillConvexPoly(vz, pp, float(zt[i]), cv2.LINE_8, 4)
         n_clip_drawn += 1
     holes = cover == 0
     res = dict(
@@ -389,7 +396,7 @@ def evaluate(s, P, cam, target, amt, cw, ch, scale, want_img=False, want_alpha=T
         hole_px=int(holes.sum()), hole_frac=float(holes.mean()),
         alpha0_frac=float((amap == 2).mean()),
     )
-    return res, dict(flipped=flipped, clipped=clipped, stretch=stretch, holes=holes, amap=amap, img=img)
+    return res, dict(flipped=flipped, clipped=clipped, stretch=stretch, holes=holes, amap=amap, img=img, vz=vz, Pm=Pm, V=V)
 
 
 def clip_near(pts, near):
@@ -529,6 +536,169 @@ def run(args):
     print('súhrn:', os.path.join(args.out, 'k3-suhrn.json'))
 
 
+
+# ---------------------------------------------------------------- prechody: diery až po skladaní (post shader)
+def _ss(a, b, x):
+    t = np.clip((x - a) / np.where(np.abs(b - a) < 1e-9, 1e-9, b - a), 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+def _sample(tex, u, v):
+    """texture2D s MirroredRepeat a LinearFilter; tex (RH, RW, C) s riadkom 0 hore, u, v ako vUv (v nahor)."""
+    RH, RW = tex.shape[:2]
+    mx = (u * RW - 0.5).astype(np.float32); my = ((1 - v) * RH - 0.5).astype(np.float32)
+    return cv2.remap(tex, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+
+
+def composite(kind, x, TA, TB, f1, f2, dS, uLead, asp, CK):
+    """Kópia vetiev post shadera (bez rozmazania). TA/TB: (RH, RW, 5) = B, G, R, diera, alfa. Vráti (RH, RW, 4) = farba + podiel diery."""
+    RH, RW = TA.shape[:2]
+    jj, ii = np.meshgrid((np.arange(RW) + 0.5) / RW, 1 - (np.arange(RH) + 0.5) / RH)
+    u, v = jj.astype(np.float32), ii.astype(np.float32)
+    A0 = _sample(TA, u, v); B0 = _sample(TB, u, v)
+    aa, ba = A0[..., 4], B0[..., 4]
+    s_ = math.sin(math.pi * x)
+    if kind == 0:
+        o = np.maximum(aa, ba); w = _ss(o * 0.55, o * 0.55 + 0.45, x)
+        out = A0[..., :4] * (1 - w[..., None]) + B0[..., :4] * w[..., None]
+    elif kind == 1:
+        lat = (dS[0] or dS[1])
+        if lat:
+            h = np.clip(((u - 0.5) * dS[0] + (v - 0.5) * dS[1]) * 0.9 + 0.5, 0, 1)
+        else:
+            q = np.stack([(u - f1[0]) * asp, v - f1[1]], -1)
+            h = 1 - np.clip(np.linalg.norm(q, axis=-1) / max(asp, 1) * 1.3, 0, 1)
+        t0 = 0.6 * (1 - h) + 0.12 * np.maximum(aa, ba); w = _ss(t0, t0 + 0.22, x)
+        out = A0[..., :4] * (1 - w[..., None]) + B0[..., :4] * w[..., None]
+    elif kind == 2:
+        cx = math.cos(math.pi * x); Pp = (2 - 3 * cx + cx ** 3) * 0.25
+        sh = (dS[0] * CK['sx'], dS[1] * CK['sy']); m = float(_ss(0.45, 0.55, x))
+        Aa = _sample(TA, u + sh[0] * Pp, v + sh[1] * Pp); Bb = _sample(TB, u - sh[0] * (1 - Pp), v - sh[1] * (1 - Pp))
+        out = Aa[..., :4] * (1 - m) + Bb[..., :4] * m
+    elif kind == 3:
+        qx, qy = u - f1[0], v - f1[1]; q2x, q2y = u - f2[0], v - f2[1]
+        den = math.hypot(max(f1[0], 1 - f1[0]) * asp, max(f1[1], 1 - f1[1]))
+        r = np.clip(np.hypot(qx * asp, qy) / den, 0, 1); t0 = 0.39 + 0.14 * r; m = _ss(t0, t0 + 0.08, x)
+        zA = 1 + CK['za'] * x * x; k = CK['kz'] * s_ * s_
+        Aa = _sample(TA, f1[0] + qx * (1 - k / 2) / zA, f1[1] + qy * (1 - k / 2) / zA)
+        Bb = _sample(TB, f2[0] + q2x * (1 - k / 2), f2[1] + q2y * (1 - k / 2))
+        out = Aa[..., :4] * (1 - m[..., None]) + Bb[..., :4] * m[..., None]
+    else:
+        md = (-dS[0], -dS[1]); pd = (md[1], -md[0])
+        uu = (u - 0.5) * md[0] + (v - 0.5) * md[1] + 0.5; ww = (u - 0.5) * pd[0] + (v - 0.5) * pd[1] + 0.5
+        wF = (f1[0] - 0.5) * pd[0] + (f1[1] - 0.5) * pd[1] + 0.5
+        R0 = -0.15
+        L = uLead + (1 + CK['pe'] - uLead) * float(_ss(0.0, 0.56, x)); R = R0 + (1 + CK['pe'] - R0) * float(_ss(0.2, 0.86, x))
+        g = float(_ss(0.0, 0.5, x)); fill = float(_ss(0.04, 0.26, x)); kk = (L - R) / max(uLead - R0, 0.05)
+        us = R0 + (uu - R) / kk; ws = wF + (ww - wF) / kk
+        inside = _ss(0.0, 0.12 * g + 1e-4, us)
+        psx = np.clip(0.5 + md[0] * (us - 0.5) + pd[0] * (ws - 0.5), 0.002, 0.998)
+        psy = np.clip(0.5 + md[1] * (us - 0.5) + pd[1] * (ws - 0.5), 0.002, 0.998)
+        O = _sample(TA, psx.astype(np.float32), psy.astype(np.float32))
+        oa = 1 + (O[..., 4] - 1) * inside
+        pw = CK['pw'] * (0.4 + 0.6 * g)
+        bow = CK['bow'] * g * (1 - np.minimum(1, 4 * (ww - wF) ** 2)); Re = R - bow; Le = L + bow
+        near_ = _ss(0.5, 0.78, oa)
+        cov = _ss(Re - pw, Re + pw, uu) * (1 - _ss(Le - pw, Le + pw, uu)) * (near_ + (1 - near_) * fill)
+        useB = (uu < Re + 2 * pw) & (fill >= 1)
+        base = np.where(useB[..., None], B0[..., :4], A0[..., :4])
+        oc = O[..., :4].copy(); oc[..., :3] *= (1 - CK['pd'] * g)
+        out = base * (1 - cov[..., None]) + oc * cov[..., None]
+    return out
+
+
+def transitions(args):
+    web = args.web
+    film_js = os.path.join(web, 'assets/film.js'); html = os.path.join(web, args.stranka)
+    os.makedirs(args.out, exist_ok=True)
+    overrides = [(kv.split('=', 1)[0], json.loads(kv.split('=', 1)[1])) for kv in args.param]
+    INK = np.array([12, 13, 14], np.float32)   # 0x0e0d0c v BGR
+    report = {}
+    for dev in args.zariadenie.split(','):
+        phone = dev == 'telefon'
+        P = load_params(film_js, phone, overrides)
+        cw, ch = [int(x) for x in (args.telefon if phone else args.pc).split('x')]
+        scale = 0.5 if not phone else 1.0
+        sh = [Shot(s, P, phone, cw, ch, web) for s in parse_shots(html, phone, P)]
+        AMT = P['AMT']; span = 0.3; asp = cw / ch
+        drifts = [(1, 1, 1), (-1, -1, -1)]; mice = [(0, 0)] if phone else [(0, 0), (-0.5, 0.5)]
+        for k in range(len(sh) - 1):
+            A, B = sh[k], sh[k + 1]
+            if args.zabery and B.name not in args.zabery.split(',') and A.name not in args.zabery.split(','):
+                continue
+            cut = parse_cut(B.cut or P['CUTS'].get(A.name + '>' + B.name), phone, P)
+            if cut and cut['k'] == 4 and not (B if cut['own'] == 'b' else A).has_depth:
+                cut = dict(cut, k=1, name='pohyb')
+            amp = P['AMP_K4'] if (cut and cut['k'] == 4) else P['AMP_INE']
+            kind = cut['k'] if cut else 0
+            rev = bool(cut and (cut['name'] == 'odjazd' or (cut['k'] == 4 and cut['own'] == 'b')))
+            key = f'{A.name}>{B.name}'
+            worst = None; rows = []
+            for mix in np.round(np.arange(0.04, 0.97, 0.08), 2):
+                u_ = 0.5 - math.sin(math.asin(1 - 2 * mix) / 3)
+                S = k + 0.5 - span / 2 + span * u_
+                for d in drifts:
+                    for m in mice:
+                        rend = {}
+                        for role, s_, push, amt in (('A', A, mix, AMT + amp * mix), ('B', B, -(1 - mix), AMT + amp - amp * mix)):
+                            cam, tgt = place(s_, P, shot_t(s_, S, P), amt, d, m, push, cut)
+                            r, mp = evaluate(s_, P, cam, tgt, amt, cw, ch, scale, want_alpha=False, full=True, want_vz=True)
+                            pt = s_.pt_of(cut[role.lower()]) if (cut and cut.get(role.lower())) else [s_.eye[0], s_.eye[1]]
+                            c4 = mp['Pm'] @ mp['V'] @ np.array([pt[0], pt[1], 0, 1.0]); f = [c4[0] / c4[3] * 0.5 + 0.5, c4[1] / c4[3] * 0.5 + 0.5]
+                            rend[role] = (r, mp, f, cam, tgt, amt)
+                        fA, fB = rend['A'][2], rend['B'][2]
+                        dS = ([-cut['dir'][0], -cut['dir'][1]] if rev else cut['dir']) if cut else [0, 0]
+                        f1, f2 = (fB, fA) if rev else (fA, fB)
+                        uLead = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1]
+                        def tex(role):
+                            mp = rend[role][1]
+                            t = np.zeros(mp['holes'].shape + (5,), np.float32)
+                            t[..., 3] = mp['holes']; t[..., 4] = mp['vz']
+                            return t
+                        TA, TB = (tex('B'), tex('A')) if rev else (tex('A'), tex('B'))
+                        x = 1 - mix if rev else mix
+                        out = composite(kind, x, TA, TB, f1, f2, dS, uLead, asp, P['CK'])
+                        bandH = int(round(ch * scale * (B.band if not B.pro else 1)))
+                        D = out[:bandH, :, 3]
+                        vis = int((D > 0.3).sum())
+                        row = dict(mix=float(mix), drift=d, mys=m, diery_A=int(rend['A'][1]['holes'][:bandH].sum()), diery_B=int(rend['B'][1]['holes'][:bandH].sum()),
+                                   viditelne_px=vis, viditelne_pct=round(vis / D.size * 100, 3), max_podiel=round(float(D.max()), 3))
+                        rows.append(row)
+                        if vis and (not worst or vis > worst[0]):
+                            worst = (vis, row, {r_: (rend[r_][3], rend[r_][4], rend[r_][5]) for r_ in 'AB'}, (f1, f2, dS, uLead, x))
+            tot = sum(1 for r_ in rows if r_['viditelne_px'])
+            mx = max(rows, key=lambda r_: r_['viditelne_px'])
+            raw = max(rows, key=lambda r_: max(r_['diery_A'], r_['diery_B']))
+            print(f'{dev} {key:24s} strih={cut["name"] if cut else "prelinanie"}{" (odzadu)" if rev else ""} | diery v textúrach max A {max(r_["diery_A"] for r_ in rows)} B {max(r_["diery_B"] for r_ in rows)} px '
+                  f'| po skladaní viditeľné (podiel diery > 0,3) v {tot}/{len(rows)} polohách, max {mx["viditelne_px"]} px = {mx["viditelne_pct"]} % pri mix={mx["mix"]} drift={mx["drift"]} myš={mx["mys"]}')
+            report.setdefault(dev, {})[key] = dict(strih=cut['name'] if cut else 'prelinanie', odzadu=rev, polohy=rows)
+            if worst:
+                # obrázok: zložený záber s dierami vo farbe plátna (zelený obrys)
+                imgs = {}
+                for r_ in 'AB':
+                    s_ = A if r_ == 'A' else B
+                    cam, tgt, amt = worst[2][r_]
+                    rr, mp = evaluate(s_, P, cam, tgt, amt, cw, ch, scale, want_alpha=False, full=True, want_vz=True, want_img=True)
+                    t = np.zeros(mp['holes'].shape + (5,), np.float32)
+                    t[..., :3] = mp['img']; t[mp['holes'], :3] = INK; t[..., 3] = mp['holes']; t[..., 4] = mp['vz']
+                    imgs[r_] = t
+                f1, f2, dS, uLead, x = worst[3]
+                TA, TB = (imgs['B'], imgs['A']) if rev else (imgs['A'], imgs['B'])
+                out = composite(kind, x, TA, TB, f1, f2, dS, uLead, asp, P['CK'])
+                bandH = int(round(ch * scale * (B.band if not B.pro else 1)))
+                pic = np.clip(out[:bandH, :, :3], 0, 255).astype(np.uint8).copy()
+                mask = (out[:bandH, :, 3] > 0.3).astype(np.uint8)
+                cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                cv2.drawContours(pic, cnts, -1, (0, 255, 0), 2)
+                w_ = worst[1]
+                cv2.putText(pic, f'{dev} {key} mix={w_["mix"]} drift={w_["drift"]} mys={w_["mys"]}: viditelne diery {w_["viditelne_px"]} px ({w_["viditelne_pct"]} %)', (6, 18), 0, 0.45, (0, 255, 255), 1)
+                fn = os.path.join(args.out, f'prechod-{dev}-{k:02d}-{A.name}-{B.name}.jpg')
+                cv2.imwrite(fn, pic, [cv2.IMWRITE_JPEG_QUALITY, 86])
+                report[dev][key]['obrazok'] = fn
+    with open(os.path.join(args.out, 'k3-prechody.json'), 'w') as f:
+        json.dump(report, f, ensure_ascii=False, indent=1)
+
+
 # ---------------------------------------------------------------- porovnanie so záznamom
 def compare(args):
     """Každú snímku záznamu priradí k fotke záberu (SIFT + homografia), nájde v nej čierne škvrny
@@ -618,7 +788,7 @@ def compare(args):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('rezim', nargs='?', default='simuluj', choices=['simuluj', 'porovnaj'])
+    ap.add_argument('rezim', nargs='?', default='simuluj', choices=['simuluj', 'porovnaj', 'prechody'])
     ap.add_argument('--web', required=True, help='priečinok barbershop-30')
     ap.add_argument('--stranka', default='index.html')
     ap.add_argument('--out', required=True)
@@ -629,4 +799,4 @@ if __name__ == '__main__':
     ap.add_argument('--snimky', help='porovnaj: priečinok so snímkami záznamu z###.jpg')
     ap.add_argument('--vyrezy', action='store_true', help='porovnaj: uložiť obrázky porovnania (len snímky so škvrnami)')
     a = ap.parse_args()
-    (compare if a.rezim == 'porovnaj' else run)(a)
+    {'porovnaj': compare, 'prechody': transitions}.get(a.rezim, run)(a)
