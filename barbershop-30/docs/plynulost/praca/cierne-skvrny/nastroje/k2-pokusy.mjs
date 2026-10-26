@@ -27,6 +27,23 @@ const FILM = fs.readFileSync(path.join(ROOT, 'barbershop-30/assets/film.js'), 'u
 
 function must(s, a, b) { if (!s.includes(a)) throw new Error('vo film.js chýba: ' + a); return s.split(a).join(b); }
 const alfa = (s) => must(s, 'alpha: false, depth: true', 'alpha: true, preserveDrawingBuffer: true, depth: true');
+// oprava C (telefón): strih popredia ráta súradnice v páse fotky (horných uB plátna) a predmet berie len z neho
+const PAS_FIX = [
+  ['uLead: { value: 0.5 }, uRes:', 'uLead: { value: 0.5 }, uB: { value: 1 }, uRes:'],
+  ['uniform float uMix, uAspect, uKind, uLead, uDbg;', 'uniform float uMix, uAspect, uKind, uLead, uDbg, uB;'],
+  ['float u = dot(vUv - 0.5, md) + 0.5, w = dot(vUv - 0.5, pd) + 0.5, wF = dot(uFoc - 0.5, pd) + 0.5;',
+    'vec2 vb = vec2(vUv.x, 1.0 - (1.0 - vUv.y) / uB), fb = vec2(uFoc.x, 1.0 - (1.0 - uFoc.y) / uB);\n' +
+    '          float u = dot(vb - 0.5, md) + 0.5, w = dot(vb - 0.5, pd) + 0.5, wF = dot(fb - 0.5, pd) + 0.5, lead = dot(fb - 0.5, md) + 0.5;'],
+  ['float L = mix(uLead, ', 'float L = mix(lead, '],
+  ['k = (L - R) / max(uLead - R0, 0.05);', 'k = (L - R) / max(lead - R0, 0.05);'],
+  ['vec4 o = textureLod(tA, ps, mix(6.5, g * ${F(CK.pf)}, inside));',
+    'float lo = mix(6.5, g * ${F(CK.pf)}, inside);\n' +
+    '          if (uB < 0.999) ps.y = max(1.0 - (1.0 - ps.y) * uB, 1.0 - uB + 1.5 * exp2(lo) / uRes.y);\n' +
+    '          vec4 o = textureLod(tA, ps, lo);'],
+  ['pu.uLead.value = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1];',
+    'pu.uLead.value = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1]; pu.uB.value = cut && cut.k === 4 ? Math.min((A && A.band) || 1, B.band || 1) : 1;'],
+];
+const pasFix = (s) => PAS_FIX.reduce((t, [a, b]) => must(t, a, b), s);
 const VARIANTS = {
   zaklad: (s) => s,
   alfa,
@@ -39,6 +56,9 @@ const VARIANTS = {
   // posune kamery sa nevtiahne do záberu (okno v pokoji je od okraja fotky aspoň 4,8 %)
   okraj: (s) => must(VARIANTS.diery(s), 'float z = texture2D(uDepth, vUv).r;', 'float z = texture2D(uDepth, vUv).r; vec2 k2e = min(uv, 1.0 - uv); z *= smoothstep(0.0, 0.03, min(k2e.x, k2e.y));'),
   okrajoprava: (s) => must(VARIANTS.oprava(s), 'float z = texture2D(uDepth, vUv).r;', 'float z = texture2D(uDepth, vUv).r; vec2 k2e = min(uv, 1.0 - uv); z *= smoothstep(0.0, 0.03, min(k2e.x, k2e.y));'),
+  // pas = diery + strih popredia počíta v páse telefónu (uB), nie z prázdna pod ním; pasoprava = okrajoprava + to isté
+  pas: (s) => pasFix(VARIANTS.diery(s)),
+  pasoprava: (s) => pasFix(VARIANTS.okrajoprava(s)),
   // diery + sprístupnené textúry strihu rtA/rtB (čítajú sa po každom stave): kde v nich ostala farba čistenia
   dieryrt: (s) => must(VARIANTS.diery(s), 'const rtA = new THREE.WebGLRenderTarget(1, 1, rtOpt), rtB = new THREE.WebGLRenderTarget(1, 1, rtOpt);',
     'const rtA = new THREE.WebGLRenderTarget(1, 1, rtOpt), rtB = new THREE.WebGLRenderTarget(1, 1, rtOpt); window.__k2 = { renderer, rtA, rtB };'),

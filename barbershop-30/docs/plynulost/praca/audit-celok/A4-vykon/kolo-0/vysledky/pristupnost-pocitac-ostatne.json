@@ -1,0 +1,4328 @@
+[
+ {
+  "zar": "pocitac",
+  "url": "rezervacia.html",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+  "chyby": [],
+  "http4xx": [],
+  "dom": {
+   "lang": "sk",
+   "title": "Rezervácia | Barbershop 30 Nitra",
+   "h1": 1,
+   "nadpisy": 34,
+   "skoky": [],
+   "dup": [],
+   "zlyOdkaz": [],
+   "zlaRola": [],
+   "skrytyFokus": [],
+   "kladnyTab": [],
+   "bezAlt": [],
+   "svgBez": [],
+   "landmarks": {
+    "header": 1,
+    "main": 1,
+    "nav": [
+     "Hlavná navigácia"
+    ],
+    "footer": 1
+   },
+   "blank": 28,
+   "blankBezUpoz": 28,
+   "ovl": [],
+   "autoplay": [],
+   "jazykyCudzie": [
+    "sk-SK",
+    "en",
+    "uk-UA",
+    "hu-HU",
+    "sr-Latn",
+    "pl-PL",
+    "de-AT",
+    "cs-CZ"
+   ],
+   "tlacidloBezTypu": [],
+   "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "zoomZakazany": false
+  },
+  "bezMena": [],
+  "roly": {
+   "RootWebArea": 1,
+   "link": 42,
+   "banner": 1,
+   "main": 1,
+   "contentinfo": 1,
+   "StaticText": 181,
+   "generic": 13,
+   "navigation": 1,
+   "region": 8,
+   "paragraph": 71,
+   "InlineTextBox": 201,
+   "button": 1,
+   "heading": 34,
+   "complementary": 1,
+   "list": 5,
+   "emphasis": 1,
+   "DescriptionList": 1,
+   "listitem": 25,
+   "image": 14,
+   "term": 4,
+   "definition": 4,
+   "group": 1,
+   "LineBreak": 2
+  },
+  "kontrast": {
+   "spolu": 162,
+   "farby": 148,
+   "pixely": 14,
+   "preskocene": 0,
+   "slabe": [],
+   "vsetky": [
+    {
+     "i": 1,
+     "d": "body.rez > header.site-header.is-scrolled > div.container > a.brand",
+     "t": "Barbershop 30 Nitra",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 14.86,
+     "kontrastMedian": 15.13,
+     "kontrastMin": 14.72
+    },
+    {
+     "i": 2,
+     "d": "header.site-header.is-scrolled > div.container > a.brand > small",
+     "t": "Nitra",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 12,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 9.74,
+     "kontrastMedian": 9.74,
+     "kontrastMin": 9.74
+    },
+    {
+     "i": 3,
+     "d": "div.container > div.lang > button.lang-btn > span",
+     "t": "SK",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 9.51,
+     "kontrastMedian": 9.51,
+     "kontrastMin": 9.51
+    },
+    {
+     "i": 20,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "t": "Prehliadka",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 9.28,
+     "kontrastMedian": 9.41,
+     "kontrastMin": 9.19
+    },
+    {
+     "i": 21,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "t": "Služby",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 9.28,
+     "kontrastMedian": 9.41,
+     "kontrastMin": 9.22
+    },
+    {
+     "i": 22,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "t": "Tím",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 9.22,
+     "kontrastMedian": 9.32,
+     "kontrastMin": 9.22
+    },
+    {
+     "i": 23,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "t": "Galéria",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 8.99,
+     "kontrastMedian": 9.18,
+     "kontrastMin": 8.88
+    },
+    {
+     "i": 24,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "t": "Kontakt",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 8.88,
+     "kontrastMedian": 9.01,
+     "kontrastMin": 8.81
+    },
+    {
+     "i": 25,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a.btn.btn-secondary",
+     "t": "Zavolať",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 8.83,
+     "kontrastMedian": 9.46,
+     "kontrastMin": 2.51
+    },
+    {
+     "i": 26,
+     "d": "main#main > section.rez-uvod > div.container.rez-uvod-text > p.kicker",
+     "t": "Rezervácia",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 12,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 10.5,
+     "kontrastMedian": 14.64,
+     "kontrastMin": 2.45
+    },
+    {
+     "i": 27,
+     "d": "main#main > section.rez-uvod > div.container.rez-uvod-text > h1#h-rez.title",
+     "t": "Kedy si sadneš?",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 88,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 11.47,
+     "kontrastMedian": 15.08,
+     "kontrastMin": 5.4
+    },
+    {
+     "i": 28,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > h1#h-rez.title > em",
+     "t": "si sadneš?",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 88,
+     "fw": 500,
+     "velky": true,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 11.22,
+     "kontrastMedian": 14.65,
+     "kontrastMin": 5.44
+    },
+    {
+     "i": 29,
+     "d": "main#main > section.rez-uvod > div.container.rez-uvod-text > p.title-sub",
+     "t": "Vyber si službu, barbera a voľný čas. Al",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 17.28,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 13.55,
+     "kontrastMedian": 14.7,
+     "kontrastMin": 9.86
+    },
+    {
+     "i": 30,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-primary",
+     "t": "Vybrať službu",
+     "fg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "fs": 14,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      224,
+      96,
+      28,
+      1
+     ],
+     "kontrast": 5.42
+    },
+    {
+     "i": 31,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-secondary",
+     "t": "Zavolať a potvrdiť termín",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 14,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "pixely",
+     "obraz": "img",
+     "kontrast": 14.59,
+     "kontrastMedian": 14.94,
+     "kontrastMin": 4.05
+    },
+    {
+     "i": 32,
+     "d": "div.container.rez-grid > div#objednavka.rez-app > div.rez-cennik > p.eyebrow",
+     "t": "Služby a ceny",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 33,
+     "d": "div.container.rez-grid > div#objednavka.rez-app > div.rez-cennik > h2.h3",
+     "t": "Vyber si službu",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 28,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 34,
+     "d": "div.container.rez-grid > div#objednavka.rez-app > div.rez-cennik > p.rez-pozn",
+     "t": "Termín dokončíš v rezervačnom systéme Ba",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 35,
+     "d": "div.rez-cennik > div.price-list > section.price-group > h3#g-strih.price-group-title",
+     "t": "Strih",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 36,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Pánsky strih",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 37,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Konzultácia, strih strojčekom aj nožnica",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 38,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "40 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 39,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "18 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 40,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Pánsky strih",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 42,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Pánsky strih a úprava brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 43,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Kompletný strih a k nemu úprava brady s ",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 44,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "60 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 45,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "28 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 46,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Pánsky strih a úprava brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 48,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Pánsky strih – dĺžka vlasov nad 10 cm",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 49,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Rovnaký postup ako pánsky strih, s viac ",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 50,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "60 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 51,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "22 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 52,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Pánsky strih, dĺžka vlasov na",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 54,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Strih pre malých gentlemanov",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 55,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Klasický strih alebo fade, prípadne krea",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 56,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "45 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 57,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "15 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 58,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Strih pre malých gentlemanov",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 60,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Oholenie hlavy",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 61,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Príprava pokožky, holenie britvou, umyti",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 62,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "25 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 63,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "13 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 64,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Oholenie hlavy",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 66,
+     "d": "div.rez-cennik > div.price-list > section.price-group > h3#g-brada.price-group-title",
+     "t": "Brada a holenie",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 67,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Úprava brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 68,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Tvarovanie brady, naparenie horúcim uter",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 69,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "20 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 70,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "15 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 71,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Úprava brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 73,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Holenie do hladka Hot Towel",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 74,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Holenie britvou s naparením horúcim uter",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 75,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "30 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 76,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "15 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 77,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Holenie do hladka Hot Towel",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 79,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Farbenie brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 80,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Farbenie profesionálnymi farbami, 20 ml ",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 81,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "30 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 82,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "10 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 83,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Farbenie brady",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 85,
+     "d": "div.rez-cennik > div.price-list > section.price-group > h3#g-balicky.price-group-title",
+     "t": "Balíčky",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 86,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Balíček 1",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 87,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Strih, úprava brady, horúci uterák, oboč",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 88,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "65 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 89,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "30 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 90,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Balíček 1",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 92,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Ultra inclusive Barbershop30",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 93,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Všetko z Balíčka 1 a navyše naparenie tv",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 94,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "80 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 95,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "40 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 96,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Ultra inclusive Barbershop30",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 98,
+     "d": "div.rez-cennik > div.price-list > section.price-group > h3#g-doplnky.price-group-title",
+     "t": "Doplnky",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 99,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Starostlivosť o pleť PREMIUM",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 100,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Naparenie tváre, peeling a relaxačná mas",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 101,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "30 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 102,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "21,50 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 103,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Starostlivosť o pleť PREMIUM",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 105,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Úprava obočia",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 106,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Vytrhanie a úprava obočia.",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 107,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "5 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 108,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "3 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 109,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Úprava obočia",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 111,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Depilácia uší a nosa voskom",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 112,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Odstránenie chĺpkov z uší a nosa voskom.",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 113,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "10 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 114,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "5,50 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 115,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Depilácia uší a nosa voskom",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 117,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Kreatívny ornament na hlave",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 118,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Vzor vystrihnutý do vlasov.",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 119,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "10 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 120,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "4 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 121,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Kreatívny ornament na hlave",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 123,
+     "d": "ul > li.price-row > div.price-main > h4.price-name",
+     "t": "Farbenie obočia",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 124,
+     "d": "ul > li.price-row > div.price-main > p.price-desc",
+     "t": "Farbenie obočia profesionálnymi farbami.",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 125,
+     "d": "section.price-group > ul > li.price-row > p.price-time",
+     "t": "10 min",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 126,
+     "d": "section.price-group > ul > li.price-row > p.price-amount",
+     "t": "5 €",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 26,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 127,
+     "d": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+     "t": "Objednať – Farbenie obočia",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 129,
+     "d": "div.price-list > div.price-extra > div.price-main > p.price-name",
+     "t": "Farbenie, melír a trvalá",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 130,
+     "d": "div.price-list > div.price-extra > div.price-main > p.price-desc",
+     "t": "Robí ich Romana a rezervujú sa v samosta",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 131,
+     "d": "div.rez-cennik > div.price-list > div.price-extra > a.link-arrow",
+     "t": "Rezervovať na Booqme →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 132,
+     "d": "section.band.rez-pas > div.container.rez-grid > aside#kontakt.rez-bok > p.eyebrow",
+     "t": "Kde nás nájdeš",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 133,
+     "d": "section.band.rez-pas > div.container.rez-grid > aside#kontakt.rez-bok > h2#h-kontakt.h3",
+     "t": "Mostná 30, Nitra",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 28,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 134,
+     "d": "aside#kontakt.rez-bok > dl.contact-list > div.contact-row > dt",
+     "t": "Adresa",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 135,
+     "d": "dl.contact-list > div.contact-row > dd > address",
+     "t": "Mostná 30, 949 01 Nitra",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 136,
+     "d": "aside#kontakt.rez-bok > dl.contact-list > div.contact-row > dt",
+     "t": "Telefón",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 137,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "t": "0951 267 203",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 138,
+     "d": "aside#kontakt.rez-bok > dl.contact-list > div.contact-row > dt",
+     "t": "E‑mail",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 139,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "t": "info@barbershop30.sk",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 140,
+     "d": "aside#kontakt.rez-bok > dl.contact-list > div.contact-row > dt",
+     "t": "Otvorené",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 5.04
+    },
+    {
+     "i": 141,
+     "d": "aside#kontakt.rez-bok > dl.contact-list > div.contact-row > dd",
+     "t": "Po–Pi 9:00–19:00So 9:00–14:00Ne zatvoren",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 142,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-primary",
+     "t": "Zavolať a potvrdiť termín",
+     "fg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "fs": 14,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      224,
+      96,
+      28,
+      1
+     ],
+     "kontrast": 5.42
+    },
+    {
+     "i": 143,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-secondary",
+     "t": "Navigovať",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 14,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 144,
+     "d": "main#main > section#tim.band.rez-tim > div.container > p.eyebrow",
+     "t": "Kto ťa ostrihá",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 145,
+     "d": "main#main > section#tim.band.rez-tim > div.container > h2#h-tim.h2",
+     "t": "Komu zveríš hlavu?",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 56,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 146,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Nikolas",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 147,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 148,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Strih ti pristane, akoby si ho nosil odj",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 149,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 150,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Kristián",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 151,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 152,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Elegancia bez námahy. Taký je jeho rukop",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 153,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 154,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Damian",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 155,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 156,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Pozorne ťa vypočuje. Potom už hovoria le",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 157,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 158,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Michal",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 159,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 160,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Zavrieš oči pri horúcom uteráku a otvorí",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 161,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 162,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Andy",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 163,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 164,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Každý detail na svojom mieste, aj ten, k",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 165,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 166,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Dominika",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 167,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barberka",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 168,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Jemná ruka, prísne oko. U nej je hotovo,",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 169,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 170,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Kevin",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 171,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 172,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Pracuje pokojne a čisto. Výsledok ťa pot",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 173,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 174,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Lajko",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 175,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 176,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Ostrá línia na krku, mäkký prechod na bo",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 177,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 178,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Jojo",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 179,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 180,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Rozhovor alebo ticho, ako ti je milšie. ",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 181,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 182,
+     "d": "ul.team-grid > li.team-card > div.team-body > h3.team-name",
+     "t": "Adrian",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 23.04,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 183,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-role",
+     "t": "Barber",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 14,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 4.59
+    },
+    {
+     "i": 184,
+     "d": "ul.team-grid > li.team-card > div.team-body > p.team-bio",
+     "t": "Dôveru získa skôr, než si sadneš do kres",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 17,
+     "fw": 500,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 9.11
+    },
+    {
+     "i": 185,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "t": "Objednať sa →",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 15,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      34,
+      29,
+      25,
+      1
+     ],
+     "kontrast": 13.87
+    },
+    {
+     "i": 186,
+     "d": "main#main > section#praca.band.rez-praca > div.container > p.eyebrow",
+     "t": "Naša práca",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 13,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 10.01
+    },
+    {
+     "i": 187,
+     "d": "main#main > section#praca.band.rez-praca > div.container > h2#h-praca.h2",
+     "t": "Pozri, ako strihá náš tím",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 56,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 188,
+     "d": "main#main > section#praca.band.rez-praca > div.container > a.btn.btn-secondary",
+     "t": "Viac na Instagrame @barbershop30_nitra",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 14,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      23,
+      20,
+      18,
+      1
+     ],
+     "kontrast": 15.23
+    },
+    {
+     "i": 189,
+     "d": "body.rez > footer.site-footer.rez-pata > div.container.footer-bottom > p.small",
+     "t": "© 2026 Barbershop 30 · Prevádzkovateľ: F",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 5.34
+    },
+    {
+     "i": 190,
+     "d": "footer.site-footer.rez-pata > div.container.footer-bottom > p.small > span.year",
+     "t": "2026",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 5.34
+    },
+    {
+     "i": 191,
+     "d": "body.rez > footer.site-footer.rez-pata > div.container.footer-bottom > p.small.footer-autor",
+     "t": "Grafický dizajn a web: Samuel Pavelka",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 5.34
+    },
+    {
+     "i": 192,
+     "d": "footer.site-footer.rez-pata > div.container.footer-bottom > p.small.footer-autor > span",
+     "t": "Samuel Pavelka",
+     "fg": [
+      142,
+      133,
+      120,
+      1
+     ],
+     "fs": 15,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 5.34
+    },
+    {
+     "i": 193,
+     "d": "body.rez > footer.site-footer.rez-pata > div.container.footer-bottom > a.link-arrow",
+     "t": "Späť na web →",
+     "fg": [
+      201,
+      190,
+      174,
+      1
+     ],
+     "fs": 16,
+     "fw": 600,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 10.6
+    }
+   ]
+  },
+  "ciele": {
+   "spolu": 0,
+   "male": [],
+   "prekryte": [],
+   "mimo": 0
+  }
+ },
+ {
+  "zar": "pocitac",
+  "url": "admin/index.html",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+  "chyby": [],
+  "http4xx": [],
+  "dom": {
+   "lang": "sk",
+   "title": "Admin · Barbershop 30",
+   "h1": 1,
+   "nadpisy": 2,
+   "skoky": [],
+   "dup": [],
+   "zlyOdkaz": [],
+   "zlaRola": [],
+   "skrytyFokus": [],
+   "kladnyTab": [],
+   "bezAlt": [],
+   "svgBez": [],
+   "landmarks": {
+    "header": 1,
+    "main": 1,
+    "nav": [
+     "Časti adminu"
+    ],
+    "footer": 0
+   },
+   "blank": 2,
+   "blankBezUpoz": 2,
+   "ovl": [],
+   "autoplay": [],
+   "jazykyCudzie": [],
+   "tlacidloBezTypu": [],
+   "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "zoomZakazany": false
+  },
+  "bezMena": [],
+  "roly": {
+   "RootWebArea": 1,
+   "banner": 1,
+   "main": 1,
+   "StaticText": 25,
+   "emphasis": 1,
+   "generic": 2,
+   "InlineTextBox": 30,
+   "heading": 2,
+   "paragraph": 4,
+   "LabelText": 1,
+   "textbox": 1,
+   "checkbox": 1,
+   "button": 1,
+   "list": 1,
+   "listitem": 5,
+   "ListMarker": 5,
+   "link": 1
+  },
+  "kontrast": {
+   "spolu": 21,
+   "farby": 21,
+   "pixely": 0,
+   "preskocene": 0,
+   "slabe": [],
+   "vsetky": [
+    {
+     "i": 0,
+     "d": "body > header.top > div.in > span.brand",
+     "t": "Barbershop 30admin",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 1,
+     "d": "header.top > div.in > span.brand > em",
+     "t": "admin",
+     "fg": [
+      240,
+      126,
+      60,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.17
+    },
+    {
+     "i": 4,
+     "d": "body > main > section#login.login > h1",
+     "t": "Admin webu",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 40,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 5,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Tu zmeníš texty, cenník, tím a fotky web",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 6,
+     "d": "main > section#login.login > div.f > label",
+     "t": "Kľúč k webu",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 14.5,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 7,
+     "d": "main > section#login.login > div.f > p.kind",
+     "t": "Kľúč je heslo pre úpravy webu. Zadáš ho ",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 14,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 8,
+     "d": "body > main > section#login.login > label.chk",
+     "t": "Zapamätať v tomto prehliadači",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 9,
+     "d": "main > section#login.login > div.btns > button#prihlasit.btn",
+     "t": "Prihlásiť",
+     "fg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "fs": 15,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      224,
+      96,
+      28,
+      1
+     ],
+     "kontrast": 5.42
+    },
+    {
+     "i": 10,
+     "d": "body > main > section#login.login > h2",
+     "t": "Ako získam kľúč",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 22,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 11,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Kľúč vytvorí raz správca webu na účte, k",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 12,
+     "d": "main > section#login.login > ol > li",
+     "t": "Otvor github.com/settings/personal-acces",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 13,
+     "d": "section#login.login > ol > li > a",
+     "t": "github.com/settings/personal-access-toke",
+     "fg": [
+      240,
+      126,
+      60,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.17
+    },
+    {
+     "i": 14,
+     "d": "main > section#login.login > ol > li",
+     "t": "Názov napr. Admin Barbershop, platnosť p",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 15,
+     "d": "section#login.login > ol > li > b",
+     "t": "Admin Barbershop",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 16,
+     "d": "main > section#login.login > ol > li",
+     "t": "Repository access: Only select repositor",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 17,
+     "d": "section#login.login > ol > li > b",
+     "t": "Only select repositories",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 18,
+     "d": "main > section#login.login > ol > li",
+     "t": "Permissions → Repository permissions → C",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 19,
+     "d": "section#login.login > ol > li > b",
+     "t": "Contents: Read and write",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 20,
+     "d": "main > section#login.login > ol > li",
+     "t": "Klikni Generate token, kľúč skopíruj a v",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 21,
+     "d": "section#login.login > ol > li > b",
+     "t": "Generate token",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 22,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Keď kľúč stratíš alebo ho niekto videl, ",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    }
+   ]
+  },
+  "ciele": {
+   "spolu": 0,
+   "male": [],
+   "prekryte": [],
+   "mimo": 0
+  }
+ }
+]
