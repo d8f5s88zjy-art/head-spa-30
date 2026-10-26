@@ -338,6 +338,8 @@
     void main() {
       vUv = vec2(uv.x, 1.0 - uv.y);
       float z = texture2D(uDepth, vUv).r;
+      // okraj fotky ostáva na rovine steny: blízky okraj by sa pri bočnom posune strihu vtiahol do záberu (prázdny pás)
+      vec2 e = min(uv, 1.0 - uv); z *= smoothstep(0.0, 0.03, min(e.x, e.y));
       vZ = z;                                                  // hĺbka bodu (1 = blízko) pre prechod medzi zábermi
       vec4 w = modelMatrix * vec4(position, 1.0);
       // bod sa posunie po priamke k oku: z pokojného miesta kamery je obraz presne fotka,

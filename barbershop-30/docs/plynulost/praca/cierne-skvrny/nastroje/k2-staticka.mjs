@@ -188,7 +188,10 @@ if (er) {
     const py = `import sys,glob,os\nfrom PIL import Image\nimport numpy as np\nm=0\nfor f in glob.glob(os.path.join(sys.argv[1],'assets/img/film/*-hlbka.webp')):\n  if '-m-' in f: continue\n  a=np.asarray(Image.open(f).convert('L')).astype(float)/255\n  m=max(m,a[:,:4].max(),a[:,-4:].max(),a[:4].max(),a[-4:].max())\nprint(m)`;
     maxEdge = parseFloat(execFileSync('python3', ['-I', '-c', py, ROOT], { encoding: 'utf8' }));
   } catch (e) { /* bez PIL */ }
-  if (isFinite(maxEdge) && k < maxEdge) add('POZOR', 'K2-12', `rezerva okraja v strihu počíta s hĺbkou okraja ${k}, mapy majú na okraji až ${maxEdge.toFixed(2)} – blízky okraj sa môže pri bočnom posune strihu vtiahnuť do záberu (pás --ink pri okraji; pokus „diery“ kava>sud mix 0,3)`, at(/uAmt\.value\s*\*\s*[\d.]+\s*,\s*par\s*=/));
+  const V = tpl('VERT');
+  const edgeGuard = V && /min\(\s*uv\s*,\s*1\.0\s*-\s*uv\s*\)/.test(V.body) && /smoothstep/.test(V.body);
+  if (edgeGuard) add('OK', 'K2-12', 'poistka okraja vo vertex shaderi: hĺbka sa pri okraji fotky stiahne na rovinu steny, okraj sa nevtiahne do záberu', `assets/film.js:${lineOf(src, V.idx)}`);
+  else if (isFinite(maxEdge) && k < maxEdge) add('CHYBA', 'K2-12', `rezerva okraja v strihu počíta s hĺbkou okraja ${k}, mapy majú na okraji až ${maxEdge.toFixed(2)}: blízky okraj sa pri bočnom posune strihu vtiahne do záberu, v textúre strihu ostane nepokrytý pás (--ink) a strih popredia ho rozmaže cez obraz (pokus „dieryrt“: kava>sud mix 0,3 – 4,3 % rtB, na obrazovke čierny rozmazaný pás vľavo). Poistka: hĺbka pri okraji fotky → 0 vo VERT`, at(/uAmt\.value\s*\*\s*[\d.]+\s*,\s*par\s*=/));
   else add('OK', 'K2-12', `rezerva okraja ${k} ≥ max. hĺbka okraja ${isFinite(maxEdge) ? maxEdge.toFixed(2) : '?'}`, at(/uAmt\.value\s*\*\s*[\d.]+\s*,\s*par\s*=/));
 }
 

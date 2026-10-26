@@ -1,6 +1,6 @@
 // K2 (kód a shadery): cielené pokusy s upravenými kópiami assets/film.js.
 // Strom sa nemení: upravený film.js sa podstrčí cez page.route, zvyšok stránky ide zo servera.
-// Použitie: node k2-pokusy.mjs <variant> <výstupný priečinok> [port] [koreň stromu] [desk|phone]
+// Použitie: node k2-pokusy.mjs <variant> <výstupný priečinok> [port] [koreň stromu | x = predvolený] [desk|phone]
 //   varianty: zaklad | alfa | oprava | diery | rub | prazdna
 //   alfa    = renderer s alpha:true + preserveDrawingBuffer: číta sa skutočná alfa, ktorú film píše do plátna
 //   oprava  = alfa + priamy prechod píše alfu 1 (navrhovaná oprava)
@@ -20,7 +20,7 @@ const { chromium } = require('playwright');
 const VARIANT = process.argv[2] || 'zaklad';
 const OUT = process.argv[3] || './pokus-' + VARIANT;
 const PORT = +(process.argv[4] || 8810);
-const ROOT = process.argv[5] || '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny';
+const ROOT = (process.argv[5] && process.argv[5] !== 'x') ? process.argv[5] : '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny';
 const MODE = process.argv[6] || 'desk';
 fs.mkdirSync(OUT, { recursive: true });
 const FILM = fs.readFileSync(path.join(ROOT, 'barbershop-30/assets/film.js'), 'utf8');
