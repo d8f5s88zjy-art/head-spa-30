@@ -1,0 +1,32 @@
+{
+ "parametre": {
+  "okno": "1512x982@0.5",
+  "gpu": "swiftshader",
+  "rezimy": "uvod,pomaly,spat,rychly",
+  "krok": 40,
+  "usadit": 12,
+  "prah": 24,
+  "plocha": 0.05,
+  "refJas": 48,
+  "tol": 2.5,
+  "sirka": 640,
+  "od": 0,
+  "do": null,
+  "maxVyrezov": 24,
+  "tahy": 1200,
+  "filmOn": true,
+  "znacka": false,
+  "testVada": false,
+  "brana": true,
+  "snimky": 1,
+  "out": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/hlavny",
+  "url": "http://127.0.0.1:8801/barbershop-30/index.html?asistent=ukazka&objednavka=ukazka"
+ },
+ "behy": [
+  {
+   "okno": "1512x982@0.5",
+   "gpu": "swiftshader",
+   "chyba": "page.evaluate: Target page, context or browser has been closed"
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "cas": "2026-10-26T09:33:02.890Z",
+ "strom": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny",
+ "base": "http://127.0.0.1:8860/barbershop-30/",
+ "spolu": 6,
+ "zle": 2,
+ "vysledky": [
+  {
+   "sc": "film",
+   "zar": "pocitac",
+   "nazov": "film beží (world-in, canvas), prológ dobehol",
+   "ok": true,
+   "detail": "karty world js-odhal js-kin js-steps js-cennik world-in"
+  },
+  {
+   "sc": "film",
+   "zar": "pocitac",
+   "nazov": "Späť na ulicu vyvedie kameru von",
+   "ok": true,
+   "detail": "{\"outside\":true,\"text\":\"VOJDI DNU\"}"
+  },
+  {
+   "sc": "film",
+   "zar": "pocitac",
+   "nazov": "Vojdi dnu vráti dnu",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "film",
+   "zar": "pocitac",
+   "nazov": "film (prológ, dvere, skrol): bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @ /barbershop-30/assets/vendor/three.module.min.js:5"
+  },
+  {
+   "sc": "film",
+   "zar": "telefon",
+   "nazov": "film beží (world-in, canvas), prológ dobehol",
+   "ok": true,
+   "detail": "karty world js-odhal js-kin js-steps js-cennik world-in"
+  },
+  {
+   "sc": "film",
+   "zar": "telefon",
+   "nazov": "scenár dobehol bez výnimky",
+   "ok": false,
+   "detail": "locator.isVisible: Target page, context or browser has been closed"
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+OK   [film/pocitac] film beží (world-in, canvas), prológ dobehol  karty world js-odhal js-kin js-steps js-cennik world-in
+OK   [film/pocitac] Späť na ulicu vyvedie kameru von  {"outside":true,"text":"VOJDI DNU"}
+OK   [film/pocitac] Vojdi dnu vráti dnu
+INFO [snimka/-] film-pocitac-skrol-08: page.screenshot: Timeout 30000ms exceeded.
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+INFO [snimka/-] film-pocitac-skrol-10: page.screenshot: Timeout 30000ms exceeded.
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+INFO [film/pocitac] plátno filmu {"w":1440,"h":900}
+FAIL [film/pocitac] film (prológ, dvere, skrol): bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @ /barbershop-30/assets/vendor/three.module.min.js:5
+INFO [film/pocitac] trvanie 1244 s
+OK   [film/telefon] film beží (world-in, canvas), prológ dobehol  karty world js-odhal js-kin js-steps js-cennik world-in
+INFO [snimka/-] film-telefon-po-prologu: page.screenshot: Target page, context or browser has been closed
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+FAIL [film/telefon] scenár dobehol bez výnimky  locator.isVisible: Target page, context or browser has been closed
+INFO [film/telefon] trvanie 40 s
+
+SÚHRN: 6 kontrol, zlyhalo 2
