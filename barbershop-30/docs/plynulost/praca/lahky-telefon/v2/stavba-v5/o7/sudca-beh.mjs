@@ -28,9 +28,9 @@ function pouzitelnost(l, r, oc, pr) {
     return [...ok, ...vol].some((x) => CEN[l].has(x)) ? 'INA-SKUPINA' : 'ODCHYLKA';
   }
   if (r.typ === 'odpoved') return ok.has(r.id) ? 'OK-PRIAMO' : 'ODCHYLKA';
-  if (r.typ === 'vyber') { const k = r.p.map((x) => x.id); return [...ok, ...vol].some((x) => k.slice(0, 2).includes(x)) || (ok.has('trvanie') && k.some((x) => CEN[l].has(x))) ? 'OK-VOLBA' : 'ODOVZDANIE-NAVYSE'; }
+  if (r.typ === 'vyber') { const k = r.p.map((x) => x.id); if (ok.has('odovzdanie')) return 'OK'; return [...ok, ...vol].some((x) => k.slice(0, 2).includes(x)) || (ok.has('trvanie') && k.some((x) => CEN[l].has(x))) ? 'OK-VOLBA' : 'ODOVZDANIE-NAVYSE'; }
   if (r.typ === 'nevieme' && ok.has(r.id)) return 'OK-PRIAMO';
-  return 'ODOVZDANIE-NAVYSE';
+  return ok.has('odovzdanie') ? 'OK' : 'ODOVZDANIE-NAVYSE';
 }
 function zdroj(meno, otazky, oznacene) {
   const typ = {}, chyby = {}, prik = [], pou = {};

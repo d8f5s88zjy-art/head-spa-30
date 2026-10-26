@@ -1,0 +1,37 @@
+# sudca (c) nad /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-recepcia/barbershop-30, 2026-10-25T12:36:06.275Z
+
+## Slepé sady (označené)
+sada-A: otázok 349, CHYBY (c) 0 {} | typy {"odpoved":77,"fallback":40,"vyber":27,"nevieme":77,"cennik":102,"zdvorilost":26} | použiteľnosť {"OK-PRIAMO":179,"ODOVZDANIE-NAVYSE":12,"OK-VOLBA":24,"OK":134}
+sada-B: otázok 315, CHYBY (c) 5 {"E3":5} | typy {"nevieme":128,"vyber":59,"cennik":59,"fallback":35,"odpoved":9,"zdvorilost":25} | použiteľnosť {"OK":232,"OK-VOLBA":17,"OK-PRIAMO":57,"ODOVZDANIE-NAVYSE":4,"CENNIK-PRI-ODOVZDANI":5}
+    sk „Strih a holenie hlavy naraz, koľko?“ → skupiny Strih + Brada a holenie + Balíčky | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Strih a holenie hlavy naraz, koľko?“ → skupiny Strih + Brada a holenie + Balíčky | očakávané bez-ceny
+    sk „Brada a obočie spolu, cena?“ → skupiny Strih + Brada a holenie + Doplnky | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Brada a obočie spolu, cena?“ → skupiny Strih + Brada a holenie + Doplnky | očakávané bez-ceny
+    sk „Strih a farbenie brady spolu koľko?“ → skupiny Strih + Brada a holenie | E3 skupina cenníka pri otázke označenej bez-ceny
+    (použiteľnosť) sk „Strih a farbenie brady spolu koľko?“ → skupiny Strih + Brada a holenie | očakávané bez-ceny
+    de „Was kostet Rückenwaxing?“ → skupiny Extras | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) de „Was kostet Rückenwaxing?“ → skupiny Extras | očakávané odovzdanie
+    hu „Hátgyantázás ára?“ → skupiny Extrák | E3 skupina cenníka pri otázke označenej odovzdanie
+    (použiteľnosť) hu „Hátgyantázás ára?“ → skupiny Extrák | očakávané odovzdanie
+sada-C2: otázok 260, CHYBY (c) 0 {} | typy {"vyber":67,"odpoved":34,"nevieme":80,"cennik":60,"fallback":16,"zdvorilost":3} | použiteľnosť {"OK-VOLBA":54,"OK-PRIAMO":94,"ODOVZDANIE-NAVYSE":12,"OK":100}
+sada-D1: otázok 293, CHYBY (c) 0 {} | typy {"odpoved":83,"nevieme":73,"vyber":67,"cennik":64,"fallback":6} | použiteľnosť {"OK-PRIAMO":145,"ODOVZDANIE-NAVYSE":22,"OK":69,"OK-VOLBA":56,"ODCHYLKA":1}
+sada-D2: otázok 311, CHYBY (c) 0 {} | typy {"cennik":84,"vyber":131,"nevieme":55,"fallback":7,"odpoved":34} | použiteľnosť {"OK-PRIAMO":117,"OK-VOLBA":95,"ODOVZDANIE-NAVYSE":55,"OK":44}
+sada-E2: otázok 208, CHYBY (c) 0 {} | typy {"odpoved":56,"cennik":46,"vyber":49,"nevieme":50,"fallback":7} | použiteľnosť {"OK-PRIAMO":99,"ODCHYLKA":3,"OK-VOLBA":45,"OK":55,"ODOVZDANIE-NAVYSE":6}
+  legitímnych otázok 1097, odovzdanie navyše 111 (10.12 %)
+
+## Skeptik 2 (označené otázky)
+skeptik2/otazky-v5-2.txt: otázok 137, CHYBY (c) 0 {} | typy {"vyber":44,"cennik":39,"odpoved":23,"nevieme":31}
+skeptik2/otazky-v5-2b.txt: otázok 30, CHYBY (c) 0 {} | typy {"cennik":13,"vyber":4,"nevieme":9,"odpoved":4}
+
+## Zoznamy otázok kontrol a skeptika (bez označenia)
+k4/sondy-k4.txt: otázok 261, CHYBY (c) 0 {} | typy {"vyber":99,"odpoved":18,"nevieme":93,"fallback":6,"cennik":45}
+k4/sondy-k4b.txt: otázok 66, CHYBY (c) 0 {} | typy {"odpoved":21,"fallback":1,"vyber":37,"cennik":4,"nevieme":3}
+k4/sondy-k4c.txt: otázok 23, CHYBY (c) 0 {} | typy {"vyber":19,"nevieme":3,"cennik":1}
+k5/sonda.txt: otázok 76, CHYBY (c) 0 {} | typy {"cennik":27,"vyber":29,"nevieme":12,"odpoved":8}
+k5/sondy-k5.txt: otázok 63, CHYBY (c) 0 {} | typy {"nevieme":11,"vyber":9,"cennik":43}
+k5/sondy-k5b.txt: otázok 11, CHYBY (c) 0 {} | typy {"vyber":8,"cennik":3}
+skeptik/otazky.txt: otázok 54, CHYBY (c) 0 {} | typy {"cennik":12,"vyber":14,"nevieme":21,"odpoved":6,"fallback":1}
+skeptik/otazky2.txt: otázok 24, CHYBY (c) 0 {} | typy {"vyber":15,"nevieme":3,"odpoved":6}
+o7/sondy-p7.txt: otázok 53, CHYBY (c) 0 {} | typy {"nevieme":11,"cennik":24,"odpoved":18}
+
+SPOLU: otázok 2534, chýb podľa (c) 5
