@@ -307,9 +307,16 @@
     placeBox.classList.toggle('on', !!key);
   };
   let renderer;
-  // bez prelínania sa záber kreslí rovno na obrazovku, preto aj ona má hĺbku (mriežka sa môže prekryť sama so sebou)
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, depth: true, stencil: false, powerPreference: 'high-performance' }); }
-  catch (e) { canvas.remove(); placeBox.remove(); quit(); return; }
+  /* kontext si film zakladá sám a bez alfy (alpha: false). three.js zakladá kontext vždy s alfou (jeho voľba alpha: false
+     len neočistí alfu): prehliadač potom plátno skladá so stránkou podľa alfy, ktorú doň zapísal shader, a Safari pixel
+     s alfou 0 ukáže ako podklad stránky (--ink) – tak vznikali čierne škvrny. Plátno bez alfy je nepriehľadné vždy,
+     nech je v jeho alfe čokoľvek (poistka aj pre neznámu príčinu).
+     Bez prelínania sa záber kreslí rovno na obrazovku, preto aj ona má hĺbku (mriežka sa môže prekryť sama so sebou). */
+  try {
+    const context = canvas.getContext('webgl2', { alpha: false, depth: true, stencil: false, antialias: false, premultipliedAlpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false });
+    if (!context) throw new Error('WebGL2 nie je');
+    renderer = new THREE.WebGLRenderer({ canvas, context, antialias: false, alpha: false, depth: true, stencil: false, powerPreference: 'high-performance' });
+  } catch (e) { canvas.remove(); placeBox.remove(); quit(); return; }
   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); canvas.remove(); placeBox.remove(); quit(); return; }
   // farby fotiek idú na obrazovku bez prepočtov, presne ako na fotke
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
@@ -338,6 +345,10 @@
     void main() {
       vUv = vec2(uv.x, 1.0 - uv.y);
       float z = texture2D(uDepth, vUv).r;
+      // krajné 3 % fotky ostávajú na rovine steny (hĺbka 0): blízky okraj (stĺp, kreslo, hĺbka až 1) by sa pri bočnom
+      // posune kamery v strihu vtiahol do záberu a za ním by ostal pás farby čistenia; okno v pokoji je od okraja
+      // fotky aspoň 4,8 % (presah OVER), preto sa obraz v pokoji nemení
+      vec2 e = min(uv, 1.0 - uv); z *= smoothstep(0.0, 0.03, min(e.x, e.y));
       vZ = z;                                                  // hĺbka bodu (1 = blízko) pre prechod medzi zábermi
       vec4 w = modelMatrix * vec4(position, 1.0);
       // bod sa posunie po priamke k oku: z pokojného miesta kamery je obraz presne fotka,
@@ -345,7 +356,7 @@
       w.xyz = uEye + (w.xyz - uEye) * (1.0 - uAmt * z);
       gl_Position = projectionMatrix * viewMatrix * w;
     }`;
-  // uVig: 1/šírka, 1/výška plátna, pomer strán, 1 = kreslí sa rovno na obrazovku (vinetácia už tu);
+  // uVig: 1/šírka, 1/výška plátna, pomer strán, 1 = kreslí sa rovno na obrazovku (vinetácia už tu, alfa vždy 1);
   // do textúry prechodu ide v alfe hĺbka bodu, podľa nej sa zábery prelínajú (blízke veci posledné)
   const FRAG = `
     uniform sampler2D uMap; uniform vec4 uVig; varying vec2 vUv; varying float vZ;
@@ -355,7 +366,9 @@
         vec2 q = (gl_FragCoord.xy * uVig.xy - 0.5) * vec2(uVig.z, 1.0) / max(uVig.z, 1.0);
         c *= 1.0 - smoothstep(0.32, 0.9, length(q)) * 0.34;
       }
-      gl_FragColor = vec4(c, vZ);
+      // na obrazovku nepriehľadne: alfa = hĺbka má zmysel len v textúre prechodu; v plátne by ju prehliadač mohol
+      // použiť pri skladaní stránky a hĺbka 0 (koniec miestnosti) by presvitla ako podklad stránky (čierna škvrna)
+      gl_FragColor = vec4(c, uVig.w > 0.5 ? 1.0 : vZ);
     }`;
   // sekvencia snímok (data-video-mode="seq"): dve susedné snímky a ich prelínanie podľa presnej polohy
   const FRAG_SEQ = FRAG.replace('uniform sampler2D uMap;', 'uniform sampler2D uMap; uniform sampler2D uMap2; uniform float uMix;')
@@ -410,8 +423,10 @@
 
   SHOTS.forEach((s) => {
     const sq = s.video && s.video.mode === 'seq';
+    // obojstranne: keby sa trojuholník mriežky na hrane hĺbky pri silnom posune preklopil, nakreslí sa aj tak
+    // (kúsok fotky), nie diera vo farbe čistenia; bežne sú všetky trojuholníky z lícnej strany, cena je nulová
     s.mat = new THREE.ShaderMaterial({
-      vertexShader: VERT, fragmentShader: sq ? FRAG_SEQ : FRAG,
+      vertexShader: VERT, fragmentShader: sq ? FRAG_SEQ : FRAG, side: THREE.DoubleSide,
       uniforms: Object.assign({ uMap: { value: blank }, uDepth: { value: flat }, uAmt: { value: AMT }, uEye: { value: new THREE.Vector3() }, uVig: vig },
         sq ? { uMap2: { value: blank }, uMix: { value: 0 } } : {}),
     });
@@ -819,13 +834,13 @@
       tA: { value: rtA.texture }, tB: { value: rtB.texture }, uMix: { value: 0 }, uAspect: { value: 1 },
       // uKind = druh strihu (0 prelínanie, 1 pohyb, 2 švih, 3 nájazd, 4 popredie), uDir = smer kamery na obrazovke
       // (x doprava, y nahor), uFoc / uFoc2 = bod strihu na odchádzajúcom / prichádzajúcom zábere (0 až 1, zdola),
-      // uLead = hrana predmetu popredia v smere jeho letu, uRes = plátno v pixeloch
+      // uB = výška pásu fotky na plátne (telefón na výšku; 1 = celé plátno), uRes = plátno v pixeloch
       uKind: { value: 0 }, uDir: { value: new THREE.Vector2() }, uFoc: { value: new THREE.Vector2(0.5, 0.5) }, uFoc2: { value: new THREE.Vector2(0.5, 0.5) },
-      uLead: { value: 0.5 }, uRes: { value: new THREE.Vector2(1, 1) }, uDbg: { value: 0 },
+      uB: { value: 1 }, uRes: { value: new THREE.Vector2(1, 1) }, uDbg: { value: 0 },
     },
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
     fragmentShader: `
-      uniform sampler2D tA, tB; uniform float uMix, uAspect, uKind, uLead, uDbg; uniform vec2 uDir, uFoc, uFoc2, uRes;
+      uniform sampler2D tA, tB; uniform float uMix, uAspect, uKind, uB, uDbg; uniform vec2 uDir, uFoc, uFoc2, uRes;
       varying vec2 vUv;
       #define PI 3.14159265
       #define NT ${CK.nt}
@@ -897,22 +912,29 @@
           dip *= 0.5;
         } else {
           /* popredie: kamera ide tesne popri blízkom predmete odchádzajúceho záberu (hĺbková mapa). Predmet
-             (pás obrazu od okraja R0 po jeho hranu uLead) sa naťahuje k objektívu: jeho predná hrana L letí
+             (pás obrazu od okraja R0 po jeho hranu lead) sa naťahuje k objektívu: jeho predná hrana L letí
              cez obraz, zadná R ide za ňou, medzi nimi je ten istý predmet zväčšený, čoraz neostrejší a v tieni.
              Za zadnou hranou je už nový záber; výmena je pod predmetom, kde kryje celý obraz. */
           vec2 md = -uDir, pd = vec2(md.y, -md.x);
-          float u = dot(vUv - 0.5, md) + 0.5, w = dot(vUv - 0.5, pd) + 0.5, wF = dot(uFoc - 0.5, pd) + 0.5;
+          // telefón na výšku: fotka je v hornom páse plátna (uB), pod ním je farba čistenia. Predmet aj jeho let sa
+          // počítajú v súradniciach pásu; inak by sa spod pásu natiahla cez obraz farba čistenia (čierne okno)
+          vec2 vb = vec2(vUv.x, 1.0 - (1.0 - vUv.y) / uB), fb = vec2(uFoc.x, 1.0 - (1.0 - uFoc.y) / uB);
+          float u = dot(vb - 0.5, md) + 0.5, w = dot(vb - 0.5, pd) + 0.5, wF = dot(fb - 0.5, pd) + 0.5;
+          float lead = dot(fb - 0.5, md) + 0.5;                     // hrana predmetu v smere jeho letu
           const float R0 = -0.15;
-          float L = mix(uLead, ${F(1 + CK.pe)}, smoothstep(0.0, 0.56, x));
+          float L = mix(lead, ${F(1 + CK.pe)}, smoothstep(0.0, 0.56, x));
           float R = mix(R0, ${F(1 + CK.pe)}, smoothstep(0.2, 0.86, x));
-          float g = smoothstep(0.0, 0.5, x), fill = smoothstep(0.04, 0.26, x), k = (L - R) / max(uLead - R0, 0.05);
+          float g = smoothstep(0.0, 0.5, x), fill = smoothstep(0.04, 0.26, x), k = (L - R) / max(lead - R0, 0.05);
           // bod predmetu, ktorý sa kreslí na tomto mieste (pozdĺž letu natiahnutý, naprieč zväčšený okolo jeho bodu)
           float us = R0 + (u - R) / k, ws = wF + (w - wF) / k;
           /* časť predmetu za okrajom obrazu: krajný riadok, ku okraju čoraz neostrejší, takže predmet do tmy
              plynule pokračuje (zrkadlo by z neho urobilo súmerný obrazec, opakovaný riadok pruhy); je blízko */
           float inside = smoothstep(0.0, 0.12 * g + 1e-4, us);     // na začiatku strihu presne obraz (g = 0)
           vec2 ps = clamp(0.5 + md * (us - 0.5) + pd * (ws - 0.5), 0.002, 0.998);
-          vec4 o = textureLod(tA, ps, mix(6.5, g * ${F(CK.pf)}, inside));
+          float lo = mix(6.5, g * ${F(CK.pf)}, inside);
+          // späť do súradníc plátna; vzorka aj s rozmazaním úrovne lo ostáva v páse fotky, nikdy pod ním
+          if (uB < 0.999) ps.y = max(1.0 - (1.0 - ps.y) * uB, 1.0 - uB + 1.5 * exp2(lo) / uRes.y);
+          vec4 o = textureLod(tA, ps, lo);
           o.a = mix(1.0, o.a, inside);
           float pw = ${F(CK.pw)} * (0.4 + 0.6 * g);                  // hrana predmetu neostrá podľa toho, ako blízko je
           // predmet je oblý (operadlo, sud, stĺp zblízka): obe hrany sú v strede o kúsok vypuklé, nie rovná čiara
@@ -1169,7 +1191,7 @@
       pu.tA.value = rev ? rtB.texture : rtA.texture; pu.tB.value = rev ? rtA.texture : rtB.texture;
       pu.uKind.value = cut ? cut.k : 0;
       pu.uDir.value.set(dS[0], dS[1]); pu.uFoc.value.set(f1[0], f1[1]); pu.uFoc2.value.set(f2[0], f2[1]);
-      pu.uLead.value = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1];   // hrana predmetu v smere jeho letu (−smer kamery)
+      pu.uB.value = cut && cut.k === 4 ? Math.min((A && A.band) || 1, B.band || 1) : 1;   // pás fotky na plátne (telefón na výšku)
       pu.uMix.value = rev ? 1 - mix : mix;
       renderer.setRenderTarget(null); renderer.clear();
       renderer.render(postScene, postCam);
@@ -1449,7 +1471,8 @@
   }, { passive: false });
   // strata grafického kontextu (málo pamäte): rozrobené pásy sa hneď zrušia (uvoľnia rozbalené fotky),
   // po obnove sa fotky načítajú znova
-  on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); }, { passive: false });
+  // kým je grafika preč, plátno je prázdne: ukážu sa zálohy .film-still (world-in sa vráti s prvým novým snímkom), nie tmavé okno
+  on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); lost = true; while (jobs.length) jobs.shift()(); root.classList.remove('world-in'); shown = false; drawn = false; }, { passive: false });
   on(canvas, 'webglcontextrestored', () => {
     lost = false;
     SHOTS.forEach((s) => { if (s.video) { detach(s, false); s.pmap = null; } if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
