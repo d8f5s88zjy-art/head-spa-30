@@ -1,0 +1,2733 @@
+{
+ "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: M barbershop-30/assets/film.js",
+ "sekvencie": [
+  {
+   "zar": "telefon",
+   "st": "index.html",
+   "kroky": [
+    {
+     "i": 0,
+     "d": "html.karty.world > body > a.skip-link",
+     "name": "Preskočiť na obsah",
+     "r": [
+      12,
+      12,
+      181,
+      50
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 75.22,
+     "diffPx": 9780
+    },
+    {
+     "i": 1,
+     "d": "body > header.site-header > div.container > a.brand",
+     "name": "Barbershop 30 Nitra – na začiatok",
+     "r": [
+      16,
+      14,
+      184,
+      32
+     ],
+     "absY": 14,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.56,
+     "diffPx": 918
+    },
+    {
+     "i": 2,
+     "d": "body > header.site-header > div.container > button.hudba",
+     "name": "Hudba",
+     "r": [
+      262,
+      8,
+      44,
+      44
+     ],
+     "absY": 8,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.47,
+     "diffPx": 413
+    },
+    {
+     "i": 3,
+     "d": "body > header.site-header > div.container > button.nav-toggle",
+     "name": "Menu",
+     "r": [
+      330,
+      8,
+      44,
+      44
+     ],
+     "absY": 8,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.25,
+     "diffPx": 405
+    },
+    {
+     "i": 4,
+     "d": "div.title-card.title-hero > ul.hero-proof > li > a.hero-rating",
+     "name": "5,0 na Google · 945 recenzií",
+     "r": [
+      31,
+      628,
+      187,
+      28
+     ],
+     "absY": 628,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.3,
+     "diffPx": 920
+    },
+    {
+     "i": 5,
+     "d": "div.title-frame > div.title-card.title-hero > div.title-actions > a.btn.btn-primary",
+     "name": "Objednať sa",
+     "r": [
+      16,
+      672,
+      358,
+      44
+     ],
+     "absY": 672,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 67.74,
+     "diffPx": 15201
+    },
+    {
+     "i": 6,
+     "d": "div.title-frame > div.title-card.title-hero > div.title-actions > a.btn.btn-secondary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      16,
+      724,
+      358,
+      44
+     ],
+     "absY": 724,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "a.asi-oznam-tel",
+     "inShadow": false,
+     "diff": 2.17,
+     "diffPx": 488
+    },
+    {
+     "i": 7,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Rezervuj si miesto→",
+     "r": [
+      2,
+      1184,
+      178,
+      40
+     ],
+     "absY": 1589,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 8,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Pánsky strih 18 €, objednaj sa→",
+     "r": [
+      2,
+      1197,
+      254,
+      40
+     ],
+     "absY": 2179,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 9,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Káva čaká, vyber si čas→",
+     "r": [
+      149,
+      1129,
+      211,
+      40
+     ],
+     "absY": 2770,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 10,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Vyber si svojho barbera→",
+     "r": [
+      2,
+      1622,
+      213,
+      40
+     ],
+     "absY": 3361,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 11,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      29,
+      2863,
+      104,
+      37
+     ],
+     "absY": 4504,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 12,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      313,
+      2863,
+      104,
+      37
+     ],
+     "absY": 4504,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 13,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      2380,
+      104,
+      37
+     ],
+     "absY": 4504,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 14,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      329,
+      485,
+      104,
+      37
+     ],
+     "absY": 4504,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 20.43,
+     "diffPx": 747
+    },
+    {
+     "i": 15,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      426,
+      104,
+      37
+     ],
+     "absY": 4488,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.81,
+     "diffPx": 624
+    },
+    {
+     "i": 16,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      329,
+      426,
+      104,
+      37
+     ],
+     "absY": 4488,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.77,
+     "diffPx": 284
+    },
+    {
+     "i": 17,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      426,
+      104,
+      37
+     ],
+     "absY": 4488,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.81,
+     "diffPx": 624
+    },
+    {
+     "i": 18,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      330,
+      426,
+      104,
+      37
+     ],
+     "absY": 4488,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.77,
+     "diffPx": 280
+    },
+    {
+     "i": 19,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      426,
+      104,
+      37
+     ],
+     "absY": 4488,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "opakovanie": true
+    }
+   ],
+   "neviditelne": 7,
+   "prekryte": 1,
+   "bezIndikatora": 0,
+   "spat": []
+  },
+  {
+   "zar": "telefon",
+   "st": "rezervacia.html",
+   "kroky": [
+    {
+     "i": 0,
+     "d": "html.obj-zapnute.obj-css > body.rez > a.skip-link",
+     "name": "Preskočiť na obsah",
+     "r": [
+      12,
+      12,
+      181,
+      50
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 73.45,
+     "diffPx": 9550
+    },
+    {
+     "i": 1,
+     "d": "body.rez > header.site-header.is-scrolled > div.container > a.brand",
+     "name": "Barbershop 30 Nitra – na web",
+     "r": [
+      16,
+      14,
+      184,
+      32
+     ],
+     "absY": 14,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.67,
+     "diffPx": 928
+    },
+    {
+     "i": 2,
+     "d": "body.rez > header.site-header.is-scrolled > div.container > button.nav-toggle",
+     "name": "Menu",
+     "r": [
+      330,
+      8,
+      44,
+      44
+     ],
+     "absY": 8,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.56,
+     "diffPx": 416
+    },
+    {
+     "i": 3,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-primary",
+     "name": "Vybrať službu",
+     "r": [
+      16,
+      472,
+      358,
+      44
+     ],
+     "absY": 472,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.4,
+     "diffPx": 1660
+    },
+    {
+     "i": 4,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-secondary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      16,
+      524,
+      358,
+      44
+     ],
+     "absY": 524,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.31,
+     "diffPx": 1640
+    },
+    {
+     "i": 5,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih40 min · 18 €",
+     "r": [
+      31,
+      575,
+      328,
+      60
+     ],
+     "absY": 975,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 18.24,
+     "diffPx": 4769
+    },
+    {
+     "i": 6,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih a úprava brady60 min · 28 €",
+     "r": [
+      31,
+      491,
+      328,
+      60
+     ],
+     "absY": 1036,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.14,
+     "diffPx": 1604
+    },
+    {
+     "i": 7,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih – dĺžka vlasov nad 10 cm60 ",
+     "r": [
+      31,
+      552,
+      328,
+      72
+     ],
+     "absY": 1097,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 3.62,
+     "diffPx": 1097
+    },
+    {
+     "i": 8,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Strih pre malých gentlemanov45 min · 15 ",
+     "r": [
+      31,
+      625,
+      328,
+      72
+     ],
+     "absY": 1170,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "div.asi-oznam-hlava",
+     "inShadow": false,
+     "diff": 3.06,
+     "diffPx": 927
+    },
+    {
+     "i": 9,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Oholenie hlavy25 min · 13 €",
+     "r": [
+      31,
+      698,
+      328,
+      60
+     ],
+     "absY": 1243,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "a.asi-oznam-tel",
+     "inShadow": false,
+     "diff": 1.29,
+     "diffPx": 337
+    },
+    {
+     "i": 10,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Úprava brady20 min · 15 €",
+     "r": [
+      31,
+      475,
+      328,
+      60
+     ],
+     "absY": 1490,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.34,
+     "diffPx": 2965
+    },
+    {
+     "i": 11,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Holenie do hladka Hot Towel30 min · 15 €",
+     "r": [
+      31,
+      491,
+      328,
+      60
+     ],
+     "absY": 1551,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.14,
+     "diffPx": 1604
+    },
+    {
+     "i": 12,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Farbenie brady30 min · 10 €",
+     "r": [
+      31,
+      552,
+      328,
+      60
+     ],
+     "absY": 1612,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.14,
+     "diffPx": 1606
+    },
+    {
+     "i": 13,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Balíček 165 min · 30 €",
+     "r": [
+      31,
+      784,
+      328,
+      60
+     ],
+     "absY": 1859,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 3.48,
+     "diffPx": 813
+    },
+    {
+     "i": 14,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Ultra inclusive Barbershop3080 min · 40 ",
+     "r": [
+      31,
+      487,
+      328,
+      72
+     ],
+     "absY": 1920,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 48.57,
+     "diffPx": 14702
+    },
+    {
+     "i": 15,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Starostlivosť o pleť PREMIUM30 min · 21,",
+     "r": [
+      31,
+      683,
+      328,
+      72
+     ],
+     "absY": 2179,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "div.asi-oznam.is-on",
+     "inShadow": false,
+     "diff": 1.19,
+     "diffPx": 359
+    },
+    {
+     "i": 16,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Úprava obočia5 min · 3 €",
+     "r": [
+      31,
+      756,
+      328,
+      60
+     ],
+     "absY": 2252,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 3.34,
+     "diffPx": 872
+    },
+    {
+     "i": 17,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Depilácia uší a nosa voskom10 min · 5,50",
+     "r": [
+      31,
+      772,
+      328,
+      72
+     ],
+     "absY": 2313,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 1.2,
+     "diffPx": 331
+    },
+    {
+     "i": 18,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Kreatívny ornament na hlave10 min · 4 €",
+     "r": [
+      31,
+      490,
+      328,
+      60
+     ],
+     "absY": 2386,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 16.33,
+     "diffPx": 4269
+    },
+    {
+     "i": 19,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Farbenie obočia10 min · 5 €",
+     "r": [
+      31,
+      491,
+      328,
+      60
+     ],
+     "absY": 2447,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.14,
+     "diffPx": 1606
+    },
+    {
+     "i": 20,
+     "d": "div#objednavka.rez-app > div.obj.obj-stranka > div.obj-pata > a.obj-tel",
+     "name": "Radšej zavoláš? 0951 267 203",
+     "r": [
+      31,
+      590,
+      212,
+      44
+     ],
+     "absY": 2546,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 4.31,
+     "diffPx": 590
+    },
+    {
+     "i": 21,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "name": "0951 267 203",
+     "r": [
+      124,
+      822,
+      106,
+      22
+     ],
+     "absY": 2780,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.07,
+     "diffPx": 332
+    },
+    {
+     "i": 22,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "name": "info@barbershop30.sk",
+     "r": [
+      124,
+      509,
+      167,
+      22
+     ],
+     "absY": 2823,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 29.71,
+     "diffPx": 2066
+    },
+    {
+     "i": 23,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-primary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      16,
+      600,
+      358,
+      50
+     ],
+     "absY": 2974,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "div.asi-oznam.is-on",
+     "inShadow": false,
+     "diff": 4.42,
+     "diffPx": 1092
+    },
+    {
+     "i": 24,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-secondary",
+     "name": "Navigovať",
+     "r": [
+      16,
+      662,
+      358,
+      50
+     ],
+     "absY": 3036,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": "p.asi-oznam-t",
+     "inShadow": false,
+     "diff": 1.99,
+     "diffPx": 491
+    },
+    {
+     "i": 25,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      29,
+      847,
+      104,
+      37
+     ],
+     "absY": 3667,
+     "inVp": false,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 26,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      313,
+      441,
+      104,
+      37
+     ],
+     "absY": 3667,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.72,
+     "diffPx": 348
+    },
+    {
+     "i": 27,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      441,
+      104,
+      37
+     ],
+     "absY": 3667,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.81,
+     "diffPx": 624
+    },
+    {
+     "i": 28,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      329,
+      441,
+      104,
+      37
+     ],
+     "absY": 3667,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.77,
+     "diffPx": 284
+    },
+    {
+     "i": 29,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      45,
+      441,
+      104,
+      37
+     ],
+     "absY": 3667,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "opakovanie": true
+    }
+   ],
+   "neviditelne": 1,
+   "prekryte": 5,
+   "bezIndikatora": 0,
+   "spat": []
+  },
+  {
+   "zar": "pocitac",
+   "st": "index.html",
+   "kroky": [
+    {
+     "i": 0,
+     "d": "html.karty.world > body > a.skip-link",
+     "name": "Preskočiť na obsah",
+     "r": [
+      12,
+      -87,
+      181,
+      50
+     ],
+     "absY": -87,
+     "inVp": false,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 1,
+     "d": "body > header.site-header > div.container > a.brand",
+     "name": "Barbershop 30 Nitra – na začiatok",
+     "r": [
+      40,
+      16,
+      184,
+      32
+     ],
+     "absY": 16,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.52,
+     "diffPx": 914
+    },
+    {
+     "i": 2,
+     "d": "header.site-header > div.container > div.lang > button.lang-btn",
+     "name": "SK, jazyk stránky",
+     "r": [
+      671,
+      10,
+      62,
+      44
+     ],
+     "absY": 10,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.32,
+     "diffPx": 483
+    },
+    {
+     "i": 3,
+     "d": "body > header.site-header > div.container > button.hudba",
+     "name": "Hudba",
+     "r": [
+      757,
+      10,
+      100,
+      44
+     ],
+     "absY": 10,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.14,
+     "diffPx": 636
+    },
+    {
+     "i": 4,
+     "d": "header.site-header > div.container > nav#nav.nav > a",
+     "name": "Prehliadka",
+     "r": [
+      881,
+      12,
+      76,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.09,
+     "diffPx": 520
+    },
+    {
+     "i": 5,
+     "d": "header.site-header > div.container > nav#nav.nav > a",
+     "name": "Služby",
+     "r": [
+      981,
+      12,
+      47,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.45,
+     "diffPx": 404
+    },
+    {
+     "i": 6,
+     "d": "header.site-header > div.container > nav#nav.nav > a",
+     "name": "Tím",
+     "r": [
+      1052,
+      12,
+      26,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 13.56,
+     "diffPx": 319
+    },
+    {
+     "i": 7,
+     "d": "header.site-header > div.container > nav#nav.nav > a",
+     "name": "Galéria",
+     "r": [
+      1102,
+      12,
+      52,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.13,
+     "diffPx": 424
+    },
+    {
+     "i": 8,
+     "d": "header.site-header > div.container > nav#nav.nav > a",
+     "name": "Kontakt",
+     "r": [
+      1178,
+      12,
+      55,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.97,
+     "diffPx": 436
+    },
+    {
+     "i": 9,
+     "d": "header.site-header > div.container > nav#nav.nav > a.btn.btn-primary",
+     "name": "Objednať sa",
+     "r": [
+      1257,
+      10,
+      143,
+      44
+     ],
+     "absY": 10,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 8.42,
+     "diffPx": 803
+    },
+    {
+     "i": 10,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Úvod",
+     "r": [
+      6,
+      305,
+      24,
+      24
+     ],
+     "absY": 305,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 11,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Poď ďalej",
+     "r": [
+      6,
+      343,
+      24,
+      24
+     ],
+     "absY": 343,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 12,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Remeslo",
+     "r": [
+      6,
+      381,
+      24,
+      24
+     ],
+     "absY": 381,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 13,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Čakáreň",
+     "r": [
+      6,
+      419,
+      24,
+      24
+     ],
+     "absY": 419,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 14,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Tím",
+     "r": [
+      6,
+      457,
+      24,
+      24
+     ],
+     "absY": 457,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 15,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Služby a ceny",
+     "r": [
+      6,
+      495,
+      24,
+      24
+     ],
+     "absY": 495,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 16,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Galéria",
+     "r": [
+      6,
+      533,
+      24,
+      24
+     ],
+     "absY": 533,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 17,
+     "d": "html.karty.world > body > nav.story-line > a",
+     "name": "Rezervácia",
+     "r": [
+      6,
+      571,
+      24,
+      24
+     ],
+     "absY": 571,
+     "inVp": true,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 0,
+     "diffPx": 0
+    },
+    {
+     "i": 18,
+     "d": "div.title-card.title-hero > ul.hero-proof > li > a.hero-rating",
+     "name": "5,0 na Google · 945 recenzií",
+     "r": [
+      535,
+      595,
+      214,
+      31
+     ],
+     "absY": 595,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.66,
+     "diffPx": 1044
+    },
+    {
+     "i": 19,
+     "d": "div.title-frame > div.title-card.title-hero > div.title-actions > a.btn.btn-primary",
+     "name": "Objednať sa",
+     "r": [
+      490,
+      658,
+      161,
+      48
+     ],
+     "absY": 658,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.81,
+     "diffPx": 885
+    },
+    {
+     "i": 20,
+     "d": "div.title-frame > div.title-card.title-hero > div.title-actions > a.btn.btn-secondary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      662,
+      658,
+      288,
+      48
+     ],
+     "absY": 658,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.19,
+     "diffPx": 1399
+    },
+    {
+     "i": 21,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Rezervuj si miesto→",
+     "r": [
+      26,
+      1175,
+      188,
+      44
+     ],
+     "absY": 1475,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 22,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Pánsky strih 18 €, objednaj sa→",
+     "r": [
+      26,
+      1301,
+      270,
+      44
+     ],
+     "absY": 2150,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 23,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Káva čaká, vyber si čas→",
+     "r": [
+      1162,
+      1857,
+      224,
+      44
+     ],
+     "absY": 2780,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 24,
+     "d": "div.title-pin > div.title-frame > div.title-card > a.hook",
+     "name": "Vyber si svojho barbera→",
+     "r": [
+      26,
+      2500,
+      226,
+      44
+     ],
+     "absY": 3423,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 25,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      57,
+      3117,
+      109,
+      39
+     ],
+     "absY": 5165,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 26,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      334,
+      3117,
+      109,
+      39
+     ],
+     "absY": 5165,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 27,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      611,
+      3117,
+      109,
+      39
+     ],
+     "absY": 5165,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 28,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      887,
+      1685,
+      109,
+      39
+     ],
+     "absY": 5165,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 29,
+     "d": "ul.team-grid > li.team-card.reveal > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      1164,
+      1685,
+      109,
+      39
+     ],
+     "absY": 5165,
+     "inVp": false,
+     "vis": true,
+     "op": 0,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "opakovanie": true
+    }
+   ],
+   "neviditelne": 18,
+   "prekryte": 0,
+   "bezIndikatora": 8,
+   "spat": []
+  },
+  {
+   "zar": "pocitac",
+   "st": "rezervacia.html",
+   "kroky": [
+    {
+     "i": 0,
+     "d": "html.obj-zapnute.obj-css > body.rez > a.skip-link",
+     "name": "Preskočiť na obsah",
+     "r": [
+      12,
+      12,
+      181,
+      50
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 73.43,
+     "diffPx": 9547
+    },
+    {
+     "i": 1,
+     "d": "body.rez > header.site-header.is-scrolled > div.container > a.brand",
+     "name": "Barbershop 30 Nitra – na web",
+     "r": [
+      40,
+      16,
+      184,
+      32
+     ],
+     "absY": 16,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.6,
+     "diffPx": 922
+    },
+    {
+     "i": 2,
+     "d": "header.site-header.is-scrolled > div.container > div.lang > button.lang-btn",
+     "name": "SK, jazyk stránky",
+     "r": [
+      831,
+      10,
+      62,
+      44
+     ],
+     "absY": 10,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.58,
+     "diffPx": 495
+    },
+    {
+     "i": 3,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "name": "Prehliadka",
+     "r": [
+      917,
+      12,
+      76,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.09,
+     "diffPx": 520
+    },
+    {
+     "i": 4,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "name": "Služby",
+     "r": [
+      1017,
+      12,
+      47,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.45,
+     "diffPx": 404
+    },
+    {
+     "i": 5,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "name": "Tím",
+     "r": [
+      1088,
+      12,
+      26,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 13.61,
+     "diffPx": 320
+    },
+    {
+     "i": 6,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "name": "Galéria",
+     "r": [
+      1138,
+      12,
+      52,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.13,
+     "diffPx": 424
+    },
+    {
+     "i": 7,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a",
+     "name": "Kontakt",
+     "r": [
+      1214,
+      12,
+      55,
+      40
+     ],
+     "absY": 12,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 10.97,
+     "diffPx": 436
+    },
+    {
+     "i": 8,
+     "d": "header.site-header.is-scrolled > div.container > nav#nav.nav > a.btn.btn-secondary",
+     "name": "Zavolať",
+     "r": [
+      1293,
+      10,
+      107,
+      44
+     ],
+     "absY": 10,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 8.94,
+     "diffPx": 660
+    },
+    {
+     "i": 9,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-primary",
+     "name": "Vybrať službu",
+     "r": [
+      40,
+      590,
+      181,
+      48
+     ],
+     "absY": 590,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 15.02,
+     "diffPx": 1894
+    },
+    {
+     "i": 10,
+     "d": "section.rez-uvod > div.container.rez-uvod-text > div.title-actions > a.btn.btn-secondary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      233,
+      590,
+      288,
+      48
+     ],
+     "absY": 590,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.16,
+     "diffPx": 1394
+    },
+    {
+     "i": 11,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih40 min · 18 €",
+     "r": [
+      61,
+      926,
+      902,
+      60
+     ],
+     "absY": 1323,
+     "inVp": false,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false
+    },
+    {
+     "i": 12,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih a úprava brady60 min · 28 €",
+     "r": [
+      61,
+      667,
+      902,
+      60
+     ],
+     "absY": 1384,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 12.73,
+     "diffPx": 8881
+    },
+    {
+     "i": 13,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Pánsky strih – dĺžka vlasov nad 10 cm60 ",
+     "r": [
+      61,
+      521,
+      902,
+      60
+     ],
+     "absY": 1445,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 14,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Strih pre malých gentlemanov45 min · 15 ",
+     "r": [
+      61,
+      582,
+      902,
+      60
+     ],
+     "absY": 1506,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 15,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Oholenie hlavy25 min · 13 €",
+     "r": [
+      61,
+      643,
+      902,
+      60
+     ],
+     "absY": 1567,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 4.71,
+     "diffPx": 3284
+    },
+    {
+     "i": 16,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Úprava brady20 min · 15 €",
+     "r": [
+      61,
+      574,
+      902,
+      60
+     ],
+     "absY": 2029,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.25,
+     "diffPx": 5059
+    },
+    {
+     "i": 17,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Holenie do hladka Hot Towel30 min · 15 €",
+     "r": [
+      61,
+      521,
+      902,
+      60
+     ],
+     "absY": 2090,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 18,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Farbenie brady30 min · 10 €",
+     "r": [
+      61,
+      582,
+      902,
+      60
+     ],
+     "absY": 2151,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3902
+    },
+    {
+     "i": 19,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Balíček 165 min · 30 €",
+     "r": [
+      61,
+      635,
+      902,
+      60
+     ],
+     "absY": 2613,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 84.01,
+     "diffPx": 58614
+    },
+    {
+     "i": 20,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Ultra inclusive Barbershop3080 min · 40 ",
+     "r": [
+      61,
+      521,
+      902,
+      60
+     ],
+     "absY": 2674,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3902
+    },
+    {
+     "i": 21,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Starostlivosť o pleť PREMIUM30 min · 21,",
+     "r": [
+      61,
+      590,
+      902,
+      60
+     ],
+     "absY": 3137,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.95,
+     "diffPx": 6940
+    },
+    {
+     "i": 22,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Úprava obočia5 min · 3 €",
+     "r": [
+      61,
+      521,
+      902,
+      60
+     ],
+     "absY": 3198,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 23,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Depilácia uší a nosa voskom10 min · 5,50",
+     "r": [
+      61,
+      582,
+      902,
+      60
+     ],
+     "absY": 3259,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 24,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Kreatívny ornament na hlave10 min · 4 €",
+     "r": [
+      61,
+      643,
+      902,
+      60
+     ],
+     "absY": 3320,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3900
+    },
+    {
+     "i": 25,
+     "d": "section.obj-skup > ul.obj-sluzby > li > button",
+     "name": "Farbenie obočia10 min · 5 €",
+     "r": [
+      61,
+      704,
+      902,
+      60
+     ],
+     "absY": 3381,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 5.59,
+     "diffPx": 3902
+    },
+    {
+     "i": 26,
+     "d": "div#objednavka.rez-app > div.obj.obj-stranka > div.obj-pata > a.obj-tel",
+     "name": "Radšej zavoláš? 0951 267 203",
+     "r": [
+      61,
+      803,
+      212,
+      44
+     ],
+     "absY": 3480,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 7.28,
+     "diffPx": 996
+    },
+    {
+     "i": 27,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "name": "0951 267 203",
+     "r": [
+      1160,
+      233,
+      106,
+      22
+     ],
+     "absY": 2910,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 12.25,
+     "diffPx": 568
+    },
+    {
+     "i": 28,
+     "d": "dl.contact-list > div.contact-row > dd > a",
+     "name": "info@barbershop30.sk",
+     "r": [
+      1160,
+      283,
+      167,
+      22
+     ],
+     "absY": 2960,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 11.68,
+     "diffPx": 812
+    },
+    {
+     "i": 29,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-primary",
+     "name": "Zavolať a potvrdiť termín",
+     "r": [
+      1048,
+      447,
+      352,
+      52
+     ],
+     "absY": 3124,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.68,
+     "diffPx": 1672
+    },
+    {
+     "i": 30,
+     "d": "div.container.rez-grid > aside#kontakt.rez-bok > div.rez-bok-akcie > a.btn.btn-secondary",
+     "name": "Navigovať",
+     "r": [
+      1048,
+      511,
+      352,
+      52
+     ],
+     "absY": 3188,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 6.68,
+     "diffPx": 1672
+    },
+    {
+     "i": 31,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      57,
+      470,
+      109,
+      39
+     ],
+     "absY": 4268,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.48,
+     "diffPx": 652
+    },
+    {
+     "i": 32,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      334,
+      470,
+      109,
+      39
+     ],
+     "absY": 4268,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.48,
+     "diffPx": 652
+    },
+    {
+     "i": 33,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      611,
+      470,
+      109,
+      39
+     ],
+     "absY": 4268,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.48,
+     "diffPx": 652
+    },
+    {
+     "i": 34,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      887,
+      470,
+      109,
+      39
+     ],
+     "absY": 4268,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "diff": 9.48,
+     "diffPx": 652
+    },
+    {
+     "i": 35,
+     "d": "ul.team-grid > li.team-card > div.team-body > a.link-arrow.team-cta",
+     "name": "Objednať sa →",
+     "r": [
+      1164,
+      470,
+      109,
+      39
+     ],
+     "absY": 4268,
+     "inVp": true,
+     "vis": true,
+     "op": 1,
+     "fv": true,
+     "prekryty": null,
+     "inShadow": false,
+     "opakovanie": true
+    }
+   ],
+   "neviditelne": 1,
+   "prekryte": 0,
+   "bezIndikatora": 0,
+   "spat": [
+    "Radšej zavoláš? 0951 267 203 (3480) → 0951 267 203 (2910)"
+   ]
+  }
+ ],
+ "toky": [
+  {
+   "zar": "telefon",
+   "nazov": "Preskočiť na obsah",
+   "ok": true,
+   "detail": {
+    "prvy": "html.karty.world > body > a.skip-link „Preskočiť na obsah“",
+    "poSkip": {
+     "hash": "#main",
+     "y": 0,
+     "act": "body"
+    }
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Menu: Enter otvorí a fokus ide do menu",
+   "ok": false,
+   "detail": {
+    "exp": "true",
+    "act": "body > header.site-header > div.container > button.nav-toggle",
+    "inNav": false
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Menu: Tab ostane v otvorenom menu (fokus neodíde pod stmavenú stránku)",
+   "ok": true,
+   "detail": {
+    "unik": [],
+    "cesta": [
+     "SKSlovensky",
+     "ENEnglish",
+     "UAУкраїнська",
+     "HUMagyar",
+     "SRSrpski",
+     "PLPolski",
+     "DEDeutsch",
+     "CZČesky",
+     "Prehliadka"
+    ]
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Menu: Esc zavrie a fokus späť na tlačidlo menu",
+   "ok": true,
+   "detail": {
+    "exp": "false",
+    "act": "button.nav-toggle"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Galéria: Enter otvorí zväčšenú fotku, fokus v okne",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "act": "html.karty.world > body > div#lightbox.lightbox > button.lightbox-btn.lightbox-close",
+    "inLb": true,
+    "img": "naradie-noznice-1600.jpg"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Galéria: šípka vpravo ďalšia fotka",
+   "ok": true,
+   "detail": {
+    "pred": "naradie-noznice-1600.jpg",
+    "po": "detail-stol-1600.jpg"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Galéria: Tab ostáva v okne (5×)",
+   "ok": true,
+   "detail": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Galéria: Esc zavrie, fokus späť na fotku",
+   "ok": true,
+   "detail": {
+    "opener": "div.gallery > ul.gallery-grid > li.gallery-item.is-wide > button.gallery-btn.media „Zväčšiť: Nožnice a hrebeň na b“",
+    "open": false,
+    "act": "div.gallery > ul.gallery-grid > li.gallery-item.is-wide > button.gallery-btn.media"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Časté otázky: Enter otvorí, medzera zavrie",
+   "ok": true,
+   "detail": {
+    "o1": true,
+    "o2": false
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Objednávka (ukážka): Enter na Objednať sa otvorí modálne okno s fokusom vnútri",
+   "ok": true,
+   "detail": {
+    "odkaz": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+    "open": true,
+    "modal": true,
+    "act": "body > dialog.obj > div.obj-obsah > h2#obj-h.obj-h",
+    "inDlg": true,
+    "url": "index.html?asistent=ukazka&objednavka=ukazka#main"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Objednávka (ukážka): kroky služba → barber → deň/čas klávesnicou",
+   "ok": false,
+   "detail": [
+    {
+     "krok": 0,
+     "volba": "pondelok 26. októbra o 14:00",
+     "open": true,
+     "nadpis": "Tvoj výber",
+     "act": "h2#obj-h.obj-h",
+     "inDlg": true
+    },
+    {
+     "krok": 1,
+     "chyba": "nenašiel som voľbu",
+     "akt": "Dokončiť v rezervačnom systéme"
+    }
+   ]
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Objednávka (ukážka): Esc zavrie, fokus späť na odkaz",
+   "ok": false,
+   "detail": {
+    "odkaz": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+    "open": false,
+    "act": "html.karty.world > body"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Asistent (ukážka): Enter otvorí panel, fokus vnútri",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "exp": "true",
+    "act": "html.karty.world > body > section#asi-panel.asi-panel",
+    "inP": true
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Asistent (ukážka): výber otázky klávesnicou pridá odpoveď",
+   "ok": true,
+   "detail": {
+    "pred": 1,
+    "po": 3,
+    "act": "section#asi-panel.asi-panel"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Asistent (ukážka): Esc zavrie, fokus späť na tlačidlo",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "act": "html.karty.world > body > button.asi-btn.is-on"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Jazyk",
+   "ok": true,
+   "detail": "tlačidlo jazyka nie je viditeľné (ponuka je rozbalená alebo chýba) – preskočené"
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Hudba: tlačidlo s aria-pressed",
+   "ok": true,
+   "detail": {
+    "d": "body > header.site-header > div.container > button.hudba",
+    "pressed": "false",
+    "vis": true,
+    "name": "Hudba"
+   }
+  },
+  {
+   "zar": "telefon",
+   "nazov": "Rezervácia (stránka, ukážka): kroky na stránke ovládateľné klávesnicou",
+   "ok": true,
+   "detail": {
+    "info": {
+     "kroky": true,
+     "tlacidiel": 16,
+     "h1": "Kedy si sadneš?"
+    },
+    "vybrane": {
+     "pred": "Preskočiť na obsah\n\n  \n  \n    \n      Bar",
+     "po": {
+      "act": "body.rez",
+      "txt": "Preskočiť na obsah\n\n  \n  \n    \n      Bar"
+     }
+    },
+    "chyby": []
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Preskočiť na obsah",
+   "ok": true,
+   "detail": {
+    "prvy": "html.karty.world > body > a.skip-link „Preskočiť na obsah“",
+    "poSkip": {
+     "hash": "#main",
+     "y": 0,
+     "act": "body"
+    }
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Galéria: Enter otvorí zväčšenú fotku, fokus v okne",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "act": "html.karty.world > body > div#lightbox.lightbox > button.lightbox-btn.lightbox-close",
+    "inLb": true,
+    "img": "naradie-noznice-1600.jpg"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Galéria: šípka vpravo ďalšia fotka",
+   "ok": true,
+   "detail": {
+    "pred": "naradie-noznice-1600.jpg",
+    "po": "detail-stol-1600.jpg"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Galéria: Tab ostáva v okne (5×)",
+   "ok": true,
+   "detail": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Galéria: Esc zavrie, fokus späť na fotku",
+   "ok": true,
+   "detail": {
+    "opener": "div.gallery > ul.gallery-grid > li.gallery-item.is-wide > button.gallery-btn.media „Zväčšiť: Nožnice a hrebeň na b“",
+    "open": false,
+    "act": "div.gallery > ul.gallery-grid > li.gallery-item.is-wide > button.gallery-btn.media"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Časté otázky: Enter otvorí, medzera zavrie",
+   "ok": true,
+   "detail": {
+    "o1": true,
+    "o2": false
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Objednávka (ukážka): Enter na Objednať sa otvorí modálne okno s fokusom vnútri",
+   "ok": true,
+   "detail": {
+    "odkaz": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+    "open": true,
+    "modal": true,
+    "act": "body > dialog.obj > div.obj-obsah > h2#obj-h.obj-h",
+    "inDlg": true,
+    "url": "index.html?asistent=ukazka&objednavka=ukazka#main"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Objednávka (ukážka): kroky služba → barber → deň/čas klávesnicou",
+   "ok": false,
+   "detail": [
+    {
+     "krok": 0,
+     "volba": "pondelok 26. októbra o 14:00",
+     "open": true,
+     "nadpis": "Tvoj výber",
+     "act": "h2#obj-h.obj-h",
+     "inDlg": true
+    },
+    {
+     "krok": 1,
+     "chyba": "nenašiel som voľbu",
+     "akt": "Dokončiť v rezervačnom systéme"
+    }
+   ]
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Objednávka (ukážka): Esc zavrie, fokus späť na odkaz",
+   "ok": false,
+   "detail": {
+    "odkaz": "section.price-group > ul > li.price-row > a.btn.btn-ghost",
+    "open": false,
+    "act": "html.karty.world > body"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Asistent (ukážka): Enter otvorí panel, fokus vnútri",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "exp": "true",
+    "act": "body > section#asi-panel.asi-panel > form.asi-form > textarea",
+    "inP": true
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Asistent (ukážka): výber otázky klávesnicou pridá odpoveď",
+   "ok": false,
+   "detail": null
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Asistent (ukážka): Esc zavrie, fokus späť na tlačidlo",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "act": "html.karty.world > body > button.asi-btn.is-on"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Jazyk: Enter otvorí ponuku, fokus na voľbe",
+   "ok": true,
+   "detail": {
+    "exp": "true",
+    "act": "button.lang-opt",
+    "role": "menuitemradio"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Jazyk: šípka dole posunie fokus v ponuke (role menu)",
+   "ok": true,
+   "detail": {
+    "act": "button.lang-opt",
+    "lang": "en"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Jazyk: Esc zavrie, fokus späť na tlačidlo",
+   "ok": true,
+   "detail": {
+    "exp": "false",
+    "act": "button.lang-btn"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Hudba: tlačidlo s aria-pressed",
+   "ok": true,
+   "detail": {
+    "d": "body > header.site-header > div.container > button.hudba",
+    "pressed": "false",
+    "vis": true,
+    "name": "Hudba"
+   }
+  },
+  {
+   "zar": "pocitac",
+   "nazov": "Rezervácia (stránka, ukážka): kroky na stránke ovládateľné klávesnicou",
+   "ok": true,
+   "detail": {
+    "info": {
+     "kroky": true,
+     "tlacidiel": 16,
+     "h1": "Kedy si sadneš?"
+    },
+    "vybrane": {
+     "pred": "Preskočiť na obsah\n\n  \n  \n    \n      Bar",
+     "po": {
+      "act": "body.rez",
+      "txt": "Preskočiť na obsah\n\n  \n  \n    \n      Bar"
+     }
+    },
+    "chyby": []
+   }
+  }
+ ]
+}

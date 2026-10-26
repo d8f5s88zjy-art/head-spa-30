@@ -1,0 +1,578 @@
+[
+ {
+  "zar": "telefon",
+  "url": "admin/index.html",
+  "git": "102c5ee Barbershop 30: filmová scéna bez čiernych škvŕn pri pohybe do hĺbky | zmeny: žiadne",
+  "chyby": [],
+  "http4xx": [],
+  "dom": {
+   "lang": "sk",
+   "title": "Admin · Barbershop 30",
+   "h1": 1,
+   "nadpisy": 2,
+   "skoky": [],
+   "dup": [],
+   "zlyOdkaz": [],
+   "zlaRola": [],
+   "skrytyFokus": [],
+   "kladnyTab": [],
+   "bezAlt": [],
+   "svgBez": [],
+   "landmarks": {
+    "header": 1,
+    "main": 1,
+    "nav": [
+     "Časti adminu"
+    ],
+    "footer": 0
+   },
+   "blank": 2,
+   "blankBezUpoz": 2,
+   "ovl": [],
+   "autoplay": [],
+   "jazykyCudzie": [],
+   "tlacidloBezTypu": [],
+   "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "zoomZakazany": false
+  },
+  "bezMena": [],
+  "roly": {
+   "RootWebArea": 1,
+   "banner": 1,
+   "main": 1,
+   "StaticText": 25,
+   "emphasis": 1,
+   "generic": 2,
+   "InlineTextBox": 33,
+   "heading": 2,
+   "paragraph": 4,
+   "LabelText": 1,
+   "textbox": 1,
+   "checkbox": 1,
+   "button": 1,
+   "list": 1,
+   "listitem": 5,
+   "ListMarker": 5,
+   "link": 1
+  },
+  "kontrast": {
+   "spolu": 21,
+   "farby": 21,
+   "pixely": 0,
+   "preskocene": 0,
+   "slabe": [],
+   "vsetky": [
+    {
+     "i": 0,
+     "d": "body > header.top > div.in > span.brand",
+     "t": "Barbershop 30admin",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 20,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 1,
+     "d": "header.top > div.in > span.brand > em",
+     "t": "admin",
+     "fg": [
+      240,
+      126,
+      60,
+      1
+     ],
+     "fs": 13,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.17
+    },
+    {
+     "i": 4,
+     "d": "body > main > section#login.login > h1",
+     "t": "Admin webu",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 28,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 5,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Tu zmeníš texty, cenník, tím a fotky web",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 6,
+     "d": "main > section#login.login > div.f > label",
+     "t": "Kľúč k webu",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 14.5,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 7,
+     "d": "main > section#login.login > div.f > p.kind",
+     "t": "Kľúč je heslo pre úpravy webu. Zadáš ho ",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 14,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 8,
+     "d": "body > main > section#login.login > label.chk",
+     "t": "Zapamätať v tomto prehliadači",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 9,
+     "d": "main > section#login.login > div.btns > button#prihlasit.btn",
+     "t": "Prihlásiť",
+     "fg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "fs": 15,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      224,
+      96,
+      28,
+      1
+     ],
+     "kontrast": 5.42
+    },
+    {
+     "i": 10,
+     "d": "body > main > section#login.login > h2",
+     "t": "Ako získam kľúč",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 22,
+     "fw": 800,
+     "velky": true,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 11,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Kľúč vytvorí raz správca webu na účte, k",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 12,
+     "d": "main > section#login.login > ol > li",
+     "t": "Otvor github.com/settings/personal-acces",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 13,
+     "d": "section#login.login > ol > li > a",
+     "t": "github.com/settings/personal-access-toke",
+     "fg": [
+      240,
+      126,
+      60,
+      1
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.17
+    },
+    {
+     "i": 14,
+     "d": "main > section#login.login > ol > li",
+     "t": "Názov napr. Admin Barbershop, platnosť p",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 15,
+     "d": "section#login.login > ol > li > b",
+     "t": "Admin Barbershop",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 16,
+     "d": "main > section#login.login > ol > li",
+     "t": "Repository access: Only select repositor",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 17,
+     "d": "section#login.login > ol > li > b",
+     "t": "Only select repositories",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 18,
+     "d": "main > section#login.login > ol > li",
+     "t": "Permissions → Repository permissions → C",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 19,
+     "d": "section#login.login > ol > li > b",
+     "t": "Contents: Read and write",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 20,
+     "d": "main > section#login.login > ol > li",
+     "t": "Klikni Generate token, kľúč skopíruj a v",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    },
+    {
+     "i": 21,
+     "d": "section#login.login > ol > li > b",
+     "t": "Generate token",
+     "fg": [
+      241,
+      233,
+      221,
+      1
+     ],
+     "fs": 16,
+     "fw": 700,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 16.12
+    },
+    {
+     "i": 22,
+     "d": "body > main > section#login.login > p.lead",
+     "t": "Keď kľúč stratíš alebo ho niekto videl, ",
+     "fg": [
+      241,
+      233,
+      221,
+      0.68
+     ],
+     "fs": 16,
+     "fw": 400,
+     "velky": false,
+     "op": 1,
+     "metoda": "farby",
+     "bg": [
+      14,
+      13,
+      12,
+      1
+     ],
+     "kontrast": 7.72
+    }
+   ]
+  },
+  "ciele": {
+   "spolu": 4,
+   "male": [
+    {
+     "i": 1,
+     "d": "main > section#login.login > label.chk > input#zapamatat",
+     "t": "",
+     "w": 22,
+     "h": 22,
+     "bw": 22,
+     "bh": 22,
+     "inline": false
+    },
+    {
+     "i": 3,
+     "d": "section#login.login > ol > li > a",
+     "t": "github.com/settings/personal-a",
+     "w": 121,
+     "h": 23,
+     "bw": 286,
+     "bh": 22,
+     "inline": true
+    }
+   ],
+   "prekryte": [],
+   "mimo": 0
+  }
+ }
+]

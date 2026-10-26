@@ -1,0 +1,1020 @@
+[
+ {
+  "zar": "telefon",
+  "url": "index.html",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+  "zataz": [
+   [
+    12.99,
+    9.56,
+    4.49
+   ],
+   [
+    16.74,
+    11.51,
+    5.6
+   ]
+  ],
+  "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+  "canvas": [],
+  "vyska": 17255,
+  "dosiahnute": 17255,
+  "chyby": [],
+  "celkovo": {
+   "snimok": 648,
+   "median": 33.3,
+   "p95": 216.6,
+   "p99": 633.3,
+   "max": 2916.6,
+   "nad33": 240,
+   "nad50": 156,
+   "nad100": 80,
+   "plynule": 45
+  },
+  "sekcie": {
+   "uvod": {
+    "snimok": 22,
+    "median": 33.3,
+    "p95": 83.4,
+    "p99": 100,
+    "max": 100,
+    "nad33": 8,
+    "nad50": 6,
+    "nad100": 0,
+    "plynule": 41
+   },
+   "vstup-dnu": {
+    "snimok": 32,
+    "median": 33.4,
+    "p95": 249.9,
+    "p99": 466.6,
+    "max": 466.6,
+    "nad33": 15,
+    "nad50": 9,
+    "nad100": 4,
+    "plynule": 25
+   },
+   "remeslo": {
+    "snimok": 27,
+    "median": 16.7,
+    "p95": 133.4,
+    "p99": 2916.6,
+    "max": 2916.6,
+    "nad33": 7,
+    "nad50": 5,
+    "nad100": 4,
+    "plynule": 67
+   },
+   "cakaren": {
+    "snimok": 29,
+    "median": 33.3,
+    "p95": 216.6,
+    "p99": 316.7,
+    "max": 316.7,
+    "nad33": 12,
+    "nad50": 7,
+    "nad100": 4,
+    "plynule": 45
+   },
+   "tim": {
+    "snimok": 114,
+    "median": 33.3,
+    "p95": 150,
+    "p99": 583.4,
+    "max": 1566.6,
+    "nad33": 46,
+    "nad50": 24,
+    "nad100": 12,
+    "plynule": 36
+   },
+   "sluzby": {
+    "snimok": 127,
+    "median": 16.7,
+    "p95": 249.9,
+    "p99": 449.9,
+    "max": 1483.3,
+    "nad33": 34,
+    "nad50": 23,
+    "nad100": 15,
+    "plynule": 53
+   },
+   "galeria": {
+    "snimok": 118,
+    "median": 33.3,
+    "p95": 283.3,
+    "p99": 516.7,
+    "max": 750,
+    "nad33": 53,
+    "nad50": 35,
+    "nad100": 16,
+    "plynule": 36
+   },
+   "rezervacia": {
+    "snimok": 158,
+    "median": 33.3,
+    "p95": 349.9,
+    "p99": 733.3,
+    "max": 2349.9,
+    "nad33": 64,
+    "nad50": 47,
+    "nad100": 25,
+    "plynule": 49
+   },
+   "kontakt": {
+    "snimok": 21,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 33.4,
+    "nad33": 1,
+    "nad50": 0,
+    "nad100": 0,
+    "plynule": 86
+   }
+  },
+  "loaf": {
+   "pocet": 226,
+   "nad100": 136,
+   "najdlhsie": [
+    {
+     "t": 48141,
+     "d": 2234,
+     "b": 2110,
+     "sl": 27,
+     "s": []
+    },
+    {
+     "t": 61764,
+     "d": 1838,
+     "b": 1742,
+     "sl": 11,
+     "s": []
+    },
+    {
+     "t": 16670,
+     "d": 1379,
+     "b": 0,
+     "sl": 17,
+     "s": []
+    },
+    {
+     "t": 41363,
+     "d": 1294,
+     "b": 1137,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 10603,
+     "d": 1021,
+     "b": 971,
+     "sl": 17,
+     "s": []
+    },
+    {
+     "t": 73465,
+     "d": 977,
+     "b": 0,
+     "sl": 7,
+     "s": []
+    },
+    {
+     "t": 71723,
+     "d": 928,
+     "b": 0,
+     "sl": 10,
+     "s": [
+      {
+       "f": "app.js",
+       "fn": "tick",
+       "d": 6,
+       "i": "TimerHandler:setTimeout",
+       "it": "user-callback"
+      },
+      {
+       "f": "app.js",
+       "fn": "tick",
+       "d": 6,
+       "i": "TimerHandler:setTimeout",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 23897,
+     "d": 871,
+     "b": 821,
+     "sl": 1,
+     "s": []
+    }
+   ],
+   "podlaSkriptu": [
+    [
+     "?::user-callback",
+     {
+      "n": 16,
+      "ms": 234
+     }
+    ],
+    [
+     "atmosfera.js::event-listener",
+     {
+      "n": 1,
+      "ms": 221
+     }
+    ],
+    [
+     "app.js:tick:user-callback",
+     {
+      "n": 20,
+      "ms": 147
+     }
+    ],
+    [
+     "app.js::user-callback",
+     {
+      "n": 2,
+      "ms": 14
+     }
+    ],
+    [
+     "app.js:scheduleMeasure:user-callback",
+     {
+      "n": 1,
+      "ms": 8
+     }
+    ],
+    [
+     "atmosfera.js::resolve-promise",
+     {
+      "n": 1,
+      "ms": 7
+     }
+    ]
+   ]
+  },
+  "dlheUlohy": {
+   "pocet": 45,
+   "sucetNad50": 10715,
+   "max": 2188
+  },
+  "pamatPred": {
+   "jsHeapMB": 1.3,
+   "jsHeapTotalMB": 2,
+   "uzly": 2570,
+   "dokumenty": 2,
+   "posluchaci": 72,
+   "layoutov": 12,
+   "stylov": 212,
+   "rssMB": null
+  },
+  "pamatPo": {
+   "jsHeapMB": 1.4,
+   "jsHeapTotalMB": 2.5,
+   "uzly": 2570,
+   "dokumenty": 2,
+   "posluchaci": 58,
+   "layoutov": 266,
+   "stylov": 1988,
+   "rssMB": null
+  }
+ },
+ {
+  "zar": "telefon",
+  "url": "index.html?film=on",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: M barbershop-30/assets/film.js",
+  "zataz": [
+   [
+    16.94,
+    11.72,
+    5.73
+   ],
+   [
+    28.58,
+    22.25,
+    12
+   ]
+  ],
+  "trieda": "karty world js-odhal js-kin js-steps js-cennik world-in",
+  "canvas": [
+   {
+    "cl": "film-canvas",
+    "w": 682,
+    "h": 1477
+   }
+  ],
+  "vyska": 17255,
+  "dosiahnute": 4489,
+  "chyby": [],
+  "celkovo": {
+   "snimok": 145,
+   "median": 133.3,
+   "p95": 3866.5,
+   "p99": 8166.3,
+   "max": 23115.8,
+   "nad33": 124,
+   "nad50": 108,
+   "nad100": 85,
+   "plynule": 3
+  },
+  "sekcie": {
+   "uvod": {
+    "snimok": 20,
+    "median": 116.7,
+    "p95": 3916.5,
+    "p99": 3916.5,
+    "max": 3916.5,
+    "nad33": 16,
+    "nad50": 12,
+    "nad100": 11,
+    "plynule": 0
+   },
+   "vstup-dnu": {
+    "snimok": 25,
+    "median": 133.4,
+    "p95": 5483.1,
+    "p99": 23115.8,
+    "max": 23115.8,
+    "nad33": 22,
+    "nad50": 20,
+    "nad100": 18,
+    "plynule": 0
+   },
+   "remeslo": {
+    "snimok": 25,
+    "median": 149.9,
+    "p95": 3899.8,
+    "p99": 5583.1,
+    "max": 5583.1,
+    "nad33": 22,
+    "nad50": 20,
+    "nad100": 15,
+    "plynule": 4
+   },
+   "cakaren": {
+    "snimok": 23,
+    "median": 283.3,
+    "p95": 2049.9,
+    "p99": 3249.8,
+    "max": 3249.8,
+    "nad33": 19,
+    "nad50": 16,
+    "nad100": 12,
+    "plynule": 4
+   },
+   "tim": {
+    "snimok": 52,
+    "median": 150,
+    "p95": 3866.5,
+    "p99": 8166.3,
+    "max": 8166.3,
+    "nad33": 45,
+    "nad50": 40,
+    "nad100": 29,
+    "plynule": 4
+   }
+  },
+  "loaf": {
+   "pocet": 214,
+   "nad100": 185,
+   "najdlhsie": [
+    {
+     "t": 72717,
+     "d": 30493,
+     "b": 0,
+     "sl": 15,
+     "s": [
+      {
+       "f": "film.js",
+       "fn": "frame",
+       "d": 7,
+       "i": "FrameRequestCallback",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 49659,
+     "d": 23046,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    },
+    {
+     "t": 203771,
+     "d": 11027,
+     "b": 0,
+     "sl": 9,
+     "s": [
+      {
+       "f": "film.js",
+       "fn": "frame",
+       "d": 14,
+       "i": "FrameRequestCallback",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 143530,
+     "d": 10581,
+     "b": 0,
+     "sl": 13,
+     "s": []
+    },
+    {
+     "t": 160282,
+     "d": 8376,
+     "b": 65,
+     "sl": 23,
+     "s": [
+      {
+       "f": "film.js",
+       "fn": "",
+       "d": 5,
+       "i": "TimerHandler:setTimeout",
+       "it": "user-callback"
+      },
+      {
+       "f": "film.js",
+       "fn": "frame",
+       "d": 17,
+       "i": "FrameRequestCallback",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 240613,
+     "d": 8150,
+     "b": 0,
+     "sl": 4,
+     "s": []
+    },
+    {
+     "t": 130179,
+     "d": 5565,
+     "b": 0,
+     "sl": 3,
+     "s": []
+    },
+    {
+     "t": 103219,
+     "d": 5478,
+     "b": 0,
+     "sl": 15,
+     "s": []
+    }
+   ],
+   "podlaSkriptu": [
+    [
+     "film.js:frame:user-callback",
+     {
+      "n": 59,
+      "ms": 1063
+     }
+    ],
+    [
+     "film.js::event-listener",
+     {
+      "n": 4,
+      "ms": 137
+     }
+    ],
+    [
+     "film.js::resolve-promise",
+     {
+      "n": 4,
+      "ms": 85
+     }
+    ],
+    [
+     "atmosfera.js::event-listener",
+     {
+      "n": 1,
+      "ms": 52
+     }
+    ],
+    [
+     "app.js:tick:user-callback",
+     {
+      "n": 4,
+      "ms": 30
+     }
+    ],
+    [
+     "?::user-callback",
+     {
+      "n": 4,
+      "ms": 22
+     }
+    ],
+    [
+     "atmosfera.js::resolve-promise",
+     {
+      "n": 1,
+      "ms": 14
+     }
+    ],
+    [
+     "i18n.js::user-callback",
+     {
+      "n": 1,
+      "ms": 13
+     }
+    ],
+    [
+     "app.js:stavTeraz:user-callback",
+     {
+      "n": 2,
+      "ms": 13
+     }
+    ],
+    [
+     "film.js::user-callback",
+     {
+      "n": 2,
+      "ms": 12
+     }
+    ]
+   ]
+  },
+  "dlheUlohy": {
+   "pocet": 30,
+   "sucetNad50": 5075,
+   "max": 2781
+  },
+  "pamatPred": {
+   "jsHeapMB": 3.2,
+   "jsHeapTotalMB": 3.8,
+   "uzly": 2595,
+   "dokumenty": 2,
+   "posluchaci": 86,
+   "layoutov": 13,
+   "stylov": 88,
+   "rssMB": null
+  },
+  "pamatPo": {
+   "jsHeapMB": 3.6,
+   "jsHeapTotalMB": 4.3,
+   "uzly": 2597,
+   "dokumenty": 2,
+   "posluchaci": 80,
+   "layoutov": 57,
+   "stylov": 592,
+   "rssMB": null
+  }
+ },
+ {
+  "zar": "pocitac",
+  "url": "index.html",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: M barbershop-30/assets/film.js",
+  "zataz": [
+   [
+    27.58,
+    22.24,
+    12.1
+   ],
+   [
+    17.56,
+    20.05,
+    12.44
+   ]
+  ],
+  "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+  "canvas": [],
+  "vyska": 18089,
+  "dosiahnute": 18089,
+  "chyby": [],
+  "celkovo": {
+   "snimok": 772,
+   "median": 100.1,
+   "p95": 349.9,
+   "p99": 666.7,
+   "max": 950,
+   "nad33": 687,
+   "nad50": 622,
+   "nad100": 389,
+   "plynule": 7
+  },
+  "sekcie": {
+   "uvod": {
+    "snimok": 21,
+    "median": 16.7,
+    "p95": 133.3,
+    "p99": 200,
+    "max": 200,
+    "nad33": 10,
+    "nad50": 10,
+    "nad100": 4,
+    "plynule": 52
+   },
+   "vstup-dnu": {
+    "snimok": 27,
+    "median": 149.9,
+    "p95": 416.7,
+    "p99": 666.7,
+    "max": 666.7,
+    "nad33": 26,
+    "nad50": 26,
+    "nad100": 16,
+    "plynule": 4
+   },
+   "remeslo": {
+    "snimok": 24,
+    "median": 200,
+    "p95": 550,
+    "p99": 783.3,
+    "max": 783.3,
+    "nad33": 23,
+    "nad50": 21,
+    "nad100": 18,
+    "plynule": 0
+   },
+   "cakaren": {
+    "snimok": 23,
+    "median": 116.6,
+    "p95": 333.2,
+    "p99": 599.9,
+    "max": 599.9,
+    "nad33": 21,
+    "nad50": 18,
+    "nad100": 12,
+    "plynule": 4
+   },
+   "tim": {
+    "snimok": 162,
+    "median": 83.4,
+    "p95": 366.7,
+    "p99": 700,
+    "max": 750,
+    "nad33": 135,
+    "nad50": 116,
+    "nad100": 71,
+    "plynule": 11
+   },
+   "sluzby": {
+    "snimok": 160,
+    "median": 100.1,
+    "p95": 300,
+    "p99": 366.6,
+    "max": 816.6,
+    "nad33": 150,
+    "nad50": 135,
+    "nad100": 86,
+    "plynule": 3
+   },
+   "galeria": {
+    "snimok": 174,
+    "median": 116.7,
+    "p95": 450.1,
+    "p99": 799.9,
+    "max": 950,
+    "nad33": 160,
+    "nad50": 152,
+    "nad100": 107,
+    "plynule": 5
+   },
+   "rezervacia": {
+    "snimok": 181,
+    "median": 83.4,
+    "p95": 233.3,
+    "p99": 333.3,
+    "max": 616.7,
+    "nad33": 162,
+    "nad50": 144,
+    "nad100": 75,
+    "plynule": 6
+   }
+  },
+  "loaf": {
+   "pocet": 612,
+   "nad100": 373,
+   "najdlhsie": [
+    {
+     "t": 66676,
+     "d": 1022,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    },
+    {
+     "t": 89254,
+     "d": 967,
+     "b": 0,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 44996,
+     "d": 796,
+     "b": 0,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 16465,
+     "d": 773,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    },
+    {
+     "t": 24699,
+     "d": 755,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    },
+    {
+     "t": 88582,
+     "d": 670,
+     "b": 0,
+     "sl": 5,
+     "s": []
+    },
+    {
+     "t": 10460,
+     "d": 654,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    },
+    {
+     "t": 24048,
+     "d": 646,
+     "b": 0,
+     "sl": 4,
+     "s": []
+    }
+   ],
+   "podlaSkriptu": [
+    [
+     "app.js:tick:user-callback",
+     {
+      "n": 2,
+      "ms": 27
+     }
+    ]
+   ]
+  },
+  "dlheUlohy": {
+   "pocet": 28,
+   "sucetNad50": 3157,
+   "max": 476
+  },
+  "pamatPred": {
+   "jsHeapMB": 1.2,
+   "jsHeapTotalMB": 1.8,
+   "uzly": 2592,
+   "dokumenty": 2,
+   "posluchaci": 78,
+   "layoutov": 8,
+   "stylov": 42,
+   "rssMB": null
+  },
+  "pamatPo": {
+   "jsHeapMB": 1.5,
+   "jsHeapTotalMB": 2.5,
+   "uzly": 2564,
+   "dokumenty": 2,
+   "posluchaci": 68,
+   "layoutov": 286,
+   "stylov": 1573,
+   "rssMB": null
+  }
+ },
+ {
+  "zar": "pocitac",
+  "url": "index.html?film=on",
+  "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: M barbershop-30/assets/film.js",
+  "zataz": [
+   [
+    19.25,
+    20.33,
+    12.61
+   ],
+   [
+    16.52,
+    18.43,
+    14.06
+   ]
+  ],
+  "trieda": "karty world js-odhal js-kin js-steps js-cennik world-in",
+  "canvas": [
+   {
+    "cl": "film-canvas",
+    "w": 1440,
+    "h": 900
+   }
+  ],
+  "vyska": 18089,
+  "dosiahnute": 7394,
+  "chyby": [],
+  "celkovo": {
+   "snimok": 273,
+   "median": 616.6,
+   "p95": 3716.6,
+   "p99": 7449.8,
+   "max": 19199.2,
+   "nad33": 257,
+   "nad50": 248,
+   "nad100": 234,
+   "plynule": 4
+  },
+  "sekcie": {
+   "uvod": {
+    "snimok": 13,
+    "median": 666.7,
+    "p95": 3666.5,
+    "p99": 3666.5,
+    "max": 3666.5,
+    "nad33": 13,
+    "nad50": 13,
+    "nad100": 13,
+    "plynule": 0
+   },
+   "vstup-dnu": {
+    "snimok": 20,
+    "median": 550,
+    "p95": 3716.6,
+    "p99": 3716.6,
+    "max": 3716.6,
+    "nad33": 20,
+    "nad50": 20,
+    "nad100": 19,
+    "plynule": 0
+   },
+   "remeslo": {
+    "snimok": 19,
+    "median": 1816.7,
+    "p95": 8533,
+    "p99": 8533,
+    "max": 8533,
+    "nad33": 19,
+    "nad50": 19,
+    "nad100": 18,
+    "plynule": 0
+   },
+   "cakaren": {
+    "snimok": 19,
+    "median": 1199.9,
+    "p95": 3166.5,
+    "p99": 3166.5,
+    "max": 3166.5,
+    "nad33": 19,
+    "nad50": 19,
+    "nad100": 18,
+    "plynule": 0
+   },
+   "tim": {
+    "snimok": 159,
+    "median": 633.3,
+    "p95": 3916.5,
+    "p99": 7449.8,
+    "max": 19199.2,
+    "nad33": 145,
+    "nad50": 137,
+    "nad100": 128,
+    "plynule": 6
+   },
+   "sluzby": {
+    "snimok": 43,
+    "median": 450,
+    "p95": 1199.9,
+    "p99": 1383.4,
+    "max": 1383.4,
+    "nad33": 41,
+    "nad50": 40,
+    "nad100": 38,
+    "plynule": 5
+   }
+  },
+  "loaf": {
+   "pocet": 215,
+   "nad100": 201,
+   "najdlhsie": [
+    {
+     "t": 217026,
+     "d": 19206,
+     "b": 0,
+     "sl": 0,
+     "s": [
+      {
+       "f": "film.js",
+       "fn": "frame",
+       "d": 7,
+       "i": "FrameRequestCallback",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 66772,
+     "d": 8528,
+     "b": 0,
+     "sl": 4,
+     "s": []
+    },
+    {
+     "t": 242279,
+     "d": 7477,
+     "b": 0,
+     "sl": 0,
+     "s": [
+      {
+       "f": "film.js",
+       "fn": "frame",
+       "d": 8,
+       "i": "FrameRequestCallback",
+       "it": "user-callback"
+      }
+     ]
+    },
+    {
+     "t": 260809,
+     "d": 6232,
+     "b": 0,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 199451,
+     "d": 4889,
+     "b": 0,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 204340,
+     "d": 4878,
+     "b": 0,
+     "sl": 0,
+     "s": []
+    },
+    {
+     "t": 57445,
+     "d": 4795,
+     "b": 0,
+     "sl": 5,
+     "s": []
+    },
+    {
+     "t": 53154,
+     "d": 4289,
+     "b": 0,
+     "sl": 2,
+     "s": []
+    }
+   ],
+   "podlaSkriptu": [
+    [
+     "film.js:frame:user-callback",
+     {
+      "n": 28,
+      "ms": 337
+     }
+    ],
+    [
+     "app.js::user-callback",
+     {
+      "n": 1,
+      "ms": 40
+     }
+    ],
+    [
+     "film.js::user-callback",
+     {
+      "n": 1,
+      "ms": 6
+     }
+    ]
+   ]
+  },
+  "dlheUlohy": {
+   "pocet": 38,
+   "sucetNad50": 33087,
+   "max": 6047
+  },
+  "pamatPred": {
+   "jsHeapMB": 3.3,
+   "jsHeapTotalMB": 3.8,
+   "uzly": 2587,
+   "dokumenty": 2,
+   "posluchaci": 91,
+   "layoutov": 14,
+   "stylov": 69,
+   "rssMB": null
+  },
+  "pamatPo": {
+   "jsHeapMB": 3.6,
+   "jsHeapTotalMB": 4.5,
+   "uzly": 2589,
+   "dokumenty": 2,
+   "posluchaci": 89,
+   "layoutov": 83,
+   "stylov": 541,
+   "rssMB": null
+  }
+ }
+]

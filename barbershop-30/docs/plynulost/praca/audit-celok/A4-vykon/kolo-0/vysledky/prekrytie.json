@@ -1,0 +1,141 @@
+{
+ "git": "102c5ee",
+ "prekrytia": [
+  {
+   "t": "Objednať sa",
+   "sec": "",
+   "y": 0,
+   "top": 672,
+   "bottom": 716,
+   "ok": true,
+   "cta": false,
+   "kto": "a.btn",
+   "ctaHidden": true,
+   "vidiene": 25,
+   "zakryte": 18,
+   "zakryteCta": 0
+  },
+  {
+   "t": "Zavolať a potvrdiť termín",
+   "sec": "",
+   "y": 0,
+   "top": 724,
+   "bottom": 768,
+   "ok": true,
+   "cta": false,
+   "kto": "a.btn",
+   "ctaHidden": true,
+   "vidiene": 25,
+   "zakryte": 20,
+   "zakryteCta": 0
+  },
+  {
+   "t": "Pozri celý cenník→",
+   "sec": "",
+   "y": 4200,
+   "top": 732,
+   "bottom": 772,
+   "ok": true,
+   "cta": false,
+   "kto": "a.hook",
+   "ctaHidden": false,
+   "vidiene": 8,
+   "zakryte": 2,
+   "zakryteCta": 0
+  },
+  {
+   "t": "Príď to zažiť, objednaj sa→",
+   "sec": "",
+   "y": 8160,
+   "top": 809,
+   "bottom": 849,
+   "ok": true,
+   "cta": false,
+   "kto": "a.hook",
+   "ctaHidden": true,
+   "vidiene": 9,
+   "zakryte": 3,
+   "zakryteCta": 0
+  },
+  {
+   "t": "Objednaj sa online→",
+   "sec": "",
+   "y": 11400,
+   "top": 799,
+   "bottom": 839,
+   "ok": false,
+   "cta": true,
+   "kto": "a.btn",
+   "ctaHidden": false,
+   "vidiene": 6,
+   "zakryte": 6,
+   "zakryteCta": 1
+  }
+ ],
+ "hlavicka": [
+  {
+   "zar": "pocitac",
+   "fg": "rgb(201, 190, 174)",
+   "bg": "rgb(224, 96, 28)",
+   "box": [
+    1257,
+    10,
+    143,
+    44
+   ],
+   "menu": "closed",
+   "refFg": "rgb(14, 13, 12)",
+   "refBg": "rgb(224, 96, 28)",
+   "kontrast": 1.96,
+   "kontrastInde": 5.42
+  },
+  {
+   "zar": "telefon",
+   "fg": "rgb(241, 233, 221)",
+   "bg": "rgb(224, 96, 28)",
+   "box": [
+    16,
+    556,
+    358,
+    44
+   ],
+   "menu": "open",
+   "refFg": "rgb(14, 13, 12)",
+   "refBg": "rgb(224, 96, 28)",
+   "kontrast": 2.98,
+   "kontrastInde": 5.42
+  }
+ ],
+ "skip": [
+  {
+   "zar": "pocitac",
+   "akt": "skip-link",
+   "text": "Preskočiť na obsah",
+   "box": [
+    12,
+    12,
+    181,
+    50
+   ],
+   "transform": "matrix(1, 0, 0, 1, 0, -0.115688)",
+   "opacity": "1",
+   "vOkne": true,
+   "fv": true
+  },
+  {
+   "zar": "telefon",
+   "akt": "skip-link",
+   "text": "Preskočiť na obsah",
+   "box": [
+    12,
+    12,
+    181,
+    50
+   ],
+   "transform": "none",
+   "opacity": "1",
+   "vOkne": true,
+   "fv": true
+  }
+ ]
+}
