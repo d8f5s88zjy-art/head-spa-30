@@ -1,0 +1,2307 @@
+{
+ "site": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny/barbershop-30",
+ "base": "https://d8f5s88zjy-art.github.io/barbershop30/",
+ "datum": "2026-10-26T08:51:48.765Z",
+ "nalezy": [
+  {
+   "lvl": "INFO",
+   "kod": "BASE",
+   "text": "základná adresa z canonical index.html: https://d8f5s88zjy-art.github.io/barbershop30/",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "OK",
+   "kod": "lang",
+   "text": "lang=\"sk\"",
+   "kde": "index.html:2"
+  },
+  {
+   "lvl": "OK",
+   "kod": "viewport",
+   "text": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "kde": "index.html:5"
+  },
+  {
+   "lvl": "OK",
+   "kod": "title",
+   "text": "„Barbershop 30 Nitra | Pánske holičstvo, Mostná 30“ (49 znakov, odporúčané 30–60)",
+   "kde": "index.html:6"
+  },
+  {
+   "lvl": "OK",
+   "kod": "description",
+   "text": "131 znakov (odporúčané 70–160): „Pánske holičstvo na Mostnej 30 v Nitre: strih, fade, úprava brady a holenie britvou, káva zdarma. Objednaj sa online alebo zavolaj.“",
+   "kde": "index.html:7"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots",
+   "text": "(bez meta robots = indexovať)",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "canonical",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/",
+   "kde": "index.html:24"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "hreflang-html",
+   "text": "v HTML nie je hreflang (je len v sitemap.xml)",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og",
+   "text": "og:type/title/description/url/image/locale/site_name sú",
+   "kde": "index.html:28"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "og-type",
+   "text": "og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website",
+   "kde": "index.html:25"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "og-locale-alt",
+   "text": "chýba og:locale:alternate (druhá jazyková verzia)",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og-image",
+   "text": "assets/og.jpg 1200×630 jpeg, 139 kB",
+   "kde": "index.html:31"
+  },
+  {
+   "lvl": "OK",
+   "kod": "twitter",
+   "text": "twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)",
+   "kde": "index.html:35"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "favicon",
+   "text": "2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
+   "kde": "index.html:36"
+  },
+  {
+   "lvl": "OK",
+   "kod": "apple-touch-icon",
+   "text": "assets/img/ikona/apple-touch-icon.png 180×180",
+   "kde": "index.html:38"
+  },
+  {
+   "lvl": "OK",
+   "kod": "manifest",
+   "text": "assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk",
+   "kde": "index.html:39"
+  },
+  {
+   "lvl": "OK",
+   "kod": "h1",
+   "text": "„Barbershop 30 · Nitra Tvoj strih. Tvoje miesto.“",
+   "kde": "index.html:188"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "img-src",
+   "text": "img so src=\"\" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)",
+   "kde": "index.html:898"
+  },
+  {
+   "lvl": "OK",
+   "kod": "img-alt",
+   "text": "30 obrázkov, všetky majú alt",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "subory",
+   "text": "211 odkazovaných súborov existuje",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "odkazy",
+   "text": "72 odkazov, interných 18, externé domény: www.barbershop30.sk 37×, www.google.com 4×, booqme.app 2×, www.instagram.com 2×, www.facebook.com 1×",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "text",
+   "text": "1010 slov viditeľného textu v HTML bez skriptu",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "slova",
+   "text": "miestne a služobné slová\n          Nitra/Nitre/Nitry: titulok 1, popis 1, H1 1, H2 0, text 10\n          barbershop: titulok 1, popis 0, H1 1, H2 0, text 13\n          barber(i/ka): titulok 0, popis 0, H1 0, H2 0, text 16\n          holičstvo/holič: titulok 1, popis 1, H1 0, H2 0, text 1\n          Mostná/Mostnej: titulok 1, popis 1, H1 0, H2 0, text 7\n          strih: titulok 0, popis 1, H1 1, H2 0, text 36\n          brada/brady: titulok 0, popis 1, H1 0, H2 0, text 18\n          holenie: titulok 0, popis 1, H1 0, H2 0, text 13\n          fade: titulok 0, popis 1, H1 0, H2 0, text 7\n          cenník: titulok 0, popis 0, H1 0, H2 0, text 3\n          centrum/centre: titulok 0, popis 0, H1 0, H2 0, text 0\n          bez objednania: titulok 0, popis 0, H1 0, H2 0, text 0\n          poukážka: titulok 0, popis 0, H1 0, H2 0, text 0\n          detský strih: titulok 0, popis 0, H1 0, H2 0, text 6",
+   "kde": "index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-syntax",
+   "text": "JSON-LD sa dá prečítať (@type BarberShop)",
+   "kde": "index.html:53"
+  },
+  {
+   "lvl": "OK",
+   "kod": "lang",
+   "text": "lang=\"en\"",
+   "kde": "en/index.html:3"
+  },
+  {
+   "lvl": "OK",
+   "kod": "viewport",
+   "text": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "kde": "en/index.html:6"
+  },
+  {
+   "lvl": "OK",
+   "kod": "title",
+   "text": "„Barbershop 30 Nitra | Men's barbershop, Mostná 30“ (49 znakov, odporúčané 30–60)",
+   "kde": "en/index.html:7"
+  },
+  {
+   "lvl": "OK",
+   "kod": "description",
+   "text": "132 znakov (odporúčané 70–160): „Men's barbershop at Mostná 30 in Nitra: haircuts, fades, beard trims and straight razor shaves, free coffee. Book online or call us.“",
+   "kde": "en/index.html:8"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots",
+   "text": "(bez meta robots = indexovať)",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "canonical",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/en/",
+   "kde": "en/index.html:25"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "hreflang-html",
+   "text": "v HTML nie je hreflang (je len v sitemap.xml)",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og",
+   "text": "og:type/title/description/url/image/locale/site_name sú",
+   "kde": "en/index.html:29"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "og-type",
+   "text": "og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website",
+   "kde": "en/index.html:26"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "og-locale-alt",
+   "text": "chýba og:locale:alternate (druhá jazyková verzia)",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og-image",
+   "text": "assets/og.jpg 1200×630 jpeg, 139 kB",
+   "kde": "en/index.html:32"
+  },
+  {
+   "lvl": "OK",
+   "kod": "twitter",
+   "text": "twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)",
+   "kde": "en/index.html:36"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "favicon",
+   "text": "2× rel=icon (data:URI, ../assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
+   "kde": "en/index.html:37"
+  },
+  {
+   "lvl": "OK",
+   "kod": "apple-touch-icon",
+   "text": "../assets/img/ikona/apple-touch-icon.png 180×180",
+   "kde": "en/index.html:39"
+  },
+  {
+   "lvl": "OK",
+   "kod": "manifest",
+   "text": "../assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk",
+   "kde": "en/index.html:40"
+  },
+  {
+   "lvl": "OK",
+   "kod": "h1",
+   "text": "„Barbershop 30 · Nitra Your cut. Your place.“",
+   "kde": "en/index.html:189"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "img-src",
+   "text": "img so src=\"\" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)",
+   "kde": "en/index.html:899"
+  },
+  {
+   "lvl": "OK",
+   "kod": "img-alt",
+   "text": "30 obrázkov, všetky majú alt",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "subory",
+   "text": "211 odkazovaných súborov existuje",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "odkazy",
+   "text": "72 odkazov, interných 18, externé domény: www.barbershop30.sk 37×, www.google.com 4×, booqme.app 2×, www.instagram.com 2×, www.facebook.com 1×",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "text",
+   "text": "1152 slov viditeľného textu v HTML bez skriptu",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "slova",
+   "text": "miestne a služobné slová\n          Nitra: titulok 1, popis 1, H1 1, H2 0, text 10\n          barbershop: titulok 2, popis 1, H1 1, H2 0, text 14\n          barber: titulok 0, popis 0, H1 0, H2 0, text 15\n          haircut: titulok 0, popis 1, H1 0, H2 0, text 18\n          beard: titulok 0, popis 1, H1 0, H2 0, text 20\n          shave: titulok 0, popis 1, H1 0, H2 0, text 14\n          fade: titulok 0, popis 0, H1 0, H2 0, text 7\n          price list: titulok 0, popis 0, H1 0, H2 0, text 9\n          Mostná: titulok 1, popis 1, H1 0, H2 0, text 7\n          city centre: titulok 0, popis 0, H1 0, H2 0, text 0\n          walk-in: titulok 0, popis 0, H1 0, H2 0, text 0\n          gift voucher: titulok 0, popis 0, H1 0, H2 0, text 0",
+   "kde": "en/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-syntax",
+   "text": "JSON-LD sa dá prečítať (@type BarberShop)",
+   "kde": "en/index.html:54"
+  },
+  {
+   "lvl": "OK",
+   "kod": "lang",
+   "text": "lang=\"sk\"",
+   "kde": "rezervacia.html:2"
+  },
+  {
+   "lvl": "OK",
+   "kod": "viewport",
+   "text": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "kde": "rezervacia.html:5"
+  },
+  {
+   "lvl": "OK",
+   "kod": "title",
+   "text": "„Rezervácia | Barbershop 30 Nitra“ (32 znakov, odporúčané 30–60)",
+   "kde": "rezervacia.html:6"
+  },
+  {
+   "lvl": "OK",
+   "kod": "description",
+   "text": "125 znakov (odporúčané 70–160): „Online rezervácia v Barbershop 30 na Mostnej 30 v Nitre: vyber si službu, barbera a voľný čas. Alebo zavolaj na 0951 267 203.“",
+   "kde": "rezervacia.html:7"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots",
+   "text": "noindex",
+   "kde": "rezervacia.html:13"
+  },
+  {
+   "lvl": "OK",
+   "kod": "canonical",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/rezervacia.html",
+   "kde": "rezervacia.html:15"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og",
+   "text": "og:type/title/description/url/image/locale/site_name sú",
+   "kde": "rezervacia.html:19"
+  },
+  {
+   "lvl": "OK",
+   "kod": "og-image",
+   "text": "assets/og.jpg 1200×630 jpeg, 139 kB (bez og:image:width/height)",
+   "kde": "rezervacia.html:22"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "og-image-wh",
+   "text": "chýba og:image:width a og:image:height (Facebook pri prvom zdieľaní nemusí ukázať obrázok)",
+   "kde": "rezervacia.html:22"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "twitter",
+   "text": "chýba twitter:card",
+   "kde": "rezervacia.html"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "favicon",
+   "text": "2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
+   "kde": "rezervacia.html:23"
+  },
+  {
+   "lvl": "OK",
+   "kod": "apple-touch-icon",
+   "text": "assets/img/ikona/apple-touch-icon.png 180×180",
+   "kde": "rezervacia.html:25"
+  },
+  {
+   "lvl": "OK",
+   "kod": "manifest",
+   "text": "assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk",
+   "kde": "rezervacia.html:26"
+  },
+  {
+   "lvl": "OK",
+   "kod": "h1",
+   "text": "„Kedy si sadneš?“",
+   "kde": "rezervacia.html:83"
+  },
+  {
+   "lvl": "OK",
+   "kod": "img-alt",
+   "text": "15 obrázkov, všetky majú alt",
+   "kde": "rezervacia.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "subory",
+   "text": "107 odkazovaných súborov existuje",
+   "kde": "rezervacia.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "odkazy",
+   "text": "42 odkazov, interných 9, externé domény: www.barbershop30.sk 25×, booqme.app 1×, www.google.com 1×, www.instagram.com 1×",
+   "kde": "rezervacia.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "lang",
+   "text": "lang=\"sk\"",
+   "kde": "karta/index.html:2"
+  },
+  {
+   "lvl": "OK",
+   "kod": "viewport",
+   "text": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "kde": "karta/index.html:5"
+  },
+  {
+   "lvl": "OK",
+   "kod": "title",
+   "text": "„Vernostná kartička Barbershop 30“ (32 znakov, odporúčané 30–60)",
+   "kde": "karta/index.html:16"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "description",
+   "text": "počet meta description: 0",
+   "kde": "karta/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots",
+   "text": "noindex, nofollow",
+   "kde": "karta/index.html:9"
+  },
+  {
+   "lvl": "OK",
+   "kod": "favicon",
+   "text": "ikony/barbershop-192.png",
+   "kde": "karta/index.html:17"
+  },
+  {
+   "lvl": "OK",
+   "kod": "apple-touch-icon",
+   "text": "ikony/barbershop-180.png 180×180",
+   "kde": "karta/index.html:18"
+  },
+  {
+   "lvl": "OK",
+   "kod": "manifest",
+   "text": "manifest.webmanifest: Barbershop 30 · vernostná kartička, 2 ikony, lang sk",
+   "kde": "karta/index.html:19"
+  },
+  {
+   "lvl": "OK",
+   "kod": "img-alt",
+   "text": "0 obrázkov, všetky majú alt",
+   "kde": "karta/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "subory",
+   "text": "6 odkazovaných súborov existuje",
+   "kde": "karta/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "odkazy",
+   "text": "1 odkazov, interných 0, externé domény: -",
+   "kde": "karta/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "lang",
+   "text": "lang=\"sk\"",
+   "kde": "admin/index.html:2"
+  },
+  {
+   "lvl": "OK",
+   "kod": "viewport",
+   "text": "width=device-width, initial-scale=1, viewport-fit=cover",
+   "kde": "admin/index.html:5"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "title",
+   "text": "„Admin · Barbershop 30“ (21 znakov, odporúčané 30–60)",
+   "kde": "admin/index.html:10"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "description",
+   "text": "počet meta description: 0",
+   "kde": "admin/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots",
+   "text": "noindex, nofollow",
+   "kde": "admin/index.html:6"
+  },
+  {
+   "lvl": "OK",
+   "kod": "favicon",
+   "text": "../karta/ikony/barbershop-192.png",
+   "kde": "admin/index.html:11"
+  },
+  {
+   "lvl": "OK",
+   "kod": "img-alt",
+   "text": "0 obrázkov, všetky majú alt",
+   "kde": "admin/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "subory",
+   "text": "2 odkazovaných súborov existuje",
+   "kde": "admin/index.html"
+  },
+  {
+   "lvl": "OK",
+   "kod": "odkazy",
+   "text": "2 odkazov, interných 1, externé domény: github.com 1×",
+   "kde": "admin/index.html"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "404-chyba",
+   "text": "404.html na webe Barbershopu nie je; zlá adresa ukáže cudziu chybovú stránku (pozri ZAPIS.md)",
+   "kde": "404.html"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "jsonld-typ",
+   "text": "@type \"BarberShop\" v slovníku schema.org neexistuje (Google údaje nerozpozná ako firmu); existuje napr. HairSalon",
+   "kde": "index.html:56"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "jsonld-localbusiness",
+   "text": "@type BarberShop nie je podtyp LocalBusiness",
+   "kde": "index.html:56"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "jsonld-odporucane",
+   "text": "chýba odporúčané podľa Google: geo, priceRange",
+   "kde": "index.html:53"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "jsonld-id",
+   "text": "chýba @id (napr. BASE + \"#firma\"), podnik sa nedá prepojiť s inými údajmi",
+   "kde": "index.html:53"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-recenzie",
+   "text": "bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)",
+   "kde": "index.html:53"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-telefon",
+   "text": "telephone +421951267203; na stránke tel: +421951267203",
+   "kde": "index.html:61"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-email",
+   "text": "email info@barbershop30.sk; na stránke info@barbershop30.sk",
+   "kde": "index.html:62"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-adresa",
+   "text": "Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky",
+   "kde": "index.html:65"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-sameAs",
+   "text": "https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)",
+   "kde": "index.html:76"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-sameAs",
+   "text": "https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)",
+   "kde": "index.html:76"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-hasMap",
+   "text": "https://www.google.com/maps?cid=18132360254733427623",
+   "kde": "index.html:64"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-hodiny",
+   "text": "Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky",
+   "kde": "index.html:72"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-cennik",
+   "text": "15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia",
+   "kde": "index.html:84"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "jsonld-rezervacia",
+   "text": "ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)",
+   "kde": "index.html:80"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "jsonld-zalozenie",
+   "text": "foundingDate 2019",
+   "kde": "index.html:63"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "jsonld-typ",
+   "text": "@type \"BarberShop\" v slovníku schema.org neexistuje (Google údaje nerozpozná ako firmu); existuje napr. HairSalon",
+   "kde": "en/index.html:57"
+  },
+  {
+   "lvl": "VAZNA",
+   "kod": "jsonld-localbusiness",
+   "text": "@type BarberShop nie je podtyp LocalBusiness",
+   "kde": "en/index.html:57"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "jsonld-odporucane",
+   "text": "chýba odporúčané podľa Google: geo, priceRange",
+   "kde": "en/index.html:54"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "jsonld-id",
+   "text": "chýba @id (napr. BASE + \"#firma\"), podnik sa nedá prepojiť s inými údajmi",
+   "kde": "en/index.html:54"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-recenzie",
+   "text": "bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)",
+   "kde": "en/index.html:54"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-telefon",
+   "text": "telephone +421951267203; na stránke tel: +421951267203",
+   "kde": "en/index.html:62"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-email",
+   "text": "email info@barbershop30.sk; na stránke info@barbershop30.sk",
+   "kde": "en/index.html:63"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-adresa",
+   "text": "Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky",
+   "kde": "en/index.html:66"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-sameAs",
+   "text": "https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)",
+   "kde": "en/index.html:77"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-sameAs",
+   "text": "https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)",
+   "kde": "en/index.html:77"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-hasMap",
+   "text": "https://www.google.com/maps?cid=18132360254733427623",
+   "kde": "en/index.html:65"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-hodiny",
+   "text": "Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky",
+   "kde": "en/index.html:73"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jsonld-cennik",
+   "text": "15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia",
+   "kde": "en/index.html:85"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "jsonld-rezervacia",
+   "text": "ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)",
+   "kde": "en/index.html:81"
+  },
+  {
+   "lvl": "INFO",
+   "kod": "jsonld-zalozenie",
+   "text": "foundingDate 2019",
+   "kde": "en/index.html:64"
+  },
+  {
+   "lvl": "OK",
+   "kod": "jedinecny-title",
+   "text": "titulky sú jedinečné (index.html, en/index.html, rezervacia.html)",
+   "kde": ""
+  },
+  {
+   "lvl": "OK",
+   "kod": "jedinecny-desc",
+   "text": "popisy sú jedinečné (index.html, en/index.html, rezervacia.html)",
+   "kde": ""
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots-syntax",
+   "text": "User-agent *, Disallow: /source/ /docs/ /admin/",
+   "kde": "robots.txt"
+  },
+  {
+   "lvl": "OK",
+   "kod": "robots-sitemap",
+   "text": "Sitemap: https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml",
+   "kde": "robots.txt:9"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "robots-umiestnenie",
+   "text": "web je v podpriečinku /barbershop30/: vyhľadávače čítajú len robots.txt v koreni domény, tento súbor platí až na vlastnej doméne (napr. www.barbershop30.sk)",
+   "kde": "robots.txt"
+  },
+  {
+   "lvl": "DROBNA",
+   "kod": "robots-noindex",
+   "text": "admin/index.html: Disallow /admin/ a zároveň noindex – Google noindex neprečíta (pri odkaze zvonka môže adresu zaradiť bez obsahu); stačí jedno",
+   "kde": "robots.txt:6"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-xml",
+   "text": "XML je platné",
+   "kde": "sitemap.xml"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-url",
+   "text": "8 adries: / /en/ /?lang=uk /?lang=hu /?lang=sr /?lang=pl /?lang=de /?lang=cs",
+   "kde": "sitemap.xml"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:9"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/en/: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:28"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:43"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=uk: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:43"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:58"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=hu: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:58"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:73"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=sr: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:73"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:88"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=pl: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:88"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=de: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:103"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=de: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:103"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "sitemap-kanonicka",
+   "text": "https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
+   "kde": "sitemap.xml:118"
+  },
+  {
+   "lvl": "OK",
+   "kod": "sitemap-lastmod",
+   "text": "/?lang=cs: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
+   "kde": "sitemap.xml:118"
+  },
+  {
+   "lvl": "OK",
+   "kod": "hreflang-vzajomnost",
+   "text": "všetkých 8 adries má rovnakú sadu 9 hreflang (sk, en, uk, hu, sr-Latn, pl, de, cs, x-default) – vzájomné",
+   "kde": "sitemap.xml"
+  },
+  {
+   "lvl": "STREDNA",
+   "kod": "hreflang-kanonicka",
+   "text": "6 hreflang vedie na adresy s inou canonical (uk, hu, sr-Latn, pl, de, cs → https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk má canonical https://d8f5s88zjy-art.github.io/barbershop30/); Google také hreflang ignoruje a ?lang= stránky má za duplikát slovenskej",
+   "kde": "sitemap.xml"
+  }
+ ],
+ "summary": {
+  "index.html": {
+   "lang": "sk",
+   "title": "Barbershop 30 Nitra | Pánske holičstvo, Mostná 30",
+   "desc": "Pánske holičstvo na Mostnej 30 v Nitre: strih, fade, úprava brady a holenie britvou, káva zdarma. Objednaj sa online alebo zavolaj.",
+   "robots": "",
+   "noindex": false,
+   "canonical": "https://d8f5s88zjy-art.github.io/barbershop30/",
+   "hreflangHTML": [],
+   "icons": [
+    "data:URI",
+    "assets/favicon.svg"
+   ],
+   "nadpisy": [
+    {
+     "uroven": 1,
+     "text": "Barbershop 30 · Nitra Tvoj strih. Tvoje miesto.",
+     "riadok": 188,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Poď ďalej.",
+     "riadok": 222,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Povedz, ako to chceš.",
+     "riadok": 245,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Vzadu ťa čaká káva.",
+     "riadok": 268,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Komu zveríš hlavu?",
+     "riadok": 291,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Nikolas",
+     "riadok": 323,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kristián",
+     "riadok": 338,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Damian",
+     "riadok": 353,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Michal",
+     "riadok": 368,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Andy",
+     "riadok": 383,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Dominika",
+     "riadok": 398,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kevin",
+     "riadok": 413,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Lajko",
+     "riadok": 428,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Jojo",
+     "riadok": 443,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Adrian",
+     "riadok": 458,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Čo to bude dnes?",
+     "riadok": 484,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Strih",
+     "riadok": 506,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih",
+     "riadok": 509,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih a úprava brady",
+     "riadok": 515,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih – dĺžka vlasov nad 10 cm",
+     "riadok": 521,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Strih pre malých gentlemanov",
+     "riadok": 527,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Oholenie hlavy",
+     "riadok": 533,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Brada a holenie",
+     "riadok": 542,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Úprava brady",
+     "riadok": 545,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Holenie do hladka Hot Towel",
+     "riadok": 551,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Farbenie brady",
+     "riadok": 557,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Balíčky",
+     "riadok": 566,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Balíček 1",
+     "riadok": 569,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Ultra inclusive Barbershop30",
+     "riadok": 575,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Doplnky",
+     "riadok": 584,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Starostlivosť o pleť PREMIUM",
+     "riadok": 587,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Úprava obočia",
+     "riadok": 593,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Depilácia uší a nosa voskom",
+     "riadok": 599,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Kreatívny ornament na hlave",
+     "riadok": 605,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Farbenie obočia",
+     "riadok": 611,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Pozri si to zblízka.",
+     "riadok": 645,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Výsledky strihov",
+     "riadok": 656,
+     "skryty": true
+    },
+    {
+     "uroven": 3,
+     "text": "Odchádzaš s hlavou hore.",
+     "riadok": 762,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Kedy si sadneš?",
+     "riadok": 785,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Mostná 30, Nitra",
+     "riadok": 799,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Časté otázky",
+     "riadok": 827,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Kontakt",
+     "riadok": 856,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Otváracie hodiny",
+     "riadok": 864,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Sleduj nás",
+     "riadok": 872,
+     "skryty": false
+    }
+   ],
+   "obrazky": {
+    "spolu": 30,
+    "bezAlt": 0,
+    "dlhyAlt": 0,
+    "bezRozmerov": 0
+   },
+   "odkazy": {
+    "spolu": 72,
+    "interne": 18,
+    "externe": {
+     "www.barbershop30.sk": 37,
+     "www.google.com": 4,
+     "booqme.app": 2,
+     "www.instagram.com": 2,
+     "www.facebook.com": 1
+    }
+   },
+   "slov": 1010,
+   "slovaKluc": {
+    "Nitra/Nitre/Nitry": {
+     "titulok": 1,
+     "popis": 1,
+     "h1": 1,
+     "h2": 0,
+     "text": 10
+    },
+    "barbershop": {
+     "titulok": 1,
+     "popis": 0,
+     "h1": 1,
+     "h2": 0,
+     "text": 13
+    },
+    "barber(i/ka)": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 16
+    },
+    "holičstvo/holič": {
+     "titulok": 1,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 1
+    },
+    "Mostná/Mostnej": {
+     "titulok": 1,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 7
+    },
+    "strih": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 1,
+     "h2": 0,
+     "text": 36
+    },
+    "brada/brady": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 18
+    },
+    "holenie": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 13
+    },
+    "fade": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 7
+    },
+    "cenník": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 3
+    },
+    "centrum/centre": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    },
+    "bez objednania": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    },
+    "poukážka": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    },
+    "detský strih": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 6
+    }
+   },
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BarberShop",
+     "name": "Barbershop 30",
+     "alternateName": "Barbershop30",
+     "url": "https://d8f5s88zjy-art.github.io/barbershop30/",
+     "image": "https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg",
+     "telephone": "+421951267203",
+     "email": "info@barbershop30.sk",
+     "foundingDate": "2019",
+     "hasMap": "https://www.google.com/maps?cid=18132360254733427623",
+     "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mostná 30",
+      "postalCode": "949 01",
+      "addressLocality": "Nitra",
+      "addressCountry": "SK"
+     },
+     "openingHoursSpecification": [
+      {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+       ],
+       "opens": "09:00",
+       "closes": "19:00"
+      },
+      {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": "Saturday",
+       "opens": "09:00",
+       "closes": "14:00"
+      }
+     ],
+     "sameAs": [
+      "https://www.instagram.com/barbershop30_nitra/",
+      "https://www.facebook.com/barbershop30nitra/"
+     ],
+     "potentialAction": {
+      "@type": "ReserveAction",
+      "target": "https://www.barbershop30.sk/rezervacia"
+     },
+     "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Služby a ceny",
+      "itemListElement": [
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Pánsky strih"
+        },
+        "price": "18",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Pánsky strih a úprava brady"
+        },
+        "price": "28",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Pánsky strih – dĺžka vlasov nad 10 cm"
+        },
+        "price": "22",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Strih pre malých gentlemanov"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Oholenie hlavy"
+        },
+        "price": "13",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Úprava brady"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Holenie do hladka Hot Towel"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Farbenie brady"
+        },
+        "price": "10",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Balíček 1"
+        },
+        "price": "30",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Ultra inclusive Barbershop30"
+        },
+        "price": "40",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Starostlivosť o pleť PREMIUM"
+        },
+        "price": "21.50",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Úprava obočia"
+        },
+        "price": "3",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Depilácia uší a nosa voskom"
+        },
+        "price": "5.50",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Kreatívny ornament na hlave"
+        },
+        "price": "4",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Farbenie obočia"
+        },
+        "price": "5",
+        "priceCurrency": "EUR"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "en/index.html": {
+   "lang": "en",
+   "title": "Barbershop 30 Nitra | Men's barbershop, Mostná 30",
+   "desc": "Men's barbershop at Mostná 30 in Nitra: haircuts, fades, beard trims and straight razor shaves, free coffee. Book online or call us.",
+   "robots": "",
+   "noindex": false,
+   "canonical": "https://d8f5s88zjy-art.github.io/barbershop30/en/",
+   "hreflangHTML": [],
+   "icons": [
+    "data:URI",
+    "../assets/favicon.svg"
+   ],
+   "nadpisy": [
+    {
+     "uroven": 1,
+     "text": "Barbershop 30 · Nitra Your cut. Your place.",
+     "riadok": 189,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Come on in.",
+     "riadok": 223,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Tell us how you want it.",
+     "riadok": 246,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "In the back, coffee's waiting.",
+     "riadok": 269,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Who do you trust with your head?",
+     "riadok": 292,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Nikolas",
+     "riadok": 324,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kristián",
+     "riadok": 339,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Damian",
+     "riadok": 354,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Michal",
+     "riadok": 369,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Andy",
+     "riadok": 384,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Dominika",
+     "riadok": 399,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kevin",
+     "riadok": 414,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Lajko",
+     "riadok": 429,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Jojo",
+     "riadok": 444,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Adrian",
+     "riadok": 459,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "What'll it be today?",
+     "riadok": 485,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Cut",
+     "riadok": 507,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Men's haircut",
+     "riadok": 510,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Men's haircut and beard trim",
+     "riadok": 516,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Men's haircut – hair over 10 cm",
+     "riadok": 522,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Little gentlemen's cut",
+     "riadok": 528,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Head shave",
+     "riadok": 534,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Beard and shave",
+     "riadok": 543,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Beard trim",
+     "riadok": 546,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Hot Towel clean shave",
+     "riadok": 552,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Beard colouring",
+     "riadok": 558,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Packages",
+     "riadok": 567,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Package 1",
+     "riadok": 570,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Ultra inclusive Barbershop30",
+     "riadok": 576,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Extras",
+     "riadok": 585,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Skin care PREMIUM",
+     "riadok": 588,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Eyebrow shaping",
+     "riadok": 594,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Ear and nose waxing",
+     "riadok": 600,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Creative hair pattern",
+     "riadok": 606,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Eyebrow tinting",
+     "riadok": 612,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "See it up close.",
+     "riadok": 646,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Haircut results",
+     "riadok": 657,
+     "skryty": true
+    },
+    {
+     "uroven": 3,
+     "text": "You walk out head held high.",
+     "riadok": 763,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "When will you take a seat?",
+     "riadok": 786,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Mostná 30, Nitra",
+     "riadok": 800,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Frequently asked questions",
+     "riadok": 828,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Contact",
+     "riadok": 857,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Opening hours",
+     "riadok": 865,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Follow us",
+     "riadok": 873,
+     "skryty": false
+    }
+   ],
+   "obrazky": {
+    "spolu": 30,
+    "bezAlt": 0,
+    "dlhyAlt": 0,
+    "bezRozmerov": 0
+   },
+   "odkazy": {
+    "spolu": 72,
+    "interne": 18,
+    "externe": {
+     "www.barbershop30.sk": 37,
+     "www.google.com": 4,
+     "booqme.app": 2,
+     "www.instagram.com": 2,
+     "www.facebook.com": 1
+    }
+   },
+   "slov": 1152,
+   "slovaKluc": {
+    "Nitra": {
+     "titulok": 1,
+     "popis": 1,
+     "h1": 1,
+     "h2": 0,
+     "text": 10
+    },
+    "barbershop": {
+     "titulok": 2,
+     "popis": 1,
+     "h1": 1,
+     "h2": 0,
+     "text": 14
+    },
+    "barber": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 15
+    },
+    "haircut": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 18
+    },
+    "beard": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 20
+    },
+    "shave": {
+     "titulok": 0,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 14
+    },
+    "fade": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 7
+    },
+    "price list": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 9
+    },
+    "Mostná": {
+     "titulok": 1,
+     "popis": 1,
+     "h1": 0,
+     "h2": 0,
+     "text": 7
+    },
+    "city centre": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    },
+    "walk-in": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    },
+    "gift voucher": {
+     "titulok": 0,
+     "popis": 0,
+     "h1": 0,
+     "h2": 0,
+     "text": 0
+    }
+   },
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BarberShop",
+     "name": "Barbershop 30",
+     "alternateName": "Barbershop30",
+     "url": "https://d8f5s88zjy-art.github.io/barbershop30/",
+     "image": "https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg",
+     "telephone": "+421951267203",
+     "email": "info@barbershop30.sk",
+     "foundingDate": "2019",
+     "hasMap": "https://www.google.com/maps?cid=18132360254733427623",
+     "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mostná 30",
+      "postalCode": "949 01",
+      "addressLocality": "Nitra",
+      "addressCountry": "SK"
+     },
+     "openingHoursSpecification": [
+      {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+       ],
+       "opens": "09:00",
+       "closes": "19:00"
+      },
+      {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": "Saturday",
+       "opens": "09:00",
+       "closes": "14:00"
+      }
+     ],
+     "sameAs": [
+      "https://www.instagram.com/barbershop30_nitra/",
+      "https://www.facebook.com/barbershop30nitra/"
+     ],
+     "potentialAction": {
+      "@type": "ReserveAction",
+      "target": "https://www.barbershop30.sk/rezervacia"
+     },
+     "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services and prices",
+      "itemListElement": [
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Men's haircut"
+        },
+        "price": "18",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Men's haircut and beard trim"
+        },
+        "price": "28",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Men's haircut – hair over 10 cm"
+        },
+        "price": "22",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Little gentlemen's cut"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Head shave"
+        },
+        "price": "13",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Beard trim"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Hot Towel clean shave"
+        },
+        "price": "15",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Beard colouring"
+        },
+        "price": "10",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Package 1"
+        },
+        "price": "30",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Ultra inclusive Barbershop30"
+        },
+        "price": "40",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Skin care PREMIUM"
+        },
+        "price": "21.50",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Eyebrow shaping"
+        },
+        "price": "3",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Ear and nose waxing"
+        },
+        "price": "5.50",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Creative hair pattern"
+        },
+        "price": "4",
+        "priceCurrency": "EUR"
+       },
+       {
+        "@type": "Offer",
+        "itemOffered": {
+         "@type": "Service",
+         "name": "Eyebrow tinting"
+        },
+        "price": "5",
+        "priceCurrency": "EUR"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "rezervacia.html": {
+   "lang": "sk",
+   "title": "Rezervácia | Barbershop 30 Nitra",
+   "desc": "Online rezervácia v Barbershop 30 na Mostnej 30 v Nitre: vyber si službu, barbera a voľný čas. Alebo zavolaj na 0951 267 203.",
+   "robots": "noindex",
+   "noindex": true,
+   "canonical": "https://d8f5s88zjy-art.github.io/barbershop30/rezervacia.html",
+   "hreflangHTML": [],
+   "icons": [
+    "data:URI",
+    "assets/favicon.svg"
+   ],
+   "nadpisy": [
+    {
+     "uroven": 1,
+     "text": "Kedy si sadneš?",
+     "riadok": 83,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Vyber si službu",
+     "riadok": 99,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Strih",
+     "riadok": 104,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih",
+     "riadok": 107,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih a úprava brady",
+     "riadok": 113,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Pánsky strih – dĺžka vlasov nad 10 cm",
+     "riadok": 119,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Strih pre malých gentlemanov",
+     "riadok": 125,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Oholenie hlavy",
+     "riadok": 131,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Brada a holenie",
+     "riadok": 141,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Úprava brady",
+     "riadok": 144,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Holenie do hladka Hot Towel",
+     "riadok": 150,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Farbenie brady",
+     "riadok": 156,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Balíčky",
+     "riadok": 166,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Balíček 1",
+     "riadok": 169,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Ultra inclusive Barbershop30",
+     "riadok": 175,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Doplnky",
+     "riadok": 185,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Starostlivosť o pleť PREMIUM",
+     "riadok": 188,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Úprava obočia",
+     "riadok": 194,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Depilácia uší a nosa voskom",
+     "riadok": 200,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Kreatívny ornament na hlave",
+     "riadok": 206,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
+     "text": "Farbenie obočia",
+     "riadok": 212,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Mostná 30, Nitra",
+     "riadok": 233,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Komu zveríš hlavu?",
+     "riadok": 252,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Nikolas",
+     "riadok": 263,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kristián",
+     "riadok": 278,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Damian",
+     "riadok": 293,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Michal",
+     "riadok": 308,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Andy",
+     "riadok": 323,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Dominika",
+     "riadok": 338,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Kevin",
+     "riadok": 353,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Lajko",
+     "riadok": 368,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Jojo",
+     "riadok": 383,
+     "skryty": false
+    },
+    {
+     "uroven": 3,
+     "text": "Adrian",
+     "riadok": 398,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Pozri, ako strihá náš tím",
+     "riadok": 412,
+     "skryty": false
+    }
+   ],
+   "obrazky": {
+    "spolu": 15,
+    "bezAlt": 0,
+    "dlhyAlt": 0,
+    "bezRozmerov": 0
+   },
+   "odkazy": {
+    "spolu": 42,
+    "interne": 9,
+    "externe": {
+     "www.barbershop30.sk": 25,
+     "booqme.app": 1,
+     "www.google.com": 1,
+     "www.instagram.com": 1
+    }
+   },
+   "slov": 547,
+   "jsonld": []
+  },
+  "karta/index.html": {
+   "lang": "sk",
+   "title": "Vernostná kartička Barbershop 30",
+   "desc": "",
+   "robots": "noindex, nofollow",
+   "noindex": true,
+   "canonical": "",
+   "hreflangHTML": [],
+   "icons": [
+    "ikony/barbershop-192.png"
+   ],
+   "nadpisy": [],
+   "obrazky": {
+    "spolu": 0,
+    "bezAlt": 0,
+    "dlhyAlt": 0,
+    "bezRozmerov": 0
+   },
+   "odkazy": {
+    "spolu": 1,
+    "interne": 0,
+    "externe": {}
+   },
+   "slov": 2,
+   "jsonld": []
+  },
+  "admin/index.html": {
+   "lang": "sk",
+   "title": "Admin · Barbershop 30",
+   "desc": "",
+   "robots": "noindex, nofollow",
+   "noindex": true,
+   "canonical": "",
+   "hreflangHTML": [],
+   "icons": [
+    "../karta/ikony/barbershop-192.png"
+   ],
+   "nadpisy": [
+    {
+     "uroven": 1,
+     "text": "Admin webu",
+     "riadok": 116,
+     "skryty": false
+    },
+    {
+     "uroven": 2,
+     "text": "Ako získam kľúč",
+     "riadok": 125,
+     "skryty": false
+    }
+   ],
+   "obrazky": {
+    "spolu": 0,
+    "bezAlt": 0,
+    "dlhyAlt": 0,
+    "bezRozmerov": 0
+   },
+   "odkazy": {
+    "spolu": 2,
+    "interne": 1,
+    "externe": {
+     "github.com": 1
+    }
+   },
+   "slov": 122,
+   "jsonld": []
+  }
+ }
+}

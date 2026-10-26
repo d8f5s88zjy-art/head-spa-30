@@ -4,7 +4,8 @@ export const meta = {
   phases: [{ title: 'Krok', detail: 'podľa args.rezim' }],
 }
 const SP = '/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad'
-const STROM = SP + '/hs-skvrny'
+const a = args || {}
+const STROM = a.strom || SP + '/hs-skvrny'
 const WEB = STROM + '/barbershop-30'
 const OUT = SP + '/barber/audit-celok'
 const BAZA = '2687b6e'
@@ -19,7 +20,6 @@ const AUDITY = {
   'A3-seo': { porty: '8880–8889', t: `AUDIT 3 – SEO. Technické: title a meta description (dĺžky, jedinečnosť pre index, en/, rezervacia, 404), canonical (absolútne URL na produkčnú doménu, ak je známa zo stránky alebo podkladov – inak zapíš), hreflang (sk, en a x-default; vzájomnosť), atribút lang, meta robots (404 a admin/karta noindex), robots.txt a sitemap.xml (platné, všetky stránky, lastmod), Open Graph a Twitter (obrázok existuje, rozmery), favicon a manifest, štruktúrované dáta JSON-LD (HairSalon/LocalBusiness, adresa, telefón, otváracie hodiny, ceny služieb, FAQ, recenzie – platná syntax, súlad s textom stránky a s pravidlami Google, nič vymyslené), nadpisy H1–H3 (jeden H1, poradie), alt texty obrázkov, interné odkazy a kotvy, rýchlosť (LCP, CLS, TBT cez CDP), mobilná použiteľnosť, indexovateľnosť obsahu bez JS (text v HTML), obsah pre miestne vyhľadávanie (Nitra, barbershop, služby – porovnaj s ${SP}/hs-skvrny/barbershop-30/docs/ SEO analýzou, ak existuje). Znovupoužiteľný skript ${OUT}/nastroje/a3-seo.mjs (statická kontrola HTML + JSON-LD) a zápis s konkrétnymi návrhmi textov (len z faktov stránky).` },
   'A4-vykon': { porty: '8890–8899', t: `AUDIT 4 – VÝKON, PLYNULOSŤ A PRÍSTUPNOSŤ. Telefón (390×844, CPU 4×, sieť 4G 10 Mb/s RTT 60 ms) a počítač: bajty prvej obrazovky a do load, LCP, CLS, TBT/dlhé úlohy, rAF medzery počas skrolu celou stránkou (aj filmovou scénou), pamäť po prejdení stránky, počet požiadaviek, neoptimalizované obrázky (veľkosť vs. zobrazenie), fonty (FOIT/FOUT). Prístupnosť: kontrast, popisy tlačidiel a odkazov, poradie fokusu a viditeľný fokus, klávesnica (menu, dialógy, rezervácia, recepcia), prefers-reduced-motion, čítačka (role, aria, lang), dotykové ciele ≥ 44 px. Znovupoužiteľný skript ${OUT}/nastroje/a4-vykon.cjs.` },
 }
-const a = args || {}
 const kolo = a.kolo || 0
 
 phase('Krok')

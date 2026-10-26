@@ -1,0 +1,590 @@
+{
+ "cas": "2026-10-26T08:57:12.354Z",
+ "strom": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-skvrny",
+ "base": "http://127.0.0.1:8860/barbershop-30/",
+ "spolu": 83,
+ "zle": 11,
+ "vysledky": [
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "prepínač jazyka vytvorený (i18n.js po geste)",
+   "ok": true,
+   "detail": "{\"lang\":true,\"hudba\":true,\"recenzie\":6,\"recBox\":false,\"karty\":true,\"vernost\":false,\"zive\":\"Teraz otvorené · 9:00 – 19:00\",\"rok\":\"2026\",\"priceTabs\":4}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "recenzie: 6 citácií, blok viditeľný",
+   "ok": true,
+   "detail": "6"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "pás vizitky a pripomienky vložený (karty.js)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "navigácia „Prehliadka“ → #vstup-dnu v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-270,\"bottom\":360,\"y\":1170,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "navigácia „Služby“ → #sluzby v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-270,\"bottom\":3557,\"y\":6194,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "navigácia „Tím“ → #tim v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":-3404,\"bottom\":-270,\"y\":6194,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "navigácia „Galéria“ → #galeria v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-270,\"bottom\":3510,\"y\":10021,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "navigácia „Kontakt“ → #kontakt v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":497,\"bottom\":900,\"y\":17189,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #uvod → v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":-1800,\"bottom\":-900,\"y\":1800}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #vstup-dnu → v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":900,\"bottom\":1530,\"y\":0}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #remeslo → v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-270,\"bottom\":360,\"y\":1800}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #cakaren → v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":360,\"bottom\":990,\"y\":1800}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #tim → v zábere",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-270,\"bottom\":2864,\"y\":3060}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #sluzby → v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":2864,\"bottom\":6691,\"y\":3060}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #galeria → v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":3557,\"bottom\":7337,\"y\":6194}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "linka kapitol #rezervacia → v zábere",
+   "ok": false,
+   "detail": "{\"ok\":false,\"top\":3506,\"bottom\":7661,\"y\":10025}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "značka v lište vráti na úvod",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "tlačidlo #uvod .title-actions a.btn-primary viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "#uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte",
+   "ok": true,
+   "detail": "https://www.barbershop30.sk/rezervacia"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "tlačidlo #nav a.btn-primary viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "#nav a.btn-primary otvorí rezerváciu v novej karte",
+   "ok": true,
+   "detail": "https://www.barbershop30.sk/rezervacia"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "časté otázky: 8 otázok sa rozbalí",
+   "ok": true,
+   "detail": "{\"nFaq\":8,\"otvorene\":8}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "lightbox sa otvorí s fotkou a popisom (8 fotiek)",
+   "ok": true,
+   "detail": "{\"open\":true,\"nat\":1440,\"cap\":\"Nožnice a hrebeň na barberskej podložke s logom\",\"src\":\"/barbershop-30/assets/img/naradie-noznice-1600.jpg\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "lightbox: ďalšia fotka",
+   "ok": true,
+   "detail": "Karafa, pomády a štetka na holenie na pracovnom stole"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "lightbox: predchádzajúca fotka",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "lightbox: šípka, Esc zavrie, fokus späť na fotku, stránka odomknutá",
+   "ok": true,
+   "detail": "{\"hidden\":true,\"focus\":true,\"overflow\":\"\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz",
+   "ok": true,
+   "detail": "{\"kedy0\":\"Pripomienka pondelok 23. novembra o 10:00\",\"kedy\":\"Pripomienka pondelok 7. decembra o 10:00\",\"dt\":\"20261207T100000\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "pripomienka: Pridať do kalendára stiahne platný .ics",
+   "ok": true,
+   "detail": "barbershop30-pripomienka.ics"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "Uložiť kontakt: .vcf existuje a má telefón",
+   "ok": true,
+   "detail": "200 text/vcard"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "Pošli kamarátovi: skopíruje odkaz a povie to",
+   "ok": true,
+   "detail": "{\"st\":\"Odkaz je skopírovaný\",\"clip\":\"https://d8f5s88zjy-art.github.io/barbershop30/\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "tlačidlo Hudba prepne stav",
+   "ok": true,
+   "detail": "{\"vis\":true,\"p0\":\"true\",\"p1\":\"false\",\"audio\":[\"/barbershop-30/assets/audio/strih.webm 200\",\"/barbershop-30/assets/audio/hudba.webm 200\"]}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "kurzor nožníc a svetlo pod kurzorom",
+   "ok": true,
+   "detail": "{\"body\":\"image-set(url(\\\"http://127.0.0.1:8860/barbershop-30/assets/img/kurzor/noznice-32.png\\\") 1dppx, url(\\\"http://127.0.0.1:8860/\",\"a\":\"image-set(url(\\\"http://127.0.0.1:8860/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png\\\") 1dppx, url(\\\"http://127.0.\",\"svetlo\":true,\"kurzRes\":[\"/barbershop-30/assets/img/kurzor/noznice-32.png 200\",\"/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png 200\"]}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "pätička: Vernostná kartička otvorí stránku kartičky",
+   "ok": true,
+   "detail": "{\"url\":\"/barbershop-30/karta/\",\"h\":\"Zbieraj body za každú návštevu\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\\n30\\nZbieraj body za každú návštevu\\n\\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\\n\\nKartičky práve spúšťame\\n\\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\\n\\nZavolať\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "pätička: Späť hore",
+   "ok": false,
+   "detail": "17189"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "klávesnica: prvý Tab = Preskočiť na obsah, Enter skočí na #main",
+   "ok": false,
+   "detail": "hero-rating"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "pocitac",
+   "nazov": "index.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "prepínač jazyka vytvorený (i18n.js po geste)",
+   "ok": true,
+   "detail": "{\"lang\":true,\"hudba\":true,\"recenzie\":6,\"recBox\":false,\"karty\":true,\"vernost\":false,\"zive\":\"Teraz otvorené · 9:00 – 19:00\",\"rok\":\"2026\",\"priceTabs\":4}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "recenzie: 6 citácií, blok viditeľný",
+   "ok": true,
+   "detail": "6"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "pás vizitky a pripomienky vložený (karty.js)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí (pred Prehliadka)",
+   "ok": true,
+   "detail": "true"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "navigácia „Prehliadka“ → #vstup-dnu v zábere a menu zavreté",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-253,\"bottom\":338,\"y\":1097,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí (pred Služby)",
+   "ok": true,
+   "detail": "true"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "navigácia „Služby“ → #sluzby v zábere a menu zavreté",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-253,\"bottom\":4254,\"y\":4450,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí (pred Tím)",
+   "ok": true,
+   "detail": "true"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "navigácia „Tím“ → #tim v zábere a menu zavreté",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-254,\"bottom\":1800,\"y\":2870,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí (pred Galéria)",
+   "ok": true,
+   "detail": "true"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "navigácia „Galéria“ → #galeria v zábere a menu zavreté",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":-253,\"bottom\":3582,\"y\":8485,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu sa otvorí (pred Kontakt)",
+   "ok": true,
+   "detail": "true"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "navigácia „Kontakt“ → #kontakt v zábere a menu zavreté",
+   "ok": true,
+   "detail": "{\"ok\":true,\"top\":76,\"bottom\":971,\"y\":16204,\"menu\":\"false\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu: Esc zavrie",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "menu: ťuk na stmavenú stránku pod panelom zavrie",
+   "ok": true,
+   "detail": "{\"lockOn\":\"hidden\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "značka v lište vráti na úvod",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "tlačidlo #uvod .title-actions a.btn-primary viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "#uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte",
+   "ok": true,
+   "detail": "https://www.barbershop30.sk/rezervacia"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "tlačidlo #mobile-cta a.btn-primary viditeľné",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "#mobile-cta a.btn-primary otvorí rezerváciu v novej karte",
+   "ok": true,
+   "detail": "https://www.barbershop30.sk/rezervacia"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "časté otázky: 8 otázok sa rozbalí",
+   "ok": true,
+   "detail": "{\"nFaq\":8,\"otvorene\":8}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "cenník: 4 záložky skupín",
+   "ok": true,
+   "detail": "4"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "cenník: záložka 3 posunie na skupinu 3",
+   "ok": true,
+   "detail": "{\"top\":200,\"vh\":844}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "cenník: ťuk na popis ho rozbalí",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "lightbox sa otvorí s fotkou a popisom (8 fotiek)",
+   "ok": true,
+   "detail": "{\"open\":true,\"nat\":390,\"cap\":\"Nožnice a hrebeň na barberskej podložke s logom\",\"src\":\"/barbershop-30/assets/img/naradie-noznice-1600.jpg\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "lightbox: ďalšia fotka",
+   "ok": true,
+   "detail": "Karafa, pomády a štetka na holenie na pracovnom stole"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "lightbox: predchádzajúca fotka",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "lightbox: Zavrieť ho zavrie a odomkne stránku",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz",
+   "ok": true,
+   "detail": "{\"kedy0\":\"Pripomienka pondelok 23. novembra o 10:00\",\"kedy\":\"Pripomienka pondelok 7. decembra o 10:00\",\"dt\":\"20261207T100000\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "pripomienka: Pridať do kalendára stiahne platný .ics",
+   "ok": true,
+   "detail": "barbershop30-pripomienka.ics"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "Uložiť kontakt: .vcf existuje a má telefón",
+   "ok": true,
+   "detail": "200 text/vcard"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "Pošli kamarátovi: zdieľanie telefónu s adresou",
+   "ok": true,
+   "detail": "{\"title\":\"Barbershop 30\",\"text\":\"Barbershop 30, pánske holičstvo na Mostnej 30 v Nitre.\",\"url\":\"https://d8f5s88zjy-art.github.io/barbershop30/\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "tlačidlo Hudba prepne stav",
+   "ok": true,
+   "detail": "{\"vis\":true,\"p0\":\"true\",\"p1\":\"false\",\"audio\":[\"/barbershop-30/assets/audio/hudba.webm 200\",\"/barbershop-30/assets/audio/strih.webm 200\"]}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "pätička: Vernostná kartička otvorí stránku kartičky",
+   "ok": true,
+   "detail": "{\"url\":\"/barbershop-30/karta/\",\"h\":\"Zbieraj body za každú návštevu\",\"text\":\"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\\n30\\nZbieraj body za každú návštevu\\n\\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\\n\\nKartičky práve spúšťame\\n\\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\\n\\nZavolať\"}"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "pätička: Späť hore",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "sc": "zaklad",
+   "zar": "telefon",
+   "nazov": "index.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx",
+   "ok": false,
+   "detail": "error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "assets/manifest.webmanifest: platný JSON",
+   "ok": true,
+   "detail": "{\"name\":\"Barbershop 30 Nitra\",\"start_url\":\"../\",\"scope\":\"../\",\"display\":\"minimal-ui\"}"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "assets/manifest.webmanifest: ikony a start_url existujú",
+   "ok": true,
+   "detail": "{\"zle\":[],\"start\":\"/barbershop-30/\",\"status\":200}"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "karta/manifest.webmanifest: platný JSON",
+   "ok": true,
+   "detail": "{\"name\":\"Barbershop 30 · vernostná kartička\",\"start_url\":\"./\",\"scope\":\"./\",\"display\":\"standalone\"}"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "karta/manifest.webmanifest: ikony a start_url existujú",
+   "ok": true,
+   "detail": "{\"zle\":[],\"start\":\"/barbershop-30/karta/\",\"status\":200}"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "assets/favicon.svg existuje",
+   "ok": true,
+   "detail": "200"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "assets/img/ikona/apple-touch-icon.png existuje",
+   "ok": true,
+   "detail": "200"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "robots.txt existuje",
+   "ok": true,
+   "detail": "200"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "sitemap.xml existuje",
+   "ok": true,
+   "detail": "200"
+  },
+  {
+   "sc": "manifest",
+   "zar": "-",
+   "nazov": "assets/og.jpg existuje",
+   "ok": true,
+   "detail": "200"
+  }
+ ]
+}

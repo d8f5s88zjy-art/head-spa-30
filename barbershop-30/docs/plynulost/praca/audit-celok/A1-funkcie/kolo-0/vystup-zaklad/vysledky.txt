@@ -1,0 +1,96 @@
+OK   [zaklad/pocitac] prepínač jazyka vytvorený (i18n.js po geste)  {"lang":true,"hudba":true,"recenzie":6,"recBox":false,"karty":true,"vernost":false,"zive":"Teraz otvorené · 9:00 – 19:00","rok":"2026","priceTabs":4}
+OK   [zaklad/pocitac] recenzie: 6 citácií, blok viditeľný  6
+OK   [zaklad/pocitac] pás vizitky a pripomienky vložený (karty.js)
+INFO [zaklad/pocitac] vernostná kartička v páse: nie (bez data-zapnute správne skrytá); živý stav: „Teraz otvorené · 9:00 – 19:00“; rok 2026
+OK   [zaklad/pocitac] navigácia „Prehliadka“ → #vstup-dnu v zábere  {"ok":true,"top":-270,"bottom":360,"y":1170,"menu":"false"}
+OK   [zaklad/pocitac] navigácia „Služby“ → #sluzby v zábere  {"ok":true,"top":-270,"bottom":3557,"y":6194,"menu":"false"}
+FAIL [zaklad/pocitac] navigácia „Tím“ → #tim v zábere  {"ok":false,"top":-3404,"bottom":-270,"y":6194,"menu":"false"}
+OK   [zaklad/pocitac] navigácia „Galéria“ → #galeria v zábere  {"ok":true,"top":-270,"bottom":3510,"y":10021,"menu":"false"}
+FAIL [zaklad/pocitac] navigácia „Kontakt“ → #kontakt v zábere  {"ok":false,"top":497,"bottom":900,"y":17189,"menu":"false"}
+INFO [zaklad/pocitac] linka kapitol: 8/8 bodov viditeľných [{"href":"#uvod","vis":true,"w":24,"h":24},{"href":"#vstup-dnu","vis":true,"w":24,"h":24}]
+FAIL [zaklad/pocitac] linka kapitol #uvod → v zábere  {"ok":false,"top":-1800,"bottom":-900,"y":1800}
+FAIL [zaklad/pocitac] linka kapitol #vstup-dnu → v zábere  {"ok":false,"top":900,"bottom":1530,"y":0}
+OK   [zaklad/pocitac] linka kapitol #remeslo → v zábere  {"ok":true,"top":-270,"bottom":360,"y":1800}
+OK   [zaklad/pocitac] linka kapitol #cakaren → v zábere  {"ok":true,"top":360,"bottom":990,"y":1800}
+OK   [zaklad/pocitac] linka kapitol #tim → v zábere  {"ok":true,"top":-270,"bottom":2864,"y":3060}
+FAIL [zaklad/pocitac] linka kapitol #sluzby → v zábere  {"ok":false,"top":2864,"bottom":6691,"y":3060}
+FAIL [zaklad/pocitac] linka kapitol #galeria → v zábere  {"ok":false,"top":3557,"bottom":7337,"y":6194}
+FAIL [zaklad/pocitac] linka kapitol #rezervacia → v zábere  {"ok":false,"top":3506,"bottom":7661,"y":10025}
+OK   [zaklad/pocitac] značka v lište vráti na úvod  0
+OK   [zaklad/pocitac] tlačidlo #uvod .title-actions a.btn-primary viditeľné
+OK   [zaklad/pocitac] #uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/pocitac] tlačidlo #nav a.btn-primary viditeľné
+OK   [zaklad/pocitac] #nav a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/pocitac] odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)  []
+OK   [zaklad/pocitac] časté otázky: 8 otázok sa rozbalí  {"nFaq":8,"otvorene":8}
+OK   [zaklad/pocitac] lightbox sa otvorí s fotkou a popisom (8 fotiek)  {"open":true,"nat":1440,"cap":"Nožnice a hrebeň na barberskej podložke s logom","src":"/barbershop-30/assets/img/naradie-noznice-1600.jpg"}
+OK   [zaklad/pocitac] lightbox: ďalšia fotka  Karafa, pomády a štetka na holenie na pracovnom stole
+OK   [zaklad/pocitac] lightbox: predchádzajúca fotka
+OK   [zaklad/pocitac] lightbox: šípka, Esc zavrie, fokus späť na fotku, stránka odomknutá  {"hidden":true,"focus":true,"overflow":""}
+OK   [zaklad/pocitac] pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz  {"kedy0":"Pripomienka pondelok 23. novembra o 10:00","kedy":"Pripomienka pondelok 7. decembra o 10:00","dt":"20261207T100000"}
+OK   [zaklad/pocitac] pripomienka: Pridať do kalendára stiahne platný .ics  barbershop30-pripomienka.ics
+OK   [zaklad/pocitac] Uložiť kontakt: .vcf existuje a má telefón  200 text/vcard
+OK   [zaklad/pocitac] Pošli kamarátovi: skopíruje odkaz a povie to  {"st":"Odkaz je skopírovaný","clip":"https://d8f5s88zjy-art.github.io/barbershop30/"}
+OK   [zaklad/pocitac] tlačidlo Hudba prepne stav  {"vis":true,"p0":"true","p1":"false","audio":["/barbershop-30/assets/audio/strih.webm 200","/barbershop-30/assets/audio/hudba.webm 200"]}
+OK   [zaklad/pocitac] kurzor nožníc a svetlo pod kurzorom  {"body":"image-set(url(\"http://127.0.0.1:8860/barbershop-30/assets/img/kurzor/noznice-32.png\") 1dppx, url(\"http://127.0.0.1:8860/","a":"image-set(url(\"http://127.0.0.1:8860/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png\") 1dppx, url(\"http://127.0.","svetlo":true,"kurzRes":["/barbershop-30/assets/img/kurzor/noznice-32.png 200","/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png 200"]}
+OK   [zaklad/pocitac] pätička: Vernostná kartička otvorí stránku kartičky  {"url":"/barbershop-30/karta/","h":"Zbieraj body za každú návštevu","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\n30\nZbieraj body za každú návštevu\n\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\n\nKartičky práve spúšťame\n\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\n\nZavolať"}
+FAIL [zaklad/pocitac] pätička: Späť hore  17189
+FAIL [zaklad/pocitac] klávesnica: prvý Tab = Preskočiť na obsah, Enter skočí na #main  hero-rating
+FAIL [zaklad/pocitac] index.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+INFO [zaklad/pocitac] index.html: prerušené požiadavky (ERR_ABORTED, bežné pri lenivom načítaní/odchode): 1× /barbershop-30/assets/img/detail-stol-1600.jpg net::ERR_ABORTED
+INFO [zaklad/pocitac] externé adresy zablokované auditom: https://www.barbershop30.sk/rezervacia | https://www.google.com/maps?cid=18132360254733427623
+INFO [zaklad/pocitac] trvanie 121 s
+OK   [zaklad/telefon] prepínač jazyka vytvorený (i18n.js po geste)  {"lang":true,"hudba":true,"recenzie":6,"recBox":false,"karty":true,"vernost":false,"zive":"Teraz otvorené · 9:00 – 19:00","rok":"2026","priceTabs":4}
+OK   [zaklad/telefon] recenzie: 6 citácií, blok viditeľný  6
+OK   [zaklad/telefon] pás vizitky a pripomienky vložený (karty.js)
+INFO [zaklad/telefon] vernostná kartička v páse: nie (bez data-zapnute správne skrytá); živý stav: „Teraz otvorené · 9:00 – 19:00“; rok 2026
+OK   [zaklad/telefon] menu sa otvorí (pred Prehliadka)  true
+OK   [zaklad/telefon] navigácia „Prehliadka“ → #vstup-dnu v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":338,"y":1097,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Služby)  true
+OK   [zaklad/telefon] navigácia „Služby“ → #sluzby v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":4254,"y":4450,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Tím)  true
+OK   [zaklad/telefon] navigácia „Tím“ → #tim v zábere a menu zavreté  {"ok":true,"top":-254,"bottom":1800,"y":2870,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Galéria)  true
+OK   [zaklad/telefon] navigácia „Galéria“ → #galeria v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":3582,"y":8485,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Kontakt)  true
+OK   [zaklad/telefon] navigácia „Kontakt“ → #kontakt v zábere a menu zavreté  {"ok":true,"top":76,"bottom":971,"y":16204,"menu":"false"}
+OK   [zaklad/telefon] menu: Esc zavrie
+OK   [zaklad/telefon] menu: ťuk na stmavenú stránku pod panelom zavrie  {"lockOn":"hidden"}
+INFO [zaklad/telefon] linka kapitol: 0/8 bodov viditeľných [{"href":"#uvod","vis":false,"w":0,"h":0},{"href":"#vstup-dnu","vis":false,"w":0,"h":0}]
+OK   [zaklad/telefon] značka v lište vráti na úvod  0
+OK   [zaklad/telefon] tlačidlo #uvod .title-actions a.btn-primary viditeľné
+OK   [zaklad/telefon] #uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/telefon] tlačidlo #mobile-cta a.btn-primary viditeľné
+OK   [zaklad/telefon] #mobile-cta a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/telefon] odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)  []
+OK   [zaklad/telefon] časté otázky: 8 otázok sa rozbalí  {"nFaq":8,"otvorene":8}
+OK   [zaklad/telefon] cenník: 4 záložky skupín  4
+OK   [zaklad/telefon] cenník: záložka 3 posunie na skupinu 3  {"top":200,"vh":844}
+OK   [zaklad/telefon] cenník: ťuk na popis ho rozbalí
+OK   [zaklad/telefon] lightbox sa otvorí s fotkou a popisom (8 fotiek)  {"open":true,"nat":390,"cap":"Nožnice a hrebeň na barberskej podložke s logom","src":"/barbershop-30/assets/img/naradie-noznice-1600.jpg"}
+OK   [zaklad/telefon] lightbox: ďalšia fotka  Karafa, pomády a štetka na holenie na pracovnom stole
+OK   [zaklad/telefon] lightbox: predchádzajúca fotka
+OK   [zaklad/telefon] lightbox: Zavrieť ho zavrie a odomkne stránku
+OK   [zaklad/telefon] pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz  {"kedy0":"Pripomienka pondelok 23. novembra o 10:00","kedy":"Pripomienka pondelok 7. decembra o 10:00","dt":"20261207T100000"}
+OK   [zaklad/telefon] pripomienka: Pridať do kalendára stiahne platný .ics  barbershop30-pripomienka.ics
+OK   [zaklad/telefon] Uložiť kontakt: .vcf existuje a má telefón  200 text/vcard
+OK   [zaklad/telefon] Pošli kamarátovi: zdieľanie telefónu s adresou  {"title":"Barbershop 30","text":"Barbershop 30, pánske holičstvo na Mostnej 30 v Nitre.","url":"https://d8f5s88zjy-art.github.io/barbershop30/"}
+INFO [zaklad/telefon] Pošli kamarátovi zdieľa adresu https://d8f5s88zjy-art.github.io/barbershop30/ (kanonická adresa z HTML)
+OK   [zaklad/telefon] tlačidlo Hudba prepne stav  {"vis":true,"p0":"true","p1":"false","audio":["/barbershop-30/assets/audio/hudba.webm 200","/barbershop-30/assets/audio/strih.webm 200"]}
+OK   [zaklad/telefon] pätička: Vernostná kartička otvorí stránku kartičky  {"url":"/barbershop-30/karta/","h":"Zbieraj body za každú návštevu","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\n30\nZbieraj body za každú návštevu\n\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\n\nKartičky práve spúšťame\n\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\n\nZavolať"}
+OK   [zaklad/telefon] pätička: Späť hore  0
+FAIL [zaklad/telefon] index.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+INFO [zaklad/telefon] index.html: prerušené požiadavky (ERR_ABORTED, bežné pri lenivom načítaní/odchode): 2× /barbershop-30/assets/img/naradie-noznice-1600.jpg net::ERR_ABORTED | /barbershop-30/assets/img/detail-stol-1600.jpg net::ERR_ABORTED
+INFO [zaklad/telefon] externé adresy zablokované auditom: https://www.barbershop30.sk/rezervacia
+INFO [zaklad/telefon] trvanie 77 s
+OK   [manifest/-] assets/manifest.webmanifest: platný JSON  {"name":"Barbershop 30 Nitra","start_url":"../","scope":"../","display":"minimal-ui"}
+OK   [manifest/-] assets/manifest.webmanifest: ikony a start_url existujú  {"zle":[],"start":"/barbershop-30/","status":200}
+OK   [manifest/-] karta/manifest.webmanifest: platný JSON  {"name":"Barbershop 30 · vernostná kartička","start_url":"./","scope":"./","display":"standalone"}
+OK   [manifest/-] karta/manifest.webmanifest: ikony a start_url existujú  {"zle":[],"start":"/barbershop-30/karta/","status":200}
+OK   [manifest/-] assets/favicon.svg existuje  200
+OK   [manifest/-] assets/img/ikona/apple-touch-icon.png existuje  200
+OK   [manifest/-] robots.txt existuje  200
+OK   [manifest/-] sitemap.xml existuje  200
+OK   [manifest/-] assets/og.jpg existuje  200
+
+SÚHRN: 83 kontrol, zlyhalo 11
