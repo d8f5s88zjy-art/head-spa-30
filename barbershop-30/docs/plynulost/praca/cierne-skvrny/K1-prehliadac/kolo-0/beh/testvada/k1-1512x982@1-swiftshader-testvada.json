@@ -1,0 +1,2261 @@
+{
+ "nastroj": "k1-detektor.cjs",
+ "cas": "2026-10-26T08:44:38.037Z",
+ "url": "http://127.0.0.1:8801/barbershop-30/index.html?asistent=ukazka&objednavka=ukazka&film=on",
+ "okno": {
+  "w": 1512,
+  "h": 982,
+  "dpr": 1
+ },
+ "gpu": {
+  "rezim": "swiftshader",
+  "args": [
+   "--use-angle=swiftshader",
+   "--enable-unsafe-swiftshader"
+  ],
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+ },
+ "parametre": {
+  "krok": 40,
+  "usadit": 0,
+  "prah": 24,
+  "plocha_pct": 0.05,
+  "ref_jas": 48,
+  "tol_pct": 2.5,
+  "sirka": 640,
+  "znacka": false,
+  "test_vada": true,
+  "tahy": 1200
+ },
+ "kroky": [
+  {
+   "r": "pomaly-pokoj",
+   "y": 2400,
+   "S": 3.5632,
+   "T": 3.5632,
+   "mix": 0,
+   "cut": null,
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 114,
+   "a0": 5.05,
+   "a16": 26.44,
+   "k": 28,
+   "s": 2,
+   "p": 2,
+   "dpr": 1,
+   "ms": 5600,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 23.2
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2418,
+   "S": 3.5656,
+   "T": 3.585,
+   "mix": 0.902,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 105,
+   "a0": 0,
+   "a16": 0,
+   "k": 40,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 7905,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 13.8
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2455,
+   "S": 3.577,
+   "T": 3.633,
+   "mix": 0.883,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 105,
+   "a0": 0,
+   "a16": 0,
+   "k": 40,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 4821,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 18.8
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2503,
+   "S": 3.6402,
+   "T": 3.6868,
+   "mix": 0.939,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 106,
+   "a0": 0,
+   "a16": 0,
+   "k": 38,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 6661,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.5
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2538,
+   "S": 3.6978,
+   "T": 3.7552,
+   "mix": 0.977,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 106,
+   "a0": 0,
+   "a16": 0,
+   "k": 40,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 10577,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.6
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2577,
+   "S": 3.7507,
+   "T": 3.8105,
+   "mix": 0.991,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 107,
+   "a0": 0,
+   "a16": 0,
+   "k": 42,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 11676,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 24.6
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2610,
+   "S": 3.7998,
+   "T": 3.857,
+   "mix": 0.996,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 106,
+   "a0": 0,
+   "a16": 0,
+   "k": 40,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 8366,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 9.9
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2644,
+   "S": 3.8417,
+   "T": 3.9108,
+   "mix": 0.998,
+   "cut": "stol>cakaren svih",
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 106,
+   "a0": 0,
+   "a16": 0,
+   "k": 40,
+   "s": 2,
+   "p": 0,
+   "dpr": 1,
+   "ms": 7965,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.3
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2711,
+   "S": 3.9396,
+   "T": 4.0011,
+   "mix": 0,
+   "cut": null,
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 115,
+   "a0": 5.71,
+   "a16": 27.31,
+   "k": 24,
+   "s": 2,
+   "p": 2,
+   "dpr": 1,
+   "ms": 3793,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 16.2
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2736,
+   "S": 3.9934,
+   "T": 4.0403,
+   "mix": 0,
+   "cut": null,
+   "A": "stol",
+   "B": "cakaren",
+   "jas": 116,
+   "a0": 5.85,
+   "a16": 27.48,
+   "k": 22,
+   "s": 2,
+   "p": 2,
+   "dpr": 1,
+   "ms": 2127,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.2
+    }
+   ]
+  },
+  {
+   "r": "pomaly",
+   "y": 2798,
+   "S": 4.1229,
+   "T": 4.1499,
+   "mix": 0,
+   "cut": null,
+   "A": "cakaren",
+   "B": "sala-rano",
+   "jas": 116,
+   "a0": 6.07,
+   "a16": 27.68,
+   "k": 24,
+   "s": 2,
+   "p": 2,
+   "dpr": 1,
+   "ms": 4212,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.4
+    }
+   ]
+  },
+  {
+   "r": "pomaly-pokoj",
+   "y": 2800,
+   "S": 4.1557,
+   "T": 4.1562,
+   "mix": 0,
+   "cut": null,
+   "A": "cakaren",
+   "B": "sala-rano",
+   "jas": 116,
+   "a0": 5.99,
+   "a16": 27.5,
+   "k": 22,
+   "s": 2,
+   "p": 2,
+   "dpr": 1,
+   "ms": 4485,
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 17.8
+    }
+   ]
+  }
+ ],
+ "skvrny": [
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2400,
+   "S": 3.5632,
+   "T": 3.5632,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 23.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 359.1,
+    "y": 158.2,
+    "w": 505.6,
+    "h": 243.1
+   },
+   "stred": [
+    0.405,
+    0.285
+   ],
+   "plocha": 6.116,
+   "jas": 12.1,
+   "rozptyl": 2.29,
+   "farba": [
+    13,
+    12.1,
+    11.2
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.819,
+   "ref_jas": 83.2,
+   "necakane": 0.876,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|safari|cakaren|1,0",
+   "vyrez_platno": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-pokoj-y2400-S3.563-0-safari-platno100.png",
+   "nahlad": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-pokoj-y2400-S3.563-nahlad.jpg",
+   "vyrez_obrazovka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-pokoj-y2400-S3.563-0-obrazovka.jpg"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2400,
+   "S": 3.5632,
+   "T": 3.5632,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 23.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 576.4,
+    "y": 191.2,
+    "w": 288.2,
+    "h": 170
+   },
+   "stred": [
+    0.477,
+    0.281
+   ],
+   "plocha": 3.255,
+   "jas": 11.4,
+   "rozptyl": 2.99,
+   "farba": [
+    12.2,
+    11.3,
+    10.5
+   ],
+   "rovna": false,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.66,
+   "ref_jas": 90.6,
+   "necakane": 0.786,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|chromium|cakaren|1,0",
+   "vyrez_platno": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-pokoj-y2400-S3.563-1-chromium-platno100.png",
+   "vyrez_obrazovka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-pokoj-y2400-S3.563-1-obrazovka.jpg"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2418,
+   "S": 3.5656,
+   "T": 3.585,
+   "mix": 0.902,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 13.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 578.8,
+    "y": 186.5,
+    "w": 295.3,
+    "h": 170
+   },
+   "stred": [
+    0.48,
+    0.276
+   ],
+   "plocha": 3.365,
+   "jas": 0.3,
+   "rozptyl": 1.55,
+   "farba": [
+    0.3,
+    0.3,
+    0.2
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.1,
+   "necakane": 0.46,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0",
+   "vyrez_platno": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-y2418-S3.566-0-safari-platno100.png",
+   "nahlad": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-y2418-S3.566-nahlad.jpg",
+   "vyrez_obrazovka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-y2418-S3.566-0-obrazovka.jpg"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2418,
+   "S": 3.5656,
+   "T": 3.585,
+   "mix": 0.902,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 13.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 578.8,
+    "y": 186.5,
+    "w": 295.3,
+    "h": 170
+   },
+   "stred": [
+    0.48,
+    0.276
+   ],
+   "plocha": 3.365,
+   "jas": 0.3,
+   "rozptyl": 1.55,
+   "farba": [
+    0.3,
+    0.3,
+    0.2
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.1,
+   "necakane": 0.46,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0",
+   "vyrez_platno": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-y2418-S3.566-1-chromium-platno100.png",
+   "vyrez_obrazovka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/testvada/vyrezy/1512x982@1-swiftshader-testvada-pomaly-y2418-S3.566-1-obrazovka.jpg"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2455,
+   "S": 3.577,
+   "T": 3.633,
+   "mix": 0.883,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 18.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 578.8,
+    "y": 181.8,
+    "w": 302.4,
+    "h": 174.7
+   },
+   "stred": [
+    0.483,
+    0.274
+   ],
+   "plocha": 3.415,
+   "jas": 0.2,
+   "rozptyl": 1.32,
+   "farba": [
+    0.2,
+    0.2,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.9,
+   "necakane": 0.473,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2455,
+   "S": 3.577,
+   "T": 3.633,
+   "mix": 0.883,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 18.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 578.8,
+    "y": 181.8,
+    "w": 302.4,
+    "h": 174.7
+   },
+   "stred": [
+    0.483,
+    0.274
+   ],
+   "plocha": 3.415,
+   "jas": 0.2,
+   "rozptyl": 1.32,
+   "farba": [
+    0.2,
+    0.2,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.9,
+   "necakane": 0.473,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2503,
+   "S": 3.6402,
+   "T": 3.6868,
+   "mix": 0.939,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.5
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 574.1,
+    "y": 179.4,
+    "w": 311.8,
+    "h": 174.7
+   },
+   "stred": [
+    0.483,
+    0.272
+   ],
+   "plocha": 3.532,
+   "jas": 0.1,
+   "rozptyl": 1.31,
+   "farba": [
+    0.2,
+    0.1,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 40.8,
+   "necakane": 0.469,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2503,
+   "S": 3.6402,
+   "T": 3.6868,
+   "mix": 0.939,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.5
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 574.1,
+    "y": 179.4,
+    "w": 311.8,
+    "h": 174.7
+   },
+   "stred": [
+    0.483,
+    0.272
+   ],
+   "plocha": 3.532,
+   "jas": 0.1,
+   "rozptyl": 1.31,
+   "farba": [
+    0.2,
+    0.1,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 40.8,
+   "necakane": 0.469,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2538,
+   "S": 3.6978,
+   "T": 3.7552,
+   "mix": 0.977,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.6
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 571.7,
+    "y": 179.4,
+    "w": 307.1,
+    "h": 172.3
+   },
+   "stred": [
+    0.48,
+    0.27
+   ],
+   "plocha": 3.531,
+   "jas": 0.1,
+   "rozptyl": 1.14,
+   "farba": [
+    0.1,
+    0.1,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 42.8,
+   "necakane": 0.511,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2538,
+   "S": 3.6978,
+   "T": 3.7552,
+   "mix": 0.977,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.6
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 571.7,
+    "y": 179.4,
+    "w": 307.1,
+    "h": 172.3
+   },
+   "stred": [
+    0.48,
+    0.27
+   ],
+   "plocha": 3.531,
+   "jas": 0.1,
+   "rozptyl": 1.14,
+   "farba": [
+    0.1,
+    0.1,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 42.8,
+   "necakane": 0.511,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2577,
+   "S": 3.7507,
+   "T": 3.8105,
+   "mix": 0.991,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 24.6
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 567,
+    "y": 172.3,
+    "w": 311.8,
+    "h": 179.4
+   },
+   "stred": [
+    0.478,
+    0.267
+   ],
+   "plocha": 3.687,
+   "jas": 0.2,
+   "rozptyl": 1.81,
+   "farba": [
+    0.2,
+    0.2,
+    0.2
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 44.3,
+   "necakane": 0.503,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2577,
+   "S": 3.7507,
+   "T": 3.8105,
+   "mix": 0.991,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 24.6
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 567,
+    "y": 172.3,
+    "w": 311.8,
+    "h": 179.4
+   },
+   "stred": [
+    0.478,
+    0.267
+   ],
+   "plocha": 3.687,
+   "jas": 0.2,
+   "rozptyl": 1.81,
+   "farba": [
+    0.2,
+    0.2,
+    0.2
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 44.3,
+   "necakane": 0.503,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2610,
+   "S": 3.7998,
+   "T": 3.857,
+   "mix": 0.996,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 9.9
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 567,
+    "y": 174.7,
+    "w": 302.4,
+    "h": 179.4
+   },
+   "stred": [
+    0.475,
+    0.269
+   ],
+   "plocha": 3.533,
+   "jas": 0,
+   "rozptyl": 0.5,
+   "farba": [
+    0,
+    0,
+    0
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 42.1,
+   "necakane": 0.49,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2610,
+   "S": 3.7998,
+   "T": 3.857,
+   "mix": 0.996,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 9.9
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 567,
+    "y": 174.7,
+    "w": 302.4,
+    "h": 179.4
+   },
+   "stred": [
+    0.475,
+    0.269
+   ],
+   "plocha": 3.533,
+   "jas": 0,
+   "rozptyl": 0.5,
+   "farba": [
+    0,
+    0,
+    0
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 42.1,
+   "necakane": 0.49,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2644,
+   "S": 3.8417,
+   "T": 3.9108,
+   "mix": 0.998,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.3
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 569.4,
+    "y": 179.4,
+    "w": 304.8,
+    "h": 177
+   },
+   "stred": [
+    0.477,
+    0.273
+   ],
+   "plocha": 3.566,
+   "jas": 0.2,
+   "rozptyl": 1.5,
+   "farba": [
+    0.2,
+    0.2,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.9,
+   "necakane": 0.46,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|safari|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2644,
+   "S": 3.8417,
+   "T": 3.9108,
+   "mix": 0.998,
+   "strih": "stol>cakaren svih",
+   "zaber": "stol>cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 15.3
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 569.4,
+    "y": 179.4,
+    "w": 304.8,
+    "h": 177
+   },
+   "stred": [
+    0.477,
+    0.273
+   ],
+   "plocha": 3.566,
+   "jas": 0.2,
+   "rozptyl": 1.5,
+   "farba": [
+    0.2,
+    0.2,
+    0.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 41.9,
+   "necakane": 0.46,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "strih s posunom obrazu: navyše rovná čierna",
+   "skupina": "skvrny|chromium|stol>cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2711,
+   "S": 3.9396,
+   "T": 4.0011,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 16.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 333.1,
+    "y": 136.9,
+    "w": 543.4,
+    "h": 259.7
+   },
+   "stred": [
+    0.4,
+    0.272
+   ],
+   "plocha": 6.899,
+   "jas": 12.1,
+   "rozptyl": 2.29,
+   "farba": [
+    13,
+    12,
+    11.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.816,
+   "ref_jas": 86,
+   "necakane": 0.888,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|safari|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2711,
+   "S": 3.9396,
+   "T": 4.0011,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 16.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 567,
+    "y": 172.3,
+    "w": 309.5,
+    "h": 177
+   },
+   "stred": [
+    0.477,
+    0.266
+   ],
+   "plocha": 3.679,
+   "jas": 11.3,
+   "rozptyl": 2.92,
+   "farba": [
+    12.1,
+    11.2,
+    10.3
+   ],
+   "rovna": false,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.656,
+   "ref_jas": 94.7,
+   "necakane": 0.807,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|chromium|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2736,
+   "S": 3.9934,
+   "T": 4.0403,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 328.4,
+    "y": 132.2,
+    "w": 555.2,
+    "h": 262
+   },
+   "stred": [
+    0.401,
+    0.268
+   ],
+   "plocha": 7.114,
+   "jas": 12.1,
+   "rozptyl": 2.3,
+   "farba": [
+    13,
+    12,
+    11.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.815,
+   "ref_jas": 86.4,
+   "necakane": 0.889,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|safari|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2736,
+   "S": 3.9934,
+   "T": 4.0403,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 564.6,
+    "y": 170,
+    "w": 318.9,
+    "h": 177
+   },
+   "stred": [
+    0.479,
+    0.263
+   ],
+   "plocha": 3.769,
+   "jas": 11.3,
+   "rozptyl": 2.93,
+   "farba": [
+    12.1,
+    11.2,
+    10.3
+   ],
+   "rovna": false,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.65,
+   "ref_jas": 94.9,
+   "necakane": 0.807,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|chromium|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2798,
+   "S": 4.1229,
+   "T": 4.1499,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.4
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 321.3,
+    "y": 125.1,
+    "w": 562.3,
+    "h": 266.7
+   },
+   "stred": [
+    0.398,
+    0.263
+   ],
+   "plocha": 7.344,
+   "jas": 12.1,
+   "rozptyl": 2.31,
+   "farba": [
+    13,
+    12,
+    11.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.817,
+   "ref_jas": 86.9,
+   "necakane": 0.837,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|safari|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2798,
+   "S": 4.1229,
+   "T": 4.1499,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.4
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 559.9,
+    "y": 162.9,
+    "w": 323.7,
+    "h": 181.8
+   },
+   "stred": [
+    0.477,
+    0.258
+   ],
+   "plocha": 3.9,
+   "jas": 11.3,
+   "rozptyl": 3.01,
+   "farba": [
+    12.1,
+    11.2,
+    10.4
+   ],
+   "rovna": false,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.655,
+   "ref_jas": 96.4,
+   "necakane": 0.715,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|chromium|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2800,
+   "S": 4.1557,
+   "T": 4.1562,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 17.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 321.3,
+    "y": 127.5,
+    "w": 550.5,
+    "h": 266.7
+   },
+   "stred": [
+    0.395,
+    0.266
+   ],
+   "plocha": 7.178,
+   "jas": 12.1,
+   "rozptyl": 2.3,
+   "farba": [
+    13,
+    12.1,
+    11.1
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.826,
+   "ref_jas": 88,
+   "necakane": 0.893,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|safari|cakaren|1,0"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2800,
+   "S": 4.1557,
+   "T": 4.1562,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 17.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 559.9,
+    "y": 165.2,
+    "w": 311.8,
+    "h": 179.4
+   },
+   "stred": [
+    0.473,
+    0.26
+   ],
+   "plocha": 3.756,
+   "jas": 11.3,
+   "rozptyl": 2.95,
+   "farba": [
+    12.1,
+    11.2,
+    10.4
+   ],
+   "rovna": false,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0.668,
+   "ref_jas": 97.8,
+   "necakane": 0.815,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "skvrny|chromium|cakaren|1,0"
+  }
+ ],
+ "podozrenia": [
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2400,
+   "S": 3.5632,
+   "T": 3.5632,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 23.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 267,
+    "y": 856.9,
+    "w": 56.7,
+    "h": 125.1
+   },
+   "stred": [
+    0.195,
+    0.936
+   ],
+   "plocha": 0.301,
+   "jas": 18.6,
+   "rozptyl": 1.51,
+   "farba": [
+    19.7,
+    18.8,
+    14.8
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.9,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|safari|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2400,
+   "S": 3.5632,
+   "T": 3.5632,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 23.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 267,
+    "y": 856.9,
+    "w": 56.7,
+    "h": 125.1
+   },
+   "stred": [
+    0.195,
+    0.936
+   ],
+   "plocha": 0.301,
+   "jas": 18.6,
+   "rozptyl": 1.51,
+   "farba": [
+    19.7,
+    18.8,
+    14.8
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.9,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|chromium|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2711,
+   "S": 3.9396,
+   "T": 4.0011,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 16.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 233.9,
+    "y": 882.9,
+    "w": 54.3,
+    "h": 99.1
+   },
+   "stred": [
+    0.173,
+    0.95
+   ],
+   "plocha": 0.231,
+   "jas": 18.5,
+   "rozptyl": 1.57,
+   "farba": [
+    19.5,
+    18.6,
+    15
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 7,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|safari|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2711,
+   "S": 3.9396,
+   "T": 4.0011,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 16.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 233.9,
+    "y": 882.9,
+    "w": 54.3,
+    "h": 99.1
+   },
+   "stred": [
+    0.173,
+    0.95
+   ],
+   "plocha": 0.231,
+   "jas": 18.5,
+   "rozptyl": 1.57,
+   "farba": [
+    19.5,
+    18.6,
+    15
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 7,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|chromium|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2736,
+   "S": 3.9934,
+   "T": 4.0403,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 226.8,
+    "y": 887.6,
+    "w": 54.3,
+    "h": 94.4
+   },
+   "stred": [
+    0.168,
+    0.952
+   ],
+   "plocha": 0.22,
+   "jas": 18.5,
+   "rozptyl": 1.61,
+   "farba": [
+    19.5,
+    18.6,
+    15
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.7,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|safari|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2736,
+   "S": 3.9934,
+   "T": 4.0403,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.2
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 226.8,
+    "y": 887.6,
+    "w": 54.3,
+    "h": 94.4
+   },
+   "stred": [
+    0.168,
+    0.952
+   ],
+   "plocha": 0.22,
+   "jas": 18.5,
+   "rozptyl": 1.61,
+   "farba": [
+    19.5,
+    18.6,
+    15
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.7,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|chromium|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2798,
+   "S": 4.1229,
+   "T": 4.1499,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.4
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 215,
+    "y": 897,
+    "w": 52,
+    "h": 85
+   },
+   "stred": [
+    0.159,
+    0.957
+   ],
+   "plocha": 0.196,
+   "jas": 18.3,
+   "rozptyl": 1.56,
+   "farba": [
+    19.5,
+    18.5,
+    14.9
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|safari|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly",
+   "scrollY": 2798,
+   "S": 4.1229,
+   "T": 4.1499,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 20.4
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 215,
+    "y": 897,
+    "w": 52,
+    "h": 85
+   },
+   "stred": [
+    0.159,
+    0.957
+   ],
+   "plocha": 0.196,
+   "jas": 18.3,
+   "rozptyl": 1.56,
+   "farba": [
+    19.5,
+    18.5,
+    14.9
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|chromium|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2800,
+   "S": 4.1557,
+   "T": 4.1562,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 17.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "safari",
+   "bbox": {
+    "x": 215,
+    "y": 892.3,
+    "w": 52,
+    "h": 89.7
+   },
+   "stred": [
+    0.159,
+    0.954
+   ],
+   "plocha": 0.208,
+   "jas": 18.4,
+   "rozptyl": 1.61,
+   "farba": [
+    19.6,
+    18.5,
+    14.9
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.5,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|safari|cakaren|0,2"
+  },
+  {
+   "rezim": "pomaly-pokoj",
+   "scrollY": 2800,
+   "S": 4.1557,
+   "T": 4.1562,
+   "mix": 0,
+   "strih": null,
+   "zaber": "cakaren",
+   "ref": [
+    {
+     "photo": "cakaren",
+     "mae": 17.8
+    }
+   ],
+   "dpr": 1,
+   "plátno": [
+    1512,
+    982
+   ],
+   "pohlad": "chromium",
+   "bbox": {
+    "x": 215,
+    "y": 892.3,
+    "w": 52,
+    "h": 89.7
+   },
+   "stred": [
+    0.159,
+    0.954
+   ],
+   "plocha": 0.208,
+   "jas": 18.4,
+   "rozptyl": 1.61,
+   "farba": [
+    19.6,
+    18.5,
+    14.9
+   ],
+   "rovna": true,
+   "ako_pozadie": true,
+   "alfa0_podiel": 0,
+   "ref_jas": 6.5,
+   "necakane": 0,
+   "znama": 1,
+   "viditelna": 1,
+   "dovod": "fotka je na tom mieste svetlá",
+   "skupina": "podozrenia|chromium|cakaren|0,2"
+  }
+ ],
+ "chyby": [],
+ "film_ready": true,
+ "zabery": [
+  {
+   "photo": "vstup",
+   "ok": true
+  },
+  {
+   "photo": "rohozka",
+   "ok": true
+  },
+  {
+   "photo": "sala",
+   "ok": true
+  },
+  {
+   "photo": "stol",
+   "ok": true
+  },
+  {
+   "photo": "cakaren",
+   "ok": true
+  },
+  {
+   "photo": "sala-rano",
+   "ok": true
+  },
+  {
+   "photo": "kreslo-stred",
+   "ok": true
+  },
+  {
+   "photo": "kava",
+   "ok": true
+  },
+  {
+   "photo": "sud",
+   "ok": true
+  },
+  {
+   "photo": "vstup",
+   "ok": true
+  }
+ ],
+ "rozsah": [
+  2400,
+  2800
+ ],
+ "maxY": 17949,
+ "film_koniec": {
+  "frames": 104,
+  "dpr": 1,
+  "firstFrameMs": 2242,
+  "ready": [
+   [
+    "vstup",
+    0,
+    null
+   ],
+   [
+    "rohozka",
+    0,
+    null
+   ],
+   [
+    "sala",
+    0,
+    null
+   ],
+   [
+    "stol",
+    2172,
+    "768x512"
+   ],
+   [
+    "cakaren",
+    2172,
+    "768x512"
+   ],
+   [
+    "sala-rano",
+    2172,
+    "768x512"
+   ],
+   [
+    "kreslo-stred",
+    2172,
+    "768x512"
+   ],
+   [
+    "kava",
+    0,
+    null
+   ],
+   [
+    "sud",
+    0,
+    null
+   ],
+   [
+    "vstup",
+    0,
+    null
+   ]
+  ]
+ },
+ "skupiny": [
+  {
+   "skupina": "skvrny|safari|cakaren|1,0",
+   "druh": "skvrny",
+   "pohlad": "safari",
+   "zaber": "cakaren",
+   "pocet": 5,
+   "prvy": {
+    "scrollY": 2400,
+    "S": 3.5632,
+    "bbox": {
+     "x": 359.1,
+     "y": 158.2,
+     "w": 505.6,
+     "h": 243.1
+    },
+    "plocha": 6.116,
+    "alfa0_podiel": 0.819,
+    "ref_jas": 83.2
+   },
+   "max_plocha": 7.344,
+   "rezimy": [
+    "pomaly-pokoj",
+    "pomaly"
+   ],
+   "scrollY": [
+    2400,
+    2800
+   ]
+  },
+  {
+   "skupina": "skvrny|chromium|cakaren|1,0",
+   "druh": "skvrny",
+   "pohlad": "chromium",
+   "zaber": "cakaren",
+   "pocet": 5,
+   "prvy": {
+    "scrollY": 2400,
+    "S": 3.5632,
+    "bbox": {
+     "x": 576.4,
+     "y": 191.2,
+     "w": 288.2,
+     "h": 170
+    },
+    "plocha": 3.255,
+    "alfa0_podiel": 0.66,
+    "ref_jas": 90.6
+   },
+   "max_plocha": 3.9,
+   "rezimy": [
+    "pomaly-pokoj",
+    "pomaly"
+   ],
+   "scrollY": [
+    2400,
+    2800
+   ]
+  },
+  {
+   "skupina": "podozrenia|safari|cakaren|0,2",
+   "druh": "podozrenia",
+   "pohlad": "safari",
+   "zaber": "cakaren",
+   "pocet": 5,
+   "prvy": {
+    "scrollY": 2400,
+    "S": 3.5632,
+    "bbox": {
+     "x": 267,
+     "y": 856.9,
+     "w": 56.7,
+     "h": 125.1
+    },
+    "plocha": 0.301,
+    "alfa0_podiel": 0,
+    "ref_jas": 6.9
+   },
+   "max_plocha": 0.301,
+   "rezimy": [
+    "pomaly-pokoj",
+    "pomaly"
+   ],
+   "scrollY": [
+    2400,
+    2800
+   ]
+  },
+  {
+   "skupina": "podozrenia|chromium|cakaren|0,2",
+   "druh": "podozrenia",
+   "pohlad": "chromium",
+   "zaber": "cakaren",
+   "pocet": 5,
+   "prvy": {
+    "scrollY": 2400,
+    "S": 3.5632,
+    "bbox": {
+     "x": 267,
+     "y": 856.9,
+     "w": 56.7,
+     "h": 125.1
+    },
+    "plocha": 0.301,
+    "alfa0_podiel": 0,
+    "ref_jas": 6.9
+   },
+   "max_plocha": 0.301,
+   "rezimy": [
+    "pomaly-pokoj",
+    "pomaly"
+   ],
+   "scrollY": [
+    2400,
+    2800
+   ]
+  },
+  {
+   "skupina": "skvrny|safari|stol>cakaren|1,0",
+   "druh": "skvrny",
+   "pohlad": "safari",
+   "zaber": "stol>cakaren",
+   "pocet": 7,
+   "prvy": {
+    "scrollY": 2418,
+    "S": 3.5656,
+    "bbox": {
+     "x": 578.8,
+     "y": 186.5,
+     "w": 295.3,
+     "h": 170
+    },
+    "plocha": 3.365,
+    "alfa0_podiel": 0,
+    "ref_jas": 41.1
+   },
+   "max_plocha": 3.687,
+   "rezimy": [
+    "pomaly"
+   ],
+   "scrollY": [
+    2418,
+    2644
+   ]
+  },
+  {
+   "skupina": "skvrny|chromium|stol>cakaren|1,0",
+   "druh": "skvrny",
+   "pohlad": "chromium",
+   "zaber": "stol>cakaren",
+   "pocet": 7,
+   "prvy": {
+    "scrollY": 2418,
+    "S": 3.5656,
+    "bbox": {
+     "x": 578.8,
+     "y": 186.5,
+     "w": 295.3,
+     "h": 170
+    },
+    "plocha": 3.365,
+    "alfa0_podiel": 0,
+    "ref_jas": 41.1
+   },
+   "max_plocha": 3.687,
+   "rezimy": [
+    "pomaly"
+   ],
+   "scrollY": [
+    2418,
+    2644
+   ]
+  }
+ ],
+ "suhrn": {
+  "snimky": 12,
+  "zakryte": 0,
+  "skvrny_detekcie": 24,
+  "skvrny_unikatne": 4,
+  "skvrny_safari": 2,
+  "skvrny_chromium": 2,
+  "detekcie_safari": 12,
+  "detekcie_chromium": 12,
+  "max_alfa0_pct": 6.07,
+  "podozrenia_detekcie": 10,
+  "podozrenia_unikatne": 2,
+  "cas_s": 93,
+  "chyby": 0
+ }
+}
