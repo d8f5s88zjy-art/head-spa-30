@@ -1,0 +1,46 @@
+# zmeny v strome hs-skvrny počas auditu A1 (len záznam, nehodnotené) – 2026-10-26T12:26:56Z
+ M barbershop-30/assets/film.js
+ barbershop-30/assets/film.js | 55 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 16 deletions(-)
+
+## prvých 40 riadkov diffu film.js
+diff --git a/barbershop-30/assets/film.js b/barbershop-30/assets/film.js
+index 41454f6..6e26c3b 100644
+--- a/barbershop-30/assets/film.js
++++ b/barbershop-30/assets/film.js
+@@ -307,9 +307,16 @@
+     placeBox.classList.toggle('on', !!key);
+   };
+   let renderer;
+-  // bez prelínania sa záber kreslí rovno na obrazovku, preto aj ona má hĺbku (mriežka sa môže prekryť sama so sebou)
+-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, depth: true, stencil: false, powerPreference: 'high-performance' }); }
+-  catch (e) { canvas.remove(); placeBox.remove(); quit(); return; }
++  /* kontext si film zakladá sám a bez alfy (alpha: false). three.js zakladá kontext vždy s alfou (jeho voľba alpha: false
++     len neočistí alfu): prehliadač potom plátno skladá so stránkou podľa alfy, ktorú doň zapísal shader, a Safari pixel
++     s alfou 0 ukáže ako podklad stránky (--ink) – tak vznikali čierne škvrny. Plátno bez alfy je nepriehľadné vždy,
++     nech je v jeho alfe čokoľvek (poistka aj pre neznámu príčinu).
++     Bez prelínania sa záber kreslí rovno na obrazovku, preto aj ona má hĺbku (mriežka sa môže prekryť sama so sebou). */
++  try {
++    const context = canvas.getContext('webgl2', { alpha: false, depth: true, stencil: false, antialias: false, premultipliedAlpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false });
++    if (!context) throw new Error('WebGL2 nie je');
++    renderer = new THREE.WebGLRenderer({ canvas, context, antialias: false, alpha: false, depth: true, stencil: false, powerPreference: 'high-performance' });
++  } catch (e) { canvas.remove(); placeBox.remove(); quit(); return; }
+   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); canvas.remove(); placeBox.remove(); quit(); return; }
+   // farby fotiek idú na obrazovku bez prepočtov, presne ako na fotke
+   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+@@ -338,6 +345,10 @@
+     void main() {
+       vUv = vec2(uv.x, 1.0 - uv.y);
+       float z = texture2D(uDepth, vUv).r;
++      // krajné 3 % fotky ostávajú na rovine steny (hĺbka 0): blízky okraj (stĺp, kreslo, hĺbka až 1) by sa pri bočnom
++      // posune kamery v strihu vtiahol do záberu a za ním by ostal pás farby čistenia; okno v pokoji je od okraja
++      // fotky aspoň 4,8 % (presah OVER), preto sa obraz v pokoji nemení
++      vec2 e = min(uv, 1.0 - uv); z *= smoothstep(0.0, 0.03, min(e.x, e.y));
+       vZ = z;                                                  // hĺbka bodu (1 = blízko) pre prechod medzi zábermi
+       vec4 w = modelMatrix * vec4(position, 1.0);
+       // bod sa posunie po priamke k oku: z pokojného miesta kamery je obraz presne fotka,
+@@ -345,7 +356,7 @@
+       w.xyz = uEye + (w.xyz - uEye) * (1.0 - uAmt * z);
+       gl_Position = projectionMatrix * viewMatrix * w;
+     }`;
+-  // uVig: 1/šírka, 1/výška plátna, pomer strán, 1 = kreslí sa rovno na obrazovku (vinetácia už tu);

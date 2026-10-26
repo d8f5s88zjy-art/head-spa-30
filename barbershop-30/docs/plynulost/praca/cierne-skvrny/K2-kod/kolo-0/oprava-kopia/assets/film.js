@@ -824,11 +824,11 @@
       // (x doprava, y nahor), uFoc / uFoc2 = bod strihu na odchádzajúcom / prichádzajúcom zábere (0 až 1, zdola),
       // uLead = hrana predmetu popredia v smere jeho letu, uRes = plátno v pixeloch
       uKind: { value: 0 }, uDir: { value: new THREE.Vector2() }, uFoc: { value: new THREE.Vector2(0.5, 0.5) }, uFoc2: { value: new THREE.Vector2(0.5, 0.5) },
-      uLead: { value: 0.5 }, uRes: { value: new THREE.Vector2(1, 1) }, uDbg: { value: 0 },
+      uLead: { value: 0.5 }, uB: { value: 1 }, uRes: { value: new THREE.Vector2(1, 1) }, uDbg: { value: 0 },
     },
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
     fragmentShader: `
-      uniform sampler2D tA, tB; uniform float uMix, uAspect, uKind, uLead, uDbg; uniform vec2 uDir, uFoc, uFoc2, uRes;
+      uniform sampler2D tA, tB; uniform float uMix, uAspect, uKind, uLead, uDbg, uB; uniform vec2 uDir, uFoc, uFoc2, uRes;
       varying vec2 vUv;
       #define PI 3.14159265
       #define NT ${CK.nt}
@@ -904,18 +904,24 @@
              cez obraz, zadná R ide za ňou, medzi nimi je ten istý predmet zväčšený, čoraz neostrejší a v tieni.
              Za zadnou hranou je už nový záber; výmena je pod predmetom, kde kryje celý obraz. */
           vec2 md = -uDir, pd = vec2(md.y, -md.x);
-          float u = dot(vUv - 0.5, md) + 0.5, w = dot(vUv - 0.5, pd) + 0.5, wF = dot(uFoc - 0.5, pd) + 0.5;
+          // telefón na výšku: fotka je len v hornom páse textúry (uB výšky), pod ním je farba čistenia; predmet aj jeho hrana
+          // sa rátajú v súradniciach pásu, inak by sa „predmetom“ stal prázdny pás pod fotkou (čierna cez celý obraz)
+          vec2 vb = vec2(vUv.x, 1.0 - (1.0 - vUv.y) / uB), fb = vec2(uFoc.x, 1.0 - (1.0 - uFoc.y) / uB);
+          float u = dot(vb - 0.5, md) + 0.5, w = dot(vb - 0.5, pd) + 0.5, wF = dot(fb - 0.5, pd) + 0.5, lead = dot(fb - 0.5, md) + 0.5;
           const float R0 = -0.15;
-          float L = mix(uLead, ${F(1 + CK.pe)}, smoothstep(0.0, 0.56, x));
+          float L = mix(lead, ${F(1 + CK.pe)}, smoothstep(0.0, 0.56, x));
           float R = mix(R0, ${F(1 + CK.pe)}, smoothstep(0.2, 0.86, x));
-          float g = smoothstep(0.0, 0.5, x), fill = smoothstep(0.04, 0.26, x), k = (L - R) / max(uLead - R0, 0.05);
+          float g = smoothstep(0.0, 0.5, x), fill = smoothstep(0.04, 0.26, x), k = (L - R) / max(lead - R0, 0.05);
           // bod predmetu, ktorý sa kreslí na tomto mieste (pozdĺž letu natiahnutý, naprieč zväčšený okolo jeho bodu)
           float us = R0 + (u - R) / k, ws = wF + (w - wF) / k;
           /* časť predmetu za okrajom obrazu: krajný riadok, ku okraju čoraz neostrejší, takže predmet do tmy
              plynule pokračuje (zrkadlo by z neho urobilo súmerný obrazec, opakovaný riadok pruhy); je blízko */
           float inside = smoothstep(0.0, 0.12 * g + 1e-4, us);     // na začiatku strihu presne obraz (g = 0)
           vec2 ps = clamp(0.5 + md * (us - 0.5) + pd * (ws - 0.5), 0.002, 0.998);
-          vec4 o = textureLod(tA, ps, mix(6.5, g * ${F(CK.pf)}, inside));
+          float lo = mix(6.5, g * ${F(CK.pf)}, inside);
+          // vzorka predmetu ostáva v páse fotky, s rezervou podľa úrovne mipmapy (rozmazanie nesmie siahnuť pod pás)
+          if (uB < 0.999) ps.y = max(1.0 - (1.0 - ps.y) * uB, 1.0 - uB + 1.5 * exp2(lo) / uRes.y);
+          vec4 o = textureLod(tA, ps, lo);
           o.a = mix(1.0, o.a, inside);
           float pw = ${F(CK.pw)} * (0.4 + 0.6 * g);                  // hrana predmetu neostrá podľa toho, ako blízko je
           // predmet je oblý (operadlo, sud, stĺp zblízka): obe hrany sú v strede o kúsok vypuklé, nie rovná čiara
@@ -1173,6 +1179,7 @@
       pu.uKind.value = cut ? cut.k : 0;
       pu.uDir.value.set(dS[0], dS[1]); pu.uFoc.value.set(f1[0], f1[1]); pu.uFoc2.value.set(f2[0], f2[1]);
       pu.uLead.value = 0.5 - (f1[0] - 0.5) * dS[0] - (f1[1] - 0.5) * dS[1];   // hrana predmetu v smere jeho letu (−smer kamery)
+      pu.uB.value = cut && cut.k === 4 ? Math.min((A && A.band) || 1, B.band || 1) : 1;   // pás fotky na telefóne (popredie)
       pu.uMix.value = rev ? 1 - mix : mix;
       renderer.setRenderTarget(null); renderer.clear();
       renderer.render(postScene, postCam);

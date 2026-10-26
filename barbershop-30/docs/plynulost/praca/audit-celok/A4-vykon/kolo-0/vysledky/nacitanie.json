@@ -1,0 +1,8063 @@
+[
+ {
+  "sum": {
+   "zar": "telefon",
+   "url": "index.html",
+   "behov": 3,
+   "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+   "fcp": 1892,
+   "lcp": 1892,
+   "load": 2174.5,
+   "cls": 0.0276,
+   "tbtLoad": 546,
+   "tbtTicho": 2076,
+   "bajtyDoLcp": 786147,
+   "bajtyDoLoad": 789414,
+   "gzDoLoad": 533028,
+   "pozDoLoad": 12,
+   "bajtySpolu": 1183986,
+   "gzSpolu": 886741,
+   "pozSpolu": 21,
+   "zataz": [
+    [
+     [
+      2.77,
+      1.18,
+      0.44
+     ],
+     [
+      4.44,
+      1.69,
+      0.63
+     ]
+    ],
+    [
+     [
+      5.06,
+      1.91,
+      0.71
+     ],
+     [
+      7.04,
+      2.44,
+      0.9
+     ]
+    ],
+    [
+     [
+      7.04,
+      2.44,
+      0.9
+     ],
+     [
+      7.96,
+      2.79,
+      1.03
+     ]
+    ]
+   ]
+  },
+  "behy": [
+   {
+    "zar": "telefon",
+    "url": "index.html",
+    "zataz": [
+     [
+      2.77,
+      1.18,
+      0.44
+     ],
+     [
+      4.44,
+      1.69,
+      0.63
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 330.1,
+    "fcp": 9080,
+    "lcp": 9080,
+    "lcpEl": {
+     "t": 9080,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 18129.4,
+    "load": 18129.9,
+    "cls": 0.0276,
+    "clsSucet": 0.0276,
+    "posuny": [
+     {
+      "t": 18014.900000000023,
+      "v": 0.027561607162911884,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         0,
+         397,
+         390,
+         397
+        ],
+        "na": [
+         0,
+         353,
+         390,
+         444
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 7410,
+    "tbtTicho": 9724,
+    "dlheUlohy": [
+     [
+      1504,
+      1965
+     ],
+     [
+      4286,
+      2060
+     ],
+     [
+      6379,
+      1752
+     ],
+     [
+      8134,
+      379
+     ],
+     [
+      8513,
+      153
+     ],
+     [
+      9204,
+      1284
+     ],
+     [
+      10489,
+      199
+     ],
+     [
+      11075,
+      1682
+     ],
+     [
+      12990,
+      178
+     ],
+     [
+      13171,
+      783
+     ],
+     [
+      14375,
+      150
+     ],
+     [
+      14528,
+      170
+     ],
+     [
+      14707,
+      3165
+     ],
+     [
+      17874,
+      249
+     ],
+     [
+      18161,
+      1367
+     ],
+     [
+      19820,
+      272
+     ],
+     [
+      20363,
+      370
+     ],
+     [
+      22509,
+      331
+     ],
+     [
+      22865,
+      224
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 482,
+      "d": 5849,
+      "b": 4654,
+      "s": [
+       {
+        "f": "index.html",
+        "fn": "",
+        "d": 1017,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 6346,
+      "d": 1770,
+      "b": 1698,
+      "s": []
+     },
+     {
+      "t": 8131,
+      "d": 533,
+      "b": 480,
+      "s": [
+       {
+        "f": "index.html",
+        "fn": "",
+        "d": 376,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 8666,
+      "d": 1438,
+      "b": 1386,
+      "s": []
+     },
+     {
+      "t": 10488,
+      "d": 203,
+      "b": 151,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 197,
+        "i": "PerformanceObserverCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 10695,
+      "d": 215,
+      "b": 164,
+      "s": []
+     },
+     {
+      "t": 10912,
+      "d": 1781,
+      "b": 1712,
+      "s": []
+     },
+     {
+      "t": 12758,
+      "d": 221,
+      "b": 171,
+      "s": []
+     },
+     {
+      "t": 12979,
+      "d": 747,
+      "b": 684,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 175,
+        "i": "PerformanceObserverCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 13954,
+      "d": 565,
+      "b": 514,
+      "s": []
+     },
+     {
+      "t": 14526,
+      "d": 177,
+      "b": 124,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 170,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 14707,
+      "d": 3363,
+      "b": 3311,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 3144,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       },
+       {
+        "f": "vernost.js",
+        "fn": "",
+        "d": 19,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vernost.js",
+        "it": "classic-script"
+       },
+       {
+        "f": "app.js",
+        "fn": "tick",
+        "d": 50,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 18143,
+      "d": 1376,
+      "b": 1317,
+      "s": []
+     },
+     {
+      "t": 19529,
+      "d": 279,
+      "b": 209,
+      "s": []
+     },
+     {
+      "t": 19820,
+      "d": 288,
+      "b": 238,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 272,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 20353,
+      "d": 385,
+      "b": 324,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 365,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 20803,
+      "d": 149,
+      "b": 92,
+      "s": []
+     },
+     {
+      "t": 21453,
+      "d": 312,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 22285,
+      "d": 533,
+      "b": 465,
+      "s": []
+     },
+     {
+      "t": 22865,
+      "d": 227,
+      "b": 173,
+      "s": [
+       {
+        "f": "atmosfera.js",
+        "fn": "",
+        "d": 221,
+        "i": "IdleRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 23234,
+      "d": 213,
+      "b": 161,
+      "s": []
+     },
+     {
+      "t": 23454,
+      "d": 248,
+      "b": 198,
+      "s": [
+       {
+        "f": "atmosfera.js",
+        "fn": "",
+        "d": 245,
+        "i": "Response.arrayBuffer.then",
+        "it": "resolve-promise"
+       }
+      ]
+     }
+    ],
+    "doFcp": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "doLcp": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "vsetko": {
+     "n": 21,
+     "b": 1183986,
+     "gz": 886741
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 1110,
+      "e": 1667,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 1260,
+      "e": 1666,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 1263,
+      "e": 1671,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 6429,
+      "e": 6709,
+      "b": 16962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 6430,
+      "e": 6705,
+      "b": 17042
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 620,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 1110,
+      "e": 1667,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 1260,
+      "e": 1666,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 1263,
+      "e": 1671,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 1273,
+      "e": 1771,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 1274,
+      "e": 1700,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 1276,
+      "e": 3831,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 1277,
+      "e": 1786,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 3243,
+      "e": 3743,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 6429,
+      "e": 6709,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 6430,
+      "e": 6705,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 16446,
+      "e": 16596,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 18141,
+      "e": 18587,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 18141,
+      "e": 18623,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 20132,
+      "e": 20229,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 20732,
+      "e": 20806,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 21631,
+      "e": 21721,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 21634,
+      "e": 21728,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 22218,
+      "e": 22292,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 22229,
+      "e": 22299,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 23086,
+      "e": 23174,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "telefon",
+    "url": "index.html",
+    "zataz": [
+     [
+      5.06,
+      1.91,
+      0.71
+     ],
+     [
+      7.04,
+      2.44,
+      0.9
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 5.5,
+    "fcp": 876,
+    "lcp": 1416,
+    "lcpEl": {
+     "t": 1416,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1668.9,
+    "load": 1741.6,
+    "cls": 0.0276,
+    "clsSucet": 0.0276,
+    "posuny": [
+     {
+      "t": 1794.0999999999767,
+      "v": 0.027561607162911884,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         0,
+         397,
+         390,
+         397
+        ],
+        "na": [
+         0,
+         353,
+         390,
+         444
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 546,
+    "tbtTicho": 2076,
+    "dlheUlohy": [
+     [
+      700,
+      70
+     ],
+     [
+      1042,
+      280
+     ],
+     [
+      1347,
+      120
+     ],
+     [
+      1481,
+      296
+     ],
+     [
+      1779,
+      54
+     ],
+     [
+      1872,
+      924
+     ],
+     [
+      3393,
+      99
+     ],
+     [
+      4514,
+      399
+     ],
+     [
+      6355,
+      304
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 70,
+      "d": 699,
+      "b": 251,
+      "s": [
+       {
+        "f": "index.html",
+        "fn": "",
+        "d": 22,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 770,
+      "d": 228,
+      "b": 164,
+      "s": []
+     },
+     {
+      "t": 1031,
+      "d": 244,
+      "b": 194,
+      "s": []
+     },
+     {
+      "t": 1323,
+      "d": 131,
+      "b": 67,
+      "s": []
+     },
+     {
+      "t": 1477,
+      "d": 328,
+      "b": 274,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 181,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 1863,
+      "d": 1612,
+      "b": 1451,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 924,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4119,
+      "d": 205,
+      "b": 152,
+      "s": []
+     },
+     {
+      "t": 4510,
+      "d": 402,
+      "b": 348,
+      "s": []
+     },
+     {
+      "t": 5807,
+      "d": 836,
+      "b": 732,
+      "s": []
+     },
+     {
+      "t": 9337,
+      "d": 180,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 10,
+     "b": 769185,
+     "gz": 514136
+    },
+    "doLcp": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "vsetko": {
+     "n": 21,
+     "b": 1183986,
+     "gz": 886741
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 102,
+      "e": 252,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 105,
+      "e": 237,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 105,
+      "e": 272,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 716,
+      "e": 807,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 717,
+      "e": 979,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 141,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 102,
+      "e": 252,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 105,
+      "e": 237,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 105,
+      "e": 272,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 105,
+      "e": 466,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 135,
+      "e": 720,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 145,
+      "e": 384,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 146,
+      "e": 411,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 148,
+      "e": 556,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 716,
+      "e": 807,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 717,
+      "e": 979,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1492,
+      "e": 1580,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1828,
+      "e": 2454,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1832,
+      "e": 2498,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3547,
+      "e": 3631,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 4007,
+      "e": 4110,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 5246,
+      "e": 5333,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 5247,
+      "e": 5341,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5739,
+      "e": 5808,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5746,
+      "e": 5819,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 6686,
+      "e": 6779,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "telefon",
+    "url": "index.html",
+    "zataz": [
+     [
+      7.04,
+      2.44,
+      0.9
+     ],
+     [
+      7.96,
+      2.79,
+      1.03
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 10,
+    "fcp": 1892,
+    "lcp": 1892,
+    "lcpEl": {
+     "t": 1892,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 2111.7,
+    "load": 2174.5,
+    "cls": 0,
+    "clsSucet": 0,
+    "posuny": [],
+    "tbtLoad": 279,
+    "tbtTicho": 1399,
+    "dlheUlohy": [
+     [
+      1394,
+      52
+     ],
+     [
+      1459,
+      112
+     ],
+     [
+      1606,
+      615
+     ],
+     [
+      2224,
+      96
+     ],
+     [
+      2363,
+      128
+     ],
+     [
+      2725,
+      827
+     ],
+     [
+      3561,
+      51
+     ],
+     [
+      3786,
+      112
+     ],
+     [
+      4196,
+      77
+     ],
+     [
+      5996,
+      52
+     ],
+     [
+      6075,
+      177
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 81,
+      "d": 1347,
+      "b": 1014,
+      "s": [
+       {
+        "f": "index.html",
+        "fn": "",
+        "d": 20,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 1447,
+      "d": 107,
+      "b": 56,
+      "s": []
+     },
+     {
+      "t": 1572,
+      "d": 693,
+      "b": 605,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 494,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 2321,
+      "d": 146,
+      "b": 73,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 5,
+        "i": "PerformanceObserverCallback",
+        "it": "user-callback"
+       },
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 10,
+        "i": "IntersectionObserverCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 2492,
+      "d": 185,
+      "b": 31,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 7,
+        "i": "PerformanceObserverCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 2685,
+      "d": 921,
+      "b": 823,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 23,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       },
+       {
+        "f": "",
+        "fn": "",
+        "d": 827,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       },
+       {
+        "f": "app.js",
+        "fn": "tick",
+        "d": 41,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3785,
+      "d": 120,
+      "b": 69,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 111,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 3984,
+      "d": 204,
+      "b": 154,
+      "s": []
+     },
+     {
+      "t": 6048,
+      "d": 176,
+      "b": 114,
+      "s": [
+       {
+        "f": "atmosfera.js",
+        "fn": "ready",
+        "d": 5,
+        "i": "LINK.onload",
+        "it": "event-listener"
+       }
+      ]
+     },
+     {
+      "t": 6273,
+      "d": 107,
+      "b": 0,
+      "s": [
+       {
+        "f": "i18n.js",
+        "fn": "",
+        "d": 19,
+        "i": "IdleRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     }
+    ],
+    "doFcp": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "doLcp": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "vsetko": {
+     "n": 21,
+     "b": 1183986,
+     "gz": 886741
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 130,
+      "e": 276,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 135,
+      "e": 264,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 135,
+      "e": 298,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 1401,
+      "e": 1499,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 1401,
+      "e": 1505,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 145,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 130,
+      "e": 276,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 135,
+      "e": 264,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 135,
+      "e": 298,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 135,
+      "e": 500,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 167,
+      "e": 750,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 170,
+      "e": 416,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 176,
+      "e": 436,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 176,
+      "e": 585,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 1401,
+      "e": 1499,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 1401,
+      "e": 1505,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1951,
+      "e": 2037,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 2316,
+      "e": 2576,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 2321,
+      "e": 2746,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3624,
+      "e": 3737,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 3888,
+      "e": 3976,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 5684,
+      "e": 5771,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 5686,
+      "e": 5905,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5781,
+      "e": 5976,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5929,
+      "e": 6021,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 6425,
+      "e": 6615,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sum": {
+   "zar": "telefon",
+   "url": "index.html?film=on",
+   "behov": 3,
+   "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+   "fcp": 836,
+   "lcp": 836,
+   "load": 1328.8,
+   "cls": 0.0276,
+   "tbtLoad": 111,
+   "tbtTicho": 2802,
+   "bajtyDoLcp": 752143,
+   "bajtyDoLoad": 789414,
+   "gzDoLoad": 533028,
+   "pozDoLoad": 12,
+   "bajtySpolu": 2389434,
+   "gzSpolu": 1575807,
+   "pozSpolu": 26,
+   "zataz": [
+    [
+     [
+      7.96,
+      2.88,
+      1.07
+     ],
+     [
+      9.3,
+      3.33,
+      1.23
+     ]
+    ],
+    [
+     [
+      9.27,
+      3.42,
+      1.28
+     ],
+     [
+      10.31,
+      3.83,
+      1.43
+     ]
+    ],
+    [
+     [
+      10.52,
+      3.99,
+      1.5
+     ],
+     [
+      11.41,
+      4.4,
+      1.66
+     ]
+    ]
+   ]
+  },
+  "behy": [
+   {
+    "zar": "telefon",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      7.96,
+      2.88,
+      1.07
+     ],
+     [
+      9.3,
+      3.33,
+      1.23
+     ]
+    ],
+    "trieda": "karty world pro js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 4.2,
+    "fcp": 1704,
+    "lcp": 1704,
+    "lcpEl": {
+     "t": 1704,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1320.9,
+    "load": 1328.8,
+    "cls": 0.0276,
+    "clsSucet": 0.0276,
+    "posuny": [
+     {
+      "t": 1717.9000000000233,
+      "v": 0.027561607162911884,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         0,
+         397,
+         390,
+         397
+        ],
+        "na": [
+         0,
+         353,
+         390,
+         444
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 2727,
+    "dlheUlohy": [
+     [
+      831,
+      246
+     ],
+     [
+      1110,
+      117
+     ],
+     [
+      1273,
+      60
+     ],
+     [
+      1479,
+      117
+     ],
+     [
+      1859,
+      1496
+     ],
+     [
+      3895,
+      50
+     ],
+     [
+      4203,
+      440
+     ],
+     [
+      4654,
+      62
+     ],
+     [
+      4823,
+      129
+     ],
+     [
+      5326,
+      195
+     ],
+     [
+      5968,
+      76
+     ],
+     [
+      6045,
+      267
+     ],
+     [
+      6313,
+      198
+     ],
+     [
+      6658,
+      59
+     ],
+     [
+      7107,
+      304
+     ],
+     [
+      8169,
+      51
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 71,
+      "d": 977,
+      "b": 422,
+      "s": [
+       {
+        "f": "index.html?film=on",
+        "fn": "",
+        "d": 19,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html?film=on",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 1087,
+      "d": 129,
+      "b": 75,
+      "s": []
+     },
+     {
+      "t": 1227,
+      "d": 502,
+      "b": 103,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 45,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       },
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 117,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       },
+       {
+        "f": "app.js",
+        "fn": "tick",
+        "d": 6,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 1802,
+      "d": 1591,
+      "b": 1447,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 1495,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3458,
+      "d": 119,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 4107,
+      "d": 538,
+      "b": 392,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 15,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 414,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 4820,
+      "d": 138,
+      "b": 85,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "n",
+        "d": 128,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 5282,
+      "d": 221,
+      "b": 145,
+      "s": [
+       {
+        "f": "atmosfera.js",
+        "fn": "ready",
+        "d": 6,
+        "i": "LINK.onload",
+        "it": "event-listener"
+       },
+       {
+        "f": "i18n.js",
+        "fn": "build",
+        "d": 5,
+        "i": "LINK.onload",
+        "it": "event-listener"
+       }
+      ]
+     },
+     {
+      "t": 5577,
+      "d": 226,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 6045,
+      "d": 254,
+      "b": 204,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 253,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6312,
+      "d": 182,
+      "b": 131,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 175,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6546,
+      "d": 159,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 35,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 7034,
+      "d": 373,
+      "b": 250,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 295,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 7521,
+      "d": 264,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 8,
+        "i": "Promise.resolve",
+        "it": "resolve-promise"
+       },
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 14,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 7845,
+      "d": 176,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 9,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 8023,
+      "d": 113,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 24,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     }
+    ],
+    "doFcp": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "doLcp": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 786147,
+     "gz": 531098
+    },
+    "vsetko": {
+     "n": 26,
+     "b": 2389434,
+     "gz": 1575807
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 5,
+      "b": 532905,
+      "gz": 532905
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 109,
+      "e": 265,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 112,
+      "e": 251,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 113,
+      "e": 282,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 871,
+      "e": 979,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 875,
+      "e": 983,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 140,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 109,
+      "e": 265,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 112,
+      "e": 251,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 113,
+      "e": 282,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 114,
+      "e": 482,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 139,
+      "e": 734,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 150,
+      "e": 379,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 151,
+      "e": 439,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 151,
+      "e": 570,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 871,
+      "e": 979,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 875,
+      "e": 983,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1290,
+      "e": 1369,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1750,
+      "e": 2028,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1751,
+      "e": 2080,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 3340,
+      "e": 4174,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3405,
+      "e": 3507,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 3769,
+      "e": 3866,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4986,
+      "e": 5194,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4991,
+      "e": 5199,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Fetch",
+      "s": 5011,
+      "e": 5520,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-hlbka.webp",
+      "typ": "Fetch",
+      "s": 5033,
+      "e": 5194,
+      "b": 7337,
+      "gz": 7337,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5209,
+      "e": 5283,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5212,
+      "e": 5307,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5577,
+      "e": 5667,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 7034,
+      "e": 7271,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 7035,
+      "e": 7137,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "telefon",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      9.27,
+      3.42,
+      1.28
+     ],
+     [
+      10.31,
+      3.83,
+      1.43
+     ]
+    ],
+    "trieda": "karty world pro js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 5.8,
+    "fcp": 796,
+    "lcp": 796,
+    "lcpEl": {
+     "t": 796,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1388.6,
+    "load": 1436.5,
+    "cls": 0.0276,
+    "clsSucet": 0.0276,
+    "posuny": [
+     {
+      "t": 1478.5999999999767,
+      "v": 0.027561607162911884,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         0,
+         397,
+         390,
+         397
+        ],
+        "na": [
+         0,
+         353,
+         390,
+         444
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 256,
+    "tbtTicho": 2802,
+    "dlheUlohy": [
+     [
+      560,
+      110
+     ],
+     [
+      702,
+      175
+     ],
+     [
+      1144,
+      123
+     ],
+     [
+      1269,
+      202
+     ],
+     [
+      1472,
+      59
+     ],
+     [
+      1582,
+      1713
+     ],
+     [
+      3358,
+      208
+     ],
+     [
+      4060,
+      86
+     ],
+     [
+      4219,
+      87
+     ],
+     [
+      5429,
+      227
+     ],
+     [
+      5930,
+      363
+     ],
+     [
+      6447,
+      203
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 71,
+      "d": 575,
+      "b": 237,
+      "s": [
+       {
+        "f": "index.html?film=on",
+        "fn": "",
+        "d": 19,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html?film=on",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 670,
+      "d": 197,
+      "b": 135,
+      "s": []
+     },
+     {
+      "t": 877,
+      "d": 227,
+      "b": 150,
+      "s": []
+     },
+     {
+      "t": 1116,
+      "d": 133,
+      "b": 68,
+      "s": []
+     },
+     {
+      "t": 1268,
+      "d": 214,
+      "b": 162,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 106,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 1531,
+      "d": 1803,
+      "b": 1669,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 1713,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3351,
+      "d": 242,
+      "b": 184,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 208,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4044,
+      "d": 107,
+      "b": 41,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 10,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 75,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 5212,
+      "d": 420,
+      "b": 362,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 19,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 5771,
+      "d": 509,
+      "b": 300,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 345,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6446,
+      "d": 203,
+      "b": 152,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 201,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6903,
+      "d": 120,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 10,
+     "b": 458860,
+     "gz": 203811
+    },
+    "doLcp": {
+     "n": 10,
+     "b": 458860,
+     "gz": 203811
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "vsetko": {
+     "n": 26,
+     "b": 2389434,
+     "gz": 1575807
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 5,
+      "b": 532905,
+      "gz": 532905
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 115,
+      "e": 304,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 118,
+      "e": 310,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 119,
+      "e": 341,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 573,
+      "e": 685,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 573,
+      "e": 688,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 188,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 115,
+      "e": 304,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 118,
+      "e": 310,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 119,
+      "e": 341,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 124,
+      "e": 538,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 140,
+      "e": 813,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 193,
+      "e": 443,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 200,
+      "e": 468,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 206,
+      "e": 627,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 573,
+      "e": 685,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 573,
+      "e": 688,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1299,
+      "e": 1375,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1515,
+      "e": 1821,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1530,
+      "e": 1861,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 3282,
+      "e": 4021,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3617,
+      "e": 3721,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 3776,
+      "e": 3850,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Fetch",
+      "s": 4332,
+      "e": 4705,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-hlbka.webp",
+      "typ": "Fetch",
+      "s": 4337,
+      "e": 4431,
+      "b": 7337,
+      "gz": 7337,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4937,
+      "e": 5036,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4944,
+      "e": 5046,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5104,
+      "e": 5203,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5113,
+      "e": 5201,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 6715,
+      "e": 6962,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 6716,
+      "e": 6821,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 6904,
+      "e": 6993,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "telefon",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      10.52,
+      3.99,
+      1.5
+     ],
+     [
+      11.41,
+      4.4,
+      1.66
+     ]
+    ],
+    "trieda": "karty world pro js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 7.5,
+    "fcp": 836,
+    "lcp": 836,
+    "lcpEl": {
+     "t": 836,
+     "size": 71167,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1189.2,
+    "load": 1211.9,
+    "cls": 0.0276,
+    "clsSucet": 0.0276,
+    "posuny": [
+     {
+      "t": 1376.2999999999302,
+      "v": 0.027561607162911884,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         0,
+         397,
+         390,
+         397
+        ],
+        "na": [
+         0,
+         353,
+         390,
+         444
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 111,
+    "tbtTicho": 2900,
+    "dlheUlohy": [
+     [
+      609,
+      86
+     ],
+     [
+      715,
+      239
+     ],
+     [
+      1115,
+      93
+     ],
+     [
+      1266,
+      222
+     ],
+     [
+      1498,
+      1779
+     ],
+     [
+      4168,
+      86
+     ],
+     [
+      4255,
+      273
+     ],
+     [
+      4548,
+      110
+     ],
+     [
+      4676,
+      204
+     ],
+     [
+      5292,
+      377
+     ],
+     [
+      5970,
+      57
+     ],
+     [
+      6302,
+      74
+     ],
+     [
+      6869,
+      98
+     ],
+     [
+      7202,
+      59
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 70,
+      "d": 612,
+      "b": 73,
+      "s": [
+       {
+        "f": "index.html?film=on",
+        "fn": "",
+        "d": 20,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html?film=on",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 709,
+      "d": 209,
+      "b": 158,
+      "s": []
+     },
+     {
+      "t": 954,
+      "d": 156,
+      "b": 81,
+      "s": []
+     },
+     {
+      "t": 1115,
+      "d": 277,
+      "b": 169,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 71,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 1489,
+      "d": 2082,
+      "b": 1912,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 1779,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3899,
+      "d": 196,
+      "b": 137,
+      "s": []
+     },
+     {
+      "t": 4103,
+      "d": 146,
+      "b": 76,
+      "s": []
+     },
+     {
+      "t": 4255,
+      "d": 285,
+      "b": 234,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 23,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 248,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 4548,
+      "d": 118,
+      "b": 68,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 110,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       },
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 6,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4676,
+      "d": 210,
+      "b": 159,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "n",
+        "d": 203,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 5162,
+      "d": 490,
+      "b": 424,
+      "s": []
+     },
+     {
+      "t": 5696,
+      "d": 254,
+      "b": 198,
+      "s": []
+     },
+     {
+      "t": 6187,
+      "d": 118,
+      "b": 67,
+      "s": []
+     },
+     {
+      "t": 6595,
+      "d": 360,
+      "b": 37,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 84,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 7357,
+      "d": 277,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 7635,
+      "d": 156,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 9,
+     "b": 752143,
+     "gz": 497094
+    },
+    "doLcp": {
+     "n": 9,
+     "b": 752143,
+     "gz": 497094
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 789414,
+     "gz": 533028
+    },
+    "vsetko": {
+     "n": 26,
+     "b": 2389434,
+     "gz": 1575807
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 3,
+      "b": 637559,
+      "gz": 637559
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 5,
+      "b": 532905,
+      "gz": 532905
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 151,
+      "e": 256,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 162,
+      "e": 315,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 176,
+      "e": 348,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 623,
+      "e": 859,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 628,
+      "e": 861,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 17255,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 172,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 151,
+      "e": 256,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 162,
+      "e": 315,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 176,
+      "e": 348,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 182,
+      "e": 552,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Image",
+      "s": 231,
+      "e": 791,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 252,
+      "e": 501,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 258,
+      "e": 481,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 260,
+      "e": 615,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 623,
+      "e": 859,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 628,
+      "e": 861,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1127,
+      "e": 1210,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1483,
+      "e": 1772,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1488,
+      "e": 1817,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 3269,
+      "e": 4032,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3599,
+      "e": 3703,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 3817,
+      "e": 3901,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-1448.avif",
+      "typ": "Fetch",
+      "s": 4916,
+      "e": 5409,
+      "b": 327287,
+      "gz": 327287,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-m-hlbka.webp",
+      "typ": "Fetch",
+      "s": 4916,
+      "e": 5014,
+      "b": 7337,
+      "gz": 7337,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4927,
+      "e": 5077,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4929,
+      "e": 5091,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5084,
+      "e": 5166,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5100,
+      "e": 5175,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 6041,
+      "e": 6145,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 7296,
+      "e": 7515,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 7297,
+      "e": 7374,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sum": {
+   "zar": "pocitac",
+   "url": "index.html",
+   "behov": 3,
+   "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+   "fcp": 768,
+   "lcp": 768,
+   "load": 1124.7,
+   "cls": 0.0283,
+   "tbtLoad": 0,
+   "tbtTicho": 1651,
+   "bajtyDoLcp": 424856,
+   "bajtyDoLoad": 755188,
+   "gzDoLoad": 500139,
+   "pozDoLoad": 11,
+   "bajtySpolu": 1157176,
+   "gzSpolu": 859931,
+   "pozSpolu": 23,
+   "zataz": [
+    [
+     [
+      11.14,
+      4.46,
+      1.69
+     ],
+     [
+      11.82,
+      4.82,
+      1.84
+     ]
+    ],
+    [
+     [
+      11.82,
+      4.82,
+      1.84
+     ],
+     [
+      12.59,
+      5.22,
+      2
+     ]
+    ],
+    [
+     [
+      12.59,
+      5.22,
+      2
+     ],
+     [
+      12.21,
+      5.38,
+      2.09
+     ]
+    ]
+   ]
+  },
+  "behy": [
+   {
+    "zar": "pocitac",
+    "url": "index.html",
+    "zataz": [
+     [
+      11.14,
+      4.46,
+      1.69
+     ],
+     [
+      11.82,
+      4.82,
+      1.84
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 5.1,
+    "fcp": 2036,
+    "lcp": 2036,
+    "lcpEl": {
+     "t": 2036,
+     "size": 177572,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1400,
+    "load": 1420.6,
+    "cls": 0.0265,
+    "clsSucet": 0.0266,
+    "posuny": [
+     {
+      "t": 1354.2999999999302,
+      "v": 0.026392415364583335,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         146,
+         23,
+         1148,
+         877
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 1651,
+    "dlheUlohy": [
+     [
+      782,
+      80
+     ],
+     [
+      1420,
+      58
+     ],
+     [
+      2546,
+      1669
+     ],
+     [
+      5085,
+      82
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 864,
+      "d": 427,
+      "b": 373,
+      "s": []
+     },
+     {
+      "t": 48,
+      "d": 809,
+      "b": 38,
+      "s": [
+       {
+        "f": "index.html",
+        "fn": "",
+        "d": 11,
+        "i": "http://127.0.0.1:8890/barbershop-30/index.html",
+        "it": "classic-script"
+       }
+      ]
+     },
+     {
+      "t": 1361,
+      "d": 691,
+      "b": 23,
+      "s": []
+     },
+     {
+      "t": 2094,
+      "d": 405,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 2503,
+      "d": 1717,
+      "b": 1623,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 1669,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4222,
+      "d": 168,
+      "b": 0,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 11,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 4391,
+      "d": 125,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 4617,
+      "d": 130,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 5028,
+      "d": 137,
+      "b": 37,
+      "s": [
+       {
+        "f": "i18n.js",
+        "fn": "",
+        "d": 6,
+        "i": "IdleRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 5217,
+      "d": 450,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 9136,
+      "d": 232,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLoad": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "vsetko": {
+     "n": 23,
+     "b": 1157176,
+     "gz": 859931
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 70,
+      "e": 214,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 70,
+      "e": 198,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 71,
+      "e": 226,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 798,
+      "e": 1377,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 799,
+      "e": 1375,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 184,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 67,
+      "e": 698,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 70,
+      "e": 214,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 70,
+      "e": 198,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 71,
+      "e": 226,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 71,
+      "e": 450,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 183,
+      "e": 399,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 184,
+      "e": 360,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 184,
+      "e": 728,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 798,
+      "e": 1377,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 799,
+      "e": 1375,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1295,
+      "e": 1352,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 2063,
+      "e": 2356,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 2063,
+      "e": 2403,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 4223,
+      "e": 4290,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 4299,
+      "e": 4519,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4923,
+      "e": 4986,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4924,
+      "e": 4993,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 4989,
+      "e": 5039,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 4998,
+      "e": 5047,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 5087,
+      "e": 5137,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 5089,
+      "e": 5140,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5207,
+      "e": 5266,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "pocitac",
+    "url": "index.html",
+    "zataz": [
+     [
+      11.82,
+      4.82,
+      1.84
+     ],
+     [
+      12.59,
+      5.22,
+      2
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 6.9,
+    "fcp": 768,
+    "lcp": 768,
+    "lcpEl": {
+     "t": 768,
+     "size": 173204,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 660.3,
+    "load": 932.4,
+    "cls": 0.0283,
+    "clsSucet": 0.0283,
+    "posuny": [
+     {
+      "t": 768.2999999999302,
+      "v": 0.028139799141589508,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         146,
+         26,
+         1148,
+         874
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 2031,
+    "dlheUlohy": [
+     [
+      519,
+      88
+     ],
+     [
+      610,
+      50
+     ],
+     [
+      965,
+      50
+     ],
+     [
+      1022,
+      2081
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 100,
+      "d": 402,
+      "b": 92,
+      "s": []
+     },
+     {
+      "t": 607,
+      "d": 164,
+      "b": 5,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 49,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 792,
+      "d": 181,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 1016,
+      "d": 2125,
+      "b": 2041,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 2081,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3189,
+      "d": 231,
+      "b": 0,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 8,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 3427,
+      "d": 139,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 3603,
+      "d": 130,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 3886,
+      "d": 164,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 4154,
+      "d": 126,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 4936,
+      "d": 104,
+      "b": 38,
+      "s": []
+     },
+     {
+      "t": 7353,
+      "d": 228,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 8,
+     "b": 424856,
+     "gz": 169807
+    },
+    "doLcp": {
+     "n": 8,
+     "b": 424856,
+     "gz": 169807
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "vsetko": {
+     "n": 23,
+     "b": 1157176,
+     "gz": 859931
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 106,
+      "e": 263,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 106,
+      "e": 246,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 107,
+      "e": 280,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 486,
+      "e": 899,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 486,
+      "e": 898,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 116,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 106,
+      "e": 263,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 106,
+      "e": 246,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 107,
+      "e": 280,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 107,
+      "e": 479,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 113,
+      "e": 922,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 117,
+      "e": 355,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 117,
+      "e": 398,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 117,
+      "e": 556,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 486,
+      "e": 899,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 486,
+      "e": 898,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 611,
+      "e": 1027,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1012,
+      "e": 1277,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1016,
+      "e": 1320,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 3154,
+      "e": 3229,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 3238,
+      "e": 3429,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4433,
+      "e": 4496,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4434,
+      "e": 4611,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 4499,
+      "e": 4677,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 4618,
+      "e": 4894,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 4685,
+      "e": 4948,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 4685,
+      "e": 4949,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 4719,
+      "e": 4956,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "pocitac",
+    "url": "index.html",
+    "zataz": [
+     [
+      12.59,
+      5.22,
+      2
+     ],
+     [
+      12.21,
+      5.38,
+      2.09
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+    "motion": "on",
+    "chyby": [],
+    "ttfb": 7.2,
+    "fcp": 464,
+    "lcp": 464,
+    "lcpEl": {
+     "t": 464,
+     "size": 173204,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1115.5,
+    "load": 1124.7,
+    "cls": 0.0283,
+    "clsSucet": 0.0283,
+    "posuny": [
+     {
+      "t": 1128.7000000000698,
+      "v": 0.02826682587716478,
+      "inp": false,
+      "src": [
+       {
+        "el": "nav#nav.nav",
+        "z": [
+         870,
+         10,
+         530,
+         44
+        ],
+        "na": [
+         881,
+         10,
+         519,
+         44
+        ]
+       },
+       {
+        "el": "::before",
+        "z": [
+         146,
+         26,
+         1148,
+         874
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 611,
+    "dlheUlohy": [
+     [
+      374,
+      64
+     ],
+     [
+      1180,
+      654
+     ],
+     [
+      5505,
+      57
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 52,
+      "d": 310,
+      "b": 35,
+      "s": []
+     },
+     {
+      "t": 492,
+      "d": 104,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 643,
+      "d": 105,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 748,
+      "d": 304,
+      "b": 250,
+      "s": []
+     },
+     {
+      "t": 1135,
+      "d": 722,
+      "b": 622,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 654,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 2114,
+      "d": 136,
+      "b": 75,
+      "s": []
+     },
+     {
+      "t": 3775,
+      "d": 431,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 5308,
+      "d": 251,
+      "b": 144,
+      "s": []
+     },
+     {
+      "t": 5563,
+      "d": 273,
+      "b": 173,
+      "s": []
+     },
+     {
+      "t": 5892,
+      "d": 309,
+      "b": 245,
+      "s": []
+     },
+     {
+      "t": 6425,
+      "d": 329,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 7059,
+      "d": 129,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 6,
+     "b": 271192,
+     "gz": 115234
+    },
+    "doLcp": {
+     "n": 6,
+     "b": 271192,
+     "gz": 115234
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "vsetko": {
+     "n": 23,
+     "b": 1157176,
+     "gz": 859931
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Script": {
+      "n": 7,
+      "b": 233858,
+      "gz": 88231
+     },
+     "Fetch": {
+      "n": 1,
+      "b": 15111,
+      "gz": 15111
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 55,
+      "e": 195,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 55,
+      "e": 182,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 55,
+      "e": 209,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 348,
+      "e": 620,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 348,
+      "e": 622,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html",
+      "typ": "Document",
+      "s": 0,
+      "e": 197,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 55,
+      "e": 195,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 55,
+      "e": 182,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 55,
+      "e": 209,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 62,
+      "e": 751,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 62,
+      "e": 342,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 197,
+      "e": 622,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 197,
+      "e": 400,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 198,
+      "e": 663,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 348,
+      "e": 620,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 348,
+      "e": 622,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 1076,
+      "e": 1129,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1134,
+      "e": 1452,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1135,
+      "e": 1489,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 1866,
+      "e": 1931,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 2074,
+      "e": 2125,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4625,
+      "e": 4692,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4626,
+      "e": 4696,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 5262,
+      "e": 5312,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 5265,
+      "e": 5316,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 5507,
+      "e": 5554,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 5507,
+      "e": 5559,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5843,
+      "e": 5905,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sum": {
+   "zar": "pocitac",
+   "url": "index.html?film=on",
+   "behov": 3,
+   "git": "2687b6e Rezervácia: porovnanie pred a po (údaje zákazníka, potvrdenie) | zmeny: žiadne",
+   "fcp": 988,
+   "lcp": 988,
+   "load": 762.9,
+   "cls": 0.0283,
+   "tbtLoad": 0,
+   "tbtTicho": 1256,
+   "bajtyDoLcp": 758455,
+   "bajtyDoLoad": 755188,
+   "gzDoLoad": 500139,
+   "pozDoLoad": 11,
+   "bajtySpolu": 2655733,
+   "gzSpolu": 1842106,
+   "pozSpolu": 32,
+   "zataz": [
+    [
+     [
+      12.21,
+      5.38,
+      2.09
+     ],
+     [
+      11.72,
+      5.5,
+      2.16
+     ]
+    ],
+    [
+     [
+      11.58,
+      5.58,
+      2.21
+     ],
+     [
+      11.5,
+      5.76,
+      2.3
+     ]
+    ],
+    [
+     [
+      11.5,
+      5.76,
+      2.3
+     ],
+     [
+      11.19,
+      5.88,
+      2.38
+     ]
+    ]
+   ]
+  },
+  "behy": [
+   {
+    "zar": "pocitac",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      12.21,
+      5.38,
+      2.09
+     ],
+     [
+      11.72,
+      5.5,
+      2.16
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 3.4,
+    "fcp": 696,
+    "lcp": 696,
+    "lcpEl": {
+     "t": 696,
+     "size": 173204,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 663.5,
+    "load": 755.1,
+    "cls": 0.0283,
+    "clsSucet": 0.0283,
+    "posuny": [
+     {
+      "t": 742.8000000000466,
+      "v": 0.028139799141589508,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         146,
+         26,
+         1148,
+         874
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 1234,
+    "dlheUlohy": [
+     [
+      577,
+      58
+     ],
+     [
+      872,
+      77
+     ],
+     [
+      957,
+      1002
+     ],
+     [
+      2321,
+      93
+     ],
+     [
+      2672,
+      140
+     ],
+     [
+      2849,
+      59
+     ],
+     [
+      3500,
+      76
+     ],
+     [
+      4850,
+      137
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 49,
+      "d": 517,
+      "b": 86,
+      "s": []
+     },
+     {
+      "t": 635,
+      "d": 109,
+      "b": 13,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 26,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       }
+      ]
+     },
+     {
+      "t": 750,
+      "d": 105,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 957,
+      "d": 1109,
+      "b": 965,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 1002,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 2306,
+      "d": 105,
+      "b": 40,
+      "s": []
+     },
+     {
+      "t": 2656,
+      "d": 158,
+      "b": 92,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 5,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 134,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 3427,
+      "d": 148,
+      "b": 27,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 73,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3576,
+      "d": 113,
+      "b": 62,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 9,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 3697,
+      "d": 102,
+      "b": 47,
+      "s": []
+     },
+     {
+      "t": 3992,
+      "d": 197,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 4194,
+      "d": 791,
+      "b": 155,
+      "s": [
+       {
+        "f": "atmosfera.js",
+        "fn": "ready",
+        "d": 13,
+        "i": "LINK.onload",
+        "it": "event-listener"
+       }
+      ]
+     },
+     {
+      "t": 4988,
+      "d": 328,
+      "b": 272,
+      "s": []
+     },
+     {
+      "t": 5318,
+      "d": 361,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 5698,
+      "d": 424,
+      "b": 303,
+      "s": []
+     },
+     {
+      "t": 6135,
+      "d": 135,
+      "b": 85,
+      "s": []
+     },
+     {
+      "t": 6272,
+      "d": 181,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 8,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       },
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 7,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6456,
+      "d": 833,
+      "b": 186,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 5,
+        "i": "Response.blob.then",
+        "it": "resolve-promise"
+       },
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 7,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 7292,
+      "d": 285,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 21,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     }
+    ],
+    "doFcp": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "doLcp": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "vsetko": {
+     "n": 32,
+     "b": 2655733,
+     "gz": 1842106
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 9,
+      "b": 826014,
+      "gz": 826014
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 59,
+      "e": 198,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 59,
+      "e": 183,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 59,
+      "e": 211,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 548,
+      "e": 634,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 548,
+      "e": 633,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 180,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 58,
+      "e": 668,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 59,
+      "e": 198,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 59,
+      "e": 183,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 59,
+      "e": 211,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 59,
+      "e": 428,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 180,
+      "e": 395,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 180,
+      "e": 341,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 181,
+      "e": 502,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 548,
+      "e": 634,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 548,
+      "e": 633,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 637,
+      "e": 787,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 858,
+      "e": 1116,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 858,
+      "e": 1152,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 1952,
+      "e": 2611,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 2098,
+      "e": 2173,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 2178,
+      "e": 2312,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Fetch",
+      "s": 2914,
+      "e": 3220,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-hlbka.webp",
+      "typ": "Fetch",
+      "s": 2915,
+      "e": 2968,
+      "b": 6043,
+      "gz": 6043,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 3427,
+      "e": 3641,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 3428,
+      "e": 3492,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4256,
+      "e": 4326,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4257,
+      "e": 4329,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 4506,
+      "e": 4558,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 4509,
+      "e": 4562,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 4856,
+      "e": 4904,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 4856,
+      "e": 4904,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Fetch",
+      "s": 5680,
+      "e": 5866,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-hlbka.webp",
+      "typ": "Fetch",
+      "s": 5682,
+      "e": 5753,
+      "b": 7833,
+      "gz": 7833,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5695,
+      "e": 5768,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Fetch",
+      "s": 6282,
+      "e": 6501,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-hlbka.webp",
+      "typ": "Fetch",
+      "s": 6282,
+      "e": 6341,
+      "b": 7257,
+      "gz": 7257,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "pocitac",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      11.58,
+      5.58,
+      2.21
+     ],
+     [
+      11.5,
+      5.76,
+      2.3
+     ]
+    ],
+    "trieda": "karty world pro js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 4.2,
+    "fcp": 988,
+    "lcp": 988,
+    "lcpEl": {
+     "t": 988,
+     "size": 173204,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 749.6,
+    "load": 762.9,
+    "cls": 0.0283,
+    "clsSucet": 0.0283,
+    "posuny": [
+     {
+      "t": 628.4000000000233,
+      "v": 0.028139799141589508,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         146,
+         26,
+         1148,
+         874
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 1256,
+    "dlheUlohy": [
+     [
+      444,
+      101
+     ],
+     [
+      547,
+      52
+     ],
+     [
+      2496,
+      789
+     ],
+     [
+      4083,
+      260
+     ],
+     [
+      4385,
+      84
+     ],
+     [
+      5785,
+      202
+     ],
+     [
+      6017,
+      171
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 49,
+      "d": 489,
+      "b": 51,
+      "s": []
+     },
+     {
+      "t": 667,
+      "d": 338,
+      "b": 9,
+      "s": []
+     },
+     {
+      "t": 1010,
+      "d": 610,
+      "b": 1,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 14,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 1623,
+      "d": 864,
+      "b": 800,
+      "s": []
+     },
+     {
+      "t": 2496,
+      "d": 792,
+      "b": 741,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 789,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4066,
+      "d": 278,
+      "b": 211,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 9,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 249,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 4918,
+      "d": 367,
+      "b": 301,
+      "s": []
+     },
+     {
+      "t": 5287,
+      "d": 119,
+      "b": 63,
+      "s": []
+     },
+     {
+      "t": 5567,
+      "d": 149,
+      "b": 88,
+      "s": []
+     },
+     {
+      "t": 5777,
+      "d": 209,
+      "b": 151,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 199,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6004,
+      "d": 183,
+      "b": 121,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 169,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6201,
+      "d": 140,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 6386,
+      "d": 167,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 6824,
+      "d": 179,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 7004,
+      "d": 104,
+      "b": 0,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "vsetko": {
+     "n": 30,
+     "b": 2471117,
+     "gz": 1657490
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 7,
+      "b": 641398,
+      "gz": 641398
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 54,
+      "e": 198,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 54,
+      "e": 185,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 54,
+      "e": 213,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 458,
+      "e": 547,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 458,
+      "e": 563,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 191,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 54,
+      "e": 198,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 54,
+      "e": 185,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 54,
+      "e": 213,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 55,
+      "e": 423,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 58,
+      "e": 692,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 192,
+      "e": 405,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 193,
+      "e": 343,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 193,
+      "e": 522,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 458,
+      "e": 547,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 458,
+      "e": 563,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 549,
+      "e": 798,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1008,
+      "e": 1279,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1009,
+      "e": 1559,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 1012,
+      "e": 1119,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 1565,
+      "e": 1621,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 3281,
+      "e": 3951,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4370,
+      "e": 4459,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4373,
+      "e": 4880,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Fetch",
+      "s": 4473,
+      "e": 5344,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-hlbka.webp",
+      "typ": "Fetch",
+      "s": 4474,
+      "e": 4940,
+      "b": 6043,
+      "gz": 6043,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 4477,
+      "e": 4933,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 4884,
+      "e": 5265,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 5263,
+      "e": 5309,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 5267,
+      "e": 5313,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5515,
+      "e": 5576,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 6004,
+      "e": 6249,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 6005,
+      "e": 6101,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Fetch",
+      "s": 8340,
+      "e": 8508,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-hlbka.webp",
+      "typ": "Fetch",
+      "s": 8340,
+      "e": 8398,
+      "b": 7833,
+      "gz": 7833,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   },
+   {
+    "zar": "pocitac",
+    "url": "index.html?film=on",
+    "zataz": [
+     [
+      11.5,
+      5.76,
+      2.3
+     ],
+     [
+      11.19,
+      5.88,
+      2.38
+     ]
+    ],
+    "trieda": "karty world js-odhal js-kin js-steps js-cennik world-in",
+    "motion": "on",
+    "chyby": [
+     "warning: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported."
+    ],
+    "ttfb": 10.5,
+    "fcp": 1248,
+    "lcp": 1248,
+    "lcpEl": {
+     "t": 1248,
+     "size": 173204,
+     "el": "span.w",
+     "url": ""
+    },
+    "dcl": 1015,
+    "load": 1024.6,
+    "cls": 0.0283,
+    "clsSucet": 0.0283,
+    "posuny": [
+     {
+      "t": 1308.3000000000466,
+      "v": 0.028139799141589508,
+      "inp": false,
+      "src": [
+       {
+        "el": "::before",
+        "z": [
+         146,
+         26,
+         1148,
+         874
+        ],
+        "na": [
+         146,
+         0,
+         1148,
+         900
+        ]
+       }
+      ]
+     }
+    ],
+    "tbtLoad": 0,
+    "tbtTicho": 1407,
+    "dlheUlohy": [
+     [
+      750,
+      133
+     ],
+     [
+      1146,
+      159
+     ],
+     [
+      1596,
+      818
+     ],
+     [
+      3086,
+      425
+     ],
+     [
+      3515,
+      74
+     ],
+     [
+      3599,
+      116
+     ],
+     [
+      4569,
+      64
+     ],
+     [
+      4877,
+      64
+     ],
+     [
+      7476,
+      189
+     ]
+    ],
+    "loafNad100": [
+     {
+      "t": 57,
+      "d": 821,
+      "b": 88,
+      "s": []
+     },
+     {
+      "t": 977,
+      "d": 333,
+      "b": 114,
+      "s": [
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 33,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/app.js",
+        "it": "module-script"
+       },
+       {
+        "f": "app.js",
+        "fn": "",
+        "d": 159,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 1315,
+      "d": 231,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 1547,
+      "d": 873,
+      "b": 772,
+      "s": [
+       {
+        "f": "",
+        "fn": "",
+        "d": 817,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 2442,
+      "d": 123,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 2606,
+      "d": 286,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 2940,
+      "d": 119,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 3060,
+      "d": 453,
+      "b": 377,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "",
+        "d": 13,
+        "i": "http://127.0.0.1:8890/barbershop-30/assets/vendor/three.module.min.js",
+        "it": "module-script"
+       },
+       {
+        "f": "film.js",
+        "fn": "",
+        "d": 410,
+        "i": "import.then",
+        "it": "resolve-promise"
+       }
+      ]
+     },
+     {
+      "t": 3592,
+      "d": 124,
+      "b": 67,
+      "s": [
+       {
+        "f": "three.module.min.js",
+        "fn": "n",
+        "d": 116,
+        "i": "TimerHandler:setTimeout",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4021,
+      "d": 181,
+      "b": 116,
+      "s": []
+     },
+     {
+      "t": 4484,
+      "d": 148,
+      "b": 16,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 62,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4683,
+      "d": 255,
+      "b": 121,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 6,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 4985,
+      "d": 119,
+      "b": 64,
+      "s": []
+     },
+     {
+      "t": 5104,
+      "d": 754,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 5932,
+      "d": 131,
+      "b": 80,
+      "s": []
+     },
+     {
+      "t": 6064,
+      "d": 714,
+      "b": 0,
+      "s": [
+       {
+        "f": "film.js",
+        "fn": "frame",
+        "d": 7,
+        "i": "FrameRequestCallback",
+        "it": "user-callback"
+       }
+      ]
+     },
+     {
+      "t": 6857,
+      "d": 113,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 6971,
+      "d": 422,
+      "b": 0,
+      "s": []
+     },
+     {
+      "t": 7396,
+      "d": 268,
+      "b": 139,
+      "s": []
+     }
+    ],
+    "doFcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLcp": {
+     "n": 12,
+     "b": 758455,
+     "gz": 502069
+    },
+    "doLoad": {
+     "n": 11,
+     "b": 755188,
+     "gz": 500139
+    },
+    "vsetko": {
+     "n": 32,
+     "b": 2655733,
+     "gz": 1842106
+    },
+    "typy": {
+     "Document": {
+      "n": 1,
+      "b": 85258,
+      "gz": 15381
+     },
+     "Font": {
+      "n": 5,
+      "b": 99714,
+      "gz": 99714
+     },
+     "Image": {
+      "n": 5,
+      "b": 610749,
+      "gz": 610749
+     },
+     "Stylesheet": {
+      "n": 4,
+      "b": 112486,
+      "gz": 30745
+     },
+     "Script": {
+      "n": 8,
+      "b": 921512,
+      "gz": 259503
+     },
+     "Fetch": {
+      "n": 9,
+      "b": 826014,
+      "gz": 826014
+     }
+    },
+    "pisma": [
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "s": 62,
+      "e": 207,
+      "b": 21802
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "s": 62,
+      "e": 185,
+      "b": 16946
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "s": 62,
+      "e": 309,
+      "b": 26962
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "s": 774,
+      "e": 884,
+      "b": 17042
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "s": 774,
+      "e": 880,
+      "b": 16962
+     }
+    ],
+    "fontyStav": [
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "800",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Fraunces",
+      "w": "500",
+      "s": "italic",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "600",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "700",
+      "s": "normal",
+      "st": "loaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "400",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     },
+     {
+      "fam": "Manrope",
+      "w": "500 800",
+      "s": "normal",
+      "st": "unloaded",
+      "disp": "swap"
+     }
+    ],
+    "blokujuce": [
+     "assets/style.css"
+    ],
+    "vyska": 18089,
+    "poziadavky": [
+     {
+      "u": "index.html?film=on",
+      "typ": "Document",
+      "s": 0,
+      "e": 211,
+      "b": 85258,
+      "gz": 15381,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-800.woff2",
+      "typ": "Font",
+      "s": 62,
+      "e": 207,
+      "b": 21802,
+      "gz": 21802,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-400.woff2",
+      "typ": "Font",
+      "s": 62,
+      "e": 185,
+      "b": 16946,
+      "gz": 16946,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Fraunces-500i.woff2",
+      "typ": "Font",
+      "s": 62,
+      "e": 309,
+      "b": 26962,
+      "gz": 26962,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Image",
+      "s": 69,
+      "e": 844,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/style.css",
+      "typ": "Stylesheet",
+      "s": 70,
+      "e": 385,
+      "b": 95420,
+      "gz": 24012,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/app.js",
+      "typ": "Script",
+      "s": 211,
+      "e": 757,
+      "b": 47255,
+      "gz": 15720,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vernost.js",
+      "typ": "Script",
+      "s": 211,
+      "e": 737,
+      "b": 24804,
+      "gz": 10131,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/film.js",
+      "typ": "Script",
+      "s": 211,
+      "e": 765,
+      "b": 106409,
+      "gz": 38853,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-700.woff2",
+      "typ": "Font",
+      "s": 774,
+      "e": 884,
+      "b": 17042,
+      "gz": 17042,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/fonts/Manrope-600.woff2",
+      "typ": "Font",
+      "s": 774,
+      "e": 880,
+      "b": 16962,
+      "gz": 16962,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/recenzie.js",
+      "typ": "Script",
+      "s": 983,
+      "e": 1036,
+      "b": 3267,
+      "gz": 1930,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Image",
+      "s": 1314,
+      "e": 1576,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Image",
+      "s": 1315,
+      "e": 1635,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.js",
+      "typ": "Script",
+      "s": 1550,
+      "e": 1624,
+      "b": 22304,
+      "gz": 9217,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/vendor/three.module.min.js",
+      "typ": "Script",
+      "s": 2410,
+      "e": 3068,
+      "b": 687654,
+      "gz": 171272,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/karty.css",
+      "typ": "Stylesheet",
+      "s": 2436,
+      "e": 2496,
+      "b": 7215,
+      "gz": 2748,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-2172.avif",
+      "typ": "Fetch",
+      "s": 3723,
+      "e": 4033,
+      "b": 296328,
+      "gz": 296328,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/vstup-hlbka.webp",
+      "typ": "Fetch",
+      "s": 3723,
+      "e": 3789,
+      "b": 6043,
+      "gz": 6043,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-2172.avif",
+      "typ": "Fetch",
+      "s": 4485,
+      "e": 4746,
+      "b": 176641,
+      "gz": 176641,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/rohozka-hlbka.webp",
+      "typ": "Fetch",
+      "s": 4485,
+      "e": 4555,
+      "b": 6529,
+      "gz": 6529,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.js",
+      "typ": "Script",
+      "s": 4526,
+      "e": 4600,
+      "b": 12346,
+      "gz": 4960,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.js",
+      "typ": "Script",
+      "s": 4527,
+      "e": 4610,
+      "b": 17473,
+      "gz": 7420,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/atmosfera.css",
+      "typ": "Stylesheet",
+      "s": 4638,
+      "e": 4706,
+      "b": 4890,
+      "gz": 2014,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/i18n.css",
+      "typ": "Stylesheet",
+      "s": 4640,
+      "e": 4712,
+      "b": 4961,
+      "gz": 1971,
+      "prio": "VeryHigh",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-32.png",
+      "typ": "Image",
+      "s": 4886,
+      "e": 4985,
+      "b": 2049,
+      "gz": 2049,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/img/kurzor/noznice-otvorene-32.png",
+      "typ": "Image",
+      "s": 4886,
+      "e": 4985,
+      "b": 2100,
+      "gz": 2100,
+      "prio": "Low",
+      "st": 200
+     },
+     {
+      "u": "assets/audio/strih.webm",
+      "typ": "Fetch",
+      "s": 5860,
+      "e": 5931,
+      "b": 15111,
+      "gz": 15111,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-2172.avif",
+      "typ": "Fetch",
+      "s": 6068,
+      "e": 6245,
+      "b": 132913,
+      "gz": 132913,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/sala-hlbka.webp",
+      "typ": "Fetch",
+      "s": 6068,
+      "e": 6134,
+      "b": 7833,
+      "gz": 7833,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-2172.avif",
+      "typ": "Fetch",
+      "s": 7397,
+      "e": 7599,
+      "b": 177359,
+      "gz": 177359,
+      "prio": "High",
+      "st": 200
+     },
+     {
+      "u": "assets/img/film/stol-hlbka.webp",
+      "typ": "Fetch",
+      "s": 7397,
+      "e": 7458,
+      "b": 7257,
+      "gz": 7257,
+      "prio": "High",
+      "st": 200
+     }
+    ]
+   }
+  ]
+ }
+]

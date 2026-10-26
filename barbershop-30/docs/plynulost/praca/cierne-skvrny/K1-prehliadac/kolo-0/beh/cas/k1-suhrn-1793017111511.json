@@ -1,0 +1,118 @@
+{
+ "parametre": {
+  "okno": "1512x982@1",
+  "gpu": "swiftshader",
+  "rezimy": "pomaly",
+  "krok": 40,
+  "usadit": 0,
+  "prah": 24,
+  "plocha": 0.05,
+  "refJas": 48,
+  "tol": 2.5,
+  "sirka": 640,
+  "od": 2400,
+  "do": 2600,
+  "maxVyrezov": 2,
+  "tahy": 1200,
+  "filmOn": true,
+  "znacka": false,
+  "testVada": false,
+  "brana": true,
+  "snimky": 1,
+  "out": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/cas",
+  "url": "http://127.0.0.1:8801/barbershop-30/index.html?asistent=ukazka&objednavka=ukazka"
+ },
+ "behy": [
+  {
+   "okno": "1512x982@1",
+   "gpu": "swiftshader",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "suhrn": {
+    "max_krok_px": 44,
+    "dorovnane": 5,
+    "snimky": 7,
+    "zakryte": 0,
+    "skvrny_detekcie": 2,
+    "skvrny_unikatne": 1,
+    "skvrny_safari": 1,
+    "skvrny_chromium": 0,
+    "detekcie_safari": 2,
+    "detekcie_chromium": 0,
+    "max_alfa0_pct": 5.6,
+    "podozrenia_detekcie": 4,
+    "podozrenia_unikatne": 2,
+    "cas_s": 87,
+    "chyby": 0
+   },
+   "chyba": null,
+   "skupiny": [
+    {
+     "skupina": "skvrny|safari|cakaren|1,0",
+     "pocet": 2,
+     "max_plocha": 5.525,
+     "prvy": {
+      "scrollY": 2599,
+      "S": 3.8332,
+      "bbox": {
+       "x": 342.6,
+       "y": 146.4,
+       "w": 498.5,
+       "h": 252.6
+      },
+      "plocha": 5.41,
+      "alfa0_podiel": 1,
+      "ref_jas": 92.5
+     },
+     "rezimy": [
+      "pomaly",
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|safari|cakaren|0,2",
+     "pocet": 2,
+     "max_plocha": 0.254,
+     "prvy": {
+      "scrollY": 2599,
+      "S": 3.8332,
+      "bbox": {
+       "x": 245.7,
+       "y": 873.4,
+       "w": 54.3,
+       "h": 108.6
+      },
+      "plocha": 0.254,
+      "alfa0_podiel": 0,
+      "ref_jas": 7.3
+     },
+     "rezimy": [
+      "pomaly",
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|chromium|cakaren|0,2",
+     "pocet": 2,
+     "max_plocha": 0.254,
+     "prvy": {
+      "scrollY": 2599,
+      "S": 3.8332,
+      "bbox": {
+       "x": 245.7,
+       "y": 873.4,
+       "w": 54.3,
+       "h": 108.6
+      },
+      "plocha": 0.254,
+      "alfa0_podiel": 0,
+      "ref_jas": 7.3
+     },
+     "rezimy": [
+      "pomaly",
+      "pomaly-pokoj"
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,5 +1,6 @@
 # Hárok záznam vs. reprodukcia: riadok = chvíľa; stĺpce: snímka zo záznamu (Safari) | Chromium bez zásahu |
-# alfa plátna (čierna = 0) | simulácia „alfa 0 = diera“. Použitie: k4-porovnanie.py <snímky> <reprodukcia-dir> <výstup.jpg>
+# alfa plátna z gl.readPixels (čierna = 0) | simulácia „alfa 0 = farba stránky“ (k4-alfa-gl.py).
+# Použitie: k4-porovnanie.py <snímky> <reprodukcia-dir> <výstup.jpg>
 import sys, os
 from PIL import Image, ImageDraw, ImageFont
 sn, rd, out = sys.argv[1:4]
@@ -13,13 +14,13 @@ ROWS = [  # (snímka záznamu, id reprodukcie, popis)
 ]
 H = 430
 CROP = (0.08, 0.0, 0.70, 1.0)   # výrez okna 1350×960 podobný tomu, čo zachytil telefón (stred obrazovky)
-cols = ['záznam (Safari, telefón)', 'Chromium bez zásahu', 'alfa plátna (čierna = 0)', 'simulácia: alfa 0 = diera']
+cols = ['záznam (Safari, telefón)', 'Chromium bez zásahu', 'alfa plátna (readPixels; čierna = 0)', 'simulácia: alfa 0 = farba stránky']
 tiles = []
 for fr, i, desc in ROWS:
     v = Image.open(os.path.join(sn, 'f%04d.jpg' % fr)).convert('RGB')
     v = v.resize((int(v.width * H / v.height), H))
     row = [v]
-    for p in [os.path.join(rd, 'chromium', i + '.jpg'), os.path.join(rd, 'alfa', i + '-alfa.jpg'), os.path.join(rd, 'alfa', i + '-sim.jpg')]:
+    for p in [os.path.join(rd, 'chromium', i + '.jpg'), os.path.join(rd, 'alfa', i + '-alfa-gl.png'), os.path.join(rd, 'alfa', i + '-sim.jpg')]:
         if os.path.exists(p):
             im = Image.open(p).convert('RGB')
             w, h = im.size

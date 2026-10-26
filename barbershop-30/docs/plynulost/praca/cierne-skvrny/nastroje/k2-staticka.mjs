@@ -195,6 +195,29 @@ if (er) {
   else add('OK', 'K2-12', `rezerva okraja ${k} ≥ max. hĺbka okraja ${isFinite(maxEdge) ? maxEdge.toFixed(2) : '?'}`, at(/uAmt\.value\s*\*\s*[\d.]+\s*,\s*par\s*=/));
 }
 
+/* ---- K2-13: telefón na výšku – pás fotky a strih popredia ----
+   Na telefóne na výšku sa záber kreslí len do horného pásu plátna (PAS_B výšky, style.css P16), zvyšok textúry
+   strihu rtA/rtB je farba čistenia (--ink). Strih popredia (uKind 4) berie predmet z pásu textúry od R0 = −0,15 po
+   hranu uLead v smere letu: pri zvislom smere (cakaren>sala-rano má na telefóne m:rise) je to prázdny pás pod
+   fotkou, ktorý sa rozmazaný natiahne cez celý obraz (pokus „diery“ na telefóne: 93–100 % pásu fotky zelené pri
+   mix 0,45–0,6; naostro čierna obrazovka). Poistka: shader strihu pozná pás (uniform uB), ráta hranu aj vzorkuje v ňom. */
+const pasB = num(/const PAS_B = ([\d.]+)/);
+if (isFinite(pasB) && pasB < 1) {
+  const cutsSrc = (/const CUTS = \{([\s\S]*?)\n\s*\};/.exec(src) || [])[1] || '';
+  const vert = [...cutsSrc.matchAll(/'([^']+)':\s*'([^']*)'/g)]
+    .filter((m) => /\bpopredie\b/.test(m[2]) && !/\bm:(prelinanie|pohyb|svih|najazd|odjazd)\b/.test(m[2]) && /\b(m:)?(rise|up|down)\b/.test(m[2]))
+    .map((m) => m[1]);
+  const w = `assets/film.js:${lineOf(src, src.indexOf('const PAS_B'))}`;
+  if (!P) add('POZOR', 'K2-13', 'shader prechodu sa nenašiel, pás telefónu sa nedá overiť', w);
+  else {
+    const pop = P.body.slice(P.body.indexOf('popredie'));
+    const hasB = /uniform float[^;]*\buB\b/.test(P.body) && /\buB\b/.test(pop) && /ps\.y\s*=\s*max\(/.test(pop);
+    const setB = /pu\.uB\.value\s*=/.test(src) && /\.band/.test((/pu\.uB\.value\s*=([^\n]*)/.exec(src) || ['', ''])[1]);
+    if (hasB && setB) add('OK', 'K2-13', `strih popredia ráta aj vzorkuje v páse fotky (uB = band, PAS_B ${pasB}); zvislé popredia na telefóne: ${vert.join(', ') || 'žiadne'}`, w);
+    else add(vert.length ? 'CHYBA' : 'POZOR', 'K2-13', `pás fotky na telefóne PAS_B ${pasB}, ale strih popredia ráta predmet z celej textúry (pod pásom je farba čistenia): zvislý strih ${vert.join(', ') || '(žiadny zvislý dnes)'} natiahne prázdny pás cez celý obraz – čierna obrazovka na telefóne. Poistka: uniform uB v shaderi prechodu (súradnice pásu, vzorka predmetu v páse) a pu.uB = band`, w);
+  }
+} else add('OK', 'K2-13', 'bez pásu fotky na telefóne (PAS_B chýba alebo 1)', 'assets/film.js');
+
 if (asJson) console.log(JSON.stringify(out, null, 1));
 else for (const o of out) console.log(`${o.stav.padEnd(5)}  ${o.kod.padEnd(7)}  ${o.popis}  (${o.kde})`);
 const chyby = out.filter((o) => o.stav === 'CHYBA').length;

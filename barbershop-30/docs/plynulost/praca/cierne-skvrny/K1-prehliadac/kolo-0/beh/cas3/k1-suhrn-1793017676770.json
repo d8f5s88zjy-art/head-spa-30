@@ -1,0 +1,388 @@
+{
+ "parametre": {
+  "okno": "1512x982@1",
+  "gpu": "angle-gl",
+  "rezimy": "pomaly",
+  "krok": 40,
+  "usadit": 0,
+  "prah": 24,
+  "plocha": 0.05,
+  "refJas": 48,
+  "tol": 2.5,
+  "sirka": 640,
+  "od": 2520,
+  "do": 2640,
+  "maxVyrezov": 1,
+  "tahy": 1200,
+  "filmOn": true,
+  "znacka": false,
+  "testVada": false,
+  "brana": true,
+  "snimky": 1,
+  "out": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/K1-prehliadac/kolo-0/beh/cas3",
+  "url": "http://127.0.0.1:8801/barbershop-30/index.html?asistent=ukazka&objednavka=ukazka"
+ },
+ "behy": [
+  {
+   "okno": "1512x982@1",
+   "gpu": "angle-gl",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "suhrn": {
+    "max_krok_px": 40,
+    "dorovnane": 0,
+    "snimky": 5,
+    "zakryte": 0,
+    "skvrny_detekcie": 12,
+    "skvrny_unikatne": 10,
+    "skvrny_safari": 5,
+    "skvrny_chromium": 5,
+    "detekcie_safari": 6,
+    "detekcie_chromium": 6,
+    "max_alfa0_pct": 0,
+    "podozrenia_detekcie": 8,
+    "podozrenia_unikatne": 6,
+    "cas_s": 33,
+    "chyby": 0
+   },
+   "chyba": null,
+   "skupiny": [
+    {
+     "skupina": "skvrny|safari|cakaren|2,0",
+     "pocet": 1,
+     "max_plocha": 0.347,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1412.8,
+       "y": 35.4,
+       "w": 99.2,
+       "h": 106.2
+      },
+      "plocha": 0.347,
+      "alfa0_podiel": 0,
+      "ref_jas": 89.4
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|safari|cakaren|1,0",
+     "pocet": 2,
+     "max_plocha": 0.104,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 727.6,
+       "y": 177,
+       "w": 37.8,
+       "h": 51.9
+      },
+      "plocha": 0.077,
+      "alfa0_podiel": 0,
+      "ref_jas": 191.1
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|safari|cakaren|0,1",
+     "pocet": 1,
+     "max_plocha": 0.199,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 141.8,
+       "y": 292.7,
+       "w": 151.2,
+       "h": 229
+      },
+      "plocha": 0.199,
+      "alfa0_podiel": 0,
+      "ref_jas": 166.4
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|safari|cakaren|2,1",
+     "pocet": 1,
+     "max_plocha": 0.149,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1478.9,
+       "y": 488.6,
+       "w": 33.1,
+       "h": 110.9
+      },
+      "plocha": 0.149,
+      "alfa0_podiel": 0,
+      "ref_jas": 39.2
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|safari|cakaren|0,2",
+     "pocet": 1,
+     "max_plocha": 0.074,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 0,
+       "y": 951.3,
+       "w": 49.6,
+       "h": 30.7
+      },
+      "plocha": 0.074,
+      "alfa0_podiel": 0,
+      "ref_jas": 102.1
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|chromium|cakaren|2,0",
+     "pocet": 1,
+     "max_plocha": 0.347,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1412.8,
+       "y": 35.4,
+       "w": 99.2,
+       "h": 106.2
+      },
+      "plocha": 0.347,
+      "alfa0_podiel": 0,
+      "ref_jas": 89.4
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|chromium|cakaren|1,0",
+     "pocet": 2,
+     "max_plocha": 0.104,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 727.6,
+       "y": 177,
+       "w": 37.8,
+       "h": 51.9
+      },
+      "plocha": 0.077,
+      "alfa0_podiel": 0,
+      "ref_jas": 191.1
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|chromium|cakaren|0,1",
+     "pocet": 1,
+     "max_plocha": 0.199,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 141.8,
+       "y": 292.7,
+       "w": 151.2,
+       "h": 229
+      },
+      "plocha": 0.199,
+      "alfa0_podiel": 0,
+      "ref_jas": 166.4
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|chromium|cakaren|2,1",
+     "pocet": 1,
+     "max_plocha": 0.149,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1478.9,
+       "y": 488.6,
+       "w": 33.1,
+       "h": 110.9
+      },
+      "plocha": 0.149,
+      "alfa0_podiel": 0,
+      "ref_jas": 39.2
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "skvrny|chromium|cakaren|0,2",
+     "pocet": 1,
+     "max_plocha": 0.074,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 0,
+       "y": 951.3,
+       "w": 49.6,
+       "h": 30.7
+      },
+      "plocha": 0.074,
+      "alfa0_podiel": 0,
+      "ref_jas": 102.1
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|safari|cakaren|2,1",
+     "pocet": 1,
+     "max_plocha": 0.319,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1457.7,
+       "y": 170,
+       "w": 54.3,
+       "h": 448.5
+      },
+      "plocha": 0.319,
+      "alfa0_podiel": 0,
+      "ref_jas": 17.3
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|safari|cakaren|2,0",
+     "pocet": 2,
+     "max_plocha": 0.243,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1476.6,
+       "y": 188.8,
+       "w": 35.4,
+       "h": 115.7
+      },
+      "plocha": 0.243,
+      "alfa0_podiel": 0,
+      "ref_jas": 69.8
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|safari|cakaren|2,2",
+     "pocet": 1,
+     "max_plocha": 0.178,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1486,
+       "y": 597.2,
+       "w": 26,
+       "h": 148.7
+      },
+      "plocha": 0.178,
+      "alfa0_podiel": 0,
+      "ref_jas": 27.3
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|chromium|cakaren|2,1",
+     "pocet": 1,
+     "max_plocha": 0.319,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1457.7,
+       "y": 170,
+       "w": 54.3,
+       "h": 448.5
+      },
+      "plocha": 0.319,
+      "alfa0_podiel": 0,
+      "ref_jas": 17.3
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|chromium|cakaren|2,0",
+     "pocet": 2,
+     "max_plocha": 0.243,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1476.6,
+       "y": 188.8,
+       "w": 35.4,
+       "h": 115.7
+      },
+      "plocha": 0.243,
+      "alfa0_podiel": 0,
+      "ref_jas": 69.8
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    },
+    {
+     "skupina": "podozrenia|chromium|cakaren|2,2",
+     "pocet": 1,
+     "max_plocha": 0.178,
+     "prvy": {
+      "scrollY": 2520,
+      "S": 3.7377,
+      "bbox": {
+       "x": 1486,
+       "y": 597.2,
+       "w": 26,
+       "h": 148.7
+      },
+      "plocha": 0.178,
+      "alfa0_podiel": 0,
+      "ref_jas": 27.3
+     },
+     "rezimy": [
+      "pomaly-pokoj"
+     ]
+    }
+   ]
+  }
+ ]
+}

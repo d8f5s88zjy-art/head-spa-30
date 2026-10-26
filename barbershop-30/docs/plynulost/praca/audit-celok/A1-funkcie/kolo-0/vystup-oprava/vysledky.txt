@@ -1,0 +1,165 @@
+OK   [zaklad/pocitac] prepínač jazyka vytvorený (i18n.js po geste)  {"lang":true,"hudba":true,"recenzie":6,"recBox":false,"karty":true,"vernost":false,"zive":"Teraz otvorené · 9:00 – 19:00","rok":"2026","priceTabs":4}
+OK   [zaklad/pocitac] recenzie: 6 citácií, blok viditeľný  6
+OK   [zaklad/pocitac] pás vizitky a pripomienky vložený (karty.js)
+INFO [zaklad/pocitac] vernostná kartička v páse: nie (bez data-zapnute správne skrytá); živý stav: „Teraz otvorené · 9:00 – 19:00“; rok 2026
+OK   [zaklad/pocitac] navigácia „Prehliadka“ → #vstup-dnu v zábere  {"ok":true,"top":-270,"bottom":360,"y":1170,"menu":"false"}
+OK   [zaklad/pocitac] navigácia „Služby“ → #sluzby v zábere  {"ok":true,"top":-270,"bottom":3557,"y":6194,"menu":"false"}
+OK   [zaklad/pocitac] navigácia „Tím“ → #tim v zábere  {"ok":true,"top":-270,"bottom":2864,"y":3060,"menu":"false"}
+OK   [zaklad/pocitac] navigácia „Galéria“ → #galeria v zábere  {"ok":true,"top":-270,"bottom":3510,"y":10021,"menu":"false"}
+FAIL [zaklad/pocitac] navigácia „Kontakt“ → #kontakt v zábere  {"ok":false,"top":497,"bottom":900,"y":17189,"menu":"false"}
+INFO [zaklad/pocitac] linka kapitol: 8/8 bodov viditeľných [{"href":"#uvod","vis":true,"w":24,"h":24},{"href":"#vstup-dnu","vis":true,"w":24,"h":24}]
+FAIL [zaklad/pocitac] linka kapitol #uvod → v zábere  {"ok":false,"top":-1800,"bottom":-900,"y":1800}
+FAIL [zaklad/pocitac] linka kapitol #vstup-dnu → v zábere  {"ok":false,"top":900,"bottom":1530,"y":0}
+OK   [zaklad/pocitac] linka kapitol #remeslo → v zábere  {"ok":true,"top":-270,"bottom":360,"y":1800}
+OK   [zaklad/pocitac] linka kapitol #cakaren → v zábere  {"ok":true,"top":-270,"bottom":360,"y":2430}
+OK   [zaklad/pocitac] linka kapitol #tim → v zábere  {"ok":true,"top":-236,"bottom":2898,"y":3026}
+OK   [zaklad/pocitac] linka kapitol #sluzby → v zábere  {"ok":true,"top":-270,"bottom":3557,"y":6194}
+OK   [zaklad/pocitac] linka kapitol #galeria → v zábere  {"ok":true,"top":-270,"bottom":3510,"y":10021}
+OK   [zaklad/pocitac] linka kapitol #rezervacia → v zábere  {"ok":true,"top":-270,"bottom":3885,"y":13801}
+OK   [zaklad/pocitac] značka v lište vráti na úvod  0
+OK   [zaklad/pocitac] tlačidlo #uvod .title-actions a.btn-primary viditeľné
+OK   [zaklad/pocitac] #uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/pocitac] tlačidlo #nav a.btn-primary viditeľné
+OK   [zaklad/pocitac] #nav a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/pocitac] odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)  []
+OK   [zaklad/pocitac] časté otázky: 8 otázok sa rozbalí  {"nFaq":8,"otvorene":8}
+OK   [zaklad/pocitac] lightbox sa otvorí s fotkou a popisom (8 fotiek)  {"open":true,"nat":1440,"cap":"Nožnice a hrebeň na barberskej podložke s logom","src":"/barbershop-30/assets/img/naradie-noznice-1600.jpg"}
+OK   [zaklad/pocitac] lightbox: ďalšia fotka  Karafa, pomády a štetka na holenie na pracovnom stole
+OK   [zaklad/pocitac] lightbox: predchádzajúca fotka
+OK   [zaklad/pocitac] lightbox: šípka, Esc zavrie, fokus späť na fotku, stránka odomknutá  {"hidden":true,"focus":true,"overflow":""}
+OK   [zaklad/pocitac] pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz  {"kedy0":"Pripomienka pondelok 23. novembra o 10:00","kedy":"Pripomienka pondelok 7. decembra o 10:00","dt":"20261207T100000"}
+OK   [zaklad/pocitac] pripomienka: Pridať do kalendára stiahne platný .ics  barbershop30-pripomienka.ics
+OK   [zaklad/pocitac] Uložiť kontakt: .vcf existuje a má telefón  200 text/vcard
+OK   [zaklad/pocitac] Pošli kamarátovi: skopíruje odkaz a povie to  {"st":"Odkaz je skopírovaný","clip":"https://d8f5s88zjy-art.github.io/barbershop30/"}
+OK   [zaklad/pocitac] tlačidlo Hudba prepne stav  {"vis":true,"p0":"true","p1":"false","audio":["/barbershop-30/assets/audio/strih.webm 200","/barbershop-30/assets/audio/hudba.webm 200"]}
+OK   [zaklad/pocitac] kurzor nožníc a svetlo pod kurzorom  {"body":"image-set(url(\"http://127.0.0.1:8861/barbershop-30/assets/img/kurzor/noznice-32.png\") 1dppx, url(\"http://127.0.0.1:8861/","a":"image-set(url(\"http://127.0.0.1:8861/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png\") 1dppx, url(\"http://127.0.","svetlo":true,"kurzRes":["/barbershop-30/assets/img/kurzor/noznice-32.png 200","/barbershop-30/assets/img/kurzor/noznice-otvorene-32.png 200"]}
+OK   [zaklad/pocitac] pätička: Vernostná kartička otvorí stránku kartičky  {"url":"/barbershop-30/karta/","h":"Zbieraj body za každú návštevu","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\n30\nZbieraj body za každú návštevu\n\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\n\nKartičky práve spúšťame\n\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\n\nZavolať"}
+FAIL [zaklad/pocitac] scenár dobehol bez výnimky  locator.click: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('.footer-top')[22m
+[2m    - locator resolved to <a href="#uvod" class="link-arrow footer-top">…</a>[22m
+[2m  - attempting click action[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is not stable[22m
+[2m  - retrying click action[22m
+[2m    - waiting for element to be v
+INFO [zaklad/pocitac] trvanie 167 s
+OK   [zaklad/telefon] prepínač jazyka vytvorený (i18n.js po geste)  {"lang":true,"hudba":true,"recenzie":6,"recBox":false,"karty":true,"vernost":false,"zive":"Teraz otvorené · 9:00 – 19:00","rok":"2026","priceTabs":4}
+OK   [zaklad/telefon] recenzie: 6 citácií, blok viditeľný  6
+OK   [zaklad/telefon] pás vizitky a pripomienky vložený (karty.js)
+INFO [zaklad/telefon] vernostná kartička v páse: nie (bez data-zapnute správne skrytá); živý stav: „Teraz otvorené · 9:00 – 19:00“; rok 2026
+OK   [zaklad/telefon] menu sa otvorí (pred Prehliadka)  true
+OK   [zaklad/telefon] navigácia „Prehliadka“ → #vstup-dnu v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":338,"y":1097,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Služby)  true
+OK   [zaklad/telefon] navigácia „Služby“ → #sluzby v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":4254,"y":4450,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Tím)  true
+OK   [zaklad/telefon] navigácia „Tím“ → #tim v zábere a menu zavreté  {"ok":true,"top":-254,"bottom":1800,"y":2870,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Galéria)  true
+OK   [zaklad/telefon] navigácia „Galéria“ → #galeria v zábere a menu zavreté  {"ok":true,"top":-253,"bottom":3582,"y":8485,"menu":"false"}
+OK   [zaklad/telefon] menu sa otvorí (pred Kontakt)  true
+OK   [zaklad/telefon] navigácia „Kontakt“ → #kontakt v zábere a menu zavreté  {"ok":true,"top":76,"bottom":971,"y":16204,"menu":"false"}
+OK   [zaklad/telefon] menu: Esc zavrie
+OK   [zaklad/telefon] menu: ťuk na stmavenú stránku pod panelom zavrie  {"lockOn":"hidden"}
+INFO [zaklad/telefon] linka kapitol: 0/8 bodov viditeľných [{"href":"#uvod","vis":false,"w":0,"h":0},{"href":"#vstup-dnu","vis":false,"w":0,"h":0}]
+OK   [zaklad/telefon] značka v lište vráti na úvod  0
+OK   [zaklad/telefon] tlačidlo #uvod .title-actions a.btn-primary viditeľné
+OK   [zaklad/telefon] #uvod .title-actions a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/telefon] tlačidlo #mobile-cta a.btn-primary viditeľné
+OK   [zaklad/telefon] #mobile-cta a.btn-primary otvorí rezerváciu v novej karte  https://www.barbershop30.sk/rezervacia
+OK   [zaklad/telefon] odkazy tel/mail/mapa/sociálne siete/Booqme majú správny tvar (17)  []
+OK   [zaklad/telefon] časté otázky: 8 otázok sa rozbalí  {"nFaq":8,"otvorene":8}
+OK   [zaklad/telefon] cenník: 4 záložky skupín  4
+OK   [zaklad/telefon] cenník: záložka 3 posunie na skupinu 3  {"top":200,"vh":844}
+OK   [zaklad/telefon] cenník: ťuk na popis ho rozbalí
+OK   [zaklad/telefon] lightbox sa otvorí s fotkou a popisom (8 fotiek)  {"open":true,"nat":390,"cap":"Nožnice a hrebeň na barberskej podložke s logom","src":"/barbershop-30/assets/img/naradie-noznice-1600.jpg"}
+OK   [zaklad/telefon] lightbox: ďalšia fotka  Karafa, pomády a štetka na holenie na pracovnom stole
+OK   [zaklad/telefon] lightbox: predchádzajúca fotka
+OK   [zaklad/telefon] lightbox: Zavrieť ho zavrie a odomkne stránku
+OK   [zaklad/telefon] pripomienka: voľba 6 týždňov zmení dátum, .ics a Google odkaz  {"kedy0":"Pripomienka pondelok 23. novembra o 10:00","kedy":"Pripomienka pondelok 7. decembra o 10:00","dt":"20261207T100000"}
+OK   [zaklad/telefon] pripomienka: Pridať do kalendára stiahne platný .ics  barbershop30-pripomienka.ics
+OK   [zaklad/telefon] Uložiť kontakt: .vcf existuje a má telefón  200 text/vcard
+OK   [zaklad/telefon] Pošli kamarátovi: zdieľanie telefónu s adresou  {"title":"Barbershop 30","text":"Barbershop 30, pánske holičstvo na Mostnej 30 v Nitre.","url":"https://d8f5s88zjy-art.github.io/barbershop30/"}
+INFO [zaklad/telefon] Pošli kamarátovi zdieľa adresu https://d8f5s88zjy-art.github.io/barbershop30/ (kanonická adresa z HTML)
+OK   [zaklad/telefon] tlačidlo Hudba prepne stav  {"vis":true,"p0":"true","p1":"false","audio":["/barbershop-30/assets/audio/hudba.webm 200","/barbershop-30/assets/audio/strih.webm 200"]}
+OK   [zaklad/telefon] pätička: Vernostná kartička otvorí stránku kartičky  {"url":"/barbershop-30/karta/","h":"Zbieraj body za každú návštevu","text":"BARBERSHOP 30 · VERNOSTNÁ KARTIČKA\n30\nZbieraj body za každú návštevu\n\nZa návštevy dostávaš body a vymeníš ich za odmeny, ktoré nájdeš na kartičke. Kartička je zadarmo a na tvoje meno.\n\nKartičky práve spúšťame\n\nKartičku ti zatiaľ založíme na recepcii. Zavolaj nám na 0951 267 203.\n\nZavolať"}
+OK   [zaklad/telefon] pätička: Späť hore  0
+FAIL [zaklad/telefon] index.html: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx  error: Failed to load resource: the server responded with a status of 404 (File not found) @ /vernost/api/?a=stav:0 | http: 404 /vernost/api/?a=stav
+INFO [zaklad/telefon] index.html: prerušené požiadavky (ERR_ABORTED, bežné pri lenivom načítaní/odchode): 2× /barbershop-30/assets/img/naradie-noznice-1600.jpg net::ERR_ABORTED | /barbershop-30/assets/img/detail-stol-1600.jpg net::ERR_ABORTED
+INFO [zaklad/telefon] externé adresy zablokované auditom: https://www.barbershop30.sk/rezervacia
+INFO [zaklad/telefon] trvanie 99 s
+OK   [ukazka/pocitac] Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)  {"dlg":true,"pas":"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.","sluzby":15}
+OK   [ukazka/pocitac] objednávka: po službe ukážkové časy  3
+OK   [ukazka/pocitac] objednávka: Späť vráti na služby
+OK   [ukazka/pocitac] objednávka: výber s poznámkou, odkaz do rezervácie a telefón  ["https://www.barbershop30.sk/rezervacia","tel:+421951267203","tel:+421951267203"]
+OK   [ukazka/pocitac] objednávka: okno sa zavrie
+OK   [ukazka/pocitac] cenník: Objednať pri službe otvorí okno s vybranou službou  ← Späť
+
+OBJEDNÁVKA · KROK 2 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Kedy a u koho?
+Pánsky strih a úprava brady
+
+OK   [ukazka/pocitac] tím: Objednať sa u Nikolas otvorí objednávku s týmto barberom (až po výbere služby, krok 1 barbera nespomína)  ← Späť OBJEDNÁVKA · KROK 3 ZO 4 × Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. Kedy? Pánsky strih Nikolas Po 26 okt Ut 27 okt 
+OK   [ukazka/pocitac] asistent: ikona Barbera viditeľná
+INFO [ukazka/pocitac] asistent: bublina pri ikone {"vis":true,"text":"Barber AI\n\nAhoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.\n\nSpýtať sa\nZavolať"}
+OK   [ukazka/pocitac] asistent: okno sa otvorí, ukážka označená, témy otázok  {"panel":true,"pas":"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.","chips":15}
+OK   [ukazka/pocitac] asistent: ťuk na otázku ukáže pripravenú odpoveď  {"n0":1,"n1":2,"posledna":"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €."}
+OK   [ukazka/pocitac] asistent: napísaná otázka o cene dostane odpoveď z cenníka  Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné.
+OK   [ukazka/pocitac] asistent: Esc okno zavrie
+OK   [ukazka/pocitac] asistent: Skryť Barbera skryje ikonu
+OK   [ukazka/pocitac] index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [ukazka/pocitac] ukážka nič neposiela na server  []
+INFO [ukazka/pocitac] trvanie 40 s
+OK   [ukazka/telefon] Objednať sa otvorí okno objednávky (ukážka označená, služby z cenníka)  {"dlg":true,"pas":"Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.","sluzby":15}
+OK   [ukazka/telefon] objednávka: po službe ukážkové časy  3
+OK   [ukazka/telefon] objednávka: Späť vráti na služby
+OK   [ukazka/telefon] objednávka: výber s poznámkou, odkaz do rezervácie a telefón  ["https://www.barbershop30.sk/rezervacia","tel:+421951267203","tel:+421951267203"]
+OK   [ukazka/telefon] objednávka: okno sa zavrie
+OK   [ukazka/telefon] cenník: Objednať pri službe otvorí okno s vybranou službou  ← Späť
+
+OBJEDNÁVKA · KROK 2 ZO 4
+
+×
+
+Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje.
+
+Kedy a u koho?
+Pánsky strih a úprava brady
+
+OK   [ukazka/telefon] tím: Objednať sa u Nikolas otvorí objednávku s týmto barberom (až po výbere služby, krok 1 barbera nespomína)  ← Späť OBJEDNÁVKA · KROK 3 ZO 4 × Ukážka na kontrolu: barberi a voľné časy sú len na ukážku, nič sa nerezervuje. Kedy? Pánsky strih Nikolas Po 26 okt Ut 27 okt 
+OK   [ukazka/telefon] asistent: ikona Barbera viditeľná
+INFO [ukazka/telefon] asistent: bublina pri ikone {"vis":false,"text":"Barber AIAhoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.Spýtať saZavolať"}
+OK   [ukazka/telefon] asistent: okno sa otvorí, ukážka označená, témy otázok  {"panel":true,"pas":"Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.","chips":15}
+OK   [ukazka/telefon] asistent: ťuk na otázku ukáže pripravenú odpoveď  {"n0":1,"n1":2,"posledna":"Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady"}
+OK   [ukazka/telefon] asistent: napísaná otázka o cene dostane odpoveď z cenníka  Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné.
+OK   [ukazka/telefon] asistent: Zavrieť okno zavrie
+OK   [ukazka/telefon] asistent: Skryť Barbera skryje ikonu
+OK   [ukazka/telefon] index.html?asistent=ukazka&objednavka=ukazka: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [ukazka/telefon] ukážka nič neposiela na server  []
+INFO [ukazka/telefon] trvanie 58 s
+OK   [en/pocitac] en/: stránka po anglicky  {"lang":"en","title":"Barbershop 30 Nitra | Men's barbershop, Mostná 30","nav":"Tour|Services|Team|Gallery|Contact|Book now","canon":"https://d8f5s88zjy-art.github.io/barbershop30/en/","cur":"EN"}
+FAIL [en/pocitac] en/: navigácia na kotvy  [["#sluzby",true],["#galeria",true],["#kontakt",false]]
+OK   [en/pocitac] en/: recenzie a pás vizitky po anglicky  {"rec":6,"karty":true,"zd":"Send to a friend","vcf":"http://127.0.0.1:8861/barbershop-30/assets/barbershop30.vcf","karta":"http://127.0.0.1:8861/barbershop-30/karta/"}
+OK   [en/pocitac] en/: odkazy na .vcf a karta/ vedú na existujúce súbory  ["/barbershop-30/assets/barbershop30.vcf",200,"/barbershop-30/karta/",200]
+OK   [en/pocitac] en/: voľba sk vedie na slovenskú stránku  {"u":"/barbershop-30/","l2":"sk"}
+OK   [en/pocitac] en/ → sk: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+INFO [en/pocitac] en/ → sk: prerušené požiadavky (ERR_ABORTED, bežné pri lenivom načítaní/odchode): 1× /barbershop-30/assets/video/tim-v-akcii-576.webm net::ERR_ABORTED
+OK   [en/pocitac] en/: voľba de vedie na slovenskú stránku  {"u":"/barbershop-30/?lang=de","l2":"de-AT"}
+OK   [en/pocitac] en/ → de: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+INFO [en/pocitac] trvanie 35 s
+OK   [en/telefon] en/: stránka po anglicky  {"lang":"en","title":"Barbershop 30 Nitra | Men's barbershop, Mostná 30","nav":"Tour|Services|Team|Gallery|Contact|Book now","canon":"https://d8f5s88zjy-art.github.io/barbershop30/en/","cur":"EN"}
+OK   [en/telefon] en/: navigácia na kotvy  [["#sluzby",true],["#galeria",true],["#kontakt",true]]
+OK   [en/telefon] en/: recenzie a pás vizitky po anglicky  {"rec":6,"karty":true,"zd":"Send to a friend","vcf":"http://127.0.0.1:8861/barbershop-30/assets/barbershop30.vcf","karta":"http://127.0.0.1:8861/barbershop-30/karta/"}
+OK   [en/telefon] en/: odkazy na .vcf a karta/ vedú na existujúce súbory  ["/barbershop-30/assets/barbershop30.vcf",200,"/barbershop-30/karta/",200]
+OK   [en/telefon] en/: voľba sk vedie na slovenskú stránku  {"u":"/barbershop-30/","l2":"sk"}
+OK   [en/telefon] en/ → sk: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+OK   [en/telefon] en/: voľba de vedie na slovenskú stránku  {"u":"/barbershop-30/?lang=de","l2":"de-AT"}
+OK   [en/telefon] en/ → de: bez chýb konzoly, pageerror, zlyhaných požiadaviek a 4xx
+INFO [en/telefon] trvanie 28 s
+FAIL [chybova/-] barbershop-30/404.html existuje (vlastná stránka pre zlú adresu)  {"subor":false,"GET neexistujuca-stranka":404,"server":"SimpleHTTP/0.6 Python/3.11.15"}
+
+SÚHRN: 119 kontrol, zlyhalo 7

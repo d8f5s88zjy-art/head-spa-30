@@ -22,6 +22,7 @@ Použitie:
           [--pc 1440x900] [--telefon 390x844] [--zabery cakaren,sala-rano] [--param K=V ...]
   python3 -I k3-simulacia.py prechody --web <barbershop-30> --out <priečinok>   (diery po skladaní strihu v post shaderi)
   python3 -I k3-simulacia.py porovnaj --web <barbershop-30> --snimky <priečinok so z###.jpg> --out <priečinok>
+  python3 -I k3-simulacia.py skvrny --web <barbershop-30> --out <priečinok>   (súvislé oblasti alfa 0 v okne každého záberu v pokoji)
 """
 import argparse, json, math, os, re, subprocess, sys, glob
 import numpy as np
@@ -786,9 +787,78 @@ def compare(args):
             print(r['snimka'], '-')
 
 
+
+# ---------------------------------------------------------------- skvrny: súvislé oblasti s alfou 0 v okne záberu
+def spots(args):
+    """Režim skvrny: pre každý záber v pokoji (bez prechodu, kreslí sa rovno na obrazovku s alfou = vZ) nájde
+    súvislé oblasti okna, kde je zjemnená hĺbka presne 0 (alfa 0). Pokoj = t 0 / 0,5 / 1, dýchanie v krajných
+    polohách a (počítač) myš. Vypíše tabuľku, uloží k3-skvrny.json a obrázok skvrny-<zariadenie>-<záber>.jpg
+    (čierne = alfa 0 pri t = 0,5 bez dýchania, červený obrys = zjednotenie cez všetky pokojné polohy)."""
+    web = args.web
+    film_js = os.path.join(web, 'assets/film.js'); html = os.path.join(web, args.stranka)
+    os.makedirs(args.out, exist_ok=True)
+    overrides = [(kv.split('=', 1)[0], json.loads(kv.split('=', 1)[1])) for kv in args.param]
+    sel = set(args.zabery.split(',')) if args.zabery else None
+    report = {}; total = 0
+    for dev in args.zariadenie.split(','):
+        phone = dev == 'telefon'
+        P = load_params(film_js, phone, overrides)
+        cw, ch = [int(x) for x in (args.telefon if phone else args.pc).split('x')]
+        scale = 1.0 if phone else 0.5
+        sh = [Shot(s, P, phone, cw, ch, web) for s in parse_shots(html, phone, P)]
+        drifts = [(0, 0, 0), (1, 1, 1), (-1, -1, -1), (1, -1, 1), (-1, 1, -1)]
+        mice = [(0, 0)] if phone else [(0, 0), (0.5, 0.5), (-0.5, -0.5)]
+        for s in sh:
+            if sel and s.name not in sel:
+                continue
+            union = None; base = None; rest = None
+            for t in (0, 0.5, 1):
+                for d in drifts:
+                    for m in mice:
+                        cam, tgt = place(s, P, t, P['AMT'], d, m)
+                        want = t == 0.5 and d == (0, 0, 0) and m == (0, 0)
+                        r, mp = evaluate(s, P, cam, tgt, P['AMT'], cw, ch, scale, want_img=want)
+                        a0 = mp['amap'] == 2
+                        union = a0 if union is None else (union | a0)
+                        if want:
+                            base = mp['img'].copy(); rest = a0
+            RH, RW = union.shape
+            def comps(mask):
+                n, lab, st, cen = cv2.connectedComponentsWithStats(mask.astype(np.uint8))
+                out = []
+                for i in range(1, n):
+                    area = int(st[i, cv2.CC_STAT_AREA])
+                    if area / scale / scale < args.min_px:
+                        continue
+                    x, y, w, h = [int(v) for v in st[i, :4]]
+                    out.append(dict(plocha_px=int(round(area / scale / scale)), podiel_okna_pct=round(area / mask.size * 100, 2),
+                                    stred_pct=[round(cen[i][0] / RW * 100, 1), round(cen[i][1] / RH * 100, 1)],
+                                    ramcek_pct=[round(x / RW * 100, 1), round(y / RH * 100, 1), round((x + w) / RW * 100, 1), round((y + h) / RH * 100, 1)]))
+                return sorted(out, key=lambda c: -c['plocha_px'])
+            c_rest = comps(rest); c_union = comps(union)
+            key = f'{s.pi:02d}-{s.name}'
+            report.setdefault(dev, {})[key] = dict(okno_px=[cw, int(round(ch * s.band))], pokoj_t05=c_rest, zjednotenie_pokoj=c_union,
+                                                    alfa0_pokoj_t05_pct=round(rest.mean() * 100, 2), alfa0_zjednotenie_pct=round(union.mean() * 100, 2))
+            total += len(c_union)
+            pic = base.copy(); pic[rest] = (0, 0, 0)
+            cnts, _ = cv2.findContours(union.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cv2.drawContours(pic, cnts, -1, (0, 0, 255), 1)
+            for i, c in enumerate(c_union, 1):
+                cx, cy = int(c['stred_pct'][0] / 100 * RW), int(c['stred_pct'][1] / 100 * RH)
+                cv2.putText(pic, str(i), (cx, cy), 0, 0.7, (0, 255, 255), 2)
+            cv2.putText(pic, f'{dev} {s.name}: alfa 0 v pokoji t=0.5 {rest.mean()*100:.2f} % okna (cierne), zjednotenie {union.mean()*100:.2f} % (cerveny obrys), {len(c_union)} oblasti', (6, 18), 0, 0.42, (0, 255, 255), 1)
+            fn = os.path.join(args.out, f'skvrny-{dev}-{s.pi:02d}-{s.name}.jpg')
+            cv2.imwrite(fn, pic, [cv2.IMWRITE_JPEG_QUALITY, 88])
+            report[dev][key]['obrazok'] = fn
+            desc = '; '.join(f"#{i} {c['plocha_px']} px ({c['podiel_okna_pct']} % okna) stred x {c['stred_pct'][0]} % y {c['stred_pct'][1]} %" for i, c in enumerate(c_union, 1)) or '-'
+            print(f'{dev} {key:16s} okno {cw}x{int(round(ch * s.band))} | alfa 0 v pokoji t=0,5: {rest.mean()*100:5.2f} % | zjednotenie pokojných polôh: {union.mean()*100:5.2f} % | oblasti ≥ {args.min_px} px: {len(c_union)} | {desc}', flush=True)
+    with open(os.path.join(args.out, 'k3-skvrny.json'), 'w') as f:
+        json.dump(report, f, ensure_ascii=False, indent=1)
+    print(f'spolu oblastí alfa 0 (všetky zariadenia a zábery): {total}')
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('rezim', nargs='?', default='simuluj', choices=['simuluj', 'porovnaj', 'prechody'])
+    ap.add_argument('rezim', nargs='?', default='simuluj', choices=['simuluj', 'porovnaj', 'prechody', 'skvrny'])
     ap.add_argument('--web', required=True, help='priečinok barbershop-30')
     ap.add_argument('--stranka', default='index.html')
     ap.add_argument('--out', required=True)
@@ -798,5 +868,6 @@ if __name__ == '__main__':
     ap.add_argument('--param', action='append', default=[], help='prepis parametra kódu, napr. AMT=0.3 alebo SEG=[128,96]')
     ap.add_argument('--snimky', help='porovnaj: priečinok so snímkami záznamu z###.jpg')
     ap.add_argument('--vyrezy', action='store_true', help='porovnaj: uložiť obrázky porovnania (len snímky so škvrnami)')
+    ap.add_argument('--min-px', type=int, default=100, help='skvrny: najmenšia oblasť alfa 0 v pixeloch plátna')
     a = ap.parse_args()
-    {'porovnaj': compare, 'prechody': transitions}.get(a.rezim, run)(a)
+    {'porovnaj': compare, 'prechody': transitions, 'skvrny': spots}.get(a.rezim, run)(a)
