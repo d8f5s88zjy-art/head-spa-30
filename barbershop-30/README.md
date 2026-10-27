@@ -36,7 +36,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   alebo 3,5 s po načítaní. Prepínač je na počítači v lište, na telefóne v rozbaľovacom menu. Nadpisy po slovách
   (`.kin`) sa prekladajú po celých riadkoch a delia znova, Booqme dostane jazyk (srbčina → angličtina) a pri hlavnej
   rezervácii (len po slovensky) je poznámka v jazyku stránky. Ukrajinčina sťahuje Manrope s cyrilikou len pri
-  cyrilike. `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP). Nový text na stránke
+  cyrilike. `hreflang` je v `sitemap.xml`, nie v HTML (HTML musí ostať v prvom okne TCP); sú v ňom len kanonické
+  adresy sk a `en/` (adresy `?lang=` majú canonical na slovenskú stránku, Google by ich bral ako duplikát). Nový text na stránke
   potrebuje kľúč vo všetkých slovníkoch; kontrola: `node source/tools/i18n-test.mjs`.
   Anglická stránka `en/index.html` (pre Google: vlastná adresa, texty priamo v HTML) sa vytvorí pri nasadení zo
   slovenskej `index.html` a `assets/i18n/en.json` (`source/tools/en-stranka.mjs`, rovnaké pravidlá ako `i18n.js`);
