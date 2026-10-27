@@ -108,7 +108,29 @@ Cieľ: Pásy obsahu (cenník, kontakt, pred návštevou) pôsobia rovnako filmov
 - Neprekročiť 14 600 B gzip v index.html. Nepridávať viditeľný text bez kľúčov vo všetkých 7 slovníkoch assets/i18n/*.json.
 - Nepoužívať backdrop-filter na mobile, nepridávať nové písma a nedokresľovať logo „30“ (vektor nemáme).
 - Neukazovať odkaz „Vernostná kartička“, kým na headspa30.sk nebeží vernost/ (curl 200).
-- Nespomínať Salón 30 ani HEAD SPA 30 ako súčasť značky a nedávať ich telefón na stránky Barbershopu.
+- Nespomínať Salón 30 ani HEAD SPA 30 ako súčasť značky a nedávať ich telefón na stránky Barbershopu. (Zmena 27. 10. 2026: majiteľ žiada v pätičke odkazy na „naše prevádzky“ HEAD SPA 30, Salón 30 a Barbershop 30; odkazy sú postavené, telefóny iných prevádzok sa neuvádzajú, potvrdenie nadpisu je otázka 26.)
 - Neuvádzať atribút LGBTQ+ z Google profilu bez výslovného súhlasu. Bezbariérový vchod len po potvrdení.
 - Nemeniť canonical JavaScriptom. Nepreberať texty ani vizuál konkurencie, len princípy.
 - Nezaradiť nepotvrdené údaje (platba, storno, pripomienky, detaily poukážok, dni Romany, hodnotenie číslom) ako viditeľný text. Pripraviť ich skryté a zapnúť až po odpovedi majiteľa.
+
+## Doplnenie 27. 10. 2026: texty tímu, garancia a odkazy na prevádzky
+
+Zadanie majiteľa z 27. 10.: údernejšie texty pri barberoch (garancia, skúsenosti), v častých otázkach vysvetliť, že recepčná sa stará o termíny a pohodlie a barber o výsledok, a na konci stránky odkazy na HEAD SPA 30, Salón 30 a Barbershop 30. Postavené na vetve `barbershop-oprava` (úvod tímu, nové riadky pri desiatich barberoch, tri piliere Skúsenosti · Precíznosť · Pohodlie, otázky „Mám volať barberovi alebo recepcii?“ a „Čo ma čaká, keď prídem?“, blok „Naše prevádzky“ v pätičke, 8 jazykov). Všetko len z overených textov webu; čo nie je potvrdené, na webe nie je a čaká tu.
+
+### Otázky (odpovedať stačí číslom a vetou)
+
+25. **Garancia.** Na webe dnes žiadna garancia nie je (v textoch webu ani v dokumentoch sa slovo „garancia“ nevyskytuje), preto je tretí pilier zatiaľ „Pohodlie“. Ktoré znenie potvrdzujete, a platí presne tak, ako je napísané?
+    - G1 (najbezpečnejšie, len v kresle): „Nie si spokojný? Povedz to ešte v kresle barberovi alebo recepcii a dáme to do poriadku na mieste.“
+    - G2 (do konca dňa): „Strih musí sedieť tebe, nie nám. Ak nesedí, povedz to a dáme to do poriadku ešte dnes.“
+    - G3 (najostrejšie): „Z kresla vstaneš, až keď si spokojný. Ak nie, strih neplatíš.“ Upozornenie: je to verejný sľub, ktorý si zákazníci vyskúšajú. Potvrďte ho, len ak ho dodržíte bez výnimky.
+    Po potvrdení nahradí garancia pilier „Pohodlie“ a pribudne otázka „Čo ak nebudem spokojný?“ s odpoveďou: „Povedz to hneď, ešte v kresle, barberovi alebo recepcii. Dáme to do poriadku na mieste.“ (pri G2 doplníme „ešte dnes“, pri G3 „Ak to aj tak nesedí, strih neplatíš.“). Ak má garancia platiť aj po odchode (zavolať neskôr), napíšte dokedy a za akých podmienok; bez toho sa na web nedostane nič o lehotách, o „zadarmo“ ani o „neplatíš“.
+26. **Nadpis „Naše prevádzky“.** V pätičke sú HEAD SPA 30, Salón 30 a Barbershop 30 pod nadpisom „Naše prevádzky“ (vaše slová z 27. 10.). Doterajšie pravidlo v tomto súbore znelo nespomínať Salón 30 a HEAD SPA 30 ako súčasť značky; podľa vašej požiadavky sme ho zmenili. Potvrdzujete nadpis? Náhradný nadpis bez privlastnenia: „Na Mostnej 30 nájdeš aj“.
+27. **Adresa HEAD SPA 30.** Odkaz vedie na https://www.headspa30.sk/ (živá doména webu z tohto repozitára, overené 27. 10.: odpoveď 200; https://headspa30.sk/ presmeruje na www). Kópia na https://d8f5s88zjy-art.github.io/head-spa-30/ (kanonická adresa v repozitári) tiež odpovedá 200. Má ostať doména headspa30.sk?
+28. **Salón 30.** Odkaz vedie na https://www.salon30.sk/ (odpoveď 200, titulok „Salón 30“, na stránke Mostná 30, „Wellness pre vaše vlasy“, „koloristika“, „Trichologické vyšetrenie vlasov“). Riadok pod odkazom: „Kaderníctvo a wellness pre vlasy: strihy, farbenie a koloristika, trichologické vyšetrenie.“ Súhlasí? Má sa spomenúť niečo iné (kozmetika, fúkaná)?
+29. **Barbershop 30 v pätičke** vedie dnes na úvod tejto stránky a je označený ako aktuálna prevádzka. Po spustení nového webu na www.barbershop30.sk (otázka 21) ho prepneme na doménu. Súhlasíte?
+30. **Podnadpis bloku** „Všetky tri na Mostnej 30 v Nitre.“ (adresy overené: HEAD SPA 30 Mostná 226/30, Salón 30 Mostná 30, Barbershop 30 Mostná 30). Pridať?
+31. **Hodnotenie 5,0 v pilieri Skúsenosti.** Veta „Hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“ používa hodnotenie, ktoré je už v úvode webu („5,0 na Google · 945 recenzií“). Počet recenzií sme do piliera nedali (starne; otázka 18 je stále otvorená). Ak sa hodnotenie zmení, mení sa úvod aj pilier naraz (kľúče v 7 slovníkoch). Súhlasíte s hodnotením v pilieri?
+32. **Bez objednania** (otázka 5 stále otvorená). Ak platí, pridáme otázku „Môžem prísť bez objednania?“ s odpoveďou: „Môžeš, ale bez istoty voľného kresla. Istotu máš len s termínom: online kedykoľvek, alebo cez recepciu na 0951 267 203.“
+33. **Fakty o barberoch** (nadväzuje na otázku 17). Riadky pri barberoch sú zámerne bez rokov praxe, špecializácií a ocenení, lebo web ani dokumenty také údaje nemajú. Ak chcete pri niekom skutočný údaj (od ktorého roku strihá, v čom je najsilnejší, jazyky), pošlite ho a riadok prispôsobíme.
+34. **„Vždy volaj recepcii.“** Má sa v odpovedi uviesť aj e‑mail info@barbershop30.sk alebo WhatsApp (otázka 12)? Odpoveď dnes hovorí: „Recepcia ti termín nájde, zmenu či zrušenie jej daj vedieť čo najskôr.“ Lehoty a poplatky za storno (otázka 3) v nej nie sú.
+
