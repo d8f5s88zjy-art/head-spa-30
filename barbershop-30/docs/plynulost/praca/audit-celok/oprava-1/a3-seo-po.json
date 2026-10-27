@@ -1,7 +1,7 @@
 {
  "site": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/hs-audit/barbershop-30",
  "base": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
- "datum": "2026-10-26T12:44:49.903Z",
+ "datum": "2026-10-27T07:02:59.290Z",
  "nalezy": [
   {
    "lvl": "INFO",
@@ -55,37 +55,25 @@
    "lvl": "OK",
    "kod": "og",
    "text": "og:type/title/description/url/image/locale/site_name sú",
-   "kde": "index.html:28"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "og-type",
-   "text": "og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website",
-   "kde": "index.html:25"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "og-locale-alt",
-   "text": "chýba og:locale:alternate (druhá jazyková verzia)",
-   "kde": "index.html"
+   "kde": "index.html:29"
   },
   {
    "lvl": "OK",
    "kod": "og-image",
    "text": "assets/og.jpg 1200×630 jpeg, 139 kB",
-   "kde": "index.html:31"
+   "kde": "index.html:32"
   },
   {
    "lvl": "OK",
    "kod": "twitter",
    "text": "twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)",
-   "kde": "index.html:35"
+   "kde": "index.html:36"
   },
   {
-   "lvl": "DROBNA",
+   "lvl": "OK",
    "kod": "favicon",
-   "text": "2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
-   "kde": "index.html:36"
+   "text": "assets/favicon.svg",
+   "kde": "index.html:37"
   },
   {
    "lvl": "OK",
@@ -103,13 +91,7 @@
    "lvl": "OK",
    "kod": "h1",
    "text": "„Barbershop 30 · Nitra Tvoj strih. Tvoje miesto.“",
-   "kde": "index.html:188"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "img-src",
-   "text": "img so src=\"\" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)",
-   "kde": "index.html:898"
+   "kde": "index.html:189"
   },
   {
    "lvl": "OK",
@@ -193,37 +175,25 @@
    "lvl": "OK",
    "kod": "og",
    "text": "og:type/title/description/url/image/locale/site_name sú",
-   "kde": "en/index.html:29"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "og-type",
-   "text": "og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website",
-   "kde": "en/index.html:26"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "og-locale-alt",
-   "text": "chýba og:locale:alternate (druhá jazyková verzia)",
-   "kde": "en/index.html"
+   "kde": "en/index.html:30"
   },
   {
    "lvl": "OK",
    "kod": "og-image",
    "text": "assets/og.jpg 1200×630 jpeg, 139 kB",
-   "kde": "en/index.html:32"
+   "kde": "en/index.html:33"
   },
   {
    "lvl": "OK",
    "kod": "twitter",
    "text": "twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)",
-   "kde": "en/index.html:36"
+   "kde": "en/index.html:37"
   },
   {
-   "lvl": "DROBNA",
+   "lvl": "OK",
    "kod": "favicon",
-   "text": "2× rel=icon (data:URI, ../assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
-   "kde": "en/index.html:37"
+   "text": "../assets/favicon.svg",
+   "kde": "en/index.html:38"
   },
   {
    "lvl": "OK",
@@ -241,13 +211,7 @@
    "lvl": "OK",
    "kod": "h1",
    "text": "„Barbershop 30 · Nitra Your cut. Your place.“",
-   "kde": "en/index.html:189"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "img-src",
-   "text": "img so src=\"\" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)",
-   "kde": "en/index.html:899"
+   "kde": "en/index.html:190"
   },
   {
    "lvl": "OK",
@@ -330,44 +294,38 @@
   {
    "lvl": "OK",
    "kod": "og-image",
-   "text": "assets/og.jpg 1200×630 jpeg, 139 kB (bez og:image:width/height)",
+   "text": "assets/og.jpg 1200×630 jpeg, 139 kB",
    "kde": "rezervacia.html:22"
   },
   {
-   "lvl": "DROBNA",
-   "kod": "og-image-wh",
-   "text": "chýba og:image:width a og:image:height (Facebook pri prvom zdieľaní nemusí ukázať obrázok)",
-   "kde": "rezervacia.html:22"
-  },
-  {
-   "lvl": "DROBNA",
+   "lvl": "OK",
    "kod": "twitter",
-   "text": "chýba twitter:card",
-   "kde": "rezervacia.html"
+   "text": "twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)",
+   "kde": "rezervacia.html:26"
   },
   {
-   "lvl": "DROBNA",
+   "lvl": "OK",
    "kod": "favicon",
-   "text": "2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať",
-   "kde": "rezervacia.html:23"
+   "text": "assets/favicon.svg",
+   "kde": "rezervacia.html:27"
   },
   {
    "lvl": "OK",
    "kod": "apple-touch-icon",
    "text": "assets/img/ikona/apple-touch-icon.png 180×180",
-   "kde": "rezervacia.html:25"
+   "kde": "rezervacia.html:28"
   },
   {
    "lvl": "OK",
    "kod": "manifest",
    "text": "assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk",
-   "kde": "rezervacia.html:26"
+   "kde": "rezervacia.html:29"
   },
   {
    "lvl": "OK",
    "kod": "h1",
    "text": "„Kedy si sadneš?“",
-   "kde": "rezervacia.html:83"
+   "kde": "rezervacia.html:86"
   },
   {
    "lvl": "OK",
@@ -580,12 +538,6 @@
    "kde": "index.html:53"
   },
   {
-   "lvl": "DROBNA",
-   "kod": "jsonld-id",
-   "text": "chýba @id (napr. BASE + \"#firma\"), podnik sa nedá prepojiť s inými údajmi",
-   "kde": "index.html:53"
-  },
-  {
    "lvl": "OK",
    "kod": "jsonld-recenzie",
    "text": "bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)",
@@ -595,61 +547,61 @@
    "lvl": "OK",
    "kod": "jsonld-telefon",
    "text": "telephone +421951267203; na stránke tel: +421951267203",
-   "kde": "index.html:61"
+   "kde": "index.html:62"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-email",
    "text": "email info@barbershop30.sk; na stránke info@barbershop30.sk",
-   "kde": "index.html:62"
+   "kde": "index.html:63"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-adresa",
    "text": "Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky",
-   "kde": "index.html:65"
+   "kde": "index.html:66"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-sameAs",
    "text": "https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)",
-   "kde": "index.html:76"
+   "kde": "index.html:77"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-sameAs",
    "text": "https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)",
-   "kde": "index.html:76"
+   "kde": "index.html:77"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-hasMap",
    "text": "https://www.google.com/maps?cid=18132360254733427623",
-   "kde": "index.html:64"
+   "kde": "index.html:65"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-hodiny",
    "text": "Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky",
-   "kde": "index.html:72"
+   "kde": "index.html:73"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-cennik",
    "text": "15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia",
-   "kde": "index.html:84"
+   "kde": "index.html:85"
   },
   {
    "lvl": "INFO",
    "kod": "jsonld-rezervacia",
    "text": "ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)",
-   "kde": "index.html:80"
+   "kde": "index.html:81"
   },
   {
    "lvl": "INFO",
    "kod": "jsonld-zalozenie",
    "text": "foundingDate 2019",
-   "kde": "index.html:63"
+   "kde": "index.html:64"
   },
   {
    "lvl": "OK",
@@ -670,12 +622,6 @@
    "kde": "en/index.html:54"
   },
   {
-   "lvl": "DROBNA",
-   "kod": "jsonld-id",
-   "text": "chýba @id (napr. BASE + \"#firma\"), podnik sa nedá prepojiť s inými údajmi",
-   "kde": "en/index.html:54"
-  },
-  {
    "lvl": "OK",
    "kod": "jsonld-recenzie",
    "text": "bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)",
@@ -685,61 +631,61 @@
    "lvl": "OK",
    "kod": "jsonld-telefon",
    "text": "telephone +421951267203; na stránke tel: +421951267203",
-   "kde": "en/index.html:62"
+   "kde": "en/index.html:63"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-email",
    "text": "email info@barbershop30.sk; na stránke info@barbershop30.sk",
-   "kde": "en/index.html:63"
+   "kde": "en/index.html:64"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-adresa",
    "text": "Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky",
-   "kde": "en/index.html:66"
+   "kde": "en/index.html:67"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-sameAs",
    "text": "https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)",
-   "kde": "en/index.html:77"
+   "kde": "en/index.html:78"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-sameAs",
    "text": "https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)",
-   "kde": "en/index.html:77"
+   "kde": "en/index.html:78"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-hasMap",
    "text": "https://www.google.com/maps?cid=18132360254733427623",
-   "kde": "en/index.html:65"
+   "kde": "en/index.html:66"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-hodiny",
    "text": "Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky",
-   "kde": "en/index.html:73"
+   "kde": "en/index.html:74"
   },
   {
    "lvl": "OK",
    "kod": "jsonld-cennik",
    "text": "15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia",
-   "kde": "en/index.html:85"
+   "kde": "en/index.html:86"
   },
   {
    "lvl": "INFO",
    "kod": "jsonld-rezervacia",
    "text": "ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)",
-   "kde": "en/index.html:81"
+   "kde": "en/index.html:82"
   },
   {
    "lvl": "INFO",
    "kod": "jsonld-zalozenie",
    "text": "foundingDate 2019",
-   "kde": "en/index.html:64"
+   "kde": "en/index.html:65"
   },
   {
    "lvl": "OK",
@@ -756,26 +702,20 @@
   {
    "lvl": "OK",
    "kod": "robots-syntax",
-   "text": "User-agent *, Disallow: /source/ /docs/ /admin/",
+   "text": "User-agent *, Disallow: /source/ /docs/",
    "kde": "robots.txt"
   },
   {
    "lvl": "OK",
    "kod": "robots-sitemap",
    "text": "Sitemap: https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/sitemap.xml",
-   "kde": "robots.txt:9"
+   "kde": "robots.txt:10"
   },
   {
    "lvl": "DROBNA",
    "kod": "robots-umiestnenie",
    "text": "web je v podpriečinku /head-spa-30/barbershop-30/: vyhľadávače čítajú len robots.txt v koreni domény, tento súbor platí až na vlastnej doméne (napr. www.barbershop30.sk)",
    "kde": "robots.txt"
-  },
-  {
-   "lvl": "DROBNA",
-   "kod": "robots-noindex",
-   "text": "admin/index.html: Disallow /admin/ a zároveň noindex – Google noindex neprečíta (pri odkaze zvonka môže adresu zaradiť bez obsahu); stačí jedno",
-   "kde": "robots.txt:6"
   },
   {
    "lvl": "OK",
@@ -786,103 +726,25 @@
   {
    "lvl": "OK",
    "kod": "sitemap-url",
-   "text": "8 adries: / /en/ /?lang=uk /?lang=hu /?lang=sr /?lang=pl /?lang=de /?lang=cs",
+   "text": "2 adries: / /en/",
    "kde": "sitemap.xml"
   },
   {
    "lvl": "OK",
    "kod": "sitemap-lastmod",
-   "text": "/: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:9"
+   "text": "/: lastmod 2026-10-27, posledný commit súboru 2026-10-27",
+   "kde": "sitemap.xml:11"
   },
   {
    "lvl": "OK",
    "kod": "sitemap-lastmod",
-   "text": "/en/: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:28"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=uk: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:43"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=uk: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:43"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=hu: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:58"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=hu: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:58"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=sr: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:73"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=sr: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:73"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=pl: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:88"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=pl: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:88"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=de: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:103"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=de: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:103"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "sitemap-kanonicka",
-   "text": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=cs: stránka má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)",
-   "kde": "sitemap.xml:118"
-  },
-  {
-   "lvl": "OK",
-   "kod": "sitemap-lastmod",
-   "text": "/?lang=cs: lastmod 2026-10-25, posledný commit súboru 2026-10-25",
-   "kde": "sitemap.xml:118"
+   "text": "/en/: lastmod 2026-10-27, posledný commit súboru 2026-10-27",
+   "kde": "sitemap.xml:24"
   },
   {
    "lvl": "OK",
    "kod": "hreflang-vzajomnost",
-   "text": "všetkých 8 adries má rovnakú sadu 9 hreflang (sk, en, uk, hu, sr-Latn, pl, de, cs, x-default) – vzájomné",
-   "kde": "sitemap.xml"
-  },
-  {
-   "lvl": "STREDNA",
-   "kod": "hreflang-kanonicka",
-   "text": "6 hreflang vedie na adresy s inou canonical (uk, hu, sr-Latn, pl, de, cs → https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/?lang=uk má canonical https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/); Google také hreflang ignoruje a ?lang= stránky má za duplikát slovenskej",
+   "text": "všetkých 2 adries má rovnakú sadu 3 hreflang (sk, en, x-default) – vzájomné",
    "kde": "sitemap.xml"
   }
  ],
@@ -896,272 +758,271 @@
    "canonical": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
    "hreflangHTML": [],
    "icons": [
-    "data:URI",
     "assets/favicon.svg"
    ],
    "nadpisy": [
     {
      "uroven": 1,
      "text": "Barbershop 30 · Nitra Tvoj strih. Tvoje miesto.",
-     "riadok": 188,
+     "riadok": 189,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Poď ďalej.",
-     "riadok": 222,
+     "riadok": 223,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Povedz, ako to chceš.",
-     "riadok": 245,
+     "riadok": 246,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Vzadu ťa čaká káva.",
-     "riadok": 268,
+     "riadok": 269,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Komu zveríš hlavu?",
-     "riadok": 291,
+     "riadok": 292,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Nikolas",
-     "riadok": 323,
+     "riadok": 324,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kristián",
-     "riadok": 338,
+     "riadok": 339,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Damian",
-     "riadok": 353,
+     "riadok": 354,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Michal",
-     "riadok": 368,
+     "riadok": 369,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Andy",
-     "riadok": 383,
+     "riadok": 384,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Dominika",
-     "riadok": 398,
+     "riadok": 399,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kevin",
-     "riadok": 413,
+     "riadok": 414,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Lajko",
-     "riadok": 428,
+     "riadok": 429,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Jojo",
-     "riadok": 443,
+     "riadok": 444,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Adrian",
-     "riadok": 458,
+     "riadok": 459,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Čo to bude dnes?",
-     "riadok": 484,
+     "riadok": 485,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Strih",
-     "riadok": 506,
+     "riadok": 507,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Pánsky strih",
-     "riadok": 509,
+     "riadok": 510,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Pánsky strih a úprava brady",
-     "riadok": 515,
+     "riadok": 516,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Pánsky strih – dĺžka vlasov nad 10 cm",
-     "riadok": 521,
+     "riadok": 522,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Strih pre malých gentlemanov",
-     "riadok": 527,
+     "riadok": 528,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Oholenie hlavy",
-     "riadok": 533,
+     "riadok": 534,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Brada a holenie",
-     "riadok": 542,
+     "riadok": 543,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Úprava brady",
-     "riadok": 545,
+     "riadok": 546,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Holenie do hladka Hot Towel",
-     "riadok": 551,
+     "riadok": 552,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Farbenie brady",
-     "riadok": 557,
+     "riadok": 558,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Balíčky",
-     "riadok": 566,
+     "riadok": 567,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Balíček 1",
-     "riadok": 569,
+     "riadok": 570,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Ultra inclusive Barbershop30",
-     "riadok": 575,
+     "riadok": 576,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Doplnky",
-     "riadok": 584,
+     "riadok": 585,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Starostlivosť o pleť PREMIUM",
-     "riadok": 587,
+     "riadok": 588,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Úprava obočia",
-     "riadok": 593,
+     "riadok": 594,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Depilácia uší a nosa voskom",
-     "riadok": 599,
+     "riadok": 600,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Kreatívny ornament na hlave",
-     "riadok": 605,
+     "riadok": 606,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Farbenie obočia",
-     "riadok": 611,
+     "riadok": 612,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Pozri si to zblízka.",
-     "riadok": 645,
+     "riadok": 646,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Výsledky strihov",
-     "riadok": 656,
+     "riadok": 657,
      "skryty": true
     },
     {
      "uroven": 3,
      "text": "Odchádzaš s hlavou hore.",
-     "riadok": 762,
+     "riadok": 763,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Kedy si sadneš?",
-     "riadok": 785,
+     "riadok": 786,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Mostná 30, Nitra",
-     "riadok": 799,
+     "riadok": 800,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Časté otázky",
-     "riadok": 827,
+     "riadok": 828,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Kontakt",
-     "riadok": 856,
+     "riadok": 857,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Otváracie hodiny",
-     "riadok": 864,
+     "riadok": 865,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Sleduj nás",
-     "riadok": 872,
+     "riadok": 873,
      "skryty": false
     }
    ],
@@ -1287,6 +1148,7 @@
     {
      "@context": "https://schema.org",
      "@type": "HairSalon",
+     "@id": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#barbershop",
      "name": "Barbershop 30",
      "alternateName": "Barbershop30",
      "url": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
@@ -1483,272 +1345,271 @@
    "canonical": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/en/",
    "hreflangHTML": [],
    "icons": [
-    "data:URI",
     "../assets/favicon.svg"
    ],
    "nadpisy": [
     {
      "uroven": 1,
      "text": "Barbershop 30 · Nitra Your cut. Your place.",
-     "riadok": 189,
+     "riadok": 190,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Come on in.",
-     "riadok": 223,
+     "riadok": 224,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Tell us how you want it.",
-     "riadok": 246,
+     "riadok": 247,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "In the back, coffee's waiting.",
-     "riadok": 269,
+     "riadok": 270,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Who do you trust with your head?",
-     "riadok": 292,
+     "riadok": 293,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Nikolas",
-     "riadok": 324,
+     "riadok": 325,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kristián",
-     "riadok": 339,
+     "riadok": 340,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Damian",
-     "riadok": 354,
+     "riadok": 355,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Michal",
-     "riadok": 369,
+     "riadok": 370,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Andy",
-     "riadok": 384,
+     "riadok": 385,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Dominika",
-     "riadok": 399,
+     "riadok": 400,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kevin",
-     "riadok": 414,
+     "riadok": 415,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Lajko",
-     "riadok": 429,
+     "riadok": 430,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Jojo",
-     "riadok": 444,
+     "riadok": 445,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Adrian",
-     "riadok": 459,
+     "riadok": 460,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "What'll it be today?",
-     "riadok": 485,
+     "riadok": 486,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Cut",
-     "riadok": 507,
+     "riadok": 508,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Men's haircut",
-     "riadok": 510,
+     "riadok": 511,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Men's haircut and beard trim",
-     "riadok": 516,
+     "riadok": 517,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Men's haircut – hair over 10 cm",
-     "riadok": 522,
+     "riadok": 523,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Little gentlemen's cut",
-     "riadok": 528,
+     "riadok": 529,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Head shave",
-     "riadok": 534,
+     "riadok": 535,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Beard and shave",
-     "riadok": 543,
+     "riadok": 544,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Beard trim",
-     "riadok": 546,
+     "riadok": 547,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Hot Towel clean shave",
-     "riadok": 552,
+     "riadok": 553,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Beard colouring",
-     "riadok": 558,
+     "riadok": 559,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Packages",
-     "riadok": 567,
+     "riadok": 568,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Package 1",
-     "riadok": 570,
+     "riadok": 571,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Ultra inclusive Barbershop30",
-     "riadok": 576,
+     "riadok": 577,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Extras",
-     "riadok": 585,
+     "riadok": 586,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Skin care PREMIUM",
-     "riadok": 588,
+     "riadok": 589,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Eyebrow shaping",
-     "riadok": 594,
+     "riadok": 595,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Ear and nose waxing",
-     "riadok": 600,
+     "riadok": 601,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Creative hair pattern",
-     "riadok": 606,
+     "riadok": 607,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Eyebrow tinting",
-     "riadok": 612,
+     "riadok": 613,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "See it up close.",
-     "riadok": 646,
+     "riadok": 647,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Haircut results",
-     "riadok": 657,
+     "riadok": 658,
      "skryty": true
     },
     {
      "uroven": 3,
      "text": "You walk out head held high.",
-     "riadok": 763,
+     "riadok": 764,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "When will you take a seat?",
-     "riadok": 786,
+     "riadok": 787,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Mostná 30, Nitra",
-     "riadok": 800,
+     "riadok": 801,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Frequently asked questions",
-     "riadok": 828,
+     "riadok": 829,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Contact",
-     "riadok": 857,
+     "riadok": 858,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Opening hours",
-     "riadok": 865,
+     "riadok": 866,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Follow us",
-     "riadok": 873,
+     "riadok": 874,
      "skryty": false
     }
    ],
@@ -1860,6 +1721,7 @@
     {
      "@context": "https://schema.org",
      "@type": "HairSalon",
+     "@id": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#barbershop",
      "name": "Barbershop 30",
      "alternateName": "Barbershop30",
      "url": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/",
@@ -2056,212 +1918,211 @@
    "canonical": "https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/rezervacia.html",
    "hreflangHTML": [],
    "icons": [
-    "data:URI",
     "assets/favicon.svg"
    ],
    "nadpisy": [
     {
      "uroven": 1,
      "text": "Kedy si sadneš?",
-     "riadok": 83,
+     "riadok": 86,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Vyber si službu",
-     "riadok": 99,
+     "riadok": 102,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Strih",
-     "riadok": 104,
-     "skryty": false
-    },
-    {
-     "uroven": 4,
-     "text": "Pánsky strih",
      "riadok": 107,
      "skryty": false
     },
     {
      "uroven": 4,
+     "text": "Pánsky strih",
+     "riadok": 110,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
      "text": "Pánsky strih a úprava brady",
-     "riadok": 113,
+     "riadok": 116,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Pánsky strih – dĺžka vlasov nad 10 cm",
-     "riadok": 119,
+     "riadok": 122,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Strih pre malých gentlemanov",
-     "riadok": 125,
+     "riadok": 128,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Oholenie hlavy",
-     "riadok": 131,
+     "riadok": 134,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Brada a holenie",
-     "riadok": 141,
-     "skryty": false
-    },
-    {
-     "uroven": 4,
-     "text": "Úprava brady",
      "riadok": 144,
      "skryty": false
     },
     {
      "uroven": 4,
+     "text": "Úprava brady",
+     "riadok": 147,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
      "text": "Holenie do hladka Hot Towel",
-     "riadok": 150,
+     "riadok": 153,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Farbenie brady",
-     "riadok": 156,
+     "riadok": 159,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Balíčky",
-     "riadok": 166,
-     "skryty": false
-    },
-    {
-     "uroven": 4,
-     "text": "Balíček 1",
      "riadok": 169,
      "skryty": false
     },
     {
      "uroven": 4,
+     "text": "Balíček 1",
+     "riadok": 172,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
      "text": "Ultra inclusive Barbershop30",
-     "riadok": 175,
+     "riadok": 178,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Doplnky",
-     "riadok": 185,
-     "skryty": false
-    },
-    {
-     "uroven": 4,
-     "text": "Starostlivosť o pleť PREMIUM",
      "riadok": 188,
      "skryty": false
     },
     {
      "uroven": 4,
+     "text": "Starostlivosť o pleť PREMIUM",
+     "riadok": 191,
+     "skryty": false
+    },
+    {
+     "uroven": 4,
      "text": "Úprava obočia",
-     "riadok": 194,
+     "riadok": 197,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Depilácia uší a nosa voskom",
-     "riadok": 200,
+     "riadok": 203,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Kreatívny ornament na hlave",
-     "riadok": 206,
+     "riadok": 209,
      "skryty": false
     },
     {
      "uroven": 4,
      "text": "Farbenie obočia",
-     "riadok": 212,
+     "riadok": 215,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Mostná 30, Nitra",
-     "riadok": 233,
+     "riadok": 236,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Komu zveríš hlavu?",
-     "riadok": 252,
+     "riadok": 255,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Nikolas",
-     "riadok": 263,
+     "riadok": 266,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kristián",
-     "riadok": 278,
+     "riadok": 281,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Damian",
-     "riadok": 293,
+     "riadok": 296,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Michal",
-     "riadok": 308,
+     "riadok": 311,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Andy",
-     "riadok": 323,
+     "riadok": 326,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Dominika",
-     "riadok": 338,
+     "riadok": 341,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Kevin",
-     "riadok": 353,
+     "riadok": 356,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Lajko",
-     "riadok": 368,
+     "riadok": 371,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Jojo",
-     "riadok": 383,
+     "riadok": 386,
      "skryty": false
     },
     {
      "uroven": 3,
      "text": "Adrian",
-     "riadok": 398,
+     "riadok": 401,
      "skryty": false
     },
     {
      "uroven": 2,
      "text": "Pozri, ako strihá náš tím",
-     "riadok": 412,
+     "riadok": 415,
      "skryty": false
     }
    ],
