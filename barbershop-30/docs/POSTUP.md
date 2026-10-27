@@ -59,6 +59,14 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑27 (hotové, audit SEO A3-04, A3-07 až A3-13): sitemap.xml len s kanonickými adresami sk a `en/` (adresy
+  `?lang=` majú canonical na slovenskú stránku). og:type website, og:locale:alternate, jedna ikona stránky, @id podniku,
+  zväčšená fotka bez `src=""`, rezervácia s rozmermi obrázka a twitter:card; robots.txt nezakazuje admin/ (má noindex).
+  Keď nasadenie zapne objednávku, rezervácia pribudne do sitemap.xml. Na telefóne väčšie ťukacie plochy telefónu
+  a e‑mailu v kontakte a odkazov v pätičke (neviditeľný presah, vzhľad bez zmeny). Čaká na majiteľa: „8 rokov“
+  recepcie (otázka 9), počet recenzií (otázka 18), geo súradnice a priceRange (admin by ho pri zmene cien neprepísal).
+  Nadpisy H2 s „Služby a ceny“ a pod. (A3-06) a rýchlosť telefónu (A3-05) v ďalšom kole.
+
 - 2026‑10‑26 (hotové, audit SEO A3-01 až A3-03): údaje pre Google majú typ podniku HairSalon (BarberShop slovník
   schema.org nepozná). Základná adresa webu je všade tá, kde web naozaj beží, `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/`
   (stará `…/barbershop30/` vracala 404, aj odkaz a obrázok pri zdieľaní); na doménu barbershop30.sk ju prepne jeden
