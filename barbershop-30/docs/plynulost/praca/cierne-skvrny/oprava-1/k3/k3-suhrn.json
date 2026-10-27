@@ -1,0 +1,942 @@
+{
+ "pc": {
+  "00-vstup": {
+   "polohy": 142,
+   "preklopene_max": [
+    14972,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    3045,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "za_kamerou_max": [
+    2463,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "natiahnutie_max": [
+    50025.07731392223,
+    "prechod vstup>rohozka (najazd) mix=0.85 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 17321,
+   "blizka_unia": 3080,
+   "natiahnutie8_unia": 17001,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-00-vstup.jpg"
+  },
+  "01-rohozka": {
+   "polohy": 184,
+   "preklopene_max": [
+    12662,
+    "prechod rohozka>sala (pohyb) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    19.698801683885506,
+    "prechod rohozka>sala (pohyb) mix=0.95 A drift=(-1, -1, -1) mys=(0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    6480,
+    "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 13,
+   "diery_zoznam": [
+    [
+     6480,
+     2.0,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.017334384429318617,
+      -0.4771243611023685,
+      11.713931493107284
+     ],
+     [
+      0.0013867507543454895,
+      -0.41830763395998055,
+      0.0
+     ],
+     0.515
+    ],
+    [
+     6401,
+     1.976,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(-0.5, 0.5)",
+     [
+      -0.14794286994972072,
+      -0.4151453907102287,
+      11.713931493107284
+     ],
+     [
+      -0.011835429595977658,
+      -0.4133493163286094,
+      0.0
+     ],
+     0.515
+    ],
+    [
+     6367,
+     1.965,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0.5, 0.5)",
+     [
+      0.18261163880835796,
+      -0.4151453907102287,
+      11.713931493107284
+     ],
+     [
+      0.014608931104668637,
+      -0.4133493163286094,
+      0.0
+     ],
+     0.515
+    ],
+    [
+     4055,
+     1.252,
+     "prechod vstup>rohozka (najazd) mix=0.15 B drift=(1, 1, 1) mys=(-0.5, 0.5)",
+     [
+      -0.14293397733739424,
+      -0.4112321933568487,
+      11.540072090426337
+     ],
+     [
+      -0.01143471818699154,
+      -0.413036260540339,
+      0.0
+     ],
+     0.505
+    ],
+    [
+     4041,
+     1.247,
+     "prechod vstup>rohozka (najazd) mix=0.15 B drift=(1, 1, 1) mys=(0.5, 0.5)",
+     [
+      0.18762053142068444,
+      -0.4112321933568487,
+      11.540072090426337
+     ],
+     [
+      0.015009642513654756,
+      -0.413036260540339,
+      0.0
+     ],
+     0.505
+    ],
+    [
+     4008,
+     1.237,
+     "prechod vstup>rohozka (najazd) mix=0.15 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.0223432770416451,
+      -0.4732111637489884,
+      11.540072090426337
+     ],
+     [
+      0.0017874621633316079,
+      -0.41799457817171015,
+      0.0
+     ],
+     0.505
+    ],
+    [
+     1080,
+     0.333,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(-1, -1, -1) mys=(-0.5, 0.5)",
+     [
+      -0.5225713132088766,
+      -0.5528764360260949,
+      11.273931493107282
+     ],
+     [
+      -0.04180570505671013,
+      -0.42436779995387863,
+      0.0
+     ],
+     0.515
+    ],
+    [
+     752,
+     0.232,
+     "prechod vstup>rohozka (najazd) mix=0.3 B drift=(1, 1, 1) mys=(0.5, 0.5)",
+     [
+      0.19385427468145502,
+      -0.4063620814343717,
+      11.295082045457516
+     ],
+     [
+      0.015508341974516402,
+      -0.4126466515865408,
+      0.0
+     ],
+     0.49
+    ],
+    [
+     721,
+     0.223,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(-1, -1, -1) mys=(0, 0)",
+     [
+      -0.3572940588298373,
+      -0.6148554064182346,
+      11.273931493107282
+     ],
+     [
+      -0.028583524706386983,
+      -0.42932611758524986,
+      0.0
+     ],
+     0.515
+    ],
+    [
+     719,
+     0.222,
+     "prechod vstup>rohozka (najazd) mix=0.3 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.028577020302415684,
+      -0.4683410518265114,
+      11.295082045457516
+     ],
+     [
+      0.002286161624193255,
+      -0.41760496921791196,
+      0.0
+     ],
+     0.49
+    ],
+    [
+     661,
+     0.204,
+     "prechod vstup>rohozka (najazd) mix=0.3 B drift=(1, 1, 1) mys=(-0.5, 0.5)",
+     [
+      -0.13670023407662366,
+      -0.4063620814343717,
+      11.295082045457516
+     ],
+     [
+      -0.010936018726129893,
+      -0.4126466515865408,
+      0.0
+     ],
+     0.49
+    ],
+    [
+     441,
+     0.136,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(-1, -1, -1) mys=(0.5, 0.5)",
+     [
+      -0.19201680445079794,
+      -0.5528764360260949,
+      11.273931493107282
+     ],
+     [
+      -0.015361344356063835,
+      -0.42436779995387863,
+      0.0
+     ],
+     0.515
+    ]
+   ],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 12796,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 5125,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-01-rohozka.jpg"
+  },
+  "02-sala": {
+   "polohy": 184,
+   "preklopene_max": [
+    6704,
+    "prechod sala>stol (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    22.245709626161695,
+    "prechod sala>stol (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 8009,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 131,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-02-sala.jpg"
+  },
+  "03-stol": {
+   "polohy": 184,
+   "preklopene_max": [
+    6709,
+    "prechod stol>cakaren (svih) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    7.6846839380038725,
+    "prechod stol>cakaren (svih) mix=0.95 A drift=(1, 1, 1) mys=(0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 8606,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-03-stol.jpg"
+  },
+  "04-cakaren": {
+   "polohy": 184,
+   "preklopene_max": [
+    5000,
+    "prechod cakaren>sala-rano (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    8.162237427038011,
+    "prechod cakaren>sala-rano (popredie) mix=0.95 A drift=(1, 1, 1) mys=(0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 6531,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 3,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-04-cakaren.jpg"
+  },
+  "05-sala-rano": {
+   "polohy": 184,
+   "preklopene_max": [
+    7607,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(1, 1, 1) mys=(0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    9059,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "za_kamerou_max": [
+    7890,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "natiahnutie_max": [
+    15093.129350949503,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    100,
+    "prechod cakaren>sala-rano (popredie) mix=0.3 B drift=(1, 1, 1) mys=(0.5, 0.5)"
+   ],
+   "polohy_s_dierami": 1,
+   "diery_zoznam": [
+    [
+     100,
+     0.031,
+     "prechod cakaren>sala-rano (popredie) mix=0.3 B drift=(1, 1, 1) mys=(0.5, 0.5)",
+     [
+      0.25892807261748846,
+      -0.3246417580236207,
+      10.791908918054757
+     ],
+     [
+      -0.5777035703756228,
+      -0.44501869162968766,
+      0.0
+     ],
+     0.5319999999999999
+    ]
+   ],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 8751,
+   "blizka_unia": 9059,
+   "natiahnutie8_unia": 19269,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-05-sala-rano.jpg"
+  },
+  "06-kreslo-stred": {
+   "polohy": 184,
+   "preklopene_max": [
+    1572,
+    "pokoj t=1 drift=(-1, 1, -1) mys=(0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    4.801268108830078,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.05 B drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 3916,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-06-kreslo-stred.jpg"
+  },
+  "07-kava": {
+   "polohy": 184,
+   "preklopene_max": [
+    3128,
+    "prechod kava>sud (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    18.023731102608117,
+    "prechod kava>sud (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 4078,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 487,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-07-kava.jpg"
+  },
+  "08-sud": {
+   "polohy": 184,
+   "preklopene_max": [
+    3646,
+    "pokoj t=1 drift=(-1, 1, -1) mys=(-0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    5.295385897606874,
+    "prechod kava>sud (popredie) mix=0.05 B drift=(1, 1, 1) mys=(0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 5164,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-08-sud.jpg"
+  },
+  "09-vstup": {
+   "polohy": 142,
+   "preklopene_max": [
+    9412,
+    "prechod sud>vstup (odjazd) mix=0.05 B drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    167.01374545512073,
+    "prechod sud>vstup (odjazd) mix=0.05 B drift=(-1, -1, -1) mys=(-0.5, 0.5)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 10733,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 2973,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-pc-09-vstup.jpg"
+  }
+ },
+ "telefon": {
+  "00-vstup": {
+   "polohy": 34,
+   "preklopene_max": [
+    4837,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    472,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    443,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    14637.863699431835,
+    "prechod vstup>rohozka (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 5017,
+   "blizka_unia": 472,
+   "natiahnutie8_unia": 1058,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-00-vstup.jpg"
+  },
+  "01-rohozka": {
+   "polohy": 48,
+   "preklopene_max": [
+    4413,
+    "prechod rohozka>sala (pohyb) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    4.000316502061286,
+    "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    3120,
+    "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 3,
+   "diery_zoznam": [
+    [
+     3120,
+     1.691,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.019135660018705154,
+      -0.5935326519983306,
+      11.625931493107283
+     ],
+     [
+      0.0015308528014964123,
+      -0.5622862667629848,
+      0.0
+     ],
+     0.395
+    ],
+    [
+     1601,
+     0.868,
+     "prechod vstup>rohozka (najazd) mix=0.15 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.02088480807376128,
+      -0.5908829169446712,
+      11.452072090426338
+     ],
+     [
+      0.0016707846459009025,
+      -0.562074287958692,
+      0.0
+     ],
+     0.385
+    ],
+    [
+     784,
+     0.425,
+     "prechod vstup>rohozka (najazd) mix=0.05 B drift=(-1, -1, -1) mys=(0, 0)",
+     [
+      -0.1378524801421432,
+      -0.7054464899555303,
+      11.361931493107283
+     ],
+     [
+      -0.011028198411371457,
+      -0.5712393737995607,
+      0.0
+     ],
+     0.395
+    ]
+   ],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 4413,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-01-rohozka.jpg"
+  },
+  "02-sala": {
+   "polohy": 48,
+   "preklopene_max": [
+    3327,
+    "prechod sala>stol (prelinanie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    8.45887348849724,
+    "prechod sala>stol (prelinanie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    1560,
+    "prechod rohozka>sala (pohyb) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 1,
+   "diery_zoznam": [
+    [
+     1560,
+     0.846,
+     "prechod rohozka>sala (pohyb) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)",
+     [
+      0.0042960575032753995,
+      -0.5036122708073982,
+      11.405839519035247
+     ],
+     [
+      0.00034368460026203195,
+      -0.5550926362677101,
+      0.0
+     ],
+     0.395
+    ]
+   ],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 3334,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 4,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-02-sala.jpg"
+  },
+  "03-stol": {
+   "polohy": 48,
+   "preklopene_max": [
+    2188,
+    "prechod stol>cakaren (svih) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    3.47726060221004,
+    "prechod sala>stol (prelinanie) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 2188,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-03-stol.jpg"
+  },
+  "04-cakaren": {
+   "polohy": 48,
+   "preklopene_max": [
+    1153,
+    "prechod cakaren>sala-rano (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    2.7766104922189,
+    "prechod cakaren>sala-rano (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 1165,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-04-cakaren.jpg"
+  },
+  "05-sala-rano": {
+   "polohy": 48,
+   "preklopene_max": [
+    3378,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    11.570132270446994,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 3378,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 216,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-05-sala-rano.jpg"
+  },
+  "06-kreslo-stred": {
+   "polohy": 48,
+   "preklopene_max": [
+    180,
+    "prechod kreslo-stred>kava (svih) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    2.562843265320395,
+    "prechod sala-rano>kreslo-stred (najazd) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 180,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-06-kreslo-stred.jpg"
+  },
+  "07-kava": {
+   "polohy": 48,
+   "preklopene_max": [
+    958,
+    "prechod kava>sud (popredie) mix=0.95 A drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    3.3268167555331867,
+    "prechod kreslo-stred>kava (svih) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 958,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-07-kava.jpg"
+  },
+  "08-sud": {
+   "polohy": 48,
+   "preklopene_max": [
+    1116,
+    "pokoj t=1 drift=(-1, 1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    3.1150993581868534,
+    "prechod kava>sud (popredie) mix=0.05 B drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 1121,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 0,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-08-sud.jpg"
+  },
+  "09-vstup": {
+   "polohy": 34,
+   "preklopene_max": [
+    3387,
+    "prechod sud>vstup (odjazd) mix=0.05 B drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "blizka_rovina_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "za_kamerou_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "natiahnutie_max": [
+    8.368042633580362,
+    "prechod sud>vstup (odjazd) mix=0.05 B drift=(-1, -1, -1) mys=(0, 0)"
+   ],
+   "diery_px_max": [
+    0,
+    "pokoj t=0 drift=(1, 1, 1) mys=(0, 0)"
+   ],
+   "polohy_s_dierami": 0,
+   "diery_zoznam": [],
+   "alfa0_pokoj_podiel_okna": [
+    0.0,
+    0.0
+   ],
+   "preklopene_unia": 3387,
+   "blizka_unia": 0,
+   "natiahnutie8_unia": 5,
+   "mapa": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k3/mapa-telefon-09-vstup.jpg"
+  }
+ }
+}

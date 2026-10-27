@@ -1,0 +1,620 @@
+[
+ {
+  "zar": "telefon",
+  "rm": "reduce",
+  "git": "102c5ee Barbershop 30: filmová scéna bez čiernych škvŕn pri pohybe do hĺbky | zmeny: žiadne",
+  "s0": {
+   "cls": "karty js-cennik world-off",
+   "motion": "off",
+   "sb": "auto"
+  },
+  "s1": {
+   "cls": "karty js-cennik world-off",
+   "canvas": 0
+  },
+  "animacie": [
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "div.title-frame",
+    "dur": 1,
+    "iter": 1,
+    "n": 2
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "picture.film-still",
+    "dur": 1,
+    "iter": 1,
+    "n": 2
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "picture.film-still",
+    "dur": 1,
+    "iter": 1,
+    "n": 2
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "source",
+    "dur": 1,
+    "iter": 1,
+    "n": 2
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "img",
+    "dur": 1,
+    "iter": 1,
+    "n": 1
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "div#mobile-cta.mobile-cta.is-hidden",
+    "dur": 1,
+    "iter": 1,
+    "n": 1
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "div#mobile-cta.mobile-cta.is-hidden",
+    "dur": 1,
+    "iter": 1,
+    "n": 1
+   }
+  ],
+  "videaHraju": [],
+  "tazkePoziadavky": 0,
+  "tazkeUkazka": []
+ },
+ {
+  "zar": "telefon",
+  "rm": "no-preference",
+  "git": "102c5ee Barbershop 30: filmová scéna bez čiernych škvŕn pri pohybe do hĺbky | zmeny: žiadne",
+  "s0": {
+   "cls": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+   "motion": "on",
+   "sb": "smooth"
+  },
+  "s1": {
+   "cls": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+   "canvas": 0
+  },
+  "animacie": [
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "span.kw",
+    "dur": 600,
+    "iter": 1,
+    "n": 84
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "filter",
+    "el": "span.kw",
+    "dur": 450,
+    "iter": 1,
+    "n": 80
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "span.kw",
+    "dur": 350,
+    "iter": 1,
+    "n": 79
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "pas-nudge",
+    "el": "li.team-card.reveal",
+    "dur": 1100,
+    "iter": 1,
+    "n": 60
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "preklop",
+    "el": "b.flip",
+    "dur": 90,
+    "iter": 1,
+    "n": 51
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "li.price-row.is-in",
+    "dur": 550,
+    "iter": 1,
+    "n": 50
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "li.price-row.is-in",
+    "dur": 450,
+    "iter": 1,
+    "n": 38
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "picture",
+    "dur": 1300,
+    "iter": 1,
+    "n": 37
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "lesk",
+    "el": "a.btn.btn-primary",
+    "dur": 6000,
+    "iter": null,
+    "n": 31
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "li",
+    "dur": 600,
+    "iter": 1,
+    "n": 26
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "filter",
+    "el": "li",
+    "dur": 500,
+    "iter": 1,
+    "n": 24
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "li",
+    "dur": 500,
+    "iter": 1,
+    "n": 24
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "clip-path",
+    "el": "button.gallery-btn.media",
+    "dur": 850,
+    "iter": 1,
+    "n": 19
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "a.hook",
+    "dur": 600,
+    "iter": 1,
+    "n": 18
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "i.band-cut",
+    "dur": 900,
+    "iter": 1,
+    "n": 17
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "hero-live",
+    "el": "p.hero-live.is-otvorene",
+    "dur": 2400,
+    "iter": 3,
+    "n": 16
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "a.hook",
+    "dur": 450,
+    "iter": 1,
+    "n": 16
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "hook-sipka",
+    "el": "span.hook-sipka",
+    "dur": 1100,
+    "iter": 2,
+    "n": 12
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "clip-path",
+    "el": "div.team-portrait.odhal",
+    "dur": 850,
+    "iter": 1,
+    "n": 10
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "div#mobile-cta.mobile-cta",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "div#mobile-cta.mobile-cta",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "div#mobile-cta.mobile-cta.is-hidden",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "div#mobile-cta.mobile-cta.is-hidden",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "obeh",
+    "el": "span.beam-line",
+    "dur": 7000,
+    "iter": null,
+    "n": 3
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "pas",
+    "el": "div.marquee-track",
+    "dur": 46000,
+    "iter": null,
+    "n": 2
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "background-color",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 1
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "box-shadow",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 1
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 1
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "p.scroll-hint",
+    "dur": 300,
+    "iter": 1,
+    "n": 1
+   }
+  ],
+  "videaHraju": [],
+  "tazkePoziadavky": 1,
+  "tazkeUkazka": [
+   "assets/audio/strih.webm"
+  ]
+ },
+ {
+  "zar": "pocitac",
+  "rm": "reduce",
+  "git": "102c5ee Barbershop 30: filmová scéna bez čiernych škvŕn pri pohybe do hĺbky | zmeny: žiadne",
+  "s0": {
+   "cls": "karty js-cennik world-off",
+   "motion": "off",
+   "sb": "auto"
+  },
+  "s1": {
+   "cls": "karty js-cennik world-off",
+   "canvas": 0
+  },
+  "animacie": [
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "picture.film-still",
+    "dur": 1,
+    "iter": 1,
+    "n": 68
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "source",
+    "dur": 1,
+    "iter": 1,
+    "n": 68
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "a",
+    "dur": 1,
+    "iter": 1,
+    "n": 36
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "picture.film-still",
+    "dur": 1,
+    "iter": 1,
+    "n": 34
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "visibility",
+    "el": "img",
+    "dur": 1,
+    "iter": 1,
+    "n": 34
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "background-color",
+    "el": "a",
+    "dur": 1,
+    "iter": 1,
+    "n": 33
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "color",
+    "el": "a",
+    "dur": 1,
+    "iter": 1,
+    "n": 28
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "div.title-frame",
+    "dur": 1,
+    "iter": 1,
+    "n": 9
+   }
+  ],
+  "videaHraju": [],
+  "tazkePoziadavky": 0,
+  "tazkeUkazka": []
+ },
+ {
+  "zar": "pocitac",
+  "rm": "no-preference",
+  "git": "102c5ee Barbershop 30: filmová scéna bez čiernych škvŕn pri pohybe do hĺbky | zmeny: žiadne",
+  "s0": {
+   "cls": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+   "motion": "on",
+   "sb": "smooth"
+  },
+  "s1": {
+   "cls": "karty world js-odhal js-kin js-steps js-cennik world-frame world-off",
+   "canvas": 0
+  },
+  "animacie": [
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "picture",
+    "dur": 1300,
+    "iter": 1,
+    "n": 157
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "clip-path",
+    "el": "div.team-portrait.odhal",
+    "dur": 850,
+    "iter": 1,
+    "n": 81
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "li.team-card.reveal",
+    "dur": 200,
+    "iter": 1,
+    "n": 75
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "lesk",
+    "el": "a.btn.btn-primary",
+    "dur": 6000,
+    "iter": null,
+    "n": 51
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "clip-path",
+    "el": "button.gallery-btn.media",
+    "dur": 850,
+    "iter": 1,
+    "n": 48
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "preklop",
+    "el": "b.flip",
+    "dur": 90,
+    "iter": 1,
+    "n": 47
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "background-color",
+    "el": "a",
+    "dur": 200,
+    "iter": 1,
+    "n": 33
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "a",
+    "dur": 200,
+    "iter": 1,
+    "n": 33
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "filter",
+    "el": "span.kw",
+    "dur": 450,
+    "iter": 1,
+    "n": 27
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "span.kw",
+    "dur": 350,
+    "iter": 1,
+    "n": 27
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "span.kw",
+    "dur": 600,
+    "iter": 1,
+    "n": 27
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "i.band-cut",
+    "dur": 900,
+    "iter": 1,
+    "n": 27
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "hero-live",
+    "el": "p.hero-live.is-otvorene",
+    "dur": 2400,
+    "iter": 3,
+    "n": 23
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "color",
+    "el": "a",
+    "dur": 200,
+    "iter": 1,
+    "n": 20
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "a.hook",
+    "dur": 450,
+    "iter": 1,
+    "n": 7
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "transform",
+    "el": "a.hook",
+    "dur": 600,
+    "iter": 1,
+    "n": 7
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "hook-sipka",
+    "el": "span.hook-sipka",
+    "dur": 1100,
+    "iter": 2,
+    "n": 7
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "p.scroll-hint",
+    "dur": 300,
+    "iter": 1,
+    "n": 4
+   },
+   {
+    "typ": "CSSAnimation",
+    "meno": "obeh",
+    "el": "span.beam-line",
+    "dur": 7000,
+    "iter": null,
+    "n": 4
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "background-color",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "box-shadow",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "header.site-header.is-scrolled",
+    "dur": 300,
+    "iter": 1,
+    "n": 3
+   },
+   {
+    "typ": "CSSTransition",
+    "meno": "opacity",
+    "el": "nav.story-line.is-visible",
+    "dur": 400,
+    "iter": 1,
+    "n": 3
+   }
+  ],
+  "videaHraju": [
+   "tim-v-akcii-576.webm"
+  ],
+  "tazkePoziadavky": 1,
+  "tazkeUkazka": [
+   "assets/video/tim-v-akcii-576.webm"
+  ]
+ }
+]

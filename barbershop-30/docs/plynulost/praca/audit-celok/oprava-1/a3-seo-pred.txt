@@ -1,0 +1,196 @@
+INFO    [BASE] základná adresa z canonical index.html: https://d8f5s88zjy-art.github.io/barbershop30/  (index.html:24)
+
+=== index.html
+OK      [lang] lang="sk"  (index.html:2)
+OK      [viewport] width=device-width, initial-scale=1, viewport-fit=cover  (index.html:5)
+OK      [title] „Barbershop 30 Nitra | Pánske holičstvo, Mostná 30“ (49 znakov, odporúčané 30–60)  (index.html:6)
+OK      [description] 131 znakov (odporúčané 70–160): „Pánske holičstvo na Mostnej 30 v Nitre: strih, fade, úprava brady a holenie britvou, káva zdarma. Objednaj sa online alebo zavolaj.“  (index.html:7)
+OK      [robots] (bez meta robots = indexovať)  (index.html)
+OK      [canonical] https://d8f5s88zjy-art.github.io/barbershop30/  (index.html:24)
+INFO    [hreflang-html] v HTML nie je hreflang (je len v sitemap.xml)  (index.html)
+OK      [og] og:type/title/description/url/image/locale/site_name sú  (index.html:28)
+DROBNA  [og-type] og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website  (index.html:25)
+DROBNA  [og-locale-alt] chýba og:locale:alternate (druhá jazyková verzia)  (index.html)
+OK      [og-image] assets/og.jpg 1200×630 jpeg, 139 kB  (index.html:31)
+OK      [twitter] twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)  (index.html:35)
+DROBNA  [favicon] 2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať  (index.html:36)
+OK      [apple-touch-icon] assets/img/ikona/apple-touch-icon.png 180×180  (index.html:38)
+OK      [manifest] assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk  (index.html:39)
+OK      [h1] „Barbershop 30 · Nitra Tvoj strih. Tvoje miesto.“  (index.html:188)
+DROBNA  [img-src] img so src="" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)  (index.html:898)
+OK      [img-alt] 30 obrázkov, všetky majú alt  (index.html)
+OK      [subory] 211 odkazovaných súborov existuje  (index.html)
+OK      [odkazy] 72 odkazov, interných 18, externé domény: www.barbershop30.sk 37×, www.google.com 4×, booqme.app 2×, www.instagram.com 2×, www.facebook.com 1×  (index.html)
+OK      [text] 1010 slov viditeľného textu v HTML bez skriptu  (index.html)
+INFO    [slova] miestne a služobné slová
+          Nitra/Nitre/Nitry: titulok 1, popis 1, H1 1, H2 0, text 10
+          barbershop: titulok 1, popis 0, H1 1, H2 0, text 13
+          barber(i/ka): titulok 0, popis 0, H1 0, H2 0, text 16
+          holičstvo/holič: titulok 1, popis 1, H1 0, H2 0, text 1
+          Mostná/Mostnej: titulok 1, popis 1, H1 0, H2 0, text 7
+          strih: titulok 0, popis 1, H1 1, H2 0, text 36
+          brada/brady: titulok 0, popis 1, H1 0, H2 0, text 18
+          holenie: titulok 0, popis 1, H1 0, H2 0, text 13
+          fade: titulok 0, popis 1, H1 0, H2 0, text 7
+          cenník: titulok 0, popis 0, H1 0, H2 0, text 3
+          centrum/centre: titulok 0, popis 0, H1 0, H2 0, text 0
+          bez objednania: titulok 0, popis 0, H1 0, H2 0, text 0
+          poukážka: titulok 0, popis 0, H1 0, H2 0, text 0
+          detský strih: titulok 0, popis 0, H1 0, H2 0, text 6  (index.html)
+OK      [jsonld-syntax] JSON-LD sa dá prečítať (@type BarberShop)  (index.html:53)
+
+=== en/index.html
+OK      [lang] lang="en"  (en/index.html:3)
+OK      [viewport] width=device-width, initial-scale=1, viewport-fit=cover  (en/index.html:6)
+OK      [title] „Barbershop 30 Nitra | Men's barbershop, Mostná 30“ (49 znakov, odporúčané 30–60)  (en/index.html:7)
+OK      [description] 132 znakov (odporúčané 70–160): „Men's barbershop at Mostná 30 in Nitra: haircuts, fades, beard trims and straight razor shaves, free coffee. Book online or call us.“  (en/index.html:8)
+OK      [robots] (bez meta robots = indexovať)  (en/index.html)
+OK      [canonical] https://d8f5s88zjy-art.github.io/barbershop30/en/  (en/index.html:25)
+INFO    [hreflang-html] v HTML nie je hreflang (je len v sitemap.xml)  (en/index.html)
+OK      [og] og:type/title/description/url/image/locale/site_name sú  (en/index.html:29)
+DROBNA  [og-type] og:type business.business bez povinných business:contact_data:* (street_address, locality, postal_code, country_name); jednoduchšie og:type website  (en/index.html:26)
+DROBNA  [og-locale-alt] chýba og:locale:alternate (druhá jazyková verzia)  (en/index.html)
+OK      [og-image] assets/og.jpg 1200×630 jpeg, 139 kB  (en/index.html:32)
+OK      [twitter] twitter:card=summary_large_image (titulok, popis a obrázok berie X z og:*)  (en/index.html:36)
+DROBNA  [favicon] 2× rel=icon (data:URI, ../assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať  (en/index.html:37)
+OK      [apple-touch-icon] ../assets/img/ikona/apple-touch-icon.png 180×180  (en/index.html:39)
+OK      [manifest] ../assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk  (en/index.html:40)
+OK      [h1] „Barbershop 30 · Nitra Your cut. Your place.“  (en/index.html:189)
+DROBNA  [img-src] img so src="" (neplatné HTML; doplniť až skriptom alebo vynechať atribút)  (en/index.html:899)
+OK      [img-alt] 30 obrázkov, všetky majú alt  (en/index.html)
+OK      [subory] 211 odkazovaných súborov existuje  (en/index.html)
+OK      [odkazy] 72 odkazov, interných 18, externé domény: www.barbershop30.sk 37×, www.google.com 4×, booqme.app 2×, www.instagram.com 2×, www.facebook.com 1×  (en/index.html)
+OK      [text] 1152 slov viditeľného textu v HTML bez skriptu  (en/index.html)
+INFO    [slova] miestne a služobné slová
+          Nitra: titulok 1, popis 1, H1 1, H2 0, text 10
+          barbershop: titulok 2, popis 1, H1 1, H2 0, text 14
+          barber: titulok 0, popis 0, H1 0, H2 0, text 15
+          haircut: titulok 0, popis 1, H1 0, H2 0, text 18
+          beard: titulok 0, popis 1, H1 0, H2 0, text 20
+          shave: titulok 0, popis 1, H1 0, H2 0, text 14
+          fade: titulok 0, popis 0, H1 0, H2 0, text 7
+          price list: titulok 0, popis 0, H1 0, H2 0, text 9
+          Mostná: titulok 1, popis 1, H1 0, H2 0, text 7
+          city centre: titulok 0, popis 0, H1 0, H2 0, text 0
+          walk-in: titulok 0, popis 0, H1 0, H2 0, text 0
+          gift voucher: titulok 0, popis 0, H1 0, H2 0, text 0  (en/index.html)
+OK      [jsonld-syntax] JSON-LD sa dá prečítať (@type BarberShop)  (en/index.html:54)
+
+=== rezervacia.html
+OK      [lang] lang="sk"  (rezervacia.html:2)
+OK      [viewport] width=device-width, initial-scale=1, viewport-fit=cover  (rezervacia.html:5)
+OK      [title] „Rezervácia | Barbershop 30 Nitra“ (32 znakov, odporúčané 30–60)  (rezervacia.html:6)
+OK      [description] 125 znakov (odporúčané 70–160): „Online rezervácia v Barbershop 30 na Mostnej 30 v Nitre: vyber si službu, barbera a voľný čas. Alebo zavolaj na 0951 267 203.“  (rezervacia.html:7)
+OK      [robots] noindex  (rezervacia.html:13)
+OK      [canonical] https://d8f5s88zjy-art.github.io/barbershop30/rezervacia.html  (rezervacia.html:15)
+OK      [og] og:type/title/description/url/image/locale/site_name sú  (rezervacia.html:19)
+OK      [og-image] assets/og.jpg 1200×630 jpeg, 139 kB (bez og:image:width/height)  (rezervacia.html:22)
+DROBNA  [og-image-wh] chýba og:image:width a og:image:height (Facebook pri prvom zdieľaní nemusí ukázať obrázok)  (rezervacia.html:22)
+DROBNA  [twitter] chýba twitter:card  (rezervacia.html)
+DROBNA  [favicon] 2× rel=icon (data:URI, assets/favicon.svg); Google aj prehliadač berú len jednu, data:URI sa nedá prehľadať  (rezervacia.html:23)
+OK      [apple-touch-icon] assets/img/ikona/apple-touch-icon.png 180×180  (rezervacia.html:25)
+OK      [manifest] assets/manifest.webmanifest: Barbershop 30 Nitra, 3 ikony, lang sk  (rezervacia.html:26)
+OK      [h1] „Kedy si sadneš?“  (rezervacia.html:83)
+OK      [img-alt] 15 obrázkov, všetky majú alt  (rezervacia.html)
+OK      [subory] 107 odkazovaných súborov existuje  (rezervacia.html)
+OK      [odkazy] 42 odkazov, interných 9, externé domény: www.barbershop30.sk 25×, booqme.app 1×, www.google.com 1×, www.instagram.com 1×  (rezervacia.html)
+
+=== karta/index.html
+OK      [lang] lang="sk"  (karta/index.html:2)
+OK      [viewport] width=device-width, initial-scale=1, viewport-fit=cover  (karta/index.html:5)
+OK      [title] „Vernostná kartička Barbershop 30“ (32 znakov, odporúčané 30–60)  (karta/index.html:16)
+DROBNA  [description] počet meta description: 0  (karta/index.html)
+OK      [robots] noindex, nofollow  (karta/index.html:9)
+OK      [favicon] ikony/barbershop-192.png  (karta/index.html:17)
+OK      [apple-touch-icon] ikony/barbershop-180.png 180×180  (karta/index.html:18)
+OK      [manifest] manifest.webmanifest: Barbershop 30 · vernostná kartička, 2 ikony, lang sk  (karta/index.html:19)
+OK      [img-alt] 0 obrázkov, všetky majú alt  (karta/index.html)
+OK      [subory] 6 odkazovaných súborov existuje  (karta/index.html)
+OK      [odkazy] 1 odkazov, interných 0, externé domény: -  (karta/index.html)
+
+=== admin/index.html
+OK      [lang] lang="sk"  (admin/index.html:2)
+OK      [viewport] width=device-width, initial-scale=1, viewport-fit=cover  (admin/index.html:5)
+DROBNA  [title] „Admin · Barbershop 30“ (21 znakov, odporúčané 30–60)  (admin/index.html:10)
+DROBNA  [description] počet meta description: 0  (admin/index.html)
+OK      [robots] noindex, nofollow  (admin/index.html:6)
+OK      [favicon] ../karta/ikony/barbershop-192.png  (admin/index.html:11)
+OK      [img-alt] 0 obrázkov, všetky majú alt  (admin/index.html)
+OK      [subory] 2 odkazovaných súborov existuje  (admin/index.html)
+OK      [odkazy] 2 odkazov, interných 1, externé domény: github.com 1×  (admin/index.html)
+
+=== 404.html
+VAZNA   [404-chyba] 404.html na webe Barbershopu nie je; zlá adresa ukáže cudziu chybovú stránku (pozri ZAPIS.md)  (404.html)
+
+=== JSON-LD index.html
+VAZNA   [jsonld-typ] @type "BarberShop" v slovníku schema.org neexistuje (Google údaje nerozpozná ako firmu); existuje napr. HairSalon  (index.html:56)
+VAZNA   [jsonld-localbusiness] @type BarberShop nie je podtyp LocalBusiness  (index.html:56)
+DROBNA  [jsonld-odporucane] chýba odporúčané podľa Google: geo, priceRange  (index.html:53)
+DROBNA  [jsonld-id] chýba @id (napr. BASE + "#firma"), podnik sa nedá prepojiť s inými údajmi  (index.html:53)
+OK      [jsonld-recenzie] bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)  (index.html:53)
+OK      [jsonld-telefon] telephone +421951267203; na stránke tel: +421951267203  (index.html:61)
+OK      [jsonld-email] email info@barbershop30.sk; na stránke info@barbershop30.sk  (index.html:62)
+OK      [jsonld-adresa] Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky  (index.html:65)
+OK      [jsonld-sameAs] https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)  (index.html:76)
+OK      [jsonld-sameAs] https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)  (index.html:76)
+OK      [jsonld-hasMap] https://www.google.com/maps?cid=18132360254733427623  (index.html:64)
+OK      [jsonld-hodiny] Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky  (index.html:72)
+OK      [jsonld-cennik] 15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia  (index.html:84)
+INFO    [jsonld-rezervacia] ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)  (index.html:80)
+INFO    [jsonld-zalozenie] foundingDate 2019  (index.html:63)
+
+=== JSON-LD en/index.html
+VAZNA   [jsonld-typ] @type "BarberShop" v slovníku schema.org neexistuje (Google údaje nerozpozná ako firmu); existuje napr. HairSalon  (en/index.html:57)
+VAZNA   [jsonld-localbusiness] @type BarberShop nie je podtyp LocalBusiness  (en/index.html:57)
+DROBNA  [jsonld-odporucane] chýba odporúčané podľa Google: geo, priceRange  (en/index.html:54)
+DROBNA  [jsonld-id] chýba @id (napr. BASE + "#firma"), podnik sa nedá prepojiť s inými údajmi  (en/index.html:54)
+OK      [jsonld-recenzie] bez aggregateRating a review (v súlade s pravidlami Google aj podkladmi)  (en/index.html:54)
+OK      [jsonld-telefon] telephone +421951267203; na stránke tel: +421951267203  (en/index.html:62)
+OK      [jsonld-email] email info@barbershop30.sk; na stránke info@barbershop30.sk  (en/index.html:63)
+OK      [jsonld-adresa] Mostná 30, 949 01 Nitra, SK – zhoda s textom stránky  (en/index.html:66)
+OK      [jsonld-sameAs] https://www.instagram.com/barbershop30_nitra/ (odkaz je aj na stránke)  (en/index.html:77)
+OK      [jsonld-sameAs] https://www.facebook.com/barbershop30nitra/ (odkaz je aj na stránke)  (en/index.html:77)
+OK      [jsonld-hasMap] https://www.google.com/maps?cid=18132360254733427623  (en/index.html:65)
+OK      [jsonld-hodiny] Po 09:00–19:00, Ut 09:00–19:00, St 09:00–19:00, Št 09:00–19:00, Pi 09:00–19:00, So 09:00–14:00 – časy sú aj v texte stránky  (en/index.html:73)
+OK      [jsonld-cennik] 15 ponúk = 15 riadkov cenníka, názvy aj ceny sedia  (en/index.html:85)
+INFO    [jsonld-rezervacia] ReserveAction → https://www.barbershop30.sk/rezervacia (Google ho pri bežnom webe nezobrazuje, neškodí)  (en/index.html:81)
+INFO    [jsonld-zalozenie] foundingDate 2019  (en/index.html:64)
+
+=== Jedinečnosť
+OK      [jedinecny-title] titulky sú jedinečné (index.html, en/index.html, rezervacia.html)
+OK      [jedinecny-desc] popisy sú jedinečné (index.html, en/index.html, rezervacia.html)
+
+=== robots.txt
+OK      [robots-syntax] User-agent *, Disallow: /source/ /docs/ /admin/  (robots.txt)
+OK      [robots-sitemap] Sitemap: https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml  (robots.txt:9)
+DROBNA  [robots-umiestnenie] web je v podpriečinku /barbershop30/: vyhľadávače čítajú len robots.txt v koreni domény, tento súbor platí až na vlastnej doméne (napr. www.barbershop30.sk)  (robots.txt)
+DROBNA  [robots-noindex] admin/index.html: Disallow /admin/ a zároveň noindex – Google noindex neprečíta (pri odkaze zvonka môže adresu zaradiť bez obsahu); stačí jedno  (robots.txt:6)
+
+=== sitemap.xml
+OK      [sitemap-xml] XML je platné  (sitemap.xml)
+OK      [sitemap-url] 8 adries: / /en/ /?lang=uk /?lang=hu /?lang=sr /?lang=pl /?lang=de /?lang=cs  (sitemap.xml)
+OK      [sitemap-lastmod] /: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:9)
+OK      [sitemap-lastmod] /en/: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:28)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:43)
+OK      [sitemap-lastmod] /?lang=uk: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:43)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=hu: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:58)
+OK      [sitemap-lastmod] /?lang=hu: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:58)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=sr: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:73)
+OK      [sitemap-lastmod] /?lang=sr: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:73)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=pl: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:88)
+OK      [sitemap-lastmod] /?lang=pl: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:88)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=de: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:103)
+OK      [sitemap-lastmod] /?lang=de: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:103)
+STREDNA [sitemap-kanonicka] https://d8f5s88zjy-art.github.io/barbershop30/?lang=cs: stránka má canonical https://d8f5s88zjy-art.github.io/barbershop30/; do sitemap patria len kanonické adresy (Google túto adresu aj jej hreflang ignoruje)  (sitemap.xml:118)
+OK      [sitemap-lastmod] /?lang=cs: lastmod 2026-10-25, posledný commit súboru 2026-10-25  (sitemap.xml:118)
+OK      [hreflang-vzajomnost] všetkých 8 adries má rovnakú sadu 9 hreflang (sk, en, uk, hu, sr-Latn, pl, de, cs, x-default) – vzájomné  (sitemap.xml)
+STREDNA [hreflang-kanonicka] 6 hreflang vedie na adresy s inou canonical (uk, hu, sr-Latn, pl, de, cs → https://d8f5s88zjy-art.github.io/barbershop30/?lang=uk má canonical https://d8f5s88zjy-art.github.io/barbershop30/); Google také hreflang ignoruje a ?lang= stránky má za duplikát slovenskej  (sitemap.xml)
+
+=== Naživo (curl)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/en/ → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/sitemap.xml → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/robots.txt → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+VAZNA   [nazivo] https://d8f5s88zjy-art.github.io/barbershop30/assets/og.jpg → HTTP 404 (canonical, og:image, JSON-LD a sitemap vedú na neexistujúcu adresu)  (index.html:24)
+
+SÚHRN: VAZNA 10, STREDNA 7, DROBNA 20, OK 98, INFO 9

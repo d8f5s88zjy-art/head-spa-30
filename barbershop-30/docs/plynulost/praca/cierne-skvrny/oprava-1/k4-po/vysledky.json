@@ -1,0 +1,852 @@
+{
+ "nastroj": "k4-reprodukcia.cjs",
+ "cas": "2026-10-26T12:31:59.701Z",
+ "url": "http://127.0.0.1:8842/barbershop-30/index.html?asistent=ukazka&objednavka=ukazka&film=on",
+ "okno": {
+  "W": 1350,
+  "H": 960,
+  "dpr": 1
+ },
+ "gpu": [
+  "--use-angle=swiftshader",
+  "--enable-unsafe-swiftshader"
+ ],
+ "pozadie": "#ff00ff",
+ "rezimy": [
+  {
+   "rezim": "chromium",
+   "ready": true,
+   "chvile": [
+    {
+     "id": "sala-t30",
+     "zaber": "sala",
+     "t": 0.3,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 1.927,
+      "frames": 13,
+      "scrollY": 1202,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 15.5
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-t30.jpg"
+    },
+    {
+     "id": "sala-t50",
+     "zaber": "sala",
+     "t": 0.5,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 2,
+      "frames": 53,
+      "scrollY": 1296,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 15.27
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-t50.jpg"
+    },
+    {
+     "id": "sala-t70",
+     "zaber": "sala",
+     "t": 0.7,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 2.14,
+      "frames": 96,
+      "scrollY": 1390,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 14.86
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-t70.jpg"
+    },
+    {
+     "id": "cakaren-t30",
+     "zaber": "cakaren",
+     "t": 0.3,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 3.871,
+      "frames": 149,
+      "scrollY": 2553,
+      "ready": [
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 3.5
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/cakaren-t30.jpg"
+    },
+    {
+     "id": "cakaren-t50",
+     "zaber": "cakaren",
+     "t": 0.5,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 4,
+      "frames": 191,
+      "scrollY": 2640,
+      "ready": [
+       "stol+h",
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 3.39
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/cakaren-t50.jpg"
+    },
+    {
+     "id": "cakaren-t70",
+     "zaber": "cakaren",
+     "t": 0.7,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 4.139,
+      "frames": 238,
+      "scrollY": 2727,
+      "ready": [
+       "stol+h",
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 2.48
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/cakaren-t70.jpg"
+    },
+    {
+     "id": "sala-rano-t50",
+     "zaber": "sala-rano",
+     "t": 0.5,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5,
+      "frames": 279,
+      "scrollY": 3264,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 5.68
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-rano-t50.jpg"
+    },
+    {
+     "id": "sala-rano-t65",
+     "zaber": "sala-rano",
+     "t": 0.65,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5.105,
+      "frames": 317,
+      "scrollY": 3596,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h",
+       "kava+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 3.46
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-rano-t65.jpg"
+    },
+    {
+     "id": "sala-rano-t80",
+     "zaber": "sala-rano",
+     "t": 0.8,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5.21,
+      "frames": 358,
+      "scrollY": 3927,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h",
+       "kava+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 2.73
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sala-rano-t80.jpg"
+    },
+    {
+     "id": "rohozka-t50",
+     "zaber": "rohozka",
+     "t": 0.5,
+     "zaznam": "1,5–3,3 s (čisté)",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "rohozka",
+      "S": 1,
+      "frames": 400,
+      "scrollY": 0,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 25.65
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/rohozka-t50.jpg"
+    },
+    {
+     "id": "stol-t50",
+     "zaber": "stol",
+     "t": 0.5,
+     "zaznam": "10,0–12,1 s (čisté)",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "stol",
+      "S": 3,
+      "frames": 460,
+      "scrollY": 1968,
+      "ready": [
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 9.24
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/stol-t50.jpg"
+    },
+    {
+     "id": "kreslo-stred-t50",
+     "zaber": "kreslo-stred",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "kreslo-stred",
+      "S": 6,
+      "frames": 497,
+      "scrollY": 6423,
+      "ready": [
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 6.01
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/kreslo-stred-t50.jpg"
+    },
+    {
+     "id": "kava-t50",
+     "zaber": "kava",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "kava",
+      "S": 7,
+      "frames": 538,
+      "scrollY": 10339,
+      "ready": [
+       "kreslo-stred+h",
+       "kava+h",
+       "sud+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 17.76
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/kava-t50.jpg"
+    },
+    {
+     "id": "sud-t50",
+     "zaber": "sud",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sud",
+      "S": 8,
+      "frames": 573,
+      "scrollY": 13588,
+      "ready": [
+       "kava+h",
+       "sud+h",
+       "vstup+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 4.87
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/chromium/sud-t50.jpg"
+    }
+   ],
+   "chyby": []
+  },
+  {
+   "rezim": "alfa",
+   "ready": true,
+   "chvile": [
+    {
+     "id": "sala-t30",
+     "zaber": "sala",
+     "t": 0.3,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 1.927,
+      "frames": 14,
+      "scrollY": 1202,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 17.35,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-t30.jpg"
+    },
+    {
+     "id": "sala-t50",
+     "zaber": "sala",
+     "t": 0.5,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 2,
+      "frames": 59,
+      "scrollY": 1296,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 17.19,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-t50.jpg"
+    },
+    {
+     "id": "sala-t70",
+     "zaber": "sala",
+     "t": 0.7,
+     "zaznam": "5,4–9,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala",
+      "S": 2.14,
+      "frames": 118,
+      "scrollY": 1390,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 17,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-t70.jpg"
+    },
+    {
+     "id": "cakaren-t30",
+     "zaber": "cakaren",
+     "t": 0.3,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 3.871,
+      "frames": 165,
+      "scrollY": 2553,
+      "ready": [
+       "stol+h",
+       "cakaren+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 3.5,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/cakaren-t30.jpg"
+    },
+    {
+     "id": "cakaren-t50",
+     "zaber": "cakaren",
+     "t": 0.5,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 4,
+      "frames": 210,
+      "scrollY": 2640,
+      "ready": [
+       "stol+h",
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 2.71,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/cakaren-t50.jpg"
+    },
+    {
+     "id": "cakaren-t70",
+     "zaber": "cakaren",
+     "t": 0.7,
+     "zaznam": "12,8–15,2 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "cakaren",
+      "S": 4.139,
+      "frames": 263,
+      "scrollY": 2727,
+      "ready": [
+       "stol+h",
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 2.25,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/cakaren-t70.jpg"
+    },
+    {
+     "id": "sala-rano-t50",
+     "zaber": "sala-rano",
+     "t": 0.5,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5,
+      "frames": 308,
+      "scrollY": 3264,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 6.02,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-rano-t50.jpg"
+    },
+    {
+     "id": "sala-rano-t65",
+     "zaber": "sala-rano",
+     "t": 0.65,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5.105,
+      "frames": 355,
+      "scrollY": 3596,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h",
+       "kava+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 3.44,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-rano-t65.jpg"
+    },
+    {
+     "id": "sala-rano-t80",
+     "zaber": "sala-rano",
+     "t": 0.8,
+     "zaznam": "17,0–19,7 s",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sala-rano",
+      "S": 5.21,
+      "frames": 403,
+      "scrollY": 3927,
+      "ready": [
+       "cakaren+h",
+       "sala-rano+h",
+       "kreslo-stred+h",
+       "kava+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 2.72,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sala-rano-t80.jpg"
+    },
+    {
+     "id": "rohozka-t50",
+     "zaber": "rohozka",
+     "t": 0.5,
+     "zaznam": "1,5–3,3 s (čisté)",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "rohozka",
+      "S": 1,
+      "frames": 450,
+      "scrollY": 0,
+      "ready": [
+       "rohozka+h",
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 27.48,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/rohozka-t50.jpg"
+    },
+    {
+     "id": "stol-t50",
+     "zaber": "stol",
+     "t": 0.5,
+     "zaznam": "10,0–12,1 s (čisté)",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "stol",
+      "S": 3,
+      "frames": 510,
+      "scrollY": 1968,
+      "ready": [
+       "sala+h",
+       "stol+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 9.63,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/stol-t50.jpg"
+    },
+    {
+     "id": "kreslo-stred-t50",
+     "zaber": "kreslo-stred",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "kreslo-stred",
+      "S": 6,
+      "frames": 554,
+      "scrollY": 6423,
+      "ready": [
+       "sala-rano+h",
+       "kreslo-stred+h",
+       "kava+h",
+       "sud+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 6.07,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/kreslo-stred-t50.jpg"
+    },
+    {
+     "id": "kava-t50",
+     "zaber": "kava",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "kava",
+      "S": 7,
+      "frames": 603,
+      "scrollY": 10339,
+      "ready": [
+       "kreslo-stred+h",
+       "kava+h",
+       "sud+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 16.93,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/kava-t50.jpg"
+    },
+    {
+     "id": "sud-t50",
+     "zaber": "sud",
+     "t": 0.5,
+     "zaznam": "mimo záznamu",
+     "goTo": true,
+     "stav": {
+      "mix": 0,
+      "cut": null,
+      "current": "sud",
+      "S": 8,
+      "frames": 653,
+      "scrollY": 13588,
+      "ready": [
+       "kava+h",
+       "sud+h",
+       "vstup+h"
+      ]
+     },
+     "meranie": {
+      "diera_pct": 0,
+      "diera_box": null,
+      "takmer_cierne_pct": 4.87,
+      "alfa_gl": {
+       "w": 1350,
+       "h": 960,
+       "alfa0_pct": 0,
+       "alfa_do8_pct": 0
+      }
+     },
+     "snimka": "/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/cierne-skvrny/oprava-1/k4-po/alfa/sud-t50.jpg"
+    }
+   ],
+   "chyby": []
+  }
+ ],
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+}
