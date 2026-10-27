@@ -1,0 +1,41 @@
+OK   pred prvým gestom sa atmosféra nesťahuje (prvý obraz)
+OK   kurzor stránky: nožnice  image-set(url("http://127.0.0.1:46041/assets/img/kurzor/noznice-32.png") 1dppx, url("http:
+OK   kurzor nad odkazom a tlačidlom: otvorené nožnice
+OK   PNG noznice-32 existuje
+OK   PNG noznice-64 existuje
+OK   PNG noznice-otvorene-32 existuje
+OK   PNG noznice-otvorene-64 existuje
+OK   PNG noznice-zatvorene-32 existuje
+OK   PNG noznice-zatvorene-64 existuje
+OK   tlačidlo Hudba je v lište, vypnuté  {"pressed":"false","hidden":false,"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":1,"fetched":0,"pref":null}
+OK   pred kliknutím sa hudba nesťahuje a zvuk sa nevytvára
+OK   svetlo ide za myšou  {"on":true,"tr":"translate3d(720px, 470px, 0px) scale(1)","op":"1","pe":"none"}
+OK   svetlo nezachytáva kliknutia
+OK   nad odkazom sa svetlo zväčší  translate3d(918.8px, 32px, 0px) scale(1.3)
+OK   klávesa (Tab) hudbu nepustí ani nestrihne
+OK   zvuk strihnutia je načítaný vopred (po načítaní stránky)  {"pressed":"false","hidden":false,"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":1,"fetched":0,"pref":null}
+OK   prvé kliknutie pustí hudbu  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.56,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   slučka bez medzery (loop, loopEnd 50,526 s)  [{"loop":true,"end":50.526,"dur":50.526}]
+OK   prvé kliknutie zároveň strihne  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.56,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   zvuk beží (čas kontextu rastie)  2.56 → 3.37
+OK   ďalšie kliknutie nespustí druhú stopu
+OK   každé kliknutie strihne  {"pressed":"true","hidden":false,"ctx":["running"],"t":3.73,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":2,"snipFetched":1,"fetched":1,"pref":null}
+OK   pravé tlačidlo myši nestrihá
+OK   skrytá karta: zvuk sa zastaví
+OK   návrat na kartu: hudba pokračuje
+OK   tlačidlo hudbu vypne a voľba sa uloží  {"pressed":"false","hidden":false,"ctx":["suspended"],"t":5.03,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":2,"snipFetched":1,"fetched":1,"pref":"vyp"}
+OK   kliknutie na tlačidlo Hudba nestrihá
+OK   pri vypnutom zvuku kliknutie nestrihá
+OK   vypnutá hudba sa po obnovení nepustí  {"pressed":"false","hidden":false,"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":0,"fetched":0,"pref":"vyp"}
+OK   tlačidlo ju znova zapne  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.07,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":0,"snipFetched":1,"fetched":1,"pref":"zap"}
+OK   bez chýb v konzole
+OK   žiadne zlyhané požiadavky
+OK   ?hudba=off: bez tlačidla, hudby aj strihania  {"ctx":[],"t":null,"src":[],"snips":0,"snipFetched":0,"fetched":0,"pref":"zap"}
+OK   telefón: tlačidlo Hudba 44 × 44 px v lište  {"w":44,"h":44,"inHeader":true,"right":306,"vw":390,"svetlo":false,"text":"inset(50%)"}
+OK   telefón: bez svetla pod kurzorom
+OK   telefón: ťuknutie pustí hudbu  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.55,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   telefón: ťuknutie strihne raz  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.55,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":1,"snipFetched":1,"fetched":1,"pref":null}
+OK   telefón: bez chýb
+OK   telefón: ťuknutie pred načítaním modulu pustí hudbu po načítaní  {"pressed":"true","hidden":false,"ctx":["running"],"t":2.96,"src":[{"loop":true,"end":50.526,"dur":50.526}],"snips":0,"snipFetched":1,"fetched":1,"pref":null}
+
+Všetky kontroly prešli

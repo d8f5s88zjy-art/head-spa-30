@@ -1,0 +1,14 @@
+OK   bez data-asistent sa nič nesťahuje ani neposiela
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('.asi-btn') to be visible[22m
+
+    at /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/oprava-1/plny-strom/barbershop-30/source/tools/asistent-test.mjs:68:15 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.2

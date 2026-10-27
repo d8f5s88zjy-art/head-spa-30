@@ -1,0 +1,120 @@
+
+prihlásenie
+OK   zlý kľúč: správa o neplatnom kľúči
+OK   kľúč len na čítanie: správa o práve zapisovať
+OK   web ešte nie je v main: správa, kľúč ostal
+OK   správny kľúč: prihlásený, texty načítané
+OK   kľúč zapamätaný v prehliadači
+OK   záložky  Texty, Cenník, Tím, Galéria, Kontakt a hodiny, Odpovede asistenta, Kartička
+OK   texty webu po častiach  168 polí: Odkaz na obsah a spodná lišta 3, Hlavička 8, Úvod 10, Poď ďalej 4, Remeslo 5, Čakáreň 5, Tím 10, Služby a ceny 18, Galéria 18, Rezervácia a kontakt 45, Pätička 14, Rezervačná stránka 28
+OK   cenník: 15 služieb  15
+OK   tím: 10 ľudí  10
+OK   galéria  8
+OK   odpovede asistenta  251
+OK   takmer každý text má preklady  0 bez prekladu
+
+uloženie: text, cena, tím
+OK   text s prekladom nájdený  Vyber si svojho barbera
+OK   lišta: 1 zmena  1 zmena
+OK   odpovede so starou cenou na kontrolu  10: Koľko stojí pánsky strih? (cenu som prepísal, skontroluj) | Čo zahŕňa pánsky strih? (cenu som prepísal, skontroluj)
+OK   fotka člena tímu pripravená
+OK   lišta so zmenami  14 zmien
+OK   uloženie prešlo  Uložené. Na webe to bude o minútu. Otvoriť web
+OK   jeden commit, vetva posunutá  c1
+OK   správa commitu  Barbershop 30, úprava webu: Tím: Vyber si svojho barbera; Cenník: Pánsky strih (cena); Tím: Nikolas (popis) a ďalšie (11)
+     zmenené súbory: barbershop-30/index.html, asistent/znalosti/barbershop.md, asistent/znalosti/barbershop-otazky.json, barbershop-30/assets/asistent-otazky.json, barbershop-30/assets/i18n/en.json, barbershop-30/assets/i18n/uk.json, barbershop-30/assets/i18n/hu.json, barbershop-30/assets/i18n/sr.json, barbershop-30/assets/i18n/pl.json, barbershop-30/assets/i18n/de.json, barbershop-30/assets/i18n/cs.json, barbershop-30/rezervacia.html, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-480.webp, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-480.jpg, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-820.webp, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-820.jpg
+OK   index.html: nový text na mieste  Vyber si svojho barbera dnes.
+OK   preklad presunutý na nový kľúč
+OK   cena v index.html aj rezervacia.html  19
+OK   údaje pre Google (JSON-LD): nová cena, platný JSON  18 → 19
+OK   znalosti asistenta: nová cena
+OK   odpovede asistenta bez starej ceny Pánskeho strihu
+OK   kópia odpovedí pre web zhodná
+OK   počet odpovedí rovnaký  251
+OK   odpoveď o členovi tímu má nový popis  Áno, Nikolas je barber v našom tíme. Strih ti pristane, akoby si ho nosil odjakživa a s ús
+OK   popis tímu v oboch súboroch
+OK   fotka tímu ako WebP aj JPEG  barbershop-30/assets/img/tim-nikolas-mvqc3iz5-480.webp, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-480.jpg, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-820.webp, barbershop-30/assets/img/tim-nikolas-mvqc3iz5-820.jpg
+OK   obrázok tim-nikolas-mvqc3iz5-480.webp  1312 B
+OK   index.html odkazuje na tim-nikolas-mvqc3iz5-480.webp
+OK   obrázok tim-nikolas-mvqc3iz5-480.jpg  3294 B
+OK   index.html odkazuje na tim-nikolas-mvqc3iz5-480.jpg
+OK   obrázok tim-nikolas-mvqc3iz5-820.webp  2458 B
+OK   index.html odkazuje na tim-nikolas-mvqc3iz5-820.webp
+OK   obrázok tim-nikolas-mvqc3iz5-820.jpg  8676 B
+OK   index.html odkazuje na tim-nikolas-mvqc3iz5-820.jpg
+     index.html rozdiel {"od":89,"x":424,"y":423} rezervacia.html {"od":112,"x":157,"y":156}
+OK   štruktúra HTML rovnaká (karty, riadky, obrázky, sekcie)
+OK   stará fotka nahradená celá, ohnisko zachované
+OK   po uložení načítaná nová verzia bez zmien
+
+kontrola pred uložením
+OK   zlá cena zablokuje uloženie
+OK   nič sa neuložilo
+OK   zrušenie zmien
+
+súbeh
+OK   súbeh: správa, nič neprepísané
+OK   vetva ostala na cudzom uložení
+OK   po obnovení prihlásený zapamätaným kľúčom
+OK   galéria uložená  Uložené. Na webe to bude o minútu. Otvoriť web
+OK   popis fotky aj zväčšenia
+
+nový člen tímu
+OK   nový člen bez fotky: výzva na fotku
+OK   nový člen uložený  Uložené. Na webe to bude o minútu. Otvoriť web
+OK   karta v index.html
+OK   karta v rezervacia.html (odsadenie, fetchpriority)
+OK   odpovede asistenta o tíme
+OK   znalosti: zoznam barberov
+OK   meno v prekladoch
+
+kontakt a hodiny
+OK   kontakt načítaný z webu
+OK   hodiny načítané z app.js (Po–Pi 9–19, So 9–14)
+OK   zlý telefón: upozornenie, nič sa nemení
+OK   náhľad: počet miest a súborov  Zmení sa 760 miest v 27 súboroch.
+OK   náhľad: vety s časom otvorenia bez dňa na kontrolu
+OK   zoznam zmien: telefón
+OK   kontakt a hodiny uložené  Uložené. Na webe to bude o minútu. Otvoriť web
+     zmenené: index.html, asistent/znalosti/barbershop.md, asistent/znalosti/barbershop-otazky.json, assets/asistent-otazky.json, assets/i18n/en.json, assets/i18n/uk.json, assets/i18n/hu.json, assets/i18n/sr.json, assets/i18n/pl.json, assets/i18n/de.json, assets/i18n/cs.json, assets/app.js, assets/asistent.js, assets/objednavka.js, assets/asistent-ukazka.js, assets/karty.js, assets/barbershop30.vcf, karta/index.html, karta/karta.js, vernost/karta/karta.js, vernost/lib/jadro.php, vernost/ochrana-udajov.html, asistent/lib/jadro.php, asistent/api.php, asistent/ochrana-udajov.html, CLAUDE.md, rezervacia.html
+OK   starý telefón a e‑mail nikde
+OK   index.html: odkazy tel: a údaje pre Google
+OK   vizitka: telefón
+OK   kartička na serveri: telefón Barbershopu nový, HEAD SPA nezmenený
+OK   kópie karta.js ostali rovnaké
+OK   app.js: hodiny pre živý stav
+OK   index.html: hodiny v texte
+OK   index.html: hodiny pre Google
+OK   preklady: kľúč aj preklad s novými hodinami
+OK   preklady: maďarčina a nemčina
+OK   odpovede asistenta: nové hodiny
+OK   kópia odpovedí pre web zhodná
+OK   znalosti asistenta: hodiny
+OK   pokyny asistenta: hodiny nové, príklad termínov nezmenený
+OK   CLAUDE.md: pravidlo s novými hodinami
+OK   ukážka objednávky: termíny nezmenené
+OK   PHP bez chyby syntaxe: vernost/lib/jadro.php
+OK   PHP bez chyby syntaxe: asistent/lib/jadro.php
+OK   PHP bez chyby syntaxe: asistent/api.php
+OK   JS bez chyby syntaxe: barbershop-30/assets/app.js
+OK   JS bez chyby syntaxe: barbershop-30/assets/asistent.js
+OK   JS bez chyby syntaxe: barbershop-30/assets/objednavka.js
+OK   JS bez chyby syntaxe: barbershop-30/assets/asistent-ukazka.js
+OK   JS bez chyby syntaxe: barbershop-30/assets/karty.js
+OK   JS bez chyby syntaxe: barbershop-30/karta/karta.js
+OK   JS bez chyby syntaxe: vernost/karta/karta.js
+OK   po uložení načítaný nový telefón
+
+web po zmenách
+OK   web bez chýb skriptu
+OK   web: 11 kariet tímu, bez pretekania  11, 390px
+OK   fotka nového člena sa načíta  tim-testovaci-mvqc3mjl-480.webp
+OK   angličtina: zmenený text je preložený (nie slovensky)
+OK   angličtina: nové hodiny preložené
+OK   web: všetky tlačidlá Zavolať na nové číslo
+OK   tabuľa hodín: dnes (Tue) podľa nových hodín  9:00 – 20:00
+OK   admin na telefóne bez vodorovného pretekania  390px
+OK   admin bez chýb v konzole
+OK   žiadne iné zápisy ako blob, strom, commit, posun vetvy
+
+VÝSLEDOK: všetko v poriadku

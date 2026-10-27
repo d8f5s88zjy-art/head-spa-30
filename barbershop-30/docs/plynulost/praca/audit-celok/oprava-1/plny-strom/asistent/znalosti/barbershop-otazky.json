@@ -1,0 +1,2653 @@
+{
+ "verzia": "2026-10-22",
+ "zdroj": "asistent/znalosti/barbershop.md a barbershop-30/index.html",
+ "temy": {
+  "sluzby": "Služby a ceny",
+  "brada": "Brada a holenie",
+  "balicky": "Balíčky a doplnky",
+  "deti": "Strih pre deti",
+  "objednanie": "Objednanie a termíny",
+  "hodiny": "Otváracie hodiny",
+  "kontakt": "Cesta a kontakt",
+  "tim": "Tím barberov",
+  "podnik": "O nás",
+  "ine": "Platby a ostatné",
+  "barber": "O Barberovi"
+ },
+ "otazky": [
+  {
+   "id": "cena-pansky-strih",
+   "t": "sluzby",
+   "q": "Koľko stojí pánsky strih?",
+   "v": [
+    "Koľko je pánsky strih?",
+    "Cena pánskeho strihu",
+    "Koľko zaplatím za pánsky strih?"
+   ],
+   "a": "Pánsky strih stojí 18 € a trvá približne 40 minút. Patrí k nemu konzultácia, strih strojčekom aj nožnicami vrátane fade, umytie vlasov, fénovanie, styling a kolínska. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-pansky-strih",
+   "t": "sluzby",
+   "q": "Čo zahŕňa pánsky strih?",
+   "v": [
+    "Čo je súčasťou služby Pánsky strih?",
+    "Ako prebieha pánsky strih?",
+    "Čo dostanem pri službe Pánsky strih?"
+   ],
+   "a": "Patrí k nemu konzultácia, strih strojčekom aj nožnicami vrátane fade, umytie vlasov, fénovanie, styling a kolínska. Pánsky strih stojí 18 € a trvá približne 40 minút."
+  },
+  {
+   "id": "trvanie-pansky-strih",
+   "t": "sluzby",
+   "q": "Ako dlho trvá pánsky strih?",
+   "v": [
+    "Koľko času zaberie pánsky strih?",
+    "Ako dlho budem sedieť pri službe Pánsky strih?"
+   ],
+   "a": "Pánsky strih trvá približne 40 minút a stojí 18 €."
+  },
+  {
+   "id": "objednat-pansky-strih",
+   "t": "sluzby",
+   "q": "Ako sa objednám na pánsky strih?",
+   "v": [
+    "Chcem sa objednať na pánsky strih.",
+    "Termín na pánsky strih"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Pánsky strih, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-strih-a-brada",
+   "t": "sluzby",
+   "q": "Koľko stojí pánsky strih a úprava brady?",
+   "v": [
+    "Koľko stojí strih aj brada?",
+    "Cena strihu s bradou",
+    "Koľko stojí strih a brada spolu?",
+    "Koľko zaplatím za pánsky strih a úpravu brady?"
+   ],
+   "a": "Pánsky strih a úprava brady stojí 28 € a trvá približne 60 minút. Je to kompletný strih a k nemu úprava brady s horúcim uterákom, britvou a stylingom. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-strih-a-brada",
+   "t": "sluzby",
+   "q": "Čo zahŕňa pánsky strih a úprava brady?",
+   "v": [
+    "Čo je súčasťou služby Pánsky strih a úprava brady?",
+    "Ako prebieha pánsky strih a úprava brady?",
+    "Čo dostanem pri službe Pánsky strih a úprava brady?"
+   ],
+   "a": "Je to kompletný strih a k nemu úprava brady s horúcim uterákom, britvou a stylingom. Pánsky strih a úprava brady stojí 28 € a trvá približne 60 minút."
+  },
+  {
+   "id": "trvanie-strih-a-brada",
+   "t": "sluzby",
+   "q": "Ako dlho trvá pánsky strih a úprava brady?",
+   "v": [
+    "Koľko času zaberie pánsky strih a úprava brady?",
+    "Ako dlho budem sedieť pri službe Pánsky strih a úprava brady?"
+   ],
+   "a": "Pánsky strih a úprava brady trvá približne 60 minút a stojí 28 €."
+  },
+  {
+   "id": "objednat-strih-a-brada",
+   "t": "sluzby",
+   "q": "Ako sa objednám na pánsky strih a úpravu brady?",
+   "v": [
+    "Chcem sa objednať na pánsky strih a úpravu brady.",
+    "Termín na pánsky strih a úpravu brady"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Pánsky strih a úprava brady, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-dlhe-vlasy",
+   "t": "sluzby",
+   "q": "Koľko stojí pánsky strih pre vlasy nad 10 cm?",
+   "v": [
+    "Koľko stojí strih dlhých vlasov?",
+    "Cena strihu pre dlhé vlasy",
+    "Koľko zaplatím za pánsky strih pre vlasy nad 10 cm?"
+   ],
+   "a": "Pánsky strih pre vlasy nad 10 cm stojí 22 € a trvá približne 60 minút. Postup je rovnaký ako pri pánskom strihu, len je viac času na dlhšie vlasy. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-dlhe-vlasy",
+   "t": "sluzby",
+   "q": "Čo zahŕňa pánsky strih pre vlasy nad 10 cm?",
+   "v": [
+    "Čo je súčasťou služby Pánsky strih pre dĺžku vlasov nad 10 cm?",
+    "Ako prebieha pánsky strih pre vlasy nad 10 cm?",
+    "Čo dostanem pri službe Pánsky strih pre dĺžku vlasov nad 10 cm?"
+   ],
+   "a": "Postup je rovnaký ako pri pánskom strihu, len je viac času na dlhšie vlasy. Pánsky strih pre vlasy nad 10 cm stojí 22 € a trvá približne 60 minút."
+  },
+  {
+   "id": "trvanie-dlhe-vlasy",
+   "t": "sluzby",
+   "q": "Ako dlho trvá pánsky strih pre vlasy nad 10 cm?",
+   "v": [
+    "Koľko času zaberie pánsky strih pre vlasy nad 10 cm?",
+    "Ako dlho budem sedieť pri službe Pánsky strih pre dĺžku vlasov nad 10 cm?"
+   ],
+   "a": "Pánsky strih pre vlasy nad 10 cm trvá približne 60 minút a stojí 22 €."
+  },
+  {
+   "id": "objednat-dlhe-vlasy",
+   "t": "sluzby",
+   "q": "Ako sa objednám na pánsky strih pre vlasy nad 10 cm?",
+   "v": [
+    "Chcem sa objednať na pánsky strih pre vlasy nad 10 cm.",
+    "Termín na pánsky strih pre vlasy nad 10 cm"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Pánsky strih pre dĺžku vlasov nad 10 cm, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-male-gentlemany",
+   "t": "deti",
+   "q": "Koľko stojí strih pre malých gentlemanov?",
+   "v": [
+    "Koľko stojí detský strih?",
+    "Cena strihu pre dieťa",
+    "Koľko stojí strih pre chlapca?",
+    "Koľko stojí strih pre syna?",
+    "Koľko zaplatím za strih pre malých gentlemanov?"
+   ],
+   "a": "Strih pre malých gentlemanov stojí 15 € a trvá približne 45 minút. Je pre chlapcov do 10 rokov: klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-male-gentlemany",
+   "t": "deti",
+   "q": "Čo zahŕňa strih pre malých gentlemanov?",
+   "v": [
+    "Čo je súčasťou služby Strih pre malých gentlemanov?",
+    "Ako prebieha strih pre malých gentlemanov?",
+    "Čo dostanem pri službe Strih pre malých gentlemanov?"
+   ],
+   "a": "Je pre chlapcov do 10 rokov: klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling. Strih pre malých gentlemanov stojí 15 € a trvá približne 45 minút."
+  },
+  {
+   "id": "trvanie-male-gentlemany",
+   "t": "deti",
+   "q": "Ako dlho trvá strih pre malých gentlemanov?",
+   "v": [
+    "Koľko času zaberie strih pre malých gentlemanov?",
+    "Ako dlho budem sedieť pri službe Strih pre malých gentlemanov?"
+   ],
+   "a": "Strih pre malých gentlemanov trvá približne 45 minút a stojí 15 €."
+  },
+  {
+   "id": "objednat-male-gentlemany",
+   "t": "deti",
+   "q": "Ako sa objednám na strih pre malých gentlemanov?",
+   "v": [
+    "Chcem sa objednať na strih pre malých gentlemanov.",
+    "Termín na strih pre malých gentlemanov"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Strih pre malých gentlemanov, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-oholenie-hlavy",
+   "t": "brada",
+   "q": "Koľko stojí oholenie hlavy?",
+   "v": [
+    "Koľko stojí holá hlava?",
+    "Cena za oholenie hlavy",
+    "Koľko zaplatím za oholenie hlavy?"
+   ],
+   "a": "Oholenie hlavy stojí 13 € a trvá približne 25 minút. Patrí k nemu príprava pokožky, holenie britvou, umytie, sušenie a styling. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-oholenie-hlavy",
+   "t": "brada",
+   "q": "Čo zahŕňa oholenie hlavy?",
+   "v": [
+    "Čo je súčasťou služby Oholenie hlavy?",
+    "Ako prebieha oholenie hlavy?",
+    "Čo dostanem pri službe Oholenie hlavy?"
+   ],
+   "a": "Patrí k nemu príprava pokožky, holenie britvou, umytie, sušenie a styling. Oholenie hlavy stojí 13 € a trvá približne 25 minút."
+  },
+  {
+   "id": "trvanie-oholenie-hlavy",
+   "t": "brada",
+   "q": "Ako dlho trvá oholenie hlavy?",
+   "v": [
+    "Koľko času zaberie oholenie hlavy?",
+    "Ako dlho budem sedieť pri službe Oholenie hlavy?"
+   ],
+   "a": "Oholenie hlavy trvá približne 25 minút a stojí 13 €."
+  },
+  {
+   "id": "objednat-oholenie-hlavy",
+   "t": "brada",
+   "q": "Ako sa objednám na oholenie hlavy?",
+   "v": [
+    "Chcem sa objednať na oholenie hlavy.",
+    "Termín na oholenie hlavy"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Oholenie hlavy, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-uprava-brady",
+   "t": "brada",
+   "q": "Koľko stojí úprava brady?",
+   "v": [
+    "Koľko stojí zastrihnutie brady?",
+    "Cena úpravy brady",
+    "Koľko zaplatím za úpravu brady?"
+   ],
+   "a": "Úprava brady stojí 15 € a trvá približne 20 minút. Patrí k nej tvarovanie brady, naparenie horúcim uterákom, britva a styling s prípravkami. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-uprava-brady",
+   "t": "brada",
+   "q": "Čo zahŕňa úprava brady?",
+   "v": [
+    "Čo je súčasťou služby Úprava brady?",
+    "Ako prebieha úprava brady?",
+    "Čo dostanem pri službe Úprava brady?"
+   ],
+   "a": "Patrí k nej tvarovanie brady, naparenie horúcim uterákom, britva a styling s prípravkami. Úprava brady stojí 15 € a trvá približne 20 minút."
+  },
+  {
+   "id": "trvanie-uprava-brady",
+   "t": "brada",
+   "q": "Ako dlho trvá úprava brady?",
+   "v": [
+    "Koľko času zaberie úprava brady?",
+    "Ako dlho budem sedieť pri službe Úprava brady?"
+   ],
+   "a": "Úprava brady trvá približne 20 minút a stojí 15 €."
+  },
+  {
+   "id": "objednat-uprava-brady",
+   "t": "brada",
+   "q": "Ako sa objednám na úpravu brady?",
+   "v": [
+    "Chcem sa objednať na úpravu brady.",
+    "Termín na úpravu brady",
+    "Chcem si dať upraviť bradu.",
+    "Chcem si dať ostrihať bradu.",
+    "Zastrihnete mi bradu?"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Úprava brady, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-hot-towel",
+   "t": "brada",
+   "q": "Koľko stojí holenie do hladka Hot Towel?",
+   "v": [
+    "Koľko stojí holenie tváre?",
+    "Cena holenia britvou",
+    "Koľko stojí hot towel?",
+    "Koľko zaplatím za holenie do hladka Hot Towel?"
+   ],
+   "a": "Holenie do hladka Hot Towel stojí 15 € a trvá približne 30 minút. Je to holenie britvou s naparením horúcim uterákom a ošetrením pleti po holení. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-hot-towel",
+   "t": "brada",
+   "q": "Čo zahŕňa holenie do hladka Hot Towel?",
+   "v": [
+    "Čo je súčasťou služby Holenie do hladka Hot Towel?",
+    "Ako prebieha holenie do hladka Hot Towel?",
+    "Čo dostanem pri službe Holenie do hladka Hot Towel?"
+   ],
+   "a": "Je to holenie britvou s naparením horúcim uterákom a ošetrením pleti po holení. Holenie do hladka Hot Towel stojí 15 € a trvá približne 30 minút."
+  },
+  {
+   "id": "trvanie-hot-towel",
+   "t": "brada",
+   "q": "Ako dlho trvá holenie do hladka Hot Towel?",
+   "v": [
+    "Koľko času zaberie holenie do hladka Hot Towel?",
+    "Ako dlho budem sedieť pri službe Holenie do hladka Hot Towel?"
+   ],
+   "a": "Holenie do hladka Hot Towel trvá približne 30 minút a stojí 15 €."
+  },
+  {
+   "id": "objednat-hot-towel",
+   "t": "brada",
+   "q": "Ako sa objednám na holenie do hladka Hot Towel?",
+   "v": [
+    "Chcem sa objednať na holenie do hladka Hot Towel.",
+    "Termín na holenie do hladka Hot Towel"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Holenie do hladka Hot Towel, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-farbenie-brady",
+   "t": "brada",
+   "q": "Koľko stojí farbenie brady?",
+   "v": [
+    "Koľko stojí zafarbenie brady?",
+    "Cena farby na bradu",
+    "Koľko zaplatím za farbenie brady?"
+   ],
+   "a": "Farbenie brady stojí 10 € a trvá približne 30 minút. Farbíme profesionálnymi farbami, použije sa 20 ml farby. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-farbenie-brady",
+   "t": "brada",
+   "q": "Čo zahŕňa farbenie brady?",
+   "v": [
+    "Čo je súčasťou služby Farbenie brady?",
+    "Ako prebieha farbenie brady?",
+    "Čo dostanem pri službe Farbenie brady?"
+   ],
+   "a": "Farbíme profesionálnymi farbami, použije sa 20 ml farby. Farbenie brady stojí 10 € a trvá približne 30 minút."
+  },
+  {
+   "id": "trvanie-farbenie-brady",
+   "t": "brada",
+   "q": "Ako dlho trvá farbenie brady?",
+   "v": [
+    "Koľko času zaberie farbenie brady?",
+    "Ako dlho budem sedieť pri službe Farbenie brady?"
+   ],
+   "a": "Farbenie brady trvá približne 30 minút a stojí 10 €."
+  },
+  {
+   "id": "objednat-farbenie-brady",
+   "t": "brada",
+   "q": "Ako sa objednám na farbenie brady?",
+   "v": [
+    "Chcem sa objednať na farbenie brady.",
+    "Termín na farbenie brady"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Farbenie brady, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-balicek-1",
+   "t": "balicky",
+   "q": "Koľko stojí Balíček 1?",
+   "v": [
+    "Koľko stojí prvý balíček?",
+    "Cena balíčka 1",
+    "Koľko zaplatím za Balíček 1?"
+   ],
+   "a": "Balíček 1 stojí 30 € a trvá približne 65 minút. Je v ňom strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-balicek-1",
+   "t": "balicky",
+   "q": "Čo zahŕňa Balíček 1?",
+   "v": [
+    "Čo je súčasťou služby Balíček 1?",
+    "Ako prebieha Balíček 1?",
+    "Čo dostanem pri službe Balíček 1?"
+   ],
+   "a": "Je v ňom strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. Balíček 1 stojí 30 € a trvá približne 65 minút."
+  },
+  {
+   "id": "trvanie-balicek-1",
+   "t": "balicky",
+   "q": "Ako dlho trvá Balíček 1?",
+   "v": [
+    "Koľko času zaberie Balíček 1?",
+    "Ako dlho budem sedieť pri službe Balíček 1?"
+   ],
+   "a": "Balíček 1 trvá približne 65 minút a stojí 30 €."
+  },
+  {
+   "id": "objednat-balicek-1",
+   "t": "balicky",
+   "q": "Ako sa objednám na Balíček 1?",
+   "v": [
+    "Chcem sa objednať na Balíček 1.",
+    "Termín na Balíček 1"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Balíček 1, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-ultra-inclusive",
+   "t": "balicky",
+   "q": "Koľko stojí balíček Ultra inclusive?",
+   "v": [
+    "Koľko stojí ultra balíček?",
+    "Cena Ultra inclusive",
+    "Koľko zaplatím za balíček Ultra inclusive?"
+   ],
+   "a": "Balíček Ultra inclusive stojí 40 € a trvá približne 80 minút. Je v ňom všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-ultra-inclusive",
+   "t": "balicky",
+   "q": "Čo zahŕňa balíček Ultra inclusive?",
+   "v": [
+    "Čo je súčasťou služby Ultra inclusive Barbershop30?",
+    "Ako prebieha balíček Ultra inclusive?",
+    "Čo dostanem pri službe Ultra inclusive Barbershop30?"
+   ],
+   "a": "Je v ňom všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky. Balíček Ultra inclusive stojí 40 € a trvá približne 80 minút."
+  },
+  {
+   "id": "trvanie-ultra-inclusive",
+   "t": "balicky",
+   "q": "Ako dlho trvá balíček Ultra inclusive?",
+   "v": [
+    "Koľko času zaberie balíček Ultra inclusive?",
+    "Ako dlho budem sedieť pri službe Ultra inclusive Barbershop30?"
+   ],
+   "a": "Balíček Ultra inclusive trvá približne 80 minút a stojí 40 €."
+  },
+  {
+   "id": "objednat-ultra-inclusive",
+   "t": "balicky",
+   "q": "Ako sa objednám na balíček Ultra inclusive?",
+   "v": [
+    "Chcem sa objednať na balíček Ultra inclusive.",
+    "Termín na balíček Ultra inclusive"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Ultra inclusive Barbershop30, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-plet-premium",
+   "t": "balicky",
+   "q": "Koľko stojí starostlivosť o pleť PREMIUM?",
+   "v": [
+    "Koľko stojí ošetrenie pleti?",
+    "Cena pleťovej masky",
+    "Koľko zaplatím za starostlivosť o pleť PREMIUM?"
+   ],
+   "a": "Starostlivosť o pleť PREMIUM stojí 21,50 € a trvá približne 30 minút. Patrí k nej naparenie tváre, peeling a relaxačná maska podľa vlastného výberu. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-plet-premium",
+   "t": "balicky",
+   "q": "Čo zahŕňa starostlivosť o pleť PREMIUM?",
+   "v": [
+    "Čo je súčasťou služby Starostlivosť o pleť PREMIUM?",
+    "Ako prebieha starostlivosť o pleť PREMIUM?",
+    "Čo dostanem pri službe Starostlivosť o pleť PREMIUM?"
+   ],
+   "a": "Patrí k nej naparenie tváre, peeling a relaxačná maska podľa vlastného výberu. Starostlivosť o pleť PREMIUM stojí 21,50 € a trvá približne 30 minút."
+  },
+  {
+   "id": "trvanie-plet-premium",
+   "t": "balicky",
+   "q": "Ako dlho trvá starostlivosť o pleť PREMIUM?",
+   "v": [
+    "Koľko času zaberie starostlivosť o pleť PREMIUM?",
+    "Ako dlho budem sedieť pri službe Starostlivosť o pleť PREMIUM?"
+   ],
+   "a": "Starostlivosť o pleť PREMIUM trvá približne 30 minút a stojí 21,50 €."
+  },
+  {
+   "id": "objednat-plet-premium",
+   "t": "balicky",
+   "q": "Ako sa objednám na starostlivosť o pleť PREMIUM?",
+   "v": [
+    "Chcem sa objednať na starostlivosť o pleť PREMIUM.",
+    "Termín na starostlivosť o pleť PREMIUM"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Starostlivosť o pleť PREMIUM, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-uprava-obocia",
+   "t": "balicky",
+   "q": "Koľko stojí úprava obočia?",
+   "v": [
+    "Koľko stojí trhanie obočia?",
+    "Cena úpravy obočia",
+    "Koľko zaplatím za úpravu obočia?"
+   ],
+   "a": "Úprava obočia stojí 3 € a trvá približne 5 minút. Je to vytrhanie a úprava obočia. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-uprava-obocia",
+   "t": "balicky",
+   "q": "Čo zahŕňa úprava obočia?",
+   "v": [
+    "Čo je súčasťou služby Úprava obočia?",
+    "Ako prebieha úprava obočia?",
+    "Čo dostanem pri službe Úprava obočia?"
+   ],
+   "a": "Je to vytrhanie a úprava obočia. Úprava obočia stojí 3 € a trvá približne 5 minút."
+  },
+  {
+   "id": "trvanie-uprava-obocia",
+   "t": "balicky",
+   "q": "Ako dlho trvá úprava obočia?",
+   "v": [
+    "Koľko času zaberie úprava obočia?",
+    "Ako dlho budem sedieť pri službe Úprava obočia?"
+   ],
+   "a": "Úprava obočia trvá približne 5 minút a stojí 3 €."
+  },
+  {
+   "id": "objednat-uprava-obocia",
+   "t": "balicky",
+   "q": "Ako sa objednám na úpravu obočia?",
+   "v": [
+    "Chcem sa objednať na úpravu obočia.",
+    "Termín na úpravu obočia"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Úprava obočia, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-depilacia",
+   "t": "balicky",
+   "q": "Koľko stojí depilácia uší a nosa voskom?",
+   "v": [
+    "Koľko stojí vosk na nos?",
+    "Cena depilácie nosa a uší",
+    "Koľko zaplatím za depiláciu uší a nosa voskom?"
+   ],
+   "a": "Depilácia uší a nosa voskom stojí 5,50 € a trvá približne 10 minút. Chĺpky z uší a nosa odstránime voskom. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-depilacia",
+   "t": "balicky",
+   "q": "Čo zahŕňa depilácia uší a nosa voskom?",
+   "v": [
+    "Čo je súčasťou služby Depilácia uší a nosa voskom?",
+    "Ako prebieha depilácia uší a nosa voskom?",
+    "Čo dostanem pri službe Depilácia uší a nosa voskom?"
+   ],
+   "a": "Chĺpky z uší a nosa odstránime voskom. Depilácia uší a nosa voskom stojí 5,50 € a trvá približne 10 minút."
+  },
+  {
+   "id": "trvanie-depilacia",
+   "t": "balicky",
+   "q": "Ako dlho trvá depilácia uší a nosa voskom?",
+   "v": [
+    "Koľko času zaberie depilácia uší a nosa voskom?",
+    "Ako dlho budem sedieť pri službe Depilácia uší a nosa voskom?"
+   ],
+   "a": "Depilácia uší a nosa voskom trvá približne 10 minút a stojí 5,50 €."
+  },
+  {
+   "id": "objednat-depilacia",
+   "t": "balicky",
+   "q": "Ako sa objednám na depiláciu uší a nosa voskom?",
+   "v": [
+    "Chcem sa objednať na depiláciu uší a nosa voskom.",
+    "Termín na depiláciu uší a nosa voskom"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Depilácia uší a nosa voskom, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-ornament",
+   "t": "balicky",
+   "q": "Koľko stojí kreatívny ornament na hlave?",
+   "v": [
+    "Koľko stojí vzor do vlasov?",
+    "Cena ornamentu",
+    "Koľko zaplatím za kreatívny ornament na hlave?"
+   ],
+   "a": "Kreatívny ornament na hlave stojí 4 € a trvá približne 10 minút. Je to vzor vystrihnutý do vlasov. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-ornament",
+   "t": "balicky",
+   "q": "Čo zahŕňa kreatívny ornament na hlave?",
+   "v": [
+    "Čo je súčasťou služby Kreatívny ornament na hlave?",
+    "Ako prebieha kreatívny ornament na hlave?",
+    "Čo dostanem pri službe Kreatívny ornament na hlave?"
+   ],
+   "a": "Je to vzor vystrihnutý do vlasov. Kreatívny ornament na hlave stojí 4 € a trvá približne 10 minút."
+  },
+  {
+   "id": "trvanie-ornament",
+   "t": "balicky",
+   "q": "Ako dlho trvá kreatívny ornament na hlave?",
+   "v": [
+    "Koľko času zaberie kreatívny ornament na hlave?",
+    "Ako dlho budem sedieť pri službe Kreatívny ornament na hlave?"
+   ],
+   "a": "Kreatívny ornament na hlave trvá približne 10 minút a stojí 4 €."
+  },
+  {
+   "id": "objednat-ornament",
+   "t": "balicky",
+   "q": "Ako sa objednám na kreatívny ornament na hlave?",
+   "v": [
+    "Chcem sa objednať na kreatívny ornament na hlave.",
+    "Termín na kreatívny ornament na hlave"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Kreatívny ornament na hlave, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "cena-farbenie-obocia",
+   "t": "balicky",
+   "q": "Koľko stojí farbenie obočia?",
+   "v": [
+    "Koľko stojí zafarbenie obočia?",
+    "Cena farby na obočie",
+    "Koľko zaplatím za farbenie obočia?"
+   ],
+   "a": "Farbenie obočia stojí 5 € a trvá približne 10 minút. Farbíme profesionálnymi farbami. Ceny sú konečné."
+  },
+  {
+   "id": "obsah-farbenie-obocia",
+   "t": "balicky",
+   "q": "Čo zahŕňa farbenie obočia?",
+   "v": [
+    "Čo je súčasťou služby Farbenie obočia?",
+    "Ako prebieha farbenie obočia?",
+    "Čo dostanem pri službe Farbenie obočia?"
+   ],
+   "a": "Farbíme profesionálnymi farbami. Farbenie obočia stojí 5 € a trvá približne 10 minút."
+  },
+  {
+   "id": "trvanie-farbenie-obocia",
+   "t": "balicky",
+   "q": "Ako dlho trvá farbenie obočia?",
+   "v": [
+    "Koľko času zaberie farbenie obočia?",
+    "Ako dlho budem sedieť pri službe Farbenie obočia?"
+   ],
+   "a": "Farbenie obočia trvá približne 10 minút a stojí 5 €."
+  },
+  {
+   "id": "objednat-farbenie-obocia",
+   "t": "balicky",
+   "q": "Ako sa objednám na farbenie obočia?",
+   "v": [
+    "Chcem sa objednať na farbenie obočia.",
+    "Termín na farbenie obočia"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyber službu Farbenie obočia, potom barbera a voľný čas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "sluzby-zoznam",
+   "t": "sluzby",
+   "q": "Aké služby ponúkate?",
+   "v": [
+    "Čo všetko robíte?",
+    "Ponuka služieb",
+    "Aké služby robíte?"
+   ],
+   "a": "Strihy (pánsky strih, strih pre vlasy nad 10 cm, strih pre chlapcov do 10 rokov, oholenie hlavy), úpravu a farbenie brady, holenie Hot Towel, dva balíčky a doplnky: starostlivosť o pleť, úpravu a farbenie obočia, depiláciu uší a nosa a ornament do vlasov. Celý cenník je na webe v časti Služby a ceny."
+  },
+  {
+   "id": "ceny-prehlad",
+   "t": "sluzby",
+   "q": "Aké máte ceny?",
+   "v": [
+    "Cenník",
+    "Kde nájdem cenník?",
+    "Máte cenník?"
+   ],
+   "a": "Pánsky strih stojí 18 €, s úpravou brady 28 €, pre vlasy nad 10 cm 22 €, strih pre chlapcov do 10 rokov 15 €. Úprava brady 15 €, Balíček 1 30 €, Ultra inclusive 40 €. Celý cenník je na webe v časti Služby a ceny a ceny sú konečné."
+  },
+  {
+   "id": "cena-strih",
+   "t": "sluzby",
+   "q": "Koľko stojí strih?",
+   "v": [
+    "Koľko stojí ostrihanie?",
+    "Za koľko strihate?",
+    "Cena strihu",
+    "Koľko by ma stál strih?"
+   ],
+   "a": "Pánsky strih stojí 18 € (približne 40 minút), pre vlasy nad 10 cm 22 € a s úpravou brady 28 €. Strih pre chlapcov do 10 rokov stojí 15 €. Ceny sú konečné."
+  },
+  {
+   "id": "cena-brada",
+   "t": "brada",
+   "q": "Koľko stojí brada?",
+   "v": [
+    "Koľko platím za bradu?",
+    "Ceny za bradu"
+   ],
+   "a": "Úprava brady stojí 15 € (približne 20 minút), farbenie brady 10 € a pánsky strih s úpravou brady 28 €."
+  },
+  {
+   "id": "cena-oholenie",
+   "t": "brada",
+   "q": "Koľko stojí oholenie?",
+   "v": [
+    "Koľko stojí holenie?",
+    "Cena holenia"
+   ],
+   "a": "Holenie tváre do hladka (Hot Towel, britva a horúci uterák) stojí 15 €, oholenie hlavy 13 €."
+  },
+  {
+   "id": "cena-obocie",
+   "t": "balicky",
+   "q": "Koľko stojí obočie?",
+   "v": [
+    "Ceny za obočie"
+   ],
+   "a": "Úprava obočia stojí 3 € (približne 5 minút), farbenie obočia 5 € (približne 10 minút). Obočie je aj v Balíčku 1."
+  },
+  {
+   "id": "ceny-konecne",
+   "t": "sluzby",
+   "q": "Sú ceny konečné?",
+   "v": [
+    "Platí sa niečo navyše?",
+    "Pripláca sa niečo?",
+    "Sú v cene všetky poplatky?"
+   ],
+   "a": "Áno, ceny v cenníku sú konečné."
+  },
+  {
+   "id": "najlacnejsie",
+   "t": "sluzby",
+   "q": "Aká je najlacnejšia služba?",
+   "v": [
+    "Čo je najlacnejšie?",
+    "Najlacnejší strih"
+   ],
+   "a": "Najlacnejšia je úprava obočia za 3 €. Najlacnejší strih je strih pre chlapcov do 10 rokov za 15 €, pánsky strih stojí 18 €."
+  },
+  {
+   "id": "najdrahsie",
+   "t": "balicky",
+   "q": "Aká je najdrahšia služba?",
+   "v": [
+    "Čo je najdrahšie?",
+    "Najväčší balíček"
+   ],
+   "a": "Najdrahší je balíček Ultra inclusive Barbershop30 za 40 € (približne 80 minút): všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska a pohárik whisky."
+  },
+  {
+   "id": "fade",
+   "t": "sluzby",
+   "q": "Robíte fade?",
+   "v": [
+    "Strihate fade?",
+    "Skin fade",
+    "Prechod do stratena"
+   ],
+   "a": "Áno, fade je súčasťou pánskeho strihu (18 €, približne 40 minút). Pri konzultácii povieš barberovi, aký prechod chceš."
+  },
+  {
+   "id": "noznice",
+   "t": "sluzby",
+   "q": "Strihate aj nožnicami?",
+   "v": [
+    "Strih nožnicami",
+    "Strihate nožnicami alebo strojčekom?"
+   ],
+   "a": "Áno, pánsky strih robíme strojčekom aj nožnicami, podľa toho, čo si pri konzultácii dohodnete."
+  },
+  {
+   "id": "strojcek",
+   "t": "sluzby",
+   "q": "Môžem sa dať ostrihať len strojčekom?",
+   "v": [
+    "Strih strojčekom",
+    "Len strojček na jednu dĺžku"
+   ],
+   "a": "Pri pánskom strihu barber strihá strojčekom aj nožnicami podľa toho, čo chceš, stačí to povedať pri konzultácii. Ak chceš hlavu úplne oholiť, je na to oholenie hlavy za 13 €."
+  },
+  {
+   "id": "konzultacia",
+   "t": "sluzby",
+   "q": "Poradíte mi, aký strih si mám dať?",
+   "v": [
+    "Neviem, aký strih chcem.",
+    "Je pred strihom konzultácia?",
+    "Poradíte mi s účesom?"
+   ],
+   "a": "Áno, pánsky strih začína konzultáciou. Povieš barberovi, čo chceš, a spolu vyberiete, čo ti pristane."
+  },
+  {
+   "id": "fotka-strihu",
+   "t": "sluzby",
+   "q": "Môžem priniesť fotku strihu, ktorý chcem?",
+   "v": [
+    "Ukážem vám fotku účesu",
+    "Mám obrázok strihu"
+   ],
+   "a": "Áno, ukáž ju barberovi pri konzultácii na začiatku strihu."
+  },
+  {
+   "id": "umytie",
+   "t": "sluzby",
+   "q": "Umyjete mi aj vlasy?",
+   "v": [
+    "Je v cene umytie vlasov?",
+    "Umývate vlasy?"
+   ],
+   "a": "Áno, umytie vlasov aj fénovanie sú v cene pánskeho strihu. Umytie je aj v strihu pre chlapcov, pri oholení hlavy a v balíčkoch."
+  },
+  {
+   "id": "styling",
+   "t": "sluzby",
+   "q": "Je v cene aj styling?",
+   "v": [
+    "Upravíte mi vlasy po strihu?",
+    "Dáte mi na vlasy prípravok?"
+   ],
+   "a": "Áno, styling je súčasťou strihov aj úpravy brady. Pánsky strih končí stylingom a kolínskou."
+  },
+  {
+   "id": "kolinska",
+   "t": "sluzby",
+   "q": "Dostanem po strihu kolínsku?",
+   "v": [
+    "Je v cene kolínska?",
+    "Parfum po strihu"
+   ],
+   "a": "Áno, pánsky strih končí stylingom a kolínskou. Kolínska je aj v Balíčku 1."
+  },
+  {
+   "id": "fenovanie",
+   "t": "sluzby",
+   "q": "Fénujete vlasy?",
+   "v": [
+    "Vysušíte mi vlasy?",
+    "Fénovanie"
+   ],
+   "a": "Áno, fénovanie je súčasťou pánskeho strihu aj Balíčka 1."
+  },
+  {
+   "id": "dlhe-vlasy-vyber",
+   "t": "sluzby",
+   "q": "Mám dlhé vlasy, aký strih si mám vybrať?",
+   "v": [
+    "Ktorý strih pre dlhé vlasy?",
+    "Mám vlasy dlhšie ako 10 cm"
+   ],
+   "a": "Pre vlasy dlhšie ako 10 cm vyber pánsky strih pre dĺžku vlasov nad 10 cm za 22 € (približne 60 minút). Postup je rovnaký, len je viac času."
+  },
+  {
+   "id": "rozdiel-strihy",
+   "t": "sluzby",
+   "q": "Aký je rozdiel medzi pánskym strihom a strihom pre vlasy nad 10 cm?",
+   "v": [
+    "Rozdiel medzi strihom za 18 a za 22 eur"
+   ],
+   "a": "Postup je rovnaký. Strih pre vlasy nad 10 cm má viac času na dlhšie vlasy: trvá približne 60 minút a stojí 22 €. Bežný pánsky strih trvá približne 40 minút a stojí 18 €."
+  },
+  {
+   "id": "strih-aj-brada",
+   "t": "sluzby",
+   "q": "Chcem strih aj bradu, čo si mám vybrať?",
+   "v": [
+    "Strih a brada naraz",
+    "Dá sa strih aj brada v jednom termíne?"
+   ],
+   "a": "Vyber pánsky strih a úpravu brady za 28 € (približne 60 minút). Ak chceš navyše obočie, depiláciu uší a vlasový tonik, je tu Balíček 1 za 30 €."
+  },
+  {
+   "id": "malo-casu",
+   "t": "sluzby",
+   "q": "Mám málo času, čo stihnem?",
+   "v": [
+    "Čo je najrýchlejšie?",
+    "Ponáhľam sa"
+   ],
+   "a": "Najkratšia je úprava obočia (približne 5 minút), potom ornament, depilácia a farbenie obočia (po 10 minút) a úprava brady (20 minút). Pánsky strih trvá približne 40 minút."
+  },
+  {
+   "id": "vzor-vlasy",
+   "t": "balicky",
+   "q": "Vystrihnete mi vzor do vlasov?",
+   "v": [
+    "Robíte ornamenty?",
+    "Obrázok vystrihnutý vo vlasoch"
+   ],
+   "a": "Áno, kreatívny ornament na hlave stojí 4 € a trvá približne 10 minút. Pri strihu pre chlapcov môže byť ornament jeho súčasťou."
+  },
+  {
+   "id": "doplnky-k-strihu",
+   "t": "balicky",
+   "q": "Môžem si k strihu pridať obočie alebo depiláciu?",
+   "v": [
+    "Doplnky k strihu",
+    "Čo si môžem pridať k strihu?"
+   ],
+   "a": "Áno, k strihu si môžeš objednať doplnky: úpravu obočia (3 €), farbenie obočia (5 €), depiláciu uší a nosa voskom (5,50 €), ornament (4 €) alebo starostlivosť o pleť PREMIUM (21,50 €)."
+  },
+  {
+   "id": "damsky-strih",
+   "t": "sluzby",
+   "q": "Strihate aj ženy?",
+   "v": [
+    "Dámsky strih",
+    "Ostriháte aj ženu?"
+   ],
+   "a": "Náš cenník je pánsky. O dámskom strihu web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "farbenie-vlasov",
+   "t": "sluzby",
+   "q": "Farbíte aj vlasy?",
+   "v": [
+    "Robíte melír?",
+    "Robíte trvalú?",
+    "Farbenie vlasov"
+   ],
+   "a": "Farbenie, melír a trvalú robí Romana. Rezervuješ ich samostatne na https://booqme.app/sk/rezervacia/barbershop30, kde sú aj ich ceny."
+  },
+  {
+   "id": "cena-melir",
+   "t": "sluzby",
+   "q": "Koľko stojí melír alebo farbenie vlasov?",
+   "v": [
+    "Cena melíru",
+    "Koľko stojí trvalá?",
+    "Cena farbenia vlasov"
+   ],
+   "a": "Ceny farbenia, melíru a trvalej nájdeš pri Romaninej rezervácii na https://booqme.app/sk/rezervacia/barbershop30. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "romana",
+   "t": "sluzby",
+   "q": "Ako sa objednám k Romane?",
+   "v": [
+    "Termín u Romany",
+    "Rezervácia na farbenie vlasov"
+   ],
+   "a": "K Romane sa objednáš samostatne na https://booqme.app/sk/rezervacia/barbershop30. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "holenie-britvou",
+   "t": "brada",
+   "q": "Holíte britvou?",
+   "v": [
+    "Oholíte ma britvou?",
+    "Holenie britvou"
+   ],
+   "a": "Áno. Holenie do hladka Hot Towel je holenie britvou s naparením horúcim uterákom a ošetrením pleti, stojí 15 € (približne 30 minút). Britvou holíme aj hlavu pri oholení hlavy za 13 €."
+  },
+  {
+   "id": "horuci-uterak",
+   "t": "brada",
+   "q": "Používate horúci uterák?",
+   "v": [
+    "Dáte mi horúci uterák na tvár?",
+    "Horúci uterák"
+   ],
+   "a": "Áno, horúcim uterákom naparíme pleť pri úprave brady, pri holení Hot Towel, pri strihu s úpravou brady aj v balíčkoch."
+  },
+  {
+   "id": "hot-towel-co",
+   "t": "brada",
+   "q": "Čo znamená Hot Towel?",
+   "v": [
+    "Čo je hot towel?"
+   ],
+   "a": "Hot Towel je holenie do hladka britvou s naparením horúcim uterákom a ošetrením pleti po holení. Stojí 15 € a trvá približne 30 minút."
+  },
+  {
+   "id": "dlha-brada",
+   "t": "brada",
+   "q": "Mám dlhú bradu, upravíte ju?",
+   "v": [
+    "Zastrihnete aj dlhú bradu?",
+    "Hustá brada"
+   ],
+   "a": "Áno, úprava brady (tvarovanie, horúci uterák, britva a styling) stojí 15 € a trvá približne 20 minút."
+  },
+  {
+   "id": "tvar-brady",
+   "t": "brada",
+   "q": "Poradíte mi s tvarom brady?",
+   "v": [
+    "Aký tvar brady mi pristane?"
+   ],
+   "a": "Úprava brady začína tvarovaním, povedz barberovi, čo chceš, a poradí ti. Stojí 15 € a trvá približne 20 minút."
+  },
+  {
+   "id": "sediny-brada",
+   "t": "brada",
+   "q": "Zakryjete šediny na brade?",
+   "v": [
+    "Šedivá brada",
+    "Prefarbíte mi bradu?"
+   ],
+   "a": "Robíme farbenie brady profesionálnymi farbami za 10 € (približne 30 minút). Či sa hodí na tvoje šediny, ti povie barber."
+  },
+  {
+   "id": "hladka-tvar",
+   "t": "brada",
+   "q": "Chcem sa oholiť do hladka, čo si mám vybrať?",
+   "v": [
+    "Oholenie fúzov",
+    "Úplne oholiť bradu"
+   ],
+   "a": "Vyber holenie do hladka Hot Towel za 15 € (približne 30 minút): britva, horúci uterák a ošetrenie pleti po holení."
+  },
+  {
+   "id": "brada-alebo-holenie",
+   "t": "brada",
+   "q": "Aký je rozdiel medzi úpravou brady a holením Hot Towel?",
+   "v": [
+    "Úprava brady alebo holenie?"
+   ],
+   "a": "Pri úprave brady (15 €, približne 20 minút) bradu tvarujeme a necháme. Pri holení Hot Towel (15 €, približne 30 minút) ťa oholíme do hladka britvou."
+  },
+  {
+   "id": "pripravky",
+   "t": "brada",
+   "q": "Aké prípravky používate?",
+   "v": [
+    "Akú kozmetiku používate?",
+    "Značka prípravkov"
+   ],
+   "a": "Pri úprave brady robíme styling s prípravkami a farbíme profesionálnymi farbami. Konkrétne značky web neuvádza, spýtaj sa barbera."
+  },
+  {
+   "id": "rozdiel-balicky",
+   "t": "balicky",
+   "q": "Aký je rozdiel medzi Balíčkom 1 a Ultra inclusive?",
+   "v": [
+    "Porovnanie balíčkov",
+    "Ktorý balíček si vybrať?"
+   ],
+   "a": "Balíček 1 (30 €, približne 65 minút): strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. Ultra inclusive (40 €, približne 80 minút): všetko z Balíčka 1 a navyše naparenie tváre, peeling, relaxačná maska podľa výberu a pohárik whisky."
+  },
+  {
+   "id": "oplati-balicek",
+   "t": "balicky",
+   "q": "Oplatí sa balíček?",
+   "v": [
+    "Je balíček výhodnejší?",
+    "Má zmysel brať balíček?"
+   ],
+   "a": "Pánsky strih s úpravou brady stojí 28 €, Balíček 1 za 30 € k tomu pridá obočie, depiláciu uší, vlasový tonik a kolínsku. Ak chceš aj starostlivosť o pleť a whisky, vyber Ultra inclusive za 40 €."
+  },
+  {
+   "id": "balicky-zoznam",
+   "t": "balicky",
+   "q": "Aké máte balíčky?",
+   "v": [
+    "Balíčky",
+    "Ponúkate balíčky služieb?"
+   ],
+   "a": "Máme dva: Balíček 1 za 30 € (približne 65 minút) a Ultra inclusive Barbershop30 za 40 € (približne 80 minút), ktorý má navyše starostlivosť o pleť a pohárik whisky."
+  },
+  {
+   "id": "whisky",
+   "t": "balicky",
+   "q": "Je v balíčku naozaj whisky?",
+   "v": [
+    "Dostanem whisky?",
+    "Pohárik whisky"
+   ],
+   "a": "Áno, balíček Ultra inclusive Barbershop30 má pohárik whisky."
+  },
+  {
+   "id": "maska",
+   "t": "balicky",
+   "q": "Akú masku dostanem?",
+   "v": [
+    "Relaxačná maska",
+    "Pleťová maska"
+   ],
+   "a": "Relaxačnú masku si vyberieš sám. Je súčasťou starostlivosti o pleť PREMIUM (21,50 €) aj balíčka Ultra inclusive (40 €)."
+  },
+  {
+   "id": "peeling",
+   "t": "balicky",
+   "q": "Robíte peeling?",
+   "v": [
+    "Peeling tváre"
+   ],
+   "a": "Áno, peeling je v starostlivosti o pleť PREMIUM (21,50 €, približne 30 minút) a v balíčku Ultra inclusive (40 €)."
+  },
+  {
+   "id": "tonik",
+   "t": "balicky",
+   "q": "Dostanem aj vlasový tonik?",
+   "v": [
+    "Vlasový tonik"
+   ],
+   "a": "Vlasový tonik je súčasťou Balíčka 1 aj balíčka Ultra inclusive."
+  },
+  {
+   "id": "plet",
+   "t": "balicky",
+   "q": "Robíte ošetrenie pleti?",
+   "v": [
+    "Starostlivosť o pleť",
+    "Naparenie tváre"
+   ],
+   "a": "Áno, starostlivosť o pleť PREMIUM: naparenie tváre, peeling a relaxačná maska podľa vlastného výberu, 21,50 €, približne 30 minút."
+  },
+  {
+   "id": "obocie-uprava",
+   "t": "balicky",
+   "q": "Upravíte mi obočie?",
+   "v": [
+    "Vytrháte obočie?",
+    "Obočie"
+   ],
+   "a": "Áno, úprava obočia (vytrhanie a úprava) stojí 3 € a trvá približne 5 minút. Obočie je aj v Balíčku 1."
+  },
+  {
+   "id": "chlpky-nos",
+   "t": "balicky",
+   "q": "Odstránite chĺpky z nosa a uší?",
+   "v": [
+    "Chĺpky v ušiach",
+    "Depilácia nosa"
+   ],
+   "a": "Áno, depilácia uší a nosa voskom stojí 5,50 € a trvá približne 10 minút. Depilácia uší je aj v Balíčku 1."
+  },
+  {
+   "id": "darcek-balicek",
+   "t": "balicky",
+   "q": "Čo vybrať ako darček pre muža?",
+   "v": [
+    "Darček pre otca",
+    "Darček pre priateľa"
+   ],
+   "a": "Obľúbený je balíček Ultra inclusive Barbershop30 za 40 €: strih, brada, starostlivosť o pleť aj pohárik whisky. O darčekových poukážkach web nič neuvádza, spýtaj sa na recepcii na 0951 267 203."
+  },
+  {
+   "id": "deti",
+   "t": "deti",
+   "q": "Strihate aj deti?",
+   "v": [
+    "Ostriháte aj dieťa?",
+    "Strih pre deti",
+    "Detský strih"
+   ],
+   "a": "Áno, strih pre malých gentlemanov je pre chlapcov do 10 rokov: klasický strih alebo fade, prípadne kreatívny ornament, umytie a styling. Stojí 15 € a trvá približne 45 minút."
+  },
+  {
+   "id": "deti-vek",
+   "t": "deti",
+   "q": "Do koľkých rokov je detský strih?",
+   "v": [
+    "Pre aký vek je detský strih?",
+    "Veková hranica"
+   ],
+   "a": "Strih pre malých gentlemanov je pre chlapcov do 10 rokov."
+  },
+  {
+   "id": "deti-starsi",
+   "t": "deti",
+   "q": "Mám syna, ktorý má viac ako 10 rokov, aký strih?",
+   "v": [
+    "Strih pre tínedžera",
+    "Syn má 12 rokov"
+   ],
+   "a": "Strih pre malých gentlemanov je do 10 rokov. Pre staršieho syna je v cenníku pánsky strih za 18 €. Ak si nie si istý, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "deti-dievca",
+   "t": "deti",
+   "q": "Ostriháte aj dievča?",
+   "v": [
+    "Strih pre dievčatko"
+   ],
+   "a": "Detský strih na webe je pre chlapcov do 10 rokov. O strihaní dievčat web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "deti-male",
+   "t": "deti",
+   "q": "Ostriháte aj malé dieťa?",
+   "v": [
+    "Prvý strih dieťaťa",
+    "Batoľa",
+    "Malý chlapček"
+   ],
+   "a": "Strih pre malých gentlemanov je pre chlapcov do 10 rokov. Pri úplne prvom strihu alebo veľmi malom dieťati nám radšej vopred zavolaj na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "deti-fade",
+   "t": "deti",
+   "q": "Robíte deťom aj fade?",
+   "v": [
+    "Fade pre chlapca"
+   ],
+   "a": "Áno, strih pre malých gentlemanov môže byť klasický alebo fade."
+  },
+  {
+   "id": "deti-ornament",
+   "t": "deti",
+   "q": "Môže mať syn vzor do vlasov?",
+   "v": [
+    "Ornament pre dieťa"
+   ],
+   "a": "Áno, kreatívny ornament môže byť súčasťou strihu pre malých gentlemanov. Samostatne stojí ornament 4 €."
+  },
+  {
+   "id": "deti-rodic",
+   "t": "deti",
+   "q": "Môžem byť pri strihu syna?",
+   "v": [
+    "Môže byť rodič pri strihu?"
+   ],
+   "a": "O tom web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "otec-a-syn",
+   "t": "deti",
+   "q": "Môžeme sa ostrihať s otcom a synom naraz?",
+   "v": [
+    "Strih pre otca aj syna",
+    "Prídeme dvaja so synom"
+   ],
+   "a": "V rezervácii objednaj pánsky strih pre seba a strih pre malých gentlemanov pre syna, každý u svojho barbera. Ak chcete ísť v rovnakom čase, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "hodiny",
+   "t": "hodiny",
+   "q": "Kedy máte otvorené?",
+   "v": [
+    "Otváracie hodiny",
+    "Aké máte hodiny?",
+    "Kedy ste otvorení?"
+   ],
+   "a": "Otvorené máme pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, v nedeľu je zatvorené."
+  },
+  {
+   "id": "hodiny-pondelok",
+   "t": "hodiny",
+   "q": "Máte otvorené v pondelok?",
+   "v": [
+    "Otváracie hodiny v pondelok",
+    "Do koľkej máte otvorené v pondelok?"
+   ],
+   "a": "Áno, v pondelok máme otvorené od 9:00 do 19:00."
+  },
+  {
+   "id": "hodiny-utorok",
+   "t": "hodiny",
+   "q": "Máte otvorené v utorok?",
+   "v": [
+    "Otváracie hodiny v utorok",
+    "Do koľkej máte otvorené v utorok?"
+   ],
+   "a": "Áno, v utorok máme otvorené od 9:00 do 19:00."
+  },
+  {
+   "id": "hodiny-streda",
+   "t": "hodiny",
+   "q": "Máte otvorené v stredu?",
+   "v": [
+    "Otváracie hodiny v stredu",
+    "Do koľkej máte otvorené v stredu?"
+   ],
+   "a": "Áno, v stredu máme otvorené od 9:00 do 19:00."
+  },
+  {
+   "id": "hodiny-stvrtok",
+   "t": "hodiny",
+   "q": "Máte otvorené vo štvrtok?",
+   "v": [
+    "Otváracie hodiny vo štvrtok",
+    "Do koľkej máte otvorené vo štvrtok?"
+   ],
+   "a": "Áno, vo štvrtok máme otvorené od 9:00 do 19:00."
+  },
+  {
+   "id": "hodiny-piatok",
+   "t": "hodiny",
+   "q": "Máte otvorené v piatok?",
+   "v": [
+    "Otváracie hodiny v piatok",
+    "Do koľkej máte otvorené v piatok?"
+   ],
+   "a": "Áno, v piatok máme otvorené od 9:00 do 19:00."
+  },
+  {
+   "id": "hodiny-sobota",
+   "t": "hodiny",
+   "q": "Máte otvorené v sobotu?",
+   "v": [
+    "Otváracie hodiny v sobotu",
+    "Do koľkej máte v sobotu?"
+   ],
+   "a": "Áno, v sobotu máme otvorené od 9:00 do 14:00."
+  },
+  {
+   "id": "hodiny-nedela",
+   "t": "hodiny",
+   "q": "Máte otvorené v nedeľu?",
+   "v": [
+    "Otváracie hodiny v nedeľu"
+   ],
+   "a": "V nedeľu máme zatvorené. Otvorené je pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00."
+  },
+  {
+   "id": "hodiny-vikend",
+   "t": "hodiny",
+   "q": "Máte otvorené cez víkend?",
+   "v": [
+    "Víkend"
+   ],
+   "a": "V sobotu od 9:00 do 14:00, v nedeľu máme zatvorené."
+  },
+  {
+   "id": "hodiny-otvarate",
+   "t": "hodiny",
+   "q": "O koľkej otvárate?",
+   "v": [
+    "Kedy otvárate?",
+    "Od koľkej máte otvorené?"
+   ],
+   "a": "Od pondelka do soboty otvárame o 9:00."
+  },
+  {
+   "id": "hodiny-zatvarate",
+   "t": "hodiny",
+   "q": "Do koľkej máte otvorené?",
+   "v": [
+    "Kedy zatvárate?",
+    "O koľkej zatvárate?"
+   ],
+   "a": "V pracovné dni do 19:00, v sobotu do 14:00. V nedeľu je zatvorené."
+  },
+  {
+   "id": "hodiny-sobota-poobede",
+   "t": "hodiny",
+   "q": "Máte otvorené v sobotu poobede?",
+   "v": [
+    "Sobota poobede"
+   ],
+   "a": "V sobotu máme otvorené len do 14:00."
+  },
+  {
+   "id": "hodiny-rano",
+   "t": "hodiny",
+   "q": "Dá sa prísť skôr ako o 9:00?",
+   "v": [
+    "Ráno pred deviatou",
+    "Skoro ráno"
+   ],
+   "a": "Otvárame o 9:00. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "hodiny-vecer",
+   "t": "hodiny",
+   "q": "Dá sa prísť po 19:00?",
+   "v": [
+    "Večer po práci",
+    "Neskoro večer"
+   ],
+   "a": "V pracovné dni máme otvorené do 19:00. Voľné časy na konci dňa uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "posledny-termin",
+   "t": "hodiny",
+   "q": "Kedy je posledný termín v daný deň?",
+   "v": [
+    "Posledný voľný čas",
+    "Najneskorší termín"
+   ],
+   "a": "Voľné časy vrátane posledného v daný deň uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "hodiny-sviatky",
+   "t": "hodiny",
+   "q": "Máte otvorené cez sviatky?",
+   "v": [
+    "Vianoce",
+    "Štátny sviatok",
+    "Veľká noc",
+    "Silvester"
+   ],
+   "a": "O sviatkoch web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "hodiny-obed",
+   "t": "hodiny",
+   "q": "Máte obedňajšiu prestávku?",
+   "v": [
+    "Prestávka na obed",
+    "Zatvárate cez obed?"
+   ],
+   "a": "Otvorené máme v pracovné dni od 9:00 do 19:00. O prestávkach web nič neuvádza, voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "hodiny-dnes",
+   "t": "hodiny",
+   "q": "Máte dnes otvorené?",
+   "v": [
+    "Ste dnes otvorení?",
+    "Dnes otvorené"
+   ],
+   "a": "Otvorené máme pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, v nedeľu je zatvorené."
+  },
+  {
+   "id": "hodiny-zajtra",
+   "t": "hodiny",
+   "q": "Máte zajtra otvorené?",
+   "v": [
+    "Ste zajtra otvorení?"
+   ],
+   "a": "Otvorené máme pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, v nedeľu je zatvorené."
+  },
+  {
+   "id": "hodiny-telefon",
+   "t": "hodiny",
+   "q": "Kedy vám môžem zavolať?",
+   "v": [
+    "Kedy zdvíhate telefón?",
+    "Telefón mimo hodín"
+   ],
+   "a": "Recepcia telefonuje v pracovné dni od 9:00 do 19:00 na 0951 267 203, vtedy telefón vždy zdvihneme."
+  },
+  {
+   "id": "hodiny-leto",
+   "t": "hodiny",
+   "q": "Máte otvorené aj v lete a cez dovolenky?",
+   "v": [
+    "Dovolenka",
+    "Zatvorené v lete"
+   ],
+   "a": "Bežne máme otvorené pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, v nedeľu je zatvorené. O dovolenkách a zmenách web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "online-noc",
+   "t": "hodiny",
+   "q": "Dá sa objednať aj v noci?",
+   "v": [
+    "Objednanie mimo otváracích hodín",
+    "Rezervácia cez víkend"
+   ],
+   "a": "Áno, online sa objednáš kedykoľvek na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "adresa",
+   "t": "kontakt",
+   "q": "Kde sa nachádzate?",
+   "v": [
+    "Adresa",
+    "Kde vás nájdem?",
+    "Kde ste?"
+   ],
+   "a": "Sme na Mostnej 30, 949 01 Nitra. Navigácia: https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra"
+  },
+  {
+   "id": "navigacia",
+   "t": "kontakt",
+   "q": "Ako sa k vám dostanem?",
+   "v": [
+    "Navigácia",
+    "Cesta k vám",
+    "Ako trafím?"
+   ],
+   "a": "Zadaj do navigácie Mostná 30, Nitra, alebo použi tento odkaz: https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra"
+  },
+  {
+   "id": "psc",
+   "t": "kontakt",
+   "q": "Aké je vaše PSČ?",
+   "v": [
+    "Poštové smerovacie číslo"
+   ],
+   "a": "Mostná 30, 949 01 Nitra."
+  },
+  {
+   "id": "nitra",
+   "t": "kontakt",
+   "q": "Ste v Nitre?",
+   "v": [
+    "Mesto",
+    "V ktorom meste ste?"
+   ],
+   "a": "Áno, sme v Nitre na Mostnej 30."
+  },
+  {
+   "id": "telefon",
+   "t": "kontakt",
+   "q": "Aké je vaše telefónne číslo?",
+   "v": [
+    "Telefón",
+    "Číslo na recepciu",
+    "Kontakt"
+   ],
+   "a": "Recepcia: 0951 267 203, zo zahraničia +421 951 267 203. V pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "telefon-zahranicie",
+   "t": "kontakt",
+   "q": "Aké je vaše číslo zo zahraničia?",
+   "v": [
+    "Číslo s predvoľbou",
+    "Volám zo zahraničia"
+   ],
+   "a": "Zo zahraničia volaj na +421 951 267 203."
+  },
+  {
+   "id": "email",
+   "t": "kontakt",
+   "q": "Aký máte e-mail?",
+   "v": [
+    "E-mail",
+    "Mailová adresa"
+   ],
+   "a": "Náš e-mail je info@barbershop30.sk."
+  },
+  {
+   "id": "napisat",
+   "t": "kontakt",
+   "q": "Môžem vám napísať?",
+   "v": [
+    "Napísať správu",
+    "Kontakt e-mailom"
+   ],
+   "a": "Napíš na info@barbershop30.sk. Ak potrebuješ rýchlu odpoveď alebo termín, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "instagram",
+   "t": "kontakt",
+   "q": "Máte Instagram?",
+   "v": [
+    "Instagram",
+    "Kde uvidím vaše strihy?"
+   ],
+   "a": "Áno, @barbershop30_nitra: https://www.instagram.com/barbershop30_nitra/ Sú tam aktuálne strihy a dianie v shope."
+  },
+  {
+   "id": "facebook",
+   "t": "kontakt",
+   "q": "Máte Facebook?",
+   "v": [
+    "Facebook"
+   ],
+   "a": "Áno: https://www.facebook.com/barbershop30nitra/"
+  },
+  {
+   "id": "web",
+   "t": "kontakt",
+   "q": "Aká je vaša webová stránka?",
+   "v": [
+    "Web",
+    "Stránka"
+   ],
+   "a": "www.barbershop30.sk, rezervácia je na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "hodnotenie",
+   "t": "kontakt",
+   "q": "Aké máte hodnotenie?",
+   "v": [
+    "Recenzie",
+    "Hodnotenie na Google",
+    "Ste dobrí?"
+   ],
+   "a": "Na Google máme hodnotenie 5,0 z 945 recenzií (stav 13. 10. 2026). Recenzie si prečítaš tu: https://www.google.com/maps?cid=18132360254733427623"
+  },
+  {
+   "id": "recenzia",
+   "t": "kontakt",
+   "q": "Kde môžem napísať recenziu?",
+   "v": [
+    "Chcem vás ohodnotiť",
+    "Napísať hodnotenie"
+   ],
+   "a": "Na našom profile na Google: https://www.google.com/maps?cid=18132360254733427623 Ďakujeme!"
+  },
+  {
+   "id": "parkovanie",
+   "t": "kontakt",
+   "q": "Dá sa pri vás parkovať?",
+   "v": [
+    "Parkovanie",
+    "Kde zaparkujem?",
+    "Parkovisko"
+   ],
+   "a": "O parkovaní web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "mhd",
+   "t": "kontakt",
+   "q": "Ako sa k vám dostanem autobusom?",
+   "v": [
+    "MHD",
+    "Zastávka"
+   ],
+   "a": "O spojoch MHD web nič neuvádza. Sme na Mostnej 30 v Nitre, trasu ti ukáže navigácia: https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra"
+  },
+  {
+   "id": "bezbarierovy",
+   "t": "kontakt",
+   "q": "Máte bezbariérový prístup?",
+   "v": [
+    "Vozíčkar",
+    "Kočík"
+   ],
+   "a": "O bezbariérovom prístupe web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "vchod",
+   "t": "kontakt",
+   "q": "Ako vás spoznám, keď prídem?",
+   "v": [
+    "Kde je vchod?",
+    "Kam mám ísť, keď prídem?"
+   ],
+   "a": "Sme na Mostnej 30 v Nitre. Pri dverách ťa privíta recepčná."
+  },
+  {
+   "id": "pobocky",
+   "t": "kontakt",
+   "q": "Máte aj inú pobočku?",
+   "v": [
+    "Ďalšia prevádzka",
+    "Pobočky"
+   ],
+   "a": "Na webe je len naša prevádzka na Mostnej 30 v Nitre."
+  },
+  {
+   "id": "objednanie",
+   "t": "objednanie",
+   "q": "Ako sa objednám?",
+   "v": [
+    "Rezervácia",
+    "Chcem sa objednať",
+    "Objednanie"
+   ],
+   "a": "Online kedykoľvek na https://www.barbershop30.sk/rezervacia: vyberieš službu, barbera a voľný čas. Alebo nám zavolaj na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "objednanie-online",
+   "t": "objednanie",
+   "q": "Dá sa objednať online?",
+   "v": [
+    "Online rezervácia",
+    "Rezervácia cez internet"
+   ],
+   "a": "Áno, kedykoľvek na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "objednanie-telefon",
+   "t": "objednanie",
+   "q": "Môžem sa objednať telefonicky?",
+   "v": [
+    "Objednanie cez telefón",
+    "Rezervácia telefonicky"
+   ],
+   "a": "Áno, zavolaj na recepciu 0951 267 203. V pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "rezervacia-postup",
+   "t": "objednanie",
+   "q": "Ako prebieha online rezervácia?",
+   "v": [
+    "Postup rezervácie",
+    "Ako funguje rezervácia?"
+   ],
+   "a": "Na https://www.barbershop30.sk/rezervacia vyberieš službu, potom barbera, deň a voľný čas a nakoniec vyplníš svoje údaje. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "rezervacia-udaje",
+   "t": "objednanie",
+   "q": "Aké údaje potrebujete pri rezervácii?",
+   "v": [
+    "Čo musím vyplniť pri rezervácii?"
+   ],
+   "a": "V rezervácii vyplníš kontaktné údaje, ktoré systém pýta, napríklad meno a telefón. Barber ich nepotrebuje, nepíš ich sem do chatu."
+  },
+  {
+   "id": "termin-dnes",
+   "t": "objednanie",
+   "q": "Máte dnes voľný termín?",
+   "v": [
+    "Voľno dnes",
+    "Dá sa dnes prísť?",
+    "Stihnem sa dnes ostrihať?"
+   ],
+   "a": "Aktuálne voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "termin-zajtra",
+   "t": "objednanie",
+   "q": "Máte zajtra voľný termín?",
+   "v": [
+    "Voľno zajtra",
+    "Termín na zajtra"
+   ],
+   "a": "Voľné časy na zajtra uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "termin-sobota",
+   "t": "objednanie",
+   "q": "Máte voľný termín v sobotu?",
+   "v": [
+    "Voľno v sobotu",
+    "Termín cez víkend"
+   ],
+   "a": "V sobotu máme otvorené od 9:00 do 14:00, voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "termin-najblizsi",
+   "t": "objednanie",
+   "q": "Kedy je najbližší voľný termín?",
+   "v": [
+    "Najbližší termín",
+    "Kedy najskôr môžem prísť?"
+   ],
+   "a": "Najbližšie voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, ak si vyberieš ktoréhokoľvek barbera. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "termin-tyzden",
+   "t": "objednanie",
+   "q": "Máte voľno tento týždeň?",
+   "v": [
+    "Termín tento týždeň",
+    "Budúci týždeň"
+   ],
+   "a": "Voľné časy na celé dni dopredu uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "dopredu",
+   "t": "objednanie",
+   "q": "Ako dlho dopredu sa dá objednať?",
+   "v": [
+    "Rezervácia na budúci mesiac",
+    "Ako ďaleko dopredu?"
+   ],
+   "a": "Dni, na ktoré sa dá objednať, uvidíš v rezervačnom kalendári na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "vybrat-barbera",
+   "t": "objednanie",
+   "q": "Môžem si vybrať barbera?",
+   "v": [
+    "Výber barbera",
+    "Chcem konkrétneho barbera"
+   ],
+   "a": "Áno, svojho barbera si vyberieš v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "rovnaky-barber",
+   "t": "objednanie",
+   "q": "Môžem chodiť stále k tomu istému barberovi?",
+   "v": [
+    "Stály barber",
+    "Vždy k rovnakému barberovi"
+   ],
+   "a": "Áno, v rezervácii si zakaždým vyberieš svojho barbera."
+  },
+  {
+   "id": "zmena-terminu",
+   "t": "objednanie",
+   "q": "Ako zmením termín?",
+   "v": [
+    "Presunúť termín",
+    "Zmena rezervácie"
+   ],
+   "a": "Pri zmene termínu nám zavolaj na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "zrusenie",
+   "t": "objednanie",
+   "q": "Ako zruším termín?",
+   "v": [
+    "Zrušenie rezervácie",
+    "Nemôžem prísť"
+   ],
+   "a": "Ak nemôžeš prísť, zavolaj nám čo najskôr na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "meskanie",
+   "t": "objednanie",
+   "q": "Čo ak budem meškať?",
+   "v": [
+    "Meškám",
+    "Prídem neskôr"
+   ],
+   "a": "Daj nám vedieť čo najskôr na 0951 267 203. V pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "bez-objednania",
+   "t": "objednanie",
+   "q": "Dá sa prísť bez objednania?",
+   "v": [
+    "Berete aj bez rezervácie?",
+    "Môžem prísť len tak?",
+    "Bez termínu"
+   ],
+   "a": "Či vezmeme aj bez rezervácie, web neuvádza. Istejšie je objednať sa online na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "potvrdenie",
+   "t": "objednanie",
+   "q": "Ako zistím, že mám termín potvrdený?",
+   "v": [
+    "Potvrdenie rezervácie",
+    "Je môj termín platný?"
+   ],
+   "a": "Termín platí, keď ho potvrdí rezervačný systém alebo recepcia. Ak si nie si istý, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "pripomienka",
+   "t": "objednanie",
+   "q": "Pošlete mi pripomienku termínu?",
+   "v": [
+    "SMS pripomienka",
+    "Pripomenutie termínu"
+   ],
+   "a": "O pripomienkach termínu web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "zaloha",
+   "t": "objednanie",
+   "q": "Platí sa pri rezervácii záloha?",
+   "v": [
+    "Záloha",
+    "Platba vopred"
+   ],
+   "a": "O zálohe web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "viac-ludi",
+   "t": "objednanie",
+   "q": "Môžem objednať viac ľudí naraz?",
+   "v": [
+    "Prídeme dvaja",
+    "Objednať kamarátov",
+    "Skupina"
+   ],
+   "a": "Každého objednaj v rezervácii zvlášť, máme 8 kresiel. Ak chcete prísť v rovnakom čase, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "objednat-syna",
+   "t": "objednanie",
+   "q": "Môžem objednať syna?",
+   "v": [
+    "Objednanie dieťaťa",
+    "Rezervácia pre chlapca"
+   ],
+   "a": "Áno, v rezervácii na https://www.barbershop30.sk/rezervacia vyber strih pre malých gentlemanov (pre chlapcov do 10 rokov, 15 €). Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "rezervacia-nefunguje",
+   "t": "objednanie",
+   "q": "Rezervácia mi nefunguje, čo mám robiť?",
+   "v": [
+    "Nejde mi objednať",
+    "Chyba v rezervácii"
+   ],
+   "a": "Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme a termín dohodneme po telefóne.",
+   "tel": 1
+  },
+  {
+   "id": "volno-barber",
+   "t": "objednanie",
+   "q": "Má môj barber voľný termín?",
+   "v": [
+    "Voľno u barbera",
+    "Kedy má barber čas?"
+   ],
+   "a": "Voľné časy každého barbera uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď si ho vyberieš. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "kolko-pred",
+   "t": "objednanie",
+   "q": "Koľko minút pred termínom mám prísť?",
+   "v": [
+    "Kedy mám prísť?",
+    "Prísť skôr"
+   ],
+   "a": "O tom web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-nikolas",
+   "t": "tim",
+   "q": "Strihá u vás Nikolas?",
+   "v": [
+    "Je u vás Nikolas?",
+    "Nikolas barber",
+    "Pracuje u vás Nikolas?"
+   ],
+   "a": "Áno, Nikolas je barber v našom tíme. Strih ti pristane, akoby si ho nosil odjakživa. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-nikolas",
+   "t": "tim",
+   "q": "Kedy má Nikolas voľný termín?",
+   "v": [
+    "Má Nikolas voľno?",
+    "Termín u Nikolas",
+    "Objednať sa k Nikolas"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Nikolas. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-kristian",
+   "t": "tim",
+   "q": "Strihá u vás Kristián?",
+   "v": [
+    "Je u vás Kristián?",
+    "Kristián barber",
+    "Pracuje u vás Kristián?"
+   ],
+   "a": "Áno, Kristián je barber v našom tíme. Elegancia bez námahy. Taký je jeho rukopis. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-kristian",
+   "t": "tim",
+   "q": "Kedy má Kristián voľný termín?",
+   "v": [
+    "Má Kristián voľno?",
+    "Termín u Kristián",
+    "Objednať sa k Kristián"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Kristián. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-damian",
+   "t": "tim",
+   "q": "Strihá u vás Damian?",
+   "v": [
+    "Je u vás Damian?",
+    "Damian barber",
+    "Pracuje u vás Damian?"
+   ],
+   "a": "Áno, Damian je barber v našom tíme. Pozorne ťa vypočuje. Potom už hovoria len nožnice. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-damian",
+   "t": "tim",
+   "q": "Kedy má Damian voľný termín?",
+   "v": [
+    "Má Damian voľno?",
+    "Termín u Damian",
+    "Objednať sa k Damian"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Damian. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-michal",
+   "t": "tim",
+   "q": "Strihá u vás Michal?",
+   "v": [
+    "Je u vás Michal?",
+    "Michal barber",
+    "Pracuje u vás Michal?"
+   ],
+   "a": "Áno, Michal je barber v našom tíme. Zavrieš oči pri horúcom uteráku a otvoríš ich spokojný. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-michal",
+   "t": "tim",
+   "q": "Kedy má Michal voľný termín?",
+   "v": [
+    "Má Michal voľno?",
+    "Termín u Michal",
+    "Objednať sa k Michal"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Michal. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-andy",
+   "t": "tim",
+   "q": "Strihá u vás Andy?",
+   "v": [
+    "Je u vás Andy?",
+    "Andy barber",
+    "Pracuje u vás Andy?"
+   ],
+   "a": "Áno, Andy je barber v našom tíme. Každý detail na svojom mieste, aj ten, ktorý vidíš len z profilu. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-andy",
+   "t": "tim",
+   "q": "Kedy má Andy voľný termín?",
+   "v": [
+    "Má Andy voľno?",
+    "Termín u Andy",
+    "Objednať sa k Andy"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Andy. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-dominika",
+   "t": "tim",
+   "q": "Strihá u vás Dominika?",
+   "v": [
+    "Je u vás Dominika?",
+    "Dominika barber",
+    "Pracuje u vás Dominika?"
+   ],
+   "a": "Áno, Dominika je barberka v našom tíme. Jemná ruka, prísne oko. U nej je hotovo, až keď sedí každý vlas. Vyberieš si ju v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-dominika",
+   "t": "tim",
+   "q": "Kedy má Dominika voľný termín?",
+   "v": [
+    "Má Dominika voľno?",
+    "Termín u Dominika",
+    "Objednať sa k Dominika"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Dominika. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-kevin",
+   "t": "tim",
+   "q": "Strihá u vás Kevin?",
+   "v": [
+    "Je u vás Kevin?",
+    "Kevin barber",
+    "Pracuje u vás Kevin?"
+   ],
+   "a": "Áno, Kevin je barber v našom tíme. Pracuje pokojne a čisto. Výsledok ťa poteší aj o týždeň. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-kevin",
+   "t": "tim",
+   "q": "Kedy má Kevin voľný termín?",
+   "v": [
+    "Má Kevin voľno?",
+    "Termín u Kevin",
+    "Objednať sa k Kevin"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Kevin. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-lajko",
+   "t": "tim",
+   "q": "Strihá u vás Lajko?",
+   "v": [
+    "Je u vás Lajko?",
+    "Lajko barber",
+    "Pracuje u vás Lajko?"
+   ],
+   "a": "Áno, Lajko je barber v našom tíme. Ostrá línia na krku, mäkký prechod na bokoch. Remeslo vidno zblízka. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-lajko",
+   "t": "tim",
+   "q": "Kedy má Lajko voľný termín?",
+   "v": [
+    "Má Lajko voľno?",
+    "Termín u Lajko",
+    "Objednať sa k Lajko"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Lajko. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-jojo",
+   "t": "tim",
+   "q": "Strihá u vás Jojo?",
+   "v": [
+    "Je u vás Jojo?",
+    "Jojo barber",
+    "Pracuje u vás Jojo?"
+   ],
+   "a": "Áno, Jojo je barber v našom tíme. Rozhovor alebo ticho, ako ti je milšie. Strih dotiahne tak či tak. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia."
+  },
+  {
+   "id": "volno-jojo",
+   "t": "tim",
+   "q": "Kedy má Jojo voľný termín?",
+   "v": [
+    "Má Jojo voľno?",
+    "Termín u Jojo",
+    "Objednať sa k Jojo"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Jojo. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim-adrian",
+   "t": "tim",
+   "q": "Strihá u vás Adrián?",
+   "v": [
+    "Je u vás Adrián?",
+    "Adrián barber",
+    "Pracuje u vás Adrián?"
+   ],
+   "a": "Áno, Adrián je barber v našom tíme. Dôveru získa skôr, než si sadneš do kresla. Rád sa k nemu vrátiš. Vyberieš si ho v rezervácii na https://www.barbershop30.sk/rezervacia. V rezervačnom systéme je ako Adrian."
+  },
+  {
+   "id": "volno-adrian",
+   "t": "tim",
+   "q": "Kedy má Adrián voľný termín?",
+   "v": [
+    "Má Adrián voľno?",
+    "Termín u Adrián",
+    "Objednať sa k Adrián"
+   ],
+   "a": "Voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia, keď v kroku barber vyberieš Adrián. V rezervačnom systéme je ako Adrian. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "tim",
+   "t": "tim",
+   "q": "Kto u vás strihá?",
+   "v": [
+    "Aký máte tím?",
+    "Kto sú vaši barberi?",
+    "Kto tam pracuje?"
+   ],
+   "a": "V tíme sú barberi Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián a barberka Dominika. Svojho človeka si vyberieš v rezervácii."
+  },
+  {
+   "id": "barberka",
+   "t": "tim",
+   "q": "Máte aj barberku?",
+   "v": [
+    "Máte v tíme ženu?",
+    "Barberka"
+   ],
+   "a": "Áno, v tíme je barberka Dominika. Objednáš sa k nej v rezervácii, keď ju vyberieš v kroku barber."
+  },
+  {
+   "id": "kolko-barberov",
+   "t": "tim",
+   "q": "Koľko máte barberov?",
+   "v": [
+    "Koľko vás je?",
+    "Počet barberov"
+   ],
+   "a": "Na webe je predstavených desať ľudí: deväť barberov a barberka Dominika. Strihá sa v 8 kreslách v troch miestnostiach."
+  },
+  {
+   "id": "najlepsi-barber",
+   "t": "tim",
+   "q": "Ktorý barber je najlepší?",
+   "v": [
+    "Koho mi odporučíš?",
+    "Ku komu ísť?"
+   ],
+   "a": "Každý má svoj rukopis, spája ich poctivé remeslo, moderný štýl a ľudský prístup. Krátke predstavenie každého nájdeš na webe v časti Tím."
+  },
+  {
+   "id": "prax",
+   "t": "tim",
+   "q": "Koľko rokov praxe majú barberi?",
+   "v": [
+    "Skúsenosti barberov",
+    "Ako dlho strihajú?"
+   ],
+   "a": "O praxi jednotlivých barberov web nič neuvádza. Na Mostnej 30 strihy robíme od roku 2019."
+  },
+  {
+   "id": "specializacia",
+   "t": "tim",
+   "q": "Kto sa špecializuje na brady alebo fade?",
+   "v": [
+    "Špecialista na fade",
+    "Kto robí najlepšie brady?"
+   ],
+   "a": "O špecializáciách barberov web nič neuvádza. Fade patrí k pánskemu strihu a úpravu brady robí tím s horúcim uterákom a britvou."
+  },
+  {
+   "id": "jazyky-timu",
+   "t": "tim",
+   "q": "Hovoria barberi po anglicky?",
+   "v": [
+    "English speaking barber",
+    "Jazyky tímu"
+   ],
+   "a": "O jazykoch tímu web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "praca-barberov",
+   "t": "tim",
+   "q": "Kde uvidím prácu barberov?",
+   "v": [
+    "Fotky strihov",
+    "Ukážky strihov"
+   ],
+   "a": "Aktuálne strihy sú na Instagrame @barbershop30_nitra: https://www.instagram.com/barbershop30_nitra/ Galéria strihov na webe bude doplnená po nafotení."
+  },
+  {
+   "id": "od-kedy",
+   "t": "podnik",
+   "q": "Odkedy fungujete?",
+   "v": [
+    "Ako dlho existujete?",
+    "Od kedy ste na Mostnej?"
+   ],
+   "a": "Na Mostnej 30 strihy robíme od roku 2019."
+  },
+  {
+   "id": "kresla",
+   "t": "podnik",
+   "q": "Koľko máte kresiel?",
+   "v": [
+    "Aký veľký je barbershop?",
+    "Koľko miestností máte?"
+   ],
+   "a": "Máme 8 kresiel v troch miestnostiach."
+  },
+  {
+   "id": "recepcia",
+   "t": "podnik",
+   "q": "Máte recepciu?",
+   "v": [
+    "Recepčná",
+    "Kto ma privíta?"
+   ],
+   "a": "Áno, pri dverách ťa privíta recepčná. Ako jediný barbershop v Nitre ju máme už 8 rokov."
+  },
+  {
+   "id": "kava",
+   "t": "podnik",
+   "q": "Je u vás káva?",
+   "v": [
+    "Dostanem kávu?",
+    "Káva zdarma",
+    "Niečo na pitie"
+   ],
+   "a": "Áno, vzadu v čakárni je káva aj minerálka zdarma."
+  },
+  {
+   "id": "cakaren",
+   "t": "podnik",
+   "q": "Máte čakáreň?",
+   "v": [
+    "Kde počkám?",
+    "Čakanie"
+   ],
+   "a": "Áno, vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom. Káva aj minerálka sú zdarma."
+  },
+  {
+   "id": "route66",
+   "t": "podnik",
+   "q": "Čo je tá benzínová pumpa v čakárni?",
+   "v": [
+    "Route 66",
+    "Retro pumpa"
+   ],
+   "a": "To je retro pumpa Route 66 v našej čakárni. Pri nej si dáš kávu alebo minerálku zdarma."
+  },
+  {
+   "id": "skolenia",
+   "t": "podnik",
+   "q": "Robíte školenia?",
+   "v": [
+    "Kurz pre barberov",
+    "Školenie"
+   ],
+   "a": "Áno, školenia sú na poschodí pod značkou Barbershop 30. Podrobnosti ti povedia na recepcii: 0951 267 203."
+  },
+  {
+   "id": "skolenie-prihlasit",
+   "t": "podnik",
+   "q": "Ako sa prihlásim na školenie?",
+   "v": [
+    "Prihláška na kurz",
+    "Cena školenia"
+   ],
+   "a": "Podrobnosti o školeniach sú len na recepcii. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "prevadzkovatel",
+   "t": "podnik",
+   "q": "Kto je prevádzkovateľ?",
+   "v": [
+    "Firma",
+    "Fakturačné údaje"
+   ],
+   "a": "Prevádzkovateľ je FACEPALM, s.r.o., IČO 52231381."
+  },
+  {
+   "id": "ico",
+   "t": "podnik",
+   "q": "Aké je vaše IČO?",
+   "v": [
+    "IČO"
+   ],
+   "a": "IČO 52231381 (FACEPALM, s.r.o.)."
+  },
+  {
+   "id": "atmosfera",
+   "t": "podnik",
+   "q": "Aká je u vás atmosféra?",
+   "v": [
+    "Aké je to u vás v shope?",
+    "Prostredie"
+   ],
+   "a": "Sme lokálny barber, kde stretneš hocikoho. Pri dverách ťa privíta recepčná, vzadu čaká káva, kreslá a retro pumpa."
+  },
+  {
+   "id": "preco-vy",
+   "t": "podnik",
+   "q": "Prečo si vybrať práve vás?",
+   "v": [
+    "Čím ste iní?",
+    "Prečo k vám?"
+   ],
+   "a": "Na Mostnej 30 strihy robíme od roku 2019, máme 8 kresiel, recepčnú, kávu zdarma a na Google hodnotenie 5,0 z 945 recenzií."
+  },
+  {
+   "id": "vernostna",
+   "t": "podnik",
+   "q": "Máte vernostnú kartičku?",
+   "v": [
+    "Vernostný program",
+    "Body za návštevy"
+   ],
+   "a": "Na vernostnú kartičku sa spýtaj na recepcii. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "praca-u-vas",
+   "t": "podnik",
+   "q": "Hľadáte barbera do tímu?",
+   "v": [
+    "Práca",
+    "Voľné miesto",
+    "Chcem u vás pracovať"
+   ],
+   "a": "O voľných miestach web nič neuvádza. Napíš na info@barbershop30.sk alebo zavolaj na 0951 267 203."
+  },
+  {
+   "id": "holicstvo",
+   "t": "podnik",
+   "q": "Ste holičstvo alebo barbershop?",
+   "v": [
+    "Holičstvo"
+   ],
+   "a": "Sme Barbershop 30, lokálny barber na Mostnej 30 v Nitre: pánske strihy, brada a holenie."
+  },
+  {
+   "id": "karta",
+   "t": "ine",
+   "q": "Dá sa u vás platiť kartou?",
+   "v": [
+    "Platba kartou",
+    "Berete karty?"
+   ],
+   "a": "O platbe kartou web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "hotovost",
+   "t": "ine",
+   "q": "Dá sa platiť v hotovosti?",
+   "v": [
+    "Platba v hotovosti",
+    "Cash"
+   ],
+   "a": "O platbe v hotovosti web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "zlavy",
+   "t": "ine",
+   "q": "Máte nejaké zľavy?",
+   "v": [
+    "Zľava",
+    "Akcie"
+   ],
+   "a": "O zľavách a akciách web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "studenti",
+   "t": "ine",
+   "q": "Máte študentskú zľavu?",
+   "v": [
+    "Zľava pre študentov",
+    "ISIC"
+   ],
+   "a": "O študentských zľavách web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "dochodcovia",
+   "t": "ine",
+   "q": "Máte zľavu pre dôchodcov?",
+   "v": [
+    "Seniori"
+   ],
+   "a": "O zľavách pre seniorov web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "poukazy",
+   "t": "ine",
+   "q": "Dá sa kúpiť darčekový poukaz?",
+   "v": [
+    "Darčeková poukážka",
+    "Voucher"
+   ],
+   "a": "O darčekových poukážkach web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "produkty",
+   "t": "ine",
+   "q": "Predávate produkty na vlasy a bradu?",
+   "v": [
+    "Pomáda na predaj",
+    "Olej na bradu"
+   ],
+   "a": "O predaji produktov web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "faktura",
+   "t": "ine",
+   "q": "Vystavíte faktúru na firmu?",
+   "v": [
+    "Faktúra",
+    "Doklad na firmu"
+   ],
+   "a": "O faktúrach web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "wifi",
+   "t": "ine",
+   "q": "Máte Wi‑Fi?",
+   "v": [
+    "Internet",
+    "Je u vás wifi?"
+   ],
+   "a": "O Wi‑Fi web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "pes",
+   "t": "ine",
+   "q": "Môžem prísť so psom?",
+   "v": [
+    "Pes",
+    "Zvieratá"
+   ],
+   "a": "O zvieratách web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "hygiena",
+   "t": "ine",
+   "q": "Ako čistíte nástroje?",
+   "v": [
+    "Hygiena",
+    "Dezinfekcia"
+   ],
+   "a": "O čistení nástrojov web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "alergia",
+   "t": "ine",
+   "q": "Mám alergiu na farby, môžem si dať zafarbiť bradu?",
+   "v": [
+    "Alergia",
+    "Citlivosť na farbu"
+   ],
+   "a": "Povedz to vopred barberovi a pred objednaním sa poraď s recepciou. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "citliva-plet",
+   "t": "ine",
+   "q": "Mám citlivú pleť, môžem ísť na holenie?",
+   "v": [
+    "Citlivá pokožka",
+    "Podráždenie po holení"
+   ],
+   "a": "Povedz to barberovi pri konzultácii. Holenie Hot Towel končí ošetrením pleti po holení. Ak si nie si istý, spýtaj sa na recepcii: 0951 267 203."
+  },
+  {
+   "id": "zmena-cien",
+   "t": "ine",
+   "q": "Zmenili sa ceny?",
+   "v": [
+    "Aktuálne ceny",
+    "Nové ceny"
+   ],
+   "a": "Aktuálne ceny sú v cenníku na webe, napríklad pánsky strih 18 €, s úpravou brady 28 €. Ceny sú konečné."
+  },
+  {
+   "id": "nezdvihnu",
+   "t": "ine",
+   "q": "Čo ak nezdvihnete telefón?",
+   "v": [
+    "Nikto nedvíha",
+    "Neviem sa dovolať"
+   ],
+   "a": "Na 0951 267 203 v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme. Mimo tohto času sa objednáš online na https://www.barbershop30.sk/rezervacia alebo napíš na info@barbershop30.sk.",
+   "tel": 1
+  },
+  {
+   "id": "barber-kto",
+   "t": "barber",
+   "q": "Kto si?",
+   "v": [
+    "Čo si zač?",
+    "Predstav sa"
+   ],
+   "a": "Som Barber, AI asistent Barbershopu 30. Pomôžem ti so službami, cenami, otváracími hodinami aj objednaním."
+  },
+  {
+   "id": "barber-meno",
+   "t": "barber",
+   "q": "Ako sa voláš?",
+   "v": [
+    "Tvoje meno"
+   ],
+   "a": "Volám sa Barber, som AI asistent Barbershopu 30."
+  },
+  {
+   "id": "barber-clovek",
+   "t": "barber",
+   "q": "Si človek?",
+   "v": [
+    "Píšem s robotom?",
+    "Si AI?",
+    "Chcem hovoriť s človekom"
+   ],
+   "a": "Nie, som AI asistent. S človekom sa spojíš na recepcii: 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+  },
+  {
+   "id": "barber-objedna",
+   "t": "barber",
+   "q": "Vieš ma objednať?",
+   "v": [
+    "Rezervuj mi termín",
+    "Môžeš ma objednať ty?"
+   ],
+   "a": "Sám termín nerezervujem. Objednáš sa online na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "barber-zrusi",
+   "t": "barber",
+   "q": "Vieš zrušiť môj termín?",
+   "v": [
+    "Zruš mi termín"
+   ],
+   "a": "Termíny cez chat nerušíme. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "tel": 1
+  },
+  {
+   "id": "barber-jazyky",
+   "t": "barber",
+   "q": "Hovoríš aj po anglicky?",
+   "v": [
+    "Do you speak English?",
+    "Jazyky"
+   ],
+   "a": "Áno, odpoviem v jazyku, v ktorom sa opýtaš."
+  },
+  {
+   "id": "barber-udaje",
+   "t": "barber",
+   "q": "Ukladáš si naše rozhovory?",
+   "v": [
+    "Súkromie",
+    "Čo sa deje s mojimi správami?"
+   ],
+   "a": "Server Barbera rozhovory neukladá, ostávajú len v tvojom prehliadači. Nepíš sem osobné údaje. Viac je v odkaze Ochrana údajov pod oknom."
+  },
+  {
+   "id": "barber-spravne",
+   "t": "barber",
+   "q": "Sú tvoje odpovede správne?",
+   "v": [
+    "Môžem ti veriť?",
+    "Presnosť odpovedí"
+   ],
+   "a": "Odpovedám len podľa údajov z webu Barbershopu 30. Termín, cenu alebo výnimku si pre istotu potvrď na recepcii: 0951 267 203."
+  },
+  {
+   "id": "ahoj",
+   "t": "barber",
+   "q": "Ahoj",
+   "v": [
+    "Dobrý deň",
+    "Čau",
+    "Zdravím"
+   ],
+   "a": "Ahoj! Som Barber. Spýtaj sa ma na ceny, služby, otváracie hodiny alebo objednanie."
+  },
+  {
+   "id": "dakujem",
+   "t": "barber",
+   "q": "Ďakujem",
+   "v": [
+    "Vďaka",
+    "Super, díky"
+   ],
+   "a": "Rado sa stalo. Ak ťa ešte niečo zaujíma, pýtaj sa."
+  },
+  {
+   "id": "dovidenia",
+   "t": "barber",
+   "q": "Dovidenia",
+   "v": [
+    "Maj sa",
+    "Čau, zatiaľ"
+   ],
+   "a": "Maj sa! Tešíme sa na teba na Mostnej 30."
+  }
+ ]
+}

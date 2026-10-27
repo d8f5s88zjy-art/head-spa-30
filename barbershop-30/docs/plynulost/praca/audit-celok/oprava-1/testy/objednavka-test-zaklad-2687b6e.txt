@@ -1,0 +1,33 @@
+OK   okno sa zapne až po stave servera s pripojeným kalendárom
+OK   pás s vizitkou je hneď pod kontaktom
+OK   vizitka má prednú aj zadnú stranu
+OK   vizitka ako ich: kontakt z fotky vpredu, zadná strana bez textu
+OK   vizitka: pôvodné logo v kruhu na oboch stranách
+OK   Uložiť kontakt (vCard), bez vymysleného PDF
+OK   súbor kontaktu existuje
+OK   vernostná kartička: ukážka s vypnutým tlačidlom (prihláška nie je zapnutá)
+OK   zmena jazyka: texty pásu preložené, vizitka ostáva slovenská ako vytlačená
+OK   krok 1: 15 služieb z cenníka
+OK   krok 1: názov, čas a cena ako na webe
+OK   krok 1: nič nepreteká do strany
+DIAG tím 200 uvod=off&film=off&hudba=off&objednavka=http%3A%2F%2F127.0.0.1%3A8905%2Fapi.php&vernost=ukazka <!DOCTYPE html>
+<html lang="sk" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta  | 200 a=stav {"ok":true,"zapnute":false,"kalendar":true} | 503 a=dni&sluzba=18&barber=ktoko%C4%BEvek {"ok":false,"chyba":"Rezervačný kalendár nie je pripojený."} | 503 a=barberi&sluzba=18 {"ok":false,"chyba":"Rezervačný kalendár nie je pripojený."} {"obj":"← SpäťObjednávka · Krok 2 zo 4×Kedy a u koho?Pánsky strih a úprava bradyVoľné časy teraz neviem overiť.Zavolaj nám, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.Dokončiť v rezervačnom systémeZavolať a potvrdiť termínRadšej zavoláš? 0951 267 203","r":[503,"{\"ok\":false,\"chyba\":\"Rezervačný kalendár nie je pripojený.\"}"],"krok":"Kedy a u koho?"}
+FAIL krok 2: Nezáleží a barberi z rezervačného systému  []
+FAIL krok 2: portréty z tímu na webe
+OK   krok 2: nič nepreteká
+DIAG rýchla voľba 200 uvod=off&film=off&hudba=off&objednavka=http%3A%2F%2F127.0.0.1%3A8905%2Fapi.php&vernost=ukazka <!DOCTYPE html>
+<html lang="sk" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta  | 200 a=stav {"ok":true,"zapnute":false,"kalendar":true} | 503 a=dni&sluzba=18&barber=ktoko%C4%BEvek {"ok":false,"chyba":"Rezervačný kalendár nie je pripojený."} | 503 a=barberi&sluzba=18 {"ok":false,"chyba":"Rezervačný kalendár nie je pripojený."} | 503 a=barberi&sluzba=18 {"ok":false,"chyba":"Rezervačný kalendár nie je pripojený."} [503,"{\"ok\":false,\"chyba\":\"Rezervačný kalendár nie je pripojený.\"}"]
+FAIL krok 2: najbližšie voľné časy u kohokoľvek nad tímom  []
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.obj-tim button').filter({ hasText: 'Adrian' })[22m
+
+    at /tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/barber/audit-celok/oprava-1/plny-zaklad/barbershop-30/source/tools/objednavka-test.mjs:138:64 {
+  name: 'TimeoutError'
+}
