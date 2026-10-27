@@ -655,3 +655,27 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   `docs/screenshots/tema-rezervacia/` (390 a 1440 px, kroky 1 až 6 vrátane súhrnu a potvrdenia).
 - Nedá sa cez jazykový súbor: „Posledný krok“, „Skontrolujte si Vašu rezerváciu…“, „Služby:“, „Odstrániť“,
   „Pridať službu“, „Zmeniť“ a dvojbodky za popismi (sú v kóde ich systému). Vzhľad e‑mailov je v ich šablóne.
+
+## 32. Texty tímu, recepcia v častých otázkach a odkazy na prevádzky (2026‑10‑27)
+
+- Zadávateľ: údernejšie texty pri barberoch (garancia, skúsenosti), v otázkach recepčná = termíny a pohodlie, barber
+  = výsledok, na konci stránky odkazy na HEAD SPA 30, Salón 30 a Barbershop 30.
+- Tím (`#tim .band-team`): úvod „Tím barberov a barberiek pod jednou značkou. … Ty povieš, ako to chceš. Zvyšok je
+  remeslo.“, tri piliere `ul.team-pillars` (Skúsenosti · Precíznosť · Pohodlie, každý ≤ 140 znakov) nad portrétmi,
+  riadky barberov ≤ 90 znakov (rovnaké v `rezervacia.html` a v odpovediach asistenta `tim-*`, `node source/tools/otazky.mjs`
+  OK). Bez faktov o osobe, bez porovnávania konkurencie, bez zdravotných sľubov. Garancia len ako otázka pre majiteľa.
+- Časté otázky: 10 položiek (`en-test.mjs` čaká 10); „Mám volať barberovi alebo recepcii?“ 319 znakov, „Čo ma čaká,
+  keď prídem?“ 205 znakov; každá veta má oporu na stránke (CONTENT_SOURCES, časť 2026‑10‑27).
+- Pätička: `.footer-shops` medzi stĺpcami a riadkom prevádzkovateľa; HEAD SPA 30 → https://www.headspa30.sk/
+  (200, headspa30.sk presmeruje na www), Salón 30 → https://www.salon30.sk/ (200), Barbershop 30 → `#uvod`
+  s `aria-current="page"`; externé odkazy `target="_blank" rel="noopener"`; na telefóne ťukacia plocha 44 px.
+  Ostatné stĺpce pätičky bez zmeny; film.js bez zmeny.
+- Jazyky: 27 nových kľúčov v 7 slovníkoch (11 starých odobraných), `en/index.html` pregenerovaná (369 prekladov,
+  bez prekladu 0). CSS: `ul.team-pillars`, lebo `ul[role="list"]` nuluje okraje s vyššou špecifickosťou.
+- Overené (Playwright, 390×844 DPR 3 a 1440×900): snímky tímu, otázok a pätičky PRED (bdabff7) a PO, hárok
+  `scratchpad/barber/texty/pred-po.jpg`; bez vodorovného pretekania, bez chýb skriptu. Testy i18n (55 OK), en (16 OK),
+  vychytavky (27 OK), admin (101 OK); app-smoke 108 OK + 1 FAIL „[softvér desktop] bez posunu rozloženia (CLS 0.0283)“
+  s rovnakou hodnotou ako pred zmenou (v jednom z dvoch behov 109 OK, kolísavé meranie záložného úvodu bez filmu);
+  tma-test v tomto prostredí padá na chýbajúcom module Pillow (`PIL._imaging`), rovnako pred zmenou aj po nej.
+- Veľkosť: index.html gzip 14 844 → 15 758 B (nad 14 600 B z plánu D6; hranica bola prekročená už pred touto zmenou).
+

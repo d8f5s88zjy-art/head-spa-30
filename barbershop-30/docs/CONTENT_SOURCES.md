@@ -175,3 +175,31 @@ Hodnotenie na Google ostáva aj ako odkaz (teraz priamo na profil, nie na vyhľa
   Predvoľba služby a barbera v rezervačnom systéme cez adresu nie je zdokumentovaná, preto Dokončiť otvorí jeho formulár
   bez nej.
 
+
+## Texty tímu, časté otázky a prevádzky v pätičke (2026‑10‑27)
+
+Zadanie majiteľa z 27. 10. 2026: údernejšie texty pri barberoch, recepcia v častých otázkach, odkazy na prevádzky.
+Pravidlo: žiadny nový fakt; každá veta stavia len na textoch, ktoré už na webe sú, alebo na živých weboch prevádzok.
+Riadky barberov ostávajú dojem a prístup, nie fakty o osobe (žiadne roky praxe, špecializácie, ocenenia).
+Garancia na webe nie je, kým ju majiteľ nepotvrdí (`dennik/.../OTAZKY-PRE-MAJITELA.md`, otázka 25).
+
+| text na webe | kde | opora | stupeň |
+|---|---|---|---|
+| Úvod tímu „Tím barberov a barberiek pod jednou značkou. … strih, ktorý vyzerá dobre aj o týždeň. Ty povieš, ako to chceš. Zvyšok je remeslo.“ | tím, `.lead` | karta tímu „Pod značkou Barbershop 30 tu pracuje tím barberov a barberiek.“ (želanie majiteľa 13. 10.), krok Konzultácia v cenníku, „Výsledok ťa poteší aj o týždeň.“ (pôvodný riadok Kevina), scéna „Povedz, ako to chceš.“ | zostavené z webu |
+| Riadky pri desiatich barberoch | tím, `.team-bio` (aj `rezervacia.html`, odpovede asistenta `tim-*`) | zostrené pôvodné riadky z 11. 10.; bez faktov o osobe | dojem a prístup |
+| Pilier Skúsenosti „Striháme na Mostnej 30 od roku 2019. Hodnotenie 5,0 na Google sa za týždeň nastrihať nedá. Nič naslepo.“ | tím, `.team-pillars` | „Na Mostnej 30 striháme od roku 2019.“ (karta Dôvera), „5,0 na Google“ (úvod, časť Úvod: hodnotenie a cena); počet recenzií sa v pilieri neuvádza, lebo starne | overené‑oficiálne + tretia strana (Google) |
+| Pilier Precíznosť „Konzultácia pred prvým ťahom strojčeka, britva pri brade, styling a kolínska na záver: nič sa tu nerobí od oka.“ | tím | „Pánsky strih krok za krokom“ (konzultácia, strojček a nožnice, horúci uterák a britva, styling a kolínska) | overené‑oficiálne (cenník) |
+| Pilier Pohodlie „Pri dverách recepčná, v čakárni káva a minerálka zdarma. Ty si len sadneš.“ | tím | karty „Poď ďalej“ (recepčná pri dverách) a „Čakáreň“ (káva aj minerálka zdarma) | overené‑oficiálne |
+| „Mám volať barberovi alebo recepcii?“ – „Vždy recepcii: 0951 267 203, … Recepčná sa stará o tvoj termín a pohodlie, barber o tvoj výsledok. … Recepcia ti termín nájde, zmenu či zrušenie jej daj vedieť čo najskôr.“ | časté otázky (2. položka) | telefón a hodiny recepcie (karta Rezervácia), rozdelenie recepčná/barber = zadanie majiteľa 27. 10., „Daj nám vedieť čo najskôr“ (otázka „Čo ak nestihnem prísť?“); lehoty a poplatky za storno (otázka 3) sa neuvádzajú | tvrdenie majiteľa + web |
+| „Čo ma čaká, keď prídem?“ – recepčná pri dverách, káva alebo minerálka vzadu, konzultácia, strojček, nožnice, fade, horúci uterák a britva, styling a kolínska | časté otázky (9. položka) | karty „Poď ďalej“, „Čakáreň“, „Remeslo“, „Cestou von“, cenník | overené‑oficiálne |
+| Pätička „Naše prevádzky“: HEAD SPA 30 → https://www.headspa30.sk/ „Head Spa rituály pre relax a regeneráciu vlasov.“ | pätička | web HEAD SPA 30 v tomto repozitári (meta description koreňového `index.html`), živá doména (curl 27. 10.: 200, `headspa30.sk` presmeruje na `www`; `tools/ftp-balik.sh` prepisuje kanonickú adresu na doménu) | overené‑oficiálne |
+| Salón 30 → https://www.salon30.sk/ „Kaderníctvo a wellness pre vlasy: strihy, farbenie a koloristika, trichologické vyšetrenie.“ | pätička | www.salon30.sk (curl 27. 10.: 200; na stránke „Wellness pre vaše vlasy“, „Strih“, „koloristika“, „Trichologické vyšetrenie vlasov“, Mostná 30) | overené‑oficiálne (web salónu) |
+| Barbershop 30 → `#uvod` (aktuálna prevádzka, `aria-current="page"`) „Pánske strihy, brada a holenie britvou. Si tu.“ | pätička | pätička webu a cenník (holenie britvou); po spustení na www.barbershop30.sk sa prepne na doménu (otázka 21) | overené‑oficiálne |
+
+Nadpis „Naše prevádzky“ sú slová majiteľa z 27. 10.; prevádzkovateľ FACEPALM, s.r.o., IČO 52231381 je uvedený na
+barbershop30.sk aj salon30.sk a HEAD SPA 30 sídli v priestoroch Salónu 30. Doterajšie pravidlo „Vzťah so Salónom 30 … žiadny
+web nespomína druhý“ (časť Čo ostáva neoverené) tým majiteľ zmenil; potvrdenie nadpisu je otázka 26. Telefóny iných
+prevádzok sa neuvádzajú. Dôkazy adries (`curl -sS -o /dev/null -L -w '%{http_code} final=%{url_effective}'`, 27. 10. 2026):
+https://www.headspa30.sk/ → 200 (final www), https://headspa30.sk/ → 200 (final https://www.headspa30.sk/),
+https://d8f5s88zjy-art.github.io/head-spa-30/ → 200, https://www.salon30.sk/ → 200, https://salon30.sk/ → 200 (final www),
+https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/ → 200, https://www.barbershop30.sk/ → 200 (starý web).

@@ -696,6 +696,13 @@ html.pro:not(.world-off) .scroll-hint { opacity: 0; }
 .team-note a { color: var(--paper-2); }
 .team-note a:hover { color: var(--lamp-2); }
 @media (max-width: 640px) { .team-body { padding: var(--s3) var(--s3) var(--s4); } .team-cta { font-size: 0.875rem; } .team-bio { font-size: 1rem; } }
+/* tri piliere tímu (zadávateľ 2026‑10‑27): skúsenosti, precíznosť, pohodlie; sadzba ako fakty pri kontakte, menšie písmo.
+   ul.team-pillars, lebo ul[role="list"] vyššie nuluje okraje a má vyššiu špecifickosť */
+ul.team-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); margin-bottom: var(--s7); }
+.team-pillars li { display: grid; gap: var(--s2); min-width: 0; padding-left: var(--s4); border-left: 2px solid var(--lamp); }
+.team-pillars strong { font-family: var(--font-display); font-weight: 800; font-variation-settings: "opsz" 144; font-size: 1.25rem; line-height: 1.15; color: var(--paper); }
+.team-pillars span { font-size: 0.9375rem; line-height: 1.5; color: var(--paper-2); text-wrap: pretty; }
+@media (max-width: 800px) { ul.team-pillars { grid-template-columns: 1fr; gap: var(--s4); margin-bottom: var(--s6); } }
 
 /* --------------------------------------------------------------------------
    P5. Služby a ceny – doska s cenníkom nad záberom (tabulárne číslice)
@@ -938,6 +945,15 @@ html[data-motion="off"] .board-hero { animation: none; }
 .footer-bottom .footer-autor { flex-basis: 100%; order: 3; margin-top: calc(-1 * var(--s2)); }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px)  { .footer-grid { grid-template-columns: 1fr; gap: var(--s5); } }
+/* naše prevádzky (zadávateľ 2026‑10‑27): riadok medzi stĺpcami a údajmi prevádzkovateľa, tri odkazy,
+   aktuálna prevádzka (aria-current) v tóne lampy; ostatné stĺpce pätičky bez zmeny */
+.footer-shops { margin-top: var(--s7); padding-top: var(--s5); border-top: 1px solid var(--line); }
+.footer-shop-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); }
+.footer-shop-list li { display: grid; gap: var(--s1); min-width: 0; align-content: start; }
+.footer-shop-list a { justify-self: start; font-size: 1.0625rem; font-weight: 600; color: var(--paper); }
+.footer-shop-list a[aria-current="page"] { color: var(--lamp-2); text-decoration-color: var(--lamp); }
+.footer-shop-list span { font-size: 0.9375rem; color: var(--paper-3); }
+@media (max-width: 640px) { .footer-shop-list { grid-template-columns: 1fr; gap: var(--s4); } }
 
 /* Podklad lišty bez app.js (scroll-driven animation); app.js prepne na .is-scrolled */
 @supports (animation-timeline: scroll()) {
@@ -1609,6 +1625,7 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
   .link-arrow, .hero-rating { position: relative; }
   .link-arrow::after, .hero-rating::after { content: ""; position: absolute; inset: -10px -4px; }
   .site-footer address a { display: inline-block; padding-block: 10px; margin-block: -10px; }
+  .footer-shop-list a { padding-block: 10px; margin-block: -10px; }
   /* telefón a e‑mail v kontakte (medzera 20 px) a odkazy v pätičke (medzera 12 px): presah len do polovice
      medzery k susedovi, aby si plochy nebrali ťuk; vzhľad bez zmeny */
   .contact-row a, .footer-links a { position: relative; }

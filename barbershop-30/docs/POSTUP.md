@@ -59,6 +59,19 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑27 (hotové na vetve, CHECKS 32): zadávateľ: „pri barberoch pikantnejšie texty (garancia, skúsenosti), do otázok
+  napísať, že recepčná sa stará o termíny a pohodlie a barber o výsledok, na konci odkazy na HEAD SPA 30, Salón 30
+  a Barbershop 30“. Tím: nový úvod, tri piliere Skúsenosti · Precíznosť · Pohodlie (`.team-pillars`), údernejšie
+  riadky pri desiatich barberoch (aj `rezervacia.html` a odpovede asistenta `tim-*`); otázky „Mám volať barberovi alebo
+  recepcii?“ (2. miesto) a „Čo ma čaká, keď prídem?“ (9. miesto); pätička blok „Naše prevádzky“ (www.headspa30.sk,
+  www.salon30.sk, Barbershop 30 ako aktuálna stránka, všetko curl 200). Všetko z overených textov webu (CONTENT_SOURCES,
+  časť 2026‑10‑27), 8 jazykov, `en/` pregenerovaná. Garancia NIE je na webe: tri znenia čakajú na majiteľa
+  (`dennik/.../OTAZKY-PRE-MAJITELA.md`, otázky 25 až 34: garancia, nadpis „Naše prevádzky“, adresy prevádzok, hodnotenie
+  v pilieri, bez objednania, fakty o barberoch). index.html gzip 14 844 → 15 758 B. Testy i18n, en, vychytavky a admin OK;
+  app-smoke má jedinú chybu „[softvér desktop] bez posunu rozloženia (CLS 0.0283)“ s rovnakou hodnotou ako pred zmenou
+  (kolísavé meranie záložného úvodu, v jednom z dvoch behov prešlo); tma-test padá na chýbajúcom module Pillow v prostredí
+  (rovnako ako pred zmenou).
+
 - 2026‑10‑27 (hotové, audit SEO A3-04, A3-07 až A3-13): sitemap.xml len s kanonickými adresami sk a `en/` (adresy
   `?lang=` majú canonical na slovenskú stránku). og:type website, og:locale:alternate, jedna ikona stránky, @id podniku,
   zväčšená fotka bez `src=""`, rezervácia s rozmermi obrázka a twitter:card; robots.txt nezakazuje admin/ (má noindex).

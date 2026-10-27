@@ -62,7 +62,7 @@ const telefon = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, i
   ok(info.lang === 'en' && /Men's barbershop/.test(info.title) && /^Men's barbershop at Mostná/.test(info.desc), 'jazyk, titulok a popis po anglicky', info.title);
   ok(info.canon === BASE + 'en/', 'kanonická adresa en/ = základná adresa + en/', info.canon);
   ok(/Barbershop 30 · Nitra/i.test(info.h1) && /Your cut|Your place/i.test(info.h1), 'H1 so značkou a mestom', info.h1);
-  ok(info.faq === 8 && info.faqQ === 'How do I book?', 'časté otázky po anglicky', `${info.faq}, ${info.faqQ}`);
+  ok(info.faq === 10 && info.faqQ === 'How do I book?', 'časté otázky po anglicky', `${info.faq}, ${info.faqQ}`);
   ok(info.sk.length === 0, 'žiadny slovenský text zo slovníka', info.sk.slice(0, 5).join(' | '));
   ok(chybajuce.length === 0 && info.obrazky.length === 0, 'všetky súbory sa načítajú z en/ (cesty ../assets)', chybajuce.slice(0, 4).join(', ') + info.obrazky.slice(0, 2).join(', '));
   ok(chyby.length === 0, 'bez chýb skriptu', chyby.slice(0, 2).join(' | '));
@@ -98,7 +98,7 @@ const telefon = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, i
   }));
   ok(sk.title === 'Barbershop 30 Nitra | Pánske holičstvo, Mostná 30' && sk.title.length <= 60, 'titulok do 60 znakov', `${sk.title.length}`);
   ok(/BARBERSHOP 30 · NITRA|Barbershop 30 · Nitra/i.test(sk.h1) && sk.kicker === 'uppercase', 'H1 obsahuje značku a mesto, nadpisok ostal verzálkami', sk.h1);
-  ok(sk.faq.length === 8 && sk.faq[0] === 'Ako sa objednám?', 'časté otázky na slovenskej stránke', sk.faq.length);
+  ok(sk.faq.length === 10 && sk.faq[0] === 'Ako sa objednám?', 'časté otázky na slovenskej stránke', sk.faq.length);
   ok(/maps\?cid=/.test(sk.ld || ''), 'údaje pre Google: odkaz na profil v Mapách', sk.ld);
   await p.evaluate(() => document.querySelector('#caste-otazky').scrollIntoView({ block: 'start', behavior: 'instant' }));
   await p.waitForTimeout(500);

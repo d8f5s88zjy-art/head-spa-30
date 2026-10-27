@@ -46,9 +46,14 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 - **SEO úvod a časté otázky (2026‑10‑25, `docs/SEO-ANALYZA.md`)**: titulok „Barbershop 30 Nitra | Pánske holičstvo,
   Mostná 30“, popis so službami, H1 so značkou a mestom (nadpisok „Barbershop 30 · Nitra“ nad „Tvoj strih. Tvoje
   miesto.“), podnadpis „Pánske holičstvo na Mostnej 30“. Časté otázky (`#caste-otazky`, pás v rezervácii pod
-  kontaktom, 8 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
+  kontaktom, 10 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
   s `hasMap` (profil v Mapách; súradnice nie sú, lebo nie sú overené).
 
+- **Tím, recepcia v otázkach a prevádzky v pätičke (2026‑10‑27, `docs/CHECKS.md` 32)**: nad portrétmi tímu tri
+  piliere Skúsenosti · Precíznosť · Pohodlie (`ul.team-pillars`), riadky barberov bez faktov o osobe (rovnaké
+  v `rezervacia.html` a v odpovediach asistenta), v častých otázkach „Mám volať barberovi alebo recepcii?“ (recepčná =
+  termíny a pohodlie, barber = výsledok), v pätičke blok „Naše prevádzky“ (`.footer-shops`: HEAD SPA 30, Salón 30,
+  Barbershop 30 ako aktuálna stránka s `aria-current`). Garancia sa zobrazí až po potvrdení majiteľom (otázky v denníku).
 - **Asistent Barber** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): ikona vľavo dole je logo
   Barbershopu 30 v bielom kruhu so štítkom AI; keď ju návštevník chvíľu vidí, vyskočí pri nej bublina (Spýtať sa,
   Zavolať, zavrieť; raz za návštevu, zavretá sa 14 dní neukáže). Chat odpovedá na otázky o službách, cenách,
