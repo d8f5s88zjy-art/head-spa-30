@@ -16,6 +16,8 @@ const OUT = path.resolve(opt.out || path.join(SITE, 'docs', 'screenshots', 'vych
 fs.mkdirSync(OUT, { recursive: true });
 let failed = 0;
 const ok = (c, m, x = '') => { console.log(`${c ? 'OK  ' : 'FAIL'} ${m}${x ? '  ' + x : ''}`); if (!c) failed++; };
+// základná adresa webu (canonical úvodu): Pošli kamarátovi zdieľa práve ju
+const BASE = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8').match(/<link rel="canonical" href="([^"]+)"/)[1];
 const srv = await startStaticServer(SITE);
 const b = await chromium.launch();
 
@@ -80,7 +82,7 @@ for (const [w, h] of [[390, 844], [360, 780], [430, 932]]) {
     // Pošli kamarátovi
     await p.locator('.karty-zdielaj').click();
     const zd = await p.evaluate(() => window.__zdielane);
-    ok(v.zd === 'Pošli kamarátovi' && zd && zd.url.endsWith('/barbershop30/') && !zd.url.includes('?') && /Mostnej 30/.test(zd.text), 'Pošli kamarátovi: zdieľa kanonickú adresu a krátky text', JSON.stringify(zd));
+    ok(v.zd === 'Pošli kamarátovi' && zd && zd.url === BASE && !zd.url.includes('?') && /Mostnej 30/.test(zd.text), 'Pošli kamarátovi: zdieľa kanonickú adresu a krátky text', JSON.stringify(zd));
     // jazyk: angličtina
     await p.evaluate(() => window.B30_LANG && window.B30_LANG.set('en'));
     await p.waitForFunction(() => document.querySelector('.karty-zdielaj').textContent === 'Send to a friend', null, { timeout: 15000 }).catch(() => {});
@@ -96,7 +98,7 @@ for (const [w, h] of [[390, 844], [360, 780], [430, 932]]) {
     await p.locator('.karty-zdielaj').click();
     await p.waitForTimeout(300);
     const r = await p.evaluate(async () => ({ stav: document.querySelector('.karty-stav').textContent, schr: await navigator.clipboard.readText() }));
-    ok(r.stav === 'Odkaz je skopírovaný' && r.schr.endsWith('/barbershop30/'), 'bez zdieľania telefónu: odkaz v schránke a správa', JSON.stringify(r));
+    ok(r.stav === 'Odkaz je skopírovaný' && r.schr.endsWith(BASE), 'bez zdieľania telefónu: odkaz v schránke a správa', JSON.stringify(r));
   }
   const pre = await p.evaluate(() => document.documentElement.scrollWidth > innerWidth || [...document.querySelectorAll('.karty-vizitka *')].some((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }));
   ok(!pre, `${w} px: vizitka, zdieľanie a pripomienka bez pretekania`);

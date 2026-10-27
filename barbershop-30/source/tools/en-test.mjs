@@ -18,6 +18,8 @@ fs.mkdirSync(OUT, { recursive: true });
 let failed = 0;
 const ok = (c, m, x = '') => { console.log(`${c ? 'OK  ' : 'FAIL'} ${m}${x ? '  ' + x : ''}`); if (!c) failed++; };
 const en = JSON.parse(fs.readFileSync(path.join(SITE, 'assets', 'i18n', 'en.json'), 'utf8'));
+// základná adresa webu (canonical slovenskej stránky); pri vlastnej doméne ju prepne jeden sed (README, Nasadenie)
+const BASE = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8').match(/<link rel="canonical" href="([^"]+)"/)[1];
 
 let aktualna = true;
 try { execFileSync(process.execPath, [path.join(SITE, 'source', 'tools', 'en-stranka.mjs'), SITE, '--check'], { stdio: 'pipe' }); } catch (e) { aktualna = false; }
@@ -58,7 +60,7 @@ const telefon = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, i
     };
   }, en);
   ok(info.lang === 'en' && /Men's barbershop/.test(info.title) && /^Men's barbershop at Mostná/.test(info.desc), 'jazyk, titulok a popis po anglicky', info.title);
-  ok(info.canon.endsWith('/barbershop30/en/'), 'kanonická adresa en/', info.canon);
+  ok(info.canon === BASE + 'en/', 'kanonická adresa en/ = základná adresa + en/', info.canon);
   ok(/Barbershop 30 · Nitra/i.test(info.h1) && /Your cut|Your place/i.test(info.h1), 'H1 so značkou a mestom', info.h1);
   ok(info.faq === 8 && info.faqQ === 'How do I book?', 'časté otázky po anglicky', `${info.faq}, ${info.faqQ}`);
   ok(info.sk.length === 0, 'žiadny slovenský text zo slovníka', info.sk.slice(0, 5).join(' | '));

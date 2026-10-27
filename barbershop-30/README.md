@@ -154,11 +154,19 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 ## Nasadenie
 
 Teraz: podpriečinok `/barbershop-30/` webu HEAD SPA 30 (GitHub Pages, vetva `main`,
-`.github/workflows/pages.yml` kopíruje `index.html`, `rezervacia.html`, `robots.txt`, `sitemap.xml`, `assets/`,
-`karta/` a `admin/`,
-nahradí základnú adresu a nakoniec vytvorí anglickú stránku `en/` zo slovenskej po všetkých úpravách). Pri vlastnej doméne nahraď základnú adresu
-`https://d8f5s88zjy-art.github.io/barbershop30/` v `index.html`, `robots.txt` a `sitemap.xml`
-jedným príkazom `sed` (miesta sú označené komentárom DEPLOY STEP).
+`.github/workflows/pages.yml` kopíruje `index.html`, `rezervacia.html`, `404.html`, `robots.txt`, `sitemap.xml`, `assets/`,
+`karta/` a `admin/` a nakoniec vytvorí anglickú stránku `en/` zo slovenskej po všetkých úpravách).
+
+Základná adresa webu je v súboroch rovno tá, kde web naozaj beží: `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/`
+(canonical, og:url, og:image a JSON-LD v `index.html` a `rezervacia.html`, `404.html`, `robots.txt`, `sitemap.xml`;
+miesta sú označené komentárom DEPLOY STEP). Pri vlastnej doméne ju prepne jeden príkaz z koreňa `barbershop-30`
+a potom `node source/tools/en-stranka.mjs` (anglická stránka prevezme novú adresu):
+
+    sed -i 's#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#https://www.barbershop30.sk/#g' index.html rezervacia.html 404.html robots.txt sitemap.xml
+
+Zlá adresa: GitHub Pages ukáže na každej neexistujúcej adrese len koreňový `/404.html` (HEAD SPA 30). Ten pri ceste
+s `/barbershop-30/` ukáže blok Barbershopu 30 (Objednať sa, Zavolať 0951 267 203, Späť na úvod). `404.html` v tomto
+priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nasadenie (`nasad-barbershop30.sh`).
 
 ## Nástroje (`source/tools/`, Playwright a Python s Pillow)
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stránka sa nenašla | Barbershop 30 Nitra</title>
+<meta name="description" content="Táto stránka na webe Barbershop 30 neexistuje. Objednaj sa online, zavolaj na 0951 267 203 alebo sa vráť na úvod.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0E0D0C">
+<meta name="color-scheme" content="dark">
+<!-- Chybová stránka pre vlastnú doménu alebo samostatné nasadenie (na GitHub Pages pod head-spa-30 platí koreňový
+     /404.html, ten pri ceste /barbershop-30/ ukáže ten istý blok). Server ju ukáže na akejkoľvek zlej adrese, preto
+     sú cesty úplné. DEPLOY STEP: základná URL ako v index.html, pri inej doméne ju nahradí ten istý sed (README, Nasadenie). -->
+<link rel="icon" href="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/favicon.svg" type="image/svg+xml" sizes="any">
+<style>
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:800;font-display:swap;src:url("https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/fonts/Fraunces-800.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;src:url("https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/fonts/Manrope-400.woff2") format("woff2")}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;src:url("https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/fonts/Manrope-700.woff2") format("woff2")}
+/* tokeny a tlačidlá ako v assets/style.css (orech, papier, lampa) */
+:root{color-scheme:dark;--ink:#0e0d0c;--paper:#f1e9dd;--paper-2:#c9beae;--paper-3:#8e8578;--lamp:#e0601c;--lamp-2:#f07e3c;--line:rgba(241,233,221,.14)}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:48px 16px;
+  background:var(--ink);color:var(--paper);font-family:Manrope,"Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+main{width:100%;max-width:600px;text-align:center}
+.brand{margin:0 auto 40px;max-width:none;font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:800;font-size:1.25rem;letter-spacing:-.01em;color:var(--paper)}
+.brand small{margin-left:8px;font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-2)}
+.kicker{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 16px;max-width:none;font-weight:700;font-size:.75rem;line-height:1;letter-spacing:.2em;text-transform:uppercase}
+.kicker::before,.kicker::after{content:"";flex:none;width:24px;height:2px;background:var(--lamp)}
+h1{margin:0;font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:800;font-size:clamp(2.25rem,7vw,3.75rem);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+p{margin:20px auto 0;max-width:40ch;color:var(--paper-2)}
+.cta{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+/* ploché tlačidlá s verzálkami ako na webe (min. výška 52 px, na telefóne cez celú šírku) */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:6px;border:1px solid rgba(241,233,221,.42);
+  font-weight:700;font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;line-height:1;white-space:nowrap;text-decoration:none;color:var(--paper);
+  transition:background-color .2s,border-color .2s,color .2s}
+.btn:hover{border-color:var(--paper)}
+.btn.primary{background:var(--lamp);border-color:var(--lamp);color:var(--ink)}
+.btn.primary:hover{background:var(--lamp-2);border-color:var(--lamp-2)}
+.fine{margin-top:32px;font-size:.9375rem;color:var(--paper-3)}
+:focus-visible{outline:2px solid var(--lamp-2);outline-offset:3px}
+@media (max-width:640px){.btn{width:100%;min-height:50px}}
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">Barbershop 30 <small>Nitra</small></p>
+  <p class="kicker">Chyba 404</p>
+  <h1>Táto stránka tu nie je.</h1>
+  <p>Odkaz je asi starý alebo má preklep. Objednaj sa online alebo zavolaj.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://www.barbershop30.sk/rezervacia" rel="noopener">Objednať sa</a>
+    <a class="btn" href="tel:+421951267203">Zavolať 0951 267 203</a>
+    <a class="btn" href="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/">Späť na úvod</a>
+  </div>
+  <p class="fine">Mostná 30, 949 01 Nitra</p>
+</main>
+</body>
+</html>

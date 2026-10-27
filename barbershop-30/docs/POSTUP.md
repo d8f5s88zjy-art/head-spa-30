@@ -59,6 +59,12 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑26 (hotové, audit SEO A3-01 až A3-03): údaje pre Google majú typ podniku HairSalon (BarberShop slovník
+  schema.org nepozná). Základná adresa webu je všade tá, kde web naozaj beží, `https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/`
+  (stará `…/barbershop30/` vracala 404, aj odkaz a obrázok pri zdieľaní); na doménu barbershop30.sk ju prepne jeden
+  sed (README, Nasadenie). Vlastná chybová stránka `404.html` a koreňový `/404.html` pri ceste `/barbershop-30/` ukáže
+  blok Barbershopu (Objednať sa, Zavolať 0951 267 203, Späť na úvod), ostatné adresy bez zmeny. Naživo až po nasadení do `main`.
+
 - 2026‑10‑25 (hotové, CHECKS 31): krajšie texty a rámčeky pri rezervácii. Naše okno: tichý riadok výberu, lístok
   súhrnu, poznámky v rámčeku. Ich systém: návrh textov (docs/TEXTY_REZERVACIA.md, JSON na vloženie) a štýl súhrnu
   a potvrdenia v tema-rezervacia.css s náhľadom pred a po. Čaká sa, kto vloží texty a štýl do ich systému.

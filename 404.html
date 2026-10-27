@@ -9,6 +9,11 @@
 <!-- Cesty sú od koreňa /head-spa-30/, lebo GitHub Pages ukáže túto stránku na akejkoľvek zlej adrese -->
 <link rel="icon" type="image/svg+xml" href="/head-spa-30/assets/favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="/head-spa-30/assets/apple-touch-icon.png">
+<!-- Zlá adresa pod webom BARBERSHOP 30 (/head-spa-30/barbershop-30/…) ukáže blok Barbershopu s jeho telefónom
+     a rezerváciou, nie HEAD SPA 30. Rozhodne sa ešte pred vykreslením; ostatné adresy ostávajú bez zmeny. -->
+<script>(function(h){try{if(/\/barbershop-30(\/|$)/i.test(location.pathname)){h.classList.add('b30');document.title='Stránka sa nenašla | Barbershop 30 Nitra';
+var m=document.querySelector('meta[name="theme-color"]'),i=document.querySelector('link[rel="icon"]'),a=document.querySelector('link[rel="apple-touch-icon"]');
+if(m)m.setAttribute('content','#0E0D0C');if(i)i.href='/head-spa-30/barbershop-30/assets/favicon.svg';if(a)a.href='/head-spa-30/barbershop-30/assets/img/ikona/apple-touch-icon.png';}}catch(e){}})(document.documentElement);</script>
 <style>
 @font-face{font-family:'Lora';font-style:normal;font-weight:300 700;font-display:swap;src:url(/head-spa-30/assets/fonts/Lora-display.woff2) format('woff2')}
 @font-face{font-family:'Lora';font-style:italic;font-weight:300 700;font-display:swap;src:url(/head-spa-30/assets/fonts/Lora-italic.woff2) format('woff2')}
@@ -38,10 +43,32 @@ p{color:var(--muted);margin:18px auto 0;max-width:40ch}
 .fine a{color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:380px){.btn{width:100%}}
+/* BARBERSHOP 30 (trieda b30 z hlavičky): farby, písma a tlačidlá ako na jeho webe; písma sa stiahnu len vtedy */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:800;font-display:swap;src:url(/head-spa-30/barbershop-30/assets/fonts/Fraunces-800.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:700;font-display:swap;src:url(/head-spa-30/barbershop-30/assets/fonts/Manrope-700.woff2) format('woff2')}
+.bs{display:none}
+.b30{--canvas:#0e0d0c;--text:#f1e9dd;--muted:#c9beae}
+.b30 .hs{display:none}
+.b30 .bs{display:block;max-width:600px}
+.bs .bs-brand{margin:0 auto 40px;max-width:none;font-family:Fraunces,Georgia,serif;font-weight:800;font-size:20px;letter-spacing:-.01em;color:var(--text)}
+.bs-brand small{margin-left:8px;font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bs .bs-kicker{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 16px;max-width:none;font-weight:700;font-size:12px;line-height:1;letter-spacing:.2em;text-transform:uppercase;color:var(--text)}
+.bs-kicker::before,.bs-kicker::after{content:"";flex:none;width:24px;height:2px;background:#e0601c}
+.bs h1{margin:0;font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(36px,7vw,60px);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.bs p{margin-top:20px}
+.bs-cta{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.bs-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:6px;border:1px solid rgba(241,233,221,.42);
+  font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;line-height:1;white-space:nowrap;text-decoration:none;color:var(--text);transition:background-color .2s,border-color .2s,color .2s}
+.bs-btn:hover{border-color:var(--text)}
+.bs-btn.bs-primary{background:#e0601c;border-color:#e0601c;color:#0e0d0c}
+.bs-btn.bs-primary:hover{background:#f07e3c;border-color:#f07e3c}
+.bs .bs-fine{margin-top:32px;font-size:15px;color:#8e8578}
+.b30 :focus-visible{outline-color:#f07e3c}
+@media (max-width:640px){.bs-btn{width:100%;min-height:50px}}
 </style>
 </head>
 <body>
-<main>
+<main class="hs">
   <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="#d9b56a" stroke-width="1.5"/><path d="M32 19c3.6 4.6 4.6 10.6 0 18.5c-4.6-7.9-3.6-13.9 0-18.5zM32 37.5c-5.2-1-9.6-5.2-10.8-11.4c5.3 1.1 8.9 5 10.8 11.4zM32 37.5c5.2-1 9.6-5.2 10.8-11.4c-5.3 1.1-8.9 5-10.8 11.4zM32 38.6c-7.2 0-12.6-2.9-15.6-7c6.2-.6 11.6 2 15.6 7zM32 38.6c7.2 0 12.6-2.9 15.6-7c-6.2-.6-11.6 2-15.6 7z" fill="none" stroke="#f3c98a" stroke-width="1.3" stroke-linejoin="round"/><path d="M21 45.5h22" stroke="#d9b56a" stroke-width="1.2" stroke-linecap="round"/></svg>
   <div class="kicker">Chyba 404</div>
   <h1>Táto stránka <em>neexistuje.</em></h1>
@@ -52,6 +79,18 @@ p{color:var(--muted);margin:18px auto 0;max-width:40ch}
     <a class="btn" href="https://booqme.app/sk/rezervacia/salon-30-head-spa" rel="noopener">Rezervovať termín</a>
   </div>
   <p class="fine">Mostná 30, Nitra · <a href="tel:+421911153136">0911 153 136</a></p>
+</main>
+<main class="bs" aria-labelledby="bs-h1">
+  <p class="bs-brand">Barbershop 30 <small>Nitra</small></p>
+  <p class="bs-kicker">Chyba 404</p>
+  <h1 id="bs-h1">Táto stránka tu nie je.</h1>
+  <p>Odkaz je asi starý alebo má preklep. Objednaj sa online alebo zavolaj.</p>
+  <div class="bs-cta">
+    <a class="bs-btn bs-primary" href="https://www.barbershop30.sk/rezervacia" rel="noopener">Objednať sa</a>
+    <a class="bs-btn" href="tel:+421951267203">Zavolať 0951 267 203</a>
+    <a class="bs-btn" href="/head-spa-30/barbershop-30/">Späť na úvod</a>
+  </div>
+  <p class="bs-fine">Mostná 30, 949 01 Nitra</p>
 </main>
 </body>
 </html>
