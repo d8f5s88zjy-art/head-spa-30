@@ -92,11 +92,12 @@ function ldPreklad(json) {
 
 let html = out.join('');
 // hlavička anglickej stránky: jazyk, zdroj pre i18n.js (prepínač jazyka vedie späť na slovenskú stránku),
-// vlastná kanonická adresa a og:url, locale
+// vlastná kanonická adresa a og:url, locale (hlavný en_GB, druhý jazyk sk_SK)
 html = html.replace(/<html lang="sk"/, '<html lang="en" data-zdroj="en"')
   .replace(/(<link rel="canonical" href=")([^"]+)(")/, (mm, x, u, y) => x + u + 'en/' + y)
   .replace(/(<meta property="og:url" content=")([^"]+)(")/, (mm, x, u, y) => x + u + 'en/' + y)
-  .replace(/(<meta property="og:locale" content=")sk_SK(")/, '$1en_GB$2');
+  .replace(/(<meta property="og:locale" content=")sk_SK(")/, '$1en_GB$2')
+  .replace(/(<meta property="og:locale:alternate" content=")en_GB(")/, '$1sk_SK$2');
 // relatívne cesty o priečinok vyššie (súbory webu sú v koreni, stránka v en/)
 html = html.replace(/(["'(\s,])assets\//g, '$1../assets/').replace(/href="karta\//g, 'href="../karta/')
   .replace(/^<!DOCTYPE html>\n/i, '<!DOCTYPE html>\n<!-- Vygenerované zo slovenskej index.html a assets/i18n/en.json (source/tools/en-stranka.mjs). Needitovať, pri nasadení sa vytvorí nanovo. -->\n');
