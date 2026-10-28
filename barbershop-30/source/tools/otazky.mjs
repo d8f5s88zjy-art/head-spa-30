@@ -8,7 +8,8 @@
 // Kontroly: aspoň 250 otázok, jedinečné id, známe témy, žiadne dlhé pomlčky; id tim-meno a volno-meno v téme tim
 // len pre odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova); v odpovediach len ceny a dĺžky
 // z cenníka webu (index.html), len overený telefón, odkazy a hodiny, bez „24/7“; odpoveď o termíne má telefón
-// a vetu „telefón vždy zdvihneme“; každá otázka aj jej iné znenie nájde samu seba; hľadanie na serveri
+// a vetu „telefón vždy zdvihneme“; každá otázka aj jej iné znenie nájde samu seba; sada všeobecných otázok padne na
+// všeobecné odpovede a otázky mimo témy ostanú pod prahom okna; hľadanie na serveri
 // (asistent/lib/otazky.php) zoradí rovnako ako v prehliadači (assets/asistent-otazky.js), ak je php; kópia pre web
 // zoradí rovnako ako zdroj a bez kmeňov (kým sa sťahujú) nájde každá otázka samu seba.
 import fs from 'node:fs';
@@ -72,8 +73,36 @@ for (const o of ot) for (const z of [o.q, ...(o.v || [])]) {
   if (!h[0] || h[0].o.id !== o.id) chyba(`${o.id}: „${z}“ nájde ${h[0] ? h[0].o.id : 'nič'}`);
 }
 
+// všeobecná otázka padne na všeobecnú odpoveď (nové znenia ju nesmú prebiť, napr. „cena fade“ nie na strih s bradou za 28 €)
+// a otázka mimo témy ostane pod prahom okna (PRAH v asistent-ukazka.js), teda dostane telefón recepcie namiesto
+// nesúvisiacej odpovede (nálezy kontroly 28. 10. 2026)
+const PRAH = Number(fs.readFileSync(path.join(SITE, 'assets', 'asistent-ukazka.js'), 'utf8').match(/const PRAH = ([\d.]+)/)[1]);
+const VSEOB = {
+  'cena fade': ['fade'], 'kolko stoji fade': ['fade'], 'mozem prist bez objednania': ['bez-objednania'],
+  'robite farbenie brady': ['obsah-farbenie-brady', 'objednat-farbenie-brady', 'cena-farbenie-brady'],
+  'Čo všetko je v Balíčku 1?': ['obsah-balicek-1'], 'co obsahuje balicek jedna': ['obsah-balicek-1'], 'co ak sa mi strih nepaci': ['garancia'],
+  'mate darcekove poukazy': ['poukazy'], 'da sa platit kartou': ['karta'], 'mate vernostnu karticku': ['vernostna'], 'ako zrusit termin': ['zrusenie'],
+  'kolko stoji strih pre chlapca': ['cena-male-gentlemany'], 'kolko stoji uprava brady': ['cena-uprava-brady'], 'otvarate v sobotu?': ['hodiny-sobota'],
+  'kde ste': ['adresa'],
+};
+const MIMO = ['Aké bude zajtra počasie v Nitre?', 'Opravíte mi bicykel?', 'Kto vyhral majstrovstvá sveta v hokeji?', 'Viete mi poradiť recept na guláš?',
+  'Koľko stojí benzín?', 'Koľko stojí nafta?', 'Kde je najbližšia lekáreň?', 'Predávate pneumatiky?', 'Aký je kurz eura?', 'Aký je kurz dolára?',
+  'Kto je prezident Slovenska?', 'Kedy ide vlak do Bratislavy?', 'Ako sa robí pizza?', 'Opravujete mobily?', 'Viete mi napísať úlohu z matematiky?',
+  'Predávate lístky na koncert?', 'Koľko stojí nájom na Mostnej?', 'Koľko stojí letenka do Londýna?'];
+let zleVseob = 0, zleMimo = 0;
+for (const [q, ok] of Object.entries(VSEOB)) {
+  for (const id of ok) if (!ids.has(id)) chyba(`sada všeobecných otázok: neznáme id ${id}`);
+  const h = hladaj(db, q, 1)[0];
+  if (!h || h.skore < PRAH || !ok.includes(h.o.id)) { zleVseob++; chyba(`„${q}“ nájde ${h ? `${h.o.id} ${h.skore}` : 'nič'}, čakám ${ok.join(' alebo ')}`); }
+}
+for (const q of MIMO) {
+  const h = hladaj(db, q, 1)[0];
+  if (h && h.skore >= PRAH) { zleMimo++; chyba(`mimo témy „${q}“ odpovie ${h.o.id} (${h.skore} ≥ ${PRAH}), má dostať telefón`); }
+}
+if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpoveď (${Object.keys(VSEOB).length}), mimo témy pod prahom ${PRAH} (${MIMO.length})`);
+
 // server a prehliadač zoradia rovnako (otázky, znenia a pár iných)
-const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',
+const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), ...Object.keys(VSEOB), ...MIMO, 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',
   'Má Adrián zajtra voľný termín?', 'mozem si dat pivo', 'kde zaparkujem auto', 'Do you cut kids hair?', 'Wie viel kostet ein Haarschnitt?',
   'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', '', '???'];
 let php = '';

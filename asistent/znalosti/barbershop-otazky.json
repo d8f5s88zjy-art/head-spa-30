@@ -73,8 +73,7 @@
     "Cena strihu s bradou",
     "Koľko stojí strih a brada spolu?",
     "Koľko zaplatím za pánsky strih a úpravu brady?",
-    "kolko je priplatok za bradu k strihu",
-    "fade a brada cena"
+    "kolko je priplatok za bradu k strihu"
    ],
    "a": "Pánsky strih a úprava brady stojí 28 € a trvá približne 60 minút. Je to kompletný strih a k nemu úprava brady s horúcim uterákom, britvou a stylingom. Ceny sú konečné."
   },
@@ -393,7 +392,9 @@
     "Ako prebieha farbenie brady?",
     "Čo dostanem pri službe Farbenie brady?",
     "ako sa farbi brada",
-    "cim farbite bradu"
+    "cim farbite bradu",
+    "robite farbenie brady",
+    "farbite aj bradu"
    ],
    "a": "Farbíme profesionálnymi farbami, použije sa 20 ml farby. Farbenie brady stojí 10 € a trvá približne 30 minút."
   },
@@ -447,7 +448,9 @@
     "Čo všetko dostanem za 30 €?",
     "co dostanem za tridsat eur",
     "co je v balicku 1",
-    "mozem si k balicku pridat obocie"
+    "mozem si k balicku pridat obocie",
+    "co vsetko je v balicku 1",
+    "co obsahuje balicek jedna"
    ],
    "a": "Je v ňom strih, úprava brady, horúci uterák, obočie, depilácia uší, umytie, vlasový tonik, fénovanie, styling a kolínska. Balíček 1 stojí 30 € a trvá približne 65 minút."
   },
@@ -772,7 +775,7 @@
     "Kde nájdem cenník?",
     "poslete mi cennik",
     "cennik na stiahnutie",
-    "kolko co stoji"
+    "kolko co stoji v cenniku"
    ],
    "a": "Pánsky strih stojí 18 €, s úpravou brady 28 €, pre vlasy nad 10 cm 22 €, strih pre chlapcov do 10 rokov 15 €. Úprava brady 15 €, Balíček 1 30 €, Ultra inclusive 40 €. Celý cenník je na webe v časti Služby a ceny a ceny sú konečné."
   },
@@ -868,7 +871,8 @@
     "kolko stoji fade",
     "ako dlho trva fade",
     "taper fade",
-    "boky kratke hore dlhsie"
+    "boky kratke hore dlhsie",
+    "cena fade"
    ],
    "a": "Áno, fade je súčasťou pánskeho strihu (18 €, približne 40 minút). Pri konzultácii povieš barberovi, aký prechod chceš."
   },
@@ -2253,7 +2257,8 @@
     "prist na holenie bez terminu",
     "prist len tak bez terminu",
     "beriete walk in",
-    "bez rezervacie dnes"
+    "bez rezervacie dnes",
+    "mozem prist bez objednania"
    ],
    "a": "Či vezmeme aj bez rezervácie, web neuvádza. Istejšie je objednať sa online na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
@@ -2662,7 +2667,7 @@
     "podla coho si vybrat barbera",
     "kto z barberov je top"
    ],
-   "a": "Každý má svoj rukopis a 10 až 15 rokov praxe, všetkých spája jeden štandard: konzultácia, presná práca a strih, ktorý sedí aj o týždeň. Krátke predstavenie každého nájdeš na webe v časti Tím."
+   "a": "Každý má svoj rukopis. Barberi majú 10 až 15 rokov praxe a všetkých spája jeden štandard: konzultácia, presná práca a strih, ktorý sedí aj o týždeň. Krátke predstavenie každého nájdeš na webe v časti Tím."
   },
   {
    "id": "prax",
@@ -2842,11 +2847,11 @@
    "t": "podnik",
    "q": "Robíte školenia?",
    "v": [
-    "Kurz pre barberov",
     "Školenie",
     "chcem sa naucit strihat",
     "kurz barbera pre zaciatocnika",
-    "barber akademia"
+    "barber akademia",
+    "kurz strihania pre buducich barberov"
    ],
    "a": "Áno, školenia sú na poschodí pod značkou Barbershop 30. Podrobnosti ti povedia na recepcii: 0951 267 203."
   },
@@ -2913,7 +2918,7 @@
     "Body za návštevy",
     "karticka na body"
    ],
-   "a": "Na vernostnú kartičku sa spýtaj na recepcii. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
+   "a": "O vernostnej kartičke web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
   },
   {
    "id": "praca-u-vas",
@@ -3383,7 +3388,7 @@
     "mullet strih",
     "robite crop alebo undercut"
    ],
-   "a": "Konkrétne názvy strihov cenník nemá, všetko je pánsky strih za 18 €: konzultácia, strojček, nožnice a fade. Povedz barberovi názov alebo ukáž fotku a dohodnete sa."
+   "a": "Konkrétne názvy strihov cenník nemá. Pánsky strih stojí 18 €, pri vlasoch nad 10 cm 22 €, a začína konzultáciou. Povedz barberovi názov alebo ukáž fotku a dohodnete sa."
   },
   {
    "id": "sluzby-moderne-strihy",
@@ -4738,9 +4743,8 @@
   {
    "id": "brada-po-farbeni",
    "t": "brada",
-   "q": "Čo mám robiť s bradou po farbení?",
+   "q": "Ako sa mám starať o bradu po farbení?",
    "v": [
-    "co po farbeni brady",
     "kedy mozem umyt bradu po farbeni",
     "starostlivost po farbeni brady"
    ],
@@ -4845,7 +4849,7 @@
     "mam 16 mozem ultra inclusive",
     "alkohol pre mladistvych v balicku"
    ],
-   "a": "Pod 18 rokov whisky nedostaneš, alkohol je len pre dospelých. Zvyšok Ultra inclusive za 40 € môžeš mať aj tak, alebo vyber Balíček 1 za 30 €. Vek povedz pri objednaní na recepcii, 0951 267 203."
+   "a": "Na to sa spýtaj recepcie ešte pred objednaním. Balíček 1 za 30 € whisky nemá, Ultra inclusive za 40 € k nemu pridá naparenie tváre, peeling, masku a pohárik whisky. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme."
   },
   {
    "id": "balicky-ultra-relax",
@@ -4867,7 +4871,7 @@
     "co robi naparenie pleti",
     "napara tvare pred maskou"
    ],
-   "a": "Naparenie tváre zahreje a pripraví pleť na peeling a masku. Je v starostlivosti o pleť PREMIUM za 21,50 € a v balíčku Ultra inclusive za 40 €."
+   "a": "V cenníku je naparenie tváre súčasťou starostlivosti o pleť PREMIUM za 21,50 €, spolu s peelingom a relaxačnou maskou. Z balíčkov ho má len Ultra inclusive za 40 €. Viac web neuvádza, podrobnosti ti povie barber v kresle."
   },
   {
    "id": "balicky-peeling-co",
@@ -5317,8 +5321,7 @@
    "q": "Je obočie a depilácia uší aj v Ultra inclusive?",
    "v": [
     "ultra inclusive obocie",
-    "depilacia usi v ultra",
-    "ma ultra vsetko z balicka 1"
+    "depilacia usi v ultra"
    ],
    "a": "Áno. Ultra inclusive má všetko z Balíčka 1, teda aj úpravu obočia, depiláciu uší, umytie, tonik, fénovanie, styling a kolínsku, a navyše naparenie tváre, peeling, masku a pohárik whisky."
   },
@@ -5424,7 +5427,7 @@
     "vytrhavaju obocie v balicku",
     "len zastrihnut obocie v balicku"
    ],
-   "a": "Obočie v balíčku je úprava obočia, teda vytrhanie a úprava, rovnako ako samostatná služba za 3 €. Ak chceš len zastrihnúť alebo ho nechať tak, povedz to barberovi v kresle."
+   "a": "V balíčku je obočie. Ako presne sa v balíčku upravuje, web neuvádza; samostatná úprava obočia za 3 € je vytrhanie a úprava. Ak chceš len zastrihnúť alebo ho nechať tak, povedz to barberovi v kresle."
   },
   {
    "id": "balicky-poradi-recepcia",
@@ -6880,7 +6883,7 @@
     "nech mi recepcia vyberie barbera",
     "poradte mi barbera"
    ],
-   "a": "Termín ti nájde recepčná, výber barbera je na tebe: barberi majú 10 až 15 rokov praxe a jeden štandard. Zavolaj na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "Termín ti nájde recepčná. Či ti poradí aj konkrétneho barbera, web neuvádza. Barberi majú 10 až 15 rokov praxe a jeden štandard, predstavenie každého je na webe v časti Tím. Zavolaj na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7015,7 +7018,7 @@
     "v pondelok nestrihate",
     "je pondelok volny den"
    ],
-   "a": "Nie, v pondelok normálne strihame od 9:00 do 19:00. Zatvorené máme len v nedeľu."
+   "a": "Nie, v pondelok normálne striháme od 9:00 do 19:00. Zatvorené máme len v nedeľu."
   },
   {
    "id": "hodiny-sobota-posledny",
@@ -7073,7 +7076,7 @@
     "mozem prist presne o deviatej",
     "prvy volny cas rano"
    ],
-   "a": "Otvárame o 9:00 a od tej chvíle strihame. Prvé voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "Otvárame o 9:00 a od tej chvíle striháme. Prvé voľné časy uvidíš v rezervácii na https://www.barbershop30.sk/rezervacia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7143,7 +7146,7 @@
     "vynimocne v nedelu",
     "nedela individualne"
    ],
-   "a": "V nedeľu máme zatvorené, strihame pondelok až sobota. Ak potrebuješ niečo mimoriadne, povedz to recepcii: zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "V nedeľu máme zatvorené, striháme pondelok až sobota. Ak potrebuješ niečo mimoriadne, povedz to recepcii: zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7154,7 +7157,7 @@
     "nedela nestrihate",
     "preco v nedelu nestrihate"
    ],
-   "a": "V nedeľu máme zatvorené, strihame šesť dní v týždni: pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00. Objednať sa online môžeš aj v nedeľu, kedykoľvek, na https://www.barbershop30.sk/rezervacia."
+   "a": "V nedeľu máme zatvorené, striháme šesť dní v týždni: pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00. Objednať sa online môžeš aj v nedeľu, kedykoľvek, na https://www.barbershop30.sk/rezervacia."
   },
   {
    "id": "hodiny-nedela-telefon",
@@ -7232,7 +7235,7 @@
     "1. januara otvorene",
     "strihate na novy rok"
    ],
-   "a": "O sviatkoch web nič neuvádza. Bežne strihame pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O sviatkoch web nič neuvádza. Bežne striháme pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7299,7 +7302,7 @@
    "v": [
     "strihate 17. 11."
    ],
-   "a": "O sviatkoch web nič neuvádza. Bežne strihame pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O sviatkoch web nič neuvádza. Bežne striháme pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7447,7 +7450,7 @@
     "strihate aj v noci po zatvoreni",
     "berete v noci"
    ],
-   "a": "Nie, strihame pondelok až piatok od 9:00 do 19:00 a v sobotu od 9:00 do 14:00. V noci sa dá objednať online na https://www.barbershop30.sk/rezervacia."
+   "a": "Nie, striháme pondelok až piatok od 9:00 do 19:00 a v sobotu od 9:00 do 14:00. V noci sa dá objednať online na https://www.barbershop30.sk/rezervacia."
   },
   {
    "id": "hodiny-obed-strih",
@@ -7595,7 +7598,7 @@
     "kedy mate zatvorene dni",
     "kedy ste zatvoreni"
    ],
-   "a": "V nedeľu. Inak strihame pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. O sviatkoch web nič neuvádza, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "V nedeľu. Inak striháme pondelok až piatok 9:00 až 19:00 a v sobotu 9:00 až 14:00. O sviatkoch web nič neuvádza, zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7675,7 +7678,7 @@
     "adventna nedela",
     "otvorene v advente"
    ],
-   "a": "Bežne máme v nedeľu zatvorené a strihame pondelok až sobota. O zmenách v advente a cez sviatky web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "Bežne máme v nedeľu zatvorené a striháme pondelok až sobota. O zmenách v advente a cez sviatky web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
@@ -7904,7 +7907,7 @@
   },
   {
    "id": "kontakt-platba-mobilom",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Dá sa platiť mobilom alebo hodinkami?",
    "v": [
     "apple pay",
@@ -7917,7 +7920,7 @@
   },
   {
    "id": "kontakt-mena",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Platí sa v eurách?",
    "v": [
     "mena",
@@ -7929,7 +7932,7 @@
   },
   {
    "id": "kontakt-platba-kedy",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Platí sa pred strihom alebo po ňom?",
    "v": [
     "kedy sa plati",
@@ -7941,7 +7944,7 @@
   },
   {
    "id": "kontakt-doklad",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Dostanem doklad o zaplatení?",
    "v": [
     "blocek",
@@ -7953,7 +7956,7 @@
   },
   {
    "id": "kontakt-benefity",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Berete stravné lístky alebo benefitové karty?",
    "v": [
     "gastrolistky",
@@ -7965,7 +7968,7 @@
   },
   {
    "id": "kontakt-platba-zvlast",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Môžeme zaplatiť každý zvlášť?",
    "v": [
     "platime oddelene",
@@ -7977,7 +7980,7 @@
   },
   {
    "id": "kontakt-karta-minimum",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Je minimálna suma na platbu kartou?",
    "v": [
     "minimalna suma kartou",
@@ -7989,7 +7992,7 @@
   },
   {
    "id": "kontakt-poukaz-online",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Dá sa poukaz kúpiť online alebo na diaľku?",
    "v": [
     "poukaz online",
@@ -8001,7 +8004,7 @@
   },
   {
    "id": "kontakt-poukaz-hodnota",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Je poukaz na sumu alebo na konkrétnu službu?",
    "v": [
     "poukaz na sumu",
@@ -8013,7 +8016,7 @@
   },
   {
    "id": "kontakt-poukaz-platnost",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Ako dlho platí poukaz?",
    "v": [
     "platnost poukazky",
@@ -8025,18 +8028,18 @@
   },
   {
    "id": "kontakt-poukaz-uplatnit",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Mám poukaz, ako ho uplatním?",
    "v": [
     "dostal som poukazku co dalej",
     "objednat sa s poukazom"
    ],
-   "a": "Objednaj sa ako každý: online na https://www.barbershop30.sk/rezervacia alebo cez recepciu. Ako poukaz uplatníš, ti povie recepcia: zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O poukazoch web nič neuvádza. Či a ako ho uplatníš, ti povie recepcia: zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
    "id": "kontakt-poukaz-headspa",
-   "t": "kontakt",
+   "t": "ine",
    "q": "Platí váš poukaz aj v HEAD SPA 30 alebo Salóne 30?",
    "v": [
     "poukaz do head spa",
@@ -8048,43 +8051,43 @@
   },
   {
    "id": "kontakt-vernostna-odmeny",
-   "t": "kontakt",
+   "t": "podnik",
    "q": "Čo dostanem za vernostnú kartičku?",
    "v": [
     "odmeny za body",
     "kolko navstev strih zadarmo",
     "vernostne body"
    ],
-   "a": "Odmeny a body web neuvádza. Na vernostnú kartičku sa spýtaj na recepcii. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O vernostnej kartičke, bodoch ani odmenách web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
    "id": "kontakt-vernostna-mobil",
-   "t": "kontakt",
+   "t": "podnik",
    "q": "Je vernostná kartička aj v mobile?",
    "v": [
     "digitalna karticka",
     "karticka v telefone",
     "appka s kartickou"
    ],
-   "a": "Či je vernostná kartička aj v mobile, ti povie recepcia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O vernostnej kartičke web nič neuvádza, ani o verzii v mobile. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
    "id": "kontakt-vernostna-stratena",
-   "t": "kontakt",
+   "t": "podnik",
    "q": "Stratil som vernostnú kartičku, čo teraz?",
    "v": [
     "stratena karticka",
     "zabudol som karticku doma",
     "nemam kartiicku pri sebe"
    ],
-   "a": "Rieši to recepcia. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
+   "a": "O vernostnej kartičke web nič neuvádza. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.",
    "tel": 1
   },
   {
    "id": "kontakt-vernostna-headspa",
-   "t": "kontakt",
+   "t": "podnik",
    "q": "Platí vernostná kartička aj v HEAD SPA 30?",
    "v": [
     "karticka v salone 30",
@@ -8494,7 +8497,7 @@
   },
   {
    "id": "o-time-majitel",
-   "t": "tim",
+   "t": "podnik",
    "q": "Kto je majiteľ a strihá aj on?",
    "v": [
     "kto je sef barbershopu",
@@ -8695,7 +8698,7 @@
   },
   {
    "id": "o-time-recepcna-meno",
-   "t": "tim",
+   "t": "podnik",
    "q": "Ako sa volá recepčná?",
    "v": [
     "meno recepcnej",
@@ -8706,7 +8709,7 @@
   },
   {
    "id": "o-time-recepcna-striha",
-   "t": "tim",
+   "t": "podnik",
    "q": "Strihá aj recepčná?",
    "v": [
     "ostriha ma recepcna",
@@ -8716,7 +8719,7 @@
   },
   {
    "id": "o-time-recepcna-co-vybavi",
-   "t": "tim",
+   "t": "podnik",
    "q": "Čo všetko mi vybaví recepčná?",
    "v": [
     "co robi recepcna",
@@ -8728,7 +8731,7 @@
   },
   {
    "id": "o-time-barber-nedviha",
-   "t": "tim",
+   "t": "kontakt",
    "q": "Barber mi nedvíha telefón.",
    "v": [
     "nedovolam sa barberovi",
@@ -8740,7 +8743,7 @@
   },
   {
    "id": "o-time-cislo-barbera",
-   "t": "tim",
+   "t": "kontakt",
    "q": "Dáte mi číslo na môjho barbera?",
    "v": [
     "telefon na barbera",
@@ -8763,7 +8766,7 @@
   },
   {
    "id": "o-time-komu-povedat",
-   "t": "tim",
+   "t": "podnik",
    "q": "Komu poviem, keď mi niečo nesedí, barberovi alebo recepčnej?",
    "v": [
     "komu sa stazovat na strih",
@@ -8774,7 +8777,7 @@
   },
   {
    "id": "o-time-recepcna-termin",
-   "t": "tim",
+   "t": "objednanie",
    "q": "Nájde mi recepčná termín?",
    "v": [
     "moze mi recepcna dat termin",
@@ -8786,7 +8789,7 @@
   },
   {
    "id": "o-time-zmena-recepcia",
-   "t": "tim",
+   "t": "objednanie",
    "q": "Môžem zmenu termínu dohodnúť s barberom v kresle?",
    "v": [
     "poviem barberovi ze nepridem",
@@ -8798,7 +8801,7 @@
   },
   {
    "id": "o-time-dalsi-termin",
-   "t": "tim",
+   "t": "objednanie",
    "q": "Objednám si ďalší termín hneď po strihu?",
    "v": [
     "dalsi termin na recepcii po strihu",
@@ -8810,7 +8813,7 @@
   },
   {
    "id": "o-time-nespokojny-doma",
-   "t": "tim",
+   "t": "podnik",
    "q": "Prišiel som domov a strih sa mi nepáči.",
    "v": [
     "az doma vidim ze je to zle",
@@ -8822,7 +8825,7 @@
   },
   {
    "id": "o-time-doladenie-cena",
-   "t": "tim",
+   "t": "podnik",
    "q": "Platí sa za doladenie strihu v kresle navyše?",
    "v": [
     "stoji oprava strihu v kresle nieco",
@@ -8833,7 +8836,7 @@
   },
   {
    "id": "o-time-vratenie-penazi",
-   "t": "tim",
+   "t": "podnik",
    "q": "Vrátite mi peniaze, keď nebudem spokojný?",
    "v": [
     "vratenie penazi za strih",
@@ -8845,7 +8848,7 @@
   },
   {
    "id": "o-time-garancia-lehota",
-   "t": "tim",
+   "t": "podnik",
    "q": "Dokedy platí garancia?",
    "v": [
     "do kedy mozem reklamovat strih",
@@ -8856,7 +8859,7 @@
   },
   {
    "id": "o-time-hanbim-sa",
-   "t": "tim",
+   "t": "podnik",
    "q": "Hanbím sa povedať barberovi, že sa mi to nepáči.",
    "v": [
     "nechcem urazit barbera",
@@ -8867,7 +8870,7 @@
   },
   {
    "id": "o-time-zmena-pocas-strihu",
-   "t": "tim",
+   "t": "podnik",
    "q": "Môžem si to počas strihu rozmyslieť a chcieť kratšie?",
    "v": [
     "zmenit nazor pocas strihu",
@@ -8878,7 +8881,7 @@
   },
   {
    "id": "o-time-zrkadlo",
-   "t": "tim",
+   "t": "podnik",
    "q": "Ukáže mi barber výsledok zo všetkých strán?",
    "v": [
     "uvidim strih aj zozadu",
@@ -8889,7 +8892,7 @@
   },
   {
    "id": "o-time-hudba",
-   "t": "tim",
+   "t": "podnik",
    "q": "Hrá u vás hudba?",
    "v": [
     "pustate hudbu",
@@ -8912,7 +8915,7 @@
   },
   {
    "id": "o-time-alkohol",
-   "t": "tim",
+   "t": "podnik",
    "q": "Máte aj alkohol, pivo alebo niečo tvrdšie?",
    "v": [
     "dostanem pivo",
@@ -8924,7 +8927,7 @@
   },
   {
    "id": "o-time-kava-pocas-strihu",
-   "t": "tim",
+   "t": "podnik",
    "q": "Dostanem kávu aj počas strihu?",
    "v": [
     "kava v kresle",
@@ -8936,7 +8939,7 @@
   },
   {
    "id": "o-time-aka-kava",
-   "t": "tim",
+   "t": "podnik",
    "q": "Akú kávu robíte, espresso alebo z automatu?",
    "v": [
     "aky druh kavy podavate",
@@ -8948,7 +8951,7 @@
   },
   {
    "id": "o-time-kto-da-kavu",
-   "t": "tim",
+   "t": "podnik",
    "q": "Kto mi dá kávu, barber alebo recepčná?",
    "v": [
     "mam si kavu vypytat",
@@ -8959,7 +8962,7 @@
   },
   {
    "id": "o-time-barber-kadernik",
-   "t": "tim",
+   "t": "podnik",
    "q": "Aký je rozdiel medzi barberom a kaderníkom?",
    "v": [
     "barber vs kadernik",
@@ -8971,7 +8974,7 @@
   },
   {
    "id": "o-time-interier",
-   "t": "tim",
+   "t": "podnik",
    "q": "Ako to u vás vyzerá vnútri?",
    "v": [
     "interier barbershopu",
@@ -8983,7 +8986,7 @@
   },
   {
    "id": "o-time-pre-kazdeho",
-   "t": "tim",
+   "t": "podnik",
    "q": "Je to u vás len pre štamgastov?",
    "v": [
     "je to uzavreta spolocnost",
@@ -8995,7 +8998,7 @@
   },
   {
    "id": "o-time-oblecenie",
-   "t": "tim",
+   "t": "ine",
    "q": "Mám prísť nejako oblečený?",
    "v": [
     "dress code",
@@ -9007,7 +9010,7 @@
   },
   {
    "id": "o-time-buldog",
-   "t": "tim",
+   "t": "podnik",
    "q": "Čo je ten farebný buldog u vás?",
    "v": [
     "soska psa v cakarni",
@@ -9019,7 +9022,7 @@
   },
   {
    "id": "o-time-poschodie",
-   "t": "tim",
+   "t": "podnik",
    "q": "Čo je u vás na poschodí?",
    "v": [
     "co mate hore",
@@ -9031,7 +9034,7 @@
   },
   {
    "id": "o-time-sukromie-miestnost",
-   "t": "tim",
+   "t": "podnik",
    "q": "Budem v jednej miestnosti s inými zákazníkmi?",
    "v": [
     "mate samostatnu miestnost",
@@ -9043,7 +9046,7 @@
   },
   {
    "id": "o-time-co-povedat",
-   "t": "tim",
+   "t": "sluzby",
    "q": "Čo mám povedať barberovi, keď prídem prvýkrát?",
    "v": [
     "ako vysvetlit barberovi co chcem",
@@ -9055,7 +9058,7 @@
   },
   {
    "id": "o-time-prvykrat-obava",
-   "t": "tim",
+   "t": "podnik",
    "q": "Bojím sa ísť prvýkrát k barberovi.",
    "v": [
     "nikdy som nebol u barbera",
@@ -9067,7 +9070,7 @@
   },
   {
    "id": "o-time-prichod",
-   "t": "tim",
+   "t": "podnik",
    "q": "Kam sa mám hlásiť, keď prídem?",
    "v": [
     "komu sa ohlasit pri prichode",
@@ -9079,7 +9082,7 @@
   },
   {
    "id": "o-time-prva-trvanie",
-   "t": "tim",
+   "t": "sluzby",
    "q": "Trvá prvá návšteva dlhšie?",
    "v": [
     "kolko trva prvy strih u vas",
@@ -9090,7 +9093,7 @@
   },
   {
    "id": "o-time-plast",
-   "t": "tim",
+   "t": "ine",
    "q": "Dostanem plášť, aby som nemal vlasy na oblečení?",
    "v": [
     "mate plast na strihanie",
@@ -9102,7 +9105,7 @@
   },
   {
    "id": "o-time-mobil-v-kresle",
-   "t": "tim",
+   "t": "ine",
    "q": "Môžem počas strihu telefonovať alebo byť na mobile?",
    "v": [
     "mobil pocas strihu",
@@ -9114,7 +9117,7 @@
   },
   {
    "id": "o-time-rukavice",
-   "t": "tim",
+   "t": "ine",
    "q": "Pracujú barberi v rukaviciach?",
    "v": [
     "holite v rukaviciach",
@@ -9125,7 +9128,7 @@
   },
   {
    "id": "o-time-chory",
-   "t": "tim",
+   "t": "objednanie",
    "q": "Som prechladnutý, mám prísť na termín?",
    "v": [
     "som chory mozem prist",
@@ -9138,7 +9141,7 @@
   },
   {
    "id": "o-time-vlastna-pomada",
-   "t": "tim",
+   "t": "ine",
    "q": "Môžem si priniesť vlastnú pomádu alebo vosk?",
    "v": [
     "donesiem si vlastny produkt",
@@ -9150,7 +9153,7 @@
   },
   {
    "id": "o-time-produkt-odporuci",
-   "t": "tim",
+   "t": "ine",
    "q": "Odporučí mi barber produkt na doma?",
    "v": [
     "poradi mi barber pomadu",
@@ -9166,7 +9169,6 @@
    "q": "Kto robí kreatívne ornamenty do vlasov?",
    "v": [
     "ktory barber robi vzory do vlasov",
-    "kto robi starostlivost o plet",
     "specialista na hair tattoo",
     "kto u vas robi ornamenty"
    ],
@@ -9198,7 +9200,7 @@
   },
   {
    "id": "o-time-fotka-v-kresle",
-   "t": "tim",
+   "t": "ine",
    "q": "Môžem si urobiť fotku s barberom alebo z kresla?",
    "v": [
     "selfie v barbershope",
@@ -9210,7 +9212,7 @@
   },
   {
    "id": "o-time-rodinny",
-   "t": "tim",
+   "t": "podnik",
    "q": "Je to rodinný podnik?",
    "v": [
     "rodinna firma",
@@ -9222,7 +9224,7 @@
   },
   {
    "id": "o-time-pozriet-sa",
-   "t": "tim",
+   "t": "podnik",
    "q": "Môžem sa prísť pozrieť, ako strihajú?",
    "v": [
     "chcem vidiet barberov pri praci",
@@ -9257,7 +9259,7 @@
   },
   {
    "id": "o-time-kolko-denne",
-   "t": "tim",
+   "t": "podnik",
    "q": "Koľko ľudí denne ostriháte?",
    "v": [
     "kolko zakaznikov mate za den",
@@ -9269,7 +9271,7 @@
   },
   {
    "id": "o-time-klima",
-   "t": "tim",
+   "t": "ine",
    "q": "Máte klimatizáciu?",
    "v": [
     "je u vas v lete horuco",
@@ -9281,7 +9283,7 @@
   },
   {
    "id": "o-time-fajcenie",
-   "t": "tim",
+   "t": "ine",
    "q": "Dá sa u vás fajčiť?",
    "v": [
     "fajcenie v barbershope",
@@ -9293,7 +9295,7 @@
   },
   {
    "id": "o-time-piliere",
-   "t": "tim",
+   "t": "podnik",
    "q": "Na čom si zakladáte?",
    "v": [
     "co je pre vas dolezite",
@@ -9301,11 +9303,11 @@
     "co vas odlisuje ako tim",
     "aky mate pristup k zakaznikovi"
    ],
-   "a": "Na troch veciach: skúsenosti (prax 10 až 15 rokov, na Mostnej 30 od roku 2019), precíznosť (konzultácia pred prvým ťahom strojčeka, britva pri brade, styling a kolínska na záver) a garancia (z kresla vstaneš, až keď si spokojný)."
+   "a": "Na troch veciach: skúsenosti (barberi s praxou 10 až 15 rokov; na Mostnej 30 striháme od roku 2019), precíznosť (konzultácia pred prvým ťahom strojčeka, britva pri brade, styling a kolínska na záver) a garancia (z kresla vstaneš, až keď si spokojný)."
   },
   {
    "id": "o-time-sedi-o-tyzden",
-   "t": "tim",
+   "t": "podnik",
    "q": "Čo znamená strih, ktorý sedí aj o týždeň?",
    "v": [
     "drzi strih aj po tyzdni",

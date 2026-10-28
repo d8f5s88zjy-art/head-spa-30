@@ -89,7 +89,8 @@ let nacitane = null, hladanie = null;
 export function nacitaj() {
   if (!nacitane) {
     nacitane = stiahni(OTAZKY).then((d) => priprav(d)).catch((e) => { nacitane = null; hladanie = null; throw e; });
-    hladanie = nacitane.then((db) => stiahni(KMENE).then((km) => { const p = priprav(db, km.k); db.ot = p.ot; db.idf = p.idf; },
+    // kmene inej verzie (stará kópia v pamäti prehliadača alebo CDN) sa nepoužijú, hľadá sa ďalej podľa otázok
+    hladanie = nacitane.then((db) => stiahni(KMENE).then((km) => { if (km.verzia !== db.verzia) return; const p = priprav(db, km.k); db.ot = p.ot; db.idf = p.idf; },
       () => { /* bez kmeňov ostane hľadanie podľa otázok */ }).then(() => db));
     hladanie.catch(() => {});
   }
