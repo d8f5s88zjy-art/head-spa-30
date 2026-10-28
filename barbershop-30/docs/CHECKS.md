@@ -757,3 +757,20 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   objednania“, „kurz eura“, „recept na gulas“, 12 z 12 podľa očakávania, chyby skriptu 0, šírka 390. Prvá odpoveď po
   otvorení okna na pomalom 4G (CPU 4×, medián 5 behov): 1 855 ms (58dd5f8e) → 1 823 ms; prenos asistenta gzip +0,8 kB.
 - Testy: `otazky.mjs --kontrola` OK, i18n-test 55, en-test 16, app-smoke 109, vychytavky-test 27, admin-test 101 OK.
+
+## 36. Druhá oprava po kontrole Barbera a webu (2026‑10‑28)
+
+- Kontrola Barbera (slepá sada 200 otázok) našla 8 nesprávnych odpovedí v téme a 1 mimo témy („potrebujem instalatera“
+  → Instagram 0,639, lebo „instagram“ aj „inštalatér“ dávali kmeň „insta“). Kmene: `instagram` pribudol do `CELE`
+  (JS aj PHP, zhoda servera a prehliadača 3 926 dotazov). Znenia z a3f73c06 bez témy preformulované („stihnem strih po
+  robote“, „od kolkych rokov upravujete bradu“, „ten isty barber mi robi strih aj bradu“, „prelozit si termin sam
+  v systeme“, „balicek bez depilacie usi“, „poslete mi poukaz domov“), chýbajúce znenia doplnené (barber-clovek „si
+  robot“, farbenie-vlasov „kto robi farbenie“, objednanie „kde je rezervacny system“, objednat-farbenie-brady „ofarbit“,
+  obsah-male-gentlemany „co obsahuje“, barber-kto „co vsetko vies“), nová otázka „Je v balíčku aj depilácia uší?“ (777).
+- Odpoveď „Musím online rezerváciu ešte potvrdiť telefonicky?“ bez domnienky „Nemusíš“: web to neuvádza, má tlačidlo
+  „Zavolať a potvrdiť termín“. Farba brady → recepcia, prehľad trvaní s Hot Towel 30 minút.
+- Stráž `otazky-ocakavane.json`: 158 → 227 všeobecných (56 netriviálnych zo slepej sady kontroly s id podľa jej
+  hodnotenia, 8 jej nesprávnych odpovedí, vlastné preformulovania), 64 → 71 mimo témy (inštalatér, pošta, tesco,
+  lekáreň…). Nad 54ad1f0a 11 + 2 chyby, teraz 0. `otazky.mjs` vypíše otázky mimo témy tesne pod prahom (0,55 až 0,6).
+- Web: pilier Skúsenosti bez vety o praxi, ktorá je v úvode tímu tesne nad ním („Na Mostnej 30 od roku 2019.
+  Hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“), 7 slovníkov a `en/`.

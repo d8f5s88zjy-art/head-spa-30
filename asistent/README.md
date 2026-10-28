@@ -38,13 +38,13 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 - Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
 - Na otázku, kto odpovedá, povie pravdivo, že je Barber, AI asistent, nie človek.
 
-## Časté otázky (776 overených odpovedí)
+## Časté otázky (777 overených odpovedí)
 
 - `znalosti/barbershop-otazky.json`: otázka, iné znenia, odpoveď, téma, `tel` (pod odpoveď patrí Zavolať a Objednať sa).
   Len fakty z `barbershop.md` a webu; čo web neuvádza, odpoveď povie a dá telefón. Id `tim-meno` a `volno-meno` v téme
   tim sú len odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova), iné otázky tímu majú `o-time-`.
 - Server (`lib/otazky.php`) nájde k poslednej otázke najviac 6 podobných (zhoda aspoň 0,3) a pridá ich modelu do druhej
-  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (776 otázok, asi 200 kB textu) sa neplatí pri
+  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (777 otázok, asi 200 kB textu) sa neplatí pri
   každej otázke.
 - Okno na webe ukazuje témy a otázky ťuknutím s odpoveďou hneď a bez servera (označená ako pripravená odpoveď). Kópia
   pre prehliadač sú dva súbory: `assets/asistent-otazky.json` (otázky a odpovede, pri prvom otvorení okna) a
@@ -52,7 +52,7 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 - Po každej úprave: `node barbershop-30/source/tools/otazky.mjs` (fakty proti cenníku, každá otázka nájde samu
   seba, bežné otázky zo sady `otazky-ocakavane.json` nájdu svoju odpoveď a otázky mimo témy ostanú pod prahom 0,6,
   server a prehliadač zoradia rovnako, kópia pre web v dvoch súboroch so spoločným otiskom). Kmene: slová zo zoznamu
-  `CELE`/`OTAZKY_CELE` (recept, počasie) sa neskracujú, aby nesplynuli s „recepcia“ a „počas“; zoznam je rovnaký v JS aj PHP. Test servera: `testy/spusti.sh` (model
+  `CELE`/`OTAZKY_CELE` (recept, počasie, instagram) sa neskracujú, aby nesplynuli s „recepcia“, „počas“ a „inštalatér“; zoznam je rovnaký v JS aj PHP. Test servera: `testy/spusti.sh` (model
   dostal odpovede).
 
 ## Okno na webe: Barber

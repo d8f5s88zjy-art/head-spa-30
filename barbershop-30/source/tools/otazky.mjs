@@ -95,6 +95,10 @@ for (const q of MIMO) {
   if (h && h.skore >= PRAH) { zleMimo++; chyba(`mimo témy „${q}“ odpovie ${h.o.id} (${h.skore} ≥ ${PRAH}), má dostať telefón`); }
 }
 if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpoveď (${Object.keys(VSEOB).length} v ${Object.keys(OCAK.vseobecne).length} témach), mimo témy pod prahom ${PRAH} (${MIMO.length})`);
+// rezerva pod prahom (len výpis, nie chyba): „kedy ma otvorene <iné miesto>“ má 0,598 pri každom neznámom slove, lebo
+// „Kedy máte otvorené?“ má len dva kmene; pridané zriedkavé slovo v znení by takú otázku posunulo nad prah
+const tesne = MIMO.map((q) => [q, hladaj(db, q, 1)[0]]).filter(([, h]) => h && h.skore >= PRAH - 0.05 && h.skore < PRAH);
+if (tesne.length) console.log(`     mimo témy tesne pod prahom (${tesne.length}): ${tesne.map(([q, h]) => `${q} ${h.o.id} ${h.skore}`).join('; ')}`);
 
 // server a prehliadač zoradia rovnako (otázky, znenia a pár iných)
 const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), ...Object.keys(VSEOB), ...MIMO, 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',

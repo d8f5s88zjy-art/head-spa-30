@@ -25,8 +25,9 @@ const STOP = new Set(('a aj ale alebo ako aka ake aki aky ani by bol bola bude b
 const KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho', 'emu', 'ovi', 'ich', 'ou', 'om', 'ov', 'ej',
   'ia', 'ie', 'iu', 'ii', 'ym', 'a', 'e', 'i', 'o', 'u', 'y'];
 // slová, ktorých skrátený kmeň by splynul s iným slovom odpovedí (recept → recep ako recepcia, počasie → počas ako
-// „počas strihu“): kmeňom je celá táto predpona, takže otázka mimo témy nedostane nezmyselnú odpoveď ani návrhy
-const CELE = ['pocasi', 'recept'];
+// „počas strihu“, instagram → insta ako inštalatér): kmeňom je celá táto predpona, takže otázka mimo témy nedostane
+// nezmyselnú odpoveď ani návrhy
+const CELE = ['pocasi', 'recept', 'instagram'];
 
 export function kmene(text) {
   const t = String(text).toLowerCase().replace(/[^\x00-\x7f]/g, (z) => DIAKRITIKA[z] ?? z).replace(/[^a-z0-9]+/g, ' ');

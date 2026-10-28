@@ -17,8 +17,9 @@ const OTAZKY_STOP = 'a aj ale alebo ako aka ake aki aky ani by bol bola bude bud
   'som so su ta tak tam te to toho ten tu tvoj u uz v vam vas vo vy z za ze zo prosim vobec';
 const OTAZKY_KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho', 'emu', 'ovi', 'ich', 'ou', 'om', 'ov', 'ej',
   'ia', 'ie', 'iu', 'ii', 'ym', 'a', 'e', 'i', 'o', 'u', 'y'];
-/* slová, ktorých skrátený kmeň by splynul s iným slovom (recept a recepcia, počasie a „počas“): kmeňom je celá predpona */
-const OTAZKY_CELE = ['pocasi', 'recept'];
+/* slová, ktorých skrátený kmeň by splynul s iným slovom (recept a recepcia, počasie a „počas“, instagram a inštalatér):
+   kmeňom je celá predpona */
+const OTAZKY_CELE = ['pocasi', 'recept', 'instagram'];
 
 /* kmene slov: bez diakritiky a výplňových slov, koncovka preč, najviac 5 znakov (čísla celé, OTAZKY_CELE celé) */
 function otazky_kmene(string $text): array {

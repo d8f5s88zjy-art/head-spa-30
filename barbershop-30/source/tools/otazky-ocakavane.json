@@ -1,5 +1,5 @@
 {
- "popis": "Stráž pre source/tools/otazky.mjs (nálezy kontroly 28. 10. 2026). vseobecne: bežná otázka, ako ju ľudia píšu (s preklepmi a bez diakritiky), podľa témy → id odpovedí, ktoré na ňu svojím významom odpovedajú; okno musí odpovedať jednou z nich (skóre aspoň PRAH z assets/asistent-ukazka.js). Id sú vybrané podľa významu, nie podľa toho, čo hľadanie vráti. mimo: otázky mimo témy, ktoré musia ostať pod prahom (dostanú telefón recepcie). Pri kolízii oprav znenia (v) v barbershop-otazky.json, nie túto sadu ani hľadanie.",
+ "popis": "Stráž pre source/tools/otazky.mjs (nálezy kontroly 28. 10. 2026). vseobecne: bežná otázka, ako ju ľudia píšu (s preklepmi a bez diakritiky), podľa témy → id odpovedí, ktoré na ňu svojím významom odpovedajú; okno musí odpovedať jednou z nich (skóre aspoň PRAH z assets/asistent-ukazka.js). Id sú vybrané podľa významu, nie podľa toho, čo hľadanie vráti. mimo: otázky mimo témy, ktoré musia ostať pod prahom (dostanú telefón recepcie). Pri kolízii oprav znenia (v) v barbershop-otazky.json, nie túto sadu ani hľadanie. Doplnené v oprave 2 (28. 10. 2026): netriviálne otázky zo slepej sady kontroly Barbera (kmene sa nezhodujú so žiadnym znením, id podľa hodnotenia odpovede kontrolórom), jej nesprávne odpovede a otázky mimo témy tesne pod prahom.",
  "vseobecne": {
   "sluzby": {
    "kolko stoji strih": ["cena-strih", "cena-pansky-strih"],
@@ -22,7 +22,16 @@
    "mozem priniest fotku strihu": ["fotka-strihu"],
    "poradite mi aky strih si dat": ["konzultacia"],
    "strihate dlhe vlasy": ["sluzby-dlhe-vlasy-strihate", "dlhe-vlasy-vyber", "cena-dlhe-vlasy", "obsah-dlhe-vlasy"],
-   "ako dlho trva strih s bradou": ["trvanie-strih-a-brada"]
+   "ako dlho trva strih s bradou": ["trvanie-strih-a-brada"],
+   "robite aj strih noznicami alebo len strojcekom": ["noznice"],
+   "ake vsetko robite za sluzby": ["sluzby-zoznam"],
+   "da sa u vas oholit hlava na hladko": ["brada-hlava-aj-tvar"],
+   "robite skin fade?": ["fade"],
+   "umyjete mi aj vlasy pri strihu?": ["umytie"],
+   "robite aj farbenie vlasov pre chlapov": ["farbenie-vlasov"],
+   "chcem si dat vystrihnut obrazok do vlasov": ["vzor-vlasy"],
+   "kto u vas robi farbenie": ["farbenie-vlasov"],
+   "kto robi farbenie vlasov": ["farbenie-vlasov"]
   },
   "brada": {
    "kolko stoji uprava brady": ["cena-uprava-brady"],
@@ -39,7 +48,14 @@
    "zakryjete sediny na brade": ["sediny-brada"],
    "pouzivate horuci uterak": ["horuci-uterak"],
    "mam dlhu bradu, upravite mi ju?": ["dlha-brada"],
-   "ake pripravky pouzivate": ["pripravky"]
+   "ake pripravky pouzivate": ["pripravky"],
+   "uprava fuzou cena": ["brada-fuzy"],
+   "holenie britvov kolko": ["holenie-britvou"],
+   "farbite aj sive fuzy?": ["brada-farbenie-fuzy"],
+   "strih aj s bradou spolu kolko to vyjde": ["cena-strih-a-brada"],
+   "pouzivate na bradu britvu alebo strojcek": ["brada-strojcek-alebo-britva"],
+   "chcem si dat ofarbit bradu": ["objednat-farbenie-brady", "obsah-farbenie-brady"],
+   "ofarbite mi bradu?": ["objednat-farbenie-brady", "obsah-farbenie-brady"]
   },
   "balicky": {
    "Čo všetko je v Balíčku 1?": ["obsah-balicek-1"],
@@ -56,7 +72,15 @@
    "kolko stoji starostlivost o plet": ["cena-plet-premium"],
    "vystrihnete mi vzor do vlasov": ["vzor-vlasy"],
    "oplati sa balicek": ["oplati-balicek"],
-   "co kupit muzovi ako darcek": ["darcek-balicek"]
+   "co kupit muzovi ako darcek": ["darcek-balicek"],
+   "kolko stoji ultra inclusive": ["cena-ultra-inclusive"],
+   "aky je rozdiel medzi balickom 1 a ultra": ["rozdiel-balicky"],
+   "je v ultra balicku aj whisky?": ["whisky"],
+   "ako dlho trva ultra inkluziv": ["trvanie-ultra-inclusive"],
+   "kolko minut trva balicek jedna": ["trvanie-balicek-1"],
+   "mozem si k balicku pridat ornament": ["balicky-ornament"],
+   "dostanem v balicku aj depilaciu usi?": ["balicky-depilacia-usi", "balicky-b1-depilacia-nos", "obsah-balicek-1"],
+   "je v balicku 1 depilacia usi": ["balicky-depilacia-usi", "balicky-b1-depilacia-nos", "obsah-balicek-1"]
   },
   "deti": {
    "strihate aj deti": ["deti"],
@@ -72,7 +96,14 @@
    "strihate aj male deti": ["deti-male", "deti"],
    "syn ma 12 rokov, aky strih?": ["deti-starsi"],
    "mozem prist so synom ma 7 rokov": ["deti", "objednat-syna", "deti-vek"],
-   "ostrihate otca a syna naraz": ["otec-a-syn"]
+   "ostrihate otca a syna naraz": ["otec-a-syn"],
+   "kolko stoji strih pre chlapca 6 rokov": ["cena-male-gentlemany"],
+   "syn ma 12 rokov plati detsky strih?": ["deti-starsi"],
+   "moj syn sa boji strihania": ["deti-strach"],
+   "kolko trva strih dietata": ["trvanie-male-gentlemany"],
+   "male dieta strih": ["deti-male"],
+   "mozem byt pri synovi ked ho strihaju": ["deti-rodic"],
+   "co obsahuje strih pre maleho gentlemana": ["obsah-male-gentlemany"]
   },
   "objednanie": {
    "ako sa objednam": ["objednanie"],
@@ -91,7 +122,18 @@
    "plati sa zaloha": ["zaloha"],
    "kedy je najblizsi volny termin": ["termin-najblizsi"],
    "rezervacia mi nefunguje": ["rezervacia-nefunguje"],
-   "da sa objednat viac ludi naraz": ["viac-ludi"]
+   "da sa objednat viac ludi naraz": ["viac-ludi"],
+   "chcem sa objednat na zajtra": ["barber-objedna"],
+   "mozem prist len tak bez objednavky": ["bez-objednania"],
+   "mate volno dnes poobede?": ["termin-dnes"],
+   "da sa objednat cez telefon": ["objednanie-telefon"],
+   "neviem sa objednat cez web nejde mi to": ["rezervacia-nefunguje"],
+   "objednam sa ku konkretnemu barberovi?": ["objednanie-barber-po-telefone"],
+   "meskam 10 minut co mam robit": ["meskanie"],
+   "mozem sa objednat aj na sobotu": ["hodiny-sobota-dopredu"],
+   "kde sa objednam na farbenie vlasov": ["farbenie-vlasov"],
+   "kde je rezervacny system": ["objednanie"],
+   "kde najdem rezervacny system": ["objednanie"]
   },
   "hodiny": {
    "kedy mate otvorene": ["hodiny"],
@@ -106,7 +148,14 @@
    "mate dnes otvorene": ["hodiny-dnes"],
    "da sa prist po 19:00": ["hodiny-vecer"],
    "mate otvorene cez vikend": ["hodiny-vikend"],
-   "kedy vam mozem zavolat": ["hodiny-telefon"]
+   "kedy vam mozem zavolat": ["hodiny-telefon"],
+   "ste otvoreni cez sviatky?": ["hodiny-sviatky"],
+   "do kolko hodin mate v piatok": ["hodiny-piatok"],
+   "kedy mozem volat na recepciu": ["objednanie-volat-barberovi"],
+   "mate otvorene cez obed?": ["hodiny-obed"],
+   "pracujete aj cez vikend": ["hodiny-vikend"],
+   "Aké máte otváracie hodiny cez týždeň?": ["hodiny-pracovne-dni"],
+   "od kolkej robite rano": ["hodiny-otvarate", "hodiny"]
   },
   "kontakt": {
    "kde ste": ["adresa"],
@@ -121,7 +170,13 @@
    "ake mate hodnotenie": ["hodnotenie"],
    "ste v nitre?": ["nitra"],
    "mate aj inu pobocku": ["pobocky"],
-   "ako sa k vam dostanem autobusom": ["mhd"]
+   "ako sa k vam dostanem autobusom": ["mhd"],
+   "telefonne cislo": ["telefon"],
+   "da sa u vas zaparkovat": ["parkovanie"],
+   "ako sa k vam dostanem z autobusovej stanice": ["kontakt-stanica"],
+   "mozem vam napisat na whatsapp?": ["kontakt-whatsapp"],
+   "volal som a nikto nezdvihol": ["nezdvihnu"],
+   "mate pobocku aj v bratislave?": ["pobocky"]
   },
   "tim": {
    "kto u vas striha": ["tim"],
@@ -135,7 +190,11 @@
    "hovoria barberi po anglicky": ["jazyky-timu"],
    "kto sa specializuje na fade": ["specializacia"],
    "kde uvidim pracu barberov": ["praca-barberov"],
-   "striha este dominika": ["tim-dominika"]
+   "striha este dominika": ["tim-dominika"],
+   "aku maju barberi prax": ["prax"],
+   "je tam este Lajko?": ["tim-lajko"],
+   "chcem ist k Dominike": ["tim-dominika"],
+   "kto je majitel": ["o-time-majitel"]
   },
   "podnik": {
    "odkedy fungujete": ["od-kedy"],
@@ -151,7 +210,11 @@
    "hladate barbera do timu": ["praca-u-vas"],
    "preco si vybrat prave vas": ["preco-vy"],
    "aka je u vas atmosfera": ["atmosfera"],
-   "ake je vase ico": ["ico"]
+   "ake je vase ico": ["ico"],
+   "robite skolenia pre barberov": ["skolenia"],
+   "kto je prevadzkovatel ico": ["prevadzkovatel"],
+   "co je ta pumpa route 66": ["route66"],
+   "co ked nebudem spokojny so strihom": ["garancia"]
   },
   "ine": {
    "da sa platit kartou": ["karta"],
@@ -166,7 +229,10 @@
    "vystavite fakturu na firmu": ["faktura"],
    "mam citlivu plet, mozem na holenie": ["citliva-plet"],
    "mate zlavu pre dochodcov": ["dochodcovia"],
-   "co ak nezdvihnete telefon": ["nezdvihnu"]
+   "co ak nezdvihnete telefon": ["nezdvihnu"],
+   "ako funguje vernostny program": ["vernostna"],
+   "su ceny konecne alebo sa nieco priplaca": ["ceny-konecne"],
+   "mozem platit cez apple pay": ["kontakt-platba-mobilom"]
   },
   "barber": {
    "kto si": ["barber-kto"],
@@ -179,7 +245,10 @@
    "su tvoje odpovede spravne": ["barber-spravne"],
    "ahoj": ["ahoj"],
    "dakujem": ["dakujem"],
-   "dovidenia": ["dovidenia"]
+   "dovidenia": ["dovidenia"],
+   "si robot?": ["barber-clovek"],
+   "co vsetko vies": ["barber-kto"],
+   "s cim vsetko mi vies pomoct": ["barber-kto"]
   }
  },
  "mimo": [
@@ -246,6 +315,13 @@
   "chcem si kupit auto",
   "aky je kurz forintu",
   "kde je v nitre zoo",
-  "kto vyhral superstar"
+  "kto vyhral superstar",
+  "potrebujem instalatera",
+  "kedy ma otvorene posta",
+  "kedy ma otvorene tesco",
+  "aka je cena zlata",
+  "ako vyliecit chripku",
+  "potrebujem elektrikara",
+  "kedy ma otvorene lekaren"
  ]
 }
