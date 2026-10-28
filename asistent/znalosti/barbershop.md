@@ -1,7 +1,8 @@
 # Barbershop 30 Nitra – overené údaje pre asistenta
 
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
-stav 28. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
+stav 28. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; vernostná kartička
+podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
 (časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
@@ -27,6 +28,12 @@ stav 28. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, gar
 - Instagram s aktuálnymi strihmi: https://www.instagram.com/barbershop30_nitra/
 - Facebook: https://www.facebook.com/barbershop30nitra/
 - Hodnotenie na Google: 5,0 z 945 recenzií (13. 10. 2026), profil https://www.google.com/maps?cid=18132360254733427623
+- Vernostná kartička (odkaz „Vernostná kartička“ v pätičke webu, stránka barbershop-30/karta/): za návštevy zákazník zbiera
+  body a vymení ich za odmeny zo zoznamu na kartičke, napríklad zľavu alebo produkt; body pripíše recepcia. Kartička je
+  zadarmo a na meno, otvorí sa v mobile (dá sa pridať na plochu) a na recepcii sa ukáže. Odkaz na ňu príde e-mailom, ak ho
+  zákazník pri založení zadal, inak ju ukážu na recepcii. Založí sa na stránke kartičky, kým to tam nejde, na recepcii.
+  Pri kartičke sa dajú zapnúť správy o akciách. Koľko bodov je za návštevu a aké sú odmeny, ukáže až kartička; či platí
+  aj v HEAD SPA 30 a Salóne 30, web neuvádza.
 
 ## Rezervácia
 - Online 24/7 cez rezervačný systém: https://www.barbershop30.sk/rezervacia (tam sa vyberá služba, barber a voľný termín).

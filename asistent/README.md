@@ -50,7 +50,9 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
   pre prehliadač sú dva súbory: `assets/asistent-otazky.json` (otázky a odpovede, pri prvom otvorení okna) a
   `assets/asistent-otazky-kmene.json` (kmene iných znení na hľadanie, hneď po ňom).
 - Po každej úprave: `node barbershop-30/source/tools/otazky.mjs` (fakty proti cenníku, každá otázka nájde samu
-  seba, server a prehliadač zoradia rovnako, kópia pre web v dvoch súboroch). Test servera: `testy/spusti.sh` (model
+  seba, bežné otázky zo sady `otazky-ocakavane.json` nájdu svoju odpoveď a otázky mimo témy ostanú pod prahom 0,6,
+  server a prehliadač zoradia rovnako, kópia pre web v dvoch súboroch so spoločným otiskom). Kmene: slová zo zoznamu
+  `CELE`/`OTAZKY_CELE` (recept, počasie) sa neskracujú, aby nesplynuli s „recepcia“ a „počas“; zoznam je rovnaký v JS aj PHP. Test servera: `testy/spusti.sh` (model
   dostal odpovede).
 
 ## Okno na webe: Barber

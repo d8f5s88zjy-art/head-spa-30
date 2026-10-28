@@ -9,9 +9,10 @@
 // len pre odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova); v odpovediach len ceny a dĺžky
 // z cenníka webu (index.html), len overený telefón, odkazy a hodiny, bez „24/7“; odpoveď o termíne má telefón
 // a vetu „telefón vždy zdvihneme“; každá otázka aj jej iné znenie nájde samu seba; sada všeobecných otázok padne na
-// všeobecné odpovede a otázky mimo témy ostanú pod prahom okna; hľadanie na serveri
+// všeobecné odpovede a otázky mimo témy ostanú pod prahom okna (otazky-ocakavane.json); hľadanie na serveri
 // (asistent/lib/otazky.php) zoradí rovnako ako v prehliadači (assets/asistent-otazky.js), ak je php; kópia pre web
-// zoradí rovnako ako zdroj a bez kmeňov (kým sa sťahujú) nájde každá otázka samu seba.
+// zoradí rovnako ako zdroj a bez kmeňov (kým sa sťahujú) nájde každá otázka samu seba; nacitaj() nepoužije kmene
+// z inej kópie a po chybe ich stiahne znova.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -75,20 +76,14 @@ for (const o of ot) for (const z of [o.q, ...(o.v || [])]) {
 
 // všeobecná otázka padne na všeobecnú odpoveď (nové znenia ju nesmú prebiť, napr. „cena fade“ nie na strih s bradou za 28 €)
 // a otázka mimo témy ostane pod prahom okna (PRAH v asistent-ukazka.js), teda dostane telefón recepcie namiesto
-// nesúvisiacej odpovede (nálezy kontroly 28. 10. 2026)
+// nesúvisiacej odpovede (nálezy kontroly 28. 10. 2026). Sady sú v source/tools/otazky-ocakavane.json: aspoň 120
+// všeobecných otázok, z každej témy aspoň 10, a aspoň 60 otázok mimo témy. Pri chybe oprav znenia (v), nie sadu.
 const PRAH = Number(fs.readFileSync(path.join(SITE, 'assets', 'asistent-ukazka.js'), 'utf8').match(/const PRAH = ([\d.]+)/)[1]);
-const VSEOB = {
-  'cena fade': ['fade'], 'kolko stoji fade': ['fade'], 'mozem prist bez objednania': ['bez-objednania'],
-  'robite farbenie brady': ['obsah-farbenie-brady', 'objednat-farbenie-brady', 'cena-farbenie-brady'],
-  'Čo všetko je v Balíčku 1?': ['obsah-balicek-1'], 'co obsahuje balicek jedna': ['obsah-balicek-1'], 'co ak sa mi strih nepaci': ['garancia'],
-  'mate darcekove poukazy': ['poukazy'], 'da sa platit kartou': ['karta'], 'mate vernostnu karticku': ['vernostna'], 'ako zrusit termin': ['zrusenie'],
-  'kolko stoji strih pre chlapca': ['cena-male-gentlemany'], 'kolko stoji uprava brady': ['cena-uprava-brady'], 'otvarate v sobotu?': ['hodiny-sobota'],
-  'kde ste': ['adresa'],
-};
-const MIMO = ['Aké bude zajtra počasie v Nitre?', 'Opravíte mi bicykel?', 'Kto vyhral majstrovstvá sveta v hokeji?', 'Viete mi poradiť recept na guláš?',
-  'Koľko stojí benzín?', 'Koľko stojí nafta?', 'Kde je najbližšia lekáreň?', 'Predávate pneumatiky?', 'Aký je kurz eura?', 'Aký je kurz dolára?',
-  'Kto je prezident Slovenska?', 'Kedy ide vlak do Bratislavy?', 'Ako sa robí pizza?', 'Opravujete mobily?', 'Viete mi napísať úlohu z matematiky?',
-  'Predávate lístky na koncert?', 'Koľko stojí nájom na Mostnej?', 'Koľko stojí letenka do Londýna?'];
+const OCAK = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'otazky-ocakavane.json'), 'utf8'));
+const VSEOB = Object.assign({}, ...Object.values(OCAK.vseobecne)), MIMO = OCAK.mimo;
+if (Object.keys(VSEOB).length < 120) chyba(`všeobecných otázok v otazky-ocakavane.json je ${Object.keys(VSEOB).length}, treba aspoň 120`);
+for (const t of Object.keys(data.temy)) { const n = Object.keys(OCAK.vseobecne[t] || {}).length; if (n < 10) chyba(`otazky-ocakavane.json: téma ${t} má ${n} všeobecných otázok, treba aspoň 10`); }
+if (MIMO.length < 60) chyba(`otázok mimo témy v otazky-ocakavane.json je ${MIMO.length}, treba aspoň 60`);
 let zleVseob = 0, zleMimo = 0;
 for (const [q, ok] of Object.entries(VSEOB)) {
   for (const id of ok) if (!ids.has(id)) chyba(`sada všeobecných otázok: neznáme id ${id}`);
@@ -99,12 +94,12 @@ for (const q of MIMO) {
   const h = hladaj(db, q, 1)[0];
   if (h && h.skore >= PRAH) { zleMimo++; chyba(`mimo témy „${q}“ odpovie ${h.o.id} (${h.skore} ≥ ${PRAH}), má dostať telefón`); }
 }
-if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpoveď (${Object.keys(VSEOB).length}), mimo témy pod prahom ${PRAH} (${MIMO.length})`);
+if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpoveď (${Object.keys(VSEOB).length} v ${Object.keys(OCAK.vseobecne).length} témach), mimo témy pod prahom ${PRAH} (${MIMO.length})`);
 
 // server a prehliadač zoradia rovnako (otázky, znenia a pár iných)
 const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), ...Object.keys(VSEOB), ...MIMO, 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',
   'Má Adrián zajtra voľný termín?', 'mozem si dat pivo', 'kde zaparkujem auto', 'Do you cut kids hair?', 'Wie viel kostet ein Haarschnitt?',
-  'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', '', '???'];
+  'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', 'recepty od recepčnej', 'počasím počas strihu', '', '???'];
 let php = '';
 try { php = execFileSync('php', ['-v'], { encoding: 'utf8' }); } catch (e) { console.log('pozor: php nie je, zhoda so serverom sa nekontroluje'); }
 if (php) {
@@ -138,6 +133,24 @@ const dbBez = priprav(JSON.parse(min));
 const bez = ot.filter((o) => { const h = hladaj(dbBez, o.q, 1); return !h[0] || h[0].o.id !== o.id; });
 if (bez.length) chyba(`kópia bez kmeňov: ${bez.length} otázok nenájde samu seba (${bez.slice(0, 5).map((o) => o.id).join(', ')})`);
 else console.log(`OK   kópia bez kmeňov: každá otázka nájde samu seba (${ot.length})`);
+// nacitaj() v prehliadači (fetch nahradený): kmene z inej kópie (otisk) sa nepoužijú, po chybe ich ďalšie nacitaj() stiahne znova
+{
+  const zle0 = zle, zoz = [], fetch0 = globalThis.fetch;
+  const skus = async (kmene) => {
+    let p = 0; globalThis.fetch = async (u) => (u.endsWith('asistent-otazky.json') ? { ok: true, json: async () => JSON.parse(min) } : (zoz.push(u), kmene(++p)));
+    const m = await import(path.join(SITE, 'assets', 'asistent-otazky.js') + `?nacitaj-${Math.random()}`);
+    await m.nacitajHladanie(); const pred = (await m.nacitaj()).ot.some((o) => o.znenia.length > 1);
+    m.nacitaj(); const po = (await m.nacitajHladanie()).ot.some((o) => o.znenia.length > 1);
+    return [pred, po];
+  };
+  const dobre = () => ({ ok: true, json: async () => JSON.parse(minKmene) });
+  const [a1, a2] = await skus((p) => (p === 1 ? { ok: true, json: async () => ({ ...JSON.parse(minKmene), otisk: 'iny' }) } : dobre()));
+  if (a1 || !a2) chyba(`nacitaj(): kmene z inej kópie ${a1 ? 'použilo' : 'nepoužilo'}, ďalší pokus ${a2 ? 'ich použil' : 'ich nepoužil'}`);
+  const [b1, b2] = await skus((p) => (p === 1 ? Promise.reject(new Error('sieť')) : dobre()));
+  if (b1 || !b2) chyba(`nacitaj(): po chybe siete ďalšie nacitaj() kmene ${b2 ? '' : 'ne'}stiahlo`);
+  globalThis.fetch = fetch0;
+  if (zle === zle0) console.log(`OK   nacitaj(): kmene z inej kópie nepoužije, po chybe ich stiahne znova (${zoz.length} stiahnutí kmeňov)`);
+}
 const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(1)} kB, gzip ${(zlib.gzipSync(s, { level: 6 }).length / 1024).toFixed(1)} kB`;
 console.log(`     kópia pre web: otázky ${kb(min)}; kmene ${kb(minKmene)}`);
 if (kontrola) {

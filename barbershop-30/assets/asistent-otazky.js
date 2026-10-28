@@ -5,7 +5,8 @@
  *  - asistent-otazky.json: témy, otázky a odpovede bez iných znení (témy v okne, ťuknutie na otázku, odpoveď),
  *  - asistent-otazky-kmene.json: kmene otázky a jej iných znení podľa id, spočítané vopred (len na hľadanie).
  * nacitaj() stiahne prvý súbor pri prvom otvorení okna a hneď po ňom kmene; kým kmene nie sú, hľadá sa podľa
- * otázok, nacitajHladanie() počká na kmene. Server má to isté hľadanie (asistent/lib/otazky.php) nad zdrojom, aby
+ * otázok, nacitajHladanie() počká na kmene. Kmene z inej kópie (verzia, otisk) sa nepoužijú; keď zlyhajú alebo
+ * nesedia, ďalšie nacitaj() ich stiahne znova. Server má to isté hľadanie (asistent/lib/otazky.php) nad zdrojom, aby
  * modelu pridal odpovede na podobné otázky; otazky.mjs stráži, že server, zdroj aj kópia vrátia rovnaké poradie.
  *
  * Hľadanie: text bez diakritiky a bez výplňových slov, slová skrátené na kmeň (koncovka preč, najviac 5 znakov),
@@ -23,6 +24,9 @@ const STOP = new Set(('a aj ale alebo ako aka ake aki aky ani by bol bola bude b
   'som so su ta tak tam te to toho ten tu tvoj u uz v vam vas vo vy z za ze zo prosim vobec').split(' '));
 const KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho', 'emu', 'ovi', 'ich', 'ou', 'om', 'ov', 'ej',
   'ia', 'ie', 'iu', 'ii', 'ym', 'a', 'e', 'i', 'o', 'u', 'y'];
+// slová, ktorých skrátený kmeň by splynul s iným slovom odpovedí (recept → recep ako recepcia, počasie → počas ako
+// „počas strihu“): kmeňom je celá táto predpona, takže otázka mimo témy nedostane nezmyselnú odpoveď ani návrhy
+const CELE = ['pocasi', 'recept'];
 
 export function kmene(text) {
   const t = String(text).toLowerCase().replace(/[^\x00-\x7f]/g, (z) => DIAKRITIKA[z] ?? z).replace(/[^a-z0-9]+/g, ' ');
@@ -31,8 +35,12 @@ export function kmene(text) {
     if (!w || STOP.has(w)) continue;
     let k = w;
     if (!/^\d+$/.test(w)) {
-      for (const s of KONCOVKY) if (k.length - s.length >= 3 && k.endsWith(s)) { k = k.slice(0, -s.length); break; }
-      k = k.slice(0, 5);
+      const cele = CELE.find((p) => w.startsWith(p));
+      if (cele) k = cele;
+      else {
+        for (const s of KONCOVKY) if (k.length - s.length >= 3 && k.endsWith(s)) { k = k.slice(0, -s.length); break; }
+        k = k.slice(0, 5);
+      }
     }
     out.add(k);
   }
@@ -41,12 +49,17 @@ export function kmene(text) {
 
 /* kópia pre prehliadač: { otazky: obsah asistent-otazky.json, kmene: obsah asistent-otazky-kmene.json }. Otázky bez
    iných znení (v); kmene { id: znenia oddelené |, kmene medzerou }, bez opakovaní (rovnaké znenie nemení najlepšiu
-   zhodu ani váhy), takže telefón ich pri otvorení okna nepočíta. Server číta zdroj s v (jeho formát sa nemení). */
+   zhodu ani váhy), takže telefón ich pri otvorení okna nepočíta. Server číta zdroj s v (jeho formát sa nemení).
+   otisk (FNV-1a kmeňov) majú oba súbory: nacitaj() spáruje len kmene z tej istej kópie, aj keď sa zdroj zmení dvakrát
+   v ten istý deň (verzia je dátum) alebo ho uloží admin (verziu nemení). */
+const otisk = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193); return (h >>> 0).toString(36); };
 export function kopiaPreWeb(data) {
   const k = (o) => [...new Set([o.q, ...(o.v || [])].map((z) => kmene(z).join(' ')).filter(Boolean))].join('|');
+  const km = Object.fromEntries(data.otazky.map((o) => [o.id, k(o)]));
+  const o = otisk(JSON.stringify(km));
   return {
-    otazky: { ...data, otazky: data.otazky.map(({ v, ...o }) => o) },
-    kmene: { verzia: data.verzia, k: Object.fromEntries(data.otazky.map((o) => [o.id, k(o)])) },
+    otazky: { ...data, otisk: o, otazky: data.otazky.map(({ v, ...x }) => x) },
+    kmene: { verzia: data.verzia, otisk: o, k: km },
   };
 }
 
@@ -84,16 +97,20 @@ export function hladaj(db, text, kolko = 5) {
 }
 
 const stiahni = (u) => fetch(u.href, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))));
-let nacitane = null, hladanie = null;
+let nacitane = null, hladanie = null, bezKmenov = false;
+/* kmene k db: inej verzie alebo z inej kópie (stará kópia v pamäti prehliadača alebo CDN) sa nepoužijú; pri zlyhaní
+   alebo nezhode ostane hľadanie podľa otázok a ďalšie nacitaj() (ďalšie otvorenie okna, ďalšia otázka) skúsi znova */
+const kmeneDo = (db) => stiahni(KMENE).then((km) => {
+  if (km.verzia !== db.verzia || km.otisk !== db.otisk) { bezKmenov = true; return db; }
+  const p = priprav(db, km.k); db.ot = p.ot; db.idf = p.idf; return db;
+}, () => { bezKmenov = true; return db; });
 /* otázky a odpovede (db pre témy a ťuknutie); hneď potom sa sťahujú kmene a to isté db ich dostane (ot, idf) */
 export function nacitaj() {
   if (!nacitane) {
     nacitane = stiahni(OTAZKY).then((d) => priprav(d)).catch((e) => { nacitane = null; hladanie = null; throw e; });
-    // kmene inej verzie (stará kópia v pamäti prehliadača alebo CDN) sa nepoužijú, hľadá sa ďalej podľa otázok
-    hladanie = nacitane.then((db) => stiahni(KMENE).then((km) => { if (km.verzia !== db.verzia) return; const p = priprav(db, km.k); db.ot = p.ot; db.idf = p.idf; },
-      () => { /* bez kmeňov ostane hľadanie podľa otázok */ }).then(() => db));
+    hladanie = nacitane.then(kmeneDo);
     hladanie.catch(() => {});
-  }
+  } else if (bezKmenov) { bezKmenov = false; hladanie = nacitane.then(kmeneDo); }
   return nacitane;
 }
 /* to isté db, keď už hľadá aj podľa iných znení (kmene stiahnuté alebo nedostupné) */

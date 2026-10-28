@@ -75,7 +75,9 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   a rovnaké v `../asistent/lib/otazky.php`. Po úprave otázok `node source/tools/otazky.mjs` (kontrola faktov proti
   cenníku, zhoda prehliadač a server, kópia pre prehliadač: `assets/asistent-otazky.json` s otázkami a odpoveďami pri
   prvom otvorení okna, gzip asi 41 kB, a `assets/asistent-otazky-kmene.json` s kmeňmi znení na hľadanie hneď po ňom,
-  asi 25 kB; admin ju pri uložení robí rovnako).
+  asi 25 kB; admin ju pri uložení robí rovnako). Stráž `source/tools/otazky-ocakavane.json`: 158 bežných otázok
+  (z každej témy aspoň 10) musí padnúť na odpoveď so zodpovedajúcim významom a 64 otázok mimo témy (počasie, benzín,
+  kurz eura, recept…) musí ostať pod prahom okna 0,6; pri chybe sa opravujú znenia (`v`), nie sada ani hľadanie.
 
 - **Živý telefón (2026‑10‑22, style.css P15, app.js časť 12)**: zadávateľ: „na telefóne to pôsobí ako PowerPoint“.
   Fotka scény sa aj bez filmu hýbe pri skrolovaní ako kamera podľa `data-mv` (in a near priblíženie, rise a down

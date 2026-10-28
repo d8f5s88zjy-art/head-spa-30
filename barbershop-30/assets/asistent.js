@@ -346,6 +346,7 @@ export async function spusti(api) {
         if (!rozhovor.length) { if (!zoz.querySelector('.asi-temy')) { const tm = temy(); if (tm) zoz.append(tm); } }
         else if (!zoz.querySelector('.asi-suvis') && rozhovor[rozhovor.length - 1].r === 'a') suvisiace(rozhovor[rozhovor.length - 2].t);
       });
+      else if (modOt) modOt.nacitaj();   // kmene, ktoré minule zlyhali alebo nesedeli, sa stiahnu znova
       // z bubliny sa fokus po zavretí vráti na ikonu (bublina už nebude)
       navrat = oznam.contains(document.activeElement) ? btn : document.activeElement;
       schovajOznam(); popisy(); obsah(); setTimeout(pole, 30);

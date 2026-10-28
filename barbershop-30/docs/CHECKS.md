@@ -735,3 +735,25 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   a 1 mimo témy so správnou odpoveďou a súvisiacimi otázkami, bez chýb skriptu, bez vodorovného pretekania.
 - Testy: `otazky.mjs --kontrola` OK (776 otázok), i18n-test 55 OK, en-test 16 OK, app-smoke 109 OK, vychytavky-test
   27 OK, admin-test 101 OK (kópia pre web zhodná po uložení odpovedí, tímu aj kontaktu, počet odpovedí 776).
+
+## 35. Barber odpovedá presnejšie: všeobecné otázky, mimo témy, domnienky (2026‑10‑28)
+
+- Kontrola kódu a textov po 34: nové znenia prebíjali všeobecné otázky („kto je najlepsi barber“ → špecializácie,
+  „kolko trva uprava brady“ → cena), otázky mimo témy dostávali nesúvisiacu odpoveď („Aké bude zajtra počasie?“ →
+  voľný termín zajtra 0,644, „kolko je hodin“ → otváracie hodiny 0,756) a niekoľko odpovedí domýšľalo prax podniku.
+- Stráž `source/tools/otazky-ocakavane.json` v `otazky.mjs`: 158 bežných otázok s preklepmi a bez diakritiky
+  (z každej z 11 tém 11 až 21) → id podľa významu, 64 otázok mimo témy pod prahom 0,6. Na 58dd5f8e 12 chýb, teraz 0.
+  Opravené znenia, nie hľadanie (19 zmien: 11 kolíznych znení preč, presunutých alebo spresnených, otázka route66
+  bez slova „benzínová“ a jej nové znenie, 6 prirodzených znení pre všeobecné otázky). Kmene: „recept“ a „počasie“ sa neskracujú (CELE v JS aj PHP),
+  inak splývali s „recepcia“ a „počas“; server a prehliadač zoradia rovnako (3 837 dotazov).
+- Odpovede (97 zmien, z toho 93 v nových otázkach; len overené fakty alebo recepcia s telefónom): vernostná kartička podľa stránky `karta/` (je na
+  webe, odkaz v pätičke; doplnené aj v `asistent/znalosti/barbershop.md`), prax len o tíme (nie „každý má rukopis“,
+  nie „barber v kresle s 10 až 15 rokmi praxe“), balíčky len podľa cenníka („strih, úprava brady, obočie…“ bez
+  domnienok o fade a britve), odovzdania „spýtaj sa barbera v kresle“ → recepcia, tabuľa Dnes je v časti „Kedy si
+  sadneš?“. Témy: newsletter → Platby a ostatné, kedy býva školenie → O nás.
+- `asistent-otazky.js`: kópia otázok a kmeňov má spoločný otisk; kmene inej kópie alebo verzie sa nepoužijú a po chybe
+  sa stiahnu znova pri ďalšom otvorení okna alebo otázke (stráž v `otazky.mjs`).
+- Prehliadač (390×844, `?asistent=ukazka&objednavka=ukazka`): 12 otázok vrátane „cena fade“, „mozem prist bez
+  objednania“, „kurz eura“, „recept na gulas“, 12 z 12 podľa očakávania, chyby skriptu 0, šírka 390. Prvá odpoveď po
+  otvorení okna na pomalom 4G (CPU 4×, medián 5 behov): 1 855 ms (58dd5f8e) → 1 823 ms; prenos asistenta gzip +0,8 kB.
+- Testy: `otazky.mjs --kontrola` OK, i18n-test 55, en-test 16, app-smoke 109, vychytavky-test 27, admin-test 101 OK.

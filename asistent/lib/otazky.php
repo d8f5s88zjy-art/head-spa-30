@@ -17,8 +17,10 @@ const OTAZKY_STOP = 'a aj ale alebo ako aka ake aki aky ani by bol bola bude bud
   'som so su ta tak tam te to toho ten tu tvoj u uz v vam vas vo vy z za ze zo prosim vobec';
 const OTAZKY_KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho', 'emu', 'ovi', 'ich', 'ou', 'om', 'ov', 'ej',
   'ia', 'ie', 'iu', 'ii', 'ym', 'a', 'e', 'i', 'o', 'u', 'y'];
+/* slová, ktorých skrátený kmeň by splynul s iným slovom (recept a recepcia, počasie a „počas“): kmeňom je celá predpona */
+const OTAZKY_CELE = ['pocasi', 'recept'];
 
-/* kmene slov: bez diakritiky a výplňových slov, koncovka preč, najviac 5 znakov (čísla celé) */
+/* kmene slov: bez diakritiky a výplňových slov, koncovka preč, najviac 5 znakov (čísla celé, OTAZKY_CELE celé) */
 function otazky_kmene(string $text): array {
   static $stop = null;
   $stop ??= array_flip(explode(' ', OTAZKY_STOP));
@@ -28,8 +30,13 @@ function otazky_kmene(string $text): array {
     if ($w === '' || isset($stop[$w])) continue;
     $k = $w;
     if (!ctype_digit($w)) {
-      foreach (OTAZKY_KONCOVKY as $s) if (strlen($k) - strlen($s) >= 3 && str_ends_with($k, $s)) { $k = substr($k, 0, -strlen($s)); break; }
-      $k = substr($k, 0, 5);
+      $cele = null;
+      foreach (OTAZKY_CELE as $p) if (str_starts_with($w, $p)) { $cele = $p; break; }
+      if ($cele !== null) $k = $cele;
+      else {
+        foreach (OTAZKY_KONCOVKY as $s) if (strlen($k) - strlen($s) >= 3 && str_ends_with($k, $s)) { $k = substr($k, 0, -strlen($s)); break; }
+        $k = substr($k, 0, 5);
+      }
     }
     $out['_' . $k] = $k;               // predpona: kľúč z číslic by PHP zmenilo na číslo
   }
