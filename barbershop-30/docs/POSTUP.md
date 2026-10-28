@@ -59,6 +59,11 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑28 (hotové na vetve, CHECKS 33): majiteľ po videní textov z 27. 10.: „Musia to byť rázne texty, nechám to na
+  teba.“, „Barberi majú 10–15 rokov praxe.“ Úvod tímu v troch vetách s praxou 10 až 15 rokov, pilier Pohodlie nahradila
+  Garancia v kresle (bez lehôt a sľubov po odchode), kratšie riadky barberov, otázka „Čo ak nebudem spokojný?“, recepčná
+  „od roku 2019“ namiesto „jediný v Nitre, 8 rokov“, podnadpis „Všetky tri na Mostnej 30 v Nitre.“ (adresy overené na
+  headspa30.sk a salon30.sk), znalosti Barbera a 252 otázok, 7 jazykov a `en/`. Ďalej: 500 ďalších bežných otázok pre Barbera.
 - 2026‑10‑27 (hotové na vetve, CHECKS 32): zadávateľ: „pri barberoch pikantnejšie texty (garancia, skúsenosti), do otázok
   napísať, že recepčná sa stará o termíny a pohodlie a barber o výsledok, na konci odkazy na HEAD SPA 30, Salón 30
   a Barbershop 30“. Tím: nový úvod, tri piliere Skúsenosti · Precíznosť · Pohodlie (`.team-pillars`), údernejšie

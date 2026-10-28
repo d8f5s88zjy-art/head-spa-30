@@ -948,6 +948,7 @@ html[data-motion="off"] .board-hero { animation: none; }
 /* naše prevádzky (zadávateľ 2026‑10‑27): riadok medzi stĺpcami a údajmi prevádzkovateľa, tri odkazy,
    aktuálna prevádzka (aria-current) v tóne lampy; ostatné stĺpce pätičky bez zmeny */
 .footer-shops { margin-top: var(--s7); padding-top: var(--s5); border-top: 1px solid var(--line); }
+.footer-shops-sub { margin: calc(-1 * var(--s2)) 0 var(--s5); font-size: 0.9375rem; color: var(--paper-2); }
 .footer-shop-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); }
 .footer-shop-list li { display: grid; gap: var(--s1); min-width: 0; align-content: start; }
 .footer-shop-list a { justify-self: start; font-size: 1.0625rem; font-weight: 600; color: var(--paper); }

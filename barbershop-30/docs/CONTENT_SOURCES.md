@@ -203,3 +203,25 @@ prevádzok sa neuvádzajú. Dôkazy adries (`curl -sS -o /dev/null -L -w '%{http
 https://www.headspa30.sk/ → 200 (final www), https://headspa30.sk/ → 200 (final https://www.headspa30.sk/),
 https://d8f5s88zjy-art.github.io/head-spa-30/ → 200, https://www.salon30.sk/ → 200, https://salon30.sk/ → 200 (final www),
 https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/ → 200, https://www.barbershop30.sk/ → 200 (starý web).
+
+## Ráznejšie texty tímu, prax 10 až 15 rokov a garancia v kresle (2026‑10‑28)
+
+Majiteľ 27. 10. 2026 po videní textov: „Musia to byť rázne texty, nechám to na teba.“ a „Barberi majú 10–15 rokov praxe.“
+Dva nové fakty od majiteľa: prax barberov 10 až 15 rokov (o tíme, nie o konkrétnom mene) a garancia v znení v kresle.
+Rozhodnutia nechané na nás: garancia nahrádza pilier Pohodlie, pribúda otázka „Čo ak nebudem spokojný?“, podnadpis
+prevádzok ostáva, ak majú všetky tri adresu Mostná 30, „jediný barbershop v Nitre, 8 rokov“ sa zosúlaďuje s rokom 2019.
+
+| text na webe | kde | opora | stupeň |
+|---|---|---|---|
+| Úvod tímu „Barberi s 10 až 15 rokmi praxe pod jednou značkou. Jeden štandard pre všetkých: konzultácia, presná práca a strih, ktorý sedí aj o týždeň. Ty povieš, ako to chceš, zvyšok je remeslo.“ | tím, `.lead` | prax = slová majiteľa 27. 10.; zvyšok z úvodu z 27. 10. (konzultácia v cenníku, „Povedz, ako to chceš.“) | tvrdenie majiteľa + zostavené z webu |
+| Pilier Skúsenosti „Prax 10 až 15 rokov, na Mostnej 30 od roku 2019. Hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“ | tím, `.team-pillars` | prax = majiteľ 27. 10.; „od roku 2019“ (karta Dôvera), „5,0 na Google“ (úvod) | tvrdenie majiteľa + overené‑oficiálne + Google |
+| Pilier Precíznosť „… styling a kolínska na záver. Nič od oka, nič naslepo.“ | tím | ako 27. 10. (cenník „Pánsky strih krok za krokom“), len kratšie | overené‑oficiálne |
+| Pilier Garancia „Z kresla vstaneš, až keď si spokojný. Čo nesedí, dohodneme a doladíme hneď.“ | tím | znenie G2 potvrdené zadaním z 27. 10. (majiteľ nechal rozhodnutie na nás, výslovne bez sľubov po odchode a bez lehôt); žiadne „zadarmo“, „neplatíš“ ani dni | tvrdenie majiteľa |
+| Riadky barberov Nikolas, Damian, Andy, Kevin, Lajko, Jojo, Adrian (kratšie znenia z 27. 10.) | tím, `.team-bio` (aj `rezervacia.html`, odpovede asistenta `tim-*`) | rovnaké dojmy ako 27. 10., bez nových faktov o osobe; Kristián, Michal a Dominika bez zmeny (riadok Dominiky môže ostať, majiteľ 27. 10.) | dojem a prístup |
+| „Čo ak nebudem spokojný?“ – „Z kresla vstaneš, až keď si spokojný. Čo nesedí, povedz rovno v kresle: dohodneme a doladíme hneď. Všetko ostatné rieši recepcia: 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.“ | časté otázky (10. položka) | garancia = majiteľ 27. 10.; telefón a hodiny recepcie (karta Rezervácia) | tvrdenie majiteľa + overené‑oficiálne |
+| „Pri dverách ťa privíta recepčná. Tak je to tu od roku 2019.“ (karta Poď ďalej) a „Recepcia: pri dverách, od roku 2019“ (karta Dôvera) | vstup, dôvera | nahrádza „Ako jediný barbershop v Nitre ju máme už 8 rokov.“ (nesúlad s rokom 2019, otázka 9 v denníku; „jediný“ neoverené, pravidlo Čo nerobíme); rok 2019 = obchodný register a starý web | overené‑oficiálne |
+| Podnadpis „Všetky tri na Mostnej 30 v Nitre.“ | pätička `.footer-shops-sub` | www.headspa30.sk (stiahnuté 27. 10.: „Mostnej 226/30 v centre Nitry“, „Mostnej 30 v Nitre“, mapa Mostná 226/30 Nitra), www.salon30.sk („Mostná 30“), Barbershop 30 Mostná 30 | overené (weby prevádzok) |
+
+Znalosti Barbera (`../asistent/znalosti/barbershop.md`) a otázky (`barbershop-otazky.json`: `prax`, `recepcia`, `pobocky`,
+`najlepsi-barber`, `preco-vy`, `tim-*`, nová `garancia`) hovoria to isté. Čo majiteľ nepovedal, tam nie je: lehota garancie,
+„zadarmo“, vrátenie peňazí, prax konkrétneho barbera.

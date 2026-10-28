@@ -679,3 +679,29 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   tma-test v tomto prostredí padá na chýbajúcom module Pillow (`PIL._imaging`), rovnako pred zmenou aj po nej.
 - Veľkosť: index.html gzip 14 844 → 15 758 B (nad 14 600 B z plánu D6; hranica bola prekročená už pred touto zmenou).
 
+## 33. Ráznejšie texty tímu, prax 10 až 15 rokov a garancia v kresle (2026‑10‑28)
+
+- Majiteľ 27. 10. po videní verzie c88d29a: „Musia to byť rázne texty, nechám to na teba.“, „Barberi majú 10–15 rokov
+  praxe.“ Rázne = sebavedomé, krátke, priame; bez vulgarít, bez porovnávania konkurencie, bez zdravotných sľubov.
+- Tím (`#tim .band-team`): úvod v troch vetách (182 znakov) s praxou 10 až 15 rokov; piliere Skúsenosti (102) ·
+  Precíznosť (111) · Garancia (75: „Z kresla vstaneš, až keď si spokojný. Čo nesedí, dohodneme a doladíme hneď.“, bez
+  lehôt, bez „zadarmo“); riadky barberov 46 až 74 znakov (Kristián, Michal, Dominika bez zmeny), rovnaké v `rezervacia.html`
+  a v odpovediach asistenta `tim-*`.
+- Časté otázky: 11 položiek (`en-test.mjs` čaká 11); nová „Čo ak nebudem spokojný?“ (199 znakov, 10. miesto, pred
+  „Kedy máte otvorené?“) s garanciou a telefónom recepcie.
+- Zosúladenie: „Ako jediný barbershop v Nitre ju máme už 8 rokov.“ → „Tak je to tu od roku 2019.“ (karta Poď ďalej),
+  „ako jediný barbershop v Nitre, už 8 rokov“ → „pri dverách, od roku 2019“ (karta Dôvera); v slovníkoch, `en/`, znalostiach
+  aj otázkach asistenta nikde „jediný“ ani „8 rokov“ (`grep` 0 nálezov).
+- Pätička: podnadpis `.footer-shops-sub` „Všetky tri na Mostnej 30 v Nitre.“ (headspa30.sk: Mostná 226/30 a „Mostnej 30
+  v Nitre“, salon30.sk: Mostná 30; stiahnuté 27. 10.). CSS 1 riadok; film.js bez zmeny.
+- Asistent: `znalosti/barbershop.md` (prax tímu, recepčná vs. barber, garancia v kresle, prevádzky, stav 28. 10.),
+  `barbershop-otazky.json` 252 otázok (nová `garancia` so 4 zneniami; `prax`, `recepcia`, `pobocky`, `najlepsi-barber`,
+  `preco-vy` upravené), `node source/tools/otazky.mjs` OK; „Čo ak nebudem spokojný?“, „mate garanciu“, „reklamacia“,
+  „co ak sa mi strih nebude pacit“ nájdu `garancia`.
+- Jazyky: 7 slovníkov 325 → 328 kľúčov (14 kľúčov nahradených, 3 nové, žiadna iná hodnota zmenená), `en/index.html`
+  pregenerovaná (372 prekladov,
+  bez prekladu 0), i18n-test OK.
+- Overené (Playwright, 390×844 DPR 3 a 1440×900): snímky tímu, otázok a pätičky PRED (c88d29a) a PO, hárok
+  `scratchpad/barber/razne/pred-po-texty.jpg`; bez vodorovného pretekania, bez chýb skriptu. Testy pozri odovzdávku
+  `scratchpad/barber/razne/odovzdavka-texty.md`.
+- Veľkosť: index.html gzip 15 747 → 15 848 B (nad 14 600 B z plánu D6 už pred zmenou).

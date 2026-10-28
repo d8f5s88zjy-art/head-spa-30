@@ -46,14 +46,20 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 - **SEO úvod a časté otázky (2026‑10‑25, `docs/SEO-ANALYZA.md`)**: titulok „Barbershop 30 Nitra | Pánske holičstvo,
   Mostná 30“, popis so službami, H1 so značkou a mestom (nadpisok „Barbershop 30 · Nitra“ nad „Tvoj strih. Tvoje
   miesto.“), podnadpis „Pánske holičstvo na Mostnej 30“. Časté otázky (`#caste-otazky`, pás v rezervácii pod
-  kontaktom, 10 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
+  kontaktom, 11 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
   s `hasMap` (profil v Mapách; súradnice nie sú, lebo nie sú overené).
 
 - **Tím, recepcia v otázkach a prevádzky v pätičke (2026‑10‑27, `docs/CHECKS.md` 32)**: nad portrétmi tímu tri
-  piliere Skúsenosti · Precíznosť · Pohodlie (`ul.team-pillars`), riadky barberov bez faktov o osobe (rovnaké
+  piliere Skúsenosti · Precíznosť · Pohodlie (`ul.team-pillars`, od 28. 10. Garancia), riadky barberov bez faktov o osobe (rovnaké
   v `rezervacia.html` a v odpovediach asistenta), v častých otázkach „Mám volať barberovi alebo recepcii?“ (recepčná =
   termíny a pohodlie, barber = výsledok), v pätičke blok „Naše prevádzky“ (`.footer-shops`: HEAD SPA 30, Salón 30,
-  Barbershop 30 ako aktuálna stránka s `aria-current`). Garancia sa zobrazí až po potvrdení majiteľom (otázky v denníku).
+  Barbershop 30 ako aktuálna stránka s `aria-current`).
+- **Ráznejšie texty tímu, prax 10 až 15 rokov a garancia v kresle (2026‑10‑28, `docs/CHECKS.md` 33)**: majiteľ 27. 10.:
+  „Musia to byť rázne texty“, „Barberi majú 10–15 rokov praxe“. Úvod tímu v troch vetách s praxou, piliere Skúsenosti ·
+  Precíznosť · Garancia („Z kresla vstaneš, až keď si spokojný. Čo nesedí, dohodneme a doladíme hneď.“, bez lehôt a sľubov po
+  odchode), kratšie riadky barberov, otázka „Čo ak nebudem spokojný?“ (11. položka → 10. miesto), „recepčná od roku 2019“
+  namiesto „jediný barbershop v Nitre, 8 rokov“, podnadpis „Všetky tri na Mostnej 30 v Nitre.“ v pätičke (adresy overené na
+  weboch prevádzok). To isté v znalostiach Barbera (`../asistent/znalosti/barbershop.md`, otázky 252).
 - **Asistent Barber** (`assets/asistent.js` a `asistent.css`, server `../asistent/`): ikona vľavo dole je logo
   Barbershopu 30 v bielom kruhu so štítkom AI; keď ju návštevník chvíľu vidí, vyskočí pri nej bublina (Spýtať sa,
   Zavolať, zavrieť; raz za návštevu, zavretá sa 14 dní neukáže). Chat odpovedá na otázky o službách, cenách,

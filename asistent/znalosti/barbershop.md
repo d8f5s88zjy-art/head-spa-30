@@ -1,7 +1,7 @@
 # Barbershop 30 Nitra – overené údaje pre asistenta
 
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
-stav 22. 10. 2026. Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
+stav 28. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
 (časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
@@ -11,11 +11,19 @@ stav 22. 10. 2026. Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to a
 - Telefón na recepciu: 0951 267 203 (zo zahraničia +421 951 267 203). Recepcia telefonuje v pracovné dni 9:00 až 19:00.
 - E-mail: info@barbershop30.sk
 - Otvorené: pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, nedeľa zatvorené.
-- 8 kresiel v troch miestnostiach. Pri dverách privíta recepčná (ako jediný barbershop v Nitre ju majú už 8 rokov).
+- 8 kresiel v troch miestnostiach. Pri dverách privíta recepčná, tak je to tu od roku 2019.
+- Recepčná sa stará o termín a pohodlie zákazníka, barber o výsledok. Volať treba vždy recepcii (0951 267 203), nie barberovi:
+  keď má barber v kresle zákazníka, venuje sa jemu, nie telefónu. Zmenu alebo zrušenie termínu dať vedieť recepcii čo najskôr.
+- Garancia (slová majiteľa, 27. 10. 2026): z kresla zákazník vstane, až keď je spokojný. Čo nesedí, povie rovno v kresle,
+  dohodne sa a doladí hneď. Nič viac sa nesľubuje: žiadne lehoty po odchode, žiadne „zadarmo“, „neplatíš“ ani vrátenie peňazí.
 - Vzadu je čakáreň s kreslami a retro pumpou Route 66; káva aj minerálka sú zdarma.
 - Strihanie detí: strih pre malých gentlemanov do 10 rokov.
 - Školenia sú na poschodí, pod značkou Barbershop 30 (podrobnosti len na recepcii).
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
+- Naše prevádzky na Mostnej 30 v Nitre (odkazy v pätičke webu): Barbershop 30 (pánske strihy, brada a holenie britvou),
+  HEAD SPA 30 (Head Spa rituály pre relax a regeneráciu vlasov) a Salón 30 (kaderníctvo a wellness pre vlasy: strihy,
+  farbenie a koloristika, trichologické vyšetrenie). Ich ceny, hodiny, telefóny a rezerváciu asistent nepozná, odkáž na ich web.
+  Barbershop 30 inú pobočku na webe nemá.
 - Instagram s aktuálnymi strihmi: https://www.instagram.com/barbershop30_nitra/
 - Facebook: https://www.facebook.com/barbershop30nitra/
 - Hodnotenie na Google: 5,0 z 945 recenzií (13. 10. 2026), profil https://www.google.com/maps?cid=18132360254733427623
@@ -48,8 +56,10 @@ Doplnky
 
 ## Tím
 Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si zákazník vyberie v rezervácii.
+Barberi majú 10 až 15 rokov praxe (slová majiteľa, 27. 10. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
+a strih, ktorý sedí aj o týždeň.
 Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián (v rezervačnom systéme Adrian). Barberka: Dominika.
-O jednotlivých barberoch (roky praxe, špecializácie) web nič neuvádza.
+O konkrétnom barberovi (jeho roky praxe, špecializácie) web nič neuvádza: prax 10 až 15 rokov platí o tíme, nie o menách.
 
 ## Čo asistent nevie (odkáž na recepciu)
 Voľné termíny (len cez nástroj over_volne_terminy, keď je kalendár pripojený), platobné možnosti, parkovanie, darčekové poukazy, zľavy a akcie, predaj produktov, presná
