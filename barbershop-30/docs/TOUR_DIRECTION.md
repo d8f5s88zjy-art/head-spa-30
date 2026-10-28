@@ -156,7 +156,7 @@ Na telefóne sú tri zábery skutočné videá majiteľa (`data-video`, film.js 
 | # | sekcia (id) | záber počítač / telefón | karta | nadpisok · nadpis · riadok | tlačidlá |
 |---|---|---|---|---|---|
 | 0 | prológ (bez kotvy) | `vstup` fasáda s dverami | – | to isté ako úvod | – |
-| 1 | `#uvod` | `rohozka` | stred | Barbershop 30 · Nitra · „Tvoj strih. *Tvoje miesto.*“ · Za dverami na Mostnej 30 sa strihá od roku 2019. | Rezervovať termín, Zavolať |
+| 1 | `#uvod` | `rohozka` | stred | Barbershop 30 · Nitra · „Každý človek. Každé želanie. *Jedno miesto.*“ · Pánske holičstvo na Mostnej 30. Strih, úprava brady aj holenie britvou, káva zdarma. (heslo od 28. 10. 2026, predtým „Tvoj strih. Tvoje miesto.“) | Rezervovať termín, Zavolať |
 | 2 | `#vstup-dnu` | `sala` / telefón **sekvencia** `assets/seq/vstup-dnu` (video‑3 0–5 s, 51 fotiek po 0,1 s, skrol vedie chôdzu sálou) | vľavo | Prvý krok · „Poď ďalej.“ · Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje. | – |
 | 3 | `#remeslo` | `stol` / telefón **sekvencia** `assets/seq/okolo-kresla` (video‑3 5–9,3 s, 44 fotiek po 0,1 s, kamera obchádza barbera) | vľavo | Remeslo · „Povedz, ako to chceš.“ | – |
 | 4 | `#cakaren` | `cakaren` | vpravo | Čakáreň · „Vzadu ťa čaká káva.“ · Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma. | – |

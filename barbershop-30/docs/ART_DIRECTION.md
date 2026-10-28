@@ -3,6 +3,9 @@
 Stav: pracovná verzia 1 (2026-10-09). Všetko nižšie je odvodené zo 45 fotografií
 prevádzky (`source/photos/`) a z briefu „Tvoj strih. Tvoje miesto.“
 
+> Poznámka 28. 10. 2026: aktuálne heslo úvodu (H1) je „Každý človek. Každé želanie. Jedno miesto.“ (úvodná správa podľa majiteľa,
+> `index.html` a 7 slovníkov). „Tvoj strih. Tvoje miesto.“ je pôvodné heslo briefu z 9. 10. 2026.
+
 ## 1. Čo sme videli na fotkách (a z čoho vychádzame)
 
 Prevádzka má tri výrazné priestory a jeden rukopis:

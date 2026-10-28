@@ -9,7 +9,7 @@ Nový web (`index.html` + `assets/`):
 
 | | pôvodný | nový |
 |---|---|---|
-| úvod | slider fotiek s textom cez obrázok | úvod ako film: z Mostnej cez dvere na rohožku, H1 „Tvoj strih. Tvoje miesto.“ a dve tlačidlá od prvej sekundy |
+| úvod | slider fotiek s textom cez obrázok | úvod ako film: z Mostnej cez dvere na rohožku, H1 „Každý človek. Každé želanie. Jedno miesto.“ (od 28. 10. 2026, predtým „Tvoj strih. Tvoje miesto.“) a dve tlačidlá od prvej sekundy |
 | priestor | galéria v mriežke | prehliadka: 13 záberov s hĺbkou v poradí, ako sa podnikom prechádza, kamera sa v nich pohne; popis miesta vľavo dole |
 | služby | odkaz do rezervácie | cenník 15 služieb s opisom, trvaním a cenou (na cent presne), „Objednať“ pri každej |
 | tím | mená a fotky | 10 portrétov v rovnakom výreze, mená a roly presne ako ich tím uvádza, video „tím v akcii“ |

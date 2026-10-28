@@ -126,6 +126,9 @@ to je voľná príležitosť.
 
 ## Plán
 
+Poznámka 28. 10. 2026: H1 má dnes nadpisok „Barbershop 30 · Nitra“ a heslo „Každý človek. Každé želanie. Jedno miesto.“ (úvodná správa podľa
+majiteľa); „Tvoj strih. Tvoje miesto.“ v tabuľke vyššie je stav z 25. 10.
+
 Stav 2026‑10‑25 (na vetve, nezverejnené): hotové rýchly krok 2 a väčšie kroky 1 a 3 (titulok, popis, H1, 8 častých
 otázok, anglická stránka `en/`, `hasMap` v údajoch pre Google; `docs/CHECKS.md` 27). Bez objednania, poukážky,
 produkty a detská stolička čakajú na potvrdenie prevádzky.

@@ -46,7 +46,8 @@ Instagram: https://www.instagram.com/barbershop30_nitra/ · Facebook: https://ww
 
 Z `barbershop-30/index.html` (karty prehliadky, poradie v `docs/TOUR_DIRECTION.md`):
 
-- „Tvoj strih. Tvoje miesto.“ / „Za dverami na Mostnej 30 sa strihá od roku 2019.“
+- „Každý človek. Každé želanie. Jedno miesto.“ (heslo úvodu od 28. 10. 2026; predtým „Tvoj strih. Tvoje miesto.“) / „Pánske holičstvo na Mostnej 30.
+  Strih, úprava brady aj holenie britvou, káva zdarma.“
 - „Poď ďalej.“ / „Osem kresiel pod oranžovými lampami. Jedno z nich je tvoje.“
 - „Povedz, ako to chceš.“ / „Konzultácia, strojček, nožnice, fade.“
 - „Vzadu ťa čaká káva.“ / „Kreslá, retro pumpa a farebný buldog. Káva aj minerálka sú zdarma.“
