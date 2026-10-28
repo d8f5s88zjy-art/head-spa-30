@@ -705,3 +705,33 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   `scratchpad/barber/razne/pred-po-texty.jpg`; bez vodorovného pretekania, bez chýb skriptu. Testy pozri odovzdávku
   `scratchpad/barber/razne/odovzdavka-texty.md`.
 - Veľkosť: index.html gzip 15 747 → 15 848 B (nad 14 600 B z plánu D6 už pred zmenou).
+
+## 34. Barber pozná ďalších 500 bežných otázok (2026‑10‑28)
+
+- Majiteľ 27. 10. chce pre Barbera ďalších 500 bežných otázok. Zdroj `asistent/znalosti/barbershop-otazky.json`
+  (verzia 2026-10-28): 252 → 776 otázok (+524: tím 71, kontakt 70, služby 69, brada 69, deti 67, hodiny 64, balíčky 63,
+  objednanie 51; 210 s `tel`), +590 znení k existujúcim otázkam, znení spolu (q + v) 820 → 3 596. Žiadna otázka ani
+  odpoveď zo základu sa nezmenila (13 znení s rovnakými kmeňmi ako iné znenie tej istej otázky vynechaných).
+- Pôvod: 8 overených dávok (`scratchpad/barber/razne/otazky/*.overene.json`) s nezávislou kontrolou faktov
+  (`*.kontrola.md`: 39 vyhodených duplicít, opravené tvrdenia bez opory); všetkých 39 v zdroji nie je, 524 nových otázok
+  má presne overené znenie otázky a odpovede (`kontrola-vyhodene.mjs`). Zlúčenie: duplikát = Dice s váhami ≥ 0,9
+  (kmene() z `assets/asistent-otazky.js`): 103 znení vynechaných, 1 otázka zlúčená (Strihá ma skúsený barber? → prax);
+  12 párov ≥ 0,9 medzi rôznymi otázkami posúdených ako iný význam (napr. „mobilný barber“ a „barber pri strihu na mobile“),
+  každé znenie nájde svoju otázku.
+- Id: nové otázky tímu `o-time-*`; predpona `tim-` a `volno-` v téme tim je pre odpovede o členoch, admin ich pri zmene
+  tímu zmaže (admin-test pred opravou „počet odpovedí rovnaký 705“). `otazky.mjs` to stráži (mená z `.team-name`).
+- Kópia pre prehliadač (gzip > 60 kB pri jednom súbore): `assets/asistent-otazky.json` (otázky a odpovede, 203 738 B,
+  gzip 41 553 B) pri prvom otvorení okna a `assets/asistent-otazky-kmene.json` (kmene znení podľa id, 77 665 B, gzip
+  25 112 B) hneď po ňom; kým kmene nie sú, hľadá sa podľa otázok. Formát zdroja pre server bez zmeny. `otazky.mjs`:
+  kópia hľadá rovnako ako zdroj (3 607 dotazov), bez kmeňov nájde každá otázka samu seba, server (php) a prehliadač
+  zoradia rovnako. Admin kópiu pri uložení robí znova zo zdroja (`kopiaPreWeb()`), admin-test OK.
+- Meranie (Playwright, 390×844 DPR 3, sieť ako Lighthouse Slow 4G, CPU 4×, server s gzip, medián 5 behov): od ťuknutia na
+  Barbera po témy 592 ms (c88d29a, 14,8 kB) → 876 ms (dnes; jeden súbor 64 kB 1 101 ms), kmene do 1 267 ms. Hľadanie na
+  776 otázkach: node priemer 0,85 ms (p95 1,1, max 1,5), Chromium s CPU 4× priemer 2,8 ms (p95 do 5,8 ms).
+- Slepá sada 150 vlastných otázok (130 v 8 témach + 20 mimo): správne odpovede 0,62 (c88d29a) → 0,75 (po zlúčení,
+  slepo) → 0,91 (po doplnení 26 znení podľa nej a kontroly, už nie slepo); mimo témy zobrazená odpoveď 1 → 0 (najvyššie
+  skóre 0,58). Kontrolná sada 58 otázok: 0,35 → 0,52 → 0,63. Podrobne `scratchpad/barber/razne/odovzdavka-otazky.md`.
+- Prehliadač (?asistent=ukazka, 390×844): 11 tém, Tím barberov 8 + Všetky otázky (99), 10 písaných otázok z 10 tém
+  a 1 mimo témy so správnou odpoveďou a súvisiacimi otázkami, bez chýb skriptu, bez vodorovného pretekania.
+- Testy: `otazky.mjs --kontrola` OK (776 otázok), i18n-test 55 OK, en-test 16 OK, app-smoke 109 OK, vychytavky-test
+  27 OK, admin-test 101 OK (kópia pre web zhodná po uložení odpovedí, tímu aj kontaktu, počet odpovedí 776).

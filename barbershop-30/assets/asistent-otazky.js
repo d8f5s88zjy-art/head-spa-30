@@ -1,14 +1,18 @@
 /*
- * BARBERSHOP 30 – časté otázky pre Barbera (asistent.js a asistent-ukazka.js): overené odpovede z
- * asistent-otazky.json (kópia ../asistent/znalosti/barbershop-otazky.json, robí ju source/tools/otazky.mjs) a
- * hľadanie najpodobnejšej otázky. Server má to isté hľadanie (asistent/lib/otazky.php), aby modelu pridal
- * odpovede na podobné otázky; otazky.mjs stráži, že obe vrátia rovnaké poradie.
+ * BARBERSHOP 30 – časté otázky pre Barbera (asistent.js a asistent-ukazka.js): overené odpovede a hľadanie
+ * najpodobnejšej otázky. Zdroj je ../asistent/znalosti/barbershop-otazky.json (otázka q, iné znenia v, odpoveď a).
+ * Prehliadač dostane kópiu v dvoch súboroch (kopiaPreWeb() nižšie; zapisuje ju source/tools/otazky.mjs a admin):
+ *  - asistent-otazky.json: témy, otázky a odpovede bez iných znení (témy v okne, ťuknutie na otázku, odpoveď),
+ *  - asistent-otazky-kmene.json: kmene otázky a jej iných znení podľa id, spočítané vopred (len na hľadanie).
+ * nacitaj() stiahne prvý súbor pri prvom otvorení okna a hneď po ňom kmene; kým kmene nie sú, hľadá sa podľa
+ * otázok, nacitajHladanie() počká na kmene. Server má to isté hľadanie (asistent/lib/otazky.php) nad zdrojom, aby
+ * modelu pridal odpovede na podobné otázky; otazky.mjs stráži, že server, zdroj aj kópia vrátia rovnaké poradie.
  *
  * Hľadanie: text bez diakritiky a bez výplňových slov, slová skrátené na kmeň (koncovka preč, najviac 5 znakov),
  * váha slova podľa toho, v koľkých otázkach je (zriedkavé slovo váži viac), zhoda s otázkou aj jej inými
  * zneniami (Dice s váhami), berie sa najlepšie znenie.
  */
-const ZDROJ = new URL('asistent-otazky.json', import.meta.url);
+const OTAZKY = new URL('asistent-otazky.json', import.meta.url), KMENE = new URL('asistent-otazky-kmene.json', import.meta.url);
 
 const DIAKRITIKA = { á: 'a', ä: 'a', à: 'a', â: 'a', ã: 'a', å: 'a', ā: 'a', ă: 'a', ą: 'a', č: 'c', ć: 'c', ç: 'c', ď: 'd',
   é: 'e', ě: 'e', ë: 'e', è: 'e', ê: 'e', ē: 'e', ę: 'e', í: 'i', ì: 'i', î: 'i', ï: 'i', ĺ: 'l', ľ: 'l', ł: 'l', ň: 'n', ń: 'n',
@@ -35,9 +39,23 @@ export function kmene(text) {
   return [...out];
 }
 
-/* pripraví otázky: kmene každého znenia a váhy slov */
-export function priprav(data) {
-  const ot = data.otazky.map((o) => ({ ...o, znenia: [o.q, ...(o.v || [])].map(kmene).filter((z) => z.length) }));
+/* kópia pre prehliadač: { otazky: obsah asistent-otazky.json, kmene: obsah asistent-otazky-kmene.json }. Otázky bez
+   iných znení (v); kmene { id: znenia oddelené |, kmene medzerou }, bez opakovaní (rovnaké znenie nemení najlepšiu
+   zhodu ani váhy), takže telefón ich pri otvorení okna nepočíta. Server číta zdroj s v (jeho formát sa nemení). */
+export function kopiaPreWeb(data) {
+  const k = (o) => [...new Set([o.q, ...(o.v || [])].map((z) => kmene(z).join(' ')).filter(Boolean))].join('|');
+  return {
+    otazky: { ...data, otazky: data.otazky.map(({ v, ...o }) => o) },
+    kmene: { verzia: data.verzia, k: Object.fromEntries(data.otazky.map((o) => [o.id, k(o)])) },
+  };
+}
+
+/* pripraví otázky na hľadanie: kmene každého znenia a váhy slov. Kmene z kópie (k podľa id), inak z otázky a jej
+   iných znení (zdroj); kópia otázok bez kmeňov hľadá len podľa otázok. */
+export function priprav(data, km = null) {
+  const ot = data.otazky.map((o) => ({ ...o, znenia: km && typeof km[o.id] === 'string'
+    ? km[o.id].split('|').filter(Boolean).map((z) => z.split(' '))
+    : [o.q, ...(o.v || [])].map(kmene).filter((z) => z.length) }));
   const df = new Map();
   for (const o of ot) for (const k of new Set(o.znenia.flat())) df.set(k, (df.get(k) || 0) + 1);
   const n = ot.length;
@@ -65,9 +83,20 @@ export function hladaj(db, text, kolko = 5) {
   return vys.sort((a, b) => b.skore - a.skore || (a.o.id < b.o.id ? -1 : 1)).slice(0, kolko);
 }
 
-let nacitane = null;
+const stiahni = (u) => fetch(u.href, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))));
+let nacitane = null, hladanie = null;
+/* otázky a odpovede (db pre témy a ťuknutie); hneď potom sa sťahujú kmene a to isté db ich dostane (ot, idf) */
 export function nacitaj() {
-  if (!nacitane) nacitane = fetch(ZDROJ.href, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status))))).then(priprav)
-    .catch((e) => { nacitane = null; throw e; });
+  if (!nacitane) {
+    nacitane = stiahni(OTAZKY).then((d) => priprav(d)).catch((e) => { nacitane = null; hladanie = null; throw e; });
+    hladanie = nacitane.then((db) => stiahni(KMENE).then((km) => { const p = priprav(db, km.k); db.ot = p.ot; db.idf = p.idf; },
+      () => { /* bez kmeňov ostane hľadanie podľa otázok */ }).then(() => db));
+    hladanie.catch(() => {});
+  }
   return nacitane;
+}
+/* to isté db, keď už hľadá aj podľa iných znení (kmene stiahnuté alebo nedostupné) */
+export function nacitajHladanie() {
+  nacitaj();
+  return hladanie;
 }

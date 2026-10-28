@@ -164,11 +164,15 @@ export async function spusti(api) {
   await new Promise((ok) => { css.onload = css.onerror = ok; document.head.append(css); });
 
   let rozhovor = nacitaj(kluc), bezi = false;
-  // časté otázky: načítajú sa pri prvom otvorení okna (asistent-otazky.js a asistent-otazky.json, 14 kB)
+  // časté otázky: pri prvom otvorení okna asistent-otazky.js a asistent-otazky.json (otázky a odpovede, gzip asi 41 kB),
+  // hneď potom asistent-otazky-kmene.json (kmene na hľadanie, asi 25 kB); presne = počkať aj na kmene
   let otazky = null, modOt = null;
   const faq = () => (jazyk() === 'sk' && otazky ? otazky : null);
-  async function nacitajOtazky() {
-    try { modOt = modOt || await import('./asistent-otazky.js'); otazky = otazky || await modOt.nacitaj(); } catch (e) { /* okno ide aj bez nich */ }
+  async function nacitajOtazky(presne) {
+    try {
+      modOt = modOt || await import('./asistent-otazky.js'); otazky = otazky || await modOt.nacitaj();
+      if (presne) await modOt.nacitajHladanie();
+    } catch (e) { /* okno ide aj bez nich */ }
     return otazky;
   }
   // ikona: logo, štítok AI; pri otvorenom okne na počítači krížik na zavretie
@@ -313,7 +317,7 @@ export async function spusti(api) {
       doplnky(b, kal, tel);
       if (ukazka) pripravenaZnacka(b);
       rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined, z: ukazka ? 'o' : undefined }); uloz(kluc, rozhovor);
-      await nacitajOtazky();
+      await nacitajOtazky(true);
       suvisiace(otazka, zOtazok && zOtazok.id);
     } catch (e) {
       // otázka bez odpovede sa vráti do poľa, aby ju návštevník mohol poslať znova
@@ -336,8 +340,8 @@ export async function spusti(api) {
     panel.hidden = !on; clona.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
     prisposob();
     if (on) {
-      // časté otázky: témy sa doplnia na úvodnú obrazovku, keď sa načítajú
-      if (!otazky) nacitajOtazky().then(() => {
+      // časté otázky: témy sa doplnia na úvodnú obrazovku, keď sa načítajú (súvisiace pod obnoveným rozhovorom až s kmeňmi)
+      if (!otazky) nacitajOtazky(rozhovor.length > 0).then(() => {
         if (panel.hidden || bezi) return;
         if (!rozhovor.length) { if (!zoz.querySelector('.asi-temy')) { const tm = temy(); if (tm) zoz.append(tm); } }
         else if (!zoz.querySelector('.asi-suvis') && rozhovor[rozhovor.length - 1].r === 'a') suvisiace(rozhovor[rozhovor.length - 2].t);

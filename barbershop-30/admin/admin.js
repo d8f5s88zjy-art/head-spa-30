@@ -10,22 +10,27 @@
  *    (asistent/znalosti/barbershop.md) a odpovede asistenta s cenou dá na kontrolu (záložka Odpovede asistenta);
  *  - tím: oba súbory (karta podľa mena), fotky ako WebP a JPEG v dvoch šírkach, zoznam tímu v znalostiach a odpovediach;
  *  - galéria: fotka a popis;
- *  - odpovede asistenta: barbershop-otazky.json a jeho kópia pre web (assets/asistent-otazky.json);
+ *  - odpovede asistenta: barbershop-otazky.json a jeho kópia pre web (assets/asistent-otazky.json a asistent-otazky-kmene.json,
+ *    vždy znova zo zdroja cez kopiaPreWeb() z assets/asistent-otazky.js, rovnako ako source/tools/otazky.mjs);
  *  - kontakt a hodiny: telefón, e‑mail a otváracie hodiny naraz vo všetkých súboroch, kde sú (KONTAKT nižšie).
  * Odmeny a akcie vernostnej kartičky sú v admine kartičky (odkaz v záložke Kartička).
  */
+import { kopiaPreWeb } from '../assets/asistent-otazky.js';
+
 const OWNER = 'd8f5s88zjy-art', REPO = 'head-spa-30', BRANCH = 'main';
 const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 const P = 'barbershop-30/';
 const LIVE = `https://${OWNER}.github.io/${REPO}/${P}`;
 const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
 const LN = { en: 'Angličtina', uk: 'Ukrajinčina', hu: 'Maďarčina', sr: 'Srbčina', pl: 'Poľština', de: 'Nemčina', cs: 'Čeština' };
-const F = { index: P + 'index.html', rez: P + 'rezervacia.html', md: 'asistent/znalosti/barbershop.md', faq: 'asistent/znalosti/barbershop-otazky.json', faqWeb: P + 'assets/asistent-otazky.json' };
+const F = { index: P + 'index.html', rez: P + 'rezervacia.html', md: 'asistent/znalosti/barbershop.md', faq: 'asistent/znalosti/barbershop-otazky.json', faqWeb: P + 'assets/asistent-otazky.json',
+  faqKmene: P + 'assets/asistent-otazky-kmene.json' };
 const NB = ' ';
 /* súbory s telefónom, e‑mailom a otváracími hodinami Barbershopu: web, preklady, asistent (aj server), kartička,
-   vizitka, ukážky; app.js len riadok HOURS (živý stav „otvorené“), CLAUDE.md len hodiny (pravidlo pre asistenta) */
+   vizitka, ukážky; app.js len riadok HOURS (živý stav „otvorené“), CLAUDE.md len hodiny (pravidlo pre asistenta);
+   kópia odpovedí pre web nie, tá sa pri uložení urobí znova zo zdroja (F.faqWeb, F.faqKmene) */
 const APP = P + 'assets/app.js';
-const KONTAKT = [F.index, F.rez, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), F.md, F.faq, F.faqWeb, APP,
+const KONTAKT = [F.index, F.rez, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), F.md, F.faq, APP,
   P + 'assets/asistent.js', P + 'assets/objednavka.js', P + 'assets/asistent-ukazka.js', P + 'assets/karty.js', P + 'assets/barbershop30.vcf',
   P + 'karta/index.html', P + 'karta/karta.js', 'vernost/karta/karta.js', 'vernost/lib/jadro.php', 'vernost/ochrana-udajov.html',
   'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md'];
@@ -181,6 +186,9 @@ async function nacitaj() {
   const cesty = [...new Set([F.index, F.rez, F.md, F.faq, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), ...KONTAKT])];
   const obsah = await Promise.all(cesty.map((c) => readFile(c, sha)));
   const raw = {}; cesty.forEach((c, i) => { raw[c] = obsah[i]; });
+  // kópia odpovedí pre web: len na porovnanie pri uložení (chýbajúca sa pri uložení vytvorí)
+  const web = await Promise.all([F.faqWeb, F.faqKmene].map((c) => readFile(c, sha).catch(() => null)));
+  raw[F.faqWeb] = web[0]; raw[F.faqKmene] = web[1];
   const i18n = {}; LANGS.forEach((l) => { i18n[l] = JSON.parse(raw[`${P}assets/i18n/${l}.json`]); });
   base = { sha, raw, i18n, faq: JSON.parse(raw[F.faq]) };
   base.kontakt = kontaktZoSuborov(raw);
@@ -529,7 +537,7 @@ function kontaktNahlad() {
     kp.nahlad.replaceChildren();
     if (k && !k.chyba) {
       let spolu = 0; const sub = [], nej = [];
-      for (const c of KONTAKT) { const r = kontaktNahrad(c, base.raw[c], k); if (r.n) { spolu += r.n; sub.push(`${c.replace(P, '')} (${r.n})`); } nej.push(...r.nejasne.filter((x) => x.cesta !== F.faqWeb)); }
+      for (const c of KONTAKT) { const r = kontaktNahrad(c, base.raw[c], k); if (r.n) { spolu += r.n; sub.push(`${c.replace(P, '')} (${r.n})`); } nej.push(...r.nejasne); }
       kp.nahlad.append(h('div', { class: 'note' }, h('b', {}, `Zmení sa ${spolu} ${spolu === 1 ? 'miesto' : spolu < 5 ? 'miesta' : 'miest'} v ${sub.length} súboroch.`),
         h('details', { class: 'tr' }, h('summary', {}, 'Ktoré súbory'), h('p', {}, sub.join(', ')))));
       if (nej.length) kp.nahlad.append(h('div', { class: 'note' }, h('b', {}, 'Na kontrolu: '), `tieto vety spomínajú čas otvorenia bez dňa, dostanú čas pracovných dní (${k.hod.w[0]}:00). Ulož zmenu a potom ich oprav v záložke Odpovede asistenta alebo daj vedieť tvorcovi webu.`,
@@ -778,7 +786,7 @@ function zostav() {
   for (const [stary, novy, tr] of presuny) prekladyPresun(i18n, stary, novy, tr);
   const out = { [F.index]: html[F.index], [F.rez]: html[F.rez], [F.md]: md };
   for (const l of LANGS) { const s = JSON.stringify(i18n[l]); out[`${P}assets/i18n/${l}.json`] = s !== JSON.stringify(base.i18n[l]) ? s : base.raw[`${P}assets/i18n/${l}.json`]; }
-  if (faqZmena) { out[F.faq] = JSON.stringify(faq, null, 1) + '\n'; out[F.faqWeb] = JSON.stringify(faq) + '\n'; }
+  if (faqZmena) out[F.faq] = JSON.stringify(faq, null, 1) + '\n';
   // kontakt a hodiny: až nakoniec, v hotových textoch všetkých súborov (aj v práve zmenených)
   const k = kontaktNove();
   if (k && k.chyba) throw Object.assign(new Error(k.chyba), { user: true });
@@ -786,6 +794,9 @@ function zostav() {
     for (const c of KONTAKT) if (!(c in out)) out[c] = base.raw[c];
     for (const c of KONTAKT) out[c] = kontaktNahrad(c, out[c], k).text;
   }
+  // kópia odpovedí pre web zo zdroja, ktorý sa ukladá (po zmene odpovedí, tímu aj kontaktu); zapíše sa, len ak sa líši
+  const web = kopiaPreWeb(JSON.parse(out[F.faq] || base.raw[F.faq]));
+  out[F.faqWeb] = JSON.stringify(web.otazky) + '\n'; out[F.faqKmene] = JSON.stringify(web.kmene) + '\n';
   for (const [c, t] of Object.entries(out)) if (t !== base.raw[c]) subory[c] = { text: t };
   return { subory, nove, faq: k ? JSON.parse(out[F.faq]) : faq };
 }

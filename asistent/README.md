@@ -38,15 +38,20 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 - Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
 - Na otázku, kto odpovedá, povie pravdivo, že je Barber, AI asistent, nie človek.
 
-## Časté otázky (251 overených odpovedí)
+## Časté otázky (776 overených odpovedí)
 
 - `znalosti/barbershop-otazky.json`: otázka, iné znenia, odpoveď, téma, `tel` (pod odpoveď patrí Zavolať a Objednať sa).
-  Len fakty z `barbershop.md` a webu; čo web neuvádza, odpoveď povie a dá telefón.
+  Len fakty z `barbershop.md` a webu; čo web neuvádza, odpoveď povie a dá telefón. Id `tim-meno` a `volno-meno` v téme
+  tim sú len odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova), iné otázky tímu majú `o-time-`.
 - Server (`lib/otazky.php`) nájde k poslednej otázke najviac 6 podobných (zhoda aspoň 0,3) a pridá ich modelu do druhej
-  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (asi 25 000 tokenov) sa neplatí pri každej otázke.
-- Okno na webe ukazuje témy a otázky ťuknutím s odpoveďou hneď a bez servera (označená ako pripravená odpoveď).
+  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (776 otázok, asi 200 kB textu) sa neplatí pri
+  každej otázke.
+- Okno na webe ukazuje témy a otázky ťuknutím s odpoveďou hneď a bez servera (označená ako pripravená odpoveď). Kópia
+  pre prehliadač sú dva súbory: `assets/asistent-otazky.json` (otázky a odpovede, pri prvom otvorení okna) a
+  `assets/asistent-otazky-kmene.json` (kmene iných znení na hľadanie, hneď po ňom).
 - Po každej úprave: `node barbershop-30/source/tools/otazky.mjs` (fakty proti cenníku, každá otázka nájde samu
-  seba, server a prehliadač zoradia rovnako, kópia pre web). Test servera: `testy/spusti.sh` (model dostal odpovede).
+  seba, server a prehliadač zoradia rovnako, kópia pre web v dvoch súboroch). Test servera: `testy/spusti.sh` (model
+  dostal odpovede).
 
 ## Okno na webe: Barber
 

@@ -59,6 +59,12 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑28 (hotové na vetve, CHECKS 34): majiteľ chce pre Barbera ďalších 500 bežných otázok. Barber má 776 otázok
+  (252 → 776, +524 nových v 8 témach, +590 znení k existujúcim; spolu 3 596 znení), všetky z overených dávok s nezávislou
+  kontrolou faktov (39 vyhodených duplicít). Kópia pre prehliadač v dvoch súboroch: otázky a odpovede pri prvom otvorení
+  okna (gzip 41,6 kB), kmene znení hneď po nich (25,1 kB); prvé otvorenie okna na telefóne 4G 592 → 876 ms (jeden súbor
+  64 kB by bol 1 101 ms). Slepá sada 130 otázok: správne odpovede 0,62 → 0,75 (po doplnení znení podľa nej 0,91), mimo
+  témy 1 → 0 zobrazených odpovedí. Nové otázky tímu majú id `o-time-*` (admin by `tim-*` pri zmene tímu zmazal).
 - 2026‑10‑28 (hotové na vetve, CHECKS 33): majiteľ po videní textov z 27. 10.: „Musia to byť rázne texty, nechám to na
   teba.“, „Barberi majú 10–15 rokov praxe.“ Úvod tímu v troch vetách s praxou 10 až 15 rokov, pilier Pohodlie nahradila
   Garancia v kresle (bez lehôt a sľubov po odchode), kratšie riadky barberov, otázka „Čo ak nebudem spokojný?“, recepčná

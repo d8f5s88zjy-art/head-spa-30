@@ -69,11 +69,13 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   ho vypne, `?asistent=ukazka` ukáže okno bez servera s vopred pripravenými odpoveďami z údajov webu
   (`assets/asistent-ukazka.js`, na kontrolu, výrazne označené, že nepíše AI). Podrobne `../asistent/README.md`;
   test `source/tools/asistent-test.mjs`.
-- **Časté otázky Barbera** (`../asistent/znalosti/barbershop-otazky.json`, 251 overených odpovedí v 11 témach): v okne
+- **Časté otázky Barbera** (`../asistent/znalosti/barbershop-otazky.json`, 776 overených odpovedí v 11 témach): v okne
   témy a otázky ťuknutím (overená odpoveď hneď, bez servera, s popisom „Pripravená odpoveď“), pod odpoveďou súvisiace
   otázky; server ku každej písanej otázke pridá modelu 6 najpodobnejších. Hľadanie je v `assets/asistent-otazky.js`
   a rovnaké v `../asistent/lib/otazky.php`. Po úprave otázok `node source/tools/otazky.mjs` (kontrola faktov proti
-  cenníku, zhoda prehliadač a server, kópia `assets/asistent-otazky.json`).
+  cenníku, zhoda prehliadač a server, kópia pre prehliadač: `assets/asistent-otazky.json` s otázkami a odpoveďami pri
+  prvom otvorení okna, gzip asi 41 kB, a `assets/asistent-otazky-kmene.json` s kmeňmi znení na hľadanie hneď po ňom,
+  asi 25 kB; admin ju pri uložení robí rovnako).
 
 - **Živý telefón (2026‑10‑22, style.css P15, app.js časť 12)**: zadávateľ: „na telefóne to pôsobí ako PowerPoint“.
   Fotka scény sa aj bez filmu hýbe pri skrolovaní ako kamera podľa `data-mv` (in a near priblíženie, rise a down

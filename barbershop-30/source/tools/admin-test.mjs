@@ -14,6 +14,9 @@ import { fileURLToPath } from 'node:url';
 const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ROOT = path.resolve(SITE, '..');
 const { startStaticServer } = await import(path.join(SITE, 'source', 'shot.mjs'));
+const { kopiaPreWeb } = await import(path.join(SITE, 'assets', 'asistent-otazky.js'));
+// kópia odpovedí pre web (dva súbory) musí byť presne kopiaPreWeb() zo zdroja
+const kopiaSedi = (zdroj, otazky, kmene) => { const w = kopiaPreWeb(zdroj); return otazky === JSON.stringify(w.otazky) + '\n' && kmene === JSON.stringify(w.kmene) + '\n'; };
 const require = createRequire(path.join(SITE, 'source', 'shot.mjs'));
 const { chromium } = require('playwright');
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
@@ -35,7 +38,7 @@ const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
 const KONTAKT = ['barbershop-30/assets/app.js', 'barbershop-30/assets/asistent.js', 'barbershop-30/assets/objednavka.js', 'barbershop-30/assets/asistent-ukazka.js', 'barbershop-30/assets/karty.js',
   'barbershop-30/assets/barbershop30.vcf', 'barbershop-30/karta/index.html', 'barbershop-30/karta/karta.js', 'vernost/karta/karta.js', 'vernost/lib/jadro.php', 'vernost/ochrana-udajov.html',
   'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md'];
-const CESTY = ['barbershop-30/index.html', 'barbershop-30/rezervacia.html', 'asistent/znalosti/barbershop.md', 'asistent/znalosti/barbershop-otazky.json', 'barbershop-30/assets/asistent-otazky.json', ...LANGS.map((l) => `barbershop-30/assets/i18n/${l}.json`), ...KONTAKT];
+const CESTY = ['barbershop-30/index.html', 'barbershop-30/rezervacia.html', 'asistent/znalosti/barbershop.md', 'asistent/znalosti/barbershop-otazky.json', 'barbershop-30/assets/asistent-otazky.json', 'barbershop-30/assets/asistent-otazky-kmene.json', ...LANGS.map((l) => `barbershop-30/assets/i18n/${l}.json`), ...KONTAKT];
 const stromy = new Map();
 stromy.set('t0', new Map(CESTY.map((c) => [c, precitaj(c)])));
 commits.set('c0', { tree: 't0', parents: [], message: 'začiatok' });
@@ -209,7 +212,7 @@ const idx1 = subor('barbershop-30/index.html').toString(), rez1 = subor('barbers
 const en1 = JSON.parse(subor('barbershop-30/assets/i18n/en.json'));
 const md1 = subor('asistent/znalosti/barbershop.md').toString();
 const faq1 = JSON.parse(subor('asistent/znalosti/barbershop-otazky.json'));
-const faqWeb1 = JSON.parse(subor('barbershop-30/assets/asistent-otazky.json'));
+const faqWeb1 = subor('barbershop-30/assets/asistent-otazky.json').toString(), faqKmene1 = subor('barbershop-30/assets/asistent-otazky-kmene.json').toString();
 const n = (s) => s.replace(/\s+/g, ' ').trim();
 ok(n(idx1).includes(n(novyText)) && !n(idx1).includes(n(hook) + '<'), 'index.html: nový text na mieste', novyText);
 ok(en1[n(novyText)] === en0[n(hook)] && !(n(hook) in en1), 'preklad presunutý na nový kľúč');
@@ -221,7 +224,7 @@ ok(ldCena(idx1) === novaCena.replace(',', '.') && ldCena(idx0) === staraCena.rep
 ok(md1.includes(`– ${novaCena} €`) && md1.split('\n').some((r) => r.startsWith('- Pánsky strih –') && r.includes(`${novaCena} €`)), 'znalosti asistenta: nová cena');
 const staraVOdp = faq1.otazky.filter((o) => new RegExp(`(^|[^\\d,])${staraCena}[\\s${NB}]€`).test(o.a));
 ok(staraVOdp.length === 0 || staraVOdp.every((o) => /Pánsky strih/.test(o.a) === false), 'odpovede asistenta bez starej ceny Pánskeho strihu', staraVOdp.map((o) => o.id).join(','));
-ok(JSON.stringify(faq1.otazky) === JSON.stringify(faqWeb1.otazky), 'kópia odpovedí pre web zhodná');
+ok(kopiaSedi(faq1, faqWeb1, faqKmene1), 'kópia odpovedí pre web zhodná (otázky aj kmene)');
 ok(faq1.otazky.length === JSON.parse(precitaj('asistent/znalosti/barbershop-otazky.json')).otazky.length, 'počet odpovedí rovnaký', String(faq1.otazky.length));
 const timOdp = faq1.otazky.find((o) => o.id === `tim-${meno1.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')}`);
 ok(timOdp && /s úsmevom/.test(timOdp.a), 'odpoveď o členovi tímu má nový popis', timOdp ? timOdp.a.slice(0, 90) : 'chýba');
@@ -357,7 +360,7 @@ ok(/9:00 és 20:00/.test(obsahy['barbershop-30/assets/i18n/hu.json']) && /von 9:
 const faqK = JSON.parse(obsahy['asistent/znalosti/barbershop-otazky.json']);
 const faqT = JSON.stringify(faqK.otazky);
 ok(!/\b19:00/.test(faqT) && /od 9:00 do 20:00/.test(faqT) && /sobota 10:00 až 14:00|sobotu (od )?10:00/.test(faqT + obsahy['asistent/znalosti/barbershop.md']), 'odpovede asistenta: nové hodiny');
-ok(JSON.stringify(JSON.parse(obsahy['barbershop-30/assets/asistent-otazky.json']).otazky) === faqT, 'kópia odpovedí pre web zhodná');
+ok(kopiaSedi(faqK, obsahy['barbershop-30/assets/asistent-otazky.json'], obsahy['barbershop-30/assets/asistent-otazky-kmene.json']), 'kópia odpovedí pre web zhodná (otázky aj kmene)');
 ok(/pondelok až piatok 9:00 až 20:00, sobota 10:00 až 14:00/.test(obsahy['asistent/znalosti/barbershop.md']), 'znalosti asistenta: hodiny');
 ok(obsahy['asistent/lib/jadro.php'].includes('od 9:00 do 20:00') && obsahy['asistent/lib/jadro.php'].includes('o 10:00 a 14:00'), 'pokyny asistenta: hodiny nové, príklad termínov nezmenený');
 ok(obsahy['CLAUDE.md'].includes('v pracovné dni od 9:00 do 20:00') && obsahy['CLAUDE.md'].includes('0911 153 136'), 'CLAUDE.md: pravidlo s novými hodinami');
