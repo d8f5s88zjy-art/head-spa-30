@@ -1076,8 +1076,9 @@ html.karty .film-shot.is-title:not([data-pro]):focus-within .title-frame { opaci
 .title-hero h1 .w { display: inline-block; animation: zaostrenie 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 /* nadpis úvodu je viditeľný od prvého snímku a zaostrí sa ako pri zaostrení kamery (nie z neviditeľnosti) */
 @keyframes zaostrenie { from { filter: blur(10px); transform: translateY(14px) scale(1.02); } to { filter: none; transform: none; } }
-.title-hero h1 .w:first-child { animation-delay: 150ms; }
-.title-hero h1 .w:nth-child(2) { animation-delay: 300ms; }
+.title-hero h1 .w:nth-child(2) { animation-delay: 150ms; }
+.title-hero h1 .w:nth-child(3) { animation-delay: 300ms; }
+.title-hero h1 .w:nth-child(4) { animation-delay: 450ms; }
 .title-hero .kicker { animation: text-in 600ms var(--ease-out) 300ms both; }
 .title-hero .title-sub { animation: text-in 600ms var(--ease-out) 760ms both; }
 .title-hero .title-actions { animation: text-in 600ms var(--ease-out) 900ms both; }

@@ -61,7 +61,7 @@ const telefon = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, i
   }, en);
   ok(info.lang === 'en' && /Men's barbershop/.test(info.title) && /^Men's barbershop at Mostná/.test(info.desc), 'jazyk, titulok a popis po anglicky', info.title);
   ok(info.canon === BASE + 'en/', 'kanonická adresa en/ = základná adresa + en/', info.canon);
-  ok(/Barbershop 30 · Nitra/i.test(info.h1) && /Your cut|Your place/i.test(info.h1), 'H1 so značkou a mestom', info.h1);
+  ok(/Barbershop 30 · Nitra/i.test(info.h1) && /Every person|One place/i.test(info.h1), 'H1 so značkou a mestom', info.h1);
   ok(info.faq === 11 && info.faqQ === 'How do I book?', 'časté otázky po anglicky', `${info.faq}, ${info.faqQ}`);
   ok(info.sk.length === 0, 'žiadny slovenský text zo slovníka', info.sk.slice(0, 5).join(' | '));
   ok(chybajuce.length === 0 && info.obrazky.length === 0, 'všetky súbory sa načítajú z en/ (cesty ../assets)', chybajuce.slice(0, 4).join(', ') + info.obrazky.slice(0, 2).join(', '));

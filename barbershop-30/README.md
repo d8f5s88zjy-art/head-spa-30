@@ -44,7 +44,7 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   `data-zdroj="en"` povie `i18n.js`, že stránka už je po anglicky, a prepínač vedie na slovenskú stránku s `?lang=`.
   V repozitári je jej kópia na náhľad, `--check` overí, že je aktuálna; test `node source/tools/en-test.mjs`.
 - **SEO úvod a časté otázky (2026‑10‑25, `docs/SEO-ANALYZA.md`)**: titulok „Barbershop 30 Nitra | Pánske holičstvo,
-  Mostná 30“, popis so službami, H1 so značkou a mestom (nadpisok „Barbershop 30 · Nitra“ nad „Tvoj strih. Tvoje
+  Mostná 30“, popis so službami, H1 so značkou a mestom (nadpisok „Barbershop 30 · Nitra“ nad „Každý človek. Každé želanie. Jedno
   miesto.“), podnadpis „Pánske holičstvo na Mostnej 30“. Časté otázky (`#caste-otazky`, pás v rezervácii pod
   kontaktom, 11 otázok ako `<details>`, odpovede len z overených údajov, bez skriptu fungujú), údaje pre Google
   s `hasMap` (profil v Mapách; súradnice nie sú, lebo nie sú overené).
