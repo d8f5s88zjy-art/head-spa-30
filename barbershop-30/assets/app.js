@@ -767,8 +767,11 @@ start();
 
   // tabuľa dnešných hodín podľa otváracích hodín v Nitre (Po–Pi 9–19, So 9–14, Ne zatvorené)
   const HOURS = { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14], 0: null };
+  // formátovač s časovým pásmom sa vytvorí raz (pri každom volaní stál na telefóne s CPU 4× desiatky ms hlavného vlákna)
+  let fmtNitra = null;
   const nowNitra = () => {
-    const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    fmtNitra = fmtNitra || new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bratislava', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    const p = Object.fromEntries(fmtNitra.formatToParts(new Date()).map((x) => [x.type, x.value]));
     return { dow: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), h: +p.hour + +p.minute / 60 };
   };
   // slová tabule po slovensky; ostatné jazyky ich majú v slovníku (assets/i18n/<jazyk>.json, kľúč __tabula)

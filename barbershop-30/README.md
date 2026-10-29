@@ -180,6 +180,15 @@ a potom `node source/tools/en-stranka.mjs` (anglická stránka prevezme novú ad
 
     sed -i 's#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#https://www.barbershop30.sk/#g' index.html rezervacia.html 404.html robots.txt sitemap.xml
 
+Pred prepnutím domény www.barbershop30.sk na nový web (otázka 21 pre majiteľa, kontrola SEO 29. 10. 2026): všetky
+tlačidlá Objednať sa (37×) a `potentialAction` v JSON-LD vedú na `https://www.barbershop30.sk/rezervacia` (rezervačný
+systém podniku na tom istom serveri, endpoint `/rezervacia/ajax`). Preto:
+1. s prevádzkovateľom rezervácie potvrdiť, že `/rezervacia` a `/rezervacia/ajax` ostanú na doméne (nový web do koreňa
+   toho istého servera, nie statický hosting, kde by tlačidlá skončili na 404);
+2. zoznam adries starého webu a 301 na nové stránky;
+3. po nasadení overiť, že rezervácia odpovedá:
+   `curl -s -o /dev/null -w '%{http_code}\n' https://www.barbershop30.sk/rezervacia` musí vypísať 200.
+
 Zlá adresa: GitHub Pages ukáže na každej neexistujúcej adrese len koreňový `/404.html` (HEAD SPA 30). Ten pri ceste
 s `/barbershop-30/` ukáže blok Barbershopu 30 (Objednať sa, Zavolať 0951 267 203, Späť na úvod). `404.html` v tomto
 priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nasadenie (`nasad-barbershop30.sh`).
