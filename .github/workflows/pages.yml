@@ -47,16 +47,23 @@ jobs:
           HESLO_H: ${{ secrets.VERNOST_HESLO_HEADSPA }}
         run: |
           mkdir -p _site/vernost/web && cp vernost/web/prihlaska.js _site/vernost/web/
-          # prihláška sa zapne len pre prevádzku, ktorá má heslo do adminu (recepcia vie kartičky obsluhovať)
-          if [ ${#HESLO_B} -ge 10 ]; then sed -i 's#data-prevadzka="barbershop"#data-prevadzka="barbershop" data-zapnute#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; fi
-          if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _site/index.html; fi
+          # prihláška (a na Barbershope aj odkaz Vernostná kartička v pätičke) sa zapne len pre prevádzku, ktorá má heslo
+          # do adminu (recepcia vie kartičky obsluhovať), a len keď server kartičiek naozaj odpovedá (curl 200), inak by
+          # odkaz viedol na kartičku, ktorá sa nedá založiť
+          zije() { for u in 'https://www.headspa30.sk/vernost/api/?a=stav' https://www.headspa30.sk/vernost/karta/ https://www.headspa30.sk/vernost/ochrana-udajov.html; do [ "$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$u")" = 200 ] || { echo "server kartičiek neodpovedá: $u"; return 1; }; done; }
+          if zije; then
+            if [ ${#HESLO_B} -ge 10 ]; then sed -i 's#data-prevadzka="barbershop"#data-prevadzka="barbershop" data-zapnute#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; fi
+            if [ ${#HESLO_H} -ge 10 ]; then sed -i 's#data-prevadzka="headspa"#data-prevadzka="headspa" data-zapnute#' _site/index.html; fi
+          else echo "vernostná kartička vypnutá (server neodpovedá)"; fi
       - name: Asistent na otázky na webe BARBERSHOP 30 (server beží na www.headspa30.sk/asistent/)
         env:
           KLUC: ${{ secrets.ANTHROPIC_API_KEY }}
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
         run: |
-          # okno sa zapne len s kľúčom API a nasadením na hosting (bez nich web nič nesťahuje ani neposiela)
-          if [ -n "$KLUC" ] && [ -n "$FTP_SERVER" ]; then sed -i 's#<html lang="sk" data-motion="on">#<html lang="sk" data-motion="on" data-asistent="https://www.headspa30.sk/asistent/api.php">#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; echo "asistent zapnutý"; else echo "asistent vypnutý (chýba ANTHROPIC_API_KEY alebo FTP_SERVER)"; fi
+          # okno sa zapne len s kľúčom API a nasadením na hosting (bez nich web nič nesťahuje ani neposiela) a len keď je na
+          # serveri jeho stránka o ochrane údajov (odkaz v okne by inak viedol na 404)
+          OU=$(curl -s -o /dev/null -m 20 -w '%{http_code}' https://www.headspa30.sk/asistent/ochrana-udajov.html)
+          if [ -n "$KLUC" ] && [ -n "$FTP_SERVER" ] && [ "$OU" = 200 ]; then sed -i 's#<html lang="sk" data-motion="on">#<html lang="sk" data-motion="on" data-asistent="https://www.headspa30.sk/asistent/api.php">#' _site/barbershop-30/index.html _site/barbershop-30/rezervacia.html; echo "asistent zapnutý"; else echo "asistent vypnutý (chýba ANTHROPIC_API_KEY alebo FTP_SERVER, alebo ochrana-udajov.html na serveri vráti $OU)"; fi
       - name: Objednávka na webe BARBERSHOP 30 (voľné časy z rezervačného kalendára cez server na www.headspa30.sk)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}

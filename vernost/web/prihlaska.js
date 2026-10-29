@@ -176,6 +176,10 @@
     if (u) window.open(u, '_blank', 'noopener'); else otvor('');
   });
 
+  /* odkaz „Vernostná kartička“ v pätičke je skrytý (<li hidden>), kým nebeží server kartičiek: ukáže sa so zapnutou
+     prihláškou (data-zapnute dáva nasadenie, až keď server odpovedá) alebo keď má návštevník kartičku uloženú */
+  if (aktivne() || kartaUlozena()) document.querySelectorAll('[data-vernost-karta]').forEach(function (a) { var li = a.closest('li[hidden]'); if (li) li.hidden = false; });
+
   /* uložená kartička: raz za návštevu webu overiť, že ešte existuje (zrušená alebo zmazaná na recepcii) */
   function overUlozenu() {
     var u = kartaUlozena();
