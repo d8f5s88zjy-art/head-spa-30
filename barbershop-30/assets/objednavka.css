@@ -153,6 +153,12 @@
   .obj-tim { grid-template-columns: 1fr 1fr; gap: 8px; }
   .obj-akcie .btn { flex-basis: 100%; }
 }
+/* nízke okno (malý telefón 320 × 568, telefón na šírku): v okne objednávky bez ozdobných fotiek skupín a s tesnejším
+   pásom ukážky, aby bol vidieť zoznam služieb, nie jeden riadok (kontrola 29. 10. 2026) */
+@media (max-height: 640px) {
+  .obj:not(.obj-stranka) .obj-skup-foto { display: none; }
+  .obj-ukazka-pas { margin-bottom: 10px; padding: 6px 10px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .obj-css .obj[open], .obj-telo.obj-prichod { animation: none; }
   .obj * { transition: none !important; }

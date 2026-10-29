@@ -146,7 +146,7 @@
   <!-- filmové pásy (letterbox) počas úvodu ako filmu: po príchode dnu sa odsunú (film.js dá pro-end) -->
   <div class="film-bars" aria-hidden="true"><i></i><i></i></div>
   <div class="site">
-  <main id="main">
+  <main id="main" tabindex="-1">
 
     <!-- =================================================================== -->
     <!-- 1 ÚVOD – hneď za dverami, na rohožke; úvod ako film začína z ulice     -->
@@ -160,9 +160,9 @@
            data-pro="vstup" data-pro-size="4096x2731" data-pro-f="0.76,0.53" data-pro-fm="0.50,0.53" data-pro-mv="door" data-pro-place="Vstup z Mostnej ulice" data-tiers="1086,1448,2172" data-m="rohozka-m" data-m-size="1449x2576" data-m-tiers="1086,1448" data-pro-tiers="1086,1448,2172,2896,4096" data-pro-m="vstup-m" data-pro-m-size="1536x2731" data-pro-m-tiers="1086,1448">
         <template id="still-uvod">
           <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
-            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, 124vw">
-            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw">
-            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
+            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="1920" height="1200" fetchpriority="high" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
           </picture>
         </template>
         <template id="still-vstup">
@@ -177,9 +177,9 @@
         <script>(function(d){var t=d.getElementById(d.documentElement.classList.contains('pro')?'still-vstup':'still-uvod');t.after(t.content.cloneNode(true));})(document);</script>
         <noscript>
           <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.6000; --pam: 0.5625">
-            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, 124vw">
-            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw">
-            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, 124vw" width="1920" height="1200" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
+            <source type="image/avif" srcset="../assets/img/film/rohozka-1086.avif 1086w, ../assets/img/film/rohozka-1448.avif 1448w, ../assets/img/film/rohozka-2172.avif 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+            <source type="image/webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+            <img src="../assets/img/film/rohozka-1448.webp" srcset="../assets/img/film/rohozka-1086.webp 1086w, ../assets/img/film/rohozka-1448.webp 1448w, ../assets/img/film/rohozka-2172.webp 1920w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="1920" height="1200" decoding="async" alt="Doormat with the Barbershop 30 logo just inside the door, with a barber chair and a room with ring lights beyond it">
           </picture>
         </noscript>
         <!-- titulná karta (P11 v style.css): pripnutá, kým kotva prechádza oknom, mení sa len krytím (--o z app.js) -->
@@ -214,9 +214,9 @@
     <section class="scene" id="vstup-dnu" data-scene="2" aria-labelledby="h-vstup-dnu">
       <div class="film-shot is-title" data-card="left" data-shot="sala" data-f="0.5,0.55" data-mv="in" data-place="Hlavná sála" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/sala-1086.avif 1086w, ../assets/img/film/sala-1448.avif 1448w, ../assets/img/film/sala-2172.avif 2172w, ../assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/sala-1448.webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room with a barber at work, orange lamps and a wooden floor">
+          <source type="image/avif" srcset="../assets/img/film/sala-1086.avif 1086w, ../assets/img/film/sala-1448.avif 1448w, ../assets/img/film/sala-2172.avif 2172w, ../assets/img/film/sala-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/sala-1448.webp" srcset="../assets/img/film/sala-1086.webp 1086w, ../assets/img/film/sala-1448.webp 1448w, ../assets/img/film/sala-2172.webp 2172w, ../assets/img/film/sala-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room with a barber at work, orange lamps and a wooden floor">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -237,9 +237,9 @@
     <section class="scene" id="remeslo" data-scene="3" aria-labelledby="h-remeslo">
       <div class="film-shot is-title" data-card="left" data-shot="stol" data-f="0.5,0.5" data-mv="rise" data-place="Pracovné miesto" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="stol-m" data-m-size="1152x2048" data-m-tiers="1086,1448" data-fm="0.50,0.52">
         <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 52%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.52; --pa: 1.4998; --pam: 0.5625">
-          <source type="image/avif" srcset="../assets/img/film/stol-1086.avif 1086w, ../assets/img/film/stol-1448.avif 1448w, ../assets/img/film/stol-2172.avif 2172w, ../assets/img/film/stol-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/stol-1448.webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber's workstation with a mirror, Edison bulbs and tools on the counter">
+          <source type="image/avif" srcset="../assets/img/film/stol-1086.avif 1086w, ../assets/img/film/stol-1448.avif 1448w, ../assets/img/film/stol-2172.avif 2172w, ../assets/img/film/stol-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/stol-1448.webp" srcset="../assets/img/film/stol-1086.webp 1086w, ../assets/img/film/stol-1448.webp 1448w, ../assets/img/film/stol-2172.webp 2172w, ../assets/img/film/stol-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber's workstation with a mirror, Edison bulbs and tools on the counter">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -260,9 +260,9 @@
     <section class="scene" id="cakaren" data-scene="4" aria-labelledby="h-cakaren">
       <div class="film-shot is-title" data-card="right" data-shot="cakaren" data-f="0.5,0.55" data-mv="in" data-place="Kútik s pumpou Route 66" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="cakaren-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/cakaren-1086.avif 1086w, ../assets/img/film/cakaren-1448.avif 1448w, ../assets/img/film/cakaren-2172.avif 2172w, ../assets/img/film/cakaren-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/cakaren-1448.webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A corner with armchairs, a colourful bulldog figure and a retro Route 66 petrol pump">
+          <source type="image/avif" srcset="../assets/img/film/cakaren-1086.avif 1086w, ../assets/img/film/cakaren-1448.avif 1448w, ../assets/img/film/cakaren-2172.avif 2172w, ../assets/img/film/cakaren-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/cakaren-1448.webp" srcset="../assets/img/film/cakaren-1086.webp 1086w, ../assets/img/film/cakaren-1448.webp 1448w, ../assets/img/film/cakaren-2172.webp 2172w, ../assets/img/film/cakaren-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A corner with armchairs, a colourful bulldog figure and a retro Route 66 petrol pump">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -283,9 +283,9 @@
     <section class="scene" id="tim" data-scene="5" aria-labelledby="h-tim">
       <div class="film-shot is-title title-long" data-card="left" data-shot="sala-rano" data-f="0.5,0.55" data-mv="left" data-place="Sála v rannom svetle" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sala-rano-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/sala-rano-1086.avif 1086w, ../assets/img/film/sala-rano-1448.avif 1448w, ../assets/img/film/sala-rano-2172.avif 2172w, ../assets/img/film/sala-rano-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/sala-rano-1448.webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room in morning light, with chairs and an illuminated Barbershop sign">
+          <source type="image/avif" srcset="../assets/img/film/sala-rano-1086.avif 1086w, ../assets/img/film/sala-rano-1448.avif 1448w, ../assets/img/film/sala-rano-2172.avif 2172w, ../assets/img/film/sala-rano-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/sala-rano-1448.webp" srcset="../assets/img/film/sala-rano-1086.webp 1086w, ../assets/img/film/sala-rano-1448.webp 1448w, ../assets/img/film/sala-rano-2172.webp 2172w, ../assets/img/film/sala-rano-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The main room in morning light, with chairs and an illuminated Barbershop sign">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -482,9 +482,9 @@
     <section class="scene" id="sluzby" data-scene="6" aria-labelledby="h-sluzby">
       <div class="film-shot is-title title-long" data-card="center" data-shot="kreslo-stred" data-f="0.5,0.55" data-mv="near" data-place="Kreslo uprostred sály" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kreslo-stred-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/kreslo-stred-1086.avif 1086w, ../assets/img/film/kreslo-stred-1448.avif 1448w, ../assets/img/film/kreslo-stred-2172.avif 2172w, ../assets/img/film/kreslo-stred-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/kreslo-stred-1448.webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber chair in the middle of the main room, between two workstations with mirrors">
+          <source type="image/avif" srcset="../assets/img/film/kreslo-stred-1086.avif 1086w, ../assets/img/film/kreslo-stred-1448.avif 1448w, ../assets/img/film/kreslo-stred-2172.avif 2172w, ../assets/img/film/kreslo-stred-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/kreslo-stred-1448.webp" srcset="../assets/img/film/kreslo-stred-1086.webp 1086w, ../assets/img/film/kreslo-stred-1448.webp 1448w, ../assets/img/film/kreslo-stred-2172.webp 2172w, ../assets/img/film/kreslo-stred-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="A barber chair in the middle of the main room, between two workstations with mirrors">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -643,9 +643,9 @@
     <section class="scene" id="galeria" data-scene="7" aria-labelledby="h-galeria">
       <div class="film-shot is-title title-long" data-card="left" data-shot="kava" data-f="0.5,0.5" data-mv="down" data-place="Káva pre hostí" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="kava-m" data-m-size="1229x2185" data-m-tiers="1086,1448" data-fm="0.50,0.5">
         <picture class="film-still" style="--fx: 50%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.5; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5625">
-          <source type="image/avif" srcset="../assets/img/film/kava-1086.avif 1086w, ../assets/img/film/kava-1448.avif 1448w, ../assets/img/film/kava-2172.avif 2172w, ../assets/img/film/kava-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/kava-1448.webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Coffee and water on a wooden tray in the morning sun">
+          <source type="image/avif" srcset="../assets/img/film/kava-1086.avif 1086w, ../assets/img/film/kava-1448.avif 1448w, ../assets/img/film/kava-2172.avif 2172w, ../assets/img/film/kava-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/kava-1448.webp" srcset="../assets/img/film/kava-1086.webp 1086w, ../assets/img/film/kava-1448.webp 1448w, ../assets/img/film/kava-2172.webp 2172w, ../assets/img/film/kava-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="Coffee and water on a wooden tray in the morning sun">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -760,9 +760,9 @@
       </div>
       <div class="film-shot is-title" data-card="right" data-shot="sud" data-f="0.5,0.55" data-mv="down" data-place="Predná sála so sudom" data-size="4096x2731" data-tiers="1086,1448,2172,2896" data-m="sud-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.55">
         <picture class="film-still" style="--fx: 50%; --fy: 55%; --fmx: 50.0%; --fmy: 55%; --fxn: 0.5; --fyn: 0.55; --fmxn: 0.5; --fmyn: 0.55; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/sud-1086.avif 1086w, ../assets/img/film/sud-1448.avif 1448w, ../assets/img/film/sud-2172.avif 2172w, ../assets/img/film/sud-2896.avif 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/sud-1448.webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The front room with a barrel, towels, a chair and ring lights">
+          <source type="image/avif" srcset="../assets/img/film/sud-1086.avif 1086w, ../assets/img/film/sud-1448.avif 1448w, ../assets/img/film/sud-2172.avif 2172w, ../assets/img/film/sud-2896.avif 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/sud-1448.webp" srcset="../assets/img/film/sud-1086.webp 1086w, ../assets/img/film/sud-1448.webp 1448w, ../assets/img/film/sud-2172.webp 2172w, ../assets/img/film/sud-2896.webp 2896w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The front room with a barrel, towels, a chair and ring lights">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -783,9 +783,9 @@
     <section class="scene" id="rezervacia" data-scene="8" aria-labelledby="h-rezervacia">
       <div class="film-shot is-title title-long" data-card="center" data-shot="vstup" data-f="0.55,0.5" data-mv="in" data-place="Vstup z Mostnej ulice" data-size="4096x2731" data-tiers="1086,1448,2172,2896,4096" data-m="vstup-m" data-m-size="1536x2731" data-m-tiers="1086,1448" data-fm="0.50,0.5">
         <picture class="film-still" style="--fx: 55%; --fy: 50%; --fmx: 50.0%; --fmy: 50%; --fxn: 0.55; --fyn: 0.5; --fmxn: 0.5; --fmyn: 0.5; --pa: 1.4998; --pam: 0.5624">
-          <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w, ../assets/img/film/vstup-2896.avif 2896w, ../assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 170vw, 124vw">
-          <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, 124vw">
-          <img src="../assets/img/film/vstup-1448.webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The Barbershop 30 façade on Mostná Street in Nitra, with the door and a barber pole">
+          <source type="image/avif" srcset="../assets/img/film/vstup-1086.avif 1086w, ../assets/img/film/vstup-1448.avif 1448w, ../assets/img/film/vstup-2172.avif 2172w, ../assets/img/film/vstup-2896.avif 2896w, ../assets/img/film/vstup-4096.avif 4096w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <source type="image/webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw">
+          <img src="../assets/img/film/vstup-1448.webp" srcset="../assets/img/film/vstup-1086.webp 1086w, ../assets/img/film/vstup-1448.webp 1448w, ../assets/img/film/vstup-2172.webp 2172w, ../assets/img/film/vstup-2896.webp 2896w, ../assets/img/film/vstup-4096.webp 4096w" sizes="(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw" width="4096" height="2731" loading="lazy" decoding="async" alt="The Barbershop 30 façade on Mostná Street in Nitra, with the door and a barber pole">
         </picture>
         <div class="title-pin">
           <div class="title-frame">
@@ -886,6 +886,7 @@
             <li><a href="https://www.instagram.com/barbershop30_nitra/" target="_blank" rel="noopener">Instagram</a></li>
             <li><a href="https://www.facebook.com/barbershop30nitra/" target="_blank" rel="noopener">Facebook</a></li>
             <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Mostn%C3%A1+30%2C+949+01+Nitra" target="_blank" rel="noopener">Get directions</a></li>
+            <!-- skrytý, kým nebeží server kartičiek: odkryje ho ../assets/vernost.js (data-zapnute z nasadenia alebo uložená kartička) -->
             <li hidden><a href="../karta/" data-vernost-karta>Loyalty card</a></li>
           </ul>
         </div>

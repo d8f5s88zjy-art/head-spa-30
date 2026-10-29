@@ -90,7 +90,9 @@ function el(tag, attrs = {}, deti = []) {
 
 /* Vizitka (obe strany) podľa tej, ktorú prevádzka rozdáva. */
 export function vizitka() {
-  const kruh = () => el('div', { class: 'viz-kruh' }, [el('img', { src: new URL('img/logo-30-barbershop.webp', import.meta.url).href, alt: '', width: '480', height: '429', loading: 'lazy', decoding: 'async' })]);
+  // logo sa kreslí v 68 až 124 px: stačí 256 px (10 kB), 480 px (45 kB) len pre väčší displej
+  const logo = (w) => new URL(`img/logo-30-barbershop${w === 480 ? '' : '-' + w}.webp`, import.meta.url).href;
+  const kruh = () => el('div', { class: 'viz-kruh' }, [el('img', { src: logo(256), srcset: `${logo(256)} 256w, ${logo(480)} 480w`, sizes: '124px', alt: '', width: '480', height: '429', loading: 'lazy', decoding: 'async' })]);
   const pred = el('div', { class: 'viz-strana viz-pred' }, [
     el('div', { class: 'viz-pruhy', 'aria-hidden': 'true' }), kruh(),
     el('div', { class: 'viz-kontakt' }, [

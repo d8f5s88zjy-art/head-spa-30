@@ -20,7 +20,10 @@ PHONE = '(max-width: 720px)'
 SIZES = '(max-width: 720px) 93vw, 124vw'
 # telefón na výšku (P16 v style.css): zábery okrem prológu sú fotkou na šírku v páse 56 % výšky, rovina záberu
 # je asi 2,2× širšia než displej (pri 390 × 844 asi 880 px), preto 170vw a žiadne výrezy -m
-SIZES_PAS = '(max-width: 720px) 170vw, 124vw'
+# tablet na výšku: záber pokrýva výšku okna, rovina záberu je asi 2,5 až 2,7× širšia než okno (820 × 1180: 2195 px),
+# preto 270vw (pri 124vw bol pri 2× displeji pod 1 bod súboru na bod obrazovky, kontrola 29. 10. 2026); film tam
+# berie ten istý stupeň 2896
+SIZES_PAS = '(max-width: 720px) 170vw, (orientation: portrait) 270vw, 124vw'
 P = 'assets/img/film/'
 
 def srcset(name, tiers, ext):

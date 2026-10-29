@@ -377,9 +377,9 @@ if (motionOn && mqFinePointer.matches) {
     import('./atmosfera.js').then((m) => m.spusti(gesture)).catch(() => {});
   };
   ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
-  ['pointerdown', 'touchend', 'click'].forEach((t) => addEventListener(t, (e) => {
-    if (!(e.pointerType === 'mouse' && e.button)) gesture = true;
-  }, { once: true, passive: true }));
+  // gesto pre hudbu: kliknutie myšou alebo ťuknutie (click po dotyku), nie švih prstom pri skrolovaní ani kláves
+  addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && !e.button) gesture = true; }, { passive: true });
+  addEventListener('click', (e) => { if (e.detail) gesture = true; }, { passive: true });
   const later = () => setTimeout(load, 3500);
   if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
 })();
@@ -536,6 +536,8 @@ function setMenu(open, { restoreFocus = true } = {}) {
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
   setClass(mobileCta, 'is-hidden', ctaHidden());
+  // otvorené menu: Tab a čítačka ostanú v menu, obsah pod ním je inert (Esc a ťuk mimo menu ho zavrú)
+  for (const el of [$('main'), $('footer'), mobileCta]) if (el) el.toggleAttribute('inert', open);
   if (open) {
     const first = $('a, button', nav);
     first?.focus({ preventScroll: true });

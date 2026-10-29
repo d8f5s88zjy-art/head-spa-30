@@ -191,8 +191,15 @@ function zvuk(btn, gesto) {
     if (lastType === 'mouse' || e.detail === 0 || onBtn(e)) return;   // detail 0 = kliknutie klávesom
     first(); snip();
   }, { capture: true, passive: true });
-  // iOS Safari odomkne zvuk až pri touchend; prvé ťuknutie pustí hudbu
-  addEventListener('touchend', (e) => { if (!onBtn(e)) first(); }, { capture: true, passive: true });
+  // iOS Safari odomkne zvuk až pri touchend; prvé ťuknutie pustí hudbu. Švih prstom pri skrolovaní (posun nad 10 px)
+  // nie je ťuknutie: hudba sa po ňom nepustí ani nestiahne (kontrola 29. 10. 2026)
+  let dotyk0 = null;
+  addEventListener('touchstart', (e) => { const d = e.touches[0]; dotyk0 = d ? [d.clientX, d.clientY] : null; }, { capture: true, passive: true });
+  addEventListener('touchend', (e) => {
+    const d = e.changedTouches[0];
+    if (!dotyk0 || !d || Math.hypot(d.clientX - dotyk0[0], d.clientY - dotyk0[1]) > 10 || onBtn(e)) return;
+    first();
+  }, { capture: true, passive: true });
 
   // skrytá karta: zvuk sa zastaví, po návrate pokračuje
   document.addEventListener('visibilitychange', () => {
