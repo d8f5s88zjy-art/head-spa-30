@@ -101,7 +101,9 @@
       const g = c.getContext('webgl2', { failIfMajorPerformanceCaveat: !filmOn }) || (filmOn ? c.getContext('webgl2') : null);
       const ri = g && !filmOn && g.getExtension('WEBGL_debug_renderer_info');
       gpu = !!g && !(ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(g.getParameter(ri.UNMASKED_RENDERER_WEBGL) || ''));
-      const x = g && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
+      // pri softvérovom kreslení sa kontext neuvoľňuje: loseContext() tam blokuje hlavné vlákno aj sekundy,
+      // plátno aj tak zanikne samo
+      const x = gpu && g.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
     } catch (e) { gpu = false; }
     if (!gpu) { root.classList.add('world-frame'); quit(); return; }
   }
@@ -197,7 +199,8 @@
     'cakaren>sala-rano': 'popredie right b:0.30,0.62 m:rise mb:0.5,0.78',       // popri operadle do rannej sály
     'sala-rano>kreslo-stred': 'najazd a:0.635,0.56 b:0.5,0.45 ma:0.52,0.45',    // do kresla v sále, z neho na kreslo uprostred
     'kreslo-stred>kava': 'svih down',                                          // švih nadol na stolík s kávou
-    'kava>sud': 'popredie left b:0.88,0.45 mb:0.78,0.4',                        // popri stĺpe do prednej sály
+    'kava>sud': 'pohyb left',                                                  // pohybom do prednej sály (popri stĺpe zakryl
+                                                                               // tmavý stĺp až 61 % obrazu, pôsobil ako čierne okno)
     'sud>vstup': 'odjazd b:0.76,0.53 mb:0.50,0.53',                            // von cez dvere na Mostnú
   };
   function parseCut(spec) {
@@ -1016,7 +1019,7 @@
   /* ---------- kamera: tlmená pružina, jemné dýchanie ako zo steadicamu ---------- */
   let S = 0, V = 0, mx = 0, my = 0, pmx = 0, pmy = 0, breath = 1, sy = scrollY;
   let raf = 0, last = 0, running = true, lost = false, shown = false, shownAt = 0, lastInput = performance.now();
-  const started = performance.now();
+  let started = performance.now();                          // po obnove grafiky sa počíta znova (strážca 15 s)
   // kamera sa hýbe stále (ako video): plnou frekvenciou displeja (60 až 240 snímok/s, majiteľ 2026‑10‑11),
   // po 3 minútach bez pohybu sa zastaví (batéria); hocijaký pohyb ju zasa rozbehne
   const BREATH_MS = 180000, FULL_MS = BREATH_MS;
@@ -1229,9 +1232,9 @@
     const med = ft[15], p90 = ft[27]; ft.length = 0;
     const hz = Math.max(fastest, 1 / 250);                   // interval displeja (60 až 240 Hz)
     if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
-      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
+      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); draw(now, 0); }
     } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
-      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize();
+      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize(); draw(now, 0);
     }
   }
 
@@ -1248,7 +1251,8 @@
       // nový render target pri prvom použití čaká na grafiku: overí sa hneď, v tej istej snímke ako zmena
       // rozlíšenia, a nie o chvíľu neskôr uprostred skrolu pri najbližšom prelínaní
       for (const rt of [rtA, rtB]) { renderer.setRenderTarget(rt); renderer.clear(); }
-      renderer.setRenderTarget(null);
+      // setSize plátno vymaže na čiernu (0,0,0): kým sa nakreslí záber, má aspoň farbu stránky (#0e0d0c)
+      renderer.setRenderTarget(null); renderer.clear();
       post.material.uniforms.uAspect.value = w / h;
       post.material.uniforms.uRes.value.set(canvas.width, canvas.height);
       vig.value.set(1 / canvas.width, 1 / canvas.height, w / h, vig.value.w);
@@ -1476,6 +1480,8 @@
   on(canvas, 'webglcontextrestored', () => {
     lost = false;
     SHOTS.forEach((s) => { if (s.video) { detach(s, false); s.pmap = null; } if (s.loading) s.ctl.abort(); s.loading = null; s.ready = false; s.size = 0; s.drt = null; s.mat.uniforms.uMap.value = blank; s.mat.uniforms.uDepth.value = flat; });
+    // strážca prvého záberu (15 s) sa počíta od obnovy, nie od spustenia filmu, inak by film po obnove skončil
+    started = performance.now();
     cw = 0; resize();
   });
   // obsah stránky mení výšku (fotky, rozbalené karty, menu), kotvy sa preto prepočítajú

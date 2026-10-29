@@ -415,7 +415,9 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
   z-index: 0; pointer-events: none;
   opacity: 0; transition: opacity 1.2s var(--ease-in-out);
 }
-html.world-in .film-canvas { opacity: 1; }
+/* plátno je pod zálohou hneď celé (záloha nad ním sa prelína 0,7 s rovno do filmu): pri dvoch naraz
+   priesvitných vrstvách by na pol sekundy presvital tmavý podklad stránky; zhasína (strata grafiky) ďalej 1,2 s */
+html.world-in .film-canvas { opacity: 1; transition: none; }
 .site { position: relative; z-index: 1; }
 
 /* --------------------------------------------------------------------------
