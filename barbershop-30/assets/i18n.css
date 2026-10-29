@@ -63,6 +63,8 @@ body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: translate(-50%, 0); 
   body:has(.mobile-cta.is-hidden) .lang-offer { transform: translateY(-40%); }
   body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
 }
+/* otvorené menu telefónu alebo rozbalené jazyky v lište: prúžok hore by ich prekryl, kým sú otvorené, nie je vidieť */
+body:has(.site-header[data-menu="open"]) .lang-offer, body:has(.lang-btn[aria-expanded="true"]) .lang-offer { visibility: hidden; }
 /* telefón: jazyky ako rad skratiek na začiatku rozbaľovacieho menu */
 .lang.lang-v-menu { margin: 0 0 var(--s2); width: 100%; }
 .lang-v-menu .lang-menu {
