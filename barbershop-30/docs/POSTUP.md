@@ -59,6 +59,14 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑10‑29 (hotové na vetve, CHECKS 37): majiteľ: „Chcem, aby nikde neboli žiadne chyby, aby si skontroloval, či aj
+  všetko funguje, aj SEO.“ Šesť kontrol (funkcie, vzhľad, SEO, výkon, film, Barber) a oprava všetkých vážnych
+  a stredných nálezov: čierny snímok filmu pri zmene rozlíšenia a stmavnutie pri nábehu preč, strih káva → sála bez
+  tmavého stĺpa, Barber na otázky o cene a čase dáva číslo správnej služby (mriežka 406 otázok 65 → 0 zlých),
+  okno Barbera modálne na telefóne a bez zakrývania tlačidiel, telefón na šírku, ponuka jazyka hore, kontrast
+  tlačidla v lište, písmo tučných textov, odkaz Vernostná kartička až so serverom kartičiek, JSON-LD geo
+  a priceRange. Čaká na majiteľa: zlúčenie do main (živý web je pozadu), otázka 21 (doména a /rezervacia),
+  strih čakáreň → ranná sála s tmavým operadlom (nechať alebo zmeniť ako káva → sála).
 - 2026‑10‑28 (hotové na vetve, CHECKS 34): majiteľ chce pre Barbera ďalších 500 bežných otázok. Barber má 776 otázok
   (252 → 776, +524 nových v 8 témach, +590 znení k existujúcim; spolu 3 596 znení), všetky z overených dávok s nezávislou
   kontrolou faktov (39 vyhodených duplicít). Kópia pre prehliadač v dvoch súboroch: otázky a odpovede pri prvom otvorení

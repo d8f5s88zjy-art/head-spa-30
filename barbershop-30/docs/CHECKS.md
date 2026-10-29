@@ -774,3 +774,39 @@ Emulácia prehliadača proti falošnému rezervačnému systému; živý systém
   lekáreň…). Nad 54ad1f0a 11 + 2 chyby, teraz 0. `otazky.mjs` vypíše otázky mimo témy tesne pod prahom (0,55 až 0,6).
 - Web: pilier Skúsenosti bez vety o praxi, ktorá je v úvode tímu tesne nad ním („Na Mostnej 30 od roku 2019.
   Hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“), 7 slovníkov a `en/`.
+
+## 37. Oprava po šiestich kontrolách: funkcie, vzhľad, SEO, výkon, film, Barber (2026‑10‑29)
+
+Majiteľ 26. 10.: „Chcem, aby nikde neboli žiadne chyby, aby si skontroloval, či aj všetko funguje, aj SEO.“ Šesť
+nezávislých kontrol nad c8febb66 našlo 3 vážne (dva sú ten istý čierny snímok filmu), 20 stredných a 34 drobných nálezov; opravené sú všetky vážne a stredné
+okrem tých, ktoré nie sú v kóde (živý web je pozadu za vetvou, prechod na doménu čaká na otázku 21).
+- Film (`film.js`): po zmene rozlíšenia plátna (adaptívna kvalita) sa záber nakreslí v tej istej snímke, plátno sa
+  najprv vyčistí farbou stránky (telefón: 4 zo 4 zmien predtým čierny snímok); plátno je pod zálohou hneď celé (nábeh
+  bez stmavnutia, jas pásu 57 → 58 namiesto 30); po obnove grafiky sa film vráti; pri softvérovom kreslení sa
+  skúšobný kontext neuvoľňuje (dlhá úloha 2,3 s); strih káva → predná sála pohybom (tmavý stĺp zakryl 61 % obrazu).
+  Kontrola škvŕn (a5-film, telefón 81 a počítač 45 snímok plátna): alfa < 255 0 %, čierna ≤ 0,001 %.
+- Barber: smerovač cenníka v okne aj na serveri (`smeruj`/`najdi`, `otazky_smeruj`/`otazky_najdi`): mriežka 406
+  otázok na cenu a čas zlé čísla 65 → 0, stráž v `otazky.mjs` (mriežka, FAQ webu, www.* len z barbershop.md, zhoda
+  servera a prehliadača). Nové znenia, otázka „Aké máte heslo?“ (778). Okno: začiatok odpovede ostane v okne,
+  modálne na telefóne (aria-modal, inert), aria-busy, fokus po téme, Novom rozhovore a Skryť Barbera, navigácia ako
+  „Navigovať v Google Mapách“, pod „nič nemám“ len Zavolať, ukážka na en/ po anglicky, bublina nekryje tlačidlá
+  úvodu ani pätičku, okno na šírku cez celú výšku.
+- Web: telefón na šírku (úvod a karty medzi lištou a spodkom), ponuka jazyka hore pod lištou (a skrytá pri
+  otvorenom menu), Objednať sa v lište a menu tmavým textom (5,42 : 1), cyrilská Manrope s váhami 600 a 700 (tučný
+  text už neprejde na systémové písmo), zalomenie dlhého tlačidla na úzkom telefóne, hu/sr popisy, cenník pod
+  záložkami, tablet na výšku so zálohami 2896, objednávka na nízkom displeji, logo vizitky 256 px, hudba len po
+  ťuknutí, inert pod menu, main tabindex, scroll-padding-bottom, ťukacia plocha cenníka, fokus v admine.
+- Vernostná kartička: odkaz v pätičke skrytý, kým nebeží server (vernost.js ho odkryje); pages.yml zapne prihlášku
+  len pri 200 zo servera kartičiek a Barbera len pri 200 z jeho stránky o ochrane údajov.
+- SEO: JSON-LD priceRange a geo, „detský strih“ v častých otázkach (8 jazykov), lastmod 2026‑10‑29 a v pages.yml
+  podľa commitu, postup pred prepnutím domény v README.
+- Testy: asistent-test a objednavka-test bez composer závislostí vypíšu PRESKOČENÉ a pustia časti bez servera,
+  porty v `--port`; tma-test meria jas v prehliadači (bez Pillow).
+- Neopravené s dôvodom: prechod kariet (choreografia, treba skutočný telefón), preklepy v Barberovi (rezerva prahu
+  mimo témy), hreflang v HTML a prepínač EN na en/ (zámer hreflang v sitemap, rozpočet HTML), väčšie fotky pásu
+  v rezervacia.html (nové súbory z originálov), strih čakáreň → ranná sála s operadlom (rozhodnutie majiteľa).
+- Testy na kópii b1d7790e (pred: kópia c8febb66): i18n-test 55, en-test 16, en-stranka --check aktuálna, otazky.mjs
+  --kontrola OK (778 otázok, mriežka 406, zhoda servera 4 370 otázok), vychytavky-test 27, admin-test 101, app-smoke
+  109 / 0 (pred 108 / 1: CLS 0,0283 pri prechode tučného textu na systémové písmo, dvakrát), tma-test 52 / 0;
+  asistent-test 7 a objednavka-test 15 kontrol bez servera OK, časti so serverom PRESKOČENÉ (v kontajneri chýba
+  asistent/vendor; pred spadli: 1 OK + TimeoutError, 13 OK / 3 FAIL).
