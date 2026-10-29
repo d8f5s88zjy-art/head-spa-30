@@ -2,11 +2,11 @@
 // Film nikdy neukáže čierne plátno: rýchly skrol a skoky cez menu na pomalej sieti (zábery sa ešte načítavajú).
 //   node source/tools/tma-test.mjs [--only=desktop|mobile] [--out=dir]
 // Po každom kroku snímka samotného filmu (stránka skrytá); viac ako 85 % takmer čiernych bodov (jas pod 22) = FAIL.
+// Jas sa meria v prehliadači (canvas), Python s Pillow netreba.
 import path from 'node:path';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { execFileSync } from 'node:child_process';
 const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const { startStaticServer, PRESETS } = await import(path.join(SITE, 'source', 'shot.mjs'));
 const require = createRequire(path.join(SITE, 'source', 'shot.mjs'));
@@ -46,7 +46,11 @@ for (const kind of opt.only ? [opt.only] : ['desktop', 'mobile']) {
       files.push(f);
     }
   }
-  const jas = execFileSync('python3', ['-c', 'import sys\nfrom PIL import Image, ImageStat\nfor f in sys.argv[1:]: h = Image.open(f).convert("L").histogram(); print(round(100 * sum(h[:22]) / sum(h)))', ...files]).toString().trim().split('\n').map(Number);
+  // jas meria prehliadač (canvas), nie Pillow: rovnaký jas ako PIL convert("L") (ITU-R 601: 299, 587, 114), rovnaký prah
+  const meraj = await ctx.newPage();
+  const jas = [];
+  for (const f of files) jas.push(await meraj.evaluate(async (b64) => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode(); const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const x = c.getContext('2d'); x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 0; i < d.length; i += 4) if ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 < 22) n++; return Math.round(100 * n / (c.width * c.height)); }, fs.readFileSync(f).toString('base64')));
+  await meraj.close();
   files.forEach((f, i) => {
     const bad = jas[i] > 85;
     if (bad) failed++;

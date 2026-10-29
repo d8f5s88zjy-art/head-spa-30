@@ -4,7 +4,9 @@
 // v prehliadači proti serveru asistenta (asistent/api.php) a falošnému rezervačnému systému
 // (asistent/testy/mock-rezervacie.php). Nič nejde na skutočný rezervačný systém; objednávka sa nikdy neodošle.
 // Snímky na kontrolu ukladá do docs/screenshots/objednavka/.
-//   node source/tools/objednavka-test.mjs [--out=dir]
+//   node source/tools/objednavka-test.mjs [--out=dir] [--port=8972]   (port servera asistenta, ďalšie dva: kalendár, server bez kalendára)
+// Bez knižnice servera (asistent/vendor z composer install) časti so serverom preskočí a vypíše PRESKOČENÉ; časti bez
+// servera (bez zapnutia, stránka bez skriptu a bez príznaku, ukážka) pobežia aj tak.
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -27,27 +29,31 @@ const casyOk = (c, vzor = CASY) => c.length > 0 && c.every((x) => vzor.includes(
 let zle = 0;
 const ok = (c, m, x = '') => { console.log(`${c ? 'OK  ' : 'FAIL'} ${m}${c || !x ? '' : '  ' + x}`); if (!c) zle++; };
 
+const P0 = Number(opt.port || 8972), PR = P0 + 1, PB = P0 + 2;   // server asistenta, kalendár, server bez kalendára
+let php = false; try { php = (await import('node:child_process')).spawnSync('php', ['-v']).status === 0; } catch (e) { /* bez php */ }
+const SERVER = php && fs.existsSync(path.join(ASI, 'vendor', 'autoload.php'));
+if (!SERVER) console.log(`PRESKOČENÉ časti so serverom: ${php ? 'chýba asistent/vendor (spusti composer install v asistent/)' : 'chýba php'}; pobežia len časti bez servera`);
 const srv = await startStaticServer(SITE);
 const T = fs.mkdtempSync(path.join(os.tmpdir(), 'obj-'));
 fs.mkdirSync(path.join(T, 'kal'));
 // kľúč len aby stav asistenta hlásil zapnutý (test tlačidla AI asistenta); na API sa v teste nič neposiela
-fs.writeFileSync(path.join(T, 'config.php'), `<?php return ['kluc' => 'sk-ant-test', 'db' => '${T}/a.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal', 'kalendar' => ['url' => 'http://127.0.0.1:8973', 'timeout' => 2.0]];`);
+fs.writeFileSync(path.join(T, 'config.php'), `<?php return ['kluc' => 'sk-ant-test', 'db' => '${T}/a.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal', 'kalendar' => ['url' => 'http://127.0.0.1:${PR}', 'timeout' => 2.0]];`);
 fs.writeFileSync(path.join(T, 'config-bez.php'), `<?php return ['kluc' => '', 'db' => '${T}/b.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal'];`);
 const SCEN = path.join(T, 'scen.json'), LOG = path.join(T, 'rez.log');
 fs.writeFileSync(SCEN, '{}');
 const env = { ...process.env, MOCK_LOG: LOG, MOCK_SCEN: SCEN, PHP_CLI_SERVER_WORKERS: '4' };
 // vlastná skupina procesov: php -S s viacerými workermi má podprocesy, zastaviť treba celú skupinu
-const deti = [
-  spawn('php', ['-S', '127.0.0.1:8973', path.join(ASI, 'testy', 'mock-rezervacie.php')], { env, stdio: 'ignore', detached: true }),
-  spawn('php', ['-S', '127.0.0.1:8972', '-t', ASI], { env: { ...env, ASISTENT_CONFIG: path.join(T, 'config.php') }, stdio: 'ignore', detached: true }),
-  spawn('php', ['-S', '127.0.0.1:8974', '-t', ASI], { env: { ...env, ASISTENT_CONFIG: path.join(T, 'config-bez.php') }, stdio: 'ignore', detached: true }),
-];
+const deti = SERVER ? [
+  spawn('php', ['-S', `127.0.0.1:${PR}`, path.join(ASI, 'testy', 'mock-rezervacie.php')], { env, stdio: 'ignore', detached: true }),
+  spawn('php', ['-S', `127.0.0.1:${P0}`, '-t', ASI], { env: { ...env, ASISTENT_CONFIG: path.join(T, 'config.php') }, stdio: 'ignore', detached: true }),
+  spawn('php', ['-S', `127.0.0.1:${PB}`, '-t', ASI], { env: { ...env, ASISTENT_CONFIG: path.join(T, 'config-bez.php') }, stdio: 'ignore', detached: true }),
+] : [];
 const zastav = () => deti.forEach((d) => { try { process.kill(-d.pid); } catch (e) { /* už nebeží */ } });
 // aj pri páde testu zastaviť servery (inak by ďalší beh dostal staré s inou konfiguráciou)
 process.on('exit', zastav);
 process.on('uncaughtException', (e) => { console.error(e); process.exit(1); });
-await sleep(900);
-const API = 'http://127.0.0.1:8972/api.php';
+if (SERVER) await sleep(900);
+const API = `http://127.0.0.1:${P0}/api.php`;
 const browser = await chromium.launch(PRESETS[0]);
 
 // dni ako server (Bratislava): prvý pracovný deň od dnes, nedeľa zatvorená
@@ -85,7 +91,7 @@ async function stranka0(w, h, q) {
 const preteka = (page) => page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1 || [...document.querySelectorAll('.obj[open] *')].some((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1) && !e.closest('.obj-dni'); }));
 
 /* ---------- 1. telefón 390: celá cesta služba → barber → deň → čas → výber ---------- */
-{
+if (SERVER) {
   const { ctx, page, von, chyby } = await stranka(390, 844, `objednavka=${encodeURIComponent(API)}&vernost=ukazka`);
   await page.mouse.move(10, 10);
   await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
@@ -210,7 +216,7 @@ const preteka = (page) => page.evaluate(() => document.documentElement.scrollWid
 }
 
 /* ---------- 2. šírky 360 a 430, tablet a počítač: okno bez pretekania ---------- */
-for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
+if (SERVER) for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   const { ctx, page, chyby } = await stranka(w, h, `objednavka=${encodeURIComponent(API)}&vernost=ukazka`);
   await page.mouse.move(10, 10);
   await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
@@ -253,7 +259,7 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   await ctx.close();
 }
 /* ---------- 4. zapnutá prihláška vernostnej kartičky (ako po nasadení s heslom recepcie) ---------- */
-{
+if (SERVER) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK', colorScheme: 'dark' });
   const page = await ctx.newPage();
   const von = [];
@@ -299,8 +305,8 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   await ctx.close();
 }
 /* server bez napojenia kalendára: okno sa nezapne */
-{
-  const { ctx, page } = await stranka(390, 844, `objednavka=${encodeURIComponent('http://127.0.0.1:8974/api.php')}`);
+if (SERVER) {
+  const { ctx, page } = await stranka(390, 844, `objednavka=${encodeURIComponent(`http://127.0.0.1:${PB}/api.php`)}`);
   await page.mouse.move(10, 10);
   await sleep(3500);
   ok(!(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute'))), 'kalendár nepripojený: okno sa nezapne, odkazy ostanú');
@@ -332,7 +338,7 @@ for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   ok(!chyby.length, 'stránka bez príznaku: bez chýb skriptu', chyby.join(' | '));
   await ctx.close();
 }
-for (const [w, h] of [[360, 780], [390, 844], [430, 932], [768, 1024], [1440, 900]]) {
+if (SERVER) for (const [w, h] of [[360, 780], [390, 844], [430, 932], [768, 1024], [1440, 900]]) {
   const { ctx, page, von, chyby } = await stranka0(w, h, `objednavka=${encodeURIComponent(API)}&asistent=${encodeURIComponent(API)}`);
   await page.waitForSelector('.obj-stranka .obj-sluzby button', { timeout: 10000 }).catch(() => {});
   ok(await page.locator('.obj-stranka .obj-sluzby button').count() === 15 && !(await page.locator('.rez-cennik').isVisible()), `stránka ${w} px: kroky priamo na stránke namiesto cenníka`);
@@ -366,7 +372,7 @@ for (const [w, h] of [[360, 780], [390, 844], [430, 932], [768, 1024], [1440, 90
   ok(!chyby.length, `stránka ${w} px: bez chýb skriptu`, chyby.join(' | '));
   await ctx.close();
 }
-{
+if (SERVER) {
   // odkaz s predvoľbou (napr. z Instagramu): služba a barber vybraní, rovno deň; jazyk stránky preloží aj kroky
   const { ctx, page } = await stranka0(390, 844, `objednavka=${encodeURIComponent(API)}&sluzba=1&barber=Adrian&lang=en`);
   await page.waitForSelector('.obj-dni button', { timeout: 10000 }).catch(() => {});
@@ -402,10 +408,10 @@ for (const [subor, q] of [['rezervacia.html', 'objednavka=ukazka'], ['index.html
   await ctx.close();
 }
 
-ok(!fs.readFileSync(LOG, 'utf8').includes('makeOrder'), 'objednávka (makeOrder) sa nikdy neodoslala');
+if (SERVER) ok(!fs.readFileSync(LOG, 'utf8').includes('makeOrder'), 'objednávka (makeOrder) sa nikdy neodoslala');
 await browser.close();
 zastav();
 srv.close && srv.close();
 fs.rmSync(T, { recursive: true, force: true });
-console.log(zle ? `VÝSLEDOK: ${zle} zlyhalo` : 'VÝSLEDOK: všetko v poriadku', '· snímky:', OUT);
+console.log(zle ? `VÝSLEDOK: ${zle} zlyhalo` : SERVER ? 'VÝSLEDOK: všetko v poriadku' : 'VÝSLEDOK: v poriadku v častiach bez servera (časti so serverom PRESKOČENÉ)', '· snímky:', OUT);
 process.exit(zle ? 1 : 0);

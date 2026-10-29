@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Test okna asistenta (assets/asistent.js) so serverom asistenta (asistent/api.php) a falošným API (asistent/testy/mock-api.php).
-//   node source/tools/asistent-test.mjs [--out=dir]
+//   node source/tools/asistent-test.mjs [--out=dir] [--port=8911]   (port falošného API, ďalšie tri: server, kalendár, server bez kalendára)
+// Bez knižnice servera (asistent/vendor z composer install) časti so serverom preskočí a vypíše PRESKOČENÉ; časti bez
+// servera (bez zapnutia, ukážka) pobežia aj tak.
 // Kontroly: bez data-asistent sa nič nenačíta; tlačidlo až po stave „zapnuté“, zreteľne „AI“; otvorenie, návrh otázky,
 // odpoveď po kúskoch, odkazy v odpovedi, karta overených termínov a Zavolať a potvrdiť termín (overené, výpadok kalendára,
 // bez napojenia), Esc a návrat fokusu, rozhovor po obnovení stránky, angličtina, telefón bez pretekania a prekryvu, chyba servera;
@@ -25,21 +27,28 @@ let failed = 0;
 const ok = (c, m, x = '') => { console.log(`${c ? 'OK  ' : 'FAIL'} ${m}${x ? '  ' + x : ''}`); if (!c) failed++; };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const P0 = Number(opt.port || 8911), PA = P0 + 1, PR = P0 + 2, PB = P0 + 3;   // falošné API, server, kalendár, server bez kalendára
+// server asistenta potrebuje knižnicu (composer install v asistent/) a php; bez nich sa časti so serverom preskočia
+let php = false; try { php = (await import('node:child_process')).spawnSync('php', ['-v']).status === 0; } catch (e) { /* bez php */ }
+const SERVER = php && fs.existsSync(path.join(ASI, 'vendor', 'autoload.php'));
+if (!SERVER) console.log(`PRESKOČENÉ časti so serverom: ${php ? 'chýba asistent/vendor (spusti composer install v asistent/)' : 'chýba php'}; pobežia len časti bez servera`);
 const srv = await startStaticServer(SITE);
 const T = fs.mkdtempSync(path.join(os.tmpdir(), 'asi-'));
 fs.mkdirSync(path.join(T, 'kal'));
-fs.writeFileSync(path.join(T, 'config.php'), `<?php return ['kluc' => 'sk-ant-test', 'db' => '${T}/a.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal', 'kalendar' => ['url' => 'http://127.0.0.1:8913', 'timeout' => 2.0]];`);
+fs.writeFileSync(path.join(T, 'config.php'), `<?php return ['kluc' => 'sk-ant-test', 'db' => '${T}/a.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal', 'kalendar' => ['url' => 'http://127.0.0.1:${PR}', 'timeout' => 2.0]];`);
 fs.writeFileSync(path.join(T, 'config-bez.php'), `<?php return ['kluc' => 'sk-ant-test', 'db' => '${T}/b.sqlite', 'povody' => ['${srv.origin}'], 'cache_dir' => '${T}/kal'];`);
 // zajtra (alebo pondelok, ak je zajtra nedeľa) je v kalendári voľno, o dva pracovné dni neskôr systém spadne (500)
 const den = (n) => { const d = new Date(Date.now() + 864e5 * n); if (d.getDay() === 0) d.setDate(d.getDate() + 1); return d.toISOString().slice(0, 10); };
 const D1 = den(1), DCH = den(3);
 fs.writeFileSync(path.join(T, 'scen.json'), JSON.stringify({ [DCH]: 'chyba500' }));
-const mock = spawn('php', ['-S', '127.0.0.1:8911', path.join(ASI, 'testy', 'mock-api.php')], { env: { ...process.env, MOCK_LOG: path.join(T, 'api.log') }, stdio: 'ignore' });
-const rez = spawn('php', ['-S', '127.0.0.1:8913', path.join(ASI, 'testy', 'mock-rezervacie.php')], { env: { ...process.env, MOCK_LOG: path.join(T, 'rez.log'), MOCK_SCEN: path.join(T, 'scen.json'), PHP_CLI_SERVER_WORKERS: '3' }, stdio: 'ignore' });
-const api = spawn('php', ['-S', '127.0.0.1:8912', '-t', ASI], { env: { ...process.env, ANTHROPIC_BASE_URL: 'http://127.0.0.1:8911', ASISTENT_CONFIG: path.join(T, 'config.php'), PHP_CLI_SERVER_WORKERS: '3' }, stdio: 'ignore' });
-const api2 = spawn('php', ['-S', '127.0.0.1:8914', '-t', ASI], { env: { ...process.env, ANTHROPIC_BASE_URL: 'http://127.0.0.1:8911', ASISTENT_CONFIG: path.join(T, 'config-bez.php') }, stdio: 'ignore' });
-await sleep(800);
-const API = 'http://127.0.0.1:8912/api.php';
+const spusti = (...a) => (SERVER ? spawn(...a) : { kill() {} });
+const mock = spusti('php', ['-S', `127.0.0.1:${P0}`, path.join(ASI, 'testy', 'mock-api.php')], { env: { ...process.env, MOCK_LOG: path.join(T, 'api.log') }, stdio: 'ignore' });
+const rez = spusti('php', ['-S', `127.0.0.1:${PR}`, path.join(ASI, 'testy', 'mock-rezervacie.php')], { env: { ...process.env, MOCK_LOG: path.join(T, 'rez.log'), MOCK_SCEN: path.join(T, 'scen.json'), PHP_CLI_SERVER_WORKERS: '3' }, stdio: 'ignore' });
+const api = spusti('php', ['-S', `127.0.0.1:${PA}`, '-t', ASI], { env: { ...process.env, ANTHROPIC_BASE_URL: `http://127.0.0.1:${P0}`, ASISTENT_CONFIG: path.join(T, 'config.php'), PHP_CLI_SERVER_WORKERS: '3' }, stdio: 'ignore' });
+const api2 = spusti('php', ['-S', `127.0.0.1:${PB}`, '-t', ASI], { env: { ...process.env, ANTHROPIC_BASE_URL: `http://127.0.0.1:${P0}`, ASISTENT_CONFIG: path.join(T, 'config-bez.php') }, stdio: 'ignore' });
+if (SERVER) await sleep(800);
+const API = `http://127.0.0.1:${PA}/api.php`;
+const naServer = (u) => /api\.php/.test(u) || [P0, PA, PR, PB].some((p) => u.includes(`127.0.0.1:${p}`));
 const browser = await chromium.launch(PRESETS[0]);
 try {
   // 1. bez zapnutia sa modul ani server nevolá
@@ -47,13 +56,13 @@ try {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     const req = [];
-    page.on('request', (r) => { if (/asistent|8912/.test(r.url())) req.push(r.url()); });
+    page.on('request', (r) => { if (/asistent/.test(r.url()) || naServer(r.url())) req.push(r.url()); });
     await page.goto(`${srv.origin}/index.html?uvod=off&film=off`, { waitUntil: 'load' });
     await page.mouse.move(200, 200); await sleep(1200);
     ok(req.length === 0, 'bez data-asistent sa nič nesťahuje ani neposiela', req.join(' '));
     await ctx.close();
   }
-  for (const kind of ['desktop', 'mobile']) {
+  if (SERVER) for (const kind of ['desktop', 'mobile']) {
     const ctx = await browser.newContext(kind === 'mobile'
       ? { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
       : { viewport: { width: 1440, height: 900 } });
@@ -135,7 +144,7 @@ try {
     await ctx.close();
   }
   // angličtina: popisy okna v jazyku stránky, jazyk ide aj na server
-  {
+  if (SERVER) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&lang=en&asistent=${encodeURIComponent(API)}`, { waitUntil: 'load' });
@@ -153,10 +162,10 @@ try {
     await ctx.close();
   }
   // bez napojenia na kalendár: poctivé „neviem overiť“, žiadna karta, Zavolať áno
-  {
+  if (SERVER) {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
-    await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent('http://127.0.0.1:8914/api.php')}`, { waitUntil: 'load' });
+    await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent(`http://127.0.0.1:${PB}/api.php`)}`, { waitUntil: 'load' });
     await page.evaluate(() => window.scrollTo(0, 30));
     const btn = page.locator('.asi-btn');
     await btn.waitFor({ state: 'visible', timeout: 8000 });
@@ -169,7 +178,7 @@ try {
     await ctx.close();
   }
   // Barber: logo, bublina pri ikone, Zavolať v hlavičke, skrytie (telefón 360 px)
-  {
+  if (SERVER) {
     const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 360, height: 780 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     const url = `${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent(API)}`;
@@ -216,7 +225,7 @@ try {
     await ctx.close();
   }
   // časté otázky v okne (telefón 390 px): témy, otázka ťuknutím bez servera, súvisiace otázky, clona, klávesnica
-  {
+  if (SERVER) {
     const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     // náhrada visualViewport: test zmenší viditeľnú plochu ako otvorená klávesnica
     await ctx.addInitScript(() => {
@@ -267,7 +276,7 @@ try {
     const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     const req = [], errs = [];
-    page.on('request', (r) => { if (/api\.php|:891\d/.test(r.url())) req.push(r.url()); });
+    page.on('request', (r) => { if (naServer(r.url())) req.push(r.url()); });
     page.on('pageerror', (e) => errs.push(e.message));
     await page.goto(`${srv.origin}/rezervacia.html?objednavka=ukazka&asistent=ukazka`, { waitUntil: 'load' });
     await page.mouse.move(300, 300);
@@ -299,5 +308,5 @@ try {
   srv.close && srv.close();
   fs.rmSync(T, { recursive: true, force: true });
 }
-console.log(failed ? `${failed} FAIL` : 'všetko OK');
+console.log(failed ? `${failed} FAIL` : SERVER ? 'všetko OK' : 'všetko OK v častiach bez servera (časti so serverom PRESKOČENÉ)');
 process.exit(failed ? 1 : 0);
