@@ -131,6 +131,24 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
   html.asi-klav .asi-panel { top: var(--asi-vt, 0px); bottom: auto; height: var(--asi-vh, 100dvh); border-radius: 0; padding-bottom: 0; animation: none; }
   html.asi-klav .asi-pata { display: none; }
 }
+/* nízke okno (telefón na šírku): okno cez celú výšku, hlavička, pás ukážky a päta stiesnené, aby na rozhovor ostalo miesto */
+@media (max-height: 500px) and (orientation: landscape) {
+  .asi-panel { top: 8px; bottom: 8px; height: auto; }
+  .asi-sub { display: none; }
+  .asi-hlava { padding-block: 6px; }
+  .asi-logo-m { width: 32px; height: 32px; }
+  .asi-hlava h2 { font-size: 1.1rem; }
+  .asi-ukazka-pas { padding-block: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .asi-zoz { padding-block: var(--s2); }
+  .asi-form { padding-block: 6px 4px; }
+  .asi-form textarea { min-height: 40px; padding-block: 8px; }
+  .asi-send { width: 40px; height: 40px; }
+  .asi-pata { padding-bottom: 6px; }
+  .asi-pata-akcie { flex-direction: row; gap: var(--s3); }
+}
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 640px) {
+  .asi-panel { top: 0; bottom: 0; height: auto; border-radius: 0; }
+}
 @media (max-width: 420px) {
   .asi-volaj { width: 40px; padding: 0; justify-content: center; }
   .asi-volaj span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

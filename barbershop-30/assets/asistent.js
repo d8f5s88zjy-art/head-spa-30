@@ -40,6 +40,11 @@ const T = {
 // časté otázky (asistent-otazky.js) sú po slovensky, preto témy a súvisiace otázky len na slovenskej stránke
 const TS = { temy: 'Časté otázky podľa témy:', vsetky: 'Všetky otázky ({n})', spat: 'Späť na témy', suvis: 'Môže ťa zaujímať:',
   caste: 'Časté otázky', pripravena: 'Pripravená odpoveď z overených údajov webu' };
+// text odkazu na Google Mapy (namiesto adresy s %C3%A1): navigácia a profil podniku
+const MAPA = { sk: ['Navigovať v Google Mapách', 'Barbershop 30 v Google Mapách'], en: ['Directions in Google Maps', 'Barbershop 30 on Google Maps'],
+  uk: ['Маршрут у Google Maps', 'Barbershop 30 у Google Maps'], hu: ['Útvonal a Google Térképen', 'Barbershop 30 a Google Térképen'],
+  sr: ['Uputstva u Google mapama', 'Barbershop 30 na Google mapama'], pl: ['Nawiguj w Mapach Google', 'Barbershop 30 w Mapach Google'],
+  de: ['Route in Google Maps', 'Barbershop 30 in Google Maps'], cs: ['Navigovat v Mapách Google', 'Barbershop 30 v Mapách Google'] };
 const jazyk = () => { const l = (html.lang || 'sk').slice(0, 2).toLowerCase(); return T[l] ? l : 'sk'; };
 const tx = () => T[jazyk()];
 
@@ -60,13 +65,18 @@ const I_SEND = '<path d="M4 12l16-8-6 16-2.5-6.5z" fill="none" stroke="currentCo
 
 /* text odpovede na odseky a odrážky; adresy, telefón a e-mail ako odkazy (len textové uzly, žiadne HTML z modelu) */
 const ODKAZ = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)])|(\+?421[\s\d]{9,13}\d|0\d{3}\s?\d{3}\s?\d{3})|([\w.+-]+@[\w-]+\.[\w.-]*\w)/g;
+function textOdkazu(url) {
+  if (/^https?:\/\/(www\.)?google\.[a-z.]+\/maps/.test(url)) return MAPA[jazyk()][/\/maps\/dir\//.test(url) ? 0 : 1];
+  const t = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+  try { return decodeURIComponent(t.replace(/\+/g, ' ')); } catch (e) { return t; }
+}
 function riadok(text, kam) {
   let i = 0;
   for (const m of text.matchAll(ODKAZ)) {
     kam.append(text.slice(i, m.index));
     const [cele, url, tel, mail] = m;
     const a = el('a', url ? { href: url, target: '_blank', rel: 'noopener' } : tel ? { href: 'tel:' + (tel.startsWith('0') ? '+421' + tel.slice(1) : tel).replace(/\s/g, '') } : { href: 'mailto:' + mail });
-    a.textContent = url ? url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : cele;
+    a.textContent = url ? textOdkazu(url) : cele;
     kam.append(a);
     i = m.index + cele.length;
   }
@@ -102,10 +112,12 @@ function karta(k) {
   box.append(p);
   return box;
 }
-/* tlačidlá pod odpoveďou o termíne: zavolať (vždy) a objednať sa */
-function akcie() {
+/* tlačidlá pod odpoveďou o termíne: zavolať (vždy) a objednať sa; pod odpoveďou bez odpovede (nevie, chyba) len
+   Zavolať, lebo „potvrdiť termín“ k otázke mimo termínu nesedí */
+function akcie(lenVolat) {
   const t = tx();
-  const tel = el('a', { class: 'asi-tel', href: TEL }, [ikona(I_TEL)]); tel.append(t.tel);
+  const tel = el('a', { class: 'asi-tel', href: TEL }, [ikona(I_TEL)]); tel.append(lenVolat ? t.volat : t.tel);
+  if (lenVolat) { tel.setAttribute('aria-label', t.tel + ': 0951 267 203'); return el('div', { class: 'asi-akcie' }, [tel]); }
   const obj = el('a', { class: 'asi-obj', href: REZ, target: '_blank', rel: 'noopener' }); obj.textContent = t.obj;
   return el('div', { class: 'asi-akcie' }, [tel, obj]);
 }
@@ -206,7 +218,7 @@ export async function spusti(api) {
 
   const bublina = (rola, text) => { const b = el('div', { class: 'asi-msg asi-' + rola }); if (text) vykresli(text, b); zoz.append(b); return b; };
   // karta termínu a tlačidlá idú pod bublinu odpovede (aj po obnovení stránky z uloženého rozhovoru)
-  const doplnky = (b, k, tel) => { const c = karta(k); if (c) b.after(c); if (tel) (c || b).after(akcie()); };
+  const doplnky = (b, k, tel) => { const c = karta(k); if (c) b.after(c); if (tel) (c || b).after(akcie(tel === 'v')); };
   // pripravená odpoveď z častých otázok má pod sebou zreteľný popis (nepísala ju AI)
   const pripravenaZnacka = (b) => b.after(el('p', { class: 'asi-zdroj' }, [TS.pripravena]));
   function chipy(trieda, nadpis, polozky) {
@@ -216,7 +228,8 @@ export async function spusti(api) {
     return box;
   }
   // nahradí skupinu inou a fokus dá na jej prvé tlačidlo (klávesnica, čítačka)
-  const vymen = (stara, nova) => { stara.replaceWith(nova); const b = nova.querySelector('button'); if (b && !dotyk) b.focus({ preventScroll: true }); nova.scrollIntoView({ block: 'nearest' }); };
+  // na dotyku ostane fokus v okne (ťuknuté tlačidlo zmizlo), klávesnica sa nevysunie
+  const vymen = (stara, nova) => { stara.replaceWith(nova); const b = nova.querySelector('button'); if (b && !dotyk) b.focus({ preventScroll: true }); else panel.focus({ preventScroll: true }); nova.scrollIntoView({ block: 'nearest' }); };
   function temy() {
     const db = faq();
     if (!db) return null;
@@ -299,24 +312,30 @@ export async function spusti(api) {
     rozhovor.push({ r: 'u', t: otazka }); uloz(kluc, rozhovor);
     const navrhy = zoz.querySelectorAll('.asi-chips');
     if (navrhy.length) { navrhy.forEach((c) => c.remove()); pole(); }   // fokus nesmie ostať na zmazanom návrhu
-    bublina('u', otazka); novy.hidden = false;
+    const ub = bublina('u', otazka); novy.hidden = false;
     area.value = ''; vyska();
     const b = bublina('a', ''); b.classList.add('asi-pise');
     zoz.scrollTop = zoz.scrollHeight;
-    bezi = true; odosli.disabled = true;
+    // čítačka prečíta odpoveď celú až na konci, nie po slovách
+    bezi = true; odosli.disabled = true; zoz.setAttribute('aria-busy', 'true');
     let text = '', kal = null, tel = false, zOtazok = null;
     const naText = (kus) => {
       const dole = zoz.scrollHeight - zoz.scrollTop - zoz.clientHeight < 40;
       text += kus; b.classList.remove('asi-pise'); vykresli(text, b);
-      if (dole) zoz.scrollTop = zoz.scrollHeight;
+      if (dole) naZaciatok(ub);
     };
     try {
-      // ukážka: vopred pripravené odpovede z údajov webu, nič sa neposiela
-      if (ukazka) zOtazok = await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
+      // ukážka: vopred pripravené odpovede z údajov webu po slovensky, nič sa neposiela; na stránke v inom jazyku
+      // povie v jej jazyku, že teraz neodpovie, a dá telefón (slovenská odpoveď by bola nezrozumiteľná)
+      if (ukazka && jazyk() !== 'sk') { await new Promise((r) => setTimeout(r, 400)); naText(t.err); tel = true; zOtazok = { id: null }; }
+      else if (ukazka) zOtazok = await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
       else await opytaj(api, rozhovor, naText, (k) => { kal = k; }, () => { tel = true; });
+      // ukážka bez odpovede (id null): pod ňou len Zavolať
+      if (tel && zOtazok && zOtazok.id === null) tel = 'v';
       doplnky(b, kal, tel);
-      if (ukazka) pripravenaZnacka(b);
-      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined, z: ukazka ? 'o' : undefined }); uloz(kluc, rozhovor);
+      const pripravena = ukazka && zOtazok && zOtazok.id !== null;
+      if (pripravena) pripravenaZnacka(b);
+      rozhovor.push({ r: 'a', t: text.trim() || '…', k: kal || undefined, tel: tel || undefined, z: pripravena ? 'o' : undefined }); uloz(kluc, rozhovor);
       await nacitajOtazky(true);
       suvisiace(otazka, zOtazok && zOtazok.id);
     } catch (e) {
@@ -324,20 +343,36 @@ export async function spusti(api) {
       rozhovor.pop(); uloz(kluc, rozhovor);
       // správy servera sú po slovensky; v inom jazyku stránky všeobecná správa v jej jazyku
       b.classList.remove('asi-pise'); b.classList.add('asi-chyba'); vykresli((jazyk() === 'sk' && e.message) || t.err, b);
-      b.after(akcie());
+      b.after(akcie(true));
       area.value = otazka; vyska();
     } finally {
-      bezi = false; odosli.disabled = false;
-      zoz.scrollTop = zoz.scrollHeight;
+      bezi = false; odosli.disabled = false; zoz.removeAttribute('aria-busy');
+      // začiatok odpovede (cena, čas) ostane v okne: zoznam ide dole, najviac tak, aby otázka bola hore
+      naZaciatok(ub);
     }
+  }
+  // posunie zoznam dole, ale nie ďalej, než je prvok (otázka návštevníka) pri hornom okraji zoznamu
+  function naZaciatok(prvok) {
+    const ciel = zoz.scrollTop + prvok.getBoundingClientRect().top - zoz.getBoundingClientRect().top - 8;
+    zoz.scrollTop = Math.max(0, Math.min(ciel, zoz.scrollHeight - zoz.clientHeight));
   }
 
   // na dotykovom displeji sa klávesnica nevysúva sama (zakryla by odpoveď), pole sa ťukne
   const dotyk = matchMedia('(pointer: coarse)').matches;
   const pole = () => (dotyk ? panel : area).focus({ preventScroll: true });
-  let navrat = null;
+  let navrat = null, inertne = [];
+  // telefón: okno s clonou je modálne pre klávesnicu aj čítačku (zvyšok stránky inert); na počítači je bočné a nemodálne
+  function modal(on) {
+    inertne.forEach((e) => e.removeAttribute('inert')); inertne = [];
+    panel.removeAttribute('aria-modal');
+    if (!on || !uzky.matches) return;
+    panel.setAttribute('aria-modal', 'true');
+    inertne = [...document.body.children].filter((e) => e !== panel && e !== clona && !e.hasAttribute('inert') && !/^(SCRIPT|STYLE|LINK)$/.test(e.tagName));
+    inertne.forEach((e) => e.setAttribute('inert', ''));
+  }
   function otvor(on) {
     panel.hidden = !on; clona.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
+    modal(on);
     prisposob();
     if (on) {
       // časté otázky: témy sa doplnia na úvodnú obrazovku, keď sa načítajú (súvisiace pod obnoveným rozhovorom až s kmeňmi)
@@ -369,9 +404,19 @@ export async function spusti(api) {
     if (oznam.contains(document.activeElement)) btn.focus({ preventScroll: true });
     oznam.classList.remove('is-on'); oznam.hidden = true;
   }
+  // pätička (prevádzkovateľ, odkazy) je v okne: bublina by ju zakryla, preto sa neukáže a ukázaná zmizne
+  let pataVidno = false;
+  const pata = document.querySelector('footer');
+  const pozor = pata && 'IntersectionObserver' in window ? new IntersectionObserver((z) => {
+    pataVidno = z.some((x) => x.isIntersecting);
+    if (pataVidno && !oznam.hidden) schovajOznam();
+  }) : null;
+  if (pozor) pozor.observe(pata);
   let videl = 0;
   const hodiny = setInterval(() => {
-    const vidno = btn.isConnected && panel.hidden && parseFloat(getComputedStyle(btn).opacity) > 0.9 && !document.querySelector('.lang-offer.in');
+    // telefón: kým je skrytá spodná lišta (úvod s tlačidlami Objednať sa a Zavolať), bublina by ich zakryla
+    const vidno = btn.isConnected && panel.hidden && parseFloat(getComputedStyle(btn).opacity) > 0.9 && !document.querySelector('.lang-offer.in')
+      && !pataVidno && !(uzky.matches && document.querySelector('.mobile-cta.is-hidden'));
     videl = vidno ? videl + 1 : 0;
     if (videl >= 8 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 8) ukazOznam(); }
   }, 1000);
@@ -379,8 +424,12 @@ export async function spusti(api) {
   // Skryť Barbera: ikona, bublina aj okno zmiznú do konca návštevy
   function skryBarbera() {
     zapis('sessionStorage', K_SKRYTY, '1');
-    clearInterval(hodiny); clearTimeout(oznamCas);
+    clearInterval(hodiny); clearTimeout(oznamCas); if (pozor) pozor.disconnect();
+    modal(false);
     html.classList.remove('asi-open');
+    // fokus nesmie ostať na zmazanom okne: na prvok, z ktorého sa okno otvorilo, inak na obsah stránky
+    const ciel = navrat && navrat.isConnected && navrat !== btn && !panel.contains(navrat) && !oznam.contains(navrat) ? navrat : document.getElementById('main');
+    if (ciel && (panel.contains(document.activeElement) || oznam.contains(document.activeElement) || document.activeElement === btn)) ciel.focus({ preventScroll: true });
     btn.remove(); oznam.remove(); clona.remove(); panel.remove();
   }
 
@@ -403,7 +452,7 @@ export async function spusti(api) {
     if (e.key !== 'Escape') return;
     if (!panel.hidden) { e.stopPropagation(); otvor(false); } else if (!oznam.hidden && oznam.contains(document.activeElement)) { e.stopPropagation(); schovajOznam(); }
   }, true);
-  novy.addEventListener('click', () => { if (bezi) return; rozhovor = []; uloz(kluc, rozhovor); obsah(); area.focus(); });
+  novy.addEventListener('click', () => { if (bezi) return; rozhovor = []; uloz(kluc, rozhovor); obsah(); pole(); });
   form.addEventListener('submit', (e) => { e.preventDefault(); posli(area.value); });
   area.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); posli(area.value); } });
   area.addEventListener('input', vyska);
