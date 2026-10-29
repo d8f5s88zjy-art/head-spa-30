@@ -1,12 +1,13 @@
 # Barbershop 30 Nitra – overené údaje pre asistenta
 
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
-stav 28. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; vernostná kartička
+stav 29. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; vernostná kartička
 podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
 (časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
 - Názov: Barbershop 30 (v právnych údajoch Barbershop30). Lokálny barber, kde stretneš hocikoho.
+- Heslo úvodu webu (úvodná správa majiteľa, od 28. 10. 2026): „Každý človek. Každé želanie. Jedno miesto.“
 - Adresa: Mostná 30, 949 01 Nitra. Na Mostnej 30 strihá od roku 2019.
 - Navigácia: https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra
 - Telefón na recepciu: 0951 267 203 (zo zahraničia +421 951 267 203). Recepcia telefonuje v pracovné dni 9:00 až 19:00.
@@ -23,12 +24,14 @@ podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny 
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
 - Naše prevádzky na Mostnej 30 v Nitre (odkazy v pätičke webu): Barbershop 30 (pánske strihy, brada a holenie britvou),
   HEAD SPA 30 (Head Spa rituály pre relax a regeneráciu vlasov) a Salón 30 (kaderníctvo a wellness pre vlasy: strihy,
-  farbenie a koloristika, trichologické vyšetrenie). Ich ceny, hodiny, telefóny a rezerváciu asistent nepozná, odkáž na ich web.
+  farbenie a koloristika, trichologické vyšetrenie). Weby: HEAD SPA 30 www.headspa30.sk, Salón 30 www.salon30.sk.
+  Ich ceny, hodiny, telefóny a rezerváciu asistent nepozná, odkáž na ich web.
   Barbershop 30 inú pobočku na webe nemá.
 - Instagram s aktuálnymi strihmi: https://www.instagram.com/barbershop30_nitra/
 - Facebook: https://www.facebook.com/barbershop30nitra/
 - Hodnotenie na Google: 5,0 z 945 recenzií (13. 10. 2026), profil https://www.google.com/maps?cid=18132360254733427623
-- Vernostná kartička (odkaz „Vernostná kartička“ v pätičke webu, stránka barbershop-30/karta/): za návštevy zákazník zbiera
+- Vernostná kartička (stránka barbershop-30/karta/; odkaz „Vernostná kartička“ v pätičke webu sa ukáže, až keď beží server
+  kartičiek, dovtedy kartičku založí recepcia, ako píše stránka kartičky): za návštevy zákazník zbiera
   body a vymení ich za odmeny zo zoznamu na kartičke, napríklad zľavu alebo produkt; body pripíše recepcia. Kartička je
   zadarmo a na meno, otvorí sa v mobile (dá sa pridať na plochu) a na recepcii sa ukáže. Odkaz na ňu príde e-mailom, ak ho
   zákazník pri založení zadal, inak ju ukážu na recepcii. Založí sa na stránke kartičky, kým to tam nejde, na recepcii.

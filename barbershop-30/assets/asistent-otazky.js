@@ -97,6 +97,70 @@ export function hladaj(db, text, kolko = 5) {
   return vys.sort((a, b) => b.skore - a.skore || (a.o.id < b.o.id ? -1 : 1)).slice(0, kolko);
 }
 
+/* Cenník: otázka na cenu alebo čas, ktorá menuje jednu službu z cenníka, dostane overenú odpoveď cena-<služba> alebo
+   trvanie-<služba>, keď ju hľadanie samo nevyberie. Hľadanie podľa slov skoro netrestá chýbajúce časté slovo (strih),
+   takže kratšie znenie inej služby („Koľko stojí úprava brady?“) prebilo „strih a úprava brady“ (kontrola 29. 10. 2026).
+   Pravidlá idú od konkrétnej služby k všeobecnej; tretí údaj sú služby, ktoré pravidlo zahŕňa (strih s bradou je aj
+   strih aj brada). Keď otázka menuje ešte inú službu, je to otázka na viac služieb a rozhodne bežné hľadanie.
+   Hľadanie má prednosť, keď vyberie práve túto odpoveď alebo inú než odpoveď o jednej službe (prehľad, fade, čo
+   obsahuje), ktorá skoro presne sedí na otázku alebo má správne číslo v prvej vete. Server (asistent/lib/otazky.php) má tie isté pravidlá, otazky.mjs stráži zhodu a mriežku
+   cenník × názvy × otázky. */
+const SLUZBY = [
+  ['ultra-inclusive', /ultra|balic\w*.{0,25}whisk|whisk\w*.{0,25}balic/, 'balicek-1 strih-a-brada pansky-strih uprava-brady hot-towel uprava-obocia depilacia plet-premium'],
+  ['balicek-1', /balic\w* (1|jedn|prv)|prv\w* balic|zakladn\w* balic/, 'strih-a-brada pansky-strih uprava-brady hot-towel uprava-obocia depilacia'],
+  ['farbenie-brady', /farb\w*.{0,20}brad|brad\w*.{0,20}farb/, 'uprava-brady'],
+  ['farbenie-obocia', /farb\w*.{0,20}oboc|oboc\w*.{0,20}farb/, 'uprava-obocia'],
+  ['strih-a-brada', /\b(strih|ostrih|vlas)\w*.{0,30}(brad|fuz)|(brad|fuz)\w*.{0,30}\b(strih|ostrih|vlas)/, 'uprava-brady pansky-strih hot-towel'],
+  ['oholenie-hlavy', /(hol|britv)\w*.{0,20}hlav|hlav\w*.{0,20}(hol|britv|hladk)/, 'hot-towel'],
+  ['dlhe-vlasy', /dlh\w* vlas|dlhs\w* vlas|(nad|cez|viac ako) 10|po plec/, 'pansky-strih'],
+  ['uprava-obocia', /oboc/, ''],
+  ['uprava-brady', /brad|fuz/, 'hot-towel'],
+  ['male-gentlemany', /detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/, 'pansky-strih ornament'],
+  ['hot-towel', /hot towel|do hladka|britv|ohol\w* tvar|holen/, ''],
+  ['plet-premium', /\bplet|peeling|\bmask|premium/, ''],
+  ['depilacia', /depil|vosk/, ''],
+  ['ornament', /ornament|vzor/, ''],
+  ['pansky-strih', /\b(o?strih|o?strihu|o?strihom|o?strihy|o?strihov|o?strihani[ea]|fade)\b/, ''],
+];
+const CENA = /\bcen[auy]?\b|\bcenn|\bstoj|\bstal\b|\b(bude|by|ma) stat\b|\bzaplat|\bkolko (sa )?plat|\bvyjde|\bza kolko\b|\bkolko (si )?(pytate|uctujete)|\beur/;
+const CAS = /\bdlho\b|\btrva|\bkolko casu\b|\bzaberie|\bminut/;
+// otázka nie je len na cenu alebo čas služby z cenníka: iný človek, podnik alebo služba, vek, platba, porovnanie,
+// výdrž, čakanie, otázka, ktorá cenu či čas už menuje („strih za 18 eur“); rozhodne bežné hľadanie
+const INE = new RegExp(['\\b(pes|psa|psov|psovi|psik\\w*|mack\\w*|zviera\\w*|konkurenc\\w*|inde|damsk\\w*|zensk\\w*|zen[auye]?|zenou|baby',
+  'dievc\\w*|dcer\\w*|priatelk\\w*|manzelk\\w*|melir\\w*|trval\\w*|kadernic\\w*|rocn\\w*|rok|roky|rokov|tined\\w*|teen\\w*|vnuk\\w*|vnuc\\w*',
+  'kartou|karta|kartu|hotovost\\w*|vydrz\\w*|zavis\\w*|rozdiel\\w*|dokedy|rovnak\\w*|cak\\w*|oprav\\w*|dolad\\w*|posob\\w*|necha\\w*',
+  'lacnejs\\w*|drahs\\w*|rychlejs\\w*)\\b|\\b(dlhsie|kratsie) ako\\b|\\bviac\\b(?! ako \\d)|\\d+ ?(eur\\w*|e|min\\w*|hod\\w*)\\b',
+  'farb\\w*.{0,15}vlas|vlas\\w*.{0,15}farb'].join('|'));
+const plain = (text) => String(text).toLowerCase().replace(/[^\x00-\x7f]/g, (z) => DIAKRITIKA[z] ?? z).replace(/[^a-z0-9]+/g, ' ').trim();
+const ID_SLUZBY = new Set(SLUZBY.flatMap(([s]) => [`cena-${s}`, `trvanie-${s}`]));
+
+/* overená odpoveď z cenníka pre otázku na cenu alebo čas jednej služby, inak null */
+export function smeruj(db, text) {
+  const t = plain(text);
+  if (!t || t.split(' ').length > 14 || INE.test(t)) return null;
+  const druh = CAS.test(t) ? 'trvanie' : CENA.test(t) ? 'cena' : null;
+  if (!druh) return null;
+  const zhoda = SLUZBY.filter(([, re]) => re.test(t));
+  if (!zhoda.length) return null;
+  const [s, , zahrna] = zhoda[0];
+  if (zahrna !== '*' && zhoda.slice(1).some(([x]) => !zahrna.split(' ').includes(x))) return null;
+  return db.ot.find((o) => o.id === `${druh}-${s}`) || null;
+}
+
+/* číslo, ktoré musí byť v odpovedi: cena (18 €) alebo dĺžka (40 minút) zo smerovanej odpovede */
+const cislo = (o) => (o.id.startsWith('cena-') ? (o.a.match(/\d+(?:,\d+)? €/) || [])[0] : (o.a.match(/\d+ minút/) || [])[0]);
+
+/* najlepšia odpoveď pre okno a server: [{ o, skore }] ako hladaj(), na prvom mieste smerovaná odpoveď z cenníka */
+export function najdi(db, text, kolko = 5, prah = 0) {
+  const h = hladaj(db, text, kolko);
+  const s = smeruj(db, text);
+  if (!s) return h;
+  const top = h[0];
+  const c = cislo(s);
+  if (top && top.skore >= prah && (top.o.id === s.id || (!ID_SLUZBY.has(top.o.id) && (top.skore >= 0.9 || (c && top.o.a.split(/(?<=[.!?])\s/)[0].includes(c)))))) return h;
+  return [{ o: s, skore: 1 }, ...h.filter((x) => x.o.id !== s.id)].slice(0, kolko);
+}
+
 const stiahni = (u) => fetch(u.href, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))));
 let nacitane = null, hladanie = null, bezKmenov = false;
 /* kmene k db: inej verzie alebo z inej kópie (stará kópia v pamäti prehliadača alebo CDN) sa nepoužijú; pri zlyhaní

@@ -8,8 +8,10 @@
 // Kontroly: aspoň 250 otázok, jedinečné id, známe témy, žiadne dlhé pomlčky; id tim-meno a volno-meno v téme tim
 // len pre odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova); v odpovediach len ceny a dĺžky
 // z cenníka webu (index.html), len overený telefón, odkazy a hodiny, bez „24/7“; odpoveď o termíne má telefón
-// a vetu „telefón vždy zdvihneme“; každá otázka aj jej iné znenie nájde samu seba; sada všeobecných otázok padne na
-// všeobecné odpovede a otázky mimo témy ostanú pod prahom okna (otazky-ocakavane.json); hľadanie na serveri
+// a vetu „telefón vždy zdvihneme“; adresy www.* len z barbershop.md; každá otázka aj jej iné znenie nájde samu seba;
+// sada všeobecných otázok padne na všeobecné odpovede a otázky mimo témy ostanú pod prahom okna (otazky-ocakavane.json);
+// mriežka cenník × hovorové názvy × otázky na cenu a čas dostane správne číslo (smerovač cenníka, najdi()); každá
+// častá otázka z webu (index.html, details.faq-item) má odpoveď nad prahom; hľadanie aj smerovač na serveri
 // (asistent/lib/otazky.php) zoradí rovnako ako v prehliadači (assets/asistent-otazky.js), ak je php; kópia pre web
 // zoradí rovnako ako zdroj a bez kmeňov (kým sa sťahujú) nájde každá otázka samu seba; nacitaj() nepoužije kmene
 // z inej kópie a po chybe ich stiahne znova.
@@ -23,7 +25,7 @@ const ASI = path.resolve(SITE, '..', 'asistent');
 const ZDROJ = path.join(ASI, 'znalosti', 'barbershop-otazky.json');
 const KOPIA = path.join(SITE, 'assets', 'asistent-otazky.json'), KOPIA_KMENE = path.join(SITE, 'assets', 'asistent-otazky-kmene.json');
 const kontrola = process.argv.includes('--kontrola');
-const { priprav, hladaj, kopiaPreWeb } = await import(path.join(SITE, 'assets', 'asistent-otazky.js'));
+const { priprav, hladaj, najdi, kopiaPreWeb } = await import(path.join(SITE, 'assets', 'asistent-otazky.js'));
 
 let zle = 0;
 const chyba = (m) => { zle++; console.log('FAIL ' + m); };
@@ -44,6 +46,8 @@ const ODKAZY = new Set(['https://www.barbershop30.sk/rezervacia', 'https://booqm
 // otváracie hodiny z app.js (rovnaké ako živý stav „otvorené“; admin ich mení v záložke Kontakt a hodiny)
 const HOURS = fs.readFileSync(path.join(SITE, 'assets', 'app.js'), 'utf8').match(/const HOURS = \{([^}]*)\};/)[1];
 const HODINY = new Set([...HOURS.matchAll(/\[(\d+), (\d+)\]/g)].flatMap((m) => [`${m[1]}:00`, `${m[2]}:00`]));
+// adresy webov (www.salon30.sk, …) v odpovediach len tie, ktoré sú v jedinom zdroji faktov (barbershop.md)
+const ZNALOSTI = fs.readFileSync(path.join(ASI, 'znalosti', 'barbershop.md'), 'utf8');
 
 if (ot.length < 250) chyba(`otázok je ${ot.length}, treba aspoň 250`);
 const ids = new Set();
@@ -64,6 +68,7 @@ for (const o of ot) {
   for (const m of o.a.matchAll(/(?<!\d)(?:\+421|0)\s?\d{3}\s?\d{3}\s?\d{3}(?!\d)/g)) if (!TEL.has(m[0])) chyba(`${kde} neznámy telefón ${m[0]}`);
   for (const m of o.a.matchAll(/https?:\/\/[^\s]+[^\s.,;:!?)]/g)) if (!ODKAZY.has(m[0])) chyba(`${kde} neznámy odkaz ${m[0]}`);
   for (const m of o.a.matchAll(/\b\d{1,2}:\d{2}\b/g)) if (!HODINY.has(m[0])) chyba(`${kde} čas ${m[0]} nie je v otváracích hodinách`);
+  for (const m of o.a.matchAll(/\bwww\.[a-z0-9-]+(?:\.[a-z0-9-]+)+/gi)) if (!ZNALOSTI.includes(m[0])) chyba(`${kde} adresa ${m[0]} nie je v barbershop.md`);
   if (o.tel && !(o.a.includes('0951 267 203') && o.a.includes('telefón vždy zdvihneme'))) chyba(`${kde} odpoveď o termíne bez telefónu a istoty`);
 }
 
@@ -87,11 +92,11 @@ if (MIMO.length < 60) chyba(`otázok mimo témy v otazky-ocakavane.json je ${MIM
 let zleVseob = 0, zleMimo = 0;
 for (const [q, ok] of Object.entries(VSEOB)) {
   for (const id of ok) if (!ids.has(id)) chyba(`sada všeobecných otázok: neznáme id ${id}`);
-  const h = hladaj(db, q, 1)[0];
+  const h = najdi(db, q, 1, PRAH)[0];
   if (!h || h.skore < PRAH || !ok.includes(h.o.id)) { zleVseob++; chyba(`„${q}“ nájde ${h ? `${h.o.id} ${h.skore}` : 'nič'}, čakám ${ok.join(' alebo ')}`); }
 }
 for (const q of MIMO) {
-  const h = hladaj(db, q, 1)[0];
+  const h = najdi(db, q, 1, PRAH)[0];
   if (h && h.skore >= PRAH) { zleMimo++; chyba(`mimo témy „${q}“ odpovie ${h.o.id} (${h.skore} ≥ ${PRAH}), má dostať telefón`); }
 }
 if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpoveď (${Object.keys(VSEOB).length} v ${Object.keys(OCAK.vseobecne).length} témach), mimo témy pod prahom ${PRAH} (${MIMO.length})`);
@@ -100,23 +105,74 @@ if (!zleVseob && !zleMimo) console.log(`OK   všeobecné otázky na svoju odpove
 const tesne = MIMO.map((q) => [q, hladaj(db, q, 1)[0]]).filter(([, h]) => h && h.skore >= PRAH - 0.05 && h.skore < PRAH);
 if (tesne.length) console.log(`     mimo témy tesne pod prahom (${tesne.length}): ${tesne.map(([q, h]) => `${q} ${h.o.id} ${h.skore}`).join('; ')}`);
 
+// mriežka cenníka (nález kontroly 29. 10. 2026: „Koľko stojí strih a úprava brady?“ dostalo cenu úpravy brady):
+// každá služba hovorovými názvami × otázky na cenu a čas; odpoveď okna (najdi nad prahom) musí mať cenu alebo dĺžku
+// tej služby z jej overenej odpovede cena-<služba> / trvanie-<služba>, nikdy telefón ani iné číslo
+const MRIEZKA = {
+  'pansky-strih': ['pánsky strih', 'strih', 'strihanie', 'ostrihanie', 'fade', 'strih vlasov', 'obyčajný strih'],
+  'strih-a-brada': ['strih a úprava brady', 'strih s úpravou brady', 'strih s bradou', 'strih a brada', 'vlasy aj brada', 'strih aj brada'],
+  'dlhe-vlasy': ['strih dlhých vlasov', 'strih pre vlasy nad 10 cm', 'strih dlhších vlasov', 'dlhé vlasy'],
+  'male-gentlemany': ['detský strih', 'strih pre syna', 'strih pre dieťa', 'strih pre chlapca', 'strih pre malých gentlemanov'],
+  'oholenie-hlavy': ['oholenie hlavy', 'holenie hlavy', 'oholenie celej hlavy', 'vyholenie hlavy', 'hlava na hladko'],
+  'uprava-brady': ['úprava brady', 'zastrihnutie brady', 'úprava fúzov', 'tvarovanie brady'],
+  'hot-towel': ['holenie do hladka', 'holenie britvou', 'holenie s horúcim uterákom', 'hot towel', 'oholenie tváre'],
+  'farbenie-brady': ['farbenie brady', 'zafarbenie brady'],
+  'balicek-1': ['balíček 1', 'prvý balíček'],
+  'ultra-inclusive': ['ultra inclusive', 'balíček s whisky', 'balíček ultra'],
+  'plet-premium': ['starostlivosť o pleť', 'pleťová maska', 'peeling tváre', 'ošetrenie pleti'],
+  'uprava-obocia': ['úprava obočia', 'obočie'],
+  'depilacia': ['depilácia uší', 'depilácia nosa', 'vosk na uši', 'depilácia voskom'],
+  'ornament': ['ornament', 'vzor do vlasov', 'vystrihnutý vzor'],
+  'farbenie-obocia': ['farbenie obočia', 'zafarbenie obočia'],
+};
+const bezDiak = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const SABLONY = { cena: [(x) => `Koľko stojí ${x}?`, (x) => `${x} cena`, (x) => bezDiak(`kolko stoji ${x}`), (x) => `Koľko zaplatím za ${x}?`],
+  trvanie: [(x) => `Ako dlho trvá ${x}?`, (x) => bezDiak(`kolko trva ${x}`), (x) => `Koľko času zaberie ${x}?`] };
+const MRIEZKA_Q = [];
+{
+  let n = 0, zleM = 0, prvaInde = 0;
+  for (const [s, nazvy] of Object.entries(MRIEZKA)) for (const [druh, sabl] of Object.entries(SABLONY)) {
+    const vzor = ot.find((o) => o.id === `${druh}-${s}`);
+    if (!vzor) { chyba(`mriežka: chýba odpoveď ${druh}-${s}`); continue; }
+    const c = (vzor.a.match(druh === 'cena' ? /\d+(?:,\d+)? €/ : /\d+ minút/) || [])[0];
+    for (const x of nazvy) for (const f of sabl) {
+      const q = f(x); n++; MRIEZKA_Q.push(q);
+      const h = najdi(db, q, 1, PRAH)[0];
+      if (!h || h.skore < PRAH || !h.o.a.includes(c)) { zleM++; chyba(`mriežka: „${q}“ → ${h && h.skore >= PRAH ? `${h.o.id} bez ${c}` : 'telefón'}, čakám ${c} (${vzor.id})`); }
+      else if (!h.o.a.startsWith(vzor.a.split(' ')[0]) && (h.o.a.match(druh === 'cena' ? /\d+(?:,\d+)? €/ : /\d+ minút/) || [])[0] !== c) prvaInde++;
+    }
+  }
+  if (!zleM) console.log(`OK   mriežka cenníka: ${n} otázok na cenu a čas má správne číslo (${prvaInde} v prehľade viacerých služieb)`);
+}
+// každá častá otázka z webu (index.html) má v okne odpoveď nad prahom (nie telefón „nič nemám“)
+const FAQ = [...html.matchAll(/<details class="faq-item"><summary>([^<]+)<\/summary>/g)].map((m) => m[1]);
+if (FAQ.length < 5) chyba(`časté otázky webu: našlo sa len ${FAQ.length}`);
+const bezOdp = FAQ.filter((q) => { const h = najdi(db, q, 1, PRAH)[0]; return !h || h.skore < PRAH; });
+if (bezOdp.length) chyba(`časté otázky webu bez odpovede v okne: ${bezOdp.join(' | ')}`);
+else console.log(`OK   časté otázky webu majú odpoveď v okne (${FAQ.length})`);
+
 // server a prehliadač zoradia rovnako (otázky, znenia a pár iných)
 const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), ...Object.keys(VSEOB), ...MIMO, 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',
   'Má Adrián zajtra voľný termín?', 'mozem si dat pivo', 'kde zaparkujem auto', 'Do you cut kids hair?', 'Wie viel kostet ein Haarschnitt?',
-  'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', 'recepty od recepčnej', 'počasím počas strihu', '', '???'];
+  'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', 'recepty od recepčnej', 'počasím počas strihu', '', '???', ...MRIEZKA_Q, ...FAQ,
+  'kolko stoji strih psa', 'Koľko stojí strih u konkurencie?', 'Koľko stojí strih a holenie?', 'Koľko stojí úprava brady pre syna?', 'Koľko stojí detský strih s ornamentom?'];
 let php = '';
 try { php = execFileSync('php', ['-v'], { encoding: 'utf8' }); } catch (e) { console.log('pozor: php nie je, zhoda so serverom sa nekontroluje'); }
 if (php) {
   const kod = `define('ASISTENT', 1); require ${JSON.stringify(path.join(ASI, 'lib', 'otazky.php'))};
     $db = otazky_db('barbershop'); $out = [];
-    foreach (json_decode(stream_get_contents(STDIN), true) as $q) $out[] = array_map(fn($x) => $x['o']['id'] . ' ' . $x['skore'], otazky_hladaj($db, $q, 6));
+    foreach (json_decode(stream_get_contents(STDIN), true) as $q) $out[] = [array_map(fn($x) => $x['o']['id'] . ' ' . $x['skore'], otazky_hladaj($db, $q, 6)),
+      array_map(fn($x) => $x['o']['id'], otazky_najdi($db, $q, 6, ${PRAH}))];
     echo json_encode($out);`;
   const p = JSON.parse(execFileSync('php', ['-r', kod], { input: JSON.stringify(SKUS), encoding: 'utf8', maxBuffer: 1 << 26 }));
   let rozdiel = 0;
   SKUS.forEach((q, i) => {
     const j = hladaj(db, q, 6).map((x) => `${x.o.id} ${x.skore}`);
-    const r = p[i].map((s) => s.replace(/ (\d+(?:\.\d+)?)$/, (_, n) => ` ${Number(n)}`));
+    const r = p[i][0].map((s) => s.replace(/ (\d+(?:\.\d+)?)$/, (_, n) => ` ${Number(n)}`));
     if (JSON.stringify(j) !== JSON.stringify(r)) { rozdiel++; if (rozdiel <= 5) chyba(`server a prehliadač sa líšia pri „${q}“: ${r.join(', ')} | ${j.join(', ')}`); }
+    // smerovač cenníka: server dá modelu na prvé miesto tú istú odpoveď, akú vyberie okno
+    const jn = najdi(db, q, 6, PRAH).map((x) => x.o.id);
+    if (JSON.stringify(jn) !== JSON.stringify(p[i][1])) { rozdiel++; if (rozdiel <= 5) chyba(`smerovač: server a prehliadač sa líšia pri „${q}“: ${p[i][1].join(', ')} | ${jn.join(', ')}`); }
   });
   if (rozdiel) chyba(`rozdielov spolu ${rozdiel} z ${SKUS.length}`);
   else console.log(`OK   server a prehliadač zoradia rovnako (${SKUS.length} otázok)`);

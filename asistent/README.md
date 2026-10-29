@@ -38,20 +38,27 @@ Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"za
 - Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
 - Na otázku, kto odpovedá, povie pravdivo, že je Barber, AI asistent, nie človek.
 
-## Časté otázky (777 overených odpovedí)
+## Časté otázky (778 overených odpovedí)
 
 - `znalosti/barbershop-otazky.json`: otázka, iné znenia, odpoveď, téma, `tel` (pod odpoveď patrí Zavolať a Objednať sa).
   Len fakty z `barbershop.md` a webu; čo web neuvádza, odpoveď povie a dá telefón. Id `tim-meno` a `volno-meno` v téme
   tim sú len odpovede o členoch tímu (admin ich pri zmene tímu zmaže a vytvorí znova), iné otázky tímu majú `o-time-`.
 - Server (`lib/otazky.php`) nájde k poslednej otázke najviac 6 podobných (zhoda aspoň 0,3) a pridá ich modelu do druhej
-  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (777 otázok, asi 200 kB textu) sa neplatí pri
+  časti pokynov, mimo cache: pokyny v cache sa nemenia a celý zoznam (778 otázok, asi 200 kB textu) sa neplatí pri
   každej otázke.
+- Smerovač cenníka (`smeruj()`/`najdi()` v `assets/asistent-otazky.js`, `otazky_smeruj()`/`otazky_najdi()` v
+  `lib/otazky.php`, rovnaké pravidlá): otázka na cenu alebo čas jednej služby z cenníka dostane jej overenú odpoveď
+  `cena-<služba>` / `trvanie-<služba>` (okno ju ukáže, server ju dá modelu prvú), keď ju hľadanie podľa slov samo
+  nevyberie. Hľadanie skoro netrestá chýbajúce časté slovo, preto „Koľko stojí strih a úprava brady?“ predtým
+  dostalo cenu úpravy brady (kontrola 29. 10. 2026). Otázka na viac služieb, vek, platbu, porovnanie či výdrž ide
+  bežným hľadaním.
 - Okno na webe ukazuje témy a otázky ťuknutím s odpoveďou hneď a bez servera (označená ako pripravená odpoveď). Kópia
   pre prehliadač sú dva súbory: `assets/asistent-otazky.json` (otázky a odpovede, pri prvom otvorení okna) a
   `assets/asistent-otazky-kmene.json` (kmene iných znení na hľadanie, hneď po ňom).
 - Po každej úprave: `node barbershop-30/source/tools/otazky.mjs` (fakty proti cenníku, každá otázka nájde samu
   seba, bežné otázky zo sady `otazky-ocakavane.json` nájdu svoju odpoveď a otázky mimo témy ostanú pod prahom 0,6,
-  server a prehliadač zoradia rovnako, kópia pre web v dvoch súboroch so spoločným otiskom). Kmene: slová zo zoznamu
+  mriežka cenník × hovorové názvy × otázky na cenu a čas má vždy správne číslo, každá častá otázka z webu má odpoveď,
+  adresy www.* len z `barbershop.md`, server a prehliadač zoradia aj smerujú rovnako, kópia pre web v dvoch súboroch so spoločným otiskom). Kmene: slová zo zoznamu
   `CELE`/`OTAZKY_CELE` (recept, počasie, instagram) sa neskracujú, aby nesplynuli s „recepcia“, „počas“ a „inštalatér“; zoznam je rovnaký v JS aj PHP. Test servera: `testy/spusti.sh` (model
   dostal odpovede).
 

@@ -5,7 +5,7 @@
  * dosť nesedí, ukážka to povie a dá telefón; voľné termíny nikdy nevymýšľa. Okno to výrazne označuje (pás ukážky,
  * popis pri každej odpovedi). Nič sa nikam neposiela.
  */
-import { nacitajHladanie, hladaj } from './asistent-otazky.js';
+import { nacitajHladanie, najdi } from './asistent-otazky.js';
 
 const PRAH = 0.6;   // pod touto zhodou je odpoveď neistá, radšej telefón a návrhy podobných otázok
 const NEVIEM = 'Na toto v pripravených odpovediach nič nemám. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.';
@@ -14,7 +14,8 @@ const NEVIEM = 'Na toto v pripravených odpovediach nič nemám. Zavolaj nám na
 export async function odpoved(otazka) {
   let db = null;
   try { db = await nacitajHladanie(); } catch (e) { /* bez súboru ostane telefón */ }
-  const h = db && hladaj(db, otazka, 1)[0];
+  // otázka na cenu alebo čas služby z cenníka dostane jej overenú odpoveď (najdi, smerovač cenníka)
+  const h = db && najdi(db, otazka, 1, PRAH)[0];
   if (h && h.skore >= PRAH) return { t: h.o.a, tel: !!h.o.tel, id: h.o.id };
   return { t: NEVIEM, tel: true, id: null };
 }
