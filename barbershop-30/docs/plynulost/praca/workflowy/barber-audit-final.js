@@ -44,7 +44,8 @@ if (vsetky.length) {
 let over = []
 if (O && naOpravu.length) {
   phase('Overenie')
-  const ktore = [...new Set(naOpravu.map((n) => n.audit))].filter((k) => AUDITY[k])
+  const ktore = [...new Set(naOpravu.map((n) => Object.keys(AUDITY).find((k) => String(n.id || '').startsWith(k.slice(0, 2)))))].filter(Boolean)
+  log(`overenie auditov: ${ktore.join(', ')}`)
   over = (await parallel(ktore.map((k) => () => agent(`${KONTEXT}\n\nROLA: nezávislý audítor (${k}, OVERENIE po oprave); v strome nič nemeníš, píš do ${OUT}/${k}/overenie/. Porty ${AUDITY[k].porty}. Strom je na HEAD po oprave (${O.subor}). Spusti svoj nástroj z ${OUT}/nastroje/ (alebo ho dopíš) a over každý predchádzajúci nález (${OUT}/${k}/ZAPIS.md) – opravený? – a hľadaj NOVÉ chyby, ktoré oprava mohla spôsobiť, aspoň jedným novým spôsobom. ${AUDITY[k].t}\nZapíš ${OUT}/${k}/overenie/ZAPIS.md.`, { label: `overenie:${k}`, phase: 'Overenie', schema: NAL, effort: 'high' })))).filter(Boolean)
   const zostava = over.flatMap((r) => r.nalezy).filter((n) => n.zavaznost !== 'drobna')
   if (zostava.length) {
