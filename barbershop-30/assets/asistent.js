@@ -460,6 +460,8 @@ export async function spusti(api) {
     else { panel.style.removeProperty('--asi-vh'); panel.style.removeProperty('--asi-vt'); }
   }
   if (vv) { vv.addEventListener('resize', prisposob); vv.addEventListener('scroll', prisposob); }
+  // otočenie telefónu (WEB-01): okno zmení podobu (na šírku bočné, na výšku s clonou), modálnosť a inert sa nastavia nanovo
+  uzky.addEventListener('change', () => { if (!panel.hidden) { modal(true); prisposob(); } });
   clona.addEventListener('click', () => otvor(false));
   btn.addEventListener('click', () => otvor(panel.hidden));
   zavri.addEventListener('click', () => otvor(false));

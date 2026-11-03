@@ -302,6 +302,28 @@ try {
     ok(req.length === 0 && errs.length === 0, 'ukážka: nič sa neposiela na server, bez chýb', req.concat(errs).join(' '));
     await ctx.close();
   }
+  // otočenie telefónu s otvoreným oknom (WEB-01): na výšku modálne s clonou (zvyšok stránky inert), na šírku bočné a
+  // nemodálne (stránka vedľa okna reaguje); oboma smermi, okno sa nastaví nanovo
+  for (const [tag, a, z] of [['na výšku → na šírku', [390, 844], [844, 390]], ['na šírku → na výšku', [844, 390], [390, 844]]]) {
+    const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: a[0], height: a[1] }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=ukazka`, { waitUntil: 'load' });
+    await page.mouse.move(20, 20);
+    await page.locator('.asi-btn').waitFor({ state: 'visible', timeout: 10000 });
+    await page.locator('.asi-btn').click();
+    await page.waitForTimeout(600);
+    await page.setViewportSize({ width: z[0], height: z[1] });
+    await page.waitForTimeout(800);
+    const st = await page.evaluate(() => {
+      const pnl = document.getElementById('asi-panel'), e = document.elementFromPoint(innerWidth - 20, innerHeight / 2);
+      return { modal: pnl.getAttribute('aria-modal'), inert: [...document.body.children].filter((x) => x.hasAttribute('inert')).length, vedla: e ? e.tagName : null, vOkne: !!(e && pnl.contains(e)) };
+    });
+    let tabVOkne = true;
+    if (z[0] < z[1]) for (let i = 0; i < 12; i++) { await page.keyboard.press('Tab'); if (!(await page.evaluate(() => document.getElementById('asi-panel').contains(document.activeElement)))) tabVOkne = false; }
+    ok(z[0] > z[1] ? st.modal === null && st.inert === 0 && st.vedla !== 'BODY' && !st.vOkne : st.modal === 'true' && st.inert >= 9 && tabVOkne,
+      `otočenie ${tag}: ${z[0] > z[1] ? 'okno nemodálne, stránka vedľa reaguje' : 'okno modálne, Tab ostane v okne'}`, JSON.stringify({ ...st, tabVOkne }));
+    await ctx.close();
+  }
 } finally {
   await browser.close();
   mock.kill(); api.kill(); api2.kill(); rez.kill();
