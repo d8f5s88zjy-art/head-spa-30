@@ -851,7 +851,7 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   - plné `--bg` s hornou linkou `--line`, bez rozostrenia, `padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom))`;
   - `a.dock-call.btn.btn-g` (48 px, `R.zavolat`) a `a.dock-cta.btn.btn-p` (48 px; `span.dock-l-hero` = `R.dok_prvy_raz`, `span.dock-l-std` = `R.dok_cennik`);
   - skryje sa pri pätičke (`.is-hidden`) a pri otvorenom menu.
-- **`a.totop`:** len ≥ 861 px a od 3. obrazovky. 44 × 44, `--bg-2`.
+- **`a.totop`:** len ≥ 1344 px (pozri odchýlku nižšie; oprava 2, KF-5 – predtým tu stálo „≥ 861 px“, CSS je od `fa688ff` 1344 px) a od 3. obrazovky. 44 × 44, `--bg-2`.
   - *(Odchýlka z Opráv pred B4, na rozhodnutie orchestrátora: tlačidlo stojí v pravom okraji vedľa `.wrap` a ukáže sa až od 1344 px, keď je okraj aspoň 60 px. Pri 861–1343 px by 44 px tlačidlo prekrylo obsah, preto tam nie je; návrat hore cez lištu (ukáže sa pri posune nahor) a kláves Home.)*
 - **Lightbox:** značkovanie a správanie v 5.4 a 6.2.
 
