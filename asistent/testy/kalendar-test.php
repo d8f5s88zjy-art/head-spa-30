@@ -54,6 +54,14 @@ foreach (glob("$dir/kal-*.json") as $f) { $c = json_decode(file_get_contents($f)
 volne_terminy('Adrián', $d1->format('Y-m-d'), 1);
 skus('staré časy sa overia znova', ($po = substr_count((string) file_get_contents(getenv('MOCK_LOG')), '"metoda":"getTime"')) === $pred + 1, "pred $pred po $po");
 
+// objednávka, krok deň (REZ-03): deň, keď nepracuje len barber, je jeho voľno, nie sviatok; sviatky sú len spoločné dni
+$vol = (new DateTimeImmutable('today', $tz))->modify('+20 days')->format('Y-m-d');
+$x = objednavka_dni('Adrián', 1);
+skus('objednávka dni: voľno barbera je vo volno, nie v sviatkoch', $x['stav'] === 'ok' && $x['volno'] === [$vol] && !in_array($vol, $x['sviatky'], true) && in_array('2026-12-24', $x['sviatky'], true), json_encode($x, JSON_UNESCAPED_UNICODE));
+$x = objednavka_dni('Nikolas', 1);
+skus('objednávka dni: barber bez voľna má volno prázdne, sviatky ostanú', $x['stav'] === 'ok' && $x['volno'] === [] && in_array('2026-12-25', $x['sviatky'], true), json_encode($x, JSON_UNESCAPED_UNICODE));
+skus('objednávka dni: Nezáleží nemá voľno', ($x = objednavka_dni('ktokoľvek', 1))['stav'] === 'ok' && $x['volno'] === [], json_encode($x, JSON_UNESCAPED_UNICODE));
+
 // bez napojenia: poctivé „nepripojene“
 putenv("ASISTENT_CONFIG=$cfgOff");
 $k = (new ReflectionFunction('konfig'));

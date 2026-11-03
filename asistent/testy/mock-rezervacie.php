@@ -38,7 +38,8 @@ switch ($req['ajax_method'] ?? '') {
   case 'getCalendar':
     if ($barber() === null) { echo json_encode(['result' => false, 'errors' => ['Nie je vybratá služba alebo pracovník']]); break; }
     echo json_encode(['result' => ['calendar' => ['limits' => ['min' => $dnes->format('j.n.Y'), 'max' => $dnes->modify('+30 days')->format('j.n.Y')],
-      'disabled_days' => ['Ne'], 'disabled_dates' => ['24.12.2026', '25.12.2026', '1.1.2027']]]]);
+      // Adrian (42) má navyše jeden deň voľna o 20 dní: podnik je otvorený, len on nepracuje (REZ-03)
+      'disabled_days' => ['Ne'], 'disabled_dates' => array_merge(['24.12.2026', '25.12.2026', '1.1.2027'], $barber() === 42 ? [$dnes->modify('+20 days')->format('j.n.Y')] : [])]]]);
     break;
   case 'getTime':
     $kto = $barber();

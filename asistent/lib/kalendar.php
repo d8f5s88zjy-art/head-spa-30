@@ -153,7 +153,9 @@ function objednavka_barberi(int $sluzba, ?callable $volaj = null): array {
   catch (Throwable $e) { error_log('objednavka barberi: ' . $e->getMessage()); return ['stav' => 'chyba']; }
 }
 
-/* Objednávka na webe, krok deň: rozsah rezervácie, zatvorené dni v týždni (Po … Ne) a sviatky pre barbera. */
+/* Objednávka na webe, krok deň: rozsah rezervácie, zatvorené dni v týždni (Po … Ne), sviatky a voľno barbera.
+   Sviatky sú len dni, keď je zatvorené pre celý tím (aj pri „Nezáleží“); ostatné zakázané dni barbera sú jeho voľno
+   (nález REZ-03: okno ich ukazovalo ako „zatvorené“). Pravidlá „Nezáleží“ sú v tej istej cache (1 h). */
 function objednavka_dni(string $barber, int $sluzba, ?callable $volaj = null): array {
   if (!isset(SLUZBY[$sluzba])) return ['stav' => 'neznama_sluzba'];
   $volaj = kal_spojenie($volaj);
@@ -164,7 +166,13 @@ function objednavka_dni(string $barber, int $sluzba, ?callable $volaj = null): a
     $p = kal_pravidla($sluzba, $kto, $volaj);
     if (!$p['od'] || !$p['do']) return ['stav' => 'chyba'];
     $dnes = teraz()->format('Y-m-d');
-    return ['stav' => 'ok', 'barber' => $kto['meno'], 'dnes' => $dnes, 'od' => max($p['od'], $dnes), 'do' => $p['do'], 'zatvorene' => $p['dni'], 'sviatky' => $p['sviatky']];
+    $sviatky = $p['sviatky']; $volno = [];
+    if ($kto['id'] !== 0) {
+      $spolocne = kal_pravidla($sluzba, kal_najdi('nezalezi', kal_barberi($sluzba, $volaj)), $volaj)['sviatky'];
+      $volno = array_values(array_diff($sviatky, $spolocne));
+      $sviatky = array_values(array_intersect($sviatky, $spolocne));
+    }
+    return ['stav' => 'ok', 'barber' => $kto['meno'], 'dnes' => $dnes, 'od' => max($p['od'], $dnes), 'do' => $p['do'], 'zatvorene' => $p['dni'], 'sviatky' => $sviatky, 'volno' => $volno];
   } catch (Throwable $e) { error_log('objednavka dni: ' . $e->getMessage()); return ['stav' => 'chyba']; }
 }
 
