@@ -120,6 +120,13 @@ const OTAZKY_INE = '/\b(pes|psa|psov|psovi|psik\w*|mack\w*|zviera\w*|konkurenc\w
   . 'farb\w*.{0,15}vlas|vlas\w*.{0,15}farb/';
 
 /* overené odpovede z cenníka pre otázku na jednu či viac služieb (smerujVsetky() v asistent-otazky.js) */
+/* mimo témy (MIMO, RIADI, MIESTO, OTVOR v asistent-otazky.js): zviera, trávnik, plot či záhrada pri strihu alebo cene
+   a otváracie hodiny iného miesta dostanú telefón */
+const OTAZKY_MIMO = '/\b(pes|psa|psov|psovi|psik\w*|mack\w*|zviera\w*|travn\w*|plot\w*|krik\w*|krov\w*|strom\w*|zahrad\w*|ovc\w*|kon[ai]?)\b/';
+const OTAZKY_RIADI = '/strih|holen|ohol|stoj|cen|trva|farb|zaplat/';
+const OTAZKY_MIESTO = '/\b(posta|posty|postu|poste|lekar\w*|tesco\w*|plavar\w*|bank[ay]|banku|bankach|kaufland\w*|lidl\w*|billa\w*)\b/';
+const OTAZKY_OTVOR = '/otvor|zatvor|zatvar|hodin|\bkedy\b/';
+
 function otazky_smeruj_vsetky(array $db, string $text): array {
   $t = trim((string) preg_replace('/[^a-z0-9]+/', ' ', strtr(mb_strtolower($text, 'UTF-8'), OTAZKY_DIAKRITIKA)));
   if ($t === '' || count(explode(' ', $t)) > 16 || preg_match(OTAZKY_INE, $t)) return [];
@@ -149,6 +156,8 @@ function otazky_smeruj(array $db, string $text): ?array {
 
 /* ako otazky_hladaj(), na prvom mieste smerovaná odpoveď z cenníka (najdi() v asistent-otazky.js) */
 function otazky_najdi(array $db, string $text, int $kolko = 5, float $prah = 0.0): array {
+  $t = trim((string) preg_replace('/[^a-z0-9]+/', ' ', strtr(mb_strtolower($text, 'UTF-8'), OTAZKY_DIAKRITIKA)));
+  if ((preg_match(OTAZKY_MIMO, $t) && preg_match(OTAZKY_RIADI, $t)) || (preg_match(OTAZKY_MIESTO, $t) && preg_match(OTAZKY_OTVOR, $t))) return [];
   $h = otazky_hladaj($db, $text, $kolko);
   $v = otazky_smeruj_vsetky($db, $text);
   $top = $h[0] ?? null;

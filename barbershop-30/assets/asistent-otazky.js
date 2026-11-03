@@ -135,6 +135,12 @@ const INE = new RegExp(['\\b(pes|psa|psov|psovi|psik\\w*|mack\\w*|zviera\\w*|kon
   'kartou|karta|kartu|hotovost\\w*|vydrz\\w*|zavis\\w*|rozdiel\\w*|dokedy|rovnak\\w*|cak\\w*|oprav\\w*|dolad\\w*|posob\\w*|necha\\w*',
   'lacnejs\\w*|drahs\\w*|rychlejs\\w*)\\b|\\b(dlhsie|kratsie) ako\\b(?! 10)|\\bviac\\b(?! ako \\d)|\\d+ ?(eur\\w*|e|min\\w*|hod\\w*)\\b',
   'farb\\w*.{0,15}vlas|vlas\\w*.{0,15}farb'].join('|'));
+// mimo témy (BAR-03, BAR-07): strih, holenie či cena pre zviera, trávnik, plot alebo záhradu a otváracie hodiny iného miesta
+// (pošta, lekáreň, Tesco, plaváreň, banka) nedostanú cenu ani hodiny Barbershopu, len telefón recepcie
+const MIMO = /\b(pes|psa|psov|psovi|psik\w*|mack\w*|zviera\w*|travn\w*|plot\w*|krik\w*|krov\w*|strom\w*|zahrad\w*|ovc\w*|kon[ai]?)\b/;
+const RIADI = /strih|holen|ohol|stoj|cen|trva|farb|zaplat/;
+const MIESTO = /\b(posta|posty|postu|poste|lekar\w*|tesco\w*|plavar\w*|bank[ay]|banku|bankach|kaufland\w*|lidl\w*|billa\w*)\b/;
+const OTVOR = /otvor|zatvor|zatvar|hodin|\bkedy\b/;
 const plain = (text) => String(text).toLowerCase().replace(/[^\x00-\x7f]/g, (z) => DIAKRITIKA[z] ?? z).replace(/[^a-z0-9]+/g, ' ').trim();
 const ID_SLUZBY = new Set(SLUZBY.flatMap(([s]) => [`cena-${s}`, `trvanie-${s}`]));
 
@@ -171,6 +177,8 @@ const prvaVeta = (a) => a.split(/(?<=[.!?])\s/)[0];
    Otázka na viac služieb (BAR-02): keď hľadanie nenašlo pripravenú odpoveď na takú dvojicu (napr. sluzby-strih-ornament),
    okno zloží prvé vety overených odpovedí tých služieb za sebou (id cennik-viac). Nič nesčítava. */
 export function najdi(db, text, kolko = 5, prah = 0) {
+  const t = plain(text);
+  if ((MIMO.test(t) && RIADI.test(t)) || (MIESTO.test(t) && OTVOR.test(t))) return [];
   const h = hladaj(db, text, kolko);
   const v = smerujVsetky(db, text);
   const top0 = h[0];
