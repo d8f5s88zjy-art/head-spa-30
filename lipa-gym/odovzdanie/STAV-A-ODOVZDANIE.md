@@ -1,6 +1,6 @@
 # GYM KLUB (Lipa gym): stav práce a odovzdanie webu
 
-Stav k 15. 10. 2026. Tento súbor je „pamäť“ projektu. Ak pri odovzdaní webu niečo nevieš, odpoveď
+Stav k 3. 11. 2026 (časti 2 a 4 doplnené po Filmovej vrstve). Tento súbor je „pamäť“ projektu. Ak pri odovzdaní webu niečo nevieš, odpoveď
 by mala byť tu alebo v súboroch, na ktoré odkazuje.
 
 ## 1. Kde čo je
@@ -43,6 +43,23 @@ repozitára. Stačí napísať „nahraj do Lupa-gym“, alebo to nahrať sám (
   Commit `d450017`, po nezávislej kontrole opravy v `809bc02` (fotka sa odhalí až načítaná, fokus v lightboxe,
   pulz bodky pri obmedzenom pohybe).
 
+**Vetva `filmova-vrstva` (od `809bc02`, 3. 11. 2026; zatiaľ len lokálne v pracovnom priečinku, do zálohy `.bundle`
+a do náhľadu ju pridá orchestrátor):**
+
+- Na žiadosť majiteľa z 2. 11. („filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“).
+- Kontrola fotiek a opravy (`dcd8414`): všetky fotky sa ukážu pri všetkých šírkach, v lightboxe, po skoku z menu aj na
+  pomalej sieti (karty trénerov a plagáty videí už nie sú prázdne sivé rámy); diakritika druhého riadku nadpisov sa
+  nedotkne prvého; logo MDS v pätičke pri 1024 px nie je stlačené; video Ladydefence sa po ťuknutí samo prehrá; v náhľade
+  claude.ai odkazy Zavolať a e-mail otvoria nové okno namiesto chybovej stránky.
+- Mapa a tlačidlo Späť (`c6aa7e7`): keď sa Google mapa nenačíta (zablokovaná, offline, náhľad), ostane pekná karta
+  s adresou a tlačidlom Navigovať, nikdy biela plocha; Späť po skoku z menu vráti na pôvodné miesto.
+- Filmová vrstva a kurzor (`07eca7a`, oprava rytmu úvodu `c8de97f`): otvárací záber úvodu (na počítači rozostrený záber zaostrí a kinematografické
+  pásy sa stiahnu, titulok v rytme), titulkové karty kapitol, fotky sa „exponujú“ z tmy, veľké zábery priestoru pomaly
+  odstúpia (4,8 s, potom stoja), skok z menu strihom cez tmu, vineta medzihry, záverečný titulok pätičky, kurzor činka
+  (kostená, nad odkazmi červená) len pre myš. Len CSS, žiadny nový JavaScript, žiadne video ani efekt riadený
+  skrolovaním, pri „obmedziť pohyb“ a bez JS všetko statické a viditeľné; na telefóne pri 4× spomalenom CPU rovnako plynulé
+  snímky obrazu ako predtým, otvorenie a skok bez nových dlhých úloh. Testy a dokumentácia (`SPEC.md` 2.8, 5.6, `IMPLEMENTACIA-POZNAMKY.md` „Filmová vrstva a kurzor“).
+
 ## 3. Postup pri odovzdaní (v tomto poradí)
 
 1. **Nahrať vetvu `main` do Lupa-gym** (zo zálohy, časť 6) a hneď potom v Lupa-gym otvoriť
@@ -63,19 +80,23 @@ repozitára. Stačí napísať „nahraj do Lupa-gym“, alebo to nahrať sám (
 
 | Krok | Čo | Stav |
 | --- | --- | --- |
-| Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); otvorené: tlačidlo Späť po skoku z menu nevráti na pôvodné miesto (stredná), biela plocha mapy, keď sa Google mapa nenačíta |
+| Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); oba otvorené body (Späť po skoku z menu, biela plocha mapy) opravené vo vetve `filmova-vrstva` (`c6aa7e7`) |
 | B5 | výkon a prístupnosť (SPEC kap. 9 a 10), Lighthouse, klávesnica | nezačaté |
-| Filmová vrstva | **nová požiadavka majiteľa**: „viac profesionálne, filmové animácie, filmové prechody, ukáž fitko čo najlepšie“ | koncept nezačatý (prvý pokus zastavil limit relácie) |
+| Filmová vrstva | požiadavka majiteľa: „filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“ | **implementované** vo vetve `filmova-vrstva` (`dcd8414`, `c6aa7e7`, `07eca7a`, `afe892b`, `c8de97f`); čaká na nezávislú kontrolu, nový náhľad pre majiteľa a zlúčenie do `redizajn-2026-10`. Otvorené: lightbox ako „premietanie“ (FIL-07, voliteľné), prah vrstiev počas prechodov, ručné overenie kurzora a prechodov na iPhone (Safari 18 a 26) a Androide |
 | B6 | záverečná kontrola, snímky 390–1920 px, návody, zoznam pre majiteľa | nezačaté |
 
-**Filmová vrstva, materiál a pravidlá:** 12 skutočných videoklipov z prevádzky z 26. 9. 2026 (`IMG_8981` až
-`IMG_8998`, na výšku 1080 × 1920), príchodový film `prichod-900.mp4`, skutočné panorámy, fotky. Pravidlá: len
-skutočné zábery (žiadne AI), žiadne video riadené skrolovaním (klient ho v minulosti odmietol ako zasekané),
-žiadne pripínanie obsahu, plynulosť na bežnom telefóne, pri „obmedziť pohyb“ všetko statické. Pôvodné klipy
-boli len v dočasnom priestore a v tejto zálohe nie sú; zdroj sú videá od majiteľa z 26. 9.
+**Filmová vrstva, materiál a pravidlá:** použité sú len súbory v repozitári – skutočné fotky (`assets/img/f`, tím)
+a tri existujúce videá (zápasenie, MDS, Ladydefence). Pôvodné videoklipy z 26. 9. 2026 (`IMG_8981` až `IMG_8998`)
+v zálohe nie sú, preto filmovosť nesie pohyb kamery a strih nad fotkami, nie nové video. Pravidlá: len skutočné zábery
+(žiadne AI, nič generované ani vymyslené), žiadne video ani efekt riadený skrolovaním po snímkach (klient ho odmietol
+ako zasekané), žiadne pripínanie obsahu, plynulosť na bežnom telefóne, pri „obmedziť pohyb“ a bez JS všetko statické
+a viditeľné.
 
 **Známe otvorené body z kontrol:** plynulosť: prah sa meria na snímkach kompozítora pri 4× spomalenom CPU a na hlavnom
-vlákne pri bežnom CPU (zmena zapísaná v SPEC 9); rozpočet `app.js` 14 kB gzip je vyčerpaný;
+vlákne pri bežnom CPU (zmena zapísaná v SPEC 9); rozpočet `app.js` 14 kB gzip je takmer vyčerpaný (rezerva 122 B);
+vrstvy kompozítora počas prechodov („najviac počas scény“) sú nad 40 už pred filmovou vrstvou – navrhnutý prah
+„špička ≤ stav pred + 10“ potvrdí orchestrátor; pár záberov (plagáty videí, `mma-1-32`) je na telefóne pod 1× DPR,
+bez nových záberov sa to zlepšiť nedá;
 úvod na telefóne pri výške okna 781–880 px ukazuje málo fitka; fotka `volne-vahy-2` je na webe dvakrát;
 treba ručne overiť na skutočnom iPhone a Androide.
 

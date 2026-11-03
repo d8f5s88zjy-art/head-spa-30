@@ -1307,3 +1307,230 @@ a ostáva otvoreným rozhodnutím orchestrátora. Bez zmeny kódu.
 - Rozpočet `app.js` 14 kB gzip je vyčerpaný (rezerva 4 B).
 - Nezmenené z B4: ručné overenie na skutočnom iPhone a Androide (SPEC 11.5); úvod na telefóne pri výške okna 781–880 px;
   tlačidlo hore od 1344 px; `volne-vahy-2` dvakrát; text medzihry o bicykli (13.5).
+
+## Filmová vrstva a kurzor (2.–3. 11. 2026)
+
+Požiadavka majiteľa z 2. 11. (komentár k náhľadu): „zlepšiť stránku filmovými prechodmi, kurzor bude činka, cinematické
+efekty a prechody, nech to vyzerá profesionálne, skontrolovať, či ukazuje všetky fotky, a spraviť kontrolu“. Postup:
+príprava a kontrola fotiek (`film/priprava/ZAPIS.md`, nálezy PRI-1 až PRI-12) → koncept art directora a motion designera
+(`film/koncept/KONCEPT.md`, efekty FIL-01 až FIL-10, prototyp, merania) → implementácia (táto časť).
+
+**Vetva `filmova-vrstva`** od `809bc02` v pracovnej kópii `gym/lupa` (len lokálne, bez push; `redizajn-2026-10` a `main`
+sa nemenili). Commity bez podpisových riadkov:
+
+| Commit | Krok | Obsah |
+|---|---|---|
+| `dcd8414` | A | fotky na pomalej sieti (PRI-4), diakritika nadpisov (PRI-5), logo MDS (PRI-6), Ladydefence (PRI-7), `tel:`/`mailto:` v náhľade (PRI-1), `PYTHON` v `test_prehliadac` (PRI-9) |
+| `c6aa7e7` | B | záložná karta mapy (PRI-3), Späť po skoku z menu (PRI-2) |
+| `07eca7a` | C | filmová vrstva FIL-01–06, 08–10, kurzor činka, P-01 |
+| `afe892b` | D | testy `test_kurzor_len_pri_mysi`, `test_naprotivky_v_bloku_reduce`, `test_rozpocet_filmovej_vrstvy` |
+| `c8de97f` | C2 | rytmus titulku úvodu naozaj platí (oprava špecificity, aj chyba z B4) + `test_rytmus_titulku_uvodu` |
+
+Kroky A a B urobil predchádzajúci implementátor tejto úlohy (zastavil ho limit relácie); rozpracovaný krok C bol v pracovnom
+strome necommitnutý a zhodoval sa so záplatou konceptu (`diff` s `film/impl/cast19.css` prázdny). Všetko som po reštarte
+kontajnera znova overil na výslednej zostave. Pracovné súbory a dôkazy: `film/impl/` (skripty `skripty/`, logy `logy/`
+a `logy/final/`, merania `vykon/`, snímky `snimky/`, `fotky-HEAD/`, `vzhlad/`, sekvencie `sekv/A` a `sekv/B`, hárky `harky/`,
+hárok `pred-po.jpg`). Merania výkonu vždy **A/B striedavo** (A = `809bc02`, B = filmová vrstva) za rovnakých podmienok –
+súbežne bežala úloha Barbershop s vlastným prehliadačom, záťaž kontajnera počas meraní 1,7–5,4 pri 4 jadrách (v logoch).
+
+Obsah, médiá, `.pages.yml` a texty sa nemenili (žiadny nový text, číslo scény ani titulok; len skutočné fotky a tri
+existujúce videá). Nový JavaScript nepribudol (oprava Späť v B je presun riadku a jeden poslucháč `popstate`).
+
+### A. Kontrola fotiek a súborov (PRI-1 až PRI-12)
+
+| Nález | Stav | Dôkaz na výslednej zostave |
+|---|---|---|
+| PRI-1 `tel:`/`mailto:` v náhľade claude.ai zmení rám na chybovú stránku | opravené: v rámci (`window !== top`) dostanú 16 odkazov `target=_blank`, mimo rámca bez zmeny | `logy/kontrola_a-HEAD.log` (OK 3/3 pre PRI-1) |
+| PRI-2 Späť po skoku nevráti na pôvodné miesto | opravené v B | `logy/kontrola_spat-HEAD.log` 12/12 OK (809bc02: 12/12 ZLE, `logy/kontrola_spat-809bc02.log`) |
+| PRI-3 biela/sivá plocha mapy bez Google | opravené v B | `logy/kontrola_mapa-HEAD.log` 12/12 OK, snímky `snimky/mapa-HEAD/` |
+| PRI-4 prázdne sivé rámy trénerov po skoku na Slow 4G | opravené: karta trénera aj plagát videa čakajú na načítanú fotku | `fotky-HEAD/`, `logy/fotky-HEAD-suhrn.txt`: 0 prázdnych rámov po 400/800/1 500/3 000/8 000 ms pri 360–1920 px (predtým 2–8 po 400 ms); snímka `fotky-HEAD/1920/slow4g-treneri-800.png` prezretá |
+| PRI-5 diakritika 2. riadku nadpisov zasahuje do 1. | opravené: `.h2`, `.foot-h` riadkovanie 1,12, maska v em nadpisu | snímky `vzhlad/snimky/390-treningy.jpg`, `pred-po.jpg` (Tréningy) prezreté – „OSTATNÉ“ sa „VYBERTE“ nedotkne |
+| PRI-6 logo MDS pri 1024 px ovál | opravené (`picture{flex:none}`) | `logy/kontrola_a-HEAD.log`: 40 × 40 pri 390, 1024, 1440 |
+| PRI-7 Ladydefence sa sám neprehrá | opravené: po otvorení `play()`, pri obmedzenom pohybe nie | `logy/kontrola_a-HEAD.log`: hrá (t 3,3 s), pri reduce `paused` |
+| PRI-8 pár záberov pod 1× DPR | bez zmeny (rozlíšenie videa 464/576 px, `mma-1-32`); filmová vrstva tieto zábery nezväčšuje (plagát `scale:none`) | ZAPIS.md 2b |
+| PRI-9 `test_prehliadac` padá na systémovom python3 | opravené: `PYTHON=…/venv/bin/python` | `logy/final/test_prehliadac_vzor*.log` |
+| PRI-10 og:image/JSON-LD na súbor, ktorý dnes na živom webe nie je | bez zmeny – overiť po nasadení | – |
+| PRI-11 dnešný náhľad = `4675cfb` | nový náhľad zverejní orchestrátor z celej `_site` | – |
+| PRI-12 skrol na telefóne „takmer nedobiehal“ | rovnaké gesto: 809bc02 20–23 ťahov, filmová vrstva 21–22 ťahov na ~18 500 px (`vykon/meraj/*.json`, pole `skrol.gest`) – bez rozdielu; ručne overiť na telefóne | – |
+
+**Všetky fotky sa ukážu** (`skripty/fotky.mjs` = `film/nastroje/fotky.mjs` so závojom FIL-03, `fotky-HEAD/`, log
+`logy/fotky-HEAD.log`): pri **360, 390, 768, 1024, 1440 a 1920 px** po pomalom prechode celou stránkou 42/42 `<img>`,
+0 nenačítaných viditeľných, 0 prázdnych rámov počas prechodu; **lightbox 12/12** záberov otvorených a načítaných pri každej
+šírke; videá (plagát, prehratie, Ladydefence), náhľad Kde začať (≥ 1024 px), pás Detaily (šípky), filter a detail trénera,
+rýchly prechod (0 prázdnych po 50/1 500/4 000 ms) aj **Slow 4G + skok z menu** na Priestor, Tréningy a Trénerov:
+0 prázdnych rámov v každom čase; 0 chýb JS, 0 zlyhaných požiadaviek. Po skoku na Slow 4G drží závoj rám, kým sa fotka
+nenačíta (napr. Tréningy 1440: 4 rámy so závojom po 400 a 800 ms, odhalené po 1,5–3 s) – nikdy sa neukáže prázdny sivý rám.
+
+### B. Otvorené body B4
+
+**Mapa (PRI-3, SPEC 4.13, 5.4 #32):** karta s adresou písmom nadpisov, budovou a mestskou časťou, obrysom a tlačidlom
+**Navigovať** (Google Mapy v novom okne) je zároveň záloha. Iframe sa vkladá na klik alebo pri priblížení (IO, ako #32),
+ale až po úspešnej sonde `https://www.google.com/favicon.ico`; v rámci (náhľad), offline a pri chybe sondy sa iframe
+nevloží, karta dostane `.is-off` (skryje Zobraziť mapu) a ostane. Overené v 6 scenároch × 2 šírky (`kontrola_mapa.mjs`):
+zablokovaný Google, podstrčená dostupná mapa, skutočný Google cez proxy, offline, v rámci z iného pôvodu, bez JS – vždy
+karta s adresou a Navigovať, pri dostupnej mape iframe `opacity 1`, nikdy biela plocha (snímky `snimky/mapa-HEAD/*.png`,
+prezreté `mapa-blokovany-1440.png` a `mapa-v-ramci-390.png`). **Konzola:** pri zablokovanom Google je v nej jedna sieťová
+hláška prehliadača k sonde („Failed to load resource: net::ERR_FAILED“, nie chyba JS – rovnakú by zapísal aj iframe);
+v rámci (náhľad claude.ai) a bez JS je konzola prázdna, offline hlásia zlyhanie len lenivé obrázky stránky. Úplne tichá
+konzola pri blokovanom Google by znamenala nekontaktovať Google vôbec (mapa len na klik do nového okna) – rozhodnutie
+orchestrátora; dnes sa mapa načíta pri priblížení, ako žiada #32.
+
+**Späť po skoku (PRI-2):** `history.pushState` sa volá **pred** posunom (prehliadač k pôvodnému záznamu uloží pôvodnú
+polohu), pri `popstate` sa na dve snímky odoberie `html.sm`, aby sa poloha vrátila strihom, nie plynulým prejazdom.
+`kontrola_spat.mjs` (390 a 1440, s pohybom aj pri reduce, ciele Cenník, Tréneri, Kontakt): 12/12 OK – po Späť ±0 px
+(napr. 1440: 2 392 → 11 960 → 2 392 za 2–21 ms), adresa bez `#`, fokus po skoku na nadpise cieľa, CLS 0 pri skoku aj Späť,
+`html.sm` znova zapnuté, 0 chýb. Na 809bc02 12/12 ZLE (ostane na cieli). `app.js` 14 214 B gzip (limit 14 336 B).
+
+### C. Filmová vrstva a kurzor (SPEC 2.8, 5.6)
+
+Implementované podľa konceptu (záplata `koncept/integracia/film-vrstva.patch`, overená zhoda): **FIL-01** otvárací záber
+(na ≥ 861 px rozmazaný LQIP nad fotkou zaostrí, pásy 2,39 : 1 sa stiahnu; rytmus titulku všade), **FIL-02** titulková karta
+kapitoly, **FIL-03** expozícia fotky z tmy, **FIL-04** pomalé odďaľovanie eseje a medzihry (4,8 s, potom stojí),
+**FIL-05** strih cez tmu pri skoku (+ Späť z B), **FIL-06** vineta medzihry, **FIL-08** plagát → video prelínačkou,
+**FIL-09** záverečný titulok pätičky v maske, **FIL-10** kurzor činka, **P-01** skryté stavy bez prechodu.
+**FIL-07** (lightbox ako premietanie) som **neimplementoval** – je voliteľný (let fotky z B4 je už filmový) a oneskorenie
+len popisku by v `app.js` stálo bajty pri rezerve 122 B; ostáva otvorený (SPEC 5.6.7).
+
+**Rozdiely oproti záplate konceptu:**
+
+1. **Rytmus titulku (FIL-01c) priamo v časti 18** namiesto prebíjania v časti 19 – oneskorenia sú raz, ako výpočet z tokenov
+   (140/350/520/590/760/840 ms), časť 19 je kratšia.
+2. **Oprava chyby z B4 (`c8de97f`):** skratka `animation:hxUp` pre `:is(.hero-live,.hero-p,.hero-cta,.hero-colo dl,.dock)`
+   mala špecificitu (0,4,2) a prebíjala pravidlá s oneskorením (0,4,1) – odsek, tlačidlá a dok sa v 809bc02 aj v záplate
+   konceptu objavili **naraz** s prvým riadkom nadpisu (vypočítaný štýl `hxUp 0s`, `skripty/rytmus_uvodu.mjs`; fungovali
+   len oneskorenia riadkov H1 a kolofónu). `:where()` znižuje skratku na (0,3,1); teraz odsek 0,52 s, tlačidlá 0,59 s,
+   kolofón 0,76 s, dok 0,84 s pri 390 aj 1440 px. Hárok `harky/uvod-1440-B.jpg` (prezretý): 0–160 ms rozostrený záber
+   v pásoch so živým stavom, 320 ms prvý riadok, 480 ms červený riadok, 640 ms odsek, 800 ms tlačidlá, od 960 ms usadené.
+   Test `test_rytmus_titulku_uvodu` porovnáva špecificitu (negatívna skúška so starým `:is` spadne).
+
+**Kurzor činka (FIL-10, SPEC 2.8):** `assets/kurzor/` 4 PNG (32 a 64 px, spolu 7 773 B) + 2 SVG, len CSS
+v `@media (hover:hover) and (pointer:fine) and (prefers-contrast:no-preference) and (forced-colors:none)`. Overenie
+(`koncept/skripty/kurzor_over.mjs`, `kurzor_over2.mjs`, logy `logy/final/kurzor_over*.log`): na počítači `html`, `body`,
+kostená pätička = základná činka `image-set(cinka-32.png 1dppx, cinka-64.png 2dppx) 3 3, auto`; odkaz menu, text v odkaze,
+`.btn-p`, klikateľná fotka aj jej `img`, `summary`, deň rozvrhu, čip, video, odkaz pätičky = červená činka `… 3 3, pointer`;
+zakázaná šípka pásu = základná činka; `.lead`, H2, adresa, `td` = `text`; obrázky 200. Dotyk, `contrast: more`
+a `forcedColors: active`: `auto`/`pointer`/`zoom-in` ako predtým, obrázky kurzora sa nesťahujú. Pri DPR 2 sa načítajú
+64 px verzie. Bez `image-set` (simulácia) ostane `url("cinka-32.png") 3 3, auto`. Snímka obrazovky kurzor nezachytí –
+v hárku `pred-po.jpg` je obrázok kurzora vložený na miesto myši (dlaždica `snimky/pred-po/kurzor.png`).
+
+**Overenie pravidiel majiteľa a SPEC pri každom efekte:**
+
+- **Obmedzený pohyb a bez JS** (`koncept/skripty/kontrola_film.mjs`, `logy/kontrola_film-HEAD.log`, 390 a 1440): 4 × OK –
+  `getAnimations()` po 1,5 s 0 a po prejdení stránky 0, 0 skrytých prvkov, 0 závojov, linky štítkov celé, bez odďaľovania,
+  LQIP nad úvodom `opacity 0`, pásy `scale 1 0`. `test_vzhlad` kontrola 10 (reduce: 0 animácií) a 11 (po 4 s len `ping`)
+  OK pri 390 aj 1440.
+- **Záloha Safari/Firefox** (`skripty/zaloha.mjs`, simulácia odstránením podpory v Chromiu, `logy/final/zaloha.log`):
+  profily *bez `:has()`* (pravidlá s `:has` sa zahodia), *bez View Transition*, *bez `el.animate`*, *bez `image-set`*
+  a *„Firefox“* (všetko naraz + `@supports (animation-timeline)` neplatí), každý pri 390 a 1440: 0 chýb JS, po prejdení
+  stránky 0 skrytých prvkov a 0 závojov, bez `:has()` štítok a lead pod zložením viditeľné hneď (`opacity 1`), skok na
+  Cenník dorazí (bez VT plynulým posunom za ~1,25 s), Späť vráti na pôvodnú polohu, lightbox sa otvorí s načítanou fotkou
+  a popisom a zavrie, kurzor bez `image-set` padne na `url()`. Pri prvom behu som raz videl 80 neodhalených prvkov (profil
+  bez VT, 390) – ďalších 4 + 2 + 1 behov toho istého profilu bolo čistých; príčinou boli zrejme vynechané snímky pri
+  syntetickom skoku o 600 px každých 70 ms pri záťaži (IO vyhodnocuje polohu len pri vykreslení snímky). Dlaždice pásu
+  Detaily mimo jeho výrezu sa odhalia až pri posune pásu (ako v 809bc02) – skript ich vynecháva.
+- **Nič riadené skrolovaním po snímkach, žiadne pripínanie:** všetky nové pohyby spúšťajú triedy (`hx-*`, `.is-in`,
+  `vt-jump`, `.is-playing`); `animation-timeline` filmová vrstva nepridáva (časť 19 nemá `animation` vôbec), `position:sticky`
+  nepribudlo; najdlhší pohyb 4,8 s a potom stojí (SPEC 10). Test `test_rozpocet_filmovej_vrstvy`: prechody v časti 19 len
+  `opacity`/`translate`/`scale`, žiadny `filter`/`clip-path`.
+- **Skok z menu** (`skripty/akceptacia_skok.mjs`, `logy/final/akceptacia_skok.log`): 7 položiek menu (+ CTA na telefóne)
+  a 8 odkazov pätičky pri 390 aj 1440 (31 skokov): po 600 ms začiatok cieľa pod lištou (68/80 px), nadpis celý v okne,
+  0 prázdnych rámov, 0 neodhalených prvkov v hornej polovici okna; po 1,5 s fokus na nadpise a `#kotva` v adrese. (Fokus
+  prichádza po konci prechodu – 460 ms + dekódovanie fotiek cieľa ≤ 250 ms –, preto skript kontroluje fokus až po 1,5 s.)
+  Hárok `harky/skok-1440-AB.jpg` (prezretý): A po 80 ms dvojexpozícia úvodu a Cenníka, B po 120 ms stmavnutý úvod,
+  po 160 ms tmavý Cenník, od 240 ms plný – bez dvojexpozície; na telefóne panel menu prejde priamo do Cenníka
+  (`pred-po.jpg`, Telefón – skok).
+
+### Výkon (CPU 4×, A/B striedavo)
+
+Podmienky: Chromium headless bez WebGL (`--disable-3d-apis`), nový kontext na každý beh, telefón 390 × 844 DPR 3 dotyk,
+počítač 1440 × 900; A = `809bc02` (`film/impl/site-809bc02`), B = filmová vrstva (`site-07eca7a`, otvorenie aj po C2
+`site-HEAD`). Záťaž kontajnera 1,7–5,4 (súbežný Barbershop) – rozhoduje porovnanie A/B v rovnakom behu a medián.
+
+**`meraj_ab.mjs`** (skripty konceptu; okná: *otvorenie* 0–3 s, *esej* gesto 3 600 px rýchlosťou 1 200 px/s od medzihry
+cez esej, Detaily a Bar + 1,5 s, *skok* menu → Cenník 0–1,2 s; mediány, `vykon/ab-*.json`, `otvorenie-C2.log`, `skok-390.log`):
+
+| Scéna | Metrika | 390 A | 390 B | 1440 A | 1440 B |
+|---|---|---|---|---|---|
+| otvorenie (B po C2, 5 + 5) | kompozítor sn/s | 39,7 | **43,1** | 39,5 | 37,3 |
+| | hlavné vlákno fps | 36,7 | **40,0** | 37,8 | **41,5** |
+| | dlhé úlohy (počet / ms) | 8 / 832 | 6 / 875 | 7 / 856 | **6 / 680** |
+| | LCP (prvok vždy `img.hero-img`) | 396 ms | 412 ms | 408 ms | 404 ms |
+| esej gestom (5 + 5) | kompozítor sn/s (> 50 ms) | 59,9 (0 %) | **60,0 (0 %)** | 58,0 (0,3 %) | 56,7 (0,7 %) |
+| | hlavné vlákno fps | 59,6 | 59,9 | 37,2 | 37,0 |
+| | dlhé úlohy | 0 | 0 | 4 / 276 ms | 4 / 236 ms |
+| skok menu → Cenník (390: 8 + 8, 1440: 5 + 5) | kompozítor sn/s | 47,3 | **50,5** | 43,1 | 42,3 |
+| | hlavné vlákno fps | 43,0 | 43,6 | 37,3 | 36,5 |
+| | dlhé úlohy | 2 / 123 ms | **1 / 95 ms** | 2 / 118 ms | **1 / 88 ms** |
+
+Otvorenie pred C2 (5 + 5): 390 kompozítor 40,9 / 41,6, hlavné vlákno 28,6 / 40,1, dlhé úlohy 9 (1 051 ms) / 7 (875 ms);
+1440 38,8 / 38,5, 37,4 / 36,6, 7 (905) / 7 (977). **LCP pri 1440** som pre rozptyl meral trikrát (`vykon/lcp-suhrn.txt`):
+mediány A/B 352/368, 372/376 a po C2 408/404 ms, jednotlivé behy 320–556 ms u oboch; variant B bez zaostrenia (FIL-01a)
+mal 448 ms – systematický rozdiel som nenašiel, rozpočet SPEC 9 (≤ 1,0 s) je splnený s rezervou. **Nové dlhé úlohy
+pri prechodoch nevznikli** (otvorenie, esej, skok – B rovnako alebo menej ako A).
+
+**`meraj.mjs --trace`** (prípravy, gesto 2 000 px/s cez celú stránku, 3 + 3 behy, `vykon/meraj-suhrn.txt`):
+
+| | 390 A | 390 B | 1440 A | 1440 B |
+|---|---|---|---|---|
+| snímky kompozítora za s (podiel > 50 ms) – **prah SPEC 9 ≥ 55, ≤ 1 %** | 59,5–59,9 (0–0,21 %) | **59,4–59,8 (0–0,11 %)** | 57,7–57,9 (0,23–0,35 %) | **57,1–58,5 (0,25–0,63 %)** |
+| hlavné vlákno fps (informatívne pri CPU 4×) | 53,4–54,9 | 51,7–53,0 | 51,0–52,7 | 47,1–49,6 |
+| dlhé úlohy počas skrolu / CLS | 0 / 0 | 0 / 0 | 0 / 0 | 0–1 / 0 |
+| vrstvy v pokoji hore / Detaily / Cenník (≤ 40) | 33 / 29 / 29 | **31 / 29 / 29** | 29 / 36 / 20 | **23 / 33 / 21** |
+| prenos do nečinnosti | 725 kB | 734 kB | 780 kB | 791 kB |
+| výška stránky (obrazovky; SPEC 3.2 ≤ 23 / ≤ 18,5) | 22,92 | 22,97 | 18,32 | 18,38 |
+
+Prah SPEC 9 pri CPU 4× (snímky kompozítora) je splnený pri oboch šírkach. Hlavné vlákno pri CPU 4× (informatívne) je
+s filmovou vrstvou na počítači o ~3 fps nižšie (pomalé odďaľovanie eseje drží prechod 4,8 s namiesto 1,6 s, Blink prepočíta
+štýl dlhšie) – návštevník vidí snímky kompozítora, tie sú rovnaké. **Pozor na výšku pri 1440:** 18,38 obrazovky je blízko
+limitu 18,5 (+57 px z riadkovania nadpisov PRI-5); pri 390 22,97 z 23. Prenos +9–11 kB meria server bez gzip
+(`style.css` nekomprimovaný +8,2 kB); s gzip je to +2,7 kB CSS a +0,5 kB HTML.
+
+**Vrstvy kompozítora počas scén** (`koncept/skripty/vrstvy.mjs`, najviac počas okna, 2 + 2 behy, `vykon/vrstvy.log`):
+390 – úvod 40 → **38**, esej 32 → **31**, skok 55 → **55**; 1440 – úvod 36 → **32**, esej 47 → **50**, skok 55 → **64**.
+V pokoji (metóda B4) ≤ 40 všade (tabuľka vyššie). Počas prechodov je nad 40 už 809bc02 (metóda počíta aj prechodné vrstvy
+View Transition a animácií); filmová vrstva pridáva na počítači +3 pri eseji (odďaľovanie drží fotku vo vrstve dlhšie)
+a +9 pri skoku (dlhší prechod, oneskorená snímka lišty). Navrhovaný prah „špička ≤ A + 10“ je splnený – **potvrdí
+orchestrátor** (SPEC 9).
+
+**Veľkosti:** `style.css` 18 800 B gzip (809bc02 16 072 B; limit 22 kB), 918 riadkov (≤ 1 000), z toho časť 19 2 335 B;
+`app.js` 14 214 B gzip (809bc02 14 332 B; limit 14 336 B, rezerva 122 B); `index.html` 23 501 B gzip (≤ 25 kB);
+kurzory 7 773 B (sťahujú sa len na počítači s myšou).
+
+### D. Testy (výsledná zostava `c8de97f`, logy `film/impl/logy/final/`)
+
+Všetko na `c8de97f` po sebe, bez súbehu meraní (`logy/final/stav.txt`: 07:31–07:41 UTC, záťaž 0,9–1,9):
+
+- `zostav.py` → kód 0, „Web je zostavený“.
+- `python -m unittest discover -s nastroje -p 'test_*.py'` (venv) → **Ran 90 tests … OK** (86 pôvodných + 4 nové:
+  `test_kurzor_len_pri_mysi`, `test_naprotivky_v_bloku_reduce`, `test_rozpocet_filmovej_vrstvy`, `test_rytmus_titulku_uvodu`).
+  Mutačná skúška (`skripty/mutacie_testov.py`, `logy/mutacie-testov.log`): 9/9 pokazení CSS nové testy zachytia
+  (kurzor mimo bloku, bez zálohy `url()`, aj pri vysokom kontraste, aj na dotyku, `--zoom-kb` bez náprotivku, skrytý stav
+  bez `transition:none`, `filter` vo filmovej vrstve, `clip-path` v keyframes, skratka úvodu s `:is`); nepokazené CSS 5/5 OK.
+- `PYTHON=…/venv/bin/python node nastroje/test_prehliadac.mjs ../lupa-vzor` aj `../lupa-vzor-cms` → 19 × OK, „Všetko v poriadku.“
+- `PORT=9349 node nastroje/test_vzhlad.mjs _site film/impl/vzhlad-final` → kód 0, **93 kontrol OK** (výška 390: 22,97,
+  1440: 18,38; 10 reduce 0 animácií, 11 len `ping`, 12 CLS `/#cennik` 0,0000).
+- `BEZ_PIXELOV=1 node nastroje/porovnaj_so_vzorom.mjs ../lupa-vzor-cms _site film/impl/porovnanie-final` → kód 0, „Bez rozdielov
+  okrem zámerných zmien“ (filter 8×, dni 7×, Tréner 11×, otázky 6×, lightbox 12× pri 390 aj 1440).
+- `zaloha.mjs` 10/10 OK, `akceptacia_skok.mjs` 31/31 OK, `kurzor_over.mjs` a `kurzor_over2.mjs` kód 0 (DPR 2: 200 `cinka-64.png`,
+  `cinka-akcia-64.png`), `kontrola_spat.mjs` 12/12 OK, `spat.mjs` konceptu „VRÁTI na pôvodné miesto“ pri 1440 aj 390.
+- Pred záverečným behom na `07eca7a`/`c8de97f`: `kontrola_film.mjs` 4 × OK, `kontrola_mapa.mjs` 12/12, `kontrola_a.mjs` 12 × OK,
+  `fotky.mjs` 6 šírok (časť A).
+
+### Snímky prezreté (Read)
+
+`pred-po.jpg` (celý a výrezy `harky/kontrola-hore.jpg`, `kontrola-prechody.jpg`, `kontrola-kurzor.jpg`), `harky/skok-1440-AB.jpg`,
+`harky/uvod-1440-B.jpg`, `snimky/mapa-HEAD/mapa-blokovany-1440.png`, `mapa-v-ramci-390.png`, `vzhlad/snimky/1440-opener.jpg`
+(vineta medzihry, nadpis „PO PRÁCI SEM, NIE NA GAUČ.“), `vzhlad/snimky/390-treningy.jpg`, `fotky-HEAD/1920/slow4g-treneri-400.png`
+(po 400 ms ešte beží strih cez tmu – stmavnutý úvod, adresa už `#treneri`) a `slow4g-treneri-800.png` (karty trénerov
+s fotkami, druhá sa práve odhaľuje, žiadny sivý rám), `koncept/kurzor-nahlad.jpg`.
+
+### Otvorené (na rozhodnutie orchestrátora)
+
+- Prah vrstiev počas prechodov („špička ≤ stav pred + 10“; 1440 skok 64 pri A 55).
+- FIL-07 lightbox ako premietanie (voliteľné, nie je implementované).
+- Pásy 2,39 : 1 v úvode (najviditeľnejší „kino“ prvok) – ak by majiteľ chcel pokojnejší úvod, vypustiť jednu časť CSS;
+  zaostrenie úvodu na telefóne je vypnuté (meranie konceptu).
+- Mapa: pri zablokovanom Google jedna sieťová hláška sondy v konzole; úplne tichá konzola = mapa len na klik do nového okna.
+- Výška stránky pri 1440 (18,38 z 18,5) a 390 (22,97 z 23) je tesne pod limitom – ďalší obsah treba vyvážiť.
+- Ručné overenie: iPhone so Safari 18 (bez VT – záloha FIL-05) a 26 (`:has()`, VT, `-webkit-image-set` kurzora), stredný
+  Android (plynulosť, PRI-12), myš na Windows/macOS (vzhľad kurzora pri škálovaní 125–150 %).

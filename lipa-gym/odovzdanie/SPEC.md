@@ -199,8 +199,8 @@ Tento dokument je jediný zdroj pravdy pre implementáciu. Kde sa líši od náv
 | Rola | Písmo a rez | Veľkosť | Riadkovanie a úprava |
 |---|---|---|---|
 | H1 `.hero-h` | Oswald 600, verzálky | `clamp(3.25rem, 1.6rem + 6.6vw, 8.25rem)` | lh .92, ls −.005em; riadok 1 `--ink`, riadok 2 (`em`, `font-style:normal`) `--red` |
-| H2 `.h2` | Oswald 500, verzálky | `clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem)` | lh 1.0, `text-wrap: balance`; `em` (`display:block` až od 760 px, inak inline) `--ink-3` |
-| H3 `.h3`, `.mds-h`, `.lessons-h` | Oswald 500, verzálky | `clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)` | lh 1.05 |
+| H2 `.h2` | Oswald 500, verzálky | `clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem)` (token `--fs-h2`) | lh 1.12 a `margin-block:-.06em` *(Filmová vrstva A, PRI-5: diakritika druhého riadku sa nedotkne prvého; predtým lh 1.0)*, `text-wrap: balance`; `em` (`display:block` až od 760 px, inak inline) `--ink-3` |
+| H3 `.h3`, `.mds-h`, `.lessons-h` | Oswald 500, verzálky | `clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)` (token `--fs-h3`) | lh 1.05 |
 | Titulok záberu `.shot-t`, `.cesta-t`, `h4` | Oswald 500, verzálky | `clamp(1.375rem, 1.1rem + .9vw, 1.875rem)` | lh 1.1 |
 | Meno trénera `.coach-name` | Oswald 500, verzálky | 1.375rem | lh 1.1 |
 | Cena `.price-n` | Oswald 500 | `clamp(3rem, 2rem + 3vw, 4.5rem)` | lh .95, `font-variant-numeric: tabular-nums` |
@@ -270,7 +270,7 @@ Tento dokument je jediný zdroj pravdy pre implementáciu. Kde sa líši od náv
 
 - **`.tlink`** (textový odkaz): Manrope 600 15 px, podčiarknutie 1 px cez `text-decoration-thickness:1px; text-underline-offset:5px`; hover farba `--red-ink` a šípka `translate:3px 0`. Samostatný odkaz má `padding-block:12px`, aby cieľ mal ≥ 44 px.
 - **`.ph`** (rám fotky): `position:relative; overflow:clip; border-radius:var(--r-img); background:var(--bg-2)`. Vnútri je `<picture>` a `<img width height loading decoding>` s `object-fit:cover; object-position:var(--fx,50%) var(--fy,50%)`.
-- **`.ph-btn`:** skutočné `<button type="button" class="ph-btn" aria-haspopup="dialog">` okolo `<picture>`. Prístupný názov dáva `alt` obrázka, `aria-label` sa nepridáva.
+- **`.ph-btn`:** skutočné `<button type="button" class="ph-btn" aria-haspopup="dialog">` okolo `<picture>`. Prístupný názov dáva `alt` obrázka, `aria-label` sa nepridáva. Kurzor `zoom-in` ostáva ako záloha (dotyk, vysoký kontrast, vynútené farby); na počítači s myšou ho nahrádza červená činka (2.8).
 - **`.dot`:**
   - 8 px kruh;
   - farba `--ok` pri `.is-open` na obale, inak obrysová `--off`;
@@ -291,6 +291,26 @@ Tento dokument je jediný zdroj pravdy pre implementáciu. Kde sa líši od náv
 - **Esej:** tri plochy, pozri 4.5.
 
 Čísla kapitol (`<span class="ch">`) sa vypúšťajú zo všetkých štítkov.
+
+### 2.8 Kurzor činka (len počítač) *(doplnené 3. 11. 2026, Filmová vrstva, FIL-10; zadanie žiadalo „2.7“, číslo 2.7 je obsadené)*
+
+- Platí len v `@media (hover:hover) and (pointer:fine) and (prefers-contrast:no-preference) and (forced-colors:none)`
+  (koniec `style.css`, časť 19). Dotyk, vysoký kontrast a vynútené farby majú systémové kurzory (`auto`, `pointer`,
+  `zoom-in` z pravidiel 2.6) a obrázky kurzora sa vôbec nesťahujú.
+- **Základ:** činka v štýle loga – stupňovitý obrys (koncovka, menší kotúč, väčší kotúč) nakreslený ako jedna cesta (bez
+  švov medzi kotúčmi), výplň kostená `#f4f2ec`, obrys `#0b0c0f` 1,5 px, sklon 45°, 32 × 32 px; horúci bod (3, 3) = koniec
+  činky vľavo hore. Zápis so zálohami v tomto poradí:
+  `cursor:url(kurzor/cinka-32.png) 3 3,auto` → `-webkit-image-set(… 1x, …-64.png 2x) 3 3,auto` → `image-set(url(kurzor/cinka-32.png) 1x,url(kurzor/cinka-64.png) 2x) 3 3,auto`.
+- **Klikateľné** (`a[href]`, `button`, `summary`, `label[for]`, `select`, `[role=button]`, `[role=tab]`, klikateľné fotky
+  `.ph-btn`, `.lv video`): „zdvihnutá“ červená činka (kotúče `#e2412f`, tyč kostená, sklon 30°), ten istý horúci bod,
+  záloha `pointer`. Selektor `:is(…)` má špecificitu (0,1,1) a je v súbore neskôr, takže prebije `button{cursor:pointer}`,
+  `.ph-btn{cursor:zoom-in}` a `.q summary`. Potomkovia odkazov a tlačidiel dedia (`:where(…) :where(*){cursor:inherit}`).
+  Zakázané tlačidlo (`button:disabled`, napr. šípka pásu na konci) má základnú činku.
+- **Text** (`p`, `li`, `dd`, `dt`, `td`, `th`, `h1`–`h4`, `blockquote`, `address`, `figcaption`, `caption`, textové `input`,
+  `textarea`, `[contenteditable]`): `cursor:text` – výber a kopírovanie adresy a telefónu ostávajú prirodzené.
+- Žiadny kurzor riadený JS (oneskorenie o snímku, práca hlavného vlákna, rozpočet JS). Súbory `assets/kurzor/`:
+  `cinka-32.png` (1,3 kB), `cinka-64.png` (2,5 kB), `cinka-akcia-32.png` (1,3 kB), `cinka-akcia-64.png` (2,7 kB) a zdrojové
+  `cinka.svg`, `cinka-akcia.svg`. Pri DPR 2 sa načíta 64 px verzia. Test `test_kurzor_len_pri_mysi` (8.5).
 
 ---
 
@@ -694,6 +714,8 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   </figure>
   ```
   - **Bez atribútu `poster`.** Dnes sa 116 kB plagátov sťahuje pri štarte.
+  - *(Filmová vrstva A, PRI-4)* `<picture>` plagátu má triedu `rv-img` (odhalenie 5.3 s čakaním na načítanú fotku): na pomalej
+    sieti sa nikdy neukáže prázdny rám. Plagát sa pri odhalení nezväčšuje (`scale:none`) – rozlíšenie obmedzuje video (464 a 576 px).
   - Tlačidlá majú najmenej 44 × 44.
   - Rám 4 : 5, `--r-img`. Štítok vľavo hore na rgba(11,12,15,.72).
 
@@ -797,13 +819,22 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   - rám 4 : 3 na `--bg-2`, `--r-img`;
   - zástupný obsah: ikona špendlíka, adresa (`data-fact=street`/`city`) a `button.btn.btn-g.btn-sm[data-map-load]` (`R.mapa_zobrazit`);
   - iframe sa načíta pri kliknutí na tlačidlo **alebo** pri priblížení (IO, `rootMargin:'200px'`, ako dnes) a prelne sa (`--dur-3`). `filter:grayscale(.85)` na iframe.
+  - *(Filmová vrstva B, PRI-3 – nikdy biela ani prázdna plocha)* Zástupný obsah je zároveň **záložná karta** v štýle webu:
+    adresa písmom nadpisov (`.map-addr`, pod ňou budova a mestská časť), obrys `--line` a riadok tlačidiel `.map-act`
+    s odkazom **Navigovať** (`K.mapa`, Google Mapy v novom okne) a tlačidlom Zobraziť mapu. Pred vložením iframu `mapEmbed`
+    overí dostupnosť Google malou sondou (`new Image()` na `https://www.google.com/favicon.ico`); iframe sa vloží až po jej
+    `load`. Pri chybe sondy (Google zablokovaný), offline (`navigator.onLine === false`) a v rámci (`window !== top`, napr.
+    náhľad claude.ai s CSP `frame-src`) sa Google vôbec nekontaktuje alebo iframe nevloží, mapa dostane `.is-off`
+    (skryje Zobraziť mapu) a karta s Navigovať ostane. Bez JS (`html.no-anim`) karta s Navigovať, bez Zobraziť mapu.
+    Pri zablokovanom Google zapíše prehliadač do konzoly jednu sieťovú hlášku sondy („Failed to load resource“, nie chyba
+    JS) – rovnakú by zapísal aj iframe; v náhľade (rámec) a offline sa Google nekontaktuje.
   - Text „Mapa sa načíta pri posune sem.“ sa ruší.
 
 ### 4.14 Pätička `footer.foot`
 
 - **`.foot-cta`** (na `--bg`, `padding-block:clamp(72px,9vw,136px)`):
   - `p.foot-k` (dnešný obsah, 13 px verzálkami `--ink-3`);
-  - `p.foot-h` (vzhľad H2, `nadpis(TX.paticka.slogan)`, `em` `--red`; druhé povolené miesto červeného nadpisu);
+  - `p.foot-h` (vzhľad H2, `nadpis(TX.paticka.slogan)`, `em` `--red`; druhé povolené miesto červeného nadpisu); *(Filmová vrstva, FIL-09)* v obale `<div class="mask">` – záverečný titulok vyjde z masky ako nadpisy kapitol (5.4 #14);
   - `.foot-act`: `a.btn.btn-p.btn-lg.btn-arrow` (`P.adresa.navigovat_na`) a `a.btn.btn-g.btn-lg` (telefón).
 - **`.foot-in`** (kostený spodok `--bone`, text #0b0c0f, `padding-block:56px 40px`):
   - plnofarebné logo 140 px;
@@ -811,7 +842,7 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   - `nav.foot-nav` v 3 stĺpcoch, každý odkaz riadok ≥ 44 px, farba #0b0c0f, hover #b52d1c. Položky:
     - 7 rovnakých ako menu + `PR.bar.nadpis_maly` → `#bar` (za Priestorom);
     - Instagram (`R.instagram`), Facebook (`R.facebook`), web (`K.web_text`);
-  - partner MDS (logo 40 px a dnešné texty);
+  - partner MDS (logo 40 px a dnešné texty; *Filmová vrstva A, PRI-6:* `picture` loga má `flex:none`, pri 1024 px ostáva 40 × 40);
   - `p.foot-copy` (© `[data-year]`, `data-fact=fullname`, `R.prava`; 13 px #5c5a55).
 
 ### 4.15 Dok, tlačidlo hore, lightbox
@@ -837,7 +868,7 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   --dur-3:320ms;   /* UI stavy: menu, lišta, filter, lightbox, dok, mapa */
   --dur-4:640ms;   /* odhalenie textu a riadkov */
   --dur-5:900ms;   /* nadpis z masky, riadky H1 */
-  --dur-6:1100ms;  /* opona fotky */
+  --dur-6:1100ms;  /* expozícia fotky (závoj), pásy úvodu */
   --dur-7:1600ms;  /* usadenie fotky (scale), usadenie úvodu */
   --ease-out:cubic-bezier(.16,1,.3,1);     /* príchod, usadenie */
   --ease-io:cubic-bezier(.65,0,.35,1);     /* presun medzi stavmi, opona */
@@ -845,15 +876,18 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
   --ease-ui:cubic-bezier(.2,0,0,1);        /* hover, drobné stavy */
   --rise:14px; --rise-2:24px; --stagger:70ms;   /* najviac 4 súrodenci = 280 ms */
   --zoom-in:1.06; --zoom-hover:1.03; --par:18px;
+  --zoom-kb:1.08;  /* pomalé odďaľovanie veľkých záberov (5.6, FIL-04) */
 }
 @media (prefers-reduced-motion: reduce){
-  :root{--dur-3:0s;--dur-4:0s;--dur-5:0s;--dur-6:0s;--dur-7:0s;--rise:0px;--rise-2:0px;--stagger:0ms;--zoom-in:1;--zoom-hover:1;--par:0px}
+  :root{--dur-3:0s;--dur-4:0s;--dur-5:0s;--dur-6:0s;--dur-7:0s;--rise:0px;--rise-2:0px;--stagger:0ms;--zoom-in:1;--zoom-hover:1;--zoom-kb:1;--par:0px}
   html{scroll-behavior:auto}
   .dot::after,:root .is-open .dot.is-vis::after{animation:none}
 }
 ```
 
 - Toto je **jediný** blok `prefers-reduced-motion: reduce` v `style.css`.
+- *(Filmová vrstva, 3. 11. 2026)* Každý pohybový token z `:root` (`--dur-3` až `--dur-7`, `--rise*`, `--stagger`, `--zoom-*`
+  vrátane `--zoom-kb`, `--par`) má v tomto bloku nulový náprotivok – overuje `test_naprotivky_v_bloku_reduce`.
 - *(Opravy po kontrole B4)* Pulz bodky vypína v bloku `reduce` aj selektor `:root .is-open .dot.is-vis::after` – vyššia špecificita (0,4,1) ako pravidlo s `infinite` (`.is-open .dot.is-vis::after`, 0,3,1), lebo blok `reduce` je v súbore skôr a pri rovnakej špecificite by prehral; samotné `.dot::after{animation:none}` (0,1,1) to pravidlo neprebilo a záruka stála len na tokene `--dur-7:0s`. `test_css_pravidla` overuje, že každý selektor s `infinite` má v bloku `reduce` náprotivok s `animation:none`, ktorý ho prebije (vyššia špecificita, alebo rovnaká a neskôr v súbore).
 - Prelínanie farby a opacity do 200 ms (`--dur-1`, `--dur-2`) ostáva aj pri obmedzenom pohybe, nejde o pohyb.
 - Všetky `transition` a `animation` v súbore používajú len tieto tokeny. Iné trvania sú dovolené len ako výpočet z tokenov.
@@ -885,25 +919,34 @@ Z eseje vypadnú: `vstup-1`, `recepcia-1`, `terasa-1` (snímky z videa), `funkcn
 
 ```css
 /* text, riadky, karty */
-html.rv-on .rv:not(.is-in){opacity:0;translate:0 var(--rise)}
+html.rv-on .rv:not(.is-in){opacity:0;translate:0 var(--rise);transition:none}
 .rv{transition:opacity var(--dur-4) var(--ease-out) calc(var(--i,0)*var(--stagger)),
                translate var(--dur-4) var(--ease-out) calc(var(--i,0)*var(--stagger))}
 /* nadpis z masky – obal je MIMO h2, nadpis() sa nemení */
-.mask{display:block;overflow:clip;padding-block:.18em .06em;margin-block:-.18em -.06em}
-html.rv-on .mask:not(.is-in) > *{translate:0 105%}
+.mask{display:block;overflow:clip;padding-block:.2em .16em;margin-block:-.2em -.16em}
+.mask:has(>.h2,>.foot-h){font-size:var(--fs-h2)} .mask:has(>.h3){font-size:var(--fs-h3)}
+html.rv-on .mask:not(.is-in) > *{translate:0 calc(105% + .4em);transition:none}
 .mask > *{transition:translate var(--dur-5) var(--ease-out)}
-/* fotka: opona vo farbe pozadia, odhalenie vždy zdola, len kompozítor */
-.ph::after{content:"";position:absolute;inset:0;background:var(--rv-bg,var(--bg));transform-origin:50% 0;pointer-events:none;scale:1 0}
-html.rv-on .rv-img:not(.is-in)::after{scale:1 1}
-.rv-img::after{transition:scale var(--dur-6) var(--ease-io)}
-html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
+/* fotka: expozícia z tmy (5.6 FIL-03) – závoj vo farbe pozadia sa prelne preč, len kompozítor */
+.rv-img::after{content:"";position:absolute;inset:0;background:var(--rv-bg,var(--bg));pointer-events:none;opacity:0;transition:opacity var(--dur-6) var(--ease-ui)}
+html.rv-on .rv-img:not(.is-in)::after{opacity:1;transition:none}
+html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in);transition:none}
 .rv-img img{transition:scale var(--dur-7) var(--ease-out)}
 .no-tr,.no-tr *, .no-tr::after, .no-tr *::after{transition:none!important}
 ```
 
-- Opona má `transform-origin` hore a zmenšuje sa k hornej hrane, takže fotka sa odkrýva zdola nahor.
+*(Zmenené vo Filmovej vrstve 3. 11. 2026, podrobnosti v 5.6 a `IMPLEMENTACIA-POZNAMKY.md`, časť „Filmová vrstva a kurzor“:)*
+opona `scale` Y je nahradená expozíciou (`opacity` toho istého pseudoprvku, FIL-03); skryté stavy majú `transition:none`
+(P-01: pri štarte sa prvky mimo okna skryjú hneď, prechod beží len pri odhalení – vzhľad sa nemení, otvorenie je ľahšie);
+maska nadpisu má okraj v em nadpisu (`--fs-h2`, `--fs-h3`), aby neorezala mäkčene prvého riadku ani čiarku posledného
+(PRI-5, bez `:has()` ostáva em textu). Fotky eseje a medzihra majú namiesto usadenia pomalé odďaľovanie (FIL-04).
+
+- ~~Opona má `transform-origin` hore a zmenšuje sa k hornej hrane, takže fotka sa odkrýva zdola nahor.~~ *(Filmová vrstva:
+  závoj sa prelne preč – celá kompozícia je vidieť od 80–160 ms, FIL-03.)*
 - `--i` zapisuje šablóna (`style="--i:{{ [loop.index0, 4]|min }}"`).
 - `.mask` obaľuje `h2.h2` v hlavičkách sekcií a `h3.h3` v Detailoch, Bare a krokoch. **Neobaľuje** H1 (úvod má vlastné `.line`). Doslovné testy H2 tak ostávajú.
+- *(Filmová vrstva A, PRI-4)* Rovnaké čakanie na načítanú fotku má aj karta trénera (`.coach`) a plagát videa
+  (`picture.rv-img`, 4.7) – po skoku z menu na pomalej sieti (Slow 4G) 0 prázdnych rámov.
 - **Fotka sa odhalí až keď je načítaná:** IO pridá `is-in` po splnení oboch podmienok: prvok je v okne a `img.complete`, inak sa čaká na `load`/`error`. Pod oponou je `background:var(--bg-2)`, nikdy sa neodhalí prázdny rám.
   - *(Opravy po kontrole B4)* Platí vo všetkých cestách odhalenia – pri štarte (prvok v okne), pri rýchlom posune (prvok sa objaví v hornej polovici okna), po skoku (`odhalHned`) aj po filtri: kým obrázok nie je `complete`, opona ostáva a po `load`/`error` odíde animovane (bez `.no-tr`). Hotový obrázok (aj chybný: `complete` bez `naturalWidth`) sa odhalí hneď. Poistka je 8 s a platí len pre požiadavku, ktorá sa nikdy neskončí – pôvodných „najviac 800 ms“ by na pomalej sieti odhalilo prázdny rám, do ktorého fotka skočí.
 - **Prvky v okne pri štarte** (obnova stránky, otvorenie s kotvou, skok z menu) dostanú `.is-in` spolu s `.no-tr`. `.no-tr` sa odstráni po 2 snímkach (`requestAnimationFrame` × 2).
@@ -920,11 +963,13 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 
 ### 5.4 Katalóg prechodov
 
+*FV* v bunke = zmenené vo Filmovej vrstve (3. 11. 2026, kapitola 5.6 a `IMPLEMENTACIA-POZNAMKY.md`, „Filmová vrstva a kurzor“); zmenené riadky: #1, #2, #3, #11, #14, #15, #31; vo Filmovej vrstve A/B (opravy z prípravy) #25 a #32.
+
 | # | Prechod | Spúšťač | Technika | Trvanie, krivka | Záloha (Safari iOS ≤ 17/18, Firefox) | Obmedzený pohyb |
 |---|---|---|---|---|---|---|
-| 1 | Otvorenie úvodu: fotka | `hx-lit` (po `img.decode()`, najneskôr 1200 ms) | LQIP podklad; `.hero-cam img` `scale` 1.06 → 1; `.hero-expo` opacity .5 → 0 (700 ms) | `--dur-7`, `--ease-out` | rovnaké (transform, opacity) | bez `hx`, hneď konečný stav |
-| 2 | Otvorenie úvodu: H1 | `hx-go` (písmo alebo 300 ms, čo skôr) | `.line > span` `translate` 0 110 % → 0, druhý riadok s oneskorením 120 ms | `--dur-5`, `--ease-out` | rovnaké | hneď |
-| 3 | Otvorenie úvodu: ostatné | `hx-go` | `.hero-live`, `.hero-p`, `.hero-cta`, kolofón, dok: opacity + `translate 0 12px` | `--dur-4`, oneskorenie 0 / 200 / 280 / 480 / 560 ms | rovnaké | hneď |
+| 1 | Otvorenie úvodu: fotka | `hx-lit` (po `img.decode()`, najneskôr 1200 ms) | LQIP podklad; `.hero-cam img` `scale` 1.06 → 1; `.hero-expo` opacity .5 → 0 (700 ms). *FV (FIL-01, len ≥ 861 px):* rozmazaný LQIP **nad** fotkou (`.hero-cam::after`) opacity 1 → 0 (`--dur-5`, `--ease-io`) a `scale --zoom-in → 1` (`--dur-7`) = zaostrenie; pásy 2,39 : 1 (`.hero-media::before/::after`, `--bg`) `scale 1 1 → 1 0` (`--dur-6`, `--ease-io`, oneskorenie `--dur-2`) | `--dur-7`, `--ease-out` | rovnaké (transform, opacity) | bez `hx`, hneď konečný stav (pseudoprvky opacity 0, pásy `scale 1 0`) |
+| 2 | Otvorenie úvodu: H1 | `hx-go` (písmo alebo 300 ms, čo skôr) | `.line > span` `translate` 0 110 % → 0; *FV (FIL-01c):* riadok 1 o 140 ms, červený riadok 2 o 350 ms ako samostatný úder (predtým 0 a 120 ms) | `--dur-5`, `--ease-out` | rovnaké | hneď |
+| 3 | Otvorenie úvodu: ostatné | `hx-go` | `.hero-live`, `.hero-p`, `.hero-cta`, kolofón, dok: opacity + `translate 0 12px` | `--dur-4`, oneskorenie *FV (FIL-01c):* 0 / 520 / 590 / 760 / 840 ms (predtým 0 / 200 / 280 / 480 / 560 ms); všetko dobehne do 1 480 ms, `hx-done` po 1 650 ms | rovnaké | hneď |
 | 4 | Opakovaná návšteva | `hx-quick` | len opacity | 300 ms | rovnaké | hneď |
 | 5 | Odchod úvodu pod list | `animation-timeline: scroll(root)` | `hxOut`/`hxDim`/`hxPush` (`style.css:1040–1049`), hodnoty: `.hero-in` opacity 1 → 0 a `translate 0 → -48px` (0–60svh), `.hero-dim` 0 → .55, `.hero-cam` `scale 1 → 1.05` (0–100svh) | lineárne s posunom | **statický** úvod, list ho len prekryje. **JS záloha `heroExit` sa maže** | statické |
 | 6 | Lišta skryť/ukázať | scroll (pasívny, rAF, číta len `scrollY`) | `translate: 0 -100%` | `--dur-3`, `--ease-io` | rovnaké | okamžitá zmena |
@@ -932,11 +977,11 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 | 8 | Aktívna položka menu | IO na sekciách menu, `rootMargin:'-45% 0px -50% 0px'` | linka `scale` X 0 → 1, `aria-current` | `--dur-2` | rovnaké | bez animácie |
 | 9 | Prúžok postupu | `scroll(root)` | `scale` X | lineárne | skrytý | skrytý |
 | 10 | Mobilné menu | burger | panel opacity 0 → 1 + `translate 0 -8px → 0` (`@starting-style` + `transition-behavior: allow-discrete` na `display`); odkazy opacity + `--rise` s odstupom 30 ms (max 8); zatvorenie opacity `--dur-2` `--ease-in` | `--dur-3`, `--ease-out` | bez `@starting-style` (iOS < 17.5) sa panel ukáže hneď | len zobraziť |
-| 11 | Skok z menu, pätičky, tlačidla na vzdialenú kotvu (> 1,5 výšky okna) | klik na `a[href^="#"]` s existujúcim cieľom | View Transition (6.2 `jump`): `::view-transition-old(root)` opacity → 0 (140 ms, `--ease-in`), `::view-transition-new(root)` opacity 0 → 1 a `translate 0 12px → 0` (280 ms, `--ease-out`); `.bar{view-transition-name:bar}`, `.dock{view-transition-name:dock}`, `::view-transition-group(bar),::view-transition-group(dock){animation:none}` | ≤ 280 ms | bez VT (iOS 17, Safari 18.0–18.3, Firefox < 144): `scrollIntoView({behavior:'smooth'})` | okamžitý skok |
+| 11 | Skok z menu, pätičky, tlačidla na vzdialenú kotvu (> 1,5 výšky okna) | klik na `a[href^="#"]` s existujúcim cieľom | View Transition (6.2 `jump`), *FV (FIL-05) strih cez tmu:* `::view-transition-old(root)` opacity → 0 (`--dur-2 × .7` = 140 ms, `--ease-in`), `::view-transition-new(root)` **až od 140 ms** opacity 0 → 1 (`--dur-3`, `--ease-out`, `@keyframes vtDipIn`, len opacity – bez posunu 12 px); `old(bar)`, `old(dock)` s oneskorením `--dur-2 × .6` = 120 ms (cez panel mobilného menu nepresvitne úvod); `.bar{view-transition-name:bar}`, `.dock{view-transition-name:dock}`, `::view-transition-group(bar),::view-transition-group(dock){animation:none}` | *FV:* 460 ms (predtým ≤ 280 ms) | bez VT (iOS 17, Safari 18.0–18.3, Firefox < 144): `scrollIntoView({behavior:'smooth'})` | okamžitý skok |
 | 12 | Skok na blízku kotvu (≤ 1,5 okna) | klik | `scrollIntoView({behavior:'smooth'})` | prehliadač | rovnaké | `auto` |
 | 13 | Odhalenie textu, riadkov, kariet | IO (5.3) | `.rv` | `--dur-4` + odstup | bez IO všetko viditeľné | viditeľné |
-| 14 | Odhalenie nadpisu | IO | `.mask > h2` z 105 % | `--dur-5`, `--ease-out` | rovnaké | viditeľné |
-| 15 | Odhalenie fotky | IO + načítaný obrázok | opona `scale` Y 1 → 0 (`--dur-6`, `--ease-io`) + `img scale` 1.06 → 1 (`--dur-7`, `--ease-out`) | – | rovnaké | viditeľné, bez zväčšenia |
+| 14 | Odhalenie nadpisu | IO | `.mask > h2` z 105 %; *FV (FIL-02) titulková karta:* linka štítku `scale 0 1 → 1 1` (`--dur-4`, `--ease-io`), štítok opacity (+`--stagger`), nadpis +2 × `--stagger`, lead opacity + `--rise` (+4 × `--stagger`), spúšťač `.mask.is-in` cez `:has()`; aj `p.foot-h` (FIL-09) | `--dur-5`, `--ease-out` | rovnaké; bez `:has()` štítok a lead hneď viditeľné | viditeľné |
+| 15 | Odhalenie fotky | IO + načítaný obrázok | *FV (FIL-03) expozícia z tmy:* závoj `.rv-img::after` opacity 1 → 0 (`--dur-6`, `--ease-ui`; predtým opona `scale` Y 1 → 0, `--ease-io`) + `img scale` 1.06 → 1 (`--dur-7`, `--ease-out`); v eseji a medzihre pomalé odďaľovanie FIL-04 (5.6) | – | rovnaké | viditeľné, bez zväčšenia |
 | 16 | Parallax `.opener`, `.pl-w` | `view()` | `.par translate` ±18 px | lineárne | statické | statické |
 | 17 | Náhľad Kde začať | `mouseenter`/`focusin` riadku (≥ 1024 px, `pointer:fine`) | 4 vrstvy: nová opacity 0 → 1 (`--dur-3`) a `scale` 1.04 → 1 (600 ms); šípka riadku `translate 4px` | `--ease-out` | rovnaké | len prelnutie `--dur-2` |
 | 18 | Hover klikateľnej fotky | `:hover`, `:focus-visible` (len `@media (hover:hover)` pre hover) | `picture scale` 1 → 1.03; prechod je na **základnom** stave (tam aj späť) | 700 ms, `--ease-out` | rovnaké | bez zväčšenia |
@@ -946,14 +991,14 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 | 22 | Lightbox: prechod do inej skupiny (priestor → detaily → bar) | rovnaké | „krok“: stará `scale 1 → 1.04` + opacity → 0 (320 ms, `--ease-io`), nová `scale .965 → 1` + opacity (420 ms, `--ease-out`, oneskorenie 60 ms); späť zrkadlovo | 420 ms | rovnaké | okamžite |
 | 23 | Lightbox: ťah prstom | pointer events na `.lb-stage`, `touch-action:pan-y` | vrstva ide s prstom 1 : 1 (`translate`); pustenie > 18 % šírky alebo rýchlosť > 0,5 px/ms = krok, inak návrat | návrat 240 ms `--ease-out` | rovnaké | bez animácie návratu |
 | 24 | Lightbox: zatvorenie | Esc (`cancel` → `preventDefault` + animácia), ×, klik na pozadie | spätný FLIP k náhľadu, ak je náhľad v okne; inak opacity + `scale .98`; potom `close()` a fokus späť na tlačidlo | 240 ms, `--ease-in` | `close()` hneď | okamžite |
-| 25 | Lightbox: video (Ladydefence) | `button.mds-lady-open` | ten istý dialóg, `video.lb-video` (`controls playsinline`, zdroj z `data-*`), šípky skryté; pri zatvorení `pause()` a `removeAttribute('src')` | ako #20 (bez FLIP, len opacity/scale) | rovnaké | bez autoplay |
+| 25 | Lightbox: video (Ladydefence) | `button.mds-lady-open` | ten istý dialóg, `video.lb-video` (`controls playsinline`, zdroj z `data-*`), šípky skryté; *Filmová vrstva A (PRI-7):* po otvorení `play()` (ťuknutie je gesto používateľa); pri zatvorení `pause()` a `removeAttribute('src')` | ako #20 (bez FLIP, len opacity/scale) | rovnaké | bez autoplay |
 | 26 | Filter trénerov | klik `.chip` | `document.startViewTransition(apply)`; počas prechodu má každá viditeľná `.coach` `view-transition-name: c-{index}` (JS nastaví pred a zmaže po `finished`); `::view-transition-group(*)` `--dur-3` `--ease-io` | 320 ms | bez VT: viditeľné karty opacity 0 → 1 (200 ms) | okamžite |
 | 27 | Rozvrh: výber dňa | klik, ←/→ | `.tt-row` opacity 0 → 1 + `translate 0 6px → 0`, odstup 40 ms (max 6) cez `animation-delay`, ako dnes | 320 ms | rovnaké | okamžite (`tt-quiet` pri minútovom obnovení ostáva) |
 | 28 | Otázky | `toggle` na `details` | `@supports (interpolate-size: allow-keywords){:root{interpolate-size:allow-keywords} details.q::details-content{block-size:0;overflow:clip;transition:block-size var(--dur-3) var(--ease-io),content-visibility var(--dur-3) allow-discrete} details.q[open]::details-content{block-size:auto}}`; vždy `details.q[open] .a{animation:fadeUp var(--dur-2) var(--ease-out)}` (opacity + 6 px) | 320 ms | výška sa zmení okamžite, obsah sa prelne (Safari, Firefox) | natívne |
 | 29 | Detail trénera | `details.coach-more` | rovnaké ako #28 | – | – | – |
 | 30 | Pás Detaily: šípky | `.strip-prev/.strip-next` | `strip.scrollBy({left: ±0,8 · clientWidth, behavior:'smooth'})`; `disabled` na koncoch (pasívny scroll + rAF, číta len `scrollLeft`, `scrollWidth` a `clientWidth` z `ResizeObserver`) | prehliadač | rovnaké | `behavior:'auto'` |
-| 31 | Video v sekcii | počítač: IO ≥ 50 % (pauza pod 20 %); telefón (`lite-root`): len ťuknutie na `.lv-play` | po udalosti `playing` sa `.lv-poster` prelne (opacity → 0) | `--dur-3` | plagát + tlačidlo | nikdy samo, tlačidlo Prehrať |
-| 32 | Mapa | klik alebo IO | iframe opacity 0 → 1 po `load` | `--dur-3` | rovnaké | okamžite |
+| 31 | Video v sekcii | počítač: IO ≥ 50 % (pauza pod 20 %); telefón (`lite-root`): len ťuknutie na `.lv-play` | po udalosti `playing` sa plagát (`.lv > picture`) prelne (opacity → 0); plagát má odhalenie `.rv-img` (4.7) | *FV (FIL-08):* `--dur-5`, `--ease-io` (predtým `--dur-3`, `--ease-out`) | plagát + tlačidlo | nikdy samo, tlačidlo Prehrať |
+| 32 | Mapa | klik alebo IO | *Filmová vrstva B (PRI-3):* iframe sa vloží až po úspešnej sonde Google (4.13); potom opacity 0 → 1 po `load`; pri chybe sondy, offline a v rámci (náhľad) záložná karta s adresou a Navigovať (`.is-off`) | `--dur-3` | rovnaké | okamžite |
 | 33 | Stavová bodka | IO pridá `.is-vis` | `::after` `scale 1 → 2.4`, opacity .5 → 0, `infinite` | 2,4 s `--ease-out` | rovnaké | bez pulzu |
 | 34 | Dok | IO na pätičke, otvorené menu | `translate 0 100%` + opacity | `--dur-3` | rovnaké | okamžite |
 
@@ -962,8 +1007,12 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 1. Zavolať `flush()` odložených inicializácií (ako dnes).
 2. Obrázkom s `loading=lazy` v prvej obrazovke cieľa nastaviť `loading='eager'` a čakať na `decode()` najviac 250 ms.
 3. Vo vnútri `startViewTransition`: `window.scrollTo({top: cieľ, behavior:'instant'})` a prvkom `.rv`, `.mask`, `.rv-img` v cieľovej obrazovke pridať `.is-in .no-tr`.
-4. Po `finished`: `history.pushState(null,'','#'+id)` a fokus na nadpis cieľa (`tabindex="-1"`, `focus({preventScroll:true})`).
-5. Pri `hashchange`/späť v histórii prehliadač zaskočí sám (bez VT).
+4. Po `finished`: fokus na nadpis cieľa (`tabindex="-1"`, `focus({preventScroll:true})`). *(Filmová vrstva B, PRI-2:)*
+   `history.pushState(null,'','#'+id)` sa volá **pred** posunom (pred `startViewTransition` aj okamžitým skokom), aby si
+   prehliadač k pôvodnému záznamu uložil pôvodnú polohu; predtým sa volal až po posune a Späť nechal stránku na cieli.
+5. Pri Späť (`popstate`) sa na dve snímky odoberie `html.sm`, takže prehliadač vráti pôvodnú polohu okamžite (strihom),
+   nie plynulým prejazdom celej stránky; potom sa `sm` vráti. Fokus a CLS 0 ostávajú (overené `kontrola_spat.mjs`,
+   12 scenárov pri 390 a 1440, s pohybom aj pri `reduce`).
 6. **Detekcia funkcie:** `'startViewTransition' in document && !/Version\/18\.[0-3](\.\d+)? .*Safari/.test(navigator.userAgent)`. Safari 18.0–18.3 má chyby pri zmene polohy skrolovania; vynecháva sa vedome a kontrola je obmedzená len na tieto verzie.
 7. **Názvy kapitol v JS (`CHAPTERS`) sa rušia** spolu s `filmCut` a `.cut`.
 
@@ -986,6 +1035,47 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 
 **Selektory a atribúty:** `.marquee`, `.gal-item`, `.tr-card`, `.rail`, `.f-field`, `[data-tilt]`, `.glowcard`, `[data-par]`, `[data-depth-*]`, `.reel*`, `.cut*`, `.band*`, `.bridge*`, `.ticker*`, `.pole-rule`, `.ch`, `--spring`, `--volt*`, `--acc-*`, `--panel-grad`.
 
+### 5.6 Filmová vrstva *(doplnené 3. 11. 2026 na žiadosť majiteľa: „filmové prechody, cinematické efekty, nech to vyzerá profesionálne“; koncept `film/koncept/KONCEPT.md`, implementácia vetva `filmova-vrstva`, commity `07eca7a` a `c8de97f`)*
+
+Filmová vrstva nemení pravidlá 5.2: animujú sa len `opacity`, `translate`, `scale`; nič nie je viazané na polohu skrolu po
+snímkach; nič sa nepripína; jediná nekonečná animácia je `ping`; každý automatický pohyb skončí do 5 s (SPEC 10); pri
+obmedzenom pohybe a bez JS je stránka statická a všetko viditeľné. Je to **len CSS** (časť 19 `style.css` a úpravy častí 8,
+10 a 18) – spúšťajú ju triedy, ktoré stránka už má: `hx`, `hx-lit`, `hx-go`, `.is-in`, `vt-jump`, `.is-playing`. Nový JS sa
+nepridáva (výnimka: oprava Späť v `jump()`, 5.4 #11 body 4 a 5). Nepribúda žiadny text ani médium (čísla scén a titulky
+nie – rytmus kapitol dáva FIL-02 bez textu); pracuje sa len so skutočnými fotkami z fitka.
+
+**Režijné pravidlá:** kamera sa hýbe pomaly (1,6–4,8 s, `--ease-io`), strih je rýchly (≤ 460 ms); fotka sa „exponuje“
+z tmy, neodkrýva sa stierkou; titulok má poradie linka → štítok → nadpis → lead; strih cez tmu, nikdy dvojexpozícia.
+
+| ID | Prechod | Spúšťač | Technika | Trvanie, krivka | Záloha (Safari, Firefox) | Obmedzený pohyb, bez JS |
+|---|---|---|---|---|---|---|
+| FIL-01 | Otvárací záber úvodu | `hx-lit`, `hx-go` | ≥ 861 px: LQIP nad fotkou `opacity 1→0` + `scale --zoom-in→1` (zaostrenie) a pásy 2,39 : 1 `scale 1 1→1 0`; všade rytmus titulku 140/350/520/590/760/840 ms (časť 18; skratka `animation:hxUp` je v `:where()`, aby ju oneskorenia prebili – s `:is()` mala vyššiu špecificitu a odsek, tlačidlá a dok sa v B4 objavili naraz, test `test_rytmus_titulku_uvodu`) | `--dur-5` `--ease-io` / `--dur-7` `--ease-out`; pásy `--dur-6` `--ease-io` + `--dur-2` | rovnaké | statický úvod (bez `hx`; aj opakovaná návšteva `hx-quick`) |
+| FIL-02 | Titulková karta kapitoly (`.sec-head` 8×, `.opener-in`) | `.mask.is-in` cez `:has()` | linka štítku `scale 0 1→1 1`, štítok `opacity`, nadpis z masky +2 × `--stagger`, lead `opacity` + `--rise` +4 × `--stagger` | `--dur-4`; karta 920 ms | bez `:has()` štítok a lead hneď viditeľné | viditeľné |
+| FIL-03 | Expozícia fotky (nahrádza oponu #15) | `.rv-img.is-in` (fotka načítaná) | závoj `.rv-img::after` `opacity 1→0`; usadenie `img` ako #15 | `--dur-6` `--ease-ui` | rovnaké | viditeľné |
+| FIL-04 | Pomalé odďaľovanie (Ken Burns časom, nie skrolom) | `.is-in` rámu eseje; medzihra `.opener:has(.mask.is-in)` | `img scale --zoom-kb→1` (+ posun −1,6 % pri širokej ploche, ±1,2 % pri rozloženej) | 3 × `--dur-7` = 4,8 s, `--ease-io`, potom stojí | rovnaké | bez pohybu (`--zoom-kb:1`, trvanie 0) |
+| FIL-05 | Strih cez tmu (nahrádza #11) | klik na vzdialenú kotvu | `old(root) opacity→0`; `new(root)` od 140 ms `opacity 0→1` (len opacity); `old(bar/dock)` oneskorenie 120 ms | 140 + 320 ms | bez VT plynulý posun | okamžitý skok |
+| FIL-06 | Vineta medzihry | – (statická) | `radial-gradient(130% 95% at 50% 42%, transparent 58%, rgba(11,12,15,.42) 100%)` na prvom mieste pozadia `.opener-media::after` | – | – | – |
+| FIL-07 | Lightbox ako premietanie – **neimplementované** (5.6.7) | otvorenie | `::backdrop` .97, popisok po dosadnutí letu (420 ms) | – | – | – |
+| FIL-08 | Plagát → video | `.lv.is-playing` | `picture opacity→0` | `--dur-5` `--ease-io` | rovnaké | video samo nehrá |
+| FIL-09 | Záverečný titulok | `.mask.is-in` | `p.foot-h` v `.mask` (4.14) | `--dur-5` `--ease-out` | rovnaké | viditeľné |
+| FIL-10 | Kurzor činka | `@media (hover:hover) and (pointer:fine) …` | CSS `cursor: image-set(…)` (2.8) | – | `url()` / `-webkit-image-set` | – (systémový pri vysokom kontraste a vynútených farbách) |
+
+- **5.6.1** Nový token `--zoom-kb:1.08` (pri `reduce` 1, 5.1).
+- **5.6.2** `:has()` sa používa len ako spúšťač skrytého stavu (FIL-02, FIL-04); bez podpory sa pravidlá zahodia a stav
+  je viditeľný (overené simuláciou – `film/impl/skripty/zaloha.mjs`, profil `bez-has`).
+- **5.6.3** Prvky v okne pri štarte a po skoku (`.no-tr` na maske) sa ukážu hneď vrátane štítku, leadu a bez odďaľovania.
+- **5.6.4** Zamietnuté (KONCEPT 4): čísla scén, filmové zrno, svetelné záblesky a „light leaks“, stierky cez obrazovku,
+  `filter`/`clip-path` v animácii, pásy natrvalo alebo na telefóne, video v úvode a film z klipov, Ken Burns dlhší ako 5 s,
+  JS kurzor; zaostrenie úvodu na telefóne (meranie pri CPU 4× predĺžilo dlhé úlohy otvorenia a LCP).
+- **5.6.5** Späť po skoku: `pushState` pred posunom, pri `popstate` sa na dve snímky vypne `html.sm` (5.4 #11).
+- **5.6.6** Skryté počiatočné stavy (5.3 aj 5.6) majú `transition:none` (P-01): pri štarte (`rv-on`) sa prvky mimo okna
+  skryjú hneď a prechod beží len pri odhalení (`.is-in`); inak by pri načítaní desiatky prvkov mimo okna 0,6–4,8 s
+  animovali (KONCEPT 7). Overuje `test_naprotivky_v_bloku_reduce`.
+- **5.6.7** FIL-07 (lightbox ako premietanie) **nie je implementovaný** – je voliteľný (let fotky z B4 je už filmový) a
+  oneskorenie len popisku by v `app.js` stálo bajty nad rozpočtom 6; ostáva otvoreným rozhodnutím.
+- **5.6.8** Rozpočet: časť 19 `style.css` ≤ 2,6 kB gzip, kurzory ≤ 8 kB, žiadny nový súbor JS, `app.js` ≤ 14 kB gzip
+  (`test_rozpocet_filmovej_vrstvy`). Výkon a vrstvy: 9 a `IMPLEMENTACIA-POZNAMKY.md`, „Filmová vrstva a kurzor“.
+
 ---
 
 ## 6. JavaScript `assets/app.js` (prepis v jednom súbore, ≤ 14 kB gzip)
@@ -997,7 +1087,7 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 - `esc()` pri **každom** vkladaní textu do `innerHTML`. `esc(c.name)`, `esc(c.note)`, `esc(c.coach)`, `esc(c.from)`, `esc(c.to)`, `esc(c.tag)` doslova (test).
 - `fillFacts`, `hoursTable` (doplní `is-today` riadku), `timetable` (6.2), `coaches` + `setCoachFilter`, `dock` (prepínanie `href` `.dock-cta`), `copyAddr` (texty z `data-done` a pôvodného textu tlačidla, nie napevno), `mapEmbed` (+ tlačidlo `[data-map-load]`), `heroFit`, `liveVideo`.
 - Udalosti `gk:tick` a `gk:hero-done`. Odložené inicializácie po `gk:hero-done`, prvom posune nad 0,3 okna alebo kliku na kotvu, ako dnes (`app.js:707–724`).
-- `html.sm` po `load` (plynulé skrolovanie CSS až po prvom vykreslení).
+- `html.sm` po `load` (plynulé skrolovanie CSS až po prvom vykreslení). *(Filmová vrstva B:)* pri `popstate` sa `sm` na dve snímky odoberie (Späť vráti polohu strihom, 5.4 #11 bod 5).
 
 ### 6.2 Moduly
 
@@ -1007,7 +1097,7 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in)}
 | `menu()` | burger, `html.nav-open`, Esc, návrat fokusu, zatvorenie pri kliku na odkaz a pri zmene na ≥ 861 px | `aria-expanded`, `aria-label` |
 | `activeNav()` | IO na 7 sekciách menu; `aria-current` a `.is-active`; **ruší stav**, keď v pásme nie je žiadna sekcia (oprava B2) | – |
 | `reveal()` | pridá `html.rv-on`; 1 IO podľa 5.3; prvky v okne pri štarte okamžite (`no-tr`); pri `rv-img` čaká na obrázok (≤ 800 ms) | bez IO: všetko `is-in` |
-| `jump()` | 5.4 #11, #12; delegovaný klik na `document` pre `a[href^="#"]` s existujúcim cieľom (aj `.skip`: len fokus na `#main`) | pri `reduce` okamžitý skok + fokus |
+| `jump()` | 5.4 #11, #12; delegovaný klik na `document` pre `a[href^="#"]` s existujúcim cieľom (aj `.skip`: len fokus na `#main`); *Filmová vrstva B:* `pushState` pred posunom, poslucháč `popstate` (5.4 #11 body 4 a 5) | pri `reduce` okamžitý skok + fokus |
 | `dots()` | IO pridáva/odoberá `.is-vis` na `.dot` v obale `.is-open` | – |
 | `timetable()` | dnešná logika; v `drawTabs` navyše `data-n` (počet lekcií, „–“ pri 0, „!“ pri sviatku) a `aria-label` s plným textom; `textContent` tlačidla bez zmeny | test `' lekcií'` |
 | `coaches()` | filter; zmenu obalí `document.startViewTransition` (5.4 #26), ak je k dispozícii a nie je `reduce` | `[data-coach-count]` |
@@ -1419,8 +1509,11 @@ Zástupné značky v nových poliach fungujú automaticky.
 | `test_haky_v_html` | Pozitívne háky z 1.1 sú v HTML; negatívne neexistujú: `depth.js`, `<canvas`, `class="ch"`, `ticker`, `bridge`, `data-tilt`, `data-par`, `data-depth`, `btn-volt`, `reel-`, `class="cut"`. |
 | `TestZjednotenie` | 7.1 |
 | `test_css_pravidla` | `style.css`: `!important` ≤ 5; regex `prefers-reduced-motion\s*:\s*reduce` presne 1×; každý výskyt `infinite` je v deklarácii s `ping`; žiadne `backdrop-filter`, `GK Hero`, `Fraunces`, `JetBrains`, `Archivo`, `Bebas`, `--volt`; `fonts.css` bez týchto rodín; gzip `style.css` ≤ 22 kB, `app.js` ≤ 14 kB (`gzip.compress(…, 9)`). |
+| `test_kurzor_len_pri_mysi` *(Filmová vrstva)* | Obrázkové kurzory len v bloku `@media (hover:hover) and (pointer:fine) and (prefers-contrast:no-preference) and (forced-colors:none)`; každý so zálohou `url()` → `-webkit-image-set()` → `image-set()`, horúcim bodom `3 3` a `auto`/`pointer` na konci; 4 PNG 32 a 64 px; `cursor:text` pre text; pravidlá 2.6 (`button`, `.ph-btn`, `.q summary`) ostávajú pred blokom (2.8). |
+| `test_naprotivky_v_bloku_reduce` *(Filmová vrstva)* | Každý pohybový token z `:root` (`--dur-3`–`--dur-7`, `--rise*`, `--stagger`, `--zoom-*`, `--par`) má v bloku `reduce` nulovú hodnotu; každý skrytý stav `html.rv-on … :not(.is-in)` s `opacity`/`scale` má `transition:none` (5.6.6). |
+| `test_rozpocet_filmovej_vrstvy` *(Filmová vrstva)* | Časť 19 `style.css` ≤ 2,6 kB gzip a prechody v nej len `opacity`/`translate`/`scale`, bez `filter`/`clip-path`; `@keyframes` v celom súbore len `opacity`/`translate`/`scale`/`rotate`; PNG kurzorov ≤ 8 kB; jediný skript `assets/app.js` ≤ 14 kB gzip bez `mousemove` (žiadny JS kurzor). |
 
-**`nastroje/test_prehliadac.mjs`:** 9 sekcií ostáva. `dlhe`, `bar`, `xss`, `komentar` a `cache` ostávajú. Spúšťa sa **dvakrát**, s `../lupa-vzor` aj s `../lupa-vzor-cms` (zmrazený 396f446).
+**`nastroje/test_prehliadac.mjs`:** 9 sekcií ostáva. `dlhe`, `bar`, `xss`, `komentar` a `cache` ostávajú. Spúšťa sa **dvakrát**, s `../lupa-vzor` aj s `../lupa-vzor-cms` (zmrazený 396f446). *(Filmová vrstva A, PRI-9)* Generátor spúšťa Python z premennej `PYTHON` (predvolene `python3`, ktorý v kontajneri nemá `jinja2`): `PYTHON=../venv/bin/python node nastroje/test_prehliadac.mjs ../lupa-vzor`. `test_vzhlad.mjs` berie pevný port z `PORT` (súbežné úlohy s vlastnými rozsahmi portov).
 
 **`nastroje/porovnaj_so_vzorom.mjs`:**
 
@@ -1441,7 +1534,7 @@ Zástupné značky v nových poliach fungujú automaticky.
 | TBT mobil / počítač | 35 / 13 822 ms | ≤ 150 / ≤ 100 ms |
 | CLS vrátane otvorenia `/#cennik` | 0,70 pri kotve | ≤ 0,02 |
 | `index.html` gzip | 24,2 kB | ≤ 25 kB |
-| `style.css` gzip | 32,9 kB | ≤ 22 kB (≤ 1 000 riadkov) |
+| `style.css` gzip | 32,9 kB | ≤ 22 kB (≤ 1 000 riadkov) *(po Filmovej vrstve 18,8 kB, 918 riadkov; časť 19 ≤ 2,6 kB)* |
 | `app.js` gzip | 12 + 5,6 kB | ≤ 14 kB |
 | Písma pred prvým vykreslením | 9 súborov, 211 kB | 3 súbory, ≤ 70 kB |
 | Logo v hlavičke | 22,5 kB | ≤ 15 kB gzip |
@@ -1450,12 +1543,19 @@ Zástupné značky v nových poliach fungujú automaticky.
 | Prenos po prejdení celej stránky | 9,05 / 8,3 MB | mobil ≤ 3,5 MB (videá len po ťuknutí), počítač ≤ 5 MB |
 | Plynulosť pri skrolovaní (`audit-pohyb/skripty/meraj.mjs`, gesto 2 000 px/s, bez WebGL) | 26,8 / 33,3 fps (hlavné vlákno, CPU 4×) | **CPU 4×:** snímky kompozítora z trace (`DrawFrame`, `kompozitor.py`) ≥ 55 za s a ≤ 1 % intervalov > 50 ms; **CPU 1×:** snímky hlavného vlákna ≥ 55 fps a ≤ 1 % snímok > 50 ms; na počítači aj telefóne *(prah zmenený po kontrole B4, zdôvodnenie pod tabuľkou)* |
 | Nečinnosť hlavného vlákna (`necinnost.mjs`, CPU 4×) | 63–82 % | ≤ 6 % |
-| Vrstvy kompozítora | 81–110 | ≤ 40 |
+| Vrstvy kompozítora | 81–110 | ≤ 40 *(v pokoji, metóda B4; Filmová vrstva: 390 31/29/29, 1440 23/33/21 hore/Detaily/Cenník. Počas prechodov – „najviac počas scény“ – je už 809bc02 nad 40: 390 40/32/55, 1440 36/47/55 úvod/esej/skok; filmová vrstva 38/31/55 a 32/50/64. Navrhovaný prah počas prechodov „≤ stav pred + 10“ potvrdí orchestrátor.)* |
 | Nekonečné animácie pri nečinnosti | 12 | len `ping`, len bodky v obraze |
 | Kontexty WebGL a `<canvas>` | 2–3 | 0 |
 | Výška stránky | 27,3 / 35,5 obrazovky | ≤ 18,5 / ≤ 23 |
 
 *(Rozhodnutie o prahu plynulosti – Opravy po kontrole B4: pohyb B4 je len kompozitný (opacity, translate, scale, rotate), to, čo návštevník vidí, sú snímky kompozítora; snímky hlavného vlákna pri CPU 4× merajú réžiu prepočtu štýlu a PrePaint počas bežiacich prechodov. V tomto kontajneri nedosiahne prah 55 fps hlavného vlákna pri CPU 4× ani stránka bez pohybu (stav pred B4, `4675cfb`: 50,8–54,4 fps na počítači), vzor má 12,5–18,8 fps a 25–48 % snímok > 50 ms. Preto pri CPU 4× platí prah na snímkach kompozítora (`meraj.mjs --trace` + `kompozitor.py`, `DrawFrame`; B4 56,9 / 59,5 za s, kontrola 55,0 / 58,2, po opravách 55,8 / 58,0 za s s 0,6 / 0,4 % intervalov > 50 ms) a prah hlavného vlákna ≥ 55 fps a ≤ 1 % snímok > 50 ms pri CPU 1× pre celú stránku (po opravách 56,0 / 59,8 fps, 0,1 / 0 %; po sekciách informatívne – krátke sekcie majú ~30 snímok, Intro na počítači 3,3 %). Hlavné vlákno pri CPU 4× sa sleduje informatívne (B4 38,9–40,3 / 47,4–50,0 fps, po opravách 38,0 / 47,9). Nečinnosť 0–1 %, vrstvy ≤ 35, CLS všetkých kotiev 0. Meranie a rozbor: `IMPLEMENTACIA-POZNAMKY.md`, časti B4 a Opravy po kontrole B4.)*
+
+*(Filmová vrstva, 3. 11. 2026 – A/B striedavo s `809bc02`, CPU 4×, bez WebGL, súbežná záťaž 1,7–5,4:)* `meraj.mjs --trace`
+cez celú stránku – snímky kompozítora 390: 59,4–59,8 za s (0–0,11 % > 50 ms; A 59,5–59,9), 1440: 57,1–58,5 (0,25–0,63 %;
+A 57,7–57,9) – prah splnený; hlavné vlákno pri CPU 4× (informatívne) 390: 51,7–53,0 (A 53,4–54,9), 1440: 47,1–49,6 (A 51,0–52,7)
+– odďaľovanie eseje (4,8 s) drží prechody dlhšie. `meraj_ab.mjs` (otvorenie, esej gestom, skok): kompozítor rovnaký alebo
+lepší, dlhé úlohy rovnako alebo menej, LCP bez systematického rozdielu (prvok vždy `img.hero-img`). Podrobnosti
+v `IMPLEMENTACIA-POZNAMKY.md`, „Filmová vrstva a kurzor“.
 
 **Opatrenia:**
 
@@ -1486,7 +1586,8 @@ Zástupné značky v nových poliach fungujú automaticky.
   - cenník má `th scope=row`;
   - detail trénera a otázky sú natívne `details`;
   - `figure.lv` video má `aria-label` z CMS.
-- **Pohyb:** obmedzený pohyb znamená statickú stránku a okamžité skoky. Žiadny automatický pohyb dlhší ako 5 s okrem stavovej bodky (WCAG 2.2.2; bežiaci pás sa ruší). Video v slučke má viditeľné ovládanie (klik na video pauzuje, ako dnes).
+- **Pohyb:** obmedzený pohyb znamená statickú stránku a okamžité skoky. Žiadny automatický pohyb dlhší ako 5 s okrem stavovej bodky (WCAG 2.2.2; bežiaci pás sa ruší; najdlhší pohyb filmovej vrstvy je odďaľovanie 4,8 s, 5.6 FIL-04). Video v slučke má viditeľné ovládanie (klik na video pauzuje, ako dnes).
+- **Kurzor** (2.8): obrázkový kurzor len pri myši; pri vysokom kontraste (`prefers-contrast: more`) a vynútených farbách systémové kurzory; textový kurzor nad textom ostáva.
 - **Jazyk a texty:** `lang="sk"`, diakritika, nezlomiteľné medzery z generátora ostávajú.
 
 ---
@@ -1555,6 +1656,12 @@ Implementátor si **každú snímku prezrie** (nástrojom Read) a zapíše nájd
 - Skripty z `redesign/audit-pohyb/skripty/` (prispôsobiť cestu k `_site` a port): `meraj.mjs` (CPU 4× s `--trace` a `kompozitor.py` pre snímky kompozítora, CPU 1× pre hlavné vlákno; 1440 a 390), `necinnost.mjs`, `kotva_cls.mjs`, `obmedzeny_pohyb.mjs`, `trace.mjs`. Výsledky do `redesign/overenie/vykon/`. Prahy podľa 9.
 - Lighthouse 3 behy mobil a počítač, medián, server s gzip (`redesign/audit-cms/skripty/gzip-server.mjs`). Prahy podľa 9.
 - Vrstvy kompozítora: DevTools protokol `LayerTree` (ako v audite pohybu) pri úvode a pri Detailoch.
+- *(Filmová vrstva, 3. 11. 2026)* Skripty v `film/koncept/skripty/` a `film/impl/skripty/` (prispôsobiť URL): `kontrola_film.mjs`
+  (reduce a bez JS: 0 animácií po 1,5 s, nič skryté, závoje `opacity 0`, pásy `scale 1 0`), `zaloha.mjs` (simulácia Safari/
+  Firefox: bez `:has()`, bez View Transition, bez `el.animate`, bez `image-set` – 0 chýb, nič skryté, skok, Späť, lightbox),
+  `kurzor_over.mjs` a `kurzor_over2.mjs` (vypočítaný `cursor` na 18 typoch prvkov, dotyk, `contrast: more`, `forcedColors`,
+  DPR 2), `kontrola_spat.mjs`, `kontrola_mapa.mjs`, `meraj_ab.mjs` (A/B striedavo CPU 4×: otvorenie, esej, skok),
+  `vrstvy.mjs` (najviac vrstiev počas scény), `sekvencia.mjs` (snímky prechodu po 40/80 ms cez `currentTime`).
 
 ### 11.5 Ručné overenie (mimo kontajnera; zapísať ako odporúčanie do odovzdania)
 
@@ -1673,7 +1780,7 @@ CSS a JS sa v tomto balíku nemenia okrem dvoch vecí: odstránenia `depth.js` a
 - `necinnost.mjs` ≤ 6 %;
 - vrstvy ≤ 40;
 - `kotva_cls.mjs` ≤ 0,02;
-- skok z každej položky menu a pätičky pristane na nadpise sekcie (snímka po 400 ms) a bez prázdnych rámov fotiek;
+- skok z každej položky menu a pätičky pristane na nadpise sekcie (snímka po 400 ms; *po Filmovej vrstve po 600 ms – strih cez tmu trvá 460 ms, 5.4 #11*) a bez prázdnych rámov fotiek;
 - lightbox: popisok sa nikdy neukáže nad starou fotkou (snímky 0/120/300 ms po šípke);
 - pri `reduce` 0 animácií;
 - unittest a `test_prehliadac` zelené.
