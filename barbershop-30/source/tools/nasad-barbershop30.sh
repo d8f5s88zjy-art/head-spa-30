@@ -21,6 +21,7 @@ cp -a "$SITE/index.html" "$SITE/rezervacia.html" "$SITE/404.html" "$SITE/robots.
 cp -a "$SITE/assets" "$W/assets"
 cp -a "$SITE/karta" "$W/karta"
 node "$SITE/source/tools/en-stranka.mjs" "$W"          # anglická stránka en/ z práve skopírovanej index.html
+node "$SITE/source/tools/zmensi.mjs" "$W"              # bez komentárov v HTML a CSS (menší prvý obraz, PLY-01)
 touch "$W/.nojekyll"                                   # súbory sa servírujú tak, ako sú (bez Jekyllu)
 cd "$W"
 git add -A

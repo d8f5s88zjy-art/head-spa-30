@@ -49,3 +49,12 @@ try {
   await browser.close();
   if (srv) srv.server.close();
 }
+// stráž (PLY-01): nasadená index.html (bez komentárov, zmensi.mjs) má gzip pod 14 600 B, aby sa prvý obraz zmestil do
+// prvých okien TCP spojenia; pri prekročení skončí s chybou
+{
+  const fs = await import('node:fs'), zlib = await import('node:zlib');
+  const { bezKomentarovHtml } = await import('./zmensi.mjs');
+  const n = zlib.gzipSync(bezKomentarovHtml(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')), { level: 9 }).length;
+  console.log(`${n < 14600 ? 'OK  ' : 'FAIL'} nasadená index.html (bez komentárov) gzip ${n} B, hranica 14 600 B`);
+  if (n >= 14600) process.exitCode = 1;
+}

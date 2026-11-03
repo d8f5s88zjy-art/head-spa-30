@@ -79,6 +79,8 @@ jobs:
           if [ -n "$D" ]; then sed -i "s#<lastmod>[^<]*</lastmod>#<lastmod>$D</lastmod>#; s#\(<loc>[^<]*rezervacia\.html</loc>\)#\1\n    <lastmod>$D</lastmod>#" _site/barbershop-30/sitemap.xml; fi
       - name: Anglická stránka BARBERSHOP 30 (en/, pre Google; zo slovenskej stránky po všetkých úpravách vyššie)
         run: node barbershop-30/source/tools/en-stranka.mjs _site/barbershop-30
+      - name: BARBERSHOP 30 bez komentárov v HTML a CSS (zdroj ostáva s komentármi; menší prvý obraz na telefóne)
+        run: node barbershop-30/source/tools/zmensi.mjs _site/barbershop-30
       - name: Balík na FTP na stiahnutie (headspa30-ftp.zip)
         run: sh tools/ftp-balik.sh headspa30.sk "$PWD/_site/headspa30-ftp.zip"
       - name: Ten istý web v menších ZIPoch (do 19 MB)
