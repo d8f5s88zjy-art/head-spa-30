@@ -63,6 +63,27 @@ body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: translate(-50%, 0); 
   body:has(.mobile-cta.is-hidden) .lang-offer { transform: translateY(-40%); }
   body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
 }
+/* nízke okno (malý a ležiaci telefón, WEB-02): prúžok hore zakrýval nadpis úvodu (36 až 53 %), preto je ponuka malý čip:
+   tlačidlo jazyka a ×, celá veta ostane pre čítačku. Na šírku je čip v lište vľavo od hudby a menu; na úzkom nízkom
+   telefóne v lište miesto nie je, tam je čip vpravo dole (v úvode pod tlačidlami, inak nad spodnou lištou).
+   Pri 390×844 a na počítači bez zmeny. */
+@media (max-height: 600px) {
+  .lang-offer, body:has(.mobile-cta.is-hidden) .lang-offer { left: auto; max-width: none; padding: 4px; gap: 2px; border-radius: 999px; font-size: 0.8125rem; line-height: 1.2; }
+  .lang-offer span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .lang-offer [data-yes] { min-height: 34px; padding: 0 14px; }
+  .lang-offer [data-no] { min-width: 34px; min-height: 34px; }
+}
+@media (max-height: 600px) and (min-width: 561px) {
+  .lang-offer, body:has(.mobile-cta.is-hidden) .lang-offer { top: calc((var(--nav-h) - 44px) / 2); bottom: auto; right: calc(var(--gutter) + 120px); transform: translateY(-40%); }
+  .lang-offer.in, body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
+}
+@media (max-height: 600px) and (max-width: 560px) {
+  .lang-offer { right: var(--gutter); transform: translateY(140%); }
+  .lang-offer.in { transform: none; }
+  body:has(.mobile-cta.is-hidden) .lang-offer { top: auto; bottom: calc(4px + env(safe-area-inset-bottom)); transform: translateY(140%); }
+  body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
+  body:has(.lang-offer.in) .scroll-hint { opacity: 0; }
+}
 /* otvorené menu telefónu alebo rozbalené jazyky v lište: prúžok hore by ich prekryl, kým sú otvorené, nie je vidieť */
 body:has(.site-header[data-menu="open"]) .lang-offer, body:has(.lang-btn[aria-expanded="true"]) .lang-offer { visibility: hidden; }
 /* telefón: jazyky ako rad skratiek na začiatku rozbaľovacieho menu */
