@@ -180,14 +180,26 @@ a potom `node source/tools/en-stranka.mjs` (anglická stránka prevezme novú ad
 
     sed -i 's#https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/#https://www.barbershop30.sk/#g' index.html rezervacia.html 404.html robots.txt sitemap.xml
 
-Pred prepnutím domény www.barbershop30.sk na nový web (otázka 21 pre majiteľa, kontrola SEO 29. 10. 2026): všetky
-tlačidlá Objednať sa (37×) a `potentialAction` v JSON-LD vedú na `https://www.barbershop30.sk/rezervacia` (rezervačný
-systém podniku na tom istom serveri, endpoint `/rezervacia/ajax`). Preto:
-1. s prevádzkovateľom rezervácie potvrdiť, že `/rezervacia` a `/rezervacia/ajax` ostanú na doméne (nový web do koreňa
-   toho istého servera, nie statický hosting, kde by tlačidlá skončili na 404);
-2. zoznam adries starého webu a 301 na nové stránky;
-3. po nasadení overiť, že rezervácia odpovedá:
-   `curl -s -o /dev/null -w '%{http_code}\n' https://www.barbershop30.sk/rezervacia` musí vypísať 200.
+Pred prepnutím domény www.barbershop30.sk na nový web (otázka 21 pre majiteľa, kontroly 29. 10. a 2. 11. 2026): všetky
+tlačidlá Objednať sa a `potentialAction` v JSON-LD vedú na `https://www.barbershop30.sk/rezervacia`. Koreň domény dnes
+obsluhuje Laravel (cookie `laravel_session`, `/index.html` vráti 404): rezervačný systém je jeho stránka `/rezervacia`
+(komponent `v-order-component`), objednávka ide na `/rezervacia/ajax` a štýly, skripty a obrázky sú v `css/`, `js/`,
+`images/` a `fonts/`. Preto:
+1. s hostingom a správcom rezervácie písomne potvrdiť, že `index.php`, `/rezervacia`, `/rezervacia/ajax`, `css/`, `js/`,
+   `images/` a `fonts/` ostanú a nový web pôjde len **vedľa** nich (nie „namiesto“ starého webu, nahratie cez FTP
+   nesmie tieto priečinky prepísať ani zmazať);
+2. nový web nesmie mať nič na `/rezervacia` ani `/rezervacia.html`: pri zapnutom MultiViews by Apache na `/rezervacia`
+   vrátil našu statickú stránku s kódom 200 a objednať by sa nedalo. Našu stránku dať na inú adresu (návrh
+   `/objednavka/`) alebo mať písomne potvrdené vypnuté MultiViews;
+3. zoznam adries starého webu a 301 na nové stránky;
+4. **pred prepnutím aj hneď po ňom** spustiť kontrolu domény (samotný kód 200 nestačí, kontroluje aj obsah stránky,
+   štýly, endpoint objednávky a presmerovanie na HTTPS):
+
+       bash source/tools/domena-kontrola.sh https://www.barbershop30.sk --web=https://www.barbershop30.sk/
+
+   Návratový kód 0 = kritické kontroly (rezervačný systém, `css/app.css` a `js/app.js`, `/rezervacia/ajax` 405,
+   `https://…/rezervacia/` neodchádza na http) prešli. Dnes hlási REZ-08: `https://…/rezervacia/` presmeruje na `http://`
+   a HTTP nepresmeruje na HTTPS; to opraví hosting (presmerovanie na HTTPS na celej doméne).
 
 Zlá adresa: GitHub Pages ukáže na každej neexistujúcej adrese len koreňový `/404.html` (HEAD SPA 30). Ten pri ceste
 s `/barbershop-30/` ukáže blok Barbershopu 30 (Objednať sa, Zavolať 0951 267 203, Späť na úvod). `404.html` v tomto

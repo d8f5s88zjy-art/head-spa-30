@@ -16,7 +16,10 @@ V hlavičke stránky rezervácie (alebo celého webu) **za** riadok s ich štýl
 <link rel="stylesheet" href="https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/assets/tema-rezervacia.css">
 ```
 
-Adresa funguje po nasadení webu do `main`. Ak nechce odkaz na cudziu adresu, skopíruje si na svoj hosting
+Adresa platí až po nasadení vetvy do `main` (dnes vracia 404, GitHub Pages beží zo staršieho `main`). Pred poslaním
+riadku správcovi ju over: `bash source/tools/domena-kontrola.sh https://www.barbershop30.sk --web=https://d8f5s88zjy-art.github.io/head-spa-30/barbershop-30/`
+musí pri kontrole 6 vypísať OK. Po prepnutí domény na nový web daj do riadku adresu na doméne
+(`https://www.barbershop30.sk/assets/tema-rezervacia.css`) alebo súbor do ich `public/css/`. Ak nechce odkaz na cudziu adresu, skopíruje si na svoj hosting
 `tema-rezervacia.css` do `css/` a písma `assets/fonts/Fraunces-500.woff2`, `Fraunces-500i.woff2`, `Fraunces-800.woff2`,
 `Manrope-400.woff2`, `Manrope-600.woff2`, `Manrope-700.woff2` do `css/fonts/`, a odkáže na `css/tema-rezervacia.css`.
 Odobrať sa dá zmazaním toho riadku, nič iné sa nemení.
