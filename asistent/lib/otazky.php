@@ -104,7 +104,7 @@ const OTAZKY_SLUZBY = [
   ['uprava-obocia', '/oboc/', ''],
   ['hot-towel', '/do hladka|na hladko|nahladko|\b(o|vy)?hol\w* (tvar|brad)\w*/', 'uprava-brady'],
   ['uprava-brady', '/\b(o|za)?strih\w* (brady|fuzov)\b|brad|fuz/', 'hot-towel'],
-  ['male-gentlemany', '/detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/', 'pansky-strih ornament'],
+  ['male-gentlemany', '/\bo?strih\w* pre (\w+ )?(syn|chlapc|diet|deti|mal)\w*|detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/', 'pansky-strih ornament'],
   ['hot-towel', '/hot towel|do hladka|britv|ohol\w* tvar|holen/', ''],
   ['plet-premium', '/\bplet|peeling|\bmask|premium/', ''],
   ['depilacia', '/depil|vosk/', ''],
@@ -126,12 +126,15 @@ function otazky_smeruj_vsetky(array $db, string $text): array {
   $druh = preg_match(OTAZKY_CAS, $t) ? 'trvanie' : (preg_match(OTAZKY_CENA, $t) ? 'cena' : null);
   if ($druh === null) return [];
   $t = (string) preg_replace('/\b(bez|okrem)( \w+)? (brad|fuz|strih|ostrih|vlas|holen|ohol)\w*/', ' ', $t);
+  $cely = $t;
+  $viacLudi = (bool) preg_match('/\bpre (mna|seba|mnou)\b|\b(ja|mne) a\b/', $t);
   $vybrane = [];
   foreach (OTAZKY_SLUZBY as [$s, $re, $zahrna]) {
     if (!preg_match($re, $t, $m, PREG_OFFSET_CAPTURE)) continue;
+    if ($s === 'male-gentlemany' && !preg_match('/strih|fade|gentleman/', $cely)) continue;
     $t = substr($t, 0, $m[0][1]) . ' ' . substr($t, $m[0][1] + strlen($m[0][0]));
     $uz = false;
-    foreach ($vybrane as [$x, $z]) if ($x === $s || in_array($s, $z === '' ? [] : explode(' ', $z), true)) { $uz = true; break; }
+    foreach ($vybrane as [$x, $z]) if ($x === $s || (in_array($s, $z === '' ? [] : explode(' ', $z), true) && !($viacLudi && $x === 'male-gentlemany'))) { $uz = true; break; }
     if (!$uz) $vybrane[] = [$s, $zahrna];
   }
   $out = [];
@@ -147,12 +150,18 @@ function otazky_smeruj(array $db, string $text): ?array {
 /* ako otazky_hladaj(), na prvom mieste smerovaná odpoveď z cenníka (najdi() v asistent-otazky.js) */
 function otazky_najdi(array $db, string $text, int $kolko = 5, float $prah = 0.0): array {
   $h = otazky_hladaj($db, $text, $kolko);
-  $s = otazky_smeruj($db, $text);
-  if (!$s) return $h;
+  $v = otazky_smeruj_vsetky($db, $text);
   $top = $h[0] ?? null;
+  $sluzba = (bool) preg_match('/^(cena|trvanie)-(' . implode('|', array_map(fn($x) => preg_quote($x[0], '/'), OTAZKY_SLUZBY)) . ')$/', $top['o']['id'] ?? '');
+  // viac služieb (cennik-viac v asistent-otazky.js): prvé vety ich overených odpovedí za sebou, nič sa nesčítava
+  if (count($v) > 1 && (!$top || $top['skore'] < $prah || $sluzba)) {
+    $a = implode(' ', array_map(fn($x) => preg_split('/(?<=[.!?])\s/u', $x['a'])[0], $v)) . ' Ceny sú konečné.';
+    return array_slice(array_merge([['o' => ['id' => 'cennik-viac', 'q' => $text, 'a' => $a, 'viac' => array_column($v, 'id')], 'skore' => 1]], $h), 0, $kolko);
+  }
+  $s = count($v) === 1 ? $v[0] : null;
+  if (!$s) return $h;
   preg_match(str_starts_with($s['id'], 'cena-') ? '/\d+(?:,\d+)? €/u' : '/\d+ minút/u', $s['a'], $m);
   $c = $m[0] ?? '';
-  $sluzba = (bool) preg_match('/^(cena|trvanie)-(' . implode('|', array_map(fn($x) => preg_quote($x[0], '/'), OTAZKY_SLUZBY)) . ')$/', $top['o']['id'] ?? '');
   if ($top && $top['skore'] >= $prah && ($top['o']['id'] === $s['id'] || (!$sluzba && ($top['skore'] >= 0.9
       || ($c !== '' && str_contains(preg_split('/(?<=[.!?])\s/u', $top['o']['a'])[0], $c)))))) return $h;
   $ine = array_values(array_filter($h, fn($x) => $x['o']['id'] !== $s['id']));
@@ -166,6 +175,13 @@ function otazky_pre_model(string $prevadzka, string $otazka): string {
   if (!$db) return '';
   $h = array_filter(otazky_najdi($db, $otazka, 6), fn($x) => $x['skore'] >= 0.3);
   if (!$h) return '';
+  // otázka na viac služieb: modelu ide na prvé miesta každá nájdená overená odpoveď zvlášť (nič sa nesčítava)
+  $prva = reset($h);
+  if ($prva['o']['id'] === 'cennik-viac') {
+    $viac = array_values(array_filter($db['ot'], fn($o) => in_array($o['id'], $prva['o']['viac'], true)));
+    usort($viac, fn($a, $b) => array_search($a['id'], $prva['o']['viac'], true) <=> array_search($b['id'], $prva['o']['viac'], true));
+    $h = array_merge(array_map(fn($o) => ['o' => $o, 'skore' => 1], $viac), array_slice($h, 1));
+  }
   $t = 'ČASTÉ OTÁZKY podobné poslednej otázke návštevníka (overené odpovede):';
   foreach ($h as $x) $t .= "\n- " . $x['o']['q'] . "\n  " . $x['o']['a'];
   return $t;

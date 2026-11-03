@@ -119,7 +119,7 @@ const SLUZBY = [
   ['uprava-obocia', /oboc/, ''],
   ['hot-towel', /do hladka|na hladko|nahladko|\b(o|vy)?hol\w* (tvar|brad)\w*/, 'uprava-brady'],
   ['uprava-brady', /\b(o|za)?strih\w* (brady|fuzov)\b|brad|fuz/, 'hot-towel'],   // „strih brady“ je úprava brady
-  ['male-gentlemany', /detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/, 'pansky-strih ornament'],
+  ['male-gentlemany', /\bo?strih\w* pre (\w+ )?(syn|chlapc|diet|deti|mal)\w*|detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/, 'pansky-strih ornament'],
   ['hot-towel', /hot towel|do hladka|britv|ohol\w* tvar|holen/, ''],
   ['plet-premium', /\bplet|peeling|\bmask|premium/, ''],
   ['depilacia', /depil|vosk/, ''],
@@ -146,12 +146,16 @@ export function smerujVsetky(db, text) {
   const druh = CAS.test(t) ? 'trvanie' : CENA.test(t) ? 'cena' : null;
   if (!druh) return [];
   t = t.replace(/\b(bez|okrem)( \w+)? (brad|fuz|strih|ostrih|vlas|holen|ohol)\w*/g, ' ');
+  const cely = t;
+  // „strih pre mňa a pre syna“ sú dvaja ľudia: detský strih sa nezlúči s pánskym
+  const viacLudi = /\bpre (mna|seba|mnou)\b|\b(ja|mne) a\b/.test(t);
   const vybrane = [];
   for (const [s, re, zahrna] of SLUZBY) {
     const m = t.match(re);
     if (!m) continue;
+    if (s === 'male-gentlemany' && !/strih|fade|gentleman/.test(cely)) continue;   // „úprava brady pre syna“: syn je človek, nie služba
     t = t.slice(0, m.index) + ' ' + t.slice(m.index + m[0].length);
-    if (vybrane.some(([x, z]) => x === s || z.split(' ').includes(s))) continue;
+    if (vybrane.some(([x, z]) => x === s || (z.split(' ').includes(s) && !(viacLudi && x === 'male-gentlemany')))) continue;
     vybrane.push([s, zahrna]);
   }
   return vybrane.map(([s]) => db.ot.find((o) => o.id === `${druh}-${s}`)).filter(Boolean);
@@ -161,15 +165,24 @@ export function smeruj(db, text) { const v = smerujVsetky(db, text); return v.le
 
 /* číslo, ktoré musí byť v odpovedi: cena (18 €) alebo dĺžka (40 minút) zo smerovanej odpovede */
 const cislo = (o) => (o.id.startsWith('cena-') ? (o.a.match(/\d+(?:,\d+)? €/) || [])[0] : (o.a.match(/\d+ minút/) || [])[0]);
+const prvaVeta = (a) => a.split(/(?<=[.!?])\s/)[0];
 
-/* najlepšia odpoveď pre okno a server: [{ o, skore }] ako hladaj(), na prvom mieste smerovaná odpoveď z cenníka */
+/* najlepšia odpoveď pre okno a server: [{ o, skore }] ako hladaj(), na prvom mieste smerovaná odpoveď z cenníka.
+   Otázka na viac služieb (BAR-02): keď hľadanie nenašlo pripravenú odpoveď na takú dvojicu (napr. sluzby-strih-ornament),
+   okno zloží prvé vety overených odpovedí tých služieb za sebou (id cennik-viac). Nič nesčítava. */
 export function najdi(db, text, kolko = 5, prah = 0) {
   const h = hladaj(db, text, kolko);
-  const s = smeruj(db, text);
+  const v = smerujVsetky(db, text);
+  const top0 = h[0];
+  if (v.length > 1 && (!top0 || top0.skore < prah || ID_SLUZBY.has(top0.o.id))) {
+    const o = { id: 'cennik-viac', q: text, a: v.map((x) => prvaVeta(x.a)).join(' ') + ' Ceny sú konečné.', viac: v.map((x) => x.id) };
+    return [{ o, skore: 1 }, ...h].slice(0, kolko);
+  }
+  const s = v.length === 1 ? v[0] : null;
   if (!s) return h;
   const top = h[0];
   const c = cislo(s);
-  if (top && top.skore >= prah && (top.o.id === s.id || (!ID_SLUZBY.has(top.o.id) && (top.skore >= 0.9 || (c && top.o.a.split(/(?<=[.!?])\s/)[0].includes(c)))))) return h;
+  if (top && top.skore >= prah && (top.o.id === s.id || (!ID_SLUZBY.has(top.o.id) && (top.skore >= 0.9 || (c && prvaVeta(top.o.a).includes(c)))))) return h;
   return [{ o: s, skore: 1 }, ...h.filter((x) => x.o.id !== s.id)].slice(0, kolko);
 }
 

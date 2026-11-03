@@ -160,6 +160,19 @@ const SADA150 = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(
     if (cislaV(a).length) { zleS++; chyba(`sada 150: „${s.q}“ → ${h.o.id} s číslom inej služby (${cislaV(a).slice(0, 3).join(', ')}), čakám ${c}`); }
   }
   if (!zleS) console.log(`OK   sada 150 cien a časov: ${n} otázok na jednu službu bez čísla inej služby a bez zbytočného telefónu`);
+  // otázky na viac služieb (k, BAR-02): odpoveď bez jediného správneho čísla je zavádzajúca (napr. 28 € za strih pre syna
+  // a úpravu brady pre mňa); neúplná smie byť len pri týchto troch, kde hľadanie vyberie pripravený prehľad
+  const NEUPLNE = new Set(['Koľko stojí strih a holenie hlavy?', 'Koľko stojí strih s ornamentom?', 'Koľko stojí oholenie hlavy aj tváre?']);
+  let zleK = 0, nk = 0;
+  for (const s of SADA150.filter((x) => x.d === 'k')) {
+    nk++;
+    const h = najdi(db, s.q, 1, PRAH)[0], a = h && h.skore >= PRAH ? h.o.a : '';
+    if (!a) { if (!s.alebo_tel) { zleK++; chyba(`sada 150: „${s.q}“ → telefón, čakám ${s.vsetko.join(' a ')}`); } continue; }
+    const chyba1 = s.vsetko.filter((c) => !a.includes(c));
+    if (chyba1.length === s.vsetko.length && cislaV(a).length) { zleK++; chyba(`sada 150: „${s.q}“ → ${h.o.id} so zavádzajúcim číslom (${cislaV(a).slice(0, 3).join(', ')}), čakám ${s.vsetko.join(' a ')}`); }
+    else if (chyba1.length && !NEUPLNE.has(s.q)) { zleK++; chyba(`sada 150: „${s.q}“ → ${h.o.id} bez ${chyba1.join(' a ')}`); }
+  }
+  if (!zleK) console.log(`OK   sada 150, viac služieb naraz: ${nk} otázok bez zavádzajúceho čísla (neúplné najviac ${NEUPLNE.size})`);
 }
 // každá častá otázka z webu (index.html) má v okne odpoveď nad prahom (nie telefón „nič nemám“)
 const FAQ = [...html.matchAll(/<details class="faq-item"><summary>([^<]+)<\/summary>/g)].map((m) => m[1]);
