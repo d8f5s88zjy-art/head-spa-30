@@ -193,8 +193,9 @@
   const CUTS = {
     'vstup>rohozka': 'najazd a:0.76,0.53 ma:0.50,0.53',                         // prológ: cez dvere dnu (von je to isté odzadu)
     'rohozka>sala': 'pohyb in',                                                // krok z rohožky dopredu do sály (telefón: do videa Poď ďalej)
-    'sala>stol': 'popredie left a:0.27,0.55 m:prelinanie',                     // za operadlom kresla k pracovnému miestu; telefón: obe videá
-                                                                               // sú jeden súvislý záber (0–5 s a 5–9,3 s), stačí prelínanie
+    'sala>stol': 'pohyb left m:prelinanie',                                   // pohybom k pracovnému miestu (za tmavým operadlom kresla zakryla
+                                                                               // tmavá plocha až štvrtinu obrazu, FIL-2, ako kava>sud); telefón: obe
+                                                                               // videá sú jeden súvislý záber (0–5 s a 5–9,3 s), stačí prelínanie
     'stol>cakaren': 'svih right',                                              // od kresla švihom dozadu do čakárne
     'cakaren>sala-rano': 'popredie right b:0.30,0.62 m:rise mb:0.5,0.78',       // popri operadle do rannej sály
     'sala-rano>kreslo-stred': 'najazd a:0.635,0.56 b:0.5,0.45 ma:0.52,0.45',    // do kresla v sále, z neho na kreslo uprostred
