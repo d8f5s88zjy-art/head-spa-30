@@ -936,10 +936,10 @@
   </div>
 
   <script type="module" src="../assets/app.js"></script>
-  <script src="../assets/vernost.js" data-prevadzka="barbershop" defer></script>
+  <script src="../assets/vernost.js" data-prevadzka="barbershop" defer fetchpriority="low"></script>
   <!-- Film zo skutočných fotiek (three r169, hĺbkové mapy). Modul si sám overí triedu world na <html>,
        načíta knižnicu až po pohybe návštevníka a vytvorí canvas .film-canvas; kým neexistuje alebo zlyhá,
        stránka ostáva v pokojnej verzii so statickými zábermi. -->
-  <script type="module" src="../assets/film.js"></script>
+  <script type="module" src="../assets/film.js" fetchpriority="low"></script>
 </body>
 </html>
