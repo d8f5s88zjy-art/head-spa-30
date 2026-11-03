@@ -103,7 +103,9 @@ function measure() {
     const afterBand = !!(title && prev && prev.classList && prev.classList.contains('band'));
     let swap = 0;
     if (afterBand) { const b = prev.getBoundingClientRect(); swap = y + (b.top + b.bottom - (pas ? pasK : 1) * vh) / 2; }
-    return { el, top, height: Math.max(1, r.height), items, title, free, long, afterBand, swap, first: title && top < 1 };
+    // kapitola, do ktorej záber patrí (aktívna kapitola sa berie z ukázanej karty, KF-10)
+    const secEl = el.closest('section[data-scene]'), sec = sections.find((x) => x.el === secEl) || null;
+    return { el, top, height: Math.max(1, r.height), items, title, free, long, afterBand, swap, first: title && top < 1, sec };
   });
 
   const pr = $('.band-prices');
@@ -213,6 +215,7 @@ function apply(p) {
   // telefón na výšku: za pásom sa záber vymení ešte pod ním (pás kryje celý pás fotky, P18), aby spod neho vyšla
   // hotová fotka ako vo filme; inde sa prelína počas nábehu karty
   const prelinanie = (s) => (pas && s.afterBand ? ease01((y - s.swap) / (0.2 * vh) + 0.5) : ease01((y - s.top) / s.free / CARD_IN));
+  let karta = null, kartaSo = 0;
   for (let i = 0; i < titles.length; i++) {
     const s = titles[i], n = titles[i + 1];
     const fin = s.first ? 1 : prelinanie(s);
@@ -220,13 +223,17 @@ function apply(p) {
     const so = footerIn || nextIn >= 1 ? 0 : fin;
     setVar('--so', so, s.el);
     setClass(s.el, 'is-shown', so > 0.001);
+    // ukázaná karta: pri prelínaní tá, ktorá už prevažuje (neskoršia s krytím aspoň 0,5)
+    if (so > 0.001 && (!karta || so >= 0.5 || kartaSo < 0.5)) { karta = s; kartaSo = so; }
     // okolie: záloha sa načíta (display) len pri aktuálnej karte, dvoch ďalších a jednej predchádzajúcej;
     // kým sa stránka nenačíta celá, len úvod (prvý obraz má sieť sám pre seba)
     setClass(s.el, 'is-near', document.readyState === 'complete' ? i >= cur - 1 && i <= cur + 2 : i === 0);
   }
 
-  // aktívna kapitola
-  const { section, footerWins } = closestSection(y);
+  // aktívna kapitola: z ukázanej karty (menu, lišta aj pás súhlasia s tým, čo zákazník vidí, KF-10);
+  // bez ukázanej karty (pätička) podľa polohy
+  const blizko = closestSection(y), footerWins = blizko.footerWins;
+  const section = (!footerWins && karta && karta.sec) || blizko.section;
   const scene = section ? section.scene : 0;
   if (scene) {
     if (scene !== activeScene) {
