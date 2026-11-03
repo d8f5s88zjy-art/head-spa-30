@@ -939,7 +939,8 @@ html.rv-on .rv-img:not(.is-in) img{scale:var(--zoom-in);transition:none}
 opona `scale` Y je nahradená expozíciou (`opacity` toho istého pseudoprvku, FIL-03); skryté stavy majú `transition:none`
 (P-01: pri štarte sa prvky mimo okna skryjú hneď, prechod beží len pri odhalení – vzhľad sa nemení, otvorenie je ľahšie);
 maska nadpisu má okraj v em nadpisu (`--fs-h2`, `--fs-h3`), aby neorezala mäkčene prvého riadku ani čiarku posledného
-(PRI-5, bez `:has()` ostáva em textu). Fotky eseje a medzihra majú namiesto usadenia pomalé odďaľovanie (FIL-04).
+(PRI-5, bez `:has()` ostáva em textu). Široká plocha eseje (`.pl-w`) a medzihra majú namiesto usadenia pomalé odďaľovanie
+(FIL-04); ostatné fotky eseje majú bežné usadenie #15 (oprava 2, KP-02).
 
 - ~~Opona má `transform-origin` hore a zmenšuje sa k hornej hrane, takže fotka sa odkrýva zdola nahor.~~ *(Filmová vrstva:
   závoj sa prelne preč – celá kompozícia je vidieť od 80–160 ms, FIL-03.)*
@@ -1019,7 +1020,7 @@ maska nadpisu má okraj v em nadpisu (`--fs-h2`, `--fs-h3`), aby neorezala mäk�
 **Zmenené v B4** (podrobnosti a dôvody v `IMPLEMENTACIA-POZNAMKY.md`, časť B4):
 
 - **#5:** jeden rozsah pre všetky štyri prvky (`calc(--hero-top · −1)` až `+ 100svh`, úvod vyšší ako okno sa najprv doroluje); text úvodu zmizne v 60 % rozsahu (`@keyframes hxOut{60%,to{…}}`), `fill` `backwards`.
-- **#11:** `::view-transition-old(bar)` a `old(dock)` sa prelnú preč (140 ms, `mix-blend-mode:normal`), inak by stará snímka lišty s otvoreným mobilným menu zmizla naraz. Mobilné menu zatvára `jump()` až vo vnútri prechodu. Lišta po skoku ostane 1,5 s viditeľná. Pri `#top` dostane fokus `#h-hero`.
+- **#11:** `::view-transition-old(bar)` a `old(dock)` sa prelnú preč (140 ms, `mix-blend-mode:normal`), inak by stará snímka lišty s otvoreným mobilným menu zmizla naraz. Mobilné menu zatvára `jump()` až vo vnútri prechodu. *Oprava 2 (KP-01):* pri skoku z otvoreného menu `jump()` pridá na `html` triedu `vt-menu` (po konci prechodu ju zmaže): `old(root)` pod nepriehľadným panelom je hneď skrytá, `old(bar)`/`old(dock)` zhasnú bez oneskorenia 0–140 ms a `new(root)` sa rozsvieti od 140 ms – menu sa už neprekrýva s cieľom (predtým 80–140 ms dvojexpozícia). Lišta po skoku ostane 1,5 s viditeľná. Pri `#top` dostane fokus `#h-hero`.
 - **Otvorenie s kotvou** (`/#cennik` …, doplnok): skript v hlavičke pridá `html.kotva` (`main` a pätička `visibility:hidden`), kým prehliadač neskočí na cieľ (prvý `scroll`, `load`, najneskôr 1,5 s). CLS 0 pri všetkých kotvách a úvod pred skokom nezablikne.
 - **#20, #24:** let fotky ide cez dočasný rám `.lb-fly` (rám mení `scale` X/Y, fotka v ňom opačne), aby náhľad orezaný `object-fit:cover` prešiel do celej fotky bez deformácie; pred letom `decode()` rámu (najviac 250 ms) a `decoding='sync'`. Široké plochy eseje majú pod 760 px `data-full-t` (lightbox ukáže tú istú sadu `t` ako náhľad).
 - **#21, #22:** popisok a počítadlo sa prelínajú spolu s novou fotkou (rovnaké trvanie a oneskorenie), takže nikdy nie sú novšie než fotka pod nimi.
@@ -1052,8 +1053,8 @@ z tmy, neodkrýva sa stierkou; titulok má poradie linka → štítok → nadpis
 | FIL-01 | Otvárací záber úvodu | `hx-lit`, `hx-go` | ≥ 861 px: LQIP nad fotkou `opacity 1→0` + `scale --zoom-in→1` (zaostrenie) a pásy 2,39 : 1 `scale 1 1→1 0`; všade rytmus titulku 140/350/520/590/760/840 ms (časť 18; skratka `animation:hxUp` je v `:where()`, aby ju oneskorenia prebili – s `:is()` mala vyššiu špecificitu a odsek, tlačidlá a dok sa v B4 objavili naraz, test `test_rytmus_titulku_uvodu`) | `--dur-5` `--ease-io` / `--dur-7` `--ease-out`; pásy `--dur-6` `--ease-io` + `--dur-2` | rovnaké | statický úvod (bez `hx`; aj opakovaná návšteva `hx-quick`) |
 | FIL-02 | Titulková karta kapitoly (`.sec-head` 8×, `.opener-in`) | `.mask.is-in` cez `:has()` | linka štítku `scale 0 1→1 1`, štítok `opacity`, nadpis z masky +2 × `--stagger`, lead `opacity` + `--rise` +4 × `--stagger` | `--dur-4`; karta 920 ms | bez `:has()` štítok a lead hneď viditeľné | viditeľné |
 | FIL-03 | Expozícia fotky (nahrádza oponu #15) | `.rv-img.is-in` (fotka načítaná) | závoj `.rv-img::after` `opacity 1→0`; usadenie `img` ako #15 | `--dur-6` `--ease-ui` | rovnaké | viditeľné |
-| FIL-04 | Pomalé odďaľovanie (Ken Burns časom, nie skrolom) | `.is-in` rámu eseje; medzihra `.opener:has(.mask.is-in)` | `img scale --zoom-kb→1` (+ posun −1,6 % pri širokej ploche, ±1,2 % pri rozloženej) | 3 × `--dur-7` = 4,8 s, `--ease-io`, potom stojí | rovnaké | bez pohybu (`--zoom-kb:1`, trvanie 0) |
-| FIL-05 | Strih cez tmu (nahrádza #11) | klik na vzdialenú kotvu | `old(root) opacity→0`; `new(root)` od 140 ms `opacity 0→1` (len opacity); `old(bar/dock)` oneskorenie 120 ms | 140 + 320 ms | bez VT plynulý posun | okamžitý skok |
+| FIL-04 | Pomalé odďaľovanie (Ken Burns časom, nie skrolom) | `.is-in` širokej plochy eseje (`.pl-w`); medzihra `.opener:has(.mask.is-in)` | `img scale --zoom-kb→1` + posun −1,6 %; ostatné fotky eseje bežné usadenie #15 (oprava 2, KP-02: odďaľovanie všetkých štyroch naraz držalo pri súvislom skrole o 6–8 vrstiev viac) | 3 × `--dur-7` = 4,8 s, `--ease-io`, potom stojí | rovnaké | bez pohybu (`--zoom-kb:1`, trvanie 0) |
+| FIL-05 | Strih cez tmu (nahrádza #11) | klik na vzdialenú kotvu | `old(root) opacity→0`; `new(root)` od 140 ms `opacity 0→1` (len opacity); `old(bar/dock)` oneskorenie 120 ms; z otvoreného mobilného menu (`vt-menu`, KP-01) `old(root)` hneď skrytá a `old(bar/dock)` bez oneskorenia – menu zhasne do tmy 0–140 ms, cieľ od 140 ms | 140 + 320 ms | bez VT plynulý posun | okamžitý skok |
 | FIL-06 | Vineta medzihry | – (statická) | `radial-gradient(130% 95% at 50% 42%, transparent 58%, rgba(11,12,15,.42) 100%)` na prvom mieste pozadia `.opener-media::after` | – | – | – |
 | FIL-07 | Lightbox ako premietanie – **neimplementované** (5.6.7) | otvorenie | `::backdrop` .97, popisok po dosadnutí letu (420 ms) | – | – | – |
 | FIL-08 | Plagát → video | `.lv.is-playing` | `picture opacity→0` | `--dur-5` `--ease-io` | rovnaké | video samo nehrá |
@@ -1094,7 +1095,7 @@ z tmy, neodkrýva sa stierkou; titulok má poradie linka → štítok → nadpis
 | Modul | Čo robí | Poznámky |
 |---|---|---|
 | `header()` | jedna pasívna rAF slučka: číta **len** `scrollY`; `in-hero`, skrytie, `.totop.is-on` (od 3 okien) | žiadne `scrollHeight` ani `getBoundingClientRect` |
-| `menu()` | burger, `html.nav-open`, Esc, návrat fokusu, zatvorenie pri kliku na odkaz a pri zmene na ≥ 861 px | `aria-expanded`, `aria-label` |
+| `menu()` | burger, `html.nav-open`, Esc, návrat fokusu, zatvorenie pri kliku na odkaz a pri zmene na ≥ 861 px; pri `nav-open` (≤ 860 px) má `main` a pätička `visibility:hidden` až po prelnutí panelu (`--dur-3`) – obsah zakrytý menu nie je v poradí Tab ani pre čítačku (oprava 2, KF-3; dok sa skrýval už predtým) | `aria-expanded`, `aria-label` |
 | `activeNav()` | IO na 7 sekciách menu; `aria-current` a `.is-active`; **ruší stav**, keď v pásme nie je žiadna sekcia (oprava B2) | – |
 | `reveal()` | pridá `html.rv-on`; 1 IO podľa 5.3; prvky v okne pri štarte okamžite (`no-tr`); pri `rv-img` čaká na obrázok (≤ 800 ms) | bez IO: všetko `is-in` |
 | `jump()` | 5.4 #11, #12; delegovaný klik na `document` pre `a[href^="#"]` s existujúcim cieľom (aj `.skip`: len fokus na `#main`); *Filmová vrstva B:* `pushState` pred posunom, poslucháč `popstate` (5.4 #11 body 4 a 5) | pri `reduce` okamžitý skok + fokus |
@@ -1575,10 +1576,10 @@ v `IMPLEMENTACIA-POZNAMKY.md`, „Filmová vrstva a kurzor“.
   - skip link na `#main`;
   - `aria-current` v menu;
   - po skoku fokus na nadpis sekcie;
-  - menu: Esc, fokus späť na burger;
+  - menu: Esc, fokus späť na burger; Tab neodíde do obsahu zakrytého menu (KF-3);
   - lightbox: fokus v dialógu – pri fotke na tlačidle Zavrieť (`.lb-close`, explicitne po `showModal()`; Chromium by inak zameral skryté video), pri videu natívne na videu; Esc, ←/→, Home/End, návrat fokusu na tlačidlo zdroja;
   - pás Detaily: dlaždice sú tlačidlá dosiahnuteľné tabulátorom (natívne sa posunú do obrazu), šípky s `aria-controls`;
-  - rozvrh: ←/→ (ako dnes).
+  - rozvrh: ←/→ v kruhu, Home/End na prvý a posledný deň (vzor ARIA tabs; oprava 2, KF-4).
 - **Dotykové ciele** ≥ 44 × 44 px na ≤ 860 px: čipy, `tt-go`, `.tt-day` (56), `lv-sound`, `lv-play`, telefóny trénerov a MDS, odkazy pätičky, adresa v úvode, `summary` v otázkach a pri trénerovi, šípky pásu, tlačidlá lightboxu (48). Výnimka WCAG: odkazy vnútri súvislého textu odseku.
 - **Sémantika:**
   - klikateľné fotky sú `<button>` vo `figure` (rieši `aria-allowed-role` a `label-content-name-mismatch`);
