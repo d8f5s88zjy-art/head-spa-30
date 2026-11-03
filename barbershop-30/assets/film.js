@@ -326,7 +326,9 @@
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
   renderer.autoClear = false;
-  renderer.setClearColor(0x0e0d0c, 1);                        // --ink
+  // --ink #0e0d0c v pracovnom (lineárnom) priestore: výstup je bez prepočtu, preto čistí presne na 14, 13, 12
+  // (hex 0x0e0d0c by sa prepočítal zo sRGB a na obrazovke bol 1, 1, 1, FIL-1)
+  renderer.setClearColor(new THREE.Color(14 / 255, 13 / 255, 12 / 255), 1);
   // shadery sú hotové a overené; kontrola chýb by pri každom preklade čakala na grafiku (stovky ms na telefóne)
   renderer.debug.checkShaderErrors = false;
   // ostrosť: plné rozlíšenie displeja do 2x; pomalé zariadenie si ho samo zníži
@@ -1233,9 +1235,9 @@
     const med = ft[15], p90 = ft[27]; ft.length = 0;
     const hz = Math.max(fastest, 1 / 250);                   // interval displeja (60 až 240 Hz)
     if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
-      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); draw(now, 0); }
+      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
     } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
-      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize(); draw(now, 0);
+      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize();
     }
   }
 
@@ -1252,7 +1254,8 @@
       // nový render target pri prvom použití čaká na grafiku: overí sa hneď, v tej istej snímke ako zmena
       // rozlíšenia, a nie o chvíľu neskôr uprostred skrolu pri najbližšom prelínaní
       for (const rt of [rtA, rtB]) { renderer.setRenderTarget(rt); renderer.clear(); }
-      // setSize plátno vymaže na čiernu (0,0,0): kým sa nakreslí záber, má aspoň farbu stránky (#0e0d0c)
+      // setSize plátno vymaže na čiernu (0,0,0): vyčistí sa na farbu stránky (#0e0d0c, presne 14, 13, 12) a záber
+      // sa nakreslí v tej istej snímke (quality ide vo frame() pred draw())
       renderer.setRenderTarget(null); renderer.clear();
       post.material.uniforms.uAspect.value = w / h;
       post.material.uniforms.uRes.value.set(canvas.width, canvas.height);
@@ -1306,6 +1309,9 @@
     const idle = now - lastInput;
     breath = idle < BREATH_MS ? 1 : Math.max(0, 1 - (idle - BREATH_MS) / 3000);
     const active = idle < FULL_MS;                             // nedávny pohyb: kresliť každú snímku
+    // rozlíšenie sa mení pred kreslením: snímka po zmene sa nakreslí v tom istom rAF jediným prechodom (FIL-3);
+    // meria sa len počas pohybu (inak je last 0, teda dt 0 a quality nič nemeria)
+    if (shown) quality(dt, now);
     const busy = draw(now, dt);
     if (drawn && !shown) {
       shown = true; shownAt = now; firstMs = Math.round(performance.now() - tStart);
@@ -1334,7 +1340,7 @@
       if (now - started > 15000) { stop(); return; }
       if (jobs.length) wake(); else setTimeout(wake, 120);   // fotka ide do grafiky: ďalší pás hneď v ďalšej snímke
       last = 0;
-    } else if (moving || breath > 0) { quality(dt, now); if (!raf) raf = requestAnimationFrame(frame); }   // plnou frekvenciou displeja
+    } else if (moving || breath > 0) { if (!raf) raf = requestAnimationFrame(frame); }   // plnou frekvenciou displeja
     else last = 0;
   }
   function wake() { if (!raf && running && !lost) raf = requestAnimationFrame(frame); }
