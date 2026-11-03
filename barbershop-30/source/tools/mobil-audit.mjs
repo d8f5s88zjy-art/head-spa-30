@@ -6,7 +6,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { execFileSync } from 'node:child_process';
 const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const { startStaticServer, PRESETS } = await import(path.join(SITE, 'source', 'shot.mjs'));
 const require = createRequire(path.join(SITE, 'source', 'shot.mjs'));
@@ -47,22 +46,25 @@ for (const w of WS) {
       .filter((x) => x.h > 40 && (!x.media || x.hidden || x.mw < x.w - 2 || x.mh < x.h - 2 || x.loaded === false || x.loaded === 0));
     return { over, fixed, media, H: document.documentElement.scrollHeight };
   });
-  const tma = execFileSync('python3', ['-c', 'import sys\nfrom PIL import Image\nfor f in sys.argv[1:]: h = Image.open(f).convert("L").histogram(); print(round(100 * sum(h[:18]) / sum(h)))', ...files]).toString().trim().split('\n').map(Number);
+  // tma a prehľad skladá prehliadač (canvas), nie Pillow (v kontajneri býva rozbitý): jas ITU-R 601 (299, 587, 114)
+  // ako PIL convert("L"), prah rovnaký ako tma-test.mjs (jas < 22 = takmer čierny bod)
+  const tma = [];
+  const pctx = await browser.newContext({ viewport: { width: 800, height: 600 }, deviceScaleFactor: 1 });
+  await pctx.route('http://prehlad.local/**', (r) => r.fulfill({ path: path.join(OUT, path.basename(new URL(r.request().url()).pathname)) }));
+  const meraj = await pctx.newPage();
+  for (const f of files) tma.push(await meraj.evaluate(async (b64) => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode(); const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const x = c.getContext('2d'); x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 0; i < d.length; i += 4) if ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 < 22) n++; return Math.round(100 * n / (c.width * c.height)); }, fs.readFileSync(f).toString('base64')));
   report[w] = { ...info, tma, errs };
-  // prehľad: snímky vedľa seba
-  execFileSync('python3', ['-c', `
-import sys
-from PIL import Image, ImageDraw
-fs = sys.argv[2:]; out = sys.argv[1]
-ims = [Image.open(f).convert('RGB') for f in fs]
-th = 520; ims = [i.resize((round(i.width * th / i.height), th)) for i in ims]
-cols = min(len(ims), 8 if ims[0].width < 400 else 4); rows = (len(ims) + cols - 1) // cols
-W = cols * (ims[0].width + 10) + 10; Hh = rows * (th + 34) + 10
-c = Image.new('RGB', (W, Hh), (255, 255, 255)); d = ImageDraw.Draw(c)
-for k, im in enumerate(ims):
-    x = 10 + (k % cols) * (im.width + 10); y = 10 + (k // cols) * (th + 34)
-    c.paste(im, (x, y)); d.text((x, y + th + 6), str(k), fill=(0, 0, 0))
-c.save(out, quality=80)`, path.join(OUT, `prehlad-w${w}.jpg`), ...files]);
+  // prehľad: snímky vedľa seba (výška 520 px, pod každou poradové číslo)
+  {
+    const th = 520, tw = Math.round(th * w / h), cols = Math.min(files.length, tw < 400 ? 8 : 4), W = cols * (tw + 10) + 10;
+    await meraj.setViewportSize({ width: W, height: 600 });
+    await meraj.goto('about:blank');
+    await meraj.setContent(`<!doctype html><style>body{margin:0;padding:10px;background:#fff;font:13px sans-serif;display:grid;grid-template-columns:repeat(${cols},${tw}px);gap:10px}
+      img{display:block;width:${tw}px;height:${th}px}p{margin:6px 0 4px;color:#000}</style>` +
+      files.map((f, k) => `<div><img src="http://prehlad.local/${path.basename(f)}"><p>${k}</p></div>`).join(''), { waitUntil: 'load' });
+    await meraj.screenshot({ path: path.join(OUT, `prehlad-w${w}.jpg`), type: 'jpeg', quality: 80, fullPage: true });
+  }
+  await pctx.close();
   console.log(`w${w}: výška ${info.H}, pretekanie ${info.over}px, snímok ${files.length}, tmavé (>70 % čiernej): ${tma.map((t, i) => t > 70 ? i + ':' + t + '%' : null).filter(Boolean).join(' ') || 'žiadne'}`);
   console.log('   pevné prvky:', info.fixed.map((f) => `${f.el} [${Math.round(f.r.left)},${Math.round(f.r.top)} ${Math.round(f.r.width)}x${Math.round(f.r.height)}]`).join(' | '));
   if (info.media.length) console.log('   médiá s medzerou/skryté:', JSON.stringify(info.media));
