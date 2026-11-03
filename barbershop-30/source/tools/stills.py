@@ -17,7 +17,10 @@ HTML = os.path.join(ROOT, 'index.html')
 PHONE = '(max-width: 720px)'
 # šírka pre výber stupňa: rovnaký stupeň, aký si vyberie film (rovina záberu 1,24 × okno; telefón kreslí 2×,
 # preto 93vw dá pri 3× aj 2× displeji 1086 px), takže fotku zálohy film už má v cache
-SIZES = '(max-width: 720px) 93vw, 124vw'
+# tablet na výšku (WEB-06): fotka prológu pokrýva výšku okna (pomer 1,5 × výška, s pohybom kamery asi 1,77 × výška);
+# 120vh dá pri 820 × 1180 a 2× displeji stupeň 2896 (1,39 bodu súboru na bod obrazovky, pri 124vw len 2172 a 1,04)
+# a zároveň nie 4096; telefón (93vw) a počítač (124vw) bez zmeny. Rovnaké imagesizes má prednačítanie v hlavičke.
+SIZES = '(max-width: 720px) 93vw, (orientation: portrait) 120vh, 124vw'
 # telefón na výšku (P16 v style.css): zábery okrem prológu sú fotkou na šírku v páse 56 % výšky, rovina záberu
 # je asi 2,2× širšia než displej (pri 390 × 844 asi 880 px), preto 170vw a žiadne výrezy -m
 # tablet na výšku: záber pokrýva výšku okna, rovina záberu je asi 2,5 až 2,7× širšia než okno (820 × 1180: 2195 px),
