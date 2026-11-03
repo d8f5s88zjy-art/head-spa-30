@@ -369,6 +369,79 @@ p + p { margin-top: var(--s4); }
 .story-line a:hover::before { background: var(--paper); }
 @media (max-width: 1100px) { .story-line { display: none; } }
 
+/* Pás kapitol ako vo videoprehrávači (KF-01, app.js pridá html.kino): kapitoly sa plnia podľa skrolu, ťuk skočí,
+   ťah pretáča film, ▶ pustí Kino. Len čiary a text s tieňom nad filmom, žiadna doska. Počítač dole v strede
+   s názvom kapitoly, telefón hore pod lištou (dole je spodné tlačidlo). */
+html.kino .story-line {
+  display: flex; position: fixed; z-index: 41; left: 50%; right: auto; top: auto; bottom: 22px; transform: translateX(-50%);
+  width: min(620px, 64vw); flex-direction: row; align-items: center; gap: 6px; padding: 0; opacity: 1;
+  touch-action: none; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.55)); transition: opacity 300ms;
+}
+/* v úvode je z pásu len ▶; kapitoly prídu po kúsku skrolu (is-visible z app.js) */
+html.kino .story-line:not(.is-visible) a, html.kino .story-line:not(.is-visible) .kino-label { opacity: 0; pointer-events: none; }
+html.kino .story-line a, html.kino .kino-label, .kino-play { transition: opacity 250ms; }
+html.kino .story-line a { position: relative; flex: 1 1 0; width: auto; height: 32px; min-width: 0; padding: 0; display: block; }
+html.kino .story-line a::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; width: auto; height: 3px; margin-top: -1.5px;
+  border-radius: 2px; background: rgba(241, 233, 221, 0.38); transform: none; transition: height 180ms, margin 180ms;
+}
+html.kino .story-line a[aria-current="true"]::before { background: rgba(241, 233, 221, 0.55); transform: none; }
+html.kino .story-line a:hover::before, html.kino .story-line a:focus-visible::before, html.kino.kino-tah .story-line a::before { height: 6px; margin-top: -3px; }
+html.kino .story-line a:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; border-radius: 3px; }
+.kino-fill {
+  position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px;
+  background: var(--lamp); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; transition: height 180ms, margin 180ms;
+}
+html.kino .story-line a:hover .kino-fill, html.kino .story-line a:focus-visible .kino-fill, html.kino.kino-tah .kino-fill { height: 6px; margin-top: -3px; }
+.kino-play {
+  flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(241, 233, 221, 0.8);
+  background: transparent; color: var(--paper); display: grid; place-items: center; cursor: pointer; padding: 0;
+}
+.kino-play svg { width: 18px; height: 18px; fill: currentColor; }
+.kino-play .i-pause, html.kino-hra .kino-play .i-play { display: none; }
+html.kino-hra .kino-play .i-pause { display: inline; }
+html.kino-hra .kino-play { border-color: var(--lamp); color: var(--lamp); }
+.kino-play:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; }
+.kino-label {
+  flex: 0 0 auto; min-width: 9.5em; font-weight: 600; font-size: 0.75rem; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--paper); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); white-space: nowrap;
+}
+/* nad pásmi s textom (tím, cenník, galéria) je pás 2 px čiara na tom istom mieste (inak by sa pod kurzorom hojdal) */
+html.kino-tenky .story-line:not(:hover):not(:focus-within) .kino-play, html.kino-tenky .story-line:not(:hover):not(:focus-within) .kino-label { opacity: 0; pointer-events: none; }
+html.kino-tenky .story-line:not(:hover):not(:focus-within) a::before, html.kino-tenky .story-line:not(:hover):not(:focus-within) .kino-fill { height: 2px; margin-top: -1px; }
+/* pri menu, okne Barbera, objednávke, prológu a vonku sa pás neukazuje; kým svieti ponuka jazyka, pás počká */
+html.pro .story-line, html.outside .story-line, .site-header[data-menu="open"] ~ .story-line, html.obj-otvorene .story-line,
+html.kino:has(.lang-offer.in) .story-line { opacity: 0 !important; pointer-events: none !important; }
+@media (max-width: 900px) {
+  html.asi-open .story-line { opacity: 0 !important; pointer-events: none !important; }
+  html.kino .story-line { top: calc(var(--nav-h) + 4px); bottom: auto; left: 12px; right: 12px; transform: none; width: auto; gap: 4px; }
+  html.kino .story-line a { height: 30px; }
+  .kino-play { flex-basis: 36px; width: 36px; height: 36px; }
+  .kino-play svg { width: 15px; height: 15px; }
+  .kino-label { display: none; }
+}
+/* nízky telefón: kým je ukázaná karta úvodu, pás by ležal na jej nadpise, ukáže sa až pri ďalšej kapitole */
+@media (max-height: 600px) and (max-width: 900px) { html.kino-uvod .story-line { opacity: 0 !important; pointer-events: none !important; } }
+@media (prefers-reduced-motion: reduce) { .kino-fill, html.kino .story-line a::before { transition: none; } }
+/* „Ďalej: <kapitola> ↓“ pri zastavení (KF-03, kino.js): len text s tieňom a čiara lampy, žiadna doska */
+.kino-next {
+  position: fixed; z-index: 41; left: 24px; bottom: 76px; display: inline-flex; gap: 0.4em; align-items: baseline; max-width: 70vw;
+  padding: 10px 2px; color: var(--paper); text-decoration: none; font-weight: 600; font-size: 0.95rem; line-height: 1.1;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.95), 0 1px 6px rgba(0, 0, 0, 0.9), 0 0 16px rgba(0, 0, 0, 0.65); border-bottom: 2px solid var(--lamp);
+  opacity: 0; transform: translateY(8px); transition: opacity 350ms, transform 350ms; pointer-events: none;
+}
+.kino-next[hidden] { display: none; }
+.kino-next-k { color: var(--paper); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
+html.kino-stoji .kino-next:not([hidden]) { opacity: 1; transform: none; pointer-events: auto; }
+.kino-next:focus-visible { opacity: 1; transform: none; pointer-events: auto; outline: 2px solid var(--lamp); outline-offset: 3px; }
+html.kino-hra .kino-next, html.kino-tenky .kino-next, html.pro .kino-next, html.outside .kino-next, html.obj-otvorene .kino-next,
+.site-header[data-menu="open"] ~ .kino-next, html.kino:has(.lang-offer.in) .kino-next { opacity: 0 !important; pointer-events: none !important; }
+@media (max-width: 900px) {
+  .kino-next { left: 16px; top: calc(var(--nav-h) + 44px); bottom: auto; }
+  html.asi-open .kino-next { opacity: 0 !important; pointer-events: none !important; }
+}
+@media (prefers-reduced-motion: reduce) { .kino-next { transition: none; transform: none; } }
+
 /* --------------------------------------------------------------------------
    7. Obrázky a videá
    -------------------------------------------------------------------------- */

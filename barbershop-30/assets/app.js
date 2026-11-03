@@ -52,6 +52,18 @@ const storyLine = $('.story-line');
 const storyLinks = storyLine ? $$('a[data-chapter]', storyLine) : [];
 const navLinks = nav ? $$('a[href^="#"]', nav) : [];
 const mobileCta = $('#mobile-cta');
+/* pás kapitol ako vo videoprehrávači (KF-01): .story-line dostane výplň kapitol, názov kapitoly a ▶ Kino (lenivý
+   kino.js); výplň a stav sa kreslia v slučke apply(), pás nemá vlastný poslucháč skrolu. Bez skriptu ostanú odkazy. */
+const kino = storyLine && storyLinks.length ? (() => {
+  html.classList.add('kino');
+  const play = document.createElement('button');
+  play.type = 'button'; play.className = 'kino-play'; play.setAttribute('aria-label', 'Prehrať prehliadku');
+  play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
+  const label = document.createElement('span'); label.className = 'kino-label'; label.setAttribute('aria-hidden', 'true');
+  const fills = storyLinks.map((a) => { const i = document.createElement('i'); i.className = 'kino-fill'; i.setAttribute('aria-hidden', 'true'); a.append(i); return i; });
+  storyLine.prepend(play); storyLine.append(label);
+  return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0 };
+})() : null;
 const footer = $('.site-footer');
 
 /* ----------------------------------------------------------------------------
@@ -112,6 +124,11 @@ function measure() {
   if (pr) { const r = pr.getBoundingClientRect(); pricesBox = { top: r.top + y, bottom: r.bottom + y }; }
 
   titles = shots.filter((s) => s.title);
+  // pás kapitol: pásy s textom (tím, cenník, galéria, kontakt, pätička), nad nimi je pás len tenká čiara
+  if (kino) {
+    kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
+    const r = storyLine.getBoundingClientRect(); kino.barY = r.top + r.height / 2;
+  }
 
   if (footer) {
     const r = footer.getBoundingClientRect();
@@ -155,6 +172,7 @@ let lastFrame = 0;
 let snapUntil = performance.now() + 600; // do tohto času sa stav nastavuje okamžite (bez lerpu)
 let menuOpen = false;
 let activeScene = 0;
+let posScene = 0;      // kapitola podľa polohy (40 % okna): spodné tlačidlo sa skryje v rezervácii hneď, ako do nej zákazník príde
 let lastHeaderScrolled = null;
 
 let curY = 0;
@@ -233,6 +251,7 @@ function apply(p) {
   // aktívna kapitola: z ukázanej karty (menu, lišta aj pás súhlasia s tým, čo zákazník vidí, KF-10);
   // bez ukázanej karty (pätička) podľa polohy
   const blizko = closestSection(y), footerWins = blizko.footerWins;
+  posScene = blizko.section ? blizko.section.scene : 0;
   const section = (!footerWins && karta && karta.sec) || blizko.section;
   const scene = section ? section.scene : 0;
   if (scene) {
@@ -245,6 +264,8 @@ function apply(p) {
     for (const a of navLinks) setAttr(a, 'aria-current', a.getAttribute('href') === currentHash ? 'true' : null);
   }
 
+  if (kino) kresliPas(y, section, !!(karta && karta.first));
+
   // lišta, linka príbehu, plávajúce CTA
   const scrolled = curY > 80;                               // nečítať scrollY po zápisoch štýlu
   if (scrolled !== lastHeaderScrolled) { lastHeaderScrolled = scrolled; setClass(header, 'is-scrolled', scrolled); }
@@ -252,11 +273,26 @@ function apply(p) {
   setClass(mobileCta, 'is-hidden', ctaHidden(y));
 }
 
+// pás kapitol: aktuálna kapitola plná po polohu v nej, predošlé plné, ďalšie prázdne (len transform, zápis iba pri zmene)
+function kresliPas(y, section, uvod) {
+  const c = section ? Math.max(0, Math.min(kino.fills.length - 1, section.scene - 1)) : 0;
+  for (let i = 0; i < kino.fills.length; i++) {
+    const s = i === c ? sections.find((x) => x.scene === i + 1) : null;
+    const f = i < c ? 1 : i > c ? 0 : s ? Math.round(1000 * Math.max(0.02, Math.min(1, (y + vh * 0.5 - s.top) / s.height))) / 1000 : 0;
+    if (f !== kino.f[i]) { kino.f[i] = f; kino.fills[i].style.transform = `scaleX(${f})`; }
+  }
+  if (c !== kino.cur) { kino.cur = c; kino.label.textContent = String(c + 1).padStart(2, '0') + ' · ' + storyLinks[c].getAttribute('aria-label'); }
+  const yb = y + kino.barY, tenky = kino.pasy.some((b) => yb >= b[0] && yb <= b[1]);
+  if (tenky !== kino.tenky) { kino.tenky = tenky; html.classList.toggle('kino-tenky', tenky); }
+  // ukázaná karta úvodu: na nízkom telefóne by pás ležal na jej nadpise (CSS ho vtedy skryje)
+  if (uvod !== kino.uvod) { kino.uvod = uvod; html.classList.toggle('kino-uvod', uvod); }
+}
+
 // spodné tlačidlo: nie v úvode (titulná karta má vlastné tlačidlá), nie v rezervácii, nie pri menu
 function ctaHidden(y = window.scrollY || 0) {
   const hero = shots[0] && shots[0].first && y < shots[0].height * 0.6;
   const mid = y + vh * 0.5, prices = !!pricesBox && mid > pricesBox.top && mid < pricesBox.bottom;
-  return activeScene === lastScene || menuOpen || !!hero || prices;
+  return activeScene === lastScene || posScene === lastScene || menuOpen || !!hero || prices;
 }
 
 function tick(now) {
@@ -298,6 +334,49 @@ function snapNow(ms = 0) {
    6. Udalosti: scroll, resize, viditeľnosť karty, kotvy
    ---------------------------------------------------------------------------- */
 window.addEventListener('scroll', start, { passive: true });
+
+/* pás kapitol: ťuk skočí (bežný odkaz), ťah pretáča film (pointer capture), šípky ←/→ skáču po kapitolách;
+   ▶ pustí Kino (kino.js, načíta sa v nečinnosti alebo hneď pri ťuku) */
+if (kino) {
+  const N = storyLinks.length;
+  const sec = (i) => sections.find((x) => x.scene === i + 1);
+  // cieľ kapitoly: jej titulná karta je celá na obrazovke
+  const ciel = (i) => {
+    const s = sec(i); if (!i || !s) return 0;
+    const t = shots.find((x) => x.title && x.top >= s.top - 1);
+    return Math.min(maxScroll, (t ? t.top : s.top) + vh * 0.25, s.top + s.height - vh * 0.1);
+  };
+  let tah = null;
+  storyLine.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.kino-play')) return;
+    tah = { x0: e.clientX, moved: false, a: storyLinks[0].getBoundingClientRect(), b: storyLinks[N - 1].getBoundingClientRect(), id: e.pointerId };
+  });
+  storyLine.addEventListener('pointermove', (e) => {
+    if (!tah || e.pointerId !== tah.id) return;
+    if (!tah.moved && Math.abs(e.clientX - tah.x0) < 8) return;
+    if (!tah.moved) { tah.moved = true; storyLine.setPointerCapture(e.pointerId); html.classList.add('kino-tah'); }
+    const f = Math.max(0, Math.min(0.9999, (e.clientX - tah.a.left) / (tah.b.right - tah.a.left))), i = Math.floor(f * N), s = sec(i);
+    if (s) window.scrollTo({ top: Math.max(0, s.top + (f * N - i) * s.height - vh * 0.5), behavior: 'instant' });
+  });
+  const koniecTahu = () => { if (tah && tah.moved) setTimeout(() => html.classList.remove('kino-tah'), 0); tah = null; };
+  storyLine.addEventListener('pointerup', koniecTahu); storyLine.addEventListener('pointercancel', koniecTahu);
+  storyLine.addEventListener('click', (e) => { if (html.classList.contains('kino-tah')) e.preventDefault(); }, true);
+  storyLine.addEventListener('keydown', (e) => {
+    const i = storyLinks.indexOf(document.activeElement);
+    if (i < 0 || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+    e.preventDefault();
+    const j = Math.max(0, Math.min(N - 1, i + (e.key === 'ArrowRight' ? 1 : -1)));
+    storyLinks[j].focus({ preventScroll: true });
+    window.scrollTo({ top: ciel(j), behavior: motionOff || Math.abs(j - i) > 1 ? 'instant' : 'smooth' });
+  });
+  window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; } };
+  const modul = () => import('./kino.js');
+  kino.play.addEventListener('click', () => modul().then((m) => m.prepni()).catch(() => {}));
+  // Kino a „Ďalej“ (kino.js) v nečinnosti po načítaní
+  const neskor = () => setTimeout(() => (window.requestIdleCallback || setTimeout)(() => modul().then((m) => m.zapni()).catch(() => {}), { timeout: 4000 }), 1500);
+  if (document.readyState === 'complete') neskor(); else window.addEventListener('load', neskor, { once: true });
+  document.addEventListener('langchange', () => { kino.cur = -1; apply(shownP); });
+}
 
 let resizeTimer = 0;
 function scheduleMeasure() {
