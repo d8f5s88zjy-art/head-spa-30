@@ -132,6 +132,8 @@ async function daj(a, par, ttl = 36e5) {
 let telo, nadpis, krokEl, spat, vyber, zivy, pruh;
 function postav(prvok) {
   koren = prvok || el('dialog', { class: 'obj', 'aria-labelledby': 'obj-h' });
+  // REZ-04: dvojklik na voľbu prepne krok a druhý klik by označil text nového kroku; ťahom sa dá označovať ďalej
+  koren.addEventListener('mousedown', (e) => { if (e.detail > 1) e.preventDefault(); });
   koren.setAttribute('data-no-i18n', ''); koren.setAttribute('translate', 'no');
   spat = el('button', { class: 'obj-spat', type: 'button' });
   spat.addEventListener('click', () => chod(s.krok - 1));
@@ -190,6 +192,18 @@ function vykresli(zameraj) {
   nadpis.textContent = [L.h1, L.h2, L.h3, L.h4][s.krok - 1];
   koren.querySelector('.obj-tel').textContent = L.tel;
   zivy.textContent = '';
+  // krok 4 (WEB-03, REZ-02 a): v okne je Dokončiť v päte, teda na očiach bez skrolu na každom telefóne; pri Späť zmizne.
+  // Na stránke rezervacia.html päta nie je prilepená, tam ostane Dokončiť v obsahu nad Zavolať (krok4)
+  const pata = koren.querySelector('.obj-pata');
+  let hl = pata.querySelector('[data-obj-priamo]');
+  if (s.krok === 4 && !naStranke) {
+    if (!hl) {
+      hl = el('a', { class: 'btn btn-primary obj-pata-hl', href: REZERVACIA, target: '_blank', rel: 'noopener', 'data-obj-priamo': true });
+      hl.addEventListener('click', otvoreneDoSystemu);
+      pata.prepend(hl);
+    }
+    hl.textContent = L.dokoncit;
+  } else if (hl) { hl.remove(); otvoreneVSysteme = false; }
   // doterajší výber: ťuknutím sa vrátiš na krok
   const sl = sluzby().find((x) => x.id === s.sluzba);
   const kusy = [];
@@ -422,17 +436,56 @@ function krok4(L, sl) {
   return [
     el('dl', { class: 'obj-suhrn' }, riadky.map(([l, a, b]) => el('div', {}, [el('dt', {}, [l]), el('dd', {}, [a]), b ? el('dd', { class: 'obj-suhrn-m' }, [b]) : null]))),
     poznamka(L.predbezne, L.predT),
-    akcie(L),
+    tahak(sl),
+    naStranke ? akcie(L, otvoreneDoSystemu) : el('div', { class: 'obj-akcie' }, [el('a', { class: 'btn btn-secondary btn-tel', href: TEL }, [L.zavolat])]),
   ];
+}
+function otvoreneDoSystemu() { otvoreneVSysteme = true; const h = koren.querySelector('.obj-tahak .obj-poznamka-h'); if (h) h.textContent = (TH[jazyk()] || TH.sk)[1]; }
+/* ťahák „v systéme vyber to isté“ (KV-02): rezervačný systém nečíta adresu (REZ-02), preto okno presne povie, čo v ňom
+   ťuknúť, a to slovenskými názvami, ktoré tam zákazník uvidí. Po ťuku na Dokončiť nadpis povie, že systém je v novej karte. */
+const TH = {
+  sk: ['V rezervačnom systéme vyber to isté:', 'Rezervácia sa otvorila v novej karte. Vyber v nej:', 'službu {s}', 'barbera {b}', '{d} a čas {t}', 'meno, e-mail, telefón a „Rezervovať termín“', ''],
+  en: ['In the booking system choose the same:', 'Booking opened in a new tab. Choose there:', 'service {s}', 'barber {b}', '{d} and time {t}', 'name, e-mail, phone and „Rezervovať termín“', 'The booking page is in Slovak.'],
+  uk: ['У системі бронювання обери те саме:', 'Бронювання відкрилося в новій вкладці. Обери там:', 'послугу {s}', 'барбера {b}', '{d} і час {t}', 'ім’я, e-mail, телефон і „Rezervovať termín“', 'Сторінка бронювання словацькою мовою.'],
+  hu: ['A foglalási rendszerben válaszd ugyanezt:', 'A foglalás új lapon nyílt meg. Ott válaszd:', 'a szolgáltatást: {s}', 'a barbert: {b}', '{d}, időpont {t}', 'név, e-mail, telefon és „Rezervovať termín“', 'A foglalási oldal szlovák nyelvű.'],
+  sr: ['U sistemu za rezervacije izaberi isto:', 'Rezervacija se otvorila u novoj kartici. Tamo izaberi:', 'uslugu {s}', 'berberina {b}', '{d} i vreme {t}', 'ime, e-mail, telefon i „Rezervovať termín“', 'Stranica za rezervaciju je na slovačkom.'],
+  pl: ['W systemie rezerwacji wybierz to samo:', 'Rezerwacja otworzyła się w nowej karcie. Wybierz tam:', 'usługę {s}', 'barbera {b}', '{d} i godzinę {t}', 'imię, e-mail, telefon i „Rezervovať termín“', 'Strona rezerwacji jest po słowacku.'],
+  de: ['Wähl im Buchungssystem dasselbe:', 'Die Buchung ist in einem neuen Tab offen. Wähl dort:', 'Leistung {s}', 'Barber {b}', '{d} und Zeit {t}', 'Name, E-Mail, Telefon und „Rezervovať termín“', 'Die Buchungsseite ist auf Slowakisch.'],
+  cs: ['V rezervačním systému vyber totéž:', 'Rezervace se otevřela v nové kartě. Vyber v ní:', 'službu {s}', 'barbera {b}', '{d} a čas {t}', 'jméno, e-mail, telefon a „Rezervovať termín“', 'Rezervační stránka je ve slovenštině.'],
+};
+const SKN = new Map();                                   // id služby -> slovenský názov (ako v systéme)
+function skNazvy() {
+  if (jazyk() === 'sk' && html.dataset.zdroj !== 'en') { sluzby().forEach((x) => SKN.set(x.id, x.nazov)); return Promise.resolve(); }
+  return fetch(new URL(`i18n/${jazyk()}.json`, import.meta.url).href).then((r) => r.json()).then((j) => {
+    const spat = new Map(Object.entries(j).map(([k, v]) => [v, k]));
+    sluzby().forEach((x) => SKN.set(x.id, spat.get(x.nazov) || x.nazov));
+  }).catch(() => {});
+}
+let otvoreneVSysteme = false;
+function tahak(sl) {
+  const t = TH[jazyk()] || TH.sk;
+  const ol = el('ol', { class: 'obj-tahak-z' });
+  const kresli = () => {
+    const sn = sl ? `„${SKN.get(sl.id) || sl.nazov}“` : '';
+    const bn = s.barber === KTOKOLVEK ? '„Nezáleží“' : `„${menoBarbera(s.barber)}“`;
+    const d = new Date(s.datum + 'T12:00:00');
+    const datum = isNaN(d) ? s.datum : `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
+    ol.replaceChildren(...[fill(t[2], { s: sn }), fill(t[3], { b: bn }), fill(t[4], { d: datum, t: s.cas }), t[5]].map((x) => el('li', {}, [x])));
+  };
+  kresli();
+  if (!SKN.size || jazyk() !== 'sk') skNazvy().then(kresli);
+  return el('div', { class: 'obj-tahak', role: 'note' }, [el('p', { class: 'obj-poznamka-h' }, [otvoreneVSysteme ? t[1] : t[0]]), ol, t[6] ? el('p', { class: 'obj-tahak-sys' }, [t[6]]) : null]);
 }
 /* poznámka v rámčeku s linkou lampy: prvá veta nadpisom, zvyšok tichšie (keď druhá časť nie je daná, rozdelí text) */
 function poznamka(h, t) {
   if (t === undefined) { const m = /^(.+?[.!?])\s+(.+)$/s.exec(h); if (m) { h = m[1]; t = m[2]; } }
   return el('div', { class: 'obj-poznamka', role: 'note' }, [el('p', { class: 'obj-poznamka-h' }, [h]), t ? el('p', {}, [t]) : null]);
 }
-function akcie(L) {
+function akcie(L, priKliku) {
+  const dok = el('a', { class: 'btn btn-primary', href: REZERVACIA, target: '_blank', rel: 'noopener', 'data-obj-priamo': true }, [L.dokoncit]);
+  if (priKliku) dok.addEventListener('click', priKliku);
   return el('div', { class: 'obj-akcie' }, [
-    el('a', { class: 'btn btn-primary', href: REZERVACIA, target: '_blank', rel: 'noopener', 'data-obj-priamo': true }, [L.dokoncit]),
+    dok,
     el('a', { class: 'btn btn-secondary btn-tel', href: TEL }, [L.zavolat]),
   ]);
 }

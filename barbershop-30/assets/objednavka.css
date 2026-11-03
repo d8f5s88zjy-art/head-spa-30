@@ -179,3 +179,22 @@ html.obj-otvorene { overflow: hidden; }
   .obj-stranka .obj-hlava { padding: 10px 14px 8px; }
   .obj-stranka .obj-pruh, .obj-stranka .obj-obsah, .obj-stranka .obj-pata { padding-inline: 14px; }
 }
+
+/* krok 4 (WEB-03, KV-01, KV-02): Dokončiť v päte okna a ťahák pre rezervačný systém (svetlý, bez tmavej dosky) */
+.obj-pata { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+.obj-pata-hl { flex: 1 1 100%; white-space: normal; text-align: center; line-height: 1.25; }
+.obj-tahak { margin: 16px 0 0; padding: 14px 16px 12px 18px; border-radius: 4px; background: #f1e9dd; color: #1b1714; }
+.obj-tahak .obj-poznamka-h { margin: 0 0 6px; font-weight: 700; font-size: 1rem; color: #1b1714; }
+.obj-tahak-z { margin: 0; padding-left: 1.3em; font-size: 0.9375rem; line-height: 1.5; color: #3a2f27; }
+.obj-tahak-z li::marker { color: #b8460f; font-weight: 700; }
+.obj-tahak-sys { margin: 6px 0 0; font-size: 0.8125rem; color: #5b4e43; }
+/* nízky telefón: v kroku 4 je volanie aj v obsahu („Zavolať a potvrdiť termín“), päta nesie len Dokončiť */
+@media (max-height: 640px) { .obj-pata:has(.obj-pata-hl) .obj-tel { display: none; } }
+/* 320 px (KV-09): „← Späť“ sa nezalomí, kicker kroku ustúpi (pruh pod ním ukazuje krok) */
+.obj-spat { white-space: nowrap; }
+@media (max-width: 359px) { .obj-hlava { grid-template-columns: auto minmax(0, 1fr) auto; } .obj-hlava .obj-kicker { white-space: normal; font-size: 0.6875rem; letter-spacing: 0.1em; line-height: 1.35; text-align: right; } }
+/* REZ-04: dvojklik na voľbu neoznačí text, ťuk nečaká na dvojité priblíženie; REZ-06: nadpis kroku dostane fokus
+   kvôli čítačke, rámik okolo neho by len rušil (tlačidlá rámik majú) */
+.obj button, .obj-sluzby, .obj-tim, .obj-dni, .obj-mriezka { -webkit-user-select: none; user-select: none; }
+.obj button { touch-action: manipulation; }
+.obj .obj-h:focus-visible { outline: none; }
