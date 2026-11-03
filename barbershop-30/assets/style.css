@@ -1467,7 +1467,10 @@ html.js-odhal .odhal picture { display: block; transform: scale(1.12); transitio
 html.js-odhal .odhal.is-in { clip-path: inset(-6px); }
 html.js-odhal .odhal.is-in picture { transform: none; }
 
-.btn:active { transform: translateY(1px) scale(0.98); transition-duration: 80ms; }
+/* odozva pri stlačení (KH-07): tlačidlo sa jemne stlačí, len transform (kompozícia), 120 ms; pri obmedzenom pohybe nič */
+.btn:active { transform: scale(0.97); transition-duration: 120ms; }
+@media (prefers-reduced-motion: reduce) { .btn:active { transform: none; } }
+html[data-motion="off"] .btn:active { transform: none; }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); }
 }
