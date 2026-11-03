@@ -156,7 +156,8 @@ if (SERVER) {
   const t4 = await page.locator('.obj').textContent();
   ok(t4.includes('Pánsky strih a úprava brady') && t4.includes('Adrian') && t4.includes('o ' + cas1), 'krok 4: výber služby, barbera, dňa a času');
   ok(t4.includes('Termín ešte nie je rezervovaný') && !/rezervovan[ýá]\b(?! )|úspešn|potvrden[ýá] /i.test(t4.replace('Termín ešte nie je rezervovaný', '')), 'krok 4: žiadny úspech bez skutočného potvrdenia');
-  ok(await page.evaluate(() => { const a = document.querySelectorAll('.obj-akcie a'); return a.length === 2 && /barbershop30\.sk\/rezervacia$/.test(a[0].href) && a[0].hasAttribute('data-obj-priamo') && a[1].href === 'tel:+421951267203'; }), 'krok 4: Dokončiť v rezervačnom systéme a Zavolať a potvrdiť termín');
+  // po WEB-03: Dokončiť je v päte okna (na očiach bez skrolu), v obsahu ťahák pre rezervačný systém a Zavolať
+  ok(await page.evaluate(() => { const d = document.querySelector('.obj .obj-pata [data-obj-priamo]'), t = [...document.querySelectorAll('.obj .obj-telo .obj-akcie a')]; return !!d && /barbershop30\.sk\/rezervacia$/.test(d.href) && t.length === 1 && t[0].href === 'tel:+421951267203' && !!document.querySelector('.obj .obj-tahak'); }), 'krok 4: Dokončiť v rezervačnom systéme v päte okna, ťahák a Zavolať a potvrdiť termín');
   ok(!(await preteka(page)), 'krok 4: nič nepreteká');
   await snimka(page, '4-vyber-390.png');
   // jazyk počas otvoreného okna
@@ -295,7 +296,7 @@ if (SERVER) {
   await page.locator('.obj-tim button', { hasText: 'Nezáleží' }).click();
   await page.waitForSelector('.obj-mriezka button', { timeout: 10000 }).catch(async () => { await snimka(page, 'chyba-4.png'); console.log(await page.locator('.obj').textContent()); });
   await page.locator('.obj-mriezka button').first().click();
-  await page.locator('.obj-akcie a', { hasText: 'Dokončiť v rezervačnom systéme' }).click();
+  await page.locator('.obj [data-obj-priamo]', { hasText: 'Dokončiť v rezervačnom systéme' }).click();
   await page.waitForSelector('#v30p[open]', { timeout: 5000 }).catch(() => {});
   ok(await page.locator('#v30p[open]').count() === 1 && await page.locator('.obj[open]').count() === 1, 'Dokončiť: prihláška kartičky nad výberom, výber ostáva');
   await sleep(500);
