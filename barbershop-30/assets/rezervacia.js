@@ -28,6 +28,19 @@ const ukazka = q.get('objednavka') === 'ukazka';
   matchMedia('(max-width: 900px)').addEventListener?.('change', (e) => { if (!e.matches) nastav(false); });
 })();
 
+/* fotky krokov (PLY-02): zdroj až po načítaní stránky v nečinnosti, aby na pomalej sieti nesúperili s prvým obrazom;
+   rozmery rámika sú dané v CSS (pomer 16 : 6), nič neposkočí; bez skriptu sú v <noscript> */
+(function fotkyKrokov() {
+  const pustit = () => document.querySelectorAll('picture[data-pozde]').forEach((p) => {
+    p.querySelectorAll('[data-srcset]').forEach((e) => { e.srcset = e.dataset.srcset; e.removeAttribute('data-srcset'); });
+    const im = p.querySelector('img[data-src]');
+    if (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
+    p.removeAttribute('data-pozde');
+  });
+  const neskor = () => ('requestIdleCallback' in window ? requestIdleCallback(pustit, { timeout: 2000 }) : setTimeout(pustit, 200));
+  if (document.readyState === 'complete') neskor(); else addEventListener('load', neskor, { once: true });
+})();
+
 /* rok v pätičke */
 document.querySelectorAll('.year').forEach((e) => { e.textContent = String(new Date().getFullYear()); });
 

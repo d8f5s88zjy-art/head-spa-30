@@ -35,6 +35,8 @@ body.rez { background: var(--ink); }
 /* cenník s fotkou miesta nad každou skupinou (skutočné fotky prevádzky, nie výsledky strihov) */
 .rez-skup-foto { display: block; aspect-ratio: 16 / 6; margin: 0 0 var(--s4); overflow: hidden; border-radius: var(--radius); border: 1px solid var(--line); }
 .rez-skup-foto img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
+/* fotka kroku pred nastavením zdroja (rezervacia.js, PLY-02): bez textu alt v rámiku */
+.rez-skup-foto img:not([src]) { visibility: hidden; }
 
 /* tím a naša práca */
 .rez-tim, .rez-praca { padding-block: var(--s8); }
