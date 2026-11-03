@@ -19,7 +19,7 @@ const OTAZKY_KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho'
   'ia', 'ie', 'iu', 'ii', 'ym', 'a', 'e', 'i', 'o', 'u', 'y'];
 /* slová, ktorých skrátený kmeň by splynul s iným slovom (recept a recepcia, počasie a „počas“, instagram a inštalatér):
    kmeňom je celá predpona */
-const OTAZKY_CELE = ['pocasi', 'recept', 'instagram'];
+const OTAZKY_CELE = ['pocasi', 'recept', 'instagram', 'barberk'];
 
 /* kmene slov: bez diakritiky a výplňových slov, koncovka preč, najviac 5 znakov (čísla celé, OTAZKY_CELE celé) */
 function otazky_kmene(string $text): array {

@@ -18,7 +18,7 @@ podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny 
   keď má barber v kresle zákazníka, venuje sa jemu, nie telefónu. Zmenu alebo zrušenie termínu dať vedieť recepcii čo najskôr.
 - Garancia (slová majiteľa, 27. 10. 2026): z kresla zákazník vstane, až keď je spokojný. Čo nesedí, povie rovno v kresle,
   dohodne sa a doladí hneď. Nič viac sa nesľubuje: žiadne lehoty po odchode, žiadne „zadarmo“, „neplatíš“ ani vrátenie peňazí.
-- Vzadu je čakáreň s kreslami a retro pumpou Route 66; káva aj minerálka sú zdarma.
+- Vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom (web: „Kreslá, retro pumpa a farebný buldog.“); káva aj minerálka sú zdarma.
 - Strihanie detí: strih pre malých gentlemanov do 10 rokov.
 - Školenia sú na poschodí, pod značkou Barbershop 30 (podrobnosti len na recepcii).
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
@@ -69,7 +69,18 @@ Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si
 Barberi majú 10 až 15 rokov praxe (slová majiteľa, 27. 10. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
 a strih, ktorý sedí aj o týždeň.
 Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián (v rezervačnom systéme Adrian). Barberka: Dominika.
-O konkrétnom barberovi (jeho roky praxe, špecializácie) web nič neuvádza: prax 10 až 15 rokov platí o tíme, nie o menách.
+Predstavenia barberov na webe (doslova z karty tímu):
+- Nikolas (barber): Strih, akoby si ho nosil odjakživa. Len lepší.
+- Kristián (barber): Elegancia bez námahy. Ty sedíš, on pracuje. Výsledok hovorí za všetko.
+- Damian (barber): Najprv ťa vypočuje. Potom hovoria už len nožnice.
+- Michal (barber): Horúci uterák, britva, ticho. Zavrieš oči unavený, otvoríš ich ako nový.
+- Andy (barber): Každý detail na svojom mieste. Aj ten, čo vidí len tvoje zrkadlo.
+- Dominika (barberka): Jemná ruka, prísne oko. Vstaneš, až keď sedí každý vlas. Bez výnimky.
+- Kevin (barber): Pokojne, čisto, bez zbytočných rečí. Strih, ktorý drží aj o týždeň.
+- Lajko (barber): Ostrá línia na krku, mäkký prechod na bokoch. Remeslo vidno zblízka.
+- Jojo (barber): Reč alebo ticho, ako chceš. Strih dotiahne tak či tak. Poriadne.
+- Adrian (barber): Dôveru si získa skôr, než si sadneš. Vrátiš sa skôr, než ti dorastú vlasy.
+Roky praxe a špecializácie jednotlivých barberov web neuvádza: prax 10 až 15 rokov platí o tíme, nie o menách.
 
 ## Čo asistent nevie (odkáž na recepciu)
 Voľné termíny (len cez nástroj over_volne_terminy, keď je kalendár pripojený), platobné možnosti, parkovanie, darčekové poukazy, zľavy a akcie, predaj produktov, presná

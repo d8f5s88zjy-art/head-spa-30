@@ -27,7 +27,7 @@ const KONCOVKY = ['ovia', 'ami', 'ach', 'och', 'ych', 'ymi', 'imi', 'eho', 'emu'
 // slová, ktorých skrátený kmeň by splynul s iným slovom odpovedí (recept → recep ako recepcia, počasie → počas ako
 // „počas strihu“, instagram → insta ako inštalatér): kmeňom je celá táto predpona, takže otázka mimo témy nedostane
 // nezmyselnú odpoveď ani návrhy
-const CELE = ['pocasi', 'recept', 'instagram'];
+const CELE = ['pocasi', 'recept', 'instagram', 'barberk'];
 
 export function kmene(text) {
   const t = String(text).toLowerCase().replace(/[^\x00-\x7f]/g, (z) => DIAKRITIKA[z] ?? z).replace(/[^a-z0-9]+/g, ' ');
