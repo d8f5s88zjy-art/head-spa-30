@@ -144,6 +144,23 @@ const MRIEZKA_Q = [];
   }
   if (!zleM) console.log(`OK   mriežka cenníka: ${n} otázok na cenu a čas má správne číslo (${prvaInde} v prehľade viacerých služieb)`);
 }
+// sada 150 otázok na ceny a časy (source/tools/sada-150-ceny.json, slepá sada kontroly BAR-01, 3. 11. 2026) s nulovou
+// toleranciou: otázka na jednu službu (c = cena, t = čas) dostane číslo tej služby, nikdy číslo inej služby ani telefón
+// (telefón len pri alebo_tel); odpoveď, ktorá číslo nemá v prvej vete, smie byť len prehľad viacerých služieb
+const SADA150 = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'sada-150-ceny.json'), 'utf8')).sada;
+{
+  const cislaV = (a) => [...a.matchAll(/\d+(?:,\d+)? €|\d+ minút/g)].map((x) => x[0]);
+  let zleS = 0, n = 0;
+  for (const s of SADA150) {
+    if (s.d !== 'c' && s.d !== 't') continue;
+    n++;
+    const c = s.d === 'c' ? s.c : s.t, h = najdi(db, s.q, 1, PRAH)[0], a = h && h.skore >= PRAH ? h.o.a : '';
+    if (!a) { if (!s.alebo_tel) { zleS++; chyba(`sada 150: „${s.q}“ → telefón, čakám ${c}`); } continue; }
+    if (a.includes(c) || (s.ma || []).some((r) => new RegExp(r, 'i').test(a))) continue;
+    if (cislaV(a).length) { zleS++; chyba(`sada 150: „${s.q}“ → ${h.o.id} s číslom inej služby (${cislaV(a).slice(0, 3).join(', ')}), čakám ${c}`); }
+  }
+  if (!zleS) console.log(`OK   sada 150 cien a časov: ${n} otázok na jednu službu bez čísla inej služby a bez zbytočného telefónu`);
+}
 // každá častá otázka z webu (index.html) má v okne odpoveď nad prahom (nie telefón „nič nemám“)
 const FAQ = [...html.matchAll(/<details class="faq-item"><summary>([^<]+)<\/summary>/g)].map((m) => m[1]);
 if (FAQ.length < 5) chyba(`časté otázky webu: našlo sa len ${FAQ.length}`);
@@ -155,7 +172,8 @@ else console.log(`OK   časté otázky webu majú odpoveď v okne (${FAQ.length}
 const SKUS = [...ot.flatMap((o) => [o.q, ...(o.v || [])]), ...Object.keys(VSEOB), ...MIMO, 'kolko by ma stal strih pre syna', 'chcem si dat ostrihat bradu',
   'Má Adrián zajtra voľný termín?', 'mozem si dat pivo', 'kde zaparkujem auto', 'Do you cut kids hair?', 'Wie viel kostet ein Haarschnitt?',
   'Koľko stojí strih 10 cm?', 'otvarate v nedelu?', 'recepty od recepčnej', 'počasím počas strihu', '', '???', ...MRIEZKA_Q, ...FAQ,
-  'kolko stoji strih psa', 'Koľko stojí strih u konkurencie?', 'Koľko stojí strih a holenie?', 'Koľko stojí úprava brady pre syna?', 'Koľko stojí detský strih s ornamentom?'];
+  'kolko stoji strih psa', 'Koľko stojí strih u konkurencie?', 'Koľko stojí strih a holenie?', 'Koľko stojí úprava brady pre syna?', 'Koľko stojí detský strih s ornamentom?',
+  ...SADA150.map((s) => s.q)];
 let php = '';
 try { php = execFileSync('php', ['-v'], { encoding: 'utf8' }); } catch (e) { console.log('pozor: php nie je, zhoda so serverom sa nekontroluje'); }
 if (php) {

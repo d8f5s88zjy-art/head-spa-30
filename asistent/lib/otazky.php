@@ -92,16 +92,18 @@ function otazky_hladaj(array $db, string $text, int $kolko = 5): array {
 /* Cenník: otázka na cenu alebo čas jednej služby z cenníka dostane jej overenú odpoveď (cena-<služba>, trvanie-<služba>),
    keď ju hľadanie samo nevyberie. Rovnaké pravidlá ako smeruj() a najdi() v asistent-otazky.js (popis tam);
    otazky.mjs stráži, že server a prehliadač vyberú to isté. */
+const OTAZKY_SPOJ = '( a| aj| s| so| plus| spolu s| aj s| a aj)';
 const OTAZKY_SLUZBY = [
   ['ultra-inclusive', '/ultra|balic\w*.{0,25}whisk|whisk\w*.{0,25}balic/', 'balicek-1 strih-a-brada pansky-strih uprava-brady hot-towel uprava-obocia depilacia plet-premium'],
-  ['balicek-1', '/balic\w* (1|jedn|prv)|prv\w* balic|zakladn\w* balic/', 'strih-a-brada pansky-strih uprava-brady hot-towel uprava-obocia depilacia'],
-  ['farbenie-brady', '/farb\w*.{0,20}brad|brad\w*.{0,20}farb/', 'uprava-brady'],
+  ['balicek-1', '/balic\w* (1|jedn|prv)|balik (1|jedn)|prv\w* balic|zakladn\w* balic/', 'strih-a-brada pansky-strih uprava-brady hot-towel uprava-obocia depilacia'],
+  ['farbenie-brady', '/(farb|tonov|sedin|sediv)\w*.{0,20}(brad|fuz)|(brad|fuz)\w*.{0,20}(farb|tonov|sedin|sediv)/', 'uprava-brady'],
   ['farbenie-obocia', '/farb\w*.{0,20}oboc|oboc\w*.{0,20}farb/', 'uprava-obocia'],
-  ['strih-a-brada', '/\b(strih|ostrih|vlas)\w*.{0,30}(brad|fuz)|(brad|fuz)\w*.{0,30}\b(strih|ostrih|vlas)/', 'uprava-brady pansky-strih hot-towel'],
+  ['dlhe-vlasy', '/(\bo?strih\w* )?(dlh\w*|dlhs\w*) vlas\w*|vlas\w* (dlh\w*|dlhs\w*)( ako)?( 10)?|(nad|cez|viac ako|dlhs\w* ako) 10|po plec/', 'pansky-strih'],
+  ['strih-a-brada', '/\b(strih|ostrih|vlas)\w*( \w+)?(' . OTAZKY_SPOJ . '( \w+){0,2}| (uprav|zastrih)\w*) (brad|fuz)\w*|\b(brad|fuz)\w*( \w+)?' . OTAZKY_SPOJ . '( \w+){0,2} (strih|ostrih|vlas)\w*/', 'uprava-brady pansky-strih hot-towel'],
   ['oholenie-hlavy', '/(hol|britv)\w*.{0,20}hlav|hlav\w*.{0,20}(hol|britv|hladk)/', 'hot-towel'],
-  ['dlhe-vlasy', '/dlh\w* vlas|dlhs\w* vlas|(nad|cez|viac ako) 10|po plec/', 'pansky-strih'],
   ['uprava-obocia', '/oboc/', ''],
-  ['uprava-brady', '/brad|fuz/', 'hot-towel'],
+  ['hot-towel', '/do hladka|na hladko|nahladko|\b(o|vy)?hol\w* (tvar|brad)\w*/', 'uprava-brady'],
+  ['uprava-brady', '/\b(o|za)?strih\w* (brady|fuzov)\b|brad|fuz/', 'hot-towel'],
   ['male-gentlemany', '/detsk|\bsyn|dieta|\bdeti|chlapc|chlapec|gentleman|\bmal(eho|emu|ych|ym)\b/', 'pansky-strih ornament'],
   ['hot-towel', '/hot towel|do hladka|britv|ohol\w* tvar|holen/', ''],
   ['plet-premium', '/\bplet|peeling|\bmask|premium/', ''],
@@ -109,26 +111,37 @@ const OTAZKY_SLUZBY = [
   ['ornament', '/ornament|vzor/', ''],
   ['pansky-strih', '/\b(o?strih|o?strihu|o?strihom|o?strihy|o?strihov|o?strihani[ea]|fade)\b/', ''],
 ];
-const OTAZKY_CENA = '/\bcen[auy]?\b|\bcenn|\bstoj|\bstal\b|\b(bude|by|ma) stat\b|\bzaplat|\bkolko (sa )?plat|\bvyjde|\bza kolko\b|\bkolko (si )?(pytate|uctujete)|\beur/';
+const OTAZKY_CENA = '/\bcen[auy]?\b|\bcenn|\bstoj|\bstal\b|\b(bude|by|ma) stat\b|\bzaplat|\bkolko (sa )?plat|\bvyjde|\bza kolko\b|\bkolko (si )?(pytate|uctujete)|\bkolko dam\b|\bdam za\b|\beur/';
 const OTAZKY_CAS = '/\bdlho\b|\btrva|\bkolko casu\b|\bzaberie|\bminut/';
 const OTAZKY_INE = '/\b(pes|psa|psov|psovi|psik\w*|mack\w*|zviera\w*|konkurenc\w*|inde|damsk\w*|zensk\w*|zen[auye]?|zenou|baby|'
   . 'dievc\w*|dcer\w*|priatelk\w*|manzelk\w*|melir\w*|trval\w*|kadernic\w*|rocn\w*|rok|roky|rokov|tined\w*|teen\w*|vnuk\w*|vnuc\w*|'
   . 'kartou|karta|kartu|hotovost\w*|vydrz\w*|zavis\w*|rozdiel\w*|dokedy|rovnak\w*|cak\w*|oprav\w*|dolad\w*|posob\w*|necha\w*|'
-  . 'lacnejs\w*|drahs\w*|rychlejs\w*)\b|\b(dlhsie|kratsie) ako\b|\bviac\b(?! ako \d)|\d+ ?(eur\w*|e|min\w*|hod\w*)\b|'
+  . 'lacnejs\w*|drahs\w*|rychlejs\w*)\b|\b(dlhsie|kratsie) ako\b(?! 10)|\bviac\b(?! ako \d)|\d+ ?(eur\w*|e|min\w*|hod\w*)\b|'
   . 'farb\w*.{0,15}vlas|vlas\w*.{0,15}farb/';
 
-function otazky_smeruj(array $db, string $text): ?array {
+/* overené odpovede z cenníka pre otázku na jednu či viac služieb (smerujVsetky() v asistent-otazky.js) */
+function otazky_smeruj_vsetky(array $db, string $text): array {
   $t = trim((string) preg_replace('/[^a-z0-9]+/', ' ', strtr(mb_strtolower($text, 'UTF-8'), OTAZKY_DIAKRITIKA)));
-  if ($t === '' || count(explode(' ', $t)) > 14 || preg_match(OTAZKY_INE, $t)) return null;
+  if ($t === '' || count(explode(' ', $t)) > 16 || preg_match(OTAZKY_INE, $t)) return [];
   $druh = preg_match(OTAZKY_CAS, $t) ? 'trvanie' : (preg_match(OTAZKY_CENA, $t) ? 'cena' : null);
-  if ($druh === null) return null;
-  $zhoda = array_values(array_filter(OTAZKY_SLUZBY, fn($s) => preg_match($s[1], $t) === 1));
-  if (!$zhoda) return null;
-  [$s, , $zahrna] = $zhoda[0];
-  $zahrna = $zahrna === '' ? [] : explode(' ', $zahrna);
-  foreach (array_slice($zhoda, 1) as $x) if (!in_array($x[0], $zahrna, true)) return null;
-  foreach ($db['ot'] as $o) if ($o['id'] === "$druh-$s") return $o;
-  return null;
+  if ($druh === null) return [];
+  $t = (string) preg_replace('/\b(bez|okrem)( \w+)? (brad|fuz|strih|ostrih|vlas|holen|ohol)\w*/', ' ', $t);
+  $vybrane = [];
+  foreach (OTAZKY_SLUZBY as [$s, $re, $zahrna]) {
+    if (!preg_match($re, $t, $m, PREG_OFFSET_CAPTURE)) continue;
+    $t = substr($t, 0, $m[0][1]) . ' ' . substr($t, $m[0][1] + strlen($m[0][0]));
+    $uz = false;
+    foreach ($vybrane as [$x, $z]) if ($x === $s || in_array($s, $z === '' ? [] : explode(' ', $z), true)) { $uz = true; break; }
+    if (!$uz) $vybrane[] = [$s, $zahrna];
+  }
+  $out = [];
+  foreach ($vybrane as [$s]) foreach ($db['ot'] as $o) if ($o['id'] === "$druh-$s") { $out[] = $o; break; }
+  return $out;
+}
+
+function otazky_smeruj(array $db, string $text): ?array {
+  $v = otazky_smeruj_vsetky($db, $text);
+  return count($v) === 1 ? $v[0] : null;
 }
 
 /* ako otazky_hladaj(), na prvom mieste smerovaná odpoveď z cenníka (najdi() v asistent-otazky.js) */
