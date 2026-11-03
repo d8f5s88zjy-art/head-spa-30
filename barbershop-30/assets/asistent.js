@@ -25,7 +25,20 @@ const K_SKRYTY = 'b30.barber.skryty';                // sessionStorage: návšte
 const K_OZNAM = 'b30.barber.oznam';                  // localStorage: kedy zavrel bublinu (14 dní sa neukáže)
 const K_OZNAM_RAZ = 'b30.barber.oznam.raz';          // sessionStorage: bublina už v tejto návšteve bola
 const UKAZKA = 'ukazka';
-const MAX_SPRAV = 15;                                   // server berie najviac 16 správ (otázka, odpoveď, …, otázka)
+// server (asistent/lib/jadro.php, rozhovor()) berie najviac 16 správ, striedavo otázka a odpoveď, začína aj končí otázkou,
+// otázka do 800 a odpoveď do 4000 znakov, spolu do 16 000; okno mu preto pošle len posledné správy, rozhovor sa nezablokuje
+const MAX_SPRAV = 15, MAX_SPOLU = 15000;
+/* posledné správy rozhovoru pre server: nepárny počet (začína aj končí otázkou 'u'), najviac MAX_SPRAV, spolu pod MAX_SPOLU */
+export function oknoRozhovoru(rozhovor) {
+  let od = rozhovor.length, spolu = 0;
+  for (let i = rozhovor.length - 1; i >= 0 && rozhovor.length - i <= MAX_SPRAV; i--) {
+    const s = rozhovor[i];
+    spolu += Math.min(String(s.t).length, s.r === 'u' ? 800 : 4000);
+    if (spolu > MAX_SPOLU) break;
+    if (s.r === 'u') od = i;
+  }
+  return rozhovor.slice(od);
+}
 
 const T = {
   sk: { ai: 'AI', btn: 'Otvoriť chat s Barberom, AI asistentom Barbershopu 30', meno: 'Barber, AI asistent', sub: 'AI asistent Barbershopu 30, termín potvrdí recepcia', hello: 'Ahoj, som Barber, AI asistent Barbershopu 30. Poradím ti so službami, cenami aj objednaním. Na čo sa chceš opýtať?', oznam: 'Ahoj, som Barber. Spýtaj sa ma na ceny, služby alebo objednanie.', spytat: 'Spýtať sa', volat: 'Zavolať', skryt: 'Skryť Barbera', ukazka: 'Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI. Naostro odpovedá AI.', deti: 'Strihate aj deti?', chips: ['Koľko stojí strih?', 'Má Adrián zajtra voľný termín?', 'Kedy máte otvorené?', 'Ako sa objednám?'], ph: 'Napíš otázku…', send: 'Odoslať', close: 'Zavrieť', novy: 'Nový rozhovor', note: 'Odpovedá AI podľa údajov z webu. Termín platí až po potvrdení. Nepíš sem osobné údaje.', err: 'Teraz neviem odpovedať. Zavolaj nám na 0951 267 203, v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme.', ochrana: 'Ochrana údajov', dlhy: 'Rozhovor je už dlhý. Začni nový a opýtaj sa znova.', tel: 'Zavolať a potvrdiť termín', obj: 'Objednať sa', kal: 'Podľa kalendára o', pred: 'Predbežné, kým termín nepotvrdíš.', ziadny: 'V tento deň voľný termín nie je.' },
@@ -260,7 +273,6 @@ export async function spusti(api) {
   // ťuk na častú otázku: overená odpoveď hneď, bez čakania a bez servera
   function pripravena(o) {
     if (bezi) return;
-    if (rozhovor.length >= MAX_SPRAV) { bublina('a', tx().dlhy).classList.add('asi-chyba'); return; }
     zoz.querySelectorAll('.asi-chips').forEach((c) => c.remove());
     pole();
     rozhovor.push({ r: 'u', t: o.q }, { r: 'a', t: o.a, tel: o.tel ? true : undefined, z: 'o' }); uloz(kluc, rozhovor);
@@ -308,7 +320,13 @@ export async function spusti(api) {
     otazka = otazka.trim().slice(0, 800);
     if (!otazka || bezi) return;
     const t = tx();
-    if (rozhovor.length >= MAX_SPRAV) { bublina('a', t.dlhy).classList.add('asi-chyba'); return; }
+    // naostro len posledné správy (oknoRozhovoru); keď sa ani tak nedá poslať, hláška v zornom poli, prázdne pole
+    // a tlačidlo Nový rozhovor (ukážka a pripravené odpovede sú bez limitu, server nevolajú)
+    if (!ukazka && !oknoRozhovoru([...rozhovor, { r: 'u', t: otazka }]).length) {
+      const d = bublina('a', t.dlhy); d.classList.add('asi-chyba');
+      const n = el('button', { class: 'asi-novy', type: 'button' }); n.textContent = t.novy; n.addEventListener('click', () => novy.click());
+      d.append(el('div', { class: 'asi-akcie' }, [n])); area.value = ''; vyska(); d.scrollIntoView({ block: 'nearest' }); return;
+    }
     rozhovor.push({ r: 'u', t: otazka }); uloz(kluc, rozhovor);
     const navrhy = zoz.querySelectorAll('.asi-chips');
     if (navrhy.length) { navrhy.forEach((c) => c.remove()); pole(); }   // fokus nesmie ostať na zmazanom návrhu
@@ -329,7 +347,7 @@ export async function spusti(api) {
       // povie v jej jazyku, že teraz neodpovie, a dá telefón (slovenská odpoveď by bola nezrozumiteľná)
       if (ukazka && jazyk() !== 'sk') { await new Promise((r) => setTimeout(r, 400)); naText(t.err); tel = true; zOtazok = { id: null }; }
       else if (ukazka) zOtazok = await (await import('./asistent-ukazka.js')).opytaj(otazka, naText, () => { tel = true; });
-      else await opytaj(api, rozhovor, naText, (k) => { kal = k; }, () => { tel = true; });
+      else await opytaj(api, oknoRozhovoru(rozhovor), naText, (k) => { kal = k; }, () => { tel = true; });
       // ukážka bez odpovede (id null): pod ňou len Zavolať
       if (tel && zOtazok && zOtazok.id === null) tel = 'v';
       doplnky(b, kal, tel);
