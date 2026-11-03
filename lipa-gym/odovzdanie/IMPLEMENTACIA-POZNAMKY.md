@@ -1534,3 +1534,66 @@ s fotkami, druhá sa práve odhaľuje, žiadny sivý rám), `koncept/kurzor-nahl
 - Výška stránky pri 1440 (18,38 z 18,5) a 390 (22,97 z 23) je tesne pod limitom – ďalší obsah treba vyvážiť.
 - Ručné overenie: iPhone so Safari 18 (bez VT – záloha FIL-05) a 26 (`:has()`, VT, `-webkit-image-set` kurzora), stredný
   Android (plynulosť, PRI-12), myš na Windows/macOS (vzhľad kurzora pri škálovaní 125–150 %).
+
+## Filmová vrstva – oprava 2 po kontrolách KF a KP (3. 11. 2026, commit `36d8066`)
+
+Podklad: `film/kontrola-fotky-funkcie.md` (KF) a `film/kontrola-plynulost-film.md` (KP). Pracovné súbory, logy a hárky
+sú v `gym/film/oprava2/`, zápis `gym/film/oprava2.md`. Výkon je meraný vždy A/B striedavo za rovnakých podmienok
+(CPU 4×, súbežne beží iná úloha s prehliadačom, záťaž je v logoch).
+
+### Opravené
+
+- **KP-01 / KF-1 (stredná) – skok z mobilného menu bez dvojexpozície.** `jump()` pridá pri otvorenom menu na `html`
+  triedu `vt-menu` (po konci prechodu ju zmaže spolu s `vt-jump`). CSS časť 18: `:root.vt-menu::view-transition-old(root)
+  {animation:none;opacity:0}` (úvod pod nepriehľadným panelom netreba prelínať) a `old(bar)`/`old(dock)` bez oneskorenia,
+  teda menu zhasne do tmy 0–140 ms a `new(root)` sa rozsvieti až od 140 ms. Na počítači (bez menu) je strih rovnaký ako
+  predtým. Hárok `oprava2/harky/skok-390-B-C-deterministicky.jpg` (po 40 ms): B má 160–240 ms menu cez Cenník, C pri 120 ms
+  menu stmavené, od 160 ms len Cenník. Skutočný čas pri CPU 4× (`harky/skok-390-realny-cas-B-C.jpg`, 3 behy C): bez
+  prekrytia, hotové asi 520–550 ms po kliku.
+- **KP-02 (stredná) – menej vrstiev počas odhalení.** Pomalé odďaľovanie FIL-04 (4,8 s) ostalo len na širokej ploche eseje
+  (`.pl-w`) a v medzihre; ostatné fotky eseje majú bežné usadenie #15 (1,6 s). Vybrané z troch variantov A/B/C
+  (`logy/abc-suhrn.md`, n = 3 + 3 + 3): C1 „len .pl-w + medzihra“ 1440 najviac vrstiev 65 → 57, C2 „všetko 3,2 s“ 65 → 62.
+  Potvrdenie B (`c8de97f`) vs C (výsledok), `logy/bc-suhrn-final.md`:
+
+  | CPU 4×, medián (rozsah) | 390 B (n = 5) | 390 C (n = 5) | 1440 B (n = 3) | 1440 C (n = 3) |
+  |---|---|---|---|---|
+  | odhalenia: najviac vrstiev | 54 (49–58) | **48 (46–50)** | 66 (66–66) | **60 (58–60)** |
+  | odhalenia: kompozítor sn/s | 59,7 | 59,8 | 56,9 | 58,6 |
+  | odhalenia: rAF fps | 53,9 | 55,3 | 42,7 | 47,2 |
+  | odhalenia: dlhé úlohy | 1 (0–4) | 0 (0–5) | 14 (0–22) | 8 (3–16) |
+  | skok: kompozítor sn/s / > 50 ms % | 52,7 / 4,7 | 45,8 / 5,6 | 50,1 / 1,1 | 49,9 / 1,1 |
+  | skok: rAF fps | 52,7 | 54,4 | 44,3 | 41,8 |
+  | vrstvy v pokoji hore / Detaily / Cenník | 33 / 31 / 31 | 33 / 31 / 31 | 25 / 41 / 25 | 25 / 41 / 25 |
+
+  Skok 390 má v C menej snímok kompozítora, lebo počas čakania na `decode()` (≤ 250 ms, obraz statický) je `main` pod menu
+  skrytý (KF-3) a nemá čo prekresľovať: najdlhšia medzera začína 82–108 ms po kliku a končí pri štarte prechodu
+  (`logy/skok-390-komp.log`); rAF je lepšie. Vrstvy v pokoji pri Detailoch na počítači ostávajú 41 (prah ≤ 40 prekročený
+  o 1 už od B, mimo tejto opravy). LCP 1440 (452 → 588, rozsah 344–724) sa týmito zmenami netýka (úvod nezmenený), je to rozptyl.
+- **KF-3 (drobná) – Tab neodíde pod otvorené menu.** `≤ 860 px`: `:root.nav-open :is(main,.foot){visibility:hidden;
+  transition:visibility 0s linear var(--dur-3)}` – obsah zmizne až po prelnutí panelu, po zatvorení sa ukáže hneď (dok sa
+  skrýval už predtým). Bez JS a pri obmedzenom pohybe sa nič nemení (trieda `nav-open` je len z JS). Tab z burgra krúži cez
+  „Preskočiť na obsah“, logo a položky menu (`oprava2/logy/final/menu_tab.log` 13 × OK; prísna kontrola `funkcie.mjs`
+  počíta odkaz „Preskočiť“ ako „iné“, preto tam ostáva ZLE – predtým tam bolo „Výstavná 6…“, „Ako prísť prvýkrát…“).
+- **KF-4 (drobná) – rozvrh Home/End.** Mapa kláves `{ Home: 0, End: 6, ArrowRight: sel + 1, ArrowLeft: sel + 6 }[e.key] % 7`
+  (+41 B gzip; `app.js` 14 225 B z 14 336 B).
+- **KF-5 (drobná, dokumentácia)** – SPEC 4.15 teraz hovorí „len ≥ 1344 px“ ako CSS od `fa688ff` (odchýlka bola zdôvodnená
+  v riadku pod ním).
+
+### Neopravené (zdôvodnenie)
+
+- **KF-2** mapa v hraničnom prípade (Google odpovie, vloženie `/maps` blokované) – chybovú stránku v cudzom rámci JS
+  nerozpozná a pás s tlačidlom cez mapu by zakryl značku a podmienky Google. Adresa aj „Navigovať“ sú v tej istej časti
+  hneď nad mapou, návštevník teda o cestu nepríde. Ponechané na rozhodnutie (mapa len na klik).
+- **KF-6 až KF-9, KP-03 až KP-06** – informatívne alebo rozhodnutia orchestrátora/majiteľa, bez zmeny.
+
+### Overenie (`oprava2/logy/final/stav.txt`, 15:10–15:48 UTC, záťaž 0,9–2,4)
+
+zostav kód 0; unittest **Ran 91 tests OK** (nový `test_skok_z_menu_bez_dvojexpozicie`); `test_prehliadac` vzor aj vzor-cms
+19 × OK; `test_vzhlad` 93 OK; `porovnaj_so_vzorom` „Bez rozdielov okrem zámerných zmien“; odkazy 337, chýbajúcich 0
+(2 SVG „nedekóduje“ je len obmedzenie `identify`, oba súbory sú platné SVG); fotky pri 360/390/768/1024/1440/1920: 42 img,
+0 nenačítaných, lightbox 12/12, 0 chýb (pri 1920 predtým 11/12); `funkcie.mjs` 233 OK / 5 ZLE (KF-2 2×, menu „Preskočiť“,
+fokus 90 ms 2× – rovnaké ako pri kontrole); `akceptacia_skok` 31/31, `zaloha` 10/10, `kontrola_spat` 12/12, `menu_tab`
+13/13, `kurzor_over` kód 0. Hárok `film/impl/pred-po.jpg` obnovený (riadok „PO skok“ pri 390 je teraz bez prekrytia;
+pôvodný je v `oprava2/pred-po-c8de97f.jpg`). Prezreté (Read): `harky/skok-390-B-C-deterministicky.jpg`,
+`zoom-skok-390-prechod-B-C.jpg`, `skok-390-realny-cas-B-C.jpg`, `novy-telefon.jpg`, `novy-hore.jpg`,
+`fotky-390-kontrola.jpg`, `fotky-1440-kontrola.jpg`.

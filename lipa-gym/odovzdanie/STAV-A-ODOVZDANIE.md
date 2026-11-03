@@ -43,8 +43,8 @@ repozitára. Stačí napísať „nahraj do Lupa-gym“, alebo to nahrať sám (
   Commit `d450017`, po nezávislej kontrole opravy v `809bc02` (fotka sa odhalí až načítaná, fokus v lightboxe,
   pulz bodky pri obmedzenom pohybe).
 
-**Vetva `filmova-vrstva` (od `809bc02`, 3. 11. 2026; zatiaľ len lokálne v pracovnom priečinku, do zálohy `.bundle`
-a do náhľadu ju pridá orchestrátor):**
+**Vetva `filmova-vrstva` (od `809bc02`, 3. 11. 2026, posledný commit `36d8066`; záloha `lupa-gym-filmova-vrstva.bundle`
+v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 2026; do Lupa-gym **nenahratá**):**
 
 - Na žiadosť majiteľa z 2. 11. („filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“).
 - Kontrola fotiek a opravy (`dcd8414`): všetky fotky sa ukážu pri všetkých šírkach, v lightboxe, po skoku z menu aj na
@@ -52,13 +52,20 @@ a do náhľadu ju pridá orchestrátor):**
   nedotkne prvého; logo MDS v pätičke pri 1024 px nie je stlačené; video Ladydefence sa po ťuknutí samo prehrá; v náhľade
   claude.ai odkazy Zavolať a e-mail otvoria nové okno namiesto chybovej stránky.
 - Mapa a tlačidlo Späť (`c6aa7e7`): keď sa Google mapa nenačíta (zablokovaná, offline, náhľad), ostane pekná karta
-  s adresou a tlačidlom Navigovať, nikdy biela plocha; Späť po skoku z menu vráti na pôvodné miesto.
+  s adresou a tlačidlom Navigovať; Späť po skoku z menu vráti na pôvodné miesto. Výnimka (KF-2, otvorené): keď
+  Google pošle chybovú alebo prázdnu stránku, iframe ostane biely – istotu dá len načítanie mapy po kliknutí (rozhodne majiteľ).
 - Filmová vrstva a kurzor (`07eca7a`, oprava rytmu úvodu `c8de97f`): otvárací záber úvodu (na počítači rozostrený záber zaostrí a kinematografické
   pásy sa stiahnu, titulok v rytme), titulkové karty kapitol, fotky sa „exponujú“ z tmy, veľké zábery priestoru pomaly
   odstúpia (4,8 s, potom stoja), skok z menu strihom cez tmu, vineta medzihry, záverečný titulok pätičky, kurzor činka
   (kostená, nad odkazmi červená) len pre myš. Len CSS, žiadny nový JavaScript, žiadne video ani efekt riadený
   skrolovaním, pri „obmedziť pohyb“ a bez JS všetko statické a viditeľné; na telefóne pri 4× spomalenom CPU rovnako plynulé
   snímky obrazu ako predtým, otvorenie a skok bez nových dlhých úloh. Testy a dokumentácia (`SPEC.md` 2.8, 5.6, `IMPLEMENTACIA-POZNAMKY.md` „Filmová vrstva a kurzor“).
+- Oprava 2 po nezávislej kontrole (`36d8066`): skok z otvoreného mobilného menu bez dvojexpozície (menu zhasne do tmy,
+  cieľ sa rozsvieti), pomalé odďaľovanie len pri širokej ploche eseje (menej vrstiev pri súvislom skrole), Tab nezájde pod
+  otvorené menu, rozvrh ovládateľný aj Home/End. Overenie: unittest 91 OK, test_prehliadac a test_vzhlad (93) OK, pri 6 šírkach
+  všetky fotky načítané, lightbox 12/12, 8/8 skokov so Späť na pôvodné miesto, v prehliadači náhľadov 36/36 fotiek a 0 chýb.
+- Poznámka: „bez efektu riadeného skrolovaním a bez pripínania“ platí pre filmovú vrstvu. Odchod úvodu, pruh postupu, parallax
+  a lepiace prvky (úvod, Kde začať, video lekcií, nadpis Otázok) sú od B3/B4 (SPEC 5.2 #4–5); či ostanú, rozhodne majiteľ.
 
 ## 3. Postup pri odovzdaní (v tomto poradí)
 
@@ -82,7 +89,7 @@ a do náhľadu ju pridá orchestrátor):**
 | --- | --- | --- |
 | Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); oba otvorené body (Späť po skoku z menu, biela plocha mapy) opravené vo vetve `filmova-vrstva` (`c6aa7e7`) |
 | B5 | výkon a prístupnosť (SPEC kap. 9 a 10), Lighthouse, klávesnica | nezačaté |
-| Filmová vrstva | požiadavka majiteľa: „filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“ | **implementované** vo vetve `filmova-vrstva` (`dcd8414`, `c6aa7e7`, `07eca7a`, `afe892b`, `c8de97f`); čaká na nezávislú kontrolu, nový náhľad pre majiteľa a zlúčenie do `redizajn-2026-10`. Otvorené: lightbox ako „premietanie“ (FIL-07, voliteľné), prah vrstiev počas prechodov, ručné overenie kurzora a prechodov na iPhone (Safari 18 a 26) a Androide |
+| Filmová vrstva | požiadavka majiteľa: „filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“ | **implementované** vo vetve `filmova-vrstva` (`dcd8414`, `c6aa7e7`, `07eca7a`, `afe892b`, `c8de97f`), nezávislé kontroly KF a KP hotové, ich stredné nálezy opravené v `36d8066` (skok z mobilného menu bez prekrytia menu s cieľom, pomalé odďaľovanie len širokej plochy – menej vrstiev, Tab neodíde pod otvorené menu, rozvrh Home/End); čaká na nový náhľad pre majiteľa a zlúčenie do `redizajn-2026-10`. Otvorené: lightbox ako „premietanie“ (FIL-07, voliteľné), prah vrstiev počas prechodov, ručné overenie kurzora a prechodov na iPhone (Safari 18 a 26) a Androide |
 | B6 | záverečná kontrola, snímky 390–1920 px, návody, zoznam pre majiteľa | nezačaté |
 
 **Filmová vrstva, materiál a pravidlá:** použité sú len súbory v repozitári – skutočné fotky (`assets/img/f`, tím)
@@ -93,7 +100,7 @@ ako zasekané), žiadne pripínanie obsahu, plynulosť na bežnom telefóne, pri
 a viditeľné.
 
 **Známe otvorené body z kontrol:** plynulosť: prah sa meria na snímkach kompozítora pri 4× spomalenom CPU a na hlavnom
-vlákne pri bežnom CPU (zmena zapísaná v SPEC 9); rozpočet `app.js` 14 kB gzip je takmer vyčerpaný (rezerva 122 B);
+vlákne pri bežnom CPU (zmena zapísaná v SPEC 9); rozpočet `app.js` 14 kB gzip je takmer vyčerpaný (rezerva 111 B po `36d8066`); mapa: keď Google odpovie, ale vloženie mapy zablokuje blokovač alebo firemný filter, ostane biela plocha mapy (adresa a „Navigovať“ sú hneď nad ňou; úplná náprava = mapa len na klik);
 vrstvy kompozítora počas prechodov („najviac počas scény“) sú nad 40 už pred filmovou vrstvou – navrhnutý prah
 „špička ≤ stav pred + 10“ potvrdí orchestrátor; pár záberov (plagáty videí, `mma-1-32`) je na telefóne pod 1× DPR,
 bez nových záberov sa to zlepšiť nedá;
@@ -124,6 +131,14 @@ git bundle verify ../lupa-gym-zaloha.bundle
 git fetch ../lupa-gym-zaloha.bundle main:zaloha-main redizajn-2026-10:redizajn-2026-10
 git log --oneline zaloha-main -3          # posledný má byť 396f446
 git push origin zaloha-main:main          # NAHRATIE hotových zmien (len keď si pripravený, časť 3)
+```
+
+Filmová vrstva (prírastková záloha, potrebuje `809bc02` z vetvy `redizajn-2026-10` vyššie):
+
+```bash
+git bundle verify ../lupa-gym-filmova-vrstva.bundle
+git fetch ../lupa-gym-filmova-vrstva.bundle filmova-vrstva:filmova-vrstva
+git log --oneline filmova-vrstva -1       # má byť 36d8066
 ```
 
 Zostavenie a testy (Python 3 + `pip install -r nastroje/requirements.txt`):
