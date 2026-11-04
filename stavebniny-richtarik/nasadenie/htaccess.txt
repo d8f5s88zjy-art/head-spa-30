@@ -1,0 +1,110 @@
+# Stavebniny Richtárik – nastavenie pre Apache (na hostingu premenovať na .htaccess). Vyrobené: nasadenie/presmerovania.py
+ErrorDocument 404 /404.html
+AddType image/avif .avif
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType application/manifest+json .webmanifest
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(avif|webp|jpg|jpeg|png|gif|svg|ico|woff2|pdf|mp4|doc)$">
+    Header set Cache-Control "max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|css|js|json|xml|txt|webmanifest)$">
+    Header set Cache-Control "max-age=600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# 301 zo starých adries pôvodného webu (vyrobené zo zdroj/pages.json) a zo starých súborov files/N
+RewriteEngine On
+RewriteRule ^sk\.aspx$ / [R=301,L,NC]
+RewriteRule ^sk/akcie\.aspx$ /akcie/index.html [R=301,L,NC]
+RewriteRule ^sk/akcie/betonove\-tvarnice\.aspx$ /akcie/betonove-tvarnice.html [R=301,L,NC]
+RewriteRule ^sk/akcie/cement\-325\-r\.aspx$ /akcie/cement-325-r.html [R=301,L,NC]
+RewriteRule ^sk/akcie/dlazby\-\-ploty\-stadreko\.aspx$ /akcie/dlazby-ploty-stadreko.html [R=301,L,NC]
+RewriteRule ^sk/akcie/komin\-qatro\.aspx$ /akcie/komin-qatro.html [R=301,L,NC]
+RewriteRule ^sk/akcie/krytina\-blachotrapez\.aspx$ /akcie/krytina-blachotrapez.html [R=301,L,NC]
+RewriteRule ^sk/akcie/nobasil\.aspx$ /akcie/nobasil.html [R=301,L,NC]
+RewriteRule ^sk/akcie/okna\-\-schody\-fakro\.aspx$ /akcie/okna-schody-fakro.html [R=301,L,NC]
+RewriteRule ^sk/akcie/pezinska\-tehla\-termobrik\.aspx$ /akcie/pezinska-tehla-termobrik.html [R=301,L,NC]
+RewriteRule ^sk/akcie/porfix\.aspx$ /akcie/porfix.html [R=301,L,NC]
+RewriteRule ^sk/akcie/sadrokartonovy\-\-\-zateplovaci\-system\.aspx$ /akcie/sadrokartonovy-zateplovaci-system.html [R=301,L,NC]
+RewriteRule ^sk/akcie/sakret\.aspx$ /akcie/sakret.html [R=301,L,NC]
+RewriteRule ^sk/akcie/stavebne\-naradie\.aspx$ /akcie/stavebne-naradie.html [R=301,L,NC]
+RewriteRule ^sk/akcie/stavebne\-rezivo\.aspx$ /akcie/stavebne-rezivo.html [R=301,L,NC]
+RewriteRule ^sk/akcie/stresne\-okna\-rooflite\.aspx$ /akcie/stresne-okna-rooflite.html [R=301,L,NC]
+RewriteRule ^sk/akcie/ytong\.aspx$ /akcie/ytong.html [R=301,L,NC]
+RewriteRule ^sk/akciovy\-letak\.aspx$ /letak.html [R=301,L,NC]
+RewriteRule ^sk/error\-page\.aspx$ / [R=301,L,NC]
+RewriteRule ^sk/fotogaleria\.aspx$ /galeria/index.html [R=301,L,NC]
+RewriteRule ^sk/fotogaleria/fotky\-\-\-vystava\-domexpo\-nitra\-2010\.aspx$ /galeria/index.html [R=301,L,NC]
+RewriteRule ^sk/fotogaleria/vystava\-agrokomplex\-2011\.aspx$ /galeria/index.html [R=301,L,NC]
+RewriteRule ^sk/fotogaleria/vystava\-agrokomplex\-2012\.aspx$ /galeria/index.html [R=301,L,NC]
+RewriteRule ^sk/fotogaleria/vystava\-gardenia\-2012\.aspx$ /galeria/index.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby\.aspx$ /katalog/dlazby.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby/dlazby\-in\-vest\.aspx$ /katalog/dlazby/dlazby-in-vest.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby/dlazby\-in\-vest/plotovy\-system\.aspx$ /katalog/dlazby/dlazby-in-vest/plotovy-system.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby/dlazby\-in\-vest/prvky\-pre\-cestne\-komunikacie\.aspx$ /katalog/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby/dlazby\-in\-vest/prvky\-vonkajsej\-architektury\.aspx$ /katalog/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dlazby/dlazby\-in\-vest/prvky\-zahradnej\-architektury\.aspx$ /katalog/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/dvere\-\-\-okna\.aspx$ /katalog/dvere-okna.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/farby\-\-\-laky\.aspx$ /katalog/farby-laky.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/fasadny\-system\.aspx$ /katalog/fasadny-system.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/hutny\-material\.aspx$ /katalog/hutny-material.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/izolacny\-material\.aspx$ /katalog/izolacny-material.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/kominove\-systemy\.aspx$ /katalog/kominove-systemy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/kominove\-systemy/qatro\.aspx$ /katalog/kominove-systemy/qatro.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/kominove\-systemy/qatro/komin\-nerezovy\.aspx$ /katalog/kominove-systemy/qatro/komin-nerezovy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/kominove\-systemy/qatro/komin\-samotovy\.aspx$ /katalog/kominove-systemy/qatro/komin-samotovy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/kominove\-systemy/schiedel\.aspx$ /katalog/kominove-systemy/schiedel.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material\.aspx$ /katalog/murovaci-material.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material/pezinske\-tehelne\.aspx$ /katalog/murovaci-material/pezinske-tehelne.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material/pezinske\-tehelne/priecky\.aspx$ /katalog/murovaci-material/pezinske-tehelne/priecky.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material/pezinske\-tehelne/stropny\-system\.aspx$ /katalog/murovaci-material/pezinske-tehelne/stropny-system.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material/porfix\.aspx$ /katalog/murovaci-material/porfix.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/murovaci\-material/ytong\.aspx$ /katalog/murovaci-material/ytong.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/podhlady\-\-\-pvc\.aspx$ /katalog/podhlady-pvc.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sadrokartonovy\-\-\-zateplovaci\-system\.aspx$ /katalog/sadrokartonovy-zateplovaci-system.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stavebne\-naradie\-doplnky\.aspx$ /katalog/stavebne-naradie-doplnky.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stavebne\-rezivo\.aspx$ /katalog/stavebne-rezivo.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny\.aspx$ /katalog/stresne-kritiny.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/blachotrapez\.aspx$ /katalog/stresne-kritiny/blachotrapez.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/blachotrapez/plech\-trapezovy\.aspx$ /katalog/stresne-kritiny/blachotrapez/plech-trapezovy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/blachotrapez/plech\-vzor\-skridla\.aspx$ /katalog/stresne-kritiny/blachotrapez/plech-vzor-skridla.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/icopal\.aspx$ /katalog/stresne-kritiny/icopal.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/mediterran\.aspx$ /katalog/stresne-kritiny/mediterran.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/onduline\.aspx$ /katalog/stresne-kritiny/onduline.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-kritiny/tondach\.aspx$ /katalog/stresne-kritiny/tondach.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-okna\.aspx$ /katalog/stresne-okna.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-okna/fakro\.aspx$ /katalog/stresne-okna/fakro.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-okna/fakro/fakro\-schody\-\-vylezy\.aspx$ /katalog/stresne-okna/fakro/fakro-schody-vylezy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/stresne\-okna/velux\.aspx$ /katalog/stresne-okna.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sypke\-zmesy\.aspx$ /katalog/sypke-zmesy.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sypke\-zmesy/baumit\.aspx$ /katalog/sypke-zmesy/baumit.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sypke\-zmesy/calmit\.aspx$ /katalog/sypke-zmesy/calmit.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sypke\-zmesy/cemmac\.aspx$ /katalog/sypke-zmesy/cemmac.html [R=301,L,NC]
+RewriteRule ^sk/katalog\-roduktov/sypke\-zmesy/holcim\.aspx$ /katalog/sypke-zmesy/holcim.html [R=301,L,NC]
+RewriteRule ^sk/kontakt\.aspx$ /kontakt.html [R=301,L,NC]
+RewriteRule ^sk/kontakt/googlemap\.aspx$ /kontakt.html [R=301,L,NC]
+RewriteRule ^sk/kontakt/kontaktny\-formular\.aspx$ /kontakt.html [R=301,L,NC]
+RewriteRule ^sk/mapa\.aspx$ / [R=301,L,NC]
+RewriteRule ^sk/novinky\.aspx$ /novinky/index.html [R=301,L,NC]
+RewriteRule ^sk/novinky/betonove\-\-vyrobky\.aspx$ /novinky/betonove-vyrobky.html [R=301,L,NC]
+RewriteRule ^sk/novinky/dekoracne\-kamene\.aspx$ /novinky/dekoracne-kamene.html [R=301,L,NC]
+RewriteRule ^sk/novinky/delap\-\-ohybny\-kamenny\-obklad\.aspx$ /novinky/delap-ohybny-kamenny-obklad.html [R=301,L,NC]
+RewriteRule ^sk/novinky/ekostyren\.aspx$ /novinky/ekostyren.html [R=301,L,NC]
+RewriteRule ^sk/novinky/garaze\-\-zahradne\-domceky\.aspx$ /novinky/garaze-zahradne-domceky.html [R=301,L,NC]
+RewriteRule ^sk/novinky/magic\-floor\-vynilova\-podlaha\.aspx$ /novinky/magic-floor-vynilova-podlaha.html [R=301,L,NC]
+RewriteRule ^sk/novinky/topstone\-oprava\-starych\-chodnikov\.aspx$ /novinky/topstone-oprava-starych-chodnikov.html [R=301,L,NC]
+RewriteRule ^sk/novinky/vyrobky\-z\-plastu\.aspx$ /novinky/vyrobky-z-plastu.html [R=301,L,NC]
+RewriteRule ^sk/o\-nas\.aspx$ /o-nas.html [R=301,L,NC]
+RewriteRule ^sk/sluzby\.aspx$ /sluzby.html [R=301,L,NC]
+RewriteRule ^sk/sluzby/poradenstvo\.aspx$ /sluzby.html [R=301,L,NC]
+RewriteRule ^files/(33|39|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|119|120|121|122|123|124|125|126|127|128|129|130|131|132|133|134|135|136|137|138|139|140|154|155|156|157|158|159|160|161|162|163|165|166|167|168|169|170|171|172|173|174|175|176|177|178|179|180|181|182|183|184|186|187|188|189|190|191|197|198|199|200|201|202|203|204|205|206|207|212|214|215|216|218|223|224|226|227|228|229|230|232|272|273|274|284|285|286|287|288|289|290|291|292|293|298|320|321|322|385|386|433|434|471|558|618|626|631|633|641|649|653|654|657|658|659|660|661|662|663|664)\.pdf$ /pdf/$1.pdf [R=301,L,NC]
+RewriteRule ^files/(275|276|277|278|279|280|281|282|283)\.doc$ /subory/$1.doc [R=301,L,NC]
+RewriteRule ^files/233\.wmv$ /subory/233-onduvilla-montaz.mp4 [R=301,L,NC]
