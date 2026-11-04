@@ -57,6 +57,15 @@ async function scrollTo(page, y) {
   await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), Math.round(y));
   await page.waitForFunction(() => window.__scrollSettled === false, null, { timeout: 5000 }).catch(() => {});
   await page.waitForFunction(() => window.__scrollSettled === true, null, { timeout: 90000 }).catch(() => {});
+  // aktívna kapitola sa berie z ukázanej karty a pri záťaži (alebo dopočítaní rozloženia) chvíľu dobieha:
+  // kontroly idú, až keď sa data-scene-active a --o kariet 400 ms nemenia
+  await page.evaluate(() => { window.__ust = null; });
+  await page.waitForFunction(() => {
+    const st = document.documentElement.dataset.sceneActive + '|' + [...document.querySelectorAll('.film-shot.is-on')].length, t = performance.now();
+    const u = window.__ust || (window.__ust = { st, t });
+    if (u.st !== st) { u.st = st; u.t = t; }
+    return window.__scrollSettled === true && t - u.t >= 400;
+  }, null, { timeout: 10000, polling: 100 }).catch(() => {});
   await sleep(250);
 }
 const vars = (page) => page.evaluate(() => {

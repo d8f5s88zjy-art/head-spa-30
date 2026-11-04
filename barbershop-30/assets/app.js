@@ -284,7 +284,10 @@ function kresliPas(y, section, uvod) {
     const f = i < c ? 1 : i > c ? 0 : s ? Math.round(kino.q * Math.max(0.02, Math.min(1, (y + vh * 0.5 - s.top) / s.height))) / kino.q : 0;
     if (f !== kino.f[i]) { kino.f[i] = f; kino.fills[i].style.transform = `scaleX(${f})`; }
   }
-  if (c !== kino.cur) { kino.cur = c; kino.label.textContent = String(c + 1).padStart(2, '0') + ' · ' + storyLinks[c].getAttribute('aria-label'); }
+  // po ťuku na kapitolu ukáže štítok hneď cieľ skoku (plynulý skok inak cestou ukáže kapitoly, cez ktoré ide)
+  let lc = c;
+  if (kino.skok >= 0) { if (c === kino.skok || performance.now() > kino.skokDo) kino.skok = -1; else lc = kino.skok; }
+  if (lc !== kino.cur) { kino.cur = lc; kino.label.textContent = String(lc + 1).padStart(2, '0') + ' · ' + storyLinks[lc].getAttribute('aria-label'); }
   const yb = y + kino.barY, tenky = kino.pasy.some((b) => yb >= b[0] && yb <= b[1]);
   if (tenky !== kino.tenky) { kino.tenky = tenky; html.classList.toggle('kino-tenky', tenky); }
   // ukázaná karta úvodu: na nízkom telefóne by pás ležal na jej nadpise (CSS ho vtedy skryje)
@@ -367,7 +370,11 @@ if (kino) {
   storyLine.addEventListener('dragstart', (e) => e.preventDefault());
   const koniecTahu = () => { if (tah && tah.moved) setTimeout(() => html.classList.remove('kino-tah'), 0); tah = null; };
   storyLine.addEventListener('pointerup', koniecTahu); storyLine.addEventListener('pointercancel', koniecTahu);
-  storyLine.addEventListener('click', (e) => { if (html.classList.contains('kino-tah')) e.preventDefault(); }, true);
+  storyLine.addEventListener('click', (e) => {
+    if (html.classList.contains('kino-tah')) { e.preventDefault(); return; }
+    const a = e.target instanceof Element ? e.target.closest('a[data-chapter]') : null;
+    if (a) { kino.skok = storyLinks.indexOf(a); kino.skokDo = performance.now() + 1500; }
+  }, true);
   storyLine.addEventListener('keydown', (e) => {
     const i = storyLinks.indexOf(document.activeElement);
     if (i < 0 || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
