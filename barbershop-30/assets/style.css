@@ -444,6 +444,8 @@ html.kino-hra .kino-next, html.kino-tenky .kino-next, html.pro .kino-next, html.
 @media (prefers-reduced-motion: reduce) { .kino-next { transition: none; transform: none; } }
 
 /* --------------------------------------------------------------------------
+/* ležiaci a nízky telefón: karta je hneď pod pásom (vľavo aj dole), Ďalej by ležal na jej nadpise či tlačidle */
+@media (max-height: 500px) { .kino-next { display: none !important; } }
    7. Obrázky a videá
    -------------------------------------------------------------------------- */
 .media { position: relative; overflow: hidden; background: var(--ink-3); }
