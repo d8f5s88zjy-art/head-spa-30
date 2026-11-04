@@ -63,7 +63,7 @@ const kino = storyLine && storyLinks.length ? (() => {
   // draggable = false: myšou sa inak ťahá odkaz (dragstart → pointercancel) a pás sa nedá pretáčať
   const fills = storyLinks.map((a) => { a.draggable = false; const i = document.createElement('i'); i.className = 'kino-fill'; i.setAttribute('aria-hidden', 'true'); a.append(i); return i; });
   storyLine.prepend(play); storyLine.append(label);
-  return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0 };
+  return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0, q: 100, skok: -1, skokDo: 0 };
 })() : null;
 const footer = $('.site-footer');
 
@@ -129,6 +129,8 @@ function measure() {
   if (kino) {
     kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
     const r = storyLine.getBoundingClientRect(); kino.barY = r.top + r.height / 2;
+    // výplň kapitoly po celých CSS px dielika (nie po 0,001): pri skrole sa zapíše len raz za niekoľko snímok
+    kino.q = Math.max(8, Math.min(100, Math.round(storyLinks[0].getBoundingClientRect().width) || 100));
   }
 
   if (footer) {
@@ -279,7 +281,7 @@ function kresliPas(y, section, uvod) {
   const c = section ? Math.max(0, Math.min(kino.fills.length - 1, section.scene - 1)) : 0;
   for (let i = 0; i < kino.fills.length; i++) {
     const s = i === c ? sections.find((x) => x.scene === i + 1) : null;
-    const f = i < c ? 1 : i > c ? 0 : s ? Math.round(1000 * Math.max(0.02, Math.min(1, (y + vh * 0.5 - s.top) / s.height))) / 1000 : 0;
+    const f = i < c ? 1 : i > c ? 0 : s ? Math.round(kino.q * Math.max(0.02, Math.min(1, (y + vh * 0.5 - s.top) / s.height))) / kino.q : 0;
     if (f !== kino.f[i]) { kino.f[i] = f; kino.fills[i].style.transform = `scaleX(${f})`; }
   }
   if (c !== kino.cur) { kino.cur = c; kino.label.textContent = String(c + 1).padStart(2, '0') + ' · ' + storyLinks[c].getAttribute('aria-label'); }
