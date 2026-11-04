@@ -222,6 +222,8 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   `asistent-test.mjs` – okno asistenta so serverom a falošným API; `admin-test.mjs` – admin s falošným GitHubom
   (prihlásenie, texty, cenník, tím, galéria, súbeh, web po zmenách); `objednavka-test.mjs` – objednávkové okno, vizitka
   a vernostná kartička proti falošnému rezervačnému systému.
+- `kino-test.mjs` – pás kapitol a Kino: ťah myšou aj ťuk na počítači, popis ▶ pre čítačku v jazyku stránky (sk, en, de, en/),
+  „Ďalej“ hneď za pásom a nikdy na texte karty (na okne do 500 px výšky sa neukáže), pás nad pásmi s textom schovaný.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený
