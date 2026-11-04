@@ -4,6 +4,10 @@ Verzia 1.0 · 14. 10. 2026 · hlavný dizajnér a technický vedúci
 Repozitár: `/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/lupa` (ďalej `lupa/`), východiskový commit `396f446`.
 Pracovný priečinok redizajnu: `/tmp/claude-0/-home-user-head-spa-30/e4fc08a7-9804-506e-a6e2-06fd64c3d915/scratchpad/redesign/` (ďalej `redesign/`).
 
+> **Aktualizácia 4. 11. 2026 – „Profesionálny vzhľad“:** štruktúra stránky, sekcie, komponenty, pohyb a rozpočet dĺžky
+> platia podľa **kapitoly 14** (vetva `profesionalny-vzhlad`). Kapitoly 3.1, 3.2, 4.2–4.14 a 5.6 opisujú predchádzajúci stav
+> (`36d8066`) a ostávajú ako história; kde sa líšia, platí kapitola 14.
+
 Tento dokument je jediný zdroj pravdy pre implementáciu. Kde sa líši od návrhov A, B, C alebo od auditov, platí tento dokument. Implementátor nemá ďalšie otázky riešiť sám. Ak niečo nejde podľa textu, postupuje podľa bodu „Ak to nejde“ pri danom pravidle. Ak pre daný prípad taký bod chýba, zvolí konzervatívnejšie riešenie, teda menej pohybu, menej zmien v CMS a zachovanie háku, a zapíše ho do `redesign/IMPLEMENTACIA-POZNAMKY.md`.
 
 ---
@@ -316,7 +320,7 @@ Tento dokument je jediný zdroj pravdy pre implementáciu. Kde sa líši od náv
 
 ## 3. Štruktúra stránky
 
-### 3.1 Poradie DOM
+### 3.1 Poradie DOM *(nahradené 14.3)*
 
 ```
 a.skip (text z CMS rozhranie.preskocit)
@@ -361,7 +365,7 @@ dialog#lightbox
 
 `test_prehliadac` nájde 9 sekcií (cesta, preco, priestor, treningy, treneri, rozvrh, cennik, faq, kontakt).
 
-### 3.2 Rozpočet dĺžky (akceptačné kritérium, meria sa v 11.3)
+### 3.2 Rozpočet dĺžky (akceptačné kritérium, meria sa v 11.3) *(nahradené 14.8)*
 
 | Blok | 1440 × 900 (obrazovky) | 390 × 844 (obrazovky) |
 |---|---|---|
@@ -386,7 +390,7 @@ dialog#lightbox
 
 ---
 
-## 4. Sekcia po sekcii
+## 4. Sekcia po sekcii *(4.2–4.14 nahradené 14.4)*
 
 Zápis `TX` = `obsah/texty.json`, `PR` = `obsah/priestor.json`, `CN` = `obsah/cennik.json`, `R` = `TX.rozhranie` (nový kľúč, 8.2), `P` = `prevadzka.json`, `K` = kontakty z generátora.
 
@@ -1036,7 +1040,7 @@ maska nadpisu má okraj v em nadpisu (`--fs-h2`, `--fs-h3`), aby neorezala mäk�
 
 **Selektory a atribúty:** `.marquee`, `.gal-item`, `.tr-card`, `.rail`, `.f-field`, `[data-tilt]`, `.glowcard`, `[data-par]`, `[data-depth-*]`, `.reel*`, `.cut*`, `.band*`, `.bridge*`, `.ticker*`, `.pole-rule`, `.ch`, `--spring`, `--volt*`, `--acc-*`, `--panel-grad`.
 
-### 5.6 Filmová vrstva *(doplnené 3. 11. 2026 na žiadosť majiteľa: „filmové prechody, cinematické efekty, nech to vyzerá profesionálne“; koncept `film/koncept/KONCEPT.md`, implementácia vetva `filmova-vrstva`, commity `07eca7a` a `c8de97f`)*
+### 5.6 Filmová vrstva *(doplnené 3. 11. 2026 na žiadosť majiteľa: „filmové prechody, cinematické efekty, nech to vyzerá profesionálne“; koncept `film/koncept/KONCEPT.md`, implementácia vetva `filmova-vrstva`, commity `07eca7a` a `c8de97f`)* *(zredukovaná, platí 14.5)*
 
 Filmová vrstva nemení pravidlá 5.2: animujú sa len `opacity`, `translate`, `scale`; nič nie je viazané na polohu skrolu po
 snímkach; nič sa nepripína; jediná nekonečná animácia je `ping`; každý automatický pohyb skončí do 5 s (SPEC 10); pri
@@ -1535,8 +1539,8 @@ Zástupné značky v nových poliach fungujú automaticky.
 | TBT mobil / počítač | 35 / 13 822 ms | ≤ 150 / ≤ 100 ms |
 | CLS vrátane otvorenia `/#cennik` | 0,70 pri kotve | ≤ 0,02 |
 | `index.html` gzip | 24,2 kB | ≤ 25 kB |
-| `style.css` gzip | 32,9 kB | ≤ 22 kB (≤ 1 000 riadkov) *(po Filmovej vrstve 18,8 kB, 918 riadkov; časť 19 ≤ 2,6 kB)* |
-| `app.js` gzip | 12 + 5,6 kB | ≤ 14 kB |
+| `style.css` gzip | 32,9 kB | ≤ 22 kB (≤ 1 000 riadkov) *(po Filmovej vrstve 18,8 kB, 918 riadkov; časť 19 ≤ 2,6 kB. Profesionálny vzhľad: ≤ 13 kB a ≤ 700 riadkov, namerané 13 014 B a 642 riadkov; časť 19 ≤ 1,5 kB)* |
+| `app.js` gzip | 12 + 5,6 kB | ≤ 14 kB *(Profesionálny vzhľad: ≤ 13 700 B, namerané 12 995 B)* |
 | Písma pred prvým vykreslením | 9 súborov, 211 kB | 3 súbory, ≤ 70 kB |
 | Logo v hlavičke | 22,5 kB | ≤ 15 kB gzip |
 | Fotka úvodu (AVIF) | 268 kB mobil | mobil ≤ 150 kB, počítač ≤ 200 kB |
@@ -1547,7 +1551,7 @@ Zástupné značky v nových poliach fungujú automaticky.
 | Vrstvy kompozítora | 81–110 | ≤ 40 *(v pokoji, metóda B4; Filmová vrstva: 390 31/29/29, 1440 23/33/21 hore/Detaily/Cenník. Počas prechodov – „najviac počas scény“ – je už 809bc02 nad 40: 390 40/32/55, 1440 36/47/55 úvod/esej/skok; filmová vrstva 38/31/55 a 32/50/64. Navrhovaný prah počas prechodov „≤ stav pred + 10“ potvrdí orchestrátor.)* |
 | Nekonečné animácie pri nečinnosti | 12 | len `ping`, len bodky v obraze |
 | Kontexty WebGL a `<canvas>` | 2–3 | 0 |
-| Výška stránky | 27,3 / 35,5 obrazovky | ≤ 18,5 / ≤ 23 |
+| Výška stránky | 27,3 / 35,5 obrazovky | ≤ 18,5 / ≤ 23 *(Profesionálny vzhľad: ≤ 13,0 / ≤ 16,0, pozri 14.8)* |
 
 *(Rozhodnutie o prahu plynulosti – Opravy po kontrole B4: pohyb B4 je len kompozitný (opacity, translate, scale, rotate), to, čo návštevník vidí, sú snímky kompozítora; snímky hlavného vlákna pri CPU 4× merajú réžiu prepočtu štýlu a PrePaint počas bežiacich prechodov. V tomto kontajneri nedosiahne prah 55 fps hlavného vlákna pri CPU 4× ani stránka bez pohybu (stav pred B4, `4675cfb`: 50,8–54,4 fps na počítači), vzor má 12,5–18,8 fps a 25–48 % snímok > 50 ms. Preto pri CPU 4× platí prah na snímkach kompozítora (`meraj.mjs --trace` + `kompozitor.py`, `DrawFrame`; B4 56,9 / 59,5 za s, kontrola 55,0 / 58,2, po opravách 55,8 / 58,0 za s s 0,6 / 0,4 % intervalov > 50 ms) a prah hlavného vlákna ≥ 55 fps a ≤ 1 % snímok > 50 ms pri CPU 1× pre celú stránku (po opravách 56,0 / 59,8 fps, 0,1 / 0 %; po sekciách informatívne – krátke sekcie majú ~30 snímok, Intro na počítači 3,3 %). Hlavné vlákno pri CPU 4× sa sleduje informatívne (B4 38,9–40,3 / 47,4–50,0 fps, po opravách 38,0 / 47,9). Nečinnosť 0–1 %, vrstvy ≤ 35, CLS všetkých kotiev 0. Meranie a rozbor: `IMPLEMENTACIA-POZNAMKY.md`, časti B4 a Opravy po kontrole B4.)*
 
@@ -1833,3 +1837,146 @@ CSS a JS sa v tomto balíku nemenia okrem dvoch vecí: odstránenia `depth.js` a
 - **Migrácia CMS:** ak Ondrej uloží formulár so starými kľúčmi počas nasadenia, zverejnenie zlyhá na „kľúč nepozná nastavenie CMS“. Nasadiť, keď needituje, a upozorniť ho.
 - **View Transitions a scroll-timeline na starších iPhonoch:** majú len zálohu, teda natívne skrolovanie a statický stav. Overiť na zariadení.
 - **Plný disk:** bez kroku 11.1 padnú testy na ENOSPC.
+
+---
+
+## 14. Profesionálny vzhľad (3.–4. 11. 2026) – platná štruktúra a komponenty
+
+*Požiadavka majiteľa z 3. 11. 2026: „Skús to fitko urobiť menej jak dokument ale ako profesionálnu stránku s ktorou bude
+zákazník spokojný.“ Tri koncepty (`profi/koncept-vizual` = A „Klub ako značka“, `koncept-ponuka` = B, `koncept-premium` = C)
+posúdila porota (`profi/porota/VYBER.md`, plán P-01 až P-33 v `porota/plan.json`). Základ je A, z C štyri dlaždice faktov
+s „Práve teraz“, kompaktný cenník (na telefóne 50 € prvá), pás trénerov ~160 CSS px a 6 stĺpcov na počítači, 5 rovnakých
+kariet lekcií na počítači, kontakt v kartách a ľahká filmová vrstva s kurzorom; z B nižší úvod na telefóne (prvý rad
+dlaždíc v prvej obrazovke), dok Zavolať + Navigovať + výzva, živý štítok na karte lekcie, videá len po ťuknutí a statický
+rozvrh bez JS. Implementácia: vetva `profesionalny-vzhlad` od `36d8066` (commity v `IMPLEMENTACIA-POZNAMKY.md`, časť
+„Profesionálny vzhľad“).*
+
+**Kde sa táto kapitola líši od kapitol 2–8, platí táto kapitola.** Nahrádza najmä 3.1 (poradie DOM), 3.2 (rozpočet dĺžky),
+4.3–4.14 (sekcie), 5.6 (filmová vrstva, zredukovaná) a riadky „Výška stránky“ a `style.css` v 9.
+
+### 14.1 Pravidlá (platia ďalej, overujú ich testy)
+
+- Len skutočné fotky a zábery z fitka (`assets/img/f`, `assets/img/tim`, `assets/video`); nič generované, žiadne fotobanky.
+  Každý záber z `assets/img/f` je na stránke najviac raz (`test_kazda_fotka_raz`, generátor varuje). Nepoužité ostávajú
+  `funkcna-zona-5`, `funkcna-zona-7`, `mma-1`, `mma-1-32`, `tatami-3`, `bar-kavovar` (nápisy susedov, banner, kvalita).
+- Nič vymyslené: žiadne nové tvrdenia, recenzie, citáty, počty členov, roky, ocenenia ani štatistiky. Texty sa smú len
+  skracovať a preskupovať. Citáty recenzií sú doslovné, výpustka „…“ len na konci (`test_citaty_doslovne`).
+- Žiadne video ani efekt riadený skrolovaním, **žiadne pripínanie obsahu**: v `style.css` 0× `position:sticky`,
+  0× `animation-timeline`, `scroll()`, `view()` (`test_bez_pripinania`). `position:fixed` majú len lišta, panel menu (≤ 860 px),
+  dok, tlačidlo hore, odkaz „Preskočiť na obsah“, lightbox a jeho letiaca fotka.
+- Pri „obmedziť pohyb“ je všetko statické a viditeľné (jediný blok `prefers-reduced-motion`), bez JS je všetko viditeľné
+  (`:root.no-anim` skryje len ovládače, ktoré by nič neurobili: filter trénerov, záložky rozvrhu, kopírovanie adresy,
+  tlačidlá videí; rozvrh je v `<noscript>` ako statický zoznam).
+- Náhľad v ráme s prísnou CSP (claude.ai): `tel:` a `mailto:` majú v ráme `target=_blank`, mapa ostane kartou.
+- Google mapa sa načíta **až po kliknutí** „Zobraziť mapu“ (dovtedy 0 požiadaviek na google.com a 0 iframe).
+- Ceny a časy nie sú v šablóne napevno (`test_fakty_z_cms`), každý viditeľný text je z CMS (`texty.rozhranie`, 37 kľúčov);
+  výnimky sú len `aria-label` neviditeľných ovládačov („Hlavné menu“, „Otvoriť menu“, „Rýchle akcie“, „Filter trénerov“,
+  „Dni v týždni“, „Späť hore“, „Zväčšená fotografia“, „Zavrieť“, „Predchádzajúca“, „Ďalšia“, „Pätička“).
+
+### 14.2 Vizuálny systém (mení 2.1, 2.5–2.7)
+
+- **Dva povrchy:** tmavý (`--k #0b0c0f`, karty `--k2`, `--k3`) a kostený `.t-light` (`--bone #f4f2ec`, karty biele,
+  text `#121418`, akcent `#b3301c`). Sekcie sa striedajú: úvod tmavý · fakty tmavé · **ponuka kostená** · cenník tmavý
+  (zvýraznená karta kostená) · **prvá návšteva kostená** · lekcie tmavé · **rozvrh kostený** · tréneri tmavé ·
+  **priestor kostený** · recenzie tmavé · **otázky kostené** · kontakt tmavý · červený pás a pätička. Na telefóne nie sú
+  nikde viac ako 2 tmavé obrazovky po sebe (rytmus.py).
+- **Obsah v kartách:** rádius `--r 16px` (karty), `--r-s 12px` (rámy fotiek), tieň len na kostenom povrchu. Fotky majú
+  pevné pomery (`aspect-ratio`), takže sa nič neposúva (CLS 0).
+- **Nadpis sekcie:** H2 Oswald 600 verzálky s krátkou červenou linkou nad ním, pod ním jedna veta (`uvod_sekcie`,
+  ≤ 18 slov). Nadpis ≤ 20 znakov, aby bol na telefóne v jednom riadku. Bez kickerov a leadov.
+- **Tlačidlá:** `btn-p` (červené, `--red-btn`), `btn-w` (biele na fotke), `btn-g` (obrys); dotykové ciele ≥ 44 px.
+- **Odsadenie sekcií** `--sec: clamp(48px, 6vw, 88px)`; obsah `--wrap 1280px`, okraj `--gut clamp(16px, 4vw, 48px)`.
+- Rozpočet: `style.css` ≤ 13 kB gzip (13 × 1024 B) a ≤ 700 riadkov, ≤ 5× `!important`, 1 blok reduce
+  (`test_css_pravidla`); `app.js` ≤ 13 700 B gzip.
+
+### 14.3 Poradie DOM (nahrádza 3.1)
+
+```
+a.skip · svg sprite
+header.bar#top  (.bar-in: logo · nav#nav · .bar-cta: stav, tel, „Ako prísť prvýkrát“ → #prva-navsteva, burger)
+  div.oznam (len ak je oznam)
+main#main
+  section.hero                      tmavý, fotka cez celú plochu, na telefóne min(66svh, 560px)
+  <script> GK … </script>           hneď za úvodom (stav otvorenia, „Práve teraz“, ?gk-at=)
+  section.facts#preco               4 dlaždice + čipy (texty.cesta.pata)
+  section.svcs.t-light#cesta        6 obrazových kariet ponuky (celá karta je odkaz)
+  section.prices#cennik             3 hlavné karty (zvýraznená = permanentka) + „Ďalšie vstupy a permanentky“ + čipy platby
+  section.first.t-light#prva-navsteva  fotka + 3 kroky + Navigovať / Zavolať recepcii
+  section.lessons-sec#treningy      5 kariet lekcií (article#mds je jedna z nich)
+  section.timetable.t-light#rozvrh  „Dnes“ + záložky 7 dní (JS) · noscript: statický zoznam
+  section.team#treneri              filter (čipy) + mriežka/pás trénerov
+  section.space.t-light#priestor    galéria (1 veľký + štvorce) + „Pozrieť“ + div.bar-blok#bar
+  section.reviews#recenzie          fotka baru + 4 citáty
+  section.faq.t-light#faq           akordeón details.q
+  section.contact#kontakt           3 karty: adresa a akcie · otváracie hodiny · mapa (karta, Google až po kliknutí)
+footer.foot   (.foot-cta červený pás bez fotky · .foot-in)
+div.dock      (Zavolať · Navigovať · výzva: v úvode #prva-navsteva, ďalej #cennik; pri pätičke .is-hidden)
+a.totop · dialog#lightbox · <script src="assets/app.js" defer>
+```
+
+**Zrušené oproti 3.1:** `div.hero-pin`, `div.intro` (list cez úvod), `div.opener` (medzihra), esej a Detaily
+(`div.essay`, `div.more`, `.mosaic`), `div.duo` a `section.mds` ako samostatná sekcia, `div.progress`, kolofón v pätičke,
+titulkové karty kapitol a vineta medzihry. Kotvy SPEC 1.1 ostali (`#mds` je karta lekcie, `#bar` blok v Priestore,
+`#prva-navsteva` samostatná sekcia).
+
+### 14.4 Sekcie (nahrádza 4.2–4.14)
+
+| Sekcia | Komponenty | Obsah (CMS) | Pravidlá |
+|---|---|---|---|
+| Úvod | `.hero-live` stav (bodka), `.hero-k` štítok, H1 v 2 riadkoch (2. riadok červený), odsek, 2 tlačidlá | `texty.uvod` (stitok, nadpis_riadok_1/2, odsek, tlacidlo, foto, foto_telefon, ohnisko) | na 390×844 je v prvej obrazovke H1, obe tlačidlá a prvý rad dlaždíc; kontrast H1 a odseku ≥ 4,5 : 1, červený riadok ≥ 3 : 1 |
+| Fakty `#preco` | 4 dlaždice `a.fact`: Jednorazový vstup + permanentka → `#cennik`; Dnes otvorené / hodiny → `#kontakt`; Práve teraz / Lekcie (`data-today-*`) → `#rozvrh`; Kde nás nájdete → mapa; čipy | ceny z `cennik.json`, hodiny z `prevadzka.json`, lekcie z `rozvrh.json`, `rozhranie.vstup/permanentka/lekcie/kde` | bez JS majú všetky 4 dlaždice text; sviatok „Dnes je sviatok · overte telefonicky“ |
+| Ponuka `#cesta` | 6 kariet `.svc` (fotka/plagát/trio trénerov, štítok, živý údaj `data-live`, názov, 1 veta, odkaz) | `texty.cesta.karty[]` (nazov, stitok, zivy_udaj, text, odkaz, odkaz_text, obraz, nova_foto, treneri_na_fotke) | 4–8 kariet; telefón 2 stĺpce 3 : 4, počítač 3 stĺpce 4 : 3 (761–1100 px 4 : 5); plagát a jeden portrét na počítači ako panel vpravo (`contain`, ostrosť) |
+| Cenník `#cennik` | 3 karty (`.is-hot` kostená, na telefóne prvá, na počítači vyzdvihnutá o 12 px), body ✓, fotka na zvýraznenej karte; „Ďalšie vstupy a permanentky“ ako mriežka; čipy platby; poznámka | `cennik.json` (karty[].body, foto, popis_fotky, tlacidlo, poznamky, platnost) | všetkých 8 cien a kartička 3 € viditeľné bez rozbalenia |
+| Prvá návšteva | fotka (počítač: výška stĺpca s krokmi) + 3 kroky (číslo, nadpis, veta) + Navigovať / Zavolať recepcii | `cennik.prva_navsteva` (nadpis, uvod, foto, popis_fotky, kroky) | krok ≤ 25 slov |
+| Lekcie `#treningy` | 5 kariet `article.lesson`: médium (plagát/tréner, tlačidlo „Ukážka z tréningu“ → video v lightboxe), štítky dní, živý štítok „Teraz, do …“, názov, podnázov, tréner, veta, Zavolať trénerovi / Cez recepciu; MDS má logo a „Ukážka Ladydefence“ | `rozvrh.json` lekcie (popis ≤ 70 zn., obraz, video, video_popis), `texty.mds` | počítač 5 rovnakých stĺpcov, 761–1100 2 stĺpce, telefón zoznam kompaktných kariet; video sa nestiahne pred ťuknutím |
+| Rozvrh `#rozvrh` | „Dnes“ (stav + dnešné lekcie), záložky dní (`role=tablist`, šípky, Home/End), zoznam (`role=tabpanel`); `<noscript>` statický zoznam | `rozvrh.json`, `texty.rozvrh` | záložky ≥ 44 px pri 360 |
+| Tréneri `#treneri` | filter (čipy, View Transition), `.coach-grid` `role=region` `tabindex=0`: telefón vodorovný pás kariet ~160 px, 761–1100 4 stĺpce, ≥ 1101 6 stĺpcov | `treneri.json` (popis ≤ 70 zn., 1 riadok) | počet trénerov v texte sa počíta (`{pocet_trenerov}`) |
+| Priestor `#priestor` | galéria `figure.shot` (1 veľký záber 2 × 2, ostatné štvorce, titulok na fotke, posledný doplní rad), „Pozrieť“; `#bar`: text + fotky baru | `priestor.json` galeria[] (foto, nova_foto, titulok, popis_fotky, velka, len_pocitac), bar | najviac 1 veľká fotka; pri nepárnom počte bez diery (`_rozloz_galeriu`); lightbox „1 / 11“ cez galériu a bar |
+| Recenzie | fotka baru + 4 citáty v kartách (iniciála a meno), bez hviezdičiek a hodnotení | `recenzie.json`, `texty.recenzie.foto` | citáty doslovné |
+| Otázky `#faq` | `details.q` (odpoveď ≤ 35 slov), hodiny v otázke o hodinách ako tabuľka `[data-hours]` | `otazky.json` | — |
+| Kontakt `#kontakt` | `.c-main` (stav, adresa, telefón, e-mail, Zavolať, Navigovať, Napísať, Kopírovať adresu, Instagram, Facebook), `.c-hours` (dnešný deň zvýraznený, poznámka), `.map` (fotka `hlavna-sala-5`, „Zobraziť mapu“ → iframe) | `texty.kontakt` (nadpis, hodiny_nadpis, poznamka_k_hodinam, foto_mapy) | mapa až po kliknutí; v ráme ostane kartou |
+| Pätička | červený pás (slogan + 2 tlačidlá, bez fotky), logo, menu, kontakty, MDS | `texty.paticka` | — |
+| Dok (telefón) | Zavolať · Navigovať · výzva | `rozhranie.zavolat`, `navigovat`, `uvod.tlacidlo` | ciele ≥ 44 px pri 360, skrytý pri pätičke |
+
+### 14.5 Pohyb (mení 5.2–5.6)
+
+Ostáva: odhalenia kariet (`.rv`, opacity + posun ≤ 12 px, 400 ms, odstup 60 ms, najviac 3 kroky; na telefóne sa karty
+v páse trénerov neodhaľujú), FIL-01 krátke otvorenie úvodu **len na počítači** (≤ 1 s), FIL-03 expozícia fotky z tmy
+(≤ 500 ms, karty a galéria), FIL-05 strih cez tmu pri skoku z menu (`vt-jump`, `vt-menu`), FIL-08 video až po ťuknutí,
+FIL-10 kurzor činka (len myš), filter trénerov cez View Transition, akordeón cez `interpolate-size`, pulz bodky (`ping`).
+**Zrušené:** odchod úvodu, pruh postupu, parallax, lepiace prvky (úvod, Kde začať, video lekcií, nadpis Otázok),
+pomalé odďaľovanie eseje (FIL-04), titulkové karty (FIL-02), vineta medzihry (FIL-06), záverečný titulok (FIL-09).
+CSS filmovej vrstvy (časť 19) ≤ 1 536 B gzip (`test_rozpocet_filmovej_vrstvy`).
+
+### 14.6 JavaScript (mení 6.2)
+
+`app.js` stratil moduly `strip` (pás medzihry), `cestaPreview`, `liveVideo`, `heroFit` a pozorovateľ mapy (mapa je len na
+klik); fotky lightboxu sú `.shot` a `#bar .gal-f`. Neskoré moduly: aktívna položka menu, bodky stavu, filter trénerov,
+lightbox, kopírovanie adresy, mapa po kliknutí. Ostali reťazce, ktoré čaká `test_zostav` (`if (!GK || !GK.GYM`, `esc(c.name)` …).
+
+### 14.7 CMS a generátor (mení 8.2–8.4)
+
+- `.pages.yml`: nové komponenty `nadpis_sekcie` (≤ 20 zn.), `uvod_sekcie` (≤ 140 zn., ≤ 18 slov), `obraz_karty`
+  (plagáty a fotky na výšku); `odkaz` má `#cesta`; texty sú v položkách „Úvod a ponuka“, „Nadpisy častí“, „Kontakt“,
+  „Texty rozhrania“ (37 polí). Popis trénera a lekcie je jeden riadok (≤ 70 znakov).
+- `nastroje/zostav.py`: limity slov `SLOV_*` (veta pod nadpisom 18, odsek úvodu 20, text karty ponuky 12, bod cenníka 10,
+  krok prvej návštevy 25, odpoveď 35, titulok fotky galérie 3; prekročenie je chyba s cestou k poľu),
+  `pocet_slov()` (číslo s jednotkou = 1 slovo), kontrola opakovania fotky, `_stitok_z_rozvrhu`, `_rozloz_galeriu`,
+  `VIDEA` (rozmery videí zápasenia a MDS). Zrušené `dosky()`, mozaika baru a esej.
+- Testy: `nastroje/test_zostav.py` 99 testov (zoznam zrušených a ich náhrad v `IMPLEMENTACIA-POZNAMKY.md`);
+  `test_prehliadac.mjs` (galéria +1 fotka, dlhé slovo v páse trénerov); `test_vzhlad.mjs` (nové sekcie, kontrast
+  úvodu a kariet ponuky, lightbox 1 / N, video až po ťuknutí, posledná karta pásu trénerov sa načíta).
+
+### 14.8 Rozpočet dĺžky a úloh (nahrádza 3.2 a riadok „Výška stránky“ v 9)
+
+| Meranie (`dokument.mjs`, `porota.mjs`) | 390 × 844 | 1440 × 900 |
+|---|---|---|
+| Dĺžka stránky | ≤ 16,0 obrazovky | ≤ 13,0 obrazovky |
+| Cena vstupu a permanentky | v prvej obrazovke | v prvej obrazovke |
+| Otváracie hodiny | ≤ 0,3 obrazovky | v prvej obrazovke |
+| Prvá návšteva | ≤ 4,5 obrazovky, 1 ťuk | ≤ 3,0 obrazovky, 1 klik |
+| Bojové športy (tréner a čas) | ≤ 5,0 obrazovky, ≤ 1 ťuk | ≤ 4,0 obrazovky, 1 klik |
+| Odseky nad 25 slov | 0 | 0 |
+| Výkon (A/B so stavom pred, CPU 4× na telefóne) | snímky kompozítora > 50 ms ≤ pred, CLS ≤ 0,02, dlhé úlohy pri skrole 0, LCP ≤ pred × 1,1 | to isté pri CPU 1× |
+
+Namerané hodnoty a porovnanie so stavom pred sú v `IMPLEMENTACIA-POZNAMKY.md`, „Profesionálny vzhľad“.

@@ -1597,3 +1597,169 @@ fokus 90 ms 2× – rovnaké ako pri kontrole); `akceptacia_skok` 31/31, `zaloha
 pôvodný je v `oprava2/pred-po-c8de97f.jpg`). Prezreté (Read): `harky/skok-390-B-C-deterministicky.jpg`,
 `zoom-skok-390-prechod-B-C.jpg`, `skok-390-realny-cas-B-C.jpg`, `novy-telefon.jpg`, `novy-hore.jpg`,
 `fotky-390-kontrola.jpg`, `fotky-1440-kontrola.jpg`.
+
+
+---
+
+## Profesionálny vzhľad (3.–4. 11. 2026, vetva `profesionalny-vzhlad`)
+
+Požiadavka majiteľa z 3. 11. 2026: „Skús to fitko urobiť menej jak dokument ale ako profesionálnu stránku s ktorou bude
+zákazník spokojný.“ Postup: diagnóza (`gym/profi/diagnoza/`), tri koncepty (A „Klub ako značka“ `koncept-vizual`,
+B „Ponuka a rozhodnutie“ `koncept-ponuka`, C „Prémiové fitko“ `koncept-premium`), porota a plán P-01 až P-33
+(`gym/profi/porota/VYBER.md`, `plan.json`), implementácia v generátore (táto časť). Základ A, z C dlaždice faktov
+s „Práve teraz“, kompaktný cenník, pás trénerov, 5 kariet lekcií, kontakt v kartách, ľahká filmová vrstva a kurzor;
+z B nižší úvod na telefóne s prvým radom dlaždíc, dok Zavolať + Navigovať + výzva, živý štítok na karte lekcie,
+videá len po ťuknutí a statický rozvrh bez JS. Štruktúra a komponenty sú v `SPEC.md`, kapitola 14.
+
+**Vetva `profesionalny-vzhlad`** od `36d8066` v pracovnej kópii `gym/lupa` (len lokálne, bez push, nič nezverejnené).
+Commity bez podpisových riadkov, autor `Claude <noreply@anthropic.com>` len v metadátach:
+
+| Commit | Obsah |
+|---|---|
+| `b0a3273` | Profesionálny vzhľad: obsah (migrácia `obsah/*.json` aj `testdata`), `.pages.yml`, `zostav.py`, nová šablóna a `style.css`, orezaný `app.js`, testy, návody |
+| `40d85f0` | Prvá návšteva: prvý krok bez zopakovania „Kedykoľvek v otváracích hodinách“ (odsek mal 26 slov) |
+| `d2ead6c` | Ponuka: `sizes` fotiek trénerov na karte podľa výšky orezu (na 1440 px pri DPR 2 boli mäkké, 0,66) |
+| `8b15860` | Počítač: fotka prvej návštevy vo výške stĺpca s krokmi, karty ponuky 4 : 3 (úloha „bojové športy“ na 1440 bola 4,13 obrazovky, cieľ ≤ 4,0) |
+| `0ab4fcd` | Popisy troch fotiek podľa toho, čo je na nich (činky namiesto jednoručiek, „kardio stroje“ namiesto neistého „eliptický“, kreslá a stolíky) |
+| `c6c01d0` | Úvod: kratší odsek a neviditeľný nadpis dlaždíc („V skratke“), prvá obrazovka telefónu má 60 slov (cieľ ≤ 60, predtým 66) |
+
+`git diff --stat 36d8066..HEAD`: 23 súborov, +2 422 / −2 751 riadkov. Pracovné súbory, skripty a dôkazy sú
+v `gym/profi/impl/` (skripty `skripty/`, záverečné overenie `final/stav.txt`, merania `meranie/`, snímky `prepo/`,
+hárok `pred-po.jpg`, zápis `ODOVZDANIE.md`).
+
+### Čo sa zmenilo
+
+- **Obsah a CMS (P-02 až P-09):** texty iba skrátené a preskupené (`impl/skripty/migracia.py`), žiadne nové fakty:
+  `fakty_slova.py` nad výsledným webom proti obsahu `36d8066` a starému webu = **0 nových čísel**, 19 nových tvarov
+  slov (skloňovanie a rozhranie: „Časté otázky“, „Nenašli ste odpoveď?“, „Napísať“, „Ponuka“, „V skratke“, „káva,
+  chladené nápoje“ z „kávou a chladenými nápojmi“…; výpis `impl/final/fakty-slova.txt`). Nové polia sekcií, kariet
+  ponuky, cenníka, prvej návštevy, galérie a 37 textov rozhrania (SPEC 14.7); `polia_pouzite.py`: 253 polí, nečítané
+  žiadne. Ceny a časy nie sú v šablóne (test `test_fakty_z_cms`), každý text je z CMS; v šablóne ostalo 11 `aria-label`
+  neviditeľných ovládačov (`impl/final/literaly.txt`).
+- **Šablóna (P-10 až P-23):** sekcie a komponenty podľa SPEC 14.3–14.4: úvod s dlaždicami, ponuka v 6 obrazových
+  kartách, cenník v kartách, samostatná prvá návšteva, 5 kariet lekcií, rozvrh (bez JS statický zoznam), tréneri
+  (pás / mriežka), galéria 1 veľký záber + štvorce, recenzie v kartách, otázky, kontakt v 3 kartách, červený pás, dok.
+  Zrušené: list cez úvod, medzihra, esej a Detaily, duo, samostatná sekcia MDS, pruh postupu, kolofón, všetky lepiace
+  prvky.
+- **CSS (P-24 až P-26):** nový `style.css` (13 014 B gzip −9, 642 riadkov, 2× `!important`, 1 blok reduce), striedanie
+  tmavého a kosteného povrchu, karty, pevné pomery fotiek; filmová vrstva zredukovaná (FIL-01 len počítač ≤ 1 s,
+  FIL-03, FIL-05, FIL-08, FIL-10, časť 19 ≤ 1 536 B gzip); 0× `position:sticky`, 0× `animation-timeline`.
+- **JS (P-27):** `app.js` 12 995 B gzip (cieľ ≤ 13 700), bez modulov pásu medzihry, náhľadu Kde začať, živého videa,
+  prispôsobenia úvodu a pozorovateľa mapy (mapa len na klik).
+
+### Testy (P-28)
+
+`test_zostav.py` 91 → **99 testov**. Zrušené testy a ich náhrady (žiadny test nie je oslabený bez náhrady; limity
+v `test_css_pravidla` a `test_vzhlad` sú prísnejšie: CSS 22 → 13 kB, 1 000 → 700 riadkov, `app.js` 14 336 → 13 700 B,
+výška stránky 18,5 / 23 → 13 / 16 obrazoviek):
+
+| Zrušený test (`36d8066`) | Prečo | Náhrada |
+|---|---|---|
+| `test_dosky` (plochy eseje) | esej zrušená | `test_galeria_bez_diery`, `test_dve_velke_fotky_galerie` |
+| `test_rozmiestnenie_mozaiky` (mozaika baru) | mozaika zrušená | `test_galeria_bez_diery` (`_rozloz_galeriu`, telefón aj počítač) |
+| `test_jedna_fotka_navyse_v_bare_bez_diery` | bar je súčasť galérie | `test_galeria_bez_diery` + `test_prehliadac` „galéria +1 fotka“ |
+| `test_nahrata_fotka_vo_filme_nejde_na_sirku` | film eseje zrušený | `test_nahrata_fotka_v_galerii` |
+| `test_nova_cena_aj_v_nadpise_slovom` | nadpis cenníka už cenu slovom nemá | `test_fakty_z_cms` (cena 7 / 55 € a 07:00 v H1, dlaždici, cenníku aj JSON-LD) |
+| `test_ina_sobota_kolofon_tri_skupiny` | kolofón zrušený | `test_ina_sobota_tri_skupiny_v_dlazdici` |
+
+Prepísané pre novú štruktúru (rovnaký názov a účel): `test_obsah_a_pocty`, `test_haky_v_html` (`data-live` c-open,
+c-boj, c-lekcie, `.coach[data-tags]`, `.dock`, rozvrh `tablist`/`tabpanel`…), `test_neznama_fotka`, `test_neznama_znacka`,
+`test_preklep_v_znacke`, `test_cesta_v_hlaske_ako_v_menu_cms`, `test_pocet_kariet` (4–8), `test_iny_piatok`,
+`test_ina_sobota`, `test_spolocne_tlacidlo_cennika`, `test_ohnisko` (trieda `TestOhniska` namiesto `TestDosky`),
+`test_kazdy_text_rozhrania_sa_vypise` (37 kľúčov), `test_css_pravidla`, `test_naprotivky_v_bloku_reduce`,
+`test_rytmus_titulku_uvodu`, `test_rozpocet_filmovej_vrstvy`, `TestBezpecnostTextu`. Nové: `test_bez_pripinania`,
+`test_fakty_z_cms`, `test_pocet_trenerov_sa_pocita`, `test_citaty_doslovne`, `test_kazda_fotka_raz`,
+`test_galeria_bez_diery`, `test_ina_sobota_tri_skupiny_v_dlazdici`, `test_nahrata_fotka_v_galerii`,
+`test_neznamy_obraz_v_galerii`, `test_neznamy_trener_na_karte_ponuky`, `test_plagat_bez_videa`,
+`test_dve_velke_fotky_galerie`, `test_kratke_popisy`, `test_vela_slov`. `test_prehliadac.mjs`: „galéria +1 fotka“,
+„dlhé slovo“ v páse trénerov. `test_vzhlad.mjs`: nové sekcie, kontrast úvodu (1. riadok 4,5 : 1, červený 3 : 1)
+a kariet ponuky (4,5 : 1), lightbox 1 / N, video sa nestiahne pred ťuknutím, posledná karta pásu trénerov sa načíta.
+
+### Záverečné overenie (`impl/final/stav.txt`, HEAD `c6c01d0`)
+
+zostav kód 0 · unittest **Ran 99 tests OK** · `test_prehliadac` 19 OK / 0 ZLE · `test_vzhlad` (360–1920 px) 173 OK /
+0 ZLE · `over.mjs` (390 aj 1440: mapa len po kliknutí, kotvy, rozvrh, filter, lightbox 1 / 11, video po ťuknutí,
+Ladydefence, dok, menu, Späť po skoku, `?gk-at` večer/noc/sviatok, bez JS 0 skrytých, rám s CSP, klávesnica
+106 zastavení Tab = 106 ovládačov) 42 OK / 0 ZLE · `fotky_kontrola.mjs` 234 odkazov, 0 chýba, 18 záberov `assets/img/f`
+každý raz, pri 360/390/768/1024/1440/1920 px 42–45 obrázkov, 0 nenačítaných, lightbox 11/11 na 390 aj 1440 ·
+čistý klon `zostav.py` „Web je zostavený“ bez varovaní · `grep -iwE "ai|claude|anthropic"` v pridaných riadkoch
+`36d8066..HEAD` aj v správach commitov 0. axe-core v kontajneri nie je (offline), náhradou sú kontroly kontrastu,
+dotykových cieľov ≥ 44 px a textu ≥ 13 px v `test_vzhlad`.
+
+### Merania pred / po
+
+| Meranie | pred `36d8066` | po (HEAD) | cieľ plánu | zdroj |
+|---|---|---|---|---|
+| dĺžka 390 / 1440 | 22,94 / 18,41 obr. | **15,55 / 12,64** | ≤ 16,0 / ≤ 13,0 | `dokument.mjs` |
+| slová 390 / 1440 | 1 571 / 1 571 | 1 157 / 1 198 | — | `dokument.mjs` |
+| medián slov na obrazovku 390 | 66 | **70** (A 55,5, B 60,5, C 61) | ≤ 58 | `dokument.mjs` |
+| obrazovky bez fotky 390 (úsek) / 1440 | 10 (8) / 6 (6) | **5 (2) / 2 (1)** | ≤ 4 (≤ 2) / ≤ 2 (≤ 1) | `dokument.mjs` |
+| obrazovky bez akcie 390 / 1440 | 12 / 9 | **5 / 3** | ≤ 4 / ≤ 2 | `dokument.mjs` |
+| karty / riadky s linkou 390 | 3 / 63 | **43 / 9** | ≥ 40 / ≤ 12 | `dokument.mjs` |
+| odseky nad 25 slov | 6 | **0** | 0 | `dokument.mjs` |
+| jas 390: medián, obrazovky < 40, najdlhší tmavý úsek | 32,6 · 14 · 10 | **84,1 · 3 · 1** | ≥ 75 · ≤ 4 · ≤ 2 | `rytmus.py` → `jas-po-390.json` |
+| cena / hodiny 390 | 7,17 / 0 obr. | **0 / 0** | 0 / ≤ 0,3 | `porota.mjs` |
+| prvá návšteva 390 / 1440 | 16,88 / 13,86 obr. | **3,73 / 2,71**, 1 ťuk | ≤ 4,5 / ≤ 3,0 | `porota.mjs` |
+| bojové športy 390 / 1440 | 8,27 / 7,79 obr. | **4,76 / 3,97**, 1 ťuk | ≤ 5,0 / ≤ 4,0 | `porota.mjs` |
+| slová v 1. obrazovke 390 | — | **60** | ≤ 60 | `porota.mjs` |
+| ostrosť 390 DPR 3 | 28 ostrých, 3 mäkké, medián 1,42 | **33 ostrých, 0 mäkkých**, medián 1,04 | 0 mäkkých, medián ≥ 1,1 | `ostrost.mjs` |
+| ostrosť 1440 DPR 2 | 26 / 5 mäkkých, medián 1,06 | **40 ostrých, 1 mäkká** (úvod, strop zdroja 1 920 px), medián 1,32 | 0 mäkkých okrem úvodu | `ostrost.mjs` |
+
+Výkon A/B striedavo (`impl/skripty/meraj.mjs --trace`, bez WebGL, súbežne bežali iné úlohy; súhrn
+`impl/meranie/ab/suhrn.md`, priebeh so záťažou `impl/meranie/ab/beh.log`).
+
+Telefón 390 × 844, DPR 3, CPU 4×: 5 párov (pred / po). Páry 1–3 na `d2ead6c`, pár 4 na `8b15860`, pár 5 na `c6c01d0`
+(medzi `d2ead6c` a `c6c01d0` sa mení len CSS v `@media (min-width:761px)` a `(min-width:861px)` a texty). Pár 3 bežal pri
+záťaži nad 8, preto sú zopakované páry 4 a 5. Počítač 1440 × 900, CPU 1×: 4 páry (1–2 na `8b15860`, 3–4 na `c6c01d0`).
+
+| 390, CPU 4× | pár 1 | pár 2 | pár 3 | pár 4 | pár 5 | medián |
+|---|---|---|---|---|---|---|
+| záťaž (loadavg 1 min) | 3,6–4,0 | 3,6–6,9 | 6,9–9,6 | 5,4–7,3 | 3,4–5,0 | |
+| snímky kompozítora > 50 ms, pred → po | 2 → **0** | 19 → **4** | 5 → **1** | 3 → **0** | 0 → **0** | 3 → 0 |
+| snímky kompozítora za s, pred → po | 59,3 → 59,4 | 56,3 → 57,3 | 58,3 → 59,5 | 58,9 → 59,9 | 59,9 → 59,7 | 58,9 → 59,5 |
+| rAF fps hlavného vlákna, pred → po | 51,2 → 57,3 | 45,4 → 53,8 | 45,6 → 54,1 | 47,4 → 57,9 | 56,3 → 58,7 | 47,4 → 57,3 |
+| dlhé úlohy počas skrolu, pred → po | 2 → 0 | 12 → 1 | 12 → 3 | 9 → 0 | 0 → 0 | 9 → 0 |
+| LCP ms, pred → po (`img.hero-img`) | 312 → 268 | 296 → 416 | 392 → 272 | 356 → 340 | 264 → 236 | **312 → 272** |
+| CLS otvorenie / skrol, po | 0 / 0 | 0 / 0 | 0 / 0 | 0,0005 / 0 | 0 / 0 | |
+| vrstvy kompozítora (najviac), pred → po | 33 → 17 | 31 → 18 | 31 → 17 | 31 → 17 | 31 → 17 | **31 → 17** |
+| prenos 1. obrazovky / celá stránka | pred 735 / 1 972 kB, po 765–766 / 1 475 kB | | | | | |
+
+| 1440, CPU 1× | pár 1 | pár 2 | pár 3 | pár 4 | medián |
+|---|---|---|---|---|---|
+| snímky kompozítora > 50 ms, pred → po | 7 → **2** | 11 → **4** | 4 → **2** | 5 → **2** | 6 → 2 |
+| snímky kompozítora za s, pred → po | 56,1 → 57,0 | 55,4 → 56,8 | 57,3 → 57,0 | 56,5 → 57,3 | 56,3 → 57,0 |
+| rAF fps, pred → po | 54,7 → 59,6 | 52,0 → 59,3 | 57,9 → 58,5 | 54,9 → 59,6 | 54,8 → 59,5 |
+| dlhé úlohy počas skrolu, pred → po | 2 → 0 | 4 → 0 | 0 → 0 | 1 → 0 | 1,5 → **0** |
+| LCP ms, pred → po | 308 → 292 | 232 → 308 | 324 → 368 | 332 → 188 | **316 → 300** |
+| vrstvy (najviac) / CLS po | 27 → 10 / 0,0003 | 27 → 10 / 0,0003 | 27 → 10 / 0 | 27 → 10 / 0,0003 | |
+| prenos 1. obrazovky / celá stránka | pred 792 / 3 297 kB, po 658 / 1 317 kB | | | | |
+
+### Odchýlky od plánu a neopravené (zdôvodnenie)
+
+- **Hustota textu na telefóne (P-30):** medián slov na obrazovku a obrazovky bez fotky/akcie sú nad cieľom (tabuľka
+  vyššie). Stránka je o 7,4 obrazovky kratšia a má takmer rovnako textu ako koncept A (A: 1 174 slov na 17,47 obrazovky,
+  medián 55,5), takže hustota stúpla. Obe podmienky (≤ 16 obrazoviek a medián ≤ 58) naraz vyžadujú ubrať asi pätinu
+  textu; to je rozhodnutie obsahu pre majiteľa (v CMS sa dá skrátiť bez vývojára), nie úloha kódu.
+- **Prenos prvej obrazovky (P-31):** 765 kB na 390 a 658 kB na 1440 (cieľ ≤ 650 kB) pri meraní bez kompresie
+  (`python -m http.server`) a bez obmedzenia siete. Chrome v kontajneri načítava lenivé obrázky do 3 000 px pod oknom,
+  stránka je hustejšia, preto sa stiahnu aj fotky cenníka a prvej návštevy. Pri emulácii „Fast 4G“ (`bajty1.mjs --4g`)
+  je to **620 kB** (pred 447 kB); GitHub Pages posiela HTML, CSS, JS a SVG gzipom, čo uberie ďalších ~173 kB
+  (`index.html` 102 979 → 22 096 B, `style.css` 52 627 → 13 014 B, `app.js` 40 368 → 12 995 B, logo 38 383 → 14 748 B).
+- **Dlhé úlohy počas skrolu na telefóne:** 0 v troch z piatich párov; 1 a 3 v pároch pri záťaži 6,6–9,6 (pred v tých
+  istých pároch 12 a 12). Plán chce 0; na počítači je 0 vo všetkých štyroch pároch.
+- **Ostrosť telefónu (P-26):** medián 1,04 (cieľ 1,1) – portréty trénerov majú zdroj 480 × 600 px (pomer 1,01 pri DPR 3),
+  väčší zdroj nie je; mäkká fotka 0. Na 1440 DPR 2 je mäkký len úvod (0,67, zdroj najviac 1 920 px).
+- **Mapa:** karta mapy má fotku `hlavna-sala-5`, nie `hlavna-sala-3` z plánu P-22 – tá je v galérii a každá fotka
+  je na stránke raz (P-07 má prednosť).
+- **Karty ponuky** majú `alt=""` (obrázok je dekorácia vnútri odkazu s textom), pole `popis_fotky` pri nich nie je.
+- **Červený pás** je bez fotky (čistá farba, kratší a čitateľnejší).
+- **Prvá odpoveď v Otázkach** ostala v pôvodnom znení (22 slov ≤ 35).
+- **Plagáty videí a jeden portrét** sú na počítači panel vpravo (`object-fit: contain`), aby neboli mäkké.
+- **Recenzie na telefóne** sú bez fotky baru (kratšia sekcia; fotka je na počítači).
+
+### Snímky prezreté (Read)
+
+`impl/snimky/v3/*` (390 a 1440, hárky a–f, orez sloganu), `impl/prepo/po-1440-02-ponuka.jpg`, `po-1440-03-cennik.jpg`,
+`po-1440-04-prva-navsteva.jpg`, `po-1440-05-lekcie.jpg`, kontrolné snímky po `8b15860` (1440 a 1024 prvá návšteva,
+1440 ponuka), `impl/pred-po.jpg` a jeho strany `impl/harok/pred-po-01.jpg` až `06.jpg`, `impl/final/rytmus-po-390.jpg`,
+fotky `kardio-2`, `volne-vahy-3`, `stroje-1`, `bar-kresla` (kontrola popisov).

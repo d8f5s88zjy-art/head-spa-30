@@ -1,6 +1,6 @@
 # GYM KLUB (Lipa gym): stav práce a odovzdanie webu
 
-Stav k 3. 11. 2026 (časti 2 a 4 doplnené po Filmovej vrstve). Tento súbor je „pamäť“ projektu. Ak pri odovzdaní webu niečo nevieš, odpoveď
+Stav k 4. 11. 2026 (časti 1, 2, 4, 5 a 6 doplnené po Profesionálnom vzhľade; predtým 3. 11. po Filmovej vrstve). Tento súbor je „pamäť“ projektu. Ak pri odovzdaní webu niečo nevieš, odpoveď
 by mala byť tu alebo v súboroch, na ktoré odkazuje.
 
 ## 1. Kde čo je
@@ -10,6 +10,7 @@ by mala byť tu alebo v súboroch, na ktoré odkazuje.
 | Živý web dnes | repozitár `d8f5s88zjy-art/Lupa-gym`, vetva `main` = commit `4fb1416` (tvoja verzia), web <https://d8f5s88zjy-art.github.io/Lupa-gym/> | beží, bez mojich zmien |
 | Moje hotové zmeny (logo, Marko Rigo, Bar, editor pre Ondreja) | záloha `lupa-gym-zaloha.bundle` v tomto priečinku, vetva `main` (commity `69d7665` až `396f446`) | hotové, skontrolované, **nenahraté** do Lupa-gym |
 | Nový vzhľad (redizajn) | tá istá záloha, vetva `redizajn-2026-10` (od `534f588`) | **rozpracované**, nenasadzovať |
+| Profesionálny vzhľad (želanie z 3. 11.: „menej jak dokument, ako profesionálna stránka“) | vetva `profesionalny-vzhlad` (od `36d8066`, posledný commit `c6c01d0`), prírastková záloha `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku | **hotové a overené**, nezverejnené, nenasadené (časť 2) |
 | Náhľad redizajnu | <https://claude.ai/artifact/2a5djhGB6rjJKtWyUBsffC> (súkromný, zdieľa sa cez Share) | stav pred pohybovým systémom |
 | Špecifikácia redizajnu | `SPEC.md` v tomto priečinku | záväzná pre dokončenie |
 | Denník implementácie | `IMPLEMENTACIA-POZNAMKY.md` v tomto priečinku | všetky rozhodnutia, merania a odchýlky |
@@ -67,6 +68,28 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
 - Poznámka: „bez efektu riadeného skrolovaním a bez pripínania“ platí pre filmovú vrstvu. Odchod úvodu, pruh postupu, parallax
   a lepiace prvky (úvod, Kde začať, video lekcií, nadpis Otázok) sú od B3/B4 (SPEC 5.2 #4–5); či ostanú, rozhodne majiteľ.
 
+**Vetva `profesionalny-vzhlad` (od `36d8066`, 3.–4. 11. 2026, posledný commit `c6c01d0`; záloha
+`lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku, obnova v časti 6; nezverejnená, do Lupa-gym **nenahratá**):**
+
+- Na želanie majiteľa z 3. 11.: „Skús to fitko urobiť menej jak dokument ale ako profesionálnu stránku s ktorou bude
+  zákazník spokojný.“ Tri koncepty, porota (víťaz A „Klub ako značka“ s prvkami z B a C) a plán P-01 až P-33
+  (`gym/profi/porota/VYBER.md`). Štruktúra a komponenty: `SPEC.md` kapitola 14; denník a merania:
+  `IMPLEMENTACIA-POZNAMKY.md`, „Profesionálny vzhľad“.
+- Čo uvidí zákazník: tmavé a svetlé (kostené) časti sa striedajú, obsah je v kartách. Hneď pod úvodom sú štyri
+  dlaždice: cena vstupu a permanentky, dnešné otváracie hodiny, čo práve prebieha, adresa. Ponuka je v šiestich
+  kartách s fotkou, cenník v kartách (permanentka zvýraznená), prvá návšteva v troch krokoch, päť kariet lekcií
+  (video až po ťuknutí), rozvrh, tréneri (na telefóne vodorovný pás), galéria priestoru, recenzie, otázky, kontakt
+  v troch kartách (Google mapa až po kliknutí). Na telefóne je dole dok Zavolať · Navigovať · výzva.
+- Stránka je kratšia: telefón 22,9 → 15,6 obrazovky, počítač 18,4 → 12,6. Cena a hodiny sú v prvej obrazovke,
+  prvá návšteva do 3,7 obrazovky (predtým 16,9), bojové športy do 4,8 (predtým 8,3), všetko na 1 ťuk.
+- Pravidlá ostali: len skutočné fotky z fitka (každá na stránke raz), žiadne nové tvrdenia ani čísla (texty len
+  skrátené), **nič sa nepripína a nič nie je riadené skrolovaním** (zrušené lepiace prvky, pruh postupu, parallax,
+  odchod úvodu), pri „obmedziť pohyb“ a bez JS je všetko statické a viditeľné, v náhľade claude.ai nič nezlyhá.
+- Plynulosť na telefóne pri 4× spomalenom CPU je lepšia ako predtým (v žiadnom z 5 párov meraní viac zaseknutých
+  snímok nad 50 ms, spolu 29 → 5; vrstvy kompozítora 31 → 17); celá stránka sa stiahne za 1,5 MB namiesto 2,0 MB (počítač 3,3 → 1,3 MB).
+- Overenie na `c6c01d0`: 99 testov OK, testy v prehliadači a vzhľadu pri 360–1920 px bez chyby, fotky pri 6 šírkach
+  načítané, lightbox 11/11, čistá zostava z klonu (podrobne v `IMPLEMENTACIA-POZNAMKY.md`).
+
 ## 3. Postup pri odovzdaní (v tomto poradí)
 
 1. **Nahrať vetvu `main` do Lupa-gym** (zo zálohy, časť 6) a hneď potom v Lupa-gym otvoriť
@@ -90,6 +113,7 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
 | Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); oba otvorené body (Späť po skoku z menu, biela plocha mapy) opravené vo vetve `filmova-vrstva` (`c6aa7e7`) |
 | B5 | výkon a prístupnosť (SPEC kap. 9 a 10), Lighthouse, klávesnica | nezačaté |
 | Filmová vrstva | požiadavka majiteľa: „filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“ | **implementované** vo vetve `filmova-vrstva` (`dcd8414`, `c6aa7e7`, `07eca7a`, `afe892b`, `c8de97f`), nezávislé kontroly KF a KP hotové, ich stredné nálezy opravené v `36d8066` (skok z mobilného menu bez prekrytia menu s cieľom, pomalé odďaľovanie len širokej plochy – menej vrstiev, Tab neodíde pod otvorené menu, rozvrh Home/End); čaká na nový náhľad pre majiteľa a zlúčenie do `redizajn-2026-10`. Otvorené: lightbox ako „premietanie“ (FIL-07, voliteľné), prah vrstiev počas prechodov, ručné overenie kurzora a prechodov na iPhone (Safari 18 a 26) a Androide |
+| Profesionálny vzhľad | želanie majiteľa z 3. 11. (menej dokument, viac profesionálna stránka) | **implementované a overené** vo vetve `profesionalny-vzhlad` (`b0a3273` až `c6c01d0`), čaká na náhľad pre majiteľa a jeho rozhodnutia v časti 5 (body 7–11); nahrádza štruktúru z B2–B4 a zredukuje filmovú vrstvu |
 | B6 | záverečná kontrola, snímky 390–1920 px, návody, zoznam pre majiteľa | nezačaté |
 
 **Filmová vrstva, materiál a pravidlá:** použité sú len súbory v repozitári – skutočné fotky (`assets/img/f`, tím)
@@ -107,6 +131,12 @@ bez nových záberov sa to zlepšiť nedá;
 úvod na telefóne pri výške okna 781–880 px ukazuje málo fitka; fotka `volne-vahy-2` je na webe dvakrát;
 treba ručne overiť na skutočnom iPhone a Androide.
 
+**Po Profesionálnom vzhľade (4. 11.):** lepiace prvky, pruh postupu, parallax a odchod úvodu sú zrušené; každá fotka je
+na webe raz (aj `volne-vahy-2`); úvod na telefóne je nižší a prvý rad dlaždíc je v prvej obrazovke; mapa sa načíta
+len po kliknutí (bod o bielej ploche mapy tým odpadá); `app.js` má 12 995 B gzip (rezerva 705 B do 13 700 B).
+Otvorené: text je na telefóne hustejší, než chcel plán (medián slov na obrazovku nad 58), a prenos prvej obrazovky
+bez kompresie je 765 kB (s gzipom na GitHub Pages asi 590 kB) – podrobne v `IMPLEMENTACIA-POZNAMKY.md`.
+
 ## 5. Rozhodnutia pre majiteľa fitka
 
 1. **Logo v hlavičke**: ponechané plnofarebné logo z kartičky na bielej kartičke (tak si to chcel).
@@ -114,12 +144,27 @@ treba ručne overiť na skutočnom iPhone a Androide.
 2. **Nadpis úvodu**: ostáva „Stačí prísť. Vstup 6 €.“ Dá sa zmeniť v CMS.
 3. **Fotky Panda Fight Club** (z gymklub.sk): platí ešte súhlas klubu? Na jednej je čitateľný banner ProFighters.eu.
 4. **Text medzihry „Funkčná zóna“** spomína vzduchový bicykel, ktorý na fotke nie je: skrátiť text v CMS, alebo dofotiť.
+   *(V Profesionálnom vzhľade medzihra nie je; karta „Funkčná zóna“ má text „Kettlebelly a šprintérska dráha. Kruhový
+   tréning sami alebo s trénerom.“ bez bicykla.)*
 5. **Fotky funkčnej zóny s nápismi susedných firiem v oknách** (SATELITNÁ TECHNIKA, ANTIK, namiSAT) sa nepoužívajú;
    kým sa nedofotí, medzihra používa fotku rigu pri oknách.
 6. **Dofotiť** (bez toho nebude dojem naplno prémiový): recepcia a pult; šatne a sprchy; ľudia pri tréningu
    so súhlasom (hlavná sála, funkčná zóna pod LED, lekcia na tatami); vlastné zábery sály Panda; široké zábery
    na šírku zo statívu vo výške asi 1,3 m; originály fotiek baru s vypnutým televízorom. Pred fotením upratať
    popolníky, bundy na rigoch a ľudí v zrkadlách.
+
+Po Profesionálnom vzhľade (vetva `profesionalny-vzhlad`, predvolené voľby sú už v nej):
+
+7. **Hustota textu na telefóne:** stránka je kratšia (15,6 obrazovky), ale text je hustejší, ako chcel plán (medián
+   slov na obrazovku nad 58). Ak má pôsobiť ešte vzdušnejšie, treba ubrať asi pätinu textu (popisy lekcií, poznámka
+   v cenníku, texty kariet) – v CMS, bez vývojára. Alebo ostať pri dnešnom stave.
+8. **Fotka karty mapy:** `hlavna-sala-5` (plán chcel `hlavna-sala-3`, tá je v galérii a každá fotka má byť na webe raz).
+9. **Červený pás pred pätičkou** je bez fotky (len farba, slogan a dve tlačidlá).
+10. **Odsek úvodu** je skrátený na „Bez objednávania. Platíte na recepcii, MultiSport ukážete pri príchode.“ –
+    hotovosť a karta sú v dlaždiciach a v cenníku. Dá sa zmeniť v CMS (najviac 20 slov).
+11. **Nasadenie:** vetva `profesionalny-vzhlad` mení štruktúru polí CMS (nové položky „Úvod a ponuka“, „Nadpisy častí“,
+    „Texty rozhrania“, karty cenníka, galéria). Nasadiť až po náhľade a súhlase majiteľa a keď Ondrej needituje;
+    návod pre Ondreja v repozitári (`NAVOD-PRE-ONDREJA.md` vo vetve) je aktualizovaný.
 
 ## 6. Obnova zo zálohy
 
@@ -139,6 +184,14 @@ Filmová vrstva (prírastková záloha, potrebuje `809bc02` z vetvy `redizajn-20
 git bundle verify ../lupa-gym-filmova-vrstva.bundle
 git fetch ../lupa-gym-filmova-vrstva.bundle filmova-vrstva:filmova-vrstva
 git log --oneline filmova-vrstva -1       # má byť 36d8066
+```
+
+Profesionálny vzhľad (prírastková záloha, potrebuje `36d8066` z vetvy `filmova-vrstva` vyššie):
+
+```bash
+git bundle verify ../lupa-gym-profesionalny-vzhlad.bundle
+git fetch ../lupa-gym-profesionalny-vzhlad.bundle profesionalny-vzhlad:profesionalny-vzhlad
+git log --oneline profesionalny-vzhlad -1 # má byť c6c01d0
 ```
 
 Zostavenie a testy (Python 3 + `pip install -r nastroje/requirements.txt`):
