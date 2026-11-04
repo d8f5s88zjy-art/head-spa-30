@@ -376,11 +376,12 @@ html.kino .story-line {
   display: flex; position: fixed; z-index: 41; left: 50%; right: auto; top: auto; bottom: 22px; transform: translateX(-50%);
   width: min(620px, 64vw); flex-direction: row; align-items: center; gap: 6px; padding: 0; opacity: 1;
   touch-action: none; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.55)); transition: opacity 300ms;
+  -webkit-user-select: none; user-select: none;
 }
 /* v úvode je z pásu len ▶; kapitoly prídu po kúsku skrolu (is-visible z app.js) */
 html.kino .story-line:not(.is-visible) a, html.kino .story-line:not(.is-visible) .kino-label { opacity: 0; pointer-events: none; }
 html.kino .story-line a, html.kino .kino-label, .kino-play { transition: opacity 250ms; }
-html.kino .story-line a { position: relative; flex: 1 1 0; width: auto; height: 32px; min-width: 0; padding: 0; display: block; }
+html.kino .story-line a { position: relative; flex: 1 1 0; width: auto; height: 32px; min-width: 0; padding: 0; display: block; -webkit-user-drag: none; }
 html.kino .story-line a::before {
   content: ""; position: absolute; left: 0; right: 0; top: 50%; width: auto; height: 3px; margin-top: -1.5px;
   border-radius: 2px; background: rgba(241, 233, 221, 0.38); transform: none; transition: height 180ms, margin 180ms;

@@ -60,7 +60,8 @@ const kino = storyLine && storyLinks.length ? (() => {
   play.type = 'button'; play.className = 'kino-play'; play.setAttribute('aria-label', 'Prehrať prehliadku');
   play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
   const label = document.createElement('span'); label.className = 'kino-label'; label.setAttribute('aria-hidden', 'true');
-  const fills = storyLinks.map((a) => { const i = document.createElement('i'); i.className = 'kino-fill'; i.setAttribute('aria-hidden', 'true'); a.append(i); return i; });
+  // draggable = false: myšou sa inak ťahá odkaz (dragstart → pointercancel) a pás sa nedá pretáčať
+  const fills = storyLinks.map((a) => { a.draggable = false; const i = document.createElement('i'); i.className = 'kino-fill'; i.setAttribute('aria-hidden', 'true'); a.append(i); return i; });
   storyLine.prepend(play); storyLine.append(label);
   return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0 };
 })() : null;
@@ -355,9 +356,13 @@ if (kino) {
     if (!tah || e.pointerId !== tah.id) return;
     if (!tah.moved && Math.abs(e.clientX - tah.x0) < 8) return;
     if (!tah.moved) { tah.moved = true; storyLine.setPointerCapture(e.pointerId); html.classList.add('kino-tah'); }
-    const f = Math.max(0, Math.min(0.9999, (e.clientX - tah.a.left) / (tah.b.right - tah.a.left))), i = Math.floor(f * N), s = sec(i);
-    if (s) window.scrollTo({ top: Math.max(0, s.top + (f * N - i) * s.height - vh * 0.5), behavior: 'instant' });
+    // poloha v kapitole i ide od jej cieľa (karta celá na obrazovke) po cieľ ďalšej, takže začiatok kapitoly
+    // ukáže tú istú kapitolu ako ťuk a ťah doprava nikdy neskočí o kapitolu späť
+    const f = Math.max(0, Math.min(0.9999, (e.clientX - tah.a.left) / (tah.b.right - tah.a.left))), i = Math.floor(f * N);
+    const y0 = ciel(i), y1 = i + 1 < N ? ciel(i + 1) - 1 : maxScroll;
+    window.scrollTo({ top: Math.max(0, y0 + (f * N - i) * Math.max(0, y1 - y0)), behavior: 'instant' });
   });
+  storyLine.addEventListener('dragstart', (e) => e.preventDefault());
   const koniecTahu = () => { if (tah && tah.moved) setTimeout(() => html.classList.remove('kino-tah'), 0); tah = null; };
   storyLine.addEventListener('pointerup', koniecTahu); storyLine.addEventListener('pointercancel', koniecTahu);
   storyLine.addEventListener('click', (e) => { if (html.classList.contains('kino-tah')) e.preventDefault(); }, true);
