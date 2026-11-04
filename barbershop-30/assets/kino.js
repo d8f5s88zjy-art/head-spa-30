@@ -17,6 +17,8 @@ const N = links.length;
 const reduced = () => root.dataset.motion === 'off' || matchMedia('(prefers-reduced-motion: reduce)').matches;
 const HOLD = 3200, STOJ = 1800;
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+// popis ▶ pre čítačku v jazyku stránky (slovník i18n; kým sa nenačíta, po slovensky)
+const tr = (k) => (window.B30_LANG ? window.B30_LANG.t(k) : k);
 
 let zapnute = false, next = null, nextN = null, stojT = 0;
 let playing = false, tw = 0, hold = 0;
@@ -41,7 +43,7 @@ export function zapni() {
   next = d.createElement('a'); next.className = 'kino-next'; next.href = '#'; next.hidden = true;
   next.innerHTML = '<span class="kino-next-k">Ďalej</span> <span class="kino-next-n"></span> <span aria-hidden="true">↓</span>';
   nextN = next.querySelector('.kino-next-n');
-  d.body.append(next);
+  line.after(next); // hneď za pásom: v poradí Tab za kapitolami, nie až za pätičkou
   // kapitola sa mení v app.js (data-scene-active); jazyk mení názvy (aria-label)
   new MutationObserver(dalej).observe(root, { attributes: true, attributeFilter: ['data-scene-active', 'lang'] });
   dalej();
@@ -78,7 +80,7 @@ function start() {
   zapni();
   if (playing) return;
   playing = true; root.classList.add('kino-hra'); root.classList.remove('kino-stoji');
-  play.setAttribute('aria-label', 'Zastaviť prehliadku');
+  play.setAttribute('aria-label', tr('Zastaviť prehliadku'));
   // z rozpozeranej kapitoly pokračuje; na konci stránky začne odznova
   let i = Math.max(0, PAS.kapitola);
   if (scrollY > PAS.ciel(i) + 8) i++;
@@ -88,6 +90,6 @@ function start() {
 function stop() {
   if (!playing) return;
   playing = false; cancelAnimationFrame(tw); clearTimeout(hold);
-  root.classList.remove('kino-hra'); play.setAttribute('aria-label', 'Prehrať prehliadku');
+  root.classList.remove('kino-hra'); play.setAttribute('aria-label', tr('Prehrať prehliadku'));
 }
 export function prepni() { zapni(); if (playing) stop(); else start(); }
