@@ -174,6 +174,23 @@ const SADA150 = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(
   }
   if (!zleK) console.log(`OK   sada 150, viac služieb naraz: ${nk} otázok bez zavádzajúceho čísla (neúplné najviac ${NEUPLNE.size})`);
 }
+// dve služby v jednej otázke (SKEPTIK #13, 5. 11. 2026): odpoveď menuje obe služby a každú s jej cenou z cenníka
+// (nie len jednu z nich, ani len cenu kombinácie)
+{
+  const DVE = [
+    ['strih pre syna a úpravu brady pre mňa, koľko to bude?', [/malých gentlemanov[^.]*15 €/, /úprava brady[^.]*15 €/]],
+    ['Koľko stojí strih pre syna a úprava brady pre mňa?', [/malých gentlemanov[^.]*15 €/, /úprava brady[^.]*15 €/]],
+    ['Koľko stojí strih a koľko úprava brady?', [/pánsky strih 18 €/i, /úprava brady 15 €/]],
+    ['Koľko je strih a koľko brada?', [/pánsky strih 18 €/i, /úprava brady 15 €/]],
+  ];
+  let zleD = 0;
+  for (const [q, ma] of DVE) {
+    const h = najdi(db, q, 1, PRAH)[0], a = h && h.skore >= PRAH ? h.o.a : '';
+    const chyba1 = ma.filter((r) => !r.test(a));
+    if (chyba1.length) { zleD++; chyba(`dve služby: „${q}“ → ${h ? h.o.id : 'telefón'} bez ${chyba1.map(String).join(' a ')}`); }
+  }
+  if (!zleD) console.log(`OK   dve služby v jednej otázke: obe služby s cenou v ${DVE.length} otázkach`);
+}
 // každá častá otázka z webu (index.html) má v okne odpoveď nad prahom (nie telefón „nič nemám“)
 const FAQ = [...html.matchAll(/<details class="faq-item"><summary>([^<]+)<\/summary>/g)].map((m) => m[1]);
 if (FAQ.length < 5) chyba(`časté otázky webu: našlo sa len ${FAQ.length}`);
