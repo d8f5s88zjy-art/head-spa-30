@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Test pásu kapitol a Kina (KF-01..03): ťah myšou na počítači, ťuk na kapitolu, popis ▶ pre čítačku v jazyku stránky,
 // „Ďalej“ v poradí Tab hneď za pásom a nikdy na texte karty (ani na ležiacom telefóne), pás nad pásmi s textom schovaný,
-// kým svieti ponuka jazyka, pás počká.
+// kým svieti ponuka jazyka, pás počká; koliesko a klávesy Kino zastavia aj s myšou či fokusom na ▶.
 //   node source/tools/kino-test.mjs
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -136,6 +136,50 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) {
   const po = await op();
   ok(ma && pocas.pas === 0 && pocas.trieda && po.pas === 1 && !po.trieda, `${w}: kým svieti ponuka jazyka, pás je schovaný, po zavretí sa vráti`, JSON.stringify({ ma, pocas, po }));
   ok(!chyby.length, `${w}: ponuka jazyka bez chýb skriptu`, chyby.join(' | '));
+  await ctx.close();
+}
+/* 6. zákazník má prednosť: Kino zastaví koliesko aj s myšou nad ▶, šípka ↓ a PageDown hneď po kliknutí na ▶ (fokus
+   ostal na ▶), stránka potom stojí (posun ≤ 5 px za 1,5 s); medzerník a Enter na fokusovanom ▶ ostávajú prepínač;
+   telefón: ťuk na ▶ pustí, ťuk do stránky zastaví */
+{
+  const { ctx, p, chyby } = await stranka(1440, 900, false);
+  await p.waitForTimeout(1200);
+  const kino = () => p.evaluate(() => window.BS30_KINO.state.playing);
+  const zastavi = async (meno, akcia) => {
+    await p.evaluate(() => { window.BS30_KINO.stop(); scrollTo({ top: 0, behavior: 'instant' }); }); await p.waitForTimeout(600);
+    await p.mouse.move(720, 450); await p.click('.kino-play'); await p.waitForTimeout(3000);
+    const pred = await kino();
+    await akcia();
+    await p.waitForTimeout(400); const y1 = await p.evaluate(() => scrollY); await p.waitForTimeout(1500);
+    const s = await p.evaluate(() => ({ hra: window.BS30_KINO.state.playing, y: scrollY, fokus: document.activeElement && document.activeElement.className }));
+    const posun = Math.round(Math.abs(s.y - y1));
+    ok(pred && !s.hra && posun <= 5, `1440: ${meno} Kino zastaví a stránka stojí`, `hralo ${pred} → ${s.hra}, posun za 1,5 s ${posun} px, fokus ${s.fokus}`);
+  };
+  await zastavi('koliesko s myšou nad ▶', async () => { const bx = await p.locator('.kino-play').boundingBox(); await p.mouse.move(bx.x + bx.width / 2, bx.y + bx.height / 2); await p.mouse.wheel(0, 40); });
+  await zastavi('šípka ↓ po kliknutí na ▶', () => p.keyboard.press('ArrowDown'));
+  await zastavi('PageDown po kliknutí na ▶', () => p.keyboard.press('PageDown'));
+  await zastavi('koliesko v strede stránky', async () => { await p.mouse.move(720, 450); await p.mouse.wheel(0, 40); });
+  // medzerník a Enter na fokusovanom ▶: prepínač (pustí, zastaví), nie prerušenie
+  await p.evaluate(() => { window.BS30_KINO.stop(); scrollTo({ top: 0, behavior: 'instant' }); }); await p.waitForTimeout(600);
+  await p.focus('.kino-play'); await p.keyboard.press(' '); await p.waitForTimeout(800);
+  const m1 = await kino(); await p.keyboard.press(' '); await p.waitForTimeout(300);
+  const m2 = await kino(); await p.keyboard.press('Enter'); await p.waitForTimeout(800);
+  const e1 = await kino(); await p.keyboard.press('Enter'); await p.waitForTimeout(300);
+  const e2 = await kino();
+  ok(m1 && !m2 && e1 && !e2, '1440: medzerník a Enter na ▶ Kino pustia aj zastavia', [m1, m2, e1, e2].join(' '));
+  ok(!chyby.length, '1440: prerušenie bez chýb skriptu', chyby.join(' | '));
+  await ctx.close();
+}
+{
+  const { ctx, p, chyby } = await stranka(390, 844, true);
+  await p.waitForTimeout(1200);
+  await p.tap('.kino-play'); await p.waitForTimeout(5000); // prvé 3,2 s Kino stojí na úvode (státie)
+  const hra = await p.evaluate(() => ({ hra: window.BS30_KINO.state.playing, y: scrollY }));
+  await p.touchscreen.tap(195, 600);
+  await p.waitForTimeout(400); const y1 = await p.evaluate(() => scrollY); await p.waitForTimeout(1500);
+  const s = await p.evaluate(() => ({ hra: window.BS30_KINO.state.playing, y: scrollY }));
+  ok(hra.hra && hra.y > 0 && !s.hra && Math.abs(s.y - y1) <= 5, '390 dotyk: ťuk na ▶ Kino pustí, ťuk do stránky ho zastaví', `po 5 s y ${Math.round(hra.y)}, hrá ${hra.hra} → ${s.hra}, posun ${Math.round(Math.abs(s.y - y1))} px`);
+  ok(!chyby.length, '390 dotyk: bez chýb skriptu', chyby.join(' | '));
   await ctx.close();
 }
 await b.close(); srv.server.close();

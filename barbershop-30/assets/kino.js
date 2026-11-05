@@ -51,10 +51,12 @@ export function zapni() {
   const stoj = () => { if (!playing) root.classList.add('kino-stoji'); };
   addEventListener('scroll', () => { if (root.classList.contains('kino-stoji')) root.classList.remove('kino-stoji'); clearTimeout(stojT); stojT = setTimeout(stoj, STOJ); }, { passive: true });
   stojT = setTimeout(stoj, STOJ);
-  // Kino zastaví zákazník: dotyk, koliesko, kláves (okrem ▶), skrytie karty
+  // Kino zastaví zákazník: koliesko a kláves vždy (aj s myšou nad ▶ či fokusom na ▶ hneď po kliknutí), dotyk a stlačenie
+  // mimo ▶, skrytie karty. ▶ prepína len kliknutím; Enter a medzerník na fokusovanom ▶ sú to isté kliknutie.
   const prerus = (e) => { if (playing && !(e.target instanceof Element && e.target.closest('.kino-play'))) stop(); };
-  ['wheel', 'touchstart', 'pointerdown'].forEach((t) => addEventListener(t, prerus, { passive: true, capture: true }));
-  addEventListener('keydown', (e) => { if (playing && d.activeElement !== play) stop(); }, { capture: true });
+  ['touchstart', 'pointerdown'].forEach((t) => addEventListener(t, prerus, { passive: true, capture: true }));
+  addEventListener('wheel', () => { if (playing) stop(); }, { passive: true, capture: true });
+  addEventListener('keydown', (e) => { if (playing && !(d.activeElement === play && (e.key === 'Enter' || e.key === ' '))) stop(); }, { capture: true });
   d.addEventListener('visibilitychange', () => { if (d.hidden) stop(); });
   window.BS30_KINO = { play: start, stop, get state() { return { playing, cur: PAS.kapitola, ciele: links.map((_, i) => Math.round(PAS.ciel(i))), jazda: jazda.slice() }; } };
 }
