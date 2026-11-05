@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Test pásu kapitol a Kina (KF-01..03): ťah myšou na počítači, ťuk na kapitolu, popis ▶ pre čítačku v jazyku stránky,
-// „Ďalej“ v poradí Tab hneď za pásom a nikdy na texte karty (ani na ležiacom telefóne), pás nad pásmi s textom schovaný.
+// „Ďalej“ v poradí Tab hneď za pásom a nikdy na texte karty (ani na ležiacom telefóne), pás nad pásmi s textom schovaný,
+// kým svieti ponuka jazyka, pás počká.
 //   node source/tools/kino-test.mjs
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -118,6 +119,23 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) {
   await p.focus('.story-line a[data-chapter="5"]'); await p.waitForTimeout(500);
   const fokus = await p.evaluate(() => +getComputedStyle(document.querySelector('.story-line')).opacity);
   ok(fokus === 1, `${w}: fokus klávesnice pás nad textom ukáže`, String(fokus));
+  await ctx.close();
+}
+/* 5. ponuka jazyka (prehliadač v inom jazyku): kým svieti, pás a Ďalej sa schovajú, po zavretí sa vrátia
+   (trieda html.lang-ponuka z i18n.js; html:has() by pri každej zmene stránky prepočítaval štýl celého dokumentu) */
+for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) {
+  const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: mob, hasTouch: mob, deviceScaleFactor: 1, locale: 'de-DE' });
+  const p = await ctx.newPage(); const chyby = [];
+  p.on('pageerror', (e) => chyby.push(String(e).slice(0, 160)));
+  await p.goto(URL, { waitUntil: 'load' });
+  const op = () => p.evaluate(() => ({ pas: +getComputedStyle(document.querySelector('.story-line')).opacity, trieda: document.documentElement.classList.contains('lang-ponuka') }));
+  const ma = await p.waitForSelector('.lang-offer.in', { timeout: 15000 }).then(() => true).catch(() => false);
+  await p.waitForTimeout(500);
+  const pocas = await op();
+  await p.click('.lang-offer [data-no]'); await p.waitForTimeout(800);
+  const po = await op();
+  ok(ma && pocas.pas === 0 && pocas.trieda && po.pas === 1 && !po.trieda, `${w}: kým svieti ponuka jazyka, pás je schovaný, po zavretí sa vráti`, JSON.stringify({ ma, pocas, po }));
+  ok(!chyby.length, `${w}: ponuka jazyka bez chýb skriptu`, chyby.join(' | '));
   await ctx.close();
 }
 await b.close(); srv.server.close();

@@ -253,11 +253,12 @@ function offer() {
     if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) { /* */ } zavri(); }
   });
   document.body.appendChild(box);
-  requestAnimationFrame(() => box.classList.add('in'));
+  // html.lang-ponuka: kým ponuka svieti, pás kapitol a Ďalej počkajú (style.css)
+  requestAnimationFrame(() => { box.classList.add('in'); html.classList.add('lang-ponuka'); });
   // zmizne po 12 s alebo keď návštevník odskroluje o obrazovku (na telefóne by zakrýval text, ponuku nechal tak;
   // ukáže sa pri ďalšej návšteve)
   const y0 = scrollY;
-  const zavri = () => { removeEventListener('scroll', skrol); clearTimeout(cas); box.classList.remove('in'); setTimeout(() => box.remove(), 400); };
+  const zavri = () => { removeEventListener('scroll', skrol); clearTimeout(cas); box.classList.remove('in'); html.classList.remove('lang-ponuka'); setTimeout(() => box.remove(), 400); };
   const skrol = () => { if (Math.abs(scrollY - y0) > innerHeight) zavri(); };
   const cas = setTimeout(zavri, 12000);
   addEventListener('scroll', skrol, { passive: true });

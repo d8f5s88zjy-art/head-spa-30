@@ -413,9 +413,10 @@ html.kino-hra .kino-play { border-color: var(--lamp); color: var(--lamp); }
 /* nad pásmi s textom (tím, cenník, galéria) sa pás schová celý: čiary bez podkladu by text prečiarkovali;
    klávesnica ho ukáže (fokus), pri ťahu ostane */
 html.kino-tenky:not(.kino-tah) .story-line:not(:focus-within) { opacity: 0; pointer-events: none; }
-/* pri menu, okne Barbera, objednávke, prológu a vonku sa pás neukazuje; kým svieti ponuka jazyka, pás počká */
+/* pri menu, okne Barbera, objednávke, prológu a vonku sa pás neukazuje; kým svieti ponuka jazyka, pás počká
+   (ponuka jazyka cez triedu lang-ponuka z i18n.js, nie html:has(): ten pri skrole prepočítaval štýl celej stránky) */
 html.pro .story-line, html.outside .story-line, .site-header[data-menu="open"] ~ .story-line, html.obj-otvorene .story-line,
-html.kino:has(.lang-offer.in) .story-line { opacity: 0 !important; pointer-events: none !important; }
+html.kino.lang-ponuka .story-line { opacity: 0 !important; pointer-events: none !important; }
 @media (max-width: 900px) {
   html.asi-open .story-line { opacity: 0 !important; pointer-events: none !important; }
   html.kino .story-line { top: calc(var(--nav-h) + 4px); bottom: auto; left: 12px; right: 12px; transform: none; width: auto; gap: 4px; }
@@ -439,7 +440,7 @@ html.kino:has(.lang-offer.in) .story-line { opacity: 0 !important; pointer-event
 html.kino-stoji .kino-next:not([hidden]) { opacity: 1; transform: none; pointer-events: auto; }
 .kino-next:focus-visible { opacity: 1; transform: none; pointer-events: auto; outline: 2px solid var(--lamp); outline-offset: 3px; }
 html.kino-hra .kino-next, html.kino-tenky .kino-next, html.pro .kino-next, html.outside .kino-next, html.obj-otvorene .kino-next,
-.site-header[data-menu="open"] ~ .kino-next, html.kino:has(.lang-offer.in) .kino-next { opacity: 0 !important; pointer-events: none !important; }
+.site-header[data-menu="open"] ~ .kino-next, html.lang-ponuka .kino-next { opacity: 0 !important; pointer-events: none !important; }
 @media (max-width: 900px) {
   .kino-next { left: 16px; top: calc(var(--nav-h) + 44px); bottom: auto; }
   html.asi-open .kino-next { opacity: 0 !important; pointer-events: none !important; }
