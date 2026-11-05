@@ -11,13 +11,14 @@
   <!-- Brána filmu (trieda world): podmienky a prepínače ?film=off|on, ?motion=off sú v README, časť Film zo skutočných fotiek. -->
   <!-- karty: titulné karty a zábery stoja cez celé okno (P11 v style.css); bez skriptu ide záloha bežne so stránkou -->
   <!-- Hlavičkový skript:
+       - C8: kde film nebude (podmienky ako v film.js), dá rovno world-off; film.js sa potom vôbec nevloží (koniec stránky)
        - C7: zvolený či uložený jazyk (na en/ angličtina): modul prekladu a slovník sa sťahujú hneď s hlavičkou, nie až po app.js; nízka priorita, aby nezdržali fotku úvodu
        - úvod ako film (prológ, ../assets/film.js): raz za návštevu, len s filmom, bez kotvy v adrese a len v zobrazenej karte; ?uvod=znova ho pustí aj opakovane, ?uvod=off ho vynechá (ladenie, merania). Rozhoduje sa tu, aby prvý obraz úvodu bola hneď fasáda.
        - záloha úvodu (fasáda pri prológu, inak rohožka) sa začne sťahovať hneď s hlavičkou, nie až keď ju prehliadač nájde v tele stránky; rovnaký srcset/sizes ako <picture> v kotve, takže ide z cache
        - DEPLOY STEP: tie isté srcset ako v kotve úvodu (stills.py); telefón: prológ výrez na výšku -m, rohožka fotka na šírku v páse (P16)
        (komentáre sú tu, nie v skripte: pri nasadení ich zmensi.mjs odstráni, skript sa nemení) -->
   <script>(function(h){h.classList.add('karty');try{var q=(/[?&]lang=(\w+)/.exec(location.search)||0)[1],g=q||localStorage.getItem('b30.lang');g&&g!='sk'&&h.classList.add('t-wait');
-  var j=q||h.getAttribute('data-zdroj')||g;if(/^(en|uk|hu|sr|pl|de|cs)$/.test(j)){var a=document.createElement('link');a.rel='modulepreload';a.fetchPriority='low';a.href='../assets/i18n.js';document.head.appendChild(a);a=document.createElement('link');a.rel='preload';a.as='fetch';a.crossOrigin='anonymous';a.fetchPriority='low';a.href='../assets/i18n/'+j+'.json';document.head.appendChild(a)}}catch(e){}try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');}catch(e){}
+  var j=q||h.getAttribute('data-zdroj')||g;if(/^(en|uk|hu|sr|pl|de|cs)$/.test(j)){var a=document.createElement('link');a.rel='modulepreload';a.fetchPriority='low';a.href='../assets/i18n.js';document.head.appendChild(a);a=document.createElement('link');a.rel='preload';a.as='fetch';a.crossOrigin='anonymous';a.fetchPriority='low';a.href='../assets/i18n/'+j+'.json';document.head.appendChild(a)}}catch(e){}try{if(/[?&](film|motion)=off\b/.test(location.search)){h.classList.add('world-off');return;}if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData)&&!matchMedia('(max-height: 500px)').matches&&(navigator.deviceMemory||8)>=4&&(navigator.hardwareConcurrency||8)>=4)h.classList.add('world');else h.classList.add('world-off');}catch(e){}
   try{if(h.classList.contains('world')&&!location.hash&&!document.hidden&&!/[?&]uvod=off\b/.test(location.search)&&(/[?&]uvod=znova\b/.test(location.search)||!sessionStorage.bs30uvod)){h.classList.add('pro');sessionStorage.bs30uvod='1';}}catch(e){}
   try{var p=h.classList.contains('pro'),m=matchMedia('(max-width: 720px)').matches,n=p?'vstup'+(m?'-m':''):'rohozka',l=document.createElement('link');
   var S={"vstup":"1086w,1448w,2172w,2896w,4096w","vstup-m":"1086w,1448w","rohozka":"1086w,1448w,1920w","rohozka-m":"1086w,1448w"},W={"vstup":[1086,1448,2172,2896,4096],"vstup-m":[1086,1448],"rohozka":[1086,1448,2172],"rohozka-m":[1086,1448]};
@@ -941,7 +942,9 @@
   <script src="../assets/vernost.js" data-prevadzka="barbershop" defer fetchpriority="low"></script>
   <!-- Film zo skutočných fotiek (three r169, hĺbkové mapy). Modul si sám overí triedu world na <html>,
        načíta knižnicu až po pohybe návštevníka a vytvorí canvas .film-canvas; kým neexistuje alebo zlyhá,
-       stránka ostáva v pokojnej verzii so statickými zábermi. -->
-  <script type="module" src="../assets/film.js" fetchpriority="low"></script>
+       stránka ostáva v pokojnej verzii so statickými zábermi. Vloží sa len pri triede world (alebo ?film=on):
+       kde film nebude (obmedzený pohyb, šetrenie dát, slabé zariadenie, nízke okno, ?film=off, ?motion=off),
+       dá hlavička rovno world-off a film.js sa nesťahuje (C8). -->
+  <script>if(document.documentElement.classList.contains('world')||/[?&]film=on\b/.test(location.search)){var f=document.createElement('script');f.type='module';f.src='../assets/film.js';f.fetchPriority='low';document.body.appendChild(f)}</script>
 </body>
 </html>
