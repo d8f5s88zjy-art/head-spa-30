@@ -477,9 +477,11 @@ if (motionOn && mqFinePointer.matches) {
     import('./atmosfera.js').then((m) => m.spusti(gesture)).catch(() => {});
   };
   ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
-  // gesto pre hudbu: kliknutie myšou alebo ťuknutie (click po dotyku), nie švih prstom pri skrolovaní ani kláves
-  addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && !e.button) gesture = true; }, { passive: true });
-  addEventListener('click', (e) => { if (e.detail) gesture = true; }, { passive: true });
+  // gesto pre hudbu: kliknutie myšou alebo ťuknutie (click po dotyku), nie švih prstom pri skrolovaní ani kláves;
+  // ťuk na ovládač (menu, odkaz, tlačidlo) hudbu nepúšťa, ▶ Kino áno (C6, rovnako ako atmosfera.js)
+  const naOvladac = (e) => e.target instanceof Element && !!e.target.closest('a, button, [role="button"], summary, input, select, textarea, label') && !e.target.closest('.kino-play');
+  addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && !e.button && !naOvladac(e)) gesture = true; }, { passive: true });
+  addEventListener('click', (e) => { if (e.detail && !naOvladac(e)) gesture = true; }, { passive: true });
   const later = () => setTimeout(load, 3500);
   if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
 })();

@@ -5,6 +5,7 @@
 // kliknutí (nie pri klávese), slučka bez medzery (loop, loopEnd), tlačidlo vypne a voľba sa pamätá, skrytá karta
 // zastaví zvuk, ?hudba=off, telefón: bez svetla, ťuknutie pustí hudbu, tlačidlo 44 × 44 px v lište.
 // Strihnutie: pri kliknutí myšou a ťuknutí áno, pri klávese, na tlačidle Hudba a pri vypnutom zvuku nie.
+// C6: ťuk na ovládač (menu) ani švih prstom AudioContext nezaložia, ▶ Kino hudbu pustí.
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -140,7 +141,9 @@ try {
   ok(mb.w >= 44 && mb.h >= 44 && mb.inHeader, 'telefón: tlačidlo Hudba 44 × 44 px v lište', JSON.stringify(mb));
   ok(!mb.svetlo, 'telefón: bez svetla pod kurzorom');
   if (SNIMKY) await mp.screenshot({ path: path.join(SNIMKY, 'telefon-lista.png'), clip: { x: 0, y: 0, width: 390, height: 70 } });
-  await mp.tap('main, body', { position: { x: 200, y: 500 } }).catch(() => mp.touchscreen.tap(200, 500));
+  // ťuk do textu úvodu (nie na odkaz či tlačidlo: tie hudbu nepúšťajú, C6; bod 200, 500 bol odkaz na hodnotenie Google)
+  const tukText = async (pg) => { const bx = await pg.locator('.title-hero .title-sub').boundingBox(); await pg.touchscreen.tap(bx.x + bx.width / 2, bx.y + bx.height / 2); };
+  await tukText(mp);
   await sleep(2500);
   const ms = await audioState(mp);
   ok(ms.pressed === 'true' && ms.ctx[0] === 'running', 'telefón: ťuknutie pustí hudbu', JSON.stringify(ms));
@@ -149,9 +152,25 @@ try {
   // ťuknutie ešte pred načítaním modulu: hudba sa pustí hneď po jeho načítaní
   const mp2 = await m.newPage();
   await mp2.goto(URL0, { waitUntil: 'load' }); await sleep(300);
-  await mp2.touchscreen.tap(200, 500); await sleep(3000);
+  await tukText(mp2); await sleep(3000);
   const ms2 = await audioState(mp2);
   ok(ms2.pressed === 'true' && ms2.ctx[0] === 'running', 'telefón: ťuknutie pred načítaním modulu pustí hudbu po načítaní', JSON.stringify(ms2));
+  // C6: ťuk na ovládač (menu) a švih prstom zvuk nezakladajú; ▶ Kino hudbu pustí zámerne
+  const mp3 = await m.newPage();
+  await mp3.goto(URL0, { waitUntil: 'load' }); await sleep(4500);
+  await mp3.tap('.nav-toggle'); await sleep(700);
+  const m3a = await audioState(mp3);
+  await mp3.tap('.nav-toggle'); await sleep(700);
+  const cdp = await m.newCDPSession(mp3);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
+  for (let y = 600; y > 250; y -= 35) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200, y }] }); await sleep(16); }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(1500);
+  const m3b = await audioState(mp3);
+  ok(m3a.ctx.length === 0 && m3a.pressed === 'false' && m3b.ctx.length === 0 && m3b.fetched === 0, 'telefón: ťuk na menu ani švih prstom zvuk nezaložia (žiadny AudioContext)', JSON.stringify({ menu: m3a.ctx, svih: m3b.ctx, hudba: m3b.fetched }));
+  await mp3.evaluate(() => scrollTo(0, 0)); await sleep(500);
+  await mp3.tap('.kino-play'); await sleep(2500);
+  const m3c = await audioState(mp3);
+  ok(m3c.pressed === 'true' && m3c.ctx[0] === 'running', 'telefón: ▶ Kino hudbu pustí', JSON.stringify(m3c));
   await m.close();
 } finally {
   await browser.close();

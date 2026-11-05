@@ -19,6 +19,8 @@
  */
 const html = document.documentElement;
 const params = new URLSearchParams(location.search);
+// ovládacie prvky: ťuk na ne nezakladá zvuk (C6); rovnaký zoznam používa app.js pre gesto pred načítaním modulu
+const OVLADAC = 'a, button, [role="button"], summary, input, select, textarea, label';
 const reduced = html.dataset.motion === 'off' || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ----------------------------------------------------------------------------
@@ -181,14 +183,18 @@ function zvuk(btn, gesto) {
     else if (ctx) ctx.addEventListener('statechange', () => { if (ctx.state === 'running') firstDone = true; }, { once: true });
   };
   const onBtn = (e) => e.target instanceof Element && e.target.closest('.hudba');
+  // C6: ťuk na ovládač (menu, odkaz, tlačidlo, pole) robí len to, čo ovládač – kým zvuk ešte nebeží, kontext nezakladá
+  // (prvé new AudioContext stojí na telefóne s CPU 4× okolo 100 ms priamo v obsluhe ťuku). Ťuk do fotky či textu
+  // hudbu pustí ako doteraz, ▶ Kino ju pustí zámerne (film s hudbou). Keď už kontext je, ovládač strihne ako inde.
+  const naOvladac = (e) => !ctx && e.target instanceof Element && !!e.target.closest(OVLADAC) && !e.target.closest('.kino-play');
   let lastType = 'mouse';
   addEventListener('pointerdown', (e) => {
     lastType = e.pointerType;
-    if (e.pointerType !== 'mouse' || e.button !== 0 || onBtn(e)) return;
+    if (e.pointerType !== 'mouse' || e.button !== 0 || onBtn(e) || naOvladac(e)) return;
     first(); snip();
   }, { capture: true, passive: true });
   addEventListener('click', (e) => {
-    if (lastType === 'mouse' || e.detail === 0 || onBtn(e)) return;   // detail 0 = kliknutie klávesom
+    if (lastType === 'mouse' || e.detail === 0 || onBtn(e) || naOvladac(e)) return;   // detail 0 = kliknutie klávesom
     first(); snip();
   }, { capture: true, passive: true });
   // iOS Safari odomkne zvuk až pri touchend; prvé ťuknutie pustí hudbu. Švih prstom pri skrolovaní (posun nad 10 px)
@@ -197,7 +203,7 @@ function zvuk(btn, gesto) {
   addEventListener('touchstart', (e) => { const d = e.touches[0]; dotyk0 = d ? [d.clientX, d.clientY] : null; }, { capture: true, passive: true });
   addEventListener('touchend', (e) => {
     const d = e.changedTouches[0];
-    if (!dotyk0 || !d || Math.hypot(d.clientX - dotyk0[0], d.clientY - dotyk0[1]) > 10 || onBtn(e)) return;
+    if (!dotyk0 || !d || Math.hypot(d.clientX - dotyk0[0], d.clientY - dotyk0[1]) > 10 || onBtn(e) || naOvladac(e)) return;
     first();
   }, { capture: true, passive: true });
 
