@@ -337,9 +337,42 @@ function snapNow(ms = 0) {
 }
 
 /* ----------------------------------------------------------------------------
+   5b. Lenivé moduly (C5): po načítaní po jednom v nečinnosti a mimo skrolu, n-tý najneskôr 0,7·n s po spustení
+   plánu (Barber a Hudba do 4 s aj pri švihaní); gesto plán len spustí skôr. Hneď len jazyk, ▶ Kino a Objednať.
+   ---------------------------------------------------------------------------- */
+let skrolT = 0;   // posledný skrol alebo dotyk
+const plan = (() => {
+  const rad = []; let bezi = false, od = 0, n = 0;   // od: čas spustenia plánu
+  const krok = () => {
+    if (bezi || !od || !rad.length) return;
+    bezi = true;
+    const najneskor = od + 700 * ++n;
+    const skus = () => {
+      const f = () => {
+        if (performance.now() - skrolT < 250 && performance.now() < najneskor) { setTimeout(skus, 100); return; }
+        Promise.resolve().then(rad.shift().f).catch(() => {}).then(() => { bezi = false; krok(); });
+      };
+      if (window.requestIdleCallback) requestIdleCallback(f, { timeout: Math.max(1, najneskor - performance.now()) }); else setTimeout(f, 100);
+    };
+    skus();
+  };
+  const spusti = () => { if (!od) { od = performance.now(); krok(); } };
+  let gesto = false;
+  const zacni = () => { if (document.readyState === 'complete') spusti(); else gesto = true; };
+  ['pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, zacni, { once: true, passive: true }));
+  // myš len skutočným pohybom (pointermove chodí aj po zmene rozloženia pod kurzorom)
+  const mys = (e) => { if (e.movementX || e.movementY) { removeEventListener('pointermove', mys); zacni(); } };
+  addEventListener('pointermove', mys, { passive: true });
+  addEventListener('touchstart', () => { skrolT = performance.now(); }, { passive: true });
+  const poLoad = () => (gesto ? spusti() : setTimeout(spusti, 1000));
+  if (document.readyState === 'complete') poLoad(); else addEventListener('load', poLoad, { once: true });
+  return { pridaj(f, poradie) { rad.push({ f, poradie }); rad.sort((x, y) => x.poradie - y.poradie); krok(); } };
+})();
+
+/* ----------------------------------------------------------------------------
    6. Udalosti: scroll, resize, viditeľnosť karty, kotvy
    ---------------------------------------------------------------------------- */
-window.addEventListener('scroll', start, { passive: true });
+window.addEventListener('scroll', () => { skrolT = performance.now(); start(); }, { passive: true });
 
 /* pás kapitol: ťuk skočí (bežný odkaz), ťah pretáča film (pointer capture), šípky ←/→ skáču po kapitolách;
    ▶ pustí Kino (kino.js, načíta sa v nečinnosti alebo hneď pri ťuku) */
@@ -386,9 +419,8 @@ if (kino) {
   window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; } };
   const modul = () => import('./kino.js');
   kino.play.addEventListener('click', () => modul().then((m) => m.prepni()).catch(() => {}));
-  // Kino a „Ďalej“ (kino.js) v nečinnosti po načítaní
-  const neskor = () => setTimeout(() => (window.requestIdleCallback || setTimeout)(() => modul().then((m) => m.zapni()).catch(() => {}), { timeout: 4000 }), 1500);
-  if (document.readyState === 'complete') neskor(); else window.addEventListener('load', neskor, { once: true });
+  // Kino a „Ďalej“ (kino.js) ako posledný v pláne lenivých modulov (5b)
+  plan.pridaj(() => modul().then((m) => { m.zapni(); }), 6);
   document.addEventListener('langchange', () => { kino.cur = -1; apply(shownP); });
 }
 
@@ -466,24 +498,17 @@ if (motionOn && mqFinePointer.matches) {
 
 /* ----------------------------------------------------------------------------
    7b. Atmosféra (assets/atmosfera.js: kurzor nožnice, svetlo pod kurzorom, hudba, zvuk strihnutia)
-   Načíta sa až pri prvom pohybe myši, dotyku či klávese, inak 3,5 s po načítaní stránky, aby nič z nej
-   nesúperilo s prvým obrazom. Kliknutie alebo ťuknutie pred načítaním sa odovzdá (hudba sa pustí hneď).
+   Načíta sa v pláne lenivých modulov (5b), nič z nej nesúperí s prvým obrazom. Kliknutie alebo ťuknutie pred
+   načítaním sa odovzdá (hudba sa pustí hneď po načítaní).
    ---------------------------------------------------------------------------- */
 (function atmosfera() {
-  let loaded = false, gesture = false;
-  const load = () => {
-    if (loaded) return;
-    loaded = true;
-    import('./atmosfera.js').then((m) => m.spusti(gesture)).catch(() => {});
-  };
-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
+  let gesture = false;
+  plan.pridaj(() => import('./atmosfera.js').then((m) => { m.spusti(gesture); }), 4);
   // gesto pre hudbu: kliknutie myšou alebo ťuknutie (click po dotyku), nie švih prstom pri skrolovaní ani kláves;
   // ťuk na ovládač (menu, odkaz, tlačidlo) hudbu nepúšťa, ▶ Kino áno (C6, rovnako ako atmosfera.js)
   const naOvladac = (e) => e.target instanceof Element && !!e.target.closest('a, button, [role="button"], summary, input, select, textarea, label') && !e.target.closest('.kino-play');
   addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && !e.button && !naOvladac(e)) gesture = true; }, { passive: true });
   addEventListener('click', (e) => { if (e.detail && !naOvladac(e)) gesture = true; }, { passive: true });
-  const later = () => setTimeout(load, 3500);
-  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
 })();
 
 /* ----------------------------------------------------------------------------
@@ -509,15 +534,7 @@ if (motionOn && mqFinePointer.matches) {
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   const api = q === 'off' ? '' : q === 'ukazka' ? q : (lokal && q) || html.dataset.asistent || '';
   if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
-  let loaded = false;
-  const load = () => {
-    if (loaded) return;
-    loaded = true;
-    import('./asistent.js').then((m) => m.spusti(api)).catch(() => {});
-  };
-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
-  const later = () => setTimeout(load, 3500);
-  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+  plan.pridaj(() => import('./asistent.js').then((m) => { m.spusti(api); }), 2);
 })();
 
 /* ----------------------------------------------------------------------------
@@ -533,15 +550,11 @@ if (motionOn && mqFinePointer.matches) {
   // ?objednavka=ukazka: ukážka na kontrolu bez servera (aj na náhľade), výrazne označená, nič nerezervuje
   const api = q === 'off' ? '' : q === 'ukazka' ? 'ukazka' : (lokal && q) || html.dataset.objednavka || '';
   if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
-  let loaded = false;
-  const load = () => {
-    if (loaded) return;
-    loaded = true;
-    import('./objednavka.js').then((m) => m.spusti(api)).catch(() => {});
-  };
-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
-  const later = () => setTimeout(load, 2500);
-  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+  let loaded = null;
+  const load = () => loaded || (loaded = import('./objednavka.js').then((m) => { m.spusti(api); }));
+  plan.pridaj(load, 1);
+  // ťuk na Objednať pred načítaním: modul hneď (kým nie je, odkaz vedie rovno do rezervačného systému)
+  addEventListener('pointerdown', (e) => { if (e.target instanceof Element && e.target.closest('a[href*="barbershop30.sk/rezervacia"]')) load().catch(() => {}); }, { passive: true });
 })();
 
 /* ----------------------------------------------------------------------------
@@ -551,30 +564,20 @@ if (motionOn && mqFinePointer.matches) {
 (function karty() {
   const kontakt = document.querySelector('.band-contact');
   if (!kontakt) return;
-  const load = () => import('./karty.js').then((m) => m.spusti(kontakt)).catch(() => {});
-  // ďaleko pod prvou obrazovkou: po načítaní stránky, keď prehliadač nemá čo robiť
-  const later = () => (window.requestIdleCallback ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 600));
-  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+  // ďaleko pod prvou obrazovkou: v pláne lenivých modulov (5b)
+  plan.pridaj(() => import('./karty.js').then((m) => { m.spusti(kontakt); }), 5);
 })();
 
 /* ----------------------------------------------------------------------------
    7c. Jazyky (assets/i18n.js, slovníky assets/i18n/*.json). Pri ?lang= alebo uloženej voľbe sa modul načíta hneď
-   (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak pri prvom geste alebo 3,5 s po načítaní (prepínač, ponuka).
+   (úvod je zatiaľ skrytý triedou t-wait z hlavičky), inak v pláne lenivých modulov (5b; prepínač, ponuka).
    ---------------------------------------------------------------------------- */
 (function jazyky() {
   let lang = new URLSearchParams(location.search).get('lang');
   try { lang = lang || localStorage.getItem('b30.lang'); } catch (e) { /* súkromné okno */ }
-  let loaded = false;
-  const load = () => {
-    if (loaded) return;
-    loaded = true;
-    import('./i18n.js').then((m) => m.spusti()).catch(() => html.classList.remove('t-wait'));
-  };
+  const load = () => import('./i18n.js').then((m) => { m.spusti(); }).catch(() => html.classList.remove('t-wait'));
   // anglická stránka (en/): slovník hneď, aby aj texty skladané skriptmi boli po anglicky
-  if ((lang && lang !== 'sk') || html.dataset.zdroj) { load(); return; }
-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel'].forEach((t) => addEventListener(t, load, { once: true, passive: true }));
-  const later = () => setTimeout(load, 3500);
-  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
+  if ((lang && lang !== 'sk') || html.dataset.zdroj) load(); else plan.pridaj(load, 3);
 })();
 
 /* ----------------------------------------------------------------------------
