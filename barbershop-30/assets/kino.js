@@ -20,7 +20,7 @@ const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 // popis ▶ pre čítačku v jazyku stránky (slovník i18n; kým sa nenačíta, po slovensky)
 const tr = (k) => (window.B30_LANG ? window.B30_LANG.t(k) : k);
 
-let zapnute = false, next = null, nextN = null, stojT = 0;
+let zapnute = false, next = null, nextN = null, nextK = null, stojT = 0;
 let playing = false, tw = 0, hold = 0;
 const jazda = [];
 
@@ -35,14 +35,16 @@ function dalej() {
   if (!ok) return;
   next.href = links[c + 1].getAttribute('href');
   nextN.textContent = links[c + 1].getAttribute('aria-label');
+  nextK.textContent = tr('Ďalej');
 }
 
 export function zapni() {
   if (zapnute || !line || !PAS || !N) return;
   zapnute = true;
   next = d.createElement('a'); next.className = 'kino-next'; next.href = '#'; next.hidden = true;
-  next.innerHTML = '<span class="kino-next-k">Ďalej</span> <span class="kino-next-n"></span> <span aria-hidden="true">↓</span>';
-  nextN = next.querySelector('.kino-next-n');
+  // „Ďalej“ zo slovníka i18n (pri zmene jazyka ho preloží dalej(), nie zbierka textov i18n)
+  next.innerHTML = '<span class="kino-next-k" data-no-i18n></span> <span class="kino-next-n"></span> <span aria-hidden="true">↓</span>';
+  nextN = next.querySelector('.kino-next-n'); nextK = next.querySelector('.kino-next-k');
   line.after(next); // hneď za pásom: v poradí Tab za kapitolami, nie až za pätičkou
   // kapitola sa mení v app.js (data-scene-active); jazyk mení názvy (aria-label)
   new MutationObserver(dalej).observe(root, { attributes: true, attributeFilter: ['data-scene-active', 'lang'] });
