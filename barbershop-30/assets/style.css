@@ -1523,6 +1523,10 @@ html.js-kin .film-shot.is-title.is-on .hook-sipka { animation: hook-sipka 1.1s e
 /* úvod: živý stav podľa otváracích hodín (app.js, texty tabule __tabula v slovníkoch) */
 .hero-live { display: inline-flex; align-items: center; gap: 0.55em; margin: 0 0 var(--s3); padding: 6px 14px 6px 12px; border-radius: 999px; background: rgba(var(--ink-rgb), 0.6); border: 1px solid var(--line-strong); font-size: 0.875rem; font-weight: 700; color: var(--paper); }
 .hero-live[hidden] { display: none; }
+/* WEB-05: so skriptom (karty z hlavičky) má stav miesto rezervované už v prvom obraze, kým ho app.js vyplní –
+   inak karta úvodu po vyplnení poskočí (CLS 0,028 na počítači); nástup text-in sa spustí až po vyplnení */
+html.karty .hero-live[hidden] { display: inline-flex; visibility: hidden; animation: none; }
+html.karty .hero-live[hidden]::after { content: "\a0"; }
 .hero-live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--paper-3); flex: none; }
 .hero-live.is-otvorene::before { background: var(--lamp-2); box-shadow: 0 0 0 0 rgba(240, 126, 60, 0.55); animation: hero-live 2.4s ease-out 1s 3; }
 @keyframes hero-live { 70% { box-shadow: 0 0 0 9px rgba(240, 126, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 126, 60, 0); } }
