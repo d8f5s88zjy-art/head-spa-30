@@ -21,7 +21,8 @@ OLD = 'http://www.stavebninyrichtarik.sk'
 # produkčná adresa webu (koreň hostingu); canonical, og:url, og:image a sitemap.xml sú absolútne na túto doménu.
 # Náhľad v podpriečinku (GitHub Pages) funguje ďalej, lebo všetky odkazy v stránkach ostávajú relatívne.
 DOMENA = 'https://www.stavebninyrichtarik.sk/'
-OG_IMG = ('img/uvod/og.jpg', 1200, 630)   # skutočný záber auta firmy z úvodného filmu
+OG_IMG = ('img/og-dvor.jpg', 1200, 630)   # výrez skutočnej fotky dvora u4, bez auta (pôvod v img/FOTKY.md)
+OG_ALT = 'Dvor Stavebnín Richtárik v Nitre plný materiálu na paletách'
 
 
 def webp_rozmer(cesta):
@@ -471,6 +472,29 @@ def breadcrumb_ld(path, crumbs):
 FARBA = '#faf8f4'   # svetlý podklad webu (theme-color, manifest, ikona)
 
 
+def prechody_head():
+    """Skript prechodov medzi stránkami (zdroj zdroj/prechody.js bez komentárov) a pravidlá prípravy stránky
+    (Speculation Rules): cieľ dlaždice katalógu, akcie, zásoby alebo novinky sa začne pripravovať pri dotyku
+    (eagerness conservative = pointerdown), takže fotka hlavičky je pri prechode načítaná. Len stránky .html
+    toho istého webu, nikdy PDF, subory/, mailto: ani tel:. Rovnaký blok je ručne v index.html (kontrola_uvodu)."""
+    s = open(os.path.join(ROOT, 'zdroj', 'prechody.js'), encoding='utf-8').read()
+    s = re.sub(r'/\*.*?\*/', '', s, flags=re.S)
+    riadky = []
+    for r in s.split('\n'):
+        r = re.sub(r'\s+//\s.*$', '', r).strip()
+        if r and not r.startswith('//'): riadky.append(r)
+    # zmenšenie: medzery okolo interpunkcie preč (reťazce v úvodzovkách ostávajú bez zmeny), zdroj má bodkočiarky všade
+    casti = re.split(r"('(?:\\.|[^'\\])*'|\"(?:\\.|[^\"\\])*\")", ' '.join(riadky))
+    for i in range(0, len(casti), 2):
+        casti[i] = re.sub(r'\s*([{}()\[\];,=:+\-*/<>!?&|])\s*', r'\1', re.sub(r'\s+', ' ', casti[i]))
+    js = ''.join(casti).strip()
+    pravidla = {"prerender": [{"where": {"and": [{"selector_matches": "a.cat, a.deal, a.zt, a.nov"}, {"href_matches": "/*.html"}]}, "eagerness": "conservative"}]}
+    return '<script>' + js + '</script>\n<script type="speculationrules">' + json.dumps(pravidla, separators=(',', ':')) + '</script>\n'
+
+
+PRECHODY_HEAD = prechody_head()
+
+
 def popis(desc, body):
     """Meta description 120–155 znakov: zadaný popis doplnený textom zo začiatku obsahu stránky (bez bočného menu
     a navigácie), dlhší skrátený na celé slovo."""
@@ -564,7 +588,8 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
     pre = prefix(path)
     def _nav_a(p, t):
         cur = ' aria-current="page"' if (path == p or (p != "index.html" and path.startswith(p.split("/")[0] + "/"))) else ''
-        return f'<a href="{rel(path, p)}"{cur}>{t}</a>'
+        # podčiarknutie aktívnej položky je samostatný prvok: pri prechode medzi stránkami sa presunie k novej položke
+        return f'<a href="{rel(path, p)}"{cur}>{t}<span class="nav-ciara" aria-hidden="true"></span></a>' if cur else f'<a href="{rel(path, p)}">{t}</a>'
     nav = ''.join(_nav_a(p, t) for p, t in NAV)
     dnav = ''.join(f'<a href="{rel(path, p)}">{t}</a>' for p, t in NAV)
     crumb = ''
@@ -599,6 +624,7 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
 <meta property="og:image" content="{DOMENA}{OG_IMG[0]}">
 <meta property="og:image:width" content="{OG_IMG[1]}">
 <meta property="og:image:height" content="{OG_IMG[2]}">
+<meta property="og:image:alt" content="{OG_ALT}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{pre}img/apple-touch-icon.png">
@@ -608,7 +634,7 @@ def page(path, title, body, desc=None, crumbs=None, wide=False, extra_head='', h
 <link rel="preload" href="{pre}assets/fonts/Barlow-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{pre}assets/fonts/Barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{pre}assets/site.css">
-{breadcrumb_ld(path, crumbs)}{extra_head}
+{PRECHODY_HEAD}{breadcrumb_ld(path, crumbs)}{extra_head}
 </head>
 <body{' class="home"' if home else ''}>
 <a class="skip" href="#obsah">Preskočiť na obsah</a>
@@ -680,8 +706,8 @@ def sidebar(path, current_slug):
 
 
 def write(path, content):
-    if path == 'index.html':  # poistka: úvod s filmom sa udržiava ručne, generátor ho nikdy neprepíše
-        raise SystemExit('build.py: index.html (úvod s filmom) sa negeneruje; starý úvod len s --stary-uvod do zdroj/uvod-stary.html')
+    if path == 'index.html':  # poistka: úvod sa udržiava ručne (README, časť Úvod), generátor ho nikdy neprepíše
+        raise SystemExit('build.py: index.html (úvod) sa negeneruje, upravuje sa ručne')
     if path.endswith(('.html', '.json')): content = opravy(content)
     if path.endswith('.html'): content = rozmery(nadpisy(content), path)
     full = os.path.join(OUT, path)
@@ -698,9 +724,8 @@ DLAZDICA_UVOD = {'murovaci-material': 'zasoba-tehly', 'stavebne-rezivo': 'zasoba
 
 
 def dlazdice(path, cisla=False):
-    """Každá dlaždica má jednu pevnú adresu obrázka (bez výberu podľa šírky): úvodný film si fotky dlaždíc stiahne
-    a dekóduje vopred podľa src <img>, preto musí byť src presne to, čo prehliadač zobrazí. Skutočné fotky z dvora
-    v <picture>: AVIF 720 (src aj prvý zdroj), WebP 720 pre prehliadač bez AVIF."""
+    """Dlaždice kategórií (úvod ručne aj Katalóg). Skutočné fotky z dvora sú v <picture>: AVIF 720 (src aj prvý zdroj),
+    WebP 720 pre prehliadač bez AVIF; ostatné kategórie majú ilustračnú fotku (img/hd, 1200 px pri veľkej a širokej)."""
     pre = prefix(path); out = ''
     for n, k in enumerate(KATEGORIE):
         cls = ' big' if n == 0 else (' wide' if n in (5, 10) else '')
@@ -1026,97 +1051,6 @@ def letak_thumb(slug, path):
     return f'<img class="thumb" src="{rel(path, "img/p/" + big[0] + ".webp")}" alt="" loading="lazy" width="{IMG_SIZES[big[0]][0]}" height="{IMG_SIZES[big[0]][1]}">' if big else ''
 
 
-LOGA = ['18', '19', '23', '30', '31', '44', '45', '53', '54', '118', '126', '378', '416', '429', '137', '302', '35', '24', '57', '59', '61', '62', '64', '66', '68', '122', '125']
-
-
-def words(t, start=0):
-    """Titulok po slovách, každé so svojím oneskorením."""
-    return ' '.join(f'<span class="w" style="--i:{start + n}">{w}</span>' for n, w in enumerate(t.split()))
-
-
-def build_home():
-    path = 'index.html'
-    deals = ''.join(f'<a class="deal" href="{rel(path, PAGES["akcie__" + s])}">{letak_thumb("akcie__" + s, path)}<span class="tag">{tag}</span><h3>{h}</h3><p>{p}</p></a>' for s, tag, h, p in [k for k in AKCIE_KARTY if '__' not in k[0]][:6] if 'akcie__' + s in PAGES)
-    cats = ''
-    for n, k in enumerate(KATEGORIE):
-        cls = ' big' if n == 0 else (' wide' if n in (5, 10) else '')
-        cats += f'''<a class="cat{cls}" href="katalog/{nice_slug(k[0])}.html"><div class="ph"><img src="img/{k[4]}.webp" alt="" loading="lazy" width="900" height="600"></div><span class="n">{n + 1:02d}</span><div class="tx"><h3>{k[1]}</h3><p>{k[2]}</p><span class="brands">{k[3]}</span></div></a>'''
-    novs = ''
-    for s in children('novinky')[:4]:
-        k = s.split('__')[1]; t = nice_title(SRC[s]['title'])
-        first = [i for i, e in SRC[s]['imgs'] if i in IMG_SIZES and IMG_SIZES[i][0] >= 200]
-        img = f'<div class="ph"><img src="img/p/{first[0]}.webp" alt="" loading="lazy"></div>' if first else nov_tile(k)
-        novs += f'<a class="nov" href="{PAGES[s]}">{img}<div class="tx"><h3>{t}</h3><p>{NOVINKY_POPIS.get(k, "")}</p></div></a>'
-    tiles = ''.join(f'<div class="tile"><img src="img/p/{i}.webp" alt="" width="130" height="40"></div>' for i in LOGA if i in IMG_SIZES)
-    body = f'''
-<section class="hero" aria-labelledby="h-uvod">
-  <div class="bg" data-parallax="0.28" data-film="img/film/uvod"><img class="base" src="img/hd/hero.webp" alt="Sklad stavebného materiálu" width="2400" height="1600" fetchpriority="high"><img class="s s1" src="img/hd/stavba.webp" alt="" width="2400" height="1347" loading="lazy"><img class="s s2" src="img/hd/murar.webp" alt="" width="2400" height="1599" loading="lazy"><img class="s s3" src="img/hd/strecha-praca.webp" alt="" width="2400" height="1600" loading="lazy"></div>
-  <div class="wrap">
-    <div class="eyebrow">Stavebniny Richtárik, Nitra. Od roku 1997</div>
-    <h1 id="h-uvod">{words('Stavebný materiál')} <span class="thin">{words('v celom sortimente.', 2)}</span> <em>{words('Za super ceny.', 5)}</em></h1>
-    <p>Rodinné stavebniny v Nitre od roku 1997. Cenovú ponuku na celý dom aj výpočet spotreby ti spravíme zadarmo, materiál dovezieme vlastnými autami po celom Slovensku.</p>
-    <div class="search hero-search"><label for="q" class="vh">Hľadať v katalógu</label><input id="q" type="search" placeholder="Čo hľadáš? Cement, Ytong, škridla, Fakro, polystyrén…" autocomplete="off"><div class="res" id="res" hidden></div></div>
-    <div class="cta"><a class="btn primary" href="katalog/index.html">Prezrieť katalóg</a><a class="btn outline" href="akcie/index.html">Aktuálne akcie</a></div>
-  </div>
-  <div class="cue" aria-hidden="true">Skroluj</div>
-</section>
-<div class="facts" aria-label="V skratke">
-  <div><b>1997</b><span>rodinná firma v stavebninách od roku 1997</span></div>
-  <div><b><i>5</i> %</b><span>zľava z akciových cien pri platbe v hotovosti (zákaznícka karta)</span></div>
-  <div><b><i>3,3</i> %</b><span>zľava z akciových cien pri platbe platobnou kartou (zákaznícka karta)</span></div>
-  <div><b><i data-count="{len(KATEGORIE)}">{len(KATEGORIE)}</i></b><span>kategórií materiálu a akcie na vybrané výrobky</span></div>
-</div>
-<div class="marquee" aria-label="Značky v ponuke"><div class="lbl">Značky, ktoré máme na sklade alebo objednáme</div><div class="track">{tiles}{tiles}</div></div>
-<section class="sec"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow">Katalóg</div><h2>Všetko na stavbu od základov po strechu</h2><p class="lede">{len(KATEGORIE)} kategórií a viac ako 40 značiek na jednom mieste. Vyber, čo staviaš, a my spočítame, koľko toho potrebuješ.</p></div><a class="btn ghost" href="katalog/index.html">Celý katalóg</a></div>
-  <div class="cats">{cats}</div>
-</div></section>
-<section class="band" aria-labelledby="h-band">
-  <div class="bg" data-parallax="0.18"><img src="img/hd/vzv.webp" alt="" loading="lazy" width="2400" height="2081"></div>
-  <div class="wrap"><div class="eyebrow light">Sklad a doprava</div><h2 id="h-band">Materiál zložíme presne tam, kde ho na stavbe potrebuješ</h2><p>Vlastné autá s mechanickou rukou, doprava po celom Slovensku, tovar bez zbytočného prekladania.</p><div class="cta"><a class="btn light" href="sluzby.html">Ako to funguje</a><a class="btn outline" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div></div>
-</section>
-<section class="sec akcie dark grainy"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow light">Akcie</div><h2>Aktuálne akcie na vybrané výrobky</h2><p class="lede">Cenník akcií je aktualizovaný 28.&nbsp;1.&nbsp;2026.</p></div><a class="btn outline" href="akcie/index.html">Všetky akcie</a></div>
-  <div class="deals">{deals}</div>
-</div></section>
-<section class="sec zlavy"><div class="wrap grid">
-  <div><div class="eyebrow">Rozdávame zľavy</div><h2>Z akciových cien dostaneš ešte ďalšiu zľavu</h2><p>Stačí spôsob platby. Stavebné firmy, živnostníci a predajne stavebnín majú navyše špeciálne dohodnuté ceny.</p>
-  <div class="disc"><div><b><i>5</i> %</b><span>pri platbe v hotovosti</span></div><div><b><i>3,3</i> %</b><span>pri platbe platobnou kartou</span></div></div></div>
-  <div class="karta rv"><img src="img/p/944.webp" alt="Zákaznícka karta Stavebniny Richtárik" loading="lazy" width="671" height="427"><div><b>Zákaznícka karta</b><p>Príď si k nám pre svoju zákaznícku kartu a získaš všetky zľavy, ktoré sme pre teba pripravili.</p></div></div>
-</div></section>
-<section class="sec sluzby"><div class="wrap">
-  <div class="head"><div class="eyebrow">Služby</div><h2>Poradíme, spočítame, dovezieme</h2><p class="lede">Nemusíš nič voziť ani prekladať. Poradíme, spočítame, dovezieme a zložíme presne tam, kde materiál potrebuješ.</p></div>
-  <div class="grid">
-    <figure class="ph rvimg"><img src="img/p/885.webp" alt="Nákladné auto s mechanickou rukou pri nakládke" loading="lazy" width="576" height="768"><figcaption>Vlastná doprava s mechanickou rukou zloží materiál presne tam, kde ho potrebuješ.</figcaption></figure>
-    <div class="srvs">
-      <article class="srv"><i>01</i><div><h3>Doprava po celom Slovensku</h3><p>Avia 3,5 t a Iveco 8 t s mechanickou rukou. Materiál zložíme presne tam, kde ho na stavbe potrebuješ.</p></div></article>
-      <article class="srv"><i>02</i><div><h3>Cenová ponuka zadarmo</h3><p>Prines projekt alebo rozmery a vypracujeme ti cenovú ponuku na celý dom.</p></div></article>
-      <article class="srv"><i>03</i><div><h3>Výpočet spotreby materiálu</h3><p>Bezplatne spočítame, koľko tehál, izolácie, krytiny či omietky na stavbu skutočne potrebuješ.</p></div></article>
-      <article class="srv"><i>04</i><div><h3>Bezplatné poradenstvo</h3><p>Zaškolený personál s dlhoročnými skúsenosťami ti pomôže vybrať správny materiál.</p></div></article>
-      <article class="srv"><i>05</i><div><h3>Množstevné zľavy</h3><p>Pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny špeciálne ceny.</p></div></article>
-      <article class="srv"><i>06</i><div><h3>Platba kartou a na splátky</h3><p>Platobný terminál priamo v predajni a nákup stavebného materiálu na splátky cez Quatro.</p></div></article>
-    </div>
-  </div>
-</div></section>
-<section class="sec"><div class="wrap">
-  <div class="head row"><div><div class="eyebrow">Novinky</div><h2>Čo sme pridali do ponuky</h2><p class="lede">Materiály, ktoré u nás nájdeš nové.</p></div><a class="btn ghost" href="novinky/index.html">Všetky novinky</a></div>
-  <div class="novs">{novs}</div>
-</div></section>
-<section class="sec onas"><div class="wrap grid">
-  <div class="ph rvimg"><a href="img/p/110.webp" data-lb="1" data-cap="Predajňa Stavebniny Richtárik, Novozámocká 62/68"><img src="img/p/110.webp" alt="Predajňa Stavebniny Richtárik v Nitre" loading="lazy" width="533" height="400"></a><div class="year"><small>Od roku</small>1997</div></div>
-  <div class="tx"><div class="eyebrow">O nás</div><h2>Rodinná firma, ktorá stavbám rozumie</h2><p>Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997. Hlavným profilom firmy je predaj a sprostredkovanie stavebného materiálu, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.</p><p>Poradenstvo a vypracovanie cenových ponúk sú u nás zadarmo. Najdôležitejšia je pre nás tvoja spokojnosť.</p><a class="btn ghost" href="o-nas.html">Viac o nás</a></div>
-</div></section>
-<section class="sec kontakt-teaser dark grainy"><div class="wrap grid">
-  <div><div class="eyebrow light">Kontakt</div><h2>Zavolaj, poradíme hneď</h2><a class="big-tel" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a>
-  <div class="hours"><span><b>Po – Pi</b>7:00 – 16:00</span><span><b>Sobota</b>7:00 – 12:00</span></div>
-  <p>{FIRMA['ulica']}, {FIRMA['mesto']}.</p><div class="cta"><a class="btn primary" href="kontakt.html">Kontakt a mapa</a><a class="btn outline" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div></div>
-  <a class="ph rvimg" href="kontakt.html"><img src="img/predajna.webp" alt="" loading="lazy" width="1200" height="800"></a>
-</div></section>
-'''
-    ld = json.dumps({"@context": "https://schema.org", "@type": "HardwareStore", "name": "Stavebniny Richtárik", "alternateName": FIRMA['majitel'], "telephone": [FIRMA['mobil_tel'], FIRMA['pevna_tel']], "email": FIRMA['email'], "foundingDate": "1997", "address": {"@type": "PostalAddress", "streetAddress": FIRMA['ulica'], "addressLocality": "Nitra", "postalCode": "949 05", "addressCountry": "SK"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "16:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "12:00"}], "paymentAccepted": "Cash, Credit Card", "areaServed": "Slovensko", "taxID": FIRMA['dic'], "url": DOMENA, "logo": DOMENA + 'img/logo.png', "image": DOMENA + OG_IMG[0], "hasMap": 'https://maps.google.com/?cid=137067579998285540'}, ensure_ascii=False)
-    write(path, page(path, 'Stavebniny Richtárik Nitra', body, 'Stavebný materiál v celom sortimente vo výhodných cenách. Rodinné stavebniny v Nitre, Horné Krškany, doprava po celom Slovensku, cenová ponuka zadarmo.', None, extra_head=f'<script type="application/ld+json">{ld}</script>', home=True))
-
-
 def build_search_index():
     """Index hľadania z vygenerovaných stránok (okrem úvodu a 404): titulok z H1, kategória, text = úvodný odstavec
     hlavičky (pri akciách text karty s cenami) + obsah stránky bez bočného menu a navigácie (sortiment zo zdroja „uvod“,
@@ -1157,23 +1091,44 @@ def build_sitemap():
     return len(stranky)
 
 
+# priečinok odstráneného videa s autom a jeho obrázok pri zdieľaní (skladá sa z častí, aby kontrola nenašla samu seba)
+STARE_VIDEO = 'img/' + 'fi' + 'lm' + '|' + 'uvod/' + r'og\.jpg'
+
+
 def kontrola_uvodu():
-    """Úvod (index.html) je ručne udržiavaný film, build.py ho neprepisuje. Upozorní, keď sa menu alebo údaje firmy
-    v build.py zmenili a v úvode nie sú (treba ich doplniť ručne)."""
+    """Úvod (index.html) je ručne udržiavaný, build.py ho neprepisuje. Upozorní, keď sa menu alebo údaje firmy
+    v build.py zmenili a v úvode nie sú (treba ich doplniť ručne), a skontroluje celý web: žiadny odkaz na staré
+    video s autom ani na jeho obrázok pri zdieľaní, og obrázok dvora na každej stránke, na úvode práve jeden H1 so slovom
+    „Stavebniny“ (SEO) a og aj JSON-LD obrázok dvora."""
     s = open(os.path.join(OUT, 'index.html'), encoding='utf-8').read()
     chyba = [p for p, t in NAV if p != 'index.html' and f'href="{p}">{t}<' not in s]
     chyba += [v for k, v in FIRMA.items() if k not in ('mapa',) and v not in s and html.escape(v) not in s]
-    if chyba: print('POZOR: v index.html chýba (doplň ručne):', chyba)
+    stranky = bez_og = 0; stare = []; bez_prechodu = []
+    for kor, dirs, subory in os.walk(OUT):
+        dirs[:] = [x for x in dirs if x not in ('img', 'pdf', 'subory', 'zdroj', 'nasadenie', '__pycache__', '.git')]
+        for f in subory:
+            if not f.endswith(('.html', '.css', '.js', '.json', '.webmanifest', '.xml')): continue
+            t = open(os.path.join(kor, f), encoding='utf-8', errors='replace').read()
+            if re.search(STARE_VIDEO, t): stare.append(os.path.relpath(os.path.join(kor, f), OUT))
+            if f.endswith('.html'):
+                stranky += 1
+                if f'{DOMENA}{OG_IMG[0]}' not in t: bez_og += 1
+                if t.count("'pagereveal'") != 1: bez_prechodu.append(os.path.relpath(os.path.join(kor, f), OUT))
+    if PRECHODY_HEAD not in s: chyba.append('úvod: skript prechodov v <head> sa nezhoduje so zdroj/prechody.js (vlož výstup prechody_head())')
+    if bez_prechodu: chyba.append('skript prechodov nie je práve raz: ' + ', '.join(bez_prechodu[:5]))
+    if stare: chyba.append('odkaz na staré video alebo og.jpg: ' + ', '.join(stare[:5]))
+    if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
+    h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)
+    if len(h1) != 1 or 'Stavebniny' not in h1[0]: chyba.append(f'úvod: H1 {len(h1)}×, so slovom Stavebniny: {bool(h1) and "Stavebniny" in h1[0]}')
+    if s.count(f'{DOMENA}{OG_IMG[0]}') < 2: chyba.append('úvod: og:image alebo JSON-LD image nie je og obrázok dvora')
+    if chyba: print('POZOR: kontrola úvodu (doplň ručne):', chyba)
+    else: print(f'kontrola úvodu: OK (stránok {stranky}, og obrázok dvora na všetkých, H1 1×, bez starého videa, skript prechodov 1× na každej)')
     return not chyba
 
 
 if __name__ == '__main__':
     import sys
-    # nový úvod s filmom je ručne udržiavaný; starý generovaný úvod len na vyžiadanie do iného súboru
-    if '--stary-uvod' in sys.argv:
-        OUT_HOME = 'zdroj/uvod-stary.html'
-        _w = write; write = lambda p, c: _w(OUT_HOME if p == 'index.html' else p, c)
-        build_home(); write = _w
+    # úvod (index.html) je ručne udržiavaný, build.py ho neprepisuje (kontrola_uvodu na konci)
     build_katalog_index()
     for s in PAGES:
         if s.startswith('katalog-roduktov__'): build_katalog_page(s)

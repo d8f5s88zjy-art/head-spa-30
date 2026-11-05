@@ -2,7 +2,7 @@
 # Balík na nahratie na hosting (koreň domény): len to, čo web pri behu potrebuje, zoznam súborov, zip a kontroly.
 # Použitie (v priečinku webu): bash nasadenie/balik.sh . <výstupný priečinok>
 # Výstup: <výstup>/web/ (obsah na nahratie), <výstup>/zoznam.txt, <výstup>/stavebniny-richtarik-web.zip.
-# Do balíka nepatrí: zdroj/ (pages.json, film.sh …), build.py, obsah.py, popisy.py, __pycache__/, README.md,
+# Do balíka nepatrí: zdroj/ (pages.json, obrazky.json), build.py, obsah.py, popisy.py, __pycache__/, README.md,
 # OBNOVA-*.md, img/FOTKY.md, nasadenie/ (nastavenie servera sa nahrá zvlášť, README časť Nasadenie), .gitignore
 # a obrázky v img/, na ktoré nič neodkazuje.
 # Skript nič nenahráva; prepíše len <výstup>/web, zoznam.txt a zip.
@@ -18,7 +18,7 @@ tar -C "$SRC" \
   --exclude='*.pyc' --exclude='.DS_Store' \
   -cf - . | tar -C "$OUT/web" -xf -
 # obrázky v img/, na ktoré neodkazuje žiadna stránka, štýl, skript ani index.json, do balíka nejdú (staré ilustračné
-# fotky a ikony ostávajú v repozitári pre build.py --stary-uvod); film img/film/ načítava skript, ostáva celý
+# fotky a ikony ostávajú v repozitári, napr. na výmenu fotky)
 python3 -I - "$OUT/web" <<'EOF2'
 import os, sys
 R = sys.argv[1]; text = []
@@ -28,7 +28,6 @@ for dp, dn, fn in os.walk(R):
             text.append(open(os.path.join(dp, f), encoding='utf-8', errors='replace').read())
 text = '\n'.join(text); n = 0; b = 0
 for dp, dn, fn in os.walk(os.path.join(R, 'img')):
-    if os.path.relpath(dp, R).replace(os.sep, '/').startswith('img/film'): continue
     for f in fn:
         p = os.path.join(dp, f); rel = os.path.relpath(p, R).replace(os.sep, '/')
         if rel not in text:

@@ -30,7 +30,25 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
-Úvodný film (`img/film/`) je záber z dronu príjazdu IVECO do dvora (klip-4k.mp4 a ostrý prvý záber start-ulica.png), výroba v `zdroj/film.sh`. Starší film z fotiek Pexels (`uvod*.mp4`) bol odstránený.
+## Skutočné fotky dvora (`img/uvod/`, od majiteľa)
 
-Ostré verzie tých istých fotiek (2400 px) sú v `img/hd/` a používajú sa v úvode, v hlavičkách podstránok a v páse s vozíkom. Dlaždice ostávajú 900 px.
+Originály má majiteľ; v repozitári sú len webové veľkosti. Fotky sa neupravujú (žiadne dokreslené palety ani tovar),
+robí sa len výrez a zmenšenie.
+
+- `dvor-p-1290|1720` (na šírku) a `dvor-t-1086|1448` (na výšku): hlavný obraz úvodu. Výrez fotky dvora `u4`
+  (`u4-p-1920` a `u4-t-1448` v stave `44aa237b^`, do repozitára pridané v `bb6bbaeb`): na šírku x 0–1720, y 220–1080
+  bez pravého okraja, kde stojí auto firmy; na výšku y 300–1860. Na úvode nie je žiadne auto.
+- `img/og-dvor.jpg` (1200 × 630): obrázok pri zdieľaní (og:image a JSON-LD `image` na všetkých stránkach), výrez tej
+  istej fotky `u4-p-1920` (x 0–1720), bez auta.
+- `pas-dvor`, `dvor-predajna`, `zasoba-porfix` (všetkých 20 súborov, AVIF aj WebP): 5. 11. 2026 vrátené na neupravené
+  verzie zo stavu `bb6bbaeb`. Upravené verzie s generatívne doplnenými paletami vznikli v `6d285c37` („doplnený tovar“)
+  a ďalej sa menili v `b46c7d43` a `6bffd83e` (ten stav mal web až do `4b2646bf`); plné zásoby sa nesmú dokazovať
+  upravenou fotkou. V strome nie je žiadny súbor s md5 niektorej z 54 upravených verzií. Na Porfixe je teraz vidieť prázdnu a načatú paletu a modré plachty.
+- `zasoba-tehly`, `zasoba-stadreko`, `zasoba-rezivo`: bez zmeny (zábery strihu na úvode a pás „Na našom dvore v Nitre“).
+- Úvodné video s nákladným autom (vyrobené z vygenerovaného klipu) a jeho obrázok pri zdieľaní boli 5. 11. 2026 na
+  žiadosť majiteľa odstránené zo stromu aj zo všetkých stránok.
+
+Ostré verzie ilustračných fotiek Pexels (2400 px a 1200 px) sú v `img/hd/` a používajú sa v hlavičkách podstránok
+a v dlaždiciach kategórií (aj na úvodnej stránke v časti Katalóg), nikdy v úvodnom obraze ani v strihu zásob. Dlaždice
+ostávajú 900 px.
 
