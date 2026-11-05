@@ -1,0 +1,97 @@
+From 3c00cf80fb0bc97ed8209198d0de159bb870169f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 15:00:46 +0000
+Subject: [PATCH 5/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20asistent=20s?=
+ =?UTF-8?q?a=20zl=C3=BA=C4=8Di=20s=20nov=C3=BDm=20=C3=BAvodom=20bez=20konf?=
+ =?UTF-8?q?liktu?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Úvod bez ikony spozná asistent podľa sekcie s nadpisom #h-uvod (starý .hero aj nový úvod .uv), preto
+index.html už nemení riadok sekcie úvodu a pri zlúčení s vetvou richtarik-profi nevznikne konflikt.
+Kontrola data-asistent v kontrola_uvodu() je o riadok vyššie, mimo zmien nového úvodu v build.py.
+README a návod asistenta popisujú, podľa čoho sa ikona nad úvodom skryje.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KAgBy7HtV8agdsJ7vg3aLy
+---
+ stavebniny-richtarik/README.md          | 3 ++-
+ stavebniny-richtarik/asistent/README.md | 2 +-
+ stavebniny-richtarik/assets/asistent.js | 4 ++--
+ stavebniny-richtarik/build.py           | 2 +-
+ stavebniny-richtarik/index.html         | 2 +-
+ 5 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/stavebniny-richtarik/README.md b/stavebniny-richtarik/README.md
+index 93f69d88..4a3d5ffd 100644
+--- a/stavebniny-richtarik/README.md
++++ b/stavebniny-richtarik/README.md
+@@ -126,7 +126,8 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven
+   režimy, zapnutie naostro, kľúč (len cez premennú `KLUC` do `asistent/config.php`, nikdy do repozitára ani do správ),
+   limity, odhad nákladov a údržba znalostí.
+ - Náhľad: `data-asistent="ukazka"` na `<html>` (šablóna v `build.py`, ručne v `index.html`), odpovede vopred
+-  pripravené, nič sa neposiela. Úvod má `data-bez-asistenta`, aby ikona nezakryla jeho tlačidlá.
++  pripravené, nič sa neposiela. Kým je v okne úvod (sekcia s nadpisom `#h-uvod`, trieda `.hero` alebo atribút
++  `data-bez-asistenta`), ikona je skrytá, aby nezakryla jeho tlačidlá.
+ - Balík: bez `ASISTENT_API` ide web bez asistenta (žiadne `data-asistent`, žiadny odkaz Ochrana údajov v päte,
+   žiadne `asistent/` ani `assets/asistent*`); s `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php`
+   dostanú stránky adresu servera.
+diff --git a/stavebniny-richtarik/asistent/README.md b/stavebniny-richtarik/asistent/README.md
+index b01d4112..12dfec6c 100644
+--- a/stavebniny-richtarik/asistent/README.md
++++ b/stavebniny-richtarik/asistent/README.md
+@@ -12,7 +12,7 @@ priečinku, vlastná doména, vlastný kľúč a účet majiteľa.
+ | Časté otázky v prehliadači a hľadanie | `assets/asistent-otazky.js`, `assets/asistent-otazky.json` (kópia zdroja) |
+ | Ukážka bez servera (náhľad) | `assets/asistent-ukazka.js` |
+ | Zapnutie (atribút `data-asistent` na `<html>`) | `assets/site.js` (časť asistent, pred vyhľadávaním), `build.py` (šablóna), `index.html`, `nasadenie/balik.sh` |
+-| Úvod bez ikony | `data-bez-asistenta` na sekcii úvodu v `index.html` |
++| Úvod bez ikony | `assets/asistent.js` (`UVOD`): sekcia s nadpisom `#h-uvod`, `.hero` alebo `data-bez-asistenta` v `index.html` |
+ | Server: prúd odpovede, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
+ | Časté otázky na serveri (to isté hľadanie) | `lib/otazky.php` |
+ | Čo asistent vie (jediný zdroj faktov) | `znalosti/richtarik.md`, `znalosti/richtarik-otazky.json` (60 overených odpovedí) |
+diff --git a/stavebniny-richtarik/assets/asistent.js b/stavebniny-richtarik/assets/asistent.js
+index 8baaf4fe..4bfd3b09 100644
+--- a/stavebniny-richtarik/assets/asistent.js
++++ b/stavebniny-richtarik/assets/asistent.js
+@@ -24,8 +24,8 @@ const TEL = 'tel:+421905622223', TEL_TXT = '0905 622 223';
+ const DOPYT = 'mailto:info@stavebninyrichtarik.sk?subject=Cenov%C3%A1%20ponuka';
+ const DOMENA = 'https://www.stavebninyrichtarik.sk/';
+ const KOREN = new URL('../', import.meta.url).href;   // koreň webu (ostrý web aj náhľad v podpriečinku)
+-// úvod úvodnej stránky: atribút data-bez-asistenta (pridaný ručne v index.html); .hero a sekcia s nadpisom #h-uvod
+-// pre istotu, keby atribút pri zmene úvodu vypadol
++// úvod úvodnej stránky, nad ktorým sa ikona nezobrazí: sekcia s nadpisom #h-uvod (starý .hero aj nový úvod .uv),
++// trieda .hero alebo atribút data-bez-asistenta (ručne v index.html, voliteľný pre ďalšie plochy)
+ const UVOD = '[data-bez-asistenta], .hero, section[aria-labelledby="h-uvod"]';
+ 
+ // štítok označenia (T.ai) stojí v názve okna pred slovom „asistent“: názov sa číta „AI asistent Stavebnín Richtárik“
+diff --git a/stavebniny-richtarik/build.py b/stavebniny-richtarik/build.py
+index 8e8c2b01..c3d16135 100644
+--- a/stavebniny-richtarik/build.py
++++ b/stavebniny-richtarik/build.py
+@@ -1162,8 +1162,8 @@ def kontrola_uvodu():
+     v build.py zmenili a v úvode nie sú (treba ich doplniť ručne)."""
+     s = open(os.path.join(OUT, 'index.html'), encoding='utf-8').read()
+     chyba = [p for p, t in NAV if p != 'index.html' and f'href="{p}">{t}<' not in s]
+-    chyba += [v for k, v in FIRMA.items() if k not in ('mapa',) and v not in s and html.escape(v) not in s]
+     if 'data-asistent="ukazka"' not in s: chyba.append('data-asistent="ukazka" na <html> (asistent v náhľade)')
++    chyba += [v for k, v in FIRMA.items() if k not in ('mapa',) and v not in s and html.escape(v) not in s]
+     if chyba: print('POZOR: v index.html chýba (doplň ručne):', chyba)
+     return not chyba
+ 
+diff --git a/stavebniny-richtarik/index.html b/stavebniny-richtarik/index.html
+index 93e147a0..f749ff4e 100644
+--- a/stavebniny-richtarik/index.html
++++ b/stavebniny-richtarik/index.html
+@@ -44,7 +44,7 @@
+ 
+ <main id="obsah">
+ 
+-<section class="hero film" aria-labelledby="h-uvod" data-bez-asistenta>
++<section class="hero film" aria-labelledby="h-uvod">
+   <div class="pin">
+     <div class="bg" data-film-bg style="--farba-t:#746e72;--nahlad-t:url(data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAQBQCdASoQACMAPu1cqE2ppKOiNVgIATAdiWYAnTKABs7T+A0uVGOLozKdG8n3/SIAAPx9tFuUU3rh43j6Fp/+wUfpyQpmo0OjiiFC15L0w79sg013jMMdjS/IJcXOq1Nd9JaDHei8KE8xanMOq+bgeL08CTttEEm0vrtAz88dVQLJVYPqX0kyEHD74dG/FAehMvMQR7cKAAAA);--oy-t:63.2%;--farba-p:#776e68;--nahlad-p:url(data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAABwBQCdASogABIAPu1mqk2ppaQiMAgBMB2JYgCzgB6JUSWb+bGYDa/Ym6UdnZknggnVmhwAAP7gALrRCJ2TA8ZVOi8XIe7FSlyPr4t3ISMDXQe2ErbNwMJzGBua8iDNUAOxcUzjnC+fBUoguilNl5G3zzMorpuIdZWMufSoCEBVDfkv9gqt5UNeNkIUYc7ajSDIyjNIXlP7l4zQ+73fHk2ewhEfbKluNbA6kiK6FntueQEogAA=);--ox-p:55.3%;--oy-p:63.2%"><picture class="prvy"><source media="(max-aspect-ratio:2/3)" type="image/avif" srcset="img/film/prvy-t540.avif 540w, img/film/prvy-t720.avif 720w, img/film/prvy-t960.avif 960w" sizes="max(100vw, 46.2vh)" width="720" height="1560"><source media="(max-aspect-ratio:2/3)" type="image/webp" srcset="img/film/prvy-t540.webp 540w, img/film/prvy-t720.webp 720w, img/film/prvy-t960.webp 960w" sizes="max(100vw, 46.2vh)" width="720" height="1560"><source type="image/avif" srcset="img/film/prvy-p1280.avif 1280w, img/film/prvy-p1920.avif 1920w" sizes="max(100vw, 177.8vh)"><img src="img/film/prvy-p1280.webp" width="1280" height="720" alt="Nákladné auto IVECO Stavebniny Richtárik s mechanickou rukou odbočuje z ulice do dvora plného materiálu" fetchpriority="high"></picture><canvas class="platno" aria-hidden="true"></canvas><picture class="posl" aria-hidden="true"><source media="(max-aspect-ratio:2/3)" type="image/avif" data-srcset="img/film/posl-t720.avif 720w, img/film/posl-t960.avif 960w" sizes="max(100vw, 46.2vh)" width="960" height="2080"><img data-src="img/film/posl-p1280.avif" data-srcset="img/film/posl-p1280.avif 1280w, img/film/posl-p1920.avif 1920w" sizes="max(100vw, 177.8vh)" width="1920" height="1080" alt="" decoding="async"></picture></div>
+     <div class="zatm" aria-hidden="true"></div><div class="vin" aria-hidden="true"></div>
+-- 
+2.43.0
+

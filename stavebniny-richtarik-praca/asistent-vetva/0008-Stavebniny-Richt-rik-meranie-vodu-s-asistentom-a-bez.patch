@@ -1,0 +1,48 @@
+From 2eda9c90af2b01bb66b0a13bcf4f1608b2e9c33d Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 15:34:39 +0000
+Subject: [PATCH 8/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20meranie=20?=
+ =?UTF-8?q?=C3=BAvodu=20s=20asistentom=20a=20bez=20neho=20a=C5=BE=20po=20r?=
+ =?UTF-8?q?ozohriat=C3=AD=20servera?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+ab-uvod.mjs pred kolami raz načíta obe varianty bez zápisu. Bez toho prvé kolo po spustení servera meralo studené
+čítanie fotiek z disku (jedna snímka až 4,8 s) a rozdiel LCP vychádzal z náhody, nie z asistenta.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KAgBy7HtV8agdsJ7vg3aLy
+---
+ stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs b/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
+index 061433ed..077be60a 100644
+--- a/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
++++ b/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
+@@ -2,6 +2,7 @@
+  * A/B úvodnej stránky s asistentom (ukážka) a bez neho (?asistent=off), telefón 390×844, DPR 3, CPU 4×, striedavo.
+  * Meria LCP, CLS, dlhé snímky (> 50 ms) v okne úvodu 0,6–5,0 s a v okne načítania modulu asistenta, kedy sa stiahol
+  * asistent.js a či bola ikona viditeľná počas prvých 4 s.
++ * Pred meraním sa obe varianty raz načítajú bez zápisu (rozohriatie). Merajte pri záťaži do 3,5 (uptime).
+  * Použitie: node ab-uvod.mjs <adresa …/stavebniny-richtarik/index.html> <výstup.jsonl> [kolá=4]
+  */
+ import { createRequire } from 'node:module';
+@@ -28,6 +29,13 @@ const INIT = `(() => {
+ const browser = await chromium.launch();
+ const med = (a) => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
+ const vysl = { s: [], bez: [] };
++// rozohriatie: obe adresy raz načítať a nezapísať (súbory v pamäti disku), inak prvé kolo meria studený server
++for (const v of ['', '?asistent=off']) {
++  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
++  const page = await ctx.newPage();
++  await page.goto(URL_UVOD + v, { waitUntil: 'load' }); await page.waitForTimeout(6500);
++  await ctx.close();
++}
+ console.log('záťaž pred:', os.loadavg().map((x) => x.toFixed(2)).join(' '));
+ for (let k = 0; k < KOLA; k++) {
+   for (const v of (k % 2 ? ['bez', 's'] : ['s', 'bez'])) {
+-- 
+2.43.0
+

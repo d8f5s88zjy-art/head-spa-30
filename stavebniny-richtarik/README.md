@@ -92,7 +92,8 @@ v `<head>` pri odchode zo stránky (`pageswap`) a odovzdá ho novej stránke (`p
 - **zdieľaná fotka** (`foto`): ťuk na dlaždicu katalógu, pásu zásob alebo novinky. Fotka dlaždice za 0,44 s preletí
   a zväčší sa na fotku hlavičky stránky (okno mení veľkosť a orezáva). Pri Späť sa fotka hlavičky zmenší späť do dlaždice
   a dlaždica sa ukáže až na konci letu. Ak je v hlavičke iná fotka ako na dlaždici, počas letu sa prelínajú (typ
-  `prelnutie`). Pri dlaždici katalógu letí aj názov a stane sa nadpisom H1 (`nadpis`, len rovnaký text v jednom riadku).
+  `prelnutie`). Pri dlaždici katalógu letí aj názov a stane sa nadpisom H1 (`nadpis`, len rovnaký text v jednom riadku);
+  na telefóne odsek pod H1 počká, kým nadpis dosadne, aby letiaci nadpis nešiel cez text.
   Na počítači prejde podčiarknutie aktívnej položky menu k novej položke (`ciara`). Lišta a spodná lišta stoja.
 - Prechod sa nespustí pri obnovení stránky a pri „obmedziť pohyb“. Ťuknutie alebo kláves počas prechodu ho hneď ukončí.
   Nenačítaná fotka sa nezdieľa (letela by ako prázdny rám), vtedy len odíde a príde so stránkou.
@@ -105,14 +106,17 @@ v `<head>` pri odchode zo stránky (`pageswap`) a odovzdá ho novej stránke (`p
   je vložený ručne a `kontrola_uvodu()` overí zhodu). Po zmene `zdroj/prechody.js` treba spustiť `build.py` a nový blok
   (výstup `prechody_head()`) vložiť do `<head>` úvodu namiesto starého.
 
-**Vstup hlavičky podstránky** (pri každom načítaní, len s JS): H1 vyjde zdola, nakreslí sa linka nadpisku, odsek ide
-za ním a fotka hlavičky sa otvorí ako okno kina (pásy malty sa stiahnu k okrajom) a dosadne. Keď fotka a H1 prileteli
-z dlaždice, ich vstup sa nespustí.
+**Vstup hlavičky podstránky** (len s JS, keď stránka prišla bez prechodu: priamy odkaz, obnovenie, prehliadač bez
+prechodov): H1 vyjde zdola, nakreslí sa linka nadpisku, odsek ide za ním a fotka hlavičky sa otvorí ako okno kina
+(pásy malty sa stiahnu k okrajom) a dosadne. Keď stránka prišla prechodom (trieda `vt` na `<html>` zo skriptu
+v `<head>`), vstup sa nespustí a hýbe sa len prechod: vstup počas prechodu na počítači bez grafickej karty zdvojnásobil
+dlhé snímky.
 
 **Odhalenia pri posune** (CSS `animation-timeline: view()`, beží v kompozítore): nadpisok, nadpis, odsek a tlačidlo sekcie
 vyjdú zdola za sebou, karty v mriežke podľa stĺpca, fotky sa otvoria ako okno kina (pásy papiera `scaleY`, nie
 `clip-path`) a dosadnú, štítok akcie dopadne ako pečiatka, fotka pásu Doprava ide pomalšie než stránka (namiesto
-nekonečného driftu). Prehliadač bez časovej osi posunu má objavovanie cez IntersectionObserver v `site.js`.
+nekonečného driftu). Prehliadač bez časovej osi posunu má objavovanie cez IntersectionObserver v `site.js`. Odhalenia
+sú len pre obrazovku (`@media screen`), pri tlači je všetko viditeľné (`tlac-zf.mjs`).
 
 **Ovládacie prvky:** stlačenie tlačidiel (0,97) a dlaždíc (0,985) za 80 ms, odozva pod myšou len na zariadení s myšou
 (šípka v páse názvu dlaždice, zdvih štítkov, podčiarknutie menu), krúžok fokusu 3 px, menu na telefóne s položkami
@@ -127,10 +131,19 @@ myš, fokus aj tlačidlo „Zastaviť pohyb“; bez JS a pri „obmedziť pohyb�
 - vstup hlavičky podstránky: zmazať blok `@media` v časti 3 Pohybového systému,
 - celý pohyb pre jedného návštevníka: nastavenie systému „obmedziť pohyb“.
 
+**Na počítači** (od 1001 px) sa fotka a nadpis neprenášajú letom, ale objavia sa rovno v hlavičke, a strih z menu je
+ako „ďalej“: v meraní v Chromiu bez grafickej karty mal let a strih celou stránkou na počítači viac dlhých snímok
+(pravidlo `@media (min-width:1001px)` v časti 2 Pohybového systému; na počítači s grafickou kartou sa dá overiť a zmazať).
+Podčiarknutie menu letí aj na počítači.
+
 **Testy** sú v `richtarik/dokoncenie/nastroje/`: `prechody-zf.mjs` (prechody na 8 typoch stránok tam aj späť, typy,
 mená, dlhé snímky, prázdna dlaždica pri Späť, režim bez podpory), `scenar.mjs` (presný storyboard prechodu: animácie
 sa zastavia a nastavia na časy), `posun-zf.mjs` (posun 30 × 120 px, pripnuté prvky, CLS, kotvy), `staticke-zf.mjs`
-(bez JS, „obmedziť pohyb“: skryté prvky a bežiace animácie) a `mikro-zf.mjs` (odozva ťuknutí, fokus, pás značiek).
+(bez JS, „obmedziť pohyb“: skryté prvky a bežiace animácie), `koniec-zf.mjs` (odhalenia dobehnú aj na konci stránky),
+`osi-zf.mjs` (každá animácia pri posune sa riadi posunom stránky, nie rámom s `overflow: hidden`), `lightbox-zf.mjs`
+(storyboard lightboxu), `mikro-zf.mjs` (odozva ťuknutí, fokus, pás značiek), `tlac-zf.mjs` (tlač: nič priesvitné ani
+posunuté), `bfcache-zf.mjs` (Späť a Vpred z vyrovnávacej pamäte prehliadača, v plnom Chromiu: `KANAL=chromium`)
+a `harok-zf.py` (jas snímok a hárky).
 
 **Zdroje inšpirácie** (navštívené 5. 11. 2026; prevzaté sú len princípy, kód je vlastný, bez knižnice a CDN):
 

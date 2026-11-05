@@ -1,0 +1,116 @@
+From 0b59c5b013bedc806dd41ee9696776068a960bff Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 15:21:36 +0000
+Subject: [PATCH 7/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20mobil=20v=20?=
+ =?UTF-8?q?odpovedi=20asistenta=20ako=20odkaz=20na=20volanie,=20DI=C4=8C?=
+ =?UTF-8?q?=20bez=20odkazu?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+V texte odpovede sa mobil 0905 622 223 (dve skupiny číslic) doteraz nestal odkazom tel: a na telefóne sa zalomil,
+naopak časť DIČ SK1083167855 sa brala ako telefónne číslo. Odkazom je teraz mobil aj pevná linka, číslice uprostred
+iného kódu nie; telefón a dátum cenníka 28. 1. 2026 sa v bubline nezalomia. Kontrola okna to overuje na telefóne
+aj na počítači (odkaz tel:, jeden riadok, DIČ ako text) a odkazy na stránky webu berie len z http adries.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KAgBy7HtV8agdsJ7vg3aLy
+---
+ .../asistent/nastroje/prehliadac.mjs             | 15 ++++++++++++++-
+ stavebniny-richtarik/assets/asistent.css         |  2 ++
+ stavebniny-richtarik/assets/asistent.js          | 16 +++++++++++++---
+ 3 files changed, 29 insertions(+), 4 deletions(-)
+
+diff --git a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+index 8cf8cd9a..0271bc3b 100644
+--- a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
++++ b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+@@ -114,9 +114,16 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   await page.fill('.asi-form textarea', 'Kde nájdem cenník?');
+   await page.keyboard.press('Enter');
+   await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelectorAll('.asi-msg.asi-a').length >= 4, null, { timeout: 15000 });
+-  const odkazy = await page.locator('.asi-msg.asi-a').last().locator('a').evaluateAll((a) => a.map((x) => x.href));
++  const odkazy = await page.locator('.asi-msg.asi-a').last().locator('a[href^="http"]').evaluateAll((a) => a.map((x) => x.href));
+   skus(`${nazov}: odkazy na www.stavebninyrichtarik.sk vedú v náhľade na náhľad`, odkazy.length > 0 && odkazy.every((h) => h.startsWith(ZAKLAD)), odkazy.join(' '));
+   for (const h of odkazy) { const s = (await page.request.get(h)).status(); skus(`${nazov}: odkaz ${h.replace(ZAKLAD, '')} existuje`, s === 200, String(s)); }
++  // telefón v texte odpovede je odkaz tel: a nezalomí sa, dátum cenníka tiež nie (jeden riadok = jeden obdĺžnik)
++  const tz = await page.locator('.asi-msg.asi-a').last().evaluate((b) => {
++    const t = b.querySelector('a[href="tel:+421905622223"]'), d = b.querySelector('.asi-nz');
++    return { tel: !!t, telRiadky: t ? t.getClientRects().length : 0, datum: d ? d.textContent : '', datumRiadky: d ? d.getClientRects().length : 0 };
++  });
++  skus(`${nazov}: mobil 0905 622 223 v texte odpovede je odkaz tel: v jednom riadku`, tz.tel && tz.telRiadky === 1, JSON.stringify(tz));
++  skus(`${nazov}: dátum cenníka 28. 1. 2026 v jednom riadku`, tz.datum === '28. 1. 2026' && tz.datumRiadky === 1, tz.datum);
+   await page.screenshot({ path: `${OUT}/${nazov}-4-rozhovor.png` });
+   // 7. pravdivá odpoveď na „si človek?“
+   await page.fill('.asi-form textarea', 'Si človek?');
+@@ -124,6 +131,12 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelectorAll('.asi-msg.asi-a').length >= 5, null, { timeout: 15000 });
+   const odp5 = await page.locator('.asi-msg.asi-a').last().textContent();
+   skus(`${nazov}: „Si človek?“ – pravdivo nie`, /nie človek/.test(odp5), odp5.slice(0, 70));
++  // DIČ SK1083167855 nie je odkaz na telefón (číslice uprostred kódu)
++  await page.fill('.asi-form textarea', 'Aké sú vaše firemné údaje?');
++  await page.keyboard.press('Enter');
++  await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelectorAll('.asi-msg.asi-a').length >= 6, null, { timeout: 15000 });
++  const fi = await page.locator('.asi-msg.asi-a').last().evaluate((b) => ({ text: b.textContent, tel: [...b.querySelectorAll('a[href^="tel:"]')].map((a) => a.textContent) }));
++  skus(`${nazov}: DIČ SK1083167855 ostane text, nie odkaz tel:`, /DIČ SK1083167855/.test(fi.text) && !fi.tel.some((t) => /083167855/.test(t)), fi.tel.join(', ') || 'bez tel:');
+   // 8. Escape zavrie, fokus späť na ikonu; klávesnica: Enter na ikone otvorí okno s fokusom v okne
+   await page.keyboard.press('Escape');
+   skus(`${nazov}: Escape zavrie okno`, await page.locator('.asi-panel').isHidden());
+diff --git a/stavebniny-richtarik/assets/asistent.css b/stavebniny-richtarik/assets/asistent.css
+index d0c2c7b7..8c912869 100644
+--- a/stavebniny-richtarik/assets/asistent.css
++++ b/stavebniny-richtarik/assets/asistent.css
+@@ -89,6 +89,8 @@ html.asi-uvod .asi-oznam { display: none; }
+ .asi-msg p + p, .asi-msg p + ul, .asi-msg ul + p { margin-top: .5em; }
+ .asi-msg ul { margin: 0; padding-left: 1.1em; }
+ .asi-msg a { color: var(--brick-dk); text-decoration: underline; text-underline-offset: 3px; }
++/* telefón a dátum v odpovedi sa nezalomia (0905 622 223, 28. 1. 2026) */
++.asi-msg a[href^="tel:"], .asi-nz { white-space: nowrap; }
+ .asi-a { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 2px; }
+ .asi-u { align-self: flex-end; background: var(--ink); color: #fff; font-weight: 500; border-bottom-right-radius: 2px; }
+ .asi-chyba { border-color: var(--brick-pale); background: var(--brick-lt); }
+diff --git a/stavebniny-richtarik/assets/asistent.js b/stavebniny-richtarik/assets/asistent.js
+index 4bfd3b09..816697ff 100644
+--- a/stavebniny-richtarik/assets/asistent.js
++++ b/stavebniny-richtarik/assets/asistent.js
+@@ -66,7 +66,16 @@ const I_TEHLY = '<g fill="currentColor"><rect x="3" y="5" width="8" height="3.6"
+ const znak = (trieda) => el('span', { class: 'asi-znak ' + trieda, 'aria-hidden': 'true' }, [ikona(I_TEHLY)]);
+ 
+ /* text odpovede na odseky a odrážky; adresy, telefón a e-mail ako odkazy (len textové uzly, žiadne HTML z odpovede) */
+-const ODKAZ = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)])|(\+?421[\s\d]{9,13}\d|0\d{2,3}(?:\s?\d{2,3}){3})|([\w.+-]+@[\w-]+\.[\w.-]*\w)/g;
++// telefón: mobil 0905 622 223 (dve skupiny) aj pevná linka 037 651 17 77 (tri); číslice uprostred iného čísla
++// alebo kódu (napr. DIČ SK1083167855) odkazom nie sú, preto sa pozerá aj na znak pred zhodou
++const ODKAZ = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)])|(\+?421[\s\d]{9,13}\d|0\d{2,3}(?:\s?\d{2,3}){2,3})|([\w.+-]+@[\w-]+\.[\w.-]*\w)/g;
++// dátum (28. 1. 2026) sa nezalomí
++const DATUM = /\d{1,2}\. \d{1,2}\. \d{4}/g;
++function obycajny(text, kam) {
++  let i = 0;
++  for (const m of text.matchAll(DATUM)) { kam.append(text.slice(i, m.index), el('span', { class: 'asi-nz' }, [m[0]])); i = m.index + m[0].length; }
++  kam.append(text.slice(i));
++}
+ function cielOdkazu(url) { return url.startsWith(DOMENA) ? KOREN + url.slice(DOMENA.length) : url; }
+ function textOdkazu(url) {
+   if (/^https?:\/\/(www\.)?google\.[a-z.]+\/maps/.test(url)) return T.mapa;
+@@ -76,8 +85,9 @@ function textOdkazu(url) {
+ function riadok(text, kam) {
+   let i = 0;
+   for (const m of text.matchAll(ODKAZ)) {
+-    kam.append(text.slice(i, m.index));
+     const [cele, url, tel, mail] = m;
++    if (tel && m.index && /[\p{L}\d+]/u.test(text[m.index - 1])) continue;
++    obycajny(text.slice(i, m.index), kam);
+     const vonku = url && !url.startsWith(DOMENA);
+     const a = el('a', url ? { href: cielOdkazu(url), target: vonku ? '_blank' : null, rel: vonku ? 'noopener' : null }
+       : tel ? { href: 'tel:' + (tel.startsWith('0') ? '+421' + tel.slice(1) : tel).replace(/\s/g, '') } : { href: 'mailto:' + mail });
+@@ -85,7 +95,7 @@ function riadok(text, kam) {
+     kam.append(a);
+     i = m.index + cele.length;
+   }
+-  kam.append(text.slice(i));
++  obycajny(text.slice(i), kam);
+ }
+ function vykresli(text, kam) {
+   kam.replaceChildren();
+-- 
+2.43.0
+

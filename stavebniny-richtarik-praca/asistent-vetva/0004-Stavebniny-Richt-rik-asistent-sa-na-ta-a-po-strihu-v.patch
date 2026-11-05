@@ -1,0 +1,167 @@
+From 2d77cd3f24ddbbb6842fe3ca31256dd6d305d6b0 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 12:48:03 +0000
+Subject: [PATCH 4/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20asistent=20s?=
+ =?UTF-8?q?a=20na=C4=8D=C3=ADta=20a=C5=BE=20po=20strihu=20=C3=BAvodu=20a?=
+ =?UTF-8?q?=20v=20ne=C4=8Dinnom=20=C4=8Dase?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Modul najskôr 3,5 s po načítaní a 5,5 s od začiatku, cez requestIdleCallback aj po geste, v ráme bez
+allow-same-origin vôbec (CORS by ho zastavil). Päta má vpravo miesto pre ikonu od prvého vykreslenia
+(len s data-asistent). Ochrana údajov s og obrázkom dvora pre kontrolu stránok. Meranie A/B úvodu
+(ab-uvod.mjs) a kontroly v prehliadači pre oneskorené načítanie.
+---
+ .../asistent/nastroje/ab-uvod.mjs             | 60 +++++++++++++++++++
+ .../asistent/nastroje/prehliadac.mjs          |  4 +-
+ .../asistent/ochrana-udajov.html              |  2 +
+ stavebniny-richtarik/assets/site.css          |  3 +
+ stavebniny-richtarik/assets/site.js           | 11 +++-
+ 5 files changed, 75 insertions(+), 5 deletions(-)
+ create mode 100644 stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
+
+diff --git a/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs b/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
+new file mode 100644
+index 00000000..061433ed
+--- /dev/null
++++ b/stavebniny-richtarik/asistent/nastroje/ab-uvod.mjs
+@@ -0,0 +1,60 @@
++/*
++ * A/B úvodnej stránky s asistentom (ukážka) a bez neho (?asistent=off), telefón 390×844, DPR 3, CPU 4×, striedavo.
++ * Meria LCP, CLS, dlhé snímky (> 50 ms) v okne úvodu 0,6–5,0 s a v okne načítania modulu asistenta, kedy sa stiahol
++ * asistent.js a či bola ikona viditeľná počas prvých 4 s.
++ * Použitie: node ab-uvod.mjs <adresa …/stavebniny-richtarik/index.html> <výstup.jsonl> [kolá=4]
++ */
++import { createRequire } from 'node:module';
++import { appendFileSync, writeFileSync } from 'node:fs';
++import os from 'node:os';
++const { chromium } = createRequire('/opt/node22/lib/node_modules/')('playwright');
++const [URL_UVOD, OUT, K] = process.argv.slice(2);
++const KOLA = +(K || 4);
++writeFileSync(OUT, '');
++const INIT = `(() => {
++  const W = window.__ab = { gaps: [], lcp: 0, lcpEl: '', cls: 0, ikona: [] };
++  try { new PerformanceObserver((l) => { for (const e of l.getEntries()) { W.lcp = e.startTime; W.lcpEl = (e.url || (e.element && e.element.tagName) || '').split('/').pop(); } }).observe({ type: 'largest-contentful-paint', buffered: true }); } catch (e) {}
++  try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) W.cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
++  let last = 0;
++  const f = (ts) => {
++    if (last && ts - last > 50) W.gaps.push([Math.round(last), Math.round(ts - last)]);
++    last = ts;
++    const b = document.querySelector('.asi-btn');
++    if (b && ts < 4000 && parseFloat(getComputedStyle(b).opacity) > 0.01) W.ikona.push(Math.round(ts));
++    if (ts < 9000) requestAnimationFrame(f);
++  };
++  requestAnimationFrame(f);
++})();`;
++const browser = await chromium.launch();
++const med = (a) => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
++const vysl = { s: [], bez: [] };
++console.log('záťaž pred:', os.loadavg().map((x) => x.toFixed(2)).join(' '));
++for (let k = 0; k < KOLA; k++) {
++  for (const v of (k % 2 ? ['bez', 's'] : ['s', 'bez'])) {
++    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
++    const page = await ctx.newPage();
++    await page.addInitScript(INIT);
++    const cdp = await ctx.newCDPSession(page);
++    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
++    let modul = null; const t0 = Date.now();
++    page.on('request', (r) => { if (/assets\/asistent\.js/.test(r.url()) && modul === null) modul = Date.now() - t0; });
++    await page.goto(URL_UVOD + (v === 'bez' ? '?asistent=off' : ''), { waitUntil: 'load' });
++    const nacitane = Date.now() - t0;
++    await page.waitForTimeout(8000);
++    const w = await page.evaluate(() => window.__ab);
++    const vOkne = w.gaps.filter(([t]) => t >= 600 && t <= 5000);
++    const r = { kolo: k + 1, v, lcp: Math.round(w.lcp), lcpEl: w.lcpEl, cls: +w.cls.toFixed(4), dlheUvod: vOkne.length, najdlhsiaUvod: Math.max(0, ...vOkne.map((g) => g[1])),
++      dlheVsetky: w.gaps.length, najdlhsia: Math.max(0, ...w.gaps.map((g) => g[1])), gaps: w.gaps, nacitane, modul, ikonaDo4s: w.ikona.length, zataz: +os.loadavg()[0].toFixed(2) };
++    appendFileSync(OUT, JSON.stringify(r) + '\n');
++    console.log(JSON.stringify({ ...r, gaps: undefined }));
++    vysl[v].push(r);
++    await ctx.close();
++  }
++}
++await browser.close();
++for (const v of ['s', 'bez']) {
++  const a = vysl[v];
++  console.log(`${v === 's' ? 's asistentom   ' : 'bez (?asistent=off)'}: LCP medián ${med(a.map((x) => x.lcp))} ms (${a.map((x) => x.lcp).join('/')}), CLS max ${Math.max(...a.map((x) => x.cls))}, dlhé snímky v okne úvodu ${a.map((x) => x.dlheUvod).join('/')}, najdlhšia ${Math.max(...a.map((x) => x.najdlhsiaUvod))} ms, ikona do 4 s ${a.map((x) => x.ikonaDo4s).join('/')}`);
++}
++console.log('rozdiel mediánov LCP (s − bez):', med(vysl.s.map((x) => x.lcp)) - med(vysl.bez.map((x) => x.lcp)), 'ms');
++console.log('záťaž po:', os.loadavg().map((x) => x.toFixed(2)).join(' '));
+diff --git a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+index cd81970b..8cf8cd9a 100644
+--- a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
++++ b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+@@ -196,9 +196,9 @@ for (const w of [320, 360, 390, 414]) {
+     await page.waitForTimeout(200);
+   }
+   skus('úvod: počas strihu (0–4 s) ikona nie je', vidnoPocasStrihu.length > 5 && !vidnoPocasStrihu.some(Boolean), `${vidnoPocasStrihu.length} vzoriek`);
+-  await page.waitForTimeout(Math.max(0, 5000 - (Date.now() - t0 - nacitane)));
++  await page.waitForTimeout(Math.max(0, 7500 - (Date.now() - t0)));
+   const prvy = casy[0];
+-  skus('úvod: asistent.js až po 3,5 s od načítania stránky (bez gesta)', prvy && prvy[1] >= nacitane + 3400, `načítanie ${nacitane} ms, asistent.js ${prvy && prvy[1]} ms`);
++  skus('úvod: asistent.js až po 3,5 s od načítania stránky a po 5,5 s od začiatku (bez gesta, po strihu úvodu)', prvy && prvy[1] >= nacitane + 3400 && prvy[1] >= 5400, `načítanie ${nacitane} ms, asistent.js ${prvy && prvy[1]} ms`);
+   skus('úvod: pred otvorením okna sa časté otázky nesťahujú', !casy.some(([u]) => u === 'asistent-otazky.json'), casy.map((c) => c.join('@')).join(' '));
+   await page.screenshot({ path: `${OUT}/telefon-5-uvod-ikona.png` });
+   const op = async () => page.evaluate(() => { const b = document.querySelector('.asi-btn'); return b ? parseFloat(getComputedStyle(b).opacity) : -1; });
+diff --git a/stavebniny-richtarik/asistent/ochrana-udajov.html b/stavebniny-richtarik/asistent/ochrana-udajov.html
+index dbed18cc..92c1a285 100644
+--- a/stavebniny-richtarik/asistent/ochrana-udajov.html
++++ b/stavebniny-richtarik/asistent/ochrana-udajov.html
+@@ -6,6 +6,8 @@
+ <meta name="robots" content="noindex">
+ <title>Asistent na webe – ochrana osobných údajov | Stavebniny Richtárik</title>
+ <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
++<meta property="og:title" content="Asistent na webe – ochrana osobných údajov | Stavebniny Richtárik">
++<meta property="og:image" content="https://www.stavebninyrichtarik.sk/img/og-dvor.jpg">
+ <!-- NÁVRH TEXTU NA SCHVÁLENIE MAJITEĽOM alebo zodpovednou osobou pre ochranu osobných údajov. Údaje o firme sú
+      z pôvodného webu (FAKTY A). Po schválení odstrániť pás .navrh; asistent sa na ostrom webe zapína až potom. -->
+ <style>
+diff --git a/stavebniny-richtarik/assets/site.css b/stavebniny-richtarik/assets/site.css
+index 5c79c59a..dbd31564 100644
+--- a/stavebniny-richtarik/assets/site.css
++++ b/stavebniny-richtarik/assets/site.css
+@@ -505,6 +505,9 @@ footer p{margin-top:12px;line-height:1.5;max-width:none}
+ .flogo{width:180px;height:auto}
+ footer .bottom{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;justify-content:space-between;margin-top:36px;padding-top:18px;border-top:1px solid rgba(20,18,16,.14)}
+ footer .bottom a{display:inline}
++/* asistent (data-asistent): posledný riadok päty nekončí pod jeho ikonou vpravo dole; od prvého vykreslenia, bez posunu */
++html[data-asistent] footer .bottom{padding-right:64px}
++@media (max-width:640px){html[data-asistent] footer .bottom{padding-right:56px}}
+ @media (max-width:900px){
+   footer .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+   footer a{display:flex;align-items:center;min-height:44px;padding:0}
+diff --git a/stavebniny-richtarik/assets/site.js b/stavebniny-richtarik/assets/site.js
+index 2fda5f32..95b75b89 100644
+--- a/stavebniny-richtarik/assets/site.js
++++ b/stavebniny-richtarik/assets/site.js
+@@ -910,19 +910,24 @@
+   // neposiela) alebo adresa servera https://…/asistent/api.php (ostrý web, dopíše ju nasadenie/balik.sh len
+   // s ASISTENT_API). Bez atribútu sa nič nesťahuje ani neposiela. ?asistent=off okno vypne, ?asistent=ukazka ukáže
+   // ukážku, na localhost ?asistent=<adresa> skúšobný server. Modul sa načíta pri prvom geste, inak 3,5 s po načítaní
+-  // stránky, aby nebral výkon úvodu.
++  // stránky a najskôr 5,5 s od začiatku načítania (po strihu úvodu), vždy v nečinnom čase, aby nebral výkon úvodu.
+   (function asistent() {
+     var qa = new URLSearchParams(location.search).get('asistent');
+     var lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+     var api = qa === 'off' ? '' : qa === 'ukazka' ? qa : (lokal && qa) || d.documentElement.getAttribute('data-asistent') || '';
+     if (api !== 'ukazka' && !/^https:\/\//.test(api) && !(lokal && /^http:\/\//.test(api))) return;
++    // rám bez allow-same-origin (napr. náhľad v pieskovisku) má nepriehľadný pôvod: modul by neprešiel CORS, preto nič
++    if (window.origin === 'null') return;
+     var nacitane = false;
+     function nacitaj() {
+       if (nacitane) return; nacitane = true;
+-      import(new URL(pre + 'assets/asistent.js', location.href).href).then(function (m) { m.spusti(api); }).catch(function () {});
++      var ric = window.requestIdleCallback || function (f) { return setTimeout(f, 1); };
++      ric(function () {
++        import(new URL(pre + 'assets/asistent.js', location.href).href).then(function (m) { m.spusti(api); }).catch(function () {});
++      }, { timeout: 1500 });
+     }
+     ['pointerdown', 'touchstart', 'keydown', 'wheel'].forEach(function (t) { addEventListener(t, nacitaj, { once: true, passive: true }); });
+-    function neskor() { setTimeout(nacitaj, 3500); }
++    function neskor() { setTimeout(nacitaj, Math.max(3500, 5500 - performance.now())); }
+     if (d.readyState === 'complete') neskor(); else addEventListener('load', neskor, { once: true });
+   })();
+ 
+-- 
+2.43.0
+

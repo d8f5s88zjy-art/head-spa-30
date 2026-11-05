@@ -1,0 +1,228 @@
+From daf2b5437a3dd321c0bf758fbed028ca9becc06d Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 12:31:31 +0000
+Subject: [PATCH 3/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20bal=C3=ADk?=
+ =?UTF-8?q?=20s=20asistentom=20len=20s=20adresou=20servera,=20n=C3=A1vod?=
+ =?UTF-8?q?=20na=20zapnutie?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Bez ASISTENT_API ide web bez asistenta (bez data-asistent, odkazu v päte, asistent/ a assets/asistent*),
+s ňou dostanú stránky adresu servera; testy, nástroje, README, config.php a vendor/ do balíka nejdú.
+README asistenta: podmienky hostingu, kľúč len cez premennú KLUC, kontrola po nasadení, limity, odhad
+nákladov a údržba znalostí.
+---
+ stavebniny-richtarik/README.md          |  10 +++
+ stavebniny-richtarik/asistent/README.md | 114 ++++++++++++++++--------
+ stavebniny-richtarik/nasadenie/balik.sh |  27 +++++-
+ 3 files changed, 112 insertions(+), 39 deletions(-)
+
+diff --git a/stavebniny-richtarik/README.md b/stavebniny-richtarik/README.md
+index 6692cf46..93f69d88 100644
+--- a/stavebniny-richtarik/README.md
++++ b/stavebniny-richtarik/README.md
+@@ -120,3 +120,13 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven
+    (názvy bez verzie). Fotku pod rovnakým názvom zákazníci po výmene uvidia až po roku – meniť názov.
+ 5. Po nahratí: Google Search Console – odoslať `sitemap.xml`, skontrolovať niekoľko starých adries (301) a jednu
+    neexistujúcu (404).
++
++## Asistent na otázky
++- Okno asistenta s povinným označením ako na Barbershope (výslovná žiadosť majiteľa). Všetko o ňom je v `asistent/README.md`:
++  režimy, zapnutie naostro, kľúč (len cez premennú `KLUC` do `asistent/config.php`, nikdy do repozitára ani do správ),
++  limity, odhad nákladov a údržba znalostí.
++- Náhľad: `data-asistent="ukazka"` na `<html>` (šablóna v `build.py`, ručne v `index.html`), odpovede vopred
++  pripravené, nič sa neposiela. Úvod má `data-bez-asistenta`, aby ikona nezakryla jeho tlačidlá.
++- Balík: bez `ASISTENT_API` ide web bez asistenta (žiadne `data-asistent`, žiadny odkaz Ochrana údajov v päte,
++  žiadne `asistent/` ani `assets/asistent*`); s `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php`
++  dostanú stránky adresu servera.
+diff --git a/stavebniny-richtarik/asistent/README.md b/stavebniny-richtarik/asistent/README.md
+index 9e4964d6..b01d4112 100644
+--- a/stavebniny-richtarik/asistent/README.md
++++ b/stavebniny-richtarik/asistent/README.md
+@@ -1,52 +1,92 @@
+ # Asistent na otázky (Stavebniny Richtárik)
+ 
+-Okno „Asistent“ na webe Stavebniny Richtárik, vo všetkých textoch okna zreteľne označené štítkom AI (rovnako ako Barber
+-na webe Barbershop 30): návštevník napíše otázku alebo ťukne na častú otázku a odpoveď sa píše hneď, po kúskoch.
+-Naostro odpovedá model Claude Opus 5.5 (oficiálna PHP knižnica Anthropic) len z overených údajov webu. Nezávislý od
+-Barbershopu: vlastný server v tomto priečinku, vlastná doména, vlastný kľúč a účet majiteľa.
++Okno „AI asistent Stavebnín Richtárik“ na webe Stavebniny Richtárik, označené rovnako ako Barber na webe Barbershop 30
++(štítok AI pri ikone aj v názve okna, podtitul, prvá správa, poznámka pod oknom a odkaz Ochrana údajov). Návštevník
++napíše otázku alebo ťukne na častú otázku a odpoveď sa píše po kúskoch. Naostro odpovedá model Claude Opus 5.5
++(oficiálna PHP knižnica Anthropic) len z overených údajov webu. Nezávislý od Barbershopu: vlastný server v tomto
++priečinku, vlastná doména, vlastný kľúč a účet majiteľa.
+ 
+ | Časť | Kde |
+ | --- | --- |
+-| Okno na webe (ikona, bublina, témy a časté otázky, odkazy v odpovedi, rozhovor v karte prehliadača) | `assets/asistent.js`, `asistent.css` |
++| Okno na webe (ikona, bublina, témy a časté otázky, odkazy v odpovedi, rozhovor v karte prehliadača) | `assets/asistent.js`, `assets/asistent.css` |
+ | Časté otázky v prehliadači a hľadanie | `assets/asistent-otazky.js`, `assets/asistent-otazky.json` (kópia zdroja) |
+ | Ukážka bez servera (náhľad) | `assets/asistent-ukazka.js` |
+-| Zapnutie (atribút `data-asistent` na `<html>`) | `assets/site.js` (časť asistent), `build.py`, `index.html`, `nasadenie/balik.sh` |
++| Zapnutie (atribút `data-asistent` na `<html>`) | `assets/site.js` (časť asistent, pred vyhľadávaním), `build.py` (šablóna), `index.html`, `nasadenie/balik.sh` |
++| Úvod bez ikony | `data-bez-asistenta` na sekcii úvodu v `index.html` |
+ | Server: prúd odpovede, limity, kontrola vstupu | `api.php`, `lib/jadro.php` |
+ | Časté otázky na serveri (to isté hľadanie) | `lib/otazky.php` |
+ | Čo asistent vie (jediný zdroj faktov) | `znalosti/richtarik.md`, `znalosti/richtarik-otazky.json` (60 overených odpovedí) |
+-| Ochrana údajov (odkaz z okna) | `ochrana-udajov.html` |
++| Ochrana údajov (odkaz z okna aj z päty, `noindex`) | `ochrana-udajov.html` (návrh na schválenie majiteľom) |
+ | Apache / IIS (zvonku len `api.php` a `ochrana-udajov.html`) | `.htaccess`, `lib/.htaccess`, `data/.htaccess`, `web.config` |
+ | Konfigurácia s kľúčom (mimo repozitára) | `config.example.php`, `nasadenie/asistent-config.php` |
+-| Testy a nástroje (do balíka nejdú) | `testy/spusti.sh` (server proti falošnému API, 27 kontrol), `nastroje/otazky_zdroj.py` (zdroj častých otázok), `nastroje/otazky.mjs` (fakty a hľadanie), `nastroje/prehliadac.mjs` (okno v prehliadači) |
+-
+-## Zapnutie
+-- Náhľad: `data-asistent="ukazka"` na `<html>` všetkých stránok (build.py, index.html). Okno ukazuje vopred pripravené
+-  overené odpovede, pás v okne hovorí, že nepíše AI a nič sa neposiela.
+-- Ostrý web bez servera: `bash nasadenie/balik.sh . <výstup>` atribút odstráni, okno sa neukáže, nič sa nesťahuje.
+-- Ostrý web so serverom (keď hosting spĺňa podmienky nižšie a majiteľ má kľúč):
+-  1. `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php bash nasadenie/balik.sh . <výstup>`
+-  2. `composer install -d <výstup>/web/asistent --no-dev --prefer-dist --optimize-autoloader`
+-  3. `KLUC=… php nasadenie/asistent-config.php > <výstup>/web/asistent/config.php` (kľúč len v premennej prostredia)
+-  4. nahrať, `asistent/data/` zapisovateľný pre PHP; kontrola `https://www.stavebninyrichtarik.sk/asistent/api.php?a=stav`
+-     vráti `"zapnute":true` a `…/asistent/lib/jadro.php`, `…/asistent/znalosti/richtarik.md`, `…/asistent/config.php`
+-     vrátia 403 alebo 404.
+-- `?asistent=off` okno vypne, `?asistent=ukazka` ukáže ukážku, na localhost `?asistent=<adresa>` skúšobný server.
+-
+-## Hosting
+-PHP 8.1 alebo novšie (odporúčané 8.3) s rozšíreniami pdo_sqlite, curl, mbstring, openssl, json; HTTPS s platným
+-certifikátom; zapisovateľný `asistent/data/`; výstup bez vyrovnávania (Apache: `no-gzip`, IIS FastCGI:
+-`responseBufferLimit="0"` na obsluhe PHP), odchádzajúce HTTPS na api.anthropic.com.
++| Testy a nástroje (do balíka nejdú) | `testy/spusti.sh` (server proti falošnému API, 27 kontrol), `nastroje/otazky_zdroj.py` (zdroj častých otázok), `nastroje/otazky.mjs` (fakty, štýl a hľadanie), `nastroje/caste.mjs` (zhoda so stránkou Časté otázky), `nastroje/prehliadac.mjs` (okno v prehliadači) |
++
++## Režimy
++- **Náhľad:** `data-asistent="ukazka"` na `<html>` všetkých stránok. Okno ukazuje vopred pripravené overené odpovede,
++  podtitul „Ukážka – odpovede sú pripravené vopred z častých otázok.“ a pás ukážky. Nič sa nikam neposiela.
++- **Ostrý web bez servera** (predvolené): `bash nasadenie/balik.sh . <výstup>` odstráni `data-asistent` aj odkaz
++  Ochrana údajov z päty a do balíka nedá `asistent/` ani `assets/asistent*`. Okno sa neukáže, nič sa nesťahuje.
++- **Ostrý web so serverom:** postup nižšie.
++- Na skúšku: `?asistent=off` okno vypne, `?asistent=ukazka` ukáže ukážku, na localhost `?asistent=<adresa api.php>`
++  skúšobný server.
++
++## Zapnutie naostro
++Podmienky (otázky pre majiteľa a hosting sú v `richtarik/profi/z3/ZAPIS.md`):
++- PHP 8.1 alebo novšie (odporúčané 8.3) s rozšíreniami pdo_sqlite, curl, mbstring, openssl a json.
++- HTTPS s platným certifikátom (otázky idú cez sieť; CORS je len pre `https://www.stavebninyrichtarik.sk`
++  a `https://stavebninyrichtarik.sk`) a odchádzajúce HTTPS na api.anthropic.com.
++- Zapisovateľný `asistent/data/` (SQLite s počítadlami limitov).
++- Výstup bez vyrovnávania (Apache: `no-gzip` je v `.htaccess`; IIS FastCGI: `responseBufferLimit="0"` na obsluhe PHP
++  nastaví hosting). Bez toho odpoveď príde naraz na konci, čo funguje, len pomalšie.
++- Schválený text `ochrana-udajov.html` (majiteľ alebo zodpovedná osoba pre GDPR) a odstránený pás `.navrh`.
++  `balik.sh` upozorní, keď tam pás ešte je.
++- Účet na platform.claude.com na firmu a mesačný limit výdavkov nastavený v konzole.
++
++Postup (na počítači správcu webu, nie na hostingu):
++1. `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php bash nasadenie/balik.sh . <výstup>`
++   (všetky stránky dostanú adresu servera; testy, nástroje, README, `config.php` a `vendor/` do balíka nejdú).
++2. `composer install -d <výstup>/web/asistent --no-dev --prefer-dist --optimize-autoloader`
++   (knižnica `anthropic-ai/sdk` ^0.61; na hostingu composer netreba).
++3. Kľúč **len cez premennú prostredia `KLUC`**: `read -rs KLUC && export KLUC && php nasadenie/asistent-config.php >
++   <výstup>/web/asistent/config.php; unset KLUC`. Kľúč nikdy nepatrí do repozitára (`config.php` je v `.gitignore`),
++   do príkazového riadku s históriou, do e-mailu ani do správ. Majiteľ ho odovzdá správcovi osobne alebo cez
++   správcu hesiel. Bez kľúča ostane asistent vypnutý (`api.php?a=stav` → `"zapnute":false`, okno sa neukáže).
++4. Nahrať balík. Po nasadení skontrolovať:
++   - `https://www.stavebninyrichtarik.sk/asistent/api.php?a=stav` vráti `{"ok":true,"zapnute":true}`,
++   - `…/asistent/lib/jadro.php`, `…/asistent/znalosti/richtarik.md`, `…/asistent/config.php`, `…/asistent/data/`
++     a `…/asistent/vendor/autoload.php` vrátia 403 alebo 404 (pravidlá `.htaccess` a `web.config` tu neboli
++     overené na skutočnom Apache ani IIS),
++   - 20 až 30 skúšobných otázok s kľúčom majiteľa: hodiny, adresa, cement, Blachotrapez, doprava do Bratislavy,
++     vykládka, zákaznícka karta, sklad, „Ste človek?“, „Ktorý je najlacnejší komín?“ (bez superlatívu), otázka mimo
++     témy, otázka v angličtine. Odpoveď nesmie mať cenu, ktorá nie je v znalostiach, ani sľub termínu, zľavy či vykládky
++     zdarma.
++
++## Limity a náklady
++- Limity: 12 otázok za 10 minút a 40 za deň od jedného návštevníka (IP len ako odtlačok so soľou, po 24 h preč), 400
++  otázok za deň spolu (strop nákladov). Mení sa v `config.php` (`za_10_min`, `za_den`, `spolu_za_den`), pri príprave
++  aj premennou `SPOLU_ZA_DEN`.
++- Odhad (cenník Claude Opus 5.5: vstup 4 $ a výstup 20 $ za milión tokenov, čítanie z vyrovnávacej pamäte 0,20 $):
++  jedna otázka asi 0,01 až 0,015 $, prvá otázka po 5 minútach ticha asi 0,03 $. Pri 20 otázkach denne asi 5 až 10 $
++  mesačne, v najhoršom prípade pri strope 400 otázok denne 4 až 12 $ za deň. Je to odhad, nie meranie; presné čísla
++  ukáže konzola (`usage`) po zapnutí.
++- Model `claude-opus-5-5`, úsilie `low`, záložný model servera (`fallbacks: "default"`, beta
++  `server-side-fallback-2026-07-01`) pri odmietnutí, bez nástrojov, pokyny so znalosťami vo vyrovnávacej pamäti API.
+ 
+ ## Ako to funguje
+ - Prehliadač pošle rozhovor (najviac 16 správ, otázka najviac 800 znakov) na `api.php?a=otazka`. Server pridá pokyny
+-  a znalosti (v cache API), k poslednej otázke najviac 6 podobných overených odpovedí (mimo cache) a posiela text ďalej
+-  ako `text/event-stream`. Úsilie `low`, záložný model `fallbacks: "default"`. Žiadne nástroje.
+-- Limity: 12 otázok za 10 minút a 40 za deň od návštevníka (IP len ako odtlačok so soľou, po 24 h preč), 400 otázok za
+-  deň spolu (strop nákladov). Rozhovory sa na serveri neukladajú.
+-- Ceny len tie, ktoré sú v znalostiach (cenník akcií 28. 1. 2026), vždy s tým, že platnosť potvrdí predajňa; nič
+-  nepočíta (cena, množstvo), skladovú zásobu ani termín dovozu nesľubuje. Na otázku, kto odpovedá, povie pravdivo, že je
+-  AI asistent webu, nie človek.
+-
+-## Keď sa zmení akcia, cenník, hodiny alebo kontakt
+-Zmeniť `znalosti/richtarik.md` a `nastroje/otazky_zdroj.py`, vyrobiť `znalosti/richtarik-otazky.json`, skopírovať ho do
+-`assets/asistent-otazky.json` a spustiť `node asistent/nastroje/otazky.mjs .` (musí byť 0 FAIL okrem známych hraníc).
++  a znalosti a k poslednej otázke najviac 6 podobných overených odpovedí a posiela text ďalej ako `text/event-stream`.
++- Rozhovory sa na serveri neukladajú ani nezapisujú do záznamov.
++- Ceny len tie, ktoré sú v znalostiach (cenník akcií 28. 1. 2026), vždy s tým, že platnosť potvrdí predajňa. Nič
++  nepočíta (cena, množstvo), skladovú zásobu, termín dovozu, vykládku zdarma ani zľavu navyše nesľubuje. Na otázku, kto
++  odpovedá, povie pravdivo, že je AI asistent webu, nie človek. Vyká, bez superlatívov, „super cien“ a značky 8 t auta.
++
++## Údržba znalostí (keď sa zmení akcia, cenník, hodiny, kontakt alebo stránky webu)
++1. Upraviť `znalosti/richtarik.md` a odpovede v `nastroje/otazky_zdroj.py` (len fakty z webu, cenníka a pôvodného webu).
++2. `python3 -I asistent/nastroje/otazky_zdroj.py .` (v priečinku webu) zapíše `znalosti/richtarik-otazky.json`, kópiu
++   `assets/asistent-otazky.json` a časť „Stránky webu“ v znalostiach podľa stránok, ktoré na webe sú (`doprava.html`,
++   `caste-otazky.html` sa pridajú samy).
++3. `node asistent/nastroje/otazky.mjs .` – fakty, štýl, odkazy a hľadanie. Povolený je len známy 1 FAIL
++   („Kedy by ste mi to vedeli doviezť?“ má zhodu 0,57 pod prahom 0,6; v ukážke dá telefón, naostro odpovie model).
++4. `node asistent/nastroje/caste.mjs .` – stránka Časté otázky a asistent musia mať rovnaké odpovede (100 %).
++5. Server: `sh asistent/testy/spusti.sh` v kópii s `vendor/` (27 kontrol). Okno: `node asistent/nastroje/prehliadac.mjs
++   <adresa webu> <priečinok snímok> [<adresa skúšobného api.php>]`.
+diff --git a/stavebniny-richtarik/nasadenie/balik.sh b/stavebniny-richtarik/nasadenie/balik.sh
+index 3389c418..b24d1d28 100644
+--- a/stavebniny-richtarik/nasadenie/balik.sh
++++ b/stavebniny-richtarik/nasadenie/balik.sh
+@@ -6,6 +6,9 @@
+ # OBNOVA-*.md, img/FOTKY.md, nasadenie/ (nastavenie servera sa nahrá zvlášť, README časť Nasadenie), .gitignore
+ # a obrázky v img/, na ktoré nič neodkazuje.
+ # Skript nič nenahráva; prepíše len <výstup>/web, zoznam.txt a zip.
++# Asistent na otázky: bez premennej ASISTENT_API ide web bez neho (bez data-asistent, bez odkazu Ochrana údajov
++# v päte, bez asistent/ a assets/asistent*). S ASISTENT_API=https://…/asistent/api.php dostanú všetky stránky adresu
++# servera a server ide do balíka bez testov, nástrojov, README, config.php a vendor/ (README asistenta, Zapnutie).
+ set -euo pipefail
+ SRC="$(cd "$1" && pwd)"; OUT="$2"
+ [ -f "$SRC/index.html" ] && [ -f "$SRC/assets/site.js" ] || { echo "CHYBA: $SRC nie je priečinok webu"; exit 1; }
+@@ -16,7 +19,23 @@ tar -C "$SRC" \
+   --exclude=./zdroj --exclude=./__pycache__ --exclude=./build.py --exclude=./obsah.py --exclude=./popisy.py \
+   --exclude=./README.md --exclude='./OBNOVA-*.md' --exclude=./img/FOTKY.md --exclude=./nasadenie --exclude=./.gitignore \
+   --exclude='*.pyc' --exclude='.DS_Store' \
++  --exclude=./asistent/testy --exclude=./asistent/nastroje --exclude=./asistent/README.md \
++  --exclude=./asistent/config.example.php --exclude=./asistent/config.php --exclude=./asistent/vendor \
++  --exclude=./asistent/composer.lock --exclude='./asistent/data/*.sqlite*' --exclude=./asistent/.gitignore \
+   -cf - . | tar -C "$OUT/web" -xf -
++# asistent: zapnutý len s adresou servera, inak z balíka zmizne celý (náhľad má data-asistent="ukazka")
++if [ -n "${ASISTENT_API:-}" ]; then
++  case "$ASISTENT_API" in https://*/api.php) ;; *) echo "CHYBA: ASISTENT_API musí byť https://…/api.php"; exit 1;; esac
++  find "$OUT/web" -name '*.html' -exec sed -i "s#data-asistent=\"ukazka\"#data-asistent=\"$ASISTENT_API\"#" {} +
++  echo "asistent: zapnutý, server $ASISTENT_API (vendor/ a config.php doplniť podľa asistent/README.md, Zapnutie)"
++  if grep -q 'class="navrh"' "$OUT/web/asistent/ochrana-udajov.html"; then
++    echo "POZOR: asistent/ochrana-udajov.html je stále návrh (pás .navrh); pred zapnutím ho musí schváliť majiteľ"
++  fi
++else
++  find "$OUT/web" -name '*.html' -exec sed -i -e 's# data-asistent="ukazka"##' -e 's#<a [^>]*data-asistent-odkaz[^>]*>[^<]*</a>##' {} +
++  rm -rf "$OUT/web/asistent" "$OUT/web/assets/"asistent*
++  echo "asistent: vypnutý (bez ASISTENT_API)"
++fi
+ # obrázky v img/, na ktoré neodkazuje žiadna stránka, štýl, skript ani index.json, do balíka nejdú (staré ilustračné
+ # fotky a ikony ostávajú v repozitári pre build.py --stary-uvod); film img/film/ načítava skript, ostáva celý
+ python3 -I - "$OUT/web" <<'EOF2'
+@@ -39,8 +58,12 @@ EOF2
+ echo "balík: $(wc -l < "$OUT/zoznam.txt") súborov, $(du -sh "$OUT/web" | cut -f1)"
+ 
+ # kontrola 1: v balíku nie sú zdroje ani poznámky
+-nz=$(grep -cE '\.(py|md|pyc)$|^zdroj/|^nasadenie/' "$OUT/zoznam.txt" || true)
+-echo "súborov .py/.md, zdroj/ a nasadenie/ v balíku: $nz"
++# znalosti asistenta (asistent/znalosti/*.md) server potrebuje, zvonku sú zakázané (.htaccess, web.config)
++nz=$(grep -vE '^asistent/znalosti/' "$OUT/zoznam.txt" | grep -cE '\.(py|md|pyc|mjs|sh)$|^zdroj/|^nasadenie/' || true)
++echo "súborov .py/.md/.mjs/.sh, zdroj/ a nasadenie/ v balíku: $nz"
++# kontrola 3: ukážka asistenta nesmie ísť na ostrý web; bez ASISTENT_API žiadne data-asistent
++echo "stránok s data-asistent=\"ukazka\": $(grep -rl 'data-asistent="ukazka"' "$OUT/web" --include='*.html' | wc -l), s data-asistent: $(grep -rl 'data-asistent=' "$OUT/web" --include='*.html' | wc -l) z $(find "$OUT/web" -name '*.html' | wc -l)"
++echo "asistent v balíku: testy/nástroje/README/config/vendor: $(grep -cE '^asistent/(testy|nastroje|README|config|vendor|composer\.lock)' "$OUT/zoznam.txt" || true)"
+ # kontrola 2: každý lokálny odkaz href/src/srcset v HTML a url() v CSS existuje (odkazy od koreňa „/…“ má len 404.html)
+ python3 -I - "$OUT/web" <<'EOF'
+ import os, re, sys, urllib.parse
+-- 
+2.43.0
+

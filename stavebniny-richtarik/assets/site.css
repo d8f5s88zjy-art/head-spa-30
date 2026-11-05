@@ -1027,7 +1027,7 @@ html{scroll-padding-top:90px}
   .uv-ide .uv-stop>.uv-stitok{animation:none}
 }
 /* 5. pri odchode z úvodu fotka ide pomalšie než stránka (bez pripnutia, časová os posunu v kompozítore); len s JS */
-@media (prefers-reduced-motion:no-preference) and (scripting:enabled){
+@media screen and (prefers-reduced-motion:no-preference) and (scripting:enabled){
   @supports (animation-timeline:view()){
     .uv-dvor img{animation:uv-odjazd linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
     @keyframes uv-odjazd{to{translate:0 14%;scale:1.06}}
@@ -1125,6 +1125,22 @@ html:active-view-transition::view-transition-old(foto):only-child,html:active-vi
 html:active-view-transition::view-transition-old(ciara):only-child{display:block;animation:vt-von var(--dlzka-von) var(--krivka-von) both}
 html:active-view-transition::view-transition-new(foto):only-child,html:active-view-transition::view-transition-new(nadpis):only-child,
 html:active-view-transition::view-transition-new(ciara):only-child{animation:vt-dnu var(--dlzka-dnu) var(--krivka-dnu) var(--dlzka-von) both}
+/* počítač (≥ 1001 px): fotka a nadpis sa neprenášajú letom, ale objavia sa rovno na mieste hlavičky (strih na akciu),
+   a strih z menu je ako „ďalej“. Dôvod: meranie A/B v Chromiu bez GPU (zf/ZAPIS.md, časť 3) – let fotky a strih celou
+   stránkou mali na počítači 2 až 7× viac snímok nad 50 ms ako z1, na telefóne s CPU 4× nie. Na počítači s grafickou
+   kartou sa to dá overiť a toto pravidlo zmazať. */
+@media (min-width:1001px){
+  ::view-transition-group(foto),::view-transition-group(nadpis){animation-duration:0s}
+  /* nadpis bez letu príde so stránkou (inak by bol nový H1 chvíľu cez odchádzajúcu stránku) */
+  html:active-view-transition-type(dalej)::view-transition-new(nadpis){animation:vt-dnu var(--dlzka-dnu) var(--krivka-dnu) var(--dlzka-von) both}
+  html:active-view-transition-type(strih)::view-transition-old(root){animation:vt-von var(--dlzka-von) var(--krivka-von) both}
+  html:active-view-transition-type(strih)::view-transition-new(root){animation:vt-dnu var(--dlzka-dnu) var(--krivka-dnu) var(--dlzka-von) both;box-shadow:none}
+}
+/* telefón: kým názov dlaždice letí do H1, odsek pod ním počká a objaví sa až za ním (text nie je cez text) */
+@media (max-width:1000px){
+  html:active-view-transition-type(dalej) .page-head h1[style*="nadpis"]~.lede{animation:vt-odsek var(--dlzka-let) linear both}
+}
+@keyframes vt-odsek{0%,60%{opacity:0}}
 /* zdieľaný nadpis: snímka tesne okolo textu (rovnaký pomer strán na dlaždici aj v hlavičke) */
 .page-head h1,.cat h3,.cat h2.h3{width:fit-content}
 /* menu na počítači: podčiarknutie aktívnej položky je samostatný prvok, pri prechode prejde k novej položke */
@@ -1138,8 +1154,8 @@ html:active-view-transition::view-transition-new(ciara):only-child{animation:vt-
 
 /* ── 3. vstup hlavičky podstránky (pri načítaní, len s JS a bez obmedzenia pohybu; text nikdy pod 0,2) ───────────
    0,06 s H1 vyjde 22 px zdola, 0,12 s linka nadpisku sa nakreslí, 0,16 s úvodný odsek, 0,1–0,9 s fotka v hlavičke
-   sa otvorí ako okno kina (pásy malty sa stiahnu k okrajom) a dosadne. Ak fotka a H1 prileteli z dlaždice (vt-foto,
-   vt-nadpis), ich vstup sa nespustí. */
+   sa otvorí ako okno kina (pásy malty sa stiahnu k okrajom) a dosadne. Keď stránka prišla prechodom (trieda vt
+   zo skriptu v <head>), vstup sa nespustí: hýbe sa len prechod (na počítači bez grafickej karty polovica dlhých snímok). */
 .ph-foto{position:relative}
 .ph-foto::before,.ph-foto::after{content:"";position:absolute;left:0;right:0;height:19%;z-index:2;background:var(--mortar);pointer-events:none;transform:scaleY(0)}
 .ph-foto::before{top:0;transform-origin:50% 0}
@@ -1150,12 +1166,12 @@ html:active-view-transition::view-transition-new(ciara):only-child{animation:vt-
 @keyframes clona-cas{from{transform:scaleY(1)}to{transform:scaleY(0)}}
 @keyframes dosad-cas{from{scale:1.06}}
 @media (prefers-reduced-motion:no-preference) and (scripting:enabled){
-  html:not(.vt-nadpis) .page-head h1{animation:vstup var(--dlzka-vstup) var(--krivka-vyjazd) .06s both}
-  .page-head .eyebrow::before{transform-origin:0 50%;animation:linka .6s var(--krivka-vyjazd) .12s both}
-  .page-head .head .lede{animation:vstup var(--dlzka-vstup) var(--krivka-vyjazd) .16s both}
-  .page-head .crumbs{animation:objav-cas .4s linear both}
-  html:not(.vt-foto) .ph-foto::before,html:not(.vt-foto) .ph-foto::after{animation:clona-cas .8s var(--krivka-clona) .1s both}
-  html:not(.vt-foto) .ph-foto img{animation:dosad-cas 1.2s var(--krivka-kamera) both}
+  html:not(.vt) .page-head h1{animation:vstup var(--dlzka-vstup) var(--krivka-vyjazd) .06s both}
+  html:not(.vt) .page-head .eyebrow::before{transform-origin:0 50%;animation:linka .6s var(--krivka-vyjazd) .12s both}
+  html:not(.vt) .page-head .head .lede{animation:vstup var(--dlzka-vstup) var(--krivka-vyjazd) .16s both}
+  html:not(.vt) .page-head .crumbs{animation:objav-cas .4s linear both}
+  html:not(.vt) .ph-foto::before,html:not(.vt) .ph-foto::after{animation:clona-cas .8s var(--krivka-clona) .1s both}
+  html:not(.vt) .ph-foto img{animation:dosad-cas 1.2s var(--krivka-kamera) both}
 }
 
 /* ── 4. odhalenia pri posune (časová os posunu v CSS, beží v kompozítore, nič sa nepripína) ────────────────────
@@ -1171,7 +1187,7 @@ html:active-view-transition::view-transition-new(ciara):only-child{animation:vt-
 @keyframes s-pas{from{translate:0 -7%;scale:1.06}to{translate:0 7%;scale:1}}
 @keyframes s-pas-t{from{translate:0 -3%;scale:1.05}to{translate:0 3%;scale:1.03}}
 @keyframes s-priebeh{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media (prefers-reduced-motion:no-preference) and (scripting:enabled){@supports (animation-timeline:view()){
+@media screen and (prefers-reduced-motion:no-preference) and (scripting:enabled){@supports (animation-timeline:view()){
   /* rámy s overflow:hidden by boli pre časovú os view() vlastným „posúvačom“ (ktorý sa nikdy neposúva) a odhalenie by
      zamrzlo v polovici: overflow:clip orezáva rovnako, ale posúvačom nie je (úvod, pásy, fotky v rámoch, karty akcií) */
   .uv-ram,.band,.zlavy,.kontakt-teaser,.rvimg,.galeria a,.kdvor picture,.deal,.facts,.facts.n3,.sluzby .ph,.onas .ph,.kontakt-teaser .ph{overflow:clip}
@@ -1256,7 +1272,9 @@ main>section+section,main>section+div,main>div+section{content-visibility:auto;c
 .cta-pas{content-visibility:auto;contain-intrinsic-size:auto 300px}
 footer{content-visibility:auto;contain-intrinsic-size:auto 480px}
 @media print{main>section+section,main>section+div,main>div+section,.cta-pas,footer{content-visibility:visible}
-  .eyebrow::before{transform:none!important}.ph-foto::before,.ph-foto::after{display:none}}
+  .eyebrow::before{transform:none!important}.ph-foto::before,.ph-foto::after{display:none}
+  /* tlač: odhalenia bez časovej osi (IntersectionObserver) a rozbehnuté vstupy hotové, nič priesvitné ani posunuté */
+  .rv,.rv.in{opacity:1!important;transform:none!important;transition:none!important}.rvimg{clip-path:none!important}.rvimg img{transform:none!important}.mq-stop{display:none!important}}
 
 /* ── 6. mikroanimácie ovládacích prvkov ──────────────────────────────────────────────────────────────────────
    Stlačenie je rýchle (80 ms), uvoľnenie mäkké (160 ms), odozva pod myšou 240 ms a len na zariadení s myšou. */
@@ -1300,6 +1318,7 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 /* vyhľadávanie: pole pri fokuse, výsledky sa vysunú pod poľom */
 .search input{transition:border-color .2s,box-shadow var(--dlzka-hover)}
 .search input:focus{box-shadow:0 0 0 4px var(--brick-lt),0 10px 28px rgba(28,26,23,.10)}
+.search input:focus-visible{outline:3px solid var(--brick);outline-offset:2px}   /* z klávesnice aj obrys ako pri odkazoch */
 @keyframes res-dnu{from{opacity:0;translate:0 -6px}}
 @keyframes menu-dnu{from{opacity:.2;translate:24px 0}}
 @keyframes lb-dnu{from{opacity:0}}
@@ -1326,7 +1345,7 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 /* ── 7. dotykové plochy aspoň 44 px (WCAG 2.5.5): neviditeľné rozšírenie plochy pseudoprvkom, rozloženie sa nemení ── */
 .skip{display:inline-flex;align-items:center;min-height:44px}
 .brand::after{content:"";position:absolute;inset:-2px 0}
-.crumbs a,.znacka summary,.bt .site,.back a,.kbox .mail,.uv-odkazy a,.uv-znova,.mq-stop,footer .bottom a{position:relative}
+.crumbs a,.znacka summary,.bt .site,.back a,.kbox .mail,.uv-odkazy a,.mq-stop,footer .bottom a{position:relative}   /* .uv-znova je absolute */
 .crumbs a::after,.back a::after{content:"";position:absolute;inset:-10px -6px}
 .znacka summary::before,.bt .site::before,.kbox .mail::before,.uv-odkazy a::before,footer .bottom a::before{content:"";position:absolute;inset:-10px -4px}
 .uv-znova::after,.mq-stop::after{content:"";position:absolute;inset:-6px}

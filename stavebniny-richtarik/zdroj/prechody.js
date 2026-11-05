@@ -19,10 +19,10 @@
   function V(el) { var r = el && el.getBoundingClientRect(); return !!r && r.width > 0 && r.bottom > 0 && r.top < innerHeight; }
   function R(el) { var s = getComputedStyle(el); return s.textTransform == 'uppercase' && el.offsetHeight < parseFloat(s.fontSize) * 1.6; }
   function T(el) { return el.textContent.trim().toLowerCase().replace(/\s+/g, ' '); }
-  function I(el) { return el.tagName == 'IMG' ? el : el.querySelector('img'); }
+  function I(el) { return el.querySelector('img'); }   // fotka v ráme dlaždice alebo hlavičky
   function F(el) { var i = I(el); return i ? (i.currentSrc || i.src).split('/').pop().replace(/(-\d+)?\.\w+$/, '') : ''; }
   function D(u) {
-    var c = P(u), a = d.querySelectorAll('a.cat,a.zt,a.nov,a.deal'), i, x, f, n;
+    var c = P(u), a = d.querySelectorAll('a.cat,a.zt,a.nov'), i, x, f, n;
     for (i = 0; i < a.length; i++) if (P(a[i].href) == c) {
       x = a[i]; f = x.matches('.zt') ? x : x.querySelector('.ph'); n = x.matches('.cat') && x.querySelector('h2,h3');
       if (f && !I(f)) f = 0;
@@ -46,25 +46,27 @@
     if (t == 'dalej' && !p.f && !p.n && !tr && klik && klik.closest('.nav,.drawer,footer,.mbar,.uv .cta,.uv-odkazy')) t = 'strih';
     if (p.n && !R(p.n)) p.n = 0;
     N(p.f, 'foto', vt); N(p.n, 'nadpis', vt); N(C(), 'ciara', vt); Y(vt, t);
-    if (ss) try { ss.setItem(K, JSON.stringify({ u: P(a.entry.url), t: t, f: p.f ? F(p.f) || '-' : '', n: p.n ? T(p.n) : '' })); } catch (x) {}
+    if (ss) ss.setItem(K, JSON.stringify({ u: P(a.entry.url), t: t, f: p.f ? F(p.f) || '-' : '', n: p.n ? T(p.n) : '' }));
   });
 
   // nová stránka: ten istý typ a zdieľané prvky (len hotová fotka: nenačítaná by letela ako prázdny rám).
-  // Triedy vt-foto a vt-nadpis: fotka a H1 hlavičky prileteli z dlaždice, ich vlastný vstup (CSS) sa nespustí.
+  // Trieda vt: stránka prišla prechodom, vstup hlavičky (CSS) sa nespustí, aby sa naraz hýbal len prechod.
   w.addEventListener('pagereveal', function (e) {
     var vt = e.viewTransition, a = w.navigation && w.navigation.activation, z = null, t, p, i;
     if (!vt) return;
-    if (!a || a.navigationType == 'reload' || matchMedia('(prefers-reduced-motion: reduce)').matches) return vt.skipTransition();
+    if (!a || a.navigationType == 'reload' || matchMedia('(prefers-reduced-motion:reduce)').matches) return vt.skipTransition();
     if (ss) try { z = JSON.parse(ss.getItem(K)); ss.removeItem(K); } catch (x) {}
     if (z && z.u != P(location.href)) z = null;
     t = z ? z.t : a.navigationType == 'traverse' && a.from && a.entry && a.entry.index < a.from.index ? 'spat' : 'dalej';
     Y(vt, t);
-    h.classList.remove('vt-foto', 'vt-nadpis');
+    h.classList.add('vt');
     if (z) {
       p = t != 'spat' ? H() : a.from ? D(a.from.url) : {};
       i = p.f && I(p.f);
-      if (z.f && i && i.complete && i.naturalWidth) { N(p.f, 'foto', vt); if (t != 'spat') h.classList.add('vt-foto'); if (F(p.f) != z.f) Y(vt, 'prelnutie'); }
-      if (z.n && p.n && T(p.n) == z.n && R(p.n)) { N(p.n, 'nadpis', vt); if (t != 'spat') h.classList.add('vt-nadpis'); }
+      if (z.f && i && i.complete && i.naturalWidth) { N(p.f, 'foto', vt); if (F(p.f) != z.f) Y(vt, 'prelnutie'); }
+      // Späť na stránku načítanú znova: fotka dlaždice ešte nie je hotová, hlavička v nej počká (site.js, vtCakaj)
+      else if (z.f && i && t == 'spat') { N(p.f, 'foto', vt); w.vtCakaj = [vt, i]; }
+      if (z.n && p.n && T(p.n) == z.n && R(p.n)) N(p.n, 'nadpis', vt);
     }
     N(C(), 'ciara', vt);
     // ťuknutie alebo kláves počas prechodu ho hneď ukončí (prechod nesmie zdržať interakciu)

@@ -1,0 +1,73 @@
+From d283a75899bd3d03a727f0d96d24cf78cb9494a1 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 15:14:30 +0000
+Subject: [PATCH 6/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20znalosti=20a?=
+ =?UTF-8?q?sistenta=20zak=C3=A1zan=C3=A9=20aj=20na=20hostingu=20bez=20mod?=
+ =?UTF-8?q?=5Frewrite?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+asistent/znalosti/ má vlastný .htaccess (Require all denied) ako lib/ a data/, takže zostane zatvorený aj tam,
+kde hlavné pravidlá s RewriteRule nebežia. Návod asistenta: podmienky zapnutia bez odkazu na pracovné poznámky
+mimo repozitára, v prehľade súborov aj nový .htaccess.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KAgBy7HtV8agdsJ7vg3aLy
+---
+ stavebniny-richtarik/asistent/.htaccess          | 3 ++-
+ stavebniny-richtarik/asistent/README.md          | 4 ++--
+ stavebniny-richtarik/asistent/znalosti/.htaccess | 7 +++++++
+ 3 files changed, 11 insertions(+), 3 deletions(-)
+ create mode 100644 stavebniny-richtarik/asistent/znalosti/.htaccess
+
+diff --git a/stavebniny-richtarik/asistent/.htaccess b/stavebniny-richtarik/asistent/.htaccess
+index 7ac42a0d..327cce54 100644
+--- a/stavebniny-richtarik/asistent/.htaccess
++++ b/stavebniny-richtarik/asistent/.htaccess
+@@ -1,5 +1,6 @@
+ # ASISTENT STAVEBNÍN RICHTÁRIK – Apache. Zvonku je dostupné len api.php a ochrana-udajov.html;
+-# knižnice, dáta, znalosti, testy a konfigurácia nie.
++# knižnice, dáta, znalosti, testy a konfigurácia nie (lib/, data/ a znalosti/ majú aj vlastný .htaccess pre hosting
++# bez mod_rewrite).
+ <IfModule mod_rewrite.c>
+   RewriteEngine On
+   RewriteRule ^(lib|data|znalosti|vendor|testy)(/|$) - [F,L]
+diff --git a/stavebniny-richtarik/asistent/README.md b/stavebniny-richtarik/asistent/README.md
+index 12dfec6c..9ef9c573 100644
+--- a/stavebniny-richtarik/asistent/README.md
++++ b/stavebniny-richtarik/asistent/README.md
+@@ -17,7 +17,7 @@ priečinku, vlastná doména, vlastný kľúč a účet majiteľa.
+ | Časté otázky na serveri (to isté hľadanie) | `lib/otazky.php` |
+ | Čo asistent vie (jediný zdroj faktov) | `znalosti/richtarik.md`, `znalosti/richtarik-otazky.json` (60 overených odpovedí) |
+ | Ochrana údajov (odkaz z okna aj z päty, `noindex`) | `ochrana-udajov.html` (návrh na schválenie majiteľom) |
+-| Apache / IIS (zvonku len `api.php` a `ochrana-udajov.html`) | `.htaccess`, `lib/.htaccess`, `data/.htaccess`, `web.config` |
++| Apache / IIS (zvonku len `api.php` a `ochrana-udajov.html`) | `.htaccess`, `lib/.htaccess`, `data/.htaccess`, `znalosti/.htaccess`, `web.config` |
+ | Konfigurácia s kľúčom (mimo repozitára) | `config.example.php`, `nasadenie/asistent-config.php` |
+ | Testy a nástroje (do balíka nejdú) | `testy/spusti.sh` (server proti falošnému API, 27 kontrol), `nastroje/otazky_zdroj.py` (zdroj častých otázok), `nastroje/otazky.mjs` (fakty, štýl a hľadanie), `nastroje/caste.mjs` (zhoda so stránkou Časté otázky), `nastroje/prehliadac.mjs` (okno v prehliadači) |
+ 
+@@ -31,7 +31,7 @@ priečinku, vlastná doména, vlastný kľúč a účet majiteľa.
+   skúšobný server.
+ 
+ ## Zapnutie naostro
+-Podmienky (otázky pre majiteľa a hosting sú v `richtarik/profi/z3/ZAPIS.md`):
++Podmienky (rozhoduje majiteľ s hostingom; dnešný server je IIS 10 s ASP.NET 2.0 a HTTPS na ňom nefunguje):
+ - PHP 8.1 alebo novšie (odporúčané 8.3) s rozšíreniami pdo_sqlite, curl, mbstring, openssl a json.
+ - HTTPS s platným certifikátom (otázky idú cez sieť; CORS je len pre `https://www.stavebninyrichtarik.sk`
+   a `https://stavebninyrichtarik.sk`) a odchádzajúce HTTPS na api.anthropic.com.
+diff --git a/stavebniny-richtarik/asistent/znalosti/.htaccess b/stavebniny-richtarik/asistent/znalosti/.htaccess
+new file mode 100644
+index 00000000..c9f54f45
+--- /dev/null
++++ b/stavebniny-richtarik/asistent/znalosti/.htaccess
+@@ -0,0 +1,7 @@
++<IfModule mod_authz_core.c>
++  Require all denied
++</IfModule>
++<IfModule !mod_authz_core.c>
++  Order allow,deny
++  Deny from all
++</IfModule>
+-- 
+2.43.0
+

@@ -1,0 +1,1280 @@
+From d6af738c4cf74eec4bb5161624f478c18d414ec4 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 12:28:33 +0000
+Subject: [PATCH 2/8] =?UTF-8?q?Stavebniny=20Richt=C3=A1rik:=20asistent=20s?=
+ =?UTF-8?q?o=20znalos=C5=A5ami=20pod=C4=BEa=20=C5=A1t=C3=BDlu=20webu,=20oz?=
+ =?UTF-8?q?na=C4=8Den=C3=ADm=20okna=20a=20n=C3=A1vrhom=20ochrany=20=C3=BAd?=
+ =?UTF-8?q?ajov?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Znalosti a 60 overených odpovedí bez „super ceny“, superlatívov, „zložíme presne tam“ a značky 8 t auta,
+mechanická ruka v jednotnom čísle, stav skladu len podľa webu. Generátor dopĺňa odkazy na doprava.html
+a caste-otazky.html, keď na webe sú; caste.mjs porovná stránku Časté otázky s odpoveďami asistenta.
+Okno: titul so štítkom označenia, podtitul, pozdrav a poznámka podľa STYL §9, v ukážke vlastný podtitul,
+výpadok siete bez technickej hlášky, ikona sa nemihne nad úvodom. Ochrana údajov ako návrh na schválenie.
+---
+ stavebniny-richtarik/asistent/api.php         |   2 +-
+ stavebniny-richtarik/asistent/lib/jadro.php   |   6 +
+ .../asistent/nastroje/caste.mjs               |  43 ++++++
+ .../asistent/nastroje/otazky.mjs              |  32 +++-
+ .../asistent/nastroje/otazky_zdroj.py         |  78 ++++++----
+ .../asistent/nastroje/prehliadac.mjs          | 137 ++++++++++++++++--
+ .../asistent/ochrana-udajov.html              |  28 ++--
+ .../asistent/znalosti/richtarik-otazky.json   |  31 ++--
+ .../asistent/znalosti/richtarik.md            |  46 +++---
+ .../assets/asistent-otazky.json               |  31 ++--
+ stavebniny-richtarik/assets/asistent.css      |  37 +++--
+ stavebniny-richtarik/assets/asistent.js       |  53 ++++---
+ 12 files changed, 386 insertions(+), 138 deletions(-)
+ create mode 100644 stavebniny-richtarik/asistent/nastroje/caste.mjs
+
+diff --git a/stavebniny-richtarik/asistent/api.php b/stavebniny-richtarik/asistent/api.php
+index 716505e1..25f6ba05 100644
+--- a/stavebniny-richtarik/asistent/api.php
++++ b/stavebniny-richtarik/asistent/api.php
+@@ -85,7 +85,7 @@ try {
+     $acc->accumulate($e);
+     if ($e instanceof BetaRawContentBlockDeltaEvent && $e->delta instanceof BetaTextDelta) { $text .= $e->delta->text; udalost('text', ['t' => $e->delta->text]); }
+   }
+-  if ($acc->message()->stopReason === 'refusal') { udalost('chyba', ['chyba' => 'Na toto neodpoviem. So Stavebninami Richtárik vám rád pomôžem.']); exit; }
++  if ($acc->message()->stopReason === 'refusal') { udalost('chyba', ['chyba' => 'Na toto neodpoviem. So Stavebninami Richtárik vám radi pomôžeme.']); exit; }
+   if (treba_volat($otazka) || treba_volat($text)) udalost('tel', []);
+   udalost('koniec', []);
+ } catch (RateLimitException $e) {
+diff --git a/stavebniny-richtarik/asistent/lib/jadro.php b/stavebniny-richtarik/asistent/lib/jadro.php
+index a997bea7..b3e448eb 100644
+--- a/stavebniny-richtarik/asistent/lib/jadro.php
++++ b/stavebniny-richtarik/asistent/lib/jadro.php
+@@ -137,6 +137,9 @@ Jazyk a tón:
+ - Odpovedaj spisovnou, gramaticky správnou slovenčinou a vykaj. Ak návštevník píše v inom jazyku, odpovedz v jeho jazyku.
+ - Píš vecne a krátko: zvyčajne jedna až tri vety, pri výpočte viacerých položiek krátky zoznam s pomlčkou na začiatku
+   riadku. Bez nadpisov, tučného písma a tabuliek. Odkazy píš ako celú adresu https://…, bez úprav. Nepoužívaj dlhú pomlčku.
++- Tón ako skúsený predavač za pultom: čísla namiesto prídavných mien, bez výkričníkov, emotikonov, verzálok a prázdnych
++  fráz. Namiesto „super ceny“ píš „akciová cena“ alebo uveď cenu. Slová hneď, ihneď a okamžite nepoužívaj (jediná
++  výnimka zo znalostí: komín Stadreko, odber možný ihneď).
+ 
+ Fakty:
+ - Fakty ber len z časti ZNALOSTI nižšie. Ceny, zľavy, hodiny, adresu, telefóny, značky, parametre, dodacie lehoty,
+@@ -149,6 +152,9 @@ Fakty:
+ - Množstvo materiálu (koľko tehál, vriec, m²) nepočítaj. Ponúkni bezplatný výpočet spotreby: projekt alebo rozmery
+   e-mailom alebo telefonicky.
+ - Skladovú zásobu, termín dovozu ani cenu dopravy na konkrétnu adresu nesľubuj; potvrdí ich predajňa.
++- Doprava: mechanickú ruku má jedno auto, hovor „aj autom s mechanickou rukou“. Značku 8-tonového auta nemenuj.
++  Vykládku zdarma ani miesto zloženia na stavbe nesľubuj; pri niektorých akciách sa vykládka platí.
++- Zľavu nad tie, ktoré sú v znalostiach, technickú záruku ani dostupnosť konkrétneho kusu nesľubuj.
+ - Nepoužívaj superlatívy ani porovnania s inými predajcami (najlacnejší, najlepší, najväčší), ani keď ich návštevník chce.
+ 
+ Časté otázky:
+diff --git a/stavebniny-richtarik/asistent/nastroje/caste.mjs b/stavebniny-richtarik/asistent/nastroje/caste.mjs
+new file mode 100644
+index 00000000..7055756c
+--- /dev/null
++++ b/stavebniny-richtarik/asistent/nastroje/caste.mjs
+@@ -0,0 +1,43 @@
++/*
++ * Zhoda stránky Časté otázky (caste-otazky.html) s overenými odpoveďami asistenta (asistent/znalosti/richtarik-otazky.json).
++ * Každá otázka na stránke musí byť v databáze asistenta a jej odpoveď musí byť rovnaká (100 %), aby web a asistent
++ * nehovorili dve rôzne veci. Porovnáva sa po úprave medzier (aj nezlomiteľných) a s adresami
++ * https://www.stavebninyrichtarik.sk/… skrátenými na cestu (sluzby.html), lebo stránka ich môže mať ako odkazy.
++ * Otázky a odpovede stránky berie z FAQPage v JSON-LD; bez neho z <details><summary>otázka</summary>odpoveď</details>.
++ * Použitie: node caste.mjs <priečinok stavebniny-richtarik>   (bez caste-otazky.html v strome len oznámi a skončí 0)
++ */
++import { readFileSync, existsSync } from 'node:fs';
++import path from 'node:path';
++
++const R = path.resolve(process.argv[2] || '.');
++const STRANKA = path.join(R, 'caste-otazky.html');
++if (!existsSync(STRANKA)) { console.log('caste-otazky.html v strome nie je (pribudne s textami webu), nie je čo porovnať'); process.exit(0); }
++const zdroj = JSON.parse(readFileSync(path.join(R, 'asistent/znalosti/richtarik-otazky.json'), 'utf8'));
++const html = readFileSync(STRANKA, 'utf8');
++
++const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', ndash: '–', hellip: '…' };
++const odEnt = (s) => s.replace(/&(#x?[0-9a-f]+|\w+);/gi, (m, e) => e[0] === '#' ? String.fromCodePoint(parseInt(e.slice(e[1] === 'x' || e[1] === 'X' ? 2 : 1), e[1] === 'x' || e[1] === 'X' ? 16 : 10)) : (ENT[e] ?? m));
++const bezZnaciek = (s) => odEnt(s.replace(/<br\s*\/?>|<\/(p|li|div)>/gi, '\n').replace(/<li[^>]*>/gi, '\n- ').replace(/<[^>]+>/g, ''));
++const norm = (s) => s.replace(/[  ]/g, ' ').replace(/https:\/\/www\.stavebninyrichtarik\.sk\//g, '')
++  .replace(/^\s*[-•]\s*/gm, '- ').replace(/\s+/g, ' ').trim();
++
++let pary = [];
++for (const m of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)) {
++  let j; try { j = JSON.parse(m[1]); } catch (e) { console.log('FAIL JSON-LD sa nedá prečítať'); process.exit(1); }
++  for (const x of [].concat(j['@graph'] || j)) if (x && x['@type'] === 'FAQPage') {
++    for (const q of x.mainEntity || []) pary.push([q.name, q.acceptedAnswer && q.acceptedAnswer.text || '', 'JSON-LD']);
++  }
++}
++if (!pary.length) for (const m of html.matchAll(/<details[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/gi)) pary.push([bezZnaciek(m[1]), bezZnaciek(m[2]), 'details']);
++
++const podlaOtazky = new Map(zdroj.otazky.map((o) => [norm(o.q), o]));
++let ok = 0; const zle = [];
++for (const [q, a, odkial] of pary) {
++  const o = podlaOtazky.get(norm(q));
++  if (!o) { zle.push(`otázka nie je v databáze asistenta: „${norm(q)}“ (${odkial})`); continue; }
++  if (norm(a) === norm(o.a)) ok++;
++  else zle.push(`${o.id}: odpoveď sa líši (${odkial})\n    stránka:  ${norm(a)}\n    asistent: ${norm(o.a)}`);
++}
++for (const z of zle) console.log('FAIL', z);
++console.log(`\notázok na stránke ${pary.length}, zhodných ${ok} (${pary.length ? Math.round(100 * ok / pary.length) : 0} %)`);
++process.exit(pary.length && !zle.length ? 0 : 1);
+diff --git a/stavebniny-richtarik/asistent/nastroje/otazky.mjs b/stavebniny-richtarik/asistent/nastroje/otazky.mjs
+index 4d6377c5..cb804526 100644
+--- a/stavebniny-richtarik/asistent/nastroje/otazky.mjs
++++ b/stavebniny-richtarik/asistent/nastroje/otazky.mjs
+@@ -1,7 +1,10 @@
+ /*
+  * Kontrola častých otázok asistenta Stavebnín Richtárik:
+  *  1. fakty: každé číslo, telefón, e-mail a adresa https v odpovediach je v asistent/znalosti/richtarik.md,
+- *  2. zakázané slová (superlatívy, otvorené otázky majiteľa: LIAZ/Iveco, Nero Ebono/Ebano),
++ *  2. zakázané slová a tvary (superlatívy, „super ceny“, „zložíme presne tam“, mechanická ruka v množnom čísle,
++ *     „objednáme“ bez opory, tykanie, staré tvary značiek; otvorené otázky majiteľa: LIAZ/Iveco, Nero Ebono/Ebano),
++ *  2b. každý odkaz na www.stavebninyrichtarik.sk v znalostiach aj v odpovediach je stránka alebo súbor v strome; keď
++ *     v strome je doprava.html, odpovede o doprave na ňu odkazujú (generátor treba po zlúčení s textami spustiť znova),
+  *  3. každá otázka a každé jej iné znenie nájde samu seba ako prvú,
+  *  4. bežné otázky (OCAKAVANE) nájdu svoju odpoveď so zhodou aspoň 0,6 (ukážka odpovie),
+  *  5. otázky mimo témy (MIMO) ostanú pod 0,6 (ukážka povie, že nevie, a dá telefón),
+@@ -9,7 +12,7 @@
+  *  7. kópia pre web assets/asistent-otazky.json je zhodná so zdrojom.
+  * Použitie: node otazky.mjs <priečinok stavebniny-richtarik>
+  */
+-import { readFileSync } from 'node:fs';
++import { readFileSync, existsSync } from 'node:fs';
+ import { execFileSync } from 'node:child_process';
+ import { pathToFileURL } from 'node:url';
+ import path from 'node:path';
+@@ -32,10 +35,31 @@ for (const o of zdroj.otazky) {
+   for (const c of a.match(/\d+(?:[,.:]\d+)?/g) || []) skus(`číslo ${c} v ${o.id}`, znalosti.includes(c));
+   for (const u of a.match(/https:\/\/[^\s]+[^\s.,)]/g) || []) skus(`odkaz v ${o.id}`, znalosti.includes(u), u);
+   for (const m of a.match(/[\w.+-]+@[\w-]+\.[\w.]+\w/g) || []) skus(`e-mail v ${o.id}`, znalosti.includes(m), m);
+-  // 2. zakázané slová
+-  skus(`zakázané slovo v ${o.id}`, !/najlacn|najlepš|najväčš|LIAZ|Iveco|Ebono|Ebano|garanc|záruk/i.test(a), a.slice(0, 80));
++  // 2. zakázané slová a tvary (STYL.md §1, §2, §7, §8; VYBER.md časť 5)
++  skus(`zakázané slovo v ${o.id}`, !/najlacn|najlepš|najväčš|LIAZ|Iveco|Ebono|Ebano|garanc|záruk|super\s*cen|zložíme|vyložíme|presne tam|v rámci|objednáme|\bhneď\b|okamžite/i.test(a), a.slice(0, 80));
++  skus(`mechanická ruka v jednotnom čísle (${o.id})`, !/(autami|autá|autách)\s+s\s+mechanickou/i.test(a), a.slice(0, 80));
++  skus(`vykanie, nie tykanie (${o.id})`, !/(?<!\p{L})(zavolaj|napíš|pošli|príď|prines|potrebuješ|hľadáš|chceš|máš|môžeš|vieš|tvoj[aeu]?|tebe|teba|ti)(?!\p{L})/iu.test(o.a + ' ' + o.q), o.q);
++  skus(`záväzné tvary značiek (${o.id})`, !/Rooflite|BIANKA|TermoBrik|Termobrik|Knaufinsulation|VUB\b|Ico ?Pal\b/.test(a), a.slice(0, 80));
+   skus(`AI len v téme asistent (${o.id})`, !/\bAI\b/.test(a) || o.t === 'asistent');
+ }
++// 2a. znalosti (posielajú sa modelu celé): bez zakázaných tvarov
++{
++  const zle = [...(znalosti.match(/super\s*cen\S*|najlacn\S*|zložíme|presne tam|v rámci\b|objednáme|LIAZ|Iveco|(autami|autá)\s+s\s+mechanickou/gi) || []),
++    ...(znalosti.match(/Rooflite|BIANKA|TermoBrik|Knaufinsulation/g) || [])];
++  skus('znalosti bez zakázaných tvarov (super ceny, superlatívy, zložíme, v rámci, objednáme, značka 8 t auta)', zle.length === 0, zle.join(', '));
++}
++// 2b. odkazy na stránky webu existujú v strome
++const DOM = 'https://www.stavebninyrichtarik.sk/';
++const odkazy = new Set([...(znalosti.match(/https:\/\/www\.stavebninyrichtarik\.sk\/[^\s)]*[^\s.,;:)]/g) || []),
++  ...zdroj.otazky.flatMap((o) => plain(o.a).match(/https:\/\/www\.stavebninyrichtarik\.sk\/[^\s)]*[^\s.,;:)]/g) || [])]);
++const chybaOdkaz = [...odkazy].filter((u) => !existsSync(path.join(R, decodeURIComponent(u.slice(DOM.length)) || 'index.html')));
++skus(`odkazy na stránky webu existujú (${odkazy.size - chybaOdkaz.length}/${odkazy.size})`, chybaOdkaz.length === 0, chybaOdkaz.join(' '));
++if (existsSync(path.join(R, 'doprava.html'))) {
++  const bez = zdroj.otazky.filter((o) => ['doprava', 'doprava-cena'].includes(o.id) && !o.a.includes(DOM + 'doprava.html')).map((o) => o.id);
++  skus('odpovede o doprave odkazujú na doprava.html (generátor po zlúčení s textami)', bez.length === 0, bez.join(' '));
++}
++if (existsSync(path.join(R, 'caste-otazky.html'))) skus('znalosti poznajú caste-otazky.html', znalosti.includes(DOM + 'caste-otazky.html'));
++
+ // 3. otázka a znenia nájdu samy seba
+ let znenia = 0, zneniaZle = [];
+ for (const o of zdroj.otazky) {
+diff --git a/stavebniny-richtarik/asistent/nastroje/otazky_zdroj.py b/stavebniny-richtarik/asistent/nastroje/otazky_zdroj.py
+index 5bc8b3e6..678ffc53 100644
+--- a/stavebniny-richtarik/asistent/nastroje/otazky_zdroj.py
++++ b/stavebniny-richtarik/asistent/nastroje/otazky_zdroj.py
+@@ -1,12 +1,26 @@
+ """Zdroj častých otázok asistenta Stavebnín Richtárik (overené odpovede len z asistent/znalosti/richtarik.md).
+-Spustenie: python3 -I otazky_zdroj.py <výstup richtarik-otazky.json>
++Spustenie: python3 -I asistent/nastroje/otazky_zdroj.py <priečinok webu stavebniny-richtarik>
++Zapíše asistent/znalosti/richtarik-otazky.json, jeho kópiu pre web assets/asistent-otazky.json a časť „Stránky webu“
++v asistent/znalosti/richtarik.md (len stránky, ktoré na webe naozaj sú; doprava.html a caste-otazky.html pribudnú
++s textami webu). Po zmene stránok webu spustiť znova, potom kontrolu node asistent/nastroje/otazky.mjs <priečinok>.
+ Každá odpoveď: q otázka, v iné znenia, a odpoveď, t téma, tel = pod odpoveď patrí Zavolať (a Cenová ponuka).
+-Kontrolu faktov a hľadania robí otazky.mjs."""
++Kontrolu faktov a hľadania robí otazky.mjs, zhodu so stránkou Časté otázky caste.mjs."""
+ import json
++import os
++import re
+ import sys
+ 
++KOREN = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), '..', '..'))
++JE = lambda p: os.path.isfile(os.path.join(KOREN, p))
++# stránky, na ktoré asistent smie odkázať (v poradí do znalostí); pridá sa len tá, ktorá v strome je
++STRANKY = [('kontakt.html', 'Kontakt a mapa'), ('sluzby.html', 'Služby'),
++           ('doprava.html', 'Doprava na stavbu (autá, podmienky dopravy pri akciách)'),
++           ('caste-otazky.html', 'Časté otázky'), ('o-nas.html', 'O nás'),
++           ('galeria/index.html', 'Galéria (predajňa, sklad, dvor, výstavy)')]
++
+ W = 'https://www.stavebninyrichtarik.sk/'
+ TEL = '0905 622 223'
++DOPRAVA = W + ('doprava.html' if JE('doprava.html') else 'sluzby.html')
+ TEMY = {
+     'kontakt': 'Adresa a kontakt',
+     'hodiny': 'Otváracie hodiny',
+@@ -64,7 +78,7 @@ q('hodiny-nedela', 'hodiny', 'Máte otvorené v nedeľu?',
+ q('sluzby-prehlad', 'sluzby', 'Aké služby ponúkate?',
+   ['čo všetko robíte', 'služby', 'čo pre mňa urobíte', 'ponuka služieb'],
+   '- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n'
+-  '- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami s mechanickou rukou\n'
++  '- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami po celom Slovensku, aj autom s mechanickou rukou\n'
+   '- platba kartou a nákup na splátky Quatro\nViac: ' + W + 'sluzby.html')
+ q('sluzby-ponuka', 'sluzby', 'Ako získam cenovú ponuku?',
+   ['cenová ponuka', 'nacenenie', 'pripravíte mi ponuku', 'chcem ponuku na dom', 'ponuka na materiál', 'kalkulácia'],
+@@ -99,20 +113,20 @@ q('o-nas', 'sluzby', 'Odkedy fungujete?',
+ # ---------- doprava ----------
+ q('doprava', 'doprava', 'Dovezete materiál na stavbu?',
+   ['doprava', 'robíte dopravu na stavbu', 'dovoz materiálu', 'privezte mi tovar', 'rozvoz', 'dovážate', 'doprava domov'],
+-  'Áno. Tovar dovezieme vlastnými autami s mechanickou rukou (3,5 t a 8 t) na miesto stavby, ktoré určíte, '
+-  f'v rámci celého Slovenska. Cenu dopravy na vašu adresu vám povieme na {TEL}.', tel=True)
++  'Áno. Tovar dovezieme vlastnými autami na miesto stavby, ktoré určíte, po celom Slovensku: Avia 3,5 t a nákladné '
++  f'auto 8 t s mechanickou rukou. Cenu dopravy na vašu adresu vám povieme na {TEL}. Viac: {DOPRAVA}', tel=True)
+ q('doprava-cena', 'doprava', 'Koľko stojí doprava?',
+   ['cena dopravy', 'koľko účtujete za dopravu', 'koľko zaplatím za dovoz', 'doprava zadarmo', 'je doprava zdarma', 'poplatok za dopravu'],
+   f'Cenu dopravy na konkrétnu stavbu vám povie predajňa na {TEL}. Pri niektorých akciách je doprava zdarma, '
+   'napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava '
+-  'nad 50 m² 17 € s DPH po celom Slovensku.', tel=True)
++  f'nad 50 m² 17 € s DPH po celom Slovensku. Viac: {DOPRAVA}', tel=True)
+ q('doprava-ruka', 'doprava', 'Máte auto s hydraulickou rukou?',
+   ['mechanická ruka', 'vykládka', 'zložíte tovar', 'hydraulická ruka', 'auto s rukou', 'zloženie paliet'],
+-  'Áno, máme vlastné autá s mechanickou rukou, materiál zložíme presne tam, kde ho na stavbe potrebujete. '
+-  f'Podrobnosti o vykládke vám povieme na {TEL}.', tel=True)
++  'Áno. Okrem auta Avia 3,5 t máme nákladné auto 8 t s mechanickou rukou. Vykládka sa pri niektorých akciách platí, '
++  f'napríklad pri krytine Blachotrapez 40 € s DPH. Podrobnosti vám povieme na {TEL}.', tel=True)
+ q('doprava-slovensko', 'doprava', 'Vozíte aj mimo Nitry?',
+   ['doprava do Bratislavy', 'vozíte po celom Slovensku', 'doprava do inej obce', 'dovoz mimo Nitry', 'kam vozíte'],
+-  f'Áno, materiál dovezieme na stavbu v rámci celého Slovenska. Cenu a termín dovozu vám povieme na {TEL}.', tel=True)
++  f'Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na {TEL}.', tel=True)
+ q('doprava-termin', 'doprava', 'Kedy mi materiál dovezete?',
+   ['termín dovozu', 'kedy viete doviezť', 'kedy dovezete', 'ako rýchlo dovezete', 'dodacia lehota', 'zajtra dovoz', 'dokedy dovezete'],
+   f'Termín dovozu závisí od objednávky. Dohodnete ho na {TEL}; termín ja potvrdiť neviem.', tel=True)
+@@ -167,8 +181,9 @@ q('akcia-termobrik', 'akcie', 'Aká je akcia na tehly TermoBRIK?',
+   f'za poplatok. Zavolajte {TEL}.', tel=True)
+ q('akcia-komin', 'akcie', 'Máte komín Stadreko na sklade?',
+   ['komín', 'komín Stadreko cena', 'komínový systém', 'komín akcia', 'Schiedel'],
+-  'Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny komínov sú v cenníku akcií: ' + W
+-  + f'pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na {TEL}.', tel=True)
++  'Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií, '
++  'napríklad komín 6 m, ø 160/90 za 618 € s DPH: ' + W + f'pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na {TEL}.',
++  tel=True)
+ q('akcia-blachotrapez', 'akcie', 'Aké sú podmienky pri krytine Blachotrapez?',
+   ['plechová krytina', 'škridloplech', 'trapézový plech', 'Blachotrapez doprava', 'plech na strechu'],
+   'Krytina Blachotrapez (škridloplech, trapézové plechy): doprava nad 50 m² 17 € s DPH po celom Slovensku, do 50 m² '
+@@ -176,24 +191,24 @@ q('akcia-blachotrapez', 'akcie', 'Aké sú podmienky pri krytine Blachotrapez?',
+ q('akcia-fakro', 'akcie', 'Je zľava na strešné okná?',
+   ['Fakro zľava', 'strešné okno akcia', 'podkrovné schody', 'sklápacie schody', 'Velux', 'Rooflite'],
+   'Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné '
+-  'doplnky). Strešné okná Rooflite sú v akcii za super ceny. V katalógu máme aj Velux.')
++  'doplnky). V akcii sú aj strešné okná RoofLITE. V katalógu máme aj Velux.')
+ q('akcia-porfix-ytong', 'akcie', 'Je doprava zdarma pri Porfixe alebo Ytongu?',
+   ['Porfix', 'Ytong', 'pórobetón', 'celý kamión', 'Ytong doprava zadarmo', 'Porfix doprava zdarma'],
+   'Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma až na stavbu.')
+ q('akcia-dlazba', 'akcie', 'Máte akciu na dlažbu?',
+   ['zámková dlažba', 'City Stone Design', 'dlažba zľava', 'obrubníky', 'Stadreko dlažba', 'ploty'],
+-  'Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). Dlažby a ploty Stadreko '
+-  'sú za super ceny (dlažby, ploty, tvárnice, palisády, obrubníky a iné).')
++  'Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). V akcii sú aj dlažby '
++  'a ploty Stadreko (dlažby, ploty, tvárnice, palisády, obrubníky a iné).')
+ q('akcia-zateplenie', 'akcie', 'Dovezete polystyrén zadarmo?',
+   ['polystyrén', 'zateplenie', 'sadrokartón', 'zatepľovací systém', 'vozíte polystyrén domov zadarmo'],
+   'Áno, pri akcii na zatepľovací a sadrokartónový systém dovezieme polystyrén priamo domov zdarma.')
+ q('akcia-rezivo', 'akcie', 'Predávate stavebné rezivo?',
+   ['rezivo', 'drevo', 'hranoly', 'krov', 'strešné laty', 'palivové drevo', 'dosky'],
+-  'Áno, stavebné rezivo máme v akcii za super ceny: dosky, hranoly, strešné laty, foršne, tatranský obklad, '
++  'Áno, stavebné rezivo máme priamo na sklade a v akcii: dosky, hranoly, strešné laty, foršne, tatranský obklad, '
+   'palivové drevo aj krovy na mieru.')
+ q('akcia-garaze', 'akcie', 'Predávate garáže alebo záhradné domčeky?',
+   ['garáž', 'plechová garáž', 'záhradný domček', 'montovaná garáž'],
+-  'Áno, montované plechové garáže a záhradné domčeky za super ceny. Doprava aj montáž po celom Slovensku zdarma. '
++  'Áno, montované plechové garáže a záhradné domčeky sú v akcii. Doprava aj montáž po celom Slovensku zdarma. '
+   'Viac: ' + W + 'novinky/garaze-zahradne-domceky.html')
+ q('akcia-univerbau', 'akcie', 'Máte akciu na lepidlá a omietky?',
+   ['lepidlo na polystyrén', 'omietky', 'Univerbau', 'malta', 'flexibilné lepidlo', 'nivelit'],
+@@ -210,7 +225,7 @@ q('novinky-delap', 'akcie', 'Koľko stojí kamenný obklad Delap?',
+ q('novinky', 'akcie', 'Čo máte nové v ponuke?',
+   ['novinky', 'nový tovar', 'čo je nové', 'Magic Floor', 'Ekostyrén', 'kamenný koberec'],
+   'Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové '
+-  'podlahy Magic Floor, kamenný koberec BIANKA a výrobky z recyklovaného plastu. Viac: ' + W + 'novinky/index.html')
++  'podlahy Magic Floor, kamenný koberec Bianka a výrobky z recyklovaného plastu. Viac: ' + W + 'novinky/index.html')
+ 
+ # ---------- sortiment ----------
+ q('sortiment', 'sortiment', 'Čo všetko predávate?',
+@@ -220,8 +235,8 @@ q('sortiment', 'sortiment', 'Čo všetko predávate?',
+   'Katalóg: ' + W + 'katalog/index.html')
+ q('sortiment-sklad', 'sortiment', 'Máte tento tovar na sklade?',
+   ['je to skladom', 'máte na sklade', 'dostupnosť', 'koľko kusov máte', 'skladová zásoba', 'máte hneď'],
+-  f'Skladovú zásobu konkrétneho výrobku overiť neviem. Dvor máme plný materiálu a čo nemáme, objednáme; dostupnosť '
+-  f'vám potvrdíme na {TEL}.', tel=True)
++  f'Skladovú zásobu konkrétneho výrobku overiť neviem, dostupnosť vám potvrdí predajňa na {TEL}. Priamo na sklade '
++  'máme podľa webu komín Stadreko, stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite.', tel=True)
+ q('sortiment-tehly', 'sortiment', 'Aké tehly a tvárnice máte?',
+   ['tehly', 'murovací materiál', 'tvárnice', 'Pezinské tehelne', 'Ytong tvárnice a preklady', 'stropy'],
+   'Murovací materiál: tehly, pórobetónové a betónové tvárnice, preklady a stropné systémy od Pezinských tehelní, '
+@@ -261,7 +276,7 @@ q('sortiment-fasada', 'sortiment', 'Máte fasádne omietky a zateplenie?',
+   + W + 'katalog/fasadny-system.html')
+ q('sortiment-znacka-ina', 'sortiment', 'Predávate aj značku, ktorú nevidím na webe?',
+   ['máte inú značku', 'objednáte inú značku', 'iný výrobca', 'nenašiel som výrobok'],
+-  f'Na webe sú značky, ktoré máme na sklade alebo objednáme. Či vieme zohnať inú značku, vám povieme na {TEL}.',
++  f'Na webe sú značky z našej ponuky. Či vieme zohnať inú značku, vám povieme na {TEL}.',
+   tel=True)
+ 
+ # ---------- asistent ----------
+@@ -272,12 +287,23 @@ q('asistent-clovek', 'asistent', 'Píšem s človekom?',
+ q('asistent-udaje', 'asistent', 'Čo sa stane s mojimi otázkami?',
+   ['ochrana údajov', 'ukladáte rozhovor', 'ukladáte si moje správy', 'gdpr', 'osobné údaje', 'súkromie'],
+   'Rozhovory neukladáme. Nepíšte sem osobné údaje. Podrobnosti sú v časti Ochrana údajov pod oknom.')
+-q('asistent-co-vie', 'asistent', 'S čím mi vieš pomôcť?',
+-  ['čo vieš', 'na čo sa môžem opýtať', 'pomoc', 'ako funguješ'],
++q('asistent-co-vie', 'asistent', 'S čím mi viete pomôcť?',
++  ['čo vieš', 's čím mi vieš pomôcť', 'na čo sa môžem opýtať', 'pomoc', 'ako funguješ'],
+   'Odpoviem na otázky o sortimente, akciách, zľavách, doprave, službách, otváracích hodinách a kontakte. Ceny uvádzam '
+-  'len z cenníka akcií; presnú ponuku, výpočet materiálu a termín dovozu vybaví predajňa.')
++  'len z cenníka akcií; presnú ponuku, výpočet materiálu a termín dovozu vybaví predajňa.'
++  + (' Časté otázky: ' + W + 'caste-otazky.html' if JE('caste-otazky.html') else ''))
+ 
+ if __name__ == '__main__':
+-    data = {'verzia': '2026-11-04', 'zdroj': 'asistent/znalosti/richtarik.md', 'temy': TEMY, 'otazky': O}
+-    json.dump(data, open(sys.argv[1], 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+-    print('otázok:', len(O))
++    data = {'verzia': '2026-11-05', 'zdroj': 'asistent/znalosti/richtarik.md', 'temy': TEMY, 'otazky': O}
++    text = json.dumps(data, ensure_ascii=False, indent=1)
++    for ciel in ('asistent/znalosti/richtarik-otazky.json', 'assets/asistent-otazky.json'):
++        with open(os.path.join(KOREN, ciel), 'w', encoding='utf-8') as f: f.write(text)
++    # znalosti: časť Stránky webu len so stránkami, ktoré v strome sú
++    md = os.path.join(KOREN, 'asistent/znalosti/richtarik.md')
++    s = open(md, encoding='utf-8').read()
++    riadky = ''.join(f'- {n}: {W}{p}\n' for p, n in STRANKY if JE(p))
++    s, k = re.subn(r'(<!-- stranky:[^\n]*-->\n)(?:.*?\n)?(<!-- /stranky -->)', lambda m: m.group(1) + riadky + m.group(2), s, flags=re.S)
++    if k != 1: sys.exit('znalosti: chýba časť <!-- stranky: … --> … <!-- /stranky -->')
++    with open(md, 'w', encoding='utf-8') as f: f.write(s)
++    print('otázok:', len(O), '| stránky v znalostiach:', ', '.join(p for p, _ in STRANKY if JE(p)),
++          '| chýbajú (pribudnú s textami webu):', ', '.join(p for p, _ in STRANKY if not JE(p)) or '0')
+diff --git a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+index 23069a8f..cd81970b 100644
+--- a/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
++++ b/stavebniny-richtarik/asistent/nastroje/prehliadac.mjs
+@@ -1,11 +1,25 @@
+ /*
+- * Okno asistenta v prehliadači (ukážka, data-asistent="ukazka"): telefón 390×844 (CPU 4×) a počítač 1440×900.
+- * Použitie: node prehliadac.mjs <základná adresa …/stavebniny-richtarik/> <priečinok snímok>
++ * Okno asistenta v prehliadači (ukážka, data-asistent="ukazka"): telefón 390×844 (CPU 4×) a počítač 1440×900,
++ * ikona pri 320/360/390/414, klávesnica a čítačka, úvod (ikona nie je počas strihu), jas clony, obmedzený pohyb, bez JS.
++ * S treťou adresou aj naostro proti skúšobnému serveru (asistent/api.php s falošným API, testy/mock-api.php):
++ * prúd odpovede, tlačidlá pod cenou, chyba API, výpadok siete a limit otázok.
++ * Použitie: node prehliadac.mjs <základná adresa …/stavebniny-richtarik/> <priečinok snímok> [<adresa …/api.php>]
+  */
+ import { createRequire } from 'node:module';
+ import { mkdirSync, writeFileSync } from 'node:fs';
++import { execFileSync } from 'node:child_process';
+ const { chromium } = createRequire('/opt/node22/lib/node_modules/')('playwright');
+-const [ZAKLAD, OUT] = process.argv.slice(2);
++const [ZAKLAD, OUT, API] = process.argv.slice(2);
++// názvy a texty okna podľa STYL.md §9
++const TITUL = 'AI asistent Stavebnín Richtárik';
++const SUB_UKAZKA = 'Ukážka – odpovede sú pripravené vopred z častých otázok.';
++const SUB_NAOSTRO = 'Odpovede sú automatické. Cenu a dostupnosť potvrdí predajňa.';
++const POZDRAV = 'Dobrý deň, som AI asistent Stavebnín Richtárik. Odpoviem na otázky o sortimente, akciách, doprave, otváracích hodinách a kontakte. Cenu na konkrétne množstvo vám pripraví predajňa zadarmo.';
++const UVOD = '[data-bez-asistenta], .hero, section[aria-labelledby="h-uvod"]';
++// priemerný jas (Y, 0–255) obdĺžnika snímky (PIL)
++const jas = (subor, x, y, w, h) => Number(execFileSync('/usr/bin/python3.12', ['-I', '-c',
++  'import sys; from PIL import Image, ImageStat; im = Image.open(sys.argv[1]).convert("L"); x, y, w, h = map(int, sys.argv[2:]); print(ImageStat.Stat(im.crop((x, y, x + w, y + h))).mean[0])',
++  subor, String(Math.round(x)), String(Math.round(y)), String(Math.round(w)), String(Math.round(h))]).toString());
+ mkdirSync(OUT, { recursive: true });
+ const vysledky = [];
+ const skus = (meno, podm, detail = '') => { vysledky.push({ meno, ok: !!podm, detail }); console.log(podm ? 'OK  ' : 'FAIL', meno, detail); };
+@@ -31,7 +45,7 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   skus(`${nazov}: ikona so štítkom AI`, ai === 'AI');
+   if (mobil) {
+     const mbar = await page.locator('.mbar').boundingBox();
+-    skus(`${nazov}: ikona nad spodnou lištou (nezakrýva Zavolať / Cenová ponuka)`, mbar && btn.y + btn.height <= mbar.y - 4, `ikona dole ${Math.round(btn.y + btn.height)} px, lišta hore ${mbar && Math.round(mbar.y)} px`);
++    skus(`${nazov}: ikona nad spodnou lištou (nezakrýva Zavolať / Cenová ponuka)`, mbar && btn.y + btn.height <= mbar.y - 8, `ikona dole ${Math.round(btn.y + btn.height)} px, lišta hore ${mbar && Math.round(mbar.y)} px`);
+   }
+   skus(`${nazov}: ikona celá v okne`, btn.x >= 0 && btn.x + btn.width <= vp.width && btn.y + btn.height <= vp.height);
+   skus(`${nazov}: ukážka nič neposiela na server asistenta`, !poziadavky.some((u) => /api\.php/.test(u)));
+@@ -41,17 +55,23 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   await page.waitForSelector('.asi-temy button', { timeout: 10000 });
+   await page.waitForTimeout(400);
+   await page.screenshot({ path: `${OUT}/${nazov}-2-okno.png` });
+-  const hlava = await page.locator('#asi-h').textContent();
++  const hlava = (await page.locator('#asi-h').textContent()).trim();
++  const stitok = await page.locator('#asi-h .asi-ai').textContent();
+   const sub = await page.locator('.asi-sub').textContent();
+   const pas = await page.locator('.asi-ukazka-pas').textContent();
+   const note = await page.locator('.asi-note').textContent();
+   const ochrana = await page.locator('.asi-pata a').getAttribute('href');
+-  skus(`${nazov}: názov okna so štítkom AI`, /Asistent\s*AI/.test(hlava), hlava);
+-  skus(`${nazov}: podnadpis AI asistent Stavebnín Richtárik`, /AI asistent Stavebnín Richtárik/.test(sub), sub);
++  const ochranaText = await page.locator('.asi-pata a').textContent();
++  const pozdrav = await page.locator('.asi-msg.asi-a').first().textContent();
++  skus(`${nazov}: titul okna „${TITUL}“ so štítkom AI`, hlava === TITUL && stitok === 'AI', hlava);
++  skus(`${nazov}: podtitul ukážky`, sub === SUB_UKAZKA, sub);
++  skus(`${nazov}: pozdrav podľa STYL §9`, pozdrav.trim() === POZDRAV, pozdrav.slice(0, 60));
+   skus(`${nazov}: pás ukážky (nepíše AI, nič sa neposiela)`, /nepíše ich AI/.test(pas) && /nič sa neposiela/.test(pas));
+-  skus(`${nazov}: poznámka pod oknom a odkaz Ochrana údajov`, /Odpovedá AI/.test(note) && /asistent\/ochrana-udajov\.html$/.test(ochrana), ochrana);
+-  const r = await page.request.get(ochrana);
+-  skus(`${nazov}: stránka ochrany údajov existuje (200)`, r.status() === 200);
++  skus(`${nazov}: poznámka pod oknom a odkaz Ochrana údajov`, /potvrdí predajňa/.test(note) && /osobné údaje/.test(note) && ochranaText === 'Ochrana údajov' && /asistent\/ochrana-udajov\.html$/.test(ochrana), ochrana);
++  skus(`${nazov}: čítačka – dialóg s názvom, živý zoznam správ`, await page.evaluate(() => { const p = document.querySelector('.asi-panel'); const z = document.querySelector('.asi-zoz'); return p.getAttribute('role') === 'dialog' && p.getAttribute('aria-labelledby') === 'asi-h' && z.getAttribute('role') === 'log' && z.getAttribute('aria-live') === 'polite'; }));
++  const r = await page.request.get(new URL(ochrana, page.url()).href);
++  const rText = await r.text();
++  skus(`${nazov}: stránka ochrany údajov existuje (200) a má noindex`, r.status() === 200 && /<meta name="robots" content="noindex">/.test(rText));
+   const panel = await page.locator('.asi-panel').boundingBox();
+   skus(`${nazov}: okno celé v okne prehliadača`, panel.x >= 0 && panel.x + panel.width <= vp.width + 0.5 && panel.y >= 0 && panel.y + panel.height <= vp.height + 0.5, JSON.stringify(panel));
+   const pozadie = await page.evaluate(() => getComputedStyle(document.querySelector('.asi-panel')).backgroundColor);
+@@ -60,6 +80,13 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+     const clona = await page.evaluate(() => getComputedStyle(document.querySelector('.asi-clona')).backgroundColor);
+     skus(`${nazov}: clona za oknom svetlá, nie tmavá`, /rgba\(243, 240, 234/.test(clona), clona);
+   }
++  // jas pozadia za oknom: na telefóne clona nad oknom, na počítači stránka vľavo od okna
++  {
++    const j = mobil ? jas(`${OUT}/${nazov}-2-okno.png`, 0, 0, vp.width * 2, Math.max(10, panel.y - 2) * 2)
++      : jas(`${OUT}/${nazov}-2-okno.png`, 0, 0, Math.max(10, panel.x - 20), vp.height);
++    skus(`${nazov}: jas pozadia za oknom ≥ 150`, j >= 150, j.toFixed(1));
++    skus(`${nazov}: jas okna ≥ 150`, jas(`${OUT}/${nazov}-2-okno.png`, panel.x * (mobil ? 2 : 1), panel.y * (mobil ? 2 : 1), panel.width * (mobil ? 2 : 1), panel.height * (mobil ? 2 : 1)) >= 150);
++  }
+ 
+   // 3. téma a pripravená odpoveď ťuknutím
+   await page.locator('.asi-temy button', { hasText: 'Akcie a ceny' }).click();
+@@ -76,7 +103,7 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   await page.keyboard.press('Enter');
+   await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelectorAll('.asi-msg.asi-a').length >= 2, null, { timeout: 15000 });
+   const odp2 = await page.locator('.asi-msg.asi-a').last().textContent();
+-  skus(`${nazov}: napísaná otázka – doprava po celom Slovensku`, /celého Slovenska/.test(odp2), odp2.slice(0, 80));
++  skus(`${nazov}: napísaná otázka – doprava po celom Slovensku`, /celom Slovensku/.test(odp2), odp2.slice(0, 80));
+   // 5. otázka mimo témy: nevie, dá telefón, nič nevymyslí
+   await page.fill('.asi-form textarea', 'Aké bude zajtra počasie?');
+   await page.keyboard.press('Enter');
+@@ -97,9 +124,20 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelectorAll('.asi-msg.asi-a').length >= 5, null, { timeout: 15000 });
+   const odp5 = await page.locator('.asi-msg.asi-a').last().textContent();
+   skus(`${nazov}: „Si človek?“ – pravdivo nie`, /nie človek/.test(odp5), odp5.slice(0, 70));
+-  // 8. Escape zavrie, fokus späť
++  // 8. Escape zavrie, fokus späť na ikonu; klávesnica: Enter na ikone otvorí okno s fokusom v okne
+   await page.keyboard.press('Escape');
+   skus(`${nazov}: Escape zavrie okno`, await page.locator('.asi-panel').isHidden());
++  if (!mobil) {
++    skus(`${nazov}: po zavretí je fokus na ikone`, await page.evaluate(() => document.activeElement === document.querySelector('.asi-btn')));
++    await page.keyboard.press('Enter');
++    await page.waitForTimeout(150);
++    skus(`${nazov}: klávesnica – Enter na ikone otvorí okno, fokus je v poli otázky`, await page.locator('.asi-panel').isVisible() && await page.evaluate(() => document.activeElement === document.querySelector('.asi-form textarea')));
++    const fv = await page.evaluate(() => { const b = document.querySelector('.asi-x'); b.focus(); return getComputedStyle(b).outlineStyle !== 'none' || true; });
++    await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Tab');
++    const obrys = await page.evaluate(() => parseFloat(getComputedStyle(document.activeElement).outlineWidth) || 0);
++    skus(`${nazov}: viditeľný fokus v okne (obrys ≥ 2 px)`, fv && obrys >= 2, String(obrys));
++    await page.keyboard.press('Escape');
++  }
+   skus(`${nazov}: bez chýb v konzole`, chyby.length === 0, chyby.join(' | '));
+   await ctx.close();
+ }
+@@ -132,7 +170,18 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   skus('bez JS: žiadne okno ani ikona, obsah stránky viditeľný', await page.locator('.asi-btn').count() === 0 && await page.locator('main').isVisible());
+   await ctx.close();
+ }
+-// 11. úvod: modul sa nenačíta skôr ako 3,5 s po načítaní bez gesta (nebráni filmu)
++// 9b. ikona nad spodnou lištou pri 320, 360, 390 a 414 px (−8 px)
++for (const w of [320, 360, 390, 414]) {
++  const ctx = await browser.newContext({ viewport: { width: w, height: w === 320 ? 640 : 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
++  const page = await ctx.newPage();
++  await page.goto(ZAKLAD + 'kontakt.html', { waitUntil: 'load' });
++  await page.waitForSelector('.asi-btn.is-on', { timeout: 15000 });
++  await page.waitForTimeout(500);
++  const b = await page.locator('.asi-btn').boundingBox(), m = await page.locator('.mbar').boundingBox();
++  skus(`${w} px: spodok ikony ≤ horný okraj .mbar − 8 px a ikona celá v okne`, m && b.y + b.height <= m.y - 8 && b.x + b.width <= w, `ikona ${Math.round(b.y + b.height)}, lišta ${m && Math.round(m.y)}`);
++  await ctx.close();
++}
++// 11. úvod: modul sa nenačíta skôr ako 3,5 s po načítaní bez gesta (nebráni úvodu) a ikona nie je počas strihu (0–4 s)
+ {
+   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+   const page = await ctx.newPage();
+@@ -141,17 +190,75 @@ for (const [nazov, vp, mobil] of [['telefon', { width: 390, height: 844 }, true]
+   page.on('request', (r) => { if (/assets\/asistent/.test(r.url())) casy.push([r.url().split('/').pop(), Date.now() - t0]); });
+   await page.goto(ZAKLAD + 'index.html', { waitUntil: 'load' });
+   const nacitane = Date.now() - t0;
+-  await page.waitForTimeout(5000);
++  const vidnoPocasStrihu = [];
++  while (Date.now() - t0 < 4000) {
++    vidnoPocasStrihu.push(await page.evaluate(() => { const b = document.querySelector('.asi-btn'); return !!b && parseFloat(getComputedStyle(b).opacity) > 0.01; }));
++    await page.waitForTimeout(200);
++  }
++  skus('úvod: počas strihu (0–4 s) ikona nie je', vidnoPocasStrihu.length > 5 && !vidnoPocasStrihu.some(Boolean), `${vidnoPocasStrihu.length} vzoriek`);
++  await page.waitForTimeout(Math.max(0, 5000 - (Date.now() - t0 - nacitane)));
+   const prvy = casy[0];
+   skus('úvod: asistent.js až po 3,5 s od načítania stránky (bez gesta)', prvy && prvy[1] >= nacitane + 3400, `načítanie ${nacitane} ms, asistent.js ${prvy && prvy[1]} ms`);
+   skus('úvod: pred otvorením okna sa časté otázky nesťahujú', !casy.some(([u]) => u === 'asistent-otazky.json'), casy.map((c) => c.join('@')).join(' '));
+   await page.screenshot({ path: `${OUT}/telefon-5-uvod-ikona.png` });
+   const op = async () => page.evaluate(() => { const b = document.querySelector('.asi-btn'); return b ? parseFloat(getComputedStyle(b).opacity) : -1; });
+   skus('úvod: ikona skrytá, kým je úvod v okne (nezakryje tlačidlá úvodu)', (await op()) === 0, String(await op()));
+-  await page.evaluate(() => { const h = document.querySelector('.hero'); scrollTo(0, h.getBoundingClientRect().bottom + scrollY + 50); });
++  await page.evaluate((sel) => { const h = document.querySelector(sel); scrollTo(0, h.getBoundingClientRect().bottom + scrollY + 50); }, UVOD);
+   await page.waitForFunction(() => parseFloat(getComputedStyle(document.querySelector('.asi-btn')).opacity) > 0.99, null, { timeout: 5000 }).catch(() => {});
+   skus('úvod: po odskrolovaní za úvod sa ikona ukáže', (await op()) > 0.99, String(await op()));
+   await page.screenshot({ path: `${OUT}/telefon-6-za-uvodom.png` });
++  // ťuk počas úvodu načíta modul skôr, ikona však ostane skrytá, kým je úvod v okne
++  await page.evaluate(() => scrollTo(0, 0));
++  await page.waitForTimeout(600);
++  skus('úvod: po návrate na úvod je ikona znova skrytá', (await op()) === 0, String(await op()));
++  await ctx.close();
++}
++// 12. naostro proti skúšobnému serveru (falošné API, žiadny skutočný kľúč): podtitul, prúd, tlačidlá, chyby, limit
++if (API) {
++  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
++  const page = await ctx.newPage();
++  const chyby = [];
++  page.on('pageerror', (e) => chyby.push(e.message));
++  const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
++  await page.goto(ZAKLAD + 'kontakt.html?asistent=' + encodeURIComponent(API), { waitUntil: 'load' });
++  await page.waitForSelector('.asi-btn.is-on', { timeout: 15000 });
++  await page.click('.asi-btn');
++  const sub = await page.locator('.asi-sub').textContent(), note = await page.locator('.asi-note').textContent();
++  skus('naostro: podtitul a poznámka „Odpovedá AI“, bez pásu ukážky', sub === SUB_NAOSTRO && /^Odpovedá AI/.test(note) && await page.locator('.asi-ukazka-pas').count() === 0, sub);
++  const pred = await page.locator('.asi-msg.asi-a').count();
++  await page.fill('.asi-form textarea', 'Koľko stojí cement?');
++  await page.keyboard.press('Enter');
++  await page.waitForFunction((n) => document.querySelectorAll('.asi-msg.asi-a').length > n && /Otvorené/.test(document.querySelectorAll('.asi-msg.asi-a')[n].textContent), pred, { timeout: 10000 });
++  const castocne = await page.locator('.asi-msg.asi-a').last().textContent();
++  await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]'), null, { timeout: 15000 });
++  const cele = await page.locator('.asi-msg.asi-a').last().textContent();
++  skus('naostro: odpoveď sa píše po kúskoch (prúd)', castocne.length < cele.length && /sobota 7:00/.test(cele), `${castocne.length} → ${cele.length} znakov`);
++  skus('naostro: pod odpoveďou o cene Zavolať a Cenová ponuka', await page.locator('.asi-akcie a[href="tel:+421905622223"]').count() > 0);
++  await page.screenshot({ path: `${OUT}/naostro-1-prud.png` });
++  await page.fill('.asi-form textarea', 'CHYBA500');
++  await page.keyboard.press('Enter');
++  await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]') && document.querySelector('.asi-msg.asi-chyba'), null, { timeout: 15000 });
++  const ch = await page.locator('.asi-msg.asi-chyba').last().textContent();
++  skus('naostro: chyba API – slovenská správa s telefónom', /Teraz neviem odpovedať/.test(ch) && /0905 622 223/.test(ch), ch.slice(0, 60));
++  skus('naostro: po chybe ostane otázka v poli na opakovanie', (await page.inputValue('.asi-form textarea')) === 'CHYBA500');
++  await page.route('**/api.php?a=otazka', (r) => r.abort('internetdisconnected'));
++  await page.fill('.asi-form textarea', 'Máte otvorené v sobotu?');
++  await page.keyboard.press('Enter');
++  await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]'), null, { timeout: 15000 });
++  const siet = await page.locator('.asi-msg.asi-chyba').last().textContent();
++  skus('naostro: výpadok siete – vlastná správa s telefónom, nie technická hláška', /Teraz neviem odpovedať/.test(siet) && !/fetch|Failed|network/i.test(siet), siet.slice(0, 60));
++  await page.unroute('**/api.php?a=otazka');
++  let limit = '';
++  for (let i = 0; i < 12 && !/Veľa otázok/.test(limit); i++) {
++    await page.click('.asi-novy').catch(() => {});
++    await page.fill('.asi-form textarea', 'Aké máte hodiny? ' + i);
++    await page.keyboard.press('Enter');
++    await page.waitForFunction(() => !document.querySelector('.asi-zoz[aria-busy]'), null, { timeout: 15000 });
++    limit = await page.locator('.asi-msg.asi-a').last().textContent();
++  }
++  skus('naostro: limit otázok – zdvorilá správa s telefónom (429)', /Veľa otázok/.test(limit) && /0905 622 223/.test(limit), limit.slice(0, 70));
++  await page.screenshot({ path: `${OUT}/naostro-2-limit.png` });
++  skus('naostro: bez chýb stránky', chyby.length === 0, chyby.join(' | '));
+   await ctx.close();
+ }
+ await browser.close();
+diff --git a/stavebniny-richtarik/asistent/ochrana-udajov.html b/stavebniny-richtarik/asistent/ochrana-udajov.html
+index 607eb115..dbed18cc 100644
+--- a/stavebniny-richtarik/asistent/ochrana-udajov.html
++++ b/stavebniny-richtarik/asistent/ochrana-udajov.html
+@@ -6,6 +6,8 @@
+ <meta name="robots" content="noindex">
+ <title>Asistent na webe – ochrana osobných údajov | Stavebniny Richtárik</title>
+ <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
++<!-- NÁVRH TEXTU NA SCHVÁLENIE MAJITEĽOM alebo zodpovednou osobou pre ochranu osobných údajov. Údaje o firme sú
++     z pôvodného webu (FAKTY A). Po schválení odstrániť pás .navrh; asistent sa na ostrom webe zapína až potom. -->
+ <style>
+ @font-face { font-family: "Barlow"; font-weight: 400; font-display: swap; src: url(../assets/fonts/Barlow-400-latin-ext.woff2) format("woff2"); unicode-range: U+0100-024F; }
+ @font-face { font-family: "Barlow"; font-weight: 400; font-display: swap; src: url(../assets/fonts/Barlow-400-latin.woff2) format("woff2"); unicode-range: U+0000-00FF; }
+@@ -18,32 +20,38 @@ h1 { font: 800 clamp(30px, 6vw, 44px)/1 "Barlow Condensed", "Arial Narrow", Aria
+ h2 { font: 800 22px/1.15 "Barlow Condensed", "Arial Narrow", Arial, sans-serif; text-transform: uppercase; margin: 28px 0 8px; }
+ p, li { overflow-wrap: anywhere; } a { color: #96291f; } ul { padding-left: 1.2rem; }
+ .pozn { color: #6b665f; } .spat { font-weight: 600; text-decoration: none; }
++.navrh { margin: 16px 0 4px; padding: 10px 14px; border: 1px solid #e6c9c4; border-radius: 4px; background: #fbefed; color: #7a2118; font-size: 15px; line-height: 1.45; }
+ </style>
+ </head>
+ <body>
+ <main>
+ <a class="spat" href="../index.html">← Stavebniny Richtárik</a>
+ <h1>Asistent na webe: ochrana osobných údajov</h1>
+-<p class="pozn">Platí pre okno „Opýtajte sa“ na webe Stavebniny Richtárik.</p>
++<p class="navrh">Návrh textu na schválenie majiteľom alebo zodpovednou osobou pre ochranu osobných údajov. Kým nie je schválený, asistent na webe odpovedá len v ukážke a nič sa neposiela.</p>
++<p class="pozn">Platí pre okno „AI asistent Stavebnín Richtárik“ na webe www.stavebninyrichtarik.sk.</p>
++
++<h2>Prevádzkovateľ</h2>
++<p><b>Ing. Mário Richtárik - Stavebniny</b>, Novozámocká 62/68, 949 05 Nitra – Horné Krškany, IČO 45959846. Kontakt: <a href="tel:+421905622223">0905 622 223</a>, <a href="mailto:info@stavebninyrichtarik.sk">info@stavebninyrichtarik.sk</a>.</p>
+ 
+ <h2>Kto odpovedá</h2>
+-<p>Na otázky odpovedá AI asistent (umelá inteligencia), nie človek. Odpovede tvorí jazykový model Claude od spoločnosti Anthropic len z údajov, ktoré sú na webe (sortiment, akcie, zľavy, služby, hodiny, kontakt). Za odpovede zodpovedá prevádzkovateľ <b>Ing. Mário Richtárik - Stavebniny</b>, Novozámocká 62/68, 949 05 Nitra, IČO 45959846, tel. <a href="tel:+421905622223">0905 622 223</a>, <a href="mailto:info@stavebninyrichtarik.sk">info@stavebninyrichtarik.sk</a>. Záväzné sú ceny a údaje, ktoré potvrdí predajňa.</p>
++<p>Na otázky odpovedá AI asistent, teda automatický program, nie človek. Odpoveď tvorí jazykový model Claude spoločnosti Anthropic PBC len z údajov, ktoré sú na tomto webe (sortiment, akcie, zľavy, doprava, služby, otváracie hodiny, kontakt). Záväzné sú ceny a údaje, ktoré potvrdí predajňa.</p>
+ 
+-<h2>Čo sa s otázkou stane</h2>
++<h2>Čo sa posiela a komu</h2>
+ <ul>
+-  <li>Text vašej otázky a predchádzajúcich správ toho istého rozhovoru sa pošle cez náš server spoločnosti Anthropic PBC (USA), ktorá z neho vytvorí odpoveď. Anthropic ho spracúva ako sprostredkovateľ; podľa svojich obchodných podmienok ho nepoužíva na trénovanie modelov a uchováva ho len obmedzený čas (<a href="https://privacy.anthropic.com/" rel="noopener">privacy.anthropic.com</a>).</li>
+-  <li>My rozhovory neukladáme a nečítame. Na serveri ostáva len počet otázok s odtlačkom IP adresy (nedá sa spätne prečítať), aby sa asistent nedal zneužiť; po 24 hodinách sa zmaže.</li>
+-  <li>Nepíšte do okna osobné údaje (meno, telefón, adresu stavby). Asistent ich nepotrebuje, objednávku ani dopyt neprijíma; na to slúži telefón 0905 622 223 alebo e-mail.</li>
++  <li>Posiela sa len text vašej otázky a predchádzajúcich správ toho istého rozhovoru (najviac 16 správ). Prechádza cez náš server k spoločnosti Anthropic PBC (USA), ktorá z neho vytvorí odpoveď. Anthropic ho spracúva ako sprostredkovateľ. Podmienky spracúvania a dobu uchovania uvádza na <a href="https://privacy.anthropic.com/" rel="noopener">privacy.anthropic.com</a>.</li>
++  <li>Rozhovory na našom serveri neukladáme, nezapisujeme do záznamov a nečítame.</li>
++  <li>Aby sa asistent nedal zneužiť, platia limity: od jedného návštevníka 12 otázok za 10 minút a 40 otázok za deň, na celom webe spolu 400 otázok za deň. Na ich počítanie si server pamätá len čas otázky a odtlačok IP adresy, z ktorého sa adresa nedá spätne prečítať. Po 24 hodinách sa zmaže.</li>
++  <li>Nepíšte do okna osobné údaje (meno, telefón, adresu stavby). Asistent ich nepotrebuje a objednávku ani dopyt neprijíma; na to slúži telefón 0905 622 223 alebo e-mail.</li>
+ </ul>
+ 
++<h2>Úložisko v prehliadači</h2>
++<p>Okno nepoužíva cookies. Rozhovor si pamätá len táto karta prehliadača, kým ju nezavriete (sessionStorage); tlačidlo Nový rozhovor ho vymaže hneď. Keď zavriete krátku ponuku pri ikone asistenta, prehliadač si na 14 dní zapamätá len čas zavretia (localStorage), aby sa ponuka neukazovala znova. V ukážke sa nič nikam neposiela: odpovede sú vopred pripravené z údajov webu.</p>
++
+ <h2>Vaše práva</h2>
+ <ul>
+   <li>Máte právo na prístup k údajom, ich opravu, vymazanie a obmedzenie spracúvania. Stačí zavolať alebo napísať e-mail.</li>
+-  <li>Sťažnosť môžete podať na Úrad na ochranu osobných údajov SR, <a href="https://dataprotection.gov.sk/" rel="noopener">dataprotection.gov.sk</a>.</li>
++  <li>Sťažnosť môžete podať na Úrad na ochranu osobných údajov Slovenskej republiky, <a href="https://dataprotection.gov.sk/" rel="noopener">dataprotection.gov.sk</a>.</li>
+ </ul>
+-
+-<h2>Úložisko v prehliadači</h2>
+-<p>Okno nepoužíva cookies. Rozhovor si pamätá len táto karta prehliadača, kým ju nezavriete (sessionStorage); tlačidlo Nový rozhovor ho vymaže hneď. V ukážke na kontrolu (pred zapnutím) sa nič nikam neposiela: odpovede sú vopred pripravené z údajov webu.</p>
+ </main>
+ </body>
+ </html>
+diff --git a/stavebniny-richtarik/asistent/znalosti/richtarik-otazky.json b/stavebniny-richtarik/asistent/znalosti/richtarik-otazky.json
+index 05b85146..a74177f7 100644
+--- a/stavebniny-richtarik/asistent/znalosti/richtarik-otazky.json
++++ b/stavebniny-richtarik/asistent/znalosti/richtarik-otazky.json
+@@ -1,5 +1,5 @@
+ {
+- "verzia": "2026-11-04",
++ "verzia": "2026-11-05",
+  "zdroj": "asistent/znalosti/richtarik.md",
+  "temy": {
+   "kontakt": "Adresa a kontakt",
+@@ -145,7 +145,7 @@
+     "čo pre mňa urobíte",
+     "ponuka služieb"
+    ],
+-   "a": "- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami s mechanickou rukou\n- platba kartou a nákup na splátky Quatro\nViac: https://www.stavebninyrichtarik.sk/sluzby.html"
++   "a": "- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami po celom Slovensku, aj autom s mechanickou rukou\n- platba kartou a nákup na splátky Quatro\nViac: https://www.stavebninyrichtarik.sk/sluzby.html"
+   },
+   {
+    "id": "sluzby-ponuka",
+@@ -263,7 +263,7 @@
+     "dovážate",
+     "doprava domov"
+    ],
+-   "a": "Áno. Tovar dovezieme vlastnými autami s mechanickou rukou (3,5 t a 8 t) na miesto stavby, ktoré určíte, v rámci celého Slovenska. Cenu dopravy na vašu adresu vám povieme na 0905 622 223.",
++   "a": "Áno. Tovar dovezieme vlastnými autami na miesto stavby, ktoré určíte, po celom Slovensku: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. Cenu dopravy na vašu adresu vám povieme na 0905 622 223. Viac: https://www.stavebninyrichtarik.sk/sluzby.html",
+    "tel": true
+   },
+   {
+@@ -278,7 +278,7 @@
+     "je doprava zdarma",
+     "poplatok za dopravu"
+    ],
+-   "a": "Cenu dopravy na konkrétnu stavbu vám povie predajňa na 0905 622 223. Pri niektorých akciách je doprava zdarma, napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava nad 50 m² 17 € s DPH po celom Slovensku.",
++   "a": "Cenu dopravy na konkrétnu stavbu vám povie predajňa na 0905 622 223. Pri niektorých akciách je doprava zdarma, napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava nad 50 m² 17 € s DPH po celom Slovensku. Viac: https://www.stavebninyrichtarik.sk/sluzby.html",
+    "tel": true
+   },
+   {
+@@ -293,7 +293,7 @@
+     "auto s rukou",
+     "zloženie paliet"
+    ],
+-   "a": "Áno, máme vlastné autá s mechanickou rukou, materiál zložíme presne tam, kde ho na stavbe potrebujete. Podrobnosti o vykládke vám povieme na 0905 622 223.",
++   "a": "Áno. Okrem auta Avia 3,5 t máme nákladné auto 8 t s mechanickou rukou. Vykládka sa pri niektorých akciách platí, napríklad pri krytine Blachotrapez 40 € s DPH. Podrobnosti vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -307,7 +307,7 @@
+     "dovoz mimo Nitry",
+     "kam vozíte"
+    ],
+-   "a": "Áno, materiál dovezieme na stavbu v rámci celého Slovenska. Cenu a termín dovozu vám povieme na 0905 622 223.",
++   "a": "Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -493,7 +493,7 @@
+     "komín akcia",
+     "Schiedel"
+    ],
+-   "a": "Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny komínov sú v cenníku akcií: https://www.stavebninyrichtarik.sk/pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na 0905 622 223.",
++   "a": "Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií, napríklad komín 6 m, ø 160/90 za 618 € s DPH: https://www.stavebninyrichtarik.sk/pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -521,7 +521,7 @@
+     "Velux",
+     "Rooflite"
+    ],
+-   "a": "Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné doplnky). Strešné okná Rooflite sú v akcii za super ceny. V katalógu máme aj Velux."
++   "a": "Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné doplnky). V akcii sú aj strešné okná RoofLITE. V katalógu máme aj Velux."
+   },
+   {
+    "id": "akcia-porfix-ytong",
+@@ -549,7 +549,7 @@
+     "Stadreko dlažba",
+     "ploty"
+    ],
+-   "a": "Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). Dlažby a ploty Stadreko sú za super ceny (dlažby, ploty, tvárnice, palisády, obrubníky a iné)."
++   "a": "Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). V akcii sú aj dlažby a ploty Stadreko (dlažby, ploty, tvárnice, palisády, obrubníky a iné)."
+   },
+   {
+    "id": "akcia-zateplenie",
+@@ -577,7 +577,7 @@
+     "palivové drevo",
+     "dosky"
+    ],
+-   "a": "Áno, stavebné rezivo máme v akcii za super ceny: dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo aj krovy na mieru."
++   "a": "Áno, stavebné rezivo máme priamo na sklade a v akcii: dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo aj krovy na mieru."
+   },
+   {
+    "id": "akcia-garaze",
+@@ -589,7 +589,7 @@
+     "záhradný domček",
+     "montovaná garáž"
+    ],
+-   "a": "Áno, montované plechové garáže a záhradné domčeky za super ceny. Doprava aj montáž po celom Slovensku zdarma. Viac: https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html"
++   "a": "Áno, montované plechové garáže a záhradné domčeky sú v akcii. Doprava aj montáž po celom Slovensku zdarma. Viac: https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html"
+   },
+   {
+    "id": "akcia-univerbau",
+@@ -642,7 +642,7 @@
+     "Ekostyrén",
+     "kamenný koberec"
+    ],
+-   "a": "Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové podlahy Magic Floor, kamenný koberec BIANKA a výrobky z recyklovaného plastu. Viac: https://www.stavebninyrichtarik.sk/novinky/index.html"
++   "a": "Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové podlahy Magic Floor, kamenný koberec Bianka a výrobky z recyklovaného plastu. Viac: https://www.stavebninyrichtarik.sk/novinky/index.html"
+   },
+   {
+    "id": "sortiment",
+@@ -670,7 +670,7 @@
+     "skladová zásoba",
+     "máte hneď"
+    ],
+-   "a": "Skladovú zásobu konkrétneho výrobku overiť neviem. Dvor máme plný materiálu a čo nemáme, objednáme; dostupnosť vám potvrdíme na 0905 622 223.",
++   "a": "Skladovú zásobu konkrétneho výrobku overiť neviem, dostupnosť vám potvrdí predajňa na 0905 622 223. Priamo na sklade máme podľa webu komín Stadreko, stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite.",
+    "tel": true
+   },
+   {
+@@ -807,7 +807,7 @@
+     "iný výrobca",
+     "nenašiel som výrobok"
+    ],
+-   "a": "Na webe sú značky, ktoré máme na sklade alebo objednáme. Či vieme zohnať inú značku, vám povieme na 0905 622 223.",
++   "a": "Na webe sú značky z našej ponuky. Či vieme zohnať inú značku, vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -842,9 +842,10 @@
+   {
+    "id": "asistent-co-vie",
+    "t": "asistent",
+-   "q": "S čím mi vieš pomôcť?",
++   "q": "S čím mi viete pomôcť?",
+    "v": [
+     "čo vieš",
++    "s čím mi vieš pomôcť",
+     "na čo sa môžem opýtať",
+     "pomoc",
+     "ako funguješ"
+diff --git a/stavebniny-richtarik/asistent/znalosti/richtarik.md b/stavebniny-richtarik/asistent/znalosti/richtarik.md
+index d7d948d2..adfbc014 100644
+--- a/stavebniny-richtarik/asistent/znalosti/richtarik.md
++++ b/stavebniny-richtarik/asistent/znalosti/richtarik.md
+@@ -1,8 +1,9 @@
+ # Stavebniny Richtárik Nitra – overené údaje pre asistenta
+ 
+-Zdroj: nový web (stavebniny-richtarik/, stav 4b2646bf) a pôvodný web www.stavebninyrichtarik.sk (zdroj/pages.json),
+-cenník akcií pdf/662.pdf (aktualizovaný 28. 1. 2026). Keď sa na webe zmení akcia, cena, hodiny alebo kontakt, zmeň
+-to aj tu a v richtarik-otazky.json a spusti kontrolu (nastroje/otazky.mjs). Nič iné asistent nevie.
++Zdroj: nový web (stavebniny-richtarik/), pôvodný web www.stavebninyrichtarik.sk (zdroj/pages.json) a cenník akcií
++pdf/662.pdf (aktualizovaný 28. 1. 2026). Keď sa na webe zmení akcia, cena, hodiny alebo kontakt, zmeň to aj tu
++a v nastroje/otazky_zdroj.py, spusti `python3 -I nastroje/otazky_zdroj.py ..` a kontrolu `node nastroje/otazky.mjs ..`.
++Nič iné asistent nevie.
+ 
+ ## Firma
+ - Názov: Stavebniny Richtárik. Prevádzkovateľ: Ing. Mário Richtárik - Stavebniny. IČO 45959846, DIČ SK1083167855.
+@@ -24,10 +25,13 @@ to aj tu a v richtarik-otazky.json a spusti kontrolu (nastroje/otazky.mjs). Nič
+   alebo prinesie projekt či rozmery do predajne; predajňa spočíta spotrebu, pripraví ponuku a dohodne dopravu.
+ - Bezplatné poradenstvo: zaškolený personál poradí pri výbere materiálu.
+ - Množstevné zľavy: pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny špeciálne ceny.
+-- Doprava: tovar dovezieme vlastnými autami s mechanickou rukou na miesto stavby, ktoré zákazník určí, v rámci celého
+-  Slovenska; bez zbytočného skladovania a prekladania (menšie riziko poškodenia). Autá: 3,5 t a 8 t s mechanickou rukou.
+-  (Typ 8-tonového auta má web nejednotne, preto ho asistent nemenuje.) Cenu dopravy na konkrétnu stavbu web všeobecne
+-  neuvádza: povie ju predajňa po telefóne. Výnimky podľa akcií sú v časti Akcie.
++- Doprava: tovar dovezieme vlastnými autami na miesto stavby, ktoré zákazník určí, po celom Slovensku, aj autom
++  s mechanickou rukou. Tovar ide priamo na stavbu, bez zbytočného skladovania a prekladania (menšie riziko poškodenia).
++  Autá: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. (Značku 8-tonového auta web uvádza nejednotne, preto ju
++  asistent nemenuje.) Cenu dopravy na konkrétnu stavbu web všeobecne neuvádza: povie ju predajňa po telefóne.
++  Výnimky podľa akcií sú v časti Akcie.
++- Vykládka: pri niektorých akciách sa platí (krytina Blachotrapez 40 € s DPH, tehla TermoBRIK za poplatok). Vykládku
++  zdarma ani miesto zloženia na stavbe asistent nesľubuje; podrobnosti povie predajňa.
+ - Platba: v hotovosti, platobnou kartou cez terminál VÚB banky priamo v predajni, nákup na splátky cez Quatro.
+ - E-shop ani online objednávku web nemá; objednať sa dá telefonicky, e-mailom alebo v predajni.
+ 
+@@ -42,29 +46,31 @@ to aj tu a v richtarik-otazky.json a spusti kontrolu (nastroje/otazky.mjs). Nič
+   https://www.stavebninyrichtarik.sk/akcie/index.html ; akciové letáky: https://www.stavebninyrichtarik.sk/letak.html
+ - Platnosť: web uvádza dátum aktualizácie cenníka 28. 1. 2026, dátum konca akcií neuvádza. Pri akcii vždy povedz,
+   že platnosť a aktuálnu cenu potvrdí predajňa (0905 622 223).
+-- Pezinská tehla TermoBRIK (super ceny): brúsená tehla, Dry systém TermoBRIK, s pojivom, lepidlo zdarma. Na tehlu
++- Pezinská tehla TermoBRIK (akcia): brúsená tehla, Dry systém TermoBRIK, s pojivom, lepidlo zdarma. Na tehlu
+   pripravíme individuálnu cenovú ponuku konkrétne na dom zákazníka. Podľa cenníka 28. 1. 2026 doprava zdarma až na
+   stavbu, vykládka za poplatok.
+-- Komín Stadreko (na sklade): máme priamo na sklade, odber možný ihneď. (Ceny komínov sú v cenníku akcií.)
++- Komín Stadreko (na sklade): máme priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií,
++  napríklad komín 6 m, ø 160/90 za 618 € s DPH; výška komína sa dá vyskladať rôzna.
+ - Krytina Blachotrapez (škridloplech, trapézové plechy): doprava nad 50 m² 17 € s DPH po celom Slovensku; do 50 m²
+   plus ochranná fólia 0,55 €/m²; podlimitná objednávka do 30 m² plus 1,20 €/m²; vykládka tovaru 40 € s DPH.
+ - Dlažba City Stone Design: zľava 15 až 30 % z cenníkových cien (objektové zľavy).
+-- Dlažby a ploty Stadreko (super ceny): betónové dlažby, ploty, tvárnice, striešky, svahovky, palisády,
++- Dlažby a ploty Stadreko (akcia): betónové dlažby, ploty, tvárnice, striešky, svahovky, palisády,
+   zatrávňovačky, obrubníky, komíny.
+ - Okná a schody Fakro: zľava 20 %; strešné okná, podkrovné stropné sklápacie schody, strešné doplnky.
+-- Stavebné rezivo (super ceny): dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo, krovy na mieru.
++- Stavebné rezivo (akcia, priamo na sklade): dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo,
++  krovy na mieru.
+ - Stavebné náradie (na sklade): náradie na stavbu, do záhrady, do domácnosti, do dielne.
+ - Zatepľovací a sadrokartónový systém: kompletný sortiment; polystyrén dovezieme priamo domov zdarma.
+ - Porfix (špeciálne zľavy): obvodové murivo, priečky, strop, lepidlá, malty; pri celom kamióne doprava až domov zdarma.
+ - Ytong (špeciálne zľavy): doprava pri celom kamióne zdarma až na stavbu.
+-- Garáže, záhradné domčeky (super ceny): doprava aj montáž po celom Slovensku zdarma.
++- Garáže, záhradné domčeky (akcia): doprava aj montáž po celom Slovensku zdarma.
+ - Betónové tvárnice (znížené ceny): základové aj stĺpikové tvárnice.
+ - Cement 325 R, 25 kg: 4,42 € za vrece s DPH; cement 425 R, 25 kg: 5,18 € za vrece s DPH; cena platí pri platbe
+   v hotovosti.
+ - Lepidlá, omietky Univerbau (znížené ceny): lepidlo mrazuvzdorné, na polystyrén, kvádre, flexibilné, nivelit,
+   omietky hrubé, putzovky, murovacie malty, betónový poter a iné.
+-- Climowool 039 (super ceny): šikmé strechy, vnútorné steny, stropy, podlahy, fasády, ploché strechy, technické izolácie.
+-- Strešné okná Rooflite: akcia, super ceny.
++- Climowool 039 (akcia): šikmé strechy, vnútorné steny, stropy, podlahy, fasády, ploché strechy, technické izolácie.
++- Strešné okná RoofLITE: akcia.
+ 
+ ## Novinky v ponuke
+ - Betónové výrobky: šalovacie diely, tvárnice a betónové prvky.
+@@ -73,16 +79,18 @@ to aj tu a v richtarik-otazky.json a spusti kontrolu (nastroje/otazky.mjs). Nič
+ - Delap, ohybný kamenný obklad z prírodného kameňa: akciová cena 17,80 € za m² s DPH pri platbe v hotovosti,
+   v balení 4 m².
+ - Ekostyrén: plnivo do betónu z polystyrénovej drte, ľahký tepelnoizolačný betón do podláh a striech.
+-- Montované plechové garáže a záhradné domčeky; doprava a montáž v rámci Slovenska zdarma.
++- Montované plechové garáže a záhradné domčeky; doprava a montáž po celom Slovensku zdarma.
+   https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html
+ - Magic Floor: vinylové podlahy do domácnosti aj do prevádzok.
+-- Kamenný koberec BIANKA (Stone): úprava schodísk, balkónov, výjazdov, vstupov, dvorov a chodníkov; prírodný kameň
++- Kamenný koberec Bianka (Topstone): úprava schodísk, balkónov, výjazdov, vstupov, dvorov a chodníkov; prírodný kameň
+   od 22,80 € za m², drvený mramor od 31 € za m² s DPH.
+ - Výrobky z recyklovaného plastu: zatrávňovacie dlažby, chodníky, plotovky, profily, palety.
+ - Všetky novinky: https://www.stavebninyrichtarik.sk/novinky/index.html
+ 
+ ## Sortiment (15 kategórií, katalóg https://www.stavebninyrichtarik.sk/katalog/index.html)
+-Na sklade máme alebo objednáme. Či je konkrétny výrobok práve na sklade, asistent nevie: potvrdí predajňa.
++Značky v našej ponuke; dvor v Nitre máme plný materiálu. Priamo na sklade web výslovne uvádza: komín Stadreko (odber
++ihneď), stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite (určité druhy na objednávku). Či je iný konkrétny
++výrobok práve na sklade, asistent nevie: potvrdí predajňa.
+ - Sypké zmesi (cement, vápno, malty, omietky, lepidlá, stierky, samonivelačné hmoty): Baumit, Cemmac, Calmit, Holcim,
+   Murexin, Univerbau. https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy.html
+ - Murovací materiál (tehly, pórobetónové a betónové tvárnice, preklady, stropné systémy): Pezinské tehelne, Ytong,
+@@ -95,7 +103,7 @@ Na sklade máme alebo objednáme. Či je konkrétny výrobok práve na sklade, a
+   Isover, Nobasil, Icopal, Den Braven, Climowool. https://www.stavebninyrichtarik.sk/katalog/izolacny-material.html
+ - Komínové systémy (certifikované komíny so šamotovou alebo nerezovou vložkou): Stadreko, Schiedel.
+   https://www.stavebninyrichtarik.sk/katalog/kominove-systemy.html
+-- Strešné okná (kyvné a výklopné okná, výlezy, svetlíky, schody, doplnky): Velux, Fakro, Rooflite.
++- Strešné okná (kyvné a výklopné okná, výlezy, svetlíky, schody, doplnky): Velux, Fakro, RoofLITE.
+   https://www.stavebninyrichtarik.sk/katalog/stresne-okna.html
+ - Hutný materiál (betonárska oceľ, siete, plechy, profily, rúry, zárubne, garážové brány): Yssel Steel.
+   https://www.stavebninyrichtarik.sk/katalog/hutny-material.html
+@@ -115,10 +123,12 @@ Na sklade máme alebo objednáme. Či je konkrétny výrobok práve na sklade, a
+   Elastik. https://www.stavebninyrichtarik.sk/katalog/farby-laky.html
+ 
+ ## Stránky webu
++<!-- stranky: túto časť dopĺňa nastroje/otazky_zdroj.py podľa stránok, ktoré na webe naozaj sú -->
+ - Kontakt a mapa: https://www.stavebninyrichtarik.sk/kontakt.html
+ - Služby: https://www.stavebninyrichtarik.sk/sluzby.html
+ - O nás: https://www.stavebninyrichtarik.sk/o-nas.html
+ - Galéria (predajňa, sklad, dvor, výstavy): https://www.stavebninyrichtarik.sk/galeria/index.html
++<!-- /stranky -->
+ 
+ ## Čo asistent nevie (vždy odkáž na telefón 0905 622 223 alebo e-mail)
+ - Aktuálne ceny tovaru mimo akcií uvedených vyššie, cenu dopravy na konkrétnu adresu, skladovú zásobu konkrétneho
+diff --git a/stavebniny-richtarik/assets/asistent-otazky.json b/stavebniny-richtarik/assets/asistent-otazky.json
+index 05b85146..a74177f7 100644
+--- a/stavebniny-richtarik/assets/asistent-otazky.json
++++ b/stavebniny-richtarik/assets/asistent-otazky.json
+@@ -1,5 +1,5 @@
+ {
+- "verzia": "2026-11-04",
++ "verzia": "2026-11-05",
+  "zdroj": "asistent/znalosti/richtarik.md",
+  "temy": {
+   "kontakt": "Adresa a kontakt",
+@@ -145,7 +145,7 @@
+     "čo pre mňa urobíte",
+     "ponuka služieb"
+    ],
+-   "a": "- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami s mechanickou rukou\n- platba kartou a nákup na splátky Quatro\nViac: https://www.stavebninyrichtarik.sk/sluzby.html"
++   "a": "- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami po celom Slovensku, aj autom s mechanickou rukou\n- platba kartou a nákup na splátky Quatro\nViac: https://www.stavebninyrichtarik.sk/sluzby.html"
+   },
+   {
+    "id": "sluzby-ponuka",
+@@ -263,7 +263,7 @@
+     "dovážate",
+     "doprava domov"
+    ],
+-   "a": "Áno. Tovar dovezieme vlastnými autami s mechanickou rukou (3,5 t a 8 t) na miesto stavby, ktoré určíte, v rámci celého Slovenska. Cenu dopravy na vašu adresu vám povieme na 0905 622 223.",
++   "a": "Áno. Tovar dovezieme vlastnými autami na miesto stavby, ktoré určíte, po celom Slovensku: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. Cenu dopravy na vašu adresu vám povieme na 0905 622 223. Viac: https://www.stavebninyrichtarik.sk/sluzby.html",
+    "tel": true
+   },
+   {
+@@ -278,7 +278,7 @@
+     "je doprava zdarma",
+     "poplatok za dopravu"
+    ],
+-   "a": "Cenu dopravy na konkrétnu stavbu vám povie predajňa na 0905 622 223. Pri niektorých akciách je doprava zdarma, napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava nad 50 m² 17 € s DPH po celom Slovensku.",
++   "a": "Cenu dopravy na konkrétnu stavbu vám povie predajňa na 0905 622 223. Pri niektorých akciách je doprava zdarma, napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava nad 50 m² 17 € s DPH po celom Slovensku. Viac: https://www.stavebninyrichtarik.sk/sluzby.html",
+    "tel": true
+   },
+   {
+@@ -293,7 +293,7 @@
+     "auto s rukou",
+     "zloženie paliet"
+    ],
+-   "a": "Áno, máme vlastné autá s mechanickou rukou, materiál zložíme presne tam, kde ho na stavbe potrebujete. Podrobnosti o vykládke vám povieme na 0905 622 223.",
++   "a": "Áno. Okrem auta Avia 3,5 t máme nákladné auto 8 t s mechanickou rukou. Vykládka sa pri niektorých akciách platí, napríklad pri krytine Blachotrapez 40 € s DPH. Podrobnosti vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -307,7 +307,7 @@
+     "dovoz mimo Nitry",
+     "kam vozíte"
+    ],
+-   "a": "Áno, materiál dovezieme na stavbu v rámci celého Slovenska. Cenu a termín dovozu vám povieme na 0905 622 223.",
++   "a": "Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -493,7 +493,7 @@
+     "komín akcia",
+     "Schiedel"
+    ],
+-   "a": "Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny komínov sú v cenníku akcií: https://www.stavebninyrichtarik.sk/pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na 0905 622 223.",
++   "a": "Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií, napríklad komín 6 m, ø 160/90 za 618 € s DPH: https://www.stavebninyrichtarik.sk/pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -521,7 +521,7 @@
+     "Velux",
+     "Rooflite"
+    ],
+-   "a": "Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné doplnky). Strešné okná Rooflite sú v akcii za super ceny. V katalógu máme aj Velux."
++   "a": "Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné doplnky). V akcii sú aj strešné okná RoofLITE. V katalógu máme aj Velux."
+   },
+   {
+    "id": "akcia-porfix-ytong",
+@@ -549,7 +549,7 @@
+     "Stadreko dlažba",
+     "ploty"
+    ],
+-   "a": "Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). Dlažby a ploty Stadreko sú za super ceny (dlažby, ploty, tvárnice, palisády, obrubníky a iné)."
++   "a": "Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). V akcii sú aj dlažby a ploty Stadreko (dlažby, ploty, tvárnice, palisády, obrubníky a iné)."
+   },
+   {
+    "id": "akcia-zateplenie",
+@@ -577,7 +577,7 @@
+     "palivové drevo",
+     "dosky"
+    ],
+-   "a": "Áno, stavebné rezivo máme v akcii za super ceny: dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo aj krovy na mieru."
++   "a": "Áno, stavebné rezivo máme priamo na sklade a v akcii: dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo aj krovy na mieru."
+   },
+   {
+    "id": "akcia-garaze",
+@@ -589,7 +589,7 @@
+     "záhradný domček",
+     "montovaná garáž"
+    ],
+-   "a": "Áno, montované plechové garáže a záhradné domčeky za super ceny. Doprava aj montáž po celom Slovensku zdarma. Viac: https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html"
++   "a": "Áno, montované plechové garáže a záhradné domčeky sú v akcii. Doprava aj montáž po celom Slovensku zdarma. Viac: https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html"
+   },
+   {
+    "id": "akcia-univerbau",
+@@ -642,7 +642,7 @@
+     "Ekostyrén",
+     "kamenný koberec"
+    ],
+-   "a": "Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové podlahy Magic Floor, kamenný koberec BIANKA a výrobky z recyklovaného plastu. Viac: https://www.stavebninyrichtarik.sk/novinky/index.html"
++   "a": "Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové podlahy Magic Floor, kamenný koberec Bianka a výrobky z recyklovaného plastu. Viac: https://www.stavebninyrichtarik.sk/novinky/index.html"
+   },
+   {
+    "id": "sortiment",
+@@ -670,7 +670,7 @@
+     "skladová zásoba",
+     "máte hneď"
+    ],
+-   "a": "Skladovú zásobu konkrétneho výrobku overiť neviem. Dvor máme plný materiálu a čo nemáme, objednáme; dostupnosť vám potvrdíme na 0905 622 223.",
++   "a": "Skladovú zásobu konkrétneho výrobku overiť neviem, dostupnosť vám potvrdí predajňa na 0905 622 223. Priamo na sklade máme podľa webu komín Stadreko, stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite.",
+    "tel": true
+   },
+   {
+@@ -807,7 +807,7 @@
+     "iný výrobca",
+     "nenašiel som výrobok"
+    ],
+-   "a": "Na webe sú značky, ktoré máme na sklade alebo objednáme. Či vieme zohnať inú značku, vám povieme na 0905 622 223.",
++   "a": "Na webe sú značky z našej ponuky. Či vieme zohnať inú značku, vám povieme na 0905 622 223.",
+    "tel": true
+   },
+   {
+@@ -842,9 +842,10 @@
+   {
+    "id": "asistent-co-vie",
+    "t": "asistent",
+-   "q": "S čím mi vieš pomôcť?",
++   "q": "S čím mi viete pomôcť?",
+    "v": [
+     "čo vieš",
++    "s čím mi vieš pomôcť",
+     "na čo sa môžem opýtať",
+     "pomoc",
+     "ako funguješ"
+diff --git a/stavebniny-richtarik/assets/asistent.css b/stavebniny-richtarik/assets/asistent.css
+index 3f6190b7..d0c2c7b7 100644
+--- a/stavebniny-richtarik/assets/asistent.css
++++ b/stavebniny-richtarik/assets/asistent.css
+@@ -1,6 +1,6 @@
+ /* STAVEBNINY RICHTÁRIK – okno asistenta (asistent.js), v štýle webu: papier, malta, tmavé písmo, tehlová červená,
+    Barlow a Barlow Condensed (premenné zo site.css). Načíta sa až s modulom, prvý obraz stránky ho nepotrebuje.
+-   Ikona (tehlová značka v bielom kruhu so štítkom AI, 52 px, na telefóne 46 px) je vpravo dole; na telefóne nad
++   Ikona (tehlová značka v bielom kruhu so štítkom označenia, 52 px, na telefóne 46 px) je vpravo dole; na telefóne nad
+    spodnou lištou Zavolať a Cenová ponuka (.mbar). Okno na počítači vyskočí nad ikonou, na telefóne sa vysunie zdola.
+    Žiadna tmavá plocha: clona za oknom na telefóne je svetlá. */
+ .asi-znak { display: grid; place-items: center; border-radius: 50%; background: #fff; color: var(--brick); }
+@@ -9,7 +9,8 @@
+   display: inline-block; padding: 2px 6px; border-radius: 3px; background: var(--brick); color: #fff;
+   font: 700 11px/1.25 var(--body); letter-spacing: .06em; vertical-align: middle;
+ }
+-:root { --asi-dole: 20px; }
++/* pohyb okna: jedna krivka a dĺžky; pri zlúčení s pohybovým jazykom webu stačí sem dosadiť jeho premenné */
++:root { --asi-dole: 20px; --asi-krivka: cubic-bezier(.2, .7, .2, 1); --asi-cas: .32s; --asi-stlac: 80ms; }
+ @media (max-width: 980px) { :root { --asi-dole: 84px; } }   /* nad spodnou lištou .mbar (site.css, do 980 px) */
+ 
+ /* ikona */
+@@ -18,10 +19,10 @@
+   width: 52px; height: 52px; padding: 0; display: grid; place-items: center;
+   border: 2px solid var(--brick); border-radius: 50%; background: #fff; cursor: pointer;
+   box-shadow: 0 8px 22px rgba(20, 18, 16, .18);
+-  opacity: 0; transform: translateY(12px); transition: opacity .4s ease, transform .4s ease;
++  opacity: 0; transform: translateY(12px); transition: opacity var(--asi-cas) var(--asi-krivka), transform var(--asi-cas) var(--asi-krivka);
+ }
+ .asi-btn.is-on { opacity: 1; transform: none; }
+-.asi-btn:active { transform: scale(.96); }
++.asi-btn:active { transform: scale(.97); transition-duration: var(--asi-stlac); }
+ .asi-btn .asi-znak-btn { width: 100%; height: 100%; transition: opacity .15s; }
+ .asi-btn .asi-ai { position: absolute; top: -6px; right: -8px; padding: 1px 4px; font-size: 10px; box-shadow: 0 0 0 2px #fff; }
+ .asi-btn > svg { position: absolute; width: 22px; height: 22px; color: var(--ink); opacity: 0; transition: opacity .15s; }
+@@ -42,14 +43,14 @@ html.asi-uvod .asi-oznam { display: none; }
+   width: min(300px, calc(100vw - 2 * var(--gutter))); padding: 10px 10px 12px 14px;
+   border: 1px solid var(--line); border-radius: 6px; border-bottom-right-radius: 2px; background: #fff; color: var(--ink);
+   font: 400 15px/1.45 var(--body); box-shadow: 0 16px 40px rgba(20, 18, 16, .16);
+-  opacity: 0; transform: translateY(10px); transform-origin: 100% 100%; transition: opacity .35s ease, transform .35s ease;
++  opacity: 0; transform: translateY(10px); transform-origin: 100% 100%; transition: opacity var(--asi-cas) var(--asi-krivka), transform var(--asi-cas) var(--asi-krivka);
+ }
+ .asi-oznam[hidden] { display: none; }
+ .asi-oznam.is-on { opacity: 1; transform: none; }
+ .asi-oznam-hlava { display: flex; align-items: center; gap: 10px; }
+ .asi-znak-s { flex: none; width: 30px; height: 30px; border: 1.5px solid var(--brick); }
+ .asi-oznam-h { flex: 1; margin: 0; font: 700 18px/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+-.asi-oznam-h .asi-ai, .asi-hlava h2 .asi-ai { margin-left: 6px; position: relative; top: -2px; }
++.asi-oznam-h .asi-ai, .asi-hlava h2 .asi-ai { margin-right: 2px; position: relative; top: -2px; }
+ .asi-oznam-x { flex: none; width: 40px; height: 40px; margin: -6px -4px -6px 0; display: grid; place-items: center; border: 0; background: none; color: var(--ink-3); cursor: pointer; }
+ .asi-oznam-x svg { width: 18px; height: 18px; }
+ .asi-oznam-t { margin: 6px 0 10px; }
+@@ -62,17 +63,17 @@ html.asi-uvod .asi-oznam { display: none; }
+ /* okno */
+ .asi-panel {
+   position: fixed; right: var(--gutter); bottom: calc(var(--asi-dole) + 66px + env(safe-area-inset-bottom, 0px)); z-index: 75;
+-  display: flex; flex-direction: column; width: min(410px, calc(100vw - 2 * var(--gutter))); height: min(620px, calc(100vh - 150px));
++  display: flex; flex-direction: column; width: min(430px, calc(100vw - 2 * var(--gutter))); height: min(620px, calc(100vh - 150px));
+   border: 1px solid var(--line); border-top: 4px solid var(--brick); border-radius: 6px; background: var(--paper); color: var(--ink);
+   font: 400 16px/1.5 var(--body); box-shadow: 0 30px 70px rgba(20, 18, 16, .22); overflow: hidden;
+-  transform-origin: 100% 100%; animation: asi-in .3s ease;
++  transform-origin: 100% 100%; animation: asi-in var(--asi-cas) var(--asi-krivka);
+ }
+ .asi-panel[hidden] { display: none; }
+ @keyframes asi-in { from { opacity: 0; transform: translateY(12px); } }
+ .asi-hlava { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 16px; background: #fff; border-bottom: 1px solid var(--line); }
+-.asi-znak-m { flex: none; width: 44px; height: 44px; border: 2px solid var(--brick); }
++.asi-znak-m { flex: none; width: 38px; height: 38px; border: 2px solid var(--brick); }
+ .asi-hlava-t { flex: 1; min-width: 0; }
+-.asi-hlava h2 { margin: 0; font: 800 24px/1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
++.asi-hlava h2 { margin: 0; font: 800 19px/1.05 var(--display); text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
+ .asi-sub { margin: 3px 0 0; color: var(--ink-3); font-size: 13px; line-height: 1.3; max-width: none; }
+ .asi-hlava-akcie { flex: none; display: flex; align-items: center; gap: 8px; }
+ .asi-volaj { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border-radius: var(--radius); background: var(--brick); color: #fff; font: 700 15px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+@@ -82,7 +83,8 @@ html.asi-uvod .asi-oznam { display: none; }
+ /* ukážka bez servera: výrazný pás pod hlavičkou */
+ .asi-ukazka-pas { margin: 0; max-width: none; padding: 8px 16px; background: var(--brick-lt); border-bottom: 1px solid var(--brick-pale); color: var(--brick-dk); font-size: 13px; font-weight: 600; line-height: 1.35; }
+ .asi-zoz { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+-.asi-msg { max-width: 90%; padding: 10px 14px; border-radius: 6px; overflow-wrap: anywhere; }
++.asi-msg { max-width: 90%; padding: 10px 14px; border-radius: 6px; overflow-wrap: anywhere; animation: asi-sprava .22s var(--asi-krivka) both; }
++@keyframes asi-sprava { from { opacity: 0; transform: translateY(6px); } }
+ .asi-msg p { margin: 0; max-width: none; }
+ .asi-msg p + p, .asi-msg p + ul, .asi-msg ul + p { margin-top: .5em; }
+ .asi-msg ul { margin: 0; padding-left: 1.1em; }
+@@ -95,7 +97,11 @@ html.asi-uvod .asi-oznam { display: none; }
+ @keyframes asi-dych { 50% { opacity: .35; } }
+ .asi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+ .asi-chips button { min-height: 40px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; text-align: left; }
+-.asi-chips button:hover { border-color: var(--brick); color: var(--brick-dk); }
++.asi-chips button { transition: border-color .15s, color .15s, transform var(--asi-stlac) var(--asi-krivka); }
++@media (hover: hover) { .asi-chips button:hover { border-color: var(--brick); color: var(--brick-dk); } }
++.asi-chips button:active, .asi-send:active, .asi-volaj:active, .asi-tel:active, .asi-dopyt:active,
++.asi-oznam-spytaj:active, .asi-oznam-tel:active { transform: scale(.97); }
++.asi-send, .asi-volaj, .asi-tel, .asi-dopyt, .asi-oznam-spytaj, .asi-oznam-tel { transition: transform var(--asi-stlac) var(--asi-krivka); }
+ .asi-chips-h { flex-basis: 100%; margin: 0; color: var(--ink-3); font-size: 13px; font-weight: 600; }
+ .asi-temy, .asi-suvis { padding-top: 4px; }
+ .asi-chips .asi-chip-dalej { border-style: dashed; color: var(--ink-3); background: transparent; }
+@@ -141,9 +147,12 @@ html.asi-uvod .asi-oznam { display: none; }
+ @media (max-width: 420px) {
+   .asi-volaj { width: 40px; padding: 0; justify-content: center; }
+   .asi-volaj span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+-  .asi-hlava h2 { font-size: 21px; }
++  .asi-hlava h2 { font-size: 18px; }
+ }
+ @media (prefers-reduced-motion: reduce) {
+-  .asi-btn, .asi-oznam, .asi-panel { transition: none; animation: none; }
++  .asi-btn, .asi-oznam, .asi-panel, .asi-msg, .asi-chips button, .asi-send, .asi-volaj, .asi-tel, .asi-dopyt,
++  .asi-oznam-spytaj, .asi-oznam-tel { transition: none; animation: none; }
++  .asi-btn:active, .asi-chips button:active, .asi-send:active, .asi-volaj:active, .asi-tel:active, .asi-dopyt:active,
++  .asi-oznam-spytaj:active, .asi-oznam-tel:active { transform: none; }
+   .asi-pise::after { animation: none; }
+ }
+diff --git a/stavebniny-richtarik/assets/asistent.js b/stavebniny-richtarik/assets/asistent.js
+index a6e1a9a0..8baaf4fe 100644
+--- a/stavebniny-richtarik/assets/asistent.js
++++ b/stavebniny-richtarik/assets/asistent.js
+@@ -3,7 +3,8 @@
+  * Návštevník napíše otázku alebo ťukne na častú otázku a hneď dostane odpoveď (sortiment, akcie, zľavy, doprava,
+  * služby, hodiny, kontakt). Naostro odpovedá server asistenta (asistent/api.php) len z overených údajov webu
+  * (asistent/znalosti/richtarik.md); kľúč je len na serveri. Okno je všade zreteľne označené ako automatický asistent:
+- * štítok AI pri ikone aj pri mene, podnadpis, prvá správa a poznámka pod oknom s odkazom Ochrana údajov.
++ * štítok označenia pri ikone aj v názve okna, podnadpis, prvá správa a poznámka pod oknom s odkazom Ochrana údajov
++ * (STYL.md §9, rovnako ako okno Barbera na Barbershope).
+  *
+  * spusti(api): ikona sa ukáže, až keď server povie, že je zapnutý (api.php?a=stav), inak sa nestane nič.
+  * spusti('ukazka'): okno bez servera s vopred pripravenými odpoveďami z častých otázok (asistent-ukazka.js), na
+@@ -23,16 +24,22 @@ const TEL = 'tel:+421905622223', TEL_TXT = '0905 622 223';
+ const DOPYT = 'mailto:info@stavebninyrichtarik.sk?subject=Cenov%C3%A1%20ponuka';
+ const DOMENA = 'https://www.stavebninyrichtarik.sk/';
+ const KOREN = new URL('../', import.meta.url).href;   // koreň webu (ostrý web aj náhľad v podpriečinku)
++// úvod úvodnej stránky: atribút data-bez-asistenta (pridaný ručne v index.html); .hero a sekcia s nadpisom #h-uvod
++// pre istotu, keby atribút pri zmene úvodu vypadol
++const UVOD = '[data-bez-asistenta], .hero, section[aria-labelledby="h-uvod"]';
+ 
++// štítok označenia (T.ai) stojí v názve okna pred slovom „asistent“: názov sa číta „AI asistent Stavebnín Richtárik“
+ const T = {
+-  ai: 'AI', meno: 'Asistent', btn: 'Otvoriť okno asistenta Stavebnín Richtárik (AI, automatické odpovede)',
+-  sub: 'AI asistent Stavebnín Richtárik · ceny a dovoz potvrdí predajňa',
+-  hello: 'Dobrý deň, som AI asistent Stavebnín Richtárik. Odpoviem na otázky o sortimente, akciách, zľavách, doprave a otváracích hodinách. Na čo sa chcete opýtať?',
++  ai: 'AI', meno: 'asistent Stavebnín Richtárik', btn: 'Otvoriť okno: AI asistent Stavebnín Richtárik (automatické odpovede)',
++  sub: 'Odpovede sú automatické. Cenu a dostupnosť potvrdí predajňa.',
++  subUkazka: 'Ukážka – odpovede sú pripravené vopred z častých otázok.',
++  hello: 'Dobrý deň, som AI asistent Stavebnín Richtárik. Odpoviem na otázky o sortimente, akciách, doprave, otváracích hodinách a kontakte. Cenu na konkrétne množstvo vám pripraví predajňa zadarmo.',
+   oznam: 'Máte otázku k materiálu, akciám alebo doprave? Opýtajte sa.', spytat: 'Opýtať sa', volat: 'Zavolať',
+   skryt: 'Skryť asistenta', ukazka: 'Ukážka na kontrolu: odpovede sú vopred pripravené z údajov webu, nepíše ich AI a nič sa neposiela. Naostro odpovedá AI.',
+   chips: ['Aké máte otváracie hodiny?', 'Dovezete materiál na stavbu?', 'Aké máte aktuálne akcie?', 'Ako získam cenovú ponuku?'],
+   ph: 'Napíšte otázku…', send: 'Odoslať', close: 'Zavrieť', novy: 'Nový rozhovor',
+-  note: 'Odpovedá AI podľa údajov z webu. Ceny, sklad a dovoz potvrdí predajňa. Nepíšte sem osobné údaje.',
++  note: 'Odpovedá AI podľa údajov z webu. Cenu, sklad a dovoz potvrdí predajňa. Nepíšte sem osobné údaje.',
++  noteUkazka: 'Cenu, sklad a dovoz potvrdí predajňa. Nepíšte sem osobné údaje.',
+   err: 'Teraz neviem odpovedať. Zavolajte nám na 0905 622 223 (pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00).',
+   ochrana: 'Ochrana údajov', dlhy: 'Rozhovor je už dlhý. Začnite nový a opýtajte sa znova.', ponuka: 'Cenová ponuka',
+   temy: 'Časté otázky podľa témy:', vsetky: 'Všetky otázky ({n})', spat: 'Späť na témy', suvis: 'Môže vás zaujímať:',
+@@ -97,11 +104,14 @@ function akcie() {
+   return el('div', { class: 'asi-akcie' }, [tel, dop]);
+ }
+ 
+-/* odpoveď servera ako prúd udalostí: text po kúskoch, „tel“, na konci „koniec“, pri chybe „chyba“ */
++/* odpoveď servera ako prúd udalostí: text po kúskoch, „tel“, na konci „koniec“, pri chybe „chyba“.
++   Správu chyby ukáže okno len vtedy, keď ju poslal server (slovensky, s telefónom); výpadok siete alebo prerušený prúd
++   má vlastný text T.err, nie technickú hlášku prehliadača („Failed to fetch“). */
++const zoServera = (text) => Object.assign(new Error(text || ''), { zoServera: true });
+ async function opytaj(api, spravy, onText, onTel) {
+   const res = await fetch(api + '?a=otazka', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prevadzka: 'richtarik', spravy: spravy.map(({ r, t }) => ({ r, t })) }) });
+   const typ = res.headers.get('Content-Type') || '';
+-  if (!typ.includes('text/event-stream')) { const j = await res.json().catch(() => ({})); throw new Error(j.chyba || ''); }
++  if (!typ.includes('text/event-stream')) { const j = await res.json().catch(() => ({})); throw zoServera(j.chyba); }
+   const reader = res.body.getReader(), dec = new TextDecoder();
+   let buf = '', koniec = false;
+   for (;;) {
+@@ -116,7 +126,7 @@ async function opytaj(api, spravy, onText, onTel) {
+       const d = JSON.parse(data);
+       if (meno === 'text') onText(d.t || '');
+       else if (meno === 'tel') onTel();
+-      else if (meno === 'chyba') throw new Error(d.chyba || '');
++      else if (meno === 'chyba') throw zoServera(d.chyba);
+       else if (meno === 'koniec') koniec = true;
+     }
+   }
+@@ -140,13 +150,13 @@ export async function spusti(api) {
+   }
+   const ochranaUrl = new URL('../asistent/ochrana-udajov.html', import.meta.url).href;
+ 
+-  // ikona so štítkom AI; bublina; okno
++  // ikona so štítkom označenia; bublina; okno
+   const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'aria-label': T.btn, title: T.btn },
+     [znak('asi-znak-btn'), el('span', { class: 'asi-ai' }, [T.ai]), ikona(I_X)]);
+   const spytaj = el('button', { class: 'asi-oznam-spytaj', type: 'button' }, [T.spytat]);
+   const oznamX = el('button', { class: 'asi-oznam-x', type: 'button', 'aria-label': T.close }, [ikona(I_X)]);
+-  const oznam = el('div', { class: 'asi-oznam', role: 'region', 'aria-label': T.meno + ' ' + T.ai, hidden: true },
+-    [el('div', { class: 'asi-oznam-hlava' }, [znak('asi-znak-s'), el('p', { class: 'asi-oznam-h' }, [T.meno, ' ', el('span', { class: 'asi-ai' }, [T.ai])]), oznamX]),
++  const oznam = el('div', { class: 'asi-oznam', role: 'region', 'aria-label': T.ai + ' ' + T.meno, hidden: true },
++    [el('div', { class: 'asi-oznam-hlava' }, [znak('asi-znak-s'), el('p', { class: 'asi-oznam-h' }, [el('span', { class: 'asi-ai' }, [T.ai]), ' asistent']), oznamX]),
+       el('p', { class: 'asi-oznam-t' }, [T.oznam]),
+       el('div', { class: 'asi-oznam-akcie' }, [spytaj, el('a', { class: 'asi-oznam-tel', href: TEL, 'aria-label': T.volat + ' ' + TEL_TXT }, [ikona(I_TEL), T.volat])])]);
+   const zoz = el('div', { class: 'asi-zoz', role: 'log', 'aria-live': 'polite' });
+@@ -160,11 +170,14 @@ export async function spusti(api) {
+   const clona = el('div', { class: 'asi-clona', hidden: true });
+   const panel = el('section', { class: 'asi-panel', id: 'asi-panel', role: 'dialog', 'aria-labelledby': 'asi-h', tabindex: '-1', hidden: true },
+     [el('header', { class: 'asi-hlava' }, [znak('asi-znak-m'),
+-      el('div', { class: 'asi-hlava-t' }, [el('h2', { id: 'asi-h' }, [T.meno, ' ', el('span', { class: 'asi-ai' }, [T.ai])]), el('p', { class: 'asi-sub' }, [T.sub])]),
++      el('div', { class: 'asi-hlava-t' }, [el('h2', { id: 'asi-h' }, [el('span', { class: 'asi-ai' }, [T.ai]), ' ' + T.meno]), el('p', { class: 'asi-sub' }, [ukazka ? T.subUkazka : T.sub])]),
+       el('div', { class: 'asi-hlava-akcie' }, [volaj, zavri])]),
+     pas, zoz, form,
+-    el('div', { class: 'asi-pata' }, [el('div', {}, [el('p', { class: 'asi-note' }, [T.note]), el('a', { href: ochranaUrl, target: '_blank', rel: 'noopener' }, [T.ochrana])]),
++    el('div', { class: 'asi-pata' }, [el('div', {}, [el('p', { class: 'asi-note' }, [ukazka ? T.noteUkazka : T.note]), el('a', { href: ochranaUrl, target: '_blank', rel: 'noopener' }, [T.ochrana])]),
+       el('div', { class: 'asi-pata-akcie' }, [novy, skry])])]);
++  // úvod v okne už pri vložení ikony (pozorovateľ nižšie hlási až neskôr): ikona sa ani na snímku neukáže počas úvodu
++  const uvodVOkne = () => [...document.querySelectorAll(UVOD)].some((u) => { const r = u.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight * 0.65; });
++  html.classList.toggle('asi-uvod', uvodVOkne());
+   document.body.append(oznam, btn, clona, panel);
+ 
+   const bublina = (rola, text) => { const b = el('div', { class: 'asi-msg asi-' + rola }); if (text) vykresli(text, b); zoz.append(b); return b; };
+@@ -222,7 +235,7 @@ export async function spusti(api) {
+     const posl = rozhovor[rozhovor.length - 1], otazka = rozhovor[rozhovor.length - 2];
+     if (posl && posl.r === 'a' && otazka) suvisiace(otazka.t);
+     novy.hidden = !rozhovor.length;
+-    zoz.scrollTop = zoz.scrollHeight;
++    zoz.scrollTop = rozhovor.length ? zoz.scrollHeight : 0;   // prázdny rozhovor od pozdravu, inak posledná odpoveď
+   }
+   function vyska() { area.style.height = 'auto'; area.style.height = Math.min(area.scrollHeight, 140) + 'px'; }
+   function naZaciatok(prvok) {
+@@ -254,7 +267,7 @@ export async function spusti(api) {
+       suvisiace(otazka, zOtazok && zOtazok.id);
+     } catch (e) {
+       rozhovor.pop(); uloz(kluc, rozhovor);
+-      b.classList.remove('asi-pise'); b.classList.add('asi-chyba'); vykresli(e.message || T.err, b);
++      b.classList.remove('asi-pise'); b.classList.add('asi-chyba'); vykresli((e && e.zoServera && e.message) || T.err, b);
+       b.after(akcie());
+       area.value = otazka; vyska();
+     } finally {
+@@ -316,8 +329,8 @@ export async function spusti(api) {
+   const pozor = pata && 'IntersectionObserver' in window ? new IntersectionObserver((z) => { pataVidno = z.some((x) => x.isIntersecting); if (pataVidno && !oznam.hidden) schovajOznam(); }) : null;
+   if (pozor) pozor.observe(pata);
+   const hodiny = setInterval(() => {
+-    // úvod (film) je prvá obrazovka: bublina až po odskrolovaní za ňu
+-    const uvod = document.querySelector('.hero');
++    // úvod je prvá obrazovka: bublina až po odskrolovaní za ňu
++    const uvod = document.querySelector(UVOD);
+     const zaUvodom = !uvod || uvod.getBoundingClientRect().bottom < innerHeight * 0.5;
+     const vidno = btn.isConnected && panel.hidden && zaUvodom && !pataVidno && parseFloat(getComputedStyle(btn).opacity) > 0.9;
+     videl = vidno ? videl + 1 : 0;
+@@ -332,9 +345,9 @@ export async function spusti(api) {
+     btn.remove(); oznam.remove(); clona.remove(); panel.remove();
+   }
+ 
+-  // úvod (film) a iné plochy s vlastnými tlačidlami (.hero, [data-bez-asistenta]): kým sú v okne, ikona sa skryje,
+-  // aby nezakryla tlačidlá úvodu (Prezrieť katalóg, Aktuálne akcie)
+-  const uvody = document.querySelectorAll('.hero, [data-bez-asistenta]');
++  // úvod a iné plochy s vlastnými tlačidlami (UVOD): kým sú v okne, ikona sa skryje, aby nezakryla tlačidlá a hľadanie
++  // úvodu ani nevyrušovala počas strihu záberov
++  const uvody = document.querySelectorAll(UVOD);
+   if (uvody.length && 'IntersectionObserver' in window) {
+     const vidno = new Set();
+     const io = new IntersectionObserver((z) => {
+-- 
+2.43.0
+

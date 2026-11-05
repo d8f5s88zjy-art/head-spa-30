@@ -181,7 +181,18 @@
     else priprav();
   })();
 
-  // prechod medzi stránkami: skript v <head> (View Transitions); prehliadač bez podpory má okamžitú navigáciu bez čakania
+  // prechod medzi stránkami: skript v <head> (View Transitions); prehliadač bez podpory má okamžitú navigáciu bez čakania.
+  // Späť na stránku, ktorá sa načítava znova (nie je vo vyrovnávacej pamäti prehliadača): fotka dlaždice, do ktorej sa
+  // vracia hlavička, ešte nie je dekódovaná. Prelnutie do dlaždice počká na fotku (najviac 0,9 s), dovtedy je v dlaždici
+  // fotka hlavičky, takže dlaždica sa nikdy neukáže ako prázdny rám (skript v <head> odovzdá prechod a fotku vo vtCakaj).
+  var vc = window.vtCakaj;
+  if (vc && vc[0].ready) vc[0].ready.then(function () {
+    var an = d.getAnimations().filter(function (a) { return a.effect && a.effect.pseudoElement === '::view-transition-new(foto)'; });
+    var pusti = function () { an.forEach(function (a) { a.play(); }); };
+    an.forEach(function (a) { a.pause(); });
+    vc[1].loading = 'eager';
+    (vc[1].decode ? vc[1].decode() : Promise.resolve()).then(pusti, pusti); setTimeout(pusti, 900);
+  }, function () {});
 
   // pás značiek: tlačidlo Zastaviť pohyb (pás sa hýbe len s JS a bez obmedzenia pohybu, pauza aj pod myšou a pri fokuse)
   var mq = d.querySelector('.marquee'), mqb = mq && mq.querySelector('.mq-stop');
