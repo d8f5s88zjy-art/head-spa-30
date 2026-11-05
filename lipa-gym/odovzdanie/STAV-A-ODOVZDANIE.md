@@ -10,7 +10,7 @@ by mala byť tu alebo v súboroch, na ktoré odkazuje.
 | Živý web dnes | repozitár `d8f5s88zjy-art/Lupa-gym`, vetva `main` = commit `4fb1416` (tvoja verzia), web <https://d8f5s88zjy-art.github.io/Lupa-gym/> | beží, bez mojich zmien |
 | Moje hotové zmeny (logo, Marko Rigo, Bar, editor pre Ondreja) | záloha `lupa-gym-zaloha.bundle` v tomto priečinku, vetva `main` (commity `69d7665` až `396f446`) | hotové, skontrolované, **nenahraté** do Lupa-gym |
 | Nový vzhľad (redizajn) | tá istá záloha, vetva `redizajn-2026-10` (od `534f588`) | **rozpracované**, nenasadzovať |
-| Profesionálny vzhľad (želanie z 3. 11.: „menej jak dokument, ako profesionálna stránka“) | vetva `profesionalny-vzhlad` (od `36d8066`, posledný commit `c6c01d0`), prírastková záloha `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku | **hotové a overené**, nezverejnené, nenasadené (časť 2) |
+| Profesionálny vzhľad (želanie z 3. 11.: „menej jak dokument, ako profesionálna stránka“) | vetva `profesionalny-vzhlad` (od `36d8066`, posledný commit `b3a3b21` po oprave nálezov kontrol z 5. 11.), prírastková záloha `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku | **hotové a overené**, nezverejnené, nenasadené (časť 2) |
 | Náhľad redizajnu | <https://claude.ai/artifact/2a5djhGB6rjJKtWyUBsffC> (súkromný, zdieľa sa cez Share) | stav pred pohybovým systémom |
 | Špecifikácia redizajnu | `SPEC.md` v tomto priečinku | záväzná pre dokončenie |
 | Denník implementácie | `IMPLEMENTACIA-POZNAMKY.md` v tomto priečinku | všetky rozhodnutia, merania a odchýlky |
@@ -68,7 +68,7 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
 - Poznámka: „bez efektu riadeného skrolovaním a bez pripínania“ platí pre filmovú vrstvu. Odchod úvodu, pruh postupu, parallax
   a lepiace prvky (úvod, Kde začať, video lekcií, nadpis Otázok) sú od B3/B4 (SPEC 5.2 #4–5); či ostanú, rozhodne majiteľ.
 
-**Vetva `profesionalny-vzhlad` (od `36d8066`, 3.–4. 11. 2026, posledný commit `c6c01d0`; záloha
+**Vetva `profesionalny-vzhlad` (od `36d8066`, 3.–5. 11. 2026, posledný commit `b3a3b21`; záloha
 `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku, obnova v časti 6; nezverejnená, do Lupa-gym **nenahratá**):**
 
 - Na želanie majiteľa z 3. 11.: „Skús to fitko urobiť menej jak dokument ale ako profesionálnu stránku s ktorou bude
@@ -89,6 +89,12 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
   snímok nad 50 ms, spolu 29 → 5; vrstvy kompozítora 31 → 17); celá stránka sa stiahne za 1,5 MB namiesto 2,0 MB (počítač 3,3 → 1,3 MB).
 - Overenie na `c6c01d0`: 99 testov OK, testy v prehliadači a vzhľadu pri 360–1920 px bez chyby, fotky pri 6 šírkach
   načítané, lightbox 11/11, čistá zostava z klonu (podrobne v `IMPLEMENTACIA-POZNAMKY.md`).
+- Oprava po dvoch nezávislých kontrolách (5. 11., commity `851e071`–`b3a3b21`): na úzkych telefónoch (320–375 px) sa
+  štítok karty Ponuky už neprekrýva s nadpisom a neoreže sa, rozvrh nemá slová zlomené v strede; na počítači spodný rad
+  Ponuky bez ostrého rezu fotky; úvodná fotka na tablete na výšku znova ostrá; logo MDS v päte nezdeformované; „Teraz“
+  alebo najbližší termín na každej karte lekcie; na telefóne bez zdvojeného stavu v úvode, v Kontakte jedno Navigovať.
+  Overenie: 99 testov OK, test v prehliadači 19 OK, vzhľad 185 OK; podrobne `IMPLEMENTACIA-POZNAMKY.md`
+  („Oprava po nezávislých kontrolách“) a `gym/profi/oprava/ODOVZDANIE.md`.
 
 ## 3. Postup pri odovzdaní (v tomto poradí)
 

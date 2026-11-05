@@ -1763,3 +1763,37 @@ záťaži nad 8, preto sú zopakované páry 4 a 5. Počítač 1440 × 900, CPU 
 `po-1440-04-prva-navsteva.jpg`, `po-1440-05-lekcie.jpg`, kontrolné snímky po `8b15860` (1440 a 1024 prvá návšteva,
 1440 ponuka), `impl/pred-po.jpg` a jeho strany `impl/harok/pred-po-01.jpg` až `06.jpg`, `impl/final/rytmus-po-390.jpg`,
 fotky `kardio-2`, `volne-vahy-3`, `stroje-1`, `bar-kresla` (kontrola popisov).
+
+### Oprava po nezávislých kontrolách (5. 11. 2026, HEAD `b3a3b21`)
+
+Kontroly: `gym/profi/kontrola-funkcie/ZAPIS.md` (KF-1 až KF-4) a `gym/profi/kontrola-zakaznik/ZAPIS.md` (KZ-01 až
+KZ-10). Zápis opravy s dôkazmi: `gym/profi/oprava/ODOVZDANIE.md`. Commity (lokálne, bez podpisových riadkov):
+
+| Commit | Obsah |
+|---|---|
+| `851e071` | Ponuka: štítok a text karty v toku (karta rastie s obsahom, rad rovnako vysoký), štítok sa smie zalomiť; spodný rad na počítači bez ostrého zvislého rezu; rozvrh pod 375 px tlačidlo pod textom a čip bez zalomenia; úvod: telefónny `sizes` len do 760 px; päta: logo MDS sa nezmršťuje; `test_vzhlad` kontrola 5 rozšírená |
+| `3085cc8` | Živý riadok „Teraz, do …“ / najbližší termín na každej karte lekcie (`data-live-l`), nadpisy kariet lekcií na počítači v jednej výške; telefón bez stavového čipu v úvode; v Kontakte jedno Navigovať (na mapovej karte); prístupný názov „Ukážka Ladydefence: …“; `test_zostav` |
+| `20811fe` | Mäkký okraj panelovej fotky prechodom farby namiesto masky; odstránené vložené volanie živých údajov za dlaždicami (zhoršovalo LCP, pozri nižšie) |
+| `b3a3b21` | Štítok „Teraz · Zdravý chrbát“ sa pri 390 px zmestí do riadka |
+
+| Nález | Stav | Dôkaz po oprave |
+|---|---|---|
+| KF-1 logo MDS v päte 900–1279 px zúžené | opravené (`.foot-partner picture,img{flex:none}`) | `oprava/pata-mds.log`: 40 × 40 pri 768–1440 px; `test_vzhlad` [5] „obrázky bez orezu nie sú zdeformované“ – na `c6c01d0` ZLE (31,3 × 40, 22 %), teraz OK pri 6 šírkach |
+| KF-2 mäkký úvod na tablete na výšku | opravené (`sizes` s `(max-width: 760px) and (orientation: portrait)`) | `oprava/hero-ostrost.log`: 768 / 820 / 834 px → zdroj `-1600`, ostrosť 1,04 / 0,98 / 0,96 (predtým 0,70 / 0,66 / 0,65) |
+| KZ-01 štítok cez nadpis pri 320 px | opravené | `oprava/prekryv-final.txt`: prekrytie ≤ −12 px pri 320–390 (predtým +26 / +10 px pri 320) |
+| KZ-02 orezané štítky 320–390 px | opravené (zalomenie povolené, pod 400 px užší okraj, písmo ostáva 13 px) | `prekryv-final.txt`: 0 orezaných; `test_vzhlad` [5] štítky celé pri 360–1920 |
+| KZ-03 rozvrh 320/360 px | opravené | `prekryv-final.txt`: šírka textu 184 px (320) / 224 px (360), nič nepreteká (predtým 85 px, čip 94 > 88) |
+| KZ-04 ostrý rez fotky v spodnom rade Ponuky (1440) | opravené (fotka vpravo v prirodzenom pomere, ľavý okraj prechádza do farby karty) | snímky `oprava/snimky/po2-1440-cesta-svc-grid.jpg`, `po2-1024-…` |
+| KF-4 label in name | opravené | `obsah/texty.json:119` „Ukážka Ladydefence: kurz s Tomášom Židekom …“ |
+| KZ-05 „Teraz“ len pri Bojových | opravené | snímky lekcií 390 / 1440: Bojové aj Zdravý chrbát „Teraz, do 19:00“, ostatné najbližší termín |
+| KZ-06 nepokojný rytmus lekcií (1440) | zmiernené (rezervované 2 riadky časov + riadok stavu, nadpisy v jednej výške; MDS má dvojriadkový názov) | `test_vzhlad` snímka `1440-treningy.jpg` |
+| KZ-07 opakované akcie | čiastočne: čip stavu v úvode na telefóne skrytý, v Kontakte o jedno Navigovať menej (Navigovať 7 → 6); červený pás a dok ostali | `prepo/po-390-00-prva-obrazovka.jpg`, `po-390-11-kontakt.jpg` |
+| KZ-09 „nová veta“ v cenníku | bez zmeny – nie je nová: v `36d8066` je „Neobmedzené vstupy – pri troch tréningoch do týždňa vyjde lacnejšie než jednorazové vstupy.“ (`git show 36d8066:obsah/cennik.json`, riadok 22), teraz skrátená | |
+| KZ-10 CLS 0,00035 (1440) | neopravené: oprava vloženým `GK.paint()` za dlaždicami dala CLS 0, ale v pokuse A/B (6 párov, 1440) LCP medián 220 ms proti 188 ms bez nej (`oprava/vykon2/suhrn.md`) – ponechané 0,00035 (hranica „dobré“ 0,1) | `oprava/vykon2/` |
+| KZ-08 prázdna plocha v kartách trénerov | neopravené: rovnaká výška kariet v páse s tlačidlom dole je zámer; popisy majú jednu vetu (48–83 znakov) | |
+| KF-3 ostrosť obmedzená zdrojom | neopravené (nie regresia; treba väčšie zdroje alebo iné rozloženie karty mapy na tablete) | `oprava/fotky-analyza.log` |
+
+**Overenie na HEAD:** unittest **99 OK**; `test_prehliadac` **19 OK** (pri plnom disku `/tmp` padal Chromium – spúšťať
+s `TMPDIR` na voľnom mieste, napr. `/dev/shm`); `test_vzhlad` 360–1920 px **185 OK / 0 ZLE** (stav `20811fe`, po
+`b3a3b21` kontroly 1–5 a 8 pri 360/390 50 OK); `app.js` gzip 12 995 B (bez zmeny). Fotky pri 6 šírkach, lightbox
+a A/B: `gym/profi/oprava/ODOVZDANIE.md`.
