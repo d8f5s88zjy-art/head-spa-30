@@ -10,8 +10,8 @@ by mala byť tu alebo v súboroch, na ktoré odkazuje.
 | Živý web dnes | repozitár `d8f5s88zjy-art/Lupa-gym`, vetva `main` = commit `4fb1416` (tvoja verzia), web <https://d8f5s88zjy-art.github.io/Lupa-gym/> | beží, bez mojich zmien |
 | Moje hotové zmeny (logo, Marko Rigo, Bar, editor pre Ondreja) | záloha `lupa-gym-zaloha.bundle` v tomto priečinku, vetva `main` (commity `69d7665` až `396f446`) | hotové, skontrolované, **nenahraté** do Lupa-gym |
 | Nový vzhľad (redizajn) | tá istá záloha, vetva `redizajn-2026-10` (od `534f588`) | **rozpracované**, nenasadzovať |
-| Profesionálny vzhľad (želanie z 3. 11.: „menej jak dokument, ako profesionálna stránka“) | vetva `profesionalny-vzhlad` (od `36d8066`, posledný commit `b3a3b21` po oprave nálezov kontrol z 5. 11.), prírastková záloha `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku | **hotové a overené**, nezverejnené, nenasadené (časť 2) |
-| Náhľad redizajnu | <https://claude.ai/artifact/2a5djhGB6rjJKtWyUBsffC> (súkromný, zdieľa sa cez Share) | stav pred pohybovým systémom |
+| Profesionálny vzhľad (želanie z 3. 11.: „menej jak dokument, ako profesionálna stránka“) | vetva `profesionalny-vzhlad` (od `36d8066`, posledný commit `b3a3b21` po oprave nálezov kontrol z 5. 11.), prírastková záloha `lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku | **hotové a overené**, zverejnené v súkromnom náhľade claude.ai 5. 11. (verzia 4), nenasadené (časť 2) |
+| Náhľad redizajnu | <https://claude.ai/artifact/2a5djhGB6rjJKtWyUBsffC> (súkromný, zdieľa sa cez Share) | od 5. 11. Profesionálny vzhľad `b3a3b21` (verzia 4; predtým Filmová vrstva) |
 | Špecifikácia redizajnu | `SPEC.md` v tomto priečinku | záväzná pre dokončenie |
 | Denník implementácie | `IMPLEMENTACIA-POZNAMKY.md` v tomto priečinku | všetky rozhodnutia, merania a odchýlky |
 | Návod pre Ondreja | `NAVOD-PRE-ONDREJA.md` (kópia z repozitára) | aktuálny pre vetvu `main` |
@@ -69,7 +69,7 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
   a lepiace prvky (úvod, Kde začať, video lekcií, nadpis Otázok) sú od B3/B4 (SPEC 5.2 #4–5); či ostanú, rozhodne majiteľ.
 
 **Vetva `profesionalny-vzhlad` (od `36d8066`, 3.–5. 11. 2026, posledný commit `b3a3b21`; záloha
-`lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku, obnova v časti 6; nezverejnená, do Lupa-gym **nenahratá**):**
+`lupa-gym-profesionalny-vzhlad.bundle` v tomto priečinku, obnova v časti 6; v súkromnom náhľade claude.ai od 5. 11., do Lupa-gym **nenahratá**):**
 
 - Na želanie majiteľa z 3. 11.: „Skús to fitko urobiť menej jak dokument ale ako profesionálnu stránku s ktorou bude
   zákazník spokojný.“ Tri koncepty, porota (víťaz A „Klub ako značka“ s prvkami z B a C) a plán P-01 až P-33
@@ -119,7 +119,7 @@ v tomto priečinku, obnova v časti 6; zverejnená v náhľade claude.ai 3. 11. 
 | Kontrola B4 | nezávislá kontrola pohybového systému a opravy | hotové (`809bc02`); oba otvorené body (Späť po skoku z menu, biela plocha mapy) opravené vo vetve `filmova-vrstva` (`c6aa7e7`) |
 | B5 | výkon a prístupnosť (SPEC kap. 9 a 10), Lighthouse, klávesnica | nezačaté |
 | Filmová vrstva | požiadavka majiteľa: „filmové prechody, kurzor činka, cinematické efekty, profesionálne, skontrolovať fotky“ | **implementované** vo vetve `filmova-vrstva` (`dcd8414`, `c6aa7e7`, `07eca7a`, `afe892b`, `c8de97f`), nezávislé kontroly KF a KP hotové, ich stredné nálezy opravené v `36d8066` (skok z mobilného menu bez prekrytia menu s cieľom, pomalé odďaľovanie len širokej plochy – menej vrstiev, Tab neodíde pod otvorené menu, rozvrh Home/End); čaká na nový náhľad pre majiteľa a zlúčenie do `redizajn-2026-10`. Otvorené: lightbox ako „premietanie“ (FIL-07, voliteľné), prah vrstiev počas prechodov, ručné overenie kurzora a prechodov na iPhone (Safari 18 a 26) a Androide |
-| Profesionálny vzhľad | želanie majiteľa z 3. 11. (menej dokument, viac profesionálna stránka) | **implementované a overené** vo vetve `profesionalny-vzhlad` (`b0a3273` až `c6c01d0`), čaká na náhľad pre majiteľa a jeho rozhodnutia v časti 5 (body 7–11); nahrádza štruktúru z B2–B4 a zredukuje filmovú vrstvu |
+| Profesionálny vzhľad | želanie majiteľa z 3. 11. (menej dokument, viac profesionálna stránka) | **implementované a overené** vo vetve `profesionalny-vzhlad` (`b0a3273` až `b3a3b21`), skeptik 5. 11.: poslať; náhľad majiteľovi poslaný 5. 11., čaká na jeho rozhodnutia v časti 5 (body 7–11); nahrádza štruktúru z B2–B4 a zredukuje filmovú vrstvu |
 | B6 | záverečná kontrola, snímky 390–1920 px, návody, zoznam pre majiteľa | nezačaté |
 
 **Filmová vrstva, materiál a pravidlá:** použité sú len súbory v repozitári – skutočné fotky (`assets/img/f`, tím)
@@ -197,7 +197,7 @@ Profesionálny vzhľad (prírastková záloha, potrebuje `36d8066` z vetvy `film
 ```bash
 git bundle verify ../lupa-gym-profesionalny-vzhlad.bundle
 git fetch ../lupa-gym-profesionalny-vzhlad.bundle profesionalny-vzhlad:profesionalny-vzhlad
-git log --oneline profesionalny-vzhlad -1 # má byť c6c01d0
+git log --oneline profesionalny-vzhlad -1 # má byť b3a3b21
 ```
 
 Zostavenie a testy (Python 3 + `pip install -r nastroje/requirements.txt`):
