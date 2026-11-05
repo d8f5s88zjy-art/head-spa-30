@@ -312,7 +312,7 @@ export async function spusti(api) {
     const posl = rozhovor[rozhovor.length - 1], otazka = rozhovor[rozhovor.length - 2];
     if (posl && posl.r === 'a' && otazka) suvisiace(otazka.t);
     novy.hidden = !rozhovor.length;
-    zoz.scrollTop = zoz.scrollHeight;
+    requestAnimationFrame(() => { zoz.scrollTop = zoz.scrollHeight; }); // v snímke, nie hneď po zápise (vynútené rozloženie)
   }
   function vyska() { area.style.height = 'auto'; area.style.height = Math.min(area.scrollHeight, 140) + 'px'; }
 
@@ -390,8 +390,15 @@ export async function spusti(api) {
   }
   function otvor(on) {
     panel.hidden = !on; clona.hidden = !on; btn.setAttribute('aria-expanded', String(on)); html.classList.toggle('asi-open', on);
-    modal(on);
-    prisposob();
+    // C4: rozmery (prisposob číta výšku okna) až v snímke po zápise a inert zvyšku stránky až po vykreslení – inak by
+    // ťuk čakal na prepočet štýlu celej stránky (asi 950 prvkov) ešte pred prvým obrazom okna
+    requestAnimationFrame(prisposob);
+    // zavretie: okno zmizne hneď, inert stránky sa zruší a fokus vráti až po vykreslení (prvok, na ktorý sa fokus vracia,
+    // môže byť v inert časti, preto najprv modal(false))
+    requestAnimationFrame(() => setTimeout(() => {
+      if (on !== panel.hidden) modal(on);
+      if (!on && panel.hidden && navrat && navrat.focus) navrat.focus({ preventScroll: true });
+    }, 0));
     if (on) {
       // časté otázky: témy sa doplnia na úvodnú obrazovku, keď sa načítajú (súvisiace pod obnoveným rozhovorom až s kmeňmi)
       if (!otazky) nacitajOtazky(rozhovor.length > 0).then(() => {
@@ -403,7 +410,7 @@ export async function spusti(api) {
       // z bubliny sa fokus po zavretí vráti na ikonu (bublina už nebude)
       navrat = oznam.contains(document.activeElement) ? btn : document.activeElement;
       schovajOznam(); popisy(); obsah(); setTimeout(pole, 30);
-    } else if (navrat && navrat.focus) navrat.focus({ preventScroll: true });
+    }
   }
 
   // bublina: raz za návštevu, keď návštevník ikonu 8 s vidí (nie v úvode, pri menu ani pri ponuke jazyka);

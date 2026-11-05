@@ -47,7 +47,7 @@ function el(tag, attrs = {}, deti = []) {
   return e;
 }
 
-let API = '', dlg = null, koren = null, naStranke = false, pripojene = false;
+let API = '', dlg = null, koren = null, naStranke = false, pripojene = false, bezFokusu = false;
 const s = { krok: 1, sluzba: null, barber: null, chce: null, datum: null, cas: null, dni: null, kresliDni: null };
 const pamat = new Map();                               // odpovede servera (barberi a dni dlhšie, časy 110 s)
 
@@ -169,8 +169,13 @@ function otvor(pred = {}) {
   // tlačidlo Späť v telefóne zatvorí okno, nie stránku
   if (!(history.state && history.state.obj)) history.pushState({ obj: true }, '');
   dlg.lang = html.lang || 'sk';
-  if (!dlg.open) { dlg.showModal(); html.classList.add('obj-otvorene'); }
+  // C4: krok sa nakreslí ešte v zatvorenom okne, showModal() potom prepočíta štýl stránky raz a fokus nadpisu už
+  // nevynúti ďalší prepočet a rozloženie (predtým showModal, zápis kroku a hneď nadpis.focus)
+  const nove = !dlg.open;
+  bezFokusu = nove;
   if (s.sluzba) vyberSluzbu(s.sluzba); else chod(1);
+  bezFokusu = false;
+  if (nove) { dlg.showModal(); html.classList.add('obj-otvorene'); nadpis.focus({ preventScroll: true }); }
 }
 function zatvor() { if (dlg && dlg.open) dlg.close(); }
 
@@ -217,9 +222,12 @@ function vykresli(zameraj) {
   }));
   vyber.hidden = !kusy.length;
   telo.replaceChildren(...[krok1, krok2, krok3, krok4][s.krok - 1](L, sl));
-  telo.classList.remove('obj-prichod'); void telo.offsetWidth; telo.classList.add('obj-prichod');
-  if (zameraj) nadpis.focus({ preventScroll: true });
-  if (!naStranke) { telo.scrollTop = 0; koren.querySelector('.obj-obsah').scrollTop = 0; }
+  // nábeh kroku znova: v zatvorenom okne netreba (animácia začne sama pri zobrazení, offsetWidth by vynútil prepočet)
+  if (naStranke || dlg.open) { telo.classList.remove('obj-prichod'); void telo.offsetWidth; }
+  telo.classList.add('obj-prichod');
+  if (zameraj && !bezFokusu) nadpis.focus({ preventScroll: true });
+  // v zatvorenom okne netreba: zobrazené okno začína hore samo (zápis scrollTop by vynútil prepočet štýlu)
+  if (!naStranke) { if (dlg.open) { telo.scrollTop = 0; koren.querySelector('.obj-obsah').scrollTop = 0; } }
   // na stránke: nový krok začína hore, ak je začiatok bloku nad oknom (bez únosu skrolu, len jeden posun)
   else if (zameraj && koren.getBoundingClientRect().top < 0) koren.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }

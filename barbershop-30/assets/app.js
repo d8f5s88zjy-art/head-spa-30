@@ -621,11 +621,14 @@ if (motionOn && mqFinePointer.matches) {
    9. Menu (mobil)
    ---------------------------------------------------------------------------- */
 let bodyOverflowBefore = '';
+let menuInert = [];   // prvky, ktorým otvorené menu dalo inert (po zavretí sa vrátia)
 function lockScroll(lock) {
   if (lock) { bodyOverflowBefore = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
   else document.body.style.overflow = bodyOverflowBefore || '';
 }
 
+// po vykreslení snímky (rAF + úloha): práca, ktorá nemá zdržať prvý obraz po ťuku
+const poSnimke = (f) => requestAnimationFrame(() => setTimeout(f, 0));
 function setMenu(open, { restoreFocus = true } = {}) {
   if (!header || !navToggle || !nav) return;
   open = !!open;
@@ -635,15 +638,21 @@ function setMenu(open, { restoreFocus = true } = {}) {
   navToggle.setAttribute('aria-expanded', String(open));
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
-  setClass(mobileCta, 'is-hidden', ctaHidden());
-  // otvorené menu: Tab a čítačka ostanú v menu, obsah pod ním je inert (Esc a ťuk mimo menu ho zavrú)
-  for (const el of [$('main'), $('footer'), mobileCta]) if (el) el.toggleAttribute('inert', open);
-  if (open) {
-    const first = $('a, button', nav);
-    first?.focus({ preventScroll: true });
-  } else if (restoreFocus) {
-    navToggle.focus({ preventScroll: true });
-  }
+  setClass(mobileCta, 'is-hidden', ctaHidden(curY)); // poloha zo slučky: čítanie scrollY by tu vynútilo rozloženie (C4)
+  // fokus v snímke po zápise (prepočíta len menu), inert až po vykreslení: inert prepočíta štýl celého obsahu (asi
+  // 850 prvkov) a pred ním by menu prišlo o desiatky ms neskôr. Otvorené menu: Tab a čítačka ostanú v menu, všetko
+  // mimo lišty je inert, aj pás kapitol, Barber a preskakovací odkaz (Esc a ťuk mimo menu ho zavrú)
+  requestAnimationFrame(() => {
+    if (menuOpen !== open) return;
+    // prvý viditeľný prvok menu (tlačidlo jazyka je na telefóne skryté, jazyky sú v menu ako rad skratiek)
+    if (open) [...nav.querySelectorAll('a, button')].find((e) => !e.closest('[hidden]'))?.focus({ preventScroll: true });
+    else if (restoreFocus) navToggle.focus({ preventScroll: true });
+  });
+  poSnimke(() => {
+    if (menuOpen !== open) return;
+    if (open) { menuInert = [...document.body.children].filter((e) => e !== header && !e.hasAttribute('inert') && !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(e.tagName)); menuInert.forEach((e) => e.setAttribute('inert', '')); }
+    else { menuInert.forEach((e) => e.removeAttribute('inert')); menuInert = []; }
+  });
 }
 
 if (navToggle && nav && header) {
