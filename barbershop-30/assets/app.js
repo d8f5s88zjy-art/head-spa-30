@@ -249,7 +249,7 @@ function apply(p) {
     for (const a of navLinks) setAttr(a, 'aria-current', a.getAttribute('href') === currentHash ? 'true' : null);
   }
 
-  if (kino) kresliPas(y, section, !!(karta && karta.first));
+  if (kino) { kresliPas(y, section, !!(karta && karta.first)); if (kino.krok) kino.krok(y); }
 
   // lišta, linka príbehu, plávajúce CTA
   const scrolled = curY > 80;                               // nečítať scrollY po zápisoch štýlu
@@ -361,10 +361,11 @@ window.addEventListener('scroll', () => { skrolT = performance.now(); start(); }
 if (kino) {
   const N = storyLinks.length;
   const sec = (i) => sections.find((x) => x.scene === i + 1);
-  // cieľ kapitoly: jej titulná karta je celá na obrazovke
+  // titulná karta kapitoly; cieľ kapitoly: karta je celá na obrazovke
+  const karta = (i) => { const s = sec(i); return s && shots.find((x) => x.title && x.top >= s.top - 1); };
   const ciel = (i) => {
     const s = sec(i); if (!i || !s) return 0;
-    const t = shots.find((x) => x.title && x.top >= s.top - 1);
+    const t = karta(i);
     return Math.min(maxScroll, (t ? t.top : s.top) + vh * 0.25, s.top + s.height - vh * 0.1);
   };
   let tah = null;
@@ -397,7 +398,8 @@ if (kino) {
     storyLinks[j].focus({ preventScroll: true });
     window.scrollTo({ top: ciel(j), behavior: motionOff || Math.abs(j - i) > 1 ? 'instant' : 'smooth' });
   });
-  window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; } };
+  // karta(i): [začiatok, dĺžka] karty kapitoly; krok: funkcia kino.js volaná v slučke (titulky Remesla, B5)
+  window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; }, karta: (i) => { const t = karta(i); return t && [t.top, t.free]; }, set krok(f) { kino.krok = f; apply(shownP); } };
   const modul = () => import('./kino.js');
   kino.play.addEventListener('click', () => modul().then((m) => m.prepni()).catch(() => {}));
   // Kino a „Ďalej“ (kino.js) ako posledný v pláne lenivých modulov (5b)
