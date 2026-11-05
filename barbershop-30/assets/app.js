@@ -1,13 +1,9 @@
 /*
- * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; docs/TOUR_DIRECTION.md; docs/ART_DIRECTION.md §8).
- *
- * Jediný zdroj pravdy je scroll. Jedna slučka requestAnimationFrame číta window.scrollY, počíta celkový
- * progress a lokálne t každého záberu (.film-shot), zapisuje CSS premenné na kotvy (nikdy na <html>), prepína stavy
- * (is-in, data-scene-active, lišta, linka príbehu, mobilné CTA) a riadi tiché videoslučky, menu a lightbox.
- * Film zo skutočných fotiek (assets/film.js) je samostatný modul: číta kotvy .film-shot a triedy world /
- * world-in / world-off na <html> – tento súbor ich nenastavuje ani nečíta.
- * Žiadne externé požiadavky, žiadna analytika, žiadne globálne premenné
- * (iba window.__renderDone / window.__scrollSettled pre source/shot.mjs a testy).
+ * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; TOUR_DIRECTION.md; ART_DIRECTION.md §8).
+ * Jediný zdroj pravdy je scroll: jedna slučka rAF číta scrollY, počíta t každého záberu (.film-shot), píše CSS
+ * premenné na kotvy (nikdy na <html>), prepína stavy a riadi videá, menu a lightbox. Film (film.js) je samostatný
+ * modul (triedy world, world-in, world-off). Bez externých požiadaviek a analytiky; globálne len __renderDone a
+ * __scrollSettled pre testy.
  */
 
 const html = document.documentElement;
@@ -110,8 +106,7 @@ function measure() {
     // voľná dĺžka karty: celá kotva, pri .title-long (za kartou je pás) bez poslednej výšky okna
     const long = el.classList.contains('title-long');
     const free = Math.max(1, r.height - (long ? vh : 0));
-    // pred kartou je pás (tím, cenník, galéria): ako film.js, záber sa vymení ešte pod pásom
-    // (v strede úseku, keď pás kryje celé okno fotky; na telefóne na výšku len pás fotky hore)
+    // pred kartou je pás (tím, cenník, galéria): záber sa vymení ešte pod ním, v strede úseku (ako film.js)
     const prev = el.previousElementSibling || (el.parentElement.previousElementSibling || {}).lastElementChild;
     const afterBand = !!(title && prev && prev.classList && prev.classList.contains('band'));
     let swap = 0;
@@ -184,8 +179,7 @@ function readTarget() {
   targetP = clamp01(curY / maxScroll);
 }
 
-// Aktívna sekcia: tá, v ktorej leží bod 40 % výšky okna (sekcie sú rôzne dlhé – záber + pás);
-// pred prvou je prvá, za poslednou posledná. Pätička vyhráva pre navigáciu, keď bod leží v nej.
+// aktívna sekcia: tá s bodom 40 % výšky okna; pätička vyhráva pre navigáciu, keď bod leží v nej
 function closestSection(y) {
   const mark = y + vh * 0.4;
   let best = null;
@@ -200,22 +194,16 @@ function closestSection(y) {
 
 function apply(p) {
   const y = p * maxScroll;
-  // výzva a dvere v úvode zmiznú v prvých 2 % skrolu; premenná ide len na kotvu úvodu (na <html> by sa
-  // dedila do celej stránky a každý zápis by prepočítal asi 750 prvkov v každej snímke skrolu)
+  // výzva a dvere v úvode zmiznú v prvých 2 % skrolu (premenná len na kotvu úvodu, na <html> by prepočítala celú stránku)
   if (shots[0] && shots[0].first) setVar('--hint', 1 - p / 0.02, shots[0].el);
 
-  // lokálne t záberu: 0 keď stred obrazovky vstúpi na jeho horný okraj, 1 keď vyjde spodným okrajom.
-  // Z neho CSS odvodí jemný prejazd zálohy (scale 1 → 1.06, premenná --sp na kotve) a stav data-at prvkov.
+  // t záberu: 0 keď stred okna vstúpi na horný okraj kotvy, 1 keď vyjde spodným (--sp pre CSS a data-at prvky)
   for (const s of shots) {
     const t = clamp01((y + vh * 0.5 - s.top) / s.height);
     setVar('--sp', t, s.el);
     for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
-    // titulná karta: u = 0 keď horný okraj kotvy dosiahne horný okraj okna (karta sa pripne), 1 keď spodný.
-    // Krytie: nábeh 0 až 0,12 (úvod bez nábehu), odchod 0,92 až 1; nikdy sa nehýbe, mení sa len krytie.
-    // Telefón na výšku (pás fotky hore): karta za pásom ide hneď za ním a je vidieť, už keď vychádza zdola
-    // (scéna začína o pás skôr, P18), a karta pred pásom nezmizne skôr, ako ju pás prekryje (zhasne až pod ním,
-    // keď jeho horný okraj prejde pás fotky; kotva oreže len do strán, kratší pás by ju inak ukázal pod sebou),
-    // takže pod fotkou nikdy neostane prázdny atrament.
+    // titulná karta: u = 0 pri pripnutí, 1 na konci kotvy; mení sa len krytie (nábeh 0–0,12, odchod 0,92–1).
+    // Telefón na výšku (P18): karta za pásom je vidieť už zdola, karta pred pásom zhasne až pod ním (bez prázdna).
     if (s.title) {
       const u = (y - s.top) / s.free;
       const inO = s.first || (pas && s.afterBand) ? 1 : ease01(u / CARD_IN);
@@ -225,16 +213,12 @@ function apply(p) {
       setClass(s.el, 'is-on', o > 0.01);
     }
   }
-  // zábery bez filmu (pokojná verzia, záloha kým film nebeží): stoja cez celé okno; ďalší sa prelína navrch
-  // počas nábehu svojej karty a predchádzajúci zmizne, až keď je nový celý (nikdy nevyjde zdola cez text)
+  // zábery bez filmu stoja cez celé okno; ďalší sa prelína navrch počas nábehu svojej karty, starý zmizne až potom
   const footerIn = !!footerBox && y + vh > footerBox.top;
-  // aktuálna karta podľa poradia (posledná, ktorej horný okraj je nad stredom okna); okolie sa ráta v kartách,
-  // nie v pixeloch, aby ho neobišlo rozloženie, ktoré sa pri načítaní ešte dopočítava (inak by sa naraz
-  // začali sťahovať zálohy celej stránky)
+  // aktuálna karta: posledná s horným okrajom nad stredom okna (okolie v kartách, nie v px – rozloženie sa dopočítava)
   let cur = 0;
   for (let i = 0; i < titles.length; i++) if (titles[i].top <= y + vh * 0.5) cur = i;
-  // telefón na výšku: za pásom sa záber vymení ešte pod ním (pás kryje celý pás fotky, P18), aby spod neho vyšla
-  // hotová fotka ako vo filme; inde sa prelína počas nábehu karty
+  // telefón na výšku: za pásom sa záber vymení ešte pod ním (P18); inde sa prelína počas nábehu karty
   const prelinanie = (s) => (pas && s.afterBand ? ease01((y - s.swap) / (0.2 * vh) + 0.5) : ease01((y - s.top) / s.free / CARD_IN));
   let karta = null, kartaSo = 0;
   for (let i = 0; i < titles.length; i++) {
@@ -246,13 +230,11 @@ function apply(p) {
     setClass(s.el, 'is-shown', so > 0.001);
     // ukázaná karta: pri prelínaní tá, ktorá už prevažuje (neskoršia s krytím aspoň 0,5)
     if (so > 0.001 && (!karta || so >= 0.5 || kartaSo < 0.5)) { karta = s; kartaSo = so; }
-    // okolie: záloha sa načíta (display) len pri aktuálnej karte, dvoch ďalších a jednej predchádzajúcej;
-    // kým sa stránka nenačíta celá, len úvod (prvý obraz má sieť sám pre seba)
+    // okolie: záloha sa načíta pri aktuálnej, dvoch ďalších a jednej predchádzajúcej karte; pred load len úvod
     setClass(s.el, 'is-near', document.readyState === 'complete' ? i >= cur - 1 && i <= cur + 2 : i === 0);
   }
 
-  // aktívna kapitola: z ukázanej karty (menu, lišta aj pás súhlasia s tým, čo zákazník vidí, KF-10);
-  // bez ukázanej karty (pätička) podľa polohy
+  // aktívna kapitola z ukázanej karty (KF-10), bez nej (pätička) podľa polohy
   const blizko = closestSection(y), footerWins = blizko.footerWins;
   posScene = blizko.section ? blizko.section.scene : 0;
   const section = (!footerWins && karta && karta.sec) || blizko.section;
@@ -394,8 +376,7 @@ if (kino) {
     if (!tah || e.pointerId !== tah.id) return;
     if (!tah.moved && Math.abs(e.clientX - tah.x0) < 8) return;
     if (!tah.moved) { tah.moved = true; storyLine.setPointerCapture(e.pointerId); html.classList.add('kino-tah'); }
-    // poloha v kapitole i ide od jej cieľa (karta celá na obrazovke) po cieľ ďalšej, takže začiatok kapitoly
-    // ukáže tú istú kapitolu ako ťuk a ťah doprava nikdy neskočí o kapitolu späť
+    // poloha v kapitole i ide od jej cieľa po cieľ ďalšej (ťah doprava nikdy neskočí o kapitolu späť)
     const f = Math.max(0, Math.min(0.9999, (e.clientX - tah.a.left) / (tah.b.right - tah.a.left))), i = Math.floor(f * N);
     const y0 = ciel(i), y1 = i + 1 < N ? ciel(i + 1) - 1 : maxScroll;
     window.scrollTo({ top: Math.max(0, y0 + (f * N - i) * Math.max(0, y1 - y0)), behavior: 'instant' });
@@ -460,11 +441,8 @@ document.addEventListener('click', (e) => {
 window.addEventListener('hashchange', () => snapNow(motionOn ? 900 : 100));
 
 /* ----------------------------------------------------------------------------
-   6b. Plynulý skrol kolieskom (len počítač s myšou)
-   Koliesko stránku neposúva skokmi po zárezoch, ale posúva cieľ, ku ktorému stránka plynulo dobieha
-   (časová konštanta 140 ms), takže film, dosky aj prechody idú ako jeden pomalý pohyb kamery.
-   Dotyk, klávesy, posuvník a odkazy na kotvy ostávajú natívne; pri obmedzení pohybu, Ctrl/Cmd+koliesko
-   (lupa), vodorovnom skrole, otvorenom menu alebo lightboxe sa koliesko nechá prehliadaču.
+   6b. Plynulý skrol kolieskom (počítač s myšou): koliesko posúva cieľ, stránka k nemu dobieha (140 ms).
+   Dotyk, klávesy a kotvy natívne; pri obmedzenom pohybe, lupe, vodorovnom skrole, menu či lightboxe prehliadač.
    ---------------------------------------------------------------------------- */
 if (motionOn && mqFinePointer.matches) {
   const lightbox = $('#lightbox');
@@ -493,41 +471,33 @@ if (motionOn && mqFinePointer.matches) {
   window.addEventListener('scroll', () => { if (!ours && !raf) cur = target = window.scrollY; }, { passive: true });
 }
 
-/* 7. (kurzor) zrušené: --pointer-x/y na <html> pri každom pohybe myši prepočítali štýl celej stránky a nič
-   ich nečítalo; film má na posun pohľadu vlastný pointermove */
+/* 7. (kurzor) zrušené: --pointer-x/y na <html> prepočítavali celú stránku a nič ich nečítalo */
 
 /* ----------------------------------------------------------------------------
-   7b. Atmosféra (assets/atmosfera.js: kurzor nožnice, svetlo pod kurzorom, hudba, zvuk strihnutia)
-   Načíta sa v pláne lenivých modulov (5b), nič z nej nesúperí s prvým obrazom. Kliknutie alebo ťuknutie pred
-   načítaním sa odovzdá (hudba sa pustí hneď po načítaní).
+   7b. Atmosféra (atmosfera.js: kurzor, svetlo, hudba, strihnutie) v pláne 5b; ťuk pred načítaním sa odovzdá.
    ---------------------------------------------------------------------------- */
 (function atmosfera() {
   let gesture = false;
   plan.pridaj(() => import('./atmosfera.js').then((m) => { m.spusti(gesture); }), 4);
-  // gesto pre hudbu: kliknutie myšou alebo ťuknutie (click po dotyku), nie švih prstom pri skrolovaní ani kláves;
-  // ťuk na ovládač (menu, odkaz, tlačidlo) hudbu nepúšťa, ▶ Kino áno (C6, rovnako ako atmosfera.js)
+  // gesto pre hudbu: klik myšou alebo ťuk, nie švih ani kláves; ovládač nie, ▶ Kino áno (C6, ako atmosfera.js)
   const naOvladac = (e) => e.target instanceof Element && !!e.target.closest('a, button, [role="button"], summary, input, select, textarea, label') && !e.target.closest('.kino-play');
   addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && !e.button && !naOvladac(e)) gesture = true; }, { passive: true });
   addEventListener('click', (e) => { if (e.detail && !naOvladac(e)) gesture = true; }, { passive: true });
 })();
 
 /* ----------------------------------------------------------------------------
-   7b2. Recenzie (assets/recenzie.js): doslovné citácie z Google. Sú v samostatnom module, aby HTML ostalo v prvom
-   okne TCP; bez skriptu ostáva odkaz na hodnotenie na Google.
+   7b2. Recenzie (recenzie.js): citácie z Google mimo HTML (prvé okno TCP); bez skriptu ostáva odkaz.
    ---------------------------------------------------------------------------- */
 (function recenzie() {
   const zoznam = document.querySelector('[data-recenzie]');
   if (!zoznam) return;
-  // hneď (malý modul, ďaleko pod prvou obrazovkou): obsah pod ním sa tak posunie ešte pred načítaním stránky,
-  // nie počas skrolovania, a kotvy filmu sa merajú už s recenziami
+  // hneď: obsah pod nimi sa posunie ešte pred load, nie počas skrolu, a kotvy sa merajú už s nimi
   import('./recenzie.js').then((m) => m.spusti(zoznam)).catch(() => {});
 })();
 
 /* ----------------------------------------------------------------------------
-   7b3. Asistent (assets/asistent.js): okno s otázkami a odpoveďami. Zapne ho nasadenie (pages.yml) atribútom
-   data-asistent na <html> s adresou servera, len keď je v GitHube kľúč API; bez neho sa nič nesťahuje ani neposiela.
-   Na vlastnom počítači ide skúšobný server cez ?asistent=<adresa>. ?asistent=off ho vypne, ?asistent=ukazka ukáže
-   okno bez servera s vopred pripravenými odpoveďami z údajov webu (na kontrolu, výrazne označené, nie AI).
+   7b3. Asistent (asistent.js): zapne ho data-asistent na <html> (pages.yml, len s kľúčom API), inak nič nesťahuje.
+   Lokálne ?asistent=<adresa>; ?asistent=off vypne, ?asistent=ukazka pripravené odpovede bez servera (označené).
    ---------------------------------------------------------------------------- */
 (function asistent() {
   const q = new URLSearchParams(location.search).get('asistent');
@@ -538,16 +508,13 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
-   7b4. Objednávka (assets/objednavka.js): služba → barber → deň a voľný čas z rezervačného kalendára v štýle webu.
-   Zapne ju nasadenie (pages.yml) atribútom data-objednavka na <html> s adresou servera, len so súhlasom prevádzky
-   rezervačného systému; bez neho odkazy Objednať sa vedú rovno do rezervačného systému. Na vlastnom počítači ide
-   skúšobný server cez ?objednavka=<adresa>, ?objednavka=off ju vypne, ?objednavka=ukazka ukáže kroky s ukážkovými
-   časmi bez servera (na kontrolu, výrazne označené).
+   7b4. Objednávka (objednavka.js): služba → barber → deň a čas. Zapne ju data-objednavka na <html> (pages.yml, len
+   so súhlasom prevádzky), inak Objednať vedie rovno do rezervačného systému. Lokálne ?objednavka=<adresa>|off|ukazka.
    ---------------------------------------------------------------------------- */
 (function objednavka() {
   const q = new URLSearchParams(location.search).get('objednavka');
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  // ?objednavka=ukazka: ukážka na kontrolu bez servera (aj na náhľade), výrazne označená, nič nerezervuje
+  // ?objednavka=ukazka: ukážka bez servera (aj na náhľade), označená, nič nerezervuje
   const api = q === 'off' ? '' : q === 'ukazka' ? 'ukazka' : (lokal && q) || html.dataset.objednavka || '';
   if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
   let loaded = null;
@@ -558,8 +525,7 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
-   7b5. Vizitka a vernostná kartička (assets/karty.js) v pásme pod kontaktom. Sú v samostatnom module, aby HTML ostalo
-   v prvom okne TCP; kontakt bez skriptu je v pásme nad nimi a v pätičke.
+   7b5. Vizitka a vernostná kartička (karty.js) pod kontaktom; kontakt bez skriptu je nad nimi a v pätičke.
    ---------------------------------------------------------------------------- */
 (function karty() {
   const kontakt = document.querySelector('.band-contact');
@@ -599,9 +565,8 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
-   8b. Filmové strihy (P14 v style.css): pás nastúpi linkou ako nový záber, fotky tímu a galérie sa odhalia
-   maskou zdola. Len pri povolenom pohybe; trieda js-odhal skryje prvky až tu, takže bez skriptu alebo pri
-   chybe ostáva všetko vidieť. Fotky v jednom rade nastupujú po sebe (--i).
+   8b. Filmové strihy (P14): pás nastúpi linkou, fotky tímu a galérie maskou zdola, po sebe (--i). Len pri pohybe;
+   js-odhal skryje prvky až tu, bez skriptu je všetko vidieť.
    ---------------------------------------------------------------------------- */
 (function strihy() {
   const nodes = $$('.odhal, .band');
@@ -644,9 +609,7 @@ function setMenu(open, { restoreFocus = true } = {}) {
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
   setClass(mobileCta, 'is-hidden', ctaHidden(curY)); // poloha zo slučky: čítanie scrollY by tu vynútilo rozloženie (C4)
-  // fokus v snímke po zápise (prepočíta len menu), inert až po vykreslení: inert prepočíta štýl celého obsahu (asi
-  // 850 prvkov) a pred ním by menu prišlo o desiatky ms neskôr. Otvorené menu: Tab a čítačka ostanú v menu, všetko
-  // mimo lišty je inert, aj pás kapitol, Barber a preskakovací odkaz (Esc a ťuk mimo menu ho zavrú)
+  // C4: fokus v snímke po zápise, inert (prepočet ~850 prvkov) až po vykreslení; inert je všetko mimo lišty
   requestAnimationFrame(() => {
     if (menuOpen !== open) return;
     // prvý viditeľný prvok menu (tlačidlo jazyka je na telefóne skryté, jazyky sú v menu ako rad skratiek)
@@ -767,10 +730,8 @@ if (navToggle && nav && header) {
 })();
 
 /* ----------------------------------------------------------------------------
-   11. Tiché videoslučky (Remeslo, Tím)
-   Pravidlá: play pri viditeľnosti >= 35 %, pause mimo viewportu a pri skrytej karte; súčasne hrá
-   najviac jedno video; video v prvku s data-at alebo .reveal hrá, len kým je prvok zobrazený (.is-in);
-   pri data-motion=off a prefers-reduced-motion sa nič nesťahuje ani neprehráva (ostáva poster).
+   11. Tiché videoslučky (Remeslo, Tím): hrá najviac jedno, pri viditeľnosti ≥ 35 % a zobrazenom prvku (.is-in);
+   pri obmedzenom pohybe nič (ostáva poster).
    ---------------------------------------------------------------------------- */
 (function setupVideos() {
   const vids = $$('video[data-video]');
