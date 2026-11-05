@@ -56,7 +56,7 @@ function suggested() {
 }
 
 /* Zbierka textových uzlov a atribútov na preklad, robí sa raz na pôvodnom slovenskom obsahu */
-let nodes = null, attrs = null;
+let nodes = null, attrs = null, zbierka = false;   // zbierka: celá stránka zozbieraná (nielen lišta a úvod)
 const known = new WeakSet();
 function ok(n) {
   const p = n.parentNode;
@@ -66,9 +66,10 @@ function walk(root, f) {
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: (n) => (ok(n) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
   let n; while ((n = w.nextNode())) f(n);
 }
+const zarad = (n) => { if (known.has(n)) return; known.add(n); nodes.push({ node: n, sk: n.nodeValue, key: norm(n.nodeValue) }); };
 function collect() {
-  nodes = []; attrs = [];
-  walk(document.body, (n) => { known.add(n); nodes.push({ node: n, sk: n.nodeValue, key: norm(n.nodeValue) }); });
+  nodes = nodes || []; attrs = [];
+  walk(document.body, zarad);   // uzly lišty a úvodu, preložené vopred (apply), už v zbierke sú
   document.body.querySelectorAll('[' + ATTRS.join('],[') + ']').forEach((el) => {
     if (el.closest('svg') || el.closest('[data-no-i18n]')) return;
     ATTRS.forEach((a) => {
@@ -82,6 +83,7 @@ function collect() {
   });
   const ti = document.querySelector('title');
   if (ti) attrs.push({ el: ti, attr: 'text', sk: ti.textContent, key: norm(ti.textContent) });
+  zbierka = true;
   watch();
 }
 
@@ -121,17 +123,24 @@ function retell(v, prev, map) {
 
 const later = window.requestIdleCallback ? (f) => requestIdleCallback(f, { timeout: 500 }) : (f) => setTimeout(f, 0);
 function apply(code, map) {
-  if (!nodes) collect();
   prevRev = liveRev; live = map; liveRev = reverse(map);
+  const preloz = (x) => { const tr = map && map[x.key]; x.node.nodeValue = tr ? put(x.sk, tr) : x.sk; };
   let i = 0; const CHUNK = 240;
   const chunk = () => {
     const end = Math.min(nodes.length, i + CHUNK);
-    for (; i < end; i++) { const x = nodes[i], tr = map && map[x.key]; x.node.nodeValue = tr ? put(x.sk, tr) : x.sk; }
+    for (; i < end; i++) preloz(nodes[i]);
     if (i === CHUNK) waiting(false);
     if (i < nodes.length) { later(chunk); return; }
     finish(code, map);
   };
-  chunk();
+  if (nodes) { if (!zbierka) collect(); chunk(); return; }
+  // prvý preklad (C7): najprv lišta a karta úvodu (prvé okno), úvod sa hneď ukáže; zbierka celej stránky (asi 1 000
+  // uzlov a atribútov) a zvyšok prekladu až potom, po kúskoch v nečinnosti
+  nodes = [];
+  document.querySelectorAll('.site-header, .title-hero').forEach((r) => walk(r, zarad));
+  nodes.forEach(preloz); i = nodes.length;
+  waiting(false);
+  later(() => { if (!zbierka) collect(); if (live === map) chunk(); });   // medzitým iný jazyk: preloží ho jeho apply
 }
 function finish(code, map) {
   attrs.forEach((x) => {
