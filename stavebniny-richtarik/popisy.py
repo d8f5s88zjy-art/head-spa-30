@@ -1,12 +1,12 @@
 # Popisky značiek v katalógu. Každý je napísaný len z toho, čo bolo v sortimente na pôvodnom webe,
 # celý zoznam výrobkov ostáva pod popiskom v rozbaľovacej časti.
-# kľúč: (kategória, značka malými písmenami) -> (popisok, obrázok alebo None)
+# kľúč: (kategória, záväzný názov značky malými písmenami, texty.NAZVY_ZNACIEK) -> (popisok, obrázok alebo None)
 # obrázok: 'p/ID' fotka z pôvodného webu, alebo názov fotky z img/ (kľúč kategórie), None = fotka kategórie
 
 ZNACKY = {
     ('dlazby', 'premac'): ('Zámková dlažba, terasové platne, svahové systémy, plotové tvárnice, palisády, obrubníky a odvodňovacie žľaby.', None),
     ('dlazby', 'stadreko'): ('Dlažby, ploty, palisády a svahovky v akciových cenách.', None),
-    ('dlazby', 'dlažby - city stone design'): ('Betónové zámkové dlažby Háčko, Dvojvlna, Top Zóna, Blok, Kyjak, Šesťhran či Romana, k tomu palisády, obrubníky a štiepaný plotový systém Casser.', 'p/446'),
+    ('dlazby', 'city stone design'): ('Betónové zámkové dlažby Háčko, Dvojvlna, Top Zóna, Blok, Kyjak, Šesťhran či Romana, k tomu palisády, obrubníky a štiepaný plotový systém Casser.', 'p/446'),
     ('dvere---okna', 'masonite'): ('Interiérové dvere Masonite I až III, laminované a biele hladké, vchodové a bezpečnostné dvere, posuvné dvere. Jednokrídlové aj dvojkrídlové, plné alebo so sklom, v siedmich dekoroch. Bežné druhy priamo na sklade.', None),
     ('farby---laky', 'het'): ('Interiérové a fasádne farby, latexové a akrylátové farby, penetrácie, tónovacie prípravky, tenkovrstvové a mozaikové omietkoviny a tmely.', None),
     ('farby---laky', 'chemolak'): ('Dekoratívne a priemyselné farby, laky na interiér, exteriér a parkety, syntetické základné aj vrchné nátery, tónovacie systémy Industrymix a Decormix. Čo nie je na sklade, zabezpečíme na požiadanie.', None),
@@ -17,26 +17,26 @@ ZNACKY = {
     ('fasadny-system', 'delap'): ('Fasádny tepelnoizolačný systém s omietkami Spraytex, Sagre, Grafiato a Sandtex, základ Superbond, farebný omietkový základ Kvarctext a farba Super Gold.', None),
     ('hutny-material', 'yssel steel'): ('Oceľové zárubne pre dvere, sadrokartón aj presné tvárnice, požiarne a obložkové zárubne, garážové brány výklopné aj sekcionálne s diaľkovým ovládaním, lešenárske kozy, oceľové dvere, poklopy a zákazková výroba mreží a brán.', None),
     ('hutny-material', 'raven'): ('Kompletný hutný materiál: plechy čierne, pozinkované, medené a hliníkové, betonárska oceľ v tyčiach aj zvitkoch, profilové tyče, rúry, uzavreté profily, zvárané siete a drôty.', None),
-    ('izolacny-material', 'knaufinsulation'): ('Sklená minerálna vlna Ecose v roliach a doskách na šikmé strechy, steny, podhľady a fasády, kamenná vlna Nobasil na podlahy, fasády a podkrovia, extrudovaný polystyrén Polyfoam.', None),
+    ('izolacny-material', 'knauf insulation'): ('Sklená minerálna vlna Ecose v roliach a doskách na šikmé strechy, steny, podhľady a fasády, kamenná vlna Nobasil na podlahy, fasády a podkrovia, extrudovaný polystyrén Polyfoam.', None),
     ('izolacny-material', 'isover, orsil'): ('Minerálna vlna a XPS pre podkrovie, priečky, fasády, ploché strechy a podlahy: Domo, Unirol, Akuplast, Orstrop, Piano, Fasoterm, Styrodur a ďalšie. Tepelná ochrana, akustika aj požiarna bezpečnosť.', None),
     ('izolacny-material', 'parapetrol'): ('Automobilové a priemyselné oleje, obrábacie a konzervačné prostriedky, asfaltové izolačné výrobky a palivá.', None),
     ('izolacny-material', 'parabit'): ('Asfaltové izolačné pásy: ľahké, oxidované, elastomerické modifikované aj špeciálne pásy Parafix, Paraelast, Paraantifire a Parasingle.', None),
-    ('izolacny-material', 'ico pal'): ('Asfaltové pásy SBS Foalbit, Glasbit a Hydrobit, modifikované pásy Elastobit a Polarbit, samolepiace fólie, asfaltové šindle JCP a kompletný strešný systém s fóliami a parozábranami.', 'p/430'),
+    ('izolacny-material', 'icopal'): ('Asfaltové pásy SBS Foalbit, Glasbit a Hydrobit, modifikované pásy Elastobit a Polarbit, samolepiace fólie, asfaltové šindle JCP a kompletný strešný systém s fóliami a parozábranami.', 'p/430'),
     ('izolacny-material', 'optim'): ('Drevocementové dosky Krupinit na tepelnú, zvukovú a protipožiarnu izoláciu, kompozitné dosky Kombidoska a Krupizol, studňové skruže a vstupné šachty.', None),
     ('izolacny-material', 'easytherm'): ('Fasádny, tvrdený a recyklovaný polystyrén EPS 70F, 80F a 100 v rôznych hrúbkach, Styrofoam, akrylové omietky a penetračný náter Easytherm.', None),
     ('izolacny-material', 'den braven'): ('Polyuretánové peny, tmely a silikóny, lepidlá, kotviaca technika, stavebná chémia, strešné fólie a membrány, cementové lepidlá a stierky, maliarsky program a diamantové kotúče.', None),
     ('izolacny-material', 'ekostyrén'): ('Plnivo do betónu z polystyrénovej drte, ktoré výrazne zlepší tepelnoizolačné vlastnosti. Ľahko sa mieša s vodou, cementom a pieskom, ručne aj v miešačke.', None),
-    ('kominove-systemy', 'qatro'): ('Komíny so šamotovými vložkami pre pevné, kvapalné a plynné palivá a s antikorovými vložkami pre kondenzačné kotly. Jednoprieduchové K3 aj dvojprieduchové K4, kompletný certifikovaný systém s ľahkou montážou.', 'p/505'),
-    ('kominove-systemy', 'schiedel'): ('Keramické komínové systémy Absolut, Uni Plus, Solid a Multi s trojnásobnou 30 ročnou zárukou, nerezové komíny ICS, Prima Plus a Technoflex, vetranie Aero Comfort a krby Kingfire.', 'p/571'),
-    ('murovaci-material', 'pezinské tehelne'): ('Tehly TermoBrik TD 440 až TD 85 pre obvodové murivo, akustické, deliace aj nosné priečky, keramické stropné nosníky a vložky, keramické preklady. Pevnosť P10 alebo P15.', 'p/255'),
+    ('kominove-systemy', 'stadreko (komínový systém qatro)'): ('Komíny so šamotovými vložkami pre pevné, kvapalné a plynné palivá a s antikorovými vložkami pre kondenzačné kotly. Jednoprieduchové K3 aj dvojprieduchové K4, kompletný certifikovaný systém s ľahkou montážou.', 'p/505'),
+    ('kominove-systemy', 'schiedel'): ('Keramické komínové systémy Absolut, Uni Plus, Solid a Multi so zárukou výrobcu (trojnásobná 30-ročná), nerezové komíny ICS, Prima Plus a Technoflex, vetranie Aero Comfort a krby Kingfire.', 'p/571'),
+    ('murovaci-material', 'pezinské tehelne'): ('Tehly TermoBRIK TD 440 až TD 85 pre obvodové murivo, akustické, deliace aj nosné priečky, keramické stropné nosníky a vložky, keramické preklady. Pevnosť P10 alebo P15.', 'p/255'),
     ('murovaci-material', 'porfix'): ('Presné tvárnice Porfix Plus pre obvodové a nosné steny, tvárnice a priečkovky Porfix, U profily, samonosné a nosné preklady, stropný systém, lepidlo a omietky. Hrúbky od 5 do 37,5 cm.', 'p/291'),
     ('murovaci-material', 'ytong'): ('Tepelnoizolačné a presné tvárnice pre obvodové, nosné aj nenosné steny, vencové tvárnice, preklady, schodiskové a stropné dielce, montovaný strop, strešné a stenové dielce, malty a náradie. Hrúbky od 5 do 37,5 cm.', 'p/304'),
     ('murovaci-material', 'betonárka nadlice'): ('Betónové tvárnice na stratené debnenie, piliere, soklové a ohradové murivo, nosné a obvodové murivo, priečky a prímurovky, zatrávňovacie dielce a betónové dlažby.', None),
-    ('podhlady---pvc', 'recykling'): ('Výhradný predajca plastových výrobkov pre Nitru a okolie: zatrávňovacie dlažby, záhonové chodníky a obrubníky, nášľapné dielce, plotovky, profily, terasové platne, káblové žľaby a prepravné palety.', None),
+    ('podhlady---pvc', 'transform recykling'): ('Výhradný predajca plastových výrobkov pre Nitru a okolie: zatrávňovacie dlažby, záhonové chodníky a obrubníky, nášľapné dielce, plotovky, profily, terasové platne, káblové žľaby a prepravné palety.', None),
     ('sadrokartonovy---zateplovaci-system', 'stavebné profily'): ('Kompletný systém pre sadrokartón: profily CD, UD, CW a UW, závesy a spojky, rohové a ukončovacie lišty, skrutky a hmoždinky, pásky, brúsne mriežky, obkladové, dlažbové a schodové profily.', None),
     ('sadrokartonovy---zateplovaci-system', 'masterplast'): ('Sadrokartón s príslušenstvom a profilmi, zatepľovací systém so sklotexom, hmoždinkami, polystyrénom a lepidlami, strešné a parotesné fólie, izolácia proti vlhkosti a radónu, OSB dosky.', None),
     ('stavebne-naradie-doplnky', 'slovakia trend'): ('Kompletné stavebné, dielenské, elektrické a záhradkárske náradie: hladítka, kladivá, miešačky, vodováhy, rezače dlažby, rebríky, spojovací materiál, pletivo, ochranné pomôcky, kotlíky aj zváracia technika.', None),
-    ('stavebne-naradie-doplnky', 'haco'): ('Revízne a vaňové dvierka, vetracie mriežky plastové aj nerezové, tanierové ventily, flexo potrubie a spony, podlahové a kanalizačné vpusty.', None),
+    ('stavebne-naradie-doplnky', 'ds haco'): ('Revízne a vaňové dvierka, vetracie mriežky plastové aj nerezové, tanierové ventily, flexo potrubie a spony, podlahové a kanalizačné vpusty.', None),
     ('stavebne-rezivo', 'drepex'): ('Stavebné rezivo priamo na sklade: dosky, hranoly, foršne, strešné laty a krovy, tatranský profil, zrubový obklad, dlážkovica, palubovka a lišty. V ponuke aj palivové drevo agát.', None),
     ('stresne-kritiny', 'tondach'): ('Pálená krytina Bravura, Steinbrück, Mediteran, Brnenka, Twist, Rumba, Samba, Falcovka, Románska, Figaro, bobrovky a viedenské škridly, keramické a nekeramické príslušenstvo, protisnehový systém, fólie a solar.', 'p/340'),
     ('stresne-kritiny', 'mediterran'): ('Betónová strešná krytina Standard, Rundo, Danubia, Coppo a Zenit so všetkými tvarovkami: odvetrávacie a krajné škridly, hrebenáče, pultové škridly, vetracie mriežky, úžľabia a tesniace pásy.', 'p/363'),
@@ -52,7 +52,7 @@ ZNACKY = {
     ('sypke-zmesy', 'baumit'): ('Ručné a strojové omietky, štukové a tenkovrstvové omietky a stierky, kontaktné zatepľovacie systémy s lepiacimi hmotami a hmoždinkami, sanačné systémy Sanova, potery, stavebné lepidlá Baumacol, suché betónové zmesi a murovacie malty.', 'p/240'),
     ('sypke-zmesy', 'murexin'): ('Obkladačská technika od prípravy podkladu po škárovanie a ošetrovanie, stavebná chémia, prísady do betónu, hydroizolácie a tesnenia, epoxidové a polyuretánové systémy, podlahárska technika a farby.', None),
     ('sypke-zmesy', 'styrcon'): ('Paropriepustné zateplenie zo zmesi polystyrénového granulátu a cementu: nehorľavé, rozmerovo stále, na steny, priečky, podhľady aj podlahy. Styrcon 200, lepidlo Lepstyr, Penestyr, sklotex a omietky.', None),
-    ('sypke-zmesy', 'holcim'): ('Najväčší výrobca cementu na Slovensku: vrecovaný cement Extracem 42,5 R a Multicem 32,5 R, cementové spojivo Profimalt na omietky a malty.', 'p/139'),
+    ('sypke-zmesy', 'holcim'): ('Podľa výrobcu najväčší výrobca a dodávateľ cementu na Slovensku. Vrecovaný cement Extracem 42,5 R a Multicem 32,5 R, cementové spojivo Profimalt na omietky a malty.', 'p/139'),
 }
 
 # Popisky produktov bez fotky nechávame z pôvodného webu, dostanú značkovú dlaždicu s logom.

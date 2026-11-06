@@ -6,6 +6,7 @@ try:
     from popisy import ZNACKY
 except ImportError:
     ZNACKY = {}
+from texty import nazov_znacky, OBR_ALT
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OLD = 'http://www.stavebninyrichtarik.sk'
@@ -117,7 +118,7 @@ class Parser:
                 name = _txt(c[1].xpath('.//strong|.//b')[0]).strip(' -–:') if c[1].xpath('.//strong|.//b') else ''
                 full = _txt(c[1]).strip()
                 desc = re.sub(r'^\s*' + re.escape(name) + r'\s*[-–:]?\s*', '', full, flags=re.I).strip(' -–')
-                brands.append({'logo': logo if logo and logo in self.S else None, 'url': a[0].get('href') if a else None, 'name': name.title() if name.isupper() else name, 'text': desc[:1].upper() + desc[1:]})
+                brands.append({'logo': logo if logo and logo in self.S else None, 'url': a[0].get('href') if a else None, 'name': nazov_znacky(name), 'text': desc[:1].upper() + desc[1:]})
             out.append(('brands', brands)); return
         # dátová tabuľka: bez vnorených tabuliek a obrázkov, krátke bunky
         nested = tb.xpath('.//table|.//img|.//p')
@@ -458,10 +459,13 @@ class Parser:
     def _src(self, i):
         return f'{self.pre}img/g/{i[1:]}.webp' if i.startswith('g') else f'{self.pre}img/p/{i}.webp'
 
-    def _img(self, x, cls='', lb=True):
+    def _img(self, x, cls='', lb=True, nahrada=''):
+        """Obrázok: alt zo zdroja, ak je to ľudský text; inak opis z texty.OBR_ALT (logá, letáky) alebo náhrada
+        (názov výrobku z nadpisu karty)."""
         i, alt = x
         w, h = self.S.get(i, (0, 0))
-        img = f'<img src="{self._src(i)}" alt="{html.escape(_alt(alt))}" loading="lazy"{f" width={w} height={h}" if w else ""}>'
+        a = _alt(alt) or OBR_ALT.get(i.lstrip('g'), '') or nahrada
+        img = f'<img src="{self._src(i)}" alt="{html.escape(a)}" loading="lazy"{f" width={w} height={h}" if w else ""}>'
         if lb and (w >= 260 or h >= 200):
             return f'<a href="{self._src(i)}" data-lb="1" class="{cls}">{img}</a>'
         return f'<span class="{cls}">{img}</span>'
@@ -491,17 +495,19 @@ class Parser:
             media = ''
             if imgs and all(not x[0].startswith('g') and self.S.get(x[0], (0, 0))[0] <= 160 and self.S.get(x[0], (0, 0))[1] <= 160 for x in imgs):
                 # všetky malé obrázky (vzorky farieb); pri dvoch a viac sú v rade nad textom (trieda viac), text má celú šírku karty
-                ic = ''.join(self._img(x, cls='', lb=False) for x in imgs)
+                ic = ''.join(self._img(x, cls='', lb=False, nahrada=_nice(it['title']) if it['title'] else '') for x in imgs)
                 return f'<article class="prod icon{" viac" if len(imgs) > 1 else ""} rv"><div class="prod-icon">{ic}</div><div class="prod-body">{f"<h3>{title}</h3>" if title else ""}{body}</div></article>'
             if not imgs and (it['params'] or it['pdfs']) and (self.logo or self.ctx.get('kat_img')):
                 bg = f' style="background-image:url({self.pre}img/{self.ctx["kat_img"]}.webp)"' if self.ctx.get('kat_img') else ''
-                lg = f'<img src="{self._src(self.logo[0])}" alt="" loading="lazy">' if self.logo else f'<span>{html.escape(_nice(it["title"])[:1])}</span>'
+                lga = OBR_ALT.get(self.logo[0], '') if self.logo else ''
+                lg = f'<img src="{self._src(self.logo[0])}" alt="{html.escape(lga)}" loading="lazy">' if self.logo else f'<span>{html.escape(_nice(it["title"])[:1])}</span>'
                 media = f'<div class="prod-media"><div class="tile"{bg}><div class="tile-in">{lg}<b>{title}</b></div></div></div>'
                 return f'<article class="prod rv">{media}<div class="prod-body"><h3>{title}</h3>{body}</div></article>'
             if imgs:
                 big = imgs[0]
-                media = f'<div class="prod-media">{self._img(big, cls="main")}'
-                if len(imgs) > 1: media += '<div class="thumbs">' + ''.join(self._img(x, cls="th") for x in imgs[1:]) + '</div>'
+                nazov = _nice(it['title']) if it['title'] else ''
+                media = f'<div class="prod-media">{self._img(big, cls="main", nahrada=nazov)}'
+                if len(imgs) > 1: media += '<div class="thumbs">' + ''.join(self._img(x, cls="th", nahrada=f'{nazov} – detail' if nazov else '') for x in imgs[1:]) + '</div>'
                 media += '</div>'
             return f'<article class="prod rv{" step" if not title else ""}">{media}<div class="prod-body">{f"<h3>{title}</h3>" if title else ""}{body}</div></article>'
         media = ''.join(self._fig(x) for x in it['imgs'])
@@ -534,12 +540,13 @@ class Parser:
             if h < 100 or w / max(1, h) > 2.4: img = None  # úzke bannery na kartu nepatria
         if img and img.startswith('p/'):
             src = f'{self.pre}img/{img}.webp'; fit = 'contain' if self.S.get(img[2:], (0, 0))[0] < 500 else 'cover'
+            zalt = OBR_ALT.get(img[2:], '') or f'Výrobky {name}'
         else:
-            src = f'{self.pre}img/{self.ctx.get("kat_img", "sklad")}.webp'; fit = 'cover'
+            src = f'{self.pre}img/{self.ctx.get("kat_img", "sklad")}.webp'; fit = 'cover'; zalt = ''
         # odznak s logom len keď je logo čitateľné; prázdny alebo písmenkový odznak vyzerá lacno
         lw, lh = self.S.get(b['logo'], (0, 0)) if b['logo'] else (0, 0)
-        badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="" loading="lazy"></div>' if b['logo'] and lw >= 60 and lh >= 18 else ''
-        media = f'<div class="zm {fit}"><img src="{src}" alt="" loading="lazy">{badge}</div>'
+        badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>' if b['logo'] and lw >= 60 and lh >= 18 else ''
+        media = f'<div class="zm {fit}"><img src="{src}" alt="{html.escape(zalt)}" loading="lazy">{badge}</div>'
         links = ''
         if sub: links += f'<a class="btn small primary" href="{self.rel(self.path, sub[0])}">Podrobnosti a výrobky</a>'
         if b['url']: links += f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>'

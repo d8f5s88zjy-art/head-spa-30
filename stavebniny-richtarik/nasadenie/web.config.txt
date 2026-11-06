@@ -2,95 +2,101 @@
 <!-- Stavebniny Richtárik – nastavenie pre IIS (na hostingu premenovať na web.config). Vyrobené: nasadenie/presmerovania.py -->
 <configuration><system.webServer>
 <rewrite><rewriteMaps><rewriteMap name="stare">
-  <add key="/sk.aspx" value="/" />
-  <add key="/sk/akcie.aspx" value="/akcie/index.html" />
-  <add key="/sk/akcie/betonove-tvarnice.aspx" value="/akcie/betonove-tvarnice.html" />
-  <add key="/sk/akcie/cement-325-r.aspx" value="/akcie/cement-325-r.html" />
-  <add key="/sk/akcie/dlazby--ploty-stadreko.aspx" value="/akcie/dlazby-ploty-stadreko.html" />
-  <add key="/sk/akcie/komin-qatro.aspx" value="/akcie/komin-qatro.html" />
-  <add key="/sk/akcie/krytina-blachotrapez.aspx" value="/akcie/krytina-blachotrapez.html" />
-  <add key="/sk/akcie/nobasil.aspx" value="/akcie/nobasil.html" />
-  <add key="/sk/akcie/okna--schody-fakro.aspx" value="/akcie/okna-schody-fakro.html" />
-  <add key="/sk/akcie/pezinska-tehla-termobrik.aspx" value="/akcie/pezinska-tehla-termobrik.html" />
-  <add key="/sk/akcie/porfix.aspx" value="/akcie/porfix.html" />
-  <add key="/sk/akcie/sadrokartonovy---zateplovaci-system.aspx" value="/akcie/sadrokartonovy-zateplovaci-system.html" />
-  <add key="/sk/akcie/sakret.aspx" value="/akcie/sakret.html" />
-  <add key="/sk/akcie/stavebne-naradie.aspx" value="/akcie/stavebne-naradie.html" />
-  <add key="/sk/akcie/stavebne-rezivo.aspx" value="/akcie/stavebne-rezivo.html" />
-  <add key="/sk/akcie/stresne-okna-rooflite.aspx" value="/akcie/stresne-okna-rooflite.html" />
-  <add key="/sk/akcie/ytong.aspx" value="/akcie/ytong.html" />
-  <add key="/sk/akciovy-letak.aspx" value="/letak.html" />
-  <add key="/sk/error-page.aspx" value="/" />
-  <add key="/sk/fotogaleria.aspx" value="/galeria/index.html" />
-  <add key="/sk/fotogaleria/fotky---vystava-domexpo-nitra-2010.aspx" value="/galeria/index.html" />
-  <add key="/sk/fotogaleria/vystava-agrokomplex-2011.aspx" value="/galeria/index.html" />
-  <add key="/sk/fotogaleria/vystava-agrokomplex-2012.aspx" value="/galeria/index.html" />
-  <add key="/sk/fotogaleria/vystava-gardenia-2012.aspx" value="/galeria/index.html" />
-  <add key="/sk/katalog-roduktov/dlazby.aspx" value="/katalog/dlazby.html" />
-  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest.aspx" value="/katalog/dlazby/dlazby-in-vest.html" />
-  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/plotovy-system.aspx" value="/katalog/dlazby/dlazby-in-vest/plotovy-system.html" />
-  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.aspx" value="/katalog/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.html" />
-  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.aspx" value="/katalog/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.html" />
-  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.aspx" value="/katalog/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.html" />
-  <add key="/sk/katalog-roduktov/dvere---okna.aspx" value="/katalog/dvere-okna.html" />
-  <add key="/sk/katalog-roduktov/farby---laky.aspx" value="/katalog/farby-laky.html" />
-  <add key="/sk/katalog-roduktov/fasadny-system.aspx" value="/katalog/fasadny-system.html" />
-  <add key="/sk/katalog-roduktov/hutny-material.aspx" value="/katalog/hutny-material.html" />
-  <add key="/sk/katalog-roduktov/izolacny-material.aspx" value="/katalog/izolacny-material.html" />
-  <add key="/sk/katalog-roduktov/kominove-systemy.aspx" value="/katalog/kominove-systemy.html" />
-  <add key="/sk/katalog-roduktov/kominove-systemy/qatro.aspx" value="/katalog/kominove-systemy/qatro.html" />
-  <add key="/sk/katalog-roduktov/kominove-systemy/qatro/komin-nerezovy.aspx" value="/katalog/kominove-systemy/qatro/komin-nerezovy.html" />
-  <add key="/sk/katalog-roduktov/kominove-systemy/qatro/komin-samotovy.aspx" value="/katalog/kominove-systemy/qatro/komin-samotovy.html" />
-  <add key="/sk/katalog-roduktov/kominove-systemy/schiedel.aspx" value="/katalog/kominove-systemy/schiedel.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material.aspx" value="/katalog/murovaci-material.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne.aspx" value="/katalog/murovaci-material/pezinske-tehelne.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne/priecky.aspx" value="/katalog/murovaci-material/pezinske-tehelne/priecky.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne/stropny-system.aspx" value="/katalog/murovaci-material/pezinske-tehelne/stropny-system.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material/porfix.aspx" value="/katalog/murovaci-material/porfix.html" />
-  <add key="/sk/katalog-roduktov/murovaci-material/ytong.aspx" value="/katalog/murovaci-material/ytong.html" />
-  <add key="/sk/katalog-roduktov/podhlady---pvc.aspx" value="/katalog/podhlady-pvc.html" />
-  <add key="/sk/katalog-roduktov/sadrokartonovy---zateplovaci-system.aspx" value="/katalog/sadrokartonovy-zateplovaci-system.html" />
-  <add key="/sk/katalog-roduktov/stavebne-naradie-doplnky.aspx" value="/katalog/stavebne-naradie-doplnky.html" />
-  <add key="/sk/katalog-roduktov/stavebne-rezivo.aspx" value="/katalog/stavebne-rezivo.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny.aspx" value="/katalog/stresne-kritiny.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez.aspx" value="/katalog/stresne-kritiny/blachotrapez.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez/plech-trapezovy.aspx" value="/katalog/stresne-kritiny/blachotrapez/plech-trapezovy.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez/plech-vzor-skridla.aspx" value="/katalog/stresne-kritiny/blachotrapez/plech-vzor-skridla.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/icopal.aspx" value="/katalog/stresne-kritiny/icopal.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/mediterran.aspx" value="/katalog/stresne-kritiny/mediterran.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/onduline.aspx" value="/katalog/stresne-kritiny/onduline.html" />
-  <add key="/sk/katalog-roduktov/stresne-kritiny/tondach.aspx" value="/katalog/stresne-kritiny/tondach.html" />
-  <add key="/sk/katalog-roduktov/stresne-okna.aspx" value="/katalog/stresne-okna.html" />
-  <add key="/sk/katalog-roduktov/stresne-okna/fakro.aspx" value="/katalog/stresne-okna/fakro.html" />
-  <add key="/sk/katalog-roduktov/stresne-okna/fakro/fakro-schody--vylezy.aspx" value="/katalog/stresne-okna/fakro/fakro-schody-vylezy.html" />
-  <add key="/sk/katalog-roduktov/stresne-okna/velux.aspx" value="/katalog/stresne-okna.html" />
-  <add key="/sk/katalog-roduktov/sypke-zmesy.aspx" value="/katalog/sypke-zmesy.html" />
-  <add key="/sk/katalog-roduktov/sypke-zmesy/baumit.aspx" value="/katalog/sypke-zmesy/baumit.html" />
-  <add key="/sk/katalog-roduktov/sypke-zmesy/calmit.aspx" value="/katalog/sypke-zmesy/calmit.html" />
-  <add key="/sk/katalog-roduktov/sypke-zmesy/cemmac.aspx" value="/katalog/sypke-zmesy/cemmac.html" />
-  <add key="/sk/katalog-roduktov/sypke-zmesy/holcim.aspx" value="/katalog/sypke-zmesy/holcim.html" />
-  <add key="/sk/kontakt.aspx" value="/kontakt.html" />
-  <add key="/sk/kontakt/googlemap.aspx" value="/kontakt.html" />
-  <add key="/sk/kontakt/kontaktny-formular.aspx" value="/kontakt.html" />
-  <add key="/sk/mapa.aspx" value="/" />
-  <add key="/sk/novinky.aspx" value="/novinky/index.html" />
-  <add key="/sk/novinky/betonove--vyrobky.aspx" value="/novinky/betonove-vyrobky.html" />
-  <add key="/sk/novinky/dekoracne-kamene.aspx" value="/novinky/dekoracne-kamene.html" />
-  <add key="/sk/novinky/delap--ohybny-kamenny-obklad.aspx" value="/novinky/delap-ohybny-kamenny-obklad.html" />
-  <add key="/sk/novinky/ekostyren.aspx" value="/novinky/ekostyren.html" />
-  <add key="/sk/novinky/garaze--zahradne-domceky.aspx" value="/novinky/garaze-zahradne-domceky.html" />
-  <add key="/sk/novinky/magic-floor-vynilova-podlaha.aspx" value="/novinky/magic-floor-vynilova-podlaha.html" />
-  <add key="/sk/novinky/topstone-oprava-starych-chodnikov.aspx" value="/novinky/topstone-oprava-starych-chodnikov.html" />
-  <add key="/sk/novinky/vyrobky-z-plastu.aspx" value="/novinky/vyrobky-z-plastu.html" />
-  <add key="/sk/o-nas.aspx" value="/o-nas.html" />
-  <add key="/sk/sluzby.aspx" value="/sluzby.html" />
-  <add key="/sk/sluzby/poradenstvo.aspx" value="/sluzby.html" />
-</rewriteMap></rewriteMaps><rules><rule name="stare adresy" stopProcessing="true"><match url=".*" />
+  <add key="/sk.aspx" value="https://www.stavebninyrichtarik.sk/" />
+  <add key="/sk/akcie.aspx" value="https://www.stavebninyrichtarik.sk/akcie/index.html" />
+  <add key="/sk/akcie/betonove-tvarnice.aspx" value="https://www.stavebninyrichtarik.sk/akcie/betonove-tvarnice.html" />
+  <add key="/sk/akcie/cement-325-r.aspx" value="https://www.stavebninyrichtarik.sk/akcie/cement-325-r.html" />
+  <add key="/sk/akcie/dlazby--ploty-stadreko.aspx" value="https://www.stavebninyrichtarik.sk/akcie/dlazby-ploty-stadreko.html" />
+  <add key="/sk/akcie/komin-qatro.aspx" value="https://www.stavebninyrichtarik.sk/akcie/komin-qatro.html" />
+  <add key="/sk/akcie/krytina-blachotrapez.aspx" value="https://www.stavebninyrichtarik.sk/akcie/krytina-blachotrapez.html" />
+  <add key="/sk/akcie/nobasil.aspx" value="https://www.stavebninyrichtarik.sk/akcie/nobasil.html" />
+  <add key="/sk/akcie/okna--schody-fakro.aspx" value="https://www.stavebninyrichtarik.sk/akcie/okna-schody-fakro.html" />
+  <add key="/sk/akcie/pezinska-tehla-termobrik.aspx" value="https://www.stavebninyrichtarik.sk/akcie/pezinska-tehla-termobrik.html" />
+  <add key="/sk/akcie/porfix.aspx" value="https://www.stavebninyrichtarik.sk/akcie/porfix.html" />
+  <add key="/sk/akcie/sadrokartonovy---zateplovaci-system.aspx" value="https://www.stavebninyrichtarik.sk/akcie/sadrokartonovy-zateplovaci-system.html" />
+  <add key="/sk/akcie/sakret.aspx" value="https://www.stavebninyrichtarik.sk/akcie/sakret.html" />
+  <add key="/sk/akcie/stavebne-naradie.aspx" value="https://www.stavebninyrichtarik.sk/akcie/stavebne-naradie.html" />
+  <add key="/sk/akcie/stavebne-rezivo.aspx" value="https://www.stavebninyrichtarik.sk/akcie/stavebne-rezivo.html" />
+  <add key="/sk/akcie/stresne-okna-rooflite.aspx" value="https://www.stavebninyrichtarik.sk/akcie/stresne-okna-rooflite.html" />
+  <add key="/sk/akcie/ytong.aspx" value="https://www.stavebninyrichtarik.sk/akcie/ytong.html" />
+  <add key="/sk/akciovy-letak.aspx" value="https://www.stavebninyrichtarik.sk/letak.html" />
+  <add key="/sk/error-page.aspx" value="https://www.stavebninyrichtarik.sk/" />
+  <add key="/sk/fotogaleria.aspx" value="https://www.stavebninyrichtarik.sk/galeria/index.html" />
+  <add key="/sk/fotogaleria/fotky---vystava-domexpo-nitra-2010.aspx" value="https://www.stavebninyrichtarik.sk/galeria/index.html" />
+  <add key="/sk/fotogaleria/vystava-agrokomplex-2011.aspx" value="https://www.stavebninyrichtarik.sk/galeria/index.html" />
+  <add key="/sk/fotogaleria/vystava-agrokomplex-2012.aspx" value="https://www.stavebninyrichtarik.sk/galeria/index.html" />
+  <add key="/sk/fotogaleria/vystava-gardenia-2012.aspx" value="https://www.stavebninyrichtarik.sk/galeria/index.html" />
+  <add key="/sk/katalog-roduktov/dlazby.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby.html" />
+  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby/dlazby-in-vest.html" />
+  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/plotovy-system.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby/dlazby-in-vest/plotovy-system.html" />
+  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.html" />
+  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.html" />
+  <add key="/sk/katalog-roduktov/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.html" />
+  <add key="/sk/katalog-roduktov/dvere---okna.aspx" value="https://www.stavebninyrichtarik.sk/katalog/dvere-okna.html" />
+  <add key="/sk/katalog-roduktov/farby---laky.aspx" value="https://www.stavebninyrichtarik.sk/katalog/farby-laky.html" />
+  <add key="/sk/katalog-roduktov/fasadny-system.aspx" value="https://www.stavebninyrichtarik.sk/katalog/fasadny-system.html" />
+  <add key="/sk/katalog-roduktov/hutny-material.aspx" value="https://www.stavebninyrichtarik.sk/katalog/hutny-material.html" />
+  <add key="/sk/katalog-roduktov/izolacny-material.aspx" value="https://www.stavebninyrichtarik.sk/katalog/izolacny-material.html" />
+  <add key="/sk/katalog-roduktov/kominove-systemy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/kominove-systemy.html" />
+  <add key="/sk/katalog-roduktov/kominove-systemy/qatro.aspx" value="https://www.stavebninyrichtarik.sk/katalog/kominove-systemy/qatro.html" />
+  <add key="/sk/katalog-roduktov/kominove-systemy/qatro/komin-nerezovy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/kominove-systemy/qatro/komin-nerezovy.html" />
+  <add key="/sk/katalog-roduktov/kominove-systemy/qatro/komin-samotovy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/kominove-systemy/qatro/komin-samotovy.html" />
+  <add key="/sk/katalog-roduktov/kominove-systemy/schiedel.aspx" value="https://www.stavebninyrichtarik.sk/katalog/kominove-systemy/schiedel.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material/pezinske-tehelne.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne/priecky.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material/pezinske-tehelne/priecky.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material/pezinske-tehelne/stropny-system.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material/pezinske-tehelne/stropny-system.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material/porfix.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material/porfix.html" />
+  <add key="/sk/katalog-roduktov/murovaci-material/ytong.aspx" value="https://www.stavebninyrichtarik.sk/katalog/murovaci-material/ytong.html" />
+  <add key="/sk/katalog-roduktov/podhlady---pvc.aspx" value="https://www.stavebninyrichtarik.sk/katalog/podhlady-pvc.html" />
+  <add key="/sk/katalog-roduktov/sadrokartonovy---zateplovaci-system.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sadrokartonovy-zateplovaci-system.html" />
+  <add key="/sk/katalog-roduktov/stavebne-naradie-doplnky.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stavebne-naradie-doplnky.html" />
+  <add key="/sk/katalog-roduktov/stavebne-rezivo.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stavebne-rezivo.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/blachotrapez.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez/plech-trapezovy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/blachotrapez/plech-trapezovy.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/blachotrapez/plech-vzor-skridla.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/blachotrapez/plech-vzor-skridla.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/icopal.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/icopal.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/mediterran.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/mediterran.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/onduline.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/onduline.html" />
+  <add key="/sk/katalog-roduktov/stresne-kritiny/tondach.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny/tondach.html" />
+  <add key="/sk/katalog-roduktov/stresne-okna.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-okna.html" />
+  <add key="/sk/katalog-roduktov/stresne-okna/fakro.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-okna/fakro.html" />
+  <add key="/sk/katalog-roduktov/stresne-okna/fakro/fakro-schody--vylezy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-okna/fakro/fakro-schody-vylezy.html" />
+  <add key="/sk/katalog-roduktov/stresne-okna/velux.aspx" value="https://www.stavebninyrichtarik.sk/katalog/stresne-okna.html" />
+  <add key="/sk/katalog-roduktov/sypke-zmesy.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy.html" />
+  <add key="/sk/katalog-roduktov/sypke-zmesy/baumit.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy/baumit.html" />
+  <add key="/sk/katalog-roduktov/sypke-zmesy/calmit.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy/calmit.html" />
+  <add key="/sk/katalog-roduktov/sypke-zmesy/cemmac.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy/cemmac.html" />
+  <add key="/sk/katalog-roduktov/sypke-zmesy/holcim.aspx" value="https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy/holcim.html" />
+  <add key="/sk/kontakt.aspx" value="https://www.stavebninyrichtarik.sk/kontakt.html" />
+  <add key="/sk/kontakt/googlemap.aspx" value="https://www.stavebninyrichtarik.sk/kontakt.html" />
+  <add key="/sk/kontakt/kontaktny-formular.aspx" value="https://www.stavebninyrichtarik.sk/kontakt.html" />
+  <add key="/sk/mapa.aspx" value="https://www.stavebninyrichtarik.sk/" />
+  <add key="/sk/novinky.aspx" value="https://www.stavebninyrichtarik.sk/novinky/index.html" />
+  <add key="/sk/novinky/betonove--vyrobky.aspx" value="https://www.stavebninyrichtarik.sk/novinky/betonove-vyrobky.html" />
+  <add key="/sk/novinky/dekoracne-kamene.aspx" value="https://www.stavebninyrichtarik.sk/novinky/dekoracne-kamene.html" />
+  <add key="/sk/novinky/delap--ohybny-kamenny-obklad.aspx" value="https://www.stavebninyrichtarik.sk/novinky/delap-ohybny-kamenny-obklad.html" />
+  <add key="/sk/novinky/ekostyren.aspx" value="https://www.stavebninyrichtarik.sk/novinky/ekostyren.html" />
+  <add key="/sk/novinky/garaze--zahradne-domceky.aspx" value="https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html" />
+  <add key="/sk/novinky/magic-floor-vynilova-podlaha.aspx" value="https://www.stavebninyrichtarik.sk/novinky/magic-floor-vynilova-podlaha.html" />
+  <add key="/sk/novinky/topstone-oprava-starych-chodnikov.aspx" value="https://www.stavebninyrichtarik.sk/novinky/topstone-oprava-starych-chodnikov.html" />
+  <add key="/sk/novinky/vyrobky-z-plastu.aspx" value="https://www.stavebninyrichtarik.sk/novinky/vyrobky-z-plastu.html" />
+  <add key="/sk/o-nas.aspx" value="https://www.stavebninyrichtarik.sk/o-nas.html" />
+  <add key="/sk/sluzby.aspx" value="https://www.stavebninyrichtarik.sk/sluzby.html" />
+  <add key="/sk/sluzby/poradenstvo.aspx" value="https://www.stavebninyrichtarik.sk/sluzby.html" />
+</rewriteMap></rewriteMaps><rules>
+<!-- 1. Kanonická adresa https://www.stavebninyrichtarik.sk/: vypnuté (enabled="false"), zapnúť až keď https://www.stavebninyrichtarik.sk/ na hostingu funguje (README, HTTPS a presmerovania). Staré adresy ho obchádzajú. -->
+<rule name="kanonicka adresa" enabled="false" stopProcessing="true"><match url="^(?!sk\.aspx$|sk/.+\.aspx$|files/)(.*)$" ignoreCase="true" />
+<conditions logicalGrouping="MatchAny"><add input="{HTTPS}" pattern="^OFF$" /><add input="{HTTP_HOST}" pattern="^www\.stavebninyrichtarik\.sk$" negate="true" /></conditions>
+<action type="Redirect" url="https://www.stavebninyrichtarik.sk/{R:1}" redirectType="Permanent" /></rule>
+<!-- 2. Staré adresy rovno na kanonickú adresu https://www.stavebninyrichtarik.sk/ (jedno presmerovanie) -->
+<rule name="stare adresy" stopProcessing="true"><match url=".*" />
 <conditions><add input="{stare:{REQUEST_URI}}" pattern="(.+)" /></conditions>
 <action type="Redirect" url="{C:1}" redirectType="Permanent" /></rule>
-<rule name="stare pdf" stopProcessing="true"><match url="^files/(33|39|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|119|120|121|122|123|124|125|126|127|128|129|130|131|132|133|134|135|136|137|138|139|140|154|155|156|157|158|159|160|161|162|163|165|166|167|168|169|170|171|172|173|174|175|176|177|178|179|180|181|182|183|184|186|187|188|189|190|191|197|198|199|200|201|202|203|204|205|206|207|212|214|215|216|218|223|224|226|227|228|229|230|232|272|273|274|284|285|286|287|288|289|290|291|292|293|298|320|321|322|385|386|433|434|471|558|618|626|631|633|641|649|653|654|657|658|659|660|661|662|663|664)\.pdf$" ignoreCase="true" /><action type="Redirect" url="/pdf/{R:1}.pdf" redirectType="Permanent" /></rule>
-<rule name="stare doc" stopProcessing="true"><match url="^files/(275|276|277|278|279|280|281|282|283)\.doc$" ignoreCase="true" /><action type="Redirect" url="/subory/{R:1}.doc" redirectType="Permanent" /></rule>
-<rule name="stare video" stopProcessing="true"><match url="^files/233\.wmv$" ignoreCase="true" /><action type="Redirect" url="/subory/233-onduvilla-montaz.mp4" redirectType="Permanent" /></rule>
+<rule name="stare pdf" stopProcessing="true"><match url="^files/(33|39|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|119|120|121|122|123|124|125|126|127|128|129|130|131|132|133|134|135|136|137|138|139|140|154|155|156|157|158|159|160|161|162|163|165|166|167|168|169|170|171|172|173|174|175|176|177|178|179|180|181|182|183|184|186|187|188|189|190|191|197|198|199|200|201|202|203|204|205|206|207|212|214|215|216|218|223|224|226|227|228|229|230|232|272|273|274|284|285|286|287|288|289|290|291|292|293|298|320|321|322|385|386|433|434|471|558|618|626|631|633|641|649|653|654|657|658|659|660|661|662|663|664)\.pdf$" ignoreCase="true" /><action type="Redirect" url="https://www.stavebninyrichtarik.sk/pdf/{R:1}.pdf" redirectType="Permanent" /></rule>
+<rule name="stare doc" stopProcessing="true"><match url="^files/(275|276|277|278|279|280|281|282|283)\.doc$" ignoreCase="true" /><action type="Redirect" url="https://www.stavebninyrichtarik.sk/subory/{R:1}.doc" redirectType="Permanent" /></rule>
+<rule name="stare video" stopProcessing="true"><match url="^files/233\.wmv$" ignoreCase="true" /><action type="Redirect" url="https://www.stavebninyrichtarik.sk/subory/233-onduvilla-montaz.mp4" redirectType="Permanent" /></rule>
 </rules></rewrite>
 <httpErrors errorMode="Custom" existingResponse="Replace"><remove statusCode="404" /><error statusCode="404" path="/404.html" responseMode="ExecuteURL" /></httpErrors>
 <urlCompression doStaticCompression="true" doDynamicCompression="false" />

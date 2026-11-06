@@ -32,8 +32,19 @@ karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
 ## Skutočné fotky dvora (`img/uvod/`, od majiteľa)
 
-Originály má majiteľ; v repozitári sú len webové veľkosti. Fotky sa neupravujú (žiadne dokreslené palety ani tovar),
-robí sa len výrez a zmenšenie.
+Originály má majiteľ; v repozitári sú len webové veľkosti. Nič sa do fotiek nepridáva ani z nich neuberá (žiadne
+dokreslené palety ani tovar, žiadne generatívne nástroje).
+
+**Elegantná fotografická úprava (6. 11. 2026, na žiadosť majiteľa „Uprav tie fotky, nech to vyzerá elegantne“):** všetkých
+59 súborov dvora a zásob (`img/uvod/*`, `img/uvod/hlavicka/*`, `img/og-dvor.jpg`) má jednotný svetlý tón: vyváženie bielej,
+expozícia, tiene, svetlá, kontrast, sýtosť, jemný odšum a doostrenie, pri `dvor-p`, `dvor-t`, `og-dvor` a `pas-dvor` aj
+vyrovnanie horizontu (otočenie o 0,8 až 1°, pri `pas-dvor` aj zvislice) a orez. Zdroj je vždy neupravená verzia
+(`dvor-*` a `og-dvor` z `u4` v `44aa237b^`, ostatné z `bb6bbaeb`), nič sa nezväčšovalo. Parametre, nástroje a merania
+(jas, tmavé plochy, farby tovaru, ostrosť) sú v pracovnom priečinku úpravy fotiek (`fotky/MANIFEST.txt`, `fotky/ZAPIS.md`,
+`fotky/nastroje/uprav.py`, `fotky/nasadenie/nastroje/`), nie v balíku webu.
+Po vyrovnaní horizontu majú dva súbory menej pixelov, než hovorí názov (názov ostáva kvôli odkazom): `dvor-t-1448`
+1420 × 1530 a `pas-dvor-1920` 1848 × 1040; v `srcset` je ich skutočná šírka (`1420w`, `1848w`), v `build.py`
+`UVOD_FOTO['pas-dvor']` skutočný rozmer.
 
 - `dvor-p-1290|1720` (na šírku) a `dvor-t-1086|1448` (na výšku): hlavný obraz úvodu. Výrez fotky dvora `u4`
   (`u4-p-1920` a `u4-t-1448` v stave `44aa237b^`, do repozitára pridané v `bb6bbaeb`): na šírku x 0–1720, y 220–1080
@@ -44,7 +55,8 @@ robí sa len výrez a zmenšenie.
   verzie zo stavu `bb6bbaeb`. Upravené verzie s generatívne doplnenými paletami vznikli v `6d285c37` („doplnený tovar“)
   a ďalej sa menili v `b46c7d43` a `6bffd83e` (ten stav mal web až do `4b2646bf`); plné zásoby sa nesmú dokazovať
   upravenou fotkou. V strome nie je žiadny súbor s md5 niektorej z 54 upravených verzií. Na Porfixe je teraz vidieť prázdnu a načatú paletu a modré plachty.
-- `zasoba-tehly`, `zasoba-stadreko`, `zasoba-rezivo`: bez zmeny (zábery strihu na úvode a pás „Na našom dvore v Nitre“).
+- `zasoba-tehly`, `zasoba-stadreko`, `zasoba-rezivo`: zábery strihu na úvode a pás „Na našom dvore v Nitre“, obsah bez
+  zmeny (len fotografická úprava vyššie).
 - Úvodné video s nákladným autom (vyrobené z vygenerovaného klipu) a jeho obrázok pri zdieľaní boli 5. 11. 2026 na
   žiadosť majiteľa odstránené zo stromu aj zo všetkých stránok.
 

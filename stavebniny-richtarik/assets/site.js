@@ -117,14 +117,15 @@
     });
   })();
 
-  // úvod: strih zásob. Skutočné fotky tehál, pórobetónu (neupravená fotka), dlažieb a reziva dopadnú ako výtlačky
+  // úvod: strih zásob. Skutočné fotky tehál, pórobetónu (bez dokreslených paliet), dlažieb a reziva dopadnú ako výtlačky
   // na fotku dvora, potom odídu a štítok „Náš dvor“ sa vrazí. Všetok pohyb robí CSS (kompozítor), skript len pripraví
   // zábery zo <template>, počká na ich dekódovanie a po 3 s ich odstráni. Spustí sa len s triedou uv-ide (skript
   // v <head>, „bez obmedzenia pohybu“), nie pri šetrení dát, nie keď zákazník už posúva, ťuká, píše alebo je vo
-  // vyhľadávaní, a len raz za reláciu. Tlačidlo „Prehrať úvod“ ho spustí znova.
+  // vyhľadávaní, a len raz za reláciu. Tlačidlo „Prehrať úvod“ ho spustí znova. Po uvítaní (br-ide) čaká na br-koniec.
   (function () {
     var h = d.documentElement, ram = d.querySelector('.uv-ram'), tpl = d.getElementById('uv-zabery');
-    if (!ram || !tpl || !h.classList.contains('uv-ide')) return;
+    var brana = h.classList.contains('br-ide');
+    if (!ram || !tpl || !(brana || h.classList.contains('uv-ide'))) return;
     var box = ram.querySelector('.uv-zabery'), znova = ram.querySelector('.uv-znova'), hlavna = ram.querySelector('.uv-dvor img');
     var karty = null, pripravene = false, beh = 0, zastavene = false, tc = null, ss = null;
     try { ss = window.sessionStorage; } catch (e) { ss = null; }
@@ -172,7 +173,13 @@
       karty.forEach(function (k) { box.appendChild(k); });   // skryté (visibility), sťahujú a dekódujú sa až po fotke dvora
       Promise.all(karty.map(function (k) { var im = k.querySelector('img'); return im.decode ? im.decode() : Promise.resolve(); })).then(function () {
         pripravene = true;
-        if (zastavene || uz() || window.scrollY > 24 || performance.now() > 3400) { odober(); if (znova) znova.hidden = false; return; }
+        if (zastavene || uz() || window.scrollY > 24 || (!brana && performance.now() > 3400)) { odober(); if (znova) znova.hidden = false; return; }
+        if (brana) {   // 0,6 s po konci uvítania, hranica 3,4 s od jeho konca; po preskočení (aj bez prekryvu .br) nie
+          var po = function (e) { var x = e.detail, t = x.t;
+            if (x.preskocene || zastavene || window.scrollY > 24 || performance.now() > (x.rychlo ? 0 : t) + 3400) stop(); else setTimeout(spusti, t + 600 - performance.now()); };
+          if (window.brKoniec) po(window.brKoniec); else if (d.querySelector('.br')) addEventListener('br-koniec', po, { once: true }); else stop();
+          return;
+        }
         // zábery ostanú skryté v ráme a štart len prepne triedu: v prvej snímke strihu sa nič nevkladá ani nerozmiestňuje
         setTimeout(spusti, Math.max(0, 1000 - performance.now()));
       }, function () { odober(); karty = null; });
@@ -307,6 +314,40 @@
     });
   }
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dr && dr.classList.contains('open')) open(false); });
+
+  // asistent na otázky (assets/asistent.js). Musí byť pred vyhľadávaním, lebo to končí skorým return na stránkach bez
+  // poľa hľadania. Zapína ho atribút data-asistent na <html>: "ukazka" (náhľad, vopred pripravené odpovede, nič sa
+  // neposiela) alebo adresa servera https://…/asistent/api.php (ostrý web, dopíše ju nasadenie/balik.sh len
+  // s ASISTENT_API). Bez atribútu sa nič nesťahuje ani neposiela. ?asistent=off okno vypne, ?asistent=ukazka ukáže
+  // ukážku, na localhost ?asistent=<adresa> skúšobný server. Modul sa načíta pri prvom ťuknutí alebo klávese, inak
+  // 3,5 s po načítaní stránky a najskôr 5,5 s od začiatku načítania (po strihu úvodu), vždy v nečinnom čase a nikdy
+  // počas posunu: preklad modulu a jeho štýl by inak dali pri CPU 4× snímku nad 50 ms práve v odhaleniach pri posune
+  // (meranie pri zlúčení: posun-zf.mjs, import a LINK.onload 61–64 ms). Kým sa posúva, čaká sa 600 ms pokoja.
+  (function asistent() {
+    var qa = new URLSearchParams(location.search).get('asistent');
+    var lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    var api = qa === 'off' ? '' : qa === 'ukazka' ? qa : (lokal && qa) || d.documentElement.getAttribute('data-asistent') || '';
+    if (api !== 'ukazka' && !/^https:\/\//.test(api) && !(lokal && /^http:\/\//.test(api))) return;
+    // rám bez allow-same-origin (napr. náhľad v pieskovisku) má nepriehľadný pôvod: modul by neprešiel CORS, preto nič
+    if (window.origin === 'null') return;
+    var nacitane = false, posun = 0;
+    addEventListener('scroll', function () { posun = performance.now(); }, { passive: true });
+    function nacitaj() {
+      if (nacitane) return;
+      if (d.querySelector('.br')) return addEventListener('br-koniec', nacitaj, { once: true });   // nie počas uvítania
+      var pokoj = performance.now() - posun;
+      if (pokoj < 600) { setTimeout(nacitaj, 600 - pokoj); return; }   // posúva sa: počkať, kým posun stojí
+      nacitane = true;
+      var ric = window.requestIdleCallback || function (f) { return setTimeout(f, 1); };
+      ric(function () {
+        import(new URL(pre + 'assets/asistent.js', location.href).href).then(function (m) { m.spusti(api); }).catch(function () {});
+      }, { timeout: 1500 });
+    }
+    // ťuknutie (click, nie pointerdown: ten je aj začiatok posunu prstom) a kláves (Tab k ikone); koliesko a posun nie
+    ['click', 'keydown'].forEach(function (t) { addEventListener(t, nacitaj, { once: true, passive: true }); });
+    function neskor() { setTimeout(nacitaj, Math.max(3500, 5500 - performance.now())); }
+    if (d.readyState === 'complete') neskor(); else addEventListener('load', neskor, { once: true });
+  })();
 
   // vyhľadávanie: index sa stiahne pri prvom písaní, hľadá sa bez diakritiky
   var q = d.getElementById('q'), res = d.getElementById('res');

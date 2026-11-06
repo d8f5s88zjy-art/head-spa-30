@@ -1,0 +1,856 @@
+{
+ "verzia": "2026-11-05",
+ "zdroj": "asistent/znalosti/richtarik.md",
+ "temy": {
+  "kontakt": "Adresa a kontakt",
+  "hodiny": "Otváracie hodiny",
+  "sluzby": "Služby a cenová ponuka",
+  "doprava": "Doprava na stavbu",
+  "zlavy": "Zľavy a platba",
+  "akcie": "Akcie a ceny",
+  "sortiment": "Sortiment a značky",
+  "asistent": "O asistentovi"
+ },
+ "otazky": [
+  {
+   "id": "kontakt-adresa",
+   "t": "kontakt",
+   "q": "Kde sa nachádzate?",
+   "v": [
+    "Aká je vaša adresa?",
+    "Kde je predajňa?",
+    "kde sídlite",
+    "sídlo firmy",
+    "adresa stavebnín",
+    "kde vas najdem",
+    "kde ste v Nitre",
+    "kde je sklad"
+   ],
+   "a": "Predajňa a sklad sú na adrese Novozámocká 62/68, 949 05 Nitra, Horné Krškany. Navigácia: https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra"
+  },
+  {
+   "id": "kontakt-telefon",
+   "t": "kontakt",
+   "q": "Aké máte telefónne číslo?",
+   "v": [
+    "Na aké číslo môžem zavolať?",
+    "telefónne číslo predajne",
+    "kontakt na predajňu",
+    "číslo na predajňu",
+    "mobilné číslo",
+    "pevná linka"
+   ],
+   "a": "Zavolajte nám na mobil 0905 622 223 alebo na pevnú linku 037 651 17 77. Otváracie hodiny: pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00.",
+   "tel": true
+  },
+  {
+   "id": "kontakt-email",
+   "t": "kontakt",
+   "q": "Aký je váš e-mail?",
+   "v": [
+    "Kam môžem napísať?",
+    "emailová adresa",
+    "mail",
+    "môžem vám poslať e-mail",
+    "kontaktný e-mail"
+   ],
+   "a": "Napíšte nám na info@stavebninyrichtarik.sk. Pošlite aj zoznam materiálu alebo projekt a pripravíme vám cenovú ponuku."
+  },
+  {
+   "id": "kontakt-firma",
+   "t": "kontakt",
+   "q": "Aké sú vaše firemné údaje?",
+   "v": [
+    "IČO na faktúru",
+    "DIČ",
+    "fakturačné údaje",
+    "kto je prevádzkovateľ",
+    "názov firmy",
+    "údaje na faktúru"
+   ],
+   "a": "Prevádzkovateľ: Ing. Mário Richtárik - Stavebniny, Novozámocká 62/68, 949 05 Nitra, Horné Krškany. IČO 45959846, DIČ SK1083167855."
+  },
+  {
+   "id": "kontakt-mapa",
+   "t": "kontakt",
+   "q": "Ako sa k vám dostanem?",
+   "v": [
+    "navigácia",
+    "cesta k vám",
+    "mapa",
+    "ako k vám prísť autom",
+    "trasa do predajne"
+   ],
+   "a": "Nájdete nás v Nitre v Horných Krškanoch na Novozámockej ulici č. 68 (adresa Novozámocká 62/68). Navigácia: https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra"
+  },
+  {
+   "id": "kontakt-parkovanie",
+   "t": "kontakt",
+   "q": "Dá sa u vás parkovať?",
+   "v": [
+    "parkovisko",
+    "kde zaparkujem",
+    "môžem prísť s vozíkom",
+    "príjazd s prívesom"
+   ],
+   "a": "Parkovanie web neuvádza. Pred cestou nám zavolajte na 0905 622 223, radi vám poradíme.",
+   "tel": true
+  },
+  {
+   "id": "hodiny",
+   "t": "hodiny",
+   "q": "Aké máte otváracie hodiny?",
+   "v": [
+    "Kedy máte otvorené?",
+    "otváracia doba",
+    "do koľkej máte otvorené",
+    "od koľkej ste otvorení",
+    "hodiny predajne"
+   ],
+   "a": "Pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00."
+  },
+  {
+   "id": "hodiny-sobota",
+   "t": "hodiny",
+   "q": "Máte otvorené aj v sobotu?",
+   "v": [
+    "sobota",
+    "v sobotu do koľkej",
+    "otvorené cez víkend",
+    "víkend"
+   ],
+   "a": "Áno, v sobotu máme otvorené od 7:00 do 12:00. Cez týždeň od 7:00 do 16:00."
+  },
+  {
+   "id": "hodiny-nedela",
+   "t": "hodiny",
+   "q": "Máte otvorené v nedeľu?",
+   "v": [
+    "nedeľa",
+    "v nedeľu",
+    "sviatky",
+    "otvorené cez sviatok",
+    "štátny sviatok"
+   ],
+   "a": "Web uvádza otváracie hodiny len pondelok až piatok 7:00 až 16:00 a sobotu 7:00 až 12:00. Pri sviatkoch sa radšej vopred informujte na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-prehlad",
+   "t": "sluzby",
+   "q": "Aké služby ponúkate?",
+   "v": [
+    "čo všetko robíte",
+    "služby",
+    "čo pre mňa urobíte",
+    "ponuka služieb"
+   ],
+   "a": "- predaj stavebného materiálu v celom sortimente\n- bezplatný výpočet spotreby materiálu\n- cenová ponuka zadarmo\n- bezplatné poradenstvo\n- množstevné zľavy\n- doprava vlastnými autami po celom Slovensku, aj autom s mechanickou rukou\n- platba kartou a nákup na splátky Quatro\nViac: https://www.stavebninyrichtarik.sk/sluzby.html"
+  },
+  {
+   "id": "sluzby-ponuka",
+   "t": "sluzby",
+   "q": "Ako získam cenovú ponuku?",
+   "v": [
+    "cenová ponuka",
+    "nacenenie",
+    "pripravíte mi ponuku",
+    "chcem ponuku na dom",
+    "ponuka na materiál",
+    "kalkulácia"
+   ],
+   "a": "Cenová ponuka je zadarmo. Pošlite nám zoznam materiálu alebo projekt na info@stavebninyrichtarik.sk, prípadne prineste projekt alebo rozmery do predajne. Spočítame spotrebu, pripravíme ponuku a dohodneme dopravu. Telefón 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-vypocet",
+   "t": "sluzby",
+   "q": "Spočítate mi, koľko materiálu potrebujem?",
+   "v": [
+    "výpočet spotreby",
+    "koľko tehál potrebujem",
+    "koľko potrebujem na dom",
+    "vypočítate množstvo",
+    "koľko kusov na m2",
+    "koľko vriec omietky",
+    "spotreba materiálu"
+   ],
+   "a": "Áno, výpočet spotreby materiálu je zadarmo. Pošlite projekt alebo rozmery na info@stavebninyrichtarik.sk alebo zavolajte na 0905 622 223. Množstvo vám spočíta personál predajne, ja ho nepočítam.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-poradenstvo",
+   "t": "sluzby",
+   "q": "Poradíte mi s výberom materiálu?",
+   "v": [
+    "poradenstvo",
+    "neviem čo vybrať",
+    "odporučíte mi",
+    "potrebujem poradiť",
+    "čo je lepšie"
+   ],
+   "a": "Áno, poradenstvo je zadarmo. Zaškolený personál vám poradí v predajni alebo na telefóne 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-objednavka",
+   "t": "sluzby",
+   "q": "Ako si môžem objednať materiál?",
+   "v": [
+    "objednávka",
+    "chcem objednať",
+    "máte e-shop",
+    "dá sa objednať online",
+    "internetový obchod",
+    "ako nakúpiť"
+   ],
+   "a": "Objednať si môžete telefonicky na 0905 622 223, e-mailom na info@stavebninyrichtarik.sk alebo priamo v predajni na Novozámockej 62/68 v Nitre. E-shop web nemá.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-firmy",
+   "t": "sluzby",
+   "q": "Máte ceny pre stavebné firmy?",
+   "v": [
+    "som živnostník",
+    "lepšie ceny pre živnostníka",
+    "zľava pre firmy",
+    "veľkoodber",
+    "spolupráca so stavebninami",
+    "množstevná zľava"
+   ],
+   "a": "Áno. Pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny máme špeciálne zľavy. Dohodnete sa v predajni alebo na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "sluzby-reklamacia",
+   "t": "sluzby",
+   "q": "Ako reklamovať tovar?",
+   "v": [
+    "reklamácia",
+    "vrátenie tovaru",
+    "chcem vrátiť materiál",
+    "faktúra",
+    "poškodený tovar"
+   ],
+   "a": "Reklamácie, vrátenie tovaru a faktúry rieši predajňa. Zavolajte na 0905 622 223 alebo napíšte na info@stavebninyrichtarik.sk.",
+   "tel": true
+  },
+  {
+   "id": "o-nas",
+   "t": "sluzby",
+   "q": "Odkedy fungujete?",
+   "v": [
+    "kto ste",
+    "o firme",
+    "rodinná firma",
+    "história",
+    "ako dlho existujete",
+    "odkedy existujete"
+   ],
+   "a": "Stavebniny Richtárik sú rodinná firma z Nitry, založená v roku 1997. Hlavným profilom je predaj a sprostredkovanie stavebného materiálu. Viac: https://www.stavebninyrichtarik.sk/o-nas.html"
+  },
+  {
+   "id": "doprava",
+   "t": "doprava",
+   "q": "Dovezete materiál na stavbu?",
+   "v": [
+    "doprava",
+    "robíte dopravu na stavbu",
+    "dovoz materiálu",
+    "privezte mi tovar",
+    "rozvoz",
+    "dovážate",
+    "doprava domov"
+   ],
+   "a": "Áno. Tovar dovezieme vlastnými autami na miesto stavby, ktoré určíte, po celom Slovensku: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. Cenu dopravy na vašu adresu vám povieme na 0905 622 223. Viac: https://www.stavebninyrichtarik.sk/doprava.html",
+   "tel": true
+  },
+  {
+   "id": "doprava-cena",
+   "t": "doprava",
+   "q": "Koľko stojí doprava?",
+   "v": [
+    "cena dopravy",
+    "koľko účtujete za dopravu",
+    "koľko zaplatím za dovoz",
+    "doprava zadarmo",
+    "je doprava zdarma",
+    "poplatok za dopravu"
+   ],
+   "a": "Cenu dopravy na konkrétnu stavbu vám povie predajňa na 0905 622 223. Pri niektorých akciách je doprava zdarma, napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava nad 50 m² 17 € s DPH po celom Slovensku. Viac: https://www.stavebninyrichtarik.sk/doprava.html",
+   "tel": true
+  },
+  {
+   "id": "doprava-ruka",
+   "t": "doprava",
+   "q": "Máte auto s hydraulickou rukou?",
+   "v": [
+    "mechanická ruka",
+    "vykládka",
+    "zložíte tovar",
+    "hydraulická ruka",
+    "auto s rukou",
+    "zloženie paliet"
+   ],
+   "a": "Áno. Okrem auta Avia 3,5 t máme nákladné auto 8 t s mechanickou rukou. Vykládka sa pri niektorých akciách platí, napríklad pri krytine Blachotrapez 40 € s DPH. Podrobnosti vám povieme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "doprava-slovensko",
+   "t": "doprava",
+   "q": "Vozíte aj mimo Nitry?",
+   "v": [
+    "doprava do Bratislavy",
+    "vozíte po celom Slovensku",
+    "doprava do inej obce",
+    "dovoz mimo Nitry",
+    "kam vozíte"
+   ],
+   "a": "Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "doprava-termin",
+   "t": "doprava",
+   "q": "Kedy mi materiál dovezete?",
+   "v": [
+    "termín dovozu",
+    "kedy viete doviezť",
+    "kedy dovezete",
+    "ako rýchlo dovezete",
+    "dodacia lehota",
+    "zajtra dovoz",
+    "dokedy dovezete"
+   ],
+   "a": "Termín dovozu závisí od objednávky. Dohodnete ho na 0905 622 223; termín ja potvrdiť neviem.",
+   "tel": true
+  },
+  {
+   "id": "zlava-karta",
+   "t": "zlavy",
+   "q": "Aké zľavy máte so zákazníckou kartou?",
+   "v": [
+    "zákaznícka karta",
+    "aké zľavy dávate",
+    "zľava 5 %",
+    "zľava pri platbe v hotovosti",
+    "ďalšia zľava z akcie",
+    "zľavy",
+    "rozdávate zľavy"
+   ],
+   "a": "Z akciových cien dostanete so zákazníckou kartou ďalšiu zľavu: 5 % pri platbe v hotovosti a 3,3 % pri platbe platobnou kartou. Kartu si vyzdvihnete v predajni."
+  },
+  {
+   "id": "zlava-kartu-ziskam",
+   "t": "zlavy",
+   "q": "Ako získam zákaznícku kartu?",
+   "v": [
+    "kde dostanem kartu",
+    "vybavenie karty",
+    "chcem zákaznícku kartu",
+    "ako získať zákaznícku kartu"
+   ],
+   "a": "Zákaznícku kartu si vyzdvihnete v predajni na Novozámockej 62/68 v Nitre. S ňou máte z akciových cien ďalšiu zľavu 5 % v hotovosti alebo 3,3 % kartou."
+  },
+  {
+   "id": "zlava-cennik",
+   "t": "zlavy",
+   "q": "Sú ceny v cenníku akcií už so zľavou?",
+   "v": [
+    "ceny v cenníku",
+    "je v cene zľava",
+    "cena v hotovosti",
+    "cenník so zľavou"
+   ],
+   "a": "Áno. Ceny v cenníku akcií (28. 1. 2026) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava."
+  },
+  {
+   "id": "platba-karta",
+   "t": "zlavy",
+   "q": "Môžem platiť kartou?",
+   "v": [
+    "platba kartou",
+    "terminál",
+    "platobná karta",
+    "berete karty",
+    "platba",
+    "ako sa dá platiť"
+   ],
+   "a": "Áno, v predajni je platobný terminál (VÚB banka). Platiť môžete aj v hotovosti; pri akciových cenách so zákazníckou kartou je zľava 5 % v hotovosti a 3,3 % kartou."
+  },
+  {
+   "id": "platba-splatky",
+   "t": "zlavy",
+   "q": "Dá sa kúpiť materiál na splátky?",
+   "v": [
+    "splátky",
+    "Quatro",
+    "úver na materiál",
+    "kúpa na splátky",
+    "financovanie"
+   ],
+   "a": "Áno, stavebný materiál môžete kúpiť na splátky cez Quatro. Podrobnosti vám povieme v predajni alebo na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcie",
+   "t": "akcie",
+   "q": "Aké máte aktuálne akcie?",
+   "v": [
+    "akcie",
+    "čo je v akcii",
+    "čo máte teraz v akcii",
+    "zľavnený tovar",
+    "akciový leták",
+    "výpredaj",
+    "aktuálne ponuky"
+   ],
+   "a": "Akcie máme napríklad na tehly TermoBRIK, komín Stadreko, krytinu Blachotrapez, okná a schody Fakro (zľava 20 %), stavebné rezivo, Porfix, Ytong a cement. Všetky akcie: https://www.stavebninyrichtarik.sk/akcie/index.html. Cenník akcií (28. 1. 2026): https://www.stavebninyrichtarik.sk/pdf/662.pdf. Platnosť a cenu vám potvrdíme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcie-cennik",
+   "t": "akcie",
+   "q": "Kde nájdem cenník?",
+   "v": [
+    "cenník",
+    "cenník akcií",
+    "pdf cenník",
+    "ceny tovaru",
+    "cenník na stiahnutie",
+    "leták"
+   ],
+   "a": "Cenník aktuálnych akcií (aktualizovaný 28. 1. 2026): https://www.stavebninyrichtarik.sk/pdf/662.pdf. Akciové letáky: https://www.stavebninyrichtarik.sk/letak.html. Ceny ostatného tovaru vám povieme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcie-platnost",
+   "t": "akcie",
+   "q": "Dokedy platia akcie?",
+   "v": [
+    "platnosť akcie",
+    "je akcia ešte platná",
+    "do kedy je akcia",
+    "platí ešte cena"
+   ],
+   "a": "Cenník akcií je aktualizovaný 28. 1. 2026, dátum konca akcií web neuvádza. Platnosť a cenu vám potvrdíme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "cena-ina",
+   "t": "akcie",
+   "q": "Koľko stojí tovar, ktorý nie je v akcii?",
+   "v": [
+    "cena tehly",
+    "koľko stojí",
+    "cena za kus",
+    "aká je cena",
+    "cena polystyrénu",
+    "cena za m2",
+    "cena za paletu"
+   ],
+   "a": "Ceny uvádzam len pri akciách z cenníka akcií (28. 1. 2026). Aktuálnu cenu ostatného tovaru vám povieme na 0905 622 223 alebo v cenovej ponuke zadarmo (info@stavebninyrichtarik.sk).",
+   "tel": true
+  },
+  {
+   "id": "cena-cement",
+   "t": "akcie",
+   "q": "Koľko stojí cement?",
+   "v": [
+    "cena cementu",
+    "cement 25 kg",
+    "cement 325",
+    "cement 425",
+    "vrece cementu"
+   ],
+   "a": "V akcii: cement 325 R, 25 kg za 4,42 € za vrece s DPH a cement 425 R, 25 kg za 5,18 € za vrece s DPH. Cena platí pri platbe v hotovosti. Platnosť vám potvrdíme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcia-termobrik",
+   "t": "akcie",
+   "q": "Aká je akcia na tehly TermoBRIK?",
+   "v": [
+    "Pezinská tehla",
+    "TermoBRIK cena",
+    "brúsená tehla",
+    "Dry systém",
+    "tehly na dom",
+    "Leier"
+   ],
+   "a": "Pezinská tehla TermoBRIK, brúsená tehla, Dry systém, s pojivom a lepidlom zdarma. Na tehlu vám pripravíme individuálnu cenovú ponuku konkrétne na váš dom. Podľa cenníka akcií je doprava zdarma až na stavbu, vykládka je za poplatok. Zavolajte 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcia-komin",
+   "t": "akcie",
+   "q": "Máte komín Stadreko na sklade?",
+   "v": [
+    "komín",
+    "komín Stadreko cena",
+    "komínový systém",
+    "komín akcia",
+    "Schiedel"
+   ],
+   "a": "Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií, napríklad komín 6 m, ø 160/90 za 618 € s DPH: https://www.stavebninyrichtarik.sk/pdf/662.pdf. Komíny Schiedel máme v katalógu. Poradíme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "akcia-blachotrapez",
+   "t": "akcie",
+   "q": "Aké sú podmienky pri krytine Blachotrapez?",
+   "v": [
+    "plechová krytina",
+    "škridloplech",
+    "trapézový plech",
+    "Blachotrapez doprava",
+    "plech na strechu"
+   ],
+   "a": "Krytina Blachotrapez (škridloplech, trapézové plechy): doprava nad 50 m² 17 € s DPH po celom Slovensku, do 50 m² plus ochranná fólia 0,55 €/m², podlimitná objednávka do 30 m² plus 1,20 €/m², vykládka tovaru 40 € s DPH."
+  },
+  {
+   "id": "akcia-fakro",
+   "t": "akcie",
+   "q": "Je zľava na strešné okná?",
+   "v": [
+    "Fakro zľava",
+    "strešné okno akcia",
+    "podkrovné schody",
+    "sklápacie schody",
+    "Velux",
+    "Rooflite"
+   ],
+   "a": "Okná a schody Fakro sú v akcii so zľavou 20 % (strešné okná, podkrovné stropné sklápacie schody, strešné doplnky). V akcii sú aj strešné okná RoofLITE. V katalógu máme aj Velux."
+  },
+  {
+   "id": "akcia-porfix-ytong",
+   "t": "akcie",
+   "q": "Je doprava zdarma pri Porfixe alebo Ytongu?",
+   "v": [
+    "Porfix",
+    "Ytong",
+    "pórobetón",
+    "celý kamión",
+    "Ytong doprava zadarmo",
+    "Porfix doprava zdarma"
+   ],
+   "a": "Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma až na stavbu."
+  },
+  {
+   "id": "akcia-dlazba",
+   "t": "akcie",
+   "q": "Máte akciu na dlažbu?",
+   "v": [
+    "zámková dlažba",
+    "City Stone Design",
+    "dlažba zľava",
+    "obrubníky",
+    "Stadreko dlažba",
+    "ploty"
+   ],
+   "a": "Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). V akcii sú aj dlažby a ploty Stadreko (dlažby, ploty, tvárnice, palisády, obrubníky a iné)."
+  },
+  {
+   "id": "akcia-zateplenie",
+   "t": "akcie",
+   "q": "Dovezete polystyrén zadarmo?",
+   "v": [
+    "polystyrén",
+    "zateplenie",
+    "sadrokartón",
+    "zatepľovací systém",
+    "vozíte polystyrén domov zadarmo"
+   ],
+   "a": "Áno, pri akcii na zatepľovací a sadrokartónový systém dovezieme polystyrén priamo domov zdarma."
+  },
+  {
+   "id": "akcia-rezivo",
+   "t": "akcie",
+   "q": "Predávate stavebné rezivo?",
+   "v": [
+    "rezivo",
+    "drevo",
+    "hranoly",
+    "krov",
+    "strešné laty",
+    "palivové drevo",
+    "dosky"
+   ],
+   "a": "Áno, stavebné rezivo máme priamo na sklade a v akcii: dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo aj krovy na mieru."
+  },
+  {
+   "id": "akcia-garaze",
+   "t": "akcie",
+   "q": "Predávate garáže alebo záhradné domčeky?",
+   "v": [
+    "garáž",
+    "plechová garáž",
+    "záhradný domček",
+    "montovaná garáž"
+   ],
+   "a": "Áno, montované plechové garáže a záhradné domčeky sú v akcii. Doprava aj montáž po celom Slovensku zdarma. Viac: https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html"
+  },
+  {
+   "id": "akcia-univerbau",
+   "t": "akcie",
+   "q": "Máte akciu na lepidlá a omietky?",
+   "v": [
+    "lepidlo na polystyrén",
+    "omietky",
+    "Univerbau",
+    "malta",
+    "flexibilné lepidlo",
+    "nivelit"
+   ],
+   "a": "Áno, lepidlá a omietky Univerbau sú za znížené ceny: lepidlo mrazuvzdorné, na polystyrén, flexibilné, nivelit, hrubé omietky, murovacie malty, betónový poter a iné. Ceny vybraných lepidiel a omietok sú v cenníku akcií: https://www.stavebninyrichtarik.sk/pdf/662.pdf"
+  },
+  {
+   "id": "novinky-kamene",
+   "t": "akcie",
+   "q": "Koľko stoja dekoračné kamene?",
+   "v": [
+    "dekoračný kameň",
+    "okruhliaky",
+    "kamenná kôra",
+    "mramor",
+    "kamene do záhrady"
+   ],
+   "a": "Dekoračné kamene sú vo vreciach 25 kg, ceny s DPH: kamenná kôra od 8,95 € za vrece, mramorový okruhliak biely 11,20 €. Viac: https://www.stavebninyrichtarik.sk/novinky/dekoracne-kamene.html"
+  },
+  {
+   "id": "novinky-delap",
+   "t": "akcie",
+   "q": "Koľko stojí kamenný obklad Delap?",
+   "v": [
+    "Delap",
+    "ohybný obklad",
+    "kamenný obklad",
+    "obklad na fasádu"
+   ],
+   "a": "Ohybný kamenný obklad Delap má akciovú cenu 17,80 € za m² s DPH pri platbe v hotovosti, v balení sú 4 m²."
+  },
+  {
+   "id": "novinky",
+   "t": "akcie",
+   "q": "Čo máte nové v ponuke?",
+   "v": [
+    "novinky",
+    "nový tovar",
+    "čo je nové",
+    "Magic Floor",
+    "Ekostyrén",
+    "kamenný koberec"
+   ],
+   "a": "Novinky: betónové výrobky, dekoračné kamene, ohybný obklad Delap, Ekostyrén, garáže a záhradné domčeky, vinylové podlahy Magic Floor, kamenný koberec Bianka a výrobky z recyklovaného plastu. Viac: https://www.stavebninyrichtarik.sk/novinky/index.html"
+  },
+  {
+   "id": "sortiment",
+   "t": "sortiment",
+   "q": "Čo všetko predávate?",
+   "v": [
+    "sortiment",
+    "aký tovar máte",
+    "čo máte v ponuke",
+    "katalóg",
+    "stavebný materiál",
+    "všetko na stavbu"
+   ],
+   "a": "Máme 15 kategórií: sypké zmesi, murovací materiál, strešné krytiny, dlažby a ploty, izolácie, komíny, strešné okná, hutný materiál, dvere a okná, rezivo, náradie, podhľady a PVC, sadrokartón a zateplenie, fasády, farby a laky. Katalóg: https://www.stavebninyrichtarik.sk/katalog/index.html"
+  },
+  {
+   "id": "sortiment-sklad",
+   "t": "sortiment",
+   "q": "Máte tento tovar na sklade?",
+   "v": [
+    "je to skladom",
+    "máte na sklade",
+    "dostupnosť",
+    "koľko kusov máte",
+    "skladová zásoba",
+    "máte hneď"
+   ],
+   "a": "Skladovú zásobu konkrétneho výrobku overiť neviem, dostupnosť vám potvrdí predajňa na 0905 622 223. Priamo na sklade máme podľa webu komín Stadreko, stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite.",
+   "tel": true
+  },
+  {
+   "id": "sortiment-tehly",
+   "t": "sortiment",
+   "q": "Aké tehly a tvárnice máte?",
+   "v": [
+    "tehly",
+    "murovací materiál",
+    "tvárnice",
+    "Pezinské tehelne",
+    "Ytong tvárnice a preklady",
+    "stropy"
+   ],
+   "a": "Murovací materiál: tehly, pórobetónové a betónové tvárnice, preklady a stropné systémy od Pezinských tehelní, Ytongu, Porfixu a Betonárky Nadlice. Viac: https://www.stavebninyrichtarik.sk/katalog/murovaci-material.html"
+  },
+  {
+   "id": "sortiment-strecha",
+   "t": "sortiment",
+   "q": "Aké strešné krytiny máte?",
+   "v": [
+    "strecha",
+    "pálená škridla",
+    "Tondach",
+    "Bramac",
+    "krytina",
+    "asfaltové pásy"
+   ],
+   "a": "Strešné krytiny: pálené a betónové škridly, plechové krytiny, asfaltové pásy a príslušenstvo. Značky Tondach, Bramac, Mediterran, Onduline, Icopal a Blachotrapez. Viac: https://www.stavebninyrichtarik.sk/katalog/stresne-kritiny.html"
+  },
+  {
+   "id": "sortiment-izolacie",
+   "t": "sortiment",
+   "q": "Aké izolácie máte?",
+   "v": [
+    "izolácia",
+    "minerálna vlna",
+    "Isover",
+    "Knauf",
+    "izolácia proti vode",
+    "radón"
+   ],
+   "a": "Izolačný materiál: minerálna vlna, polystyrén, asfaltové pásy, izolácie proti vode a radónu. Značky Knauf Insulation, Isover, Nobasil, Icopal, Den Braven a Climowool. Viac: https://www.stavebninyrichtarik.sk/katalog/izolacny-material.html"
+  },
+  {
+   "id": "sortiment-zmesi",
+   "t": "sortiment",
+   "q": "Máte cement, vápno a omietky?",
+   "v": [
+    "sypké zmesi",
+    "vápno",
+    "Baumit",
+    "Holcim",
+    "stierky",
+    "samonivelačná hmota"
+   ],
+   "a": "Áno. Sypké zmesi: cement, vápno, malty, omietky, lepidlá, stierky a samonivelačné hmoty od Baumit, Cemmac, Calmit, Holcim, Murexin a Univerbau. Viac: https://www.stavebninyrichtarik.sk/katalog/sypke-zmesy.html"
+  },
+  {
+   "id": "sortiment-dvere",
+   "t": "sortiment",
+   "q": "Predávate dvere a okná?",
+   "v": [
+    "dvere",
+    "vchodové dvere",
+    "interiérové dvere",
+    "Masonite",
+    "okná"
+   ],
+   "a": "Áno: interiérové, vchodové, bezpečnostné a posuvné dvere (Masonite), okná drevené, dvojsklo. Viac: https://www.stavebninyrichtarik.sk/katalog/dvere-okna.html"
+  },
+  {
+   "id": "sortiment-hutny",
+   "t": "sortiment",
+   "q": "Máte betonársku oceľ a siete?",
+   "v": [
+    "hutný materiál",
+    "kari siete",
+    "oceľ",
+    "plechy",
+    "profily",
+    "zárubne",
+    "garážová brána"
+   ],
+   "a": "Áno. Hutný materiál: betonárska oceľ, siete, plechy, profily, rúry, zárubne a garážové brány (Yssel Steel). Viac: https://www.stavebninyrichtarik.sk/katalog/hutny-material.html"
+  },
+  {
+   "id": "sortiment-farby",
+   "t": "sortiment",
+   "q": "Máte farby a laky?",
+   "v": [
+    "farby",
+    "laky",
+    "fasádna farba",
+    "riedidlo",
+    "Het",
+    "Chemolak"
+   ],
+   "a": "Áno: interiérové a fasádne farby, laky, lepidlá, riedidlá a tónovacie systémy od Het, Chemolak, Chemos a Elastik. Viac: https://www.stavebninyrichtarik.sk/katalog/farby-laky.html"
+  },
+  {
+   "id": "sortiment-naradie",
+   "t": "sortiment",
+   "q": "Predávate náradie?",
+   "v": [
+    "náradie",
+    "spojovací materiál",
+    "záhradné náradie",
+    "elektrické náradie"
+   ],
+   "a": "Áno: stavebné, elektrické a záhradné náradie, spojovací materiál, mriežky a poklopy. Stavebné náradie máme v akcii priamo na sklade. Viac: https://www.stavebninyrichtarik.sk/katalog/stavebne-naradie-doplnky.html"
+  },
+  {
+   "id": "sortiment-fasada",
+   "t": "sortiment",
+   "q": "Máte fasádne omietky a zateplenie?",
+   "v": [
+    "fasáda",
+    "silikónová omietka",
+    "fasádne omietky",
+    "Masterplast",
+    "sklotex",
+    "suchá výstavba"
+   ],
+   "a": "Áno: fasádny systém (silikónové, silikátové a mozaikové omietky, fasádne farby, zatepľovacie systémy, Baumit, Univerbau) a sadrokartón a zateplenie (suchá výstavba, profily, polystyrén, sklotex, fólie). Viac: https://www.stavebninyrichtarik.sk/katalog/fasadny-system.html"
+  },
+  {
+   "id": "sortiment-znacka-ina",
+   "t": "sortiment",
+   "q": "Predávate aj značku, ktorú nevidím na webe?",
+   "v": [
+    "máte inú značku",
+    "objednáte inú značku",
+    "iný výrobca",
+    "nenašiel som výrobok"
+   ],
+   "a": "Na webe sú značky z našej ponuky. Či vieme zohnať inú značku, vám povieme na 0905 622 223.",
+   "tel": true
+  },
+  {
+   "id": "asistent-clovek",
+   "t": "asistent",
+   "q": "Píšem s človekom?",
+   "v": [
+    "si človek",
+    "ste skutočný človek",
+    "kto odpovedá",
+    "si robot",
+    "je to automat",
+    "hovorím s predavačom"
+   ],
+   "a": "Nie, som AI asistent webu Stavebniny Richtárik, teda automatický asistent, nie človek. S človekom sa spojíte na 0905 622 223 alebo v predajni.",
+   "tel": true
+  },
+  {
+   "id": "asistent-udaje",
+   "t": "asistent",
+   "q": "Čo sa stane s mojimi otázkami?",
+   "v": [
+    "ochrana údajov",
+    "ukladáte rozhovor",
+    "ukladáte si moje správy",
+    "gdpr",
+    "osobné údaje",
+    "súkromie"
+   ],
+   "a": "Rozhovory neukladáme. Nepíšte sem osobné údaje. Podrobnosti sú v časti Ochrana údajov pod oknom."
+  },
+  {
+   "id": "asistent-co-vie",
+   "t": "asistent",
+   "q": "S čím mi viete pomôcť?",
+   "v": [
+    "čo vieš",
+    "s čím mi vieš pomôcť",
+    "na čo sa môžem opýtať",
+    "pomoc",
+    "ako funguješ"
+   ],
+   "a": "Odpoviem na otázky o sortimente, akciách, zľavách, doprave, službách, otváracích hodinách a kontakte. Ceny uvádzam len z cenníka akcií; presnú ponuku, výpočet materiálu a termín dovozu vybaví predajňa. Časté otázky: https://www.stavebninyrichtarik.sk/caste-otazky.html"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+/* Uvítanie „Brána“ pred úvodom (len index.html). Zdroj, ktorý build.py:uvitanie_bloky() zmenší do <style> v <head>
+   úvodu (kontrola_uvodu() overí zhodu). Dve svetlé krídla brány s pozdravom sa rozídu do strán, za nimi je celá skutočná
+   fotka dvora so štítkami a fotka sa usadí do rámu úvodu. Prvok vkladá skript len pri triede br-ide (skript v <head>);
+   bez JS, pri „obmedziť pohyb“ a pri tlači neexistuje. Hlavička a spodná lišta (Zavolať) ostávajú nad bránou a dajú sa
+   stlačiť: brána začína pod hlavičkou (79 px) a na telefóne končí nad spodnou lištou (69 px), z-index 39 je pod nimi.
+   Pohyb je len transform a opacity (bez otáčania, bez perspektívy a bez orezávania cestou), krivky a dĺžky sú
+   z pohybového systému v site.css. Poistka: keby skript zlyhal, prekryv sa skryje sám 3,2 s po prvom vykreslení. */
+.br{position:fixed;left:0;right:0;top:79px;bottom:0;z-index:39;overflow:hidden;contain:layout paint;animation:br-poistka 1ms 3.2s forwards}
+/* obe kľúčové snímky skryté: pri konci 1 ms animácie je priebeh 0,9999… a krok na konci by ešte ukázal začiatok */
+@keyframes br-poistka{from,to{visibility:hidden}}
+@media (max-width:980px){.br{bottom:calc(69px + env(safe-area-inset-bottom,0px))}}
+/* vnútro je inert (bez fokusu, výberu textu a mimo čítačky); ťuk zachytí samotný .br, takže pod bránou sa nič nestlačí */
+.br-in,.br-okno{position:absolute;inset:0}
+.br-okno{overflow:hidden;transform-origin:0 0;background:var(--paper);container-type:size}
+/* scéna má pomer strán fotky (--a: dvor-p 1720 × 860, dvor-t 1086 × 1170) a pokryje celé okno; vodorovne je posunutá
+   k uličke medzi paletami (--x), zvislo v strede. Bez čítania rozmerov v skripte (nič sa neprepočítava pri načítaní). */
+.br-scena{--a:2;--x:.7;position:absolute;transform-origin:0 0;width:max(100cqw,100cqh * var(--a));aspect-ratio:var(--a);left:calc((100cqw - max(100cqw,100cqh * var(--a))) * var(--x));top:calc((100cqh - max(100cqw,100cqh * var(--a)) / var(--a)) / 2)}
+.br-kam{position:absolute;inset:0}
+.br-kam img{display:block;width:100%;height:100%}
+.br .uv-znak{z-index:2;opacity:0;transform-origin:0 0}
+/* štítky na paletách: papier, tehlová hrana, špendlík na skutočnom mieste fotky */
+.br-st{position:absolute;display:grid;gap:1px;margin:0;padding:7px 13px 8px 10px;background:var(--paper);color:var(--ink);border-left:5px solid var(--brick);border-radius:2px;box-shadow:0 10px 24px rgba(20,18,16,.18);white-space:nowrap;translate:-7px calc(-100% - 16px);opacity:0}
+.br-st b{font-family:var(--display);font-weight:800;font-size:21px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+.br-st span{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.br-st::after,.br-st::before{content:"";position:absolute;left:-11px;bottom:-22px;width:12px;height:12px;border-radius:50%;background:var(--brick);box-shadow:0 0 0 3px var(--paper)}
+.br-st::before{background:none;box-shadow:0 0 0 2px var(--brick);opacity:0}
+.br-st.vlavo{translate:calc(-100% + 7px) calc(-100% - 16px);border-left:0;border-right:5px solid var(--brick);text-align:right;padding:7px 10px 8px 13px}
+.br-st.vlavo::after,.br-st.vlavo::before{left:auto;right:-11px}
+/* krídla: papier s jemnými latkami, tehlová spára v strede, pozdrav cez obe krídla (každé nesie svoju polovicu) */
+.br-krid{position:absolute;top:0;bottom:0;width:50%;z-index:3;overflow:hidden;background:var(--paper) repeating-linear-gradient(90deg,rgba(20,18,16,.05) 0 1px,transparent 1px 100%);background-size:20% 100%}
+.br-l{left:0}
+.br-p{right:0;background-position:100% 0}
+.br-krid::after{content:"";position:absolute;top:0;bottom:0;width:1.5px;background:var(--brick);animation:br-spara .4s var(--krivka-vyjazd) both}
+.br-l::after{right:0}
+.br-p::after{left:0}
+@keyframes br-spara{from{transform:scaleY(0)}}
+.br-tab{position:absolute;top:0;bottom:0;width:200%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 var(--gutter) 6vh}
+.br-l .br-tab{left:0}
+.br-p .br-tab{right:0}
+.br-nad{display:flex;align-items:center;gap:12px;margin:0 0 18px;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.2;letter-spacing:.18em;text-transform:uppercase;color:var(--brick);white-space:nowrap}
+.br-nad::before,.br-nad::after{content:"";width:34px;height:2px;background:currentColor}
+.br-veta{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(54px,8.6vw,124px);line-height:.92;letter-spacing:-.012em;text-transform:uppercase;color:var(--ink)}
+.br-veta>span{display:block;overflow:clip;padding-top:.12em;margin-top:-.12em}
+.br-veta>span>span{display:inline-block;animation:br-riadok .34s var(--krivka-vyjazd) both}
+.br-veta>span+span>span{animation-delay:.06s;color:var(--brick)}
+@keyframes br-riadok{from{transform:translateY(105%)}}
+@media (max-width:700px){
+.br-scena{--a:calc(1086 / 1170);--x:.5}
+.br-nad{font-size:11.5px;letter-spacing:.12em;gap:8px;margin-bottom:14px}
+.br-nad::before,.br-nad::after{width:18px}
+.br-st{padding:5px 10px 6px 8px;border-left-width:4px;translate:-6px calc(-100% - 14px)}
+.br-st.vlavo{translate:calc(-100% + 6px) calc(-100% - 14px);border-right-width:4px;padding:5px 8px 6px 10px}
+.br-st b{font-size:19px}
+.br-st span{font-size:11px}
+}
+@media (max-width:359px){.br-nad::before,.br-nad::after{display:none}}
+@media (min-width:1100px){.br-st{padding:9px 15px 10px 12px}.br-st b{font-size:27px}.br-st span{font-size:14.5px}}
+@media print,(prefers-reduced-motion:reduce){.br{display:none}}
+/* tlač počas uvítania: úvod v konečnom stave (!important prebije bežiaci pohyb nadpisu, ponuky a štítku) */
+@media print{.uv h1 .ln>span,.uv-b,.uv-ram>.uv-stitok{opacity:1!important;transform:none!important}}
