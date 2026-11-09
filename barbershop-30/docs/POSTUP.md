@@ -59,6 +59,16 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑11‑09 (hotové na vetve barbershop-skvrny): Lajko k najnovšej verzii: „Pánske holičstvo 30 môže zostať, zachovať iba 2–3 druhy
+  písma, sme tam od 2017, upraviť fotky na rezervácii, remeslo, na ktorom si dáme záležať, old school v Nitre s lokálnou klientelou,
+  v čakárni ťa obslúžime, profesionálni barberi, garantujeme skúsenosť, upraviť texty, pridať logá aj ostatných prevádzok.“
+  Texty webu, 7 slovníkov, `en/`, znalosti a 13 odpovedí Barbera podľa jeho slov (rok 2019 → 2017, tagline v úvode a pätičke,
+  pred/po v `scratchpad/barber/lajko/b1/TEXTY.md`, zdroje v `docs/CONTENT_SOURCES.md`). Písma: Fraunces 500 (stojaté) sa nikde
+  nepoužívalo, súbor a deklarácie preč; Manrope 600 zlúčené do 700 (dve rodiny: Fraunces 800 + 500 kurzíva, Manrope 400 + 700;
+  pätkové písmo systému ostáva len na kópii vytlačenej vizitky). Fotky skupín na rezervácii: vlastné výrezy 16 : 6 v `assets/img/rez/`
+  z existujúcich fotiek, jednotne doladené. Miesto na logá prevádzok v pätičke je pripravené a skryté, kým Lajko nepošle súbory
+  (`README.md`, Logá prevádzok). Otázka pre majiteľa: rok 2017 (Lajko) vs. 2019 (starý web, zápis s.r.o.).
+
 - 2026‑10‑29 (hotové na vetve, CHECKS 37): majiteľ: „Chcem, aby nikde neboli žiadne chyby, aby si skontroloval, či aj
   všetko funguje, aj SEO.“ Šesť kontrol (funkcie, vzhľad, SEO, výkon, film, Barber) a oprava všetkých vážnych
   a stredných nálezov: čierny snímok filmu pri zmene rozlíšenia a stmavnutie pri nábehu preč, strih káva → sála bez
