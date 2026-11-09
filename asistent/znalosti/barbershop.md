@@ -1,24 +1,27 @@
 # Barbershop 30 Nitra – overené údaje pre asistenta
 
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
-stav 29. 10. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; vernostná kartička
-podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
+stav 9. 11. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; slová barbera Lajka
+z 9. 11. 2026: na Mostnej 30 od roku 2017, old school štýl, lokálna klientela, obsluha v čakárni, profesionálni barberi,
+„garantujeme skúsenosť“, heslo „Remeslo, na ktorom si dáme záležať.“; vernostná kartička podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
 (časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
-- Názov: Barbershop 30 (v právnych údajoch Barbershop30). Lokálny barber, kde stretneš hocikoho.
+- Názov: Barbershop 30 (v právnych údajoch Barbershop30). Old school pánske holičstvo, lokálny barber, kde stretneš hocikoho;
+  zákazníci sú prevažne miestni z Nitry. Heslo remesla: „Remeslo, na ktorom si dáme záležať.“
 - Heslo úvodu webu (úvodná správa majiteľa, od 28. 10. 2026): „Každý človek. Každé želanie. Jedno miesto.“
-- Adresa: Mostná 30, 949 01 Nitra. Na Mostnej 30 strihá od roku 2019.
+- Adresa: Mostná 30, 949 01 Nitra. Na Mostnej 30 strihá od roku 2017.
 - Navigácia: https://www.google.com/maps/dir/?api=1&destination=Mostn%C3%A1+30%2C+949+01+Nitra
 - Telefón na recepciu: 0951 267 203 (zo zahraničia +421 951 267 203). Recepcia telefonuje v pracovné dni 9:00 až 19:00.
 - E-mail: info@barbershop30.sk
 - Otvorené: pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, nedeľa zatvorené.
-- 8 kresiel v troch miestnostiach. Pri dverách privíta recepčná, tak je to tu od roku 2019.
+- 8 kresiel v troch miestnostiach. Pri dverách privíta recepčná.
 - Recepčná sa stará o termín a pohodlie zákazníka, barber o výsledok. Volať treba vždy recepcii (0951 267 203), nie barberovi:
   keď má barber v kresle zákazníka, venuje sa jemu, nie telefónu. Zmenu alebo zrušenie termínu dať vedieť recepcii čo najskôr.
 - Garancia (slová majiteľa, 27. 10. 2026): z kresla zákazník vstane, až keď je spokojný. Čo nesedí, povie rovno v kresle,
   dohodne sa a doladí hneď. Nič viac sa nesľubuje: žiadne lehoty po odchode, žiadne „zadarmo“, „neplatíš“ ani vrátenie peňazí.
-- Vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom (web: „Kreslá, retro pumpa a farebný buldog.“); káva aj minerálka sú zdarma.
+- Vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom (web: „Kreslá, retro pumpa a farebný buldog.“); v čakárni
+  zákazníka obslúžia, káva aj minerálka sú zdarma.
 - Strihanie detí: strih pre malých gentlemanov do 10 rokov.
 - Školenia sú na poschodí, pod značkou Barbershop 30 (podrobnosti len na recepcii).
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
@@ -66,7 +69,7 @@ Doplnky
 
 ## Tím
 Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si zákazník vyberie v rezervácii.
-Barberi majú 10 až 15 rokov praxe (slová majiteľa, 27. 10. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
+Profesionálni barberi s 10 až 15 rokmi praxe (slová majiteľa, 27. 10. 2026); podnik o sebe hovorí „garantujeme skúsenosť“ (Lajko, 9. 11. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
 a strih, ktorý sedí aj o týždeň.
 Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián (v rezervačnom systéme Adrian). Barberka: Dominika.
 Predstavenia barberov na webe (doslova z karty tímu):

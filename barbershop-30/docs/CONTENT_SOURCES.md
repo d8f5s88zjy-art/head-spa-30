@@ -17,7 +17,7 @@ Dátum získania všetkých údajov: **2026‑10‑09**, pokiaľ nie je uvedené
 | otváracie hodiny | Po–Pi 09:00–19:00, So 09:00–14:00, Ne zatvorené | |
 | rezervácia | https://www.barbershop30.sk/rezervacia | vlastný rezervačný systém podniku (Vue komponent, endpoint /rezervacia/ajax); nie Bookio. Nový web naň odkazuje, neembeduje ho. Predvoľba služby/barbera cez URL nie je zdokumentovaná → neprenáša sa. |
 | farbenie, melír, trvalá | https://booqme.app/sk/rezervacia/barbershop30 | samostatná Booqme stránka (pracovníčka Romana); na novom webe len ako odkaz v sekcii služieb |
-| založenie | 2019 („Sme tu pre vás už od roku 2019“) | na webe len ako „na Mostnej 30 od roku 2019“ (viazané na adresu); recepcia „8 rokov“ pozri nižšie |
+| založenie | 2019 („Sme tu pre vás už od roku 2019“ na starom webe; zápis FACEPALM, s.r.o. 5. 3. 2019) | **od 9. 11. 2026 na webe „od roku 2017“** podľa slov barbera Lajka („sme tam od 2017“), pozri časť Old school texty; rozpor so starým webom a registrom je otázka pre majiteľa |
 | kapacita | 8 kresiel, recepčná, káva a minerálka zdarma, online rezervácie 24/7, strihanie detí | prevzaté z „Prečo práve my?“ na aktuálnom webe |
 | kde sa podáva káva | vzadu, kde ľudia čakajú (čakáreň s kreslami a pumpou Route 66), nie pri recepcii | majiteľ 2026‑10‑11; na webe v karte Čakáreň |
 | Instagram | https://www.instagram.com/barbershop30_nitra/ | |
@@ -225,3 +225,32 @@ prevádzok ostáva, ak majú všetky tri adresu Mostná 30, „jediný barbersho
 Znalosti Barbera (`../asistent/znalosti/barbershop.md`) a otázky (`barbershop-otazky.json`: `prax`, `recepcia`, `pobocky`,
 `najlepsi-barber`, `preco-vy`, `tim-*`, nová `garancia`) hovoria to isté. Čo majiteľ nepovedal, tam nie je: lehota garancie,
 „zadarmo“, vrátenie peňazí, prax konkrétneho barbera.
+
+## Old school texty podľa Lajka (2026‑11‑09)
+
+Lajko (barber Barbershopu 30 a používateľ adminu) 9. 11. 2026 k najnovšej verzii webu: „Pánske holičstvo 30 môže zostať. Zachovať
+iba 2–3 druhy písma. Sme tam od 2017. Upraviť fotky na rezervácii. Remeslo, na ktorom si dáme záležať – také na štýl old school
+v Nitre s lokálnou klientelou. V čakárni ťa obslúžime. Profesionálni barberi – garantujeme skúsenosť. Upraviť texty. Pridať logá
+aj ostatných prevádzok.“ Nové fakty z jeho slov: podnik je na Mostnej 30 od roku 2017, old school štýl, lokálna klientela,
+obsluha v čakárni, profesionálni barberi; „garantujeme skúsenosť“ je tvrdenie podniku o sebe (na webe ako jeho vlastné slovo,
+nie ako externý fakt). Logá ostatných prevádzok neposlal (na webe je pripravené skryté miesto, `README.md`). Pred/po každej
+vety: `scratchpad/barber/lajko/b1/TEXTY.md`.
+
+| text na webe | kde | opora | stupeň |
+|---|---|---|---|
+| „Pánske holičstvo na Mostnej 30, od roku 2017. Strih, brada a britva: remeslo, na ktorom si dáme záležať.“ | úvod, `.title-sub` | rok a tagline = Lajko 9. 11.; služby = cenník | tvrdenie podniku + overené‑oficiálne |
+| „Pri dverách ťa privíta recepčná. Na Mostnej 30 sme od roku 2017.“ | karta Poď ďalej | recepčná = starý web; rok = Lajko | overené‑oficiálne + tvrdenie podniku |
+| „Old school remeslo: konzultácia, strojček a nožnice, fade. Pri brade horúci uterák a britva.“ | karta Remeslo | „na štýl old school“ = Lajko; kroky = cenník | tvrdenie podniku + overené‑oficiálne |
+| „Kreslá, retro pumpa a farebný buldog. V čakárni ťa obslúžime, káva aj minerálka sú zdarma.“ | karta Čakáreň, aj otázka „Čo ma čaká, keď prídem?“ | „V čakárni ťa obslúžime“ = Lajko; káva a minerálka = starý web | tvrdenie podniku + overené‑oficiálne |
+| „… profesionálni barberi a barberky.“, „Profesionálni barberi s 10 až 15 rokmi praxe …“ | karta Ľudia, úvod tímu | „profesionálni barberi“ = Lajko; prax = majiteľ 27. 10. | tvrdenie podniku |
+| Pilier Skúsenosti „Garantujeme skúsenosť: na Mostnej 30 striháme od roku 2017 a hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“ | tím | „garantujeme skúsenosť“ a rok = Lajko; 5,0 = Google (úvod) | tvrdenie podniku + Google |
+| „Old school holičstvo v Nitre, kam chodia miestni. Na Mostnej 30 striháme od roku 2017 a čo o nás hovoria zákazníci, si prečítaš priamo na Google.“ | karta Dôvera | „old school v Nitre s lokálnou klientelou“ = Lajko | tvrdenie podniku |
+| Fakty „Od roku 2017“ a „Recepcia: privíta ťa pri dverách“ (bez roku) | karta Dôvera `.facts` | rok = Lajko; o recepcii rok nepovedal, preto bez roku | tvrdenie podniku |
+| Pätička „Remeslo, na ktorom si dáme záležať. Pánske holičstvo na Mostnej 30 v Nitre, od roku 2017.“ | `.footer-brand` | Lajko | tvrdenie podniku |
+| meta description a og:description s „od roku 2017“ a „Old school“; JSON-LD `foundingDate` 2017 | hlavička | Lajko | tvrdenie podniku |
+
+Rok 2019 (starý web, zápis s.r.o.) na webe už nie je. Ak majiteľ potvrdí, že rok 2017 platí pre prevádzku na Mostnej 30 a 2019
+je len zápis spoločnosti, nič netreba meniť; ak by platil 2019, zmena je spätná jedným skriptom (`scratchpad/barber/lajko/b1/nastroje/texty.py`
+s opačným mapovaním). Znalosti a 13 odpovedí Barbera (`prax`, `od-kedy`, `heslo`, `recepcia`, `atmosfera`, `preco-vy`,
+`hodiny-recepcia-sobota`, `kontakt-prestahovanie`, `o-time-vek`, `o-time-najdlhsie`, `o-time-recepcna-meno`, `o-time-rodinny`,
+`o-time-piliere`) hovoria to isté.
