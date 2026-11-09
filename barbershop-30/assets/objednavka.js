@@ -77,15 +77,17 @@ function zTimu(meno) {
 }
 const menoBarbera = (m) => (m === KTOKOLVEK ? tx().nezalezi : zTimu(m).meno);
 
-/* skupiny služieb: skutočná fotka prevádzky (nie výsledok strihu), rovnaká ako v galérii webu */
-const FOTO_SKUP = { 'g-strih': ['galeria-zrkadlo', '45% 55%'], 'g-brada': ['galeria-sud', '50% 55%'], 'g-balicky': ['detail-stol', '45% 55%'], 'g-doplnky': ['galeria-neon', '45% 48%'] };
+/* skupiny služieb: skutočná fotka prevádzky (nie výsledok strihu), výrezy 16 : 6 ako na rezervačnej stránke
+   (assets/img/rez/, source/tools/rez-fotky.py) */
+const FOTO_SKUP = { 'g-strih': 'rez-strih', 'g-brada': 'rez-brada', 'g-balicky': 'rez-balicky', 'g-doplnky': 'rez-doplnky' };
 const img = (cesta) => new URL(`img/${cesta}`, import.meta.url).href;
 function fotoSkup(skup) {
   const f = FOTO_SKUP[skup];
   if (!f) return null;
+  const sada = (p) => `${img(`rez/${f}-760.${p}`)} 760w, ${img(`rez/${f}-1080.${p}`)} 1080w`;
   return el('picture', { class: 'obj-skup-foto', 'aria-hidden': 'true' }, [
-    el('source', { type: 'image/avif', srcset: `${img(f[0] + '-640.avif')} 640w, ${img(f[0] + '-1080.avif')} 1080w`, sizes: '(max-width: 640px) 100vw, 40rem' }),
-    el('img', { src: img(f[0] + '-640.webp'), srcset: `${img(f[0] + '-640.webp')} 640w, ${img(f[0] + '-1080.webp')} 1080w`, sizes: '(max-width: 640px) 100vw, 40rem', alt: '', width: '640', height: '427', loading: 'lazy', decoding: 'async', style: `object-position: ${f[1]}` }),
+    el('source', { type: 'image/avif', srcset: sada('avif'), sizes: '(max-width: 640px) 100vw, 40rem' }),
+    el('img', { src: img(`rez/${f}-760.webp`), srcset: sada('webp'), sizes: '(max-width: 640px) 100vw, 40rem', alt: '', width: '760', height: '285', loading: 'lazy', decoding: 'async' }),
   ]);
 }
 /* fotky práce barberov (assets/praca.json, vyrobí source/tools/praca.py z fotiek od barberov); bez súboru nič */
