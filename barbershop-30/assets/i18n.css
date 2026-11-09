@@ -5,7 +5,7 @@
   display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
   min-width: 44px; min-height: 44px; padding: 0 var(--s2);
   color: var(--paper-2);
-  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   border-radius: 999px;
   transition: color var(--t-micro) var(--ease-out);
 }
@@ -100,7 +100,6 @@ body:has(.site-header[data-menu="open"]) .lang-offer, body:has(.lang-btn[aria-ex
 /* ukrajinčina: Manrope s cyrilikou sa stiahne len pri cyrilike (pre ostatné jazyky 0 B); nadpisy prejdú
    na pätkové písmo systému, Fraunces cyriliku nemá */
 @font-face { font-family: "Manrope"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/Manrope-cyr-400.woff2") format("woff2"); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-/* tučné rezy cyriliky majú presné váhy ako latinské (600, 700): s rozsahom 500 800 Chrome pri váhe 700 vybral len
+/* tučný rez cyriliky má presnú váhu ako latinský (700): s rozsahom 500 800 Chrome pri váhe 700 vybral len
    cyrilský rez a latinku nechal na systémové písmo */
-@font-face { font-family: "Manrope"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/Manrope-cyr-700.woff2") format("woff2"); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
 @font-face { font-family: "Manrope"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/Manrope-cyr-700.woff2") format("woff2"); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }

@@ -1,16 +1,10 @@
-/* BARBERSHOP 30 – self-hosted web fonts
-   Fraunces (display): static instances cut from the variable font
-   (opsz=144, SOFT=0, WONK=0), subset to latin + latin-ext (Slovak diacritics included).
-   Manrope (text): 400 / 600 / 700, subset with Slovak diacritics.
-   Paths are relative to this file (assets/fonts.css -> assets/fonts/). */
-
-@font-face {
-  font-family: "Fraunces";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Fraunces-500.woff2") format("woff2");
-}
+/* BARBERSHOP 30 – vlastné písma (dve rodiny, štyri rezy; Lajko 9. 11. 2026: „zachovať iba 2–3 druhy písma“)
+   Fraunces (nadpisy): statické rezy z variabilného písma (opsz=144, SOFT=0, WONK=0), latinka + latin-ext
+   so slovenskou diakritikou; 800 na nadpisy a ceny, 500 kurzíva ako jediný akcent (em v nadpisoch, riadky barberov,
+   číslovanie krokov). Stojatý rez 500 sa na webe nikde nepoužíval, preto tu nie je.
+   Manrope (text): 400 a 700 so slovenskou diakritikou; rez 600 sa zlúčil do 700 (rozdiel pri 13 px verzálkach
+   bol nepostrehnuteľný a ušetrí sa jeden súbor pri prvom obraze). Cyrilika pre ukrajinčinu je v i18n.css.
+   Cesty sú relatívne k tomuto súboru (assets/fonts.css -> assets/fonts/). */
 
 @font-face {
   font-family: "Fraunces";
@@ -34,14 +28,6 @@
   font-weight: 400;
   font-display: swap;
   src: url("fonts/Manrope-400.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/Manrope-600.woff2") format("woff2");
 }
 
 @font-face {

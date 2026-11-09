@@ -23,10 +23,10 @@
 
 /* hlavička: späť, krok, zavrieť */
 .obj-hlava { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 12px 12px 10px 20px; }
-.obj-spat { grid-column: 1; justify-self: start; min-height: 44px; padding: 0 10px 0 0; font-weight: 600; font-size: 0.9375rem; color: var(--paper-2, #c9beae); }
+.obj-spat { grid-column: 1; justify-self: start; min-height: 44px; padding: 0 10px 0 0; font-weight: 700; font-size: 0.9375rem; color: var(--paper-2, #c9beae); }
 .obj-spat:hover { color: var(--paper, #f1e9dd); }
 .obj-spat[hidden] + .obj-kicker { grid-column: 1; }
-.obj-kicker { grid-column: 2; margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-2, #c9beae); white-space: nowrap; }
+.obj-kicker { grid-column: 2; margin: 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-2, #c9beae); white-space: nowrap; }
 .obj-x { grid-column: 3; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; border: 1px solid var(--line, rgba(241, 233, 221, 0.14)) !important; }
 .obj-x:hover { border-color: var(--paper, #f1e9dd) !important; }
 
@@ -36,14 +36,14 @@
 .obj-pruh i.je { background: var(--lamp, #e0601c); }
 
 .obj-obsah { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 22px 20px 24px; }
-.obj-ukazka-pas { margin: 0 0 16px; padding: 8px 12px; border: 1px dashed var(--lamp, #e0601c); border-radius: 6px; font-size: 0.8125rem; font-weight: 600; color: var(--lamp-2, #f07e3c); }
+.obj-ukazka-pas { margin: 0 0 16px; padding: 8px 12px; border: 1px dashed var(--lamp, #e0601c); border-radius: 6px; font-size: 0.8125rem; font-weight: 700; color: var(--lamp-2, #f07e3c); }
 .obj-h { margin: 0 0 14px; font-family: var(--font-display, "Fraunces", Georgia, serif); font-weight: 800; font-variation-settings: "opsz" 144;
   font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1; letter-spacing: -0.015em; outline: none; }
 
 /* doterajší výber: tichý riadok (služba · barber · termín) bez krabičiek, ťuk na časť vráti na jej krok */
 .obj-vyber { display: flex; flex-wrap: wrap; align-items: center; margin: -6px 0 18px; font-size: 0.9375rem; line-height: 1.35; }
 .obj-vyber[hidden] { display: none; }
-.obj-vyber button { min-height: 40px; padding: 0; font-weight: 600; text-align: left; color: var(--paper-2, #c9beae);
+.obj-vyber button { min-height: 40px; padding: 0; font-weight: 700; text-align: left; color: var(--paper-2, #c9beae);
   text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 5px; text-decoration-thickness: 1px;
   transition: color var(--t-micro, 200ms) var(--ease-out, ease), text-decoration-color var(--t-micro, 200ms) var(--ease-out, ease); }
 .obj-vyber button:hover { color: var(--paper, #f1e9dd); text-decoration-color: var(--lamp, #e0601c); }
@@ -77,7 +77,7 @@
 .obj-rychlo[hidden] { display: none; }
 .obj-rychlo-h { margin: 0 0 12px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lamp-2, #f07e3c); }
 .obj-rychlo-h::first-letter { text-transform: uppercase; }
-.obj-alebo { margin: 0 0 12px; font-size: 0.9375rem; font-weight: 600; color: var(--paper-2, #c9beae); }
+.obj-alebo { margin: 0 0 12px; font-size: 0.9375rem; font-weight: 700; color: var(--paper-2, #c9beae); }
 
 /* 2. tím: karty s portrétom (ako tím na webe), pod nimi ukážky práce, keď ich prevádzka dodala */
 .obj-tim { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 12px; }
@@ -97,7 +97,7 @@
 .obj-foto { padding: 0; border: 0; background: transparent; max-width: min(92vw, 34rem); max-height: 92vh; overflow: visible; }
 .obj-foto::backdrop { background: rgba(14, 13, 12, 0.9); }
 .obj-foto img { display: block; width: 100%; max-height: calc(92vh - 64px); object-fit: contain; border-radius: var(--radius, 8px); background: var(--ink-2, #171412); }
-.obj-foto-lista { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--paper, #f1e9dd); font: 600 0.9375rem/1.3 var(--font-text, "Manrope", system-ui, sans-serif); }
+.obj-foto-lista { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--paper, #f1e9dd); font: 700 0.9375rem/1.3 var(--font-text, "Manrope", system-ui, sans-serif); }
 .obj-foto-popis { flex: 1; margin: 0; text-align: center; }
 .obj-foto-tl { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-strong, rgba(241, 233, 221, 0.3)); background: rgba(14, 13, 12, 0.6); color: inherit; font-size: 1.25rem; cursor: pointer; }
 
@@ -128,7 +128,7 @@
 .obj-suhrn dt { grid-column: 1 / -1; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-3, #8e8578); }
 .obj-suhrn dd { margin: 0; font-weight: 700; font-size: 1.0625rem; line-height: 1.35; color: var(--paper, #f1e9dd); min-width: 0; overflow-wrap: anywhere; }
 .obj-suhrn dd::first-letter { text-transform: uppercase; }
-.obj-suhrn .obj-suhrn-m { font-weight: 600; font-size: 0.9375rem; color: var(--paper-2, #c9beae); white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+.obj-suhrn .obj-suhrn-m { font-weight: 700; font-size: 0.9375rem; color: var(--paper-2, #c9beae); white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
 .obj-suhrn .obj-suhrn-m::first-letter { text-transform: none; }
 
 /* poznámka (termín ešte nie je rezervovaný, časy neviem overiť, deň je plný): tichý rámček s linkou lampy */
@@ -141,7 +141,7 @@
 .obj-akcie .btn { flex: 1 1 15rem; white-space: normal; text-align: center; line-height: 1.25; }
 
 .obj-pata { padding: 10px 20px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line, rgba(241, 233, 221, 0.14)); }
-.obj-tel { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper, #f1e9dd); font-weight: 600; font-size: 0.9375rem; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp, #e0601c); }
+.obj-tel { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper, #f1e9dd); font-weight: 700; font-size: 0.9375rem; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--lamp, #e0601c); }
 
 /* telefón: panel zdola (82 % výšky), nad ním ostane vidieť stmavenú stránku; ťuk na ňu okno zavrie */
 @media (max-width: 640px) {

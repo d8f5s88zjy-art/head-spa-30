@@ -57,7 +57,7 @@ Dve rodiny, obe so slovenskou diakritikou, hostované lokálne (`assets/fonts/`)
 - **Fraunces 800 (opsz 144)** – titulky. Má rytý, mierne „vrtošivý“ charakter,
   ktorý sedí k rytému logu „30“ na rohožke. Fraunces 500 italic pre jeden‑dva
   tiché citáty.
-- **Manrope 400/600/700** – všetok bežný text, popisky, tlačidlá, navigácia.
+- **Manrope 400/700** – všetok bežný text, popisky, tlačidlá, navigácia (rez 600 zlúčený do 700, 9. 11. 2026: dve rodiny, štyri rezy).
 
 Mierka (clamp, desktop → mobil):
 
@@ -66,7 +66,7 @@ Mierka (clamp, desktop → mobil):
 | H1 | `clamp(2.75rem, 7.2vw, 6.75rem)` | 0.94 | Fraunces 800, `letter-spacing:-.02em` |
 | H2 | `clamp(2rem, 4.4vw, 3.5rem)` | 1.0 | Fraunces 800 |
 | H3 | `clamp(1.35rem, 2vw, 1.75rem)` | 1.15 | Fraunces 800 |
-| eyebrow | `.8125rem` | 1 | Manrope 600, VERZÁLKY, `letter-spacing:.14em` |
+| eyebrow | `.8125rem` | 1 | Manrope 700, VERZÁLKY, `letter-spacing:.14em` |
 | lead | `clamp(1.125rem, 1.5vw, 1.375rem)` | 1.45 | Manrope 400 |
 | body | `1.0625rem` (17px) | 1.6 | Manrope 400 |
 | small | `.9375rem` | 1.5 | Manrope 400 |
@@ -101,7 +101,7 @@ pod 1 počas prechodov (len opacity + posun do 24 px).
   cenou, tlačidlo „Objednať“ → rezervácia. Rámček 1 px `--line`, hover rámček
   `rgba(241,233,221,.3)`.
 - **Chip**: popisok v obraze (napr. „Hlavná sála“), `rgba(14,13,12,.6)` + blur,
-  text Manrope 600 13 px.
+  text Manrope 700 13 px.
 
 ## 6. Svetlo a materiály (3D kreslo)
 

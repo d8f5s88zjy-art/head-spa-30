@@ -29,7 +29,7 @@ let playing = false, tw = 0, hold = 0;
 const jazda = [];
 const CSS = `
 .kino-tit{position:absolute;left:0;right:0;bottom:104px;width:min(640px,calc(100% - 48px));height:3em;margin:0 auto;padding:0;list-style:none;text-align:center;pointer-events:none}
-.kino-tit li{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;color:var(--paper);font:600 1.125rem/1.35 var(--font-text);text-shadow:0 0 2px rgba(0,0,0,.95),0 1px 6px rgba(0,0,0,.9),0 0 16px rgba(0,0,0,.65)}
+.kino-tit li{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;color:var(--paper);font:700 1.125rem/1.35 var(--font-text);text-shadow:0 0 2px rgba(0,0,0,.95),0 1px 6px rgba(0,0,0,.9),0 0 16px rgba(0,0,0,.65)}
 .kino-tit li.on{opacity:1;transform:none}
 .kino-tit i{margin-right:.45em;font:italic 500 1.05em var(--font-display);color:var(--lamp-2)}
 @media (max-width:720px) and (orientation:portrait){.kino-tit{bottom:auto;top:calc(var(--pas) - 4.05rem);left:var(--gutter);right:var(--gutter);width:auto;height:2.7rem}.kino-tit li{font-size:1rem}}
