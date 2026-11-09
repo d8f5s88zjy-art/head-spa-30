@@ -134,8 +134,13 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   systému a telefón. Odkaz s predvoľbou: `rezervacia.html?sluzba=1&barber=Adrian` (rovno na deň). Zapína sa rovnakými
   príznakmi ako web (`data-objednavka`, `data-asistent`, nasadenie v pages.yml); kým nie je pripojený kalendár, má
   `noindex` (nasadenie s kalendárom ho odstráni). Záväzné odoslanie rezervácie z webu nie je (pozri Objednávka).
-  Služby sú po skupinách so skutočnou fotkou prevádzky (strih, brada, balíčky, doplnky; nie výsledky strihov),
-  barberi ako karty s portrétom, pod tým tím ako na webe a „Naša práca“ s odkazom na Instagram. Fotky práce
+  Služby sú po skupinách so skutočnou fotkou prevádzky (strih, brada, balíčky, doplnky; nie výsledky strihov):
+  od 9. 11. 2026 (Lajko: „upraviť fotky na rezervácii“) sú to vlastné výrezy 16 : 6 `assets/img/rez/rez-<skupina>-{760,1080,1600}.{avif,webp,jpg}`
+  zo zdrojových fotiek v repozitári (`source/tools/rez-fotky.py`: nožnice a hrebeň na podložke, uteráky na sude s kreslom
+  a buldogom, karafa s pomádami a štetkou, pracovný stôl s produktmi bez televízora; jas a sýtosť každého výrezu
+  doladené k priemeru sady najviac o ±10 %, jemné doostrenie po zmenšení, žiadne tónovanie ani cudzie fotky), tie isté
+  výrezy ukazuje okno objednávky (`objednavka.js`, `FOTO_SKUP`); barberi ako karty s portrétom, pod tým tím ako na webe
+  a „Naša práca“ s odkazom na Instagram. Fotky práce
   barberov: `docs/FOTKY_PRACE.md`, `source/tools/praca.py` → `assets/praca.json` (okno aj stránka ich ukážu samy).
 - **Vizitka a vernostná kartička** (`assets/karty.js` a `karty.css`, pás pod kontaktom, načíta sa po načítaní stránky):
   vizitka, ktorú prevádzka už rozdáva (predloha: fotka recepcie `source/photos/foto-17.jpg`), nie nový návrh: na výšku,
@@ -166,6 +171,26 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   uložením ukáže počet miest a vety s časom otvorenia bez dňa na kontrolu. Adresu a nedeľu mení tvorca webu.
   `source/tools/otazky.mjs` berie povolené časy z app.js. Test: `node source/tools/admin-test.mjs`
   (falošný GitHub v pamäti, nič nejde von). Funguje až po zverejnení webu v `main` (číta súbory odtiaľ).
+
+## Logá prevádzok (pripravené, čaká na súbory)
+
+Lajko 9. 11. 2026: „pridať logá aj ostatných prevádzok“. Súbory zatiaľ neposlal, preto je v pätičke `index.html`
+(blok `.footer-shops`, položky HEAD SPA 30, Salón 30, Barbershop 30) pri každej prevádzke `<img class="footer-shop-logo">`
+v HTML komentári: nič sa nezobrazí a nasadená stránka ho nenesie (komentáre odstraňuje `source/tools/zmensi.mjs`).
+Štýl je hotový v `assets/style.css` (`.footer-shop-logo`: výška 40 px, šírka podľa pomeru, najviac 180 px, bez podkladu).
+
+Čo treba dodať (od Lajka alebo majiteľa):
+- logo každej prevádzky: najlepšie SVG (krivky), inak PNG s priehľadným pozadím aspoň 2× výšky zobrazenia (≥ 320 px na šírku),
+  vo svetlej (jednofarebnej alebo plnofarebnej) verzii na tmavé pozadie; Barbershop 30 má vektor
+  `source/web-povodny/logo-vector-black.svg` (čierny, na pätičku treba svetlý variant),
+- potvrdenie názvov a odkazov (dnes HEAD SPA 30 → https://www.headspa30.sk/, Salón 30 → https://www.salon30.sk/,
+  Barbershop 30 → úvod tejto stránky; adresy Mostná 30 overené 27. 10. 2026),
+- súhlas majiteľov HEAD SPA 30 a Salónu 30 s použitím ich loga na tomto webe.
+
+Zapnutie: súbory do `assets/img/prevadzky/` (`head-spa-30.svg`, `salon-30.svg`, `barbershop-30.svg`), v `index.html`
+odkomentovať tri `<img>`, doplniť skutočné `width`/`height` v pomere súboru, `node source/tools/en-stranka.mjs`
+(anglická stránka), `node source/tools/vaha.mjs` (rozpočet 14 600 B gzip: tri `<img>` sú asi +150 B) a `node source/tools/app-smoke.mjs`.
+Alt ostáva prázdny (meno prevádzky je hneď v odkaze pod logom), preto netreba kľúče v slovníkoch.
 
 ## Nasadenie
 
