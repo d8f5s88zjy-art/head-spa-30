@@ -254,3 +254,25 @@ je len zápis spoločnosti, nič netreba meniť; ak by platil 2019, zmena je sp�
 s opačným mapovaním). Znalosti a 13 odpovedí Barbera (`prax`, `od-kedy`, `heslo`, `recepcia`, `atmosfera`, `preco-vy`,
 `hodiny-recepcia-sobota`, `kontakt-prestahovanie`, `o-time-vek`, `o-time-najdlhsie`, `o-time-recepcna-meno`, `o-time-rodinny`,
 `o-time-piliere`) hovoria to isté.
+
+## Hooky kariet a vtip so strážnym psom podľa Lajka (2026‑11‑09 večer)
+
+Lajko (barber Barbershopu 30, hovorí za majiteľa) 9. 11. 2026 večer k náhľadu 7c231b10 (šesť snímok z iPhonu): podnadpisy kariet
+nemajú opisovať fotku, ale byť hook; úvod sekcie Služby bez cien (cenník ostáva); web tyká, slušne a spisovne s občasným slangom,
+bez vulgarizmov a klišé. Nové fakty z jeho slov (stupeň: **tvrdenie podniku**, zapísané ako „Lajko 9. 11. 2026 večer“); zvyšok každej vety
+stojí na overených textoch webu. Pred/po každej vety vo všetkých jazykoch: `scratchpad/barber/lajko2/l1/TEXTY.md`.
+
+| text na webe | kde | opora | stupeň |
+|---|---|---|---|
+| „Kávu podľa svojej chuti dostaneš aj počas strihania. Na účet podniku.“ | galéria, karta „Pozri si to zblízka.“ (.title-sub) (bod 1) | káva zdarma = web (karta Čakáreň, CONTENT_SOURCES „kapacita“); „podľa tvojej chuti“ a „aj počas strihania“ = Lajko 9. 11. 2026 večer; „na účet podniku“ = zdarma (idióm, jemný slang podľa bodu 8); druhy kávy web neuvádza, preto žiadne; stará veta len opisovala tri fotky | tvrdenie podniku + overené‑oficiálne |
+| „Prémiové kreslá, aby si sa u nás cítil ako doma. Vyber si, čo ti dnes sadne.“ | služby, karta „Čo to bude dnes?“ (.title-sub) (bod 2) | „prémiové a kvalitné kreslá, aby si sa u nás cítil pohodlne ako doma“ = Lajko 9. 11. 2026 večer; ceny z úvodu sekcie preč (cenník pod kartou ostáva, „Ceny sú konečné“ ostáva v častých otázkach); „čo ti dnes sadne“ nadväzuje na H2 „Čo to bude dnes?“ | tvrdenie podniku + overené‑oficiálne |
+| „Profesionálni barberi s 10 až 15 rokmi praxe. Ty povieš, ako to chceš, a barber ťa ostrihá presne tak, ako si to želáš a predstavuješ: konzultácia, presná práca a strih, ktorý sedí aj o týždeň.“ | tím, odsek pod štítkom „Kto ťa ostrihá“ (.lead) (bod 3) | „barber ťa ostrihá presne tak, ako si želáš a predstavuješ“ = Lajko 9. 11. 2026 večer (skombinované s dnešným odsekom: „Ty povieš, ako to chceš“ ostáva, „pod jednou značkou“ vypadlo, lebo karta tesne nad odsekom hovorí „Pod značkou Barbershop 30 tu pracujú…“, a dĺžka na 320 px musí ostať do 6 riadkov); prax 10 až 15 rokov = majiteľ 27. 10.; „profesionálni“ = Lajko 9. 11.; kroky = cenník | tvrdenie podniku + overené‑oficiálne |
+| „Pozor, strážny pes: farebný buldog na sude neštekne, len dohliada, aby každý strih sedel. Káva aj minerálka sú zdarma.“ | čakáreň, karta „Vzadu ťa čaká káva.“ (.title-sub) (bod 4) | vtip „strážny pes, ktorý dohliada na správny a kvalitný strih“ = Lajko 9. 11. 2026 večer; buldog je farebná socha so slúchadlami na drevenom sude (fotka záberu, alt „farebnou soškou buldoga“), preto hneď „farebný buldog na sude“ a „neštekne“ (nie živý pes); káva a minerálka zdarma = web; „V čakárni ťa obslúžime“ (Lajko B1) ostáva v častých otázkach a u Barbera | tvrdenie podniku + overené‑oficiálne |
+| „Pri vchode ťa privíta šarmantná a milá recepčná. Sme tu od roku 2017.“ | prvý krok, karta „Poď ďalej.“ (.title-sub) (bod 6) | „pri vchode ťa privíta šarmantná a milá recepčná“ = Lajko 9. 11. 2026 večer; recepčná pri dverách = web; rok 2017 = Lajko 9. 11. (B1), „tu“ = Mostná 30 (v úvode, Dôvere, Skúsenostiach a päte), lebo plné „Na Mostnej 30 sme od roku 2017“ s prívlastkami má na 320 px 3 riadky namiesto 2 | tvrdenie podniku + overené‑oficiálne |
+
+Čo Lajko nepovedal, na webe nie je: druhy kávy, meno recepčnej, značka kresiel. „Ceny sú konečné“ zmizlo len z karty Služby, ostáva
+v častých otázkach („Sú ceny v cenníku konečné?“) a v cenníku sú všetky ceny ako doteraz; háčik karty Remeslo „Pánsky strih 18 €, objednaj sa“
+Lajko nespomenul, ostáva (otázka pre Lajka). Znalosti Barbera (`../asistent/znalosti/barbershop.md`) a 14 odpovedí (`kava`, `cakaren`,
+`balicky-kava`, `o-time-kava-pocas-strihu`, `o-time-buldog`, `o-time-interier`, `route66`, `kresla`, `vchod`, `recepcia`, `o-time-prichod`,
+`o-time-recepcna-meno`, `atmosfera`, `sluzby-presne-podla-mna`) hovoria to isté: káva podľa chuti aj počas strihania, prémiové kreslá,
+šarmantná a milá recepčná pri vchode, barber ostrihá presne podľa želania a predstavy, buldog = socha so slúchadlami na sude („strážny pes“ je vtip).
