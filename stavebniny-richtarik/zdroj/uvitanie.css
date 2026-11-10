@@ -4,8 +4,9 @@
    vykreslení) a ukáže sa len pri triede br-ide (skript v <head>); bez JS, pri „obmedziť pohyb“ a pri tlači je skrytý. Hlavička a spodná lišta (Zavolať) ostávajú nad bránou a dajú sa
    stlačiť: brána začína pod hlavičkou (79 px) a na telefóne končí nad spodnou lištou (69 px), z-index 39 je pod nimi.
    Pohyb je len transform a opacity (bez otáčania, bez perspektívy a bez orezávania cestou), krivky a dĺžky sú
-   z pohybového systému v site.css. Poistka: keby skript zlyhal, prekryv sa skryje sám 3,2 s po prvom vykreslení. */
-.br{display:none;position:fixed;left:0;right:0;top:79px;bottom:0;z-index:39;overflow:hidden;contain:layout paint;animation:br-poistka 1ms 3.2s forwards}
+   z pohybového systému v site.css; dĺžky sú 1,5-násobok pôvodných (majiteľ 9. 11. 2026: pomalšie animácie; skript
+   uvitanie.js násobí svoje časy konštantou M = 1,5). Poistka: keby skript zlyhal, prekryv sa skryje sám 4,8 s po prvom vykreslení. */
+.br{display:none;position:fixed;left:0;right:0;top:79px;bottom:0;z-index:39;overflow:hidden;contain:layout paint;animation:br-poistka 1ms 4.8s forwards}
 /* obe kľúčové snímky skryté: pri konci 1 ms animácie je priebeh 0,9999… a krok na konci by ešte ukázal začiatok */
 @keyframes br-poistka{from,to{visibility:hidden}}
 .br-ide .br{display:block}
@@ -15,8 +16,10 @@
 /* vnútro je inert (bez fokusu, výberu textu a mimo čítačky); ťuk zachytí samotný .br, takže pod bránou sa nič nestlačí */
 .br-in,.br-okno{position:absolute;inset:0}
 .br-okno{overflow:hidden;transform-origin:0 0;background:var(--paper);container-type:size}
-/* scéna má pomer strán fotky (--a: 11 na šírku 1720 × 1314, zvislý výrez -t- 663 × 1435; fotka od majiteľa 9. 11. 2026) a pokryje
-   celé okno; vodorovne je posunutá k ceste medzi paletami (--x), zvislo v strede. Bez čítania rozmerov v skripte. */
+/* scéna má pomer strán fotky (--a: 11 na šírku 1720 × 1314; fotka od majiteľa 9. 11. 2026) a pokryje celé okno;
+   vodorovne je posunutá k ceste medzi paletami (--x), zvislo v strede. Bez čítania rozmerov v skripte. Telefón berie tú
+   istú širokú fotku (súbor -1290 ≈ 1 : 1 so zdrojom) s výrezom na palety (--x .44): zvislý výrez -t- 663 px prehliadač
+   zväčšoval 1,76× a v ráme úvodu bol mäkký (KV-03). */
 .br-scena{--a:calc(1720 / 1313);--x:.6;position:absolute;transform-origin:0 0;width:max(100cqw,100cqh * var(--a));aspect-ratio:var(--a);left:calc((100cqw - max(100cqw,100cqh * var(--a))) * var(--x));top:calc((100cqh - max(100cqw,100cqh * var(--a)) / var(--a)) / 2)}
 .br-kam{position:absolute;inset:0}
 .br-kam img{display:block;width:100%;height:100%}
@@ -34,7 +37,7 @@
 .br-krid{position:absolute;top:0;bottom:0;width:50%;z-index:3;overflow:hidden;background:var(--paper) repeating-linear-gradient(90deg,rgba(var(--irgb),.05) 0 1px,transparent 1px 100%);background-size:20% 100%}
 .br-l{left:0}
 .br-p{right:0;background-position:100% 0}
-.br-krid::after{content:"";position:absolute;top:0;bottom:0;width:1.5px;background:var(--brick);animation:br-spara .4s var(--krivka-vyjazd) .26s both}
+.br-krid::after{content:"";position:absolute;top:0;bottom:0;width:1.5px;background:var(--brick);animation:br-spara .6s var(--krivka-vyjazd) .39s both}
 .br-l::after{right:0}
 .br-p::after{left:0}
 @keyframes br-spara{from{transform:scaleY(0)}}
@@ -47,16 +50,19 @@
 .br-znacka{display:flex;align-items:center;gap:14px;margin:0 0 22px;font-family:var(--display);font-weight:800;font-size:clamp(24px,2.4vw,36px);line-height:.9;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
 .br-znacka img{display:block;width:auto;height:112px;height:clamp(76px,7.6vw,112px)}
 .br-znacka b{color:var(--brick)}
+/* KF-11: do 1023 px je názov vedľa znaku v dvoch riadkoch (ako v lište), aby sa riadok zmestil do krídla (701–1023 px
+   polovica okna) aj do telefónu od 320 px; od 1024 px je v jednom riadku */
+@media (max-width:1023px){.br-znacka{font-size:clamp(27px,3.7vw,36px);gap:12px}.br-znacka b{display:block}}
 .br-nad{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 12px;margin:0 0 18px;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.2;letter-spacing:.18em;text-transform:uppercase;color:var(--brick-txt);white-space:nowrap}
 .br-nad::before{content:"";width:34px;height:2px;background:currentColor}
 .br-nad span+span::before{content:"·";margin-right:12px}
 .br-veta{margin:0;font-family:var(--display);font-weight:800;font-size:1em;line-height:.92;letter-spacing:-.012em;text-transform:uppercase;color:var(--ink)}
 .br-veta>span{display:block;overflow:clip;padding-top:.12em;margin-top:-.12em}
-.br-veta>span>span{display:inline-block;animation:br-riadok .26s var(--krivka-vyjazd) both}
-.br-p .br-veta>span>span{animation-delay:.05s;color:var(--brick)}
+.br-veta>span>span{display:inline-block;animation:br-riadok .39s var(--krivka-vyjazd) both}
+.br-p .br-veta>span>span{animation-delay:.075s;color:var(--brick)}
 @keyframes br-riadok{from{transform:translateY(105%)}}
 @media (max-width:700px){
-.br-scena{--a:calc(663 / 1435);--x:.5}
+.br-scena{--x:.44}
 /* telefón na výšku (RP2-07): brána sa otvára zvisle ako garážová brána. Krídla sú horná a dolná polovica (latky
    vodorovne), spára je vodorovná a kreslí sa zľava; pozdrav ide cez celú šírku (17,5 vw, najviac 76 px; „Poďte ďalej.“
    má 4,98 em, pri 390 px je to 340 px z 354 px): „Vitajte.“ v hornom krídle nad spárou, „Poďte ďalej.“ v dolnom pod
@@ -71,8 +77,8 @@
 .br-l .br-tab,.br-p .br-tab{inset:0;align-items:flex-start;text-align:left;padding:0 var(--gutter)}
 .br-l .br-tab{justify-content:flex-end;padding-bottom:3vh}
 .br-p .br-tab{justify-content:flex-start;padding-top:3vh}
-.br-znacka{gap:10px;margin-bottom:14px;font-size:22px}
-.br-znacka img{height:86px}
+.br-znacka{gap:min(12px,3vw);margin-bottom:14px;font-size:min(34px,8.4vw)}
+.br-znacka img{height:min(86px,22vw)}
 .br-nad{justify-content:flex-start;gap:4px 10px;font-size:13px;letter-spacing:.14em;margin-bottom:12px;white-space:normal}
 .br-nad span{white-space:nowrap}
 .br-nad span+span::before{display:none}
@@ -82,6 +88,46 @@
 .br-st span{font-size:11px}
 }
 @media (min-width:1100px){.br-st{padding:9px 15px 10px 12px}.br-st b{font-size:27px}.br-st span{font-size:14.5px}}
+.br-nazov{display:none}
+/* ── Farebná téma (predvolená; Lajo 10. 11. 2026): krídla brány sú červená loga s antracitovým pásom hore a linkou dole (pás
+   loga), spára antracit. Uprostred veľké logo s názvom: ľavé krídlo nesie očistený znak RS (zarovnaný k spáre), pravé názov
+   STAVEBNINY RICHTÁRIK živým písmom webu, biely s antracitovým obrysom ako v grafike majiteľa (dva riadky s riadkovaním .92 = výška znaku --bl);
+   spára ide medzi znakom a názvom. Pod nimi pozdrav, „Poďte ďalej.“ na antracitovom páse. Na telefóne (krídla hore a dole)
+   je všetko v strede: hore pozdrav a znak, dole názov (18,4 vw: STAVEBNINY má 4,49 em, pri 320 px 264 px z 284 px, nezalomí
+   sa a neoreže) a „Poďte ďalej.“. Okno s fotkou, odznak a štítky sa nepoužijú: úvod je fotka cez celú výšku s červeným
+   panelom, krídla sa rozídu rovno nad ním (uvitanie.js, otvorF). Lišta je vo farebnej téme vyššia (--lista-v v site.css). */
+html[data-tema="farebna"] .br{top:var(--lista-v,88px)}
+html[data-tema="farebna"] .br-okno,html[data-tema="farebna"] .br .uv-znak{display:none}
+html[data-tema="farebna"] .br-krid{--bl:clamp(104px,13.4vw,206px);--pas:clamp(30px,8vh,72px);background:var(--f-cervena) linear-gradient(180deg,var(--f-antracit) 0 var(--pas),transparent var(--pas) calc(100% - 10px),var(--f-antracit) calc(100% - 10px)) no-repeat;background-size:100% 100%}
+html[data-tema="farebna"] .br-krid::after{width:2px;background:var(--f-antracit)}
+html[data-tema="farebna"] .br-tab{inset:0;display:grid;grid-template-rows:minmax(0,1fr) var(--bl) auto minmax(0,1fr);justify-content:normal;padding:0 clamp(18px,3vw,48px);font-size:calc(var(--bl) * .33)}
+html[data-tema="farebna"] .br-l .br-tab{justify-items:end;align-items:start;padding-right:clamp(9px,1.1vw,18px)}
+html[data-tema="farebna"] .br-p .br-tab{justify-items:start;align-items:start;padding-left:clamp(9px,1.1vw,18px)}
+html[data-tema="farebna"] .br-znacka{grid-row:2;margin:0}
+html[data-tema="farebna"] .br-znacka img{height:var(--bl)}
+html[data-tema="farebna"] .br-znacka span{display:none}
+html[data-tema="farebna"] .br-nazov{display:grid;grid-row:2;align-self:center;margin:0;font-family:var(--display);font-weight:800;font-size:calc(var(--bl) / 1.84);line-height:.92;letter-spacing:.004em;text-transform:uppercase;white-space:nowrap;color:#fff;text-shadow:var(--obrys)}
+html[data-tema="farebna"] .br-veta{grid-row:3;margin:.5em 0 0;color:#fff}
+html[data-tema="farebna"] .br-p .br-veta>span>span{color:#fff;background:var(--f-antracit);padding:.03em .22em .07em}
+html[data-tema="farebna"] .br-nad{grid-row:4;align-self:start;margin:18px 0 0;color:#fff}
+@media (max-width:980px){html[data-tema="farebna"] .br{box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 var(--f-antracit)}}
+@media (max-width:700px){
+html[data-tema="farebna"] .br-krid{--bl:min(31vw,150px);--pas:34px;background-image:none}
+html[data-tema="farebna"] .br-l{background-image:linear-gradient(180deg,var(--f-antracit) 0 var(--pas),transparent var(--pas))}
+html[data-tema="farebna"] .br-p{background-image:linear-gradient(0deg,var(--f-antracit) 0 10px,transparent 10px)}
+html[data-tema="farebna"] .br-krid::after{width:auto;height:2px}
+html[data-tema="farebna"] .br-l .br-tab,html[data-tema="farebna"] .br-p .br-tab{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 var(--gutter);font-size:min(9.8vw,46px)}
+html[data-tema="farebna"] .br-l .br-tab{justify-content:flex-end;padding-bottom:max(12px,2.2vh)}
+html[data-tema="farebna"] .br-p .br-tab{justify-content:flex-start;padding-top:max(12px,2.2vh)}
+html[data-tema="farebna"] .br-nad{order:1;position:absolute;left:0;right:0;top:0;height:var(--pas);margin:0;justify-content:center;align-content:center;font-size:12.5px;letter-spacing:.14em}
+html[data-tema="farebna"] .br-nad::before{display:none}
+html[data-tema="farebna"] .br-nad span+span::before{display:inline;content:"·";margin-right:10px}
+html[data-tema="farebna"] .br-veta{order:2;margin:0}
+html[data-tema="farebna"] .br-l .br-veta{margin-bottom:.42em}
+html[data-tema="farebna"] .br-p .br-veta{margin-top:.42em}
+html[data-tema="farebna"] .br-znacka{order:3}
+html[data-tema="farebna"] .br-nazov{font-size:min(18.4vw,86px)}
+}
 @media print,(prefers-reduced-motion:reduce){.br,.br-ide .br{display:none}}
 /* tlač počas uvítania: úvod v konečnom stave (!important prebije bežiaci pohyb nadpisu, ponuky a štítku) */
 @media print{.uv h1 .ln>span,.uv-b,.uv-ram>.uv-stitok{opacity:1!important;transform:none!important}}

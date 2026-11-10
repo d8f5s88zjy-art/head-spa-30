@@ -9,9 +9,10 @@
   display: inline-block; padding: 2px 6px; border-radius: 3px; background: var(--brick); color: #fff;
   font: 700 11px/1.25 var(--body); letter-spacing: .06em; vertical-align: middle;
 }
-/* pohyb okna z pohybového jazyka webu (site.css, Pohybový systém, časť 1): príchod ako nová stránka (--krivka-dnu,
-   --dlzka-dnu), stlačenie ako tlačidlá a dlaždice (--dlzka-tlak, scale .97); záložné hodnoty sú tie isté čísla */
-:root { --asi-dole: 20px; --asi-krivka: var(--krivka-dnu, cubic-bezier(.2, .7, .2, 1)); --asi-cas: var(--dlzka-dnu, 330ms); --asi-stlac: var(--dlzka-tlak, 80ms); }
+/* pohyb okna z pohybového jazyka webu (site.css, Pohybový systém, časť 1): krivka príchodu novej stránky (--krivka-dnu),
+   stlačenie ako tlačidlá a dlaždice (--dlzka-tlak, scale .97). Okno je odpoveď na ťuk, preto má vlastných 360 ms a
+   nespomaľuje sa s tempom ×1,5 prechodov (--dlzka-dnu je od 10. 11. 2026 540 ms) */
+:root { --asi-dole: 20px; --asi-krivka: var(--krivka-dnu, cubic-bezier(.2, .7, .2, 1)); --asi-cas: 360ms; --asi-stlac: var(--dlzka-tlak, 80ms); }
 @media (max-width: 980px) { :root { --asi-dole: 84px; } }   /* nad spodnou lištou .mbar (site.css, do 980 px) */
 
 /* ikona */
@@ -176,4 +177,21 @@ html.asi-uvod .asi-oznam { display: none; }
   html[data-tema="tmava"] .asi-form textarea { background: var(--concrete); }
   html[data-tema="tmava"] .asi-chips .asi-chip-dalej { background: transparent; }
   html[data-tema="tmava"] .asi-clona:not([hidden]) { background: rgba(18, 17, 16, .72); }
+}
+
+/* farebná téma (predvolená; site.css, časť Farebná téma): okno na teplom svetlom tóne s bielymi bublinami, hlavička okna je
+   červený pás loga s antracitovou linkou hore a bielym písmom (4,73 : 1), tlačidlo Zavolať v hlavičke antracit, bubliny
+   zákazníka antracit s bielym písmom; označenie asistenta v červenej hlavičke je biele s červeným písmom (6,35 : 1).
+   Clona za oknom na telefóne je svetlý tón stránky. */
+@media screen {
+  html[data-tema="farebna"] .asi-panel { border-top-color: var(--f-antracit); box-shadow: 0 30px 70px rgba(28, 26, 27, .3); }
+  html[data-tema="farebna"] .asi-hlava { background: var(--f-cervena); border-bottom-color: var(--f-antracit); color: #fff; }
+  html[data-tema="farebna"] .asi-hlava h2, html[data-tema="farebna"] .asi-sub { color: #fff; }
+  html[data-tema="farebna"] .asi-hlava h2 .asi-ai { background: #fff; color: var(--f-cervena-tm); }
+  html[data-tema="farebna"] .asi-znak-m { border-color: var(--f-antracit); }
+  html[data-tema="farebna"] .asi-volaj { background: var(--f-antracit); color: #fff; }
+  html[data-tema="farebna"] .asi-x { border-color: #fff; }
+  html[data-tema="farebna"] .asi-hlava :focus-visible { outline-color: #fff; }
+  html[data-tema="farebna"] .asi-u { background: var(--f-antracit); color: #fff; }
+  html[data-tema="farebna"] .asi-clona:not([hidden]) { background: rgba(246, 238, 228, .86); }
 }

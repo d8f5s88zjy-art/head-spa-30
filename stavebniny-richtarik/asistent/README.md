@@ -82,6 +82,8 @@ Postup (na počítači správcu webu, nie na hostingu):
 
 ## Údržba znalostí (keď sa zmení akcia, cenník, hodiny, kontakt alebo stránky webu)
 1. Upraviť `znalosti/richtarik.md` a odpovede v `nastroje/otazky_zdroj.py` (len fakty z webu, cenníka a pôvodného webu).
+   Poznámky pre správcu do znalostí nepatria (model ich môže zákazníkovi zopakovať), píšu sa sem: miesto sa volá
+   **predajňa**, nie dvor (majiteľ 9. 11. 2026) – v znalostiach ani v odpovediach sa slovo „dvor“ ako názov miesta nepoužíva.
 2. `python3 -I asistent/nastroje/otazky_zdroj.py .` (v priečinku webu) zapíše `znalosti/richtarik-otazky.json`, kópiu
    `assets/asistent-otazky.json` a časť „Stránky webu“ v znalostiach podľa stránok, ktoré na webe sú (`doprava.html`,
    `caste-otazky.html` sa pridajú samy).

@@ -165,7 +165,8 @@
 
   // úvod: strih zásob. Skutočné fotky tehál, pórobetónu (bez dokreslených paliet), dlažieb a reziva dopadnú ako výtlačky
   // (rovno, bez natočenia) na fotku predajne, potom odídu a štítok „Naša predajňa“ sa vrazí. Všetok pohyb robí CSS (kompozítor),
-  // skript len pripraví zábery zo <template>, počká na ich dekódovanie a po 3 s ich odstráni. Sám sa spustí len pri prvej
+  // skript len pripraví zábery zo <template>, počká na ich dekódovanie a po 4,5 s ich odstráni (časy sú 1,5-násobok
+  // pôvodných, rovnako ako v site.css; majiteľ 9. 11. 2026: pomalšie animácie). Sám sa spustí len pri prvej
   // návšteve bez uvítania (trieda uv-ide zo skriptu v <head>, „bez obmedzenia pohybu“), nie keď stránka prišla prechodom
   // (trieda vt, napr. Späť na úvod, RP1-08), nie pri šetrení dát, nie keď zákazník už posúva, ťuká, píše alebo je vo
   // vyhľadávaní, a len raz za reláciu. Po uvítaní (br-ide) sa nespustí sám (hook odovzdala brána, RP1-06): ostane len
@@ -173,6 +174,9 @@
   (function () {
     var h = d.documentElement, ram = d.querySelector('.uv-ram'), tpl = d.getElementById('uv-zabery');
     var brana = h.classList.contains('br-ide');
+    // farebná téma (predvolená): úvod je fotka cez celú výšku s názvom a heslom v červenom paneli, strih zásob ani tlačidlo
+    // Prehrať úvod sa nepoužívajú (zábery sa nesťahujú); svetlá a tmavá téma na porovnanie ich majú ako doteraz
+    if (h.getAttribute('data-tema') === 'farebna') return;
     if (!ram || !tpl || !(brana || h.classList.contains('uv-ide'))) return;
     var box = ram.querySelector('.uv-zabery'), znova = ram.querySelector('.uv-znova'), hlavna = ram.querySelector('.uv-dvor img');
     var karty = null, pripravene = false, beh = 0, zastavene = false, tc = null, ss = null;
@@ -199,11 +203,11 @@
       ram.classList.remove('uv-hotovo');
       karty.forEach(function (k) { if (k.parentNode !== box) box.appendChild(k); });   // pri prvom štarte už čakajú skryté v ráme
       tc = d.createElement('span'); tc.className = 'uv-tc'; tc.setAttribute('aria-hidden', 'true'); tc.textContent = '01 / 04'; ram.appendChild(tc);
-      var i = 1; [550, 1050, 1500].forEach(function (t) { setTimeout(function () { if (tc) tc.textContent = '0' + (++i) + ' / 04'; }, t); });
+      var i = 1; [830, 1580, 2250].forEach(function (t) { setTimeout(function () { if (tc) tc.textContent = '0' + (++i) + ' / 04'; }, t); });
       void ram.offsetWidth;   // nový štart animácií pri „Prehrať úvod“
       ram.classList.add('uv-mont');
       try { if (ss) ss.setItem('uv-videne', '1'); } catch (e) {}
-      beh = setTimeout(function () { koniec(false); }, 3020);
+      beh = setTimeout(function () { koniec(false); }, 4530);
     }
     function stop() {
       zastavene = true;
@@ -225,9 +229,9 @@
       Promise.all(karty.map(function (k) { var im = k.querySelector('img'); return im.decode ? im.decode() : Promise.resolve(); })).then(function () {
         pripravene = true;
         if (naZiadost) { if (!zastavene) spusti(); return; }
-        if (zastavene || uz() || h.classList.contains('vt') || window.scrollY > 24 || performance.now() > 3400) { odober(); tlacidlo(); return; }
+        if (zastavene || uz() || h.classList.contains('vt') || window.scrollY > 24 || performance.now() > 3900) { odober(); tlacidlo(); return; }
         // zábery ostanú skryté v ráme a štart len prepne triedu: v prvej snímke strihu sa nič nevkladá ani nerozmiestňuje
-        setTimeout(spusti, Math.max(0, 1000 - performance.now()));
+        setTimeout(spusti, Math.max(0, 1500 - performance.now()));
       }, function () { odober(); karty = null; });
     }
     if (znova) znova.addEventListener('click', function () {

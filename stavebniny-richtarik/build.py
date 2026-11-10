@@ -16,6 +16,23 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = ROOT
 SRC = json.load(open(os.path.join(ROOT, 'zdroj/pages.json'), encoding='utf-8'))
 IMG_SIZES = json.load(open(os.path.join(ROOT, 'zdroj/obrazky.json')))
+
+# Úpravy zdrojového HTML pred rozborom (len značky, text sa nemení): na pôvodnej stránke Topstone sú dva zoznamy odrážok
+# celé tučné, rozbor obsahu (obsah.py: „tučná odrážka je nadpis“) z nich robil šesť samostatných nadpisov (KF-15). Odrážky
+# sa odtučnia a otázka „Prečo zvoliť povrchy Bianka?“ je označená ako nadpis, takže vyjde nadpis, odsek a pod ním zoznam.
+ZDROJ_UPRAVY = {
+    'novinky__topstone-oprava-starych-chodnikov': [
+        ('</span></strong></u><strong><span style="color: rgb(178, 34, 34);">&bull; schodísk', '</span></strong></u><br />\n\t<span>&bull; schodísk'),
+        ('&bull; podláh altánov a pergol</span></strong></p>', '&bull; podláh altánov a pergol</span></p>'),
+        ('<u><strong><span style="color: rgb(0, 0, 0);">Prečo zvoliť povrchy BIANKA?</span></strong></u><br />', '</p><h3>Prečo zvoliť povrchy BIANKA?</h3><p>'),
+        ('<u><strong><span style="color: rgb(178, 34, 34);">&bull; mrazuvzdorný', '<span>&bull; mrazuvzdorný'),
+        ('&bull; je nenáročný na údržbu v lete aj v zime<br />\n\t</span></strong></u><br />', '&bull; je nenáročný na údržbu v lete aj v zime</span></p>\n<p>'),
+    ],
+}
+for _slug, _upravy in ZDROJ_UPRAVY.items():
+    for _a, _b in _upravy:
+        assert SRC[_slug]['html'].count(_a) == 1, (_slug, _a)   # zdroj sa zmenil: úpravu treba prejsť znova
+        SRC[_slug]['html'] = SRC[_slug]['html'].replace(_a, _b)
 PDF_LOCAL = set(os.listdir(os.path.join(ROOT, 'pdf')))
 OLD = 'http://www.stavebninyrichtarik.sk'
 # produkčná adresa webu (koreň hostingu); canonical, og:url, og:image a sitemap.xml sú absolútne na túto doménu.
@@ -81,7 +98,15 @@ FIRMA = {
 #  'obrazok' – vlastná equirektangulárna panoráma 2:1 (img/panorama/predajna.jpg) pre prehliadač zdroj/panorama.js; dnes skúšobný
 #              obraz vygenerovaný lokálne (nápis „skúšobná panoráma“), skutočný záber nahradí súbor pod tým istým názvom.
 # Prednosť má 'src'; bez oboch ostáva v komponente fotka a tlačidlo je skryté.
-PANORAMA = {'src': '', 'obrazok': 'img/panorama/predajna.jpg'}
+#  'skusobna' – True, kým je v 'obrazok' len skúšobný obraz (KF-12): náhľad na kontrolu to hovorí priamo v stránke (odznak
+#              „360° · ukážka“, veta pod oknom, odsek sekcie, texty odkazov) a nasadenie/balik.sh sekciu aj odkazy medzi značkami
+#              <!--p360--> … <!--/p360--> z balíka na ostrý web vynechá. Po dodaní skutočného záberu (alebo 'src') nastaviť False,
+#              spustiť build a na úvode vymeniť blok, odsek a text odkazu (kontrola_uvodu vypíše, čo sa nezhoduje).
+PANORAMA = {'src': '', 'obrazok': 'img/panorama/predajna.jpg', 'skusobna': True}
+P360_SKUSOBNA = bool(PANORAMA.get('skusobna')) and not PANORAMA['src']
+P360_LEDE = ('Ukážka na kontrolu: prehliadka zatiaľ ukazuje skúšobný obraz. Skutočný 360° záber predajne doplníme.' if P360_SKUSOBNA
+             else 'Otočte sa po predajni a sklade priamo na našej stránke.')
+P360_ODKAZ = 'Prehliadka 360° (ukážka)' if P360_SKUSOBNA else 'Prezrieť predajňu v 360°'
 # Stavebná firma FIZO SK (brat majiteľa; majiteľ 9. 11. 2026: „odkaz aj na bratovu stránku – www.fizosk.sk“). Popis len
 # z adresára a titulku stránky (majitel/dodavatelia/ZAPIS.md časť 3), rodinný vzťah ani odber materiálu sa neuvádzajú.
 FIZOSK = 'https://www.fizosk.sk/'
@@ -500,7 +525,8 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#faf8f4'   # svetlý podklad webu (theme-color, manifest, ikona); v tmavej téme ju skript TEMA_HEAD prepíše na #121110
+FARBA = '#1c1a1b'   # farba lišty prehliadača (theme-color, manifest): antracit farebnej témy (nad červenou lištou webu tmavá linka ako v páse loga); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #faf8f4, pri ?tema=tmava na #121110
+TEMA = 'farebna'    # predvolená téma v atribúte data-tema na <html> každej stránky (farebná aj bez JS; zdroj/tema-head.js)
 
 
 def zmensi_js(s):
@@ -538,9 +564,11 @@ PRECHODY_HEAD = prechody_head()
 
 
 def tema_head():
-    """Skript témy podkladu (zdroj zdroj/tema-head.js): pred štýlom každej stránky nastaví data-tema="tmava" na <html> z ?tema=
-    alebo z localStorage ešte pred prvým vykreslením (bez bliku svetlej). Rovnaký blok je ručne v index.html (kontrola_uvodu)
-    a medzi značkami <!--tema--> v asistent/ochrana-udajov.html (ochrana_prechody). Tokeny: site.css, časť Tmavá téma."""
+    """Skript témy podkladu (zdroj zdroj/tema-head.js). Predvolená farebná téma je v HTML (data-tema="farebna" na <html>,
+    konštanta TEMA), skript ju pred štýlom každej stránky len prepne na porovnanie: ?tema=svetla (bez atribútu) alebo
+    ?tema=tmava, voľba sa pamätá v localStorage, ?tema=farebna ju zruší; všetko pred prvým vykreslením (bez bliku).
+    Rovnaký blok je ručne v index.html (kontrola_uvodu) a medzi značkami <!--tema--> v asistent/ochrana-udajov.html
+    (ochrana_prechody). Tokeny: site.css, časti Tmavá téma a Farebná téma."""
     return '<script>' + zmensi_js(open(os.path.join(ROOT, 'zdroj', 'tema-head.js'), encoding='utf-8').read()) + '</script>\n'
 
 
@@ -702,9 +730,11 @@ def prehliadka_blok(pre, foto, sizes='(max-width:700px) 100vw, 1184px'):
     if src: veta = 'Prehliadka sa načíta z Google Máp až po kliknutí; dovtedy sa Googlu nič neodosiela (ochrana údajov). Otáčajte ťahaním prstom alebo myšou.'
     elif obr: veta = 'Panorámu otáčajte ťahaním prstom alebo myšou, na počítači aj šípkami; dva prsty alebo klávesy + a − priblížia.'
     else: veta = ''
-    return (f'<figure class="p360" id="prehliadka" data-panorama-src="{html.escape(src, quote=True)}" data-panorama-obrazok="{(pre + obr) if obr else ""}">'
-            f'<div class="p360-okno">{predajna_picture(pre, foto, sizes, max_sirka=1720)}<span class="p360-znak" aria-hidden="true">360°</span>'
-            f'<div class="p360-stred"><button class="btn primary p360-start" type="button" hidden>Prezrieť predajňu v 360°</button>'
+    skus = P360_SKUSOBNA and bool(obr)
+    if skus: veta = 'Ukážka: skúšobný obraz, nie záber predajne. ' + veta
+    return (f'<figure class="p360" id="prehliadka" data-panorama-src="{html.escape(src, quote=True)}" data-panorama-obrazok="{(pre + obr) if obr else ""}"{" data-panorama-skusobna" if skus else ""}>'
+            f'<div class="p360-okno">{predajna_picture(pre, foto, sizes, max_sirka=1720)}<span class="p360-znak" aria-hidden="true">{"360° · ukážka" if skus else "360°"}</span>'
+            f'<div class="p360-stred"><button class="btn primary p360-start" type="button" hidden>{"Vyskúšať prehliadku 360°" if skus else "Prezrieť predajňu v 360°"}</button>'
             f'<noscript><p class="p360-nojs">Prehliadka potrebuje zapnutý JavaScript.</p></noscript></div>'
             f'<div class="p360-lista" hidden><button class="p360-cela" type="button" aria-pressed="false">Celá obrazovka</button>'
             f'<button class="p360-zavri" type="button">Zavrieť prehliadku</button></div></div>'
@@ -713,8 +743,8 @@ def prehliadka_blok(pre, foto, sizes='(max-width:700px) 100vw, 1184px'):
 
 def prehliadka_sekcia(pre, foto):
     """Nadpis a komponent prehliadky (Kontakt; na úvode je nadpis v sekcii úvodu ručne)."""
-    return (f'<div class="p360-sek"><div class="head"><div class="eyebrow">Predajňa</div><h2><span class="dr"><span>Prezrite si predajňu v 360°</span></span></h2>'
-            f'<p class="lede">Otočte sa po predajni a sklade priamo na našej stránke.</p></div>{prehliadka_blok(pre, foto)}</div>')
+    return (f'<!--p360--><div class="p360-sek"><div class="head"><div class="eyebrow">Predajňa</div><h2><span class="dr"><span>Prezrite si predajňu v 360°</span></span></h2>'
+            f'<p class="lede">{P360_LEDE}</p></div>{prehliadka_blok(pre, foto)}</div><!--/p360-->')
 
 
 def panorama_js():
@@ -754,7 +784,7 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
     titul = html.escape(texty.titulok(path, title))
     d = html.escape(texty.popis(path, head[1] if head else title, druh, head[2] if head and head[2] else ''))
     return f'''<!doctype html>
-<html lang="sk" data-asistent="ukazka">
+<html lang="sk" data-tema="{TEMA}" data-asistent="ukazka">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1242,7 +1272,7 @@ def build_kontakt():
   <div class="kbox"><h3>Telefón a e-mail</h3><a class="big" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a class="big" href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div>
   <div class="kbox khod"><h3>Otváracie hodiny</h3><table class="hours"><tr><td>Pondelok – piatok</td><td>7:00 – 16:00</td></tr><tr><td>Sobota</td><td>7:00 – 12:00</td></tr></table></div>
   <div class="kbox kfir"><h3>Firemné údaje a platba</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
-  <figure class="kdvor">{predajna_picture('', '09-tabula-ulica', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">Prezrieť predajňu v 360°</a></span></figcaption></figure>
+  <figure class="kdvor">{predajna_picture('', '09-tabula-ulica', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><!--p360--><a class="btn ghost small" href="#prehliadka">{P360_ODKAZ}</a><!--/p360--></span></figcaption></figure>
 </div>
 {prehliadka_sekcia('', '02-tvarnice-obloha')}
 <div class="txt rv kpartner"><p>Odkaz na stavebnú firmu z Nitry: <a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a>.</p></div>
@@ -1663,14 +1693,16 @@ def kontrola_uvodu():
                 stranky += 1
                 if f'{DOMENA}{OG_IMG[0]}' not in t: bez_og += 1
                 if t.count("'pagereveal'") != 1: bez_prechodu.append(os.path.relpath(os.path.join(kor, f), OUT))
-                if t.count('tema=(tmava|svetla)') != 1: bez_temy.append(os.path.relpath(os.path.join(kor, f), OUT))
+                if t.count('tema=(farebna|svetla|tmava)') != 1 or len(re.findall(r'<html lang="sk" data-tema="' + TEMA + '"[ >]', t)) != 1 or t.count(f'<meta name="theme-color" content="{FARBA}">') > 1: bez_temy.append(os.path.relpath(os.path.join(kor, f), OUT))
     if firma_ld().strip() not in s: chyba.append('úvod: JSON-LD HardwareStore sa nezhoduje s firma_ld() (vlož výstup firma_ld())')
     if PRECHODY_HEAD not in s: chyba.append('úvod: skript prechodov v <head> sa nezhoduje so zdroj/prechody.js (vlož výstup prechody_head())')
     if bez_prechodu: chyba.append('skript prechodov nie je práve raz: ' + ', '.join(bez_prechodu[:5]))
-    if bez_temy: chyba.append('skript témy (zdroj/tema-head.js) nie je práve raz: ' + ', '.join(bez_temy[:5]))
+    if bez_temy: chyba.append('skript témy (zdroj/tema-head.js) nie je práve raz alebo <html> nemá predvolenú tému data-tema="' + TEMA + '": ' + ', '.join(bez_temy[:5]))
     if s.split('<link rel="stylesheet"')[0].count(TEMA_HEAD.strip()) != 1: chyba.append('úvod: skript témy v <head> pred štýlom sa nezhoduje so zdroj/tema-head.js (vlož výstup tema_head())')
     if stare: chyba.append('odkaz na staré video alebo og.jpg: ' + ', '.join(stare[:5]))
     if von360: chyba.append('odkaz von na 360° v Google Mapách (má byť prehliadka v stránke): ' + ', '.join(von360[:5]))
+    if s.count(f'<p class="lede">{P360_LEDE}</p>') != 1 or s.count(f'<!--p360--> <a href="#prehliadka">{P360_ODKAZ}</a><!--/p360-->') != 1 or s.count('<!--p360-->') != 2 or s.count('<!--/p360-->') != 2:
+        chyba.append('úvod: sekcia prehliadky 360° nemá odsek P360_LEDE, odkaz P360_ODKAZ alebo značky <!--p360--> … <!--/p360--> okolo sekcie a odkazu (balik.sh podľa nich skúšobnú prehliadku vynechá)')
     if s.count(prehliadka_blok('', '13-dlazba-sklad')) != 1: chyba.append('úvod: komponent prehliadky 360° nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok(\'\', \'13-dlazba-sklad\') (vlož jeho výstup)')
     if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
     h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)

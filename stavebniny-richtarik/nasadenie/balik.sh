@@ -36,6 +36,25 @@ else
   rm -rf "$OUT/web/asistent" "$OUT/web/assets/"asistent*
   echo "asistent: vypnutý (bez ASISTENT_API)"
 fi
+# prehliadka 360°: kým je v nej len skúšobný obraz (build.py PANORAMA['skusobna'], atribút data-panorama-skusobna), na ostrý
+# web nejde: sekcia aj odkazy medzi značkami <!--p360--> … <!--/p360--> sa z balíka vynechajú spolu s obrazom a prehliadačom
+if grep -rq 'data-panorama-skusobna' "$OUT/web" --include='*.html'; then
+  python3 -I - "$OUT/web" <<'EOF3'
+import os, re, sys
+n = 0
+for dp, dn, fn in os.walk(sys.argv[1]):
+    for f in fn:
+        if not f.endswith('.html'): continue
+        p = os.path.join(dp, f); s = open(p, encoding='utf-8').read()
+        t = re.sub(r'<!--p360-->.*?<!--/p360-->', '', s, flags=re.S)
+        if t != s: open(p, 'w', encoding='utf-8').write(t); n += 1
+print('prehliadka 360°: skúšobný obraz, sekcia a odkazy vynechané zo stránok:', n)
+EOF3
+  rm -rf "$OUT/web/img/panorama" "$OUT/web/assets/panorama.js"
+else
+  echo "prehliadka 360°: ostrá (bez data-panorama-skusobna), ostáva v balíku"
+fi
+echo "stránok so skúšobnou prehliadkou 360° alebo odkazom #prehliadka bez cieľa v balíku: $(grep -rlE 'data-panorama-skusobna' "$OUT/web" --include='*.html' | wc -l)"
 # obrázky v img/, na ktoré neodkazuje žiadna stránka, štýl, skript ani index.json, do balíka nejdú (staré ilustračné
 # fotky a ikony ostávajú v repozitári, napr. na výmenu fotky)
 python3 -I - "$OUT/web" <<'EOF2'

@@ -89,7 +89,7 @@ Nič iné asistent nevie.
 - Všetky novinky: https://www.stavebninyrichtarik.sk/novinky/index.html
 
 ## Sortiment (15 kategórií, katalóg https://www.stavebninyrichtarik.sk/katalog/index.html)
-Značky v našej ponuke; predajňu v Nitre máme plnú materiálu (majiteľ: miesto sa volá predajňa, nie dvor). Priamo na sklade web výslovne uvádza: komín Stadreko (odber
+Značky v našej ponuke; predajňu v Nitre máme plnú materiálu. Priamo na sklade web výslovne uvádza: komín Stadreko (odber
 ihneď), stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite (určité druhy na objednávku). Či je iný konkrétny
 výrobok práve na sklade, asistent nevie: potvrdí predajňa.
 - Sypké zmesi (cement, vápno, malty, omietky, lepidlá, stierky, samonivelačné hmoty): Baumit, Cemmac, Calmit, Holcim,

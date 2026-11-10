@@ -20,6 +20,8 @@
    data-vt na <html>: typ, ktorým stránka prišla (CSS podľa neho pridá vstup H1 z drážky); trieda vt: stránka prišla
    prechodom. sessionStorage vt:<kľúč položky histórie>: typ príchodu na položku (zrkadlo pri Späť, zopakovanie pri Vpred).
    vtBeh: prechod tejto stránky (alebo null) pre site.js, ktorý odloží prácu až po prechode.
+   Farebná téma (10. 11. 2026): nová stránka pri pagereveal zapíše na <html> --vt-pozadie = zvislý prechod s farbami scén
+   (--scena) sekcií, ktoré sú v okne; site.css ho dá ako podklad ::view-transition, aby pri prelnutí nič nepreblikne.
    Ľahká verzia (RP1-09): keď prechod na zariadení dvakrát v relácii seká (meria site.js, sessionStorage vt-lahke ≥ 2),
    ďalšie prechody idú bez zdieľaných prvkov a bez strihu. */
 (function (w, d) {
@@ -78,6 +80,17 @@
     t = z ? z.t : a.navigationType == 'traverse' && a.from && a.entry && a.entry.index < a.from.index ? 'spat' : 'dalej';
     Y(vt, t); if (z && z.m) Y(vt, 'zmenu');
     h.classList.add('vt'); h.dataset.vt = t;
+    // farebná téma: podklad prechodu (::view-transition) po pásoch vo farbe scén novej stránky (token --scena: svetlý tón,
+    // antracit, červená). Pri postupnom prelnutí je chvíľu vidno podklad; jednofarebný svetlý by v antracitovej hlavičke
+    // podstránky a v červených pásoch preblikol nasvetlo. Hranice pásov sú hranice sekcií v okne (site.css, Farebná téma).
+    if (h.getAttribute('data-tema') == 'farebna') {
+      var g = [], x = d.querySelectorAll('main>*,body>section,body>footer'), r, c;
+      for (i = 0; i < x.length; i++) {
+        r = x[i].getBoundingClientRect(); c = r.height && r.bottom > 0 && r.top < innerHeight && getComputedStyle(x[i]).getPropertyValue('--scena');
+        if (c) g.push(c + ' ' + Math.round(r.top) + 'px ' + Math.round(r.bottom) + 'px');
+      }
+      if (g[0]) h.style.setProperty('--vt-pozadie', 'linear-gradient(' + g + ')');
+    }
     // typ príchodu na túto položku histórie (z otvoreného menu ako strih); prechod históriou ho neprepíše
     if (ss && a.navigationType != 'traverse' && a.entry) ss.setItem(K + ':' + a.entry.key, z && z.m ? 'strih' : t);
     if (z && (z.f || z.n || z.s)) {   // dlaždice a hlavička sa hľadajú len pri prechode so zdieľaným prvkom

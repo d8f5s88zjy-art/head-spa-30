@@ -10,18 +10,23 @@
    Triedy na <html> sa nemenia.
    Ťuk, klik, koliesko, kláves (aj Tab), posun, zmena šírky okna alebo skrytie karty uvítanie hneď ukončí: úvod je
    v konečnom stave a prekryv sa prelne za --dlzka-pusti. Pomalá sieť (prvé vykreslenie po POMALE) alebo fotka
-   nepripravená včas: brána len pozdraví a otvorí sa rovno na úvod (rýchla cesta). Poistky: CSS skryje prekryv 3,2 s
-   po prvom vykreslení, skript ho odstráni najneskôr po 6 s. Scenár po desatinách sekundy: README, časť Úvod. */
+   nepripravená včas: brána len pozdraví a otvorí sa rovno na úvod (rýchla cesta). Poistky: CSS skryje prekryv 4,8 s
+   po prvom vykreslení, skript ho odstráni najneskôr po 9 s. Scenár po desatinách sekundy: README, časť Úvod.
+   Tempo (majiteľ 9. 11. 2026: pomalšie animácie): všetky dĺžky a oneskorenia scenára násobí M = 1,5 (funkcia T),
+   pozdrav drží 1,5× dlhšie; odozva na ťuk (preskočenie, --dlzka-pusti) a rýchla cesta sa nespomaľujú. */
 (function (d, w) {
   var h = d.documentElement, ov0 = d.querySelector('body>.br');
   if (!ov0) return;
   if (!h.classList.contains('br-ide')) return ov0.parentNode.removeChild(ov0);
   // časy v ms: DRZ pozdrav od prvého vykreslenia, CAKAJ najdlhšie čakanie na fotku (CAKAJP pri rýchlej ceste), POMALE
-  // hranica pomalej siete, ďalej od otvorenia t0 (násobí ich k, aby bol úvod použiteľný do CIEL od navigácie; k ≥ KMIN)
-  var DRZ = 380, CAKAJ = 900, CAKAJP = 700, POMALE = 1500, CIEL = 2450, KMIN = 0.72, OTV = 500, DOK = 600, DOKD = 520, KONIEC = DOK + DOKD, ZMIZ = 90;
+  // hranica pomalej siete, ďalej od otvorenia t0 (násobí ich k, aby bol úvod použiteľný do CIEL od navigácie; k ≥ KMIN).
+  // M je tempo: časy scenára OTV, DOK, DOKD a všetky dĺžky v T() sú základné (pôvodné) hodnoty × M; DRZ, CAKAJ a CIEL
+  // sú už vynásobené (380, 900 a 2450 × 1,5)
+  var M = 1.5, DRZ = 570, CAKAJ = 1350, CAKAJP = 700, POMALE = 1500, CIEL = 3700, KMIN = 0.72, OTV = 500, DOK = 600, DOKD = 520, KONIEC = DOK + DOKD, ZMIZ = 90;
   var ov, okno, sc, zO, stav = 0, an = [], txt = [], f0 = 0, hotova = 0, vykr = 0, pomala = false, k = 1, tel, vw, cs = getComputedStyle(h), cas = [];
+  var far = h.getAttribute('data-tema') === 'farebna';   // farebná téma (predvolená): krídla sa rozídu rovno nad úvodom (otvorF)
   function kr(n) { return cs.getPropertyValue('--krivka-' + n).trim() || 'ease'; }   // krivky pohybového systému (site.css)
-  function T(ms) { return Math.round(ms * k); }
+  function T(ms) { return Math.round(ms * k * M); }
   function A(el, kf, o, zoz) { if (!el) return; var a = el.animate(kf, o); (zoz || an).push(a); }
   function znacka(n, t) { try { performance.mark(n, t ? { startTime: t } : undefined); } catch (e) {} }
   function po(ms, f) { cas.push(setTimeout(f, ms > 0 ? ms : 0)); }
@@ -107,7 +112,7 @@
       ks.push({ offset: q, transform: 'translate(' + ((Dx - wx) / sx - (L.left - V.left)) + 'px,' + ((Dy - wy) / sy - (L.top - V.top)) + 'px) scale(' + (Dw / (sx * L.width)) + ',' + (Dw / (sy * L.width)) + ')' });
       kz.push({ offset: q, transform: 'translate(' + (zh.left - zo.left) * p + 'px,' + (zh.top - zo.top) * p + 'px) scale(' + (ZV + (1 - ZV) * p) + ')' });
     }
-    k = Math.min(1, Math.max(KMIN, (CIEL - t0) / (KONIEC + 120)));
+    k = Math.min(1, Math.max(KMIN, (CIEL - t0) / ((KONIEC + 120) * M)));
     var vy = kr('vyjazd'), dok = { duration: T(DOKD), delay: T(DOK), easing: 'linear', fill: 'both' };
     kridla(T(OTV));
     // kamera vojde dnu (1 → 1,05) a pri usadení sa vráti
@@ -135,7 +140,7 @@
     A(d.querySelector('.uv-b'), [{ opacity: .2, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(DOK + 200), easing: vy, fill: 'backwards' }, txt);
     // prelnutie do skutočného úvodu (rovnaká poloha, krátke prelnutie skryje iné prevzorkovanie) a pečiatka „Naša predajňa“
     A(ov, [{ opacity: 1 }, { opacity: 0 }], { duration: ZMIZ, delay: T(KONIEC), fill: 'forwards' });
-    A(ram.querySelector('.uv-ram>.uv-stitok'), [{ opacity: 0, transform: 'scale(1.35)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(KONIEC) + 60, easing: kr('pecat'), fill: 'backwards' }, txt);
+    A(ram.querySelector('.uv-ram>.uv-stitok'), [{ opacity: 0, transform: 'scale(1.35)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(KONIEC) + 90, easing: kr('pecat'), fill: 'backwards' }, txt);
     an.concat(txt).forEach(function (a) { a.pause(); });
     return (G = 1);
   }
@@ -150,12 +155,31 @@
     hotovo({});
   }
 
+  // farebná téma: úvod je fotka cez celú výšku s červeným panelom a názvom, takže okno s fotkou, usadenie do rámu ani štítky
+  // nie sú (CSS ich skryje): krídla s logom a názvom sa rozídu rovno nad hotovým úvodom, fotka úvodu dosadne (1,06 → 1),
+  // heslo vyjde z drážky a štítok predajne sa vrazí. Ťuk prechádza na úvod od prvej snímky otvorenia (Zavolať).
+  function otvorF() {
+    if (stav) return;
+    if (w.scrollY > 4) return rychlo();
+    var t = performance.now(), vy = kr('vyjazd');
+    stav = 1; k = 1; znacka('br-otvor'); znacka('br-usad', t);
+    w.brCas = { f: Math.round(f0), pr: Math.round(hotova), otvor: Math.round(t), far: 1 };
+    ov.style.pointerEvents = 'none';
+    kridla(T(OTV));
+    A(d.querySelector('.uv-dvor'), [{ transform: 'scale(1.06)' }, { transform: 'none' }], { duration: T(800), easing: kr('kamera'), fill: 'backwards' }, txt);
+    [].forEach.call(d.querySelectorAll('.uv h1 .ln>span'), function (s, j) {
+      A(s, [{ transform: 'translateY(112%)' }, { transform: 'none' }], { duration: T(440), delay: T(160 + j * 60), easing: vy, fill: 'backwards' }, txt);
+    });
+    A(d.querySelector('.uv-ram>.uv-stitok'), [{ opacity: 0, transform: 'scale(1.35)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(OTV), easing: kr('pecat'), fill: 'backwards' }, txt);
+    hotovo({});
+  }
+
   try {
     ov = ov0;
     okno = ov.querySelector('.br-okno'); sc = ov.querySelector('.br-scena'); zO = ov.querySelector('.uv-znak');
     tel = w.matchMedia('(max-width:700px)').matches;   // rozmery sa tu nečítajú (vynútili by prepočet štýlov počas načítania)
     if (!tel) { DOK = 560; DOKD = 440; KONIEC = DOK + DOKD; }   // počítač: veľký rám, fotka sa usádza na kratšiu vzdialenosť
-    ov.querySelector('.br-kam').style.transformOrigin = tel ? '55% 50%' : '82% 52%';   // úbežník cesty medzi paletami (fotka 11)
+    ov.querySelector('.br-kam').style.transformOrigin = tel ? '48% 50%' : '82% 52%';   // úbežník cesty medzi paletami (fotka 11, v pomere k celej širokej fotke)
     [].forEach.call(ov.querySelectorAll('.br-st'), function (s) {
       var m = s.getAttribute(tel ? 'data-tel' : 'data-pc');
       if (!m) return s.remove();
@@ -169,6 +193,7 @@
       if (stav || !f0 || !hotova) return;
       var z = DRZ - (performance.now() - f0);
       if (pomala) return vykr && po(z, function () { requestAnimationFrame(rychlo); });   // rýchla cesta až po vykreslení fotky
+      if (far) return po(z, function () { requestAnimationFrame(otvorF); });
       var ric = w.requestIdleCallback || function (f) { return setTimeout(f, 1); };
       ric(function () { priprav(f0 + DRZ); }, { timeout: Math.max(1, z - 40) });
       po(z, function () { requestAnimationFrame(beh); });
@@ -176,7 +201,7 @@
     var fcp = function (t) {
       if (f0) return;
       f0 = t || 1; znacka('br-f', f0);
-      var termin = Math.min(f0 + CAKAJ, CIEL - KMIN * (KONIEC + 120));
+      var termin = Math.min(f0 + CAKAJ, CIEL - KMIN * (KONIEC + 120) * M);
       pomala = f0 > POMALE || f0 + DRZ > termin;   // celý scenár by nestihol CIEL: len pozdrav a rýchla cesta
       po((pomala ? f0 + CAKAJP : termin) - performance.now(), rychlo); skus();
     };
@@ -186,7 +211,7 @@
     // fotka je pripravená, keď ju prehliadač vykreslil (LCP úvodu alebo uvítania) alebo dekódoval
     try { new PerformanceObserver(function (l) { l.getEntries().forEach(function (e) { var el = e.element; if (el && (el === img || el.closest('.uv-dvor'))) pripravena(1); }); }).observe({ type: 'largest-contentful-paint', buffered: true }); } catch (x) {}
     if (img.decode) img.decode().then(function () { pripravena(); }, function () { if (img.complete && img.naturalWidth) pripravena(); });
-    setTimeout(function () { if (stav < 3) koniec({ rychlo: true }); }, 6000);   // poistka
+    setTimeout(function () { if (stav < 3) koniec({ rychlo: true }); }, 9000);   // poistka
   } catch (e) {
     h.classList.remove('br-ide');
     if (ov && ov.parentNode) ov.parentNode.removeChild(ov);

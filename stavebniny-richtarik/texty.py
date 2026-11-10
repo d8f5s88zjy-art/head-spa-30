@@ -52,7 +52,7 @@ STRANKY = {
         d='Akciové letáky Stavebnín Richtárik na stiahnutie: cenník akcií z 28. 1. 2026 vo formáte PDF, staršie letáky a reklama v Spravodaji Nitra.'),
     'doprava.html': dict(h1='Doprava materiálu po celom Slovensku', t='Doprava stavebného materiálu',
         d='Doprava stavebného materiálu po celom Slovensku vlastnými autami Avia 3,5 t a 8 t s mechanickou rukou. Dovezieme na miesto, ktoré určíte.'),
-    'caste-otazky.html': dict(h1='Časté otázky', t='Časté otázky o doprave a zľavách',
+    'caste-otazky.html': dict(h1='Časté otázky', t='Časté otázky: doprava a zľavy',
         d='Časté otázky o Stavebninách Richtárik v Nitre: doprava po Slovensku, zákaznícka karta a zľavy, platba kartou, splátky a cenová ponuka zadarmo.'),
     '404.html': dict(t='Stránka sa nenašla',
         d='Stránka sa nenašla. Pokračujte do katalógu, na akcie alebo nám zavolajte na 0905 622 223. Stavebniny Richtárik, Nitra – Horné Krškany.'),
@@ -64,7 +64,7 @@ STRANKY = {
         d='Murovací materiál v Nitre: tehly TermoBRIK, tvárnice Ytong a Porfix, preklady a stropné systémy. Výpočet spotreby a cenová ponuka zadarmo.'),
     'katalog/stresne-kritiny.html': dict(t='Strešné krytiny Tondach, Bramac',
         d='Strešné krytiny v Nitre: pálené a betónové škridly Tondach a Bramac, plechové krytiny a asfaltové pásy. Výpočet krytiny a cenová ponuka zadarmo.'),
-    'katalog/dlazby.html': dict(t='Zámková dlažba, obrubníky, ploty',
+    'katalog/dlazby.html': dict(t='Dlažba, obrubníky a ploty',
         d='Dlažby a ploty v Nitre: zámková dlažba, terasové platne, obrubníky, palisády a ploty City Stone Design, Premac a Stadreko. Cenová ponuka zadarmo.'),
     'katalog/izolacny-material.html': dict(t='Polystyrén a minerálna vlna',
         d='Izolačný materiál v Nitre: minerálna vlna, polystyrén, asfaltové pásy a izolácie proti vode a radónu. Výpočet spotreby a cenová ponuka zadarmo.'),
@@ -72,11 +72,11 @@ STRANKY = {
         d='Komínové systémy v Nitre: certifikované komíny Stadreko a Schiedel so šamotovou alebo nerezovou vložkou. Komín Stadreko máme priamo na sklade.'),
     'katalog/stresne-okna.html': dict(t='Strešné okná Velux, Fakro',
         d='Strešné okná v Nitre: Velux, Fakro a RoofLITE, výlezy, svetlíky a podkrovné schody. Poradíme vám s výberom a cenovú ponuku pripravíme zadarmo.'),
-    'katalog/hutny-material.html': dict(t='Hutný materiál a betonárska oceľ',
+    'katalog/hutny-material.html': dict(t='Hutný materiál, betonárska oceľ',
         d='Hutný materiál v Nitre: betonárska oceľ, siete, plechy, profily, rúry, oceľové zárubne a garážové brány. Cenová ponuka zadarmo, doprava na stavbu.'),
     'katalog/dvere-okna.html': dict(t='Dvere Masonite a drevené okná',
         d='Dvere a okná v Nitre: interiérové, vchodové a bezpečnostné dvere Masonite v siedmich dekoroch. Bežné druhy máme na sklade, ostatné na objednávku.'),
-    'katalog/stavebne-rezivo.html': dict(t='Stavebné rezivo a krovy na mieru',
+    'katalog/stavebne-rezivo.html': dict(t='Stavebné rezivo, krovy na mieru',
         d='Stavebné rezivo v Nitre priamo na sklade: dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru. V ponuke aj palivové drevo agát.'),
     'katalog/stavebne-naradie-doplnky.html': dict(t='Stavebné náradie a doplnky',
         d='Náradie a doplnky v Nitre: stavebné, elektrické a záhradné náradie, spojovací materiál, mriežky a poklopy Slovakia Trend a DS Haco. Poradíme vám.'),
@@ -92,7 +92,7 @@ STRANKY = {
     # značky a výrobky (H1 = značka a čo to je)
     'katalog/dlazby/dlazby-in-vest.html': dict(h1='Dlažby City Stone Design', t='Dlažby City Stone Design',
         d='Dlažby City Stone Design: zámkové dlažby Háčko, Dvojvlna, Top Zóna, Blok a Romana, palisády, obrubníky a plotový systém Casser. Nitra.'),
-    'katalog/dlazby/dlazby-in-vest/plotovy-system.html': dict(h1='Plotový systém City Stone Design', t='Plotový systém City Stone Design',
+    'katalog/dlazby/dlazby-in-vest/plotovy-system.html': dict(h1='Plotový systém City Stone Design', t='Plot City Stone Design',
         d='Plotový systém City Stone Design: štiepané plotové prvky Casser, zákrytové dosky a debniace betónové tvárnice. Cenová ponuka zadarmo.'),
     'katalog/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.html': dict(t='Prvky pre cestné komunikácie',
         d='Prvky pre cestné komunikácie City Stone Design: obrubník cestný, parkový a bariérový, prídlažba a žľabovka. Stavebniny Richtárik, Nitra.'),
@@ -124,19 +124,19 @@ STRANKY = {
         d='Trapézové plechy Blachotrapez T-8 až T-135 v rôznych farbách a povrchových úpravách, na požadovanú dĺžku. Stavebniny Richtárik, Nitra.'),
     'katalog/stresne-kritiny/blachotrapez/plech-vzor-skridla.html': dict(h1='Plechová krytina vzor škridla', t='Plechová krytina vzor škridla',
         d='Plechová krytina vzor škridla Blachotrapez: Diament Plus, Kingas a Joker vo farebnej škále. Výpočet krytiny a cenová ponuka zadarmo.'),
-    'katalog/stresne-kritiny/icopal.html': dict(h1='Icopal – asfaltové pásy a šindle', t='Icopal – asfaltové pásy a šindle',
+    'katalog/stresne-kritiny/icopal.html': dict(h1='Icopal – asfaltové pásy a šindle', t='Icopal – asfaltové pásy, šindle',
         d='Icopal: asfaltové pásy SBS, modifikované pásy Elastobit a Polarbit, šindle JCP a strešný systém s fóliami. Stavebniny Richtárik, Nitra.'),
     'katalog/stresne-kritiny/mediterran.html': dict(h1='Mediterran – betónová krytina', t='Mediterran – betónová krytina',
         d='Betónová strešná krytina Mediterran Standard, Rundo, Danubia, Coppo a Zenit so všetkými tvarovkami a doplnkami. Stavebniny Richtárik, Nitra.'),
     'katalog/stresne-kritiny/onduline.html': dict(h1='Onduline – ľahké asfaltové krytiny', t='Onduline – asfaltové krytiny',
         d='Onduline: ľahké asfaltové vlnovky, škridle Onduvilla, šindle Bardoline a Tegola a priehľadné krytiny Onduclair. Stavebniny Richtárik, Nitra.'),
-    'katalog/stresne-kritiny/tondach.html': dict(h1='Tondach – pálená strešná krytina', t='Tondach – pálená strešná krytina',
+    'katalog/stresne-kritiny/tondach.html': dict(h1='Tondach – pálená strešná krytina', t='Tondach: pálená strešná krytina',
         d='Pálená strešná krytina Tondach: Bravura, Steinbrück, Figaro, bobrovky, viedenské škridly a keramické príslušenstvo. Stavebniny Richtárik, Nitra.'),
     'katalog/stresne-okna/fakro.html': dict(h1='Fakro – strešné okná', t='Strešné okná Fakro',
         d='Strešné okná Fakro z tlakovo impregnovanej borovice: kyvno-výklopné FPP, panoramatické FEL a plastové PPP, k nim markízy a rolety. Nitra.'),
     'katalog/stresne-okna/fakro/fakro-schody-vylezy.html': dict(h1='Podkrovné sklápacie schody Fakro', t='Podkrovné schody Fakro',
         d='Podkrovné sklápacie schody Fakro LWS Smart, LWK Komfort a zateplené LTK Thermo z borovicového dreva. Cenovú ponuku pripravíme zadarmo.'),
-    'katalog/sypke-zmesy/baumit.html': dict(h1='Baumit – omietky, malty a lepidlá', t='Baumit – omietky, malty, lepidlá',
+    'katalog/sypke-zmesy/baumit.html': dict(h1='Baumit – omietky, malty a lepidlá', t='Baumit: omietky, malty, lepidlá',
         d='Baumit: ručné a strojové omietky, stierky, zatepľovacie systémy, sanačné systémy Sanova, potery, lepidlá Baumacol a murovacie malty. Nitra.'),
     'katalog/sypke-zmesy/calmit.html': dict(h1='Calmit – vápenný hydrát a vápno', t='Calmit – vápenný hydrát a vápno',
         d='Vápno Calmit: vápenný hydrát Spezikalk, nehasené vápno Feinkalk a mleté vápence Florakalk v 25 kg vreciach. Stavebniny Richtárik, Nitra.'),
@@ -160,11 +160,11 @@ STRANKY = {
         d='Akcia Climowool 039: izolácia na šikmé strechy, vnútorné steny, stropy, podlahy a fasády od 29,88 € za balenie s DPH. Stavebniny Richtárik, Nitra.'),
     'akcie/okna-schody-fakro.html': dict(h1='Okná a schody Fakro so zľavou 20 %', t='Okná a schody Fakro v akcii',
         d='Akcia Fakro: strešné okná, podkrovné sklápacie schody a strešné doplnky so zľavou 20 %. Rôzne druhy a rozmery. Stavebniny Richtárik, Nitra.'),
-    'akcie/pezinska-tehla-termobrik.html': dict(h1='Pezinská tehla TermoBRIK v akcii', t='Pezinská tehla TermoBRIK v akcii',
+    'akcie/pezinska-tehla-termobrik.html': dict(h1='Pezinská tehla TermoBRIK v akcii', t='Pezinská tehla TermoBRIK: akcia',
         d='Akcia Pezinská tehla TermoBRIK: brúsené tehly, systém Dry, lepidlo zdarma, individuálna cenová ponuka na váš dom. Doprava až na stavbu zdarma.'),
     'akcie/porfix.html': dict(h1='Porfix v akcii', t='Porfix v akcii',
         d='Akcia Porfix: špeciálne zľavy na obvodové murivo, priečky, strop, lepidlá a malty. Pri celom kamióne doprava až domov zdarma. Nitra.'),
-    'akcie/sadrokartonovy-zateplovaci-system.html': dict(h1='Zatepľovací a sadrokartónový systém v akcii', t='Sadrokartón a zateplenie v akcii',
+    'akcie/sadrokartonovy-zateplovaci-system.html': dict(h1='Zatepľovací a sadrokartónový systém v akcii', t='Sadrokartón, zateplenie v akcii',
         d='Akcia sadrokartón a zateplenie: Norgips od 6,22 € za dosku s DPH, polystyrén Styrodur a OSB dosky. Polystyrén dovezieme domov zdarma.'),
     'akcie/sakret.html': dict(h1='Lepidlá a omietky Univerbau v akcii', t='Lepidlá a omietky v akcii',
         d='Akcia lepidlá a omietky Univerbau: lepidlá na obklad a polystyrén, nivelit, omietky, malty a betónový poter za znížené ceny. Nitra.'),
@@ -178,7 +178,7 @@ STRANKY = {
         d='Akcia Ytong: špeciálne zľavy a pri celom kamióne doprava zdarma až na stavbu. Spotrebu spočítame a cenovú ponuku pripravíme zadarmo. Nitra.'),
 
     # novinky (H1 = výrobok a použitie)
-    'novinky/betonove-vyrobky.html': dict(h1='Betónové výrobky a šalovacie diely', t='Šalovacie diely a betónové prvky',
+    'novinky/betonove-vyrobky.html': dict(h1='Betónové výrobky a šalovacie diely', t='Šalovacie diely, betónové prvky',
         d='Betónové výrobky v Stavebninách Richtárik: šalovacie diely DT 12 – 40, stĺpikové tvárnice, skruže, poklopy, striešky a vinohradnícke stĺpy.'),
     'novinky/dekoracne-kamene.html': dict(h1='Dekoračné kamene a kamenná kôra', t='Dekoračné kamene a kamenná kôra',
         d='Dekoračné kamene vo vreciach 25 kg: mramorový okruhliak za 11,20 €, Nero Ebono za 10,75 € a kamenná kôra za 8,95 € s DPH. Stavebniny Richtárik.'),
@@ -202,9 +202,12 @@ def stranka(path):
 
 
 def titulok(path, nazov):
-    """<title> vo vzore „… | Stavebniny Richtárik Nitra“ (najviac 60 znakov)."""
+    """<title> vo vzore „… | Stavebniny Richtárik Nitra“ (najviac 60 znakov, teda najviac 31 znakov pred príponou).
+    Dlhší titulok sa nereže (rezanie potichu usekávalo posledné slovo, KF-09): build skončí chybou a titulok treba
+    skrátiť ručne v STRANKY."""
     t = stranka(path).get('t') or nazov
-    if len(t + PRIPONA) > 60: t = t[:60 - len(PRIPONA)].rsplit(' ', 1)[0].rstrip(' ,–-')
+    if len(t + PRIPONA) > 60:
+        raise ValueError(f'{path}: titulok „{t}“ má {len(t)} znakov, najviac {60 - len(PRIPONA)} (skráťte ho ručne v texty.STRANKY)')
     return t + PRIPONA
 
 
