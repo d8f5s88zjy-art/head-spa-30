@@ -141,6 +141,13 @@
      Zábery sú fotky na šírku (výrezy -m len pre prológ, ten ide cez celé plátno); optická os kamery je v strede
      pásu (setViewOffset v aim()), pás sa správa ako celé okno a plátno pod ním zakryje atrament. */
   const PAS_B = 0.56;
+  /* Mierky: výška okna, s ktorou ráta rozloženie stránky (100svh: malé okno; lišta prehliadača na telefóne ju pri
+     skrole nemení, innerHeight áno), a výška pásu fotky z CSS (--pas: 56 % malého okna, v nízkom okne menej, aby sa
+     pod pás zmestila karta). Pás na plátne (plátno má 100lvh) je preto podiel pasB = --pas / výška plátna. */
+  const mierka = (css) => { const e = d.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;top:0;left:0;width:0;visibility:hidden;pointer-events:none;' + css; d.body.append(e); return e; };
+  const mOkno = mierka('height:100vh;height:100svh'), mPas = mierka('height:var(--pas,0px)');
+  const okno = () => mOkno.getBoundingClientRect().height || innerHeight;
+  let pasB = PAS_B;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   // okamžitý skok bez plynulého skrolu z CSS (scroll-behavior: smooth); staré Safari nepozná 'instant'
   const jumpTo = (y) => { try { scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { const s = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; scrollTo(0, y); root.style.scrollBehavior = s; } };
@@ -800,9 +807,12 @@
   function layout() {
     const aspect = canvas.width / canvas.height, pas = phone && aspect < 1;
     const vh = 2 * DIST * tanH;
+    // pás fotky podľa CSS (--pas) ako podiel výšky plátna; bez neho (starý prehliadač) 56 %
+    const pp = mPas.getBoundingClientRect().height, hp = canvas.clientHeight || innerHeight;
+    pasB = pas && pp > 0 && hp > 0 ? clamp(pp / hp, 0.2, 0.9) : PAS_B;
     SHOTS.forEach((s) => {
       // okno záberu: celé plátno, na telefóne na výšku horný pás (okrem prológu); vh je výška okna vo svete
-      s.band = pas && !s.pro ? PAS_B : 1;
+      s.band = pas && !s.pro ? pasB : 1;
       const vw = vh * aspect / s.band;
       // fotka pokryje okno s presahom na oboch stranách; na telefóne na výšku vidno jej stred okolo bodu záujmu
       const ovr = s.video ? OVER_V : OVER, ov = 1 + 2 * ovr;
@@ -980,7 +990,8 @@
     return el.getBoundingClientRect().top + y;
   }
   function measure() {
-    const vh = innerHeight, P = [], An = [], was = path.map((s) => s.photo).join();
+    // výška okna z mierky (svh): kotvy sa s lištou prehliadača nehýbu, kamera pri jej schovaní neposkočí
+    const vh = okno(), P = [], An = [], was = path.map((s) => s.photo).join();
     vhNow = vh;
     SHOTS.forEach((s) => {
       s.pi = null;
@@ -999,7 +1010,7 @@
       // na telefóne kratší ako 1,5 okna, pevný odstup by strih ukázal nad pásom)
       const prev = s.at.previousElementSibling || (s.at.parentElement.previousElementSibling || {}).lastElementChild;
       if (card && prev && prev.classList && prev.classList.contains('band')) {
-        const r = prev.getBoundingClientRect(), kryt = (phone && innerWidth < innerHeight ? PAS_B : 1) * vh;
+        const r = prev.getBoundingClientRect(), kryt = (phone && innerWidth < innerHeight ? pasB * (canvas.clientHeight || vh) : vh);
         s.cut = scrollY + (r.top + r.bottom - kryt) / 2;
       } else s.cut = card ? top : null;
       if (An.length && a <= An[An.length - 1] + 1) return;
@@ -1222,7 +1233,7 @@
      frekvenciu displeja, ak je nižšia), rozlíšenie klesne o 0,25 (najnižšie 1x); keď beží plnou frekvenciou
      displeja s rezervou, po 8 s bez poklesu sa o 0,25 vráti k ostrosti. Strop 30 snímok už nie je.
      Najkratšia snímka zariadenia = frekvencia displeja (60, 90, 120, 144, 240 Hz; 30 Hz pri šetrení energie nie je „pomalé“). */
-  let fastest = 0, lowAt = 0;
+  let fastest = 0, lowAt = 0, upAt = 0, zamok = false;        // zamok: po návrate k ostrosti muselo rozlíšenie znova klesnúť
   const ft = [];
   function quality(dt, now) {
     // pri nahrávaní fotiek do grafiky a počas prológu či odchodu sa nemeria: dlhé snímky z nahrávania by
@@ -1235,9 +1246,12 @@
     const med = ft[15], p90 = ft[27]; ft.length = 0;
     const hz = Math.max(fastest, 1 / 250);                   // interval displeja (60 až 240 Hz)
     if (med > Math.max(hz * 1.3, 1 / 55) || p90 > Math.max(hz * 2.2, 1 / 40)) {
-      if (dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
-    } else if (dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000) {
-      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); resize();
+      // pokles do 30 s po návrate k ostrosti: zariadenie vyššie rozlíšenie pri skrole neutiahne, ďalej sa už nevracia
+      // (striedanie rozlíšenia hore-dole každých pár sekúnd je viditeľné a každá zmena stojí novú alokáciu plátna)
+      if (dpr > DPR_MIN) { if (upAt && now - upAt < 30000) zamok = true; dpr = Math.max(DPR_MIN, Math.round((dpr - 0.25) * 4) / 4); lowAt = now; resize(); }
+    } else if (!zamok && dpr < DPR_MAX && med < hz * 1.08 && p90 < hz * 1.5 && now - lowAt > 8000 && now - lastInput > 1000) {
+      // k ostrosti sa vracia len v pokoji (sekundu bez skrolu a dotyku), nikdy uprostred gesta
+      dpr = Math.min(DPR_MAX, Math.round((dpr + 0.25) * 4) / 4); upAt = now; resize();
     }
   }
 
@@ -1416,8 +1430,11 @@
   // lišta prehliadača na telefóne pri skrolovaní posiela resize, plátno (100lvh) sa pritom nemení: kotvy sa
   // prepočítajú až o 150 ms, nie synchrónne uprostred skrolu; skutočná zmena rozmeru ide hneď
   on(window, 'resize', () => {
-    if ((canvas.clientWidth || innerWidth) === cw && (canvas.clientHeight || innerHeight) === ch) { clearTimeout(mt); mt = setTimeout(() => { measure(); wake(); }, 150); }
-    else resize();
+    if ((canvas.clientWidth || innerWidth) === cw && (canvas.clientHeight || innerHeight) === ch) {
+      // len lišta prehliadača: plátno (lvh) ani rozloženie stránky (svh) sa nezmenili, nič sa nemeria
+      if (okno() === vhNow) return;
+      clearTimeout(mt); mt = setTimeout(() => { measure(); wake(); }, 150);
+    } else resize();
   });
   // skutočný pohyb návštevníka: až potom sa sťahujú videá (meranie stránky bez pohybu ich nestiahne)
   const moved = () => { if (!userMoved) { userMoved = true; wake(); } };

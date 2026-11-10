@@ -149,8 +149,9 @@ try {
     }
     ok(NS >= 8 && new Set(seen).size === NS, `[${label}] kapitoly sa prepínajú (${seen.join('→')})`);
     ok(cardsOn === NS, `[${label}] titulná karta svieti v každej kapitole (${cardsOn}/${NS})`);
-    const sp = await page.evaluate(() => [...document.querySelectorAll('.film-shot')].map((el) => parseFloat(el.style.getPropertyValue('--sp'))).filter((v) => Number.isFinite(v)));
-    ok(sp.length === stills.count && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na všetkých kotvách v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
+    // --sp píše app.js na kartu a fotku záberu (nie na kotvu: zdedená premenná prepočítala štýl celého záberu)
+    const sp = await page.evaluate(() => [...document.querySelectorAll('.film-shot .title-card')].map((el) => parseFloat(el.style.getPropertyValue('--sp'))).filter((v) => Number.isFinite(v)));
+    ok(sp.length === stills.count && sp.every((v) => v >= 0 && v <= 1), `[${label}] --sp nastavené na kartách všetkých záberov v rozsahu 0–1`, sp.map((v) => v.toFixed(2)).join(' '));
 
     // titulná karta druhého záberu v kapitole (galéria: sud, Cestou von): zhasnutá pred kotvou, svieti v pripnutí
     // telefón na výšku (P18): karta za pásom ide hneď za ním a je vidieť už pri nábehu, nikdy nie cez pás

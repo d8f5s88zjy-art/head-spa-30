@@ -1,7 +1,7 @@
 /*
  * BARBERSHOP 30 – režisér stránky (docs/CONTRACT.md §3, §6; TOUR_DIRECTION.md; ART_DIRECTION.md §8).
  * Jediný zdroj pravdy je scroll: jedna slučka rAF číta scrollY, počíta t každého záberu (.film-shot), píše CSS
- * premenné na kotvy (nikdy na <html>), prepína stavy a riadi videá, menu a lightbox. Film (film.js) je samostatný
+ * premenné na kotvy a ich prvky (nikdy na <html>), prepína stavy a riadi videá, menu a lightbox. Film (film.js) je samostatný
  * modul (triedy world, world-in, world-off). Bez externých požiadaviek a analytiky; globálne len __renderDone a
  * __scrollSettled pre testy.
  */
@@ -27,6 +27,8 @@ const mqMobile = matchMedia('(max-width: 900px)');
 // telefón na výšku: fotka scény v hornom páse, text pod ňou (P16 v style.css, rovnaký prah)
 const mqPas = matchMedia('(max-width: 720px) and (orientation: portrait)');
 const mqFinePointer = matchMedia('(hover: hover) and (pointer: fine)');
+// dotykové zariadenie (telefón, tablet): stav stránky ide presne so skrolom, bez dobiehania (pozri tick())
+const mqDotyk = matchMedia('(pointer: coarse)');
 const deviceMemory = typeof navigator.deviceMemory === 'number' ? navigator.deviceMemory : undefined;
 
 const motionOff = params.get('motion') === 'off'
@@ -75,7 +77,11 @@ let footerBox = null;
 let titles = [];    // kotvy s titulnou kartou v poradí dokumentu (zábery bez filmu sa prelínajú medzi nimi)
 let pricesBox = null; // pás cenníka: tam sa plávajúce tlačidlo skryje (každá služba má vlastné Objednať)
 let pas = false;     // telefón na výšku s pásom fotky (mqPas), zisťuje sa v measure()
-let pasK = 1;        // výška pásu fotky ako podiel okna (--pas-k zo style.css)
+let pasK = 1;        // výška pásu fotky ako podiel okna (meria sa z --pas v style.css)
+/* Mierky: výška okna, s ktorou ráta rozloženie (100svh: malé okno; lišta prehliadača na telefóne ju pri skrole nemení,
+   innerHeight áno), a výška pásu fotky (--pas). Neviditeľné pevné prvky, čítajú sa len v measure(). */
+const mierka = (css) => { const e = document.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;top:0;left:0;width:0;visibility:hidden;pointer-events:none;' + css; document.body.append(e); return e; };
+const mOkno = mierka('height:100vh;height:100svh'), mPas = mierka('height:var(--pas,0px)');
 
 function parseAt(value) {
   const parts = String(value || '').split(',').map((s) => parseFloat(s));
@@ -85,9 +91,9 @@ function parseAt(value) {
 }
 
 function measure() {
-  vh = window.innerHeight || 1;
+  vh = mOkno.getBoundingClientRect().height || window.innerHeight || 1;
   pas = mqPas.matches;
-  pasK = pas ? parseFloat(getComputedStyle(html).getPropertyValue('--pas-k')) || 1 : 1;
+  pasK = pas ? mPas.getBoundingClientRect().height / vh || 1 : 1;
   const scrollH = Math.max(html.scrollHeight, document.body?.scrollHeight || 0);
   maxScroll = Math.max(1, scrollH - vh);
   const y = window.scrollY || 0;
@@ -113,7 +119,8 @@ function measure() {
     if (afterBand) { const b = prev.getBoundingClientRect(); swap = y + (b.top + b.bottom - (pas ? pasK : 1) * vh) / 2; }
     // kapitola, do ktorej záber patrí (aktívna kapitola sa berie z ukázanej karty, KF-10)
     const secEl = el.closest('section[data-scene]'), sec = sections.find((x) => x.el === secEl) || null;
-    return { el, top, height: Math.max(1, r.height), items, title, free, long, afterBand, swap, first: title && top < 1, sec };
+    // prvky, ktoré čítajú --sp (fotka zálohy, karta): premenná sa píše priamo na ne (pozri apply())
+    return { el, top, height: Math.max(1, r.height), items, title, free, long, afterBand, swap, first: title && top < 1, sec, img: $('.film-still img', el), card: $('.title-card', el) };
   });
 
   const pr = $('.band-prices');
@@ -197,10 +204,13 @@ function apply(p) {
   // výzva a dvere v úvode zmiznú v prvých 2 % skrolu (premenná len na kotvu úvodu, na <html> by prepočítala celú stránku)
   if (shots[0] && shots[0].first) setVar('--hint', 1 - p / 0.02, shots[0].el);
 
-  // t záberu: 0 keď stred okna vstúpi na horný okraj kotvy, 1 keď vyjde spodným (--sp pre CSS a data-at prvky)
+  // t záberu: 0 keď stred okna vstúpi na horný okraj kotvy, 1 keď vyjde spodným (--sp pre CSS a data-at prvky).
+  // --sp sa píše na fotku a kartu, nie na kotvu: zdedená premenná na kotve prepočítala pri každej snímke štýl
+  // všetkých prvkov záberu (v style.css je --sp registrovaná ako nededená)
   for (const s of shots) {
     const t = clamp01((y + vh * 0.5 - s.top) / s.height);
-    setVar('--sp', t, s.el);
+    if (s.img) setVar('--sp', t, s.img);
+    if (s.card) setVar('--sp', t, s.card);
     for (const it of s.items) setClass(it.el, 'is-in', t >= it.a && t <= it.b);
     // titulná karta: u = 0 pri pripnutí, 1 na konci kotvy; mení sa len krytie (nábeh 0–0,12, odchod 0,92–1).
     // Telefón na výšku (P18): karta za pásom je vidieť už zdola, karta pred pásom zhasne až pod ním (bez prázdna).
@@ -270,7 +280,9 @@ function kresliPas(y, section, uvod) {
   let lc = c;
   if (kino.skok >= 0) { if (c === kino.skok || performance.now() > kino.skokDo) kino.skok = -1; else lc = kino.skok; }
   if (lc !== kino.cur) { kino.cur = lc; kino.label.textContent = String(lc + 1).padStart(2, '0') + ' · ' + storyLinks[lc].getAttribute('aria-label'); }
-  const yb = y + kino.barY, tenky = kino.pasy.some((b) => yb >= b[0] && yb <= b[1]);
+  // nad pásom s textom sa pás kapitol schová: podľa skutočnej polohy skrolu (curY), nie dobiehanej (y) – pri pomalých
+  // snímkach by dobiehaná poloha meškala a názov kapitoly by svietil cez text pásu
+  const yb = curY + kino.barY, tenky = kino.pasy.some((b) => yb >= b[0] && yb <= b[1]);
   if (tenky !== kino.tenky) { kino.tenky = tenky; html.classList.toggle('kino-tenky', tenky); }
   // ukázaná karta úvodu: na nízkom telefóne by pás ležal na jej nadpise (CSS ho vtedy skryje)
   if (uvod !== kino.uvod) { kino.uvod = uvod; html.classList.toggle('kino-uvod', uvod); }
@@ -289,7 +301,9 @@ function tick(now) {
   lastFrame = now;
   readTarget();
 
-  if (motionOff || now < snapUntil) {
+  // dotyk: bez dobiehania. Telefón posúva stránku sám (prst, zotrvačnosť); pevné fotky a karty, ktoré by za skrolom
+  // dobiehali, sa voči obsahu oneskorujú a pri každej neskoršej snímke poskočia („trasenie“). Dobieha len koliesko myši.
+  if (motionOff || mqDotyk.matches || now < snapUntil) {
     shownP = targetP;
   } else {
     // frame-rate-nezávislý lerp: k = 0.16 pri 60 fps
@@ -415,9 +429,18 @@ function scheduleMeasure() {
     snapNow(0); // po zmene rozmerov bez dobiehania
   }, 120);
 }
-window.addEventListener('resize', scheduleMeasure);
+/* Lišta prehliadača na telefóne sa pri skrole schováva a zakaždým pošle resize (mení sa len výška okna). Rozloženie
+   stojí na malom okne (svh) a pevné vrstvy na veľkom (lvh), takže sa nič nezmenilo: bez merania a bez skoku stavu
+   uprostred gesta. Skutočnú zmenu (šírka, otočenie, výška dokumentu) ohlási šírka okna alebo ResizeObserver tela. */
+const maRO = 'ResizeObserver' in window && !!document.body;
+let sirkaOkna = window.innerWidth;
+window.addEventListener('resize', () => {
+  if (maRO && mqDotyk.matches && window.innerWidth === sirkaOkna) return;
+  sirkaOkna = window.innerWidth;
+  scheduleMeasure();
+});
 window.addEventListener('orientationchange', scheduleMeasure);
-if ('ResizeObserver' in window && document.body) {
+if (maRO) {
   // obrázky, fonty, neskorší obsah – mení sa výška dokumentu
   new ResizeObserver(scheduleMeasure).observe(document.body);
 }
@@ -880,7 +903,10 @@ start();
     return () => bs.forEach(([b, c], i) => {
       if (c === ' ') return;
       let n = 4 + i * 2;
-      const tick = () => { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); b.textContent = --n <= 0 ? c : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; if (n > 0) setTimeout(tick, 70); };
+      // preklopenie políčka cez Web Animations (to isté ako @keyframes preklop): opakovanie triedy s čítaním
+      // offsetWidth vynútilo rozloženie stránky pri každom z ~150 preklopení; starý prehliadač ostáva pri triede
+      const preklop = () => { if (b.animate) b.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.2)' }, { transform: 'scaleY(1)' }], 90); else { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); } };
+      const tick = () => { preklop(); b.textContent = --n <= 0 ? c : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; if (n > 0) setTimeout(tick, 70); };
       setTimeout(tick, i * 40);
     });
   };

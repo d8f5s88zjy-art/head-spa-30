@@ -70,6 +70,9 @@ html {
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 16px);
+  /* nič sa nedá potiahnuť do strany (iPhone inak dovolí ťahať stránku vodorovne, aj keď má telo overflow-x: hidden);
+     clip nerobí z prvku posúvací kontajner, takže pripnuté karty (sticky) a pevné vrstvy fungujú ďalej */
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -80,7 +83,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background: var(--ink);
-  overflow-x: hidden;
+  overflow-x: hidden; overflow-x: clip;
 }
 
 img, picture, video, canvas, svg { display: block; max-width: 100%; }
@@ -439,7 +442,7 @@ html.kino.lang-ponuka .story-line { opacity: 0 !important; pointer-events: none 
 .kino-next-k { color: var(--paper); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
 html.kino-stoji .kino-next:not([hidden]) { opacity: 1; transform: none; pointer-events: auto; }
 .kino-next:focus-visible { opacity: 1; transform: none; pointer-events: auto; outline: 2px solid var(--lamp); outline-offset: 3px; }
-html.kino-hra .kino-next, html.kino-tenky .kino-next, html.pro .kino-next, html.outside .kino-next, html.obj-otvorene .kino-next,
+html.kino-hra .kino-next, html.kino-tenky .kino-next, html.kino-nevolno .kino-next, html.pro .kino-next, html.outside .kino-next, html.obj-otvorene .kino-next,
 .site-header[data-menu="open"] ~ .kino-next, html.lang-ponuka .kino-next { opacity: 0 !important; pointer-events: none !important; }
 @media (max-width: 900px) {
   .kino-next { left: 16px; top: calc(var(--nav-h) + 44px); bottom: auto; }
@@ -540,7 +543,8 @@ html.world-in .film-canvas { opacity: 1; transition: none; }
   transform: scale(calc(1 + 0.06 * var(--sp, 0)));
   transform-origin: var(--fx, 50%) var(--fy, 50%);
 }
-html[data-motion="on"] .film-still img { will-change: transform; }
+/* vlastná vrstva len pre fotku, ktorá je práve ukázaná a hýbe sa (is-shown z app.js; úvod je ukázaný od začiatku) */
+html[data-motion="on"] .film-shot.is-shown .film-still img, html[data-motion="on"] .film-shot[data-pro] .film-still img { will-change: transform; }
 html[data-motion="off"] .film-still img { transform: none; }
 /* telefón (rovnaký prah ako film.js): záloha je výrez na výšku s vlastným bodom záujmu --fmx/--fmy */
 @media (max-width: 720px) {
@@ -656,7 +660,7 @@ html.world-in:not(.world-off) .place-tag { opacity: 0 !important; visibility: hi
 html[data-motion="off"] .board-hero h1 .w, html[data-motion="off"] .board-hero .lead, html[data-motion="off"] .board-hero .board-actions { animation: none; }
 
 /* obsah záberu ide pri skrolovaní o kúsok pomalšie než stránka (doska pláva nad filmom, hĺbka aj v texte) */
-html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.5 - var(--sp, 0.5)) * 28px)); will-change: transform; }
+html[data-motion="on"] .film-shot .film-content { transform: translateY(calc((0.5 - var(--sp, 0.5)) * 28px)); }
 
 /* filmové pásy: počas úvodu ako filmu (html.pro) a kým návštevník stojí na ulici (html.outside) sú hore
    a dole čierne pásy ako v kine; keď kamera príde dnu, odsunú sa von (900 ms). Poistka: keby film
@@ -1192,7 +1196,7 @@ html[data-motion="off"] .title-hero * { animation: none !important; }
    S filmom je to jedna pevná vrstva medzi plátnom a stránkou (nebliká pri výmene kariet), bez filmu
    má ten istý okraj každá záloha .film-still. */
 body::after {
-  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  content: ""; position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh; z-index: 0; pointer-events: none;
   opacity: 0; transition: opacity 0.7s var(--ease-in-out);
   background:
     linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 16%, rgba(var(--ink-rgb), 0) 52%, rgba(var(--ink-rgb), 0.42) 80%, rgba(var(--ink-rgb), 0.62) 100%);
@@ -1320,6 +1324,12 @@ html:not(.karty) .title-pin { position: relative; }
   animation: obeh 7s linear infinite;
 }
 @keyframes obeh { to { transform: rotate(1turn); } }
+/* otáčaná plocha len taká veľká ako uhlopriečka karty (predtým 200 vmax: na telefóne štvorec 1 688 px, pri DPR 3 vrstva
+   25 megapixelov pre 1 px rámik); kužeľový prechod je uhlový, vzhľad je rovnaký. Starší prehliadač ostáva pri 200 vmax. */
+@supports (width: calc(hypot(1cqw, 1cqh))) {
+  .beam > .beam-line { container-type: size; }
+  .beam > .beam-line::before { width: calc(1.06 * hypot(100cqw, 100cqh)); height: calc(1.06 * hypot(100cqw, 100cqh)); margin: 0; translate: -50% -50%; }
+}
 
 /* --- pás služieb: pomaly beží ako titulky, okraje sa strácajú do tmy --- */
 .marquee {
@@ -1376,6 +1386,9 @@ html:not(.karty) .title-pin { position: relative; }
 .kin .kw { display: inline-block; }
 .js-kin .kin .kw { transform: translateY(0.3em); filter: blur(5px); opacity: 0; transition: transform 0.6s cubic-bezier(0.2, 0.75, 0.15, 1), filter 0.45s ease, opacity 0.35s ease; transition-delay: calc(60ms + var(--i, 0) * 60ms); }
 .js-kin .kin.is-in .kw, .js-kin .film-shot.is-title.is-on .kin .kw { transform: none; filter: none; opacity: 1; }
+/* dotyk: nástup slov a krokov bez rozmazania (len posun a krytie). Rozmazanie textu sa na telefóne kreslí mimo
+   obrazovky v každej snímke prechodu a prechod sa spúšťa uprostred skrolu (karta sa rozsvieti), čo skrol brzdilo. */
+@media (pointer: coarse) { .js-kin .kin .kw, .js-steps .steps li { filter: none; } }
 @media (prefers-reduced-motion: reduce) {
   .btn-primary::after, .beam > .beam-line::before, .marquee-track { animation: none; }
   .beam > .beam-line::before { transform: rotate(0.9turn); }
@@ -1588,8 +1601,19 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
    vidieť stránku (ťuk mimo panel ho zavrie).
    ========================================================================== */
 @property --pas-o { syntax: "<number>"; inherits: false; initial-value: 0; }
+/* --sp (poloha v zábere 0 až 1): app.js ju píše priamo na fotku zálohy a na kartu, ktoré ju čítajú. Nededí sa, takže
+   zápis pri skrole prepočíta štýl jedného prvku, nie celého záberu; kým skript nič nezapísal, platí stred (0,5). */
+@property --sp { syntax: "<number>"; inherits: false; initial-value: 0.5; }
 @media (max-width: 720px) and (orientation: portrait) {
-  :root { --pas-k: 0.56; --pas: calc(var(--pas-k) * 100vh); }
+  /* výška pásu fotky: 56 % malého okna (svh: to, čo je vidieť aj s lištou prehliadača; rám karty .title-frame má tú
+     istú jednotku – s vh rátal iPhone pás z okna bez líšt, karta sa pod neho nezmestila a vyliezla do titulkov),
+     najviac toľko, aby pod pásom ostalo miesto na kartu (--karta-h) a spodné tlačidlá, najmenej 30 % okna.
+     app.js aj film.js si výšku pásu merajú z tejto premennej (mierka), nepočítajú ju z --pas-k. */
+  :root {
+    --pas-k: 0.56; --karta-h: 252px; --okno: 100vh;
+    --pas: max(calc(0.3 * var(--okno)), min(calc(var(--pas-k) * var(--okno)), calc(0.97 * var(--okno) + var(--s5) - var(--cta-h) - env(safe-area-inset-bottom, 0px) - var(--karta-h))));
+  }
+  @supports (height: 100svh) { :root { --okno: 100svh; } }
   /* atrament pod pásom: s filmom jedna pevná vrstva nad plátnom (počas prológu a na ulici bežná vinetácia,
      prechod plynulý cez --pas-o), bez filmu ::after každej zálohy */
   body::after {
@@ -1597,18 +1621,19 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
     transition: opacity 0.7s var(--ease-in-out), --pas-o 0.9s var(--ease-in-out);
     background: linear-gradient(to bottom,
       rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 14%,
-      rgba(var(--ink-rgb), 0) calc(40% + (var(--pas-k) * 100% - 51%) * var(--pas-o)),
-      rgba(var(--ink-rgb), calc(0.5 + 0.5 * var(--pas-o))) calc(70% + (var(--pas-k) * 100% - 70%) * var(--pas-o)),
+      rgba(var(--ink-rgb), 0) calc(40% + (var(--pas) - 51%) * var(--pas-o)),
+      rgba(var(--ink-rgb), calc(0.5 + 0.5 * var(--pas-o))) calc(70% + (var(--pas) - 70%) * var(--pas-o)),
       rgba(var(--ink-rgb), calc(0.72 + 0.28 * var(--pas-o))) 100%);
   }
   html.pro body::after, html.outside body::after { --pas-o: 0; }
-  html.karty .film-shot.is-title .film-still:not(.film-still-pro) { height: var(--pas); overflow: visible; }
+  /* fotka v páse: do strán orezaná (priblížená fotka netrčí z pevnej vrstvy), nadol nie (atrament ::after pod pásom) */
+  html.karty .film-shot.is-title .film-still:not(.film-still-pro) { height: var(--pas); overflow: visible; overflow-x: clip; }
   html.karty .film-shot.is-title .film-still:not(.film-still-pro)::after,
   html.karty.world:not(.world-off) .film-shot.is-title .film-still:not(.film-still-pro)::after,
   html.karty.world-frame .film-shot.is-title .film-still:not(.film-still-pro)::after {
-    inset: 0 0 auto 0; height: 100vh;
+    inset: 0 0 auto 0; height: 100vh; height: 100lvh;
     background: linear-gradient(to bottom, rgba(var(--ink-rgb), 0.5) 0%, rgba(var(--ink-rgb), 0) 14%,
-      rgba(var(--ink-rgb), 0) calc(var(--pas-k) * 100% - 11%), var(--ink) calc(var(--pas-k) * 100%), var(--ink) 100%);
+      rgba(var(--ink-rgb), 0) calc(var(--pas) - 11%), var(--ink) var(--pas), var(--ink) 100%);
   }
   /* záloha bez filmu: fotka na šírku v páse okolo bodu záujmu záberu (výrezy na výšku sú len pre prológ) */
   .film-still:not(.film-still-pro) img { object-position: var(--fx, 50%) var(--fy, 50%); transform-origin: var(--fx, 50%) var(--fy, 50%); }
@@ -1774,6 +1799,33 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
   .title-actions:has(.btn-tel) { flex-wrap: nowrap; }
   .title-actions .btn, .title-actions .btn-tel, .title-actions:has(.btn-tel) .btn { flex: 0 1 auto; min-height: 40px; }
   .title-card::before { inset: -20% -12%; }
+}
+
+/* ==========================================================================
+   P19. Nízke okno telefónu na výšku (2026‑11‑10, zákazník: „prekrývajúce sa texty sú neprofesionálne“). iPhone
+   s viditeľnou lištou Safari má okno 390 × 664, menšie telefóny 375 × 548 či 320 × 568: úvod sa nezmestil pod lištu
+   (nadpisok ležal pod logom) a karta vyliezla do pásu fotky a do titulkov. Pás fotky sa teraz zmenší sám (--pas
+   v P16 drží miesto na kartu), tu sa k tomu zmenší písmo kariet a úvodu a odpadne výzva „Prejdi si podnik“.
+   Okná vysoké aspoň 621 px (390 × 844, 430 × 932, 360 × 780) sa nemenia.
+   ========================================================================== */
+@media (max-width: 720px) and (orientation: portrait) and (max-height: 620px) {
+  :root { --title-size: clamp(1.9rem, 8.6vw, 2.4rem); --hero-size: clamp(2.2rem, 10.2vw, 2.8rem); --karta-h: 236px; }
+  .kicker { margin-bottom: var(--s2); }
+  .title-sub { margin-top: var(--s2); }
+  .hero-proof { margin-top: var(--s2); }
+  .title-actions { margin-top: var(--s3); }
+  html.karty #uvod .film-shot.is-title .title-frame { padding-bottom: calc(var(--s5) + env(safe-area-inset-bottom, 0px)); }
+  html.karty .title-frame .scroll-hint { display: none; }
+}
+/* veľmi nízke okno (iPhone SE s lištou, 320 × 447): ešte tesnejšie, aby úvod ostal pod lištou */
+@media (max-width: 720px) and (orientation: portrait) and (max-height: 500px) {
+  :root { --title-size: clamp(1.7rem, 8vw, 2.1rem); --hero-size: clamp(1.85rem, 8.8vw, 2.3rem); --karta-h: 216px; }
+  .title-sub { font-size: 0.8125rem; line-height: 1.4; }
+  .hero-live { margin-bottom: 0; padding-block: 2px; }
+  .hook { min-height: 40px; }
+  .title-actions { margin-top: var(--s2); gap: 6px; }
+  .title-actions .btn { min-height: 40px; }
+  html.karty #uvod .film-shot.is-title .title-frame { padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* Kontakt: dlhý popis (maďarčina „TELEFONSZÁM“) rozšíri stĺpec popisov vo všetkých riadkoch naraz a nenarazí na

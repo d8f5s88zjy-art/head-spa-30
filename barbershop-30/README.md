@@ -249,6 +249,10 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   a vernostná kartička proti falošnému rezervačnému systému.
 - `kino-test.mjs` – pás kapitol a Kino: ťah myšou aj ťuk na počítači, popis ▶ pre čítačku v jazyku stránky (sk, en, de, en/),
   „Ďalej“ hneď za pásom a nikdy na texte karty (na okne do 500 px výšky sa neukáže), pás nad pásmi s textom schovaný.
+- `prekryv-test.mjs` – žiadne dva texty cez seba (zákazník 9. 11. 2026): okná 320/360/390/430/768/1440 px bez filmu aj
+  s `?film=on` a nízke okná telefónu (iPhone s lištou Safari 390×664, 360×614, 430×733, 320×447). Stránka po krokoch,
+  hrany pásov cez miesto „Ďalej“ a pásu kapitol po 16 px, skutočné čakanie na cieli kapitol; 0 prekrytí = OK
+  (asi 20 minút; `--w=390 --film=off --nizke=nie` je rýchla skúška jedného okna).
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený

@@ -5,11 +5,16 @@
  *   státie 3,2 s; cez dlhý pás s textom – tím, cenník, galéria – strih, film zábery prelína sám). Koniec na Rezervácii.
  *   Akýkoľvek dotyk, koliesko, kláves alebo skrytie karty Kino hneď zastaví. Pri obmedzenom pohybe skoky po 5 s.
  *   Hudbu pustí to isté prvé ťuknutie ako inde na stránke (atmosfera.js), ak ju zákazník nevypol.
- * KF-03 „Ďalej: <kapitola> ↓“: keď zákazník 1,8 s neskroluje (nie v úvode, na poslednej kapitole, počas Kina ani
- *   nad pásmi s textom). Len text s tieňom a čiara, žiadna doska. Názvy kapitol sú aria-label z pásu (preklady i18n).
- * KF-07 titulky „krok za krokom“ (B5): pri karte Remesla bežia dole kroky pánskeho strihu z cenníka (.steps, preklady
+ * KF-03 „Ďalej: <kapitola> ↓“: keď zákazník 1,8 s neskroluje (nie v úvode, na poslednej kapitole, počas Kina). Len
+ *   text s tieňom a čiara, žiadna doska. Názvy kapitol sú aria-label z pásu (preklady i18n). Nikdy neleží na inom
+ *   texte: pri zastavení (nie pri skrole) sa raz zmeria, či je jeho miesto voľné (volno()); nad pásom s textom,
+ *   kartou či titulkom sa neukáže.
+ * KF-07 titulky „krok za krokom“ (B5): pri karte Remesla bežia kroky pánskeho strihu z cenníka (.steps, preklady
  *   i18n) podľa polohy v karte, ako titulky filmu. Text s tieňom bez dosky, čítačka ich nečíta (sú v cenníku).
  *   Poloha z jednej slučky app.js (BS30_PAS.krok), nič sa pri skrole nemeria. Pri obmedzenom pohybe nie sú.
+ *   Majú vlastné miesto vo fotke (telefón: spodok pásu fotky nad kartou, počítač: dole v strede) a striedajú sa
+ *   po sebe (starý zhasne, až potom nastúpi nový). Keď sa do miesta nezmestia (nízke okno, dlhšia karta v inom
+ *   jazyku), nie sú vôbec (miesto(), meria sa pri zmene okna alebo karty, nie pri skrole).
  * Štýly modulu sú tu (CSS), do prvého obrazu nič nepridávajú.
  */
 const d = document, root = d.documentElement;
@@ -29,10 +34,11 @@ let playing = false, tw = 0, hold = 0;
 const jazda = [];
 const CSS = `
 .kino-tit{position:absolute;left:0;right:0;bottom:104px;width:min(640px,calc(100% - 48px));height:3em;margin:0 auto;padding:0;list-style:none;text-align:center;pointer-events:none}
-.kino-tit li{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;color:var(--paper);font:700 1.125rem/1.35 var(--font-text);text-shadow:0 0 2px rgba(0,0,0,.95),0 1px 6px rgba(0,0,0,.9),0 0 16px rgba(0,0,0,.65)}
-.kino-tit li.on{opacity:1;transform:none}
+.kino-tit[hidden]{display:none}
+.kino-tit li{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;color:var(--paper);font:700 1.125rem/1.35 var(--font-text);text-shadow:0 0 2px rgba(0,0,0,.95),0 1px 6px rgba(0,0,0,.9),0 0 16px rgba(0,0,0,.65)}
+.kino-tit li.on{opacity:1;transform:none;transition-delay:.2s}
 .kino-tit i{margin-right:.45em;font:italic 500 1.05em var(--font-display);color:var(--lamp-2)}
-@media (max-width:720px) and (orientation:portrait){.kino-tit{bottom:auto;top:calc(var(--pas) - 4.05rem);left:var(--gutter);right:var(--gutter);width:auto;height:2.7rem}.kino-tit li{font-size:1rem}}
+@media (max-width:720px) and (orientation:portrait){.kino-tit{bottom:auto;top:calc(var(--pas) - var(--s5) - 2.7rem - 2px);left:var(--gutter);right:var(--gutter);width:auto;height:2.7rem}.kino-tit li{font-size:1rem}}
 @media (max-height:500px){.kino-tit{display:none}}
 html.obj-otvorene .kino-tit,.site-header[data-menu="open"]~.site .kino-tit,html.lang-ponuka .kino-tit{opacity:0}
 @media (max-width:900px){html.asi-open .kino-tit{opacity:0}}
@@ -66,8 +72,15 @@ export function zapni() {
   dalej();
   const st = d.createElement('style'); st.textContent = CSS; d.head.append(st);
   titulky();
-  // zastavenie: 1,8 s bez skrolu (len časovač, nič sa pri skrole nemeria)
-  const stoj = () => { if (!playing) root.classList.add('kino-stoji'); };
+  // zastavenie: 1,8 s bez skrolu (len časovač, nič sa pri skrole nemeria). Až pri zastavení sa raz zmeria, či je miesto
+  // pre „Ďalej“ voľné (rezerva 12 px): pás s textom alebo pätička, rozsvietená karta, titulok. Ak nie, neukáže sa.
+  const volno = () => {
+    const r = next.getBoundingClientRect();
+    if (!r.height) return true;
+    const m = 12, hit = (el) => { const q = el.getBoundingClientRect(); return q.height > 0 && q.bottom > r.top - m && q.top < r.bottom + m && q.right > r.left - m && q.left < r.right + m; };
+    return ![...d.querySelectorAll('.band, .site-footer, .film-shot.is-title.is-on .title-card, .kino-tit li.on')].some(hit);
+  };
+  const stoj = () => { clearTimeout(stojT); if (playing) return; root.classList.toggle('kino-nevolno', !volno()); root.classList.add('kino-stoji'); };
   addEventListener('scroll', () => { if (root.classList.contains('kino-stoji')) root.classList.remove('kino-stoji'); clearTimeout(stojT); stojT = setTimeout(stoj, STOJ); }, { passive: true });
   stojT = setTimeout(stoj, STOJ);
   // Kino zastaví zákazník: koliesko a kláves vždy (aj s myšou nad ▶ či fokusom na ▶ hneď po kliknutí), dotyk a stlačenie
@@ -77,7 +90,8 @@ export function zapni() {
   addEventListener('wheel', () => { if (playing) stop(); }, { passive: true, capture: true });
   addEventListener('keydown', (e) => { if (playing && !(d.activeElement === play && (e.key === 'Enter' || e.key === ' '))) stop(); }, { capture: true });
   d.addEventListener('visibilitychange', () => { if (d.hidden) stop(); });
-  window.BS30_KINO = { play: start, stop, get state() { return { playing, cur: PAS.kapitola, ciele: links.map((_, i) => Math.round(PAS.ciel(i))), jazda: jazda.slice() }; } };
+  // stoj: zastavenie hneď (to isté, čo časovač po 1,8 s) – pre test prekrývania (source/tools/prekryv-test.mjs)
+  window.BS30_KINO = { play: start, stop, stoj, get state() { return { playing, cur: PAS.kapitola, ciele: links.map((_, i) => Math.round(PAS.ciel(i))), jazda: jazda.slice() }; } };
 }
 
 function titulky() {
@@ -92,6 +106,20 @@ function titulky() {
     e.lastChild.textContent = x.textContent.trim(); return e;
   });
   box.append(...li); fr.append(box);
+  // miesto titulkov: len keď nezasahujú do karty (tá sa pri skrole posúva o ±22 px, style.css P15) ani pod pás kapitol
+  // a „Ďalej“ (telefón: 48 px pod pásom); inak sa titulky neukážu vôbec. Meria sa pri zmene veľkosti rámu alebo karty
+  // (okno, jazyk, písmo), nikdy pri skrole; rám aj karta majú rovnakého predka, preto offsety.
+  const karta = fr.querySelector('.title-card');
+  const miesto = () => {
+    box.hidden = false;
+    const bt = box.offsetTop, bb = bt + box.offsetHeight, bl = box.offsetLeft, br = bl + box.offsetWidth;
+    if (!box.offsetHeight) return;   // skryté štýlom (nízke okno, obmedzený pohyb)
+    const kt = karta.offsetTop - 24, kb = karta.offsetTop + karta.offsetHeight + 24, kl = karta.offsetLeft, kr = kl + karta.offsetWidth;
+    const naKarte = kb > bt && kt < bb && kr > bl && kl < br;
+    const podPasom = matchMedia('(max-width: 900px)').matches && bt < line.getBoundingClientRect().bottom + 48;
+    box.hidden = naKarte || podPasom;
+  };
+  if (karta && 'ResizeObserver' in window) { const ro = new ResizeObserver(miesto); ro.observe(fr); ro.observe(karta); } else if (karta) miesto();
   // krok podľa polohy v karte Remesla: u 0 karta prichádza, 0,92 odchádza; päť rovnakých úsekov
   let cur = -1;
   PAS.krok = (y) => {

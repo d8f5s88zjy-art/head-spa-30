@@ -119,7 +119,7 @@ try {
       await page.waitForTimeout(500);
       const st = await page.evaluate(() => {
         const cs = getComputedStyle(document.documentElement);
-        const near = [...document.querySelectorAll('.film-shot')].map((el) => ({ n: el.dataset.shot, r: el.getBoundingClientRect(), sp: el.style.getPropertyValue('--sp') })).filter((s) => s.r.bottom > 0 && s.r.top < innerHeight).map((s) => `${s.n}:${s.sp || '-'}`);
+        const near = [...document.querySelectorAll('.film-shot')].map((el) => ({ n: el.dataset.shot, r: el.getBoundingClientRect(), sp: (el.querySelector('.title-card') || el).style.getPropertyValue('--sp') })).filter((s) => s.r.bottom > 0 && s.r.top < innerHeight).map((s) => `${s.n}:${s.sp || '-'}`);
         return { y: Math.round(scrollY), p: (scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4), active: document.documentElement.dataset.sceneActive, near: near.join(' ') };
       });
       const file = path.join(out, `scena-${id}-${kind}.png`);
