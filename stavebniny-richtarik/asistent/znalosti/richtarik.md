@@ -13,8 +13,9 @@ Nič iné asistent nevie.
 - Mapa a navigácia: https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra
 - Telefón (mobil): 0905 622 223, zo zahraničia +421 905 622 223. Pevná linka: 037 651 17 77.
 - E-mail: info@stavebninyrichtarik.sk
-- Otváracie hodiny: pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00. Nedeľu web neuvádza (otvorené nie je
-  uvedené); na otázku na nedeľu povedz, že web uvádza len pondelok až sobotu, a odkáž na telefón.
+- Otváracie hodiny: pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00 (v odpovedi píš rozsah s pomlčkou, nie „až“).
+  Nedeľu web neuvádza (otvorené nie je uvedené); na otázku na nedeľu povedz, že web uvádza len pondelok až sobotu,
+  a odkáž na telefón.
 - Sviatky, obedňajšia prestávka, parkovanie: web neuvádza, odkáž na telefón.
 
 ## Služby
@@ -38,7 +39,7 @@ Nič iné asistent nevie.
 ## Zľavy (zákaznícka karta)
 - Z akciových cien je ďalšia zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou
   kartou. Zákaznícku kartu si zákazník vyzdvihne v predajni.
-- Stavebné firmy, živnostníci a predajne stavebnín majú špeciálne dohodnuté ceny (zľavy).
+- Stavebné firmy, živnostníci a predajne stavebnín majú špeciálne zľavy.
 - Ceny v cenníku akcií (28. 1. 2026) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava.
 
 ## Akcie (stránka Akcie, cenník akcií aktualizovaný 28. 1. 2026)
@@ -81,14 +82,14 @@ Nič iné asistent nevie.
 - Ekostyrén: plnivo do betónu z polystyrénovej drte, ľahký tepelnoizolačný betón do podláh a striech.
 - Montované plechové garáže a záhradné domčeky; doprava a montáž po celom Slovensku zdarma.
   https://www.stavebninyrichtarik.sk/novinky/garaze-zahradne-domceky.html
-- Magic Floor: vinylové podlahy do domácnosti aj do prevádzok.
+- Magic Floor: vinylové podlahy do domácnosti (Home) aj do priemyselných priestorov (Commercial).
 - Kamenný koberec Bianka (Topstone): úprava schodísk, balkónov, výjazdov, vstupov, dvorov a chodníkov; prírodný kameň
   od 22,80 € za m², drvený mramor od 31 € za m² s DPH.
 - Výrobky z recyklovaného plastu: zatrávňovacie dlažby, chodníky, plotovky, profily, palety.
 - Všetky novinky: https://www.stavebninyrichtarik.sk/novinky/index.html
 
 ## Sortiment (15 kategórií, katalóg https://www.stavebninyrichtarik.sk/katalog/index.html)
-Značky v našej ponuke; dvor v Nitre máme plný materiálu. Priamo na sklade web výslovne uvádza: komín Stadreko (odber
+Značky v našej ponuke; predajňu v Nitre máme plnú materiálu (majiteľ: miesto sa volá predajňa, nie dvor). Priamo na sklade web výslovne uvádza: komín Stadreko (odber
 ihneď), stavebné náradie, stavebné rezivo a bežné druhy dverí Masonite (určité druhy na objednávku). Či je iný konkrétny
 výrobok práve na sklade, asistent nevie: potvrdí predajňa.
 - Sypké zmesi (cement, vápno, malty, omietky, lepidlá, stierky, samonivelačné hmoty): Baumit, Cemmac, Calmit, Holcim,
@@ -129,7 +130,7 @@ výrobok práve na sklade, asistent nevie: potvrdí predajňa.
 - Doprava na stavbu (autá, podmienky dopravy pri akciách): https://www.stavebninyrichtarik.sk/doprava.html
 - Časté otázky: https://www.stavebninyrichtarik.sk/caste-otazky.html
 - O nás: https://www.stavebninyrichtarik.sk/o-nas.html
-- Galéria (predajňa, sklad, dvor, výstavy): https://www.stavebninyrichtarik.sk/galeria/index.html
+- Galéria (predajňa, sklad, výstavy): https://www.stavebninyrichtarik.sk/galeria/index.html
 <!-- /stranky -->
 
 ## Čo asistent nevie (vždy odkáž na telefón 0905 622 223 alebo e-mail)

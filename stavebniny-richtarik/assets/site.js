@@ -2,11 +2,30 @@
    Prechody medzi stránkami sú v skripte v <head> (zdroj/prechody.js), pohybový systém v site.css (README, Pohyb a prechody). */
 (function () {
   var d = document;
+  // RP2-15: Safari na iPhone ukáže stav :active (stlačenie dlaždice a tlačidla) len pri poslucháčovi touchstart; prázdny
+  // a pasívny poslucháč nič nemení na posune ani na ťuknutí (overiť na skutočnom iPhone, README)
+  d.addEventListener('touchstart', function () {}, { passive: true });
   var scr = d.querySelector('script[src$="assets/site.js"]');
   var pre = scr ? scr.getAttribute('src').replace('assets/site.js', '') : '';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // odhalenia pri posune robí CSS (časová os posunu, beží v kompozítore); skript ich robí len v prehliadači bez nej
+  // fotky pri posune odhaľuje CSS (časová os posunu, beží v kompozítore); paralaxu a pruh priebehu robí skript len
+  // v prehliadači bez nej
   var css_posun = !reduce && !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));
+  var ric = window.requestIdleCallback || function (f) { return setTimeout(f, 1); };
+  // RP1-05: práca, ktorá nemusí byť v prvej snímke (odhalenia, lightbox, pás značiek, služby, počítadlá), beží až po
+  // prechode stránky (vtBeh uloží skript v <head> pri pagereveal), inak v nečinnom čase; na úvode s uvítaním až po ňom.
+  // Prvá snímka novej stránky tak nesie len štýl, rozloženie a menu (meranie: dlhá snímka na začiatku prechodu).
+  function poPrechode(f) {
+    var ok = 0, g = function () { if (!ok) { ok = 1; f(); } };
+    var cakaj = function (vt) {
+      if (vt) { vt.finished.then(function () { setTimeout(g, 30); }, g); setTimeout(g, 1500); }
+      else if (d.documentElement.classList.contains('br-ide') && !window.brKoniec) addEventListener('br-koniec', function () { ric(g, { timeout: 600 }); }, { once: true });
+      else ric(g, { timeout: 600 });
+    };
+    if ('vtBeh' in window) cakaj(window.vtBeh);
+    else if ('onpagereveal' in window) addEventListener('pagereveal', function (e) { cakaj(e.viewTransition); }, { once: true });
+    else cakaj(null);
+  }
 
   // menu: zatvorené je inert (mimo fokusu aj čítačky), otvorené je modálny dialóg – fokus na Zavrieť, Tab ostáva v menu,
   // po zatvorení sa fokus vráti na tlačidlo menu
@@ -26,59 +45,86 @@
     else if (bolo) b.focus({ preventScroll: true });
   }
   if (b && dr) {
-    dr.inert = !dr.classList.contains('open');
+    if (dr.inert !== !dr.classList.contains('open')) dr.inert = !dr.classList.contains('open');   // v HTML už inert
     b.addEventListener('click', function () { open(!dr.classList.contains('open')); });
     dr.querySelector('.close').addEventListener('click', function () { open(false); });
-    dr.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { open(false); }); });
+    // RP1-13: odkaz na inú stránku pri prechode medzi stránkami menu nezatvorí (panel odíde v prechode doprava, skript
+    // v <head> ho pomenuje), zatvorí sa pri návrate z vyrovnávacej pamäte; tel:, kotva a prehliadač bez prechodu hneď
+    var vtOk = 'onpagereveal' in window && !reduce;
+    dr.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var u = null; try { u = new URL(a.href, location.href); } catch (x) {}
+        if (vtOk && u && u.origin === location.origin && u.pathname !== location.pathname && !(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)) return;
+        open(false);
+      });
+    });
+    addEventListener('pageshow', function (e) { if (e.persisted && dr.classList.contains('open')) open(false); });
     d.addEventListener('keydown', function (e) { if (e.key === 'Tab' && dr.classList.contains('open')) pasca(dr, e); });
   }
-  var r = d.getElementById('rok'); if (r) r.textContent = new Date().getFullYear();
+  // rok v päte, zbalenie päty a zvýraznenie dnešného dňa menia DOM: až po prechode (päta je pod oknom), aby počas
+  // animácie prechodu nebolo treba znova štýlovať živú novú stránku (RP1-05, Späť na dlhý úvod)
+  poPrechode(function () { var r = d.getElementById('rok'); if (r && r.textContent != new Date().getFullYear()) r.textContent = new Date().getFullYear(); });
 
   // päta: na telefóne (do 700 px) sú Stránky a Katalóg zbalené, na širšej obrazovke vždy otvorené (nadpis sa nedá zbaliť,
   // nie je ani zastávkou Tab). Bez JS ostanú otvorené.
   var fzb = d.querySelectorAll('footer details.f-zb');
-  if (fzb.length && window.matchMedia) {
+  if (fzb.length && window.matchMedia) poPrechode(function () {
     var fmq = window.matchMedia('(max-width:700px)');
     var fnastav = function () { fzb.forEach(function (x) { x.open = !fmq.matches; x.querySelector('summary').tabIndex = fmq.matches ? 0 : -1; }); };
     fnastav();
     if (fmq.addEventListener) fmq.addEventListener('change', fnastav); else if (fmq.addListener) fmq.addListener(fnastav);
     fzb.forEach(function (x) { x.querySelector('summary').addEventListener('click', function (e) { if (!fmq.matches) e.preventDefault(); }); });
-  }
+  });
 
   // tieň lišty po odskrolovaní
   var top = d.querySelector('.top');
-  function onScroll() { if (top) top.classList.toggle('scrolled', window.scrollY > 8); }
-  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  function onScroll() { var s = window.scrollY > 8; if (top && top.classList.contains('scrolled') !== s) top.classList.toggle('scrolled', s); }
+  window.addEventListener('scroll', onScroll, { passive: true }); poPrechode(onScroll);
 
-  // objavovanie blokov pri skrolovaní, so stupňovaním v mriežkach
-  // (s časovou osou posunu to robí CSS, site.css časť Pohybový systém; triedy .rv sa vtedy nepridávajú)
-  var rv = css_posun ? [] : Array.prototype.slice.call(d.querySelectorAll('.rv, .rvimg, .head, .deals > *, .cats > *, .novs > *, .grid3 > *, .sub-grid > *'));
-  rv.forEach(function (el) { if (!el.classList.contains('rv') && !el.classList.contains('rvimg') && !el.classList.contains('head')) el.classList.add('rv'); });
-  if (!rv.length) {
-    /* nič na objavovanie */
-  } else if (!('IntersectionObserver' in window) || reduce) {
-    rv.forEach(function (el) { el.classList.add('now'); });
-  } else {
+  // RP1-01: odhalenie textov, kariet a štítkov pri posune, spúšťané s časom (site.css, Pohybový systém časť 4A).
+  // Prvok, ktorý je pri štarte v okne alebo nad ním (aj vo vodorovnom páse), ostane bez animácie a bez triedy; prvok pod
+  // oknom dostane .c (čaká, skrytý) a pri vstupe do okna .v, odhalenie dobehne samo. Rozmery hlási IntersectionObserver
+  // (žiadne čítanie rozloženia v skripte). Vnorené zhody (napr. .cta-pas .cta a jej tlačidlá) odhaľuje len vonkajší prvok.
+  // Bez JS, pri „obmedziť pohyb“ a bez IntersectionObserver nič nečaká.
+  var ODH = 'main .head .eyebrow,main .head h2,main .head .lede,main .head>.btn,main .head>div>.btn,.rv:not(.galeria):not(.karta):not(.facts),.karta,' +
+    '.cats>.cat,.deals>.deal,.sub-grid>.sub,.kgrid>.kbox,.facts>div,.disc>div,.srvs>.srv,.cennik>.cen,.band .wrap>*,.onas .tx>*,' +
+    '.kontakt-teaser .grid>div>*,.cta-pas .wrap>div>*,.cta-pas .cta,.zlavy .grid>div:first-child>:not(.disc),.sort-note,.akcia-tag,.novs>.nov,.zt span,.onas .year,' +
+    '.galeria>a:nth-child(n+9)';   // RP2-09: fotky galérie od 9. v mriežke (prvých 8 odhaľuje časová os posunu v CSS)
+  function odhalenia() {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    var vs = d.querySelectorAll(ODH), mn = new Set(), zoz = [];
+    vs.forEach(function (el) { mn.add(el); });
+    vs.forEach(function (el) {
+      if (el.closest('.page-head,.uv,.br,.lb,.drawer')) return;
+      for (var p = el.parentElement; p; p = p.parentElement) if (mn.has(p)) return;
+      zoz.push(el);
+    });
+    // druhý pozorovateľ bez okraja: čo z čakajúcich je v okne aspoň okrajom (spodných 8 % okna); keď posun 180 ms stojí,
+    // odhalí sa aj to, takže v pokoji nie je v okne nič skryté
+    var kraj = new Set(), tp = 0;
+    var io0 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) kraj.add(e.target); else kraj.delete(e.target); }); });
+    function odhal(el) { el.classList.add('v'); io.unobserve(el); io0.unobserve(el); kraj.delete(el); }
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target, sib = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
-        el.style.transitionDelay = Math.min(sib % 6, 5) * 70 + 'ms';
-        el.classList.add('in'); io.unobserve(el);
+        var el = e.target, r = e.boundingClientRect;
+        if (!el._odh) {
+          el._odh = 1;
+          if ((r.width || r.height) && r.top < innerHeight && r.left < innerWidth && r.right > 0) { io.unobserve(el); return; }
+          el.classList.add('c'); io0.observe(el);
+        }
+        if (e.isIntersecting) odhal(el);
       });
-    }, { rootMargin: '0px 0px 0px 0px', threshold: 0 });
-    rv.forEach(function (el) {
-      var rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.9) el.classList.add('now'); else io.observe(el);
-    });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    zoz.forEach(function (el) { io.observe(el); });
+    var pokoj = function () { kraj.forEach(odhal); };
+    addEventListener('scroll', function () { clearTimeout(tp); tp = setTimeout(pokoj, 180); }, { passive: true });
   }
-
-  window.addEventListener('beforeprint', function () { rv.forEach(function (el) { el.classList.add('now'); }); });
+  poPrechode(odhalenia);
 
   // paralaxa: fotky v úvode, v hlavičke a v páse sa posúvajú pomalšie než stránka; len počítač s myšou
   var desk = window.matchMedia && window.matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches;
   var pars = desk && !reduce && !css_posun ? Array.prototype.slice.call(d.querySelectorAll('[data-parallax]')) : [];
-  var prog = d.createElement('div'); prog.className = 'progress'; d.body.appendChild(prog);
+  var prog = d.createElement('div'); prog.className = 'progress'; poPrechode(function () { d.body.appendChild(prog); });
   var ticking = false, vh = window.innerHeight, maxY = 0, lastW = -1;
   function measure() { vh = window.innerHeight; maxY = d.documentElement.scrollHeight - vh; }
   function move() {
@@ -109,19 +155,21 @@
 
   // otváracie hodiny: dnešný deň sa zvýrazní (data-dni="1-5" pondelok až piatok, "6" sobota); bez JS ostávajú hodiny
   // rovnaké, len bez zvýraznenia. Neuvádza sa „otvorené“ ani „zatvorené“ (sviatky web nepozná).
-  (function () {
+  poPrechode(function () {
     var den = new Date().getDay();
     Array.prototype.forEach.call(d.querySelectorAll('[data-dni]'), function (el) {
       var r = el.getAttribute('data-dni').split('-'), od = +r[0], po = +(r[1] || r[0]);
       if (den >= od && den <= po) el.classList.add('dnes');
     });
-  })();
+  });
 
   // úvod: strih zásob. Skutočné fotky tehál, pórobetónu (bez dokreslených paliet), dlažieb a reziva dopadnú ako výtlačky
-  // na fotku dvora, potom odídu a štítok „Náš dvor“ sa vrazí. Všetok pohyb robí CSS (kompozítor), skript len pripraví
-  // zábery zo <template>, počká na ich dekódovanie a po 3 s ich odstráni. Spustí sa len s triedou uv-ide (skript
-  // v <head>, „bez obmedzenia pohybu“), nie pri šetrení dát, nie keď zákazník už posúva, ťuká, píše alebo je vo
-  // vyhľadávaní, a len raz za reláciu. Tlačidlo „Prehrať úvod“ ho spustí znova. Po uvítaní (br-ide) čaká na br-koniec.
+  // (rovno, bez natočenia) na fotku predajne, potom odídu a štítok „Naša predajňa“ sa vrazí. Všetok pohyb robí CSS (kompozítor),
+  // skript len pripraví zábery zo <template>, počká na ich dekódovanie a po 3 s ich odstráni. Sám sa spustí len pri prvej
+  // návšteve bez uvítania (trieda uv-ide zo skriptu v <head>, „bez obmedzenia pohybu“), nie keď stránka prišla prechodom
+  // (trieda vt, napr. Späť na úvod, RP1-08), nie pri šetrení dát, nie keď zákazník už posúva, ťuká, píše alebo je vo
+  // vyhľadávaní, a len raz za reláciu. Po uvítaní (br-ide) sa nespustí sám (hook odovzdala brána, RP1-06): ostane len
+  // tlačidlo „Prehrať úvod“ a zábery sa stiahnu až po jeho stlačení. Odchod zo stránky strih hneď ukončí (aj pre Späť).
   (function () {
     var h = d.documentElement, ram = d.querySelector('.uv-ram'), tpl = d.getElementById('uv-zabery');
     var brana = h.classList.contains('br-ide');
@@ -132,16 +180,18 @@
     var setri = navigator.connection && navigator.connection.saveData;
     function uz() { try { return ss && ss.getItem('uv-videne') === '1'; } catch (e) { return false; } }
     function odober() { if (karty) karty.forEach(function (k) { if (k.parentNode) k.parentNode.removeChild(k); }); }
+    function tlacidlo() { if (znova && !setri) znova.hidden = false; }
+    function dokonci() {   // konečný stav: zábery preč, štítok stojí, tlačidlo na nové prehratie
+      clearTimeout(beh); beh = 0;
+      ram.classList.remove('uv-mont', 'uv-stop'); ram.classList.add('uv-hotovo');
+      odober();
+      if (tc && tc.parentNode) tc.parentNode.removeChild(tc);
+      tc = null; tlacidlo();
+    }
     function koniec(rychlo) {
       clearTimeout(beh); beh = 0;
       if (rychlo) ram.classList.add('uv-stop');
-      setTimeout(function () {
-        ram.classList.remove('uv-mont', 'uv-stop'); ram.classList.add('uv-hotovo');
-        odober();
-        if (tc && tc.parentNode) tc.parentNode.removeChild(tc);
-        tc = null;
-        if (znova && karty) znova.hidden = false;
-      }, rychlo ? 200 : 0);
+      setTimeout(dokonci, rychlo ? 200 : 0);
     }
     function spusti() {
       if (!karty || zastavene) return;
@@ -158,33 +208,39 @@
     function stop() {
       zastavene = true;
       if (ram.classList.contains('uv-mont')) koniec(true);
-      else if (pripravene) { odober(); if (znova) znova.hidden = false; }   // zastavené pred štartom: zábery preč, tlačidlo ostane
+      else if (pripravene) { odober(); tlacidlo(); }   // zastavené pred štartom: zábery preč, tlačidlo ostane
     }
     ['wheel', 'touchstart', 'keydown'].forEach(function (n) {
       window.addEventListener(n, function (e) { if (n !== 'keydown' || e.key !== 'Tab') stop(); }, { passive: true, capture: true, once: true });
     });
     window.addEventListener('scroll', function onS() { if (window.scrollY > 24) { stop(); window.removeEventListener('scroll', onS); } }, { passive: true });
     d.addEventListener('focusin', function (e) { if (e.target && e.target.id === 'q') stop(); });
-    if (znova) znova.addEventListener('click', function () { zastavene = false; if (!ram.classList.contains('uv-mont')) spusti(); });
-    function priprav() {
+    addEventListener('pagehide', function () { if (ram.classList.contains('uv-mont')) dokonci(); });
+    // priprav(naZiadost): zábery sa stiahnu a dekódujú až po fotke predajne; naZiadost = tlačidlo, spustí sa hneď po dekódovaní
+    function priprav(naZiadost) {
       if (karty || setri) return;
       var frag = tpl.content.cloneNode(true);
       karty = [].slice.call(frag.querySelectorAll('.uv-z'));
-      karty.forEach(function (k) { box.appendChild(k); });   // skryté (visibility), sťahujú a dekódujú sa až po fotke dvora
+      karty.forEach(function (k) { box.appendChild(k); });   // skryté (visibility), sťahujú a dekódujú sa až teraz
       Promise.all(karty.map(function (k) { var im = k.querySelector('img'); return im.decode ? im.decode() : Promise.resolve(); })).then(function () {
         pripravene = true;
-        if (zastavene || uz() || window.scrollY > 24 || (!brana && performance.now() > 3400)) { odober(); if (znova) znova.hidden = false; return; }
-        if (brana) {   // 0,6 s po konci uvítania, hranica 3,4 s od jeho konca; po preskočení (aj bez prekryvu .br) nie
-          var po = function (e) { var x = e.detail, t = x.t;
-            if (x.preskocene || zastavene || window.scrollY > 24 || performance.now() > (x.rychlo ? 0 : t) + 3400) stop(); else setTimeout(spusti, t + 600 - performance.now()); };
-          if (window.brKoniec) po(window.brKoniec); else if (d.querySelector('.br')) addEventListener('br-koniec', po, { once: true }); else stop();
-          return;
-        }
+        if (naZiadost) { if (!zastavene) spusti(); return; }
+        if (zastavene || uz() || h.classList.contains('vt') || window.scrollY > 24 || performance.now() > 3400) { odober(); tlacidlo(); return; }
         // zábery ostanú skryté v ráme a štart len prepne triedu: v prvej snímke strihu sa nič nevkladá ani nerozmiestňuje
         setTimeout(spusti, Math.max(0, 1000 - performance.now()));
       }, function () { odober(); karty = null; });
     }
-    if (hlavna && !hlavna.complete) { hlavna.addEventListener('load', priprav, { once: true }); setTimeout(priprav, 2500); }
+    if (znova) znova.addEventListener('click', function () {
+      zastavene = false;
+      if (!karty) priprav(true); else if (!ram.classList.contains('uv-mont')) spusti();
+    });
+    if (brana) {   // po uvítaní len tlačidlo (bez sťahovania záberov); úvod je v tejto relácii videný (RP2-14: ďalšia
+      // návšteva úvodu v tej istej relácii strih sama nespustí, ostane tlačidlo Prehrať úvod)
+      try { if (ss) ss.setItem('uv-videne', '1'); } catch (e) {}
+      if (window.brKoniec || !d.querySelector('body>.br')) tlacidlo(); else addEventListener('br-koniec', tlacidlo, { once: true });
+      return;
+    }
+    if (hlavna && !hlavna.complete) { hlavna.addEventListener('load', function () { priprav(); }, { once: true }); setTimeout(priprav, 2500); }
     else priprav();
   })();
 
@@ -192,6 +248,22 @@
   // Späť na stránku, ktorá sa načítava znova (nie je vo vyrovnávacej pamäti prehliadača): fotka dlaždice, do ktorej sa
   // vracia hlavička, ešte nie je dekódovaná. Prelnutie do dlaždice počká na fotku (najviac 0,9 s), dovtedy je v dlaždici
   // fotka hlavičky, takže dlaždica sa nikdy neukáže ako prázdny rám (skript v <head> odovzdá prechod a fotku vo vtCakaj).
+  // RP1-09: let a strih sú aj na počítači; keď prechod na zariadení seká (aspoň 2 snímky nad 50 ms po prvých 100 ms
+  // animácie, prvá snímka novej stránky sa nepočíta) a stane sa to v relácii dvakrát, skript v <head> pustí ďalšie
+  // prechody v ľahkej verzii bez zdieľaných prvkov a bez strihu (sessionStorage vt-lahke)
+  (function () {
+    var ss = null; try { ss = window.sessionStorage; if (ss.getItem('vt-lahke') > 1) return; } catch (e) { return; }
+    function meraj(vt) {
+      if (!vt) return;
+      vt.ready.then(function () {
+        var t0 = performance.now(), l = t0, n = 0, b = 1;
+        var f = function (x) { if (!b) return; if (x - t0 > 100 && x - l > 50) n++; l = x; requestAnimationFrame(f); };
+        requestAnimationFrame(f);
+        vt.finished.then(function () { b = 0; if (n > 1) try { ss.setItem('vt-lahke', (+ss.getItem('vt-lahke') || 0) + 1); } catch (e) {} }, function () { b = 0; });
+      }, function () {});
+    }
+    if ('vtBeh' in window) meraj(window.vtBeh); else if ('onpagereveal' in window) addEventListener('pagereveal', function (e) { meraj(e.viewTransition); }, { once: true });
+  })();
   var vc = window.vtCakaj;
   if (vc && vc[0].ready) vc[0].ready.then(function () {
     var an = d.getAnimations().filter(function (a) { return a.effect && a.effect.pseudoElement === '::view-transition-new(foto)'; });
@@ -201,6 +273,7 @@
     (vc[1].decode ? vc[1].decode() : Promise.resolve()).then(pusti, pusti); setTimeout(pusti, 900);
   }, function () {});
 
+  poPrechode(function () {
   // pás značiek: tlačidlo Zastaviť pohyb (pás sa hýbe len s JS a bez obmedzenia pohybu, pauza aj pod myšou a pri fokuse)
   var mq = d.querySelector('.marquee'), mqb = mq && mq.querySelector('.mq-stop');
   if (mqb && !reduce) {
@@ -239,6 +312,7 @@
       counters.forEach(function (el) { co.observe(el); });
     }
   }
+  });
 
   // lightbox: všetky fotky na stránke, šípky, popisok, počítadlo
   var lb = d.getElementById('lb');
@@ -256,8 +330,11 @@
       var im = a.querySelector('img'); return im && im.alt && !/fotografia/i.test(im.alt) ? im.alt : '';
     }
     // pohyb lightboxu (len bez obmedzenia pohybu): fotka sa pri otvorení prenesie z miesta náhľadu (FLIP, len transform
-    // a opacity), pri zatvorení sa vráti, pri listovaní príde zo strany. Nenačítaná fotka (do 250 ms) len dosadne (CSS).
-    var pohyb = !reduce && !!img.animate, KRIVKA = 'cubic-bezier(.3,0,.15,1)';
+    // a opacity), pri zatvorení sa vráti, pri listovaní príde zo strany. RP1-03: nová fotka je skrytá, kým nie je
+    // dekódovaná (najviac 250 ms), potom sa hneď spustí let s fill backwards, takže sa nikdy neukáže čiastočne načítaná
+    // ani dvakrát; popisok sa objaví až po lete. Podklad sa medzitým prelína (CSS). Stránka pod lightboxom sa nezamyká
+    // cez overflow (zmena posuvníka by prepočítala celé rozloženie): koliesko a posun prstom zachytí sám lightbox.
+    var pohyb = !reduce && !!img.animate, KRIVKA = 'cubic-bezier(.3,0,.15,1)', fc = lb.querySelector('figcaption'), tok = 0;
     function nahlad(a) { var t = a && a.querySelector('img'), r = t && t.getBoundingClientRect(); return r && r.width && r.bottom > 0 && r.top < innerHeight ? r : null; }
     function hotova(cb) {   // fotka lightboxu dekódovaná, najviac 250 ms
       var ok = false, f = function (v) { if (!ok) { ok = true; cb(v); } };
@@ -265,26 +342,68 @@
       setTimeout(function () { f(false); }, 250);
     }
     function z(r, q) { var s = r.width / q.width; return 'translate(' + (r.left + r.width / 2 - q.left - q.width / 2) + 'px,' + (r.top + r.height / 2 - q.top - q.height / 2) + 'px) scale(' + s + ')'; }
-    function show(i, smer) {
+    function nastav(i) {   // obsah fotky bez zobrazenia (skrytá do dekódovania)
       cur = (i + links.length) % links.length; var a = links[cur];
+      img.style.opacity = 0;
       img.src = a.getAttribute('href'); img.alt = caption(a) || 'Fotografia';
       cap.textContent = caption(a); cnt.textContent = links.length > 1 ? (cur + 1) + ' / ' + links.length : '';
       prev.hidden = next.hidden = links.length < 2;
-      if (smer && pohyb) hotova(function (ok) { if (ok) img.animate([{ opacity: .3, transform: 'translateX(' + (smer * 28) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: KRIVKA }); });
+      return ++tok;
     }
-    // každý odkaz na zväčšenie má meno pre čítačku: popisok fotky, inak „Zväčšiť fotografiu“
-    all().forEach(function (a) { if (!a.getAttribute('aria-label')) { var c = caption(a); a.setAttribute('aria-label', c ? 'Zväčšiť: ' + c : 'Zväčšiť fotografiu'); } });
-    function openLb(a) {
-      var r = pohyb ? nahlad(a) : null;
-      links = all(); spat = a; lb.classList.toggle('z-nahladu', !!r); lb.hidden = false; d.body.style.overflow = 'hidden';
-      show(links.indexOf(a)); lb.querySelector('.lb-x').focus();
-      if (r) hotova(function (ok) {
-        var q = img.getBoundingClientRect();
-        if (ok && q.width) img.animate([{ transform: z(r, q), opacity: .7 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: KRIVKA });
-        else img.animate([{ opacity: .4, transform: 'scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: KRIVKA });
+    // RP2-08: listovanie bez prázdneho podkladu. Nová fotka sa stiahne a dekóduje mimo lightboxu (new Image), stará
+    // ostáva viditeľná; až keď je nová hotová, stará odíde (120 ms lineárne k 0,25 a 20 px proti smeru) a v tej istej
+    // snímke sa vymení za novú, ktorá príde zo strany (0,25 → 1, ±28 px, 260 ms). Kým nová nie je hotová, ostáva stará
+    // (žiadna snímka bez fotky). Susedné fotky sa predčítajú po otvorení a po každom listovaní (nie pri šetrení dát).
+    var setri = navigator.connection && navigator.connection.saveData, odch = null, pred = [];
+    function predcitaj() {
+      if (setri || links.length < 2) return;
+      pred = [cur - 1, cur + 1].map(function (i) {
+        var p = new Image(); p.src = links[(i + links.length) % links.length].getAttribute('href');
+        if (p.decode) p.decode().catch(function () {});
+        return p;
       });
     }
-    function zavri() { lb.hidden = true; lb.classList.remove('z-nahladu'); img.src = ''; d.body.style.overflow = ''; if (spat) { spat.focus({ preventScroll: true }); spat = null; } }
+    function show(i, smer) {
+      if (odch) { odch.cancel(); odch = null; }   // rýchle listovanie: stará fotka sa vráti, nová príde, až bude hotová
+      cur = (i + links.length) % links.length;
+      var a = links[cur], u = a.getAttribute('href'), t = ++tok, p = new Image(), hot = 0;
+      var vymen = function () {
+        if (t !== tok) return;   // medzitým ďalšie listovanie alebo zatvorenie
+        if (odch) { odch.cancel(); odch = null; }
+        img.src = u; img.alt = caption(a) || 'Fotografia'; img.style.opacity = ''; fc.style.opacity = '';
+        cap.textContent = caption(a); cnt.textContent = links.length > 1 ? (cur + 1) + ' / ' + links.length : '';
+        if (smer && pohyb) img.animate([{ opacity: .25, transform: 'translateX(' + (smer * 28) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: KRIVKA, fill: 'backwards' });
+        predcitaj();
+      };
+      var hotovo = function () {
+        if (hot || t !== tok) return; hot = 1;
+        if (!smer || !pohyb) return vymen();
+        odch = img.animate([{ opacity: 1, transform: 'none' }, { opacity: .25, transform: 'translateX(' + (-smer * 20) + 'px)' }], { duration: 120, easing: 'linear', fill: 'forwards' });
+        odch.finished.then(vymen, function () {});
+      };
+      p.src = u;
+      (p.decode ? p.decode() : Promise.reject()).then(hotovo, function () { if (p.complete) hotovo(); else p.onload = p.onerror = hotovo; });
+    }
+    // každý odkaz na zväčšenie má meno pre čítačku: popisok fotky, inak „Zväčšiť fotografiu“
+    poPrechode(function () { all().forEach(function (a) { if (!a.getAttribute('aria-label')) { var c = caption(a); a.setAttribute('aria-label', c ? 'Zväčšiť: ' + c : 'Zväčšiť fotografiu'); } }); });
+    function openLb(a) {
+      var r = pohyb ? nahlad(a) : null;
+      links = all(); spat = a;
+      var t = nastav(links.indexOf(a));
+      lb.hidden = false; lb.querySelector('.lb-x').focus();
+      if (pohyb) fc.style.opacity = 0;
+      hotova(function (ok) {
+        if (t !== tok) return;
+        var q = img.getBoundingClientRect();
+        img.style.opacity = ''; fc.style.opacity = '';
+        if (!pohyb) return;
+        if (r && ok && q.width) img.animate([{ transform: z(r, q), opacity: .7 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: KRIVKA, fill: 'backwards' });
+        else img.animate([{ opacity: .4, transform: 'scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: KRIVKA, fill: 'backwards' });
+        fc.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: 300, fill: 'backwards' });   // popisok až po lete
+      });
+      predcitaj();
+    }
+    function zavri() { if (odch) { odch.cancel(); odch = null; } lb.hidden = true; tok++; img.src = ''; img.style.opacity = ''; fc.style.opacity = ''; if (spat) { spat.focus({ preventScroll: true }); spat = null; } }
     function close() {
       if (lb.hidden || lb.inert) return;   // počas zatvárania druhé zatvorenie nič nerobí
       var r = pohyb ? nahlad(links[cur]) : null, q = img.getBoundingClientRect();
@@ -304,16 +423,92 @@
     next.addEventListener('click', function () { show(cur + 1, 1); });
     var tx = 0;
     lb.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('wheel', function (e) { e.preventDefault(); }, { passive: false });   // stránka pod lightboxom sa neposúva
     lb.addEventListener('touchend', function (e) { var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50 && links.length > 1) show(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
     d.addEventListener('keydown', function (e) {
       if (lb.hidden) return;
       if (e.key === 'Tab') pasca(lb, e);
       if (e.key === 'Escape') close();
+      if (/^(PageUp|PageDown|Home|End|ArrowUp|ArrowDown)$/.test(e.key)) e.preventDefault();
       if (e.key === 'ArrowLeft') show(cur - 1, -1);
       if (e.key === 'ArrowRight') show(cur + 1, 1);
     });
   }
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dr && dr.classList.contains('open')) open(false); });
+
+  // prehliadka predajne 360° (.p360; build.py prehliadka_blok, zdroj/panorama.js): majiteľ chce otáčať sa po predajni priamo
+  // na stránke, nikoho neposielať na Google. Pred kliknutím sa nič nenačíta (0 požiadaviek na Google, panoráma ani prehliadač
+  // nie sú stiahnuté, tlačidlo je skryté, kým komponent nemá zdroj). Po kliknutí sa podľa data-panorama-src vloží rám Google
+  // Máp, inak sa importuje assets/panorama.js a otvorí vlastná panoráma z data-panorama-obrazok; fotka sa prelne preč až po
+  // načítaní (bez prázdneho rámu). Celá obrazovka: requestFullscreen na celom komponente, kde nie je (iPhone), pevná pozícia
+  // cez celé okno (.p360-pevne, Esc ju ukončí). Zavrieť odstráni rám alebo panorámu, vráti fotku a fokus na tlačidlo.
+  d.querySelectorAll('.p360').forEach(function (p) {
+    var okno = p.querySelector('.p360-okno'), start = p.querySelector('.p360-start'), lista = p.querySelector('.p360-lista');
+    var cela = p.querySelector('.p360-cela'), zavri = p.querySelector('.p360-zavri');
+    var src = p.getAttribute('data-panorama-src') || '', obr = p.getAttribute('data-panorama-obrazok') || '';
+    if (!start || !okno || !lista || !cela || !zavri || !(src || obr)) return;
+    start.hidden = false;
+    var ram = null, pan = null, beh = 0, text = start.textContent;
+    function hotovo(ok) {
+      if (!beh) return;
+      beh = 0; start.setAttribute('aria-busy', 'false'); start.textContent = text; start.disabled = false;
+      if (!ok) { if (ram && ram.parentNode) ram.parentNode.removeChild(ram); ram = null; if (pan) { pan.znic(); pan = null; } return; }
+      p.classList.add('p360-on'); start.hidden = true; lista.hidden = false;
+      (pan ? pan.plocha : zavri).focus({ preventScroll: true });
+    }
+    function otvor() {
+      if (beh || p.classList.contains('p360-on')) return;
+      beh = 1; start.setAttribute('aria-busy', 'true'); start.disabled = true; start.textContent = 'Načítava sa…';
+      if (src) {
+        ram = d.createElement('iframe');
+        ram.title = 'Prehliadka predajne Stavebniny Richtárik v 360° (Google Mapy)';
+        ram.loading = 'lazy'; ram.referrerPolicy = 'no-referrer-when-downgrade'; ram.allowFullscreen = true;
+        ram.setAttribute('allow', 'fullscreen');
+        ram.addEventListener('load', function () { hotovo(true); }, { once: true });
+        ram.src = src; okno.appendChild(ram);
+        setTimeout(function () { hotovo(true); }, 6000);   // keby udalosť load neprišla, rám sa aj tak ukáže
+        return;
+      }
+      import(new URL(pre + 'assets/panorama.js', location.href).href).then(function (m) {
+        if (!beh) return;
+        pan = m.spusti(okno, new URL(obr, location.href).href, function (ok) { hotovo(ok); });
+        p.panorama = pan;   // stav pohľadu pre skúšky (pohlad(), nastav())
+      }).catch(function () { hotovo(false); });
+    }
+    function jeCela() { return d.fullscreenElement === p || p.classList.contains('p360-pevne'); }
+    // pevná pozícia cez celé okno: sekcia s content-visibility:auto (site.css) je pre position:fixed obsahujúcim blokom, preto
+    // dostane triedu, ktorá obmedzenie vypne (p360-pevne-rodic), kým je komponent cez celé okno
+    var sek = p.closest('main>section,main>div');
+    function pevne(z) { p.classList.toggle('p360-pevne', z); if (sek) sek.classList.toggle('p360-pevne-rodic', z); }
+    function oznac() {
+      var c = jeCela();
+      p.classList.toggle('p360-cela-on', c); cela.setAttribute('aria-pressed', String(c));
+      cela.textContent = c ? 'Ukončiť celú obrazovku' : 'Celá obrazovka';
+      if (pan) pan.nastav();
+    }
+    function prepni() {
+      if (jeCela()) {
+        if (d.fullscreenElement === p && d.exitFullscreen) d.exitFullscreen().catch(function () {});
+        pevne(false); oznac(); return;
+      }
+      var r = p.requestFullscreen ? p.requestFullscreen({ navigationUI: 'hide' }) : null;
+      if (r && r.then) r.then(oznac, function () { pevne(true); oznac(); });
+      else { pevne(true); oznac(); }
+    }
+    function zavriPrehliadku() {
+      if (jeCela()) prepni();
+      pevne(false); beh = 0; p.classList.remove('p360-on'); lista.hidden = true;
+      if (ram) { if (ram.parentNode) ram.parentNode.removeChild(ram); ram = null; }
+      if (pan) { pan.znic(); pan = null; }
+      start.hidden = false; start.textContent = text; start.disabled = false; start.setAttribute('aria-busy', 'false');
+      start.focus({ preventScroll: true });
+    }
+    d.addEventListener('fullscreenchange', oznac);
+    cela.addEventListener('click', prepni);
+    zavri.addEventListener('click', zavriPrehliadku);
+    start.addEventListener('click', otvor);
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && p.classList.contains('p360-pevne')) prepni(); });
+  });
 
   // asistent na otázky (assets/asistent.js). Musí byť pred vyhľadávaním, lebo to končí skorým return na stránkach bez
   // poľa hľadania. Zapína ho atribút data-asistent na <html>: "ukazka" (náhľad, vopred pripravené odpovede, nič sa
@@ -354,7 +549,17 @@
   if (!q || !res) return;
   var idx = null, loading = false, stav = d.getElementById('res-stav');
   if (!q.getAttribute('aria-controls')) q.setAttribute('aria-controls', 'res');
-  function ukaz(v, text) { res.hidden = !v; q.setAttribute('aria-expanded', String(v)); if (stav && text !== undefined) stav.textContent = text; }
+  // RP2-11: panel výsledkov je nepriehľadný a pri otvorení sa rozvinie (CSS), riadky sa pri otvorení objavia postupne
+  // (trieda otv na 300 ms, nie pri každom písmene); zatvorenie je prelnutie 120 ms a až potom hidden
+  var zatv = null, otvT = 0;
+  function ukaz(v, text) {
+    q.setAttribute('aria-expanded', String(v)); if (stav && text !== undefined) stav.textContent = text;
+    if (zatv) { zatv.cancel(); zatv = null; }
+    if (v && res.hidden) { res.classList.add('otv'); clearTimeout(otvT); otvT = setTimeout(function () { res.classList.remove('otv'); }, 300); }
+    if (v || res.hidden || reduce || !res.animate) { res.hidden = !v; return; }
+    zatv = res.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, easing: 'linear', fill: 'forwards' });
+    zatv.finished.then(function () { var z = zatv; zatv = null; res.hidden = true; if (z) z.cancel(); }, function () {});
+  }
   ukaz(false);
   function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   var cakaj = null;   // posledná požiadavka počas sťahovania indexu (rýchle písanie alebo vložený text sa nestratí)
@@ -367,11 +572,12 @@
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function render() {
     var v = norm(q.value.trim());
-    if (v.length < 2) { res.innerHTML = ''; ukaz(false, ''); return; }
+    if (v.length < 2) { ukaz(false, ''); return; }   // obsah ostáva, kým sa panel neprelne (potom je skrytý)
     var words = v.split(/\s+/);
     var hits = idx.filter(function (it) { return words.every(function (w) { return it.n.indexOf(w) >= 0; }); });
     hits.sort(function (a, b) { var ta = norm(a.t).indexOf(words[0]) >= 0 ? 0 : 1, tb = norm(b.t).indexOf(words[0]) >= 0 ? 0 : 1; return ta - tb; });
     hits = hits.slice(0, 8);
+    if (!res.hidden && !zatv) res.classList.remove('otv');   // panel už je otvorený: ďalšie písmeno riadky nanovo neprelína
     if (!hits.length) { res.innerHTML = '<div class="none">Nič sme nenašli. Zavolajte 0905 622 223, poradíme vám.</div>'; ukaz(true, 'Nič sme nenašli.'); return; }
     res.innerHTML = hits.map(function (it) {
       var i = it.n.indexOf(words[0]), s = Math.max(0, i - 40), frag = (it.t + ' ' + it.k + ' ' + it.x).slice(s, s + 120);
@@ -381,6 +587,17 @@
   }
   q.addEventListener('input', function () { load(render); if (idx) render(); });
   q.addEventListener('focus', function () { load(render); });
+  // RP1-11: na telefóne a tablete (do 1000 px) sa pole pri fokuse jedným posunom presunie pod lištu (88 px od vrchu),
+  // aby výsledky boli nad spodnou lištou; ikona asistenta sa počas fokusu skryje (neprekryje krížik poľa). Jednorazový
+  // posun na žiadosť zákazníka, posun sa nezamyká.
+  var mqHl = window.matchMedia && window.matchMedia('(max-width:1000px)');
+  q.addEventListener('focus', function () {
+    d.documentElement.classList.add('hl-fokus');
+    if (!mqHl || !mqHl.matches) return;
+    var y = q.getBoundingClientRect().top;
+    if (y < 70 || y > 120) window.scrollTo({ top: Math.max(0, y + window.scrollY - 88), behavior: reduce ? 'auto' : 'smooth' });
+  });
+  q.addEventListener('blur', function () { d.documentElement.classList.remove('hl-fokus'); });
   q.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { var f = res.querySelector('a'); if (f) location.href = f.href; }
     if (e.key === 'Escape') { ukaz(false); }

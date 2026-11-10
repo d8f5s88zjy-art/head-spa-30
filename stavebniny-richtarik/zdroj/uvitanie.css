@@ -1,20 +1,23 @@
 /* Uvítanie „Brána“ pred úvodom (len index.html). Zdroj, ktorý build.py:uvitanie_bloky() zmenší do <style> v <head>
-   úvodu (kontrola_uvodu() overí zhodu). Dve svetlé krídla brány s pozdravom sa rozídu do strán, za nimi je celá skutočná
-   fotka dvora so štítkami a fotka sa usadí do rámu úvodu. Prvok vkladá skript len pri triede br-ide (skript v <head>);
-   bez JS, pri „obmedziť pohyb“ a pri tlači neexistuje. Hlavička a spodná lišta (Zavolať) ostávajú nad bránou a dajú sa
+   úvodu (kontrola_uvodu() overí zhodu). Dve svetlé krídla brány s pozdravom sa rozídu do strán (na telefóne hore a dole, RP2-07), za nimi je celá skutočná
+   fotka predajne so štítkami a fotka sa usadí do rámu úvodu. Prekryv je v HTML ako prvý prvok <body> (pozdrav je v prvom
+   vykreslení) a ukáže sa len pri triede br-ide (skript v <head>); bez JS, pri „obmedziť pohyb“ a pri tlači je skrytý. Hlavička a spodná lišta (Zavolať) ostávajú nad bránou a dajú sa
    stlačiť: brána začína pod hlavičkou (79 px) a na telefóne končí nad spodnou lištou (69 px), z-index 39 je pod nimi.
    Pohyb je len transform a opacity (bez otáčania, bez perspektívy a bez orezávania cestou), krivky a dĺžky sú
    z pohybového systému v site.css. Poistka: keby skript zlyhal, prekryv sa skryje sám 3,2 s po prvom vykreslení. */
-.br{position:fixed;left:0;right:0;top:79px;bottom:0;z-index:39;overflow:hidden;contain:layout paint;animation:br-poistka 1ms 3.2s forwards}
+.br{display:none;position:fixed;left:0;right:0;top:79px;bottom:0;z-index:39;overflow:hidden;contain:layout paint;animation:br-poistka 1ms 3.2s forwards}
 /* obe kľúčové snímky skryté: pri konci 1 ms animácie je priebeh 0,9999… a krok na konci by ešte ukázal začiatok */
 @keyframes br-poistka{from,to{visibility:hidden}}
-@media (max-width:980px){.br{bottom:calc(69px + env(safe-area-inset-bottom,0px))}}
+.br-ide .br{display:block}
+/* telefón: brána končí nad spodnou lištou; kým sa lišta prvýkrát vykreslí (je na konci HTML), pás pod bránou zakryje
+   papier (tieň bez rozmazania), aby nebolo vidno kúsok stránky; lišta je nad ním (z-index 40) */
+@media (max-width:980px){.br{bottom:calc(69px + env(safe-area-inset-bottom,0px));box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 var(--paper)}}
 /* vnútro je inert (bez fokusu, výberu textu a mimo čítačky); ťuk zachytí samotný .br, takže pod bránou sa nič nestlačí */
 .br-in,.br-okno{position:absolute;inset:0}
 .br-okno{overflow:hidden;transform-origin:0 0;background:var(--paper);container-type:size}
-/* scéna má pomer strán fotky (--a: dvor-p 1720 × 860, dvor-t 1086 × 1170) a pokryje celé okno; vodorovne je posunutá
-   k uličke medzi paletami (--x), zvislo v strede. Bez čítania rozmerov v skripte (nič sa neprepočítava pri načítaní). */
-.br-scena{--a:2;--x:.7;position:absolute;transform-origin:0 0;width:max(100cqw,100cqh * var(--a));aspect-ratio:var(--a);left:calc((100cqw - max(100cqw,100cqh * var(--a))) * var(--x));top:calc((100cqh - max(100cqw,100cqh * var(--a)) / var(--a)) / 2)}
+/* scéna má pomer strán fotky (--a: 11 na šírku 1720 × 1314, zvislý výrez -t- 663 × 1435; fotka od majiteľa 9. 11. 2026) a pokryje
+   celé okno; vodorovne je posunutá k ceste medzi paletami (--x), zvislo v strede. Bez čítania rozmerov v skripte. */
+.br-scena{--a:calc(1720 / 1313);--x:.6;position:absolute;transform-origin:0 0;width:max(100cqw,100cqh * var(--a));aspect-ratio:var(--a);left:calc((100cqw - max(100cqw,100cqh * var(--a))) * var(--x));top:calc((100cqh - max(100cqw,100cqh * var(--a)) / var(--a)) / 2)}
 .br-kam{position:absolute;inset:0}
 .br-kam img{display:block;width:100%;height:100%}
 .br .uv-znak{z-index:2;opacity:0;transform-origin:0 0}
@@ -26,35 +29,59 @@
 .br-st::before{background:none;box-shadow:0 0 0 2px var(--brick);opacity:0}
 .br-st.vlavo{translate:calc(-100% + 7px) calc(-100% - 16px);border-left:0;border-right:5px solid var(--brick);text-align:right;padding:7px 10px 8px 13px}
 .br-st.vlavo::after,.br-st.vlavo::before{left:auto;right:-11px}
-/* krídla: papier s jemnými latkami, tehlová spára v strede, pozdrav cez obe krídla (každé nesie svoju polovicu) */
-.br-krid{position:absolute;top:0;bottom:0;width:50%;z-index:3;overflow:hidden;background:var(--paper) repeating-linear-gradient(90deg,rgba(20,18,16,.05) 0 1px,transparent 1px 100%);background-size:20% 100%}
+/* krídla: papier s jemnými latkami (v tmavej téme noc so svetlými latkami, --irgb zo site.css), tehlová spára v strede; každé krídlo nesie svoje slovo pozdravu (ľavé „Vitajte.“
+   zarovnané k spáre, pravé „Poďte ďalej.“ od spáry), takže spára ide medzi slovami a nikdy cez písmeno (RP1-07) */
+.br-krid{position:absolute;top:0;bottom:0;width:50%;z-index:3;overflow:hidden;background:var(--paper) repeating-linear-gradient(90deg,rgba(var(--irgb),.05) 0 1px,transparent 1px 100%);background-size:20% 100%}
 .br-l{left:0}
 .br-p{right:0;background-position:100% 0}
-.br-krid::after{content:"";position:absolute;top:0;bottom:0;width:1.5px;background:var(--brick);animation:br-spara .4s var(--krivka-vyjazd) both}
+.br-krid::after{content:"";position:absolute;top:0;bottom:0;width:1.5px;background:var(--brick);animation:br-spara .4s var(--krivka-vyjazd) .26s both}
 .br-l::after{right:0}
 .br-p::after{left:0}
 @keyframes br-spara{from{transform:scaleY(0)}}
-.br-tab{position:absolute;top:0;bottom:0;width:200%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 var(--gutter) 6vh}
-.br-l .br-tab{left:0}
-.br-p .br-tab{right:0}
-.br-nad{display:flex;align-items:center;gap:12px;margin:0 0 18px;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.2;letter-spacing:.18em;text-transform:uppercase;color:var(--brick);white-space:nowrap}
-.br-nad::before,.br-nad::after{content:"";width:34px;height:2px;background:currentColor}
-.br-veta{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(54px,8.6vw,124px);line-height:.92;letter-spacing:-.012em;text-transform:uppercase;color:var(--ink)}
+@keyframes br-spara-t{from{transform:scaleX(0)}}
+/* slová stoja na spoločnej línii nad stredom (em = veľkosť pozdravu; „Poďte ďalej.“ má 4,98 em, pri 8,2 vw sa zmestí
+   do krídla od 701 px, inak sa zalomí) */
+.br-tab{position:absolute;inset:0 0 calc(50% + 3vh - .52em) 0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--gutter);font-size:clamp(54px,8.2vw,124px)}
+.br-l .br-tab{align-items:flex-end;text-align:right;padding-right:3vw}
+.br-p .br-tab{align-items:flex-start;text-align:left;padding-left:3vw}
+.br-znacka{display:flex;align-items:center;gap:14px;margin:0 0 22px;font-family:var(--display);font-weight:800;font-size:clamp(24px,2.4vw,36px);line-height:.9;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.br-znacka img{display:block;width:auto;height:112px;height:clamp(76px,7.6vw,112px)}
+.br-znacka b{color:var(--brick)}
+.br-nad{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 12px;margin:0 0 18px;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.2;letter-spacing:.18em;text-transform:uppercase;color:var(--brick-txt);white-space:nowrap}
+.br-nad::before{content:"";width:34px;height:2px;background:currentColor}
+.br-nad span+span::before{content:"·";margin-right:12px}
+.br-veta{margin:0;font-family:var(--display);font-weight:800;font-size:1em;line-height:.92;letter-spacing:-.012em;text-transform:uppercase;color:var(--ink)}
 .br-veta>span{display:block;overflow:clip;padding-top:.12em;margin-top:-.12em}
-.br-veta>span>span{display:inline-block;animation:br-riadok .34s var(--krivka-vyjazd) both}
-.br-veta>span+span>span{animation-delay:.06s;color:var(--brick)}
+.br-veta>span>span{display:inline-block;animation:br-riadok .26s var(--krivka-vyjazd) both}
+.br-p .br-veta>span>span{animation-delay:.05s;color:var(--brick)}
 @keyframes br-riadok{from{transform:translateY(105%)}}
 @media (max-width:700px){
-.br-scena{--a:calc(1086 / 1170);--x:.5}
-.br-nad{font-size:11.5px;letter-spacing:.12em;gap:8px;margin-bottom:14px}
-.br-nad::before,.br-nad::after{width:18px}
+.br-scena{--a:calc(663 / 1435);--x:.5}
+/* telefón na výšku (RP2-07): brána sa otvára zvisle ako garážová brána. Krídla sú horná a dolná polovica (latky
+   vodorovne), spára je vodorovná a kreslí sa zľava; pozdrav ide cez celú šírku (17,5 vw, najviac 76 px; „Poďte ďalej.“
+   má 4,98 em, pri 390 px je to 340 px z 354 px): „Vitajte.“ v hornom krídle nad spárou, „Poďte ďalej.“ v dolnom pod
+   ňou, oba zarovnané vľavo na okraj obsahu. Krídla odídu hore a dole (uvitanie.js, kridla()). */
+.br-krid{width:auto;left:0;right:0;height:50%;background-image:repeating-linear-gradient(0deg,rgba(var(--irgb),.05) 0 1px,transparent 1px 100%);background-size:100% 20%}
+.br-l{top:0;bottom:auto}
+.br-p{top:auto;bottom:0;background-position:0 0}
+.br-krid::after{top:auto;bottom:auto;left:0;right:0;width:auto;height:1.5px;transform-origin:0 50%;animation-name:br-spara-t}
+.br-l::after{bottom:0}
+.br-p::after{top:0}
+.br-tab{font-size:min(17.5vw,76px)}
+.br-l .br-tab,.br-p .br-tab{inset:0;align-items:flex-start;text-align:left;padding:0 var(--gutter)}
+.br-l .br-tab{justify-content:flex-end;padding-bottom:3vh}
+.br-p .br-tab{justify-content:flex-start;padding-top:3vh}
+.br-znacka{gap:10px;margin-bottom:14px;font-size:22px}
+.br-znacka img{height:86px}
+.br-nad{justify-content:flex-start;gap:4px 10px;font-size:13px;letter-spacing:.14em;margin-bottom:12px;white-space:normal}
+.br-nad span{white-space:nowrap}
+.br-nad span+span::before{display:none}
 .br-st{padding:5px 10px 6px 8px;border-left-width:4px;translate:-6px calc(-100% - 14px)}
 .br-st.vlavo{translate:calc(-100% + 6px) calc(-100% - 14px);border-right-width:4px;padding:5px 8px 6px 10px}
 .br-st b{font-size:19px}
 .br-st span{font-size:11px}
 }
-@media (max-width:359px){.br-nad::before,.br-nad::after{display:none}}
 @media (min-width:1100px){.br-st{padding:9px 15px 10px 12px}.br-st b{font-size:27px}.br-st span{font-size:14.5px}}
-@media print,(prefers-reduced-motion:reduce){.br{display:none}}
+@media print,(prefers-reduced-motion:reduce){.br,.br-ide .br{display:none}}
 /* tlač počas uvítania: úvod v konečnom stave (!important prebije bežiaci pohyb nadpisu, ponuky a štítku) */
 @media print{.uv h1 .ln>span,.uv-b,.uv-ram>.uv-stitok{opacity:1!important;transform:none!important}}

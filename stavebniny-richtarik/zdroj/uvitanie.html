@@ -1,14 +1,16 @@
-<!-- Šablóna uvítania „Brána“ (len index.html, za hlavičkou a menu tesne pred <main>). build.py:uvitanie_bloky() spojí riadky
-     bez medzier; kontrola_uvodu() overí zhodu. <template> je bez JS nečinný a nič nesťahuje. Prekryv .br má aria-hidden,
+<!-- Prekryv uvítania „Brána“ (len index.html, prvý prvok <body>, aby bol pozdrav v prvom vykreslení, RP1-07).
+     build.py:uvitanie_bloky() spojí riadky bez medzier; kontrola_uvodu() overí zhodu. Bez triedy br-ide (bez JS, pri
+     „obmedziť pohyb“, ďalšia návšteva…) je skrytý (display:none) a skript uvítania ho odstráni. Prekryv .br má aria-hidden,
      vnútro je inert (bez fokusu a mimo čítačky); .br sám zachytí ťuk, aby sa pod bránou nič nestlačilo. Fotka je ten istý
-     <picture> ako fotka úvodu (rovnaké srcset a sizes, stiahne sa raz). Texty: FAKTY.md A, B, D1, F; štítky len tam,
-     kde ich fotka ukazuje (data-tel/data-pc = poloha špendlíka v pomere k fotke, bez hodnoty skript štítok odstráni). -->
-<template id="br-tpl"><div class="br" aria-hidden="true"><div class="br-in" inert><div class="br-okno"><div class="br-scena"><div class="br-kam">
-<picture><source media="(max-width:700px)" type="image/avif" srcset="img/uvod/dvor-t-1086.avif 1086w, img/uvod/dvor-t-1448.avif 1420w" sizes="100vw"><source media="(max-width:700px)" type="image/webp" srcset="img/uvod/dvor-t-1086.webp 1086w, img/uvod/dvor-t-1448.webp 1420w" sizes="100vw"><source type="image/avif" srcset="img/uvod/dvor-p-1290.avif 1290w, img/uvod/dvor-p-1720.avif 1720w" sizes="100vw"><img class="br-foto" src="img/uvod/dvor-p-1720.webp" srcset="img/uvod/dvor-p-1290.webp 1290w, img/uvod/dvor-p-1720.webp 1720w" sizes="100vw" width="1720" height="860" alt="" fetchpriority="high"></picture>
-<p class="br-st" data-tel=".50 .30" data-pc=".33 .36"><b>Betónové tvárnice</b><span>murovací materiál</span></p>
-<p class="br-st vlavo" data-pc=".65 .92"><b>Betónové výrobky</b><span>na paletách</span></p>
-<p class="br-st vlavo" data-tel=".72 .70" data-pc=".90 .88"><b>Doprava na stavbu</b><span>po celom Slovensku</span></p>
-</div></div></div><p class="uv-znak">Skutočná fotka nášho dvora v&nbsp;Nitre</p>
-<div class="br-krid br-l"><div class="br-tab"><p class="br-nad">Nitra&nbsp;– Horné Krškany · od roku 1997</p><p class="br-veta"><span><span>Vitajte.</span></span> <span><span>Poďte ďalej.</span></span></p></div></div>
-<div class="br-krid br-p"><div class="br-tab"><p class="br-nad">Nitra&nbsp;– Horné Krškany · od roku 1997</p><p class="br-veta"><span><span>Vitajte.</span></span> <span><span>Poďte ďalej.</span></span></p></div></div>
-</div></div></template>
+     <picture> ako fotka úvodu (rovnaké srcset a sizes, stiahne sa raz). Každé krídlo nesie svoje slovo pozdravu, spára
+     ide medzi nimi. Texty: FAKTY.md A, B, D1, F; štítky len tam, kde ich fotka ukazuje (fotka 11 od majiteľa, 9. 11. 2026; data-tel/data-pc = poloha
+     špendlíka v pomere k fotke, bez hodnoty skript štítok odstráni). -->
+<div class="br" aria-hidden="true"><div class="br-in" inert><div class="br-okno"><div class="br-scena"><div class="br-kam">
+<picture><source media="(max-width:700px)" type="image/avif" srcset="img/predajna/11-tvarnice-porfix-cesta-t-990.avif 457w, img/predajna/11-tvarnice-porfix-cesta-t-1435.avif 663w" sizes="100vw"><source media="(max-width:700px)" type="image/webp" srcset="img/predajna/11-tvarnice-porfix-cesta-t-990.webp 457w, img/predajna/11-tvarnice-porfix-cesta-t-1435.webp 663w" sizes="100vw"><source type="image/avif" srcset="img/predajna/11-tvarnice-porfix-cesta-1290.avif 1290w, img/predajna/11-tvarnice-porfix-cesta-1720.avif 1720w" sizes="100vw"><img class="br-foto" src="img/predajna/11-tvarnice-porfix-cesta-1720.webp" srcset="img/predajna/11-tvarnice-porfix-cesta-1290.webp 1290w, img/predajna/11-tvarnice-porfix-cesta-1720.webp 1720w" sizes="100vw" width="1720" height="1314" alt="" fetchpriority="high"></picture>
+<p class="br-st" data-tel=".34 .42" data-pc=".22 .44"><b>Betónové tvárnice</b><span>murovací materiál</span></p>
+<p class="br-st vlavo" data-pc=".72 .40"><b>Materiál na paletách</b><span>v areáli predajne</span></p>
+<p class="br-st vlavo" data-tel=".86 .78" data-pc=".90 .84"><b>Doprava na stavbu</b><span>po celom Slovensku</span></p>
+</div></div></div><p class="uv-znak">Skutočná fotka našej predajne v&nbsp;Nitre</p>
+<div class="br-krid br-l"><div class="br-tab"><p class="br-znacka"><img src="img/logo-rs-360.png" srcset="img/logo-rs-360.png 360w, img/logo-rs-720.png 720w" sizes="(max-width:700px) 86px, 112px" width="360" height="175" alt=""><span>Stavebniny <b>Richtárik</b></span></p><p class="br-nad"><span>Nitra&nbsp;– Horné Krškany</span> <span>od roku 1997</span></p><p class="br-veta"><span><span>Vitajte.</span></span></p></div></div>
+<div class="br-krid br-p"><div class="br-tab"><p class="br-veta"><span><span>Poďte ďalej.</span></span></p></div></div>
+</div></div>

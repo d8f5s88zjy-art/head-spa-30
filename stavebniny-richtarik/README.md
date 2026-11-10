@@ -13,6 +13,8 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Doprava (`doprava.html`): vlastné autá, doprava po celom Slovensku a podmienky dopravy pri akciách, len fakty
   z pôvodného webu a cenníka, fotka dvora (žiadne auto). Časté otázky (`caste-otazky.html`): 15 otázok, odpovede
   doslova z overenej databázy otázok predajne (časť Texty a SEO).
+- Prehliadka predajne 360° priamo na stránke (úvod, sekcia Predajňa, a Kontakt): fotka predajne, po kliknutí otočná panoráma
+  bez odkazu na Google (časť Prehliadka predajne 360°).
 - Vyhľadávanie v celom katalógu bez ohľadu na diakritiku (`assets/index.json`).
 - Asistent na otázky (okno vpravo dole, v náhľade ukážka z overených častých otázok, na ostrom webe len so serverom;
   časť Asistent na otázky a `asistent/README.md`).
@@ -47,6 +49,25 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   a tovaru v `img/uvod/` sú od majiteľa, ilustračné fotky kategórií sú z Pexels (`img/FOTKY.md`), kým sa nenafotí ďalší
   tovar. Nová fotka sa uloží pod novým názvom (obrázky majú na hostingu cache na rok, časť Údržba).
 
+## Téma podkladu: svetlý papier a tmavá „čierno-biela“
+
+Web má dva varianty podkladu z jedných komponentov cez tokeny v `assets/site.css`. Bez atribútu platí svetlý papier
+(doterajší vzhľad). `html[data-tema="tmava"]` prepne tokeny (časť „Tmavá téma“ na konci `site.css`): podklad noc
+`#121110`, pásy sekcií `#181614`, karty `#1b1917`, písmo papierová biela `#f4f1ec`, akcent červená loga `#d73438`
+len vo veľkom písme, tlačidlách a grafike, malé červené písmo je svetlejšia `#ef7a66` (AA). Roly v `:root`:
+`--brick-txt` (malé červené písmo), `--brick-hover` (tlačidlo pod myšou), `--povrch` a `--povrch-2` (karta a karta pod
+myšou), `--prgb` (RGB podkladu pre priesvitné lišty a odznaky), `--irgb` (RGB písma pre jemné linky a latky brány).
+Tlačený obsah ostáva na bielej aj v tmavej (logá značiek, letáky, malé fotky výrobkov), fotky v rámoch majú svetlú hranu,
+tlač je vždy svetlá (`@media screen`). Asistent má svoje pravidlá na konci `assets/asistent.css`,
+`asistent/ochrana-udajov.html` vlastné tokeny.
+
+Prepínanie: skript `zdroj/tema-head.js` (build.py `TEMA_HEAD`, v `index.html` ho vkladá `python3 -I zdroj/tema_vloz.py .`,
+v `asistent/ochrana-udajov.html` značky `<!--tema-->`) beží v `<head>` pred štýlom: `?tema=tmava` zapne tmavý variant
+a zapamätá si ho (`localStorage` `tema`), `?tema=svetla` voľbu zruší, bez parametra platí zapamätaná voľba; nastaví len
+atribút na `<html>` a `theme-color`. Bez JS, v ráme bez úložiska alebo so zakázaným úložiskom je web svetlý (parameter
+v adrese funguje aj tam). Prepínač v rozhraní zatiaľ nie je (rozhodne majiteľ). Zápis, merania a kontrasty:
+`richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
+
 ## Úvod
 Úvod (`index.html`, sekcia `.uv`) je len zo skutočných fotiek dvora, bez videa a bez auta. Hlavný obraz je výrez fotky
 dvora `u4` (palety tvárnic pod modrou oblohou): `img/uvod/dvor-p-1290|1720` na šírku (počítač, tablet) a
@@ -55,7 +76,8 @@ snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
 - Scenár (čas od začiatku načítania): 0–2,9 s fotka pomaly dosadne (zmenšenie z 1,09 na 1); 0,2–1,05 s sa hore a dole
   rozostúpia dva svetlé pásy papiera ako okno kina; 0,12–1,06 s vyjde nadpis po riadkoch z drážky
   („Stavebniny Nitra – Horné Krškany“ ako riadok nad nadpisom, „Dvor plný materiálu. Od základov po strechu.“);
-  1,0–3,0 s dopadnú na dvor za sebou štyri skutočné zábery zásob so štítkom ako na palete (Tehly TermoBRIK, Pórobetón
+  1,0–3,0 s dopadnú na dvor za sebou štyri skutočné zábery zásob (ležia rovno, na telefóne najviac 46 % výšky rámu
+  vpravo hore) so štítkom ako na palete (Tehly TermoBRIK, Pórobetón
   Porfix – fotka bez dokreslených paliet, Dlažby a obrubníky Stadreko, Stavebné rezivo priamo na sklade); 3,32–3,84 s kôpka odíde
   doprava; 3,62–3,98 s sa vrazí štítok „Náš dvor · Novozámocká 62/68, Nitra“. Potom ostane statický koncový stav
   a vpravo hore tlačidlo „Prehrať úvod“. Celý čas je stály popis fotky „Skutočná fotka nášho dvora v Nitre“.
@@ -67,7 +89,9 @@ snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
   `assets/site.js` (časť „úvod: strih zásob“) a trieda `uv-ide` zo skriptu v `<head>` úvodu. Animuje sa len
   `transform` a `opacity`.
 - Strih sa nespustí bez JS, pri „obmedziť pohyb“, pri šetrení dát (`saveData`), druhýkrát v tej istej relácii
-  (`sessionStorage` `uv-videne`) a keď zákazník už posúva. Preruší ho posun, koliesko, dotyk, kláves (okrem Tab)
+  (`sessionStorage` `uv-videne`) a keď zákazník už posúva. Sám sa nespustí ani po uvítaní (hook odovzdala brána) a keď
+  stránka prišla prechodom alebo Späť/Vpred (trieda `vt`; vtedy sa nehrá ani vstup úvodu): ostane tlačidlo „Prehrať
+  úvod“ a zábery sa stiahnu až po jeho stlačení. Odchod zo stránky bežiaci strih hneď dokončí. Preruší ho posun, koliesko, dotyk, kláves (okrem Tab)
   a fokus vo vyhľadávaní. Zábery sú v `<template id="uv-zabery">`, takže bez strihu sa vôbec nestiahnu.
 - Výmena záberu: v `index.html` v `<template id="uv-zabery">` zmeniť cesty `img/uvod/zasoba-<názov>-480|720|900`
   a text štítku (`<b>` a `<span>`); nová fotka musí byť skutočná, bez pridaného či ubraného obsahu, v rovnakých
@@ -88,11 +112,13 @@ Pri prvej návšteve zákazníka privíta svetlá brána z papiera s pozdravom �
 a „Vitajte. Poďte ďalej.“. Krídla sa rozídu do strán (posuvná brána, bez otáčania), za nimi je celá skutočná fotka
 dvora (tá istá ako v úvode) s odznakom „Skutočná fotka nášho dvora v Nitre“ a štítkami na paletách („Betónové
 tvárnice · murovací materiál“, „Doprava na stavbu · po celom Slovensku“, na počítači aj „Betónové výrobky · na
-paletách“). Fotka sa potom presne usadí do rámu úvodu, vyjde nadpis a ponuka, štítok „Náš dvor“ sa vrazí a 0,6 s po
-konci nadviaže strih zásob. Hlavička (logo, menu, telefón) a spodná lišta Zavolať / Cenová ponuka sú celý čas nad
+paletách“). Fotka sa potom presne usadí do rámu úvodu, vyjde nadpis a ponuka a štítok „Náš dvor“ sa vrazí. Strih zásob
+sa potom sám nespustí, ostane tlačidlo „Prehrať úvod“. Hlavička (logo, menu, telefón) a spodná lišta Zavolať / Cenová ponuka sú celý čas nad
 bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava po celom Slovensku, sortiment).
-- Scenár na telefóne (390 × 844, 4G, CPU 4×; F = prvé vykreslenie ≈ 0,8 s): F – F + 0,4 s pozdrav vyjde z drážky a
-  nakreslí sa tehlová spára; t0 = max(F + 0,38 s, fotka pripravená) ≈ 1,2 s krídla sa za 0,5 s rozídu, kamera vojde na
+- Scenár na telefóne (390 × 844, 4G, CPU 4×; F = prvé vykreslenie ≈ 0,8 s): F – F + 0,26 s pozdrav vyjde z drážky
+  (každé krídlo nesie svoje slovo: na počítači „Vitajte.“ vľavo zarovnané k spáre a „Poďte ďalej.“ vpravo od spáry;
+  na telefóne sa brána otvára zvisle, „Vitajte.“ je v hornom krídle nad vodorovnou spárou a „Poďte ďalej.“ v dolnom
+  pod ňou, cez celú šírku, 17,5 vw), F + 0,26 – 0,66 s sa medzi slovami nakreslí tehlová spára; t0 = max(F + 0,38 s, fotka pripravená) ≈ 1,2 s krídla sa za 0,5 s rozídu (na telefóne hore a dole), kamera vojde na
   1,05; t0 + 0,15 s odznak; t0 + 0,10 / 0,15 s štítky (krúžok špendlíka sa raz rozvlní), zhasnú v t0 + 0,94 s;
   t0 + 0,60 – 1,12 s usadenie do rámu úvodu (len `transform`, bez posunu rozloženia), t0 + 0,74 / 0,80 s riadky H1,
   t0 + 0,80 s ponuka; t0 + 1,12 s prelnutie 90 ms a prekryv zmizne, pečiatka „Náš dvor“. Úvod je použiteľný ≈ 2,3 s.
@@ -102,28 +128,31 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   pozdraví a otvorí sa rovno na úvod (0,44 s), keď je fotka úvodu vykreslená, najneskôr 0,7 s po prvom vykreslení.
 - Kedy sa neukáže: druhá návšteva v tej istej relácii (`sessionStorage` `br-videne`), príchod z inej stránky webu,
   Späť, Vpred a obnovenie, kotva v adrese, šetrenie dát, predvykreslenie, okno menšie ako 300 × 420 px, „obmedziť
-  pohyb“ a bez JS (šablóna `<template>` je nečinná, nič sa nestiahne). Vtedy beží dnešný úvod (trieda `uv-ide`).
+  pohyb“ a bez JS (prekryv je v HTML ako prvý prvok `<body>`, bez triedy `br-ide` je skrytý a skript ho odstráni;
+  fotka je tá istá ako v úvode, nič navyše sa nestiahne). Vtedy beží dnešný úvod (trieda `uv-ide`).
   `?uvitanie` v adrese ho vynúti aj pri ďalšej návšteve (nie pri „obmedziť pohyb“), napr. na ukážku majiteľovi.
 - Preskočenie: ťuk, klik, koliesko, kláves (aj Tab), posun, zmena šírky okna alebo skrytie karty. Úvod je hneď
   v konečnom stave a brána sa prelne za 0,16 s; ťuk na bránu nič pod ňou nestlačí, ťuk na Zavolať v lište alebo na
   telefón v hlavičke sa normálne vykoná. Po preskočení sa strih zásob nespustí (tlačidlo „Prehrať úvod“ ostane).
-- Asistent na otázky sa počas uvítania nenačíta ani neukáže (čaká na udalosť `br-koniec`).
+- Asistent na otázky, odložená práca `site.js` (odhalenia, pás značiek…) a tlačidlo „Prehrať úvod“ čakajú na koniec
+  uvítania (udalosť `br-koniec`).
 - Prístupnosť a SEO: prekryv má `aria-hidden`, vnútro je `inert` (žiadny fokus, mimo čítačky), samotný prekryv
   zachytí ťuk (inert vrstva by ťuk pustila na odkaz pod ňou). Prvý nadpis v strome je nezmenené H1, obsah úvodu je
   v HTML od začiatku. Pri tlači sa prekryv nezobrazí a úvod je v konečnom stave.
 - Poistky: CSS skryje prekryv 3,2 s po prvom vykreslení, aj keby skript zlyhal; skript ho odstráni najneskôr po 6 s.
 - Kód: zdroje sú v `zdroj/uvitanie-head.js` (rozhodnutie v `<head>`), `zdroj/uvitanie.css`, `zdroj/uvitanie.html`
-  (šablóna) a `zdroj/uvitanie.js` (riadenie, WAAPI). `build.py:uvitanie_bloky()` ich zmenší na 4 bloky v `index.html`
-  (štýl a rozhodnutie v `<head>` pred skriptom `uv-ide`, šablóna a skript za hlavičkou a menu tesne pred `<main>`).
+  (prekryv) a `zdroj/uvitanie.js` (riadenie, WAAPI). `build.py:uvitanie_bloky()` ich zmenší na 4 bloky v `index.html`
+  (štýl a rozhodnutie v `<head>` pred skriptom `uv-ide`, prekryv ako prvý prvok `<body>`, aby bol pozdrav v prvom
+  vykreslení, skript za hlavičkou a menu tesne pred `<main>`).
   Po zmene zdroja: `python3 -I zdroj/uvitanie_vloz.py .` (bloky v `index.html` nahradí) a `python3 build.py`
   („kontrola úvodu: OK … uvítanie zo zdroja 1×“; kontrola overí aj `aria-hidden`, `inert`, žiadny nadpis, odkaz,
-  výkričník ani štítok označenia asistenta v šablóne a žiadne `rotate`, `perspective` ani `clip-path`). Strih zásob a asistent v
-  `assets/site.js` čakajú na udalosť `br-koniec` (`{preskocene, rychlo, t}`).
+  výkričník ani štítok označenia asistenta v prekryve, jeho skrytie bez `br-ide` a žiadne `rotate`, `perspective` ani
+  `clip-path`). `assets/site.js` čaká na udalosť `br-koniec` (`{preskocene, rychlo, t}`).
 - Vypnutie: v `zdroj/uvitanie-head.js` `VYP = 1` a vložiť bloky (`uvitanie_vloz.py`), alebo zmazať 4 bloky
-  z `index.html` (`<style>` začínajúci `.br{`, skript s `br-ide` v `<head>`, `<template id="br-tpl">` a skript za ním)
+  z `index.html` (`<style>` začínajúci `.br{`, skript s `br-ide` v `<head>`, `<div class="br" …>` za `<body>` a skript pred `<main>`)
   a z podmienky skriptu `uv-ide` časť `&&!h.classList.contains("br-ide")`, potom upraviť `kontrola_uvodu()`.
 - Výmena fotky dvora: uvítanie používa ten istý `<picture>` ako úvod (rovnaké `srcset` a `sizes`), pri inom výreze
-  treba v šablóne skontrolovať polohy špendlíkov štítkov (`data-tel`, `data-pc` = poloha v pomere k fotke) a pomer
+  treba v prekryve skontrolovať polohy špendlíkov štítkov (`data-tel`, `data-pc` = poloha v pomere k fotke) a pomer
   strán v `zdroj/uvitanie.css` (`.br-scena`, `--a`).
 - Test: `richtarik/dokoncenie/nastroje/uvitanie-zf.mjs kontroly` (preskočenie, relácia, obmedziť pohyb, bez JS, kotva,
   šetrenie dát, iframe, tlač, Späť, šírky 320 – 1920, odovzdanie do rámu, štítky, krídla) a `… vykon` (A/B meranie).
@@ -133,11 +162,11 @@ Jeden pohybový jazyk pre celý web. CSS je v časti „Pohybový systém celéh
 dĺžok a kriviek `--dlzka-*`, `--krivka-*`), skript prechodov v `zdroj/prechody.js`. Úplný katalóg (prvok, spúšťač,
 trvanie, krivka, rozpočet, správanie pri „obmedziť pohyb“) je v `richtarik/profi/zf/POHYB.md`. Zásady: animuje sa len
 `transform`, `translate`, `scale` a `opacity`; nič sa nepripína a posun sa nezamyká; plochy pri prechodoch sú papier
-alebo fotka, nikdy tmavá clona; text nikdy nie je priehľadnejší ako 0,2; bez JS, pri „obmedziť pohyb“ a v prehliadači
+alebo fotka, nikdy tmavá clona; text v okne je po odhalení plne viditeľný (aj v pokoji po posune); bez JS, pri „obmedziť pohyb“ a v prehliadači
 bez podpory je všetko hneď v konečnom stave; bez otáčania a poskakovania.
 
 **Uvítanie pred úvodom** (len `index.html`, prvá návšteva v relácii zvonka; podrobne v časti Úvod): pozdrav vyjde
-z drážky po riadkoch (`--krivka-vyjazd`, 0,34 s), krídla brány sa rozídu do strán (`--krivka-clona`, 0,5 s), kamera
+z drážky, každé krídlo svoje slovo (`--krivka-vyjazd`, 0,26 s, spára medzi slovami až potom), krídla brány sa rozídu do strán (`--krivka-clona`, 0,5 s), kamera
 vojde na 1,05 (`--krivka-kamera`), štítky vyjdú (`--krivka-vyjazd`, 0,26 s), fotka sa usadí do rámu úvodu (0,52 s,
 13 kľúčových snímok ease in-out, len `transform`), prelnutie 90 ms do papiera úvodu, pečiatka „Náš dvor“
 (`--krivka-pecat`, jediný prekmit), preskočenie `--dlzka-pusti`. Rozpočet: 0 dlhých snímok počas pohybu brány,
@@ -146,16 +175,27 @@ Pri „obmedziť pohyb“, bez JS, pri tlači a šetrení dát neexistuje.
 
 **Prechody medzi stránkami** (View Transitions medzi dokumentmi, `@view-transition{navigation:auto}`). Typ určí skript
 v `<head>` pri odchode zo stránky (`pageswap`) a odovzdá ho novej stránke (`pagereveal`, `sessionStorage`):
-- `dalej` – bežný odkaz a Vpred: 0–150 ms stará stránka odíde 8 px hore do papiera, 150–480 ms nová príde 16 px zdola
-  (nová začne, až keď stará skončila, texty nie sú nikdy cez seba).
+- `dalej` – bežný odkaz a Vpred: postupné odídenie a príchod (priehľadnosť a posun sú oddelené). Stará stránka
+  lineárne zmizne za 0–120 ms (posun 8 px hore za 180 ms), nová sa lineárne objaví za 60–220 ms (posun 24 px zdola
+  60–420 ms). Texty oboch strán nikdy nie sú spolu nad 0,21 a ich súčet nikdy pod 0,37, lišta stojí: nie je dvojitá
+  expozícia ani prázdny papier. Na telefóne potom H1 vyjde z drážky (200–640 ms) a odsek pod ním nasleduje.
 - `spat` – Späť v histórii, drobčeky a odkaz Späť: rovnako, smer je opačný.
 - `strih` – hlavné menu, menu na telefóne, päta, spodná lišta a tlačidlá úvodu: nová stránka za 0,5 s vyjde zdola ako
   list papiera cez starú, stará len mierne ustúpi (nestmavne, nezmenší sa).
+- `strih-spat` – Späť zo stránky, na ktorú sa prišlo strihom (aj z menu): zrkadlo strihu, list za 0,42 s odíde nadol
+  a predošlá stránka sa vráti zo svojho ústupu. Vpred strih zopakuje. Typ príchodu si skript pamätá pri každej položke
+  histórie (`sessionStorage` `vt:<kľúč>`).
 - **zdieľaná fotka** (`foto`): ťuk na dlaždicu katalógu, pásu zásob alebo novinky. Fotka dlaždice za 0,44 s preletí
   a zväčší sa na fotku hlavičky stránky (okno mení veľkosť a orezáva). Pri Späť sa fotka hlavičky zmenší späť do dlaždice
   a dlaždica sa ukáže až na konci letu. Ak je v hlavičke iná fotka ako na dlaždici, počas letu sa prelínajú (typ
-  `prelnutie`). Pri dlaždici katalógu letí aj názov a stane sa nadpisom H1 (`nadpis`, len rovnaký text v jednom riadku);
-  na telefóne odsek pod H1 počká, kým nadpis dosadne, aby letiaci nadpis nešiel cez text.
+  `prelnutie`). Zdieľa sa len prvok, z ktorého je medzi hornou a spodnou lištou viditeľných aspoň 60 % (inak by
+  vzlietol spod lišty); inak ide čistý `dalej` alebo `spat`. Od 701 px letí pri dlaždici katalógu aj názov a stane sa
+  nadpisom H1 (`nadpis`, len rovnaký text v jednom riadku, letí pod fotkou); odsek pod H1 sa objaví až v posledných
+  18 % letu, keď nadpis dosadá. Karta značky v kategórii (tlačidlo Podrobnosti) pošle svoju fotku do hlavičky značky
+  (s prelnutím) a od 701 px štítok karty akcie („Špeciálne zľavy“, „Akciová cena“…) letí do štítku na stránke akcie
+  (`stitok`, len posun a zmena veľkosti, bez prekmitu); pri Späť opačne. Na telefóne (do 700 px) názov ani štítok
+  neletia: H1 vyjde z drážky a štítok akcie dopadne na mieste pečiatkou. Prechod z otvoreného menu na telefóne (typ
+  `zmenu`) je jeden pohyb: panel odíde za 0,36 s doprava ako opona a pod ním už stojí nová stránka aj s lištou.
   Na počítači prejde podčiarknutie aktívnej položky menu k novej položke (`ciara`). Lišta a spodná lišta stoja.
   Ikona asistenta (`asi`) sa s obsahom nehýbe: na mieste zmizne za čas odchodu starej stránky a na novej sa ukáže až
   s lenivo načítaným modulom; pri Späť z vyrovnávacej pamäte len stojí. Stránka `asistent/ochrana-udajov.html` má
@@ -177,30 +217,36 @@ prechodov): H1 vyjde zdola, nakreslí sa linka nadpisku, odsek ide za ním a fot
 v `<head>`), vstup sa nespustí a hýbe sa len prechod: vstup počas prechodu na počítači bez grafickej karty zdvojnásobil
 dlhé snímky.
 
-**Odhalenia pri posune** (CSS `animation-timeline: view()`, beží v kompozítore): nadpisok, nadpis, odsek a tlačidlo sekcie
-vyjdú zdola za sebou, karty v mriežke podľa stĺpca, fotky sa otvoria ako okno kina (pásy papiera `scaleY`, nie
-`clip-path`) a dosadnú, štítok akcie dopadne ako pečiatka, fotka pásu Doprava ide pomalšie než stránka (namiesto
-nekonečného driftu). Prehliadač bez časovej osi posunu má objavovanie cez IntersectionObserver v `site.js`. Odhalenia
-sú len pre obrazovku (`@media screen`), pri tlači je všetko viditeľné (`tlac-zf.mjs`).
+**Odhalenia pri posune.** Texty, karty a štítky sa odhalia spúšťaným odhalením s časom (`site.js`, IntersectionObserver):
+nadpisok, nadpis, odsek a tlačidlo sekcie vyjdú 18 px zdola za sebou (70 ms, najviac 4 kroky), karty v mriežke podľa
+stĺpca, štítok akcie dopadne ako pečiatka, číslo služby vyjde zľava; priehľadnosť dobehne za 520 ms, posun za 620 ms,
+takže po zastavení posunu je všetko v okne plne viditeľné (aj spodný okraj okna sa odhalí po 180 ms pokoja). Čo je pri
+načítaní v okne, sa nehýbe. Fotky sa otvoria ako okno kina (pásy papiera `scaleY`, nie `clip-path`) a dosadnú a fotka
+pásu Doprava ide pomalšie než stránka – tie sú viazané na posun (CSS `animation-timeline: view()`, kompozítor; bez
+podpory stoja). Odhalenia sú len pre obrazovku (`@media screen`), pri tlači je všetko viditeľné (`tlac-zf.mjs`).
+Práca, ktorá nemusí byť v prvej snímke (odhalenia, popisy lightboxu, pás značiek, služby), sa spustí až po prechode
+stránky alebo v nečinnom čase (`poPrechode` v `site.js`).
 
 **Ovládacie prvky:** stlačenie tlačidiel (0,97) a dlaždíc (0,985) za 80 ms, odozva pod myšou len na zariadení s myšou
 (šípka v páse názvu dlaždice, zdvih štítkov, podčiarknutie menu), krúžok fokusu 3 px, menu na telefóne s položkami
-za sebou, výsledky hľadania sa vysunú, lightbox prenesie fotku z náhľadu a pri zatvorení ju vráti. Pás značiek zastaví
+za sebou, výsledky hľadania sa vysunú (na telefóne sa pole pri fokuse posunie pod lištu, výsledky sú nad spodnou lištou
+a ikona asistenta sa skryje), lightbox ukáže fotku až dekódovanú, prenesie ju z náhľadu (popisok po lete) a pri
+zatvorení ju vráti; stránku pod ním nezamyká cez `overflow`. Bublina asistenta sa ukáže až po 1,5 s pokoja posunu. Pás značiek zastaví
 myš, fokus aj tlačidlo „Zastaviť pohyb“; bez JS a pri „obmedziť pohyb“ je to statický zoznam, ktorý sa dá posúvať.
 
 **Ako vypnúť:**
 - prechody medzi stránkami: v `site.css` `@view-transition{navigation:auto}` → `navigation:none`,
-- len zdieľanú fotku na počítači: `@media (min-width:1001px){::view-transition-group(foto){animation-duration:0s}}`,
-- odhalenia pri posune: zmazať blok `@supports (animation-timeline:view())` v časti 4 Pohybového systému (obsah ostane
-  viditeľný),
+- zdieľané prvky a strih (ľahká verzia pre všetkých): v `zdroj/prechody.js` nahradiť `lahke = ss.getItem(L) > 1` za `lahke = 1`, `build.py`
+  a blok `prechody_head()` vložiť do `index.html`,
+- odhalenia textov pri posune: v `site.js` zmazať `poPrechode(odhalenia)`; odhalenia fotiek: zmazať blok
+  `@supports (animation-timeline:view())` v časti 4B Pohybového systému (obsah ostane viditeľný),
 - vstup hlavičky podstránky: zmazať blok `@media` v časti 3 Pohybového systému,
 - uvítanie pred úvodom: `VYP = 1` v `zdroj/uvitanie-head.js` a `python3 -I zdroj/uvitanie_vloz.py .` (časť Úvod),
 - celý pohyb pre jedného návštevníka: nastavenie systému „obmedziť pohyb“.
 
-**Na počítači** (od 1001 px) sa fotka a nadpis neprenášajú letom, ale objavia sa rovno v hlavičke, a strih z menu je
-ako „ďalej“: v meraní v Chromiu bez grafickej karty mal let a strih celou stránkou na počítači viac dlhých snímok
-(pravidlo `@media (min-width:1001px)` v časti 2 Pohybového systému; na počítači s grafickou kartou sa dá overiť a zmazať).
-Podčiarknutie menu letí aj na počítači.
+**Telefón aj počítač** majú rovnaký jazyk (let fotky, nadpisu a štítku aj strih). Záloha: keď prechod na zariadení
+seká (aspoň 2 snímky nad 50 ms po prvých 100 ms animácie) a stane sa to v relácii dvakrát, ďalšie prechody idú v ľahkej
+verzii bez zdieľaných prvkov a bez strihu (`site.js` meria, `sessionStorage` `vt-lahke`, skript v `<head>` ho číta).
 
 **Testy** sú v `richtarik/dokoncenie/nastroje/`: `prechody-zf.mjs` (prechody na 8 typoch stránok tam aj späť, typy,
 mená, dlhé snímky, prázdna dlaždica pri Späť, režim bez podpory), `scenar.mjs` (presný storyboard prechodu: animácie
@@ -209,7 +255,11 @@ sa zastavia a nastavia na časy), `posun-zf.mjs` (posun 30 × 120 px, pripnuté 
 `osi-zf.mjs` (každá animácia pri posune sa riadi posunom stránky, nie rámom s `overflow: hidden`), `lightbox-zf.mjs`
 (storyboard lightboxu), `mikro-zf.mjs` (odozva ťuknutí, fokus, pás značiek), `tlac-zf.mjs` (tlač: nič priesvitné ani
 posunuté), `bfcache-zf.mjs` (Späť a Vpred z vyrovnávacej pamäte prehliadača, v plnom Chromiu: `KANAL=chromium`)
-a `harok-zf.py` (jas snímok a hárky), `uvitanie-zf.mjs` (uvítanie pred úvodom: kontroly a A/B meranie).
+a `harok-zf.py` (jas snímok a hárky), `uvitanie-zf.mjs` (uvítanie pred úvodom: kontroly a A/B meranie). Doladenie
+pohybu (6. 11. 2026) pridalo v `richtarik/profi/doladenie/kolo1/oprava/nastroje/`: `pokoj.mjs` (priehľadnosť textov
+v okne po zastavení posunu), `nahraj.mjs` (záznam a dlhé snímky všetkých scén, CLS, INP), `kontroly.mjs` („obmedziť
+pohyb“, bez JS, prehliadač bez View Transitions), `uvod.mjs` a `pozdrav.mjs` (uvítanie a úvod), `bublina.mjs`
+(bublina asistenta pri posune).
 
 **Zdroje inšpirácie** (navštívené 5. 11. 2026; prevzaté sú len princípy, kód je vlastný, bez knižnice a CDN):
 
@@ -232,6 +282,43 @@ a `harok-zf.py` (jas snímok a hárky), `uvitanie-zf.mjs` (uvítanie pred úvodo
 | DEV: Accessible marquee – https://dev.to/olpeh/modern-and-accessible-marquee-clone-with-tailwindcss-5abb | pauza a statický pás pri obmedzení pohybu | tlačidlo Zastaviť pohyb, pauza pri fokuse |
 | web.dev: High-performance CSS animations – https://web.dev/articles/animations-guide | len transform a opacity | – |
 | A. Roselli: Don't split words into letters – https://adrianroselli.com/2026/02/you-know-what-just-dont-split-words-into-letters.html | text najviac po riadkoch | – |
+
+## Prehliadka predajne 360°
+
+Majiteľ (9. 11. 2026) chce, aby si ľudia mohli predajňu prezrieť ako v Google Mapách (otáčať sa po predajni), a to priamo na
+našej stránke; nikoho neposielame na Google. Komponent `.p360` (`build.py: prehliadka_blok()`, štýl v `assets/site.css`
+časť „Prehliadka predajne 360°“, správanie v `assets/site.js`) je na úvode (sekcia Predajňa pred Kontaktom, fotka 13) a na
+Kontakte (fotka 02); odkazy „Prezrieť predajňu v 360°“ v päte sekcie Kontakt na úvode a pri fotke na Kontakte vedú na `#prehliadka`
+tej istej stránky. Pred kliknutím je to len fotka predajne od majiteľa, odznak „360°“ a tlačidlo: **nič sa nenačíta** (0 požiadaviek
+na Google, panoráma ani prehliadač sa nestiahnu). Po kliknutí sa do okna (telefón 60 vh, od 701 px 16:9) vloží jeden z dvoch zdrojov
+podľa `PANORAMA` v `build.py` (prednosť má `src`):
+
+1. **`src` – rám Google Máp** (`data-panorama-src`): `<iframe>` s adresou z kódu „Vložiť mapu“ panorámy stavebnín
+   (`https://www.google.com/maps/embed?pb=…`), `loading="lazy"`, `allowfullscreen`, `referrerpolicy="no-referrer-when-downgrade"`,
+   titulok; fotka sa prelne preč až po udalosti `load` (bez prázdneho rámu). Veta pod oknom hovorí, že obsah z Google Máp sa
+   načíta až po kliknutí (ochrana údajov). **Ako získať kód** (Lajo alebo majiteľ, prihlásený v prehliadači na počítači):
+   otvoriť záznam firmy v Google Mapách (`https://www.google.com/maps?cid=137067579998285540`) → Fotky → záložka
+   „360°“ (alebo Street View) → otvoriť panorámu stavebnín → menu (tri bodky) alebo „Zdieľať“ → „Vložiť mapu“ → skopírovať
+   `src="…"` z `<iframe>` → vložiť do `PANORAMA['src']` → `python3 build.py` a ten istý blok vložiť ručne do `index.html`
+   (`kontrola_uvodu()` hlási, kým sa nezhoduje). Kód sa z nášho prostredia nedal získať (Google ukázal reCAPTCHA pre sieť,
+   `richtarik/majitel/360/ZAPIS.md`), nič sa nezostavuje od oka. Hotovú adresu overte v stránke: rám sa dá ťahať.
+2. **`obrazok` – vlastná panoráma** (`data-panorama-obrazok`, dnes `img/panorama/predajna.jpg`): equirektangulárny obraz
+   2:1 (celých 360° × 180°, sever v strede), prehliadač `zdroj/panorama.js` (build ho zmenší do `assets/panorama.js`, modul sa
+   importuje až po kliknutí). WebGL: jeden trojuholník, zlomkový shader počíta smer každého bodu a číta z textúry (šírka
+   mocnina dvoch, najviac 4096 px); bez WebGL záloha v CSS (pás ako pozadie, len vodorovné a zvislé posúvanie). Ovládanie:
+   ťahanie prstom alebo myšou so zotrvačnosťou (útlm 320 ms; pri „obmedziť pohyb“ bez zotrvačnosti), dva prsty = priblíženie
+   (zorný uhol 45–100°), šípky a +/−, koliesko len na celej obrazovke. Kreslí sa len počas pohybu. **Dnes je v súbore
+   skúšobný obraz** vygenerovaný lokálne (`richtarik/majitel/360/nastroje/panorama_skuska.py`: prechod oblohy a zeme, mriežka
+   po 15°, svetové strany a stupne na horizonte, nápis „Skúšobná panoráma – skutočný záber predajne sa doplní“). Skutočná
+   panoráma od majiteľa (fotoaparát alebo telefón s režimom 360°, prípadne stiahnutá z jeho účtu Google) sa uloží pod tým
+   istým názvom `img/panorama/predajna.jpg` (JPEG, 2:1, 4096–8192 px šírka, do 1,5 MB); nič iné netreba meniť.
+
+Tlačidlá na okne: „Celá obrazovka“ (`requestFullscreen` na celom komponente; kde nie je, napr. iPhone, pevná pozícia cez celé
+okno `.p360-pevne`, sekcia s `content-visibility:auto` dostane `p360-pevne-rodic`; Esc ju ukončí) a „Zavrieť prehliadku“
+(odstráni rám alebo panorámu, vráti fotku a fokus na tlačidlo). Bez JS ostáva fotka a veta „Prehliadka potrebuje zapnutý
+JavaScript“ (tlačidlo je `hidden`). Bez oboch zdrojov ostáva fotka a tlačidlo je skryté. Obe témy: odznak a veta z tokenov,
+čipy lišty tmavý papier so svetlým písmom (na bielej fotke 11,7 : 1, na noci 18,7 : 1; tlačidlo tehlová s bielym písmom 5,4 : 1 svetlá, 4,7 : 1 tmavá). Skúšky: `richtarik/majitel/360/nastroje/test-p360.mjs` (sieť pred kliknutím,
+ťahanie, zotrvačnosť, klávesnica, celá obrazovka, zavretie, obmedziť pohyb, bez JS, dĺžky snímok).
 
 ## Texty a SEO
 Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, tlačidlá):
@@ -292,6 +379,8 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   nadpisy, titulky, popisy, názvy značiek, alt texty a typografia v `texty.py` (časť Texty a SEO).
   Nový cenník akcií: PDF do `pdf/`, zmeniť `CENNIK_PDF`, `CENNIK_TEXT`, `CENNIK_LETAK` a dátum v `index.html` (sekcia
   Akcie).
+- Prehliadka predajne 360°: kód „Vložiť mapu“ z Google Máp do `PANORAMA['src']`, skutočná panoráma pod `img/panorama/predajna.jpg`
+  (časť Prehliadka predajne 360°); po zmene `PANORAMA` alebo `prehliadka_blok()` vložiť nový blok ručne aj do `index.html`.
 - Úvod (`index.html`) sa mení ručne (texty, odkazy, karty akcií a noviniek, päta). Po zmene `index.html`, `site.css`
   alebo `site.js`: `node --check assets/site.js` a prejsť úvod na telefóne aj počítači (strih, Prehrať úvod, posun).
 - Fotky úvodu `img/uvod/` sú hotové webové veľkosti fotiek majiteľa (originály má majiteľ). Novú fotku treba vyrobiť

@@ -16,7 +16,7 @@ JE = lambda p: os.path.isfile(os.path.join(KOREN, p))
 STRANKY = [('kontakt.html', 'Kontakt a mapa'), ('sluzby.html', 'Služby'),
            ('doprava.html', 'Doprava na stavbu (autá, podmienky dopravy pri akciách)'),
            ('caste-otazky.html', 'Časté otázky'), ('o-nas.html', 'O nás'),
-           ('galeria/index.html', 'Galéria (predajňa, sklad, dvor, výstavy)')]
+           ('galeria/index.html', 'Galéria (predajňa, sklad, výstavy)')]
 
 W = 'https://www.stavebninyrichtarik.sk/'
 TEL = '0905 622 223'
@@ -46,7 +46,7 @@ q('kontakt-adresa', 'kontakt', 'Kde sa nachádzate?',
 q('kontakt-telefon', 'kontakt', 'Aké máte telefónne číslo?',
   ['Na aké číslo môžem zavolať?', 'telefónne číslo predajne', 'kontakt na predajňu', 'číslo na predajňu', 'mobilné číslo', 'pevná linka'],
   f'Zavolajte nám na mobil {TEL} alebo na pevnú linku 037 651 17 77. Otváracie hodiny: '
-  'pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00.', tel=True)
+  'pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00.', tel=True)
 q('kontakt-email', 'kontakt', 'Aký je váš e-mail?',
   ['Kam môžem napísať?', 'emailová adresa', 'mail', 'môžem vám poslať e-mail', 'kontaktný e-mail'],
   'Napíšte nám na info@stavebninyrichtarik.sk. Pošlite aj zoznam materiálu alebo projekt a pripravíme vám cenovú ponuku.')
@@ -56,7 +56,7 @@ q('kontakt-firma', 'kontakt', 'Aké sú vaše firemné údaje?',
   'IČO 45959846, DIČ SK1083167855.')
 q('kontakt-mapa', 'kontakt', 'Ako sa k vám dostanem?',
   ['navigácia', 'cesta k vám', 'mapa', 'ako k vám prísť autom', 'trasa do predajne'],
-  'Nájdete nás v Nitre v Horných Krškanoch na Novozámockej ulici č. 68 (adresa Novozámocká 62/68). Navigácia: '
+  'Nájdete nás v Nitre – Horných Krškanoch na Novozámockej ulici 62/68. Navigácia: '
   'https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra')
 q('kontakt-parkovanie', 'kontakt', 'Dá sa u vás parkovať?',
   ['parkovisko', 'kde zaparkujem', 'môžem prísť s vozíkom', 'príjazd s prívesom'],
@@ -65,14 +65,14 @@ q('kontakt-parkovanie', 'kontakt', 'Dá sa u vás parkovať?',
 # ---------- hodiny ----------
 q('hodiny', 'hodiny', 'Aké máte otváracie hodiny?',
   ['Kedy máte otvorené?', 'otváracia doba', 'do koľkej máte otvorené', 'od koľkej ste otvorení', 'hodiny predajne'],
-  'Pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00.')
+  'Pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00.')
 q('hodiny-sobota', 'hodiny', 'Máte otvorené aj v sobotu?',
   ['sobota', 'v sobotu do koľkej', 'otvorené cez víkend', 'víkend'],
-  'Áno, v sobotu máme otvorené od 7:00 do 12:00. Cez týždeň od 7:00 do 16:00.')
+  'Áno, v sobotu máme otvorené 7:00 – 12:00, v pracovné dni 7:00 – 16:00.')
 q('hodiny-nedela', 'hodiny', 'Máte otvorené v nedeľu?',
   ['nedeľa', 'v nedeľu', 'sviatky', 'otvorené cez sviatok', 'štátny sviatok'],
-  f'Web uvádza otváracie hodiny len pondelok až piatok 7:00 až 16:00 a sobotu 7:00 až 12:00. Pri sviatkoch sa '
-  f'radšej vopred informujte na {TEL}.', tel=True)
+  f'Otváracie hodiny máme pondelok – piatok 7:00 – 16:00 a v sobotu 7:00 – 12:00. Nedeľu a sviatky si, prosím, '
+  f'overte vopred na {TEL}.', tel=True)
 
 # ---------- služby ----------
 q('sluzby-prehlad', 'sluzby', 'Aké služby ponúkate?',
@@ -89,7 +89,7 @@ q('sluzby-vypocet', 'sluzby', 'Spočítate mi, koľko materiálu potrebujem?',
   ['výpočet spotreby', 'koľko tehál potrebujem', 'koľko potrebujem na dom', 'vypočítate množstvo',
    'koľko kusov na m2', 'koľko vriec omietky', 'spotreba materiálu'],
   'Áno, výpočet spotreby materiálu je zadarmo. Pošlite projekt alebo rozmery na info@stavebninyrichtarik.sk alebo '
-  f'zavolajte na {TEL}. Množstvo vám spočíta personál predajne, ja ho nepočítam.', tel=True)
+  f'zavolajte na {TEL}. Množstvo spočíta personál predajne, ja výpočty nerobím.', tel=True)
 q('sluzby-poradenstvo', 'sluzby', 'Poradíte mi s výberom materiálu?',
   ['poradenstvo', 'neviem čo vybrať', 'odporučíte mi', 'potrebujem poradiť', 'čo je lepšie'],
   f'Áno, poradenstvo je zadarmo. Zaškolený personál vám poradí v predajni alebo na telefóne {TEL}.', tel=True)
@@ -117,8 +117,8 @@ q('doprava', 'doprava', 'Dovezete materiál na stavbu?',
   f'auto 8 t s mechanickou rukou. Cenu dopravy na vašu adresu vám povieme na {TEL}. Viac: {DOPRAVA}', tel=True)
 q('doprava-cena', 'doprava', 'Koľko stojí doprava?',
   ['cena dopravy', 'koľko účtujete za dopravu', 'koľko zaplatím za dovoz', 'doprava zadarmo', 'je doprava zdarma', 'poplatok za dopravu'],
-  f'Cenu dopravy na konkrétnu stavbu vám povie predajňa na {TEL}. Pri niektorých akciách je doprava zdarma, '
-  'napríklad pri celom kamióne Porfix a Ytong, polystyrén domov, montované garáže. Krytina Blachotrapez: doprava '
+  f'Cenu dopravy na konkrétnu stavbu vám povie predajňa na {TEL}. Pri niektorých akciách je doprava zdarma: '
+  'celý kamión Porfix alebo Ytong, polystyrén až domov, montované garáže aj s montážou. Krytina Blachotrapez: doprava '
   f'nad 50 m² 17 € s DPH po celom Slovensku. Viac: {DOPRAVA}', tel=True)
 q('doprava-ruka', 'doprava', 'Máte auto s hydraulickou rukou?',
   ['mechanická ruka', 'vykládka', 'zložíte tovar', 'hydraulická ruka', 'auto s rukou', 'zloženie paliet'],
@@ -129,7 +129,7 @@ q('doprava-slovensko', 'doprava', 'Vozíte aj mimo Nitry?',
   f'Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na {TEL}.', tel=True)
 q('doprava-termin', 'doprava', 'Kedy mi materiál dovezete?',
   ['termín dovozu', 'kedy viete doviezť', 'kedy dovezete', 'ako rýchlo dovezete', 'dodacia lehota', 'zajtra dovoz', 'dokedy dovezete'],
-  f'Termín dovozu závisí od objednávky. Dohodnete ho na {TEL}; termín ja potvrdiť neviem.', tel=True)
+  f'Termín dovozu dohodnete s predajňou na {TEL}, ja ho potvrdiť neviem.', tel=True)
 
 # ---------- zľavy a platba ----------
 q('zlava-karta', 'zlavy', 'Aké zľavy máte so zákazníckou kartou?',
@@ -160,7 +160,7 @@ q('akcie', 'akcie', 'Aké máte aktuálne akcie?',
   + W + f'pdf/662.pdf. Platnosť a cenu vám potvrdíme na {TEL}.', tel=True)
 q('akcie-cennik', 'akcie', 'Kde nájdem cenník?',
   ['cenník', 'cenník akcií', 'pdf cenník', 'ceny tovaru', 'cenník na stiahnutie', 'leták'],
-  'Cenník aktuálnych akcií (aktualizovaný 28. 1. 2026): ' + W + 'pdf/662.pdf. Akciové letáky: ' + W
+  'Cenník akcií z 28. 1. 2026: ' + W + 'pdf/662.pdf. Akciové letáky: ' + W
   + f'letak.html. Ceny ostatného tovaru vám povieme na {TEL}.', tel=True)
 q('akcie-platnost', 'akcie', 'Dokedy platia akcie?',
   ['platnosť akcie', 'je akcia ešte platná', 'do kedy je akcia', 'platí ešte cena'],
@@ -176,9 +176,9 @@ q('cena-cement', 'akcie', 'Koľko stojí cement?',
   f'Cena platí pri platbe v hotovosti. Platnosť vám potvrdíme na {TEL}.', tel=True)
 q('akcia-termobrik', 'akcie', 'Aká je akcia na tehly TermoBRIK?',
   ['Pezinská tehla', 'TermoBRIK cena', 'brúsená tehla', 'Dry systém', 'tehly na dom', 'Leier'],
-  'Pezinská tehla TermoBRIK, brúsená tehla, Dry systém, s pojivom a lepidlom zdarma. Na tehlu vám pripravíme '
-  'individuálnu cenovú ponuku konkrétne na váš dom. Podľa cenníka akcií je doprava zdarma až na stavbu, vykládka je '
-  f'za poplatok. Zavolajte {TEL}.', tel=True)
+  'Pezinská tehla TermoBRIK: brúsená tehla so systémom Dry a pojivom, lepidlo zdarma. Na váš dom pripravíme '
+  'individuálnu cenovú ponuku. Podľa cenníka akcií je doprava až na stavbu zdarma, vykládka za poplatok. '
+  f'Zavolajte {TEL}.', tel=True)
 q('akcia-komin', 'akcie', 'Máte komín Stadreko na sklade?',
   ['komín', 'komín Stadreko cena', 'komínový systém', 'komín akcia', 'Schiedel'],
   'Komín Stadreko máme v akcii priamo na sklade, odber možný ihneď. Ceny kompletných komínov sú v cenníku akcií, '
@@ -194,7 +194,7 @@ q('akcia-fakro', 'akcie', 'Je zľava na strešné okná?',
   'doplnky). V akcii sú aj strešné okná RoofLITE. V katalógu máme aj Velux.')
 q('akcia-porfix-ytong', 'akcie', 'Je doprava zdarma pri Porfixe alebo Ytongu?',
   ['Porfix', 'Ytong', 'pórobetón', 'celý kamión', 'Ytong doprava zadarmo', 'Porfix doprava zdarma'],
-  'Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma až na stavbu.')
+  'Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma: Porfix až domov, Ytong až na stavbu.')
 q('akcia-dlazba', 'akcie', 'Máte akciu na dlažbu?',
   ['zámková dlažba', 'City Stone Design', 'dlažba zľava', 'obrubníky', 'Stadreko dlažba', 'ploty'],
   'Áno. Dlažba City Stone Design má zľavu 15 až 30 % z cenníkových cien (objektové zľavy). V akcii sú aj dlažby '
@@ -247,7 +247,7 @@ q('sortiment-strecha', 'sortiment', 'Aké strešné krytiny máte?',
   'Bramac, Mediterran, Onduline, Icopal a Blachotrapez. Viac: ' + W + 'katalog/stresne-kritiny.html')
 q('sortiment-izolacie', 'sortiment', 'Aké izolácie máte?',
   ['izolácia', 'minerálna vlna', 'Isover', 'Knauf', 'izolácia proti vode', 'radón'],
-  'Izolačný materiál: minerálna vlna, polystyrén, asfaltové pásy, izolácie proti vode a radónu. Značky Knauf '
+  'Izolačný materiál: minerálna vlna, polystyrén, asfaltové pásy a izolácie proti vode a radónu. Značky Knauf '
   'Insulation, Isover, Nobasil, Icopal, Den Braven a Climowool. Viac: ' + W + 'katalog/izolacny-material.html')
 q('sortiment-zmesi', 'sortiment', 'Máte cement, vápno a omietky?',
   ['sypké zmesi', 'vápno', 'Baumit', 'Holcim', 'stierky', 'samonivelačná hmota'],
@@ -255,7 +255,7 @@ q('sortiment-zmesi', 'sortiment', 'Máte cement, vápno a omietky?',
   'Holcim, Murexin a Univerbau. Viac: ' + W + 'katalog/sypke-zmesy.html')
 q('sortiment-dvere', 'sortiment', 'Predávate dvere a okná?',
   ['dvere', 'vchodové dvere', 'interiérové dvere', 'Masonite', 'okná'],
-  'Áno: interiérové, vchodové, bezpečnostné a posuvné dvere (Masonite), okná drevené, dvojsklo. Viac: '
+  'Áno: interiérové, vchodové, bezpečnostné a posuvné dvere (Masonite) a drevené okná s dvojsklom. Viac: '
   + W + 'katalog/dvere-okna.html')
 q('sortiment-hutny', 'sortiment', 'Máte betonársku oceľ a siete?',
   ['hutný materiál', 'kari siete', 'oceľ', 'plechy', 'profily', 'zárubne', 'garážová brána'],
@@ -294,7 +294,7 @@ q('asistent-co-vie', 'asistent', 'S čím mi viete pomôcť?',
   + (' Časté otázky: ' + W + 'caste-otazky.html' if JE('caste-otazky.html') else ''))
 
 if __name__ == '__main__':
-    data = {'verzia': '2026-11-05', 'zdroj': 'asistent/znalosti/richtarik.md', 'temy': TEMY, 'otazky': O}
+    data = {'verzia': '2026-11-06', 'zdroj': 'asistent/znalosti/richtarik.md', 'temy': TEMY, 'otazky': O}
     text = json.dumps(data, ensure_ascii=False, indent=1)
     for ciel in ('asistent/znalosti/richtarik-otazky.json', 'assets/asistent-otazky.json'):
         with open(os.path.join(KOREN, ciel), 'w', encoding='utf-8') as f: f.write(text)

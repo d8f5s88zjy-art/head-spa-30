@@ -1,10 +1,11 @@
-/* Uvítanie „Brána“ pred úvodom (len index.html, skript hneď za šablónou #br-tpl pred <main>; build.py:uvitanie_bloky()
-   ho zmenší, kontrola_uvodu() overí zhodu). Pri triede br-ide vloží prekryv zo šablóny ešte pred prvým vykreslením.
-   Brána drží zatvorená, kým sa dá prečítať pozdrav (DRZ od prvého vykreslenia) a kým nie je dekódovaná fotka dvora (tá
+/* Uvítanie „Brána“ pred úvodom (len index.html, skript pred <main>; build.py:uvitanie_bloky() ho zmenší, kontrola_uvodu()
+   overí zhodu). Prekryv .br je v HTML ako prvý prvok <body>, takže pozdrav je v prvom vykreslení (CSS ho ukáže len pri
+   triede br-ide). Bez triedy br-ide skript prekryv odstráni.
+   Brána drží zatvorená, kým sa dá prečítať pozdrav (DRZ od prvého vykreslenia) a kým nie je dekódovaná fotka predajne (tá
    istá ako v úvode, žiadne bajty navyše). Celý scenár sa vopred v nečinnom čase vytvorí pozastavený (WAAPI
    s oneskoreniami, beží v kompozítore) a v prvej snímke po t0 sa spustí naraz: krídla sa rozídu do strán, kamera vojde
    dnu, objaví sa odznak a štítky, okno s fotkou sa usadí presne do rámu úvodu (.uv-ram), vyjde nadpis a ponuka úvodu,
-   prekryv sa prelne a štítok „Náš dvor“ sa vrazí. Koniec určujú prísľuby finished, nie časovače; na konci sa prekryv
+   prekryv sa prelne a štítok „Naša predajňa“ sa vrazí. Koniec určujú prísľuby finished, nie časovače; na konci sa prekryv
    odstráni a vyšle sa udalosť br-koniec {preskocene, rychlo, t} (strih zásob a asistent v site.js čakajú na ňu).
    Triedy na <html> sa nemenia.
    Ťuk, klik, koliesko, kláves (aj Tab), posun, zmena šírky okna alebo skrytie karty uvítanie hneď ukončí: úvod je
@@ -12,8 +13,9 @@
    nepripravená včas: brána len pozdraví a otvorí sa rovno na úvod (rýchla cesta). Poistky: CSS skryje prekryv 3,2 s
    po prvom vykreslení, skript ho odstráni najneskôr po 6 s. Scenár po desatinách sekundy: README, časť Úvod. */
 (function (d, w) {
-  var h = d.documentElement, tpl = d.getElementById('br-tpl');
-  if (!tpl || !h.classList.contains('br-ide')) return;
+  var h = d.documentElement, ov0 = d.querySelector('body>.br');
+  if (!ov0) return;
+  if (!h.classList.contains('br-ide')) return ov0.parentNode.removeChild(ov0);
   // časy v ms: DRZ pozdrav od prvého vykreslenia, CAKAJ najdlhšie čakanie na fotku (CAKAJP pri rýchlej ceste), POMALE
   // hranica pomalej siete, ďalej od otvorenia t0 (násobí ich k, aby bol úvod použiteľný do CIEL od navigácie; k ≥ KMIN)
   var DRZ = 380, CAKAJ = 900, CAKAJP = 700, POMALE = 1500, CIEL = 2450, KMIN = 0.72, OTV = 500, DOK = 600, DOKD = 520, KONIEC = DOK + DOKD, ZMIZ = 90;
@@ -59,10 +61,10 @@
     ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (n) { w[f](n, pusti, { capture: true, passive: true }); });
     w[f]('scroll', posun, { passive: true }); w[f]('resize', otoc); w[f]('pagehide', von); d[f]('visibilitychange', skry);
   }
-  function kridla(ms) {   // krídla sa rozídu do strán ako posuvná brána, polovice pozdravu idú s nimi
-    var o = { duration: ms, easing: kr('clona'), fill: 'both' };
-    A(ov.querySelector('.br-l'), [{ transform: 'none' }, { transform: 'translateX(-106%)' }], o);
-    A(ov.querySelector('.br-p'), [{ transform: 'none' }, { transform: 'translateX(106%)' }], o);
+  function kridla(ms) {   // krídla sa rozídu do strán ako posuvná brána (na telefóne hore a dole, RP2-07), slová pozdravu idú s nimi
+    var o = { duration: ms, easing: kr('clona'), fill: 'both' }, x = tel ? 'translateY(' : 'translateX(';
+    A(ov.querySelector('.br-l'), [{ transform: 'none' }, { transform: x + '-106%)' }], o);
+    A(ov.querySelector('.br-p'), [{ transform: 'none' }, { transform: x + '106%)' }], o);
   }
   // rýchla cesta: brána len pozdraví a otvorí sa rovno na úvod (bez celej fotky); otvára sa, keď je fotka úvodu
   // vykreslená (najneskôr CAKAJP od prvého vykreslenia), aby sa počas pohybu krídel nedekódovala a neodkryl sa prázdny rám
@@ -131,7 +133,7 @@
       A(s, [{ transform: 'translateY(112%)' }, { transform: 'none' }], { duration: T(440), delay: T(DOK + 140 + j * 60), easing: vy, fill: 'backwards' }, txt);
     });
     A(d.querySelector('.uv-b'), [{ opacity: .2, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(DOK + 200), easing: vy, fill: 'backwards' }, txt);
-    // prelnutie do skutočného úvodu (rovnaká poloha, krátke prelnutie skryje iné prevzorkovanie) a pečiatka „Náš dvor“
+    // prelnutie do skutočného úvodu (rovnaká poloha, krátke prelnutie skryje iné prevzorkovanie) a pečiatka „Naša predajňa“
     A(ov, [{ opacity: 1 }, { opacity: 0 }], { duration: ZMIZ, delay: T(KONIEC), fill: 'forwards' });
     A(ram.querySelector('.uv-ram>.uv-stitok'), [{ opacity: 0, transform: 'scale(1.35)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(KONIEC) + 60, easing: kr('pecat'), fill: 'backwards' }, txt);
     an.concat(txt).forEach(function (a) { a.pause(); });
@@ -149,17 +151,16 @@
   }
 
   try {
-    ov = tpl.content.firstElementChild.cloneNode(true);
+    ov = ov0;
     okno = ov.querySelector('.br-okno'); sc = ov.querySelector('.br-scena'); zO = ov.querySelector('.uv-znak');
     tel = w.matchMedia('(max-width:700px)').matches;   // rozmery sa tu nečítajú (vynútili by prepočet štýlov počas načítania)
     if (!tel) { DOK = 560; DOKD = 440; KONIEC = DOK + DOKD; }   // počítač: veľký rám, fotka sa usádza na kratšiu vzdialenosť
-    ov.querySelector('.br-kam').style.transformOrigin = tel ? '60% 55%' : '78% 60%';   // úbežník uličky medzi paletami
+    ov.querySelector('.br-kam').style.transformOrigin = tel ? '55% 50%' : '82% 52%';   // úbežník cesty medzi paletami (fotka 11)
     [].forEach.call(ov.querySelectorAll('.br-st'), function (s) {
       var m = s.getAttribute(tel ? 'data-tel' : 'data-pc');
       if (!m) return s.remove();
       m = m.split(' '); s.style.left = m[0] * 100 + '%'; s.style.top = m[1] * 100 + '%';
     });
-    tpl.parentNode.insertBefore(ov, tpl);   // bez čítania rozmerov: veľkosť scény rieši CSS (container query)
     zap(1);
     var img = ov.querySelector('.br-foto');
     // otvorí sa v prvej snímke po t0 = max(prvé vykreslenie + DRZ, fotka pripravená); fotka musí byť pripravená do

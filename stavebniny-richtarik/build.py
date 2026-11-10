@@ -21,8 +21,8 @@ OLD = 'http://www.stavebninyrichtarik.sk'
 # produkčná adresa webu (koreň hostingu); canonical, og:url, og:image a sitemap.xml sú absolútne na túto doménu.
 # Náhľad v podpriečinku (GitHub Pages) funguje ďalej, lebo všetky odkazy v stránkach ostávajú relatívne.
 DOMENA = 'https://www.stavebninyrichtarik.sk/'
-OG_IMG = ('img/og-dvor.jpg', 1200, 630)   # výrez skutočnej fotky dvora u4, bez auta (pôvod v img/FOTKY.md)
-OG_ALT = 'Dvor Stavebnín Richtárik v Nitre plný materiálu na paletách'
+OG_IMG = ('img/og-stavebniny-richtarik.jpg', 1200, 630)   # nové logo RS a názov na papieri webu (majitel/podklady/assets/og, 9. 11. 2026)
+OG_ALT = 'Logo RS a názov Stavebniny Richtárik, predaj stavebného materiálu v celom sortimente, Nitra – Horné Krškany'
 
 
 def webp_rozmer(cesta):
@@ -74,6 +74,17 @@ FIRMA = {
     'email': 'info@stavebninyrichtarik.sk', 'ico': '45959846', 'dic': 'SK1083167855',
     'mapa': 'https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra',
 }
+# Prehliadka predajne 360° priamo na stránke (majiteľ 9. 11. 2026: panoramatický pohľad z Googlu „keby sa dal použiť aj v našej
+# stránke“; Lajo 9. 11.: nikoho neposielať na Google). Dva zdroje, oba sa načítajú až po kliknutí (pred ním 0 požiadaviek na Google):
+#  'src'     – kód „Vložiť mapu“ panorámy z Google Máp (src rámu https://www.google.com/maps/embed?pb=…); prázdne = rám sa nepoužije,
+#              postup získania je v README (Údržba) a richtarik/majitel/360/ZAPIS.md,
+#  'obrazok' – vlastná equirektangulárna panoráma 2:1 (img/panorama/predajna.jpg) pre prehliadač zdroj/panorama.js; dnes skúšobný
+#              obraz vygenerovaný lokálne (nápis „skúšobná panoráma“), skutočný záber nahradí súbor pod tým istým názvom.
+# Prednosť má 'src'; bez oboch ostáva v komponente fotka a tlačidlo je skryté.
+PANORAMA = {'src': '', 'obrazok': 'img/panorama/predajna.jpg'}
+# Stavebná firma FIZO SK (brat majiteľa; majiteľ 9. 11. 2026: „odkaz aj na bratovu stránku – www.fizosk.sk“). Popis len
+# z adresára a titulku stránky (majitel/dodavatelia/ZAPIS.md časť 3), rodinný vzťah ani odber materiálu sa neuvádzajú.
+FIZOSK = 'https://www.fizosk.sk/'
 
 # Kategórie katalógu: slug pôvodného webu -> pekný názov, popis, značky, fotka na karte
 KATEGORIE = [
@@ -81,17 +92,17 @@ KATEGORIE = [
     ('murovaci-material', 'Murovací materiál', 'Tehly, pórobetónové a betónové tvárnice, preklady a stropné systémy.', 'Pezinské tehelne, Ytong, Porfix, Betonárka Nadlice', 'tehla'),
     ('stresne-kritiny', 'Strešné krytiny', 'Pálené a betónové škridly, plechové krytiny, asfaltové pásy a príslušenstvo.', 'Tondach, Bramac, Mediterran, Onduline, Icopal, Blachotrapez', 'strecha'),
     ('dlazby', 'Dlažby a ploty', 'Zámkové dlažby, terasové platne, obrubníky, palisády a plotové systémy.', 'City Stone Design, Premac, Stadreko', 'dlazba'),
-    ('izolacny-material', 'Izolačný materiál', 'Minerálna vlna, polystyrén, asfaltové pásy, izolácie proti vode a radónu.', 'Knauf Insulation, Isover, Nobasil, Icopal, Den Braven, Climowool', 'izolacia'),
+    ('izolacny-material', 'Izolačný materiál', 'Minerálna vlna, polystyrén, asfaltové pásy a izolácie proti vode a radónu.', 'Knauf Insulation, Isover, Nobasil, Icopal, Den Braven, Climowool', 'izolacia'),
     ('kominove-systemy', 'Komínové systémy', 'Certifikované komíny so šamotovou alebo nerezovou vložkou.', 'Stadreko, Schiedel', 'komin'),
-    ('stresne-okna', 'Strešné okná', 'Kyvné a výklopné strešné okná, výlezy, svetlíky, schody a doplnky.', 'Velux, Fakro, RoofLITE', 'okno-strecha'),
+    ('stresne-okna', 'Strešné okná', 'Kyvné a výklopné strešné okná, výlezy, svetlíky, podkrovné schody a doplnky.', 'Velux, Fakro, RoofLITE', 'okno-strecha'),
     ('hutny-material', 'Hutný materiál', 'Betonárska oceľ, siete, plechy, profily, rúry, zárubne a garážové brány.', 'Yssel Steel', 'hutny'),
-    ('dvere---okna', 'Dvere a okná', 'Interiérové, vchodové, bezpečnostné a posuvné dvere. Okná drevené, dvojsklo.', 'Masonite', 'dvere'),
-    ('stavebne-rezivo', 'Stavebné rezivo', 'Dosky, hranoly, foršne, strešné laty, tatranský profil, krovy na mieru.', 'Drepex', 'rezivo'),
+    ('dvere---okna', 'Dvere a okná', 'Interiérové, vchodové, bezpečnostné a posuvné dvere, drevené okná s dvojsklom.', 'Masonite', 'dvere'),
+    ('stavebne-rezivo', 'Stavebné rezivo', 'Dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru.', 'Drepex', 'rezivo'),
     ('stavebne-naradie-doplnky', 'Náradie a doplnky', 'Stavebné, elektrické a záhradné náradie, spojovací materiál, mriežky a poklopy.', 'Slovakia Trend, DS Haco', 'naradie'),
     ('podhlady---pvc', 'Podhľady a PVC', 'Plastové zatrávňovacie dlažby, plotovky, profily, platne a káblové žľaby.', 'Transform Recykling', 'zahrada'),
     ('sadrokartonovy---zateplovaci-system', 'Sadrokartón a zateplenie', 'Suchá výstavba, profily, polystyrén, sklotex, fólie a strešné doplnky.', 'Stavebné profily, Masterplast', 'sadrokarton'),
-    ('fasadny-system', 'Fasádny systém', 'Silikónové, silikátové a mozaikové omietky, fasádne farby, zatepľovacie systémy.', 'Baumit, Univerbau', 'fasada'),
-    ('farby---laky', 'Farby a laky', 'Interiérové a fasádne farby, laky, lepidlá, riedidlá, tónovacie systémy.', 'Het, Chemolak, Chemos, Elastik', 'farby'),
+    ('fasadny-system', 'Fasádny systém', 'Silikónové, silikátové a mozaikové omietky, fasádne farby a zatepľovacie systémy.', 'Baumit, Univerbau', 'fasada'),
+    ('farby---laky', 'Farby a laky', 'Interiérové a fasádne farby, laky, lepidlá, riedidlá a tónovacie systémy.', 'Het, Chemolak, Chemos, Elastik', 'farby'),
 ]
 KAT = {k[0]: k for k in KATEGORIE}
 
@@ -108,23 +119,23 @@ ZLAVA_AKCIE = ('Zľava z akciových cien so zákazníckou kartou: 5\u00a0% pri p
 # Karty akcií v poradí a znení pôvodnej stránky Akcie (zdroj/pages.json „akcie“; menený len pravopis a veľké písmená).
 # slug: podstránka akcie (akcie/<slug>.html), alebo celý slug inej stránky (karta bez letáku vedie tam).
 AKCIE_KARTY = [
-    ('pezinska-tehla-termobrik', 'Akciová cena', 'Pezinská tehla TermoBRIK', 'Brúsené tehly TermoBRIK, systém Dry, lepidlo zdarma. Na váš dom pripravíme individuálnu cenovú ponuku a pokúsime sa o čo najlepšiu cenu. Doprava až na stavbu zdarma, vykládka za poplatok.'),
+    ('pezinska-tehla-termobrik', 'Akciová cena', 'Pezinská tehla TermoBRIK', 'Brúsené tehly TermoBRIK so systémom Dry, lepidlo zdarma. Na váš dom pripravíme individuálnu cenovú ponuku. Doprava až na stavbu zdarma, vykládka za poplatok.'),
     ('komin-qatro', 'Na sklade', 'Komín Stadreko', 'Certifikovaný komínový systém priamo na sklade, odber ihneď. Napríklad kompletný komín 6 m, ø 160/90 za 618 € s DPH.'),
-    ('krytina-blachotrapez', 'Doprava 17 €', 'Krytina Blachotrapez', 'Škridloplech, trapézové plechy. Doprava nad 50 m² – 17 € s DPH po celom Slovensku. Do 50 m² + ochranná fólia – 0,55 €/m². Podlimitná objednávka do 30 m² + 1,20 €/m². Vykládka tovaru 40 € s DPH.'),
+    ('krytina-blachotrapez', 'Doprava 17 €', 'Krytina Blachotrapez', 'Pri odbere nad 50 m²: škridloplech od 9,22 €/m², trapézové plechy od 8,28 €/m² a doprava po celom Slovensku za 17 €, ceny s DPH. Vykládka 40 € s DPH.'),
     ('katalog-roduktov__dlazby', '15 – 30 %', 'Dlažba City Stone Design', 'Zľava 15 – 30 % z cenníkových cien (objektové zľavy).'),
-    ('dlazby--ploty-stadreko', 'Akciová cena', 'Dlažby a ploty Stadreko', 'Betónové dlažby, ploty, tvárnice, striešky, svahovky, palisády, zatrávňovačky, obrubníky a komíny za akciové ceny.'),
-    ('okna--schody-fakro', 'Zľava 20 %', 'Okná a schody Fakro', 'Strešné okná, podkrovné stropné sklápacie schody, strešné doplnky. Rôzne druhy a rozmery.'),
-    ('stavebne-rezivo', 'Akciová cena', 'Stavebné rezivo', 'Dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo a krovy na mieru za akciové ceny.'),
-    ('stavebne-naradie', 'Na sklade', 'Stavebné náradie', 'Náradie na stavbu, do záhrady, do domácnosti a do dielne. Široká ponuka priamo na sklade.'),
-    ('sadrokartonovy---zateplovaci-system', 'Doprava zdarma', 'Zatepľovací a sadrokartónový systém', 'Kompletný sortiment výrobkov. Polystyrén vám dovezieme priamo domov zdarma.'),
-    ('porfix', 'Špeciálne zľavy', 'Porfix', 'Obvodové murivo, priečky, strop, lepidlá a malty. Pri celom kamióne doprava až domov zdarma.'),
-    ('ytong', 'Špeciálne zľavy', 'Ytong', 'Špeciálne zľavy. Pri celom kamióne doprava zdarma až na stavbu.'),
-    ('novinky__garaze--zahradne-domceky', 'Akciová cena', 'Garáže, záhradné domčeky', 'Montované garáže a záhradné domčeky za akciové ceny. Doprava aj montáž po celom Slovensku zdarma.'),
-    ('betonove-tvarnice', 'Znížené ceny', 'Betónové tvárnice', 'Znížené ceny na základové aj stĺpikové tvárnice, napríklad šalovacia tvárnica 50 × 25 × 12 za 1,28 € s DPH.'),
-    ('cement-325-r', '4,42 €/vrece', 'Cement 325 R a 425 R', 'Cement 325 R, 25 kg – 4,42 €/vrece s DPH. Cement 425 R, 25 kg – 5,18 €/vrece s DPH. Cena platí pri platbe v hotovosti.'),
-    ('sakret', 'Znížené ceny', 'Lepidlá a omietky Univerbau', 'Znížené ceny: lepidlo mrazuvzdorné, na polystyrén, kvádre, flexibilné, nivelit, hrubé omietky, putzovky, murovacie malty, betónový poter a iné.'),
-    ('nobasil', 'Akciová cena', 'Climowool 039', 'Šikmé strechy, vnútorné steny, stropy, podlahy, fasády, ploché strechy a technické izolácie. Napríklad 15 cm za 29,88 € za balenie s DPH.'),
-    ('stresne-okna-rooflite', 'Akciová cena', 'Strešné okná RoofLITE', 'Napríklad Solid Pine 78 × 118 s lemovaním TFX za 283 € s DPH. Rôzne rozmery a druhy.'),
+    ('dlazby--ploty-stadreko', 'Akciová cena', 'Dlažby a ploty Stadreko', 'Dlažby, obrubníky, plotové tvárnice, striešky, svahovky, palisády a zatrávňovačky za akciové ceny, napríklad dlažba Holland od 10,45 €/m² s DPH.'),
+    ('okna--schody-fakro', 'Zľava 20 %', 'Okná a schody Fakro', 'Strešné okná, podkrovné sklápacie schody a strešné doplnky so zľavou 20 %, v rôznych druhoch a rozmeroch.'),
+    ('stavebne-rezivo', 'Akciová cena', 'Stavebné rezivo', 'Dosky, hranoly, strešné laty, foršne, tatranský obklad, palivové drevo a krovy na mieru za akciové ceny, rezivo priamo na sklade.'),
+    ('stavebne-naradie', 'Na sklade', 'Stavebné náradie', 'Náradie na stavbu, do dielne, do záhrady aj do domácnosti, priamo na sklade.'),
+    ('sadrokartonovy---zateplovaci-system', 'Doprava zdarma', 'Zatepľovací a sadrokartónový systém', 'Sadrokartón, profily, polystyrén a príslušenstvo v kompletnom sortimente. Polystyrén vám dovezieme domov zdarma.'),
+    ('porfix', 'Špeciálne zľavy', 'Porfix', 'Tvárnice na obvodové murivo a priečky, strop, lepidlá a malty. Pri celom kamióne doprava až domov zdarma.'),
+    ('ytong', 'Špeciálne zľavy', 'Ytong', 'Pórobetónové tvárnice, preklady a stropné dielce. Pri celom kamióne doprava zdarma až na stavbu.'),
+    ('novinky__garaze--zahradne-domceky', 'Akciová cena', 'Garáže, záhradné domčeky', 'Montované plechové garáže a záhradné domčeky za akciové ceny. Doprava aj montáž po celom Slovensku zdarma.'),
+    ('betonove-tvarnice', 'Znížené ceny', 'Betónové tvárnice', 'Presné tvárnice s perom a drážkou: šalovacie od 1,28 € a stĺpové od 1,57 € za kus s DPH.'),
+    ('cement-325-r', '4,42 €/vrece', 'Cement 325 R a 425 R', 'Cement 325 R za 4,42 € a 425 R za 5,18 € za vrece 25 kg s DPH. Ceny platia pri platbe v hotovosti.'),
+    ('sakret', 'Znížené ceny', 'Lepidlá a omietky Univerbau', 'Lepidlá mrazuvzdorné, na polystyrén a na kvádre, flexibilné lepidlá, nivelit, hrubé omietky, murovacie malty a betónový poter za znížené ceny.'),
+    ('nobasil', 'Akciová cena', 'Climowool 039', 'Izolácia na šikmé a ploché strechy, steny, stropy, podlahy a fasády, napríklad hrúbka 15 cm za 29,88 € za balenie s DPH.'),
+    ('stresne-okna-rooflite', 'Akciová cena', 'Strešné okná RoofLITE', 'Strešné okno Solid Pine 78 × 118 s lemovaním TFX za 283 € s DPH, ďalšie rozmery a druhy za akciové ceny.'),
 ]
 # karty bez letáku: text odkazu
 AKCIE_ODKAZ = {'katalog-roduktov__dlazby': 'City Stone Design v katalógu', 'novinky__garaze--zahradne-domceky': 'Garáže a domčeky'}
@@ -165,20 +176,19 @@ PONUKA_UVOD = {
                                 'prevetrané podlahy, pivničné svetlíky, vetracie šachty, mrežové rošty – Slovakia Trend, DS Haco.',
 }
 # úvodný text pôvodného webu o sortimente a nákupe (zdroj „uvod“), doslova; na stránke Katalóg
-SORTIMENT_UVOD = ('V sortimente tovarov v našich stavebninách nájdete produkty popredných slovenských, ale i svetových výrobcov. '
-                  'Systém zliav dohodnutý s výrobcami materiálu nám dovoľuje predávať vo výhodných cenách stavebným firmám, individuálnym '
-                  'stavebníkom, ako aj spolupracujúcim stavebninám. Materiál dopravíme vlastnou nákladnou dopravou na miesto stavby, ktoré '
-                  'určíte, a to v rámci celého Slovenska. V našich stavebninách máte možnosť kúpiť stavebný materiál na splátky cez Quatro '
-                  'a úplnou samozrejmosťou je aj platba (cez terminál) platobnými kartami. Tiež vám zdarma vypracujeme cenové ponuky '
-                  'a samozrejme aj poradíme.')
+SORTIMENT_UVOD = ('V našich stavebninách nájdete produkty popredných slovenských aj svetových výrobcov. Systém zliav dohodnutý '
+                  's výrobcami nám dovoľuje predávať za výhodné ceny stavebným firmám, individuálnym stavebníkom aj spolupracujúcim '
+                  'stavebninám. Materiál dopravíme vlastnou nákladnou dopravou na miesto stavby, ktoré určíte, po celom Slovensku. '
+                  'Stavebný materiál môžete kúpiť aj na splátky cez Quatro a platiť platobnou kartou cez terminál. Cenové ponuky '
+                  'a poradenstvo sú u nás zadarmo.')
 
 NOVINKY_POPIS = {
-    'dekoracne-kamene': 'Mramorový okruhliak, Nero Ebono a kamenná kôra v 25 kg vreciach, ceny s DPH.',
+    'dekoracne-kamene': 'Biely mramorový okruhliak, čierny Nero Ebono a kamenná kôra vo vreciach po 25 kg, ceny s DPH.',
     'topstone-oprava-starych-chodnikov': 'Kamenný koberec Bianka na úpravu schodísk, balkónov, výjazdov, vstupov, dvorov a chodníkov.',
-    'delap--ohybny-kamenny-obklad': 'Ohybný obklad z prírodného kameňa, akciová cena 17,80 € za m² s DPH.',
+    'delap--ohybny-kamenny-obklad': 'Prírodný kameň v ohybných pásoch, 7 tvarov, balenie 4 m², akciová cena 17,80 €/m² s DPH.',
     'magic-floor-vynilova-podlaha': 'Vinylové podlahy Magic Floor do domácnosti aj do priemyselných priestorov.',
     'vyrobky-z-plastu': 'Zatrávňovacie dlažby, chodníky, plotovky, profily a palety z recyklovaného plastu.',
-    'garaze--zahradne-domceky': 'Montované plechové garáže na mieru, doprava a montáž po celom Slovensku zdarma.',
+    'garaze--zahradne-domceky': 'Montované plechové garáže a záhradné domčeky, doprava a montáž po celom Slovensku zdarma.',
     'ekostyren': 'Plnivo do betónu z polystyrénovej drte, ktoré zlepší jeho tepelnoizolačné vlastnosti.',
     'betonove--vyrobky': 'Šalovacie diely, tvárnice a betónové prvky za akciové ceny.',
 }
@@ -195,11 +205,11 @@ HOOKY = {
     'stresne-okna': 'Strešné okná Velux, Fakro a RoofLITE, výlezy, svetlíky a podkrovné schody. Akcia: okná a schody Fakro so zľavou 20 %.',
     'hutny-material': 'Betonárska oceľ, siete, plechy, profily, rúry, oceľové zárubne a garážové brány. Materiál vám dovezieme na miesto stavby, ktoré určíte.',
     'dvere---okna': 'Interiérové, vchodové a bezpečnostné dvere Masonite v siedmich dekoroch. Bežné druhy máme priamo na sklade, ostatné na objednávku.',
-    'stavebne-rezivo': 'Dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru. Rezivo je priamo na sklade, v ponuke aj palivové drevo agát.',
-    'stavebne-naradie-doplnky': 'Náradie na stavbu, do dielne aj do záhrady, spojovací materiál, mriežky a poklopy. Širokú ponuku náradia máme priamo na sklade.',
-    'podhlady---pvc': 'Zatrávňovacie dlažby, chodníky, plotovky, profily a palety z recyklovaného plastu. Sme výhradný predajca pre Nitru a okolie.',
+    'stavebne-rezivo': 'Dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru. Rezivo máme priamo na sklade, v ponuke je aj palivové drevo agát.',
+    'stavebne-naradie-doplnky': 'Náradie na stavbu, do dielne aj do záhrady, spojovací materiál, mriežky a poklopy. Náradie máme priamo na sklade.',
+    'podhlady---pvc': 'Zatrávňovacie dlažby, chodníky, plotovky, profily a palety z recyklovaného plastu. Sme výhradný predajca Transform Recykling pre Nitru a okolie.',
     'sadrokartonovy---zateplovaci-system': 'Sadrokartón, profily, polystyrén, sklotex, fólie a strešné doplnky. Polystyrén vám dovezieme domov zdarma.',
-    'fasadny-system': 'Omietky a fasádne farby Baumit, Univerbau a Delap, zatepľovacie systémy. Spotrebu na m² fasády vám spočítame zadarmo.',
+    'fasadny-system': 'Omietky a fasádne farby Baumit, Univerbau a Delap, zatepľovacie systémy. Spotrebu na vašu fasádu vám spočítame zadarmo.',
     'farby---laky': 'Interiérové a fasádne farby, laky, lepidlá a riedidlá Het, Chemolak, Chemos a Elastik. Čo nie je na sklade, zabezpečíme na požiadanie.',
 }
 
@@ -250,6 +260,12 @@ def nadpisy(t):
         at = re.sub(r'class="([^"]*)"', r'class="\1 h3"', at) if 'class="' in at else at + ' class="h3"'
         return f'<h2{at}>{m.group(3)}</h2>'
     return t[:i] + re.sub(r'<h([23])\b([^>]*)>(.*?)</h\1>', f, t[i:j], flags=re.S) + t[j:]
+
+
+def drazky(t):
+    """Nadpisy sekcií (h2.sh s triedou rv) dostanú text v drážke <span class="dr"><span>…</span></span>: pri odhalení
+    pri posune vyjde zdola ako riadok H1 (RP2-06, site.css Pohybový systém časť 4A). Text ani poradie sa nemenia."""
+    return re.sub(r'(<h2 class="sh rv"[^>]*>)<span>((?:(?!</?span\b).)*?)</span>', r'\1<span class="dr"><span>\2</span></span>', t, flags=re.S)
 
 
 def nice_slug(s):
@@ -484,7 +500,7 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#faf8f4'   # svetlý podklad webu (theme-color, manifest, ikona)
+FARBA = '#faf8f4'   # svetlý podklad webu (theme-color, manifest, ikona); v tmavej téme ju skript TEMA_HEAD prepíše na #121110
 
 
 def zmensi_js(s):
@@ -521,10 +537,21 @@ def prechody_head():
 PRECHODY_HEAD = prechody_head()
 
 
+def tema_head():
+    """Skript témy podkladu (zdroj zdroj/tema-head.js): pred štýlom každej stránky nastaví data-tema="tmava" na <html> z ?tema=
+    alebo z localStorage ešte pred prvým vykreslením (bez bliku svetlej). Rovnaký blok je ručne v index.html (kontrola_uvodu)
+    a medzi značkami <!--tema--> v asistent/ochrana-udajov.html (ochrana_prechody). Tokeny: site.css, časť Tmavá téma."""
+    return '<script>' + zmensi_js(open(os.path.join(ROOT, 'zdroj', 'tema-head.js'), encoding='utf-8').read()) + '</script>\n'
+
+
+TEMA_HEAD = tema_head()
+
+
 def uvitanie_bloky():
     """Uvítanie „Brána“ pred úvodom (len index.html): štyri bloky zo zdroj/uvitanie-head.js, uvitanie.css,
-    uvitanie.html a uvitanie.js. Úvod je ručný, build.py ho neprepisuje: bloky sa vložia ručne (head a style pred skript
-    uv-ide v <head>, šablóna a skript za hlavičkou a menu tesne pred <main>, aby prvá snímka mala hlavičku) a kontrola_uvodu() overí, že sú v index.html
+    uvitanie.html a uvitanie.js. Úvod je ručný, build.py ho neprepisuje: bloky sa vložia ručne (zdroj/uvitanie_vloz.py:
+    head a style pred skript uv-ide v <head>, prekryv ako prvý prvok <body>, aby bol pozdrav v prvom vykreslení, skript
+    za hlavičkou a menu tesne pred <main>) a kontrola_uvodu() overí, že sú v index.html
     práve raz a zhodujú sa so zdrojom. Vypnutie: VYP = 1 v uvitanie-head.js alebo zmazať štyri bloky (README, Úvod)."""
     z = lambda n: open(os.path.join(ROOT, 'zdroj', n), encoding='utf-8').read()
     tpl = ''.join(r.strip() for r in re.sub(r'<!--.*?-->', '', z('uvitanie.html'), flags=re.S).split('\n'))
@@ -535,7 +562,7 @@ def uvitanie_bloky():
 
 
 # Fotka v hlavičke podstránky: ostrá, v ráme (počítač vpravo do 520 px, telefón pod textom celou šírkou obsahu, výška 230 px),
-# bez stmavenia a bez paralaxy. Skutočné fotky dvora (img/uvod, existujúce šírky AVIF a WebP) a áut firmy (img/p) tam, kde
+# bez stmavenia a bez paralaxy. Skutočné fotky areálu predajne (img/uvod, existujúce šírky AVIF a WebP) a áut firmy (img/p) tam, kde
 # ukazujú presne ten tovar alebo firmu; ilustračné fotky img/hd (verzia 1200 px, q80) len pri kategóriách tovaru.
 # Výrez: object-position drží palety a tovar v zábere.
 UVOD_FOTO = {   # názov: (šírky v názvoch súborov, skutočný rozmer najväčšieho, object-position)
@@ -549,26 +576,75 @@ UVOD_FOTO = {   # názov: (šírky v názvoch súborov, skutočný rozmer najvä
     'dvor-predajna': ((800, 1200), (1200, 800), '28% 55%'),
 }
 FOTO_SIZES = '(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px'
-# Fotka hlavičky podľa stránky (prednosť pred head_img volajúceho): skutočný tovar z dvora pri tom istom tovare, dvor pri
-# prehľadových stránkach a Kontakte (v tele Kontaktu je iný záber dvora), auto firmy pri Službách; ostatné akcie a novinky
+# Fotky od majiteľa (e-mail 8./9. 11. 2026, snímky ~1320 px upravené vzhľadom Svetlé ráno; zápis majitel/podklady/assets/ZAPIS.md):
+# img/predajna/<názov>-<šírka>.avif|webp, šírky 480/720/960/1290 (1290 ≈ 1:1 so zdrojom) a 1720 (zväčšenie 1,33×, len na celú
+# šírku okna); zvislé výrezy -t- pre telefón. Výrezy (object-position) držia tovar a predajňu v zábere. Úvodná fotka 11 je
+# provizórna, kým majiteľ nepotvrdí „fotku číslo 5“ (hárok majitel/podklady/fotky-cislovane.jpg). Dve autá (10) sú len
+# v Doprave a Službách, nie na úvode.
+PREDAJNA_POS = {'01-predajna-naradie': '50% 50%', '02-tvarnice-obloha': '50% 55%', '03-baumit-sklad': '50% 55%', '04-ytong-porfix': '55% 50%',
+                '05-hala-vozik': '50% 55%', '06-regal-profily': '50% 45%', '07-univer-bau-sklad': '50% 55%', '08-predajna-pult': '50% 45%',
+                '09-tabula-ulica': '58% 45%', '10-auta-firmy': '50% 55%', '11-tvarnice-porfix-cesta': '50% 55%', '12-predajna-regaly': '50% 50%',
+                '13-dlazba-sklad': '50% 60%'}
+PREDAJNA_ALT = {   # opis toho, čo je na fotke (STYL §10); značky len tie, ktoré sú na obaloch čitateľné
+    '01-predajna-naradie': 'Predajňa Stavebnín Richtárik zvnútra: náradie, rezné kotúče a vedrá na regáloch',
+    '02-tvarnice-obloha': 'Palety betónových tvárnic v areáli predajne Stavebnín Richtárik pod modrou oblohou',
+    '03-baumit-sklad': 'Palety omietok a mált Baumit v sklade predajne',
+    '04-ytong-porfix': 'Palety pórobetónu Ytong a Porfix v areáli predajne v Nitre',
+    '05-hala-vozik': 'Krytá hala s vrecovanými zmesami a vysokozdvižným vozíkom',
+    '06-regal-profily': 'Regál s oceľovými profilmi v areáli predajne',
+    '07-univer-bau-sklad': 'Palety lepidiel a omietok Univer Bau v sklade predajne',
+    '08-predajna-pult': 'Predajňa Stavebnín Richtárik s pultom a regálmi, nad vchodom tabuľa Richtárik Stavebniny',
+    '09-tabula-ulica': 'Tabuľa Stavebniny Richtárik pri ceste pred predajňou v Nitre – Horných Krškanoch',
+    '10-auta-firmy': 'Dve nákladné autá Stavebnín Richtárik s nápisom firmy, jedno s mechanickou rukou',
+    '11-tvarnice-porfix-cesta': 'Predajňa Stavebnín Richtárik v Nitre: rad paliet betónových tvárnic a materiál v červenej fólii pri ceste k predajni',
+    '12-predajna-regaly': 'Predajňa zvnútra: lopaty, násady a náradie na regáloch',
+    '13-dlazba-sklad': 'Palety betónovej dlažby v areáli predajne, v pozadí sklad',
+}
+
+
+def predajna_sirky(meno):
+    """Existujúce šírky fotky z img/predajna (podľa súborov, nie podľa zoznamu)."""
+    z = os.path.join(ROOT, 'img', 'predajna')
+    return sorted(int(m.group(1)) for f in os.listdir(z) for m in [re.fullmatch(re.escape(meno) + r'-(\d+)\.webp', f)] if m)
+
+
+def predajna_picture(pre, meno, sizes, alt=None, lazy=True, max_sirka=1290, pos=None, cls='', fetch=False):
+    """<picture> fotky od majiteľa: AVIF a WebP srcset do max_sirka, src najväčšia WebP, width a height zo súboru."""
+    sir = [s for s in predajna_sirky(meno) if s <= max_sirka] or predajna_sirky(meno)[:1]
+    w, h = webp_rozmer(os.path.join(ROOT, f'img/predajna/{meno}-{sir[-1]}.webp'))
+    ss = lambda ext: ', '.join(f'{pre}img/predajna/{meno}-{s}.{ext} {s}w' for s in sir)
+    a = PREDAJNA_ALT[meno] if alt is None else alt
+    p = pos or PREDAJNA_POS.get(meno, '50% 50%')
+    extra = ' fetchpriority="high"' if fetch else (' loading="lazy" decoding="async"' if lazy else ' decoding="async"')
+    return (f'<picture{" class=" + chr(34) + cls + chr(34) if cls else ""}><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}">'
+            f'<img src="{pre}img/predajna/{meno}-{sir[-1]}.webp" srcset="{ss("webp")}" sizes="{sizes}" width="{w}" height="{h}" alt="{html.escape(a, quote=True)}" style="object-position:{p}"{extra}></picture>')
+# Fotka hlavičky podľa stránky (prednosť pred head_img volajúceho): fotky od majiteľa (img/predajna) pri prehľadových stránkach,
+# Kontakte, O nás, Službách a Doprave a pri kategóriách s tým istým tovarom, skutočný tovar z img/uvod pri tehlách, Porfixe,
+# dlažbe a rezive; ostatné akcie a novinky
 # fotka kategórie tovaru (img/hd). Leták je bez fotky.
 HLAVICKA_FOTO = {
-    'katalog/index.html': 'uvod:pas-dvor', 'akcie/index.html': 'uvod:pas-dvor', 'galeria/index.html': 'uvod:pas-dvor',
-    'kontakt.html': 'uvod:pas-dvor', 'o-nas.html': 'uvod:dvor-predajna', 'sluzby.html': 'p:884',
+    'katalog/index.html': 'predajna:11-tvarnice-porfix-cesta', 'akcie/index.html': 'predajna:04-ytong-porfix', 'galeria/index.html': 'predajna:02-tvarnice-obloha',
+    'kontakt.html': 'predajna:13-dlazba-sklad', 'o-nas.html': 'predajna:08-predajna-pult', 'sluzby.html': 'predajna:10-auta-firmy',
+    'katalog/sypke-zmesy.html': 'predajna:03-baumit-sklad', 'katalog/sypke-zmesy/baumit.html': 'predajna:03-baumit-sklad',
+    'katalog/murovaci-material/ytong.html': 'predajna:04-ytong-porfix', 'akcie/ytong.html': 'predajna:04-ytong-porfix',
+    'katalog/fasadny-system.html': 'predajna:07-univer-bau-sklad', 'akcie/sakret.html': 'predajna:07-univer-bau-sklad',
+    'katalog/hutny-material.html': 'predajna:06-regal-profily', 'katalog/sadrokartonovy-zateplovaci-system.html': 'predajna:06-regal-profily',
+    'katalog/stavebne-naradie-doplnky.html': 'predajna:12-predajna-regaly', 'akcie/stavebne-naradie.html': 'predajna:01-predajna-naradie',
+    'akcie/cement-325-r.html': 'predajna:05-hala-vozik',
     'katalog/murovaci-material.html': 'uvod:zasoba-tehly', 'katalog/murovaci-material/pezinske-tehelne.html': 'uvod:zasoba-tehly',
     'katalog/murovaci-material/porfix.html': 'uvod:zasoba-porfix', 'katalog/dlazby.html': 'uvod:zasoba-stadreko',
     'katalog/stavebne-rezivo.html': 'uvod:zasoba-rezivo',
     'akcie/porfix.html': 'uvod:zasoba-porfix', 'akcie/pezinska-tehla-termobrik.html': 'uvod:zasoba-tehly',
     'akcie/dlazby-ploty-stadreko.html': 'uvod:zasoba-stadreko', 'akcie/stavebne-rezivo.html': 'uvod:zasoba-rezivo',
     'akcie/komin-qatro.html': 'komin', 'akcie/krytina-blachotrapez.html': 'strecha', 'akcie/okna-schody-fakro.html': 'okno-strecha',
-    'akcie/stresne-okna-rooflite.html': 'okno-strecha', 'akcie/stavebne-naradie.html': 'naradie',
-    'akcie/sadrokartonovy-zateplovaci-system.html': 'sadrokarton', 'akcie/ytong.html': 'tehla', 'akcie/betonove-tvarnice.html': 'tehla',
-    'akcie/cement-325-r.html': 'cement', 'akcie/sakret.html': 'cement', 'akcie/nobasil.html': 'izolacia',
+    'akcie/stresne-okna-rooflite.html': 'okno-strecha',
+    'akcie/sadrokartonovy-zateplovaci-system.html': 'sadrokarton', 'akcie/betonove-tvarnice.html': 'tehla',
+    'akcie/nobasil.html': 'izolacia',
     'novinky/index.html': 'zahrada', 'novinky/betonove-vyrobky.html': 'tehla', 'novinky/dekoracne-kamene.html': 'dlazba',
     'novinky/topstone-oprava-starych-chodnikov.html': 'dlazba', 'novinky/delap-ohybny-kamenny-obklad.html': 'fasada',
     'novinky/ekostyren.html': 'beton', 'novinky/garaze-zahradne-domceky.html': 'hutny',
     'novinky/magic-floor-vynilova-podlaha.html': 'sadrokarton', 'novinky/vyrobky-z-plastu.html': 'zahrada',
-    'letak.html': None, 'caste-otazky.html': None, 'doprava.html': 'uvod:pas-dvor',
+    'letak.html': None, 'caste-otazky.html': None, 'doprava.html': 'predajna:10-auta-firmy',
     # strešné okná: svetlá fotka strešného okna na streche (pôvodná fotka okien bola z 80 % tmavé drevo)
     'katalog/stresne-okna.html': 'okno-strecha', 'katalog/stresne-okna/fakro.html': 'okno-strecha',
     'katalog/stresne-okna/fakro/fakro-schody-vylezy.html': 'okno-strecha',
@@ -589,12 +665,14 @@ def telefon_zdroje(pre, druh, meno):
 
 
 def foto_hlavicky(path, spec):
-    """<figure> s fotkou hlavičky. spec: 'uvod:<názov>' (skutočný dvor), 'p:<číslo>' (fotka z pôvodného webu),
-    inak '<názov>' alebo 'hd:<názov>' (img/hd, verzia -1200 so srcset na 2400 px)."""
+    """<figure> s fotkou hlavičky. spec: 'predajna:<názov>' (fotka od majiteľa, img/predajna), 'uvod:<názov>' (skutočná fotka
+    areálu predajne, img/uvod), 'p:<číslo>' (fotka z pôvodného webu), inak '<názov>' alebo 'hd:<názov>' (img/hd, -1200 so srcset 2400 px)."""
     pre = prefix(path)
     druh, meno = spec.split(':', 1) if ':' in spec else ('hd', spec)
     tel = telefon_zdroje(pre, druh, meno)
-    if druh == 'uvod':
+    if druh == 'predajna':
+        img = predajna_picture(pre, meno, FOTO_SIZES, alt='', lazy=False, fetch=True)
+    elif druh == 'uvod':
         sir, (w, h), pos = UVOD_FOTO[meno]
         ss = lambda ext: ', '.join(f'{pre}img/uvod/{meno}-{s}.{ext} {w if s == sir[-1] else s}w' for s in sir)
         img = (f'<picture>{tel}<source type="image/avif" srcset="{ss("avif")}" sizes="{FOTO_SIZES}">'
@@ -611,6 +689,39 @@ def foto_hlavicky(path, spec):
             img = f'<img src="{pre}img/hd/{meno}.webp" width="{w}" height="{h}" alt="" fetchpriority="high">'
         if tel: img = f'<picture>{tel}{img}</picture>'
     return f'<figure class="ph-foto">{img}</figure>'
+
+
+def prehliadka_blok(pre, foto, sizes='(max-width:700px) 100vw, 1184px'):
+    """Komponent „Prehliadka predajne 360°“ (site.js, site.css .p360): fotka predajne od majiteľa ako náhľad, tlačidlo skryté
+    (hidden), kým ho site.js neodkryje podľa zdroja v data-panorama-src (rám Google Máp) alebo data-panorama-obrazok (vlastná
+    panoráma, zdroj/panorama.js); bez JS ostáva fotka s vetou z <noscript>. Rám alebo panoráma sa vytvoria až po kliknutí (nič sa
+    nenačíta vopred), ostanú v stránke (telefón 60 vh, počítač 16:9), tlačidlá Celá obrazovka a Zavrieť, žiadny odkaz von. Ten istý
+    blok je na úvode (ručne, kontrola_uvodu overí zhodu s fotkou 13) a na Kontakte (fotka 02). Okno nemá triedu rvimg (pásy
+    okna kina viazané na posun by po skoku odkazom #prehliadka ostali na fotke, kým sa neposunie; fotka tu stojí)."""
+    src, obr = PANORAMA['src'], PANORAMA['obrazok']
+    if src: veta = 'Prehliadka sa načíta z Google Máp až po kliknutí; dovtedy sa Googlu nič neodosiela (ochrana údajov). Otáčajte ťahaním prstom alebo myšou.'
+    elif obr: veta = 'Panorámu otáčajte ťahaním prstom alebo myšou, na počítači aj šípkami; dva prsty alebo klávesy + a − priblížia.'
+    else: veta = ''
+    return (f'<figure class="p360" id="prehliadka" data-panorama-src="{html.escape(src, quote=True)}" data-panorama-obrazok="{(pre + obr) if obr else ""}">'
+            f'<div class="p360-okno">{predajna_picture(pre, foto, sizes, max_sirka=1720)}<span class="p360-znak" aria-hidden="true">360°</span>'
+            f'<div class="p360-stred"><button class="btn primary p360-start" type="button" hidden>Prezrieť predajňu v 360°</button>'
+            f'<noscript><p class="p360-nojs">Prehliadka potrebuje zapnutý JavaScript.</p></noscript></div>'
+            f'<div class="p360-lista" hidden><button class="p360-cela" type="button" aria-pressed="false">Celá obrazovka</button>'
+            f'<button class="p360-zavri" type="button">Zavrieť prehliadku</button></div></div>'
+            f'{f"<figcaption class=p360-info>{veta}</figcaption>" if veta else ""}</figure>')
+
+
+def prehliadka_sekcia(pre, foto):
+    """Nadpis a komponent prehliadky (Kontakt; na úvode je nadpis v sekcii úvodu ručne)."""
+    return (f'<div class="p360-sek"><div class="head"><div class="eyebrow">Predajňa</div><h2><span class="dr"><span>Prezrite si predajňu v 360°</span></span></h2>'
+            f'<p class="lede">Otočte sa po predajni a sklade priamo na našej stránke.</p></div>{prehliadka_blok(pre, foto)}</div>')
+
+
+def panorama_js():
+    """Prehliadač panorámy zdroj/panorama.js zmenšený do assets/panorama.js (modul, site.js ho importuje až po kliknutí)."""
+    s = zmensi_js(open(os.path.join(ROOT, 'zdroj', 'panorama.js'), encoding='utf-8').read())
+    open(os.path.join(OUT, 'assets', 'panorama.js'), 'w', encoding='utf-8').write(s + '\n')
+    return len(s)
 
 
 def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, head_img=None, druh=''):
@@ -635,7 +746,8 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
         kicker, h1, lede = head
         head_img = HLAVICKA_FOTO.get(path, head_img)
         foto = foto_hlavicky(path, head_img) if head_img else ''
-        band = f'<section class="page-head{" has-img" if foto else ""}"><div class="wrap">{crumb}<div class="ph-in"><div class="head"><div class="eyebrow">{kicker}</div><h1>{h1}</h1>{f"<p class=lede>{lede}</p>" if lede else ""}</div>{foto}</div></div></section>'
+        # H1 v drážke (span.dr, RP2-04): na telefóne po prechode vyjde zdola (site.css, Pohybový systém časť 2), text sa nemení
+        band = f'<section class="page-head{" has-img" if foto else ""}"><div class="wrap">{crumb}<div class="ph-in"><div class="head"><div class="eyebrow">{kicker}</div><h1><span class="dr"><span>{h1}</span></span></h1>{f"<p class=lede>{lede}</p>" if lede else ""}</div>{foto}</div></div></section>'
     elif crumb:
         band = f'<section class="page-head"><div class="wrap">{crumb}</div></section>'
     crumb = band
@@ -661,19 +773,20 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
 <meta property="og:image:height" content="{OG_IMG[2]}">
 <meta property="og:image:alt" content="{OG_ALT}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{pre}img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="{pre}img/ikona-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="{pre}img/apple-touch-icon.png">
 <link rel="manifest" href="{pre}manifest.webmanifest">
 <link rel="preload" href="{pre}assets/fonts/BarlowCondensed-800-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{pre}assets/fonts/BarlowCondensed-800-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{pre}assets/site.css">
+{TEMA_HEAD}<link rel="stylesheet" href="{pre}assets/site.css">
 {PRECHODY_HEAD}{breadcrumb_ld(path, crumbs)}{extra_head}
 </head>
 <body{' class="home"' if home else ''}>
 <a class="skip" href="#obsah">Preskočiť na obsah</a>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="{pre}index.html" aria-label="Stavebniny Richtárik, úvod"><img class="lg-tm" src="{pre}img/logo.png" alt="Stavebniny Richtárik" width="480" height="142"></a>
+    <a class="brand" href="{pre}index.html" aria-label="Stavebniny Richtárik, úvod"><picture><source type="image/webp" srcset="{pre}img/logo-rs-360.webp 360w, {pre}img/logo-rs-720.webp 720w" sizes="99px"><img class="lg-znak" src="{pre}img/logo-rs-360.png" srcset="{pre}img/logo-rs-360.png 360w, {pre}img/logo-rs-720.png 720w" sizes="99px" width="360" height="175" alt=""></picture><span class="lg-nazov"><span>Stavebniny</span><span>Richtárik</span></span></a>
     <nav class="nav" aria-label="Hlavné menu">{nav}</nav>
     <a class="tel" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a>
     <button class="menu-btn" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="drawer"><span></span></button>
@@ -689,18 +802,18 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
 </main>
 <section class="cta-pas">
   <div class="wrap">
-    <div><div class="eyebrow light">Cenová ponuka zadarmo</div><h2>Pošlite nám projekt alebo zoznam materiálu</h2><p>Spočítame spotrebu, pripravíme cenovú ponuku zadarmo a dohodneme dopravu na stavbu.</p></div>
+    <div><div class="eyebrow light">Cenová ponuka zadarmo</div><h2><span class="dr"><span>Pošlite nám projekt alebo zoznam materiálu</span></span></h2><p>Spočítame spotrebu, pripravíme cenovú ponuku a dohodneme dopravu na stavbu.</p></div>
     <div class="cta"><a class="btn primary" href="mailto:{FIRMA['email']}?subject=Cenov%C3%A1%20ponuka">Poslať dopyt e-mailom</a><a class="btn light" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div>
   </div>
 </section>
 <footer>
   <div class="wrap grid">
-    <div class="f-firma"><img src="{pre}img/logo.png" alt="Stavebniny Richtárik" width="200" height="59" class="flogo" loading="lazy" decoding="async"><p>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</p><p>IČO {FIRMA['ico']} · DIČ {FIRMA['dic']}</p></div>
+    <div class="f-firma"><img src="{pre}img/logo-rs-360.png" alt="Stavebniny Richtárik" width="360" height="175" class="flogo" loading="lazy" decoding="async"><p>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</p><p>IČO {FIRMA['ico']} · DIČ {FIRMA['dic']}</p></div>
     <details class="f-zb" open><summary>Stránky</summary>{dnav}<a href="{rel(path, 'caste-otazky.html')}">Časté otázky</a></details>
     <details class="f-zb" open><summary>Katalóg</summary>{''.join(f'<a href="{rel(path, "katalog/" + nice_slug(k[0]) + ".html")}">{k[1]}</a>' for k in KATEGORIE[:8])}<a href="{rel(path, 'katalog/index.html')}">Celý katalóg</a></details>
     <div class="f-kontakt"><h3>Kontakt</h3><a href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a><p>Po – Pi 7:00 – 16:00<br>So 7:00 – 12:00</p></div>
   </div>
-  <div class="wrap bottom"><span>© <span id="rok">2026</span> {FIRMA['majitel']}, Nitra</span><a href="{rel(path, 'letak.html')}">Akciový leták</a><a href="{rel(path, 'asistent/ochrana-udajov.html')}" data-asistent-odkaz>Ochrana údajov</a></div>
+  <div class="wrap bottom"><span>© <span id="rok">2026</span> {FIRMA['majitel']}, Nitra</span><a href="{rel(path, 'letak.html')}">Akciový leták</a><a href="{rel(path, 'asistent/ochrana-udajov.html')}" data-asistent-odkaz>Ochrana údajov</a><a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a></div>
 </footer>
 <div class="mbar" aria-label="Rýchly kontakt"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať</a><a class="btn ghost" href="{rel(path, 'kontakt.html')}">Cenová ponuka</a></div>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Fotografia" hidden><button class="lb-x" type="button" aria-label="Zavrieť">&times;</button></div>
@@ -744,7 +857,7 @@ def write(path, content):
     if path == 'index.html':  # poistka: úvod sa udržiava ručne (README, časť Úvod), generátor ho nikdy neprepíše
         raise SystemExit('build.py: index.html (úvod) sa negeneruje, upravuje sa ručne')
     if path.endswith(('.html', '.json')): content = opravy(content)
-    if path.endswith('.html'): content = rozmery(nadpisy(texty.uprav(content)), path); ZAPISANE.add(path)
+    if path.endswith('.html'): content = rozmery(drazky(nadpisy(texty.uprav(content))), path); ZAPISANE.add(path)
     full = os.path.join(OUT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, 'w', encoding='utf-8').write(content)
@@ -756,15 +869,21 @@ def write(path, content):
 # a dlažby majú skutočné fotky z dvora (img/uvod, AVIF + WebP), ostatné ilustračnú fotku kategórie (900 px, veľká a široká
 # dlaždica 1200 px z img/hd, aby bola ostrá aj na počítači s DPR 2).
 DLAZDICA_UVOD = {'murovaci-material': 'zasoba-tehly', 'stavebne-rezivo': 'zasoba-rezivo', 'dlazby': 'zasoba-stadreko'}
+# fotky od majiteľa (img/predajna) na dlaždiciach kategórií, kde ukazujú ten istý tovar; ostatné kategórie čakajú na fotky
+# výrobcov s povolením (majitel/dodavatelia/ZAPIS.md), dovtedy ilustračná fotka img/hd
+DLAZDICA_PREDAJNA = {'sypke-zmesy': '03-baumit-sklad', 'hutny-material': '06-regal-profily', 'sadrokartonovy---zateplovaci-system': '06-regal-profily',
+                     'fasadny-system': '07-univer-bau-sklad', 'stavebne-naradie-doplnky': '12-predajna-regaly'}
 
 
 def dlazdice(path, cisla=False):
-    """Dlaždice kategórií (úvod ručne aj Katalóg). Skutočné fotky z dvora sú v <picture>: AVIF 720 (src aj prvý zdroj),
+    """Dlaždice kategórií (úvod ručne aj Katalóg). Skutočné fotky z areálu predajne sú v <picture>: AVIF 720 (src aj prvý zdroj),
     WebP 720 pre prehliadač bez AVIF; ostatné kategórie majú ilustračnú fotku (img/hd, 1200 px pri veľkej a širokej)."""
     pre = prefix(path); out = ''
     for n, k in enumerate(KATEGORIE):
         cls = ' big' if n == 0 else (' wide' if n in (5, 10) else '')
-        if k[0] in DLAZDICA_UVOD:
+        if k[0] in DLAZDICA_PREDAJNA:
+            img = predajna_picture(pre, DLAZDICA_PREDAJNA[k[0]], '(max-width:720px) 50vw, (max-width:1100px) 33vw, 300px' if not cls else '(max-width:720px) 100vw, (max-width:1100px) 66vw, 620px', alt='', max_sirka=960 if cls else 720)
+        elif k[0] in DLAZDICA_UVOD:
             m = DLAZDICA_UVOD[k[0]]; _, (w, h), pos = UVOD_FOTO[m]
             img = (f'<picture><source type="image/avif" srcset="{pre}img/uvod/{m}-720.avif"><source type="image/webp" srcset="{pre}img/uvod/{m}-720.webp">'
                    f'<img src="{pre}img/uvod/{m}-720.avif" alt="" loading="lazy" decoding="async" width="720" height="{round(720 * h / w)}" style="object-position:{pos}"></picture>')
@@ -789,7 +908,7 @@ def build_katalog_index():
 <div class="txt rv" style="margin-top:32px"><p>{SORTIMENT_UVOD}</p></div>
 <div class="sort-note"><p>Nenašli ste, čo hľadáte? Zavolajte, poradíme vám.</p><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div>
 </div></section>'''
-    write(path, page(path, 'Katalóg stavebného materiálu', body, [('index.html', 'Úvod'), (None, 'Katalóg')], head=('Katalóg', 'Katalóg stavebného materiálu', 'Produkty popredných slovenských aj svetových výrobcov. Vyberte kategóriu alebo hľadajte podľa názvu výrobku či značky.'), head_img='uvod:pas-dvor'))
+    write(path, page(path, 'Katalóg stavebného materiálu', body, [('index.html', 'Úvod'), (None, 'Katalóg')], head=('Katalóg', 'Katalóg stavebného materiálu', '15 kategórií a viac ako 40 značiek popredných slovenských aj svetových výrobcov. Vyberte kategóriu alebo hľadajte podľa výrobku alebo značky.'), head_img='uvod:pas-dvor'))
 
 
 def karta_podstranky(c):
@@ -890,7 +1009,7 @@ def build_novinky():
     body = f'''<section class="sec"><div class="wrap">
 <div class="novs grid-page">{items}</div>
 </div></section>'''
-    write(path, page(path, 'Novinky', body, [('index.html', 'Úvod'), (None, 'Novinky')], head=('Novinky', 'Novinky v sortimente', 'Nové materiály v našej ponuke: dekoračné kamene, ohybný obklad Delap, montované garáže, výrobky z recyklovaného plastu a ďalšie.'), head_img=None))
+    write(path, page(path, 'Novinky', body, [('index.html', 'Úvod'), (None, 'Novinky')], head=('Novinky', 'Novinky v sortimente', 'Dekoračné kamene, ohybný kamenný obklad Delap, plnivo Ekostyrén, montované garáže, vinylové podlahy a výrobky z recyklovaného plastu.'), head_img=None))
     for s in children('novinky'):
         p = PAGES[s]; t = nice_title(SRC[s]['title']); k = s.split('__')[1]
         cont = cennik_kamene(s) if k == 'dekoracne-kamene' else lb_fotky(content(s, p), t)
@@ -948,13 +1067,26 @@ GALERIA_ALBUMY = [  # (slug zdroja, názov albumu v nadpise a v popisku fotky)
 ]
 
 
-# Prvá sekcia galérie: skutočné fotky dvora (tie isté ako na úvode). Popisky z úvodu (pás Plná zásoba, fotka pri kontakte).
-GALERIA_DVOR = [('dvor-predajna', 'Dvor predajne Stavebniny Richtárik v Nitre s paletami TermoBRIK a Porfix'),
-                ('pas-dvor', 'Dvor Stavebnín Richtárik v Nitre s paletami tehál TermoBRIK a pórobetónu Porfix'),
-                ('zasoba-tehly', 'Palety tehál TermoBRIK na dvore Stavebnín Richtárik v Nitre'),
-                ('zasoba-porfix', 'Palety pórobetónu Porfix pod modrými plachtami na dvore v Nitre'),
-                ('zasoba-stadreko', 'Palety betónovej dlažby a obrubníkov Stadreko na dvore v Nitre'),
-                ('zasoba-rezivo', 'Stavebné rezivo naskladané na dvore Stavebnín Richtárik v Nitre')]
+# Prvé sekcie galérie: fotky od majiteľa (img/predajna, 9. 11. 2026) a skutočné fotky areálu predajne (img/uvod, tie isté
+# ako v strihu zásob na úvode). Majiteľ 9. 11. 2026: miesto je predajňa, nie dvor.
+GALERIA_PREDAJNA = ['08-predajna-pult', '01-predajna-naradie', '12-predajna-regaly', '09-tabula-ulica', '02-tvarnice-obloha', '11-tvarnice-porfix-cesta',
+                    '04-ytong-porfix', '13-dlazba-sklad', '03-baumit-sklad', '07-univer-bau-sklad', '05-hala-vozik', '06-regal-profily', '10-auta-firmy']
+GALERIA_DVOR = [('dvor-predajna', 'Areál predajne Stavebniny Richtárik v Nitre s paletami TermoBRIK a Porfix'),
+                ('pas-dvor', 'Palety tehál TermoBRIK a pórobetónu Porfix v areáli predajne Stavebnín Richtárik v Nitre'),
+                ('zasoba-tehly', 'Palety tehál TermoBRIK v areáli predajne Stavebnín Richtárik v Nitre'),
+                ('zasoba-porfix', 'Palety pórobetónu Porfix pod modrými plachtami v areáli predajne v Nitre'),
+                ('zasoba-stadreko', 'Palety betónovej dlažby a obrubníkov Stadreko v areáli predajne v Nitre'),
+                ('zasoba-rezivo', 'Stavebné rezivo naskladané v areáli predajne Stavebnín Richtárik v Nitre')]
+
+
+def galeria_predajna(path):
+    pre = prefix(path); g = ''
+    sizes = '(max-width:700px) 46vw, 300px'
+    for m in GALERIA_PREDAJNA:
+        cap = PREDAJNA_ALT[m]
+        g += f'<a href="{pre}img/predajna/{m}-1290.webp" data-lb="1" data-cap="{html.escape(cap)}">{predajna_picture(pre, m, sizes, max_sirka=720)}</a>'
+    n = len(GALERIA_PREDAJNA)
+    return f'<div class="album"><h2 class="sh rv"><span>Naša predajňa a sklad</span><small>{n} fotografií</small></h2><div class="galeria rv">{g}</div></div>'
 
 
 def galeria_dvor(path):
@@ -967,7 +1099,7 @@ def galeria_dvor(path):
         nw = nahl[-1]; nh = round(nw * h / w)
         g += (f'<a href="{pre}img/uvod/{m}-{sir[-1]}.webp" data-lb="1" data-cap="{html.escape(cap)}"><picture><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}">'
               f'<img src="{pre}img/uvod/{m}-{nw}.webp" srcset="{ss("webp")}" sizes="{sizes}" alt="{html.escape(cap)}" loading="lazy" decoding="async" width="{nw}" height="{nh}" style="object-position:{pos}"></picture></a>')
-    return f'<div class="album"><h2 class="sh rv"><span>Z nášho dvora v Nitre</span><small>{len(GALERIA_DVOR)} fotografií</small></h2><div class="galeria dvor rv">{g}</div></div>'
+    return f'<div class="album"><h2 class="sh rv"><span>Materiál v areáli predajne</span><small>{len(GALERIA_DVOR)} fotografií</small></h2><div class="galeria dvor rv">{g}</div></div>'
 
 
 def build_galeria():
@@ -984,12 +1116,14 @@ def build_galeria():
             g += (f'<a href="{rel(path, "img/g/" + i + ".webp")}" data-lb="1" data-cap="{html.escape(t)}">'
                   f'<img src="{rel(path, "img/gt/" + i + ".webp")}" alt="{html.escape(texty.GALERIA_ALT.get(i, t))}" loading="lazy" width="{w}" height="{h}"></a>')
         g = f'<div class="galeria rv">{g}</div>'
-        secs += f'<div class="album"><h2 class="sh rv"><span>{t}</span><small>{g.count("data-lb")} fotografií</small></h2>{g}</div>'
+        n = g.count("data-lb")   # riadky mriežky pri 4 a 2 stĺpcoch: odhad výšky albumu pod prvým (content-visibility, RP2-09)
+        secs += f'<div class="album" style="--r:{-(-n // 4)};--rt:{-(-n // 2)}"><h2 class="sh rv"><span>{t}</span><small>{n} fotografií</small></h2>{g}</div>'
     body = f'''<section class="sec"><div class="wrap">
+{galeria_predajna(path)}
 {galeria_dvor(path)}
 {secs}
 </div></section>'''
-    write(path, page(path, 'Galéria', body, [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z predajne, skladu a výstav', 'Fotografie z predajne a skladu a z výstav Agrokomplex, Gardenia a Domexpo v Nitre, kde sme vystavovali náš sortiment.'), head_img='uvod:pas-dvor'))
+    write(path, page(path, 'Galéria', body, [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z predajne, skladu a výstav', 'Naša predajňa a sklad v Horných Krškanoch a naše stánky na výstavách Domexpo, Agrokomplex a Gardenia v Nitre.'), head_img='predajna:02-tvarnice-obloha'))
 
 
 def build_simple(slug, kicker, h1, lede=None, extra='', head_img=None):
@@ -1004,17 +1138,16 @@ def build_simple(slug, kicker, h1, lede=None, extra='', head_img=None):
 # Služby: celý text zdroja „sluzby“ (úvodná veta, zoznam služieb ako číslované položky, odsek o doprave), popisy položiek
 # len z textov, ktoré na webe sú (Katalóg, výzva pred pätou, O nás a úvod pôvodného webu – zdroj „uvod“, úvod nového webu);
 # všetky vykajú alebo sú neutrálne ako zdroj. Fotky áut z pôvodnej stránky Služby (885, 884, 883) bez rámov, s lightboxom.
-SLUZBY_UVOD = ('Od výberu materiálu po dopravu na stavbu. Poradíme vám s výberom, spotrebu spočítame a cenovú ponuku '
-               'pripravíme zadarmo.')
+SLUZBY_UVOD = 'Od výberu materiálu po dopravu na stavbu: poradenstvo, výpočet spotreby a cenová ponuka sú u nás zadarmo.'
 SLUZBY = [
-    ('Predaj stavebného materiálu v celom sortimente', 'Produkty popredných slovenských aj svetových výrobcov.'),
-    ('Bezplatný výpočet spotreby stavebného materiálu', 'Spočítame spotrebu, pripravíme cenovú ponuku a dohodneme dopravu na stavbu.'),
-    ('Bezplatná poradenská činnosť', 'Zaškolený personál vám ochotne poradí pri výbere z veľmi širokého sortimentu materiálov a výrobkov.'),
-    ('Poskytovanie množstevných zliav', 'Pri väčšom odbere poskytujeme množstevné zľavy. Stavebné firmy, živnostníci a predajne stavebnín majú špeciálne zľavy.'),
-    ('Doprava', 'Zakúpený tovar vám dovezieme priamo na stavbu, bez zbytočného skladovania, čím sa znižuje riziko poškodenia pri '
-                'viacnásobnom prekladaní. Na rozvoz tovaru máme autá Avia 3,5 t a LIAZ 8 t s mechanickou rukou.'),
-    ('Predaj na splátky Quatro', 'Stavebný materiál si u nás môžete kúpiť aj na splátky cez Quatro.'),
-    ('Platba kartou cez terminál VÚB banky', 'V predajni môžete platiť platobnými kartami cez terminál VÚB banky.'),
+    ('Stavebný materiál v celom sortimente', 'Výrobky popredných slovenských aj svetových výrobcov v 15 kategóriách, od základov po strechu.'),
+    ('Výpočet spotreby zadarmo', 'Prineste projekt alebo rozmery a spočítame, koľko materiálu na stavbu potrebujete.'),
+    ('Poradenstvo zadarmo', 'Zaškolený personál vám poradí s výberom z celého sortimentu materiálov a výrobkov.'),
+    ('Množstevné zľavy', 'Pri väčšom odbere poskytujeme množstevné zľavy. Stavebné firmy, živnostníci a predajne stavebnín majú špeciálne zľavy.'),
+    ('Doprava na stavbu', 'Tovar dovezieme priamo na stavbu, bez zbytočného skladovania a prekladania, pri ktorom hrozí poškodenie. '
+                          'Na rozvoz máme autá Avia 3,5 t a LIAZ 8 t s mechanickou rukou.'),
+    ('Nákup na splátky', 'Stavebný materiál si u nás môžete kúpiť aj na splátky cez Quatro.'),
+    ('Platba kartou', 'V predajni môžete platiť platobnou kartou cez terminál VÚB banky.'),
 ]
 SLUZBY_FOTKY = ['885', '884', '883']
 
@@ -1025,27 +1158,27 @@ def build_sluzby():
     cap = 'Naše autá: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou'
     # opis každej fotky (fotky áut z pôvodnej stránky Služby, hárok v z2/prac/auta-883-885.jpg)
     alt = {'883': 'Červená Avia s valníkom a modré nákladné auto s mechanickou rukou',
-           '884': 'Avia a nákladné auto s mechanickou rukou na dvore pri paletách',
+           '884': 'Avia a nákladné auto s mechanickou rukou pred predajňou pri paletách',
            '885': 'Avia a modré nákladné auto so zdvihnutou mechanickou rukou'}
     fotky = ''.join(f'<a href="{rel(p, "img/p/" + i + ".webp")}" data-lb="1" data-cap="{cap}"><img src="{rel(p, "img/p/" + i + ".webp")}" alt="{alt[i]}" loading="lazy" decoding="async" width="{IMG_SIZES[i][0]}" height="{IMG_SIZES[i][1]}"></a>' for i in SLUZBY_FOTKY)
     body = f'''<section class="sec sluzby-page"><div class="wrap">
 <div class="srv-grid"><div class="srvs">{polozky}</div></div>
 <h2 class="sh rv"><span>Vlastná doprava</span><small><a href="{rel(p, 'doprava.html')}">Doprava a podmienky</a></small></h2>
 <div class="auta rv">{fotky}</div>
-<div class="txt rv"><p>{cap}. Podmienky dopravy pri akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava materiálu po celom Slovensku</a>, odpovede na časté otázky na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
+<div class="txt rv"><p>{cap}. Podmienky dopravy pri jednotlivých akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava</a>, ďalšie odpovede na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
 </div></section>'''
     write(p, page(p, 'Služby', body, [('index.html', 'Úvod'), (None, 'Služby')], head=('Služby', 'Výpočet materiálu, poradenstvo a doprava', SLUZBY_UVOD), head_img='p:884'))
 
 
 # O nás: pás faktov z úvodu (index.html, pás „V skratke“; texty doslova)
 FAKTY_ONAS = ('<div class="facts n3 rv" aria-label="V skratke"><div><b>1997</b><span>rodinná firma v Nitre</span></div>'
-              '<div><b><i>5</i> %</b><span>ďalšia zľava z akciových cien pri platbe v hotovosti so zákazníckou kartou</span></div>'
-              '<div><b><i>3,3</i> %</b><span>ďalšia zľava z akciových cien pri platbe kartou</span></div></div>')
+              '<div><b><i>5</i> %</b><span>ďalšia zľava z akciových cien so zákazníckou kartou pri platbe v hotovosti</span></div>'
+              '<div><b><i>3,3</i> %</b><span>ďalšia zľava z akciových cien so zákazníckou kartou pri platbe platobnou kartou</span></div></div>')
 # Text O nás (pôvodný web PW:2720–2722, STYL P8): bez kalku „za účelom“, verzálok a s vykaním
-ONAS_TEXT = ['Stavebniny Richtárik sú rodinná firma, ktorú sme založili v roku 1997, aby sme rozšírili doteraz ponúkané služby v stavebníctve. '
-             'Hlavným profilom firmy je predaj a sprostredkovanie stavebného materiálu. Majiteľ spolu s personálom majú dlhoročné skúsenosti v oblasti stavebníctva.',
-             'Zaškolený personál vám ochotne poradí pri výbere z veľmi širokého sortimentu materiálov a výrobkov. Personál predajne sa neustále '
-             'školí, pretože trh so stavebným materiálom sa neustále mení.',
+ONAS_TEXT = ['Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997, aby rozšíril služby, ktoré dovtedy v stavebníctve ponúkal. '
+             'Sme rodinná firma: predávame a sprostredkúvame stavebný materiál a majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.',
+             'Zaškolený personál vám poradí s výberom z celého sortimentu materiálov a výrobkov a priebežne sa školí, pretože trh so stavebným '
+             'materiálom sa stále mení.',
              'Poradenstvo a vypracovanie cenových ponúk sú u nás zadarmo. Najdôležitejšia je pre nás vaša spokojnosť.']
 
 
@@ -1076,7 +1209,7 @@ def build_letak():
 <div class="pdfs rv">{pdf('pdf/386.pdf', 'Akciový leták 1 (PDF, 27. 4. 2012)')}{pdf('pdf/385.pdf', 'Akciový leták 2 (PDF, 10. 4. 2012)')}{pdf('pdf/197.pdf', 'Leták Stavebniny Richtárik (PDF, 30. 11. 2009)')}</div>
 <div class="figs rv n2">{fig('886', 'Akciový leták 1')}{fig('887', 'Akciový leták 2')}</div>
 <h2 class="sh rv"><span>Reklama</span></h2>
-<div class="figs rv n2">{fig('360', 'Reklama Spravodaj Nitra 2010')}{fig('361', 'Reklamná tabuľa – plot')}</div>
+<div class="figs rv n2">{fig('360', 'Reklama Spravodaj Nitra 2010')}{fig('361', 'Reklamná tabuľa na plote')}</div>
 </div>
 </div></section>'''
     write(p, page(p, 'Akciový leták', body, [('index.html', 'Úvod'), (None, 'Akciové letáky')],
@@ -1088,7 +1221,7 @@ def build_404():
     adrese (aj /a/b/c.html). Bez canonical, s noindex; nastavenie servera je v nasadenie/ (ErrorDocument, httpErrors)."""
     p = '404.html'
     body = f'''<section class="sec"><div class="wrap narrow">
-<div class="head" style="margin-bottom:28px"><div class="eyebrow">Chyba 404</div><h1>Stránka sa nenašla</h1><p class="lede">Táto stránka na webe nie je. Pokračujte do katalógu, na akcie alebo nám zavolajte.</p></div>
+<div class="head" style="margin-bottom:28px"><div class="eyebrow">Chyba 404</div><h1>Stránka sa nenašla</h1><p class="lede">Stránka na tejto adrese neexistuje. Hľadajte v katalógu, pokračujte na akcie alebo nám zavolajte.</p></div>
 <div class="search"><label for="q" class="vh">Hľadať v katalógu</label><input id="q" type="search" placeholder="Hľadajte: cement, Ytong, škridla…" autocomplete="off" aria-controls="res" aria-expanded="false" aria-describedby="res-stav"><div class="res" id="res" role="region" aria-label="Výsledky hľadania" hidden></div><p class="vh" id="res-stav" role="status" aria-live="polite"></p></div>
 <div class="cta" style="margin-top:28px"><a class="btn primary" href="index.html">Úvod</a><a class="btn ghost" href="katalog/index.html">Katalóg</a><a class="btn ghost" href="akcie/index.html">Akcie</a><a class="btn ghost" href="kontakt.html">Kontakt</a></div>
 <p style="margin-top:28px">Poradíme vám aj po telefóne <a href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a>.</p>
@@ -1105,15 +1238,17 @@ def build_kontakt():
     p = 'kontakt.html'
     body = f'''<section class="sec kontakt-page"><div class="wrap">
 <div class="kgrid">
-  <div class="kbox"><h3>Predajňa a sklad</h3><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Otvoriť v mapách</a></div>
+  <div class="kbox"><h3>Predajňa a sklad</h3><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a></div>
   <div class="kbox"><h3>Telefón a e-mail</h3><a class="big" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a class="big" href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div>
   <div class="kbox khod"><h3>Otváracie hodiny</h3><table class="hours"><tr><td>Pondelok – piatok</td><td>7:00 – 16:00</td></tr><tr><td>Sobota</td><td>7:00 – 12:00</td></tr></table></div>
-  <div class="kbox kfir"><h3>Firemné údaje</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou cez terminál VÚB<br>Nákup na splátky Quatro</address></div>
-  <figure class="kdvor"><picture><source type="image/avif" srcset="img/uvod/dvor-predajna-800.avif 800w, img/uvod/dvor-predajna-1200.avif 1200w" sizes="(max-width:700px) calc(100vw - 36px), 600px"><img src="img/uvod/dvor-predajna-1200.webp" srcset="img/uvod/dvor-predajna-800.webp 800w, img/uvod/dvor-predajna-1200.webp 1200w" sizes="(max-width:700px) calc(100vw - 36px), 600px" alt="Dvor predajne Stavebniny Richtárik v Nitre s paletami TermoBRIK a Porfix" loading="lazy" decoding="async" width="1200" height="800"></picture><figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Otvoriť navigáciu</a></figcaption></figure>
+  <div class="kbox kfir"><h3>Firemné údaje a platba</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
+  <figure class="kdvor">{predajna_picture('', '09-tabula-ulica', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">Prezrieť predajňu v 360°</a></span></figcaption></figure>
 </div>
+{prehliadka_sekcia('', '02-tvarnice-obloha')}
+<div class="txt rv kpartner"><p>Odkaz na stavebnú firmu z Nitry: <a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a>.</p></div>
 
 </div></section>'''
-    write(p, page(p, 'Kontakt', body, [('index.html', 'Úvod'), (None, 'Kontakt')], head=('Kontakt', 'Predajňa a sklad v Nitre – Horných Krškanoch', 'Pozývame vás do predajne na Novozámockej ulici 62/68. Radi vám pomôžeme s výberom materiálu.'), head_img='uvod:pas-dvor', extra_head=firma_ld()))
+    write(p, page(p, 'Kontakt', body, [('index.html', 'Úvod'), (None, 'Kontakt')], head=('Kontakt', 'Predajňa a sklad v Nitre – Horných Krškanoch', 'Príďte do predajne na Novozámockej 62/68, poradíme vám s výberom materiálu a cenovú ponuku pripravíme zadarmo.'), head_img='uvod:pas-dvor', extra_head=firma_ld()))
 
 # ---------- údaje o firme pre vyhľadávače (JSON-LD) ----------
 def firma_ld():
@@ -1125,7 +1260,7 @@ def firma_ld():
          "address": {"@type": "PostalAddress", "streetAddress": FIRMA['ulica'], "addressLocality": "Nitra", "postalCode": "949 05", "addressCountry": "SK"},
          "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "16:00"},
                                        {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "12:00"}],
-         "paymentAccepted": "Cash, Credit Card", "areaServed": "Slovensko", "url": DOMENA, "logo": DOMENA + "img/logo.png",
+         "paymentAccepted": "Cash, Credit Card", "areaServed": "Slovensko", "url": DOMENA, "logo": DOMENA + "img/logo-rs-720.png",
          "image": DOMENA + OG_IMG[0], "hasMap": "https://maps.google.com/?cid=137067579998285540", "taxID": FIRMA['dic']}
     return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False) + '</script>\n'
 
@@ -1223,7 +1358,7 @@ CENNIK_AKCIE = {
         ('10 m, ø 200/45', '918 €'), ('10 m, ø 200/90', '892 €'), ('10 m, ø 160/45', '891 €'), ('10 m, ø 160/90', '864 €'),
         ('8 m, ø 200/45', '791 €'), ('8 m, ø 200/90', '764 €'), ('8 m, ø 160/45', '768 €'), ('8 m, ø 160/90', '741 €'),
         ('6 m, ø 200/45', '664 €'), ('6 m, ø 200/90', '637 €'), ('6 m, ø 160/45', '644 €'), ('6 m, ø 160/90', '618 €')],
-        'Možnosť vyskladať rôznu výšku komína.')],
+        'Komín sa dá vyskladať aj v inej výške.')],
     'krytina-blachotrapez': [('Plechové krytiny, hrúbka 0,5 mm (s. 2)', [
         ('Diament eco, lesklý', '9,22 €/m²'), ('Diament eco, matný', '12,36 €/m²'), ('Kingas eco, lesklý', '9,22 €/m²'),
         ('Kingas eco, matný', '12,36 €/m²'), ('Germania 25, lesklý', '9,73 €/m²'), ('Germania 25, matný', '13,06 €/m²'),
@@ -1270,10 +1405,10 @@ CENNIK_AKCIE = {
         ('Hrúbka 15 cm, 6,12 m² v balení', '29,88 €/balenie'), ('Hrúbka 20 cm, 4,56 m² v balení', '30,97 €/balenie')], '')],
     'stresne-okna-rooflite': [('Strešné okná RoofLITE (s. 3)', [('Solid Pine 78 × 118 s lemovaním TFX', '283 €/ks')], 'Rôzne rozmery a druhy.')],
     'sadrokartonovy-zateplovaci-system': [('Sadrokartón Norgips 2 × 1,2 m, 2,4 m² v kuse (s. 2)', [
-        ('Biely', '6,22 €/ks'), ('Zelený', '9,70 €/ks'), ('Červený', '9,93 €/ks')], 'Príslušenstvo k sadrokartónu je tiež v akcii.'),
+        ('Biely', '6,22 €/ks'), ('Zelený', '9,70 €/ks'), ('Červený', '9,93 €/ks')], 'V akcii je aj príslušenstvo k sadrokartónu.'),
         ('Styrodur Fibrostir XPS 1250 × 600 mm, 0,75 m² v kuse (s. 4)', [('2 cm', '1,90 €/ks'), ('3 cm', '2,85 €/ks'), ('5 cm', '4,80 €/ks'), ('10 cm', '9,60 €/ks')], ''),
         ('OSB doska Kronopol 2500 × 1250 mm, 3,125 m² v kuse (s. 4)', [('8 mm', '13,70 €/ks'), ('12 mm', '16,58 €/ks'), ('15 mm', '22,71 €/ks'), ('22 mm', '34,90 €/ks')], '')],
-    'stavebne-rezivo': [('Palivové drevo (s. 1)', [('Palivové drevo buk, paleta 100 × 100', '134,90 €/paleta')], 'V cenníku aj predaj reziva a krovy na mieru (s. 4).')],
+    'stavebne-rezivo': [('Palivové drevo (s. 1)', [('Palivové drevo buk, paleta 100 × 100', '134,90 €/paleta')], 'Cenník uvádza aj predaj reziva a krovy na mieru (s. 4).')],
 }
 
 
@@ -1314,14 +1449,14 @@ def build_doprava():
     body = f'''<section class="sec doprava-page"><div class="wrap">
 <div class="srv-grid"><div class="srvs">
 <article class="srv rv"><i>01</i><div><h2 class="h3">Vlastné autá</h2><p>Na rozvoz tovaru máme auto Avia 3,5 t a nákladné auto 8 t s mechanickou rukou.</p></div></article>
-<article class="srv rv"><i>02</i><div><h2 class="h3">Po celom Slovensku</h2><p>Materiál dovezieme vlastnou nákladnou dopravou na miesto stavby, ktoré určíte, a to po celom Slovensku.</p></div></article>
-<article class="srv rv"><i>03</i><div><h2 class="h3">Bez zbytočného prekladania</h2><p>Tovar dovezieme priamo k vám, bez zbytočného skladovania, čím sa znižuje riziko poškodenia pri viacnásobnom prekladaní.</p></div></article>
-<article class="srv rv"><i>04</i><div><h2 class="h3">Cena a termín dovozu</h2><p>Cenu a termín dovozu vám povieme na {tel}. Cenovú ponuku na materiál pripravíme zadarmo.</p></div></article>
+<article class="srv rv"><i>02</i><div><h2 class="h3">Po celom Slovensku</h2><p>Dovezieme na stavbu alebo domov, na miesto, ktoré určíte, kdekoľvek na Slovensku.</p></div></article>
+<article class="srv rv"><i>03</i><div><h2 class="h3">Bez zbytočného prekladania</h2><p>Tovar ide zo skladu priamo k vám. Bez medziskladov a opakovaného prekladania je menšie riziko poškodenia.</p></div></article>
+<article class="srv rv"><i>04</i><div><h2 class="h3">Cena a termín dovozu</h2><p>Oboje dohodneme na {tel}, spolu s cenovou ponukou na materiál, ktorá je zadarmo.</p></div></article>
 </div></div>
 <h2 class="sh rv"><span>Doprava pri akciách</span><small><a href="{rel(p, CENNIK_PDF)}" target="_blank" rel="noopener">{CENNIK_TEXT}</a></small></h2>
 <div class="txt rv"><p>Podľa cenníka akcií z 28.&nbsp;1.&nbsp;2026:</p><ul class="ticks">{li(cennik)}</ul>
 <p>Pri ďalších akciách zo stránky <a href="{rel(p, 'akcie/index.html')}">Akcie</a> (bez dátumu, platnosť potvrdí predajňa):</p><ul class="ticks">{li(stare)}</ul></div>
-<div class="txt rv"><p>Ďalšie odpovede nájdete na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>, služby predajne na stránke <a href="{rel(p, 'sluzby.html')}">Služby</a>.</p></div>
+<div class="txt rv"><p>Ďalšie odpovede sú na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>, prehľad služieb na stránke <a href="{rel(p, 'sluzby.html')}">Služby</a>.</p></div>
 </div></section>'''
     write(p, page(p, 'Doprava', body, [('index.html', 'Úvod'), (None, 'Doprava')],
                   head=('Doprava', 'Doprava materiálu po celom Slovensku', 'Materiál dovezieme vlastnými autami na miesto stavby, ktoré určíte, aj autom s mechanickou rukou.'), head_img='uvod:pas-dvor'))
@@ -1334,9 +1469,9 @@ CASTE_ID = ['kontakt-telefon', 'kontakt-email', 'hodiny', 'sluzby-ponuka', 'sluz
             'doprava-slovensko', 'doprava-ruka', 'zlava-karta', 'zlava-cennik', 'platba-karta', 'platba-splatky',
             'akcia-porfix-ytong', 'akcia-zateplenie', 'cena-cement']
 CASTE_KOPIA = {
-    'kontakt-telefon': ('kontakt', 'Aké máte telefónne číslo?', 'Zavolajte nám na mobil 0905 622 223 alebo na pevnú linku 037 651 17 77. Otváracie hodiny: pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00.'),
+    'kontakt-telefon': ('kontakt', 'Aké máte telefónne číslo?', 'Zavolajte nám na mobil 0905 622 223 alebo na pevnú linku 037 651 17 77. Otváracie hodiny: pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00.'),
     'kontakt-email': ('kontakt', 'Aký je váš e-mail?', 'Napíšte nám na info@stavebninyrichtarik.sk. Pošlite aj zoznam materiálu alebo projekt a pripravíme vám cenovú ponuku.'),
-    'hodiny': ('hodiny', 'Aké máte otváracie hodiny?', 'Pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00.'),
+    'hodiny': ('hodiny', 'Aké máte otváracie hodiny?', 'Pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00.'),
     'sluzby-ponuka': ('sluzby', 'Ako získam cenovú ponuku?', 'Cenová ponuka je zadarmo. Pošlite nám zoznam materiálu alebo projekt na info@stavebninyrichtarik.sk, prípadne prineste projekt alebo rozmery do predajne. Spočítame spotrebu, pripravíme ponuku a dohodneme dopravu. Telefón 0905 622 223.'),
     'sluzby-poradenstvo': ('sluzby', 'Poradíte mi s výberom materiálu?', 'Áno, poradenstvo je zadarmo. Zaškolený personál vám poradí v predajni alebo na telefóne 0905 622 223.'),
     'sluzby-firmy': ('sluzby', 'Máte ceny pre stavebné firmy?', 'Áno. Pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny máme špeciálne ceny. Dohodnete sa v predajni alebo na 0905 622 223.'),
@@ -1346,7 +1481,7 @@ CASTE_KOPIA = {
     'zlava-cennik': ('zlavy', 'Sú ceny v cenníku akcií už so zľavou?', 'Áno. Ceny v cenníku akcií (28. 1. 2026) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava.'),
     'platba-karta': ('zlavy', 'Môžem platiť kartou?', 'Áno, v predajni je platobný terminál (VÚB banka). Platiť môžete aj v hotovosti; pri akciových cenách so zákazníckou kartou je zľava 5 % v hotovosti a 3,3 % kartou.'),
     'platba-splatky': ('zlavy', 'Dá sa kúpiť materiál na splátky?', 'Áno, stavebný materiál môžete kúpiť na splátky cez Quatro. Podrobnosti vám povieme v predajni alebo na 0905 622 223.'),
-    'akcia-porfix-ytong': ('akcie', 'Je doprava zdarma pri Porfixe alebo Ytongu?', 'Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma až na stavbu.'),
+    'akcia-porfix-ytong': ('akcie', 'Je doprava zdarma pri Porfixe alebo Ytongu?', 'Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma: Porfix až domov, Ytong až na stavbu.'),
     'akcia-zateplenie': ('akcie', 'Dovezete polystyrén zadarmo?', 'Áno, pri akcii na zatepľovací a sadrokartónový systém dovezieme polystyrén priamo domov zdarma.'),
     'cena-cement': ('akcie', 'Koľko stojí cement?', 'V akcii: cement 325 R, 25 kg za 4,42 € za vrece s DPH a cement 425 R, 25 kg za 5,18 € za vrece s DPH. Cena platí pri platbe v hotovosti. Platnosť vám potvrdíme na 0905 622 223.'),
 }
@@ -1498,57 +1633,67 @@ def ochrana_prechody():
     p = os.path.join(OUT, 'asistent', 'ochrana-udajov.html')
     if not os.path.exists(p): return
     s = open(p, encoding='utf-8').read()
-    skript = PRECHODY_HEAD.split('</script>')[0] + '</script>'
-    n = re.sub(r'(<!--prechody[^>]*-->).*?(<!--/prechody-->)', lambda m: m.group(1) + skript + m.group(2), s, count=1, flags=re.S)
-    if n == s and skript not in s: print('POZOR: asistent/ochrana-udajov.html bez značiek <!--prechody--> (skript prechodov)')
+    n = s
+    for znacka, skript in (('prechody', PRECHODY_HEAD.split('</script>')[0] + '</script>'), ('tema', TEMA_HEAD.strip())):
+        m = re.sub(r'(<!--' + znacka + r'[^>]*-->).*?(<!--/' + znacka + r'-->)', lambda x: x.group(1) + skript + x.group(2), n, count=1, flags=re.S)
+        if m == n and skript not in n: print(f'POZOR: asistent/ochrana-udajov.html bez značiek <!--{znacka}--> (skript {znacka})')
+        n = m
     if n != s: open(p, 'w', encoding='utf-8').write(n)
 
 
 def kontrola_uvodu():
     """Úvod (index.html) je ručne udržiavaný, build.py ho neprepisuje. Upozorní, keď sa menu alebo údaje firmy
     v build.py zmenili a v úvode nie sú (treba ich doplniť ručne), a skontroluje celý web: žiadny odkaz na staré
-    video s autom ani na jeho obrázok pri zdieľaní, og obrázok dvora na každej stránke, na úvode práve jeden H1 so slovom
-    „Stavebniny“ (SEO) a og aj JSON-LD obrázok dvora."""
+    video s autom ani na jeho obrázok pri zdieľaní, og obrázok (logo a názov) na každej stránke, na úvode práve jeden H1
+    so slovom „Stavebniny“ (SEO) a og aj JSON-LD obrázok."""
     s = open(os.path.join(OUT, 'index.html'), encoding='utf-8').read()
     chyba = [p for p, t in NAV if p != 'index.html' and f'href="{p}">{t}<' not in s]
     if 'data-asistent="ukazka"' not in s: chyba.append('data-asistent="ukazka" na <html> (asistent v náhľade)')
     chyba += [v for k, v in FIRMA.items() if k not in ('mapa',) and v not in s and html.escape(v) not in s]
-    stranky = bez_og = 0; stare = []; bez_prechodu = []
+    stranky = bez_og = 0; stare = []; bez_prechodu = []; bez_temy = []; von360 = []
     for kor, dirs, subory in os.walk(OUT):
         dirs[:] = [x for x in dirs if x not in ('img', 'pdf', 'subory', 'zdroj', 'nasadenie', '__pycache__', '.git')]
         for f in subory:
             if not f.endswith(('.html', '.css', '.js', '.json', '.webmanifest', '.xml')): continue
             t = open(os.path.join(kor, f), encoding='utf-8', errors='replace').read()
             if re.search(STARE_VIDEO, t): stare.append(os.path.relpath(os.path.join(kor, f), OUT))
+            # prehliadka 360° je v stránke (Lajo 9. 11. 2026): žiadny odkaz von na záznam v Google Mapách ani starý odkaz-360
+            if 'google.com/maps?cid' in t or 'odkaz-360' in t: von360.append(os.path.relpath(os.path.join(kor, f), OUT))
             if f.endswith('.html'):
                 stranky += 1
                 if f'{DOMENA}{OG_IMG[0]}' not in t: bez_og += 1
                 if t.count("'pagereveal'") != 1: bez_prechodu.append(os.path.relpath(os.path.join(kor, f), OUT))
+                if t.count('tema=(tmava|svetla)') != 1: bez_temy.append(os.path.relpath(os.path.join(kor, f), OUT))
     if firma_ld().strip() not in s: chyba.append('úvod: JSON-LD HardwareStore sa nezhoduje s firma_ld() (vlož výstup firma_ld())')
     if PRECHODY_HEAD not in s: chyba.append('úvod: skript prechodov v <head> sa nezhoduje so zdroj/prechody.js (vlož výstup prechody_head())')
     if bez_prechodu: chyba.append('skript prechodov nie je práve raz: ' + ', '.join(bez_prechodu[:5]))
+    if bez_temy: chyba.append('skript témy (zdroj/tema-head.js) nie je práve raz: ' + ', '.join(bez_temy[:5]))
+    if s.split('<link rel="stylesheet"')[0].count(TEMA_HEAD.strip()) != 1: chyba.append('úvod: skript témy v <head> pred štýlom sa nezhoduje so zdroj/tema-head.js (vlož výstup tema_head())')
     if stare: chyba.append('odkaz na staré video alebo og.jpg: ' + ', '.join(stare[:5]))
+    if von360: chyba.append('odkaz von na 360° v Google Mapách (má byť prehliadka v stránke): ' + ', '.join(von360[:5]))
+    if s.count(prehliadka_blok('', '13-dlazba-sklad')) != 1: chyba.append('úvod: komponent prehliadky 360° nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok(\'\', \'13-dlazba-sklad\') (vlož jeho výstup)')
     if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
     h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)
     if len(h1) != 1 or 'Stavebniny' not in h1[0]: chyba.append(f'úvod: H1 {len(h1)}×, so slovom Stavebniny: {bool(h1) and "Stavebniny" in h1[0]}')
-    if s.count(f'{DOMENA}{OG_IMG[0]}') < 2: chyba.append('úvod: og:image alebo JSON-LD image nie je og obrázok dvora')
-    # uvítanie Brána (zdroj/uvitanie.*): štyri bloky zo zdroja práve raz, šablóna nečinná (<template>), prekryv mimo
-    # čítačky (aria-hidden, vnútro inert), bez nadpisu, odkazu, prvku s fokusom, výkričníka a štítku označenia asistenta
+    if s.count(f'{DOMENA}{OG_IMG[0]}') < 2: chyba.append('úvod: og:image alebo JSON-LD image nie je og obrázok webu')
+    # uvítanie Brána (zdroj/uvitanie.*): štyri bloky zo zdroja práve raz, prekryv ako prvý prvok <body> (bez triedy br-ide
+    # skrytý), mimo čítačky (aria-hidden, vnútro inert), bez nadpisu, odkazu, prvku s fokusom, výkričníka a štítku označenia asistenta
     # (skratka z assets/asistent.js, patrí len k oknu asistenta); rozhodnutie
     # v <head> práve raz a dnešný pohyb úvodu (uv-ide) sa pri uvítaní nespustí; bez otáčania, perspektívy a clip-path
     hlava, uv = s.split('</head>')[0], uvitanie_bloky()
     oznacenie = re.search(r"\bai: '([^']+)'", open(os.path.join(OUT, 'assets', 'asistent.js'), encoding='utf-8').read()).group(1)
     chyba += [f'úvod: blok uvítania {n} nie je v index.html práve raz alebo sa nezhoduje so zdrojom (vlož výstup uvitanie_bloky())'
               for n, b in uv.items() if s.count(b) != 1]
-    sab = re.findall(r'<template id="br-tpl">(.*?)</template>', s, re.S)
-    if len(sab) != 1: chyba.append('úvod: šablóna uvítania #br-tpl nie je práve jeden <template>')
-    elif not sab[0].startswith('<div class="br" aria-hidden="true"><div class="br-in" inert>'): chyba.append('úvod: prekryv uvítania bez aria-hidden alebo vnútro bez inert')
-    elif re.search(r'<h[1-6][\s>]|<a[\s>]|<button|<input|tabindex|!|\b' + re.escape(oznacenie) + r'\b', sab[0]): chyba.append('úvod: šablóna uvítania má nadpis, odkaz, prvok s fokusom, výkričník alebo označenie asistenta')
+    sab = uv['sablona']
+    if not re.search(r'<body[^>]*>\n' + re.escape(sab), s): chyba.append('úvod: prekryv uvítania nie je prvý prvok <body>')
+    elif not sab.startswith('<div class="br" aria-hidden="true"><div class="br-in" inert>'): chyba.append('úvod: prekryv uvítania bez aria-hidden alebo vnútro bez inert')
+    elif re.search(r'<h[1-6][\s>]|<a[\s>]|<button|<input|tabindex|!|\b' + re.escape(oznacenie) + r'\b', sab): chyba.append('úvod: prekryv uvítania má nadpis, odkaz, prvok s fokusom, výkričník alebo označenie asistenta')
+    if '.br{display:none;' not in uv['style'] or '.br-ide .br{display:block}' not in uv['style']: chyba.append('úvod: prekryv uvítania nie je bez triedy br-ide skrytý')
     if hlava.count("classList.add('br-ide')") != 1: chyba.append('úvod: rozhodnutie uvítania (br-ide) nie je v <head> práve raz')
     if '.matches&&!h.classList.contains("br-ide"))h.classList.add("uv-ide")' not in hlava: chyba.append('úvod: pohyb úvodu uv-ide sa spustí aj pri uvítaní')
     if re.search(r'rotate|perspective|clip-path', uv['style'] + uv['skript']): chyba.append('úvod: uvítanie otáča, má perspektívu alebo clip-path')
     if chyba: print('POZOR: kontrola úvodu (doplň ručne):', chyba)
-    else: print(f'kontrola úvodu: OK (stránok {stranky}, og obrázok dvora na všetkých, H1 1×, bez starého videa, skript prechodov 1× na každej, uvítanie zo zdroja 1×)')
+    else: print(f'kontrola úvodu: OK (stránok {stranky}, og obrázok na všetkých, H1 1×, bez starého videa, skript prechodov a témy 1× na každej, uvítanie zo zdroja 1×)')
     return not chyba
 
 
@@ -1569,6 +1714,7 @@ if __name__ == '__main__':
     build_kontakt()
     build_404()
     build_search_index()
+    print('assets/panorama.js (prehliadač panorámy zo zdroj/panorama.js):', panorama_js(), 'B')
     ochrana_prechody()
     print('stránok v sitemap.xml:', build_sitemap())
     if obsah.CHYBAJUCE: print('vynechané odkazy na súbory, ktoré už neexistujú:', ' '.join(sorted(obsah.CHYBAJUCE)))

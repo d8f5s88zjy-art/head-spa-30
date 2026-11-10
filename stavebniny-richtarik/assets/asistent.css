@@ -44,7 +44,8 @@ html.asi-uvod .asi-oznam { display: none; }
   width: min(300px, calc(100vw - 2 * var(--gutter))); padding: 10px 10px 12px 14px;
   border: 1px solid var(--line); border-radius: 6px; border-bottom-right-radius: 2px; background: #fff; color: var(--ink);
   font: 400 15px/1.45 var(--body); box-shadow: 0 16px 40px rgba(20, 18, 16, .16);
-  opacity: 0; transform: translateY(10px); transform-origin: 100% 100%; transition: opacity var(--asi-cas) var(--asi-krivka), transform var(--asi-cas) var(--asi-krivka);
+  opacity: 0; transform: translateY(12px); transform-origin: 100% 100%;
+  transition: opacity var(--dlzka-hover, 240ms) var(--asi-krivka), transform var(--dlzka-hover, 240ms) var(--asi-krivka);
 }
 .asi-oznam[hidden] { display: none; }
 .asi-oznam.is-on { opacity: 1; transform: none; }
@@ -133,7 +134,8 @@ html.asi-uvod .asi-oznam { display: none; }
 @media (max-width: 640px) {
   .asi-btn { width: 46px; height: 46px; }
   html.asi-open .asi-btn { opacity: 0; pointer-events: none; }
-  .asi-oznam { bottom: calc(var(--asi-dole) + 58px + env(safe-area-inset-bottom, 0px)); }
+  .asi-oznam { bottom: calc(var(--asi-dole) + 58px + env(safe-area-inset-bottom, 0px)); width: min(300px, 62vw); }   /* RP1-12: najviac 62 % šírky */
+  .asi-oznam-spytaj, .asi-oznam-tel { padding: 0 8px; }
   .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(78vh, calc(100vh - 64px)); height: min(78dvh, calc(100dvh - 64px)); border-radius: 8px 8px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
   .asi-clona:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 74; background: rgba(243, 240, 234, .82); }
   html.asi-open, html.asi-open body { overflow: hidden; }
@@ -158,4 +160,20 @@ html.asi-uvod .asi-oznam { display: none; }
   .asi-btn:active, .asi-chips button:active, .asi-send:active, .asi-volaj:active, .asi-tel:active, .asi-dopyt:active,
   .asi-oznam-spytaj:active, .asi-oznam-tel:active { transform: none; }
   .asi-pise::after { animation: none; }
+}
+
+/* tmavá téma „čierno-biela“ (site.css, časť Tmavá téma; tokeny --paper, --povrch, --concrete, --brick-txt): okno na noci,
+   hlavička, formulár a bubliny firmy na uhľovej karte, bubliny zákazníka o stupeň svetlejšie; ikona ostáva biely kruh
+   s červenou značkou (na tmavom svieti správne); clona za oknom na telefóne je farba stránky, nie cudzia čierna */
+@media screen {
+  html[data-tema="tmava"] .asi-oznam, html[data-tema="tmava"] .asi-hlava, html[data-tema="tmava"] .asi-form, html[data-tema="tmava"] .asi-pata,
+  html[data-tema="tmava"] .asi-a, html[data-tema="tmava"] .asi-chips button, html[data-tema="tmava"] .asi-x { background: var(--povrch); }
+  html[data-tema="tmava"] .asi-panel { background: var(--paper); box-shadow: 0 30px 70px rgba(0, 0, 0, .6); }
+  html[data-tema="tmava"] .asi-oznam { box-shadow: 0 16px 40px rgba(0, 0, 0, .5); }
+  html[data-tema="tmava"] .asi-u { background: var(--concrete); color: var(--ink); }
+  html[data-tema="tmava"] .asi-msg a { color: var(--brick-txt); }
+  html[data-tema="tmava"] .asi-ukazka-pas { color: var(--brick-pale); border-bottom-color: rgba(239, 122, 102, .35); }
+  html[data-tema="tmava"] .asi-form textarea { background: var(--concrete); }
+  html[data-tema="tmava"] .asi-chips .asi-chip-dalej { background: transparent; }
+  html[data-tema="tmava"] .asi-clona:not([hidden]) { background: rgba(18, 17, 16, .72); }
 }

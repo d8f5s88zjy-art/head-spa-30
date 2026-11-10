@@ -8,7 +8,7 @@
 import { nacitaj, hladaj } from './asistent-otazky.js';
 
 const PRAH = 0.6;   // pod touto zhodou je odpoveď neistá, radšej telefón a návrhy podobných otázok
-const NEVIEM = 'Na toto v pripravených odpovediach nič nemám. Zavolajte nám na 0905 622 223 (pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00) alebo napíšte na info@stavebninyrichtarik.sk.';
+const NEVIEM = 'Na toto v pripravených odpovediach nič nemám. Zavolajte nám na 0905 622 223 (pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00) alebo napíšte na info@stavebninyrichtarik.sk.';
 
 /* odpoveď na otázku: { t: text, tel: pod ňou Zavolať, id: ktorá častá otázka (null = nevie) } */
 export async function odpoved(otazka) {

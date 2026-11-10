@@ -40,7 +40,7 @@ const T = {
   ph: 'Napíšte otázku…', send: 'Odoslať', close: 'Zavrieť', novy: 'Nový rozhovor',
   note: 'Odpovedá AI podľa údajov z webu. Cenu, sklad a dovoz potvrdí predajňa. Nepíšte sem osobné údaje.',
   noteUkazka: 'Cenu, sklad a dovoz potvrdí predajňa. Nepíšte sem osobné údaje.',
-  err: 'Teraz neviem odpovedať. Zavolajte nám na 0905 622 223 (pondelok až piatok 7:00 až 16:00, sobota 7:00 až 12:00).',
+  err: 'Teraz neviem odpovedať. Zavolajte nám na 0905 622 223 (pondelok – piatok 7:00 – 16:00, sobota 7:00 – 12:00).',
   ochrana: 'Ochrana údajov', dlhy: 'Rozhovor je už dlhý. Začnite nový a opýtajte sa znova.', ponuka: 'Cenová ponuka',
   temy: 'Časté otázky podľa témy:', vsetky: 'Všetky otázky ({n})', spat: 'Späť na témy', suvis: 'Môže vás zaujímať:',
   caste: 'Časté otázky', pripravena: 'Pripravená odpoveď z overených údajov webu', mapa: 'Navigovať v Google Mapách',
@@ -61,7 +61,7 @@ const ikona = (d) => { const s = document.createElementNS('http://www.w3.org/200
 const I_X = '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
 const I_TEL = '<path d="M6.6 3.5h2.6l1.4 4-2 1.3a12 12 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
 const I_SEND = '<path d="M4 12l16-8-6 16-2.5-6.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
-// značka webu (tehlová stena z img/favicon.svg) na svetlom podklade
+// značka asistenta: tehlová stena (vlastná kresba, nezávislá od loga) na svetlom podklade
 const I_TEHLY = '<g fill="currentColor"><rect x="3" y="5" width="8" height="3.6" rx=".4"/><rect x="13" y="5" width="8" height="3.6" rx=".4"/><rect x="3" y="10.2" width="3.5" height="3.6" rx=".4"/><rect x="8.2" y="10.2" width="7.6" height="3.6" rx=".4"/><rect x="17.5" y="10.2" width="3.5" height="3.6" rx=".4"/><rect x="3" y="15.4" width="8" height="3.6" rx=".4"/><rect x="13" y="15.4" width="8" height="3.6" rx=".4"/></g>';
 const znak = (trieda) => el('span', { class: 'asi-znak ' + trieda, 'aria-hidden': 'true' }, [ikona(I_TEHLY)]);
 
@@ -338,13 +338,17 @@ export async function spusti(api) {
   const pata = document.querySelector('footer');
   const pozor = pata && 'IntersectionObserver' in window ? new IntersectionObserver((z) => { pataVidno = z.some((x) => x.isIntersecting); if (pataVidno && !oznam.hidden) schovajOznam(); }) : null;
   if (pozor) pozor.observe(pata);
+  // RP1-12: bublina sa ukáže až po 1,5 s pokoja posunu (nie cez obsah, ktorý zákazník práve posúva)
+  let posunCas = 0;
+  addEventListener('scroll', () => { posunCas = performance.now(); }, { passive: true });
   const hodiny = setInterval(() => {
     // úvod je prvá obrazovka: bublina až po odskrolovaní za ňu
     const uvod = document.querySelector(UVOD);
     const zaUvodom = !uvod || uvod.getBoundingClientRect().bottom < innerHeight * 0.5;
     const vidno = btn.isConnected && panel.hidden && zaUvodom && !pataVidno && parseFloat(getComputedStyle(btn).opacity) > 0.9;
     videl = vidno ? videl + 1 : 0;
-    if (videl >= 8 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 8) ukazOznam(); }
+    if (!btn.isConnected || !panel.hidden) { clearInterval(hodiny); return; }
+    if (videl >= 8 && performance.now() - posunCas >= 1500) { clearInterval(hodiny); ukazOznam(); }
   }, 1000);
   function skryAsistenta() {
     zapis('sessionStorage', K_SKRYTY, '1');

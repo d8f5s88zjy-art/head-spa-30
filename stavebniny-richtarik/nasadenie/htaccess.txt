@@ -18,6 +18,10 @@ AddType application/manifest+json .webmanifest
   <FilesMatch "\.(html|css|js|json|xml|txt|webmanifest)$">
     Header set Cache-Control "max-age=600, must-revalidate"
   </FilesMatch>
+  # písma aj pre stránku v ráme bez allow-same-origin (pôvod null, napr. náhľad): bez hlavičky prehliadač písmo odmietne
+  <FilesMatch "\.woff2$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
 </IfModule>
 
 RewriteEngine On
