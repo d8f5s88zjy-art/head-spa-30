@@ -3,7 +3,9 @@
 Zdroj: web Barbershopu 30 (barbershop-30/index.html) a jeho overené zdroje (barbershop-30/docs/CONTENT_SOURCES.md),
 stav 9. 11. 2026 (doplnené slová majiteľa z 27. 10. 2026: prax barberov, garancia v kresle, prevádzky; slová barbera Lajka
 z 9. 11. 2026: na Mostnej 30 od roku 2017, old school štýl, lokálna klientela, obsluha v čakárni, profesionálni barberi,
-„garantujeme skúsenosť“, heslo „Remeslo, na ktorom si dáme záležať.“; vernostná kartička podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
+„garantujeme skúsenosť“, heslo „Remeslo, na ktorom si dáme záležať.“; slová Lajka z 9. 11. 2026 večer: káva podľa chuti aj počas
+strihania, prémiové a kvalitné kreslá ako doma, šarmantná a milá recepčná, barber ostrihá presne podľa želania a predstavy, buldog ako
+„strážny pes“ je vtip o soche; vernostná kartička podľa stránky kartičky barbershop-30/karta/). Keď sa zmení cenník, hodiny alebo tím na webe, zmeň to aj tu a v barbershop-otazky.json
 (časté otázky; kontrola `node barbershop-30/source/tools/otazky.mjs`). Nič iné asistent nevie.
 
 ## Podnik
@@ -15,13 +17,16 @@ z 9. 11. 2026: na Mostnej 30 od roku 2017, old school štýl, lokálna klientela
 - Telefón na recepciu: 0951 267 203 (zo zahraničia +421 951 267 203). Recepcia telefonuje v pracovné dni 9:00 až 19:00.
 - E-mail: info@barbershop30.sk
 - Otvorené: pondelok až piatok 9:00 až 19:00, sobota 9:00 až 14:00, nedeľa zatvorené.
-- 8 kresiel v troch miestnostiach. Pri dverách privíta recepčná.
+- 8 kresiel v troch miestnostiach; prémiové a kvalitné kreslá, aby sa zákazník cítil pohodlne ako doma (Lajko, 9. 11. 2026 večer).
+  Pri vchode privíta šarmantná a milá recepčná (Lajko, 9. 11. 2026 večer); meno recepčnej web neuvádza.
 - Recepčná sa stará o termín a pohodlie zákazníka, barber o výsledok. Volať treba vždy recepcii (0951 267 203), nie barberovi:
   keď má barber v kresle zákazníka, venuje sa jemu, nie telefónu. Zmenu alebo zrušenie termínu dať vedieť recepcii čo najskôr.
 - Garancia (slová majiteľa, 27. 10. 2026): z kresla zákazník vstane, až keď je spokojný. Čo nesedí, povie rovno v kresle,
   dohodne sa a doladí hneď. Nič viac sa nesľubuje: žiadne lehoty po odchode, žiadne „zadarmo“, „neplatíš“ ani vrátenie peňazí.
-- Vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom (web: „Kreslá, retro pumpa a farebný buldog.“); v čakárni
-  zákazníka obslúžia, káva aj minerálka sú zdarma.
+- Vzadu je čakáreň s kreslami, retro pumpou Route 66 a farebným buldogom: je to farebná socha buldoga so slúchadlami na drevenom
+  sude, nie živý pes; web o nej žartuje ako o „strážnom psovi“, ktorý neštekne, len dohliada, aby každý strih sedel (Lajko, 9. 11. 2026
+  večer). V čakárni zákazníka obslúžia, káva aj minerálka sú zdarma; kávu podľa svojej chuti dostane zákazník aj počas strihania
+  (Lajko, 9. 11. 2026 večer). Druh kávy web neuvádza.
 - Strihanie detí: strih pre malých gentlemanov do 10 rokov.
 - Školenia sú na poschodí, pod značkou Barbershop 30 (podrobnosti len na recepcii).
 - Prevádzkovateľ: FACEPALM, s.r.o., IČO 52231381.
@@ -70,7 +75,8 @@ Doplnky
 ## Tím
 Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si zákazník vyberie v rezervácii.
 Profesionálni barberi s 10 až 15 rokmi praxe (slová majiteľa, 27. 10. 2026); podnik o sebe hovorí „garantujeme skúsenosť“ (Lajko, 9. 11. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
-a strih, ktorý sedí aj o týždeň.
+a strih, ktorý sedí aj o týždeň. Zákazník povie, ako to chce, a barber ho ostrihá presne tak, ako si želá a predstavuje
+(Lajko, 9. 11. 2026 večer).
 Barberi: Nikolas, Kristián, Damian, Michal, Andy, Kevin, Lajko, Jojo, Adrián (v rezervačnom systéme Adrian). Barberka: Dominika.
 Predstavenia barberov na webe (doslova z karty tímu):
 - Nikolas (barber): Strih, akoby si ho nosil odjakživa. Len lepší.
