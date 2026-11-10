@@ -20,8 +20,9 @@
    data-vt na <html>: typ, ktorým stránka prišla (CSS podľa neho pridá vstup H1 z drážky); trieda vt: stránka prišla
    prechodom. sessionStorage vt:<kľúč položky histórie>: typ príchodu na položku (zrkadlo pri Späť, zopakovanie pri Vpred).
    vtBeh: prechod tejto stránky (alebo null) pre site.js, ktorý odloží prácu až po prechode.
-   Farebná téma (10. 11. 2026): nová stránka pri pagereveal zapíše na <html> --vt-pozadie = zvislý prechod s farbami scén
-   (--scena) sekcií, ktoré sú v okne; site.css ho dá ako podklad ::view-transition, aby pri prelnutí nič nepreblikne.
+   Farebná téma (10. 11. 2026): nová stránka pri pagereveal poskladá zvislý prechod s farbami scén (--scena) sekcií, ktoré
+   sú v okne, a dá ho ako obrázok podkladu ::view-transition (malý <style id="vt-pozadie">), aby pri prelnutí nič nepreblikne.
+   Len obrázok (background-image): farba podkladu ostáva zo site.css, ktoré pásy zhasne, len čo ich nová stránka zakryje.
    Ľahká verzia (RP1-09): keď prechod na zariadení dvakrát v relácii seká (meria site.js, sessionStorage vt-lahke ≥ 2),
    ďalšie prechody idú bez zdieľaných prvkov a bez strihu. */
 (function (w, d) {
@@ -89,7 +90,12 @@
         r = x[i].getBoundingClientRect(); c = r.height && r.bottom > 0 && r.top < innerHeight && getComputedStyle(x[i]).getPropertyValue('--scena');
         if (c) g.push(c + ' ' + Math.round(r.top) + 'px ' + Math.round(r.bottom) + 'px');
       }
-      if (g[0]) h.style.setProperty('--vt-pozadie', 'linear-gradient(' + g + ')');
+      // pravidlo ide do vlastného <style>, nie ako vlastnosť --… na <html>: tá sa dedí a prepočítala by štýl celej stránky
+      // (telefón pri CPU 4×: 13–24 ms oproti 1,5 ms); trieda vt v selektore ho dáva nad pravidlo zo site.css bez ohľadu na poradie
+      if (g[0]) {
+        c = d.getElementById('vt-pozadie') || d.head.appendChild(d.createElement('style')); c.id = 'vt-pozadie';
+        c.textContent = 'html.vt[data-tema="farebna"]::view-transition{background-image:linear-gradient(' + g + ')}';
+      }
     }
     // typ príchodu na túto položku histórie (z otvoreného menu ako strih); prechod históriou ho neprepíše
     if (ss && a.navigationType != 'traverse' && a.entry) ss.setItem(K + ':' + a.entry.key, z && z.m ? 'strih' : t);

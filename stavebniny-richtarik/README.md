@@ -59,17 +59,21 @@ atribútu) a tmavá „čierno-biela“ (`data-tema="tmava"`) ostávajú len na 
 
 **Farebná téma** (časť „Farebná téma“ na konci `site.css`): farby loga – červená `#d73438` (zmeraná), antracit `#1c1a1b`,
 biela. Stránka má teplý svetlý tón `#f6eee4` s bielymi kartami a červenými prvkami (katalóg, dlhé texty); sekcie sú scény
-s lokálnymi tokenmi: **červená** (lišta ako pás loga s tmavou linkou hore a dole, pás faktov, pás Doprava, zľavy so
-zákazníckou kartou, výzva pred pätou, pás v päte) a **antracit** (hlavička podstránky, pás značiek, akcie a služby na úvode,
-kontakt, päta, menu, spodná lišta). Biele ostrovy v scénach (karty akcií, vyhľadávanie) majú späť svetlé tokeny. Biele
+s lokálnymi tokenmi: **červená** (lišta ako pás loga s tmavou linkou hore a dole, hlavička podstránky, pás faktov, pás
+Doprava, zľavy so zákazníckou kartou, výzva pred pätou, pás v päte, menu na telefóne) a **antracit** (pás značiek, akcie
+a služby na úvode, kontakt, päta, spodná lišta). Biele ostrovy v scénach (karty akcií, vyhľadávanie) majú späť svetlé tokeny. Biele
 písmo na červenej loga má 4,73 : 1, preto je na červenej vždy čisto biele (nikdy priesvitné), dlhý text je na svetlom tóne
 alebo antracite, malé červené písmo je `#b92328` (svetlá scéna) alebo `#f28b7d` (antracit). Úvod je v duchu prvého návrhu:
 fotka cez celú výšku, červený panel so šikmou antracitovou hranou, veľký biely názov STAVEBNINY RICHTÁRIK s antracitovým
 obrysom a znakom RS, heslo a tlačidlá (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a` a `.uv-b` `display:contents`);
 strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
 živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom). Podklad prechodu medzi stránkami
-(`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`, skript `zdroj/prechody.js` zapíše
-`--vt-pozadie`), aby antracitová hlavička ani červené pásy pri prelnutí nepreblikli nasvetlo. Výška lišty je token
+(`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal`
+zapíše ako `background-image` do malého `<style id="vt-pozadie">`, nie ako dedenú vlastnosť na `<html>`, tá by prepočítala
+štýl celej stránky), aby červená hlavička ani antracitové pásy pri prelnutí nepreblikli nasvetlo. Pásy zhasnú, len čo ich
+nová stránka zakryje (`@keyframes vt-podklad` v `site.css`, 330 ms; pri návrate na počítači ostávajú do konca, lebo tam
+doznievajúci posun stránky nekryje spodná lišta) – inak sa kreslili pod stránkou až do konca prechodu a na telefóne
+predlžovali jeho poslednú snímku. Výška lišty je token
 `--lista-v` (88 px, do 980 px 84 px). Tlač je vždy svetlá (`@media screen`). Tokeny, kontrasty a merania:
 `richtarik/majitel/farebna/TOKENY.md` a `ZAPIS.md`.
 

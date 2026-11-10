@@ -1578,8 +1578,9 @@ html[data-tema="tmava"] :is(.brand img,.h1-znacka img,.br-znacka img,.flogo){bor
    html[data-tema="farebna"] je atribút priamo v HTML každej stránky (build.py TEMA, index.html, asistent/ochrana-udajov.html),
    takže web je farebný aj bez JS; skript v <head> (zdroj/tema-head.js) ho len prepne na porovnanie (?tema=svetla, ?tema=tmava).
    Stavba: 1. tokeny stránky = teplý svetlý tón s bielymi kartami a červenými prvkami (katalóg, dlhé texty); 2. scény s lokálnymi
-   tokenmi: ANTRACIT (hlavička podstránky, pás značiek, akcie a služby na úvode, kontakt, päta, menu, spodná lišta) a ČERVENÁ loga
-   (lišta ako pás „RICHTÁRIK [RS] Stavebniny“, pás faktov, pás Doprava, zľavy so zákazníckou kartou, výzva pred pätou, pás v päte);
+   tokenmi: ČERVENÁ loga (lišta ako pás „RICHTÁRIK [RS] Stavebniny“, hlavička podstránky, pás faktov, pás Doprava, zľavy so
+   zákazníckou kartou, výzva pred pätou, pás v päte, menu na telefóne) a ANTRACIT (pás značiek, akcie a služby na úvode, kontakt,
+   päta, spodná lišta);
    3. biele ostrovy v scénach (karty akcií, vyhľadávanie) majú späť svetlé tokeny; 4. úvod v duchu prvého návrhu: fotka cez celú
    výšku, červený panel so šikmou antracitovou hranou, veľký názov s logom, heslo a tlačidlá. Biele písmo na červenej loga má
    4,73 : 1 (AA aj pre malý text), preto je na červenej vždy čisto biele (žiadna priesvitná biela); antracit na červenej 3,66 : 1
@@ -1603,13 +1604,13 @@ html[data-tema="farebna"]{
 html[data-tema="farebna"]{scroll-padding-top:calc(var(--lista-v) + 10px)}
 
 /* ── scéna ANTRACIT: lokálne tokeny (biele písmo, malé červené písmo svetlejšie #f28b7d 7,2 : 1, červená loga len veľké písmo a grafika 3,66 : 1) ── */
-html[data-tema="farebna"] body :is(.page-head,.marquee,.kontakt-teaser,footer,.drawer,.mbar,.akcie.dark,.sec.sluzby){
+html[data-tema="farebna"] body :is(.marquee,.kontakt-teaser,footer,.mbar,.akcie.dark,.sec.sluzby){
   --paper:#1c1a1b;--prgb:28,26,27;--mortar:#1c1a1b;--concrete:#343031;--line:#454041;--povrch:#272425;--povrch-2:#322e2f;
   --ink:#fff;--ink-2:#ece6df;--ink-3:#c9c2b9;--irgb:255,255,255;
   --brick-dk:#f28b7d;--brick-txt:#f28b7d;--brick-lt:#3b2021;--brick-pale:#f9cfc9;--scena:#1c1a1b;
   background:var(--f-antracit);color:var(--ink)}
 /* ── scéna ČERVENÁ loga: všetko písmo čisto biele (4,73 : 1), akcent a linky biele, tlačidlá biele alebo antracit ── */
-html[data-tema="farebna"] body :is(.top,.facts,.zlavy,.cta-pas,.band){
+html[data-tema="farebna"] body :is(.top,.page-head,.drawer,.facts,.zlavy,.cta-pas,.band){
   --paper:#d73438;--prgb:215,52,56;--mortar:#d73438;--concrete:#b92328;--line:rgba(255,255,255,.5);
   --ink:#fff;--ink-2:#fff;--ink-3:#fff;--irgb:255,255,255;
   --brick:#fff;--brick-hover:#1c1a1b;--brick-dk:#fff;--brick-txt:#fff;--brick-lt:rgba(255,255,255,.16);--brick-pale:#fff;--scena:#d73438;
@@ -1620,8 +1621,16 @@ html[data-tema="farebna"] body :is(.search,.akcie.dark .deal){
   --ink:#1c1a1b;--ink-2:#3b3637;--ink-3:#5f5758;--irgb:28,26,27;
   --brick:#d73438;--brick-hover:#b92328;--brick-dk:#b92328;--brick-txt:#b92328;--brick-lt:#f8ded9;--brick-pale:#f9cfc9;
   color:var(--ink)}
-/* podklad prechodu medzi stránkami: pásy vo farbe scén novej stránky (skript v <head> zapíše --vt-pozadie); bez neho svetlý tón */
-html[data-tema="farebna"]::view-transition{background:var(--paper) var(--vt-pozadie,none)}
+/* podklad prechodu medzi stránkami: pásy vo farbe scén novej stránky (skript v <head> ich zapíše do <style id="vt-pozadie">
+   pravidlom html.vt[data-tema="farebna"]::view-transition ako background-image); pod nimi a bez nich svetlý tón.
+   Pásy zhasnú, len čo je nová stránka nepriehľadná (--vt-odstup-op + --dlzka-dnu-op = 330 ms): odvtedy ich nevidno, len by sa
+   kreslili pod ňou až do konca prechodu (na telefóne pri CPU 4× bola posledná snímka prechodu dlhšia o desiatky ms).
+   Doznievajúci posun novej stránky (24 px) kryje pri type dalej lišta hore, pri type spat spodná lišta (len do 980 px,
+   na počítači preto pásy pri návrate ostávajú do konca). Strih podklad neukazuje. */
+html[data-tema="farebna"]::view-transition{background:var(--paper)}
+@keyframes vt-podklad{to{background-image:none}}
+html.vt[data-tema="farebna"]:active-view-transition-type(dalej)::view-transition{animation:vt-podklad 1ms linear calc(var(--vt-odstup-op) + var(--dlzka-dnu-op)) forwards}
+@media (max-width:980px){html.vt[data-tema="farebna"]:active-view-transition-type(spat)::view-transition{animation:vt-podklad 1ms linear calc(var(--vt-odstup-op) + var(--dlzka-dnu-op)) forwards}}
 /* tlačidlá v červenej scéne: hlavné biele s antracitovým písmom, druhé antracit, obrys biely */
 html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) .btn.primary{background:#fff;color:var(--f-antracit);border-color:#fff}
 html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) .btn.primary:hover{background:var(--f-antracit);color:#fff;border-color:var(--f-antracit)}
@@ -1629,10 +1638,10 @@ html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band) .btn.light{background:
 html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band) .btn.light:hover{background:#000;border-color:#000}
 html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
 html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-cervena-tm);border-color:#fff}
-html[data-tema="farebna"] body :is(.top,.facts,.zlavy,.cta-pas,.band,.uv) :is(.btn,a,button,input):focus-visible{outline-color:#fff}
+html[data-tema="farebna"] body :is(.top,.page-head,.drawer,.facts,.zlavy,.cta-pas,.band,.uv) :is(.btn,a,button,input):focus-visible{outline-color:#fff}
 /* tlačidlá v antracitovej scéne: obrys biely, pod myšou biely s antracitovým písmom */
-html[data-tema="farebna"] body :is(.page-head,.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
-html[data-tema="farebna"] body :is(.page-head,.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-antracit);border-color:#fff}
+html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
+html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-antracit);border-color:#fff}
 
 /* ── lišta: červený pás s tmavou linkou hore a dole ako v páse loga, znak RS a biely názov výrazne väčší ── */
 html[data-tema="farebna"] body header.top,html[data-tema="farebna"] body.home header.top.scrolled{background:var(--f-cervena);border-block:4px solid var(--f-antracit);backdrop-filter:none;-webkit-backdrop-filter:none}
@@ -1654,12 +1663,16 @@ html[data-tema="farebna"] .nav a{color:#fff}
 @media (max-width:359px){html[data-tema="farebna"] .top .wrap{--lg-v:46px;--lg-p:24px}}
 html[data-tema="farebna"] .progress{background:#fff}
 html[data-tema="farebna"] .side-in{top:calc(var(--lista-v) + 14px)}
-/* menu na telefóne: antracit, biele položky, telefóny svetlou červenou */
-html[data-tema="farebna"] .drawer .dtel a{color:var(--brick-txt)}
+/* menu na telefóne: červená plocha loga s antracitovou linkou hore, biele položky aj telefóny */
+html[data-tema="farebna"] .drawer{border-top:4px solid var(--f-antracit)}
+html[data-tema="farebna"] .drawer .dtel a{color:#fff}
 
-/* ── hlavička podstránky: antracit s červenou linkou dole, fotka v ráme so svetlou hranou ── */
-html[data-tema="farebna"] .page-head{border-bottom:6px solid var(--f-cervena)}
-html[data-tema="farebna"] .ph-foto{box-shadow:0 0 0 1px rgba(255,255,255,.18),0 18px 40px rgba(0,0,0,.4)}
+/* ── hlavička podstránky: červená plocha loga s antracitovou linkou dole (pod červenou lištou ju delí tmavá linka lišty),
+   biely nadpis s tvrdým antracitovým tieňom, fotka v ráme na antracitovej podložke ── */
+html[data-tema="farebna"] .page-head{border-bottom:6px solid var(--f-antracit)}
+html[data-tema="farebna"] .page-head h1{text-shadow:0 .045em 0 rgba(28,26,27,.42)}
+html[data-tema="farebna"] .page-head .crumbs a:hover{text-decoration:underline}
+html[data-tema="farebna"] .ph-foto{box-shadow:clamp(6px,.8vw,11px) clamp(6px,.8vw,11px) 0 var(--f-antracit)}
 
 /* ── pás faktov a ostatné červené pásy: tmavá linka hore a dole (pás loga) ── */
 html[data-tema="farebna"] .facts{border-top:0;box-shadow:inset 0 5px 0 var(--f-antracit),inset 0 -5px 0 var(--f-antracit)}
@@ -1696,7 +1709,8 @@ html[data-tema="farebna"] body.home .akcie a.deal:hover{background:var(--povrch-
 /* ── zľavy a zákaznícka karta: červená plocha, karta na antracitovej podložke ── */
 html[data-tema="farebna"] body.home .zlavy p,html[data-tema="farebna"] body.home .zlavy .eyebrow,html[data-tema="farebna"] body.home .disc b,html[data-tema="farebna"] body.home .disc b i,html[data-tema="farebna"] body.home .disc span,html[data-tema="farebna"] body.home .karta p{color:#fff}
 html[data-tema="farebna"] body.home :is(.disc,.disc div,.disc div+div){border-color:rgba(255,255,255,.5)}
-html[data-tema="farebna"] .karta::before{background:var(--f-antracit)}
+html[data-tema="farebna"] .karta{padding-bottom:clamp(18px,3vw,30px)}
+html[data-tema="farebna"] .karta::before{background:var(--f-antracit);inset:0;height:auto}
 html[data-tema="farebna"] body.home .karta img{box-shadow:0 26px 54px rgba(28,26,27,.5)}
 
 /* ── služby a kontakt na úvode: antracit ── */
