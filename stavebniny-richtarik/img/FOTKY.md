@@ -42,16 +42,19 @@ Zápis výroby a manifest: pracovný priečinok `majitel/podklady/assets/` (`MAN
   (1290 ≈ 1 : 1 so zdrojom, 1720 je zväčšenie 1,33× len na celú šírku okna), vzhľad „Svetlé ráno“ ako ostatné skutočné fotky.
   Použitie: úvod a uvítanie (11, **provizórne**, kým majiteľ nepotvrdí „fotku číslo 5“; telefón berie tie isté široké súbory
   `-960` a `-1290`, zvislé výrezy `-t-` fotky 11 sa od 10. 11. 2026 nepoužívajú a zo stromu sú preč, výrezy náhradnej fotky 02 ostávajú), pás zásob, hlavičky podstránok,
-  Kontakt, Doprava a Služby (10), galéria, náhľad prehliadky 360° (13 a 02).
+  Kontakt, Doprava a Služby (10), galéria a prechádzka predajňou (zastávky 09, 11, 04, 13, 06, 05, 01, 12, 08 – `build.py` `PRECHADZKA`).
 - `img/logo-rs-360|720.png|webp`, `img/favicon-32.png`, `img/apple-touch-icon.png`, `img/ikona-192|512.png` – nové logo RS
   (tehlový múr s murárskou lyžicou a červené RS na čiernom zaoblenom podklade), vyčistené zo snímky obrazovky.
 - `img/karta-nova-671|1200.avif|webp` – nová zákaznícka karta (orez na rámik). Stará `img/p/944.webp` ostala v repozitári
   bez odkazu; `nasadenie/balik.sh` neodkazované obrázky do balíka nedáva.
 - `img/og-stavebniny-richtarik.jpg` (1200 × 630) – obrázok pri zdieľaní (og:image a JSON-LD `image` na všetkých stránkach):
   logo, názov a podtitul z FAKTY.md na tmavom podklade. Nahradil `img/og-dvor.jpg` (zo stromu preč).
-- `img/panorama/predajna.jpg` (4096 × 2048) – **skúšobný obraz** prehliadky 360° vygenerovaný lokálne (mriežka, svetové strany,
-  nápis „skúšobná panoráma“), nie fotka. Kým ho nenahradí skutočný záber, je prehliadka v náhľade označená ako ukážka a balík
-  na ostrý web ju vynecháva (`build.py` `PANORAMA['skusobna']`, README časť Prehliadka predajne 360°).
+- `img/prechadzka/<fotka>-160.avif|webp` – náhľady 9 zastávok prechádzky predajňou (šírka 160 px, zmenšenie tej istej
+  fotky z `img/predajna/<fotka>-480.webp`, 3–8 kB; nástroj `richtarik/majitel/prehliadka/nastroje/nahlady.py`).
+  Fotky zastávok sú `img/predajna/` v šírkach 720–1720; v prechádzke sa neukážu väčšie než 1,6-násobok skutočného
+  rozlíšenia zdroja (1296 × 930 až 990, fotka 06 má 1132 × 1366 – README časť Prehliadka predajne).
+- `img/panorama/` – miesto pre skutočné panorámy (360° alebo Pano z telefónu), keď ich majiteľ alebo Lajo nafotia;
+  dnes prázdne. Skúšobný obraz `predajna.jpg` bol 10. 11. 2026 zo stromu odstránený (návštevníkovi sa nesmie ukázať).
 - Fotky dodávateľov (z ich webov) na webe nie sú: bez doloženého povolenia sa nesťahujú ani nevkladajú.
 
 ## Skutočné fotky areálu predajne z 5. 11. 2026 (`img/uvod/`, od majiteľa)

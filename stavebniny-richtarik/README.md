@@ -13,8 +13,9 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Doprava (`doprava.html`): vlastné autá, doprava po celom Slovensku a podmienky dopravy pri akciách, len fakty
   z pôvodného webu a cenníka, fotka dvora (žiadne auto). Časté otázky (`caste-otazky.html`): 15 otázok, odpovede
   doslova z overenej databázy otázok predajne (časť Texty a SEO).
-- Prehliadka predajne 360° priamo na stránke (úvod, sekcia Predajňa, a Kontakt): fotka predajne, po kliknutí otočná panoráma
-  bez odkazu na Google (časť Prehliadka predajne 360°).
+- Prehliadka predajne priamo na stránke (úvod, sekcia Predajňa, a Kontakt): „Prechádzka predajňou“ – 9 zastávok
+  zo skutočných fotiek majiteľa so šípkami na zemi a pásom náhľadov – a druhá záložka „Pohľad z ulice (Google)“
+  s rámom Street View vloženým až po kliknutí; nikoho neposielame von (časť Prehliadka predajne).
 - Vyhľadávanie v celom katalógu bez ohľadu na diakritiku (`assets/index.json`).
 - Asistent na otázky (okno vpravo dole, v náhľade ukážka z overených častých otázok, na ostrom webe len so serverom;
   časť Asistent na otázky a `asistent/README.md`).
@@ -358,50 +359,101 @@ pohyb“, bez JS, prehliadač bez View Transitions), `uvod.mjs` a `pozdrav.mjs` 
 | web.dev: High-performance CSS animations – https://web.dev/articles/animations-guide | len transform a opacity | – |
 | A. Roselli: Don't split words into letters – https://adrianroselli.com/2026/02/you-know-what-just-dont-split-words-into-letters.html | text najviac po riadkoch | – |
 
-## Prehliadka predajne 360°
+## Prehliadka predajne
 
-**Režim ukážky (10. 11. 2026, KF-12).** Kým je v `img/panorama/predajna.jpg` len skúšobný obraz, platí v `build.py`
-`PANORAMA['skusobna'] = True`: komponent má atribút `data-panorama-skusobna`, odznak „360° · ukážka“, tlačidlo „Vyskúšať
-prehliadku 360°“, vetu „Ukážka: skúšobný obraz, nie záber predajne.“, odsek sekcie „Ukážka na kontrolu: …“ a odkazy
-„Prehliadka 360° (ukážka)“. Sekcia aj odkazy sú medzi značkami `<!--p360-->` a `<!--/p360-->`; `nasadenie/balik.sh` ich
-z balíka na ostrý web vynechá spolu s obrazom a prehliadačom (v balíku 0 stránok s prehliadkou, overené). Po dodaní
-skutočného záberu alebo kódu „Vložiť mapu“: `PANORAMA['skusobna'] = False`, build a na úvode vymeniť blok, odsek a text
-odkazu (`kontrola_uvodu()` vypíše, čo sa nezhoduje).
+Majiteľ (9. 11. 2026) chce, aby si ľudia mohli predajňu prezrieť ako v Google Mapách, priamo na našej stránke. Lajo
+(10. 11. 2026): urobiť to z fotiek, ktoré majiteľ poslal, a zachovať to, čo Google – že sa tam dá pohybovať. Fotky
+majiteľa sú bežné ploché zábery, nie 360° panorámy; **nič sa nedomýšľa ani negeneruje**. Preto má komponent `.pp`
+(sekcia „Prezrite si predajňu“ na úvode pred Kontaktom a na Kontakte, kotva `#prehliadka`) dve záložky:
 
-Majiteľ (9. 11. 2026) chce, aby si ľudia mohli predajňu prezrieť ako v Google Mapách (otáčať sa po predajni), a to priamo na
-našej stránke; nikoho neposielame na Google. Komponent `.p360` (`build.py: prehliadka_blok()`, štýl v `assets/site.css`
-časť „Prehliadka predajne 360°“, správanie v `assets/site.js`) je na úvode (sekcia Predajňa pred Kontaktom, fotka 13) a na
-Kontakte (fotka 02); odkazy „Prezrieť predajňu v 360°“ v päte sekcie Kontakt na úvode a pri fotke na Kontakte vedú na `#prehliadka`
-tej istej stránky. Pred kliknutím je to len fotka predajne od majiteľa, odznak „360°“ a tlačidlo: **nič sa nenačíta** (0 požiadaviek
-na Google, panoráma ani prehliadač sa nestiahnu). Po kliknutí sa do okna (telefón 60 vh, od 701 px 16:9) vloží jeden z dvoch zdrojov
-podľa `PANORAMA` v `build.py` (prednosť má `src`):
+1. **Prechádzka predajňou** – zastávky `PRECHADZKA` v `build.py` (dnes 9: tabuľa pri ceste → tvárnice pri ceste →
+   Ytong a Porfix → palety dlažby → regál s profilmi → krytý sklad → predajňa: náradie → regály → pult). Každá zastávka
+   je jedna fotka z `img/predajna/`. Poradie je odhad podľa fotiek, potvrdí ho majiteľ. Slovo 360° sa nikde nepoužíva,
+   kým zastávka nie je skutočná panoráma.
+2. **Pohľad z ulice (Google)** – rám Street View v našej stránke (ulica pred predajňou, dá sa v ňom otáčať a ísť po
+   ceste). Vytvorí sa až po kliknutí na záložku; pred ním ide na Google 0 požiadaviek a veta pod oknom to hovorí.
 
-1. **`src` – rám Google Máp** (`data-panorama-src`): `<iframe>` s adresou z kódu „Vložiť mapu“ panorámy stavebnín
-   (`https://www.google.com/maps/embed?pb=…`), `loading="lazy"`, `allowfullscreen`, `referrerpolicy="no-referrer-when-downgrade"`,
-   titulok; fotka sa prelne preč až po udalosti `load` (bez prázdneho rámu). Veta pod oknom hovorí, že obsah z Google Máp sa
-   načíta až po kliknutí (ochrana údajov). **Ako získať kód** (Lajo alebo majiteľ, prihlásený v prehliadači na počítači):
-   otvoriť záznam firmy v Google Mapách (`https://www.google.com/maps?cid=137067579998285540`) → Fotky → záložka
-   „360°“ (alebo Street View) → otvoriť panorámu stavebnín → menu (tri bodky) alebo „Zdieľať“ → „Vložiť mapu“ → skopírovať
-   `src="…"` z `<iframe>` → vložiť do `PANORAMA['src']` → `python3 build.py` a ten istý blok vložiť ručne do `index.html`
-   (`kontrola_uvodu()` hlási, kým sa nezhoduje). Kód sa z nášho prostredia nedal získať (Google ukázal reCAPTCHA pre sieť,
-   `richtarik/majitel/360/ZAPIS.md`), nič sa nezostavuje od oka. Hotovú adresu overte v stránke: rám sa dá ťahať.
-2. **`obrazok` – vlastná panoráma** (`data-panorama-obrazok`, dnes `img/panorama/predajna.jpg`): equirektangulárny obraz
-   2:1 (celých 360° × 180°, sever v strede), prehliadač `zdroj/panorama.js` (build ho zmenší do `assets/panorama.js`, modul sa
-   importuje až po kliknutí). WebGL: jeden trojuholník, zlomkový shader počíta smer každého bodu a číta z textúry (šírka
-   mocnina dvoch, najviac 4096 px); bez WebGL záloha v CSS (pás ako pozadie, len vodorovné a zvislé posúvanie). Ovládanie:
-   ťahanie prstom alebo myšou so zotrvačnosťou (útlm 320 ms; pri „obmedziť pohyb“ bez zotrvačnosti), dva prsty = priblíženie
-   (zorný uhol 45–100°), šípky a +/−, koliesko len na celej obrazovke. Kreslí sa len počas pohybu. **Dnes je v súbore
-   skúšobný obraz** vygenerovaný lokálne (`richtarik/majitel/360/nastroje/panorama_skuska.py`: prechod oblohy a zeme, mriežka
-   po 15°, svetové strany a stupne na horizonte, nápis „Skúšobná panoráma – skutočný záber predajne sa doplní“). Skutočná
-   panoráma od majiteľa (fotoaparát alebo telefón s režimom 360°, prípadne stiahnutá z jeho účtu Google) sa uloží pod tým
-   istým názvom `img/panorama/predajna.jpg` (JPEG, 2:1, 4096–8192 px šírka, do 1,5 MB); nič iné netreba meniť.
+Pred kliknutím je v stránke len fotka prvej zastávky (náhľad), odznak „Prechádzka · 9 zastávok“, tlačidlo „Prejsť sa
+predajňou“ a záložky. Modul `assets/prechadzka.js` (25,9 kB, gzip 8,5 kB; zdroj `zdroj/prechadzka.js`, build pred neho
+vloží zoznam zastávok), fotky ďalších zastávok, náhľady 160 px (`img/prechadzka/`) ani rám Googlu sa pred kliknutím
+nesťahujú. Prvá zastávka je tá istá fotka ako náhľad, takže sa otvorí hneď (telefón 390 × 844, 4G 9 Mb/s: 0,25 s,
+so studenou pamäťou 0,55 s; pomalá 4G 1,6 Mb/s: 0,43 s a 1,24 s – `richtarik/majitel/prehliadka/ZAPIS.md`).
 
-Tlačidlá na okne: „Celá obrazovka“ (`requestFullscreen` na celom komponente; kde nie je, napr. iPhone, pevná pozícia cez celé
-okno `.p360-pevne`, sekcia s `content-visibility:auto` dostane `p360-pevne-rodic`; Esc ju ukončí) a „Zavrieť prehliadku“
-(odstráni rám alebo panorámu, vráti fotku a fokus na tlačidlo). Bez JS ostáva fotka a veta „Prehliadka potrebuje zapnutý
-JavaScript“ (tlačidlo je `hidden`). Bez oboch zdrojov ostáva fotka a tlačidlo je skryté. Obe témy: odznak a veta z tokenov,
-čipy lišty tmavý papier so svetlým písmom (na bielej fotke 11,7 : 1, na noci 18,7 : 1; tlačidlo tehlová s bielym písmom 5,4 : 1 svetlá, 4,7 : 1 tmavá). Skúšky: `richtarik/majitel/360/nastroje/test-p360.mjs` (sieť pred kliknutím,
-ťahanie, zotrvačnosť, klávesnica, celá obrazovka, zavretie, obmedziť pohyb, bez JS, dĺžky snímok).
+**V zastávke.** Fotka je väčšia než okno: ťahanie prstom alebo myšou ju posúva (zotrvačnosť, útlm 320 ms), pri posune sa
+jemne nakláňa v perspektíve (najviac 2,5° a 1,5°, len keď fotka okno prekrýva s rezervou). Dva prsty, tlačidlá + a −,
+klávesy + a −, dvojité ťuknutie alebo koliesko priblížia; koliesko v stránke posúva stránku (priblíži s Ctrl), na
+celej obrazovke priblíži samo. Zvislý ťah prstom v stránke patrí stránke (`touch-action: pan-y`), na celej obrazovke
+fotke. Všetko je `transform` jednej vrstvy (kompozítor), kreslí sa len počas pohybu.
+**Mierka.** `PRECHADZKA_LIMIT = 1.6`: jeden bod zdroja nikdy nezaberie viac než 1,6 CSS bodu (rendered / intrinsic
+v nástrojoch prehliadača, počíta sa proti skutočnému rozlíšeniu fotky v `zdroj`, dnes 1296 × 930 až 990 a 1132 × 1366).
+Východisko: fotka prekrýva okno a do strán presahuje o 30 %, pokiaľ je vidno aspoň 42 % jej plochy; strop priblíženia
+je 2,2-násobok najmenšej mierky, najviac limit. Keď je okno väčšie než 1,6-násobok fotky (veľký monitor), fotka ostane
+menšia než okno na tmavom podklade. S originálmi od majiteľa stačí prepísať `zdroj` a limit sa posunie sám.
+**Súbory.** Podľa zobrazenej šírky a hustoty displeja (najviac 2) sa vyberie 720, 960 alebo 1290 px (AVIF, WebP ako
+záloha); zväčšený súbor 1720 px len vtedy, keď je fotka na obrazovke širšia než zdroj (veľké okno alebo priblíženie).
+**Medzi zastávkami.** Šípky ukotvené na zemi (poloha v % fotky a smer v `sipky`, cieľ dotyku 64 px dopredu a 52 px
+späť), klávesy ← → ↑ (so Shiftom šípky posúvajú pohľad, Home a End prvá a posledná), tlačidlá kroku pri názve a pás
+náhľadov. Prechod: nájazd do smeru šípky (mierka 1 → 1,32 so stredom v šípke) s prelnutím, 620 ms; krok späť prichádza
+z priblíženia; pri „obmedziť pohyb“ len prelnutie 220 ms, bez zotrvačnosti a náklonu. Susedné zastávky sa sťahujú
+vopred, ostatné sa uvoľňujú. Názov a poradie („Predajňa – náradie, 7 z 9“) číta čítačka pri zmene (`aria-live`).
+**Okno.** Telefón 56 vh (300–500 px), od 701 px 16 : 9 (najviac 76 vh), pod ním päta s názvom a náhľadmi. „Celá
+obrazovka“ je `requestFullscreen` na celom komponente; kde nie je (iPhone), pevná pozícia cez celé okno (`.pp-pevne`,
+sekcia s `content-visibility:auto` dostane `pp-pevne-rodic`, Esc ju ukončí). „Zavrieť“ vráti náhľad a fokus na tlačidlo.
+**Prístupnosť.** Záložky `role="tablist"` (šípky presúvajú fokus, obsah sa prepne až Enterom – pohľad z ulice načíta
+obsah od Googlu), scéna `role="application"` s názvom zastávky a opisom klávesov, šípky a náhľady sú tlačidlá s názvom
+cieľa, ciele dotyku ≥ 44 px, kontrast vo všetkých troch témach nad AA (čipy a šípky na fotke rátané nad bielou aj
+čiernou fotkou). **Bez JS** ostáva fotka prvej zastávky s popisom a pod ňou galéria ostatných zastávok s popismi
+(`<noscript>`), tlačidlo a záložky sú `hidden`.
+
+### Nastavenie v `build.py`
+
+- `PRECHADZKA` – zoznam zastávok: `id`, `foto` (názov z `img/predajna`), `nazov`, `zdroj` (skutočné rozlíšenie fotky),
+  `stred` (bod fotky v %, ktorý je pri príchode v strede okna), `sipky` – `(cieľ, x %, y %, smer°)`; smer 0 = dopredu,
+  kladný doprava, 180 = späť. Šípka na skoršiu zastávku sa kreslí ako menšia šípka späť. Novej fotke treba vyrobiť
+  náhľad: `richtarik/venv/bin/python richtarik/majitel/prehliadka/nastroje/nahlady.py <priečinok webu> <názov fotky>`.
+- `ULICA_GOOGLE = True` – **jediný prepínač** záložky Googlu; `False` ju odstráni z oboch stránok (bez záložiek ostane
+  len prechádzka). `ULICA_SURADNICE` – súradnice predajne pre bezkľúčové vloženie
+  `https://www.google.com/maps?q=&layer=c&cbll=…&output=svembed` (bez kľúča API, nič od Googlu nie je v repozitári).
+- `PANORAMA['src']` – ak majiteľ dodá kód „Vložiť mapu“ svojej panorámy (adresa `https://www.google.com/maps/embed?pb=…`
+  z `<iframe>`), vloží sa sem a má prednosť pred súradnicami. Postup: záznam firmy v Google Mapách → Fotky → 360° →
+  otvoriť panorámu → Zdieľať → Vložiť mapu → skopírovať `src`.
+- Po zmene: `python3 build.py` a blok vložiť aj do `index.html` (úvod sa udržiava ručne; `kontrola_uvodu()` hlási, kým
+  sa nezhoduje s `prehliadka_blok('')`; blok vypíše `python3 -c "import build; print(build.prehliadka_blok(''))"`).
+
+Rám Googlu: `referrerpolicy="no-referrer-when-downgrade"`, `allowfullscreen`, titulok; ukáže sa po udalosti `load`. Ak
+`load` do 8 s nepríde, rám sa odstráni, pod oknom ostane „Pohľad z ulice sa nepodarilo načítať. Ostáva prechádzka
+predajňou.“ a vráti sa prvá záložka. Z cudzieho rámu sa nedá zistiť, čo v ňom Google ukázal (napr. overenie robota);
+v našom prostredí sa 10. 11. 2026 panoráma načítala a dalo sa v nej otáčať aj ísť po ceste. Po kliknutí rám od Googlu
+vypíše do konzoly hlásenie o zakázanom akcelerometri (rovnaké ako pri oficiálnom kóde „Vložiť mapu“); senzory mu
+zámerne nedávame.
+
+### Ako prechádzku povýšiť na skutočné 360° (návod pre Laja)
+
+Prehliadač panorám `zdroj/panorama.js` (build ho zmenší do `assets/panorama.js`, stiahne sa až na zastávke typu
+panoráma) je pripravený: WebGL, jeden trojuholník, **guľa** pri pomere 2 : 1 (360° × 180°), **valec** pri čiastočnej
+panoráme z telefónu (pohľad sa zastaví na okraji obrazu), šípky sa ukotvia na smer a fungujú rovnako.
+
+1. **Koľko a kde:** 5–8 stanovíšť v poradí cesty zákazníka (brána, stred cesty medzi paletami, pred krytým skladom,
+   v sklade, vchod do predajne, stred predajne, pri pulte). Stáť v strede uličky alebo cesty, nie pri regáli.
+2. **Ako fotiť:** 360° kamera na statíve (najlepšie; výstup JPEG 2 : 1) alebo iPhone v režime **Pano**: telefón na
+   výšku, otáčať sa na mieste okolo telefónu (nie okolo seba), pomaly, celý kruh alebo aspoň polkruh. **Rovnaká výška**
+   na všetkých stanovištiach (hrudník, asi 1,4–1,5 m), vodorovne, za rovnakého svetla (jeden deň, bez protisvetla),
+   bez ľudí a značiek áut v zábere. Z každého stanovišťa nech je vidno nasledujúce.
+3. **Súbory:** JPEG do `img/panorama/` (napr. `01-brana.jpg`), šírka 4096–8192 px, do 1,5 MB. Guľa musí mať pomer
+   presne 2 : 1; Pano z telefónu ostane, ako je (pomer napr. 4 : 1).
+4. **Zápis zastávky** v `PRECHADZKA` namiesto `foto` a `zdroj`:
+   `dict(id='brana', panorama='img/panorama/01-brana.jpg', uhol=360, nahlad='09-tabula-ulica', alt='Brána predajne',
+   nazov='Brána', stred=(0, 0), sipky=[('cesta', 15, -20, 0)])`. `uhol` je vodorovný rozsah záberu v stupňoch (360
+   pri guli; pri Pano odhad, napr. 180 alebo 240 – podľa toho, o koľko sa fotograf otočil), `nahlad` je fotka
+   z `img/predajna` pre pás náhľadov a galériu bez JS, `stred` je smer pohľadu pri príchode `(yaw, pitch)` v stupňoch
+   (0 = stred obrazu, kladný yaw doprava, kladný pitch hore) a šípky `(cieľ, yaw, pitch, smer)` – pitch okolo −20 je zem
+   pár metrov pred fotografom.
+5. Build, vložiť blok do `index.html`, prejsť všetky zastávky na telefóne. Až potom smie pribudnúť slovo 360° v názve.
+
+Skúšobný obrazec panorámy v repozitári ani na webe nie je (odstránený 10. 11. 2026); skúška panorám beží v kópii webu
+(`richtarik/majitel/prehliadka/nastroje/test-pano.mjs`). Skúšky komponentu: `test-pp.mjs` (141 kontrol: sieť pred
+kliknutím, dotyk, myš, klávesnica, čítačka, celá obrazovka, zatvorenie, obmedziť pohyb, bez JS, zlyhanie Googlu),
+`sv-test.mjs` (skutočný rám Googlu), `kontrast.mjs`, `meraj.mjs` (4G a plynulosť pri CPU 4×).
 
 ## Texty a SEO
 Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, tlačidlá):
@@ -463,8 +515,10 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   nadpisy, titulky, popisy, názvy značiek, alt texty a typografia v `texty.py` (časť Texty a SEO).
   Nový cenník akcií: PDF do `pdf/`, zmeniť `CENNIK_PDF`, `CENNIK_TEXT`, `CENNIK_LETAK` a dátum v `index.html` (sekcia
   Akcie).
-- Prehliadka predajne 360°: kód „Vložiť mapu“ z Google Máp do `PANORAMA['src']`, skutočná panoráma pod `img/panorama/predajna.jpg`
-  (časť Prehliadka predajne 360°); po zmene `PANORAMA` alebo `prehliadka_blok()` vložiť nový blok ručne aj do `index.html`.
+- Prehliadka predajne: zastávky prechádzky v `PRECHADZKA`, záložka Googlu prepínačom `ULICA_GOOGLE`, kód „Vložiť mapu“
+  do `PANORAMA['src']`, skutočné panorámy do `img/panorama/` (časť Prehliadka predajne); po zmene vložiť nový blok
+  `prehliadka_blok('')` ručne aj do `index.html` a spustiť `asistent/nastroje/otazky_zdroj.py`, ak sa zmenil počet zastávok
+  (asistent ho uvádza).
 - Úvod (`index.html`) sa mení ručne (texty, odkazy, karty akcií a noviniek, päta). Po zmene `index.html`, `site.css`
   alebo `site.js`: `node --check assets/site.js` a prejsť úvod na telefóne aj počítači (strih, Prehrať úvod, posun).
 - Fotky úvodu `img/uvod/` sú hotové webové veľkosti fotiek majiteľa (originály má majiteľ). Novú fotku treba vyrobiť

@@ -345,7 +345,8 @@ export async function spusti(api) {
     // úvod je prvá obrazovka: bublina až po odskrolovaní za ňu
     const uvod = document.querySelector(UVOD);
     const zaUvodom = !uvod || uvod.getBoundingClientRect().bottom < innerHeight * 0.5;
-    const vidno = btn.isConnected && panel.hidden && zaUvodom && !pataVidno && parseFloat(getComputedStyle(btn).opacity) > 0.9;
+    // počas otvorenej prechádzky predajňou (.pp-on) sa bublina neukáže, aby nezakryla jej pätu s náhľadmi
+    const vidno = btn.isConnected && panel.hidden && zaUvodom && !pataVidno && !document.querySelector('.pp-on') && parseFloat(getComputedStyle(btn).opacity) > 0.9;
     videl = vidno ? videl + 1 : 0;
     if (!btn.isConnected || !panel.hidden) { clearInterval(hodiny); return; }
     if (videl >= 8 && performance.now() - posunCas >= 1500) { clearInterval(hodiny); ukazOznam(); }

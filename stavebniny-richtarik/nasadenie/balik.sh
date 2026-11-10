@@ -36,25 +36,12 @@ else
   rm -rf "$OUT/web/asistent" "$OUT/web/assets/"asistent*
   echo "asistent: vypnutý (bez ASISTENT_API)"
 fi
-# prehliadka 360°: kým je v nej len skúšobný obraz (build.py PANORAMA['skusobna'], atribút data-panorama-skusobna), na ostrý
-# web nejde: sekcia aj odkazy medzi značkami <!--p360--> … <!--/p360--> sa z balíka vynechajú spolu s obrazom a prehliadačom
-if grep -rq 'data-panorama-skusobna' "$OUT/web" --include='*.html'; then
-  python3 -I - "$OUT/web" <<'EOF3'
-import os, re, sys
-n = 0
-for dp, dn, fn in os.walk(sys.argv[1]):
-    for f in fn:
-        if not f.endswith('.html'): continue
-        p = os.path.join(dp, f); s = open(p, encoding='utf-8').read()
-        t = re.sub(r'<!--p360-->.*?<!--/p360-->', '', s, flags=re.S)
-        if t != s: open(p, 'w', encoding='utf-8').write(t); n += 1
-print('prehliadka 360°: skúšobný obraz, sekcia a odkazy vynechané zo stránok:', n)
-EOF3
-  rm -rf "$OUT/web/img/panorama" "$OUT/web/assets/panorama.js"
-else
-  echo "prehliadka 360°: ostrá (bez data-panorama-skusobna), ostáva v balíku"
+# prechádzka predajňou (build.py PRECHADZKA): ide do balíka celá – komponent .pp na úvode a Kontakte, modul assets/prechadzka.js
+# (v ňom sú cesty fotiek zastávok a náhľadov doslovne, preto ich kontrola neodkazovaných obrázkov nižšie nechá) a prehliadač
+# panorám assets/panorama.js pre zastávky typu panoráma. Skúšobný obraz panorámy ani starý komponent p360 v balíku nesmú byť.
+if grep -rqE 'data-panorama-skusobna|class="p360' "$OUT/web" --include='*.html' || [ -e "$OUT/web/img/panorama/predajna.jpg" ]; then
+  echo "CHYBA: v balíku je skúšobná panoráma alebo starý komponent p360"; exit 1
 fi
-echo "stránok so skúšobnou prehliadkou 360° alebo odkazom #prehliadka bez cieľa v balíku: $(grep -rlE 'data-panorama-skusobna' "$OUT/web" --include='*.html' | wc -l)"
 # obrázky v img/, na ktoré neodkazuje žiadna stránka, štýl, skript ani index.json, do balíka nejdú (staré ilustračné
 # fotky a ikony ostávajú v repozitári, napr. na výmenu fotky)
 python3 -I - "$OUT/web" <<'EOF2'
@@ -74,6 +61,19 @@ print('vynechané neodkazované obrázky:', n, 'súborov,', round(b / 1048576, 2
 EOF2
 (cd "$OUT/web" && find . -type f | sed 's|^\./||' | LC_ALL=C sort > "$OUT/zoznam.txt")
 echo "balík: $(wc -l < "$OUT/zoznam.txt") súborov, $(du -sh "$OUT/web" | cut -f1)"
+# prechádzka predajňou: každý súbor, ktorý modul prechádzky menuje (fotky zastávok, náhľady, panorámy), je v balíku
+python3 -I - "$OUT/web" <<'EOF4'
+import os, re, sys
+R = sys.argv[1]; m = os.path.join(R, 'assets', 'prechadzka.js')
+if not os.path.exists(m): print('CHYBA: v balíku chýba assets/prechadzka.js'); sys.exit(1)
+s = open(m, encoding='utf-8').read()
+cesty = sorted(set(re.findall(r'"(img/[^"]+\.(?:avif|webp|jpg|jpeg|png))"', s)))
+chyba = [c for c in cesty if not os.path.exists(os.path.join(R, c))]
+stranky = [f for f in ('index.html', 'kontakt.html') if 'class="pp"' in open(os.path.join(R, f), encoding='utf-8').read()]
+ulica = sum('data-ulica="https://www.google.com/maps' in open(os.path.join(R, f), encoding='utf-8').read() for f in stranky)
+print('prechádzka predajňou: zastávok', s.count('"id":'), '· súborov fotiek a náhľadov', len(cesty), '· chýbajúcich', len(chyba), chyba[:5], '· komponent na stránkach', ' '.join(stranky), '· záložka pohľadu z ulice (Google) na', ulica, 'z nich')
+if chyba or len(stranky) != 2: sys.exit(1)
+EOF4
 
 # kontrola 1: v balíku nie sú zdroje, poznámky ani súbory starého úvodného videa
 # znalosti asistenta (asistent/znalosti/*.md) server potrebuje, zvonku sú zakázané (.htaccess, web.config)

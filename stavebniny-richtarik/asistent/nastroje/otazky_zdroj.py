@@ -58,6 +58,11 @@ q('kontakt-mapa', 'kontakt', 'Ako sa k vám dostanem?',
   ['navigácia', 'cesta k vám', 'mapa', 'ako k vám prísť autom', 'trasa do predajne'],
   'Nájdete nás v Nitre – Horných Krškanoch na Novozámockej ulici 62/68. Navigácia: '
   'https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra')
+q('kontakt-prehliadka', 'kontakt', 'Dá sa predajňa pozrieť na webe?',
+  ['Ako vyzerá predajňa?', 'prechádzka predajňou', 'prehliadka predajne', 'virtuálna prehliadka', 'pozrieť si predajňu online', 'pohľad z ulice na predajňu'],
+  'Áno. Na úvodnej stránke a na stránke Kontakt je Prechádzka predajňou: 9 zastávok zo skutočných fotiek od tabule '
+  'pri ceste po pult v predajni. Fotku posúvate ťahaním, medzi zastávkami prejdete šípkami. Druhá záložka ukáže pohľad '
+  'z ulice z Google Máp. ' + W + 'kontakt.html')
 q('kontakt-parkovanie', 'kontakt', 'Dá sa u vás parkovať?',
   ['parkovisko', 'kde zaparkujem', 'môžem prísť s vozíkom', 'príjazd s prívesom'],
   f'Parkovanie web neuvádza. Pred cestou nám zavolajte na {TEL}, radi vám poradíme.', tel=True)

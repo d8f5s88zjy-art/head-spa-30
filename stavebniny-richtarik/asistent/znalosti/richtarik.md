@@ -17,6 +17,12 @@ Nič iné asistent nevie.
   Nedeľu web neuvádza (otvorené nie je uvedené); na otázku na nedeľu povedz, že web uvádza len pondelok až sobotu,
   a odkáž na telefón.
 - Sviatky, obedňajšia prestávka, parkovanie: web neuvádza, odkáž na telefón.
+- Prehliadka predajne na webe: na úvodnej stránke a na stránke Kontakt je „Prechádzka predajňou“ – 9 zastávok
+  zo skutočných fotiek predajne od tabule pri ceste cez areál a krytý sklad až po pult v predajni. Fotka sa dá posúvať
+  a priblížiť, medzi zastávkami sa prechádza šípkami na fotke. Druhá záložka „Pohľad z ulice (Google)“ ukáže ulicu pred
+  predajňou z Google Máp (obsah od Googlu sa načíta až po kliknutí na záložku).
+  https://www.stavebninyrichtarik.sk/kontakt.html
+  Tovar na fotkách nemusí byť práve na sklade (sklad sa mení); dostupnosť tovaru overí predajňa na telefóne.
 
 ## Služby
 - Predaj stavebného materiálu v celom sortimente, produkty popredných slovenských aj svetových výrobcov.

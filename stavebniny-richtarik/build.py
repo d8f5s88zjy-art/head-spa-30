@@ -61,6 +61,19 @@ def obr_rozmer(cesta):
     return None
 
 
+def jpeg_rozmer(cesta):
+    """Šírka a výška obrázka JPEG zo značky SOF (panorámy prechádzky v img/panorama); None, ak sa nedá zistiť."""
+    with open(cesta, 'rb') as f:
+        if f.read(2) != b'\xff\xd8': return None
+        while True:
+            b = f.read(4)
+            if len(b) < 4 or b[0] != 0xff: return None
+            dlzka = int.from_bytes(b[2:4], 'big')
+            if 0xc0 <= b[1] <= 0xcf and b[1] not in (0xc4, 0xc8, 0xcc):
+                d = f.read(5); return int.from_bytes(d[3:5], 'big'), int.from_bytes(d[1:3], 'big')
+            f.seek(dlzka - 2, 1)
+
+
 def rozmery(t, path):
     """Každý <img> s miestnym súborom dostane width a height (miesto pre obrázok je rezervované, obsah neposkočí).
     Výnimka: prázdny obrázok lightboxu (src="" sa plní skriptom)."""
@@ -91,22 +104,57 @@ FIRMA = {
     'email': 'info@stavebninyrichtarik.sk', 'ico': '45959846', 'dic': 'SK1083167855',
     'mapa': 'https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra',
 }
-# Prehliadka predajne 360° priamo na stránke (majiteľ 9. 11. 2026: panoramatický pohľad z Googlu „keby sa dal použiť aj v našej
-# stránke“; Lajo 9. 11.: nikoho neposielať na Google). Dva zdroje, oba sa načítajú až po kliknutí (pred ním 0 požiadaviek na Google):
-#  'src'     – kód „Vložiť mapu“ panorámy z Google Máp (src rámu https://www.google.com/maps/embed?pb=…); prázdne = rám sa nepoužije,
-#              postup získania je v README (Údržba) a richtarik/majitel/360/ZAPIS.md,
-#  'obrazok' – vlastná equirektangulárna panoráma 2:1 (img/panorama/predajna.jpg) pre prehliadač zdroj/panorama.js; dnes skúšobný
-#              obraz vygenerovaný lokálne (nápis „skúšobná panoráma“), skutočný záber nahradí súbor pod tým istým názvom.
-# Prednosť má 'src'; bez oboch ostáva v komponente fotka a tlačidlo je skryté.
-#  'skusobna' – True, kým je v 'obrazok' len skúšobný obraz (KF-12): náhľad na kontrolu to hovorí priamo v stránke (odznak
-#              „360° · ukážka“, veta pod oknom, odsek sekcie, texty odkazov) a nasadenie/balik.sh sekciu aj odkazy medzi značkami
-#              <!--p360--> … <!--/p360--> z balíka na ostrý web vynechá. Po dodaní skutočného záberu (alebo 'src') nastaviť False,
-#              spustiť build a na úvode vymeniť blok, odsek a text odkazu (kontrola_uvodu vypíše, čo sa nezhoduje).
-PANORAMA = {'src': '', 'obrazok': 'img/panorama/predajna.jpg', 'skusobna': True}
-P360_SKUSOBNA = bool(PANORAMA.get('skusobna')) and not PANORAMA['src']
-P360_LEDE = ('Ukážka na kontrolu: prehliadka zatiaľ ukazuje skúšobný obraz. Skutočný 360° záber predajne doplníme.' if P360_SKUSOBNA
-             else 'Otočte sa po predajni a sklade priamo na našej stránke.')
-P360_ODKAZ = 'Prehliadka 360° (ukážka)' if P360_SKUSOBNA else 'Prezrieť predajňu v 360°'
+# Prehliadka predajne priamo na stránke (majiteľ 9. 11. 2026: panoramatický pohľad z Googlu „keby sa dal použiť aj v našej
+# stránke“; Lajo 10. 11. 2026: „urob to podľa fotiek, ktoré som poslal, a zachovaj to, čo Google, že sa tam vieš pohybovať“;
+# nikoho neposielame von na Google). Komponent .pp (prehliadka_blok, site.css, site.js, zdroj/prechadzka.js) má dve záložky:
+#  1. „Prechádzka predajňou“ – zastávky PRECHADZKA zo skutočných fotiek majiteľa (img/predajna), medzi nimi šípky na zemi.
+#     Fotky zastávok sa načítajú až po kliknutí. Slovo 360° sa používa len pri skutočnej panoráme (zastávka s 'panorama').
+#  2. „Pohľad z ulice (Google)“ – rám Street View v našej stránke, vytvorený až po kliknutí (pred ním 0 požiadaviek na Google).
+#     ULICA_GOOGLE = False záložku vypne na celom webe (jeden prepínač; potom build a blok vložiť aj do index.html).
+#     PANORAMA['src'] – kód „Vložiť mapu“ od majiteľa (src rámu https://www.google.com/maps/embed?pb=…) má prednosť pred
+#     bezkľúčovou adresou podľa súradníc predajne ULICA_SURADNICE (OpenStreetMap, majitel/dodavatelia/ZAPIS.md časť 2).
+ULICA_GOOGLE = True
+ULICA_SURADNICE = '48.2827877,18.0893607'
+ULICA_SRC = f'https://www.google.com/maps?q=&layer=c&cbll={ULICA_SURADNICE}&cbp=11,0,0,0,0&output=svembed'
+PANORAMA = {'src': ''}
+# Zastávky prechádzky v poradí cesty zákazníka (poradie je odhad podľa fotiek, potvrdí majiteľ). Každá zastávka je jedna fotka:
+#  id      – krátke meno (odkazujú naň šípky),
+#  foto    – fotka z img/predajna (šírky 720–1720, AVIF + WebP; náhľad 160 px v img/prechadzka, nástroj
+#            richtarik/majitel/prehliadka/nastroje/nahlady.py),
+#  nazov   – názov zastávky pod oknom (len to, čo je na fotke vidieť; „dvor“ sa nepoužíva),
+#  zdroj   – skutočné rozlíšenie fotky od majiteľa po oreze (šírka, výška v bodoch): fotka sa na obrazovke nikdy neukáže väčšia
+#            než PRECHADZKA_LIMIT-násobok (1 bod zdroja najviac 1,6 CSS bodu); s originálmi sa číslo zmení a limit sa posunie sám,
+#  stred   – bod fotky v % (x, y), ktorý je pri príchode v strede okna,
+#  sipky   – šípky na zemi: (cieľová zastávka, x %, y % na fotke, smer v stupňoch: 0 = dopredu, kladný doprava, 180 = späť).
+# Zastávka typu panoráma (skutočná 360° fotka alebo Pano z telefónu) má namiesto 'foto' a 'zdroj' kľúče
+#  'panorama': 'img/panorama/<súbor>.jpg', 'uhol': vodorovný rozsah v stupňoch (360 pri guli 2 : 1, inak napr. 180),
+#  'nahlad': fotka z img/predajna pre pás náhľadov a galériu bez JS, 'alt': opis; 'stred' je (yaw, pitch) v stupňoch
+#  a šípky (cieľ, yaw, pitch, smer). Návod: README, časť Prehliadka predajne.
+PRECHADZKA_LIMIT = 1.6
+PRECHADZKA = [
+    dict(id='prichod', foto='09-tabula-ulica', nazov='Príchod – tabuľa pri ceste', zdroj=(1296, 930), stred=(52, 48),
+         sipky=[('cesta', 42, 74, 25)]),
+    dict(id='cesta', foto='11-tvarnice-porfix-cesta', nazov='Areál – betónové tvárnice pri ceste', zdroj=(1296, 990), stred=(60, 59),
+         sipky=[('porobeton', 74, 68, 55), ('prichod', 38, 84, 180)]),
+    dict(id='porobeton', foto='04-ytong-porfix', nazov='Areál – pórobetón Ytong a Porfix', zdroj=(1296, 962), stred=(38, 60),
+         sipky=[('dlazba', 20, 75, -35), ('cesta', 52, 84, 180)]),
+    dict(id='dlazba', foto='13-dlazba-sklad', nazov='Areál – palety dlažby', zdroj=(1296, 990), stred=(42, 50),
+         sipky=[('profily', 40, 41, 55), ('porobeton', 24, 50, 215)]),
+    dict(id='profily', foto='06-regal-profily', nazov='Areál – regál s oceľovými profilmi', zdroj=(1132, 1366), stred=(35, 60),
+         sipky=[('sklad', 13, 62, -5), ('dlazba', 13, 78, 180)]),
+    dict(id='sklad', foto='05-hala-vozik', nazov='Krytý sklad – vrecované zmesi', zdroj=(1296, 982), stred=(60, 60),
+         sipky=[('naradie', 78, 84, 35), ('profily', 42, 86, 180)]),
+    dict(id='naradie', foto='01-predajna-naradie', nazov='Predajňa – náradie', zdroj=(1296, 990), stred=(60, 59),
+         sipky=[('regaly', 68, 62, 0), ('sklad', 72, 84, 180)]),
+    dict(id='regaly', foto='12-predajna-regaly', nazov='Predajňa – regály s náradím', zdroj=(1296, 990), stred=(58, 59),
+         sipky=[('pult', 64, 63, 0), ('naradie', 70, 84, 180)]),
+    dict(id='pult', foto='08-predajna-pult', nazov='Predajňa – pult', zdroj=(1296, 990), stred=(48, 58),
+         sipky=[('regaly', 62, 84, 180)]),
+]
+PP_ULICA = PANORAMA['src'] or (ULICA_SRC if ULICA_GOOGLE else '')
+PP_NADPIS = 'Prezrite si predajňu'
+PP_LEDE = 'Prejdite sa predajňou na fotkách: od tabule pri ceste cez sklad až k pultu.'
+PP_ODKAZ = 'Prezrieť predajňu'
 # Stavebná firma FIZO SK (brat majiteľa; majiteľ 9. 11. 2026: „odkaz aj na bratovu stránku – www.fizosk.sk“). Popis len
 # z adresára a titulku stránky (majitel/dodavatelia/ZAPIS.md časť 3), rodinný vzťah ani odber materiálu sa neuvádzajú.
 FIZOSK = 'https://www.fizosk.sk/'
@@ -719,39 +767,89 @@ def foto_hlavicky(path, spec):
     return f'<figure class="ph-foto">{img}</figure>'
 
 
-def prehliadka_blok(pre, foto, sizes='(max-width:700px) 100vw, 1184px'):
-    """Komponent „Prehliadka predajne 360°“ (site.js, site.css .p360): fotka predajne od majiteľa ako náhľad, tlačidlo skryté
-    (hidden), kým ho site.js neodkryje podľa zdroja v data-panorama-src (rám Google Máp) alebo data-panorama-obrazok (vlastná
-    panoráma, zdroj/panorama.js); bez JS ostáva fotka s vetou z <noscript>. Rám alebo panoráma sa vytvoria až po kliknutí (nič sa
-    nenačíta vopred), ostanú v stránke (telefón 60 vh, počítač 16:9), tlačidlá Celá obrazovka a Zavrieť, žiadny odkaz von. Ten istý
-    blok je na úvode (ručne, kontrola_uvodu overí zhodu s fotkou 13) a na Kontakte (fotka 02). Okno nemá triedu rvimg (pásy
-    okna kina viazané na posun by po skoku odkazom #prehliadka ostali na fotke, kým sa neposunie; fotka tu stojí)."""
-    src, obr = PANORAMA['src'], PANORAMA['obrazok']
-    if src: veta = 'Prehliadka sa načíta z Google Máp až po kliknutí; dovtedy sa Googlu nič neodosiela (ochrana údajov). Otáčajte ťahaním prstom alebo myšou.'
-    elif obr: veta = 'Panorámu otáčajte ťahaním prstom alebo myšou, na počítači aj šípkami; dva prsty alebo klávesy + a − priblížia.'
-    else: veta = ''
-    skus = P360_SKUSOBNA and bool(obr)
-    if skus: veta = 'Ukážka: skúšobný obraz, nie záber predajne. ' + veta
-    return (f'<figure class="p360" id="prehliadka" data-panorama-src="{html.escape(src, quote=True)}" data-panorama-obrazok="{(pre + obr) if obr else ""}"{" data-panorama-skusobna" if skus else ""}>'
-            f'<div class="p360-okno">{predajna_picture(pre, foto, sizes, max_sirka=1720)}<span class="p360-znak" aria-hidden="true">{"360° · ukážka" if skus else "360°"}</span>'
-            f'<div class="p360-stred"><button class="btn primary p360-start" type="button" hidden>{"Vyskúšať prehliadku 360°" if skus else "Prezrieť predajňu v 360°"}</button>'
-            f'<noscript><p class="p360-nojs">Prehliadka potrebuje zapnutý JavaScript.</p></noscript></div>'
-            f'<div class="p360-lista" hidden><button class="p360-cela" type="button" aria-pressed="false">Celá obrazovka</button>'
-            f'<button class="p360-zavri" type="button">Zavrieť prehliadku</button></div></div>'
-            f'{f"<figcaption class=p360-info>{veta}</figcaption>" if veta else ""}</figure>')
+def pp_foto(z):
+    """Fotka zastávky z img/predajna (zastávka typu panoráma má vlastný kľúč 'nahlad')."""
+    return z.get('foto') or z['nahlad']
 
 
-def prehliadka_sekcia(pre, foto):
-    """Nadpis a komponent prehliadky (Kontakt; na úvode je nadpis v sekcii úvodu ručne)."""
-    return (f'<!--p360--><div class="p360-sek"><div class="head"><div class="eyebrow">Predajňa</div><h2><span class="dr"><span>Prezrite si predajňu v 360°</span></span></h2>'
-            f'<p class="lede">{P360_LEDE}</p></div>{prehliadka_blok(pre, foto)}</div><!--/p360-->')
+def pp_pocet(n):
+    return f'{n} ' + ('zastávka' if n == 1 else 'zastávky' if n < 5 else 'zastávok')
 
 
-def panorama_js():
-    """Prehliadač panorámy zdroj/panorama.js zmenšený do assets/panorama.js (modul, site.js ho importuje až po kliknutí)."""
-    s = zmensi_js(open(os.path.join(ROOT, 'zdroj', 'panorama.js'), encoding='utf-8').read())
-    open(os.path.join(OUT, 'assets', 'panorama.js'), 'w', encoding='utf-8').write(s + '\n')
-    return len(s)
+def prehliadka_blok(pre, sizes='(max-width:700px) 100vw, 1184px'):
+    """Komponent „Prechádzka predajňou“ (.pp; site.css, site.js, zdroj/prechadzka.js). Náhľad je fotka prvej zastávky; tlačidlo
+    „Prejsť sa predajňou“ a záložky sú skryté (hidden), kým ich site.js neodkryje – bez JS ostáva fotka prvej zastávky a pod ňou
+    galéria ostatných zastávok s popismi (<noscript>). Modul prechádzky, fotky zastávok ani rám Googlu sa nenačítajú pred
+    kliknutím. Záložka „Pohľad z ulice (Google)“ je v bloku len s ULICA_GOOGLE alebo PANORAMA['src'] (atribúty data-ulica,
+    data-panorama-src). Ten istý blok je na úvode (ručne, kontrola_uvodu overí zhodu) a na Kontakte. Okno nemá triedu rvimg
+    (pásy okna kina viazané na posun by po skoku odkazom #prehliadka ostali na fotke; fotka tu stojí)."""
+    z0, n = PRECHADZKA[0], len(PRECHADZKA)
+    zalozky = (f'<div class="pp-hlava" role="tablist" aria-label="Spôsob prehliadky" hidden>'
+               f'<button class="pp-t1" type="button" role="tab" id="pp-t1" aria-selected="true" aria-controls="pp-p1">Prechádzka predajňou</button>'
+               f'<button class="pp-t2" type="button" role="tab" id="pp-t2" aria-selected="false" aria-controls="pp-p2" tabindex="-1">Pohľad z ulice (Google)</button></div>') if PP_ULICA else ''
+    panel = ' role="tabpanel" aria-labelledby="pp-t1"' if PP_ULICA else ''
+    veta = ('Fotku posúvajte ťahaním prstom alebo myšou, dva prsty alebo tlačidlá + a − ju priblížia. Medzi zastávkami prejdete '
+            'šípkami na fotke, pásom náhľadov alebo klávesmi ← → ↑. Fotky zastávok sa načítajú až po kliknutí.')
+    if PP_ULICA: veta += ' Pohľad z ulice načíta obsah z Google Máp – tiež až po kliknutí na záložku; dovtedy sa Googlu nič neodosiela.'
+    galeria = ''.join(f'<li><figure>{predajna_picture(pre, pp_foto(z), "(max-width:700px) 50vw, 380px", max_sirka=720)}<figcaption>{i}. {z["nazov"]}</figcaption></figure></li>'
+                      for i, z in enumerate(PRECHADZKA[1:], 2))
+    return (f'<figure class="pp" id="prehliadka" data-panorama-src="{html.escape(PANORAMA["src"], quote=True)}" data-ulica="{html.escape(ULICA_SRC if ULICA_GOOGLE else "", quote=True)}">'
+            f'<div class="pp-okno">{zalozky}<div class="pp-ram">'
+            f'<div class="pp-javisko" id="pp-p1"{panel}>{predajna_picture(pre, pp_foto(z0), sizes, max_sirka=1720)}'
+            f'<span class="pp-znak" aria-hidden="true">Prechádzka · {pp_pocet(n)}</span>'
+            f'<div class="pp-stred"><button class="btn primary pp-start" type="button" hidden>Prejsť sa predajňou</button></div></div>'
+            f'<div class="pp-ulica" id="pp-p2"{" role=" + chr(34) + "tabpanel" + chr(34) + " aria-labelledby=" + chr(34) + "pp-t2" + chr(34) if PP_ULICA else ""} hidden></div>'
+            f'<div class="pp-lista" hidden><button class="pp-cela" type="button">Celá obrazovka</button>'
+            f'<button class="pp-zavri" type="button">Zavrieť</button></div></div>'
+            f'<div class="pp-pata" hidden></div></div>'
+            f'<p class="pp-stav" role="status"></p>'
+            f'<noscript><p class="pp-prva">1. {z0["nazov"]}</p><ol class="pp-galeria" start="2">{galeria}</ol></noscript>'
+            f'<figcaption class="pp-info">Skutočné fotky predajne v {n} zastávkach. <span class="pp-rada" hidden>{veta}</span></figcaption></figure>')
+
+
+def prehliadka_sekcia(pre):
+    """Nadpis a komponent prechádzky (Kontakt; na úvode je nadpis v sekcii úvodu ručne)."""
+    return (f'<div class="pp-sek"><div class="head"><div class="eyebrow">Predajňa</div><h2><span class="dr"><span>{PP_NADPIS}</span></span></h2>'
+            f'<p class="lede">{PP_LEDE}</p></div>{prehliadka_blok(pre)}</div>')
+
+
+def prechadzka_data():
+    """Zoznam zastávok pre zdroj/prechadzka.js (var DATA): cesty súborov celé a doslovné, aby ich nasadenie/balik.sh našiel
+    ako odkazované (obrázok bez odkazu v stránke, štýle alebo skripte do balíka nejde)."""
+    ids = [z['id'] for z in PRECHADZKA]
+    assert len(set(ids)) == len(ids), 'PRECHADZKA: dve zastávky s rovnakým id'
+    von = []
+    for z in PRECHADZKA:
+        foto = pp_foto(z)
+        for ciel, *_ in z['sipky']: assert ciel in ids and ciel != z['id'], f'PRECHADZKA: šípka zo zastávky {z["id"]} na neznámu zastávku {ciel}'
+        for ext in ('avif', 'webp'): assert os.path.exists(os.path.join(ROOT, f'img/prechadzka/{foto}-160.{ext}')), f'chýba náhľad img/prechadzka/{foto}-160.{ext} (nahlady.py)'
+        o = {'id': z['id'], 'n': z['nazov'], 'c': list(z['stred']), 's': [list(x) for x in z['sipky']],
+             't': [f'img/prechadzka/{foto}-160.avif', f'img/prechadzka/{foto}-160.webp']}
+        if z.get('panorama'):
+            assert os.path.exists(os.path.join(ROOT, z['panorama'])), f'PRECHADZKA: chýba súbor panorámy {z["panorama"]}'
+            rozmer = jpeg_rozmer(os.path.join(ROOT, z['panorama'])) if z['panorama'].lower().endswith(('.jpg', '.jpeg')) else obr_rozmer(os.path.join(ROOT, z['panorama']))
+            assert rozmer, f'PRECHADZKA: panoráma {z["panorama"]} musí byť JPEG, WebP alebo PNG'
+            w, h = rozmer
+            o.update({'p': z['panorama'], 'u': z.get('uhol', 360 if abs(w / h - 2) < 0.06 else 180), 'w': w, 'h': h, 'a': z.get('alt') or z['nazov']})
+        else:
+            sir = [x for x in predajna_sirky(foto) if x >= 720]
+            o.update({'w': z['zdroj'][0], 'h': z['zdroj'][1], 'a': PREDAJNA_ALT[foto], 'm': max(x for x in sir if x <= 1290),
+                      'f': [[x, f'img/predajna/{foto}-{x}.avif', f'img/predajna/{foto}-{x}.webp'] for x in sir]})
+        von.append(o)
+    return {'lim': PRECHADZKA_LIMIT, 'z': von}
+
+
+def prechadzka_js():
+    """Prechádzka predajňou: zdroj/prechadzka.js zmenšený do assets/prechadzka.js so zoznamom zastávok na začiatku (modul,
+    site.js ho importuje až po kliknutí) a prehliadač panorám zdroj/panorama.js do assets/panorama.js (importuje ho
+    prechádzka, len keď má zastávku typu panoráma)."""
+    von = []
+    data = 'var DATA=' + json.dumps(prechadzka_data(), ensure_ascii=False, separators=(',', ':')) + ';'
+    for meno, pred in (('prechadzka', data), ('panorama', '')):
+        t = pred + zmensi_js(open(os.path.join(ROOT, 'zdroj', meno + '.js'), encoding='utf-8').read())
+        open(os.path.join(OUT, 'assets', meno + '.js'), 'w', encoding='utf-8').write(t + '\n')
+        von.append(f'assets/{meno}.js {len(t.encode("utf-8"))} B')
+    return ', '.join(von)
 
 
 def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, head_img=None, druh=''):
@@ -1272,9 +1370,9 @@ def build_kontakt():
   <div class="kbox"><h3>Telefón a e-mail</h3><a class="big" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a class="big" href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div>
   <div class="kbox khod"><h3>Otváracie hodiny</h3><table class="hours"><tr><td>Pondelok – piatok</td><td>7:00 – 16:00</td></tr><tr><td>Sobota</td><td>7:00 – 12:00</td></tr></table></div>
   <div class="kbox kfir"><h3>Firemné údaje a platba</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
-  <figure class="kdvor">{predajna_picture('', '09-tabula-ulica', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><!--p360--><a class="btn ghost small" href="#prehliadka">{P360_ODKAZ}</a><!--/p360--></span></figcaption></figure>
+  <figure class="kdvor">{predajna_picture('', '02-tvarnice-obloha', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">{PP_ODKAZ}</a></span></figcaption></figure>
 </div>
-{prehliadka_sekcia('', '02-tvarnice-obloha')}
+{prehliadka_sekcia('')}
 <div class="txt rv kpartner"><p>Odkaz na stavebnú firmu z Nitry: <a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a>.</p></div>
 
 </div></section>'''
@@ -1687,8 +1785,9 @@ def kontrola_uvodu():
             if not f.endswith(('.html', '.css', '.js', '.json', '.webmanifest', '.xml')): continue
             t = open(os.path.join(kor, f), encoding='utf-8', errors='replace').read()
             if re.search(STARE_VIDEO, t): stare.append(os.path.relpath(os.path.join(kor, f), OUT))
-            # prehliadka 360° je v stránke (Lajo 9. 11. 2026): žiadny odkaz von na záznam v Google Mapách ani starý odkaz-360
-            if 'google.com/maps?cid' in t or 'odkaz-360' in t: von360.append(os.path.relpath(os.path.join(kor, f), OUT))
+            # prehliadka je v stránke (Lajo 9. 11. 2026): žiadny odkaz von na záznam v Google Mapách, starý odkaz-360, skúšobná
+            # panoráma ani starý komponent p360
+            if 'google.com/maps?cid' in t or 'odkaz-360' in t or 'p360' in t or 'data-panorama-skusobna' in t: von360.append(os.path.relpath(os.path.join(kor, f), OUT))
             if f.endswith('.html'):
                 stranky += 1
                 if f'{DOMENA}{OG_IMG[0]}' not in t: bez_og += 1
@@ -1700,10 +1799,10 @@ def kontrola_uvodu():
     if bez_temy: chyba.append('skript témy (zdroj/tema-head.js) nie je práve raz alebo <html> nemá predvolenú tému data-tema="' + TEMA + '": ' + ', '.join(bez_temy[:5]))
     if s.split('<link rel="stylesheet"')[0].count(TEMA_HEAD.strip()) != 1: chyba.append('úvod: skript témy v <head> pred štýlom sa nezhoduje so zdroj/tema-head.js (vlož výstup tema_head())')
     if stare: chyba.append('odkaz na staré video alebo og.jpg: ' + ', '.join(stare[:5]))
-    if von360: chyba.append('odkaz von na 360° v Google Mapách (má byť prehliadka v stránke): ' + ', '.join(von360[:5]))
-    if s.count(f'<p class="lede">{P360_LEDE}</p>') != 1 or s.count(f'<!--p360--> <a href="#prehliadka">{P360_ODKAZ}</a><!--/p360-->') != 1 or s.count('<!--p360-->') != 2 or s.count('<!--/p360-->') != 2:
-        chyba.append('úvod: sekcia prehliadky 360° nemá odsek P360_LEDE, odkaz P360_ODKAZ alebo značky <!--p360--> … <!--/p360--> okolo sekcie a odkazu (balik.sh podľa nich skúšobnú prehliadku vynechá)')
-    if s.count(prehliadka_blok('', '13-dlazba-sklad')) != 1: chyba.append('úvod: komponent prehliadky 360° nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok(\'\', \'13-dlazba-sklad\') (vlož jeho výstup)')
+    if von360: chyba.append('odkaz von na 360° v Google Mapách, starý komponent p360 alebo skúšobná panoráma: ' + ', '.join(von360[:5]))
+    if s.count(f'<h2><span class="dr"><span>{PP_NADPIS}</span></span></h2><p class="lede">{PP_LEDE}</p>') != 1 or s.count(f' <a href="#prehliadka">{PP_ODKAZ}</a>') != 1:
+        chyba.append('úvod: sekcia prechádzky nemá nadpis PP_NADPIS s odsekom PP_LEDE alebo odkaz PP_ODKAZ na #prehliadka v sekcii Kontakt')
+    if s.count(prehliadka_blok('')) != 1: chyba.append("úvod: komponent prechádzky predajňou nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok('') (vlož jeho výstup)")
     if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
     h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)
     if len(h1) != 1 or 'Stavebniny' not in h1[0]: chyba.append(f'úvod: H1 {len(h1)}×, so slovom Stavebniny: {bool(h1) and "Stavebniny" in h1[0]}')
@@ -1746,7 +1845,7 @@ if __name__ == '__main__':
     build_kontakt()
     build_404()
     build_search_index()
-    print('assets/panorama.js (prehliadač panorámy zo zdroj/panorama.js):', panorama_js(), 'B')
+    print('prechádzka predajňou:', len(PRECHADZKA), 'zastávok, pohľad z ulice', 'zapnutý' if PP_ULICA else 'vypnutý', '–', prechadzka_js())
     ochrana_prechody()
     print('stránok v sitemap.xml:', build_sitemap())
     if obsah.CHYBAJUCE: print('vynechané odkazy na súbory, ktoré už neexistujú:', ' '.join(sorted(obsah.CHYBAJUCE)))

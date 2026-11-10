@@ -440,78 +440,44 @@
   }
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dr && dr.classList.contains('open')) open(false); });
 
-  // prehliadka predajne 360° (.p360; build.py prehliadka_blok, zdroj/panorama.js): majiteľ chce otáčať sa po predajni priamo
-  // na stránke, nikoho neposielať na Google. Pred kliknutím sa nič nenačíta (0 požiadaviek na Google, panoráma ani prehliadač
-  // nie sú stiahnuté, tlačidlo je skryté, kým komponent nemá zdroj). Po kliknutí sa podľa data-panorama-src vloží rám Google
-  // Máp, inak sa importuje assets/panorama.js a otvorí vlastná panoráma z data-panorama-obrazok; fotka sa prelne preč až po
-  // načítaní (bez prázdneho rámu). Celá obrazovka: requestFullscreen na celom komponente, kde nie je (iPhone), pevná pozícia
-  // cez celé okno (.p360-pevne, Esc ju ukončí). Zavrieť odstráni rám alebo panorámu, vráti fotku a fokus na tlačidlo.
-  d.querySelectorAll('.p360').forEach(function (p) {
-    var okno = p.querySelector('.p360-okno'), start = p.querySelector('.p360-start'), lista = p.querySelector('.p360-lista');
-    var cela = p.querySelector('.p360-cela'), zavri = p.querySelector('.p360-zavri');
-    var src = p.getAttribute('data-panorama-src') || '', obr = p.getAttribute('data-panorama-obrazok') || '';
-    if (!start || !okno || !lista || !cela || !zavri || !(src || obr)) return;
+  // prechádzka predajňou (.pp; build.py prehliadka_blok, zdroj/prechadzka.js): prehliadka predajne priamo na stránke, nikoho
+  // neposielame na Google. Tu je len odkrytie tlačidla a záložiek a prvé kliknutie: pred ním sa nenačíta modul prechádzky,
+  // fotky zastávok ani nič z Googlu (0 požiadaviek na google.*). Po kliknutí na „Prejsť sa predajňou“ alebo na záložku
+  // „Pohľad z ulice (Google)“ sa importuje assets/prechadzka.js a ďalej riadi on (zastávky, šípky, záložky, celá obrazovka,
+  // zatvorenie s návratom fokusu na tlačidlo). Bez JS ostáva fotka prvej zastávky a galéria ostatných v <noscript>.
+  d.querySelectorAll('.pp').forEach(function (p) {
+    var start = p.querySelector('.pp-start'), hlava = p.querySelector('.pp-hlava'), rada = p.querySelector('.pp-rada');
+    var t1 = p.querySelector('.pp-t1'), t2 = p.querySelector('.pp-t2'), stav = p.querySelector('.pp-stav');
+    if (!start) return;
     start.hidden = false;
-    var ram = null, pan = null, beh = 0, text = start.textContent;
-    function hotovo(ok) {
-      if (!beh) return;
-      beh = 0; start.setAttribute('aria-busy', 'false'); start.textContent = text; start.disabled = false;
-      if (!ok) { if (ram && ram.parentNode) ram.parentNode.removeChild(ram); ram = null; if (pan) { pan.znic(); pan = null; } return; }
-      p.classList.add('p360-on'); start.hidden = true; lista.hidden = false;
-      (pan ? pan.plocha : zavri).focus({ preventScroll: true });
+    if (rada) rada.hidden = false;
+    var ulica = p.getAttribute('data-panorama-src') || p.getAttribute('data-ulica') || '', caka = null;
+    if (hlava && ulica) hlava.hidden = false;
+    function spusti(rezim) {
+      if (p.prechadzka) { p.prechadzka.prepni(rezim); return; }
+      if (caka) { caka = rezim; return; }
+      caka = rezim; start.setAttribute('aria-busy', 'true');
+      import(new URL(pre + 'assets/prechadzka.js', location.href).href).then(function (m) {
+        start.setAttribute('aria-busy', 'false');
+        p.prechadzka = m.vytvor(p, pre);
+        p.prechadzka.prepni(caka); caka = null;
+      }).catch(function () {
+        caka = null; start.setAttribute('aria-busy', 'false');
+        if (stav) stav.textContent = 'Prechádzku sa nepodarilo načítať. Skúste to, prosím, znova.';
+      });
     }
-    function otvor() {
-      if (beh || p.classList.contains('p360-on')) return;
-      beh = 1; start.setAttribute('aria-busy', 'true'); start.disabled = true; start.textContent = 'Načítava sa…';
-      if (src) {
-        ram = d.createElement('iframe');
-        ram.title = 'Prehliadka predajne Stavebniny Richtárik v 360° (Google Mapy)';
-        ram.loading = 'lazy'; ram.referrerPolicy = 'no-referrer-when-downgrade'; ram.allowFullscreen = true;
-        ram.setAttribute('allow', 'fullscreen');
-        ram.addEventListener('load', function () { hotovo(true); }, { once: true });
-        ram.src = src; okno.appendChild(ram);
-        setTimeout(function () { hotovo(true); }, 6000);   // keby udalosť load neprišla, rám sa aj tak ukáže
-        return;
-      }
-      import(new URL(pre + 'assets/panorama.js', location.href).href).then(function (m) {
-        if (!beh) return;
-        pan = m.spusti(okno, new URL(obr, location.href).href, function (ok) { hotovo(ok); });
-        p.panorama = pan;   // stav pohľadu pre skúšky (pohlad(), nastav())
-      }).catch(function () { hotovo(false); });
+    start.addEventListener('click', function () { spusti('prechadzka'); });
+    if (t1 && t2) {
+      t1.addEventListener('click', function () { spusti('prechadzka'); });
+      t2.addEventListener('click', function () { spusti('ulica'); });
+      // záložky: šípky vľavo a vpravo presunú fokus, obsah sa prepne až klávesom Enter alebo medzerníkom (pohľad z ulice
+      // načíta obsah od Googlu, preto nie samotným presunom fokusu)
+      hlava.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
+        e.preventDefault();
+        (e.key === 'Home' || (e.key !== 'End' && d.activeElement === t2) ? t1 : t2).focus();
+      });
     }
-    function jeCela() { return d.fullscreenElement === p || p.classList.contains('p360-pevne'); }
-    // pevná pozícia cez celé okno: sekcia s content-visibility:auto (site.css) je pre position:fixed obsahujúcim blokom, preto
-    // dostane triedu, ktorá obmedzenie vypne (p360-pevne-rodic), kým je komponent cez celé okno
-    var sek = p.closest('main>section,main>div');
-    function pevne(z) { p.classList.toggle('p360-pevne', z); if (sek) sek.classList.toggle('p360-pevne-rodic', z); }
-    function oznac() {
-      var c = jeCela();
-      p.classList.toggle('p360-cela-on', c); cela.setAttribute('aria-pressed', String(c));
-      cela.textContent = c ? 'Ukončiť celú obrazovku' : 'Celá obrazovka';
-      if (pan) pan.nastav();
-    }
-    function prepni() {
-      if (jeCela()) {
-        if (d.fullscreenElement === p && d.exitFullscreen) d.exitFullscreen().catch(function () {});
-        pevne(false); oznac(); return;
-      }
-      var r = p.requestFullscreen ? p.requestFullscreen({ navigationUI: 'hide' }) : null;
-      if (r && r.then) r.then(oznac, function () { pevne(true); oznac(); });
-      else { pevne(true); oznac(); }
-    }
-    function zavriPrehliadku() {
-      if (jeCela()) prepni();
-      pevne(false); beh = 0; p.classList.remove('p360-on'); lista.hidden = true;
-      if (ram) { if (ram.parentNode) ram.parentNode.removeChild(ram); ram = null; }
-      if (pan) { pan.znic(); pan = null; }
-      start.hidden = false; start.textContent = text; start.disabled = false; start.setAttribute('aria-busy', 'false');
-      start.focus({ preventScroll: true });
-    }
-    d.addEventListener('fullscreenchange', oznac);
-    cela.addEventListener('click', prepni);
-    zavri.addEventListener('click', zavriPrehliadku);
-    start.addEventListener('click', otvor);
-    d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && p.classList.contains('p360-pevne')) prepni(); });
   });
 
   // asistent na otázky (assets/asistent.js). Musí byť pred vyhľadávaním, lebo to končí skorým return na stránkach bez

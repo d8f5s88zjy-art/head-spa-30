@@ -777,46 +777,116 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .kdvor figcaption{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.02em;color:var(--ink-2)}
 @media (max-width:900px){.kgrid .kfir{grid-column:1/-1;grid-row:auto}.kdvor{grid-column:1/-1;grid-row:auto}}
 @media (max-width:520px){.kgrid .khod{grid-column:auto}.kdvor figcaption .cta{width:100%}.kdvor figcaption .btn{flex:1 1 100%}}
-/* ── Prehliadka predajne 360° (.p360; build.py prehliadka_blok, site.js, zdroj/panorama.js; majiteľ 9. 11. 2026: otáčať sa po
-   predajni ako v Google Mapách, Lajo: priamo na našej stránke, nikoho neposielať na Google). Fotka predajne od majiteľa ako
-   náhľad, uprostred tlačidlo; po kliknutí sa do okna vloží rám Google Máp (data-panorama-src) alebo plocha vlastnej panorámy
-   (.pan s <canvas>, bez WebGL záloha .pan-css s pásom ako pozadím) a fotka sa prelne preč až po načítaní (žiadny prázdny rám).
-   Okno: telefón 60 vh, od 701 px 16:9; celá obrazovka (.p360-cela-on: skutočná cez :fullscreen alebo pevná pozícia cez celé
-   okno .p360-pevne, kde requestFullscreen nie je) vyplní obrazovku. Bez JS ostáva fotka a veta z <noscript>, tlačidlo je hidden.
-   Čipy lišty sú tmavý papier so svetlým písmom (ležia na fotke aj panoráme, v oboch témach rovnaké; aj nad bielou fotkou 11,7 : 1). */
-.p360{margin:0;display:grid;gap:12px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 92px)}   /* odkaz #prehliadka zastaví pod lepiacou lištou */
-.p360-okno{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--concrete);height:60vh;min-height:300px;max-height:640px}
-@media (min-width:701px){.p360-okno{height:auto;max-height:none;aspect-ratio:16/9}}
-.p360-okno picture{position:absolute;inset:0;width:100%;height:100%;display:block}
-.p360-okno img{width:100%;height:100%;object-fit:cover;transition:opacity .5s linear}
-.p360-on .p360-okno img{opacity:0}
-.p360-okno iframe,.p360-okno .pan{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;opacity:0;transition:opacity .5s linear}
-.p360-on .p360-okno iframe,.p360-on .p360-okno .pan{opacity:1}
-.p360-znak{position:absolute;left:14px;top:14px;z-index:3;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.08em;padding:5px 10px;border-radius:var(--radius);background:rgba(var(--prgb),.97);color:var(--ink);pointer-events:none}
-.p360-on .p360-znak{display:none}
-.p360-stred{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding:16px;pointer-events:none}
-.p360-stred>*{pointer-events:auto}
-.p360-start{box-shadow:0 10px 26px rgba(0,0,0,.28)}
-.p360-start[hidden],.p360-lista[hidden]{display:none}   /* atribút hidden má prednosť pred display tlačidla a lišty (bez JS, pred otvorením) */
-.p360-start[aria-busy="true"]{opacity:.85;cursor:progress}
-.p360-nojs{background:rgba(var(--prgb),.97);color:var(--ink);padding:10px 16px;border-radius:var(--radius);font-weight:600;text-align:center;margin:0}
-.p360-lista{position:absolute;right:12px;top:12px;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.p360-lista button{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;min-height:44px;padding:0 14px;border:0;border-radius:var(--radius);background:rgba(20,18,16,.84);color:#fff;cursor:pointer}
-.p360-lista button:hover{background:rgba(20,18,16,.96)}
-.p360-info{font-size:15px;color:var(--ink-2)}
-.p360-sek{margin-top:clamp(36px,5vw,64px)}
-.pan{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;outline:none;background:var(--concrete)}
+/* ── Prechádzka predajňou (.pp; build.py prehliadka_blok a PRECHADZKA, site.js, zdroj/prechadzka.js; majiteľ 9. 11. 2026:
+   prezrieť si predajňu ako v Google Mapách, Lajo 10. 11.: zo skutočných fotiek, s pohybom medzi miestami, priamo na našej
+   stránke). Náhľad je fotka prvej zastávky s tlačidlom; po kliknutí sa v javisku (.pp-javisko) otvorí scéna (.pp-scena):
+   vrstva zastávky (.pp-vrstva) s plátnom (.pp-platno: fotka väčšia než okno, posun, mierka a jemný náklon cez transform,
+   len kompozítor) a šípkami na zemi (.pp-sipka, poloha v % fotky, cieľ 64 a 52 px). Pod javiskom päta (.pp-pata): krok späť
+   a ďalej, názov zastávky a pás náhľadov. Druhá záložka (.pp-hlava, .pp-ulica) je rám Street View od Googlu, vytvorený až
+   po kliknutí. Okno: telefón 56 vh (300–500 px), od 701 px 16:9 (najviac 76 vh); celá obrazovka (.pp-cela-on: skutočná
+   alebo pevná pozícia .pp-pevne, kde requestFullscreen nie je) vyplní obrazovku. Bez JS ostáva fotka prvej zastávky
+   a galéria ostatných (.pp-galeria v <noscript>). Čipy, šípky a tlačidlá na fotke sú tmavý papier s bielym písmom
+   (rovnaké vo všetkých témach); záložky a päta berú tokeny témy. */
+.pp{margin:0;display:grid;gap:12px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 92px)}   /* odkaz #prehliadka zastaví pod lepiacou lištou */
+.pp [hidden]{display:none!important}
+.pp-okno{display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;background:var(--povrch);box-shadow:0 0 0 1px var(--line)}
+.pp-hlava{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.pp-hlava button{min-height:48px;padding:6px 10px;border:0;background:var(--povrch);color:var(--ink);font-family:var(--display);font-weight:700;font-size:17px;line-height:1.1;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.pp-hlava button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.pp-hlava button:focus-visible{outline-offset:-5px}
+.pp-hlava button[aria-selected="true"]:focus-visible{outline-color:var(--paper)}
+@media (min-width:701px){.pp-hlava{grid-template-columns:auto auto;justify-content:start}.pp-hlava button{padding:6px 24px}}
+.pp-ram{position:relative;flex:1 1 auto;min-height:0}
+.pp-javisko,.pp-ulica{position:relative;overflow:hidden;background:#1c1a1b;height:min(56vh,500px);min-height:300px}
+@media (min-width:701px){.pp-javisko,.pp-ulica{height:auto;aspect-ratio:16/9;max-height:76vh}}
+.pp-javisko>picture{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pp-javisko>picture img{width:100%;height:100%;object-fit:cover}
+.pp-bezi .pp-javisko>picture{visibility:hidden;transition:visibility 0s .32s}   /* náhľad zmizne, až keď ho scéna prekryje */
+.pp-znak{position:absolute;left:14px;top:14px;z-index:3;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.08em;padding:5px 10px;border-radius:var(--radius);background:rgba(var(--prgb),.97);color:var(--ink);pointer-events:none}
+.pp-stred{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding:16px;pointer-events:none}
+.pp-stred>*{pointer-events:auto}
+.pp-bezi .pp-znak,.pp-bezi .pp-stred{display:none}
+.pp-start{box-shadow:0 10px 26px rgba(0,0,0,.28)}
+.pp-start[aria-busy="true"]{opacity:.85;cursor:progress}
+.pp-lista{position:absolute;right:12px;top:12px;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pp-lista button,.pp-zoom button{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;min-height:44px;padding:0 14px;border:0;border-radius:var(--radius);background:rgba(20,18,16,.84);color:#fff;cursor:pointer}
+.pp-lista button:hover,.pp-zoom button:hover:not(:disabled){background:rgba(20,18,16,.96)}
+.pp-scena{position:absolute;inset:0;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;outline:none;background:#1c1a1b;opacity:0;transition:opacity .3s linear}
+.pp-bezi .pp-scena{opacity:1}
+.pp-scena.taha{cursor:grabbing}
+.pp-scena:focus-visible::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 6px #1c1a1b}
+.pp-scena.pp-caka::before{content:"Načítava sa…";position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%);padding:10px 16px;border-radius:var(--radius);background:rgba(20,18,16,.84);color:#fff;font-weight:600}
+.pp-vrstva{position:absolute;inset:0}
+.pp-platno{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;--k:1}
+.pp-platno picture,.pp-platno img{display:block;width:100%;height:100%}
+.pp-platno img{max-width:none;pointer-events:none;-webkit-user-drag:none}
+.pp-vrstva-pan .pan{position:absolute;inset:0;width:100%;height:100%}
+/* šípka na zemi: cieľ dotyku je celý štvorec (64 px dopredu, 52 px späť), znak v ňom leží na zemi (rotateX) a mieri smerom --u;
+   pri priblížení plátna (--k) ostáva rovnako veľká */
+.pp-sipka{position:absolute;width:64px;height:64px;margin:0;padding:0;border:0;border-radius:50%;background:none;color:#fff;cursor:pointer;transform:translate(-50%,-50%) scale(calc(1/var(--k,1)));-webkit-tap-highlight-color:transparent}
+.pp-vrstva-pan .pp-sipka{left:0;top:0;z-index:2}
+.pp-sipka-zn{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:rgba(20,18,16,.66);box-shadow:0 0 0 3px rgba(255,255,255,.94),0 8px 20px rgba(0,0,0,.5);transform:perspective(260px) rotateX(52deg) rotate(var(--u,0deg));transition:background .24s}
+.pp-sipka-zn svg{display:block;width:36px;height:36px}
+.pp-sipka:focus-visible .pp-sipka-zn{background:#b92328}
+.pp-sipka:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.pp-sipka-spat{width:52px;height:52px}
+.pp-sipka-spat .pp-sipka-zn{background:rgba(20,18,16,.58);box-shadow:0 0 0 2px rgba(255,255,255,.78),0 6px 14px rgba(0,0,0,.4)}
+.pp-sipka-spat svg{width:26px;height:26px}
+.pp-sipka::after{content:attr(data-nazov);position:absolute;left:50%;bottom:100%;transform:translate(-50%,-4px);white-space:nowrap;padding:6px 9px;border-radius:var(--radius);background:rgba(20,18,16,.92);color:#fff;font:600 14px/1 var(--body);opacity:0;pointer-events:none;transition:opacity .16s}
+.pp-sipka:focus-visible::after{opacity:1}
+@media (hover:hover){.pp-sipka:hover .pp-sipka-zn{background:#b92328}.pp-sipka:hover::after{opacity:1}}
+.pp-odchadza .pp-sipka{opacity:0;transition:opacity .12s linear}
+.pp-zoom{position:absolute;right:12px;top:64px;z-index:3;display:grid;gap:6px}   /* pod čipmi; dole sú šípky na zemi */
+.pp-zoom button{width:44px;padding:0;font-size:26px;line-height:1}
+.pp-zoom button:disabled{opacity:.45;cursor:default}
+.pp-cela-on .pp-scena{touch-action:none}
+/* pohľad z ulice (Google): rám sa ukáže až po načítaní, dovtedy veta na tmavom podklade */
+.pp-ulica iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;opacity:0;transition:opacity .3s linear}
+.pp-ulica-ok iframe{opacity:1}
+.pp-ulica-veta{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:20px;text-align:center;color:#fff;font-weight:600}
+.pp-ulica-veta:empty{display:none}
+.pp-ulica-on .pp-lista{top:auto;bottom:12px;right:auto;left:12px;justify-content:flex-start}   /* vpravo hore má Google vlastné tlačidlo celej obrazovky */
+/* päta: krok späť a ďalej, názov zastávky s poradím, pás náhľadov */
+.pp-pata{display:grid;gap:8px;min-width:0;padding:10px 12px 12px;border-top:1px solid var(--line);background:var(--povrch);color:var(--ink)}
+.pp-nav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px}
+.pp-krok{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--povrch);color:var(--ink);cursor:pointer}
+.pp-krok svg{display:block;width:24px;height:24px}
+.pp-krok:hover:not(:disabled){background:var(--povrch-2)}
+.pp-krok:disabled{opacity:.4;cursor:default}
+.pp-kde{margin:0;min-width:0;text-align:center;font-family:var(--display);font-size:20px;line-height:1.15;letter-spacing:.02em}
+.pp-nazov{font-weight:700;text-transform:uppercase}
+.pp-pocet{display:block;font-family:var(--body);font-size:14px;letter-spacing:0;color:var(--ink-3)}
+.pp-pas{position:relative;display:flex;gap:8px;min-width:0;padding:3px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+.pp-nahlad{flex:0 0 auto;width:72px;height:54px;padding:0;border:0;border-radius:3px;overflow:hidden;background:var(--concrete);cursor:pointer;opacity:.7}
+.pp-nahlad picture,.pp-nahlad img{display:block;width:100%;height:100%}
+.pp-nahlad img{object-fit:cover}
+.pp-nahlad:hover,.pp-nahlad[aria-current="true"]{opacity:1}
+.pp-nahlad[aria-current="true"]{outline:3px solid var(--brick);outline-offset:0}
+@media (min-width:901px){.pp-pata{grid-template-columns:minmax(280px,400px) minmax(0,1fr);align-items:center;gap:20px}}
+.pp-stav{margin:0;font-weight:600;color:var(--ink)}
+.pp-stav:empty{display:none}
+.pp-info{font-size:15px;color:var(--ink-2)}
+.pp-sek{margin-top:clamp(36px,5vw,64px)}
+/* bez JS: prvá zastávka je fotka v okne, ostatné v mriežke pod ňou */
+.pp-prva,.pp-galeria figcaption{margin:0;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.02em;color:var(--ink-2)}
+.pp-galeria{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px;margin:0;padding:0;list-style:none}
+@media (min-width:701px){.pp-galeria{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pp-galeria figure{margin:0;display:grid;gap:6px}
+.pp-galeria img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius)}
+/* celá obrazovka */
+.pp-cela-on{display:block;background:#1c1a1b}
+.pp-cela-on .pp-okno{height:100%;border-radius:0;box-shadow:none}
+.pp-cela-on .pp-javisko,.pp-cela-on .pp-ulica{height:100%;min-height:0;max-height:none;aspect-ratio:auto}
+.pp-cela-on .pp-info,.pp-cela-on .pp-stav{display:none}
+.pp-pevne{position:fixed;inset:0;z-index:85;margin:0}
+.pp-pevne-rodic{content-visibility:visible!important}   /* sekcia s content-visibility:auto by bola pre pevnú pozíciu obsahujúcim blokom */
+.pp-pevne .pp-okno{height:100%;height:100dvh}
+/* panoráma (zastávka typu panoráma, zdroj/panorama.js): plocha s <canvas>, bez WebGL záloha .pan-css s pásom ako pozadím */
+.pan{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;outline:none;background:#1c1a1b}
 .pan.taha{cursor:grabbing}
-.pan:focus-visible{box-shadow:inset 0 0 0 3px var(--brick)}
 .pan canvas{display:block;width:100%;height:100%}
 .pan-css{background-repeat:repeat-x;background-size:auto 220%}
-.p360-cela-on{display:block;background:var(--paper)}
-.p360-cela-on .p360-okno{aspect-ratio:auto;height:100%;max-height:none;min-height:0;border-radius:0}
-.p360-cela-on .p360-info{display:none}
-.p360-cela-on .pan{touch-action:none}
-.p360-pevne{position:fixed;inset:0;z-index:85;margin:0}
-.p360-pevne-rodic{content-visibility:visible!important}   /* sekcia s content-visibility:auto by bola pre pevnú pozíciu obsahujúcim blokom */
-.p360-pevne .p360-okno{height:100%;height:100dvh}
+.pp-cela-on .pan{touch-action:none}
 /* výzva pred pätou: tehlové tlačidlo na tehlovom páse by nebolo vidieť – obrys */
 .cta-pas .btn.primary{background:transparent;border-color:rgba(255,255,255,.8);color:#fff}
 .cta-pas .btn.primary:hover{background:rgba(255,255,255,.12);border-color:#fff}
@@ -1565,9 +1635,6 @@ html[data-tema="tmava"] .uv-znova:hover{background:var(--povrch-2)}
 /* lightbox a zákaznícka karta: tiene tmavšie (na noci by svetlé nebolo vidieť) */
 html[data-tema="tmava"] .lb img{box-shadow:0 18px 50px rgba(0,0,0,.6)}
 html[data-tema="tmava"] body.home .karta img{box-shadow:0 30px 60px rgba(0,0,0,.6)}
-/* prehliadka 360°: okno so svetlou hranou ako ostatné fotky v rámoch (čipy lišty sú v oboch témach rovnaké) */
-html[data-tema="tmava"] .p360-okno{box-shadow:0 0 0 1px rgba(255,255,255,.14)}
-html[data-tema="tmava"] .p360-cela-on .p360-okno{box-shadow:none}
 /* znak RS má vlastný čierny zaoblený podklad (#000): na noci #121110 dostane jemnú svetlú hranu ako ostatné odznaky, aby
    nepôsobil ako tmavší obdĺžnik nalepený na lište (KV-05). Polomer = roh znaku (40 z 720 px šírky, 40 z 350 px výšky). */
 html[data-tema="tmava"] :is(.brand img,.h1-znacka img,.br-znacka img,.flogo){border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
