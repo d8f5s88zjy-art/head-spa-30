@@ -180,6 +180,7 @@ function postav() {
   koren.append(hlava, pruh, el('div', { class: 'obj-obsah' }, [ukazkaPas, nadpis, vyber, telo, zivy]), el('div', { class: 'obj-pata' }, [tel]));
   dlg = koren;
   dlg.addEventListener('close', () => {
+    dlg.classList.remove('obj-zaviera');
     html.classList.remove('obj-otvorene');
     if (history.state && history.state.obj) history.back();
     // fokus späť na odkaz, ktorý okno otvoril (ak ešte je na stránke a nie je pod zavretým oknom)
@@ -187,6 +188,14 @@ function postav() {
     navrat = null;
   });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) zatvor(); });
+  // Esc (K2-2): okno zmizne hneď v najbližšej snímke (len krytie okna a clony, lacné), samotné zatvorenie s prepočtom
+  // celej stránky (zrušenie inert) príde až po nej; vnorené okno s ukážkami práce sa zatvára samo
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || e.isComposing || e.target.closest('dialog') !== dlg) return;
+    e.preventDefault();
+    dlg.classList.add('obj-zaviera');
+    requestAnimationFrame(() => setTimeout(zatvor));
+  });
   addEventListener('popstate', () => { if (dlg.open) dlg.close(); });
   // internet sa vrátil: okno s „nejde“ to skúsi samo
   addEventListener('online', () => { if (dlg.open && s.krok === 0) znova(); });

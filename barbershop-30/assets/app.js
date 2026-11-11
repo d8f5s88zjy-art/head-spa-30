@@ -562,18 +562,71 @@ if (motionOn && mqFinePointer.matches) {
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   const api = o === 'ukazka' ? 'ukazka' : (lokal && o) || html.dataset.objednavka || '';
   const ODKAZY = 'a[href*="barbershop30.sk/rezervacia"]';
-  let m = null;
+  let m = null, pokus = 0;
+  // zlyhané stiahnutie (bez internetu) sa nedrží: ďalší ťuk skúsi modul znova, s ?r= pre prehliadač, ktorý si
+  // zlyhaný import pamätá (K2-1); prehliadač bez okna (bez <dialog>, bez cenníka) ostáva pri rezervačnom systéme
   const load = () => m || (m = (() => {
     // štýl okna sa sťahuje súbežne s modulom (nie až po ňom): na pomalej sieti o jeden okruh skôr
-    const l = document.createElement('link');
-    l.rel = 'preload'; l.as = 'style'; l.href = new URL('objednavka.css', import.meta.url).href;
-    document.head.append(l);
-    return import('./objednavka.js').then((x) => x.spusti(api).then((ok) => { if (!ok) throw new Error('bez okna'); return x; }));
+    if (!pokus) {
+      const l = document.createElement('link');
+      l.rel = 'preload'; l.as = 'style'; l.href = new URL('objednavka.css', import.meta.url).href;
+      document.head.append(l);
+    }
+    return import('./objednavka.js' + (pokus++ ? '?r=' + Date.now() : ''))
+      .catch((e) => { m = null; throw e; })
+      .then((x) => x.spusti(api).then((ok) => { if (!ok) throw Object.assign(new Error('bez okna'), { bezOkna: 1 }); return x; }));
   })());
   const vopred = (e) => { if (e.target instanceof Element && e.target.closest(ODKAZY)) load().catch(() => {}); };
   addEventListener('pointerdown', vopred, { passive: true });
   addEventListener('focusin', vopred);
   addEventListener('pointerover', (e) => { if (e.pointerType === 'mouse') vopred(e); }, { passive: true });
+  // okno až po vykreslení odozvy ťuku (aria-busy): prepočet celej stránky pri showModal nebrzdí odozvu (K2-2)
+  const poVykresleni = () => new Promise((ok) => requestAnimationFrame(() => setTimeout(ok)));
+  const otvorObj = (a) => {
+    // kým sa modul prvý raz sťahuje, odkaz ukáže, že sa niečo deje (aria-busy, style.css)
+    a.setAttribute('aria-busy', 'true');
+    Promise.all([load(), poVykresleni()]).then(([x]) => x.otvorOdkaz(a)).catch((e) => {
+      // modul sa nestiahol (bez internetu): malé okno s telefónom a hodinami priamo zo stránky, nie nová karta
+      if (!e.bezOkna && window.HTMLDialogElement) return zaloha(a);
+      // prehliadač bez okna: rezervačný systém ako doteraz
+      const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href);
+    }).finally(() => a.removeAttribute('aria-busy'));
+  };
+  // záloha bez modulu: texty z okna objednávky (objednavka.js), telefón z úvodu a hodiny z pätičky (už v jazyku stránky)
+  const ZAL = {
+    sk: 'Objednávka cez web teraz nejde – zavolaj.|Si bez internetu. Keď sa pripojíš, skús znova.|Zavrieť|Skúsiť znova',
+    en: 'Online booking isn’t working right now – call us.|You’re offline. Once you’re connected, try again.|Close|Try again',
+    uk: 'Онлайн-бронювання зараз не працює – зателефонуй.|Немає інтернету. Коли підключишся, спробуй ще раз.|Закрити|Спробувати ще раз',
+    hu: 'Az online foglalás most nem működik – hívj minket.|Nincs internetkapcsolat. Ha újra csatlakoztál, próbáld újra.|Bezárás|Újrapróbálás',
+    sr: 'Onlajn zakazivanje sada ne radi – pozovi nas.|Nisi povezan na internet. Kad se povežeš, pokušaj ponovo.|Zatvori|Pokušaj ponovo',
+    pl: 'Rezerwacja online teraz nie działa – zadzwoń.|Brak internetu. Gdy się połączysz, spróbuj ponownie.|Zamknij|Spróbuj ponownie',
+    de: 'Online-Buchung geht gerade nicht – ruf uns an.|Du bist offline. Sobald du verbunden bist, versuch es noch einmal.|Schließen|Noch einmal versuchen',
+    cs: 'Objednávka přes web teď nejde – zavolej.|Jsi offline. Až se připojíš, zkus to znovu.|Zavřít|Zkusit znovu',
+  };
+  let zal = null, zalOdkaz = null;
+  const zaloha = (a) => {
+    const [h, off, x, r] = (ZAL[(html.lang || 'sk').slice(0, 2)] || ZAL.sk).split('|');
+    const n = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; };
+    if (!zal) {
+      zal = n('dialog', 'obj-zaloha');
+      zal.setAttribute('aria-labelledby', 'obj-zaloha-h'); zal.setAttribute('data-no-i18n', '');
+      zal.addEventListener('click', (e) => { if (e.target === zal) zal.close(); });
+      document.body.append(zal);
+      // internet sa vrátil: skúsi okno objednávky samo
+      addEventListener('online', () => { if (zal.open) { zal.close(); otvorObj(zalOdkaz); } });
+    }
+    zalOdkaz = a;
+    const nad = n('h2', '', h); nad.id = 'obj-zaloha-h'; nad.tabIndex = -1;
+    const zav = n('button', 'obj-zaloha-x', '×'); zav.type = 'button'; zav.setAttribute('aria-label', x); zav.onclick = () => zal.close();
+    const tel = $('.title-actions .btn-tel'), t = n('a', 'btn btn-primary', tel ? tel.textContent : '0951 267 203'); t.href = 'tel:+421951267203';
+    const hod = $('.site-footer .hours'), hodH = hod && hod.previousElementSibling;
+    const zn = n('button', 'btn btn-secondary', r); zn.type = 'button'; zn.onclick = () => { zal.close(); otvorObj(zalOdkaz); };
+    zal.replaceChildren(zav, nad, navigator.onLine === false ? n('p', '', off) : '', t,
+      hodH ? n('p', 'obj-zaloha-hod', hodH.textContent) : '', hod ? hod.cloneNode(true) : '', zn);
+    zal.removeAttribute('inert');   // otvorené z okna Barbera (to robí zvyšok stránky inert)
+    if (!zal.open) zal.showModal();
+    nad.focus({ preventScroll: true });
+  };
   // zachytenie skôr ako prihláška vernostnej kartičky (tá je na document); Dokončiť v okne (data-obj-priamo) ide ďalej;
   // klávesy s Ctrl/Cmd/Shift a stredné tlačidlo nechajú rezervačný systém v novej karte
   addEventListener('click', (e) => {
@@ -581,11 +634,7 @@ if (motionOn && mqFinePointer.matches) {
     const a = e.target instanceof Element && e.target.closest(ODKAZY);
     if (!a || a.hasAttribute('data-obj-priamo')) return;
     e.preventDefault();
-    // kým sa modul prvý raz sťahuje, odkaz ukáže, že sa niečo deje (aria-busy, style.css)
-    a.setAttribute('aria-busy', 'true');
-    // okno sa nedá (starý prehliadač bez <dialog>, modul sa nestiahol): rezervačný systém ako doteraz
-    load().then((x) => x.otvorOdkaz(a)).catch(() => { const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href); })
-      .finally(() => a.removeAttribute('aria-busy'));
+    otvorObj(a);
   }, true);
   if (q.get('objednat')) {
     const z = new URLSearchParams(q);

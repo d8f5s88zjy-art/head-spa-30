@@ -427,6 +427,33 @@ for (const [w, h] of [[320, 568], [430, 932], [768, 1024], [1440, 900]]) {
   }
 }
 
+/* ---------- 3b2. bez internetu ešte pred prvým dotykom (modul okna sa nestiahol), potom online (K2-1) ---------- */
+{
+  const { ctx, page, chyby } = await stranka(390, 844, '');
+  const karty = []; ctx.on('page', (x) => { if (x !== page) { karty.push(x.url()); x.close().catch(() => {}); } });
+  await ctx.setOffline(true);
+  await page.locator('#uvod a.btn-primary').first().tap();
+  await page.waitForSelector('dialog.obj-zaloha[open]', { timeout: 8000 }).catch(() => {});
+  const z = await page.evaluate(() => { const d = document.querySelector('dialog.obj-zaloha[open]'); return d && { t: d.textContent, tel: !!d.querySelector('a[href="tel:+421951267203"]'), hod: !!d.querySelector('.hours'), fokus: document.activeElement === d.querySelector('h2') }; });
+  ok(!!z && z.t.includes('nejde – zavolaj') && z.t.includes('bez internetu') && z.tel && z.hod && z.fokus && !karty.length,
+    'bez internetu pred prvým dotykom: záloha s telefónom a hodinami, fokus na nadpise, žiadna nová karta', JSON.stringify({ z, karty }));
+  await page.keyboard.press('Escape');
+  await sleep(300);
+  ok(!(await page.locator('dialog[open]').count()), 'záloha: Esc ju zatvorí');
+  await page.locator('#uvod a.btn-primary').first().tap();
+  await page.waitForSelector('dialog.obj-zaloha[open]', { timeout: 8000 }).catch(() => {});
+  await ctx.setOffline(false);
+  await page.waitForSelector('dialog.obj[open] #obj-h', { timeout: 10000 }).catch(() => {});
+  ok(await page.locator('dialog.obj[open]').count() === 1 && !(await page.locator('dialog.obj-zaloha[open]').count()), 'internet späť pri otvorenej zálohe: okno objednávky sa otvorí samo');
+  await page.keyboard.press('Escape');
+  await sleep(400);
+  await page.locator('#uvod a.btn-primary').first().tap();
+  await page.waitForSelector('dialog.obj[open] #obj-h', { timeout: 10000 }).catch(() => {});
+  ok(await page.locator('dialog.obj[open]').count() === 1 && !karty.length && page.url().startsWith(srv.origin), 'potom ďalší ťuk: okno objednávky, žiadna nová karta, stránka ostala', karty.join(' '));
+  ok(!chyby.length, 'bez internetu pred prvým dotykom: bez chýb skriptu', chyby.join(' | '));
+  await ctx.close();
+}
+
 /* ---------- 3c. klávesnica, čítačka, obmedzený pohyb ---------- */
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'sk-SK', colorScheme: 'dark', reducedMotion: 'reduce' });

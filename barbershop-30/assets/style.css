@@ -1068,6 +1068,16 @@ html[data-motion="off"] .board-hero { animation: none; }
 
 /* Objednať sa pri prvom ťuknutí, kým sa okno objednávky sťahuje (app.js 7b4, na pomalej sieti do ~1 s) */
 a[aria-busy="true"] { cursor: progress; opacity: 0.72; }
+/* záloha okna objednávky, keď sa modul nestiahol (bez internetu, app.js 7b4): rovnaký vzhľad ako okno objednávky */
+.obj-zaloha { width: min(24rem, calc(100% - 2 * var(--gutter))); padding: var(--s5); border: 1px solid var(--line-strong); border-radius: var(--radius, 8px);
+  background: var(--ink-2); color: var(--paper); box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55); }
+.obj-zaloha::backdrop { background: rgba(14, 13, 12, 0.8); }
+.obj-zaloha h2 { margin: 0 44px var(--s3) 0; font: 800 1.5rem/1.15 var(--font-display); outline: none; }
+.obj-zaloha p { margin: 0 0 var(--s3); color: var(--paper-2); }
+.obj-zaloha .btn { width: 100%; margin: var(--s3) 0; }
+.obj-zaloha .obj-zaloha-hod { margin: var(--s4) 0 var(--s2); font-weight: 700; color: var(--paper); }
+.obj-zaloha .hours { color: var(--paper-2); }
+.obj-zaloha-x { position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: none; color: inherit; font-size: 1.6rem; line-height: 1; cursor: pointer; }
 
 /* Podklad lišty bez app.js (scroll-driven animation); app.js prepne na .is-scrolled */
 @supports (animation-timeline: scroll()) {
