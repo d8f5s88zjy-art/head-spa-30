@@ -156,21 +156,38 @@
     // odhalí sa aj to, takže v pokoji nie je v okne nič skryté
     var kraj = new Set(), tp = 0;
     var io0 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) kraj.add(e.target); else kraj.delete(e.target); }); });
-    function odhal(el) { el.classList.add('v'); io.unobserve(el); io0.unobserve(el); kraj.delete(el); }
+    // KZ-02: tempo odhalenia podľa rýchlosti posunu, aby obsah pri rýchlejšom posune nedobiehal. Rýchlosť sa počíta
+    // v poslucháči posunu z polohy a času (bez čítania rozloženia); 150 ms bez posunu = stojí. Pod RYCHLO px/s spomalené
+    // tempo, od RYCHLO pôvodné tempo (.r) a odhalenie sa spustí už 25 % výšky okna pod ním (tretí pozorovateľ), od IHNED
+    // je prvok hneď na mieste (.ih). Site.css, časť 4A.
+    var RYCHLO = 600, IHNED = 1500, py = window.scrollY, pt = 0, rych = 0;
+    function tempo() { return performance.now() - pt > 150 ? 0 : rych; }
+    function odhal(el) {
+      var v = tempo();
+      el.classList.add('v'); if (v >= IHNED) el.classList.add('ih'); else if (v >= RYCHLO) el.classList.add('r');
+      io.unobserve(el); io0.unobserve(el); io1.unobserve(el); kraj.delete(el);
+    }
+    var io1 = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting && e.target.classList.contains('c') && tempo() >= RYCHLO) odhal(e.target); });
+    }, { rootMargin: '0px 0px 25% 0px' });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         var el = e.target, r = e.boundingClientRect;
         if (!el._odh) {
           el._odh = 1;
           if ((r.width || r.height) && r.top < innerHeight && r.left < innerWidth && r.right > 0) { io.unobserve(el); return; }
-          el.classList.add('c'); io0.observe(el);
+          el.classList.add('c'); io0.observe(el); io1.observe(el);
         }
         if (e.isIntersecting) odhal(el);
       });
     }, { rootMargin: '0px 0px -8% 0px' });
     zoz.forEach(function (el) { io.observe(el); });
     var pokoj = function () { kraj.forEach(odhal); };
-    addEventListener('scroll', function () { clearTimeout(tp); tp = setTimeout(pokoj, 180); }, { passive: true });
+    addEventListener('scroll', function () {
+      var t = performance.now(), y = window.scrollY, dt = t - pt, v = dt > 0 ? Math.abs(y - py) / dt * 1000 : rych;
+      rych = dt > 150 ? 0 : (rych + v) / 2; py = y; pt = t;   // po pauze sa začína od nuly, inak priemer s minulou hodnotou
+      clearTimeout(tp); tp = setTimeout(pokoj, 180);
+    }, { passive: true });
   }
   poPrechode(odhalenia);
 

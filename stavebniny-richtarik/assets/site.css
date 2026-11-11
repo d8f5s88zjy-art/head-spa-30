@@ -1437,6 +1437,12 @@ h2,.page-head h1{display:flow-root}   /* záporné okraje drážky nepresiaknu c
   h2.sh.c.v::after{transform-origin:0 50%;animation:o-linka .9s var(--krivka-vyjazd) calc(var(--d) + 330ms) backwards}
   h2.sh.c:not(.v) small{opacity:0}
   h2.sh.c.v small{animation:o-op .6s linear calc(var(--d) + 390ms) backwards}
+  /* KZ-02 (11. 11. 2026): tempo podľa rýchlosti posunu (site.js, odhalenia). Pri čítaní (pod 600 px/s) platí spomalené
+     tempo ×1,5; pri rýchlejšom posune (.r, 600–1500 px/s) pôvodné tempo bez spomalenia a s kratším stupňovaním a odhalenie
+     sa spustí už 25 % výšky okna pod ním; pri rýchlom posune (.ih, od 1500 px/s) je obsah hneď na mieste – nič nedobieha. */
+  .c.v.r{--dlzka-odh:620ms;--dlzka-odh-op:520ms;--krok-cas:35ms}
+  h2.c.v.r .dr>span{animation-duration:560ms}
+  .c.v.ih,.zt span.c.v.ih,.year.c.v.ih,.eyebrow.c.v.ih::before,.srv.c.v.ih i,.deal.c.v.ih .tag,h2.c.v.ih .dr>span,h2.sh.c.v.ih::after,h2.sh.c.v.ih small{animation:none}
 }
 /* B) fotky a pás Doprava viazané na posun */
 @media screen and (prefers-reduced-motion:no-preference) and (scripting:enabled){@supports (animation-timeline:view()){

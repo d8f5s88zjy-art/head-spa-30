@@ -115,7 +115,7 @@ FIRMA = {
 #     bezkľúčovou adresou podľa súradníc predajne ULICA_SURADNICE (OpenStreetMap, majitel/dodavatelia/ZAPIS.md časť 2).
 ULICA_GOOGLE = True
 ULICA_SURADNICE = '48.2827877,18.0893607'
-ULICA_SRC = f'https://www.google.com/maps?q=&layer=c&cbll={ULICA_SURADNICE}&cbp=11,0,0,0,0&output=svembed'
+ULICA_SRC = f'https://www.google.com/maps?q=&layer=c&cbll={ULICA_SURADNICE}&cbp=11,0,0,0,0&hl=sk&output=svembed'
 PANORAMA = {'src': ''}
 # Zastávky prechádzky v poradí cesty zákazníka (poradie je odhad podľa fotiek, potvrdí majiteľ). Každá zastávka je jedna fotka:
 #  id      – krátke meno (odkazujú naň šípky),

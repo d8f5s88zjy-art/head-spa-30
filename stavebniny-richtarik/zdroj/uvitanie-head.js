@@ -28,15 +28,28 @@
         }
         if (kot) {
           hr.replaceState(hr.state, '', location.pathname + location.search);
-          // prehliadač si kotvu z pôvodnej adresy pamätá: kým sa stránka nenačíta, poloha ostáva hore
-          var hore = function () { if (w.scrollY) w.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
+          // prehliadač si kotvu z pôvodnej adresy pamätá: kým sa stránka nenačíta, poloha ostáva hore. Keď sa však
+          // návštevník medzitým posunul sám (koliesko, ťah prstom, klávesy posunu), jeho polohu nemeníme – okrem prípadu,
+          // keď je stránka presne tam, kam ju posunul prehliadač kvôli kotve (KZ-05, pomalá sieť). Ťuk bez ťahu sa nepočíta.
+          var sam = 0, ja = function (e) { if (e.type !== 'keydown' || /^(Page|Arrow(Up|Down)|Home|End|\s)/.test(e.key)) sam = 1; };
+          ['wheel', 'touchmove', 'keydown'].forEach(function (u) { w.addEventListener(u, ja, { capture: true, passive: true }); });
+          var naKotve = function () {
+            try {
+              var el = d.getElementById(decodeURIComponent(kot.slice(1)));
+              return !!el && Math.abs(el.getBoundingClientRect().top - (parseFloat(getComputedStyle(h).scrollPaddingTop) || 0) - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0)) < 3;
+            } catch (e) { return false; }
+          };
+          var hore = function () { if (w.scrollY && (!sam || naKotve())) w.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
           d.addEventListener('DOMContentLoaded', hore);
-          w.addEventListener('load', function () { hore(); setTimeout(hore, 0); });
+          w.addEventListener('load', function () { hore(); setTimeout(function () { hore(); ['wheel', 'touchmove', 'keydown'].forEach(function (u) { w.removeEventListener(u, ja, true); }); }, 0); });
         }
       }
     }
     if (VYP || !matchMedia('(prefers-reduced-motion: no-preference)').matches || location.hash || d.prerendering) return;
     if (w.innerWidth < 300 || w.innerHeight < 420) return;
+    // Späť a Vpred bránu neukážu ani s ?uvitanie (odkazy pre Laja ho majú): návštevník sa vracia na miesto, kde bol,
+    // a brána by sa pri prechode na chvíľu mihla cez sekciu (postreh videa 11. 11. 2026)
+    if (n && n.type === 'back_forward') return;
     if (!q) {
       if (c && c.saveData) return;
       if (n && n.type && n.type !== 'navigate') return;

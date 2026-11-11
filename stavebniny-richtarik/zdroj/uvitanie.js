@@ -53,6 +53,8 @@
       w.addEventListener('click', z, true); setTimeout(function () { w.removeEventListener('click', z, true); }, 700);
     }
     txt.forEach(function (a) { try { a.finish(); } catch (x) {} });
+    // farebná téma: názov úvodu je už na mieste, logo a názov v krídlach hneď zhasnú (nie dva názvy počas prelnutia, KZ-01)
+    if (far) [].forEach.call(ov.querySelectorAll('.br-tab'), function (x) { x.style.opacity = 0; });
     var v = cs.getPropertyValue('--dlzka-pusti').trim(), ms = parseFloat(v) * (/ms$/.test(v) ? 1 : 1000) || 160;
     var a = ov.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, fill: 'forwards' });
     a.finished.then(function () { koniec({ preskocene: true }); }, function () {});
@@ -80,6 +82,7 @@
     w.brCas = { f: Math.round(f0), pr: Math.round(hotova), otvor: Math.round(performance.now()), rychlo: 1 };
     okno.style.visibility = zO.style.visibility = 'hidden';
     kridla(440);   // kratšie ako pri celom scenári: na pomalej sieti už pozdrav trval dosť dlho
+    if (far) odkryF(440, kr('vyjazd'));   // farebná téma: ani tu nie sú naraz dva názvy (KZ-01)
     A(ov, [{ opacity: 1 }, { opacity: 0 }], { duration: ZMIZ, delay: 350, fill: 'forwards' });
     hotovo({ rychlo: true });
   }
@@ -158,18 +161,48 @@
   // farebná téma: úvod je fotka cez celú výšku s červeným panelom a názvom, takže okno s fotkou, usadenie do rámu ani štítky
   // nie sú (CSS ich skryje): krídla s logom a názvom sa rozídu rovno nad hotovým úvodom, fotka úvodu dosadne (1,06 → 1),
   // heslo vyjde z drážky a štítok predajne sa vrazí. Ťuk prechádza na úvod od prvej snímky otvorenia (Zavolať).
+  // KZ-01 (11. 11. 2026): názov úvodu (logo RS a STAVEBNINY RICHTÁRIK) leží presne pod švom krídel, preto ho škára medzi
+  // krídlami odkrývala po kúskoch a naraz boli vidieť dva až tri názvy, jeden prerezaný. Teraz logo a názov v krídlach
+  // zhasnú počas prvej časti otvárania (krídla sa vtedy ešte takmer nehýbu) a názov úvodu sa objaví až vtedy, keď sú krídla
+  // celkom mimo neho; riadky hesla vyjdú z drážky tiež až nad voľným miestom. Kedy krídlo prejde okrajom prvku, sa
+  // vypočíta z rozmerov (jedno čítanie v snímke otvorenia) a z krivky clony, takže to platí pri každej šírke okna.
+  function krivka(n) {   // čas (0–1), kedy krivka clony dosiahne priebeh p (cubic-bezier, polením); bez krivky lineárne
+    var m = /cubic-bezier\(([^)]+)\)/.exec(kr(n)), c = m && m[1].split(',').map(parseFloat);
+    if (!c || c.length !== 4 || c.some(isNaN)) return function (p) { return p; };
+    var B = function (a, b, s) { return 3 * (1 - s) * (1 - s) * s * a + 3 * (1 - s) * s * s * b + s * s * s; };
+    return function (p) {
+      if (p <= 0) return 0; if (p >= 1) return 1;
+      for (var lo = 0, hi = 1, s = .5, i = 0; i < 24; i++, s = (lo + hi) / 2) { if (B(c[1], c[3], s) < p) lo = s; else hi = s; }
+      return B(c[0], c[2], s);
+    };
+  }
+  function odkryF(D, vy) {   // D: trvanie krídel v ms; vráti, kedy je odkrytý názov úvodu
+    var V = ov.getBoundingClientRect(), cas = krivka('clona'), zn = d.querySelector('.uv h1 .h1-znacka');
+    var pol = tel ? (V.top + V.bottom) / 2 : (V.left + V.right) / 2, dr = 1.06 * (tel ? V.height : V.width) / 2;
+    var volny = function (el) {   // ms od začiatku otvárania, keď už prvok nekryje žiadne krídlo
+      if (!el) return 0;
+      var r = el.getBoundingClientRect(), a = tel ? Math.max(r.top, V.top) : Math.max(r.left, V.left), b = tel ? Math.min(r.bottom, V.bottom) : Math.min(r.right, V.right);
+      if (a >= b) return 0;
+      return Math.round(D * cas(Math.min(1, Math.max(0, (pol - a) / dr, (b - pol) / dr) + .02)));
+    };
+    var tz = volny(zn), tf = Math.max(Math.min(tz, Math.round(D * .45)), 120);
+    [].forEach.call(ov.querySelectorAll('.br-tab'), function (x) { A(x, [{ opacity: 1 }, { opacity: 0 }], { duration: tf, easing: 'linear', fill: 'forwards' }); });
+    A(zn, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: T(300), delay: tz, easing: vy, fill: 'backwards' }, txt);
+    [].forEach.call(d.querySelectorAll('.uv h1 .ln>span'), function (s, j) {
+      A(s, [{ transform: 'translateY(112%)' }, { transform: 'none' }], { duration: T(440), delay: Math.max(T(160 + j * 60), volny(s.parentNode), tz + T(80 + j * 60)), easing: vy, fill: 'backwards' }, txt);
+    });
+    return tz;
+  }
   function otvorF() {
     if (stav) return;
     if (w.scrollY > 4) return rychlo();
-    var t = performance.now(), vy = kr('vyjazd');
+    var t = performance.now(), vy = kr('vyjazd'), D = T(OTV);
     stav = 1; k = 1; znacka('br-otvor'); znacka('br-usad', t);
     w.brCas = { f: Math.round(f0), pr: Math.round(hotova), otvor: Math.round(t), far: 1 };
     ov.style.pointerEvents = 'none';
-    kridla(T(OTV));
+    kridla(D);
+    w.brCas.nazov = odkryF(D, vy);
     A(d.querySelector('.uv-dvor'), [{ transform: 'scale(1.06)' }, { transform: 'none' }], { duration: T(800), easing: kr('kamera'), fill: 'backwards' }, txt);
-    [].forEach.call(d.querySelectorAll('.uv h1 .ln>span'), function (s, j) {
-      A(s, [{ transform: 'translateY(112%)' }, { transform: 'none' }], { duration: T(440), delay: T(160 + j * 60), easing: vy, fill: 'backwards' }, txt);
-    });
     A(d.querySelector('.uv-ram>.uv-stitok'), [{ opacity: 0, transform: 'scale(1.35)' }, { opacity: 1, transform: 'none' }], { duration: T(360), delay: T(OTV), easing: kr('pecat'), fill: 'backwards' }, txt);
     hotovo({});
   }

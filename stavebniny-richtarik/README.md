@@ -68,8 +68,10 @@ alebo antracite, malé červené písmo je `#b92328` (svetlá scéna) alebo `#f2
 fotka cez celú výšku, červený panel so šikmou antracitovou hranou, veľký biely názov STAVEBNINY RICHTÁRIK s antracitovým
 obrysom a znakom RS, heslo a tlačidlá (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a` a `.uv-b` `display:contents`);
 strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
-živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom). Podklad prechodu medzi stránkami
-(`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal`
+živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: znak a názov
+v krídlach zhasnú počas prvej časti otvárania a názov úvodu sa objaví, až keď sú krídla celkom mimo neho – kedy, vypočíta
+`odkryF` z rozmerov a krivky clony –, takže nikdy nie sú vidieť dva názvy ani názov prerezaný hranou krídla). Podklad
+prechodu medzi stránkami (`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal`
 zapíše ako `background-image` do malého `<style id="vt-pozadie">`, nie ako dedenú vlastnosť na `<html>`, tá by prepočítala
 štýl celej stránky), aby červená hlavička ani antracitové pásy pri prelnutí nepreblikli nasvetlo. Pásy zhasnú, len čo ich
 nová stránka zakryje (`@keyframes vt-podklad` v `site.css`, 330 ms; pri návrate na počítači ostávajú do konca, lebo tam
@@ -179,7 +181,9 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   (napr. `#prehliadka` zo staršieho odkazu) ešte pred rozhodnutím o uvítaní a nastaví `history.scrollRestoration =
   'manual'`, takže stránka začne hore na úvode a uvítanie sa ukáže podľa pravidiel nižšie. Sekundu po načítaní a pred
   odchodom sa obnova polohy vráti na `auto`: Späť a Vpred (aj z podstránky) vracajú polohu ako doteraz a kotva
-  v odkaze vnútri webu funguje. Vypnutie: `HORE = 0` v `zdroj/uvitanie-head.js` a vložiť bloky (`uvitanie_vloz.py`).
+  v odkaze vnútri webu funguje. Kým sa stránka s kotvou načíta, vracia sa hore, len kým sa návštevník neposunie sám
+  (koliesko, ťah prstom, klávesy posunu; KZ-05) – okrem polohy, kam ju posunul prehliadač kvôli kotve. Späť a Vpred
+  bránu neukážu ani s `?uvitanie`. Vypnutie: `HORE = 0` v `zdroj/uvitanie-head.js` a vložiť bloky (`uvitanie_vloz.py`).
   Skúška: `majitel/uvod-hore/nastroje/k-uvod.mjs` (otvorenie zvonka s kotvou aj bez, `?uvitanie`, obnovenie, Späť
   z podstránky s bfcache aj bez, „obmedziť pohyb“, kotva z vnútra webu).
 - Kotvy v stránke (odkaz „Prezrieť predajňu“ → `#prehliadka`): posun riadi `assets/site.js` (`naKotvu`), lebo sekcie
@@ -310,7 +314,11 @@ dlhé snímky.
 **Odhalenia pri posune.** Texty, karty a štítky sa odhalia spúšťaným odhalením s časom (`site.js`, IntersectionObserver):
 nadpisok, nadpis, odsek a tlačidlo sekcie vyjdú 18 px zdola za sebou (70 ms, najviac 4 kroky), karty v mriežke podľa
 stĺpca, štítok akcie dopadne ako pečiatka, číslo služby vyjde zľava; priehľadnosť dobehne za 520 ms, posun za 620 ms,
-takže po zastavení posunu je všetko v okne plne viditeľné (aj spodný okraj okna sa odhalí po 180 ms pokoja). Čo je pri
+takže po zastavení posunu je všetko v okne plne viditeľné (aj spodný okraj okna sa odhalí po 180 ms pokoja). Hodnoty
+sú od 9. 11. 2026 ×1,5 (930 / 780 ms, 105 ms) – to platí pri čítaní; tempo sa riadi rýchlosťou posunu (KZ-02, 11. 11.
+2026, rýchlosť z polohy a času v poslucháči posunu): od 600 px/s pôvodné tempo bez spomalenia (trieda `.r`) a odhalenie
+sa spustí už 25 % výšky okna pod ním, od 1500 px/s je obsah hneď na mieste (`.ih`), takže pri rýchlom posune nič
+nedobieha. Čo je pri
 načítaní v okne, sa nehýbe. Fotky sa otvoria ako okno kina (pásy papiera `scaleY`, nie `clip-path`) a dosadnú a fotka
 pásu Doprava ide pomalšie než stránka – tie sú viazané na posun (CSS `animation-timeline: view()`, kompozítor; bez
 podpory stoja). Odhalenia sú len pre obrazovku (`@media screen`), pri tlači je všetko viditeľné (`tlac-zf.mjs`).
@@ -447,7 +455,7 @@ cieľa, ciele dotyku ≥ 44 px, kontrast vo všetkých troch témach nad AA (či
   náhľad: `richtarik/venv/bin/python richtarik/majitel/prehliadka/nastroje/nahlady.py <priečinok webu> <názov fotky>`.
 - `ULICA_GOOGLE = True` – **jediný prepínač** záložky Googlu; `False` ju odstráni z oboch stránok (bez záložiek ostane
   len prechádzka). `ULICA_SURADNICE` – súradnice predajne pre bezkľúčové vloženie
-  `https://www.google.com/maps?q=&layer=c&cbll=…&output=svembed` (bez kľúča API, nič od Googlu nie je v repozitári).
+  `https://www.google.com/maps?q=&layer=c&cbll=…&hl=sk&output=svembed` (`hl=sk`: rozhranie rámu po slovensky, KZ-09) (bez kľúča API, nič od Googlu nie je v repozitári).
 - `PANORAMA['src']` – ak majiteľ dodá kód „Vložiť mapu“ svojej panorámy (adresa `https://www.google.com/maps/embed?pb=…`
   z `<iframe>`), vloží sa sem a má prednosť pred súradnicami. Postup: záznam firmy v Google Mapách → Fotky → 360° →
   otvoriť panorámu → Zdieľať → Vložiť mapu → skopírovať `src`.
