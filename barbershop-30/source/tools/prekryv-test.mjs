@@ -5,7 +5,7 @@
 // seba (riadkové obdĺžniky sa pretínajú o viac ako 2 px v oboch osiach a medzi nimi nie je nepriehľadná plocha).
 // 0 prekrytí = OK.
 //
-//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150]
+//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150] [--vrstvy=nie] [--len=vrstvy]
 //                                      [--naraz=3] [--out=<priečinok na snímky nálezov>] [--url=<iná adresa>]
 //
 // Ako meria: v každom okne tri prechody.
@@ -259,15 +259,109 @@ async function okno(w, h, film) {
   await ctx.close();
 }
 
+/* ---- vrstvy nad stránkou (L3, Lajko 9. 11. 2026, snímky z iPhonu 10. 11.): bublina Barbera („Ahoj, som Barber…“)
+   a ponuka jazyka („This page is also in English.“) ležali cez nadpis, vetu a háčik titulnej karty. Majú nepriehľadné
+   pozadie, preto ich hlavný prechod ráta ako zakrytie, nie prekrytie. Tu: kým svietia, ich obdĺžnik nesmie pretínať
+   žiadny riadok viditeľného textu stránky (karty ani iného), ponuka v jazykoch en, de, uk, bublina v slovenčine
+   (?asistent=ukazka); bublina sa po posune stránky schová a ponuka pri skrole zhasne hneď. ---- */
+const VRSTVY = () => {
+  const vid = (e) => { if (!e || e.hidden) return 0; let o = 1; for (let x = e; x && x.nodeType === 1; x = x.parentElement) { const s = getComputedStyle(x); if (s.display === 'none' || s.visibility === 'hidden') return 0; o *= +s.opacity; } return o; };
+  const vrstvy = [['bublina', document.querySelector('.asi-oznam')], ['ponuka', document.querySelector('.lang-offer')]].filter(([, e]) => vid(e) > 0.05);
+  const prieniky = [];
+  for (const [meno, v] of vrstvy) {
+    const r = v.getBoundingClientRect();
+    const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), rg = document.createRange();
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+      const p = n.parentElement;
+      if (!p || !n.nodeValue.trim() || p.closest('.asi-btn, .asi-oznam, .lang-offer, script, style, noscript, template') || vid(p) <= 0.05) continue;
+      rg.selectNodeContents(n);
+      for (const q of rg.getClientRects()) {
+        const w = Math.min(q.right, r.right) - Math.max(q.left, r.left), h = Math.min(q.bottom, r.bottom) - Math.max(q.top, r.top);
+        if (w > 2 && h > 2) { prieniky.push(`${meno} × „${n.nodeValue.trim().slice(0, 40)}“${p.closest('.title-card') ? ' (karta)' : ''}`); break; }
+      }
+    }
+  }
+  return { vrstvy: vrstvy.map(([m]) => m), prieniky };
+};
+async function vrstvy() {
+  const POLOHY = ['uvod', 'vstup-dnu', 'vstup-dnu+karta', 'remeslo+karta', 'cakaren+karta', 'tim+karta'];
+  // poloha: začiatok scény, alebo cieľ kapitoly (karta celá na očiach, BS30_KINO.state.ciele) – zistí sa raz pre okno
+  const ciele = new Map();
+  const zisti = async (w, h) => {
+    const k = `${w}x${h}`; if (ciele.has(k)) return ciele.get(k);
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 700, hasTouch: w < 700, colorScheme: 'dark', locale: 'sk-SK' });
+    const page = await ctx.newPage();
+    await page.goto(`${URL0}?uvod=off&hudba=off&film=off`, { waitUntil: 'load' });
+    if (w < 700) await page.touchscreen.tap(w / 2, h * 0.3); else await page.mouse.move(w / 2, h / 2);
+    await page.waitForFunction(() => !!window.BS30_KINO, null, { timeout: 30000 }).catch(() => {});
+    const m = await page.evaluate(() => {
+      const c = window.BS30_KINO ? window.BS30_KINO.state.ciele : [], o = { uvod: 0 };
+      ['vstup-dnu', 'remeslo', 'cakaren', 'tim'].forEach((id, i) => { const s = document.getElementById(id); o[id] = Math.round(s.getBoundingClientRect().top + scrollY); if (c[i + 1] != null) o[id + '+karta'] = c[i + 1]; });
+      return o;
+    });
+    await ctx.close(); ciele.set(k, m); return m;
+  };
+  const ulohyV = [];
+  for (const locale of ['en-US', 'de-DE', 'uk-UA']) for (const [w, h] of [[390, 844], [1440, 900]]) for (const p of POLOHY) ulohyV.push(['ponuka', w, h, locale, p]);
+  for (const [w, h] of [[320, 568], [430, 932]]) for (const p of POLOHY) ulohyV.push(['ponuka', w, h, 'en-US', p]);
+  for (const [w, h] of [[390, 844], [320, 568], [1440, 900]]) for (const p of POLOHY.slice(1)) ulohyV.push(['bublina', w, h, 'sk-SK', p]);
+  const vysledky = [];
+  const jedna = async ([druh, w, h, locale, poloha]) => {
+    const y = (await zisti(w, h))[poloha];
+    if (y == null) return;
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 700, hasTouch: w < 700, colorScheme: 'dark', locale });
+    const page = await ctx.newPage(); const chyby = [];
+    page.on('pageerror', (e) => chyby.push(String(e.message).slice(0, 120)));
+    await page.route(/barbershop30\.sk|headspa30\.sk|booqme|instagram|facebook|google/, (r) => r.abort());
+    const r = { druh, okno: `${w}×${h}`, locale, poloha, svietila: false, prieniky: [], hned: null, chyby };
+    try {
+      await page.goto(`${URL0}?uvod=off&hudba=off&film=off${druh === 'bublina' ? '&asistent=ukazka' : ''}`, { waitUntil: 'load' });
+      await page.evaluate((yy) => scrollTo({ top: yy, behavior: 'instant' }), y);
+      // gesto na fotke záberu (hore), nie na karte
+      if (w < 700) await page.touchscreen.tap(w / 2, h * 0.25); else await page.mouse.move(w * 0.7, h * 0.4);
+      const sel = druh === 'bublina' ? '.asi-oznam' : '.lang-offer';
+      // bublina: 8 s na očiach + meranie; ponuka: modul jazykov po geste a meranie po zastavení. Meria sa každých 500 ms.
+      const koniec = Date.now() + (druh === 'bublina' ? 12500 : 6000);
+      while (Date.now() < koniec) {
+        await page.waitForTimeout(500);
+        const v = await page.evaluate(VRSTVY);
+        if (v.vrstvy.includes(druh)) { r.svietila = true; r.prieniky.push(...v.prieniky); }
+      }
+      if (r.svietila && await page.locator(sel).count()) {
+        // posun o 40 px: bublina sa schová, ponuka zhasne v najbližšej snímke (krytie 0 alebo skrytá)
+        r.hned = await page.evaluate((s) => new Promise((ok) => { scrollBy({ top: 40, behavior: 'instant' }); requestAnimationFrame(() => requestAnimationFrame(() => {
+          const e = document.querySelector(s); if (!e || e.hidden) return ok(true);
+          const c = getComputedStyle(e); ok(c.display === 'none' || c.visibility === 'hidden' || +c.opacity < 0.01);
+        })); }), sel);
+      }
+    } catch (e) { r.chyby.push(String(e.message || e).split('\n')[0].slice(0, 160)); }
+    vysledky.push(r);
+    await ctx.close();
+  };
+  let i = 0;
+  await Promise.all(Array.from({ length: NARAZ }, async () => { while (i < ulohyV.length) await jedna(ulohyV[i++]); }));
+  for (const druh of ['ponuka', 'bublina']) {
+    const rr = vysledky.filter((x) => x.druh === druh), zle = rr.filter((x) => x.prieniky.length || x.chyby.length || x.hned === false);
+    ok(!zle.length, `${druh}: nikdy cez text stránky ani karty`, `${rr.length} polôh, svietila v ${rr.filter((x) => x.svietila).length}, prienikov ${zle.reduce((a, x) => a + x.prieniky.length, 0)}`);
+    for (const x of zle) console.log(`     ${x.okno} ${x.locale} ${x.poloha}: ${[...new Set(x.prieniky)].join(' | ')}${x.hned === false ? ' | po posune nezhasla' : ''}${x.chyby.length ? ' | chyby: ' + x.chyby.join(' | ') : ''}`);
+    // test musí niečo strážiť: vrstva sa aspoň niekde ukáže (na voľnom mieste) a po posune zhasne
+    ok(rr.some((x) => x.svietila) && rr.filter((x) => x.svietila).every((x) => x.hned !== false), `${druh}: na voľnom mieste sa ukáže a po posune hneď zhasne`, rr.filter((x) => x.svietila).map((x) => `${x.okno} ${x.locale} ${x.poloha}`).join(', '));
+  }
+  if (arg.vypis) for (const x of vysledky) console.log('     ', JSON.stringify(x));
+}
+
 const filmy = FILM === 'oba' ? ['off', 'on'] : [FILM];
 const ulohy = [];
-if (arg.nizke !== 'len') for (const film of filmy) for (const w of WS) ulohy.push([w, VYSKA[w] || (w < 700 ? 844 : 900), film]);
-if (arg.nizke !== 'nie') for (const [w, h] of NIZKE) if (arg.nizke === 'len' || !arg.w || WS.includes(w)) ulohy.push([w, h, 'off']);
+if (arg.len !== 'vrstvy') {
+  if (arg.nizke !== 'len') for (const film of filmy) for (const w of WS) ulohy.push([w, VYSKA[w] || (w < 700 ? 844 : 900), film]);
+  if (arg.nizke !== 'nie') for (const [w, h] of NIZKE) if (arg.nizke === 'len' || !arg.w || WS.includes(w)) ulohy.push([w, h, 'off']);
+}
 const t0 = Date.now();
 // najviac NARAZ okien súbežne (film so softvérovou grafikou zaťaží všetky jadrá)
 let dalsia = 0;
 await Promise.all(Array.from({ length: Math.min(NARAZ, ulohy.length) }, async () => { while (dalsia < ulohy.length) { const u = ulohy[dalsia++]; await okno(...u); } }));
+if (arg.vrstvy !== 'nie') await vrstvy();
 await browser.close();
 if (srv) srv.server.close();
-console.log(`${failed ? 'FAIL' : 'OK  '} prekrývanie textov: ${ulohy.length} okien, ${failed} chýb, ${Math.round((Date.now() - t0) / 1000)} s${failed ? ', snímky nálezov: ' + OUT : ''}`);
+console.log(`${failed ? 'FAIL' : 'OK  '} prekrývanie textov: ${ulohy.length} okien${arg.vrstvy !== 'nie' ? ' + vrstvy (bublina Barbera, ponuka jazyka)' : ''}, ${failed} chýb, ${Math.round((Date.now() - t0) / 1000)} s${failed ? ', snímky nálezov: ' + OUT : ''}`);
 process.exit(failed ? 1 : 0);

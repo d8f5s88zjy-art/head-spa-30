@@ -262,6 +262,12 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   „Ďalej“ svieti len tam, kde jeho obdĺžnik s rezervou 8 px nepretína žiadny viditeľný text (`kino.js` `volno()`,
   meria sa pri zastavení a pri každej zmene), pri skrole zhasne v tej istej snímke (test to overí) a pás kapitol sa
   schová skôr, než sa ho okraj pásu s textom dotkne (celý jeho obdĺžnik + 8 px, `app.js` `kresliPas`).
+  Na konci **vrstvy** (L3, 11. 11. 2026; samostatne `--len=vrstvy`, asi 3 minúty, vypnúť `--vrstvy=nie`): bublina Barbera
+  („Ahoj, som Barber…“, `?asistent=ukazka`) a ponuka jazyka („This page is also in English.“ v jazykoch en, de, uk)
+  v oknách 320/390/430/1440 na úvode, začiatku scény a cieli kapitol Poď ďalej, Remeslo, Čakáreň, Tím: kým svietia,
+  ich obdĺžnik nepretína žiadny riadok viditeľného textu (karty ani iného) a po posune o 40 px zhasnú v najbližšej
+  snímke. Obe sa ukážu len na mieste bez textu (`assets/volno.js`, to isté pravidlo ako „Ďalej“): ponuka je hneď pod
+  lištou (na fotke záberu), bublina pri ikone počká na voľné miesto; meria sa len v pokoji.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený

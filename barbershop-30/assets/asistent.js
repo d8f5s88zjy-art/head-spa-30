@@ -416,9 +416,10 @@ export async function spusti(api) {
   // bublina: raz za návštevu, keď návštevník ikonu 8 s vidí (nie v úvode, pri menu ani pri ponuke jazyka);
   // sama zmizne po 25 s, zavretá krížikom sa 14 dní neukáže
   let oznamCas = 0;
+  const smieOznam = () => panel.hidden && !rozhovor.length && !citaj('sessionStorage', K_OZNAM_RAZ)
+    && Date.now() - (Number(citaj('localStorage', K_OZNAM)) || 0) >= 14 * 864e5;
   function ukazOznam() {
-    if (!panel.hidden || rozhovor.length || citaj('sessionStorage', K_OZNAM_RAZ)) return;
-    if (Date.now() - (Number(citaj('localStorage', K_OZNAM)) || 0) < 14 * 864e5) return;
+    if (!smieOznam()) return;
     zapis('sessionStorage', K_OZNAM_RAZ, '1');
     oznam.hidden = false; requestAnimationFrame(() => oznam.classList.add('is-on'));
     oznamCas = setTimeout(() => schovajOznam(), 25000);
@@ -437,13 +438,35 @@ export async function spusti(api) {
     if (pataVidno && !oznam.hidden) schovajOznam();
   }) : null;
   if (pozor) pozor.observe(pata);
-  let videl = 0;
+  // Bublina nikdy cez text (Lajko 9. 11. 2026: vyskočila cez nadpis a vetu karty „Poď ďalej.“): po 8 s na očiach sa
+  // zmeria na svojom mieste (skrytá, krytie 0) a ukáže sa, len keď pod ňou nie je viditeľný text stránky (volno.js);
+  // inak čaká na miesto bez textu. Meria sa len v pokoji (nie počas skrolu) a po posune stránky sa bublina schová.
+  let videl = 0, posl = 0, meria = false, oznamY = null;
+  addEventListener('scroll', () => {
+    posl = performance.now();
+    if (oznamY !== null && !oznam.hidden && Math.abs(scrollY - oznamY) > 24) { oznamY = null; schovajOznam(); }
+  }, { passive: true });
+  const miesto = () => import('./volno.js').then(({ volno }) => {
+    if (!panel.hidden || !oznam.hidden || !btn.isConnected) return false;
+    oznam.hidden = false;
+    const ok = volno(oznam.getBoundingClientRect(), [oznam, btn], 12);
+    if (!ok) oznam.hidden = true;
+    return ok;
+  }).catch(() => false);
   const hodiny = setInterval(() => {
     // telefón: kým je skrytá spodná lišta (úvod s tlačidlami Objednať sa a Zavolať), bublina by ich zakryla
     const vidno = btn.isConnected && panel.hidden && parseFloat(getComputedStyle(btn).opacity) > 0.9 && !document.querySelector('.lang-offer.in')
       && !pataVidno && !(uzky.matches && document.querySelector('.mobile-cta.is-hidden'));
     videl = vidno ? videl + 1 : 0;
-    if (videl >= 8 || !btn.isConnected || !panel.hidden) { clearInterval(hodiny); if (videl >= 8) ukazOznam(); }
+    if (!btn.isConnected || !smieOznam()) { clearInterval(hodiny); return; }
+    if (videl < 8 || meria || performance.now() - posl < 600) return;
+    meria = true;
+    miesto().then((ok) => {
+      meria = false;
+      if (!ok) return;
+      clearInterval(hodiny); oznam.hidden = true; ukazOznam();
+      if (!oznam.hidden) oznamY = scrollY;
+    });
   }, 1000);
 
   // Skryť Barbera: ikona, bublina aj okno zmiznú do konca návštevy

@@ -31,58 +31,42 @@
 .lang-opt[aria-checked="true"] { color: var(--paper); }
 .lang-opt[aria-checked="true"] b { color: var(--lamp); }
 
-/* ponuka jazyka podľa prehliadača: prúžok dole, nad mobilným tlačidlom rezervácie */
+/* ponuka jazyka podľa prehliadača (L3, Lajko 9. 11. 2026: prúžok dole ležal cez vetu a háčik karty „Poď ďalej.“):
+   hneď pod lištou, kde je na telefóne aj na počítači fotka záberu (karty s textom sú pod pásom fotky, resp. vľavo).
+   i18n.js ju rozsvieti, len keď pod ňou nie je viditeľný text (volno.js); skrytá má krytie 0 a visibility hidden
+   (nezachytí ťuk), pri skrole zhasne hneď (.hned, bez doznievania). */
 .lang-offer {
-  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 58;
+  position: fixed; left: 50%; top: calc(var(--nav-h) + 8px); z-index: 58;
   display: flex; align-items: center; gap: var(--s3); max-width: calc(100vw - 32px);
   padding: 8px 8px 8px 16px; border: 1px solid var(--line); border-radius: 999px;
   background: rgba(14, 13, 12, 0.94); color: var(--paper); font-size: 0.9375rem;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-  transform: translate(-50%, 140%); opacity: 0;
-  transition: transform 400ms var(--ease-out), opacity 400ms var(--ease-out);
+  transform: translate(-50%, -8px); opacity: 0; visibility: hidden;
+  transition: transform 400ms var(--ease-out), opacity 400ms var(--ease-out), visibility 0s 400ms;
 }
-.lang-offer.in { transform: translate(-50%, 0); opacity: 1; }
+.lang-offer.in { transform: translate(-50%, 0); opacity: 1; visibility: visible; transition: transform 400ms var(--ease-out), opacity 400ms var(--ease-out); }
+.lang-offer.hned { transition: none; }
 .lang-offer [data-yes] { min-height: 40px; padding: 0 var(--s4); border-radius: 999px; background: var(--lamp); color: var(--ink); font-weight: 700; }
 .lang-offer [data-no] { min-width: 40px; min-height: 40px; border-radius: 50%; color: var(--paper-2); font-size: 1.25rem; }
 html[data-motion="off"] .lang-offer { transition: none; }
-@media (max-width: 900px) {
-  .lang-offer { bottom: calc(var(--cta-h) + 28px + env(safe-area-inset-bottom)); }
-}
-/* úzky telefón: ponuka cez celú šírku nad spodnou lištou, text na dva riadky (nie štyri cez obsah) */
+/* úzky telefón: ponuka cez celú šírku pod lištou, text na dva riadky (nie štyri cez obsah) */
 @media (max-width: 560px) {
-  .lang-offer { left: var(--gutter); right: var(--gutter); max-width: none; border-radius: 14px; padding: 8px 6px 8px 14px; font-size: 0.875rem; line-height: 1.3; transform: translateY(140%); }
+  .lang-offer { left: var(--gutter); right: var(--gutter); max-width: none; border-radius: 14px; padding: 8px 6px 8px 14px; font-size: 0.875rem; line-height: 1.3; transform: translateY(-8px); }
   .lang-offer.in { transform: none; }
   .lang-offer span { flex: 1; min-width: 0; }
   .lang-offer [data-yes] { flex: none; }
 }
-/* na úvode (spodná lišta telefónu je skrytá, dole sú tlačidlá Objednať sa a Zavolať) a na konci stránky ide ponuka
-   hore pod lištu, aby nezakryla tlačidlá (kontrola 29. 10. 2026) */
-body:has(.mobile-cta.is-hidden) .lang-offer { top: calc(var(--nav-h) + 8px); bottom: auto; transform: translate(-50%, -40%); }
-body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: translate(-50%, 0); }
-@media (max-width: 560px) {
-  body:has(.mobile-cta.is-hidden) .lang-offer { transform: translateY(-40%); }
-  body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
-}
-/* nízke okno (malý a ležiaci telefón, WEB-02): prúžok hore zakrýval nadpis úvodu (36 až 53 %), preto je ponuka malý čip:
-   tlačidlo jazyka a ×, celá veta ostane pre čítačku. Na šírku je čip v lište vľavo od hudby a menu; na úzkom nízkom
-   telefóne v lište miesto nie je, tam je čip vpravo dole (v úvode pod tlačidlami, inak nad spodnou lištou).
-   Pri 390×844 a na počítači bez zmeny. */
+/* nízke okno (malý a ležiaci telefón, WEB-02): ponuka je malý čip (tlačidlo jazyka a ×, celá veta ostane pre čítačku).
+   Na šírku je čip v lište vľavo od hudby a menu, na úzkom nízkom telefóne vpravo pod lištou. */
 @media (max-height: 600px) {
-  .lang-offer, body:has(.mobile-cta.is-hidden) .lang-offer { left: auto; max-width: none; padding: 4px; gap: 2px; border-radius: 999px; font-size: 0.8125rem; line-height: 1.2; }
+  .lang-offer { left: auto; right: var(--gutter); max-width: none; padding: 4px; gap: 2px; border-radius: 999px; font-size: 0.8125rem; line-height: 1.2; transform: translateY(-8px); }
+  .lang-offer.in { transform: none; }
   .lang-offer span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .lang-offer [data-yes] { min-height: 34px; padding: 0 14px; }
   .lang-offer [data-no] { min-width: 34px; min-height: 34px; }
 }
 @media (max-height: 600px) and (min-width: 561px) {
-  .lang-offer, body:has(.mobile-cta.is-hidden) .lang-offer { top: calc((var(--nav-h) - 44px) / 2); bottom: auto; right: calc(var(--gutter) + 120px); transform: translateY(-40%); }
-  .lang-offer.in, body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
-}
-@media (max-height: 600px) and (max-width: 560px) {
-  .lang-offer { right: var(--gutter); transform: translateY(140%); }
-  .lang-offer.in { transform: none; }
-  body:has(.mobile-cta.is-hidden) .lang-offer { top: auto; bottom: calc(4px + env(safe-area-inset-bottom)); transform: translateY(140%); }
-  body:has(.mobile-cta.is-hidden) .lang-offer.in { transform: none; }
-  body:has(.lang-offer.in) .scroll-hint { opacity: 0; }
+  .lang-offer { top: calc((var(--nav-h) - 44px) / 2); right: calc(var(--gutter) + 120px); }
 }
 /* otvorené menu telefónu alebo rozbalené jazyky v lište: prúžok hore by ich prekryl, kým sú otvorené, nie je vidieť */
 body:has(.site-header[data-menu="open"]) .lang-offer, body:has(.lang-btn[aria-expanded="true"]) .lang-offer { visibility: hidden; }

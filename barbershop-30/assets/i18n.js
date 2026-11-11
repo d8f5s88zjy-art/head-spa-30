@@ -262,15 +262,41 @@ function offer() {
     if (e.target.closest('[data-no]')) { try { localStorage.setItem(STORE + '.no', '1'); } catch (er) { /* */ } zavri(); }
   });
   document.body.appendChild(box);
-  // html.lang-ponuka: kým ponuka svieti, pás kapitol a Ďalej počkajú (style.css)
-  requestAnimationFrame(() => { box.classList.add('in'); html.classList.add('lang-ponuka'); });
-  // zmizne po 12 s alebo keď návštevník odskroluje o obrazovku (na telefóne by zakrýval text, ponuku nechal tak;
-  // ukáže sa pri ďalšej návšteve)
-  const y0 = scrollY;
-  const zavri = () => { removeEventListener('scroll', skrol); clearTimeout(cas); box.classList.remove('in'); html.classList.remove('lang-ponuka'); setTimeout(() => box.remove(), 400); };
-  const skrol = () => { if (Math.abs(scrollY - y0) > innerHeight) zavri(); };
-  const cas = setTimeout(zavri, 12000);
+  // Nikdy cez text (Lajko 9. 11. 2026: ponuka ležala cez vetu a háčik karty „Poď ďalej.“): prúžok je hneď pod lištou
+  // (i18n.css) a svieti, len keď pod ním nie je viditeľný text stránky (volno.js). Pás kapitol a „Ďalej“ sa pri ponuke
+  // schovajú (html.lang-ponuka, style.css), preto sa nerátajú. Pri skrole zhasne v tej istej snímke a pri zastavení sa
+  // zmeria znova. Zmizne po 12 s na očiach, keď návštevník odskroluje o obrazovku od miesta, kde svietila, alebo keď
+  // minútu nenájde voľné miesto (ukáže sa pri ďalšej návšteve).
+  let volno = null, y0 = null, videl = 0, od = 0, posl = 0, stoj = 0, koniec = false;
+  const t0 = Date.now();
+  const okrem = () => [box, ...document.querySelectorAll(html.classList.contains('kino') ? '.story-line, .kino-next' : '.kino-next')];
+  const ukaz = (on) => {
+    if (on === box.classList.contains('in')) return;
+    box.classList.toggle('in', on); html.classList.toggle('lang-ponuka', on);
+    if (on) od = Date.now(); else { videl += Date.now() - od; od = 0; }
+  };
+  const zmeraj = () => {
+    if (koniec || !volno) return;
+    const ok = volno(box.getBoundingClientRect(), okrem());
+    if (ok && y0 === null) y0 = scrollY;
+    ukaz(ok);
+  };
+  const zavri = () => {
+    if (koniec) return;
+    koniec = true; removeEventListener('scroll', skrol); clearInterval(hod); clearTimeout(stoj);
+    box.classList.remove('in'); html.classList.remove('lang-ponuka'); setTimeout(() => box.remove(), 400);
+  };
+  // jeden časovač zastavenia (nie nový pri každej udalosti scroll)
+  const zastal = () => { const d = performance.now() - posl; if (d < 240) { stoj = setTimeout(zastal, 250 - d); return; } stoj = 0; box.classList.remove('hned'); zmeraj(); };
+  const skrol = () => {
+    posl = performance.now();
+    if (box.classList.contains('in')) { box.classList.add('hned'); ukaz(false); }
+    if (y0 !== null && Math.abs(scrollY - y0) > innerHeight) return zavri();
+    if (!stoj) stoj = setTimeout(zastal, 250);
+  };
+  const hod = setInterval(() => { if (videl + (od ? Date.now() - od : 0) > 12000 || (y0 === null && Date.now() - t0 > 60000)) zavri(); }, 1000);
   addEventListener('scroll', skrol, { passive: true });
+  import('./volno.js').then((m) => { volno = m.volno; requestAnimationFrame(zmeraj); }).catch(zavri);
 }
 
 /* t(kľúč) vráti preklad slovenského textu v nasadenom jazyku, pre texty skladané v skriptoch */
