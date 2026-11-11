@@ -278,7 +278,7 @@ try {
     const req = [], errs = [];
     page.on('request', (r) => { if (naServer(r.url())) req.push(r.url()); });
     page.on('pageerror', (e) => errs.push(e.message));
-    await page.goto(`${srv.origin}/rezervacia.html?objednavka=ukazka&asistent=ukazka`, { waitUntil: 'load' });
+    await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&objednavka=ukazka&asistent=ukazka`, { waitUntil: 'load' });
     await page.mouse.move(300, 300);
     const btn = page.locator('.asi-btn');
     await btn.waitFor({ state: 'visible', timeout: 8000 });

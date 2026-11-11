@@ -121,27 +121,35 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   tím pre toho, kto chce svojho barbera. Objednať pri službe v cenníku ju vyberie, Objednať sa pri barberovi ho vyberie. Na konci ukáže výber s poznámkou, že
   termín ešte nie je rezervovaný, a vedie do rezervačného systému (cestou sa ozve prihláška vernostnej kartičky) alebo
   na telefón; úspech neukazuje, lebo objednávku nič nepotvrdilo (odoslanie z webu by potrebovalo písomný súhlas
-  prevádzky a jej dokumentáciu rozhrania). Zapne ho nasadenie atribútom `data-objednavka` na `<html>` len s premennou
-  `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP; okno sa zapne až po `api.php?a=stav` s pripojeným kalendárom, inak
-  a pri každej chybe vedú odkazy rovno do rezervačného systému. `?objednavka=<adresa>` na localhost, `?objednavka=off`;
-  `?objednavka=ukazka` (aj na náhľade) ukáže kroky s ukážkovými časmi bez servera, s pruhom „Ukážka na kontrolu… nič sa
-  nerezervuje“, aby sa dala cesta preklikať pred zapnutím kalendára.
-  Test: `source/tools/objednavka-test.mjs` (okno aj rezervačná stránka, falošný rezervačný systém, snímky).
-- **Rezervačná stránka** (`rezervacia.html`, `assets/rezervacia.js` a `rezervacia.css`): samostatná stránka v dizajne
-  webu na odkaz z Instagramu, Google alebo webu. Úvod s fotkou kresla, kroky objednávky priamo na stránke (ten istý kód
-  ako okno, `objednavka.js` → `stranka`), vedľa kontakt, jazyky ako na webe a AI asistent na otázky (`asistent.js`,
-  zreteľne označený ako AI). Bez skriptu a bez pripojeného kalendára je to cenník webu s odkazmi do rezervačného
-  systému a telefón. Odkaz s predvoľbou: `rezervacia.html?sluzba=1&barber=Adrian` (rovno na deň). Zapína sa rovnakými
-  príznakmi ako web (`data-objednavka`, `data-asistent`, nasadenie v pages.yml); kým nie je pripojený kalendár, má
-  `noindex` (nasadenie s kalendárom ho odstráni). Záväzné odoslanie rezervácie z webu nie je (pozri Objednávka).
-  Služby sú po skupinách so skutočnou fotkou prevádzky (strih, brada, balíčky, doplnky; nie výsledky strihov):
-  od 9. 11. 2026 (Lajko: „upraviť fotky na rezervácii“) sú to vlastné výrezy 16 : 6 `assets/img/rez/rez-<skupina>-{760,1080,1600}.{avif,webp,jpg}`
-  zo zdrojových fotiek v repozitári (`source/tools/rez-fotky.py`: nožnice a hrebeň na podložke, uteráky na sude s kreslom
-  a buldogom, karafa s pomádami a štetkou, pracovný stôl s produktmi bez televízora; jas a sýtosť každého výrezu
-  doladené k priemeru sady najviac o ±10 %, jemné doostrenie po zmenšení, žiadne tónovanie ani cudzie fotky), tie isté
-  výrezy ukazuje okno objednávky (`objednavka.js`, `FOTO_SKUP`); barberi ako karty s portrétom, pod tým tím ako na webe
-  a „Naša práca“ s odkazom na Instagram. Fotky práce
-  barberov: `docs/FOTKY_PRACE.md`, `source/tools/praca.py` → `assets/praca.json` (okno aj stránka ich ukážu samy).
+  prevádzky a jej dokumentáciu rozhrania).
+  **Jediná cesta k objednaniu (Lajko 9. 11. 2026, bod 7):** okno je na webe vždy. Každý odkaz Objednať sa (lišta, úvod,
+  háčiky kariet, tím, cenník, kontakt, spodná lišta telefónu, odpovede Barbera, `en/`) ho otvorí – zachytí ich `app.js`
+  (časť 7b4) a modul sa stiahne v nečinnosti (plán lenivých modulov, slot 1) alebo hneď pri dotyku odkazu; v HTML ostávajú
+  odkazy na rezervačný systém (cesta bez skriptu, Ctrl/Cmd‑klik ho otvorí v novej karte). `?objednat=1` otvorí okno po
+  načítaní (aj s `&sluzba=<id>&barber=<meno>`; adresa sa potom vyčistí). `404.html` vedie na `…/?objednat=1`.
+  Voľné časy ukáže len server s pripojeným kalendárom: nasadenie pridá `data-objednavka` na `<html>` len s premennou
+  `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP. Stav servera sa zisťuje hneď pri spustení, **najviac 8 s**
+  (`api.php?a=stav`, aj voľné časy majú limit 8 s). Okno nikdy nie je slepá ulička: kým sa zisťuje, služba sa dá vybrať
+  a krok 2 ukáže „Pozerám do kalendára…“; bez servera (náhľad na GitHub Pages či raw.githack), s nepripojeným kalendárom,
+  pri chybe alebo bez internetu ukáže **„Objednávka cez web teraz nejde – zavolaj.“** s tlačidlami Zavolať 0951 267 203
+  a Skúsiť znova, otváracími hodinami (kópia `.hours` z pätičky, teda v jazyku stránky a podľa adminu) a tichým odkazom
+  na rezervačný systém; bez internetu navyše „Si bez internetu…“ a po návrate pripojenia to okno skúsi samo. Chyba
+  uprostred cesty ukáže pri kroku Dokončiť v rezervačnom systéme, Zavolať, Skúsiť znova a hodiny. Fokus ide na nadpis
+  kroku, Esc a Späť telefónu okno zatvoria a fokus sa vráti na odkaz; pri obmedzenom pohybe bez nábehu.
+  `?objednavka=<adresa>` na localhost, `?objednavka=off` (len na skúšku bez okna); `?objednavka=ukazka` (aj na náhľade)
+  ukáže kroky s ukážkovými časmi bez servera, s pruhom „Ukážka na kontrolu… nič sa nerezervuje“.
+  Test: `source/tools/objednavka-test.mjs` (všetky odkazy otvoria okno, bez servera, server visí/zlyhá/Skúsiť znova
+  cez `page.route`, bez internetu, klávesnica, presmerovanie, `?objednat=1`, žiadny odkaz na `rezervacia.html`; časti
+  s php serverom a falošným rezervačným systémom bežia len s `asistent/vendor`).
+- **`rezervacia.html` = len presmerovanie** (od 11. 11. 2026): samostatná rezervačná stránka už nie je cesta pre zákazníka.
+  Staré odkazy a Instagram (`rezervacia.html?sluzba=1&barber=Adrian`) presmeruje skript hneď na
+  `index.html?objednat=1&sluzba=1&barber=Adrian` (okno s predvoľbou), bez skriptu `meta refresh` na `index.html?objednat=1`,
+  a na stránke je viditeľný odkaz Objednať sa a telefón. `noindex`, canonical na hlavnú stránku, nie je v `sitemap.xml`
+  ani v JSON-LD (nasadenie ju tam už nepridáva). `assets/rezervacia.js` a `rezervacia.css` sú preč; fotky skupín služieb
+  (vlastné výrezy 16 : 6 `assets/img/rez/rez-<skupina>-{760,1080,1600}.{avif,webp,jpg}` zo zdrojových fotiek,
+  `source/tools/rez-fotky.py`, Lajko 9. 11. 2026) ukazuje okno objednávky (`objednavka.js`, `FOTO_SKUP`). Admin ju naďalej číta (texty a telefón, cenník ani tím nemá).
+  Pred prepnutím domény platí bod 2 v Nasadení: na `www.barbershop30.sk` ju nedávať na `/rezervacia.html`.
+
 - **Vizitka a vernostná kartička** (`assets/karty.js` a `karty.css`, pás pod kontaktom, načíta sa po načítaní stránky):
   vizitka, ktorú prevádzka už rozdáva (predloha: fotka recepcie `source/photos/foto-17.jpg`), nie nový návrh: na výšku,
   pruhy barber pole, biely kruh s pôvodným logom zo starého webu (`source/web-povodny/logo-vector-black.svg` →

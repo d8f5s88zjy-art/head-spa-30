@@ -12,7 +12,7 @@
  * (Spýtať sa, Zavolať, zavrieť), raz za návštevu; zavretá sa 14 dní neukáže. Odkaz Skryť Barbera v okne schová
  * ikonu do konca návštevy.
  *
- * Modul načíta app.js (časť 7b3) alebo rezervacia.js pri prvom geste, inak o pár sekúnd po načítaní, a zavolá
+ * Modul načíta app.js (časť 7b3) pri prvom geste, inak o pár sekúnd po načítaní, a zavolá
  * spusti(api). Ikona sa ukáže, až keď server odpovie, že je zapnutý (api.php?a=stav), inak sa nestane nič.
  * spusti('ukazka') ukáže okno bez servera s vopred pripravenými odpoveďami z údajov webu (asistent-ukazka.js), na
  * kontrolu vzhľadu; je výrazne označené, že neodpovedá AI. Rozhovor ostáva v tejto karte prehliadača

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// Test objednávkového okna (assets/objednavka.js), rezervačnej stránky (rezervacia.html, assets/rezervacia.js)
-// a pásu s vizitkou a vernostnou kartičkou (assets/karty.js)
+// Test objednávkového okna (assets/objednavka.js) – jediná cesta k objednaniu (Lajko 9. 11. 2026, bod 7): každý odkaz
+// Objednať sa otvorí okno, ?objednat=1 ho otvorí po načítaní, rezervacia.html je len presmerovanie; bez servera, keď
+// server visí, zlyhá alebo nie je internet, okno do 8 s povie „Objednávka cez web teraz nejde – zavolaj“ (Zavolať,
+// Skúsiť znova, otváracie hodiny) – a pásu s vizitkou a vernostnou kartičkou (assets/karty.js)
 // v prehliadači proti serveru asistenta (asistent/api.php) a falošnému rezervačnému systému
 // (asistent/testy/mock-rezervacie.php). Nič nejde na skutočný rezervačný systém; objednávka sa nikdy neodošle.
 // Snímky na kontrolu ukladá do docs/screenshots/objednavka/.
@@ -78,16 +80,6 @@ async function stranka(w, h, q, extra = {}) {
 const hore = async (page) => { await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' })); await page.waitForFunction(() => scrollY === 0); await sleep(300); };
 // snímka až po príchode okna a kroku (320 a 280 ms)
 const snimka = async (page, f) => { await sleep(450); await page.screenshot({ path: path.join(OUT, f) }); };
-async function stranka0(w, h, q) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile: w < 800, hasTouch: w < 800, locale: 'sk-SK', colorScheme: 'dark' });
-  const page = await ctx.newPage();
-  const von = [], chyby = [];
-  await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => { von.push(r.request().url()); r.abort(); });
-  page.on('pageerror', (e) => chyby.push(e.message));
-  page.on('console', (m) => { if (m.type() === 'error' && !/ERR_FAILED|net::/.test(m.text())) chyby.push('konzola: ' + m.text()); });
-  await page.goto(`${srv.origin}/rezervacia.html${q ? '?' + q : ''}`, { waitUntil: 'load' });
-  return { ctx, page, von, chyby };
-}
 const preteka = (page) => page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1 || [...document.querySelectorAll('.obj[open] *')].some((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1) && !e.closest('.obj-dni'); }));
 
 /* ---------- 1. telefón 390: celá cesta služba → barber → deň → čas → výber ---------- */
@@ -95,7 +87,7 @@ if (SERVER) {
   const { ctx, page, von, chyby } = await stranka(390, 844, `objednavka=${encodeURIComponent(API)}&vernost=ukazka`);
   await page.mouse.move(10, 10);
   await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
-  ok(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute')), 'okno sa zapne až po stave servera s pripojeným kalendárom');
+  ok(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute')), 'okno je pripravené (modul a štýl)');
   // pás s vizitkou a kartičkou
   await page.waitForSelector('.band-karty', { timeout: 10000 }).catch(() => {});
   ok(await page.evaluate(() => { const p = document.querySelector('.band-karty'); return !!p && p.previousElementSibling.classList.contains('band-contact'); }), 'pás s vizitkou je hneď pod kontaktom');
@@ -246,19 +238,6 @@ if (SERVER) for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 90
   await ctx.close();
 }
 
-/* ---------- 3. bez zapnutia: odkazy idú rovno do rezervačného systému, nič sa nesťahuje ---------- */
-{
-  const { ctx, page } = await stranka(390, 844, '');
-  const ziadosti = [];
-  page.on('request', (r) => { if (/objednavka\.js|api\.php/.test(r.url())) ziadosti.push(r.url()); });
-  await page.mouse.move(10, 10);
-  await sleep(3500);
-  ok(!ziadosti.length && !(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute'))), 'bez data-objednavka sa nič nesťahuje ani neposiela');
-  ok(await page.locator('.karty-vernost').count() === 0 && await page.locator('.karty-vizitka').count() === 1, 'bez zapnutej prihlášky sa vernostná kartička neukáže, vizitka áno');
-  const [popup] = await Promise.all([page.waitForEvent('popup', { timeout: 5000 }).catch(() => null), page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first().click()]);
-  ok(!!popup && /barbershop30\.sk\/rezervacia/.test(popup.url()) && !(await page.locator('.obj[open]').count()), 'Objednať sa otvorí rezervačný systém');
-  await ctx.close();
-}
 /* ---------- 4. zapnutá prihláška vernostnej kartičky (ako po nasadení s heslom recepcie) ---------- */
 if (SERVER) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK', colorScheme: 'dark' });
@@ -305,86 +284,219 @@ if (SERVER) {
   ok(!chyby.length, 'zapnutá prihláška: bez chýb skriptu', chyby.join(' | '));
   await ctx.close();
 }
-/* server bez napojenia kalendára: okno sa nezapne */
+/* server bez napojenia kalendára: okno sa otvorí a povie „nejde – zavolaj“ (nie rezervačný systém v novej karte) */
 if (SERVER) {
   const { ctx, page } = await stranka(390, 844, `objednavka=${encodeURIComponent(`http://127.0.0.1:${PB}/api.php`)}`);
   await page.mouse.move(10, 10);
   await sleep(3500);
-  ok(!(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute'))), 'kalendár nepripojený: okno sa nezapne, odkazy ostanú');
+  await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+  await page.waitForSelector('.obj[open] .obj-znova', { timeout: 9000 }).catch(() => {});
+  ok((await page.locator('.obj[open] .obj-h').textContent().catch(() => '')) === 'Objednávka cez web teraz nejde – zavolaj.', 'kalendár nepripojený: okno povie „nejde – zavolaj“');
   await ctx.close();
 }
 
-/* ---------- 5. rezervačná stránka (rezervacia.html) ---------- */
+/* ---------- 3. bez servera (náhľad, statický hosting): Objednať sa otvorí okno, do 8 s „nejde – zavolaj“ ---------- */
+// Lajko 9. 11. 2026, bod 7: jediná cesta k objednaniu je okno na hlavnej stránke; nikdy slepá ulička
+const NEJDE = 'Objednávka cez web teraz nejde – zavolaj.';
+const stavOkna = (page) => page.evaluate(() => {
+  const d = document.querySelector('.obj[open]');
+  if (!d) return { open: false };
+  const h = d.querySelector('.obj-h').textContent, t = d.querySelector('.obj-telo');
+  return { open: true, h, sluzby: d.querySelectorAll('.obj-sluzby button').length, tel: !!t.querySelector('a[href="tel:+421951267203"]'),
+    znova: !!t.querySelector('button.obj-znova'), hodiny: t.querySelectorAll('.obj-hodiny dt').length, sys: !!t.querySelector('a[data-obj-priamo][href*="barbershop30.sk/rezervacia"]'),
+    offline: /bez internetu/.test(t.textContent), fokus: document.activeElement === d.querySelector('.obj-h'), prazdne: !t.textContent.trim() };
+});
 {
-  // bez skriptu: úvod, cenník s odkazmi do rezervačného systému, kontakt
+  const { ctx, page, von, chyby } = await stranka(390, 844, '');
+  const ziadosti = [], popupy = [];
+  page.on('request', (r) => { if (/api\.php/.test(r.url())) ziadosti.push(r.url()); });
+  page.on('popup', (p) => popupy.push(p.url()));
+  await page.mouse.move(10, 10);
+  await sleep(1500);
+  ok(!(await page.locator('.obj[open]').count()), 'bez servera: okno sa samo neotvorí');
+  const t0 = Date.now();
+  await page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first().click();
+  await page.waitForFunction((n) => { const h = document.querySelector('.obj[open] .obj-h'); return h && h.textContent === n; }, NEJDE, { timeout: 8000 }).catch(() => {});
+  const ms = Date.now() - t0, st = await stavOkna(page);
+  ok(st.open && st.h === NEJDE && ms < 8000, 'bez servera: Objednať sa otvorí okno a do 8 s povie „Objednávka cez web teraz nejde – zavolaj“', `${ms} ms`);
+  ok(st.tel && st.znova && st.hodiny === 3 && st.sys && st.fokus, 'bez servera: Zavolať, Skúsiť znova, otváracie hodiny zo stránky, tichý odkaz na rezervačný systém, fokus na nadpise', JSON.stringify(st));
+  ok(!popupy.length && !ziadosti.length && !von.length, 'bez servera: žiadna nová karta, nič na server ani do rezervačného systému', popupy.concat(ziadosti, von).join(' '));
+  ok(!(await preteka(page)), 'bez servera: okno nepreteká');
+  await snimka(page, '0-nejde-390.png');
+  // Skúsiť znova: zase bez servera, okno ostane (nie prázdne), tlačidlo je znova použiteľné
+  await page.locator('.obj button.obj-znova').click();
+  await sleep(1000);
+  const st2 = await stavOkna(page);
+  ok(st2.open && st2.h === NEJDE && st2.znova && !st2.prazdne && await page.locator('.obj button.obj-znova').isEnabled(), 'Skúsiť znova bez servera: okno ostane a dá sa skúsiť znova');
+  await page.keyboard.press('Escape');
+  await sleep(300);
+  ok(!(await page.locator('.obj[open]').count()) && page.url().startsWith(srv.origin), 'Esc zatvorí okno, stránka ostala');
+  // všetky odkazy Objednať sa na stránke (lišta, úvod, karty, tím, cenník, kontakt, spodná lišta telefónu) otvoria okno
+  // (okrem odkazov v samotnom okne: Dokončiť / rezervačný systém majú data-obj-priamo a idú do rezervačného systému)
+  const ODK = 'a[href*="barbershop30.sk/rezervacia"]:not([data-obj-priamo])';
+  const n = await page.locator(ODK).count();
+  let otvorilo = 0;
+  for (let i = 0; i < n; i++) {
+    await page.evaluate(([k, sel]) => document.querySelectorAll(sel)[k].click(), [i, ODK]);
+    if (await page.waitForSelector('.obj[open]', { timeout: 3000 }).then(() => true, () => false)) otvorilo++;
+    await page.evaluate(() => { const d = document.querySelector('.obj[open]'); if (d) d.close(); });
+    await sleep(120);
+  }
+  ok(n >= 30 && otvorilo === n && !popupy.length, `každý odkaz Objednať sa otvorí okno (${otvorilo} z ${n}), žiadna nová karta`);
+  ok(!chyby.length, 'bez servera: bez chýb skriptu', chyby.join(' | '));
+  await ctx.close();
+}
+for (const [w, h] of [[320, 568], [430, 932], [768, 1024], [1440, 900]]) {
+  const { ctx, page, chyby } = await stranka(w, h, '');
+  await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+  await page.waitForFunction((n) => { const e = document.querySelector('.obj[open] .obj-h'); return e && e.textContent === n; }, NEJDE, { timeout: 8000 }).catch(() => {});
+  const st = await stavOkna(page);
+  ok(st.h === NEJDE && st.tel && st.znova && !(await preteka(page)), `${w} px: „nejde – zavolaj“ bez pretekania`);
+  if (w === 1440 || w === 320) await snimka(page, `0-nejde-${w}.png`);
+  ok(!chyby.length, `${w} px: bez chýb skriptu`, chyby.join(' | '));
+  await ctx.close();
+}
+
+/* ---------- 3b. server (falošný cez page.route, bez php): visí, chyba, Skúsiť znova, bez internetu ---------- */
+{
+  const FAKE = 'http://127.0.0.1:9/api.php';
+  const jeApi = (u) => u.href.startsWith('http://127.0.0.1:9/');
+  // visí: na „Objednať sa“ okno hneď (služby), po najviac 8 s od spustenia „nejde – zavolaj“
+  {
+    const { ctx, page, chyby } = await stranka(390, 844, `objednavka=${encodeURIComponent(FAKE)}`);
+    await page.route(jeApi, () => {});
+    const t0 = Date.now();
+    await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+    await page.waitForSelector('.obj[open]', { timeout: 5000 }).catch(() => {});
+    const prve = await stavOkna(page);
+    ok(prve.open && prve.sluzby === 15, 'server visí: okno sa otvorí hneď so službami (nie prázdne)', JSON.stringify(prve));
+    await page.waitForFunction((n) => { const e = document.querySelector('.obj[open] .obj-h'); return e && e.textContent === n; }, NEJDE, { timeout: 12000 }).catch(() => {});
+    const ms = Date.now() - t0, st = await stavOkna(page);
+    ok(st.h === NEJDE && ms <= 8800, 'server visí: do 8 s „nejde – zavolaj“', `${ms} ms od kliku`);
+    ok(!chyby.length, 'server visí: bez chýb skriptu', chyby.join(' | '));
+    await ctx.close();
+  }
+  // chyba servera (spojenie zlyhá): „nejde“ hneď; Skúsiť znova s funkčným serverom → výber služby a barbera
+  {
+    const { ctx, page, chyby } = await stranka(390, 844, `objednavka=${encodeURIComponent(FAKE)}`);
+    let zije = false;
+    await page.route(jeApi, (r) => {
+      if (!zije) return r.abort();
+      const a = new URL(r.request().url()).searchParams.get('a');
+      const j = a === 'stav' ? { ok: true, kalendar: true } : a === 'barberi' ? { ok: true, stav: 'ok', barberi: ['Adrian', 'Nikolas'] } : a === 'dni' ? { ok: true, stav: 'chyba' } : { ok: true };
+      r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(j) });
+    });
+    await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+    await page.waitForFunction((n) => { const e = document.querySelector('.obj[open] .obj-h'); return e && e.textContent === n; }, NEJDE, { timeout: 8000 }).catch(() => {});
+    ok((await stavOkna(page)).h === NEJDE, 'chyba servera: „nejde – zavolaj“');
+    zije = true;
+    await page.locator('.obj button.obj-znova').click();
+    await page.waitForSelector('.obj[open] .obj-sluzby button', { timeout: 5000 }).catch(() => {});
+    ok((await stavOkna(page)).sluzby === 15, 'Skúsiť znova so živým serverom: výber služby');
+    await page.locator('.obj-sluzby button', { hasText: 'Úprava brady' }).first().click();
+    await page.waitForSelector('.obj-tim button', { timeout: 5000 }).catch(() => {});
+    ok(await page.locator('.obj-tim button', { hasText: 'Adrian' }).count() === 1, 'potom krok 2: barberi zo servera');
+    ok(!chyby.length, 'Skúsiť znova: bez chýb skriptu', chyby.join(' | '));
+    await ctx.close();
+  }
+  // bez internetu: veta o pripojení; po návrate internetu to okno skúsi samo
+  {
+    const { ctx, page, chyby } = await stranka(390, 844, '');
+    await page.mouse.move(10, 10);
+    await page.waitForFunction(() => document.documentElement.classList.contains('obj-zapnute'), null, { timeout: 15000 }).catch(() => {});
+    await ctx.setOffline(true);
+    await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
+    await page.waitForSelector('.obj[open] .obj-znova', { timeout: 8000 }).catch(() => {});
+    const st = await stavOkna(page);
+    ok(st.h === NEJDE && st.offline && st.tel, 'bez internetu: „nejde – zavolaj“ s vetou o pripojení a telefónom', JSON.stringify(st));
+    await ctx.setOffline(false);
+    await page.waitForFunction(() => { const t = document.querySelector('.obj[open] .obj-telo'); return t && !/bez internetu/.test(t.textContent) && t.querySelector('.obj-znova'); }, null, { timeout: 6000 }).catch(() => {});
+    const st2 = await stavOkna(page);
+    ok(st2.open && st2.h === NEJDE && !st2.offline, 'internet späť: okno to skúsilo samo (bez servera ostáva „nejde“, veta o pripojení zmizla)');
+    ok(!chyby.length, 'bez internetu: bez chýb skriptu', chyby.join(' | '));
+    await ctx.close();
+  }
+}
+
+/* ---------- 3c. klávesnica, čítačka, obmedzený pohyb ---------- */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'sk-SK', colorScheme: 'dark', reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => r.abort());
+  await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&objednavka=ukazka`, { waitUntil: 'load' });
+  await page.mouse.move(10, 10);
+  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+  const odkaz = page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first();
+  await odkaz.focus();
+  await page.keyboard.press('Enter');
+  await page.waitForSelector('.obj[open]', { timeout: 5000 }).catch(() => {});
+  ok(await page.evaluate(() => document.activeElement && document.activeElement.id === 'obj-h' && document.querySelector('.obj[open]').getAttribute('aria-labelledby') === 'obj-h'), 'klávesnica: Enter na Objednať sa otvorí okno, fokus na nadpise kroku (čítačka ho prečíta)');
+  for (let i = 0; i < 25; i++) await page.keyboard.press('Tab');
+  ok(await page.evaluate(() => document.querySelector('.obj[open]').contains(document.activeElement)), 'klávesnica: Tab ostáva v okne');
+  ok(await page.evaluate(() => getComputedStyle(document.querySelector('.obj[open]')).animationName === 'none' && getComputedStyle(document.querySelector('.obj-telo')).animationName === 'none'), 'obmedzený pohyb: okno bez nábehu');
+  await page.keyboard.press('Escape');
+  await sleep(300);
+  ok(!(await page.locator('.obj[open]').count()) && await page.evaluate(() => document.activeElement && document.activeElement.matches('#uvod a.btn-primary')), 'Esc zatvorí okno a fokus sa vráti na odkaz Objednať sa');
+  await ctx.close();
+}
+
+/* ---------- 5. rezervacia.html je len presmerovanie; ?objednat=1 otvorí okno; žiadny odkaz na rezervacia.html ---------- */
+{
+  // so skriptom: hneď na hlavnú stránku s predvoľbou služby a barbera, okno otvorené (ukážka bez servera)
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK' });
+  const page = await ctx.newPage(); const chyby = [];
+  page.on('pageerror', (e) => chyby.push(e.message));
+  await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => r.abort());
+  await page.goto(`${srv.origin}/rezervacia.html?sluzba=3&barber=Adrian&objednavka=ukazka`, { waitUntil: 'load' });
+  await page.waitForURL(/index\.html/, { timeout: 5000 }).catch(() => {});
+  await page.waitForSelector('.obj[open] .obj-dni button', { timeout: 10000 }).catch(() => {});
+  ok(/\/index\.html(\?objednavka=ukazka)?$/.test(page.url()), 'rezervacia.html presmeruje na hlavnú stránku (adresa bez ?objednat, obnovenie okno znova neotvorí)', page.url());
+  ok((await page.locator('.obj-h').textContent().catch(() => '')) === 'Kedy?' && /Úprava brady/.test(await page.locator('.obj-vyber').textContent()) && /Adrian/.test(await page.locator('.obj-vyber').textContent()), 'predvoľby z odkazu (?sluzba=3&barber=Adrian): služba aj barber vybraní, rovno deň');
+  await snimka(page, 'presmerovanie-390.png');
+  ok(!chyby.length, 'presmerovanie: bez chýb skriptu', chyby.join(' | '));
+  await ctx.close();
+}
+{
+  // bez skriptu: meta refresh na hlavnú stránku s ?objednat=1 a viditeľný odkaz
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, locale: 'sk-SK' });
   const page = await ctx.newPage();
   await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => r.abort());
+  const r = await page.request.get(`${srv.origin}/rezervacia.html`);
+  const t = await r.text();
+  ok(/<meta http-equiv="refresh" content="0; url=index\.html\?objednat=1">/.test(t) && /<a href="index\.html\?objednat=1">/.test(t) && /href="tel:\+421951267203"/.test(t) && /noindex/.test(t), 'rezervacia.html: meta refresh, viditeľný odkaz, telefón, noindex');
   await page.goto(`${srv.origin}/rezervacia.html`, { waitUntil: 'load' });
-  ok(await page.evaluate(() => document.querySelector('h1').textContent.includes('Kedy') && document.querySelectorAll('a.price-cta[data-sluzba][href*="barbershop30.sk/rezervacia"]').length === 15 && document.querySelectorAll('a[href="tel:+421951267203"]').length >= 3), 'stránka bez skriptu: úvod, 15 služieb s odkazom do rezervačného systému, telefón');
-  await sleep(800);                                    // krátky príchod úvodu (600 ms) aj bez skriptu
-  const bs = await page.evaluate(() => ({ o: getComputedStyle(document.querySelector('.rez-uvod .title')).opacity, sw: document.documentElement.scrollWidth, iw: innerWidth }));
-  ok(bs.o === '1' && bs.sw <= bs.iw, 'stránka bez skriptu: text viditeľný, nič nepreteká', JSON.stringify(bs));
-  await snimka(page, 'stranka-bez-skriptu-390.png');
+  await page.waitForURL(/index\.html\?objednat=1/, { timeout: 5000 }).catch(() => {});
+  ok(/index\.html\?objednat=1$/.test(page.url()), 'bez skriptu: meta refresh na index.html?objednat=1', page.url());
+  await ctx.close();
+}
+for (const [cesta, jazyk] of [['index.html', 'sk'], ['en/index.html', 'en']]) {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK' });
+  const page = await ctx.newPage(); const chyby = [];
+  page.on('pageerror', (e) => chyby.push(e.message));
+  await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => r.abort());
+  await page.goto(`${srv.origin}/${cesta}?objednat=1&uvod=off&film=off&hudba=off`, { waitUntil: 'load' });
+  await page.waitForSelector('.obj[open]', { timeout: 10000 }).catch(() => {});
+  const h = await page.locator('.obj[open] .obj-h').textContent().catch(() => '');
+  ok(h === (jazyk === 'en' ? 'Online booking isn’t working right now – call us.' : NEJDE) && !/objednat/.test(page.url()), `${cesta}?objednat=1: okno po načítaní (bez servera „nejde“ v jazyku stránky), adresa bez ?objednat`, h);
+  ok(!chyby.length, `${cesta}?objednat=1: bez chýb skriptu`, chyby.join(' | '));
   await ctx.close();
 }
 {
-  // bez príznaku: cenník ostane, nič sa nesťahuje ani neposiela
-  const { ctx, page, chyby } = await stranka0(390, 844, '');
-  const ziadosti = [];
-  page.on('request', (r) => { if (/objednavka\.js|api\.php|asistent\.js/.test(r.url())) ziadosti.push(r.url()); });
-  await page.mouse.move(10, 10);
-  await sleep(3200);
-  ok(!ziadosti.length && await page.locator('.rez-cennik').isVisible() && !(await page.locator('.obj-stranka').count()), 'stránka bez príznaku: cenník, nič sa nesťahuje ani neposiela');
-  ok(!chyby.length, 'stránka bez príznaku: bez chýb skriptu', chyby.join(' | '));
-  await ctx.close();
-}
-if (SERVER) for (const [w, h] of [[360, 780], [390, 844], [430, 932], [768, 1024], [1440, 900]]) {
-  const { ctx, page, von, chyby } = await stranka0(w, h, `objednavka=${encodeURIComponent(API)}&asistent=${encodeURIComponent(API)}`);
-  await page.waitForSelector('.obj-stranka .obj-sluzby button', { timeout: 10000 }).catch(() => {});
-  ok(await page.locator('.obj-stranka .obj-sluzby button').count() === 15 && !(await page.locator('.rez-cennik').isVisible()), `stránka ${w} px: kroky priamo na stránke namiesto cenníka`);
-  ok(await page.locator('.obj-stranka .obj-skup-foto').count() === 4 && await page.locator('.obj-stranka .obj-skup-h').count() === 4, `stránka ${w} px: služby po skupinách s fotkou prevádzky`);
-  if (w === 390) await snimka(page, 'stranka-1-390.png');
-  await page.locator('.obj-sluzby button', { hasText: 'Pánsky strih a úprava brady' }).click();
-  await page.locator('.obj-tim button', { hasText: 'Adrian' }).click();
-  await page.waitForSelector('.obj-mriezka button', { timeout: 10000 }).catch(() => {});
-  const cs = await page.locator('.obj-mriezka button').allTextContents();
-  ok(casyOk(cs) && !(await preteka(page)), `stránka ${w} px: voľné časy, nič nepreteká`, JSON.stringify(cs));
-  await snimka(page, `stranka-3-${w}.png`);
-  await page.locator('.obj-mriezka button', { hasText: cs[0] }).click();
-  const t = await page.locator('.obj-stranka').textContent();
-  ok(t.includes('Termín ešte nie je rezervovaný') && t.includes('o ' + cs[0]) && await page.locator('.obj-stranka .obj-akcie a[href$="barbershop30.sk/rezervacia"]').count() === 1, `stránka ${w} px: výber predbežný, dokončenie v rezervačnom systéme`);
-  if (w === 390) {
-    await snimka(page, 'stranka-4-390.png');
-    // AI asistent na otázky aj na rezervačnej stránke, zreteľne označený
-    await page.mouse.move(20, 20);
-    await page.waitForSelector('.asi-btn.is-on', { timeout: 10000 }).catch(() => {});
-    ok((await page.locator('.asi-btn').getAttribute('aria-label').catch(() => '') || await page.locator('.asi-btn').textContent().catch(() => '')).includes('AI'), 'stránka: AI asistent na otázky, označený ako AI');
-  }
-  if (w === 390) {
-    // tím na stránke: Objednať sa pri barberovi → služba → rovno deň u neho
-    ok(await page.locator('.rez-tim .team-card').count() === 10 && await page.locator('a.rez-ig[href="https://www.instagram.com/barbershop30_nitra/"]').count() === 1 && await page.locator('[data-praca]').isHidden(), 'stránka: tím s portrétmi, odkaz na Instagram, galéria práce skrytá kým nie sú fotky');
-    await page.locator('.rez-tim .team-card', { hasText: 'Nikolas' }).locator('.team-cta').click();
-    await page.locator('.obj-sluzby button', { hasText: /^Úprava brady/ }).click();
-    await page.waitForSelector('.obj-dni button', { timeout: 10000 }).catch(() => {});
-    ok((await page.locator('.obj-h').textContent()) === 'Kedy?' && (await page.locator('.obj-stranka .obj-vyber').textContent()).includes('Nikolas'), 'stránka: Objednať sa pri barberovi začne objednávku u neho');
-  }
-  ok(!von.length, `stránka ${w} px: žiadna požiadavka na skutočné systémy`, von.join(' '));
-  ok(!chyby.length, `stránka ${w} px: bez chýb skriptu`, chyby.join(' | '));
-  await ctx.close();
-}
-if (SERVER) {
-  // odkaz s predvoľbou (napr. z Instagramu): služba a barber vybraní, rovno deň; jazyk stránky preloží aj kroky
-  const { ctx, page } = await stranka0(390, 844, `objednavka=${encodeURIComponent(API)}&sluzba=1&barber=Adrian&lang=en`);
-  await page.waitForSelector('.obj-dni button', { timeout: 10000 }).catch(() => {});
-  ok((await page.locator('.obj-stranka .obj-vyber').textContent()).includes('Adrian') && (await page.locator('.obj-h').textContent()) === 'When?', 'stránka: ?sluzba=1&barber=Adrian rovno na deň, kroky po anglicky');
-  await page.waitForFunction(() => document.documentElement.lang === 'en' && document.querySelector('.rez-uvod .title-sub').textContent.startsWith('Pick a service'), null, { timeout: 10000 }).catch(() => {});
-  ok(await page.evaluate(() => document.querySelector('.rez-uvod .title-sub').textContent.startsWith('Pick a service') && document.title.startsWith('Booking')), 'stránka po anglicky: úvod aj názov stránky');
-  await ctx.close();
+  // statické kontroly: žiadny odkaz na rezervacia.html (navigácia, päta, karty, en/, 404, karta/), sitemap a JSON-LD bez nej,
+  // 404 Objednať sa vedie na okno
+  const subory = ['index.html', 'en/index.html', '404.html', 'karta/index.html'].map((f) => [f, fs.readFileSync(path.join(SITE, f), 'utf8')]);
+  ok(subory.every(([, t]) => !/href="[^"]*rezervacia\.html/.test(t)), 'žiadny odkaz na rezervacia.html (index, en/, 404, karta/)');
+  const ld = (t) => (t.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || ['', ''])[1];
+  ok(!fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8').includes('rezervacia') && subory.every(([, t]) => !ld(t).includes('rezervacia.html')), 'sitemap.xml a JSON-LD bez rezervacia.html');
+  ok(/<a class="btn primary" href="https:\/\/[^"]+\/\?objednat=1">Objednať sa<\/a>/.test(subory[2][1]), '404: Objednať sa otvorí okno na hlavnej stránke (?objednat=1)');
+  const ymlP = path.join(SITE, '..', '.github', 'workflows', 'pages.yml');
+  if (!fs.existsSync(ymlP)) console.log('PRESKOČENÉ pages.yml (kópia stromu bez .github)');
+  else ok(!/rezervacia\.html<\/loc>|robots" content="noindex">\/d' _site\/barbershop-30\/rezervacia/.test(fs.readFileSync(ymlP, 'utf8')), 'nasadenie (pages.yml) rezervaciu nepridáva do sitemap.xml ani jej neruší noindex');
 }
 
 /* ---------- 6. ukážka na kontrolu (?objednavka=ukazka): bez servera, výrazne označená ---------- */
-for (const [subor, q] of [['rezervacia.html', 'objednavka=ukazka'], ['index.html', 'uvod=off&film=off&hudba=off&objednavka=ukazka']]) {
+for (const [subor, q] of [['index.html', 'uvod=off&film=off&hudba=off&objednavka=ukazka']]) {
+
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'sk-SK' });
   const page = await ctx.newPage();
   const api = [], chyby = [];
@@ -402,7 +514,7 @@ for (const [subor, q] of [['rezervacia.html', 'objednavka=ukazka'], ['index.html
   await page.locator('.obj-sluzby button', { hasText: 'Pánsky strih' }).first().click();
   await page.waitForSelector('.obj-rychlo:not([hidden]) .obj-mriezka button', { timeout: 10000 }).catch(() => {});
   ok((await page.locator('.obj-rychlo').textContent()).includes('Ukážkové časy, nie skutočné') && await page.locator('.obj-tim button').count() >= 3, `ukážka ${subor}: časy označené ako ukážkové, tím zo stránky`);
-  if (subor === 'rezervacia.html') await snimka(page, 'ukazka-2-390.png');
+  await snimka(page, 'ukazka-2-390.png');
   await page.locator('.obj-rychlo .obj-mriezka button').first().click();
   ok((await page.locator('.obj-h').textContent()) === 'Tvoj výber' && (await page.locator('.obj').first().textContent()).includes('Termín ešte nie je rezervovaný'), `ukážka ${subor}: dve kliknutia po výber, žiadny úspech`);
   ok(!api.length && !chyby.length, `ukážka ${subor}: bez servera a bez chýb`, api.concat(chyby).join(' | '));

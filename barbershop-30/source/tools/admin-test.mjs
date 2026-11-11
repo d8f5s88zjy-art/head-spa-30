@@ -3,7 +3,8 @@
 //   node source/tools/admin-test.mjs [--out=dir] [--zoznam]
 // Falošný GitHub drží súbory repozitára v pamäti (začína z lokálnych súborov) a commit ich naozaj zmení, takže druhé
 // načítanie po uložení vidí novú verziu. Kontroly: prihlásenie (zlý kľúč, kľúč len na čítanie, správny kľúč), záložky,
-// zmena textu (index.html na mieste, preklad sa presunie na nový kľúč), cenník (index aj rezervacia.html, preklady,
+// zmena textu (index.html na mieste, preklad sa presunie na nový kľúč), cenník (index.html; rezervacia.html je od 11. 11. 2026
+// len presmerovanie na okno objednávky a cenník ani tím nemá – admin ju nesmie pokaziť), preklady,
 // znalosti asistenta, odpovede so starou cenou na kontrolu a blok uloženia pri nesúlade), tím (popis, fotka WebP a JPEG,
 // nový člen, odpovede asistenta o tíme), galéria (popis), commit do main jedným posunom vetvy, súbeh (web sa zmenil inde),
 // telefón 390 px bez vodorovného pretekania.
@@ -218,7 +219,7 @@ ok(n(idx1).includes(n(novyText)) && !n(idx1).includes(n(hook) + '<'), 'index.htm
 ok(en1[n(novyText)] === en0[n(hook)] && !(n(hook) in en1), 'preklad presunutý na nový kľúč');
 const cenaRe = (c) => new RegExp(`<p class="price-amount">${c}[\\s${NB}]€</p>`);
 const riadok = (h, id) => { const i = h.indexOf(`data-sluzba="${id}"`); return h.slice(h.lastIndexOf('<li class="price-row"', i), i); };
-ok(cenaRe(novaCena).test(riadok(idx1, 1)) && cenaRe(novaCena).test(riadok(rez1, 1)), 'cena v index.html aj rezervacia.html', novaCena);
+ok(cenaRe(novaCena).test(riadok(idx1, 1)) && rez1 === rez0, 'cena v index.html, presmerovanie rezervacia.html bez zmeny', novaCena);
 const ldCena = (h) => { const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/); const o = JSON.parse(m[1]).hasOfferCatalog.itemListElement.find((x) => x.itemOffered.name === 'Pánsky strih'); return o && o.price; };
 ok(ldCena(idx1) === novaCena.replace(',', '.') && ldCena(idx0) === staraCena.replace(',', '.'), 'údaje pre Google (JSON-LD): nová cena, platný JSON', `${ldCena(idx0)} → ${ldCena(idx1)}`);
 ok(md1.includes(`– ${novaCena} €`) && md1.split('\n').some((r) => r.startsWith('- Pánsky strih –') && r.includes(`${novaCena} €`)), 'znalosti asistenta: nová cena');
@@ -228,7 +229,7 @@ ok(kopiaSedi(faq1, faqWeb1, faqKmene1), 'kópia odpovedí pre web zhodná (otáz
 ok(faq1.otazky.length === JSON.parse(precitaj('asistent/znalosti/barbershop-otazky.json')).otazky.length, 'počet odpovedí rovnaký', String(faq1.otazky.length));
 const timOdp = faq1.otazky.find((o) => o.id === `tim-${meno1.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')}`);
 ok(timOdp && /s úsmevom/.test(timOdp.a), 'odpoveď o členovi tímu má nový popis', timOdp ? timOdp.a.slice(0, 90) : 'chýba');
-ok(n(rez1).includes('a s úsmevom.') && n(idx1).includes('a s úsmevom.'), 'popis tímu v oboch súboroch');
+ok(n(idx1).includes('a s úsmevom.') && !n(rez1).includes('a s úsmevom.'), 'popis tímu v index.html (presmerovanie bez tímu)');
 const nove = c1.zmenene.filter((c) => /assets\/img\/tim-/.test(c));
 ok(nove.some((c) => c.endsWith('.webp')) && nove.some((c) => c.endsWith('.jpg')), 'fotka tímu ako WebP aj JPEG', nove.join(', '));
 for (const c of nove) {
@@ -310,9 +311,7 @@ ok(/^Uložené/.test(await page.textContent('#saveMsg')), 'nový člen uložený
 const idx3 = subor('barbershop-30/index.html').toString(), rez3 = subor('barbershop-30/rezervacia.html').toString();
 const faq3 = JSON.parse(subor('asistent/znalosti/barbershop-otazky.json'));
 ok((idx3.match(/class="team-card/g) || []).length === 11 && idx3.includes('<h3 class="team-name">Testovací</h3>'), 'karta v index.html');
-const kartaRez = rez3.slice(rez3.lastIndexOf('<li class="team-card', rez3.indexOf('Testovací')), rez3.indexOf('</li>', rez3.indexOf('Testovací')) + 5);
-ok(/fetchpriority="low"/.test(kartaRez) && /\n {16}<source type="image\/webp"/.test(kartaRez) && /\n {14}<\/picture>/.test(kartaRez), 'karta v rezervacia.html (odsadenie, fetchpriority)');
-if (opt.zoznam) console.log(kartaRez);
+ok(!rez3.includes('Testovací') && !rez3.includes('team-card'), 'presmerovanie rezervacia.html bez karty tímu (tím je len na hlavnej stránke)');
 ok(faq3.otazky.some((o) => o.id === 'tim-testovaci') && /Testovací/.test(faq3.otazky.find((o) => o.id === 'tim').a), 'odpovede asistenta o tíme');
 ok(/Testovací/.test(subor('asistent/znalosti/barbershop.md').toString().match(/^Barberi: .*$/m)[0]), 'znalosti: zoznam barberov');
 ok(JSON.parse(subor('barbershop-30/assets/i18n/en.json'))['Testovací'] === 'Testovací', 'meno v prekladoch');

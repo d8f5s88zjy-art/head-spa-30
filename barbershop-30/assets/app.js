@@ -538,20 +538,40 @@ if (motionOn && mqFinePointer.matches) {
 })();
 
 /* ----------------------------------------------------------------------------
-   7b4. Objednávka (objednavka.js): služba → barber → deň a čas. Zapne ju data-objednavka na <html> (pages.yml, len
-   so súhlasom prevádzky), inak Objednať vedie rovno do rezervačného systému. Lokálne ?objednavka=<adresa>|off|ukazka.
+   7b4. Objednávka (objednavka.js): jediná cesta k objednaniu (Lajko 9. 11. 2026, bod 7). Každý odkaz Objednať sa
+   (v HTML vedie do rezervačného systému, to je cesta bez skriptu) otvorí okno na tejto stránke; ?objednat=1 ho otvorí
+   po načítaní (rezervacia.html, 404, odkazy s ?sluzba= a ?barber=). Voľné časy ukáže okno len so serverom
+   s pripojeným kalendárom (data-objednavka na <html> z pages.yml so súhlasom prevádzky, lokálne ?objednavka=<adresa>),
+   inak „Objednávka cez web teraz nejde – zavolaj“. ?objednavka=ukazka ukážka bez servera, ?objednavka=off len na skúšku
+   bez okna. Modul v pláne lenivých modulov (slot 1) a hneď pri dotyku odkazu; klik pred načítaním počká naň.
    ---------------------------------------------------------------------------- */
 (function objednavka() {
-  const q = new URLSearchParams(location.search).get('objednavka');
+  const q = new URLSearchParams(location.search), o = q.get('objednavka');
+  if (o === 'off') return;
   const lokal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  // ?objednavka=ukazka: ukážka bez servera (aj na náhľade), označená, nič nerezervuje
-  const api = q === 'off' ? '' : q === 'ukazka' ? 'ukazka' : (lokal && q) || html.dataset.objednavka || '';
-  if (api !== 'ukazka' && !/^https?:\/\//.test(api)) return;
-  let loaded = null;
-  const load = () => loaded || (loaded = import('./objednavka.js').then((m) => { m.spusti(api); }));
-  plan.pridaj(load, 1);
-  // ťuk na Objednať pred načítaním: modul hneď (kým nie je, odkaz vedie rovno do rezervačného systému)
-  addEventListener('pointerdown', (e) => { if (e.target instanceof Element && e.target.closest('a[href*="barbershop30.sk/rezervacia"]')) load().catch(() => {}); }, { passive: true });
+  const api = o === 'ukazka' ? 'ukazka' : (lokal && o) || html.dataset.objednavka || '';
+  const ODKAZY = 'a[href*="barbershop30.sk/rezervacia"]';
+  let m = null;
+  const load = () => m || (m = import('./objednavka.js').then((x) => x.spusti(api).then((ok) => { if (!ok) throw new Error('bez okna'); return x; })));
+  plan.pridaj(() => load().catch(() => {}), 1);
+  addEventListener('pointerdown', (e) => { if (e.target instanceof Element && e.target.closest(ODKAZY)) load().catch(() => {}); }, { passive: true });
+  // zachytenie skôr ako prihláška vernostnej kartičky (tá je na document); Dokončiť v okne (data-obj-priamo) ide ďalej;
+  // klávesy s Ctrl/Cmd/Shift a stredné tlačidlo nechajú rezervačný systém v novej karte
+  addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target instanceof Element && e.target.closest(ODKAZY);
+    if (!a || a.hasAttribute('data-obj-priamo')) return;
+    e.preventDefault();
+    // okno sa nedá (starý prehliadač bez <dialog>, modul sa nestiahol): rezervačný systém ako doteraz
+    load().then((x) => x.otvorOdkaz(a)).catch(() => { const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href); });
+  }, true);
+  if (q.get('objednat')) {
+    const z = new URLSearchParams(q);
+    load().then((x) => x.otvorZAdresy(z)).catch(() => {});
+    // adresa bez ?objednat (obnovenie stránky či Späť okno znova neotvorí)
+    ['objednat', 'sluzba', 'barber'].forEach((k) => q.delete(k));
+    history.replaceState(history.state, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+  }
 })();
 
 /* ----------------------------------------------------------------------------

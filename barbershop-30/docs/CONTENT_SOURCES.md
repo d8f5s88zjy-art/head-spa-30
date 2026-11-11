@@ -286,3 +286,12 @@ https://www.instagram.com/headspa.salon30/, https://www.instagram.com/salon30_ni
 https://www.instagram.com/barbershop30_nitra/ (náš web). Prevádzkovateľ Salónu 30 podľa päty salon30.sk: Facepalm s.r.o.,
 IČO 52231381 (= Barbershop 30); HEAD SPA 30 prevádzkovateľa na webe neuvádza. Stupeň: overené‑oficiálne (weby prevádzok).
 Podrobne `README.md` „Logá prevádzok“.
+
+## Objednávka cez jednu stránku (Lajko 9. 11. 2026 večer, bod 7; zapracované 11. 11. 2026)
+
+Lajko: zákazník sa má objednať priamo z hlavnej stránky cez „Objednať sa“ (okno objednávky), samostatná rezervačná
+stránka nemá byť cesta pre zákazníka, „stále nech to funguje“. Nové texty okna nie sú nové fakty: „Objednávka cez web
+teraz nejde – zavolaj.“ (stav bez servera alebo pri chybe, zadanie kola L3), „V pracovné dni od 9:00 do 19:00 telefón
+vždy zdvihneme.“ (overená veta webu a Barbera), telefón 0951 267 203 a otváracie hodiny sa berú z pätičky stránky
+(Po–Pi 9:00–19:00, So 9:00–14:00, Ne zatvorené). `rezervacia.html` hovorí len „Objednávka je na hlavnej stránke.“
+Stupeň: overené‑oficiálne (web) + požiadavka podniku.

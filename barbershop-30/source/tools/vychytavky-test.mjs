@@ -28,7 +28,8 @@ const b = await chromium.launch();
   ok(man.name && man.short_name === 'Barbershop 30' && man.start_url === '../' && man.display, 'manifest: meno, začiatok na webe, zobrazenie', JSON.stringify({ n: man.name, s: man.start_url }));
   const ikony = await Promise.all(man.icons.map(async (i) => (await p.request.get(`${srv.origin}/assets/${i.src}`)).ok()));
   ok(ikony.length === 3 && ikony.every(Boolean) && man.icons.some((i) => i.purpose === 'maskable'), 'manifest: ikony 192, 512 a maskovateľná existujú');
-  for (const s of ['index.html', 'rezervacia.html', 'en/index.html']) {
+  // rezervacia.html je od 11. 11. 2026 len presmerovanie na okno objednávky (bez manifestu)
+  for (const s of ['index.html', 'en/index.html']) {
     await p.goto(`${srv.origin}/${s}?uvod=off&film=off&hudba=off`, { waitUntil: 'domcontentloaded' });
     const r = await p.evaluate(async () => {
       const m = document.querySelector('link[rel="manifest"]'), a = document.querySelector('link[rel="apple-touch-icon"]');
