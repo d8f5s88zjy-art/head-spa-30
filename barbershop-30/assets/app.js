@@ -543,7 +543,9 @@ if (motionOn && mqFinePointer.matches) {
    po načítaní (rezervacia.html, 404, odkazy s ?sluzba= a ?barber=). Voľné časy ukáže okno len so serverom
    s pripojeným kalendárom (data-objednavka na <html> z pages.yml so súhlasom prevádzky, lokálne ?objednavka=<adresa>),
    inak „Objednávka cez web teraz nejde – zavolaj“. ?objednavka=ukazka ukážka bez servera, ?objednavka=off len na skúšku
-   bez okna. Modul v pláne lenivých modulov (slot 1) a hneď pri dotyku odkazu; klik pred načítaním počká naň.
+   bez okna. Modul (47 kB) a jeho štýl sa stiahnu až na požiadanie: pri dotyku odkazu, fokuse klávesnicou alebo keď nad
+   ním prejde myš, a pri ?objednat=1 – nie v nečinnosti každému (A/B 11. 11. 2026: s modulom v pláne lenivých modulov
+   viac dlhých snímok pri skrole telefónu); klik pred načítaním počká naň.
    ---------------------------------------------------------------------------- */
 (function objednavka() {
   const q = new URLSearchParams(location.search), o = q.get('objednavka');
@@ -552,9 +554,17 @@ if (motionOn && mqFinePointer.matches) {
   const api = o === 'ukazka' ? 'ukazka' : (lokal && o) || html.dataset.objednavka || '';
   const ODKAZY = 'a[href*="barbershop30.sk/rezervacia"]';
   let m = null;
-  const load = () => m || (m = import('./objednavka.js').then((x) => x.spusti(api).then((ok) => { if (!ok) throw new Error('bez okna'); return x; })));
-  plan.pridaj(() => load().catch(() => {}), 1);
-  addEventListener('pointerdown', (e) => { if (e.target instanceof Element && e.target.closest(ODKAZY)) load().catch(() => {}); }, { passive: true });
+  const load = () => m || (m = (() => {
+    // štýl okna sa sťahuje súbežne s modulom (nie až po ňom): na pomalej sieti o jeden okruh skôr
+    const l = document.createElement('link');
+    l.rel = 'preload'; l.as = 'style'; l.href = new URL('objednavka.css', import.meta.url).href;
+    document.head.append(l);
+    return import('./objednavka.js').then((x) => x.spusti(api).then((ok) => { if (!ok) throw new Error('bez okna'); return x; }));
+  })());
+  const vopred = (e) => { if (e.target instanceof Element && e.target.closest(ODKAZY)) load().catch(() => {}); };
+  addEventListener('pointerdown', vopred, { passive: true });
+  addEventListener('focusin', vopred);
+  addEventListener('pointerover', (e) => { if (e.pointerType === 'mouse') vopred(e); }, { passive: true });
   // zachytenie skôr ako prihláška vernostnej kartičky (tá je na document); Dokončiť v okne (data-obj-priamo) ide ďalej;
   // klávesy s Ctrl/Cmd/Shift a stredné tlačidlo nechajú rezervačný systém v novej karte
   addEventListener('click', (e) => {
@@ -562,8 +572,11 @@ if (motionOn && mqFinePointer.matches) {
     const a = e.target instanceof Element && e.target.closest(ODKAZY);
     if (!a || a.hasAttribute('data-obj-priamo')) return;
     e.preventDefault();
+    // kým sa modul prvý raz sťahuje, odkaz ukáže, že sa niečo deje (aria-busy, style.css)
+    a.setAttribute('aria-busy', 'true');
     // okno sa nedá (starý prehliadač bez <dialog>, modul sa nestiahol): rezervačný systém ako doteraz
-    load().then((x) => x.otvorOdkaz(a)).catch(() => { const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href); });
+    load().then((x) => x.otvorOdkaz(a)).catch(() => { const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href); })
+      .finally(() => a.removeAttribute('aria-busy'));
   }, true);
   if (q.get('objednat')) {
     const z = new URLSearchParams(q);

@@ -80,13 +80,18 @@ async function stranka(w, h, q, extra = {}) {
 const hore = async (page) => { await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' })); await page.waitForFunction(() => scrollY === 0); await sleep(300); };
 // snímka až po príchode okna a kroku (320 a 280 ms)
 const snimka = async (page, f) => { await sleep(450); await page.screenshot({ path: path.join(OUT, f) }); };
+// modul okna sa sťahuje na požiadanie (dotyk, fokus, myš nad odkazom): dotyk odkazu Objednať sa ho načíta vopred
+const predNacitaj = async (page) => {
+  await page.locator('a[href*="barbershop30.sk/rezervacia"]').first().dispatchEvent('pointerdown');
+  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+};
 const preteka = (page) => page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1 || [...document.querySelectorAll('.obj[open] *')].some((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1) && !e.closest('.obj-dni'); }));
 
 /* ---------- 1. telefón 390: celá cesta služba → barber → deň → čas → výber ---------- */
 if (SERVER) {
   const { ctx, page, von, chyby } = await stranka(390, 844, `objednavka=${encodeURIComponent(API)}&vernost=ukazka`);
   await page.mouse.move(10, 10);
-  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+  await predNacitaj(page);
   ok(await page.evaluate(() => document.documentElement.classList.contains('obj-zapnute')), 'okno je pripravené (modul a štýl)');
   // pás s vizitkou a kartičkou
   await page.waitForSelector('.band-karty', { timeout: 10000 }).catch(() => {});
@@ -212,7 +217,7 @@ if (SERVER) {
 if (SERVER) for (const [w, h] of [[360, 780], [430, 932], [768, 1024], [1440, 900]]) {
   const { ctx, page, chyby } = await stranka(w, h, `objednavka=${encodeURIComponent(API)}&vernost=ukazka`);
   await page.mouse.move(10, 10);
-  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+  await predNacitaj(page);
   await page.waitForSelector('.band-karty', { timeout: 10000 }).catch(() => {});
   await hore(page);
   await page.locator('a.price-cta[data-sluzba="1"]').scrollIntoViewIfNeeded();
@@ -253,7 +258,7 @@ if (SERVER) {
   page.on('pageerror', (e) => chyby.push(e.message));
   await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&objednavka=${encodeURIComponent(API)}`, { waitUntil: 'load' });
   await page.mouse.move(10, 10);
-  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+  await predNacitaj(page);
   await page.waitForSelector('.karty-vernost', { timeout: 10000 }).catch(() => {});
   ok(await page.locator('.karty-vernost a.btn-primary[data-vernost-karta]').count() === 1 && !(await page.locator('.karty-ukazka').count()), 'zapnutá prihláška: kartička na stránke s aktívnym tlačidlom');
   await page.locator('.karty-vernost a.btn-primary').scrollIntoViewIfNeeded();
@@ -311,9 +316,12 @@ const stavOkna = (page) => page.evaluate(() => {
   const ziadosti = [], popupy = [];
   page.on('request', (r) => { if (/api\.php/.test(r.url())) ziadosti.push(r.url()); });
   page.on('popup', (p) => popupy.push(p.url()));
+  const moduly = [];
+  page.on('request', (r) => { if (/objednavka\.(js|css)/.test(r.url())) moduly.push(r.url()); });
   await page.mouse.move(10, 10);
-  await sleep(1500);
-  ok(!(await page.locator('.obj[open]').count()), 'bez servera: okno sa samo neotvorí');
+  await page.touchscreen.tap(195, 300);
+  await sleep(3500);
+  ok(!(await page.locator('.obj[open]').count()) && !moduly.length, 'okno sa samo neotvorí a modul sa bez požiadavky nesťahuje (ani po geste a 3,5 s)', moduly.join(' '));
   const t0 = Date.now();
   await page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first().click();
   await page.waitForFunction((n) => { const h = document.querySelector('.obj[open] .obj-h'); return h && h.textContent === n; }, NEJDE, { timeout: 8000 }).catch(() => {});
@@ -402,7 +410,8 @@ for (const [w, h] of [[320, 568], [430, 932], [768, 1024], [1440, 900]]) {
   // bez internetu: veta o pripojení; po návrate internetu to okno skúsi samo
   {
     const { ctx, page, chyby } = await stranka(390, 844, '');
-    await page.mouse.move(10, 10);
+    // modul sa sťahuje až na požiadanie: dotyk odkazu ho načíta, potom sa pripojenie stratí
+    await page.locator('#uvod a.btn-primary').first().dispatchEvent('pointerdown');
     await page.waitForFunction(() => document.documentElement.classList.contains('obj-zapnute'), null, { timeout: 15000 }).catch(() => {});
     await ctx.setOffline(true);
     await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
@@ -424,8 +433,6 @@ for (const [w, h] of [[320, 568], [430, 932], [768, 1024], [1440, 900]]) {
   const page = await ctx.newPage();
   await page.route(/barbershop30\.sk|headspa30\.sk|booqme/, (r) => r.abort());
   await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&objednavka=ukazka`, { waitUntil: 'load' });
-  await page.mouse.move(10, 10);
-  await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
   const odkaz = page.locator('#uvod a.btn-primary', { hasText: 'Objednať sa' }).first();
   await odkaz.focus();
   await page.keyboard.press('Enter');
@@ -506,7 +513,7 @@ for (const [subor, q] of [['index.html', 'uvod=off&film=off&hudba=off&objednavka
   await page.goto(`${srv.origin}/${subor}?${q}`, { waitUntil: 'load' });
   if (subor === 'index.html') {
     await page.mouse.move(10, 10);
-    await page.waitForFunction(() => document.documentElement.classList.contains('obj-css'), null, { timeout: 15000 }).catch(() => {});
+    await predNacitaj(page);
     await page.evaluate(() => document.querySelector('#uvod a.btn-primary').click());
   }
   await page.waitForSelector('.obj-sluzby button', { timeout: 10000 }).catch(() => {});

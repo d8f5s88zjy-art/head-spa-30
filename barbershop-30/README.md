@@ -124,8 +124,10 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   prevádzky a jej dokumentáciu rozhrania).
   **Jediná cesta k objednaniu (Lajko 9. 11. 2026, bod 7):** okno je na webe vždy. Každý odkaz Objednať sa (lišta, úvod,
   háčiky kariet, tím, cenník, kontakt, spodná lišta telefónu, odpovede Barbera, `en/`) ho otvorí – zachytí ich `app.js`
-  (časť 7b4) a modul sa stiahne v nečinnosti (plán lenivých modulov, slot 1) alebo hneď pri dotyku odkazu; v HTML ostávajú
-  odkazy na rezervačný systém (cesta bez skriptu, Ctrl/Cmd‑klik ho otvorí v novej karte). `?objednat=1` otvorí okno po
+  (časť 7b4). Modul a štýl okna sa stiahnu až na požiadanie (dotyk odkazu, fokus klávesnicou, myš nad odkazom,
+  `?objednat=1`), nie v nečinnosti každému návštevníkovi: A/B 11. 11. 2026 (CPU 4×) ukázalo s modulom v pláne lenivých
+  modulov viac dlhých snímok pri skrole telefónu. V HTML ostávajú odkazy na rezervačný systém (cesta bez skriptu,
+  Ctrl/Cmd‑klik ho otvorí v novej karte). `?objednat=1` otvorí okno po
   načítaní (aj s `&sluzba=<id>&barber=<meno>`; adresa sa potom vyčistí). `404.html` vedie na `…/?objednat=1`.
   Voľné časy ukáže len server s pripojeným kalendárom: nasadenie pridá `data-objednavka` na `<html>` len s premennou
   `ASISTENT_KALENDAR_URL` (súhlas prevádzky) a FTP. Stav servera sa zisťuje hneď pri spustení, **najviac 8 s**

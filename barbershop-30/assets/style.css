@@ -1066,6 +1066,9 @@ html[data-motion="off"] .board-hero { animation: none; }
 .footer-shop-list .footer-shop-web a:hover { color: var(--paper); }
 @media (max-width: 640px) { .footer-shop-list { grid-template-columns: 1fr; gap: var(--s4); } }
 
+/* Objednať sa pri prvom ťuknutí, kým sa okno objednávky sťahuje (app.js 7b4, na pomalej sieti do ~1 s) */
+a[aria-busy="true"] { cursor: progress; opacity: 0.72; }
+
 /* Podklad lišty bez app.js (scroll-driven animation); app.js prepne na .is-scrolled */
 @supports (animation-timeline: scroll()) {
   @keyframes header-bg {
