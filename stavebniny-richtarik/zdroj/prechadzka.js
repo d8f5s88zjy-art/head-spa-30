@@ -68,7 +68,7 @@ export function vytvor(p, pre) {
     if (!o.platno) b.hidden = true;
     o.el.appendChild(b);
     // rozmery okolo stredu (polovica šírky a výšky): odhad podľa druhu, po vložení do stránky sa zmerajú (drzSipky)
-    o.sipky.push({ b: b, txt: txt, s: s, p: p, hw: p === 2 ? 84 : p ? 28 : 38, hh: p ? 28 : 38, m: false, x: 0, y: 0, t: '' });
+    o.sipky.push({ b: b, txt: txt, s: s, p: p, hw: p === 2 ? 84 : p ? 28 : 38, hh: p ? 28 : 38, m: false, von: false, x: 0, y: 0, t: '' });
   }
   function sipka(o, s) {
     var ciel = idx(s[0]), spat = ciel < o.i;
@@ -97,14 +97,7 @@ export function vytvor(p, pre) {
     o.sipky.sort(function (a, b) { return a.p - b.p; });
     return o;
   }
-  function poloz(o) {
-    if (!o.pan) return;
-    o.sipky.forEach(function (x) {
-      var m = o.pan.premietni(x.s[1], x.s[2]);
-      x.b.hidden = !m.vid;
-      if (m.vid) x.b.style.transform = 'translate3d(' + m.x.toFixed(1) + 'px,' + m.y.toFixed(1) + 'px,0) translate(-50%,-50%)';
-    });
-  }
+  function poloz(o) { if (o.pan) drzSipky(o); }   // panoráma: po každom prekreslení
 
   // ── geometria pohľadu: s = mierka (CSS bod na bod zdroja), tx a ty = poloha ľavého horného rohu fotky v javisku
   var cipyW = 0;   // šírka čipov vpravo hore (Celá obrazovka, Zavrieť): šípka pri hornom okraji ostane pod nimi
@@ -116,18 +109,25 @@ export function vytvor(p, pre) {
     var dx = X - cx, dy = Y - cy, y1 = dy * Math.cos(b), z1 = dy * Math.sin(b), x2 = dx * Math.cos(a) + z1 * Math.sin(a), k = P / (P + dx * Math.sin(a) - z1 * Math.cos(a));
     return [cx + x2 * k, cy + y1 * k];
   }
-  // šípky na fotke: tlačidlá vo vrstve zastávky nad plátnom, polohu v javisku dostávajú tu pri každej zmene pohľadu
+  // šípky: tlačidlá vo vrstve zastávky nad plátnom, polohu v javisku dostávajú tu pri každej zmene pohľadu
   // (transformácia vlastnej vrstvy, len kompozítor). Šípka leží na svojom mieste fotky; keď je to miesto po posune alebo
   // priblížení mimo okna, ostane pri najbližšom okraji javiska (pod čipmi, vedľa tlačidiel + a −) – na ďalšiu zastávku
   // sa dá prejsť bez hľadania. Dve šípky sa neprekryjú: tá s nižšou prednosťou uhne pod alebo nad druhú.
+  // V panoráme leží šípka na svojom smere (yaw, pitch) a pri okraji okna sa drží rovnako; smer mimo pohľadu (za chrbtom
+  // alebo ďaleko bokom) sa skryje ako v Street View – vtedy ostáva krok v päte.
   // Rozmery okolo stredu: do strán polovica širšieho z dvojice kotúč a popis, hore polovica štvorca, dole ešte popis (17 px).
   function drzSipky(o) {
-    if (!o.platno) return;
     var i, j, a, c, m, x, y, xmin, xmax, ymin, ymax, pod, nad, dolu, hore, t;
     for (i = 0; i < o.sipky.length; i++) {
       a = o.sipky[i];
+      if (o.pan) {
+        m = o.pan.premietni(a.s[1], a.s[2]);
+        a.von = !m.vid; a.b.hidden = a.von;
+        if (a.von) continue;
+        m = [m.x, m.y];
+      } else if (o.platno) m = sNaklonom(o, o.tx + a.s[1] / 100 * o.W * o.s, o.ty + a.s[2] / 100 * o.H * o.s);
+      else return;
       if (!a.m && a.b.offsetWidth) { a.hw = Math.max(a.b.offsetWidth, a.txt.offsetWidth) / 2; a.hh = a.b.offsetHeight / 2; a.m = true; }
-      m = sNaklonom(o, o.tx + a.s[1] / 100 * o.W * o.s, o.ty + a.s[2] / 100 * o.H * o.s);
       xmin = a.hw + 8; xmax = sw - a.hw - 8; ymin = a.hh + 8; ymax = sh - a.hh - 23;
       x = Math.min(xmax, Math.max(xmin, m[0]));
       if (x + a.hw > sw - 20 - cipyW) ymin = 64 + a.hh;                     // pod čipmi vpravo hore
@@ -135,7 +135,7 @@ export function vytvor(p, pre) {
       if (y - a.hh < 172 && x + a.hw > sw - 64) x = sw - 64 - a.hw;         // vedľa tlačidiel + a −
       for (j = 0; j < i; j++) {
         c = o.sipky[j];
-        if (Math.abs(x - c.x) >= a.hw + c.hw + 6) continue;
+        if (c.von || Math.abs(x - c.x) >= a.hw + c.hw + 6) continue;
         pod = c.y + c.hh + 17 + a.hh + 4; nad = c.y - c.hh - a.hh - 17 - 4;
         if (y >= pod || y <= nad) continue;
         dolu = pod <= sh - a.hh - 19; hore = nad >= ymin;   // uhne na tú stranu, kde na fotke leží (pod: popis ešte celý v javisku)

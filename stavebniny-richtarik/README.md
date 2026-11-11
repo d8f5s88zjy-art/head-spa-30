@@ -174,8 +174,22 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   telefón / +0,84 s počítač, koniec +1,78 / +1,73 s, spolu ≈ 2,5 s od navigácie; ťuk bránu ukončí do 0,2 s).
 - Rýchla cesta: na pomalej sieti (prvé vykreslenie po 1,5 s) alebo keď fotka nie je včas pripravená, brána len
   pozdraví a otvorí sa rovno na úvod (0,44 s), keď je fotka úvodu vykreslená, najneskôr 0,7 s po prvom vykreslení.
+- Úvod sa otvára hore (Lajko 11. 11. 2026: „Nech sa stránka otvára na úvode“): pri otvorení zvonka (odkaz z WhatsAppu,
+  e-mailu alebo vyhľadávača, napísaná adresa) aj pri obnovení stránky `zdroj/uvitanie-head.js` zahodí kotvu v adrese
+  (napr. `#prehliadka` zo staršieho odkazu) ešte pred rozhodnutím o uvítaní a nastaví `history.scrollRestoration =
+  'manual'`, takže stránka začne hore na úvode a uvítanie sa ukáže podľa pravidiel nižšie. Sekundu po načítaní a pred
+  odchodom sa obnova polohy vráti na `auto`: Späť a Vpred (aj z podstránky) vracajú polohu ako doteraz a kotva
+  v odkaze vnútri webu funguje. Vypnutie: `HORE = 0` v `zdroj/uvitanie-head.js` a vložiť bloky (`uvitanie_vloz.py`).
+  Skúška: `majitel/uvod-hore/nastroje/k-uvod.mjs` (otvorenie zvonka s kotvou aj bez, `?uvitanie`, obnovenie, Späť
+  z podstránky s bfcache aj bez, „obmedziť pohyb“, kotva z vnútra webu).
+- Kotvy v stránke (odkaz „Prezrieť predajňu“ → `#prehliadka`): posun riadi `assets/site.js` (`naKotvu`), lebo sekcie
+  s `content-visibility:auto` a obrázky načítavané pri posune menia rozloženie počas cesty a plynulý posun prehliadača
+  zastal na telefóne obrazovku pred rámom prehliadky (rám 808 px pod vrchom okna). Skript pred cestou vykreslí sekcie
+  (trieda `cv-ciel`, `site.css`), v každej snímke znova zmeria polohu cieľa (aj `scroll-padding` a `scroll-margin`)
+  a dôjde presne k nemu za ≈ 0,9 s; ťuk, koliesko alebo kláves cestu zastavia, pri „obmedziť pohyb“ skok bez animácie.
+  Adresa dostane kotvu ako nový záznam histórie (Späť vráti polohu pred kliknutím, Vpred zase k prehliadke).
 - Kedy sa neukáže: druhá návšteva v tej istej relácii (`sessionStorage` `br-videne`), príchod z inej stránky webu,
-  Späť, Vpred a obnovenie, kotva v adrese, šetrenie dát, predvykreslenie, okno menšie ako 300 × 420 px, „obmedziť
+  Späť, Vpred a obnovenie, kotva v adrese pri príchode z inej stránky webu, šetrenie dát, predvykreslenie, okno menšie ako 300 × 420 px, „obmedziť
   pohyb“ a bez JS (prekryv je v HTML ako prvý prvok `<body>`, bez triedy `br-ide` je skrytý a skript ho odstráni;
   fotka je tá istá ako v úvode, nič navyše sa nestiahne). Vtedy beží dnešný úvod (trieda `uv-ide`).
   `?uvitanie` v adrese ho vynúti aj pri ďalšej návšteve (nie pri „obmedziť pohyb“), napr. na ukážku majiteľovi.
@@ -405,8 +419,8 @@ záloha); zväčšený súbor 1720 px len vtedy, keď je fotka na obrazovke šir
 okrajom a popisom „Ďalej“ (cieľ dotyku 76 px), späť tmavý s popisom „Späť“ (56 px). **Šípky sa držia v zábere**: ležia
 na svojom mieste fotky (vrátane náklonu), a keď je to miesto po posune alebo priblížení mimo okna, ostanú pri
 najbližšom okraji javiska (pod čipmi, vedľa tlačidiel + a −; dve šípky sa neprekryjú) – na ďalšiu zastávku sa dá prejsť
-bez hľadania (`drzSipky` v `zdroj/prechadzka.js`; v zastávke typu panoráma šípka mimo pohľadu zmizne ako v Street
-View a ostáva krok v päte). Ďalej klávesy ← → ↑ (so Shiftom šípky posúvajú pohľad, Home a End prvá a posledná),
+bez hľadania (`drzSipky` v `zdroj/prechadzka.js`; v zastávke typu panoráma sa šípka pri okraji okna drží rovnako,
+len smer za chrbtom alebo ďaleko bokom zmizne ako v Street View a ostáva krok v päte). Ďalej klávesy ← → ↑ (so Shiftom šípky posúvajú pohľad, Home a End prvá a posledná),
 tlačidlá kroku pri názve (krok ďalej je červený) a pás náhľadov. Prechod: nájazd do smeru šípky (mierka 1 → 1,32 so stredom v šípke) s prelnutím, 620 ms; krok späť prichádza
 z priblíženia; pri „obmedziť pohyb“ len prelnutie 220 ms, bez zotrvačnosti a náklonu. Susedné zastávky sa sťahujú
 vopred, ostatné sa uvoľňujú. Názov a poradie („Predajňa – náradie, 7 z 9“) číta čítačka pri zmene (`aria-live`).

@@ -1489,6 +1489,8 @@ main>section:not(.page-head)+section,main>section:not(.page-head)+div,main>div+s
 .cta-pas{content-visibility:auto;contain-intrinsic-size:auto 300px}
 footer{content-visibility:auto;contain-intrinsic-size:auto 480px}
 @media print{main>section:not(.page-head)+section,main>section:not(.page-head)+div,main>div+section,.album+.album,.cta-pas,footer{content-visibility:visible}
+/* kotva v stránke (site.js naKotvu): pred posunom sa vykreslia všetky sekcie, aby cieľ neušiel nižšie */
+html.cv-ciel main>section:not(.page-head)+section,html.cv-ciel main>section:not(.page-head)+div,html.cv-ciel main>div+section,html.cv-ciel .cta-pas,html.cv-ciel footer{content-visibility:visible}
   .album+.album{margin-top:34px}
   .eyebrow::before{transform:none!important}.ph-foto::before,.ph-foto::after{display:none}
   /* tlač: odhalenia pri posune sú len pre obrazovku (@media screen), tlačidlo pásu značiek sa netlačí */

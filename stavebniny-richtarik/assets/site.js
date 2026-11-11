@@ -27,6 +27,59 @@
     else cakaj(null);
   }
 
+  // Kotvy v stránke („Prezrieť predajňu“ a ďalšie odkazy #…): sekcie s content-visibility:auto majú pred prvým
+  // vykreslením odhadnutú výšku 900 px a obrázky sa načítavajú až pri posune, takže sa rozloženie počas cesty mení;
+  // plynulý posun prehliadača mal cieľ pevný od začiatku a na telefóne zastal obrazovku pred rámom prehliadky.
+  // Posun preto riadi skript: v každej snímke znova zmeria, kde cieľ práve je (vrátane scroll-padding a scroll-margin),
+  // a dôjde presne k nemu (≈ 0,9 s, spomalenie na konci). Sekcie sa pred cestou vykreslia (trieda cv-ciel, site.css),
+  // ťuk, koliesko alebo kláves cestu zastavia. Pri „obmedziť pohyb“ skok bez animácie. Krok Späť vráti polohu pred
+  // kliknutím (adresa s kotvou je nový záznam histórie ako pri bežnom odkaze).
+  function naKotvu(ciel, plynulo) {
+    var h = d.documentElement, t0 = 0, y0 = window.scrollY, hotovo = false, D = 900;
+    var cielY = function () {
+      var o = ciel.getBoundingClientRect().top - (parseFloat(getComputedStyle(h).scrollPaddingTop) || 0) - (parseFloat(getComputedStyle(ciel).scrollMarginTop) || 0);
+      return Math.max(0, Math.min(h.scrollHeight - innerHeight, window.scrollY + o));
+    };
+    var choj = function (y) { window.scrollTo({ top: Math.round(y), left: 0, behavior: 'instant' }); };
+    var stop = function () {
+      if (hotovo) return; hotovo = true; h.classList.remove('cv-ciel');
+      ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (u) { removeEventListener(u, stop, true); });
+    };
+    h.classList.add('cv-ciel');
+    if (!plynulo) {
+      choj(cielY());
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (!hotovo) choj(cielY()); stop(); }); });
+      return;
+    }
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (u) { addEventListener(u, stop, { capture: true, passive: true }); });
+    requestAnimationFrame(function krok(now) {
+      if (hotovo) return;
+      if (!t0) t0 = now;
+      var p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
+      choj(y0 + (cielY() - y0) * e);
+      if (p < 1) requestAnimationFrame(krok);
+      else requestAnimationFrame(function () { if (!hotovo) choj(cielY()); stop(); });
+    });
+  }
+  function cielKotvy(href) {
+    var id = ''; try { id = decodeURIComponent(href.slice(1)); } catch (x) {}
+    return id && id !== 'obsah' ? d.getElementById(id) : null;   // preskočenie na obsah nechá prehliadaču (fokus)
+  }
+  d.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var href = a.getAttribute('href'), ciel = cielKotvy(href);
+    if (!ciel) return;
+    e.preventDefault();
+    if (location.hash !== href) history.pushState(history.state, '', href);
+    naKotvu(ciel, !reduce);
+  });
+  // príchod s kotvou z inej stránky webu (zvonka úvod kotvu zahodí, zdroj/uvitanie-head.js): po načítaní dorovnať
+  (function () {
+    var n = performance.getEntriesByType && performance.getEntriesByType('navigation')[0], c = location.hash.length > 1 && cielKotvy(location.hash);
+    if (c && (!n || n.type === 'navigate')) addEventListener('load', function () { naKotvu(c, false); }, { once: true });
+  })();
+
   // menu: zatvorené je inert (mimo fokusu aj čítačky), otvorené je modálny dialóg – fokus na Zavrieť, Tab ostáva v menu,
   // po zatvorení sa fokus vráti na tlačidlo menu
   var b = d.querySelector('.menu-btn'), dr = d.getElementById('drawer');
