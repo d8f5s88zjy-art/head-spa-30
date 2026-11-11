@@ -287,7 +287,8 @@ await page.click('#ulozit');
 await page.waitForFunction(() => /Uložené|Neuložené/.test(document.querySelector('#saveMsg').textContent), null, { timeout: 30000 });
 ok(/^Uložené/.test(await page.textContent('#saveMsg')), 'galéria uložená', await page.textContent('#saveMsg'));
 const idx2 = subor('barbershop-30/index.html').toString();
-ok(idx2.includes(`alt="${alt0} Detail."`) && idx2.includes(`data-lightbox-alt="${alt0} Detail."`), 'popis fotky aj zväčšenia');
+// zväčšenie berie popis z alt obrázka (data-lightbox-alt v galérii od 11. 11. 2026 nie je, bol zhodný s alt)
+ok(idx2.includes(`alt="${alt0} Detail."`) && !idx2.includes(`data-lightbox-alt="${alt0}"`), 'popis fotky aj zväčšenia');
 
 /* ---------- nový člen tímu ---------- */
 console.log('\nnový člen tímu');

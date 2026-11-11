@@ -276,3 +276,13 @@ Lajko nespomenul, ostáva (otázka pre Lajka). Znalosti Barbera (`../asistent/zn
 `balicky-kava`, `o-time-kava-pocas-strihu`, `o-time-buldog`, `o-time-interier`, `route66`, `kresla`, `vchod`, `recepcia`, `o-time-prichod`,
 `o-time-recepcna-meno`, `atmosfera`, `sluzby-presne-podla-mna`) hovoria to isté: káva podľa chuti aj počas strihania, prémiové kreslá,
 šarmantná a milá recepčná pri vchode, barber ostrihá presne podľa želania a predstavy, buldog = socha so slúchadlami na sude („strážny pes“ je vtip).
+
+## Logá prevádzok v pätičke (Lajko 9. 11. 2026 večer, zapracované 11. 11. 2026)
+
+Lajko: „pridať logá Salónu 30 a HEAD SPA 30 krásne a profesionálne, s preklikom na ich web aj Instagram“. Logá sú len
+z oficiálnych webov prevádzok (stiahnuté 11. 11. 2026): HEAD SPA 30 = znak z hlavičky https://www.headspa30.sk/ (SVG),
+Salón 30 = https://www.salon30.sk/images/demo/logo.png (100 × 101 px, iné web nemá). Instagram z pätičiek ich webov:
+https://www.instagram.com/headspa.salon30/, https://www.instagram.com/salon30_nitra/; Barbershop 30
+https://www.instagram.com/barbershop30_nitra/ (náš web). Prevádzkovateľ Salónu 30 podľa päty salon30.sk: Facepalm s.r.o.,
+IČO 52231381 (= Barbershop 30); HEAD SPA 30 prevádzkovateľa na webe neuvádza. Stupeň: overené‑oficiálne (weby prevádzok).
+Podrobne `README.md` „Logá prevádzok“.

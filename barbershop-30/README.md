@@ -172,25 +172,31 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   `source/tools/otazky.mjs` berie povolené časy z app.js. Test: `node source/tools/admin-test.mjs`
   (falošný GitHub v pamäti, nič nejde von). Funguje až po zverejnení webu v `main` (číta súbory odtiaľ).
 
-## Logá prevádzok (pripravené, čaká na súbory)
+## Logá prevádzok
 
-Lajko 9. 11. 2026: „pridať logá aj ostatných prevádzok“. Súbory zatiaľ neposlal, preto je v pätičke `index.html`
-(blok `.footer-shops`, položky HEAD SPA 30, Salón 30, Barbershop 30) pri každej prevádzke `<img class="footer-shop-logo">`
-v HTML komentári: nič sa nezobrazí a nasadená stránka ho nenesie (komentáre odstraňuje `source/tools/zmensi.mjs`).
-Štýl je hotový v `assets/style.css` (`.footer-shop-logo`: výška 40 px, šírka podľa pomeru, najviac 180 px, bez podkladu).
+Lajko 9. 11. 2026 večer: „pridať logá Salónu 30 a HEAD SPA 30 krásne a profesionálne, s preklikom na ich web aj Instagram“.
+V pätičke `index.html` (blok `.footer-shops`) má každá prevádzka logo nad menom v tom istom odkaze na jej web (preto
+`alt=""`, meno je text odkazu), pod opisom odkazy **Web** a **Instagram** (`target="_blank" rel="noopener"`, `aria-label`
+s menom prevádzky, kľúče vo všetkých 7 slovníkoch). Štýl `assets/style.css` (`.footer-shop-logo`: výška 40 px, `.footer-shop-web`).
 
-Čo treba dodať (od Lajka alebo majiteľa):
-- logo každej prevádzky: najlepšie SVG (krivky), inak PNG s priehľadným pozadím aspoň 2× výšky zobrazenia (≥ 320 px na šírku),
-  vo svetlej (jednofarebnej alebo plnofarebnej) verzii na tmavé pozadie; Barbershop 30 má vektor
-  `source/web-povodny/logo-vector-black.svg` (čierny, na pätičku treba svetlý variant),
-- potvrdenie názvov a odkazov (dnes HEAD SPA 30 → https://www.headspa30.sk/, Salón 30 → https://www.salon30.sk/,
-  Barbershop 30 → úvod tejto stránky; adresy Mostná 30 overené 27. 10. 2026),
-- súhlas majiteľov HEAD SPA 30 a Salónu 30 s použitím ich loga na tomto webe.
+| prevádzka | súbor | zdroj (stiahnuté 11. 11. 2026, curl) | úprava | odkazy |
+|---|---|---|---|---|
+| HEAD SPA 30 | `assets/img/prevadzky/head-spa-30.svg` (614 B) | znak v hlavičke https://www.headspa30.sk/ (inline SVG `.mark`, viewBox 64 × 64: kruh `#d9b56a`, lotos `#f3c98a`, linka) | len vyčistené: bez tried a `pathLength` pre animáciu, pridaný `xmlns`; krivky a farby bez zmeny | https://www.headspa30.sk/, https://www.instagram.com/headspa.salon30/ |
+| Salón 30 | `assets/img/prevadzky/salon-30.webp` (1,4 kB) | https://www.salon30.sk/images/demo/logo.png (100 × 101 px, biele na priehľadnom; iné ani väčšie logo web nemá: `logo@2x.png`, `logo.svg` → 404) | orezané priehľadné okraje na 100 × 74 px, bezstratové WebP (bod po bode zhodné s PNG); zobrazené 54 × 40 px = 2× na telefóne s DPR 2 | https://www.salon30.sk/, https://www.instagram.com/salon30_nitra/ |
+| Barbershop 30 | `assets/img/ikona/ikona-192.png` (ikona tohto webu „30“ s linkou lampy) | vlastná | žiadna (atrament ikony = atrament pätičky `#0e0d0c`, štvorec nevidno) | úvod stránky, https://www.instagram.com/barbershop30_nitra/ |
 
-Zapnutie: súbory do `assets/img/prevadzky/` (`head-spa-30.svg`, `salon-30.svg`, `barbershop-30.svg`), v `index.html`
-odkomentovať tri `<img>`, doplniť skutočné `width`/`height` v pomere súboru, `node source/tools/en-stranka.mjs`
-(anglická stránka), `node source/tools/vaha.mjs` (rozpočet 14 600 B gzip: tri `<img>` sú asi +150 B) a `node source/tools/app-smoke.mjs`.
-Alt ostáva prázdny (meno prevádzky je hneď v odkaze pod logom), preto netreba kľúče v slovníkoch.
+Prevádzkovateľ: Salón 30 – päta salon30.sk „Facepalm s.r.o., IČO: 52231381“, ten istý ako Barbershop 30 (FACEPALM, s.r.o.,
+IČO 52231381). HEAD SPA 30 – headspa30.sk prevádzkovateľa neuvádza (`pravne.html` má polia Obchodné meno a IČO prázdne;
+adresa Mostná 226/30, e-mail info@salon30.sk, „samostatná časť s vlastným tímom v priestoroch Salónu 30“). Svetlý variant
+netreba: Salón 30 je už biely, HEAD SPA 30 zlatý (kontrast na atramente 10 : 1), nič sa neprekresľovalo.
+
+Čo si vyžiadať (zlepší ostrosť, nie je podmienkou): od Salónu 30 logo vo vektore (SVG/PDF/AI) alebo PNG s priehľadným
+pozadím aspoň 240 px na výšku – dnešných 100 px je na iPhone (DPR 3) mierne mäkkých a podtitul „DÁMSKE KADERNÍCTVO“ je pri
+40 px len čiarka; od HEAD SPA 30 potvrdenie prevádzkovateľa (pre zápis zdrojov) a súhlas oboch prevádzok s použitím loga
+(rovnaká skupina, logá sú z ich oficiálnych webov). Výmena: nový súbor pod tým istým menom (alebo nové meno a `src`
+v `index.html`), upraviť `width`/`height` v pomere strán, `node source/tools/en-stranka.mjs`, `node source/tools/vaha.mjs`.
+Váha: logá a odkazy v pätičke stoja +152 B gzip nasadenej `index.html`; −52 B vrátilo, že galéria už nemá
+`data-lightbox-alt` (bol zhodný s `alt` obrázka a zväčšenie berie popis z `alt`, `app.js` `show()`), spolu 14 565 B < 14 600 B.
 
 ## Nasadenie
 
