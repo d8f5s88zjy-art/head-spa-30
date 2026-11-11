@@ -592,37 +592,30 @@ if (motionOn && mqFinePointer.matches) {
       const w = window.open(a.href, '_blank'); if (w) w.opener = null; else location.assign(a.href);
     }).finally(() => a.removeAttribute('aria-busy'));
   };
-  // záloha bez modulu: texty z okna objednávky (objednavka.js), telefón z úvodu a hodiny z pätičky (už v jazyku stránky)
-  const ZAL = {
-    sk: 'Objednávka cez web teraz nejde – zavolaj.|Si bez internetu. Keď sa pripojíš, skús znova.|Zavrieť|Skúsiť znova',
-    en: 'Online booking isn’t working right now – call us.|You’re offline. Once you’re connected, try again.|Close|Try again',
-    uk: 'Онлайн-бронювання зараз не працює – зателефонуй.|Немає інтернету. Коли підключишся, спробуй ще раз.|Закрити|Спробувати ще раз',
-    hu: 'Az online foglalás most nem működik – hívj minket.|Nincs internetkapcsolat. Ha újra csatlakoztál, próbáld újra.|Bezárás|Újrapróbálás',
-    sr: 'Onlajn zakazivanje sada ne radi – pozovi nas.|Nisi povezan na internet. Kad se povežeš, pokušaj ponovo.|Zatvori|Pokušaj ponovo',
-    pl: 'Rezerwacja online teraz nie działa – zadzwoń.|Brak internetu. Gdy się połączysz, spróbuj ponownie.|Zamknij|Spróbuj ponownie',
-    de: 'Online-Buchung geht gerade nicht – ruf uns an.|Du bist offline. Sobald du verbunden bist, versuch es noch einmal.|Schließen|Noch einmal versuchen',
-    cs: 'Objednávka přes web teď nejde – zavolej.|Jsi offline. Až se připojíš, zkus to znovu.|Zavřít|Zkusit znovu',
-  };
+  // záloha bez modulu: vety ako v okne objednávky (iné jazyky preloží slovník assets/i18n/*.json pri vložení),
+  // telefón z úvodu a hodiny z pätičky (už v jazyku stránky)
   let zal = null, zalOdkaz = null;
   const zaloha = (a) => {
-    const [h, off, x, r] = (ZAL[(html.lang || 'sk').slice(0, 2)] || ZAL.sk).split('|');
     const n = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; };
     if (!zal) {
       zal = n('dialog', 'obj-zaloha');
-      zal.setAttribute('aria-labelledby', 'obj-zaloha-h'); zal.setAttribute('data-no-i18n', '');
+      zal.setAttribute('aria-labelledby', 'obj-zaloha-h');
       zal.addEventListener('click', (e) => { if (e.target === zal) zal.close(); });
       document.body.append(zal);
       // internet sa vrátil: skúsi okno objednávky samo
       addEventListener('online', () => { if (zal.open) { zal.close(); otvorObj(zalOdkaz); } });
     }
     zalOdkaz = a;
-    const nad = n('h2', '', h); nad.id = 'obj-zaloha-h'; nad.tabIndex = -1;
-    const zav = n('button', 'obj-zaloha-x', '×'); zav.type = 'button'; zav.setAttribute('aria-label', x); zav.onclick = () => zal.close();
+    const nad = n('h2', '', 'Objednávka cez web teraz nejde – zavolaj.'); nad.id = 'obj-zaloha-h'; nad.tabIndex = -1;
+    const zav = n('button', 'obj-zaloha-x'); zav.type = 'button'; zav.onclick = () => zal.close();
+    zav.append(n('span', '', '×'), n('span', 'visually-hidden', 'Zavrieť')); zav.firstChild.setAttribute('aria-hidden', 'true');
     const tel = $('.title-actions .btn-tel'), t = n('a', 'btn btn-primary', tel ? tel.textContent : '0951 267 203'); t.href = 'tel:+421951267203';
     const hod = $('.site-footer .hours'), hodH = hod && hod.previousElementSibling;
-    const zn = n('button', 'btn btn-secondary', r); zn.type = 'button'; zn.onclick = () => { zal.close(); otvorObj(zalOdkaz); };
-    zal.replaceChildren(zav, nad, navigator.onLine === false ? n('p', '', off) : '', t,
-      hodH ? n('p', 'obj-zaloha-hod', hodH.textContent) : '', hod ? hod.cloneNode(true) : '', zn);
+    const zn = n('button', 'btn btn-secondary', 'Skúsiť znova'); zn.type = 'button'; zn.onclick = () => { zal.close(); otvorObj(zalOdkaz); };
+    // kópie zo stránky sú už preložené: slovník ich nesmie prekladať znova (nemecké „So“ je slovenská sobota)
+    const hodK = hod ? hod.cloneNode(true) : '', hodP = hodH ? n('p', 'obj-zaloha-hod', hodH.textContent) : '';
+    for (const e of [t, hodK, hodP]) if (e) e.setAttribute('data-no-i18n', '');
+    zal.replaceChildren(zav, nad, navigator.onLine === false ? n('p', '', 'Si bez internetu. Keď sa pripojíš, skús znova.') : '', t, hodP, hodK, zn);
     zal.removeAttribute('inert');   // otvorené z okna Barbera (to robí zvyšok stránky inert)
     if (!zal.open) zal.showModal();
     nad.focus({ preventScroll: true });
