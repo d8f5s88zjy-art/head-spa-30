@@ -7,8 +7,10 @@
  *   Hudbu pustí to isté prvé ťuknutie ako inde na stránke (atmosfera.js), ak ju zákazník nevypol.
  * KF-03 „Ďalej: <kapitola> ↓“: keď zákazník 1,8 s neskroluje (nie v úvode, na poslednej kapitole, počas Kina). Len
  *   text s tieňom a čiara, žiadna doska. Názvy kapitol sú aria-label z pásu (preklady i18n). Nikdy neleží na inom
- *   texte: pri zastavení (nie pri skrole) sa raz zmeria, či je jeho miesto voľné (volno()); nad pásom s textom,
- *   kartou či titulkom sa neukáže.
+ *   texte (pravidlo bez časovania, zákazník 9. 11.): svieti len vtedy, keď jeho obdĺžnik s rezervou 8 px nepretína
+ *   žiadny viditeľný text (volno()). Meria sa pri zastavení (nie pri skrole), pri každej zmene jeho rozmeru či polohy
+ *   (iná kapitola, jazyk, písmo, okno) a keď sa pod ním niečo rozbehne (prechod, animácia); inak ostane skrytý.
+ *   Pri skrole zhasne hneď, bez doznievania (style.css), takže text pod neho nikdy nedôjde.
  * KF-07 titulky „krok za krokom“ (B5): pri karte Remesla bežia kroky pánskeho strihu z cenníka (.steps, preklady
  *   i18n) podľa polohy v karte, ako titulky filmu. Text s tieňom bez dosky, čítačka ich nečíta (sú v cenníku).
  *   Poloha z jednej slučky app.js (BS30_PAS.krok), nič sa pri skrole nemeria. Pri obmedzenom pohybe nie sú.
@@ -48,6 +50,50 @@ html[data-motion="off"] .kino-tit{display:none}`;
 /* pásy s textom v skrole (merajú sa pri štarte jazdy, nie počas nej) */
 const pasy = () => [...d.querySelectorAll('.band')].map((el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY, r.bottom + scrollY]; });
 
+/* Je miesto prvku (el: „Ďalej“, názov kapitoly v páse) voľné? Jeho obdĺžnik s rezervou ZONA px (zhora navyše o hore px,
+   „Ďalej“ nastupuje zdola o 8 px) nesmie pretínať žiadny viditeľný text na stránke. Viditeľný = nie display:none ani
+   visibility:hidden, účinné krytie aspoň 0,02 alebo práve nastupuje (bežiaci prechod či animácia). Text, ktorý sa sám
+   hýbe (bežiaci pás služieb), sa ráta celým svojím pásom. Meria sa len v pokoji (pri zastavení), nikdy počas skrolu. */
+const ZONA = 8;
+function volno(el, hore = 0) {
+  const r = el.getBoundingClientRect();
+  if (!r.width || !r.height) return false;          // nedá sa zmerať: radšej neukázať
+  const L = r.left - ZONA, T = r.top - ZONA - hore, R = r.right + ZONA, B = r.bottom + ZONA;
+  // texty pre čítačku (.visually-hidden, 1 × 1 px) nie sú vidieť, nerátajú sa
+  const cez = (q) => q.width > 1 && q.height > 1 && q.right > L && q.left < R && q.bottom > T && q.top < B;
+  const vidno = new Map();
+  const viditelny = (el) => {
+    if (vidno.has(el)) return vidno.get(el);
+    let o = 1, v;
+    const nizke = [];                                 // predkovia, ktorí text skoro celý zhasínajú
+    for (let e = el; e && e !== root; e = e.parentElement) {
+      const s = getComputedStyle(e);
+      if (s.display === 'none' || s.visibility === 'hidden' || s.visibility === 'collapse') { v = false; break; }
+      const op = +s.opacity;
+      if (op < 1) { o *= op; if (op < 0.5) nizke.push(e); }
+    }
+    // takmer priehľadný text sa ráta, len keď práve nastupuje: každý predok, ktorý ho zhasína, má bežiaci prechod
+    // alebo animáciu (karta po skrole zhasnutá ostane zhasnutá, nastupujúci krok či slovo sa rozsvieti)
+    if (v === undefined) v = o >= 0.02 || (nizke.length > 0 && nizke.every((e) => !!e.getAnimations && e.getAnimations().some((a) => a.playState === 'running')));
+    vidno.set(el, v); return v;
+  };
+  const tw = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT);
+  const rg = d.createRange();
+  let rodic = null;
+  for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+    const p = n.parentElement;
+    if (!p || p === rodic || !n.nodeValue.trim() || el.contains(p) || next.contains(p)) continue;
+    if (/^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE|TITLE|OPTION)$/.test(p.tagName)) continue;
+    const pas = p.closest('.marquee');
+    const box = (pas || p).getBoundingClientRect();
+    if (!cez(box)) continue;                         // rýchly odpad: rodič aj s textom je mimo miesta „Ďalej“
+    if (!pas) { rg.selectNodeContents(n); if (![...rg.getClientRects()].some(cez)) continue; }
+    if (viditelny(pas || p)) return false;
+    rodic = pas ? null : p;
+  }
+  return true;
+}
+
 function dalej() {
   if (!next) return;
   const c = PAS.kapitola;
@@ -72,16 +118,34 @@ export function zapni() {
   dalej();
   const st = d.createElement('style'); st.textContent = CSS; d.head.append(st);
   titulky();
-  // zastavenie: 1,8 s bez skrolu (len časovač, nič sa pri skrole nemeria). Až pri zastavení sa raz zmeria, či je miesto
-  // pre „Ďalej“ voľné (rezerva 12 px): pás s textom alebo pätička, rozsvietená karta, titulok. Ak nie, neukáže sa.
-  const volno = () => {
-    const r = next.getBoundingClientRect();
-    if (!r.height) return true;
-    const m = 12, hit = (el) => { const q = el.getBoundingClientRect(); return q.height > 0 && q.bottom > r.top - m && q.top < r.bottom + m && q.right > r.left - m && q.left < r.right + m; };
-    return ![...d.querySelectorAll('.band, .site-footer, .film-shot.is-title.is-on .title-card, .kino-tit li.on')].some(hit);
+  // zastavenie: 1,8 s bez skrolu (len časovač, nič sa pri skrole nemeria). Pri zastavení sa zmeria, či je miesto pre
+  // „Ďalej“ voľné (volno()); kým svieti, meria sa znova pri zmene jeho rozmeru (ResizeObserver: kapitola, jazyk, písmo),
+  // okna a keď sa na stránke rozbehne prechod či animácia (text pod ním môže nastúpiť). Nikdy počas skrolu.
+  // To isté pravidlo pre názov kapitoly v páse (len počítač, telefón ho nemá): pri zastavení nad textom (karta, ktorú
+  // nepokrýva pravidlo pásov v app.js) zhasne a ostane zhasnutý do ďalšieho zastavenia.
+  const stoji = () => root.classList.contains('kino-stoji');
+  const stitok = line.querySelector('.kino-label');
+  let pokoj = false;                                  // od zastavenia po ďalší skrol
+  const zmerajDalej = () => root.classList.toggle('kino-nevolno', !(next.hidden || volno(next, 8)));   // skryté zmeria RO
+  const zmerajStitok = () => { if (stitok) root.classList.toggle('kino-stitok-nevolno', !!stitok.offsetWidth && !volno(stitok)); };
+  // Názov kapitoly sa zmeria pri zastavení hneď. „Ďalej“ počká, kým slučka app.js dobehne (koliesko myši, pomalé
+  // snímky): karty a pás sa ešte môžu pohnúť, dovtedy ostane skryté.
+  const stoj = () => {
+    clearTimeout(stojT); if (playing) return;
+    pokoj = true; zmerajStitok();
+    if (PAS.bezi) { root.classList.remove('kino-stoji'); stojT = setTimeout(stoj, 150); return; }
+    zmerajDalej(); root.classList.add('kino-stoji');
   };
-  const stoj = () => { clearTimeout(stojT); if (playing) return; root.classList.toggle('kino-nevolno', !volno()); root.classList.add('kino-stoji'); };
-  addEventListener('scroll', () => { if (root.classList.contains('kino-stoji')) root.classList.remove('kino-stoji'); clearTimeout(stojT); stojT = setTimeout(stoj, STOJ); }, { passive: true });
+  // zmena rozmeru „Ďalej“ alebo názvu kapitoly (iná kapitola, jazyk, písmo; aj odkrytie „Ďalej“) sa meria hneď v tej
+  // istej snímke (ResizeObserver beží po rozložení, pred vykreslením); prechody a animácie inde na stránke v najbližšej
+  // snímke, najviac raz za snímku
+  const prever = () => { if (stoji()) { zmerajDalej(); zmerajStitok(); } };
+  let znovaF = 0;
+  const znova = (e) => { if (znovaF || !stoji() || (e && e.target === next)) return; znovaF = requestAnimationFrame(() => { znovaF = 0; prever(); }); };
+  if ('ResizeObserver' in window) { new ResizeObserver(prever).observe(next); if (stitok) new ResizeObserver(() => { if (pokoj) zmerajStitok(); }).observe(stitok); }
+  addEventListener('resize', znova, { passive: true });
+  for (const t of ['transitionrun', 'transitionend', 'animationstart', 'animationend']) d.addEventListener(t, znova, { passive: true });
+  addEventListener('scroll', () => { pokoj = false; if (stoji()) root.classList.remove('kino-stoji'); clearTimeout(stojT); stojT = setTimeout(stoj, STOJ); }, { passive: true });
   stojT = setTimeout(stoj, STOJ);
   // Kino zastaví zákazník: koliesko a kláves vždy (aj s myšou nad ▶ či fokusom na ▶ hneď po kliknutí), dotyk a stlačenie
   // mimo ▶, skrytie karty. ▶ prepína len kliknutím; Enter a medzerník na fokusovanom ▶ sú to isté kliknutie.

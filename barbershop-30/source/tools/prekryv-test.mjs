@@ -16,7 +16,9 @@
 //     po 16 px cez miesto, kde svieti „Ďalej“ a pás kapitol – tam vzniklo prekrytie zo snímky zákazníka („Ďalej“ cez
 //     štítok sekcie), ktoré krok 150 px netrafí.
 //  3. Skutočné čakanie 2,6 s na cieli každej kapitoly: „Ďalej“ sa musí aspoň raz ukázať samo (test nesmie prejsť len
-//     preto, že sa „Ďalej“ neukazuje vôbec).
+//     preto, že sa „Ďalej“ neukazuje vôbec) a pri prvom pohybe skrolu hneď zhasnúť (krytie 0 v najbližšej snímke).
+// Výsledok nesmie závisieť od časovania (záťaž, pomalé snímky): „Ďalej“ svieti len na mieste bez viditeľného textu
+// (kino.js volno()) a pás kapitol sa nad pásom s textom schová v tej istej snímke (style.css bez doznievania).
 // Text pod nepriehľadnou plochou (lišta, pás, pripnuté záložky cenníka) je zakrytý, to nie je nález. Pri náleze sa uloží
 // snímka s rámikmi (červený prienik, modrý a zelený prvok) do --out (predvolene dočasný priečinok, nie docs/).
 import fs from 'node:fs';
@@ -226,8 +228,9 @@ async function okno(w, h, film) {
       for (let v = zT - 16; v <= zB + 96; v += 16) body.add(Math.round(b - v));   // spodný okraj pásu (posledný text) cez zónu
     }
     for (const y of [...body].filter((y) => y >= 0 && y <= geo.max).sort((a, b) => a - b)) await meraj(y, 200);
-    // 3. skutočné čakanie na cieli kapitol: „Ďalej“ sa musí ukázať samo
-    let samo = 0;
+    // 3. skutočné čakanie na cieli kapitol: „Ďalej“ sa musí ukázať samo. Keď svieti, prvý pohyb skrolu ho musí zhasnúť
+    //    hneď (v najbližšej vykreslenej snímke krytie 0, bez doznievania) – inak by pod ním prešiel text pásu.
+    let samo = 0, doznieva = 0;
     const ciele = await page.evaluate(() => (window.BS30_KINO ? window.BS30_KINO.state.ciele : []));
     for (const y of ciele.slice(1, -1)) {
       await page.evaluate((yy) => scrollTo({ top: yy, behavior: 'instant' }), y);
@@ -235,6 +238,10 @@ async function okno(w, h, film) {
       const r = await page.evaluate(V_STRANKE, { PRAH });
       merani++; if (r.dalej) samo++;
       for (const n of r.prekryte) { const k = `${n.a.sel} × ${n.b.sel}`; if (!nalezy.has(k)) nalezy.set(k, { ...n, y, krokov: 1, snimka: '' }); }
+      if (r.dalej) {
+        const o = await page.evaluate(() => new Promise((ok) => { scrollBy({ top: 40, behavior: 'instant' }); requestAnimationFrame(() => requestAnimationFrame(() => ok(+getComputedStyle(document.querySelector('.kino-next')).opacity))); }));
+        if (o > 0.01) doznieva++;
+      }
     }
     const zoznam = [...nalezy.values()];
     ok(!zoznam.length && !chyby.length, `${meno}: 0 prekrytí textov`, `${merani} meraní, výška ${H} px, „Ďalej“ svietilo ${dalejVidno}× (samo ${samo}×), titulky ${titulkyVidno}×, zakrytých pod plochou ${zakryte}, rezov pásom ${rezy}${chyby.length ? ', chyby: ' + chyby.join(' | ') : ''}`);
@@ -243,6 +250,7 @@ async function okno(w, h, film) {
     if (h >= 700 && film === 'off') {
       ok(kino && stoj, `${meno}: Kino je načítané a dá sa zastaviť (BS30_KINO.stoj)`);
       ok(samo > 0, `${meno}: „Ďalej“ sa po 1,8 s státia ukáže samo`, `${samo} z ${Math.max(0, ciele.length - 2)} kapitol`);
+      ok(samo > 0 && doznieva === 0, `${meno}: „Ďalej“ pri prvom pohybe skrolu zhasne hneď (bez doznievania)`, `${samo - doznieva} z ${samo}`);
       if (mobil || w >= 1024) ok(titulkyVidno > 0, `${meno}: titulky krok za krokom v Remesle svietia`, `${titulkyVidno}×`);
     }
   } catch (e) {

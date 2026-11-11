@@ -61,7 +61,7 @@ const kino = storyLine && storyLinks.length ? (() => {
   // draggable = false: myšou sa inak ťahá odkaz (dragstart → pointercancel) a pás sa nedá pretáčať
   const fills = storyLinks.map((a) => { a.draggable = false; const i = document.createElement('i'); i.className = 'kino-fill'; i.setAttribute('aria-hidden', 'true'); a.append(i); return i; });
   storyLine.prepend(play); storyLine.append(label);
-  return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0, q: 100, skok: -1, skokDo: 0 };
+  return { play, label, fills, f: fills.map(() => -1), cur: -1, tenky: null, pasy: [], barY: 0, barH: 0, q: 100, skok: -1, skokDo: 0 };
 })() : null;
 const footer = $('.site-footer');
 
@@ -130,7 +130,8 @@ function measure() {
   // pás kapitol: pásy s textom (tím, cenník, galéria, kontakt, pätička), nad nimi je pás len tenká čiara
   if (kino) {
     kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
-    const r = storyLine.getBoundingClientRect(); kino.barY = r.top + r.height / 2;
+    // pás kapitol s názvom kapitoly: celý jeho obdĺžnik (nie len stred), aby sa schoval skôr, než k nemu dôjde text pásu
+    const r = storyLine.getBoundingClientRect(); kino.barY = r.top + r.height / 2; kino.barH = r.height / 2;
     // výplň kapitoly po celých CSS px dielika (nie po 0,001): pri skrole sa zapíše len raz za niekoľko snímok
     kino.q = Math.max(8, Math.min(100, Math.round(storyLinks[0].getBoundingClientRect().width) || 100));
   }
@@ -282,7 +283,8 @@ function kresliPas(y, section, uvod) {
   if (lc !== kino.cur) { kino.cur = lc; kino.label.textContent = String(lc + 1).padStart(2, '0') + ' · ' + storyLinks[lc].getAttribute('aria-label'); }
   // nad pásom s textom sa pás kapitol schová: podľa skutočnej polohy skrolu (curY), nie dobiehanej (y) – pri pomalých
   // snímkach by dobiehaná poloha meškala a názov kapitoly by svietil cez text pásu
-  const yb = curY + kino.barY, tenky = kino.pasy.some((b) => yb >= b[0] && yb <= b[1]);
+  // (celý pás s rezervou 8 px: pás s textom sa ho nesmie dotknúť ani okrajom)
+  const yb = curY + kino.barY, m = kino.barH + 8, tenky = kino.pasy.some((b) => yb + m > b[0] && yb - m < b[1]);
   if (tenky !== kino.tenky) { kino.tenky = tenky; html.classList.toggle('kino-tenky', tenky); }
   // ukázaná karta úvodu: na nízkom telefóne by pás ležal na jej nadpise (CSS ho vtedy skryje)
   if (uvod !== kino.uvod) { kino.uvod = uvod; html.classList.toggle('kino-uvod', uvod); }
@@ -413,7 +415,8 @@ if (kino) {
     window.scrollTo({ top: ciel(j), behavior: motionOff || Math.abs(j - i) > 1 ? 'instant' : 'smooth' });
   });
   // karta(i): [začiatok, dĺžka] karty kapitoly; krok: funkcia kino.js volaná v slučke (titulky Remesla, B5)
-  window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; }, karta: (i) => { const t = karta(i); return t && [t.top, t.free]; }, set krok(f) { kino.krok = f; apply(shownP); } };
+  // bezi: slučka ešte dobieha za skrolom (kino.js s „Ďalej“ počká na pokoj)
+  window.BS30_PAS = { ciel, get kapitola() { return kino.cur; }, get N() { return N; }, get bezi() { return !!rafId; }, karta: (i) => { const t = karta(i); return t && [t.top, t.free]; }, set krok(f) { kino.krok = f; apply(shownP); } };
   const modul = () => import('./kino.js');
   kino.play.addEventListener('click', () => modul().then((m) => m.prepni()).catch(() => {}));
   // Kino a „Ďalej“ (kino.js) ako posledný v pláne lenivých modulov (5b)

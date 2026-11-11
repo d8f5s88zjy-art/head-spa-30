@@ -387,18 +387,19 @@ html.kino .story-line a, html.kino .kino-label, .kino-play { transition: opacity
 html.kino .story-line a { position: relative; flex: 1 1 0; width: auto; height: 32px; min-width: 0; padding: 0; display: block; -webkit-user-drag: none; }
 html.kino .story-line a::before {
   content: ""; position: absolute; left: 0; right: 0; top: 50%; width: auto; height: 3px; margin-top: -1.5px;
-  border-radius: 2px; background: rgba(241, 233, 221, 0.38); transform: none; transition: height 180ms, margin 180ms;
+  border-radius: 2px; background: rgba(241, 233, 221, 0.38); transform: none; transition: scale 180ms;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 html.kino .story-line a[aria-current="true"]::before { background: rgba(241, 233, 221, 0.55); transform: none; }
-html.kino .story-line a:hover::before, html.kino .story-line a:focus-visible::before, html.kino.kino-tah .story-line a::before { height: 6px; margin-top: -3px; }
+/* hrubšia čiara pri ukázaní a ťahu: zväčšenie (scale), nie výška a okraj – bez prepočtu rozloženia v každej snímke */
+html.kino .story-line a:hover::before, html.kino .story-line a:focus-visible::before, html.kino.kino-tah .story-line a::before { scale: 1 2; }
 html.kino .story-line a:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; border-radius: 3px; }
 .kino-fill {
   position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px;
-  background: var(--lamp); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; transition: height 180ms, margin 180ms;
+  background: var(--lamp); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; transition: scale 180ms;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
-html.kino .story-line a:hover .kino-fill, html.kino .story-line a:focus-visible .kino-fill, html.kino.kino-tah .kino-fill { height: 6px; margin-top: -3px; }
+html.kino .story-line a:hover .kino-fill, html.kino .story-line a:focus-visible .kino-fill, html.kino.kino-tah .kino-fill { scale: 1 2; }
 .kino-play {
   flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(241, 233, 221, 0.8);
   background: transparent; color: var(--paper); display: grid; place-items: center; cursor: pointer; padding: 0;
@@ -414,8 +415,11 @@ html.kino-hra .kino-play { border-color: var(--lamp); color: var(--lamp); }
   color: var(--paper); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); white-space: nowrap;
 }
 /* nad pásmi s textom (tím, cenník, galéria) sa pás schová celý: čiary bez podkladu by text prečiarkovali;
-   klávesnica ho ukáže (fokus), pri ťahu ostane */
-html.kino-tenky:not(.kino-tah) .story-line:not(:focus-within) { opacity: 0; pointer-events: none; }
+   klávesnica ho ukáže (fokus), pri ťahu ostane. Schová sa hneď (v snímke, keď sa okraj pásu priblíži na 8 px, app.js
+   kresliPas), ukáže sa pomaly – doznievanie 300 ms nechávalo názov kapitoly svietiť cez prichádzajúci text pásu. */
+html.kino-tenky:not(.kino-tah) .story-line:not(:focus-within) { opacity: 0; pointer-events: none; transition: none; }
+/* názov kapitoly nad iným textom pri zastavení (kino.js, pravidlo ako pri „Ďalej“): zhasne, čiary pásu ostanú */
+html.kino-stitok-nevolno:not(.kino-tah) .story-line:not(:focus-within) .kino-label { opacity: 0; transition: none; }
 /* pri menu, okne Barbera, objednávke, prológu a vonku sa pás neukazuje; kým svieti ponuka jazyka, pás počká
    (ponuka jazyka cez triedu lang-ponuka z i18n.js, nie html:has(): ten pri skrole prepočítaval štýl celej stránky) */
 html.pro .story-line, html.outside .story-line, .site-header[data-menu="open"] ~ .story-line, html.obj-otvorene .story-line,
@@ -436,21 +440,24 @@ html.kino.lang-ponuka .story-line { opacity: 0 !important; pointer-events: none 
   position: fixed; z-index: 41; left: 24px; bottom: 76px; display: inline-flex; gap: 0.4em; align-items: baseline; max-width: 70vw;
   padding: 10px 2px; color: var(--paper); text-decoration: none; font-weight: 700; font-size: 0.95rem; line-height: 1.1;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.95), 0 1px 6px rgba(0, 0, 0, 0.9), 0 0 16px rgba(0, 0, 0, 0.65); border-bottom: 2px solid var(--lamp);
-  opacity: 0; transform: translateY(8px); transition: opacity 350ms, transform 350ms; pointer-events: none;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
 }
 .kino-next[hidden] { display: none; }
 .kino-next-k { color: var(--paper); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
-html.kino-stoji .kino-next:not([hidden]) { opacity: 1; transform: none; pointer-events: auto; }
+/* nástup pomaly (350 ms), zhasnutie hneď: pri prvom pohybe skrolu „Ďalej“ zmizne v tej istej snímke, takže pod ním
+   nikdy neprejde text (predtým doznieval 350 ms a štítok pásu pod ním prešiel – snímka zákazníka 9. 11.) */
+html.kino-stoji .kino-next:not([hidden]) { opacity: 1; transform: none; pointer-events: auto; transition: opacity 350ms, transform 350ms; }
 .kino-next:focus-visible { opacity: 1; transform: none; pointer-events: auto; outline: 2px solid var(--lamp); outline-offset: 3px; }
 html.kino-hra .kino-next, html.kino-tenky .kino-next, html.kino-nevolno .kino-next, html.pro .kino-next, html.outside .kino-next, html.obj-otvorene .kino-next,
-.site-header[data-menu="open"] ~ .kino-next, html.lang-ponuka .kino-next { opacity: 0 !important; pointer-events: none !important; }
+.site-header[data-menu="open"] ~ .kino-next, html.lang-ponuka .kino-next { opacity: 0 !important; pointer-events: none !important; transition: none !important; }
 @media (max-width: 900px) {
   .kino-next { left: 16px; top: calc(var(--nav-h) + 44px); bottom: auto; }
   html.asi-open .kino-next { opacity: 0 !important; pointer-events: none !important; }
 }
 /* ležiaci a nízky telefón: karta je hneď pod pásom (vľavo aj dole), Ďalej by ležal na jej nadpise či tlačidle */
 @media (max-height: 500px) { .kino-next { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { .kino-next { transition: none; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .kino-next, html.kino-stoji .kino-next:not([hidden]) { transition: none; transform: none; } }
+html[data-motion="off"] .kino-next, html[data-motion="off"].kino-stoji .kino-next:not([hidden]) { transition: none; transform: none; }
 
 /* --------------------------------------------------------------------------
    7. Obrázky a videá

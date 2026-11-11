@@ -252,7 +252,10 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
 - `prekryv-test.mjs` – žiadne dva texty cez seba (zákazník 9. 11. 2026): okná 320/360/390/430/768/1440 px bez filmu aj
   s `?film=on` a nízke okná telefónu (iPhone s lištou Safari 390×664, 360×614, 430×733, 320×447). Stránka po krokoch,
   hrany pásov cez miesto „Ďalej“ a pásu kapitol po 16 px, skutočné čakanie na cieli kapitol; 0 prekrytí = OK
-  (asi 20 minút; `--w=390 --film=off --nizke=nie` je rýchla skúška jedného okna).
+  (asi 20 minút; `--w=390 --film=off --nizke=nie` je rýchla skúška jedného okna). Výsledok nezávisí od časovania:
+  „Ďalej“ svieti len tam, kde jeho obdĺžnik s rezervou 8 px nepretína žiadny viditeľný text (`kino.js` `volno()`,
+  meria sa pri zastavení a pri každej zmene), pri skrole zhasne v tej istej snímke (test to overí) a pás kapitol sa
+  schová skôr, než sa ho okraj pásu s textom dotkne (celý jeho obdĺžnik + 8 px, `app.js` `kresliPas`).
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený
