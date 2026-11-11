@@ -138,6 +138,11 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   na rezervačný systém; bez internetu navyše „Si bez internetu…“ a po návrate pripojenia to okno skúsi samo. Chyba
   uprostred cesty ukáže pri kroku Dokončiť v rezervačnom systéme, Zavolať, Skúsiť znova a hodiny. Fokus ide na nadpis
   kroku, Esc a Späť telefónu okno zatvoria a fokus sa vráti na odkaz; pri obmedzenom pohybe bez nábehu.
+  Modul okna sa sťahuje až pri dotyku odkazu; keď sa nestiahne (bez internetu), ťuk ukáže malú **zálohu priamo z `app.js`**
+  (tá istá veta „nejde – zavolaj“, pri výpadku siete aj „Si bez internetu…“, Zavolať, hodiny z pätičky, Skúsiť znova;
+  texty z prekladových slovníkov), nikdy novú kartu; zlyhaný import sa nedrží a po návrate internetu sa okno otvorí
+  samo (kontrola K2-1, 11. 11. 2026). Odozva (K2-2): ťuk najprv ukáže `aria-busy` na odkaze a okno (`showModal`, prepočet
+  celej stránky) príde až po vykreslení; Esc okno a clonu hneď skryje (len krytie) a zatvorí ho o snímku neskôr.
   `?objednavka=<adresa>` na localhost, `?objednavka=off` (len na skúšku bez okna); `?objednavka=ukazka` (aj na náhľade)
   ukáže kroky s ukážkovými časmi bez servera, s pruhom „Ukážka na kontrolu… nič sa nerezervuje“.
   Test: `source/tools/objednavka-test.mjs` (všetky odkazy otvoria okno, bez servera, server visí/zlyhá/Skúsiť znova
@@ -272,6 +277,8 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   „Ďalej“ svieti len tam, kde jeho obdĺžnik s rezervou 8 px nepretína žiadny viditeľný text (`kino.js` `volno()`,
   meria sa pri zastavení a pri každej zmene), pri skrole zhasne v tej istej snímke (test to overí) a pás kapitol sa
   schová skôr, než sa ho okraj pásu s textom dotkne (celý jeho obdĺžnik + 8 px, `app.js` `kresliPas`).
+  Navyše (K1-1, 11. 11. 2026): plávajúca lišta Zavolať/Objednať sa nikdy cez tlačidlá titulnej karty úvodu v 6 oknách
+  telefónu 320×568 až 430×932 (skrol 0–1 400 px); na nízkom telefóne sa lišta ukáže až po zhasnutí karty (`--lista=nie` vypne).
   Na konci **vrstvy** (L3, 11. 11. 2026; samostatne `--len=vrstvy`, asi 3 minúty, vypnúť `--vrstvy=nie`): bublina Barbera
   („Ahoj, som Barber…“, `?asistent=ukazka`) a ponuka jazyka („This page is also in English.“ v jazykoch en, de, uk)
   v oknách 320/390/430/1440 na úvode, začiatku scény a cieli kapitol Poď ďalej, Remeslo, Čakáreň, Tím: kým svietia,
