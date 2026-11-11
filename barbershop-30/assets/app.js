@@ -316,15 +316,17 @@ function tick(now) {
     shownP = targetP;
     apply(shownP);
     lastFrame = 0; // slučka sa zastaví; ďalší štart začne čistým dt
-    window.__scrollSettled = true;
+    usadene = true; window.__scrollSettled = true;
     return;
   }
   apply(shownP);
   rafId = requestAnimationFrame(tick);
 }
 
+// zrkadlo window.__scrollSettled: do globálu sa zapisuje len pri zmene, nie pri každej udalosti scroll
+let usadene = false;
 function start() {
-  window.__scrollSettled = false;
+  if (usadene) { usadene = false; window.__scrollSettled = false; }
   if (rafId || document.visibilityState === 'hidden') return;
   rafId = requestAnimationFrame(tick);
 }

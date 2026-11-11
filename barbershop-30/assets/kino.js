@@ -130,10 +130,15 @@ export function zapni() {
   const zmerajStitok = () => { if (stitok) root.classList.toggle('kino-stitok-nevolno', !!stitok.offsetWidth && !volno(stitok)); };
   // Názov kapitoly sa zmeria pri zastavení hneď. „Ďalej“ počká, kým slučka app.js dobehne (koliesko myši, pomalé
   // snímky): karty a pás sa ešte môžu pohnúť, dovtedy ostane skryté.
-  const stoj = () => {
-    clearTimeout(stojT); if (playing) return;
+  // Časovač zastavenia sa pri skrole nenastavuje znova (clearTimeout + setTimeout pri každej udalosti scroll stáli
+  // väčšinu času poslucháča): beží jeden a pri vypršaní sa pozrie na čas poslednej udalosti scroll. sila: hneď (test).
+  let posledny = 0;
+  const stoj = (sila) => {
+    clearTimeout(stojT); stojT = 0; if (playing) return;
+    const zostava = posledny + STOJ - performance.now();
+    if (sila !== true && zostava > 8) { stojT = setTimeout(stoj, zostava); return; }
     pokoj = true; zmerajStitok();
-    if (PAS.bezi) { root.classList.remove('kino-stoji'); stojT = setTimeout(stoj, 150); return; }
+    if (PAS.bezi) { root.classList.remove('kino-stoji'); stojT = setTimeout(() => stoj(sila), 150); return; }
     zmerajDalej(); root.classList.add('kino-stoji');
   };
   // zmena rozmeru „Ďalej“ alebo názvu kapitoly (iná kapitola, jazyk, písmo; aj odkrytie „Ďalej“) sa meria hneď v tej
@@ -145,7 +150,7 @@ export function zapni() {
   if ('ResizeObserver' in window) { new ResizeObserver(prever).observe(next); if (stitok) new ResizeObserver(() => { if (pokoj) zmerajStitok(); }).observe(stitok); }
   addEventListener('resize', znova, { passive: true });
   for (const t of ['transitionrun', 'transitionend', 'animationstart', 'animationend']) d.addEventListener(t, znova, { passive: true });
-  addEventListener('scroll', () => { pokoj = false; if (stoji()) root.classList.remove('kino-stoji'); clearTimeout(stojT); stojT = setTimeout(stoj, STOJ); }, { passive: true });
+  addEventListener('scroll', () => { pokoj = false; posledny = performance.now(); if (stoji()) root.classList.remove('kino-stoji'); if (!stojT) stojT = setTimeout(stoj, STOJ); }, { passive: true });
   stojT = setTimeout(stoj, STOJ);
   // Kino zastaví zákazník: koliesko a kláves vždy (aj s myšou nad ▶ či fokusom na ▶ hneď po kliknutí), dotyk a stlačenie
   // mimo ▶, skrytie karty. ▶ prepína len kliknutím; Enter a medzerník na fokusovanom ▶ sú to isté kliknutie.
@@ -155,7 +160,7 @@ export function zapni() {
   addEventListener('keydown', (e) => { if (playing && !(d.activeElement === play && (e.key === 'Enter' || e.key === ' '))) stop(); }, { capture: true });
   d.addEventListener('visibilitychange', () => { if (d.hidden) stop(); });
   // stoj: zastavenie hneď (to isté, čo časovač po 1,8 s) – pre test prekrývania (source/tools/prekryv-test.mjs)
-  window.BS30_KINO = { play: start, stop, stoj, get state() { return { playing, cur: PAS.kapitola, ciele: links.map((_, i) => Math.round(PAS.ciel(i))), jazda: jazda.slice() }; } };
+  window.BS30_KINO = { play: start, stop, stoj: () => stoj(true), get state() { return { playing, cur: PAS.kapitola, ciele: links.map((_, i) => Math.round(PAS.ciel(i))), jazda: jazda.slice() }; } };
 }
 
 function titulky() {
