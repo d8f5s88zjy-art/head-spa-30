@@ -87,6 +87,17 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   cenník má na telefóne pripnuté záložky skupín, popis na dva riadky (ťuk rozbalí) a riadky nastúpia zdola, pásy
   tímu a galérie sa raz jemne posunú. Ikona asistenta 48 px (telefón 44 px), spodná lišta menšia. Pri obmedzení
   pohybu a bez skriptu všetko stojí a je viditeľné.
+- **Pás pod plávajúcou lištou a ikonou Barbera (S-1, 11. 11. 2026, style.css koniec, app.js `spodnaLista`,
+  asistent.css `.asi-pod`)**: zákazník 9. 11.: „musí byť 0 prekrývaní všade“. Lišta Zavolať / Objednať sa a ikona
+  Barbera ležali pri skrole cez text (text presvital medzi tlačidlami a okolo ikony). Na telefóne a tablete (do 900 px)
+  je pod nimi pás `#spodny-pas` cez celú šírku: plný atrament 70 px (tablet 74 px) + `safe-area-inset-bottom`, nad ním
+  28 px prechod do priehľadna; text pred ním vybledne a medzi tlačidlami nepresvitá. Pás svieti s lištou (`s-cta`) a bez
+  nej pod ikonou (`s-ikona`: cenník, kontakt, pätička), nie v úvode, pri menu a v prológu filmu. Ikona je na telefóne
+  v páse; v úvode bez pásu len tam, kde má pod tlačidlami titulnej karty voľno (`s-volno`; na 320×568 by ležala cez
+  „Zavolať a potvrdiť termín“, príde s lištou). Lišta a pás prídu až po zhasnutí titulnej karty, ak by pás ležal cez jej
+  tlačidlá (`heroNaraz` ráta s výškou pásu). Ukazovanie len cez transform a opacity (300 ms), bez backdrop-filter,
+  `pointer-events: none`, `contain`. Na počítači pás nie je: ikona má vlastný podklad (atrament 12 px okolo, tieň) a
+  pod pätičkou je rezerva 88 px (`html.asi-je`), na telefóne rezerva pásu, aby bola celá pätička nad ním.
 - **Telefón: fotka v páse, celé fotky, menšie okná (2026‑10‑25, style.css P16, film.js `PAS_B` a `aim()`)**:
   zadávateľ: „fotky nie je vidno úplne, okná zakrývajú celú obrazovku“. Na telefóne na výšku je fotka scény v hornom
   páse (56 % výšky, `--pas`), text karty pod ňou na atramente; fotka na šírku v páse ukáže asi 2× viac šírky ako cez
@@ -285,6 +296,13 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   ich obdĺžnik nepretína žiadny riadok viditeľného textu (karty ani iného) a po posune o 40 px zhasnú v najbližšej
   snímke. Obe sa ukážu len na mieste bez textu (`assets/volno.js`, to isté pravidlo ako „Ďalej“): ponuka je hneď pod
   lištou (na fotke záberu), bublina pri ikone počká na voľné miesto; meria sa len v pokoji.
+- `podklad-test.mjs` – pás pod plávajúcou lištou a ikonou Barbera (S-1, 11. 11. 2026): 7 okien (320×568, 360×640,
+  390×664, 390×844, 430×932, 768×1024, 1440×900) × slovensky a `en/` × bez filmu a s `?film=on`, zastavenia po 0,7 okna
+  cez celú stránku a úplný spodok. V obdĺžniku lišty (jej tlačidlá) aj ikony, každý + 8 px, nesmie byť viditeľný žiadny
+  znak textu stránky: body riadkov textu po 3 px, `document.elementsFromPoint` (pointer-events sa na meranie zapnú
+  všetkým prvkom) a nad textom musí byť podklad s alfou × krytie ≥ 0,9 (prechody sa nerátajú). Na spodku musí byť celá
+  pätička nad lištou, ikonou aj pásom. Test nesmie prejsť naprázdno (lišta a ikona sa musia ukázať). Asi 20 minút
+  (`--okna=390x844 --jazyk=sk --film=off` je rýchla skúška, `--naraz=5` súbežne). Na 751156d9 zlyhá vo všetkých 28 oknách.
 - `app-smoke.mjs` – dymový test stránky; `scenes-shot.mjs` – snímky všetkých scén;
   `uvod-shot.mjs` – snímky prológu, jeho stavy a návrat na ulicu; `uvod-meranie.mjs` + `uvod-zhoda.py` –
   plynulosť prológu (časová os, zhoda zálohy s prvým snímkom filmu); `prechod-shot.mjs` – zastavený

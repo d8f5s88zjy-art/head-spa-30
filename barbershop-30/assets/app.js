@@ -49,7 +49,7 @@ const nav = $('#nav') || $('.nav');
 const storyLine = $('.story-line');
 const storyLinks = storyLine ? $$('a[data-chapter]', storyLine) : [];
 const navLinks = nav ? $$('a[href^="#"]', nav) : [];
-const mobileCta = $('#mobile-cta');
+const mobileCta = $('#mobile-cta'), spodnyPas = $('#spodny-pas');
 /* pás kapitol ako vo videoprehrávači (KF-01): .story-line dostane výplň kapitol, názov kapitoly a ▶ Kino (lenivý
    kino.js); výplň a stav sa kreslia v slučke apply(), pás nemá vlastný poslucháč skrolu. Bez skriptu ostanú odkazy. */
 const kino = storyLine && storyLinks.length ? (() => {
@@ -76,7 +76,7 @@ let lastScene = 0;  // číslo poslednej kapitoly (rezervácia) – tam sa skryj
 let footerBox = null;
 let titles = [];    // kotvy s titulnou kartou v poradí dokumentu (zábery bez filmu sa prelínajú medzi nimi)
 // nízky telefón: tlačidlá titulnej karty úvodu siahajú až k plávajúcej lište, tá sa ukáže až keď karta zhasne (K1-1)
-let heroNaraz = false, heroO = 1;
+let heroNaraz = false, heroIkona = true, heroO = 1;
 let pricesBox = null; // pás cenníka: tam sa plávajúce tlačidlo skryje (každá služba má vlastné Objednať)
 let pas = false;     // telefón na výšku s pásom fotky (mqPas), zisťuje sa v measure()
 let pasK = 1;        // výška pásu fotky ako podiel okna (meria sa z --pas v style.css)
@@ -134,7 +134,11 @@ function measure() {
   const ha = shots[0] && shots[0].first ? $('.title-actions', shots[0].el) : null, hf = ha && ha.closest('.title-frame');
   let hb = ha ? ha.offsetHeight : 0;
   for (let e = ha; e && e !== hf; e = e.offsetParent) hb += e.offsetTop;
-  heroNaraz = !!(ha && hf && mobileCta && mobileCta.offsetHeight) && hb + 8 > vh - mobileCta.offsetHeight;
+  // S-1: lišta prichádza s pásom pod ňou (plný atrament 70/74 px, style.css), ten nesmie ležať cez tlačidlá karty;
+  // ikona Barbera ostane v úvode bez pásu, len kým má pod tlačidlami karty voľno (inak príde s lištou)
+  const pasV = Math.max(mobileCta ? mobileCta.offsetHeight : 0, spodnyPas ? spodnyPas.offsetHeight : 0);
+  heroNaraz = !!(ha && hf && pasV) && hb + 8 > vh - pasV;
+  heroIkona = !(ha && hf) || hb <= vh - (window.innerWidth > 640 ? 72 : 68);   // 68/72 px = ikona + 16 px spodok + 8 px okraj
   // pás kapitol: pásy s textom (tím, cenník, galéria, kontakt, pätička), nad nimi je pás len tenká čiara
   if (kino) {
     kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
@@ -275,7 +279,18 @@ function apply(p) {
   const scrolled = curY > 80;                               // nečítať scrollY po zápisoch štýlu
   if (scrolled !== lastHeaderScrolled) { lastHeaderScrolled = scrolled; setClass(header, 'is-scrolled', scrolled); }
   setClass(storyLine, 'is-visible', p > 0.02);
-  setClass(mobileCta, 'is-hidden', ctaHidden(y));
+  spodnaLista(y);
+}
+
+// plávajúca lišta a pás pod ňou a pod ikonou Barbera (S-1, style.css): pás svieti s lištou a bez nej pod ikonou
+// (cenník, kontakt, pätička), nie v úvode a pri menu; ikona je na telefóne v páse, alebo v úvode, kde má voľno
+// (s-volno); len triedy, zápis iba pri zmene
+function spodnaLista(y) {
+  const uvod = heroSvieti(y), skryta = ctaHidden(y, uvod);
+  setClass(mobileCta, 'is-hidden', skryta);
+  setClass(spodnyPas, 's-cta', !skryta);
+  setClass(spodnyPas, 's-ikona', !menuOpen && !uvod);
+  setClass(spodnyPas, 's-volno', uvod && heroIkona);   // úvod: ikona bez pásu, ak nezavadzia tlačidlám karty
 }
 
 // pás kapitol: aktuálna kapitola plná po polohu v nej, predošlé plné, ďalšie prázdne (len transform, zápis iba pri zmene)
@@ -300,10 +315,10 @@ function kresliPas(y, section, uvod) {
 }
 
 // spodné tlačidlo: nie v úvode (titulná karta má vlastné tlačidlá), nie v rezervácii, nie pri menu
-function ctaHidden(y = window.scrollY || 0) {
-  const hero = shots[0] && shots[0].first && (y < shots[0].height * 0.6 || (heroNaraz && heroO > 0.001));
+function heroSvieti(y) { return !!(shots[0] && shots[0].first && (y < shots[0].height * 0.6 || (heroNaraz && heroO > 0.001))); }
+function ctaHidden(y = window.scrollY || 0, hero = heroSvieti(y)) {
   const mid = y + vh * 0.5, prices = !!pricesBox && mid > pricesBox.top && mid < pricesBox.bottom;
-  return activeScene === lastScene || posScene === lastScene || menuOpen || !!hero || prices;
+  return activeScene === lastScene || posScene === lastScene || menuOpen || hero || prices;
 }
 
 function tick(now) {
@@ -722,7 +737,7 @@ function setMenu(open, { restoreFocus = true } = {}) {
   navToggle.setAttribute('aria-expanded', String(open));
   if (!navToggle.getAttribute('aria-controls') && nav.id) navToggle.setAttribute('aria-controls', nav.id);
   lockScroll(open);
-  setClass(mobileCta, 'is-hidden', ctaHidden(curY)); // poloha zo slučky: čítanie scrollY by tu vynútilo rozloženie (C4)
+  spodnaLista(curY); // poloha zo slučky: čítanie scrollY by tu vynútilo rozloženie (C4)
   // C4: fokus v snímke po zápise, inert (prepočet ~850 prvkov) až po vykreslení; inert je všetko mimo lišty
   requestAnimationFrame(() => {
     if (menuOpen !== open) return;
