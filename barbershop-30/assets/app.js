@@ -75,6 +75,8 @@ let sections = [];  // section[data-scene]: { el, scene, id, top, height }
 let lastScene = 0;  // číslo poslednej kapitoly (rezervácia) – tam sa skryje mobilné CTA
 let footerBox = null;
 let titles = [];    // kotvy s titulnou kartou v poradí dokumentu (zábery bez filmu sa prelínajú medzi nimi)
+// nízky telefón: tlačidlá titulnej karty úvodu siahajú až k plávajúcej lište, tá sa ukáže až keď karta zhasne (K1-1)
+let heroNaraz = false, heroO = 1;
 let pricesBox = null; // pás cenníka: tam sa plávajúce tlačidlo skryje (každá služba má vlastné Objednať)
 let pas = false;     // telefón na výšku s pásom fotky (mqPas), zisťuje sa v measure()
 let pasK = 1;        // výška pásu fotky ako podiel okna (meria sa z --pas v style.css)
@@ -127,6 +129,12 @@ function measure() {
   if (pr) { const r = pr.getBoundingClientRect(); pricesBox = { top: r.top + y, bottom: r.bottom + y }; }
 
   titles = shots.filter((s) => s.title);
+  // tlačidlá úvodu stoja v pripnutom ráme (sticky top 0), ich spodok v okne je stály; lišta je pri spodnom okraji okna.
+  // Poloha z offsetTop (bez transformácií: nábeh tlačidiel a posun karty pri skrole by meranie skreslili)
+  const ha = shots[0] && shots[0].first ? $('.title-actions', shots[0].el) : null, hf = ha && ha.closest('.title-frame');
+  let hb = ha ? ha.offsetHeight : 0;
+  for (let e = ha; e && e !== hf; e = e.offsetParent) hb += e.offsetTop;
+  heroNaraz = !!(ha && hf && mobileCta && mobileCta.offsetHeight) && hb + 8 > vh - mobileCta.offsetHeight;
   // pás kapitol: pásy s textom (tím, cenník, galéria, kontakt, pätička), nad nimi je pás len tenká čiara
   if (kino) {
     kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
@@ -221,6 +229,7 @@ function apply(p) {
       const outO = pas && s.long ? ease01(((s.top + s.height - y) / vh - pasK) / 0.08) : 1 - ease01((u - 1 + CARD_OUT) / CARD_OUT);
       const o = Math.min(inO, outO);
       setVar('--o', o, s.el);
+      if (s.first) heroO = o;
       setClass(s.el, 'is-on', o > 0.01);
     }
   }
@@ -292,7 +301,7 @@ function kresliPas(y, section, uvod) {
 
 // spodné tlačidlo: nie v úvode (titulná karta má vlastné tlačidlá), nie v rezervácii, nie pri menu
 function ctaHidden(y = window.scrollY || 0) {
-  const hero = shots[0] && shots[0].first && y < shots[0].height * 0.6;
+  const hero = shots[0] && shots[0].first && (y < shots[0].height * 0.6 || (heroNaraz && heroO > 0.001));
   const mid = y + vh * 0.5, prices = !!pricesBox && mid > pricesBox.top && mid < pricesBox.bottom;
   return activeScene === lastScene || posScene === lastScene || menuOpen || !!hero || prices;
 }
