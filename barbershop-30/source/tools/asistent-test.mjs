@@ -309,7 +309,9 @@ try {
     const page = await ctx.newPage();
     await page.goto(`${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=ukazka`, { waitUntil: 'load' });
     await page.mouse.move(20, 20);
-    await page.locator('.asi-btn').waitFor({ state: 'visible', timeout: 10000 });
+    // S-1: na nízkom okne by ikona v úvode ležala cez tlačidlá titulnej karty, príde až s lištou – okno sa otvára za úvodom
+    await page.evaluate(() => scrollTo({ top: innerHeight * 2, behavior: 'instant' }));
+    await page.waitForFunction(() => { const b = document.querySelector('.asi-btn'); return b && getComputedStyle(b).pointerEvents !== 'none' && +getComputedStyle(b).opacity > 0.95; }, null, { timeout: 10000 });
     await page.locator('.asi-btn').click();
     await page.waitForTimeout(600);
     await page.setViewportSize({ width: z[0], height: z[1] });
