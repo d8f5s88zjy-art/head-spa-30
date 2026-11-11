@@ -345,7 +345,8 @@ export async function spusti(api) {
     // úvod je prvá obrazovka: bublina až po odskrolovaní za ňu
     const uvod = document.querySelector(UVOD);
     const zaUvodom = !uvod || uvod.getBoundingClientRect().bottom < innerHeight * 0.5;
-    // počas otvorenej prechádzky predajňou (.pp-on) sa bublina neukáže, aby nezakryla jej pätu s náhľadmi
+    // počas otvorenej prechádzky predajňou (.pp-on) sa bublina neukáže, aby nezakryla jej pätu s náhľadmi (ikonu vtedy
+    // schová trieda pp-vokne, asistent.css)
     const vidno = btn.isConnected && panel.hidden && zaUvodom && !pataVidno && !document.querySelector('.pp-on') && parseFloat(getComputedStyle(btn).opacity) > 0.9;
     videl = vidno ? videl + 1 : 0;
     if (!btn.isConnected || !panel.hidden) { clearInterval(hodiny); return; }

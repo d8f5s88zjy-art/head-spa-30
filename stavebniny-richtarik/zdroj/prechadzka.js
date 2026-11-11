@@ -5,12 +5,16 @@
    Zastávka je jedna skutočná fotka majiteľa (nič sa nedomýšľa ani negeneruje). V zastávke sa dá rozhliadať: fotka je väčšia
    než okno, ťahaním prstom alebo myšou sa posúva (zotrvačnosť, jemný náklon v perspektíve), dva prsty, tlačidlá + a −,
    klávesy + a − alebo koliesko (v stránke s Ctrl, na celej obrazovke samo) priblížia. Fotka sa nikdy neukáže väčšia než
-   DATA.lim-násobok skutočného rozlíšenia zdroja (1 bod zdroja najviac DATA.lim CSS bodu). Medzi zastávkami sa prechádza
+   DATA.lim-násobok skutočného rozlíšenia zdroja (1 bod zdroja najviac DATA.lim CSS bodu, vrátane náklonu). Medzi zastávkami sa prechádza
    šípkami ukotvenými na zemi (poloha v % fotky), klávesmi ← → ↑, tlačidlami pri názve a pásom náhľadov; prechod je nájazd
-   do smeru šípky s prelnutím (620 ms), pri „obmedziť pohyb“ len prelnutie. Zastávka typu panoráma (súbor v img/panorama/)
-   sa otvorí v prehliadači panorám assets/panorama.js (guľa alebo valec) a šípky sa ukotvia na smer (yaw, pitch).
+   do smeru šípky s prelnutím (620 ms), pri „obmedziť pohyb“ len prelnutie. Šípky sa držia v zábere: keď je ich miesto na
+   fotke po posune alebo priblížení mimo okna, ostanú pri najbližšom okraji javiska (drzSipky), takže na ďalšiu zastávku sa
+   dá prejsť bez hľadania. Zastávka typu panoráma (súbor v img/panorama/) sa otvorí v prehliadači panorám
+   assets/panorama.js (guľa alebo valec) a šípky sa ukotvia na smer (yaw, pitch).
    Druhá záložka „Pohľad z ulice (Google)“: rám Street View vytvorený až po kliknutí (data-panorama-src od majiteľa má
-   prednosť pred data-ulica); ak sa do 8 s nenačíta, ukáže sa správa a vráti sa prechádzka.
+   prednosť pred data-ulica); ak sa do 8 s nenačíta, ukáže sa správa a vráti sa prechádzka. Obe časti sú prepojené
+   (Lajo 10. 11. 2026: „nech to má taký istý princíp“): na zastávke s kľúčom 'g' (prvá) je na zemi šípka „Pohľad z ulice
+   (Google)“, v pohľade z ulice je pod rámom tlačidlo „Vojsť do predajne“ (prvá zastávka prechádzky).
    Zdroj musí mať bodkočiarky všade a bez regulárnych výrazov a šablónových reťazcov (zmensi_js). */
 export function vytvor(p, pre) {
   var d = document, win = window;
@@ -49,22 +53,29 @@ export function vytvor(p, pre) {
   }
 
   // ── vrstva zastávky: obal (animuje sa pri prechode) a plátno s fotkou a šípkami (posun, mierka, náklon)
-  function sipka(o, s) {
-    var ciel = idx(s[0]), spat = ciel < o.i, b = el('button', 'pp-sipka' + (spat ? ' pp-sipka-spat' : ''));
+  var ZNAK = '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 41V19" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M24 5 38 23H10Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>';
+  // šípka na zemi: s = [cieľ, x, y, smer]; pod znakom je stály popis (Ďalej, Späť, Pohľad z ulice), poradie p určuje, ktorá
+  // má prednosť, keď sa pri okraji javiska stretnú (dopredu 0, späť 1, na ulicu 2)
+  function pridajSipku(o, trieda, nazovPreCitacku, nazov, popis, s, p, klik) {
+    var b = el('button', 'pp-sipka' + trieda), zn = el('span', 'pp-sipka-zn'), txt = el('span', 'pp-sipka-txt', popis);
     b.type = 'button';
-    b.setAttribute('aria-label', (spat ? 'Späť: ' : 'Ďalej: ') + Z[ciel].n);
-    b.setAttribute('data-nazov', Z[ciel].n);
-    var zn = el('span', 'pp-sipka-zn');
+    b.setAttribute('aria-label', nazovPreCitacku);
+    if (nazov) b.setAttribute('data-nazov', nazov);
     zn.style.setProperty('--u', s[3] + 'deg');
-    zn.innerHTML = '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 41V19" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M24 5 38 23H10Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>';
-    b.appendChild(zn);
-    b.addEventListener('click', function () { chod(ciel, s); });
-    if (o.platno) { b.style.left = s[1] + '%'; b.style.top = s[2] + '%'; o.platno.appendChild(b); }
-    else { b.hidden = true; o.el.appendChild(b); }
-    o.sipky.push({ b: b, s: s });
+    zn.innerHTML = ZNAK;
+    b.appendChild(zn); b.appendChild(txt);
+    b.addEventListener('click', klik);
+    if (!o.platno) b.hidden = true;
+    o.el.appendChild(b);
+    // rozmery okolo stredu (polovica šírky a výšky): odhad podľa druhu, po vložení do stránky sa zmerajú (drzSipky)
+    o.sipky.push({ b: b, txt: txt, s: s, p: p, hw: p === 2 ? 84 : p ? 28 : 38, hh: p ? 28 : 38, m: false, x: 0, y: 0, t: '' });
+  }
+  function sipka(o, s) {
+    var ciel = idx(s[0]), spat = ciel < o.i;
+    pridajSipku(o, spat ? ' pp-sipka-spat' : '', (spat ? 'Späť: ' : 'Ďalej: ') + Z[ciel].n, Z[ciel].n, spat ? 'Späť' : 'Ďalej', s, spat ? 1 : 0, function () { chod(ciel, s); });
   }
   function vrstva(i) {
-    var z = Z[i], o = { i: i, z: z, W: z.w, H: z.h, el: el('div', 'pp-vrstva'), platno: null, img: null, src: null, sirka: 0, pan: null, sipky: [], s: 0, sL: 0, tx: 0, ty: 0, nx: 0, ny: 0, k: 1, nak: false, hotova: null };
+    var z = Z[i], o = { i: i, z: z, W: z.w, H: z.h, el: el('div', 'pp-vrstva'), platno: null, img: null, src: null, sirka: 0, pan: null, sipky: [], s: 0, sL: 0, tx: 0, ty: 0, nx: 0, ny: 0, nak: false, hotova: null };
     if (z.p) {
       // zastávka typu panoráma: prehliadač panorám do obalu, šípky sa ukladajú na smer (yaw, pitch) po každom prekreslení
       o.el.className = 'pp-vrstva pp-vrstva-pan';
@@ -81,6 +92,9 @@ export function vytvor(p, pre) {
       pic.appendChild(o.src); pic.appendChild(o.img); o.platno.appendChild(pic); o.el.appendChild(o.platno);
     }
     z.s.forEach(function (s) { sipka(o, s); });
+    // zo zastávky pri ceste (kľúč g) vedie šípka von na ulicu: pohľad z ulice od Googlu v tom istom okne
+    if (z.g && ulicaSrc) pridajSipku(o, ' pp-sipka-spat pp-sipka-ulica', 'Pohľad z ulice (Google) – načíta obsah z Google Máp', '', 'Pohľad z ulice (Google)', [null, z.g[0], z.g[1], z.g[2]], 2, function () { ukaz('ulica'); if (tab2) tab2.focus({ preventScroll: true }); });
+    o.sipky.sort(function (a, b) { return a.p - b.p; });
     return o;
   }
   function poloz(o) {
@@ -93,11 +107,52 @@ export function vytvor(p, pre) {
   }
 
   // ── geometria pohľadu: s = mierka (CSS bod na bod zdroja), tx a ty = poloha ľavého horného rohu fotky v javisku
-  function meraj() { var r = javisko.getBoundingClientRect(); sw = r.width; sh = r.height; }
+  var cipyW = 0;   // šírka čipov vpravo hore (Celá obrazovka, Zavrieť): šípka pri hornom okraji ostane pod nimi
+  function meraj() { var r = javisko.getBoundingClientRect(); sw = r.width; sh = r.height; cipyW = lista.offsetWidth || 0; }
+  // kde náklon plátna v perspektíve (uloz) ukáže bod javiska (X, Y) – šípka ostane presne na svojom mieste fotky
+  function sNaklonom(o, X, Y) {
+    if (!o.nak) return [X, Y];
+    var cx = sw / 2, cy = sh / 2, P = Math.round(Math.max(sw, sh) * 1.25), a = 2.5 * o.nx * Math.PI / 180, b = -1.5 * o.ny * Math.PI / 180;
+    var dx = X - cx, dy = Y - cy, y1 = dy * Math.cos(b), z1 = dy * Math.sin(b), x2 = dx * Math.cos(a) + z1 * Math.sin(a), k = P / (P + dx * Math.sin(a) - z1 * Math.cos(a));
+    return [cx + x2 * k, cy + y1 * k];
+  }
+  // šípky na fotke: tlačidlá vo vrstve zastávky nad plátnom, polohu v javisku dostávajú tu pri každej zmene pohľadu
+  // (transformácia vlastnej vrstvy, len kompozítor). Šípka leží na svojom mieste fotky; keď je to miesto po posune alebo
+  // priblížení mimo okna, ostane pri najbližšom okraji javiska (pod čipmi, vedľa tlačidiel + a −) – na ďalšiu zastávku
+  // sa dá prejsť bez hľadania. Dve šípky sa neprekryjú: tá s nižšou prednosťou uhne pod alebo nad druhú.
+  // Rozmery okolo stredu: do strán polovica širšieho z dvojice kotúč a popis, hore polovica štvorca, dole ešte popis (17 px).
+  function drzSipky(o) {
+    if (!o.platno) return;
+    var i, j, a, c, m, x, y, xmin, xmax, ymin, ymax, pod, nad, dolu, hore, t;
+    for (i = 0; i < o.sipky.length; i++) {
+      a = o.sipky[i];
+      if (!a.m && a.b.offsetWidth) { a.hw = Math.max(a.b.offsetWidth, a.txt.offsetWidth) / 2; a.hh = a.b.offsetHeight / 2; a.m = true; }
+      m = sNaklonom(o, o.tx + a.s[1] / 100 * o.W * o.s, o.ty + a.s[2] / 100 * o.H * o.s);
+      xmin = a.hw + 8; xmax = sw - a.hw - 8; ymin = a.hh + 8; ymax = sh - a.hh - 23;
+      x = Math.min(xmax, Math.max(xmin, m[0]));
+      if (x + a.hw > sw - 20 - cipyW) ymin = 64 + a.hh;                     // pod čipmi vpravo hore
+      y = Math.min(ymax, Math.max(ymin, m[1]));
+      if (y - a.hh < 172 && x + a.hw > sw - 64) x = sw - 64 - a.hw;         // vedľa tlačidiel + a −
+      for (j = 0; j < i; j++) {
+        c = o.sipky[j];
+        if (Math.abs(x - c.x) >= a.hw + c.hw + 6) continue;
+        pod = c.y + c.hh + 17 + a.hh + 4; nad = c.y - c.hh - a.hh - 17 - 4;
+        if (y >= pod || y <= nad) continue;
+        dolu = pod <= sh - a.hh - 19; hore = nad >= ymin;   // uhne na tú stranu, kde na fotke leží (pod: popis ešte celý v javisku)
+        if (dolu && (m[1] >= c.y || !hore)) y = pod; else if (hore) y = nad; else x = c.x + (c.x < sw / 2 ? 1 : -1) * (a.hw + c.hw + 8);
+      }
+      a.x = x; a.y = y;
+      t = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) translate(-50%,-50%)';
+      if (a.t !== t) { a.t = t; a.b.style.transform = t; }
+    }
+  }
+  // náklon v perspektíve zväčší bližší okraj fotky najviac o 2,9 % (2,5° a 1,5° pri perspektíve 1,25 × dlhšia strana okna):
+  // strop mierky je o to nižší, aby ani pri náklone žiadna časť fotky neprekročila LIM
+  var MT = reduce ? 1 : 1.03;
   function hranice(o) {
-    var kryt = Math.max(sw / o.W, sh / o.H), sf;
-    if (kryt * 1.06 >= LIM) { o.smin = o.smax = o.s0 = LIM; return; }   // okno väčšie než dovolené zväčšenie: fotka ostane menšia než okno
-    o.smin = kryt * 1.06; o.smax = Math.min(LIM, o.smin * 2.2);
+    var kryt = Math.max(sw / o.W, sh / o.H), lim = LIM / MT, sf;
+    if (kryt * 1.06 >= lim) { o.smin = o.smax = o.s0 = lim; return; }   // okno väčšie než dovolené zväčšenie: fotka ostane menšia než okno
+    o.smin = kryt * 1.06; o.smax = Math.min(lim, o.smin * 2.2);
     sf = Math.sqrt(sw * sh / (o.W * o.H * 0.42));   // východisko: presah 30 % do strán, no vidno aspoň 42 % plochy fotky
     o.s0 = Math.min(o.smax, Math.max(o.smin, Math.min(1.3 * sw / o.W, sf)));
   }
@@ -114,7 +169,7 @@ export function vytvor(p, pre) {
     else t = 'translate3d(' + o.tx.toFixed(2) + 'px,' + o.ty.toFixed(2) + 'px,0)';
     if (Math.abs(k - 1) > 0.0005) t += ' scale(' + k.toFixed(4) + ')';
     o.platno.style.transform = t;
-    if (o.k !== k) { o.k = k; o.platno.style.setProperty('--k', k.toFixed(4)); }
+    drzSipky(o);
   }
   // po priblížení dostane plátno skutočný rozmer (ostrý raster, prípadne väčší súbor) a mierka transformácie sa vráti na 1
   function usad(o) {
@@ -139,6 +194,8 @@ export function vytvor(p, pre) {
     if (!vr || !plus) return;
     var pevna = vr.pan ? false : vr.smax - vr.smin < 0.001;
     plus.disabled = pevna || (!vr.pan && vr.s >= vr.smax - 0.001); minus.disabled = pevna || (!vr.pan && vr.s <= vr.smin + 0.001);
+    // priblížená fotka: ťah prstom ju posúva všetkými smermi (v stránke inak zvislý ťah patrí stránke)
+    scena.classList.toggle('pp-zoomnute', !vr.pan && vr.s > vr.s0 * 1.04);
   }
   function priblizKrok(von) {
     if (!vr) return;
@@ -235,7 +292,8 @@ export function vytvor(p, pre) {
   function kotvaVOkne(o, s) {   // poloha šípky v javisku (stred, keď šípka nie je)
     if (!s) return [sw / 2, sh / 2];
     if (o.pan) { var m = o.pan.premietni(s[1], s[2]); return m.vid ? [m.x, m.y] : [sw / 2, sh * 0.7]; }
-    return [o.tx + s[1] / 100 * o.W * o.s, o.ty + s[2] / 100 * o.H * o.s];
+    for (var i = 0; i < o.sipky.length; i++) { if (o.sipky[i].s === s && o.sipky[i].t) return [o.sipky[i].x, o.sipky[i].y]; }
+    return [Math.min(sw, Math.max(0, o.tx + s[1] / 100 * o.W * o.s)), Math.min(sh, Math.max(0, o.ty + s[2] / 100 * o.H * o.s))];
   }
   function sipkaNa(o, ciel) { for (var i = 0; i < o.z.s.length; i++) { if (idx(o.z.s[i][0]) === ciel) return o.z.s[i]; } return null; }
   function chod(ciel, s) {
@@ -250,7 +308,9 @@ export function vytvor(p, pre) {
       clearTimeout(cakaj); scena.classList.remove('pp-caka');
       if (!bezi || vr !== stara) { behPrechodu = false; return; }
       var vrch = dozadu ? nova : stara, k = kotvaVOkne(stara, s || sipkaNa(stara, ciel)), a1, a2;
-      if (dozadu) { k = kotvaVOkne(nova, sipkaNa(nova, stara.i)); scena.insertBefore(nova.el, zoomy); } else scena.insertBefore(nova.el, stara.el);
+      if (dozadu) scena.insertBefore(nova.el, zoomy); else scena.insertBefore(nova.el, stara.el);
+      drzSipky(nova);
+      if (dozadu) k = kotvaVOkne(nova, sipkaNa(nova, stara.i));
       if (nova.pan) { nova.pan.nastav(); poloz(nova); }
       stara.el.classList.add('pp-odchadza'); oznac(ciel);
       function koniec() {
@@ -378,13 +438,37 @@ export function vytvor(p, pre) {
       scena.insertBefore(o.el, zoomy);
       if (o.pan) { o.pan.nastav(); poloz(o); }
       p.classList.add('pp-on', 'pp-bezi'); start.hidden = true; lista.hidden = false; pata.hidden = false;
+      meraj(); drzSipky(o);
       oznac(0); stavZoomu(); stav.textContent = '';
       scena.focus({ preventScroll: true });
+      oznacOkno(); zarovnaj();
       o.drz = false;
       if (f && o.platno) usad(o);
       dopredu();
     });
   }
+
+  // po otvorení sa okno prehliadky posunie do záberu (medzi lištu webu a spodnú lištu telefónu): keď sa zmestí celé, ukáže
+  // sa celé (záložky, obraz, päta); keď nie, obraz ostane celý pod lištou webu a z päty je vidno, čo sa zmestí (na ďalšiu
+  // zastávku vedie aj šípka na fotke). Posúva sa len o toľko, koľko treba; na celej obrazovke nič
+  function zarovnaj() {
+    if (jeCela()) return;
+    var o = q('.pp-okno').getBoundingClientRect(), jv = (rezim === 'ulica' ? ulica : javisko).getBoundingClientRect(), hore = 0, dole = win.innerHeight, e, posun = 0;
+    e = d.querySelector('.top');
+    if (e) hore = Math.max(0, e.getBoundingClientRect().bottom);
+    e = d.querySelector('.mbar');
+    if (e && e.getClientRects().length && getComputedStyle(e).position === 'fixed') dole = e.getBoundingClientRect().top;
+    hore += 4; dole -= 8;
+    if (o.height <= dole - hore) { if (o.top < hore) posun = o.top - hore; else if (o.bottom > dole) posun = o.bottom - dole; }
+    else if (jv.top < hore) posun = jv.top - hore;
+    else if (o.bottom > dole) posun = Math.min(o.bottom - dole, jv.top - hore);
+    if (Math.abs(posun) > 2) win.scrollBy({ top: posun, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  // kým je otvorená prechádzka v okne prehliadača, ikona asistenta vpravo dole by zakrývala krok ďalej a náhľady:
+  // trieda pp-vokne na <html> ju schová (assets/asistent.css)
+  var vOkne = false;
+  function oznacOkno() { d.documentElement.classList.toggle('pp-vokne', vOkne && p.classList.contains('pp-on')); }
+  if (win.IntersectionObserver) new IntersectionObserver(function (z) { vOkne = z[z.length - 1].isIntersecting; oznacOkno(); }).observe(p);
 
   // ── pohľad z ulice (Google): rám až po kliknutí; bez načítania do 8 s správa a návrat na prechádzku
   var ramec = null, casovac = 0;
@@ -416,6 +500,7 @@ export function vytvor(p, pre) {
       if (jeCela() && !bezi) prepniCelu();
       ukaz('prechadzka', true);
       if (!bezi) { p.classList.remove('pp-on'); lista.hidden = true; }
+      oznacOkno();
       (bezi ? tab1 : start).focus({ preventScroll: true });
     }, 8000);
   }
@@ -430,9 +515,20 @@ export function vytvor(p, pre) {
     }
     javisko.hidden = u; ulica.hidden = !u; pata.hidden = u || !bezi;
     p.classList.toggle('pp-ulica-on', u);
-    if (u) { stav.textContent = ''; p.classList.add('pp-on'); lista.hidden = false; otvorUlicu(); }
-    else if (!bezOtvorenia) { if (!bezi) otvorPrechadzku(); else zmenaRozmeru(); }
+    if (u) { stav.textContent = ''; p.classList.add('pp-on'); lista.hidden = false; otvorUlicu(); oznacOkno(); zarovnaj(); }
+    else if (!bezOtvorenia) { if (!bezi) otvorPrechadzku(); else { zmenaRozmeru(); zarovnaj(); } }
   }
+  // „Vojsť do predajne“ v páse pod pohľadom z ulice: prvá zastávka prechádzky (ak prechádzka beží inde, vráti sa na prvú)
+  var vojdi = el('button', 'btn primary pp-vojdi');
+  vojdi.type = 'button';
+  vojdi.innerHTML = '<span>Vojsť do predajne</span>' + ZNAK;
+  lista.insertBefore(vojdi, lista.firstChild);
+  vojdi.addEventListener('click', function () {
+    ukaz('prechadzka');
+    if (!bezi) return;
+    if (cur !== 0) chod(0);
+    scena.focus({ preventScroll: true });
+  });
 
   // ── celá obrazovka (requestFullscreen na celom komponente; kde nie je, pevná pozícia cez celé okno) a zatvorenie
   var sek = p.closest('main>section,main>div');
@@ -459,9 +555,10 @@ export function vytvor(p, pre) {
     Object.keys(zasoba).forEach(function (k) { var o = zasoba[k]; clearTimeout(o.tUsad); if (o.pan) o.pan.znic(); if (o.el.parentNode) o.el.parentNode.removeChild(o.el); });
     zasoba = {}; vr = null; cur = -1; bezi = false; behPrechodu = false; vx = vyy = 0;
     p.classList.remove('pp-on', 'pp-bezi');
+    if (scena) scena.classList.remove('pp-zoomnute');
     lista.hidden = true; start.hidden = false;
     ukaz('prechadzka', true);
-    stav.textContent = '';
+    stav.textContent = ''; oznacOkno();
     start.focus({ preventScroll: true });
   }
   d.addEventListener('fullscreenchange', oznacCelu);

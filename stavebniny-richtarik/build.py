@@ -126,6 +126,10 @@ PANORAMA = {'src': ''}
 #            než PRECHADZKA_LIMIT-násobok (1 bod zdroja najviac 1,6 CSS bodu); s originálmi sa číslo zmení a limit sa posunie sám,
 #  stred   – bod fotky v % (x, y), ktorý je pri príchode v strede okna,
 #  sipky   – šípky na zemi: (cieľová zastávka, x %, y % na fotke, smer v stupňoch: 0 = dopredu, kladný doprava, 180 = späť).
+#            Šípka sa drží v zábere: keď je jej miesto po posune fotky mimo okna, ostane pri najbližšom okraji,
+#  ulica   – len zastávka pri ceste: (x %, y %, smer) šípky „Pohľad z ulice (Google)“, ktorá prepne na druhú záložku
+#            (Lajo 10. 11. 2026: obe časti prepojiť); bez záložky Googlu (ULICA_GOOGLE = False) sa nekreslí. Opačným smerom
+#            vedie tlačidlo „Vojsť do predajne“ pod pohľadom z ulice (zdroj/prechadzka.js).
 # Zastávka typu panoráma (skutočná 360° fotka alebo Pano z telefónu) má namiesto 'foto' a 'zdroj' kľúče
 #  'panorama': 'img/panorama/<súbor>.jpg', 'uhol': vodorovný rozsah v stupňoch (360 pri guli 2 : 1, inak napr. 180),
 #  'nahlad': fotka z img/predajna pre pás náhľadov a galériu bez JS, 'alt': opis; 'stred' je (yaw, pitch) v stupňoch
@@ -133,7 +137,7 @@ PANORAMA = {'src': ''}
 PRECHADZKA_LIMIT = 1.6
 PRECHADZKA = [
     dict(id='prichod', foto='09-tabula-ulica', nazov='Príchod – tabuľa pri ceste', zdroj=(1296, 930), stred=(52, 48),
-         sipky=[('cesta', 42, 74, 25)]),
+         sipky=[('cesta', 42, 69, 25)], ulica=(13, 90, -120)),
     dict(id='cesta', foto='11-tvarnice-porfix-cesta', nazov='Areál – betónové tvárnice pri ceste', zdroj=(1296, 990), stred=(60, 59),
          sipky=[('porobeton', 74, 68, 55), ('prichod', 38, 84, 180)]),
     dict(id='porobeton', foto='04-ytong-porfix', nazov='Areál – pórobetón Ytong a Porfix', zdroj=(1296, 962), stred=(38, 60),
@@ -788,9 +792,10 @@ def prehliadka_blok(pre, sizes='(max-width:700px) 100vw, 1184px'):
                f'<button class="pp-t1" type="button" role="tab" id="pp-t1" aria-selected="true" aria-controls="pp-p1">Prechádzka predajňou</button>'
                f'<button class="pp-t2" type="button" role="tab" id="pp-t2" aria-selected="false" aria-controls="pp-p2" tabindex="-1">Pohľad z ulice (Google)</button></div>') if PP_ULICA else ''
     panel = ' role="tabpanel" aria-labelledby="pp-t1"' if PP_ULICA else ''
-    veta = ('Fotku posúvajte ťahaním prstom alebo myšou, dva prsty alebo tlačidlá + a − ju priblížia. Medzi zastávkami prejdete '
-            'šípkami na fotke, pásom náhľadov alebo klávesmi ← → ↑. Fotky zastávok sa načítajú až po kliknutí.')
-    if PP_ULICA: veta += ' Pohľad z ulice načíta obsah z Google Máp – tiež až po kliknutí na záložku; dovtedy sa Googlu nič neodosiela.'
+    veta = ('Fotku posúvajte ťahaním prstom alebo myšou; dva prsty, dvojité ťuknutie alebo tlačidlá + a − ju priblížia. Medzi '
+            'zastávkami prejdete šípkami na fotke, pásom náhľadov alebo klávesmi ← → ↑. Fotky zastávok sa načítajú až po kliknutí.')
+    if PP_ULICA: veta += (' Pohľad z ulice načíta obsah z Google Máp – tiež až po kliknutí na záložku alebo na šípku „Pohľad z ulice '
+                          '(Google)“; dovtedy sa Googlu nič neodosiela.')
     galeria = ''.join(f'<li><figure>{predajna_picture(pre, pp_foto(z), "(max-width:700px) 50vw, 380px", max_sirka=720)}<figcaption>{i}. {z["nazov"]}</figcaption></figure></li>'
                       for i, z in enumerate(PRECHADZKA[1:], 2))
     return (f'<figure class="pp" id="prehliadka" data-panorama-src="{html.escape(PANORAMA["src"], quote=True)}" data-ulica="{html.escape(ULICA_SRC if ULICA_GOOGLE else "", quote=True)}">'
@@ -825,6 +830,7 @@ def prechadzka_data():
         for ext in ('avif', 'webp'): assert os.path.exists(os.path.join(ROOT, f'img/prechadzka/{foto}-160.{ext}')), f'chýba náhľad img/prechadzka/{foto}-160.{ext} (nahlady.py)'
         o = {'id': z['id'], 'n': z['nazov'], 'c': list(z['stred']), 's': [list(x) for x in z['sipky']],
              't': [f'img/prechadzka/{foto}-160.avif', f'img/prechadzka/{foto}-160.webp']}
+        if z.get('ulica') and PP_ULICA: o['g'] = list(z['ulica'])   # šípka „Pohľad z ulice (Google)“ – len so záložkou Googlu
         if z.get('panorama'):
             assert os.path.exists(os.path.join(ROOT, z['panorama'])), f'PRECHADZKA: chýba súbor panorámy {z["panorama"]}'
             rozmer = jpeg_rozmer(os.path.join(ROOT, z['panorama'])) if z['panorama'].lower().endswith(('.jpg', '.jpeg')) else obr_rozmer(os.path.join(ROOT, z['panorama']))

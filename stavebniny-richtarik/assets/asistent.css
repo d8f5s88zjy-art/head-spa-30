@@ -38,6 +38,9 @@ body:has(#drawer.open, .lb:not([hidden])) .asi-oznam { opacity: 0; pointer-event
 /* úvod s vlastnými tlačidlami v okne (asistent.js, trieda asi-uvod): ikona sa skryje, fokusom z klávesnice sa ukáže */
 html.asi-uvod:not(.asi-open) .asi-btn:not(:focus-visible) { opacity: 0; pointer-events: none; transform: translateY(12px); }
 html.asi-uvod .asi-oznam { display: none; }
+/* otvorená prechádzka predajňou v okne (zdroj/prechadzka.js, trieda pp-vokne): ikona by zakrývala krok ďalej a náhľady */
+html.pp-vokne:not(.asi-open) .asi-btn:not(:focus-visible) { opacity: 0; pointer-events: none; transform: translateY(12px); }
+html.pp-vokne .asi-oznam { display: none; }
 
 /* bublina pri ikone: Opýtať sa, Zavolať, zavrieť */
 .asi-oznam {

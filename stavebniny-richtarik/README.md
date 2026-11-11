@@ -371,32 +371,51 @@ majiteľa sú bežné ploché zábery, nie 360° panorámy; **nič sa nedomýš�
    je jedna fotka z `img/predajna/`. Poradie je odhad podľa fotiek, potvrdí ho majiteľ. Slovo 360° sa nikde nepoužíva,
    kým zastávka nie je skutočná panoráma.
 2. **Pohľad z ulice (Google)** – rám Street View v našej stránke (ulica pred predajňou, dá sa v ňom otáčať a ísť po
-   ceste). Vytvorí sa až po kliknutí na záložku; pred ním ide na Google 0 požiadaviek a veta pod oknom to hovorí.
+   ceste). Vytvorí sa až po kliknutí na záložku alebo na šípku „Pohľad z ulice (Google)“; pred ním ide na Google
+   0 požiadaviek a veta pod oknom to hovorí.
+
+**Obe časti sú prepojené** (Lajo 10. 11. 2026: „nech to má taký istý princíp a fungovanie“): na prvej zastávke je na zemi
+šípka s popisom „Pohľad z ulice (Google)“ (kľúč `ulica` zastávky v `PRECHADZKA`) – prepne na druhú záložku; v pohľade
+z ulice je v páse pod rámom tlačidlo „Vojsť do predajne“ – otvorí prvú zastávku prechádzky (ak prechádzka beží na inej
+zastávke, vráti sa na prvú). Čipy „Celá obrazovka“ a „Zavrieť“ sú v pohľade z ulice v tom istom páse pod rámom, aby
+nezakrývali ovládanie, logo a podmienky Googlu. Bez záložky Googlu (`ULICA_GOOGLE = False`) sa šípka na ulicu nekreslí.
 
 Pred kliknutím je v stránke len fotka prvej zastávky (náhľad), odznak „Prechádzka · 9 zastávok“, tlačidlo „Prejsť sa
-predajňou“ a záložky. Modul `assets/prechadzka.js` (25,9 kB, gzip 8,5 kB; zdroj `zdroj/prechadzka.js`, build pred neho
+predajňou“ a záložky. Modul `assets/prechadzka.js` (29,3 kB, gzip 9,8 kB; zdroj `zdroj/prechadzka.js`, build pred neho
 vloží zoznam zastávok), fotky ďalších zastávok, náhľady 160 px (`img/prechadzka/`) ani rám Googlu sa pred kliknutím
-nesťahujú. Prvá zastávka je tá istá fotka ako náhľad, takže sa otvorí hneď (telefón 390 × 844, 4G 9 Mb/s: 0,25 s,
-so studenou pamäťou 0,55 s; pomalá 4G 1,6 Mb/s: 0,43 s a 1,24 s – `richtarik/majitel/prehliadka/ZAPIS.md`).
+nesťahujú. Prvá zastávka je tá istá fotka ako náhľad, takže sa otvorí hneď (telefón 390 × 844, 4G 9 Mb/s: 0,26 s,
+so studenou pamäťou 0,56 s; pomalá 4G 1,6 Mb/s: 0,48 s a 1,27 s – `richtarik/majitel/prehliadka/ZAPIS.md`).
 
 **V zastávke.** Fotka je väčšia než okno: ťahanie prstom alebo myšou ju posúva (zotrvačnosť, útlm 320 ms), pri posune sa
 jemne nakláňa v perspektíve (najviac 2,5° a 1,5°, len keď fotka okno prekrýva s rezervou). Dva prsty, tlačidlá + a −,
 klávesy + a −, dvojité ťuknutie alebo koliesko priblížia; koliesko v stránke posúva stránku (priblíži s Ctrl), na
-celej obrazovke priblíži samo. Zvislý ťah prstom v stránke patrí stránke (`touch-action: pan-y`), na celej obrazovke
-fotke. Všetko je `transform` jednej vrstvy (kompozítor), kreslí sa len počas pohybu.
+celej obrazovke priblíži samo. Zvislý ťah prstom v stránke patrí stránke (`touch-action: pan-y`, nič sa nepripína); na
+celej obrazovke a pri priblíženej fotke (trieda `pp-zoomnute`) posúva prst fotku všetkými smermi (`touch-action: none`)
+– stránka sa vtedy posúva ťahom mimo fotky alebo po oddialení. Všetko je `transform` jednej vrstvy (kompozítor),
+kreslí sa len počas pohybu.
 **Mierka.** `PRECHADZKA_LIMIT = 1.6`: jeden bod zdroja nikdy nezaberie viac než 1,6 CSS bodu (rendered / intrinsic
 v nástrojoch prehliadača, počíta sa proti skutočnému rozlíšeniu fotky v `zdroj`, dnes 1296 × 930 až 990 a 1132 × 1366).
 Východisko: fotka prekrýva okno a do strán presahuje o 30 %, pokiaľ je vidno aspoň 42 % jej plochy; strop priblíženia
-je 2,2-násobok najmenšej mierky, najviac limit. Keď je okno väčšie než 1,6-násobok fotky (veľký monitor), fotka ostane
+je 2,2-násobok najmenšej mierky, najviac limit (pri zapnutom náklone 1,553, lebo náklon zväčší bližší okraj fotky
+najviac o 3 % – ani ten neprekročí 1,6). Keď je okno väčšie než 1,6-násobok fotky (veľký monitor), fotka ostane
 menšia než okno na tmavom podklade. S originálmi od majiteľa stačí prepísať `zdroj` a limit sa posunie sám.
 **Súbory.** Podľa zobrazenej šírky a hustoty displeja (najviac 2) sa vyberie 720, 960 alebo 1290 px (AVIF, WebP ako
 záloha); zväčšený súbor 1720 px len vtedy, keď je fotka na obrazovke širšia než zdroj (veľké okno alebo priblíženie).
-**Medzi zastávkami.** Šípky ukotvené na zemi (poloha v % fotky a smer v `sipky`, cieľ dotyku 64 px dopredu a 52 px
-späť), klávesy ← → ↑ (so Shiftom šípky posúvajú pohľad, Home a End prvá a posledná), tlačidlá kroku pri názve a pás
-náhľadov. Prechod: nájazd do smeru šípky (mierka 1 → 1,32 so stredom v šípke) s prelnutím, 620 ms; krok späť prichádza
+**Medzi zastávkami.** Šípky ukotvené na zemi (poloha v % fotky a smer v `sipky`): dopredu červený kotúč s bielym
+okrajom a popisom „Ďalej“ (cieľ dotyku 76 px), späť tmavý s popisom „Späť“ (56 px). **Šípky sa držia v zábere**: ležia
+na svojom mieste fotky (vrátane náklonu), a keď je to miesto po posune alebo priblížení mimo okna, ostanú pri
+najbližšom okraji javiska (pod čipmi, vedľa tlačidiel + a −; dve šípky sa neprekryjú) – na ďalšiu zastávku sa dá prejsť
+bez hľadania (`drzSipky` v `zdroj/prechadzka.js`; v zastávke typu panoráma šípka mimo pohľadu zmizne ako v Street
+View a ostáva krok v päte). Ďalej klávesy ← → ↑ (so Shiftom šípky posúvajú pohľad, Home a End prvá a posledná),
+tlačidlá kroku pri názve (krok ďalej je červený) a pás náhľadov. Prechod: nájazd do smeru šípky (mierka 1 → 1,32 so stredom v šípke) s prelnutím, 620 ms; krok späť prichádza
 z priblíženia; pri „obmedziť pohyb“ len prelnutie 220 ms, bez zotrvačnosti a náklonu. Susedné zastávky sa sťahujú
 vopred, ostatné sa uvoľňujú. Názov a poradie („Predajňa – náradie, 7 z 9“) číta čítačka pri zmene (`aria-live`).
-**Okno.** Telefón 56 vh (300–500 px), od 701 px 16 : 9 (najviac 76 vh), pod ním päta s názvom a náhľadmi. „Celá
+**Okno.** Telefón 62 vh (najmenej 300 px; Lajo 10. 11. 2026: aspoň 60 % výšky obrazovky – na 390 × 844 je to 523 px),
+od 701 px 16 : 9 (najviac 76 vh), pod ním päta s názvom a náhľadmi (miesto na dva riadky názvu, výška päty sa medzi
+zastávkami nemení). Po otvorení prechádzky aj pohľadu z ulice sa stránka posunie tak, aby bolo okno v zábere medzi
+lištou webu a spodnou lištou telefónu (`zarovnaj`): keď sa zmestí celé, ukáže sa celé; keď nie, obraz ostane celý pod
+lištou webu a z päty je vidno, čo sa zmestí. Ikona asistenta sa schová, kým je otvorená prechádzka v okne (zakrývala
+by krok ďalej). „Celá
 obrazovka“ je `requestFullscreen` na celom komponente; kde nie je (iPhone), pevná pozícia cez celé okno (`.pp-pevne`,
 sekcia s `content-visibility:auto` dostane `pp-pevne-rodic`, Esc ju ukončí). „Zavrieť“ vráti náhľad a fokus na tlačidlo.
 **Prístupnosť.** Záložky `role="tablist"` (šípky presúvajú fokus, obsah sa prepne až Enterom – pohľad z ulice načíta
@@ -409,7 +428,8 @@ cieľa, ciele dotyku ≥ 44 px, kontrast vo všetkých troch témach nad AA (či
 
 - `PRECHADZKA` – zoznam zastávok: `id`, `foto` (názov z `img/predajna`), `nazov`, `zdroj` (skutočné rozlíšenie fotky),
   `stred` (bod fotky v %, ktorý je pri príchode v strede okna), `sipky` – `(cieľ, x %, y %, smer°)`; smer 0 = dopredu,
-  kladný doprava, 180 = späť. Šípka na skoršiu zastávku sa kreslí ako menšia šípka späť. Novej fotke treba vyrobiť
+  kladný doprava, 180 = späť. Šípka na skoršiu zastávku sa kreslí ako menšia šípka späť. Zastávka pri ceste má navyše
+  `ulica=(x %, y %, smer°)` – miesto šípky „Pohľad z ulice (Google)“. Novej fotke treba vyrobiť
   náhľad: `richtarik/venv/bin/python richtarik/majitel/prehliadka/nastroje/nahlady.py <priečinok webu> <názov fotky>`.
 - `ULICA_GOOGLE = True` – **jediný prepínač** záložky Googlu; `False` ju odstráni z oboch stránok (bez záložiek ostane
   len prechádzka). `ULICA_SURADNICE` – súradnice predajne pre bezkľúčové vloženie
