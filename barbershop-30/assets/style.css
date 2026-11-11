@@ -1294,6 +1294,8 @@ html:not(.karty) .title-pin { position: relative; }
   }
 }
 @media (max-width: 359px) { .title-actions { flex-wrap: wrap; } .title-actions .btn { flex-basis: 100%; } }
+/* najužší telefón (320 px): názov v lište na jednom riadku (K1-7) */
+@media (max-width: 339px) { .site-header .brand { white-space: nowrap; font-size: 1.125rem; } .site-header .container { gap: var(--s3); } }
 
 /* spodné tlačidlo na telefóne: kompaktné vpravo dole (zavolať + rezervovať), nie oranžový pás cez celú
    šírku; skryje sa v úvode (karta má vlastné tlačidlá), v cenníku (každá služba má Objednať), v rezervácii

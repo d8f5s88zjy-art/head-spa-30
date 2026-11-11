@@ -5,7 +5,7 @@
 // seba (riadkové obdĺžniky sa pretínajú o viac ako 2 px v oboch osiach a medzi nimi nie je nepriehľadná plocha).
 // 0 prekrytí = OK.
 //
-//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150] [--vrstvy=nie] [--len=vrstvy]
+//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150] [--vrstvy=nie] [--lista=nie] [--len=vrstvy]
 //                                      [--naraz=3] [--out=<priečinok na snímky nálezov>] [--url=<iná adresa>]
 //
 // Ako meria: v každom okne tri prechody.
@@ -350,6 +350,37 @@ async function vrstvy() {
   if (arg.vypis) for (const x of vysledky) console.log('     ', JSON.stringify(x));
 }
 
+/* ---- plávajúca lišta Zavolať/Objednať sa (telefón) × tlačidlá titulnej karty úvodu (kontrola K1-1, 11. 11. 2026): na
+   nízkom telefóne ležala lišta cez „Zavolať a potvrdiť termín“. Lišta je nepriehľadné tlačidlo, hlavný prechod to ráta ako
+   zakrytie. Tu: skrol 0–1 400 px po 50 px, kým lišta svieti, jej tlačidlá nesmú pretínať viditeľné tlačidlo karty. ---- */
+async function lista() {
+  const okna = [[320, 568], [360, 614], [375, 667], [390, 664], [390, 844], [430, 932]], zle = [];
+  for (const [w, h] of okna) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: true, hasTouch: true, colorScheme: 'dark', locale: 'sk-SK' });
+    const page = await ctx.newPage();
+    await page.route(/barbershop30\.sk|headspa30\.sk|booqme|instagram|facebook|google/, (r) => r.abort());
+    await page.goto(`${URL0}?uvod=off&hudba=off&film=off`, { waitUntil: 'load' });
+    await page.touchscreen.tap(w / 2, h / 2); await page.waitForTimeout(1500);
+    let od = null;
+    for (let y = 0; y <= 1400; y += 50) {
+      await page.evaluate((yy) => scrollTo({ top: yy, behavior: 'instant' }), y); await page.waitForTimeout(600);
+      const r = await page.evaluate(() => {
+        const kryt = (e) => { let o = 1; for (let n = e; n && n.nodeType === 1; n = n.parentElement) o *= +getComputedStyle(n).opacity; return o; };
+        const cta = document.querySelector('#mobile-cta');
+        const lb = cta && !cta.classList.contains('is-hidden') && kryt(cta) > 0.5 ? [...cta.querySelectorAll('.btn')].map((e) => e.getBoundingClientRect()) : [];
+        const kb = [...document.querySelectorAll('.title-actions .btn')].filter((e) => kryt(e) > 0.01).map((e) => [e.textContent.trim(), e.getBoundingClientRect()]);
+        for (const c of lb) for (const [t, b] of kb) if (Math.min(c.right, b.right) - Math.max(c.left, b.left) > 0 && Math.min(c.bottom, b.bottom) - Math.max(c.top, b.top) > 0) return { lista: true, cez: t };
+        return { lista: lb.length > 0 };
+      });
+      if (r.lista && od == null) od = y;
+      if (r.cez) { zle.push(`${w}×${h} y=${y}: lišta cez „${r.cez}“`); break; }
+    }
+    if (od == null) zle.push(`${w}×${h}: lišta sa do 1 400 px neukázala`);
+    await ctx.close();
+  }
+  ok(!zle.length, 'plávajúca lišta nikdy cez tlačidlá titulnej karty úvodu (6 okien telefónu)', zle.join(' | '));
+}
+
 const filmy = FILM === 'oba' ? ['off', 'on'] : [FILM];
 const ulohy = [];
 if (arg.len !== 'vrstvy') {
@@ -361,6 +392,7 @@ const t0 = Date.now();
 let dalsia = 0;
 await Promise.all(Array.from({ length: Math.min(NARAZ, ulohy.length) }, async () => { while (dalsia < ulohy.length) { const u = ulohy[dalsia++]; await okno(...u); } }));
 if (arg.vrstvy !== 'nie') await vrstvy();
+if (arg.lista !== 'nie' && arg.len !== 'vrstvy') await lista();
 await browser.close();
 if (srv) srv.server.close();
 console.log(`${failed ? 'FAIL' : 'OK  '} prekrývanie textov: ${ulohy.length} okien${arg.vrstvy !== 'nie' ? ' + vrstvy (bublina Barbera, ponuka jazyka)' : ''}, ${failed} chýb, ${Math.round((Date.now() - t0) / 1000)} s${failed ? ', snímky nálezov: ' + OUT : ''}`);
