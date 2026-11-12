@@ -90,14 +90,20 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 - **Pás pod plávajúcou lištou a ikonou Barbera (S-1, 11. 11. 2026, style.css koniec, app.js `spodnaLista`,
   asistent.css `.asi-pod`)**: zákazník 9. 11.: „musí byť 0 prekrývaní všade“. Lišta Zavolať / Objednať sa a ikona
   Barbera ležali pri skrole cez text (text presvital medzi tlačidlami a okolo ikony). Na telefóne a tablete (do 900 px)
-  je pod nimi pás `#spodny-pas` cez celú šírku: plný atrament 70 px (tablet 74 px) + `safe-area-inset-bottom`, nad ním
-  28 px prechod do priehľadna; text pred ním vybledne a medzi tlačidlami nepresvitá. Pás svieti s lištou (`s-cta`) a bez
+  je pod nimi pás `#spodny-pas` cez celú šírku: plná plocha 70 px (tablet 74 px) + `safe-area-inset-bottom`, nad ním
+  28 px prechod do priehľadna; text pred ním vybledne a medzi tlačidlami nepresvitá. Tón pásu je tón sekcií
+  (`--ink-2`), nad pätičkou sa prelnie do jej tónu (`--ink`, trieda `s-pata`, len opacity; K1-S1-3). Pás svieti s lištou (`s-cta`) a bez
   nej pod ikonou (`s-ikona`: cenník, kontakt, pätička), nie v úvode, pri menu a v prológu filmu. Ikona je na telefóne
   v páse; v úvode bez pásu len tam, kde má pod tlačidlami titulnej karty voľno (`s-volno`; na 320×568 by ležala cez
   „Zavolať a potvrdiť termín“, príde s lištou). Lišta a pás prídu až po zhasnutí titulnej karty, ak by pás ležal cez jej
   tlačidlá (`heroNaraz` ráta s výškou pásu). Ukazovanie len cez transform a opacity (300 ms), bez backdrop-filter,
-  `pointer-events: none`, `contain`. Na počítači pás nie je: ikona má vlastný podklad (atrament 12 px okolo, tieň) a
-  pod pätičkou je rezerva 88 px (`html.asi-je`), na telefóne rezerva pásu, aby bola celá pätička nad ním.
+  `pointer-events: none`, `contain`. Skrytá lišta má po odchode `visibility: hidden` (nie je v poradí Tabu, D-1).
+  Na počítači pás nie je: ikona má vlastný podklad `.asi-pod` (samostatný pevný prvok hneď za tlačidlom, tón sekcie
+  12 px okolo, tieň), ktorý svieti len vtedy, keď je v zóne ikony riadok textu – app.js `podIk` sleduje zónu ikony
+  + 8 px a 40 px vopred IntersectionObserverom, text karty záberu sa ráta, kým karta svieti; nad fotkou bez textu
+  podklad nie je (K1-S1-1). Ukáže sa hneď, zhasne za 200 ms. V pätičke je rezerva 88 px (`html.asi-je .site-footer`;
+  v pätičke, nie pod ňou, aby pás kapitol pri dne ostal tenký, K1-S1-2), na telefóne rezerva pásu, aby bola celá
+  pätička nad ním.
 - **Telefón: fotka v páse, celé fotky, menšie okná (2026‑10‑25, style.css P16, film.js `PAS_B` a `aim()`)**:
   zadávateľ: „fotky nie je vidno úplne, okná zakrývajú celú obrazovku“. Na telefóne na výšku je fotka scény v hornom
   páse (56 % výšky, `--pas`), text karty pod ňou na atramente; fotka na šírku v páse ukáže asi 2× viac šírky ako cez
