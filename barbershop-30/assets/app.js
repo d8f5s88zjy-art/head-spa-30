@@ -139,6 +139,10 @@ function measure() {
   const pasV = Math.max(mobileCta ? mobileCta.offsetHeight : 0, spodnyPas ? spodnyPas.offsetHeight : 0);
   heroNaraz = !!(ha && hf && pasV) && hb + 8 > vh - pasV;
   heroIkona = !(ha && hf) || hb <= vh - (window.innerWidth > 640 ? 72 : 68);   // 68/72 px = ikona + 16 px spodok + 8 px okraj
+  // K2-1 (12. 11. 2026): výzva „Prejdi si podnik“ stojí v tom istom ráme pod kartou úvodu; keď k nej siaha spodok tlačidiel
+  // karty (nízke okno počítača 1280×720, 1366×768, dlhší jazyk), schová sa – inak by ležala cez „Zavolať a potvrdiť termín“
+  const hh = hf && $('.scroll-hint', hf);
+  if (hh) setClass(hh, 'je-tesno', !!hh.offsetParent && hb + 8 > hh.offsetTop);
   // pás kapitol: pásy s textom (tím, cenník, galéria, kontakt, pätička), nad nimi je pás len tenká čiara
   if (kino) {
     kino.pasy = $$('.band, .site-footer').map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y]; });
@@ -527,6 +531,9 @@ window.addEventListener('orientationchange', scheduleMeasure);
 if (maRO) {
   // obrázky, fonty, neskorší obsah – mení sa výška dokumentu
   new ResizeObserver(scheduleMeasure).observe(document.body);
+  // karta úvodu mení výšku bez zmeny tela (iný jazyk, riadok „Teraz otvorené“): zmeria sa znova (K1-1, K2-1)
+  const kartaUvodu = $('.title-hero');
+  if (kartaUvodu) new ResizeObserver(scheduleMeasure).observe(kartaUvodu);
 }
 document.fonts?.ready?.then(scheduleMeasure);
 window.addEventListener('load', () => { scheduleMeasure(); snapNow(400); });

@@ -306,6 +306,10 @@ priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nas
   schová skôr, než sa ho okraj pásu s textom dotkne (celý jeho obdĺžnik + 8 px, `app.js` `kresliPas`).
   Navyše (K1-1, 11. 11. 2026): plávajúca lišta Zavolať/Objednať sa nikdy cez tlačidlá titulnej karty úvodu v 6 oknách
   telefónu 320×568 až 430×932 (skrol 0–1 400 px); na nízkom telefóne sa lišta ukáže až po zhasnutí karty (`--lista=nie` vypne).
+  Navyše (K2-1, 12. 11. 2026): výzva „Prejdi si podnik“ nikdy cez kartu úvodu na počítači – okná 1024×768, 1280×720,
+  1366×768, 1440×900, 1536×864, 1920×1080 × jazyky sk, en, de, hu, uk; aspoň v jednom okne musí svietiť (`--vyzva=nie`
+  vypne). Výzva sa schová (`app.js` `measure()`, trieda `je-tesno`), keď spodok tlačidiel karty siaha na 8 px k nej;
+  karta úvodu má vlastný ResizeObserver, takže to platí aj po prepnutí jazyka za behu.
   Na konci **vrstvy** (L3, 11. 11. 2026; samostatne `--len=vrstvy`, asi 3 minúty, vypnúť `--vrstvy=nie`): bublina Barbera
   („Ahoj, som Barber…“, `?asistent=ukazka`) a ponuka jazyka („This page is also in English.“ v jazykoch en, de, uk)
   v oknách 320/390/430/1440 na úvode, začiatku scény a cieli kapitol Poď ďalej, Remeslo, Čakáreň, Tím: kým svietia,

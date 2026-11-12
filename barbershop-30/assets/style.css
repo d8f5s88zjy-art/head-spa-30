@@ -1226,6 +1226,8 @@ html[data-motion="off"] .title-hero * { animation: none !important; }
   color: var(--paper); text-shadow: 0 1px 8px rgba(var(--ink-rgb), 0.9);
 }
 .title-frame .scroll-hint::after { width: 1px; height: 28px; background: var(--lamp); }
+/* K2-1: keď spodok tlačidiel karty úvodu siaha k výzve (app.js measure), výzva sa neukáže (nízke okno počítača, dlhší jazyk) */
+.title-frame .scroll-hint.je-tesno { visibility: hidden; }
 
 /* stály šerý okraj filmu (vinetácia, nie tónovanie): hore pod lištou a spodná tretina, ako v referencii.
    S filmom je to jedna pevná vrstva medzi plátnom a stránkou (nebliká pri výmene kariet), bez filmu

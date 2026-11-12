@@ -5,7 +5,7 @@
 // seba (riadkové obdĺžniky sa pretínajú o viac ako 2 px v oboch osiach a medzi nimi nie je nepriehľadná plocha).
 // 0 prekrytí = OK.
 //
-//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150] [--vrstvy=nie] [--lista=nie] [--len=vrstvy]
+//   node source/tools/prekryv-test.mjs [--w=320,390] [--film=oba|on|off] [--nizke=ano|nie|len] [--krok=150] [--vrstvy=nie] [--lista=nie] [--vyzva=nie] [--len=vrstvy]
 //                                      [--naraz=3] [--out=<priečinok na snímky nálezov>] [--url=<iná adresa>]
 //
 // Ako meria: v každom okne tri prechody.
@@ -381,6 +381,37 @@ async function lista() {
   ok(!zle.length, 'plávajúca lišta nikdy cez tlačidlá titulnej karty úvodu (6 okien telefónu)', zle.join(' | '));
 }
 
+/* ---- výzva „Prejdi si podnik“ × karta úvodu na počítači (kontrola K2-1, 12. 11. 2026): pri 1280×720 a 1366×768 vo všetkých
+   jazykoch a pri 1440×900 a 1536×864 v maďarčine a ukrajinčine ležala výzva cez „Zavolať a potvrdiť termín“. Hlavný prechod
+   meria počítač len pri 1440×900 po slovensky. Tu: 6 okien počítača × 5 jazykov (najdlhšie texty hu, uk, de + sk, en);
+   svietiaca výzva nesmie pretínať tlačidlá, riadok pod nadpisom ani vetu karty a aspoň v jednom okne musí svietiť. ---- */
+async function vyzva() {
+  const okna = [[1024, 768], [1280, 720], [1366, 768], [1440, 900], [1536, 864], [1920, 1080]], jazyky = ['sk', 'en', 'de', 'hu', 'uk'];
+  const ulohyH = []; for (const j of jazyky) for (const o of okna) ulohyH.push([j, ...o]);
+  const zle = [], svieti = []; let k = 0;
+  await Promise.all(Array.from({ length: NARAZ }, async () => { while (k < ulohyH.length) { const [j, w, h] = ulohyH[k++];
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: 'dark', locale: 'sk-SK' });
+    const page = await ctx.newPage();
+    await page.route(/barbershop30\.sk|headspa30\.sk|booqme|instagram|facebook|google/, (r) => r.abort());
+    const u = j === 'en' ? URL0.replace(/index\.html$/, 'en/index.html') + '?' : `${URL0}?${j === 'sk' ? '' : 'lang=' + j + '&'}`;
+    await page.goto(`${u}uvod=off&hudba=off&film=off`, { waitUntil: 'load' });
+    await page.waitForTimeout(2500);   // jazyk, riadok „Teraz otvorené“, meranie app.js (120 ms po zmene veľkosti karty)
+    const r = await page.evaluate(() => {
+      const vid = (e) => { if (!e) return null; for (let n = e; n && n.nodeType === 1; n = n.parentElement) { const c = getComputedStyle(n); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < 0.05) return null; } const b = e.getBoundingClientRect(); return b.height ? b : null; };
+      const hint = vid(document.querySelector('.title-frame .scroll-hint'));
+      if (!hint) return { svieti: false, cez: [] };
+      const cez = [...document.querySelectorAll('.title-hero .title-actions .btn, .title-hero .hero-proof > li, .title-hero .title-sub, .title-hero .hero-live')]
+        .map((e) => [e.textContent.trim().slice(0, 24), vid(e)]).filter(([, b]) => b && Math.min(b.right, hint.right) - Math.max(b.left, hint.left) > 0.5 && Math.min(b.bottom, hint.bottom) - Math.max(b.top, hint.top) > 0.5)
+        .map(([t]) => t);
+      return { svieti: true, cez };
+    });
+    if (r.svieti) svieti.push(`${j} ${w}×${h}`);
+    if (r.cez.length) zle.push(`${j} ${w}×${h}: výzva cez „${r.cez.join('“, „')}“`);
+    await ctx.close(); } }));
+  ok(!zle.length, `výzva „Prejdi si podnik“ nikdy cez kartu úvodu (${ulohyH.length} okien počítača × jazyk)`, zle.join(' | '));
+  ok(svieti.length > 0, 'výzva „Prejdi si podnik“ sa na počítači ukáže, kde je pod kartou voľno', `svieti v ${svieti.length} z ${ulohyH.length}`);
+}
+
 const filmy = FILM === 'oba' ? ['off', 'on'] : [FILM];
 const ulohy = [];
 if (arg.len !== 'vrstvy') {
@@ -393,6 +424,7 @@ let dalsia = 0;
 await Promise.all(Array.from({ length: Math.min(NARAZ, ulohy.length) }, async () => { while (dalsia < ulohy.length) { const u = ulohy[dalsia++]; await okno(...u); } }));
 if (arg.vrstvy !== 'nie') await vrstvy();
 if (arg.lista !== 'nie' && arg.len !== 'vrstvy') await lista();
+if (arg.vyzva !== 'nie' && arg.len !== 'vrstvy') await vyzva();
 await browser.close();
 if (srv) srv.server.close();
 console.log(`${failed ? 'FAIL' : 'OK  '} prekrývanie textov: ${ulohy.length} okien${arg.vrstvy !== 'nie' ? ' + vrstvy (bublina Barbera, ponuka jazyka)' : ''}, ${failed} chýb, ${Math.round((Date.now() - t0) / 1000)} s${failed ? ', snímky nálezov: ' + OUT : ''}`);
