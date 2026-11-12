@@ -200,9 +200,11 @@ export async function spusti(api) {
     } catch (e) { /* okno ide aj bez nich */ }
     return otazky;
   }
-  // ikona: logo, štítok AI; pri otvorenom okne na počítači krížik na zavretie; pod ňou vlastný podklad (S-1: text pod ikonou nepresvitá)
+  // ikona: logo, štítok AI; pri otvorenom okne na počítači krížik na zavretie; pod ňou vlastný podklad (S-1: text pod
+  // ikonou nepresvitá) – samostatný prvok za tlačidlom, aby jeho ukázanie neprekresľovalo tlačidlo s logom
   const btnAi = el('span', { class: 'asi-ai' });
-  const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'data-no-i18n': true }, [el('span', { class: 'asi-pod', 'aria-hidden': 'true' }), logo('asi-logo-btn'), btnAi, ikona(I_X)]);
+  const btn = el('button', { class: 'asi-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'asi-panel', 'data-no-i18n': true }, [logo('asi-logo-btn'), btnAi, ikona(I_X)]);
+  const pod = el('span', { class: 'asi-pod', 'aria-hidden': 'true' });
   // bublina pri ikone: Spýtať sa, Zavolať, zavrieť
   const oznamH = el('p', { class: 'asi-oznam-h' }), oznamT = el('p', { class: 'asi-oznam-t' });
   const spytaj = el('button', { class: 'asi-oznam-spytaj', type: 'button' });
@@ -227,7 +229,7 @@ export async function spusti(api) {
   const panel = el('section', { class: 'asi-panel', id: 'asi-panel', role: 'dialog', 'aria-labelledby': 'asi-h', tabindex: '-1', hidden: true, 'data-no-i18n': true },
     [el('header', { class: 'asi-hlava' }, [logo('asi-logo-m'), el('div', { class: 'asi-hlava-t' }, [h, sub]), el('div', { class: 'asi-hlava-akcie' }, [volaj, zavri])]),
       pas, zoz, form, el('div', { class: 'asi-pata' }, [el('div', {}, [note, ochrana]), el('div', { class: 'asi-pata-akcie' }, [novy, skry])])]);
-  document.body.append(oznam, btn, clona, panel); html.classList.add('asi-je');   // asi-je: rezerva pod pätičkou (style.css, S-1)
+  document.body.append(oznam, btn, pod, clona, panel); html.classList.add('asi-je');   // asi-je: rezerva pod pätičkou (style.css, S-1)
 
   const bublina = (rola, text) => { const b = el('div', { class: 'asi-msg asi-' + rola }); if (text) vykresli(text, b); zoz.append(b); return b; };
   // karta termínu a tlačidlá idú pod bublinu odpovede (aj po obnovení stránky z uloženého rozhovoru)
@@ -478,7 +480,7 @@ export async function spusti(api) {
     // fokus nesmie ostať na zmazanom okne: na prvok, z ktorého sa okno otvorilo, inak na obsah stránky
     const ciel = navrat && navrat.isConnected && navrat !== btn && !panel.contains(navrat) && !oznam.contains(navrat) ? navrat : document.getElementById('main');
     if (ciel && (panel.contains(document.activeElement) || oznam.contains(document.activeElement) || document.activeElement === btn)) ciel.focus({ preventScroll: true });
-    btn.remove(); oznam.remove(); clona.remove(); panel.remove(); html.classList.remove('asi-je');
+    btn.remove(); pod.remove(); oznam.remove(); clona.remove(); panel.remove(); html.classList.remove('asi-je');
   }
 
   // telefón s klávesnicou: okno sa natiahne presne na viditeľnú plochu (pole otázky nad klávesnicou, hlavička hore)

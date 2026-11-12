@@ -152,6 +152,7 @@ function measure() {
     const r = footer.getBoundingClientRect();
     footerBox = { top: r.top + y, height: r.height };
   }
+  if (podIk) podIk.zmeraj();
 }
 
 /* ----------------------------------------------------------------------------
@@ -233,6 +234,7 @@ function apply(p) {
       const outO = pas && s.long ? ease01(((s.top + s.height - y) / vh - pasK) / 0.08) : 1 - ease01((u - 1 + CARD_OUT) / CARD_OUT);
       const o = Math.min(inO, outO);
       setVar('--o', o, s.el);
+      s.o = o;   // krytie karty pre podklad ikony na počítači (podIk)
       if (s.first) heroO = o;
       setClass(s.el, 'is-on', o > 0.01);
     }
@@ -291,7 +293,56 @@ function spodnaLista(y) {
   setClass(spodnyPas, 's-cta', !skryta);
   setClass(spodnyPas, 's-ikona', !menuOpen && !uvod);
   setClass(spodnyPas, 's-volno', uvod && heroIkona);   // úvod: ikona bez pásu, ak nezavadzia tlačidlám karty
+  if (podIk) podIk.krok();
 }
+
+/* S-1 počítač (nad 900 px): podklad ikony Barbera (.asi-pod, asistent.css) svieti len vtedy, keď je v zóne ikony
+   riadok textu; nad fotkou bez textu ostane zhasnutý (K1-S1-1). Zónu sleduje IntersectionObserver (pozná sticky aj
+   transform kariet): koreň = ikona + 8 px okraj a 40 px vopred hore aj dole, ciele = prvky s vlastným textom pri
+   ľavom okraji (meria sa len v measure()). Text karty záberu sa ráta, kým karta svieti (krytie zo slučky), titulky
+   s data-at len s is-in. Na telefóne a tablete nič (tam je pás). Len triedy na <html>, zápis iba pri zmene. */
+const podIk = 'IntersectionObserver' in window ? (() => {
+  const VON = '.site-header, .story-line, .mobile-cta, .spodny-pas, .asi-btn, .asi-oznam, .asi-panel, .asi-clona, script, style, noscript, template';
+  const zasahy = new Map();   // prvok v zóne -> { shot, at, pata }
+  let io = null, on = false, pata = false;
+  function krok() {
+    let z = false, p = true;
+    for (const i of zasahy.values()) {
+      if (i.shot ? !(i.shot.o > 0.05) : i.at ? !i.at.classList.contains('is-in') : false) continue;
+      z = true; if (!i.pata) p = false;
+    }
+    if (z !== on) { on = z; html.classList.toggle('asi-pod-on', z); }
+    if (z && p !== pata) { pata = p; html.classList.toggle('asi-pod-pata', p); }
+  }
+  function zrus() { if (io) io.disconnect(); io = null; zasahy.clear(); krok(); }
+  function zmeraj() {
+    const btn = mqMobile.matches ? null : $('.asi-btn');
+    if (!btn) { zrus(); return; }
+    const r = btn.getBoundingClientRect(), vw = html.clientWidth, vh2 = html.clientHeight, L = 40;
+    // ikona môže byť ešte posunutá o 12 px nadol (nábeh): zóna hore o to vyššie
+    const zl = r.left - 8, zr = r.right + 8, zt = r.top - 8 - L - 12, zb = r.bottom + 8 + L;
+    const m = `${Math.round(-zt)}px ${Math.round(zr - vw)}px ${Math.round(zb - vh2)}px ${Math.round(-zl)}px`;
+    if (io) io.disconnect();
+    zasahy.clear();
+    io = new IntersectionObserver((es) => {
+      for (const e of es) { if (e.isIntersecting) zasahy.set(e.target, e.target.__pod); else zasahy.delete(e.target); }
+      krok();
+    }, { rootMargin: m });
+    const ciele = new Set(), tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n; (n = tw.nextNode());) {
+      const el = n.parentElement;
+      if (!el || ciele.has(el) || !n.nodeValue.trim() || el.closest(VON)) continue;
+      const q = el.getBoundingClientRect();
+      if (q.width && q.left > zr + 8) continue;               // text ďaleko vpravo od ikony
+      ciele.add(el);
+      const shot = shots.find((s) => s.title && s.el.contains(el)) || null, at = el.closest('[data-at]');
+      el.__pod = { shot, at, pata: !!(footer && footer.contains(el)) };
+      io.observe(el);
+    }
+    krok();
+  }
+  return { zmeraj, krok };
+})() : null;
 
 // pás kapitol: aktuálna kapitola plná po polohu v nej, predošlé plné, ďalšie prázdne (len transform, zápis iba pri zmene)
 function kresliPas(y, section, uvod) {

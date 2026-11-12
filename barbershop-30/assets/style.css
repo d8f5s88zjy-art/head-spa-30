@@ -1901,5 +1901,6 @@ html[data-motion="off"] .film-shot.is-title .title-card, html[data-motion="off"]
 }
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) { .spodny-pas { transition: none; } }
 html[data-motion="off"] .spodny-pas { transition: none; }
-/* počítač: ikona Barbera vľavo dole (48 px + vlastný podklad) – rezerva pod pätičkou, aby posledný riadok ostal nad ňou */
-@media (min-width: 901px) { html.asi-je body { padding-bottom: 88px; } }
+/* počítač: ikona Barbera vľavo dole (48 px + vlastný podklad) – rezerva v pätičke, aby posledný riadok ostal nad ňou;
+   v pätičke, nie pod ňou: spodok okna ostane nad pätičkou a pás kapitol pri dne len tenká čiara (K1-S1-2) */
+@media (min-width: 901px) { html.asi-je .site-footer { padding-bottom: calc(var(--s7) + 88px); } }

@@ -22,15 +22,21 @@
 .asi-btn .asi-logo-btn { width: 100%; height: 100%; transition: opacity var(--t-micro); }
 .asi-btn .asi-ai { position: absolute; top: -4px; right: -6px; padding: 1px 4px; font-size: 0.6rem; box-shadow: 0 0 0 2px var(--ink); }
 .asi-btn > svg { position: absolute; width: 20px; height: 20px; color: var(--ink); opacity: 0; transition: opacity var(--t-micro); }
-/* vlastný podklad ikony na počítači (S-1): plný atrament 12 px okolo ikony, aby text stránky pod ňou a pri nej
-   nepresvital; okraj mäkko doznieva tieňom. Na telefóne a tablete (do 900 px) leží ikona v páse pod lištou
-   (style.css, #spodny-pas), podklad tam netreba. Je to dieťa tlačidla, ukazuje a skrýva sa s ním (opacity, transform).
-   Biely kruh pod logom a krížikom kreslí podklad sám (vrstva -1 leží nad pozadím tlačidla). Ťuk prepúšťa. */
+/* vlastný podklad ikony na počítači (S-1): plný tón sekcie 12 px okolo ikony, aby text stránky pod ňou a pri nej
+   nepresvital; okraj mäkko doznieva tieňom. Svieti len vtedy, keď je v zóne ikony riadok textu (asi-pod-on, app.js;
+   nad fotkou bez textu ostane zhasnutý, K1-S1-1): ukáže sa hneď (text nesmie presvitať ani chvíľu), zhasne za 200 ms,
+   len opacity na vlastnej vrstve (tlačidlo s logom sa pri tom neprekresľuje). Tón sekcií --ink-2, nad pätičkou --ink
+   (asi-pod-pata). Samostatný prvok hneď za tlačidlom, pod ním (z-index 35); ukazuje a skrýva sa s ním. Na telefóne
+   a tablete (do 900 px) leží ikona v páse pod lištou (style.css, #spodny-pas), podklad tam netreba. Ťuk prepúšťa. */
 .asi-pod {
-  position: absolute; inset: -12px; z-index: -1; border-radius: 12px; pointer-events: none;
-  background: radial-gradient(circle closest-side, #fff calc(100% - 12.5px), var(--ink) calc(100% - 12px)) var(--ink);
-  box-shadow: 0 0 8px 2px rgba(14, 13, 12, 0.9);
+  position: fixed; left: calc(var(--gutter) - 12px); bottom: calc(var(--s4) - 12px + env(safe-area-inset-bottom, 0px)); z-index: 35;
+  width: 72px; height: 72px; border-radius: 12px; pointer-events: none;
+  background: var(--ink-2); box-shadow: 0 0 8px 2px rgba(23, 20, 18, 0.9);
+  opacity: 0; transition: opacity 0.2s var(--ease-out); will-change: opacity;
 }
+html.asi-pod-on .asi-btn.is-on + .asi-pod, html.asi-pod-on .asi-btn:focus-visible + .asi-pod { opacity: 1; transition-duration: 0s; }
+html.pro:not(.world-off) .asi-btn:not(:focus-visible) + .asi-pod, html.outside .asi-btn + .asi-pod.asi-pod, body:has([data-menu="open"]) .asi-btn + .asi-pod.asi-pod { opacity: 0; }
+html.asi-pod-pata .asi-pod { background: var(--ink); box-shadow: 0 0 8px 2px rgba(14, 13, 12, 0.9); }
 @media (max-width: 900px) { .asi-pod { display: none; } }
 html.asi-open .asi-btn .asi-logo-btn { opacity: 0; }
 html.asi-open .asi-btn > svg { opacity: 1; }
@@ -164,7 +170,7 @@ html.pro:not(.world-off) .asi-oznam, html.outside .asi-oznam, body:has([data-men
   .asi-volaj span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .asi-btn, .asi-oznam, .asi-panel { transition: none; animation: none; }
+  .asi-btn, .asi-pod, .asi-oznam, .asi-panel { transition: none; animation: none; }
   .asi-pise::after { animation: none; }
 }
 
