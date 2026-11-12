@@ -293,6 +293,8 @@ function spodnaLista(y) {
   setClass(spodnyPas, 's-cta', !skryta);
   setClass(spodnyPas, 's-ikona', !menuOpen && !uvod);
   setClass(spodnyPas, 's-volno', uvod && heroIkona);   // úvod: ikona bez pásu, ak nezavadzia tlačidlám karty
+  // tón pásu: nad pätičkou (--ink) jej tón, inde tón sekcií (--ink-2); len opacity vrstvy (K1-S1-3)
+  setClass(spodnyPas, 's-pata', !!footerBox && curY + vh - 98 > footerBox.top);
   if (podIk) podIk.krok();
 }
 
