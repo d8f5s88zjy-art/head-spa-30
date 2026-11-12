@@ -7,7 +7,9 @@
 //   node source/tools/zmensi.mjs <priečinok webu> --skusobne   len vypíše úsporu, nič nezapíše
 //
 // HTML (index.html, en/index.html, rezervacia.html, 404.html): odstráni <!-- … --> okrem obsahu <script>, <style>,
-// <textarea> a <pre>; komentár sám na riadku zmizne aj s riadkom.
+// <textarea> a <pre>; komentár sám na riadku zmizne aj s riadkom. Odsadenie na začiatku riadkov (medzery a tabulátory za
+// zalomením) tiež zmizne, zalomenie ostáva, takže medzi prvkami je stále medzera a vzhľad sa nemení (na stránkach nie je
+// white-space: pre mimo chránených častí); 12. 11. 2026 kvôli stráži PLY-01, keď Lajkove texty úvodu a tímu pridali ~90 B.
 // CSS (assets/*.css): odstráni /* … */ len zo súborov, ktoré nemajú url( ani /* vnútri reťazca (inak by sa mohla
 // poškodiť adresa alebo text), a prázdne riadky. JavaScript sa nemení.
 import fs from 'node:fs';
@@ -15,10 +17,10 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
-/* HTML bez komentárov; časti v <script>, <style>, <textarea>, <pre> ostanú nedotknuté */
+/* HTML bez komentárov a bez odsadenia riadkov; časti v <script>, <style>, <textarea>, <pre> ostanú nedotknuté */
 export function bezKomentarovHtml(html) {
   const chran = /<(script|style|textarea|pre)\b[\s\S]*?<\/\1\s*>/gi;
-  const cisti = (t) => t.replace(/^[ \t]*<!--(?!\[if)[\s\S]*?-->[ \t]*\r?\n/gm, '').replace(/<!--(?!\[if)[\s\S]*?-->/g, '');
+  const cisti = (t) => t.replace(/^[ \t]*<!--(?!\[if)[\s\S]*?-->[ \t]*\r?\n/gm, '').replace(/<!--(?!\[if)[\s\S]*?-->/g, '').replace(/\n[ \t]+/g, '\n');
   let out = '', i = 0, m;
   while ((m = chran.exec(html))) { out += cisti(html.slice(i, m.index)) + m[0]; i = m.index + m[0].length; }
   return out + cisti(html.slice(i));

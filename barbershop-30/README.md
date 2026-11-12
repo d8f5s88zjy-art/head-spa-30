@@ -229,6 +229,10 @@ pozadím aspoň 240 px na výšku – dnešných 100 px je na iPhone (DPR 3) mie
 v `index.html`), upraviť `width`/`height` v pomere strán, `node source/tools/en-stranka.mjs`, `node source/tools/vaha.mjs`.
 Váha: logá a odkazy v pätičke stoja +152 B gzip nasadenej `index.html`; −52 B vrátilo, že galéria už nemá
 `data-lightbox-alt` (bol zhodný s `alt` obrázka a zväčšenie berie popis z `alt`, `app.js` `show()`), spolu 14 565 B < 14 600 B.
+Lajko 12. 11. 2026 (texty úvodu a tímu, väčšie logá) pridal ďalších 87 B (14 597 → 14 684 B, nad hranicou), preto
+`source/tools/zmensi.mjs` pri nasadení navyše maže odsadenie na začiatku riadkov HTML (zalomenia ostávajú, `<script>`, `<style>`,
+`<textarea>`, `<pre>` sa nemenia): nasadená `index.html` má 14 249 B. Vzhľad sa nezmenil (pixelové porovnanie zdroja a nasadenej
+podoby pri 390 a 1440 px, index.html, en/, 404.html, zhodné).
 
 ## Nasadenie
 
