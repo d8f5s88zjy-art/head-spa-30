@@ -73,7 +73,7 @@ Doplnky
 - Farbenie obočia – 10 min – 5 €: profesionálne farby.
 
 ## Tím
-Pod značkou Barbershop 30 pracuje tím barberov a barberiek; svojho človeka si zákazník vyberie v rezervácii.
+Pod značkou Barbershop 30 pracujú barberi a barberky, ktorí svoju prácu robia naozaj profesionálne (Lajko, 12. 11. 2026); svojho človeka si zákazník vyberie v rezervácii.
 Profesionálni barberi s 10 až 15 rokmi praxe (slová majiteľa, 27. 10. 2026); podnik o sebe hovorí „garantujeme skúsenosť“ (Lajko, 9. 11. 2026). Jeden štandard pre všetkých: konzultácia, presná práca
 a strih, ktorý sedí aj o týždeň. Zákazník povie, ako to chce, a barber ho ostrihá presne tak, ako si želá a predstavuje
 (Lajko, 9. 11. 2026 večer).

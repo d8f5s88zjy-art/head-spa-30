@@ -154,9 +154,9 @@ Hodnotenie na Google ostáva aj ako odkaz (teraz priamo na profil, nie na vyhľa
 
 ## Úvod: hodnotenie a cena (2026‑10‑21)
 
-- „5,0 na Google · 945 recenzií“ v úvode: profil Barbershop30 Nitra na Google Maps, overené priamo na zdroji 13. 10. 2026
-  (časť Recenzie vyššie); odkaz vedie na profil. Počet recenzií rastie, pri ďalšej kontrole ho aktualizuj
-  (index.html, `.hero-proof`, a kľúč v `assets/i18n/*.json`). Do štruktúrovaných údajov (JSON‑LD) sa nepíše.
+- „5,0 na Google · 945 recenzií“ v úvode do 12. 11. 2026: profil Barbershop30 Nitra na Google Maps, overené priamo na zdroji
+  13. 10. 2026 (časť Recenzie vyššie); odkaz vedie na profil. Od 12. 11. 2026 v úvode „Viac ako 940 recenzií“ (časť nižšie,
+  Lajko 12. 11.). Do štruktúrovaných údajov (JSON‑LD) sa hodnotenie nepíše.
 - „Pánsky strih 18 €“: cenník rezervačného systému (časť Služby a ceny).
 - „…v pracovné dni od 9:00 do 19:00 telefón vždy zdvihneme“: hodiny recepcie z webu, veta je ubezpečenie zadávateľa
   (2026‑10‑21); nesľubuje telefón mimo týchto hodín.
@@ -296,3 +296,24 @@ teraz nejde – zavolaj.“ (stav bez servera alebo pri chybe, zadanie kola L3),
 vždy zdvihneme.“ (overená veta webu a Barbera), telefón 0951 267 203 a otváracie hodiny sa berú z pätičky stránky
 (Po–Pi 9:00–19:00, So 9:00–14:00, Ne zatvorené). `rezervacia.html` hovorí len „Objednávka je na hlavnej stránke.“
 Stupeň: overené‑oficiálne (web) + požiadavka podniku.
+
+## Úvod, tím a logá podľa Lajka (2026‑11‑12)
+
+Lajko (barber, hovorí za majiteľa) 12. 11. 2026 cez WhatsApp k náhľadu c0f43332, doslova:
+- k tímu: „pod značkou Barbershop 30 tu pracujú profesionálny Barbery a Barborky ktoré svoju prácu robia profesionálne! niečo také“
+- k úvodu: „ešte by som dal do 5,0 Google preč dal by som viac ako 940 recenzie va neako že lokálny barber !nieco také tam chiba“
+- k pätičke Naše prevádzky: „sem ešte neake loga daj“
+
+| znenie na webe | miesto | zdroj |
+|---|---|---|
+| „Pod značkou Barbershop 30 tu pracujú barberi a barberky, ktorí svoju prácu robia naozaj profesionálne. Svojho človeka si vyberieš v rezervácii.“ | titulná karta tímu „Komu zveríš hlavu?“ (`.title-sub`), znalosti Barbera (časť Tím) | Lajkova veta, spisovne; „profesionálni … profesionálne“ by sa opakovalo, ostáva jeho „svoju prácu robia profesionálne“; bez nových tvrdení |
+| „Tvoj lokálny barber v Nitre“ | úvod, riadok pod otváracími hodinami (`.hero-local`) | „nejako, že lokálny barber“ = Lajko 12. 11.; adresa Mostná 30, Nitra (overené‑oficiálne) |
+| „Viac ako 940 recenzií“ (aria-label a title „Viac ako 940 recenzií na Google“), odkaz na profil Google | úvod (`.hero-rating`) | 945 recenzií na profile Barbershop30 Nitra, overené 13. 10. 2026 (časť Recenzie); 945 > 940, tvrdenie platí, kým počet neklesne pod 941. „5,0 na Google“ v úvode zmizlo na Lajkovo želanie |
+| „Pánsky strih 18 €“ | úvod | bez zmeny (cenník) |
+
+Ostatné výskyty „5,0“ ostávajú (Lajko sa k nim nevyjadril): karta Skúsenosti v časti Prečo my
+(„…hodnotenie 5,0 na Google sa za týždeň nastrihať nedá.“), znalosti Barbera („Hodnotenie na Google: 5,0 z 945 recenzií“)
+a päť odpovedí Barbera `hodnotenie`, `preco-vy`, `kontakt-google-profil`, `o-time-ocenenia`, `o-time-kolko-denne` (5,0 z 945
+recenzií, stav 13. 10. 2026), komentár `assets/recenzie.js`. Logá v pätičke: tie isté súbory z webov prevádzok (časť Logá prevádzok), len
+väčšie; Barbershop 30 = výrez znaku „30“ z vlastnej ikony webu (`assets/img/prevadzky/barbershop-30.webp`). Žiadne nové logo.
+Stupeň: požiadavka podniku + overené‑oficiálne.

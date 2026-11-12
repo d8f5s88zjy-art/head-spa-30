@@ -1486,7 +1486,13 @@ html[data-motion="off"] .btn-primary::after, html[data-motion="off"] .beam > .be
 .title-hero .hero-proof { animation: text-in 600ms var(--ease-out) 830ms both; }
 @media (max-width: 720px) {
   .title-hero .title-sub { max-width: 34ch; }
-  .hero-proof { font-size: 0.875rem; }
+  .hero-proof { font-size: 0.875rem; row-gap: var(--s1); }
+  /* Lajko 12. 11. 2026 (lokálny barber ◆ viac ako 940 recenzií ◆ cena): na telefóne dva riadky, lokálny barber sám
+     navrchu, pod ním recenzie ◆ cena; riadok sa láme pred druhou položkou, preto jej oddeľovač ◆ nekreslíme
+     (◆ nikdy na začiatku riadka). Položka sa vo vnútri nelomí. */
+  .hero-proof .hero-local { flex-basis: 100%; justify-content: center; }
+  .hero-proof .hero-local + li::before { display: none; }
+  .hero-proof li { white-space: nowrap; }
   /* dlhé „Zavolať a potvrdiť termín“ ide na vlastný riadok, obe tlačidlá cez celú šírku na palec */
   .title-actions:has(.btn-tel) { flex-wrap: wrap; }
   .title-actions .btn-tel, .title-actions:has(.btn-tel) .btn { flex: 1 1 100%; }
@@ -1523,7 +1529,11 @@ html[data-motion="off"] .btn:active { transform: none; }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); }
 }
-@media (max-width: 380px) { .hero-proof { flex-direction: column; align-items: center; gap: 2px; } .hero-proof li + li::before { display: none; } }
+/* úzky telefón (do 380 px): tesnejšie medzery okolo ◆, aby sa recenzie ◆ cena zmestili do jedného riadka (Lajko 12. 11. 2026) */
+@media (max-width: 380px) { .hero-proof { column-gap: var(--s2); } .hero-proof li { gap: var(--s2); } }
+/* do 340 px: dlhšie preklady (nemčina, maďarčina, srbčina, ukrajinčina) by recenzie ◆ cenu zalomili na tretí riadok
+   s ◆ na začiatku, preto tam o pixel menšie písmo (slovenčina, čeština, poľština, angličtina sa zmestia v 13 px) */
+@media (max-width: 340px) { html:is(:lang(de), :lang(hu), :lang(sr), :lang(uk)) .hero-proof { font-size: 0.75rem; } }
 
 /* ==========================================================================
    P15. Živý telefón (2026‑10‑22): zadávateľ: „na telefóne to pôsobí ako PowerPoint“. Fotka scény sa aj bez
