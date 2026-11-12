@@ -300,36 +300,37 @@ function spodnaLista(y) {
 
 /* S-1 počítač (nad 900 px): podklad ikony Barbera (.asi-pod, asistent.css) svieti len vtedy, keď je v zóne ikony
    riadok textu; nad fotkou bez textu ostane zhasnutý (K1-S1-1). Zónu sleduje IntersectionObserver (pozná sticky aj
-   transform kariet): koreň = ikona + 8 px okraj a 40 px vopred hore aj dole, ciele = prvky s vlastným textom pri
-   ľavom okraji (meria sa len v measure()). Text karty záberu sa ráta, kým karta svieti (krytie zo slučky), titulky
-   s data-at len s is-in. Na telefóne a tablete nič (tam je pás). Len triedy na <html>, zápis iba pri zmene. */
+   transform kariet): presná zóna = ikona + 8 px, počas skrolu aj zóna o 40 px vyššia a nižšia (podklad je hotový skôr,
+   než text dôjde k ikone); 160 ms po skrole platí už len presná. Ciele = prvky s vlastným textom pri ľavom okraji
+   (meria sa len v measure()). Text karty záberu sa ráta, kým karta svieti (krytie zo slučky), titulky s data-at len
+   s is-in. Na telefóne a tablete nič (tam je pás). Len triedy na <html>, zápis iba pri zmene. */
 const podIk = 'IntersectionObserver' in window ? (() => {
   const VON = '.site-header, .story-line, .mobile-cta, .spodny-pas, .asi-btn, .asi-oznam, .asi-panel, .asi-clona, script, style, noscript, template';
-  const zasahy = new Map();   // prvok v zóne -> { shot, at, pata }
-  let io = null, on = false, pata = false;
+  const presne = new Set(), vopred = new Set();   // prvky s textom v presnej zóne a v zóne s predstihom
+  let io = [], on = false, pata = false, tSkrol = 0, casovac = 0;
+  const svieti = (el) => { const i = el.__pod; return i.shot ? i.shot.o > 0.05 : i.at ? i.at.classList.contains('is-in') : true; };
   function krok() {
+    const skrol = performance.now() - tSkrol < 150;
     let z = false, p = true;
-    for (const i of zasahy.values()) {
-      if (i.shot ? !(i.shot.o > 0.05) : i.at ? !i.at.classList.contains('is-in') : false) continue;
-      z = true; if (!i.pata) p = false;
-    }
+    for (const m of skrol ? [presne, vopred] : [presne]) for (const el of m) { if (!svieti(el)) continue; z = true; if (!el.__pod.pata) p = false; }
     if (z !== on) { on = z; html.classList.toggle('asi-pod-on', z); }
     if (z && p !== pata) { pata = p; html.classList.toggle('asi-pod-pata', p); }
   }
-  function zrus() { if (io) io.disconnect(); io = null; zasahy.clear(); krok(); }
+  const priSkrole = () => { tSkrol = performance.now(); clearTimeout(casovac); casovac = setTimeout(krok, 160); };
+  // bez krok(): nové pozorovatele hneď ohlásia stav, podklad medzitým nezablikne (meranie beží aj počas skrolu)
+  function zrus() { io.forEach((o) => o.disconnect()); io = []; presne.clear(); vopred.clear(); removeEventListener('scroll', priSkrole); }
   function zmeraj() {
     const btn = mqMobile.matches ? null : $('.asi-btn');
-    if (!btn) { zrus(); return; }
-    const r = btn.getBoundingClientRect(), vw = html.clientWidth, vh2 = html.clientHeight, L = 40;
-    // ikona môže byť ešte posunutá o 12 px nadol (nábeh): zóna hore o to vyššie
-    const zl = r.left - 8, zr = r.right + 8, zt = r.top - 8 - L - 12, zb = r.bottom + 8 + L;
-    const m = `${Math.round(-zt)}px ${Math.round(zr - vw)}px ${Math.round(zb - vh2)}px ${Math.round(-zl)}px`;
-    if (io) io.disconnect();
-    zasahy.clear();
-    io = new IntersectionObserver((es) => {
-      for (const e of es) { if (e.isIntersecting) zasahy.set(e.target, e.target.__pod); else zasahy.delete(e.target); }
+    zrus();
+    if (!btn) { krok(); return; }
+    // poloha bez transformácie (ikona môže práve nabiehať): offset* pevného prvku je voči oknu
+    const vw = html.clientWidth, vh2 = html.clientHeight, zl = btn.offsetLeft - 8, zr = btn.offsetLeft + btn.offsetWidth + 8;
+    const zt = btn.offsetTop - 8, zb = btn.offsetTop + btn.offsetHeight + 8;
+    const koren = (L) => `${Math.round(L - zt)}px ${Math.round(zr - vw)}px ${Math.round(zb + L - vh2)}px ${Math.round(-zl)}px`;
+    io = [[presne, 0], [vopred, 40]].map(([m, L]) => new IntersectionObserver((es) => {
+      for (const e of es) { if (e.isIntersecting) m.add(e.target); else m.delete(e.target); }
       krok();
-    }, { rootMargin: m });
+    }, { rootMargin: koren(L) }));
     const ciele = new Set(), tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     for (let n; (n = tw.nextNode());) {
       const el = n.parentElement;
@@ -339,8 +340,9 @@ const podIk = 'IntersectionObserver' in window ? (() => {
       ciele.add(el);
       const shot = shots.find((s) => s.title && s.el.contains(el)) || null, at = el.closest('[data-at]');
       el.__pod = { shot, at, pata: !!(footer && footer.contains(el)) };
-      io.observe(el);
+      io.forEach((o) => o.observe(el));
     }
+    addEventListener('scroll', priSkrole, { passive: true });
     krok();
   }
   return { zmeraj, krok };

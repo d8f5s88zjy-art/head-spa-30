@@ -100,8 +100,8 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   `pointer-events: none`, `contain`. Skrytá lišta má po odchode `visibility: hidden` (nie je v poradí Tabu, D-1).
   Na počítači pás nie je: ikona má vlastný podklad `.asi-pod` (samostatný pevný prvok hneď za tlačidlom, tón sekcie
   12 px okolo, tieň), ktorý svieti len vtedy, keď je v zóne ikony riadok textu – app.js `podIk` sleduje zónu ikony
-  + 8 px a 40 px vopred IntersectionObserverom, text karty záberu sa ráta, kým karta svieti; nad fotkou bez textu
-  podklad nie je (K1-S1-1). Ukáže sa hneď, zhasne za 200 ms. V pätičke je rezerva 88 px (`html.asi-je .site-footer`;
+  + 8 px IntersectionObserverom (počas skrolu aj 40 px vopred, 160 ms po skrole už len presnú zónu), text karty
+  záberu sa ráta, kým karta svieti; nad fotkou bez textu podklad nie je (K1-S1-1). Ukáže sa hneď, zhasne za 200 ms. V pätičke je rezerva 88 px (`html.asi-je .site-footer`;
   v pätičke, nie pod ňou, aby pás kapitol pri dne ostal tenký, K1-S1-2), na telefóne rezerva pásu, aby bola celá
   pätička nad ním.
 - **Telefón: fotka v páse, celé fotky, menšie okná (2026‑10‑25, style.css P16, film.js `PAS_B` a `aim()`)**:
