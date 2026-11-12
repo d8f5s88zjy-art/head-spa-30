@@ -97,7 +97,7 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   v páse; v úvode bez pásu len tam, kde má pod tlačidlami titulnej karty voľno (`s-volno`; na 320×568 by ležala cez
   „Zavolať a potvrdiť termín“, príde s lištou). Lišta a pás prídu až po zhasnutí titulnej karty, ak by pás ležal cez jej
   tlačidlá (`heroNaraz` ráta s výškou pásu). Ukazovanie len cez transform a opacity (300 ms), bez backdrop-filter,
-  `pointer-events: none`, `contain`. Skrytá lišta má po odchode `visibility: hidden` (nie je v poradí Tabu, D-1).
+  `pointer-events: none`, `contain`.
   Na počítači pás nie je: ikona má vlastný podklad `.asi-pod` (samostatný pevný prvok hneď za tlačidlom, tón sekcie
   12 px okolo, tieň), ktorý svieti len vtedy, keď je v zóne ikony riadok textu – app.js `podIk` sleduje zónu ikony
   + 8 px IntersectionObserverom (počas skrolu aj 40 px vopred, 160 ms po skrole už len presnú zónu), text karty

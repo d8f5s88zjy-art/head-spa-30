@@ -1912,6 +1912,3 @@ html[data-motion="off"] .spodny-pas, html[data-motion="off"] .spodny-pas::after 
 /* počítač: ikona Barbera vľavo dole (48 px + vlastný podklad) – rezerva v pätičke, aby posledný riadok ostal nad ňou;
    v pätičke, nie pod ňou: spodok okna ostane nad pätičkou a pás kapitol pri dne len tenká čiara (K1-S1-2) */
 @media (min-width: 901px) { html.asi-je .site-footer { padding-bottom: calc(var(--s7) + 88px); } }
-/* skrytá lišta nie je v poradí klávesnice (D-1): po dobehnutí odchodu visibility: hidden, pri ukázaní hneď viditeľná */
-.mobile-cta { transition: transform 300ms var(--ease-out), opacity 300ms var(--ease-out), visibility 0s linear 0s; }
-.mobile-cta.is-hidden { visibility: hidden; transition: transform 300ms var(--ease-out), opacity 300ms var(--ease-out), visibility 0s linear 300ms; }
