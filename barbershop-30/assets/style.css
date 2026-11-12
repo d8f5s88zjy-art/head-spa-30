@@ -1057,9 +1057,20 @@ html[data-motion="off"] .board-hero { animation: none; }
 .footer-shop-list a { justify-self: start; font-size: 1.0625rem; font-weight: 700; color: var(--paper); }
 .footer-shop-list a[aria-current="page"] { color: var(--lamp-2); text-decoration-color: var(--lamp); }
 .footer-shop-list span { font-size: 0.9375rem; color: var(--paper-3); }
-/* logo prevádzky nad názvom v tom istom odkaze (Lajko 9. 11. 2026; súbory z webov prevádzok, README „Logá prevádzok“):
-   jednotná výška 40 px, šírka podľa pomeru strán, na atramente bez rámika ani podkladu */
-.footer-shop-logo { display: block; height: 40px; width: auto; max-width: 180px; margin-bottom: var(--s2); object-fit: contain; object-position: left center; }
+/* logo prevádzky nad názvom v tom istom odkaze (Lajko 9. 11. 2026; súbory z webov prevádzok, README „Logá prevádzok“),
+   na atramente bez rámika ani podkladu. Lajko 12. 11. 2026 „sem ešte nejaké logá daj“: väčšie, každé v páse rovnakej výšky
+   (--pas: 56 px na počítači, 48 px na telefóne), zvislo na strede, takže mená pod nimi sú v jednom rade. Výška podľa optickej
+   váhy, nie rovnaká: HEAD SPA 30 je tenký kruh (plný pás), „30“ Barbershopu je ťažké písmo (menšie), Salón 30 má len
+   100 × 74 px (README), 40 px je najviac, čo pri DPR 2 ešte drží ostrosť (44 px a viac už mäknú). */
+.footer-shop-list { --pas: 56px; }
+.footer-shop-logo { --h: var(--pas); display: block; height: var(--h); width: auto; max-width: 180px; object-fit: contain; object-position: left center;
+  margin: calc((var(--pas) - var(--h)) / 2) 0 calc((var(--pas) - var(--h)) / 2 + var(--s3)); }
+.footer-shop-logo.logo-bs { --h: 44px; }
+.footer-shop-logo.logo-salon { --h: 40px; }
+@media (max-width: 899px) {
+  .footer-shop-list { --pas: 48px; }
+  .footer-shop-logo.logo-bs { --h: 38px; }
+}
 /* Web a Instagram prevádzky pod opisom: tichšie ako meno (bežné písmo, paper-2 na atramente 10 : 1) */
 .footer-shop-web { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin: var(--s1) 0 0; }
 .footer-shop-list .footer-shop-web a { font-size: 0.9375rem; font-weight: 400; color: var(--paper-2); }

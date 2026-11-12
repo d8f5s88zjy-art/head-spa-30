@@ -209,13 +209,19 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
 Lajko 9. 11. 2026 večer: „pridať logá Salónu 30 a HEAD SPA 30 krásne a profesionálne, s preklikom na ich web aj Instagram“.
 V pätičke `index.html` (blok `.footer-shops`) má každá prevádzka logo nad menom v tom istom odkaze na jej web (preto
 `alt=""`, meno je text odkazu), pod opisom odkazy **Web** a **Instagram** (`target="_blank" rel="noopener"`, `aria-label`
-s menom prevádzky, kľúče vo všetkých 7 slovníkoch). Štýl `assets/style.css` (`.footer-shop-logo`: výška 40 px, `.footer-shop-web`).
+s menom prevádzky, kľúče vo všetkých 7 slovníkoch). Štýl `assets/style.css` (`.footer-shop-logo`, `.footer-shop-web`).
+
+Veľkosť (Lajko 12. 11. 2026 „sem ešte nejaké logá daj“): každé logo stojí v páse rovnakej výšky (`--pas`: 56 px od 900 px,
+48 px na telefóne), zvislo na strede, mená pod nimi sú v jednom rade. Výška podľa optickej váhy: HEAD SPA 30 (tenký kruh)
+celý pás 56/48 px, Barbershop 30 („30“ je ťažké písmo) 44/38 px, Salón 30 40 px všade. Salón 30 viac nedá: súbor má
+100 × 74 px, pri DPR 2 je 37 px presne bod na bod, 40 px (zväčšenie 1,08×) ešte drží ostrosť, od 44 px kresba viditeľne mäkne
+(skúška pri DPR 2: 37, 40, 44, 48, 56 px). Väčšie bude až z vektora (pozri nižšie, čo si vyžiadať).
 
 | prevádzka | súbor | zdroj (stiahnuté 11. 11. 2026, curl) | úprava | odkazy |
 |---|---|---|---|---|
 | HEAD SPA 30 | `assets/img/prevadzky/head-spa-30.svg` (614 B) | znak v hlavičke https://www.headspa30.sk/ (inline SVG `.mark`, viewBox 64 × 64: kruh `#d9b56a`, lotos `#f3c98a`, linka) | len vyčistené: bez tried a `pathLength` pre animáciu, pridaný `xmlns`; krivky a farby bez zmeny | https://www.headspa30.sk/, https://www.instagram.com/headspa.salon30/ |
 | Salón 30 | `assets/img/prevadzky/salon-30.webp` (1,4 kB) | https://www.salon30.sk/images/demo/logo.png (100 × 101 px, biele na priehľadnom; iné ani väčšie logo web nemá: `logo@2x.png`, `logo.svg` → 404) | orezané priehľadné okraje na 100 × 74 px, bezstratové WebP (bod po bode zhodné s PNG); zobrazené 54 × 40 px = 2× na telefóne s DPR 2 | https://www.salon30.sk/, https://www.instagram.com/salon30_nitra/ |
-| Barbershop 30 | `assets/img/ikona/ikona-192.png` (ikona tohto webu „30“ s linkou lampy) | vlastná | žiadna (atrament ikony = atrament pätičky `#0e0d0c`, štvorec nevidno) | úvod stránky, https://www.instagram.com/barbershop30_nitra/ |
+| Barbershop 30 | `assets/img/prevadzky/barbershop-30.webp` (5,7 kB, 149 × 132 px) | výrez z vlastnej ikony `assets/img/ikona/ikona-512.png` (znak „30“ s linkou lampy) | orez na znak s okrajom 10 px (329 × 291 z 512 × 512), Lanczos na 132 px výšky (3× pre 44 px), bezstratové WebP; atrament ikony = atrament pätičky `#0e0d0c`. Po novej ikone (`source/tools/ikony.mjs`) výrez zopakovať: `convert ikona-512.png -crop 329x291+94+135 +repage -filter Lanczos -resize x132 -strip -define webp:lossless=true barbershop-30.webp` | úvod stránky, https://www.instagram.com/barbershop30_nitra/ |
 
 Prevádzkovateľ: Salón 30 – päta salon30.sk „Facepalm s.r.o., IČO: 52231381“, ten istý ako Barbershop 30 (FACEPALM, s.r.o.,
 IČO 52231381). HEAD SPA 30 – headspa30.sk prevádzkovateľa neuvádza (`pravne.html` má polia Obchodné meno a IČO prázdne;
