@@ -30,6 +30,47 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
+## Výmena fotiek 13. 11. 2026 (Lajko: „fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“)
+
+Spracovanie ako pri ostatných fotkách `img/hd`: orez, zmenšenie (nikdy nezväčšené), jemné zjednotenie tónu (sýtosť −4 %, mierny
+kontrast, doostrenie po zmenšení), `img/hd/<názov>.webp` (najväčšia šírka zdroja), `-1200.webp`, dlaždica kategórie
+`img/<názov>.webp` 900 × 600 a výrez pre telefón `img/hd/hlavicka/<názov>-720.avif|webp`. Nástroj a merania:
+pracovný priečinok `dizajn2/zapis/nastroje/fotky.sh` (nie balík webu). Nové mená súborov (cache na rok).
+
+- `porfix-stavba` (hlavička katalógu Porfix a akcie Porfix): stavba rodinného domu z pórobetónu Porfix z dronu, **fotka výrobcu**
+  z webu Porfix (článok „Prečo Porfix“: https://www.porfix.sk/preco-porfix/, súbor
+  https://www.porfix.sk/storage/Blog_Blog/1-2000/3_image_5-stavba-porfix-mury.1751370699.png, 1613 × 1080, stiahnuté
+  13. 11. 2026). Porfix má na https://www.porfix.sk/na-stiahnutie/ sekciu pre obchodných partnerov, licencia na fotky tam
+  nie je napísaná. **Pred spustením webu treba súhlas Porfixu** (marketing@porfix.sk, +421 800 10 13 13) alebo potvrdenie, že ho
+  Stavebniny Richtárik ako partner majú; bez neho vrátiť v `build.py` (`HLAVICKA_FOTO`) `uvod:zasoba-porfix`. Najväčší súbor
+  má 1613 px (v `srcset` skutočná šírka).
+- `sadrokarton-montaz` (dlaždica Sadrokartón a zateplenie na úvode a v Katalógu, hlavička kategórie a akcie): montér reže
+  sadrokartónovú dosku – Pexels https://www.pexels.com/photo/11427405/ (Jimmy Nilsson Masth), licencia Pexels. Nahrádza
+  regál s profilmi (Máriova fotka 06 ostáva pri Hutnom materiáli) a fotku `sadrokarton` (stoh dosiek v hypermarkete).
+- `komin-strecha` (Komínové systémy, Schiedel, Qatro, akcia Komín Qatro): pálená strecha s komínom a strešnými oknami –
+  Pexels https://www.pexels.com/photo/4394224/ (Mathias Reding). Nahrádza `komin` (americká šindľová strecha). `-1200.webp`
+  je uložený s kvalitou 75 (135 kB namiesto 180 kB; zrno oblohy je jemnejšie, rozdiel v zábere 1 : 1 nevidno).
+- `podlaha-izba` (novinka Magic Floor – vinylová podlaha, hlavička; od 13. 11. 2026 po kontrole): prázdna svetlá miestnosť
+  s tmavou drevodekor podlahou a panoramatickým oknom – Pexels https://www.pexels.com/photo/7031616/ („Spacious room with
+  white walls and panoramic windows“, Max Vakhtbovych), licencia Pexels. Nahrádza `podlaha-montaz` (Pexels 4263067, autor na
+  Pexels uvedený len ako „K“ / @kelly – kladenie lamiel, pravú polovicu výrezu na telefóne zaberalo holé stehno montéra; súbory
+  zo stromu preč). Dlaždica 900 × 600 sa nerobí (Magic Floor nie je kategória).
+- `zateplenie-fasada` (karta značky Masterplast v kategórii Sadrokartón a zateplenie, len dlaždica 900 × 600): fasáda bytového
+  domu so zatepľovacími doskami a hmoždinkami za lešením – Pexels https://www.pexels.com/photo/5511087/ (Mike van
+  Schoonderwalt), licencia Pexels. `zateplenie-fasada.avif` je tá istá dlaždica v 720 × 480 (AVIF, prvý zdroj karty). Masterplast nemá na webe materiály pre partnerov (masterplast.sk, 13. 11. 2026), preto
+  voľná licencia. Karta Stavebné profily má Máriovu fotku `predajna/06-regal-profily` (regál s profilmi), hlavička kategórie
+  ostáva montáž – tá istá fotka už nie je na stránke 3×.
+- Akcia Betónové tvárnice a novinka Betónové výrobky: Máriova fotka `predajna/02-tvarnice-obloha` (palety betónových tvárnic)
+  namiesto `tehla` (rozbité keramické tehly).
+- Máriove skutočné fotky (sekcia „Skutočné fotografie – V našej predajni v Nitre“, `img/uvod`, `img/predajna`) ostávajú.
+  `img/predajna/hlavicka/<názov>-720.avif|webp` sú len výrezy 720 × 468 tých istých fotiek pre hlavičku na telefóne (z `-1290`,
+  poloha `PREDAJNA_POS`, bez úpravy tónu, AVIF crf 32); ten istý výrez berie aj karta značky Stavebné profily (`06`).
+- Staré súbory `sadrokarton`, `komin` ostávajú v repozitári bez odkazu (`komin` a `sadrokarton` sa už nepoužívajú; balík
+  neodkazované obrázky nedáva).
+- Isover (izolačný materiál) dovoľuje obchodným partnerom svoje produktové fotky
+  (https://www.isover.sk/materialy-pre-nasich-obchodnych-partnerov, „pripravené na okamžité použitie“); sú to výrezy balíkov na
+  bielom podklade, hodia sa na kartu značky, nie do hlavičky – zatiaľ nepoužité.
+
 ## Fotky od majiteľa z 9. 11. 2026 (`img/predajna/`, logo, karta, obrázok pri zdieľaní)
 
 Majiteľ poslal e-mailom 8./9. 11. 2026 nové logo, novú zákaznícku kartu a 13 fotiek, ktoré sa mu páčia. Zatiaľ máme len
@@ -55,7 +96,8 @@ Zápis výroby a manifest: pracovný priečinok `majitel/podklady/assets/` (`MAN
   rozlíšenia zdroja (1296 × 930 až 990, fotka 06 má 1132 × 1366 – README časť Prehliadka predajne).
 - `img/panorama/` – miesto pre skutočné panorámy (360° alebo Pano z telefónu), keď ich majiteľ alebo Lajo nafotia;
   dnes prázdne. Skúšobný obraz `predajna.jpg` bol 10. 11. 2026 zo stromu odstránený (návštevníkovi sa nesmie ukázať).
-- Fotky dodávateľov (z ich webov) na webe nie sú: bez doloženého povolenia sa nesťahujú ani nevkladajú.
+- Fotky dodávateľov (z ich webov) na webe nie sú, s výnimkou fotky Porfixu z 13. 11. 2026 (výslovný pokyn Laja, súhlas Porfixu
+  treba doložiť pred spustením – časť Výmena fotiek 13. 11. 2026).
 
 ## Skutočné fotky areálu predajne z 5. 11. 2026 (`img/uvod/`, od majiteľa)
 

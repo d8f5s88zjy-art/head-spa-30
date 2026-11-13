@@ -197,4 +197,6 @@ html.pp-vokne .asi-oznam { display: none; }
   html[data-tema="farebna"] .asi-hlava :focus-visible { outline-color: #fff; }
   html[data-tema="farebna"] .asi-u { background: var(--f-antracit); color: #fff; }
   html[data-tema="farebna"] .asi-clona:not([hidden]) { background: rgba(246, 238, 228, .86); }
+  /* pás „Ukážka na kontrolu“: biely s červenou linkou vľavo ako zvýraznená služba, nie ružový (kontrola 13. 11. 2026, D9) */
+  html[data-tema="farebna"] .asi-ukazka-pas { background: var(--povrch); border-bottom-color: var(--line); box-shadow: inset 3px 0 0 var(--f-cervena); color: var(--ink-2); }
 }

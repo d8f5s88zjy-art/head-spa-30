@@ -538,21 +538,43 @@ class Parser:
         if img and img.startswith('p/'):
             w, h = self.S.get(img[2:], (0, 0))
             if h < 100 or w / max(1, h) > 2.4: img = None  # úzke bannery na kartu nepatria
+        avif = ''
         if img and img.startswith('p/'):
             src = f'{self.pre}img/{img}.webp'; fit = 'contain' if self.S.get(img[2:], (0, 0))[0] < 500 else 'cover'
             zalt = OBR_ALT.get(img[2:], '') or f'Výrobky {name}'
+        elif img and img.startswith('predajna:'):
+            # Máriova fotka: výrez 720 × 468 (img/predajna/hlavicka, ten istý ako pri hlavičke na telefóne), AVIF a WebP;
+            # dekoratívna ako fotka kategórie. Karta má na telefóne 16 : 9, na počítači 260 px – výrez stačí a je o polovicu ľahší.
+            m = img.split(':', 1)[1]
+            z = f'img/predajna/hlavicka/{m}-720' if os.path.exists(os.path.join(ROOT, f'img/predajna/hlavicka/{m}-720.avif')) else f'img/predajna/{m}-720'
+            src = f'{self.pre}{z}.webp'; fit = 'cover'; zalt = ''; avif = f'{self.pre}{z}.avif'
+        elif img:
+            # ilustračná fotka z img/ (dlaždica 900 × 600, img/FOTKY.md); ak má AVIF (720 px), ide ako prvý zdroj
+            src = f'{self.pre}img/{img}.webp'; fit = 'cover'; zalt = ''
+            if os.path.exists(os.path.join(ROOT, f'img/{img}.avif')): avif = f'{self.pre}img/{img}.avif'
         else:
-            src = f'{self.pre}img/{self.ctx.get("kat_img", "sklad")}.webp'; fit = 'cover'; zalt = ''
+            src = None
         # odznak s logom len keď je logo čitateľné; prázdny alebo písmenkový odznak vyzerá lacno
         lw, lh = self.S.get(b['logo'], (0, 0)) if b['logo'] else (0, 0)
-        badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>' if b['logo'] and lw >= 60 and lh >= 18 else ''
-        media = f'<div class="zm {fit}"><img src="{src}" alt="{html.escape(zalt)}" loading="lazy">{badge}</div>'
+        citatelne = b['logo'] and lw >= 60 and lh >= 18
+        bez = ''
+        if src:
+            badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>' if citatelne else ''
+            obr = f'<img src="{src}" alt="{html.escape(zalt)}" loading="lazy" decoding="async">'
+            if avif: obr = f'<picture><source type="image/avif" srcset="{avif}">{obr}</picture>'
+            media = f'<div class="zm {fit}">{obr}{badge}</div>'
+        elif citatelne:
+            # Značka bez vlastnej fotky: logo na bielom poli, nie fotka kategórie – tá je v hlavičke a na stránke s 10 značkami by
+            # sa opakovala 10× (kontrola 13. 11. 2026, A1: „tá istá fotka 3× za sebou“ pôsobí lacno).
+            media = f'<div class="zm logo"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>'
+        else:
+            media = ''; bez = ' bez'   # bez fotky aj čitateľného loga: karta len s textom
         links = ''
         if sub: links += f'<a class="btn small primary" href="{self.rel(self.path, sub[0])}">Podrobnosti a výrobky</a>'
         if b['url']: links += f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>'
         full = html.escape(b['text'])
         body = f'<p class="lede">{html.escape(popis)}</p><details><summary>Celý sortiment</summary><p>{full}</p></details>' if popis else f'<p>{full}</p>'
-        return f'<article class="znacka rv">{media}<div class="bt"><h3>{html.escape(name)}</h3>{body}<div class="zl">{links}</div></div></article>'
+        return f'<article class="znacka{bez} rv">{media}<div class="bt"><h3>{html.escape(name)}</h3>{body}<div class="zl">{links}</div></div></article>'
 
     def plain(self, blocks):
         """Čistý text pre vyhľadávanie a úryvky."""

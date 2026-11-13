@@ -170,14 +170,14 @@ KATEGORIE = [
     ('stresne-kritiny', 'Strešné krytiny', 'Pálené a betónové škridly, plechové krytiny, asfaltové pásy a príslušenstvo.', 'Tondach, Bramac, Mediterran, Onduline, Icopal, Blachotrapez', 'strecha'),
     ('dlazby', 'Dlažby a ploty', 'Zámkové dlažby, terasové platne, obrubníky, palisády a plotové systémy.', 'City Stone Design, Premac, Stadreko', 'dlazba'),
     ('izolacny-material', 'Izolačný materiál', 'Minerálna vlna, polystyrén, asfaltové pásy a izolácie proti vode a radónu.', 'Knauf Insulation, Isover, Nobasil, Icopal, Den Braven, Climowool', 'izolacia'),
-    ('kominove-systemy', 'Komínové systémy', 'Certifikované komíny so šamotovou alebo nerezovou vložkou.', 'Stadreko, Schiedel', 'komin'),
+    ('kominove-systemy', 'Komínové systémy', 'Certifikované komíny so šamotovou alebo nerezovou vložkou.', 'Stadreko, Schiedel', 'komin-strecha'),
     ('stresne-okna', 'Strešné okná', 'Kyvné a výklopné strešné okná, výlezy, svetlíky, podkrovné schody a doplnky.', 'Velux, Fakro, RoofLITE', 'okno-strecha'),
     ('hutny-material', 'Hutný materiál', 'Betonárska oceľ, siete, plechy, profily, rúry, zárubne a garážové brány.', 'Yssel Steel', 'hutny'),
     ('dvere---okna', 'Dvere a okná', 'Interiérové, vchodové, bezpečnostné a posuvné dvere, drevené okná s dvojsklom.', 'Masonite', 'dvere'),
     ('stavebne-rezivo', 'Stavebné rezivo', 'Dosky, hranoly, foršne, strešné laty, tatranský profil a krovy na mieru.', 'Drepex', 'rezivo'),
     ('stavebne-naradie-doplnky', 'Náradie a doplnky', 'Stavebné, elektrické a záhradné náradie, spojovací materiál, mriežky a poklopy.', 'Slovakia Trend, DS Haco', 'naradie'),
     ('podhlady---pvc', 'Podhľady a PVC', 'Plastové zatrávňovacie dlažby, plotovky, profily, platne a káblové žľaby.', 'Transform Recykling', 'zahrada'),
-    ('sadrokartonovy---zateplovaci-system', 'Sadrokartón a zateplenie', 'Suchá výstavba, profily, polystyrén, sklotex, fólie a strešné doplnky.', 'Stavebné profily, Masterplast', 'sadrokarton'),
+    ('sadrokartonovy---zateplovaci-system', 'Sadrokartón a zateplenie', 'Suchá výstavba, profily, polystyrén, sklotex, fólie a strešné doplnky.', 'Stavebné profily, Masterplast', 'sadrokarton-montaz'),
     ('fasadny-system', 'Fasádny systém', 'Silikónové, silikátové a mozaikové omietky, fasádne farby a zatepľovacie systémy.', 'Baumit, Univerbau', 'fasada'),
     ('farby---laky', 'Farby a laky', 'Interiérové a fasádne farby, laky, lepidlá, riedidlá a tónovacie systémy.', 'Het, Chemolak, Chemos, Elastik', 'farby'),
 ]
@@ -688,15 +688,16 @@ def predajna_sirky(meno):
     return sorted(int(m.group(1)) for f in os.listdir(z) for m in [re.fullmatch(re.escape(meno) + r'-(\d+)\.webp', f)] if m)
 
 
-def predajna_picture(pre, meno, sizes, alt=None, lazy=True, max_sirka=1290, pos=None, cls='', fetch=False):
-    """<picture> fotky od majiteľa: AVIF a WebP srcset do max_sirka, src najväčšia WebP, width a height zo súboru."""
+def predajna_picture(pre, meno, sizes, alt=None, lazy=True, max_sirka=1290, pos=None, cls='', fetch=False, tel=''):
+    """<picture> fotky od majiteľa: AVIF a WebP srcset do max_sirka, src najväčšia WebP, width a height zo súboru.
+    tel: zdroje <source media> pre telefón pred ostatnými (výrez hlavičky, telefon_zdroje)."""
     sir = [s for s in predajna_sirky(meno) if s <= max_sirka] or predajna_sirky(meno)[:1]
     w, h = webp_rozmer(os.path.join(ROOT, f'img/predajna/{meno}-{sir[-1]}.webp'))
     ss = lambda ext: ', '.join(f'{pre}img/predajna/{meno}-{s}.{ext} {s}w' for s in sir)
     a = PREDAJNA_ALT[meno] if alt is None else alt
     p = pos or PREDAJNA_POS.get(meno, '50% 50%')
     extra = ' fetchpriority="high"' if fetch else (' loading="lazy" decoding="async"' if lazy else ' decoding="async"')
-    return (f'<picture{" class=" + chr(34) + cls + chr(34) if cls else ""}><source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}">'
+    return (f'<picture{" class=" + chr(34) + cls + chr(34) if cls else ""}>{tel}<source type="image/avif" srcset="{ss("avif")}" sizes="{sizes}">'
             f'<img src="{pre}img/predajna/{meno}-{sir[-1]}.webp" srcset="{ss("webp")}" sizes="{sizes}" width="{w}" height="{h}" alt="{html.escape(a, quote=True)}" style="object-position:{p}"{extra}></picture>')
 # Fotka hlavičky podľa stránky (prednosť pred head_img volajúceho): fotky od majiteľa (img/predajna) pri prehľadových stránkach,
 # Kontakte, O nás, Službách a Doprave a pri kategóriách s tým istým tovarom, skutočný tovar z img/uvod pri tehlách, Porfixe,
@@ -708,22 +709,27 @@ HLAVICKA_FOTO = {
     'katalog/sypke-zmesy.html': 'predajna:03-baumit-sklad', 'katalog/sypke-zmesy/baumit.html': 'predajna:03-baumit-sklad',
     'katalog/murovaci-material/ytong.html': 'predajna:04-ytong-porfix', 'akcie/ytong.html': 'predajna:04-ytong-porfix',
     'katalog/fasadny-system.html': 'predajna:07-univer-bau-sklad', 'akcie/sakret.html': 'predajna:07-univer-bau-sklad',
-    'katalog/hutny-material.html': 'predajna:06-regal-profily', 'katalog/sadrokartonovy-zateplovaci-system.html': 'predajna:06-regal-profily',
+    'katalog/hutny-material.html': 'predajna:06-regal-profily', 'katalog/sadrokartonovy-zateplovaci-system.html': 'sadrokarton-montaz',
     'katalog/stavebne-naradie-doplnky.html': 'predajna:12-predajna-regaly', 'akcie/stavebne-naradie.html': 'predajna:01-predajna-naradie',
     'akcie/cement-325-r.html': 'predajna:05-hala-vozik',
     'katalog/murovaci-material.html': 'uvod:zasoba-tehly', 'katalog/murovaci-material/pezinske-tehelne.html': 'uvod:zasoba-tehly',
-    'katalog/murovaci-material/porfix.html': 'uvod:zasoba-porfix', 'katalog/dlazby.html': 'uvod:zasoba-stadreko',
+    'katalog/murovaci-material/porfix.html': 'porfix-stavba', 'katalog/dlazby.html': 'uvod:zasoba-stadreko',
     'katalog/stavebne-rezivo.html': 'uvod:zasoba-rezivo',
-    'akcie/porfix.html': 'uvod:zasoba-porfix', 'akcie/pezinska-tehla-termobrik.html': 'uvod:zasoba-tehly',
+    'akcie/porfix.html': 'porfix-stavba', 'akcie/pezinska-tehla-termobrik.html': 'uvod:zasoba-tehly',
     'akcie/dlazby-ploty-stadreko.html': 'uvod:zasoba-stadreko', 'akcie/stavebne-rezivo.html': 'uvod:zasoba-rezivo',
-    'akcie/komin-qatro.html': 'komin', 'akcie/krytina-blachotrapez.html': 'strecha', 'akcie/okna-schody-fakro.html': 'okno-strecha',
+    'akcie/komin-qatro.html': 'komin-strecha', 'akcie/krytina-blachotrapez.html': 'strecha', 'akcie/okna-schody-fakro.html': 'okno-strecha',
     'akcie/stresne-okna-rooflite.html': 'okno-strecha',
-    'akcie/sadrokartonovy-zateplovaci-system.html': 'sadrokarton', 'akcie/betonove-tvarnice.html': 'tehla',
+    # Lajko 13. 11. 2026 („fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“): Porfix – stavba z pórobetónu Porfix z webu
+    # výrobcu (porfix.sk; pred spustením súhlas Porfixu, img/FOTKY.md), sadrokartón – montáž dosiek (Pexels), komín – pálená
+    # strecha s komínom (Pexels), betónové tvárnice – Máriova fotka 02 namiesto keramických tehál, vinylová podlaha – kladenie
+    # podlahy (Pexels) namiesto sadrokartónu; 13. 11. 2026 po kontrole hotová miestnosť s podlahou (podlaha-izba, Pexels 7031616)
+    # namiesto kladenia podlahy s holým telom montéra (podlaha-montaz pôsobila lacno a cudzo).
+    'akcie/sadrokartonovy-zateplovaci-system.html': 'sadrokarton-montaz', 'akcie/betonove-tvarnice.html': 'predajna:02-tvarnice-obloha',
     'akcie/nobasil.html': 'izolacia',
-    'novinky/index.html': 'zahrada', 'novinky/betonove-vyrobky.html': 'tehla', 'novinky/dekoracne-kamene.html': 'dlazba',
+    'novinky/index.html': 'zahrada', 'novinky/betonove-vyrobky.html': 'predajna:02-tvarnice-obloha', 'novinky/dekoracne-kamene.html': 'dlazba',
     'novinky/topstone-oprava-starych-chodnikov.html': 'dlazba', 'novinky/delap-ohybny-kamenny-obklad.html': 'fasada',
     'novinky/ekostyren.html': 'beton', 'novinky/garaze-zahradne-domceky.html': 'hutny',
-    'novinky/magic-floor-vynilova-podlaha.html': 'sadrokarton', 'novinky/vyrobky-z-plastu.html': 'zahrada',
+    'novinky/magic-floor-vynilova-podlaha.html': 'podlaha-izba', 'novinky/vyrobky-z-plastu.html': 'zahrada',
     'letak.html': None, 'caste-otazky.html': None, 'doprava.html': 'predajna:10-auta-firmy',
     # strešné okná: svetlá fotka strešného okna na streche (pôvodná fotka okien bola z 80 % tmavé drevo)
     'katalog/stresne-okna.html': 'okno-strecha', 'katalog/stresne-okna/fakro.html': 'okno-strecha',
@@ -733,12 +739,14 @@ HLAVICKA_FOTO = {
 
 # Telefón (do 480 px): rám fotky je celá šírka obsahu × 230 px, preto dostane výrez 720 × 468 (zdroj/hlavicky.sh) namiesto
 # celej fotky na výšku. Menej bajtov pred LCP na pomalej sieti; 720 px je aspoň 1,6-násobok šírky rámu (README).
+# Máriove fotky (img/predajna/hlavicka, 13. 11. 2026): ten istý výrez z -1290 v polohe PREDAJNA_POS – bez neho si telefón
+# s DPR 3 bral -1290 (napr. akcia Betónové tvárnice 98,8 kB namiesto 40,5 kB; AVIF crf 32, zdroj je snímka obrazovky).
 FOTO_TEL = '(max-width:480px)'
 
 
 def telefon_zdroje(pre, druh, meno):
     """<source> s výrezom pre telefón, ak výrez existuje (img/uvod/hlavicka/, img/hd/hlavicka/)."""
-    zlozka = {'uvod': 'img/uvod/hlavicka', 'hd': 'img/hd/hlavicka'}.get(druh)
+    zlozka = {'uvod': 'img/uvod/hlavicka', 'hd': 'img/hd/hlavicka', 'predajna': 'img/predajna/hlavicka'}.get(druh)
     if not zlozka or not os.path.exists(os.path.join(ROOT, f'{zlozka}/{meno}-720.avif')): return ''
     return ''.join(f'<source media="{FOTO_TEL}" type="image/{ext}" srcset="{pre}{zlozka}/{meno}-720.{ext} 720w" sizes="calc(100vw - 36px)">'
                    for ext in ('avif', 'webp'))
@@ -751,7 +759,7 @@ def foto_hlavicky(path, spec):
     druh, meno = spec.split(':', 1) if ':' in spec else ('hd', spec)
     tel = telefon_zdroje(pre, druh, meno)
     if druh == 'predajna':
-        img = predajna_picture(pre, meno, FOTO_SIZES, alt='', lazy=False, fetch=True)
+        img = predajna_picture(pre, meno, FOTO_SIZES, alt='', lazy=False, fetch=True, tel=tel)
     elif druh == 'uvod':
         sir, (w, h), pos = UVOD_FOTO[meno]
         ss = lambda ext: ', '.join(f'{pre}img/uvod/{meno}-{s}.{ext} {w if s == sir[-1] else s}w' for s in sir)
@@ -763,7 +771,8 @@ def foto_hlavicky(path, spec):
     else:
         if os.path.exists(os.path.join(ROOT, f'img/hd/{meno}-1200.webp')):
             w, h = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}-1200.webp'))
-            img = f'<img src="{pre}img/hd/{meno}-1200.webp" srcset="{pre}img/hd/{meno}-1200.webp 1200w, {pre}img/hd/{meno}.webp 2400w" sizes="{FOTO_SIZES}" width="{w}" height="{h}" alt="" fetchpriority="high">'
+            w2 = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}.webp'))[0]   # skutočná šírka (fotka výrobcu má 1613 px, nie 2400)
+            img = f'<img src="{pre}img/hd/{meno}-1200.webp" srcset="{pre}img/hd/{meno}-1200.webp 1200w, {pre}img/hd/{meno}.webp {w2}w" sizes="{FOTO_SIZES}" width="{w}" height="{h}" alt="" fetchpriority="high">'
         else:
             w, h = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}.webp'))
             img = f'<img src="{pre}img/hd/{meno}.webp" width="{w}" height="{h}" alt="" fetchpriority="high">'
@@ -1005,7 +1014,8 @@ def write(path, content):
 DLAZDICA_UVOD = {'murovaci-material': 'zasoba-tehly', 'stavebne-rezivo': 'zasoba-rezivo', 'dlazby': 'zasoba-stadreko'}
 # fotky od majiteľa (img/predajna) na dlaždiciach kategórií, kde ukazujú ten istý tovar; ostatné kategórie čakajú na fotky
 # výrobcov s povolením (majitel/dodavatelia/ZAPIS.md), dovtedy ilustračná fotka img/hd
-DLAZDICA_PREDAJNA = {'sypke-zmesy': '03-baumit-sklad', 'hutny-material': '06-regal-profily', 'sadrokartonovy---zateplovaci-system': '06-regal-profily',
+# sadrokartón má od 13. 11. 2026 vlastnú fotku montáže (img/hd/sadrokarton-montaz), nie regál s profilmi z Hutného materiálu
+DLAZDICA_PREDAJNA = {'sypke-zmesy': '03-baumit-sklad', 'hutny-material': '06-regal-profily',
                      'fasadny-system': '07-univer-bau-sklad', 'stavebne-naradie-doplnky': '12-predajna-regaly'}
 
 
@@ -1305,9 +1315,12 @@ def build_sluzby():
 
 
 # O nás: pás faktov z úvodu (index.html, pás „V skratke“; texty doslova)
-FAKTY_ONAS = ('<div class="facts n3 rv" aria-label="V skratke"><div><b>1997</b><span>rodinná firma v Nitre</span></div>'
-              '<div><b><i>5</i> %</b><span>ďalšia zľava z akciových cien so zákazníckou kartou pri platbe v hotovosti</span></div>'
-              '<div><b><i>3,3</i> %</b><span>ďalšia zľava z akciových cien so zákazníckou kartou pri platbe platobnou kartou</span></div></div>')
+# (Lajko 13. 11. 2026: zľava so zákazníckou kartou je jeden prvok, nie dva rovnaké riadky; site.css .facts.fk)
+FAKTY_ONAS = ('<div class="facts n3 fk rv" aria-label="V skratke"><div><b>1997</b><span>rodinná firma v Nitre</span></div>'
+              '<div class="f-karta"><span class="f-nad">Zákaznícka karta</span><span class="f-co">Ďalšia zľava z akciových cien</span>'
+              '<ul class="f-zlavy"><li><b><i>5</i> %</b><span>pri platbe v hotovosti</span></li>'
+              '<li><b><i>3,3</i> %</b><span>pri platbe platobnou kartou</span></li></ul></div>'
+              '<div><b><i>40</i>+</b><span>značiek v 15 kategóriách</span></div></div>')
 # Text O nás (pôvodný web PW:2720–2722, STYL P8): bez kalku „za účelom“, verzálok a s vykaním
 ONAS_TEXT = ['Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997, aby rozšíril služby, ktoré dovtedy v stavebníctve ponúkal. '
              'Sme rodinná firma: predávame a sprostredkúvame stavebný materiál a majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.',

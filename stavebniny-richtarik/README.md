@@ -5,7 +5,12 @@ otváracie hodiny, sortiment, značky, akcie, ceny, zľavy 5 % a 3,3 %) aj texty
 produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 
 ## Čo web obsahuje
-- Úvod s vyhľadávaním, akciami, katalógom, zľavami, službami, novinkami a kontaktom.
+- Úvod s vyhľadávaním, akciami, katalógom, zľavami, službami, novinkami a kontaktom. Pás faktov pod fotkami predajne má tri
+  prvky: 1997 · Zákaznícka karta (ďalšia zľava z akciových cien: 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou kartou –
+  jeden prvok, nie dva rovnaké riadky; Lajko 13. 11. 2026) · 40+ značiek; ten istý pás je na O nás (`FAKTY_ONAS`, `.facts.fk`).
+  Na širokom okne (od 1300 px, úvod) sú 5 % a 3,3 % vpravo v rade s 1997 a 40+. Čísla zľavy sú na úvode len v tomto páse:
+  sekcia Zľavy nižšie („Zákaznícka karta a zľavy pre firmy“) hovorí o karte a špeciálnych zľavách pre firmy, živnostníkov
+  a predajne, percentá neopakuje (kontrola 13. 11. 2026).
 - Katalóg: 15 kategórií a všetky podstránky pôvodného webu (Pezinské tehelne, Porfix, Ytong,
   Blachotrapez, Tondach, Fakro, Schiedel, Baumit…), bočné menu s výberom kategórie.
 - Akcie (15 akcií s letákom a PDF; na 10 z nich ceny z cenníka akcií z 28. 1. 2026 v tabuľke), Novinky (8), Galéria
@@ -48,7 +53,12 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   jednotky, verzálky, preklepy). Pravidlá sú v časti Texty a SEO.
 - `img/logo-rs-360|720.png|webp` je nové logo RS od majiteľa (9. 11. 2026, vyčistené zo snímky obrazovky, originál si
   žiadame; staré `logo.png` a `logo-white.png` sú zo stromu preč), fotky predajne a tovaru v `img/predajna/` a `img/uvod/`
-  sú od majiteľa, ilustračné fotky kategórií sú z Pexels (`img/FOTKY.md`), kým sa nenafotí ďalší tovar. Nová fotka sa uloží pod novým názvom (obrázky majú na hostingu cache na rok, časť Údržba).
+  sú od majiteľa, ilustračné fotky kategórií sú z Pexels (`img/FOTKY.md`), kým sa nenafotí ďalší tovar; hlavička Porfixu
+  (katalóg aj akcia) je od 13. 11. 2026 fotka výrobcu z porfix.sk – **pred spustením súhlas Porfixu** (`img/FOTKY.md`). Nová fotka sa uloží pod novým názvom (obrázky majú na hostingu cache na rok, časť Údržba).
+- Karty značiek v kategórii (`obsah.py` `_brand`, fotka v `popisy.py` `ZNACKY`): vlastná fotka (z pôvodného webu `p/ID`,
+  Máriova `predajna:<názov>` alebo ilustračná z `img/`), inak **logo značky na bielom poli** (`.zm.logo`), bez loga len text
+  (`.znacka.bez`). Fotka kategórie sa na kartách neopakuje – je v hlavičke stránky (do 13. 11. 2026 mala Izolácia tú istú
+  fotku 10× za sebou, sadrokartón 3×).
 
 ## Téma podkladu: farebná (predvolená), svetlý papier a tmavá „čierno-biela“
 
@@ -59,13 +69,20 @@ Web má tri varianty podkladu z jedných komponentov cez tokeny v `assets/site.c
 atribútu) a tmavá „čierno-biela“ (`data-tema="tmava"`) ostávajú len na porovnanie.
 
 **Farebná téma** (časť „Farebná téma“ na konci `site.css`): farby loga – červená `#d73438` (zmeraná), antracit `#1c1a1b`,
-biela. Stránka má teplý svetlý tón `#f6eee4` s bielymi kartami a červenými prvkami (katalóg, dlhé texty); sekcie sú scény
-s lokálnymi tokenmi: **červená** (lišta ako pás loga s tmavou linkou hore a dole, hlavička podstránky, pás faktov, pás
-Doprava, zľavy so zákazníckou kartou, výzva pred pätou, pás v päte, menu na telefóne) a **antracit** (pás značiek, akcie
-a služby na úvode, kontakt, päta, spodná lišta). Biele ostrovy v scénach (karty akcií, vyhľadávanie) majú späť svetlé tokeny. Biele
+biela. **Od 13. 11. 2026 (Lajko: „moc červenej farby“) je červená značka a akcent, nie podklad:** stránka má teplý svetlý tón
+`#f6eee4` s bielymi kartami (katalóg, hlavička podstránky na malte `#efe3d5`, pás faktov, akcie a služby na úvode, výzva pred
+pätou na malte s červenou linkou, dlhé texty); sekcie sú scény s lokálnymi tokenmi: **červená** len lišta (pás loga
+s tmavou linkou hore a dole, jediná stála červená plocha) a **antracit** – druhá farba loga (úvodný panel a pás Doprava so
+šikmou červenou hranou, pás značiek, zľavy so zákazníckou kartou, kontakt, menu na telefóne, päta s červenou linkou hore,
+spodná lišta). Červené akcenty: tlačidlá (hlavné vždy červené s bielym písmom), linky nadpiskov, štítky akcií a čísla
+dlaždíc, tvrdý červený tieň fotky v hlavičke podstránky, percentá zľavy. Podiel červenej plochy na obrazovku (11 stránok)
+klesol z 25,0 % na ≈ 12 % (telefón) a z 30,5 % na ≈ 9 % (počítač) – meranie `richtarik/dizajn2/zapis/` (`ZAPIS.md`,
+`nastroje/cervena.py`); pri zmene farieb ho zopakovať, cieľ do 15–20 %. Biele ostrovy v scénach (vyhľadávanie) majú späť
+svetlé tokeny. Biele
 písmo na červenej loga má 4,73 : 1, preto je na červenej vždy čisto biele (nikdy priesvitné), dlhý text je na svetlom tóne
 alebo antracite, malé červené písmo je `#b92328` (svetlá scéna) alebo `#f28b7d` (antracit). Úvod je v duchu prvého návrhu:
-fotka cez celú výšku, červený panel so šikmou antracitovou hranou, veľký biely názov STAVEBNINY RICHTÁRIK s antracitovým
+fotka cez celú výšku, antracitový panel so šikmou červenou hranou (do 13. 11. 2026 červený panel s antracitovou hranou),
+heslo na červených pásikoch, veľký biely názov STAVEBNINY RICHTÁRIK s antracitovým
 obrysom a znakom RS, heslo a tlačidlá (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a` a `.uv-b` `display:contents`);
 strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
 živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: znak a názov
@@ -98,7 +115,7 @@ Zápis tmavej témy: `richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
 ## Úvod
 **Farebná téma (predvolená od 10. 11. 2026) mení rozloženie úvodu a uvítania len cez CSS a jednu cestu v skripte uvítania;
 popis nižšie platí pre svetlú a tmavú tému na porovnanie.** Vo farebnej téme: fotka (provizórne č. 11) vypĺňa celú výšku
-prvej obrazovky, na počítači (od 981 px) vpravo od červeného panela so šikmou hranou, na telefóne a tablete hore nad ním
+prvej obrazovky, na počítači (od 981 px) vpravo od antracitového panela so šikmou červenou hranou, na telefóne a tablete hore nad ním
 (v šírke okna ≈ 1 : 1 so zdrojom, nezväčšuje sa na celú výšku); v paneli znak RS, názov (telefón 59–86 px, počítač
 96–138 px), heslo „Predajňa plná materiálu. Od základov po strechu.“ a tlačidlá Zavolať a Poslať dopyt, na počítači vpravo
 dole antracitový panel s ponukou, odkazmi a vyhľadávaním. Strih zásob a tlačidlo Prehrať úvod sa nepoužívajú. Uvítanie:
@@ -538,7 +555,9 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 - **Sitemap** má `lastmod` z dátumu posledného commitu stránky (zmenená necommitnutá stránka = dnešný dátum),
   `robots.txt` vylučuje `/asistent/`. Vyhľadávanie na webe (`assets/index.json`) sa pregeneruje pri každom behu.
 - **Rýchlosť podstránok:** fotka hlavičky má na telefóne (do 480 px) vlastný výrez 720 × 468 (`img/uvod/hlavicka/`,
-  `img/hd/hlavicka/`, vyrobí `bash zdroj/hlavicky.sh`); meno súboru bez „-720“ je rovnaké ako pri dlaždici, takže
+  `img/hd/hlavicka/`, vyrobí `bash zdroj/hlavicky.sh`; Máriove fotky `img/predajna/hlavicka/` z `-1290` v polohe
+  `PREDAJNA_POS`, AVIF crf 32 – zdroj je snímka obrazovky; od 13. 11. 2026, bez nich si telefón s DPR 3 bral `-1290`,
+  napr. 99 kB namiesto 41 kB; karta značky s Máriovou fotkou berie ten istý výrez); meno súboru bez „-720“ je rovnaké ako pri dlaždici, takže
   prechod medzi stránkami ju berie ako tú istú fotku. Po výmene fotky dvora alebo ilustračnej fotky treba skript
   spustiť znova. Prednačítané sú len 2 písma nadpisov.
 - **Otvorené otázky majiteľa** (predvolené znenie sa nemení): staré akcie bez dátumu, LIAZ alebo Iveco pri 8 t aute,
@@ -574,7 +593,8 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   fotka. Pri rovnakom názve sa na hostingu prejaví až po vypršaní cache (rok), preto novú fotku radšej pod novým názvom.
 - Fotky v hlavičkách podstránok: `HLAVICKA_FOTO` v `build.py` (stránka → `uvod:<názov>` skutočná fotka dvora,
   `p:<číslo>` fotka z pôvodného webu, `<názov>` ilustračná fotka kategórie z `img/hd`). Ilustračná fotka sa používa vo
-  verzii 1200 px (`img/hd/<názov>-1200.webp`, ImageMagick, kvalita 80); pre novú ju treba vyrobiť rovnako. Rám má na
+  verzii 1200 px (`img/hd/<názov>-1200.webp`, ImageMagick, kvalita 80); pre novú ju treba vyrobiť rovnako (celú sadu – najväčšia šírka, -1200, dlaždica 900 × 600 a výrez -720 pre telefón –
+  vyrobí `richtarik/dizajn2/zapis/nastroje/fotky.sh`; v `srcset` je skutočná šírka najväčšieho súboru). Rám má na
   počítači najviac 520 px, na telefóne celú šírku obsahu a výšku 230 px; fotka musí mať aspoň 1,6-násobok šírky rámu.
   Dlaždice kategórií (úvod aj Katalóg) skladá `dlazdice()`; skutočné fotky pri dlaždiciach sú v `DLAZDICA_UVOD`. Na
   úvode sa dlaždice menia ručne (vložiť výstup `dlazdice('index.html', cisla=True)`).
@@ -616,7 +636,9 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven�
   2. **Staré adresy** pôvodného webu (`/sk/….aspx`, 83 stránok zo `zdroj/pages.json`) a súbory `files/N.pdf|doc|wmv`
      rovno na absolútny cieľ na kanonickej adrese, takže aj z `http://` alebo bez `www` je to jedno presmerovanie
      (bez reťaze).
-  Skript na konci vypíše kontrolu: `v zdroji stránok 83 | chýba 0 | … | neexistujúci cieľ 0 | reťaze 0`.
+  Skript na konci vypíše kontrolu: `v zdroji stránok 83 | chýba 0 | … | neexistujúci cieľ 0 | reťaze 0`. Vyrába aj
+  hlavičky cache a hlavičku CORS pre písma (`Access-Control-Allow-Origin: *` pri `.woff2`, do 13. 11. 2026 len ručne
+  v súboroch), takže jeho výstup je zhodný so súbormi v `nasadenie/`.
 - **Zapnutie, keď HTTPS na hostingu funguje** (certifikát pre `www` aj holú doménu): `python3 -I
   nasadenie/presmerovania.py . nasadenie --kanonicke` (alebo v `.htaccess` odkomentovať tri riadky pod bodom 1, vo
   `web.config` dať `enabled="true"`) a súbor znova nahrať. Overenie: `curl -sI http://stavebninyrichtarik.sk/`

@@ -401,6 +401,7 @@ h3.sh,h2.h3.sh{font-size:22px;color:var(--brick);text-transform:none;letter-spac
 .zlavy .eyebrow{color:#fff}
 .zlavy h2{font-size:clamp(38px,5vw,66px)}
 .zlavy p{color:rgba(255,255,255,.9);font-size:18px}
+.zlavy h2+p{margin-top:14px}   /* nadpis a odsek sa pri 1440 dotýkali (kontrola D4) */
 .disc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border-top:1px solid rgba(255,255,255,.35);margin-top:28px}
 .disc div{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.35)}
 .disc div+div{border-left:1px solid rgba(255,255,255,.35);padding-left:24px}
@@ -437,7 +438,7 @@ h3.sh,h2.h3.sh{font-size:22px;color:var(--brick);text-transform:none;letter-spac
 .onas .ph a{display:block;height:100%}
 .onas .ph a:hover img{transform:scale(1.04)}
 .onas .year{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;padding:18px 24px;font-family:var(--display);font-weight:800;font-size:44px;line-height:1}
-.onas .year small{display:block;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--brick-pale)}
+.onas .year small{display:block;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--brick-pale);margin-bottom:6px}
 .onas .tx{display:grid;gap:16px;justify-items:start}
 .onas .tx p{font-size:17.5px;color:var(--ink-2)}
 @media (max-width:820px){.onas .grid{grid-template-columns:minmax(0,1fr)}}
@@ -571,9 +572,10 @@ html[data-asistent] footer .bottom{padding-right:64px}
 /* karty značiek s fotkou, popiskom a sortimentom */
 .znacka{grid-template-columns:260px 1fr;gap:0;padding:0;overflow:hidden}
 .znacka .zm{position:relative;min-height:200px;background:var(--mortar);overflow:hidden}
-.znacka .zm>img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.znacka .zm>img,.znacka .zm>picture>img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.znacka .zm>picture{display:block;position:absolute;inset:0}   /* karta s AVIF (Máriova fotka, ilustračná s .avif) */
 .znacka .zm.contain>img{object-fit:contain;padding:18px 18px 60px}
-.znacka:hover .zm>img{transform:scale(1.05)}
+.znacka:hover .zm>img,.znacka:hover .zm>picture>img{transform:scale(1.05)}
 .znacka .zm.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,0) 40%,rgba(20,18,16,.55))}
 .znacka .badge{position:absolute;left:12px;bottom:12px;z-index:1;background:#fff;border-radius:3px;padding:6px 10px;display:grid;place-items:center;min-width:60px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
 .znacka .badge .lg{max-height:32px;max-width:110px;width:auto;height:auto}
@@ -589,6 +591,12 @@ html[data-asistent] footer .bottom{padding-right:64px}
 .znacka details p{margin-top:8px;line-height:1.55}
 .znacka .zl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:6px}
 @media (max-width:640px){.znacka{grid-template-columns:minmax(0,1fr)}.znacka .zm{min-height:170px;aspect-ratio:16/9}}
+/* značka bez vlastnej fotky: logo na bielom poli (fotka kategórie je v hlavičke, neopakuje sa na každej karte) */
+.znacka .zm.logo{display:grid;place-items:center;min-height:0;padding:24px;background:#fff;border-right:1px solid var(--line)}
+.znacka .zm.logo>img{width:auto;height:auto;max-width:min(180px,100%);max-height:72px;object-fit:contain}
+.znacka:hover .zm.logo>img{transform:none}
+.znacka.bez{grid-template-columns:minmax(0,1fr)}
+@media (max-width:640px){.znacka .zm.logo{aspect-ratio:auto;min-height:104px;padding:20px;border-right:0;border-bottom:1px solid var(--line)}}
 /* produkt bez fotky: značková dlaždica na fotke kategórie */
 .prod-media .tile{aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;background:var(--ink) center/cover no-repeat}
 .prod-media .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,18,16,.55),rgba(20,18,16,.85))}
@@ -762,6 +770,40 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .facts.n3 div{padding:clamp(18px,2.4vw,30px) clamp(14px,2.4vw,30px)}
 @media (max-width:900px){.facts.n3 div:nth-child(-n+2){border-bottom:0}.facts.n3 div:nth-child(2){border-right:1px solid var(--line)}}
 @media (max-width:560px){.facts.n3 b{font-size:32px}.facts.n3 span{font-size:13px}}
+/* pás faktov s jedným prvkom zľavy (Lajko 13. 11. 2026: „zľavy z cien, ďalšia zľava z cien“ – fakt bol dvakrát za sebou):
+   1997 · Zákaznícka karta (ďalšia zľava z akciových cien: 5 % v hotovosti, 3,3 % kartou) · 40+. Počítač tri stĺpce (karta
+   v strede dvojnásobná), do 900 px 1997 a 40+ vedľa seba a karta pod nimi cez celú šírku. Platí vo všetkých témach. */
+.facts.fk{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr) minmax(0,1fr)}
+.facts.fk>div{border-right:1px solid var(--line);border-bottom:0}
+.facts.fk>div:last-child{border-right:0}
+.facts.fk .f-karta{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(16px,2.4vw,32px);row-gap:6px;align-content:start}
+.facts.fk .f-nad{grid-column:1/-1;display:flex;align-items:center;gap:10px;max-width:none;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-txt)}
+.facts.fk .f-nad::before{content:"";flex:none;width:22px;height:2px;background:currentColor}
+.facts.fk .f-co{grid-column:1/-1;max-width:none;font-family:var(--display);font-weight:700;font-size:clamp(20px,1.7vw,24px);line-height:1.15;letter-spacing:.01em;text-transform:uppercase;color:var(--ink)}
+.facts.fk .f-zlavy{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:clamp(18px,3vw,44px);margin:8px 0 0;padding:0;list-style:none}
+.facts.fk .f-zlavy li{display:grid;gap:4px;margin:0;padding:0}
+.facts.fk .f-zlavy b{font-size:clamp(40px,3.6vw,56px)}
+.facts.fk .f-zlavy span{max-width:16ch}
+@media (max-width:900px){
+  .facts.fk{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .facts.fk>div:first-child{border-right:1px solid var(--line)}
+  .facts.fk>div:last-child{border-right:0}
+  .facts.fk>.f-karta{order:3;grid-column:1/-1;border-right:0;border-top:1px solid var(--line)}
+}
+/* počítač: popisy percent bez zalomenia po 16 znakoch („kartou“ ostávalo samo na riadku); široké okno (od 1300 px, pás cez
+   celú šírku na úvode): nadpis karty vľavo, 5 % a 3,3 % vpravo v rade s 1997 a 40+ (do 13. 11. 2026 bola pravá polovica
+   bunky prázdna – kontrola D2). O nás (.n3, užší obsah) ostáva nad sebou. */
+@media (min-width:561px){.facts.fk .f-zlavy span{max-width:none}}
+@media (min-width:1300px){
+  .facts.fk:not(.n3){grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr)}
+  .facts.fk:not(.n3) .f-karta{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);grid-template-rows:auto 1fr;column-gap:clamp(24px,2.6vw,40px)}
+  .facts.fk:not(.n3) :is(.f-nad,.f-co){grid-column:1}
+  .facts.fk:not(.n3) .f-co{text-wrap:balance}
+  .facts.fk:not(.n3) .f-zlavy{grid-column:2;grid-row:1/span 2;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2vw,32px)}
+  .facts.fk:not(.n3) .f-zlavy b{font-size:clamp(44px,4vw,60px);white-space:nowrap}
+}
+@media (max-width:700px){.facts.fk .f-zlavy b{font-size:40px}.facts.fk .f-co{font-size:20px}}
+@media (max-width:359px){.facts.fk .f-zlavy{gap:14px}.facts.fk .f-zlavy b{font-size:34px}}
 /* úvod, O nás: štítok „Od roku 1997“ tehlový (nie tmavé pole) */
 .onas .year{background:var(--brick)}
 .onas .year small{color:#fff}
@@ -1539,6 +1581,7 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 .srv.on{padding-left:0}
 .srv>*{transition:translate .4s var(--krivka-dnu)}
 .srv.on>*{translate:12px 0}
+.srv{padding-right:12px}   /* rezerva pre posun zvýraznenej služby: text nevybehne k okraju okna (kontrola D5) */
 /* fokus z klávesnice: zreteľný krúžok na každom odkaze, tlačidle, dlaždici aj zbalenom nadpise */
 .cat:focus-visible,.deal:focus-visible,.zt:focus-visible,.nov:focus-visible,.sub:focus-visible,summary:focus-visible,.galeria a:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
 /* vyhľadávanie: pole pri fokuse, výsledky sa vysunú pod poľom */
@@ -1674,10 +1717,12 @@ html[data-tema="tmava"] :is(.brand img,.h1-znacka img,.br-znacka img,.flogo){bor
    a nová zákaznícka karta: červená loga #d73438, čierna/antracit, biela) ═══
    html[data-tema="farebna"] je atribút priamo v HTML každej stránky (build.py TEMA, index.html, asistent/ochrana-udajov.html),
    takže web je farebný aj bez JS; skript v <head> (zdroj/tema-head.js) ho len prepne na porovnanie (?tema=svetla, ?tema=tmava).
-   Stavba: 1. tokeny stránky = teplý svetlý tón s bielymi kartami a červenými prvkami (katalóg, dlhé texty); 2. scény s lokálnymi
-   tokenmi: ČERVENÁ loga (lišta ako pás „RICHTÁRIK [RS] Stavebniny“, hlavička podstránky, pás faktov, pás Doprava, zľavy so
-   zákazníckou kartou, výzva pred pätou, pás v päte, menu na telefóne) a ANTRACIT (pás značiek, akcie a služby na úvode, kontakt,
-   päta, spodná lišta);
+   Stavba (Lajko 13. 11. 2026: „moc červenej“ – červená je značka a akcent, nie podklad): 1. tokeny stránky = teplý svetlý tón
+   s bielymi kartami (katalóg, hlavičky podstránok, pás faktov, akcie a služby na úvode, výzva pred pätou, dlhé texty); 2. scény
+   s lokálnymi tokenmi: ČERVENÁ loga len lišta (pás „RICHTÁRIK [RS] Stavebniny“, jediná stála červená plocha) a ANTRACIT – druhá
+   farba loga (pás značiek, úvodný panel, pás Doprava, zľavy so zákazníckou kartou, kontakt, menu na telefóne, päta, spodná
+   lišta); červené akcenty: šikmá hrana úvodu a pásu Doprava, tlačidlá, linky nadpiskov, štítky, tvrdý tieň fotky v hlavičke,
+   percentá zľavy; podiel červenej plochy merá richtarik/dizajn2/zapis/nastroje/cervena.py;
    3. biele ostrovy v scénach (karty akcií, vyhľadávanie) majú späť svetlé tokeny; 4. úvod v duchu prvého návrhu: fotka cez celú
    výšku, červený panel so šikmou antracitovou hranou, veľký názov s logom, heslo a tlačidlá. Biele písmo na červenej loga má
    4,73 : 1 (AA aj pre malý text), preto je na červenej vždy čisto biele (žiadna priesvitná biela); antracit na červenej 3,66 : 1
@@ -1701,19 +1746,19 @@ html[data-tema="farebna"]{
 html[data-tema="farebna"]{scroll-padding-top:calc(var(--lista-v) + 10px)}
 
 /* ── scéna ANTRACIT: lokálne tokeny (biele písmo, malé červené písmo svetlejšie #f28b7d 7,2 : 1, červená loga len veľké písmo a grafika 3,66 : 1) ── */
-html[data-tema="farebna"] body :is(.marquee,.kontakt-teaser,footer,.mbar,.akcie.dark,.sec.sluzby){
+html[data-tema="farebna"] body :is(.marquee,.kontakt-teaser,footer,.mbar,.zlavy,.band,.drawer){
   --paper:#1c1a1b;--prgb:28,26,27;--mortar:#1c1a1b;--concrete:#343031;--line:#454041;--povrch:#272425;--povrch-2:#322e2f;
   --ink:#fff;--ink-2:#ece6df;--ink-3:#c9c2b9;--irgb:255,255,255;
   --brick-dk:#f28b7d;--brick-txt:#f28b7d;--brick-lt:#3b2021;--brick-pale:#f9cfc9;--scena:#1c1a1b;
   background:var(--f-antracit);color:var(--ink)}
-/* ── scéna ČERVENÁ loga: všetko písmo čisto biele (4,73 : 1), akcent a linky biele, tlačidlá biele alebo antracit ── */
-html[data-tema="farebna"] body :is(.top,.page-head,.drawer,.facts,.zlavy,.cta-pas,.band){
+/* ── scéna ČERVENÁ loga (len lišta): všetko písmo čisto biele (4,73 : 1), akcent a linky biele, tlačidlo antracit ── */
+html[data-tema="farebna"] body :is(.top){
   --paper:#d73438;--prgb:215,52,56;--mortar:#d73438;--concrete:#b92328;--line:rgba(255,255,255,.5);
   --ink:#fff;--ink-2:#fff;--ink-3:#fff;--irgb:255,255,255;
   --brick:#fff;--brick-hover:#1c1a1b;--brick-dk:#fff;--brick-txt:#fff;--brick-lt:rgba(255,255,255,.16);--brick-pale:#fff;--scena:#d73438;
   background:var(--f-cervena);color:#fff}
 /* ── biele ostrovy v scénach: späť svetlé tokeny ── */
-html[data-tema="farebna"] body :is(.search,.akcie.dark .deal){
+html[data-tema="farebna"] body :is(.search){
   --paper:#f6eee4;--prgb:246,238,228;--mortar:#efe3d5;--concrete:#e7d9c8;--line:#dccdb9;--povrch:#fff;--povrch-2:#fbf5ee;
   --ink:#1c1a1b;--ink-2:#3b3637;--ink-3:#5f5758;--irgb:28,26,27;
   --brick:#d73438;--brick-hover:#b92328;--brick-dk:#b92328;--brick-txt:#b92328;--brick-lt:#f8ded9;--brick-pale:#f9cfc9;
@@ -1728,17 +1773,17 @@ html[data-tema="farebna"]::view-transition{background:var(--paper)}
 @keyframes vt-podklad{to{background-image:none}}
 html.vt[data-tema="farebna"]:active-view-transition-type(dalej)::view-transition{animation:vt-podklad 1ms linear calc(var(--vt-odstup-op) + var(--dlzka-dnu-op)) forwards}
 @media (max-width:980px){html.vt[data-tema="farebna"]:active-view-transition-type(spat)::view-transition{animation:vt-podklad 1ms linear calc(var(--vt-odstup-op) + var(--dlzka-dnu-op)) forwards}}
-/* tlačidlá v červenej scéne: hlavné biele s antracitovým písmom, druhé antracit, obrys biely */
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) .btn.primary{background:#fff;color:var(--f-antracit);border-color:#fff}
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) .btn.primary:hover{background:var(--f-antracit);color:#fff;border-color:var(--f-antracit)}
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band) .btn.light{background:var(--f-antracit);color:#fff;border-color:var(--f-antracit)}
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band) .btn.light:hover{background:#000;border-color:#000}
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
-html[data-tema="farebna"] body :is(.zlavy,.cta-pas,.band,.uv) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-cervena-tm);border-color:#fff}
-html[data-tema="farebna"] body :is(.top,.page-head,.drawer,.facts,.zlavy,.cta-pas,.band,.uv) :is(.btn,a,button,input):focus-visible{outline-color:#fff}
+/* tlačidlá: hlavné vždy červené loga s bielym písmom (4,73 : 1), druhé antracit (na svetlom) alebo biely obrys (na antracite) */
+html[data-tema="farebna"] body :is(.cta-pas,.zlavy,.band,.uv) .btn.primary{background:var(--f-cervena);color:#fff;border-color:var(--f-cervena)}
+html[data-tema="farebna"] body :is(.cta-pas,.zlavy,.band,.uv) .btn.primary:hover{background:var(--f-cervena-tm);color:#fff;border-color:var(--f-cervena-tm)}
+html[data-tema="farebna"] body .cta-pas .btn.light{background:var(--f-antracit);color:#fff;border-color:var(--f-antracit)}
+html[data-tema="farebna"] body .cta-pas .btn.light:hover{background:#000;border-color:#000}
+html[data-tema="farebna"] body :is(.zlavy,.band) .btn.light{background:#fff;color:var(--f-antracit);border-color:#fff}
+html[data-tema="farebna"] body :is(.zlavy,.band) .btn.light:hover{background:var(--concrete);color:#fff;border-color:var(--concrete)}
+html[data-tema="farebna"] body :is(.top,.drawer,.uv) :is(.btn,a,button,input):focus-visible{outline-color:#fff}
 /* tlačidlá v antracitovej scéne: obrys biely, pod myšou biely s antracitovým písmom */
-html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
-html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.akcie.dark,.sec.sluzby) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-antracit);border-color:#fff}
+html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.zlavy,.band,.uv) :is(.btn.ghost,.btn.outline){background:transparent;color:#fff;border-color:#fff}
+html[data-tema="farebna"] body :is(.kontakt-teaser,.mbar,.zlavy,.band,.uv) :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--f-antracit);border-color:#fff}
 
 /* ── lišta: červený pás s tmavou linkou hore a dole ako v páse loga, znak RS a biely názov výrazne väčší ── */
 html[data-tema="farebna"] body header.top,html[data-tema="farebna"] body.home header.top.scrolled{background:var(--f-cervena);border-block:4px solid var(--f-antracit);backdrop-filter:none;-webkit-backdrop-filter:none}
@@ -1760,33 +1805,37 @@ html[data-tema="farebna"] .nav a{color:#fff}
 @media (max-width:359px){html[data-tema="farebna"] .top .wrap{--lg-v:46px;--lg-p:24px}}
 html[data-tema="farebna"] .progress{background:#fff}
 html[data-tema="farebna"] .side-in{top:calc(var(--lista-v) + 14px)}
-/* menu na telefóne: červená plocha loga s antracitovou linkou hore, biele položky aj telefóny */
-html[data-tema="farebna"] .drawer{border-top:4px solid var(--f-antracit)}
+/* menu na telefóne: antracit s červenou linkou hore (pod červenou lištou), biele položky aj telefóny */
+html[data-tema="farebna"] .drawer{border-top:4px solid var(--f-cervena)}
 html[data-tema="farebna"] .drawer .dtel a{color:#fff}
 
-/* ── hlavička podstránky: červená plocha loga s antracitovou linkou dole (pod červenou lištou ju delí tmavá linka lišty),
-   biely nadpis s tvrdým antracitovým tieňom, fotka v ráme na antracitovej podložke ── */
-html[data-tema="farebna"] .page-head{border-bottom:6px solid var(--f-antracit)}
-html[data-tema="farebna"] .page-head h1{text-shadow:0 .045em 0 rgba(28,26,27,.42)}
+/* ── hlavička podstránky (Lajko 13. 11.: nie celá červená): malta s antracitovým nadpisom, červená linka nadpisku,
+   fotka v ráme s tvrdým červeným tieňom ako podpis značky; od obsahu ju delí jemná linka ── */
+html[data-tema="farebna"] .page-head{background:var(--mortar);border-bottom:1px solid var(--line)}
 html[data-tema="farebna"] .page-head .crumbs a:hover{text-decoration:underline}
-html[data-tema="farebna"] .ph-foto{box-shadow:clamp(6px,.8vw,11px) clamp(6px,.8vw,11px) 0 var(--f-antracit)}
+html[data-tema="farebna"] .ph-foto{box-shadow:clamp(6px,.8vw,11px) clamp(6px,.8vw,11px) 0 var(--f-cervena)}
 
-/* ── pás faktov a ostatné červené pásy: tmavá linka hore a dole (pás loga) ── */
-html[data-tema="farebna"] .facts{border-top:0;box-shadow:inset 0 5px 0 var(--f-antracit),inset 0 -5px 0 var(--f-antracit)}
-html[data-tema="farebna"] .facts.n3{border:0;box-shadow:none}
-html[data-tema="farebna"] .facts div{border-color:rgba(255,255,255,.5)}
-html[data-tema="farebna"] .facts b,html[data-tema="farebna"] .facts b i,html[data-tema="farebna"] .facts span{color:#fff}
-html[data-tema="farebna"] .cta-pas{box-shadow:inset 0 5px 0 var(--f-antracit)}
-html[data-tema="farebna"] .cta-pas p,html[data-tema="farebna"] .cta-pas .eyebrow{color:#fff}
+/* ── pás faktov: biely pás s jemnými linkami, veľké čísla antracit, jednotky a percentá červené (veľké písmo 4,1 : 1) ── */
+html[data-tema="farebna"] .facts{background:var(--povrch);border-block:1px solid var(--line)}
+html[data-tema="farebna"] .facts>div{border-color:var(--line)}
+html[data-tema="farebna"] .facts b{color:var(--ink)}
+html[data-tema="farebna"] .facts b i{color:var(--ink)}
+html[data-tema="farebna"] .facts.fk .f-zlavy b i{color:var(--f-cervena)}
+html[data-tema="farebna"] .facts span{color:var(--ink-3)}
+html[data-tema="farebna"] .facts.n3{border:1px solid var(--line)}
+/* ── výzva pred pätou: malta s červenou linkou hore, tlačidlá červené (e-mail) a antracit (telefón) ── */
+html[data-tema="farebna"] .cta-pas{background:var(--mortar);color:var(--ink);box-shadow:inset 0 4px 0 var(--f-cervena)}
+html[data-tema="farebna"] .cta-pas .eyebrow{color:var(--brick-txt)}
+html[data-tema="farebna"] .cta-pas p{color:var(--ink-2)}
 
 /* ── pás značiek: antracit, biele dlaždice ── */
 html[data-tema="farebna"] .marquee{border-color:var(--f-antracit)}
 html[data-tema="farebna"] .marquee .tile{box-shadow:none}
 
-/* ── pás Doprava: červený panel so šikmou antracitovou hranou ako v úvode, fotka vpravo ── */
+/* ── pás Doprava: antracitový panel so šikmou červenou hranou ako v úvode (zrkadlo), fotka vpravo ── */
 html[data-tema="farebna"] body.home .band{background:var(--f-antracit);color:#fff}
-html[data-tema="farebna"] body.home .band::before{background:var(--f-cervena);clip-path:polygon(0 0,62% 0,54% 100%,0 100%);z-index:1}
-html[data-tema="farebna"] body.home .band::after{display:block;content:"";position:absolute;inset:0;opacity:1;mix-blend-mode:normal;background:var(--f-antracit);clip-path:polygon(62% 0,calc(62% + 8px) 0,calc(54% + 8px) 100%,54% 100%);z-index:1;pointer-events:none}
+html[data-tema="farebna"] body.home .band::before{background:var(--f-antracit);clip-path:polygon(0 0,62% 0,54% 100%,0 100%);z-index:1}
+html[data-tema="farebna"] body.home .band::after{display:block;content:"";position:absolute;inset:0;opacity:1;mix-blend-mode:normal;background:var(--f-cervena);clip-path:polygon(62% 0,calc(62% + 8px) 0,calc(54% + 8px) 100%,54% 100%);z-index:1;pointer-events:none}
 html[data-tema="farebna"] body.home .band p{color:#fff}
 html[data-tema="farebna"] body.home .band .eyebrow.light{color:#fff}
 @media (min-width:701px){html[data-tema="farebna"] body.home .band .bg{left:44%}html[data-tema="farebna"] body.home .band p{max-width:38ch}html[data-tema="farebna"] body.home .band h2{max-width:13ch}}
@@ -1798,27 +1847,39 @@ html[data-tema="farebna"] body.home .band .eyebrow.light{color:#fff}
   html[data-tema="farebna"] body.home .band .wrap{padding-block:244px 56px}
 }
 
-/* ── akcie na úvode: antracit, biele karty ── */
+/* ── akcie na úvode: svetlá malta, biele karty ── */
+html[data-tema="farebna"] body.home .akcie{background:var(--mortar)}
 html[data-tema="farebna"] body.home .akcie .deals{background:none;border:0;gap:12px}
 html[data-tema="farebna"] body.home .akcie .deal{background:#fff;border-radius:6px}
 html[data-tema="farebna"] body.home .akcie a.deal:hover{background:var(--povrch-2)}
 
-/* ── zľavy a zákaznícka karta: červená plocha, karta na antracitovej podložke ── */
-html[data-tema="farebna"] body.home .zlavy p,html[data-tema="farebna"] body.home .zlavy .eyebrow,html[data-tema="farebna"] body.home .disc b,html[data-tema="farebna"] body.home .disc b i,html[data-tema="farebna"] body.home .disc span,html[data-tema="farebna"] body.home .karta p{color:#fff}
-html[data-tema="farebna"] body.home :is(.disc,.disc div,.disc div+div){border-color:rgba(255,255,255,.5)}
+/* ── zľavy a zákaznícka karta: antracit (červená karta na tmavom vynikne), percentá červené, podložka karty o tón svetlejšia ── */
+html[data-tema="farebna"] body.home .zlavy p,html[data-tema="farebna"] body.home .disc b,html[data-tema="farebna"] body.home .disc span,html[data-tema="farebna"] body.home .karta p{color:#fff}
+html[data-tema="farebna"] body.home .zlavy .eyebrow{color:var(--brick-txt)}
+html[data-tema="farebna"] body.home .disc b i{color:var(--f-cervena)}
+html[data-tema="farebna"] body.home :is(.disc,.disc div,.disc div+div){border-color:rgba(255,255,255,.2)}
 html[data-tema="farebna"] .karta{padding-bottom:clamp(18px,3vw,30px)}
-html[data-tema="farebna"] .karta::before{background:var(--f-antracit);inset:0;height:auto}
+html[data-tema="farebna"] .karta::before{background:var(--f-antracit-2);inset:0;height:auto}
 html[data-tema="farebna"] body.home .karta img{box-shadow:0 26px 54px rgba(28,26,27,.5)}
 
-/* ── služby a kontakt na úvode: antracit ── */
-html[data-tema="farebna"] :is(.sec.sluzby .ph,.kontakt-teaser .ph){box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+/* ── služby na úvode: svetlé; zvýraznená služba bielym pásom s červenou linkou vľavo namiesto ružového podkladu ── */
+html[data-tema="farebna"] .srv.on{background:linear-gradient(90deg,var(--povrch),rgba(255,255,255,0) 80%);box-shadow:inset 3px 0 0 var(--f-cervena)}
+/* ── zľavy na telefóne: 5 % a 3,3 % vedľa seba (nad sebou zaberali skoro celú obrazovku) ── */
+@media (max-width:440px){
+  html[data-tema="farebna"] body.home .disc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  html[data-tema="farebna"] body.home .disc div+div{border-left:1px solid rgba(255,255,255,.2);padding-left:18px}
+  html[data-tema="farebna"] body.home .disc b{font-size:clamp(40px,12vw,52px)}
+  html[data-tema="farebna"] body.home .disc span{font-size:14px}
+}
+/* ── kontakt na úvode: antracit (služby sú svetlé) ── */
+html[data-tema="farebna"] .kontakt-teaser .ph{box-shadow:0 0 0 1px rgba(255,255,255,.18)}
 html[data-tema="farebna"] body.home .kontakt-teaser .big-tel{color:#fff}
 html[data-tema="farebna"] body.home .kontakt-teaser .big-tel:hover{color:var(--brick-txt)}
 
-/* ── päta: antracit, dole červený pás cez celú šírku s bielym písmom ── */
-html[data-tema="farebna"] footer{border-top:0;padding-bottom:0}
+/* ── päta: antracit s červenou linkou hore, dole tmavší pás cez celú šírku ── */
+html[data-tema="farebna"] footer{border-top:0;padding-bottom:0;box-shadow:inset 0 4px 0 var(--f-cervena)}
 html[data-tema="farebna"] :is(.flogo,.br-znacka img){border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.22)}
-html[data-tema="farebna"] footer .bottom{--ink:#fff;--brick-dk:#fff;margin-top:34px;padding-block:16px;border-top:0;background:var(--f-cervena);color:#fff;box-shadow:0 0 0 100vmax var(--f-cervena);clip-path:inset(0 -100vmax)}
+html[data-tema="farebna"] footer .bottom{--ink:#fff;--brick-dk:#fff;margin-top:34px;padding-block:16px;border-top:0;background:#131112;color:#fff;box-shadow:0 0 0 100vmax #131112;clip-path:inset(0 -100vmax)}
 html[data-tema="farebna"] footer .bottom a{color:#fff}
 html[data-tema="farebna"] footer .bottom a:hover{color:#fff;text-decoration:underline}
 html[data-tema="farebna"] footer .bottom :is(a,button):focus-visible{outline-color:#fff}
@@ -1834,15 +1895,15 @@ html[data-tema="farebna"] .lb img{box-shadow:0 18px 50px rgba(28,26,27,.3)}
 
 /* ── Farebná téma: úvod v duchu prvého návrhu (fotka cez celú výšku, veľký názov s logom, heslo, tlačidlá) ──────────────
    Tie isté prvky ako v svetlom úvode, iné rozloženie: .uv je mriežka, fotka (.uv-ram) a text (.uv-text) ležia na sebe.
-   Počítač (od 981 px): červený panel loga so šikmou antracitovou hranou vľavo (.uv::before/::after, clip-path), fotka vpravo
+   Počítač (od 981 px): antracitový panel so šikmou červenou hranou vľavo (.uv::before/::after, clip-path), fotka vpravo
    (60 % šírky, pri 1920 px ≈ 1 : 1 so zdrojom), v paneli znak RS, názov, heslo, tlačidlá a hodiny; vpravo dole na antracitovom
    paneli ponuka, odkazy a vyhľadávanie. Telefón a tablet: fotka hore (v šírke okna ≈ 1 : 1 so zdrojom, nie zväčšená na celú
-   výšku), pod ňou červený panel so šikmou hranou, znak RS presahuje hranu ako v grafike majiteľa. .uv-a a .uv-b sú
+   výšku), pod ňou antracitový panel so šikmou červenou hranou, znak RS presahuje hranu ako v grafike majiteľa. .uv-a a .uv-b sú
    display:contents, poradie určuje order (H1, tlačidlá, ponuka, odkazy, vyhľadávanie). Strih zásob a tlačidlo Prehrať úvod
    sa vo farebnej téme nepoužívajú (site.js), okno kina (pásy papiera) tiež nie: panel a text sú od prvej snímky na mieste. */
 @media screen{
 html[data-tema="farebna"] .uv{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(clamp(150px,27svh,330px),1fr) auto;
-  min-height:calc(100svh - var(--lista-v) - 69px - env(safe-area-inset-bottom,0px));background:var(--f-cervena);color:#fff;isolation:isolate;--scena:#d73438}
+  min-height:calc(100svh - var(--lista-v) - 69px - env(safe-area-inset-bottom,0px));background:var(--f-antracit);color:#fff;isolation:isolate;--scena:#1c1a1b}
 html[data-tema="farebna"] .uv .uv-ram{grid-area:1/1;height:auto;min-height:0;background-color:var(--f-antracit)}
 html[data-tema="farebna"] .uv .uv-ram::before{content:"";position:absolute;inset:0;height:auto;z-index:2;transform:none;animation:none;pointer-events:none;
   background:linear-gradient(180deg,rgba(28,26,27,.3) 0,rgba(28,26,27,0) 26%,rgba(28,26,27,0) 62%,rgba(28,26,27,.42) 100%)}
@@ -1853,11 +1914,12 @@ html[data-tema="farebna"] .uv .uv-znak{background:rgba(28,26,27,.9);color:#fff;m
 html[data-tema="farebna"] .uv .uv-znak::before{background:var(--f-cervena)}
 html[data-tema="farebna"] .uv-ram>.uv-stitok{background:var(--f-antracit);color:#fff;border-left-color:var(--f-cervena);box-shadow:0 10px 26px rgba(28,26,27,.3);top:40px;bottom:auto;transform-origin:0 0}
 html[data-tema="farebna"] .uv-ram>.uv-stitok span{color:#fff}
-/* text: červený panel so šikmou hranou (antracitová linka 6 px), presah 30 px do fotky */
+/* text: antracitový panel so šikmou červenou hranou 6 px (logo: červené RS na čiernom; Lajko 13. 11.: menej červenej plochy),
+   presah 30 px do fotky */
 html[data-tema="farebna"] .uv .uv-text{grid-area:2/1;width:100%;min-width:0;position:relative;z-index:2;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;gap:0;margin-top:-30px;padding-block:0 22px;background:none}
 html[data-tema="farebna"] .uv .uv-text::before,html[data-tema="farebna"] .uv .uv-text::after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;clip-path:polygon(0 30px,100% 0,100% 100%,0 100%)}
-html[data-tema="farebna"] .uv .uv-text::before{top:0;background:var(--f-antracit)}
-html[data-tema="farebna"] .uv .uv-text::after{top:6px;background:var(--f-cervena)}
+html[data-tema="farebna"] .uv .uv-text::before{top:0;background:var(--f-cervena)}
+html[data-tema="farebna"] .uv .uv-text::after{top:6px;background:var(--f-antracit)}
 html[data-tema="farebna"] .uv :is(.uv-a,.uv-b){display:contents}
 /* H1: znak RS, názov v dvoch riadkoch (biely s antracitovým obrysom ako v grafike majiteľa), miesto, heslo */
 html[data-tema="farebna"] .uv h1{order:1;--zh:min(16vw,66px);--zn:min(18.4vw,86px);font-size:min(7.5vw,36px);line-height:1.04;letter-spacing:0;color:#fff;margin:0;max-width:100%}
@@ -1867,8 +1929,8 @@ html[data-tema="farebna"] .uv h1 .h1-znacka img{height:var(--zh);border-radius:5
 html[data-tema="farebna"] .uv h1 .h1-nazov{display:grid;font-size:var(--zn);line-height:.92;letter-spacing:.004em;white-space:nowrap;text-shadow:var(--obrys)}
 html[data-tema="farebna"] .uv h1 .h1-nazov>span:nth-child(2){color:#fff}
 html[data-tema="farebna"] .uv h1 .h1-miesto{display:flex;align-items:center;gap:10px;margin-top:calc(var(--zn) * .13);font-size:clamp(12px,3.3vw,15px);letter-spacing:.16em;color:#fff;text-shadow:none}
-html[data-tema="farebna"] .uv h1 .h1-miesto::before{content:"";flex:none;width:28px;height:2px;background:#fff}
-html[data-tema="farebna"] .uv h1 em{color:#fff;background:var(--f-antracit);padding:.05em .26em .09em;margin-left:-.04em}
+html[data-tema="farebna"] .uv h1 .h1-miesto::before{content:"";flex:none;width:28px;height:2px;background:var(--f-cervena)}
+html[data-tema="farebna"] .uv h1 em{color:#fff;background:var(--f-cervena);padding:.05em .26em .09em;margin-left:-.04em}
 html[data-tema="farebna"] .uv h1 .ln+.ln{margin-top:.02em}
 html[data-tema="farebna"] .uv .cta{order:2;margin:16px 0 0;width:100%;max-width:600px}
 html[data-tema="farebna"] .uv .lede{order:3;margin:14px 0 0;color:#fff;font-size:15.5px;line-height:1.45}
@@ -1901,8 +1963,8 @@ html[data-tema="farebna"] .uv .uv-info .dnes{color:#fff;box-shadow:inset 0 -2px 
 @media (min-width:981px){
   html[data-tema="farebna"] .uv{grid-template-rows:minmax(0,1fr);min-height:max(580px,calc(100svh - var(--lista-v)));background:var(--f-antracit)}
   html[data-tema="farebna"] .uv::before,html[data-tema="farebna"] .uv::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none}
-  html[data-tema="farebna"] .uv::before{background:var(--f-antracit);clip-path:polygon(0 0,calc(59% + 9px) 0,calc(50% + 9px) 100%,0 100%)}
-  html[data-tema="farebna"] .uv::after{background:var(--f-cervena);clip-path:polygon(0 0,59% 0,50% 100%,0 100%)}
+  html[data-tema="farebna"] .uv::before{background:var(--f-cervena);clip-path:polygon(0 0,calc(59% + 9px) 0,calc(50% + 9px) 100%,0 100%)}
+  html[data-tema="farebna"] .uv::after{background:var(--f-antracit);clip-path:polygon(0 0,59% 0,50% 100%,0 100%)}
   html[data-tema="farebna"] .uv .uv-ram{grid-area:1/1}
   html[data-tema="farebna"] .uv .uv-dvor{left:40%}
   html[data-tema="farebna"] .uv .uv-dvor img{object-position:38% 55%}

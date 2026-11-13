@@ -68,7 +68,9 @@ ht = ['# Stavebniny Richtárik – nastavenie pre Apache (na hostingu premenova�
       '<IfModule mod_brotli.c>', '  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml', '</IfModule>',
       '<IfModule mod_deflate.c>', '  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml', '</IfModule>',
       '<IfModule mod_headers.c>', f'  <FilesMatch "\\.({DLHA})$">', '    Header set Cache-Control "max-age=31536000, immutable"', '  </FilesMatch>',
-      f'  <FilesMatch "\\.({KRATKA})$">', '    Header set Cache-Control "max-age=600, must-revalidate"', '  </FilesMatch>', '</IfModule>', '',
+      f'  <FilesMatch "\\.({KRATKA})$">', '    Header set Cache-Control "max-age=600, must-revalidate"', '  </FilesMatch>',
+      '  # písma aj pre stránku v ráme bez allow-same-origin (pôvod null, napr. náhľad): bez hlavičky prehliadač písmo odmietne',
+      '  <FilesMatch "\\.woff2$">', '    Header set Access-Control-Allow-Origin "*"', '  </FilesMatch>', '</IfModule>', '',
       'RewriteEngine On', '',
       f'# 1. Kanonická adresa {DOMENA} (schéma a host). ' + ('ZAPNUTÉ.' if KANONICKE else
       'VYPNUTÉ: odkomentovať až keď ' + DOMENA + ' na hostingu funguje (README, HTTPS a presmerovania).'),
@@ -115,7 +117,10 @@ wc += ['</rules></rewrite>',
        '</staticContent>',
        '</system.webServer>']
 for loc in ('img', 'pdf', 'subory', 'assets/fonts'):   # súbory, ktorých obsah sa pod rovnakým názvom nemení: cache na rok
-    wc.append(f'<location path="{loc}"><system.webServer><staticContent><clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="365.00:00:00" /></staticContent></system.webServer></location>')
+    # písma aj pre stránku v ráme bez allow-same-origin (pôvod null): hlavička CORS (do 13. 11. 2026 len ručne v súbore)
+    cors = ('\n  <httpProtocol><customHeaders><add name="Access-Control-Allow-Origin" value="*" /></customHeaders></httpProtocol>'
+            if loc == 'assets/fonts' else '')
+    wc.append(f'<location path="{loc}"><system.webServer><staticContent><clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="365.00:00:00" /></staticContent>{cors}</system.webServer></location>')
 wc += ['</configuration>']
 open(os.path.join(OUT, 'web.config.txt'), 'w').write('\n'.join(wc) + '\n')
 # kontrola: každá stránka zdroja má presmerovanie, cieľ existuje a nie je reťaz (cieľ je na kanonickej adrese, nie je
