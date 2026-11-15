@@ -1,0 +1,13 @@
+# Správa webu: z webu je dostupný len index.php a assets/ (Apache 2.4, Forpsi Linux; ISAPI Rewrite 3 na Windows číta tiež)
+# Bez „Options“ (hosting s AllowOverride bez Options by vrátil chybu 500); výpis priečinkov zakazuje „Require all denied“.
+<IfModule mod_authz_core.c>
+  Require all denied
+  <FilesMatch "^(index\.php|sprava\.(css|js)|manifest\.webmanifest|ikona-192\.png)?$">
+    Require all granted
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+DirectoryIndex index.php

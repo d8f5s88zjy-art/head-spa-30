@@ -1,0 +1,128 @@
+{
+  "otazky": [
+    {
+      "id": "kontakt-telefon",
+      "odpoved": "Zavolajte nám na mobil 0905 622 223 alebo na pevnú linku 037 651 17 77. Otváracie hodiny: {hodiny_veta}.",
+      "otazka": "Aké máte telefónne číslo?",
+      "tema": "kontakt"
+    },
+    {
+      "id": "kontakt-email",
+      "odpoved": "Napíšte nám na info@stavebninyrichtarik.sk. Pošlite aj zoznam materiálu alebo projekt a pripravíme vám cenovú ponuku.",
+      "otazka": "Aký je váš e-mail?",
+      "tema": "kontakt"
+    },
+    {
+      "id": "hodiny",
+      "odpoved": "{Hodiny_veta}.",
+      "otazka": "Aké máte otváracie hodiny?",
+      "tema": "hodiny"
+    },
+    {
+      "id": "sluzby-ponuka",
+      "odpoved": "Cenová ponuka je zadarmo. Pošlite nám zoznam materiálu alebo projekt na info@stavebninyrichtarik.sk, prípadne prineste projekt alebo rozmery do predajne. Spočítame spotrebu, pripravíme ponuku a dohodneme dopravu. Telefón 0905 622 223.",
+      "otazka": "Ako získam cenovú ponuku?",
+      "tema": "sluzby"
+    },
+    {
+      "id": "sluzby-poradenstvo",
+      "odpoved": "Áno, poradenstvo je zadarmo. Zaškolený personál vám poradí v predajni alebo na telefóne 0905 622 223.",
+      "otazka": "Poradíte mi s výberom materiálu?",
+      "tema": "sluzby"
+    },
+    {
+      "id": "sluzby-firmy",
+      "odpoved": "Áno. Pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny máme špeciálne zľavy. Dohodnete sa v predajni alebo na 0905 622 223.",
+      "otazka": "Máte ceny pre stavebné firmy?",
+      "tema": "sluzby"
+    },
+    {
+      "id": "doprava-slovensko",
+      "odpoved": "Áno, materiál dovezieme na stavbu po celom Slovensku. Cenu a termín dovozu vám povieme na 0905 622 223.",
+      "otazka": "Vozíte aj mimo Nitry?",
+      "tema": "doprava"
+    },
+    {
+      "id": "doprava-ruka",
+      "odpoved": "Áno. Okrem auta Avia 3,5 t máme nákladné auto 8 t s mechanickou rukou. Vykládka sa pri niektorých akciách platí, napríklad pri krytine Blachotrapez 40 € s DPH. Podrobnosti vám povieme na 0905 622 223.",
+      "otazka": "Máte auto s hydraulickou rukou?",
+      "tema": "doprava"
+    },
+    {
+      "id": "zlava-karta",
+      "odpoved": "Z akciových cien dostanete so zákazníckou kartou ďalšiu zľavu: 5 % pri platbe v hotovosti a 3,3 % pri platbe platobnou kartou. Kartu si vyzdvihnete v predajni.",
+      "otazka": "Aké zľavy máte so zákazníckou kartou?",
+      "tema": "zlavy"
+    },
+    {
+      "id": "zlava-cennik",
+      "odpoved": "Áno. Ceny v cenníku akcií ({cennik_datum}) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava.",
+      "otazka": "Sú ceny v cenníku akcií už so zľavou?",
+      "tema": "zlavy"
+    },
+    {
+      "id": "platba-karta",
+      "odpoved": "Áno, v predajni je platobný terminál (VÚB banka). Platiť môžete aj v hotovosti; pri akciových cenách so zákazníckou kartou je zľava 5 % v hotovosti a 3,3 % kartou.",
+      "otazka": "Môžem platiť kartou?",
+      "tema": "zlavy"
+    },
+    {
+      "id": "platba-splatky",
+      "odpoved": "Áno, stavebný materiál môžete kúpiť na splátky cez Quatro. Podrobnosti vám povieme v predajni alebo na 0905 622 223.",
+      "otazka": "Dá sa kúpiť materiál na splátky?",
+      "tema": "zlavy"
+    },
+    {
+      "id": "akcia-porfix-ytong",
+      "odpoved": "Porfix aj Ytong majú špeciálne zľavy. Pri celom kamióne je doprava zdarma: Porfix až domov, Ytong až na stavbu.",
+      "otazka": "Je doprava zdarma pri Porfixe alebo Ytongu?",
+      "tema": "akcie"
+    },
+    {
+      "id": "akcia-zateplenie",
+      "odpoved": "Áno, pri akcii na zatepľovací a sadrokartónový systém dovezieme polystyrén priamo domov zdarma.",
+      "otazka": "Dovezete polystyrén zadarmo?",
+      "tema": "akcie"
+    },
+    {
+      "id": "cena-cement",
+      "odpoved": "V akcii: cement 325 R, 25 kg za 4,42 € za vrece s DPH a cement 425 R, 25 kg za 5,18 € za vrece s DPH. Cena platí pri platbe v hotovosti. Platnosť vám potvrdíme na 0905 622 223.",
+      "otazka": "Koľko stojí cement?",
+      "tema": "akcie",
+      "vazba": {
+        "akcia": "cement-325-r",
+        "ceny": [
+          "4,42 €/vrece",
+          "5,18 €/vrece"
+        ],
+        "nahrada": "Aktuálnu cenu cementu nájdete na stránke akcie Cement 325 R a 425 R. Platnosť vám potvrdíme na 0905 622 223."
+      }
+    }
+  ],
+  "temy": [
+    [
+      "kontakt",
+      "Kontakt a otváracie hodiny"
+    ],
+    [
+      "hodiny",
+      null
+    ],
+    [
+      "sluzby",
+      "Cenová ponuka a služby"
+    ],
+    [
+      "doprava",
+      "Doprava na stavbu"
+    ],
+    [
+      "zlavy",
+      "Zľavy a platba"
+    ],
+    [
+      "akcie",
+      "Akcie a ceny"
+    ]
+  ]
+}

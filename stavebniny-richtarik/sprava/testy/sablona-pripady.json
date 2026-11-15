@@ -1,0 +1,14 @@
+[
+ ["Ahoj {{meno}}!", {"meno": "<b>\"Mário\" & 'syn'</b>"}],
+ ["{{{html}}}", {"html": "<b>tučné</b>"}],
+ ["{{#zoznam}}[{{.}}]{{/zoznam}}", {"zoznam": ["a", "b", "<c>"]}],
+ ["{{#zoznam}}{{meno}}={{hodnota}};{{/zoznam}}", {"zoznam": [{"meno": "x", "hodnota": 1}, {"meno": "y", "hodnota": 2}], "hodnota": "von"}],
+ ["{{#zoznam}}{{meno}}{{hodnota}};{{/zoznam}}", {"zoznam": [{"meno": "x"}], "hodnota": "vonkajsia"}],
+ ["{{^prazdne}}nič{{/prazdne}}|{{^plne}}nie{{/plne}}", {"prazdne": [], "plne": [1]}],
+ ["{{#slovnik}}{{a.b}}-{{x}}{{/slovnik}}", {"slovnik": {"a": {"b": "hlboko"}, "x": 0}}],
+ ["{{#pravda}}áno{{/pravda}}{{#nula}}nie{{/nula}}{{#nic}}nie{{/nic}}{{#retazec}}{{retazec}}{{/retazec}}", {"pravda": true, "nula": 0, "nic": null, "retazec": "0"}],
+ ["{{chyba}}|{{ medzery }}|{{#a}}{{#b}}{{c}}{{/b}}{{/a}}", {"medzery": "ok", "a": {"b": [{"c": 1}, {"c": 2}]}}],
+ ["Text z dát sa nevyhodnocuje: {{x}} {{{x}}}", {"x": "{{y}} <!--/s:meta--> {{{z}}}"}],
+ ["{{cislo}} {{desatinne}} {{nepravda}}", {"cislo": 42, "desatinne": "3,5", "nepravda": false}],
+ ["{{#obj}}A{{/obj}}{{^obj}}B{{/obj}}", {"obj": {}}]
+]

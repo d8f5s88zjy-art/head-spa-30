@@ -1,0 +1,119 @@
+/* Správa webu Stavebniny Richtárik: veľké písmo (18 px), polia 16 px a viac (iPhone nepribližuje), ťukacie plochy aspoň
+   48 × 48 px, hlavné tlačidlo dole na dosah palca. Farby z webu (antracit, tehlová červená). */
+:root{--ink:#141210;--sivy:#5e5852;--ciara:#dcd7cf;--papier:#faf8f4;--biela:#fff;--tehla:#c1382c;--tehla-dk:#96291f;--zelena:#1e6b3a;--zlta:#8a5a00;--r:12px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--ink);font:400 18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px 16px 120px}
+h1{font-size:28px;line-height:1.2;margin:8px 0 16px}
+h2{font-size:21px;margin:28px 0 10px;padding-top:12px;border-top:1px solid var(--ciara)}
+a{color:var(--tehla-dk)}
+.hore{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;background:#1c1a1b;color:#fff;padding:6px 12px;min-height:56px}
+.hore .meno{flex:1;font-weight:600;font-size:17px}
+.hore .spat{color:#fff;text-decoration:none;font-size:18px;padding:12px 10px 12px 0;min-height:48px;display:inline-flex;align-items:center}
+.hore .spat[hidden]{display:none}
+.hore .tl.maly{background:transparent;color:#fff;border-color:#6d6660}
+.stav{display:block;text-align:center;padding:10px 16px;font-size:16px;font-weight:600;text-decoration:none}
+.stav.ok{background:#e4f1e7;color:var(--zelena)}
+.stav.cak{background:#fff1cc;color:#5b3d00}
+.vela{font-size:19px}
+.pomocka,small{color:var(--sivy);font-size:15px}
+.hlaska{border-radius:var(--r);padding:12px 14px;margin:12px 0;font-size:17px}
+.hlaska.ok{background:#e4f1e7;color:#123f22}
+.hlaska.var{background:#fff1cc;color:#4a3200}
+.hlaska.chyba{background:#fbe3e0;color:#7a1b13}
+.hlaska ul{margin:6px 0 0;padding-left:20px}
+form.inline{display:inline}
+.tl{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:10px 20px;border-radius:var(--r);border:2px solid var(--ink);background:var(--biela);color:var(--ink);font-family:inherit;font-weight:600;font-size:18px;line-height:1.2;text-decoration:none;cursor:pointer;touch-action:manipulation}
+.tl.hlavne{background:var(--tehla);border-color:var(--tehla);color:#fff}
+.tl.hlavne:active{background:var(--tehla-dk)}
+.tl.druhe{background:var(--biela)}
+.tl.nebezpecne{background:var(--biela);border-color:var(--tehla-dk);color:var(--tehla-dk)}
+.tl.maly{min-height:48px;min-width:48px;padding:6px 12px;font-size:16px;border-width:1px}
+.tl.siroke,.siroke{width:100%}
+.dole{position:sticky;bottom:0;padding:12px 0 calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--papier) 70%,rgba(250,248,244,0));margin-top:20px;z-index:4}
+.dole.dva{display:grid;gap:10px}
+.pole{display:block;margin:14px 0;border:0;padding:0}
+.pole>span,.pole>legend{display:block;font-weight:600;margin-bottom:6px}
+input,textarea,select{font:inherit;font-size:18px;width:100%;padding:12px;border:2px solid #b9b2a9;border-radius:10px;background:var(--biela);color:var(--ink);min-height:52px}
+input:focus,textarea:focus{outline:3px solid #f0b4ac;border-color:var(--tehla)}
+input[type=checkbox],input[type=radio]{width:26px;height:26px;min-height:0;flex:none;accent-color:var(--tehla);margin:0}
+input[type=file]{padding:10px;background:#fff}
+textarea{resize:vertical}
+.prepinac{display:flex;gap:12px;align-items:flex-start;padding:12px 0;min-height:48px;cursor:pointer}
+.prepinac.maly{padding:6px 0;font-size:16px}
+.prepinac.vnor{padding-left:22px}
+.cipy{display:flex;flex-wrap:wrap;gap:8px}
+.cip{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ciara);border-radius:999px;padding:8px 14px;min-height:48px;background:#fff;font-size:16px}
+.cip:has(input:checked){border-color:var(--tehla);background:#fdf0ee}
+.cip input{width:20px;height:20px}
+.vlastny{margin-top:8px}
+.kroky li{margin:6px 0}
+.zoznam{list-style:none;margin:12px 0;padding:0}
+.zoznam li{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--ciara)}
+.zoznam li.skryta .riadok b{color:var(--sivy)}
+.riadok{flex:1;display:block;padding:12px 0;min-height:56px;color:var(--ink);text-decoration:none}
+.riadok b{display:block}
+.posun{display:flex;gap:6px}
+.znak{display:inline-block;margin:4px 6px 0 0;font-size:13px;font-weight:600;padding:2px 8px;border-radius:999px;background:#e4f1e7;color:var(--zelena)}
+.znak.sivy{background:#ece9e4;color:var(--sivy)}
+.znak.cerveny{background:#fbe3e0;color:#7a1b13}
+.dlazdice{display:grid;gap:12px;margin:16px 0}
+.dlazdica{display:block;background:#fff;border:2px solid var(--ciara);border-radius:16px;padding:18px;text-decoration:none;color:var(--ink);min-height:84px}
+.dlazdica b{display:block;font-size:21px}
+.dlazdica:active{border-color:var(--tehla)}
+.den{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;border:1px solid var(--ciara);border-radius:var(--r);padding:8px 12px 12px;margin:10px 0;background:#fff}
+.den legend{font-weight:700;padding:0 6px}
+.den .prepinac{grid-column:1/-1;padding:4px 0}
+.cas{display:block;min-width:0}
+.cas span{display:block;font-size:15px;color:var(--sivy)}
+.cas input{min-width:0;padding:12px 8px}
+.tabulka{border:1px solid var(--ciara);border-radius:var(--r);padding:8px 12px;margin:12px 0;background:#fff}
+.tabulka legend{font-weight:700;padding:0 6px}
+.cena-riadok{display:grid;grid-template-columns:1fr;gap:6px;padding:8px 0;border-bottom:1px dashed var(--ciara)}
+.nahlad-letaku{margin:8px 0}
+.nahlad-letaku img{height:auto;border:1px solid var(--ciara);border-radius:8px}
+details{margin:14px 0;border:1px solid var(--ciara);border-radius:var(--r);background:#fff;padding:0 12px}
+summary{padding:14px 0;font-weight:600;cursor:pointer;min-height:48px}
+.stlpce{columns:1;padding-bottom:10px}
+.hlavicky{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.hl{position:relative;display:block;border:3px solid transparent;border-radius:10px;overflow:hidden}
+.hl input{position:absolute;top:6px;left:6px}
+.hl img{display:block;width:100%;height:90px;object-fit:cover}
+.hl:has(input:checked){border-color:var(--tehla)}
+.skryt{margin-top:28px}
+.body{list-style:none;padding:0}
+.body li{padding:10px 12px;margin:8px 0;border-radius:10px;background:#fff;border-left:6px solid var(--zelena)}
+.body li.chyba{border-color:var(--tehla)}
+.body li.upozornenie{border-color:#d49a00}
+.body li small{display:block}
+.dalsie{margin-top:20px;text-align:center}
+.dalsie a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px}
+.odkazy{margin:16px 0}
+.odkazy a,.maly-odkaz,.odkaz-dotyk{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.pocet{display:block;margin-top:4px}
+.pocet.prilis{color:#7a1b13;font-weight:600}
+.dva-stlpce{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px}
+.hl.bez{display:flex;align-items:center;gap:8px;padding:8px;min-height:96px;background:#fff;border:3px solid var(--ciara)}
+.hl.bez input{position:static}
+.hl.bez:has(input:checked){border-color:var(--tehla)}
+.foto-riadok{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 12px;align-items:start;border-bottom:1px solid var(--ciara);padding:8px 0}
+.foto-riadok img,.zoznam.fotky img{width:96px;height:72px;object-fit:cover;border-radius:8px;flex:none}
+.foto-riadok .pole{margin:0}
+.foto-riadok .prepinac{grid-column:1/-1}
+.zoznam.fotky li{align-items:flex-start;padding:8px 0}
+.zoznam.fotky details{flex:1;margin:0;min-width:0}
+.zoznam.fotky .posun{flex-wrap:wrap;padding-bottom:12px}
+.nova-fotka{background:#fff;border:1px solid var(--ciara);border-radius:var(--r);padding:4px 12px 12px;margin:10px 0}
+.zmeny{background:#fff;border:1px solid var(--ciara);border-radius:var(--r);padding:10px 12px 10px 32px;margin:12px 0}
+.zmeny li{margin:4px 0}
+.zoznam .riadok small.zmeny-h{display:block;margin-top:2px}
+.teraz{background:#fff;border-radius:10px;padding:10px 12px}
+.pomoc ol{padding-left:22px}
+@media (min-width:700px){
+ .cena-riadok{grid-template-columns:2fr 1fr}
+ .stlpce{columns:2}
+ .dlazdice{grid-template-columns:1fr 1fr}
+ .dole.dva{grid-template-columns:1fr 1fr}
+ main{padding-top:24px}
+}

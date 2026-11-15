@@ -1,0 +1,14 @@
+# Nahrávky zo správy webu: len PDF, nič sa nespúšťa (Apache; bez php_flag, ktoré pri PHP-FPM dáva chybu 500)
+# Bez „Options“: hosting s AllowOverride bez Options by inak vrátil chybu 500 pre všetky fotky a PDF. Výpis priečinka
+# zakazuje „Require all denied“ (povolené sú len súbory s menom od správy), skripty RemoveHandler a RemoveType.
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .pht .phps .cgi .pl .py .sh .asp .aspx
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .pht .phps
+<IfModule mod_authz_core.c>
+  Require all denied
+  <FilesMatch "^[a-z0-9-]+\.pdf$">
+    Require all granted
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>

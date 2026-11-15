@@ -6,6 +6,10 @@
 # OBNOVA-*.md, img/FOTKY.md, nasadenie/ (nastavenie servera sa nahrá zvlášť, README časť Nasadenie), .gitignore
 # a obrázky v img/, na ktoré nič neodkazuje.
 # Skript nič nenahráva; prepíše len <výstup>/web, zoznam.txt a zip.
+# Správa webu (sprava/, README časť Správa webu): ide do balíka len so SPRAVA=1 a SPRAVA_REVIZIA=<revízia z data/verzia.json>
+# (poistka: pred novým balíkom treba z hostingu stiahnuť zmeny a importovať ich, inak by balík prepísal Máriove zmeny).
+# Do balíka nikdy nejdú data/, nastroje/, data_sprava.py, sprava/testy ani priečinok údajov správy (sprava-data*).
+# Ochranné súbory img/s/ a pdf/s/ (.htaccess, web.config: zákaz spúšťania) idú vždy; nahrávky v img/s sa nečistia.
 # Asistent na otázky: bez premennej ASISTENT_API ide web bez neho (bez data-asistent, bez odkazu Ochrana údajov
 # v päte, bez asistent/ a assets/asistent*). S ASISTENT_API=https://…/asistent/api.php dostanú všetky stránky adresu
 # servera a server ide do balíka bez testov, nástrojov, README, config.php a vendor/ (README asistenta, Zapnutie).
@@ -22,17 +26,34 @@ tar -C "$SRC" \
   --exclude=./asistent/testy --exclude=./asistent/nastroje --exclude=./asistent/README.md \
   --exclude=./asistent/config.example.php --exclude=./asistent/config.php --exclude=./asistent/vendor \
   --exclude=./asistent/composer.lock --exclude='./asistent/data/*.sqlite*' --exclude=./asistent/.gitignore \
+  --exclude=./data --exclude=./nastroje --exclude=./data_sprava.py --exclude=./sprava/testy --exclude='./sprava-data*' \
   -cf - . | tar -C "$OUT/web" -xf -
+# správa webu: so SPRAVA=1 ide do balíka spolu so semenom údajov (použije sa len na prázdnom hostingu) a revíziou
+if [ "${SPRAVA:-}" = "1" ]; then
+  REV=$(python3 -I -c 'import json,sys; print(json.load(open(sys.argv[1]))["revizia"])' "$SRC/data/verzia.json")
+  if [ "${SPRAVA_REVIZIA:-}" != "$REV" ]; then
+    echo "CHYBA: SPRAVA_REVIZIA musí byť $REV (revízia data/verzia.json). Najprv stiahnite zmeny zo správy na hostingu a importujte ich"
+    echo "       (python3 -I nastroje/sprava_import.py <export.zip>), potom zostavte balík: SPRAVA=1 SPRAVA_REVIZIA=$REV bash nasadenie/balik.sh . <výstup>"
+    exit 1
+  fi
+  mkdir -p "$OUT/web/sprava/semeno"
+  cp "$SRC"/data/{firma,cennik,akcie,caste,novinky,galeria,texty,verzia}.json "$OUT/web/sprava/semeno/"
+  printf '{"revizia": %s, "z_commitu": "%s"}\n' "$REV" "$(git -C "$SRC" rev-parse --short HEAD 2>/dev/null || echo neznamy)" > "$OUT/web/sprava/verzia.json"
+  echo "správa webu: v balíku (revízia údajov $REV)"
+else
+  rm -rf "$OUT/web/sprava"
+  echo "správa webu: bez nej (SPRAVA=1 ju pribalí)"
+fi
 # asistent: zapnutý len s adresou servera, inak z balíka zmizne celý (náhľad má data-asistent="ukazka")
 if [ -n "${ASISTENT_API:-}" ]; then
   case "$ASISTENT_API" in https://*/api.php) ;; *) echo "CHYBA: ASISTENT_API musí byť https://…/api.php"; exit 1;; esac
-  find "$OUT/web" -name '*.html' -exec sed -i "s#data-asistent=\"ukazka\"#data-asistent=\"$ASISTENT_API\"#" {} +
+  python3 -I "$SRC/nasadenie/profil.py" "$OUT/web" "$ASISTENT_API"
   echo "asistent: zapnutý, server $ASISTENT_API (vendor/ a config.php doplniť podľa asistent/README.md, Zapnutie)"
   if grep -q 'class="navrh"' "$OUT/web/asistent/ochrana-udajov.html"; then
     echo "POZOR: asistent/ochrana-udajov.html je stále návrh (pás .navrh); pred zapnutím ho musí schváliť majiteľ"
   fi
 else
-  find "$OUT/web" -name '*.html' -exec sed -i -e 's# data-asistent="ukazka"##' -e 's#<a [^>]*data-asistent-odkaz[^>]*>[^<]*</a>##' {} +
+  python3 -I "$SRC/nasadenie/profil.py" "$OUT/web"
   rm -rf "$OUT/web/asistent" "$OUT/web/assets/"asistent*
   echo "asistent: vypnutý (bez ASISTENT_API)"
 fi
@@ -55,6 +76,7 @@ text = '\n'.join(text); n = 0; b = 0
 for dp, dn, fn in os.walk(os.path.join(R, 'img')):
     for f in fn:
         p = os.path.join(dp, f); rel = os.path.relpath(p, R).replace(os.sep, '/')
+        if rel.startswith('img/s/'): continue   # nahrávky správy webu a ich ochranné súbory sa nečistia
         if rel not in text:
             n += 1; b += os.path.getsize(p); os.remove(p)
 print('vynechané neodkazované obrázky:', n, 'súborov,', round(b / 1048576, 2), 'MB')
@@ -89,6 +111,7 @@ python3 -I - "$OUT/web" <<'EOF'
 import os, re, sys, urllib.parse
 R = sys.argv[1]; bad = []; n = 0
 for dp, dn, fn in os.walk(R):
+    if os.path.relpath(dp, R).replace(os.sep, '/').split('/')[0] == 'sprava': continue   # správa: šablóny a kostry nie sú stránky
     for f in fn:
         if not f.endswith(('.html', '.css', '.webmanifest')): continue
         p = os.path.join(dp, f); s = open(p, encoding='utf-8').read()

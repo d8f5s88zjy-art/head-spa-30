@@ -565,17 +565,17 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
-  Beh vypíše `stránok v sitemap.xml: 76`, vynechané odkazy na súbory, ktoré na pôvodnom webe už neboli (497, 521),
-  `kontrola úvodu: OK`, `kontrola textov: OK` a `vygenerovaných stránok HTML: 76`. Riadok `POZOR` znamená, že
+  Beh vypíše `stránok v sitemap.xml: 76`, `znalosti asistenta z dát: bez zmeny`, `kontrola oblastí správy: OK`,
+  `zhoda Python = PHP: … rozdielov 0`, `kontrola úvodu: OK`, `kontrola textov: OK` a `vygenerovaných stránok HTML: 76`
+  (riadok `vynechané odkazy …` sa vypíše len vtedy, keď zdroj odkazuje na súbor, ktorý už neexistuje). Riadok `POZOR` znamená, že
   `kontrola_uvodu()` v ručnom `index.html` nenašla položku menu alebo údaj firmy z `build.py` (`NAV`, `FIRMA`), alebo
   že `kontrola_textov()` našla titulok, popis či H1 mimo pravidiel (časť Texty a SEO) – treba to opraviť. Po behu
-  `git diff --stat`: `index.html` sa nesmie zmeniť.
-- Texty: akcie (`AKCIE_KARTY`, `ZLAVA_AKCIE`, `CENNIK_PDF`, `CENNIK_AKCIE`), hlavičky kategórií (`HOOKY`), sortiment
-  zo zdroja (`PONUKA_UVOD`), novinky (`NOVINKY_POPIS`), Služby (`SLUZBY`), O nás (`ONAS_TEXT`), Doprava
-  (`build_doprava()`), Časté otázky (`CASTE_ID`, `CASTE_KOPIA`) a opravy celých viet zdroja (`OPRAVY`) sú v `build.py`;
-  nadpisy, titulky, popisy, názvy značiek, alt texty a typografia v `texty.py` (časť Texty a SEO).
-  Nový cenník akcií: PDF do `pdf/`, zmeniť `CENNIK_PDF`, `CENNIK_TEXT`, `CENNIK_LETAK` a dátum v `index.html` (sekcia
-  Akcie).
+  `git diff --stat`: `index.html` sa smie zmeniť len v označených oblastiach (údaje z `data/`).
+- Texty: akcie, ceny akcií, cenník akcií, firma, otváracie hodiny a časté otázky sú v `data/*.json` (spravuje ich
+  správa webu, časť Správa webu – pred úpravou v repozitári najprv import zmien z hostingu); hlavičky kategórií
+  (`HOOKY`), sortiment zo zdroja (`PONUKA_UVOD`), novinky (`NOVINKY_POPIS`), Služby (`SLUZBY`), O nás (`ONAS_TEXT`),
+  Doprava (`build_doprava()`) sú v `build.py`; opravy celých viet (`OPRAVY`), nadpisy, titulky, popisy, názvy značiek,
+  alt texty a typografia v `texty.py` (časť Texty a SEO). Nový cenník akcií nahrá majiteľ v správe (Cenník a letáky).
 - Prehliadka predajne: zastávky prechádzky v `PRECHADZKA`, záložka Googlu prepínačom `ULICA_GOOGLE`, kód „Vložiť mapu“
   do `PANORAMA['src']`, skutočné panorámy do `img/panorama/` (časť Prehliadka predajne); po zmene vložiť nový blok
   `prehliadka_blok('')` ručne aj do `index.html` a spustiť `asistent/nastroje/otazky_zdroj.py`, ak sa zmenil počet zastávok
@@ -603,6 +603,88 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 - Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `web.config.txt`
   a `presmerovania.tsv` (po pridaní PDF do `pdf/`, zmene stránok alebo `DOMENA`) a vypíše kontrolu (časť HTTPS
   a presmerovania).
+
+## Správa webu
+Majiteľ si na hostingu Forpsi sám upravuje akcie a ceny, letáky a cenník akcií v PDF, otváracie hodiny a oznamy
+k nim (sviatok, dovolenka, iné hodiny od – do), novinky (nové aj pôvodné: text, fotky, PDF, skrytie), fotky v albumoch
+galérie Predajňa a Areál, vybrané texty Úvodu, Služieb, O nás a Dopravy a telefón a e-mail: adresa
+`https://www.stavebninyrichtarik.sk/sprava/`, na telefóne aj na počítači. Návod pre majiteľa krok za krokom je v správe
+(Pomoc) a v `richtarik/sprava/zapis/NAVOD.md`; architektúra a výsledky testov v `richtarik/sprava/zapis/ZAPIS.md`.
+
+**Ako to funguje.** Návštevník dostáva len statické súbory ako doteraz – na verejných stránkach nie je žiadny skript,
+štýl, cookie ani odkaz správy. Obsah, ktorý správa mení, je v stránkach v označených oblastiach
+`<!--s:ID-->…<!--/s:ID-->` (269 oblastí, spolu ≈ 9 kB na 77 stránkach). Pravda o ňom sú údaje `data/*.json` (`firma`
+s hodinami a oznamami, `cennik`, `akcie`, `caste`, `novinky`, `galeria`, `texty`, `verzia`). Oblasti skladajú tie isté šablóny `sprava/sablony/*.html` v Pythone
+(`build.py` cez `nastroje/sablona.py`, `nastroje/vykreslenie.py`) aj v PHP (`sprava/jadro/Sablona.php`,
+`Vykreslenie.php`, `Typografia.php`). Správa po ťuknutí Zverejniť vykreslí z celých údajov všetky oblasti, novú
+stránku akcie alebo novinky zloží z kostry `sprava/kostry/akcia.html` / `novinka.html`, prepočíta `assets/index.json`
+a `sitemap.xml`, pri zmene telefónu alebo e-mailu nahradí ich staré podoby vo všetkých verejných textových súboroch
+(`sprava/jadro/Kontakt.php`; pri importe to isté v zdrojoch repozitára `nastroje/kontakt.py`) a ak je na hostingu
+asistent, zosúladí jeho znalosti s hodinami a častými otázkami. Oznam k hodinám má na webe `data-do` a `site.js`
+ho po poslednom dni skryje (bez JS ostane viditeľný aj s dátumom); bežné hodiny a ich údaje pre Google sa nemenia.
+Každá zmena ide cez náhľad so zoznamom „Čo sa zmení“ (pred → po, uloží sa aj do Histórie) → kontroly (H1, titulky a popisy pre Google a ich jedinečnosť, odkazy, rozmery obrázkov,
+JSON-LD, značky) → zálohu → denník prerušeného zápisu → premenovanie → overenie odtlačkov a dá sa vrátiť v Histórii.
+
+**build.py** číta `data/` (`data_sprava.py`), oblasti v ručnom `index.html` prepíše z údajov (zvyšok súboru nemení),
+zapíše `sprava/kostry/` (kostra akcie, `konstanty.json`, `oblasti.json`, `typografia.json`) a na konci overí:
+`kontrola oblastí správy: OK` (každá oblasť = vykreslenie z údajov, značky v pároch, nie v `<title>`, `<script>` ani
+atribúte) a `zhoda Python = PHP` (`nastroje/sprava_zhoda.py`: všetky oblasti, typografia na ≈ 2 600 textoch webu,
+šablóny, popisy, 75 záznamov hľadania – 0 rozdielov; bez `php` v PATH len upozornenie). `python3
+nastroje/sprava_zhoda.py --referencia <starý výstup>` overí, že web bez značiek je bajtovo ako predtým.
+
+**Inštalácia na Forpsi (Linux odporúčaný, Windows funguje).**
+1. Doména musí mať HTTPS (bez neho správa ukáže len návod). PHP 8.1 – 8.5 (odporúčané 8.3) s GD (WebP).
+2. Pred balíkom stiahnuť a importovať zmeny z hostingu (bod Zmeny z hostingu nižšie; pri prvej inštalácii netreba).
+   Balík so správou: `SPRAVA=1 SPRAVA_REVIZIA=<revízia z data/verzia.json> bash nasadenie/balik.sh . <výstup>` –
+   bez zhodnej revízie balík odmietne vzniknúť (poistka, aby nový web neprepísal zmeny majiteľa). Do balíka ide
+   `sprava/` bez testov, `sprava/semeno/` (počiatočné údaje), `sprava/verzia.json`; nikdy `data/`, `nastroje/`, údaje
+   správy ani zálohy. Bez `SPRAVA=1` je balík ako doteraz plus ochranné súbory `img/s/`, `pdf/s/`.
+3. Nahrať obsah balíka do `/<doména>/www` (FTP, WebFTP rozbalí ZIP na serveri). Na Linuxe si správa vytvorí priečinok
+   údajov **mimo webu** `/<doména>/sprava-data/`; ak to hosting nedovolí (Windows), vytvorí `www/sprava-data-<32 hex>/`
+   s `.htaccess` a `web.config` a sondou overí, že je z internetu nedostupný – inak sa zastaví.
+4. Otvoriť `https://…/sprava/` → kontrola servera (HTTPS, PHP, rozšírenia, zápis do priečinkov webu, sondy: údaje
+   nedostupné, PHP sa v `img/s` a `pdf/s` nespúšťa, `sprava/` zakázaná, značky v stránkach, web = údaje). Ak hlási
+   zápis, na Linuxe nastaviť priečinkom webu práva 757 (Forpsi). Pred prihlásením ukáže len súhrn.
+5. Prvé nastavenie spolu s majiteľom: Vytvoriť overovací kód → správa zapíše `PRVY-KOD.txt` do priečinka údajov
+   (čitateľný len cez FTP/WebFTP, kód platí 24 h, 5 pokusov, nový najskôr o 15 min) → kód opísať → meno a heslo
+   (aspoň 10 znakov, nie známe ani s názvom firmy). **Žiadne predvolené heslo ani účet neexistuje**; heslo je len ako
+   odtlačok (Argon2id/bcrypt). Zabudnuté heslo: rovnako cez `OBNOVA-KOD.txt` (1 h); núdzovo zmazať `ucty.json` cez FTP.
+
+**Bezpečnosť.** Relácia s `HttpOnly`, `SameSite=Strict`, `Secure`, prísny režim, nečinnosť 2 h; zapamätané zariadenie
+30 dní s rotáciou tokenu (starý token odhlási zariadenie); CSRF token + kontrola Origin; 5 zlých hesiel z jednej
+adresy = 15 min, 10 = 1 h (celkový zákaz pre všetkých nie je, aby cudzí nezamkol majiteľa); pokusy o kód 5 z adresy,
+200 spolu, nový kód hneď po zmazaní súboru s kódom cez FTP; hlavičky `no-store`, `noindex`, CSP, `DENY` rámy
+(`X-Robots-Tag` na `/sprava/` posiela `.htaccess` aj PHP, zámerne – chráni aj statické súbory a funguje aj bez
+mod_headers; dvojitá hlavička je neškodná).
+Fotky: v telefóne zmenšené na 2 400 px, na serveri len JPEG/PNG/WebP do 15 MB a 40 Mpx, prekódované cez GD do WebP
+(a AVIF, ak server vie) v šírkach 600 a 1 200 px nikdy väčších ako originál, bez EXIF a GPS, meno vždy od servera
+(`img/s/<rok>/<mesiac>/…`), nič sa neprepisuje. PDF: do 25 MB, bez JavaScriptu a vložených súborov (`pdf/s/…`).
+`img/s/` a `pdf/s/` zakazujú spúšťanie (`.htaccess`, `web.config`). Testy: `sprava/testy/bezpecnost.sh`.
+
+**Zmeny z hostingu späť do repozitára.** V správe Nastavenia → Stiahnuť zálohu (heslo) → ZIP s `data/`, `img/s/`,
+`pdf/s/` a odtlačkami súborov. Potom `python3 -I nastroje/sprava_import.py <zip>`: overí cesty a typy súborov,
+skopíruje, spustí `build.py` a porovná výsledok s hostingom (cez `nasadenie/profil.py`, bez `lastmod`); 0 rozdielov
+je podmienka, rozdiel znamená chybu kódu, nie obsahu. Commit „Stavebniny Richtárik: obsah zo správy k <dátum> (r<n>)“.
+**Pravidlo: pred každým novým balíkom najprv import.** Ak by sa na hosting predsa nahral starší web, správa to po
+prihlásení ukáže a tlačidlo „Vrátiť na web moje zmeny“ vykreslí web znova z uložených údajov.
+
+**Čo správa nemení:** vzhľad, menu, katalóg a značky, ostatné albumy galérie (výstavy), pôvodný obsah starých noviniek
+(dá sa doplniť text, fotky a PDF pod neho), adresu a IČO, uvítanie, prechádzku, tému, presmerovania a štruktúru JSON-LD
+(to ostáva v `build.py` a `index.html`). Asistent: hodiny v znalostiach, odpovediach a v okne (`asistent.js`,
+`asistent-ukazka.js`) aj odpovede z Častých otázok zosúladí správa aj `build.py` (riadok `znalosti asistenta z dát`);
+novú akciu či novinku do znalostí nepridá – `build.py` to vypíše ako `POZOR` a pred zapnutím asistenta ju treba
+doplniť (`asistent/README.md`). Krok späť pri novej akcii alebo novinke ju len skryje (stránka ostane s vetou, že
+skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) má v kartách akcií typografiu podstránok
+(nezlomiteľné medzery pred € a jednotkami): pri 1024 px je rad kariet o riadok (24 px) vyšší, inak bez rozdielu;
+`sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
+
+**Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (145 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, ceny a úvod),
+`bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 200 kontrol na šírku: celý postup majiteľa
+vrátane novinky, sviatku, fotky v galérii, textu, telefónu a ich vrátenia, s overením verejných stránok), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
+(testovacie súbory). Lokálny server: `php -S 127.0.0.1:<port> -t <kópia> sprava/testy/router.php` (napodobní zákazy
+z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 
 ## Nasadenie
 Náhľad beží na GitHub Pages v podpriečinku `stavebniny-richtarik/`. Ostrý web je v koreni domény

@@ -224,13 +224,16 @@
   // 3D náklon kariet a zákazníckej karty za kurzorom je vypnutý (pokojnejší web)
 
   // otváracie hodiny: dnešný deň sa zvýrazní (data-dni="1-5" pondelok až piatok, "6" sobota); bez JS ostávajú hodiny
-  // rovnaké, len bez zvýraznenia. Neuvádza sa „otvorené“ ani „zatvorené“ (sviatky web nepozná).
+  // rovnaké, len bez zvýraznenia. Neuvádza sa „otvorené“ ani „zatvorené“; sviatky sú oznamy zo správy webu (data-do).
   poPrechode(function () {
     var den = new Date().getDay();
     Array.prototype.forEach.call(d.querySelectorAll('[data-dni]'), function (el) {
       var r = el.getAttribute('data-dni').split('-'), od = +r[0], po = +(r[1] || r[0]);
       if (den >= od && den <= po) el.classList.add('dnes');
     });
+    // oznam pri hodinách (sviatok, dovolenka) zo správy webu: po poslednom dni (data-do="RRRR-MM-DD") sa skryje
+    var t = new Date(), dnes = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2);
+    Array.prototype.forEach.call(d.querySelectorAll('[data-do]'), function (el) { if (el.getAttribute('data-do') < dnes) el.hidden = true; });
   });
 
   // úvod: strih zásob. Skutočné fotky tehál, pórobetónu (bez dokreslených paliet), dlažieb a reziva dopadnú ako výtlačky

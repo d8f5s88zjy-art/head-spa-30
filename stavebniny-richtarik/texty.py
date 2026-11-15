@@ -239,6 +239,39 @@ def popis(path, nazov, druh, veta=''):
     return d
 
 
+# Opravy preklepov a jednotné názvy značiek v texte (OBS-18, OBS-19, FUN-13). Použijú sa na celý výstup write() pre .html a .json;
+# vzory obsahujú medzery alebo veľké písmená, takže sa nedotknú adries (URL a názvy súborov sú malými písmenami).
+OPRAVY = [
+    (r'ceritifikovan', 'certifikovan'),
+    (r'Tenický list', 'Technický list'), (r'Akcivý', 'Akciový'), (r'navod k pokladke', 'návod na pokládku'),
+    (r'omietkviny', 'omietkoviny'), (r'porfily', 'profily'), (r'dialničn', 'diaľničn'), (r'Modyly', 'Modely'),
+    (r'Otiene', 'Odtiene'), (r'Ekostyrenber[oó]n', 'Ekostyrénbetón'), (r'Ekostyrenbetón', 'Ekostyrénbetón'),
+    (r'ekostyrenbetón', 'ekostyrénbetón'), (r'ušľachntil', 'ušľachtil'), (r'Plech vzor skridla', 'Plech vzor škridla'),
+    (r'Delap- ohybný kamenný obklad', 'Delap, ohybný kamenný obklad'), (r'Magic floor', 'Magic Floor'),
+    (r'Lepidla, omietky', 'Lepidlá, omietky'), (r'splátky Qatro', 'splátky Quatro'), (r'skutočného otieňa', 'skutočného odtieňa'),
+    (r'\bTermo[Bb]rik\b', 'TermoBRIK'), (r'\bPORFIX\b', 'Porfix'), (r'\bYTONG\b', 'Ytong'),
+    (r'CITY STONE DESIGN|Citystonedesign', 'City Stone Design'),
+    # superlatívy ako naše tvrdenie preč (FAKTY I-06, I-07, STYL §8; o návrate rozhodne majiteľ), tvrdenia výrobcov
+    # len s pripísaním výrobcovi (FAKTY G)
+    (r'Najla[a-zšíéj]+ certifikovaný komínový systém na Slovensku', 'Certifikovaný komínový systém'),
+    (r'<section class="art rv"><h3>10\. Najekonomickejší komín</h3><p>Bezkonkurenčné ceny na Slovensku\.</p></section>', ''),
+    (r'<h2 class="sh rv"><span>Najla[a-zšíéj]+ garáže na slovensku</span></h2>', ''),
+    (r'Holcim \(Slovensko\) a\.s\. je najväčším', 'Holcim (Slovensko) a.s. je podľa vlastných údajov najväčším'),
+    (r'Schiedel je odborník v oblasti komínov a najväčší', 'Schiedel je podľa vlastných údajov odborník v oblasti komínov a najväčší'),
+    (r'Najväčší výrobca pálených škridiel v strednej Európe', 'Najväčší výrobca pálených škridiel v strednej Európe (podľa výrobcu)'),
+]
+
+
+# Vonkajšie odkazy z pôvodného webu, ktorých podstránka vracia 404 (overené GET 3. 11. 2026): koreň domény výrobcu vracia 200.
+ODKAZY_OPRAVY = {'http://www.murexin.com/sk/main1': 'https://www.murexin.com/', 'http://www.raven.sk/lang_1/default.aspx': 'https://www.raven.sk/'}
+
+
+def opravy(t):
+    for a, b in OPRAVY: t = re.sub(a, b, t)
+    for a, b in ODKAZY_OPRAVY.items(): t = t.replace(a, b)
+    return t
+
+
 # ---------- úprava písania v textoch (zdroj aj naše šablóny) ----------
 # Skratky, ktoré ostávajú verzálkami (STYL §6), a kódy výrobkov a skúšobní zo zdroja.
 SKRATKY = {'DPH', 'IČO', 'DIČ', 'VÚB', 'CEM', 'XPS', 'EPS', 'OSB', 'PVC', 'SBS', 'APP', 'JCP', 'PE', 'PP', 'DT', 'KNPV',
@@ -305,7 +338,7 @@ def _verzalky(t):
 # Preklepy a nejednotné tvary v textoch zdroja (T-09, T-06). Len vo viditeľnom texte, nie v adresách.
 PREKLEPY = [
     (r'Počet kusok', 'Počet kusov'), (r'Betónove poklopy', 'Betónové poklopy'), (r'Žľaboka', 'Žľabovka'),
-    (r'[Bb]arierov', lambda m: m.group(0)[0] + 'ariérov'), (r'niekolko', 'niekoľko'), (r'\bnei na\b', 'nie na'),
+    (r'Barierov', 'Bariérov'), (r'barierov', 'bariérov'), (r'niekolko', 'niekoľko'), (r'\bnei na\b', 'nie na'),
     (r'Lepísa', 'Lepí sa'), (r'zvchu', 'zvrchu'), (r'zvyslé', 'zvislé'), (r'gumenným', 'gumeným'),
     (r'vrámci Slovenska ZDARMA\s*!', 'po celom Slovensku zdarma'), (r'vrámci', 'v rámci'), (r'Druhy garáži\b', 'Druhy garáží'),
     (r'ľubovolnou', 'ľubovoľnou'), (r'starši aj nové', 'staršie aj nové'), (r'\bbetonov(é|ých|á|ou|ej)\b', r'betónov\1'),
