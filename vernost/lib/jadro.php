@@ -25,9 +25,25 @@ function konfig(): array {
   return $k;
 }
 
+/* Voliteľné kľúče config.php pre hosting, kde žije len jedna prevádzka (plný balík www.barbershop30.sk); bez nich sa nič nemení:
+ *   'data' => priečinok databázy a relácií (má prednosť pred ../vernost-data a vernost/data/),
+ *   'prevadzky' => ['barbershop' => ['web' => …, 'karta' => …, 'tel' => …, 'tel_text' => …]] prepíše údaje prevádzky,
+ *   'len' => ['barbershop'] zoznam prevádzok, ktoré tu žijú (iná je „Neznáma prevádzka“),
+ *   'spustene' => false: verejné zápisy (založenie kartičky, upozornenia) vrátia 503, kým recepcia nemá heslo do adminu. */
+function udaje(string $p): array {
+  $prepis = konfig()['prevadzky'][$p] ?? [];
+  return (is_array($prepis) ? array_intersect_key($prepis, ['web' => 1, 'karta' => 1, 'tel' => 1, 'tel_text' => 1]) : []) + PREVADZKY[$p];
+}
+function prevadzka_tu(string $p): bool {
+  $len = konfig()['len'] ?? null;
+  return isset(PREVADZKY[$p]) && (!is_array($len) || in_array($p, $len, true));
+}
+function prevadzky_tu(): array { return array_values(array_filter(array_keys(PREVADZKY), 'prevadzka_tu')); }
+function spustene(): bool { return (konfig()['spustene'] ?? true) !== false; }
+
 /* stránka kartičky prevádzky: konfigurácia (karty, napr. pre testy), inak PREVADZKY[...]['karta'], inak vernost/karta/ */
 function karta_zaklad(string $p): string {
-  $k = (string) (konfig()['karty'][$p] ?? PREVADZKY[$p]['karta'] ?? '');
+  $k = (string) (konfig()['karty'][$p] ?? udaje($p)['karta'] ?? '');
   return $k !== '' ? rtrim($k, '/') . '/' : zaklad() . 'karta/';
 }
 
@@ -69,6 +85,14 @@ function kod_recepcie(): string {
 
 /* databáza mimo webu, ak hosting dovolí zapisovať o priečinok vyššie; inak v data/ (zakázané v .htaccess) s náhodným menom */
 function cesta_db(): string {
+  // config.php 'data': priečinok určený nasadením (plný balík pre vlastnú doménu), aj s meno.php
+  $urcene = (string) (konfig()['data'] ?? '');
+  if ($urcene !== '' && (is_dir($urcene) || @mkdir($urcene, 0700, true)) && is_writable($urcene)) {
+    $meno = $urcene . '/meno.php';
+    if (!is_file($meno)) file_put_contents($meno, "<?php return '" . bin2hex(random_bytes(16)) . "';\n", LOCK_EX);
+    $nahodne = (string) require $meno;
+    return $urcene . "/vernost-$nahodne.sqlite";
+  }
   $data = __DIR__ . '/../data';
   $meno = $data . '/meno.php';
   if (!is_file($meno)) {
@@ -155,7 +179,7 @@ function text(mixed $x, int $max): string {
 }
 function prevadzka(mixed $p): string {
   $p = is_string($p) ? $p : '';
-  if (!isset(PREVADZKY[$p])) chyba('Neznáma prevádzka.');
+  if (!prevadzka_tu($p)) chyba('Neznáma prevádzka.');
   return $p;
 }
 
@@ -235,7 +259,7 @@ function admin(): string {
   $vlastny = preg_replace('#^(https?://[^/]+).*$#', '$1', zaklad());
   if ($o !== '' && $o !== $vlastny) chyba('Zakázané.', 403);
   $p = (string) ($_SESSION['prevadzka'] ?? '');
-  if ($p === '' || !isset(PREVADZKY[$p]) || ($_SESSION['do'] ?? 0) < time()) chyba('Prihlás sa, prosím.', 401);
+  if ($p === '' || !prevadzka_tu($p) || ($_SESSION['do'] ?? 0) < time()) chyba('Prihlás sa, prosím.', 401);
   $_SESSION['do'] = time() + 12 * 3600;
   return $p;
 }

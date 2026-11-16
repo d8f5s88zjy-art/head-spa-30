@@ -15,6 +15,8 @@ if ($post && !str_starts_with((string) ($_SERVER['CONTENT_TYPE'] ?? ''), 'applic
 $o = (string) ($_SERVER['HTTP_ORIGIN'] ?? '');
 if ($o !== '' && !povod_povoleny($o)) chyba('Zakázaný pôvod.', 403);
 
+// config.php 'spustene' => false: kartičky sa ešte len spúšťajú (recepcia nemá heslo do adminu), verejné zápisy počkajú
+if (!spustene() && in_array($a, ['registracia', 'karta_spravy', 'odber', 'odber_zrus', 'karta_zrus'], true)) chyba('Kartičky práve spúšťame. Skús to, prosím, neskôr.', 503);
 try {
   match ($a) {
     'stav' => stav(),
@@ -61,7 +63,7 @@ function stav(): never {
   $k = konfig();
   odpoved(['ok' => true, 'php' => PHP_VERSION, 'sqlite' => extension_loaded('pdo_sqlite'), 'openssl' => extension_loaded('openssl'),
     'curl' => extension_loaded('curl'), 'mbstring' => extension_loaded('mbstring'), 'email' => $k['email_od'] !== '',
-    'admin' => array_map(fn ($p) => !empty($k['hesla'][$p]), array_combine(array_keys(PREVADZKY), array_keys(PREVADZKY))),
+    'admin' => array_map(fn ($p) => !empty($k['hesla'][$p]), array_combine(prevadzky_tu(), prevadzky_tu())),
     'databaza' => (bool) hodnota(db()->query('SELECT 1')), 'ip_cez_proxy' => ip_cez_proxy()]);
 }
 
@@ -70,7 +72,7 @@ function email_karta(string $komu, string $p, string $token): void {
   $n = PREVADZKY[$p]['nazov'];
   posli_email($komu, "$n – tvoja vernostná kartička", "Ahoj,\n\ntvoja vernostná kartička $n je tu:\n" . karta_url($token, $p)
     . "\n\nPri návšteve ukáž na recepcii QR kód z kartičky a body ti pripíšeme. Kartičku si môžeš pridať na plochu telefónu.\n"
-    . "Ak si o kartičku nežiadal(a), tento e‑mail ignoruj alebo nám zavolaj.\n\n$n\n" . PREVADZKY[$p]['tel_text'] . "\n");
+    . "Ak si o kartičku nežiadal(a), tento e‑mail ignoruj alebo nám zavolaj.\n\n$n\n" . udaje($p)['tel_text'] . "\n");
 }
 
 function registracia(): never {
@@ -124,7 +126,7 @@ function karta(string $k): never {
   $sp = $pdo->prepare('SELECT nadpis, text, cas FROM sprava WHERE prevadzka = ? AND cas >= ? ORDER BY id DESC LIMIT 5'); $sp->execute([$p, $r['vytvorena'] < gmdate('Y-m-d', time() - 60 * 86400) ? gmdate('Y-m-d', time() - 60 * 86400) : substr($r['vytvorena'], 0, 10)]);
   $hi = $pdo->prepare("SELECT body, typ, popis, cas FROM pohyb WHERE klient_id = ? AND typ <> 'zalozenie' ORDER BY id DESC LIMIT 10"); $hi->execute([$r['id']]);
   [$vapid] = vapid();
-  odpoved(['ok' => true, 'prevadzka' => $p, 'nazov' => PREVADZKY[$p]['nazov'], 'tel' => PREVADZKY[$p]['tel'], 'tel_text' => PREVADZKY[$p]['tel_text'], 'web' => PREVADZKY[$p]['web'],
+  odpoved(['ok' => true, 'prevadzka' => $p, 'nazov' => PREVADZKY[$p]['nazov'], 'tel' => udaje($p)['tel'], 'tel_text' => udaje($p)['tel_text'], 'web' => udaje($p)['web'],
     'meno' => $r['meno'], 'kod' => $r['kod'], 'body' => (int) $r['body'], 'od' => $r['vytvorena'], 'suhlas_spravy' => (bool) $r['suhlas_spravy'],
     'body_za_navstevu' => (int) nastavenie($p, 'body_za_navstevu', '1'), 'odmeny' => $od->fetchAll(), 'akcie' => aktivne_akcie($p),
     'novinky' => $sp->fetchAll(), 'historia' => $hi->fetchAll(), 'vapid' => $vapid]);
@@ -213,10 +215,10 @@ function odhlasenie(): never { relacia(); $_SESSION = []; session_destroy(); odp
 function ja(): never {
   relacia();
   $p = (string) ($_SESSION['prevadzka'] ?? '');
-  $ok = $p !== '' && ($_SESSION['do'] ?? 0) >= time();
+  $ok = $p !== '' && prevadzka_tu($p) && ($_SESSION['do'] ?? 0) >= time();
   // nova: adresa, kde si klient sám založí kartičku (QR kód na recepcii po zaplatení, admin ho ukáže)
   odpoved(['ok' => true, 'prihlaseny' => $ok, 'prevadzka' => $ok ? $p : '', 'nazov' => $ok ? PREVADZKY[$p]['nazov'] : '',
-    'nova' => $ok ? karta_zaklad($p) . '?nova' : '', 'prevadzky' => array_map(fn ($x) => $x['nazov'], PREVADZKY)]);
+    'nova' => $ok ? karta_zaklad($p) . '?nova' : '', 'prevadzky' => array_map(fn ($x) => $x['nazov'], array_intersect_key(PREVADZKY, array_flip(prevadzky_tu())))]);
 }
 
 /* ================= admin ================= */
