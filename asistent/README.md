@@ -26,6 +26,14 @@ Po ďalšom nahratí do `main` nasadenie nahrá asistenta na `https://www.headsp
 dostane `data-asistent`. Bez kľúča alebo FTP web nič nesťahuje ani neposiela a okno sa neukáže.
 Kontrola naživo: `https://www.headspa30.sk/asistent/api.php?a=stav` vráti `"zapnute":true`.
 
+### Vlastná doména www.barbershop30.sk (plný balík)
+
+Na vlastnej doméne beží ten istý kód bez zmeny v priečinku `/asistent/`. `config.php` je v balíku len zástupka, ktorá načíta
+nastavenie zo správy webu (`barbershop-sprava/jadro/pre-asistenta.php`): kľúč API vloží majiteľ v správe (uložený je v priečinku
+údajov mimo webu), voľné termíny zapína tam tiež. Bez kľúča a súhlasu je `kluc` prázdny a okno sa neukáže. Knižnica `vendor/`
+sa do balíka zostaví pre PHP 8.2 (`symfony/http-client ^7.1` ho vyžaduje; `composer.json` hovorí `>=8.1`, na 8.1 ide len
+s `^6.4`, voľba `--php=8.1` v `barbershop-30/source/tools/balik-domena.sh`). Viac: `barbershop-30/README.md`.
+
 ## Ako to funguje
 
 - Prehliadač pošle celý rozhovor (najviac 16 správ, otázka najviac 800 znakov) na `api.php?a=otazka`. Server pridá

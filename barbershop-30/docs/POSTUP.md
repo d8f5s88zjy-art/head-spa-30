@@ -59,6 +59,14 @@ Testy `vernost/testy/e2e.mjs` očakávajú `/vernost/karta/` pre barbershop (ria
 
 ## Denník
 
+- 2026‑11‑16 (hotové na vetve barbershop-skvrny, CHECKS 38): Lajko k statickému balíku pre www.barbershop30.sk: „Tak tam pridaj
+  všetko toto: Asistent Barber, voľné termíny priamo v okne objednávky, vernostná kartička, admin na úpravy textov.“ Plný balík:
+  `bash barbershop-30/source/tools/balik-domena.sh` (web + `asistent/` + `vernost/` + `sprava/`), správa na hostingu
+  v `barbershop-sprava/` (prvé nastavenie kódom zo súboru, nastavenia so súhlasmi, úpravy webu so zálohou a krokom späť, export),
+  admin s vrstvou ukladania (GitHub bez zmeny, hosting nový). Nič nie je nasadené ani odoslané. Pred odoslaním balíka treba
+  od Lajka: verziu PHP na doméne (8.2+) a súhlas správcu rezervačného systému s ňou, potvrdenie prednosti `index.html` pred
+  `index.php`. Po prvom nahratí: snímku kontroly hostingu zo správy. Export zo správy sa preberá `prevezmi-export.mjs` vždy
+  pred stavbou ďalšieho balíka. README: Nasadenie (Plný balík) a Správa na vlastnej doméne.
 - 2026‑11‑09 (hotové na vetve barbershop-skvrny): Lajko k najnovšej verzii: „Pánske holičstvo 30 môže zostať, zachovať iba 2–3 druhy
   písma, sme tam od 2017, upraviť fotky na rezervácii, remeslo, na ktorom si dáme záležať, old school v Nitre s lokálnou klientelou,
   v čakárni ťa obslúžime, profesionálni barberi, garantujeme skúsenosť, upraviť texty, pridať logá aj ostatných prevádzok.“

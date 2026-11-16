@@ -203,6 +203,9 @@ fotky, film, videá). Relatívne cesty, dá sa nasadiť do koreňa domény aj do
   uložením ukáže počet miest a vety s časom otvorenia bez dňa na kontrolu. Adresu a nedeľu mení tvorca webu.
   `source/tools/otazky.mjs` berie povolené časy z app.js. Test: `node source/tools/admin-test.mjs`
   (falošný GitHub v pamäti, nič nejde von). Funguje až po zverejnení webu v `main` (číta súbory odtiaľ).
+  Ukladanie je za rozhraním (16. 11. 2026): `admin/ulozisko-github.js` (GitHub, predvolené, správanie bez zmeny) a
+  `admin/ulozisko-hosting.js` (správa na vlastnej doméne, `<html data-ulozisko="hosting">`, pozri Správa na vlastnej doméne);
+  `admin.js` je pre obe ten istý.
 
 ## Logá prevádzok
 
@@ -274,11 +277,98 @@ obsluhuje Laravel (cookie `laravel_session`, `/index.html` vráti 404): rezerva�
    `https://…/rezervacia/` neodchádza na http) prešli. Dnes hlási REZ-08: `https://…/rezervacia/` presmeruje na `http://`
    a HTTP nepresmeruje na HTTPS; to opraví hosting (presmerovanie na HTTPS na celej doméne).
 
+### Plný balík pre www.barbershop30.sk (Lajko 16. 11. 2026)
+
+„Tak tam pridaj všetko toto: Asistent Barber, voľné termíny priamo v okne objednávky, vernostná kartička, admin na úpravy
+textov.“ Jeden príkaz vyrobí všetko, čo sa nahrá na hosting vedľa rezervačného systému, bez jediného tajomstva:
+
+    bash source/tools/balik-domena.sh [--von=<priečinok>] [--vendor=<priečinok s vendor/>] [--php=8.2] [--bez-zip]
+    bash source/tools/balik-test.sh <priečinok>/NAHRAT-NA-HOSTING        # kontrola balíka pred odoslaním
+    bash ../barbershop-sprava/testy/spusti.sh <priečinok>                  # balík + jednotky PHP + prehliadač
+
+Výstup (predvolene `<repozitár>/_balik-domena`, nie je v gite): `NAHRAT-NA-HOSTING/`, `NAVOD.txt` (z `source/domena/NAVOD.txt`)
+a `barbershop30-plny.zip`. V koreni balíka je nový web (`index.html`, `404.html`, `robots.txt`, `sitemap.xml`, `assets/`, `karta/`,
+`en/` – zhodný so statickým balíkom zo 16. 11. okrem adresy servera kartičiek v `index.html`, `en/index.html` a `karta/index.html`)
+a tri priečinky serverov: `asistent/` (asistent a voľné termíny, s knižnicou `vendor/` z composeru zostavenou pre PHP 8.2 mimo
+repozitára), `vernost/` (kartičky) a `sprava/` (z `../barbershop-sprava/`: prvé nastavenie, nastavenia, úpravy webu).
+Zámerne v ňom **nie je** `rezervacia.html`, `admin/` (adresa `/admin` patrí rezervačnému systému – preto je správa na `/sprava/`),
+koreňový `.htaccess`, nič s menom `index.php`, `css`, `js`, `images`, `fonts`, `storage`, `vendor` v koreni (zoznam
+`zakazane_v_koreni` v `source/domena/ciel.json`), žiadne testy ani konfigurácia s tajomstvom. `asistent/config.php`
+a `vernost/config.php` sú len zástupky (`source/domena/*-config.php`), ktoré načítajú nastavenie zo správy.
+
+Po nahratí bez nastavenia sa web správa ako statický balík: asistent sa neukáže, okno objednávky ponúkne Zavolať a rezervačný
+systém, kartička je skrytá a web nič neposiela na `asistent/` ani `vernost/`. Funkcie zapína majiteľ sám na
+`https://www.barbershop30.sk/sprava/` (kľúč API si platí prevádzka; kľúč, heslá ani kód nikdy nejdú cez nás).
+Požiadavky na hosting: PHP 8.2+ (verzia platí pre celú doménu, teda aj pre rezervačný systém – brána projektu, pred odoslaním
+balíka ju musí potvrdiť majiteľ a správca rezervačného systému; `--php=8.1` postaví knižnicu so `symfony/http-client ^6.4`),
+rozšírenia json, mbstring, session, hash, fileinfo, pdo_sqlite, openssl, curl (gd s WebP pre fotky, zip pre export), zápis PHP
+do súborov webu, `mod_rewrite` v `.htaccess`. Všetko overuje kontrola hostingu v správe.
+
 Zlá adresa: GitHub Pages ukáže na každej neexistujúcej adrese len koreňový `/404.html` (HEAD SPA 30). Ten pri ceste
 s `/barbershop-30/` ukáže blok Barbershopu 30 (Objednať sa, Zavolať 0951 267 203, Späť na úvod). `404.html` v tomto
 priečinku je tá istá chybová stránka pre vlastnú doménu a samostatné nasadenie (`nasad-barbershop30.sh`).
 
+## Správa na vlastnej doméne (`../barbershop-sprava/`, na hostingu `/sprava/`)
+
+PHP bez knižníc (8.2+), stránky vykreslené na serveri (fungujú bez skriptu), rozhranie úprav je `admin/` s ukladaním na hosting.
+
+- **Adresy** sú na jednom mieste: `source/domena/ciel.json` (základ `https://www.barbershop30.sk/`, API, rezervačný systém pre
+  kalendár, mená zakázané v koreni). Číta ho balík, zostavenie v prehliadači (`admin/zostav.js`) aj server (`jadro/Miesto.php`).
+  Adresa kalendára sa v správe nedá zmeniť.
+- **Priečinok údajov** (`jadro/Miesto.php`), v pevnom poradí: `<nad koreňom webu>/barbershop30-udaje/`, inak existujúci alebo nový
+  `<koreň>/b30-udaje-<32 hex>/` (náhodné meno, `.htaccess`, `web.config`, prázdne `index.html`, tajné údaje len v súboroch `.php`,
+  ktoré pri priamej požiadavke nič nevypíšu). Obsah: `tajne.php` (kľúč API, odtlačok hesla recepcie), `ucty.php`, `pristup.php`,
+  `nastavenie.php`, `zdroj/` (úpravy v tvare repozitára), `zostavene/`, `zalohy/`, `nahrate/`, `relacie/`, `dennik/`, `export/`,
+  `asistent/` (limity, vyrovnávacia pamäť kalendára), `vernost/` (databáza kartičiek).
+- **Prvé nastavenie** (`jadro/Pristup.php`, `obrazovky/pristup.php`): kontrola hostingu → Vytvoriť kód → server zapíše
+  `PRVY-KOD.txt` do priečinka údajov (16 znakov, 24 hodín, v údajoch len HMAC; 5 pokusov z adresy, 200 spolu) → majiteľ ho
+  prečíta cez FTP a opíše → meno a heslo (Argon2id, aspoň 10 znakov). Zabudnuté heslo: `OBNOVA-KOD.txt` (1 hodina).
+  Relácia `b30s` (HttpOnly, SameSite=Strict, len `/sprava/`, 2 h nečinnosť, 12 h najdlhšie), CSRF v poli `_t` a hlavičke
+  `X-B30-CSRF`, pôvod sa porovnáva s adresou z `ciel.json` (nikdy s hlavičkou Host), 5 zlých hesiel = 15 minút zámok adresy.
+  HTTPS sa dokazuje cookie s príznakom Secure (`__Secure-b30h`); pod `php -S` sa nevyžaduje.
+- **Kontrola hostingu** (`jadro/Prostredie.php`): verzia PHP (staršiu zachytí brána v `index.php` a `api.php`, napísaná pre
+  PHP 5.6+), rozšírenia, HTTPS, priečinok údajov a sonda, že sa z webu nedá čítať, zápis do súborov webu, servery asistenta
+  a kartičiek, zákazy vnútorných súborov, úplnosť balíka podľa `subory.sha256`, rezervačný systém na svojom mieste
+  (`/rezervacia` s `v-order-component`, `/admin` → `/admin/login`; len GET), adresa návštevníka za proxy, limity PHP.
+- **Štyri funkcie** (`jadro/Nastavenia.php`, `obrazovky/sprava.php`): asistent (kľúč API typu heslo, súhlas, denný strop
+  100–5 000, kľúč sa už nezobrazí), voľné termíny (súhlas, Vyskúšať = jedno čítanie barberov), kartička (heslo recepcie,
+  e‑mail odosielateľa), úpravy webu. `jadro/pre-asistenta.php` a `pre-vernost.php` dávajú serverom konfiguráciu z údajov;
+  kód `../asistent/` sa nemení, `../vernost/` má štyri voliteľné kľúče (`data`, `prevadzky`, `len`, `spustene`).
+  **Lokálna poistka:** pod `php -S` sa kľúč vydá len s `ANTHROPIC_BASE_URL=http://127.0.0.1:…` (falošné API) a kalendár len
+  s `B30_TEST_KALENDAR=http://127.0.0.1:…` (falošný rezervačný systém); z vývojového stroja sa skutočné API ani živý
+  rezervačný systém nezavolá ani omylom.
+- **Prepínače** (`jadro/Prepinace.php`): to isté, čo robí `pages.yml` – `data-asistent`, `data-objednavka` na prvej značke
+  `<html>` a `data-zapnute` pri skripte `assets/vernost.js` v `/index.html` a `/en/index.html`. Zapisuje ich server z nastavenia
+  a z kontrol (kľúč + súhlas + knižnica + `api.php?a=stav`), idempotentne; `app.js`, `asistent.js`, `objednavka.js`, `vernost.js`
+  sa nemenia. Po nahratí novšieho balíka sú vypnuté, kým majiteľ neťukne Dokončiť aktualizáciu. S všetkými zapnutými má
+  `index.html` 14 271 B gzip (hranica 14 600 B).
+- **Úpravy webu** (`sprava/upravy/` = `admin/index.html` odvodený pri stavbe balíka, `admin/ulozisko-hosting.js`,
+  `sprava/api.php`): zdroj sú súbory v tvare repozitára (pôvodné v `sprava/semeno/*.txt`, úpravy v údajoch), verejné stránky
+  zostaví prehliadač tým istým kódom ako nasadenie (`admin/zostav.js` → `admin/lib/en-stranka-jadro.js`, `zmensi-jadro.js`):
+  doména, adresa servera kartičiek, `lastmod`, `en/index.html`, zmenšenie. Server (`jadro/Zmena.php`) pod zámkom overí verziu
+  (súbeh = 409 ako na GitHube), každú cestu proti pevnej tabuľke `jadro/Mapa.php` a obsah (JSON, HTML bez `<?`, kanonická adresa),
+  zálohuje, zapíše cez dočasný súbor a `rename`, verejné stránky ako posledné a hneď s prepínačmi; prerušený zápis vráti
+  ďalšia požiadavka zo zálohy. **Pravidlo kódu:** súbor `.js` alebo `.php` sa smie od verzie na webe líšiť len v samostatných
+  číslach a v e‑maile (telefón, hodiny) – cez správu sa na server nedostane program. Fotky vždy dekóduje a nanovo zakóduje GD
+  (`jadro/Fotky.php`). Krok späť vráti posledné uloženie a dá sa vrátiť (jedna úroveň); záloh je 30 alebo 200 MB.
+- **Export** (`jadro/Export.php` → `node source/tools/prevezmi-export.mjs <zip>`): ZIP so zmenenými súbormi na cestách
+  repozitára, novými fotkami, `ZMENY.json` a `BALIK.txt` (commit balíka); nikdy nič z tajomstiev. Prevzatie overí commit
+  a cesty, pri posunutom repozitári zlúči trojcestne, vytvorí `en/` a spustí kontroly. `CLAUDE.md` na hostingu nie je: po zmene
+  kontaktu alebo hodín ho treba upraviť ručne a s ním tri očakávania pôvodného kontaktu v `admin-test.mjs`. Nový balík sa
+  stavia vždy až po prevzatí exportu.
+- **Testy:** `../barbershop-sprava/testy/spusti.sh` = `balik-test.sh` (21 kontrol s `--stary`), `testy/jednotky.php`
+  (141 kontrol: výber priečinka údajov a súbeh, kód, heslá, CSRF, tabuľka ciest, pravidlo kódu, fotky, prepínače, uloženie,
+  krok späť, prerušenie, export, lokálna poistka, brána HTTPS) a `source/tools/sprava-test.mjs` (137 kontrol v prehliadači:
+  balík v napodobenine koreňa domény s rezervačným systémom `testy/napodobenina.php`, `php -S` so smerovačom `testy/router.php`,
+  falošné API a falošný rezervačný systém z `../asistent/testy/`; súbory rezervačného systému sa nesmú zmeniť, nič nejde von).
+  Neoverené naživo: skutočný hosting (Apache, proxy, práva súborov), staršie PHP (brána je overená len vzorom), živý
+  rezervačný systém a skutočné API.
+
 ## Nástroje (`source/tools/`, Playwright a Python s Pillow)
+
+- `balik-domena.sh` + `balik-zostav.mjs` – plný balík pre www.barbershop30.sk; `balik-test.sh` – kontrola balíka;
+  `sprava-test.mjs` – správa a štyri funkcie v prehliadači proti napodobenine hostingu; `prevezmi-export.mjs` – export
+  zo správy späť do repozitára (pozri Nasadenie a Správa na vlastnej doméne).
 
 - `film.py` – zábery filmu: stupne 1086/1448/2172/2896 px (fasáda vstupu aj 4096), výrezy na výšku
   pre telefón `<meno>-m-*` a hĺbkové mapy (`hlbka.py`, Depth Anything V2 small ONNX; model ~99 MB nie je

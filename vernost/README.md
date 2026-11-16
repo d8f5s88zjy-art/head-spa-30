@@ -60,6 +60,15 @@ Weby: HEAD SPA 30 načíta `vernost/web/prihlaska.js` (na GitHub Pages ho kopír
 `barbershop-30/assets/vernost.js` (web sa nasadzuje aj samostatne). Po zmene prihlášky:
 `cp vernost/web/prihlaska.js barbershop-30/assets/vernost.js` (test to stráži).
 
+### Hosting s jednou prevádzkou (plný balík www.barbershop30.sk)
+
+Štyri voliteľné kľúče `config.php` (bez nich sa nič nemení, HEAD SPA 30 ich nepoužíva): `data` (priečinok databázy
+a relácií, má prednosť pred `../vernost-data` a `vernost/data/`), `prevadzky` (prepíše `web`, `karta`, `tel`, `tel_text`
+prevádzky), `len` (zoznam prevádzok, ktoré na hostingu žijú; iná je „Neznáma prevádzka“) a `spustene` (`false` = verejné
+zápisy vrátia 503, kým recepcia nemá heslo). Na www.barbershop30.sk ich dáva správa webu (`barbershop-sprava/jadro/pre-vernost.php`,
+`vernost/config.php` je v balíku len zástupka); heslo recepcie nastavuje majiteľ v správe a databáza je v jej priečinku údajov.
+Ochrana údajov pre tú doménu: `barbershop-30/source/domena/vernost-ochrana-udajov.html`. Viac: `barbershop-30/README.md`.
+
 ## API (`api/?a=…`, JSON)
 
 Verejné: `stav`, `registracia` (POST: prevadzka, meno, telefon, email, suhlas_karta=true, suhlas_spravy), `karta` (GET k),

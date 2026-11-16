@@ -810,3 +810,25 @@ okrem tých, ktoré nie sú v kóde (živý web je pozadu za vetvou, prechod na 
   109 / 0 (pred 108 / 1: CLS 0,0283 pri prechode tučného textu na systémové písmo, dvakrát), tma-test 52 / 0;
   asistent-test 7 a objednavka-test 15 kontrol bez servera OK, časti so serverom PRESKOČENÉ (v kontajneri chýba
   asistent/vendor; pred spadli: 1 OK + TimeoutError, 13 OK / 3 FAIL).
+
+## 38. Plný balík pre www.barbershop30.sk: asistent, voľné termíny, kartička, správa (2026‑11‑16)
+
+Lajko 16. 11.: „Tak tam pridaj všetko toto: Asistent Barber, voľné termíny priamo v okne objednávky, vernostná kartička,
+admin na úpravy textov.“ Web ostáva ako 16cf3669, funkcie sa zapínajú až na hostingu a až majiteľom.
+
+- Balík (`balik-domena.sh`, `balik-test.sh --stary=<balík zo 16. 11.>`): 21 / 0. V koreni len `404.html asistent assets en
+  index.html karta robots.txt sitemap.xml sprava vernost`; statická časť sa od balíka zo 16. 11. líši len v `index.html`,
+  `en/index.html` (adresa servera kartičiek `data-api="/vernost/api/"`) a `karta/index.html`; žiadny kľúč, odtlačok hesla,
+  test ani README; verejné súbory = zostavenie pôvodných súborov tým istým kódom ako v správe; `php -l` na všetkých súboroch.
+- Jednotky PHP (`barbershop-sprava/testy/jednotky.php`): 141 / 0.
+- Prehliadač (`source/tools/sprava-test.mjs`, napodobenina koreňa domény s rezervačným systémom, falošné API a falošný
+  rezervačný systém): 137 / 0. Bez nastavenia web ako statický balík a nič neposiela; prvé nastavenie len s kódom zo súboru;
+  asistent len s kľúčom a súhlasom, odpoveď po kúskoch, kľúč nikdy v prehliadači; voľné termíny: barberi, dni, časy,
+  v zázname rezervačného systému len `getEmployees`, `getCalendar`, `getTime`, nikdy `makeOrder`; kartička na `/karta/`,
+  recepcia v `/vernost/admin/`, `headspa` odmietnutá; úprava textu, ceny, fotky tímu, kontaktu a hodín, odpovede asistenta
+  je na webe hneď (slovensky aj anglicky), so zálohou, krokom späť a hlásením súbehu; export sa dá prevziať do kópie repozitára;
+  12 útokov na ukladanie odmietnutých a web bez zmeny; súbory rezervačného systému bez zmeny; žiadna požiadavka von.
+- Doterajšie testy v kópii pred (16cf3669) a po: výsledky a čísla sú v zápise zadania (domena-plny/zapis/ZAPIS.md);
+  `admin-test.mjs` 101 / 0 bez zmeny očakávaní, `en/index.html` a zmenšené súbory z nástrojov bajt po bajte ako pred úpravou.
+- Neoverené naživo (vedome): skutočný hosting, staršie PHP, živý rezervačný systém, skutočné API. Nič nebolo nasadené,
+  kúpené ani odoslané; na živú doménu nešla žiadna požiadavka.
