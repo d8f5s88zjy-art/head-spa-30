@@ -111,6 +111,10 @@ def oblasti_varianty(D):
                    ('galeria-predajna', 'galeria/index.html'), ('galeria-dvor', 'galeria/index.html'), ('sluzby-polozky', 'sluzby.html'),
                    ('doprava-polozky', 'doprava.html'), ('onas-text', 'o-nas.html'), ('uvod-lede', 'index.html'), ('sluzby-lede', 'sluzby.html')]:
         von.append([oid, c, V.vykresli(oid, c, X)])
+    # karty Kontaktu: zmenený mobil (obrázok Zavolajte nám zmizne) a zvlášť zmenený e-mail (zmizne obrázok Napíšte nám)
+    von.append(['kontakt-karty', 'kontakt.html', V.vykresli('kontakt-karty', 'kontakt.html', X)])
+    E = copy.deepcopy(dict(D, k=K)); E.pop('verzia', None); E['firma']['email'] = 'predajna@stavebniny.example'
+    von.append(['kontakt-karty', 'kontakt.html', V.vykresli('kontakt-karty', 'kontakt.html', E), E])
     return [von, X]
 
 

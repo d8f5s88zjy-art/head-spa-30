@@ -29,8 +29,9 @@ if (isset($argv[2])) {
     $P = json_decode(file_get_contents($argv[2]), true, 512, JSON_THROW_ON_ERROR);
     if (isset($P['oblasti'])) {   // oblasti z pozmenených dát (ako po úkonoch v správe)
         [$zoz, $X] = $P['oblasti']; $z = 0;
-        foreach ($zoz as [$oid, $c, $ocak]) {
-            $v = Vykreslenie::vykresli($oid, $c, $X);
+        foreach ($zoz as $r) {   // [oid, cesta, výstup Pythonu] alebo s vlastnými dátami [oid, cesta, výstup, dáta]
+            [$oid, $c, $ocak] = $r;
+            $v = Vykreslenie::vykresli($oid, $c, $r[3] ?? $X);
             if ($v !== $ocak) { $z++; if ($z <= 5) fwrite(STDERR, "ROZDIEL oblasť $oid ($c):\n  py:  " . substr($ocak, 0, 400) . "\n  php: " . substr($v, 0, 400) . "\n"); }
         }
         echo 'oblasti z pozmenených dát: ' . count($zoz) . " prípadov, rozdielov $z\n";

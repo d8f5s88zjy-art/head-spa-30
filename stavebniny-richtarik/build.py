@@ -805,10 +805,10 @@ def prechadzka_js():
 META_OBLAST = {'kontakt.html', 'akcie/index.html', 'letak.html'}   # stránky, ktorých titulok a popis závisia od dát správy
 
 
-def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, head_img=None, druh=''):
+def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, head_img=None, druh='', cta_obr=''):
     """Šablóna stránky. H1, titulok a popis pre vyhľadávače sú z texty.STRANKY; kde stránka nie je, H1 ostáva od
     volajúceho a popis zloží generátor texty.popis podľa druhu stránky (kategoria, znacka, akcia, novinka).
-    Hlavička stránky (omrvinky, H1, fotka) je prvá časť <main>."""
+    Hlavička stránky (omrvinky, H1, fotka) je prvá časť <main>. cta_obr: obrázok do výzvy pred pätou (len Služby)."""
     pre = prefix(path)
     st = texty.stranka(path)
     if head and st.get('h1'): head = (head[0], st['h1'], head[2])
@@ -888,8 +888,8 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
 <main id="obsah">
 {crumb}{body}
 </main>
-<section class="cta-pas">
-  <div class="wrap">
+<section class="cta-pas{' s-obr' if cta_obr else ''}">
+  <div class="wrap">{cta_obr}
     <div><div class="eyebrow light">Cenová ponuka zadarmo</div><h2><span class="dr"><span>Pošlite nám projekt alebo zoznam materiálu</span></span></h2><p>Spočítame spotrebu, pripravíme cenovú ponuku a dohodneme dopravu na stavbu.</p></div>
     <div class="cta"><a class="btn primary" href="mailto:{FIRMA['email']}?subject=Cenov%C3%A1%20ponuka">Poslať dopyt e-mailom</a><a class="btn light" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div>
   </div>
@@ -995,6 +995,28 @@ def dlazdice(path, cisla=False):
     return out
 
 
+# Ilustrácie skupín tovaru od majiteľa (Mário, e-mail „nova zakaznicka karta“ 16. 11. 2026; img/FOTKY.md): jedna séria
+# ako jeden prvok na jednom mieste – vo výzve „Potrebujete cenu…“ (.kat-cta) na stránke kategórie (nie na podstránkach
+# značiek, aby sa ilustrácia neopakovala) a 14. kus Poradenstvo vo výzve „Nenašli ste…“ v Katalógu. Dlažby a ploty
+# a Podhľady a PVC ilustráciu v sérii nemajú, výzva je tam bez obrázka. Súbory img/ilu/<názov>-200|400.avif|webp vyrobí
+# nastroje/grafika_maria.sh, opis (alt) je v texty.OBR_ALT ('ilu:<názov>'). Žiadna ilustrácia nie je na úvode ani v galérii.
+KAT_ILUSTRACIA = {'sypke-zmesy': 'sypke-zmesi', 'murovaci-material': 'murovaci-material', 'stresne-kritiny': 'stresne-krytiny',
+                  'izolacny-material': 'izolacny-material', 'kominove-systemy': 'kominovy-system', 'stresne-okna': 'stresne-okna',
+                  'hutny-material': 'hutny-material', 'dvere---okna': 'okna-dvere', 'stavebne-rezivo': 'rezivo',
+                  'stavebne-naradie-doplnky': 'stavebne-naradie', 'sadrokartonovy---zateplovaci-system': 'sadrokarton',
+                  'fasadny-system': 'fasadny-system', 'farby---laky': 'farby-laky'}
+
+
+def ilustracia(path, meno):
+    """<picture> ilustrácie z img/ilu (AVIF prvý, WebP záloha) pre výzvu s obrázkom (.ilu): 200 CSS px na počítači,
+    112 px na telefóne, 88 px pod 360 px; lenivo, nikdy nie LCP."""
+    pre = prefix(path); s = '(max-width:359px) 88px, (max-width:700px) 112px, 200px'
+    sady = {x: ', '.join(f'{pre}img/ilu/{meno}-{w}.{x} {w}w' for w in (200, 400)) for x in ('avif', 'webp')}
+    return (f'<picture><source type="image/avif" srcset="{sady["avif"]}" sizes="{s}">'
+            f'<img src="{pre}img/ilu/{meno}-400.webp" srcset="{sady["webp"]}" sizes="{s}" width="400" height="400" '
+            f'alt="{html.escape(texty.OBR_ALT["ilu:" + meno])}" loading="lazy" decoding="async"></picture>')
+
+
 def build_katalog_index():
     path = 'katalog/index.html'
     cards = dlazdice(path)
@@ -1002,7 +1024,7 @@ def build_katalog_index():
 <div class="search"><label for="q" class="vh">Hľadať v katalógu</label><input id="q" type="search" placeholder="Hľadajte: cement, Ytong, škridla…" autocomplete="off" aria-controls="res" aria-expanded="false" aria-describedby="res-stav"><div class="res" id="res" role="region" aria-label="Výsledky hľadania" hidden></div><p class="vh" id="res-stav" role="status" aria-live="polite"></p></div>
 <div class="cats">{cards}</div>
 <div class="txt rv" style="margin-top:32px"><p>{SORTIMENT_UVOD}</p></div>
-<div class="sort-note"><p>Nenašli ste, čo hľadáte? Zavolajte, poradíme vám.</p><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div>
+<div class="sort-note ilu">{ilustracia(path, 'poradenstvo')}<div class="ilu-tx"><p>Nenašli ste, čo hľadáte? Zavolajte, poradíme vám.</p><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a></div></div>
 </div></section>'''
     write(path, page(path, 'Katalóg stavebného materiálu', body, [('index.html', 'Úvod'), (None, 'Katalóg')], head=('Katalóg', 'Katalóg stavebného materiálu', '15 kategórií a viac ako 40 značiek popredných slovenských aj svetových výrobcov. Vyberte kategóriu alebo hľadajte podľa výrobku alebo značky.'), head_img='uvod:pas-dvor'))
 
@@ -1041,12 +1063,15 @@ def build_katalog_page(slug):
         cont = '<h2 class="sh rv"><span>Značky, ktoré máme v ponuke</span></h2>' + cont
     if len(parts) == 1 and parts[0] in PONUKA_UVOD:
         cont += f'<h2 class="sh rv"><span>{PONUKA_NADPIS}</span></h2><div class="txt rv"><p>{html.escape(PONUKA_UVOD[parts[0]])}</p></div>'
+    ilu = ilustracia(path, KAT_ILUSTRACIA[parts[0]]) if len(parts) == 1 and parts[0] in KAT_ILUSTRACIA else ''
+    cta_tx = f'''<p>Potrebujete cenu na konkrétne množstvo? Zavolajte alebo napíšte, cenovú ponuku pripravíme zadarmo.</p><div class="cta"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a><a class="btn ghost" href="mailto:{FIRMA['email']}?subject={quote(title)}">Napísať e-mail</a></div>'''
+    kat_cta = f'<div class="kat-cta ilu">{ilu}<div class="ilu-tx">{cta_tx}</div></div>' if ilu else f'<div class="kat-cta">{cta_tx}</div>'
     body = f'''<section class="sec kat-page"><div class="wrap two">
 {sidebar(path, slug)}
 <div class="main">
 <div class="content">{cont}</div>
 {subs}{oblast('v-akcii', V.vykresli('v-akcii', path, VD))}{oblast('novinky-kat', V.vykresli('novinky-kat', path, VD)) if len(parts) == 1 else ''}
-<div class="kat-cta"><p>Potrebujete cenu na konkrétne množstvo? Zavolajte alebo napíšte, cenovú ponuku pripravíme zadarmo.</p><div class="cta"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať {FIRMA['mobil']}</a><a class="btn ghost" href="mailto:{FIRMA['email']}?subject={quote(title)}">Napísať e-mail</a></div></div>
+{kat_cta}
 </div></div></section>'''
     write(path, page(path, title, body, crumbs, head=('Katalóg' if len(parts) == 1 else cat[1], title, lede), head_img=cat[4], druh='kategoria' if len(parts) == 1 else 'znacka'))
 
@@ -1201,7 +1226,8 @@ SLUZBY_FOTKY = ['885', '884', '883']
 
 def build_sluzby():
     p = PAGES['sluzby']
-    cap = 'Naše autá: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou'
+    # 8 t auto je Iveco: Máriove grafiky z 16. 11. 2026 (IMG_0312 rozvoz, IMG_0310 leták „Prečo nakupovať u nás“), README
+    cap = 'Naše autá: Avia 3,5 t a nákladné auto Iveco 8 t s mechanickou rukou'
     # opis každej fotky (fotky áut z pôvodnej stránky Služby, hárok v z2/prac/auta-883-885.jpg)
     alt = {'883': 'Červená Avia s valníkom a modré nákladné auto s mechanickou rukou',
            '884': 'Avia a nákladné auto s mechanickou rukou pred predajňou pri paletách',
@@ -1213,7 +1239,14 @@ def build_sluzby():
 <div class="auta rv">{fotky}</div>
 <div class="txt rv"><p>{cap}. Podmienky dopravy pri jednotlivých akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava</a>, ďalšie odpovede na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
 </div></section>'''
-    write(p, page(p, 'Služby', body, [('index.html', 'Úvod'), (None, 'Služby')], head=('Služby', 'Výpočet materiálu, poradenstvo a doprava', oblast('sluzby-lede', V.vykresli('sluzby-lede', p, VD))), head_img='p:884'))
+    # výzva pred pätou s Máriovou grafikou „Zdarma výpočet spotreby stavebného materiálu“ (img/ilu, nastroje/grafika_maria.sh):
+    # len na Službách (výpočet spotreby je služba 02), na ostatných stránkach je výzva bez obrázka
+    sady = {x: ', '.join(f'img/ilu/zdarma-vypocet-{w}.{x} {w}w' for w in (480, 790, 1080)) for x in ('avif', 'webp')}
+    s = '(max-width:800px) calc(100vw - 36px), 340px'
+    cta_obr = (f'<picture><source type="image/avif" srcset="{sady["avif"]}" sizes="{s}"><img src="img/ilu/zdarma-vypocet-790.webp" '
+               f'srcset="{sady["webp"]}" sizes="{s}" width="790" height="431" alt="{html.escape(texty.OBR_ALT["ilu:zdarma-vypocet"])}" '
+               f'loading="lazy" decoding="async"></picture>')
+    write(p, page(p, 'Služby', body, [('index.html', 'Úvod'), (None, 'Služby')], head=('Služby', 'Výpočet materiálu, poradenstvo a doprava', oblast('sluzby-lede', V.vykresli('sluzby-lede', p, VD))), head_img='p:884', cta_obr=cta_obr))
 
 
 # O nás: pás faktov z úvodu (index.html, pás „V skratke“; texty doslova)
@@ -1277,12 +1310,20 @@ def build_404():
     write(p, t)
 
 
+# Kontakt: karty Zavolajte nám a Napíšte nám s Máriovými grafikami (e-mail 16. 11. 2026, IMG_0313 a IMG_0309; img/ilu/kontakt-*,
+# nastroje/grafika_maria.sh) v oblasti správy kontakt-karty (šablóna sprava/sablony/kontakt-karty.html, Python aj PHP).
+# Údaje, ktoré grafiky ukazujú (mobil a pevná linka ako číslice bez medzier, e-mail rozdelený pri @ – v tejto podobe ich
+# zmena kontaktu v správe ani nastroje/kontakt.py nenahradí): keď ich majiteľ v správe zmení, obrázok z karty
+# zmizne a karta ostane so správnym textom. Nová grafika s novým číslom = nové súbory a nové hodnoty tu.
+KONTAKT_OBR = {'zavolajte': {'mobil': '0905622223', 'pevna': '0376511777'}, 'napiste': {'email': ['info', 'stavebninyrichtarik.sk']}}
+
+
 def build_kontakt():
     p = 'kontakt.html'
     body = f'''<section class="sec kontakt-page"><div class="wrap">
+{oblast('kontakt-karty', V.vykresli('kontakt-karty', p, VD))}
 <div class="kgrid">
   <div class="kbox"><h3>Predajňa a sklad</h3><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a></div>
-  <div class="kbox"><h3>Telefón a e-mail</h3><a class="big" href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a class="big" href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a></div>
   <div class="kbox khod"><h3>Otváracie hodiny</h3>{oblast('hodiny-kontakt', V.vykresli('hodiny-kontakt', p, VD))}</div>
   <div class="kbox kfir"><h3>Firemné údaje a platba</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
   <figure class="kdvor">{predajna_picture('', '02-tvarnice-obloha', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">{PP_ODKAZ}</a></span></figcaption></figure>
@@ -1549,7 +1590,7 @@ def konstanty():
     for s, c in PAGES.items():
         sl = s.split('__')
         if sl[0] == 'katalog-roduktov' and len(sl) > 1: hladanie[c] = {'k': KAT[sl[1]][1], 'ponuka': PONUKA_UVOD.get(sl[1], '') if len(sl) == 2 else ''}
-    return {'domena': DOMENA, 'og_img': OG_IMG[0], 'farba': FARBA, 'pripona': texty.PRIPONA, 'hladanie': hladanie,
+    return {'domena': DOMENA, 'og_img': OG_IMG[0], 'farba': FARBA, 'pripona': texty.PRIPONA, 'hladanie': hladanie, 'kontakt_obr': KONTAKT_OBR,
             'stranky': {p: texty.STRANKY[p]['t'] for p in sorted(META_OBLAST)}, 'nazvy': nazvy, 'hlavicky': hlavicky,
             'kat_hlavicka': kat_hlavicka, 'predvolena_hlavicka': HLAVICKA_FOTO['akcie/index.html']}
 

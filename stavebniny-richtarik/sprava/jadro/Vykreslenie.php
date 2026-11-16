@@ -352,6 +352,24 @@ final class Vykreslenie
         return str_replace('{telefon}', '<a href="tel:' . $f['mobil_tel'] . '">' . $f['mobil'] . '</a>', Pomocne::e(self::txt($t)));
     }
 
+    // ---------- Kontakt: karty Zavolajte nám a Napíšte nám (obrázok len pri údajoch, ktoré ukazuje) ----------
+    public static function cislice(?string $s): string
+    {
+        return preg_replace('/\D/', '', $s ?? '');
+    }
+
+    public static function kontakt_karty_vm(array $D): array
+    {
+        $f = $D['firma']; $o = $D['k']['kontakt_obr'];
+        $i = strpos($f['email'], '@');
+        $meno = $i === false ? $f['email'] : substr($f['email'], 0, $i);
+        $domena = $i === false ? '' : substr($f['email'], $i + 1);
+        return ['mobil' => $f['mobil'], 'mobil_tel' => $f['mobil_tel'], 'pevna' => $f['pevna'], 'pevna_tel' => $f['pevna_tel'], 'email' => $f['email'],
+                'email_meno' => $meno, 'email_domena' => $domena,
+                'obr_tel' => self::cislice($f['mobil']) === $o['zavolajte']['mobil'] && self::cislice($f['pevna']) === $o['zavolajte']['pevna'],
+                'obr_mail' => [$meno, $domena] === $o['napiste']['email']];
+    }
+
     public static function polozky_vm(array $D, array $zoznam): array
     {
         $p = [];
@@ -412,6 +430,7 @@ final class Vykreslenie
         switch ($oid) {
             case 'hodiny-uvod-info':
                 return $S($oid, ['riadky' => self::hodiny_riadky($D)]);
+            case 'kontakt-karty': return $S('kontakt-karty', self::kontakt_karty_vm($D));
             case 'hodiny-pata': case 'hodiny-kontakt': case 'hodiny-uvod':
                 return $S($oid, ['riadky' => self::hodiny_riadky($D), 'vynimky' => self::vynimky($D)]);
             case 'ld-firma': return $S('ld', ['json' => self::firma_ld($D)]);

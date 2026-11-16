@@ -323,6 +323,23 @@ def polozky_vm(D, zoznam):
     return {'polozky': [{'n': f'{i:02d}', 'nazov': txt(t), 'popis': odkaz_telefon(D, d)} for i, (t, d) in enumerate(zoznam, 1)]}
 
 
+# ---------- Kontakt: karty Zavolajte nám a Napíšte nám ----------
+def cislice(s):
+    return re.sub(r'\D', '', s or '')
+
+
+def kontakt_karty_vm(D):
+    """Karty Kontaktu s Máriovými grafikami (img/ilu/kontakt-*). Grafika má číslo a e-mail v obrázku, preto sa ukáže len
+    vtedy, keď údaje v data/firma.json sú tie, ktoré obrázok ukazuje (konštanty kontakt_obr z build.py: čísla bez medzier
+    a e-mail rozdelený pri @, aby ich zmena kontaktu v správe nenahradila). Inak je karta bez obrázka, text je vždy z dát."""
+    f, o = D['firma'], D['k']['kontakt_obr']
+    meno, _, domena = f['email'].partition('@')
+    return {'mobil': f['mobil'], 'mobil_tel': f['mobil_tel'], 'pevna': f['pevna'], 'pevna_tel': f['pevna_tel'], 'email': f['email'],
+            'email_meno': meno, 'email_domena': domena,
+            'obr_tel': cislice(f['mobil']) == o['zavolajte']['mobil'] and cislice(f['pevna']) == o['zavolajte']['pevna'],
+            'obr_mail': [meno, domena] == o['napiste']['email']}
+
+
 # ---------- znalosti asistenta (R-1) ----------
 # Odpovede asistenta na otázky, ktoré sú aj na stránke Časté otázky, a riadok s otváracími hodinami v znalostiach sa
 # skladajú z tých istých dát ako web; správa ich na hostingu prepíše spolu so stránkami (ak tam asistent je).
@@ -372,6 +389,7 @@ def vykresli(oid, cesta, D):
     """Obsah oblasti oid v súbore cesta (relatívna cesta od koreňa webu)."""
     if oid == 'hodiny-pata': return sablona('hodiny-pata', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
     if oid == 'hodiny-kontakt': return sablona('hodiny-kontakt', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
+    if oid == 'kontakt-karty': return sablona('kontakt-karty', kontakt_karty_vm(D))
     if oid == 'hodiny-uvod-info': return sablona('hodiny-uvod-info', {'riadky': hodiny_riadky(D)})
     if oid == 'hodiny-uvod': return sablona('hodiny-uvod', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
     if oid == 'ld-firma': return sablona('ld', {'json': firma_ld(D)})

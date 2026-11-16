@@ -30,6 +30,32 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
+## Propagačné grafiky majiteľa z 16. 11. 2026 (`img/ilu/`)
+
+Pôvod: Ing. Mário Richtárik, e-mail s predmetom „nova zakaznicka karta“ (11 správ), ktorý 16. 11. 2026 preposlal Lajko
+(„Pridaj to tam do richtarika“) ako 32 snímok obrazovky iPhonu (IMG_0282 – IMG_0314, IMG_0296 chýba). Sú to Máriove vlastné
+propagačné grafiky; jeho web ich smie použiť. Originálne súbory zatiaľ nemáme (snímky nesú skutočný detail len ≈ 530 – 1 190 px),
+od Mária si ich žiadame spolu s logom vo vektore.
+
+- Zdroj v repozitári: `zdroj/grafika-maria/*.webp` – len 17 použitých výrezov bez rozhrania telefónu (bezstratové WebP, pixely
+  presne zo snímky, odkiaľ ktorý je: `zdroj/grafika-maria/vyrezy.tsv`). Webové veľkosti vyrobí `bash nastroje/grafika_maria.sh`:
+  len orez, zmenšenie (Lanczos), jemné doostrenie a prevod do AVIF a WebP; tón, farby ani obsah sa nemenia, nič sa nezväčšuje.
+- `img/ilu/<skupina>-200|400.avif|webp` – séria 14 ilustrácií skupín tovaru (sivá postavička pri práci na podstavci s nápisom):
+  sypke-zmesi (IMG_0304), murovaci-material (0293), stresne-krytiny (0302), izolacny-material (0291), kominovy-system (0292),
+  stresne-okna (0303), hutny-material (0290), okna-dvere (0294), rezivo (0298), stavebne-naradie (0301), sadrokarton (0300),
+  fasadny-system (0289), farby-laky (0288) – vo výzve „Potrebujete cenu…“ na 13 stránkach kategórií – a poradenstvo (0297)
+  vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu. Štvorcový orez zo stredu výrezu. Dlažby a ploty a Podhľady a PVC
+  ilustráciu v sérii nemajú (výzva je tam bez obrázka), kým Mário nepošle tieto dve v rovnakom štýle.
+- `img/ilu/kontakt-zavolajte|napiste-288|480.avif|webp` – ikony „Zavolajte nám“ (IMG_0313) a „Napíšte nám“ (IMG_0309) v kartách
+  na Kontakte, orez 800 × 600 (celý rám ikony). Majú číslo a e-mail v obrázku: pri inom telefóne alebo e-maile v správe sa
+  obrázok z karty sám skryje (`build.py` `KONTAKT_OBR`, šablóna `sprava/sablony/kontakt-karty.html`).
+- `img/ilu/zdarma-vypocet-480|790|1080.avif|webp` – „Zdarma výpočet spotreby stavebného materiálu“ (IMG_0313, rovnaký obrázok
+  je aj IMG_0305) vo výzve pred pätou na Službách.
+- Nepoužité (dôvody v pracovnom priečinku `richtarik/grafika/navrh/NAVRH.md`, časť 3): banner a letáky (preklepy, nečitateľný
+  drobný text, pevné otváracie hodiny, „Avia 3t“), tabule, vizitka, šikmá karta, render auta, ikona zliav, ikona otváracích hodín
+  (pevné hodiny by po zmene v správe klamali), logá s názvom (web má vyčistené logo, chceme vektor) a alternatívy v inom štýle.
+  Ilustrácie nie sú v galérii (tá je len pre skutočné fotky) ani na úvode.
+
 ## Výmena fotiek 13. 11. 2026 (Lajko: „fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“)
 
 Spracovanie ako pri ostatných fotkách `img/hd`: orez, zmenšenie (nikdy nezväčšené), jemné zjednotenie tónu (sýtosť −4 %, mierny

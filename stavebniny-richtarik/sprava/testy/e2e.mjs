@@ -314,6 +314,11 @@ try {
     t(`kontakt: nový mobil na ${c}`, x.includes('0905 111 222') && x.includes('tel:+421905111222'));
   }
   t('kontakt: starý mobil nikde', stare === 0);
+  // karty Kontaktu: grafika „Zavolajte nám“ má staré číslo v obrázku, preto zmizne; karta ostane s novým číslom
+  const kk = (await verejna('kontakt.html')).text;
+  t('kontakt: zmena mobilu skryje obrázok Zavolajte nám, karta ostane', !kk.includes('kontakt-zavolajte') && kk.includes('kontakt-napiste-480') && /<h2 class="kk-n">Zavolajte nám<\/h2><a class="big kk-hl" href="tel:\+421905111222">/.test(kk));
+  await s.goto(URL + 'kontakt.html'); await s.locator('.kk2').scrollIntoViewIfNeeded();
+  t('kontakt: karta bez obrázka sa zobrazí', (await s.locator('.kk.bez-obr .big').first().isVisible()) && (await s.locator('.kk.bez-obr picture').count()) === 0);
   await s.goto(URL + 'sprava/');
   await tuk('a.dlazdica:has-text("História")');
   t('História ukazuje, čo sa zmenilo (S8)', nb(await s.locator('.zmeny-h').first().innerText()).includes('0905 111 222'));
@@ -321,6 +326,7 @@ try {
   await s.waitForSelector('h1:has-text("Náhľad zmeny")');
   await zverejni('kontakt-vratenie');
   t('kontakt: po vrátení pôvodný mobil', nb((await verejna('kontakt.html')).text).includes('0905 622 223') && !nb((await verejna('index.html')).text).includes('0905 111 222'));
+  t('kontakt: po vrátení je obrázok Zavolajte nám späť', (await verejna('kontakt.html')).text.includes('kontakt-zavolajte-480'));
 
   // ---------- 9. ostatné obrazovky ----------
   for (const [odkaz, meno] of [['Nastavenia', 'nastavenia'], ['Pomoc', 'pomoc']]) {

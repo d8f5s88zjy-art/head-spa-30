@@ -437,6 +437,22 @@ OBR_ALT = {
     '340': 'Pálená škridla v reze s opisom vlastností', '363': 'Betónové škridly Mediterran na plánoch domu',
     '388': 'Model domu s plechovou krytinou', '417': 'Asfaltová vlnovka Onduline', '555': 'Strešné okno Fakro s roletou',
     '162': 'Areál cementárne', '165': 'Certifikát vnútropodnikovej kontroly', '139': 'Cement Holcim Extracem vo vreci',
+    # ilustrácie skupín tovaru od majiteľa (img/ilu, e-mail 16. 11. 2026; build.py KAT_ILUSTRACIA): čo je na obrázku a nápis
+    'ilu:sypke-zmesi': 'Ilustrácia: robotník s lopatou a fúrikom, nápis Sypké zmesi',
+    'ilu:murovaci-material': 'Ilustrácia: murár muruje tehlový múr, nápis Murovací materiál',
+    'ilu:stresne-krytiny': 'Ilustrácia: pokrývač kladie škridly, nápis Strešné krytiny',
+    'ilu:izolacny-material': 'Ilustrácia: robotník vkladá minerálnu vlnu do strechy, nápis Izolačný materiál',
+    'ilu:kominovy-system': 'Ilustrácia: dvaja robotníci skladajú komín z tvárnic, nápis Komínový systém',
+    'ilu:stresne-okna': 'Ilustrácia: montáž strešného okna v podkroví, nápis Strešné okná',
+    'ilu:hutny-material': 'Ilustrácia: robotník dvíha betonársku sieť, nápis Hutný materiál',
+    'ilu:okna-dvere': 'Ilustrácia: montáž okna a dverí, nápis Okná – dvere',
+    'ilu:rezivo': 'Ilustrácia: robotník reže dosky pílkou, nápis Rezivo',
+    'ilu:stavebne-naradie': 'Ilustrácia: robotník so stavebným náradím, nápis Stavebné náradie',
+    'ilu:sadrokarton': 'Ilustrácia: montáž sadrokartónu na profily, nápis Sadrokartón',
+    'ilu:fasadny-system': 'Ilustrácia: robotník lepí izolačné dosky na fasádu, nápis Fasádny systém',
+    'ilu:farby-laky': 'Ilustrácia: maliar natiera stenu, nápis Farby – laky',
+    'ilu:poradenstvo': 'Ilustrácia: predavač radí zákazníkovi nad plánom, nápis Poradenstvo v stavebninách',
+    'ilu:zdarma-vypocet': 'Zdarma výpočet spotreby stavebného materiálu – kalkulačka, plán stavby a palety tehál, dreva a cementu',
 }
 
 # Galéria: opis každej fotky (5 až 15 slov, len to, čo je na fotke vidieť). Fotky areálu a predajne sú skutočné fotky

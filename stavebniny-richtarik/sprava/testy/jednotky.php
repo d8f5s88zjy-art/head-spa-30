@@ -341,6 +341,17 @@ t('kontakt: nový mobil v údajoch aj textoch (V4)', $e === null && $X['firma'][
 $DK = Zmena::sKonstantami($X);
 $kostra = Zmena::vykresliSubor('akcie/porfix.html', $DK, null);   // kostra (ako pre novú stránku), oblasti z údajov
 t('kontakt: nová stránka z kostry má nový mobil aj mimo oblastí', !str_contains($kostra, '622 223') && !str_contains($kostra, '905622223'));
+// karty Kontaktu s Máriovými grafikami: obrázok len pri údajoch, ktoré ukazuje (konštanty kontakt_obr), karta vždy z údajov
+$kk0 = Vykreslenie::vykresli('kontakt-karty', 'kontakt.html', Zmena::sKonstantami($D));
+t('kontakt: s pôvodnými údajmi majú obe karty obrázok', str_contains($kk0, 'kontakt-zavolajte-480') && str_contains($kk0, 'kontakt-napiste-480') && !str_contains($kk0, 'bez-obr'));
+$kk = Vykreslenie::vykresli('kontakt-karty', 'kontakt.html', $DK);
+t('kontakt: zmena mobilu skryje obrázok Zavolajte nám, karta ostane s novým číslom', !str_contains($kk, 'kontakt-zavolajte') && str_contains($kk, 'kontakt-napiste-480') && str_contains($kk, 'href="tel:+421905111222">0905 111 222</a>') && str_contains($kk, 'Zavolajte nám'));
+[$Y, $e] = Obsah::kontakt($D, ['mobil' => $D['firma']['mobil'], 'pevna' => '037 777 88 99', 'email' => $D['firma']['email']]);
+t('kontakt: zmena pevnej linky skryje obrázok Zavolajte nám', $e === null && !str_contains(Vykreslenie::vykresli('kontakt-karty', 'kontakt.html', Zmena::sKonstantami($Y)), 'kontakt-zavolajte'), (string)$e);
+[$Y, $e] = Obsah::kontakt($D, ['mobil' => $D['firma']['mobil'], 'pevna' => $D['firma']['pevna'], 'email' => 'predajna@stavebniny-test.sk']);
+$kk = Vykreslenie::vykresli('kontakt-karty', 'kontakt.html', Zmena::sKonstantami($Y));
+t('kontakt: zmena e-mailu skryje obrázok Napíšte nám, Zavolajte nám ostane', $e === null && str_contains($kk, 'kontakt-zavolajte-480') && !str_contains($kk, 'kontakt-napiste') && str_contains($kk, 'mailto:predajna@stavebniny-test.sk'), (string)$e);
+t('kontakt: údaje obrázkov v konštantách zmena kontaktu nenahradí', Zmena::sKonstantami($Y)['k']['kontakt_obr']['zavolajte']['mobil'] === '0905622223');
 
 echo "Akcie: ceny, hlavička, úvod (S1, S2, S4, S5, D8)\n";
 $D = Zmena::zive();

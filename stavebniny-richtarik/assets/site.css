@@ -457,7 +457,7 @@ h3.sh,h2.h3.sh{font-size:22px;color:var(--brick);text-transform:none;letter-spac
 @media (max-width:820px){.kontakt-teaser .grid{grid-template-columns:minmax(0,1fr)}}
 
 /* kontakt */
-.kgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .kbox{background:var(--povrch);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:grid;gap:10px;align-content:start;justify-items:start}
 .kbox h3,.kbox h2.h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-txt);font-weight:600}
 .kbox address{font-style:normal;line-height:1.5;color:var(--ink-2)}
@@ -808,17 +808,52 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .onas .year{background:var(--brick)}
 .onas .year small{color:#fff}
 
-/* ---------- Kontakt: hodiny na jednom riadku v širšej karte (2 stĺpce), pod kartami fotka predajne (najviac 600 px) a navigácia ---------- */
+/* ---------- Kontakt: nad mriežkou karty Zavolajte nám a Napíšte nám (.kk2, oblasť správy kontakt-karty), mriežka
+   Predajňa a sklad | Otváracie hodiny | Firemné údaje, pod ňou fotka predajne (najviac 600 px) a vedľa nej adresa a navigácia ---------- */
 .hours td{white-space:nowrap}
-.kgrid .khod{grid-column:span 2}
-.kgrid .kfir{grid-column:3/5;grid-row:2;align-self:start}
-.kdvor{grid-column:1/3;grid-row:2;margin:0;max-width:600px;display:grid;gap:12px;align-content:start}
+.kdvor{grid-column:1/-1;margin:0;display:grid;grid-template-columns:minmax(0,600px) minmax(0,1fr);gap:12px 28px;align-items:center}
 .kdvor picture{display:block;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;background:var(--concrete)}
 .kdvor img{width:100%;height:100%;object-fit:cover}
 .kdvor figcaption .cta{display:flex;flex-wrap:wrap;gap:8px;margin:0}
-.kdvor figcaption{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.02em;color:var(--ink-2)}
-@media (max-width:900px){.kgrid .kfir{grid-column:1/-1;grid-row:auto}.kdvor{grid-column:1/-1;grid-row:auto}}
-@media (max-width:520px){.kgrid .khod{grid-column:auto}.kdvor figcaption .cta{width:100%}.kdvor figcaption .btn{flex:1 1 100%}}
+.kdvor figcaption{display:flex;flex-direction:column;gap:14px;align-items:flex-start;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.02em;color:var(--ink-2)}
+@media (max-width:900px){.kgrid .kfir{grid-column:1/-1}.kdvor{grid-template-columns:minmax(0,1fr);max-width:600px}
+  .kdvor figcaption{flex-direction:row;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}}
+@media (max-width:520px){.kdvor figcaption .cta{width:100%}.kdvor figcaption .btn{flex:1 1 100%}}
+.kk2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.kk{position:relative;display:grid;grid-template-columns:240px minmax(0,1fr);align-items:center;gap:24px;background:var(--povrch);border:1px solid var(--line);border-radius:var(--radius);padding:12px 22px 12px 12px;transition:border-color .2s}
+.kk.bez-obr{grid-template-columns:minmax(0,1fr);padding:24px}
+.kk>picture{display:block;aspect-ratio:4/3;overflow:hidden;border-radius:var(--radius)}
+.kk>picture img{display:block;width:100%;height:100%}
+.kk-tx{display:grid;gap:4px;justify-items:start;min-width:0}
+.kk .kk-n{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--brick-txt);font-weight:600;line-height:1.3;margin-bottom:6px}
+.kk .big{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.2;text-decoration:none;color:var(--ink);white-space:nowrap}
+.kk .mail{font-size:18px;color:var(--brick-txt);overflow-wrap:anywhere}
+/* celá karta je odkaz prvého čísla (mobil) alebo e-mailu, druhé číslo leží nad ním a volá samo seba */
+.kk-hl::after{content:"";position:absolute;inset:0;border-radius:var(--radius)}
+.kk .big:not(.kk-hl){position:relative;z-index:1}
+.kk:hover{border-color:var(--brick-txt)}
+.kk-hl:focus-visible{outline:none}
+.kk-hl:focus-visible::after{outline:2px solid var(--brick-txt);outline-offset:2px}
+@media (max-width:900px){.kk2{grid-template-columns:minmax(0,1fr)}.kk{grid-template-columns:clamp(104px,34vw,132px) minmax(0,1fr);gap:14px;padding:10px 14px 10px 10px}
+  .kk .big{font-size:24px}.kk .mail{font-size:16px}}
+@media (max-width:359px){.kk{grid-template-columns:88px minmax(0,1fr);gap:10px;padding:8px 10px 8px 8px}.kk .mail{font-size:15px}}
+
+/* ---------- Ilustrácie skupín tovaru od majiteľa (img/ilu) vo výzve kategórie (.kat-cta.ilu) a Katalógu (.sort-note.ilu):
+   jeden komponent, obrázok 200 px (telefón 112, pod 360 px 88), rohy ako karty, bez rámu, tieňa a červenej ---------- */
+.ilu{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px 28px;align-items:center}
+.sort-note.ilu{display:grid}
+.ilu>picture{display:block;aspect-ratio:1;overflow:hidden;border-radius:var(--radius)}
+.ilu>picture img{display:block;width:100%;height:100%}
+.ilu-tx{display:grid;gap:14px;justify-items:start;min-width:0}
+@media (max-width:700px){.ilu{grid-template-columns:112px minmax(0,1fr);column-gap:16px;padding:18px}
+  .ilu-tx{display:contents}.ilu .ilu-tx>.cta,.ilu .ilu-tx>.btn{grid-column:1/-1;justify-self:start}}
+@media (max-width:359px){.ilu{grid-template-columns:88px minmax(0,1fr);column-gap:12px;padding:16px 14px}}
+/* Služby: výzva pred pätou s grafikou „Zdarma výpočet“ (len tam, page(cta_obr)) – počítač obrázok | nadpis, text, tlačidlá */
+.cta-pas.s-obr .wrap{grid-template-columns:clamp(240px,26vw,340px) minmax(0,1fr);gap:22px clamp(28px,4vw,56px)}
+.cta-pas.s-obr .wrap>picture{grid-row:1/3;display:block;border-radius:var(--radius);overflow:hidden}
+.cta-pas.s-obr .wrap>picture img{display:block;width:100%;height:auto}
+.cta-pas.s-obr .cta{grid-column:2}
+@media (max-width:800px){.cta-pas.s-obr .wrap{grid-template-columns:minmax(0,1fr)}.cta-pas.s-obr .wrap>picture{grid-row:auto}.cta-pas.s-obr .cta{grid-column:auto}}
 /* ── Prechádzka predajňou (.pp; build.py prehliadka_blok a PRECHADZKA, site.js, zdroj/prechadzka.js; majiteľ 9. 11. 2026:
    prezrieť si predajňu ako v Google Mapách, Lajo 10. 11.: zo skutočných fotiek, s pohybom medzi miestami, priamo na našej
    stránke). Náhľad je fotka prvej zastávky s tlačidlom; po kliknutí sa v javisku (.pp-javisko) otvorí scéna (.pp-scena):
@@ -1693,7 +1728,7 @@ html[data-tema="tmava"] .cta-pas p{color:var(--ink-2)}
 html[data-tema="tmava"] .cta-pas .btn.primary{background:var(--brick);border-color:var(--brick);color:#fff}
 html[data-tema="tmava"] .cta-pas .btn.primary:hover{background:var(--brick-hover);border-color:var(--brick-hover)}
 /* fotky v rámoch majú svetlú hranu, aby nesplývali s podkladom (žiadne tmavé „duchárstvo“); pás Doprava linky hore a dole */
-html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.auta a,.uv-ram){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.auta a,.uv-ram,.ilu>picture,.kk>picture,.cta-pas.s-obr .wrap>picture){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
 html[data-tema="tmava"] .ph-foto{box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px rgba(0,0,0,.45)}
 html[data-tema="tmava"] .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 /* biele ostrovy: tlačený obsah ostáva na bielej (logá značiek, malé fotky výrobkov z pôvodného webu, letáky, obrázky v rámoch) */

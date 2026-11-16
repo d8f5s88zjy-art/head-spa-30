@@ -34,8 +34,8 @@ Nič iné asistent nevie.
 - Množstevné zľavy: pri väčšom odbere a pre stavebné firmy, živnostníkov a spolupracujúce stavebniny špeciálne zľavy.
 - Doprava: tovar dovezieme vlastnými autami na miesto stavby, ktoré zákazník určí, po celom Slovensku, aj autom
   s mechanickou rukou. Tovar ide priamo na stavbu, bez zbytočného skladovania a prekladania (menšie riziko poškodenia).
-  Autá: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. (Značku 8-tonového auta web uvádza nejednotne, preto ju
-  asistent nemenuje.) Cenu dopravy na konkrétnu stavbu web všeobecne neuvádza: povie ju predajňa po telefóne.
+  Autá: Avia 3,5 t a nákladné auto 8 t s mechanickou rukou. (Značku 8-tonového auta asistent nemenuje; podrobnosti
+  o autách sú na stránke Doprava.) Cenu dopravy na konkrétnu stavbu web všeobecne neuvádza: povie ju predajňa po telefóne.
   Výnimky podľa akcií sú v časti Akcie.
 - Vykládka: pri niektorých akciách sa platí (krytina Blachotrapez 40 € s DPH, tehla TermoBRIK za poplatok). Vykládku
   zdarma ani miesto zloženia na stavbe asistent nesľubuje; podrobnosti povie predajňa.
