@@ -1,0 +1,56 @@
+/* Správa webu Barbershop 30: farby adminu, veľké polia a dotykové plochy (aspoň 44 px), bez skriptov. */
+@font-face{font-family:'Fraunces';font-weight:800;font-display:swap;src:url(../../assets/fonts/Fraunces-800.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;font-display:swap;src:url(../../assets/fonts/Manrope-400.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:700;font-display:swap;src:url(../../assets/fonts/Manrope-700.woff2) format('woff2')}
+:root{--bg:#0e0d0c;--panel:#171412;--field:#1d1916;--line:rgba(241,233,221,.12);--line-2:rgba(241,233,221,.3);--text:#f1e9dd;--muted:rgba(241,233,221,.72);--lamp:#e0601c;--lamp-2:#f07e3c;--bad:#ffb4a0;--ok:#9fd8a8;color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+a{color:var(--lamp-2);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.hore{border-bottom:1px solid var(--line)}
+.hore .in{max-width:760px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:12px;min-height:60px}
+.znacka{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:20px;white-space:nowrap}
+.znacka em{font-style:normal;font-family:'Manrope',sans-serif;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--lamp-2);margin-left:10px}
+.sp{flex:1}
+main{max-width:760px;margin:0 auto;padding:20px 16px 72px}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:clamp(26px,6vw,34px);line-height:1.15;margin:8px 0 14px}
+h2{font-size:19px;margin:30px 0 10px}
+.karta h2{margin-top:0}
+p{margin:0 0 12px}
+.lead{color:var(--muted)}
+.pozn{color:var(--muted);font-size:14.5px}
+.spat{margin:0 0 4px}
+.spat a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:700}
+.karta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 16px}
+.karta.dolezite{border-color:rgba(224,96,28,.7)}
+details.karta summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700}
+.f{margin:0 0 14px}
+.f label{display:block;font-weight:700;margin:0 0 6px}
+.f label small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+input[type=text],input[type=password],input[type=email],input[type=number],textarea{width:100%;min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid var(--line-2);background:var(--field);color:var(--text);font:inherit}
+textarea{min-height:88px;resize:vertical}
+.chk{display:flex;align-items:flex-start;gap:12px;min-height:44px;margin:0 0 14px;cursor:pointer}
+.chk input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--lamp)}
+.tl{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border-radius:999px;border:1px solid var(--line-2);background:none;color:var(--text);font:inherit;font-weight:700;text-decoration:none;cursor:pointer;text-align:center}
+.tl.hlavne{background:var(--lamp);border-color:var(--lamp);color:#140a04}
+.tl.tiche{color:var(--muted)}
+.tl.lnk,.lnk{white-space:nowrap;min-height:44px;padding:8px 10px;border:0;color:var(--lamp-2);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;background:none;font:inherit;font-weight:700;cursor:pointer}
+form.inline{display:inline-block;margin:0 8px 10px 0}
+.rad{display:flex;flex-wrap:wrap;gap:10px}
+.hlaska{border-radius:12px;padding:12px 14px;margin:0 0 16px;border:1px solid var(--line-2);background:var(--panel)}
+.hlaska.ok{border-color:rgba(159,216,168,.5)}
+.hlaska.chyba{border-color:rgba(255,180,160,.6);color:var(--bad)}
+.hlaska.var{border-color:rgba(240,126,60,.6)}
+ul.body{list-style:none;margin:0 0 16px;padding:0}
+ul.body li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+ul.body li p{margin:4px 0 0;color:var(--muted);font-size:15px}
+ul.body .znak{flex:none;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid var(--line-2)}
+ul.body li.ok .znak{color:var(--ok);border-color:rgba(159,216,168,.5)}
+ul.body li.chyba .znak{color:var(--bad);border-color:rgba(255,180,160,.6)}
+ul.body li.upozornenie .znak{color:var(--lamp-2);border-color:rgba(240,126,60,.6)}
+.stit{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,180,160,.6);color:var(--bad);vertical-align:middle}
+.stit.var{border-color:rgba(240,126,60,.6);color:var(--lamp-2)}
+.stit.ok{border-color:rgba(159,216,168,.5);color:var(--ok)}
+@media (max-width:430px){.hore .in{gap:4px}.znacka{font-size:18px}.znacka em{font-size:11px;margin-left:6px;letter-spacing:.08em}.hore form.inline{margin:0}}
+.hore form.inline{margin:0}

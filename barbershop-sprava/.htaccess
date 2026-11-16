@@ -1,0 +1,21 @@
+# Správa webu Barbershop 30 – Apache. Z webu sú dostupné len index.php, api.php, vzhlad/ a upravy/ (rozhranie úprav);
+# jadro, obrazovky, pôvodné súbory balíka (semeno) a nastavenie PHP nie. Len mod_rewrite a mod_headers: bez Options
+# a bez DirectoryIndex (pri obmedzenom AllowOverride by zhodili priečinok na chybu 500). RewriteEngine On zároveň
+# znamená, že pravidlá koreňového .htaccess (rezervačný systém) sa v tomto priečinku neuplatnia.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(jadro|obrazovky|semeno|testy)(/|$) - [F,L]
+  RewriteRule (^|/)\.(user\.ini|ht) - [F,L]
+  RewriteRule \.(sha256|sqlite|json|txt|md)$ - [F,L]
+  RewriteRule ^$ index.php [L,QSA]
+  RewriteRule ^upravy/?$ upravy/index.html [L]
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Robots-Tag "noindex, nofollow"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "same-origin"
+  <FilesMatch "\.(html|js|css)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
