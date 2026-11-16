@@ -29,7 +29,10 @@ d) Povedz správcovi rezervačného systému, že na hostingu pribudnú priečin
 3. NAHRATIE
 Nahraj celý obsah priečinka NAHRAT-NA-HOSTING do koreňa domény. Len pridávaj. Priečinok asistent/vendor má
 {KNIZNICA} malých súborov, cez FTP to trvá dlhšie. Ak správca súborov hostingu vie rozbaliť ZIP, nahraj ZIP
-a rozbaľ ho tam; je to rýchlejšie a nič sa nestratí.
+a rozbaľ ho tam; je to rýchlejšie a nič sa nestratí. Rozbalením vznikne priečinok NAHRAT-NA-HOSTING a tento návod:
+obsah priečinka presuň priamo do koreňa domény (k súboru index.php), nie priečinok samotný. Ak by hosting pri presune
+hlásil, že prepíše existujúci súbor, zastav sa a napíš nám. Nahratý ZIP, prázdny priečinok NAHRAT-NA-HOSTING
+a NAVOD.txt potom z hostingu odstráň; nič iné nemaž.
 
 4. PRVÉ OTVORENIE SPRÁVY
 Otvor https://www.barbershop30.sk/sprava/ (s https na začiatku a lomkou na konci). Ukáže sa kontrola hostingu.
