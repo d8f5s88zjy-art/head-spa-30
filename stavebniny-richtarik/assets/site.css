@@ -217,23 +217,24 @@ a.deal:hover .thumb{transform:rotate(3deg) translateY(0);opacity:1}
 
 /* katalóg: fotografické dlaždice */
 /* dlaždice: fotka hore, pod ňou svetlý popisný pás s tmavým názvom (bez tmavého prechodu cez fotku) */
-.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:248px;gap:12px}
+/* Dlaždice skupín tovaru (úvod aj Katalóg; build.py dlazdice): jednotná mriežka, hore celá štvorcová ilustrácia skupiny od
+   majiteľa (img/ilu, nič sa neorezáva), pod ňou názov a značky. 5 stĺpcov, do 1000 px 3, do 720 px 2; prvá dlaždica (.big)
+   je na telefóne naležato cez oba stĺpce s popisom. Podklad obrázka je svetlosivý ako pozadie ilustrácií – aj v tmavej téme. */
+.cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .cat{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);background:var(--povrch);overflow:hidden;border-radius:var(--radius);border:1px solid var(--line)}
-.cat.big{grid-column:span 2;grid-row:span 2}
-.cat.wide{grid-column:span 2}
-.cat .ph{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--concrete)}
+.cat .ph{position:relative;flex:none;aspect-ratio:1;overflow:hidden;background:#e2e2df}
 .cat .ph picture{display:block;width:100%;height:100%}
 .cat img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
 @media (hover:hover){.cat:hover img{transform:scale(1.04)}}
-.cat .tx{flex:none;padding:12px 16px 14px;display:grid;gap:3px;background:var(--povrch);border-top:1px solid var(--line)}
-.cat h3,.cat h2.h3{font-size:22px;line-height:1;text-transform:uppercase;font-weight:800;letter-spacing:.01em;color:var(--ink)}
-.cat.big h3,.cat.big h2.h3{font-size:clamp(28px,2.6vw,38px)}
+.cat .tx{flex:1 1 auto;align-content:start;padding:12px 16px 14px;display:grid;gap:3px;background:var(--povrch);border-top:1px solid var(--line)}
+.cat h3,.cat h2.h3{font-size:clamp(18px,1.75vw,22px);line-height:1;text-transform:uppercase;font-weight:800;letter-spacing:.01em;color:var(--ink)}
 .cat p{font-size:15px;color:var(--ink-2);line-height:1.4;max-width:52ch;display:none}
-.cat.big p{display:block}
 .cat .brands{font-size:13px;color:var(--ink-3);font-weight:600;letter-spacing:.02em;line-height:1.35}
 .cat .n{position:absolute;top:12px;left:12px;z-index:1;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--ink);background:rgba(var(--prgb),.92);padding:3px 7px;border-radius:3px}
-@media (max-width:1000px){.cats{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:228px}.cat.wide{grid-column:span 1}}
-@media (max-width:720px){.cats{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-auto-rows:196px;gap:8px}.cat.big{grid-column:span 2;grid-row:span 1}.cat.wide{grid-column:span 1}.cat h3,.cat.big h3,.cat h2.h3,.cat.big h2.h3{font-size:19px}.cat p{display:none!important}.cat .tx{padding:10px 12px 12px}.cat .brands{display:none}}
+@media (max-width:1000px){.cats{grid-template-columns:repeat(3,minmax(0,1fr))}.cat h3,.cat h2.h3{font-size:22px}}
+@media (max-width:720px){.cats{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.cat h3,.cat h2.h3{font-size:19px}.cat .tx{padding:10px 12px 12px}.cat .brands{display:none}
+  .cat.big{grid-column:span 2;flex-direction:row}.cat.big .ph{width:calc(50% - 4px)}.cat.big .tx{border-top:0;border-left:1px solid var(--line);align-content:center;gap:6px}
+  .cat.big p{display:block;font-size:14px;line-height:1.35}}
 
 /* katalóg: strany kategórií a obsah */
 .sort-note{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius)}
@@ -848,6 +849,36 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 @media (max-width:700px){.ilu{grid-template-columns:112px minmax(0,1fr);column-gap:16px;padding:18px}
   .ilu-tx{display:contents}.ilu .ilu-tx>.cta,.ilu .ilu-tx>.btn{grid-column:1/-1;justify-self:start}}
 @media (max-width:359px){.ilu{grid-template-columns:88px minmax(0,1fr);column-gap:12px;padding:16px 14px}}
+/* ---------- Ďalšie grafiky od majiteľa (16. 11. 2026; img/ilu a img/grafika, img/FOTKY.md). Obrázky s údajom (hodiny, zľava,
+   kontakt) vykresľuje šablóna len vtedy, keď údaje platia – bez obrázka musí rozloženie držať rovnako. ---------- */
+/* Služby: karta zliav pod zoznamom služieb (oblasť sluzby-zlavy); obrázok 4 : 3 ako ikony Kontaktu */
+.kat-cta.zl{margin-top:28px;max-width:848px}
+.ilu.zl{grid-template-columns:240px minmax(0,1fr)}
+.ilu.zl>picture{aspect-ratio:4/3}
+@media (max-width:700px){.ilu.zl{grid-template-columns:minmax(0,1fr)}.ilu.zl>picture{width:100%;max-width:240px}}   /* veta o zľave je dlhá: na telefóne obrázok nad ňou */
+/* Kontakt: obrázok hodín vpravo hore v karte Otváracie hodiny (oblasť hodiny-kontakt); tabuľka a oznamy cez celú šírku */
+.khod{grid-template-columns:minmax(0,1fr) auto;column-gap:12px}
+.khod>.hours,.khod>p{grid-column:1/-1}
+.khod-obr{display:block;width:120px;aspect-ratio:4/3;margin:-10px -8px -6px 0;border-radius:var(--radius);overflow:hidden}
+.khod-obr img{display:block;width:100%;height:100%}
+/* Doprava: auto z obrázka Rozvoz vedľa štyroch bodov (na telefóne pod nimi). Roh pod autom je vo výreze priehľadný,
+   preto má rámik farbu pozadia obrázka – aj v tmavej téme */
+.rozvoz{margin:0;border-radius:var(--radius);overflow:hidden;background:#e3e5e7}
+.rozvoz picture{display:block}
+.rozvoz img{display:block;width:100%;height:auto}
+@media (min-width:901px){.doprava-page.s-autom .srv-grid{display:grid;grid-template-columns:minmax(0,1fr) 452px;gap:clamp(28px,4vw,64px);align-items:center}
+  .doprava-page.s-autom .srvs{grid-template-columns:minmax(0,1fr)}
+  .doprava-page.s-autom .srv:nth-last-child(2):nth-child(odd){border-bottom:0}}
+@media (max-width:900px){.rozvoz{margin-top:22px;max-width:452px}}
+/* Leták (Letáky a bannery, .lb4) a Galéria (Logo a firemná grafika, .gg): rovnaké rámiky 4 : 3 s celým obrázkom,
+   po kliknutí veľký obrázok */
+.figs.lb4 .fig a,.figs.gg .fig a{position:relative;display:block;aspect-ratio:4/3;min-height:0;padding:0}
+.figs.lb4 .fig picture,.figs.gg .fig picture{position:absolute;inset:8px;display:block}
+.figs.lb4 .fig img,.figs.gg .fig img{display:block;width:100%;height:100%;max-height:none;object-fit:contain}
+.figs.n6{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.figs.gg .fig figcaption{font-size:13px;line-height:1.3}
+@media (max-width:1000px){.figs.n6{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:700px){.figs.n6{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.figs.gg .fig picture{inset:5px}.figs.gg .fig figcaption{font-size:12px}}
 /* Služby: výzva pred pätou s grafikou „Zdarma výpočet“ (len tam, page(cta_obr)) – od 641 px obrázok | nadpis, text, tlačidlá
    (obrázok 240–340 px, výzva je doplnok, nie druhý banner), pod 641 px obrázok nad textom najviac 360 px: 360 × DPR 3 = 1080 =
    najväčší súbor, takže sa nikde nezväčšuje (kontrola vzhľadu KV-1; sizes v build.py build_sluzby musia sedieť s týmito šírkami) */
@@ -1472,10 +1503,11 @@ h2,.page-head h1{display:flow-root}   /* záporné okraje drážky nepresiaknu c
 .head .lede,.head>.btn,.head>div>.btn,.band .wrap>p,.onas .tx>p,.kontakt-teaser .grid>div>.big-tel,.zlavy .grid>div:first-child>p,.cta-pas .wrap>div>p{--k:2}
 .band .wrap>.cta,.onas .tx>.btn,.kontakt-teaser .grid>div>.hours,.cta-pas .cta,.zlavy .grid>div:first-child>.disc{--k:3}
 .kontakt-teaser .grid>div>p,.kontakt-teaser .grid>div>.cta,.onas .tx>p+p{--k:4}
-.cats>:nth-child(4n+2),.cats>:nth-child(4n+3),.deals>:nth-child(3n+2),.kgrid>:nth-child(4n+2),.facts>:nth-child(4n+2),.disc>:nth-child(2),
+.deals>:nth-child(3n+2),.kgrid>:nth-child(4n+2),.facts>:nth-child(4n+2),.disc>:nth-child(2),
 .sub-grid>:nth-child(2n),.prods>:nth-child(2n),.cennik>:nth-child(2n),.brands-grid>:nth-child(2n){--k:1}
-.cats>:nth-child(4n),.deals>:nth-child(3n),.kgrid>:nth-child(4n+3),.facts>:nth-child(4n+3){--k:2}
+.deals>:nth-child(3n),.kgrid>:nth-child(4n+3),.facts>:nth-child(4n+3){--k:2}
 .kgrid>:nth-child(4n),.facts>:nth-child(4n){--k:3}
+.cats>:nth-child(5n+2){--k:1}.cats>:nth-child(5n+3){--k:2}.cats>:nth-child(5n+4){--k:3}.cats>:nth-child(5n){--k:4}
 .zas>:nth-child(2),.novs>:nth-child(2){--k:1}.zas>:nth-child(3),.novs>:nth-child(3){--k:2}.zas>:nth-child(4),.novs>:nth-child(4){--k:3}
 @media (max-width:700px){
   .cats>*,.deals>*,.kgrid>*,.sub-grid>*,.prods>*,.cennik>*,.brands-grid>*{--k:0}
@@ -1724,7 +1756,7 @@ html[data-tema="tmava"] .cta-pas p{color:var(--ink-2)}
 html[data-tema="tmava"] .cta-pas .btn.primary{background:var(--brick);border-color:var(--brick);color:#fff}
 html[data-tema="tmava"] .cta-pas .btn.primary:hover{background:var(--brick-hover);border-color:var(--brick-hover)}
 /* fotky v rámoch majú svetlú hranu, aby nesplývali s podkladom (žiadne tmavé „duchárstvo“); pás Doprava linky hore a dole */
-html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.auta a,.uv-ram,.ilu>picture,.kk>picture,.cta-pas.s-obr .wrap>picture){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.auta a,.uv-ram,.ilu>picture,.kk>picture,.cta-pas.s-obr .wrap>picture,.rozvoz,.khod-obr){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
 html[data-tema="tmava"] .ph-foto{box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px rgba(0,0,0,.45)}
 html[data-tema="tmava"] .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 /* biele ostrovy: tlačený obsah ostáva na bielej (logá značiek, malé fotky výrobkov z pôvodného webu, letáky, obrázky v rámoch) */

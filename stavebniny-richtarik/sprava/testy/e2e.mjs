@@ -124,6 +124,10 @@ try {
   t('prihlásenie heslom (bez zdvojeného pozdravu, pokusy po slovensky – D3)', (await s.locator('h1').innerText()) === 'Správa webu' && (await s.locator('main').innerText()).match(/Dobrý deň/g).length === 1
     && (await s.locator('.hlaska').first().innerText()).includes('bol 1 nesprávny pokus'));
 
+  // Máriove grafiky s údajom v obrázku: pred zmenami sú všetky na webe
+  const pocetFig = async c => ((await verejna(c)).text.match(/<figure class="fig"><a href="[^"]*img\/grafika\//g) || []).length;
+  t('grafiky: pred zmenami obrázok hodín, 4 letáky a bannery, 12 obrázkov albumu', (await verejna('kontakt.html')).text.includes('kontakt-hodiny-288') && (await pocetFig('letak.html')) === 4 && (await pocetFig('galeria/index.html')) === 12 && (await verejna('galeria/index.html')).text.includes('12 obrázkov'));
+
   // ---------- 3. otváracie hodiny ----------
   await tuk('a.dlazdica:has-text("Otváracie hodiny")');
   await s.locator('input[name="den[6][do]"]').fill('11:00');
@@ -136,6 +140,14 @@ try {
   }
   t('hodiny v údajoch pre Google', (await verejna('kontakt.html')).text.includes('"dayOfWeek": "Saturday", "opens": "07:00", "closes": "11:00"'));
   t('hodiny v hľadaní', (await verejna('assets/index.json')).text.includes('sobota 7:00 – 11:00'));
+  // obrázky s pôvodnými hodinami (ikona na Kontakte, leták Prečo nakupovať, tabuľa s otváracou dobou) po zmene hodín zmiznú, text ostane
+  const kh = (await verejna('kontakt.html')).text;
+  t('grafiky: zmena hodín skryje obrázok hodín na Kontakte, tabuľka ostane', !kh.includes('kontakt-hodiny') && !kh.includes('khod-obr') && /<!--s:hodiny-kontakt--><table class="hours">/.test(kh));
+  t('grafiky: zmena hodín skryje leták Prečo nakupovať a tabuľu s otváracou dobou', !(await verejna('letak.html')).text.includes('letak-preco-nakupovat') && (await pocetFig('letak.html')) === 3
+    && !(await verejna('galeria/index.html')).text.includes('tabula-vysoka') && (await verejna('galeria/index.html')).text.includes('11 obrázkov'));
+  await s.goto(URL + 'kontakt.html'); await s.locator('.khod').scrollIntoViewIfNeeded();
+  t('grafiky: karta Otváracie hodiny bez obrázka sa zobrazí', (await s.locator('.khod .hours').isVisible()) && (await s.locator('.khod picture').count()) === 0);
+  await s.goto(URL + 'sprava/');
   await bezKoduSpravy(['index.html', 'kontakt.html', 'caste-otazky.html']);
 
   // ---------- 4. nová akcia s fotkou a cenou (časovaný test na telefóne) ----------
@@ -283,6 +295,9 @@ try {
   await s.goto(URL + 'sprava/');
   await tuk('a.dlazdica:has-text("Fotky v galérii")');
   await obrazovka('galeria');
+  const gt = nb(await s.locator('main').innerText());
+  t('galéria v správe: albumy grafiky a poznámka pri obrázku so starými hodinami', gt.includes('Letáky a bannery') && gt.includes('Logo a firemná grafika') && gt.includes('nie je na webe')
+    && (await s.locator('li.skryta:has-text("Leták Prečo nakupovať")').count()) === 1 && (await s.locator('li.skryta:has-text("Firemná tabuľa s adresou")').count()) === 1);
   const fg = s.locator('form.nova-fotka').first();
   await fg.locator('input[name=foto]').setInputFiles(`${VST}/letak.jpg`); tuknutia++;
   await s.waitForSelector('text=Fotka je pripravená', { timeout: 20000 }).catch(() => {});
@@ -322,6 +337,8 @@ try {
   // karty Kontaktu: grafika „Zavolajte nám“ má staré číslo v obrázku, preto zmizne; karta ostane s novým číslom
   const kk = (await verejna('kontakt.html')).text;
   t('kontakt: zmena mobilu skryje obrázok Zavolajte nám, karta ostane', !kk.includes('kontakt-zavolajte') && kk.includes('kontakt-napiste-480') && /<h2 class="kk-n">Zavolajte nám<\/h2><a class="big kk-hl" href="tel:\+421905111222">/.test(kk));
+  t('grafiky: zmena mobilu skryje aj vizitku, kartu a leták so sortimentom', (await pocetFig('galeria/index.html')) === 9 && (await verejna('galeria/index.html')).text.includes('9 obrázkov')
+    && !(await verejna('galeria/index.html')).text.includes('vizitka') && !(await verejna('letak.html')).text.includes('letak-stavebniny-richtarik') && (await pocetFig('letak.html')) === 2);
   await s.goto(URL + 'kontakt.html'); await s.locator('.kk2').scrollIntoViewIfNeeded();
   t('kontakt: karta bez obrázka sa zobrazí', (await s.locator('.kk.bez-obr .big').first().isVisible()) && (await s.locator('.kk.bez-obr picture').count()) === 0);
   await s.goto(URL + 'sprava/');
@@ -332,6 +349,7 @@ try {
   await zverejni('kontakt-vratenie');
   t('kontakt: po vrátení pôvodný mobil', nb((await verejna('kontakt.html')).text).includes('0905 622 223') && !nb((await verejna('index.html')).text).includes('0905 111 222'));
   t('kontakt: po vrátení je obrázok Zavolajte nám späť', (await verejna('kontakt.html')).text.includes('kontakt-zavolajte-480'));
+  t('grafiky: po vrátení mobilu sú vizitka, karta a leták so sortimentom späť', (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
 
   // ---------- 9. ostatné obrazovky ----------
   for (const [odkaz, meno] of [['Nastavenia', 'nastavenia'], ['Pomoc', 'pomoc']]) {

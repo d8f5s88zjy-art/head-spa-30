@@ -109,12 +109,23 @@ def oblasti_varianty(D):
                    ('uvod-novinky', 'index.html'), ('novinky-kat', 'katalog/dlazby.html'), ('hlavicka', 'novinky/nova-novinka.html'), ('meta', 'novinky/nova-novinka.html'),
                    ('ld-omrvinky', 'novinky/nova-novinka.html'), ('novinka-doplnok', 'novinky/nova-novinka.html'), ('hlavicka', skryta), ('meta', skryta),
                    ('galeria-predajna', 'galeria/index.html'), ('galeria-dvor', 'galeria/index.html'), ('sluzby-polozky', 'sluzby.html'),
-                   ('doprava-polozky', 'doprava.html'), ('onas-text', 'o-nas.html'), ('uvod-lede', 'index.html'), ('sluzby-lede', 'sluzby.html')]:
+                   ('doprava-polozky', 'doprava.html'), ('onas-text', 'o-nas.html'), ('uvod-lede', 'index.html'), ('sluzby-lede', 'sluzby.html'),
+                   # Máriove grafiky s údajom v obrázku: zmenený mobil skryje tabuľu s kontaktom, vizitku, kartu a leták so sortimentom
+                   ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html'), ('sluzby-zlavy', 'sluzby.html')]:
         von.append([oid, c, V.vykresli(oid, c, X)])
     # karty Kontaktu: zmenený mobil (obrázok Zavolajte nám zmizne) a zvlášť zmenený e-mail (zmizne obrázok Napíšte nám)
     von.append(['kontakt-karty', 'kontakt.html', V.vykresli('kontakt-karty', 'kontakt.html', X)])
     E = copy.deepcopy(dict(D, k=K)); E.pop('verzia', None); E['firma']['email'] = 'predajna@stavebniny.example'
     von.append(['kontakt-karty', 'kontakt.html', V.vykresli('kontakt-karty', 'kontakt.html', E), E])
+    # zmenené hodiny: obrázok hodín na Kontakte, leták „Prečo nakupovať“ a tabuľa s otváracou dobou zmiznú
+    H = copy.deepcopy(dict(D, k=K)); H.pop('verzia', None); H['firma']['hodiny'][-1]['do'] = '11:30'
+    for oid, c in [('hodiny-kontakt', 'kontakt.html'), ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html')]:
+        von.append([oid, c, V.vykresli(oid, c, H), H])
+    # zmenená zľava (bez 3,3 %): karta zliav na Službách bez obrázka; skryté všetky letáky: časť Letáky a bannery zmizne celá
+    Z = copy.deepcopy(dict(D, k=K)); Z.pop('verzia', None); Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3 % pri platbe kartou (cenník {datum}).'
+    for f in next(a for a in Z['galeria']['albumy'] if a['id'] == 'letaky')['fotky']: f['viditelna'] = False
+    for oid, c in [('sluzby-zlavy', 'sluzby.html'), ('galeria-letaky', 'letak.html')]:
+        von.append([oid, c, V.vykresli(oid, c, Z), Z])
     return [von, X]
 
 

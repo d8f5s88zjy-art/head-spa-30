@@ -959,52 +959,37 @@ def write(path, content):
 
 
 # ---------- jednotlivé typy stránok ----------
-# Dlaždice kategórií (úvod aj Katalóg): fotka hore, svetlý popisný pás pod ňou (bez tmavého prechodu). Rozloženie „bento“:
-# prvá veľká (2×2), šiesta a jedenásta široké (2×1) – 15 dlaždíc vyplní 4 stĺpce bez diery. Murovací materiál, rezivo
-# a dlažby majú skutočné fotky z dvora (img/uvod, AVIF + WebP), ostatné ilustračnú fotku kategórie (900 px, veľká a široká
-# dlaždica 1200 px z img/hd, aby bola ostrá aj na počítači s DPR 2).
-DLAZDICA_UVOD = {'murovaci-material': 'zasoba-tehly', 'stavebne-rezivo': 'zasoba-rezivo', 'dlazby': 'zasoba-stadreko'}
-# fotky od majiteľa (img/predajna) na dlaždiciach kategórií, kde ukazujú ten istý tovar; ostatné kategórie čakajú na fotky
-# výrobcov s povolením (majitel/dodavatelia/ZAPIS.md), dovtedy ilustračná fotka img/hd
-# sadrokartón má od 13. 11. 2026 vlastnú fotku montáže (img/hd/sadrokarton-montaz), nie regál s profilmi z Hutného materiálu
-DLAZDICA_PREDAJNA = {'sypke-zmesy': '03-baumit-sklad', 'hutny-material': '06-regal-profily',
-                     'fasadny-system': '07-univer-bau-sklad', 'stavebne-naradie-doplnky': '12-predajna-regaly'}
+# Ilustrácie skupín tovaru od majiteľa (Mário, e-maily zo 16. 11. 2026; img/FOTKY.md): jedna séria (sivá postavička pri práci
+# na podstavci s nápisom skupiny). Lajko 16. 11. 2026: ilustrácia skupiny je všade, kde sa skupina ukazuje s obrázkom –
+# v dlaždiciach skupín na úvode a v Katalógu (dlazdice) a vo výzve „Potrebujete cenu…“ (.kat-cta) na stránke kategórie
+# (nie na podstránkach značiek); po rozkliknutí skupiny ostávajú skutočné fotky (hlavička KAT[..][4] a HLAVICKA_FOTO, fotky
+# tovaru). 15. kus Poradenstvo je vo výzve „Nenašli ste…“ v Katalógu. Dlažby a ploty majú zatiaľ Máriov obrázok dlažby
+# iného štýlu (súbory dlazby-*), kým nepošle ilustráciu v štýle série – výmena 1 : 1 pod tým istým menom. Súbory
+# img/ilu/<názov>-200|400|480.avif|webp vyrobí nastroje/grafika_maria.sh, opis (alt) je v texty.OBR_ALT ('ilu:<názov>').
+KAT_ILUSTRACIA = {'sypke-zmesy': 'sypke-zmesi', 'murovaci-material': 'murovaci-material', 'stresne-kritiny': 'stresne-krytiny',
+                  'dlazby': 'dlazby', 'izolacny-material': 'izolacny-material', 'kominove-systemy': 'kominovy-system',
+                  'stresne-okna': 'stresne-okna', 'hutny-material': 'hutny-material', 'dvere---okna': 'okna-dvere',
+                  'stavebne-rezivo': 'rezivo', 'stavebne-naradie-doplnky': 'stavebne-naradie', 'podhlady---pvc': 'podhlady',
+                  'sadrokartonovy---zateplovaci-system': 'sadrokarton', 'fasadny-system': 'fasadny-system', 'farby---laky': 'farby-laky'}
+# šírka obrázka dlaždice (site.css .cats): 2 stĺpce do 720 px, 3 do 1000 px, potom 5 stĺpcov (najviac 228 px)
+DLAZDICA_SIZES = '(max-width:720px) calc(50vw - 20px), (max-width:1000px) 31vw, 228px'
 
 
 def dlazdice(path, cisla=False):
-    """Dlaždice kategórií (úvod ručne aj Katalóg). Skutočné fotky z areálu predajne sú v <picture>: AVIF 720 (src aj prvý zdroj),
-    WebP 720 pre prehliadač bez AVIF; ostatné kategórie majú ilustračnú fotku (img/hd, 1200 px pri veľkej a širokej)."""
+    """Dlaždice skupín tovaru (úvod ručne aj Katalóg): jednotná mriežka, hore celá štvorcová ilustrácia skupiny (nič sa
+    neorezáva), pod ňou názov a značky. Prvá dlaždica (.big) je na telefóne naležato cez oba stĺpce, aby 15 dlaždíc vyšlo
+    bez osamotenej poslednej. Obrázky AVIF + WebP 200/400/480 px (viac detailu snímky nenesú), lenivo, alt prázdny
+    (názov skupiny je v nadpise dlaždice)."""
     pre = prefix(path); out = ''
     for n, k in enumerate(KATEGORIE):
-        cls = ' big' if n == 0 else (' wide' if n in (5, 10) else '')
-        if k[0] in DLAZDICA_PREDAJNA:
-            img = predajna_picture(pre, DLAZDICA_PREDAJNA[k[0]], '(max-width:720px) 50vw, (max-width:1100px) 33vw, 300px' if not cls else '(max-width:720px) 100vw, (max-width:1100px) 66vw, 620px', alt='', max_sirka=960 if cls else 720)
-        elif k[0] in DLAZDICA_UVOD:
-            m = DLAZDICA_UVOD[k[0]]; _, (w, h), pos = UVOD_FOTO[m]
-            img = (f'<picture><source type="image/avif" srcset="{pre}img/uvod/{m}-720.avif"><source type="image/webp" srcset="{pre}img/uvod/{m}-720.webp">'
-                   f'<img src="{pre}img/uvod/{m}-720.avif" alt="" loading="lazy" decoding="async" width="720" height="{round(720 * h / w)}" style="object-position:{pos}"></picture>')
-        else:
-            hd = f'img/hd/{k[4]}-1200.webp'
-            if cls and os.path.exists(os.path.join(ROOT, hd)):
-                w, h = webp_rozmer(os.path.join(ROOT, hd))
-                img = f'<img src="{pre}{hd}" alt="" loading="lazy" decoding="async" width="{w}" height="{h}">'
-            else:
-                img = f'<img src="{pre}img/{k[4]}.webp" alt="" loading="lazy" decoding="async" width="900" height="600">'
+        m = KAT_ILUSTRACIA[k[0]]
+        sady = {x: ', '.join(f'{pre}img/ilu/{m}-{w}.{x} {w}w' for w in (200, 400, 480)) for x in ('avif', 'webp')}
+        img = (f'<picture><source type="image/avif" srcset="{sady["avif"]}" sizes="{DLAZDICA_SIZES}">'
+               f'<img src="{pre}img/ilu/{m}-400.webp" srcset="{sady["webp"]}" sizes="{DLAZDICA_SIZES}" width="480" height="480" '
+               f'alt="" loading="lazy" decoding="async"></picture>')
         num = f'<span class="n">{n + 1:02d}</span>' if cisla else ''
-        out += f'<a class="cat{cls}" href="{rel(path, "katalog/" + nice_slug(k[0]) + ".html")}"><div class="ph">{img}</div>{num}<div class="tx"><h3>{k[1]}</h3><p>{k[2]}</p><span class="brands">{k[3]}</span></div></a>'
+        out += f'<a class="cat{" big" if n == 0 else ""}" href="{rel(path, "katalog/" + nice_slug(k[0]) + ".html")}"><div class="ph">{img}</div>{num}<div class="tx"><h3>{k[1]}</h3><p>{k[2]}</p><span class="brands">{k[3]}</span></div></a>'
     return out
-
-
-# Ilustrácie skupín tovaru od majiteľa (Mário, e-mail „nova zakaznicka karta“ 16. 11. 2026; img/FOTKY.md): jedna séria
-# ako jeden prvok na jednom mieste – vo výzve „Potrebujete cenu…“ (.kat-cta) na stránke kategórie (nie na podstránkach
-# značiek, aby sa ilustrácia neopakovala) a 14. kus Poradenstvo vo výzve „Nenašli ste…“ v Katalógu. Dlažby a ploty
-# a Podhľady a PVC ilustráciu v sérii nemajú, výzva je tam bez obrázka. Súbory img/ilu/<názov>-200|400.avif|webp vyrobí
-# nastroje/grafika_maria.sh, opis (alt) je v texty.OBR_ALT ('ilu:<názov>'). Žiadna ilustrácia nie je na úvode ani v galérii.
-KAT_ILUSTRACIA = {'sypke-zmesy': 'sypke-zmesi', 'murovaci-material': 'murovaci-material', 'stresne-kritiny': 'stresne-krytiny',
-                  'izolacny-material': 'izolacny-material', 'kominove-systemy': 'kominovy-system', 'stresne-okna': 'stresne-okna',
-                  'hutny-material': 'hutny-material', 'dvere---okna': 'okna-dvere', 'stavebne-rezivo': 'rezivo',
-                  'stavebne-naradie-doplnky': 'stavebne-naradie', 'sadrokartonovy---zateplovaci-system': 'sadrokarton',
-                  'fasadny-system': 'fasadny-system', 'farby---laky': 'farby-laky'}
 
 
 def ilustracia(path, meno):
@@ -1181,6 +1166,9 @@ GALERIA_ALBUMY = [  # (slug zdroja, názov albumu v nadpise a v popisku fotky)
 
 # Prvé sekcie galérie (fotky od majiteľa z img/predajna a fotky areálu z img/uvod) sú v data/galeria.json: správa webu
 # v nich fotky pridáva, nahrádza a skrýva (oblasti galeria-predajna a galeria-dvor). Prenesené nástrojom export_obsah.py.
+# Tretí album „Logo a firemná grafika“ (oblasť galeria-grafika) a album „Letáky a bannery“ na stránke Leták (oblasť
+# galeria-letaky) sú Máriove grafiky zo 16. 11. 2026 (img/grafika, nastroje/export_grafika.py): náhľady v rámikoch, po kliknutí
+# veľký obrázok; položky s údajom v obrázku majú plati_pri (GRAFIKA_UDAJE) a správa ich vie skryť, nahradiť a popísať.
 
 
 def build_galeria():
@@ -1202,6 +1190,7 @@ def build_galeria():
     body = f'''<section class="sec"><div class="wrap">
 {oblast('galeria-predajna', V.vykresli('galeria-predajna', path, VD))}
 {oblast('galeria-dvor', V.vykresli('galeria-dvor', path, VD))}
+{oblast('galeria-grafika', V.vykresli('galeria-grafika', path, VD))}
 {secs}
 </div></section>'''
     write(path, page(path, 'Galéria', body, [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z predajne, skladu a výstav', 'Naša predajňa a sklad v Horných Krškanoch a naše stánky na výstavách Domexpo, Agrokomplex a Gardenia v Nitre.'), head_img='predajna:02-tvarnice-obloha'))
@@ -1238,6 +1227,7 @@ def build_sluzby():
     fotky = ''.join(f'<a href="{rel(p, "img/p/" + i + ".webp")}" data-lb="1" data-cap="{alt[i]}"><img src="{rel(p, "img/p/" + i + ".webp")}" alt="{alt[i]}" loading="lazy" decoding="async" width="{IMG_SIZES[i][0]}" height="{IMG_SIZES[i][1]}"></a>' for i in SLUZBY_FOTKY)
     body = f'''<section class="sec sluzby-page"><div class="wrap">
 <div class="srv-grid"><div class="srvs">{oblast('sluzby-polozky', V.vykresli('sluzby-polozky', p, VD))}</div></div>
+{oblast('sluzby-zlavy', V.vykresli('sluzby-zlavy', p, VD))}
 <h2 class="sh rv"><span>Vlastná doprava</span><small><a href="{rel(p, 'doprava.html')}">Doprava a podmienky</a></small></h2>
 <div class="txt rv"><p>{veta}. Podmienky dopravy pri jednotlivých akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava</a>, ďalšie odpovede na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
 <div class="auta rv">{fotky}</div>
@@ -1288,6 +1278,7 @@ def build_letak():
 <h2 class="sh rv"><span>Staršie letáky</span></h2>
 <div class="pdfs rv">{pdf('pdf/386.pdf', 'Akciový leták 1 (PDF, 27. 4. 2012)')}{pdf('pdf/385.pdf', 'Akciový leták 2 (PDF, 10. 4. 2012)')}{pdf('pdf/197.pdf', 'Leták Stavebniny Richtárik (PDF, 30. 11. 2009)')}</div>
 <div class="figs rv n2">{fig('886', 'Akciový leták 1')}{fig('887', 'Akciový leták 2')}</div>
+{oblast('galeria-letaky', V.vykresli('galeria-letaky', p, VD))}
 <h2 class="sh rv"><span>Reklama</span></h2>
 <div class="figs rv n2">{fig('360', 'Reklama Spravodaj Nitra 2010')}{fig('361', 'Reklamná tabuľa na plote')}</div>
 </div>
@@ -1320,6 +1311,16 @@ def build_404():
 # zmena kontaktu v správe ani nastroje/kontakt.py nenahradí): keď ich majiteľ v správe zmení, obrázok z karty
 # zmizne a karta ostane so správnym textom. Nová grafika s novým číslom = nové súbory a nové hodnoty tu.
 KONTAKT_OBR = {'zavolajte': {'mobil': '0905622223', 'pevna': '0376511777'}, 'napiste': {'email': ['info', 'stavebninyrichtarik.sk']}}
+# Ostatné Máriove grafiky s údajom v obrázku (16. 11. 2026): hodiny v karte Otváracie hodiny na Kontakte, karta zliav na
+# Službách a položky albumov grafiky (data/galeria.json, pole plati_pri: tabuľa s kontaktom, vizitka, zákaznícka karta,
+# dva letáky). Obrázok nesmie klamať: ukáže sa len vtedy, keď údaje v data/firma.json a data/cennik.json sú tie, ktoré
+# má v sebe (nastroje/vykreslenie.py udaje_platia, to isté v PHP); inak zmizne a text stránky ostane. Hodnoty sú prepísané
+# z obrázkov: hodiny „Po – Pi 7:00 – 16:00, So 7:00 – 12:00“, mobil, pevná linka a e-mail (tie isté ako v KONTAKT_OBR),
+# ulica, PSČ, meno majiteľa a zľava „hotovosť 5 % | karta 3,3 %“. Telefónne čísla sú len ako číslice bez medzier a e-mail
+# rozdelený pri @ (v komentároch ich nepíšeme): zmena kontaktu v správe ani nastroje/kontakt.py ich tak nenahradí.
+GRAFIKA_UDAJE = {'hodiny': [[[1, 2, 3, 4, 5], '7:00', '16:00'], [[6], '7:00', '12:00']], 'mobil': '0905622223', 'pevna': '0376511777',
+                 'email': ['info', 'stavebninyrichtarik.sk'], 'ulica': 'Novozámocká 62/68', 'psc': '949 05',
+                 'majitel': 'Ing. Mário Richtárik - Stavebniny', 'zlava': ['5 %', '3,3 %']}
 
 
 def build_kontakt():
@@ -1375,9 +1376,17 @@ def build_doprava():
             nazov = f'<a href="{rel(p, u)}">{html.escape(n)}</a>' if u else html.escape(n)
             out += f'<li><strong>{nazov}:</strong> {html.escape(t)}</li>'
         return out
-    body = f'''<section class="sec doprava-page"><div class="wrap">
+    # Máriova grafika „Rozvoz stavebného materiálu“ (IMG_0312): len auto, výrez bez nápisu – jeho druhý riadok má nosnosť
+    # „AVIA 3t“, majiteľ a web hovoria 3,5 t (Lajko 16. 11. 2026); výrez robí nastroje/grafika_maria.sh (img/ilu/rozvoz-*).
+    # Na počítači vpravo od štyroch bodov, na telefóne pod nimi; lenivo, nikdy nie LCP.
+    sady = {x: ', '.join(f'img/ilu/rozvoz-{w}.{x} {w}w' for w in (452, 905)) for x in ('avif', 'webp')}
+    s = '(max-width:488px) calc(100vw - 36px), 452px'
+    auto = (f'<figure class="rozvoz rv"><picture><source type="image/avif" srcset="{sady["avif"]}" sizes="{s}"><img src="img/ilu/rozvoz-905.webp" '
+            f'srcset="{sady["webp"]}" sizes="{s}" width="905" height="598" alt="{html.escape(texty.OBR_ALT["ilu:rozvoz"])}" '
+            f'loading="lazy" decoding="async"></picture></figure>')
+    body = f'''<section class="sec doprava-page s-autom"><div class="wrap">
 <div class="srv-grid"><div class="srvs">
-{oblast('doprava-polozky', V.vykresli('doprava-polozky', p, VD))}</div></div>
+{oblast('doprava-polozky', V.vykresli('doprava-polozky', p, VD))}</div>{auto}</div>
 <h2 class="sh rv"><span>Doprava pri akciách</span>{oblast('doprava-cennik-odkaz', V.vykresli('doprava-cennik-odkaz', p, VD))}</h2>
 <div class="txt rv">{oblast('doprava-cennik-veta', V.vykresli('doprava-cennik-veta', p, VD))}<ul class="ticks">{li(cennik)}</ul>
 <p>Pri ďalších akciách zo stránky <a href="{rel(p, 'akcie/index.html')}">Akcie</a> (bez dátumu, platnosť potvrdí predajňa):</p><ul class="ticks">{li(stare)}</ul></div>
@@ -1603,7 +1612,7 @@ def konstanty():
     for s, c in PAGES.items():
         sl = s.split('__')
         if sl[0] == 'katalog-roduktov' and len(sl) > 1: hladanie[c] = {'k': KAT[sl[1]][1], 'ponuka': PONUKA_UVOD.get(sl[1], '') if len(sl) == 2 else ''}
-    return {'domena': DOMENA, 'og_img': OG_IMG[0], 'farba': FARBA, 'pripona': texty.PRIPONA, 'hladanie': hladanie, 'kontakt_obr': KONTAKT_OBR,
+    return {'domena': DOMENA, 'og_img': OG_IMG[0], 'farba': FARBA, 'pripona': texty.PRIPONA, 'hladanie': hladanie, 'kontakt_obr': KONTAKT_OBR, 'grafika_udaje': GRAFIKA_UDAJE,
             'stranky': {p: texty.STRANKY[p]['t'] for p in sorted(META_OBLAST)}, 'nazvy': nazvy, 'hlavicky': hlavicky,
             'kat_hlavicka': kat_hlavicka, 'predvolena_hlavicka': HLAVICKA_FOTO['akcie/index.html']}
 

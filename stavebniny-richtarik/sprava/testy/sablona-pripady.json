@@ -10,5 +10,8 @@
  ["{{chyba}}|{{ medzery }}|{{#a}}{{#b}}{{c}}{{/b}}{{/a}}", {"medzery": "ok", "a": {"b": [{"c": 1}, {"c": 2}]}}],
  ["Text z dát sa nevyhodnocuje: {{x}} {{{x}}}", {"x": "{{y}} <!--/s:meta--> {{{z}}}"}],
  ["{{cislo}} {{desatinne}} {{nepravda}}", {"cislo": 42, "desatinne": "3,5", "nepravda": false}],
- ["{{#obj}}A{{/obj}}{{^obj}}B{{/obj}}", {"obj": {}}]
+ ["{{#obj}}A{{/obj}}{{^obj}}B{{/obj}}", {"obj": {}}],
+ ["{{#blok}}{{#album}}<div>{{/album}}{{nadpis}}{{#pocet}}<small>{{pocet}}</small>{{/pocet}}{{#fotky}}[{{popis}}{{#avif}}|{{avif}}{{/avif}}]{{/fotky}}{{#album}}</div>{{/album}}{{/blok}}", {"blok": {"album": true, "nadpis": "Grafika", "pocet": "2 obrázky", "fotky": [{"popis": "a", "avif": "x.avif 480w"}, {"popis": "b", "avif": ""}]}}],
+ ["{{#blok}}{{#album}}<div>{{/album}}{{nadpis}}{{#pocet}}<small>{{pocet}}</small>{{/pocet}}{{/blok}}|{{^blok}}nič{{/blok}}|{{#obr}}<picture>{{/obr}}<table>", {"blok": {"album": false, "nadpis": "Letáky", "pocet": ""}, "obr": false}],
+ ["{{#blok}}x{{/blok}}{{^blok}}prázdny album{{/blok}}", {"blok": null}]
 ]

@@ -448,10 +448,13 @@ OBR_ALT = {
     'ilu:okna-dvere': 'Ilustrácia: montáž okna a dverí, nápis Okná – dvere',
     'ilu:rezivo': 'Ilustrácia: robotník reže dosky pílkou, nápis Rezivo',
     'ilu:stavebne-naradie': 'Ilustrácia: robotník so stavebným náradím, nápis Stavebné náradie',
+    'ilu:podhlady': 'Ilustrácia: robotník montuje kazetový podhľad, nápis Podhľady',
+    'ilu:dlazby': 'Ilustrácia: dlaždič kladie betónovú dlažbu gumenou paličkou, nápis Predaj dlažby',
     'ilu:sadrokarton': 'Ilustrácia: montáž sadrokartónu na profily, nápis Sadrokartón',
     'ilu:fasadny-system': 'Ilustrácia: robotník lepí izolačné dosky na fasádu, nápis Fasádny systém',
     'ilu:farby-laky': 'Ilustrácia: maliar natiera stenu, nápis Farby – laky',
     'ilu:poradenstvo': 'Ilustrácia: predavač radí zákazníkovi nad plánom, nápis Poradenstvo v stavebninách',
+    'ilu:rozvoz': 'Ilustrácia: nákladné auto Iveco s hydraulickou rukou vezie palety tehál, reziva a cementu',
     'ilu:zdarma-vypocet': 'Ilustrácia: kalkulačka nad plánom stavby, palety tehál a dreva a vrecia cementu, nápis Zdarma výpočet spotreby stavebného materiálu',
 }
 

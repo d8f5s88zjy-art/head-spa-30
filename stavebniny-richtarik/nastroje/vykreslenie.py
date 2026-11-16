@@ -306,10 +306,30 @@ def fotografie(n):
     return f'{n} fotografia' if n == 1 else (f'{n} fotografie' if 2 <= n <= 4 else f'{n} fotografií')
 
 
+def obrazky(n):
+    return f'{n} obrázok' if n == 1 else (f'{n} obrázky' if 2 <= n <= 4 else f'{n} obrázkov')
+
+
+def fotka_na_webe(D, f):
+    """Položka albumu je na webe, keď je viditeľná a údaje, ktoré má v obrázku (plati_pri), platia (udaje_platia)."""
+    return bool(f.get('viditelna', True)) and udaje_platia(D, f.get('plati_pri') or [])
+
+
 def galeria_vm(D, album, cesta):
     a = next(x for x in D['galeria']['albumy'] if x['id'] == album)
-    fotky = [fotka_vm(f, cesta) for f in a['fotky'] if f.get('viditelna', True)]
+    fotky = [fotka_vm(f, cesta) for f in a['fotky'] if fotka_na_webe(D, f)]
     return {'nadpis': txt(a['nadpis']), 'pocet': fotografie(len(fotky)), 'fotky': fotky}
+
+
+def grafika_vm(D, album, cesta):
+    """Albumy Máriových grafík (data/galeria.json: letaky na stránke Leták, grafika v Galérii): náhľady v rámikoch s celým
+    obrázkom, po kliknutí veľký obrázok. Bez položiek na webe sa nevykreslí nič (ani nadpis)."""
+    a = next(x for x in D['galeria']['albumy'] if x['id'] == album)
+    fotky = [fotka_vm(f, cesta) for f in a['fotky'] if fotka_na_webe(D, f)]
+    if not fotky: return {'blok': None}
+    v_galerii = album == 'grafika'
+    return {'blok': {'nadpis': txt(a['nadpis']), 'album': v_galerii, 'pocet': obrazky(len(fotky)) if v_galerii else '',
+                     'trieda': 'n6 gg' if v_galerii else 'n4 lb4', 'fotky': fotky}}
 
 
 # ---------- texty stránok ----------
@@ -326,6 +346,27 @@ def polozky_vm(D, zoznam):
 # ---------- Kontakt: karty Zavolajte nám a Napíšte nám ----------
 def cislice(s):
     return re.sub(r'\D', '', s or '')
+
+
+def udaje_platia(D, kluce):
+    """Máriove grafiky s údajom v obrázku (hodiny, telefón, e-mail, adresa, zľava) sa ukazujú len dovtedy, kým údaje
+    v data/*.json sú tie, ktoré obrázok ukazuje (konštanty grafika_udaje z build.py; čísla bez medzier a e-mail rozdelený
+    pri @, aby ich zmena kontaktu v správe nenahradila). Vráti True, keď platia všetky vymenované údaje (kľúče hodiny,
+    mobil, pevna, email, ulica, psc, majitel, zlava); prázdny zoznam platí vždy. Oznamy k hodinám (vynimky) obrázok
+    neskrývajú: ukazuje bežné hodiny a oznam je text hneď pri ňom."""
+    f, o = D['firma'], D['k']['grafika_udaje']
+    for k in kluce:
+        if k == 'hodiny': ok = [[x['dni'], cas(x['od']), cas(x['do'])] for x in f['hodiny']] == o['hodiny']
+        elif k in ('mobil', 'pevna'): ok = cislice(f[k]) == o[k]
+        elif k == 'email': ok = f['email'].lower() == '@'.join(o['email'])
+        elif k in ('ulica', 'majitel'): ok = f[k].lower() == o[k].lower()
+        elif k == 'psc': ok = o['psc'] in f['mesto']
+        elif k == 'zlava':
+            t = D['cennik']['zlava'].replace('\u00a0', ' ')
+            ok = all(re.search(r'(?<![0-9,])' + re.escape(x), t) for x in o['zlava'])
+        else: ok = False
+        if not ok: return False
+    return True
 
 
 def kontakt_karty_vm(D):
@@ -388,7 +429,7 @@ def asistent_js(D, js):
 def vykresli(oid, cesta, D):
     """Obsah oblasti oid v súbore cesta (relatívna cesta od koreňa webu)."""
     if oid == 'hodiny-pata': return sablona('hodiny-pata', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
-    if oid == 'hodiny-kontakt': return sablona('hodiny-kontakt', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
+    if oid == 'hodiny-kontakt': return sablona('hodiny-kontakt', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D), 'obr': udaje_platia(D, ['hodiny'])})
     if oid == 'kontakt-karty': return sablona('kontakt-karty', kontakt_karty_vm(D))
     if oid == 'hodiny-uvod-info': return sablona('hodiny-uvod-info', {'riadky': hodiny_riadky(D)})
     if oid == 'hodiny-uvod': return sablona('hodiny-uvod', {'riadky': hodiny_riadky(D), 'vynimky': vynimky(D)})
@@ -417,6 +458,8 @@ def vykresli(oid, cesta, D):
     if oid == 'uvod-novinky': return sablona('uvod-novinky', {'karty': [karta_novinky(n, cesta, True) for n in novinky_viditelne(D) if n.get('na_uvode')][:4]})
     if oid == 'novinky-kat': return sablona('novinky-kat', novinky_kat_vm(D, cesta))
     if oid in ('galeria-predajna', 'galeria-dvor'): return sablona(oid, galeria_vm(D, oid[8:], cesta))
+    if oid in ('galeria-letaky', 'galeria-grafika'): return sablona('galeria-grafika', grafika_vm(D, oid[8:], cesta))
+    if oid == 'sluzby-zlavy': return sablona('sluzby-zlavy', {'zlava': zlava(D), 'obr': udaje_platia(D, ['zlava']), 'akcie_href': rel(cesta, 'akcie/index.html')})
     if oid == 'sluzby-lede': return sablona('lede', {'text': txt(D['texty']['sluzby_uvod'])})
     if oid == 'sluzby-polozky': return sablona('sluzby-polozky', polozky_vm(D, D['texty']['sluzby']))
     if oid == 'doprava-polozky': return sablona('doprava-polozky', polozky_vm(D, D['texty']['doprava']))

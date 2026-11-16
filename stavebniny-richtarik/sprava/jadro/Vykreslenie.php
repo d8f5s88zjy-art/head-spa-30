@@ -335,14 +335,41 @@ final class Vykreslenie
         return $n == 1 ? "$n fotografia" : (($n >= 2 && $n <= 4) ? "$n fotografie" : "$n fotografií");
     }
 
-    public static function galeria_vm(array $D, string $album, string $cesta): array
+    public static function obrazky(int $n): string
+    {
+        return $n == 1 ? "$n obrázok" : (($n >= 2 && $n <= 4) ? "$n obrázky" : "$n obrázkov");
+    }
+
+    /** Položka albumu je na webe, keď je viditeľná a údaje, ktoré má v obrázku (plati_pri), platia. */
+    public static function fotka_na_webe(array $D, array $f): bool
+    {
+        return (bool)($f['viditelna'] ?? true) && self::udaje_platia($D, $f['plati_pri'] ?? []);
+    }
+
+    private static function fotkyAlbumu(array $D, string $album, string $cesta): array
     {
         foreach ($D['galeria']['albumy'] as $a) if ($a['id'] === $album) {
             $fotky = [];
-            foreach ($a['fotky'] as $f) if ($f['viditelna'] ?? true) $fotky[] = self::fotka_vm($f, $cesta);
-            return ['nadpis' => self::txt($a['nadpis']), 'pocet' => self::fotografie(count($fotky)), 'fotky' => $fotky];
+            foreach ($a['fotky'] as $f) if (self::fotka_na_webe($D, $f)) $fotky[] = self::fotka_vm($f, $cesta);
+            return [$a, $fotky];
         }
         throw new RuntimeException('neznámy album ' . $album);
+    }
+
+    public static function galeria_vm(array $D, string $album, string $cesta): array
+    {
+        [$a, $fotky] = self::fotkyAlbumu($D, $album, $cesta);
+        return ['nadpis' => self::txt($a['nadpis']), 'pocet' => self::fotografie(count($fotky)), 'fotky' => $fotky];
+    }
+
+    /** Albumy Máriových grafík (letaky na stránke Leták, grafika v Galérii); bez položiek na webe sa nevykreslí nič. */
+    public static function grafika_vm(array $D, string $album, string $cesta): array
+    {
+        [$a, $fotky] = self::fotkyAlbumu($D, $album, $cesta);
+        if (!$fotky) return ['blok' => null];
+        $g = $album === 'grafika';
+        return ['blok' => ['nadpis' => self::txt($a['nadpis']), 'album' => $g, 'pocet' => $g ? self::obrazky(count($fotky)) : '',
+                           'trieda' => $g ? 'n6 gg' : 'n4 lb4', 'fotky' => $fotky]];
     }
 
     // ---------- texty stránok ----------
@@ -356,6 +383,25 @@ final class Vykreslenie
     public static function cislice(?string $s): string
     {
         return preg_replace('/\D/', '', $s ?? '');
+    }
+
+    /** Grafiky s údajom v obrázku sa ukazujú, len kým údaje platia (konštanty grafika_udaje); to isté ako v Pythone. */
+    public static function udaje_platia(array $D, array $kluce): bool
+    {
+        $f = $D['firma']; $o = $D['k']['grafika_udaje'];
+        foreach ($kluce as $k) {
+            if ($k === 'hodiny') $ok = array_map(fn($x) => [array_values($x['dni']), self::cas($x['od']), self::cas($x['do'])], array_values($f['hodiny'])) === $o['hodiny'];
+            elseif ($k === 'mobil' || $k === 'pevna') $ok = self::cislice($f[$k]) === $o[$k];
+            elseif ($k === 'email') $ok = mb_strtolower($f['email']) === implode('@', $o['email']);
+            elseif ($k === 'ulica' || $k === 'majitel') $ok = mb_strtolower($f[$k]) === mb_strtolower($o[$k]);
+            elseif ($k === 'psc') $ok = str_contains($f['mesto'], $o['psc']);
+            elseif ($k === 'zlava') {
+                $t = str_replace("\u{a0}", ' ', $D['cennik']['zlava']); $ok = true;
+                foreach ($o['zlava'] as $x) if (!preg_match('/(?<![0-9,])' . preg_quote($x, '/') . '/u', $t)) $ok = false;
+            } else $ok = false;
+            if (!$ok) return false;
+        }
+        return true;
     }
 
     public static function kontakt_karty_vm(array $D): array
@@ -431,7 +477,9 @@ final class Vykreslenie
             case 'hodiny-uvod-info':
                 return $S($oid, ['riadky' => self::hodiny_riadky($D)]);
             case 'kontakt-karty': return $S('kontakt-karty', self::kontakt_karty_vm($D));
-            case 'hodiny-pata': case 'hodiny-kontakt': case 'hodiny-uvod':
+            case 'hodiny-kontakt':
+                return $S($oid, ['riadky' => self::hodiny_riadky($D), 'vynimky' => self::vynimky($D), 'obr' => self::udaje_platia($D, ['hodiny'])]);
+            case 'hodiny-pata': case 'hodiny-uvod':
                 return $S($oid, ['riadky' => self::hodiny_riadky($D), 'vynimky' => self::vynimky($D)]);
             case 'ld-firma': return $S('ld', ['json' => self::firma_ld($D)]);
             case 'faq': return $S('faq', self::faq_vm($D));
@@ -470,6 +518,8 @@ final class Vykreslenie
                 return $S('uvod-novinky', ['karty' => array_map(fn($n) => self::karta_novinky($n, $cesta, true), $nv)]);
             case 'novinky-kat': return $S('novinky-kat', self::novinky_kat_vm($D, $cesta));
             case 'galeria-predajna': case 'galeria-dvor': return $S($oid, self::galeria_vm($D, substr($oid, 8), $cesta));
+            case 'galeria-letaky': case 'galeria-grafika': return $S('galeria-grafika', self::grafika_vm($D, substr($oid, 8), $cesta));
+            case 'sluzby-zlavy': return $S('sluzby-zlavy', ['zlava' => self::zlava($D), 'obr' => self::udaje_platia($D, ['zlava']), 'akcie_href' => self::rel($cesta, 'akcie/index.html')]);
             case 'sluzby-lede': return $S('lede', ['text' => self::txt($D['texty']['sluzby_uvod'])]);
             case 'sluzby-polozky': return $S('sluzby-polozky', self::polozky_vm($D, $D['texty']['sluzby']));
             case 'doprava-polozky': return $S('doprava-polozky', self::polozky_vm($D, $D['texty']['doprava']));

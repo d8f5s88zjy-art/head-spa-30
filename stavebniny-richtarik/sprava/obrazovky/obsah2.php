@@ -125,19 +125,25 @@ function akcia_vynimka(string $a): void
 // ---------- galéria ----------
 function obrazovka_galeria(): void
 {
-    $D = Zmena::pracovne();
-    $h = '<p class="vela">Fotky v albumoch Predajňa a Areál na stránke Galéria. Nová fotka sa pridá na začiatok albumu.</p>';
+    $D = Zmena::pracovne(); $DK = Zmena::sKonstantami($D);
+    $h = '<p class="vela">Fotky v albumoch Predajňa a Areál na stránke Galéria, vaše letáky a bannery na stránke Akciový leták a logá a firemná grafika v Galérii. Nová fotka sa pridá na začiatok albumu.</p>';
+    $kde = ['letaky' => 'Stránka Akciový leták, časť Letáky a bannery. Opravený leták alebo banner nahrajte cez „Nahradiť inou fotkou“.',
+            'grafika' => 'Stránka Galéria. Obrázok s telefónom, e-mailom alebo hodinami sa ukazuje, len kým sú údaje v správe rovnaké ako na ňom.'];
     foreach ($D['galeria']['albumy'] as $a) {
-        $vid = count(array_filter($a['fotky'], fn($x) => $x['viditelna'] ?? true));
-        $h .= '<h2>' . Ui::e($a['nadpis']) . ' <small>(' . Ui::e(Vykreslenie::fotografie($vid)) . ' na webe)</small></h2>'
+        $g = in_array($a['id'], Obsah::ALBUMY_GRAFIKY, true);
+        $vid = count(array_filter($a['fotky'], fn($x) => Vykreslenie::fotka_na_webe($DK, $x)));
+        $h .= '<h2>' . Ui::e($a['nadpis']) . ' <small>(' . Ui::e($g ? Vykreslenie::obrazky($vid) : Vykreslenie::fotografie($vid)) . ' na webe)</small></h2>'
+            . (isset($kde[$a['id']]) ? '<p class="pomocka">' . Ui::e($kde[$a['id']]) . '</p>' : '')
             . '<form method="post" action="index.php?s=galeria" enctype="multipart/form-data" class="nova-fotka">' . Ui::csrf() . '<input type="hidden" name="a" value="galeria-pridat"><input type="hidden" name="album" value="' . Ui::e($a['id']) . '">'
             . '<label class="pole subor"><span>Pridať fotku</span><input type="file" name="foto" required accept="image/jpeg,image/png,image/webp,image/heic,image/*" data-fotka></label>'
             . '<label class="pole"><span>Čo je na fotke</span><input name="popis" required placeholder="napr. Palety tehál v areáli predajne" data-pocitadlo data-max="120"></label>'
             . '<button class="tl druhe siroke" type="submit">Pridať fotku a pozrieť náhľad</button></form><ul class="zoznam fotky">';
         foreach ($a['fotky'] as $x) {
             $skr = !($x['viditelna'] ?? true);
+            $neplati = !$skr && !Vykreslenie::fotka_na_webe($DK, $x);   // údaje v obrázku sa líšia od údajov v správe
             $pol = ['album' => $a['id'], 'foto' => $x['id']];
-            $h .= '<li class="' . ($skr ? 'skryta' : '') . '"><img src="../' . Ui::e($x['src']) . '" alt="" width="96" height="72" loading="lazy"><details class="foto-uprava"><summary>' . Ui::e(mb_substr($x['popis'], 0, 60)) . ($skr ? ' <span class="znak sivy">skrytá</span>' : '') . '</summary>'
+            $h .= '<li class="' . ($skr || $neplati ? 'skryta' : '') . '"><img src="../' . Ui::e($x['src']) . '" alt="" width="96" height="72" loading="lazy"><details class="foto-uprava"><summary>' . Ui::e(mb_substr($x['popis'], 0, 60)) . ($skr ? ' <span class="znak sivy">skrytá</span>' : '') . ($neplati ? ' <span class="znak sivy">nie je na webe</span>' : '') . '</summary>'
+                . ($neplati ? '<p class="pomocka">Na webe sa neukazuje: údaje na obrázku sa líšia od údajov v správe. Nahrajte obrázok s novými údajmi cez „Nahradiť inou fotkou“.</p>' : '')
                 . '<form method="post" action="index.php?s=galeria">' . Ui::csrf() . '<input type="hidden" name="a" value="galeria-popis"><input type="hidden" name="album" value="' . Ui::e($a['id']) . '"><input type="hidden" name="foto" value="' . Ui::e($x['id']) . '">'
                 . '<label class="pole"><span>Čo je na fotke</span><input name="popis" value="' . Ui::e($x['popis']) . '" data-pocitadlo data-max="120"></label><button class="tl druhe siroke" type="submit">Uložiť popis</button></form>'
                 . '<form method="post" action="index.php?s=galeria" enctype="multipart/form-data">' . Ui::csrf() . '<input type="hidden" name="a" value="galeria-nahradit"><input type="hidden" name="album" value="' . Ui::e($a['id']) . '"><input type="hidden" name="foto" value="' . Ui::e($x['id']) . '">'

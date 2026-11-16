@@ -169,6 +169,9 @@ final class Obsah
     }
 
     // ---------- galéria ----------
+    /** Albumy Máriových grafík (rámiky s celým obrázkom; položka môže mať plati_pri – údaje, ktoré má v obrázku). */
+    const ALBUMY_GRAFIKY = ['letaky', 'grafika'];
+
     private static function album(array $D, string $album): ?int
     {
         foreach ($D['galeria']['albumy'] as $i => $a) if ($a['id'] === $album) return $i;
@@ -197,6 +200,7 @@ final class Obsah
             case 'nahradit':
                 $f = Subory::fotka($files['foto'] ?? [], $fotky[$j]['popis']);
                 if (is_string($f)) return [$D, $f];
+                // nová položka nemá plati_pri: nahratý obrázok nesie nové údaje, podmienka starého obrázka zaniká
                 $fotky[$j] = array_merge(self::fotkaZNahravky($f, $fotky[$j]['popis'], 'foto'), ['viditelna' => $fotky[$j]['viditelna'] ?? true]);
                 break;
             case 'popis':
@@ -206,7 +210,8 @@ final class Obsah
                 break;
             case 'skryt': case 'zobrazit':
                 $fotky[$j]['viditelna'] = $ukon === 'zobrazit';
-                if (!array_filter($fotky, fn($x) => $x['viditelna'] ?? true)) return [$D, 'V albume musí ostať aspoň jedna fotka.'];
+                // albumy grafiky (Letáky a bannery, Logo a firemná grafika) smú ostať prázdne: ich časť potom z webu zmizne celá
+                if (!in_array($D['galeria']['albumy'][$ai]['id'], self::ALBUMY_GRAFIKY, true) && !array_filter($fotky, fn($x) => $x['viditelna'] ?? true)) return [$D, 'V albume musí ostať aspoň jedna fotka.'];
                 break;
             case 'vyssie': case 'nizsie':
                 $k = $j + ($ukon === 'vyssie' ? -1 : 1);

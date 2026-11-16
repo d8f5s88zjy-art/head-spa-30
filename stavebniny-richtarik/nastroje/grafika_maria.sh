@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
-# Webové veľkosti propagačných grafík majiteľa (Ing. Mário Richtárik, e-mail „nova zakaznicka karta“, 16. 11. 2026).
-# Zdroj: zdroj/grafika-maria/*.webp – výrezy zo snímok obrazovky iPhonu bez rozhrania telefónu (bezstratové WebP, pixely
+# Webové veľkosti propagačných grafík majiteľa (Ing. Mário Richtárik, e-maily zo 16. 11. 2026: „nova zakaznicka karta“
+# a druhá zásielka s ilustráciou Podhľady).
+# Zdroj: zdroj/grafika-maria/*.webp – 38 výrezov zo snímok obrazovky iPhonu bez rozhrania telefónu (bezstratové WebP, pixely
 # presne zo snímky; odkiaľ je ktorý výrez, je v zdroj/grafika-maria/vyrezy.tsv). Pôvod a použitie: img/FOTKY.md.
 # Spracovanie: len orez, zmenšenie (Lanczos), jemné doostrenie po zmenšení a prevod do AVIF a WebP. Tón, farby ani obsah
-# sa nemenia a nič sa nezväčšuje: snímky nesú skutočný detail len ≈ 530–1190 px, preto séria končí na 400 px, ikony
-# Kontaktu na 480 px a „Zdarma výpočet“ na 1080 px.
-# Výstup img/ilu/ (nové mená, obrázky majú na hostingu cache na rok):
-#   séria skupín tovaru (štvorec zo stredu výrezu, strana = kratšia strana zdroja) <názov>-200|400.avif|webp
-#   Kontakt: orez 800 × 600 + 260 + 50 (celý rám ikony, menej prázdneho pozadia) kontakt-zavolajte|napiste-288|480
-#   Služby: celý výrez 1320 × 720 zdarma-vypocet-480|790|1080
+# sa nemenia a nič sa nezväčšuje: snímky nesú skutočný detail len ≈ 530–1320 px, preto séria končí na 480 px, ikony
+# Kontaktu a zliav na 480 px, hodiny na 288 px, auto na 905 px a „Zdarma výpočet“ na 1080 px; veľké obrázky albumov majú
+# najviac šírku skutočného detailu svojho výrezu (tabuľka nižšie).
+# Výstup (nové mená, obrázky majú na hostingu cache na rok):
+#   img/ilu/ séria skupín tovaru (štvorec zo stredu výrezu, strana = kratšia strana zdroja) <názov>-200|400|480.avif|webp
+#   img/ilu/ Kontakt: orez 800 × 600 + 260 + 50 (celý rám ikony, menej prázdneho pozadia) kontakt-zavolajte|napiste-288|480
+#   img/ilu/ Kontakt: hodiny, orez 710 × 533 + 300 + 95 kontakt-hodiny-144|288
+#   img/ilu/ Služby: celý výrez 1320 × 720 zdarma-vypocet-480|790|1080; zľavy, orez 800 × 600 + 236 + 12 zlavy-288|480
+#   img/ilu/ Doprava: auto bez nápisu, výrez je mnohouholník (roh s nápisom je priehľadný) rozvoz-452|905
+#   img/grafika/ albumy „Letáky a bannery“ a „Logo a firemná grafika“: <výrez>-n.avif|webp (náhľad, dlhšia strana najviac
+#                480 px) a <výrez>-v.webp (veľký po kliknutí)
 # Použitie (v priečinku webu): bash nastroje/grafika_maria.sh   (ImageMagick a ffmpeg s libaom-av1 a libwebp)
 set -euo pipefail
 cd "$(dirname "$0")/.."
-Z=zdroj/grafika-maria; O=img/ilu
-mkdir -p "$O"
+Z=zdroj/grafika-maria; O=img/ilu; G=img/grafika
+mkdir -p "$O" "$G"
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
 
 kod() {   # kod <png> <cieľ bez prípony>: WebP a AVIF (WebP cez ffmpeg, ImageMagick 6 pri WebP kvalitu ignoruje)
@@ -38,13 +44,67 @@ urob() {   # urob <výrez> <cieľ> <orez WxH+X+Y alebo „stvorec“ alebo „ce
   done
 }
 
-# séria ilustrácií skupín tovaru: výzva „Potrebujete cenu…“ na stránkach kategórií a „Nenašli ste…“ v Katalógu
+# séria ilustrácií skupín tovaru: dlaždice skupín na úvode a v Katalógu (do 480 px) a výzva „Potrebujete cenu…“ na
+# stránkach kategórií (200 a 400 px); Dlažby sú zatiaľ z obrázka iného štýlu (alt-dlazby), kým Mário nepošle sériový
 for p in sypke-zmesi murovaci-material stresne-krytiny izolacny-material kominovy-system stresne-okna hutny-material \
-         okna-dvere rezivo stavebne-naradie sadrokarton fasadny-system farby-laky poradenstvo; do
-  urob "kategoria-$p" "$p" stvorec 200 400
+         okna-dvere rezivo stavebne-naradie podhlady sadrokarton fasadny-system farby-laky; do
+  urob "kategoria-$p" "$p" stvorec 200 400 480
 done
+urob alt-dlazby dlazby stvorec 200 400 480
+# Poradenstvo: výzva „Nenašli ste…“ v Katalógu
+urob kategoria-poradenstvo poradenstvo stvorec 200 400
 # Kontakt: karty Zavolajte nám a Napíšte nám (obrázok len pri údajoch, ktoré ukazuje – sprava/sablony/kontakt-karty.html)
 urob ikona-zavolajte kontakt-zavolajte 800x600+260+50 288 480
 urob ikona-napiste-nam kontakt-napiste 800x600+260+50 288 480
 # Služby: výzva pred pätou
 urob ikona-zdarma-vypocet zdarma-vypocet cely 480 790 1080
+# Služby: karta zliav (obrázok len pri zľave 5 % a 3,3 % – sprava/sablony/sluzby-zlavy.html)
+urob ikona-zlavy zlavy 800x600+236+12 288 480
+# Kontakt: hodiny v karte Otváracie hodiny (obrázok len pri hodinách, ktoré ukazuje – sprava/sablony/hodiny-kontakt.html)
+urob ikona-otvaracie-hodiny kontakt-hodiny 710x533+300+95 144 288
+
+# Doprava: auto z obrázka „Rozvoz stavebného materiálu“ bez nápisu (druhý riadok nápisu má nosnosť „AVIA 3t“, web a majiteľ
+# hovoria 3,5 t – README). Nápis leží šikmo tesne pod autom, obdĺžnik s celým autom bez nápisu neexistuje, preto je výrez
+# mnohouholník: obdĺžnik 905 × 598 + 205 + 12 bez rohu pod lomenou čiarou 3 – 4 px nad písmenami. Roh je priehľadný (maska =
+# orez, okraj 1 px), farba pod priehľadnou časťou je zjednotená na farbu pozadia; pixely auta sa nemenia. Rámik na stránke
+# má farbu pozadia obrázka (site.css .rozvoz).
+CIARA="300,598 316,586 350,578 395,567 495,541 595,517 645,493 695,492 735,484 835,458 865,439 905,434 905,598"
+for sir in 452 905; do
+  convert "$Z/auto-rozvoz.webp" -crop 905x598+205+12 +repage \
+    \( -size 905x598 xc:white -fill black -draw "polygon $CIARA" -blur 0x1 -level 50%,100% \) -alpha off -compose CopyOpacity -composite \
+    -background '#e3e5e7' -alpha background -filter Lanczos -resize "${sir}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/r.png"
+  ffmpeg -v error -y -i "$TMP/r.png" -c:v libwebp -quality 84 -compression_level 6 "$O/rozvoz-$sir.webp"
+  ffmpeg -v error -y -i "$TMP/r.png" -filter_complex "[0:v]scale=out_color_matrix=bt601:out_range=full,format=yuva420p,split[a][b];[b]alphaextract[al]" \
+    -map "[a]" -map "[al]" -c:v libaom-av1 -still-picture 1 -crf 30 -cpu-used 3 -row-mt 1 -color_range pc -colorspace smpte170m "$O/rozvoz-$sir.avif"
+  echo "$O/rozvoz-$sir: $(identify -format '%wx%h' "$O/rozvoz-$sir.webp"), webp $(stat -c %s "$O/rozvoz-$sir.webp") B, avif $(stat -c %s "$O/rozvoz-$sir.avif") B"
+done
+
+# Albumy grafiky (Leták „Letáky a bannery“, Galéria „Logo a firemná grafika“; data/galeria.json): celý výrez bez orezu.
+# Veľký obrázok = najviac skutočný detail výrezu (druhé číslo; zmerané z ostrosti snímok), náhľad = dlhšia strana 480 px.
+# Mená sú stabilné: opravená verzia od Mária sa vymení 1 : 1 (nový výrez do zdroja pod tým istým menom a tento skript).
+album() {   # album <výrez> <šírka veľkého>
+  local src=$Z/$1.webp w h n
+  read -r w h < <(identify -format '%w %h\n' "$src")
+  n=$(( w >= h ? 480 : (480 * w + h / 2) / h )); (( n > $2 )) && n=$2
+  convert "$src" -filter Lanczos -resize "${n}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/x.png"
+  kod "$TMP/x.png" "$G/$1-n"
+  convert "$src" -filter Lanczos -resize "${2}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/x.png"
+  ffmpeg -v error -y -i "$TMP/x.png" -c:v libwebp -quality 80 -compression_level 6 "$G/$1-v.webp"
+  echo "$G/$1-v: $(identify -format '%wx%h' "$G/$1-v.webp"), webp $(stat -c %s "$G/$1-v.webp") B"
+}
+album letak-preco-nakupovat 660
+album letak-stavebniny-richtarik 659
+album banner-kompletne-systemy 1320
+album banner-super-ceny 1320
+album logo-rs-vodorovne 1190
+album logo-rs-pod-sebou 1190
+album logo-rs-cierna-doska 1190
+album tabula-siroka 1140
+album tabula-vysoka 790
+album vizitka 1190
+album karta 1140
+album alt-auto-zlte 530
+album alt-sypke-zmesi-ikona 660
+album alt-okna-robotnik 530
+album alt-rezivo-kruh 660
+album alt-stresne-krytiny-stvorec 530

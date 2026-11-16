@@ -30,33 +30,57 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
-## Propagačné grafiky majiteľa z 16. 11. 2026 (`img/ilu/`)
+## Propagačné grafiky majiteľa z 16. 11. 2026 (`img/ilu/`, `img/grafika/`)
 
 Pôvod: Ing. Mário Richtárik, e-mail s predmetom „nova zakaznicka karta“ (11 správ), ktorý 16. 11. 2026 preposlal Lajko
-(„Pridaj to tam do richtarika“) ako 32 snímok obrazovky iPhonu (IMG_0282 – IMG_0314, IMG_0296 chýba). Sú to Máriove vlastné
-propagačné grafiky; jeho web ich smie použiť. Originálne súbory zatiaľ nemáme (snímky nesú skutočný detail len ≈ 530 – 1 190 px),
-od Mária si ich žiadame spolu s logom vo vektore.
+(„Pridaj to tam do richtarika“) ako 32 snímok obrazovky iPhonu (IMG_0282 – IMG_0314), a druhá zásielka z toho istého dňa
+(„Tieto fotky čo som ti poslal tam daj aj tie predtým“) s chýbajúcou ilustráciou Podhľady (IMG_0296). Sú to Máriove vlastné
+propagačné grafiky; jeho web ich smie použiť. Lajko 16. 11. 2026: na webe majú byť všetky (38 obrázkov), v dlaždiciach
+skupín tovaru majú ilustrácie nahradiť fotky („Obrázky čo som ti poslal vymeň za tieto“) a po rozkliknutí skupiny majú ostať
+skutočné fotky. Originálne súbory zatiaľ nemáme (snímky nesú skutočný detail len ≈ 530 – 1 320 px), od Mária si ich žiadame
+spolu s logom vo vektore (README, Pre Mária).
 
-- Zdroj v repozitári: `zdroj/grafika-maria/*.webp` – len 17 použitých výrezov bez rozhrania telefónu (bezstratové WebP, pixely
-  presne zo snímky, odkiaľ ktorý je: `zdroj/grafika-maria/vyrezy.tsv`). Webové veľkosti vyrobí `bash nastroje/grafika_maria.sh`:
+- Zdroj v repozitári: `zdroj/grafika-maria/*.webp` – 38 výrezov bez rozhrania telefónu (bezstratové WebP, pixely presne zo
+  snímky, odkiaľ ktorý je: `zdroj/grafika-maria/vyrezy.tsv`). Webové veľkosti vyrobí `bash nastroje/grafika_maria.sh`:
   len orez, zmenšenie (Lanczos), jemné doostrenie a prevod do AVIF a WebP; tón, farby ani obsah sa nemenia, nič sa nezväčšuje.
-- `img/ilu/<skupina>-200|400.avif|webp` – séria 14 ilustrácií skupín tovaru (sivá postavička pri práci na podstavci s nápisom):
+- `img/ilu/<skupina>-200|400|480.avif|webp` – séria ilustrácií skupín tovaru (sivá postavička pri práci na podstavci s nápisom):
   sypke-zmesi (IMG_0304), murovaci-material (0293), stresne-krytiny (0302), izolacny-material (0291), kominovy-system (0292),
-  stresne-okna (0303), hutny-material (0290), okna-dvere (0294), rezivo (0298), stavebne-naradie (0301), sadrokarton (0300),
-  fasadny-system (0289), farby-laky (0288) – vo výzve „Potrebujete cenu…“ na 13 stránkach kategórií – a poradenstvo (0297)
-  vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu. Štvorcový orez zo stredu výrezu. Dlažby a ploty a Podhľady a PVC
-  ilustráciu v sérii nemajú (výzva je tam bez obrázka), kým Mário nepošle tieto dve v rovnakom štýle.
+  stresne-okna (0303), hutny-material (0290), okna-dvere (0294), rezivo (0298), stavebne-naradie (0301), podhlady (0296),
+  sadrokarton (0300), fasadny-system (0289), farby-laky (0288) a dlazby (IMG_0286, obrázok iného štýlu – biele pozadie,
+  modrá postava, nápis „Predaj dlažby“ – kým Mário nepošle Dlažby v štýle série). Štvorcový orez zo stredu výrezu. Sú
+  v **dlaždiciach skupín tovaru** na úvode a v Katalógu (do 480 px) a vo výzve „Potrebujete cenu…“ na 15 stránkach kategórií
+  (200 a 400 px). `poradenstvo-200|400` (0297) je vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu.
 - `img/ilu/kontakt-zavolajte|napiste-288|480.avif|webp` – ikony „Zavolajte nám“ (IMG_0313) a „Napíšte nám“ (IMG_0309) v kartách
   na Kontakte, orez 800 × 600 (celý rám ikony). Majú číslo a e-mail v obrázku: pri inom telefóne alebo e-maile v správe sa
   obrázok z karty sám skryje (`build.py` `KONTAKT_OBR`, šablóna `sprava/sablony/kontakt-karty.html`). Číslo v obrázku má zápis
-  „037/ 6511 777“ (web píše „037 651 17 77“) a ikony majú studené sivomodré pozadie, v tmavej téme svetlú dlaždicu: s
-  originálmi vyžiadať od Mária ikony bez čísla a e-mailu, ideálne s priehľadným pozadím (potom ich zmena kontaktu neskryje).
+  „037/ 6511 777“ (web píše „037 651 17 77“) a ikony majú studené sivomodré pozadie, v tmavej téme svetlú dlaždicu.
+- `img/ilu/kontakt-hodiny-144|288.avif|webp` – „Otváracie hodiny Po – Pi 7:00 – 16:00, So 7:00 – 12:00“ (IMG_0295), orez
+  710 × 533 okolo hodín a tabuľky, v karte Otváracie hodiny na Kontakte. Ukáže sa len pri týchto hodinách v správe (oznam
+  o sviatku ho neskryje).
 - `img/ilu/zdarma-vypocet-480|790|1080.avif|webp` – „Zdarma výpočet spotreby stavebného materiálu“ (IMG_0313, rovnaký obrázok
   je aj IMG_0305) vo výzve pred pätou na Službách.
-- Nepoužité: banner a letáky (preklepy, nečitateľný
-  drobný text, pevné otváracie hodiny, „Avia 3t“), tabule, vizitka, šikmá karta, render auta, ikona zliav, ikona otváracích hodín
-  (pevné hodiny by po zmene v správe klamali), logá s názvom (web má vyčistené logo, chceme vektor) a alternatívy v inom štýle.
-  Ilustrácie nie sú v galérii (tá je len pre skutočné fotky) ani na úvode.
+- `img/ilu/zlavy-288|480.avif|webp` – ikona „Zákazník dostane zľavu: hotovosť 5 % | karta 3,3 %, špeciálne zľavy pre stavebné
+  firmy a živnostníkov“ (IMG_0313), orez 800 × 600, v karte zliav na Službách hneď pri vete so zákazníckou kartou ako
+  podmienkou. Ukáže sa len pri zľave 5 % a 3,3 % v `data/cennik.json`.
+- `img/ilu/rozvoz-452|905.avif|webp` – auto Iveco s hydraulickou rukou z obrázka „Rozvoz stavebného materiálu – AVIA 3t •
+  IVECO 8t s mechanickou rukou“ (IMG_0312) na Doprave. **Bez nápisu:** nosnosť Avie je 3,5 t (Lajko 16. 11. 2026). Nápis
+  leží šikmo tesne pod autom, preto je výrez mnohouholník – obdĺžnik 905 × 598 bez rohu pod čiarou nad písmenami; roh je
+  priehľadný a rámik na stránke má farbu pozadia obrázka. Pixely auta sa nemenia, nič sa neprekresľuje.
+- `img/grafika/<výrez>-n.avif|webp` (náhľad, dlhšia strana najviac 480 px) a `<výrez>-v.webp` (veľký, najviac skutočný detail
+  výrezu) – albumy v `data/galeria.json`:
+  - **Letáky a bannery** na stránke Leták: letak-preco-nakupovat (IMG_0310; hodiny), letak-stavebniny-richtarik (IMG_0311;
+    adresa, telefóny, e-mail), banner-kompletne-systemy (IMG_0314), banner-super-ceny (IMG_0314). Majú preklepy a chyby
+    (zoznam v README, Pre Mária) – Lajko o nich vie a chce ich na webe; sú tam ako náhľady, opisy píšeme správne.
+  - **Logo a firemná grafika** v Galérii: logo-rs-vodorovne, logo-rs-pod-sebou, logo-rs-cierna-doska (zdroj dnešného loga
+    webu), tabula-siroka, tabula-vysoka (adresa, telefóny, e-mail, otváracia doba), vizitka (meno, adresa, telefóny, e-mail),
+    karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa, telefóny, e-mail) a päť ilustrácií
+    iného štýlu: alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh, alt-stresne-krytiny-stvorec.
+  Položka s údajom v obrázku má v dátach `plati_pri` a na webe je len dovtedy, kým údaje v správe sú rovnaké ako na nej
+  (`GRAFIKA_UDAJE` v `build.py`). Správa vie položku skryť, nahradiť (podmienka tým zaniká), popísať a posunúť.
+- Známe rozdiely, ktoré obrázok neskrývajú: zápis čísla „037/ 6511 777“, „Tel./fax“ (web fax neuvádza), „Nitra 5“ na karte,
+  „Avia 3t“ v letáku „Prečo nakupovať u nás“ (malé písmo v náhľade; oprava je v zozname Pre Mária).
+- Výmena za opravenú verziu: nový výrez do `zdroj/grafika-maria/` pod tým istým menom a `bash nastroje/grafika_maria.sh`
+  (mená súborov sa nemenia), alebo „Nahradiť inou fotkou“ v správe.
 
 ## Výmena fotiek 13. 11. 2026 (Lajko: „fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“)
 
@@ -158,6 +182,6 @@ Po vyrovnaní horizontu majú dva súbory menej pixelov, než hovorí názov (n�
   žiadosť majiteľa odstránené zo stromu aj zo všetkých stránok.
 
 Ostré verzie ilustračných fotiek Pexels (2400 px a 1200 px) sú v `img/hd/` a používajú sa v hlavičkách podstránok
-a v dlaždiciach kategórií (aj na úvodnej stránke v časti Katalóg), nikdy v úvodnom obraze ani v strihu zásob. Dlaždice
-ostávajú 900 px.
+a na kartách značiek, nikdy v úvodnom obraze ani v strihu zásob. V dlaždiciach skupín tovaru (úvod, Katalóg) sú od
+16. 11. 2026 Máriove ilustrácie skupín (časť Propagačné grafiky vyššie); fotky ostali v hlavičkách kategórií a v galérii.
 

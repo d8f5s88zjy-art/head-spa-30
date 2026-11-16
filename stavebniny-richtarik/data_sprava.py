@@ -95,7 +95,10 @@ def over(D):
     for kat, zoz in D['novinky'].get('kategorie', {}).items():
         if not re.fullmatch(r'katalog/[a-z0-9-]+\.html', kat) or any(i not in ids for i in zoz): raise ChybaDat(f'data/novinky.json: kategória {kat}')
     for a in D['galeria'].get('albumy', []):
-        if a.get('id') not in ('predajna', 'dvor'): raise ChybaDat(f'data/galeria.json: album {a.get("id")}')
+        if a.get('id') not in ('predajna', 'dvor', 'letaky', 'grafika'): raise ChybaDat(f'data/galeria.json: album {a.get("id")}')
+        for f in a.get('fotky', []):   # údaje v obrázku (Máriove grafiky): len známe kľúče (vykreslenie.udaje_platia)
+            if any(k not in ('hodiny', 'mobil', 'pevna', 'email', 'ulica', 'psc', 'majitel', 'zlava') for k in f.get('plati_pri') or []):
+                raise ChybaDat(f'data/galeria.json: fotka {f.get("id")}, plati_pri {f.get("plati_pri")}')
     cesta = re.compile(r'(img|pdf)/[a-z0-9/_-]+\.(webp|avif|pdf)')
     for meno in ('novinky', 'galeria', 'akcie'):
         for c, t in _texty(D[meno]):

@@ -55,13 +55,32 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   žiadame; staré `logo.png` a `logo-white.png` sú zo stromu preč), fotky predajne a tovaru v `img/predajna/` a `img/uvod/`
   sú od majiteľa, ilustračné fotky kategórií sú z Pexels (`img/FOTKY.md`), kým sa nenafotí ďalší tovar; hlavička Porfixu
   (katalóg aj akcia) je od 13. 11. 2026 fotka výrobcu z porfix.sk – **pred spustením súhlas Porfixu** (`img/FOTKY.md`). Nová fotka sa uloží pod novým názvom (obrázky majú na hostingu cache na rok, časť Údržba).
-- Propagačné grafiky majiteľa (e-mail „nova zakaznicka karta“, 16. 11. 2026; `img/ilu/`, pôvod v `img/FOTKY.md`): séria
-  ilustrácií skupín tovaru vo výzve „Potrebujete cenu na konkrétne množstvo?“ (`.kat-cta.ilu`) na 13 stránkach kategórií
-  (`KAT_ILUSTRACIA` v `build.py`; Dlažby a ploty a Podhľady a PVC v sérii chýbajú, podstránky značiek ju nemajú) a ilustrácia
-  Poradenstvo vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu (`.sort-note.ilu`); karty Zavolajte nám a Napíšte nám na
-  Kontakte (oblasť správy `kontakt-karty`, `.kk2`) a „Zdarma výpočet spotreby“ vo výzve pred pätou len na Službách
-  (`page(cta_obr=…)`, `.cta-pas.s-obr`). Ilustrácie sú lenivé, nikde nie sú LCP ani na úvode; opisy (alt) v `texty.OBR_ALT`
-  (`ilu:<názov>`). Zdroj `zdroj/grafika-maria/` a výroba `bash nastroje/grafika_maria.sh` (len orez, zmenšenie, doostrenie).
+- Propagačné grafiky majiteľa (e-maily zo 16. 11. 2026; `img/ilu/` a `img/grafika/`, pôvod a zoznam v `img/FOTKY.md`).
+  Lajko 16. 11. 2026: na webe majú byť **všetky** Máriove obrázky (38) a v dlaždiciach skupín tovaru ilustrácie namiesto
+  fotiek; skutočné fotky ostávajú po rozkliknutí skupiny. Kde sú:
+  - **dlaždice skupín tovaru** na úvode a v Katalógu (`dlazdice()` v `build.py`, `.cats`): 15 ilustrácií, jednotná mriežka
+    5 / 3 / 2 stĺpce so štvorcovým obrázkom (z ilustrácie sa nič neorezáva), prvá dlaždica je na telefóne naležato. Dlažby
+    a ploty majú zatiaľ Máriov obrázok dlažby iného štýlu (`dlazby-*`), výmena za sériový 1 : 1 pod tým istým menom.
+    Blok `.cats` v ručnom `index.html` je výstup `dlazdice('index.html', cisla=True)`. Hlavičky kategórií
+    (`HLAVICKA_FOTO`, `KAT[..][4]`), fotky tovaru a galéria majú ďalej skutočné fotky;
+  - výzva „Potrebujete cenu na konkrétne množstvo?“ (`.kat-cta.ilu`) na 15 stránkach kategórií (`KAT_ILUSTRACIA`; podstránky
+    značiek ju nemajú) a Poradenstvo vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu (`.sort-note.ilu`);
+  - karty Zavolajte nám a Napíšte nám na Kontakte (oblasť `kontakt-karty`, `.kk2`) a hodiny v karte Otváracie hodiny
+    (oblasť `hodiny-kontakt`, `.khod-obr`); „Zdarma výpočet spotreby“ vo výzve pred pätou na Službách (`page(cta_obr=…)`)
+    a ikona zliav v karte pod zoznamom služieb pri vete o zľave s podmienkou (oblasť `sluzby-zlavy`, `.kat-cta.zl`);
+  - auto z obrázka „Rozvoz stavebného materiálu“ na Doprave vedľa štyroch bodov (`.rozvoz`): výrez **bez nápisu**, lebo jeho
+    druhý riadok má „AVIA 3t“ a Avia je 3,5 t (výrez je mnohouholník, roh s nápisom je priehľadný – `nastroje/grafika_maria.sh`);
+  - dva letáky a dva bannery na stránke Leták v časti „Letáky a bannery“ (oblasť `galeria-letaky`) a logá, tabule, vizitka,
+    zákaznícka karta a päť ilustrácií iného štýlu v albume „Logo a firemná grafika“ v Galérii (oblasť `galeria-grafika`):
+    náhľady v rámikoch, po kliknutí veľký obrázok. Položky sú v `data/galeria.json` (albumy `letaky`, `grafika`, prenesené
+    `nastroje/export_grafika.py`), správa ich vie skryť, nahradiť, popísať a posunúť. Letáky a bannery majú preklepy –
+    Lajko o nich vie; opravená verzia od Mária sa vymení 1 : 1 (nový výrez do zdroja pod tým istým menom, alebo „Nahradiť“ v správe).
+  **Obrázok s údajom nesmie klamať:** hodiny, ikona zliav, tabuľa s kontaktom, vizitka, karta a oba letáky sa vykreslia len
+  vtedy, keď údaje v `data/firma.json` a `data/cennik.json` sú tie, ktoré majú v sebe (`GRAFIKA_UDAJE` v `build.py`,
+  `udaje_platia()` v `nastroje/vykreslenie.py` aj `sprava/jadro/Vykreslenie.php`, pri položkách albumov pole `plati_pri`);
+  po zmene v správe obrázok zmizne a text ostane. Všetky sú lenivé, nikde nie sú LCP; opisy (alt) v `texty.OBR_ALT`
+  (`ilu:<názov>`), pri albumoch v dátach (`popis`). Zdroj `zdroj/grafika-maria/` (38 výrezov) a výroba
+  `bash nastroje/grafika_maria.sh` (len orez, zmenšenie, doostrenie; nič nad skutočný detail snímok).
 - Karty značiek v kategórii (`obsah.py` `_brand`, fotka v `popisy.py` `ZNACKY`): vlastná fotka (z pôvodného webu `p/ID`,
   Máriova `predajna:<názov>` alebo ilustračná z `img/`), inak **logo značky na bielom poli** (`.zm.logo`), bez loga len text
   (`.znacka.bez`). Fotka kategórie sa na kartách neopakuje – je v hlavičke stránky (do 13. 11. 2026 mala Izolácia tú istú
@@ -544,7 +563,7 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   stránky Služby (`img/p/883–885`) ukazujú modré auto LIAZ, preto majú popis bez značky a veta s Ivecom stojí pred nimi ako
   text, nie ako ich popis.
   Asistent značku nemenuje (stráž v `asistent/nastroje/otazky.mjs`), Časté otázky ostávajú „nákladné auto 8 t“, aby sa
-  zhodovali s databázou asistenta. Avia ostáva **3,5 t** (Máriove grafiky píšu „Avia 3t“, rozpor – otvorená otázka nižšie).
+  zhodovali s databázou asistenta. Avia je **3,5 t** (rozhodol Lajko 16. 11. 2026; Máriove grafiky píšu „Avia 3t“, preto je obrázok auta na Doprave len vo výreze bez nápisu a oprava na obrázkoch je v zozname Pre Mária nižšie).
 - **Typografia** (`texty._typografia`, beží automaticky na každej stránke): m², m³, €, „5 %“, pomlčka s medzerami,
   nezlomiteľná medzera medzi číslom a jednotkou, v dátume a za ø, verzálky zdroja na bežné písmo (výnimky `SKRATKY`
   a `MENA`), preklepy zdroja (`PREKLEPY`). Obchodný názov „Ing. Mário Richtárik - Stavebniny“ sa nemení.
@@ -580,15 +599,33 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   `PREDAJNA_POS`, AVIF crf 32 – zdroj je snímka obrazovky; od 13. 11. 2026, bez nich si telefón s DPR 3 bral `-1290`,
   napr. 99 kB namiesto 41 kB; karta značky s Máriovou fotkou berie ten istý výrez); meno súboru bez „-720“ je rovnaké ako pri dlaždici, takže
   prechod medzi stránkami ju berie ako tú istú fotku. Po výmene fotky dvora alebo ilustračnej fotky treba skript
-  spustiť znova. Prednačítané sú len 2 písma nadpisov. Máriove grafiky (`img/ilu/`) vyrobí `bash nastroje/grafika_maria.sh`
-  zo `zdroj/grafika-maria/`; nová grafika = nový výrez do zdroja, riadok v skripte a nové meno súboru (cache na rok).
+  spustiť znova. Prednačítané sú len 2 písma nadpisov. Máriove grafiky (`img/ilu/`, `img/grafika/`) vyrobí `bash nastroje/grafika_maria.sh`
+  zo `zdroj/grafika-maria/`; nová grafika = nový výrez do zdroja, riadok v skripte a nové meno súboru (cache na rok;
+  pri výmene 1 : 1 pod starým menom ju návštevník, ktorý tu už bol, uvidí až po vypršaní cache). Dlaždice skupín: 15 ilustrácií
+  spolu 105 kB (AVIF 480 px) namiesto 1,1 – 1,3 MB fotiek.
 - **Otvorené otázky majiteľa** (predvolené znenie sa nemení): staré akcie bez dátumu, znenie zľavy 5 % / 3,3 %
-  (Máriova ikona IMG_0313 píše „HOTOVOSŤ 5 % | KARTA 3,3 %“ bez podmienky), Nero Ebono alebo Ebano, hosting a HTTPS (časť
-  HTTPS a presmerovania). Z Máriových grafík zo 16. 11. 2026 (na web sa neprebrali, kým ich nepotvrdí): Avia 3 t alebo 3,5 t
-  (IMG_0312, IMG_0310), „Týždenné zľavy na určený druh tovaru“ a „Objektové a množstevné zľavy“ (IMG_0310), „Kvalitná
+  (Máriova ikona IMG_0313 píše „HOTOVOSŤ 5 % | KARTA 3,3 %“ bez podmienky; na webe je preto pri vete s podmienkou), Nero Ebono
+  alebo Ebano, hosting a HTTPS (časť HTTPS a presmerovania). Z Máriových grafík zo 16. 11. 2026 (texty webu sa podľa nich
+  nemenia, kým ich nepotvrdí): „Týždenné zľavy na určený druh tovaru“ a „Objektové a množstevné zľavy“ (IMG_0310), „Kvalitná
   montáž“ čoho (IMG_0310), fax na pevnej linke (IMG_0312, IMG_0310), značky Kremix, Heluz, Ruukki, Budmat, Vital a „Doprava
-  zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026). S originálmi
-  grafík vyžiadať aj ikony Zavolajte nám a Napíšte nám bez čísla a e-mailu, s priehľadným pozadím (`img/FOTKY.md`).
+  zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026); Avia je 3,5 t
+  (Lajko 16. 11. 2026).
+- **Pre Mária** (čo od neho potrebujeme k obrázkom; dovtedy sú na webe tak, ako ich poslal):
+  1. Obrázok auta „Rozvoz stavebného materiálu“: nápis „AVIA 3t“ opraviť na „AVIA 3,5 t“ (rovnako v letáku „Prečo
+     nakupovať u nás“). Dovtedy je na Doprave len auto bez nápisu; s opravenou verziou ukážeme celý obrázok.
+  2. Ilustráciu **Dlažby** v štýle série (sivá postavička na podstavci s nápisom „DLAŽBY“), aby sedela k ostatným 14.
+  3. Opravené verzie oboch letákov a oboch bannerov. Leták „Prečo nakupovať u nás“: „Peradenstvo“ → Poradenstvo, na mape
+     „Horné Kiškany“ → Horné Krškany, „Avia 3t“ → Avia 3,5 t, „po - pia“ → Po – Pi. Leták so sortimentom: „PODHLADY“ →
+     PODHĽADY, „MUROVACÍ MATERIÁL“ je dvakrát, na fotke „Naša značka“ je „Stevabalny“. Veľký banner: „PVC, pedhlady“,
+     „Hutvý materiál“, „Kominový systém“, „Dlažby, platy obklady“, „BRUSENÁ TEHLA“, „THELY-LEPIDLÁ-PENY“, „NÁRADIE-PENETRÁRY“,
+     „Chemofak“ (Chemolak), skomolené logá značiek, „Strešné rezivo“ nad značkami krytín a nadpisy systémov nad iným
+     tovarom, „Doprava zdarma“ bez podmienky. Široký banner: „KOMPLETNÝ … … SYSTÉM“ (chýba slovo), „Doprava sderma“,
+     nečitateľné bočné stĺpce značiek.
+  4. Originály všetkých 38 obrázkov v plnom rozlíšení (JPG, PNG alebo PDF, nie snímky z telefónu): dnešné snímky nesú len
+     ≈ 530 – 1 320 px, letáky a bannery sú po zväčšení zle čitateľné.
+  5. Ikony bez pevných údajov (hodiny, telefón, e-mail, zľava), ideálne s priehľadným pozadím – alebo počítať s tým, že po
+     zmene údajov v správe sa obrázok sám skryje a treba poslať nový.
+  6. Logo vo vektore (SVG, PDF alebo AI) – stále chýba.
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
@@ -623,8 +660,9 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   verzii 1200 px (`img/hd/<názov>-1200.webp`, ImageMagick, kvalita 80); pre novú ju treba vyrobiť rovnako (celú sadu – najväčšia šírka, -1200, dlaždica 900 × 600 a výrez -720 pre telefón –
   vyrobí `richtarik/dizajn2/zapis/nastroje/fotky.sh`; v `srcset` je skutočná šírka najväčšieho súboru). Rám má na
   počítači najviac 520 px, na telefóne celú šírku obsahu a výšku 230 px; fotka musí mať aspoň 1,6-násobok šírky rámu.
-  Dlaždice kategórií (úvod aj Katalóg) skladá `dlazdice()`; skutočné fotky pri dlaždiciach sú v `DLAZDICA_UVOD`. Na
-  úvode sa dlaždice menia ručne (vložiť výstup `dlazdice('index.html', cisla=True)`).
+  Dlaždice kategórií (úvod aj Katalóg) skladá `dlazdice()`; od 16. 11. 2026 majú Máriove ilustrácie skupín
+  (`KAT_ILUSTRACIA`, `img/ilu`), skutočné fotky sú po rozkliknutí v hlavičke kategórie. Na úvode sa dlaždice menia ručne
+  (vložiť výstup `dlazdice('index.html', cisla=True)`).
 - Služby (`SLUZBY`), fotky dvora v galérii (`GALERIA_DVOR`) a pás faktov O nás (`FAKTY_ONAS`) sú v `build.py`; texty
   sú zo zdroja alebo z úvodu, nové treba overiť rovnako.
 - Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `web.config.txt`
@@ -634,15 +672,19 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 ## Správa webu
 Majiteľ si na hostingu Forpsi sám upravuje akcie a ceny, letáky a cenník akcií v PDF, otváracie hodiny a oznamy
 k nim (sviatok, dovolenka, iné hodiny od – do), novinky (nové aj pôvodné: text, fotky, PDF, skrytie), fotky v albumoch
-galérie Predajňa a Areál, vybrané texty Úvodu, Služieb, O nás a Dopravy a telefón a e-mail: adresa
+galérie Predajňa a Areál a obrázky v albumoch grafiky (Letáky a bannery na stránke Leták, Logo a firemná grafika
+v Galérii), vybrané texty Úvodu, Služieb, O nás a Dopravy a telefón a e-mail: adresa
 `https://www.stavebninyrichtarik.sk/sprava/`, na telefóne aj na počítači. Návod pre majiteľa krok za krokom je v správe
 (Pomoc) a v `richtarik/sprava/zapis/NAVOD.md`; architektúra a výsledky testov v `richtarik/sprava/zapis/ZAPIS.md`.
 
 **Ako to funguje.** Návštevník dostáva len statické súbory ako doteraz – na verejných stránkach nie je žiadny skript,
 štýl, cookie ani odkaz správy. Obsah, ktorý správa mení, je v stránkach v označených oblastiach
-`<!--s:ID-->…<!--/s:ID-->` (270 oblastí, spolu ≈ 10 kB na 77 stránkach; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
+`<!--s:ID-->…<!--/s:ID-->` (273 oblastí, spolu ≈ 18 kB na 77 stránkach; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
 nám na Kontakte – `kontakt-karty`: Máriova grafika s číslom alebo e-mailom v obrázku sa ukáže, len kým sú v `data/firma.json`
-údaje z obrázka, `KONTAKT_OBR` v `build.py`; po zmene telefónu či e-mailu ostane karta bez obrázka). Pravda o ňom sú údaje `data/*.json` (`firma`
+údaje z obrázka, `KONTAKT_OBR` v `build.py`; po zmene telefónu či e-mailu ostane karta bez obrázka. Rovnako ostatné grafiky
+s údajom: obrázok hodín v `hodiny-kontakt`, ikona zliav v `sluzby-zlavy` a položky albumov `galeria-letaky`
+a `galeria-grafika` s poľom `plati_pri` – `GRAFIKA_UDAJE`, `udaje_platia()`; v správe má taká položka poznámku „nie je na
+webe“ a po nahradení novým obrázkom podmienka zaniká. Albumy grafiky smú ostať prázdne, ich časť potom z webu zmizne celá). Pravda o ňom sú údaje `data/*.json` (`firma`
 s hodinami a oznamami, `cennik`, `akcie`, `caste`, `novinky`, `galeria`, `texty`, `verzia`). Oblasti skladajú tie isté šablóny `sprava/sablony/*.html` v Pythone
 (`build.py` cez `nastroje/sablona.py`, `nastroje/vykreslenie.py`) aj v PHP (`sprava/jadro/Sablona.php`,
 `Vykreslenie.php`, `Typografia.php`). Správa po ťuknutí Zverejniť vykreslí z celých údajov všetky oblasti, novú
@@ -708,10 +750,11 @@ skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) 
 `sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
 
 **Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
-`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (150 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
-prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, ceny a úvod),
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (170 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku, ceny a úvod),
 `bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 200 kontrol na šírku: celý postup majiteľa
-vrátane novinky, sviatku, fotky v galérii, textu, telefónu a ich vrátenia, s overením verejných stránok), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
+vrátane novinky, sviatku, fotky v galérii, textu, telefónu a ich vrátenia, s overením verejných stránok a toho,
+že obrázky so starými hodinami alebo telefónom po zmene zmiznú a po vrátení sa vrátia), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
 (testovacie súbory). Lokálny server: `php -S 127.0.0.1:<port> -t <kópia> sprava/testy/router.php` (napodobní zákazy
 z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 

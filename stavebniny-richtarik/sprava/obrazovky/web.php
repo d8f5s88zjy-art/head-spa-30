@@ -32,7 +32,7 @@ function obrazovka_domov(): void
        . $dlazdica('cennik', 'Cenník a letáky (PDF)', 'Cenník akcií z ' . $c['datum'])
        . $dlazdica('hodiny', 'Otváracie hodiny a sviatky', $hod . ($ozn ? ' · ' . Ui::pocet($ozn, '%d oznam', '%d oznamy', '%d oznamov') : ''))
        . $dlazdica('novinky', 'Novinky', Ui::pocet($nov, '%d novinka na webe', '%d novinky na webe', '%d noviniek na webe'))
-       . $dlazdica('galeria', 'Fotky v galérii', Ui::pocet($fot, '%d fotka v albumoch Predajňa a Areál', '%d fotky v albumoch Predajňa a Areál', '%d fotiek v albumoch Predajňa a Areál'))
+       . $dlazdica('galeria', 'Fotky v galérii', Ui::pocet($fot, '%d fotka a obrázok v galérii a letákoch', '%d fotky a obrázky v galérii a letákoch', '%d fotiek a obrázkov v galérii a letákoch'))
        . $dlazdica('texty', 'Texty stránok', 'Úvod, Služby, O nás, Doprava')
        . $dlazdica('kontakt', 'Telefón a e-mail', $D['firma']['mobil'] . ', ' . $D['firma']['email'])
        . $dlazdica('historia', 'História a Vrátiť späť', 'Čo sa kedy zmenilo')
@@ -212,6 +212,7 @@ function obrazovka_pomoc(): void
 <p>Novinky → + Pridať novinku → názov, krátky popis, text, fotky alebo PDF → Pozrieť náhľad → Zverejniť. Pri starej novinke môžete zmeniť názov, popis, pridať text a fotky, alebo ju skryť.</p>
 <h2>Fotky v galérii</h2>
 <p>Fotky v galérii → pri albume Predajňa alebo Areál ťuknite Pridať fotku a napíšte, čo je na nej. Pri fotke ťuknite na jej popis: môžete ju nahradiť inou, zmeniť popis, posunúť alebo skryť.</p>
+<p>Na tej istej obrazovke sú aj vaše letáky a bannery (stránka Akciový leták) a logá, tabule, vizitka a karta (album Logo a firemná grafika v Galérii). Opravený leták nahrajte cez „Nahradiť inou fotkou“, nepotrebný skryte. Obrázok, na ktorom je telefón, e-mail alebo otváracie hodiny, sa na webe ukazuje, len kým sú tieto údaje v správe rovnaké; po zmene údajov nahrajte nový obrázok.</p>
 <h2>Texty stránok</h2>
 <p>Texty stránok → upravte vetu alebo odsek na Úvode, v Službách, O nás alebo v Doprave → Pozrieť náhľad → Zverejniť. Vzhľad stránky ostáva.</p>
 <h2>Telefón a e-mail</h2>
