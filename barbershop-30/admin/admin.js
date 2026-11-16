@@ -17,10 +17,11 @@
  */
 import { kopiaPreWeb } from '../assets/asistent-otazky.js';
 
-const OWNER = 'd8f5s88zjy-art', REPO = 'head-spa-30', BRANCH = 'main';
-const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
+/* vrstva ukladania: GitHub (web na GitHub Pages, predvolene) alebo hosting (správa na vlastnej doméne, <html data-ulozisko="hosting">);
+   obe majú rovnaké rozhranie: prihlas, hlava, citaj, zapis, urlSuboru, human, texty (ulozisko-github.js, ulozisko-hosting.js) */
+const U = (await import(document.documentElement.dataset.ulozisko === 'hosting' ? './ulozisko-hosting.js' : './ulozisko-github.js')).default;
 const P = 'barbershop-30/';
-const LIVE = `https://${OWNER}.github.io/${REPO}/${P}`;
+const LIVE = U.zive;
 const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
 const LN = { en: 'Angličtina', uk: 'Ukrajinčina', hu: 'Maďarčina', sr: 'Srbčina', pl: 'Poľština', de: 'Nemčina', cs: 'Čeština' };
 const F = { index: P + 'index.html', rez: P + 'rezervacia.html', md: 'asistent/znalosti/barbershop.md', faq: 'asistent/znalosti/barbershop-otazky.json', faqWeb: P + 'assets/asistent-otazky.json',
@@ -33,8 +34,7 @@ const APP = P + 'assets/app.js';
 const KONTAKT = [F.index, F.rez, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), F.md, F.faq, APP,
   P + 'assets/asistent.js', P + 'assets/objednavka.js', P + 'assets/asistent-ukazka.js', P + 'assets/karty.js', P + 'assets/barbershop30.vcf',
   P + 'karta/index.html', P + 'karta/karta.js', 'vernost/karta/karta.js', 'vernost/lib/jadro.php', 'vernost/ochrana-udajov.html',
-  'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md'];
-const K_KLUC = 'b30.admin';
+  'asistent/lib/jadro.php', 'asistent/api.php', 'asistent/ochrana-udajov.html', 'CLAUDE.md', ...U.kontaktNavyse].filter((c) => !U.nedostupne.includes(c));
 
 const $ = (s, r = document) => r.querySelector(s);
 const norm = (s) => String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
@@ -68,54 +68,10 @@ function fixNb(t, old) {
   return t;
 }
 
-/* ---------------- GitHub ---------------- */
-let token = '';
-try { token = localStorage.getItem(K_KLUC) || sessionStorage.getItem(K_KLUC) || ''; } catch (e) { /* súkromné okno */ }
-async function gh(path, opts = {}) {
-  let r;
-  try {
-    r = await fetch(path.startsWith('http') ? path : API + path, { ...opts, cache: 'no-store',
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.headers || {}) } });
-  } catch (e) { throw Object.assign(new Error('sieť'), { net: true }); }
-  if (!r.ok) { let t = ''; try { t = await r.text(); } catch (e) { /* nič */ } throw Object.assign(new Error(`${r.status} ${t.slice(0, 160)}`), { status: r.status }); }
-  return r.status === 204 ? null : r.json();
-}
-function human(e) {
-  if (e.user) return e.message;
-  if (e.net) return 'Nepodarilo sa spojiť s GitHubom. Skontroluj internet a skús to znova.';
-  if (e.status === 401) return 'Kľúč nie je platný alebo mu vypršala platnosť. Odhlás sa a prihlás sa novým kľúčom.';
-  if (e.status === 403) return 'Kľúč nemá právo zapisovať (Contents: Read and write), alebo GitHub dočasne obmedzil požiadavky. Skús to o chvíľu.';
-  if (e.status === 404) return 'Kľúč nemá prístup k súborom webu. Pri kľúči vyber repozitár webu.';
-  if (e.status >= 500) return 'GitHub práve neodpovedá. Skús to o pár minút, zmeny tu ostávajú.';
-  return `Niečo sa nepodarilo (${e.status || e.message}). Skús to o chvíľu znova.`;
-}
-const b64dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, '')), (c) => c.charCodeAt(0)));
-function b64enc(str) { const bytes = new TextEncoder().encode(str); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
+/* ---------------- ukladanie: U (ulozisko-github.js alebo ulozisko-hosting.js) ---------------- */
+const human = (e) => U.human(e);
 async function b64blob(blob) { const b = new Uint8Array(await blob.arrayBuffer()); let bin = ''; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(bin); }
-async function readFile(path, ref) {
-  // kľúč prístup má (overené pri prihlásení), takže 404 znamená, že súbor v main ešte nie je (web nezverejnený)
-  const j = await gh(`/contents/${path}?ref=${ref}`).catch((e) => { throw e.status === 404 ? Object.assign(new Error(`Na webe chýba súbor ${path}. Web Barbershopu ešte asi nie je zverejnený, admin sa dá použiť až potom.`), { user: true, chyba: true }) : e; });
-  if (j.content) return b64dec(j.content);
-  const blob = await gh(`/git/blobs/${j.sha}`); return b64dec(blob.content);
-}
-async function commit(files, message, progress) {
-  const ref = await gh(`/git/ref/heads/${BRANCH}`);
-  if (ref.object.sha !== base.sha) throw Object.assign(new Error('stale'), { stale: true });
-  const head = await gh(`/git/commits/${base.sha}`);
-  const tree = [], list = Object.entries(files);
-  let i = 0;
-  for (const [path, f] of list) {
-    i++;
-    progress(`Ukladám ${i} z ${list.length}…`);
-    const blob = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: f.b64 != null ? f.b64 : b64enc(f.text), encoding: 'base64' }) });
-    tree.push({ path, mode: '100644', type: 'blob', sha: blob.sha });
-  }
-  const t = await gh('/git/trees', { method: 'POST', body: JSON.stringify({ base_tree: head.tree.sha, tree }) });
-  const c = await gh('/git/commits', { method: 'POST', body: JSON.stringify({ message, tree: t.sha, parents: [base.sha] }) });
-  try { await gh(`/git/refs/heads/${BRANCH}`, { method: 'PATCH', body: JSON.stringify({ sha: c.sha, force: false }) }); }
-  catch (e) { if (e.status === 422 || e.status === 409) throw Object.assign(new Error('stale'), { stale: true }); throw e; }
-  return c.sha;
-}
+const readFile = (path, ref) => U.citaj(path, ref);
 
 /* ---------------- čítanie HTML: textové úseky s polohou a predkami ---------------- */
 const VOID = new Set('area base br col embed hr img input link meta param source track wbr'.split(' '));
@@ -181,8 +137,7 @@ function vstup(p, label, o = {}) {
 
 /* ---------------- načítanie ---------------- */
 async function nacitaj() {
-  const ref = await gh(`/git/ref/heads/${BRANCH}`);
-  const sha = ref.object.sha;
+  const sha = await U.hlava();
   const cesty = [...new Set([F.index, F.rez, F.md, F.faq, ...LANGS.map((l) => `${P}assets/i18n/${l}.json`), ...KONTAKT])];
   const obsah = await Promise.all(cesty.map((c) => readFile(c, sha)));
   const raw = {}; cesty.forEach((c, i) => { raw[c] = obsah[i]; });
@@ -358,7 +313,7 @@ function k2src(k) {
   if (!k) return '';
   const m = k.html.match(/srcset="([^"]+\.webp)[^"]*"/);
   const prvy = m ? m[1].split(',')[0].trim().split(/\s+/)[0] : '';
-  return prvy ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${base.sha}/${P}${prvy}` : '';
+  return prvy ? U.urlSuboru(P + prvy, base.sha) : '';
 }
 
 /* galéria: fotka a popis */
@@ -368,7 +323,7 @@ function galeriaTab() {
   gal.forEach((g, i) => {
     const p = pole({ id: `g:${i}:alt`, tab: 'galeria', label: `Galéria: ${short(g.alt, 40)}`, orig: g.alt });
     const prvy = (g.g.html.match(/srcset="([^"]+\.webp)/) || [])[1] || '';
-    const img = h('img', { alt: '', src: prvy ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${base.sha}/${P}${prvy.split(',')[0].trim().split(/\s+/)[0]}` : '' });
+    const img = h('img', { alt: '', src: prvy ? U.urlSuboru(P + prvy.split(',')[0].trim().split(/\s+/)[0], base.sha) : '' });
     const subor = h('input', { type: 'file', accept: 'image/*' });
     subor.addEventListener('change', async () => { const f = subor.files[0]; if (!f) return; g.foto = await priprauFoto(f, [640, 1080, 1600]); img.src = g.foto.nahlad; obnov(); });
     s.append(h('details', { class: 'card' }, h('summary', {}, h('span', { class: 'nm' }, short(g.alt, 50))),
@@ -420,10 +375,10 @@ function odpovedeNaKontrolu() {
 
 function kartaTab() {
   const s = sec('karta');
-  s.append(h('h1', {}, 'Vernostná kartička'), h('p', { class: 'lead' }, 'Odmeny, akcie, správy zákazníkom a zápis návštev sú v admine kartičky. Prihlasuje sa heslom Barbershopu (nie týmto kľúčom).'),
-    h('p', { class: 'note' }, 'Admin kartičky beží na serveri kartičiek (headspa30.sk). Odkazy začnú fungovať, keď bude server kartičiek spustený.'),
+  s.append(h('h1', {}, 'Vernostná kartička'), h('p', { class: 'lead' }, U.texty.kartickaUvod),
+    h('p', { class: 'note' }, U.texty.kartickaPoznamka),
     h('div', { class: 'links' },
-      h('a', { href: 'https://www.headspa30.sk/vernost/admin/', target: '_blank', rel: 'noopener' }, h('b', {}, 'Admin kartičky'), h('span', {}, 'Odmeny, akcie, správy, klienti, QR pre nového klienta po zaplatení')),
+      h('a', { href: U.texty.vernostAdmin, target: '_blank', rel: 'noopener' }, h('b', {}, 'Admin kartičky'), h('span', {}, 'Odmeny, akcie, správy, klienti, QR pre nového klienta po zaplatení')),
       h('a', { href: LIVE + 'karta/?nova', target: '_blank', rel: 'noopener' }, h('b', {}, 'Založenie kartičky'), h('span', {}, 'Stránka, ktorú otvorí QR kód na recepcii'))),
     h('h2', {}, 'Ako to funguje'), h('ol', { class: 'lead' },
       h('li', {}, 'Po zaplatení ukáž zákazníkovi QR kód (admin kartičky → Klienti → QR pre nového klienta).'),
@@ -861,9 +816,9 @@ async function uloz() {
     for (const [cesta, blob] of Object.entries(nove)) subory[cesta] = { b64: await b64blob(blob) };
     if (!Object.keys(subory).length) { msg(out, 'Nie je čo uložiť, web už takto vyzerá.'); return; }
     const z = zoznamZmien();
-    await commit(subory, `Barbershop 30, úprava webu: ${z.slice(0, 3).join('; ')}${z.length > 3 ? ` a ďalšie (${z.length - 3})` : ''}`, (t) => msg(out, t));
+    await U.zapis(subory, `Barbershop 30, úprava webu: ${z.slice(0, 3).join('; ')}${z.length > 3 ? ` a ďalšie (${z.length - 3})` : ''}`, (t) => msg(out, t), base.sha, z);
     await nacitaj();
-    msg(out, ['Uložené. Na webe to bude o minútu. ', h('a', { href: LIVE, target: '_blank', rel: 'noopener' }, 'Otvoriť web')], 'ok');
+    msg(out, [U.texty.ulozene, h('a', { href: LIVE, target: '_blank', rel: 'noopener' }, 'Otvoriť web')], 'ok');
   } catch (e) {
     if (e.stale) msg(out, 'Web sa medzitým zmenil inde (iné uloženie). Obnov stránku, načítaj novú verziu a zmeny urob znova.', 'bad');
     else msg(out, 'Neuložené. ' + human(e), 'bad');
@@ -875,13 +830,10 @@ addEventListener('beforeunload', (e) => { if (base && zoznamZmien().length) { e.
 
 /* ---------------- prihlásenie ---------------- */
 async function prihlas() {
-  const t = $('#token').value.trim() || token;
-  if (!t) { msg($('#loginMsg'), 'Vlož kľúč.', 'bad'); return; }
-  token = t; msg($('#loginMsg'), 'Overujem kľúč a načítavam web…');
+  const pole = $('#token'), zap = $('#zapamatat');
+  msg($('#loginMsg'), U.texty.overujem);
   try {
-    const repo = await gh('');
-    if (!repo.permissions || !repo.permissions.push) throw Object.assign(new Error('Kľúč má len právo čítať. Pri kľúči nastav Contents: Read and write.'), { user: true });
-    try { ($('#zapamatat').checked ? localStorage : sessionStorage).setItem(K_KLUC, token); } catch (e) { /* súkromné okno */ }
+    await U.prihlas(pole ? pole.value.trim() : '', zap ? zap.checked : false);
     $('#login').hidden = true; $('#loading').hidden = false;
     tab = (location.hash || '#texty').slice(1); if (!TABY[tab]) tab = 'texty';
     await nacitaj();
@@ -891,11 +843,11 @@ async function prihlas() {
     obnov();
   } catch (e) {
     $('#loading').hidden = true; $('#login').hidden = false;
-    if (e.status === 401 || e.status === 404 || (e.user && !e.chyba)) { token = ''; try { localStorage.removeItem(K_KLUC); sessionStorage.removeItem(K_KLUC); } catch (x) { /* nič */ } }
+    U.zlyhalo(e);
     msg($('#loginMsg'), human(e), 'bad');
   }
 }
-$('#prihlasit').addEventListener('click', prihlas);
-$('#token').addEventListener('keydown', (e) => { if (e.key === 'Enter') prihlas(); });
-$('#odhlasit').addEventListener('click', () => { if (zoznamZmien().length && !confirm('Máš neuložené zmeny. Naozaj sa odhlásiť?')) return; try { localStorage.removeItem(K_KLUC); sessionStorage.removeItem(K_KLUC); } catch (e) { /* nič */ } location.reload(); });
-if (token) prihlas();
+if ($('#prihlasit')) $('#prihlasit').addEventListener('click', prihlas);
+if ($('#token')) $('#token').addEventListener('keydown', (e) => { if (e.key === 'Enter') prihlas(); });
+$('#odhlasit').addEventListener('click', () => { if (zoznamZmien().length && !confirm('Máš neuložené zmeny. Naozaj sa odhlásiť?')) return; U.odhlas(); });
+if (U.automaticky()) prihlas();
