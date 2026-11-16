@@ -1,0 +1,29 @@
+STIAHNUTIE: web je rozdelený do troch ZIPov (cast-1, cast-2, cast-3). Stiahni všetky tri a rozbaľ ich do toho istého priečinka.
+Vznikne priečinok barbershop30-web a v ňom NAHRAT-NA-HOSTING s celým webom.
+
+NOVÝ WEB BARBERSHOP 30 PRE DOMÉNU www.barbershop30.sk
+Verzia 16cf3669, tá istá ako v poslednom náhľade z 12. 11. 2026.
+
+ČO JE V BALÍKU
+Priečinok NAHRAT-NA-HOSTING. Celý jeho obsah patrí do koreňa domény www.barbershop30.sk, teda tam, kde je dnes súbor index.php.
+Adresy vo všetkých súboroch sú už prepnuté na https://www.barbershop30.sk/. Anglická verzia je v priečinku en.
+Spolu 759 súborov, asi 103 MB. Väčšinu tvoria fotky a videá.
+
+POZOR PRED NAHRATÍM
+1. Na doméne dnes beží rezervačný systém. Patria k nemu index.php, adresa /rezervacia a priečinky css, js, images a fonts.
+   Tie sa nesmú zmazať ani prepísať. Nový web ide len vedľa nich. Cez FTP súbory iba pridať, nič nemazať.
+   Súbor .htaccess na hostingu nemeniť. Preto ho v balíku zámerne nemáme.
+2. Dnes sa na úvodnej adrese otvorí index.php. Aby sa otvoril nový web, hosting musí dať prednosť súboru index.html
+   pred index.php (nastavenie DirectoryIndex). Adresa /rezervacia pritom musí fungovať ďalej. Nech to hosting alebo
+   ten, kto spravuje rezervačný systém, potvrdí písomne ešte pred nahratím.
+3. Stránka rezervacia.html v balíku zámerne nie je, aby nezavadzala adrese /rezervacia rezervačného systému.
+   Všetky tlačidlá Objednať sa vedú na https://www.barbershop30.sk/rezervacia.
+4. Hosting by mal zapnúť presmerovanie z http na https na celej doméne.
+5. Hneď po nahratí treba vyskúšať: úvodnú stránku, /en/, tlačidlo Objednať sa a celú objednávku v rezervačnom systéme.
+
+ČO OSTÁVA VYPNUTÉ
+Asistent Barber: potrebuje server s kľúčom a zapína sa až so súhlasom. Bez neho sa na webe neukáže.
+Voľné termíny priamo v okne objednávky: potrebujú súhlas a prístup k rezervačnému systému. Dovtedy okno ponúkne
+Zavolať a odkaz na rezervačný systém.
+Vernostná kartička (priečinok karta): na webe je skrytá, potrebuje server.
+Admin na úpravy textov: v balíku nie je, funguje cez GitHub.
