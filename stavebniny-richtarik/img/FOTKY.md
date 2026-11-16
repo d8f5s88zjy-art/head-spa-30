@@ -48,10 +48,12 @@ od Mária si ich žiadame spolu s logom vo vektore.
   ilustráciu v sérii nemajú (výzva je tam bez obrázka), kým Mário nepošle tieto dve v rovnakom štýle.
 - `img/ilu/kontakt-zavolajte|napiste-288|480.avif|webp` – ikony „Zavolajte nám“ (IMG_0313) a „Napíšte nám“ (IMG_0309) v kartách
   na Kontakte, orez 800 × 600 (celý rám ikony). Majú číslo a e-mail v obrázku: pri inom telefóne alebo e-maile v správe sa
-  obrázok z karty sám skryje (`build.py` `KONTAKT_OBR`, šablóna `sprava/sablony/kontakt-karty.html`).
+  obrázok z karty sám skryje (`build.py` `KONTAKT_OBR`, šablóna `sprava/sablony/kontakt-karty.html`). Číslo v obrázku má zápis
+  „037/ 6511 777“ (web píše „037 651 17 77“) a ikony majú studené sivomodré pozadie, v tmavej téme svetlú dlaždicu: s
+  originálmi vyžiadať od Mária ikony bez čísla a e-mailu, ideálne s priehľadným pozadím (potom ich zmena kontaktu neskryje).
 - `img/ilu/zdarma-vypocet-480|790|1080.avif|webp` – „Zdarma výpočet spotreby stavebného materiálu“ (IMG_0313, rovnaký obrázok
   je aj IMG_0305) vo výzve pred pätou na Službách.
-- Nepoužité (dôvody v pracovnom priečinku `richtarik/grafika/navrh/NAVRH.md`, časť 3): banner a letáky (preklepy, nečitateľný
+- Nepoužité: banner a letáky (preklepy, nečitateľný
   drobný text, pevné otváracie hodiny, „Avia 3t“), tabule, vizitka, šikmá karta, render auta, ikona zliav, ikona otváracích hodín
   (pevné hodiny by po zmene v správe klamali), logá s názvom (web má vyčistené logo, chceme vektor) a alternatívy v inom štýle.
   Ilustrácie nie sú v galérii (tá je len pre skutočné fotky) ani na úvode.

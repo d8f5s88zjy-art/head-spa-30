@@ -47,6 +47,16 @@ final class Hladanie
                 if ($n instanceof DOMText && !($n instanceof DOMCdataSection)) $n->parentNode->removeChild($n);
                 if ($e->parentNode) $e->parentNode->removeChild($e);
             }
+            // <wbr> nie je medzera: e-mail na Kontakte ostane jedno slovo. libxml2 vloží text za <wbr> dovnútra, preto sa značka
+            // odstráni a jej obsah ostane na jej mieste (ako lxml drop_tag v build.py) a susedné texty sa spoja
+            $wbr = [];
+            foreach ($xp->query('.//wbr', $m) as $e) $wbr[] = $e;
+            foreach ($wbr as $e) {
+                $r = $e->parentNode;
+                while ($e->firstChild) $r->insertBefore($e->firstChild, $e);
+                $r->removeChild($e);
+                $r->normalize();
+            }
             $casti = [];
             foreach ($xp->query('.//text()', $m) as $x) if (!($x->parentNode instanceof DOMComment)) $casti[] = $x->nodeValue;
             $txt = self::norm(implode(' ', $casti));

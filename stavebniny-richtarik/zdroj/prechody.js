@@ -82,8 +82,8 @@
     Y(vt, t); if (z && z.m) Y(vt, 'zmenu');
     h.classList.add('vt'); h.dataset.vt = t;
     // farebná téma: podklad prechodu (::view-transition) po pásoch vo farbe scén novej stránky (token --scena: svetlý tón,
-    // antracit, červená). Pri postupnom prelnutí je chvíľu vidno podklad; jednofarebný svetlý by v antracitovej hlavičke
-    // podstránky a v červených pásoch preblikol nasvetlo. Hranice pásov sú hranice sekcií v okne (site.css, Farebná téma).
+    // malta, antracit päty; do 16. 11. 2026 aj antracitové a červené pásy). Pri postupnom prelnutí je chvíľu vidno podklad;
+    // jednofarebný svetlý by v antracitovej päte preblikol nasvetlo. Hranice pásov sú hranice sekcií v okne (site.css, Farebná téma).
     if (h.getAttribute('data-tema') == 'farebna') {
       var g = [], x = d.querySelectorAll('main>*,body>section,body>footer'), r, c;
       for (i = 0; i < x.length; i++) {

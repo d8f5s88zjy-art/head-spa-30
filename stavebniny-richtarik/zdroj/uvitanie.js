@@ -158,14 +158,15 @@
     hotovo({});
   }
 
-  // farebná téma: úvod je fotka cez celú výšku s červeným panelom a názvom, takže okno s fotkou, usadenie do rámu ani štítky
+  // farebná téma: úvod je fotka cez celú výšku s panelom a heslom, takže okno s fotkou, usadenie do rámu ani štítky
   // nie sú (CSS ich skryje): krídla s logom a názvom sa rozídu rovno nad hotovým úvodom, fotka úvodu dosadne (1,06 → 1),
   // heslo vyjde z drážky a štítok predajne sa vrazí. Ťuk prechádza na úvod od prvej snímky otvorenia (Zavolať).
-  // KZ-01 (11. 11. 2026): názov úvodu (logo RS a STAVEBNINY RICHTÁRIK) leží presne pod švom krídel, preto ho škára medzi
-  // krídlami odkrývala po kúskoch a naraz boli vidieť dva až tri názvy, jeden prerezaný. Teraz logo a názov v krídlach
-  // zhasnú počas prvej časti otvárania (krídla sa vtedy ešte takmer nehýbu) a názov úvodu sa objaví až vtedy, keď sú krídla
-  // celkom mimo neho; riadky hesla vyjdú z drážky tiež až nad voľným miestom. Kedy krídlo prejde okrajom prvku, sa
-  // vypočíta z rozmerov (jedno čítanie v snímke otvorenia) a z krivky clony, takže to platí pri každej šírke okna.
+  // KZ-01 (11. 11. 2026): nadpis úvodu leží pod švom krídel, preto ho škára medzi krídlami odkrývala po kúskoch a bol
+  // vidieť prerezaný. Logo a názov v krídlach zhasnú počas prvej časti otvárania (krídla sa vtedy ešte takmer nehýbu)
+  // a prvý riadok nadpisu úvodu (miesto „Nitra – Horné Krškany“; od 16. 11. 2026 je logo a názov len v lište, Lajko:
+  // „nech sa neopakuje 2 krát“) sa objaví až vtedy, keď sú krídla celkom mimo neho; riadky hesla vyjdú z drážky tiež až
+  // nad voľným miestom. Kedy krídlo prejde okrajom prvku, sa vypočíta z rozmerov (jedno čítanie v snímke otvorenia)
+  // a z krivky clony, takže to platí pri každej šírke okna.
   function krivka(n) {   // čas (0–1), kedy krivka clony dosiahne priebeh p (cubic-bezier, polením); bez krivky lineárne
     var m = /cubic-bezier\(([^)]+)\)/.exec(kr(n)), c = m && m[1].split(',').map(parseFloat);
     if (!c || c.length !== 4 || c.some(isNaN)) return function (p) { return p; };
@@ -176,8 +177,8 @@
       return B(c[0], c[2], s);
     };
   }
-  function odkryF(D, vy) {   // D: trvanie krídel v ms; vráti, kedy je odkrytý názov úvodu
-    var V = ov.getBoundingClientRect(), cas = krivka('clona'), zn = d.querySelector('.uv h1 .h1-znacka');
+  function odkryF(D, vy) {   // D: trvanie krídel v ms; vráti, kedy je odkrytý prvý riadok nadpisu úvodu
+    var V = ov.getBoundingClientRect(), cas = krivka('clona'), zn = d.querySelector('.uv h1 .h1-miesto');
     var pol = tel ? (V.top + V.bottom) / 2 : (V.left + V.right) / 2, dr = 1.06 * (tel ? V.height : V.width) / 2;
     var volny = function (el) {   // ms od začiatku otvárania, keď už prvok nekryje žiadne krídlo
       if (!el) return 0;

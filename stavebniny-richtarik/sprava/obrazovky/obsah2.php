@@ -200,6 +200,7 @@ function obrazovka_kontakt(): void
        . '<label class="pole"><span>Mobil</span><input name="mobil" required inputmode="tel" autocomplete="off" value="' . Ui::e($F['mobil']) . '"></label>'
        . '<label class="pole"><span>Pevná linka</span><input name="pevna" required inputmode="tel" autocomplete="off" value="' . Ui::e($F['pevna']) . '"></label>'
        . '<label class="pole"><span>E-mail</span><input name="email" type="email" required autocomplete="off" value="' . Ui::e($F['email']) . '"></label>'
+       . '<p class="pomocka">Na stránke Kontakt sú obrázky „Zavolajte nám“ a „Napíšte nám“, v ktorých je číslo a e-mail priamo v obrázku. Po zmene mobilu, pevnej linky alebo e-mailu sa obrázok skryje (text karty ostane správny), kým programátor nepripraví nový.</p>'
        . '<p class="pomocka">Adresu, IČO a názov firmy mení programátor (sú aj v zmluvách a registroch).</p>'
        . '<div class="dole"><button class="tl hlavne siroke" type="submit">Pozrieť náhľad</button></div></form>';
     Ui::stranka('Telefón a e-mail', $h);

@@ -76,33 +76,39 @@ Web má tri varianty podkladu z jedných komponentov cez tokeny v `assets/site.c
 atribútu) a tmavá „čierno-biela“ (`data-tema="tmava"`) ostávajú len na porovnanie.
 
 **Farebná téma** (časť „Farebná téma“ na konci `site.css`): farby loga – červená `#d73438` (zmeraná), antracit `#1c1a1b`,
-biela. **Od 13. 11. 2026 (Lajko: „moc červenej farby“) je červená značka a akcent, nie podklad:** stránka má teplý svetlý tón
-`#f6eee4` s bielymi kartami (katalóg, hlavička podstránky na malte `#efe3d5`, pás faktov, akcie a služby na úvode, výzva pred
-pätou na malte s červenou linkou, dlhé texty); sekcie sú scény s lokálnymi tokenmi: **červená** len lišta (pás loga
-s tmavou linkou hore a dole, jediná stála červená plocha) a **antracit** – druhá farba loga (úvodný panel a pás Doprava so
-šikmou červenou hranou, pás značiek, zľavy so zákazníckou kartou, kontakt, menu na telefóne, päta s červenou linkou hore,
-spodná lišta). Červené akcenty: tlačidlá (hlavné vždy červené s bielym písmom), linky nadpiskov, štítky akcií a čísla
-dlaždíc, tvrdý červený tieň fotky v hlavičke podstránky, percentá zľavy. Podiel červenej plochy na obrazovku (11 stránok)
-klesol z 25,0 % na ≈ 12 % (telefón) a z 30,5 % na ≈ 9 % (počítač) – meranie `richtarik/dizajn2/zapis/` (`ZAPIS.md`,
-`nastroje/cervena.py`); pri zmene farieb ho zopakovať, cieľ do 15–20 %. Biele ostrovy v scénach (vyhľadávanie) majú späť
-svetlé tokeny. Biele
-písmo na červenej loga má 4,73 : 1, preto je na červenej vždy čisto biele (nikdy priesvitné), dlhý text je na svetlom tóne
-alebo antracite, malé červené písmo je `#b92328` (svetlá scéna) alebo `#f28b7d` (antracit). Úvod je v duchu prvého návrhu:
-fotka cez celú výšku, antracitový panel so šikmou červenou hranou (do 13. 11. 2026 červený panel s antracitovou hranou),
-heslo na červených pásikoch, veľký biely názov STAVEBNINY RICHTÁRIK s antracitovým
-obrysom a znakom RS, heslo a tlačidlá (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a` a `.uv-b` `display:contents`);
-strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
+biela. **Od 16. 11. 2026 (Lajko: „skús tam dať viac svetlej farby“; 13. 11. „moc červenej farby“) je svetlá podklad, červená
+značka a akcent, antracit písmo a päta:** stránka má teplý svetlý tón `#f6eee4` s bielymi kartami (úvod, katalóg, hlavička
+podstránky na malte `#efe3d5`, pás faktov, pás značiek, akcie, služby, zľavy a kontakt na úvode, výzva pred pätou na malte
+s červenou linkou, dlhé texty, menu na telefóne). Scény s lokálnymi tokenmi: **biela** lišta hore (znak RS, názov
+„Stavebniny“ antracit a „Richtárik“ červená, položky menu antracit, telefón červené tlačidlo, 4 px červená linka dole)
+a spodná lišta telefónu (biela s červenou linkou hore); **antracit** je už len päta (s červenou linkou hore), štítky na
+fotke úvodu a druhé tlačidlá. Červené akcenty: linka lišty, šikmá hrana úvodu a pásu Doprava, tlačidlá (hlavné vždy červené
+s bielym písmom), pásik druhého riadku hesla, linky nadpiskov, štítky akcií a čísla dlaždíc, tvrdý červený tieň fotky
+v hlavičke podstránky, percentá zľavy. **Merania 16. 11. 2026** (`richtarik/svetlejsie/zapis/`, `nastroje/snim.mjs`
+a `mer.py`: tmavé = L < 35 %, svetlé = L > 80 %, červená = maska HSV; obrazovky 390 × 844 a 1440 × 900): prvá obrazovka
+úvodu tmavé 53 → 13 % (telefón) a 57 → 11 % (počítač), svetlé 12 → 48 % a 9 → 62 %; červená na obrazovku (priemer cez celú
+výšku) úvod 12,0 → 7,5 % a 9,4 → 3,3 %, Kontakt a kategória ≈ 8 % a ≈ 3 %; pri zmene farieb meranie zopakovať. Biele ostrovy
+(vyhľadávanie) majú svetlé tokeny. Biele písmo na červenej loga má 4,73 : 1, preto je na červenej vždy čisto biele (nikdy
+priesvitné); malé červené písmo na svetlom je `#b92328` (5,0 – 6,3 : 1), červená loga `#d73438` na svetlom len veľké písmo
+(názov v lište, percentá) a grafika; v päte je malé červené písmo `#f28b7d`. Úvod: fotka cez celú výšku, svetlý panel so
+šikmou červenou hranou (do 13. 11. 2026 červený, do 16. 11. antracitový), riadok miesta, heslo (druhý riadok na červenom
+pásiku) a tlačidlá; znak RS a názov sú od 16. 11. 2026 len v lište (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a`
+a `.uv-b` `display:contents`); na počítači je ponuka, odkazy a vyhľadávanie na bielej karte na fotke.
+**Návrat k červenej lište** (keby majiteľ trval na farebnom páse loga): v `site.css` vymeniť tokeny scény `.top` a blok
+„lišta“ za stav z commitu „logo a názov len raz“ a `FARBA` v `build.py` vrátiť na `#1c1a1b`; ostatné svetlé sekcie ostanú.
+Strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
 živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: znak a názov
-v krídlach zhasnú počas prvej časti otvárania a názov úvodu sa objaví, až keď sú krídla celkom mimo neho – kedy, vypočíta
-`odkryF` z rozmerov a krivky clony –, takže nikdy nie sú vidieť dva názvy ani názov prerezaný hranou krídla). Podklad
-prechodu medzi stránkami (`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal`
+v krídlach zhasnú počas prvej časti otvárania a prvý riadok nadpisu úvodu sa objaví, až keď sú krídla celkom mimo neho –
+kedy, vypočíta `odkryF` z rozmerov a krivky clony –, takže nadpis nikdy nie je prerezaný hranou krídla). Podklad
+prechodu medzi stránkami (`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`: svetlý tón, malta,
+antracit päty; skript `zdroj/prechody.js` ich pri `pagereveal`
 zapíše ako `background-image` do malého `<style id="vt-pozadie">`, nie ako dedenú vlastnosť na `<html>`, tá by prepočítala
-štýl celej stránky), aby červená hlavička ani antracitové pásy pri prelnutí nepreblikli nasvetlo. Pásy zhasnú, len čo ich
+štýl celej stránky), aby antracitová päta ani pásy na malte pri prelnutí nepreblikli inou farbou. Pásy zhasnú, len čo ich
 nová stránka zakryje (`@keyframes vt-podklad` v `site.css`, 330 ms; pri návrate na počítači ostávajú do konca, lebo tam
 doznievajúci posun stránky nekryje spodná lišta) – inak sa kreslili pod stránkou až do konca prechodu a na telefóne
 predlžovali jeho poslednú snímku. Výška lišty je token
 `--lista-v` (88 px, do 980 px 84 px). Tlač je vždy svetlá (`@media screen`). Tokeny, kontrasty a merania:
-`richtarik/majitel/farebna/TOKENY.md` a `ZAPIS.md`.
+`richtarik/svetlejsie/zapis/ZAPIS.md` (staršie `richtarik/majitel/farebna/TOKENY.md` a `ZAPIS.md`).
 
 **Tmavá téma** (`html[data-tema="tmava"]`, časť „Tmavá téma“ v `site.css`): podklad noc `#121110`, pásy sekcií `#181614`,
 karty `#1b1917`, písmo papierová biela `#f4f1ec`, akcent červená loga `#d73438` len vo veľkom písme, tlačidlách a grafike,
@@ -114,7 +120,7 @@ priesvitné lišty a odznaky), `--irgb` (RGB písma pre jemné linky a latky br�
 Prepínanie: skript `zdroj/tema-head.js` (build.py `TEMA_HEAD`, v `index.html` ho vkladá `python3 -I zdroj/tema_vloz.py .`,
 v `asistent/ochrana-udajov.html` značky `<!--tema-->`) beží v `<head>` pred štýlom: `?tema=svetla` odoberie atribút
 (svetlý papier), `?tema=tmava` nastaví tmavú, oboje si zapamätá (`localStorage` `tema`), `?tema=farebna` voľbu zruší, bez
-parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#1c1a1b`, svetlá `#faf8f4`, tmavá `#121110`). Bez JS,
+parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#ffffff` – biela lišta, svetlá `#faf8f4`, tmavá `#121110`). Bez JS,
 v ráme bez úložiska alebo so zakázaným úložiskom je web farebný (parameter v adrese funguje aj tam). Skript prechodov
 v `index.html` po zmene `zdroj/prechody.js` obnoví `python3 -I zdroj/prechody_vloz.py .`. Prepínač v rozhraní nie je.
 Zápis tmavej témy: `richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
@@ -122,10 +128,10 @@ Zápis tmavej témy: `richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
 ## Úvod
 **Farebná téma (predvolená od 10. 11. 2026) mení rozloženie úvodu a uvítania len cez CSS a jednu cestu v skripte uvítania;
 popis nižšie platí pre svetlú a tmavú tému na porovnanie.** Vo farebnej téme: fotka (provizórne č. 11) vypĺňa celú výšku
-prvej obrazovky, na počítači (od 981 px) vpravo od antracitového panela so šikmou červenou hranou, na telefóne a tablete hore nad ním
-(v šírke okna ≈ 1 : 1 so zdrojom, nezväčšuje sa na celú výšku); v paneli znak RS, názov (telefón 59–86 px, počítač
-96–138 px), heslo „Predajňa plná materiálu. Od základov po strechu.“ a tlačidlá Zavolať a Poslať dopyt, na počítači vpravo
-dole antracitový panel s ponukou, odkazmi a vyhľadávaním. Strih zásob a tlačidlo Prehrať úvod sa nepoužívajú. Uvítanie:
+prvej obrazovky, na počítači (od 981 px) vpravo od svetlého panela so šikmou červenou hranou, na telefóne a tablete hore nad ním
+(v šírke okna ≈ 1 : 1 so zdrojom, nezväčšuje sa na celú výšku); v paneli riadok miesta „Nitra – Horné Krškany“, heslo „Predajňa plná materiálu. Od základov po strechu.“
+(telefón 27–40 px, počítač 40–58 px; znak RS a názov sú len v lište) a tlačidlá Zavolať a Poslať dopyt, na počítači vpravo
+dole biela karta na fotke s ponukou, odkazmi a vyhľadávaním. Strih zásob a tlačidlo Prehrať úvod sa nepoužívajú. Uvítanie:
 červené krídla, znak RS a názov, krídla sa rozídu rovno nad hotovým úvodom (koniec ≈ 1,5 s od navigácie).
 
 **Stav od 10. 11. 2026 (kolo majiteľa, platí pred staršími údajmi v tejto časti):**
@@ -133,11 +139,12 @@ dole antracitový panel s ponukou, odkazmi a vyhľadávaním. Strih zásob a tla
   „fotku číslo 5“). Počítač berie `-1290|1720`, telefón (do 700 px) tie isté široké súbory `-960|1290` s výrezom na palety
   (`object-position: 26% 55%` v ráme, `--x:.44` v uvítaní). Zvislý výrez 663 px sa už nepoužíva: v ráme ho prehliadač
   zväčšoval 1,76×, široký súbor sa v ráme 390 × 320 px pri DPR 3 zobrazí ≈ 1 : 1 (1 290 px na 1 257 bodov displeja).
-- Nadpis H1 úvodu je značka: znak RS (`img/logo-rs-*`, ozdobný) a vedľa neho „Stavebniny / Richtárik“ v dvoch riadkoch
-  s miestom „Nitra – Horné Krškany“ (`.h1-znacka`, `.h1-nazov`, `.h1-miesto`; veľkosti `--zh`, `--zn` v `site.css`:
-  telefón 390 px znak 148 × 72 px a názov 35 px, počítač 1440 px znak 230 × 112 px a názov 58 px), pod ňou heslo
-  „Predajňa plná materiálu. Od základov po strechu.“ (riadky `.ln`, 22 / 36 px). Majiteľ 9. 11. 2026: „úvodný názov
-  Stavebniny Richtárik nech je väčším a s novým logom“. Pri výmene loga stačí vymeniť súbory `img/logo-rs-*`.
+- Nadpis H1 úvodu je riadok miesta „Nitra – Horné Krškany“ (`.h1-miesto`) a heslo „Predajňa plná materiálu. Od základov
+  po strechu.“ (riadky `.ln`; farebná téma telefón 390 px 33 px, počítač 1440 px 55 px; svetlá a tmavá 30 / 48 px).
+  **Znak RS a názov Stavebniny Richtárik sú len v lište hore** (na každej stránke), v úvode sa neopakujú – Lajko
+  16. 11. 2026: „nech sa neopakuje 2 krát“ (má prednosť pred skorším „úvodný názov nech je väčším a s novým logom“
+  z 9. 11. 2026, ktoré plní väčšia lišta). Názov firmy pre vyhľadávače nesie titulok stránky, lišta, og a JSON-LD.
+  Pri výmene loga stačí vymeniť súbory `img/logo-rs-*`.
 - Tempo: všetky časy scenára úvodu, strihu zásob a uvítania nižšie sú **pôvodné hodnoty; dnes platí ich 1,5-násobok**
   (majiteľ: pomalšie animácie; tabuľka v časti Pohyb a prechody). Odozva na ťuk sa nespomalila.
 
@@ -176,7 +183,7 @@ snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
   dlaždice majú pevný pomer strán, nič sa neposunie), aby na pomalej sieti nebrali pásmo hlavnej fotke. Bez JS sa
   sťahujú hneď.
 - `build.py` úvod neprepíše: `write()` zápis do `index.html` odmietne. `kontrola_uvodu()` na konci behu overí menu
-  a údaje firmy v úvode, jeden H1 so slovom „Stavebniny“, og obrázok dvora (`img/og-dvor.jpg`) na všetkých stránkach,
+  a údaje firmy v úvode, jeden H1 s riadkom miesta a heslom bez znaku a názvu firmy (názov je v titulku a v lište práve raz), og obrázok dvora (`img/og-dvor.jpg`) na všetkých stránkach,
   že žiadny súbor neodkazuje na staré video s autom a že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie).
 
 ### Uvítanie „Brána“ pred úvodom
@@ -523,7 +530,8 @@ kliknutím, dotyk, myš, klávesnica, čítačka, celá obrazovka, zatvorenie, o
 
 ## Texty a SEO
 Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, tlačidlá):
-- **Len fakty** z pôvodného webu (`zdroj/pages.json`) a z cenníka akcií `pdf/662.pdf` (28. 1. 2026). Text sa smie
+- **Len fakty** z pôvodného webu (`zdroj/pages.json`), z cenníka akcií `pdf/662.pdf` (28. 1. 2026) a z Máriových grafík
+  zo 16. 11. 2026 (`img/FOTKY.md`), z nich len potvrdené tvrdenia (dnes len Iveco 8 t; ostatné sú otvorené otázky nižšie). Text sa smie
   preformulovať a skrátiť, nesmie pribudnúť nové tvrdenie (počty paliet, m², roky skúseností, recenzie, záruky,
   „najlacnejší“). Tvrdenia výrobcov (napr. „najväčší výrobca cementu“) len s pripísaním výrobcovi, nikdy v popise
   stránky. „Zadarmo“ len pri cenovej ponuke, poradenstve a výpočte spotreby, pri doprave len s podmienkou zo zdroja.
@@ -531,7 +539,10 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   („Zavolať 0905 622 223“, „Prezrieť katalóg“). Bez výkričníkov, verzálok vo vete a prázdnych fráz; čísla namiesto
   prídavných mien; „Akciová cena“ namiesto „super ceny“. Mechanická ruka v jednotnom čísle. 8 t auto je **Iveco** (od
   16. 11. 2026: Máriove grafiky IMG_0312 „Rozvoz stavebného materiálu … Iveco 8t s mechanickou rukou“ a leták IMG_0310;
-  pôvodný web mal raz LIAZ, raz Iveco): úvod, Služby (text aj popis fotiek áut) a Doprava píšu „Iveco 8 t“, LIAZ nikde.
+  pôvodný web mal raz LIAZ, raz Iveco): úvod, Služby (text služby aj veta pri autách) a Doprava píšu „Iveco 8 t“, LIAZ nikde.
+  Dnešné biele Iveco je na Máriovej fotke `predajna:10-auta-firmy` (hlavička Služieb a Dopravy). Staršie fotky áut z pôvodnej
+  stránky Služby (`img/p/883–885`) ukazujú modré auto LIAZ, preto majú popis bez značky a veta s Ivecom stojí pred nimi ako
+  text, nie ako ich popis.
   Asistent značku nemenuje (stráž v `asistent/nastroje/otazky.mjs`), Časté otázky ostávajú „nákladné auto 8 t“, aby sa
   zhodovali s databázou asistenta. Avia ostáva **3,5 t** (Máriove grafiky píšu „Avia 3t“, rozpor – otvorená otázka nižšie).
 - **Typografia** (`texty._typografia`, beží automaticky na každej stránke): m², m³, €, „5 %“, pomlčka s medzerami,
@@ -576,7 +587,8 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   HTTPS a presmerovania). Z Máriových grafík zo 16. 11. 2026 (na web sa neprebrali, kým ich nepotvrdí): Avia 3 t alebo 3,5 t
   (IMG_0312, IMG_0310), „Týždenné zľavy na určený druh tovaru“ a „Objektové a množstevné zľavy“ (IMG_0310), „Kvalitná
   montáž“ čoho (IMG_0310), fax na pevnej linke (IMG_0312, IMG_0310), značky Kremix, Heluz, Ruukki, Budmat, Vital a „Doprava
-  zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026).
+  zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026). S originálmi
+  grafík vyžiadať aj ikony Zavolajte nám a Napíšte nám bez čísla a e-mailu, s priehľadným pozadím (`img/FOTKY.md`).
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.

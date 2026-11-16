@@ -29,7 +29,12 @@ s.on('pageerror', (e) => konzola.push(String(e)));
 s.on('dialog', (d) => d.accept());
 
 async function obrazovka(meno) {
-  // kontrola obrazovky správy + snímka
+  // kontrola obrazovky správy + snímka; meria sa až po načítaní stránky a všetkých štýlov (inak pri záťaži občas namerala
+  // predvolených 13,33 px prehliadača namiesto 18 px zo sprava.css – kontrola regresií R-3, 16. 11. 2026). Ak sa štýly
+  // nenačítajú do 5 s, meria sa aj tak a skutočná chyba sa ukáže.
+  await s.waitForLoadState('load').catch(() => {});
+  await s.waitForFunction(() => document.readyState === 'complete'
+    && [...document.querySelectorAll('link[rel=stylesheet]')].every((l) => l.sheet), null, { timeout: 5000 }).catch(() => {});
   const r = await s.evaluate(() => {
     const d = document.documentElement, zle = [];
     const vod = d.scrollWidth > window.innerWidth + 1;

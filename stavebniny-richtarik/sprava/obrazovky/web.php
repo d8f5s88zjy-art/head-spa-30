@@ -215,7 +215,7 @@ function obrazovka_pomoc(): void
 <h2>Texty stránok</h2>
 <p>Texty stránok → upravte vetu alebo odsek na Úvode, v Službách, O nás alebo v Doprave → Pozrieť náhľad → Zverejniť. Vzhľad stránky ostáva.</p>
 <h2>Telefón a e-mail</h2>
-<p>Telefón a e-mail → prepíšte číslo alebo e-mail → Pozrieť náhľad → Zverejniť. Zmení sa na všetkých stránkach naraz, aj na tlačidlách Zavolať a v údajoch pre Google.</p>
+<p>Telefón a e-mail → prepíšte číslo alebo e-mail → Pozrieť náhľad → Zverejniť. Zmení sa na všetkých stránkach naraz, aj na tlačidlách Zavolať a v údajoch pre Google. Obrázky „Zavolajte nám“ a „Napíšte nám“ na stránke Kontakt majú číslo a e-mail v obrázku, preto sa po zmene skryjú, kým programátor nepripraví nové.</p>
 <h2>Pomýlil som sa</h2>
 <p>História a Vrátiť späť → pri zmene je napísané, čo sa zmenilo → ťuknite Vrátiť → Zverejniť. Vrátiť sa dá aj vrátenie. Nová akcia alebo novinka sa pri vrátení skryje (stránka ostane s vetou, že skončila); úplne ju zmaže programátor.</p>
 <h2>Odhlásenie</h2>

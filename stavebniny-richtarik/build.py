@@ -519,7 +519,7 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#1c1a1b'   # farba lišty prehliadača (theme-color, manifest): antracit farebnej témy (nad červenou lištou webu tmavá linka ako v páse loga); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #faf8f4, pri ?tema=tmava na #121110
+FARBA = '#ffffff'   # farba lišty prehliadača (theme-color, manifest): biela lišta webu vo farebnej téme (od 16. 11. 2026, predtým antracit #1c1a1b nad červenou lištou); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #faf8f4, pri ?tema=tmava na #121110
 TEMA = 'farebna'    # predvolená téma v atribúte data-tema na <html> každej stránky (farebná aj bez JS; zdroj/tema-head.js)
 
 
@@ -1226,23 +1226,27 @@ SLUZBY_FOTKY = ['885', '884', '883']
 
 def build_sluzby():
     p = PAGES['sluzby']
-    # 8 t auto je Iveco: Máriove grafiky z 16. 11. 2026 (IMG_0312 rozvoz, IMG_0310 leták „Prečo nakupovať u nás“), README
-    cap = 'Naše autá: Avia 3,5 t a nákladné auto Iveco 8 t s mechanickou rukou'
+    # 8 t auto je Iveco: Máriove grafiky z 16. 11. 2026 (IMG_0312 rozvoz, IMG_0310 leták „Prečo nakupovať u nás“), README.
+    # Dnešné biele Iveco je na Máriovej fotke predajna:10-auta-firmy (hlavička Služieb a Dopravy). Fotky 883–885 z pôvodnej
+    # stránky Služby ukazujú staršie modré auto LIAZ (znak na maske, pôvodný web „LIAZ 8 ton“), preto veta so značkou stojí
+    # pred nimi ako text odseku, nie ako ich popis, a lightbox má popis každej fotky bez značky (kontrola faktov F-01).
+    veta = 'Na rozvoz tovaru máme auto Avia 3,5 t a nákladné auto Iveco 8 t s mechanickou rukou'
     # opis každej fotky (fotky áut z pôvodnej stránky Služby, hárok v z2/prac/auta-883-885.jpg)
     alt = {'883': 'Červená Avia s valníkom a modré nákladné auto s mechanickou rukou',
            '884': 'Avia a nákladné auto s mechanickou rukou pred predajňou pri paletách',
            '885': 'Avia a modré nákladné auto so zdvihnutou mechanickou rukou'}
-    fotky = ''.join(f'<a href="{rel(p, "img/p/" + i + ".webp")}" data-lb="1" data-cap="{cap}"><img src="{rel(p, "img/p/" + i + ".webp")}" alt="{alt[i]}" loading="lazy" decoding="async" width="{IMG_SIZES[i][0]}" height="{IMG_SIZES[i][1]}"></a>' for i in SLUZBY_FOTKY)
+    fotky = ''.join(f'<a href="{rel(p, "img/p/" + i + ".webp")}" data-lb="1" data-cap="{alt[i]}"><img src="{rel(p, "img/p/" + i + ".webp")}" alt="{alt[i]}" loading="lazy" decoding="async" width="{IMG_SIZES[i][0]}" height="{IMG_SIZES[i][1]}"></a>' for i in SLUZBY_FOTKY)
     body = f'''<section class="sec sluzby-page"><div class="wrap">
 <div class="srv-grid"><div class="srvs">{oblast('sluzby-polozky', V.vykresli('sluzby-polozky', p, VD))}</div></div>
 <h2 class="sh rv"><span>Vlastná doprava</span><small><a href="{rel(p, 'doprava.html')}">Doprava a podmienky</a></small></h2>
+<div class="txt rv"><p>{veta}. Podmienky dopravy pri jednotlivých akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava</a>, ďalšie odpovede na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
 <div class="auta rv">{fotky}</div>
-<div class="txt rv"><p>{cap}. Podmienky dopravy pri jednotlivých akciách nájdete na stránke <a href="{rel(p, 'doprava.html')}">Doprava</a>, ďalšie odpovede na stránke <a href="{rel(p, 'caste-otazky.html')}">Časté otázky</a>.</p></div>
 </div></section>'''
     # výzva pred pätou s Máriovou grafikou „Zdarma výpočet spotreby stavebného materiálu“ (img/ilu, nastroje/grafika_maria.sh):
     # len na Službách (výpočet spotreby je služba 02), na ostatných stránkach je výzva bez obrázka
     sady = {x: ', '.join(f'img/ilu/zdarma-vypocet-{w}.{x} {w}w' for w in (480, 790, 1080)) for x in ('avif', 'webp')}
-    s = '(max-width:800px) calc(100vw - 36px), 340px'
+    # šírky podľa site.css .cta-pas.s-obr: do 396 px celá šírka obsahu (okraj 18 px), do 640 px najviac 360 px, potom stĺpec clamp(240px,26vw,340px)
+    s = '(max-width:396px) calc(100vw - 36px), (max-width:640px) 360px, (max-width:923px) 240px, (max-width:1307px) 26vw, 340px'
     cta_obr = (f'<picture><source type="image/avif" srcset="{sady["avif"]}" sizes="{s}"><img src="img/ilu/zdarma-vypocet-790.webp" '
                f'srcset="{sady["webp"]}" sizes="{s}" width="790" height="431" alt="{html.escape(texty.OBR_ALT["ilu:zdarma-vypocet"])}" '
                f'loading="lazy" decoding="async"></picture>')
@@ -1320,12 +1324,14 @@ KONTAKT_OBR = {'zavolajte': {'mobil': '0905622223', 'pevna': '0376511777'}, 'nap
 
 def build_kontakt():
     p = 'kontakt.html'
+    # nadpisy .kbox sú priamo <h2 class="h3">: nad nimi sú h2 kariet kontakt-karty, takže nadpisy() by ich nechala ako h3
+    # pod „Napíšte nám“ (kontrola regresií R-1, 16. 11. 2026)
     body = f'''<section class="sec kontakt-page"><div class="wrap">
 {oblast('kontakt-karty', V.vykresli('kontakt-karty', p, VD))}
 <div class="kgrid">
-  <div class="kbox"><h3>Predajňa a sklad</h3><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a></div>
-  <div class="kbox khod"><h3>Otváracie hodiny</h3>{oblast('hodiny-kontakt', V.vykresli('hodiny-kontakt', p, VD))}</div>
-  <div class="kbox kfir"><h3>Firemné údaje a platba</h3><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
+  <div class="kbox"><h2 class="h3">Predajňa a sklad</h2><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a></div>
+  <div class="kbox khod"><h2 class="h3">Otváracie hodiny</h2>{oblast('hodiny-kontakt', V.vykresli('hodiny-kontakt', p, VD))}</div>
+  <div class="kbox kfir"><h2 class="h3">Firemné údaje a platba</h2><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
   <figure class="kdvor">{predajna_picture('', '02-tvarnice-obloha', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">{PP_ODKAZ}</a></span></figcaption></figure>
 </div>
 {prehliadka_sekcia('')}
@@ -1412,6 +1418,10 @@ def build_search_index():
         main = doc.xpath('//main')
         for e in (main[0].xpath('.//aside|.//nav|.//script|.//*[contains(@class,"search")]|.//*[contains(@class,"kat-cta")]|.//section[contains(@class,"page-head")]') if main else []):
             e.getparent().remove(e)
+        # <wbr> (e-mail na Kontakte) nie je medzera: text pred a za ním je jedno slovo. Parser libxml2 nepozná <wbr> ako prázdny
+        # prvok a text za ním vloží dovnútra, preto drop_tag (ponechá obsah), nie drop_tree
+        for e in (main[0].xpath('.//wbr') if main else []):
+            e.drop_tag()
         txt = re.sub(r'\s+', ' ', ' '.join(main[0].itertext()) if main else '').strip()
         sl = slug_of.get(p, '').split('__')
         ponuka = ''
@@ -1516,7 +1526,8 @@ def kontrola_uvodu():
     """Úvod (index.html) je ručne udržiavaný, build.py ho neprepisuje. Upozorní, keď sa menu alebo údaje firmy
     v build.py zmenili a v úvode nie sú (treba ich doplniť ručne), a skontroluje celý web: žiadny odkaz na staré
     video s autom ani na jeho obrázok pri zdieľaní, og obrázok (logo a názov) na každej stránke, na úvode práve jeden H1
-    so slovom „Stavebniny“ (SEO) a og aj JSON-LD obrázok."""
+    s miestom a heslom „Predajňa plná materiálu“, bez znaku a názvu firmy (Lajko 16. 11. 2026: logo a názov sú v lište,
+    v úvode sa neopakujú; názov firmy nesie titulok, lišta, og a JSON-LD) a og aj JSON-LD obrázok."""
     s = open(os.path.join(OUT, 'index.html'), encoding='utf-8').read()
     chyba = [p for p, t in NAV if p != 'index.html' and f'href="{p}">{t}<' not in s]
     if 'data-asistent="ukazka"' not in s: chyba.append('data-asistent="ukazka" na <html> (asistent v náhľade)')
@@ -1548,7 +1559,9 @@ def kontrola_uvodu():
     if s.count(prehliadka_blok('')) != 1: chyba.append("úvod: komponent prechádzky predajňou nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok('') (vlož jeho výstup)")
     if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
     h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)
-    if len(h1) != 1 or 'Stavebniny' not in h1[0]: chyba.append(f'úvod: H1 {len(h1)}×, so slovom Stavebniny: {bool(h1) and "Stavebniny" in h1[0]}')
+    h1_ok = len(h1) == 1 and h1[0].count('<span class="h1-miesto">') == 1 and 'Predajňa plná materiálu' in h1[0] and not re.search(r'<img|<picture|Stavebniny|Richtárik', h1[0])
+    if not h1_ok or 'h1-znacka' in s or 'h1-nazov' in s: chyba.append(f'úvod: H1 {len(h1)}× (má byť 1×: riadok miesta .h1-miesto a heslo „Predajňa plná materiálu“, bez znaku RS a názvu firmy – tie sú len v lište)')
+    if s.count('<title>Stavebniny Richtárik') != 1 or len(re.findall(r'<a class="brand"[^>]*aria-label="Stavebniny Richtárik', s)) != 1: chyba.append('úvod: názov firmy nie je v titulku alebo v lište (a.brand) práve raz')
     if s.count(f'{DOMENA}{OG_IMG[0]}') < 2: chyba.append('úvod: og:image alebo JSON-LD image nie je og obrázok webu')
     # uvítanie Brána (zdroj/uvitanie.*): štyri bloky zo zdroja práve raz, prekryv ako prvý prvok <body> (bez triedy br-ide
     # skrytý), mimo čítačky (aria-hidden, vnútro inert), bez nadpisu, odkazu, prvku s fokusom, výkričníka a štítku označenia asistenta

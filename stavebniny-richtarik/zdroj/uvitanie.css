@@ -94,8 +94,10 @@
    STAVEBNINY RICHTÁRIK živým písmom webu, biely s antracitovým obrysom ako v grafike majiteľa (dva riadky s riadkovaním .92 = výška znaku --bl);
    spára ide medzi znakom a názvom. Pod nimi pozdrav, „Poďte ďalej.“ na antracitovom páse. Na telefóne (krídla hore a dole)
    je všetko v strede: hore pozdrav a znak, dole názov (18,4 vw: STAVEBNINY má 4,49 em, pri 320 px 264 px z 284 px, nezalomí
-   sa a neoreže) a „Poďte ďalej.“. Okno s fotkou, odznak a štítky sa nepoužijú: úvod je fotka cez celú výšku s červeným
-   panelom, krídla sa rozídu rovno nad ním (uvitanie.js, otvorF). Lišta je vo farebnej téme vyššia (--lista-v v site.css). */
+   sa a neoreže) a „Poďte ďalej.“. Okno s fotkou, odznak a štítky sa nepoužijú: úvod je fotka cez celú výšku so svetlým
+   panelom, krídla sa rozídu rovno nad ním (uvitanie.js, otvorF). Lišta je vo farebnej téme vyššia (--lista-v v site.css)
+   a od 16. 11. 2026 biela s červenou linkou; krídla ostávajú červené (pozdrav na necelú sekundu), pás pod bránou za
+   spodnou lištou telefónu je biely ako lišta. */
 html[data-tema="farebna"] .br{top:var(--lista-v,88px)}
 html[data-tema="farebna"] .br-okno,html[data-tema="farebna"] .br .uv-znak{display:none}
 html[data-tema="farebna"] .br-krid{--bl:clamp(104px,13.4vw,206px);--pas:clamp(30px,8vh,72px);background:var(--f-cervena) linear-gradient(180deg,var(--f-antracit) 0 var(--pas),transparent var(--pas) calc(100% - 10px),var(--f-antracit) calc(100% - 10px)) no-repeat;background-size:100% 100%}
@@ -110,7 +112,7 @@ html[data-tema="farebna"] .br-nazov{display:grid;grid-row:2;align-self:center;ma
 html[data-tema="farebna"] .br-veta{grid-row:3;margin:.5em 0 0;color:#fff}
 html[data-tema="farebna"] .br-p .br-veta>span>span{color:#fff;background:var(--f-antracit);padding:.03em .22em .07em}
 html[data-tema="farebna"] .br-nad{grid-row:4;align-self:start;margin:18px 0 0;color:#fff}
-@media (max-width:980px){html[data-tema="farebna"] .br{box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 var(--f-antracit)}}
+@media (max-width:980px){html[data-tema="farebna"] .br{box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 #fff}}
 @media (max-width:700px){
 html[data-tema="farebna"] .br-krid{--bl:min(31vw,150px);--pas:34px;background-image:none}
 html[data-tema="farebna"] .br-l{background-image:linear-gradient(180deg,var(--f-antracit) 0 var(--pas),transparent var(--pas))}

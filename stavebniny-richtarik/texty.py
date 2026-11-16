@@ -452,7 +452,7 @@ OBR_ALT = {
     'ilu:fasadny-system': 'Ilustrácia: robotník lepí izolačné dosky na fasádu, nápis Fasádny systém',
     'ilu:farby-laky': 'Ilustrácia: maliar natiera stenu, nápis Farby – laky',
     'ilu:poradenstvo': 'Ilustrácia: predavač radí zákazníkovi nad plánom, nápis Poradenstvo v stavebninách',
-    'ilu:zdarma-vypocet': 'Zdarma výpočet spotreby stavebného materiálu – kalkulačka, plán stavby a palety tehál, dreva a cementu',
+    'ilu:zdarma-vypocet': 'Ilustrácia: kalkulačka nad plánom stavby, palety tehál a dreva a vrecia cementu, nápis Zdarma výpočet spotreby stavebného materiálu',
 }
 
 # Galéria: opis každej fotky (5 až 15 slov, len to, čo je na fotke vidieť). Fotky areálu a predajne sú skutočné fotky
